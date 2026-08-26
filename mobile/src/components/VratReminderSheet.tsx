@@ -16,6 +16,12 @@ import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 // <Modal>: a transparent Modal lives in a separate iOS window that the e2e
 // (Maestro) accessibility snapshot can't read into, and it merges poorly for
 // VoiceOver. An in-tree overlay stays in the RN view hierarchy.
+//
+// PRD-16 §6.7 reuses this sheet for muhurat follows rather than forking it
+// (§7/§9, RULEBOOK §9). A muhurat is a TIME, not a day, so the caller may pass
+// its own `dayOfOptions` (adding the window-anchored choice), a `subtitle`
+// naming the specific day, a `dayOfLabel`, and a `footnote` explaining the
+// clamp. Everything else — layout, pills, switch, save — is shared.
 
 type AdvanceValue = 0 | 1 | 2 | 3;
 
@@ -26,55 +32,93 @@ const ADVANCE_OPTIONS: { value: AdvanceValue; hi: string; en: string }[] = [
   { value: 3, hi: '3 दिन', en: '3 days' },
 ];
 
-// Day-of presets. "Sunrise" is a labelled early-morning proxy (06:00) in v1;
-// true location/date-aware sunrise is a P4 follow-up.
-const TIME_OPTIONS = [
+/**
+ * One day-of choice. `atWindow` marks the muhurat-only option that anchors the
+ * notice to the day's best window instead of a wall-clock time; the vrat sheet
+ * never passes it, so its behaviour is unchanged.
+ */
+export type DayOfOption = {
+  key: string;
+  hour: number;
+  minute: number;
+  hi: string;
+  en: string;
+  atWindow?: boolean;
+};
+
+// Vrat day-of presets. "Sunrise" is a labelled early-morning proxy (06:00) in
+// v1; true location/date-aware sunrise is a P4 follow-up.
+const TIME_OPTIONS: readonly DayOfOption[] = [
   { key: '0700', hour: 7, minute: 0, en: '07:00', hi: '07:00' },
   { key: '0800', hour: 8, minute: 0, en: '08:00', hi: '08:00' },
   { key: 'sunrise', hour: 6, minute: 0, en: 'Sunrise', hi: 'सूर्योदय' },
 ] as const;
 
-function timeKeyFor(t?: { hour: number; minute: number }): string {
-  if (!t) return '0700';
-  if (t.hour === 8) return '0800';
-  if (t.hour === 6) return 'sunrise';
-  return '0700';
+function timeKeyFor(options: readonly DayOfOption[], pref: VratReminderPref): string {
+  if ((pref as { dayOfAtWindow?: boolean }).dayOfAtWindow) {
+    const w = options.find((o) => o.atWindow);
+    if (w) return w.key;
+  }
+  const t = pref.dayOfTime;
+  if (!t) return options[0].key;
+  const exact = options.find((o) => !o.atWindow && o.hour === t.hour && o.minute === t.minute);
+  return exact ? exact.key : options.find((o) => !o.atWindow)?.key ?? options[0].key;
 }
 
 export default function VratReminderSheet({
   visible,
   onClose,
   titleName,
+  subtitle,
   initial,
   onSave,
+  dayOfOptions = TIME_OPTIONS,
+  dayOfLabel,
+  footnote,
+  testID,
 }: {
   visible: boolean;
   onClose: () => void;
   titleName: string | null; // null => editing the global default
+  /** Overrides the derived "for X" line — e.g. a muhurat's date + window. */
+  subtitle?: string;
   initial: VratReminderPref;
   onSave: (pref: VratReminderPref) => void;
+  dayOfOptions?: readonly DayOfOption[];
+  /** Overrides the "व्रत के दिन / On the day" row label. */
+  dayOfLabel?: { hi: string; en: string };
+  /** Quiet line under the save button — the muhurat sheet explains the clamp. */
+  footnote?: string;
+  testID?: string;
 }) {
   const { colors, typography, radii } = useTheme();
   const { lang } = useGitaLanguage();
 
   const [advanceDays, setAdvanceDays] = useState<AdvanceValue>(initial.advanceDays);
   const [dayOf, setDayOf] = useState<boolean>(initial.dayOf);
-  const [tKey, setTKey] = useState<string>(timeKeyFor(initial.dayOfTime));
+  const [tKey, setTKey] = useState<string>(timeKeyFor(dayOfOptions, initial));
 
   // Re-seed when (re)opened for a different target.
   useEffect(() => {
     if (visible) {
       setAdvanceDays(initial.advanceDays);
       setDayOf(initial.dayOf);
-      setTKey(timeKeyFor(initial.dayOfTime));
+      setTKey(timeKeyFor(dayOfOptions, initial));
     }
-  }, [visible, initial]);
+  }, [visible, initial, dayOfOptions]);
 
   if (!visible) return null;
 
   const save = () => {
-    const t = TIME_OPTIONS.find((o) => o.key === tKey) ?? TIME_OPTIONS[0];
-    onSave({ advanceDays, dayOf, dayOfTime: { hour: t.hour, minute: t.minute } });
+    const t = dayOfOptions.find((o) => o.key === tKey) ?? dayOfOptions[0];
+    onSave({
+      advanceDays,
+      dayOf,
+      dayOfTime: { hour: t.hour, minute: t.minute },
+      // Only ever set for callers that passed a window option, so the vrat
+      // sheet's saved pref shape is byte-for-byte what it was.
+      ...(dayOfOptions.some((o) => o.atWindow) ? { dayOfAtWindow: Boolean(t.atWindow) } : {}),
+    } as VratReminderPref);
     onClose();
   };
 
@@ -96,7 +140,7 @@ export default function VratReminderSheet({
   const optHint = { fontFamily: fontFamilies.latinItalic, fontSize: 11, color: colors.inkMuted, marginTop: 1 };
 
   return (
-    <View style={[StyleSheet.absoluteFill, styles.overlay]}>
+    <View style={[StyleSheet.absoluteFill, styles.overlay]} testID={testID}>
       <Pressable
         accessible={false}
         style={[StyleSheet.absoluteFill, { backgroundColor: colors.modalBackdrop }]}
@@ -114,17 +158,19 @@ export default function VratReminderSheet({
           {contentByLang(lang, 'अनुस्मारक', 'Reminders')}
         </Text>
         <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkMuted, marginTop: 2, marginBottom: 14 }}>
-          {titleName
-            ? meaningByLang(
-                lang,
-                `${titleName} के लिए · केवल ऑन-डिवाइस सूचनाएँ`,
-                `For ${titleName}. Local notifications only — scheduled on-device.`
-              )
-            : meaningByLang(
-                lang,
-                'सभी फ़ॉलो किए व्रतों के लिए डिफ़ॉल्ट · ऑन-डिवाइस',
-                'Default for all followed vrats. Local notifications only — on-device.'
-              )}
+          {subtitle
+            ? subtitle
+            : titleName
+              ? meaningByLang(
+                  lang,
+                  `${titleName} के लिए`,
+                  `For ${titleName}.`
+                )
+              : meaningByLang(
+                  lang,
+                  'सभी फ़ॉलो किए व्रतों के लिए डिफ़ॉल्ट',
+                  'Default for all followed vrats.'
+                )}
         </Text>
 
         {/* Advance notice */}
@@ -155,7 +201,9 @@ export default function VratReminderSheet({
         {/* On the day */}
         <View style={[styles.optRowInline, { borderBottomColor: colors.divider }]}>
           <View>
-            <Text style={optLabel}>{contentByLang(lang, 'व्रत के दिन', 'On the day')}</Text>
+            <Text style={optLabel}>
+              {contentByLang(lang, dayOfLabel?.hi ?? 'व्रत के दिन', dayOfLabel?.en ?? 'On the day')}
+            </Text>
             <Text style={optHint}>{contentByLang(lang, 'सुबह का स्मरण', 'morning reminder')}</Text>
           </View>
           <Switch
@@ -163,7 +211,7 @@ export default function VratReminderSheet({
             onValueChange={setDayOf}
             trackColor={{ true: colors.saffron, false: colors.divider }}
             thumbColor={colors.parchment}
-            accessibilityLabel={contentByLang(lang, 'व्रत के दिन', 'On the day')}
+            accessibilityLabel={contentByLang(lang, dayOfLabel?.hi ?? 'व्रत के दिन', dayOfLabel?.en ?? 'On the day')}
           />
         </View>
 
@@ -174,7 +222,7 @@ export default function VratReminderSheet({
             <Text style={optHint}>{contentByLang(lang, 'स्थानीय', 'local')}</Text>
           </View>
           <View style={styles.pillRow}>
-            {TIME_OPTIONS.map((o) => {
+            {dayOfOptions.map((o) => {
               const sel = tKey === o.key;
               return (
                 <Pressable
@@ -197,12 +245,27 @@ export default function VratReminderSheet({
           onPress={save}
           accessibilityRole="button"
           accessibilityLabel="Save reminders"
+          testID="reminder-sheet-save"
           style={({ pressed }) => [styles.saveBtn, { backgroundColor: colors.saffron, borderRadius: radii.pill }, pressed && { opacity: 0.85 }]}
         >
           <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 14, color: colors.parchment }}>
             {contentByLang(lang, 'सहेजें', 'Save reminders')}
           </Text>
         </Pressable>
+        {footnote ? (
+          <Text
+            style={{
+              fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+              fontSize: 11.5,
+              color: colors.inkMuted,
+              textAlign: 'center',
+              lineHeight: 18,
+              marginTop: 10,
+            }}
+          >
+            {footnote}
+          </Text>
+        ) : null}
       </View>
     </View>
   );

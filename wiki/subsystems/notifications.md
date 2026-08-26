@@ -1,15 +1,15 @@
 ---
 title: Local Notifications & Reminders
 type: subsystem
-sources: [mobile/src/notifications/pure.ts, mobile/src/notifications/scheduler.ts, mobile/src/notifications/seed.ts, mobile/src/notifications/dayAnga.ts, mobile/src/notifications/dayAngaResolver.ts, mobile/src/notifications/vratReminderPure.ts, mobile/src/notifications/vratScheduler.ts, mobile/src/notifications/sadhanaReminderPure.ts, mobile/src/notifications/sadhanaScheduler.ts, mobile/src/notifications/festiveReminders.ts, mobile/src/notifications/festiveReminderPure.ts, mobile/src/notifications/festiveScheduler.ts, mobile/src/notifications/deepLink.ts, mobile/src/contexts/NotificationPreferencesContext.tsx, mobile/src/components/DailyVerseAngaBridge.tsx, mobile/src/components/VratReminderScheduler.tsx, mobile/src/components/SadhanaReminderScheduler.tsx, mobile/src/components/FestiveReminderScheduler.tsx, mobile/src/screens/ReminderSettingsScreen.tsx, mobile/src/components/ReminderOptInModal.tsx, mobile/src/navigation/entryRoutes.ts]
-last_verified_date: 2026-08-07
+sources: [mobile/src/notifications/pure.ts, mobile/src/notifications/scheduler.ts, mobile/src/notifications/seed.ts, mobile/src/notifications/dayAnga.ts, mobile/src/notifications/dayAngaResolver.ts, mobile/src/notifications/vratReminderPure.ts, mobile/src/notifications/vratScheduler.ts, mobile/src/notifications/sadhanaReminderPure.ts, mobile/src/notifications/sadhanaScheduler.ts, mobile/src/notifications/festiveReminders.ts, mobile/src/notifications/festiveReminderPure.ts, mobile/src/notifications/festiveScheduler.ts, mobile/src/notifications/pitruSmaranReminderPure.ts, mobile/src/notifications/pitruSmaranScheduler.ts, mobile/src/notifications/pitruPakshaReminderPure.ts, mobile/src/notifications/pitruPakshaScheduler.ts, mobile/src/notifications/deepLink.ts, mobile/src/contexts/NotificationPreferencesContext.tsx, mobile/src/contexts/PitruSmaranContext.tsx, mobile/src/components/DailyVerseAngaBridge.tsx, mobile/src/components/VratReminderScheduler.tsx, mobile/src/components/SadhanaReminderScheduler.tsx, mobile/src/components/FestiveReminderScheduler.tsx, mobile/src/components/PitruSmaranReminderScheduler.tsx, mobile/src/screens/ReminderSettingsScreen.tsx, mobile/src/screens/PitruSmaranDetailScreen.tsx, mobile/src/components/ReminderOptInModal.tsx, mobile/src/navigation/entryRoutes.ts]
+last_verified_date: 2026-08-13
 confidence: high
 status: current
 ---
 
 ## Summary
 
-Every notification is **local and on-device** (`expo-notifications`, plus the native alarm tiers of [[japam-alarms]]) — there is no server push and no network. Four families share one OS permission grant, and each owns an **identifier prefix** so its cancel-then-reschedule cycle can never touch another's slots: `daily-verse`, `vrat-reminder`, `festive-reminder`, and the japam alarms. Every family follows the same shape: a **pure planner** that decides what to schedule (unit-tested under `tsx --test`, `now` always parameterised) plus a **thin `expo-notifications` glue** module, armed by a headless component in `App.tsx`.
+Every notification is **local and on-device** (`expo-notifications`, plus the native alarm tiers of [[japam-alarms]]) — there is no server push and no network. Seven families share one OS permission grant, and each owns an **identifier prefix** so its cancel-then-reschedule cycle can never touch another's slots: `daily-verse`, `vrat-reminder`, `muhurat-reminder`, `festive-reminder`, `pitru-smaran-reminder`, `pitru-paksha-reminder`, and the japam alarms. Every family follows the same shape: a **pure planner** that decides what to schedule (unit-tested under `tsx --test`, `now` always parameterised) plus thin scheduling glue, armed by a headless component in `App.tsx`.
 
 ## Details
 
@@ -23,6 +23,8 @@ Every notification is **local and on-device** (`expo-notifications`, plus the na
 
 **Sadhana reminders** (`sadhanaReminderPure.ts` / `sadhanaScheduler.ts`, armed by `<SadhanaReminderScheduler>`) — a daily nudge per reminder-enabled sankalp at the shared reminder time, `SADHANA_WINDOW_DAYS = min(9, 30)`, `SADHANA_REMINDER_CAP = 18`, priority-first capping.
 
+**Muhurat reminders** (`muhuratReminderPure.ts` / `muhuratScheduler.ts`, armed by `<MuhuratReminderScheduler>`) — **opt-in**, derived from `MuhuratFollowContext` (PRD-16 §6.7). The vrat family's structural twin with three deliberate differences, all forced by the fact that a muhurat follow is a **dated one-shot** rather than a recurring rule: the cap (`MUHURAT_REMINDER_CAP = 8`) ranks **soonest-first** instead of by follow order; the day-of notice is **clamped** to `windowStart − 30 min` by `clampDayOf`, because a muhurat is a time and the shipped 07:00 default would arrive after an early window has opened; and an `excluded` verdict schedules **nothing** (a location change can re-grade a followed day, and a reminder for a day the engine now rejects is worse than silence). `ADVANCE_HOUR` is imported from `vratReminderPure`, not re-declared. **The window is never persisted with the follow** — the scheduler re-derives it from `panchangDayStore` and re-arms on location/calendar-system change; this is the one family whose plan depends on the panchang location, so it must stay inside `PanchangLocationProvider` in `App.tsx`. A tap deep-links to `MuhuratDayDetail {occasionId, dateMs}` with the date in the payload (an advance notice is read on a different day than it names) and validates the occasion against `EVENT_RULES` so a stale notice cannot open a retired screen.
+
 **Festive reminders** (`festiveReminders.ts` catalog + `festiveReminderPure.ts` planner + `festiveScheduler.ts` glue, armed by `<FestiveReminderScheduler>`) — the **default-ON** counterpart to the opt-in vrat family: the user follows nothing and configures nothing. The catalog also drives two Home surfaces: the FOR TODAY row's festival tier and the **Festive Toran** (`components/FestiveToran.tsx`, design.md §55) — a garland + greeting chip Home hangs under the wordmark on those 18 days, resolved by `getTodayFestival(date)` in `data/discoveryMeta.ts` (first observance in the catalog, same order as the row's tier 1, so all three surfaces name the same festival).
 - `festiveReminders.ts` is a **data-only** curated catalog of 18 famous festivals (no imports from `festivals.ts`/`texts.ts`, which is what keeps the planner pure). Each entry pins an `ObservanceRule.id`, a hand-authored Devanagari greeting, an invitation naming a specific text, and that text's `LibraryEntry.id`.
 - **One notification, on the day, at 07:30 local** (`FESTIVE_HOUR`/`FESTIVE_MINUTE`) — half an hour after the 07:00 daily-verse default so the two never collide. No advance notice: that is what following a vrat buys.
@@ -32,31 +34,37 @@ Every notification is **local and on-device** (`expo-notifications`, plus the na
 - Dates come from `getNextOccurrences` **without a location**, i.e. the bundled precomputed table (same choice vrat reminders make); the lookup runs behind `InteractionManager`.
 - Own Android channel `festive-reminders` (importance DEFAULT), so festival pushes can be muted separately from the daily verse.
 
+**Pitru Smaran reminders** (`pitruSmaranReminderPure.ts` / `pitruSmaranScheduler.ts`, armed by `<PitruSmaranReminderScheduler>`) — **default on when a new person is deliberately saved**. Save requests the shared OS grant when needed and persists `reminderEnabled: true` only after success; a refusal still saves the entry with the preference honestly off. Old entries with an omitted flag remain off, and the detail switch controls each person independently. Each next annual occurrence yields an evening-before notice at 18:00 and a day-of notice at 07:00, soonest-first under `PITRU_SMARAN_REMINDER_CAP = 8`. Payloads carry only the private entry id, occurrence key, and slot kind, and tapping opens that person's local detail.
+
+**Pitru Paksha reminders** (`pitruPakshaReminderPure.ts` / `pitruPakshaScheduler.ts`, reconciled alongside `<FestiveReminderScheduler>`) — the **default-ON public-season** counterpart. When festive reminders are enabled, the current and next Pitru Paksha windows produce two notices per year: 18:00 on the eve of Bhadrapada Purnima and 18:00 on the eve of Sarvapitri Amavasya. They share the existing `festive-reminders` Android channel but retain their own `pitru-paksha-reminder` identifier prefix. No family entry, name, or other private Smaran data enters these public-season payloads; tapping opens the Pitru Paksha overview.
+
 **Deep links** (`deepLink.ts`): a module-level `navigationRef` lets `handleNotificationResponse` dispatch from outside the React tree; `App.tsx` wires both the cold-start response and the live listener. Routing is by payload `type`:
 - `daily-verse` → the **Daily Bhakti tab** carrying the baked verse identity — deliberately *not* a reader.
 - `vrat-reminder` → `PanchangTab → ObservanceDetail`.
 - `festive-reminder` → **`HomeTab → Home`**; the reading the message named is the first card in Home's FOR TODAY row, which leads with the festival's content on a festival day. Gated on `ruleId` only — `sourceId` rides along as a record but no longer drives routing.
 - `sadhana-reminder` → `HomeTab → RoutineToday`.
+- `pitru-smaran-reminder` → `MoreTab → PitruSmaranDetail` for the payload's local entry id.
+- `pitru-paksha-reminder` → `MoreTab → PitruPakshaOverview` for the payload's year.
 - japam alarm → `HomeTab → JapamCounter` with `autoPlay: true`.
 
 **Settings** (`screens/ReminderSettingsScreen.tsx`, More tab → Reminders): a Daily-verse toggle card (with the shared permission banner), a Times card of `TimeStepper` rows, and a Festival-reminders toggle card whose subtitle reads the festival count and fire time off the planner constants. `ReminderOptInModal` is the once-only, third-app-open ask for the daily verse.
 
 **Testing** — `src/notifications` is deliberately **excluded from Jest**; pure suites run under `tsx --test` via `npm run test:data`, and anything importing `expo-notifications` or `@react-navigation/native` uses the `.jest.test.ts(x)` suffix instead.
-- tsx: `scheduler.test.ts`, `reminderVerseLookup.test.ts`, `vratReminderPure.test.ts`, `sadhanaReminder.test.ts`, `japamAlarms.test.ts`, `festiveReminderPure.test.ts`, `festiveReminders.test.ts`, `dayAngaResolver.jest.test.ts`.
-- Jest: `deepLink.jest.test.tsx`, `festiveScheduler.jest.test.ts`, `japamAlarm*.jest.test.ts`, `androidAlarmPolicy.jest.test.ts`.
+- tsx: `scheduler.test.ts`, `reminderVerseLookup.test.ts`, `vratReminderPure.test.ts`, `sadhanaReminder.test.ts`, `japamAlarms.test.ts`, `festiveReminderPure.test.ts`, `festiveReminders.test.ts`, `pitruReminderPure.test.ts`, `dayAngaResolver.jest.test.ts`.
+- Jest: `deepLink.jest.test.tsx`, `festiveScheduler.jest.test.ts`, `pitruSchedulers.jest.test.ts`, `japamAlarm*.jest.test.ts`, `androidAlarmPolicy.jest.test.ts`.
 - `festiveReminders.test.ts` is the seam that holds the data-only catalog to the code it names: it fails if a `ruleId` leaves `OBSERVANCE_RULES`, stops being `default`-visibility, resolves to no upcoming date, or if a `sourceId` is not a library entry with a `buildEntryStartTarget` route.
 
 ## Dependencies
 
 - [[overview]] — `NotificationPreferencesProvider` in `App.tsx`; the headless schedulers mount inside it.
 - [[panchang]] — observance dates (`resolveObservancesForYear`, `getNextOccurrences`) and the sunrise tithi behind daily-verse titles.
-- [[japam-alarms]] — the fourth family; native AlarmKit/AlarmManager tiers plus the expo fallback.
+- [[japam-alarms]] — the native AlarmKit/AlarmManager family plus the expo fallback.
 - [[languages]] — `contentByLang` / `verseLinesByLang` render every notification in the reading language.
 - `navigation/entryRoutes.ts` — `buildEntryStartTarget` is the single "open this content" table the festive deep link reuses.
 
 ## Gotchas
 
-- **The four families are collectively over-subscribed against iOS's 64 pending limit** in the worst case: daily verse alone can claim up to `IOS_PENDING_CAP` (4 times × 16 days), plus vrat 24 + sadhana 18 + festive 8. Each family's own cap is honest; the *sum* is not. Anything past 64 is silently discarded by the OS, and the festive scheduler re-arms last. Audit total pending usage before raising any cap.
+- **The six families are collectively over-subscribed against iOS's 64 pending limit** in the worst case: daily verse alone can claim up to `IOS_PENDING_CAP` (4 times × 16 days), plus vrat 24 + sadhana 18 + festive 8 + personal Pitru 8 + up to four Pitru Paksha season notices. Each family's own cap is honest; the *sum* is not. Anything past 64 is silently discarded by the OS, and the festive/Pitru Paksha scheduler re-arms last. Audit total pending usage before raising any cap.
 - **Planners are pure; only the glue touches the clock or the OS.** No `Date.now()`, no `expo-notifications`, no astronomy in `pure.ts` / `*ReminderPure.ts`. `now` is a parameter everywhere so the suites are deterministic.
 - **Content is baked at schedule time, not at fire time** — up to 30 days ahead for the daily verse and **120 for festive reminders**. Anything that changes the copy (reading language, panchang resolution, a pref) must trigger a re-arm, which is why every headless scheduler lists `lang` in its effect deps. It also means a queued notification can outlive an OTA content change: validate ids from a payload (`findVerse`, `findJapamMantra`, the festive `library.find`) instead of trusting them.
 - **The festive catalog must never point at content it cannot open.** A festival with no honest match is left out, not aimed at a loosely-related text — the message's whole promise is that the named reading is one tap away. `festiveReminders.test.ts` enforces this.

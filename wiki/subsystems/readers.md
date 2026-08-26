@@ -1,7 +1,7 @@
 ---
 title: Readers
 type: subsystem
-sources: [mobile/src/components/ReaderHeader.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, RULEBOOK.md]
+sources: [mobile/src/components/ReaderHeader.tsx, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, RULEBOOK.md]
 last_verified_date: 2026-08-01
 confidence: high
 status: current
@@ -35,6 +35,12 @@ parse the complete epic during startup; the platform bundle still carries every 
 - The top bar is `ReaderHeader` (`variant="reader"`; chapters/index screens pass
   `variant="index"` for the larger 22/20 title). Screens pass `title` / `onBack` / `right` and
   never geometry — RULEBOOK §3 makes a hand-rolled `topBar` block a hard reject.
+- **Read aloud** (July 2026, `GitaReaderScreen` + `ChalisaReaderScreen` only): the screen calls
+  `useReaderReadAloud({sourceId, data, offset, verseCount, currentIndex, listRef})` — every
+  argument already exists in every reader — and renders `ReadAloudButton` in the `right` slot after
+  the page counter. The hook builds the controller session (`chunksFor` returns `null` for a
+  transition sentinel, so speech stops at a chapter boundary rather than crossing it), owns the
+  swipe-vs-auto-advance latch, and stops on unmount. See [[audio]].
 
 **Chapter auto-advance (the cross-subsection navigation contract).** A reader whose text has
 > 1 subsection must let the user swipe across chapter/kāṇḍa boundaries. The mechanism:
@@ -103,3 +109,9 @@ transition page). `gitaAutoAdvance.test.tsx` covers the Gita swipe path Maestro 
   pattern or it will dead-end. The test auto-covers it once its manifest length exceeds 1.
 - **`navigation.replace`, not `push`** — chapters swap in place; the back button returns to the
   chapter list, not the previous chapter.
+- **Read-aloud is deliberately absent from 18 readers, and that is invisible.** `useReadAloud()` is
+  a lenient hook whose default renders no control, which is what keeps every untouched reader suite
+  green without a provider. So "the button isn't showing" is indistinguishable from "the provider
+  isn't wired" — `src/screens/__tests__/readerReadAloud.test.tsx` exists precisely to catch the
+  latter, and a reader gaining read-aloud must be added to its table (same rule as
+  `readerAutoAdvance.test.tsx`). See [[audio]] for the platform traps.

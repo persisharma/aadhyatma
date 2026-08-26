@@ -15,6 +15,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
+import CalendarDatePicker from '@/components/CalendarDatePicker';
+import ClockTimePicker from '@/components/ClockTimePicker';
 import KundaliOverview from '@/components/KundaliOverview';
 import TextField from '@/components/TextField';
 import JyotishPracticeCard from '@/components/JyotishPracticeCard';
@@ -40,11 +42,13 @@ import {
 import { CITIES, cityMatchesQuery, getCityById, type City } from '@/panchang/locations';
 import { NAKSHATRA_NAMES_EN, NAKSHATRA_NAMES_HI } from '@/panchang/names';
 import {
+  MAX_PEOPLE,
   useKundali,
   validateBirthProfile,
   type BirthProfile,
   type BirthProfileErrors,
 } from '@/panchang/useKundali';
+import PersonChips from '@/components/PersonChips';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang } from '@/utils/localize';
@@ -64,6 +68,9 @@ const EMPTY_PROFILE: BirthProfile = {
   time: '',
   cityId: '',
 };
+
+const TIME_PATTERN = /^([01]\d|2[0-3]):([0-5]\d)$/;
+const DEFAULT_BIRTH_TIME = '06:00';
 
 function formatDegrees(value: number): string {
   const degrees = Math.floor(value);
@@ -95,16 +102,15 @@ function formatBirthTime(value: string): string {
 }
 
 function formatDuration(milliseconds: number, roundUp = false): string {
-  const totalMonths = Math.max(
-    0,
-    roundUp
-      ? Math.ceil(milliseconds / (365.2425 / 12 * 86_400_000))
-      : Math.floor(milliseconds / (365.2425 / 12 * 86_400_000))
-  );
+  const round = roundUp ? Math.ceil : Math.floor;
+  const totalMonths = Math.max(0, round(milliseconds / (365.2425 / 12 * 86_400_000)));
   const years = Math.floor(totalMonths / 12);
   const months = totalMonths % 12;
   if (years && months) return `${years} y ${months} m`;
   if (years) return `${years} y`;
+  // Antardashas are as short as ~3.6 months, so their edges need day
+  // granularity — "0 m elapsed" would read as a stopped clock.
+  if (!months) return `${Math.max(0, round(milliseconds / 86_400_000))} d`;
   return `${months} m`;
 }
 
@@ -122,12 +128,21 @@ export default function KundaliScreen({ navigation, route }: Props) {
     chart,
     hydrated,
     loadState,
+    people,
+    activeId,
+    canAddPerson,
     saveProfile,
     clearProfile,
+    selectPerson,
+    addPerson,
   } = useKundali();
   const [draft, setDraft] = useState<BirthProfile>(EMPTY_PROFILE);
   const [errors, setErrors] = useState<BirthProfileErrors>({});
   const [editing, setEditing] = useState(true);
+  // A SECOND, additive mode beside `editing`: entering a new person must not
+  // write over the person currently on screen, so the create form is its own
+  // state rather than "edit with the fields blanked".
+  const [creating, setCreating] = useState(route.params?.newPerson === true);
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState('');
   const [activeTab, setActiveTab] = useState<KundaliResultTab>('overview');
@@ -138,6 +153,9 @@ export default function KundaliScreen({ navigation, route }: Props) {
 
   useEffect(() => {
     if (!hydrated) return;
+    // While creating, the draft belongs to nobody yet — the active person's
+    // details must not be copied into it.
+    if (creating) return;
     if (profile) {
       setDraft(profile);
       setEditing(openInEditMode.current);
@@ -147,7 +165,7 @@ export default function KundaliScreen({ navigation, route }: Props) {
     } else if (loadState === 'error') {
       setEditing(false);
     }
-  }, [hydrated, loadState, profile]);
+  }, [creating, hydrated, loadState, profile]);
 
   useEffect(() => {
     if (!hydrated || editing || !chart) return;
@@ -162,7 +180,24 @@ export default function KundaliScreen({ navigation, route }: Props) {
     setSaveError('');
     setSaving(true);
     try {
-      await saveProfile(draft);
+      if (creating) {
+        const added = await addPerson(draft);
+        // At the cap the roster refuses the add; say so instead of quietly
+        // dropping the details the user just entered.
+        if (!added) {
+          setSaveError(
+            contentByLang(
+              lang,
+              `${MAX_PEOPLE} लोग तक सहेजे जा सकते हैं। नया जोड़ने के लिए किसी को हटाएँ।`,
+              `Up to ${MAX_PEOPLE} people can be saved. Remove someone to add another.`
+            )
+          );
+          return;
+        }
+        setCreating(false);
+      } else {
+        await saveProfile(draft);
+      }
       setActiveTab('overview');
       setEditing(false);
     } catch {
@@ -187,13 +222,57 @@ export default function KundaliScreen({ navigation, route }: Props) {
     setActiveTab(tab);
   };
 
+  const beginNewPerson = () => {
+    Keyboard.dismiss();
+    setCreating(true);
+    setEditing(false);
+    setDraft(EMPTY_PROFILE);
+    setErrors({});
+    setSaveError('');
+  };
+
+  const cancelNewPerson = () => {
+    setCreating(false);
+    setDraft(profile ?? EMPTY_PROFILE);
+    setErrors({});
+    setSaveError('');
+  };
+
+  const handleSelectPerson = async (id: string) => {
+    if (id === activeId && !creating) return;
+    setCreating(false);
+    setErrors({});
+    setSaveError('');
+    setActiveTab('overview');
+    setEditing(false);
+    try {
+      await selectPerson(id);
+    } catch {
+      setSaveError(
+        contentByLang(
+          lang,
+          'व्यक्ति नहीं बदला जा सका। कृपया फिर प्रयास करें।',
+          'The person could not be switched. Please try again.'
+        )
+      );
+    }
+  };
+
   const startOver = async () => {
+    // Removing one of several people returns to the NEXT person's chart; only
+    // removing the last one empties the screen back to the blank form.
+    const wasLast = people.length <= 1;
     try {
       await clearProfile();
-      setDraft(EMPTY_PROFILE);
       setActiveTab('overview');
       setSaveError('');
-      setEditing(true);
+      setCreating(false);
+      if (wasLast) {
+        setDraft(EMPTY_PROFILE);
+        setEditing(true);
+      } else {
+        setEditing(false);
+      }
     } catch {
       setSaveError(
         contentByLang(
@@ -240,7 +319,7 @@ export default function KundaliScreen({ navigation, route }: Props) {
               {contentByLang(lang, 'लाहिरी · पूर्ण राशि भाव · IST', 'Lahiri · Whole-sign houses · IST')}
             </Text>
           </View>
-          {chart && profile && !editing ? (
+          {chart && profile && !editing && !creating ? (
             <View style={styles.headerActions}>
               <Pressable
                 onPress={() => setShareVisible(true)}
@@ -291,6 +370,23 @@ export default function KundaliScreen({ navigation, route }: Props) {
             keyboardDismissMode="on-drag"
             showsVerticalScrollIndicator={false}
           >
+            {/* The switcher sits above every state, so who a chart belongs to is
+                never a guess — and adding a second person is one tap from the
+                first person's own chart (design.md §51a). */}
+            <PersonChips
+              people={people}
+              activeId={creating ? null : activeId}
+              lang={lang}
+              onSelect={handleSelectPerson}
+              onAdd={beginNewPerson}
+              canAdd={canAddPerson}
+              labelHi="किसकी कुंडली"
+              labelEn="Whose chart"
+              selectAccessibilityLabel={(label) => `Show Kundali for ${label}`}
+              addAccessibilityLabel="Add another person"
+              fullMessageHi={`${MAX_PEOPLE} लोग तक सहेजे जा सकते हैं। नया जोड़ने के लिए किसी को हटाएँ।`}
+              fullMessageEn={`Up to ${MAX_PEOPLE} people can be saved. Remove someone to add another.`}
+            />
             {loadState === 'error' && !editing ? (
               <JyotishStateCard
                 kind="error"
@@ -304,21 +400,22 @@ export default function KundaliScreen({ navigation, route }: Props) {
                 actionAccessibilityLabel="Re-enter birth details"
                 onAction={startOver}
               />
-            ) : editing || !chart ? (
+            ) : creating || editing || !chart ? (
               <BirthInput
                 draft={draft}
                 errors={errors}
                 saving={saving}
                 saveError={saveError}
                 lang={lang}
+                creating={creating}
                 onChange={setDraft}
                 onChooseCity={() => {
                   Keyboard.dismiss();
                   setCityPickerVisible(true);
                 }}
                 onGenerate={handleGenerate}
-                onCancel={chart ? () => setEditing(false) : undefined}
-                onDelete={profile ? startOver : undefined}
+                onCancel={creating ? cancelNewPerson : chart ? () => setEditing(false) : undefined}
+                onDelete={!creating && profile ? startOver : undefined}
                 colors={colors}
                 typography={typography}
                 radii={radii}
@@ -388,6 +485,7 @@ function BirthInput({
   saving,
   saveError,
   lang,
+  creating = false,
   onChange,
   onChooseCity,
   onGenerate,
@@ -403,6 +501,8 @@ function BirthInput({
   saving: boolean;
   saveError: string;
   lang: Lang;
+  /** Adding a person beside the existing ones, not editing the current one. */
+  creating?: boolean;
   onChange: (profile: BirthProfile) => void;
   onChooseCity: () => void;
   onGenerate: () => void;
@@ -414,6 +514,22 @@ function BirthInput({
   elevation: any;
 }) {
   const city = getCityById(draft.cityId);
+  const [datePickerVisible, setDatePickerVisible] = useState(false);
+  const [timeOpen, setTimeOpen] = useState(false);
+  const timeKnownValid = TIME_PATTERN.test(draft.time);
+  const openDate = () => {
+    Keyboard.dismiss();
+    setDatePickerVisible(true);
+  };
+  const openTime = () => {
+    Keyboard.dismiss();
+    if (!timeKnownValid) {
+      onChange({ ...draft, time: DEFAULT_BIRTH_TIME });
+      setTimeOpen(true);
+      return;
+    }
+    setTimeOpen((open) => !open);
+  };
   return (
     <>
       <View
@@ -434,7 +550,9 @@ function BirthInput({
             fontSize: 21,
           }}
         >
-          {contentByLang(lang, 'अपनी कुंडली बनाएँ', 'Create your Kundali')}
+          {creating
+            ? contentByLang(lang, 'नई कुंडली जोड़ें', 'Add another Kundali')
+            : contentByLang(lang, 'अपनी कुंडली बनाएँ', 'Create your Kundali')}
         </Text>
         <Text
           style={{
@@ -445,11 +563,17 @@ function BirthInput({
             marginTop: 7,
           }}
         >
-          {meaningByLang(
-            lang,
-            'सटीक समय से लग्न और भाव की गणना सबसे विश्वसनीय होती है।',
-            'An exact time gives the most reliable Lagna and house calculation.'
-          )}
+          {creating
+            ? meaningByLang(
+              lang,
+              'पहले सहेजी कुंडलियाँ यथावत रहेंगी। नाम देने से बाद में चुनना आसान होता है।',
+              'The charts you already saved stay as they are. A name makes switching easier later.'
+            )
+            : meaningByLang(
+              lang,
+              'सटीक समय से लग्न और भाव की गणना सबसे विश्वसनीय होती है।',
+              'An exact time gives the most reliable Lagna and house calculation.'
+            )}
         </Text>
       </View>
 
@@ -460,42 +584,64 @@ function BirthInput({
         accessibilityLabel="Birth name"
         value={draft.name ?? ''}
         onChangeText={(name) => onChange({ ...draft, name })}
-        placeholder="Your name"
+        placeholder={creating ? 'Name' : 'Your name'}
         autoCapitalize="words"
       />
 
       <View style={styles.inputRow}>
         <View style={{ flex: 1 }}>
           <FieldLabel hi="जन्म तिथि" en="Birth date" lang={lang} colors={colors} typography={typography} />
-          <TextField
-            variant="form"
+          <Pressable
             testID="kundali-date-input"
-            accessibilityLabel="Birth date YYYY-MM-DD"
-            value={draft.date}
-            onChangeText={(date) => onChange({ ...draft, date })}
-            placeholder="YYYY-MM-DD"
-            keyboardType="numbers-and-punctuation"
-            maxLength={10}
-            style={errors.date ? { borderColor: colors.avoid } : undefined}
-          />
+            onPress={openDate}
+            accessibilityRole="button"
+            accessibilityLabel="Birth date"
+            style={({ pressed }) => [
+              styles.pickerField,
+              { backgroundColor: colors.parchmentSoft, borderColor: errors.date ? colors.avoid : colors.divider, borderRadius: radii.md },
+              pressed && { opacity: 0.7 },
+            ]}
+          >
+            <Text style={{ color: draft.date ? colors.ink : colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 15 }}>
+              {draft.date ? formatBirthDate(draft.date) : contentByLang(lang, 'तिथि', 'Select')}
+            </Text>
+            <Text style={{ color: colors.saffronDeep, fontSize: 16 }}>▾</Text>
+          </Pressable>
           {errors.date && <Text style={[styles.error, { color: colors.avoidDeep }]}>{errors.date}</Text>}
         </View>
-        <View style={{ flex: 0.72 }}>
+        <View style={{ flex: 0.82 }}>
           <FieldLabel hi="समय" en="Time" lang={lang} colors={colors} typography={typography} />
-          <TextField
-            variant="form"
+          <Pressable
             testID="kundali-time-input"
-            accessibilityLabel="Birth time HH:mm"
-            value={draft.time}
-            onChangeText={(time) => onChange({ ...draft, time })}
-            placeholder="HH:mm"
-            keyboardType="numbers-and-punctuation"
-            maxLength={5}
-            style={errors.time ? { borderColor: colors.avoid } : undefined}
-          />
+            onPress={openTime}
+            accessibilityRole="button"
+            accessibilityLabel="Birth time"
+            style={({ pressed }) => [
+              styles.pickerField,
+              { backgroundColor: colors.parchmentSoft, borderColor: errors.time ? colors.avoid : colors.divider, borderRadius: radii.md },
+              pressed && { opacity: 0.7 },
+            ]}
+          >
+            <Text style={{ color: timeKnownValid ? colors.ink : colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 15 }}>
+              {timeKnownValid ? formatBirthTime(draft.time) : contentByLang(lang, 'समय', 'Select')}
+            </Text>
+            <Text style={{ color: colors.saffronDeep, fontSize: 16 }}>{timeOpen ? '▴' : '▾'}</Text>
+          </Pressable>
           {errors.time && <Text style={[styles.error, { color: colors.avoidDeep }]}>{errors.time}</Text>}
         </View>
       </View>
+      {timeOpen && timeKnownValid && (
+        <View style={styles.timePickerHost}>
+          <ClockTimePicker value={draft.time} onChange={(time) => onChange({ ...draft, time })} label="Birth time" />
+        </View>
+      )}
+      <CalendarDatePicker
+        visible={datePickerVisible}
+        value={draft.date}
+        lang={lang}
+        onSelect={(date) => onChange({ ...draft, date })}
+        onClose={() => setDatePickerVisible(false)}
+      />
 
       <FieldLabel hi="जन्म नगर" en="Birth city" lang={lang} colors={colors} typography={typography} />
       <Pressable
@@ -581,21 +727,6 @@ function BirthInput({
           </Text>
         )}
       </Pressable>
-      <Text
-        style={{
-          color: colors.inkMuted,
-          fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-          fontSize: 12,
-          textAlign: 'center',
-          marginTop: 9,
-        }}
-      >
-        {contentByLang(
-          lang,
-          'जन्म विवरण इसी उपकरण पर रहते हैं।',
-          'Your birth details stay on this device.'
-        )}
-      </Text>
       {!!saveError && (
         <Text
           accessibilityRole="alert"
@@ -688,22 +819,19 @@ function KundaliResult({
   const city = getCityById(profile.cityId)!;
   const now = new Date();
   const currentDasha = getCurrentDasha(chart, now);
-  const currentElapsed = currentDasha
-    ? now.getTime() - currentDasha.maha.start.getTime()
-    : 0;
-  const currentRemaining = currentDasha
-    ? currentDasha.maha.end.getTime() - now.getTime()
-    : 0;
-  const currentProgress = currentDasha
-    ? Math.max(
-      0,
-      Math.min(
-        1,
-        currentElapsed
-          / (currentDasha.maha.end.getTime() - currentDasha.maha.start.getTime())
-      )
-    )
-    : 0;
+  // Both nested periods are running at once, so the card shows each one —
+  // Mahadasha and Antardasha — with its own dates, progress bar and
+  // elapsed/remaining readings; neither level speaks for the other. The
+  // Antardasha entry is absent only when float accumulation in the engine
+  // leaves `now` outside all nine sub-periods at a boundary.
+  const currentWindows = currentDasha
+    ? [
+      { key: 'maha', labelHi: 'महादशा', labelEn: 'Mahadasha', period: currentDasha.maha },
+      ...(currentDasha.antar
+        ? [{ key: 'antar', labelHi: 'अन्तर्दशा', labelEn: 'Antardasha', period: currentDasha.antar }]
+        : []),
+    ]
+    : [];
   return (
     <>
       <View
@@ -908,9 +1036,8 @@ function KundaliResult({
                 currentDasha.antar
                   ? `${GRAHA_NAMES_EN[currentDasha.antar.lord]} Antardasha`
                   : null,
-                `${formatPeriodDate(currentDasha.maha.start)} to ${formatPeriodDate(currentDasha.maha.end)}`,
-                `${formatDuration(currentElapsed)} elapsed`,
-                `${formatDuration(currentRemaining, true)} left`,
+                ...currentWindows.map((window) =>
+                  `${window.labelEn} ${formatPeriodDate(window.period.start)} to ${formatPeriodDate(window.period.end)}, ${formatDuration(now.getTime() - window.period.start.getTime())} elapsed, ${formatDuration(window.period.end.getTime() - now.getTime(), true)} left`),
               ]
                 .filter(Boolean)
                 .join(', ')}
@@ -941,41 +1068,65 @@ function KundaliResult({
                   )} ${contentByLang(lang, 'अन्तर्दशा', 'Antardasha')}`
                   : ''}
               </Text>
-              <Text style={[styles.caption, { color: colors.inkMuted, marginTop: 4 }]}>
-                {formatPeriodDate(currentDasha.maha.start)} — {formatPeriodDate(currentDasha.maha.end)}
+              {currentWindows.map((window) => {
+                const elapsed = now.getTime() - window.period.start.getTime();
+                const remaining = window.period.end.getTime() - now.getTime();
+                const progress = Math.max(
+                  0,
+                  Math.min(
+                    1,
+                    elapsed
+                      / (window.period.end.getTime() - window.period.start.getTime())
+                  )
+                );
+                return (
+                  <View key={window.key} style={{ marginTop: window.key === 'maha' ? 4 : 10 }}>
+                    <Text style={[styles.caption, { color: colors.inkMuted }]}>
+                      {contentByLang(lang, window.labelHi, window.labelEn)}{' '}
+                      {formatPeriodDate(window.period.start)} — {formatPeriodDate(window.period.end)}
+                    </Text>
+                    <View
+                      testID={`dasha-progress-${window.key}`}
+                      accessibilityRole="progressbar"
+                      accessibilityValue={{
+                        min: 0,
+                        max: 100,
+                        now: Math.round(progress * 100),
+                      }}
+                      style={[
+                        styles.progressTrack,
+                        { backgroundColor: colors.divider, borderRadius: radii.pill },
+                      ]}
+                    >
+                      <View
+                        style={[
+                          styles.progressFill,
+                          {
+                            width: `${progress * 100}%`,
+                            backgroundColor: colors.saffron,
+                            borderRadius: radii.pill,
+                          },
+                        ]}
+                      />
+                    </View>
+                    <View style={styles.progressCaptions}>
+                      <Text style={[styles.progressCaption, { color: colors.inkMuted }]}>
+                        {formatDuration(elapsed)} {contentByLang(lang, 'पूरे', 'elapsed')}
+                      </Text>
+                      <Text style={[styles.progressCaption, { color: colors.inkMuted }]}>
+                        {formatDuration(remaining, true)} {contentByLang(lang, 'शेष', 'left')}
+                      </Text>
+                    </View>
+                  </View>
+                );
+              })}
+              <Text style={[styles.caption, { color: colors.inkMuted, marginTop: 10 }]}>
+                {contentByLang(
+                  lang,
+                  'इस महादशा की नौ अन्तर्दशाएँ',
+                  'The nine Antardashas within this Mahadasha'
+                )}
               </Text>
-              <View
-                testID="dasha-progress"
-                accessibilityRole="progressbar"
-                accessibilityValue={{
-                  min: 0,
-                  max: 100,
-                  now: Math.round(currentProgress * 100),
-                }}
-                style={[
-                  styles.progressTrack,
-                  { backgroundColor: colors.divider, borderRadius: radii.pill },
-                ]}
-              >
-                <View
-                  style={[
-                    styles.progressFill,
-                    {
-                      width: `${currentProgress * 100}%`,
-                      backgroundColor: colors.saffron,
-                      borderRadius: radii.pill,
-                    },
-                  ]}
-                />
-              </View>
-              <View style={styles.progressCaptions}>
-                <Text style={[styles.progressCaption, { color: colors.inkMuted }]}>
-                  {formatDuration(currentElapsed)} {contentByLang(lang, 'पूरे', 'elapsed')}
-                </Text>
-                <Text style={[styles.progressCaption, { color: colors.inkMuted }]}>
-                  {formatDuration(currentRemaining, true)} {contentByLang(lang, 'शेष', 'left')}
-                </Text>
-              </View>
               <View
                 accessibilityLabel="Antardasha timeline"
                 style={styles.antarChips}
@@ -1015,6 +1166,14 @@ function KundaliResult({
               </View>
             </View>
           )}
+          <Text
+            style={[
+              styles.eyebrowText,
+              { color: colors.saffronDeep, marginTop: 18, marginBottom: 8 },
+            ]}
+          >
+            {contentByLang(lang, 'महादशा समयरेखा', 'MAHADASHA TIMELINE')}
+          </Text>
           <View accessibilityLabel="Full Mahadasha timeline">
             {chart.vimshottari.map((period, index) => {
               const selected = period === currentDasha?.maha;
@@ -1285,6 +1444,8 @@ const styles = StyleSheet.create({
   actionText: { fontFamily: fontFamilies.interSemiBold, fontSize: 12 },
   heroCard: { borderWidth: 1, padding: 18 },
   inputRow: { flexDirection: 'row', gap: 12 },
+  pickerField: { minHeight: 48, borderWidth: 1, paddingHorizontal: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  timePickerHost: { marginTop: 10, alignItems: 'flex-start' },
   error: { fontFamily: fontFamilies.inter, fontSize: 12, marginTop: 4 },
   saveError: { fontFamily: fontFamilies.inter, fontSize: 12, lineHeight: 17, marginTop: 8, textAlign: 'center' },
   cityButton: { minHeight: 56, borderWidth: 1, paddingHorizontal: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },

@@ -1,9 +1,12 @@
+import type { OccasionId } from '@/panchang/eventMuhurat';
 import type { NavigatorScreenParams } from '@react-navigation/native';
 import type { ContentCategory, Deity } from '@/data/texts';
 import type { PurposeId } from '@/data/purposes';
 
 export type TabParamList = {
-  HomeTab: undefined;
+  // Nested-navigator params so cross-tab jumps (e.g. Pitru Smaran's गीता पाठ
+  // links into the Gita reader) are type-checked.
+  HomeTab: NavigatorScreenParams<HomeStackParamList> | undefined;
   DailyBhaktiTab: { sourceId?: string; chapter?: number; verseIndex?: number } | undefined;
   // Nested-navigator params so cross-tab jumps like
   // navigate('PanchangTab', { screen: 'ObservanceList', params: {...}, initial: false })
@@ -11,10 +14,34 @@ export type TabParamList = {
   PanchangTab: NavigatorScreenParams<PanchangStackParamList> | undefined;
   // Dedicated audio library + media player.
   AudioTab: undefined;
-  MoreTab: undefined;
+  // Nested params typed so the Panchang day chip can deep-link to a Pitru Smaran
+  // detail (PRD-17) without an untyped navigator cast.
+  MoreTab: NavigatorScreenParams<MoreStackParamList> | undefined;
 };
 
-export type HomeStackParamList = {
+/**
+ * Guided household flows (PRD-19). `dateMs` is the festival or personal-tithi
+ * occurrence the vidhi was opened for — the samagri checklist persists per date.
+ *
+ * These three routes are registered on the Home, Panchang and More stacks.
+ * This shared type is the single source of truth for their params. The
+ * duplication is deliberate: a vidhi journey has doors on three stacks (Home's
+ * DISCOVER card, search rows and routine items; Panchang's Vrat & Parv tile,
+ * day pill and observance detail; More's Pitru Smaran doors), and a cross-tab
+ * `navigate` would leave back
+ * popping to whichever tab root hosted the screen instead of the surface the
+ * user actually came from. Registering the flow in all three stacks lets every door
+ * push in place, so back always retraces the journey.
+ */
+export type VidhiStackParamList = {
+  VidhiCatalog: undefined;
+  VidhiDetail: { vidhiId: string; dateMs?: number };
+  VidhiConduct: { vidhiId: string; dateMs?: number; initialStep?: number };
+};
+
+export type GitaReaderParams = { chapter: number; initialIndex?: number };
+
+export type HomeStackParamList = VidhiStackParamList & {
   Home: undefined;
   Search: undefined;
   CategoryList: { categoryId: ContentCategory };
@@ -29,7 +56,7 @@ export type HomeStackParamList = {
   KavachamReader: { initialIndex?: number; kavachamId?: string } | undefined;
   StutiReader: { initialIndex?: number; stutiId?: string } | undefined;
   GitaChapters: undefined;
-  GitaReader: { chapter: number; initialIndex?: number };
+  GitaReader: GitaReaderParams;
   SundarkandChapters: undefined;
   SundarkandReader: { chapter: number; initialIndex?: number };
   ShivaStrotamChapters: undefined;
@@ -73,28 +100,74 @@ export type HomeStackParamList = {
   SadhanaProgramDetail: { programId: string };
 };
 
-export type MoreStackParamList = {
+export type MoreStackParamList = VidhiStackParamList & {
   MoreHome: undefined;
   Wishlist: undefined;
   Profile: undefined;
   Reminders: undefined;
   JapamAlarms: undefined;
+  WidgetGallery: undefined;
+  // पितृ स्मरण — tithi-based family remembrance (PRD-17, same pattern as Reminders).
+  PitruSmaranList: undefined;
+  PitruSmaranEdit: { entryId?: string } | undefined;
+  PitruSmaranDetail: { entryId: string };
+  PitruPakshaOverview: undefined;
+  /** Mounted locally so a vidhi hand-off's Back button returns to conduct. */
+  GitaReader: GitaReaderParams;
 };
 
 export type PanchangHomeMode = 'calendar' | 'catalog' | 'jyotish';
 
 // Panchang tab stack — the date-first calendar, the "Vrat & Parv" catalog
 // (PRD-09), and the Jyotish tools landing (PRD-C).
-export type PanchangStackParamList = {
-  PanchangHome: { initialTab?: PanchangHomeMode } | undefined;
+export type PanchangStackParamList = VidhiStackParamList & {
+  PanchangHome:
+    | {
+        initialTab?: PanchangHomeMode;
+        dateMs?: number;
+        /** PRD-16: ring these days (epoch ms) on the month calendar for an occasion. */
+        muhuratOverlay?: { occasionId: OccasionId; days: number[] };
+      }
+    | undefined;
   ObservanceList: { category: 'vrat' | 'festival' | 'upavas' };
   ObservanceDetail: { ruleId: string };
   KathaLibrary: undefined;
   MyVrat: undefined;
   // Daily Muhurat detail (Choghadiya / Rahu Kaal / Abhijit) — PRD-14
   MuhuratDetail: { dateMs: number };
-  Kundali: { editing?: boolean } | undefined;
+  MuhuratFinder: undefined;
+  MuhuratResults: { occasionId: OccasionId };
+  MuhuratDayDetail: { occasionId: OccasionId; dateMs: number };
+  AbujhDays: undefined;
+  // `newPerson` opens the blank add-a-person form beside the people already
+  // saved (the Jyotish landing's + जोड़ें chip); `editing` still opens the
+  // ACTIVE person's details for editing.
+  Kundali: { editing?: boolean; newPerson?: boolean } | undefined;
   Rashifal: { rashiIndex?: number } | undefined;
+  GunaMilan: undefined;
+  Namkaran: undefined;
+  NamkaranResult: {
+    basis:
+      | { kind: 'birth'; date: string; time: string | null }
+      | { kind: 'manual'; nakshatraIndex: number; pada: 1 | 2 | 3 | 4 };
+    /** Set when this charana was opened from an unknown-time candidate list. It
+     * is one of the day's possibilities, not a settled answer, so the screen
+     * keeps its provenance visible and offers no exact-syllable share
+     * (PRD-17 §8.3 invariant 5). Browsing a rashi cell does NOT set it — that
+     * is a table lookup, not a claim about this child's birth. */
+    fromUnknownTime?: boolean;
+  };
+  /** Rashi-level naming detail: the 9 charanas a Moon sign holds. Its own
+   * route because both the entry browse door and the result's rashi
+   * cross-check reach it — a browse mode would strand the second caller. */
+  NamkaranRashi: {
+    rashiIndex: number;
+    /** Charana indices belonging to an unknown-time day, when the detail was
+     * opened from such a result. Those rows mark as that day's possibilities
+     * and pass `fromUnknownTime` on, so the detail cannot become a side door
+     * to an exact share the range path withholds (RULEBOOK §18.3/§18.8). */
+    dayCharanas?: readonly number[];
+  };
 };
 
 // Audio tab stack (prototype 'tab'/'both' entry styles). The now-playing

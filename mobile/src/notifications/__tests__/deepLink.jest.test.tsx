@@ -108,6 +108,56 @@ describe('handleNotificationResponse', () => {
     });
   });
 
+  test('a muhurat-reminder tap opens the followed day inside the Panchang tab', () => {
+    readySpy.mockReturnValue(true);
+
+    const dateMs = new Date(2026, 7, 17).getTime();
+    const muhurat = {
+      type: 'muhurat-reminder',
+      occasionId: 'vahan',
+      dateKey: '2026-08-17',
+      dateMs,
+      kind: 'dayOf',
+    };
+    expect(handleNotificationResponse(responseWithData(muhurat))).toBe(true);
+    expect(dispatchSpy).toHaveBeenCalledTimes(1);
+
+    // The date rides the payload: an advance notice is read on a different day
+    // than the one it points at, so "today" is the wrong thing to re-derive.
+    const action = dispatchSpy.mock.calls[0][0];
+    expect(action).toMatchObject({
+      type: 'NAVIGATE',
+      payload: {
+        name: 'PanchangTab',
+        params: { screen: 'MuhuratDayDetail', params: { occasionId: 'vahan', dateMs } },
+      },
+    });
+  });
+
+  test('ignores a muhurat-reminder for an occasion no longer in EVENT_RULES', () => {
+    readySpy.mockReturnValue(true);
+
+    // A notice armed months ago must not open a screen for a retired occasion.
+    const stale = {
+      type: 'muhurat-reminder',
+      occasionId: 'vivah',
+      dateKey: '2026-08-17',
+      dateMs: new Date(2026, 7, 17).getTime(),
+      kind: 'dayOf',
+    };
+    expect(handleNotificationResponse(responseWithData(stale))).toBe(false);
+    expect(dispatchSpy).not.toHaveBeenCalled();
+  });
+
+  test('ignores a muhurat-reminder payload missing its date', () => {
+    readySpy.mockReturnValue(true);
+
+    expect(
+      handleNotificationResponse(responseWithData({ type: 'muhurat-reminder', occasionId: 'vahan' }))
+    ).toBe(false);
+    expect(dispatchSpy).not.toHaveBeenCalled();
+  });
+
   test('ignores a vrat-reminder payload missing ruleId', () => {
     readySpy.mockReturnValue(true);
 
@@ -183,5 +233,24 @@ describe('handleNotificationResponse', () => {
       expect(handleNotificationResponse(responseWithData(data))).toBe(false);
     }
     expect(dispatchSpy).not.toHaveBeenCalled();
+  });
+
+  test('a personal Pitru Smaran reminder opens that person detail', () => {
+    readySpy.mockReturnValue(true);
+    expect(handleNotificationResponse(responseWithData({ type: 'pitru-smaran-reminder', entryId: 'father' }))).toBe(true);
+    expect(dispatchSpy.mock.calls[0][0]).toMatchObject({
+      payload: {
+        name: 'MoreTab',
+        params: { screen: 'PitruSmaranDetail', params: { entryId: 'father' }, initial: false },
+      },
+    });
+  });
+
+  test('a public Pitru Paksha reminder opens the fortnight overview', () => {
+    readySpy.mockReturnValue(true);
+    expect(handleNotificationResponse(responseWithData({ type: 'pitru-paksha-reminder', year: 2026 }))).toBe(true);
+    expect(dispatchSpy.mock.calls[0][0]).toMatchObject({
+      payload: { name: 'MoreTab', params: { screen: 'PitruPakshaOverview', initial: false } },
+    });
   });
 });

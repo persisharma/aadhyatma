@@ -28,6 +28,7 @@ type Props = {
   privacyEn: string;
   renderCard: (width: number) => React.ReactNode;
   onClose: () => void;
+  onShareSheetOpened?: () => void;
 };
 
 async function waitForLayout(): Promise<void> {
@@ -44,6 +45,7 @@ export default function JyotishShareSheet({
   privacyEn,
   renderCard,
   onClose,
+  onShareSheetOpened,
 }: Props) {
   const { width: screenWidth } = useWindowDimensions();
   const { colors, typography, spacing, radii, elevation } = useTheme();
@@ -64,6 +66,7 @@ export default function JyotishShareSheet({
         height: 1350,
       });
       if (await Sharing.isAvailableAsync()) {
+        onShareSheetOpened?.();
         await Sharing.shareAsync(uri, {
           mimeType: 'image/png',
           dialogTitle: contentByLang(lang, titleHi, titleEn),
@@ -74,7 +77,7 @@ export default function JyotishShareSheet({
     } finally {
       setBusy(false);
     }
-  }, [busy, lang, titleEn, titleHi]);
+  }, [busy, lang, onShareSheetOpened, titleEn, titleHi]);
 
   return (
     <Modal

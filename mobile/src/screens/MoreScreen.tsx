@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, Linking, Modal, Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -18,9 +18,16 @@ import { useNotificationPreferences } from '@/contexts/NotificationPreferencesCo
 import { useTour } from '@/contexts/TourContext';
 import { useRatingPrompt } from '@/contexts/RatingPromptContext';
 import { useJapamAlarms } from '@/contexts/JapamAlarmsContext';
+import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
+import { nextObservanceForEntry } from '@/panchang/pitruSmaran';
+import { shortDate } from '@/panchang/pitruSmaranDisplay';
 import { useFontScale } from '@/contexts/FontScaleContext';
 import LanguagePickerSheet from '@/components/LanguagePickerSheet';
 import ReadingSizePickerSheet, { readingSizeLabel } from '@/components/ReadingSizePickerSheet';
+import ReadAloudSettingsSheet, { readAloudRowLabel } from '@/components/ReadAloudSettingsSheet';
+import { READ_ALOUD_GLYPH } from '@/components/readAloud/ReadAloudButton';
+import { useReadAloudPrefs } from '@/contexts/ReadAloudPrefsContext';
+import { useReadAloud } from '@/contexts/ReadAloudContext';
 import { useTourTarget, scrollNodeIntoView } from '@/components/tour/tourTargets';
 import type { TimeOfDay } from '@/notifications/pure';
 import type { MoreStackParamList } from '@/navigation/types';
@@ -51,6 +58,7 @@ type RowProps = {
   stateFontFamily?: string;
   onPress: () => void;
   accessibilityLabel: string;
+  testID?: string;
   first?: boolean;
 };
 
@@ -66,11 +74,13 @@ function SettingsRow({
   stateFontFamily,
   onPress,
   accessibilityLabel,
+  testID,
   first,
 }: RowProps) {
   const { colors } = useTheme();
   return (
     <Pressable
+      testID={testID}
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel}
@@ -111,7 +121,44 @@ export default function MoreScreen({ navigation }: Props) {
   const { open: openRatingPrompt } = useRatingPrompt();
   const { alarms: japamAlarms } = useJapamAlarms();
   const { scale } = useFontScale();
+  const { prefs: readAloudPrefs } = useReadAloudPrefs();
+  const { availability: readAloudAvailability } = useReadAloud();
   const activeJapamAlarms = japamAlarms.filter((a) => a.enabled);
+  // पितृ स्मरण row state (PRD-17): count + the soonest solved date. The solve is a
+  // few memoised tithi reads per entry, run off the render path; while it is in
+  // flight (or on failure) the row shows the bare count.
+  const { entries: smaranEntries } = usePitruSmaran();
+  const [smaranSoonest, setSmaranSoonest] = useState<Date | null>(null);
+  useEffect(() => {
+    if (smaranEntries.length === 0) {
+      setSmaranSoonest(null);
+      return undefined;
+    }
+    let cancelled = false;
+    const handle = setTimeout(() => {
+      const today = new Date();
+      let soonest: Date | null = null;
+      for (const entry of smaranEntries) {
+        try {
+          const next = nextObservanceForEntry(entry, today);
+          if (next && (soonest === null || next.getTime() < soonest.getTime())) soonest = next;
+        } catch {
+          // an unsolvable entry must not break the hub row
+        }
+      }
+      if (!cancelled) setSmaranSoonest(soonest);
+    }, 0);
+    return () => {
+      cancelled = true;
+      clearTimeout(handle);
+    };
+  }, [smaranEntries]);
+  const smaranState =
+    smaranEntries.length === 0
+      ? 'NEW'
+      : smaranSoonest
+        ? `${smaranEntries.length} · ${shortDate(smaranSoonest, lang)}`
+        : `${smaranEntries.length}`;
   // Feature-tour spotlight targets (§47) — both rows sit in the "App" group,
   // below the fold on smaller devices, so each declares a reveal that scrolls
   // it on-screen before the tour measures it.
@@ -121,6 +168,7 @@ export default function MoreScreen({ navigation }: Props) {
   const [disclaimerVisible, setDisclaimerVisible] = useState(false);
   const [langSheet, setLangSheet] = useState(false);
   const [sizeSheet, setSizeSheet] = useState(false);
+  const [readAloudSheet, setReadAloudSheet] = useState(false);
 
   const hi = helpContent.hi;
   const en = helpContent.en;
@@ -262,6 +310,25 @@ export default function MoreScreen({ navigation }: Props) {
                     activeJapamAlarms.length > 0 ? `Japam alarms, ${activeJapamAlarms.length} active` : 'Japam alarms, none set'
                   }
                 />
+                {/* पितृ स्मरण (PRD-17) — private tithi remembrance; the standard
+                    More-row NEW state for one release, then count + soonest date. */}
+                <SettingsRow
+                  icon="॥"
+                  iconBg={colors.gold}
+                  iconFontFamily={typography.readerTitle.fontFamily}
+                  iconFontSize={16}
+                  label={pick(lang, { hi: 'पितृ स्मरण', en: 'Pitru Smaran', gu: 'પિતૃ સ્મરણ', kn: 'ಪಿತೃ ಸ್ಮರಣ' })}
+                  labelFontFamily={labelFont}
+                  state={smaranState}
+                  stateFontFamily={smaranEntries.length === 0 ? fontFamilies.interSemiBold : fontFamilies.inter}
+                  onPress={() => navigation.navigate('PitruSmaranList')}
+                  accessibilityLabel={
+                    smaranEntries.length > 0
+                      ? `Pitru Smaran, ${smaranEntries.length} ${smaranEntries.length === 1 ? 'entry' : 'entries'}`
+                      : 'Pitru Smaran, none saved'
+                  }
+                  testID="more-pitru-smaran"
+                />
               </View>
             </View>
 
@@ -302,6 +369,33 @@ export default function MoreScreen({ navigation }: Props) {
                     accessibilityLabel={`Reading size, ${scale === 'L' ? 'Large' : 'Standard'}`}
                   />
                 </View>
+                {/* Sits AFTER the two tour-target rows: RULEBOOK §6.1 pins the tour's
+                    final steps to Language + Reading Size, and the tour finds them by
+                    ref — so a row below them is safe as long as no tour step is added. */}
+                <SettingsRow
+                  icon={READ_ALOUD_GLYPH}
+                  iconBg={colors.saffronDeep}
+                  iconFontSize={15}
+                  label={pick(lang, { hi: 'पाठ सुनें', en: 'Read Aloud', gu: 'પાઠ સાંભળો', kn: 'ಪಾಠ ಕೇಳಿ' })}
+                  labelFontFamily={labelFont}
+                  state={readAloudRowLabel(readAloudPrefs, lang, readAloudAvailability)}
+                  stateFontFamily={chromeFont}
+                  onPress={() => setReadAloudSheet(true)}
+                  accessibilityLabel="Read aloud settings"
+                />
+                <SettingsRow
+                  icon="▦"
+                  iconBg={colors.gold}
+                  iconFontFamily={fontFamilies.interSemiBold}
+                  iconFontSize={18}
+                  label={pick(lang, { hi: 'होम-स्क्रीन विजेट', en: 'Home-Screen Widgets', gu: 'હોમ-સ્ક્રીન વિજેટ', kn: 'ಹೋಮ್-ಸ್ಕ್ರೀನ್ ವಿಜೆಟ್' })}
+                  labelFontFamily={labelFont}
+                  state="NEW"
+                  stateFontFamily={fontFamilies.interSemiBold}
+                  onPress={() => navigation.navigate('WidgetGallery')}
+                  accessibilityLabel="Home-Screen Widgets, new"
+                  testID="more-home-widgets"
+                />
                 <SettingsRow
                   icon="↗"
                   iconBg={colors.saffron}
@@ -391,6 +485,7 @@ export default function MoreScreen({ navigation }: Props) {
 
       <LanguagePickerSheet visible={langSheet} onClose={() => setLangSheet(false)} />
       <ReadingSizePickerSheet visible={sizeSheet} onClose={() => setSizeSheet(false)} />
+      <ReadAloudSettingsSheet visible={readAloudSheet} onClose={() => setReadAloudSheet(false)} />
 
       {/* Disclaimer Modal */}
       <Modal

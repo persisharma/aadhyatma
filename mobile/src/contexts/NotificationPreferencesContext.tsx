@@ -557,7 +557,11 @@ export function NotificationPreferencesProvider({
     !prefs.dailyVerseEnabled &&
     !permissionHardBlocked &&
     !osAskInFlight &&
-    meta.appOpenCount >= 3 &&
+    // First open onwards (Aug 2026): the count is bumped to ≥ 1 during the
+    // hydrate that clears `isLoading`, so this offers on the very first launch
+    // rather than waiting to "earn the ask". Kept as an explicit guard so the
+    // sheet still can't fire before the launch's open has been counted.
+    meta.appOpenCount >= 1 &&
     reofferSnoozeOver;
 
   const value = useMemo<NotificationPreferencesContextValue>(

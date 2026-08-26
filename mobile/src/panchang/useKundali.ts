@@ -1,199 +1,166 @@
+/**
+ * The React face of the birth-profile roster.
+ *
+ * `useKundali()` keeps its original single-profile shape — `profile` is the
+ * ACTIVE person and `saveProfile`/`clearProfile` still act on them — so every
+ * existing caller (Guna Milan autofill, the Jyotish landing, Rashifal) is
+ * unchanged. Multi-person surfaces additionally read `people`/`activeId` and call
+ * `selectPerson`/`addPerson`/`updatePerson`/`removePerson`.
+ *
+ * The pure model lives in `birthProfiles.ts` and persistence in
+ * `birthProfileStore.ts`; this file adds React and the active person's chart and
+ * nothing else. Chart computation is deliberately ACTIVE-ONLY — a roster of eight
+ * would otherwise run eight full Kundali solves to draw a row of chips that shows
+ * names and birth dates.
+ */
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { getCityById } from './locations';
-import { computeKundali, type KundaliChart, type KundaliInput } from './kundali';
+import { computeKundali, type KundaliChart } from './kundali';
+import {
+  activePerson as resolveActivePerson,
+  birthProfileToInput,
+  canAddPerson as rosterCanAddPerson,
+  validateBirthProfile,
+  type BirthProfile,
+  type PersonProfile,
+  type ProfileRoster,
+} from './birthProfiles';
+import {
+  LEGACY_BIRTH_PROFILE_STORAGE_KEY,
+  addPerson as storeAddPerson,
+  getRosterSnapshot,
+  loadRoster,
+  removeActivePerson,
+  removePerson as storeRemovePerson,
+  saveActivePerson,
+  selectPerson as storeSelectPerson,
+  subscribeRoster,
+  updatePerson as storeUpdatePerson,
+  type RosterState,
+} from './birthProfileStore';
 
-export type BirthProfile = {
-  name?: string;
-  date: string;
-  time: string;
-  cityId: string;
-};
+export {
+  MAX_PEOPLE,
+  birthProfileToInput,
+  parseStoredBirthProfile,
+  validateBirthProfile,
+  type BirthProfile,
+  type BirthProfileErrors,
+  type PersonProfile,
+  type ProfileRoster,
+} from './birthProfiles';
+export { BIRTH_PROFILES_STORAGE_KEY } from './birthProfileStore';
 
-export type BirthProfileErrors = Partial<Record<'date' | 'time' | 'cityId', string>>;
+/**
+ * PRD-C's single-profile key. Kept exported because it is still a real key on
+ * older devices until the one-shot migration runs, and because
+ * `derivedCacheReset` enumerates it as a NON-cache key that must never be swept.
+ */
+export const KUNDALI_PROFILE_STORAGE_KEY = LEGACY_BIRTH_PROFILE_STORAGE_KEY;
+
 export type KundaliLoadState = 'loading' | 'guest' | 'saved' | 'error';
 
-export const KUNDALI_PROFILE_STORAGE_KEY = '@vedansh:kundali-birth-profile:v1';
+/**
+ * Subscribe to the roster. Shared by `useKundali` and `useMuhuratBala` so both
+ * see a person switch on the same render, without a focus round trip.
+ */
+export function useBirthProfileRoster(): RosterState {
+  const [state, setState] = useState<RosterState>(() => getRosterSnapshot());
 
-const DATE_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/;
-const TIME_PATTERN = /^([01]\d|2[0-3]):([0-5]\d)$/;
-const IST_OFFSET_MINUTES = 330;
+  useEffect(() => {
+    const unsubscribe = subscribeRoster(setState);
+    void loadRoster().then(setState);
+    return unsubscribe;
+  }, []);
 
-export function validateBirthProfile(profile: BirthProfile): BirthProfileErrors {
-  const errors: BirthProfileErrors = {};
-  const dateMatch = DATE_PATTERN.exec(profile.date);
-  if (!dateMatch) {
-    errors.date = 'Use YYYY-MM-DD';
-  } else {
-    const [, yearText, monthText, dayText] = dateMatch;
-    const year = Number(yearText);
-    const month = Number(monthText);
-    const day = Number(dayText);
-    const check = new Date(Date.UTC(year, month - 1, day));
-    if (
-      check.getUTCFullYear() !== year
-      || check.getUTCMonth() !== month - 1
-      || check.getUTCDate() !== day
-    ) {
-      errors.date = 'Enter a valid date';
-    }
-  }
-  if (!TIME_PATTERN.test(profile.time)) errors.time = 'Use 24-hour HH:mm';
-  if (!getCityById(profile.cityId)) errors.cityId = 'Choose an Indian city';
-  return errors;
-}
-
-export function birthProfileToInput(profile: BirthProfile): KundaliInput {
-  const errors = validateBirthProfile(profile);
-  if (Object.keys(errors).length > 0) {
-    throw new Error(Object.values(errors)[0]);
-  }
-  const city = getCityById(profile.cityId)!;
-  const [year, month, day] = profile.date.split('-').map(Number);
-  const [hour, minute] = profile.time.split(':').map(Number);
-  const date = new Date(
-    Date.UTC(year, month - 1, day, hour, minute) - IST_OFFSET_MINUTES * 60_000
-  );
-  return {
-    date,
-    latitude: city.latitude,
-    longitude: city.longitude,
-    elevation: city.elevation,
-    timezone: 'Asia/Kolkata',
-  };
-}
-
-export function parseStoredBirthProfile(raw: string | null): BirthProfile | null {
-  if (!raw) return null;
-  try {
-    const candidate = JSON.parse(raw) as Partial<BirthProfile>;
-    if (
-      typeof candidate.date !== 'string'
-      || typeof candidate.time !== 'string'
-      || typeof candidate.cityId !== 'string'
-      || (candidate.name !== undefined && typeof candidate.name !== 'string')
-    ) {
-      return null;
-    }
-    const profile: BirthProfile = {
-      date: candidate.date,
-      time: candidate.time,
-      cityId: candidate.cityId,
-      ...(candidate.name?.trim() ? { name: candidate.name.trim() } : {}),
-    };
-    return Object.keys(validateBirthProfile(profile)).length === 0 ? profile : null;
-  } catch {
-    return null;
-  }
+  return state;
 }
 
 export function useKundali(): {
+  /** The active person's birth details — the shipped single-profile field. */
   profile: BirthProfile | null;
   chart: KundaliChart | null;
   hydrated: boolean;
   loadState: KundaliLoadState;
+  people: readonly PersonProfile[];
+  activeId: string | null;
+  activePerson: PersonProfile | null;
+  canAddPerson: boolean;
   saveProfile: (next: BirthProfile) => Promise<void>;
   clearProfile: () => Promise<void>;
   reloadProfile: () => Promise<void>;
+  selectPerson: (id: string) => Promise<void>;
+  addPerson: (next: BirthProfile) => Promise<PersonProfile | null>;
+  updatePerson: (id: string, next: BirthProfile) => Promise<void>;
+  removePerson: (id: string) => Promise<void>;
 } {
-  const [profile, setProfile] = useState<BirthProfile | null>(null);
-  const [hydrated, setHydrated] = useState(false);
-  const [loadError, setLoadError] = useState(false);
-
-  const reloadProfile = useCallback(async () => {
-    setHydrated(false);
-    try {
-      const raw = await AsyncStorage.getItem(KUNDALI_PROFILE_STORAGE_KEY);
-      if (!raw) {
-        setProfile(null);
-        setLoadError(false);
-        return;
-      }
-      const parsed = parseStoredBirthProfile(raw);
-      setProfile(parsed);
-      setLoadError(parsed === null);
-    } catch {
-      setProfile(null);
-      setLoadError(true);
-    } finally {
-      setHydrated(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    let active = true;
-    void (async () => {
-      try {
-        const raw = await AsyncStorage.getItem(KUNDALI_PROFILE_STORAGE_KEY);
-        if (!active) return;
-        if (!raw) {
-          setProfile(null);
-          setLoadError(false);
-          return;
-        }
-        const parsed = parseStoredBirthProfile(raw);
-        setProfile(parsed);
-        setLoadError(parsed === null);
-      } catch {
-        if (active) {
-          setProfile(null);
-          setLoadError(true);
-        }
-      } finally {
-        if (active) setHydrated(true);
-      }
-    })();
-    return () => {
-      active = false;
-    };
-  }, []);
+  const { hydrated, roster, error } = useBirthProfileRoster();
+  const person = useMemo(() => resolveActivePerson(roster), [roster]);
 
   const saveProfile = useCallback(async (next: BirthProfile) => {
     const errors = validateBirthProfile(next);
     if (Object.keys(errors).length > 0) throw new Error(Object.values(errors)[0]);
-    const normalized: BirthProfile = {
-      date: next.date,
-      time: next.time,
-      cityId: next.cityId,
-      ...(next.name?.trim() ? { name: next.name.trim() } : {}),
-    };
-    await AsyncStorage.setItem(
-      KUNDALI_PROFILE_STORAGE_KEY,
-      JSON.stringify(normalized)
-    );
-    setProfile(normalized);
-    setLoadError(false);
-    setHydrated(true);
+    await saveActivePerson(next);
+  }, []);
+
+  const addPerson = useCallback(async (next: BirthProfile) => {
+    const errors = validateBirthProfile(next);
+    if (Object.keys(errors).length > 0) throw new Error(Object.values(errors)[0]);
+    return storeAddPerson(next);
+  }, []);
+
+  const updatePerson = useCallback(async (id: string, next: BirthProfile) => {
+    const errors = validateBirthProfile(next);
+    if (Object.keys(errors).length > 0) throw new Error(Object.values(errors)[0]);
+    await storeUpdatePerson(id, next);
   }, []);
 
   const clearProfile = useCallback(async () => {
-    await AsyncStorage.removeItem(KUNDALI_PROFILE_STORAGE_KEY);
-    setProfile(null);
-    setLoadError(false);
-    setHydrated(true);
+    await removeActivePerson();
+  }, []);
+
+  const removePerson = useCallback(async (id: string) => {
+    await storeRemovePerson(id);
+  }, []);
+
+  const selectPerson = useCallback(async (id: string) => {
+    await storeSelectPerson(id);
+  }, []);
+
+  // The store publishes to every subscriber on write, so there is nothing to
+  // re-read; kept because screens still call it on focus (PanchangScreen).
+  const reloadProfile = useCallback(async () => {
+    await loadRoster();
   }, []);
 
   const chart = useMemo(
-    () => (profile ? computeKundali(birthProfileToInput(profile)) : null),
-    [profile]
+    () => (person ? computeKundali(birthProfileToInput(person)) : null),
+    [person]
   );
 
   const loadState: KundaliLoadState = !hydrated
     ? 'loading'
-    : loadError
+    : error
       ? 'error'
-      : profile
+      : person
         ? 'saved'
         : 'guest';
 
   return {
-    profile,
+    profile: person,
     chart,
     hydrated,
     loadState,
+    people: roster.people,
+    activeId: person?.id ?? null,
+    activePerson: person,
+    canAddPerson: rosterCanAddPerson(roster),
     saveProfile,
     clearProfile,
     reloadProfile,
+    selectPerson,
+    addPerson,
+    updatePerson,
+    removePerson,
   };
 }

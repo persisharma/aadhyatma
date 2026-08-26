@@ -9,13 +9,18 @@ import BackgroundLayer from '@/components/BackgroundLayer';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { library } from '@/data/texts';
-import { buildEntryStartTarget } from '@/navigation/entryRoutes';
+import { buildEntryStartTarget, moreTabTarget } from '@/navigation/entryRoutes';
 import LocationPickerModal from '@/components/LocationPickerModal';
 import MuhuratGlanceCard from '@/components/MuhuratGlanceCard';
+import MuhuratFinderDoor from '@/components/MuhuratFinderDoor';
+import PanchangTimelineRow from '@/components/PanchangTimelineRow';
+import PitruSmaranDayChip from '@/components/PitruSmaranDayChip';
+import PitruPakshaDayChip from '@/components/PitruPakshaDayChip';
 import TextField from '@/components/TextField';
 import { formatClock as formatTime12, formatEndInstant } from '@/panchang/muhuratFormat';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
-import { buildCalendarMonth, dateKey } from '@/panchang/calendarGrid';
+import { buildCalendarMonth, calendarWeeks, dateKey } from '@/panchang/calendarGrid';
+import { getEventRule } from '@/panchang/eventMuhurat';
 import {
   NAKSHATRA_NAMES_EN,
   NAKSHATRA_NAMES_HI,
@@ -31,7 +36,11 @@ import type { CalendarSystem, PanchangElement, ResolvedObservance } from '@/panc
 import { getKathaContent } from '@/panchang/kathaContent';
 import { getUpcomingObservances, searchObservances } from '@/panchang/festivalEngine';
 import { getCategoryCounts, getKathaCount, type BrowseCategory } from '@/panchang/vratCatalog';
+import { VIDHI_ENTRIES, getVidhiById } from '@/data/vidhi';
 import { useVratFollows } from '@/contexts/VratFollowContext';
+import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
+import { nextObservanceForEntry } from '@/panchang/pitruSmaran';
+import { shortDate as shortSmaranDate } from '@/panchang/pitruSmaranDisplay';
 import { captionFont } from '@/utils/scriptFont';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
@@ -55,10 +64,13 @@ import {
   type KundaliChart,
 } from '@/panchang/kundali';
 import {
+  MAX_PEOPLE,
   useKundali,
   type BirthProfile,
   type KundaliLoadState,
+  type PersonProfile,
 } from '@/panchang/useKundali';
+import PersonChips from '@/components/PersonChips';
 import { getCityById } from '@/panchang/locations';
 import type { PanchangHomeMode, PanchangStackParamList } from '@/navigation/types';
 
@@ -130,7 +142,7 @@ export default function PanchangScreen({ route }: Props) {
   const { followCount, reminderCount } = useVratFollows();
   const todayKey = new Date().toDateString();
   const today = useMemo(() => startOfLocalDay(new Date(todayKey)), [todayKey]);
-  const [selectedDate, setSelectedDate] = useState(() => startOfLocalDay(new Date()));
+  const [selectedDate, setSelectedDate] = useState(() => startOfLocalDay(route.params?.dateMs ? new Date(route.params.dateMs) : new Date()));
   const [visibleMonth, setVisibleMonth] = useState(() => startOfMonth(new Date()));
   const [calendarExpanded, setCalendarExpanded] = useState(false);
   const [panchangTab, setPanchangTab] = useState<PanchangHomeMode>(
@@ -146,6 +158,10 @@ export default function PanchangScreen({ route }: Props) {
     chart: kundaliChart,
     loadState: kundaliLoadState,
     reloadProfile,
+    people: kundaliPeople,
+    activeId: kundaliActiveId,
+    canAddPerson: canAddKundaliPerson,
+    selectPerson: selectKundaliPerson,
   } = useKundali();
   const { panchang: p, observances, upcoming } = usePanchangForSelection(selectedDate, calendarSystem);
   const monthObservances = usePanchangMonthObservances(visibleMonth, calendarSystem);
@@ -159,6 +175,21 @@ export default function PanchangScreen({ route }: Props) {
     });
     return tags;
   }, [monthObservances]);
+  // PRD-16 month-view overlay: ring an occasion's muhurat days on the same
+  // grid (one calendar vocabulary — the finder marks it, it doesn't fork it).
+  // Contextual: exists only while the param is set; ✕ clears it.
+  const muhuratOverlay = route.params?.muhuratOverlay;
+  const overlayKeys = useMemo(
+    () => new Set((muhuratOverlay?.days ?? []).map((ms) => dateKey(new Date(ms)))),
+    [muhuratOverlay]
+  );
+  const overlayRule = muhuratOverlay ? getEventRule(muhuratOverlay.occasionId) : null;
+  // The rings live on the month grid — arriving with an overlay must open it,
+  // or the chip and rings would sit behind a collapsed "Month view".
+  useEffect(() => {
+    if (muhuratOverlay) setCalendarExpanded(true);
+  }, [muhuratOverlay]);
+
   const calendarCells = useMemo(
     () => buildCalendarMonth({
       visibleMonth,
@@ -168,10 +199,21 @@ export default function PanchangScreen({ route }: Props) {
     }),
     [visibleMonth, selectedDate, today, monthObservances]
   );
+  // Weeks, not one wrapping 42-cell row — see `calendarWeeks`. The column a date
+  // lands in is then its position in its own week, never a rounding outcome.
+  const calendarRows = useMemo(() => calendarWeeks(calendarCells), [calendarCells]);
 
   useEffect(() => {
     if (route.params?.initialTab) setPanchangTab(route.params.initialTab);
   }, [route.params?.initialTab]);
+
+  useEffect(() => {
+    if (route.params?.dateMs == null || !Number.isFinite(route.params.dateMs)) return;
+    const represented = startOfLocalDay(new Date(route.params.dateMs));
+    setSelectedDate(represented);
+    setVisibleMonth(startOfMonth(represented));
+    setPanchangTab('calendar');
+  }, [route.params?.dateMs]);
 
   useFocusEffect(
     useCallback(() => {
@@ -229,13 +271,24 @@ export default function PanchangScreen({ route }: Props) {
     rootNav.navigate('HomeTab', { screen: 'VratKathaReader', params: { kathaId } });
   };
 
+  // PRD-19: the vidhi opens FOR the selected festival date — the samagri
+  // checklist persists per that occurrence, not per calendar day of entry.
+  const openVidhi = (vidhiId: string, dateMs: number) => {
+    rootNav.navigate('VidhiDetail', { vidhiId, dateMs });
+  };
+  const openVidhiCatalog = () => rootNav.navigate('VidhiCatalog');
+
   const openObservanceDetail = (ruleId: string) => rootNav.navigate('ObservanceDetail', { ruleId });
   const openCategory = (category: BrowseCategory) => rootNav.navigate('ObservanceList', { category });
   const openKathaLibrary = () => rootNav.navigate('KathaLibrary');
   const openMyVrat = () => rootNav.navigate('MyVrat');
+  const openPitruSmaran = () => rootNav.navigate('MoreTab', moreTabTarget('PitruSmaranList'));
   const openKundali = (editing = false) =>
     rootNav.navigate('Kundali', editing ? { editing: true } : undefined);
+  const openAddPerson = () => rootNav.navigate('Kundali', { newPerson: true });
   const openRashifal = () => rootNav.navigate('Rashifal');
+  const openGunaMilan = () => rootNav.navigate('GunaMilan');
+  const openNamkaran = () => rootNav.navigate('Namkaran');
 
   return (
     <View style={styles.root}>
@@ -364,19 +417,36 @@ export default function PanchangScreen({ route }: Props) {
                 testID="panchang-selected-date"
                 style={styles.selectedDateButton}
               >
+                {/* The date block toggles the month grid like the माह देखें
+                    button below — a large, natural tap target. Its a11y label is
+                    the date itself; 'Expand calendar' stays unique to the button
+                    (the smoke flows full-string match on it). */}
                 <Pressable
                   onPress={() => setCalendarExpanded((expanded) => !expanded)}
                   accessibilityRole="button"
-                  accessibilityLabel={calendarExpanded ? 'Collapse calendar' : 'Expand calendar'}
+                  accessibilityLabel={formatFullDate(selectedDate, 'en')}
                   style={({ pressed }) => [styles.datePagerPage, pressed && { opacity: 0.7 }]}
                 >
                   <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink, textAlign: 'center' }}>
                     {formatFullDate(selectedDate, lang)}
                   </Text>
-                  <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 10, color: colors.saffronDeep, marginTop: 2 }}>
-                    {calendarExpanded
-                      ? contentByLang(lang, 'माह छिपाएँ', 'Hide month')
-                      : contentByLang(lang, 'माह देखें', 'Month view')}
+                  {/* The day's panchang identity folded into the card (the
+                      separate date-header block below the card is gone): vara ·
+                      lunar month + paksha · Vikram Samvat, one line. Renders a
+                      space while the day solves so the card height is stable. */}
+                  <Text
+                    numberOfLines={1}
+                    adjustsFontSizeToFit
+                    minimumFontScale={0.75}
+                    style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkMuted, marginTop: 2, textAlign: 'center' }}
+                  >
+                    {p
+                      ? contentByLang(
+                          lang,
+                          `${p.vara.nameHi} · ${p.lunarMonth.nameHi}${p.lunarMonth.isAdhik ? ' (अधिक)' : ''} ${PAKSHA_NAMES_HI[p.tithi.paksha]} पक्ष · विक्रम संवत् ${p.vikramSamvat}`,
+                          `${p.vara.nameEn} · ${p.lunarMonth.nameEn}${p.lunarMonth.isAdhik ? ' (Adhik)' : ''} ${PAKSHA_NAMES_EN[p.tithi.paksha]} Paksha · Vikram Samvat ${p.vikramSamvat}`
+                        )
+                      : ' '}
                   </Text>
                 </Pressable>
               </View>
@@ -390,10 +460,24 @@ export default function PanchangScreen({ route }: Props) {
                 <Text style={{ color: colors.inkSoft, fontSize: 18 }}>›</Text>
               </Pressable>
             </View>
+            {/* Bottom action row: the month-view toggle (left — the redundant
+                "<Month> <Year>" label it replaces already lives in the big date
+                line above and in the expanded grid's own header) and the आज
+                return-to-today button (right). */}
             <View style={styles.compactActions}>
-              <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkMuted, flex: 1 }}>
-                {formatMonthTitle(selectedDate, lang)}
-              </Text>
+              <Pressable
+                onPress={() => setCalendarExpanded((expanded) => !expanded)}
+                accessibilityRole="button"
+                accessibilityLabel={calendarExpanded ? 'Collapse calendar' : 'Expand calendar'}
+                hitSlop={8}
+                style={({ pressed }) => [styles.monthViewButton, pressed && { opacity: 0.7 }]}
+              >
+                <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 11, color: colors.saffronDeep }}>
+                  {calendarExpanded
+                    ? contentByLang(lang, 'माह छिपाएँ', 'Hide month')
+                    : contentByLang(lang, 'माह देखें', 'Month view')}
+                </Text>
+              </Pressable>
               <Pressable
                 onPress={handleToday}
                 accessibilityRole="button"
@@ -431,6 +515,26 @@ export default function PanchangScreen({ route }: Props) {
                     <Text style={{ color: colors.inkSoft, fontSize: 18 }}>›</Text>
                   </Pressable>
                 </View>
+                {overlayRule && (
+                  <View
+                    testID="muhurat-overlay-chip"
+                    style={[styles.overlayChip, { backgroundColor: colors.goldTint, borderColor: colors.divider, borderRadius: radii.md }]}
+                  >
+                    <Text style={{ flex: 1, fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily), fontSize: 12.5, color: colors.saffronDeep, lineHeight: 20 }}>
+                      {contentByLang(lang, overlayRule.nameHi, overlayRule.nameEn)}
+                      {contentByLang(lang, ' — शुभ दिन घेरे में', ' — muhurat days ringed')}
+                    </Text>
+                    <Pressable
+                      testID="muhurat-overlay-clear"
+                      accessibilityRole="button"
+                      accessibilityLabel={contentByLang(lang, 'घेरा हटाएँ', 'Clear muhurat overlay')}
+                      hitSlop={12}
+                      onPress={() => rootNav.setParams({ muhuratOverlay: undefined })}
+                    >
+                      <Text style={{ color: colors.saffron, fontSize: 15 }}>✕</Text>
+                    </Pressable>
+                  </View>
+                )}
                 <View style={styles.weekdayRow}>
                   {(lang === 'en' ? WEEKDAYS_EN : lang === 'hi' ? WEEKDAYS_HI : WEEKDAYS_HI.map((d) => transliterateDevanagari(d, lang))).map((day) => (
                     <Text key={day} style={[styles.weekdayText, { color: colors.inkMuted }]}>
@@ -438,17 +542,19 @@ export default function PanchangScreen({ route }: Props) {
                     </Text>
                   ))}
                 </View>
-                <View style={styles.dateGrid}>
-                  {calendarCells.map((cell) => {
+                {calendarRows.map((week, weekIndex) => (
+                  <View key={week[0].key} testID={`calendar-week-${weekIndex}`} style={styles.dateWeekRow}>
+                  {week.map((cell) => {
                     const observanceTag = monthObservanceTags.get(cell.key);
                     return (
                       <Pressable
                         key={cell.key}
                         onPress={() => handleSelectDate(cell.date)}
                         accessibilityRole="button"
-                        accessibilityLabel={`Select ${formatFullDate(cell.date, 'en')}${observanceTag ? ` ${calendarTagLabel(observanceTag, 'en')}` : ''}`}
+                        accessibilityLabel={`Select ${formatFullDate(cell.date, 'en')}${observanceTag ? ` ${calendarTagLabel(observanceTag, 'en')}` : ''}${overlayKeys.has(cell.key) ? ' Muhurat day.' : ''}`}
                         style={({ pressed }) => [
                           styles.dateCell,
+                          overlayKeys.has(cell.key) && { backgroundColor: colors.goldTint, borderColor: colors.gold, borderWidth: 1.5 },
                           cell.isSelected && { backgroundColor: colors.saffronTint, borderColor: colors.saffron },
                           !cell.isSelected && cell.isToday && { borderColor: colors.gold },
                           pressed && { opacity: 0.7 },
@@ -485,40 +591,34 @@ export default function PanchangScreen({ route }: Props) {
                       </Pressable>
                     );
                   })}
-                </View>
+                  </View>
+                ))}
               </View>
             )}
           </View>
 
           {p ? (
             <>
-          <View style={[styles.dateHeader, { borderBottomColor: colors.divider }]}>
-            <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.saffronDeep }}>
-              {contentByLang(lang, p.vara.nameHi, p.vara.nameEn)}
-              <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latin : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkSoft }}>
-                {'  '}{formatFullDate(p.date, lang)} · {contentByLang(lang, `विक्रम संवत् ${p.vikramSamvat}`, `Vikram Samvat ${p.vikramSamvat}`)}
-              </Text>
-            </Text>
-            <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkMuted, marginTop: 2 }}>
-              {contentByLang(
-                lang,
-                `${p.lunarMonth.nameHi}${p.lunarMonth.isAdhik ? ' (अधिक)' : ''} · ${PAKSHA_NAMES_HI[p.tithi.paksha]} पक्ष`,
-                `${p.lunarMonth.nameEn}${p.lunarMonth.isAdhik ? ' (Adhik)' : ''} · ${PAKSHA_NAMES_EN[p.tithi.paksha]} Paksha`
-              )}
-            </Text>
-          </View>
+          {/* The old standalone date-header block (vara · date · संवत् · paksha)
+              is gone — that identity now lives as the calendar card's subtitle
+              line, so the date is stated once and the day panel starts with the
+              live muhurat card. */}
 
           {/* Daily Muhurat — Choghadiya / Rahu Kaal glance card (PRD-14). Promoted
-              to sit directly under the date header, above the anga grid: "is now
-              auspicious?" is the live, time-sensitive question users open Panchang
-              for, so it leads the day panel rather than trailing the times card. */}
-          <View ref={muhuratCardRef} collapsable={false}>
+              to lead the day panel, above the anga grid: "is now auspicious?" is
+              the live, time-sensitive question users open Panchang for. */}
+          <View ref={muhuratCardRef} collapsable={false} style={{ marginTop: 12 }}>
             <MuhuratGlanceCard
               date={selectedDate}
               calendarSystem={calendarSystem}
               onViewAll={() => rootNav.navigate('MuhuratDetail', { dateMs: selectedDate.getTime() })}
             />
           </View>
+
+          {/* Event Muhurat Finder door (PRD-16) — between the glance card and the
+              anga grid: the "is now auspicious?" reader is the user with a date
+              decision to make. Additive; nothing above or below moves. */}
+          <MuhuratFinderDoor onPress={() => rootNav.navigate('MuhuratFinder')} />
 
           {/* Two-tier anga grid: Tithi + Nakshatra lead (the two anchors users read
               first) on elevated off-white cards; Yoga + Karana sit as a quieter,
@@ -565,6 +665,7 @@ export default function PanchangScreen({ route }: Props) {
                   elevation={elevation}
                   onOpenLink={openLinkedSection}
                   onOpenKatha={openKatha}
+                  onOpenVidhi={openVidhi}
                 />
               ))
             ) : (
@@ -572,6 +673,10 @@ export default function PanchangScreen({ route }: Props) {
                 {meaningByLang(lang, 'इस तिथि पर कोई व्रत या पर्व नहीं है।', 'No vrat or festival falls on this date.')}
               </Text>
             )}
+            {/* PRD-17: the private ॥ स्मरण chip — renders only on a saved
+                observance date, muted gold register, device-only. */}
+            <PitruPakshaDayChip date={selectedDate} />
+            <PitruSmaranDayChip date={selectedDate} />
           </View>
 
           {upcoming.length > 0 && (
@@ -580,15 +685,14 @@ export default function PanchangScreen({ route }: Props) {
                 {contentByLang(lang, 'आगामी', 'Upcoming')}
               </Text>
               {upcoming.map((item, i) => (
-                <View key={`${item.rule.id}-${item.date.toDateString()}`} style={[styles.upcomingRow, { borderBottomColor: i < upcoming.length - 1 ? colors.divider : 'transparent' }]}>
-                  <View style={[styles.upcomingDot, { backgroundColor: markerColor(item.rule.marker, colors) }]} />
-                  <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latin : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkMuted, width: 50 }}>
-                    {formatShortDate(item.date, lang)}
-                  </Text>
-                  <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.ink, flex: 1 }}>
-                    {contentByLang(lang, item.rule.nameHi, item.rule.nameEn)}
-                  </Text>
-                </View>
+                <PanchangTimelineRow
+                  key={`${item.rule.id}-${item.date.toDateString()}`}
+                  markerColor={markerColor(item.rule.marker, colors)}
+                  dateLabel={formatShortDate(item.date, lang)}
+                  title={contentByLang(lang, item.rule.nameHi, item.rule.nameEn)}
+                  showDivider={i < upcoming.length - 1}
+                  accessibilityLabel={`${formatShortDate(item.date, 'en')}, ${item.rule.nameEn}`}
+                />
               ))}
             </View>
           )}
@@ -607,7 +711,9 @@ export default function PanchangScreen({ route }: Props) {
               onOpenDetail={openObservanceDetail}
               onOpenCategory={openCategory}
               onOpenKathaLibrary={openKathaLibrary}
+              onOpenVidhiCatalog={openVidhiCatalog}
               onOpenMyVrat={openMyVrat}
+              onOpenPitruSmaran={openPitruSmaran}
               followCount={followCount}
               reminderCount={reminderCount}
             />
@@ -622,9 +728,16 @@ export default function PanchangScreen({ route }: Props) {
               loadState={kundaliLoadState}
               profile={kundaliProfile}
               chart={kundaliChart}
+              people={kundaliPeople}
+              activeId={kundaliActiveId}
+              canAddPerson={canAddKundaliPerson}
+              onSelectPerson={(id) => { void selectKundaliPerson(id); }}
+              onAddPerson={openAddPerson}
               onOpenKundali={() => openKundali(false)}
               onEditKundali={() => openKundali(true)}
               onOpenRashifal={openRashifal}
+              onOpenGunaMilan={openGunaMilan}
+              onOpenNamkaran={openNamkaran}
               onOpenNavagraha={() => openLinkedSection('navagraha-stotram')}
             />
           )}
@@ -645,9 +758,16 @@ function JyotishLanding({
   loadState,
   profile,
   chart,
+  people,
+  activeId,
+  canAddPerson,
+  onSelectPerson,
+  onAddPerson,
   onOpenKundali,
   onEditKundali,
   onOpenRashifal,
+  onOpenGunaMilan,
+  onOpenNamkaran,
   onOpenNavagraha,
 }: {
   lang: Lang;
@@ -659,9 +779,16 @@ function JyotishLanding({
   loadState: KundaliLoadState;
   profile: BirthProfile | null;
   chart: KundaliChart | null;
+  people: readonly PersonProfile[];
+  activeId: string | null;
+  canAddPerson: boolean;
+  onSelectPerson: (id: string) => void;
+  onAddPerson: () => void;
   onOpenKundali: () => void;
   onEditKundali: () => void;
   onOpenRashifal: () => void;
+  onOpenGunaMilan: () => void;
+  onOpenNamkaran: () => void;
   onOpenNavagraha: () => void;
 }) {
   const [shareVisible, setShareVisible] = useState(false);
@@ -718,8 +845,8 @@ function JyotishLanding({
           >
             {meaningByLang(
               lang,
-              'इस उपकरण पर सुरक्षित जन्म विवरण पढ़े जा रहे हैं।',
-              'Reading the birth details stored on this device.'
+              'सहेजे गए जन्म विवरण पढ़े जा रहे हैं।',
+              'Loading your saved birth details.'
             )}
           </Text>
         </View>
@@ -799,6 +926,36 @@ function JyotishLanding({
           radii={radii}
           elevation={elevation}
         />
+        <JyotishToolCard
+          titleHi="अष्टकूट मिलान"
+          titleEn="Guna Milan"
+          bodyHi="वर-वधू के ३६ गुण—हर कूट का स्पष्ट और निजी हिसाब।"
+          bodyEn="A private 36-point match with every koota explained."
+          badge="NEW"
+          glyph="मि"
+          onPress={onOpenGunaMilan}
+          accessibilityLabel="Open Guna Milan"
+          lang={lang}
+          colors={colors}
+          typography={typography}
+          radii={radii}
+          elevation={elevation}
+        />
+        <JyotishToolCard
+          titleHi="नामकरण"
+          titleEn="Namkaran"
+          bodyHi="नवजात के जन्म-चन्द्र से नामाक्षर पाएँ, या नक्षत्र से बिना जन्म विवरण के देखें।"
+          bodyEn="Find a newborn's namakshar from the birth Moon, or browse by nakshatra without birth details."
+          badge="NEW"
+          glyph="ना"
+          onPress={onOpenNamkaran}
+          accessibilityLabel="Open Namkaran"
+          lang={lang}
+          colors={colors}
+          typography={typography}
+          radii={radii}
+          elevation={elevation}
+        />
       </View>
     );
   }
@@ -859,6 +1016,24 @@ function JyotishLanding({
           </Text>
         </View>
 
+        {/* Whose day this is, above the guidance it changes. Everything below —
+            Rashifal, the chart glance, the share card — follows this selection,
+            and so does the muhurat finder's आपके लिए strip (design.md §51a). */}
+        <PersonChips
+          people={people}
+          activeId={activeId}
+          lang={lang}
+          onSelect={onSelectPerson}
+          onAdd={onAddPerson}
+          canAdd={canAddPerson}
+          labelHi="किसका ज्योतिष"
+          labelEn="Whose Jyotish"
+          selectAccessibilityLabel={(label) => `Show Jyotish for ${label}`}
+          addAccessibilityLabel="Add another person"
+          fullMessageHi={`${MAX_PEOPLE} लोग तक सहेजे जा सकते हैं।`}
+          fullMessageEn={`Up to ${MAX_PEOPLE} people can be saved.`}
+        />
+
         {sectionLabel('आज का राशिफल', 'Today’s Rashifal')}
         <View
           style={[
@@ -887,11 +1062,19 @@ function JyotishLanding({
                   { color: colors.saffronDeep, fontSize: 10 },
                 ]}
               >
-                {contentByLang(
-                  lang,
-                  'चन्द्र राशि · आपकी कुंडली से',
-                  'Moon sign · From your Kundali'
-                )}
+                {/* With more than one person saved, "your" would be a guess —
+                    name whose chart this Moon sign came from. */}
+                {people.length > 1 && profile.name
+                  ? contentByLang(
+                    lang,
+                    `चन्द्र राशि · ${profile.name} की कुंडली से`,
+                    `Moon sign · From ${profile.name}’s Kundali`
+                  )
+                  : contentByLang(
+                    lang,
+                    'चन्द्र राशि · आपकी कुंडली से',
+                    'Moon sign · From your Kundali'
+                  )}
               </Text>
               <Text
                 style={{
@@ -992,7 +1175,7 @@ function JyotishLanding({
               ]}
             >
               <Text style={[styles.jyotishSavedText, { color: colors.inkMuted }]}>
-                {contentByLang(lang, 'इसी उपकरण पर सुरक्षित', 'Saved on this device')}
+                {contentByLang(lang, 'विवरण सहेजे गए', 'Details saved')}
               </Text>
             </View>
           </View>
@@ -1106,6 +1289,37 @@ function JyotishLanding({
           </View>
         </View>
 
+        {sectionLabel('मिलान', 'Compatibility')}
+        <JyotishToolCard
+          titleHi="अष्टकूट मिलान"
+          titleEn="Guna Milan"
+          bodyHi="वर-वधू के ३६ गुण—हर कूट का स्पष्ट और निजी हिसाब।"
+          bodyEn="A private 36-point match with every koota explained."
+          badge="NEW"
+          glyph="मि"
+          onPress={onOpenGunaMilan}
+          accessibilityLabel="Open Guna Milan"
+          lang={lang}
+          colors={colors}
+          typography={typography}
+          radii={radii}
+          elevation={elevation}
+        />
+        <JyotishToolCard
+          titleHi="नामकरण"
+          titleEn="Namkaran"
+          bodyHi="नवजात के जन्म-चन्द्र से नामाक्षर पाएँ, या नक्षत्र से बिना जन्म विवरण के देखें।"
+          bodyEn="Find a newborn's namakshar from the birth Moon, or browse by nakshatra without birth details."
+          badge="NEW"
+          glyph="ना"
+          onPress={onOpenNamkaran}
+          accessibilityLabel="Open Namkaran"
+          lang={lang}
+          colors={colors}
+          typography={typography}
+          radii={radii}
+          elevation={elevation}
+        />
         {sectionLabel('साधना', 'Practice')}
         <JyotishPracticeCard
           subtitleHi="आज के चन्द्र-राशि मार्गदर्शन के साथ"
@@ -1205,6 +1419,36 @@ function JyotishLanding({
         glyph="रा"
         onPress={onOpenRashifal}
         accessibilityLabel="Open Daily Rashifal"
+        lang={lang}
+        colors={colors}
+        typography={typography}
+        radii={radii}
+        elevation={elevation}
+      />
+      <JyotishToolCard
+        titleHi="अष्टकूट मिलान"
+        titleEn="Guna Milan"
+        bodyHi="वर-वधू के ३६ गुण—हर कूट का स्पष्ट और निजी हिसाब।"
+        bodyEn="A private 36-point match with every koota explained."
+        badge="NEW"
+        glyph="मि"
+        onPress={onOpenGunaMilan}
+        accessibilityLabel="Open Guna Milan"
+        lang={lang}
+        colors={colors}
+        typography={typography}
+        radii={radii}
+        elevation={elevation}
+      />
+      <JyotishToolCard
+        titleHi="नामकरण"
+        titleEn="Namkaran"
+        bodyHi="नवजात के जन्म-चन्द्र से नामाक्षर पाएँ, या नक्षत्र से बिना जन्म विवरण के देखें।"
+        bodyEn="Find a newborn's namakshar from the birth Moon, or browse by nakshatra without birth details."
+        badge="NEW"
+        glyph="ना"
+        onPress={onOpenNamkaran}
+        accessibilityLabel="Open Namkaran"
         lang={lang}
         colors={colors}
         typography={typography}
@@ -1458,7 +1702,7 @@ function TimeCell({ icon, label, value, lang, colors }: { icon: string; label: s
   );
 }
 
-function ObservanceCard({ item, lang, colors, typography, radii, elevation, onOpenLink, onOpenKatha }: {
+function ObservanceCard({ item, lang, colors, typography, radii, elevation, onOpenLink, onOpenKatha, onOpenVidhi }: {
   item: ResolvedObservance;
   lang: Lang;
   colors: any;
@@ -1467,11 +1711,15 @@ function ObservanceCard({ item, lang, colors, typography, radii, elevation, onOp
   elevation: any;
   onOpenLink: (sectionId: string) => void;
   onOpenKatha: (kathaId: string) => void;
+  onOpenVidhi: (vidhiId: string, dateMs: number) => void;
 }) {
   const linkedEntry = item.rule.linkSectionId
     ? library.find((entry) => entry.id === item.rule.linkSectionId)
     : null;
   const katha = item.rule.kathaId ? getKathaContent(item.rule.kathaId) : null;
+  // PRD-19: the vidhi pill renders only when the rule's vidhiId resolves to a
+  // published vidhi — the identical hook mechanism as kathaId.
+  const vidhi = item.rule.vidhiId ? getVidhiById(item.rule.vidhiId) : null;
 
   return (
     <View style={[styles.observanceCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card]}>
@@ -1492,6 +1740,23 @@ function ObservanceCard({ item, lang, colors, typography, radii, elevation, onOp
         {meaningByLang(lang, item.rule.shortDescriptionHi, item.rule.shortDescriptionEn)}
       </Text>
       <View style={styles.linkRow}>
+        {vidhi && (
+          <Pressable
+            onPress={() => onOpenVidhi(vidhi.id, item.date.getTime())}
+            testID={`observance-vidhi-${item.rule.id}`}
+            accessibilityRole="button"
+            accessibilityLabel={contentByLang(
+              lang,
+              `${vidhi.titleHi} पूजा विधि`,
+              `Puja vidhi for ${vidhi.titleEn}`
+            )}
+            style={({ pressed }) => [styles.kathaButton, { backgroundColor: colors.saffron, borderRadius: radii.pill }, pressed && { opacity: 0.7 }]}
+          >
+            <Text style={{ fontFamily: lang === 'en' ? fontFamilies.interSemiBold : scriptBodyFont(lang, typography.cardHindi.fontFamily), fontSize: 12, color: colors.parchment }}>
+              ॥ {contentByLang(lang, 'पूजा विधि', 'Puja Vidhi')}
+            </Text>
+          </Pressable>
+        )}
         {katha && item.rule.kathaId && (
           <Pressable
             onPress={() => onOpenKatha(item.rule.kathaId as string)}
@@ -1521,10 +1786,74 @@ function ObservanceCard({ item, lang, colors, typography, radii, elevation, onOp
   );
 }
 
+function PitruSmaranCatalogRow({
+  lang, colors, typography, radii, elevation, onPress,
+}: {
+  lang: Lang;
+  colors: any;
+  typography: any;
+  radii: any;
+  elevation: any;
+  onPress: () => void;
+}) {
+  const { entries } = usePitruSmaran();
+  const [soonest, setSoonest] = useState<Date | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    const handle = setTimeout(() => {
+      const today = startOfLocalDay(new Date());
+      const dates = entries
+        .map((entry) => {
+          try { return nextObservanceForEntry(entry, today); } catch { return null; }
+        })
+        .filter((date): date is Date => date !== null)
+        .sort((a, b) => a.getTime() - b.getTime());
+      if (!cancelled) setSoonest(dates[0] ?? null);
+    }, 0);
+    return () => { cancelled = true; clearTimeout(handle); };
+  }, [entries]);
+
+  const subtitle = entries.length > 0
+    ? contentByLang(
+        lang,
+        `${entries.length} स्मरण${soonest ? ` · अगला: ${shortSmaranDate(soonest, lang)}` : ''}`,
+        `${entries.length} remembrance${entries.length === 1 ? '' : 's'}${soonest ? ` · Next: ${shortSmaranDate(soonest, lang)}` : ''}`
+      )
+    : contentByLang(lang, 'अपने पितरों की तिथियाँ जोड़ें', 'Add your ancestors’ tithis');
+
+  return (
+    <Pressable
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={`Pitru Smaran. ${entries.length > 0 ? `${entries.length} entries` : 'Add remembrance dates'}`}
+      style={({ pressed }) => [
+        styles.myVratRow,
+        styles.pitruLedgerRow,
+        { backgroundColor: colors.goldTint, borderColor: colors.gold, borderRadius: radii.lg },
+        elevation.card,
+        pressed && { opacity: 0.8 },
+      ]}
+    >
+      <Text style={{ fontSize: 18, color: colors.gold, marginRight: 10 }}>॥</Text>
+      <View style={{ flex: 1 }}>
+        <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
+          {contentByLang(lang, 'पितृ स्मरण', 'Pitru Smaran')}
+        </Text>
+        <Text style={{ ...captionFont(subtitle), fontSize: 12, color: colors.inkMuted, marginTop: 2 }}>
+          {subtitle}
+        </Text>
+      </View>
+      <Text style={{ fontSize: 20, color: colors.inkMuted }}>›</Text>
+    </Pressable>
+  );
+}
+
 function CatalogLanding({
   lang, today, calendarSystem, query, onChangeQuery,
   colors, typography, radii, elevation,
-  onOpenDetail, onOpenCategory, onOpenKathaLibrary, onOpenMyVrat, followCount, reminderCount,
+  onOpenDetail, onOpenCategory, onOpenKathaLibrary, onOpenVidhiCatalog, onOpenMyVrat, followCount, reminderCount,
+  onOpenPitruSmaran,
 }: {
   lang: Lang;
   today: Date;
@@ -1538,7 +1867,9 @@ function CatalogLanding({
   onOpenDetail: (ruleId: string) => void;
   onOpenCategory: (category: BrowseCategory) => void;
   onOpenKathaLibrary: () => void;
+  onOpenVidhiCatalog: () => void;
   onOpenMyVrat: () => void;
+  onOpenPitruSmaran: () => void;
   followCount: number;
   reminderCount: number;
 }) {
@@ -1630,6 +1961,14 @@ function CatalogLanding({
             </View>
             <Text style={{ fontSize: 20, color: colors.inkMuted }}>›</Text>
           </Pressable>
+          <PitruSmaranCatalogRow
+            lang={lang}
+            colors={colors}
+            typography={typography}
+            radii={radii}
+            elevation={elevation}
+            onPress={onOpenPitruSmaran}
+          />
           {upcoming.length > 0 && (
             <View style={{ marginTop: 14 }}>
               <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginBottom: 8 }}>
@@ -1713,6 +2052,34 @@ function CatalogLanding({
                   {kathaCount} {contentByLang(lang, 'कथाएँ', 'stories')}
                 </Text>
               </Pressable>
+              <Pressable
+                onPress={onOpenVidhiCatalog}
+                testID="vidhi-catalog-tile"
+                accessibilityRole="button"
+                accessibilityLabel={contentByLang(
+                  lang,
+                  `पूजा विधि सूची, ${VIDHI_ENTRIES.length}`,
+                  `Puja vidhi catalog, ${VIDHI_ENTRIES.length}`
+                )}
+                style={({ pressed }) => [styles.tile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card, pressed && { opacity: 0.8 }]}
+              >
+                <View style={styles.tileGlyph}>
+                  <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 22, color: colors.saffron }}>॥</Text>
+                </View>
+                <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 16, color: colors.ink, marginTop: 8 }}>
+                  {contentByLang(lang, 'पूजा विधि', 'Puja Vidhi')}
+                </Text>
+                <Text style={{ ...captionFont(lang === 'en' ? 'चरण-दर-चरण पूजा' : 'Guided pujas'), fontSize: 12, color: colors.inkMuted }}>
+                  {lang === 'en' ? 'चरण-दर-चरण पूजा' : 'Guided pujas'}
+                </Text>
+                <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 11, color: colors.saffronDeep, marginTop: 8 }}>
+                  {contentByLang(
+                    lang,
+                    `${VIDHI_ENTRIES.length} ${VIDHI_ENTRIES.length === 1 ? 'विधि' : 'विधियाँ'}`,
+                    `${VIDHI_ENTRIES.length} ${VIDHI_ENTRIES.length === 1 ? 'vidhi' : 'vidhis'}`
+                  )}
+                </Text>
+              </Pressable>
             </View>
           </View>
         </>
@@ -1753,6 +2120,7 @@ const styles = StyleSheet.create({
   starBadge: { position: 'absolute', top: -2, right: -3, minWidth: 16, height: 16, borderRadius: 8, borderWidth: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 3 },
   starBadgeText: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, lineHeight: 13 },
   myVratRow: { flexDirection: 'row', alignItems: 'center', borderWidth: 1.5, padding: 14, marginTop: 12 },
+  pitruLedgerRow: { marginTop: 10 },
   segmented: { flexDirection: 'row', padding: 3, borderWidth: 1, marginTop: 10 },
   segmentOption: { flex: 1, minHeight: 38, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 14 },
   jyotishHero: { borderWidth: 1, padding: 16, marginTop: 12, flexDirection: 'row', alignItems: 'center', gap: 13 },
@@ -1817,7 +2185,10 @@ const styles = StyleSheet.create({
   dateNavButton: { width: 36, height: 36, borderWidth: 1, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
   selectedDateButton: { flex: 1, minHeight: 44, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 8 },
   datePagerPage: { flex: 1, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
-  compactActions: { flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 8 },
+  compactActions: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 10, marginTop: 8 },
+  // Text-only affordance, so padding (with the row's height) carries it to the
+  // 44pt floor; hitSlop tops it up.
+  monthViewButton: { minHeight: 32, justifyContent: 'center', paddingHorizontal: 6, paddingVertical: 6 },
   expandedCalendar: { marginTop: 10, paddingTop: 10, borderTopWidth: StyleSheet.hairlineWidth },
   monthHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 },
   // Deliberately 34, not the 44 used for back controls: a calendar month stepper
@@ -1825,11 +2196,17 @@ const styles = StyleSheet.create({
   // hitSlop={10} at the call site takes the real touch target to 54, clearing
   // the 44 minimum — the size exception is visual only (design.md §12).
   monthButton: { width: 34, height: 34, borderWidth: 1, borderRadius: 17, alignItems: 'center', justifyContent: 'center' },
+  overlayChip: { flexDirection: 'row', alignItems: 'center', gap: 10, borderWidth: 1, paddingHorizontal: 12, paddingVertical: 8, marginBottom: 8, minHeight: 38 },
+  // Seven `flex: 1` columns in a fixed row — never a percentage width inside a
+  // wrapping row. Yoga resolves percentages in 32-bit float, so `100 / 7` can sum
+  // to just over the container (320.000008 pt inside 320 pt on a 390 dp iPhone)
+  // and drop the seventh cell onto the next line, sliding every date one or more
+  // columns off its weekday. `flex: 1` divides the same row exactly, at any width.
   weekdayRow: { flexDirection: 'row', marginBottom: 4 },
-  weekdayText: { width: `${100 / 7}%`, textAlign: 'center', fontFamily: fontFamilies.interSemiBold, fontSize: 10 },
-  dateGrid: { flexDirection: 'row', flexWrap: 'wrap' },
+  weekdayText: { flex: 1, textAlign: 'center', fontFamily: fontFamilies.interSemiBold, fontSize: 10 },
+  dateWeekRow: { flexDirection: 'row' },
   dateCell: {
-    width: `${100 / 7}%`,
+    flex: 1,
     minHeight: 38,
     borderWidth: 1,
     borderColor: 'transparent',
@@ -1846,7 +2223,6 @@ const styles = StyleSheet.create({
   dateTagText: { fontSize: 10, lineHeight: 14 },
   todayButton: { alignSelf: 'center', marginTop: 8, borderWidth: 1, borderRadius: 999, paddingHorizontal: 16, paddingVertical: 8 },
   compactTodayButton: { marginTop: 0, paddingHorizontal: 14, paddingVertical: 7 },
-  dateHeader: { marginTop: 10, paddingBottom: 8, borderBottomWidth: StyleSheet.hairlineWidth, marginBottom: 12 },
   angaGrid: { flexDirection: 'row', gap: 8, marginTop: 12 },
   angaGridSecondary: { flexDirection: 'row', gap: 8, marginTop: 8 },
   angaTile: { flexGrow: 1, flexBasis: '47%', borderWidth: 1, paddingVertical: 12, paddingHorizontal: 14 },
@@ -1861,6 +2237,4 @@ const styles = StyleSheet.create({
   linkRow: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 8 },
   kathaButton: { alignSelf: 'flex-start', paddingHorizontal: 12, paddingVertical: 7, marginTop: 8 },
   upcomingSection: { marginTop: 12 },
-  upcomingRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 6, borderBottomWidth: StyleSheet.hairlineWidth, gap: 6 },
-  upcomingDot: { width: 5, height: 5, borderRadius: 2.5 },
 });

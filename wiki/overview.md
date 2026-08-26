@@ -22,10 +22,10 @@ backend.
 - **Navigation:** React Navigation 7 — `native-stack` + `bottom-tabs`. **Not** expo-router.
 - **State:** React Context only (no Redux/Zustand). `@react-native-async-storage/async-storage` 2.2.0 for persistence.
 - **OTA:** `expo-updates` ~29.0.17, `runtimeVersion` policy `appVersion`.
-- **Audio:** `expo-audio` (japam playback). **Notifications:** `expo-notifications`. **Calendar math:** `astronomy-engine` ~2.1.19.
+- **Audio:** `expo-audio` (japam + the bhajan library). **Speech:** `expo-speech` ~14.0.8 — on-device TTS read-aloud on the Gita and chalisa readers (see [[audio]]). **Notifications:** `expo-notifications`. **Calendar math:** `astronomy-engine` ~2.1.19.
 - **Fonts:** Noto Serif Devanagari (Devanagari), Cormorant Garamond (Latin), Noto Serif Gujarati + Noto Serif Kannada (the gu/kn reading languages).
 - **Reading languages:** `hi · en · gu · kn` (one shared `useGitaLanguage()` pref). gu/kn carry no authored content — derived at runtime by transliterating the Devanagari. See [[languages]].
-- **App version:** 1.4.5, iOS build 45 (`mobile/app.json`).
+- **App version:** 1.4.6, iOS build 46 (`mobile/app.json`).
 - **Entry Point:** `mobile/index.ts` → `registerRootComponent(App)` → `mobile/App.tsx`.
 
 ## Request Shape
@@ -64,6 +64,8 @@ Deep links and notification taps route through `navigationRef`, exported from
 | `mobile/src/data/` | Bundled content + registries | `texts.ts` (library index), `searchIndex.ts`, `deities.ts`, `categories.ts`, `gita/chapter-01..18.json`, `chalisa/`, `sundarkand/`, stotram dirs, `sourceIdMigration.ts`, `routine/` (types, units, vaar, useRoutineToday — see [[routine]]) |
 | `mobile/src/panchang/` | Hindu-calendar engine | `festivals.ts` + astronomy-engine; `muhurat.ts` (Choghadiya/Kaal/Abhijit engine — pure), `muhuratFormat.ts`, `useMuhurat.ts` (see [[panchang]]) |
 | `mobile/src/theme/` | Design tokens (light-only) | `ThemeContext.tsx`, `colors.ts`, `typography.ts`, `spacing.ts` (spacing + radii), `elevation.ts`, `fontScale.ts` |
+| `mobile/src/readAloud/` | Pure read-aloud layer (no React) | `verseAdapter.ts`, `verseScript.ts`, `voices.ts`, `pronounce.ts`, `prefs.ts` — see [[audio]] |
+| `mobile/src/audio/` | Audio session + cross-source arbitration | `audioSession.ts`, `playbackArbiter.ts` |
 | `mobile/src/utils/` | Helpers | `shareVerse.tsx`, `semverCompare.ts`, `titleByLanguage.ts`, `useMinuteTick.ts` |
 
 ## Data Layer
@@ -113,7 +115,7 @@ ID changes. User language preference, routines (`@vedansh/routines`) and daily d
   have historically run ahead of `app.json`).
 - **Light theme only** — `ThemeMode` allows `dark`, but the app is hardcoded to light (`userInterfaceStyle: "light"`).
 - **Not expo-router** — navigation is hand-wired React Navigation stacks; there is no file-based routing.
-- **Content is bundled** — OTA ships the JS bundle, **not** new festival data or audio; those require a store release.
+- **Content is bundled** — OTA ships the JS bundle, **not** new festival data or audio; those require a store release. **Native modules too**: read-aloud (`expo-speech`) shipped as a store release, and that version bump drags `APP_TOUR_VERSION` + a `whatsNew` entry with it.
 - **Two test runners** — never add `src/data` tests to Jest; they run via `tsx --test` and Jest's `testMatch` excludes them.
 - **Jest suites that render a FlatList/VirtualizedList must unmount their trees** (`afterEach` + `act`). VirtualizedList schedules cell-batch `setTimeout`s; a timer that outlives its suite fires after teardown and Jest converts the late console.error into "Cannot log after tests are done" — **the run exits 1 under a fully green summary** (all suites PASS, exit code 1). Diagnosed Aug 2026 via `LocationPickerModal.test.tsx`; note the summary line alone can't be trusted — check `$?`, and don't pipe Jest through `tail`/`grep` when you need its exit code.
 - **Romanization is by source language, not module** — Sanskrit = IAST; Awadhi/Hindi = pronunciation ASCII (design.md §3.1).

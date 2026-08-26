@@ -24,6 +24,10 @@ type Props = {
   variant?: 'card' | 'launcher';
   /** Short English label for the launcher grid; falls back to `nameEn`. */
   displayNameEn?: string;
+  /** Compact launchers default to one line; dense named indexes may opt into two. */
+  launcherLabelLines?: 1 | 2;
+  /** Home keeps captions below; dense indexes can place the title inside the tile. */
+  launcherLabelPosition?: 'below' | 'tile';
 };
 
 function CategoryCard({
@@ -37,6 +41,8 @@ function CategoryCard({
   hasNew,
   variant = 'card',
   displayNameEn,
+  launcherLabelLines = 1,
+  launcherLabelPosition = 'below',
 }: Props) {
   const { colors, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
@@ -58,17 +64,29 @@ function CategoryCard({
   );
 
   if (isLauncher) {
+    const labelInTile = launcherLabelPosition === 'tile';
+    // Deliberately no `adjustsFontSizeToFit`: on iOS a multi-line label with a
+    // fixed `lineHeight` shrinks erratically and ignores `minimumFontScale`, so
+    // scattered tiles in the 27-tile Namkaran grid collapsed to a few points
+    // while their identically sized neighbours stayed at full size. The tile is
+    // wide enough for every shipped name at this size over two lines (the
+    // longest word in any of them is ~6 Devanagari clusters), so the label
+    // holds one fixed size and caps the system multiplier instead — the grid
+    // now reads as one uniform size, which is what auto-fit was meant to do.
     const launcherLabel = (
       <Text
-        numberOfLines={1}
+        numberOfLines={launcherLabelLines}
+        maxFontSizeMultiplier={labelInTile ? 1.25 : undefined}
         style={[
           styles.launcherName,
+          labelInTile && styles.launcherNameInTile,
           {
             color: colors.ink,
             fontFamily: primary.fontFamily,
             fontSize: primary.fontSize,
             fontStyle: primary.fontStyle,
             letterSpacing: primary.letterSpacing,
+            lineHeight: labelInTile ? 21 : undefined,
           },
         ]}
       >
@@ -98,6 +116,7 @@ function CategoryCard({
             ]}
           >
             {icon}
+            {labelInTile ? launcherLabel : null}
             <View
               style={[
                 styles.badge,
@@ -110,7 +129,7 @@ function CategoryCard({
               </Text>
             </View>
           </View>
-          {launcherLabel}
+          {labelInTile ? null : launcherLabel}
         </View>
       );
     }
@@ -146,6 +165,7 @@ function CategoryCard({
             style={[styles.cardBg, { borderRadius: radii.lg }]}
           />
           {icon}
+          {labelInTile ? launcherLabel : null}
           {hasNew && (
             <View
               style={[
@@ -161,7 +181,7 @@ function CategoryCard({
             </View>
           )}
         </View>
-        {launcherLabel}
+        {labelInTile ? null : launcherLabel}
       </Pressable>
     );
   }
@@ -296,6 +316,10 @@ const styles = StyleSheet.create({
   launcherName: {
     marginTop: 6,
     textAlign: 'center',
+  },
+  launcherNameInTile: {
+    marginTop: 0,
+    paddingHorizontal: 8,
   },
   launcherBadge: {
     top: 6,

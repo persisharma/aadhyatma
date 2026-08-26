@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PRD-09 · Phase 4 — उपवास विधि (How to observe) — Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-hi:#FFF5E0;
+    --parchment-deep:#E9D9B1; --gradient-end:#E9D9B1;
+    --ink:#2F1E10; --ink-soft:#5A3A1E; --ink-muted:#8A6A47;
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --gold:#A67C34; --gold-soft:#C9B896;
+    --divider:rgba(138,62,11,0.18);
+    --saffron-tint:rgba(184,98,27,0.14); --gold-tint:rgba(166,124,52,0.16);
+    --green:#3F7D4F;
+    --shadow-lg:0 30px 70px rgba(20,12,4,0.40);
+    --sans:'Inter',system-ui,sans-serif;
+    --serif:'Cormorant Garamond',serif;
+    --deva:'Noto Serif Devanagari',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:var(--sans);color:#EADCC2;padding:34px 20px 64px;line-height:1.5;
+    background:
+      radial-gradient(900px 360px at 50% -8%, rgba(184,98,27,0.22), transparent 64%),
+      linear-gradient(160deg,#1A140C 0%,#2A1D10 58%,#1A140C 100%);
+    min-height:100vh;-webkit-font-smoothing:antialiased;
+  }
+  .intro{max-width:1120px;margin:0 auto 10px;text-align:center}
+  .intro h1{font-family:var(--serif);font-weight:500;font-size:clamp(28px,4vw,42px);color:var(--parchment)}
+  .intro .deva-sub{font-family:var(--deva);font-size:15px;color:var(--gold-soft);margin-top:2px}
+  .intro p{max-width:840px;margin:10px auto 0;font-size:14px;line-height:1.55;color:#D5C39D}
+  .samplebanner{
+    max-width:840px;margin:18px auto 34px;padding:12px 18px;border-radius:12px;
+    border:1.5px dashed var(--gold);background:rgba(166,124,52,0.10);
+    font-size:12.5px;color:#E7D8B6;text-align:center;line-height:1.6;
+  }
+  .samplebanner b{color:#FFF5E0;letter-spacing:.08em}
+
+  .scenario{max-width:1120px;margin:0 auto 58px}
+  .scenario > h2{
+    font-family:var(--serif);font-size:22px;font-weight:600;color:#FFF5E0;
+    border-bottom:1px solid #3A2A16;padding-bottom:8px;margin-bottom:4px;
+  }
+  .scenario > .sc-sub{font-size:12.5px;color:var(--gold-soft);font-style:italic;margin-bottom:20px}
+  .wrap{display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap}
+
+  /* ---- phone frame (house 360×740) ---- */
+  .phone{width:360px;height:740px;background:var(--parchment);border-radius:38px;
+    border:10px solid #0D0804;box-shadow:var(--shadow-lg),0 0 0 1px rgba(166,124,52,0.18);
+    position:relative;overflow:hidden;flex:none}
+  .statusbar{height:34px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);
+    background:linear-gradient(var(--parchment-hi),var(--parchment))}
+  .screen{position:absolute;top:34px;left:0;right:0;bottom:0;overflow-y:auto;
+    background:
+      radial-gradient(110% 42% at 50% -12%, rgba(184,98,27,0.14), transparent 62%),
+      linear-gradient(180deg,var(--parchment-hi) 0%,var(--gradient-end) 100%)}
+  .screen::-webkit-scrollbar{width:0}
+  .pad{padding:6px 18px 34px}
+
+  /* top bar */
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:8px 2px 10px}
+  .topbar .back{width:34px;height:34px;border:1px solid var(--divider);border-radius:17px;
+    display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:18px;cursor:pointer}
+  .topbar .tt{font-family:var(--deva);font-size:15px;color:var(--ink)}
+  .topbar .sp{width:34px}
+
+  /* hero */
+  .hero{text-align:center;padding:8px 0 14px;border-bottom:1px solid var(--divider)}
+  .hero .tags{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:9px}
+  .pill{display:inline-block;background:var(--gold-tint);color:var(--saffron-deep);
+    font-size:10.5px;font-weight:700;font-family:var(--sans);padding:3px 10px;border-radius:999px}
+  .pill.fest{background:var(--saffron-tint)}
+  .hero .deity{font-size:12.5px;color:var(--ink-muted)}
+  .hero .name{font-family:var(--deva);font-size:26px;color:var(--ink);line-height:1.35}
+  .hero .name-en{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--ink-muted);margin-top:1px}
+  .hero .rule{font-family:var(--deva);font-size:12px;color:var(--ink-muted);margin-top:6px}
+  .hero .next{display:inline-block;margin-top:9px;background:var(--saffron-tint);color:var(--saffron-deep);
+    border-radius:999px;padding:4px 13px;font-size:11.5px;font-weight:600}
+
+  /* actions */
+  .actions{display:flex;gap:8px;margin:12px 0 2px}
+  .abtn{flex:1;min-height:38px;display:flex;align-items:center;justify-content:center;
+    border:1.5px solid var(--saffron);border-radius:999px;font-size:12.5px;font-weight:600;
+    color:var(--saffron-deep);cursor:pointer;font-family:var(--sans)}
+  .abtn.fill{background:var(--saffron);color:var(--parchment-hi)}
+
+  /* blocks */
+  .block{margin-top:18px}
+  .bh{font-family:var(--deva);font-size:15px;color:var(--ink);margin-bottom:8px}
+  .bh .en{font-family:var(--serif);font-style:italic;font-weight:400;font-size:12px;color:var(--ink-muted)}
+  .body{font-size:13px;line-height:1.65;color:var(--ink-soft);font-family:var(--deva)}
+
+  .card{display:flex;align-items:center;gap:12px;border:1px solid var(--divider);
+    background:var(--parchment-soft);border-radius:16px;padding:13px;cursor:pointer;
+    box-shadow:0 1px 2px rgba(60,30,10,0.06)}
+  .card .glyph{font-size:21px;color:var(--saffron);font-family:var(--deva)}
+  .card .ct{flex:1;min-width:0}
+  .card .ct .t{font-family:var(--deva);font-size:14.5px;color:var(--ink)}
+  .card .ct .m{font-size:11.5px;color:var(--ink-muted);margin-top:2px;font-family:var(--serif);font-style:italic}
+  .card .chev{font-size:18px;color:var(--ink-muted)}
+
+  /* ---- the new उपवास विधि facts panel ---- */
+  .upvas{border:1px solid var(--gold-soft);background:var(--parchment-soft);
+    border-radius:16px;padding:14px 14px 12px;box-shadow:0 1px 2px rgba(60,30,10,0.06)}
+  .fasttype{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding-bottom:11px;
+    border-bottom:1px solid var(--divider)}
+  .ftchip{display:inline-flex;align-items:center;gap:5px;background:var(--saffron);
+    color:var(--parchment-hi);font-family:var(--deva);font-size:12.5px;font-weight:600;
+    padding:4px 12px;border-radius:999px;line-height:1.5}
+  .ftnote{font-size:11.5px;color:var(--ink-muted);font-family:var(--deva)}
+  .frow{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--divider)}
+  .frow:last-of-type{border-bottom:0}
+  .frow .fl{flex:0 0 76px;font-size:10px;font-weight:700;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--gold);padding-top:2px}
+  .frow .fl .d{display:block;font-family:var(--deva);font-size:12px;font-weight:600;
+    letter-spacing:0;text-transform:none;color:var(--saffron-deep)}
+  .frow .fv{flex:1;font-family:var(--deva);font-size:12.5px;line-height:1.6;color:var(--ink-soft)}
+  .computed{margin-top:6px;background:var(--gold-tint);border-radius:10px;padding:7px 10px;
+    font-family:var(--sans);font-size:11.5px;font-weight:600;color:var(--saffron-deep)}
+  .computed .loc{display:block;font-weight:400;font-size:10px;color:var(--ink-muted);margin-top:1px}
+  .footnote{margin-top:9px;font-family:var(--serif);font-style:italic;font-size:11.5px;
+    line-height:1.55;color:var(--ink-muted)}
+  .vidhi-inner{margin-top:12px}
+
+  .endcap{margin-top:24px;text-align:center;color:var(--gold);font-family:var(--deva);font-size:16px;opacity:.55}
+
+  /* ---- side annotation panel ---- */
+  .panel{flex:1;min-width:320px;max-width:560px}
+  .acard{background:#23190E;border:1px solid #3A2A16;border-radius:14px;padding:16px 18px;margin-bottom:16px}
+  .acard h3{font-family:var(--serif);font-size:17px;color:#FFF5E0;margin-bottom:8px}
+  .acard ul{list-style:none}
+  .acard li{position:relative;padding:6px 0 6px 22px;font-size:12.5px;line-height:1.6;color:#C9B896;
+    border-bottom:1px dashed #3A2A16}
+  .acard li:last-child{border-bottom:0}
+  .acard li::before{content:"◆";position:absolute;left:2px;top:7px;font-size:9px;color:var(--saffron)}
+  .acard li b{color:#FFF5E0}
+  .acard li code{font-size:11px;background:#2A1D10;border:1px solid #3A2A16;border-radius:5px;
+    padding:1px 5px;color:#E7D8B6}
+  .acard .warn{margin-top:10px;border:1px dashed var(--gold);border-radius:9px;padding:8px 11px;
+    font-size:11.5px;color:#E7D8B6}
+</style>
+</head>
+<body>
+
+<div class="intro">
+  <h1>PRD-09 · Phase 4 — Structured Upvas Content</h1>
+  <div class="deva-sub">उपवास विधि · How to observe — Observance Detail में अंतिम खंड</div>
+  <p>
+    Three states of the Observance Detail screen once verified fasting content exists:
+    <b>(A)</b> an observance with upvas info only, <b>(B)</b> an observance with upvas info
+    <i>and</i> a PRD-19 puja vidhi (showing the settled ordering), and <b>(C)</b> an observance
+    with neither — where the section is simply absent, never a placeholder.
+  </p>
+</div>
+
+<div class="samplebanner">
+  <b>⚠ ILLUSTRATIVE SAMPLE</b> — every fasting rule, window, parana time, date, and liturgical/observance
+  line on these frames is placeholder copy written for layout only. It is <b>not verified content</b> and must not
+  be transcribed into the app. Real entries ship only after the PRD's two-source verification gate (§8) is cleared.
+</div>
+
+<!-- ============================================================ A =============== -->
+<section class="scenario">
+  <h2>A — Upvas info only · निर्जला एकादशी</h2>
+  <div class="sc-sub">Full detail page in context: hero → actions → About → Story → उपवास विधि (last). Computed parana window shown.</div>
+  <div class="wrap">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="tt">व्रत विवरण</div><div class="sp"></div></div>
+
+        <div class="hero">
+          <div class="tags"><span class="pill">व्रत</span><span class="deity">श्री विष्णु</span></div>
+          <div class="name">निर्जला एकादशी</div>
+          <div class="name-en">Nirjala Ekadashi</div>
+          <div class="rule">ज्येष्ठ · शुक्ल पक्ष · एकादशी</div>
+          <div class="next">अगला · 15 जून 2027 · 301 दिन में</div>
+        </div>
+
+        <div class="actions">
+          <div class="abtn">★ फ़ॉलो करें</div>
+          <div class="abtn fill">॥ कथा पढ़ें</div>
+        </div>
+
+        <div class="block">
+          <div class="bh">महत्व <span class="en">· About</span></div>
+          <div class="body">निर्जला एकादशी विष्णु उपासना और एकादशी व्रत का दिन है। वर्ष की सभी एकादशियों में यह सबसे कठोर मानी जाती है।</div>
+        </div>
+
+        <div class="block">
+          <div class="bh">कथा <span class="en">· Story</span></div>
+          <div class="card">
+            <div class="glyph">॥</div>
+            <div class="ct">
+              <div class="t">निर्जला एकादशी व्रत कथा</div>
+              <div class="m">Nirjala Ekadashi Katha · 2 sections</div>
+            </div>
+            <div class="chev">›</div>
+          </div>
+        </div>
+
+        <!-- NEW SECTION -->
+        <div class="block">
+          <div class="bh">उपवास विधि <span class="en">· How to observe</span></div>
+          <div class="upvas">
+            <div class="fasttype">
+              <span class="ftchip">निर्जला</span>
+              <span class="ftnote">जल भी वर्जित — कठोरतम एकादशी</span>
+            </div>
+            <div class="frow">
+              <div class="fl"><span class="d">उपवास काल</span>window</div>
+              <div class="fv">एकादशी के सूर्योदय से द्वादशी के सूर्योदय तक — अन्न और जल दोनों का त्याग।</div>
+            </div>
+            <div class="frow">
+              <div class="fl"><span class="d">पारण</span>parana</div>
+              <div class="fv">
+                द्वादशी के दिन सूर्योदय के बाद, द्वादशी तिथि रहते पारण करें।
+                <div class="computed">पारण · 16 जून 2027 · 5:42 – 8:10 AM
+                  <span class="loc">आपके पंचांग स्थान (उज्जैन) के सूर्योदय व द्वादशी समाप्ति से परिकलित</span>
+                </div>
+              </div>
+            </div>
+            <div class="footnote">परंपरा अनुसार अस्वस्थ, वृद्ध एवं गर्भवती फलाहार रख सकते हैं। · Traditionally the unwell, elderly, and expectant mothers may observe with phalahar.</div>
+          </div>
+        </div>
+        <div class="endcap">॥</div>
+      </div></div>
+    </div>
+
+    <div class="panel">
+      <div class="acard">
+        <h3>Design decisions — frame A</h3>
+        <ul>
+          <li><b>Position preserved:</b> the section renders <b>last</b>, exactly where the parent PRD reserved the "How to observe" slot (§6.2). Hero, actions, About, and Story are the shipped screen, untouched.</li>
+          <li><b>Fast-type chip</b> is the panel's headline: a filled saffron pill (<code>pillTextStyle</code>, Devanagari-safe leading, 1.15 font-scale cap) with a one-line note beside it — the two facts a devotee scans first.</li>
+          <li><b>Two labelled rows</b> (उपवास काल · पारण) reuse the app's quiet fact-panel language (Pitru detail's annual-answer rows) — <b>non-interactive, no chevron</b>: actions live in the action row above.</li>
+          <li><b>Parana is text-canonical:</b> the verified rule sentence always renders. The gold-tint <b>computed line</b> beneath it is derived display — parana-day sunrise → Dwadashi end from <code>panchangDayStore</code> at the user's real location (the shipped P4 location half is what makes this line honest). When derivation returns null (Dwadashi ends pre-sunrise, etc.) the line simply doesn't render — never an invented time.</li>
+          <li><b>Strictness footnote</b> is transcribed from sources (traditional exemptions), italic-muted so it reads as a note, not a rule row.</li>
+        </ul>
+        <div class="warn">All rules/times here are ILLUSTRATIVE SAMPLE copy — layout stand-ins, not verified guidance.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ B =============== -->
+<section class="scenario">
+  <h2>B — Upvas info + puja vidhi · करवा चौथ</h2>
+  <div class="sc-sub">The composition case: one "How to observe" home — fast facts first, the PRD-19 vidhi card beneath, inside the same section.</div>
+  <div class="wrap">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="tt">व्रत विवरण</div><div class="sp"></div></div>
+
+        <div class="hero">
+          <div class="tags"><span class="pill">व्रत</span><span class="deity">मां गौरी</span></div>
+          <div class="name">करवा चौथ</div>
+          <div class="name-en">Karwa Chauth</div>
+          <div class="rule">कार्तिक · कृष्ण पक्ष · चतुर्थी</div>
+          <div class="next">अगला · 29 अक्टू 2026 · 72 दिन में</div>
+        </div>
+
+        <div class="actions">
+          <div class="abtn">★ फ़ॉलो करें</div>
+          <div class="abtn fill">॥ कथा पढ़ें</div>
+        </div>
+
+        <div class="block">
+          <div class="bh">महत्व <span class="en">· About</span></div>
+          <div class="body">करवा चौथ सुहागिनों का पति की दीर्घायु हेतु रखा जाने वाला व्रत है; संध्या में करवा माता की पूजा और चंद्र दर्शन के बाद व्रत पूर्ण होता है।</div>
+        </div>
+
+        <div class="block">
+          <div class="bh">कथा <span class="en">· Story</span></div>
+          <div class="card">
+            <div class="glyph">॥</div>
+            <div class="ct">
+              <div class="t">करवा चौथ व्रत कथा</div>
+              <div class="m">Karwa Chauth Katha · 3 sections</div>
+            </div>
+            <div class="chev">›</div>
+          </div>
+        </div>
+
+        <!-- NEW SECTION: facts + vidhi card, one home -->
+        <div class="block">
+          <div class="bh">उपवास विधि <span class="en">· How to observe</span></div>
+          <div class="upvas">
+            <div class="fasttype">
+              <span class="ftchip">निर्जला</span>
+              <span class="ftnote">चंद्रोदय तक — जल भी वर्जित</span>
+            </div>
+            <div class="frow">
+              <div class="fl"><span class="d">उपवास काल</span>window</div>
+              <div class="fv">सूर्योदय (सरगी के बाद) से चंद्र दर्शन तक।</div>
+            </div>
+            <div class="frow">
+              <div class="fl"><span class="d">पारण</span>parana</div>
+              <div class="fv">
+                चंद्र दर्शन और अर्घ्य के उपरांत जल ग्रहण कर व्रत खोलें।
+                <div class="computed">चंद्रोदय · 29 अक्टू 2026 · 8:07 PM
+                  <span class="loc">आपके पंचांग स्थान (उज्जैन) के चंद्रोदय से परिकलित</span>
+                </div>
+              </div>
+            </div>
+            <div class="footnote">परंपरा एवं परिवार की रीति अनुसार सरगी और फलाहार में भिन्नता रहती है।</div>
+
+            <!-- vidhi hand-off, INSIDE the same section, after the facts -->
+            <div class="vidhi-inner">
+              <div class="card">
+                <div class="glyph">॥</div>
+                <div class="ct">
+                  <div class="t">करवा चौथ पूजा</div>
+                  <div class="m">पूजा विधि · 15 चरण · लगभग 40 मिनट</div>
+                </div>
+                <div class="chev">›</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="endcap">॥</div>
+      </div></div>
+    </div>
+
+    <div class="panel">
+      <div class="acard">
+        <h3>Design decisions — frame B (ordering)</h3>
+        <ul>
+          <li><b>One section, not two:</b> the fast spans the whole day; the puja is one act inside it. Fast facts frame the procedure, so the section heading becomes <b>उपवास विधि · How to observe</b> and the shipped PRD-19 vidhi card moves <b>inside it, beneath the facts</b>, keeping its own ॥ पूजा विधि identity row. Two sibling sections both subtitled "How to observe" would answer one question twice.</li>
+          <li><b>Vidhi-only pages are untouched:</b> when a rule has a <code>vidhiId</code> but no upvas entry (today's six festivals until their entries verify), the block renders <b>exactly as shipped</b> — heading पूजा विधि · How to observe + card. Zero regression, pinned by the rendering-matrix test.</li>
+          <li><b>Moonrise-bound parana:</b> Karwa Chauth's computed line is the occurrence day's <code>PanchangData.moonrise</code> — a different derivation kind than frame A, demonstrating the <code>parana.kind</code> enum. Null moonrise ⇒ rule text only.</li>
+          <li><b>Card behaviour unchanged:</b> the vidhi card still deep-links to <code>VidhiDetail</code> with the occurrence's <code>dateMs</code>, same testID, same push-in-place navigation.</li>
+        </ul>
+        <div class="warn">Fasting rules, sargi note, moonrise time: ILLUSTRATIVE SAMPLE only.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ C =============== -->
+<section class="scenario">
+  <h2>C — Neither verified upvas info nor vidhi · मासिक कालाष्टमी</h2>
+  <div class="sc-sub">The honesty state: the page simply ends after the Story. No section, no placeholder, no "coming soon".</div>
+  <div class="wrap">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="tt">व्रत विवरण</div><div class="sp"></div></div>
+
+        <div class="hero">
+          <div class="tags"><span class="pill">व्रत</span><span class="deity">काल भैरव</span></div>
+          <div class="name">मासिक कालाष्टमी</div>
+          <div class="name-en">Masik Kalashtami</div>
+          <div class="rule">प्रत्येक मास · कृष्ण पक्ष · अष्टमी</div>
+          <div class="next">अगला · 4 सित 2026 · 17 दिन में</div>
+        </div>
+
+        <div class="actions">
+          <div class="abtn">★ फ़ॉलो करें</div>
+          <div class="abtn fill">॥ कथा पढ़ें</div>
+        </div>
+
+        <div class="block">
+          <div class="bh">महत्व <span class="en">· About</span></div>
+          <div class="body">मासिक कालाष्टमी काल भैरव की उपासना का दिन है; प्रत्येक कृष्ण पक्ष की अष्टमी को मनाई जाती है।</div>
+        </div>
+
+        <div class="block">
+          <div class="bh">कथा <span class="en">· Story</span></div>
+          <div class="card">
+            <div class="glyph">॥</div>
+            <div class="ct">
+              <div class="t">मासिक कालाष्टमी कथा</div>
+              <div class="m">Masik Kalashtami Katha · 2 sections</div>
+            </div>
+            <div class="chev">›</div>
+          </div>
+        </div>
+
+        <!-- deliberately nothing after the Story -->
+        <div class="endcap">॥</div>
+      </div></div>
+    </div>
+
+    <div class="panel">
+      <div class="acard">
+        <h3>Design decisions — frame C (absence)</h3>
+        <ul>
+          <li><b>Absent, never placeholdered.</b> This rule has no verified upvas entry and no <code>vidhiId</code>, so no "How to observe" section exists at all. This retires the parent PRD's original "Coming soon" slot and makes the PRD-19 Phase 2B house rule — <b>never a placeholder</b> — uniform across the page.</li>
+          <li><b>Draft = absent.</b> The same frame is what a <code>status: 'draft'</code> entry produces: <code>getUpvasInfo</code> returns null for drafts, so an unverified entry is indistinguishable from no entry at every call site. Flipping to <code>verified</code> is a reviewed content change, not a code change.</li>
+          <li><b>No status language leaks:</b> customer copy never says draft/pending/verified — the page just ends, quietly, at the ॐ-family seal spacing the readers use.</li>
+          <li><b>Test pin:</b> the rendering-matrix Jest case asserts no placeholder string exists in this tree, alongside the three positive states.</li>
+        </ul>
+        <div class="warn">Observance copy on this frame is ILLUSTRATIVE SAMPLE only.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

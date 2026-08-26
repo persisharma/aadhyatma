@@ -9,11 +9,17 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { useTilePress } from '@/contexts/TilePressContext';
 import { usePanchangCalendarSystem, useObservancesForDate } from '@/panchang/usePanchang';
 import { useMuhurat } from '@/panchang/useMuhurat';
-import { formatRangeCompact } from '@/panchang/muhuratFormat';
-import { PAKSHA_NAMES_HI, PAKSHA_NAMES_EN } from '@/panchang/names';
+import { formatClock, formatRangeCompact } from '@/panchang/muhuratFormat';
+import { useMuhuratFollows } from '@/contexts/MuhuratFollowContext';
+import { useNextFollowedMuhurat } from '@/panchang/useMuhuratFinder';
+import { PAKSHA_NAMES_HI, PAKSHA_NAMES_EN, VARA_NAMES_EN, VARA_NAMES_HI } from '@/panchang/names';
+import { transliterateDevanagari } from '@/utils/transliterate';
 import { contentByLang } from '@/utils/localize';
 import { pillTextStyle, scriptTitleFont, eyebrowTextStyle } from '@/utils/langType';
 import { useTodayKey } from '@/utils/useTodayKey';
+import PitruSmaranDayChip from '@/components/PitruSmaranDayChip';
+import { moreTabTarget } from '@/navigation/entryRoutes';
+import { pitruPakshaObservanceForDate, type PitruPakshaDayObservance } from '@/panchang/pitruSmaran';
 
 /**
  * Home "आज · Today" strip (design.md §48): a one-card daily-panchang glance —
@@ -46,6 +52,16 @@ export default function TodayStrip() {
   const today = React.useMemo(() => new Date(todayKey), [todayKey]);
   const observances = useObservancesForDate(today, calendarSystem);
   const { muhurat, panchang } = useMuhurat(today, calendarSystem, { live: false });
+  const [pitruPakshaToday, setPitruPakshaToday] = React.useState<PitruPakshaDayObservance | null>(null);
+  React.useEffect(() => {
+    let cancelled = false;
+    const handle = setTimeout(() => {
+      let result: PitruPakshaDayObservance | null = null;
+      try { result = pitruPakshaObservanceForDate(today); } catch { result = null; }
+      if (!cancelled) setPitruPakshaToday(result);
+    }, 0);
+    return () => { cancelled = true; clearTimeout(handle); };
+  }, [today]);
 
   const headlineFont =
     lang === 'en' ? fontFamilies.latinBold : scriptTitleFont(lang, fontFamilies.devanagariBold);
@@ -63,13 +79,62 @@ export default function TodayStrip() {
     fontSize: 10.5,
   });
 
+  // Followed muhurat (PRD-16 §6.7) — resolved off the render path, null unless
+  // one is upcoming and still grades.
+  const { follows } = useMuhuratFollows();
+  const nextFollow = useNextFollowedMuhurat(follows, today.getTime());
+  const followWhen = React.useMemo(() => {
+    if (!nextFollow) return undefined;
+    const d = new Date(nextFollow.dateMs);
+    const isToday = d.toDateString() === today.toDateString();
+    const wdHi = VARA_NAMES_HI[d.getDay()];
+    const day = isToday
+      ? contentByLang(lang, 'आज', 'Today')
+      : lang === 'en'
+        ? VARA_NAMES_EN[d.getDay()].slice(0, 3)
+        : lang === 'hi'
+          ? wdHi
+          : transliterateDevanagari(wdHi, lang);
+    return nextFollow.windowStart ? `${day} ${formatClock(nextFollow.windowStart)}` : day;
+  }, [nextFollow, today, lang]);
+
   // One normalized chip list — observances first, then the day's windows — so
   // the pill spec exists once. Chip text colors are the DEEP cuts: the tint
   // composites darker than the raw card surface (colors.contrast.test.ts pins
   // avoidDeep/saffronDeep against the composited chip surfaces). Ranges are
   // compact (shared meridiem written once) so the row needs less width.
-  type Chip = { key: string; labelHi: string; labelEn: string; range?: string; bg: string; fg: string };
+  type Chip = { key: string; labelHi: string; labelEn: string; range?: string; bg: string; fg: string; onPress?: () => void };
   const chips: Chip[] = [
+    // A followed muhurat leads the row when one is near (PRD-16 §6.7). Purely
+    // contextual: `nextFollow` is null unless the user followed a day inside
+    // the horizon and it still grades, so a user who follows nothing sees the
+    // shipped strip unchanged.
+    ...(nextFollow
+      ? [{
+          key: `muhurat-follow-${nextFollow.dateMs}`,
+          labelHi: nextFollow.nameHi,
+          labelEn: nextFollow.nameEn,
+          range: followWhen,
+          bg: colors.saffronTint,
+          fg: colors.saffronDeep,
+          onPress: () =>
+            rootNav.navigate('PanchangTab', {
+              screen: 'MuhuratDayDetail',
+              params: { occasionId: nextFollow.occasionId, dateMs: nextFollow.dateMs },
+              initial: false,
+            }),
+        }]
+      : []),
+    ...(pitruPakshaToday
+      ? [{
+          key: 'pitru-paksha',
+          labelHi: pitruPakshaToday.labelHi,
+          labelEn: pitruPakshaToday.labelEn,
+          bg: colors.saffronTint,
+          fg: colors.saffronDeep,
+          onPress: () => rootNav.navigate('MoreTab', moreTabTarget('PitruPakshaOverview')),
+        }]
+      : []),
     ...observances.slice(0, 2).map((o) => ({
       key: o.rule.id,
       labelHi: o.rule.nameHi,
@@ -161,20 +226,34 @@ export default function TodayStrip() {
     const overflow = s.contentW - s.layoutW;
     if (s.dragged || !s.focused || s.reduceMotion || s.layoutW <= 0 || overflow <= 8) return;
     const duration = (overflow / AUTO_SCROLL_PX_PER_SEC) * 1000;
+    // `isInteraction: false` is load-bearing, not tidiness. It defaults to
+    // `!useNativeDriver` — and this loop cannot use the native driver, because
+    // it drives `scrollTo` from a JS listener — so every drift and pause used to
+    // register an InteractionManager handle. A never-ending loop then meant Home
+    // almost never reported an idle UI, and everything on it that waits for one
+    // (the day's observance chips, the pitru match, the muhurat/festive
+    // schedulers, the widget writer, and this strip's own rollover at midnight)
+    // was starved behind an animation that is purely decorative.
     const drift = (toValue: number) =>
       Animated.timing(s.x, {
         toValue,
         duration,
         easing: Easing.inOut(Easing.quad),
+        isInteraction: false,
+        useNativeDriver: false,
+      });
+    // A hold, not Animated.delay: `delay()` takes no config, so it would keep
+    // claiming an interaction handle for its 1.8s. Same effect — the value is
+    // already at `at`, so the tween is a no-op that just burns the pause.
+    const hold = (at: number) =>
+      Animated.timing(s.x, {
+        toValue: at,
+        duration: AUTO_SCROLL_END_PAUSE_MS,
+        isInteraction: false,
         useNativeDriver: false,
       });
     s.anim = Animated.loop(
-      Animated.sequence([
-        Animated.delay(AUTO_SCROLL_END_PAUSE_MS),
-        drift(overflow),
-        Animated.delay(AUTO_SCROLL_END_PAUSE_MS),
-        drift(0),
-      ])
+      Animated.sequence([hold(0), drift(overflow), hold(overflow), drift(0)])
     );
     s.anim.start();
   }, [stopAutoScroll]);
@@ -206,11 +285,8 @@ export default function TodayStrip() {
   }, [stopAutoScroll]);
 
   return (
-    <Pressable
-      onPress={() => activateTile(openPanchang)}
-      onPressIn={() => beginTilePress(openPanchang)}
-      onPressOut={finishTilePress}
-      style={({ pressed }) => [
+    <View
+      style={[
         styles.card,
         elevation.raised,
         {
@@ -221,10 +297,7 @@ export default function TodayStrip() {
           // carries its own matching radius instead.
           backgroundColor: colors.cardActiveFrom,
         },
-        pressed && { opacity: 0.85 },
       ]}
-      accessibilityRole="button"
-      accessibilityLabel={a11y}
     >
       <LinearGradient
         colors={[colors.cardActiveFrom, colors.cardActiveTo]}
@@ -232,26 +305,37 @@ export default function TodayStrip() {
         end={{ x: 1, y: 1 }}
         style={[StyleSheet.absoluteFillObject, { borderRadius: radii.lg }]}
       />
-      <View style={styles.headRow}>
-        <Text style={[eyebrowTextStyle(lang, 12), { color: colors.saffronDeep }]}>
-          {contentByLang(lang, 'आज का पंचांग', "Today's Panchang")}
-        </Text>
-        <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 14, color: colors.saffronDeep }}>
-          ›
-        </Text>
-      </View>
-      <Text
-        numberOfLines={1}
-        style={{
-          marginTop: 3,
-          fontFamily: headlineFont,
-          fontSize: lang === 'en' ? 17 : 16,
-          color: colors.ink,
-          ...(lang === 'en' ? { letterSpacing: 0.3 } : null),
-        }}
+      {/* The card shell is not one accessibility element: private Smaran chips
+          must remain independently focusable/tappable on iOS. This header keeps
+          the original Panchang action and label without swallowing its siblings. */}
+      <Pressable
+        onPress={() => activateTile(openPanchang)}
+        onPressIn={() => beginTilePress(openPanchang)}
+        onPressOut={finishTilePress}
+        accessibilityRole="button"
+        accessibilityLabel={a11y}
       >
-        {headline}
-      </Text>
+        <View style={styles.headRow}>
+          <Text style={[eyebrowTextStyle(lang, 12), { color: colors.saffronDeep }]}>
+            {contentByLang(lang, 'आज का पंचांग', "Today's Panchang")}
+          </Text>
+          <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 14, color: colors.saffronDeep }}>
+            ›
+          </Text>
+        </View>
+        <Text
+          numberOfLines={1}
+          style={{
+            marginTop: 3,
+            fontFamily: headlineFont,
+            fontSize: lang === 'en' ? 17 : 16,
+            color: colors.ink,
+            ...(lang === 'en' ? { letterSpacing: 0.3 } : null),
+          }}
+        >
+          {headline}
+        </Text>
+      </Pressable>
       {/* Reserve this row even before the deferred Panchang solve completes.
           Otherwise its later insertion moves the category grid during a press. */}
       <ScrollView
@@ -269,11 +353,26 @@ export default function TodayStrip() {
           replanAutoScroll();
         }}
         onScrollBeginDrag={onChipRowDrag}
+        onTouchStart={stopAutoScroll}
       >
-        {chips.map((chip) => (
-          <View
+        {/* Personal remembrance is the most time-sensitive item in this row;
+            keep it first so it is fully visible and tappable before overflow. */}
+        <PitruSmaranDayChip date={today} compact />
+        {chips.map((chip) => {
+          const action = chip.onPress ?? openPanchang;
+          return (
+          <Pressable
             key={chip.key}
-            style={[styles.chip, { backgroundColor: chip.bg, borderRadius: radii.pill }]}
+            onPress={() => activateTile(action)}
+            onPressIn={() => beginTilePress(action)}
+            onPressOut={finishTilePress}
+            accessibilityRole="button"
+            accessibilityLabel={chip.labelEn}
+            style={({ pressed }) => [
+              styles.chip,
+              { backgroundColor: chip.bg, borderRadius: radii.pill },
+              pressed && { opacity: 0.7 },
+            ]}
           >
             <Text numberOfLines={1} style={{ maxWidth: 200 }}>
               <Text style={[chipText, { color: chip.fg }]}>
@@ -287,10 +386,10 @@ export default function TodayStrip() {
                 </Text>
               )}
             </Text>
-          </View>
-        ))}
+          </Pressable>
+        );})}
       </ScrollView>
-    </Pressable>
+    </View>
   );
 }
 

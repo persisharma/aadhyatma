@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect } from 'react';
-import { View } from 'react-native';
+import { Linking, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Notifications from 'expo-notifications';
@@ -40,6 +40,8 @@ import { lightColors } from '@/theme/colors';
 import { GitaLanguageProvider, useGitaLanguage } from '@/data/gita/language';
 import { BookmarksProvider } from '@/contexts/BookmarksContext';
 import { VratFollowProvider } from '@/contexts/VratFollowContext';
+import { MuhuratFollowProvider } from '@/contexts/MuhuratFollowContext';
+import { PitruSmaranProvider } from '@/contexts/PitruSmaranContext';
 import { JapamCounterProvider } from '@/contexts/JapamCounterContext';
 import { JapamAlarmsProvider } from '@/contexts/JapamAlarmsContext';
 import { registerNativeAlarmForegroundHandler } from '@/notifications/japamAlarmNative';
@@ -57,6 +59,8 @@ import {
 } from '@/contexts/NotificationPreferencesContext';
 import { PanchangLocationProvider } from '@/contexts/PanchangLocationContext';
 import { AudioPlayerProvider } from '@/contexts/AudioPlayerContext';
+import { ReadAloudPrefsProvider } from '@/contexts/ReadAloudPrefsContext';
+import { ReadAloudProvider } from '@/contexts/ReadAloudContext';
 import { handleNotificationResponse, navigationRef } from '@/notifications/deepLink';
 import ReminderOptInModal from '@/components/ReminderOptInModal';
 import UpdateReadyModal from '@/components/UpdateReadyModal';
@@ -69,13 +73,20 @@ import { RatingPromptProvider } from '@/contexts/RatingPromptContext';
 import RoutineCelebrationOverlay from '@/components/RoutineCelebrationOverlay';
 import SadhanaCompletionOverlay from '@/components/SadhanaCompletionOverlay';
 import VratReminderScheduler from '@/components/VratReminderScheduler';
+import MuhuratReminderScheduler from '@/components/MuhuratReminderScheduler';
 import FestiveReminderScheduler from '@/components/FestiveReminderScheduler';
+import PitruSmaranReminderScheduler from '@/components/PitruSmaranReminderScheduler';
 import SadhanaReminderScheduler from '@/components/SadhanaReminderScheduler';
 import DailyVerseAngaBridge from '@/components/DailyVerseAngaBridge';
 import MiniPlayer from '@/components/audio/MiniPlayer';
 import NowPlayingScreen from '@/screens/audio/NowPlayingScreen';
 import { ShareProvider } from '@/utils/shareVerse';
+import { currentBuildFingerprint } from '@/utils/buildFingerprint';
+import { resetDerivedCachesIfBuildChanged } from '@/utils/derivedCacheReset';
+import { prefetchTodayPanchang } from '@/panchang/panchangLaunchPrefetch';
 import RootNavigator from '@/navigation/RootNavigator';
+import WidgetCoordinator from '@/widgets/WidgetCoordinator';
+import { retryWidgetDeepLink } from '@/widgets/deepLink';
 
 SplashScreen.preventAutoHideAsync().catch(() => {
   /* noop — already prevented */
@@ -83,6 +94,30 @@ SplashScreen.preventAutoHideAsync().catch(() => {
 
 // One-time global setup: foreground notification presentation.
 configureForegroundNotificationHandler();
+
+// Drop the derived caches (panchang day solves, observance year scans, the widget
+// dedupe key) when the running build changes — a store update or an OTA — so a bug
+// baked into cached data cannot outlive the release that fixes it. Nothing the user
+// authored is touched; see `derivedCacheReset` for the allowlist and the exclusions.
+//
+// MODULE SCOPE, not an effect: the caches await this before touching storage, and
+// registering it here is what guarantees it is in flight before React renders
+// anything that hydrates. Fire-and-forget — it never rejects.
+void resetDerivedCachesIfBuildChanged(currentBuildFingerprint());
+
+// Read the panchang preferences and pull today's persisted day solves into memory
+// NOW, concurrently with the splash gate below rather than behind it. Home's
+// `आज का पंचांग` card is the one thing on that screen which cannot render from
+// bundled JS, and its read used to be the launch's third serial storage round
+// trip — after the font/language gate, then after the calendar-system preference
+// that only a mounted Home subscribed to. Starting it here is what lets the
+// headline paint with the rest of Home instead of two round trips later.
+//
+// MODULE SCOPE for the same reason as the reset above: it has to be in flight
+// before React renders anything that reads it. Fire-and-forget, hydrate-only
+// (never a solve), and it never rejects — nothing waits on it and a lost race
+// just leaves the hooks on the path they already take.
+void prefetchTodayPanchang();
 
 export default function App() {
   const [notoLoaded] = useNotoFonts({
@@ -162,19 +197,56 @@ export default function App() {
     };
   }, [fontsReady]);
 
+  // WidgetKit/AppWidget taps arrive as ordinary app links. Retry a cold-start
+  // URL briefly until the navigation container is ready; warm links dispatch
+  // immediately through the same validated parser.
+  useEffect(() => {
+    if (!fontsReady) return undefined;
+    let cancelled = false;
+    const cancellations = new Set<() => void>();
+    const route = (url: string) => {
+      if (cancelled) return;
+      const cancel = retryWidgetDeepLink(url);
+      cancellations.add(cancel);
+    };
+    Linking.getInitialURL().then((url) => { if (url?.startsWith('vedansh://widget/')) route(url); }).catch(() => undefined);
+    const sub = Linking.addEventListener('url', ({ url }) => { if (url.startsWith('vedansh://widget/')) route(url); });
+    return () => { cancelled = true; cancellations.forEach((cancel) => cancel()); cancellations.clear(); sub.remove(); };
+  }, [fontsReady]);
+
   if (!fontsReady) {
     return <View style={{ flex: 1, backgroundColor: lightColors.parchment }} />;
   }
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaProvider>
+      {/* `initialMetrics` is the launch-jerk fix, not an optimization to trim.
+          Without it the provider renders NOTHING until the first native inset
+          event crosses the (busy) launch JS thread, and the whole tree then
+          mounts on whatever that first event carried — on Android cold starts
+          under edge-to-edge that can be a pre-attach zero, so Home painted
+          flush under the status bar, sat frozen behind the mount burst, and
+          lurched down by the status-bar height when the corrected insets
+          finally applied. Seeding from the native module's constants gives the
+          first committed frame its final insets, so any later inset event is a
+          no-op instead of a visible reflow. */}
+      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
         <FontScaleProvider>
         <ThemeProvider>
           <GitaLanguageProvider>
             <AudioPlayerProvider>
+            {/* Read-aloud needs the reading language and its own prefs; it sits
+                inside AudioPlayerProvider so both register with the playback
+                arbiter that keeps recorded audio and TTS mutually exclusive. */}
+            <ReadAloudPrefsProvider>
+            <ReadAloudProvider>
             <BookmarksProvider>
               <VratFollowProvider>
+              {/* Dated one-shot muhurat follows (PRD-16 §6.7). Sibling of the
+                  vrat store, not a reuse: the key is (occasion, civil day). */}
+              <MuhuratFollowProvider>
+              {/* पितृ स्मरण entries (PRD-17) — device-only AsyncStorage, no sync. */}
+              <PitruSmaranProvider>
               <UserActivityProvider>
                 <NewContentProvider>
                   <ReadingProgressProvider>
@@ -203,18 +275,25 @@ export default function App() {
                             <RoutineCelebrationOverlay />
                             <SadhanaCompletionOverlay />
                             <VratReminderScheduler />
+                            {/* Muhurat follows (PRD-16 §6.7). Must stay inside
+                                PanchangLocationProvider: every window is
+                                sunrise-derived, so it re-derives them (and
+                                re-arms) on a location/calendar-system change. */}
+                            <MuhuratReminderScheduler />
                             {/* Default-on festival pushes. Below
                                 NotificationPreferencesProvider for the pref +
                                 shared permission grant; needs no panchang
                                 location (festival dates come from the bundled
                                 precomputed table). */}
                             <FestiveReminderScheduler />
+                            <PitruSmaranReminderScheduler />
                             <SadhanaReminderScheduler />
                             {/* Feeds the daily-verse scheduler each fire day's
                                 tithi/vrat for its title. Must stay inside
                                 PanchangLocationProvider — the notification
                                 provider itself sits above it. */}
                             <DailyVerseAngaBridge />
+                            <WidgetCoordinator />
                             <MiniPlayer />
                             <NowPlayingScreen />
                             {/* Top-level so the spotlight overlays the tab bar +
@@ -244,8 +323,12 @@ export default function App() {
                   </ReadingProgressProvider>
                 </NewContentProvider>
               </UserActivityProvider>
+              </PitruSmaranProvider>
+              </MuhuratFollowProvider>
               </VratFollowProvider>
             </BookmarksProvider>
+            </ReadAloudProvider>
+            </ReadAloudPrefsProvider>
             </AudioPlayerProvider>
           </GitaLanguageProvider>
         </ThemeProvider>

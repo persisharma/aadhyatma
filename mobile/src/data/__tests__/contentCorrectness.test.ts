@@ -18,6 +18,9 @@ import {
 import { deityEssays } from '../deityEssays';
 import { getRuleById } from '../../panchang/vratCatalog';
 import { isChapteredSource, chaptersForSource } from '../routine/chapters';
+import { japamMantras } from '../japam';
+import { AUDIO_TRACKS } from '../audio/tracks';
+import { SADHANA_PROGRAMS } from '../sadhana/programs';
 
 const DATA = join(__dirname, '..');
 const TRANSLATIONS = join(DATA, '..', '..', '.translations');
@@ -941,6 +944,35 @@ for (const [deityId, essay] of Object.entries(deityEssays)) {
   assert.ok(essay.titleHi.trim() && essay.titleEn.trim(), `${deityId}: essay titles should be present`);
   assert.ok(essay.bodyHi.trim() && essay.bodyEn.trim(), `${deityId}: essay bodies should be present`);
   assert.ok(essay.source.trim(), `${deityId}: deity essay should carry a source line`);
+}
+
+// ─── 20. Card thumbs are ONE Devanagari akshara ──────────────────────────────
+// RULEBOOK §1 row 5: `thumb` is a single glyph. Mixed one- and two-akshara
+// thumbs render at visibly different widths inside the same card row (the
+// "FOR TODAY" strip showed ग and गण side by side for two Ganesh texts), so
+// every thumb must be exactly one orthographic syllable: an independent vowel,
+// ॐ, or one consonant cluster (conjuncts via virama allowed) with at most one
+// matra, plus an optional candrabindu/anusvara/visarga. A hand-rolled regex,
+// not Intl.Segmenter — Indic grapheme clustering changed in ICU (Unicode
+// 15.1 GB9c), so the segmenter splits conjuncts like ज्यो on older runtimes.
+// \u-escaped (not Devanagari literals): nukta consonants like क़ decompose to
+// base + U+093C in source, which silently corrupts character-class ranges.
+// U+0950 ॐ · U+0904-14/0960-61/0972-77 independent vowels · U+0915-39/0958-5F/
+// 0978-7F consonants · U+093C nukta · U+094D virama · U+093A-4C/0962-63 matras
+// · U+0900-03 candrabindu/anusvara/visarga.
+const SINGLE_AKSHARA =
+  /^(?:\u0950|[\u0904-\u0914\u0960\u0961\u0972-\u0977]|(?:[\u0915-\u0939\u0958-\u095F\u0978-\u097F]\u093C?\u094D)*[\u0915-\u0939\u0958-\u095F\u0978-\u097F]\u093C?[\u093A-\u094C\u0962\u0963]?)[\u0900-\u0903]?$/u;
+const allThumbs: Array<[string, string, string]> = [
+  ...library.map((e): [string, string, string] => ['library', e.id, e.thumb]),
+  ...japamMantras.map((m): [string, string, string] => ['japam', m.id, m.thumb]),
+  ...AUDIO_TRACKS.map((t): [string, string, string] => ['audio', t.id, t.thumb]),
+  ...SADHANA_PROGRAMS.map((p): [string, string, string] => ['sadhana', p.id, p.thumb]),
+];
+for (const [source, id, thumb] of allThumbs) {
+  assert.ok(
+    SINGLE_AKSHARA.test(thumb),
+    `${source}/${id}: thumb ${JSON.stringify(thumb)} must be a single Devanagari akshara (RULEBOOK §1 row 5)`
+  );
 }
 
 // ─── Done ────────────────────────────────────────────────────────────────────

@@ -268,20 +268,26 @@ describe('opt-in sheet cadence: every open until confirmed, then 15-day snooze',
     expect(captured.shouldShowOptIn).toBe(false);
   });
 
-  test('the third-open gate still applies before any offer', async () => {
+  test('offers from the very first open — a fresh install with no opens yet', async () => {
+    // Festive off too, so no launch OS ask competes and permission stays
+    // undetermined; this isolates the open-count gate.
     await AsyncStorage.setItem(
       PREFS_KEY,
-      JSON.stringify({ dailyVerseEnabled: false, times: [{ hour: 7, minute: 0 }] })
+      JSON.stringify({
+        dailyVerseEnabled: false,
+        festiveRemindersEnabled: false,
+        times: [{ hour: 7, minute: 0 }],
+      })
     );
     await AsyncStorage.setItem(
       META_KEY,
-      JSON.stringify({ appOpenCount: 1, optInPromptShown: false })
+      JSON.stringify({ appOpenCount: 0, optInPromptShown: false })
     );
 
     await mountAndHydrate();
 
-    // This mount bumps the count to 2 — still below the third-open gate.
-    expect(captured.shouldShowOptIn).toBe(false);
+    // This mount bumps the count to 1 — the first open — and the sheet offers.
+    expect(captured.shouldShowOptIn).toBe(true);
   });
 });
 

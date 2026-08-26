@@ -153,7 +153,7 @@ All screens follow the parchment design system and the bilingual rules in `RULEB
 
 1. **Phase 1 — Foundation.** `RoutineContext` (+ AsyncStorage), `RoutineListScreen`, `RoutineDetailScreen`, multiple named routines, the daily-vs-weekday creation choice, "add to routine" (sections, verses, japam, granth-chapter rule), check-off → `UserActivityContext`. Ships value alone.
 2. **Phase 2 — Vaar.** Weekday strip, per-item `weekdays`, deity-of-day suggestions sourced from existing tags. "Suggested for today."
-3. **Phase 3 — Reminders.** Wire routines into the existing notification scheduler (`mobile/src/notifications/scheduler.ts`, `NotificationPreferencesContext`) — per-routine reminder time that deep-links to the Today view.
+3. **Phase 3 — Reminders.** Wire routines into the existing notification scheduler (`mobile/src/notifications/scheduler.ts`, `NotificationPreferencesContext`) — per-routine reminder time that deep-links to the Today view — **detailed in [07-routine-reminders-phase3.md](./07-routine-reminders-phase3.md)**.
 4. **Phase 4 — Calendar.** Date-anchored entries / sankalp ("read X for N days"), reusing PRD-01's bundled festival JSON for festival-day routines.
 
 ## 7a. Implementation status (Phase 1 + vaar)

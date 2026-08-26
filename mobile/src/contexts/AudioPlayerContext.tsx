@@ -9,6 +9,7 @@ import React, {
 } from 'react';
 import { createAudioPlayer, type AudioStatus } from 'expo-audio';
 import { ensureBackgroundAudioMode } from '@/audio/audioSession';
+import { claimPlayback, registerStopper } from '@/audio/playbackArbiter';
 import { AUDIO_TRACKS, type AudioTrack } from '@/data/audio/tracks';
 import { getAudioSource, hasRealAudio } from '@assets/audio-library';
 
@@ -112,6 +113,9 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
 
   const playTrack = useCallback(
     (track: AudioTrack) => {
+      // Silence read-aloud / japam first — on iOS the session mixes rather than
+      // interrupts, so two sources would otherwise play over each other.
+      claimPlayback('recorded');
       setNowPlayingOpen(false);
       // Re-tapping the current track just resumes.
       if (track.id === currentTrack?.id) {
@@ -263,6 +267,9 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
 
   const openNowPlaying = useCallback(() => setNowPlayingOpen(true), []);
   const closeNowPlaying = useCallback(() => setNowPlayingOpen(false), []);
+
+  // Let another source (read-aloud, japam) silence this player when it starts.
+  useEffect(() => registerStopper('recorded', stop), [stop]);
 
   const value = useMemo<AudioPlayerContextValue>(
     () => ({

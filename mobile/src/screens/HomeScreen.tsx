@@ -30,7 +30,7 @@ import type { ContentCategory } from '@/data/texts';
 import { useNewContent } from '@/contexts/NewContentContext';
 import { useTilePressController, TilePressProvider } from '@/contexts/TilePressContext';
 import { shuffleBySeed } from '@/utils/shuffleBySeed';
-import { panchangTabTarget } from '@/navigation/entryRoutes';
+import { moreTabTarget, panchangTabTarget } from '@/navigation/entryRoutes';
 import { useTourTarget, scrollNodeIntoView } from '@/components/tour/tourTargets';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>;
@@ -122,6 +122,16 @@ export default function HomeScreen({ navigation }: Props) {
           panchangTabTarget('PanchangHome', { initialTab: 'jyotish' })
         ),
     };
+    const muhuratTile: TileItem = {
+      key: 'muhurat',
+      nameHi: 'मुहूर्त',
+      nameEn: 'Muhurat',
+      status: 'active',
+      icon: iconFor('muhurat'),
+      hasNew: true,
+      onPress: () =>
+        rootNav.navigate('PanchangTab', panchangTabTarget('MuhuratFinder', undefined)),
+    };
     const purposeTile: TileItem = {
       key: 'purpose',
       nameHi: 'उद्देश्य',
@@ -155,11 +165,12 @@ export default function HomeScreen({ navigation }: Props) {
             ? navigation.navigate('TheerthMap', {})
             : navigation.navigate('CategoryList', { categoryId: c.id as ContentCategory }),
       });
-      if (c.id === 'japam') result.push(vratTile, kundaliTile);
+      if (c.id === 'japam') result.push(vratTile, kundaliTile, muhuratTile);
       if (c.id === 'theerth') result.push(deityTile, purposeTile);
     }
-    // नित्य साधना closes the grid at 15 tiles so every row is a full 3 (was 14
-    // → an orphan pair in the last row). Same RoutineToday target as the banner.
+    // नित्य साधना closes the grid. With मुहूर्त the count is 16 = 5 full rows
+    // + this closer, which renders full-width below (PRD-16; design.md §18) so
+    // the grid still ends clean rather than on an orphan pair.
     result.push(nityaSadhnaTile);
     return result;
   }, [hasNewInCategory, navigation, rootNav]);
@@ -219,6 +230,55 @@ export default function HomeScreen({ navigation }: Props) {
       onPress: () => navigation.navigate('SadhanaPrograms'),
     },
     {
+      // Standing zero-state discovery door. The Today strip is contextual and
+      // the Panchang ledger is a planning surface; this card makes the feature
+      // discoverable on Home before anybody has saved a family tithi.
+      key: 'pitru-smaran',
+      titleHi: 'पितृ स्मरण', titleEn: 'Pitru Smaran',
+      descHi: 'एक बार तिथि जोड़ें—हर वर्ष श्राद्ध की सही तारीख़ जानें।',
+      descEn: 'Save a tithi once and know its shraddha date every year.',
+      ctaHi: 'स्मरण जोड़ें', ctaEn: 'Set up',
+      hasNew: true,
+      icon: (
+        <Text
+          style={{
+            fontFamily: typography.thumb.fontFamily,
+            fontSize: 22,
+            color: colors.gold,
+          }}
+        >
+          ॥
+        </Text>
+      ),
+      onPress: () => rootNav.navigate('MoreTab', moreTabTarget('PitruSmaranList')),
+    },
+    {
+      // PRD-19 Phase 2B Discover card: the vidhi catalog's Home awareness door.
+      // The Panchang day-panel pill is date-dependent and the Vrat & Parv tile
+      // is two taps deep; this card makes guided pujas discoverable on Home.
+      // Pushed on the Home stack (the vidhi flow is registered on both stacks):
+      // a cross-tab jump left back popping to the Panchang calendar, which in
+      // its default mode shows no vidhi door at all.
+      key: 'puja-vidhi',
+      titleHi: 'पूजा विधि', titleEn: 'Guided Pujas',
+      descHi: 'सत्यनारायण से शिवरात्रि तक—हर चरण, हर मन्त्र साथ।',
+      descEn: 'Satyanarayan to Shivaratri — every step, guided in hand.',
+      ctaHi: 'विधि देखें', ctaEn: 'Open',
+      hasNew: true,
+      icon: (
+        <Text
+          style={{
+            fontFamily: typography.thumb.fontFamily,
+            fontSize: 22,
+            color: colors.saffronDeep,
+          }}
+        >
+          ॥
+        </Text>
+      ),
+      onPress: () => navigation.navigate('VidhiCatalog'),
+    },
+    {
       key: 'theerth',
       titleHi: 'तीर्थ यात्रा', titleEn: 'Sacred Journeys',
       descHi: 'भारत के पवित्र मंदिरों और धामों की खोज करें।',
@@ -226,6 +286,31 @@ export default function HomeScreen({ navigation }: Props) {
       ctaHi: 'खोजें', ctaEn: 'Explore',
       icon: <CategoryIcon iconKey="theerth" />,
       onPress: () => navigation.navigate('TheerthMap', {}),
+    },
+    {
+      // Launch-release Discover card (PRD-15 §3.4, design.md §HomeWidgets). One
+      // spotlight raising awareness of home-screen widgets; it opens the in-app
+      // Widget Gallery (which carries the platform add-widget instructions) —
+      // it never promises a system widget-picker jump. WidgetGallery lives on
+      // the More stack, so route through the MoreTab like the tour steps do.
+      key: 'home-widgets',
+      titleHi: 'होम-स्क्रीन विजेट', titleEn: 'Home-Screen Widgets',
+      descHi: 'आज का श्लोक, पंचांग और जप—होम स्क्रीन पर।',
+      descEn: "Today's verse, Panchang, and japa on your home screen.",
+      ctaHi: 'देखें', ctaEn: 'View',
+      hasNew: true,
+      icon: (
+        <Text
+          style={{
+            fontFamily: typography.thumb.fontFamily,
+            fontSize: 22,
+            color: colors.saffronDeep,
+          }}
+        >
+          वि
+        </Text>
+      ),
+      onPress: () => rootNav.navigate('MoreTab', moreTabTarget('WidgetGallery')),
     },
   ];
 
@@ -298,7 +383,9 @@ export default function HomeScreen({ navigation }: Props) {
             {tiles.map((tile) => (
               <View
                 key={tile.key}
-                style={{ width: tileWidth }}
+                // नित्य साधना is the grid's full-width closing row (design.md §18);
+                // every other tile keeps the 3-column width.
+                style={{ width: tile.key === 'routine' ? tileWidth * 3 + 2 * gridGap : tileWidth }}
                 ref={
                   tile.key === 'japam'
                     ? japaTileRef
@@ -328,6 +415,7 @@ export default function HomeScreen({ navigation }: Props) {
             style={[
               styles.sectionLabel,
               styles.sectionLabelSpaced,
+              styles.discoverLabel,
               {
                 color: colors.inkMuted,
                 fontSize: typography.sectionLabel.fontSize,
@@ -352,7 +440,17 @@ export default function HomeScreen({ navigation }: Props) {
               contentContainerStyle={{
                 paddingHorizontal: gridPadding,
                 gap: featureGap,
-                paddingBottom: 4,
+                // The FOR TODAY strip's touch-band fix, mirrored here: the cards
+                // are Pressables inside this horizontal ScrollView, and the shared
+                // first-tap fallback is only suppressed when onScrollBeginDrag
+                // fires. An arced horizontal flick that starts near the band edge
+                // can lose the first-pixel gesture negotiation to the card
+                // Pressable / outer vertical page-scroll — so the swipe randomly
+                // opens a card or stalls instead of scrolling. Padding the band
+                // top+bottom enlarges the scrollable frame and the arc tolerance
+                // so the horizontal scroll reliably wins the drag. It grows the
+                // touch target, not the visible cards.
+                paddingVertical: 10,
               }}
               // A horizontal swipe here is a scroll, not a tap — suppress the
               // shared first-tap fallback so a swipe never opens a card.
@@ -448,6 +546,11 @@ const styles = StyleSheet.create({
   },
   sectionLabelSpaced: {
     marginTop: 16,
+  },
+  discoverLabel: {
+    // The DISCOVER band below carries its own top padding (the touch-band fix),
+    // so drop the label's bottom margin rather than stacking the two spacings.
+    marginBottom: 0,
   },
   routineInline: {
     marginTop: 16,

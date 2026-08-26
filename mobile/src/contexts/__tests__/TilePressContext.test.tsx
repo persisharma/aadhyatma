@@ -74,6 +74,24 @@ describe('useTilePressController — Home first-tap recovery', () => {
     expect(action).not.toHaveBeenCalled();
   });
 
+  it('does not consume a stale dragged action on a later accessibility onPress', () => {
+    const c = mountController();
+    const staleAction = jest.fn(); // a prior card whose press turned into a scroll
+    const currentAction = jest.fn(); // the card actually being activated now
+    act(() => {
+      // Card A: press begins, becomes a scroll drag, releases — finishTilePress
+      // returns early on didDrag and leaves the pending action in place.
+      c.beginTilePress(staleAction);
+      c.markTileDrag();
+      c.finishTilePress();
+      // Card B (e.g. the routine banner): a VoiceOver activation invokes onPress
+      // with NO preceding onPressIn, so no fresh beginTilePress runs first.
+      c.activateTile(currentAction);
+    });
+    expect(staleAction).not.toHaveBeenCalled();
+    expect(currentAction).toHaveBeenCalledTimes(1);
+  });
+
   it('fires the action exactly once when both onPress and the fallback race', () => {
     const c = mountController();
     const action = jest.fn();
@@ -107,10 +125,11 @@ describe('TilePressContext wiring', () => {
     let consumed!: TilePressHandlers;
     function Tree() {
       provided = useTilePressController();
-      return React.createElement(TilePressProvider, {
-        value: provided,
-        children: React.createElement(Consumer),
-      });
+      return (
+        <TilePressProvider value={provided}>
+          <Consumer />
+        </TilePressProvider>
+      );
     }
     function Consumer() {
       consumed = useTilePress();

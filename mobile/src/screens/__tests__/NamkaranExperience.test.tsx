@@ -1,0 +1,685 @@
+import assert from 'node:assert/strict';
+import React, * as mockReact from 'react';
+import TestRenderer, { act } from 'react-test-renderer';
+import { FlatList, StyleSheet, Text, View as mockView } from 'react-native';
+
+import { GitaLanguageProvider } from '@/data/gita/language';
+import ListCard from '@/components/ListCard';
+import { NAKSHATRA_NAMES_HI } from '@/panchang/names';
+import {
+  calculateNamkaran,
+  charanaSetForDay,
+  distinctRashiIndices,
+  rashiSyllables,
+  type NamkaranResult,
+} from '@/panchang/namkaran';
+
+const mockNavigation = { goBack: jest.fn(), navigate: jest.fn() };
+let mockComputeState: { status: 'result'; result: NamkaranResult } = {
+  status: 'result',
+  result: calculateNamkaran({ kind: 'manual', nakshatraIndex: 6, pada: 1 }),
+};
+
+jest.mock('@react-navigation/native', () => ({ useNavigation: () => ({ navigate: jest.fn() }) }));
+jest.mock('@/panchang/useNamkaran', () => ({ useNamkaran: () => mockComputeState }));
+jest.mock('expo-linear-gradient', () => ({
+  LinearGradient: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) =>
+    mockReact.createElement(mockView, props, children),
+}));
+jest.mock('react-native-view-shot', () => ({ captureRef: jest.fn(() => Promise.resolve('file://namkaran.png')) }));
+jest.mock('expo-sharing', () => ({ isAvailableAsync: jest.fn(() => Promise.resolve(true)), shareAsync: jest.fn(() => Promise.resolve()) }));
+
+const NamkaranScreen = jest.requireActual<typeof import('../NamkaranScreen')>('../NamkaranScreen').default;
+const NamkaranResultScreen = jest.requireActual<typeof import('../NamkaranResultScreen')>('../NamkaranResultScreen').default;
+const NamkaranRashiScreen = jest.requireActual<typeof import('../NamkaranRashiScreen')>('../NamkaranRashiScreen').default;
+
+function textOf(tree: TestRenderer.ReactTestRenderer): string {
+  return tree.root.findAllByType(Text).map((node) => node.props.children).flat(Infinity).join(' ');
+}
+
+async function unmountFlatListTree(tree: TestRenderer.ReactTestRenderer): Promise<void> {
+  await act(async () => {
+    tree.unmount();
+    await new Promise((resolve) => setTimeout(resolve, 80));
+  });
+}
+
+afterEach(() => {
+  mockNavigation.goBack.mockClear();
+  mockNavigation.navigate.mockClear();
+});
+
+test('child mode reuses BirthDetailsForm without collecting a name, city, or Kundali profile', async () => {
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <NamkaranScreen navigation={mockNavigation as any} route={{ key: 'Namkaran-test', name: 'Namkaran' } as any} />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+  });
+  assert.ok(tree.root.findByProps({ accessibilityLabel: 'Child birth details, time in IST' }));
+  assert.equal(tree.root.findAllByProps({ accessibilityLabel: 'Child name, optional' }).length, 0);
+  assert.equal(textOf(tree).includes('birth place is required'), false);
+  assert.equal(textOf(tree).includes('Calculation stays on this device'), false);
+  assert.equal(textOf(tree).includes('No account'), false);
+  assert.equal(textOf(tree).includes('internet'), false);
+  await unmountFlatListTree(tree);
+});
+
+test('manual nakshatra browse uses the Home-style 3-column launcher grid before four pada rows', async () => {
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <NamkaranScreen navigation={mockNavigation as any} route={{ key: 'Namkaran-grid', name: 'Namkaran' } as any} />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+  });
+
+  await act(async () => {
+    tree.root.findByProps({ accessibilityLabel: 'Choose by nakshatra. If you know the nakshatra and pada, go straight to names.' }).props.onPress();
+  });
+  assert.ok(tree.root.findByProps({ testID: 'namkaran-nakshatra-grid' }));
+  const nakshatraTileIds = new Set(
+    tree.root
+      .findAll((node) => /^namkaran-nakshatra-\d+$/.test(node.props.testID ?? ''))
+      .map((node) => node.props.testID)
+  );
+  assert.equal(nakshatraTileIds.size, 27);
+  assert.equal(tree.root.findAll((node) => node.props.launcherLabelPosition === 'tile').length, 27);
+
+  await act(async () => {
+    tree.root.findAllByProps({ accessibilityLabel: 'Punarvasu. Tap to open.' }).find((node) => typeof node.props.onPress === 'function')?.props.onPress();
+  });
+  assert.equal(tree.root.findAll((node) => node.type === ListCard && /^Pada [1-4]\./.test(node.props.accessibilityLabel ?? '')).length, 4);
+
+  await act(async () => {
+    tree.root.findAll((node) => node.type === ListCard && /^Pada 1\./.test(node.props.accessibilityLabel ?? ''))[0].props.onPress();
+  });
+  const navigationCall = mockNavigation.navigate.mock.calls.at(-1);
+  assert.equal(navigationCall?.[0], 'NamkaranResult');
+  assert.equal(navigationCall?.[1]?.basis.kind, 'manual');
+  assert.equal(navigationCall?.[1]?.basis.nakshatraIndex, 6);
+  assert.equal(navigationCall?.[1]?.basis.pada, 1);
+  await unmountFlatListTree(tree);
+});
+
+test('manual nakshatra grid renders the complete Hindi names inside unclipped two-line tiles', async () => {
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="hi">
+        <NamkaranScreen navigation={mockNavigation as any} route={{ key: 'Namkaran-grid-hi', name: 'Namkaran' } as any} />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+  });
+  await act(async () => {
+    tree.root.findByProps({ accessibilityLabel: 'Choose by nakshatra. If you know the nakshatra and pada, go straight to names.' }).props.onPress();
+  });
+
+  const rendered = textOf(tree);
+  assert.ok(rendered.includes('अश्विनी'));
+  assert.ok(rendered.includes('पूर्वाभाद्रपद'));
+  assert.ok(rendered.includes('उत्तराभाद्रपद'));
+  assert.ok(rendered.includes('रेवती'));
+  assert.equal(tree.root.findAll((node) => node.props.launcherLabelPosition === 'tile' && node.props.launcherLabelLines === 2).length, 27);
+  await unmountFlatListTree(tree);
+});
+
+// Regression: the in-tile labels used `adjustsFontSizeToFit`, and on iOS that
+// shrank scattered tiles (हस्त / चित्रा / स्वाती) to a few points — well past
+// the 0.8 `minimumFontScale` — while their identically sized neighbours stayed
+// full size. All 27 tiles must now carry one fixed, capped size.
+test('every nakshatra tile label renders at one fixed size, not platform auto-shrink', async () => {
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="hi">
+        <NamkaranScreen navigation={mockNavigation as any} route={{ key: 'Namkaran-grid-size', name: 'Namkaran' } as any} />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+  });
+  await act(async () => {
+    tree.root.findByProps({ accessibilityLabel: 'Choose by nakshatra. If you know the nakshatra and pada, go straight to names.' }).props.onPress();
+  });
+
+  const labels = tree.root
+    .findAllByType(Text)
+    .filter((node) => NAKSHATRA_NAMES_HI.includes(node.props.children as string));
+  assert.equal(labels.length, 27);
+  for (const label of labels) {
+    assert.equal(label.props.adjustsFontSizeToFit, undefined);
+    assert.equal(label.props.minimumFontScale, undefined);
+    assert.equal(label.props.numberOfLines, 2);
+    assert.equal(label.props.maxFontSizeMultiplier, 1.25);
+  }
+  const sizes = new Set(labels.map((label) => StyleSheet.flatten(label.props.style).fontSize));
+  assert.deepEqual([...sizes], [13]);
+  await unmountFlatListTree(tree);
+});
+
+test('all-108 browse is a nakshatra-grouped grid of tappable pada cells, not a flat list', async () => {
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <NamkaranScreen navigation={mockNavigation as any} route={{ key: 'Namkaran-all', name: 'Namkaran' } as any} />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+  });
+
+  await act(async () => {
+    tree.root.findByProps({ accessibilityLabel: 'Browse all 108. Choose any sound from the complete nakshatra-pada index.' }).props.onPress();
+  });
+  assert.ok(tree.root.findByProps({ testID: 'namkaran-all-grid' }));
+  const groupIds = new Set(tree.root.findAll((node) => /^namkaran-all-group-\d+$/.test(node.props.testID ?? '')).map((node) => node.props.testID));
+  assert.equal(groupIds.size, 27);
+  const cellLabels = new Set(
+    tree.root
+      .findAll((node) => typeof node.props.accessibilityLabel === 'string' && / pada [1-4], /.test(node.props.accessibilityLabel) && node.props.accessibilityLabel.endsWith('Tap to open.'))
+      .map((node) => node.props.accessibilityLabel)
+  );
+  assert.equal(cellLabels.size, 108);
+
+  await act(async () => {
+    tree.root.findAll((node) => typeof node.props.accessibilityLabel === 'string' && node.props.accessibilityLabel.startsWith('Ashwini pada 1,') && typeof node.props.onPress === 'function')[0].props.onPress();
+  });
+  const navigationCall = mockNavigation.navigate.mock.calls.at(-1);
+  assert.equal(navigationCall?.[0], 'NamkaranResult');
+  assert.equal(navigationCall?.[1]?.basis.kind, 'manual');
+  assert.equal(navigationCall?.[1]?.basis.nakshatraIndex, 0);
+  assert.equal(navigationCall?.[1]?.basis.pada, 1);
+  await unmountFlatListTree(tree);
+});
+
+test('exact manual result has one hero, a FlatList, filters, shortlist, and exact share', async () => {
+  mockComputeState = { status: 'result', result: calculateNamkaran({ kind: 'manual', nakshatraIndex: 6, pada: 1 }) };
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <NamkaranResultScreen
+          navigation={mockNavigation as any}
+          route={{ key: 'NamkaranResult-test', name: 'NamkaranResult', params: { basis: { kind: 'manual', nakshatraIndex: 6, pada: 1 } } } as any}
+        />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+    await Promise.resolve();
+  });
+  assert.ok(tree.root.findByProps({ accessibilityLabel: 'के, Ke. Punarvasu, pada 1.' }));
+  assert.ok(tree.root.findByType(FlatList));
+  assert.ok(tree.root.findByProps({ accessibilityLabel: 'Filter names: boy' }));
+  const shortlistControl = tree.root.findByProps({ accessibilityLabel: 'Add Keshav to shortlist' });
+  assert.ok(shortlistControl);
+  // The shortlist control must remain a sibling overlay, never a nested button
+  // inside the ListCard pressable (iOS otherwise swallows it).
+  assert.equal(typeof shortlistControl.parent?.props.onPress, 'undefined');
+  assert.ok(tree.root.findByProps({ accessibilityLabel: 'Preview privacy-safe Namkaran share card' }));
+  assert.ok(tree.root.findByProps({ accessibilityLabel: 'How this namakshar was derived' }));
+  assert.ok(tree.root.findByProps({ accessibilityLabel: 'Open Mithuna rashi naming detail' }));
+  assert.ok(!textOf(tree).includes('CONTENT REVIEW PENDING'));
+  assert.ok(!textOf(tree).includes('namakshar-v1'));
+  await unmountFlatListTree(tree);
+});
+
+// Regression (August 2026): the result screen's micro labels shipped with Inter
+// plus Latin tracking, so in Hindi "नाम देखें" / "कैसे निकला?" / "राशि अनुसार अक्षर"
+// fell back to an unpredictable face with every cluster prised apart, and the
+// header ended flush against the first name card so the two collided visually.
+test('result-screen section labels are script-aware and clear the first name row', async () => {
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="hi">
+        <NamkaranResultScreen navigation={mockNavigation as any} route={{ key: 'NamkaranResult-labels', name: 'NamkaranResult', params: { basis: { kind: 'manual', nakshatraIndex: 6, pada: 1 } } } as any} />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+  });
+
+  // Asserted over *every* Devanagari line on the screen, not a list of known
+  // labels: PR #263 added three more section labels while this fix was in review,
+  // and a named list would have waved them through.
+  const indic = tree.root
+    .findAllByType(Text)
+    .map((node) => ({ text: [node.props.children].flat(Infinity).filter((part) => typeof part === 'string').join(''), style: StyleSheet.flatten(node.props.style) ?? {} }))
+    .filter(({ text }) => /[ऀ-ॣ०-ॿ]/.test(text));
+  assert.ok(indic.length > 10, 'expected the Hindi result screen to be mostly Devanagari');
+  const tracked = indic.filter(({ style }) => (style.letterSpacing ?? 0) !== 0).map(({ text }) => text);
+  assert.deepEqual(tracked, [], 'Latin tracking splits the shirorekha on Devanagari');
+  const cramped = indic
+    .filter(({ style }) => typeof style.lineHeight === 'number' && style.lineHeight / style.fontSize < 1.35)
+    .map(({ text }) => text);
+  assert.deepEqual(cramped, [], 'a Devanagari line under 1.35x leading crops its own matras');
+
+  // The named micro labels additionally may not name Inter, which has no Indic
+  // glyphs at all. (Chips and buttons still do — a separate, announced sweep.)
+  const named = indic.filter(({ text }) => ['नाम देखें', 'कैसे निकला?', 'राशि अनुसार अक्षर'].includes(text));
+  assert.equal(named.length, 3);
+  for (const { text, style } of named) {
+    assert.ok(!/^Inter/.test(style.fontFamily ?? ''), `${text} must name a face that has Devanagari`);
+  }
+
+  const headerStyle = StyleSheet.flatten(tree.root.findByProps({ testID: 'namkaran-name-list' }).props.ListHeaderComponent.props.style);
+  assert.ok(headerStyle.paddingBottom >= 12, 'the header must clear the first name row, whose card carries an upward shadow');
+  await unmountFlatListTree(tree);
+});
+
+test('name detail carries both meanings and allows copying only the candidate name', async () => {
+  mockComputeState = { status: 'result', result: calculateNamkaran({ kind: 'manual', nakshatraIndex: 6, pada: 1 }) };
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <NamkaranResultScreen
+          navigation={mockNavigation as any}
+          route={{ key: 'NamkaranResult-detail', name: 'NamkaranResult', params: { basis: { kind: 'manual', nakshatraIndex: 6, pada: 1 } } } as any}
+        />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+    await Promise.resolve();
+  });
+  await act(async () => {
+    tree.root.findByProps({ accessibilityLabel: 'Open name Keshav. A name of Vishnu-Krishna' }).props.onPress();
+  });
+  assert.ok(textOf(tree).includes('भगवान विष्णु-कृष्ण का एक नाम'));
+  assert.ok(textOf(tree).includes('A name of Vishnu-Krishna'));
+  assert.ok(tree.root.findByProps({ accessibilityLabel: 'Copy Keshav name' }));
+  await unmountFlatListTree(tree);
+});
+
+test('an empty filter combination is recoverable instead of a dead-end', async () => {
+  mockComputeState = { status: 'result', result: calculateNamkaran({ kind: 'manual', nakshatraIndex: 6, pada: 1 }) };
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <NamkaranResultScreen
+          navigation={mockNavigation as any}
+          route={{ key: 'NamkaranResult-empty-filter', name: 'NamkaranResult', params: { basis: { kind: 'manual', nakshatraIndex: 6, pada: 1 } } } as any}
+        />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+    await Promise.resolve();
+  });
+  await act(async () => {
+    tree.root.findByProps({ accessibilityLabel: 'Filter names: boy' }).props.onPress();
+    tree.root.findByProps({ accessibilityLabel: 'Filter name length: 2' }).props.onPress();
+  });
+  assert.ok(textOf(tree).includes('No names match the selected filters.'));
+  assert.ok(tree.root.findByProps({ accessibilityLabel: 'Show all available Namkaran names' }));
+  await act(async () => {
+    tree.root.findByProps({ accessibilityLabel: 'Show all available Namkaran names' }).props.onPress();
+  });
+  assert.ok(tree.root.findByProps({ accessibilityLabel: 'Add Keshav to shortlist' }));
+  await unmountFlatListTree(tree);
+});
+
+test('the approved Ashwini-Chu prototype route has a real name row', async () => {
+  mockComputeState = { status: 'result', result: calculateNamkaran({ kind: 'manual', nakshatraIndex: 0, pada: 1 }) };
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <NamkaranResultScreen
+          navigation={mockNavigation as any}
+          route={{ key: 'NamkaranResult-ashwini', name: 'NamkaranResult', params: { basis: { kind: 'manual', nakshatraIndex: 0, pada: 1 } } } as any}
+        />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+    await Promise.resolve();
+  });
+  assert.ok(tree.root.findByProps({ accessibilityLabel: 'Open name Chudamani. Crest-jewel; the finest of its kind' }));
+  assert.equal(textOf(tree).includes('Names for this sound are not yet available.'), false);
+  await unmountFlatListTree(tree);
+});
+
+test('unknown-time result is uniform candidate rows with no hero or exact share', async () => {
+  const start = Date.parse('2026-08-12T18:30:00.000Z');
+  const candidates = charanaSetForDay('2026-08-13', (date) => (358 + ((date.getTime() - start) / 86_400_000) * 15) % 360);
+  mockComputeState = { status: 'result', result: { kind: 'range', candidates, conventionVersion: 1 } };
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <NamkaranResultScreen
+          navigation={mockNavigation as any}
+          route={{ key: 'NamkaranResult-range', name: 'NamkaranResult', params: { basis: { kind: 'birth', date: '2026-08-13', time: null } } } as any}
+        />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+    await Promise.resolve();
+  });
+  assert.ok(textOf(tree).includes('Possible namakshar'));
+  assert.equal(tree.root.findAll((node) => node.type === ListCard && node.props.testID === 'namkaran-candidate-row').length, candidates.length);
+  assert.equal(tree.root.findAllByProps({ accessibilityLabel: 'Preview privacy-safe Namkaran share card' }).length, 0);
+  assert.equal(tree.root.findAll((node) => typeof node.props.accessibilityLabel === 'string' && node.props.accessibilityLabel.includes('Ke. Punarvasu')).length, 0);
+
+  // Uniform rows, but each is a destination: opening one shows that charana's
+  // namakshar card and names, flagged as derived from an unknown time.
+  const rows = tree.root.findAll((node) => node.type === ListCard && node.props.testID === 'namkaran-candidate-row');
+  assert.ok(rows.every((row) => typeof row.props.onPress === 'function'));
+  await act(async () => { rows[0].props.onPress(); });
+  const call = mockNavigation.navigate.mock.calls.at(-1);
+  assert.equal(call?.[0], 'NamkaranResult');
+  assert.equal(call?.[1]?.fromUnknownTime, true);
+  assert.deepEqual(call?.[1]?.basis, {
+    kind: 'manual',
+    nakshatraIndex: candidates[0].entry.nakshatraIndex,
+    pada: candidates[0].entry.pada,
+  });
+  await unmountFlatListTree(tree);
+});
+
+const FALLBACK_NOTICE = 'available sounds from the whole nakshatra are shown';
+
+test('the fallback notice appears on an exact thin charana', async () => {
+  // Charana 22 (Ardra pada 3, ङ) is thin, so an exact result broadens to the
+  // nakshatra and says so.
+  mockComputeState = { status: 'result', result: calculateNamkaran({ kind: 'manual', nakshatraIndex: 5, pada: 3 }) };
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <NamkaranResultScreen
+          navigation={mockNavigation as any}
+          route={{ key: 'NamkaranResult-thin', name: 'NamkaranResult', params: { basis: { kind: 'manual', nakshatraIndex: 5, pada: 3 } } } as any}
+        />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+    await Promise.resolve();
+  });
+  assert.ok(textOf(tree).includes(FALLBACK_NOTICE));
+  await unmountFlatListTree(tree);
+});
+
+test('a range never claims the fallback, because a range never broadens', async () => {
+  // A range deliberately does not widen to one candidate's nakshatra — that
+  // would rank a candidate the unknown-time path refuses to rank. So even
+  // though these candidates return no names, the notice must stay away: it
+  // would describe a broadening that never happened.
+  //
+  // The span starts at 201° so the day covers charanas 60–64: none of them is
+  // thin and none carries a development name, which is what forces the
+  // fallback branch to be considered at all. A span touching a charana that
+  // does have a name (charana 0, say) would satisfy this test vacuously.
+  const start = Date.parse('2026-08-12T18:30:00.000Z');
+  const candidates = charanaSetForDay('2026-08-13', (date) => (201 + ((date.getTime() - start) / 86_400_000) * 15) % 360);
+  mockComputeState = { status: 'result', result: { kind: 'range', candidates, conventionVersion: 1 } };
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <NamkaranResultScreen
+          navigation={mockNavigation as any}
+          route={{ key: 'NamkaranResult-range-fallback', name: 'NamkaranResult', params: { basis: { kind: 'birth', date: '2026-08-13', time: null } } } as any}
+        />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+    await Promise.resolve();
+  });
+  assert.ok(!textOf(tree).includes(FALLBACK_NOTICE));
+  await unmountFlatListTree(tree);
+});
+
+test('a charana opened from an unknown-time day keeps its provenance and offers no exact share', async () => {
+  mockComputeState = { status: 'result', result: calculateNamkaran({ kind: 'manual', nakshatraIndex: 6, pada: 1 }) };
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <NamkaranResultScreen
+          navigation={mockNavigation as any}
+          route={{ key: 'NamkaranResult-uncertain', name: 'NamkaranResult', params: { basis: { kind: 'manual', nakshatraIndex: 6, pada: 1 }, fromUnknownTime: true } } as any}
+        />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+    await Promise.resolve();
+  });
+  // The parent gets what they came for: the hero, the context, the names.
+  assert.ok(tree.root.findByProps({ accessibilityLabel: 'के, Ke. Punarvasu, pada 1.' }));
+  assert.ok(tree.root.findByProps({ accessibilityLabel: 'Add Keshav to shortlist' }));
+  // But it is one of the day's possibilities, so it says so and cannot be shared.
+  assert.ok(tree.root.findByProps({ testID: 'namkaran-uncertain-notice' }));
+  assert.ok(textOf(tree).includes('one of that day’s possible sounds'));
+  assert.equal(tree.root.findAllByProps({ accessibilityLabel: 'Preview privacy-safe Namkaran share card' }).length, 0);
+  assert.equal(tree.root.findAllByProps({ accessibilityLabel: 'Include shortlisted names in this share' }).length, 0);
+  await unmountFlatListTree(tree);
+});
+
+test('the same charana reached deliberately still shares — the flag is what suppresses it', async () => {
+  mockComputeState = { status: 'result', result: calculateNamkaran({ kind: 'manual', nakshatraIndex: 6, pada: 1 }) };
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <NamkaranResultScreen
+          navigation={mockNavigation as any}
+          route={{ key: 'NamkaranResult-deliberate', name: 'NamkaranResult', params: { basis: { kind: 'manual', nakshatraIndex: 6, pada: 1 } } } as any}
+        />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+    await Promise.resolve();
+  });
+  assert.ok(tree.root.findByProps({ accessibilityLabel: 'Preview privacy-safe Namkaran share card' }));
+  assert.equal(tree.root.findAllByProps({ testID: 'namkaran-uncertain-notice' }).length, 0);
+  await unmountFlatListTree(tree);
+});
+
+test('rashi is a peer browse door — twelve launcher tiles that land on the rashi detail', async () => {
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <NamkaranScreen navigation={mockNavigation as any} route={{ key: 'Namkaran-rashi', name: 'Namkaran' } as any} />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+  });
+
+  await act(async () => {
+    tree.root.findByProps({ accessibilityLabel: 'Choose by rashi. Know the Moon rashi? See its nine charanas and their sounds.' }).props.onPress();
+  });
+  assert.ok(tree.root.findByProps({ testID: 'namkaran-rashi-grid' }));
+  const rashiTileIds = new Set(
+    tree.root
+      .findAll((node) => /^namkaran-rashi-\d+$/.test(node.props.testID ?? ''))
+      .map((node) => node.props.testID)
+  );
+  assert.equal(rashiTileIds.size, 12);
+
+  await act(async () => {
+    tree.root.findAllByProps({ accessibilityLabel: 'Makara. Tap to open.' }).find((node) => typeof node.props.onPress === 'function')?.props.onPress();
+  });
+  const call = mockNavigation.navigate.mock.calls.at(-1);
+  assert.equal(call?.[0], 'NamkaranRashi');
+  assert.equal(call?.[1]?.rashiIndex, 9);
+  // The rashi door must never write or request birth details.
+  assert.equal(mockNavigation.navigate.mock.calls.some((entry) => entry[1]?.basis?.kind === 'birth'), false);
+  await unmountFlatListTree(tree);
+});
+
+test('the rashi cross-check is nine tappable charanas, not a flattened syllable strip', async () => {
+  // Makara holds Shravana's dual ज/ख charanas: nine charanas, thirteen
+  // syllables. Flattening would render thirteen cells and break the 3×3 grid.
+  mockComputeState = { status: 'result', result: calculateNamkaran({ kind: 'manual', nakshatraIndex: 20, pada: 2 }) };
+  assert.equal(rashiSyllables(9).length, 13);
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <NamkaranResultScreen
+          navigation={mockNavigation as any}
+          route={{ key: 'NamkaranResult-makara', name: 'NamkaranResult', params: { basis: { kind: 'manual', nakshatraIndex: 20, pada: 2 } } } as any}
+        />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+    await Promise.resolve();
+  });
+  const cellIds = new Set(
+    tree.root
+      .findAll((node) => /^namkaran-rashi-sound-\d+$/.test(node.props.testID ?? ''))
+      .map((node) => node.props.testID as string)
+  );
+  assert.equal(cellIds.size, 9);
+  assert.equal(new Set(tree.root.findAll((node) => /^namkaran-rashi-card-\d+$/.test(node.props.testID ?? '')).map((node) => node.props.testID as string)).size, 1);
+
+  // The charana this result already shows is marked, not a tap target: pushing
+  // a duplicate of the screen you are reading is not a destination.
+  // Uttarashadha pada 2 is charana 81 — the cell this very result is showing.
+  const currentNodes = tree.root.findAllByProps({ testID: 'namkaran-rashi-sound-81' });
+  assert.ok(currentNodes.length);
+  assert.equal(currentNodes.some((node) => node.props.accessibilityRole === 'button'), false);
+  assert.equal(currentNodes.some((node) => typeof node.props.onPress === 'function'), false);
+  assert.ok(textOf(tree).includes('this one'));
+  assert.ok(textOf(tree).includes('this one'));
+
+  await act(async () => {
+    tree.root.findByProps({ testID: 'namkaran-rashi-sound-84' }).props.onPress();
+  });
+  const cellCall = mockNavigation.navigate.mock.calls.at(-1);
+  assert.equal(cellCall?.[0], 'NamkaranResult');
+  assert.deepEqual(cellCall?.[1]?.basis, { kind: 'manual', nakshatraIndex: 21, pada: 1 });
+
+  await act(async () => {
+    tree.root.findByProps({ accessibilityLabel: 'Open Makara rashi naming detail' }).props.onPress();
+  });
+  const detailCall = mockNavigation.navigate.mock.calls.at(-1);
+  assert.equal(detailCall?.[0], 'NamkaranRashi');
+  assert.equal(detailCall?.[1]?.rashiIndex, 9);
+  await unmountFlatListTree(tree);
+});
+
+test('an unknown-time day that crosses a rashi boundary shows every rashi it touched', async () => {
+  const start = Date.parse('2026-08-12T18:30:00.000Z');
+  const candidates = charanaSetForDay('2026-08-13', (date) => (28 + ((date.getTime() - start) / 86_400_000) * 15) % 360);
+  assert.deepEqual(distinctRashiIndices(candidates), [0, 1]);
+  mockComputeState = { status: 'result', result: { kind: 'range', candidates, conventionVersion: 1 } };
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <NamkaranResultScreen
+          navigation={mockNavigation as any}
+          route={{ key: 'NamkaranResult-cross', name: 'NamkaranResult', params: { basis: { kind: 'birth', date: '2026-08-13', time: null } } } as any}
+        />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+    await Promise.resolve();
+  });
+  const cardIds = [...new Set(
+    tree.root
+      .findAll((node) => /^namkaran-rashi-card-\d+$/.test(node.props.testID ?? ''))
+      .map((node) => node.props.testID as string)
+  )];
+  assert.deepEqual(cardIds, ['namkaran-rashi-card-0', 'namkaran-rashi-card-1']);
+  assert.ok(textOf(tree).includes('The Moon also changed rashi during this day'));
+  // Still no hero and no exact share — showing both rashis must not smuggle a rank back in.
+  assert.equal(tree.root.findAllByProps({ accessibilityLabel: 'Preview privacy-safe Namkaran share card' }).length, 0);
+  await unmountFlatListTree(tree);
+});
+
+test('the rashi detail lists nine charanas grouped by nakshatra and opens each one', async () => {
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <NamkaranRashiScreen
+          navigation={mockNavigation as any}
+          route={{ key: 'NamkaranRashi-mesha', name: 'NamkaranRashi', params: { rashiIndex: 0 } } as any}
+        />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+    await Promise.resolve();
+  });
+  assert.ok(tree.root.findByProps({ testID: 'namkaran-rashi-summary' }));
+  const rowIds = new Set(
+    tree.root
+      .findAll((node) => /^namkaran-rashi-charana-\d+$/.test(node.props.testID ?? ''))
+      .map((node) => node.props.testID as string)
+  );
+  assert.equal(rowIds.size, 9);
+  // Mesha spans Ashwini, Bharani, and Krittika pada 1 — the grouping is by nakshatra.
+  const groupIds = new Set(tree.root.findAll((node) => /^namkaran-rashi-group-\d+$/.test(node.props.testID ?? '')).map((node) => node.props.testID));
+  assert.deepEqual([...groupIds].sort(), ['namkaran-rashi-group-1', 'namkaran-rashi-group-2', 'namkaran-rashi-group-3']);
+  assert.equal(textOf(tree).includes('9 charanas · 9 sounds'), true);
+
+  await act(async () => {
+    tree.root.findByProps({ testID: 'namkaran-rashi-charana-0' }).props.onPress();
+  });
+  const call = mockNavigation.navigate.mock.calls.at(-1);
+  assert.equal(call?.[0], 'NamkaranResult');
+  assert.deepEqual(call?.[1]?.basis, { kind: 'manual', nakshatraIndex: 0, pada: 1 });
+  // The detail is convention data only — it must not surface birth fields or review state.
+  assert.equal(textOf(tree).includes('namakshar-v1'), false);
+  assert.equal(textOf(tree).includes('DRAFT'), false);
+  await unmountFlatListTree(tree);
+});
+
+test('the rashi detail cannot reopen an unknown-time candidate as a settled answer', async () => {
+  // The loophole this closes: range result → rashi detail → tap a charana that
+  // is one of the day's own candidates → an exact result carrying a share the
+  // range path withholds (RULEBOOK §18.3/§18.8).
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <NamkaranRashiScreen
+          navigation={mockNavigation as any}
+          route={{ key: 'NamkaranRashi-day', name: 'NamkaranRashi', params: { rashiIndex: 0, dayCharanas: [3, 4] } } as any}
+        />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+    await Promise.resolve();
+  });
+  assert.ok(textOf(tree).includes('A POSSIBILITY FOR THAT DAY'));
+
+  await act(async () => { tree.root.findByProps({ testID: 'namkaran-rashi-charana-3' }).props.onPress(); });
+  const flagged = mockNavigation.navigate.mock.calls.at(-1);
+  assert.equal(flagged?.[1]?.fromUnknownTime, true);
+
+  // A charana outside that day is an ordinary table lookup, not a claim.
+  await act(async () => { tree.root.findByProps({ testID: 'namkaran-rashi-charana-7' }).props.onPress(); });
+  const plain = mockNavigation.navigate.mock.calls.at(-1);
+  assert.equal(plain?.[1]?.fromUnknownTime, undefined);
+  await unmountFlatListTree(tree);
+});
+
+test('a rashi detail opened from a browse door flags nothing', async () => {
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <NamkaranRashiScreen
+          navigation={mockNavigation as any}
+          route={{ key: 'NamkaranRashi-browse', name: 'NamkaranRashi', params: { rashiIndex: 0 } } as any}
+        />
+      </GitaLanguageProvider>
+    );
+    await Promise.resolve();
+    await Promise.resolve();
+  });
+  assert.equal(textOf(tree).includes('A POSSIBILITY FOR THAT DAY'), false);
+  await act(async () => { tree.root.findByProps({ testID: 'namkaran-rashi-charana-3' }).props.onPress(); });
+  assert.equal(mockNavigation.navigate.mock.calls.at(-1)?.[1]?.fromUnknownTime, undefined);
+  await unmountFlatListTree(tree);
+});
