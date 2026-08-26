@@ -57,7 +57,6 @@ async function render(): Promise<TestRenderer.ReactTestRenderer> {
   // Flush until the chip has rendered instead — same assertions, no dependence
   // on suite order. Bounded so a genuine regression still fails fast.
   for (let i = 0; i < 20 && tree.toJSON() === null; i += 1) {
-    // eslint-disable-next-line no-await-in-loop
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
     });
