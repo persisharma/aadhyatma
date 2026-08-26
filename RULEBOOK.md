@@ -83,6 +83,25 @@ Exact paths, in build order. Each row maps to a Phase-C step in `/add-section`.
 
 **Verse-based archetypes only.** Rows 1, 2, 4, 5, 6 of this table describe the verse-pager pipeline (Chalisa / Gita / Sundarkand / Stotram / Chalisa shapes). For `category === 'theerth'`, the file set is different — see §12.
 
+**Row 2 is a LAZY loader: the manifest is eager, the payload never is.** `index.ts`
+may statically import its `chapters-manifest.json` and nothing else. Every verse
+payload must sit behind a `require()` thunk resolved by `get<Section>Chapter()`,
+with that chapter's invariant check run on first load — the shape
+`valmiki-ramayan/index.ts` and `gita/index.ts` both use. This is not a
+micro-optimisation. Metro bundles every static import reachable from `index.ts`
+and Hermes evaluates all of it before the first frame, so one eager
+`import ch18 from './chapter-18.json'` in a module that anything on the launch
+path happens to touch lands on **every cold start** — which is exactly how 6.5 MB
+of Gītā (plus a module-scope walk of all 701 verses) came to be evaluated before
+Home could paint, because `entryRoutes.ts` wanted a chapter *count* and is reached
+from `notifications/deepLink.ts` at `App.tsx` module scope. Corollaries: the
+module-scope invariant check may only read the manifest (a 3 KB file), and
+anything that needs a title, a chapter count or a verse total reads the manifest,
+never a payload. **Gate:** `src/data/__tests__/launchGraph.test.ts` walks the real
+static import graph from `index.ts` and fails if a payload is reachable (it prints
+the import chain) or if the graph exceeds its byte budget. Never raise the budget
+to make it pass, and never add a payload to an allowlist — fix the importer.
+
 **Row 4 is mandatory even when an existing `*VersePage.tsx` *appears* to fit.** If the shapes are genuinely identical and you want to share rendering, the new file must re-export the existing component (`export { default } from './SundarkandVersePage';`) so the dependency is explicit and survives future shape changes. A reader screen must import only its own section's verse page — never another section's directly. (See §3 *Type safety on verse pages*.)
 
 ---
