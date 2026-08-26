@@ -6,19 +6,24 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Clipboard, Platform, Share, View } from 'react-native';
+import { Alert, Clipboard, Platform, Share, View } from 'react-native';
 import { captureRef } from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
 import ShareCard from '@/components/ShareCard';
 import ShareStoryCanvas from '@/components/ShareStoryCanvas';
 import ShareTargetSheet from '@/components/ShareTargetSheet';
 import { buildInstagramCaption, buildShareCaption } from '@/data/shareLinks';
-import { buildVerseHashtags, formatHashtags } from '@/data/shareHashtags';
+import {
+  buildVerseHashtags,
+  formatHashtags,
+  type TimelyContext,
+} from '@/data/shareHashtags';
 import {
   STORY_OUTPUT_HEIGHT,
   STORY_OUTPUT_WIDTH,
   storyCanvas,
 } from '@/utils/shareStoryLayout';
+import { pick } from '@/utils/localize';
 import type { Lang } from '@/data/gita/language';
 
 export type ShareableVerse = {
@@ -97,6 +102,38 @@ const CARD_HEIGHT = 675;
 const OUTPUT_WIDTH = 1080;
 const OUTPUT_HEIGHT = 1350;
 
+/** Date-free default: the tag block falls back to exactly its pre-timely form. */
+const EMPTY_TIMELY: TimelyContext = {};
+
+type TimelyResolverProps = { onResolve: (t: TimelyContext) => void };
+let resolverComponent: React.ComponentType<TimelyResolverProps> | null = null;
+
+/**
+ * Mounts the festival/vaar resolver, loading its module on first render rather
+ * than at import time.
+ *
+ * A static `import` would pull the panchang engine, the precomputed observance
+ * tables and `astronomy-engine` into the import graph of every screen that mounts
+ * this provider — which is all of them. Measured at ~10 % on every reader test
+ * suite (13.8 s → 15.2 s for one suite, cold cache), enough to push unrelated
+ * timing-sensitive suites past their 5 s timeouts and turn CI red.
+ *
+ * A deferred `require` keeps the module in Metro's graph — no bundle change, this
+ * still ships over OTA — while deferring its *execution* to the moment the picker
+ * opens. `React.lazy` + `import()` would express the same thing, but Jest cannot
+ * run a real dynamic import without `--experimental-vm-modules`, and the resolver
+ * renders `null` so there is nothing for a Suspense boundary to do anyway.
+ */
+function TimelyTagsResolver(props: TimelyResolverProps) {
+  if (!resolverComponent) {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    resolverComponent = require('@/components/TimelyTagsResolver')
+      .default as React.ComponentType<TimelyResolverProps>;
+  }
+  const Resolver = resolverComponent;
+  return <Resolver {...props} />;
+}
+
 export function ShareProvider({ children }: { children: React.ReactNode }) {
   const [pending, setPending] = useState<{
     verse: ShareableVerse;
@@ -111,6 +148,17 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
   const [busy, setBusy] = useState(false);
   const inFlightRef = useRef(false);
   const cardRef = useRef<View>(null);
+
+  // Timely tags (design.md §39.2). Resolved by `TimelyTagsResolver`, which mounts
+  // ONLY while the picker is open — see the note on that component for why this
+  // must not live in the always-mounted provider body.
+  const [timely, setTimely] = useState<TimelyContext>(EMPTY_TIMELY);
+  const timelyRef = useRef(timely);
+  timelyRef.current = timely;
+  const onTimelyResolved = useCallback((next: TimelyContext) => {
+    timelyRef.current = next;
+    setTimely(next);
+  }, []);
 
   const run = useCallback(
     async (
@@ -161,7 +209,11 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
         };
         const caption =
           target === 'instagram'
-            ? buildInstagramCaption({ ...captionParams, sourceId: verse.sourceId, format })
+            ? buildInstagramCaption({
+                ...captionParams,
+                sourceId: verse.sourceId,
+                timely: timelyRef.current,
+              })
             : buildShareCaption(captionParams);
 
         if (target === 'instagram') {
@@ -218,6 +270,24 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
               await Share.share({ message: caption }, { dialogTitle: 'Share verse' });
             }
           }
+        } else if (target === 'instagram') {
+          // Instagram takes an image or nothing: a text-only sheet would simply not
+          // list it, which reads as "the button did nothing". Say so instead of
+          // opening a sheet the reader cannot use.
+          Alert.alert(
+            pick(lang, {
+              hi: 'अभी शेयर नहीं हो पाया',
+              en: "Couldn't share just now",
+              gu: 'અત્યારે શેર ન થઈ શક્યું',
+              kn: 'ಈಗ ಹಂಚಿಕೊಳ್ಳಲಾಗಲಿಲ್ಲ',
+            }),
+            pick(lang, {
+              hi: 'कृपया दोबारा कोशिश करें।',
+              en: 'Please try again.',
+              gu: 'કૃપા કરીને ફરી પ્રયાસ કરો.',
+              kn: 'ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.',
+            })
+          );
         } else {
           // Image capture failed — share text-only so the user still gets something.
           await Share.share({ message: caption }, { dialogTitle: 'Share verse' });
@@ -259,10 +329,11 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
               sectionNameEn: chooser.verse.sectionNameEn,
               verseLabelEn: chooser.verse.verseLabelEn,
               lang: chooser.lang,
+              timely,
             })
           )
         : '',
-    [chooser]
+    [chooser, timely]
   );
 
   const pickTarget = useCallback(
@@ -278,6 +349,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
   return (
     <ShareContext.Provider value={value}>
       {children}
+      {chooser ? <TimelyTagsResolver onResolve={onTimelyResolved} /> : null}
       {chooser ? (
         <ShareTargetSheet
           visible

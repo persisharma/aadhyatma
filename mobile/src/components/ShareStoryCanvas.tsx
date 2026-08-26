@@ -17,9 +17,12 @@ import { placeStoryCard, storyCanvas } from '@/utils/shareStoryLayout';
  * only uniformly shrunk, inside the rectangle neither Story nor Reel chrome covers
  * (`shareStoryLayout.ts`).
  *
- * The card keeps its native 540×675 layout and is placed with a `transform`
- * scale, not re-laid-out at story width — re-flowing it would re-wrap the verse
- * lines and change a composition the §39 fit tests already pin.
+ * The card is neither re-laid-out at story width nor transformed: the canvas
+ * insets are chosen so a native 540×675 card fits the safe band at 1:1
+ * (`shareStoryLayout.ts`). Re-flowing it would re-wrap the verse lines and change
+ * a composition the §39 fit tests pin; scaling it would put a `transform` on the
+ * view being handed to `captureRef`. What gets captured is a plain, unscaled
+ * hierarchy — one absolutely-positioned card over a full-bleed plate.
  */
 
 const CARD_WIDTH = 540;
@@ -48,31 +51,9 @@ const ShareStoryCanvas = React.forwardRef<View, Props>(function ShareStoryCanvas
           than a letterboxed screenshot. Same plate the card itself carries. */}
       <BackgroundLayer source={getReaderBackground(props.sourceId, { stanza: props.stanza })} />
 
-      {/* Visual box inside the safe area. The card is absolutely positioned so its
-          centre coincides with the box's centre, then scaled about that centre —
-          the layout box stays 540×675 while the painted result is `place.width`
-          × `place.height`. */}
-      <View
-        style={{
-          position: 'absolute',
-          left: place.left,
-          top: place.top,
-          width: place.width,
-          height: place.height,
-        }}
-      >
-        <View
-          style={{
-            position: 'absolute',
-            left: (place.width - CARD_WIDTH) / 2,
-            top: (place.height - CARD_HEIGHT) / 2,
-            width: CARD_WIDTH,
-            height: CARD_HEIGHT,
-            transform: [{ scale: place.scale }],
-          }}
-        >
-          <ShareCard {...props} width={CARD_WIDTH} height={CARD_HEIGHT} />
-        </View>
+      {/* The card, at its native size, sitting in the band no chrome covers. */}
+      <View style={{ position: 'absolute', left: place.left, top: place.top }}>
+        <ShareCard {...props} width={place.width} height={place.height} />
       </View>
     </View>
   );
