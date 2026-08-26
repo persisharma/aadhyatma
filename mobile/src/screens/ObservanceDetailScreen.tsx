@@ -5,12 +5,14 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ObservanceDetailHero from '@/components/ObservanceDetailHero';
+import BhogGuidancePanel from '@/components/BhogGuidancePanel';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { getKathaContent } from '@/panchang/kathaContent';
 import { getUpvasInfo } from '@/panchang/upvasContent';
+import { getBhogContent } from '@/panchang/bhogContent';
 import { useUpvasParana } from '@/panchang/useUpvasParana';
 import { formatClock, formatRangeCompact, formatEndInstant, isSameLocalDay } from '@/panchang/muhuratFormat';
 import { getNextOccurrence, getRuleById } from '@/panchang/vratCatalog';
@@ -83,6 +85,9 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
   // Verified fasting facts only — a draft entry resolves to null, so the
   // section stays absent with zero status logic here (PRD-09/P4 §8).
   const upvas = rule?.upvasId ? getUpvasInfo(rule.upvasId) : null;
+  // PRD-23 follows the same verified-only contract as upvas content. Draft
+  // food guidance never produces a placeholder or review-status UI.
+  const bhog = rule?.bhogId ? getBhogContent(rule.bhogId) : null;
   const { location } = usePanchangLocation();
   // The derived parana date/time line (null for text-only kinds, while the
   // solve is in flight, or on an honest derivation miss — text renders alone).
@@ -440,6 +445,14 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                     <Text style={{ fontSize: 20, color: colors.inkMuted }}>›</Text>
                   </Pressable>
                 )}
+              </View>
+            )}
+            {bhog && (
+              <View style={styles.block}>
+                <Text style={[styles.blockHeading, { color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily) }]}>
+                  {contentByLang(lang, 'भोग · नैवेद्य · भोजन', 'Offerings & food')}
+                </Text>
+                <BhogGuidancePanel entry={bhog} testID="observance-bhog-panel" />
               </View>
             )}
           </ScrollView>

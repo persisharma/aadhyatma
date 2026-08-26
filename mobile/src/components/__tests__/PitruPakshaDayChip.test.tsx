@@ -23,22 +23,22 @@ const { GitaLanguageProvider } = jest.requireActual<typeof import('@/data/gita/l
 
 const trees: TestRenderer.ReactTestRenderer[] = [];
 
-// The chip resolves its observance through a real setTimeout(0) in useEffect, so
-// pin real timers here — otherwise fake timers leaked by a sibling suite (runInBand)
-// leave `observance` null and the guide door never renders.
+// Own the timer lifecycle so sibling suites cannot change when the chip's
+// deferred observance lookup settles in a runInBand full-suite execution.
 beforeEach(() => {
-  jest.useRealTimers();
+  jest.useFakeTimers();
 });
 
 afterEach(() => {
   act(() => trees.splice(0).forEach((tree) => tree.unmount()));
+  jest.useRealTimers();
   mockNavigate.mockClear();
   mockObservance = null;
 });
 
 async function render(): Promise<TestRenderer.ReactTestRenderer> {
   let tree!: TestRenderer.ReactTestRenderer;
-  await act(async () => {
+  act(() => {
     tree = TestRenderer.create(
       <FontScaleProvider>
         <ThemeProvider>
@@ -48,7 +48,10 @@ async function render(): Promise<TestRenderer.ReactTestRenderer> {
         </ThemeProvider>
       </FontScaleProvider>
     );
-    await new Promise((resolve) => setTimeout(resolve, 0));
+  });
+  await act(async () => {
+    jest.runOnlyPendingTimers();
+    await Promise.resolve();
   });
   trees.push(tree);
   return tree;

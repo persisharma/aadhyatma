@@ -2052,6 +2052,8 @@ function CatalogLanding({
                   {kathaCount} {contentByLang(lang, 'कथाएँ', 'stories')}
                 </Text>
               </Pressable>
+            </View>
+            <View style={styles.finalTileRow}>
               <Pressable
                 onPress={onOpenVidhiCatalog}
                 testID="vidhi-catalog-tile"
@@ -2061,7 +2063,7 @@ function CatalogLanding({
                   `पूजा विधि सूची, ${VIDHI_ENTRIES.length}`,
                   `Puja vidhi catalog, ${VIDHI_ENTRIES.length}`
                 )}
-                style={({ pressed }) => [styles.tile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card, pressed && { opacity: 0.8 }]}
+                style={({ pressed }) => [styles.tile, styles.finalTile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card, pressed && { opacity: 0.8 }]}
               >
                 <View style={styles.tileGlyph}>
                   <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 22, color: colors.saffron }}>॥</Text>
@@ -2161,7 +2163,11 @@ const styles = StyleSheet.create({
   upCard: { width: 150, borderWidth: 1, padding: 12 },
   upCardTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   tileGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
-  tile: { flexGrow: 1, flexBasis: '45%', borderWidth: 1, padding: 14, minHeight: 104 },
+  // Explicit two-column width keeps the paired rows stable. The odd final tile
+  // lives in its own row below so ScrollView measures it on every renderer.
+  tile: { width: '48%', borderWidth: 1, padding: 14, minHeight: 104 },
+  finalTileRow: { marginTop: 12 },
+  finalTile: { width: '100%' },
   // Fixed-height glyph box: the category glyphs (ॐ ✺ ☾ ॥) come from different
   // fonts with different line metrics; pinning the box height keeps the title and
   // caption rows aligned across every tile. The glyph renders at its natural line

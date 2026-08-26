@@ -23,8 +23,10 @@ import {
 } from '@/data/vidhi/checklistStore';
 import ReaderHeader from '@/components/ReaderHeader';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
+import BhogGuidancePanel from '@/components/BhogGuidancePanel';
 import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
 import { getRuleById } from '@/panchang/vratCatalog';
+import { getBhogForVidhi } from '@/panchang/bhogContent';
 import { moreTabTarget } from '@/navigation/entryRoutes';
 import type { TabParamList, VidhiStackParamList } from '@/navigation/types';
 
@@ -56,6 +58,7 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
   const rootNav = useNavigation<NavigationProp<TabParamList>>();
   const { entries: smaranEntries } = usePitruSmaran();
   const vidhi = getVidhiById(route.params.vidhiId);
+  const bhog = getBhogForVidhi(route.params.vidhiId);
   const dateKey = vidhiDateKey(route.params.dateMs ? new Date(route.params.dateMs) : new Date());
   const todayKey = vidhiDateKey(new Date());
   const [mode, setMode] = useState<Mode>('samagri');
@@ -111,10 +114,10 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
     (festivalId) => getRuleById(festivalId)?.recurrence === 'monthly'
   );
 
-  const toggleItem = (itemEn: string) => {
+  const toggleItem = (itemKey: string) => {
     const next = new Set(checked);
-    if (next.has(itemEn)) next.delete(itemEn);
-    else next.add(itemEn);
+    if (next.has(itemKey)) next.delete(itemKey);
+    else next.add(itemKey);
     setChecked(next);
     void saveSamagriChecked(vidhi.id, dateKey, [...next]);
   };
@@ -125,10 +128,17 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
       const opt = item.optional ? contentByLang(lang, ' — वैकल्पिक', ' — optional') : '';
       return `• ${contentByLang(lang, item.itemHi, item.itemEn)}${qty}${opt}`;
     });
+    const groceryLines = (bhog?.shoppingItems ?? []).map((item) => {
+      const qty = item.qty ? ` (${item.qty})` : '';
+      const opt = item.optional ? contentByLang(lang, ' — वैकल्पिक', ' — optional') : '';
+      return `• ${contentByLang(lang, item.itemHi, item.itemEn)}${qty}${opt}`;
+    });
     const title = contentByLang(lang, vidhi.titleHi, vidhi.titleEn);
     const heading = contentByLang(lang, 'सामग्री सूची', 'Samagri list');
+    const groceryHeading = contentByLang(lang, 'भोग और रसोई', 'Bhog & kitchen');
+    const grocerySection = groceryLines.length > 0 ? `\n\n${groceryHeading}\n${groceryLines.join('\n')}` : '';
     void Share.share(
-      { message: `${title} — ${heading}\n\n${lines.join('\n')}` },
+      { message: `${title} — ${heading}\n\n${lines.join('\n')}${grocerySection}` },
       { dialogTitle: heading }
     ).catch(() => undefined);
   };
@@ -142,7 +152,7 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
 
   const bodyFont = scriptBodyFont(lang, fontFamilies.devanagari);
   const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
-  const checkedCount = checked.size;
+  const checkedCount = vidhi.samagri.filter((item) => checked.has(item.itemEn)).length;
   const samagriTotal = vidhi.samagri.length;
   const remainingCount = Math.max(0, samagriTotal - checkedCount);
   const checkedPct = samagriTotal > 0 ? Math.round((checkedCount / samagriTotal) * 100) : 0;
@@ -256,6 +266,14 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
           )}
           {mode === 'samagri' ? (
             <>
+              {bhog ? (
+                <View style={styles.bhogBlock}>
+                  <Text style={[styles.phaseLabel, { color: activeColor, fontFamily: titleFont, marginTop: 0 }]}>
+                    {contentByLang(lang, 'भोग · भोजन मार्गदर्शन', 'Bhog & food guidance')}
+                  </Text>
+                  <BhogGuidancePanel entry={bhog} testID="vidhi-bhog-panel" />
+                </View>
+              ) : null}
               <Pressable
                 onPress={() => setSamagriExpanded((value) => !value)}
                 testID="vidhi-samagri-summary"
@@ -379,6 +397,59 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
                   })}
                 </View>
               )}
+              {bhog && bhog.shoppingItems.length > 0 ? (
+                <View testID="vidhi-bhog-shopping-ledger" style={styles.bhogShopping}>
+                  <Text style={[styles.phaseLabel, { color: activeColor, fontFamily: titleFont }]}>
+                    {contentByLang(lang, 'भोग और रसोई की खरीदारी', 'Bhog & kitchen shopping')}
+                  </Text>
+                  {bhog.shoppingItems.map((item, index) => {
+                    const itemKey = `bhog:${bhog.id}:${item.id}`;
+                    const done = checked.has(itemKey);
+                    const primary = contentByLang(lang, item.itemHi, item.itemEn);
+                    const alternate = lang === 'en' ? item.itemHi : item.itemEn;
+                    const meta = [alternate, item.qty].filter(Boolean).join(' · ');
+                    const last = index === bhog.shoppingItems.length - 1;
+                    return (
+                      <Pressable
+                        key={itemKey}
+                        onPress={() => toggleItem(itemKey)}
+                        testID={`vidhi-bhog-shopping-${item.id}`}
+                        accessibilityRole="checkbox"
+                        accessibilityState={{ checked: done }}
+                        accessibilityLabel={primary}
+                        style={[
+                          styles.samagriRow,
+                          { borderBottomColor: colors.divider, borderBottomWidth: last ? 0 : 1 },
+                        ]}
+                      >
+                        <View
+                          style={[
+                            styles.checkCircle,
+                            { borderColor: actionColor, backgroundColor: done ? actionColor : 'transparent' },
+                          ]}
+                        >
+                          {done ? <Text style={[styles.checkMark, { color: colors.onPrimary }]}>✓</Text> : null}
+                        </View>
+                        <View style={styles.samagriInfo}>
+                          <Text style={[styles.samagriText, { fontFamily: titleFont, color: done ? colors.inkMuted : colors.ink }]}>
+                            {primary}
+                          </Text>
+                          <Text style={[styles.samagriMeta, { fontFamily: bodyFont, color: done ? colors.inkMuted : activeColor }]}>
+                            {meta}
+                          </Text>
+                        </View>
+                        {item.optional ? (
+                          <View style={[styles.optChip, { borderColor: colors.divider, borderRadius: radii.sm }]}>
+                            <Text style={{ fontFamily: bodyFont, fontSize: 10, lineHeight: 15, color: colors.inkMuted }}>
+                              {contentByLang(lang, 'वैकल्पिक', 'optional')}
+                            </Text>
+                          </View>
+                        ) : null}
+                      </Pressable>
+                    );
+                  })}
+                </View>
+              ) : null}
               <Pressable
                 onPress={shareList}
                 testID="vidhi-share-list"
@@ -545,6 +616,8 @@ const styles = StyleSheet.create({
   track: { height: 7, width: '100%', overflow: 'hidden', marginTop: 12 },
   summaryCaret: { fontSize: 20, lineHeight: 20, marginTop: 7 },
   samagriLedger: { marginTop: 8 },
+  bhogBlock: { marginBottom: 14 },
+  bhogShopping: { marginTop: 4 },
   samagriInfo: { flex: 1, minWidth: 0 },
   samagriText: { fontSize: 16, lineHeight: 24 },
   samagriMeta: { fontSize: 12, lineHeight: 18, marginTop: 2 },
