@@ -13,7 +13,7 @@ export default upvasEntry({
   window: {
     kind: 'sunrise-to-parana',
     textHi:
-      'एकादशी के सूर्योदय से द्वादशी के दिन पारण तक। कई परम्पराओं में दशमी की संध्या से ही सात्त्विक, एक-भुक्त आहार लिया जाता है।',
+      'एकादशी के सूर्योदय से द्वादशी के दिन पारण तक। कई परम्पराओं में दशमी की संध्या से ही एक समय सात्त्विक भोजन लिया जाता है।',
     textEn:
       'From sunrise on Ekadashi until parana on the Dwadashi day. In many traditions a single sattvik meal is taken from Dashami evening onward.',
   },
@@ -26,7 +26,7 @@ export default upvasEntry({
       'Break the fast after sunrise on the Dwadashi day, while Dwadashi tithi prevails; parana during Hari Vasara (the first quarter of Dwadashi) is held to be prohibited. If Dwadashi ends before sunrise, break the fast after sunrise.',
   },
   strictnessHi:
-    'निर्जल, केवल जल, फलाहार या एक-भुक्त — कठोरता परिवार-परम्परा अनुसार चुनी जाती है। स्मार्त और वैष्णव परम्पराओं में एकादशी के दिन-निर्णय में अंतर हो सकता है। परंपरा अनुसार बालक, वृद्ध एवं अस्वस्थ फलाहार में छूट रख सकते हैं।',
+    'निर्जल, केवल जल, फलाहार या एक समय भोजन — कठोरता परिवार-परम्परा अनुसार चुनी जाती है। स्मार्त और वैष्णव परम्पराओं में एकादशी के दिन-निर्णय में अंतर हो सकता है। परंपरा अनुसार बालक, वृद्ध एवं अस्वस्थ फलाहार में छूट रख सकते हैं।',
   strictnessEn:
     'Waterless, water-only, fruit fare, or one meal — the strictness follows family tradition. Smarta and Vaishnava traditions may differ on which day the Ekadashi is observed. Traditionally children, the elderly, and the unwell may observe leniently with fruit fare.',
   whoObservesHi: 'विष्णु उपासक एवं एकादशी व्रती।',
