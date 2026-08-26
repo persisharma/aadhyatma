@@ -1884,10 +1884,6 @@ function CatalogLanding({
     festival: { glyph: '✺', hi: 'पर्व', en: 'Festivals' },
     upavas: { glyph: '☾', hi: 'उपवास', en: 'Upvas' },
   };
-  const categoryShort = (category: string): string =>
-    category === 'vrat' ? contentByLang(lang, 'व्रत', 'Vrat')
-      : category === 'upavas' ? contentByLang(lang, 'उपवास', 'Upvas')
-        : contentByLang(lang, 'पर्व', 'Festival');
   // Same glyph vocabulary as the "Browse by type" tiles (ॐ / ☾ / ✺), reused on the
   // upcoming cards so they read as devotional, not as a plain list of text.
   const categoryGlyph = (category: string): string =>
@@ -1984,18 +1980,15 @@ function CatalogLanding({
                     style={({ pressed }) => [styles.upCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card, pressed && { opacity: 0.75 }]}
                   >
                     <View style={styles.upCardTop}>
-                      <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 20, color: colors.saffron }}>
+                      <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 14, color: colors.saffron }}>
                         {categoryGlyph(item.rule.category)}
                       </Text>
                       <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 10, color: colors.saffronDeep, letterSpacing: 0.4 }}>
                         {formatShortDate(item.date, lang).toUpperCase()}
                       </Text>
                     </View>
-                    <Text numberOfLines={2} style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginTop: 8 }}>
+                    <Text numberOfLines={1} style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginTop: 6 }}>
                       {contentByLang(lang, item.rule.nameHi, item.rule.nameEn)}
-                    </Text>
-                    <Text style={{ ...captionFont(categoryShort(item.rule.category)), fontSize: 12, color: colors.inkMuted, marginTop: 2 }}>
-                      {categoryShort(item.rule.category)}
                     </Text>
                   </Pressable>
                 ))}
@@ -2157,7 +2150,9 @@ const styles = StyleSheet.create({
   jyotishSecondary: { minHeight: 42, flex: 1, paddingHorizontal: 15, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   jyotishSecondaryText: { fontFamily: fontFamilies.interSemiBold, fontSize: 11 },
   resultRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 13, borderBottomWidth: StyleSheet.hairlineWidth },
-  upCard: { width: 150, borderWidth: 1, padding: 12 },
+  // Compact upcoming card (design.md § catalog view): date + glyph top row and a
+  // one-line name — the category caption is dropped, the ॐ/☾/✺ glyph carries it.
+  upCard: { width: 136, height: 72, borderWidth: 1, paddingVertical: 10, paddingHorizontal: 12 },
   upCardTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   tileGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
   // Explicit two-column width keeps the paired rows stable. The odd final tile
