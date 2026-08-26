@@ -8,8 +8,8 @@ import type { BhogContentEntry } from '../types';
 import { VIDHI_BY_ID } from '../../data/vidhi';
 import { describeDevanagariDefect, findDevanagariDefects } from '../../data/devanagariWellFormed';
 
-test('the v1 registry publishes the ten sourced PRD-23 profiles', () => {
-  assert.deepEqual(BHOG_CONTENT.map((entry) => entry.id), [
+test('the registry preserves v1 and publishes all phase 2/3 profiles', () => {
+  assert.deepEqual(BHOG_CONTENT.slice(0, 10).map((entry) => entry.id), [
     'ekadashi-food',
     'nirjala-ekadashi-food',
     'ganesha-bhog',
@@ -20,6 +20,38 @@ test('the v1 registry publishes the ten sourced PRD-23 profiles', () => {
     'diwali-lakshmi-bhog',
     'satyanarayan-bhog',
     'hanuman-jayanti-bhog',
+  ]);
+  assert.equal(BHOG_CONTENT.length, 39);
+  assert.deepEqual(BHOG_CONTENT.slice(10).map((entry) => entry.id), [
+    'hartalika-teej-bhog',
+    'rishi-panchami-bhog',
+    'durva-ashtami-bhog',
+    'anant-chaturdashi-bhog',
+    'kojagara-bhog',
+    'ahoi-ashtami-bhog',
+    'chhath-bhog',
+    'akshaya-navami-bhog',
+    'pradosh-bhog',
+    'dwadashi-bhog',
+    'recurring-shiva-bhog',
+    'pitru-offering',
+    'skanda-sashti-bhog',
+    'devi-vrat-bhog',
+    'kalashtami-bhog',
+    'krishna-monthly-bhog',
+    'mangala-gauri-bhog',
+    'varalakshmi-bhog',
+    'vat-savitri-bhog',
+    'jivitputrika-bhog',
+    'mahalakshmi-vrat-bhog',
+    'purushottam-maas-bhog',
+    'chaturmasa-bhog',
+    'weekday-vrat-bhog',
+    'dashavatara-bhog',
+    'gangaur-bhog',
+    'jayaparvati-bhog',
+    'shitala-bhog',
+    'bachh-baras-bhog',
   ]);
 });
 
@@ -49,8 +81,24 @@ test('every profile carries bilingual guidance and independent published sources
     assert.ok(entry.source.referenceUrls.length >= 2, `${entry.id}: needs >=2 source URLs`);
     const hosts = new Set(entry.source.referenceUrls.map((url) => new URL(url).hostname.replace(/^www\./, '')));
     assert.ok(hosts.size >= 2, `${entry.id}: sources are not independent domains`);
-    assert.ok(entry.source.verificationNote.includes('2026-08-25'), `${entry.id}: verification is not dated`);
+    assert.match(entry.source.verificationNote, /2026-08-2[56]/u, `${entry.id}: verification is not dated`);
   }
+});
+
+test('every genuine vrat and upavas rule has verified food or offering guidance', () => {
+  const eligible = OBSERVANCE_RULES.filter((rule) => rule.category === 'vrat' || rule.category === 'upavas');
+  assert.equal(eligible.length, 68);
+  assert.deepEqual(
+    eligible.filter((rule) => !rule.bhogId).map((rule) => rule.id),
+    []
+  );
+  for (const rule of eligible) {
+    assert.ok(getBhogContent(rule.bhogId!)?.id, `${rule.id}: bhog is not verified/exposed`);
+  }
+
+  assert.equal(OBSERVANCE_RULES.find((rule) => rule.id === 'chandra-darshan')?.category, 'festival');
+  assert.equal(OBSERVANCE_RULES.find((rule) => rule.id === 'ishti-anvadhan')?.category, 'festival');
+  assert.equal(OBSERVANCE_RULES.find((rule) => rule.id === 'shraddha-dates')?.category, 'festival');
 });
 
 test('rule and vidhi hooks round-trip through verified-only accessors', () => {

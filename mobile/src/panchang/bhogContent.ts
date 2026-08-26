@@ -8,6 +8,7 @@
  * no surface is allowed to collapse them into one list.
  */
 import type { BhogContentEntry } from './types';
+import { EXTENDED_BHOG_CONTENT } from './bhogContentExtended';
 
 const EKADASHI_RULE_IDS = [
   'kamada-ekadashi',
@@ -32,6 +33,8 @@ const EKADASHI_RULE_IDS = [
   'vijaya-ekadashi',
   'amalaki-ekadashi',
   'papmochani-ekadashi',
+  'mahadwadashi',
+  'iskcon-ekadashi',
 ] as const;
 
 const item = (id: string, textHi: string, textEn: string) => ({ id, textHi, textEn });
@@ -117,7 +120,7 @@ const ganeshaBhog: BhogContentEntry = {
   id: 'ganesha-bhog',
   titleHi: 'श्री गणेश का नैवेद्य',
   titleEn: 'Naivedya for Shri Ganesha',
-  observanceIds: ['ganesh-chaturthi', 'sankashti-chaturthi-vrat', 'vinayaka-chaturthi-vrat'],
+  observanceIds: ['ganesh-chaturthi', 'sankashti-chaturthi-vrat', 'vinayaka-chaturthi-vrat', 'sakat-chauth'],
   vidhiIds: ['ganesh-chaturthi-sthapana'],
   offerings: [
     item('modak', 'मोदक या लड्डू; उपलब्ध न हो तो फल और नारियल', 'Modak or laddoo; fruit and coconut if those are unavailable'),
@@ -420,6 +423,7 @@ export const BHOG_CONTENT: readonly BhogContentEntry[] = [
   diwaliLakshmiBhog,
   satyanarayanBhog,
   hanumanJayantiBhog,
+  ...EXTENDED_BHOG_CONTENT,
 ];
 
 const BHOG_BY_ID: ReadonlyMap<string, BhogContentEntry> = new Map(
