@@ -193,11 +193,21 @@ appId: com.prashantsharma.vedansh
     timeout: 10000
 - tapOn: "Jupiter Mahadasha. Learn more in dasha."
 - assertVisible: "Vimshottari Dasha"
+# Both nested periods run at once, so each gets its own labelled dates and
+# progress bar — the Mahadasha and the Antardasha inside it.
 - assertVisible:
-    id: "dasha-progress"
+    id: "dasha-progress-maha"
+- assertVisible:
+    id: "dasha-progress-antar"
+- assertVisible: ".*Mahadasha 16 Jan 2012 . 16 Jan 2028.*"
+- assertVisible: ".*Antardasha 23 Aug 2025 . 16 Jan 2028.*"
 - assertVisible: ".*elapsed.*"
 - assertVisible: ".*left.*"
 - assertVisible: "Now"
+# Each "Now" level is named: the chip row is the Antardasha sequence, the
+# vertical list below is the Mahadasha timeline.
+- assertVisible: "The nine Antardashas within this Mahadasha"
+- assertVisible: "MAHADASHA TIMELINE"
 - scrollUntilVisible:
     element:
       text: "Mercury Mahadasha"

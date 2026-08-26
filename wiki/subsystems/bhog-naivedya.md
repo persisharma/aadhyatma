@@ -65,7 +65,7 @@ separately on an iOS 26.4 native development build and an Android 16 / API 36 re
 current worktree bundle embedded. The flow covers the Bhog panel, independent kitchen and ritual
 checked states, Puja phases, conduct paging, navigation, and language restoration.
 
-The 2026-08-26 all-phases bundle passed the full mobile gate (including 304/304 engine and 75/75
+The 2026-08-26 all-phases bundle passed the full mobile gate against the merged `main` (including 304/304 engine and 77/77
 data/content tests), lint with zero errors, and the same end-to-end flow on iPhone 17 Pro / iOS 26.4.
 The first iOS attempt lost the XCUITest driver connection during launch; a clean retry passed every
 app assertion. Android tooling was unavailable for the expanded bundle, so the 2026-08-25 Android
