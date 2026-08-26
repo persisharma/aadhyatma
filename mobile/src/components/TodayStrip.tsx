@@ -17,6 +17,7 @@ import { transliterateDevanagari } from '@/utils/transliterate';
 import { contentByLang } from '@/utils/localize';
 import { pillTextStyle, scriptTitleFont, eyebrowTextStyle } from '@/utils/langType';
 import { useTodayKey } from '@/utils/useTodayKey';
+import { launchMarkOnce } from '@/utils/launchTrace';
 import PitruSmaranDayChip from '@/components/PitruSmaranDayChip';
 import { moreTabTarget } from '@/navigation/entryRoutes';
 import {
@@ -82,6 +83,7 @@ function isInsidePakshaWindow(window: PitruPakshaWindow, date: Date): boolean {
 }
 
 export default function TodayStrip() {
+  launchMarkOnce('strip-render');
   const { colors, typography, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
   // Sibling tab — navigate via the parent so the action bubbles up (same
@@ -160,6 +162,10 @@ export default function TodayStrip() {
       if (handle !== undefined) clearTimeout(handle);
     };
   }, [today]);
+
+  if (panchang) launchMarkOnce('strip-headline (panchang solved)');
+  if (observances.length > 0) launchMarkOnce('strip-observance-chips');
+  if (pitruPakshaToday) launchMarkOnce('strip-pitru-chip');
 
   const headlineFont =
     lang === 'en' ? fontFamilies.latinBold : scriptTitleFont(lang, fontFamilies.devanagariBold);
@@ -357,6 +363,7 @@ export default function TodayStrip() {
     }
     // Only a tick that actually drifts consumes the settle window — a tick that
     // fires while the tab is unfocused must not let a later refocus skip it.
+    launchMarkOnce('strip-drift-first-tick');
     s.armed = true;
     const target = s.dir > 0 ? overflow : 0;
     const delta = (AUTO_SCROLL_PX_PER_SEC * AUTO_SCROLL_TICK_MS) / 1000;
