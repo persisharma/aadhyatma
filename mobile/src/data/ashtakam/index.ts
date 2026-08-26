@@ -16,6 +16,7 @@ import narasimhaAshtakam from './narasimha-ashtakam.json';
 import dattaAshtakam from './datta-ashtakam.json';
 import shaniAshtakam from './shani-ashtakam.json';
 import kalikaAshtakam from './kalika-ashtakam.json';
+import rudrashtakam from './rudrashtakam.json';
 
 export type AshtakamVerse = {
   id: string;
@@ -43,7 +44,8 @@ export type AshtakamId =
   | 'narasimha-ashtakam'
   | 'datta-ashtakam'
   | 'shani-ashtakam'
-  | 'kalika-ashtakam';
+  | 'kalika-ashtakam'
+  | 'rudrashtakam';
 
 export type AshtakamPayload = {
   id: AshtakamId;
@@ -145,6 +147,13 @@ const registry: Record<AshtakamId, AshtakamPayload> = {
     deity: kalikaAshtakam.deity,
     verses: kalikaAshtakam.verses,
   },
+  rudrashtakam: {
+    id: 'rudrashtakam',
+    titleHi: rudrashtakam.titleHi,
+    titleEn: rudrashtakam.titleEn,
+    deity: rudrashtakam.deity,
+    verses: rudrashtakam.verses,
+  },
 };
 
 export const ashtakamIds: readonly AshtakamId[] = [
@@ -161,6 +170,7 @@ export const ashtakamIds: readonly AshtakamId[] = [
   'datta-ashtakam',
   'shani-ashtakam',
   'kalika-ashtakam',
+  'rudrashtakam',
 ];
 
 export function getAshtakam(id: string | undefined): AshtakamPayload {
@@ -183,3 +193,4 @@ export const narasimhaAshtakamTotal = narasimhaAshtakam.verses.length;
 export const dattaAshtakamTotal = dattaAshtakam.verses.length;
 export const shaniAshtakamTotal = shaniAshtakam.verses.length;
 export const kalikaAshtakamTotal = kalikaAshtakam.verses.length;
+export const rudrashtakamTotal = rudrashtakam.verses.length;

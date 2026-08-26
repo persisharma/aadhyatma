@@ -136,6 +136,33 @@ for (const entry of standaloneAshtakamEntries) {
   );
 }
 
+const rudrashtakam = readJson('ashtakam/rudrashtakam.json');
+assert.equal(
+  rudrashtakam.verses.length,
+  9,
+  'Rudrashtakam should include the 8-verse hymn and its concluding phalashruti'
+);
+assert.ok(
+  rudrashtakam.verses[0].lines[0].startsWith('नमामीशमीशाननिर्वाणरूपं'),
+  'Rudrashtakam should preserve the Ramcharitmanas opening'
+);
+assert.equal(
+  rudrashtakam.verses.at(-1)?.labelEn,
+  'Phalashruti · 9',
+  'Rudrashtakam verse 9 should be identified as the phalashruti'
+);
+for (const verse of rudrashtakam.verses) {
+  assert.equal(
+    verse.lines.length,
+    verse.linesEn.length,
+    `Rudrashtakam ${verse.id} Devanagari/IAST display rows should remain aligned`
+  );
+  assert.ok(
+    verse.meaningHi.trim() && verse.meaningEn.trim(),
+    `Rudrashtakam ${verse.id} should include bilingual meaning and significance`
+  );
+}
+
 const jaiAmbeGauri = readJson('aarti/jai-ambe-gauri.json');
 assert.ok(
   jaiAmbeGauri.verses.length >= 12,
