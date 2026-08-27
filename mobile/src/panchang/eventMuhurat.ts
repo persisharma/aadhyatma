@@ -224,8 +224,11 @@ const PANCHAK_FIRST = 22; // Dhanishta … Revati (coarse: whole-nakshatra, not 
 
 const GENERAL_GOOD_TITHIS = [1, 2, 4, 6, 9, 10, 12, 14, 16, 17, 19, 21, 24, 25, 27] as const;
 const DP = 'https://www.drikpanchang.com/shubh-dates/';
-const DRAFT = (page: string, notes: string) =>
-  ({ convention: 'drikpanchang', verified: false, referenceUrls: [DP + page], notes } as const);
+const DHARMA_SINDHU_SAMSKARAS = 'https://www.kamakoti.org/kamakoti/dharmasindhu/bookview.php?chapnum=17';
+const DHARMA_SINDHU_UPANAYANA = 'https://www.kamakoti.org/kamakoti/dharmasindhu/bookview.php?chapnum=18';
+const MUHURTA_RAMAN = 'https://lakshminarayanlenasia.com/articles/muhurta.pdf';
+const DRAFT = (page: string, notes: string, extraUrls: readonly string[] = []) =>
+  ({ convention: 'drikpanchang', verified: false, referenceUrls: [DP + page, ...extraUrls], notes } as const);
 
 export const EVENT_RULES: readonly EventRule[] = [
   {
@@ -242,7 +245,8 @@ export const EVENT_RULES: readonly EventRule[] = [
     doshas: ['rikta', 'amavasya', 'bhadra', 'panchak', 'adhik', 'vyatipata', 'vaidhriti', 'chaturmas', 'guru-asta', 'shukra-asta'],
     source: DRAFT(
       'griha-pravesh-dates-with-muhurat.html',
-      'DRAFT §10 pending. Asta bar is the Muhurta Chintamani/Dharmasindhu rule DrikPanchang cites for Griha Pravesh. Nov-2026 output matched published lists on 11/25/26 Nov (PRD-16 validation).'
+      'SOURCED 2026-08-19, verification remains false pending complete golden coverage. DrikPanchang publishes the city/year result set and states that Nakshatra, weekday, Tithi, lunar month, Guru/Shukra Asta and Adhik Masa are applied. B. V. Raman, Muhurtha ch. XI (printed pp. 68–69) independently supplies the house-entry rule family. Nov-2026 output matched published lists on 11/25/26 Nov (PRD-16 validation).',
+      [MUHURTA_RAMAN]
     ),
   },
   {
@@ -257,7 +261,10 @@ export const EVENT_RULES: readonly EventRule[] = [
     varas: [1, 3, 4, 5],
     avoidVaras: [2, 6],
     doshas: ['rikta', 'amavasya', 'bhadra', 'adhik', 'vyatipata', 'vaidhriti'],
-    source: DRAFT('vehicle-purchase-dates-with-muhurat.html', 'DRAFT §10 pending.'),
+    source: DRAFT(
+      'vehicle-buying-auspicious-dates-with-muhurat.html',
+      'SOURCED 2026-08-19, verification remains false pending a second rule-table source and city/year goldens. Replaces the obsolete vehicle-purchase slug with the live published page.'
+    ),
   },
   {
     id: 'namkaran',
@@ -266,12 +273,16 @@ export const EVENT_RULES: readonly EventRule[] = [
     lagna: NO_LAGNA_RULE,
     nameHi: 'नामकरण',
     nameEn: 'Naming Ceremony',
-    nakshatras: [0, 3, 4, 6, 7, 11, 12, 13, 14, 16, 20, 21, 22, 23, 25, 26],
-    tithis: [0, 1, 2, 4, 6, 9, 10, 11, 12, 15, 16, 17, 19, 21, 24, 25, 26, 27],
+    nakshatras: [0, 3, 4, 6, 7, 11, 12, 14, 16, 20, 21, 22, 23, 25, 26],
+    tithis: [0, 1, 2, 4, 6, 9, 10, 12, 15, 16, 17, 19, 21, 24, 25, 27],
     varas: [1, 3, 4, 5],
     avoidVaras: [2, 6],
     doshas: ['rikta', 'amavasya', 'bhadra', 'adhik', 'vyatipata', 'vaidhriti'],
-    source: DRAFT('namkaran-dates-with-muhurat.html', 'DRAFT §10 pending.'),
+    source: DRAFT(
+      'sanskara/namakarana/namakarana-dates-with-muhurat.html',
+      'SOURCED 2026-08-19, verification remains false pending city/year goldens. The table is the conservative DrikPanchang + Dharma Sindhu ch. 17 + B. V. Raman (printed p. 29) intersection: Chitra and both Dwadashis are omitted where the sources diverge.',
+      [DHARMA_SINDHU_SAMSKARAS, MUHURTA_RAMAN]
+    ),
   },
   {
     id: 'vidyarambh',
@@ -280,12 +291,16 @@ export const EVENT_RULES: readonly EventRule[] = [
     lagna: NO_LAGNA_RULE,
     nameHi: 'विद्यारम्भ',
     nameEn: 'Starting Education',
-    nakshatras: [0, 6, 7, 12, 13, 14, 16, 20, 21, 22, 23, 26],
-    tithis: GENERAL_GOOD_TITHIS,
+    nakshatras: [0, 4, 5, 6, 7, 12, 13, 14, 16, 21, 22, 23, 26],
+    tithis: [1, 2, 4, 9, 10, 16, 17, 19, 24, 25],
     varas: [3, 4, 5],
     avoidVaras: [0, 2, 6],
     doshas: ['rikta', 'amavasya', 'bhadra', 'adhik', 'vyatipata', 'vaidhriti'],
-    source: DRAFT('vidyarambha-dates-with-muhurat.html', 'DRAFT §10 pending.'),
+    source: DRAFT(
+      'sanskara/education/vidyarambha/vidyarambha-dates-with-muhurat.html',
+      'SOURCED 2026-08-19, verification remains false pending city/year goldens. Nakshatra and Tithi arrays use the conservative intersection of DrikPanchang and Dharma Sindhu ch. 17.',
+      [DHARMA_SINDHU_SAMSKARAS]
+    ),
   },
   {
     id: 'bhumi-pujan',
@@ -299,7 +314,12 @@ export const EVENT_RULES: readonly EventRule[] = [
     varas: [1, 3, 4, 5],
     avoidVaras: [0, 2, 6],
     doshas: ['rikta', 'amavasya', 'bhadra', 'panchak', 'adhik', 'vyatipata', 'vaidhriti', 'chaturmas', 'guru-asta', 'shukra-asta'],
-    source: DRAFT('bhumi-pujan-dates-with-muhurat.html', 'DRAFT §10 pending. Shares Griha Pravesh masa/asta bars.'),
+    source: {
+      convention: 'drikpanchang',
+      verified: false,
+      referenceUrls: [MUHURTA_RAMAN],
+      notes: 'SOURCED 2026-08-19, verification remains false pending a second authoritative table and goldens. The recorded DrikPanchang top-level slug returns 404 and no replacement dedicated page was found, so it was removed instead of being replaced with a guessed URL. B. V. Raman, Muhurtha ch. X (printed pp. 65–66), is the currently opened foundation-laying rule family.',
+    },
   },
   {
     id: 'vyapar',
@@ -313,7 +333,11 @@ export const EVENT_RULES: readonly EventRule[] = [
     varas: [1, 3, 4, 5],
     avoidVaras: [2, 6],
     doshas: ['rikta', 'amavasya', 'bhadra', 'adhik', 'vyatipata', 'vaidhriti'],
-    source: DRAFT('business-opening-dates-with-muhurat.html', 'DRAFT §10 pending.'),
+    source: DRAFT(
+      'business-opening-dates-with-muhurat.html',
+      'SOURCED 2026-08-19, verification remains false pending city/year goldens. B. V. Raman, Muhurtha ch. VIII (printed pp. 58–59), is the independent rule-family source.',
+      [MUHURTA_RAMAN]
+    ),
   },
   // ── Phase 2 occasions (PRD-16 §4.3, TRD-16/P2 §4.4). All DRAFT pending §10. ──
   {
@@ -324,11 +348,15 @@ export const EVENT_RULES: readonly EventRule[] = [
     masa: NO_MASA_RULE,
     lagna: NO_LAGNA_RULE,
     nakshatras: [0, 4, 6, 7, 12, 13, 14, 17, 21, 22, 23],
-    tithis: GENERAL_GOOD_TITHIS,
+    tithis: [1, 2, 4, 6, 9, 10, 12, 16, 17, 19, 21, 24, 25, 27],
     varas: [1, 3, 4, 5],
     avoidVaras: [2, 6],
     doshas: ['rikta', 'amavasya', 'bhadra', 'adhik', 'vyatipata', 'vaidhriti'],
-    source: DRAFT('chudakarana-dates-with-muhurat.html', 'DRAFT §10 pending.'),
+    source: DRAFT(
+      'sanskara/mundana/mundana-dates-with-muhurat.html',
+      'SOURCED 2026-08-19, verification remains false pending city/year goldens. DrikPanchang and Dharma Sindhu ch. 17 agree on the Nakshatra set; Purnima was removed from the generic Tithi set because neither source admits it for Chudakarana.',
+      [DHARMA_SINDHU_SAMSKARAS, MUHURTA_RAMAN]
+    ),
   },
   {
     id: 'annaprashan',
@@ -338,13 +366,14 @@ export const EVENT_RULES: readonly EventRule[] = [
     masa: NO_MASA_RULE,
     lagna: NO_LAGNA_RULE,
     nakshatras: [0, 3, 4, 6, 7, 11, 12, 13, 14, 16, 20, 21, 22, 23, 25, 26],
-    tithis: [1, 2, 4, 6, 9, 11, 12, 14, 16, 17, 19, 21, 24, 26, 27],
+    tithis: [1, 2, 4, 6, 9, 12, 16, 17, 19, 21, 24, 27],
     varas: [1, 3, 4, 5],
     avoidVaras: [2, 6],
     doshas: ['rikta', 'amavasya', 'bhadra', 'adhik', 'vyatipata', 'vaidhriti'],
     source: DRAFT(
-      'annaprashan-dates-with-muhurat.html',
-      'DRAFT §10 pending. Age-window guidance (6th/8th month) is caption copy only — the finder scans its normal horizon, the same treatment namkaran shipped with.'
+      'sanskara/annaprashana/annaprashana-dates-with-muhurat.html',
+      'SOURCED 2026-08-19, verification remains false pending city/year goldens. Nakshatras and Tithis use the conservative DrikPanchang + Dharma Sindhu ch. 17 + B. V. Raman (printed pp. 29–30) intersection; Dwadashi and Purnima were removed from the earlier draft. Age-window guidance (6th/8th month) is caption copy only — the finder scans its normal horizon.',
+      [DHARMA_SINDHU_SAMSKARAS, MUHURTA_RAMAN]
     ),
   },
   {
@@ -354,12 +383,16 @@ export const EVENT_RULES: readonly EventRule[] = [
     group: 'sanskar',
     masa: NO_MASA_RULE,
     lagna: NO_LAGNA_RULE,
-    nakshatras: [4, 6, 7, 12, 13, 14, 16, 21, 22, 26],
-    tithis: GENERAL_GOOD_TITHIS,
+    nakshatras: [0, 4, 6, 7, 12, 13, 21, 22, 26],
+    tithis: [1, 2, 4, 5, 6, 9, 11, 12, 16, 17, 19, 20, 21, 24, 26, 27],
     varas: [1, 3, 4, 5],
     avoidVaras: [2, 6],
     doshas: ['rikta', 'amavasya', 'bhadra', 'adhik', 'vyatipata', 'vaidhriti'],
-    source: DRAFT('karnavedha-dates-with-muhurat.html', 'DRAFT §10 pending.'),
+    source: DRAFT(
+      'sanskara/karnavedha/karnavedha-dates-with-muhurat.html',
+      'SOURCED 2026-08-19, verification remains false pending city/year goldens. Arrays use the conservative DrikPanchang + Dharma Sindhu ch. 17 + B. V. Raman (printed p. 30) intersection; Ashwini was added and Swati/Anuradha removed from the earlier draft.',
+      [DHARMA_SINDHU_SAMSKARAS, MUHURTA_RAMAN]
+    ),
   },
   {
     id: 'upanayana',
@@ -367,16 +400,20 @@ export const EVENT_RULES: readonly EventRule[] = [
     nameEn: 'Upanayana',
     group: 'sanskar',
     // The one populated masa bar (PRD: "stricter; Chaturmas-barred"): the
-    // traditional window is Magha–Jyeshtha; Margashirsha/Pausha are barred
-    // beyond the Chaturmas months. DRAFT — the sharpest §10 review target.
-    masa: { preferred: [11, 12, 1, 2, 3], barred: [5, 6, 7, 8, 9, 10] },
+    // conservative lunar window is Magha–Vaisakha; Ashadha–Pausha are barred
+    // beyond the separate Chaturmas day rule. DRAFT — the sharpest §10 review target.
+    masa: { preferred: [11, 12, 1, 2], barred: [4, 5, 6, 7, 8, 9, 10] },
     lagna: NO_LAGNA_RULE,
-    nakshatras: [0, 3, 4, 6, 7, 12, 13, 14, 16, 21, 22, 23, 26],
-    tithis: [1, 2, 4, 9, 10, 11],
-    varas: [1, 3, 4, 5],
+    nakshatras: [0, 3, 4, 6, 7, 11, 12, 13, 14, 16, 20, 21, 22, 23, 25, 26],
+    tithis: [1, 2, 4, 9, 16, 17],
+    varas: [3, 4, 5],
     avoidVaras: [0, 2, 6],
     doshas: ['rikta', 'amavasya', 'bhadra', 'panchak', 'adhik', 'vyatipata', 'vaidhriti', 'chaturmas', 'guru-asta', 'shukra-asta'],
-    source: DRAFT('upanayana-dates-with-muhurat.html', 'DRAFT §10 pending. Shukla-paksha tithis only; masa window Magha–Jyeshtha.'),
+    source: DRAFT(
+      'sanskara/upanayana/upanayana-dates-with-muhurat.html',
+      'SOURCED 2026-08-19, verification remains false pending city/year goldens. This conservative table intersects DrikPanchang, Dharma Sindhu ch. 18 and B. V. Raman (printed pp. 31–32): Magha–Vaisakha lunar months, Wed/Thu/Fri, and the common Tithis. The sources mix solar- and lunar-month wording, so that convention choice is recorded rather than hidden.',
+      [DHARMA_SINDHU_UPANAYANA, MUHURTA_RAMAN]
+    ),
   },
   {
     id: 'sampatti',
@@ -390,7 +427,11 @@ export const EVENT_RULES: readonly EventRule[] = [
     varas: [1, 3, 4, 5],
     avoidVaras: [2, 6],
     doshas: ['rikta', 'amavasya', 'bhadra', 'adhik', 'vyatipata', 'vaidhriti'],
-    source: DRAFT('property-purchase-dates-with-muhurat.html', 'DRAFT §10 pending.'),
+    source: DRAFT(
+      'property-registration-auspicious-dates.html',
+      'SOURCED 2026-08-19, verification remains false pending table reconciliation and city/year goldens. Replaces the obsolete property-purchase slug; B. V. Raman, Muhurtha ch. XII (printed pp. 70–71), is the independent property rule-family source.',
+      [MUHURTA_RAMAN]
+    ),
   },
   {
     id: 'swarna',
@@ -404,7 +445,11 @@ export const EVENT_RULES: readonly EventRule[] = [
     varas: [1, 3, 4, 5],
     avoidVaras: [2, 6],
     doshas: ['rikta', 'amavasya', 'bhadra', 'adhik', 'vyatipata', 'vaidhriti'],
-    source: DRAFT('gold-purchase-dates-with-muhurat.html', 'DRAFT §10 pending. Overlaps the abujh days heavily by design (PRD §4.3).'),
+    source: DRAFT(
+      'gold-purchase-dates-with-muhurat.html',
+      'SOURCED 2026-08-19, verification remains false pending table reconciliation and city/year goldens. B. V. Raman, Muhurtha ch. VIII (printed p. 58), supplies the independent buying-jewellery rule family. Overlap with abujh days is intentional.',
+      [MUHURTA_RAMAN]
+    ),
   },
   // ── Phase 3 occasion (PRD-16/P3 §4.6): यात्रा completes parent §4.3. ──
   {

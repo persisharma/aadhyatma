@@ -7,6 +7,11 @@
 
 import type { Lang } from '@/data/gita/language';
 import { contentByLang, pick, type LocalizedStrings } from '@/utils/localize';
+import {
+  buildVerseHashtags,
+  formatHashtags,
+  type TimelyContext,
+} from '@/data/shareHashtags';
 
 const IOS_APP_ID = '6766086529';
 
@@ -50,6 +55,47 @@ export function buildShareCaption(p: ShareCaptionParams): string {
   const header = `${contentByLang(p.lang, p.sectionNameHi, p.sectionNameEn)} · ${contentByLang(p.lang, p.verseLabelHi, p.verseLabelEn)}`;
   const firstLine = contentByLang(p.lang, p.firstLineHi, p.firstLineEn);
   return [`${header}`, `"${firstLine}"`, '', `${pick(p.lang, SHARE_CTA)} ${SMART_LINK}`].join('\n');
+}
+
+/** "Follow" line that precedes the @handle in the Instagram caption. */
+const IG_FOLLOW: LocalizedStrings = {
+  hi: 'और भी पढ़ें',
+  en: 'More verses daily',
+  gu: 'વધુ વાંચો',
+  kn: 'ಇನ್ನಷ್ಟು ಓದಿ',
+};
+
+export type InstagramCaptionParams = ShareCaptionParams & {
+  /** `LibraryEntry.id` of the text — the hashtag block is derived from it. */
+  sourceId: string;
+  /** Festival / vrat / vaar inputs for the share date; absent → a date-free block. */
+  timely?: TimelyContext;
+};
+
+/**
+ * Instagram caption: the same verse caption WhatsApp gets, then the @handle, then a
+ * hashtag block derived from *this* verse (`buildVerseHashtags`, `shareHashtags.ts`).
+ *
+ * The blank line before the tags is deliberate — Instagram collapses a caption after
+ * the third line, so the reader sees the verse and the tags stay out of the preview.
+ */
+export function buildInstagramCaption(p: InstagramCaptionParams): string {
+  const hashtags = formatHashtags(
+    buildVerseHashtags({
+      sourceId: p.sourceId,
+      sectionNameHi: p.sectionNameHi,
+      sectionNameEn: p.sectionNameEn,
+      verseLabelEn: p.verseLabelEn,
+      lang: p.lang,
+      timely: p.timely,
+    })
+  );
+  return [
+    buildShareCaption(p),
+    `${pick(p.lang, IG_FOLLOW)} @${INSTAGRAM_HANDLE}`,
+    '',
+    hashtags,
+  ].join('\n');
 }
 
 // Multi-line feature-list invite (no emoji — §5 house style; plain • bullets).

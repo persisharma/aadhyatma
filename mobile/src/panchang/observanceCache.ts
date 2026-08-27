@@ -4,6 +4,7 @@
 // the slow live scan never reruns for a city it has already covered.
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { awaitDerivedCacheReset } from '@/utils/derivedCacheReset';
+import { launchMark } from '@/utils/launchTrace';
 import { resolveObservancesForYearLiveChunked, type ObservanceLocation } from './festivalEngine';
 import { locationKey, UJJAIN_CITY_ID } from './engine';
 import {
@@ -117,7 +118,12 @@ export function warmObservanceCache(
       // city the user has already navigated away from.
       if (mySeq !== latestWarmSeq) return;
       if (getStoredObservanceYear(cityId, calendarSystem, year)) continue;
+      // The heaviest thing this app can do on its own: a full year of per-day
+      // astronomy, chunked to 8ms slices but continuous for as long as it runs.
+      // Marked at both ends because a non-Ujjain city runs it ~3s into launch.
+      launchMark(`observance-scan-start ${year}`);
       const results = await resolveObservancesForYearLiveChunked(year, calendarSystem, location);
+      launchMark(`observance-scan-done ${year}`);
       const entries = serialize(results);
       setStoredObservanceYear(cityId, calendarSystem, year, entries);
       try {

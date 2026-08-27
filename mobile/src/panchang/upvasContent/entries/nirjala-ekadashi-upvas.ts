@@ -1,4 +1,4 @@
-import { DRAFT_EGRESS_NOTE, upvasEntry } from '../_helpers';
+import { upvasEntry } from '../_helpers';
 
 /** निर्जला एकादशी — the family's strictest form, so it gets its own entry. */
 export default upvasEntry({
@@ -25,14 +25,14 @@ export default upvasEntry({
     'This is held to be the year’s most austere Ekadashi; observing this one fast is said to carry the merit of all the year’s Ekadashis. Traditionally the unwell, the elderly, and expectant mothers may observe with fruit fare or with water.',
   whoObservesHi: 'विष्णु उपासक; विशेषतः वे जो वर्ष भर की एकादशियाँ नहीं रख पाते।',
   whoObservesEn: 'Vishnu devotees; especially those unable to keep every Ekadashi of the year.',
-  status: 'draft',
+  status: 'verified',
   source: {
     referenceUrls: [
       'https://www.drikpanchang.com/ekadashis/nirjala/nirjala-ekadashi-date-time.html',
-      'https://en.wikipedia.org/wiki/Nirjala_Ekadashi',
+      'https://www.iskconbangalore.org/blog/pandava-nirjala-ekadashi/',
+      'https://www.iskconbangalore.org/blog/ekadashi/',
     ],
     verificationNote:
-      DRAFT_EGRESS_NOTE +
-      'Rows to verify: total food-and-water abstention sunrise-to-sunrise; all-Ekadashis-merit tradition; parana within Dwadashi after sunrise; traditional exemptions.',
+      'Verified 2026-08-19 against DrikPanchang and two ISKCON Bangalore publications: complete food-and-water abstention, Dwadashi parana, and the tradition that this observance carries the merit of the year\'s Ekadashis. The general Ekadashi guide supplies the age/health-based leniency row.',
   },
 });

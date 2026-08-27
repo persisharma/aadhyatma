@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { Linking, View } from 'react-native';
+import { InteractionManager, Linking, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
@@ -87,6 +87,7 @@ import { prefetchTodayPanchang } from '@/panchang/panchangLaunchPrefetch';
 import RootNavigator from '@/navigation/RootNavigator';
 import WidgetCoordinator from '@/widgets/WidgetCoordinator';
 import { retryWidgetDeepLink } from '@/widgets/deepLink';
+import { launchMark, launchMarkOnce } from '@/utils/launchTrace';
 
 SplashScreen.preventAutoHideAsync().catch(() => {
   /* noop — already prevented */
@@ -119,7 +120,15 @@ void resetDerivedCachesIfBuildChanged(currentBuildFingerprint());
 // just leaves the hooks on the path they already take.
 void prefetchTodayPanchang();
 
+launchMark('app-module-body');
+
+// The idle mark lives here rather than in `launchTrace` (which imports nothing on
+// purpose) — it is the moment everything gated on `runAfterInteractions` is
+// finally allowed to run, so a late one indicts whatever held the thread.
+InteractionManager.runAfterInteractions(() => launchMark('first-ui-idle'));
+
 export default function App() {
+  launchMarkOnce('app-render');
   const [notoLoaded] = useNotoFonts({
     NotoSerifDevanagari_500Medium,
     NotoSerifDevanagari_600SemiBold,
@@ -146,6 +155,7 @@ export default function App() {
 
   const fontsReady =
     notoLoaded && cormorantLoaded && gujaratiLoaded && kannadaLoaded && interLoaded;
+  if (fontsReady) launchMarkOnce('fonts-ready');
 
   // Wire notification taps to deep-link navigation. Handles both:
   //  (a) Cold start — app was killed; iOS launches us with the tap response,
@@ -349,7 +359,9 @@ function AppReadyGate({ children }: { children: React.ReactNode }) {
   const { isLoading: languageLoading } = useGitaLanguage();
   const ready = !fontScaleLoading && !languageLoading;
   const hideSplash = useCallback(() => {
-    if (ready) SplashScreen.hideAsync().catch(() => undefined);
+    if (!ready) return;
+    launchMarkOnce('splash-hidden (first frame)');
+    SplashScreen.hideAsync().catch(() => undefined);
   }, [ready]);
 
   useEffect(() => {

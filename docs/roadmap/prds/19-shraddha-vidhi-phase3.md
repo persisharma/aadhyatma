@@ -2,11 +2,11 @@
 
 | | |
 |---|---|
-| **Status** | Proposed — detail PRD for the final phase; hard content-gated (egress required); prototype attached |
+| **Status** | Part A implemented 2026-08-20 — narrow household tila-tarpana remembrance guide registered and cross-linked; Parts B/C remain optional and deferred |
 | **Parent** | [PRD-19 पूजा विधि](./19-puja-vidhi.md) §8 Phase 3 · [PRD-17 पितृ स्मरण](./17-pitru-smaran.md) §7 Phase 3 (the cross-link — this document IS both phase lines; neither PRD has any further phase after this) |
 | **T-shirt size** | Part A: M (one vidhi entry + a new anchor kind + 3 door surfaces + third-stack registration). Part B: M–L (assets + player wiring; store release). Part C: M per varianted vidhi (verification dominates) |
 | **Prototype** | [`docs/shraddha-vidhi-prototype.html`](../../shraddha-vidhi-prototype.html) — person-detail vidhi door, tarpan तैयारी checklist, conduct card with Gita-paath hand-off + the Part-B audio affordance, variant selection; **every liturgical string in it is an illustrative placeholder** |
-| **Feasibility** | Engine work is nil (PRD-17 already solves every date this phase needs); screens/navigation are extensions of shipped patterns. **The content is the blocker — see §0.** |
+| **Feasibility** | Part A uses the shipped PRD-17 date engine and Vidhi surfaces. No inline mantra or full parvana-shraddha sequence is published. |
 
 > **Completes PRD-19.** Phase 3 is the last phase of the Puja Vidhi PRD: the seventh (shraddha/tarpan) vidhi with its Pitru Smaran cross-link (Part A, the headline), plus two explicitly optional product decisions — recorded step audio (Part B) and regional variants as named alternates (Part C). No further phases exist or are implied.
 
@@ -14,14 +14,14 @@
 
 ## 0. The honest content gate (read first)
 
-**The shraddha liturgy cannot be authored today, and this PRD does not pretend otherwise.** RULEBOOK §11.3 forbids composing liturgical text and forbids claiming unopened sources; §3.4 of the parent PRD requires two independent published references per vidhi (DrikPanchang as the common procedural reference plus one more), with the Gita Press canonical edition separately recorded as verified or honestly pending. That verification **cannot run from an environment where DrikPanchang and archive.org are unreachable — attempted and recorded 2026-08-12 and 2026-08-14** (each shipped entry's `canonicalEditionStatus` in `mobile/src/data/vidhi/*.ts` carries the dated attempts, e.g. `maha-shivaratri-puja.ts`).
+**The source-access blocker is cleared and the narrow v1 scope is selected.** On 2026-08-19 the full Gita Press *Nitya Karma Puja Prakash* scan (code 592) was opened and its Tarpana chapter (printed pp. 103–116) inspected; Sri Kanchi Kamakoti Peetham's condensed *Dharma Sindhu* Shraddha Prakarana was also opened, and DrikPanchang's public Shraddha timing/procedure material was captured. The evidence and decision are pinned in [`shraddha-tarpan-source-dossier.md`](../conventions/shraddha-tarpan-source-dossier.md).
 
-Therefore this document is a plan for **what to build and how to verify it** — data contracts, surfaces, navigation, state, privacy, tests — all of which can be reviewed and even scaffolded now. The vidhi's actual samagri list, step sequence, and any mantra text ship **only** after an egress-capable authoring session performs the §3.4 verification. The attached prototype uses clearly-marked illustrative placeholders and must never be transcribed into `mobile/src/data/vidhi/` as if it were sourced content. Until the entry exists in the registry, **every door specified below is absent** (the never-a-placeholder rule, same gate as the Observance Detail "How to observe" card).
+Part A therefore publishes only a concise household **tila-tarpana remembrance guide**. It explicitly says it is not complete Shraddha; omits every mantra, fixed name/gotra formula, direction, sacred-thread position and pinda/bhojana/homa sequence; and defers those branches to family tradition or a qualified officiant. The priest-guided parvana companion remains outside v1. Any future inline mantra still requires character-by-character transcription review.
 
 ## 1. Prerequisites (carried, not scope)
 
-1. **Canonical-edition sign-off for the six shipped vidhis** — the standing Phase-2 carry-over. Same environment requirement, same clearing procedure: open the recorded Gita Press scans, check character-by-character, update each `canonicalEditionStatus` from its honest pending state. This phase does not subsume that work; it merely shares the unblocking event.
-2. **An egress-capable authoring environment** (DrikPanchang + archive.org reachable) for §0's verification.
+1. **Canonical-edition sign-off state remains per entry.** Four instruction-only vidhis now carry the opened Gita Press code 592 chapter check; Karwa Chauth remains partial and Satyanarayan's exact code 1367 scan remains pending. Part A does not overstate either.
+2. **Source access satisfied 2026-08-19:** DrikPanchang, Dharma Sindhu and the Gita Press code 592 scan were opened and recorded.
 3. PRD-17 Phases 1–2 shipped (they are — native-verified iOS 2026-08-13): `pitruSmaran.ts` solves, list/add/detail screens, Pitru Paksha overview, day chips.
 
 ---
@@ -51,16 +51,16 @@ export type VidhiEntry = {
 };
 ```
 
-- `anchor: 'personal-tithi'` means: occurrence dates come from `solveNextOccurrence` / `pakshaShraddhaDay` (`mobile/src/panchang/pitruSmaran.ts`) for a saved person — **not** from the festival engine. `festivalIds` stays usable so the vidhi may *also* door on the named **सर्वपितृ अमावस्या** rule PRD-17 added (the one public day of the family); the two anchors are additive, not exclusive.
-- The registry invariant suite (`vidhiContent.test.ts`) gains: a `personal-tithi` entry must have ≥1 door surface (a `festivalIds` entry or the Pitru cross-link constant), and the shipped six must have no `anchor` field.
+- `anchor: 'personal-tithi'` means occurrence dates come from `solveNextOccurrence` / `pakshaShraddhaDay` (`mobile/src/panchang/pitruSmaran.ts`) for a saved person — **not** from the festival engine. `festivalIds` is therefore empty rather than inventing a festival rule.
+- The registry invariant suite (`vidhiContent.test.ts`) pins that the personal entry has no fake festival/deity classification, no mantra and exactly the same optional Gita chapters as Pitru Smaran; the six festive entries retain their existing rules.
 - The catalog (`VidhiCatalogScreen`) lists it like any vidhi — always-available, opened undated (checklist then keys to the civil day, the existing `dateMs?` semantics).
 - **Search:** the entry gains its section row automatically — `searchIndex.buildSectionEntries` appends one row per registry entry with no index code change; `searchIndex.test.ts`'s `library.length + VIDHI_ENTRIES.length` pin moves from +6 to +7 in the same PR.
 - **Routine:** no `AddToRoutineButton`. The shipped gate is a `festivalIds` rule with `recurrence: 'monthly'`; a shraddha day is annual and personal, and the per-person smaran reminder already owns that cadence. A routine item for grief would also collide with PRD-17's no-gamification stance — deliberately excluded, not deferred.
-- **Panchang day panel:** on सर्वपितृ अमावस्या (a public rule carrying this `vidhiId` via `festivalIds`), the ObservanceCard's standard `॥ पूजा विधि` pill applies — but rendered in the **muted gold** pill treatment, not the festive filled saffron; the day is observance, not celebration. Personal days keep their private ॥ स्मरण chip → person detail → door (no vidhi pill on the public panel for a private date — the panel must never hint that this device holds a family entry).
+- **Panchang day panel:** on सर्वपितृ अमावस्या, `PitruPakshaDayChip` adds a direct **muted-gold** `॥ तिल-तर्पण विधि` door beside the public season chip. Personal days keep their private ॥ स्मरण chip → person detail → door; no public panel reveals which family entries the device holds.
 
 ## 4. Cross-link surfaces (this section is PRD-17 Phase 3, verbatim)
 
-PRD-17 §7 Phase 3 reads "shraddha/tarpan vidhi cross-link (with PRD-19)". **These doors are that phase — building Part A closes both PRDs' final phase lines.** Both doors gate on `getVidhiById('shraddha-tarpan-vidhi')` resolving; while the registry lacks the entry (i.e., today), neither renders anything — no teaser, no "coming soon".
+PRD-17 §7 Phase 3 reads "shraddha/tarpan vidhi cross-link (with PRD-19)". **These shipped doors close both PRDs' final phase lines.** They still gate on `getVidhiById('shraddha-tarpan-vidhi')` resolving, so a future removal cannot leave a dead teaser or placeholder.
 
 1. **Person detail** (`PitruSmaranDetailScreen.tsx`, More stack): a `॥ श्राद्ध विधि` action row in the linked-content group, above the two Gita-paath rows, carrying the person's **next solved occurrence** as `dateMs` (the hero pill's date — already solved warm-first by `useSmaranDetailSolve`). During the Pitru Paksha window, a second caption line offers the person's paksha day as the occurrence instead (whichever is sooner leads).
 2. **Pitru Paksha overview** (`PitruPakshaOverviewScreen.tsx`): one quiet door row beneath the fortnight list — "श्राद्ध विधि देखें" — opening the vidhi detail with the tapped/soonest family-matched day as `dateMs`. Rows for individual days do not each grow a pill; the fortnight stays a calendar, not a launcher.
@@ -68,8 +68,8 @@ PRD-17 §7 Phase 3 reads "shraddha/tarpan vidhi cross-link (with PRD-19)". **The
 
 ## 5. Navigation contract & occurrence scoping
 
-- **Third-stack registration.** `PitruSmaranDetail`/`PitruPakshaOverview` live on the **More stack**, where the vidhi routes are not registered (`MoreStackParamList` in `navigation/types.ts` does not intersect `VidhiStackParamList`; only Home and Panchang do). Per RULEBOOK §6.0.1 and the shipped back-navigation rationale, this phase makes it `MoreStackParamList = VidhiStackParamList & { … }` and registers the three vidhi screens in `MoreStackNavigator.tsx`, so both doors **push in place** and back retraces the journey. `navigation/__tests__/vidhiBackNavigation.test.ts` extends to the third navigator (the shared param type catches a missing param, not a missing `Stack.Screen` — that test is the net).
-- **Shipped-text hand-offs from the More stack** already work: the conduct screen routes refs through `navigateToHomeStackTarget` (`entryRoutes.ts`), which checks `getState().routeNames` and falls back to `HomeTab` — the readers live only on the Home stack, and this is precisely the case that helper exists for. No new mechanism.
+- **Third-stack registration.** `MoreStackParamList` now intersects `VidhiStackParamList`, and `MoreStackNavigator.tsx` registers all three vidhi screens. Both Pitru doors therefore **push in place** and Back retraces the journey. `navigation/__tests__/vidhiBackNavigation.test.ts` pins all three navigators.
+- **The Gita hand-off is mounted in the More stack.** `MoreStackNavigator` registers `GitaReader`, so `navigateToHomeStackTarget` sees that route and pushes it locally; the reader's Back button returns to the conduct step. Other shipped-text refs still use the helper's Home fallback, but this personal guide contains only Gita refs. `vidhiBackNavigation.test.ts` pins the local route because a cross-tab fallback would strand Back on Home.
 - **Occurrence scoping.** `dateMs` = the personal solved date (annual tithi occurrence, or the paksha day). `checklistStore.ts` needs **no schema change**: samagri state stays keyed `{vidhiId: {samagri: {dateKey, checked}}}` — a fresh personal date starts a fresh checklist, exactly as a fresh festival date does. The annual date and the paksha day are **two distinct occurrences** with distinct dateKeys (see edge cases).
 
 ## 6. Data-model deltas (Part A, consolidated)
@@ -101,17 +101,14 @@ The `gita` ref kind is required because `GitaReader` is chaptered (`{ chapter }`
 - DRAFT convention: if the entry is scaffolded before verification completes (not recommended), it must not be in `VIDHI_ENTRIES` — an unregistered module is invisible to every door and to search. There is no "draft but shipped" state for a vidhi.
 - **Sensitivity review beyond sourcing:** shraddha instructions routinely involve fire, water bodies, and fasting; the authored instruction prose (which *is* written fresh, per parent §3.2) carries the same material-handling/health-safety qualification discipline the Shivaratri entry already models, and the PRD-17 §5 non-prescriptive stance — the vidhi describes the chosen source's procedure, it never asserts obligation ("आपको करना चाहिए…" is banned copy).
 
-### 8.1 Verification runbook (what the egress session actually does)
+### 8.1 Verification and implementation record
 
-So the unblocking session has no judgment calls to invent, the procedure is fixed now:
-
-1. Open DrikPanchang's shraddha/tarpan procedural pages; capture URLs + retrieval date. Open one independent published reference (candidates evaluated *in that session* — naming one now would be claiming an unopened source).
-2. Open the recorded Gita Press *Nitya Karma Puja Prakash* scan on archive.org; check the shraddha/tarpan section character-by-character for every mantra the entry will carry inline. Anything not verbatim-confirmable ships instruction-only.
-3. Author the entry: samagri, phased steps, refs (`gita` chapters 15/2 at the paath steps; existing `section`/`katha` refs where applicable), transcribed mantras with per-mantra `sourceUrl`.
-4. Complete the `source` block honestly — `canonicalEditionStatus` says exactly what was opened and checked, and what remains pending, with dates.
-5. In the same session, clear the carried prerequisite where possible: re-open the six shipped entries' recorded scans and flip their pending `canonicalEditionStatus` lines to verified (or update the honest pending note with the new dated attempt).
-6. Register the entry in `VIDHI_ENTRIES`, run `npm run test:data` (registry invariants + §11.14 validator + search-index row count) and the full Jest/Maestro gates of §12.
-7. Update design.md §62/§63 and RULEBOOK §19 in the same PR (§0.1 merge gate).
+The source session opened and recorded DrikPanchang's timing/procedure pages, Dharma Sindhu chapter
+26 and the Gita Press code 592 scan. Because no formula received a character-by-character qualified
+review, the registered entry is instruction-only. It includes the scoped samagri and ten phased steps,
+optional Gita chapters 15 and 2, and an honest source block; it is registered in `VIDHI_ENTRIES` and
+covered by the data, search, screen, navigation and Pitru-door tests in §12. The exact-edition gates
+for Karwa Chauth and Satyanarayan remain separate and are not overstated by this implementation.
 
 ---
 
@@ -167,9 +164,8 @@ variants?: VidhiVariant[];          // on VidhiEntry; base entry stays the decla
 
 ### 11.1 Sequencing & rollout
 
-1. **Now (no egress needed):** nothing user-visible ships. The navigation/type groundwork (More-stack registration, `anchor` + `gita` ref types, test scaffolds) *may* land dark — every door gates on a registry entry that does not exist, so the app is bit-identical in behaviour. Optional; zero-risk either way.
-2. **Egress session:** §8.1 runbook — content authored, six sign-offs cleared, entry registered, doors go live in the same PR series.
-3. **Release:** Part A is pure JS/TS + bundled text — **OTA-shippable** like PRD-17's core. Part B, if ever taken, forces a store release (native assets + tour/whats-new gate). Part C rides whichever release its first verified variant is ready for.
+1. **Implemented 2026-08-20:** source-backed instruction-only entry, `anchor` + `gita` ref types, More-stack registration, Pitru cross-links, search/catalog discovery and tests landed together.
+2. **Release:** Part A is pure JS/TS + bundled text — **OTA-shippable** like PRD-17's core. Part B, if ever taken, forces a store release (native assets + tour/whats-new gate). Part C rides whichever release its first verified variant is ready for.
 4. One release of the standard NEW badge on the person-detail door row; the muted register everywhere else (no DISCOVER card for this — the audience is exactly the people already inside Pitru Smaran, and grief is not a growth surface).
 
 ## 12. Test plan
@@ -180,9 +176,9 @@ variants?: VidhiVariant[];          // on VidhiEntry; base entry stays the decla
 | Solve reuse (tsx, `test:engine`) | existing `pitruSmaran` suites | unchanged — no new engine paths; a regression run guards the door's date inputs |
 | Screens (Jest) | `VidhiScreens.test.tsx` + Pitru screen suites | door renders only when the entry resolves (absent registry ⇒ absent door — non-vacuous both ways); route params never contain `entryId`/name; no source/citation text in any render; variant selector state; samagri share text contains no date/relation |
 | Navigation (Jest) | `vidhiBackNavigation.test.ts` | the three vidhi screens registered on **all three** stacks; More-stack back retraces to person detail; Gita hand-off from More stack goes through `navigateToHomeStackTarget` |
-| e2e (Maestro) | new `shraddha-vidhi-crosslink-smoke.yaml` | More → पितृ स्मरण → add a person (tithi-known path) → person detail → श्राद्ध विधि door → तैयारी check two items → conduct swipe to the Gita hand-off → reader opens → back retraces to conduct, then to person detail. iOS and Android runs reported separately (RULEBOOK §8) |
+| e2e (Maestro) | extended `.maestro/pitru-smaran.yaml` | More → पितृ स्मरण → person detail → tila-tarpana door → तैयारी → conduct → Gita 15 hand-off → reader opens → back retraces to conduct. Fresh iOS Release build passed on iPhone 17 Pro Max / iOS 26.4 on 2026-08-20; Android remains required separately (RULEBOOK §8). |
 
-Acceptance for the whole phase: `npm test` green (typecheck + widgets + readers + engine + data), the new Maestro flow passing on both platforms, `vidhiBackNavigation.test.ts` covering three stacks, and the §0.1 doc updates present in the PR. For Part A specifically, the door-absent case must be tested against the *shipped* registry (six entries) so the gate is proven before content lands, and the door-present case against a test registry containing a fixture entry — the suite must not wait for real content to exercise the surfaces.
+Acceptance for Part A: `npm test` green (typecheck + widgets + readers + engine + data), `vidhiBackNavigation.test.ts` covering three stacks, and the §0.1 doc updates present in the PR. Registry and screen tests exercise the real seventh entry, both Gita refs and all live doors. The extended Pitru Maestro flow passed on a fresh iOS Release build on 2026-08-20; Android must still pass before release. Source procurement and unit/Jest integration alone are not cross-platform device evidence.
 
 ## 13. Edge cases
 

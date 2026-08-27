@@ -8,6 +8,7 @@ import { useUserActivity } from '@/contexts/UserActivityContext';
 import { useJapamCounter } from '@/contexts/JapamCounterContext';
 import { isValidIanaTimeZone, stableWidgetPayloadKey } from './contract';
 import { writeWidgetPayload } from './native';
+import { launchMarkOnce } from '@/utils/launchTrace';
 
 const LAST_PLAN_KEY = '@vedansh/widget:last-plan-key-v1';
 const THROTTLE_MS = 30_000;
@@ -50,8 +51,10 @@ export default function WidgetCoordinator() {
           inFlight = true;
           try {
             // Dynamic boundary preserves Home first-frame independence.
+            launchMarkOnce('widget-plan-start');
             const { planWidgetPayload } = await import('./planPayload');
             const payload = await planWidgetPayload({ generatedAt: new Date(), locale: lang, location, calendarSystem, deviceTimeZone, activity, lastUsedMantraId });
+            launchMarkOnce('widget-plan-done (28 uncached solves)');
             // Dependency changes are allowed to finish their CPU work, but may
             // never overwrite a newer location/language/calendar/activity plan.
             if (cancelled || generation !== generationRef.current) return;

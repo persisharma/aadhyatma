@@ -30,3 +30,7 @@ marketing/instagram/shots/
 marketing/instagram/frames/
 marketing/instagram/carousel/
 marketing/instagram/*.mp4
+
+# Source research artifacts — kept local only; verified content lives as text and
+# sources are cited by public URL (never commit these)
+tmp/

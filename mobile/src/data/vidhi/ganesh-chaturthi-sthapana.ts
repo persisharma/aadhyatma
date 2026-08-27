@@ -121,10 +121,10 @@ export const ganeshChaturthiSthapana: VidhiEntry = {
   ],
   source: {
     canonicalEdition: 'Gita Press Nitya Karma Puja Prakash — Ganapati Puja chapter',
-    canonicalEditionUrls: ['https://archive.org/search?query=nitya+karma+puja+prakash+gita+press'],
-    canonicalEditionStatus: 'PENDING — the named Gita Press scan has not yet been checked character-by-character; this entry therefore publishes no inline installation mantra. Re-attempted 2026-08-14: archive.org egress is blocked from this authoring environment as well.',
+    canonicalEditionUrls: ['https://archive.org/details/NityaKarmaPujaPrakashGitaPressGorakhpur'],
+    canonicalEditionStatus: 'VERIFIED 2026-08-19 — opened Gita Press code 592, Nitya Karma Puja Prakash (Vikrama Samvat 2072, twelfth reprint), confirmed the publisher imprint, and collated the Ganapati-Gauri Puja chapter (printed page 190 onward) against this instruction-only sequence. Variable installation mantras remain intentionally omitted rather than silently paraphrased.',
     referenceUrls: [DRIK_GANESH, 'https://ganeshchaturthi.com/important-how-tos/how-to-perform-ganesh-staphna/'],
-    retrievedOn: '2026-08-13',
-    notes: 'The sequence follows DrikPanchang’s Ganesha Chaturthi Shodashopachara order and the independent household sthapana guide. Clay-murti handling and the permanent-murti avahana/visarjan distinction are explicit. Instructions are freshly authored; exact installation mantras remain omitted pending canonical comparison. 2026-08-14: a Ganesha-vandana step now hands off to the shipped, verified ganesh-stotram section ("Vakratunda Mahakaya") — reference, never re-typed (§11.11/PRD-19 §3.3).',
+    retrievedOn: '2026-08-19',
+    notes: 'The sequence follows the canonical Ganapati-Gauri chapter, DrikPanchang’s Ganesha Chaturthi Shodashopachara order, and the independent household sthapana guide. Clay-murti handling and the permanent-murti avahana/visarjan distinction are explicit. Instructions are freshly authored; exact installation mantras are deliberately omitted. 2026-08-14: a Ganesha-vandana step now hands off to the shipped, verified ganesh-stotram section ("Vakratunda Mahakaya") — reference, never re-typed (§11.11/PRD-19 §3.3).',
   },
 };

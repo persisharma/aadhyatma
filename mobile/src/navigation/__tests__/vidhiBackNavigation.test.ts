@@ -9,7 +9,7 @@ import * as path from 'node:path';
  * `navigate('PanchangTab', …)`. Back from the catalog then popped to the
  * Panchang calendar — a tab the user never chose, and one whose default
  * (calendar) mode carries no vidhi door to re-enter from. Registering the three
- * screens on BOTH stacks lets every door push in place, so back retraces the
+ * screens on all three entry stacks lets every door push in place, so back retraces the
  * journey it started.
  *
  * These are source assertions rather than a mounted navigator: the Home stack
@@ -22,20 +22,23 @@ const src = (...rel: string[]) => fs.readFileSync(path.resolve(__dirname, '..', 
 const VIDHI_ROUTES = ['VidhiCatalog', 'VidhiDetail', 'VidhiConduct'] as const;
 
 describe('vidhi back navigation', () => {
-  test('both stacks register the whole vidhi flow', () => {
+  test('all three entry stacks register the whole vidhi flow', () => {
     const home = src('HomeStackNavigator.tsx');
     const panchang = src('PanchangStackNavigator.tsx');
+    const more = src('MoreStackNavigator.tsx');
     for (const route of VIDHI_ROUTES) {
       expect(home).toContain(`name="${route}"`);
       expect(panchang).toContain(`name="${route}"`);
+      expect(more).toContain(`name="${route}"`);
     }
   });
 
-  test('one shared param list keeps the two registrations in sync', () => {
+  test('one shared param list keeps the three registrations in sync', () => {
     const types = src('types.ts');
     expect(types).toMatch(/export type VidhiStackParamList = \{/);
     expect(types).toMatch(/export type HomeStackParamList = VidhiStackParamList &/);
     expect(types).toMatch(/export type PanchangStackParamList = VidhiStackParamList &/);
+    expect(types).toMatch(/export type MoreStackParamList = VidhiStackParamList &/);
     // The routes must be declared once, in the shared type only.
     for (const route of VIDHI_ROUTES) {
       expect(types.match(new RegExp(`^\\s*${route}:`, 'gm'))).toHaveLength(1);
@@ -73,5 +76,13 @@ describe('vidhi back navigation', () => {
     expect(src('..', 'screens', 'ObservanceDetailScreen.tsx')).toMatch(
       /navigation\.navigate\('VidhiDetail'/
     );
+  });
+
+  test('the personal Gita hand-off stays on More so Back returns to conduct', () => {
+    const more = src('MoreStackNavigator.tsx');
+    const types = src('types.ts');
+    expect(more).toContain('name="GitaReader"');
+    expect(more).toContain("import GitaReaderScreen from '@/screens/GitaReaderScreen'");
+    expect(types).toMatch(/export type MoreStackParamList = VidhiStackParamList & \{[\s\S]*GitaReader: GitaReaderParams;/);
   });
 });
