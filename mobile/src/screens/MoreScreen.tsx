@@ -329,6 +329,21 @@ export default function MoreScreen({ navigation }: Props) {
                   }
                   testID="more-pitru-smaran"
                 />
+                {/* वास्तु दिशा (PRD-24) — the More-row NEW state for one release,
+                    the widget-gallery pattern. */}
+                <SettingsRow
+                  icon="॰"
+                  iconBg={colors.saffron}
+                  iconFontFamily={typography.readerTitle.fontFamily}
+                  iconFontSize={18}
+                  label={pick(lang, { hi: 'वास्तु दिशा', en: 'Vastu Disha', gu: 'વાસ્તુ દિશા', kn: 'ವಾಸ್ತು ದಿಶಾ' })}
+                  labelFontFamily={labelFont}
+                  state="NEW"
+                  stateFontFamily={fontFamilies.interSemiBold}
+                  onPress={() => navigation.navigate('VastuDisha')}
+                  accessibilityLabel="Vastu Disha, new"
+                  testID="more-vastu-disha"
+                />
               </View>
             </View>
 

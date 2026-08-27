@@ -1,0 +1,65 @@
+# वास्तु दिशा Smoke Test (PRD-24, design.md §66)
+#
+# Covers the More-hub door and the sensor-independent guidance contract
+# (RULEBOOK §22.6). Simulators report no magnetometer, so this flow exercises
+# exactly the honest degraded path: unavailable → manual chips → guidance.
+#   1. More → "Vastu Disha, new" row opens the screen.
+#   2. The chakra + room-by-room + mandir sections render without a sensor.
+#   3. Tapping the South-East chip surfaces the kitchen guidance first
+#      ("In this direction").
+#
+# Language note (per home-today-smoke): default Hindi renders Devanagari,
+# which Maestro's iOS tree can't read — flip to English on More first.
+# Row/chip a11y labels are English by contract either way.
+#
+# Not covered here, deliberately: the griha-pravesh door on MuhuratResults —
+# reaching it needs a full 92-day finder scan (spinner wait, flaky budget);
+# its render condition is pinned in MuhuratFinderScreens.test.tsx instead.
+# Live-heading behaviour is device-only (RULEBOOK §22.9's release gate).
+
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+
+# ── Global reading language → English (More → Language picker sheet) ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── 1. More → Vastu Disha ──
+- tapOn: { id: "more-vastu-disha" }
+- waitForAnimationToEnd
+- assertVisible: "Vastu Disha"
+
+# ── 2. Sensor-independent surfaces (simulator = no magnetometer) ──
+- extendedWaitUntil:
+    visible: "Room by room"
+    timeout: 15000
+- assertVisible: "Compass.*"
+- scrollUntilVisible:
+    element:
+      text: "The home mandir"
+    direction: DOWN
+    timeout: 30000
+
+# ── 3. Manual chip → faced-direction guidance ──
+- scrollUntilVisible:
+    element:
+      id: "vastu-disha-southeast"
+    direction: UP
+    timeout: 30000
+- tapOn: { id: "vastu-disha-southeast" }
+- waitForAnimationToEnd
+- assertVisible: "In this direction"
+- assertVisible: "Kitchen"
+
+# ── Back out cleanly ──
+- tapOn: "Back"
+- waitForAnimationToEnd
+- assertVisible: "Vastu Disha, new"

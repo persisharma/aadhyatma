@@ -112,6 +112,8 @@ export type MoreStackParamList = VidhiStackParamList & {
   PitruSmaranEdit: { entryId?: string } | undefined;
   PitruSmaranDetail: { entryId: string };
   PitruPakshaOverview: undefined;
+  /** वास्तु दिशा (PRD-24) — compass + room guidance; also on the Panchang stack. */
+  VastuDisha: undefined;
   /** Mounted locally so a vidhi hand-off's Back button returns to conduct. */
   GitaReader: GitaReaderParams;
 };
@@ -146,6 +148,9 @@ export type PanchangStackParamList = VidhiStackParamList & {
   Rashifal: { rashiIndex?: number } | undefined;
   GunaMilan: undefined;
   Namkaran: undefined;
+  /** वास्तु दिशा (PRD-24) — the griha-pravesh result's door pushes it in place
+   * here instead of hijacking the More tab (the PRD-19 multi-stack pattern). */
+  VastuDisha: undefined;
   NamkaranResult: {
     basis:
       | { kind: 'birth'; date: string; time: string | null }
