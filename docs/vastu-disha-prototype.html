@@ -351,7 +351,7 @@
           </div>
           <div class="heading-en">Īśāna · north-east</div>
           <span class="acc ok"><span class="dot"></span>दिशा स्पष्ट · GOOD</span>
-          <div class="truenorth">वास्तविक उत्तर से · corrected for declination +1.2° at उज्जैन</div>
+          <div class="truenorth">वास्तविक उत्तर · true north supplied by the OS compass</div>
         </div>
 
         <div class="rooms">
@@ -406,7 +406,7 @@
           <li><b>North-fixed chakra, not a spinning rose.</b> The single most consequential call on this screen. A compass app rotates the dial so your heading sits at top; a <i>vastu</i> chakra must keep उत्तर at top and ईशान at upper-right, because that is how every vastu plan is drawn and how the user will map it onto their floor plan. The <b>pointer</b> moves, the dik labels never do.</li>
           <li><b>Guidance is keyed to where you point.</b> That is what makes this an instrument rather than a listicle: you turn, and the card under the chakra changes. The room chips let you ask the inverse question ("where should the kitchen go?") without leaving the screen.</li>
           <li><b>ब्रह्मस्थान is drawn, not described.</b> The open centre is a real vastu concept and a filled circle at the middle of the chakra teaches it in one glance.</li>
-          <li><b>Declination is stated on the face of the screen</b>, with the location it came from. Derived from <code>panchang/locations.ts</code> lat/long via the shipped GPS snap — the same city that drives Panchang. A silent correction is indistinguishable from no correction; naming it makes the instrument auditable.</li>
+          <li><b>True north comes from the OS, and the screen says so.</b> <code>Location.watchHeadingAsync()</code> in the already-installed <code>expo-location@19.0.8</code> returns <code>trueHeading</code> with magnetic declination <b>already applied</b> — so the app bundles no declination model and owns no correction. Naming the source keeps the instrument auditable without claiming work we do not do. (An earlier draft of this prototype proposed a bundled declination grid keyed off <code>panchang/locations.ts</code>; that was wrong and is dropped.)</li>
           <li><b>"श्रेष्ठ" reuses the muhurat tier vocabulary</b> (शुभ/श्रेष्ठ/मध्यम) the app already ships — one grading language across the product, not a second one invented here.</li>
           <li><b>The avoid block is the muted terracotta</b> avoid tone, never red — same token as the muhurat "avoid" palette (design.md §60).</li>
           <li><b>"यदि सम्भव न हो" is load-bearing, not a nicety.</b> Most people cannot move a puja room. A vastu surface with no accommodation line becomes a list of things wrong with your home — the exact failure mode this feature must avoid. Every direction entry carries one.</li>
@@ -682,7 +682,7 @@
 <!-- ============================================================ FIT =============== -->
 <section class="scenario">
   <h2>Where PRD-24 fits in the shipped app</h2>
-  <div class="sc-sub">One More-hub row, one occasion-gated card on an existing result screen, and a small new stack. The only feature of the five that needs a store release.</div>
+  <div class="sc-sub">One More-hub row, one occasion-gated card on an existing result screen, and a small new stack. <b>No new native dependency</b> — the compass is an already-shipped module’s JS API.</div>
 
   <div class="acard">
     <h3>Navigation placement</h3>
@@ -720,13 +720,13 @@
     <h3>Code surface, and the one new dependency</h3>
     <table class="fit">
       <tr><th>File / package</th><th>Change</th></tr>
-      <tr><td><code>expo-sensors</code></td><td><b>NEW native dependency</b> → store release, not OTA. Per the repo's own gotcha this drags <code>APP_TOUR_VERSION</code> and a <code>whatsNew</code> entry with it. This is the whole reason PRD-24 runs on its own track.</td></tr>
-      <tr><td><code>vastu/declination.ts</code></td><td>Pure. lat/long → declination. Input comes from the shipped <code>panchang/locations.ts</code> city (54 major cities + Rajasthan tehsils, each with lat/long/elevation) via the existing <code>expo-location</code> GPS snap. <b>No new location plumbing.</b></td></tr>
+      <tr><td><code>expo-location@19.0.8</code><br /><i>already installed</i></td><td><b>No new dependency.</b> <code>watchHeadingAsync()</code> yields <code>{ trueHeading, magHeading, accuracy }</code> on both platforms — verified in the installed type definitions. <code>trueHeading</code> is <code>-1</code> without location permission and must never be rendered as उत्तर. Feature code is therefore <b>OTA-capable</b>; the one binary-level change is the iOS purpose string (below).</td></tr>
+      <tr><td><code>app.json</code> → <code>locationWhenInUsePermission</code></td><td>Today it reads "<i>only</i> to compute accurate sunrise and panchang times", which becomes false once the compass is read. Widening it is an Info.plist change → <b>needs a native rebuild</b>. Ship the feature with, not ahead of, that release.</td></tr>
       <tr><td><code>vastu/dik.ts</code></td><td>Pure. heading° → one of 8 dik + the sector boundaries. Trivially unit-testable, which is where the sector-edge cases belong.</td></tr>
       <tr><td><code>vastu/guidance.ts</code></td><td>The content registry: per dik and per room — place, facing, reasoning, avoid list, accommodation. <code>status</code> + <code>source</code>, and the same <b>draft ≡ absent</b> accessor rule as <code>getUpvasInfo</code>.</td></tr>
       <tr><td><code>components/DishaChakra.tsx</code></td><td><code>react-native-svg</code> (already a dependency). One accessible image with a full narration; every value also rendered as text. The <code>NorthIndianChart.tsx</code> precedent.</td></tr>
       <tr><td><code>hooks/useHeading.ts</code></td><td>Magnetometer subscription + smoothing + accuracy state + manual override. The <b>only</b> place sensor code lives, so the screens stay pure-ish and testable.</td></tr>
-      <tr><td>Tests</td><td><code>dik</code> boundary suite, <code>declination</code> suite, a guidance-registry invariant suite with a non-vacuous draft-exclusion assertion, a chakra a11y-label test, and a Maestro flow that exercises the <b>manual-override path</b> (a simulator has no usable magnetometer — so the override path is what e2e can actually assert). Per RULEBOOK §0.</td></tr>
+      <tr><td>Tests</td><td><code>dik</code> boundary suite, <code>declination</code> suite, a guidance-registry invariant suite with a non-vacuous draft-exclusion assertion, a chakra a11y-label test, and a Maestro flow that exercises the <b>manual-override path</b> (a simulator reports no usable heading — so the override path is what e2e can actually assert). Per RULEBOOK §0.</td></tr>
       <tr><td>Docs</td><td>A new <code>design.md</code> § for the chakra, the reading card, and both accuracy states; a <code>RULEBOOK.md</code> § for the vastu content contract. Same PR, per §0.1.</td></tr>
     </table>
   </div>
@@ -734,9 +734,8 @@
   <div class="acard">
     <h3>Phase 0 — the spike that gates the build</h3>
     <ul>
-      <li><b>Does the magnetometer settle usably</b> on target hardware, indoors, in a real home? Measure how often frame C is the state, not frame B.</li>
-      <li><b>Which declination approach:</b> a bundled coarse grid over India, a per-city value alongside the existing city list, or state magnetic north honestly and skip the correction. Decide it in the PRD and write it down — a silently-off compass in a direction feature is worse than no compass.</li>
-      <li><b>Does a clean prebuild carry <code>expo-sensors</code></b> through EAS without disturbing the existing CNG native modules?</li>
+      <li><b>How often is <code>accuracy: 3</code> actually reached</b> indoors, in a real home? This is now the only significant unknown. A dik sector is 45° wide, so naming one honestly needs better than ±22.5° — and only <code>accuracy: 3</code> (iOS: &lt;20° uncertainty) clears that. <code>accuracy: 2</code> is &lt;35°, which cannot resolve a 45° sector. Measure how often frame C is the state, not frame B.</li>
+      <li><b>Confirm the Android heading path</b> — <code>trueHeading</code> and the coarser <code>accuracy</code> scale both come from <code>SensorManager</code> there, so the trust floor may need a per-platform value.</li>
       <li><b>What does the manual-override path cost</b> if the sensor turns out to be unusable often enough that it becomes the primary path? If so, P1 ships override-first and the compass becomes the enhancement — a legitimate outcome the spike should be allowed to reach.</li>
     </ul>
   </div>

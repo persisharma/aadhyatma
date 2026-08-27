@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Q4 Journey — launch → every surface (PRD-23 · PRD-24 in place)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-hi:#FFF5E0;
+    --parchment-deep:#E9D9B1; --gradient-end:#E9D9B1;
+    --ink:#2F1E10; --ink-soft:#5A3A1E; --ink-muted:#8A6A47;
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --gold:#A67C34; --gold-soft:#C9B896;
+    --divider:rgba(138,62,11,0.18);
+    --saffron-tint:rgba(184,98,27,0.14); --gold-tint:rgba(166,124,52,0.16);
+    --avoid:#8A4A2A; --avoid-tint:rgba(138,74,42,0.11); --avoid-line:rgba(138,74,42,0.30);
+    --shadow-lg:0 30px 70px rgba(20,12,4,0.40);
+    --sans:'Inter',system-ui,sans-serif;
+    --serif:'Cormorant Garamond',serif;
+    --deva:'Noto Serif Devanagari',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:var(--sans);color:#EADCC2;padding:34px 20px 64px;line-height:1.5;
+    background:
+      radial-gradient(900px 360px at 50% -8%, rgba(184,98,27,0.22), transparent 64%),
+      linear-gradient(160deg,#1A140C 0%,#2A1D10 58%,#1A140C 100%);
+    min-height:100vh;-webkit-font-smoothing:antialiased;
+  }
+  .intro{max-width:1240px;margin:0 auto 10px;text-align:center}
+  .intro h1{font-family:var(--serif);font-weight:500;font-size:clamp(28px,4vw,42px);color:var(--parchment)}
+  .intro .deva-sub{font-family:var(--deva);font-size:15px;color:var(--gold-soft);margin-top:2px}
+  .intro p{max-width:900px;margin:10px auto 0;font-size:14px;line-height:1.55;color:#D5C39D}
+  .samplebanner{
+    max-width:900px;margin:18px auto 30px;padding:12px 18px;border-radius:12px;
+    border:1.5px dashed var(--gold);background:rgba(166,124,52,0.10);
+    font-size:12.5px;color:#E7D8B6;text-align:center;line-height:1.6;
+  }
+  .samplebanner b{color:#FFF5E0;letter-spacing:.08em}
+  .legend{max-width:900px;margin:0 auto 34px;display:flex;gap:18px;justify-content:center;flex-wrap:wrap;font-size:12px}
+  .legend span{display:inline-flex;align-items:center;gap:7px;color:#C9B896}
+  .legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+  .i-ship{background:#6E5A38}
+  .i-23{background:#B8621B}
+  .i-24{background:#8A4A2A}
+
+  .act{max-width:1600px;margin:0 auto 62px}
+  .act > h2{
+    font-family:var(--serif);font-size:23px;font-weight:600;color:#FFF5E0;
+    border-bottom:1px solid #3A2A16;padding-bottom:8px;margin-bottom:4px;
+  }
+  .act > .sc-sub{font-size:12.5px;color:var(--gold-soft);font-style:italic;margin-bottom:20px}
+  .wrap{display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap}
+
+  /* ---- full phone (house 360 wide, full scroll length) ---- */
+  .phone{width:360px;min-height:760px;background:var(--parchment);border-radius:38px;
+    border:10px solid #0D0804;box-shadow:var(--shadow-lg),0 0 0 1px rgba(166,124,52,0.18);
+    position:relative;overflow:hidden;flex:none;display:flex;flex-direction:column}
+  .statusbar{height:34px;flex:none;display:flex;align-items:center;justify-content:space-between;
+    padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);
+    background:linear-gradient(var(--parchment-hi),var(--parchment))}
+  .screen{flex:1;position:relative;
+    background:
+      radial-gradient(110% 42% at 50% -12%, rgba(184,98,27,0.14), transparent 62%),
+      linear-gradient(180deg,var(--parchment-hi) 0%,var(--gradient-end) 100%)}
+  .fold{position:absolute;left:0;right:0;height:0;border-top:1px dashed rgba(138,62,11,0.30);z-index:2}
+  .fold::after{content:attr(data-label);position:absolute;right:6px;top:-7px;
+    font-family:var(--sans);font-size:8px;font-weight:700;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--gold);background:var(--parchment-hi);
+    border:1px solid rgba(138,62,11,0.22);border-radius:999px;padding:1px 7px;line-height:1.5}
+  .pad{padding:6px 18px 34px}
+  .splashscreen{flex:1;background:#fff;display:flex;align-items:center;justify-content:center;flex-direction:column}
+  .splashscreen .om{font-family:var(--deva);font-size:74px;color:var(--saffron)}
+  .splashscreen .nm{font-family:var(--serif);font-size:15px;color:var(--ink-muted);letter-spacing:.22em;margin-top:6px}
+
+  /* ---- mini phone: same markup, scaled ---- */
+  /* Wraps rather than scrolls — a hidden step is a step nobody reviews. */
+  .flow{display:flex;gap:0;align-items:flex-start;flex-wrap:wrap;row-gap:26px;padding:4px 0 12px}
+  .step{flex:none;display:flex;align-items:flex-start}
+  .miniwrap{width:214px;height:428px;overflow:hidden;flex:none;position:relative}
+  .miniwrap .phone{transform:scale(.575);transform-origin:top left;min-height:0;height:744px}
+  .arrow{flex:none;width:40px;align-self:center;text-align:center;color:var(--saffron);
+    font-size:20px;padding-bottom:44px}
+  .cap{width:214px;padding:8px 6px 0;font-size:11.5px;line-height:1.5;color:#C9B896}
+  .cap b{display:block;color:#FFF5E0;font-size:12px;margin-bottom:2px}
+  .cap .tag{display:inline-block;font-size:8.5px;font-weight:800;letter-spacing:.09em;
+    border-radius:999px;padding:1px 7px;margin-top:5px;text-transform:uppercase}
+  .cap .tag.ship{background:#3A2E1A;color:#C9B896}
+  .cap .tag.p23{background:var(--saffron);color:#FFF5E0}
+  .cap .tag.p24{background:var(--avoid);color:#FFF5E0}
+  .stepcol{display:flex;flex-direction:column;align-items:flex-start}
+
+  /* ---- generic in-screen bits ---- */
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:8px 2px 10px}
+  .topbar .back{width:34px;height:34px;border:1px solid var(--divider);border-radius:17px;
+    display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:18px}
+  .topbar .tt{font-family:var(--deva);font-size:15px;color:var(--ink)}
+  .topbar .sp{width:34px}
+  .topbar .act2{font-size:12px;font-weight:600;color:var(--saffron-deep)}
+  .pill{display:inline-block;background:var(--gold-tint);color:var(--saffron-deep);
+    font-size:10.5px;font-weight:700;padding:3px 10px;border-radius:999px}
+  .pill.fest{background:var(--saffron-tint)}
+  .block{margin-top:16px}
+  .bh{font-family:var(--deva);font-size:15px;color:var(--ink);margin-bottom:8px}
+  .bh .en{font-family:var(--serif);font-style:italic;font-weight:400;font-size:12px;color:var(--ink-muted)}
+  .body{font-size:13px;line-height:1.65;color:var(--ink-soft);font-family:var(--deva)}
+  .box{border:1px solid var(--gold-soft);background:var(--parchment-soft);
+    border-radius:16px;padding:13px;box-shadow:0 1px 2px rgba(60,30,10,0.06)}
+  .footnote{margin-top:9px;font-family:var(--serif);font-style:italic;font-size:11.5px;
+    line-height:1.55;color:var(--ink-muted)}
+  .endcap{margin-top:20px;text-align:center;color:var(--gold);font-family:var(--deva);font-size:16px;opacity:.55}
+
+  /* Home pieces */
+  .wordmark{text-align:center;padding:12px 0 4px}
+  .wordmark .lock{font-family:var(--deva);font-size:27px;color:var(--ink);letter-spacing:.02em}
+  .wordmark .tag2{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);letter-spacing:.06em}
+  .todaystrip{margin-top:14px;border:1px solid rgba(184,98,27,0.34);border-radius:16px;padding:11px 12px;
+    background:linear-gradient(150deg,#FFF6E2,#F6E7C4);box-shadow:0 3px 10px rgba(60,30,10,0.10)}
+  .todaystrip .eb{display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--deva);font-size:12px;color:var(--saffron-deep);font-weight:600}
+  .todaystrip .hl{font-family:var(--deva);font-size:17px;color:var(--ink);margin-top:3px}
+  .chiprow{display:flex;gap:6px;margin-top:8px;overflow:hidden}
+  .chip2{flex:none;font-size:10px;padding:3px 9px;border-radius:999px;font-family:var(--deva);white-space:nowrap}
+  .chip2.obs{background:var(--saffron-tint);color:var(--saffron-deep)}
+  .chip2.abhi{background:var(--gold-tint);color:var(--saffron-deep)}
+  .chip2.rahu{background:var(--avoid-tint);color:var(--avoid)}
+  .seclabel{font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink-muted);margin:18px 0 8px 2px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .tile{border:1px solid var(--divider);background:var(--parchment-soft);border-radius:14px;
+    padding:11px 5px;text-align:center;min-height:74px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:4px}
+  .tile .g{font-family:var(--deva);font-size:19px;color:var(--saffron)}
+  .tile .n{font-family:var(--deva);font-size:11.5px;color:var(--ink);line-height:1.35}
+  .tile.full{grid-column:1/-1;flex-direction:row;gap:9px;min-height:56px}
+  .fcard{flex:none;width:174px;border:1px solid var(--divider);background:var(--parchment-soft);
+    border-radius:14px;padding:11px 12px}
+  .fcard .g{font-family:var(--deva);font-size:17px;color:var(--saffron)}
+  .fcard .n{font-family:var(--deva);font-size:12.5px;color:var(--ink);margin-top:4px}
+  .fcard .m{font-family:var(--serif);font-style:italic;font-size:10.5px;color:var(--ink-muted);margin-top:1px}
+  .fcard.new24{border-color:var(--avoid);box-shadow:0 0 0 2px var(--avoid-tint)}
+  .newtag{font-size:8px;font-weight:800;letter-spacing:.1em;background:var(--saffron);
+    color:var(--parchment-hi);border-radius:999px;padding:1px 6px;margin-left:5px;vertical-align:2px}
+  .tabbar{border-top:1px solid var(--divider);background:var(--parchment-soft);
+    display:flex;padding:7px 0 9px;margin-top:18px}
+  .tabbar .tb{flex:1;text-align:center}
+  .tabbar .tb .ic{font-family:var(--deva);font-size:15px;color:var(--ink-muted)}
+  .tabbar .tb .lb{font-family:var(--deva);font-size:10px;color:var(--ink-muted);margin-top:1px}
+  .tabbar .tb.on .ic,.tabbar .tb.on .lb{color:var(--saffron)}
+
+  /* rows / list bits */
+  .mrow{display:flex;align-items:center;gap:11px;background:var(--parchment-soft);
+    border:1px solid var(--divider);border-radius:14px;padding:11px;margin-bottom:7px}
+  .mrow .mg{width:26px;text-align:center;font-family:var(--deva);font-size:17px;color:var(--saffron)}
+  .mrow .ml{flex:1;font-family:var(--deva);font-size:13.5px;color:var(--ink)}
+  .mrow .chev{font-size:17px;color:var(--ink-muted)}
+  .mrow.newrow{border-color:var(--avoid);box-shadow:0 0 0 2px var(--avoid-tint)}
+  .win{display:flex;align-items:center;gap:9px;border:1px solid var(--divider);
+    background:var(--parchment-soft);border-radius:13px;padding:10px 11px;margin-bottom:7px}
+  .win .tier{font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    background:var(--gold-tint);color:var(--saffron-deep);border-radius:999px;padding:2px 7px}
+  .win .wt{flex:1;font-size:12.5px;font-weight:600;color:var(--ink)}
+  .door{display:flex;align-items:center;gap:11px;border:1.5px solid var(--saffron);
+    background:var(--saffron-tint);border-radius:15px;padding:12px;margin-top:12px}
+  .door.d24{border-color:var(--avoid);background:var(--avoid-tint)}
+  .door .dg{font-family:var(--deva);font-size:19px;color:var(--saffron-deep)}
+  .door.d24 .dg{color:var(--avoid)}
+  .door .dt{font-family:var(--deva);font-size:13.5px;color:var(--ink)}
+  .door .dm{font-family:var(--serif);font-style:italic;font-size:11px;color:var(--ink-muted);margin-top:1px}
+  .li{display:flex;align-items:center;gap:9px;padding:8px 0;border-bottom:1px solid var(--divider)}
+  .li:last-child{border-bottom:0}
+  .cbx{flex:none;width:18px;height:18px;border:1.5px solid var(--gold);border-radius:5px;
+    display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent}
+  .cbx.on{background:var(--saffron);border-color:var(--saffron);color:var(--parchment-hi)}
+  .li .lt{flex:1;font-family:var(--deva);font-size:12.5px;color:var(--ink)}
+  .nishedh{margin-top:10px;border:1px solid var(--avoid-line);background:var(--avoid-tint);
+    border-radius:13px;padding:10px 11px}
+  .nishedh .nh{font-family:var(--deva);font-size:12px;font-weight:600;color:var(--avoid);margin-bottom:4px}
+  .nishedh .nt{font-family:var(--deva);font-size:11.5px;line-height:1.55;color:var(--ink-soft)}
+  .chips3{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+  .c3{font-family:var(--deva);font-size:11px;padding:3px 9px;border-radius:999px;
+    background:var(--gold-tint);color:var(--saffron-deep)}
+  .c3.no{background:var(--avoid-tint);color:var(--avoid);text-decoration:line-through}
+  .permsheet{position:absolute;left:0;right:0;bottom:0;background:var(--parchment-hi);
+    border-top:1px solid var(--divider);border-radius:20px 20px 0 0;padding:18px 18px 26px;
+    box-shadow:0 -14px 34px rgba(20,12,4,0.22)}
+  .permsheet .pt{font-family:var(--deva);font-size:15px;color:var(--ink);text-align:center}
+  .permsheet .pb{font-family:var(--deva);font-size:12px;line-height:1.6;color:var(--ink-soft);
+    text-align:center;margin-top:7px}
+  .permsheet .pbtns{display:flex;gap:8px;margin-top:14px}
+  .permsheet .pbtn{flex:1;text-align:center;padding:9px;border-radius:999px;font-size:12px;font-weight:600;
+    border:1.5px solid var(--saffron);color:var(--saffron-deep)}
+  .permsheet .pbtn.fill{background:var(--saffron);color:var(--parchment-hi)}
+  .dikgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:9px}
+  .dik{border:1px solid var(--divider);background:var(--parchment-soft);border-radius:10px;
+    padding:7px 3px;text-align:center}
+  .dik .dv{font-family:var(--deva);font-size:11.5px;color:var(--ink)}
+  .dik.on{background:var(--saffron);border-color:var(--saffron)}
+  .dik.on .dv{color:var(--parchment-hi)}
+  .acc{display:inline-flex;align-items:center;gap:5px;margin-top:8px;border-radius:999px;
+    padding:3px 10px;font-size:10px;font-weight:700}
+  .acc.ok{background:var(--gold-tint);color:var(--saffron-deep)}
+  .acc.low{background:var(--avoid-tint);color:var(--avoid)}
+
+  /* annotation panel */
+  .panel{flex:1;min-width:340px;max-width:600px}
+  .acard{background:#23190E;border:1px solid #3A2A16;border-radius:14px;padding:16px 18px;margin-bottom:16px}
+  .acard h3{font-family:var(--serif);font-size:17px;color:#FFF5E0;margin-bottom:8px}
+  .acard ul{list-style:none}
+  .acard li{position:relative;padding:6px 0 6px 22px;font-size:12.5px;line-height:1.6;color:#C9B896;
+    border-bottom:1px dashed #3A2A16}
+  .acard li:last-child{border-bottom:0}
+  .acard li::before{content:"◆";position:absolute;left:2px;top:7px;font-size:9px;color:var(--saffron)}
+  .acard li b{color:#FFF5E0}
+  .acard li code{font-size:11px;background:#2A1D10;border:1px solid #3A2A16;border-radius:5px;
+    padding:1px 5px;color:#E7D8B6}
+  .acard .warn{margin-top:10px;border:1px dashed var(--gold);border-radius:9px;padding:8px 11px;
+    font-size:11.5px;color:#E7D8B6}
+  table.fit{width:100%;border-collapse:collapse;font-size:12px;margin-top:6px}
+  table.fit th,table.fit td{border:1px solid #3A2A16;padding:7px 9px;text-align:left;vertical-align:top;color:#C9B896}
+  table.fit th{background:#2A1D10;color:#FFF5E0;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase}
+  table.fit code{font-size:11px;background:#2A1D10;border:1px solid #3A2A16;border-radius:5px;padding:1px 5px;color:#E7D8B6}
+  table.fit td b{color:#FFF5E0}
+  td.new23{color:#E9A86A}
+  td.new24{color:#D69A78}
+</style>
+</head>
+<body>
+
+<div class="intro">
+  <h1>Q4 Journey — launch to every surface</h1>
+  <div class="deva-sub">भोग · नैवेद्य (PRD-23) और वास्तु दिशा (PRD-24) शिप किए हुए ऐप में कहाँ बैठते हैं</div>
+  <p>
+    The two new features drawn into the <b>real app</b>, in the order a user actually meets them:
+    cold launch → Home's first frame → the five tabs → then the two journeys end to end.
+    Every non-highlighted pixel here is a surface that <b>ships today</b> (design.md §17/§18/§48/§64);
+    the highlighted ones are the only additions. Full-size detail for the new screens lives in
+    <a href="./bhog-naivedya-prototype.html" style="color:#E9A86A">bhog-naivedya-prototype.html</a> and
+    <a href="./vastu-disha-prototype.html" style="color:#D69A78">vastu-disha-prototype.html</a>;
+    this file is the <i>path between them</i>.
+  </p>
+</div>
+
+<div class="samplebanner">
+  <b>⚠ ILLUSTRATIVE SAMPLE</b> — all dates, times, foods, offerings, prohibitions, headings and placement
+  lines are placeholder copy for layout only. Not verified content, not engine output, not sensor output.
+</div>
+
+<div class="legend">
+  <span><i class="i-ship"></i> ships today — unchanged</span>
+  <span><i class="i-23"></i> PRD-23 भोग · नैवेद्य</span>
+  <span><i class="i-24"></i> PRD-24 वास्तु दिशा</span>
+</div>
+
+<!-- ============================================ ACT 0 ============================================ -->
+<section class="act">
+  <h2>Act 0 — Cold launch · neither feature touches it</h2>
+  <div class="sc-sub">design.md §64 is a hard contract: Home's first visible frame is already its final frame. Both features are downstream of the reveal, so the launch path is unchanged — that is the point of this act.</div>
+  <div class="wrap">
+
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span></span><span>◧ ⌁ ▮</span></div>
+      <div class="splashscreen">
+        <div class="om">ॐ</div>
+        <div class="nm">VEDANSH</div>
+      </div>
+    </div>
+
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+      <div class="screen"><div class="fold" data-label="fold · one screen" style="top:686px"></div><div class="pad">
+        <div class="wordmark">
+          <div class="lock">ॐ वेदांश़ ॐ</div>
+          <div class="tag2">Sacred Texts · Daily Reading</div>
+        </div>
+
+        <div class="todaystrip">
+          <div class="eb"><span>आज का पंचांग</span><span>›</span></div>
+          <div class="hl">शनिवार · शुक्ल एकादशी</div>
+          <div class="chiprow">
+            <span class="chip2 obs">देवशयनी एकादशी</span>
+            <span class="chip2 abhi">अभिजित 11:56–12:48</span>
+            <span class="chip2 rahu">राहु 9:12</span>
+          </div>
+        </div>
+
+        <div class="seclabel">आज के लिए</div>
+        <div style="display:flex;gap:8px;overflow:hidden">
+          <div class="fcard" style="width:150px;padding:9px 11px"><div class="n" style="margin:0">विष्णु सहस्रनाम</div></div>
+          <div class="fcard" style="width:150px;padding:9px 11px"><div class="n" style="margin:0">एकादशी व्रत कथा</div></div>
+        </div>
+
+        <div class="box" style="margin-top:12px;padding:11px 12px;min-height:57px;display:flex;align-items:center;gap:10px">
+          <div style="font-family:var(--deva);font-size:17px;color:var(--saffron)">✿</div>
+          <div style="flex:1">
+            <div style="font-family:var(--deva);font-size:13px;color:var(--ink)">नित्य साधना · 2 / 5</div>
+            <div style="font-family:var(--serif);font-style:italic;font-size:11px;color:var(--ink-muted)">Today's practice</div>
+          </div>
+          <div style="font-size:17px;color:var(--ink-muted)">›</div>
+        </div>
+
+        <div class="seclabel">categories</div>
+        <div class="grid">
+          <div class="tile"><div class="g">४०</div><div class="n">चालीसा</div></div>
+          <div class="tile"><div class="g">दी</div><div class="n">आरती</div></div>
+          <div class="tile"><div class="g">स्तो</div><div class="n">स्तोत्रम्</div></div>
+          <div class="tile"><div class="g">ग्र</div><div class="n">ग्रन्थ</div></div>
+          <div class="tile"><div class="g">◉</div><div class="n">जप</div></div>
+          <div class="tile"><div class="g">व्र</div><div class="n">व्रत</div></div>
+          <div class="tile"><div class="g">कुं</div><div class="n">कुंडली</div></div>
+          <div class="tile"><div class="g">मु</div><div class="n">मुहूर्त</div></div>
+          <div class="tile"><div class="g">सं</div><div class="n">संस्कार</div></div>
+          <div class="tile"><div class="g">ती</div><div class="n">तीर्थ</div></div>
+          <div class="tile"><div class="g">कव</div><div class="n">कवच</div></div>
+          <div class="tile"><div class="g">अष्</div><div class="n">अष्टकम्</div></div>
+          <div class="tile"><div class="g">सू</div><div class="n">सूक्तम्</div></div>
+          <div class="tile"><div class="g">देव</div><div class="n">देवता</div></div>
+          <div class="tile"><div class="g">उद्</div><div class="n">उद्देश्य</div></div>
+          <div class="tile full"><div class="g">✿</div><div class="n">नित्य साधना</div></div>
+        </div>
+
+        <div class="seclabel">discover</div>
+        <div style="display:flex;gap:9px;overflow:hidden">
+          <div class="fcard"><div class="g">॥</div><div class="n">पूजा विधि</div><div class="m">Guided pujas</div></div>
+          <div class="fcard"><div class="g">✧</div><div class="n">पितृ स्मरण</div><div class="m">Remembrance</div></div>
+        </div>
+      </div>
+      <div class="tabbar">
+        <div class="tb on"><div class="ic">⌂</div><div class="lb">होम</div></div>
+        <div class="tb"><div class="ic">❁</div><div class="lb">भक्ति</div></div>
+        <div class="tb"><div class="ic">☾</div><div class="lb">पंचांग</div></div>
+        <div class="tb"><div class="ic">♪</div><div class="lb">भजन</div></div>
+        <div class="tb"><div class="ic">⋯</div><div class="lb">अन्य</div></div>
+      </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="acard">
+        <h3>What happens between these two frames</h3>
+        <ul>
+          <li><b>Nothing user-visible, and that is deliberate.</b> Behind the held splash: <code>preventAutoHideAsync()</code> at module scope, the derived-cache reset and <code>prefetchTodayPanchang()</code> already in flight, five font families gating the provider tree, and <code>AppReadyGate</code> holding until font-scale + reading-language hydrate — because both change Home geometry.</li>
+          <li><b>Neither new feature may touch this path.</b> §64's rule is that astronomy, prewarm, widget planning and schedulers all run behind <code>InteractionManager</code> <i>after</i> the reveal. PRD-23 is bundled data read on a detail screen — it never runs at launch. PRD-24's compass subscribes on <b>screen focus</b>, five taps deep, so it cannot either.</li>
+          <li><b>Reserved geometry still holds.</b> Anything above the CATEGORIES grid must occupy its final space in frame one. Neither feature adds anything above the grid — PRD-23 adds nothing to Home at all, and PRD-24 adds only a DISCOVER card, <i>below</i> it.</li>
+          <li><b>The Today strip is already the door to journey A.</b> That <code>देवशयनी एकादशी</code> chip is shipped behaviour; PRD-23 changes what the user finds two taps later, not the strip.</li>
+        </ul>
+      </div>
+      <div class="acard">
+        <h3>The only Home change in either PRD</h3>
+        <ul>
+          <li>One <b>DISCOVER carousel card</b> for वास्तु दिशा (Act 1). §32's carousel is explicitly the home for cross-cutting sections — Daily Practice, Sankalp, Pitru Smaran, पूजा विधि, Pilgrimage, Widgets — and it reshuffles per open, which is the right cadence for a surface consulted a few times a year.</li>
+          <li><b>No new grid tile.</b> The grid is at 16 tiles (5 rows + the full-width नित्य साधना closer). A 17th tile for an occasional-use feature would break that closing row and claim daily real estate for an occasional need.</li>
+          <li><b>PRD-23 gets no Home presence whatsoever.</b> It is never a destination — it is the answer to a question you already arrived with. Putting it on Home would invert the journey.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ ACT 1 ============================================ -->
+<section class="act">
+  <h2>Act 1 — The five tabs · which ones change</h2>
+  <div class="sc-sub">Both features live inside existing stacks. No sixth tab, no reordering, no change to <code>TabNavigator.tsx</code>.</div>
+  <div class="acard">
+    <table class="fit">
+      <tr><th>Tab</th><th>Ships today</th><th>PRD-23 adds</th><th>PRD-24 adds</th></tr>
+      <tr>
+        <td><b>होम</b> Home</td>
+        <td>Catalog, 30+ readers, routine, theerth, search, Vidhi catalog + detail + conduct</td>
+        <td class="new23">भोग block in Vidhi तैयारी · the सामग्री सूची screen</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td><b>भक्ति</b> Bhakti</td>
+        <td>Daily verse</td><td>—</td><td>—</td>
+      </tr>
+      <tr>
+        <td><b>पंचांग</b> Panchang</td>
+        <td>Calendar, observances, katha, vrat, Kundali, Rashifal, Muhurat finder, Abujh, Guna Milan, Namkaran</td>
+        <td class="new23">भोग panel inside Observance Detail's विधि section</td>
+        <td class="new24">One occasion-gated door on griha-pravesh / bhumi-pujan results</td>
+      </tr>
+      <tr>
+        <td><b>भजन</b> Bhajan</td>
+        <td>Audio library, Now Playing</td><td>—</td><td>—</td>
+      </tr>
+      <tr>
+        <td><b>अन्य</b> More</td>
+        <td>Profile, Wishlist, Reminders, Japam Alarms, Pitru Smaran, language, reading size, read-aloud, widgets</td>
+        <td>—</td>
+        <td class="new24">One साधना-group row → दिशा चक्र + घर का मंदिर</td>
+      </tr>
+    </table>
+    <div class="warn"><b>Net navigation cost of both PRDs:</b> two new screens (सामग्री सूची, दिशा चक्र + its घर का मंदिर sub-screen), three in-place sections, and two door cards. Zero tab-bar change.</div>
+  </div>
+</section>
+
+<!-- ============================================ ACT 2 ============================================ -->
+<section class="act">
+  <h2>Act 2 — Journey A · the festival morning (PRD-23)</h2>
+  <div class="sc-sub">6 taps, and only steps 3–5 are new. The user starts on Home not looking for "bhog" — they're looking at today.</div>
+
+  <div class="flow">
+    <!-- 1 -->
+    <div class="step"><div class="stepcol">
+      <div class="miniwrap"><div class="phone">
+        <div class="statusbar"><span>6:04</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+        <div class="screen"><div class="pad">
+          <div class="wordmark"><div class="lock">ॐ वेदांश़ ॐ</div><div class="tag2">Sacred Texts · Daily Reading</div></div>
+          <div class="todaystrip">
+            <div class="eb"><span>आज का पंचांग</span><span>›</span></div>
+            <div class="hl">शनिवार · शुक्ल एकादशी</div>
+            <div class="chiprow">
+              <span class="chip2 obs">देवशयनी एकादशी</span>
+              <span class="chip2 abhi">अभिजित</span>
+            </div>
+          </div>
+          <div class="seclabel">आज के लिए</div>
+          <div style="display:flex;gap:8px;overflow:hidden">
+            <div class="fcard" style="width:150px;padding:9px 11px"><div class="n" style="margin:0">विष्णु सहस्रनाम</div></div>
+            <div class="fcard" style="width:150px;padding:9px 11px"><div class="n" style="margin:0">एकादशी कथा</div></div>
+          </div>
+          <div class="seclabel">categories</div>
+          <div class="grid">
+            <div class="tile"><div class="g">४०</div><div class="n">चालीसा</div></div>
+            <div class="tile"><div class="g">दी</div><div class="n">आरती</div></div>
+            <div class="tile"><div class="g">स्तो</div><div class="n">स्तोत्रम्</div></div>
+          </div>
+        </div></div>
+      </div></div>
+      <div class="cap"><b>1 · Home</b>Wakes up, opens the app. The Today strip already says it is Ekadashi.<span class="tag ship">ships today</span></div>
+    </div></div>
+    <div class="arrow">→</div>
+
+    <!-- 2 -->
+    <div class="step"><div class="stepcol">
+      <div class="miniwrap"><div class="phone">
+        <div class="statusbar"><span>6:04</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="tt">पंचांग</div><div class="sp"></div></div>
+          <div class="box" style="text-align:center">
+            <div style="font-family:var(--deva);font-size:19px;color:var(--ink)">शुक्ल एकादशी</div>
+            <div style="font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted)">Saturday · 22 Aug</div>
+            <div class="chiprow" style="justify-content:center;margin-top:9px">
+              <span class="chip2 abhi">अभिजित 11:56</span>
+              <span class="chip2 rahu">राहु 9:12</span>
+            </div>
+          </div>
+          <div class="block">
+            <div class="bh">आज <span class="en">· Today</span></div>
+            <div class="mrow"><div class="mg">व्र</div><div class="ml">देवशयनी एकादशी</div><div class="chev">›</div></div>
+          </div>
+        </div></div>
+      </div></div>
+      <div class="cap"><b>2 · Panchang day panel</b>Taps the strip. The observance row is the door.<span class="tag ship">ships today</span></div>
+    </div></div>
+    <div class="arrow">→</div>
+
+    <!-- 3 -->
+    <div class="step"><div class="stepcol">
+      <div class="miniwrap"><div class="phone">
+        <div class="statusbar"><span>6:05</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="tt">व्रत विवरण</div><div class="sp"></div></div>
+          <div style="text-align:center;padding-bottom:10px;border-bottom:1px solid var(--divider)">
+            <span class="pill">व्रत</span>
+            <div style="font-family:var(--deva);font-size:21px;color:var(--ink);margin-top:6px">देवशयनी एकादशी</div>
+          </div>
+          <div class="block">
+            <div class="bh">विधि <span class="en">· How to observe</span></div>
+            <div class="box">
+              <div style="display:flex;gap:8px;align-items:center;padding-bottom:9px;border-bottom:1px solid var(--divider)">
+                <span style="background:var(--saffron);color:var(--parchment-hi);font-family:var(--deva);font-size:12px;padding:3px 11px;border-radius:999px">फलाहार</span>
+                <span style="font-family:var(--deva);font-size:11px;color:var(--ink-muted)">अन्न वर्जित</span>
+              </div>
+              <div style="font-family:var(--deva);font-size:12px;color:var(--saffron-deep);font-weight:600;margin-top:10px">नैवेद्य</div>
+              <div style="font-family:var(--deva);font-size:12px;color:var(--ink-soft);margin-top:3px">तुलसी पत्र · पंचामृत</div>
+              <div class="nishedh">
+                <div class="nh">निषेध</div>
+                <div class="nt">✕ एकादशी के दिन तुलसी न तोड़ें</div>
+              </div>
+              <div style="font-family:var(--deva);font-size:12px;color:var(--saffron-deep);font-weight:600;margin-top:11px">व्रत भोजन</div>
+              <div class="chips3">
+                <span class="c3">फल</span><span class="c3">दूध</span><span class="c3">मखाना</span>
+                <span class="c3 no">चावल</span><span class="c3 no">अन्न</span>
+              </div>
+            </div>
+          </div>
+        </div></div>
+      </div></div>
+      <div class="cap"><b>3 · Observance Detail</b>The question they actually had — what to eat, what to offer, what not to.<span class="tag p23">PRD-23</span></div>
+    </div></div>
+    <div class="arrow">→</div>
+
+    <!-- 4 -->
+    <div class="step"><div class="stepcol">
+      <div class="miniwrap"><div class="phone">
+        <div class="statusbar"><span>6:07</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="tt">तैयारी</div><div class="act2">सूची ›</div></div>
+          <div style="text-align:center;padding-bottom:8px">
+            <span class="pill fest">पूजा विधि</span>
+            <div style="font-family:var(--deva);font-size:18px;color:var(--ink);margin-top:6px">सत्यनारायण पूजा</div>
+          </div>
+          <div class="block">
+            <div class="bh">सामग्री <span class="en">· Materials</span></div>
+            <div class="box" style="padding:4px 13px">
+              <div class="li"><div class="cbx on">✓</div><div class="lt">रोली · अक्षत</div></div>
+              <div class="li"><div class="cbx"></div><div class="lt">कलश</div></div>
+            </div>
+          </div>
+          <div class="block">
+            <div class="bh">भोग सामग्री <span class="en">· For the offering</span></div>
+            <div class="box" style="padding:4px 13px">
+              <div class="li"><div class="cbx on">✓</div><div class="lt">चूरमा</div></div>
+              <div class="li"><div class="cbx"></div><div class="lt">केला</div></div>
+              <div class="li"><div class="cbx"></div><div class="lt">पंचामृत</div></div>
+            </div>
+          </div>
+        </div></div>
+      </div></div>
+      <div class="cap"><b>4 · Vidhi तैयारी</b>Materials and food as two groups — different shops, different people.<span class="tag p23">PRD-23</span></div>
+    </div></div>
+    <div class="arrow">→</div>
+
+    <!-- 5 -->
+    <div class="step"><div class="stepcol">
+      <div class="miniwrap"><div class="phone">
+        <div class="statusbar"><span>6:09</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="tt">सामग्री सूची</div><div class="act2">साझा</div></div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:6px">
+            <div style="font-family:var(--deva);font-size:14px;color:var(--ink)">एकादशी · 22 अगस्त</div>
+            <div style="font-size:11px;color:var(--ink-muted)">2 / 9</div>
+          </div>
+          <div style="font-family:var(--deva);font-size:12px;font-weight:600;color:var(--saffron-deep);margin-top:14px">पूजा सामग्री</div>
+          <div class="box" style="padding:2px 13px;margin-top:5px">
+            <div class="li"><div class="cbx on">✓</div><div class="lt">रोली · अक्षत</div></div>
+            <div class="li"><div class="cbx"></div><div class="lt">कलश</div></div>
+          </div>
+          <div style="font-family:var(--deva);font-size:12px;font-weight:600;color:var(--saffron-deep);margin-top:13px">भोग सामग्री</div>
+          <div class="box" style="padding:2px 13px;margin-top:5px">
+            <div class="li"><div class="cbx on">✓</div><div class="lt">चूरमा</div></div>
+            <div class="li"><div class="cbx"></div><div class="lt">दूध · केला</div></div>
+            <div class="li"><div class="cbx"></div><div class="lt">मखाना</div></div>
+          </div>
+          <div class="nishedh">
+            <div class="nh">न लाएँ</div>
+            <div class="nt">✕ तुलसी — आज न तोड़ें</div>
+          </div>
+        </div></div>
+      </div></div>
+      <div class="cap"><b>5 · सामग्री सूची</b>The one net-new screen. Merged, source-tagged, shareable to the family thread.<span class="tag p23">PRD-23</span></div>
+    </div></div>
+    <div class="arrow">→</div>
+
+    <!-- 6 -->
+    <div class="step"><div class="stepcol">
+      <div class="miniwrap"><div class="phone">
+        <div class="statusbar"><span>7:30</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">✕</div><div class="tt">4 / 14</div><div class="sp"></div></div>
+          <div style="text-align:center;padding:28px 4px">
+            <span class="pill">चरण ४</span>
+            <div style="font-family:var(--deva);font-size:22px;color:var(--ink);margin-top:14px;line-height:1.5">नैवेद्य अर्पण</div>
+            <div style="font-family:var(--deva);font-size:14px;color:var(--ink-soft);margin-top:16px;line-height:1.75">
+              चूरमा, केला एवं पंचामृत भगवान् के सम्मुख अर्पित करें।
+            </div>
+            <div style="font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);margin-top:12px">
+              Offer the churma, banana and panchamrit.
+            </div>
+          </div>
+          <div class="box" style="text-align:center;padding:9px">
+            <div style="font-family:var(--deva);font-size:12px;color:var(--saffron-deep)">इदं नैवेद्यं समर्पयामि</div>
+          </div>
+        </div></div>
+      </div></div>
+      <div class="cap"><b>6 · Vidhi conduct</b>The offering step now names what they actually bought.<span class="tag ship">ships today</span></div>
+    </div></div>
+  </div>
+
+  <div class="acard">
+    <h3>What this journey proves</h3>
+    <ul>
+      <li><b>PRD-23 is never a destination.</b> Steps 1, 2 and 6 are shipped screens. The feature appears only at the moment the question is live — and the user never had to know the word "bhog" to get there.</li>
+      <li><b>Step 3 is the whole product argument.</b> Today that screen answers <i>whether</i> and <i>when</i> to eat and stops. Everything a person standing in a kitchen needs is in the part that does not exist yet.</li>
+      <li><b>Step 5 loops back to a shipped store.</b> <code>vidhi/checklistStore.ts</code> already persists ticks per-vidhi-per-festival-date at <code>@vedansh/vidhi-checklist</code>; the list extends that document rather than adding a second one, so the "fresh list each year" rule holds for free.</li>
+      <li><b>Step 6 closes the loop.</b> The conduct card's नैवेद्य step can name the items from the same entry that drove steps 3–5, instead of a generic instruction.</li>
+      <li><b>Every new step degrades to today's screen.</b> With no verified entry, step 3 loses one panel, step 4 loses one group, step 5 becomes the samagri list with a header. Nothing breaks; nothing shows a placeholder.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================================ ACT 3 ============================================ -->
+<section class="act">
+  <h2>Act 3 — Journey B · the new house (PRD-24)</h2>
+  <div class="sc-sub">The path that matters most: the app already dates griha pravesh, then stops. Steps 4–6 are the continuation.</div>
+
+  <div class="flow">
+    <!-- 1 -->
+    <div class="step"><div class="stepcol">
+      <div class="miniwrap"><div class="phone">
+        <div class="statusbar"><span>21:10</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+        <div class="screen"><div class="pad">
+          <div class="wordmark"><div class="lock">ॐ वेदांश़ ॐ</div><div class="tag2">Sacred Texts · Daily Reading</div></div>
+          <div class="seclabel">categories</div>
+          <div class="grid">
+            <div class="tile"><div class="g">व्र</div><div class="n">व्रत</div></div>
+            <div class="tile"><div class="g">कुं</div><div class="n">कुंडली</div></div>
+            <div class="tile" style="border-color:var(--saffron);box-shadow:0 0 0 2px var(--saffron-tint)"><div class="g">मु</div><div class="n">मुहूर्त</div></div>
+          </div>
+          <div class="seclabel">discover</div>
+          <div style="display:flex;gap:9px;overflow:hidden">
+            <div class="fcard new24"><div class="g">✥</div><div class="n">वास्तु दिशा <span class="newtag">NEW</span></div><div class="m">Direction &amp; placement</div></div>
+            <div class="fcard"><div class="g">॥</div><div class="n">पूजा विधि</div><div class="m">Guided pujas</div></div>
+          </div>
+        </div></div>
+      </div></div>
+      <div class="cap"><b>1 · Home</b>Two doors: the मुहूर्त tile (they came for a date) and the new DISCOVER card.<span class="tag p24">PRD-24 card</span></div>
+    </div></div>
+    <div class="arrow">→</div>
+
+    <!-- 2 -->
+    <div class="step"><div class="stepcol">
+      <div class="miniwrap"><div class="phone">
+        <div class="statusbar"><span>21:11</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="tt">शुभ मुहूर्त खोज</div><div class="sp"></div></div>
+          <div class="block">
+            <div class="bh">अवसर <span class="en">· Occasion</span></div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:6px">भवन</div>
+            <div class="mrow" style="border-color:var(--saffron);box-shadow:0 0 0 2px var(--saffron-tint)">
+              <div class="mg">गृ</div><div class="ml">गृह प्रवेश</div><div class="chev">›</div>
+            </div>
+            <div class="mrow"><div class="mg">भू</div><div class="ml">भूमि पूजन</div><div class="chev">›</div></div>
+            <div class="mrow"><div class="mg">वा</div><div class="ml">वाहन क्रय</div><div class="chev">›</div></div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin:12px 0 6px">संस्कार</div>
+            <div class="mrow"><div class="mg">मुं</div><div class="ml">मुंडन</div><div class="chev">›</div></div>
+          </div>
+        </div></div>
+      </div></div>
+      <div class="cap"><b>2 · Muhurat finder</b>13 occasions, shipped. गृह प्रवेश is its highest-demand one.<span class="tag ship">ships today</span></div>
+    </div></div>
+    <div class="arrow">→</div>
+
+    <!-- 3 -->
+    <div class="step"><div class="stepcol">
+      <div class="miniwrap"><div class="phone">
+        <div class="statusbar"><span>21:12</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="tt">शुभ मुहूर्त</div><div class="act2">साझा</div></div>
+          <div style="text-align:center;padding-bottom:10px;border-bottom:1px solid var(--divider)">
+            <span class="pill">भवन</span>
+            <div style="font-family:var(--deva);font-size:20px;color:var(--ink);margin-top:6px">गृह प्रवेश</div>
+            <div style="font-family:var(--deva);font-size:11px;color:var(--ink-muted);margin-top:4px">नवम्बर 2026 · उज्जैन</div>
+          </div>
+          <div class="block">
+            <div class="bh">शुभ दिवस</div>
+            <div class="win"><span class="tier">श्रेष्ठ</span><div class="wt">18 Nov · 7:12–10:48</div></div>
+            <div class="win"><span class="tier">श्रेष्ठ</span><div class="wt">21 Nov · 6:58–9:24</div></div>
+            <div class="win"><span class="tier">मध्यम</span><div class="wt">26 Nov · 11:04–13:30</div></div>
+          </div>
+          <div class="door d24">
+            <div class="dg">✥</div>
+            <div style="flex:1">
+              <div class="dt">वास्तु दिशा</div>
+              <div class="dm">Before you move in</div>
+            </div>
+            <div class="chev" style="color:var(--avoid)">›</div>
+          </div>
+        </div></div>
+      </div></div>
+      <div class="cap"><b>3 · Result + the door</b>The date exists today; the door is the one card that ends "when but not how".<span class="tag p24">PRD-24</span></div>
+    </div></div>
+    <div class="arrow">→</div>
+
+    <!-- 4 -->
+    <div class="step"><div class="stepcol">
+      <div class="miniwrap"><div class="phone">
+        <div class="statusbar"><span>21:12</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+        <div class="screen" style="position:relative">
+          <div class="pad" style="opacity:.42">
+            <div class="topbar"><div class="back">‹</div><div class="tt">वास्तु दिशा</div><div class="sp"></div></div>
+            <div style="height:230px;display:flex;align-items:center;justify-content:center">
+              <div style="width:190px;height:190px;border-radius:50%;border:1.5px solid var(--gold-soft);background:var(--parchment-soft)"></div>
+            </div>
+          </div>
+          <div class="permsheet">
+            <div class="pt">दिशा जानने के लिए</div>
+            <div class="pb">
+              चक्र को वास्तविक उत्तर दिखाने के लिए स्थान की अनुमति आवश्यक है।
+              स्थान आपके फ़ोन से बाहर नहीं जाता।
+            </div>
+            <div class="pbtns">
+              <div class="pbtn">दिशा स्वयं चुनें</div>
+              <div class="pbtn fill">अनुमति दें</div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+      <div class="cap"><b>4 · Permission, once</b>Heading needs location. A city-picker user has never granted it — so ask here, and offer the manual path in the same breath.<span class="tag p24">PRD-24</span></div>
+    </div></div>
+    <div class="arrow">→</div>
+
+    <!-- 5 -->
+    <div class="step"><div class="stepcol">
+      <div class="miniwrap"><div class="phone">
+        <div class="statusbar"><span>21:13</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="tt">वास्तु दिशा</div><div class="act2">मंदिर</div></div>
+          <div style="display:flex;flex-direction:column;align-items:center;padding-top:4px">
+            <svg width="200" height="200" viewBox="0 0 240 240" role="img" aria-label="Disha chakra pointing north-east.">
+              <circle cx="120" cy="120" r="104" fill="#F8EFD6" stroke="#C9B896" stroke-width="1.5"/>
+              <path d="M120,120 L159.8,23.9 A104,104 0 0 1 216.1,80.2 Z" fill="rgba(184,98,27,0.16)"/>
+              <g stroke="rgba(138,62,11,0.18)" stroke-width="1">
+                <line x1="120" y1="120" x2="159.8" y2="23.9"/><line x1="120" y1="120" x2="216.1" y2="80.2"/>
+                <line x1="120" y1="120" x2="216.1" y2="159.8"/><line x1="120" y1="120" x2="159.8" y2="216.1"/>
+                <line x1="120" y1="120" x2="80.2" y2="216.1"/><line x1="120" y1="120" x2="23.9" y2="159.8"/>
+                <line x1="120" y1="120" x2="23.9" y2="80.2"/><line x1="120" y1="120" x2="80.2" y2="23.9"/>
+              </g>
+              <circle cx="120" cy="120" r="31" fill="#FFF5E0" stroke="#C9B896" stroke-width="1.5"/>
+              <text x="120" y="117" text-anchor="middle" font-family="'Noto Serif Devanagari',serif" font-size="9" fill="#A67C34">ब्रह्म</text>
+              <text x="120" y="128" text-anchor="middle" font-family="'Noto Serif Devanagari',serif" font-size="9" fill="#A67C34">स्थान</text>
+              <g font-family="'Noto Serif Devanagari',serif" font-size="12" fill="#5A3A1E" text-anchor="middle">
+                <text x="120" y="44">उत्तर</text><text x="177" y="67" fill="#8A3E0B" font-weight="600">ईशान</text>
+                <text x="200" y="124">पूर्व</text><text x="177" y="181">आग्नेय</text>
+                <text x="120" y="204">दक्षिण</text><text x="63" y="181">नैऋत्य</text>
+                <text x="40" y="124">पश्चिम</text><text x="63" y="67">वायव्य</text>
+              </g>
+              <line x1="120" y1="16" x2="120" y2="30" stroke="#A67C34" stroke-width="2"/>
+              <line x1="141.9" y1="99.5" x2="166.8" y2="76.4" stroke="#B8621B" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="166.8" cy="76.4" r="4.5" fill="#B8621B"/>
+            </svg>
+            <div style="font-family:var(--deva);font-size:23px;color:var(--ink);margin-top:4px">ईशान <span style="font-family:var(--sans);font-size:12px;color:var(--saffron-deep)">47°</span></div>
+            <span class="acc ok">● दिशा स्पष्ट</span>
+          </div>
+          <div class="box" style="margin-top:12px">
+            <div style="display:flex;align-items:baseline;gap:7px;padding-bottom:8px;border-bottom:1px solid var(--divider)">
+              <span style="font-family:var(--deva);font-size:15px;color:var(--ink)">ईशान</span>
+              <span style="font-family:var(--serif);font-style:italic;font-size:11px;color:var(--ink-muted)">· puja room</span>
+              <span style="margin-left:auto;font-size:9px;font-weight:700;background:var(--saffron);color:var(--parchment-hi);border-radius:999px;padding:2px 8px">श्रेष्ठ</span>
+            </div>
+            <div style="font-family:var(--deva);font-size:12px;line-height:1.6;color:var(--ink-soft);margin-top:8px">
+              पूजा कक्ष हेतु सर्वोत्तम। प्रतिमा का मुख पश्चिम — उपासक पूर्वाभिमुख।
+            </div>
+          </div>
+        </div></div>
+      </div></div>
+      <div class="cap"><b>5 · दिशा चक्र</b>Turn the phone, the card changes. An instrument, not a listicle.<span class="tag p24">PRD-24</span></div>
+    </div></div>
+    <div class="arrow">→</div>
+
+    <!-- 6 -->
+    <div class="step"><div class="stepcol">
+      <div class="miniwrap"><div class="phone">
+        <div class="statusbar"><span>21:16</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="tt">घर का मंदिर</div><div class="sp"></div></div>
+          <div style="text-align:center;padding-bottom:10px;border-bottom:1px solid var(--divider)">
+            <span class="pill">वास्तु दिशा</span>
+            <div style="font-family:var(--deva);font-size:20px;color:var(--ink);margin-top:6px">घर का मंदिर</div>
+          </div>
+          <div class="block">
+            <div class="bh">स्थापना</div>
+            <div class="box">
+              <div style="font-family:var(--deva);font-size:12px;line-height:1.6;color:var(--ink-soft)">◆ ईशान कोण, भूमि से ऊँचाई पर</div>
+              <div style="font-family:var(--deva);font-size:12px;line-height:1.6;color:var(--ink-soft);margin-top:7px;padding-top:7px;border-top:1px solid var(--divider)"><span style="color:var(--avoid)">✕</span> शौचालय की दीवार से लगा</div>
+            </div>
+          </div>
+          <div class="block">
+            <div class="bh">पूर्वज-चित्र</div>
+            <div class="box" style="padding:11px 13px">
+              <div style="font-family:var(--deva);font-size:12px;line-height:1.6;color:var(--ink-soft)">देव-स्थान से पृथक रखे जाते हैं।</div>
+              <div class="mrow" style="margin:9px 0 0;background:var(--parchment-hi)">
+                <div class="mg">✧</div><div class="ml" style="font-size:12.5px">पितृ स्मरण</div><div class="chev">›</div>
+              </div>
+            </div>
+          </div>
+        </div></div>
+      </div></div>
+      <div class="cap"><b>6 · घर का मंदिर</b>Not direction-keyed, so it's a sub-screen — and it hands off to shipped Pitru Smaran.<span class="tag p24">PRD-24</span></div>
+    </div></div>
+  </div>
+
+  <!-- branch -->
+  <div class="sc-sub" style="margin-top:22px">The branch that will fire often — indoors, near rebar and appliances:</div>
+  <div class="flow">
+    <div class="step"><div class="stepcol">
+      <div class="miniwrap"><div class="phone">
+        <div class="statusbar"><span>21:13</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="tt">वास्तु दिशा</div><div class="act2">मंदिर</div></div>
+          <div style="display:flex;flex-direction:column;align-items:center;padding-top:4px">
+            <svg width="200" height="200" viewBox="0 0 240 240" role="img" aria-label="Accuracy low; no direction shown.">
+              <circle cx="120" cy="120" r="104" fill="#F8EFD6" stroke="#C9B896" stroke-width="1.5"/>
+              <g stroke="rgba(138,62,11,0.18)" stroke-width="1">
+                <line x1="120" y1="120" x2="159.8" y2="23.9"/><line x1="120" y1="120" x2="216.1" y2="80.2"/>
+                <line x1="120" y1="120" x2="216.1" y2="159.8"/><line x1="120" y1="120" x2="159.8" y2="216.1"/>
+                <line x1="120" y1="120" x2="80.2" y2="216.1"/><line x1="120" y1="120" x2="23.9" y2="159.8"/>
+                <line x1="120" y1="120" x2="23.9" y2="80.2"/><line x1="120" y1="120" x2="80.2" y2="23.9"/>
+              </g>
+              <circle cx="120" cy="120" r="31" fill="#FFF5E0" stroke="#C9B896" stroke-width="1.5"/>
+              <g font-family="'Noto Serif Devanagari',serif" font-size="12" fill="#A08863" text-anchor="middle">
+                <text x="120" y="44">उत्तर</text><text x="177" y="67">ईशान</text>
+                <text x="200" y="124">पूर्व</text><text x="177" y="181">आग्नेय</text>
+                <text x="120" y="204">दक्षिण</text><text x="63" y="181">नैऋत्य</text>
+                <text x="40" y="124">पश्चिम</text><text x="63" y="67">वायव्य</text>
+              </g>
+              <line x1="120" y1="16" x2="120" y2="30" stroke="#C9B896" stroke-width="2"/>
+            </svg>
+            <div style="font-family:var(--deva);font-size:23px;color:var(--ink-muted);margin-top:4px">—</div>
+            <span class="acc low">● दिशा अस्पष्ट</span>
+          </div>
+          <div class="nishedh" style="margin-top:12px">
+            <div class="nh">दिशा-यंत्र स्थिर नहीं है</div>
+            <div class="nt">फ़ोन समतल रखें, धातु से दूर; आठ का अंक बनाते हुए घुमाएँ।</div>
+          </div>
+          <div style="font-family:var(--deva);font-size:13px;color:var(--ink);margin-top:14px">अथवा दिशा स्वयं चुनें</div>
+          <div class="dikgrid">
+            <div class="dik"><div class="dv">उत्तर</div></div>
+            <div class="dik on"><div class="dv">ईशान</div></div>
+            <div class="dik"><div class="dv">पूर्व</div></div>
+            <div class="dik"><div class="dv">आग्नेय</div></div>
+            <div class="dik"><div class="dv">दक्षिण</div></div>
+            <div class="dik"><div class="dv">नैऋत्य</div></div>
+            <div class="dik"><div class="dv">पश्चिम</div></div>
+            <div class="dik"><div class="dv">वायव्य</div></div>
+          </div>
+        </div></div>
+      </div></div>
+      <div class="cap"><b>5b · sensor untrusted</b>No pointer drawn, no dik claimed. The manual grid yields the identical card as 5.<span class="tag p24">PRD-24</span></div>
+    </div></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="stepcol">
+      <div class="miniwrap"><div class="phone">
+        <div class="statusbar"><span>21:14</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="tt">अन्य</div><div class="sp"></div></div>
+          <div style="font-family:var(--serif);font-size:26px;color:var(--ink);padding:8px 2px">अन्य</div>
+          <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin:8px 0 7px 2px">साधना</div>
+          <div class="mrow"><div class="mg">◈</div><div class="ml">साधक प्रोफ़ाइल</div><div class="chev">›</div></div>
+          <div class="mrow"><div class="mg">❖</div><div class="ml">संग्रह</div><div class="chev">›</div></div>
+          <div class="mrow"><div class="mg">◷</div><div class="ml">स्मरण</div><div class="chev">›</div></div>
+          <div class="mrow"><div class="mg">◉</div><div class="ml">जप अलार्म</div><div class="chev">›</div></div>
+          <div class="mrow"><div class="mg">✧</div><div class="ml">पितृ स्मरण</div><div class="chev">›</div></div>
+          <div class="mrow newrow"><div class="mg">✥</div><div class="ml">वास्तु दिशा</div><div class="chev">›</div></div>
+          <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin:14px 0 7px 2px">ऐप</div>
+          <div class="mrow"><div class="mg">अ</div><div class="ml">भाषा</div><div class="chev">›</div></div>
+        </div></div>
+      </div></div>
+      <div class="cap"><b>The durable address</b>Once discovered, More → साधना is where they come back to it — beside पितृ स्मरण, no count badge (it's stateless).<span class="tag p24">PRD-24</span></div>
+    </div></div>
+  </div>
+
+  <div class="acard">
+    <h3>What this journey proves</h3>
+    <ul>
+      <li><b>Three entries, three jobs.</b> The DISCOVER card is <i>discovery</i> (shuffled, occasional). The muhurat door is the <i>moment of need</i> — and it will carry most real traffic. The More row is the <i>durable address</i> they return to.</li>
+      <li><b>Step 3 is the cheapest high-value card in the batch.</b> One occasion-gated door on a shipped result screen ends the app's largest asymmetry — 13 occasions dated, one explained — at the exact point the user feels it.</li>
+      <li><b>Step 4 exists because of a real gap.</b> <code>requestForegroundPermissionsAsync</code> fires today only when someone taps "use my location" in Panchang. A user who picked their city from the list has never granted it, and <code>trueHeading</code> returns <code>-1</code> without it. So the ask belongs here, with the manual path offered in the same sheet rather than behind a denial.</li>
+      <li><b>5b is not an error screen.</b> It is the second normal mode, and the manual grid is a peer path — which also makes the feature work on a device with no magnetometer and for someone reading a floor plan away from the house.</li>
+      <li><b>No new native dependency.</b> The compass is <code>Location.watchHeadingAsync()</code> from the already-installed <code>expo-location@19.0.8</code> — <code>trueHeading</code> arrives with declination already applied by the OS. The one binary-level change is the iOS purpose string, which must be widened before this ships.</li>
+    </ul>
+    <div class="warn">Frame 5 drops the earlier prototype's "corrected for declination +1.2°" line — we are not the ones correcting it. If a provenance line is wanted, it should say the OS supplies true north.</div>
+  </div>
+</section>
+
+<!-- ============================================ ACT 4 ============================================ -->
+<section class="act">
+  <h2>Act 4 — Total feature map after both PRDs</h2>
+  <div class="sc-sub">Everything reachable in the app, by tab. New rows marked; everything else ships today.</div>
+  <div class="acard">
+    <table class="fit">
+      <tr><th>होम</th><th>पंचांग</th><th>अन्य · भक्ति · भजन</th></tr>
+      <tr>
+        <td>
+          Category grid ×16 · 30+ readers (Gita, Rāmāyaṇa, Rāmcaritmānas, Sundarkāṇḍ, 9 chalisas, 8 aartis, stotram, kavacham, aṣṭakam, sūktam, Sahasranāma)<br /><br />
+          Japam counter · Japam alarms<br />
+          Daily Routine ×5 screens · Sadhana Programs<br />
+          Theerth map · 73 temples<br />
+          Deity Index · By Purpose · Search<br />
+          Vidhi catalog · detail · conduct<br /><br />
+          <b class="new23">+ भोग सामग्री in तैयारी</b><br />
+          <b class="new23">+ सामग्री सूची (new screen)</b>
+        </td>
+        <td>
+          Calendar · day panel · Today strip<br />
+          Observances · Vrat &amp; Parv · My Vrat<br />
+          Katha library ×84 · Upvas vidhi<br />
+          Daily Muhurat (choghadiya · Rahu · Abhijit)<br />
+          Muhurat Finder ×13 occasions (lagna · hora · tārābala)<br />
+          Abujh days · Kundali · Rashifal<br />
+          Guna Milan · Namkaran<br /><br />
+          <b class="new23">+ भोग panel in विधि section</b><br />
+          <b class="new24">+ वास्तु door on गृह प्रवेश / भूमि पूजन</b>
+        </td>
+        <td>
+          <b>अन्य</b><br />
+          Profile · Wishlist · Reminders<br />
+          Japam Alarms · Pitru Smaran · Pitru Paksha<br />
+          Language · Reading size · Read Aloud<br />
+          Home-screen widgets · Share · Rate<br />
+          <b class="new24">+ वास्तु दिशा → चक्र · घर का मंदिर</b><br /><br />
+          <b>भक्ति</b> — daily verse<br /><br />
+          <b>भजन</b> — audio library · Now Playing
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="acard">
+    <h3>The shape of the addition</h3>
+    <ul>
+      <li><b>2 new screens. 3 in-place sections. 3 door/entry cards. 0 tab changes.</b> Against an app that already ships ~80 reachable surfaces, that is the whole footprint of both PRDs.</li>
+      <li><b>Both features are answers, not destinations.</b> PRD-23 has no Home presence at all and appears only where its question is already live. PRD-24 has one discovery card and one durable row, but its real entry is the muhurat result.</li>
+      <li><b>Neither touches launch, the tab bar, or Home's reserved geometry</b> — so §64's first-frame contract, the 16-tile grid's closing row, and the Today strip's fixed height are all untouched.</li>
+      <li><b>Different blockers, so they can run in parallel.</b> PRD-23 is cheap code waiting on content verification — ship the machine, entries at <code>draft</code>, invisible until reviewed. PRD-24's content is more reachable but it needs the iOS purpose-string change and a Phase 0 measurement of how often the compass is trustworthy indoors.</li>
+    </ul>
+    <div class="warn"><b>The one thing that would change this map:</b> if Phase 0 finds <code>accuracy: 3</code> is rare indoors, PRD-24's P1 should ship manual-dik-first and treat the live compass as the enhancement. Journey B's steps 4–6 stay identical; only frame 5's default state changes.</div>
+  </div>
+</section>
+
+</body>
+</html>
