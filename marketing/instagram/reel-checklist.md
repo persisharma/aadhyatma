@@ -127,6 +127,10 @@ touch red.** This is the ground truth that §3's character budgets only approxim
 
 `--safe` burns the overlay into the output — preview only, never post that file.
 
+Note the builder's safe box is deliberately more conservative than the app's story
+export (`shareStoryLayout.ts`): a published reel carries the action rail and a taller
+caption tray that a reader-posted Story card does not. README §3 has the comparison.
+
 ### 6.2 Look for tofu
 Fonts come from Google Fonts at render time. If Devanagari renders as `□□□`, the font
 request failed. Re-run; don't ship it.

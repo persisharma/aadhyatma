@@ -71,8 +71,21 @@ niche can generate, and they are earned by posts that are **complete in the fram
 no "link in bio", no cliffhanger, no "part 2 coming". A shloka card someone forwards
 to their mother is worth more than a dozen passive views.
 
-This is also exactly what PRD-05 (`docs/roadmap/prds/05-share-verse-card.md`) already
-argues for the in-app share surface. The same logic applies to the account.
+This is exactly what the in-app share surface now does. PRD-05 has **shipped** (design.md
+§39.1–39.3): the reader's share button offers an Instagram post (4:5) and an Instagram
+story/reel (9:16) route, each carrying the verse card plus a per-verse hashtag block
+derived from the section, chapter and deity registry (`mobile/src/data/shareHashtags.ts`),
+with the caption copied to the clipboard.
+
+Two things follow for the account:
+
+- **Your users are now a distribution channel.** Every verse shared out of the app lands
+  on Instagram already branded and already tagged. Encourage it — a Story reshare from a
+  reader reaches an audience you can't buy.
+- **Their hashtags are derived per verse; yours shouldn't be canned either.**
+  `shareHashtags.ts` explains why (one fixed block teaches Instagram nothing and makes
+  your own posts compete with each other). Same logic applies to the captions in
+  `posts/caption-templates.md`.
 
 ### 1.5 You're not using the one advantage nobody else has
 
@@ -124,6 +137,17 @@ gone. On a 1080 × 1920 reel the builder treats these as unusable:
 
 That leaves a **live box of 740 × 1130 px** starting at (90, 250). Every readable
 thing goes inside it — the `.live` element in `make-reel.js` *is* that box.
+
+> **There is a second set of these numbers in this repo, and they differ on purpose.**
+> The app's own story export (`mobile/src/utils/shareStoryLayout.ts`, design.md §39.3)
+> uses `top 120dp / bottom 165dp / horizontal 0` — 240 / 330 / 0 px at 1080 × 1920.
+> That is the right box for *its* job: a card a reader posts, usually to their Story,
+> where there is no action rail over the content and the reply bar sits lower. This
+> builder publishes into the **Reels feed**, where the right-hand like/comment/send rail
+> and a taller caption tray both overlay the frame — hence bottom 540 and right 250.
+> **Do not "reconcile" them by copying one into the other.** If anything, the app's
+> `horizontal: 0` is optimistic for the *reel* half of its own story/reel row; worth a
+> look, but that is app code with a passing test and a design.md section behind it.
 
 For comparison, `../linkedin/make-reel.js` puts its caption block at `bottom: 96px`
 and its call-to-action dead centre-bottom. On Instagram both are underneath the
