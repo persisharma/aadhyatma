@@ -26,13 +26,26 @@ export type WhatsNewEntry = {
  * Current app version. Must match `expo.version` in `mobile/app.json`. This is
  * the key against which the user's "last seen what's new" is compared.
  */
-export const APP_TOUR_VERSION = '1.4.7';
+export const APP_TOUR_VERSION = '1.5.0';
 
 /**
  * Per-version what's-new content. The latest entry is shown when the user
  * first opens this version of the app after updating.
  */
 export const whatsNew: Readonly<Record<string, WhatsNewEntry>> = {
+  '1.5.0': {
+    version: '1.5.0',
+    items: [
+      {
+        titleHi: 'वास्तु दिशा',
+        titleEn: 'Vastu Disha',
+        bodyHi:
+          'दिशा चक्र के साथ घर की वास्तु परंपरा — मंदिर, रसोई, मुख्य द्वार, शयन और तुलसी की शास्त्रीय दिशाएँ, कारण सहित। अन्य → वास्तु दिशा में।',
+        bodyEn:
+          'The home’s vastu tradition with a live disha chakra — the classical directions for the mandir, kitchen, main door, sleeping and tulsi, each with its reason. In More → Vastu Disha.',
+      },
+    ],
+  },
   '1.4.7': {
     version: '1.4.7',
     items: [

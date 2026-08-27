@@ -16,6 +16,7 @@ import GunaMilanScreen from '@/screens/GunaMilanScreen';
 import NamkaranScreen from '@/screens/NamkaranScreen';
 import NamkaranResultScreen from '@/screens/NamkaranResultScreen';
 import NamkaranRashiScreen from '@/screens/NamkaranRashiScreen';
+import VastuDishaScreen from '@/screens/VastuDishaScreen';
 import VidhiCatalogScreen from '@/screens/VidhiCatalogScreen';
 import VidhiDetailScreen from '@/screens/VidhiDetailScreen';
 import VidhiConductScreen from '@/screens/VidhiConductScreen';
@@ -68,6 +69,12 @@ export default function PanchangStackNavigator() {
       <Stack.Screen
         name="MuhuratDayDetail"
         component={MuhuratDayDetailScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      {/* वास्तु दिशा (PRD-24) — pushed in place by the griha-pravesh door. */}
+      <Stack.Screen
+        name="VastuDisha"
+        component={VastuDishaScreen}
         options={{ animation: 'slide_from_right' }}
       />
       <Stack.Screen
