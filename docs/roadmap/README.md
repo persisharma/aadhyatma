@@ -11,6 +11,11 @@ This folder holds the product roadmap and PRDs for upcoming releases.
 - [**Q4 2026 Candidates**](./2026-Q4-candidates.md) — household-practice gap analysis and the next five
   proposed features (PRD-20 … PRD-24, numbers reserved). Read this for what is *missing*; the table
   below is the Q3 slate only and has not tracked PRDs 07–19.
+- [**Q4 2026 Candidates, Round 2**](./2026-Q4-candidates-round-2.md) — a second slate (PRD-26 … PRD-30,
+  numbers reserved) filtered so that nothing shipped, PRD-owned, or already rejected can appear:
+  memorization/recall, the muhurat engine's missing auspicious yogas, festival arcs
+  (sthapana → visarjan), the family lineage record and living janma tithis, and the household
+  practice roster. **PRD-25 stays reserved** for सन्ध्या वन्दन per round 1 §3.
 
 ## PRDs (Q3 2026)
 
