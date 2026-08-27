@@ -148,7 +148,7 @@ Feasibility is graded against the constraint that has actually stalled shipped w
 
 > *A whole domain at zero coverage, consulted at every move, renovation, and Diwali cleaning.*
 
-**Prototype:** [`docs/vastu-disha-prototype.html`](../vastu-disha-prototype.html) — five annotated frames: the More-hub entry, the chakra working with guidance keyed to the pointed dik, the **degraded sensor state with the manual dik override**, घर का मंदिर, and the griha-pravesh door. All headings, degrees and the declination figure in it are **illustrative placeholders**, not sensor output.
+**Prototype:** [`docs/vastu-disha-prototype.html`](../vastu-disha-prototype.html) — five annotated frames: the More-hub entry, the chakra working with guidance keyed to the pointed dik, the **degraded sensor state with the manual dik override**, घर का मंदिर, and the griha-pravesh door. All headings and degrees in it are **illustrative placeholders**, not sensor output.
 
 **The gap.** The only `disha` in the codebase is travel disha-shool inside the muhurat engine. Nothing addresses the questions asked constantly in Indian homes: **which direction should the mandir face; can the puja room share a wall with the bathroom; which way should my head point when I sleep; where does the tulsī go; is it allowed to keep two Gaṇeśa idols / a Śivaliṅga / a Naṭarāja at home.** These are asked at every move-in, every rental, every rearrangement — and the muhurat finder already dates the griha pravesh they cluster around.
 
@@ -158,8 +158,12 @@ Feasibility is graded against the constraint that has actually stalled shipped w
 - **घर का मंदिर** — the daily-upkeep set the app has never covered: what belongs in a home shrine and what does not, murti condition and count conventions, where ancestor photographs go (and why not in the mandir), diyā and water discipline.
 - Entry from the More hub, plus a contextual door from a **griha pravesh** muhurat result — the moment the question is live.
 
-**Feasibility.** 🟡 The heaviest of the five, and the only one that **cannot ship OTA**. It needs `expo-sensors` (magnetometer) — a **new native dependency, therefore a store release**, which per the repo's own gotcha drags `APP_TOUR_VERSION` and a `whatsNew` entry with it. Two real engineering risks, both to be resolved in a Phase 0 spike rather than assumed:
-1. **True north.** Magnetic declination across India is small but not zero and varies by region. Options: a bundled coarse declination grid, a per-city value alongside the existing bundled city list, or a stated magnetic-north reading. Pick one in the PRD; do not leave it implicit, because a compass that is silently 2° off in a feature about direction is worse than no compass.
+**Feasibility.** 🟢 **Revised Aug 2026 — originally graded too pessimistically.** It needs **no new native dependency**: `expo-location@19.0.8` is already installed and already plugin-configured, and its `watchHeadingAsync()` returns `{ trueHeading, magHeading, accuracy }` on both platforms (verified against the installed type definitions). `trueHeading` arrives with **magnetic declination already applied by the OS**, so the bundled-declination-grid work originally scoped here is unnecessary and is dropped. Feature code is **OTA-capable**.
+
+*One binary-level change remains:* `app.json`'s `locationWhenInUsePermission` currently says location is used "**only** to compute accurate sunrise and panchang times", which becomes false once the compass is read. Widening it is an Info.plist change and needs a native rebuild — so ship the feature **with**, not ahead of, that store release. Never ship the compass OTA against a purpose string that does not mention it.
+
+The remaining risks:
+1. **Trust floor, not declination.** A dik sector is 45° wide, so naming one honestly needs better than ±22.5° — and only `accuracy: 3` (iOS: <20° uncertainty) clears it; `accuracy: 2` is <35° and cannot resolve a sector. **Phase 0's one job is to measure how often `accuracy: 3` is reached indoors.** If it is rare, P1 ships manual-dik-first and the live compass becomes the enhancement — a legitimate outcome.
 2. **Indoor accuracy.** Magnetometers are unreliable near rebar, wiring, and appliances — precisely where this feature is used. It needs a calibration prompt, a visible accuracy state, a "hold flat, away from metal" instruction, and a manual-direction override for when the sensor cannot be trusted. **The honest degraded state is part of the feature, not an afterthought.**
 
 **Stance guard.** Vastu is presented as classical convention with its traditional reasoning — never as a defect report on someone's home. No fear copy, no "vastu dosha detected", no remedy products. Most people cannot move their kitchen; the register is *understanding*, with the traditional accommodation where one exists.
@@ -190,11 +194,11 @@ PRD-20  Sankalp              ██████                  OTA · conventi
 PRD-21  Graha practice       ████████                OTA · 9-row table
 PRD-22  Havan · Sanskar vidhi    ████░░░░░░░░        Phase A OTA · B/C content-gated
 PRD-23  Bhog · Naivedya · Vrat food  ██░░░░░░░░░░    code trivial · content-gated
-PRD-24  Vastu disha          ░░░░████████████        store release · Phase 0 spike first
+PRD-24  Vastu disha          ██████████░░░░░░        OTA-capable · pair with a store release for the purpose string
                              └ ██ = buildable now   ░░ = gated
 ```
 
-**Recommended order and why.** **PRD-20 then PRD-21** — both are computational, both ship OTA, both convert engine work that is already paid for into daily-use surfaces, and neither waits on anything but a convention sign-off. Take **PRD-22 Phase A** next because it is code-only and it unblocks two other features' content whenever egress arrives. Land **PRD-23**'s registry and surfaces alongside, entries at `draft`, so the content flip is a data change and not a project. Start **PRD-24** with its Phase 0 sensor spike, independently, since it is the only one needing a store release and its risk is native rather than editorial.
+**Recommended order and why.** **PRD-20 then PRD-21** — both are computational, both ship OTA, both convert engine work that is already paid for into daily-use surfaces, and neither waits on anything but a convention sign-off. Take **PRD-22 Phase A** next because it is code-only and it unblocks two other features' content whenever egress arrives. Land **PRD-23**'s registry and surfaces alongside, entries at `draft`, so the content flip is a data change and not a project. Start **PRD-24** with its Phase 0 heading-accuracy measurement, independently — its risk is now a single empirical question (how trustworthy is the compass indoors), not a native-integration one, and its permission-string change should ride the next store release.
 
 **Cross-cutting note.** PRD-20 and PRD-21 both extend the saved birth profile (gotra; natal Moon for gochar). Design that schema change **once**, in PRD-20, and have PRD-21 consume it — two separate migrations of `@vedansh:kundali-birth-profile:v1` is the avoidable mistake here.
 
@@ -207,5 +211,5 @@ PRD-24  Vastu disha          ░░░░████████████   
 1. **Saṃvatsara reckoning** — Bārhaspatya or the southern luni-solar mapping? They disagree by years and North/South India name the current year differently. Blocks `conventions/sankalp-v1.md`, which blocks the highest-value candidate here. This is the one answer worth getting this week.
 2. **Ṛtu boundary basis** — solar (sankranti-based) or lunar-month pairs? Affects one slot of every sankalp the app ever composes.
 3. **Gotra** — does an unknown gotra fall back to **काश्यप** silently, prompt, or omit the clause? Product tone call, not a technical one.
-4. **PRD-24 true north** — bundled declination grid, per-city value, or state magnetic north honestly? Determines whether Phase 0 is a week or a fortnight.
+4. **PRD-24 trust floor** — is `accuracy: 3` the bar (defensible: 45° sectors need ±22.5°), and does Android need its own value? If Phase 0 finds `3` is rare indoors, do we ship manual-dik-first? *(The original "which declination model" question is closed — the OS supplies true north.)*
 5. **Content egress** — the standing blocker. Four shipped features already sit at `status: 'draft'`, and PRD-22 Phase B/C and PRD-23 will join them. Worth deciding whether to solve the egress path itself, because it is now the rate limiter on roughly half the roadmap rather than an inconvenience.
