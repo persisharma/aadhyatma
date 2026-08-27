@@ -242,6 +242,21 @@
   </p>
 </div>
 
+<div class="samplebanner" style="border-color:#B8621B;background:rgba(184,98,27,0.16);border-style:solid">
+  <b>⚑ SUPERSEDED — PRD-23 SHIPPED</b><br />
+  This prototype was authored 2026-08-22 against <code>main</code> @ <code>67e22a2</code>, when bhog/naivedya
+  did not exist. <b>PRD-23 has since been built and merged</b> (#301, then #300) and now ships
+  <b>39 verified profiles covering 68/68 vrat/upavas rules</b>. Canonical references are
+  <code>docs/roadmap/prds/23-bhog-naivedya-vrat-food.md</code>,
+  <code>wiki/subsystems/bhog-naivedya.md</code>, <code>mobile/src/panchang/bhogContent.ts</code> and
+  <code>components/BhogGuidancePanel.tsx</code> — <b>not this file</b>.<br /><br />
+  <b>The shipped design diverges from this prototype on its central call.</b> Frame A here argues bhog
+  belongs <i>inside</i> the existing "विधि" section ("one home, not two"), which is what created the
+  8-state matrix warned about in frame C. The shipped build instead gives bhog its <b>own top-level
+  block</b> ("भोग · नैवेद्य · भोजन / Offerings &amp; food") outside the <code>{(upvas || vidhi)}</code>
+  guard — so that guard stays 4-state and the matrix problem never arises. The shipped choice is the
+  simpler one; treat the frames below as a superseded proposal, retained only for its rationale.
+</div>
 <div class="samplebanner">
   <b>⚠ ILLUSTRATIVE SAMPLE</b> — every food, offering, prohibition, salt rule, quantity, and date on these
   frames is placeholder copy written for layout only. It is <b>not verified content</b> and must not be
