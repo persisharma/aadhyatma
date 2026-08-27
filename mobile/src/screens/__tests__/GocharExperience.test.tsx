@@ -21,15 +21,17 @@ const savedChart = computeKundali({
 });
 
 let mockKundaliState: {
-  profile: unknown;
+  profile: { id?: string; name?: string; date?: string; time?: string; cityId?: string } | null;
   chart: KundaliChart | null;
   hydrated: boolean;
   loadState: 'loading' | 'guest' | 'saved' | 'error';
+  people: { id: string; name?: string }[];
 } = {
   profile: null,
   chart: null,
   hydrated: true,
   loadState: 'guest',
+  people: [],
 };
 
 jest.mock('@react-navigation/native', () => ({
@@ -89,7 +91,7 @@ function textOf(tree: TestRenderer.ReactTestRenderer): string {
 }
 
 test('guest state explains the chart requirement and offers Create Kundali', async () => {
-  mockKundaliState = { profile: null, chart: null, hydrated: true, loadState: 'guest' };
+  mockKundaliState = { profile: null, chart: null, hydrated: true, loadState: 'guest', people: [] };
   const tree = await render(
     <GocharScreen
       navigation={mockNavigation as any}
@@ -107,10 +109,11 @@ test('guest state explains the chart requirement and offers Create Kundali', asy
 
 test('saved state renders the nine-graha table, themes, Sade Sati, and ingress list', async () => {
   mockKundaliState = {
-    profile: { name: 'Aarav', date: '1992-08-14', time: '05:42', cityId: 'ujjain' },
+    profile: { id: 'p1', name: 'Aarav', date: '1992-08-14', time: '05:42', cityId: 'ujjain' },
     chart: savedChart,
     hydrated: true,
     loadState: 'saved',
+    people: [{ id: 'p1', name: 'Aarav' }],
   };
   const tree = await render(
     <GocharScreen
@@ -163,12 +166,48 @@ test('saved state renders the nine-graha table, themes, Sade Sati, and ingress l
   await act(async () => tree.unmount());
 });
 
+test('the header names whose chart once the roster holds more than one person', async () => {
+  const single = {
+    profile: { id: 'p1', name: 'Aarav', date: '1992-08-14', time: '05:42', cityId: 'ujjain' },
+    chart: savedChart,
+    hydrated: true,
+    loadState: 'saved' as const,
+    people: [{ id: 'p1', name: 'Aarav' }],
+  };
+  mockKundaliState = single;
+  let tree = await render(
+    <GocharScreen
+      navigation={mockNavigation as any}
+      route={{ key: 'Gochar-test', name: 'Gochar' } as any}
+    />
+  );
+  assert.ok(textOf(tree).includes('Today’s grahas in your chart'), 'one person → "your"');
+  await act(async () => tree.unmount());
+
+  // With two people saved, "your" would be a guess (§51a).
+  mockKundaliState = {
+    ...single,
+    people: [{ id: 'p1', name: 'Aarav' }, { id: 'p2', name: 'Meera' }],
+  };
+  tree = await render(
+    <GocharScreen
+      navigation={mockNavigation as any}
+      route={{ key: 'Gochar-test', name: 'Gochar' } as any}
+    />
+  );
+  const text = textOf(tree);
+  assert.ok(text.includes('Today’s grahas in Aarav’s chart'), 'names the active person');
+  assert.ok(!text.includes('Today’s grahas in your chart'));
+  await act(async () => tree.unmount());
+});
+
 test('practice link appears only while a Sade Sati phase is active', async () => {
   mockKundaliState = {
-    profile: { name: 'Aarav', date: '1992-08-14', time: '05:42', cityId: 'ujjain' },
+    profile: { id: 'p1', name: 'Aarav', date: '1992-08-14', time: '05:42', cityId: 'ujjain' },
     chart: savedChart,
     hydrated: true,
     loadState: 'saved',
+    people: [{ id: 'p1', name: 'Aarav' }],
   };
   const tree = await render(
     <GocharScreen

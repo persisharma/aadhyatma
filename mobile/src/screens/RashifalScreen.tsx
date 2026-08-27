@@ -10,6 +10,7 @@ import JyotishPracticeCard from '@/components/JyotishPracticeCard';
 import JyotishShareCard from '@/components/JyotishShareCard';
 import JyotishShareSheet from '@/components/JyotishShareSheet';
 import JyotishStateCard from '@/components/JyotishStateCard';
+import PersonChips from '@/components/PersonChips';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { library } from '@/data/texts';
 import { buildEntryStartTarget } from '@/navigation/entryRoutes';
@@ -63,9 +64,10 @@ export default function RashifalScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
   const rootNav = useNavigation<any>();
-  const { chart, loadState } = useKundali();
+  const { chart, loadState, profile, people, activeId, selectPerson } = useKundali();
   const natalMoon = chart?.grahas.find((position) => position.graha === 'moon')?.rashiIndex;
   const routeSelection = route.params?.rashiIndex;
+  const activeName = people.length > 1 ? profile?.name?.trim() : undefined;
   const [rashiIndex, setRashiIndex] = useState<number | null>(routeSelection ?? null);
   const [signPickerOpen, setSignPickerOpen] = useState(routeSelection === undefined);
   const [userSelected, setUserSelected] = useState(routeSelection !== undefined);
@@ -104,6 +106,18 @@ export default function RashifalScreen({ navigation, route }: Props) {
     setUserSelected(true);
     setRashiIndex(index);
     setSignPickerOpen(false);
+  };
+
+  /**
+   * Switching person is a fresh natal selection, not a manual one: clearing
+   * `userSelected` lets the effect above adopt THAT person's Moon sign, so the
+   * card can honestly say whose Kundali it came from.
+   */
+  const choosePerson = (id: string) => {
+    if (id === activeId) return;
+    setUserSelected(false);
+    setSignPickerOpen(false);
+    void selectPerson(id);
   };
 
   return (
@@ -241,6 +255,21 @@ export default function RashifalScreen({ navigation, route }: Props) {
                 </View>
               )}
 
+              {/* Only with more than one person saved, and only when the screen
+                  was not opened for an explicit sign — with `rashiIndex` in the
+                  route the shown sign is that request, not a person's chart. */}
+              {people.length > 1 && routeSelection === undefined ? (
+                <PersonChips
+                  people={people}
+                  activeId={activeId}
+                  lang={lang}
+                  onSelect={choosePerson}
+                  labelHi="किसका राशिफल"
+                  labelEn="Whose Rashifal"
+                  selectAccessibilityLabel={(label) => `Show Rashifal for ${label}`}
+                />
+              ) : null}
+
               {selectedSign && rashiIndex !== null ? (
                 <View
                   style={[
@@ -262,7 +291,9 @@ export default function RashifalScreen({ navigation, route }: Props) {
                       ]}
                     >
                       {isNatalSelection
-                        ? contentByLang(lang, 'आपकी कुंडली से', 'From your Kundali')
+                        ? activeName
+                          ? contentByLang(lang, `${activeName} की कुंडली से`, `From ${activeName}’s Kundali`)
+                          : contentByLang(lang, 'आपकी कुंडली से', 'From your Kundali')
                         : contentByLang(lang, 'चुनी हुई चन्द्र राशि', 'Selected Moon sign')}
                     </Text>
                     <Text
@@ -288,11 +319,17 @@ export default function RashifalScreen({ navigation, route }: Props) {
                       }}
                     >
                       {isNatalSelection
-                        ? meaningByLang(
-                          lang,
-                          'आपकी जन्म चन्द्र राशि प्रतिदिन अपने-आप चुनी जाती है।',
-                          'Your natal Moon sign is selected automatically each day.'
-                        )
+                        ? activeName
+                          ? meaningByLang(
+                            lang,
+                            `${activeName} की जन्म चन्द्र राशि प्रतिदिन अपने-आप चुनी जाती है।`,
+                            `${activeName}’s natal Moon sign is selected automatically each day.`
+                          )
+                          : meaningByLang(
+                            lang,
+                            'आपकी जन्म चन्द्र राशि प्रतिदिन अपने-आप चुनी जाती है।',
+                            'Your natal Moon sign is selected automatically each day.'
+                          )
                         : meaningByLang(
                           lang,
                           'आज के पाठ के लिए चुनी गई। स्वतः चयन के लिए एक बार कुंडली बनाएँ।',
@@ -441,11 +478,17 @@ export default function RashifalScreen({ navigation, route }: Props) {
                         ]}
                       >
                         {isNatalSelection
-                          ? contentByLang(
-                            lang,
-                            'चन्द्र राशि · आपकी कुंडली से',
-                            'Moon sign · From your Kundali'
-                          )
+                          ? activeName
+                            ? contentByLang(
+                              lang,
+                              `चन्द्र राशि · ${activeName} की कुंडली से`,
+                              `Moon sign · From ${activeName}’s Kundali`
+                            )
+                            : contentByLang(
+                              lang,
+                              'चन्द्र राशि · आपकी कुंडली से',
+                              'Moon sign · From your Kundali'
+                            )
                           : contentByLang(
                             lang,
                             'आज का मार्गदर्शन · चन्द्र राशि',

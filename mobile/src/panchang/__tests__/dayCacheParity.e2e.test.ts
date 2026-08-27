@@ -14,11 +14,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { computePanchangForDate, UJJAIN_GEO } from '../engine';
+import { computePanchangForDate, sunriseForDate, UJJAIN_GEO } from '../engine';
 import { computeMuhuratDay } from '../muhurat';
 import { getObservancesForDate } from '../festivalEngine';
 import { computeAstaFlags, evaluateDay, getEventRule } from '../eventMuhurat';
-import { serializeDayInputs, reviveDayInputs } from '../panchangDaySerde';
+import { lagnaSpansForDay } from '../lagnaSweep';
+import { serializeDayInputs, reviveDayInputs, PANCHANG_DAY_CACHE_VERSION } from '../panchangDaySerde';
 import {
   cachedDayInputs,
   computeDayInputs,
@@ -40,6 +41,12 @@ const DAYS = 372; // a full year + a margin to cross month/year boundaries
 
 const dayAt = (i: number) => new Date(START.getFullYear(), START.getMonth(), START.getDate() + i);
 
+test('the DayInputs shape change (lagnas, PRD-16/P3) shipped with its version bump', () => {
+  // RULEBOOK §17.6: a persisted-shape change without a bump serves the old
+  // engine's days forever on already-scanned devices.
+  assert.ok(PANCHANG_DAY_CACHE_VERSION >= 3, 'DayInputs gained `lagnas` in v3 — the bump must ship with it');
+});
+
 for (const location of LOCATIONS) {
   for (const calendarSystem of SYSTEMS) {
     const label = `${location.cityId ?? `${location.latitude},${location.longitude}`}/${calendarSystem}`;
@@ -53,10 +60,18 @@ for (const location of LOCATIONS) {
       for (let i = 1; i <= DAYS; i += 1) {
         const d = dayAt(i);
 
-        // Fresh solve (the ground truth).
+        // Fresh solve (the ground truth), constructed independently of
+        // computeDayInputs so a store-side drift cannot hide itself.
+        const freshP = computePanchangForDate(d, opts);
         const fresh = {
-          p: computePanchangForDate(d, opts),
+          p: freshP,
           asta: computeAstaFlags(new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12)),
+          lagnas: lagnaSpansForDay(
+            freshP.sunrise,
+            sunriseForDate(dayAt(i + 1), opts),
+            location.latitude,
+            location.longitude
+          ),
         };
 
         // Persisted round-trip must equal fresh — every field, Dates included.

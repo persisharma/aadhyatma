@@ -95,15 +95,15 @@ export const karwaChauthPuja: VidhiEntry = {
   source: {
     canonicalEdition: 'Dharmasindhu, Nirnayasindhu and Vratraj — Karak Chaturthi sections',
     canonicalEditionUrls: [
-      'https://archive.org/search?query=dharmasindhu+karak+chaturthi',
-      'https://archive.org/search?query=vratraj+karak+chaturthi',
+      'https://www.kamakoti.org/kamakoti/dharmasindhu/bookview.php?chapnum=8',
+      'https://www.drikpanchang.com/festivals/karwa-chauth/info/karwa-chauth.html?lang=en',
     ],
-    canonicalEditionStatus: 'PENDING — the named Sanskrit/Hindi editions have not yet been opened and collated in this workspace; exact sankalpa and dana mantras remain omitted. Re-attempted 2026-08-14: archive.org egress is blocked from this authoring environment as well.',
+    canonicalEditionStatus: 'PARTIAL 2026-08-19 — opened Sri Kanchi Kamakoti Peetham’s condensed Dharma Sindhu, Ashviyuja Masa chapter: it places Karaka Chaturthi on Ashviyuja Krishna Chaturthi and directs observance on Sankata Chaturthi lines. The condensed text does not supply the regional karwa-dana or thali liturgy, so exact sankalpa, dana formulas and songs remain omitted pending an opened full Dharmasindhu/Nirnayasindhu/Vratraj edition.',
     referenceUrls: [
       DRIK_KARWA,
       'https://www.narayanseva.org/hi/is-tarah-se-manaen-karava-chauth-parv/',
     ],
-    retrievedOn: '2026-08-13',
-    notes: 'DrikPanchang explicitly grounds the observance in Dharmasindhu, Nirnayasindhu and Vratraj and names Parvati-first Shiva-family worship, katha, karwa dana and moonrise completion. Narayan Seva independently confirms the morning sankalpa, prepared karwa, Parvati-Shiva-Ganesha worship, katha, moon arghya and parana sequence. Regional customs such as the sieve and thali rotation are marked conditional rather than universal. 2026-08-14 review: the observance’s liturgy (karwa dana formula, regional thali songs) is variable by family tradition and remains deliberately instruction-only; no shipped library text matches it, so this entry gains no hand-off either.',
+    retrievedOn: '2026-08-19',
+    notes: 'DrikPanchang explicitly grounds the observance in Dharmasindhu, Nirnayasindhu and Vratraj and names Parvati-first Shiva-family worship, katha, karwa dana and moonrise completion. The now-opened condensed Dharma Sindhu confirms the tithi and Sankata-Chaturthi relationship but not the regional liturgy. Narayan Seva independently confirms the morning sankalpa, prepared karwa, Parvati-Shiva-Ganesha worship, katha, moon arghya and parana sequence. Regional customs such as the sieve and thali rotation are marked conditional rather than universal; exact formulas and songs remain deliberately instruction-only.',
   },
 };

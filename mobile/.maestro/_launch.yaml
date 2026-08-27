@@ -28,6 +28,11 @@ appId: com.prashantsharma.vedansh
 - launchApp:
     appId: com.prashantsharma.vedansh
     clearState: true
+    # Pin the native React Native bundle provider to this worktree's isolated
+    # Metro server. Without this launch argument it silently uses port 8081,
+    # which may belong to another worktree and produce a false green/red run.
+    arguments:
+      RCT_jsLocation: "127.0.0.1:8084"
 # clearState gives every flow a clean AsyncStorage baseline so runs are
 # order-independent and don't leak routines/bookmarks/counters between flows
 # (the native build persists state across launches, unlike an Expo Go reload).

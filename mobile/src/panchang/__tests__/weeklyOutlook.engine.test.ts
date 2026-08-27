@@ -3,10 +3,8 @@ import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 
 import { computeTaraBala } from '../gochar';
-import {
-  CHANDRA_BALA_HOUSES,
-  computeWeeklyOutlook,
-} from '../weeklyOutlook';
+import { computeWeeklyOutlook } from '../weeklyOutlook';
+import { chandrabala } from '../taraChandraBala';
 import {
   computeKundali,
   getSiderealPlanetLongitude,
@@ -76,10 +74,10 @@ test('seven anchored days with consecutive keys and consistent derivations', () 
       day.chandraBalaHouse,
       houseForRashi(day.moonRashiIndex, janmaMoon.rashiIndex)
     );
-    assert.equal(
-      day.chandraBalaFavourable,
-      CHANDRA_BALA_HOUSES.includes(day.chandraBalaHouse)
-    );
+    // Chandra bala is read through the shared primitive, not a local table.
+    const shared = chandrabala(janmaMoon.rashiIndex, day.moonRashiIndex);
+    assert.equal(day.chandraBalaHouse, shared.position);
+    assert.equal(day.chandraBalaFavourable, shared.cls === 'favourable');
     const expectedTara = computeTaraBala(
       janmaMoon.nakshatraIndex,
       Math.floor(moonLongitude / NAKSHATRA_SPAN) % 27

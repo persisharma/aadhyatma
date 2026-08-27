@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- A shloka needs line width, so this one defaults to the wide 4x2 cell; resizing
-     it taller switches the body from the two-line excerpt to the full verse. -->
+<!-- A shloka needs line width, so this one defaults to the wide 4x2 cell, where the
+     verse flows across three lines; resizing it taller gives each pada its own
+     line. Only a narrow cell drops to the planner's excerpt. -->
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:minWidth="250dp" android:minHeight="110dp" android:minResizeWidth="110dp" android:minResizeHeight="70dp"
     android:targetCellWidth="4" android:targetCellHeight="2" android:updatePeriodMillis="1800000"

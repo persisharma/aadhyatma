@@ -1,7 +1,15 @@
 import { useEffect, useState } from 'react';
 import { InteractionManager } from 'react-native';
 import { computeMuhuratDay } from './muhurat';
-import { evaluateDay, getEventRule, summarize, type DayVerdict, type FinderSummary, type OccasionId } from './eventMuhurat';
+import {
+  evaluateDay,
+  getEventRule,
+  summarize,
+  type DayVerdict,
+  type DishaDirection,
+  type FinderSummary,
+  type OccasionId,
+} from './eventMuhurat';
 import { ABUJH_RULE_IDS, pushyaYogaFor } from './abujhMuhurat';
 import { getUpcomingObservances } from './festivalEngine';
 import { cachedDayInputs, dateKeyFor, dayStoreFor, scopeKeyFor } from './panchangDayStore';
@@ -50,7 +58,12 @@ export type FinderState = {
  * occasion pays the astronomy cost once and every later occasion — plus a
  * re-entry, a midnight rollover, and a hydrated cold start — reuses it.
  */
-export function useMuhuratFinder(occasionId: OccasionId, days: number = FINDER_WINDOW_DAYS): FinderState {
+export function useMuhuratFinder(
+  occasionId: OccasionId,
+  days: number = FINDER_WINDOW_DAYS,
+  /** यात्रा only: the chosen travel direction (दिशा शूल exclusion). Scan-time input, never persisted. */
+  direction?: DishaDirection
+): FinderState {
   const { location } = usePanchangLocation();
   const [calendarSystem] = usePanchangCalendarSystem();
   const [state, setState] = useState<FinderState>({ loading: true, summary: null, firstAfter: [] });
@@ -83,11 +96,11 @@ export function useMuhuratFinder(occasionId: OccasionId, days: number = FINDER_W
       for (let i = 0; i < FIRST_AFTER_MAX_DAYS; i += 1) {
         if (cancelled) return;
         const d = dayAt(start, i);
-        const { p, asta } = inputsAt(i);
+        const { p, asta, lagnas } = inputsAt(i);
         const { p: next } = inputsAt(i + 1);
         const m = computeMuhuratDay(p.sunrise, p.sunset, next.sunrise, d.getDay());
         const abujh = abujhKeys.has(dateKeyFor(d)) || pushyaYogaFor(p, d.getDay()) != null;
-        const v = evaluateDay(rule, d.getTime(), d.getDay(), p, m, asta, { abujh });
+        const v = evaluateDay(rule, d.getTime(), d.getDay(), p, m, asta, { abujh, lagnas, direction });
         if (i < days) {
           verdicts.push(v);
         } else if (v.tier !== 'excluded') {
@@ -121,7 +134,7 @@ export function useMuhuratFinder(occasionId: OccasionId, days: number = FINDER_W
       cancelled = true;
       task.cancel();
     };
-  }, [occasionId, days, calendarSystem, location]);
+  }, [occasionId, days, direction, calendarSystem, location]);
 
   return state;
 }

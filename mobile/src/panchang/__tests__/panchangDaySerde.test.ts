@@ -7,15 +7,21 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { computePanchangForDate, UJJAIN_GEO } from '../engine';
+import { computePanchangForDate, sunriseForDate, UJJAIN_GEO } from '../engine';
 import { computeAstaFlags } from '../eventMuhurat';
+import { lagnaSpansForDay } from '../lagnaSweep';
 import { serializeDayInputs, reviveDayInputs, type DayInputs } from '../panchangDaySerde';
 
 const opts = { calendarSystem: 'purnimant' as const, location: { ...UJJAIN_GEO, cityId: 'ujjain' } };
-const makeDay = (d: Date): DayInputs => ({
-  p: computePanchangForDate(d, opts),
-  asta: computeAstaFlags(new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12)),
-});
+const makeDay = (d: Date): DayInputs => {
+  const p = computePanchangForDate(d, opts);
+  const nextSunrise = sunriseForDate(new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1), opts);
+  return {
+    p,
+    asta: computeAstaFlags(new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12)),
+    lagnas: lagnaSpansForDay(p.sunrise, nextSunrise, opts.location.latitude, opts.location.longitude),
+  };
+};
 
 test('serialize → revive reproduces the day exactly, Dates included', () => {
   const di = makeDay(new Date(2026, 7, 13));

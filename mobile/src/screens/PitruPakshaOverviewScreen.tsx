@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -8,6 +8,7 @@ import ReaderHeader from '@/components/ReaderHeader';
 import PanchangTimelineRow from '@/components/PanchangTimelineRow';
 import { useGitaLanguage } from '@/data/gita/language';
 import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
+import { getVidhiById } from '@/data/vidhi';
 import { addDays } from '@/panchang/calendarGrid';
 import { computeTithiAndMonth } from '@/panchang/engine';
 import { TITHI_NAMES_EN, TITHI_NAMES_HI } from '@/panchang/names';
@@ -43,7 +44,7 @@ function rowKey(d: Date): string {
  * Unknown-tithi entries collect on सर्वपितृ अमावस्या.
  */
 export default function PitruPakshaOverviewScreen({ navigation }: Props) {
-  const { colors, typography, spacing } = useTheme();
+  const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const { entries } = usePitruSmaran();
 
@@ -120,6 +121,8 @@ export default function PitruPakshaOverviewScreen({ navigation }: Props) {
 
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
   const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
+  const shraddhaVidhi = getVidhiById('shraddha-tarpan-vidhi');
+  const vidhiOccurrence = state?.rows.find((row) => row.family.length > 0)?.date ?? state?.start ?? null;
 
   return (
     <View style={styles.root}>
@@ -168,6 +171,33 @@ export default function PitruPakshaOverviewScreen({ navigation }: Props) {
               />
             ))}
 
+            {shraddhaVidhi && vidhiOccurrence && (
+              <Pressable
+                onPress={() => navigation.navigate('VidhiDetail', {
+                  vidhiId: shraddhaVidhi.id,
+                  dateMs: vidhiOccurrence.getTime(),
+                })}
+                testID="pitru-paksha-vidhi-door"
+                accessibilityRole="button"
+                accessibilityLabel="Open Tila-Tarpana remembrance guide"
+                style={({ pressed }) => [
+                  styles.vidhiDoor,
+                  { backgroundColor: colors.goldTint, borderColor: colors.gold, borderRadius: radii.md },
+                  pressed && { opacity: 0.75 },
+                ]}
+              >
+                <View style={styles.vidhiDoorMain}>
+                  <Text style={{ fontFamily: titleFont, fontSize: 15, color: colors.ink }}>
+                    ॥ {contentByLang(lang, 'पितृ तिल-तर्पण स्मरण', 'Pitru Tila-Tarpana Remembrance')}
+                  </Text>
+                  <Text style={{ fontFamily: bodyFont, fontSize: 12, lineHeight: 18, color: colors.inkMuted, marginTop: 2 }}>
+                    {shortDate(vidhiOccurrence, lang)} · {contentByLang(lang, 'सीमित गृहस्थ मार्गदर्शिका', 'Limited household guide')}
+                  </Text>
+                </View>
+                <Text style={{ color: colors.inkSoft, fontSize: 17 }}>›</Text>
+              </Pressable>
+            )}
+
             <Text style={{ fontFamily: fontFamilies.latinItalic, fontSize: 12, lineHeight: 19, color: colors.inkMuted, textAlign: 'center', marginTop: 16 }}>
               {contentByLang(
                 lang,
@@ -188,4 +218,14 @@ const styles = StyleSheet.create({
   loading: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   scroll: { paddingTop: 4, paddingBottom: 40 },
   hero: { marginTop: 2, marginBottom: 14 },
+  vidhiDoor: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    paddingHorizontal: 14,
+    paddingVertical: 13,
+    marginTop: 18,
+    minHeight: 52,
+  },
+  vidhiDoorMain: { flex: 1, minWidth: 0 },
 });

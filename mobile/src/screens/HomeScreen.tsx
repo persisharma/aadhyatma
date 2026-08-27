@@ -25,6 +25,7 @@ import TodayRecommendationsRow from '@/components/TodayRecommendationsRow';
 import FestiveToran from '@/components/FestiveToran';
 import { getTodayFestival } from '@/data/discoveryMeta';
 import { useTodayKey } from '@/utils/useTodayKey';
+import { launchMarkOnce } from '@/utils/launchTrace';
 import type { HomeStackParamList } from '@/navigation/types';
 import type { ContentCategory } from '@/data/texts';
 import { useNewContent } from '@/contexts/NewContentContext';
@@ -36,6 +37,7 @@ import { useTourTarget, scrollNodeIntoView } from '@/components/tour/tourTargets
 type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>;
 
 export default function HomeScreen({ navigation }: Props) {
+  launchMarkOnce('home-render');
   const { colors, typography, spacing } = useTheme();
   const { hasNewInCategory, devSimulateUpgrade, devResetNewState } = useNewContent();
   // Feature-tour spotlight anchors (design.md §47). Home tiles live in the

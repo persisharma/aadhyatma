@@ -51,20 +51,17 @@ const AshtakamReaderScreen = jest.requireActual<typeof import('../AshtakamReader
 
 type ReaderProps = React.ComponentProps<typeof AshtakamReaderScreen>;
 
-const ashtakam = getAshtakam('lingashtakam');
-const firstVerse = ashtakam.verses[0];
-
 const navigation = {} as ReaderProps['navigation'];
 navigation.goBack = () => undefined;
 navigation.navigate = (() => undefined) as ReaderProps['navigation']['navigate'];
 
-const route = {
-  key: 'AshtakamReader-test',
-  name: 'AshtakamReader',
-  params: { ashtakamId: 'lingashtakam', initialIndex: 0 },
-} as ReaderProps['route'];
-
-test('renders the first Lingashtakam verse without throwing', () => {
+function renderFirstVerse(ashtakamId: string) {
+  const ashtakam = getAshtakam(ashtakamId);
+  const route = {
+    key: `AshtakamReader-${ashtakamId}-test`,
+    name: 'AshtakamReader',
+    params: { ashtakamId, initialIndex: 0 },
+  } as ReaderProps['route'];
   let tree: TestRenderer.ReactTestRenderer | undefined;
 
   act(() => {
@@ -84,5 +81,13 @@ test('renders the first Lingashtakam verse without throwing', () => {
     .join(' ');
 
   assert.ok(renderedText.includes(ashtakam.titleHi));
-  assert.ok(renderedText.includes(firstVerse.lines[0]));
+  assert.ok(renderedText.includes(ashtakam.verses[0].lines[0]));
+}
+
+test('renders the first Lingashtakam verse without throwing', () => {
+  renderFirstVerse('lingashtakam');
+});
+
+test('renders the first Rudrashtakam verse through the shared reader', () => {
+  renderFirstVerse('rudrashtakam');
 });

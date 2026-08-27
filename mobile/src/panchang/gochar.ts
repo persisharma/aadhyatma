@@ -15,6 +15,12 @@ import {
   isRetrograde,
 } from './kundali';
 import type { Graha, KundaliChart, RashifalGuidance } from './kundali';
+import {
+  TARA_NAMES_EN,
+  TARA_NAMES_HI,
+  tarabala,
+  type TaraClass,
+} from './taraChandraBala';
 
 /**
  * Gochar (transit) engine — PRD-20.
@@ -98,42 +104,17 @@ export type PersonalGuidance = RashifalGuidance & {
   sadeSatiPhase: SadeSatiPhase;
 };
 
-export const TARA_NAMES_HI = [
-  'जन्म',
-  'सम्पत्',
-  'विपत्',
-  'क्षेम',
-  'प्रत्यरि',
-  'साधक',
-  'वध',
-  'मित्र',
-  'परम मित्र',
-] as const;
-
-export const TARA_NAMES_EN = [
-  'Janma',
-  'Sampat',
-  'Vipat',
-  'Kshema',
-  'Pratyari',
-  'Sadhaka',
-  'Vadha',
-  'Mitra',
-  'Param Mitra',
-] as const;
-
-/** Classical tara tones; “reflective” marks the traditionally cautioned taras. */
-const TARA_TONES: readonly TaraBalaTone[] = [
-  'steady',
-  'favourable',
-  'reflective',
-  'favourable',
-  'reflective',
-  'favourable',
-  'reflective',
-  'favourable',
-  'favourable',
-];
+/**
+ * The classical tara classes come from the shared `taraChandraBala` primitive
+ * (PRD-16 Phase 4) — never a second table. Only the DISPLAY vocabulary differs:
+ * a muhurat annotation says favourable/unfavourable/contested, while a daily
+ * reading speaks in the three quiet tones this suite uses everywhere.
+ */
+const TONE_BY_TARA_CLASS: Readonly<Record<TaraClass, TaraBalaTone>> = {
+  favourable: 'favourable',
+  unfavourable: 'reflective',
+  contested: 'steady',
+};
 
 function requireChartMoon(chart: KundaliChart) {
   const moon = chart.grahas.find((position) => position.graha === 'moon');
@@ -346,13 +327,12 @@ export function computeTaraBala(
       throw new Error(`Invalid ${label} nakshatra index: ${value}`);
     }
   }
-  const count = ((dayNakshatraIndex - janmaNakshatraIndex + 27) % 27) + 1;
-  const index = ((count - 1) % 9) + 1;
+  const { tara, cls } = tarabala(janmaNakshatraIndex, dayNakshatraIndex);
   return {
-    index,
-    nameHi: TARA_NAMES_HI[index - 1],
-    nameEn: TARA_NAMES_EN[index - 1],
-    tone: TARA_TONES[index - 1],
+    index: tara,
+    nameHi: TARA_NAMES_HI[tara - 1],
+    nameEn: TARA_NAMES_EN[tara - 1],
+    tone: TONE_BY_TARA_CLASS[cls],
     janmaNakshatraIndex,
     dayNakshatraIndex,
   };

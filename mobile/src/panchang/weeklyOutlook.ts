@@ -1,4 +1,5 @@
 import { computeTaraBala, type TaraBala, type TaraBalaTone } from './gochar';
+import { chandrabala } from './taraChandraBala';
 import {
   HOUSE_THEME_EN,
   HOUSE_THEME_HI,
@@ -23,8 +24,16 @@ import type { KundaliChart } from './kundali';
 
 const DAY_MS = 86_400_000;
 
-/** Classical chandra bala: supportive Moon transit houses from the janma rashi. */
-export const CHANDRA_BALA_HOUSES: readonly number[] = [1, 3, 6, 7, 10, 11];
+/** The chandra-bala classification comes from the shared `taraChandraBala`
+ * primitive (PRD-16 Phase 4) — never a second table. A weekly tone only needs
+ * the supportive/not split, so its three classes fold to a boolean here. */
+function isChandraBalaFavourable(
+  janmaRashiIndex: number,
+  dayMoonRashiIndex: number
+): { house: number; favourable: boolean } {
+  const { position, cls } = chandrabala(janmaRashiIndex, dayMoonRashiIndex);
+  return { house: position, favourable: cls === 'favourable' };
+}
 
 export type WeeklyDayTone = TaraBalaTone;
 
@@ -100,8 +109,8 @@ export function computeWeeklyOutlook(
     const moonLongitude = getSiderealPlanetLongitude('moon', anchor);
     const moonRashiIndex = Math.floor(moonLongitude / 30) % 12;
     const dayNakshatraIndex = Math.floor(moonLongitude / NAKSHATRA_SPAN) % 27;
-    const chandraBalaHouse = houseForRashi(moonRashiIndex, moon.rashiIndex);
-    const chandraBalaFavourable = CHANDRA_BALA_HOUSES.includes(chandraBalaHouse);
+    const { house: chandraBalaHouse, favourable: chandraBalaFavourable } =
+      isChandraBalaFavourable(moon.rashiIndex, moonRashiIndex);
     const taraBala = computeTaraBala(moon.nakshatraIndex, dayNakshatraIndex);
     const tone = toneFor(chandraBalaFavourable, taraBala);
     const lines = linesFor(tone, chandraBalaHouse, taraBala);

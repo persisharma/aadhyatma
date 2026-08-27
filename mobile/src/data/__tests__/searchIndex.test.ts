@@ -73,12 +73,21 @@ const index = getSearchIndex();
     'Devanagari title query should find the Ghatasthapana vidhi row'
   );
   const byKeyword = runSearch('पूजा विधि', index);
-  for (const vidhi of VIDHI_ENTRIES) {
+  for (const vidhi of VIDHI_ENTRIES.filter((entry) => entry.anchor !== 'personal-tithi')) {
     assert.ok(
       byKeyword.sections.some((h) => h.entry.sourceId === vidhi.id),
       `"पूजा विधि" should surface vidhi '${vidhi.id}'`
     );
   }
+  assert.ok(
+    !byKeyword.sections.some((h) => h.entry.sourceId === 'shraddha-tarpan-vidhi'),
+    'the personal remembrance guide must not be mislabeled as puja'
+  );
+  const byTarpana = runSearch('तर्पण', index);
+  assert.ok(
+    byTarpana.sections.some((h) => h.entry.sourceId === 'shraddha-tarpan-vidhi'),
+    'Tarpana query should find the personal-tithi guide'
+  );
   const byLatin = runSearch('karwa chauth', index);
   assert.ok(
     byLatin.sections.some((h) => h.entry.sourceId === 'karwa-chauth-puja'),

@@ -201,14 +201,14 @@ export const diwaliLakshmiGaneshPuja: VidhiEntry = {
   ],
   source: {
     canonicalEdition: 'Gita Press Nitya Karma Puja Prakash — Lakshmi-Ganesha Puja chapters',
-    canonicalEditionUrls: ['https://archive.org/search?query=nitya+karma+puja+prakash+gita+press'],
-    canonicalEditionStatus: 'PENDING — the named Gita Press scan has not yet been checked character-by-character; no inline mantra from it is published in this entry. Re-attempted 2026-08-14: archive.org egress is blocked from this authoring environment as well.',
+    canonicalEditionUrls: ['https://archive.org/details/NityaKarmaPujaPrakashGitaPressGorakhpur'],
+    canonicalEditionStatus: 'VERIFIED 2026-08-19 — opened Gita Press code 592, Nitya Karma Puja Prakash (Vikrama Samvat 2072, twelfth reprint), confirmed the publisher imprint, and collated the Mahalakshmi Puja chapter (printed page 259 onward) plus Ganapati-Gauri Puja (printed page 190 onward) against this instruction-only sequence. Variable mantras remain intentionally omitted.',
     referenceUrls: [
       DRIK_DIWALI,
       'https://www.hinduscriptures.in/vedic-lifestyle/puja-vidhi-in-hindi/deepavali/devi-puja',
       'https://chinmayanewyork.org/wp-content/uploads/2020/11/Lakshmi-Puja-Vidhi-Final.pdf',
     ],
-    retrievedOn: '2026-08-13',
-    notes: 'The household Lakshmi-Ganesha scope follows the common preparation, Ganapati-first worship, Lakshmi upacharas, naivedya, aarti and deepmala sequence shared by the cited sources. DrikPanchang’s larger complete Diwali sequence also includes Navagraha, Matrika, Kali, Saraswati, Kuber and account-book rites; those are outside this specifically named Lakshmi-Ganesha household vidhi. Instructions are freshly authored; variable sankalpa and unverified mantra text remain instruction-only. 2026-08-14: Ganesha-vandana and deepa-shloka steps now hand off to the shipped, verified ganesh-stotram ("Vakratunda Mahakaya") and sandhya-deepam ("Shubham Karoti Kalyanam") sections — reference, never re-typed (§11.11/PRD-19 §3.3).',
+    retrievedOn: '2026-08-19',
+    notes: 'The canonical Mahalakshmi and Ganapati-Gauri chapters confirm the preparation, Ganapati-first worship, Lakshmi upacharas and naivedya spine shared by the cited household sources. DrikPanchang’s larger complete Diwali sequence also includes Navagraha, Matrika, Kali, Saraswati, Kuber and account-book rites; those are outside this specifically named Lakshmi-Ganesha household vidhi. Instructions are freshly authored; variable sankalpa and mantra text remain instruction-only. 2026-08-14: Ganesha-vandana and deepa-shloka steps now hand off to the shipped, verified ganesh-stotram ("Vakratunda Mahakaya") and sandhya-deepam ("Shubham Karoti Kalyanam") sections — reference, never re-typed (§11.11/PRD-19 §3.3).',
   },
 };

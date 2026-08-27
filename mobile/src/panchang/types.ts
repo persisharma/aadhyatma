@@ -50,6 +50,11 @@ export type PanchangData = {
   nakshatra: PanchangElement;
   yoga: PanchangElement;
   karana: PanchangElement;
+  // Late-onset Vishti (PRD-16/P3 §0.3): a Bhadra that STARTS after sunrise —
+  // the karana following the sunrise karana is Vishti. Null when the sunrise
+  // karana is itself Vishti (that interval is sunrise → karana.endTime) or when
+  // no Vishti begins this day. start = karana.endTime; end is its solved end.
+  lateVishti: { start: Date; end: Date } | null;
   sunrise: Date;
   sunset: Date;
   moonrise: Date | null;
@@ -120,6 +125,12 @@ export type ObservanceRule = {
    * no entry at every call site.
    */
   upvasId?: string;
+  /**
+   * Sourced bhog/naivedya/vrat-food hook (PRD-23) — id into the
+   * `bhogContent` registry. The accessor exposes VERIFIED entries only, so a
+   * draft profile is indistinguishable from no guidance at every surface.
+   */
+  bhogId?: string;
   searchTerms?: string[];
 };
 
@@ -235,4 +246,55 @@ export type UpvasInfoEntry = {
   status: UpvasContentStatus;
   /** Review metadata — never rendered. ≥2 reference URLs per entry. */
   source: { referenceUrls: string[]; verificationNote: string };
+};
+
+// ─── Bhog / naivedya / vrat-food guidance (PRD-23) ────────────────────────
+
+export type BhogContentStatus = 'draft' | 'verified';
+
+export type BhogGuidanceItem = {
+  id: string;
+  textHi: string;
+  textEn: string;
+};
+
+export type BhogShoppingItem = {
+  id: string;
+  itemHi: string;
+  itemEn: string;
+  qty?: string;
+  optional?: boolean;
+};
+
+/**
+ * One independently reviewed food/offering profile. Eating rules and deity
+ * offerings are deliberately separate fields: food allowed during a fast is
+ * not automatically suitable naivedya, and an abhisheka ingredient is not
+ * automatically food.
+ */
+export type BhogContentEntry = {
+  id: string;
+  titleHi: string;
+  titleEn: string;
+  /** ObservanceRule ids carrying this profile through `bhogId`. */
+  observanceIds: string[];
+  /** Published vidhis whose preparation screen reuses this guidance. */
+  vidhiIds: string[];
+  offerings: BhogGuidanceItem[];
+  permittedDuringFast?: BhogGuidanceItem[];
+  abstainedDuringFast?: BhogGuidanceItem[];
+  doNotOffer?: BhogGuidanceItem[];
+  paranaMealHi?: string;
+  paranaMealEn?: string;
+  traditionNoteHi: string;
+  traditionNoteEn: string;
+  /** Additive groceries; do not duplicate the vidhi's base samagri. */
+  shoppingItems: BhogShoppingItem[];
+  status: BhogContentStatus;
+  /** Review-only provenance; never rendered. */
+  source: {
+    referenceUrls: string[];
+    verificationNote: string;
+    variantNote?: string;
+  };
 };

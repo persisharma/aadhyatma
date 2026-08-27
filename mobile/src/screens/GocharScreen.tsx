@@ -85,7 +85,7 @@ export default function GocharScreen({ navigation }: Props) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
   const rootNav = useNavigation<any>();
-  const { chart, loadState } = useKundali();
+  const { chart, loadState, profile, people } = useKundali();
   const today = useMemo(() => new Date(), []);
 
   // Cheap solves render immediately; the ingress scans (day-walks over the
@@ -175,7 +175,15 @@ export default function GocharScreen({ navigation }: Props) {
             </Text>
             <Text style={[styles.caption, { color: colors.inkMuted }]}>
               {formatDay(today, lang)} ·{' '}
-              {contentByLang(lang, 'आज के ग्रह आपकी कुंडली में', 'Today’s grahas in your chart')}
+              {/* With more than one person saved, "your" would be a guess —
+                  name whose chart these transits are read against (§51a). */}
+              {people.length > 1 && profile?.name
+                ? contentByLang(
+                  lang,
+                  `आज के ग्रह ${profile.name} की कुंडली में`,
+                  `Today’s grahas in ${profile.name}’s chart`
+                )
+                : contentByLang(lang, 'आज के ग्रह आपकी कुंडली में', 'Today’s grahas in your chart')}
             </Text>
           </View>
         </View>

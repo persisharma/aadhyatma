@@ -7,6 +7,7 @@ import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 import { TIER_LABELS, type DayVerdict, type EventRule } from '@/panchang/eventMuhurat';
 import { formatRangeCompact } from '@/panchang/muhuratFormat';
 import { VARA_NAMES_HI, VARA_NAMES_EN, PAKSHA_NAMES_HI, PAKSHA_NAMES_EN } from '@/panchang/names';
+import { RASHI_NAMES_HI, RASHI_NAMES_EN } from '@/panchang/kundali';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import type { Lang } from '@/data/gita/language';
 import type { PanchangData } from '@/panchang/types';
@@ -87,6 +88,19 @@ export default function MuhuratFinderShareCard({
           </Text>
           <Text style={{ fontFamily: titleFont, fontSize: 13, color: colors.saffronDeep, textAlign: 'center', lineHeight: 21 }}>
             {contentByLang(lang, best.nameHi, best.nameEn)}
+            {/* Phase 3 (PRD-16/P3 §7): the best window's lagna — general
+                panchang data, not personal; this card still carries no
+                personal data by construction (Tarabala/Chandrabala NEVER
+                render here — pinned by test). */}
+            {best.lagnaRashiIndex != null
+              ? ` · ${
+                  lang === 'en'
+                    ? RASHI_NAMES_EN[best.lagnaRashiIndex]
+                    : lang === 'hi'
+                      ? RASHI_NAMES_HI[best.lagnaRashiIndex]
+                      : transliterateDevanagari(RASHI_NAMES_HI[best.lagnaRashiIndex], lang)
+                } ${contentByLang(lang, 'लग्न', 'lagna')}`
+              : ''}
           </Text>
         </View>
       )}

@@ -10,9 +10,8 @@ import {
   computeTaraBala,
   computeUpcomingIngresses,
   findNextIngress,
-  TARA_NAMES_EN,
-  TARA_NAMES_HI,
 } from '../gochar';
+import { TARA_NAMES_EN, TARA_NAMES_HI } from '../taraChandraBala';
 import {
   computeKundali,
   computeRashifal,
@@ -129,6 +128,11 @@ test('tara bala covers the full 27×27 grid with the classical 9-cycle', () => {
   assert.equal(computeTaraBala(0, 2).nameEn, 'Vipat');
   assert.equal(computeTaraBala(0, 2).tone, 'reflective');
   assert.equal(computeTaraBala(26, 0).nameEn, 'Sampat');
+  // The classical arithmetic and classes come from the shared
+  // taraChandraBala primitive — this suite must not re-implement them.
+  const source = readFileSync('src/panchang/gochar.ts', 'utf8');
+  assert.match(source, /from '\.\/taraChandraBala'/);
+  assert.doesNotMatch(source, /TARA_NAMES_HI\s*=\s*\[/, 'no duplicate tara table');
   assert.throws(() => computeTaraBala(-1, 0));
   assert.throws(() => computeTaraBala(0, 27));
   assert.throws(() => computeTaraBala(0.5, 0));

@@ -10,6 +10,7 @@ import ObservanceDetailHero from '@/components/ObservanceDetailHero';
 import { useGitaLanguage } from '@/data/gita/language';
 import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
+import { getVidhiById } from '@/data/vidhi';
 import { tithiName } from '@/panchang/pitruSmaran';
 import { useSmaranDetailSolve } from '@/panchang/usePitruSmaranSolves';
 import {
@@ -59,6 +60,10 @@ export default function PitruSmaranDetailScreen({ navigation, route }: Props) {
   // next occurrence is known, without waiting on next year's solve or the
   // fortnight mapping below it. See `usePitruSmaranSolves`.
   const solved = useSmaranDetailSolve(entry?.tithiRule, todayMs);
+  const shraddhaVidhi = getVidhiById('shraddha-tarpan-vidhi');
+  const vidhiOccurrence = [solved.next, solved.pakshaDay]
+    .filter((date): date is Date => date instanceof Date && date.getTime() >= todayMs)
+    .sort((a, b) => a.getTime() - b.getTime())[0] ?? null;
 
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
   const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
@@ -210,6 +215,38 @@ export default function PitruSmaranDetailScreen({ navigation, route }: Props) {
                 accessibilityHint="Notifies the day before and the day of this remembrance"
               />
             </View>
+
+            {/* The personal-tithi vidhi knows only the solved date — never the
+                person id/name/relation. Back works because More owns the flow. */}
+            {shraddhaVidhi && vidhiOccurrence && (
+              <Pressable
+                onPress={() => navigation.navigate('VidhiDetail', {
+                  vidhiId: shraddhaVidhi.id,
+                  dateMs: vidhiOccurrence.getTime(),
+                })}
+                testID="pitru-smaran-vidhi-door"
+                accessibilityRole="button"
+                accessibilityLabel="Open Tila-Tarpana remembrance guide"
+                style={({ pressed }) => [
+                  styles.row,
+                  { backgroundColor: colors.goldTint, borderColor: colors.gold, borderRadius: radii.md },
+                  pressed && { opacity: 0.7 },
+                ]}
+              >
+                <View style={styles.rowMain}>
+                  <Text style={[styles.rowLabel, { color: colors.inkMuted }]}>
+                    {contentByLang(lang, 'उस दिन की विधि', 'GUIDE FOR THE DAY')}
+                  </Text>
+                  <Text style={{ fontFamily: bodyFont, fontSize: 14, color: colors.ink, marginTop: 2 }}>
+                    ॥ {contentByLang(lang, 'पितृ तिल-तर्पण स्मरण', 'Pitru Tila-Tarpana Remembrance')}
+                  </Text>
+                  <Text style={{ fontFamily: bodyFont, fontSize: 12, lineHeight: 18, color: colors.inkMuted, marginTop: 2 }}>
+                    {shortDateWithYear(vidhiOccurrence, lang)} · {contentByLang(lang, 'सीमित गृहस्थ मार्गदर्शिका', 'Limited household guide')}
+                  </Text>
+                </View>
+                <Text style={{ fontSize: 17, color: colors.inkSoft }}>›</Text>
+              </Pressable>
+            )}
 
             {/* गीता पाठ deep links */}
             {GITA_PAATH_CHAPTERS.map(({ chapter, labelHi, labelEn }, i) => (

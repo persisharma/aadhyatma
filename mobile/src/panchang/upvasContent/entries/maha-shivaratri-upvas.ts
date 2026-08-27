@@ -1,6 +1,6 @@
-import { DRAFT_EGRESS_NOTE, upvasEntry } from '../_helpers';
+import { upvasEntry } from '../_helpers';
 
-/** Shared by `maha-shivaratri` (annual; carries `vidhiId`) and `masik-shivaratri` (monthly). */
+/** Annual Maha Shivaratri only; monthly Shivaratri needs its own sourced entry. */
 export default upvasEntry({
   id: 'maha-shivaratri-upvas',
   fastType: 'night-vigil',
@@ -14,24 +14,24 @@ export default upvasEntry({
   parana: {
     kind: 'text-only',
     textHi:
-      'अगले दिन स्नान के बाद सूर्योदय के उपरांत पारण करने की परंपरा प्रचलित है; कई परम्पराएँ चतुर्दशी तिथि रहते ही पारण करने का निर्देश देती हैं।',
+      'दृक पंचांग परम्परा में अगले दिन स्नान के बाद सूर्योदय से चतुर्दशी तिथि की समाप्ति से पहले पारण किया जाता है। कुछ परम्पराएँ रात्रि पूजा पूरी होने के बाद व्रत खोलती हैं; अपने संप्रदाय की रीति मानें।',
     textEn:
-      'The prevailing tradition is to break the fast after bathing, following sunrise the next day; several traditions direct that parana be done while Chaturdashi tithi still prevails.',
+      'In the DrikPanchang convention, parana is done after bathing on the next day, from sunrise until Chaturdashi tithi ends. Some traditions break the fast after completing the night puja; follow your sampradaya’s practice.',
   },
   strictnessHi:
     'कोई निर्जल, कोई फलाहार रूप में रखता है; रात्रि के चार प्रहरों की पूजा और जागरण इस व्रत का मुख्य अंग है। परंपरा अनुसार बालक, वृद्ध एवं अस्वस्थ छूट रख सकते हैं।',
   strictnessEn:
     'Some keep it waterless and some on fruit fare; worship through the night’s four watches and the vigil itself are the vrat’s heart. Traditionally children, the elderly, and the unwell may observe leniently.',
-  whoObservesHi: 'शिव उपासक; महाशिवरात्रि वार्षिक है और मासिक शिवरात्रि प्रत्येक कृष्ण चतुर्दशी को।',
-  whoObservesEn: 'Shiva devotees; Maha Shivaratri is annual, and Masik Shivaratri falls on every dark-fortnight Chaturdashi.',
-  status: 'draft',
+  whoObservesHi: 'वार्षिक महाशिवरात्रि व्रत रखने वाले शिव उपासक।',
+  whoObservesEn: 'Shiva devotees observing the annual Maha Shivaratri.',
+  status: 'verified',
   source: {
     referenceUrls: [
-      'https://www.drikpanchang.com/vrat-katha/maha-shivaratri/maha-shivaratri-vrat-katha.html',
-      'https://en.wikipedia.org/wiki/Maha_Shivaratri',
+      'https://www.drikpanchang.com/festivals/maha-shivaratri/maha-shivaratri-date-time.html',
+      'https://chinmayanewyork.org/shiva/',
+      'https://nyganeshtemple.org/sivaratri2026/',
     ],
     verificationNote:
-      DRAFT_EGRESS_NOTE +
-      'Rows to verify: day-fast + four-prahar night vigil; next-day parana conventions (post-sunrise vs within-Chaturdashi) — the split is why parana stays text-only.',
+      'Verified 2026-08-19 against DrikPanchang, Chinmaya Mission New York, and Sri Maha Vallabha Ganapati Devasthanam: day fast, night vigil, four-phase/prahar worship, fasting leniency, and the explicitly divergent parana practices. This entry is annual-only because the sources do not support applying every Maha-specific row to Masik Shivaratri.',
   },
 });

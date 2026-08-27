@@ -10,6 +10,7 @@ import { library } from '@/data/texts';
 import { buildEntryStartTarget } from '@/navigation/entryRoutes';
 import {
   computeKundali,
+  getCurrentDasha,
   RASHI_NAMES_EN,
   RASHI_NAMES_WESTERN,
 } from '@/panchang/kundali';
@@ -57,16 +58,29 @@ jest.mock('expo-sharing', () => ({
   shareAsync: jest.fn(() => Promise.resolve()),
 }));
 
+// One saved person — the shipped single-profile shape, now expressed as a
+// one-entry roster. The multi-person behaviour is covered by
+// MultiProfileJyotish.test.tsx against the real store.
+const mockPerson = { id: 'p-test-1', ...mockProfile };
+
 jest.mock('@/panchang/useKundali', () => ({
   ...jest.requireActual('@/panchang/useKundali'),
   useKundali: () => ({
-    profile: mockProfile,
+    profile: mockPerson,
     chart: mockChart,
     hydrated: true,
     loadState: 'saved',
+    people: [mockPerson],
+    activeId: mockPerson.id,
+    activePerson: mockPerson,
+    canAddPerson: true,
     saveProfile: jest.fn(),
     clearProfile: jest.fn(),
     reloadProfile: jest.fn(),
+    selectPerson: jest.fn(),
+    addPerson: jest.fn(),
+    updatePerson: jest.fn(),
+    removePerson: jest.fn(),
   }),
 }));
 
@@ -85,6 +99,15 @@ function render(node: React.ReactElement): TestRenderer.ReactTestRenderer {
     );
   });
   return tree;
+}
+
+function periodDate(date: Date): string {
+  return new Intl.DateTimeFormat('en-IN', {
+    timeZone: 'Asia/Kolkata',
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  }).format(date);
 }
 
 function textOf(tree: TestRenderer.ReactTestRenderer): string {
@@ -158,13 +181,49 @@ test('Kundali result leads with plain-language insights and exposes all expert t
   assert.ok(text.includes('elapsed'));
   assert.ok(text.includes('left'));
   assert.ok(text.includes('Now'));
-  assert.ok(tree.root.findByProps({ testID: 'dasha-progress' }));
+  // Two levels are both "Now" at once (e.g. Rahu chip inside a Mercury
+  // Mahadasha row), so each level must be visibly named or the pair reads
+  // as a contradiction.
+  assert.ok(text.includes('The nine Antardashas within this Mahadasha'));
+  assert.ok(text.includes('MAHADASHA TIMELINE'));
+  assert.ok(tree.root.findByProps({ testID: 'dasha-progress-maha' }));
+  assert.ok(tree.root.findByProps({ testID: 'dasha-progress-antar' }));
   assert.ok(tree.root.findByProps({ accessibilityLabel: 'Full Mahadasha timeline' }));
+  const currentDashaLabel = tree.root.findAll((node) =>
+    typeof node.props.accessibilityLabel === 'string'
+    && node.props.accessibilityLabel.startsWith('Current Dasha,')
+  );
+  assert.ok(currentDashaLabel.length > 0);
+
+  // Both nested periods run at once, so the card shows each with its own
+  // dates and progress — a Rahu Antardasha once read as the full 17-year
+  // Mercury window because a single unlabelled bar tracked the Mahadasha.
+  const dasha = getCurrentDasha(mockChart, new Date())!;
+  assert.ok(dasha.antar);
+  const label = currentDashaLabel[0].props.accessibilityLabel as string;
   assert.ok(
-    tree.root.findAll((node) =>
-      typeof node.props.accessibilityLabel === 'string'
-      && node.props.accessibilityLabel.startsWith('Current Dasha,')
-    ).length > 0
+    label.includes(
+      `Mahadasha ${periodDate(dasha.maha.start)} to ${periodDate(dasha.maha.end)}`
+    )
+  );
+  assert.ok(
+    label.includes(
+      `Antardasha ${periodDate(dasha.antar!.start)} to ${periodDate(dasha.antar!.end)}`
+    )
+  );
+  assert.ok(text.includes(periodDate(dasha.antar!.end)));
+
+  const spanOf = (period: { start: Date; end: Date }) =>
+    (Date.now() - period.start.getTime()) / (period.end.getTime() - period.start.getTime());
+  const barValue = (testID: string) =>
+    tree.root.findByProps({ testID }).props.accessibilityValue.now as number;
+  assert.ok(Math.abs(barValue('dasha-progress-maha') - Math.round(spanOf(dasha.maha) * 100)) <= 1);
+  assert.ok(Math.abs(barValue('dasha-progress-antar') - Math.round(spanOf(dasha.antar!) * 100)) <= 1);
+  // A Mahadasha always spans all nine of its Antardashas, so the two bars are
+  // genuinely different measurements — each must track its own window.
+  assert.ok(
+    dasha.antar!.end.getTime() - dasha.antar!.start.getTime()
+    < dasha.maha.end.getTime() - dasha.maha.start.getTime()
   );
 
   act(() => {

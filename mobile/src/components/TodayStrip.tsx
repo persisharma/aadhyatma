@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, Easing, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { InteractionManager, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { useReducedMotion } from '@/utils/useReducedMotion';
@@ -17,9 +17,20 @@ import { transliterateDevanagari } from '@/utils/transliterate';
 import { contentByLang } from '@/utils/localize';
 import { pillTextStyle, scriptTitleFont, eyebrowTextStyle } from '@/utils/langType';
 import { useTodayKey } from '@/utils/useTodayKey';
+import { launchMarkOnce } from '@/utils/launchTrace';
 import PitruSmaranDayChip from '@/components/PitruSmaranDayChip';
 import { moreTabTarget } from '@/navigation/entryRoutes';
-import { pitruPakshaObservanceForDate, type PitruPakshaDayObservance } from '@/panchang/pitruSmaran';
+import {
+  pitruPakshaObservanceForDate,
+  type PitruPakshaDayObservance,
+  type PitruPakshaWindow,
+} from '@/panchang/pitruSmaran';
+import {
+  ensurePakshaWindow,
+  hydrateSmaranSolves,
+  knownPakshaWindow,
+  persistSmaranSolves,
+} from '@/panchang/pitruSmaranSolves';
 
 /**
  * Home "आज · Today" strip (design.md §48): a one-card daily-panchang glance —
@@ -35,8 +46,44 @@ import { pitruPakshaObservanceForDate, type PitruPakshaDayObservance } from '@/p
 /** Auto-scroll pacing for the chip row. ~24px/s reads as a drift, not a marquee. */
 const AUTO_SCROLL_PX_PER_SEC = 24;
 const AUTO_SCROLL_END_PAUSE_MS = 1800;
+/**
+ * Stepped by a timer rather than `Animated`, so the tick rate is ours to pick:
+ * 50 ms moves ~1.2 px, below the eye's threshold for a crawl this slow, at a
+ * third of a 60 Hz frame budget's worth of wake-ups.
+ */
+const AUTO_SCROLL_TICK_MS = 50;
+/**
+ * How long the chip row must hold still before a fresh pass may start. Longer
+ * than the deferred solves that fill the row take to land, so the launch's own
+ * churn keeps pushing the drift out instead of racing it.
+ */
+const AUTO_SCROLL_SETTLE_MS = 1200;
+
+/**
+ * The day's Pitru-Paksha observance from whatever is already memoised. Never
+ * throws — a day the calendar cannot solve simply carries no chip.
+ */
+function readPitruPaksha(day: Date): PitruPakshaDayObservance | null {
+  try {
+    return pitruPakshaObservanceForDate(day);
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Whether `date` falls in the fortnight at all — the one Pitru-Paksha question
+ * answerable with zero engine calls, and on ~350 days of the year the answer is
+ * no. Mirrors `pitruPakshaObservanceForDate`'s own bounds exactly; anything
+ * inside them needs the day's tithi reads and therefore an idle UI.
+ */
+function isInsidePakshaWindow(window: PitruPakshaWindow, date: Date): boolean {
+  const day = new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
+  return day >= window.purnima.getTime() && day <= window.end.getTime();
+}
 
 export default function TodayStrip() {
+  launchMarkOnce('strip-render');
   const { colors, typography, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
   // Sibling tab — navigate via the parent so the action bubbles up (same
@@ -52,16 +99,73 @@ export default function TodayStrip() {
   const today = React.useMemo(() => new Date(todayKey), [todayKey]);
   const observances = useObservancesForDate(today, calendarSystem);
   const { muhurat, panchang } = useMuhurat(today, calendarSystem, { live: false });
-  const [pitruPakshaToday, setPitruPakshaToday] = React.useState<PitruPakshaDayObservance | null>(null);
+  /**
+   * The public Pitru-Paksha chip, resolved the same way every other panchang
+   * answer on this card is (§48, `usePitruSmaranSolves`): a memory read paints
+   * on the first render, disk is I/O so it runs at once, and only ASTRONOMY
+   * waits for an idle UI.
+   *
+   * This used to be a bare `setTimeout(…, 0)` around the raw engine call, which
+   * put the fortnight's cold solve — a Bhadrapada-Purnima scan plus a 20-day
+   * amavasya walk, ~250 ms on Hermes and unyielded — on the launch path of the
+   * screen every cold start lands on, on EVERY launch: it never went through
+   * the persisted `pitruSmaranSolves` layer that exists to make it a
+   * once-per-install cost. Hydrating first also primes the engine's own memo, so
+   * the common case now touches no astronomy at all.
+   */
+  const [pitruPakshaToday, setPitruPakshaToday] = React.useState<PitruPakshaDayObservance | null>(
+    // A known fortnight answers on the first render: outside it for free, and
+    // inside it from the tithi reads the pass that produced the window already
+    // memoised (this strip is Home's first resolver, so it is that pass).
+    () => (knownPakshaWindow(today.getFullYear()) ? readPitruPaksha(today) : null)
+  );
   React.useEffect(() => {
     let cancelled = false;
-    const handle = setTimeout(() => {
-      let result: PitruPakshaDayObservance | null = null;
-      try { result = pitruPakshaObservanceForDate(today); } catch { result = null; }
-      if (!cancelled) setPitruPakshaToday(result);
-    }, 0);
-    return () => { cancelled = true; clearTimeout(handle); };
+    let interaction: ReturnType<typeof InteractionManager.runAfterInteractions> | undefined;
+    let handle: ReturnType<typeof setTimeout> | undefined;
+    const year = today.getFullYear();
+
+    // Everything that can reach the engine — the fortnight scan when it is
+    // missing, and the day's two tithi reads when today is inside it — waits for
+    // an idle UI, then persists whatever it had to solve.
+    const solveWhenIdle = () => {
+      interaction = InteractionManager.runAfterInteractions(() => {
+        handle = setTimeout(() => {
+          if (cancelled) return;
+          const cold = knownPakshaWindow(year) === null;
+          const value = ensurePakshaWindow(year) ? readPitruPaksha(today) : null;
+          if (cancelled) return;
+          setPitruPakshaToday(value);
+          if (cold) void persistSmaranSolves();
+        }, 0);
+      });
+    };
+
+    void (async () => {
+      if (knownPakshaWindow(year) === null) {
+        // Disk, immediately — hydration is I/O the JS thread does not perform,
+        // and it also primes the engine memo `readPitruPaksha` reads through.
+        await hydrateSmaranSolves([], today);
+        if (cancelled) return;
+      }
+      const window = knownPakshaWindow(year);
+      if (window && !isInsidePakshaWindow(window, today)) {
+        setPitruPakshaToday(null);
+        return;
+      }
+      solveWhenIdle();
+    })();
+
+    return () => {
+      cancelled = true;
+      interaction?.cancel();
+      if (handle !== undefined) clearTimeout(handle);
+    };
   }, [today]);
+
+  if (panchang) launchMarkOnce('strip-headline (panchang solved)');
+  if (observances.length > 0) launchMarkOnce('strip-observance-chips');
+  if (pitruPakshaToday) launchMarkOnce('strip-pitru-chip');
 
   const headlineFont =
     lang === 'en' ? fontFamilies.latinBold : scriptTitleFont(lang, fontFamilies.devanagariBold);
@@ -179,12 +283,33 @@ export default function TodayStrip() {
     : "Today's Panchang. Tap to open.";
 
   // ── Chip-row auto-scroll ──────────────────────────────────────────────────
-  // When the chips overflow the row, drift them to the end and back on a slow
-  // loop so off-screen chips surface without a drag. A user drag takes over
-  // for good; the loop pauses while the Home tab is unfocused and never runs
+  // When the chips overflow the row, drift them to the end and back ONCE so
+  // off-screen chips surface without a drag, then rest. A user drag takes over
+  // for good; the pass pauses while the Home tab is unfocused and never runs
   // under reduce-motion (useReducedMotion — live, subscribed). Mutable bits
-  // live in one lazily-created ref; replanning is fully synchronous, so
-  // nothing can start after unmount.
+  // live in one lazily-created ref; every timer it owns lives in that ref and
+  // is cleared by `stopAutoScroll`, so nothing can tick after unmount.
+  //
+  // NOT `Animated` (Aug 2026). This drift cannot use the native driver — it
+  // drives `scrollTo` — so an `Animated.loop` meant a requestAnimationFrame
+  // tick AND a `scrollTo` bridge call every frame, forever, on the one screen
+  // every launch lands on. `isInteraction: false` (#268) stopped it starving
+  // `runAfterInteractions`, and that fix is what finally let the day's
+  // observance chips arrive — which is precisely what pushes the row into
+  // overflow and starts this drift. So Home went from "never idle" to "one
+  // endless JS-driven animation competing with the whole launch": the deferred
+  // panchang solves, the pitru match, the reminder schedulers and the widget
+  // writer all queue behind it, and taps land late. A decorative reveal has no
+  // business holding the JS thread at 60 Hz.
+  //
+  // So: a plain self-scheduling timer at AUTO_SCROLL_TICK_MS, stepping a
+  // number. It ticks only while actually drifting (an end pause is one idle
+  // `setTimeout`, not 108 no-op frames), issues a `scrollTo` only when the
+  // rounded pixel changes, waits AUTO_SCROLL_SETTLE_MS after the last content
+  // change so the launch's own churn pushes it clear, and after one round trip
+  // it stops for good — Home goes fully idle. A genuine content change (chips
+  // landing, a language switch, the midnight rollover) re-arms exactly one
+  // fresh pass.
   const isFocused = useIsFocused();
   const reduceMotion = useReducedMotion();
   const scrollRef = React.useRef<ScrollView>(null);
@@ -195,8 +320,16 @@ export default function TodayStrip() {
     // Live mirrors of the two hooks, so the stable callbacks read fresh values.
     focused: boolean;
     reduceMotion: boolean;
-    anim: Animated.CompositeAnimation | null;
-    x: Animated.Value;
+    /** Current drift offset, and the last offset actually pushed to the row. */
+    x: number;
+    lastPx: number;
+    /** +1 drifting towards the end, −1 returning to the start. */
+    dir: 1 | -1;
+    /** The round trip has completed — rest until the content changes. */
+    revealed: boolean;
+    /** The settle delay has already been served for this content. */
+    armed: boolean;
+    timer: ReturnType<typeof setTimeout> | null;
   };
   const autoRef = React.useRef<AutoScrollState | null>(null);
   if (autoRef.current == null) {
@@ -206,57 +339,72 @@ export default function TodayStrip() {
       dragged: false,
       focused: true,
       reduceMotion: false,
-      anim: null,
-      x: new Animated.Value(0),
+      x: 0,
+      lastPx: 0,
+      dir: 1,
+      revealed: false,
+      armed: false,
+      timer: null,
     };
   }
 
   const stopAutoScroll = React.useCallback(() => {
     const s = autoRef.current!;
-    s.anim?.stop();
-    s.anim = null;
+    if (s.timer !== null) clearTimeout(s.timer);
+    s.timer = null;
   }, []);
 
-  // Stop and (when allowed) restart the drift against the CURRENT overflow —
+  const stepAutoScroll = React.useCallback(() => {
+    const s = autoRef.current!;
+    s.timer = null;
+    const overflow = s.contentW - s.layoutW;
+    if (s.revealed || s.dragged || !s.focused || s.reduceMotion || s.layoutW <= 0 || overflow <= 8) {
+      return;
+    }
+    // Only a tick that actually drifts consumes the settle window — a tick that
+    // fires while the tab is unfocused must not let a later refocus skip it.
+    launchMarkOnce('strip-drift-first-tick');
+    s.armed = true;
+    const target = s.dir > 0 ? overflow : 0;
+    const delta = (AUTO_SCROLL_PX_PER_SEC * AUTO_SCROLL_TICK_MS) / 1000;
+    const next = s.dir > 0 ? Math.min(target, s.x + delta) : Math.max(target, s.x - delta);
+    s.x = next;
+    // One bridge call per whole pixel, not per tick: at 24 px/s a tick moves
+    // well under a pixel, so most ticks have nothing to push.
+    const px = Math.round(next);
+    if (px !== s.lastPx) {
+      s.lastPx = px;
+      scrollRef.current?.scrollTo?.({ x: px, animated: false });
+    }
+    if (next !== target) {
+      s.timer = setTimeout(stepAutoScroll, AUTO_SCROLL_TICK_MS);
+      return;
+    }
+    if (s.dir > 0) {
+      // Reached the end — pause, then come back.
+      s.dir = -1;
+      s.timer = setTimeout(stepAutoScroll, AUTO_SCROLL_END_PAUSE_MS);
+      return;
+    }
+    // Home again. The reveal is done; leave the thread alone until the chips
+    // themselves change.
+    s.revealed = true;
+  }, []);
+
+  // Stop and (when allowed) re-arm the drift against the CURRENT overflow —
   // called on layout/content-size changes too, so a language switch or day
-  // rollover re-targets the loop instead of leaving it driving a stale offset.
+  // rollover re-targets the pass instead of driving a stale offset.
   const replanAutoScroll = React.useCallback(() => {
     const s = autoRef.current!;
     stopAutoScroll();
     const overflow = s.contentW - s.layoutW;
-    if (s.dragged || !s.focused || s.reduceMotion || s.layoutW <= 0 || overflow <= 8) return;
-    const duration = (overflow / AUTO_SCROLL_PX_PER_SEC) * 1000;
-    // `isInteraction: false` is load-bearing, not tidiness. It defaults to
-    // `!useNativeDriver` — and this loop cannot use the native driver, because
-    // it drives `scrollTo` from a JS listener — so every drift and pause used to
-    // register an InteractionManager handle. A never-ending loop then meant Home
-    // almost never reported an idle UI, and everything on it that waits for one
-    // (the day's observance chips, the pitru match, the muhurat/festive
-    // schedulers, the widget writer, and this strip's own rollover at midnight)
-    // was starved behind an animation that is purely decorative.
-    const drift = (toValue: number) =>
-      Animated.timing(s.x, {
-        toValue,
-        duration,
-        easing: Easing.inOut(Easing.quad),
-        isInteraction: false,
-        useNativeDriver: false,
-      });
-    // A hold, not Animated.delay: `delay()` takes no config, so it would keep
-    // claiming an interaction handle for its 1.8s. Same effect — the value is
-    // already at `at`, so the tween is a no-op that just burns the pause.
-    const hold = (at: number) =>
-      Animated.timing(s.x, {
-        toValue: at,
-        duration: AUTO_SCROLL_END_PAUSE_MS,
-        isInteraction: false,
-        useNativeDriver: false,
-      });
-    s.anim = Animated.loop(
-      Animated.sequence([hold(0), drift(overflow), hold(overflow), drift(0)])
-    );
-    s.anim.start();
-  }, [stopAutoScroll]);
+    if (s.revealed || s.dragged || !s.focused || s.reduceMotion || s.layoutW <= 0 || overflow <= 8) {
+      return;
+    }
+    // A pass that has already started resumes on its own cadence; a fresh one
+    // waits out the settle window so it never drifts into the launch.
+    s.timer = setTimeout(stepAutoScroll, s.armed ? AUTO_SCROLL_TICK_MS : AUTO_SCROLL_SETTLE_MS);
+  }, [stepAutoScroll, stopAutoScroll]);
 
   const onChipRowDrag = React.useCallback(() => {
     // Stop the auto-drift for good AND mark the shared press gesture as a scroll
@@ -266,6 +414,24 @@ export default function TodayStrip() {
     stopAutoScroll();
   }, [markTileDrag, stopAutoScroll]);
 
+  // A real content change (the deferred chips landing, a language switch, the
+  // midnight rollover) is the only thing that earns a new pass — re-serving the
+  // settle delay with it, so several changes in a row collapse into one drift
+  // after the last of them rather than one per change.
+  const onChipRowContentSize = React.useCallback(
+    (w: number) => {
+      const s = autoRef.current!;
+      if (w !== s.contentW) {
+        s.contentW = w;
+        s.revealed = false;
+        s.armed = false;
+        s.dir = 1;
+      }
+      replanAutoScroll();
+    },
+    [replanAutoScroll]
+  );
+
   React.useEffect(() => {
     const s = autoRef.current!;
     s.focused = isFocused;
@@ -273,16 +439,7 @@ export default function TodayStrip() {
     replanAutoScroll();
   }, [isFocused, reduceMotion, replanAutoScroll]);
 
-  React.useEffect(() => {
-    const s = autoRef.current!;
-    const sub = s.x.addListener(({ value }) => {
-      scrollRef.current?.scrollTo?.({ x: value, animated: false });
-    });
-    return () => {
-      s.x.removeListener(sub);
-      stopAutoScroll();
-    };
-  }, [stopAutoScroll]);
+  React.useEffect(() => stopAutoScroll, [stopAutoScroll]);
 
   return (
     <View
@@ -348,10 +505,7 @@ export default function TodayStrip() {
           autoRef.current!.layoutW = e.nativeEvent.layout.width;
           replanAutoScroll();
         }}
-        onContentSizeChange={(w) => {
-          autoRef.current!.contentW = w;
-          replanAutoScroll();
-        }}
+        onContentSizeChange={onChipRowContentSize}
         onScrollBeginDrag={onChipRowDrag}
         onTouchStart={stopAutoScroll}
       >
