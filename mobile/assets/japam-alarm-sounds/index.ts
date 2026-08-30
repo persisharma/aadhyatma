@@ -48,7 +48,7 @@
 const japamAlarmSounds: Record<string, string> = {
   'om-namah-shivaya': 'om_namah_shivaya.wav',
   // 28 s excerpts cut from the bundled recordings in assets/audio-library/
-  // (loudness-normalised, faded, mono 22.05 kHz PCM — see workflow above).
+  // (loudness-normalised, faded, mono 16 kHz PCM — see workflow above).
   'hare-krishna-mahamantra': 'hare_krishna_mahamantra.wav',
   'gayatri-mantra': 'gayatri_mantra.wav',
   // No recording shipped yet — alarm falls back to the system default chime.
