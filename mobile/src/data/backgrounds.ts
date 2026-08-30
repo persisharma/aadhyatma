@@ -27,11 +27,7 @@ const categoryBackgrounds: Record<ContentCategory, BackgroundImage> = {
   // the asset lands.
   theerth: backgroundImages.category_granth_open_scripture,
   sanskar: backgroundImages.source_gayatri_savitri_sun,
-  // Kavacham is `status: 'coming'` (PRD-A) — its tile never opens a CategoryList,
-  // so this entry only satisfies the Record<ContentCategory> type. Reuses the
-  // neutral scripture plate (same precedent as theerth above); replace with a
-  // dedicated kavach/armour sketch when the section flips to `active`.
-  kavacham: backgroundImages.category_granth_open_scripture,
+  kavacham: backgroundImages.category_kavacham_protection,
   // Ashtakam reuses the hymn-scroll plate (Stotram-family form). Per-text reader
   // backgrounds resolve by source id below (Lingashtakam → Shiva sketch).
   ashtakam: backgroundImages.category_stotram_hymn_scroll,
@@ -43,28 +39,25 @@ const categoryBackgrounds: Record<ContentCategory, BackgroundImage> = {
 const deityBackgrounds: Record<Deity, BackgroundImage> = {
   rama: backgroundImages.deity_rama_darbar,
   krishna: backgroundImages.deity_krishna_bansuri,
-  vishnu: backgroundImages.deity_krishna_bansuri,
+  vishnu: backgroundImages.source_vishnu_narayana,
   shiva: shivaStrotamImages.shiva,
   hanuman: chalisaImages.hanuman_sea,
   durga: backgroundImages.deity_durga_lion,
   ganesha: backgroundImages.deity_ganesha_modak,
-  savitr: shivaStrotamImages.shiva,
+  savitr: backgroundImages.source_gayatri_savitri_sun,
   saraswati: backgroundImages.deity_saraswati_veena,
-  // PRD-A deity expansion (§A.4.2) — reuse the closest existing plate; flagged for
-  // dedicated art later (same precedent as theerth/kavacham). Lakshmi → Narayana
-  // (her consort's) plate.
-  lakshmi: backgroundImages.source_vishnu_narayana,
-  surya: backgroundImages.source_gayatri_savitri_sun,
-  radha: backgroundImages.deity_krishna_bansuri,
-  kartikeya: shivaStrotamImages.shiva,
-  kubera: backgroundImages.source_vishnu_narayana,
-  ganga: shivaStrotamImages.shiva,
-  parvati: backgroundImages.deity_durga_lion,
-  narasimha: backgroundImages.source_vishnu_narayana,
-  dattatreya: shivaStrotamImages.shiva,
-  shani: backgroundImages.source_gayatri_savitri_sun,
-  kali: backgroundImages.deity_durga_lion,
-  navagraha: backgroundImages.source_gayatri_savitri_sun,
+  lakshmi: backgroundImages.deity_lakshmi,
+  surya: backgroundImages.deity_surya,
+  radha: backgroundImages.deity_radha_krishna,
+  kartikeya: backgroundImages.theerth_vetrimalai_murugan,
+  kubera: backgroundImages.deity_kubera,
+  ganga: backgroundImages.deity_ganga,
+  parvati: backgroundImages.deity_parvati_bhavani,
+  narasimha: backgroundImages.deity_narasimha_prahlad,
+  dattatreya: backgroundImages.deity_dattatreya,
+  shani: backgroundImages.deity_shani,
+  kali: backgroundImages.deity_kali,
+  navagraha: backgroundImages.deity_navagraha_icons,
 };
 
 const sourceBackgrounds: Record<string, BackgroundImage> = {
@@ -123,19 +116,19 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'durga-kavach': backgroundImages.deity_durga_lion,
   'krishna-stuti': backgroundImages.deity_krishna_bansuri,
   'durga-stuti-arjuna': backgroundImages.deity_durga_lion,
-  'mahalakshmi-ashtakam': backgroundImages.source_vishnu_narayana,
-  'surya-ashtakam': backgroundImages.source_gayatri_savitri_sun,
-  radhashtakam: backgroundImages.deity_krishna_bansuri,
-  'subrahmanya-ashtakam': shivaStrotamImages.shiva,
-  'kubera-stotram': backgroundImages.source_vishnu_narayana,
-  gangashtakam: shivaStrotamImages.shiva,
-  'bhavani-ashtakam': backgroundImages.deity_durga_lion,
-  'narasimha-ashtakam': backgroundImages.source_vishnu_narayana,
-  'datta-ashtakam': shivaStrotamImages.shiva,
-  'shani-ashtakam': backgroundImages.source_gayatri_savitri_sun,
-  'kalika-ashtakam': backgroundImages.deity_durga_lion,
+  'mahalakshmi-ashtakam': backgroundImages.deity_lakshmi,
+  'surya-ashtakam': backgroundImages.deity_surya,
+  radhashtakam: backgroundImages.deity_radha_krishna,
+  'subrahmanya-ashtakam': backgroundImages.theerth_vetrimalai_murugan,
+  'kubera-stotram': backgroundImages.deity_kubera,
+  gangashtakam: backgroundImages.deity_ganga,
+  'bhavani-ashtakam': backgroundImages.deity_parvati_bhavani,
+  'narasimha-ashtakam': backgroundImages.deity_narasimha_prahlad,
+  'datta-ashtakam': backgroundImages.deity_dattatreya,
+  'shani-ashtakam': backgroundImages.deity_shani,
+  'kalika-ashtakam': backgroundImages.deity_kali,
   rudrashtakam: shivaStrotamImages.shiva,
-  'navagraha-stotram': backgroundImages.source_gayatri_savitri_sun,
+  'navagraha-stotram': backgroundImages.deity_navagraha_icons,
 };
 
 const hanumanChalisaOverrides: Record<string, BackgroundImage> = {
