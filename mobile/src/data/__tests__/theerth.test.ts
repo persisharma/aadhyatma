@@ -21,6 +21,7 @@ const VALID_DEITIES = new Set([
   'durga',
   'ganesha',
   'savitr',
+  'surya',
 ]);
 
 const { lngMin, lngMax, latMin, latMax, width, height } = INDIA_PROJECTION;
