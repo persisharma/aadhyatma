@@ -65,6 +65,7 @@ function createRule(seed: ObservanceSeed): ObservanceRule {
     solarLongitude: seed.solarLongitude,
     solarIngress: seed.solarIngress,
     relativeRule: seed.relativeRule,
+    dayRule: seed.dayRule,
     marker: seed.marker ?? (category === 'festival' ? 'star' : 'halfmoon'),
     deityHi,
     deityEn,
@@ -261,7 +262,7 @@ export const FESTIVAL_RULES: ObservanceRule[] = [
   festival({ id: 'dussehra', nameHi: 'दशहरा', nameEn: 'Dussehra', lunarMonth: 7, paksha: 'shukla', tithi: 10, marker: 'star', deityHi: 'श्री राम', deityEn: 'Shri Ram', linkSectionId: 'ram-stuti', kathaId: 'dussehra-katha' }),
   festival({ id: 'sharad-purnima', nameHi: 'शरद पूर्णिमा', nameEn: 'Sharad Purnima', lunarMonth: 7, paksha: 'shukla', tithi: 15, marker: 'dot', deityHi: 'चंद्र देव', deityEn: 'Chandra Deva', kathaId: 'sharad-purnima-vrat-katha' }),
   festival({ id: 'kojagara-puja', nameHi: 'कोजागरा पूजा', nameEn: 'Kojagara Puja', lunarMonth: 7, paksha: 'shukla', tithi: 15, marker: 'dot', category: 'vrat', deityHi: 'मां लक्ष्मी', deityEn: 'Maa Lakshmi', kathaId: 'sharad-purnima-vrat-katha', bhogId: 'kojagara-bhog' }),
-  festival({ id: 'karwa-chauth', nameHi: 'करवा चौथ', nameEn: 'Karwa Chauth', lunarMonth: 8, paksha: 'krishna', tithi: 4, marker: 'star', category: 'vrat', deityHi: 'मां गौरी', deityEn: 'Maa Gauri', kathaId: 'karwa-chauth-vrat-katha', vidhiId: 'karwa-chauth-puja', upvasId: 'karwa-chauth-upvas', bhogId: 'karwa-chauth-bhog' }),
+  festival({ id: 'karwa-chauth', nameHi: 'करवा चौथ', nameEn: 'Karwa Chauth', lunarMonth: 8, paksha: 'krishna', tithi: 4, dayRule: 'chandrodaya', marker: 'star', category: 'vrat', deityHi: 'मां गौरी', deityEn: 'Maa Gauri', kathaId: 'karwa-chauth-vrat-katha', vidhiId: 'karwa-chauth-puja', upvasId: 'karwa-chauth-upvas', bhogId: 'karwa-chauth-bhog' }),
   festival({ id: 'ahoi-ashtami', nameHi: 'अहोई अष्टमी', nameEn: 'Ahoi Ashtami', lunarMonth: 8, paksha: 'krishna', tithi: 8, marker: 'dot', category: 'vrat', deityHi: 'अहोई माता', deityEn: 'Ahoi Mata', kathaId: 'ahoi-ashtami-vrat-katha', bhogId: 'ahoi-ashtami-bhog' }),
   festival({ id: 'dhanteras', nameHi: 'धनतेरस', nameEn: 'Dhanteras', lunarMonth: 8, paksha: 'krishna', tithi: 13, marker: 'dot', deityHi: 'धन्वंतरि देव', deityEn: 'Dhanvantari Deva', kathaId: 'dhanteras-legends' }),
   festival({ id: 'diwali', nameHi: 'दीपावली', nameEn: 'Diwali', lunarMonth: 8, paksha: 'krishna', tithi: 15, marker: 'star', deityHi: 'मां लक्ष्मी', deityEn: 'Maa Lakshmi', kathaId: 'diwali-legends', vidhiId: 'diwali-lakshmi-ganesh-puja', bhogId: 'diwali-lakshmi-bhog' }),
@@ -357,7 +358,7 @@ export const EKADASHI_RULES: ObservanceRule[] = EKADASHI_NAMES.map((item) => vra
 }));
 
 export const MONTHLY_VRAT_RULES: ObservanceRule[] = [
-  vrat({ id: 'sankashti-chaturthi-vrat', nameHi: 'संकष्टी चतुर्थी व्रत', nameEn: 'Sankashti Chaturthi Vrat', recurrence: 'monthly', paksha: 'krishna', tithi: 4, deityHi: 'श्री गणेश', deityEn: 'Shri Ganesh', linkSectionId: 'ganesh-chalisa', kathaId: 'sankashti-chaturthi-vrat-katha', upvasId: 'sankashti-chaturthi-upvas', bhogId: 'ganesha-bhog' }),
+  vrat({ id: 'sankashti-chaturthi-vrat', nameHi: 'संकष्टी चतुर्थी व्रत', nameEn: 'Sankashti Chaturthi Vrat', recurrence: 'monthly', paksha: 'krishna', tithi: 4, dayRule: 'chandrodaya', deityHi: 'श्री गणेश', deityEn: 'Shri Ganesh', linkSectionId: 'ganesh-chalisa', kathaId: 'sankashti-chaturthi-vrat-katha', upvasId: 'sankashti-chaturthi-upvas', bhogId: 'ganesha-bhog' }),
   vrat({ id: 'vinayaka-chaturthi-vrat', nameHi: 'शुक्ल चतुर्थी व्रत', nameEn: 'Shukla Chaturthi Vrat', recurrence: 'monthly', paksha: 'shukla', tithi: 4, deityHi: 'श्री गणेश', deityEn: 'Shri Ganesh', linkSectionId: 'ganesh-chalisa', kathaId: 'ganesha-chaturthi-vrat-katha', bhogId: 'ganesha-bhog' }),
   vrat({ id: 'pradosh-vrat-shukla', nameHi: 'शुक्ल प्रदोष व्रत', nameEn: 'Shukla Pradosh Vrat', recurrence: 'monthly', paksha: 'shukla', tithi: 13, deityHi: 'भगवान शिव', deityEn: 'Lord Shiva', linkSectionId: 'shiv-chalisa', kathaId: 'pradosha-vrat-katha', upvasId: 'pradosh-upvas', bhogId: 'pradosh-bhog' }),
   vrat({ id: 'pradosh-vrat-krishna', nameHi: 'कृष्ण प्रदोष व्रत', nameEn: 'Krishna Pradosh Vrat', recurrence: 'monthly', paksha: 'krishna', tithi: 13, deityHi: 'भगवान शिव', deityEn: 'Lord Shiva', linkSectionId: 'shiv-chalisa', kathaId: 'pradosha-vrat-katha', upvasId: 'pradosh-upvas', bhogId: 'pradosh-bhog' }),

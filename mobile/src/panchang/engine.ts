@@ -447,6 +447,50 @@ export function computeTithiAndMonth(
   return result;
 }
 
+// Moonrise memo, mirroring `sunriseCache`. The chandrodaya (moonrise-vyapini)
+// observance matcher asks for the same evening's moonrise from both the day it
+// is testing and that day's successor, so without the memo every candidate day
+// would pay two independent rise/set root-finds.
+const moonriseCache = new Map<string, Date | null>();
+
+function moonriseFor(localDate: Date, location?: GeoLocation & { cityId?: string }, civilTimeZone?: string): Date | null {
+  const key = `${locationKey(location)}:${civilTimeZone ?? 'local'}:${getLocalDateKey(localDate)}`;
+  if (moonriseCache.has(key)) return moonriseCache.get(key) ?? null;
+  const solved = computeMoonrise(localDate, observerFor(location ?? UJJAIN_GEO), civilTimeZone);
+  moonriseCache.set(key, solved);
+  return solved;
+}
+
+/**
+ * The tithi running at this civil day's moonrise — what a chandrodaya-vyapini
+ * vrat (Sankashti Chaturthi, Karwa Chauth) is fixed by, since its defining act
+ * is the moon sighting and the arghya that ends the fast.
+ *
+ * `expectedTithiIndex` is a REQUIRED gate, not a filter: solving moonrise is a
+ * rise/set root-find, far dearer than the sunrise-tithi lookup, and a year scan
+ * would otherwise pay it 365 times per rule. A day's moonrise always falls after
+ * its sunrise and before the next one, so the tithi there can only be the sunrise
+ * tithi or its successor (a tithi runs ~20–26 h — never short enough for a third
+ * to start in the ~14 h from sunrise to moonrise). When neither of those is the
+ * caller's target, the answer is known WITHOUT the solve, and `null` says so.
+ *
+ * Returns null when the target cannot be running (the gate above), and when the
+ * moon does not rise on this civil day at all (a legitimate almanac answer near
+ * amavasya, where moonrise slips past midnight).
+ */
+export function tithiAtMoonrise(
+  localDate: Date,
+  expectedTithiIndex: number,
+  options: PanchangComputationOptions = {}
+): number | null {
+  const sunriseTithi = computeTithiAndMonth(localDate, options).tithiIndex;
+  if (sunriseTithi !== expectedTithiIndex && (sunriseTithi + 1) % 30 !== expectedTithiIndex) return null;
+  const moonrise = moonriseFor(localDate, options.location, options.civilTimeZone);
+  if (!moonrise) return null;
+  const year = moonrise.getFullYear();
+  return computeTithiIndex(getSiderealSunLng(moonrise, year), getSiderealMoonLng(moonrise, year));
+}
+
 export function computePanchangForDate(localDate: Date, options: PanchangComputationOptions = {}): PanchangData {
   const calendarSystem = options.calendarSystem ?? 'purnimant';
   const observer = observerFor(options.location ?? UJJAIN_GEO);
@@ -525,7 +569,7 @@ export function computePanchangForDate(localDate: Date, options: PanchangComputa
   }
 
   const sunset = computeSunset(localDate, observer, options.civilTimeZone);
-  const moonrise = computeMoonrise(localDate, observer, options.civilTimeZone);
+  const moonrise = moonriseFor(localDate, options.location, options.civilTimeZone);
 
   const brahmaMuhurtaEnd = new Date(sunrise.getTime() - 48 * 60 * 1000);
   const brahmaMuhurtaStart = new Date(sunrise.getTime() - 96 * 60 * 1000);

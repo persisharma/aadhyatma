@@ -1,5 +1,5 @@
 import { addDays } from './calendarGrid';
-import { computeTithiAndMonth, getSiderealSunLng, locationKey, UJJAIN_CITY_ID } from './engine';
+import { computeTithiAndMonth, getSiderealSunLng, locationKey, tithiAtMoonrise, UJJAIN_CITY_ID } from './engine';
 import { getObservanceCatalog, OBSERVANCE_RULES } from './festivals';
 import { getStoredObservanceYear } from './observanceStore';
 import { PRECOMPUTED_OBSERVANCES } from './precomputedObservances';
@@ -329,6 +329,82 @@ function matchesRuleOnDate(
 // kshaya fallback, adhik-maas nija guard) — sharing the matcher keeps the two
 // surfaces incapable of drifting apart. Not part of the observance-catalog API.
 export function matchesLunarTithiRuleOnDate(
+  rule: ObservanceRule,
+  date: Date,
+  calendarSystem: CalendarSystem,
+  location?: ObservanceLocation
+): boolean {
+  if (!rule.paksha || rule.tithi === undefined) return false;
+  if (rule.dayRule === 'chandrodaya') {
+    return matchesChandrodayaRuleOnDate(rule, date, calendarSystem, location);
+  }
+  return matchesUdayaTithiRuleOnDate(rule, date, calendarSystem, location);
+}
+
+/**
+ * Moonrise-vyapini (chandrodaya) day selection, for the vrats whose defining act
+ * is the night's moon sighting and arghya — Sankashti Chaturthi and Karwa Chauth.
+ *
+ * Krishna Chaturthi usually begins mid-morning and ends before the next
+ * mid-morning, so the sunrise (udaya) answer names the day AFTER the night the
+ * moon is actually worshipped: for Bhadrapada 2026 the tithi runs 31 Aug 8:51 AM
+ * → 1 Sep 7:42 AM, and udaya matching put Sankashti on 1 Sep, a day whose
+ * moonrise (9:22 PM) falls in Panchami — there is no moon to break the fast by.
+ * Matching at moonrise puts it on 31 Aug, where the moon rises at 8:39 PM inside
+ * Chaturthi. Over 2025–2026 this agrees with the published dates in 23 of 25
+ * lunations against udaya's 12.
+ *
+ * Three cases, in order:
+ *  1. This day's moonrise falls inside the target tithi → this is the day, unless
+ *     yesterday's moonrise did too (a tithi long enough to span two moonrises is
+ *     kept on the first — the same "first of two" convention udaya matching uses
+ *     for a vriddhi tithi).
+ *  2. Yesterday's moonrise fell inside it → yesterday owns this lunation's vrat.
+ *  3. No moonrise falls inside it at all (the tithi opened after one moonrise and
+ *     closed before the next — Kartik 2025, where Chaturthi ran 9 Oct 10:54 PM →
+ *     10 Oct 7:38 PM): no night can host the sighting, so the day falls back to
+ *     the udaya rule, which is what published almanacs do there too (10 Oct 2025
+ *     for both Karwa Chauth and that month's Sankashti).
+ */
+function matchesChandrodayaRuleOnDate(
+  rule: ObservanceRule,
+  date: Date,
+  calendarSystem: CalendarSystem,
+  location?: ObservanceLocation
+): boolean {
+  const computationSystem = computationSystemForRule(rule, calendarSystem);
+  const opts = { calendarSystem: computationSystem, location };
+  const target = rule.paksha === 'shukla' ? rule.tithi! - 1 : rule.tithi! + 14;
+  const yesterdayCovers = tithiAtMoonrise(addDays(date, -1), target, opts) === target;
+  if (tithiAtMoonrise(date, target, opts) === target) {
+    return !yesterdayCovers && monthMatchesRule(rule, date, calendarSystem, location);
+  }
+  if (yesterdayCovers) return false;
+  return matchesUdayaTithiRuleOnDate(rule, date, calendarSystem, location);
+}
+
+/**
+ * The lunar-month guard the udaya matcher applies, reused by chandrodaya
+ * matching. Named-month rules (Karwa Chauth in Kartik) are observed in the nija
+ * month, never the adhik one that repeats it; monthly rules have no month to
+ * check. The moonrise night and its sunrise share a lunar month for every tithi
+ * these rules use — a chaturthi is a fortnight from either month boundary — so
+ * this day's sunrise month is the authoritative one here.
+ */
+function monthMatchesRule(
+  rule: ObservanceRule,
+  date: Date,
+  calendarSystem: CalendarSystem,
+  location?: ObservanceLocation
+): boolean {
+  const matchingMonth = monthForRuleInSystem(rule, calendarSystem);
+  if (matchingMonth === null) return true;
+  const computationSystem = computationSystemForRule(rule, calendarSystem);
+  const { lunarMonth, isAdhik } = computeTithiAndMonth(date, { calendarSystem: computationSystem, location });
+  return lunarMonth === matchingMonth && !isAdhik;
+}
+
+function matchesUdayaTithiRuleOnDate(
   rule: ObservanceRule,
   date: Date,
   calendarSystem: CalendarSystem,

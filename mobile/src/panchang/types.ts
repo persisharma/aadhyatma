@@ -82,6 +82,23 @@ export type ObservanceRecurrence = 'annual' | 'monthly' | 'seasonal' | 'catalog'
 
 export type ObservanceRelativeRule = 'friday-before-purnima';
 
+/**
+ * Which instant of the civil day the rule's tithi must cover for the day to BE
+ * the observance day (the vyapini convention).
+ *
+ * - `udaya` — the tithi running at sunrise. The default, and right for the
+ *   large majority: Ekadashi, Purnima, Amavasya, Navratri, Dussehra.
+ * - `chandrodaya` — the tithi running at MOONRISE. Correct for vrats whose
+ *   defining act is the moon sighting that ends the fast: Sankashti Chaturthi
+ *   and Karwa Chauth. Their tithi typically begins mid-morning and ends before
+ *   the next day's mid-morning, so the sunrise answer names the day AFTER the
+ *   night on which the vrat is actually kept.
+ *
+ * Other non-sunrise conventions (madhyahna, pradosh, nishita) are not modelled
+ * yet — see `VERIFICATION.md` "±1-day muhurta shift".
+ */
+export type ObservanceDayRule = 'udaya' | 'chandrodaya';
+
 export type ObservanceRule = {
   id: string;
   nameHi: string;
@@ -100,6 +117,11 @@ export type ObservanceRule = {
   solarLongitude?: number;
   solarIngress?: number;
   relativeRule?: ObservanceRelativeRule;
+  /**
+   * Day-selection convention (vyapini). Absent means `udaya` — every rule that
+   * does not say otherwise is fixed by the tithi at sunrise.
+   */
+  dayRule?: ObservanceDayRule;
   marker: FestivalMarker;
   deityHi: string;
   deityEn: string;

@@ -109,12 +109,20 @@ Two **pre-existing** issues it surfaces (NOT the month bug, not yet fixed) — b
 of the sunrise-only matcher:
 - **±1-day muhurta shift (Class B):** festivals fixed by a non-sunrise muhurta resolve one
   day late when their tithi starts after sunrise — Maha Shivaratri (Nishita), Ganesh
-  Chaturthi & Ram Navami (Madhyahna), Diwali/Dhanteras/Karwa Chauth (Pradosh). e.g. Diwali
+  Chaturthi & Ram Navami (Madhyahna), Diwali/Dhanteras (Pradosh). e.g. Diwali
   2025 engine 21 Oct vs real 20 Oct; Maha Shivaratri 2026 engine 16 Feb vs real 15 Feb.
+  **The moonrise (chandrodaya) members of this class are FIXED** (Aug 2026): `ObservanceRule.dayRule`
+  now carries the per-rule vyapini convention, and `sankashti-chaturthi-vrat` + `karwa-chauth`
+  match at moonrise (`tithiAtMoonrise` in `engine.ts`; RULEBOOK §23). Sankashti was wrong in
+  6 of 12 lunations in 2025 and 5 of 13 in 2026 — Bhadrapada 2026 resolved to 1 Sep, whose
+  9:22 PM moonrise falls in Panchami, instead of 31 Aug's 8:39 PM moonrise inside Chaturthi.
+  Karwa Chauth moved only in 2027 and 2031 (2024–2026 already agreed).
 - **kshaya-tithi drop:** a festival whose tithi is skipped at sunrise is dropped entirely —
-  e.g. Vasant Panchami 2025, Dev Uthani Ekadashi 2026, **Navratri start 2027**.
+  e.g. Vasant Panchami 2025, Dev Uthani Ekadashi 2026, **Navratri start 2027**. (Since fixed:
+  the matcher carries a kshaya fallback, and `verify:observances` reports `missing(kshaya)=0`.)
 
-Fixing either requires muhurta-aware / kshaya-aware day selection in the matcher.
+Closing the rest of Class B is the same three-part job the chandrodaya case took: a `dayRule`
+value, its case in the matcher, and published-date tests across several years.
 
 ## Reproduce
 ```
