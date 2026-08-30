@@ -222,8 +222,11 @@ appId: com.prashantsharma.vedansh
 - assertVisible: ".*includes the chart name, birth date, time, and city.*"
 # The card's own method footer is the last thing inside the fixed 4:5 box, so it is
 # the first casualty when the stack overruns: it was trimmed by `overflow: 'hidden'`
-# in August 2026. Assert it, not just the sheet chrome around it.
-- assertVisible: ".*Computed on device.*"
+# in August 2026. Assert it, not just the sheet chrome around it. Match the footer's
+# own wording ("Lahiri ayanamsa"), not the brand-row meta beside it ("Lahiri ·
+# Whole-sign houses") — the earlier ".*Computed on device.*" matched no rendered
+# string at all, so this gate could never go green.
+- assertVisible: ".*Lahiri ayanamsa.*"
 - assertVisible: "Open share sheet"
 - tapOn: "Close share preview"
 - waitForAnimationToEnd
