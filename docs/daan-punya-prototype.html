@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PRD-26 · दान-पुण्य — Interactive Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-hi:#FFF5E0;
+    --parchment-deep:#E9D9B1; --gradient-end:#E9D9B1;
+    --ink:#2F1E10; --ink-soft:#5A3A1E; --ink-muted:#8A6A47;
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --gold:#A67C34; --gold-soft:#C9B896;
+    --divider:rgba(138,62,11,0.18);
+    --saffron-tint:rgba(184,98,27,0.14); --gold-tint:rgba(166,124,52,0.16);
+    --green:#3F7D4F;
+    --shadow-lg:0 30px 70px rgba(20,12,4,0.40);
+    --sans:'Inter',system-ui,sans-serif;
+    --serif:'Cormorant Garamond',serif;
+    --deva:'Noto Serif Devanagari',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:var(--sans);color:#EADCC2;padding:34px 20px 64px;line-height:1.5;
+    background:
+      radial-gradient(900px 360px at 50% -8%, rgba(184,98,27,0.22), transparent 64%),
+      linear-gradient(160deg,#1A140C 0%,#2A1D10 58%,#1A140C 100%);
+    min-height:100vh;-webkit-font-smoothing:antialiased;
+  }
+  .intro{max-width:1120px;margin:0 auto 10px;text-align:center}
+  .intro h1{font-family:var(--serif);font-weight:500;font-size:clamp(28px,4vw,42px);color:var(--parchment)}
+  .intro .deva-sub{font-family:var(--deva);font-size:15px;color:var(--gold-soft);margin-top:2px}
+  .intro p{max-width:840px;margin:10px auto 0;font-size:14px;line-height:1.55;color:#D5C39D}
+  .samplebanner{
+    max-width:840px;margin:18px auto 34px;padding:12px 18px;border-radius:12px;
+    border:1.5px dashed var(--gold);background:rgba(166,124,52,0.10);
+    font-size:12.5px;color:#E7D8B6;text-align:center;line-height:1.6;
+  }
+  .samplebanner b{color:#FFF5E0;letter-spacing:.08em}
+
+  .scenario{max-width:1120px;margin:0 auto 58px}
+  .scenario > h2{
+    font-family:var(--serif);font-size:22px;font-weight:600;color:#FFF5E0;
+    border-bottom:1px solid #3A2A16;padding-bottom:8px;margin-bottom:4px;
+  }
+  .scenario > .sc-sub{font-size:12.5px;color:var(--gold-soft);font-style:italic;margin-bottom:20px}
+  .wrap{display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap}
+
+  /* ---- phone frame (house 360×740) ---- */
+  .phone{width:360px;height:740px;background:var(--parchment);border-radius:38px;
+    border:10px solid #0D0804;box-shadow:var(--shadow-lg),0 0 0 1px rgba(166,124,52,0.18);
+    position:relative;overflow:hidden;flex:none}
+  .statusbar{height:34px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);
+    background:linear-gradient(var(--parchment-hi),var(--parchment));position:relative;z-index:3}
+  .screen{position:absolute;top:34px;left:0;right:0;bottom:0;overflow-y:auto;
+    background:
+      radial-gradient(110% 42% at 50% -12%, rgba(184,98,27,0.14), transparent 62%),
+      linear-gradient(180deg,var(--parchment-hi) 0%,var(--gradient-end) 100%)}
+  .screen::-webkit-scrollbar{width:0}
+  .screen.hidden{display:none}
+  .pad{padding:6px 18px 34px}
+
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:8px 2px 10px}
+  .topbar .back{width:34px;height:34px;border:1px solid var(--divider);border-radius:17px;
+    display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:18px;cursor:pointer}
+  .topbar .tt{font-family:var(--deva);font-size:15px;color:var(--ink)}
+  .topbar .sp{width:34px}
+
+  .hero{text-align:center;padding:8px 0 14px;border-bottom:1px solid var(--divider)}
+  .hero .tags{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:9px}
+  .pill{display:inline-block;background:var(--gold-tint);color:var(--saffron-deep);
+    font-size:10.5px;font-weight:700;font-family:var(--sans);padding:3px 10px;border-radius:999px}
+  .pill.fest{background:var(--saffron-tint)}
+  .hero .name{font-family:var(--deva);font-size:26px;color:var(--ink);line-height:1.35}
+  .hero .name-en{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--ink-muted);margin-top:1px}
+  .hero .rule{font-family:var(--deva);font-size:12px;color:var(--ink-muted);margin-top:6px}
+
+  .block{margin-top:18px}
+  .bh{font-family:var(--deva);font-size:15px;color:var(--ink);margin-bottom:8px}
+  .bh .en{font-family:var(--serif);font-style:italic;font-weight:400;font-size:12px;color:var(--ink-muted)}
+  .body{font-size:13px;line-height:1.65;color:var(--ink-soft);font-family:var(--deva)}
+
+  .card{display:flex;align-items:center;gap:12px;border:1px solid var(--divider);
+    background:var(--parchment-soft);border-radius:16px;padding:13px;cursor:pointer;
+    box-shadow:0 1px 2px rgba(60,30,10,0.06);margin-bottom:9px}
+  .card .glyph{font-size:21px;color:var(--saffron);font-family:var(--deva)}
+  .card .ct{flex:1;min-width:0}
+  .card .ct .t{font-family:var(--deva);font-size:14.5px;color:var(--ink)}
+  .card .ct .m{font-size:11.5px;color:var(--ink-muted);margin-top:2px;font-family:var(--serif);font-style:italic}
+  .card .chev{font-size:18px;color:var(--ink-muted)}
+
+  /* आज का दान feature card */
+  .aaj{border:1px solid var(--gold-soft);background:var(--parchment-soft);border-radius:16px;
+    padding:14px;box-shadow:0 1px 2px rgba(60,30,10,0.06)}
+  .aaj .occ{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+  .aaj .why{font-family:var(--deva);font-size:13px;line-height:1.65;color:var(--ink-soft)}
+  .aaj .items{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .item-chip{background:var(--gold-tint);color:var(--saffron-deep);font-family:var(--deva);
+    font-size:12px;font-weight:600;padding:4px 11px;border-radius:999px}
+
+  /* vaar chips */
+  .vaar-row{display:flex;gap:5px;margin-bottom:10px}
+  .vchip{flex:1;text-align:center;padding:6px 0;border-radius:10px;border:1px solid var(--divider);
+    font-family:var(--deva);font-size:12px;color:var(--ink-soft);cursor:pointer;background:var(--parchment-soft)}
+  .vchip.on{background:var(--saffron);color:var(--parchment-hi);border-color:var(--saffron);font-weight:600}
+  .vaar-line{font-family:var(--deva);font-size:12.5px;line-height:1.6;color:var(--ink-soft);
+    background:var(--gold-tint);border-radius:10px;padding:8px 11px}
+
+  /* verse rendering */
+  .verse{border:1px solid var(--gold-soft);background:var(--parchment-soft);border-radius:16px;padding:16px 14px}
+  .verse .sa{font-family:var(--deva);font-size:16.5px;line-height:2;color:var(--ink);text-align:center}
+  .verse .iast{font-family:var(--serif);font-style:italic;font-size:12.5px;color:var(--ink-muted);
+    text-align:center;margin-top:8px;line-height:1.7}
+  .verse .cite{text-align:center;margin-top:9px;font-family:var(--sans);font-size:10.5px;
+    font-weight:700;letter-spacing:.08em;color:var(--gold);text-transform:uppercase}
+  .verse .mean{margin-top:12px;padding-top:11px;border-top:1px solid var(--divider);
+    font-family:var(--deva);font-size:13px;line-height:1.7;color:var(--ink-soft)}
+
+  /* journey stepper */
+  .dots{display:flex;align-items:center;justify-content:center;gap:7px;padding:6px 0 12px}
+  .dot{width:7px;height:7px;border-radius:4px;background:var(--gold-soft);transition:all .25s}
+  .dot.on{width:22px;background:var(--saffron)}
+  .stepnav{display:flex;gap:8px;margin-top:16px}
+  .sbtn{flex:1;min-height:40px;display:flex;align-items:center;justify-content:center;
+    border:1.5px solid var(--saffron);border-radius:999px;font-size:12.5px;font-weight:600;
+    color:var(--saffron-deep);cursor:pointer;font-family:var(--deva);background:transparent}
+  .sbtn.fill{background:var(--saffron);color:var(--parchment-hi)}
+  .sbtn.ghost{border-color:var(--divider);color:var(--ink-muted)}
+  .steplabel{font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+  .terminal{margin-top:14px;border-top:1px dashed var(--gold-soft);padding-top:14px}
+  .terminal .note{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);
+    text-align:center;margin-top:8px;line-height:1.55}
+  .ext-tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.06em;
+    color:var(--ink-muted);border:1px solid var(--divider);border-radius:6px;padding:1px 6px;
+    vertical-align:middle;margin-left:6px;font-family:var(--sans)}
+
+  /* ledger */
+  .month{font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--gold);margin:16px 0 8px}
+  .entry{display:flex;gap:11px;border:1px solid var(--divider);background:var(--parchment-soft);
+    border-radius:14px;padding:11px 13px;margin-bottom:8px}
+  .entry .g{font-size:18px;font-family:var(--deva);color:var(--saffron)}
+  .entry .et{flex:1}
+  .entry .et .cat{font-family:var(--deva);font-size:13.5px;color:var(--ink);font-weight:600}
+  .entry .et .tithi{font-family:var(--deva);font-size:11.5px;color:var(--ink-muted);margin-top:1px}
+  .entry .et .nt{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-soft);margin-top:3px}
+  .entry.gupt{background:var(--gold-tint);border-style:dashed}
+
+  /* form */
+  .flabel{font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--gold);margin:14px 0 7px}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .cchip{font-family:var(--deva);font-size:12.5px;color:var(--ink-soft);border:1px solid var(--divider);
+    background:var(--parchment-soft);border-radius:999px;padding:6px 13px;cursor:pointer}
+  .cchip.on{background:var(--saffron);border-color:var(--saffron);color:var(--parchment-hi);font-weight:600}
+  .field{height:48px;border:1px solid var(--divider);border-radius:12px;background:var(--parchment-soft);
+    display:flex;align-items:center;padding:0 14px;font-family:var(--sans);font-size:13px;color:var(--ink-muted)}
+  .switchrow{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--gold-soft);
+    background:var(--gold-tint);border-radius:12px;padding:11px 13px;margin-top:14px;cursor:pointer}
+  .switchrow .sl{font-family:var(--deva);font-size:13.5px;color:var(--ink)}
+  .switchrow .sd{font-family:var(--serif);font-style:italic;font-size:11px;color:var(--ink-muted);margin-top:1px}
+  .toggle{width:44px;height:26px;border-radius:13px;background:var(--gold-soft);position:relative;flex:none;transition:background .2s}
+  .toggle::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:10px;
+    background:var(--parchment-hi);transition:left .2s;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+  .toggle.on{background:var(--green)}
+  .toggle.on::after{left:21px}
+  .savebar{margin-top:18px}
+  .toast{position:absolute;left:18px;right:18px;bottom:20px;background:var(--ink);color:var(--parchment-hi);
+    font-family:var(--deva);font-size:12.5px;text-align:center;border-radius:12px;padding:10px;
+    opacity:0;transition:opacity .3s;pointer-events:none;z-index:5}
+  .toast.show{opacity:.94}
+
+  /* directory */
+  .trust{border:1px solid var(--gold-soft);background:var(--parchment-soft);border-radius:16px;padding:14px}
+  .trust .reg{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--divider)}
+  .trust .reg:last-of-type{border-bottom:0}
+  .trust .reg .rl{flex:0 0 86px;font-size:10px;font-weight:700;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--gold);padding-top:2px}
+  .trust .reg .rv{flex:1;font-family:var(--sans);font-size:12px;line-height:1.55;color:var(--ink-soft)}
+  .verified-line{display:flex;align-items:center;gap:6px;margin-top:10px;
+    font-family:var(--sans);font-size:11px;font-weight:600;color:var(--green)}
+
+  /* interstitial modal */
+  .overlay{position:absolute;inset:0;background:rgba(30,18,6,0.55);display:none;
+    align-items:flex-end;z-index:6}
+  .overlay.show{display:flex}
+  .sheet{background:var(--parchment-hi);border-radius:22px 22px 0 0;padding:20px 18px 26px;width:100%}
+  .sheet .sh{font-family:var(--deva);font-size:16px;color:var(--ink);text-align:center}
+  .sheet .sb{font-family:var(--deva);font-size:12.5px;line-height:1.7;color:var(--ink-soft);
+    margin-top:10px;text-align:center}
+  .sheet .warnbox{margin-top:12px;border:1px dashed var(--gold);border-radius:12px;padding:10px 12px;
+    font-family:var(--deva);font-size:12px;line-height:1.65;color:var(--saffron-deep);background:var(--gold-tint)}
+
+  .endcap{margin-top:24px;text-align:center;color:var(--gold);font-family:var(--deva);font-size:16px;opacity:.55}
+
+  /* ---- side annotation panel ---- */
+  .panel{flex:1;min-width:320px;max-width:560px}
+  .acard{background:#23190E;border:1px solid #3A2A16;border-radius:14px;padding:16px 18px;margin-bottom:16px}
+  .acard h3{font-family:var(--serif);font-size:17px;color:#FFF5E0;margin-bottom:8px}
+  .acard ul{list-style:none}
+  .acard li{position:relative;padding:6px 0 6px 22px;font-size:12.5px;line-height:1.6;color:#C9B896;
+    border-bottom:1px dashed #3A2A16}
+  .acard li:last-child{border-bottom:0}
+  .acard li::before{content:"◆";position:absolute;left:2px;top:7px;font-size:9px;color:var(--saffron)}
+  .acard li b{color:#FFF5E0}
+  .acard li code{font-size:11px;background:#2A1D10;border:1px solid #3A2A16;border-radius:5px;
+    padding:1px 5px;color:#E7D8B6}
+  .acard .warn{margin-top:10px;border:1px dashed var(--gold);border-radius:9px;padding:8px 11px;
+    font-size:11.5px;color:#E7D8B6}
+</style>
+</head>
+<body>
+
+<div class="intro">
+  <h1>PRD-26 · दान-पुण्य — Interactive Prototype</h1>
+  <div class="deva-sub">शिक्षा पहले · खाता बीच में · दान-द्वार सबसे अंत में</div>
+  <p>
+    Five interactive scenarios of the giving layer. The organizing rule everywhere:
+    <b>the feature opens on महत्व — why the tradition gives, in the shastra's own words —
+    and the donate hand-off is the terminal act of a journey</b>, never a button on the home,
+    never a tab, never the pitch. Click through the phones: shastra cards, the journey stepper,
+    vaar chips, the ledger form (गुप्त toggle live), and the Phase-2 hand-off interstitial all work.
+  </p>
+</div>
+
+<div class="samplebanner">
+  <b>⚠ ILLUSTRATIVE SAMPLE</b> — verse translations, occasion/vaar daan rows, ledger entries, and every
+  organization shown (names, registration ids, dates) are placeholder copy written for layout and flow only.
+  It is <b>not verified content</b> and must not be transcribed into the app. Real rows ship only after the
+  PRD-26 verification gates (§6.2, §10) are cleared; directory rows additionally need the store-policy review (§6.1).
+</div>
+
+<!-- ============================================================ S1 =============== -->
+<section class="scenario">
+  <h2>S1 — The educate-first home · More → साधना → दान-पुण्य</h2>
+  <div class="sc-sub">Opens on महत्व. Tap a shastra card to read the verse. Tap a vaar chip to change the weekly line. Note what is <i>absent</i>: any give/donate affordance.</div>
+  <div class="wrap">
+    <div class="phone" id="p1">
+      <div class="statusbar"><span>7:12</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+
+      <!-- S1 home -->
+      <div class="screen" id="p1-home">
+        <div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="tt">दान-पुण्य</div><div class="sp"></div></div>
+          <div class="hero">
+            <div class="tags"><span class="pill fest">आज मकर संक्रान्ति</span><span class="pill">माघ कृष्ण द्वितीया · रविवार</span></div>
+            <div class="name">दान-पुण्य</div>
+            <div class="name-en">Daan Punya — the giving practice</div>
+            <div class="rule">जप · व्रत · दान — साधना का तीसरा चरण</div>
+          </div>
+
+          <div class="block">
+            <div class="bh">आज के दान का महत्व <span class="en">why today asks for giving</span></div>
+            <div class="aaj">
+              <div class="why">सूर्य के उत्तरायण होने का पर्व — परम्परा कहती है कि आज दिया गया तिल-गुड़
+                और अन्न विशेष फलदायी है। तिल क्यों? शीत ऋतु में स्निग्ध तिल शरीर और दीप दोनों को
+                पोषण देता है — देना वहीं से शुरू होता है जहाँ आवश्यकता है।</div>
+              <div class="items">
+                <span class="item-chip">तिल-गुड़</span><span class="item-chip">खिचड़ी (अन्न)</span>
+                <span class="item-chip">वस्त्र / कम्बल</span><span class="item-chip">गौ-ग्रास</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="block">
+            <div class="bh">इस वार का दान <span class="en">tap a day</span></div>
+            <div class="vaar-row" id="vaarRow">
+              <div class="vchip on" onclick="setVaar(0,this)">र</div><div class="vchip" onclick="setVaar(1,this)">सो</div>
+              <div class="vchip" onclick="setVaar(2,this)">मं</div><div class="vchip" onclick="setVaar(3,this)">बु</div>
+              <div class="vchip" onclick="setVaar(4,this)">गु</div><div class="vchip" onclick="setVaar(5,this)">शु</div>
+              <div class="vchip" onclick="setVaar(6,this)">श</div>
+            </div>
+            <div class="vaar-line" id="vaarLine"></div>
+          </div>
+
+          <div class="block">
+            <div class="bh">शास्त्र क्या कहते हैं <span class="en">the source spine — tap to read</span></div>
+            <div class="card" onclick="go('p1','p1-rv')"><div class="glyph">ऋ</div>
+              <div class="ct"><div class="t">दान-सूक्त — बिना बाँटा अन्न व्यर्थ है</div>
+                <div class="m">Ṛgveda 10.117 · the oldest word on giving</div></div><div class="chev">›</div></div>
+            <div class="card" onclick="go('p1','p1-tu')"><div class="glyph">उ</div>
+              <div class="ct"><div class="t">श्रद्धया देयम् — कैसे दें</div>
+                <div class="m">Taittirīya Upaniṣad 1.11.3 · the giver's bhaav</div></div><div class="chev">›</div></div>
+            <div class="card" onclick="go('p1','p1-gita')"><div class="glyph">गी</div>
+              <div class="ct"><div class="t">सात्त्विक दान — देश, काल और पात्र</div>
+                <div class="m">Gita 17.20 · पढ़ें — reader में (bundled today)</div></div><div class="chev">›</div></div>
+            <div class="card"><div class="glyph">म</div>
+              <div class="ct"><div class="t">अन्न-दान सर्वोपरि क्यों</div>
+                <div class="m">Mahābhārata · Anuśāsana (दानधर्म) parva — Bhīṣma</div></div><div class="chev">›</div></div>
+          </div>
+
+          <div class="block">
+            <div class="bh">कथाएँ जो दान सिखाती हैं <span class="en">already in the katha library</span></div>
+            <div class="card"><div class="glyph">क</div>
+              <div class="ct"><div class="t">अक्षय तृतीया की कथा</div>
+                <div class="m">इस तिथि का दान अक्षय क्यों — opens shipped katha</div></div><div class="chev">›</div></div>
+            <div class="card"><div class="glyph">क</div>
+              <div class="ct"><div class="t">अक्षय नवमी — आँवले की छाया का दान</div>
+                <div class="m">opens shipped katha</div></div><div class="chev">›</div></div>
+          </div>
+
+          <div class="block">
+            <div class="card" onclick="go('p3','p3-ledger')" style="border-color:var(--gold-soft)">
+              <div class="glyph">॥</div>
+              <div class="ct"><div class="t">मेरा दान-पुण्य खाता</div>
+                <div class="m">private · on this device only — see S3</div></div><div class="chev">›</div></div>
+          </div>
+          <div class="endcap">॥ ॐ ॥</div>
+        </div>
+      </div>
+
+      <!-- verse screens -->
+      <div class="screen hidden" id="p1-rv"><div class="pad">
+        <div class="topbar"><div class="back" onclick="go('p1','p1-home')">‹</div><div class="tt">दान-सूक्त</div><div class="sp"></div></div>
+        <div class="block">
+          <div class="verse">
+            <div class="sa">मोघमन्नं विन्दते अप्रचेताः<br/>सत्यं ब्रवीमि वध इत्स तस्य ।<br/>
+              नार्यमणं पुष्यति नो सखायं<br/>केवलाघो भवति केवलादी ॥</div>
+            <div class="iast">mogham annaṁ vindate apracetāḥ · satyaṁ bravīmi vadha it sa tasya ·<br/>
+              nāryamaṇaṁ puṣyati no sakhāyaṁ · kevalāgho bhavati kevalādī</div>
+            <div class="cite">Ṛgveda 10.117.6 · दान-सूक्त</div>
+            <div class="mean">जो समझ रखते हुए भी नहीं बाँटता, उसका अन्न व्यर्थ जाता है — जो अकेला
+              खाता है, वह केवल दोष ही खाता है। दान कृपा नहीं, धर्म है: अन्न पाने का अर्थ ही
+              उसे बाँटना है।</div>
+          </div>
+          <div class="body" style="margin-top:12px">यह ऋग्वेद का दान-सूक्त है — देने पर सबसे
+            प्राचीन वचन। इसी से इस सुविधा का पहला पत्ता खुलता है: <b>पहले समझ, फिर भाव, फिर दान।</b></div>
+        </div>
+      </div></div>
+
+      <div class="screen hidden" id="p1-tu"><div class="pad">
+        <div class="topbar"><div class="back" onclick="go('p1','p1-home')">‹</div><div class="tt">कैसे दें</div><div class="sp"></div></div>
+        <div class="block">
+          <div class="verse">
+            <div class="sa">श्रद्धया देयम् । अश्रद्धया अदेयम् ।<br/>श्रिया देयम् । ह्रिया देयम् ।<br/>भिया देयम् । संविदा देयम् ॥</div>
+            <div class="iast">śraddhayā deyam · aśraddhayā adeyam · śriyā deyam ·<br/>hriyā deyam · bhiyā deyam · saṁvidā deyam</div>
+            <div class="cite">Taittirīya Upaniṣad 1.11.3</div>
+            <div class="mean">श्रद्धा से दो; बिना श्रद्धा के मत दो। अपने सामर्थ्य के अनुसार दो।
+              विनम्रता से दो — लेने वाले को छोटा मत समझो। संकोच (भय) सहित दो, और समझ के साथ दो।</div>
+          </div>
+          <div class="body" style="margin-top:12px">आचार्य की अंतिम शिक्षा में दान अनिवार्य कर्तव्य
+            है — पर मात्रा नहीं, <b>भाव</b> उसका मापदण्ड है। इसीलिए इस ऐप में दान का कोई अंक,
+            कोई लक्ष्य, कोई तुलना नहीं है।</div>
+        </div>
+      </div></div>
+
+      <div class="screen hidden" id="p1-gita"><div class="pad">
+        <div class="topbar"><div class="back" onclick="go('p1','p1-home')">‹</div><div class="tt">सात्त्विक दान</div><div class="sp"></div></div>
+        <div class="block">
+          <div class="verse">
+            <div class="sa">दातव्यमिति यद्दानं दीयतेऽनुपकारिणे ।<br/>देशे काले च पात्रे च तद्दानं सात्त्विकं स्मृतम् ॥</div>
+            <div class="iast">dātavyam iti yad dānaṁ dīyate 'nupakāriṇe ·<br/>deśe kāle ca pātre ca tad dānaṁ sāttvikaṁ smṛtam</div>
+            <div class="cite">श्रीमद्भगवद्गीता 17.20</div>
+            <div class="mean">"देना कर्तव्य है" — इस भाव से, बदले की आशा के बिना, उचित देश, काल
+              और पात्र को दिया गया दान सात्त्विक कहा गया है।</div>
+          </div>
+          <div class="card" style="margin-top:12px"><div class="glyph">गी</div>
+            <div class="ct"><div class="t">पूरा प्रसंग पढ़ें — अध्याय 17</div>
+              <div class="m">deep link → bundled Gita reader (17.20–22)</div></div><div class="chev">›</div></div>
+          <div class="body" style="margin-top:10px">देश-काल-पात्र — कहाँ, कब, किसे। यही विवेक
+            S4 के दान-द्वार का आधार है: <b>पात्र की परख पहले, देना बाद में।</b></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="panel">
+      <div class="acard"><h3>What this screen is — and is not</h3><ul>
+        <li><b>Opens on महत्व</b>: today's occasion line (panchang-computed — मकर संक्रान्ति here), the vaar line, and the four-layer source spine (Veda → Upaniṣad → Gītā → Itihāsa). PRD-26 §2.7 / §4a.</li>
+        <li><b>Zero give affordances.</b> No donate button, no directory door, no amount anywhere. The §9 surface-contract test pins this: the home renders no external-linking affordance.</li>
+        <li>The Gita card is the only layer <b>already bundled</b> — it deep-links into the shipped reader (<code>gita/chapter-17.json</code>). Katha cards open the shipped katha library entries.</li>
+        <li>Vaar chips drive the same 7-row table PRD-21 needs (<code>data/daan/vaar.ts</code>, shared module).</li>
+        <li>The single quiet door at the end goes to the <b>खाता</b> (ledger) — recording what one already gives is the primary behaviour.</li>
+      </ul></div>
+      <div class="acard"><h3>Register</h3><ul>
+        <li>Copy explains the <b>reason</b> ("til because…"), never commands and never scores. Copy-guard test rejects fear/guilt/points vocabulary in <code>data/daan/</code>.</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ S2 =============== -->
+<section class="scenario">
+  <h2>S2 — The occasion journey · मकर संक्रान्ति (entered from Observance Detail)</h2>
+  <div class="sc-sub">The §4a contract as a stepper: महत्व → शास्त्र → कथा → क्या दें → संकल्प-भाव. The two terminal actions exist only on the last step — record first, hand-off last.</div>
+  <div class="wrap">
+    <div class="phone" id="p2">
+      <div class="statusbar"><span>7:31</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+      <div class="screen" id="p2-j"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="tt">मकर संक्रान्ति का दान</div><div class="sp"></div></div>
+        <div class="dots" id="jDots"></div>
+        <div id="jBody"></div>
+        <div class="stepnav">
+          <div class="sbtn ghost" id="jPrev" onclick="jStep(-1)">पीछे</div>
+          <div class="sbtn fill" id="jNext" onclick="jStep(1)">आगे</div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="panel">
+      <div class="acard"><h3>Why a stepper, not a page</h3><ul>
+        <li>The §2.7 contract requires the hand-off to be <b>unreachable until the educate steps have rendered</b> — "not skippable in one scroll-tap". A stepper makes the contract structural, not stylistic.</li>
+        <li>Steps: <b>1 महत्व</b> (why this day) → <b>2 शास्त्र</b> (the verse) → <b>3 कथा</b> (shipped-story link) → <b>4 क्या दें</b> (items + reasons) → <b>5 संकल्प-भाव</b> + terminal actions.</li>
+        <li>On step 5, <b>"खाते में दर्ज करें" leads</b>; "दान-द्वार" trails it, visibly tagged <code>बाहरी / external</code>, and exists only in Phase 2 builds.</li>
+        <li>संकल्प-भाव is static bilingual copy in Phase 1; when PRD-20 lands it becomes <code>composeSankalp(…, karma:'daan')</code> with the user's real tithi-coordinates.</li>
+        <li>Entry doors into this journey: Observance Detail (daan days), Home Today strip line, vaar row, Pitru Smaran, vidhi daan steps — every door enters at step 1.</li>
+      </ul>
+      <div class="warn">A user who leaves at any step has been fully served — understanding <i>is</i> the product. The journey never nags toward its last step.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ S3 =============== -->
+<section class="scenario">
+  <h2>S3 — दान-पुण्य खाता · the private ledger + 10-second entry</h2>
+  <div class="sc-sub">Left: the smaran register, tithi-stamped, गुप्त entries masked. Right: the entry form — tap chips, flip the गुप्त toggle (watch fields disappear), save (entry appears in the ledger).</div>
+  <div class="wrap">
+    <div class="phone" id="p3">
+      <div class="statusbar"><span>8:04</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+      <div class="screen" id="p3-ledger"><div class="pad">
+        <div class="topbar"><div class="back" onclick="go('p1','p1-home')">‹</div><div class="tt">दान-पुण्य खाता</div><div class="sp"></div></div>
+        <div class="hero" style="border-bottom:0;padding-bottom:6px">
+          <div class="tags"><span class="pill">इस डिवाइस पर · निजी</span></div>
+          <div class="name" style="font-size:20px">स्मरण, अंक नहीं</div>
+          <div class="name-en">a remembrance register — never a score</div>
+        </div>
+        <div class="stepnav" style="margin-top:4px">
+          <div class="sbtn fill" onclick="go('p3','p3-entry')">नया दान दर्ज करें</div>
+        </div>
+        <div id="ledgerList">
+          <div class="month">माघ · January</div>
+          <div class="entry"><div class="g">अ</div><div class="et">
+            <div class="cat">अन्न-दान — खिचड़ी</div>
+            <div class="tithi">मकर संक्रान्ति · माघ कृष्ण द्वितीया · 14 Jan</div>
+            <div class="nt">मंदिर के अन्नक्षेत्र में</div></div></div>
+          <div class="entry gupt"><div class="g">॥</div><div class="et">
+            <div class="cat">गुप्त दान</div>
+            <div class="tithi">माघ कृष्ण अष्टमी · 20 Jan</div>
+            <div class="nt">विवरण गुप्त — केवल तिथि स्मरण में</div></div></div>
+          <div class="month">पौष · December</div>
+          <div class="entry"><div class="g">व</div><div class="et">
+            <div class="cat">वस्त्र-दान — कम्बल</div>
+            <div class="tithi">पौष पूर्णिमा · शनिवार</div></div></div>
+          <div class="entry"><div class="g">गौ</div><div class="et">
+            <div class="cat">गौ-सेवा</div>
+            <div class="tithi">गोपाष्टमी · शुक्रवार</div>
+            <div class="nt">गौशाला — चारा</div></div></div>
+        </div>
+        <div class="block">
+          <div class="card"><div class="glyph">↗</div>
+            <div class="ct"><div class="t">निर्यात करें (CSV + सारांश)</div>
+              <div class="m">OS share sheet — device-only · 80G paperwork friendly</div></div><div class="chev">›</div></div>
+        </div>
+        <div class="endcap">॥ ॐ ॥</div>
+      </div>
+      <div class="toast" id="toast3">दर्ज हुआ — माघ कृष्ण द्वितीया</div>
+      </div>
+
+      <!-- entry form -->
+      <div class="screen hidden" id="p3-entry"><div class="pad">
+        <div class="topbar"><div class="back" onclick="go('p3','p3-ledger')">‹</div><div class="tt">नया दान</div><div class="sp"></div></div>
+        <div class="flabel">तिथि — स्वतः</div>
+        <div class="field">आज · मकर संक्रान्ति · माघ कृष्ण द्वितीया, रविवार</div>
+        <div class="flabel">प्रकार (एक चुनें — बस इतना अनिवार्य है)</div>
+        <div class="chips" id="catChips">
+          <div class="cchip on" onclick="pickCat(this)">अन्न</div><div class="cchip" onclick="pickCat(this)">वस्त्र</div>
+          <div class="cchip" onclick="pickCat(this)">विद्या</div><div class="cchip" onclick="pickCat(this)">गौ-सेवा</div>
+          <div class="cchip" onclick="pickCat(this)">दीप</div><div class="cchip" onclick="pickCat(this)">द्रव्य</div>
+          <div class="cchip" onclick="pickCat(this)">रक्त-दान</div><div class="cchip" onclick="pickCat(this)">श्रम / सेवा</div>
+          <div class="cchip" onclick="pickCat(this)">अन्य</div>
+        </div>
+        <div class="switchrow" onclick="toggleGupt()">
+          <div><div class="sl">गुप्त दान</div>
+            <div class="sd">केवल तिथि दर्ज होगी — राशि, विवरण, पात्र कुछ नहीं</div></div>
+          <div class="toggle" id="guptT"></div>
+        </div>
+        <div id="optFields">
+          <div class="flabel">विवरण — वैकल्पिक</div>
+          <div class="field">जैसे: खिचड़ी, मंदिर अन्नक्षेत्र में…</div>
+          <div class="flabel">राशि (₹) — वैकल्पिक · निजी</div>
+          <div class="field">कभी किसी share card या सूची में नहीं दिखती</div>
+        </div>
+        <div class="savebar stepnav">
+          <div class="sbtn fill" onclick="saveEntry()">दर्ज करें</div>
+        </div>
+        <div class="terminal"><div class="note">दस सेकंड का फ़ॉर्म — गेट पर, हुंडी में, पड़ोस में दिया दान
+          भी उतना ही दर्ज होने योग्य है। यही प्राथमिक मार्ग है, विकल्प नहीं।</div></div>
+      </div></div>
+    </div>
+
+    <div class="panel">
+      <div class="acard"><h3>Ledger contract</h3><ul>
+        <li><b>Self-attested, device-only.</b> AsyncStorage <code>@vedansh/daan-ledger:v1</code> — the routine done-marks / japam-counter pattern. No cloud, no account.</li>
+        <li><b>Tithi-stamped by the engine.</b> Every entry carries the panchang tithi + occasion rule id automatically — the ledger reads like a samvat, not a bank statement.</li>
+        <li><b>गुप्त दान is first-class</b>: flip the toggle — amount/detail fields vanish (not just hidden-on-render: never captured). The entry lists as "गुप्त दान · तिथि" only.</li>
+        <li><b>Only date + category are required</b> — the U6 gate-and-hundi case is the primary path. Under 10 seconds.</li>
+        <li><b>No totals, no streaks, no charts of generosity.</b> Export (share sheet, PRD-06 pattern) is the only aggregation, and it leaves the app only by the user's hand.</li>
+        <li>Form uses house specs: <code>TextField variant="form"</code> 48dp, chip idiom from muhurat-disha.</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ S4 =============== -->
+<section class="scenario">
+  <h2>S4 — दान-द्वार · the terminal hand-off (Phase 2)</h2>
+  <div class="sc-sub">Reached only through a journey's last step. Even here: the organization is <i>explained</i> first — verification shown to the user — and "दान करें" is the bottom-most element. Tap it for the honest interstitial.</div>
+  <div class="wrap">
+    <div class="phone" id="p4">
+      <div class="statusbar"><span>7:58</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+      <div class="screen" id="p4-detail"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="tt">पात्र-परिचय</div><div class="sp"></div></div>
+        <div class="hero">
+          <div class="tags"><span class="pill">गौशाला</span><span class="pill fest">SAMPLE ROW</span></div>
+          <div class="name">श्री गोपाल गौ-सेवा ट्रस्ट</div>
+          <div class="name-en">(illustrative — not a real listing)</div>
+          <div class="rule">देशे काले च पात्रे — पात्र की परख पहले</div>
+        </div>
+        <div class="block">
+          <div class="bh">ये क्या करते हैं <span class="en">the work, before the ask</span></div>
+          <div class="body">वृद्ध और अशक्त गौवंश का पालन — चारा, चिकित्सा, आश्रय। गोपाष्टमी और
+            संक्रान्ति पर गौ-ग्रास सेवा का पारम्परिक पात्र।</div>
+        </div>
+        <div class="block">
+          <div class="bh">सत्यापन <span class="en">shown to the user — trust is the feature</span></div>
+          <div class="trust">
+            <div class="reg"><div class="rl">NGO Darpan</div><div class="rv">RJ/2019/0XXXXX (sample)</div></div>
+            <div class="reg"><div class="rl">80G</div><div class="rv">AAATS0000X0000 (sample) — रसीद ट्रस्ट देगा, ऐप नहीं</div></div>
+            <div class="reg"><div class="rl">आधिकारिक</div><div class="rv">gopalgauseva.org (sample) — दान-पृष्ठ केवल इसी domain से</div></div>
+            <div class="verified-line">✓ दो स्वतंत्र स्रोतों से सत्यापित · 2026-08-30 · 18 माह में पुनः-सत्यापन</div>
+          </div>
+        </div>
+        <div class="block">
+          <div class="bh">इनसे जुड़ा आपका अभ्यास</div>
+          <div class="card"><div class="glyph">गौ</div>
+            <div class="ct"><div class="t">गौ सेवा — मन्त्र व विधि</div>
+              <div class="m">opens shipped sanskar entry (gau-seva)</div></div><div class="chev">›</div></div>
+        </div>
+        <div class="terminal">
+          <div class="stepnav" style="margin-top:0">
+            <div class="sbtn" onclick="go('p3','p3-entry')">खाते में दर्ज करें</div>
+            <div class="sbtn fill" onclick="showSheet()">दान करें<span class="ext-tag">बाहरी</span></div>
+          </div>
+          <div class="note">ऐप इस लेन-देन का हिस्सा नहीं है — दान ट्रस्ट के अपने आधिकारिक
+            माध्यम पर, ऐप के बाहर होगा।</div>
+        </div>
+        <div class="endcap">॥ ॐ ॥</div>
+
+        <div class="overlay" id="p4-sheet">
+          <div class="sheet">
+            <div class="sh">बाहरी माध्यम पर जा रहे हैं</div>
+            <div class="sb">gopalgauseva.org का दान-पृष्ठ आपके ब्राउज़र में खुलेगा।</div>
+            <div class="warnbox">यह ऐप न राशि लेता है, न पुष्टि कर सकता है, न कोई अंश पाता है।
+              लौटने पर — चाहें तो — इसे खाते में दर्ज करने का <b>एक</b> विनम्र प्रस्ताव मिलेगा।</div>
+            <div class="stepnav">
+              <div class="sbtn ghost" onclick="hideSheet()">रहने दें</div>
+              <div class="sbtn fill" onclick="hideSheet()">खोलें ↗</div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="panel">
+      <div class="acard"><h3>The hand-off posture (PRD-26 §5 P2 / §6)</h3><ul>
+        <li><b>No directory tab exists.</b> This screen is reachable only from a journey's terminal step — never in one tap from anywhere.</li>
+        <li>The screen itself is educate-first: <b>work → verification → related practice → then the action row</b>. "खाते में दर्ज करें" (record) is placed before "दान करें".</li>
+        <li>The give button carries the <code>बाहरी/external</code> tag; the interstitial states plainly that the app is outside the transaction. Return-flow record offer fires <b>at most once</b>, declining is silent.</li>
+        <li>Registration ids + verification date are <b>shown to the user</b> — §6.2's two-source + govt-registry gate, re-verified on cadence; stale rows drop to <code>draft</code>.</li>
+        <li>Phase 2 rides a <b>store release</b> for review visibility (§6.1); degrades to information-only rows if review objects — Phase 1 educate/ledger is never hostage.</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ S5 =============== -->
+<section class="scenario">
+  <h2>S5 — Touchpoints · where the doors appear across the shipped app</h2>
+  <div class="sc-sub">One example in frame: Observance Detail on मौनी अमावस्या gains a quiet महत्व door (after About/Story/उपवास विधि — never above them). Panel lists every door.</div>
+  <div class="wrap">
+    <div class="phone" id="p5">
+      <div class="statusbar"><span>6:47</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="tt">व्रत विवरण</div><div class="sp"></div></div>
+        <div class="hero">
+          <div class="tags"><span class="pill fest">अमावस्या</span><span class="pill">माघ · सोमवार</span></div>
+          <div class="name">मौनी अमावस्या</div>
+          <div class="name-en">Mauni Amavasya</div>
+        </div>
+        <div class="block"><div class="bh">परिचय <span class="en">shipped section</span></div>
+          <div class="body">मौन, स्नान और पितृ-स्मरण की अमावस्या…</div></div>
+        <div class="block"><div class="bh">कथा <span class="en">shipped section</span></div>
+          <div class="card"><div class="glyph">क</div>
+            <div class="ct"><div class="t">अमावस्या व्रत कथा</div>
+              <div class="m">तिल-जल तर्पण और अन्न-वस्त्र दान की कथा</div></div><div class="chev">›</div></div></div>
+        <div class="block"><div class="bh">उपवास विधि <span class="en">shipped section (PRD-09)</span></div>
+          <div class="body" style="opacity:.65">… fasting rules render here …</div></div>
+        <div class="block">
+          <div class="bh">आज के दान का महत्व <span class="en">NEW — the PRD-26 door, last section</span></div>
+          <div class="card" style="border-color:var(--gold-soft);background:var(--gold-tint)">
+            <div class="glyph">दा</div>
+            <div class="ct"><div class="t">अमावस्या और दान — क्यों जुड़े हैं</div>
+              <div class="m">पितृ-तृप्ति · तिल-जल · अन्न-वस्त्र — opens the S2 journey at step 1</div></div>
+            <div class="chev">›</div></div>
+        </div>
+        <div class="endcap">॥ ॐ ॥</div>
+      </div></div>
+    </div>
+
+    <div class="panel">
+      <div class="acard"><h3>Every door, every entry at step 1 of the journey</h3><ul>
+        <li><b>Observance Detail</b> (daan-significant days: संक्रान्ति, अक्षय तृतीया, अमावस्या family, एकादशी family, पितृ पक्ष) — quiet last-section door, shown in frame.</li>
+        <li><b>Home Today strip</b> — a daan line only on daan-significant days, same door.</li>
+        <li><b>Katha library</b> — daan-themed kathas gain a "इस कथा का दान" footer cross-link; the journey's कथा step links back. Two-way, no duplication.</li>
+        <li><b>Vidhi conduct</b> — Karwa Chauth <code>karwa-dana</code> step (+ future <code>daan</code> step kind, PRD-22) gets a record affordance on the step card; conduct stays swipe-only.</li>
+        <li><b>Pitru Smaran</b> — shraddha-tithi detail links anna-daan educate + record; ancestor context stays private (PRD-17 stance), never on any share surface.</li>
+        <li><b>Daily Routine</b> — "add वार-दान to routine" creates the weekly unit (e.g. शनिवार तिल-तेल); marking it done offers the one-tap ledger entry.</li>
+        <li><b>Kundali / PRD-21</b> — graha-daan rows reuse <code>vaar.ts</code>; the daśā-aware line deep-links here.</li>
+        <li><b>Theerth</b> (Phase 2) — temple detail gains a giving line only where the trust has a verified directory row.</li>
+        <li><b>PRD-20 सङ्कल्प</b> — journey step 5 upgrades to <code>composeSankalp(karma:'daan')</code> when it ships.</li>
+      </ul>
+      <div class="warn"><b>Ordering rule everywhere:</b> the daan door is the <i>last</i> section of its host screen, and reminders (opt-in, existing vrat/festive families) name the occasion and the tradition — never an amount, never a recipient.</div></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  /* screen router */
+  function go(phoneId, screenId){
+    document.querySelectorAll('#'+phoneId+' .screen').forEach(s=>s.classList.add('hidden'));
+    document.getElementById(screenId).classList.remove('hidden');
+    document.getElementById(screenId).scrollTop = 0;
+  }
+
+  /* S1 vaar chips */
+  const VAAR = [
+    ['रविवार — सूर्य','गेहूँ, गुड़, ताँबे के पात्र में जल — उत्तरायण के देव को अर्घ्य के साथ।'],
+    ['सोमवार — चन्द्र / शिव','श्वेत वस्तु: दूध, चावल, मिश्री — शीतलता का दान।'],
+    ['मंगलवार — मंगल / हनुमान','मसूर, गुड़ — और श्रम-सेवा का संकल्प।'],
+    ['बुधवार — बुध','मूँग, हरा चारा (गौ-ग्रास) — बुद्धि के कारक को हरित दान।'],
+    ['गुरुवार — बृहस्पति','चना दाल, हल्दी, केला — विद्या-दान का भी वार यही।'],
+    ['शुक्रवार — शुक्र','चावल, घी, श्वेत वस्त्र — अन्नपूर्णा-भाव से।'],
+    ['शनिवार — शनि','तिल, तेल, काला वस्त्र, लोहा — और छाया-पात्रों की सेवा।'],
+  ];
+  function setVaar(i, el){
+    document.querySelectorAll('#vaarRow .vchip').forEach(c=>c.classList.remove('on'));
+    el.classList.add('on');
+    document.getElementById('vaarLine').innerHTML = '<b>'+VAAR[i][0]+'</b> — '+VAAR[i][1];
+  }
+  setVaar(0, document.querySelector('#vaarRow .vchip'));
+
+  /* S2 journey stepper */
+  const JSTEPS = [
+    {label:'चरण 1 · महत्व', html:
+      '<div class="steplabel">चरण 1 · महत्व — यह दिन दान का क्यों है</div>'+
+      '<div class="aaj"><div class="why">आज सूर्य मकर राशि में प्रवेश करते हैं — उत्तरायण का आरम्भ। '+
+      'परम्परा इस संधि-काल को <b>देने का दिन</b> कहती है: जो प्रकाश बढ़ रहा है, उसे बाँटा जाता है। '+
+      'तिल-गुड़ और खिचड़ी इस दिन के पारम्परिक दान हैं — स्निग्ध, पोषक, शीत-ऋतु में सबसे उपयोगी।</div></div>'+
+      '<div class="body" style="margin-top:12px;font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted)">Understanding first. The give action is three steps away, by design.</div>'},
+    {label:'चरण 2 · शास्त्र', html:
+      '<div class="steplabel">चरण 2 · शास्त्र</div>'+
+      '<div class="verse"><div class="sa">दातव्यमिति यद्दानं दीयतेऽनुपकारिणे ।<br/>देशे काले च पात्रे च तद्दानं सात्त्विकं स्मृतम् ॥</div>'+
+      '<div class="cite">गीता 17.20 · पढ़ें — reader में</div>'+
+      '<div class="mean">कर्तव्य-भाव से, बदले की आशा के बिना, उचित देश, काल और पात्र को दिया दान सात्त्विक है। आज <b>काल</b> स्वयं उपस्थित है — देश और पात्र आपका विवेक चुनेगा।</div></div>'},
+    {label:'चरण 3 · कथा', html:
+      '<div class="steplabel">चरण 3 · कथा</div>'+
+      '<div class="card"><div class="glyph">क</div><div class="ct"><div class="t">अक्षय तृतीया की कथा — धर्मदास</div>'+
+      '<div class="m">"थोड़ा-सा दान भी अक्षय फल देता है" — opens shipped katha</div></div><div class="chev">›</div></div>'+
+      '<div class="body">निर्धन धर्मदास का जल-दान और अन्न-दान जन्म-जन्मांतर चला — कथा-कोश में पहले से उपलब्ध यह कथा मात्रा नहीं, <b>भाव</b> की शिक्षा देती है।</div>'},
+    {label:'चरण 4 · क्या दें', html:
+      '<div class="steplabel">चरण 4 · क्या दें — कारण सहित</div>'+
+      '<div class="entry"><div class="g">ति</div><div class="et"><div class="cat">तिल-गुड़</div><div class="nt">शीत में स्निग्ध पोषण — संक्रान्ति का मूल दान</div></div></div>'+
+      '<div class="entry"><div class="g">अ</div><div class="et"><div class="cat">खिचड़ी / अन्न</div><div class="nt">अन्न-दान सर्वोपरि — अनुशासन पर्व की शिक्षा</div></div></div>'+
+      '<div class="entry"><div class="g">व</div><div class="et"><div class="cat">वस्त्र / कम्बल</div><div class="nt">माघ की ठिठुरन में सबसे प्रत्यक्ष आवश्यकता</div></div></div>'+
+      '<div class="entry"><div class="g">गौ</div><div class="et"><div class="cat">गौ-ग्रास</div><div class="nt">गौ सेवा — मन्त्र व विधि app में उपलब्ध</div></div></div>'},
+    {label:'चरण 5 · संकल्प-भाव', html:
+      '<div class="steplabel">चरण 5 · संकल्प-भाव</div>'+
+      '<div class="verse"><div class="sa">श्रद्धया देयम् — जो भी दूँ,<br/>श्रद्धा, सामर्थ्य और विनम्रता से दूँ ॥</div>'+
+      '<div class="cite">भाव-वाक्य · PRD-20 आने पर पूर्ण सङ्कल्प (तिथि-सहित) यहीं बनेगा</div></div>'+
+      '<div class="terminal">'+
+      '<div class="stepnav" style="margin-top:0">'+
+      '<div class="sbtn fill" onclick="go(\'p3\',\'p3-entry\')">खाते में दर्ज करें</div>'+
+      '<div class="sbtn" onclick="showSheet()">दान-द्वार<span class="ext-tag">बाहरी</span></div></div>'+
+      '<div class="note">यही एकमात्र स्थान है जहाँ दान-द्वार प्रकट होता है — यात्रा के अंत में, '+
+      'दर्ज-करें के बाद। यहाँ रुक जाना भी पूर्ण है।</div></div>'},
+  ];
+  let jIdx = 0;
+  function jRender(){
+    document.getElementById('jBody').innerHTML = JSTEPS[jIdx].html;
+    document.getElementById('jDots').innerHTML =
+      JSTEPS.map((_,i)=>'<div class="dot'+(i===jIdx?' on':'')+'"></div>').join('');
+    document.getElementById('jPrev').style.visibility = jIdx===0 ? 'hidden' : 'visible';
+    document.getElementById('jNext').style.display = jIdx===JSTEPS.length-1 ? 'none' : 'flex';
+    document.getElementById('p2-j').scrollTop = 0;
+  }
+  function jStep(d){ jIdx = Math.min(JSTEPS.length-1, Math.max(0, jIdx+d)); jRender(); }
+  jRender();
+
+  /* S3 form */
+  let cat = 'अन्न', gupt = false;
+  function pickCat(el){
+    document.querySelectorAll('#catChips .cchip').forEach(c=>c.classList.remove('on'));
+    el.classList.add('on'); cat = el.textContent;
+  }
+  function toggleGupt(){
+    gupt = !gupt;
+    document.getElementById('guptT').classList.toggle('on', gupt);
+    document.getElementById('optFields').style.display = gupt ? 'none' : 'block';
+  }
+  function saveEntry(){
+    const list = document.getElementById('ledgerList');
+    const div = document.createElement('div');
+    div.className = 'entry' + (gupt ? ' gupt' : '');
+    div.innerHTML = '<div class="g">'+(gupt?'॥':cat[0])+'</div><div class="et">'+
+      '<div class="cat">'+(gupt?'गुप्त दान':cat+'-दान')+'</div>'+
+      '<div class="tithi">मकर संक्रान्ति · माघ कृष्ण द्वितीया · आज</div>'+
+      (gupt?'<div class="nt">विवरण गुप्त — केवल तिथि स्मरण में</div>':'')+'</div>';
+    list.insertBefore(div, list.children[1]);
+    go('p3','p3-ledger');
+    const t = document.getElementById('toast3');
+    t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), 1800);
+  }
+
+  /* S4 sheet */
+  function showSheet(){ document.getElementById('p4-sheet').classList.add('show');
+    document.getElementById('p4-detail').classList.remove('hidden'); }
+  function hideSheet(){ document.getElementById('p4-sheet').classList.remove('show'); }
+</script>
+</body>
+</html>

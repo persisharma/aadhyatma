@@ -7,6 +7,7 @@
 | **Design** | `design.md` §67 (to be added with the build, per `.claude/rules/design-doc-sync.md`) |
 | **Contract** | `RULEBOOK.md` §23 (to be added with the build) |
 | **Convention** | `docs/roadmap/conventions/daan-punya-v1.md` (to be authored — see §10) |
+| **Prototype** | `docs/daan-punya-prototype.html` — interactive; demonstrates the §2.7 educate-first journey, the ledger, the terminal hand-off, and the touchpoint doors |
 | **Release** | Phase 1 **OTA-shippable** (pure JS + AsyncStorage). Phase 2 content-gated + store-policy-gated (see §7). |
 | **Number note** | PRD-25 stays soft-reserved for नित्य कर्म / सन्ध्या वन्दन (Q4-candidates §3 "Strong PRD-25"). |
 
@@ -38,6 +39,11 @@ So the household reality the app leaves unserved: a family *does* give — anna-
 4. **Educate with the reason, never with a verdict.** Same register as vastu (PRD-24): the classical convention and its stated reason ("til on Shanivar because…"), never "you must" and never fear. The app informs the sankalp; the giver decides.
 5. **Directory rows are verified like temple rows, or they don't ship.** The giving directory follows the theerth/§10-family discipline — ≥2 independent published sources, registration identifiers, dated verification notes, draft-invisible until verified. A misdirected donation is worse than a missing feature, so the verification bar here is the *highest* in the app (§6.2).
 6. **Bundle-only, as always.** No backend, no analytics, no cloud sync. The ledger lives in AsyncStorage; the directory is a bundled registry; reminders reuse the existing local-notification planners; export goes out via the OS share sheet (the PRD-06 backup pattern).
+7. **Educate first — the donate door is the *last* act, never the pitch.** This is an IA contract, not a tone preference, and it is testable:
+   - The daan home opens on **महत्व** — why the tradition gives, in the shastra's own words — never on a give CTA. No donate/give affordance exists above the educate content on any screen, ever.
+   - The giving directory is **not** a tab, not a home-screen button, and not reachable in one tap from anywhere. Every path to the hand-off passes *through* an educate or occasion context first (§4a journey), and within that journey the give action is the final element, after the why, the shastra, the katha, and the what.
+   - The ledger's "record" action always appears **before** the "give elsewhere" door wherever both exist — recording what one already gives is the primary behaviour; sending money out through the app's directory is the terminal, optional one.
+   - Pinned in tests: a surface-contract test asserts the daan home renders zero `Linking`-bearing affordances, and the journey screens assert the hand-off button is unreachable until the educate steps have been rendered (not "skippable in one scroll-tap").
 
 ## 3. What the binary already gives us (why this is cheap)
 
@@ -55,9 +61,26 @@ So the household reality the app leaves unserved: a family *does* give — anna-
 | Sankalp before the act | PRD-20 (proposed) `composeSankalp` | Daan is one more `karma` clause when PRD-20 lands |
 | Vaar-wise graha daan table | PRD-21 (proposed) 9-row practice table | One table, two consumers — build it once in whichever ships first |
 
-## 4. End-to-end use cases (the touchpoint map)
+## 4. The journey, then the touchpoint map
 
-**U1 — Sankranti morning.** Makar Sankranti appears on the Home Today strip and Panchang tab (already shipped). Observance detail gains a दान line: til-gud, khichdi, vastra — each with the one-line reason. The user taps the goshala row in the directory, lands on the trust's official donation page in the browser, gives there, returns; the app offers to record it. Entry auto-stamped माघ कृष्ण … / मकर संक्रान्ति.
+### 4a. The journey (the §2.7 contract, drawn once)
+
+Every giving-adjacent surface in the app follows one canonical ordering. Contextual doors may enter the journey at its head, never past it:
+
+```
+महत्व (why the tradition gives — occasion/vaar aware)
+  → शास्त्र (the verse itself: Devanagari + IAST + meaning, deep-linked where bundled)
+    → कथा (the shipped story that carries the teaching, where one exists)
+      → क्या दें (the traditional items for this day, with the one-line reason each)
+        → संकल्प भाव (the giver's intent line; composed via PRD-20 when it lands)
+          → [record in खाता]  ·  [दान द्वार — external, Phase 2, terminal]
+```
+
+The two bracketed actions render only at the journey's end. "Record" leads; the hand-off door trails it, marked as external. A user who arrives already knowing why (the U6 gate-and-hundi case) reaches the ledger directly from the More row — the ledger is never gated — but the *directory* is only ever reached through this journey.
+
+### 4b. End-to-end use cases (the touchpoint map)
+
+**U1 — Sankranti morning.** Makar Sankranti appears on the Home Today strip and Panchang tab (already shipped). Observance detail gains a quiet **आज के दान का महत्व** door — not a give button. It opens the §4a journey: why Sankranti is a daan day (Uttarayana, the til tradition and its reason) → the shastra card → the katha cross-link → the item list (til-gud, khichdi, vastra, each with its one-line why) → and only then the two terminal actions. The user who follows it to the goshala row lands on the trust's official donation page in the browser, gives there, returns; the app offers to record it. Entry auto-stamped माघ कृष्ण … / मकर संक्रान्ति. The user who stops at understanding has *also* been fully served — the journey is complete without the last step.
 
 **U2 — Shanivar til-daan (weekly habit).** The vaar line ("आज शनिवार — शनि: til, oil") surfaces on the daan home — with a saved Kundali it aligns with PRD-21's running-daśā practice; with no chart it still works from vaar alone. "Add to Routine" creates a weekly Saturday routine item (existing `AddToRoutineButton` + routine units). Each week the user marks it done in the routine (existing flow) — and marking a daan-kind routine unit done offers the one-tap ledger entry.
 
@@ -124,7 +147,7 @@ No payment collection or processing; no commission or monetization of giving in 
 ## 8. Surfaces (summary)
 
 - **More hub** — साधना group row "दान-पुण्य / Daan Punya", `testID="more-daan-punya"`.
-- **DaanPunyaScreen** — आज का दान line (occasion + vaar aware), principle cards with Gita deep links, occasion browser, ledger + directory doors.
+- **DaanPunyaScreen** — the educate home, in §4a order: आज का दान महत्व line (occasion + vaar aware), shastra principle cards (Gita deep links; RV 10.117 / TU 1.11.3 verse cards), katha cross-links, occasion browser, and a single quiet खाता door at the end. **No directory door and no give affordance on this screen** — the directory is reached only from inside an occasion journey (§2.7).
 - **DaanLedgerScreen / DaanEntryScreen** — timeline + the 10-second form; export via share sheet.
 - **DaanDirectoryScreen / detail** (Phase 2) — grouped rows (अन्नक्षेत्र · गौशाला · संस्थाएँ · रक्त-सेवा), verification date visible, external hand-off with the honest interstitial.
 - **Contextual doors** — observance detail (daan days), katha cross-links, Karwa Chauth daan step, Pitru Smaran, theerth temple detail (Phase 2), routine daan unit.
@@ -132,13 +155,28 @@ No payment collection or processing; no commission or monetization of giving in 
 ## 9. Acceptance and release gates
 
 1. **Unit:** ledger reducer + AsyncStorage versioning/migration; tithi-stamping against the panchang engine (fixed dates × fixed cities); educate/occasion/vaar registry invariants (bilingual fields, ≥2 source domains, existing-rule-id referential integrity — every `occasionRuleId` must exist in the festival/observance rule tables); copy guard (no fear/guilt/score vocabulary); gupt-entry rendering (amount/recipient provably absent from every render path and from the share pipeline).
-2. **Phase 2 adds:** directory invariants (§6.2 list); hand-off interstitial shown before any `openURL`; return-flow prompt fires at most once per hand-off.
+2. **Phase 2 adds:** directory invariants (§6.2 list); hand-off interstitial shown before any `openURL`; return-flow prompt fires at most once per hand-off; the **§2.7 surface-contract test** — the daan home renders zero external-linking affordances, and journey screens render the hand-off action only after every educate step has rendered.
 3. **Screen (Jest):** DaanPunya renders occasion line for a daan-significant fixture date; entry form saves with only date+category; ledger groups by month with tithi lines. (VirtualizedList teardown discipline per the repo gotcha.)
 4. **Maestro:** More → दान-पुण्य → नया दान → category chip → save → visible in ledger; observance-day door assertion. Every change ships with e2e per the [[e2e-verification]] policy.
 5. `npm run lint` 0 errors; `tsc` clean; **design.md §67 + RULEBOOK §23 land in the same PR as the build** (design-doc-sync rule); categories/enumeration mirrors refreshed if any registry list is doc-mirrored.
 6. Phase 1 may ship OTA at the live store runtime; **Phase 2 must ride a store release** (§6.1) even though it contains no native module — the gate is review visibility, not the binary.
 
-## 10. Open decisions (for `conventions/daan-punya-v1.md`)
+## 10. Educate content corpus — verified source spine
+
+The educate layer is what makes this feature *not* a donate button. Its content is source-backed, layered by canon, and rendered in the reader's own discipline (Devanagari + IAST + hi/en meaning; review-only `source` block never rendered; RULEBOOK §11 verification before `verified`). The spine, checked against published translations on 2026-08-30 (shlokam.org, wisdomlib.org, sacred-texts.com, sri-aurobindo.co.in — recorded per-row in the registry's source blocks):
+
+| Layer | Source | What it gives the feature | Bundled today? |
+|---|---|---|---|
+| **Veda** | Ṛgveda 10.117 (the दान-सूक्त), esp. 10.117.6 *mogham annaṁ vindate apracetāḥ* — food gained and not shared is gained in vain | The oldest statement of why giving is dharma, not charity-as-favour; the anchor verse of the महत्व home card | No — 1–2 verses enter `data/daan/principles.ts` |
+| **Upanishad** | Taittirīya Up. 1.11.3 — *śraddhayā deyam, aśraddhayā adeyam, śriyā deyam, hriyā deyam, bhiyā deyam, saṁvidā deyam* | *How* to give: with faith, according to means, with humility, with awe, with understanding — the giver's-bhaav card, and the register for the whole feature's copy | No — enters `principles.ts` |
+| **Gita** | 17.20–22 (sāttvika/rājasika/tāmasika daan; *deśe kāle ca pātre*), 18.5 (*yajña-dāna-tapaḥ … na tyājyam*) | The three-guna teaching and patra-viveka; the only layer that is **already in the binary, deep-linkable today** | **Yes** — `gita/chapter-17.json`, `chapter-18.json` |
+| **Itihasa** | Mahābhārata Anuśāsana Parva (दानधर्म पर्व) — Bhīṣma to Yudhiṣṭhira on anna-daan's supremacy (*all beings are born of anna and sustained by anna*) | Why अन्न-दान leads every occasion list and why anna-kshetras lead the directory | No — summarised teaching row with citation, not verse transcription |
+| **Purana / katha** | Akshaya Tritiya katha (daan on this tithi is akṣaya), Akshaya Navami katha (daan under the āmla), Amavasya katha (til-jal tarpaṇa + anna-vastra daan), Apara/Aja Ekadashi (punya-daan, Harishchandra) | The narrative layer — **already shipped in the katha library**; the journey's कथा step links, never duplicates | **Yes** — `kathaContent/entries/` |
+| **Smriti / occasion tables** | Vaar-daan and tithi-daan conventions (til on Shani, Sankranti til-gud, Akshaya Tritiya jala-ghaṭa/anna) | `occasions.ts` + `vaar.ts` rows | No — the §10-family two-source gate applies row by row; contested regional rows state the variance or stay `draft` |
+
+Authoring rule: new verse content is limited to the Veda/Upanishad rows above (short, universally attested, translation-checkable); everything else either links to bundled content or ships as a *teaching summary with citation*. The corpus is deliberately small — the educate layer's authority comes from precision, not volume.
+
+## 11. Open decisions (for `conventions/daan-punya-v1.md`)
 
 1. **Category taxonomy** — pin the ledger category chips (proposed: अन्न, वस्त्र, विद्या, गौ-सेवा, दीप, द्रव्य, रक्त-दान, श्रम/सेवा, अन्य) and their occasion mappings; regional variance stated in-row where sources split.
 2. **Vaar-daan table ownership** — one shared module with PRD-21; pin the item list per vaar with sources (the two PRDs must not ship divergent tables).
