@@ -8,9 +8,15 @@ This folder holds the product roadmap and PRDs for upcoming releases.
 
 ## Next
 
-- [**Q4 2026 Candidates**](./2026-Q4-candidates.md) — household-practice gap analysis and the next five
-  proposed features (PRD-20 … PRD-24, numbers reserved). Read this for what is *missing*; the table
-  below is the Q3 slate only and has not tracked PRDs 07–19.
+- [**PRD-25 — जिज्ञासा · Ask Vedansh**](./prds/25-jijnasa-ask-vedansh.md) — **proposed Q4 2026 flagship.**
+  An on-device, deterministic answer engine over the engines the app already ships, so the computed
+  half of the product (panchang, muhurat, vrat, bhog, vidhi, vastu, kundali, theerth) becomes
+  askable in one line — and every future feature is discoverable on the day it ships. Companion
+  build for the quarter: PRD-20 सङ्कल्प.
+- [**Q4 2026 Candidates**](./2026-Q4-candidates.md) — household-practice gap analysis and five
+  proposed features (PRD-20 … PRD-24, numbers reserved). PRD-23 and PRD-24 shipped in Aug 2026;
+  PRD-25 §10 records where 20/21/22 sit against the flagship. Read this for what is *missing*; the
+  table below is the Q3 slate only and has not tracked PRDs 07–19.
 
 ## PRDs (Q3 2026)
 
