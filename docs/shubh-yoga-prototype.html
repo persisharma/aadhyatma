@@ -171,7 +171,7 @@
               <div class="chip dosha">भद्रा</div>
               <div class="chip dosha">पञ्चक</div>
             </div>
-            <div class="window"><div class="wt">सर्वार्थ सिद्धि</div><div class="wv">सूर्योदय — 26:12</div></div>
+            <div class="window"><div class="wt">सर्वार्थ सिद्धि</div><div class="wv">सूर्योदय — 2:12 AM, १५ अक्टू</div></div>
           </div>
           <div class="sechead">आज का समय</div>
           <div class="actionrow"><div class="ai">☀</div><div class="at"><div class="att">अभिजित मुहूर्त</div><div class="ats">11:48 — 12:34</div></div></div>
@@ -191,7 +191,7 @@
             <div class="catpill">शुभ योग</div>
             <div class="deva" style="font-size:18px;color:var(--ink);margin-top:8px">सर्वार्थ सिद्धि योग</div>
             <div class="evid" style="margin-top:6px">"That which accomplishes all purposes." A named combination of the weekday with specific nakshatras, traditionally held to support what is begun within it.</div>
-            <div class="window"><div class="wt">आज</div><div class="wv">सूर्योदय — 26:12</div></div>
+            <div class="window"><div class="wt">आज</div><div class="wv">सूर्योदय — 2:12 AM, १५ अक्टू</div></div>
           </div>
           <div class="sechead">यह क्यों बना</div>
           <div class="card">
@@ -292,7 +292,7 @@
             <div class="deva" style="font-size:13px;color:var(--ink-soft);margin-top:3px">07:12 तक</div>
             <div class="divider"></div>
             <div class="chiprow" style="justify-content:center"><div class="chip strong">सर्वार्थ सिद्धि योग</div></div>
-            <div class="evid" style="margin-top:10px">बुधवार + रोहिणी · सूर्योदय से कल 02:12 तक</div>
+            <div class="evid" style="margin-top:10px">बुधवार + रोहिणी · सूर्योदय से 2:12 AM, १५ अक्टू तक</div>
           </div>
           <div class="sechead">आज के लिए</div>
           <div class="actionrow"><div class="ai">₹</div><div class="at"><div class="att">क्रय व आरम्भ</div><div class="ats">आज के अनुकूल कार्य देखें</div></div><div class="chev">›</div></div>
@@ -309,7 +309,7 @@
   <div class="phasedesc">
     <b>1.</b> <b>Offset or annotate?</b> Recommended annotate-only for v1 (frame 5 shows why the alternative is expensive). Must be pinned in <code>conventions/shubh-yoga-v1.md</code> either way.<br/>
     <b>2.</b> Which yogas ship in v1 — सर्वार्थ सिद्धि, अमृत सिद्धि, रवि, द्विपुष्कर, त्रिपुष्कर is the proposed set; guru-puṣya and ravi-puṣya are candidates for the same table.<br/>
-    <b>3.</b> Nakshatra-boundary windows cross midnight (the 26:12 convention above follows the shipped panchang's own past-midnight notation) — confirm that matches how the day card already renders late windows.<br/>
+    <b>3.</b> Nakshatra-boundary windows routinely cross midnight, so every yoga window must render through the shipped <code>formatEndInstant</code> — a 12-hour clock plus a short-date suffix when the end falls on a different civil day (<b>&quot;2:12 AM, १५ अक्टू&quot;</b>). The printed-panchang extended-hour style (26:12 for 2:12 the next morning) is <b>not</b> used anywhere in this app and must not be introduced by this feature.<br/>
     <b>4.</b> Every nakshatra×vāra row is verification-gated like the four existing convention docs. These tables are printed in every published panchang, so this is the cheapest verification of anything content-bearing in either slate.
   </div>
 </body>
