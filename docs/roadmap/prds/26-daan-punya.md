@@ -176,6 +176,61 @@ The educate layer is what makes this feature *not* a donate button. Its content 
 
 Authoring rule: new verse content is limited to the Veda/Upanishad rows above (short, universally attested, translation-checkable); everything else either links to bundled content or ships as a *teaching summary with citation*. The corpus is deliberately small — the educate layer's authority comes from precision, not volume.
 
+### 10.1 Day coverage matrix (`occasions.ts` — which days get the daan treatment)
+
+Coverage discipline first: **a day gets a daan row only where an attested daan tradition exists — otherwise no row, and the host screen simply shows no daan section** (the PRD-09 "absent, never placeholder" rule). Every `occasionRuleId` below is a real id in the shipped observance/festival solver (verified against `precomputedObservances.ts` / `festivals.ts`, 2026-08-30).
+
+**Tier 1 — the great daan days** (full journey, rich महत्व):
+
+| Rule id(s) | Day | Traditional daan (each row carries its reason) |
+|---|---|---|
+| `makar-sankranti` | मकर संक्रान्ति | til-gud, khichdi/anna, vastra-kambal, gau-grass |
+| the other 11 `*-sankranti` ids | every solar ingress | one shared snāna-dāna row; `karka-sankranti` (dakshinayana) gets its own |
+| `akshaya-tritiya` | अक्षय तृतीया | jala-ghaṭa, pankha/chhata, anna, jau-chana — the akṣaya teaching |
+| `shraddha-dates` | पितृ पक्ष fortnight | anna-daan, til, vastra, bhojan — ties into Pitru Smaran |
+| `akshaya-navami` | अक्षय नवमी | anna/bhojan under the āmla — katha shipped |
+| `guru-purnima` | गुरु पूर्णिमा | vidya-daan, guru-dakshina |
+| `vasant-panchami` | वसंत पंचमी | vidya-daan (Saraswati) — books, fees, teaching |
+| `ganga-dussehra`, `ganga-saptami` | गंगा दिवस | jala-daan — water, pyau, sherbet |
+| `govardhan-puja` | गोवर्धन / अन्नकूट | anna-daan, gau-seva |
+| `bachh-baras` | गोवत्स द्वादशी | gau-seva, gau-grass — links shipped `gau-seva` sanskar |
+| `dhanteras`, `diwali` | दीप पर्व | deep-daan, yam-deep; anna to the lamp-lighter |
+| `karthigai-vrat` + Kartik `purnima-vrat` | कार्तिक पूर्णिमा / देव दीपावली | deep-daan, anna |
+| `chhath-puja` | छठ | thekua/anna sharing at the ghat |
+
+**Tier 2 — the recurring tithi cadence** (one row per family, surfacing every occurrence):
+
+| Rule id(s) | Cadence | Daan row |
+|---|---|---|
+| `amavasya-vrat` | every amavasya | til-jal + anna-vastra (pitru-tṛpti); the row itself notes the somvati elevation when the tithi falls on Monday |
+| `purnima-vrat`, `shree-satyanarayan-vrat` | every purnima | anna/kheer, prasad sharing |
+| all named `*-ekadashi` ids (the `EkadashiKathaRuleIds` family) | every ekadashi | anna to the needy at parana; `shattila-ekadashi` gets its own row — the six-fold til day, til-daan explicit |
+| `masik-shivaratri`, `pradosh-vrat-*`, `sankashti-chaturthi-vrat`, … | — | **no row** — no broadly attested daan tradition; the section stays absent |
+
+**Tier 3 — weekly** (`vaar.ts`, 7 rows): the vaar-daan table (til/tel on Shani … chana-haldi on Guru), keyed to `navagraha-weekday-fasts` / `deity-weekday-fasts`, shared with PRD-21.
+
+**Tier 4 — personal days** (journeys without occasion rows): Pitru Smaran shraddha/barsi tithis (anna-daan door, PRD-17 privacy stance) and the user's janma-tithi (a quiet traditional birthday-daan line on the Kundali profile day). Grahan (eclipse) daan is a **known omission** — the engine computes no eclipses today; noted for a future engine PRD, not faked from a table.
+
+Net: ~45+ solver rule ids covered by ~20 occasion rows (the ekadashi and sankranti families collapse into shared rows with named exceptions).
+
+### 10.2 Story content plan (the कथा step)
+
+**Bucket A — cross-link only, zero new writing, OTA-free.** Already shipped in `kathaContent/entries/` and carrying the daan teaching natively: `akshaya-tritiya-vrat` (Dharmadas — small daan, akṣaya fruit; the akshaya-patra), `akshaya-navami` (daan under the āmla), `amavasya-vrat` (til-jal tarpaṇa + anna-vastra; the saubhagya-daan episode), `apara-ekadashi` (Dhaumya's punya-daan), `aja-ekadashi` (Harishchandra gives kingdom, self), `amalaki-ekadashi` (sahasra-godaan equivalence), `shattila-ekadashi` (the six uses of til), `guru-purnima` (dakshina), `govardhan-puja` (annakut), `ganga-dussehra`. The journey's कथा step links these; it never duplicates them.
+
+**Bucket B — new katha entries to author** (each: `kind: 'teaching-katha'`, RULEBOOK §11 two-source gate, ships `draft`-invisible until verified — the PRD-22 Phase-B egress caveat applies):
+
+| New entry | Source | The teaching it carries | Surfaces on |
+|---|---|---|---|
+| दानवीर कर्ण (kavach-kundal) | Mahābhārata | giving what costs you; gupt-daan register | द्रव्य/gupt-daan card; रविवार (Sūryaputra) |
+| राजा रन्तिदेव | Bhāgavata 9.21 | the apex anna-daan story — 48 days hungry, gives the last water away | anna-daan card; anna-kshetra directory detail |
+| राजा शिबि | Mahābhārata (Vana) | śaraṇa and deha-daan — protection as giving | श्रम/सेवा card |
+| बलि–वामन | Bhāgavata 8 | daan and ahaṅkāra — the gift that measured three worlds | govardhan/bali-pratipada; "daan and ego" teaching |
+| सुदामा का पोहा | Bhāgavata 10 | bhaav over mātrā — why the ledger records no totals | the ledger empty-state; गुप्त दान teaching |
+
+**Bucket C — principle/teaching rows** (not kathas; `principles.ts`, ~8–10 rows): the §10 verse spine (RV 10.117, TU 1.11.3), Gita 17.20–22 contextual note, the Anuśāsana anna-daan summary, the classical daan enumerations (deśa-kāla-pātra; the traditional daśa-dāna list stated as tradition, not prescription), and gupt-daan.
+
+Sequencing note: Bucket A ships with Phase 1 (it is pure cross-linking). Buckets B/C verse rows are content-gated like every sourced corpus in this repo — authored now, `draft` until the verification environment can reach sources, exactly the PRD-09/P4 pattern.
+
 ## 11. Open decisions (for `conventions/daan-punya-v1.md`)
 
 1. **Category taxonomy** — pin the ledger category chips (proposed: अन्न, वस्त्र, विद्या, गौ-सेवा, दीप, द्रव्य, रक्त-दान, श्रम/सेवा, अन्य) and their occasion mappings; regional variance stated in-row where sources split.
