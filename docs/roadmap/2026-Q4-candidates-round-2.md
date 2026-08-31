@@ -5,6 +5,7 @@
 | **Status** | Proposed for planning review — five candidate PRDs (PRD-26 … PRD-30, numbers reserved; PRD-25 stays reserved for सन्ध्या वन्दन per round 1 §3) |
 | **Dated** | 2026-08-27 (against `claude/next-quarter-prds-gvyobx` @ `51a7f86`, app 1.4.6) |
 | **Method** | Same household-practice audit as [round 1](./2026-Q4-candidates.md), run with a stricter filter: a candidate qualifies only if it is (a) genuinely useful and (b) **not discussed anywhere** — not shipped, not owned by PRDs 01–24, not sitting in round 1's §3 rejected table, and not in `docs/enrichment-loop/backlog.md`. Every claim below was checked against source, not against the docs. §3 records the near-misses the filter removed, including one that looked like the strongest candidate of the round. |
+| **Prototypes** | One per candidate, in the app's parchment system — linked from each section below and indexed in §6. |
 | **Inherited constraint** | Bundle-only. No backend, no CDN, no streaming, no analytics SaaS, no cloud sync. |
 
 ---
@@ -72,6 +73,8 @@ Ordered by my recommended build sequence: cheapest-and-ungated first.
 
 > *The largest untapped return on content already in the binary, at zero content cost.*
 
+**Prototype.** [`memorize-abhyas-prototype.html`](../memorize-abhyas-prototype.html) — 8 frames — the reader toggle, all three mask levels, audio-cue recall, the due queue, routine integration, and the कण्ठस्थ arrival state. Every liturgical or tabular string in it is an illustrative placeholder.
+
 **The practice.** The devotional arc does not end at reading. A devotee works toward reciting the
 Hanuman Chalisa, Gita 12 and 15, the Gayatri, Vishnu Sahasranama, Sundarkand's dohas **without the
 book** — that is what कण्ठस्थ means, and it is why families drill children on exactly these texts.
@@ -84,8 +87,8 @@ app has every prerequisite and none of the mechanic — 30+ readers, per-verse r
 and celebration path, and the japam counter's tap discipline.
 
 **What ships.**
-- `memorize/mask.ts` — pure. Deterministic progressive masking of a verse: **L1** first-akshara cue
-  per line → **L2** first word per line → **L3** fully hidden, line count and meter only. Masking is
+- `memorize/mask.ts` — pure. Deterministic progressive masking of a verse: **L1** first word of each
+  line (the lightest cue) → **L2** first akshara only → **L3** fully hidden, line count and metre only. Masking is
   **akshara-wise, never by JS code unit** — splitting mid-cluster renders garbage.
 - `memorize/mastery.ts` — pure per-unit state (level, last reviewed, consecutive successes) plus a
   spaced-review scheduler returning what is due today. Persisted at `@vedansh:memorize:v1`.
@@ -119,6 +122,8 @@ believes them.
 ### PRD-27 — शुभ योग · the additive half of the muhurat engine
 
 > *Twelve doshas, zero yogas. The engine can only tell you what is wrong with a day.*
+
+**Prototype.** [`shubh-yoga-prototype.html`](../shubh-yoga-prototype.html) — 6 frames — today's day card before/after, the yoga detail showing its working, annotate-only finder results **and** the rejected re-rank alternative, Daily Muhurat. Every liturgical or tabular string in it is an illustrative placeholder.
 
 **The practice.** "Is today a good day to buy / start / sign this" is asked constantly, and the
 traditional answer names *positive* combinations, not just absent defects: **सर्वार्थ सिद्धि योग**
@@ -162,6 +167,8 @@ chips use.
 
 > *The app knows how to install a deity and has never once concluded a rite.*
 
+**Prototype.** [`parv-arc-prototype.html`](../parv-arc-prototype.html) — 6 frames — today's silence after day 1, the duration chooser, mid-arc day 4 of 10, visarjan day, the Diwali five-day arc, and Navratri feeding PRD-23's shipped bhog list a day early. Every liturgical or tabular string in it is an illustrative placeholder.
+
 **The practice.** The biggest festivals are not days. You install Ganesh on Chaturthi and the family
 decides its own visarjan — 1½ day, 3, 5, 7, or 10 days to Anant Chaturdashi — and the concluding
 date depends on **that choice**, which is exactly why it cannot be a static calendar entry.
@@ -199,6 +206,8 @@ duration is correct.
 ### PRD-29 — कुल परम्परा · kuldevta, family observance, and the tithis of the living
 
 > *The app keeps the tithis of the dead with great care and not one tithi of the living.*
+
+**Prototype.** [`kul-parampara-prototype.html`](../kul-parampara-prototype.html) — 6 frames — janma tithi on the profile, the Home strip on the day, living and ancestor tithis side by side, the kul record, chosen-never-inferred deity picking, and the export that is the point. Every liturgical or tabular string in it is an illustrative placeholder.
 
 **The practice.** Two things every family holds that no app holds for them. **The kul** —
 kuldevta/kuldevi, the family temple, the gotra, the observance the family has always kept, the vow
@@ -244,6 +253,8 @@ sharing prompt.
 ### PRD-30 — घर की साधना · the household practice roster
 
 > *The app already accepted the multi-person household everywhere except in practice itself.*
+
+**Prototype.** [`household-roster-prototype.html`](../household-roster-prototype.html) — 6 frames — today's implicit single user, the household day, person filtering, optional assignment, one roster with optional birth details, and the shared iOS notification budget. Every liturgical or tabular string in it is an illustrative placeholder.
 
 **The practice.** Practice in a Hindu household is assigned, not individually chosen. Mother keeps
 Somvar, father Shanivar, grandmother every Ekadashi, the child does one shloka before school — and
@@ -375,3 +386,25 @@ RULEBOOK at §21.
 5. **PRD-30 person identity** — does a routine-only person share the birth-profile record?
    Recommend **yes, with birth details optional**, so the household roster does not demand a chart
    for a child who just recites one shloka.
+
+---
+
+## 6. Prototypes
+
+Five static HTML prototypes, one per candidate, in the same parchment system and frame conventions
+as the shipped PRD prototypes (`docs/*-prototype.html`). Each carries its own "open questions this
+prototype does not settle" panel, so the unresolved decisions stay attached to the picture rather
+than living only in §5.
+
+| PRD | Prototype | What it shows |
+|---|---|---|
+| **26** | [`memorize-abhyas-prototype.html`](../memorize-abhyas-prototype.html) | The अभ्यास toggle on the shipped reader, all three mask levels (word → akshara → hidden), tap-to-reveal with आया/नहीं आया, audio-cue recall, the due queue, and `RoutineItemKind: 'memorize'` |
+| **27** | [`shubh-yoga-prototype.html`](../shubh-yoga-prototype.html) | The day card with and without a yoga chip, the detail showing vāra × nakshatra as its working, annotate-only finder results beside the **rejected** re-rank alternative, and Daily Muhurat |
+| **28** | [`parv-arc-prototype.html`](../parv-arc-prototype.html) | Today's silence after day 1, the 1½/3/5/7/10-day chooser, the arc strip mid-festival, visarjan computed from *your* sthapana, the Diwali five-day arc, and Navratri surfacing PRD-23's bhog list a day early |
+| **29** | [`kul-parampara-prototype.html`](../kul-parampara-prototype.html) | Janma tithi on the profile and Home strip, living + ancestor tithis on one engine, the kul record, deity/temple chosen-never-inferred, and the PRD-06 export |
+| **30** | [`household-roster-prototype.html`](../household-roster-prototype.html) | Today's implicit single user, the household day view, `PersonChips` filtering, optional person assignment, one roster with optional birth details, and the shared iOS pending budget |
+
+**Read them as questions, not specs.** They are drawn against the shipped token set so the proposals
+can be judged at the right altitude, but no candidate here has an approved PRD, a TRD, or content
+verification. Devanagari copy in the frames is illustrative — anything liturgical ships
+source-verified or not at all, per `RULEBOOK.md` §19–21.
