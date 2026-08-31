@@ -21,11 +21,12 @@ test('the registry preserves v1 and publishes all phase 2/3 profiles', () => {
     'satyanarayan-bhog',
     'hanuman-jayanti-bhog',
   ]);
-  assert.equal(BHOG_CONTENT.length, 41);
+  assert.equal(BHOG_CONTENT.length, 42);
   assert.deepEqual(BHOG_CONTENT.slice(10).map((entry) => entry.id), [
     'hartalika-teej-bhog',
     'hariyali-teej-bhog',
     'kajari-teej-bhog',
+    'bahula-chaturthi-bhog',
     'rishi-panchami-bhog',
     'durva-ashtami-bhog',
     'anant-chaturdashi-bhog',
@@ -89,7 +90,7 @@ test('every profile carries bilingual guidance and independent published sources
 
 test('every genuine vrat and upavas rule has verified food or offering guidance', () => {
   const eligible = OBSERVANCE_RULES.filter((rule) => rule.category === 'vrat' || rule.category === 'upavas');
-  assert.equal(eligible.length, 70);
+  assert.equal(eligible.length, 71);
   assert.deepEqual(
     eligible.filter((rule) => !rule.bhogId).map((rule) => rule.id),
     []

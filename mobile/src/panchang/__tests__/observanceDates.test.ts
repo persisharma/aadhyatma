@@ -161,3 +161,21 @@ test('the three Teej land in order: Hariyali, then Kajari, then Hartalika', () =
     assert.ok(gap2 >= 13 && gap2 <= 17, `${year}: Kajari → Hartalika gap ${gap2}`);
   }
 });
+
+// ─── Bahula Chaturthi / Bol Choth ─────────────────────────────────────────────
+// The named women's vrat for children on Bhadrapada Krishna Chaturthi — the
+// generic monthly Sankashti card alone did not convey it (Aug 2026 report,
+// "Chauth too"). Chandrodaya like its Sankashti sibling: the fast concludes
+// after the evening Godhuli puja and moonrise. Published dates, NOT engine output.
+test('Bahula Chaturthi matches its published dates and rides the Sankashti day', () => {
+  assert.equal(engineDates('bahula-chaturthi', 2025)[0], '2025-08-12');
+  assert.equal(engineDates('bahula-chaturthi', 2026)[0], '2026-08-31');
+  for (const year of [2024, 2025, 2026, 2027, 2028]) {
+    const dates = engineDates('bahula-chaturthi', year);
+    assert.equal(dates.length, 1, `${year}: exactly one Bahula Chaturthi, got ${dates.join(' ')}`);
+    assert.ok(
+      engineDates('sankashti-chaturthi-vrat', year).includes(dates[0]),
+      `${year}: Bahula Chaturthi ${dates[0]} is not that month's Sankashti day (RULEBOOK §23.4)`
+    );
+  }
+});

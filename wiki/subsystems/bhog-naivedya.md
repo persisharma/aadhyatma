@@ -11,8 +11,8 @@ status: current
 
 PRD-23 adds verified, offline household guidance for deity/festival offerings, food during a fast,
 food abstained during a fast, prohibited offerings, and parana meals. All three product phases now
-publish 41 profiles (the Hariyali and Kajari Teej additions of 2026-08-30 included). Every genuine
-`vrat`/`upavas` rule is covered (70/70), while ritual-calendar rows are no longer misrepresented as
+publish 42 profiles (the Hariyali/Kajari Teej and Bahula Chaturthi additions of 2026-08-30 included).
+Every genuine `vrat`/`upavas` rule is covered (71/71), while ritual-calendar rows are no longer misrepresented as
 fasts. Every profile
 carries two or more independent published sources, a dated verification note, bilingual content,
 and an explicit tradition/variant note.
@@ -28,8 +28,8 @@ The module-scope invariant guards ids, bilingual fields, source count and hooks;
 independent-domain, dated-note, draft-filter, Devanagari, and customer-copy gates.
 
 **All-phases coverage.** `bhogContent.ts` owns the ten high-use v1 profiles and
-`bhogContentExtended.ts` owns 31 recurring, annual, advanced, and regional profiles. The test suite
-filters the live catalogue by the genuine `vrat` and `upavas` categories, pins the expected 70-rule
+`bhogContentExtended.ts` owns 32 recurring, annual, advanced, and regional profiles. The test suite
+filters the live catalogue by the genuine `vrat` and `upavas` categories, pins the expected 71-rule
 set size, and requires every row to have a verified, exposed `bhogId`. Adding a new eligible rule
 without sourced content therefore fails the engine gate. Mahadwadashi/ISKCON reuse the adjudicated
 Ekadashi family, and Sakat Chauth reuses the Ganesha/Sankashti family; other long-tail practices keep

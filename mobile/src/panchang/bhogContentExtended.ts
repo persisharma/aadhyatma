@@ -85,6 +85,29 @@ const kajariTeejBhog = profile({
   },
 });
 
+const bahulaChaturthiBhog = profile({
+  id: 'bahula-chaturthi-bhog',
+  titleHi: 'बहुला चतुर्थी (बोल चौथ) का व्रत-भोजन',
+  titleEn: 'Bahula Chaturthi (Bol Choth) vrat food',
+  observanceIds: ['bahula-chaturthi'],
+  offerings: [item('gau-puja', 'संध्या गोधूलि बेला में गौ माता और बछड़े का पूजन कर परिवार की रीति का नैवेद्य अर्पित करें।', 'Worship the cow and calf at the evening Godhuli hour, offering the naivedya prescribed by your family custom.')],
+  permittedDuringFast: [item('millet-fare', 'प्रकाशित रीति में इस दिन बाजरे जैसे मोटे अनाज के व्यंजन लिए जाते हैं।', 'In the published custom, millet-based dishes are taken on this day.')],
+  abstainedDuringFast: [item('no-milk', 'गौ-सम्मान में दूध और दुग्ध-निर्मित पदार्थ इस दिन नहीं लिए जाते।', 'In honour of the cow, milk and milk-made products are not taken this day.')],
+  paranaMealHi: 'संध्या के गौ-पूजन और चंद्रोदय के उपरांत व्रत पूर्ण कर भोजन लें।',
+  paranaMealEn: 'Complete the vrat after the evening cow worship and moonrise, then take the meal.',
+  traditionNoteHi: 'गुजरात में यह बोल चौथ और मध्य प्रदेश में बहुला चतुर्थी नाम से प्रचलित है; रीति क्षेत्र के अनुसार बदलती है।',
+  traditionNoteEn: 'Known as Bol Choth in Gujarat and Bahula Chaturthi in Madhya Pradesh; customs vary by region.',
+  source: {
+    referenceUrls: [
+      `${DP}/gujarati/festivals/bol-choth/bol-choth-date-time.html`,
+      'https://www.bhaktibharat.com/en/festival/bahula-chauth',
+    ],
+    verificationNote:
+      'Verified 2026-08-30 via search excerpts of both pages (direct fetch blocked by the network egress proxy): both attest the day-long fast with evening cow-and-calf worship concluded after Godhuli puja and moonrise; the DrikPanchang Bol Choth record attests abstaining from milk and milk-made products with millet-based food, and the Gujarat/Madhya Pradesh naming split.',
+    variantNote: 'The milk abstention and millet fare are transcribed from the Bol Choth record, not generalized beyond it; the naivedya itself is left to family custom.',
+  },
+});
+
 const rishiPanchamiBhog = profile({
   id: 'rishi-panchami-bhog',
   titleHi: 'ऋषि पंचमी का नैवेद्य और फलाहार',
@@ -673,6 +696,7 @@ export const EXTENDED_BHOG_CONTENT: readonly BhogContentEntry[] = [
   hartalikaTeejBhog,
   hariyaliTeejBhog,
   kajariTeejBhog,
+  bahulaChaturthiBhog,
   rishiPanchamiBhog,
   durvaAshtamiBhog,
   anantChaturdashiBhog,
