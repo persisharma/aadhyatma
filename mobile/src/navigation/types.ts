@@ -114,6 +114,12 @@ export type MoreStackParamList = VidhiStackParamList & {
   PitruPakshaOverview: undefined;
   /** वास्तु दिशा (PRD-24) — compass + room guidance; also on the Panchang stack. */
   VastuDisha: undefined;
+  // कुल परम्परा (PRD-29) — janma tithis of the living + the family record.
+  JanmaTithiList: undefined;
+  JanmaTithiDetail: { personId: string };
+  KulParampara: undefined;
+  KulParamparaEdit: undefined;
+  KulParamparaExport: undefined;
   /** Mounted locally so a vidhi hand-off's Back button returns to conduct. */
   GitaReader: GitaReaderParams;
 };

@@ -62,6 +62,7 @@ import VratReminderScheduler from '@/components/VratReminderScheduler';
 import MuhuratReminderScheduler from '@/components/MuhuratReminderScheduler';
 import FestiveReminderScheduler from '@/components/FestiveReminderScheduler';
 import PitruSmaranReminderScheduler from '@/components/PitruSmaranReminderScheduler';
+import JanmaTithiReminderScheduler from '@/components/JanmaTithiReminderScheduler';
 import SadhanaReminderScheduler from '@/components/SadhanaReminderScheduler';
 import DailyVerseAngaBridge from '@/components/DailyVerseAngaBridge';
 import MiniPlayer from '@/components/audio/MiniPlayer';
@@ -273,6 +274,9 @@ export default function App() {
                                 precomputed table). */}
                             <FestiveReminderScheduler />
                             <PitruSmaranReminderScheduler />
+                            {/* जन्म तिथि (PRD-29) — per-person OPT-IN only; the
+                                planner's worst case is 8 pending (roster cap). */}
+                            <JanmaTithiReminderScheduler />
                             <SadhanaReminderScheduler />
                             {/* Feeds the daily-verse scheduler each fire day's
                                 tithi/vrat for its title. Must stay inside

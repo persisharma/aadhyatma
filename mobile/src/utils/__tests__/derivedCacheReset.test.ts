@@ -58,6 +58,10 @@ const MUST_SURVIVE = [
   // Birth details and starred names, several privacy-sensitive by design.
   '@vedansh:kundali-profiles:v1',
   '@vedansh:kundali-birth-profile:v1',
+  // कुल परम्परा (PRD-29): the family record and the per-person janma reminder
+  // opt-ins — user data, never engine output, never swept.
+  '@vedansh:kul-parampara:v1',
+  '@vedansh:janma-tithi:v1',
   '@vedansh:guna-milan-draft:v1',
   '@vedansh:guna-milan-metrics:v1',
   '@vedansh:namkaran-session:v1',
