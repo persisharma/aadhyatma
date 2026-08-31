@@ -60,7 +60,7 @@ Not a search result. An answer card: *"कल — गुरुवार, 12 द�
 
 ## 3. Product principles — the stance guards
 
-1. **A grammar, not a model.** Bundled, deterministic, offline. No LLM, no network call, no telemetry, no inference. The same question returns the same answer forever, and every intent is unit-testable like `muhurat.ts` is today.
+1. **A grammar, not a model** (mechanism and a runnable spike in **§13**). Bundled, deterministic, offline. No LLM, no network call, no telemetry, no inference. The same question returns the same answer forever, and every intent is unit-testable like `muhurat.ts` is today.
 2. **Never invent.** Below the confidence threshold the resolver falls back to *did-you-mean* chips plus today's content search — unchanged. In this domain a confidently wrong answer (a wrong tithi, a wrong parana time, a wrong naivedya) costs more than no answer. **Answer-or-abstain is a hard rule, pinned by a test.**
 3. **Always show the working.** Every computed answer exposes its trail — the §51 "no opaque verdict" rule generalised to the whole app. Every content-backed answer carries provenance and inherits the `status: 'draft' | 'verified'` gate that `upvasContent` and `bhogContent` already enforce: **a draft entry is never answerable.**
 4. **Not a chatbot, not an oracle.** No open conversation, no philosophical Q&A ("what is karma" is a *content search*, and stays one), no personal prediction, no divinatory framing ("will I get the job"), no luck score, no dosha alarm, no remedy upsell. §50's *"never creates an astrological prescription engine"* and §51's prohibitions carry over verbatim and get pinned.
@@ -247,3 +247,78 @@ Inherits `RULEBOOK.md` §0/§0.1 in full:
 4. **Does the briefing replace `TodayRecommendationsRow`?** Recommend: extend, do not replace — the row's festival-attribution contract is already pinned by `festiveReminders.test.ts`.
 5. **Voice this quarter or next?** Depends entirely on whether PRD-24's pending store release can carry the STT dependency. If it can, Phase 4 becomes cheap; if not, it is Q1.
 6. **Abstain copy.** What the app says when it will not answer is the single most brand-defining string in the feature. Needs the same care as the disclaimer copy in `data/help/content.ts`.
+
+---
+
+## 13. Appendix — how this works without an LLM
+
+The objection this feature attracts first is *"natural language needs a model."* It does not, because
+**this is not open-domain language understanding.** Three properties collapse the problem:
+
+1. **The answer space is closed and already enumerated in code.** 21 deities, 13 `EVENT_RULES`
+   occasions, 162 observance rules, 8 dik, 7 vidhis, 12 rashi, 27 nakshatra, 9 graha, 73 temples,
+   69 texts. The system never has to *understand* a question — only to decide which of ~16 engines
+   to call and with which id. That is classification over a fixed set, not generation.
+2. **The engines already produce the answer.** No summarising, no synthesis, no prose. The resolver
+   picks `bhogContent.forDeity('ganesha')`; the card is rendered from the typed result. Everything a
+   model would be needed for — composing the sentence — is a formatting layer over shipped data.
+3. **Abstention is free.** A model must answer; a grammar may decline. The hard rule in §3.2 turns
+   the recall problem into a UX problem: a miss falls back to the search box the user already has.
+
+### 13.1 The pipeline
+
+```
+"गणेश जी को क्या चढ़ाएँ"  /  "ganpati ko kya chadhaye"
+      │
+      ├─ fold()      Devanagari + IAST + Latin → one ASCII key
+      ├─ tag         longest-match against the generated lexicon → deity=ganesha
+      ├─ score       trigger lexeme hit + slot fit + context prior
+      └─ resolve     bhogContent.forDeity('ganesha') → AskAnswer, or abstain
+```
+
+The only genuinely hard part is `fold()`, and it is script mechanics, not semantics:
+
+- **Inherent vowel.** Devanagari is an abugida — a bare consonant carries an unwritten *a*. Skip it
+  and मंदिर folds to `mndir`, which never meets the Latin `mandir`.
+- **Schwa deletion.** Hindi drops the *word-final* inherent vowel; Sanskrit keeps it. मंदिर = `mandir`,
+  but दिशा = `disha` (that final ā is written, not inherent). Both halves of the lexicon must land on
+  one key or the Devanagari and Hinglish inputs never match each other.
+- **Spelling noise.** `aa/ee/oo` collapse, doubled letters, `w→v`, `z→j`, and stem-tolerant head
+  matching (`ganesh` ≡ `ganesha` ≡ `श्री गणेश`) absorb most of the Hinglish long tail.
+
+`searchNormalize.ts` already does the IAST half; the transliteration layer behind the gu/kn reading
+languages already does the abugida half. **Neither is new work — this composes two shipped modules.**
+
+### 13.2 It runs today
+
+[`docs/ask-resolver-prototype.mjs`](../../ask-resolver-prototype.mjs) is a ~150-line spike (`node
+docs/ask-resolver-prototype.mjs`) that generates a 478-form lexicon from the real registries in
+`data/deities.ts`, `panchang/eventMuhurat.ts` and `panchang/festivals.ts`, adds 8 hand aliases, and
+resolves 8 intent families. On a 23-question set spanning Devanagari, Hinglish and English it
+resolves **19**, and **3 of the 4 misses are the intended abstains** (`kya mujhe naukri milegi`,
+`what is karma`, `mera bhavishya kya hai`). The one true miss — *"sone ki disha konsi honi chahiye"* —
+is a missing `bedroom` alias, which is precisely what §7.2's unanswered log is for.
+
+This is a spike, not an implementation: no context, no answer rendering, no confidence calibration,
+23 questions instead of 300. It exists to settle the feasibility question before Phase 0 is funded.
+
+### 13.3 What the spike exposed — a real design requirement
+
+*"एकादशी कब है"* resolved to `dev-uthani-ekadashi`, because longest-match picked a specific named
+instance when the user meant **the next Ekadashi of any name**. The lexicon therefore needs a
+**class-vs-instance distinction**: recurring observance families (ekadashi, pradosh, purnima,
+amavasya, sankashti, shivaratri) are classes that resolve to *next occurrence of the class*, and a
+qualifier (`nirjala`, `mokshada`) narrows to the instance. Without it the app confidently answers a
+different Ekadashi's date — the exact failure mode §3.2 exists to prevent. **This is now Phase 0's
+first task**, and it is the kind of defect a golden corpus catches and a demo never would.
+
+### 13.4 Where a model would help, and why it still is not worth it
+
+A model would widen recall on phrasings the grammar has not seen, and handle code-mixed
+sentences with clause structure. The costs: a network round trip or a large on-device model in an
+offline-first bundle-only app; non-determinism in a domain where a wrong tithi is a real harm;
+unauditable answers against the app's show-the-working stance; a per-query cost with no revenue
+model behind it; and privacy exposure on questions like *"पिताजी की तिथि कब है"*. The grammar's
+recall gap is measurable and closes release over release from the on-device log. **The trade is not
+close, and it may never be — but if it ever is, the intent registry is exactly the interface a model
+would target: it would replace `resolve()` and keep every engine, contract and guard intact.**
