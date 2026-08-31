@@ -322,3 +322,37 @@ model behind it; and privacy exposure on questions like *"पिताजी क
 recall gap is measurable and closes release over release from the on-device log. **The trade is not
 close, and it may never be — but if it ever is, the intent registry is exactly the interface a model
 would target: it would replace `resolve()` and keep every engine, contract and guard intact.**
+
+### 13.5 Not a question list — a question *space*
+
+The entity side is **generated from code**, so the answerable set is the cross-product of entities ×
+intents, not an authored FAQ:
+
+| Entity set | Source | Intents it crosses | Questions |
+|---|---|---|---|
+| 21 deities | `data/deities.ts` | offer · avoid · texts | 63 |
+| 162 observance rules | `panchang/festivals.ts` | when · how · katha · food | 648 |
+| 13 occasions | `EVENT_RULES` | muhurat | 13 |
+| 73 temples · 69 texts | `theerth/temples.ts` · `texts.ts` | find | 142 |
+| 8 dik · 12 rashi · 27 nakshatra · 9 graha | closed vocabularies | direction · chart | ~64 |
+| — | — | context-free (tithi, rahu kaal, dasha, sankalp progress…) | ~20 |
+| | | **v1 total** | **~950** |
+
+Every one of those has many valid phrasings, and **adding a deity or festival adds its questions
+automatically** — the lexicon is generated and the coverage test forbids a registry entry without it.
+
+**Where recall actually leaks is phrasing, not entities.** Asked ten ways, *"what do I offer Ganesha"*
+resolved seven in the spike. The three misses were instructive and neither was a missing question:
+
+- `ganeshji ko kya chadhana chahiye` — the trigger list had `kya chadhaye` and `kya chadhaen`, not
+  `kya chadhana`. **One added lexeme fixes it for all 21 deities at once.**
+- `गणपति को क्या अर्पण करें` — *medial* schwa deletion (गणपति = `ganpati`, not `ganapati`). A folding
+  refinement, and harder than the word-final case in §13.1 because it is lexically conditioned.
+
+That is the economics of the approach: **entity coverage is O(0) because it is generated; phrasing
+coverage is O(intents), and each lexeme added multiplies across every entity it can take.** A rough
+200 lexemes carries the v1 slate, and the unanswered log (§7.2) names the next twenty each release.
+
+So: any phrasing, of a bounded set of questions the app can actually ground — with an honest and
+*measurable* recall gap on phrasings we have not seen yet, which is what the 300-question golden
+corpus exists to quantify before Phase 1 ships.
