@@ -176,6 +176,29 @@ test('MuhuratResultsScreen ranks the validated 17 Aug 2026 Vahan day shreshtha, 
   act(() => r.unmount());
 });
 
+test('MuhuratResultsScreen: the वास्तु दिशा door renders for griha-pravesh only (PRD-24 §6)', () => {
+  const vahan = renderWithLang(
+    <MuhuratResultsScreen
+      navigation={nav}
+      route={{ key: 'k', name: 'MuhuratResults', params: { occasionId: 'vahan' } } as never}
+    />
+  );
+  expect(vahan.root.findAllByProps({ testID: 'muhurat-vastu-door' })).toHaveLength(0);
+  act(() => vahan.unmount());
+
+  const griha = renderWithLang(
+    <MuhuratResultsScreen
+      navigation={nav}
+      route={{ key: 'k', name: 'MuhuratResults', params: { occasionId: 'griha-pravesh' } } as never}
+    />
+  );
+  act(() => {
+    griha.root.findByProps({ testID: 'muhurat-vastu-door' }).props.onPress();
+  });
+  expect(mockNavigation.navigate).toHaveBeenCalledWith('VastuDisha');
+  act(() => griha.unmount());
+});
+
 test('MuhuratDayDetailScreen renders answer-first with provenance and the doshas list', async () => {
   const r = renderWithLang(
     <MuhuratDayDetailScreen

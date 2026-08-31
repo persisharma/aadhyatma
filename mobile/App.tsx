@@ -6,34 +6,20 @@ import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-c
 import { NavigationContainer } from '@react-navigation/native';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Notifications from 'expo-notifications';
-import {
-  useFonts as useNotoFonts,
-  NotoSerifDevanagari_500Medium,
-  NotoSerifDevanagari_600SemiBold,
-} from '@expo-google-fonts/noto-serif-devanagari';
-import {
-  useFonts as useCormorantFonts,
-  CormorantGaramond_400Regular_Italic,
-  CormorantGaramond_500Medium,
-  CormorantGaramond_600SemiBold,
-  CormorantGaramond_600SemiBold_Italic,
-  CormorantGaramond_700Bold,
-} from '@expo-google-fonts/cormorant-garamond';
-import {
-  useFonts as useGujaratiFonts,
-  NotoSerifGujarati_500Medium,
-  NotoSerifGujarati_600SemiBold,
-} from '@expo-google-fonts/noto-serif-gujarati';
-import {
-  useFonts as useKannadaFonts,
-  NotoSerifKannada_500Medium,
-  NotoSerifKannada_600SemiBold,
-} from '@expo-google-fonts/noto-serif-kannada';
-import {
-  useFonts as useInterFonts,
-  Inter_500Medium,
-  Inter_600SemiBold,
-} from '@expo-google-fonts/inter';
+import { useFonts } from 'expo-font';
+import { NotoSerifDevanagari_500Medium } from '@expo-google-fonts/noto-serif-devanagari/500Medium';
+import { NotoSerifDevanagari_600SemiBold } from '@expo-google-fonts/noto-serif-devanagari/600SemiBold';
+import { CormorantGaramond_400Regular_Italic } from '@expo-google-fonts/cormorant-garamond/400Regular_Italic';
+import { CormorantGaramond_500Medium } from '@expo-google-fonts/cormorant-garamond/500Medium';
+import { CormorantGaramond_600SemiBold } from '@expo-google-fonts/cormorant-garamond/600SemiBold';
+import { CormorantGaramond_600SemiBold_Italic } from '@expo-google-fonts/cormorant-garamond/600SemiBold_Italic';
+import { CormorantGaramond_700Bold } from '@expo-google-fonts/cormorant-garamond/700Bold';
+import { NotoSerifGujarati_500Medium } from '@expo-google-fonts/noto-serif-gujarati/500Medium';
+import { NotoSerifGujarati_600SemiBold } from '@expo-google-fonts/noto-serif-gujarati/600SemiBold';
+import { NotoSerifKannada_500Medium } from '@expo-google-fonts/noto-serif-kannada/500Medium';
+import { NotoSerifKannada_600SemiBold } from '@expo-google-fonts/noto-serif-kannada/600SemiBold';
+import { Inter_500Medium } from '@expo-google-fonts/inter/500Medium';
+import { Inter_600SemiBold } from '@expo-google-fonts/inter/600SemiBold';
 import { ThemeProvider } from '@/theme/ThemeContext';
 import { FontScaleProvider, useFontScale } from '@/contexts/FontScaleContext';
 import { lightColors } from '@/theme/colors';
@@ -129,32 +115,22 @@ InteractionManager.runAfterInteractions(() => launchMark('first-ui-idle'));
 
 export default function App() {
   launchMarkOnce('app-render');
-  const [notoLoaded] = useNotoFonts({
+  const [fontsReady] = useFonts({
     NotoSerifDevanagari_500Medium,
     NotoSerifDevanagari_600SemiBold,
-  });
-  const [cormorantLoaded] = useCormorantFonts({
     CormorantGaramond_400Regular_Italic,
     CormorantGaramond_500Medium,
     CormorantGaramond_600SemiBold,
     CormorantGaramond_600SemiBold_Italic,
     CormorantGaramond_700Bold,
-  });
-  const [gujaratiLoaded] = useGujaratiFonts({
     NotoSerifGujarati_500Medium,
     NotoSerifGujarati_600SemiBold,
-  });
-  const [kannadaLoaded] = useKannadaFonts({
     NotoSerifKannada_500Medium,
     NotoSerifKannada_600SemiBold,
-  });
-  const [interLoaded] = useInterFonts({
     Inter_500Medium,
     Inter_600SemiBold,
   });
 
-  const fontsReady =
-    notoLoaded && cormorantLoaded && gujaratiLoaded && kannadaLoaded && interLoaded;
   if (fontsReady) launchMarkOnce('fonts-ready');
 
   // Wire notification taps to deep-link navigation. Handles both:

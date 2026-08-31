@@ -299,6 +299,30 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
             {contentByLang(lang, ' · दृक्पंचांग पद्धति', ' · DrikPanchang convention')}
           </Text>
 
+          {/* गृह प्रवेश only (PRD-24 §6): the moment the direction questions are
+              live. Pushes वास्तु दिशा in place on this stack — Back returns here. */}
+          {rule.id === 'griha-pravesh' && (
+            <View style={{ marginTop: spacing.md }}>
+              <ListCard
+                testID="muhurat-vastu-door"
+                leading={
+                  <CardThumb>
+                    <Text style={{ color: colors.saffronDeep, fontFamily: typography.readerTitle.fontFamily, fontSize: 18 }}>दि</Text>
+                  </CardThumb>
+                }
+                onPress={() => navigation.navigate('VastuDisha')}
+                accessibilityLabel="Open Vastu Disha for the new home"
+              >
+                <Text style={{ color: colors.ink, fontFamily: titleFont, fontSize: 15 }}>
+                  {contentByLang(lang, 'नए घर की वास्तु दिशा', 'Vastu directions for the new home')}
+                </Text>
+                <Text style={{ color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily, fontSize: 11.5, lineHeight: 17 }}>
+                  {contentByLang(lang, 'मंदिर · रसोई · मुख्य द्वार — दिशा चक्र के साथ', 'Mandir · kitchen · main door — with the disha chakra')}
+                </Text>
+              </ListCard>
+            </View>
+          )}
+
           {hasResults ? (
             <>
               {summary!.shreshtha.length > 0 && (

@@ -4,10 +4,22 @@ export type BackgroundImageKey =
   | 'category_chalisa_booklet_mala'
   | 'category_japam_mala'
   | 'category_aarti_diya'
+  | 'category_kavacham_protection'
   | 'deity_rama_darbar'
   | 'deity_krishna_bansuri'
   | 'deity_durga_lion'
   | 'deity_ganesha_modak'
+  | 'deity_lakshmi'
+  | 'deity_surya'
+  | 'deity_radha_krishna'
+  | 'deity_kubera'
+  | 'deity_ganga'
+  | 'deity_parvati_bhavani'
+  | 'deity_narasimha_prahlad'
+  | 'deity_dattatreya'
+  | 'deity_shani'
+  | 'deity_kali'
+  | 'deity_navagraha_icons'
   | 'source_vishnu_narayana'
   | 'source_gayatri_savitri_sun'
   | 'deity_saraswati_veena'
@@ -30,10 +42,22 @@ export const backgroundImages: Record<BackgroundImageKey, number> = {
   category_chalisa_booklet_mala: require('./category-chalisa-booklet-mala.webp'),
   category_japam_mala: require('./category-japam-mala.webp'),
   category_aarti_diya: require('./category-aarti-diya.webp'),
+  category_kavacham_protection: require('./category-kavacham-protection.webp'),
   deity_rama_darbar: require('./deity-rama-darbar.webp'),
   deity_krishna_bansuri: require('./deity-krishna-bansuri.webp'),
   deity_durga_lion: require('./deity-durga-lion.webp'),
   deity_ganesha_modak: require('./deity-ganesha-modak.webp'),
+  deity_lakshmi: require('./deity-lakshmi.webp'),
+  deity_surya: require('./deity-surya.webp'),
+  deity_radha_krishna: require('./deity-radha-krishna.webp'),
+  deity_kubera: require('./deity-kubera.webp'),
+  deity_ganga: require('./deity-ganga.webp'),
+  deity_parvati_bhavani: require('./deity-parvati-bhavani.webp'),
+  deity_narasimha_prahlad: require('./deity-narasimha-prahlad.webp'),
+  deity_dattatreya: require('./deity-dattatreya.webp'),
+  deity_shani: require('./deity-shani.webp'),
+  deity_kali: require('./deity-kali.webp'),
+  deity_navagraha_icons: require('./deity-navagraha-icons.webp'),
   source_vishnu_narayana: require('./source-vishnu-narayana.webp'),
   source_gayatri_savitri_sun: require('./source-gayatri-savitri-sun.webp'),
   deity_saraswati_veena: require('./deity-saraswati-veena.webp'),

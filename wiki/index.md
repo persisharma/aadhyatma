@@ -21,6 +21,7 @@
 - [[home-widgets]] — cross-platform Home/Lock Screen widgets: versioned 14-day IST snapshot, atomic native bridges, generated extension/provider wiring, gallery, and exact deep links.
 - [[puja-vidhi]] — festival and personal-tithi household guidance: occurrence-scoped preparation, swipe-only conduct, private provenance, and shipped-text hand-offs.
 - [[bhog-naivedya]] — verified offerings, vrat food, prohibited offerings, parana meals, and the Vidhi kitchen-checklist integration.
+- [[vastu-disha]] — live 8-dik compass (true-north corrected, honest-accuracy states), room-by-room vastu guidance, and ghar-ka-mandir upkeep; store-release-only (expo-sensors).
 
 ## Concepts
 - [[languages]] — reading languages hi/en/gu/kn; gu/kn derived at runtime by transliterating the Devanagari; selection + typography helpers.
