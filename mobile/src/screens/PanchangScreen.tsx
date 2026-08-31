@@ -36,6 +36,7 @@ import type { CalendarSystem, PanchangElement, ResolvedObservance } from '@/panc
 import { getKathaContent } from '@/panchang/kathaContent';
 import { getUpcomingObservances, searchObservances } from '@/panchang/festivalEngine';
 import { successorTithiToday } from '@/panchang/prevailingTithi';
+import { sankashtiOccurrenceName } from '@/panchang/sankashtiNames';
 import { getCategoryCounts, getKathaCount, type BrowseCategory } from '@/panchang/vratCatalog';
 import { VIDHI_ENTRIES, getVidhiById } from '@/data/vidhi';
 import { useVratFollows } from '@/contexts/VratFollowContext';
@@ -1746,6 +1747,24 @@ function ObservanceCard({ item, moonrise, lang, colors, typography, radii, eleva
   // actually broken rather than leaving the reader to reconcile "व्रत" with a
   // तिथि line that ends before noon.
   const chandrodaya = item.rule.dayRule === 'chandrodaya' ? moonrise : null;
+  // The one generic monthly rule whose occurrences carry PUBLISHED names: the
+  // Bhadrapada Sankashti is the Heramba day, an adhik lunation is Vibhuvana, a
+  // Tuesday is अंगारकी — the rule name alone hid all of that. Occurrence-titled
+  // here only; list/search/detail surfaces keep the rule's own name.
+  const sankashtiName = React.useMemo(() => {
+    if (item.rule.id !== 'sankashti-chaturthi-vrat') return null;
+    try {
+      return sankashtiOccurrenceName(item.date);
+    } catch {
+      return null;
+    }
+  }, [item.rule.id, item.date]);
+  const titleHi = sankashtiName
+    ? `${sankashtiName.nameHi}${sankashtiName.isAngarki ? ' (अंगारकी)' : ''} व्रत`
+    : item.rule.nameHi;
+  const titleEn = sankashtiName
+    ? `${sankashtiName.nameEn}${sankashtiName.isAngarki ? ' (Angarki)' : ''} Vrat`
+    : item.rule.nameEn;
 
   return (
     <View style={[styles.observanceCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card]}>
@@ -1760,7 +1779,7 @@ function ObservanceCard({ item, moonrise, lang, colors, typography, radii, eleva
         </Text>
       </View>
       <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
-        {contentByLang(lang, item.rule.nameHi, item.rule.nameEn)}
+        {contentByLang(lang, titleHi, titleEn)}
       </Text>
       <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted, marginTop: 4 }}>
         {meaningByLang(lang, item.rule.shortDescriptionHi, item.rule.shortDescriptionEn)}
