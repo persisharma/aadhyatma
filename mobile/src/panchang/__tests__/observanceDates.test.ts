@@ -130,3 +130,34 @@ test('the live matcher agrees with the shipped table on the reported dates', () 
   assert.equal(matchesLunarTithiRuleOnDate(rule!, new Date(2025, 9, 10, 12), 'purnimant'), true);
   assert.equal(matchesLunarTithiRuleOnDate(rule!, new Date(2025, 9, 9, 12), 'purnimant'), false);
 });
+
+// ─── Teej family ──────────────────────────────────────────────────────────────
+// The catalog carried only Hartalika Teej (Bhadrapada SHUKLA 3); Hariyali Teej
+// (Shravana Shukla 3) and Kajari/Badi Teej (Bhadrapada Krishna 3) were missing
+// entirely, so the biggest women's vrat days rendered "no vrat or festival"
+// (Aug 2026 report — 31 Aug 2026 is Kajari Teej AND Sankashti Chaturthi).
+// Published civil dates (drikpanchang/prokerala, udaya tithi), NOT engine output.
+test('Hariyali and Kajari Teej match their published dates', () => {
+  assert.equal(engineDates('hariyali-teej', 2024)[0], '2024-08-07');
+  assert.equal(engineDates('hariyali-teej', 2025)[0], '2025-07-27');
+  assert.equal(engineDates('hariyali-teej', 2026)[0], '2026-08-15');
+  assert.equal(engineDates('kajari-teej', 2024)[0], '2024-08-22');
+  assert.equal(engineDates('kajari-teej', 2025)[0], '2025-08-12');
+  assert.equal(engineDates('kajari-teej', 2026)[0], '2026-08-31');
+});
+
+test('the three Teej land in order: Hariyali, then Kajari, then Hartalika', () => {
+  // Shukla 3 → next Krishna 3 → next Shukla 3: ~15 days apart each. A month
+  // mix-up (the amanta/purnimant trap Janmashtami once fell into) breaks this.
+  for (const year of [2024, 2025, 2026, 2027, 2028]) {
+    const [hariyali] = engineDates('hariyali-teej', year);
+    const [kajari] = engineDates('kajari-teej', year);
+    const [hartalika] = engineDates('hartalika-teej', year);
+    assert.ok(hariyali && kajari && hartalika, `${year}: all three Teej must resolve`);
+    const gap1 = dayDiff(hariyali, kajari);
+    const gap2 = dayDiff(kajari, hartalika);
+    assert.ok(new Date(hariyali) < new Date(kajari) && new Date(kajari) < new Date(hartalika), `${year}: order broke (${hariyali}, ${kajari}, ${hartalika})`);
+    assert.ok(gap1 >= 13 && gap1 <= 17, `${year}: Hariyali → Kajari gap ${gap1}`);
+    assert.ok(gap2 >= 13 && gap2 <= 17, `${year}: Kajari → Hartalika gap ${gap2}`);
+  }
+});

@@ -41,6 +41,50 @@ const hartalikaTeejBhog = profile({
   },
 });
 
+const hariyaliTeejBhog = profile({
+  id: 'hariyali-teej-bhog',
+  titleHi: 'हरियाली तीज का अर्पण और पकवान',
+  titleEn: 'Hariyali Teej offering and festive food',
+  observanceIds: ['hariyali-teej'],
+  offerings: [item('parvati-offering', 'तीज माता (मां पार्वती) को पुष्प, फल और मिष्ठान्न अर्पित करें।', 'Offer flowers, fruit, and sweets to Teej Mata (Maa Parvati).')],
+  permittedDuringFast: [item('family-form', 'स्त्रियां सौभाग्य के लिए व्रत रखती हैं; निर्जल या फलाहार रूप परिवार की रीति से निश्चित करें।', 'Women keep the vrat for marital well-being; settle the waterless or fruit-fare form by your family custom.')],
+  paranaMealHi: 'पूजा के उपरांत परिवार की रीति से व्रत खोलें; घेवर इस पर्व का प्रचलित पकवान है।',
+  paranaMealEn: 'Break the fast after the worship according to your family custom; ghewar is the sweet customarily associated with this festival.',
+  traditionNoteHi: 'झूला, मेहंदी और घेवर श्रावणी तीज का प्रचलित उत्तर-पश्चिमी रूप हैं; नाम और रीति क्षेत्र के अनुसार बदलते हैं।',
+  traditionNoteEn: 'Swings, mehndi, and ghewar belong to the common north-western Shravana Teej form; names and customs vary by region.',
+  source: {
+    referenceUrls: [
+      `${UTSAV}/view-event/teej-festival`,
+      'https://www.incredibleindia.gov.in/en/festivals-and-events/teej',
+    ],
+    verificationNote:
+      'Verified 2026-08-30 via search excerpts of both Ministry of Tourism pages (direct fetch blocked by the network egress proxy): both attest the women’s monsoon vrat to Parvati/Teej Mata for the husband’s wellness, swings and mehndi, and the Utsav record names ghewar as the sweet closely associated with the festival.',
+    variantNote: 'Fast strictness is left to family custom rather than asserting one universal nirjala rule.',
+  },
+});
+
+const kajariTeejBhog = profile({
+  id: 'kajari-teej-bhog',
+  titleHi: 'कजरी तीज का अर्पण, नीम पूजन और सातू',
+  titleEn: 'Kajari Teej offering, neem worship, and sattu',
+  observanceIds: ['kajari-teej'],
+  offerings: [item('neem-offering', 'नीम (नीमड़ी माता) का कुमकुम, अक्षत, हल्दी और मेहंदी से पूजन कर फल-मिष्ठान्न अर्पित करें।', 'Worship the neem (Neemdi Mata) with kumkum, akshata, haldi, and mehndi, offering fruit and sweets.')],
+  permittedDuringFast: [item('strict-form', 'प्रचलित कठोर रूप में दिन भर निर्जल व्रत रखा जाता है।', 'In the customary strict form, a waterless fast is kept through the day.')],
+  paranaMealHi: 'रात्रि में चंद्र दर्शन और अर्घ्य के बाद परम्परा से सातू ग्रहण कर व्रत खोलें — इसी से इसका सातुड़ी तीज नाम है।',
+  paranaMealEn: 'After sighting the moon at night and offering arghya, the fast is traditionally broken with sattu — the source of its Satudi Teej name.',
+  traditionNoteHi: 'यह राजस्थान का प्रचलित कजली/सातुड़ी रूप है (बूंदी का तीज मेला प्रसिद्ध है); नाम और रीति क्षेत्र के अनुसार बदलते हैं।',
+  traditionNoteEn: 'This is the common Rajasthani Kajli/Satudi form (the Bundi Teej fair is its best-known celebration); names and customs vary by region.',
+  source: {
+    referenceUrls: [
+      `${UTSAV}/view-event/kajli-teej-festival`,
+      'https://www.prokerala.com/festivals/kajari-teej.html',
+    ],
+    verificationNote:
+      'Verified 2026-08-30 via search excerpts of both pages (direct fetch blocked by the network egress proxy): the Utsav record attests the Bundi Kajli Teej celebration, and the Prokerala page the nirjala fast, neem pooja, moon offering, and breaking the fast with sattu; the sattu claim is additionally concordant across the surveyed festival pages.',
+    variantNote: 'The sattu parana and neem worship are named as the Rajasthani form, not generalized to every Kajari Teej region.',
+  },
+});
+
 const rishiPanchamiBhog = profile({
   id: 'rishi-panchami-bhog',
   titleHi: 'ऋषि पंचमी का नैवेद्य और फलाहार',
@@ -627,6 +671,8 @@ const bachhBarasBhog = profile({
 
 export const EXTENDED_BHOG_CONTENT: readonly BhogContentEntry[] = [
   hartalikaTeejBhog,
+  hariyaliTeejBhog,
+  kajariTeejBhog,
   rishiPanchamiBhog,
   durvaAshtamiBhog,
   anantChaturdashiBhog,
