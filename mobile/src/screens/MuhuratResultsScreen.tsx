@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -8,10 +8,14 @@ import { contentByLang } from '@/utils/localize';
 import { scriptTitleFont } from '@/utils/langType';
 import ReaderHeader from '@/components/ReaderHeader';
 import ListCard, { CardThumb } from '@/components/ListCard';
+import MuhuratChip from '@/components/MuhuratChip';
 import MuhuratFollowControl from '@/components/MuhuratFollowControl';
 import MuhuratBalaStrip from '@/components/MuhuratBalaStrip';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
+import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { useMuhuratFinder } from '@/panchang/useMuhuratFinder';
+import { shubhYogasForDate } from '@/panchang/muhuratFinderScan';
+import type { ShubhYogaWindow } from '@/panchang/shubhYoga';
 import { useMuhuratBala, type MuhuratBalaItem } from '@/panchang/useMuhuratBala';
 import {
   DISHA_LABELS,
@@ -100,6 +104,35 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
     }));
   const { hydrated: balaHydrated, hasProfile, balaByDate } = useMuhuratBala(balaItems);
 
+  // PRD-27 (RULEBOOK §23): the शुभ योग chips are an ANNOTATION computed beside
+  // the verdicts, never inside them — ordering, tiers, sections and the empty
+  // state above know nothing of yogas. Deferred off the render path; the scan
+  // just solved these days, so the store reads are cache hits.
+  const [calendarSystem] = usePanchangCalendarSystem();
+  const [yogasByDate, setYogasByDate] = useState<ReadonlyMap<number, ShubhYogaWindow[]>>(new Map());
+  useEffect(() => {
+    if (loading) return undefined;
+    let cancelled = false;
+    const days = [
+      ...(summary?.shreshtha.slice(0, 5) ?? []),
+      ...(summary?.madhyam.slice(0, 6) ?? []),
+      ...firstAfter,
+    ].map((v) => v.dateMs);
+    const handle = setTimeout(() => {
+      const map = new Map<number, ShubhYogaWindow[]>();
+      for (const ms of days) {
+        const yogas = shubhYogasForDate(new Date(ms), { calendarSystem, location });
+        if (yogas.length) map.set(ms, yogas);
+      }
+      if (!cancelled) setYogasByDate(map);
+    }, 0);
+    return () => {
+      cancelled = true;
+      clearTimeout(handle);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, summary, firstAfter, calendarSystem, location]);
+
   const sectionLabelStyle = {
     fontFamily: typography.sectionLabel.fontFamily,
     fontSize: typography.sectionLabel.fontSize,
@@ -152,6 +185,10 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
     const best = v.windows[0];
     const sibling = splitSibling(v.windows);
     const tier = v.tier === 'shreshtha' ? 'shreshtha' : 'madhyam';
+    // One chip per yoga KEY (a key can hold two windows on rare days); the
+    // windows themselves live on the day detail. Order is SHUBH_YOGA_ORDER as
+    // delivered — never re-sorted by any notion of strength.
+    const dayYogas = [...new Map((yogasByDate.get(v.dateMs) ?? []).map((w) => [w.key, w])).values()];
     return (
       <ListCard
         testID={`muhurat-result-${d.getDate()}`}
@@ -171,6 +208,20 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
         <Text style={{ fontFamily: titleFont, fontSize: 12, color: tier === 'shreshtha' ? colors.saffronDeep : colors.inkMuted, lineHeight: 19, marginTop: 1 }}>
           {contentByLang(lang, TIER_LABELS[tier].hi, TIER_LABELS[tier].en)}
         </Text>
+        {/* PRD-27: yoga chips annotate the card; order stays exactly as the
+            finder produced it (annotate-only, RULEBOOK §23). */}
+        {dayYogas.length > 0 && (
+          <View style={styles.yogaChips}>
+            {dayYogas.map((w) => (
+              <MuhuratChip
+                key={w.key}
+                testID={`muhurat-result-yoga-${w.key}`}
+                label={contentByLang(lang, w.nameHi, w.nameEn)}
+                tone="yoga"
+              />
+            ))}
+          </View>
+        )}
         {best && <WindowLine w={best} />}
         {sibling && (
           <>
@@ -452,4 +503,5 @@ const styles = StyleSheet.create({
   reason: { borderWidth: 1, padding: 12, marginTop: 12 },
   dishaRow: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 6, marginTop: 10 },
   dishaChip: { borderWidth: 1, paddingHorizontal: 12, paddingVertical: 6, minHeight: 32, justifyContent: 'center' },
+  yogaChips: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 4 },
 });

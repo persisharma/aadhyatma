@@ -11,8 +11,9 @@ import { contentByLang, pick } from '@/utils/localize';
 import { scriptTitleFont } from '@/utils/langType';
 import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
-import { verdictForDate } from '@/panchang/muhuratFinderScan';
+import { shubhYogasForDate, verdictForDate } from '@/panchang/muhuratFinderScan';
 import { useMuhuratBala } from '@/panchang/useMuhuratBala';
+import type { ShubhYogaWindow } from '@/panchang/shubhYoga';
 import {
   DOSHA_LABELS,
   TIER_LABELS,
@@ -26,6 +27,8 @@ import { HORA_NAMES_HI, HORA_NAMES_EN } from '@/panchang/hora';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import type { PanchangData } from '@/panchang/types';
 import MuhuratFinderShareCard from '@/components/MuhuratFinderShareCard';
+import MuhuratChip from '@/components/MuhuratChip';
+import ShubhYogaCard from '@/components/ShubhYogaCard';
 import MuhuratBalaStrip from '@/components/MuhuratBalaStrip';
 import MuhuratFollowControl from '@/components/MuhuratFollowControl';
 import ShareButton from '@/components/ShareButton';
@@ -61,7 +64,7 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
   const date = new Date(route.params.dateMs);
   const titleFont = scriptTitleFont(lang, typography.cardHindi.fontFamily);
 
-  const [data, setData] = useState<{ v: DayVerdict; p: PanchangData } | null>(null);
+  const [data, setData] = useState<{ v: DayVerdict; p: PanchangData; yogas: ShubhYogaWindow[] } | null>(null);
   const shotRef = useRef<View>(null);
   const cardHeightRef = useRef(0);
   const [busy, setBusy] = useState(false);
@@ -100,7 +103,10 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
       // than two fresh solves, and it carries the abujh exemption that keeps
       // this screen from contradicting the अबूझ list (PRD-16 §4.2).
       const solved = verdictForDate(rule, date, { calendarSystem, location });
-      if (!cancelled && solved) setData({ v: solved.verdict, p: solved.p });
+      // PRD-27: the शुभ योग annotation rides beside the verdict, never inside
+      // it (RULEBOOK §23) — same store, so this is a cache hit here.
+      const yogas = solved ? shubhYogasForDate(date, { calendarSystem, location }) : [];
+      if (!cancelled && solved) setData({ v: solved.verdict, p: solved.p, yogas });
     }, 0);
     return () => {
       cancelled = true;
@@ -252,13 +258,35 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
                 )}
               </>
             ) : (
-              <View style={[styles.tierPill, { backgroundColor: colors.avoidChipBg, borderRadius: radii.sm }]}>
-                <Text style={{ fontFamily: titleFont, fontSize: 12, color: colors.avoidDeep, lineHeight: 19 }}>
-                  {contentByLang(lang, 'इस कार्य हेतु उपयुक्त नहीं', 'Not suitable for this occasion')}
-                </Text>
-              </View>
+              <>
+                <View style={[styles.tierPill, { backgroundColor: colors.avoidChipBg, borderRadius: radii.sm }]}>
+                  <Text style={{ fontFamily: titleFont, fontSize: 12, color: colors.avoidDeep, lineHeight: 19 }}>
+                    {contentByLang(lang, 'इस कार्य हेतु उपयुक्त नहीं', 'Not suitable for this occasion')}
+                  </Text>
+                </View>
+                {/* PRD-27: name the present doshas at the answer (the checklist
+                    below still carries the full उपस्थित/नहीं roster) — the same
+                    shared chip the yoga annotation uses, its other tone. */}
+                {data.v.doshas.length > 0 && (
+                  <View style={styles.doshaChips}>
+                    {data.v.doshas.map((dk) => (
+                      <MuhuratChip
+                        key={dk}
+                        testID={`muhurat-day-dosha-${dk}`}
+                        label={contentByLang(lang, DOSHA_LABELS[dk].hi, DOSHA_LABELS[dk].en)}
+                        tone="dosha"
+                      />
+                    ))}
+                  </View>
+                )}
+              </>
             )}
           </LinearGradient>
+
+          {/* PRD-27: the day's शुभ योग with its window — an annotation that
+              coexists with the verdict above (an excluded day can truthfully
+              carry one; the app never nets the two into a score). */}
+          <ShubhYogaCard yogas={data.yogas} referenceDay={data.p.date} />
 
           {/* Phase 4: the personal strip sits between answer and actions
               (prototype phone c) — present only with a saved Kundali. */}
@@ -438,6 +466,7 @@ const styles = StyleSheet.create({
   loading: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   answer: { borderWidth: 1, padding: 16, marginTop: 6 },
   tierPill: { alignSelf: 'center', paddingHorizontal: 10, paddingVertical: 4, marginTop: 10 },
+  doshaChips: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 6, marginTop: 10 },
   best: { borderTopWidth: 1, marginTop: 12, paddingTop: 12 },
   timingsLink: { borderWidth: 1, alignItems: 'center', paddingVertical: 12, marginTop: 12 },
   evidence: { borderWidth: 1, paddingHorizontal: 14 },
