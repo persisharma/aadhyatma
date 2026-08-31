@@ -55,8 +55,8 @@ import JyotishPracticeCard from '@/components/JyotishPracticeCard';
 import JyotishShareCard from '@/components/JyotishShareCard';
 import JyotishShareSheet from '@/components/JyotishShareSheet';
 import JyotishStateCard from '@/components/JyotishStateCard';
+import { computePersonalGuidance } from '@/panchang/gochar';
 import {
-  computeRashifal,
   getCurrentDasha,
   GRAHA_NAMES_EN,
   GRAHA_NAMES_HI,
@@ -289,6 +289,8 @@ export default function PanchangScreen({ route }: Props) {
     rootNav.navigate('Kundali', editing ? { editing: true } : undefined);
   const openAddPerson = () => rootNav.navigate('Kundali', { newPerson: true });
   const openRashifal = () => rootNav.navigate('Rashifal');
+  const openGochar = () => rootNav.navigate('Gochar');
+  const openKundaliReport = () => rootNav.navigate('KundaliReport');
   const openGunaMilan = () => rootNav.navigate('GunaMilan');
   const openNamkaran = () => rootNav.navigate('Namkaran');
 
@@ -739,6 +741,8 @@ export default function PanchangScreen({ route }: Props) {
               onOpenKundali={() => openKundali(false)}
               onEditKundali={() => openKundali(true)}
               onOpenRashifal={openRashifal}
+              onOpenGochar={openGochar}
+              onOpenReport={openKundaliReport}
               onOpenGunaMilan={openGunaMilan}
               onOpenNamkaran={openNamkaran}
               onOpenNavagraha={() => openLinkedSection('navagraha-stotram')}
@@ -769,6 +773,8 @@ function JyotishLanding({
   onOpenKundali,
   onEditKundali,
   onOpenRashifal,
+  onOpenGochar,
+  onOpenReport,
   onOpenGunaMilan,
   onOpenNamkaran,
   onOpenNavagraha,
@@ -790,6 +796,8 @@ function JyotishLanding({
   onOpenKundali: () => void;
   onEditKundali: () => void;
   onOpenRashifal: () => void;
+  onOpenGochar: () => void;
+  onOpenReport: () => void;
   onOpenGunaMilan: () => void;
   onOpenNamkaran: () => void;
   onOpenNavagraha: () => void;
@@ -797,8 +805,8 @@ function JyotishLanding({
   const [shareVisible, setShareVisible] = useState(false);
   const moon = chart?.grahas.find((position) => position.graha === 'moon');
   const guidance = useMemo(
-    () => (moon ? computeRashifal(today, moon.rashiIndex) : null),
-    [moon, today]
+    () => (chart ? computePersonalGuidance(chart, today) : null),
+    [chart, today]
   );
   const currentDasha = chart ? getCurrentDasha(chart, today) : null;
   const city = profile ? getCityById(profile.cityId) : null;
@@ -1013,8 +1021,8 @@ function JyotishLanding({
           >
             {meaningByLang(
               lang,
-              'दैनिक चन्द्र-राशि मार्गदर्शन पहले; आपकी पूरी कुंडली एक स्पर्श दूर।',
-              'Daily Moon-sign guidance first; your full chart remains one tap away.'
+              'आज का मार्गदर्शन आपकी पूरी कुंडली से; चार्ट स्वयं एक स्पर्श दूर।',
+              'Today’s guidance reads your full chart; the chart itself stays one tap away.'
             )}
           </Text>
         </View>
@@ -1066,17 +1074,18 @@ function JyotishLanding({
                 ]}
               >
                 {/* With more than one person saved, "your" would be a guess —
-                    name whose chart this Moon sign came from. */}
+                    name whose chart this guidance came from. PRD-20 reads the
+                    FULL chart, not the Moon sign alone. */}
                 {people.length > 1 && profile.name
                   ? contentByLang(
                     lang,
-                    `चन्द्र राशि · ${profile.name} की कुंडली से`,
-                    `Moon sign · From ${profile.name}’s Kundali`
+                    `${profile.name} की पूरी कुंडली से`,
+                    `From ${profile.name}’s full chart`
                   )
                   : contentByLang(
                     lang,
-                    'चन्द्र राशि · आपकी कुंडली से',
-                    'Moon sign · From your Kundali'
+                    'आपकी पूरी कुंडली से',
+                    'From your full chart'
                   )}
               </Text>
               <Text
@@ -1115,7 +1124,7 @@ function JyotishLanding({
               </Text>
             </Pressable>
           </View>
-          <JyotishGuidanceRows guidance={guidance} lang={lang} />
+          <JyotishGuidanceRows guidance={guidance} lang={lang} showContext />
           <View
             style={[
               styles.jyotishGuidanceFooter,
@@ -1256,6 +1265,39 @@ function JyotishLanding({
               </View>
             ))}
           </View>
+          {guidance.sadeSatiPhase !== 'none' && (
+            <Pressable
+              onPress={onOpenGochar}
+              accessibilityRole="button"
+              accessibilityLabel="Sade Sati is running. Open Gochar"
+              style={({ pressed }) => [
+                styles.jyotishTeaser,
+                {
+                  borderColor: colors.divider,
+                  backgroundColor: colors.goldTint,
+                  borderRadius: radii.md,
+                },
+                pressed && { opacity: 0.72 },
+              ]}
+            >
+              <Text
+                style={{
+                  flex: 1,
+                  color: colors.inkSoft,
+                  fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+                  fontSize: 11,
+                  lineHeight: 16,
+                }}
+              >
+                {meaningByLang(
+                  lang,
+                  'साढ़े साती का पारम्परिक काल चल रहा है — गोचर में देखें।',
+                  'A traditional Sade Sati period is running — see it in Gochar.'
+                )}
+              </Text>
+              <Text style={{ color: colors.saffronDeep, fontSize: 16 }}>›</Text>
+            </Pressable>
+          )}
           <View style={styles.jyotishActions}>
             <Pressable
               onPress={onOpenKundali}
@@ -1290,8 +1332,37 @@ function JyotishLanding({
               </Text>
             </Pressable>
           </View>
+          <Pressable
+            onPress={onOpenReport}
+            accessibilityRole="button"
+            accessibilityLabel="Open full Kundali reading"
+            style={({ pressed }) => [
+              styles.jyotishReportLink,
+              pressed && { opacity: 0.65 },
+            ]}
+          >
+            <Text style={[styles.jyotishInlineLink, { color: colors.saffronDeep }]}>
+              {contentByLang(lang, 'पूर्ण कुंडली विवेचन खोलें', 'Open the full chart reading')} ›
+            </Text>
+          </Pressable>
         </View>
 
+        {sectionLabel('गोचर', 'Transits')}
+        <JyotishToolCard
+          titleHi="गोचर"
+          titleEn="Gochar"
+          bodyHi="आज के नौ ग्रह आपकी कुंडली में—साढ़े साती और आगामी राशि-प्रवेश सहित।"
+          bodyEn="Today's nine grahas in your chart—with Sade Sati and upcoming sign changes."
+          badge="NEW"
+          glyph="गो"
+          onPress={onOpenGochar}
+          accessibilityLabel="Open Gochar"
+          lang={lang}
+          colors={colors}
+          typography={typography}
+          radii={radii}
+          elevation={elevation}
+        />
         {sectionLabel('मिलान', 'Compatibility')}
         <JyotishToolCard
           titleHi="अष्टकूट मिलान"
@@ -2199,6 +2270,22 @@ const styles = StyleSheet.create({
   jyotishFactLabel: { fontSize: 10 },
   jyotishFactDetail: { fontFamily: fontFamilies.inter, fontSize: 10, marginTop: 1 },
   jyotishActions: { marginTop: 12, flexDirection: 'row', gap: 8 },
+  jyotishReportLink: {
+    minHeight: 44,
+    marginTop: 2,
+    justifyContent: 'center',
+    alignSelf: 'flex-start',
+  },
+  jyotishTeaser: {
+    marginTop: 10,
+    minHeight: 44,
+    paddingHorizontal: 11,
+    paddingVertical: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
   jyotishPrimary: { minHeight: 42, flex: 1, paddingHorizontal: 15, alignItems: 'center', justifyContent: 'center' },
   jyotishPrimaryText: { fontFamily: fontFamilies.interSemiBold, fontSize: 11 },
   jyotishSecondary: { minHeight: 42, flex: 1, paddingHorizontal: 15, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
