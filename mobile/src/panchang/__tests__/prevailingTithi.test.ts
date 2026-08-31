@@ -11,7 +11,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { computePanchangForDate } from '../engine';
-import { prevailingTithi } from '../prevailingTithi';
+import { prevailingTithi, successorTithiToday } from '../prevailingTithi';
 import { TITHI_NAMES_HI, TITHI_NAMES_EN } from '../names';
 import type { PanchangData } from '../types';
 
@@ -93,4 +93,38 @@ test('kshaya reference day agrees with the real engine chain (Bengaluru 10 Jul 2
   const successor = prevailingTithi(p, afterKshaya);
   assert.equal(successor.nameEn, 'Dwadashi');
   assert.equal(successor.endTime, null);
+});
+
+// ─── successorTithiToday — the anga tile / kicker handover line ──────────────
+// `day()` above builds no `date`, so these cases set it explicitly: the helper
+// compares the end instant against the day it belongs to.
+function dated(p: PanchangData, date: Date): PanchangData {
+  return { ...p, date } as PanchangData;
+}
+const AUG_21 = new Date(2026, 7, 21);
+
+test('the successor is named when the sunrise tithi hands over the same day', () => {
+  const p = dated(day(17, new Date(2026, 7, 21, 8, 51)), AUG_21); // Tritiya till 8:51 AM
+  assert.deepEqual(successorTithiToday(p), { nameHi: TITHI_NAMES_HI[18], nameEn: TITHI_NAMES_EN[18] });
+});
+
+test('no successor when the sunrise tithi runs past midnight or past the day', () => {
+  // Ends tomorrow: the तक line already carries that date, and the successor's
+  // day is not this one.
+  assert.equal(successorTithiToday(dated(day(17, new Date(2026, 7, 22, 2, 4)), AUG_21)), null);
+  // No end in this day's solve at all.
+  assert.equal(successorTithiToday(dated(day(17, null), AUG_21)), null);
+});
+
+test('no successor on a kshaya day — the tile already renders both tithis', () => {
+  const p = dated(day(9, new Date(2026, 7, 21, 8, 16), { index: 10, end: new Date(2026, 7, 22, 5, 22) }), AUG_21);
+  assert.equal(successorTithiToday(p), null);
+});
+
+test('the handover agrees with the real solve for Bengaluru, 31 Aug 2026', () => {
+  // The reported day: Tritiya till 8:51 AM, then Chaturthi for the rest of it —
+  // which is why that night, not 1 Sep, carries the Chaturthi vrat.
+  const p = computePanchangForDate(new Date(2026, 7, 31), { location: BENGALURU });
+  assert.equal(p.tithi.nameEn, 'Tritiya');
+  assert.equal(successorTithiToday(p)?.nameEn, 'Chaturthi');
 });

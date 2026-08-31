@@ -24,6 +24,18 @@
 #      `return null` until the off-render solve landed, so it must now be present
 #      as a stable frame first, then fill in with the real timings.
 #
+# Deliberately NOT asserted here — both are date-conditional, and this flow runs
+# on whatever day the device is on:
+#   - The kicker/Tithi-tile handover line ("then <Tithi> — rest of day") renders
+#     only when the sunrise tithi hands over before midnight — most days, not all
+#     (never on a kshaya day, nor when the tithi runs past the next sunrise).
+#   - The moonrise-vrat line on a chandrodaya observance card ("Kept this
+#     night — moonrise H:MM …") renders on ~one day a month.
+#   Asserting either unconditionally would make this flow fail on a correct app.
+#   They are pinned deterministically instead: prevailingTithi.test.ts and
+#   observanceDates.test.ts (tsx, test:engine) and
+#   MuhuratGlanceCardTithi.test.tsx (Jest) — see RULEBOOK §23.
+#
 # Why we switch to English first:
 #   The screen reads the GLOBAL reading language (useGitaLanguage); the default
 #   is Hindi, so most on-screen text is Devanagari, which Maestro's iOS

@@ -35,6 +35,8 @@ import {
 import type { CalendarSystem, PanchangElement, ResolvedObservance } from '@/panchang/types';
 import { getKathaContent } from '@/panchang/kathaContent';
 import { getUpcomingObservances, searchObservances } from '@/panchang/festivalEngine';
+import { successorTithiToday } from '@/panchang/prevailingTithi';
+import { sankashtiOccurrenceName } from '@/panchang/sankashtiNames';
 import { getCategoryCounts, getKathaCount, type BrowseCategory } from '@/panchang/vratCatalog';
 import { VIDHI_ENTRIES, getVidhiById } from '@/data/vidhi';
 import { useVratFollows } from '@/contexts/VratFollowContext';
@@ -624,7 +626,7 @@ export default function PanchangScreen({ route }: Props) {
               first) on elevated off-white cards; Yoga + Karana sit as a quieter,
               flatter secondary row. */}
           <View style={styles.angaGrid}>
-            <PanchangTile label={contentByLang(lang, 'तिथि', 'Tithi')} element={p.tithi} kshaya={p.kshayaTithi} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
+            <PanchangTile label={contentByLang(lang, 'तिथि', 'Tithi')} element={p.tithi} kshaya={p.kshayaTithi} successor={successorTithiToday(p)} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
             <PanchangTile label={contentByLang(lang, 'नक्षत्र', 'Nakshatra')} element={p.nakshatra} kshaya={p.kshayaNakshatra} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
           </View>
           <View style={styles.angaGridSecondary}>
@@ -658,6 +660,7 @@ export default function PanchangScreen({ route }: Props) {
                 <ObservanceCard
                   key={`${item.rule.id}-${i}`}
                   item={item}
+                  moonrise={p?.moonrise ?? null}
                   lang={lang}
                   colors={colors}
                   typography={typography}
@@ -1626,12 +1629,16 @@ function CalendarSystemToggle({ value, onChange, lang, colors, radii, typography
   );
 }
 
-function PanchangTile({ label, element, kshaya, panchangDate, lang, colors, typography, radii, elevation }: {
+function PanchangTile({ label, element, kshaya, successor, panchangDate, lang, colors, typography, radii, elevation }: {
   label: string;
   element: PanchangElement;
   // Kshaya anga (skipped at every sunrise) — rendered as a second, smaller row so
   // days like 10 Jul 2026 read "दशमी तक 8:16 AM · एकादशी तक 5:22 AM, 11 जुल".
   kshaya?: PanchangElement | null;
+  // The anga that takes over later the SAME day (tithi tile only). "तृतीया तक
+  // 8:51 AM" alone leaves the rest of the day unnamed, which is what made a
+  // Chaturthi vrat look like it belonged to the next date instead of this one.
+  successor?: { nameHi: string; nameEn: string } | null;
   panchangDate: Date;
   lang: Lang;
   colors: any;
@@ -1683,6 +1690,18 @@ function PanchangTile({ label, element, kshaya, panchangDate, lang, colors, typo
           )}
         </React.Fragment>
       ))}
+      {/* Handover line — quieter than the तक line above it, since the tile's
+          headline stays the sunrise (udaya) anga the almanac names the day by. */}
+      {successor && (
+        <Text
+          numberOfLines={1}
+          adjustsFontSizeToFit
+          minimumFontScale={0.8}
+          style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkMuted, marginTop: 3 }}
+        >
+          {contentByLang(lang, `फिर ${successor.nameHi} — शेष दिन`, `then ${successor.nameEn} — rest of day`)}
+        </Text>
+      )}
     </View>
   );
 }
@@ -1702,8 +1721,11 @@ function TimeCell({ icon, label, value, lang, colors }: { icon: string; label: s
   );
 }
 
-function ObservanceCard({ item, lang, colors, typography, radii, elevation, onOpenLink, onOpenKatha, onOpenVidhi }: {
+function ObservanceCard({ item, moonrise, lang, colors, typography, radii, elevation, onOpenLink, onOpenKatha, onOpenVidhi }: {
   item: ResolvedObservance;
+  // This date's moonrise, when the day is solved. Only read for a chandrodaya
+  // rule, whose observance day IS the day whose moonrise its tithi covers.
+  moonrise: Date | null;
   lang: Lang;
   colors: any;
   typography: any;
@@ -1720,6 +1742,29 @@ function ObservanceCard({ item, lang, colors, typography, radii, elevation, onOp
   // PRD-19: the vidhi pill renders only when the rule's vidhiId resolves to a
   // published vidhi — the identical hook mechanism as kathaId.
   const vidhi = item.rule.vidhiId ? getVidhiById(item.rule.vidhiId) : null;
+  // A moonrise vrat is kept through a night, not a calendar box: its tithi
+  // usually ends the next morning, so the card states the instant the fast is
+  // actually broken rather than leaving the reader to reconcile "व्रत" with a
+  // तिथि line that ends before noon.
+  const chandrodaya = item.rule.dayRule === 'chandrodaya' ? moonrise : null;
+  // The one generic monthly rule whose occurrences carry PUBLISHED names: the
+  // Bhadrapada Sankashti is the Heramba day, an adhik lunation is Vibhuvana, a
+  // Tuesday is अंगारकी — the rule name alone hid all of that. Occurrence-titled
+  // here only; list/search/detail surfaces keep the rule's own name.
+  const sankashtiName = React.useMemo(() => {
+    if (item.rule.id !== 'sankashti-chaturthi-vrat') return null;
+    try {
+      return sankashtiOccurrenceName(item.date);
+    } catch {
+      return null;
+    }
+  }, [item.rule.id, item.date]);
+  const titleHi = sankashtiName
+    ? `${sankashtiName.nameHi}${sankashtiName.isAngarki ? ' (अंगारकी)' : ''} व्रत`
+    : item.rule.nameHi;
+  const titleEn = sankashtiName
+    ? `${sankashtiName.nameEn}${sankashtiName.isAngarki ? ' (Angarki)' : ''} Vrat`
+    : item.rule.nameEn;
 
   return (
     <View style={[styles.observanceCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card]}>
@@ -1734,11 +1779,20 @@ function ObservanceCard({ item, lang, colors, typography, radii, elevation, onOp
         </Text>
       </View>
       <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
-        {contentByLang(lang, item.rule.nameHi, item.rule.nameEn)}
+        {contentByLang(lang, titleHi, titleEn)}
       </Text>
       <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted, marginTop: 4 }}>
         {meaningByLang(lang, item.rule.shortDescriptionHi, item.rule.shortDescriptionEn)}
       </Text>
+      {chandrodaya && (
+        <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.saffronDeep, marginTop: 6 }}>
+          {contentByLang(
+            lang,
+            `व्रत इसी रात्रि — चंद्रोदय ${formatTime12(chandrodaya)}, दर्शन व अर्घ्य के बाद पारण`,
+            `Kept this night — moonrise ${formatTime12(chandrodaya)}, parana after darshan and arghya`
+          )}
+        </Text>
+      )}
       <View style={styles.linkRow}>
         {vidhi && (
           <Pressable
