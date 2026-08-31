@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Proposed for planning review — five candidate PRDs (PRD-26 … PRD-30, numbers reserved; PRD-25 stays reserved for सन्ध्या वन्दन per round 1 §3) |
+| **Status** | Proposed for planning review — **four** candidate PRDs (PRD-26 … PRD-29, numbers reserved). PRD-30 (घर की साधना, household roster) was proposed here and **dropped by product decision** on 2026-08-31 — see §3.4; its number is retired, not reusable. PRD-25 stays reserved for सन्ध्या वन्दन per round 1 §3. |
 | **Dated** | 2026-08-27 (against `claude/next-quarter-prds-gvyobx` @ `51a7f86`, app 1.4.6) |
 | **Method** | Same household-practice audit as [round 1](./2026-Q4-candidates.md), run with a stricter filter: a candidate qualifies only if it is (a) genuinely useful and (b) **not discussed anywhere** — not shipped, not owned by PRDs 01–24, not sitting in round 1's §3 rejected table, and not in `docs/enrichment-loop/backlog.md`. Every claim below was checked against source, not against the docs. §3 records the near-misses the filter removed, including one that looked like the strongest candidate of the round. |
 | **Prototypes** | One per candidate, in the app's parchment system — linked from each section below and indexed in §6. |
@@ -48,22 +48,17 @@ Two things have moved since 2026-08-22 and both change the calculus:
    `govardhan-puja`, `bhai-dooj`), and `ganesh-chaturthi` and `anant-chaturdashi` as strangers.
    The biggest festivals are **arcs**, and the app only knows days. → **PRD-28**
 
-Plus two record-keeping gaps that fall out of features already shipped:
+Plus a record-keeping gap that falls out of features already shipped:
 
 4. **The app tracks the tithis of the dead with real care and no tithi of the living.** PRD-17 Pitru
    Smaran has `deriveTithiRuleFromDate` + `solveNextOccurrence`; multi-person birth profiles shipped
    in #294. Nothing anywhere answers "when is my Hindu birthday this year". And `kuldev`/lineage
    appear nowhere in the codebase outside katha prose, though the kuldevta is the one piece of
    practice a family most reliably loses in a generation. → **PRD-29**
-5. **The app accepted the multi-person household and left practice single-user.** Birth profiles are
-   per-person, Pitru Smaran is per-ancestor — and `Routine` (`data/routine/types.ts`) is
-   `{ id, nameHi, nameEn, mode, items, createdAt }` with **no person field at all**. Every routine,
-   done-mark, vrat follow and japam alarm belongs to one implicit user, so the second person in the
-   house is a second app. → **PRD-30**
 
 ---
 
-## 2. The five
+## 2. The four
 
 Ordered by my recommended build sequence: cheapest-and-ungated first.
 
@@ -250,44 +245,6 @@ sharing prompt.
 
 ---
 
-### PRD-30 — घर की साधना · the household practice roster
-
-> *The app already accepted the multi-person household everywhere except in practice itself.*
-
-**Prototype.** [`household-roster-prototype.html`](../household-roster-prototype.html) — 6 frames — today's implicit single user, the household day, person filtering, optional assignment, one roster with optional birth details, and the shared iOS notification budget. Every liturgical or tabular string in it is an illustrative placeholder.
-
-**The practice.** Practice in a Hindu household is assigned, not individually chosen. Mother keeps
-Somvar, father Shanivar, grandmother every Ekadashi, the child does one shloka before school — and
-one phone runs all of it. "Who still has something left today" is a real question in a joint family.
-
-**The gap.** The product has already accepted multi-person: birth profiles are per-person with a
-`PersonChips` roster (#294), Pitru Smaran is per-ancestor. Then `data/routine/types.ts` defines
-`Routine` as `{ id, nameHi, nameEn, mode, items, createdAt }` — **no person field**. Routines,
-done-marks (`@vedansh/routine-done`), vrat follows and japam alarms are all single-user, so the
-second practitioner in the house has no representation at all.
-
-**What ships.**
-- An **optional `personId`** on Routine and on vrat follows, resolved against the **shipped**
-  `birthProfiles` roster — not a second identity system.
-- A **household day view**: who has what remaining today, at a glance.
-- Person filtering on the routine and vrat surfaces (§45), reusing `PersonChips`.
-- **Per-person reminder routing** in the shipped notification planners — with the real constraint
-  stated up front: iOS has **one shared pending-notification budget** ([[notifications]]), so the
-  planner must allocate *across* people rather than schedule per-person independently, or a
-  four-person household silently starves its own reminders.
-
-**Feasibility.** ✅ Engine-only and OTA-shippable, but **the largest migration in this slate**:
-`@vedansh/routines` and `@vedansh/routine-done` gain a person dimension, and `routineItemKey` must
-keep every existing done-mark valid. All existing routines migrate to an implicit "self" person.
-Write that migration test before the feature.
-
-**Stance guards.** No accounts, no cloud, no sharing — a "person" is a label on this device. And the
-failure mode to design out deliberately: **no per-person adherence percentage and no compliance
-report**. A household roster that ranks who skipped their vrat turns practice into surveillance,
-which is the opposite of the app's register.
-
----
-
 ## 3. What the filter removed (so "not already discussed" is checkable)
 
 ### 3.1 The near-miss: विवाह मुहूर्त
@@ -325,6 +282,28 @@ so it is out of this document by construction.
 | **Children's devotional layer** | A real gap and a real audience, but content-heavy and undefined. **PRD-26's अभ्यास mode serves the concrete half of it** — drilling shlokas with a parent — at a fraction of the cost. Revisit once 26 has shipped and there is usage to look at. |
 | **Positive day-quality as a standalone daily "score"** | Out on the same grounds round 1 rejected standalone panchak warnings: the moment a day gets a number, the app is in the fortune business. PRD-27 names yogas and refuses the score. |
 
+### 3.4 Dropped after circulation: घर की साधना, the household practice roster (PRD-30)
+
+Proposed in the first cut of this document as a fifth candidate: `Routine` carries no person field
+though birth profiles went multi-person in #294, so a joint family sharing one phone has no way to
+hold more than one person's practice. It was the only candidate here that would have increased
+**people served per install** rather than depth per person.
+
+**Dropped 2026-08-31 by product decision:** the shared-household-device premise no longer holds —
+individual phone ownership is now the norm in the target audience, so the second practitioner in a
+house already has their own install. This was the item flagged in the first cut as *"the one I would
+want evidence for before building"*, and it rests on exactly the assumption that was tested and
+found false.
+
+It was also the slate's only storage migration (`@vedansh/routines` and `@vedansh/routine-done`
+gaining a person dimension while `routineItemKey` kept every existing done-mark valid), so dropping
+it removes the only change in round 2 that could have broken data users already have.
+
+**PRD-30's number is retired, not returned to the pool** — a future household feature takes a fresh
+number, so nothing in this document's history silently changes meaning. Its prototype
+(`docs/household-roster-prototype.html`) was removed in the same commit; it remains in git history if
+the premise is ever revisited.
+
 Round 1's §3 exclusions all carry over unchanged: सन्ध्या वन्दन (reserved **PRD-25**), अन्त्येष्टि,
 temple darshan timings / yatra planner, festival greeting cards, rudrākṣa / ratna / numerology, and
 panchak-or-gaṇḍamūla as standalone day warnings.
@@ -338,7 +317,6 @@ PRD-26  कण्ठस्थ · memorization    ████████       
 PRD-27  शुभ योग                   ██████          OTA · tables, published everywhere
 PRD-29  कुल परम्परा                █████           OTA · user data only
 PRD-28  पर्व-अर्क                    ███░░░░░        arc+solver OTA · visarjan text sourced
-PRD-30  घर की साधना                ██████░░        OTA · storage migration is the risk
                                   └ ██ = buildable now   ░░ = gated or risk-bearing
 ```
 
@@ -347,22 +325,19 @@ slate, it is the only one with literally no content and no convention sign-off, 
 shipped texts into a practice that compounds for years. **PRD-27 second**: small pure tables, and it
 fixes a structural asymmetry cheaply. **PRD-29 third** — no content, and its engine call is already
 written and tested. **PRD-28 fourth**, splitting the arc mechanic (now) from the visarjan text
-(scheduled, not hoped for). **PRD-30 last**, because its storage migration is the only thing in this
-document that can break data users already have.
+(scheduled, not hoped for) — and note it is the one item here with a calendar deadline, since Diwali
+falls inside Q4. With PRD-30 dropped, **nothing left in this slate migrates existing user data.**
 
 **Cross-cutting.** PRD-29 is the *third* consumer of the birth-profile schema change (after round 1's
-PRD-20 gotra and PRD-21 natal Moon). Design that migration **once**, in PRD-20. And PRD-30's person
-dimension must resolve against the same `birthProfiles` roster PRD-29 writes to — with birth details
-**optional**, since a person who only owns a routine has no chart.
+PRD-20 gotra and PRD-21 natal Moon). Design that migration **once**, in PRD-20.
 
-**Against round 1.** These five do not compete with PRD-20/21/22/24 for the same skills: round 1's
-slate is convention-and-content-heavy, this one is mechanic-and-storage-heavy. If both are wanted
+**Against round 1.** These four do not compete with PRD-20/21/22/24 for the same skills: round 1's
+slate is convention-and-content-heavy, this one is mechanic-heavy. If both are wanted
 this quarter, PRD-26 and PRD-27 can run alongside PRD-20's convention sign-off without contention.
 
 **Merge gates** (`RULEBOOK.md` §0/§0.1, and `.claude/rules/design-doc-sync.md`): unit **and** Maestro
 e2e with each change; `design.md` updated in the same PR — PRD-26 extends §9 and §45 plus a new
-section, PRD-27 extends §60, PRD-28 extends §62/§65, PRD-29 a new section plus §37, PRD-30 extends
-§45; `RULEBOOK.md` gains a content contract at §22+ for each content-bearing family (PRD-27's yoga
+section, PRD-27 extends §60, PRD-28 extends §62/§65, PRD-29 a new section plus §37; `RULEBOOK.md` gains a content contract at §22+ for each content-bearing family (PRD-27's yoga
 tables, PRD-28's visarjan vidhi); `npm run lint` at 0 errors. design.md currently ends at §65.1 and
 RULEBOOK at §21.
 
@@ -383,15 +358,12 @@ RULEBOOK at §21.
 4. **PRD-28 duration set** — which visarjan durations does the app offer (1½ / 3 / 5 / 7 / 10), and
    does it default to any? Regional variance is wide; recommend offering the set and defaulting to
    nothing.
-5. **PRD-30 person identity** — does a routine-only person share the birth-profile record?
-   Recommend **yes, with birth details optional**, so the household roster does not demand a chart
-   for a child who just recites one shloka.
 
 ---
 
 ## 6. Prototypes
 
-Five static HTML prototypes, one per candidate, in the same parchment system and frame conventions
+Four static HTML prototypes, one per candidate, in the same parchment system and frame conventions
 as the shipped PRD prototypes (`docs/*-prototype.html`). Each carries its own "open questions this
 prototype does not settle" panel, so the unresolved decisions stay attached to the picture rather
 than living only in §5.
@@ -402,7 +374,6 @@ than living only in §5.
 | **27** | [`shubh-yoga-prototype.html`](../shubh-yoga-prototype.html) | The day card with and without a yoga chip, the detail showing vāra × nakshatra as its working, annotate-only finder results beside the **rejected** re-rank alternative, and Daily Muhurat |
 | **28** | [`parv-arc-prototype.html`](../parv-arc-prototype.html) | Today's silence after day 1, the 1½/3/5/7/10-day chooser, the arc strip mid-festival, visarjan computed from *your* sthapana, the Diwali five-day arc, and Navratri surfacing PRD-23's bhog list a day early |
 | **29** | [`kul-parampara-prototype.html`](../kul-parampara-prototype.html) | Janma tithi on the profile and Home strip, living + ancestor tithis on one engine, the kul record, deity/temple chosen-never-inferred, and the PRD-06 export |
-| **30** | [`household-roster-prototype.html`](../household-roster-prototype.html) | Today's implicit single user, the household day view, `PersonChips` filtering, optional person assignment, one roster with optional birth details, and the shared iOS pending budget |
 
 **Read them as questions, not specs.** They are drawn against the shipped token set so the proposals
 can be judged at the right altitude, but no candidate here has an approved PRD, a TRD, or content
