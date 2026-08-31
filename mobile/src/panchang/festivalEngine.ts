@@ -1,5 +1,5 @@
 import { addDays } from './calendarGrid';
-import { computeTithiAndMonth, getSiderealSunLng, locationKey, tithiAtMoonrise, UJJAIN_CITY_ID } from './engine';
+import { computeTithiAndMonth, getSiderealSunLng, locationKey, tithiAtMadhyahna, tithiAtMoonrise, UJJAIN_CITY_ID } from './engine';
 import { getObservanceCatalog, OBSERVANCE_RULES } from './festivals';
 import { getStoredObservanceYear } from './observanceStore';
 import { PRECOMPUTED_OBSERVANCES } from './precomputedObservances';
@@ -336,14 +336,23 @@ export function matchesLunarTithiRuleOnDate(
 ): boolean {
   if (!rule.paksha || rule.tithi === undefined) return false;
   if (rule.dayRule === 'chandrodaya') {
-    return matchesChandrodayaRuleOnDate(rule, date, calendarSystem, location);
+    return matchesInstantVyapiniRuleOnDate(rule, date, calendarSystem, location, tithiAtMoonrise);
+  }
+  if (rule.dayRule === 'madhyahna') {
+    return matchesInstantVyapiniRuleOnDate(rule, date, calendarSystem, location, tithiAtMadhyahna);
   }
   return matchesUdayaTithiRuleOnDate(rule, date, calendarSystem, location);
 }
 
 /**
- * Moonrise-vyapini (chandrodaya) day selection, for the vrats whose defining act
- * is the night's moon sighting and arghya — Sankashti Chaturthi and Karwa Chauth.
+ * Instant-vyapini day selection — the day whose GIVEN instant the tithi covers.
+ * Two instants are wired: moonrise (chandrodaya — Sankashti Chaturthi, Karwa
+ * Chauth, Bahula Chaturthi, whose fast ends with the night's moon) and midday
+ * (madhyahna — Ganesh Chaturthi's sthapana, Ram Navami's janma, the monthly
+ * Vinayaka Chaturthi). The moonrise case is described below; madhyahna is the
+ * identical selection at the sunrise–sunset midpoint (Ganesh Chaturthi 2026:
+ * Chaturthi runs 14 Sep 7:06 AM → 15 Sep 7:44 AM, so udaya said 15 Sep while
+ * every published almanac says 14 Sep, whose midday the tithi covers).
  *
  * Krishna Chaturthi usually begins mid-morning and ends before the next
  * mid-morning, so the sunrise (udaya) answer names the day AFTER the night the
@@ -366,17 +375,18 @@ export function matchesLunarTithiRuleOnDate(
  *     the udaya rule, which is what published almanacs do there too (10 Oct 2025
  *     for both Karwa Chauth and that month's Sankashti).
  */
-function matchesChandrodayaRuleOnDate(
+function matchesInstantVyapiniRuleOnDate(
   rule: ObservanceRule,
   date: Date,
   calendarSystem: CalendarSystem,
-  location?: ObservanceLocation
+  location: ObservanceLocation | undefined,
+  tithiAtInstant: typeof tithiAtMoonrise
 ): boolean {
   const computationSystem = computationSystemForRule(rule, calendarSystem);
   const opts = { calendarSystem: computationSystem, location };
   const target = rule.paksha === 'shukla' ? rule.tithi! - 1 : rule.tithi! + 14;
-  const yesterdayCovers = tithiAtMoonrise(addDays(date, -1), target, opts) === target;
-  if (tithiAtMoonrise(date, target, opts) === target) {
+  const yesterdayCovers = tithiAtInstant(addDays(date, -1), target, opts) === target;
+  if (tithiAtInstant(date, target, opts) === target) {
     return !yesterdayCovers && monthMatchesRule(rule, date, calendarSystem, location);
   }
   if (yesterdayCovers) return false;
@@ -384,11 +394,11 @@ function matchesChandrodayaRuleOnDate(
 }
 
 /**
- * The lunar-month guard the udaya matcher applies, reused by chandrodaya
- * matching. Named-month rules (Karwa Chauth in Kartik) are observed in the nija
+ * The lunar-month guard the udaya matcher applies, reused by instant-vyapini
+ * (chandrodaya/madhyahna) matching. Named-month rules (Karwa Chauth in Kartik) are observed in the nija
  * month, never the adhik one that repeats it; monthly rules have no month to
- * check. The moonrise night and its sunrise share a lunar month for every tithi
- * these rules use — a chaturthi is a fortnight from either month boundary — so
+ * check. The matched instant and its sunrise share a lunar month for every tithi
+ * these rules use — a chaturthi or navami is days from either month boundary — so
  * this day's sunrise month is the authoritative one here.
  */
 function monthMatchesRule(

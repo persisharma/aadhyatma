@@ -108,15 +108,20 @@ guard inside `test:engine`.
 Two **pre-existing** issues it surfaces (NOT the month bug, not yet fixed) — both downstream
 of the sunrise-only matcher:
 - **±1-day muhurta shift (Class B):** festivals fixed by a non-sunrise muhurta resolve one
-  day late when their tithi starts after sunrise — Maha Shivaratri (Nishita), Ganesh
-  Chaturthi & Ram Navami (Madhyahna), Diwali/Dhanteras (Pradosh). e.g. Diwali
-  2025 engine 21 Oct vs real 20 Oct; Maha Shivaratri 2026 engine 16 Feb vs real 15 Feb.
+  day late when their tithi starts after sunrise — remaining: Maha Shivaratri (Nishita) and
+  Diwali/Dhanteras (Pradosh). e.g. Diwali 2025 engine 21 Oct vs real 20 Oct; Maha Shivaratri
+  2026 engine 16 Feb vs real 15 Feb.
   **The moonrise (chandrodaya) members of this class are FIXED** (Aug 2026): `ObservanceRule.dayRule`
   now carries the per-rule vyapini convention, and `sankashti-chaturthi-vrat` + `karwa-chauth` + `bahula-chaturthi`
   match at moonrise (`tithiAtMoonrise` in `engine.ts`; RULEBOOK §23). Sankashti was wrong in
   6 of 12 lunations in 2025 and 5 of 13 in 2026 — Bhadrapada 2026 resolved to 1 Sep, whose
   9:22 PM moonrise falls in Panchami, instead of 31 Aug's 8:39 PM moonrise inside Chaturthi.
   Karwa Chauth moved only in 2027 and 2031 (2024–2026 already agreed).
+  **The madhyahna members are FIXED too** (Aug 2026): `ganesh-chaturthi`, `ram-navami` and the
+  monthly `vinayaka-chaturthi-vrat` match at the sunrise–sunset midpoint (`tithiAtMadhyahna`).
+  Ganesh Chaturthi 2026 moved 15 Sep → 14 Sep, Ram Navami 2026 27 Mar → 26 Mar (and 2028
+  4 Apr → 3 Apr); the monthly Vinayaka dates shifted in ~20 of 100 lunations 2024–2031 and now
+  always coincide with Ganesh Chaturthi in Bhadrapada.
 - **kshaya-tithi drop:** a festival whose tithi is skipped at sunrise is dropped entirely —
   e.g. Vasant Panchami 2025, Dev Uthani Ekadashi 2026, **Navratri start 2027**. (Since fixed:
   the matcher carries a kshaya fallback, and `verify:observances` reports `missing(kshaya)=0`.)

@@ -179,3 +179,30 @@ test('Bahula Chaturthi matches its published dates and rides the Sankashti day',
     );
   }
 });
+
+// ─── Madhyahna (midday-vyapini) day selection ─────────────────────────────────
+// Ganesh Chaturthi (sthapana), Ram Navami (janma) and the monthly Vinayaka
+// Chaturthi are fixed by the tithi at MIDDAY. When the tithi opens shortly
+// after sunrise, udaya matching named the day after the midday actually
+// worshipped: Ganesh Chaturthi 2026 (Chaturthi 14 Sep 7:06 AM → 15 Sep
+// 7:44 AM) resolved to 15 Sep while every published almanac says 14 Sep.
+// Published civil dates, NOT engine output.
+test('Ganesh Chaturthi and Ram Navami match their published dates exactly', () => {
+  assert.equal(engineDate('ganesh-chaturthi', 2024), '2024-09-07');
+  assert.equal(engineDate('ganesh-chaturthi', 2025), '2025-08-27');
+  assert.equal(engineDate('ganesh-chaturthi', 2026), '2026-09-14');
+  assert.equal(engineDate('ram-navami', 2024), '2024-04-17');
+  assert.equal(engineDate('ram-navami', 2025), '2025-04-06');
+  assert.equal(engineDate('ram-navami', 2026), '2026-03-26');
+});
+
+test('the monthly Vinayaka Chaturthi rides the Ganesh Chaturthi day (RULEBOOK §23.4)', () => {
+  for (const year of [2024, 2025, 2026, 2027, 2028]) {
+    const [ganesh] = engineDates('ganesh-chaturthi', year);
+    const vinayaka = engineDates('vinayaka-chaturthi-vrat', year);
+    assert.ok(ganesh, `${year}: Ganesh Chaturthi must resolve`);
+    assert.ok(vinayaka.includes(ganesh), `${year}: Vinayaka dates miss Ganesh Chaturthi ${ganesh}`);
+    assert.ok(vinayaka.length >= 12 && vinayaka.length <= 13, `${year}: ${vinayaka.length} Vinayaka Chaturthis`);
+    assert.equal(new Set(vinayaka).size, vinayaka.length, `${year}: duplicate Vinayaka dates`);
+  }
+});

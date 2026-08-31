@@ -461,6 +461,47 @@ function moonriseFor(localDate: Date, location?: GeoLocation & { cityId?: string
   return solved;
 }
 
+// Sunset memo, the twin of `sunriseCache`: the madhyahna solver and
+// computePanchangForDate ask for the same instant.
+const sunsetCache = new Map<string, Date>();
+
+function sunsetFor(localDate: Date, location?: GeoLocation & { cityId?: string }, civilTimeZone?: string): Date {
+  const key = `${locationKey(location)}:${civilTimeZone ?? 'local'}:${getLocalDateKey(localDate)}`;
+  let cached = sunsetCache.get(key);
+  if (!cached) {
+    cached = computeSunset(localDate, observerFor(location ?? UJJAIN_GEO), civilTimeZone);
+    sunsetCache.set(key, cached);
+  }
+  return cached;
+}
+
+/**
+ * The tithi running at this civil day's madhyahna — the midpoint of sunrise and
+ * sunset, the instant a madhyahna-vyapini festival (Ganesh Chaturthi, Ram
+ * Navami, monthly Vinayaka Chaturthi) is fixed by: the sthapana/janma worship
+ * happens at midday, so the observance day is the one whose midday the tithi
+ * covers, not the one whose sunrise it covers.
+ *
+ * Same shape and same reasoning as `tithiAtMoonrise` below: `expectedTithiIndex`
+ * is a REQUIRED gate — midday falls a few hours after sunrise, so the tithi
+ * there can only be the sunrise tithi or its successor, and when neither is the
+ * target the answer is known without solving sunset. Returns null when the
+ * target cannot be running there.
+ */
+export function tithiAtMadhyahna(
+  localDate: Date,
+  expectedTithiIndex: number,
+  options: PanchangComputationOptions = {}
+): number | null {
+  const sunriseTithi = computeTithiAndMonth(localDate, options).tithiIndex;
+  if (sunriseTithi !== expectedTithiIndex && (sunriseTithi + 1) % 30 !== expectedTithiIndex) return null;
+  const sunrise = sunriseFor(localDate, options.location, options.civilTimeZone);
+  const sunset = sunsetFor(localDate, options.location, options.civilTimeZone);
+  const midday = new Date((sunrise.getTime() + sunset.getTime()) / 2);
+  const year = midday.getFullYear();
+  return computeTithiIndex(getSiderealSunLng(midday, year), getSiderealMoonLng(midday, year));
+}
+
 /**
  * The tithi running at this civil day's moonrise — what a chandrodaya-vyapini
  * vrat (Sankashti Chaturthi, Karwa Chauth) is fixed by, since its defining act
@@ -568,7 +609,7 @@ export function computePanchangForDate(localDate: Date, options: PanchangComputa
     };
   }
 
-  const sunset = computeSunset(localDate, observer, options.civilTimeZone);
+  const sunset = sunsetFor(localDate, options.location, options.civilTimeZone);
   const moonrise = moonriseFor(localDate, options.location, options.civilTimeZone);
 
   const brahmaMuhurtaEnd = new Date(sunrise.getTime() - 48 * 60 * 1000);

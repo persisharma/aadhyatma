@@ -89,15 +89,20 @@ export type ObservanceRelativeRule = 'friday-before-purnima';
  * - `udaya` — the tithi running at sunrise. The default, and right for the
  *   large majority: Ekadashi, Purnima, Amavasya, Navratri, Dussehra.
  * - `chandrodaya` — the tithi running at MOONRISE. Correct for vrats whose
- *   defining act is the moon sighting that ends the fast: Sankashti Chaturthi
- *   and Karwa Chauth. Their tithi typically begins mid-morning and ends before
- *   the next day's mid-morning, so the sunrise answer names the day AFTER the
- *   night on which the vrat is actually kept.
+ *   defining act is the evening moon that ends the fast: Sankashti Chaturthi,
+ *   Karwa Chauth, Bahula Chaturthi. Their tithi typically begins mid-morning
+ *   and ends before the next day's mid-morning, so the sunrise answer names
+ *   the day AFTER the night on which the vrat is actually kept.
+ * - `madhyahna` — the tithi running at MIDDAY (the sunrise–sunset midpoint).
+ *   Correct where the defining worship happens at madhyahna: Ganesh Chaturthi
+ *   (sthapana), Ram Navami (janma), monthly Vinayaka Chaturthi. When the tithi
+ *   opens shortly after sunrise, the sunrise answer names the day AFTER the
+ *   midday actually worshipped (Ganesh Chaturthi 2026: 15 Sep instead of 14).
  *
- * Other non-sunrise conventions (madhyahna, pradosh, nishita) are not modelled
+ * The remaining non-sunrise conventions (pradosh, nishita) are not modelled
  * yet — see `VERIFICATION.md` "±1-day muhurta shift".
  */
-export type ObservanceDayRule = 'udaya' | 'chandrodaya';
+export type ObservanceDayRule = 'udaya' | 'chandrodaya' | 'madhyahna';
 
 export type ObservanceRule = {
   id: string;
