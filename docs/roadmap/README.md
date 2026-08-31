@@ -17,6 +17,8 @@ This folder holds the product roadmap and PRDs for upcoming releases.
   (sthapana → visarjan), and the family lineage record with living janma tithis. Each has a
   prototype. **PRD-30** (household roster) was proposed and dropped by product decision — round 2 §3.4;
   its number is retired. **PRD-25 stays reserved** for सन्ध्या वन्दन per round 1 §3.
+- [**Round 2 session prompts**](./round-2-session-prompts.md) — a self-contained build prompt per
+  candidate (PRD-26 … PRD-29), one branch each, for running the four as independent sessions.
 
 ## PRDs (Q3 2026)
 
