@@ -108,6 +108,28 @@ const bahulaChaturthiBhog = profile({
   },
 });
 
+const bhadwaChauthBhog = profile({
+  id: 'bhadwa-chauth-bhog',
+  titleHi: 'भादवा चौथ का चूरमा भोग और पारण',
+  titleEn: 'Bhadwa Chauth churma offering and parana',
+  observanceIds: ['bhadwa-chauth'],
+  offerings: [item('churma-laddu', 'चौथ माता और विनायक जी को चूरमे के लड्डू का भोग लगाएं — प्रचलित रीति में पांच लड्डू: चौथ माता, विनायक जी, ब्राह्मण, पुत्र और व्रती के लिए।', 'Offer churma laddus to Chauth Mata and Vinayak Ji — in the customary form five laddus: for Chauth Mata, Vinayak Ji, a brahmin, the son, and the vrati herself.')],
+  permittedDuringFast: [item('day-fast', 'दिन भर व्रत रखा जाता है; कठोरता परिवार की रीति से निश्चित करें।', 'A day-long fast is kept; settle its strictness by your family custom.')],
+  paranaMealHi: 'संध्या चंद्रोदय पर चंद्रमा को अर्घ्य देकर, सास को बायना देकर आशीर्वाद लें, फिर प्रसाद और भोजन ग्रहण करें।',
+  paranaMealEn: 'Offer arghya to the moon at the evening moonrise, present the bayana to the mother-in-law for her blessing, then take the prasad and the meal.',
+  traditionNoteHi: 'यह राजस्थान की चौथ माता परम्परा (चौथ का बरवाड़ा, सवाई माधोपुर) का रूप है — उसी तिथि के गुजराती बोल चौथ (गौ-पूजन) से भिन्न।',
+  traditionNoteEn: 'This is the Rajasthani Chauth Mata form (Chauth Ka Barwara, Sawai Madhopur) — distinct from the Gujarati Bol Choth cow worship on the same tithi.',
+  source: {
+    referenceUrls: [
+      'https://aartisandhya.com/vrat-katha/bhadwa-chauth-mata-ki-vrat-katha',
+      'https://athshri.com/bhadwa-chauth-vrat-katha/',
+    ],
+    verificationNote:
+      'Verified 2026-08-30 via search excerpts of the surveyed Bhadwa Chauth vrat-katha pages (direct fetch blocked by the network egress proxy): both attest the Chauth Mata + Vinayak Ji worship, the day fast concluded with the evening moon arghya and the bayana to the mother-in-law; the five-churma-laddu distribution is transcribed from the same record set.',
+    variantNote: 'Named as the Rajasthani Chauth Mata form; the same tithi’s Gujarati Bol Choth keeps its own separate profile rather than being merged.',
+  },
+});
+
 const rishiPanchamiBhog = profile({
   id: 'rishi-panchami-bhog',
   titleHi: 'ऋषि पंचमी का नैवेद्य और फलाहार',
@@ -697,6 +719,7 @@ export const EXTENDED_BHOG_CONTENT: readonly BhogContentEntry[] = [
   hariyaliTeejBhog,
   kajariTeejBhog,
   bahulaChaturthiBhog,
+  bhadwaChauthBhog,
   rishiPanchamiBhog,
   durvaAshtamiBhog,
   anantChaturdashiBhog,

@@ -112,7 +112,7 @@ of the sunrise-only matcher:
   Diwali/Dhanteras (Pradosh). e.g. Diwali 2025 engine 21 Oct vs real 20 Oct; Maha Shivaratri
   2026 engine 16 Feb vs real 15 Feb.
   **The moonrise (chandrodaya) members of this class are FIXED** (Aug 2026): `ObservanceRule.dayRule`
-  now carries the per-rule vyapini convention, and `sankashti-chaturthi-vrat` + `karwa-chauth` + `bahula-chaturthi`
+  now carries the per-rule vyapini convention, and `sankashti-chaturthi-vrat` + `karwa-chauth` + `bahula-chaturthi` + `bhadwa-chauth`
   match at moonrise (`tithiAtMoonrise` in `engine.ts`; RULEBOOK §23). Sankashti was wrong in
   6 of 12 lunations in 2025 and 5 of 13 in 2026 — Bhadrapada 2026 resolved to 1 Sep, whose
   9:22 PM moonrise falls in Panchami, instead of 31 Aug's 8:39 PM moonrise inside Chaturthi.

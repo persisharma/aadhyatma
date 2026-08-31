@@ -206,3 +206,17 @@ test('the monthly Vinayaka Chaturthi rides the Ganesh Chaturthi day (RULEBOOK §
     assert.equal(new Set(vinayaka).size, vinayaka.length, `${year}: duplicate Vinayaka dates`);
   }
 });
+
+test('Bhadwa Chauth (Chauth Mata vrat) rides the same moonrise day as Bahula Chaturthi', () => {
+  // The Rajasthani identity of Bhadrapada Krishna Chaturthi: the fast ends with
+  // the evening moon arghya, so it shares the chandrodaya day with its Gujarati
+  // (Bahula/Bol Choth) and Sankashti siblings (RULEBOOK §23.4).
+  assert.equal(engineDates('bhadwa-chauth', 2026)[0], '2026-08-31');
+  for (const year of [2024, 2025, 2026, 2027, 2028]) {
+    assert.deepEqual(
+      engineDates('bhadwa-chauth', year),
+      engineDates('bahula-chaturthi', year),
+      `${year}: Bhadwa Chauth and Bahula Chaturthi diverged`
+    );
+  }
+});
