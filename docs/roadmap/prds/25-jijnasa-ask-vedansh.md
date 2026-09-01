@@ -400,3 +400,46 @@ general NLU library solves for Hindi.
 **If the hand-tuned weights stall**, the free path is scikit-learn *in a build script*: train logistic
 regression over the golden corpus, ship the weight table as bundled JSON. Zero runtime dependency,
 still deterministic, still auditable.
+
+### 13.7 Latency — measured
+
+Benchmarked 2026-08-30 on a **2,907-form lexicon** (deliberately ~3× the spike's, as a conservative
+v1 upper bound). Numbers are Node/V8; **Hermes is typically 2–5× slower on cold JS**, so the right
+column applies a 5× derating as a ceiling rather than a guess.
+
+| Operation | When | Measured (V8) | Hermes ceiling |
+|---|---|---|---|
+| Import + parse the generated lexicon module | first ask only | 3.95 ms | ~20 ms |
+| Build the lookup Map | first ask only | 1.07 ms | ~5 ms |
+| Exact entity lookup | per keystroke | ~0 ms | ~0 ms |
+| uFuzzy over the whole lexicon | per keystroke | 0.08 ms | ~0.4 ms |
+| **Full resolve** (tag + score + abstain) | per keystroke | **0.27 ms** | **~1.3 ms** |
+| *sanscript over 1000 forms* | *avoided* | *8.8 ms* | *~44 ms* |
+
+**Launch cost is zero, and that is a gate rather than a hope.** Nothing in `src/ask/` may be
+statically imported from the launch path. The lexicon loads behind a dynamic `import()`, exactly as
+`getSearchIndex()` is lazy today and as `PanchangStackNavigator` defers the Jyotish graph. The
+failure mode is silent — one stray static import from `HomeScreen` and 20 ms lands behind the splash
+that already waits on fonts and prefs (§64) — so **a launch-path import test pins it**, in the spirit
+of the three lint-enforced token rules that exist because they also fail silently.
+
+**First ask pays ~25 ms once**, about one and a half frames, and it should be spent while the
+keyboard is animating in: **warm the lexicon on search-box focus, not on the first keystroke.**
+
+**Per-keystroke resolve at ~1.3 ms** is comfortably inside the 16.7 ms frame budget, so answering
+live-as-you-type is affordable; no debounce is needed for the resolver itself (the content search
+below it keeps whatever debounce it has today).
+
+The last row is the case for §13.6's build-time split: transliterating the lexicon at runtime would
+cost ~44 ms on Hermes for a result that is identical on every launch. Generated at build time, it
+costs nothing and cannot drift.
+
+**Phase 2 is the one real risk.** आज का विधान runs standing questions near launch, which is exactly
+the path this section protects. It must reuse the existing day-cache and prewarm machinery
+(`panchangDayCache.ts`, `panchangDayPrewarm.ts`, `panchangLaunchPrefetch.ts`) rather than resolving
+on the launch frame — and the Today strip must render from cache first, never block on a resolve.
+
+**Bundle.** The generated module is 131 KB raw at 2,907 forms, plus 4 KB gz for uFuzzy — inside the
+< 250 KB budget in §11, but not comfortably. If it tightens: store folded keys only (drop the human
+form, which no runtime path reads), dedupe ids into a parallel array, and let the coverage test hold
+the mapping honest.
