@@ -41,6 +41,95 @@ const hartalikaTeejBhog = profile({
   },
 });
 
+const hariyaliTeejBhog = profile({
+  id: 'hariyali-teej-bhog',
+  titleHi: 'हरियाली तीज का अर्पण और पकवान',
+  titleEn: 'Hariyali Teej offering and festive food',
+  observanceIds: ['hariyali-teej'],
+  offerings: [item('parvati-offering', 'तीज माता (मां पार्वती) को पुष्प, फल और मिष्ठान्न अर्पित करें।', 'Offer flowers, fruit, and sweets to Teej Mata (Maa Parvati).')],
+  permittedDuringFast: [item('family-form', 'स्त्रियां सौभाग्य के लिए व्रत रखती हैं; निर्जल या फलाहार रूप परिवार की रीति से निश्चित करें।', 'Women keep the vrat for marital well-being; settle the waterless or fruit-fare form by your family custom.')],
+  paranaMealHi: 'पूजा के उपरांत परिवार की रीति से व्रत खोलें; घेवर इस पर्व का प्रचलित पकवान है।',
+  paranaMealEn: 'Break the fast after the worship according to your family custom; ghewar is the sweet customarily associated with this festival.',
+  traditionNoteHi: 'झूला, मेहंदी और घेवर श्रावणी तीज का प्रचलित उत्तर-पश्चिमी रूप हैं; नाम और रीति क्षेत्र के अनुसार बदलते हैं।',
+  traditionNoteEn: 'Swings, mehndi, and ghewar belong to the common north-western Shravana Teej form; names and customs vary by region.',
+  source: {
+    referenceUrls: [
+      `${UTSAV}/view-event/teej-festival`,
+      'https://www.incredibleindia.gov.in/en/festivals-and-events/teej',
+    ],
+    verificationNote:
+      'Verified 2026-08-30 via search excerpts of both Ministry of Tourism pages (direct fetch blocked by the network egress proxy): both attest the women’s monsoon vrat to Parvati/Teej Mata for the husband’s wellness, swings and mehndi, and the Utsav record names ghewar as the sweet closely associated with the festival.',
+    variantNote: 'Fast strictness is left to family custom rather than asserting one universal nirjala rule.',
+  },
+});
+
+const kajariTeejBhog = profile({
+  id: 'kajari-teej-bhog',
+  titleHi: 'कजरी तीज का अर्पण, नीम पूजन और सातू',
+  titleEn: 'Kajari Teej offering, neem worship, and sattu',
+  observanceIds: ['kajari-teej'],
+  offerings: [item('neem-offering', 'नीम (नीमड़ी माता) का कुमकुम, अक्षत, हल्दी और मेहंदी से पूजन कर फल-मिष्ठान्न अर्पित करें।', 'Worship the neem (Neemdi Mata) with kumkum, akshata, haldi, and mehndi, offering fruit and sweets.')],
+  permittedDuringFast: [item('strict-form', 'प्रचलित कठोर रूप में दिन भर निर्जल व्रत रखा जाता है।', 'In the customary strict form, a waterless fast is kept through the day.')],
+  paranaMealHi: 'रात्रि में चंद्र दर्शन और अर्घ्य के बाद परम्परा से सातू ग्रहण कर व्रत खोलें — इसी से इसका सातुड़ी तीज नाम है।',
+  paranaMealEn: 'After sighting the moon at night and offering arghya, the fast is traditionally broken with sattu — the source of its Satudi Teej name.',
+  traditionNoteHi: 'यह राजस्थान का प्रचलित कजली/सातुड़ी रूप है (बूंदी का तीज मेला प्रसिद्ध है); नाम और रीति क्षेत्र के अनुसार बदलते हैं।',
+  traditionNoteEn: 'This is the common Rajasthani Kajli/Satudi form (the Bundi Teej fair is its best-known celebration); names and customs vary by region.',
+  source: {
+    referenceUrls: [
+      `${UTSAV}/view-event/kajli-teej-festival`,
+      'https://www.prokerala.com/festivals/kajari-teej.html',
+    ],
+    verificationNote:
+      'Verified 2026-08-30 via search excerpts of both pages (direct fetch blocked by the network egress proxy): the Utsav record attests the Bundi Kajli Teej celebration, and the Prokerala page the nirjala fast, neem pooja, moon offering, and breaking the fast with sattu; the sattu claim is additionally concordant across the surveyed festival pages.',
+    variantNote: 'The sattu parana and neem worship are named as the Rajasthani form, not generalized to every Kajari Teej region.',
+  },
+});
+
+const bahulaChaturthiBhog = profile({
+  id: 'bahula-chaturthi-bhog',
+  titleHi: 'बहुला चतुर्थी (बोल चौथ) का व्रत-भोजन',
+  titleEn: 'Bahula Chaturthi (Bol Choth) vrat food',
+  observanceIds: ['bahula-chaturthi'],
+  offerings: [item('gau-puja', 'संध्या गोधूलि बेला में गौ माता और बछड़े का पूजन कर परिवार की रीति का नैवेद्य अर्पित करें।', 'Worship the cow and calf at the evening Godhuli hour, offering the naivedya prescribed by your family custom.')],
+  permittedDuringFast: [item('millet-fare', 'प्रकाशित रीति में इस दिन बाजरे जैसे मोटे अनाज के व्यंजन लिए जाते हैं।', 'In the published custom, millet-based dishes are taken on this day.')],
+  abstainedDuringFast: [item('no-milk', 'गौ-सम्मान में दूध और दुग्ध-निर्मित पदार्थ इस दिन नहीं लिए जाते।', 'In honour of the cow, milk and milk-made products are not taken this day.')],
+  paranaMealHi: 'संध्या के गौ-पूजन और चंद्रोदय के उपरांत व्रत पूर्ण कर भोजन लें।',
+  paranaMealEn: 'Complete the vrat after the evening cow worship and moonrise, then take the meal.',
+  traditionNoteHi: 'गुजरात में यह बोल चौथ और मध्य प्रदेश में बहुला चतुर्थी नाम से प्रचलित है; रीति क्षेत्र के अनुसार बदलती है।',
+  traditionNoteEn: 'Known as Bol Choth in Gujarat and Bahula Chaturthi in Madhya Pradesh; customs vary by region.',
+  source: {
+    referenceUrls: [
+      `${DP}/gujarati/festivals/bol-choth/bol-choth-date-time.html`,
+      'https://www.bhaktibharat.com/en/festival/bahula-chauth',
+    ],
+    verificationNote:
+      'Verified 2026-08-30 via search excerpts of both pages (direct fetch blocked by the network egress proxy): both attest the day-long fast with evening cow-and-calf worship concluded after Godhuli puja and moonrise; the DrikPanchang Bol Choth record attests abstaining from milk and milk-made products with millet-based food, and the Gujarat/Madhya Pradesh naming split.',
+    variantNote: 'The milk abstention and millet fare are transcribed from the Bol Choth record, not generalized beyond it; the naivedya itself is left to family custom.',
+  },
+});
+
+const bhadwaChauthBhog = profile({
+  id: 'bhadwa-chauth-bhog',
+  titleHi: 'भादवा चौथ का चूरमा भोग और पारण',
+  titleEn: 'Bhadwa Chauth churma offering and parana',
+  observanceIds: ['bhadwa-chauth'],
+  offerings: [item('churma-laddu', 'चौथ माता और विनायक जी को चूरमे के लड्डू का भोग लगाएं — प्रचलित रीति में पांच लड्डू: चौथ माता, विनायक जी, ब्राह्मण, पुत्र और व्रती के लिए।', 'Offer churma laddus to Chauth Mata and Vinayak Ji — in the customary form five laddus: for Chauth Mata, Vinayak Ji, a brahmin, the son, and the vrati herself.')],
+  permittedDuringFast: [item('day-fast', 'दिन भर व्रत रखा जाता है; कठोरता परिवार की रीति से निश्चित करें।', 'A day-long fast is kept; settle its strictness by your family custom.')],
+  paranaMealHi: 'संध्या चंद्रोदय पर चंद्रमा को अर्घ्य देकर, सास को बायना देकर आशीर्वाद लें, फिर प्रसाद और भोजन ग्रहण करें।',
+  paranaMealEn: 'Offer arghya to the moon at the evening moonrise, present the bayana to the mother-in-law for her blessing, then take the prasad and the meal.',
+  traditionNoteHi: 'यह राजस्थान की चौथ माता परम्परा (चौथ का बरवाड़ा, सवाई माधोपुर) का रूप है — उसी तिथि के गुजराती बोल चौथ (गौ-पूजन) से भिन्न।',
+  traditionNoteEn: 'This is the Rajasthani Chauth Mata form (Chauth Ka Barwara, Sawai Madhopur) — distinct from the Gujarati Bol Choth cow worship on the same tithi.',
+  source: {
+    referenceUrls: [
+      'https://aartisandhya.com/vrat-katha/bhadwa-chauth-mata-ki-vrat-katha',
+      'https://athshri.com/bhadwa-chauth-vrat-katha/',
+    ],
+    verificationNote:
+      'Verified 2026-08-30 via search excerpts of the surveyed Bhadwa Chauth vrat-katha pages (direct fetch blocked by the network egress proxy): both attest the Chauth Mata + Vinayak Ji worship, the day fast concluded with the evening moon arghya and the bayana to the mother-in-law; the five-churma-laddu distribution is transcribed from the same record set.',
+    variantNote: 'Named as the Rajasthani Chauth Mata form; the same tithi’s Gujarati Bol Choth keeps its own separate profile rather than being merged.',
+  },
+});
+
 const rishiPanchamiBhog = profile({
   id: 'rishi-panchami-bhog',
   titleHi: 'ऋषि पंचमी का नैवेद्य और फलाहार',
@@ -627,6 +716,10 @@ const bachhBarasBhog = profile({
 
 export const EXTENDED_BHOG_CONTENT: readonly BhogContentEntry[] = [
   hartalikaTeejBhog,
+  hariyaliTeejBhog,
+  kajariTeejBhog,
+  bahulaChaturthiBhog,
+  bhadwaChauthBhog,
   rishiPanchamiBhog,
   durvaAshtamiBhog,
   anantChaturdashiBhog,

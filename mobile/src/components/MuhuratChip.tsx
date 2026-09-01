@@ -5,7 +5,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { scriptTitleFont } from '@/utils/langType';
 
 /**
- * The one shared muhurat vocabulary chip (PRD-27, RULEBOOK §23): a शुभ योग and
+ * The one shared muhurat vocabulary chip (PRD-27, RULEBOOK §24): a शुभ योग and
  * a dosha render through the SAME component so the two vocabularies stay
  * visually paired — word + tint per design.md §12, never colour alone (the
  * label IS the word). Two tones only, deliberately: no "strong" variant, no

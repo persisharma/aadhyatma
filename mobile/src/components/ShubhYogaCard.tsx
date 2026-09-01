@@ -18,7 +18,7 @@ import type { ShubhYogaWindow } from '@/panchang/shubhYoga';
  *
  * Chips carry the full "… योग" name under the शुभ योग eyebrow — never the bare
  * word योग, which on this tab names the unrelated 27-cycle नित्य योग field
- * (the collision rule, RULEBOOK §23). Window ends go through the shipped
+ * (the collision rule, RULEBOOK §24). Window ends go through the shipped
  * formatEndInstant (via formatRangeEndAware) so a past-midnight end carries
  * its short date instead of reading as this morning; the printed-panchang
  * 26:12 style is never used.

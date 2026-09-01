@@ -42,3 +42,34 @@ export function prevailingTithi(p: PanchangData, at: Date): PrevailingTithi {
   const successor = ((kshayaTithi ?? tithi).index + 1) % 30;
   return { nameHi: TITHI_NAMES_HI[successor], nameEn: TITHI_NAMES_EN[successor], endTime: null };
 }
+
+/**
+ * The tithi that TAKES OVER later on this same civil day, or null when no
+ * handover happens within it.
+ *
+ * A day is labelled by its sunrise tithi (udaya-vyapini), and that tithi
+ * usually ends mid-morning — so "तृतीया तक 8:51 AM" states when the label stops
+ * being true without ever saying what is true for the remaining fifteen hours.
+ * That is the gap this fills: the rest of the day belongs to the successor, and
+ * a vrat fixed on the successor's tithi is kept on THIS date, not the next one
+ * the almanac labels with it.
+ *
+ * Null — deliberately, rather than a name that would mislead — when:
+ * - the sunrise tithi has no end in this day's solve (it runs past the next
+ *   sunrise, so the label holds all day); or
+ * - it ends after midnight (the successor's day is tomorrow, and the तक line
+ *   already carries that date); or
+ * - the day is kshaya, where a second tithi begins AND ends before the next
+ *   sunrise: the caller already renders both, and the third would start
+ *   tomorrow.
+ */
+export function successorTithiToday(p: PanchangData): { nameHi: string; nameEn: string } | null {
+  if (p.kshayaTithi) return null;
+  const end = p.tithi.endTime;
+  if (!end) return null;
+  if (end.getFullYear() !== p.date.getFullYear()
+    || end.getMonth() !== p.date.getMonth()
+    || end.getDate() !== p.date.getDate()) return null;
+  const successor = (p.tithi.index + 1) % 30;
+  return { nameHi: TITHI_NAMES_HI[successor], nameEn: TITHI_NAMES_EN[successor] };
+}

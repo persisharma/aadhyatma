@@ -1,18 +1,18 @@
 /**
  * शुभ योग — the additive half of the muhurat vocabulary (PRD-27).
- * See docs/roadmap/prds/27-shubh-yoga.md and RULEBOOK §23.
+ * See docs/roadmap/prds/27-shubh-yoga.md and RULEBOOK §24.
  *
  * PURE: windows derive from a `PanchangData` the caller already computed plus
  * the next civil day's sunrise — no I/O, no wall-clock reads, no React. The one
  * astronomy import is `getSiderealPlanetLongitude` (itself pure, the same
  * boundary as kundali.ts and eventMuhurat.ts) for रवि योग's Sun nakshatra.
  *
- * ANNOTATE-ONLY (RULEBOOK §23): this module is a vocabulary, never a grade.
+ * ANNOTATE-ONLY (RULEBOOK §24): this module is a vocabulary, never a grade.
  * `eventMuhurat.ts` must not import it (source-guard test) — a yoga can never
  * re-rank, re-tier, exclude or offset anything the finder produces. Doshas and
  * yogas coexist on one day and no caller may net them into a verdict.
  *
- * ⚠ CONTENT GATE (RULEBOOK §23): the tables below are DRAFT, pinned row-for-row
+ * ⚠ CONTENT GATE (RULEBOOK §24): the tables below are DRAFT, pinned row-for-row
  * against docs/roadmap/conventions/shubh-yoga-v1.md. `SHUBH_YOGA_SOURCE.verified`
  * stays the literal `false` until the two-source §10 review lands; a store build
  * exposing the chips is release-blocked on it.
@@ -43,7 +43,7 @@ export const SHUBH_YOGA_ORDER: readonly ShubhYogaKey[] = [
 /**
  * Names always render in full, ending … योग — never bare, and never as a value
  * of the नित्य योग field (the 27-cycle Sun+Moon yoga is an unrelated system;
- * the collision rule lives in RULEBOOK §23 and the convention doc).
+ * the collision rule lives in RULEBOOK §24 and the convention doc).
  */
 export const SHUBH_YOGA_LABELS: Readonly<Record<ShubhYogaKey, { hi: string; en: string }>> = {
   'amrita-siddhi': { hi: 'अमृत सिद्धि योग', en: 'Amrita Siddhi Yoga' },

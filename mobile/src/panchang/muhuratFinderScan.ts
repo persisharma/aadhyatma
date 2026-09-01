@@ -126,7 +126,7 @@ export function verdictForDate(
 }
 
 /**
- * The day's शुभ योग windows through the shared day store (PRD-27, RULEBOOK §23).
+ * The day's शुभ योग windows through the shared day store (PRD-27, RULEBOOK §24).
  *
  * ANNOTATION ONLY — deliberately outside `evaluateDay` and `verdictForDate`, so
  * no verdict, tier, ordering or empty-state can ever depend on it. Screens call

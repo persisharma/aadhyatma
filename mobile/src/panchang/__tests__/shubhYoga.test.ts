@@ -1,5 +1,5 @@
 /**
- * शुभ योग engine (PRD-27, RULEBOOK §23): the five v1 tables row-for-row against
+ * शुभ योग engine (PRD-27, RULEBOOK §24): the five v1 tables row-for-row against
  * docs/roadmap/conventions/shubh-yoga-v1.md, the window mechanics (segment
  * cuts, kshaya insertion, merge, the next-sunrise bound), the annotate-only
  * dependency guard, and a full-2026 Ujjain sweep of structural invariants.
@@ -84,7 +84,7 @@ test('sunToMoonCount is the inclusive 27-cycle count, wrap included', () => {
   assert.equal(sunToMoonCount(3, 2), 27);
 });
 
-test('labels: every yoga name ends in योग / Yoga (the naming-collision rule, RULEBOOK §23)', () => {
+test('labels: every yoga name ends in योग / Yoga (the naming-collision rule, RULEBOOK §24)', () => {
   for (const key of SHUBH_YOGA_ORDER) {
     assert.ok(SHUBH_YOGA_LABELS[key].hi.endsWith(' योग'), key);
     assert.ok(SHUBH_YOGA_LABELS[key].en.endsWith(' Yoga'), key);
@@ -307,7 +307,7 @@ test('shubhYoga stays pure: no wall clock, randomness, network, storage, or Reac
   assert.doesNotMatch(source, /AsyncStorage|react-native|from ['"]react['"]/);
 });
 
-test('annotate-only is structural: eventMuhurat must never import shubhYoga (RULEBOOK §23)', () => {
+test('annotate-only is structural: eventMuhurat must never import shubhYoga (RULEBOOK §24)', () => {
   const source = readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), '../eventMuhurat.ts'), 'utf8');
   assert.doesNotMatch(source, /shubhYoga/);
 });

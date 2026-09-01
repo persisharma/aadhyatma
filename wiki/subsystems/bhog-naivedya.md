@@ -2,7 +2,7 @@
 title: Bhog, Naivedya and Vrat Food
 type: subsystem
 sources: [mobile/src/panchang/bhogContent.ts, mobile/src/panchang/bhogContentExtended.ts, mobile/src/panchang/types.ts, mobile/src/panchang/festivals.ts, mobile/src/components/BhogGuidancePanel.tsx, mobile/src/screens/ObservanceDetailScreen.tsx, mobile/src/screens/VidhiDetailScreen.tsx, mobile/src/data/vidhi/checklistStore.ts, mobile/src/panchang/__tests__/bhogContent.test.ts, mobile/src/screens/__tests__/ObservanceDetailScreen.test.tsx, mobile/src/screens/__tests__/VidhiScreens.test.tsx, mobile/.maestro/vidhi-smoke.yaml, docs/roadmap/prds/23-bhog-naivedya-vrat-food.md, RULEBOOK.md, design.md]
-last_verified_date: 2026-08-26
+last_verified_date: 2026-08-30
 confidence: high
 status: current
 ---
@@ -11,8 +11,9 @@ status: current
 
 PRD-23 adds verified, offline household guidance for deity/festival offerings, food during a fast,
 food abstained during a fast, prohibited offerings, and parana meals. All three product phases now
-publish 39 profiles backed by 108 URLs across 50 domains. Every genuine `vrat`/`upavas` rule is
-covered (68/68), while ritual-calendar rows are no longer misrepresented as fasts. Every profile
+publish 43 profiles (the Hariyali/Kajari Teej, Bahula Chaturthi and Bhadwa Chauth additions of 2026-08-30
+included). Every genuine `vrat`/`upavas` rule is covered (72/72), while ritual-calendar rows are no longer misrepresented as
+fasts. Every profile
 carries two or more independent published sources, a dated verification note, bilingual content,
 and an explicit tradition/variant note.
 
@@ -27,8 +28,8 @@ The module-scope invariant guards ids, bilingual fields, source count and hooks;
 independent-domain, dated-note, draft-filter, Devanagari, and customer-copy gates.
 
 **All-phases coverage.** `bhogContent.ts` owns the ten high-use v1 profiles and
-`bhogContentExtended.ts` owns 29 recurring, annual, advanced, and regional profiles. The test suite
-filters the live catalogue by the genuine `vrat` and `upavas` categories, pins the expected 68-rule
+`bhogContentExtended.ts` owns 33 recurring, annual, advanced, and regional profiles. The test suite
+filters the live catalogue by the genuine `vrat` and `upavas` categories, pins the expected 72-rule
 set size, and requires every row to have a verified, exposed `bhogId`. Adding a new eligible rule
 without sourced content therefore fails the engine gate. Mahadwadashi/ISKCON reuse the adjudicated
 Ekadashi family, and Sakat Chauth reuses the Ganesha/Sankashti family; other long-tail practices keep

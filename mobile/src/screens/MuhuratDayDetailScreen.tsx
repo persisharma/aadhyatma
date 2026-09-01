@@ -104,7 +104,7 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
       // this screen from contradicting the अबूझ list (PRD-16 §4.2).
       const solved = verdictForDate(rule, date, { calendarSystem, location });
       // PRD-27: the शुभ योग annotation rides beside the verdict, never inside
-      // it (RULEBOOK §23) — same store, so this is a cache hit here.
+      // it (RULEBOOK §24) — same store, so this is a cache hit here.
       const yogas = solved ? shubhYogasForDate(date, { calendarSystem, location }) : [];
       if (!cancelled && solved) setData({ v: solved.verdict, p: solved.p, yogas });
     }, 0);

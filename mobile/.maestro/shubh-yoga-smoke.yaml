@@ -2,7 +2,7 @@
 #
 # What PRD-27 changed on-screen, end to end:
 # the Panchang day card's yoga anga tile is relabelled "Nitya Yoga" (the
-# RULEBOOK §23 collision rule — the 27-cycle Sun+Moon yoga must stay
+# RULEBOOK §24 collision rule — the 27-cycle Sun+Moon yoga must stay
 # distinguishable from the new शुभ योग chips), the daily Muhurat card carries
 # the same relabel plus a "Shubh Yoga" row when one forms, and the Event
 # Muhurat Finder's results/day-detail carry the yoga annotation.

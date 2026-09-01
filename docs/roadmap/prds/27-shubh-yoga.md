@@ -6,7 +6,7 @@
 | **T-shirt size** | S (pure tables over primitives `PanchangData` already carries; three annotation surfaces; no cache change) |
 | **Origin** | [Q4 round-2 candidates §2/PRD-27](../2026-Q4-candidates-round-2.md) |
 | **Prototype** | [`shubh-yoga-prototype.html`](../../shubh-yoga-prototype.html) — 6 frames including the **rejected** re-rank alternative |
-| **Convention** | [`conventions/shubh-yoga-v1.md`](../conventions/shubh-yoga-v1.md) (`vedansh-shubh-yoga-v1`) · RULEBOOK **§23** |
+| **Convention** | [`conventions/shubh-yoga-v1.md`](../conventions/shubh-yoga-v1.md) (`vedansh-shubh-yoga-v1`) · RULEBOOK **§24** |
 | **Feasibility** | ✅ Confirmed — nakshatra/vāra/tithi + the Lahiri Sun longitude are all shipped primitives. OTA, no new dependency. |
 
 > **Locked design decisions (do not drift):** **Annotate-only in v1** — a yoga never re-ranks, re-tiers, excludes, or offsets anything (§5). **Every window renders through `formatEndInstant`** — never the printed-panchang 26:12 style (§6). **The योग naming collision is solved by relabelling, not hoping** (§4). No day-quality score, no percentage, no "luckiest day" — present or absent, window stated, doshas and yogas coexist un-netted.
@@ -28,7 +28,7 @@ Name the day's shubh yogas, with their windows, in the same quiet register the d
 - **Daily Muhurat** (§33 Muhurat Detail / `MuhuratCardBody`, `variant="full"`): a **शुभ योग** row per present yoga inside the पंचांग group, `elementLine`-shaped (end-only when the window starts at sunrise; start–end when it onsets mid-day).
 - **Event Muhurat Finder** (§60): a yoga **chip row** on result cards (annotation between the tier line and the best-window line; chronological/tier ordering untouched) and a chips-plus-window block on the day detail's answer card. Excluded days on the day detail also gain **dosha chips** naming the present doshas — the same shared chip component, its other tone.
 - **`components/MuhuratChip.tsx`** — the one shared chip: `tone: 'yoga' | 'dosha'` (goldChipBg/saffronDeep vs avoidChipBg/avoidDeep), word + tint per §12. Yoga chips and dosha chips are the same component so the two vocabularies stay visually paired and neither can drift into a scoring treatment.
-- **`docs/roadmap/conventions/shubh-yoga-v1.md`** + **RULEBOOK §23** — the rule-table contract, following §17's shape.
+- **`docs/roadmap/conventions/shubh-yoga-v1.md`** + **RULEBOOK §24** — the rule-table contract, following §17's shape.
 
 ## 4. The naming collision — decided here
 
@@ -36,7 +36,7 @@ The day card already shows a field named **योग** — one of the 27 **nitya
 
 1. **The nitya-yoga field is relabelled नित्य योग / Nitya Yoga** everywhere it renders (the anga tile on the Panchang day card; the Daily Muhurat card's पंचांग row). Value and end-instant behaviour unchanged.
 2. **A shubh yoga never renders bare**: always under a **शुभ योग** group label, always its full name ending **… योग**. It is never a value of the नित्य योग field, and the नित्य योग value is never a chip.
-3. Pinned as a hard rule in RULEBOOK §23 and the convention doc, so a future surface cannot reintroduce the ambiguity.
+3. Pinned as a hard rule in RULEBOOK §24 and the convention doc, so a future surface cannot reintroduce the ambiguity.
 
 ## 5. Annotate-only — the one real decision, closed
 
@@ -73,4 +73,4 @@ These yogas run nakshatra-to-nakshatra and routinely end after midnight. Every w
 - `shubhYoga.test.ts` (tsx, `test:engine`, runs TZ=Asia/Kolkata): tables row-for-row vs the convention doc; ASY⊆SSY invariant; Ravi inclusive-count arithmetic incl. the 27-wrap; पुष्कर triple-factor gate; segment mechanics (kshaya day, mid-day onset, merge, next-sunrise bound); purity source guard; the **eventMuhurat-must-not-import-shubhYoga** guard; `SHUBH_YOGA_SOURCE.verified === false` pin; a full-year sweep asserting every window ⊆ [sunrise, nextSunrise) and non-empty only on table matches.
 - Jest: `MuhuratChip`/`ShubhYogaCard` render tests (absent-when-empty; the next-day `formatEndInstant` suffix; both tones).
 - Maestro `.maestro/shubh-yoga-smoke.yaml`: the stable surfaces (नित्य योग relabel on the day card and Daily Muhurat card; finder journey renders) — a specific yoga chip is date-dependent and is pinned by unit tests instead, the same reasoning as the date-dependent vidhi pill (§62).
-- `npm run test` and `npm run lint` at 0 errors; design.md §33/§60 + new §67 and RULEBOOK §23 land in the same PR (design-doc-sync).
+- `npm run test` and `npm run lint` at 0 errors; design.md §33/§60 + new §69 and RULEBOOK §24 land in the same PR (design-doc-sync).

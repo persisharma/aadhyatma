@@ -140,7 +140,7 @@ export default function MuhuratCardBody({
         <KV k={contentByLang(lang, 'नक्षत्र', 'Nakshatra')} v={elementLine(p.nakshatra, p.date, lang)} />
         {p.kshayaNakshatra && <KV k={contentByLang(lang, 'क्षय नक्षत्र', 'Kshaya Nakshatra')} v={elementLine(p.kshayaNakshatra, p.date, lang)} />}
         {/* नित्य योग, never bare योग — it must stay distinguishable from the
-            PRD-27 शुभ योग rows below (RULEBOOK §23 naming rule). */}
+            PRD-27 शुभ योग rows below (RULEBOOK §24 naming rule). */}
         {variant === 'full' && <KV k={contentByLang(lang, 'नित्य योग', 'Nitya Yoga')} v={elementLine(p.yoga, p.date, lang)} />}
         {variant === 'full' && <KV k={contentByLang(lang, 'करण', 'Karana')} v={elementLine(p.karana, p.date, lang)} />}
         {/* PRD-27: the day's शुभ योग windows — annotation, present-or-absent.

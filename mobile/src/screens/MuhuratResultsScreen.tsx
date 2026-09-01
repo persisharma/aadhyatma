@@ -104,7 +104,7 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
     }));
   const { hydrated: balaHydrated, hasProfile, balaByDate } = useMuhuratBala(balaItems);
 
-  // PRD-27 (RULEBOOK §23): the शुभ योग chips are an ANNOTATION computed beside
+  // PRD-27 (RULEBOOK §24): the शुभ योग chips are an ANNOTATION computed beside
   // the verdicts, never inside them — ordering, tiers, sections and the empty
   // state above know nothing of yogas. Deferred off the render path; the scan
   // just solved these days, so the store reads are cache hits.
@@ -209,7 +209,7 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
           {contentByLang(lang, TIER_LABELS[tier].hi, TIER_LABELS[tier].en)}
         </Text>
         {/* PRD-27: yoga chips annotate the card; order stays exactly as the
-            finder produced it (annotate-only, RULEBOOK §23). */}
+            finder produced it (annotate-only, RULEBOOK §24). */}
         {dayYogas.length > 0 && (
           <View style={styles.yogaChips}>
             {dayYogas.map((w) => (

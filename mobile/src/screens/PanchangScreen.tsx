@@ -37,6 +37,8 @@ import { useShubhYoga } from '@/panchang/useShubhYoga';
 import type { CalendarSystem, PanchangElement, ResolvedObservance } from '@/panchang/types';
 import { getKathaContent } from '@/panchang/kathaContent';
 import { getUpcomingObservances, searchObservances } from '@/panchang/festivalEngine';
+import { successorTithiToday } from '@/panchang/prevailingTithi';
+import { sankashtiOccurrenceName } from '@/panchang/sankashtiNames';
 import { getCategoryCounts, getKathaCount, type BrowseCategory } from '@/panchang/vratCatalog';
 import { VIDHI_ENTRIES, getVidhiById } from '@/data/vidhi';
 import { useVratFollows } from '@/contexts/VratFollowContext';
@@ -55,8 +57,8 @@ import JyotishPracticeCard from '@/components/JyotishPracticeCard';
 import JyotishShareCard from '@/components/JyotishShareCard';
 import JyotishShareSheet from '@/components/JyotishShareSheet';
 import JyotishStateCard from '@/components/JyotishStateCard';
+import { computePersonalGuidance } from '@/panchang/gochar';
 import {
-  computeRashifal,
   getCurrentDasha,
   GRAHA_NAMES_EN,
   GRAHA_NAMES_HI,
@@ -293,6 +295,8 @@ export default function PanchangScreen({ route }: Props) {
     rootNav.navigate('Kundali', editing ? { editing: true } : undefined);
   const openAddPerson = () => rootNav.navigate('Kundali', { newPerson: true });
   const openRashifal = () => rootNav.navigate('Rashifal');
+  const openGochar = () => rootNav.navigate('Gochar');
+  const openKundaliReport = () => rootNav.navigate('KundaliReport');
   const openGunaMilan = () => rootNav.navigate('GunaMilan');
   const openNamkaran = () => rootNav.navigate('Namkaran');
 
@@ -630,19 +634,19 @@ export default function PanchangScreen({ route }: Props) {
               first) on elevated off-white cards; Yoga + Karana sit as a quieter,
               flatter secondary row. */}
           <View style={styles.angaGrid}>
-            <PanchangTile label={contentByLang(lang, 'तिथि', 'Tithi')} element={p.tithi} kshaya={p.kshayaTithi} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
+            <PanchangTile label={contentByLang(lang, 'तिथि', 'Tithi')} element={p.tithi} kshaya={p.kshayaTithi} successor={successorTithiToday(p)} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
             <PanchangTile label={contentByLang(lang, 'नक्षत्र', 'Nakshatra')} element={p.nakshatra} kshaya={p.kshayaNakshatra} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
           </View>
           <View style={styles.angaGridSecondary}>
             {/* नित्य योग, never bare योग — the 27-cycle Sun+Moon yoga must stay
                 distinguishable from the PRD-27 शुभ योग chips below (one nitya
-                yoga is literally named सिद्धि; RULEBOOK §23 naming rule). */}
+                yoga is literally named सिद्धि; RULEBOOK §24 naming rule). */}
             <PanchangTile label={contentByLang(lang, 'नित्य योग', 'Nitya Yoga')} element={p.yoga} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
             <PanchangTile label={contentByLang(lang, 'करण', 'Karana')} element={p.karana} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
           </View>
 
           {/* PRD-27: the day's शुभ योग — present-or-absent with its window,
-              annotation only (design.md §67). Absent days render nothing. */}
+              annotation only (design.md §69). Absent days render nothing. */}
           <ShubhYogaCard yogas={shubhYogas} referenceDay={p.date} />
 
           <View style={[styles.timesCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}>
@@ -671,6 +675,7 @@ export default function PanchangScreen({ route }: Props) {
                 <ObservanceCard
                   key={`${item.rule.id}-${i}`}
                   item={item}
+                  moonrise={p?.moonrise ?? null}
                   lang={lang}
                   colors={colors}
                   typography={typography}
@@ -749,6 +754,8 @@ export default function PanchangScreen({ route }: Props) {
               onOpenKundali={() => openKundali(false)}
               onEditKundali={() => openKundali(true)}
               onOpenRashifal={openRashifal}
+              onOpenGochar={openGochar}
+              onOpenReport={openKundaliReport}
               onOpenGunaMilan={openGunaMilan}
               onOpenNamkaran={openNamkaran}
               onOpenNavagraha={() => openLinkedSection('navagraha-stotram')}
@@ -779,6 +786,8 @@ function JyotishLanding({
   onOpenKundali,
   onEditKundali,
   onOpenRashifal,
+  onOpenGochar,
+  onOpenReport,
   onOpenGunaMilan,
   onOpenNamkaran,
   onOpenNavagraha,
@@ -800,6 +809,8 @@ function JyotishLanding({
   onOpenKundali: () => void;
   onEditKundali: () => void;
   onOpenRashifal: () => void;
+  onOpenGochar: () => void;
+  onOpenReport: () => void;
   onOpenGunaMilan: () => void;
   onOpenNamkaran: () => void;
   onOpenNavagraha: () => void;
@@ -807,8 +818,8 @@ function JyotishLanding({
   const [shareVisible, setShareVisible] = useState(false);
   const moon = chart?.grahas.find((position) => position.graha === 'moon');
   const guidance = useMemo(
-    () => (moon ? computeRashifal(today, moon.rashiIndex) : null),
-    [moon, today]
+    () => (chart ? computePersonalGuidance(chart, today) : null),
+    [chart, today]
   );
   const currentDasha = chart ? getCurrentDasha(chart, today) : null;
   const city = profile ? getCityById(profile.cityId) : null;
@@ -1023,8 +1034,8 @@ function JyotishLanding({
           >
             {meaningByLang(
               lang,
-              'दैनिक चन्द्र-राशि मार्गदर्शन पहले; आपकी पूरी कुंडली एक स्पर्श दूर।',
-              'Daily Moon-sign guidance first; your full chart remains one tap away.'
+              'आज का मार्गदर्शन आपकी पूरी कुंडली से; चार्ट स्वयं एक स्पर्श दूर।',
+              'Today’s guidance reads your full chart; the chart itself stays one tap away.'
             )}
           </Text>
         </View>
@@ -1076,17 +1087,18 @@ function JyotishLanding({
                 ]}
               >
                 {/* With more than one person saved, "your" would be a guess —
-                    name whose chart this Moon sign came from. */}
+                    name whose chart this guidance came from. PRD-20 reads the
+                    FULL chart, not the Moon sign alone. */}
                 {people.length > 1 && profile.name
                   ? contentByLang(
                     lang,
-                    `चन्द्र राशि · ${profile.name} की कुंडली से`,
-                    `Moon sign · From ${profile.name}’s Kundali`
+                    `${profile.name} की पूरी कुंडली से`,
+                    `From ${profile.name}’s full chart`
                   )
                   : contentByLang(
                     lang,
-                    'चन्द्र राशि · आपकी कुंडली से',
-                    'Moon sign · From your Kundali'
+                    'आपकी पूरी कुंडली से',
+                    'From your full chart'
                   )}
               </Text>
               <Text
@@ -1125,7 +1137,7 @@ function JyotishLanding({
               </Text>
             </Pressable>
           </View>
-          <JyotishGuidanceRows guidance={guidance} lang={lang} />
+          <JyotishGuidanceRows guidance={guidance} lang={lang} showContext />
           <View
             style={[
               styles.jyotishGuidanceFooter,
@@ -1266,6 +1278,39 @@ function JyotishLanding({
               </View>
             ))}
           </View>
+          {guidance.sadeSatiPhase !== 'none' && (
+            <Pressable
+              onPress={onOpenGochar}
+              accessibilityRole="button"
+              accessibilityLabel="Sade Sati is running. Open Gochar"
+              style={({ pressed }) => [
+                styles.jyotishTeaser,
+                {
+                  borderColor: colors.divider,
+                  backgroundColor: colors.goldTint,
+                  borderRadius: radii.md,
+                },
+                pressed && { opacity: 0.72 },
+              ]}
+            >
+              <Text
+                style={{
+                  flex: 1,
+                  color: colors.inkSoft,
+                  fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+                  fontSize: 11,
+                  lineHeight: 16,
+                }}
+              >
+                {meaningByLang(
+                  lang,
+                  'साढ़े साती का पारम्परिक काल चल रहा है — गोचर में देखें।',
+                  'A traditional Sade Sati period is running — see it in Gochar.'
+                )}
+              </Text>
+              <Text style={{ color: colors.saffronDeep, fontSize: 16 }}>›</Text>
+            </Pressable>
+          )}
           <View style={styles.jyotishActions}>
             <Pressable
               onPress={onOpenKundali}
@@ -1300,8 +1345,37 @@ function JyotishLanding({
               </Text>
             </Pressable>
           </View>
+          <Pressable
+            onPress={onOpenReport}
+            accessibilityRole="button"
+            accessibilityLabel="Open full Kundali reading"
+            style={({ pressed }) => [
+              styles.jyotishReportLink,
+              pressed && { opacity: 0.65 },
+            ]}
+          >
+            <Text style={[styles.jyotishInlineLink, { color: colors.saffronDeep }]}>
+              {contentByLang(lang, 'पूर्ण कुंडली विवेचन खोलें', 'Open the full chart reading')} ›
+            </Text>
+          </Pressable>
         </View>
 
+        {sectionLabel('गोचर', 'Transits')}
+        <JyotishToolCard
+          titleHi="गोचर"
+          titleEn="Gochar"
+          bodyHi="आज के नौ ग्रह आपकी कुंडली में—साढ़े साती और आगामी राशि-प्रवेश सहित।"
+          bodyEn="Today's nine grahas in your chart—with Sade Sati and upcoming sign changes."
+          badge="NEW"
+          glyph="गो"
+          onPress={onOpenGochar}
+          accessibilityLabel="Open Gochar"
+          lang={lang}
+          colors={colors}
+          typography={typography}
+          radii={radii}
+          elevation={elevation}
+        />
         {sectionLabel('मिलान', 'Compatibility')}
         <JyotishToolCard
           titleHi="अष्टकूट मिलान"
@@ -1639,12 +1713,16 @@ function CalendarSystemToggle({ value, onChange, lang, colors, radii, typography
   );
 }
 
-function PanchangTile({ label, element, kshaya, panchangDate, lang, colors, typography, radii, elevation }: {
+function PanchangTile({ label, element, kshaya, successor, panchangDate, lang, colors, typography, radii, elevation }: {
   label: string;
   element: PanchangElement;
   // Kshaya anga (skipped at every sunrise) — rendered as a second, smaller row so
   // days like 10 Jul 2026 read "दशमी तक 8:16 AM · एकादशी तक 5:22 AM, 11 जुल".
   kshaya?: PanchangElement | null;
+  // The anga that takes over later the SAME day (tithi tile only). "तृतीया तक
+  // 8:51 AM" alone leaves the rest of the day unnamed, which is what made a
+  // Chaturthi vrat look like it belonged to the next date instead of this one.
+  successor?: { nameHi: string; nameEn: string } | null;
   panchangDate: Date;
   lang: Lang;
   colors: any;
@@ -1696,6 +1774,18 @@ function PanchangTile({ label, element, kshaya, panchangDate, lang, colors, typo
           )}
         </React.Fragment>
       ))}
+      {/* Handover line — quieter than the तक line above it, since the tile's
+          headline stays the sunrise (udaya) anga the almanac names the day by. */}
+      {successor && (
+        <Text
+          numberOfLines={1}
+          adjustsFontSizeToFit
+          minimumFontScale={0.8}
+          style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkMuted, marginTop: 3 }}
+        >
+          {contentByLang(lang, `फिर ${successor.nameHi} — शेष दिन`, `then ${successor.nameEn} — rest of day`)}
+        </Text>
+      )}
     </View>
   );
 }
@@ -1715,8 +1805,11 @@ function TimeCell({ icon, label, value, lang, colors }: { icon: string; label: s
   );
 }
 
-function ObservanceCard({ item, lang, colors, typography, radii, elevation, onOpenLink, onOpenKatha, onOpenVidhi }: {
+function ObservanceCard({ item, moonrise, lang, colors, typography, radii, elevation, onOpenLink, onOpenKatha, onOpenVidhi }: {
   item: ResolvedObservance;
+  // This date's moonrise, when the day is solved. Only read for a chandrodaya
+  // rule, whose observance day IS the day whose moonrise its tithi covers.
+  moonrise: Date | null;
   lang: Lang;
   colors: any;
   typography: any;
@@ -1733,6 +1826,29 @@ function ObservanceCard({ item, lang, colors, typography, radii, elevation, onOp
   // PRD-19: the vidhi pill renders only when the rule's vidhiId resolves to a
   // published vidhi — the identical hook mechanism as kathaId.
   const vidhi = item.rule.vidhiId ? getVidhiById(item.rule.vidhiId) : null;
+  // A moonrise vrat is kept through a night, not a calendar box: its tithi
+  // usually ends the next morning, so the card states the instant the fast is
+  // actually broken rather than leaving the reader to reconcile "व्रत" with a
+  // तिथि line that ends before noon.
+  const chandrodaya = item.rule.dayRule === 'chandrodaya' ? moonrise : null;
+  // The one generic monthly rule whose occurrences carry PUBLISHED names: the
+  // Bhadrapada Sankashti is the Heramba day, an adhik lunation is Vibhuvana, a
+  // Tuesday is अंगारकी — the rule name alone hid all of that. Occurrence-titled
+  // here only; list/search/detail surfaces keep the rule's own name.
+  const sankashtiName = React.useMemo(() => {
+    if (item.rule.id !== 'sankashti-chaturthi-vrat') return null;
+    try {
+      return sankashtiOccurrenceName(item.date);
+    } catch {
+      return null;
+    }
+  }, [item.rule.id, item.date]);
+  const titleHi = sankashtiName
+    ? `${sankashtiName.nameHi}${sankashtiName.isAngarki ? ' (अंगारकी)' : ''} व्रत`
+    : item.rule.nameHi;
+  const titleEn = sankashtiName
+    ? `${sankashtiName.nameEn}${sankashtiName.isAngarki ? ' (Angarki)' : ''} Vrat`
+    : item.rule.nameEn;
 
   return (
     <View style={[styles.observanceCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card]}>
@@ -1747,11 +1863,20 @@ function ObservanceCard({ item, lang, colors, typography, radii, elevation, onOp
         </Text>
       </View>
       <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
-        {contentByLang(lang, item.rule.nameHi, item.rule.nameEn)}
+        {contentByLang(lang, titleHi, titleEn)}
       </Text>
       <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted, marginTop: 4 }}>
         {meaningByLang(lang, item.rule.shortDescriptionHi, item.rule.shortDescriptionEn)}
       </Text>
+      {chandrodaya && (
+        <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.saffronDeep, marginTop: 6 }}>
+          {contentByLang(
+            lang,
+            `व्रत इसी रात्रि — चंद्रोदय ${formatTime12(chandrodaya)}, दर्शन व अर्घ्य के बाद पारण`,
+            `Kept this night — moonrise ${formatTime12(chandrodaya)}, parana after darshan and arghya`
+          )}
+        </Text>
+      )}
       <View style={styles.linkRow}>
         {vidhi && (
           <Pressable
@@ -2158,6 +2283,22 @@ const styles = StyleSheet.create({
   jyotishFactLabel: { fontSize: 10 },
   jyotishFactDetail: { fontFamily: fontFamilies.inter, fontSize: 10, marginTop: 1 },
   jyotishActions: { marginTop: 12, flexDirection: 'row', gap: 8 },
+  jyotishReportLink: {
+    minHeight: 44,
+    marginTop: 2,
+    justifyContent: 'center',
+    alignSelf: 'flex-start',
+  },
+  jyotishTeaser: {
+    marginTop: 10,
+    minHeight: 44,
+    paddingHorizontal: 11,
+    paddingVertical: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
   jyotishPrimary: { minHeight: 42, flex: 1, paddingHorizontal: 15, alignItems: 'center', justifyContent: 'center' },
   jyotishPrimaryText: { fontFamily: fontFamilies.interSemiBold, fontSize: 11 },
   jyotishSecondary: { minHeight: 42, flex: 1, paddingHorizontal: 15, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
