@@ -356,3 +356,47 @@ coverage is O(intents), and each lexeme added multiplies across every entity it 
 So: any phrasing, of a bounded set of questions the app can actually ground — with an honest and
 *measurable* recall gap on phrasings we have not seen yet, which is what the 300-question golden
 corpus exists to quantify before Phase 1 ships.
+
+### 13.6 Third-party tooling — what to take, what to skip
+
+Checked against npm and tested on this app's own hard cases (2026-08-30). Sizes below are the
+**shipped minified/gzipped** cost, not npm's `unpackedSize`, which is misleading by 10–30×.
+
+| Package | Licence | Runtime cost | Verdict |
+|---|---|---|---|
+| `@indic-transliteration/sanscript` | MIT | 34 KB gz (pulls its map package) | **Take — at build time only** |
+| `@leeoniya/ufuzzy` | MIT | **4 KB gz**, 0 deps | **Take — at runtime** |
+| `node-nlp` / `@nlpjs/nlu` | MIT | 15 / 4 deps, Node-oriented | Skip |
+| `natural` | MIT | 13 MB unpacked | Skip |
+| `wink-nlp` | MIT | 640 KB, English models | Skip |
+| `minisearch` · `fuse.js` · `flexsearch` | MIT / Apache-2.0 | 0.8–2.3 MB unpacked | Skip |
+| `fastest-levenshtein` | MIT | 21 KB | Fallback if uFuzzy disappoints |
+
+**Sanscript belongs in the build, not the app.** It is a correct, complete abugida transliterator —
+मंदिर → `maMdira`, गणपति → `gaNapati`, गृह प्रवेश → `gRRiha pravesha` — and it is exactly the layer
+the spike hand-rolled and got wrong twice (inherent vowel, then word-final schwa). But the lexicon is
+*generated offline anyway*, so `scripts/build-ask-lexicon.mjs` should call sanscript in Node and emit
+folded keys, and the build should also emit a **minimal Devanagari→ASCII table derived from
+sanscript** (~2–3 KB) for folding the user's typed query at runtime. Correct by construction, and the
+34 KB never reaches the bundle.
+
+One thing sanscript does **not** do, by design: it is a scheme transliterator, so it keeps the
+inherent vowel (`mandira`, `ganapati`). **Hindi schwa deletion stays ours** — roughly 30 lines,
+§13.1 — because it is phonology, not script.
+
+**uFuzzy earns its 4 KB on the exact misses §13.5 recorded.** Tested against the lexicon:
+`ganpati → ganapati` ✓ (the medial-schwa miss), `ekadasi → ekadashi` ✓, `shivratri → shivaratri` ✓;
+it missed `ganeshji`, `gruh pravesh`, `rahukal` (tunable, and per-token matching should catch them).
+Critically, it returned **no match** for `naukri` rather than a confident wrong one — the property
+§3.2 requires. Its haystack is 478 forms; it is built for six figures.
+
+**Why no NLU framework.** NLP.js would give a trained intent classifier for free, and that is the
+problem: a bundled model whose decision cannot be shown to the user contradicts the show-the-working
+principle (§3.3), it arrives with 15 Node-oriented dependencies in an RN bundle, and it replaces the
+one part of this system that is *already* trivial — §13's scoring function is twenty lines. The hard
+parts (Indic script folding, the closed entity lexicon, the abstain rule) are precisely the parts no
+general NLU library solves for Hindi.
+
+**If the hand-tuned weights stall**, the free path is scikit-learn *in a build script*: train logistic
+regression over the golden corpus, ship the weight table as bundled JSON. Zero runtime dependency,
+still deterministic, still auditable.
