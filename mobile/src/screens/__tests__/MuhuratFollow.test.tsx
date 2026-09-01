@@ -17,8 +17,9 @@ import { GitaLanguageProvider } from '@/data/gita/language';
 import { MuhuratFollowProvider } from '@/contexts/MuhuratFollowContext';
 import MuhuratDayDetailScreen from '@/screens/MuhuratDayDetailScreen';
 import MuhuratFollowList from '@/components/MuhuratFollowList';
-import { computePanchangForDate } from '@/panchang/engine';
+import { computePanchangForDate, sunriseForDate } from '@/panchang/engine';
 import { computeMuhuratDay } from '@/panchang/muhurat';
+import { lagnaSpansForDay } from '@/panchang/lagnaSweep';
 import { computeAstaFlags, evaluateDay, getEventRule } from '@/panchang/eventMuhurat';
 import { formatClock } from '@/panchang/muhuratFormat';
 import { WINDOW_LEAD_MINUTES } from '@/notifications/muhuratReminderPure';
@@ -90,13 +91,23 @@ function verdictFor(date: Date) {
     location: UJJAIN as never,
   });
   const m = computeMuhuratDay(p.sunrise, p.sunset, next.sunrise, date.getDay());
+  // Phase 3: the screen grades through the day store, whose DayInputs carry
+  // the lagna spans — build the expectation on the same inputs, or the split
+  // window pass makes the expected best-window start diverge.
+  const lagnas = lagnaSpansForDay(
+    p.sunrise,
+    sunriseForDate(new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1), { location: UJJAIN as never }),
+    UJJAIN.latitude,
+    UJJAIN.longitude
+  );
   return evaluateDay(
     getEventRule('vahan'),
     date.getTime(),
     date.getDay(),
     p,
     m,
-    computeAstaFlags(new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12))
+    computeAstaFlags(new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12)),
+    { lagnas }
   );
 }
 

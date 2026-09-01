@@ -24,8 +24,14 @@ import {
  * Every date below is a REAL engine output pinned during the Phase-2 design
  * pass (Ujjain unless stated): the bhadra end instants were cross-validated
  * against an independent 6°-elongation bisection, and the three verdict-flip
- * days are the ones the TRD publishes. Golden external validation stays owed
- * to eventMuhurat.drikfixture.test.ts (§10).
+ * days are the ones the TRD publishes. Golden external validation lives in
+ * eventMuhurat.drikfixture.test.ts (§10).
+ *
+ * Phase 3 updates (PRD-16/P3): the 27 Aug flip is re-pinned — the late-onset
+ * Vishti solver now sees the afternoon Bhadra Phase 2 was blind to, and the
+ * split-and-grade window pass may emit MORE windows per day (segments) than
+ * Phase 2 did; the assertions below were kept where they still hold and
+ * re-pinned where Phase 3 corrects Phase 2.
  */
 
 const LOC = { ...UJJAIN_GEO, cityId: 'ujjain' };
@@ -180,12 +186,23 @@ test('a non-Vishti day carries no bhadra interval', () => {
 
 // ── the three published verdict flips (TRD-16/P2 §1.1) ──────────────────────
 
-test('27 Aug 2026 Vahan: sunrise Chaturdashi but Purnima at the window — now offered', () => {
+test('27 Aug 2026 Vahan: the late-onset Vishti (Phase 3) re-excludes what Phase 2 offered', () => {
+  // Phase 2's pinned flip offered this day via its Purnima windows — but the
+  // first half of Purnima IS Vishti, beginning 9:09 AM when the sunrise
+  // (Vanija) karana ends: the afternoon Bhadra Phase 2 could not see
+  // (PRD-16/P3 §0.3, the eve-of-Raksha-Bandhan Bhadra). Every auspicious
+  // window sits inside it, so the day is honestly excluded and names बद्रा.
+  const { p } = solved(day(2026, 8, 27));
+  assert.equal(p.karana.index, 5, 'sunrise karana is Vanija, not Vishti');
+  assert.ok(p.lateVishti, 'the following karana (first half of Purnima) is Vishti');
+  const target = new Date(2026, 7, 27, 9, 9).getTime();
+  assert.ok(Math.abs(p.lateVishti!.start.getTime() - target) < 3 * 60_000, `bhadra starts ${p.lateVishti!.start}`);
+  assert.ok(p.lateVishti!.end.getTime() > p.sunset.getTime(), 'this bhadra outlasts the day');
+
   const v = verdict('vahan', day(2026, 8, 27));
-  assert.notEqual(v.tier, 'excluded');
-  const best = v.windows[0];
-  assert.ok(best.angaAtWindow, 'the anga must differ from sunrise');
-  assert.equal(best.angaAtWindow!.tithiIndex, 14); // Purnima
+  assert.equal(v.tier, 'excluded');
+  assert.ok(v.doshas.includes('bhadra'), 'the reason must name बद्रा');
+  assert.ok(v.bhadra, 'the interval rides the verdict for the struck-through row');
   assert.equal(v.sunriseAnga.tithiIndex, 13); // Chaturdashi at sunrise, kept for the almanac line
 });
 
@@ -269,10 +286,10 @@ test('upanayana is the one occasion with a populated masa bar (DRAFT)', () => {
 
 // ── the twelve-occasion roster ──────────────────────────────────────────────
 
-test('twelve occasions, each in exactly one picker group, all DRAFT', () => {
-  assert.equal(EVENT_RULES.length, 12);
+test('thirteen occasions (यात्रा joined in Phase 3), each in exactly one picker group, all DRAFT', () => {
+  assert.equal(EVENT_RULES.length, 13);
   const ids = new Set(EVENT_RULES.map((r) => r.id));
-  assert.equal(ids.size, 12);
+  assert.equal(ids.size, 13);
   for (const r of EVENT_RULES) {
     assert.ok(GROUP_ORDER.includes(r.group), `${r.id} has an unknown group`);
     assert.equal(r.source.verified, false, `${r.id} must stay DRAFT until §10`);

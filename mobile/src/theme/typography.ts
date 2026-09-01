@@ -13,7 +13,8 @@ export const fontFamilies = {
   kannada: 'NotoSerifKannada_500Medium',
   kannadaBold: 'NotoSerifKannada_600SemiBold',
   // Inter carries the tiny UI chrome (section labels, verse pills, card meta,
-  // tab labels) per design.md §3 — never used for reading content.
+  // and tab labels in en — localized tab labels take their script's serif face,
+  // design.md §17) per design.md §3 — never used for reading content.
   inter: 'Inter_500Medium',
   interSemiBold: 'Inter_600SemiBold',
 } as const;

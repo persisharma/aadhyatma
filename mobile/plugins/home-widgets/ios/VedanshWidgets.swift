@@ -100,9 +100,16 @@ struct VedanshWidgetView: View {
   }
 
   // MARK: - आज का श्लोक
-  // Small keeps the planner's two-line excerpt (it is all that fits); medium gives
-  // it the width it was written for; large drops the excerpt entirely and renders
-  // the verse line-by-line from `lines`, which the payload has always carried.
+  // Large renders the verse line-by-line from `lines`; medium flows those same
+  // lines across the three lines its cell budgets; only small falls back to the
+  // planner's excerpt, whose character cap is sized for that square.
+  //
+  // Medium used to draw the excerpt too, and that was the "shloka cut with space
+  // still on the card" bug: `twoLineExcerpt`'s 88-character cap is a small-cell
+  // budget, so a two-line Gita shloka (~90 characters) lost its closing pada to
+  // an ellipsis on a card whose third line sat empty. The full verse is in the
+  // payload — the wide cell reads it, and lets SwiftUI shrink/truncate only when
+  // the text genuinely overruns.
   @ViewBuilder private func verse(_ payload: WidgetPayload) -> some View {
     let key = widgetDateKey(entry.date, timeZone: payload.verses.timeZone)
     let lang = payload.locale
@@ -115,11 +122,17 @@ struct VedanshWidgetView: View {
               Text(item.element).font(.custom(fontName(lang, bold: false), size: 18)).foregroundStyle(WidgetTheme.ink).lineLimit(2).minimumScaleFactor(0.8)
             }
           }
-        } else {
+        } else if family == .systemSmall {
           Text(v.excerpt.value(lang))
-            .font(.custom(fontName(lang, bold: false), size: family == .systemSmall ? 13 : 16))
+            .font(.custom(fontName(lang, bold: false), size: 13))
             .foregroundStyle(WidgetTheme.ink)
-            .lineLimit(family == .systemSmall ? 4 : 3)
+            .lineLimit(4)
+            .minimumScaleFactor(0.8)
+        } else {
+          Text(flowedVerse(v.lines.value(lang)))
+            .font(.custom(fontName(lang, bold: false), size: 16))
+            .foregroundStyle(WidgetTheme.ink)
+            .lineLimit(3)
             .minimumScaleFactor(0.8)
         }
         if family != .systemSmall {
@@ -197,6 +210,12 @@ struct VedanshWidgetView: View {
       .widgetURL(URL(string: "vedansh://widget/panchang?date=\(key)"))
   }
   private func brand() -> some View { Text("ॐ वेदांश़").font(.custom("NotoSerifDevanagari-SemiBold", size: 10)).foregroundStyle(WidgetTheme.gold) }
+  // The verse as one flowing paragraph, padas separated the way the planner's
+  // excerpt separates them, so the wide cell keeps the shipped look while the
+  // text wraps to whatever line count the cell actually has.
+  private func flowedVerse(_ lines: [String]) -> String {
+    lines.map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }.filter { !$0.isEmpty }.joined(separator: " · ")
+  }
   // Section eyebrows are the one piece of widget copy the payload does not carry,
   // so they are localized here in the same four languages (gu/kn used to fall back
   // to Devanagari inside a Gujarati/Kannada widget).

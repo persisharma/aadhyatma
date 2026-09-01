@@ -28,13 +28,20 @@ const OCCASION_GLYPH: Record<OccasionId, string> = {
   upanayana: 'उ',
   sampatti: 'सं',
   swarna: 'स्व',
+  yatra: 'या',
 };
 
-/** Occasion-specific caption lines, where the generic transliteration is not enough. */
+/**
+ * Occasion-specific caption lines, where the generic name is not enough. Captions
+ * follow the counterpart-caption grammar (design.md §14/§60): the caption carries the
+ * language NOT selected — `en` renders under the Devanagari title, `hi` under the
+ * English title.
+ */
 const OCCASION_CAPTION: Partial<Record<OccasionId, { hi: string; en: string }>> = {
   annaprashan: { hi: 'छठे–आठवें मास में', en: 'Annaprashan · 6th–8th month' },
   upanayana: { hi: 'जनेऊ संस्कार', en: 'Upanayana · Janeu' },
   mundan: { hi: 'चूड़ाकर्ण संस्कार', en: 'Mundan · Chudakarana' },
+  yatra: { hi: 'दिशा शूल सहित', en: 'Travel · with Disha Shool' },
 };
 
 /**
@@ -115,9 +122,7 @@ export default function MuhuratFinderScreen({ navigation }: Props) {
                 >
                   <Text style={titleStyle}>{contentByLang(lang, rule.nameHi, rule.nameEn)}</Text>
                   <Text style={captionStyle}>
-                    {caption
-                      ? contentByLang(lang, caption.hi, caption.en)
-                      : lang === 'en' ? rule.nameHi : rule.nameEn}
+                    {lang === 'en' ? (caption?.hi ?? rule.nameHi) : (caption?.en ?? rule.nameEn)}
                   </Text>
                 </ListCard>
               );

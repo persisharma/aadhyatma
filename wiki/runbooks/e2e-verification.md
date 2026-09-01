@@ -1,8 +1,8 @@
 ---
 title: E2E (Maestro) — authoring, verification, and the ship-with-e2e policy
 type: runbook
-sources: [mobile/.maestro, mobile/.maestro/README.md, mobile/.maestro/_launch.yaml, RULEBOOK.md]
-last_verified_date: 2026-08-01
+sources: [mobile/.maestro, mobile/.maestro/README.md, mobile/.maestro/_launch.yaml, mobile/.maestro/vidhi-smoke.yaml, RULEBOOK.md]
+last_verified_date: 2026-08-25
 confidence: high
 status: current
 ---
@@ -97,6 +97,18 @@ Use this when a flow declares `appId: com.prashantsharma.vedansh`:
    The flow clears only this app's simulator state and launches the native development build with
    React Native's `RCT_jsLocation=127.0.0.1:8084` launch argument, so it cannot inherit a Metro
    server from another workspace and never touches Expo Go.
+
+### Android embedded release proof
+
+Use a release APK when a cross-platform gate must prove the current worktree independently of any
+Metro or OTA state. PRD-23 used this path on Android 16 / API 36:
+
+1. Build and install with JDK 17 and this machine's Android SDK:
+   `JAVA_HOME=/opt/homebrew/opt/openjdk@17 ANDROID_HOME=/opt/homebrew/share/android-commandlinetools npx expo run:android --variant release --device <avd> --no-bundler`.
+2. Clear the package, disable emulator Wi-Fi/mobile data, and launch `com.prashantsharma.vedansh/.MainActivity` directly. This forces the embedded bundle and prevents a published update or unrelated Metro from replacing it.
+3. Run `maestro --device <serial> test .maestro/<flow>.yaml`. Re-enable network after evidence collection if the emulator is shared.
+
+The PRD-23 `vidhi-smoke.yaml` run passed separately on iOS 26.4 and this Android path on 2026-08-25.
 
 ## Gotchas
 

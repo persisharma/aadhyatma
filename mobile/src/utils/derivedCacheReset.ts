@@ -71,7 +71,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
  *   family remembrance entries. Private, on-device, and not recomputable at all.
  *   `pitru-smaran` is the entry ledger itself (relation, name, tithi) and must
  *   never be swept; only the derived `@vedansh:pitru-solves:` dates above are.
- * - `@vedansh:kundali-birth-profile:v1`, `guna-milan-draft:v1`,
+ * - `@vedansh:kundali-profiles:v1` (the birth-profile roster — every saved
+ *   person plus which one is active), the pre-migration
+ *   `@vedansh:kundali-birth-profile:v1`, `guna-milan-draft:v1`,
  *   `namkaran-session:v1`, `namkaran-shortlist:v1` — birth details and starred
  *   names, several of them privacy-sensitive by design.
  * - `@vedansh/language`, `regionalLanguage`, `font-scale`, `read-aloud` — display

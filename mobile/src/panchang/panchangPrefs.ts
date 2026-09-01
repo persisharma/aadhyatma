@@ -43,6 +43,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { DEFAULT_LOCATION, getCityById, toPanchangLocation } from './locations';
 import { isPincodeCityId } from './pincodes';
+import { launchMark } from '@/utils/launchTrace';
 import type { CalendarSystem, PanchangLocation } from './types';
 
 export const LOCATION_STORAGE_KEY = '@vedansh:panchang-location';
@@ -209,6 +210,7 @@ export function loadPanchangPrefsOnce(): Promise<PanchangPrefs> {
 }
 
 async function runLoad(): Promise<PanchangPrefs> {
+  launchMark('prefs-read-start');
   let storedLocation: string | null = null;
   let storedSystem: string | null = null;
   let failed = false;
@@ -247,6 +249,9 @@ async function runLoad(): Promise<PanchangPrefs> {
   // "this read is no longer pending", and leaving it false would strand
   // `useMuhurat` on a scope it never considers settled — no panchang at all.
   calendarSystemHydrated = true;
+  // The scope key every panchang cache is keyed by is real from here on — the
+  // gate `useMuhurat` and `WidgetCoordinator` both wait for.
+  launchMark(`prefs-read-done (${result.location.cityId}/${result.calendarSystem})`);
   notifyCalendarSystemListeners();
   return result;
 }

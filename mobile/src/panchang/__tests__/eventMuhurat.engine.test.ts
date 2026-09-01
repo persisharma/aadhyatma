@@ -75,7 +75,8 @@ test('asta flags match the validated 2026 combustion windows', () => {
 test('17 Aug 2026 is a shreshtha Vehicle Purchase day with kaal-free windows', () => {
   const v = verdictFor('vahan', day(2026, 8, 17));
   assert.equal(v.tier, 'shreshtha');
-  assert.deepEqual(v.factors, { nakshatra: true, tithi: true, vara: true });
+  // `lagna` is false while the Phase-3 preference tables ship empty (DRAFT).
+  assert.deepEqual(v.factors, { nakshatra: true, tithi: true, vara: true, lagna: false });
   assert.ok(v.windows.length >= 3);
   // No usable window may share a slot with Rahu/Gulika/Yamaganda.
   const p = computePanchangForDate(day(2026, 8, 17));

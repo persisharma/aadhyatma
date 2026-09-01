@@ -223,13 +223,14 @@ function buildSectionEntries(): readonly SearchSectionEntry[] {
 }
 
 function vidhiSectionEntry(vidhi: VidhiEntry): SearchSectionEntry {
-  const subtitleHi = `पूजा विधि · ${vidhi.steps.length} चरण`;
+  const personal = vidhi.anchor === 'personal-tithi';
+  const subtitleHi = `${personal ? 'स्मरण विधि' : 'पूजा विधि'} · ${vidhi.steps.length} चरण`;
   const fields = [
     vidhi.titleHi,
     vidhi.titleEn,
     subtitleHi,
-    'पूजा विधि',
-    'Puja Vidhi',
+    personal ? 'तर्पण विधि पितृ स्मरण श्राद्ध मार्गदर्शिका' : 'पूजा विधि',
+    personal ? 'Tarpana Shraddha Pitru remembrance guide' : 'Puja Vidhi',
     'vidhi',
   ];
   const fieldsNorm = fields.map(normalize);

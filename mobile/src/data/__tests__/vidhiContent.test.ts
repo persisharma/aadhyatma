@@ -53,14 +53,21 @@ for (const vidhi of VIDHI_ENTRIES) {
   nonEmpty(vidhi.conventionLineEn, `${at}.conventionLineEn`);
   assert.ok(vidhi.durationHintMin > 0, `${at}.durationHintMin`);
 
-  // Deity tags come from the shared Deity union (§11.4).
-  assert.ok(vidhi.deities.length >= 1, `${at}: at least one deity`);
+  // Festival pujas carry deity tags. A personal-tithi remembrance is not
+  // falsely classified under one deity merely to satisfy discovery metadata.
+  if (vidhi.anchor !== 'personal-tithi') {
+    assert.ok(vidhi.deities.length >= 1, `${at}: at least one deity`);
+  }
   for (const deity of vidhi.deities) {
     assert.ok(deityIds.has(deity), `${at}: unknown deity '${deity}'`);
   }
 
   // Festival hook round-trip, vidhi → rule.
-  assert.ok(vidhi.festivalIds.length >= 1, `${at}: at least one festivalId`);
+  if (vidhi.anchor === 'personal-tithi') {
+    assert.equal(vidhi.festivalIds.length, 0, `${at}: personal dates do not fake a festival rule`);
+  } else {
+    assert.ok(vidhi.festivalIds.length >= 1, `${at}: at least one festivalId`);
+  }
   for (const festivalId of vidhi.festivalIds) {
     assert.ok(ruleIds.has(festivalId), `${at}: unknown festival rule '${festivalId}'`);
     const resolved = getVidhiForFestival(festivalId);
@@ -114,10 +121,15 @@ for (const vidhi of VIDHI_ENTRIES) {
           KATHA_CONTENT_BY_ID.has(step.ref.id),
           `${sat}: katha ref '${step.ref.id}' not in KATHA_CONTENT_BY_ID`
         );
-      } else {
+      } else if (step.ref.kind === 'section') {
         assert.ok(
           activeLibraryIds.has(step.ref.id),
           `${sat}: section ref '${step.ref.id}' is not an active library entry`
+        );
+      } else {
+        assert.ok(
+          Number.isInteger(step.ref.chapter) && step.ref.chapter >= 1 && step.ref.chapter <= 18,
+          `${sat}: Gita chapter '${step.ref.chapter}' must be in 1–18`
         );
       }
     }
@@ -167,7 +179,8 @@ for (const rule of OBSERVANCE_RULES) {
   }
 }
 
-// V1 catalog pins: exact registry, festival hooks, and shipped-text hand-offs.
+// Published catalog pins: festival hooks, one personal-tithi guide, and
+// shipped-text hand-offs.
 assert.deepEqual(
   VIDHI_ENTRIES.map((vidhi) => vidhi.id),
   [
@@ -177,8 +190,23 @@ assert.deepEqual(
     'navratri-ghatasthapana',
     'karwa-chauth-puja',
     'maha-shivaratri-puja',
+    'shraddha-tarpan-vidhi',
   ],
-  'all six v1 vidhis are published in curated catalog order'
+  'all seven vidhis are published in curated catalog order'
+);
+
+const shraddhaTarpan = VIDHI_BY_ID.get('shraddha-tarpan-vidhi');
+assert.ok(shraddhaTarpan, 'shraddha-tarpan-vidhi published');
+assert.equal(shraddhaTarpan.anchor, 'personal-tithi');
+assert.equal(shraddhaTarpan.festivalIds.length, 0);
+assert.equal(shraddhaTarpan.steps.some((step) => step.mantra), false, 'no unreviewed mantra ships');
+assert.deepEqual(
+  shraddhaTarpan.steps
+    .filter((step) => step.ref?.kind === 'gita')
+    .map((step) => (step.ref as { kind: 'gita'; chapter: number }).chapter)
+    .sort((a, b) => a - b),
+  [2, 15],
+  'the guide reuses the same optional Gita chapters as Pitru Smaran'
 );
 
 const satyanarayan = VIDHI_BY_ID.get('satyanarayan-puja');
@@ -223,7 +251,11 @@ const expectedRefs = new Map<string, readonly string[]>([
 ]);
 for (const [vidhiId, ids] of expectedRefs) {
   const vidhi = VIDHI_BY_ID.get(vidhiId)!;
-  const refs = new Set(vidhi.steps.flatMap((step) => (step.ref ? [step.ref.id] : [])));
+  const refs = new Set(
+    vidhi.steps.flatMap((step) =>
+      step.ref && step.ref.kind !== 'gita' ? [step.ref.id] : []
+    )
+  );
   for (const id of ids) assert.ok(refs.has(id), `${vidhiId} references shipped '${id}'`);
 }
 

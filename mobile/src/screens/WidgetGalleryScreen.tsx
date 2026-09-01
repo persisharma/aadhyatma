@@ -13,6 +13,7 @@ import { eyebrowTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langT
 import { isWidgetPinSupported, readWidgetPayload, requestPinWidget } from '@/widgets/native';
 import { WIDGET_TIME_ZONE, widgetDateKey, type WidgetPayloadState } from '@/widgets/contract';
 import { widgetCatalogEntry, widgetSizeLabel, type WidgetContent } from '@/widgets/catalog';
+import { flowedVerse } from '@/widgets/planner';
 import type { MoreStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'WidgetGallery'>;
@@ -70,7 +71,10 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
         </Text>
         <View style={styles.grid}>
           <Preview content="verse" title={contentByLang(lang, 'आज का श्लोक', 'Today’s verse')} accessibilityLabel="Daily verse widget preview" colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
-            <Text numberOfLines={2} style={[styles.verse, { color: colors.ink, fontFamily: bodyFont }]}>{verse?.excerpt[lang] ?? recovery}</Text>
+            {/* The facsimile stands in for the recommended (wide) cell, which
+                renders the whole verse flowed across three lines — not the
+                small-cell excerpt (design.md §59). */}
+            <Text numberOfLines={3} style={[styles.verse, { color: colors.ink, fontFamily: bodyFont }]}>{verse ? flowedVerse(verse.lines[lang]) : recovery}</Text>
             {verse ? <Text style={[styles.meta, { color: colors.inkMuted }]}>{verse.source[lang]}</Text> : null}
           </Preview>
           <Preview content="panchang" title={contentByLang(lang, 'आज का पंचांग', 'Today’s Panchang')} accessibilityLabel="Panchang widget preview" colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>

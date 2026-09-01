@@ -1,8 +1,8 @@
 ---
 title: Overview
 type: overview
-sources: [README.md, mobile/package.json, mobile/app.json, mobile/jest.config.js, mobile/App.tsx, mobile/src/navigation/, mobile/src/data/texts.ts, mobile/src/data/routine/, mobile/src/panchang/, mobile/src/notifications/japamAlarms.ts, RULEBOOK.md, design.md, scripts/, push.sh, mobile/eslint.config.js, mobile/src/theme/, mobile/src/components/ReaderHeader.tsx, mobile/src/components/TextField.tsx]
-last_verified_date: 2026-08-01
+sources: [README.md, mobile/package.json, mobile/app.json, mobile/jest.config.js, mobile/App.tsx, mobile/src/navigation/, mobile/src/data/texts.ts, mobile/src/data/backgrounds.ts, mobile/src/data/routine/, mobile/src/panchang/, mobile/src/notifications/japamAlarms.ts, mobile/assets/backgrounds/, RULEBOOK.md, design.md, scripts/, push.sh, mobile/eslint.config.js, mobile/src/theme/, mobile/src/components/ReaderHeader.tsx, mobile/src/components/TextField.tsx]
+last_verified_date: 2026-08-30
 confidence: medium
 status: current
 ---
@@ -77,6 +77,13 @@ category, deities, verseCount, `addedInVersion` for the NEW badge). `searchIndex
 full-text search index. `sourceIdMigration.ts` keeps bookmarks/progress stable across content
 ID changes. User language preference, routines (`@vedansh/routines`) and daily done-marks
 (`@vedansh/routine-done`) are persisted in AsyncStorage.
+
+Background artwork is also bundled offline. `mobile/assets/backgrounds/index.ts` is the typed
+static-require registry, while `mobile/src/data/backgrounds.ts` deterministically maps category,
+deity, source/reader and Theerth surfaces to those assets. Deities use distinct semantic plates;
+Theerth normally inherits the presiding deity and may override by temple id. Production sketches
+are 1024×1024 WebP files; `backgrounds.coverage.jest.test.ts` pins both coverage and commissioned
+asset identity so a future placeholder reuse fails explicitly.
 
 ## Content Pipeline
 

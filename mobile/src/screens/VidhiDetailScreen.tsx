@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation, type NavigationProp } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { useTheme } from '@/theme/ThemeContext';
@@ -23,8 +23,12 @@ import {
 } from '@/data/vidhi/checklistStore';
 import ReaderHeader from '@/components/ReaderHeader';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
+import BhogGuidancePanel from '@/components/BhogGuidancePanel';
+import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
 import { getRuleById } from '@/panchang/vratCatalog';
-import type { VidhiStackParamList } from '@/navigation/types';
+import { getBhogForVidhi } from '@/panchang/bhogContent';
+import { moreTabTarget } from '@/navigation/entryRoutes';
+import type { TabParamList, VidhiStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<VidhiStackParamList, 'VidhiDetail'>;
 
@@ -36,6 +40,11 @@ const PHASE_LABELS: Record<VidhiPhase, { hi: string; en: string }> = {
   closing: { hi: 'समापन', en: 'Closing' },
 };
 
+function stepRefIsAarti(step: VidhiStep): boolean {
+  const ref = step.ref;
+  return ref?.kind === 'section' && library.find((entry) => entry.id === ref.id)?.category === 'aarti';
+}
+
 /**
  * Vidhi overview (PRD-19 §5, design.md §61): duration under the title, then a
  * two-segment तैयारी/पूजा control — the samagri checklist (persisted per
@@ -46,7 +55,10 @@ const PHASE_LABELS: Record<VidhiPhase, { hi: string; en: string }> = {
 export default function VidhiDetailScreen({ navigation, route }: Props) {
   const { colors, typography, radii } = useTheme();
   const { lang } = useGitaLanguage();
+  const rootNav = useNavigation<NavigationProp<TabParamList>>();
+  const { entries: smaranEntries } = usePitruSmaran();
   const vidhi = getVidhiById(route.params.vidhiId);
+  const bhog = getBhogForVidhi(route.params.vidhiId);
   const dateKey = vidhiDateKey(route.params.dateMs ? new Date(route.params.dateMs) : new Date());
   const todayKey = vidhiDateKey(new Date());
   const [mode, setMode] = useState<Mode>('samagri');
@@ -89,6 +101,12 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
 
   if (!vidhi) return null;
 
+  const isPersonalTithi = vidhi.anchor === 'personal-tithi';
+  const activeTint = isPersonalTithi ? colors.goldTint : colors.saffronTint;
+  const activeColor = isPersonalTithi ? colors.inkSoft : colors.saffronDeep;
+  const actionColor = isPersonalTithi ? colors.gold : colors.saffron;
+  const actionTextColor = isPersonalTithi ? colors.ink : colors.parchment;
+
   // Add-to-routine is offered for RECURRING vidhis only (PRD-19 Phase 2B):
   // a monthly observance (Satyanarayan on every purnima) belongs in a routine;
   // an annual festival puja does not.
@@ -96,10 +114,10 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
     (festivalId) => getRuleById(festivalId)?.recurrence === 'monthly'
   );
 
-  const toggleItem = (itemEn: string) => {
+  const toggleItem = (itemKey: string) => {
     const next = new Set(checked);
-    if (next.has(itemEn)) next.delete(itemEn);
-    else next.add(itemEn);
+    if (next.has(itemKey)) next.delete(itemKey);
+    else next.add(itemKey);
     setChecked(next);
     void saveSamagriChecked(vidhi.id, dateKey, [...next]);
   };
@@ -110,10 +128,17 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
       const opt = item.optional ? contentByLang(lang, ' — वैकल्पिक', ' — optional') : '';
       return `• ${contentByLang(lang, item.itemHi, item.itemEn)}${qty}${opt}`;
     });
+    const groceryLines = (bhog?.shoppingItems ?? []).map((item) => {
+      const qty = item.qty ? ` (${item.qty})` : '';
+      const opt = item.optional ? contentByLang(lang, ' — वैकल्पिक', ' — optional') : '';
+      return `• ${contentByLang(lang, item.itemHi, item.itemEn)}${qty}${opt}`;
+    });
     const title = contentByLang(lang, vidhi.titleHi, vidhi.titleEn);
     const heading = contentByLang(lang, 'सामग्री सूची', 'Samagri list');
+    const groceryHeading = contentByLang(lang, 'भोग और रसोई', 'Bhog & kitchen');
+    const grocerySection = groceryLines.length > 0 ? `\n\n${groceryHeading}\n${groceryLines.join('\n')}` : '';
     void Share.share(
-      { message: `${title} — ${heading}\n\n${lines.join('\n')}` },
+      { message: `${title} — ${heading}\n\n${lines.join('\n')}${grocerySection}` },
       { dialogTitle: heading }
     ).catch(() => undefined);
   };
@@ -127,7 +152,7 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
 
   const bodyFont = scriptBodyFont(lang, fontFamilies.devanagari);
   const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
-  const checkedCount = checked.size;
+  const checkedCount = vidhi.samagri.filter((item) => checked.has(item.itemEn)).length;
   const samagriTotal = vidhi.samagri.length;
   const remainingCount = Math.max(0, samagriTotal - checkedCount);
   const checkedPct = samagriTotal > 0 ? Math.round((checkedCount / samagriTotal) * 100) : 0;
@@ -177,8 +202,8 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
               { key: 'samagri' as Mode, hi: 'तैयारी · सामग्री', en: 'Prepare · Samagri' },
               {
                 key: 'steps' as Mode,
-                hi: `पूजा · ${vidhi.steps.length} चरण`,
-                en: `Puja · ${vidhi.steps.length} steps`,
+                hi: `${isPersonalTithi ? 'विधि' : 'पूजा'} · ${vidhi.steps.length} चरण`,
+                en: `${isPersonalTithi ? 'Guide' : 'Puja'} · ${vidhi.steps.length} steps`,
               },
             ] as const
           ).map((segment) => {
@@ -194,7 +219,7 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
                 style={({ pressed }) => [
                   styles.segmentOption,
                   { borderRadius: radii.pill },
-                  selected && { backgroundColor: colors.saffronTint },
+                  selected && { backgroundColor: activeTint },
                   pressed && !selected && { opacity: 0.7 },
                 ]}
               >
@@ -202,7 +227,7 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
                   style={{
                     fontFamily: titleFont,
                     fontSize: 13,
-                    color: selected ? colors.saffronDeep : colors.inkMuted,
+                    color: selected ? activeColor : colors.inkMuted,
                   }}
                 >
                   {contentByLang(lang, segment.hi, segment.en)}
@@ -216,8 +241,39 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
           contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.screenGutter }]}
           showsVerticalScrollIndicator={false}
         >
+          {isPersonalTithi && smaranEntries.length === 0 && (
+            <Pressable
+              onPress={() => rootNav.navigate('MoreTab', moreTabTarget('PitruSmaranList'))}
+              testID="vidhi-add-pitru-smaran"
+              accessibilityRole="button"
+              accessibilityLabel="Add remembrance dates in Pitru Smaran"
+              style={({ pressed }) => [
+                styles.reverseLink,
+                { backgroundColor: colors.goldTint, borderColor: colors.gold, borderRadius: radii.md },
+                pressed && { opacity: 0.75 },
+              ]}
+            >
+              <View style={styles.stepMeta}>
+                <Text style={{ fontFamily: titleFont, fontSize: 14.5, color: colors.ink }}>
+                  {contentByLang(lang, 'अपने पितरों की तिथियाँ जोड़ें', 'Add your remembrance dates')}
+                </Text>
+                <Text style={{ fontFamily: bodyFont, fontSize: 12, lineHeight: 18, color: colors.inkMuted, marginTop: 2 }}>
+                  {contentByLang(lang, 'पितृ स्मरण में वार्षिक और पितृ पक्ष की तिथि देखें', 'See the annual and Pitru Paksha dates in Pitru Smaran')}
+                </Text>
+              </View>
+              <Text style={{ color: colors.inkSoft, fontSize: 17 }}>›</Text>
+            </Pressable>
+          )}
           {mode === 'samagri' ? (
             <>
+              {bhog ? (
+                <View style={styles.bhogBlock}>
+                  <Text style={[styles.phaseLabel, { color: activeColor, fontFamily: titleFont, marginTop: 0 }]}>
+                    {contentByLang(lang, 'भोग · भोजन मार्गदर्शन', 'Bhog & food guidance')}
+                  </Text>
+                  <BhogGuidancePanel entry={bhog} testID="vidhi-bhog-panel" />
+                </View>
+              ) : null}
               <Pressable
                 onPress={() => setSamagriExpanded((value) => !value)}
                 testID="vidhi-samagri-summary"
@@ -257,7 +313,7 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
                 </Text>
                 <View style={[styles.track, { backgroundColor: colors.parchmentDeep, borderRadius: radii.pill }]}>
                   <LinearGradient
-                    colors={[colors.gold, colors.saffron]}
+                    colors={isPersonalTithi ? [colors.gold, colors.gold] : [colors.gold, colors.saffron]}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 0 }}
                     style={{ width: `${checkedPct}%`, height: '100%', borderRadius: radii.pill }}
@@ -266,7 +322,7 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
                 <Text
                   style={[
                     styles.summaryCaret,
-                    { color: colors.saffron, transform: [{ rotate: samagriExpanded ? '-90deg' : '90deg' }] },
+                    { color: actionColor, transform: [{ rotate: samagriExpanded ? '-90deg' : '90deg' }] },
                   ]}
                 >
                   ›
@@ -298,8 +354,8 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
                           style={[
                             styles.checkCircle,
                             {
-                              borderColor: colors.saffron,
-                              backgroundColor: done ? colors.saffron : 'transparent',
+                              borderColor: actionColor,
+                              backgroundColor: done ? actionColor : 'transparent',
                             },
                           ]}
                         >
@@ -322,7 +378,7 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
                                   lang === 'en'
                                     ? typography.cardMeta.fontFamily
                                     : scriptBodyFont(lang, typography.meaning.fontFamily),
-                                color: done ? colors.inkMuted : colors.saffronDeep,
+                                color: done ? colors.inkMuted : activeColor,
                               },
                             ]}
                           >
@@ -341,6 +397,59 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
                   })}
                 </View>
               )}
+              {bhog && bhog.shoppingItems.length > 0 ? (
+                <View testID="vidhi-bhog-shopping-ledger" style={styles.bhogShopping}>
+                  <Text style={[styles.phaseLabel, { color: activeColor, fontFamily: titleFont }]}>
+                    {contentByLang(lang, 'भोग और रसोई की खरीदारी', 'Bhog & kitchen shopping')}
+                  </Text>
+                  {bhog.shoppingItems.map((item, index) => {
+                    const itemKey = `bhog:${bhog.id}:${item.id}`;
+                    const done = checked.has(itemKey);
+                    const primary = contentByLang(lang, item.itemHi, item.itemEn);
+                    const alternate = lang === 'en' ? item.itemHi : item.itemEn;
+                    const meta = [alternate, item.qty].filter(Boolean).join(' · ');
+                    const last = index === bhog.shoppingItems.length - 1;
+                    return (
+                      <Pressable
+                        key={itemKey}
+                        onPress={() => toggleItem(itemKey)}
+                        testID={`vidhi-bhog-shopping-${item.id}`}
+                        accessibilityRole="checkbox"
+                        accessibilityState={{ checked: done }}
+                        accessibilityLabel={primary}
+                        style={[
+                          styles.samagriRow,
+                          { borderBottomColor: colors.divider, borderBottomWidth: last ? 0 : 1 },
+                        ]}
+                      >
+                        <View
+                          style={[
+                            styles.checkCircle,
+                            { borderColor: actionColor, backgroundColor: done ? actionColor : 'transparent' },
+                          ]}
+                        >
+                          {done ? <Text style={[styles.checkMark, { color: colors.onPrimary }]}>✓</Text> : null}
+                        </View>
+                        <View style={styles.samagriInfo}>
+                          <Text style={[styles.samagriText, { fontFamily: titleFont, color: done ? colors.inkMuted : colors.ink }]}>
+                            {primary}
+                          </Text>
+                          <Text style={[styles.samagriMeta, { fontFamily: bodyFont, color: done ? colors.inkMuted : activeColor }]}>
+                            {meta}
+                          </Text>
+                        </View>
+                        {item.optional ? (
+                          <View style={[styles.optChip, { borderColor: colors.divider, borderRadius: radii.sm }]}>
+                            <Text style={{ fontFamily: bodyFont, fontSize: 10, lineHeight: 15, color: colors.inkMuted }}>
+                              {contentByLang(lang, 'वैकल्पिक', 'optional')}
+                            </Text>
+                          </View>
+                        ) : null}
+                      </Pressable>
+                    );
+                  })}
+                </View>
+              ) : null}
               <Pressable
                 onPress={shareList}
                 testID="vidhi-share-list"
@@ -352,7 +461,7 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
                   pressed && { opacity: 0.7 },
                 ]}
               >
-                <Text style={{ fontFamily: bodyFont, fontSize: 15, color: colors.saffron }}>
+                <Text style={{ fontFamily: bodyFont, fontSize: 15, color: actionColor }}>
                   {contentByLang(lang, 'सूची साझा करें', 'Share list')}
                 </Text>
               </Pressable>
@@ -375,15 +484,19 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
                     pressed && { opacity: 0.8 },
                   ]}
                 >
-                  <Text style={{ fontFamily: bodyFont, fontSize: 14, color: colors.saffronDeep }}>
+                  <Text style={{ fontFamily: bodyFont, fontSize: 14, color: activeColor }}>
                     {`${contentByLang(lang, 'जहाँ थे वहीं से', 'Resume where you were')} · ${resumeStep + 1}/${vidhi.steps.length} ›`}
                   </Text>
                 </Pressable>
               )}
               {grouped.map((group) => (
                 <View key={group.phase}>
-                  <Text style={[styles.phaseLabel, { color: colors.saffronDeep, fontFamily: titleFont }]}>
-                    {contentByLang(lang, PHASE_LABELS[group.phase].hi, PHASE_LABELS[group.phase].en)}
+                  <Text style={[styles.phaseLabel, { color: activeColor, fontFamily: titleFont }]}>
+                    {contentByLang(
+                      lang,
+                      isPersonalTithi && group.phase === 'main' ? 'तर्पण व स्मरण' : PHASE_LABELS[group.phase].hi,
+                      isPersonalTithi && group.phase === 'main' ? 'Tarpana & remembrance' : PHASE_LABELS[group.phase].en
+                    )}
                   </Text>
                   {group.steps.map(({ step, index }) => (
                     <Pressable
@@ -407,7 +520,7 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
                       ]}
                     >
                       <View style={[styles.stepNum, { borderColor: colors.goldTint, backgroundColor: colors.parchmentHighlight }]}>
-                        <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 13, color: colors.saffronDeep }}>
+                        <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 13, color: activeColor }}>
                           {index + 1}
                         </Text>
                       </View>
@@ -429,13 +542,15 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
                               ? contentByLang(lang, '॥ मन्त्र सहित', '॥ with mantra')
                               : step.ref?.kind === 'katha'
                                 ? contentByLang(lang, 'कथा पाठ', 'Katha reading')
-                                : library.find((e) => e.id === step.ref?.id)?.category === 'aarti'
+                                : step.ref?.kind === 'gita'
+                                  ? contentByLang(lang, 'गीता पाठ', 'Gita reading')
+                                  : stepRefIsAarti(step)
                                   ? contentByLang(lang, 'आरती', 'Aarti')
                                   : contentByLang(lang, 'पाठ', 'Recitation')}
                           </Text>
                         )}
                       </View>
-                      <Text style={{ color: colors.saffron, fontSize: 17 }}>›</Text>
+                      <Text style={{ color: actionColor, fontSize: 17 }}>›</Text>
                     </Pressable>
                   ))}
                 </View>
@@ -444,15 +559,23 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
                 onPress={() => startConduct(0)}
                 testID="vidhi-begin"
                 accessibilityRole="button"
-                accessibilityLabel={contentByLang(lang, 'पूजा प्रारम्भ करें', 'Begin puja')}
+                accessibilityLabel={contentByLang(
+                  lang,
+                  isPersonalTithi ? 'स्मरण आरम्भ करें' : 'पूजा प्रारम्भ करें',
+                  isPersonalTithi ? 'Begin remembrance' : 'Begin puja'
+                )}
                 style={({ pressed }) => [
                   styles.primaryButton,
-                  { backgroundColor: colors.saffron, borderRadius: radii.md },
+                  { backgroundColor: actionColor, borderRadius: radii.md },
                   pressed && { opacity: 0.85 },
                 ]}
               >
-                <Text style={{ fontFamily: bodyFont, fontSize: 15, color: colors.parchment }}>
-                  {contentByLang(lang, 'पूजा प्रारम्भ करें', 'Begin the puja')}
+                <Text style={{ fontFamily: bodyFont, fontSize: 15, color: actionTextColor }}>
+                  {contentByLang(
+                    lang,
+                    isPersonalTithi ? 'स्मरण आरम्भ करें' : 'पूजा प्रारम्भ करें',
+                    isPersonalTithi ? 'Begin remembrance' : 'Begin the puja'
+                  )}
                 </Text>
               </Pressable>
             </>
@@ -493,6 +616,8 @@ const styles = StyleSheet.create({
   track: { height: 7, width: '100%', overflow: 'hidden', marginTop: 12 },
   summaryCaret: { fontSize: 20, lineHeight: 20, marginTop: 7 },
   samagriLedger: { marginTop: 8 },
+  bhogBlock: { marginBottom: 14 },
+  bhogShopping: { marginTop: 4 },
   samagriInfo: { flex: 1, minWidth: 0 },
   samagriText: { fontSize: 16, lineHeight: 24 },
   samagriMeta: { fontSize: 12, lineHeight: 18, marginTop: 2 },
@@ -532,5 +657,15 @@ const styles = StyleSheet.create({
     minHeight: 48,
     marginTop: 12,
     justifyContent: 'center',
+  },
+  reverseLink: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    borderWidth: 1,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    marginBottom: 12,
+    minHeight: 52,
   },
 });

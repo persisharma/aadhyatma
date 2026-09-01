@@ -159,14 +159,21 @@ attribute, or derivation rule changes. Persisted user artefacts (a saved shortli
 namkaran session) record the version they were produced under, so a later convention change can be
 detected and re-derived rather than silently mixed.
 
-## 7. Sources — to be completed before `verified: true`
+## 7. Sources — collected; editorial sign-off still required before `verified: true`
 
 | Row group | Source A | Source B | Retrieved | Reviewer |
 |---|---|---|---|---|
-| 108-charana syllables | _pending_ | _pending_ | _pending_ | _pending_ |
-| Nakshatra lords | derived from `kundali.ts` `DASHA_ORDER` (test-asserted) | _pending_ | — | — |
-| Gana | _pending_ | _pending_ | _pending_ | _pending_ |
-| Presiding deities | _pending_ | _pending_ | _pending_ | _pending_ |
+| 108-charana syllables | [DrikPanchang, complete 108-pada Swar Siddhanta table](https://www.drikpanchang.com/swar-siddhanta/nakshatra/nakshatra-pada-swar-siddhanta.html?lang=en) | [myPanchang Toronto 2019, “Table for Naming child using Nakshatra”, PDF p. 6](https://mypanchang.com/2019pdfs/2019torontofullpanchang.pdf) | 2026-08-19 | _pending_ |
+| Nakshatra lords | derived from `kundali.ts` `DASHA_ORDER` (test-asserted) | [Sanjay Rath, *Introduction to Vedic Astrology*, Nakshatra table](https://www.panchanga.lv/wp-content/uploads/2020/06/Introduction-to-Vedic-Astrology-Sanjay-Rath.pdf) | 2026-08-19 | _pending_ |
+| Gana | [Sanjay Rath, *Introduction to Vedic Astrology*, Nakshatra table](https://www.panchanga.lv/wp-content/uploads/2020/06/Introduction-to-Vedic-Astrology-Sanjay-Rath.pdf) | _second authoritative table pending_ | 2026-08-19 | _pending_ |
+| Presiding deities | [DrikPanchang Nakshatra tutorial collection (example: Ashwini)](https://www.drikpanchang.com/tutorials/nakshatra/ashvini-nakshatra.html?lang=en) | [Vilnius University, *Naksatras in the Hindu Tradition*, deity table](https://epublications.vu.lt/object/elaba%3A184788178/184788178.pdf) | 2026-08-19 | _pending_ |
+
+The two complete syllable tables agree on the 27×4 structure but expose spelling and regional
+variants that must not be silently normalised. In particular, DrikPanchang writes short-vowel
+`चु / वु / हु / गु` and `च` for Revati pada 3, while the current draft uses the long-vowel forms;
+DrikPanchang gives only the `ख` series for Shravana, while myPanchang prints `Ju/khi, Je/khu,
+Jo/khe, Gha/kho` in Latin but only the `ख` series in Devanagari. Purva Ashadha pada 4 is `ढ` in
+DrikPanchang and `ढा` in myPanchang. Those are explicit editorial decisions, not missing access.
 
 RULEBOOK §11 requires **two concordant authoritative sources** with edition/page and retrieval
 date, plus a named reviewer, for each row group. Until every row is filled, `namkaranConvention.ts`

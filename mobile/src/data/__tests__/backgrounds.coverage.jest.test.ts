@@ -9,6 +9,7 @@
 // unmapped, so a missing mapping fails the assertion. Guards new content shipping
 // without its background art.
 import { aartiIdByIndex } from '@/data/aarti';
+import { backgroundImages } from '@assets/backgrounds';
 import {
   getCategoryBackground,
   getDeityBackground,
@@ -47,6 +48,68 @@ describe('background coverage', () => {
     for (const deity of deities) {
       expect(getDeityBackground(deity.id)).toBeTruthy();
     }
+  });
+
+  test('deities with existing dedicated art use their semantic background', () => {
+    expect(getDeityBackground('vishnu')).toBe(backgroundImages.source_vishnu_narayana);
+    expect(getDeityBackground('savitr')).toBe(backgroundImages.source_gayatri_savitri_sun);
+    expect(getDeityBackground('kartikeya')).toBe(backgroundImages.theerth_vetrimalai_murugan);
+  });
+
+  test.each([
+    ['lakshmi', 'deity_lakshmi'],
+    ['surya', 'deity_surya'],
+    ['radha', 'deity_radha_krishna'],
+    ['kubera', 'deity_kubera'],
+    ['ganga', 'deity_ganga'],
+    ['parvati', 'deity_parvati_bhavani'],
+    ['narasimha', 'deity_narasimha_prahlad'],
+    ['dattatreya', 'deity_dattatreya'],
+    ['shani', 'deity_shani'],
+    ['kali', 'deity_kali'],
+    ['navagraha', 'deity_navagraha_icons'],
+  ] as const)('%s uses its dedicated commissioned background', (deityId, assetKey) => {
+    expect(getDeityBackground(deityId)).toBe(backgroundImages[assetKey]);
+  });
+
+  test('Kavacham uses its dedicated protection background', () => {
+    expect(getCategoryBackground('kavacham')).toBe(
+      backgroundImages.category_kavacham_protection,
+    );
+  });
+
+  test('Konark Sun Temple resolves to the dedicated Surya background', () => {
+    const temple = getTempleById('konark-sun');
+    expect(temple?.deity).toBe('surya');
+    expect(getTheerthBackground('konark-sun', temple!.deity)).toBe(
+      backgroundImages.deity_surya,
+    );
+  });
+
+  test.each([
+    ['mahalakshmi-ashtakam', 'deity_lakshmi'],
+    ['surya-ashtakam', 'deity_surya'],
+    ['radhashtakam', 'deity_radha_krishna'],
+    ['kubera-stotram', 'deity_kubera'],
+    ['gangashtakam', 'deity_ganga'],
+    ['bhavani-ashtakam', 'deity_parvati_bhavani'],
+    ['narasimha-ashtakam', 'deity_narasimha_prahlad'],
+    ['datta-ashtakam', 'deity_dattatreya'],
+    ['shani-ashtakam', 'deity_shani'],
+    ['kalika-ashtakam', 'deity_kali'],
+    ['navagraha-stotram', 'deity_navagraha_icons'],
+  ] as const)('%s uses its commissioned reader background', (sourceId, assetKey) => {
+    expect(getSourceBackground(sourceId)).toBe(backgroundImages[assetKey]);
+    expect(getReaderBackground(sourceId)).toBe(backgroundImages[assetKey]);
+  });
+
+  test('Subrahmanya Ashtakam uses the existing Murugan background', () => {
+    expect(getSourceBackground('subrahmanya-ashtakam')).toBe(
+      backgroundImages.theerth_vetrimalai_murugan,
+    );
+    expect(getReaderBackground('subrahmanya-ashtakam')).toBe(
+      backgroundImages.theerth_vetrimalai_murugan,
+    );
   });
 
   test('every active, non-hidden library source has a source + reader background', () => {
