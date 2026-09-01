@@ -197,6 +197,9 @@ Coverage discipline first: **a day gets a daan row only where an attested daan t
 | `dhanteras`, `diwali` | दीप पर्व | deep-daan, yam-deep; anna to the lamp-lighter |
 | `karthigai-vrat` + Kartik `purnima-vrat` | कार्तिक पूर्णिमा / देव दीपावली | deep-daan, anna |
 | `chhath-puja` | छठ | thekua/anna sharing at the ghat |
+| `navratri-start` | नवरात्रि | kanya-bhoj on ashtami–navami (puri-chana-halwa), bhandara — *added by the 2026 year audit* |
+| `sharad-purnima`, `kojagara-puja` | शरद पूर्णिमा / कोजागरा | moonlit-kheer prasada shared next morning — *added by the 2026 year audit* |
+| `gita-jayanti` | गीता जयंती (मोक्षदा एकादशी) | gita-daan — gifting the Gita; exact id wins over the `-ekadashi` family — *added by the 2026 year audit* |
 
 **Tier 2 — the recurring tithi cadence** (one row per family, surfacing every occurrence):
 
@@ -211,7 +214,9 @@ Coverage discipline first: **a day gets a daan row only where an attested daan t
 
 **Tier 4 — personal days** (journeys without occasion rows): Pitru Smaran shraddha/barsi tithis (anna-daan door, PRD-17 privacy stance) and the user's janma-tithi (a quiet traditional birthday-daan line on the Kundali profile day). Grahan (eclipse) daan is a **known omission** — the engine computes no eclipses today; noted for a future engine PRD, not faked from a table.
 
-Net: ~45+ solver rule ids covered by ~20 occasion rows (the ekadashi and sankranti families collapse into shared rows with named exceptions).
+Net: ~50 solver rule ids covered by 20 occasion rows (the ekadashi and sankranti families collapse into shared rows with named exceptions).
+
+**Year-level audit (2026, purnimant, run against the live engine on 2026-09-01):** the solver resolves 258 observance instances over 92 distinct rule ids on 191 calendar days; **67 distinct days carry a covered daan occasion**, and all 365 carry the vaar-daan line. Every remaining uncovered rule id was individually reviewed: the high-frequency ones (pradosh ×25, sankashti/vinayaka ×25, masik kalashtami/shivaratri/durgashtami/janmashtami ×~50, dwadashi ×24, skanda sashti ×12) have no broadly attested daan tradition — excluded by the §10.1 no-row discipline — and the one-off festivals (holi, ram-navami, janmashtami, teej, karwa-chauth, bhai-dooj, rakhi, …) are vrat/utsav days, not daan days; karwa-chauth's karwa-dana lives inside its shipped vidhi. The audit surfaced three genuine gaps, verified and added the same day: navratri kanya-bhoj, sharad-purnima kheer-prasada, and gita-jayanti gita-daan.
 
 ### 10.2 Story content plan (the कथा step)
 

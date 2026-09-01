@@ -314,6 +314,77 @@ export const DAAN_OCCASION_ENTRIES: readonly DaanOccasionEntry[] = [
     },
   },
 
+  {
+    id: 'navratri-kanya-bhoj',
+    ruleIds: ['navratri-start'],
+    titleHi: 'नवरात्रि — कन्या भोज',
+    titleEn: 'Navratri — kanya bhoj',
+    whyHi:
+      'नवरात्रि का समापन अष्टमी-नवमी के कन्या पूजन से होता है — नौ कन्याओं में नवदुर्गा का पूजन और भोजन। व्रत का फल परम्परा में इसी भोज से पूर्ण माना जाता है।',
+    whyEn:
+      'Navratri closes with the ashtami–navami kanya pujan — nine girls honoured and fed as the Navadurga. In the tradition, the vrat completes in this feeding.',
+    items: [
+      { id: 'kanya-bhoj', nameHi: 'कन्या भोज — पूरी, चना, हलवा', nameEn: 'Kanya bhoj — puri, chana, halwa', reasonHi: 'अष्टमी-नवमी का पारम्परिक विधान', reasonEn: 'the traditional ashtami–navami form' },
+      { id: 'bhandara', nameHi: 'भंडारा · अन्न', nameEn: 'Bhandara · anna', reasonHi: 'पर्व-समापन का सामूहिक अन्न-दान', reasonEn: 'the shared anna of the festival’s close' },
+    ],
+    kathaId: 'navratri-start-katha',
+    status: 'verified',
+    source: {
+      referenceUrls: [
+        'https://en.wikipedia.org/wiki/Kanya_Puja',
+        'https://www.astroyogi.com/blog/navratri-kanya-pujan.aspx',
+      ],
+      verificationNote:
+        '2026-09-01: kanya pujan/bhoj on ashtami–navami (nine girls as Navadurga; puri–chana–halwa bhoj) concordant across both pages. Row keys to navratri-start; the copy names the ashtami–navami days.',
+    },
+  },
+  {
+    id: 'sharad-purnima',
+    ruleIds: ['sharad-purnima', 'kojagara-puja'],
+    titleHi: 'शरद पूर्णिमा — खीर-प्रसाद',
+    titleEn: 'Sharad Purnima — kheer prasada',
+    whyHi:
+      'शरद की चाँदनी में रखी खीर अगले प्रातः प्रसाद रूप में बाँटी जाती है — परिवार और समाज दोनों में। कोजागरा की रात्रि का यही जीवित रूप है।',
+    whyEn:
+      'Kheer kept under the sharad moonlight is shared the next morning as prasada — within the family and beyond it. This is the living form of the Kojagara night.',
+    items: [
+      { id: 'kheer', nameHi: 'खीर-प्रसाद बाँटना', nameEn: 'Sharing the kheer prasada', reasonHi: 'चाँदनी में रखी खीर — बाँटकर ही पूर्ण', reasonEn: 'the moonlit kheer completes only in the sharing' },
+    ],
+    kathaId: 'sharad-purnima-vrat-katha',
+    status: 'verified',
+    source: {
+      referenceUrls: [
+        'https://en.wikipedia.org/wiki/Sharada_Purnima',
+        'https://www.rudraksha-ratna.com/articles/kojagiri-purnima',
+      ],
+      verificationNote:
+        '2026-09-01: moonlit kheer distributed as next-morning prasada concordant across both pages (Sharada Purnima / Kojagiri framing).',
+    },
+  },
+  {
+    id: 'gita-jayanti',
+    ruleIds: ['gita-jayanti'],
+    titleHi: 'गीता जयंती — गीता-दान',
+    titleEn: 'Gita Jayanti — gita-daan',
+    whyHi:
+      'मार्गशीर्ष शुक्ल एकादशी (मोक्षदा) — गीता के अवतरण का दिन। इस दिन की परम्परा गीता-दान है: ज्ञान का ग्रन्थ भेंट करना, विद्या-दान का ही उच्च रूप।',
+    whyEn:
+      'Margashirsha shukla ekadashi (Mokshada) — the day the Gita was spoken. Its tradition is gita-daan: gifting the book of knowledge, the highest form of vidya-daan.',
+    items: [
+      { id: 'gita-daan', nameHi: 'गीता-दान — ग्रन्थ भेंट', nameEn: 'Gita-daan — gifting the Gita', reasonHi: 'ज्ञान-दान की परम्परा — इसी ऐप में पूरी गीता उपलब्ध है', reasonEn: 'the tradition of giving knowledge — this app itself carries the full Gita' },
+    ],
+    kathaId: 'gita-jayanti-katha',
+    status: 'verified',
+    source: {
+      referenceUrls: [
+        'https://www.iskconbangalore.org/gita-jayanti/',
+        'https://www.exoticindiaart.com/blog/gita-jayanti-history-and-significance/',
+      ],
+      verificationNote:
+        '2026-09-01: gita-daan (book gifting/charity on Gita Jayanti, Mokshada ekadashi) concordant across both pages. Exact rule id wins over the -ekadashi family for this day’s detail.',
+    },
+  },
+
   // ── Tier 2 · the recurring tithi cadence ─────────────────────────────────
   {
     id: 'amavasya',
