@@ -132,12 +132,15 @@ and belongs to PRD-06's one importer with its version-gate UX.
 
 ## 5. Data model — and the birth-profile schema coordination (PRD-20/21)
 
-Round 1 flagged that PRD-20 (gotra) and PRD-21 (natal Moon) must not migrate the birth-profile
-store twice; PRD-29 would be the third consumer. **Resolution: PRD-29 does not touch
-`@vedansh:kundali-profiles:v1` at all.** PRD-20 has not landed (no PRD file, no `gotra` in source,
-verified 2026-08-31), and the roster parser is a strict allow-list that drops unknown fields — so
-any field added there is a schema change PRD-20 still owns. PRD-29 keeps its state in two new
-sibling keys, both enumerated as non-cache keys in `derivedCacheReset.test.ts`:
+Round 1 flagged that its PRD-20 candidate (सङ्कल्प, which owns `gotra`) and PRD-21 (natal Moon)
+must not migrate the birth-profile store twice; PRD-29 would be the third consumer.
+**Resolution: PRD-29 does not touch `@vedansh:kundali-profiles:v1` at all.** The sankalp candidate
+has not landed — no `gotra` exists in source, and the number 20 has since been taken by the
+unrelated [Deep Personal Horoscope PRD](./20-personal-horoscope.md), which also leaves the roster
+schema untouched (both facts verified 2026-08-31, re-verified after merging main). The roster
+parser is a strict allow-list that drops unknown fields, so any field added there is a schema
+change the sankalp PRD still owns under whatever number it lands with. PRD-29 keeps its state in
+two new sibling keys, both enumerated as non-cache keys in `derivedCacheReset.test.ts`:
 
 - `@vedansh:janma-tithi:v1` — `{ version: 1, reminders: Record<personId, true> }`. Reminder opt-ins
   keyed by person id; ids that leave the roster are pruned on load, and the scheduler joins against
@@ -149,10 +152,10 @@ sibling keys, both enumerated as non-cache keys in `derivedCacheReset.test.ts`:
   their registries on parse (an id a release retired degrades to the free-text field, never a
   crash); versioned-payload parse per the `PitruSmaranContext` pattern.
 
-**Note for PRD-20:** gotra lives here at the *family* level, which is where the sankalp needs it.
-When PRD-20 lands, read it from `@vedansh:kul-parampara:v1` first and add a per-person override on
-the roster only if the sankalp flow actually needs one — that keeps the roster migration single and
-PRD-20's own.
+**Note for the sankalp PRD:** gotra lives here at the *family* level, which is where the sankalp
+needs it. When that PRD lands, read it from `@vedansh:kul-parampara:v1` first and add a per-person
+override on the roster only if the sankalp flow actually needs one — that keeps the roster
+migration single and that PRD's own.
 
 ## 6. Tone & privacy stance (product stance, locked)
 
@@ -215,4 +218,5 @@ not because it is trapped.
   Jest store/screen suites) green; `npm run test` and `npm run lint` at 0 errors.
 - `.maestro/kul-parampara-smoke.yaml` authored and parse-checked; **device run owed** (authoring
   environment has no simulator), per the [[e2e-verification]] recipe.
-- design.md gains §67 and §37's row list is refreshed in the same PR.
+- design.md gains §69 (numbered after PRD-20's §67/§68, which merged into main mid-branch) and
+  §37's row list is refreshed in the same PR.

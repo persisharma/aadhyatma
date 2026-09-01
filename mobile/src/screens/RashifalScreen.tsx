@@ -15,11 +15,13 @@ import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { library } from '@/data/texts';
 import { buildEntryStartTarget } from '@/navigation/entryRoutes';
 import type { PanchangStackParamList } from '@/navigation/types';
+import { computePersonalGuidance, type PersonalGuidance } from '@/panchang/gochar';
 import {
   computeRashifal,
   RASHI_NAMES_EN,
   RASHI_NAMES_HI,
   RASHI_NAMES_WESTERN,
+  type RashifalGuidance,
 } from '@/panchang/kundali';
 import { useKundali } from '@/panchang/useKundali';
 import { radii } from '@/theme/spacing';
@@ -79,16 +81,21 @@ export default function RashifalScreen({ navigation, route }: Props) {
     }
   }, [natalMoon, routeSelection, userSelected]);
 
-  const guidance = useMemo(
-    () => (rashiIndex === null ? null : computeRashifal(today, rashiIndex)),
-    [rashiIndex, today]
-  );
+  const isNatalSelection =
+    loadState === 'saved' && rashiIndex !== null && rashiIndex === natalMoon;
+  // The base favour/pause/reflect fields are identical either way (superset
+  // lock in gochar.engine.test.ts); the natal path only layers personal
+  // context, so a manually chosen sign never reads birth-derived extras.
+  const guidance = useMemo<RashifalGuidance | PersonalGuidance | null>(() => {
+    if (rashiIndex === null) return null;
+    if (isNatalSelection && chart) return computePersonalGuidance(chart, today);
+    return computeRashifal(today, rashiIndex);
+  }, [chart, isNatalSelection, rashiIndex, today]);
+  const personal = guidance && 'taraBala' in guidance ? guidance : null;
   const source = guidance
     ? library.find((entry) => entry.id === guidance.sourceId)
     : undefined;
   const selectedSign = rashiIndex === null ? null : signPair(lang, rashiIndex);
-  const isNatalSelection =
-    loadState === 'saved' && rashiIndex !== null && rashiIndex === natalMoon;
 
   const openPractice = () => {
     const target = source ? buildEntryStartTarget(source) : null;
@@ -507,6 +514,60 @@ export default function RashifalScreen({ navigation, route }: Props) {
                       <Text style={[styles.caption, { color: colors.inkMuted, marginTop: 2 }]}>
                         {formatToday(today, lang)}
                       </Text>
+                      {personal && (
+                        <View style={styles.personalPillRow}>
+                          <View
+                            accessibilityLabel={`Personal reading from your Kundali. Tara bala ${personal.taraBala.nameEn}`}
+                            style={[
+                              styles.personalPill,
+                              {
+                                borderColor: colors.divider,
+                                backgroundColor:
+                                  personal.taraBala.tone === 'favourable'
+                                    ? colors.goldTint
+                                    : personal.taraBala.tone === 'reflective'
+                                      ? colors.saffronTint
+                                      : colors.cardSurface,
+                                borderRadius: radii.pill,
+                              },
+                            ]}
+                          >
+                            <Text
+                              style={[
+                                pillTextStyle(lang, typography.sectionLabel),
+                                styles.personalPillText,
+                                { color: colors.inkSoft },
+                              ]}
+                            >
+                              {contentByLang(
+                                lang,
+                                `तारा बल · ${personal.taraBala.nameHi}`,
+                                `Tara bala · ${personal.taraBala.nameEn}`
+                              )}
+                            </Text>
+                          </View>
+                          <View
+                            style={[
+                              styles.personalPill,
+                              {
+                                borderColor: colors.divider,
+                                backgroundColor: colors.cardSurface,
+                                borderRadius: radii.pill,
+                              },
+                            ]}
+                          >
+                            <Text
+                              style={[
+                                pillTextStyle(lang, typography.sectionLabel),
+                                styles.personalPillText,
+                                { color: colors.inkSoft },
+                              ]}
+                            >
+                              {contentByLang(lang, 'व्यक्तिगत पाठ', 'Personal reading')}
+                            </Text>
+                          </View>
+                        </View>
+                      )}
                     </View>
                     <JyotishGuidanceRows guidance={guidance} lang={lang} showContext />
                   </View>
@@ -738,6 +799,20 @@ const styles = StyleSheet.create({
   guidanceBlock: {
     borderWidth: 1,
     overflow: 'hidden',
+  },
+  personalPillRow: {
+    marginTop: 7,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+  },
+  personalPill: {
+    paddingHorizontal: 9,
+    paddingVertical: 4,
+    borderWidth: 1,
+  },
+  personalPillText: {
+    fontSize: 12,
   },
   guidanceHead: {
     paddingHorizontal: 14,

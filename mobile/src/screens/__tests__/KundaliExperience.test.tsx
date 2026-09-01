@@ -173,6 +173,10 @@ test('Kundali result leads with plain-language insights and exposes all expert t
   text = textOf(tree);
   assert.ok(text.includes('Vimshottari Dasha'));
   assert.ok(text.includes('not an event guarantee'));
+  // PRD-20 Phase 4: the period reading sits above the timeline, structural only.
+  assert.ok(text.includes('Reading this period'));
+  assert.ok(text.includes('Tradition links'));
+  assert.ok(text.includes('tradition reads this period’s themes through that placement'));
   assert.ok(text.includes('CURRENT PERIOD'));
   assert.ok(text.includes('elapsed'));
   assert.ok(text.includes('left'));
@@ -267,6 +271,39 @@ test('Daily Rashifal uses the saved Moon sign and remains guidance, not certaint
     ).length > 0
   );
   assert.ok(textOf(tree).includes('No name or birth details are included'));
+});
+
+test('personal reading layers only on the natal Moon sign, never on a manual pick', () => {
+  const tree = render(
+    <RashifalScreen
+      navigation={mockNavigation as any}
+      route={{ key: 'Rashifal-test', name: 'Rashifal', params: undefined } as any}
+    />
+  );
+
+  const moon = mockChart.grahas.find((position) => position.graha === 'moon')!;
+  let text = textOf(tree);
+  assert.ok(text.includes('Personal reading'), 'natal selection carries the personal chip');
+  assert.ok(text.includes('Tara bala'), 'natal selection shows tara bala');
+  assert.ok(text.includes('from Lagna'), 'natal selection shows dual house context');
+
+  // Pick a different sign manually — every personal extra must disappear.
+  act(() => {
+    tree.root.findByProps({ accessibilityLabel: 'Change Moon sign' }).props.onPress();
+  });
+  const otherIndex = (moon.rashiIndex + 1) % 12;
+  act(() => {
+    tree.root
+      .findByProps({
+        accessibilityLabel: `${RASHI_NAMES_EN[otherIndex]}, ${RASHI_NAMES_WESTERN[otherIndex]} Moon sign`,
+      })
+      .props.onPress();
+  });
+  text = textOf(tree);
+  assert.ok(!text.includes('Personal reading'));
+  assert.ok(!text.includes('Tara bala'));
+  assert.ok(!text.includes('from Lagna'));
+  assert.ok(!text.includes('Dasha note'));
 });
 
 test('birth profile parsing is strict and converts India wall time to the correct UTC instant', () => {
