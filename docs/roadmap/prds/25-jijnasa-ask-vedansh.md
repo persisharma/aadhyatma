@@ -312,6 +312,16 @@ qualifier (`nirjala`, `mokshada`) narrows to the instance. Without it the app co
 different Ekadashi's date — the exact failure mode §3.2 exists to prevent. **This is now Phase 0's
 first task**, and it is the kind of defect a golden corpus catches and a demo never would.
 
+A second defect of the same family surfaced when the resolver was wired into the clickable prototype
+([`docs/jijnasa-ask-prototype.html`](../../jijnasa-ask-prototype.html)): **stem-tolerant matching
+over-fires on generic tokens.** *राहु काल* tags `deity=kali` (काल stems to kali), and *vrat me kya
+khaye* tags a specific vrat rule off the bare word *vrat*. Neither changes the answer in the spike —
+one intent takes no deity slot, the other would pick the same content — but both would produce a
+confidently wrong answer the moment a slot-taking intent sees them. The fix is a **specificity floor**:
+a token below a length/frequency threshold, or on a stoplist of generic devotional vocabulary
+(*vrat · kaal · puja · din · katha*), may narrow a match but must never establish an entity on its own.
+Also Phase 0.
+
 ### 13.4 Where a model would help, and why it still is not worth it
 
 A model would widen recall on phrasings the grammar has not seen, and handle code-mixed
