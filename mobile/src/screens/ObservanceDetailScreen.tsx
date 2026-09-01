@@ -13,6 +13,7 @@ import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { getKathaContent } from '@/panchang/kathaContent';
 import { getUpvasInfo } from '@/panchang/upvasContent';
 import { getBhogContent } from '@/panchang/bhogContent';
+import { getDaanOccasionForRule } from '@/data/daan';
 import { useUpvasParana } from '@/panchang/useUpvasParana';
 import { formatClock, formatRangeCompact, formatEndInstant, isSameLocalDay } from '@/panchang/muhuratFormat';
 import { getNextOccurrence, getRuleById } from '@/panchang/vratCatalog';
@@ -88,6 +89,9 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
   // PRD-23 follows the same verified-only contract as upvas content. Draft
   // food guidance never produces a placeholder or review-status UI.
   const bhog = rule?.bhogId ? getBhogContent(rule.bhogId) : null;
+  // PRD-26: the daan door renders only where an attested daan tradition exists
+  // for this rule id — absent otherwise, never a placeholder (§10.1).
+  const daan = rule ? getDaanOccasionForRule(rule.id) : null;
   const { location } = usePanchangLocation();
   // The derived parana date/time line (null for text-only kinds, while the
   // solve is in flight, or on an honest derivation miss — text renders alone).
@@ -453,6 +457,38 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                   {contentByLang(lang, 'भोग · नैवेद्य · भोजन', 'Offerings & food')}
                 </Text>
                 <BhogGuidancePanel entry={bhog} testID="observance-bhog-panel" />
+              </View>
+            )}
+            {/* PRD-26: इस दिन का दान — always the LAST section (§2.7: educate
+                door, never a give button; opens the journey at step 1). */}
+            {daan && (
+              <View style={styles.block}>
+                <Text style={[styles.blockHeading, { color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily) }]}>
+                  {contentByLang(lang, 'इस दिन का दान', "This day's daan")}
+                </Text>
+                <Pressable
+                  onPress={() => navigation.navigate('DaanJourney', { occasionId: daan.id })}
+                  testID="observance-daan-door"
+                  accessibilityRole="button"
+                  accessibilityLabel={contentByLang(lang, `${daan.titleHi} — दान-यात्रा खोलें`, `Open the daan journey: ${daan.titleEn}`)}
+                  style={({ pressed }) => [
+                    styles.kathaCard,
+                    { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg },
+                    elevation.card,
+                    pressed && { opacity: 0.8 },
+                  ]}
+                >
+                  <Text style={{ fontSize: 22, color: colors.saffron, marginRight: 12 }}>दा</Text>
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
+                      {contentByLang(lang, daan.titleHi, daan.titleEn)}
+                    </Text>
+                    <Text style={{ ...captionFont(lang === 'en' ? daan.titleHi : daan.titleEn), fontSize: 13, color: colors.inkMuted, marginTop: 2 }}>
+                      {contentByLang(lang, 'महत्व से आरम्भ — दान-यात्रा', 'Begins with why — the daan journey')}
+                    </Text>
+                  </View>
+                  <Text style={{ fontSize: 20, color: colors.inkMuted }}>›</Text>
+                </Pressable>
               </View>
             )}
           </ScrollView>

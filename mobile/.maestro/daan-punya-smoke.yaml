@@ -1,0 +1,72 @@
+# दान-पुण्य Smoke Test (PRD-26, design.md §67)
+#
+# Covers the More-hub door, the educate-first home contract, and the
+# ledger's 10-second entry path:
+#   1. More → "Daan Punya, new" row opens the educate home.
+#   2. The home renders the mahatva sections and NO give affordance —
+#      the ledger door is the only quiet door at the end (§2.7; the
+#      absence half is pinned in DaanScreens.test.tsx, which this flow
+#      complements with the presence half on device).
+#   3. Ledger → entry form → category chip → save → entry visible.
+#
+# Language note (per home-today-smoke): default Hindi renders Devanagari,
+# which Maestro's iOS tree can't read — flip to English on More first.
+# Row/chip a11y labels are English by contract either way.
+#
+# Not covered here, deliberately: the Observance-Detail daan door (needs a
+# daan-covered date — render condition pinned in unit tests), and the
+# directory hand-off (Linking leaves the app; the interstitial contract is
+# pinned in DaanScreens.test.tsx and the §6.1 store-review gate).
+
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+
+# ── Global reading language → English (More → Language picker sheet) ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── 1. More → Daan Punya ──
+- tapOn: { id: "more-daan-punya" }
+- waitForAnimationToEnd
+- assertVisible: "Daan Punya"
+
+# ── 2. The educate home: shastra + kathas render; ledger door last ──
+- extendedWaitUntil:
+    visible: "What the shastra says"
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Stories of giving"
+    direction: DOWN
+    timeout: 30000
+- scrollUntilVisible:
+    element:
+      id: "daan-ledger-door"
+    direction: DOWN
+    timeout: 30000
+
+# ── 3. Ledger → new entry → save ──
+- tapOn: { id: "daan-ledger-door" }
+- waitForAnimationToEnd
+- assertVisible: "Daan Punya register"
+- tapOn: { id: "daan-ledger-add" }
+- waitForAnimationToEnd
+- assertVisible: "New daan"
+- tapOn: { id: "daan-cat-anna" }
+- tapOn: { id: "daan-entry-save" }
+- waitForAnimationToEnd
+- assertVisible: "Daan Punya register"
+- assertVisible: "Anna"
+
+# ── Back out cleanly ──
+- tapOn: "Back"
+- waitForAnimationToEnd
+- assertVisible: "Daan Punya"

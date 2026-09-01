@@ -2,10 +2,10 @@
 
 | | |
 |---|---|
-| **Status** | Proposed — planning review |
+| **Status** | Built (2026-09-01) — all phases in one build per product direction; full gates green (169 Jest suites / 1333 tests + engine/data tsx suites, lint 0 errors, tsc clean). OTA-safe JS, but the first release carrying the directory must ride a **store release** (§6.1). Maestro flow authored (`daan-punya-smoke.yaml`); device run pending a simulator environment. |
 | **Origin** | `docs/roadmap/2026-Q3-roadmap.md` line "In-app purchases / donations (TBD, separate brief)" — this is that brief. Also closes the Q4-candidates coverage-map row "Vaar-wise daan (til on Shani, chana on Guru …) — *nothing*" jointly with PRD-21. |
-| **Design** | `design.md` §67 (to be added with the build, per `.claude/rules/design-doc-sync.md`) |
-| **Contract** | `RULEBOOK.md` §23 (to be added with the build) |
+| **Design** | `design.md` §67 (shipped with the build) |
+| **Contract** | `RULEBOOK.md` §23 (shipped with the build) |
 | **Convention** | `docs/roadmap/conventions/daan-punya-v1.md` (to be authored — see §10) |
 | **Prototype** | `docs/daan-punya-prototype.html` — interactive; demonstrates the §2.7 educate-first journey, the ledger, the terminal hand-off, and the touchpoint doors |
 | **Release** | Phase 1 **OTA-shippable** (pure JS + AsyncStorage). Phase 2 content-gated + store-policy-gated (see §7). |
@@ -242,3 +242,26 @@ Sequencing note: Bucket A ships with Phase 1 (it is pure cross-linking). Buckets
 ---
 
 *Postmortem: to be appended after ship, per roadmap convention.*
+
+## Verification records
+
+- **2026-09-01 — Full build (all phases in one go, per product direction).** Content: verse spine
+  (RV 10.117.6, TU 1.11.3 checked against two published translations each; Gita 17.20 copied
+  verbatim from the app's own bundle; Anuśāsana summary), 17 occasion rows (every exact ruleId
+  verified live against `OBSERVANCE_RULES` — 112 rules, 24 ekadashis, 12 sankrantis), the 7-row
+  vaar table (two concordant Hindi references), five teaching-kathas authored bilingually
+  (canonical episodes checked against Ganguli/vedabase/wisdomlib), and six directory rows with
+  official domains verified against ≥2 independent sources each (no registration numbers
+  transcribed, no UPI). Implementation: `data/daan/*`, `DaanLedgerContext`, seven screens,
+  `DaanStackParamList` on the More + Panchang stacks, the More-hub row and the Observance-Detail
+  last-section door, provider in App.tsx. Gates: `npm test` exit 0 (169 Jest suites / 1333 tests
+  + engine 77 + widgets/data tsx suites), `npm run lint` 0 errors, `tsc` clean; design.md §67 +
+  RULEBOOK §23 + wiki page in the same commit series. The §2.7 surface contract, the journey's
+  terminal gating, the gupt two-sided guarantee, exact-beats-suffix matching, directory staleness,
+  and the copy guard are all pinned in tests. One pre-existing suite
+  (`vidhiBackNavigation.test.ts`) pinned the literal source shape of `MoreStackParamList` and was
+  loosened to admit the daan param list — its actual contract (GitaReader stays on More) unchanged.
+  Deliberately deferred: opt-in daan-day reminders (followed daan occasions already notify via the
+  shipped vrat/festive families; a dedicated planner waits on iOS pending-budget math), the Karwa
+  Chauth vidhi-step record affordance and Routine daan-unit one-tap entry (small follow-ups), and
+  the §6.1 written store-review which belongs to the release PR that first ships the directory.

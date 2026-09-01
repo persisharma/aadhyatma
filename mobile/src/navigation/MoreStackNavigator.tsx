@@ -11,6 +11,13 @@ import PitruSmaranEditScreen from '@/screens/PitruSmaranEditScreen';
 import PitruSmaranDetailScreen from '@/screens/PitruSmaranDetailScreen';
 import PitruPakshaOverviewScreen from '@/screens/PitruPakshaOverviewScreen';
 import VastuDishaScreen from '@/screens/VastuDishaScreen';
+import DaanPunyaScreen from '@/screens/DaanPunyaScreen';
+import DaanJourneyScreen from '@/screens/DaanJourneyScreen';
+import DaanLedgerScreen from '@/screens/DaanLedgerScreen';
+import DaanEntryScreen from '@/screens/DaanEntryScreen';
+import DaanDirectoryScreen from '@/screens/DaanDirectoryScreen';
+import DaanDirectoryDetailScreen from '@/screens/DaanDirectoryDetailScreen';
+import DaanKathaScreen from '@/screens/DaanKathaScreen';
 import VidhiCatalogScreen from '@/screens/VidhiCatalogScreen';
 import VidhiDetailScreen from '@/screens/VidhiDetailScreen';
 import VidhiConductScreen from '@/screens/VidhiConductScreen';
@@ -40,6 +47,14 @@ export default function MoreStackNavigator() {
       <Stack.Screen name="PitruPakshaOverview" component={PitruPakshaOverviewScreen} />
       {/* वास्तु दिशा (PRD-24) — compass + room guidance. */}
       <Stack.Screen name="VastuDisha" component={VastuDishaScreen} />
+      {/* दान-पुण्य (PRD-26) — educate home, journey, ledger, directory. */}
+      <Stack.Screen name="DaanPunya" component={DaanPunyaScreen} />
+      <Stack.Screen name="DaanJourney" component={DaanJourneyScreen} />
+      <Stack.Screen name="DaanLedger" component={DaanLedgerScreen} />
+      <Stack.Screen name="DaanEntry" component={DaanEntryScreen} />
+      <Stack.Screen name="DaanDirectory" component={DaanDirectoryScreen} />
+      <Stack.Screen name="DaanDirectoryDetail" component={DaanDirectoryDetailScreen} />
+      <Stack.Screen name="DaanKatha" component={DaanKathaScreen} />
       {/* Personal-tithi vidhi doors push here so Back returns to Pitru Smaran. */}
       <Stack.Screen name="VidhiCatalog" component={VidhiCatalogScreen} />
       <Stack.Screen name="VidhiDetail" component={VidhiDetailScreen} />

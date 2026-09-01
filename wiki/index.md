@@ -22,6 +22,7 @@
 - [[puja-vidhi]] — festival and personal-tithi household guidance: occurrence-scoped preparation, swipe-only conduct, private provenance, and shipped-text hand-offs.
 - [[bhog-naivedya]] — verified offerings, vrat food, prohibited offerings, parana meals, and the Vidhi kitchen-checklist integration.
 - [[vastu-disha]] — live 8-dik compass (true-north corrected, honest-accuracy states), room-by-room vastu guidance, and ghar-ka-mandir upkeep; store-release-only (expo-sensors).
+- [[daan-punya]] — the educate-first giving layer: verse spine + five teaching-kathas, occasion/vaar coverage over real solver rule ids, the private no-totals ledger (gupt-daan structural guarantee), and the verified directory whose external hand-off is the journey's terminal act.
 
 ## Concepts
 - [[languages]] — reading languages hi/en/gu/kn; gu/kn derived at runtime by transliterating the Devanagari; selection + typography helpers.

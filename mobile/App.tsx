@@ -28,6 +28,7 @@ import { BookmarksProvider } from '@/contexts/BookmarksContext';
 import { VratFollowProvider } from '@/contexts/VratFollowContext';
 import { MuhuratFollowProvider } from '@/contexts/MuhuratFollowContext';
 import { PitruSmaranProvider } from '@/contexts/PitruSmaranContext';
+import { DaanLedgerProvider } from '@/contexts/DaanLedgerContext';
 import { JapamCounterProvider } from '@/contexts/JapamCounterContext';
 import { JapamAlarmsProvider } from '@/contexts/JapamAlarmsContext';
 import { registerNativeAlarmForegroundHandler } from '@/notifications/japamAlarmNative';
@@ -233,6 +234,8 @@ export default function App() {
               <MuhuratFollowProvider>
               {/* पितृ स्मरण entries (PRD-17) — device-only AsyncStorage, no sync. */}
               <PitruSmaranProvider>
+              {/* दान-पुण्य खाता (PRD-26) — device-only AsyncStorage, no totals. */}
+              <DaanLedgerProvider>
               <UserActivityProvider>
                 <NewContentProvider>
                   <ReadingProgressProvider>
@@ -309,6 +312,7 @@ export default function App() {
                   </ReadingProgressProvider>
                 </NewContentProvider>
               </UserActivityProvider>
+              </DaanLedgerProvider>
               </PitruSmaranProvider>
               </MuhuratFollowProvider>
               </VratFollowProvider>
