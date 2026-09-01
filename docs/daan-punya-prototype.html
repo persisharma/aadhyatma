@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>PRD-26 · दान-पुण्य — Interactive Prototype</title>
+<title>PRD-26 · दान-पुण्य — Build-Spec Prototype (v2)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -32,9 +32,9 @@
   .intro{max-width:1120px;margin:0 auto 10px;text-align:center}
   .intro h1{font-family:var(--serif);font-weight:500;font-size:clamp(28px,4vw,42px);color:var(--parchment)}
   .intro .deva-sub{font-family:var(--deva);font-size:15px;color:var(--gold-soft);margin-top:2px}
-  .intro p{max-width:840px;margin:10px auto 0;font-size:14px;line-height:1.55;color:#D5C39D}
+  .intro p{max-width:860px;margin:10px auto 0;font-size:14px;line-height:1.55;color:#D5C39D}
   .samplebanner{
-    max-width:840px;margin:18px auto 34px;padding:12px 18px;border-radius:12px;
+    max-width:860px;margin:18px auto 34px;padding:12px 18px;border-radius:12px;
     border:1.5px dashed var(--gold);background:rgba(166,124,52,0.10);
     font-size:12.5px;color:#E7D8B6;text-align:center;line-height:1.6;
   }
@@ -48,7 +48,6 @@
   .scenario > .sc-sub{font-size:12.5px;color:var(--gold-soft);font-style:italic;margin-bottom:20px}
   .wrap{display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap}
 
-  /* ---- phone frame (house 360×740) ---- */
   .phone{width:360px;height:740px;background:var(--parchment);border-radius:38px;
     border:10px solid #0D0804;box-shadow:var(--shadow-lg),0 0 0 1px rgba(166,124,52,0.18);
     position:relative;overflow:hidden;flex:none}
@@ -70,7 +69,7 @@
   .topbar .sp{width:34px}
 
   .hero{text-align:center;padding:8px 0 14px;border-bottom:1px solid var(--divider)}
-  .hero .tags{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:9px}
+  .hero .tags{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:9px;flex-wrap:wrap}
   .pill{display:inline-block;background:var(--gold-tint);color:var(--saffron-deep);
     font-size:10.5px;font-weight:700;font-family:var(--sans);padding:3px 10px;border-radius:999px}
   .pill.fest{background:var(--saffron-tint)}
@@ -81,7 +80,7 @@
   .block{margin-top:18px}
   .bh{font-family:var(--deva);font-size:15px;color:var(--ink);margin-bottom:8px}
   .bh .en{font-family:var(--serif);font-style:italic;font-weight:400;font-size:12px;color:var(--ink-muted)}
-  .body{font-size:13px;line-height:1.65;color:var(--ink-soft);font-family:var(--deva)}
+  .body{font-size:13px;line-height:1.7;color:var(--ink-soft);font-family:var(--deva)}
 
   .card{display:flex;align-items:center;gap:12px;border:1px solid var(--divider);
     background:var(--parchment-soft);border-radius:16px;padding:13px;cursor:pointer;
@@ -92,41 +91,39 @@
   .card .ct .m{font-size:11.5px;color:var(--ink-muted);margin-top:2px;font-family:var(--serif);font-style:italic}
   .card .chev{font-size:18px;color:var(--ink-muted)}
 
-  /* आज का दान feature card */
   .aaj{border:1px solid var(--gold-soft);background:var(--parchment-soft);border-radius:16px;
     padding:14px;box-shadow:0 1px 2px rgba(60,30,10,0.06)}
-  .aaj .occ{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
-  .aaj .why{font-family:var(--deva);font-size:13px;line-height:1.65;color:var(--ink-soft)}
+  .aaj .why{font-family:var(--deva);font-size:13px;line-height:1.7;color:var(--ink-soft)}
   .aaj .items{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
   .item-chip{background:var(--gold-tint);color:var(--saffron-deep);font-family:var(--deva);
     font-size:12px;font-weight:600;padding:4px 11px;border-radius:999px}
 
-  /* vaar chips */
   .vaar-row{display:flex;gap:5px;margin-bottom:10px}
   .vchip{flex:1;text-align:center;padding:6px 0;border-radius:10px;border:1px solid var(--divider);
     font-family:var(--deva);font-size:12px;color:var(--ink-soft);cursor:pointer;background:var(--parchment-soft)}
   .vchip.on{background:var(--saffron);color:var(--parchment-hi);border-color:var(--saffron);font-weight:600}
-  .vaar-line{font-family:var(--deva);font-size:12.5px;line-height:1.6;color:var(--ink-soft);
+  .vaar-line{font-family:var(--deva);font-size:12.5px;line-height:1.65;color:var(--ink-soft);
     background:var(--gold-tint);border-radius:10px;padding:8px 11px}
 
-  /* verse rendering */
-  .verse{border:1px solid var(--gold-soft);background:var(--parchment-soft);border-radius:16px;padding:16px 14px}
-  .verse .sa{font-family:var(--deva);font-size:16.5px;line-height:2;color:var(--ink);text-align:center}
-  .verse .iast{font-family:var(--serif);font-style:italic;font-size:12.5px;color:var(--ink-muted);
+  .verse{border:1px solid var(--gold-soft);background:var(--parchment-soft);border-radius:16px;padding:16px 14px;margin-bottom:10px}
+  .verse .sa{font-family:var(--deva);font-size:16px;line-height:2;color:var(--ink);text-align:center}
+  .verse .iast{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);
     text-align:center;margin-top:8px;line-height:1.7}
   .verse .cite{text-align:center;margin-top:9px;font-family:var(--sans);font-size:10.5px;
     font-weight:700;letter-spacing:.08em;color:var(--gold);text-transform:uppercase}
   .verse .mean{margin-top:12px;padding-top:11px;border-top:1px solid var(--divider);
     font-family:var(--deva);font-size:13px;line-height:1.7;color:var(--ink-soft)}
+  .verse .readchip{display:inline-block;margin-top:10px;border:1.5px solid var(--saffron);
+    color:var(--saffron-deep);border-radius:999px;padding:4px 13px;font-family:var(--deva);
+    font-size:12px;font-weight:600;cursor:pointer}
 
-  /* journey stepper */
   .dots{display:flex;align-items:center;justify-content:center;gap:7px;padding:6px 0 12px}
   .dot{width:7px;height:7px;border-radius:4px;background:var(--gold-soft);transition:all .25s}
   .dot.on{width:22px;background:var(--saffron)}
   .stepnav{display:flex;gap:8px;margin-top:16px}
   .sbtn{flex:1;min-height:40px;display:flex;align-items:center;justify-content:center;
     border:1.5px solid var(--saffron);border-radius:999px;font-size:12.5px;font-weight:600;
-    color:var(--saffron-deep);cursor:pointer;font-family:var(--deva);background:transparent}
+    color:var(--saffron-deep);cursor:pointer;font-family:var(--deva);background:transparent;text-align:center}
   .sbtn.fill{background:var(--saffron);color:var(--parchment-hi)}
   .sbtn.ghost{border-color:var(--divider);color:var(--ink-muted)}
   .steplabel{font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:.1em;
@@ -138,7 +135,6 @@
     color:var(--ink-muted);border:1px solid var(--divider);border-radius:6px;padding:1px 6px;
     vertical-align:middle;margin-left:6px;font-family:var(--sans)}
 
-  /* ledger */
   .month{font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:.1em;
     text-transform:uppercase;color:var(--gold);margin:16px 0 8px}
   .entry{display:flex;gap:11px;border:1px solid var(--divider);background:var(--parchment-soft);
@@ -150,7 +146,6 @@
   .entry .et .nt{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-soft);margin-top:3px}
   .entry.gupt{background:var(--gold-tint);border-style:dashed}
 
-  /* form */
   .flabel{font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:.1em;
     text-transform:uppercase;color:var(--gold);margin:14px 0 7px}
   .chips{display:flex;gap:6px;flex-wrap:wrap}
@@ -174,17 +169,15 @@
     opacity:0;transition:opacity .3s;pointer-events:none;z-index:5}
   .toast.show{opacity:.94}
 
-  /* directory */
   .trust{border:1px solid var(--gold-soft);background:var(--parchment-soft);border-radius:16px;padding:14px}
   .trust .reg{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--divider)}
   .trust .reg:last-of-type{border-bottom:0}
-  .trust .reg .rl{flex:0 0 86px;font-size:10px;font-weight:700;letter-spacing:.06em;
+  .trust .reg .rl{flex:0 0 92px;font-size:10px;font-weight:700;letter-spacing:.06em;
     text-transform:uppercase;color:var(--gold);padding-top:2px}
   .trust .reg .rv{flex:1;font-family:var(--sans);font-size:12px;line-height:1.55;color:var(--ink-soft)}
   .verified-line{display:flex;align-items:center;gap:6px;margin-top:10px;
     font-family:var(--sans);font-size:11px;font-weight:600;color:var(--green)}
 
-  /* interstitial modal */
   .overlay{position:absolute;inset:0;background:rgba(30,18,6,0.55);display:none;
     align-items:flex-end;z-index:6}
   .overlay.show{display:flex}
@@ -193,11 +186,30 @@
   .sheet .sb{font-family:var(--deva);font-size:12.5px;line-height:1.7;color:var(--ink-soft);
     margin-top:10px;text-align:center}
   .sheet .warnbox{margin-top:12px;border:1px dashed var(--gold);border-radius:12px;padding:10px 12px;
-    font-family:var(--deva);font-size:12px;line-height:1.65;color:var(--saffron-deep);background:var(--gold-tint)}
+    font-family:var(--deva);font-size:12px;line-height:1.7;color:var(--saffron-deep);background:var(--gold-tint)}
+
+  /* tier tabs (coverage browser) + story styles */
+  .tier-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+  .tchip{font-family:var(--deva);font-size:12px;color:var(--ink-soft);border:1px solid var(--divider);
+    background:var(--parchment-soft);border-radius:999px;padding:5px 12px;cursor:pointer}
+  .tchip.on{background:var(--saffron);border-color:var(--saffron);color:var(--parchment-hi);font-weight:600}
+  .cov{border:1px solid var(--divider);background:var(--parchment-soft);border-radius:14px;
+    padding:11px 13px;margin-bottom:8px}
+  .cov .ch{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+  .cov .ch .n{font-family:var(--deva);font-size:13.5px;color:var(--ink);font-weight:600}
+  .cov .ch .r{font-family:var(--sans);font-size:9.5px;color:var(--ink-muted)}
+  .cov .items{font-family:var(--deva);font-size:12px;line-height:1.6;color:var(--ink-soft);margin-top:3px}
+  .story-p{font-family:var(--deva);font-size:13.5px;line-height:1.85;color:var(--ink-soft);margin-bottom:12px;text-align:justify}
+  .story-teach{border:1px solid var(--gold-soft);background:var(--gold-tint);border-radius:14px;
+    padding:12px 14px;margin-top:6px}
+  .story-teach .tl{font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+  .story-teach .tv{font-family:var(--deva);font-size:13px;line-height:1.7;color:var(--saffron-deep)}
+  .story-teach .te{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);margin-top:5px}
+  .srcnote{font-family:var(--serif);font-style:italic;font-size:11px;color:var(--ink-muted);margin-top:10px;text-align:center}
 
   .endcap{margin-top:24px;text-align:center;color:var(--gold);font-family:var(--deva);font-size:16px;opacity:.55}
 
-  /* ---- side annotation panel ---- */
   .panel{flex:1;min-width:320px;max-width:560px}
   .acard{background:#23190E;border:1px solid #3A2A16;border-radius:14px;padding:16px 18px;margin-bottom:16px}
   .acard h3{font-family:var(--serif);font-size:17px;color:#FFF5E0;margin-bottom:8px}
@@ -216,33 +228,30 @@
 <body>
 
 <div class="intro">
-  <h1>PRD-26 · दान-पुण्य — Interactive Prototype</h1>
-  <div class="deva-sub">शिक्षा पहले · खाता बीच में · दान-द्वार सबसे अंत में</div>
+  <h1>PRD-26 · दान-पुण्य — Build-Spec Prototype</h1>
+  <div class="deva-sub">v2 · शिक्षा पहले · खाता बीच में · दान-द्वार सबसे अंत में — जैसा बनेगा, वैसा ही</div>
   <p>
-    Five interactive scenarios of the giving layer. The organizing rule everywhere:
-    <b>the feature opens on महत्व — why the tradition gives, in the shastra's own words —
-    and the donate hand-off is the terminal act of a journey</b>, never a button on the home,
-    never a tab, never the pitch. Click through the phones: shastra cards, the journey stepper,
-    vaar chips, the ledger form (गुप्त toggle live), and the Phase-2 hand-off interstitial all work.
+    This is the version being <b>implemented in the app now</b> — all phases in one build. Everything here is the
+    real registry content: the full day-coverage matrix (S6), the five new teaching-kathas in full draft text (S5),
+    and the giving directory's six real, verified organizations (S4). Review the content here; the app registries
+    port it verbatim.
   </p>
 </div>
 
 <div class="samplebanner">
-  <b>⚠ ILLUSTRATIVE SAMPLE</b> — verse translations, occasion/vaar daan rows, ledger entries, and every
-  organization shown (names, registration ids, dates) are placeholder copy written for layout and flow only.
-  It is <b>not verified content</b> and must not be transcribed into the app. Real rows ship only after the
-  PRD-26 verification gates (§6.2, §10) are cleared; directory rows additionally need the store-policy review (§6.1).
+  <b>CONTENT STATUS</b> — Verse texts and directory organizations are <b>verified</b> (official domains checked against
+  ≥2 independent sources, 2026-09-01; registration numbers are never invented — rows carry official URLs and the note
+  "receipt comes from the trust"). Occasion/vaar rows and the five story drafts are <b>authored for review</b> — they ship
+  behind the RULEBOOK §23 verification gate and this page is their review copy. No UPI VPAs anywhere: web hand-off only.
 </div>
 
 <!-- ============================================================ S1 =============== -->
 <section class="scenario">
   <h2>S1 — The educate-first home · More → साधना → दान-पुण्य</h2>
-  <div class="sc-sub">Opens on महत्व. Tap a shastra card to read the verse. Tap a vaar chip to change the weekly line. Note what is <i>absent</i>: any give/donate affordance.</div>
+  <div class="sc-sub">Opens on महत्व. All three verse cards render inline (tap गीता में पढ़ें for the reader deep-link). Vaar chips work. No give affordance exists on this screen.</div>
   <div class="wrap">
     <div class="phone" id="p1">
       <div class="statusbar"><span>7:12</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
-
-      <!-- S1 home -->
       <div class="screen" id="p1-home">
         <div class="pad">
           <div class="topbar"><div class="back">‹</div><div class="tt">दान-पुण्य</div><div class="sp"></div></div>
@@ -254,20 +263,23 @@
           </div>
 
           <div class="block">
-            <div class="bh">आज के दान का महत्व <span class="en">why today asks for giving</span></div>
+            <div class="bh">आज के दान का महत्व <span class="en">from today's occasion</span></div>
             <div class="aaj">
               <div class="why">सूर्य के उत्तरायण होने का पर्व — परम्परा कहती है कि आज दिया गया तिल-गुड़
-                और अन्न विशेष फलदायी है। तिल क्यों? शीत ऋतु में स्निग्ध तिल शरीर और दीप दोनों को
-                पोषण देता है — देना वहीं से शुरू होता है जहाँ आवश्यकता है।</div>
+                और अन्न विशेष फलदायी है। शीत ऋतु में स्निग्ध तिल शरीर और दीप दोनों को पोषण देता है —
+                देना वहीं से आरम्भ होता है जहाँ आवश्यकता है।</div>
               <div class="items">
                 <span class="item-chip">तिल-गुड़</span><span class="item-chip">खिचड़ी (अन्न)</span>
                 <span class="item-chip">वस्त्र / कम्बल</span><span class="item-chip">गौ-ग्रास</span>
+              </div>
+              <div class="stepnav" style="margin-top:12px">
+                <div class="sbtn" onclick="go('p2','p2-j');jIdx=0;jRender()">इस दिन की दान-यात्रा → (S2)</div>
               </div>
             </div>
           </div>
 
           <div class="block">
-            <div class="bh">इस वार का दान <span class="en">tap a day</span></div>
+            <div class="bh">इस वार का दान <span class="en">tap a day — the shared PRD-21 table</span></div>
             <div class="vaar-row" id="vaarRow">
               <div class="vchip on" onclick="setVaar(0,this)">र</div><div class="vchip" onclick="setVaar(1,this)">सो</div>
               <div class="vchip" onclick="setVaar(2,this)">मं</div><div class="vchip" onclick="setVaar(3,this)">बु</div>
@@ -278,29 +290,54 @@
           </div>
 
           <div class="block">
-            <div class="bh">शास्त्र क्या कहते हैं <span class="en">the source spine — tap to read</span></div>
-            <div class="card" onclick="go('p1','p1-rv')"><div class="glyph">ऋ</div>
-              <div class="ct"><div class="t">दान-सूक्त — बिना बाँटा अन्न व्यर्थ है</div>
-                <div class="m">Ṛgveda 10.117 · the oldest word on giving</div></div><div class="chev">›</div></div>
-            <div class="card" onclick="go('p1','p1-tu')"><div class="glyph">उ</div>
-              <div class="ct"><div class="t">श्रद्धया देयम् — कैसे दें</div>
-                <div class="m">Taittirīya Upaniṣad 1.11.3 · the giver's bhaav</div></div><div class="chev">›</div></div>
-            <div class="card" onclick="go('p1','p1-gita')"><div class="glyph">गी</div>
-              <div class="ct"><div class="t">सात्त्विक दान — देश, काल और पात्र</div>
-                <div class="m">Gita 17.20 · पढ़ें — reader में (bundled today)</div></div><div class="chev">›</div></div>
-            <div class="card"><div class="glyph">म</div>
-              <div class="ct"><div class="t">अन्न-दान सर्वोपरि क्यों</div>
-                <div class="m">Mahābhārata · Anuśāsana (दानधर्म) parva — Bhīṣma</div></div><div class="chev">›</div></div>
+            <div class="bh">शास्त्र क्या कहते हैं <span class="en">rendered inline, in full — the educate layer IS the screen</span></div>
+
+            <div class="verse">
+              <div class="sa">मोघमन्नं विन्दते अप्रचेताः<br/>सत्यं ब्रवीमि वध इत्स तस्य ।<br/>
+                नार्यमणं पुष्यति नो सखायं<br/>केवलाघो भवति केवलादी ॥</div>
+              <div class="iast">mogham annaṁ vindate apracetāḥ · satyaṁ bravīmi vadha it sa tasya ·<br/>
+                nāryamaṇaṁ puṣyati no sakhāyaṁ · kevalāgho bhavati kevalādī</div>
+              <div class="cite">ऋग्वेद १०.११७.६ · दान-सूक्त</div>
+              <div class="mean">जो समझ रखते हुए भी नहीं बाँटता, उसका अन्न व्यर्थ जाता है — जो अकेला खाता है,
+                वह केवल दोष ही खाता है। दान कृपा नहीं, धर्म है।</div>
+            </div>
+
+            <div class="verse">
+              <div class="sa">श्रद्धया देयम् । अश्रद्धया अदेयम् ।<br/>श्रिया देयम् । ह्रिया देयम् ।<br/>भिया देयम् । संविदा देयम् ॥</div>
+              <div class="iast">śraddhayā deyam · aśraddhayā adeyam · śriyā deyam · hriyā deyam · bhiyā deyam · saṁvidā deyam</div>
+              <div class="cite">तैत्तिरीय उपनिषद् १.११.३</div>
+              <div class="mean">श्रद्धा से दो; बिना श्रद्धा के मत दो। सामर्थ्य के अनुसार दो, विनम्रता से दो,
+                संकोच सहित दो, और समझ के साथ दो — मात्रा नहीं, भाव मापदण्ड है।</div>
+            </div>
+
+            <div class="verse">
+              <div class="sa">दातव्यमिति यद्दानं दीयतेऽनुपकारिणे ।<br/>देशे काले च पात्रे च तद्दानं सात्त्विकं स्मृतम् ॥</div>
+              <div class="iast">dātavyam iti yad dānaṁ dīyate 'nupakāriṇe · deśe kāle ca pātre ca tad dānaṁ sāttvikaṁ smṛtam</div>
+              <div class="cite">श्रीमद्भगवद्गीता १७.२०</div>
+              <div class="mean">"देना कर्तव्य है" — इस भाव से, प्रत्युपकार की आशा के बिना, उचित देश, काल और
+                पात्र को दिया गया दान सात्त्विक कहा गया है।</div>
+              <span class="readchip">गीता में पढ़ें — अध्याय १७ ›</span>
+            </div>
+
+            <div class="verse">
+              <div class="cite" style="margin-top:0">महाभारत · अनुशासन (दानधर्म) पर्व</div>
+              <div class="mean" style="border-top:0;margin-top:8px;padding-top:0">भीष्म युधिष्ठिर से कहते हैं —
+                अन्न-दान से बड़ा कोई दान नहीं, क्योंकि प्राणी अन्न से ही जन्मते और अन्न से ही जीते हैं।
+                इसीलिए हर दान-सूची में अन्न पहले आता है, और दान-द्वार में अन्नक्षेत्र पहले।</div>
+            </div>
           </div>
 
           <div class="block">
-            <div class="bh">कथाएँ जो दान सिखाती हैं <span class="en">already in the katha library</span></div>
-            <div class="card"><div class="glyph">क</div>
-              <div class="ct"><div class="t">अक्षय तृतीया की कथा</div>
-                <div class="m">इस तिथि का दान अक्षय क्यों — opens shipped katha</div></div><div class="chev">›</div></div>
-            <div class="card"><div class="glyph">क</div>
-              <div class="ct"><div class="t">अक्षय नवमी — आँवले की छाया का दान</div>
-                <div class="m">opens shipped katha</div></div><div class="chev">›</div></div>
+            <div class="bh">दान की कथाएँ <span class="en">the five teaching-kathas — full drafts in S5</span></div>
+            <div class="card" onclick="openStory('karna')"><div class="glyph">क</div>
+              <div class="ct"><div class="t">दानवीर कर्ण — कवच-कुण्डल</div>
+                <div class="m">giving what costs you · Mahābhārata</div></div><div class="chev">›</div></div>
+            <div class="card" onclick="openStory('rantideva')"><div class="glyph">र</div>
+              <div class="ct"><div class="t">राजा रन्तिदेव — अंतिम जल</div>
+                <div class="m">the apex anna-daan · Bhāgavata 9.21</div></div><div class="chev">›</div></div>
+            <div class="card" onclick="openStory('sudama')"><div class="glyph">सु</div>
+              <div class="ct"><div class="t">सुदामा का पोहा</div>
+                <div class="m">bhaav over mātrā · Bhāgavata 10</div></div><div class="chev">›</div></div>
           </div>
 
           <div class="block">
@@ -312,71 +349,14 @@
           <div class="endcap">॥ ॐ ॥</div>
         </div>
       </div>
-
-      <!-- verse screens -->
-      <div class="screen hidden" id="p1-rv"><div class="pad">
-        <div class="topbar"><div class="back" onclick="go('p1','p1-home')">‹</div><div class="tt">दान-सूक्त</div><div class="sp"></div></div>
-        <div class="block">
-          <div class="verse">
-            <div class="sa">मोघमन्नं विन्दते अप्रचेताः<br/>सत्यं ब्रवीमि वध इत्स तस्य ।<br/>
-              नार्यमणं पुष्यति नो सखायं<br/>केवलाघो भवति केवलादी ॥</div>
-            <div class="iast">mogham annaṁ vindate apracetāḥ · satyaṁ bravīmi vadha it sa tasya ·<br/>
-              nāryamaṇaṁ puṣyati no sakhāyaṁ · kevalāgho bhavati kevalādī</div>
-            <div class="cite">Ṛgveda 10.117.6 · दान-सूक्त</div>
-            <div class="mean">जो समझ रखते हुए भी नहीं बाँटता, उसका अन्न व्यर्थ जाता है — जो अकेला
-              खाता है, वह केवल दोष ही खाता है। दान कृपा नहीं, धर्म है: अन्न पाने का अर्थ ही
-              उसे बाँटना है।</div>
-          </div>
-          <div class="body" style="margin-top:12px">यह ऋग्वेद का दान-सूक्त है — देने पर सबसे
-            प्राचीन वचन। इसी से इस सुविधा का पहला पत्ता खुलता है: <b>पहले समझ, फिर भाव, फिर दान।</b></div>
-        </div>
-      </div></div>
-
-      <div class="screen hidden" id="p1-tu"><div class="pad">
-        <div class="topbar"><div class="back" onclick="go('p1','p1-home')">‹</div><div class="tt">कैसे दें</div><div class="sp"></div></div>
-        <div class="block">
-          <div class="verse">
-            <div class="sa">श्रद्धया देयम् । अश्रद्धया अदेयम् ।<br/>श्रिया देयम् । ह्रिया देयम् ।<br/>भिया देयम् । संविदा देयम् ॥</div>
-            <div class="iast">śraddhayā deyam · aśraddhayā adeyam · śriyā deyam ·<br/>hriyā deyam · bhiyā deyam · saṁvidā deyam</div>
-            <div class="cite">Taittirīya Upaniṣad 1.11.3</div>
-            <div class="mean">श्रद्धा से दो; बिना श्रद्धा के मत दो। अपने सामर्थ्य के अनुसार दो।
-              विनम्रता से दो — लेने वाले को छोटा मत समझो। संकोच (भय) सहित दो, और समझ के साथ दो।</div>
-          </div>
-          <div class="body" style="margin-top:12px">आचार्य की अंतिम शिक्षा में दान अनिवार्य कर्तव्य
-            है — पर मात्रा नहीं, <b>भाव</b> उसका मापदण्ड है। इसीलिए इस ऐप में दान का कोई अंक,
-            कोई लक्ष्य, कोई तुलना नहीं है।</div>
-        </div>
-      </div></div>
-
-      <div class="screen hidden" id="p1-gita"><div class="pad">
-        <div class="topbar"><div class="back" onclick="go('p1','p1-home')">‹</div><div class="tt">सात्त्विक दान</div><div class="sp"></div></div>
-        <div class="block">
-          <div class="verse">
-            <div class="sa">दातव्यमिति यद्दानं दीयतेऽनुपकारिणे ।<br/>देशे काले च पात्रे च तद्दानं सात्त्विकं स्मृतम् ॥</div>
-            <div class="iast">dātavyam iti yad dānaṁ dīyate 'nupakāriṇe ·<br/>deśe kāle ca pātre ca tad dānaṁ sāttvikaṁ smṛtam</div>
-            <div class="cite">श्रीमद्भगवद्गीता 17.20</div>
-            <div class="mean">"देना कर्तव्य है" — इस भाव से, बदले की आशा के बिना, उचित देश, काल
-              और पात्र को दिया गया दान सात्त्विक कहा गया है।</div>
-          </div>
-          <div class="card" style="margin-top:12px"><div class="glyph">गी</div>
-            <div class="ct"><div class="t">पूरा प्रसंग पढ़ें — अध्याय 17</div>
-              <div class="m">deep link → bundled Gita reader (17.20–22)</div></div><div class="chev">›</div></div>
-          <div class="body" style="margin-top:10px">देश-काल-पात्र — कहाँ, कब, किसे। यही विवेक
-            S4 के दान-द्वार का आधार है: <b>पात्र की परख पहले, देना बाद में।</b></div>
-        </div>
-      </div></div>
     </div>
 
     <div class="panel">
-      <div class="acard"><h3>What this screen is — and is not</h3><ul>
-        <li><b>Opens on महत्व</b>: today's occasion line (panchang-computed — मकर संक्रान्ति here), the vaar line, and the four-layer source spine (Veda → Upaniṣad → Gītā → Itihāsa). PRD-26 §2.7 / §4a.</li>
-        <li><b>Zero give affordances.</b> No donate button, no directory door, no amount anywhere. The §9 surface-contract test pins this: the home renders no external-linking affordance.</li>
-        <li>The Gita card is the only layer <b>already bundled</b> — it deep-links into the shipped reader (<code>gita/chapter-17.json</code>). Katha cards open the shipped katha library entries.</li>
-        <li>Vaar chips drive the same 7-row table PRD-21 needs (<code>data/daan/vaar.ts</code>, shared module).</li>
-        <li>The single quiet door at the end goes to the <b>खाता</b> (ledger) — recording what one already gives is the primary behaviour.</li>
-      </ul></div>
-      <div class="acard"><h3>Register</h3><ul>
-        <li>Copy explains the <b>reason</b> ("til because…"), never commands and never scores. Copy-guard test rejects fear/guilt/points vocabulary in <code>data/daan/</code>.</li>
+      <div class="acard"><h3>Changes from v1 (now the build spec)</h3><ul>
+        <li>Verse cards render <b>inline and in full</b> — no tap needed to read; the educate layer is the screen itself. Only the Gita card carries a chip: it deep-links into the bundled reader (<code>GitaReader {chapter:17}</code>).</li>
+        <li>New <b>दान की कथाएँ</b> section — the five teaching-kathas ship in <code>data/daan/kathas.ts</code>; full draft text is in S5 for review.</li>
+        <li>आज का दान card carries the <b>journey door</b> (→ S2), replacing v1's plain card; the vaar table is the final 7-row set going into <code>data/daan/vaar.ts</code> (shared with PRD-21).</li>
+        <li>Still zero give affordances on this screen — pinned by the surface-contract Jest test.</li>
       </ul></div>
     </div>
   </div>
@@ -384,13 +364,13 @@
 
 <!-- ============================================================ S2 =============== -->
 <section class="scenario">
-  <h2>S2 — The occasion journey · मकर संक्रान्ति (entered from Observance Detail)</h2>
-  <div class="sc-sub">The §4a contract as a stepper: महत्व → शास्त्र → कथा → क्या दें → संकल्प-भाव. The two terminal actions exist only on the last step — record first, hand-off last.</div>
+  <h2>S2 — The occasion journey · मकर संक्रान्ति (from Observance Detail / home card)</h2>
+  <div class="sc-sub">महत्व → शास्त्र → कथा → क्या दें → संकल्प-भाव. Terminal actions only on step 5 — record leads, दान-द्वार trails, tagged external.</div>
   <div class="wrap">
     <div class="phone" id="p2">
       <div class="statusbar"><span>7:31</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
       <div class="screen" id="p2-j"><div class="pad">
-        <div class="topbar"><div class="back">‹</div><div class="tt">मकर संक्रान्ति का दान</div><div class="sp"></div></div>
+        <div class="topbar"><div class="back" onclick="go('p1','p1-home')">‹</div><div class="tt">मकर संक्रान्ति का दान</div><div class="sp"></div></div>
         <div class="dots" id="jDots"></div>
         <div id="jBody"></div>
         <div class="stepnav">
@@ -401,22 +381,20 @@
     </div>
 
     <div class="panel">
-      <div class="acard"><h3>Why a stepper, not a page</h3><ul>
-        <li>The §2.7 contract requires the hand-off to be <b>unreachable until the educate steps have rendered</b> — "not skippable in one scroll-tap". A stepper makes the contract structural, not stylistic.</li>
-        <li>Steps: <b>1 महत्व</b> (why this day) → <b>2 शास्त्र</b> (the verse) → <b>3 कथा</b> (shipped-story link) → <b>4 क्या दें</b> (items + reasons) → <b>5 संकल्प-भाव</b> + terminal actions.</li>
-        <li>On step 5, <b>"खाते में दर्ज करें" leads</b>; "दान-द्वार" trails it, visibly tagged <code>बाहरी / external</code>, and exists only in Phase 2 builds.</li>
-        <li>संकल्प-भाव is static bilingual copy in Phase 1; when PRD-20 lands it becomes <code>composeSankalp(…, karma:'daan')</code> with the user's real tithi-coordinates.</li>
-        <li>Entry doors into this journey: Observance Detail (daan days), Home Today strip line, vaar row, Pitru Smaran, vidhi daan steps — every door enters at step 1.</li>
-      </ul>
-      <div class="warn">A user who leaves at any step has been fully served — understanding <i>is</i> the product. The journey never nags toward its last step.</div></div>
+      <div class="acard"><h3>Journey contract (§2.7 / §4a) — as coded</h3><ul>
+        <li>Implemented as <code>DaanJourneyScreen {occasionId}</code>, registered on the <b>More and Panchang stacks</b> (multi-stack door pattern) so Observance Detail pushes in place.</li>
+        <li>Step 3 links this occasion's katha: shipped kathas open the existing <code>VratKathaReader</code>; new teaching-kathas open <code>DaanKathaScreen</code> (Sankranti links Karna — Sūryaputra on the Sūrya parva).</li>
+        <li>Step 5's <b>दर्ज करें</b> pushes <code>DaanEntryScreen</code> pre-filled with the occasion; <b>दान-द्वार</b> pushes the directory — the only path to it in the whole app.</li>
+        <li>The step gate is state, not scroll: the terminal step's actions do not exist in the tree until steps 1–4 have rendered (pinned in the screen test).</li>
+      </ul></div>
     </div>
   </div>
 </section>
 
 <!-- ============================================================ S3 =============== -->
 <section class="scenario">
-  <h2>S3 — दान-पुण्य खाता · the private ledger + 10-second entry</h2>
-  <div class="sc-sub">Left: the smaran register, tithi-stamped, गुप्त entries masked. Right: the entry form — tap chips, flip the गुप्त toggle (watch fields disappear), save (entry appears in the ledger).</div>
+  <h2>S3 — दान-पुण्य खाता · ledger + 10-second entry</h2>
+  <div class="sc-sub">Tithi-stamped by the panchang engine. गुप्त toggle removes the fields (never captured). Save inserts the entry. Export = CSV via the OS share sheet.</div>
   <div class="wrap">
     <div class="phone" id="p3">
       <div class="statusbar"><span>8:04</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
@@ -459,7 +437,6 @@
       <div class="toast" id="toast3">दर्ज हुआ — माघ कृष्ण द्वितीया</div>
       </div>
 
-      <!-- entry form -->
       <div class="screen hidden" id="p3-entry"><div class="pad">
         <div class="topbar"><div class="back" onclick="go('p3','p3-ledger')">‹</div><div class="tt">नया दान</div><div class="sp"></div></div>
         <div class="flabel">तिथि — स्वतः</div>
@@ -481,7 +458,7 @@
           <div class="flabel">विवरण — वैकल्पिक</div>
           <div class="field">जैसे: खिचड़ी, मंदिर अन्नक्षेत्र में…</div>
           <div class="flabel">राशि (₹) — वैकल्पिक · निजी</div>
-          <div class="field">कभी किसी share card या सूची में नहीं दिखती</div>
+          <div class="field">कभी किसी सूची या share card में नहीं दिखती</div>
         </div>
         <div class="savebar stepnav">
           <div class="sbtn fill" onclick="saveEntry()">दर्ज करें</div>
@@ -492,13 +469,11 @@
     </div>
 
     <div class="panel">
-      <div class="acard"><h3>Ledger contract</h3><ul>
-        <li><b>Self-attested, device-only.</b> AsyncStorage <code>@vedansh/daan-ledger:v1</code> — the routine done-marks / japam-counter pattern. No cloud, no account.</li>
-        <li><b>Tithi-stamped by the engine.</b> Every entry carries the panchang tithi + occasion rule id automatically — the ledger reads like a samvat, not a bank statement.</li>
-        <li><b>गुप्त दान is first-class</b>: flip the toggle — amount/detail fields vanish (not just hidden-on-render: never captured). The entry lists as "गुप्त दान · तिथि" only.</li>
-        <li><b>Only date + category are required</b> — the U6 gate-and-hundi case is the primary path. Under 10 seconds.</li>
-        <li><b>No totals, no streaks, no charts of generosity.</b> Export (share sheet, PRD-06 pattern) is the only aggregation, and it leaves the app only by the user's hand.</li>
-        <li>Form uses house specs: <code>TextField variant="form"</code> 48dp, chip idiom from muhurat-disha.</li>
+      <div class="acard"><h3>As coded</h3><ul>
+        <li><code>DaanLedgerContext</code> — versioned AsyncStorage payload <code>@vedansh/daan-ledger:v1</code>, the PitruSmaran validation/hydration pattern.</li>
+        <li>Tithi stamp from <code>useTodayPanchang</code>: lunar month + paksha + tithi + vara, hi/en.</li>
+        <li>गुप्त entries store <code>{date, tithi, gupt:true}</code> and nothing else — the reducer drops note/amount before persisting, pinned in the context test.</li>
+        <li>Export builds CSV text and hands it to the RN <code>Share</code> sheet — device-only, PRD-06 posture.</li>
       </ul></div>
     </div>
   </div>
@@ -506,45 +481,82 @@
 
 <!-- ============================================================ S4 =============== -->
 <section class="scenario">
-  <h2>S4 — दान-द्वार · the terminal hand-off (Phase 2)</h2>
-  <div class="sc-sub">Reached only through a journey's last step. Even here: the organization is <i>explained</i> first — verification shown to the user — and "दान करें" is the bottom-most element. Tap it for the honest interstitial.</div>
+  <h2>S4 — दान-द्वार · the real directory (6 verified organizations)</h2>
+  <div class="sc-sub">Left: the directory list as it ships. Right: a detail (अक्षय पात्र) — work → verification → then the action row, record first. Tap दान करें for the interstitial.</div>
   <div class="wrap">
-    <div class="phone" id="p4">
+    <div class="phone" id="p4l">
+      <div class="statusbar"><span>7:52</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="tt">दान-द्वार</div><div class="sp"></div></div>
+        <div class="hero" style="border-bottom:0;padding-bottom:4px">
+          <div class="name" style="font-size:20px">देशे काले च पात्रे</div>
+          <div class="name-en">verified patra — the app is never part of the transaction</div>
+        </div>
+        <div class="month">अन्न</div>
+        <div class="card" onclick="go('p4r','p4r-detail')"><div class="glyph">अ</div>
+          <div class="ct"><div class="t">अक्षय पात्र फाउंडेशन</div>
+            <div class="m">PM-POSHAN mid-day meals · 2.35M+ बच्चे प्रतिदिन · akshayapatra.org</div></div><div class="chev">›</div></div>
+        <div class="card"><div class="glyph">अ</div>
+          <div class="ct"><div class="t">अन्नामृत फाउंडेशन</div>
+            <div class="m">ISKCON Food Relief · 1.2M+ mid-day meals · annamrita.org</div></div><div class="chev">›</div></div>
+        <div class="card"><div class="glyph">ति</div>
+          <div class="ct"><div class="t">श्री वेंकटेश्वर अन्नप्रसादम् ट्रस्ट (TTD)</div>
+            <div class="m">तिरुमला annadanam + गोसंरक्षण trust · tirumala.org</div></div><div class="chev">›</div></div>
+        <div class="month">वस्त्र</div>
+        <div class="card"><div class="glyph">व</div>
+          <div class="ct"><div class="t">गूँज</div>
+            <div class="m">वस्त्र-सम्मान — cloth as dignity · goonj.org</div></div><div class="chev">›</div></div>
+        <div class="month">सेवा · विद्या</div>
+        <div class="card"><div class="glyph">रा</div>
+          <div class="ct"><div class="t">रामकृष्ण मठ एवं मिशन, बेलूड़</div>
+            <div class="m">relief, rural welfare, vidya · belurmath.org</div></div><div class="chev">›</div></div>
+        <div class="month">रक्त-सेवा</div>
+        <div class="card"><div class="glyph">र</div>
+          <div class="ct"><div class="t">ई-रक्तकोष (भारत सरकार)</div>
+            <div class="m">रक्तदाता पंजीकरण — धन नहीं, रक्त · eraktkosh.mohfw.gov.in</div></div><div class="chev">›</div></div>
+        <div class="terminal"><div class="note">यह सूची छोटी और अकाट्य रहेगी — हर पंक्ति दो स्वतंत्र स्रोतों से
+          सत्यापित, 18 माह में पुनः-सत्यापन, अन्यथा अदृश्य।</div></div>
+        <div class="endcap">॥ ॐ ॥</div>
+      </div></div>
+    </div>
+
+    <div class="phone" id="p4r">
       <div class="statusbar"><span>7:58</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
-      <div class="screen" id="p4-detail"><div class="pad">
+      <div class="screen" id="p4r-detail"><div class="pad">
         <div class="topbar"><div class="back">‹</div><div class="tt">पात्र-परिचय</div><div class="sp"></div></div>
         <div class="hero">
-          <div class="tags"><span class="pill">गौशाला</span><span class="pill fest">SAMPLE ROW</span></div>
-          <div class="name">श्री गोपाल गौ-सेवा ट्रस्ट</div>
-          <div class="name-en">(illustrative — not a real listing)</div>
+          <div class="tags"><span class="pill">अन्न</span><span class="pill fest">VERIFIED</span></div>
+          <div class="name">अक्षय पात्र फाउंडेशन</div>
+          <div class="name-en">The Akshaya Patra Foundation</div>
           <div class="rule">देशे काले च पात्रे — पात्र की परख पहले</div>
         </div>
         <div class="block">
-          <div class="bh">ये क्या करते हैं <span class="en">the work, before the ask</span></div>
-          <div class="body">वृद्ध और अशक्त गौवंश का पालन — चारा, चिकित्सा, आश्रय। गोपाष्टमी और
-            संक्रान्ति पर गौ-ग्रास सेवा का पारम्परिक पात्र।</div>
+          <div class="bh">ये क्या करते हैं <span class="en">the work, before any ask</span></div>
+          <div class="body">सरकारी विद्यालयों के बच्चों को प्रतिदिन ताज़ा mid-day meal — PM-POSHAN का
+            कार्यान्वयन साझेदार, 78 रसोइयों से 23 लाख+ बच्चों तक। विश्व का सबसे बड़ा NGO-संचालित
+            school-lunch कार्यक्रम।</div>
         </div>
         <div class="block">
           <div class="bh">सत्यापन <span class="en">shown to the user — trust is the feature</span></div>
           <div class="trust">
-            <div class="reg"><div class="rl">NGO Darpan</div><div class="rv">RJ/2019/0XXXXX (sample)</div></div>
-            <div class="reg"><div class="rl">80G</div><div class="rv">AAATS0000X0000 (sample) — रसीद ट्रस्ट देगा, ऐप नहीं</div></div>
-            <div class="reg"><div class="rl">आधिकारिक</div><div class="rv">gopalgauseva.org (sample) — दान-पृष्ठ केवल इसी domain से</div></div>
-            <div class="verified-line">✓ दो स्वतंत्र स्रोतों से सत्यापित · 2026-08-30 · 18 माह में पुनः-सत्यापन</div>
+            <div class="reg"><div class="rl">पंजीकरण</div><div class="rv">Indian Trusts Act, 1882 के अंतर्गत पंजीकृत ट्रस्ट</div></div>
+            <div class="reg"><div class="rl">80G</div><div class="rv">₹500+ के दान पर 50% कर-छूट — रसीद फाउंडेशन देगा, ऐप नहीं</div></div>
+            <div class="reg"><div class="rl">आधिकारिक</div><div class="rv">www.akshayapatra.org — दान-पृष्ठ केवल इसी domain से</div></div>
+            <div class="verified-line">✓ दो स्वतंत्र स्रोतों से सत्यापित · 2026-09-01 · 18 माह में पुनः-सत्यापन</div>
           </div>
         </div>
         <div class="block">
-          <div class="bh">इनसे जुड़ा आपका अभ्यास</div>
-          <div class="card"><div class="glyph">गौ</div>
-            <div class="ct"><div class="t">गौ सेवा — मन्त्र व विधि</div>
-              <div class="m">opens shipped sanskar entry (gau-seva)</div></div><div class="chev">›</div></div>
+          <div class="bh">इनसे जुड़ी शिक्षा</div>
+          <div class="card" onclick="openStory('rantideva')"><div class="glyph">र</div>
+            <div class="ct"><div class="t">राजा रन्तिदेव — अंतिम जल</div>
+              <div class="m">अन्न-दान की शिखर-कथा (S5)</div></div><div class="chev">›</div></div>
         </div>
         <div class="terminal">
           <div class="stepnav" style="margin-top:0">
             <div class="sbtn" onclick="go('p3','p3-entry')">खाते में दर्ज करें</div>
             <div class="sbtn fill" onclick="showSheet()">दान करें<span class="ext-tag">बाहरी</span></div>
           </div>
-          <div class="note">ऐप इस लेन-देन का हिस्सा नहीं है — दान ट्रस्ट के अपने आधिकारिक
+          <div class="note">ऐप इस लेन-देन का हिस्सा नहीं है — दान फाउंडेशन के अपने आधिकारिक
             माध्यम पर, ऐप के बाहर होगा।</div>
         </div>
         <div class="endcap">॥ ॐ ॥</div>
@@ -552,7 +564,7 @@
         <div class="overlay" id="p4-sheet">
           <div class="sheet">
             <div class="sh">बाहरी माध्यम पर जा रहे हैं</div>
-            <div class="sb">gopalgauseva.org का दान-पृष्ठ आपके ब्राउज़र में खुलेगा।</div>
+            <div class="sb">www.akshayapatra.org का दान-पृष्ठ आपके ब्राउज़र में खुलेगा।</div>
             <div class="warnbox">यह ऐप न राशि लेता है, न पुष्टि कर सकता है, न कोई अंश पाता है।
               लौटने पर — चाहें तो — इसे खाते में दर्ज करने का <b>एक</b> विनम्र प्रस्ताव मिलेगा।</div>
             <div class="stepnav">
@@ -565,23 +577,79 @@
     </div>
 
     <div class="panel">
-      <div class="acard"><h3>The hand-off posture (PRD-26 §5 P2 / §6)</h3><ul>
-        <li><b>No directory tab exists.</b> This screen is reachable only from a journey's terminal step — never in one tap from anywhere.</li>
-        <li>The screen itself is educate-first: <b>work → verification → related practice → then the action row</b>. "खाते में दर्ज करें" (record) is placed before "दान करें".</li>
-        <li>The give button carries the <code>बाहरी/external</code> tag; the interstitial states plainly that the app is outside the transaction. Return-flow record offer fires <b>at most once</b>, declining is silent.</li>
-        <li>Registration ids + verification date are <b>shown to the user</b> — §6.2's two-source + govt-registry gate, re-verified on cadence; stale rows drop to <code>draft</code>.</li>
-        <li>Phase 2 rides a <b>store release</b> for review visibility (§6.1); degrades to information-only rows if review objects — Phase 1 educate/ledger is never hostage.</li>
-      </ul></div>
+      <div class="acard"><h3>The six launch rows (all verified 2026-09-01)</h3><ul>
+        <li><b>अक्षय पात्र</b> — akshayapatra.org · Wikipedia + official site concur (PM-POSHAN partner, 2.35M+ meals, Trusts Act, 80G 50%).</li>
+        <li><b>अन्नामृत (ISKCON Food Relief)</b> — annamrita.org · official + iskcon.org (1.2M+ mid-day meals, 21 kitchens).</li>
+        <li><b>गूँज</b> — goonj.org · Wikipedia + official (वस्त्र-सम्मान; the vastra-daan row's natural patra).</li>
+        <li><b>रामकृष्ण मठ एवं मिशन</b> — belurmath.org/donations · official + support portal (80G; relief/vidya/seva).</li>
+        <li><b>TTD अन्नप्रसादम् + गोसंरक्षण</b> — tirumala.org / ttdevasthanams.ap.gov.in · India.gov services portal + official (temple-trust row).</li>
+        <li><b>ई-रक्तकोष</b> — eraktkosh.mohfw.gov.in · CDAC + UMANG (govt portal; the रक्त-दान category's hand-off is donor <i>registration</i>, not money — stated on the row).</li>
+      </ul>
+      <div class="warn">No registration numbers are invented — rows state the registration <i>kind</i> and that receipts come from the trust. No UPI VPAs: web-only hand-off (PRD open decision #4 resolved to web-only at launch).</div></div>
     </div>
   </div>
 </section>
 
 <!-- ============================================================ S5 =============== -->
 <section class="scenario">
-  <h2>S5 — Touchpoints · where the doors appear across the shipped app</h2>
-  <div class="sc-sub">One example in frame: Observance Detail on मौनी अमावस्या gains a quiet महत्व door (after About/Story/उपवास विधि — never above them). Panel lists every door.</div>
+  <h2>S5 — कथा-कोश · the five teaching-kathas, full draft text</h2>
+  <div class="sc-sub">This is the reviewable story content going into <code>data/daan/kathas.ts</code> verbatim. Tap a card; every story ends with its शिक्षा and canonical source.</div>
   <div class="wrap">
     <div class="phone" id="p5">
+      <div class="statusbar"><span>9:15</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+      <div class="screen" id="p5-list"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="tt">दान की कथाएँ</div><div class="sp"></div></div>
+        <div class="hero" style="border-bottom:0;padding-bottom:4px">
+          <div class="name" style="font-size:20px">पाँच कथाएँ, पाँच भाव</div>
+          <div class="name-en">each carries one teaching the feature is built on</div>
+        </div>
+        <div id="storyCards"></div>
+        <div class="terminal"><div class="note">पहले से उपलब्ध दान-कथाएँ (अक्षय तृतीया, अक्षय नवमी, अमावस्या,
+          अपरा/अजा एकादशी, षटतिला…) कथा-कोश से जुड़ती हैं — दोहराई नहीं जातीं।</div></div>
+        <div class="endcap">॥ ॐ ॥</div>
+      </div></div>
+      <div class="screen hidden" id="p5-story"><div class="pad">
+        <div class="topbar"><div class="back" onclick="go('p5','p5-list')">‹</div><div class="tt" id="storyTitle"></div><div class="sp"></div></div>
+        <div id="storyBody" style="margin-top:8px"></div>
+      </div></div>
+    </div>
+
+    <div class="panel">
+      <div class="acard"><h3>Story → surface map (as coded)</h3><ul>
+        <li><b>कर्ण</b> → gupt-daan/द्रव्य teaching + Sankranti journey step 3 (Sūryaputra on the Sūrya parva) + रविवार vaar line.</li>
+        <li><b>रन्तिदेव</b> → anna-daan card + the anna-kshetra directory details.</li>
+        <li><b>शिबि</b> → श्रम/सेवा category teaching.</li>
+        <li><b>बलि–वामन</b> → गोवर्धन/बलि-प्रतिपदा journey + "daan and ego" principle.</li>
+        <li><b>सुदामा</b> → the ledger's empty state — why the खाता keeps no totals.</li>
+        <li>All five ship in <code>data/daan/kathas.ts</code> (own screen, <code>DaanKathaScreen</code>) — the shipped katha library is cross-linked, never duplicated.</li>
+        <li>Sources named per story: Mahābhārata (Vana/Anuśāsana parva), Bhāgavata 9.21 / 8.19–23 / 10.80–81 — checked against wisdomlib + sacred-texts translations.</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ S6 =============== -->
+<section class="scenario">
+  <h2>S6 — Coverage browser + the Observance Detail door</h2>
+  <div class="sc-sub">Left: every day the feature covers (tap a tier) — the §10.1 matrix as the occasion browser ships it. Right: the quiet last-section door on a covered day.</div>
+  <div class="wrap">
+    <div class="phone" id="p6">
+      <div class="statusbar"><span>6:40</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="tt">दान के दिन</div><div class="sp"></div></div>
+        <div class="tier-row" id="tierRow">
+          <div class="tchip on" onclick="setTier(0,this)">महापर्व</div>
+          <div class="tchip" onclick="setTier(1,this)">तिथि-चक्र</div>
+          <div class="tchip" onclick="setTier(2,this)">वार</div>
+          <div class="tchip" onclick="setTier(3,this)">व्यक्तिगत</div>
+        </div>
+        <div id="tierBody"></div>
+        <div class="terminal"><div class="note">जिस दिन की कोई प्रामाणिक दान-परम्परा नहीं — वहाँ कोई पंक्ति नहीं।
+          अनुपस्थित, placeholder कभी नहीं। ग्रहण-दान engine में सूर्य/चन्द्र ग्रहण आने तक स्थगित।</div></div>
+      </div></div>
+    </div>
+
+    <div class="phone" id="p7">
       <div class="statusbar"><span>6:47</span><span>ॐ</span><span>◧ ⌁ ▮</span></div>
       <div class="screen"><div class="pad">
         <div class="topbar"><div class="back">‹</div><div class="tt">व्रत विवरण</div><div class="sp"></div></div>
@@ -599,11 +667,11 @@
         <div class="block"><div class="bh">उपवास विधि <span class="en">shipped section (PRD-09)</span></div>
           <div class="body" style="opacity:.65">… fasting rules render here …</div></div>
         <div class="block">
-          <div class="bh">आज के दान का महत्व <span class="en">NEW — the PRD-26 door, last section</span></div>
-          <div class="card" style="border-color:var(--gold-soft);background:var(--gold-tint)">
+          <div class="bh">इस दिन का दान <span class="en">NEW — the PRD-26 door, always the last section</span></div>
+          <div class="card" style="border-color:var(--gold-soft);background:var(--gold-tint)" onclick="go('p2','p2-j');jIdx=0;jRender()">
             <div class="glyph">दा</div>
             <div class="ct"><div class="t">अमावस्या और दान — क्यों जुड़े हैं</div>
-              <div class="m">पितृ-तृप्ति · तिल-जल · अन्न-वस्त्र — opens the S2 journey at step 1</div></div>
+              <div class="m">तिल-जल · अन्न-वस्त्र · सोमवती विशेष — opens the journey at step 1</div></div>
             <div class="chev">›</div></div>
         </div>
         <div class="endcap">॥ ॐ ॥</div>
@@ -611,37 +679,31 @@
     </div>
 
     <div class="panel">
-      <div class="acard"><h3>Every door, every entry at step 1 of the journey</h3><ul>
-        <li><b>Observance Detail</b> (daan-significant days: संक्रान्ति, अक्षय तृतीया, अमावस्या family, एकादशी family, पितृ पक्ष) — quiet last-section door, shown in frame.</li>
-        <li><b>Home Today strip</b> — a daan line only on daan-significant days, same door.</li>
-        <li><b>Katha library</b> — daan-themed kathas gain a "इस कथा का दान" footer cross-link; the journey's कथा step links back. Two-way, no duplication.</li>
-        <li><b>Vidhi conduct</b> — Karwa Chauth <code>karwa-dana</code> step (+ future <code>daan</code> step kind, PRD-22) gets a record affordance on the step card; conduct stays swipe-only.</li>
-        <li><b>Pitru Smaran</b> — shraddha-tithi detail links anna-daan educate + record; ancestor context stays private (PRD-17 stance), never on any share surface.</li>
-        <li><b>Daily Routine</b> — "add वार-दान to routine" creates the weekly unit (e.g. शनिवार तिल-तेल); marking it done offers the one-tap ledger entry.</li>
-        <li><b>Kundali / PRD-21</b> — graha-daan rows reuse <code>vaar.ts</code>; the daśā-aware line deep-links here.</li>
-        <li><b>Theerth</b> (Phase 2) — temple detail gains a giving line only where the trust has a verified directory row.</li>
-        <li><b>PRD-20 सङ्कल्प</b> — journey step 5 upgrades to <code>composeSankalp(karma:'daan')</code> when it ships.</li>
-      </ul>
-      <div class="warn"><b>Ordering rule everywhere:</b> the daan door is the <i>last</i> section of its host screen, and reminders (opt-in, existing vrat/festive families) name the occasion and the tradition — never an amount, never a recipient.</div></div>
+      <div class="acard"><h3>Rule-id mapping (as coded in <code>occasions.ts</code>)</h3><ul>
+        <li>Exact ids win over family suffixes: <code>shattila-ekadashi</code> gets its til row; every other <code>*-ekadashi</code> falls to the shared parana-anna row; <code>makar-sankranti</code> beats the shared <code>*-sankranti</code> snāna-dāna row.</li>
+        <li>Tier 1 ids: makar-sankranti, akshaya-tritiya, shraddha-dates, akshaya-navami, guru-purnima, vasant-panchami, ganga-dussehra, ganga-saptami, govardhan-puja, bachh-baras, dhanteras, diwali, karthigai-vrat, chhath-puja — every one verified against the shipped solver tables.</li>
+        <li>Tier 2: amavasya-vrat (somvati elevation stated in-row), purnima-vrat + shree-satyanarayan-vrat, the ekadashi family.</li>
+        <li>Tier 4 journeys ride Pitru Smaran (privacy stance intact) and the Kundali janma-tithi.</li>
+        <li>The Observance Detail door renders only when <code>getDaanOccasionForRule(ruleId)</code> matches — absent otherwise, never a placeholder.</li>
+      </ul></div>
     </div>
   </div>
 </section>
 
 <script>
-  /* screen router */
   function go(phoneId, screenId){
     document.querySelectorAll('#'+phoneId+' .screen').forEach(s=>s.classList.add('hidden'));
-    document.getElementById(screenId).classList.remove('hidden');
-    document.getElementById(screenId).scrollTop = 0;
+    var el = document.getElementById(screenId);
+    el.classList.remove('hidden'); el.scrollTop = 0;
   }
 
-  /* S1 vaar chips */
+  /* S1 vaar chips — the final 7-row table (data/daan/vaar.ts) */
   const VAAR = [
-    ['रविवार — सूर्य','गेहूँ, गुड़, ताँबे के पात्र में जल — उत्तरायण के देव को अर्घ्य के साथ।'],
+    ['रविवार — सूर्य','गेहूँ, गुड़, ताँबे के पात्र में जल — तेज के देव को अर्घ्य के साथ। (कथा: दानवीर कर्ण — सूर्यपुत्र)'],
     ['सोमवार — चन्द्र / शिव','श्वेत वस्तु: दूध, चावल, मिश्री — शीतलता का दान।'],
-    ['मंगलवार — मंगल / हनुमान','मसूर, गुड़ — और श्रम-सेवा का संकल्प।'],
+    ['मंगलवार — मंगल / हनुमान','मसूर, गुड़, लाल वस्त्र — और श्रम-सेवा का संकल्प।'],
     ['बुधवार — बुध','मूँग, हरा चारा (गौ-ग्रास) — बुद्धि के कारक को हरित दान।'],
-    ['गुरुवार — बृहस्पति','चना दाल, हल्दी, केला — विद्या-दान का भी वार यही।'],
+    ['गुरुवार — बृहस्पति','चना दाल, हल्दी, केला, पुस्तकें — विद्या-दान का वार यही।'],
     ['शुक्रवार — शुक्र','चावल, घी, श्वेत वस्त्र — अन्नपूर्णा-भाव से।'],
     ['शनिवार — शनि','तिल, तेल, काला वस्त्र, लोहा — और छाया-पात्रों की सेवा।'],
   ];
@@ -654,29 +716,29 @@
 
   /* S2 journey stepper */
   const JSTEPS = [
-    {label:'चरण 1 · महत्व', html:
+    {html:
       '<div class="steplabel">चरण 1 · महत्व — यह दिन दान का क्यों है</div>'+
       '<div class="aaj"><div class="why">आज सूर्य मकर राशि में प्रवेश करते हैं — उत्तरायण का आरम्भ। '+
       'परम्परा इस संधि-काल को <b>देने का दिन</b> कहती है: जो प्रकाश बढ़ रहा है, उसे बाँटा जाता है। '+
-      'तिल-गुड़ और खिचड़ी इस दिन के पारम्परिक दान हैं — स्निग्ध, पोषक, शीत-ऋतु में सबसे उपयोगी।</div></div>'+
-      '<div class="body" style="margin-top:12px;font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted)">Understanding first. The give action is three steps away, by design.</div>'},
-    {label:'चरण 2 · शास्त्र', html:
+      'तिल-गुड़ और खिचड़ी इस दिन के पारम्परिक दान हैं — स्निग्ध, पोषक, शीत-ऋतु में सबसे उपयोगी।</div></div>'},
+    {html:
       '<div class="steplabel">चरण 2 · शास्त्र</div>'+
       '<div class="verse"><div class="sa">दातव्यमिति यद्दानं दीयतेऽनुपकारिणे ।<br/>देशे काले च पात्रे च तद्दानं सात्त्विकं स्मृतम् ॥</div>'+
-      '<div class="cite">गीता 17.20 · पढ़ें — reader में</div>'+
-      '<div class="mean">कर्तव्य-भाव से, बदले की आशा के बिना, उचित देश, काल और पात्र को दिया दान सात्त्विक है। आज <b>काल</b> स्वयं उपस्थित है — देश और पात्र आपका विवेक चुनेगा।</div></div>'},
-    {label:'चरण 3 · कथा', html:
+      '<div class="cite">गीता 17.20 · गीता में पढ़ें ›</div>'+
+      '<div class="mean">कर्तव्य-भाव से, प्रत्युपकार की आशा के बिना, उचित देश, काल और पात्र को दिया दान सात्त्विक है। आज <b>काल</b> स्वयं उपस्थित है — देश और पात्र आपका विवेक चुनेगा।</div></div>'},
+    {html:
       '<div class="steplabel">चरण 3 · कथा</div>'+
-      '<div class="card"><div class="glyph">क</div><div class="ct"><div class="t">अक्षय तृतीया की कथा — धर्मदास</div>'+
-      '<div class="m">"थोड़ा-सा दान भी अक्षय फल देता है" — opens shipped katha</div></div><div class="chev">›</div></div>'+
-      '<div class="body">निर्धन धर्मदास का जल-दान और अन्न-दान जन्म-जन्मांतर चला — कथा-कोश में पहले से उपलब्ध यह कथा मात्रा नहीं, <b>भाव</b> की शिक्षा देती है।</div>'},
-    {label:'चरण 4 · क्या दें', html:
+      '<div class="card" onclick="openStory(\'karna\')"><div class="glyph">क</div><div class="ct"><div class="t">दानवीर कर्ण — कवच-कुण्डल</div>'+
+      '<div class="m">सूर्य-पर्व पर सूर्यपुत्र की कथा — full draft in S5</div></div><div class="chev">›</div></div>'+
+      '<div class="body">अर्घ्य की उसी वेला में माँगा गया दान, और बिना एक क्षण रुके अपना कवच काटकर दे देना — '+
+      'संक्रान्ति के सूर्य को अर्घ्य देते समय यही कथा स्मरण की जाती है।</div>'},
+    {html:
       '<div class="steplabel">चरण 4 · क्या दें — कारण सहित</div>'+
       '<div class="entry"><div class="g">ति</div><div class="et"><div class="cat">तिल-गुड़</div><div class="nt">शीत में स्निग्ध पोषण — संक्रान्ति का मूल दान</div></div></div>'+
       '<div class="entry"><div class="g">अ</div><div class="et"><div class="cat">खिचड़ी / अन्न</div><div class="nt">अन्न-दान सर्वोपरि — अनुशासन पर्व की शिक्षा</div></div></div>'+
       '<div class="entry"><div class="g">व</div><div class="et"><div class="cat">वस्त्र / कम्बल</div><div class="nt">माघ की ठिठुरन में सबसे प्रत्यक्ष आवश्यकता</div></div></div>'+
       '<div class="entry"><div class="g">गौ</div><div class="et"><div class="cat">गौ-ग्रास</div><div class="nt">गौ सेवा — मन्त्र व विधि app में उपलब्ध</div></div></div>'},
-    {label:'चरण 5 · संकल्प-भाव', html:
+    {html:
       '<div class="steplabel">चरण 5 · संकल्प-भाव</div>'+
       '<div class="verse"><div class="sa">श्रद्धया देयम् — जो भी दूँ,<br/>श्रद्धा, सामर्थ्य और विनम्रता से दूँ ॥</div>'+
       '<div class="cite">भाव-वाक्य · PRD-20 आने पर पूर्ण सङ्कल्प (तिथि-सहित) यहीं बनेगा</div></div>'+
@@ -725,9 +787,136 @@
   }
 
   /* S4 sheet */
-  function showSheet(){ document.getElementById('p4-sheet').classList.add('show');
-    document.getElementById('p4-detail').classList.remove('hidden'); }
+  function showSheet(){ document.getElementById('p4-sheet').classList.add('show'); }
   function hideSheet(){ document.getElementById('p4-sheet').classList.remove('show'); }
+
+  /* S5 — the five teaching-kathas, full draft text (ports verbatim to data/daan/kathas.ts) */
+  const STORIES = {
+    karna: {
+      title:'दानवीर कर्ण', sub:'कवच-कुण्डल का दान · महाभारत, वन पर्व',
+      paras:[
+        'कर्ण जन्म से ही दिव्य कवच और कुण्डल धारण किए हुए था — सूर्यदेव का दिया वह रक्षा-आवरण, जो उसकी देह के साथ ही जुड़ा था। जब तक वे उसके अंग पर थे, युद्ध में उसे कोई पराजित नहीं कर सकता था। कर्ण का एक व्रत सारा आर्यावर्त जानता था — मध्याह्न में सूर्य को अर्घ्य देते समय उसके द्वार से कोई याचक खाली नहीं लौटता।',
+        'महाभारत-युद्ध निकट आया तो अर्जुन की चिंता में देवराज इन्द्र ने वही वेला चुनी। वृद्ध ब्राह्मण का रूप धरकर वे अर्घ्य की घड़ी में कर्ण के सम्मुख आ खड़े हुए। रात को स्वप्न में सूर्यदेव ने अपने पुत्र को चेता दिया था — "कल इन्द्र स्वयं तेरा कवच-कुण्डल माँगने आएँगे। मत देना; उन्हीं में तेरे प्राण हैं।" कर्ण ने हाथ जोड़कर उत्तर दिया था — "हे देव, मेरे द्वार से माँगकर कोई खाली लौट जाए, यह मृत्यु से बड़ी हार होगी।"',
+        'ब्राह्मण ने कवच-कुण्डल माँगे। कर्ण मुस्कुराया — उसने याचक को पहचान लिया था। फिर भी एक क्षण नहीं रुका: शस्त्र लेकर उसने अपनी देह से जुड़ा कवच काटा, कुण्डल उतारे, और रक्त से भीगे वे दान इन्द्र के हाथों में रख दिए। देवराज स्तब्ध रह गए — जिसे छलने आए थे, उसके सामने स्वयं छोटे पड़ गए। उन्होंने कर्ण को अमोघ शक्ति दी, और संसार ने उसे एक नया नाम — दानवीर।',
+      ],
+      teach:'दान वह है जो अपने में से दिया जाए — बचे हुए में से नहीं। कर्ण ने वह दिया जो उसकी रक्षा था; इसीलिए गुप्त-दान और कठिन दान की हर चर्चा उसी के नाम से खुलती है।',
+      teachEn:'True giving costs the giver — Karna gave the very armour of his life, knowing exactly what it would cost.',
+      src:'स्रोत: महाभारत, वन (आरण्यक) पर्व — कुण्डलाहरण उपाख्यान। sacred-texts.com (Ganguli tr.) व wisdomlib.org से मिलान।'
+    },
+    rantideva: {
+      title:'राजा रन्तिदेव', sub:'अंतिम जल का दान · श्रीमद्भागवत 9.21',
+      paras:[
+        'सङ्कृति के पुत्र राजा रन्तिदेव की कीर्ति दोनों लोकों में गाई जाती है। जो भी सम्पदा आती, वे बाँट देते — भाग्य पर भरोसा रखकर, अपने लिए कुछ भी संचित किए बिना। ऐसा करते-करते एक समय ऐसा आया कि परिवार सहित अड़तालीस दिन भूखे-प्यासे बीत गए। उनचासवें प्रातः उन्हें घी, खीर, हलवा और जल प्राप्त हुआ — काँपती देह, पर स्थिर मन से वे परिवार सहित पारण करने बैठे।',
+        'तभी द्वार पर एक ब्राह्मण अतिथि आ खड़ा हुआ। रन्तिदेव ने श्रद्धा से भोजन का भाग उसे दिया। वह गया तो एक शूद्र आया — उसे भी उतने ही आदर से भाग मिला। फिर कुत्तों समेत एक व्यक्ति आया — "मैं और मेरे कुत्ते भूखे हैं।" राजा ने बचा भोजन उन्हें अर्पित कर प्रणाम किया। अब केवल जल शेष था — एक प्राणी की प्यास भर।',
+        'तभी थका हुआ एक चाण्डाल आया — "प्यासा हूँ।" उसकी दीन वाणी सुनकर रन्तिदेव का हृदय पिघल गया, और अमृत-से वे शब्द निकले जो भागवत की अमर पंक्तियाँ बन गए — "मैं ईश्वर से आठों सिद्धियों वाली गति नहीं चाहता, मोक्ष भी नहीं; मैं समस्त प्राणियों के भीतर बैठकर उनका दुःख सहूँ, ताकि वे दुःखमुक्त हो जाएँ।" और अंतिम जल चाण्डाल को दे दिया।',
+        'उसी क्षण त्रिदेव-माया हटी — वे अतिथि देवता थे, परीक्षा लेने आए। रन्तिदेव ने कुछ नहीं माँगा; जो भी उस दृश्य को स्मरण करता है, उसके लिए अन्न-जल का दान सदा के लिए बड़ा हो जाता है।',
+      ],
+      teach:'अन्न-जल का दान देह से नहीं, करुणा से निकलता है — अड़तालीस दिन के भूखे का दिया एक पात्र जल, भरे भण्डार के सौ दानों से बड़ा है।',
+      teachEn:'The apex of anna-daan: the last water, given first — compassion outweighing hunger itself.',
+      src:'स्रोत: श्रीमद्भागवत, स्कन्ध 9, अध्याय 21 (श्लोक 2–18)। vedabase.io व wisdomlib.org से मिलान।'
+    },
+    shibi: {
+      title:'राजा शिबि', sub:'शरणागत की रक्षा · महाभारत, वन पर्व',
+      paras:[
+        'उशीनर के राजा शिबि यज्ञ में बैठे थे कि एक घायल कपोत काँपता हुआ उनकी गोद में आ गिरा — "राजन्, शरण!" पीछे-पीछे बाज आया और बोला — "यह मेरा आहार है। धर्म के राजा होकर तुम मेरा भोजन कैसे रोक सकते हो? मैं भूखा रहा तो मेरा वध तुम्हारे ही माथे होगा।"',
+        'शिबि धर्म-संकट में पड़े — शरणागत की रक्षा भी धर्म, भूखे का आहार भी धर्म। उन्होंने मार्ग निकाला: "कपोत के भार के बराबर मांस मैं अपनी देह से काटकर दूँगा।" तराजू आया। एक पलड़े पर कपोत, दूसरे पर राजा अपनी जाँघ का मांस काट-काटकर रखते गए — पर कपोत का पलड़ा झुका ही रहा। अंत में शिबि स्वयं पूरे तराजू पर चढ़ गए — "मेरा सम्पूर्ण शरीर ही ले लो।"',
+        'उसी क्षण कपोत और बाज अपने वास्तविक रूप में प्रकट हुए — अग्नि और इन्द्र, जो धर्म की परीक्षा लेने आए थे। उन्होंने राजा की देह पुनः पूर्ण की और वर दिया कि शिबि की कीर्ति जब तक सूर्य-चन्द्र हैं, तब तक रहेगी।',
+      ],
+      teach:'दान केवल द्रव्य का नहीं होता — जिसने शरण माँगी, उसकी रक्षा में लगाया गया श्रम, साहस और अभय भी दान है। इसीलिए इस खाते में "श्रम/सेवा" द्रव्य के बराबर की श्रेणी है।',
+      teachEn:'Protection of the one who seeks refuge is daan of the body and courage — seva ranks beside money, never below it.',
+      src:'स्रोत: महाभारत, वन पर्व — शिबि उपाख्यान। sacred-texts.com (Ganguli tr.) व wisdomlib.org से मिलान।'
+    },
+    'bali-vamana': {
+      title:'बलि–वामन', sub:'तीन पग भूमि · श्रीमद्भागवत, स्कन्ध 8',
+      paras:[
+        'दैत्यराज बलि ने सौ अश्वमेध पूरे किए थे और उसका नियम था — यज्ञ-वेला में जो जो माँगे, वह मिलेगा। तब वामन रूप में स्वयं विष्णु ब्रह्मचारी बटुक बनकर पधारे और माँगा — केवल तीन पग भूमि। गुरु शुक्राचार्य ने पहचान लिया और रोका — "यह स्वयं नारायण हैं; तीन पग में तेरा सर्वस्व चला जाएगा।"',
+        'बलि का उत्तर दान की मर्यादा बन गया — "यदि ये स्वयं नारायण हैं, तो मेरा वचन और भी अटल हुआ। देने का वचन देकर पीछे हटना दान का अपमान है — सर्वस्व जाए तो जाए।" उसने संकल्प का जल छोड़ दिया।',
+        'वामन बढ़े — एक पग में पृथ्वी, दूसरे में स्वर्ग। "तीसरा पग कहाँ रखूँ, राजन्?" बलि ने मुस्कुराकर अपना मस्तक झुका दिया — "यह शेष है, प्रभु।" उस झुके मस्तक पर पग रखते ही भगवान ने बलि को पाताल का सुतल लोक दिया और स्वयं उसके द्वारपाल बन गए। कार्तिक शुक्ल प्रतिपदा — गोवर्धन पूजा का दिन — बलि-प्रतिपदा भी है, उसी दानी के स्मरण का दिन।',
+      ],
+      teach:'दान में अहंकार गल जाए तो देने वाला स्वयं भगवान का प्रिय हो जाता है — दिया हुआ घटता नहीं, देने वाला बड़ा हो जाता है।',
+      teachEn:'When ego dissolves in the gift, the giver becomes dear to the Lord himself — what is given never diminishes the giver.',
+      src:'स्रोत: श्रीमद्भागवत, स्कन्ध 8, अध्याय 19–23। vedabase.io व wisdomlib.org से मिलान।'
+    },
+    sudama: {
+      title:'सुदामा का पोहा', sub:'भाव ही मापदण्ड · श्रीमद्भागवत 10.80–81',
+      paras:[
+        'द्वारकाधीश के बालसखा सुदामा घोर निर्धन थे — घर में बच्चों के लिए अन्न तक नहीं। पत्नी ने कहा — "आपके मित्र तो साक्षात् श्रीकृष्ण हैं; एक बार जाइए तो।" सुदामा संकोच से भरे चले, और पड़ोस से माँगकर बाँधी गई पोटली में ले गए — चार मुट्ठी चिउड़ा (पोहा)।',
+        'द्वारका में कृष्ण ने सखा को देखते ही दौड़कर हृदय से लगाया, स्वयं चरण धोए, अपने आसन पर बिठाया। फिर पूछा — "भाभी ने मेरे लिए कुछ भेजा होगा?" सुदामा लज्जा से पोटली छिपाते रहे। कृष्ण ने छीनकर खोली और एक मुट्ठी पोहा ऐसे प्रेम से खाया मानो छप्पन भोग हो। दूसरी मुट्ठी उठाई तो रुक्मिणी ने हाथ थाम लिया — "स्वामी, एक ही मुट्ठी में तो सब कुछ दिया जा चुका।"',
+        'सुदामा कुछ माँग नहीं सके, कृष्ण ने कुछ कहा नहीं। लौटे तो झोंपड़ी की जगह महल खड़ा था। सुदामा समझ गए — जो प्रेम से दिया जाता है, उसका लेखा देने वाले के पास नहीं, पाने वाले के हृदय में रहता है।',
+      ],
+      teach:'भाव ही मापदण्ड है — मुट्ठी भर पोहा भी प्रेम से दिया जाए तो पूर्ण है। इसीलिए इस खाते में कोई योग नहीं, कोई राशि-गणना नहीं, कोई तुलना नहीं।',
+      teachEn:'Bhaav is the only measure — a fistful of poha, given with love, is complete. This is why the ledger keeps no totals.',
+      src:'स्रोत: श्रीमद्भागवत, स्कन्ध 10, अध्याय 80–81। vedabase.io व wisdomlib.org से मिलान।'
+    },
+  };
+  const STORY_ORDER = ['karna','rantideva','shibi','bali-vamana','sudama'];
+  const STORY_GLYPHS = { karna:'क', rantideva:'र', shibi:'शि', 'bali-vamana':'ब', sudama:'सु' };
+  document.getElementById('storyCards').innerHTML = STORY_ORDER.map(id=>{
+    const s = STORIES[id];
+    return '<div class="card" onclick="openStory(\''+id+'\')"><div class="glyph">'+STORY_GLYPHS[id]+'</div>'+
+      '<div class="ct"><div class="t">'+s.title+'</div><div class="m">'+s.sub+'</div></div><div class="chev">›</div></div>';
+  }).join('');
+  function openStory(id){
+    const s = STORIES[id];
+    document.getElementById('storyTitle').textContent = s.title;
+    document.getElementById('storyBody').innerHTML =
+      '<div class="hero" style="padding-top:0"><div class="name" style="font-size:21px">'+s.title+'</div>'+
+      '<div class="name-en">'+s.sub+'</div></div>'+
+      '<div class="block">'+ s.paras.map(p=>'<div class="story-p">'+p+'</div>').join('') +
+      '<div class="story-teach"><div class="tl">शिक्षा · The teaching</div>'+
+      '<div class="tv">'+s.teach+'</div><div class="te">'+s.teachEn+'</div></div>'+
+      '<div class="srcnote">'+s.src+'</div></div><div class="endcap">॥ ॐ ॥</div>';
+    go('p5','p5-story');
+    document.getElementById('p5').scrollIntoView({behavior:'smooth', block:'nearest'});
+  }
+
+  /* S6 coverage browser */
+  const TIERS = [
+    [ // महापर्व
+      ['मकर संक्रान्ति','makar-sankranti','तिल-गुड़ · खिचड़ी (अन्न) · वस्त्र-कम्बल · गौ-ग्रास'],
+      ['अन्य संक्रान्तियाँ (11)','*-sankranti','स्नान-दान — कर्क (दक्षिणायन) की अपनी पंक्ति'],
+      ['अक्षय तृतीया','akshaya-tritiya','जल-घट · पंखा/छाता · अन्न · जौ-चना — अक्षय-फल की तिथि'],
+      ['पितृ पक्ष','shraddha-dates','अन्न-दान · तिल · वस्त्र · भोजन — पितृ स्मरण से जुड़ा'],
+      ['अक्षय नवमी','akshaya-navami','आँवले की छाया में अन्न/भोजन'],
+      ['गुरु पूर्णिमा','guru-purnima','विद्या-दान · गुरु-दक्षिणा'],
+      ['वसंत पंचमी','vasant-panchami','विद्या-दान — पुस्तकें, शुल्क, शिक्षण'],
+      ['गंगा दशहरा / सप्तमी','ganga-dussehra','जल-दान — प्याऊ, शरबत'],
+      ['गोवर्धन / अन्नकूट','govardhan-puja','अन्न-दान · गौ-सेवा (कथा: बलि–वामन)'],
+      ['बछ बारस','bachh-baras','गौ-सेवा · गौ-ग्रास'],
+      ['धनतेरस · दीपावली','dhanteras, diwali','दीप-दान · यम-दीप'],
+      ['कार्तिक पूर्णिमा / देव दीपावली','karthigai-vrat','दीप-दान · अन्न'],
+      ['छठ','chhath-puja','ठेकुआ/अन्न घाट पर बाँटना'],
+    ],
+    [ // तिथि-चक्र
+      ['हर अमावस्या','amavasya-vrat','तिल-जल · अन्न-वस्त्र — सोमवती पर विशेष उल्लेख'],
+      ['हर पूर्णिमा','purnima-vrat, shree-satyanarayan-vrat','अन्न/खीर · प्रसाद-वितरण'],
+      ['हर एकादशी','*-ekadashi','पारण पर अन्न — व्रती के व्रत का पूरक'],
+      ['षटतिला एकादशी','shattila-ekadashi','छह प्रकार का तिल — तिल-दान स्पष्ट'],
+      ['— मासिक शिवरात्रि, प्रदोष, संकष्टी','(no row)','प्रामाणिक दान-परम्परा नहीं — खंड अनुपस्थित'],
+    ],
+    [ // वार
+      ['रविवार — सूर्य','','गेहूँ · गुड़ · ताँबा'],
+      ['सोमवार — चन्द्र','','दूध · चावल · मिश्री'],
+      ['मंगलवार — मंगल','','मसूर · गुड़ · लाल वस्त्र'],
+      ['बुधवार — बुध','','मूँग · हरा चारा'],
+      ['गुरुवार — बृहस्पति','','चना दाल · हल्दी · केला · पुस्तकें'],
+      ['शुक्रवार — शुक्र','','चावल · घी · श्वेत वस्त्र'],
+      ['शनिवार — शनि','','तिल · तेल · काला वस्त्र · लोहा'],
+    ],
+    [ // व्यक्तिगत
+      ['श्राद्ध / बरसी तिथियाँ','Pitru Smaran','अन्न-दान का द्वार — पूर्वज-विवरण किसी साझा सतह पर नहीं'],
+      ['जन्म-तिथि','Kundali profile','जन्मदिन का पारम्परिक दान — एक शांत पंक्ति'],
+      ['ग्रहण-दान','(deferred)','engine में ग्रहण-गणना आने तक स्थगित — तालिका से नक़ल नहीं'],
+    ],
+  ];
+  function setTier(i, el){
+    document.querySelectorAll('#tierRow .tchip').forEach(c=>c.classList.remove('on'));
+    el.classList.add('on');
+    document.getElementById('tierBody').innerHTML = TIERS[i].map(r=>
+      '<div class="cov"><div class="ch"><div class="n">'+r[0]+'</div><div class="r">'+r[1]+'</div></div>'+
+      '<div class="items">'+r[2]+'</div></div>').join('');
+  }
+  setTier(0, document.querySelector('#tierRow .tchip'));
 </script>
 </body>
 </html>
