@@ -44,15 +44,15 @@ export function deityLabelForWeekday(weekday: number, lang: Lang): string {
   return contentByLang(lang, l.hi, l.en);
 }
 
-export type WeekdayLabel = { hi: string; en: string; short: string };
+export type WeekdayLabel = { hi: string; en: string; short: string; shortHi: string };
 
 /** Index 0 = Sunday … 6 = Saturday. */
 export const WEEKDAY_LABELS: readonly WeekdayLabel[] = [
-  { hi: 'रविवार', en: 'Sunday', short: 'Sun' },
-  { hi: 'सोमवार', en: 'Monday', short: 'Mon' },
-  { hi: 'मंगलवार', en: 'Tuesday', short: 'Tue' },
-  { hi: 'बुधवार', en: 'Wednesday', short: 'Wed' },
-  { hi: 'गुरुवार', en: 'Thursday', short: 'Thu' },
-  { hi: 'शुक्रवार', en: 'Friday', short: 'Fri' },
-  { hi: 'शनिवार', en: 'Saturday', short: 'Sat' },
+  { hi: 'रविवार', en: 'Sunday', short: 'Sun', shortHi: 'रवि' },
+  { hi: 'सोमवार', en: 'Monday', short: 'Mon', shortHi: 'सोम' },
+  { hi: 'मंगलवार', en: 'Tuesday', short: 'Tue', shortHi: 'मंगल' },
+  { hi: 'बुधवार', en: 'Wednesday', short: 'Wed', shortHi: 'बुध' },
+  { hi: 'गुरुवार', en: 'Thursday', short: 'Thu', shortHi: 'गुरु' },
+  { hi: 'शुक्रवार', en: 'Friday', short: 'Fri', shortHi: 'शुक्र' },
+  { hi: 'शनिवार', en: 'Saturday', short: 'Sat', shortHi: 'शनि' },
 ];

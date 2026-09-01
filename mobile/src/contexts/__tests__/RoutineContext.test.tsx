@@ -5,6 +5,7 @@ import { toDateKey } from '@/contexts/UserActivityContext';
 
 const CELEBRATED_KEY = '@vedansh/routine-celebrated';
 const DONE_KEY = '@vedansh/routine-done';
+const ROUTINES_KEY = '@vedansh/routines';
 const store: Record<string, string | null> = {};
 
 jest.mock('@react-native-async-storage/async-storage', () => ({
@@ -68,6 +69,52 @@ describe('RoutineContext — celebration gate (signature-based)', () => {
     const get = mountProbe();
     await act(async () => undefined);
     expect(get().celebratedSignatureToday).toBeNull();
+  });
+});
+
+describe('RoutineContext — per-routine reminder (PRD-07 P3)', () => {
+  it('setReminder persists the time on the routine record', async () => {
+    const get = mountProbe();
+    await act(async () => undefined);
+
+    let id!: string;
+    act(() => {
+      id = get().createRoutine('प्रातः', 'Morning', 'daily');
+    });
+    act(() => get().setReminder(id, { hour: 6, minute: 30 }));
+
+    expect(get().routines[0].reminder).toEqual({ hour: 6, minute: 30 });
+    const persisted = JSON.parse(store[ROUTINES_KEY] as string);
+    expect(persisted[0].reminder).toEqual({ hour: 6, minute: 30 });
+  });
+
+  it('setReminder(undefined) removes the field entirely — presence is the switch', async () => {
+    const get = mountProbe();
+    await act(async () => undefined);
+
+    let id!: string;
+    act(() => {
+      id = get().createRoutine('प्रातः', 'Morning', 'daily');
+    });
+    act(() => get().setReminder(id, { hour: 7, minute: 0 }));
+    act(() => get().setReminder(id, undefined));
+
+    expect(get().routines[0].reminder).toBeUndefined();
+    const persisted = JSON.parse(store[ROUTINES_KEY] as string);
+    expect('reminder' in persisted[0]).toBe(false);
+  });
+
+  it('legacy records without a reminder field load unchanged (migration-free)', async () => {
+    // A record written by a build that predates PRD-07 P3.
+    store[ROUTINES_KEY] = JSON.stringify([
+      { id: 'legacy', nameHi: 'साधना', nameEn: 'Sadhana', mode: 'daily', items: [], createdAt: 1 },
+    ]);
+    const get = mountProbe();
+    await act(async () => undefined);
+
+    expect(get().routines).toHaveLength(1);
+    expect(get().routines[0].id).toBe('legacy');
+    expect(get().routines[0].reminder).toBeUndefined();
   });
 });
 
