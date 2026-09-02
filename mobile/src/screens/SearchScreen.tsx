@@ -106,7 +106,11 @@ export default function SearchScreen({ navigation, route }: Props) {
   // so it is ready by the first keystroke; a plain query never sees an abstain.
   const { ready: askReady, ask, looksLikeQuestion, examples: askExamples } = useAsk(route.params?.seed);
   const resolution = useMemo(() => (hasQuery && askReady ? ask(trimmed) : null), [hasQuery, askReady, ask, trimmed]);
-  const isQuestion = hasQuery && looksLikeQuestion(trimmed);
+  // Only a multi-word (or "?"-terminated) question may show the abstain card:
+  // a single interrogative mid-typing ("kab") must not flash "can't answer"
+  // before the sentence exists. Answers are unaffected — they show as soon as
+  // the resolver has one.
+  const isQuestion = hasQuery && looksLikeQuestion(trimmed) && (trimmed.includes(' ') || trimmed.endsWith('?'));
 
   // Rotating placeholder: real answerable questions are the feature's own
   // discovery surface. Paused while the user is typing.
