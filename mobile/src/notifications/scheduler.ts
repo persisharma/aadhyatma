@@ -9,7 +9,7 @@
 
 import * as Notifications from 'expo-notifications';
 import type { Lang } from '@/data/gita/language';
-import { getVersePool } from '@/data/versePool';
+import { getVerseAtPoolIndex, getVersePoolSize } from '@/data/versePool';
 import { assignSlotVerseIndices, toDateKey, type ReminderSlot } from './seed';
 import type { DayAngaMap } from './dayAnga';
 import {
@@ -70,8 +70,8 @@ export async function scheduleDailyVerseRollingWindow(
   if (!config.enabled) return 0;
   if (config.times.length === 0) return 0;
 
-  const pool = getVersePool();
-  if (pool.length === 0) return 0;
+  const poolSize = getVersePoolSize();
+  if (poolSize === 0) return 0;
 
   const dates = computeFireDatesMulti(config.times, now);
 
@@ -87,13 +87,13 @@ export async function scheduleDailyVerseRollingWindow(
     dateKey: toDateKey(fire),
     hhmm: `${`${fire.getHours()}`.padStart(2, '0')}${`${fire.getMinutes()}`.padStart(2, '0')}`,
   }));
-  const verseIndices = assignSlotVerseIndices(slots, pool.length);
+  const verseIndices = assignSlotVerseIndices(slots, poolSize);
 
   let scheduled = 0;
   for (let i = 0; i < fires.length; i += 1) {
     const fire = fires[i];
     const { dateKey, hhmm } = slots[i];
-    const verse = pool[verseIndices[i]];
+    const verse = getVerseAtPoolIndex(verseIndices[i]);
     if (!verse) continue;
 
     const { title, body } = formatNotificationContent(verse, lang, angas[dateKey]);

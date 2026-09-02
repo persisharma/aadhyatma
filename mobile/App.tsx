@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { InteractionManager, Linking, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -74,7 +74,11 @@ import { resetDerivedCachesIfBuildChanged } from '@/utils/derivedCacheReset';
 import { prefetchTodayPanchang } from '@/panchang/panchangLaunchPrefetch';
 import RootNavigator from '@/navigation/RootNavigator';
 import WidgetCoordinator from '@/widgets/WidgetCoordinator';
-import { retryWidgetDeepLink } from '@/widgets/deepLink';
+import {
+  handleWidgetDeepLink,
+  parseWidgetDeepLink,
+  type WidgetDeepLinkTarget,
+} from '@/widgets/deepLink';
 import { launchMark, launchMarkOnce } from '@/utils/launchTrace';
 
 SplashScreen.preventAutoHideAsync().catch(() => {
@@ -117,6 +121,9 @@ InteractionManager.runAfterInteractions(() => launchMark('first-ui-idle'));
 
 export default function App() {
   launchMarkOnce('app-render');
+  const [initialWidgetTarget, setInitialWidgetTarget] = useState<
+    WidgetDeepLinkTarget | null | undefined
+  >(undefined);
   const [fontsReady] = useFonts({
     NotoSerifDevanagari_500Medium,
     NotoSerifDevanagari_600SemiBold,
@@ -134,6 +141,23 @@ export default function App() {
   });
 
   if (fontsReady) launchMarkOnce('fonts-ready');
+
+  // Resolve a cold widget URL before mounting navigation. Otherwise the tab
+  // navigator commits its default Home route first, then an effect redirects
+  // to Daily Bhakti after Home has paid its mount cost. This read races the
+  // font gate, so ordinary launches do not gain another serial startup step.
+  useEffect(() => {
+    let cancelled = false;
+    Linking.getInitialURL()
+      .then((url) => {
+        if (cancelled) return;
+        setInitialWidgetTarget(
+          url?.startsWith('vedansh://widget/') ? parseWidgetDeepLink(url) : null
+        );
+      })
+      .catch(() => { if (!cancelled) setInitialWidgetTarget(null); });
+    return () => { cancelled = true; };
+  }, []);
 
   // Wire notification taps to deep-link navigation. Handles both:
   //  (a) Cold start — app was killed; iOS launches us with the tap response,
@@ -185,24 +209,17 @@ export default function App() {
     };
   }, [fontsReady]);
 
-  // WidgetKit/AppWidget taps arrive as ordinary app links. Retry a cold-start
-  // URL briefly until the navigation container is ready; warm links dispatch
-  // immediately through the same validated parser.
+  // Cold widget URLs become the navigator's initial route above. Only warm
+  // links need an imperative dispatch after the container is already mounted.
   useEffect(() => {
-    if (!fontsReady) return undefined;
-    let cancelled = false;
-    const cancellations = new Set<() => void>();
-    const route = (url: string) => {
-      if (cancelled) return;
-      const cancel = retryWidgetDeepLink(url);
-      cancellations.add(cancel);
-    };
-    Linking.getInitialURL().then((url) => { if (url?.startsWith('vedansh://widget/')) route(url); }).catch(() => undefined);
-    const sub = Linking.addEventListener('url', ({ url }) => { if (url.startsWith('vedansh://widget/')) route(url); });
-    return () => { cancelled = true; cancellations.forEach((cancel) => cancel()); cancellations.clear(); sub.remove(); };
-  }, [fontsReady]);
+    if (!fontsReady || initialWidgetTarget === undefined) return undefined;
+    const sub = Linking.addEventListener('url', ({ url }) => {
+      if (url.startsWith('vedansh://widget/')) handleWidgetDeepLink(url);
+    });
+    return () => sub.remove();
+  }, [fontsReady, initialWidgetTarget]);
 
-  if (!fontsReady) {
+  if (!fontsReady || initialWidgetTarget === undefined) {
     return <View style={{ flex: 1, backgroundColor: lightColors.parchment }} />;
   }
 
@@ -255,7 +272,7 @@ export default function App() {
                           <View style={{ flex: 1 }}>
                             <NavigationContainer ref={navigationRef}>
                               <StatusBar style="dark" />
-                              <RootNavigator />
+                              <RootNavigator initialWidgetTarget={initialWidgetTarget} />
                               <ReminderOptInModal />
                               <UpdateReadyModal />
                               <WhatsNewModal />

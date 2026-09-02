@@ -13,6 +13,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { scriptTitleFont } from '@/utils/langType';
 import type { TabParamList } from './types';
+import type { WidgetDeepLinkTarget } from '@/widgets/deepLink';
 import {
   HomeIcon,
   BhaktiIcon,
@@ -30,7 +31,11 @@ const LazyPanchangStackNavigator = lazy(() => import('./PanchangStackNavigator')
 // setOptions) so the bar animates out cleanly and restores itself on blur.
 const IMMERSIVE_HOME_ROUTES = ['VratKathaReader'];
 
-export default function TabNavigator() {
+export default function TabNavigator({
+  initialWidgetTarget,
+}: {
+  initialWidgetTarget?: WidgetDeepLinkTarget | null;
+}) {
   const { colors } = useTheme();
   const { lang } = useGitaLanguage();
   const insets = useSafeAreaInsets();
@@ -48,9 +53,38 @@ export default function TabNavigator() {
   // bar was the last surface still English-only under a fully Indic screen.
   // contentByLang transliterates the Hindi label for gu/kn.
   const tabLabel = (hi: string, en: string) => contentByLang(lang, hi, en);
+  const initialRouteName: keyof TabParamList =
+    initialWidgetTarget?.kind === 'verse'
+      ? 'DailyBhaktiTab'
+      : initialWidgetTarget?.kind === 'panchang'
+        ? 'PanchangTab'
+        : 'HomeTab';
+  const homeInitialParams: TabParamList['HomeTab'] =
+    initialWidgetTarget?.kind === 'japam'
+      ? initialWidgetTarget.mantraId
+        ? { screen: 'JapamCounter', params: { mantraId: initialWidgetTarget.mantraId } }
+        : { screen: 'CategoryList', params: { categoryId: 'japam' } }
+      : undefined;
+  const verseInitialParams: TabParamList['DailyBhaktiTab'] =
+    initialWidgetTarget?.kind === 'verse'
+      ? {
+          sourceId: initialWidgetTarget.sourceId,
+          verseIndex: initialWidgetTarget.verseIndex,
+          ...(initialWidgetTarget.chapter == null ? {} : { chapter: initialWidgetTarget.chapter }),
+        }
+      : undefined;
+  const panchangInitialParams: TabParamList['PanchangTab'] =
+    initialWidgetTarget?.kind === 'panchang'
+      ? {
+          screen: 'PanchangHome',
+          params: { dateMs: initialWidgetTarget.dateMs },
+          initial: false,
+        }
+      : undefined;
 
   return (
     <Tab.Navigator
+      initialRouteName={initialRouteName}
       screenOptions={{
         headerShown: false,
         tabBarStyle,
@@ -71,6 +105,7 @@ export default function TabNavigator() {
       <Tab.Screen
         name="HomeTab"
         component={HomeStackNavigator}
+        initialParams={homeInitialParams}
         options={({ route }) => {
           const focused = getFocusedRouteNameFromRoute(route) ?? 'Home';
           return {
@@ -88,6 +123,7 @@ export default function TabNavigator() {
       <Tab.Screen
         name="DailyBhaktiTab"
         component={DailyBhaktiScreen}
+        initialParams={verseInitialParams}
         options={{
           tabBarLabel: tabLabel('भक्ति', 'Bhakti'),
           tabBarButtonTestID: 'tab-bhakti',
@@ -99,6 +135,7 @@ export default function TabNavigator() {
       <Tab.Screen
         name="PanchangTab"
         component={PanchangTabRoot}
+        initialParams={panchangInitialParams}
         options={{
           tabBarLabel: tabLabel('पंचांग', 'Panchang'),
           tabBarButtonTestID: 'tab-panchang',

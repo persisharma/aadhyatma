@@ -1,6 +1,6 @@
 import appConfig from '../../app.json';
-import { getVersePool } from '@/data/versePool';
-import { pickVerseForDateKey } from '@/notifications/seed';
+import { getVerseAtPoolIndex, getVersePoolSize } from '@/data/versePool';
+import { verseIndexForDateKey } from '@/notifications/seed';
 import { computePanchangForDate } from '@/panchang/engine';
 import { getObservancesForDateKey } from '@/panchang/festivalEngine';
 import { computeMuhuratDay } from '@/panchang/muhurat';
@@ -48,7 +48,7 @@ function sourceLabel(sourceHi: string, sourceEn: string, labelHi?: string, label
 }
 
 export async function planWidgetPayload(input: Omit<WidgetPlannerInput, 'panchangDays' | 'verseDays' | 'writerAppVersion'>): Promise<WidgetPayloadV1> {
-  const pool = getVersePool();
+  const poolSize = getVersePoolSize();
   const panchangDays: PanchangWidgetDay[] = [];
   const verseDays: VerseWidgetDay[] = [];
   const panchangStartKey = widgetDateKey(input.generatedAt, WIDGET_TIME_ZONE);
@@ -75,7 +75,7 @@ export async function planWidgetPayload(input: Omit<WidgetPlannerInput, 'panchan
     });
 
     const verseKey = shiftDateKey(verseStartKey, offset);
-    const verse = pickVerseForDateKey(verseKey, pool);
+    const verse = getVerseAtPoolIndex(verseIndexForDateKey(verseKey, poolSize));
     if (!verse) throw new Error('Daily verse pool is empty');
     const lines: Record<Lang, string[]> = {
       hi: verse.textHi,

@@ -50,8 +50,28 @@ test('config plugins wire the canonical fixture into both native decoders', () =
   assert.match(iosPlugin, /WidgetPayloadContract\.swift/);
 });
 
-test('App consumes the cold initial widget URL through the retry bridge', () => {
-  const source = fs.readFileSync(path.join(process.cwd(), 'App.tsx'), 'utf8');
-  assert.match(source, /Linking\.getInitialURL\(\)/);
-  assert.match(source, /retryWidgetDeepLink\(url\)/);
+test('App resolves a cold widget URL before navigation mounts', () => {
+  const app = fs.readFileSync(path.join(process.cwd(), 'App.tsx'), 'utf8');
+  const tabs = fs.readFileSync(path.join(process.cwd(), 'src/navigation/TabNavigator.tsx'), 'utf8');
+  assert.match(app, /Linking\.getInitialURL\(\)/);
+  assert.match(app, /parseWidgetDeepLink\(url\)/);
+  assert.match(app, /<RootNavigator initialWidgetTarget=\{initialWidgetTarget\}/);
+  assert.doesNotMatch(app, /retryWidgetDeepLink/);
+  assert.match(tabs, /initialRouteName=\{initialRouteName\}/);
+  assert.match(tabs, /initialWidgetTarget\?\.kind === 'verse'/);
+  assert.match(tabs, /\? 'DailyBhaktiTab'/);
+});
+
+test('widget planning selects indexed verses without materialising the complete pool', () => {
+  const planner = fs.readFileSync(path.join(process.cwd(), 'src/widgets/planPayload.ts'), 'utf8');
+  const scheduler = fs.readFileSync(path.join(process.cwd(), 'src/notifications/scheduler.ts'), 'utf8');
+  const routineUnits = fs.readFileSync(path.join(process.cwd(), 'src/data/routine/units.ts'), 'utf8');
+  const pool = fs.readFileSync(path.join(process.cwd(), 'src/data/versePool.ts'), 'utf8');
+  assert.doesNotMatch(planner, /getVersePool\(/);
+  assert.doesNotMatch(scheduler, /getVersePool\(/);
+  assert.doesNotMatch(routineUnits, /getVersePool\(/);
+  assert.match(planner, /getVerseAtPoolIndex/);
+  assert.match(scheduler, /getVerseAtPoolIndex/);
+  assert.match(pool, /function getVerseAtPoolIndex/);
+  assert.doesNotMatch(pool.match(/export function findVerse[\s\S]*$/)?.[0] ?? '', /getVersePool\(/);
 });
