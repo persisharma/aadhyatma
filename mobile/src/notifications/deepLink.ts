@@ -77,6 +77,12 @@ function isPitruPakshaReminderPayload(data: unknown): data is { type: 'pitru-pak
   return Boolean(data && typeof data === 'object' && (data as Record<string, unknown>).type === 'pitru-paksha-reminder');
 }
 
+function isJanmaTithiReminderPayload(data: unknown): data is { type: 'janma-tithi-reminder'; personId: string } {
+  if (!data || typeof data !== 'object') return false;
+  const d = data as Record<string, unknown>;
+  return d.type === 'janma-tithi-reminder' && typeof d.personId === 'string';
+}
+
 /**
  * Resolve a notification response into a navigation dispatch. Returns true if
  * we recognised the payload and routed; false otherwise.
@@ -188,6 +194,20 @@ export function handleNotificationResponse(
       CommonActions.navigate({
         name: 'MoreTab',
         params: { screen: 'PitruSmaranDetail', params: { entryId: data.entryId }, initial: false },
+      } as never)
+    );
+    return true;
+  }
+
+  // A janma-tithi tap (PRD-29) opens that person's detail in the More stack —
+  // the screen carrying this year's date and the day's practice. The person id
+  // is validated by the screen itself (a removed person renders its own
+  // not-found state), so a stale notice cannot crash a route.
+  if (isJanmaTithiReminderPayload(data)) {
+    navigationRef.dispatch(
+      CommonActions.navigate({
+        name: 'MoreTab',
+        params: { screen: 'JanmaTithiDetail', params: { personId: data.personId }, initial: false },
       } as never)
     );
     return true;
