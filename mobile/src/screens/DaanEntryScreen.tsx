@@ -1,5 +1,5 @@
 /**
- * नया दान — the 10-second entry form (PRD-26 §4b U6, design.md §69). Only
+ * नया दान — the 10-second entry form (PRD-26 §4b U6, design.md §70). Only
  * date (auto) + category are required; everything else optional. The गुप्त
  * switch removes the detail fields from the tree — combined with the
  * ledger-core sanitizer, a gupt entry's note/amount is never captured, not

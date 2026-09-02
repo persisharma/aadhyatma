@@ -1,2846 +1,5441 @@
-# Vedansh â€” Design System
-
-Reference document for all Vedansh / Aadhyatma modules (Hanuman Chalisa, Ramcharitmanas, Bhagavad GÄ«tÄ, Sundarkand, and future sacred-text modules).
-
-The source-of-truth visual reference is `design-preview.html` at the repo root. Open it to see live mockups of Home and Reader screens. This document captures the tokens, components, and rules so the same language can be re-applied in React Native.
-
----
-
-## 1. Philosophy
-
-- **Parchment-first.** The app should feel like an old manuscript, not a glossy modern reader. Warm cream base, sepia ink, saffron/gold accents.
-- **Reverent, not decorative.** Ornamentation is minimal: a single `à¥¥` glyph as divider, simple crest on Home. Never clutter the verse.
-- **Text is the hero.** Every screen exists to carry Devanagari gracefully. Backgrounds are faded sketches that sit behind a parchment overlay â€” they must never fight the text.
-- **Book-like pacing.** One verse per page, swipe to advance. No endless scroll in the reader.
-- **Bilingual but Hindi-led.** Titles and verses in Devanagari; Latin (Cormorant Garamond italic) is a quiet secondary label, never a translation.
-
----
-
-## 2. Color Tokens
-
-| Token | Hex | Role |
-| --- | --- | --- |
-| `parchment` | `#F3E7C9` | Primary background for reader surfaces |
-| `parchment-soft` | `#F8EFD6` | Lighter parchment for inner cards (with a soft `sm` shadow for lift) and flat controls |
-| `parchment-deep` | `#E9D9B1` | Bottom-edge gradient, elevated surfaces |
-| `ink` | `#1A0E03` | Primary Devanagari body text. Deepened from `#2F1E10` for contrast â€” ~15.4:1 on parchment (WCAG AAA). See `colors.ts` / `colors.contrast.test.ts`. |
-| `ink-soft` | `#5A3A1E` | Secondary text / meaning body (~8.3:1) |
-| `ink-muted` | `#6E5230` | Tertiary / metadata / placeholders / demoted secondary-language line. Deepened from `#8A6A47` (which only reached ~4.0:1) to ~5.9:1 (WCAG AA). |
-| `saffron` | `#B8621B` | Primary accent, active states, arrows |
-| `saffron-deep` | `#8A3E0B` | Strong accent, pager dot, labels |
-| `gold` | `#A67C34` | Secondary accent, crest, section tags |
-| `divider` | `rgba(138, 62, 11, 0.18)` | Borders, card outlines |
-| `newBadgeBg` | `rgba(184, 98, 27, 0.16)` | "NEW" badge fill â€” saffron tint (recently-added content) |
-| `newBadgeText` | `#8A3E0B` | "NEW" badge text â€” saffron-deep |
-| `avoid` | `#9E4A2E` | Muted terracotta â€” inauspicious/à¤¤à¥à¤¯à¤¾à¤œà¥à¤¯ timings (Rahu/Gulika/Yamaganda, avoid choghadiya). Warm palette, **never red**; PRD-14. |
-| `avoidTint` | `rgba(158, 74, 46, 0.12)` | Fill behind an `avoid` row. Auspicious rows reuse `goldTint`; quality is always labelled in text too (Â§12). |
-| `avoidChipBg` / `goldChipBg` | `rgba(158, 74, 46, 0.20)` / `rgba(166, 124, 52, 0.22)` | Fill behind a quality **chip/pill** (avoid / auspicious) on the Muhurat glance card. Deeper than the row tints so the pill reads as its own surface on the `cardActive` gradient â€” the 0.12â€“0.14 row tints were too faint to register as a chip (Â§31). |
-| `avoidDeep` | `#7A3722` | Text **on** the avoid chip tint. Raw `avoid` clears AA on the card surfaces but drops to ~3.5:1 composited on `avoidChipBg` over the gradient's dark stop â€” chip text uses this deeper cut; pinned with compositing math in `colors.contrast.test.ts`. |
-
-**Home gradient** (top â†’ bottom): `#F6ECD0` â†’ `#F1E3BF` (`parchmentHighlight` â†’ `parchmentGradientEnd` in `colors.ts`).
-
-**Reader overlay** (on top of background image): vertical gradient
-`rgba(243,231,201,0.85)` â†’ `rgba(243,231,201,0.55)` â†’ `rgba(243,231,201,0.75)` â†’ `rgba(233,217,177,0.95)`.
-
-**Background image filters:** the CSS filter stack (`opacity: 0.52`, `sepia(0.35) saturate(0.85) brightness(1.02)`) applies only to `design-preview.html`. In React Native the sketch renders unfiltered â€” `BackgroundLayer.tsx` sets no `imageStyle` opacity or tint â€” and the fade comes solely from the parchment overlay gradient stacked above it.
-
-### Scope of the warm-only rule
-
-The palette is warm manuscript â€” **never green/red** â€” and signal colours stay inside it
-(`avoid` is a muted terracotta, auspicious reuses the gold tint; both always carry a text cue,
-Â§12). This rule governs **theme colour and UI chrome**, i.e. everything in
-`mobile/src/theme/colors.ts`.
-
-**One sanctioned exception:** the baked deity-glyph illustration palette
-(`mobile/src/components/deityGlyphs/palette.ts`, Â§42) carries cool peacock/water hues â€”
-`leafGreen #17715D`, `teal #0B7D82`, `deepBlue #064D5E`. They are **painted attributes of the
-art, never signals**: Krishna's feather, Kartikeya's plume, Ganga's waves. The boundary is
-what matters â€” nothing in that file may be imported into chrome (no badge, chip, border, state
-colour or icon tint outside the glyph files). Chrome takes its colour from `colors.ts` only.
-Both files carry this note so the exception cannot be mistaken for a precedent.
-
----
-
-## 3. Typography
-
-Two typefaces, four roles.
-
-| Typeface | Usage |
-| --- | --- |
-| **Noto Serif Devanagari** | All Devanagari: titles, verses, meaning body, card names. Weights 400/500/600/700. |
-| **Cormorant Garamond** | Latin subtitles, page counters, swipe hints, italic labels. Weights 400/500 for body prose, **600 non-italic** for transliteration and Latin chapter numbers, 600 italic for section labels. Italic is reserved for labels and short flourishes; long prose is always roman (non-italic) to keep English paragraphs readable over the faded parchment bg. |
-| **Noto Serif Gujarati** | All Gujarati (`gu` reading language): titles, verses, meaning body, card names. Weights 500/600. Same family/weights as the Devanagari cut so the reading type scale carries over unchanged. |
-| **Noto Serif Kannada** | All Kannada (`kn` reading language): titles, verses, card names (Kannada meaning prose follows English). Weights 500/600. |
-| **Inter** | Only for tiny UI chrome where reading content is not involved. Loaded via `@expo-google-fonts/inter` in `App.tsx` (500/600) and carried by the `sectionLabel` / `versePill` / `cardMeta` tokens (`typography.ts`), plus the tab-bar labels. Indic-script pill/label text swaps off Inter to the script serif via `pillTextStyle()` (`utils/langType.ts`) â€” Inter has no Indic glyphs and Latin tracking splits the shirorekha. |
-
-**Font families come from tokens, never from string literals.** Always
-`fontFamilies.*` (`mobile/src/theme/typography.ts`) â€” never a hand-typed
-`'Inter_600SemiBold'`. A family string that names an unloaded or misspelled face fails
-**silently** in React Native: the node just renders in the system font. That is exactly how
-four call sites shipped referencing `NotoSansDevanagari_600SemiBold`, a family the app never
-installed or loaded â€” including the Jyotish share card, which is exported as an image and
-shared outside the app. 125 such literals across 23 files were migrated to tokens in July
-2026. **Enforced:** `eslint.config.js` bans font-family string literals outside `src/theme/`.
-
-### 3.0 The 10 pt floor
-
-**No UI chrome renders below 10 pt.** The font-scale system (Â§12) deliberately never scales
-chrome â€” only reading content â€” so a 7 pt badge is 7 pt forever, at every accessibility
-setting. 10 is the scale's own floor (`versePill` 10, `cardMeta` 11); anything smaller was
-below the system's stated minimum.
-
-A July 2026 audit found 50 chrome sites at 7â€“9 pt across Panchang, Kundali, Rashifal,
-Theerth, Muhurat and the catalog cards. All were raised to 10, and the two fixed-size chips
-that would then have clipped were grown rather than trimmed: the calendar `dateTag`
-(24Ã—12 â†’ 28Ã—16 â€” its label can be Devanagari, whose matras clip below ~1.4Ã— leading) and
-the Panchang `starBadge` (15 â†’ 16).
-
-**Leading is part of the floor.** A 10 pt line needs **â‰¥ 1.4Ã— leading** (14) whenever it can
-carry Indic text; `lineHeight === fontSize` sits the first baseline so high that the top of
-the line is sliced off, which reads as trimmed text rather than tight text. And a chrome line
-that can render Indic must *name* a face that has the script â€” Inter does not, and the OS
-fallback's metrics are taller than any fixed leading can predict, so route it through
-`pillTextStyle` / `scriptTitleFont` (`utils/langType.ts`) â€” or `indicSafeTag` for the mixed-case
-micro tags (`à¤¯à¤¹à¥€ Â· this one`, `à¥¯ à¤šà¤°à¤£ Â· 12 à¤…à¤•à¥à¤·à¤°`) that keep their Latin case and tracking in English
-but must not carry either over Devanagari. Both halves of this bit the Jyotish
-share cards in August 2026: three micro lines shipped at 10/10, and the Kundali header
-(Inter + a Devanagari label) rendered `à¤œà¤¨à¥à¤® à¤•à¥à¤‚à¤¡à¤²à¥€` as "à¤œà¤¨à¥à¤® à¤•à¥à¤‚à¤¡à¤²à¤¾" while its method footer lost
-its shirorekha. Guarded by `components/__tests__/jyotishShareCardFit.test.tsx`. Both halves recurred on Namkaran a fortnight later (Â§61) â€” a 58/78 hero syllable cropped `à¤•à¥‡`, and five Inter-tracked micro labels split their clusters â€” so treat "fixed leading on a Devanagari line" and "Inter on an Indic label" as the two things to check on any new card, not as one screen's history. Its guard is `components/__tests__/namkaranTypeFit.test.tsx`, which also pins that a hero line pins **no** leading at all: a fixed box cannot follow `maxFontSizeMultiplier`. The third form of the same fault is a fixed leading paired with **platform auto-fit**: `adjustsFontSizeToFit` scales the glyphs and leaves `lineHeight` where it was, so the leading ratio grows as the text shrinks â€” the verse share card's meaning reached 7 pt inside 24 pt of leading before it was sized in JS instead (Â§39). **A fixed `lineHeight` and `adjustsFontSizeToFit` must never sit on the same Text**; size in JS, derive the leading from that size.
-
-**Enforced:** `eslint.config.js` bans `fontSize` below 10 outside `src/theme/`.
-
-**One documented exception:** `NorthIndianChart` keeps sub-10 numbers because those are
-**viewBox units**, not points â€” they scale with the chart's `size` prop, so the "chrome can
-never grow" premise does not hold. Reasoning is recorded at the call site.
-
-**The thin italic Cormorant face (`latinItalic`, 400) is never used for numerals, clock times, ranges, quality chips, or status labels** â€” only for prose subtitles and short flourishes. Those secondary elements use the **non-italic â‰¥600 face** (`latinSemiBold` / `latinBold`): the thin italic strokes wash out against parchment and the `cardActive` gradient even when the color technically clears WCAG AA, so a time or chip set in italic reads half-visible. This has been re-fixed several times (e.g. the Muhurat glance-card times & auspicious/avoid chip, Â§31) â€” treat "small secondary text in italic on a light surface" as a readability defect on sight.
-
-### 3.1 Romanization Style by Source Language
-
-The Latin-script `linesEn` / `transliteration` field is rendered very differently depending on the source language of the verse. Use the rule that matches the *source*, not the *module*:
-
-**Sanskrit verses â†’ IAST + Hunterian digraphs.**
-This applies to the Bhagavad GÄ«tÄ in full (`transliteration[]`) and to the Sanskrit shlokas embedded in other texts (e.g., the three opening shlokas in Sundarkand, where `section === 'shloka'`).
-
-- Diacritics in scope: `Ä Ä« Å« á¹› á¹ á¹… Ã± á¹­ á¸ á¹‡ Å› á¹£ á¸¥ á¹`.
-- Digraphs: `Å›h` (à¤¶ + h aspirate), `ká¹£h` (à¤•à¥à¤·), `chh` (à¤›), `ch` (à¤š). An epenthetic `i` follows `á¹›` (e.g., `dhá¹›itarÄÅ›htra`, `pá¹›ithivÄ«`) â€” this matches the popular BhaktiVedanta-style romanization the Gita corpus already uses, not strict Sanskrit IAST (`dhá¹›tarÄá¹£á¹­ra`).
-- Reference (Gita 1.1):
-
-```
-dhá¹›itarÄÅ›htra uvÄcha
-dharma-ká¹£hetre kuru-ká¹£hetre samavetÄ yuyutsavaá¸¥
-mÄmakÄá¸¥ pÄá¹‡á¸avÄÅ›hchaiva kimakurvata saÃ±jaya
-```
-
-**Awadhi / Hindi verses â†’ pronunciation-based ASCII (no diacritics).**
-This applies to Sundarkand's chaupais, dohas, sorthas, and chhands, and to all of Hanuman Chalisa (opening dohas, chaupais, closing doha). Tulsidas's Awadhi is recited with schwa-deletion and regional consonant variations that strict IAST does not capture â€” IAST `mahÄbÄ«ra bikrama bajaraá¹gÄ«` does not match how `à¤®à¤¹à¤¾à¤¬à¥€à¤° à¤¬à¤¿à¤•à¥à¤°à¤® à¤¬à¤œà¤°à¤‚à¤—à¥€` is actually chanted, but `Mahaabeer bikram bajarangee` does. The romanization is hand-curated to reflect recitation; do not regenerate mechanically from the Devanagari.
-
-| | Verse-line romanization |
-|---|---|
-| âœ“ Sanskrit shloka | `dhá¹›itarÄÅ›htra uvÄcha` (Gita) |
-| âœ“ Sanskrit shloka | `nÄnyÄ spá¹›ihÄ raghupate há¹›idaye'smadÄ«ye` (Sundarkand opening shloka) |
-| âœ“ Awadhi chaupai | `Mahaabeer bikram bajarangee` (Hanuman Chalisa) |
-| âœ“ Awadhi doha | `Buddhiheen tanu jaanike, sumirau pavan-kumaar.` |
-| âœ— | `dhritarashtra uvacha` for a Sanskrit verse (diacritics dropped) |
-| âœ— | `mahÄbÄ«ra bikrama bajaraá¹gÄ«` for an Awadhi chaupai (IAST imposed where it doesn't fit) |
-
-**Gujarati / Kannada (`gu` / `kn`) are script conversion, not romanization.** This Â§3.1 governs only the *Latin* `linesEn`/`transliteration` field, where schwa-deletion and recitation nuance matter. The Gujarati and Kannada reading languages instead render the Devanagari re-scripted to the sister Brahmi script (`mobile/src/utils/transliterate.ts`) â€” an orthography-preserving 1:1 codepoint mapping, which is exactly how this content is printed regionally. Mechanical conversion is correct there precisely because it is *not* romanization. (gu/kn carry no authored content fields; see RULEBOOK Â§1.)
-
-**This whole section does NOT apply to:**
-
-- Chapter titles' English subtitles (e.g., `Bhagavad GÄ«tÄ`, `Arjuna's Dilemma`)
-- Verse-pill subtitles (e.g., `Chapter 1`, `Opening`, `Closing`)
-- Library-card English names (e.g., `Hanuman Chalisa`, `Sundarkand`)
-- UI chrome â€” counts (`47 verses`), hints (`â† swipe â†’`), labels (`Meaning`, `Commentary`)
-- **Theerth prose.** `significanceHi/En` and `originStoryHi/En` on each `TheerthTemple` are independent prose translations, not romanizations of the same verse line. Temple names (`Somnath`, `Kashi Vishwanath`) use popular English spellings, not IAST.
-
-These remain in everyday English. A handful of common Sanskrit terms keep their conventional spelling outside verse-lines (`GÄ«tÄ`, `kÄá¹‡á¸a`) â€” the diacritic-or-not call belongs to the editorial team, not this rule.
-
-**Rendering layout** is module-specific:
-
-- **Swap-on-toggle (all modules, Gita included):** the toggle swaps Devanagari â†” romanization in place, so only one script is visible at a time (`verseLinesByLang`). See Â§9 / Â§10. Sanskrit shlokas swap to IAST (the Gita's `transliteration[]`, Sundarkand's opening shlokas); Awadhi chaupais swap to pronunciation-based ASCII. (An earlier Gita revision rendered both scripts side-by-side; the shipped readers use one script at a time everywhere.)
-
-### Type scale
-
-This table is the **single source of truth** for reading-content sizing, implemented in `mobile/src/theme/typography.ts`. Every reader section and every surface that shows verse / transliteration / meaning / commentary consumes these tokens â€” **no hardcoded `fontSize`/`lineHeight` on reading content**, no per-section scale. Both languages render the meaning at the same size, and the verse sits above the meaning. See `RULEBOOK.md` Â§3 ("One reading type scale") and the guard test at `mobile/src/components/__tests__/readerTypeScale.test.tsx`.
-
-| Role | Typeface | Size | Weight | Notes |
-| --- | --- | --- | --- | --- |
-| Screen title (`à¤¸à¤¨à¤¾à¤¤à¤¨`) | Noto Serif Devanagari | 34 | 600 | Letter-spacing `0.01em` |
-| Reader top-bar title | Noto Serif Devanagari | 16 | 600 | |
-| Verse body (Devanagari) | Noto Serif Devanagari | 23 | 500 | Line-height 1.7 |
-| Transliteration (Latin IAST) | Cormorant Garamond | 24 | 600 | `ink`, line-height 35. Sits one step above the meaning (20) so the verse stays dominant â€” mirrors the Devanagari verseâ†”meaning hierarchy. Cormorant's small x-height reads smaller than Devanagari, so it takes a few extra points; bumped 17 â†’ 20 â†’ 24. |
-| Meaning body (Hindi) | Noto Serif Devanagari | 20 | 500 | `ink-soft`, line-height 34 (â‰ˆ1.7). Bumped 15 â†’ 20 to match the English meaning size, so both languages read at one meaning scale. |
-| Meaning body (English) | Cormorant Garamond | 20 | 500 medium non-italic | `ink`, line-height 33. Italic 400 was previously used and rejected as too thin over the parchment bg; medium-weight roman is the shipping spec. Bumped from 18 â†’ 20: Cormorant's small x-height read too small against the Devanagari meaning body. |
-| Commentary body (Hindi) | Noto Serif Devanagari | 20 | 500 | `ink-soft`, line-height 34. Paragraph gap `14`. Commentary reuses the `meaning` token â€” one reading scale, no smaller commentary tier (see `bodyStyle` in `GitaVersePage.tsx`). |
-| Commentary body (English) | Cormorant Garamond | 20 | 500 medium non-italic | `ink`, line-height 33. Paragraph gap `14`. Same `meaningEnglish` token as the English meaning body. |
-| Commentary fallback note | Cormorant Garamond | 14 | 400 italic | `ink-muted`, centred. Shown when the selected language has no commentary for this verse but the other language does (e.g., Gita Chapter 1 has only ~20 % English commentary coverage in the published source). |
-| Card name (primary language) | Noto Serif Devanagari (hi) / Cormorant Garamond (en) | 14â€“22 | 600 semibold upright (hi) / **700 bold** upright + `0.3` tracking (en) | Prominent top line on catalog, category, deity, and resume-sheet titles. The **active reading language** takes this slot â€” Devanagari-first by default (`'hi'`), English-first when the toggle is `'en'`. **Weight follows the slot, not the script.** The two scripts carry different *optical* weight at the same point size (Devanagari reads dark/dense, Cormorant reads light), so the English primary uses the heavier Bold face **and** is sized a step larger than the Devanagari primary at each call site (e.g. CategoryCard `latPrimary 17` vs `devPrimary 16`; LibraryCard `19` vs `17`) â€” otherwise an English-primary title reads as a peer of its demoted Hindi line. Ordering/weight/tracking is centralised in `orderTitlesByLanguage()`; per-script optical sizes are passed by each caller. |
-| Card name (secondary language) | Cormorant Garamond italic (en) / Noto Serif Devanagari (hi) | 11â€“13 | 400 italic (en) / 500 medium (hi) | `ink-muted` lighter supporting line below the primary title â€” the language *not* selected. Sized ~2â€“5 pt below the primary and demoted to `ink-muted` (not `ink-soft`) across **all** call sites so it reads as a caption, not a peer. |
-| Chapter card title (Hindi) | Noto Serif Devanagari | 17 | 600 | Gita Chapters Index. |
-| Chapter card title (English) | Cormorant Garamond | 16 | 400 italic | Gita Chapters Index when language toggle = English. |
-| Chapter tag (`à¤…à¤§à¥à¤¯à¤¾à¤¯ N` / `CHAPTER N`) | Inter | 10 | 600 | `0.3em` tracking, uppercase, `saffron-deep`. |
-| Language toggle (Hindi half) | Noto Serif Devanagari | 15 | 600 | Active: `saffron-deep`; inactive: `ink-muted`. |
-| Language toggle (English half) | Cormorant Garamond | 14 | 400 italic | Active: `saffron-deep`; inactive: `ink-muted`. |
-| Page counter (e.g., `1 / 47`) | Cormorant Garamond | 14 | 400 italic | Lining figures |
-| Section label (`LIBRARY`) | Inter (en) / script serif bold (hiÂ·guÂ·kn) | 11 | 600 | `0.22em` tracking, uppercase. Latin-only labels (`CATEGORIES`, `DISCOVER`, `LIBRARY`) spread the token directly. **Bilingual** eyebrows (`à¤†à¤œ à¤•à¥‡ à¤²à¤¿à¤` / `FOR TODAY`, `à¤•à¤¬ à¤ªà¤¾à¤  à¤•à¤°à¥‡à¤‚`, deity category rows, Panchang/Rashifal kickers) must route the token through `pillTextStyle()` (`utils/langType.ts`) â€” Inter has no Indic glyphs (silent system fallback) and `0.22em` tracking splits the shirorekha, so Indic scripts swap to the script serif with **no** tracking or case transform. Guarded by `utils/__tests__/langType.test.ts`. |
-| Verse-type pill (`à¤¦à¥‹à¤¹à¤¾`, `à¤šà¥Œà¤ªà¤¾à¤ˆ Â· 9`, `à¤¶à¥à¤²à¥‹à¤• Â· 1.1`) | Inter (en) / script serif bold (hiÂ·guÂ·kn) | 10 | 600 | Saffron-deep on tinted bg. English pills keep Inter + `0.3em` tracking + uppercase; Indic-script pills render in the script serif bold with **no** tracking or case transform via `pillTextStyle()` (`utils/langType.ts`). |
-| Meaning / Commentary label (`à¤­à¤¾à¤µà¤¾à¤°à¥à¤¥` / `Meaning`, `à¤µà¥à¤¯à¤¾à¤–à¥à¤¯à¤¾` / `Commentary`) | Cormorant Garamond (en) / script serif bold (hiÂ·guÂ·kn) | 13 | 600 italic (en) / semibold (Indic) | **Single-language**: the label renders only in the reading language â€” `à¤­à¤¾à¤µà¤¾à¤°à¥à¤¥` (hi) / `Meaning` (en) / `àª­àª¾àªµàª¾àª°à«àª¥` (gu) / `à²­à²¾à²µà²¾à²°à³à²¥` (kn), and `à¤µà¥à¤¯à¤¾à¤–à¥à¤¯à¤¾` / `Commentary` etc. No bilingual dot-pair, no order flipping. English keeps `0.14em` tracking + italic + uppercase; Indic scripts use the script serif bold with no tracking. `saffron-deep`, centred. See the label styling in `GitaVersePage.tsx` / `VersePage.tsx`. |
-| Sub tagline / swipe hint | Cormorant Garamond | 12â€“15 | 400 italic | |
-
----
-
-## 4. Layout Tokens
-
-| Token | Value |
-| --- | --- |
-| Screen side padding | `24â€“28` |
-| Card padding | `18` |
-| Card gap (list) | `12` |
-| Section-to-section vertical gap | `20` |
-| Card radius | `18` |
-| Thumb radius | `14` |
-| Pill radius | `999` |
-| Surface radius (reader overlay ends, etc.) | `36` on phone screen only |
-
-### Gutters
-
-> **Runtime tokens (source of truth: `mobile/src/theme/spacing.ts`).** Two gutters, not one:
-> `spacing.screenGutter` (**28**) for catalog and hub screens, and `spacing.readingGutter`
-> (**22**) for reader/chapter surfaces, where a reading column wants more line length.
-> The 22 was blessed into a token in July 2026 â€” every reader and chapters top bar had
-> independently converged on it while the declared token said 28. `ReaderHeader` (Â§9)
-> consumes `readingGutter`, so the ~32 reader/chapter screens share one value.
->
-> Card padding, pill padding and modal insets that happen to equal 22 are **not** gutters
-> and are not expected to use this token.
-
-### Radii
-
-> **Runtime tokens (source of truth: `mobile/src/theme/spacing.ts`).** One 4-step scale:
-> `radii.sm` **10** Â· `radii.md` **14** Â· `radii.lg` **18** Â· `radii.xl` **22** Â· `radii.pill` **999**.
-> `xl` was added in July 2026 for the shared **44 pt circular back-button control** â€” half of
-> 44 is 22 â€” now used by `ReaderHeader.tsx` (every reader/index top bar) and `RashifalScreen.tsx`,
-> after an audit found ten ad-hoc radii (11, 12, 15, 16, 17, 20, 22, 24, 26, 32) and none of them
-> on the scale.
->
-> **Not tokenised, on purpose:** an *incidental* circle â€” a radius that is exactly half its box â€”
-> keeps a bare literal: the `DeityCard` avatar (`borderRadius: 22`), the profile badge, and the
-> Panchang month stepper, as do `deityGlyphs/` + `CategoryIcon` illustration internals. Card /
-> tile / pill corners and the one shared 44 pt back control take a token; one-off circles stay
-> literals.
-
-### Elevation
-
-| Level | Shadow |
-| --- | --- |
-| `sm` | `0 1px 2px rgba(60, 30, 10, 0.06)` â€” default card |
-| `md` | `0 8px 24px rgba(60, 30, 10, 0.14)` â€” active card |
-| `lg` | `0 30px 60px rgba(60, 30, 10, 0.22)` â€” phone frame in preview only |
-
-> **Runtime tokens (source of truth: `mobile/src/theme/elevation.ts`).** React Native exposes
-> five named elevations rather than the `sm/md/lg` scale above. All share one warm shadow
-> colour, defined once as `#3C1E0A` â€” never re-typed at a call site.
->
-> | Token | Offset Â· opacity Â· radius Â· Android | Use |
-> | --- | --- | --- |
-> | `elevation.subtle` | `0,1` Â· `0.06` Â· `4` Â· `1` | dim/inactive card, grouped-list surface |
-> | `elevation.card` | `0,2` Â· `0.10` Â· `6` Â· `2` | default card |
-> | `elevation.lifted` | `0,4` Â· `0.11` Â· `12` Â· `3` | active/selected catalog tile, chapter card |
-> | `elevation.raised` | `0,6` Â· `0.16` Â· `14` Â· `5` | the one focal element on a screen |
-> | `elevation.overlay` | `0,6` Â· `0.25` Â· `14` Â· `10` | floats above a scrim (feature-tour card) |
->
-> `subtle`, `lifted` and `overlay` were added in July 2026: an audit found 14 files
-> hand-rolling shadows, so cards floated at slightly different heights, the warm hex was
-> re-typed by hand (with `#3c1e0a` casing drift), and the tour card used an off-palette
-> `#0a0604`. The tiers above are the clusters that audit found, so every real surface has a
-> token. The cream palette has very low figure-ground contrast, so card surfaces must be
-> opaque for the Android shadow to render.
->
-> **Enforced:** `eslint.config.js` bans a hex literal on `shadowColor` outside `src/theme/`.
-
----
-
-## 5. Iconography & Ornaments
-
-- **Home wordmark (crest lockup).** A single compact row: thin rule Â· `à¥` circle Â· `à¤µà¥‡à¤¦à¤¾à¤‚à¤¶à¤¼` Â· `à¥` circle Â· thin rule, with the `Sacred Texts Â· Daily Reading` tagline beneath. à¥ on **both** sides of the wordmark. Rules 22px, circles 30px (à¥ 19px), title 27px, saffron stroke `1.5px`, row gap 11. Implemented in `HomeWordmark.tsx`. This replaced the older stacked crest + 34px title to reclaim ~50dp of hero height while keeping the centered, altar-like essence.
-- **Verse divider.** `à¥¥` centered between two 1px horizontal rules, 80px wide, saffron at 60% opacity. Use between verse and meaning on every reader page.
-- **Back chevron.** `â€¹` inside a **44px** circle with `parchment-soft` fill and `divider` border â€” the circle itself meets the 44Ã—44 a11y target (`ChalisaReaderScreen.tsx` `styles.back`). Browse screens that keep a smaller 34px visual top it up with `hitSlop` 16.
-- **Forward chevron.** Single `â€º` in saffron on active cards.
-- **Pager dots.** 6px circles, `rgba(138,62,11,0.25)` resting. Current page dot: saffron-deep, width 18, radius 999 (pill).
-- **No emoji. No photos.** Only hand-drawn faded sketches as backgrounds.
-
----
-
-## 6. Background Image System
-
-Four faded vintage sketches serve the Hanuman texts, bundled at `mobile/assets/chalisa/` (source art in `/images/`):
-
-1. `Hanuman_sita.webp`
-2. `Ram_hanuman.webp`
-3. `hanuman_lankadahan.webp`
-4. `Hanuman_sea.webp`
-
-### Rotation rule
-
-- Selection is **deterministic per verse**, resolved by a curated registry â€” `mobile/src/data/backgrounds.ts` (`getReaderBackground(sourceId, verse)`) â€” **not** a `% 3` hash:
-  - **Hanuman Chalisa:** a hand-picked per-verse override map (`hanumanChalisaOverrides`, keyed by verse id â€” e.g. `chaupai-18`/`chaupai-19` â†’ the sea-crossing sketch), with `Ram_hanuman.webp` as the default for every other verse.
-  - **Sundarkand:** stanza-range buckets â€” stanzas 1â€“4 sea, 5â€“11 Sita, 12â€“18 Lanka-dahan, remainder Ram-Hanuman.
-  - **Every other source:** one pinned image per source id (`sourceBackgrounds`), plus category/deity fallback maps for browse screens.
-- A given verse therefore always shows the same image â€” stable as the user swipes back and forth â€” but the mapping is curated to match the verse's story beat, never re-rolled per render.
-- Apply the image as a `cover`-sized background. Then stack the parchment overlay (Section 2) on top. Then the content.
-
-**Exception â€” Theerth.** Theerth detail screens resolve their background by **presiding deity**, with per-temple overrides for shrines whose deity plate is too generic (`getTheerthBackground(templeId, deityId)` in `backgrounds.ts`). The browse/map surface uses no background image â€” only the flat parchment gradient behind the stylised India SVG outline.
-
-### Adding more modules
-
-When Ramcharitmanas / Gita modules are added, new faded sketches should follow the same treatment: warm parchment tone, ~50% opacity after sepia, subject centered or top-anchored so the bottom third of the image stays clean for the meaning block.
-
----
-
-## 7. Screen: Home / Index
-
-> **Superseded.** The v1 one-scroll, tab-less Home (hero title + flat LIBRARY card list) has been replaced by the tabbed Home in **Section 18** â€” wordmark hero, DISCOVER carousel, and category grid. This heading is kept so section numbering holds; the flat library list now lives inside the Category List screens (Â§21).
-
-The one element that carries over is the **footer mantra**: `à¥¥ à¤¶à¥à¤°à¥€à¤°à¤¾à¤®à¤šà¤¨à¥à¤¦à¥à¤° à¤šà¤°à¤£à¥Œ à¤¶à¤°à¤£à¤‚ à¤ªà¥à¤°à¤ªà¤¦à¥à¤¯à¥‡ à¥¥` â€” Noto Serif Devanagari **18** (token `footerMantra`, `typography.ts`), `ink-muted` at 55% opacity, centred at the end of the Home scroll content.
-
----
-
-## 8. Component: Library Card
-
-Two variants: `active` (live module) and `coming` (placeholder).
-
-```
-[ thumb ]  [ name (Hindi) ]                      [ â€º or badge ]
-           [ name-en (Latin italic, muted) ]
-           [ sub meta (counts, subtitle) ]
-```
-
-### Active
-
-- Background: linear-gradient `#FFF5E0 â†’ #F5DEAC`
-- Border: `rgba(184, 98, 27, 0.4)`
-- Shadow: `md` (runtime: **`elevation.raised`**)
-- Thumb: gradient `#F8D291 â†’ #E0A255` with the text's first Devanagari letter (`à¤¹`, `à¤°à¤¾`, `à¤­`, `à¤¸à¥`) in white, Noto Serif Devanagari 22.
-- Right side: saffron `â€º` chevron.
-
-### Coming
-
-- Background: `rgba(255, 250, 235, 0.72)`
-- Border: `divider`
-- Shadow: `sm` (runtime: **`elevation.subtle`**)
-- Thumb: flat `#F1E0B3` with `saffron-deep` letter.
-- Content (thumb + names) at 55% opacity so it looks dormant but still legible.
-- Top-right pill badge: `SOON` (**10**, uppercase, 0.18em tracking, `rgba(166,124,52,0.14)` fill â€” was 9, below the Â§3.0 floor).
-
-### Content per card
-
-| Text | Example |
-| --- | --- |
-| name (Hindi) | `à¤¹à¤¨à¥à¤®à¤¾à¤¨ à¤šà¤¾à¤²à¥€à¤¸à¤¾` |
-| name-en | `Hanuman Chalisa` |
-| sub | `43 verses Â· Hindi with meaning` |
-
-Tapping `active` card â†’ push Reader (Section 9) for that module.
-
----
-
-## 9. Screen: Text Reader
-
-**Purpose.** Show one verse at a time with its meaning (and, for multi-layered texts like Gita, its commentary) over a parchment-tinted sketch background.
-
-Applies to both readers â€” the Hanuman Chalisa reader (linear, single text) and the Bhagavad GÄ«tÄ reader (chapter-scoped, language-toggleable). Structural differences per module are called out inline.
-
-**Layer stack (back to front):**
-
-1. Parchment base color.
-2. Background image (Section 6), `cover`, sepia-tinted.
-3. Parchment gradient overlay (Section 2).
-4. Content column â€” every verse page is a vertical `ScrollView` (verses + commentary may exceed screen height), with **64px bottom padding** so the last line clears the pager-dot overlay (`GitaVersePage.tsx` / `VersePage.tsx` `scrollContent`).
-
-**Structure (top to bottom):**
-
-1. Status bar.
-2. **Top bar** â€” always `ReaderHeader` (see below); never a local copy.
-   - Back button â€” returns to the previous surface (the Category List for Chalisa; Chapters Index for Gita â€” one level up in the stack, not always Home).
-   - Title. Chalisa: `à¤¹à¤¨à¥à¤®à¤¾à¤¨ à¤šà¤¾à¤²à¥€à¤¸à¤¾`. Gita: `à¤…à¤§à¥à¤¯à¤¾à¤¯ N Â· <titleHi>` (Hindi mode) or `Chapter N Â· <titleEn>` (English mode).
-   - Progress counter (`1 / 47`, Cormorant Garamond italic). Counter is **chapter-scoped** for Gita (resets per chapter), **document-scoped** for Chalisa.
-3. **Reading progress bar** (`ReadingProgressBar.tsx`) â€” a thin saffron track directly under the top bar showing position within the chapter/document.
-4. **Toggle row** â€” rendered **once per reader**, in a persistent row above the pager (not on every verse page): `LanguageToggle` (Section 16) + `AddToRoutineButton`, centred.
-5. **Verse area** (flex-1, 28px horizontal padding; each page scrolls vertically with 64px bottom padding so the last line clears the dots):
-   - **Header row** (in-page): verse-type pill on the left, **Bookmark + Share buttons on the right** â€” the actions render on every verse page via the page's `topActions` prop (`GitaVersePage.tsx` / `VersePage.tsx`), not in the top bar.
-   - Verse-type pill â€” vocabulary is consistent across modules: `à¤¦à¥‹à¤¹à¤¾ Â· Opening` / `à¤šà¥Œà¤ªà¤¾à¤ˆ Â· N` / `à¤¸à¤®à¤¾à¤ªà¤¨ à¤¦à¥‹à¤¹à¤¾ Â· Closing` / `à¤¶à¥à¤²à¥‹à¤• Â· N.M` / future `à¤®à¤‚à¤¤à¥à¤°` etc. Uppercase Inter 10 @ 0.3em for English; script serif bold, no tracking, for Indic scripts (`pillTextStyle()`); saffron-deep on saffron-tint.
-   - Verse lines â€” rendered in the reading language's script, **swapped in place by the toggle** on every reader, Gita included (`verseLinesByLang` + `verseToken`): Devanagari 23/39 for `hi`, the Latin romanization (Cormorant Garamond 24/35 600) for `en`, re-scripted Gujarati/Kannada 23/39 for `gu`/`kn`. Each line on its own row; preserve the original line breaks from the JSON. Only one script is visible at a time.
-   - Ornament divider (Section 5).
-   - **Meaning** section:
-     - Label â€” **single-language**, in the reading language only: `à¤­à¤¾à¤µà¤¾à¤°à¥à¤¥` (hi) / `Meaning` (en) / `àª­àª¾àªµàª¾àª°à«àª¥` (gu) / `à²­à²¾à²µà²¾à²°à³à²¥` (kn). Cormorant Garamond 13 600 italic + `0.14em` tracking for English; script serif bold, no tracking, for Indic. `saffron-deep`, centred. No bilingual dot-pair, no order flipping.
-     - Body: Hindi at 20/34 Noto Serif Devanagari 500 `ink-soft`; English at 20/33 Cormorant Garamond 500 medium non-italic `ink` â€” one meaning scale across languages. Only one language renders at a time based on the language toggle (Section 16).
-   - Ornament divider (Gita only â€” separates Meaning from Commentary).
-   - **Commentary** section (Gita only):
-     - Label `à¤µà¥à¤¯à¤¾à¤–à¥à¤¯à¤¾` (hi) / `Commentary` (en) â€” same single-language treatment as the Meaning label.
-     - Body: array of paragraphs, 14 px gap between paragraphs. Typography matches the Meaning body for the selected language (same tokens â€” no smaller commentary tier).
-     - **Empty-commentary fallback.** If the selected language has no commentary for this verse but the other language does, hide the paragraph body and render a single italic line instead: `Extended commentary is available in Hindi only for this verse.` (or Hindi analogue) â€” Cormorant Garamond 14 italic, `ink-muted`, centred. This is how the reader handles the sparse English-commentary coverage in Chapter 1 of the Gita source.
-     - If **both** languages are empty the whole Commentary block (including ornament + label) is hidden entirely.
-6. **Bottom bar**: **centred pager dots only**, overlaid near the bottom edge â€” there is no `â† swipe â†’` hint. Dots bucket the chapter into 5 segments for Gita (so a 78-verse chapter still fits one dot track); Chalisa uses its document-scoped bucketing.
-
-**Interaction.**
-
-- Horizontal swipe (pager). Left-edge swipe from first page or right-edge from last page should bounce, not dismiss.
-- Language toggle: rendered **once per reader** in the persistent toggle row (Section 16) for all bilingual modules â€” Gita, Sundarkand, Hanuman Chalisa, and the rest. Sections that have a subsection listing (e.g., Gita's Chapters Index, Section 15) ALSO surface the toggle there. Both surfaces share state via `useGitaLanguage()` â€” same control, two screens, one source of truth.
-- Chapter auto-advance (chaptered readers): the pager appends/prepends chapter-transition cards (`NextChapterCard.tsx` / `PrevChapterCard.tsx`) so swiping past a chapter edge advances to the neighbouring chapter.
-- The Gita reader additionally shows a `JumpToStartButton` (floating, once the reader is past the first verse) to return to verse 1.
-- Tap-hold on the verse (future): audio playback hook â€” leave structural space now, don't ship until audio lands. (Texts with recorded audio surface a `â–¶` play affordance in the top bar instead.)
-- Back button or gesture returns one level up.
-
-**Progress counter.**
-
-- Chalisa: total = opening dohas + chaupais + closing dohas (`2 + 40 + 1 = 43`). Counter shows `currentIndex + 1 / total`.
-- Gita: total = chapter verse count (e.g., `47` for Chapter 1). Counter shows `currentIndex + 1 / chapterVerseCount`. Switching chapters resets the counter.
-
-### Component: Reader Header (`ReaderHeader.tsx`)
-
-**Purpose.** The one reader/chapter top bar: `[back] [centred title] [right slot]`. Every
-reader and chapters screen consumes it; none may re-implement it.
-
-Until July 2026 all ~32 of those screens carried their own copy of this block, and the copies
-had drifted â€” `paddingHorizontal` 16 **and** 22, `paddingBottom` 4/10/12, back buttons at 40
-as well as 44, one title hard-coded to 18 instead of the `readerTitle` token. Extracting it
-fixed the drift and, as a side effect, VratKathaReader's undersized back button.
-
-**Spec.**
-
-- Row: `spacing.readingGutter` (22) horizontal Â· `8` top Â· `12` bottom Â· `space-between`.
-- **Back control**: 44Ã—44 circle, `radii.xl`, `parchmentSoft` fill, `divider` border, `â€¹` at
-  22 in `ink-soft`, `hitSlop={16}`, `opacity 0.7` while pressed.
-- **Title**: `flex: 1`, centred, `numberOfLines={1}`, `titleFontByLang(lang)`, italic for
-  English only. Two named scales via `variant` â€” **`reader`** (default) at
-  `typography.readerTitle.fontSize` (16), and **`index`** at 22 (20 for Latin, whose smaller
-  x-height needs less nominal size) for chapters/index landing screens. Two names rather than
-  a loose number so the hierarchy stays a decision.
-- **Side columns**: two balancing spacers of equal `sideWidth` keep the title optically
-  centred; both must clear the wider side's content. Defaults to **120** when a `right` slot
-  is present (counter + optional audio button) and **44** when it is not. Screens with a
-  narrow trailing slot may pass a smaller value (GitaReader passes 60).
-- **`right`** slot carries the page counter, the `â–¶` audio affordance, and any actions.
-
-**Accessibility label.** The back control is labelled `"Back"` â€” deliberately English and
-**not** localized. The Maestro flows tap that string literally (`deity-browse-smoke`,
-`vrat-catalog-smoke`) and the default reading language is `hi`, so localizing it here breaks
-e2e. Screens override it where the destination is worth naming (`"Back to chapters"`,
-`"Back to home"`, `"Back to stotram list"`).
-
-**Files:** `mobile/src/components/ReaderHeader.tsx`.
-
----
-
-## 10. Content Model
-
-Each module normalises its source into a typed, module-specific shape. Shapes stay separate so one module's reader never has to know another module's vocabulary (Chalisa doesn't know `'shloka'`; Gita doesn't know `'chaupai'`). A shared reader may be introduced later via a broader union â€” until then, keep types module-local.
-
-### Chalisa (linear, single-text)
-
-Source: `HanumanChalisa/hanuman-chalisa-hi-en.md` (hand-curated bilingual markdown) â†’ generated, committed `mobile/src/data/hanuman-chalisa/hanuman-chalisa.json`, typed and invariant-checked in `mobile/src/data/hanuman-chalisa/index.ts`:
-
-```ts
-type HanumanChalisaVerse = {
-  id: string;              // e.g. "opening-doha-1", "chaupai-09", "closing-doha"
-  type: 'doha' | 'chaupai';
-  section: 'opening' | 'body' | 'closing';
-  number?: number;         // present for numbered verses
-  labelHi: string;         // e.g. "à¤¦à¥‹à¤¹à¤¾ 1", "à¤šà¥Œà¤ªà¤¾à¤ˆ 9", "à¤¸à¤®à¤¾à¤ªà¤¨ à¤¦à¥‹à¤¹à¤¾"
-  labelEn: string;         // e.g. "Doha 1", "Chaupai 9", "Closing Doha"
-  lines: string[];         // raw Devanagari lines, in order
-  linesEn: string[];       // pronunciation-based romanization, 1:1 with lines
-  meaningHi: string;       // Hindi prose
-  meaningEn: string;       // English prose
-  meaningGu?: string;      // verified native Gujarati meaning (absent â†’ transliteration fallback)
-  meaningKn?: string;      // verified native Kannada meaning (absent â†’ transliteration fallback)
-};
-```
-
-**Order for Hanuman Chalisa:** `opening_dohas[0..]` â†’ `chaupais[0..39]` â†’ `closing_doha`.
-
-### Gita (chapter-scoped, multi-layered, bilingual)
-
-Source: `BhagwadGita/chapters/chapter-NN-*.md` (published translation + commentary). Parsed by `scripts/parse-gita.mjs` into `mobile/src/data/gita/chapter-NN.json` and a top-level `chapters-manifest.json`. Parser output is committed â€” Metro bundles JSON statically, so generated data must live in the source tree. Re-running the parser should produce a byte-identical diff.
-
-```ts
-type GitaVerse = {
-  id: string;              // "bg-<chapter>-<number>" e.g. "bg-1-1"
-  chapter: number;         // 1â€“18
-  number: number;          // 1â€“chapter.verseCount
-  sanskrit: string[];      // Devanagari lines (â‰¥ 2)
-  transliteration: string[]; // IAST lines, 1:1 with sanskrit where possible
-  meaningHi: string;       // Hindi paraphrase (non-empty)
-  meaningEn: string;       // English paraphrase (non-empty)
-  commentaryHi: string[];  // Hindi paragraphs â€” may be [] when source lacks it
-  commentaryEn: string[];  // English paragraphs â€” may be [] when source lacks it
-  meaningGu?: string;      // verified native Gujarati meaning (absent â†’ transliteration fallback)
-  meaningKn?: string;      // verified native Kannada meaning (absent â†’ transliteration fallback)
-};
-
-type GitaChapter = {
-  chapter: number;
-  titleHi: string;         // e.g. "à¤…à¤°à¥à¤œà¥à¤¨à¤µà¤¿à¤·à¤¾à¤¦à¤¯à¥‹à¤—"
-  titleEn: string;         // e.g. "Arjuna's Dilemma"
-  verseCount: number;
-  summaryHi?: string;
-  summaryEn?: string;
-  verses: GitaVerse[];
-};
-```
-
-**Totals (committed data):** 18 chapters Â· 701 verses. Chapter verse counts vary 20â€“78.
-
-**Sundarkand follows the same chapter-scoped shape**, not the linear Chalisa one: 16 chapters Â· 354 verses, committed as `mobile/src/data/sundarkand/chapter-01..16.json` + `chapters-manifest.json` with its own verse vocabulary (shloka, doha, chaupai, sortha, chhand).
-
-**Source-data rules the parser enforces:**
-
-- Every verse must have at least 2 Sanskrit lines after splitting on daá¹‡á¸a (`à¥¤`). When the source crams the whole shloka onto one line, the parser splits on single `à¥¤` (not `à¥¤à¥¤`) and reattaches the trailing `à¥¤à¥¤N.Mà¥¤à¥¤` verse number to the preceding chunk.
-- Every verse must have a non-empty `meaningHi` and `meaningEn`.
-- Commentary paragraphs shorter than 10 content characters (after stripping punctuation and daá¹‡á¸a) are dropped as placeholder entries â€” the published source sometimes emits a lone `.` under `**English Commentary**` for verses the translator skipped. The parser turns those into `[]` rather than keeping a ghost paragraph.
-- Empty commentary in one language is tolerated as long as the other language is populated. If both are empty the parser fails loud.
-
-### Display label vocabulary
-
-Keep the verse-pill vocabulary consistent across modules â€” each pill pairs a Devanagari term with a Latin subtitle or number:
-
-- `doha` + `section === 'opening'` â†’ pill reads `à¤¦à¥‹à¤¹à¤¾ Â· Opening` (or `Â· N` if multiple).
-- `chaupai` â†’ pill reads `à¤šà¥Œà¤ªà¤¾à¤ˆ Â· <number>`.
-- `doha` + `section === 'closing'` â†’ pill reads `à¤¸à¤®à¤¾à¤ªà¤¨ à¤¦à¥‹à¤¹à¤¾ Â· Closing`.
-- Gita verse â†’ pill reads `à¤¶à¥à¤²à¥‹à¤• Â· <chapter>.<verse>` (e.g. `à¤¶à¥à¤²à¥‹à¤• Â· 1.1`).
-- Future: `à¤®à¤‚à¤¤à¥à¤°`, `à¤¸à¥‚à¤¤à¥à¤°`, etc. â€” always paired with a Latin subtitle.
-
-### Language state (Gita)
-
-The app carries a single reading-language preference (`Lang = 'hi' | 'en' | 'gu' | 'kn'`) exposed via a React context (`useGitaLanguage()`). Default `'hi'`, **persisted** in `AsyncStorage` at `@vedansh/language`. The context also carries `regionalLang` (`'hi' | 'gu' | 'kn'` â€” never `'en'`), the user's chosen regional script, persisted separately at `@vedansh/regionalLanguage`; it feeds the 2-segment reader toggle (Section 16) and is updated whenever a non-English language is selected (`mobile/src/data/gita/language.tsx`). The same hook is shared across every section â€” there is no per-section context. The toggle is rendered both on subsection listings (Chapters Index, Section 15) and once per reader in the persistent toggle row (Section 9). On **every** reader â€” Gita included â€” the toggle swaps the verse lines in place between Devanagari (`lines[]`/`sanskrit[]`) and the romanization (`linesEn[]`/`transliteration[]`); meaning + commentary follow the same selection. For `gu`/`kn` **everything renders in the selected script** at runtime (Â§3.1): verse lines, titles, meaning, and commentary are the Devanagari re-scripted to Gujarati / Kannada, except where verified native `meaningGu`/`meaningKn` fields exist (see RULEBOOK Â§1). The daily-verse notification is localized the same way.
-
----
-
-## 11. Motion & Haptics
-
-- Page transitions: native horizontal swipe, default spring. No custom easing in v1.
-- On page change: a light haptic tap (`Haptics.ImpactFeedbackStyle.Light`) if running on device.
-- Avoid crossfades or scale effects in v1 â€” they fight the manuscript metaphor.
-- The one sanctioned animated moment is the routine-completion pushpa-varsha (Â§30): a soft fall + fade, **no scale pops**.
-- The Today's Practice completion **seal** (`PracticeSeal`, Â§30) appears with a brief **opacity fade only** â€” no scale or rotate â€” riding that completion-moment exception; it honors reduce-motion (`useReducedMotion`) by appearing instantly. The **mala** streak (`MalaStreak`) is fully **static**: the today-bead is marked with a static ring, never a pulse.
-
----
-
-## 12. Accessibility
-
-- Minimum tap target: 44Ã—44 for back button, card tap, and pager dots.
-- **The 44 minimum is about the *touch* target, which `hitSlop` counts toward; visual
-  consistency is a separate rule.** A control smaller than 44 is acceptable only when
-  `hitSlop` brings the real target to â‰¥44 *and* the smaller size is a deliberate choice for
-  that control class. Back buttons are **always 44 visually** â€” they are the one control the
-  user meets on every screen, so a 40 among 44s reads as a mistake even though its `hitSlop`
-  cleared the minimum (Kundali and Rashifal both drifted to 40 and were corrected in July
-  2026; `ReaderHeader` now owns the reader/chapter case). **Documented size exception:** the
-  Panchang calendar month stepper stays 34Ã—34 â€” a stepper is not a back button and 44 crowds
-  the month header â€” with `hitSlop={10}` taking its real target to 54.
-- **Chrome never scales, so it has a hard 10 pt floor** (Â§3.0). The reading-size presets
-  multiply reading tokens only, which means an undersized label can never be enlarged by any
-  accessibility setting; treat sub-10 chrome as an accessibility defect at authoring time.
-- Ensure contrast on text over the parchment overlay. The overlay specified in Section 2 keeps `ink` at > 7:1 on the lightest area of every supplied background.
-- **Every text element clears WCAG AA (4.5:1) against its *actual* rendered surface â€” not just base parchment.** Secondary/metadata text, signal colors (`avoid`, `saffronDeep`), and chip labels are frequently placed on `parchmentSoft` tiles, tint pills, or the `cardActive` gradient, which are *lighter* than `parchment`; contrast must be checked against those surfaces (worst case = the lightest gradient stop, `cardActiveFrom`). `mobile/src/theme/__tests__/colors.contrast.test.ts` pins the signal colors against the card surfaces so a palette tweak can't silently drop them below AA. Two forces cause the recurring "faint secondary text" regression and both must be avoided: (a) a color that only passed AA on base parchment, and (b) the thin italic face undercutting the measured ratio (Â§3) â€” small secondary text uses the non-italic â‰¥600 face.
-- Support Dynamic Type: the in-app reading-size setting offers **two presets â€” M (Ã—1.0, default) and L (Ã—1.15)** (`mobile/src/theme/fontScale.ts`), multiplying `fontSize` and `lineHeight` of the reading tokens only (verse/meaning across all scripts), so the verse body tops out around **26** in-app while UI chrome (titles, counters, labels) never scales and nothing clips.
-- The OS-level font scale still multiplies on top â€” `allowFontScaling` is not disabled anywhere â€” so Devanagari also honours the system's user-chosen scale, not a fixed point size.
-- All accent-only information (saffron pill, saffron chevron) must also carry a text or shape cue â€” never color alone.
-- **Honor "reduce motion".** `useReducedMotion` (`mobile/src/utils/useReducedMotion.ts`) reads `AccessibilityInfo.isReduceMotionEnabled()` and stays in sync via `reduceMotionChanged`; animated entrances (e.g. `PracticeSeal`) collapse to their final frame when it is on. Prefer static designs (e.g. `MalaStreak`) so nothing needs disabling.
-- **Decorative vector art is hidden from assistive tech.** Bead/seal art sets `importantForAccessibility="no-hide-descendants"` / `accessibilityElementsHidden`; the mala exposes a single text label (e.g. "7 day mala") via `accessibilityLabel`, and completion marks carry an `accessibilityState={{ checked }}` plus a text label, never color alone.
-
----
-
-## 13. Future Modules (extension notes)
-
-When a new text is added, pick the pattern that fits the source:
-
-**Linear text (single flow, â‰¤ ~100 verses) â€” like Hanuman Chalisa:**
-
-1. Add the source JSON under its own folder (e.g., `Ramcharitmanas/ramcharitmanas.hi.json`).
-2. Normalize to the per-module `Verse[]` model in Section 10.
-3. Add 2â€“3 faded sketches to `/images/` that match the text's story and follow the treatment in Section 6.
-4. Flip the Home card from `coming` to `active`.
-5. Wire Home â†’ Reader directly.
-
-**Chapter-based text (multi-hundred verses, bilingual, with commentary) â€” like Bhagavad GÄ«tÄ:**
-
-1. Add the source Markdown files under `<Module>/chapters/chapter-NN-*.md` using the same `### BG N.M` + `**Section Name**` format the Gita parser consumes (or write a module-specific parser with the same output shape).
-2. Generate per-chapter JSONs via a build-time Node script and commit the output to `mobile/src/data/<module>/chapter-NN.json` + `chapters-manifest.json`.
-3. Define the module's content types (shape mirrors Gita's `GitaVerse` / `GitaChapter`) in `mobile/src/data/<module>/index.ts` with module-load invariants (chapter count, verse count per chapter, no duplicate ids, at least one language populated for optional sections).
-4. Reuse the existing `useGitaLanguage()` context (`mobile/src/data/gita/language.tsx`) â€” do not create a parallel per-module context. The hook is already shared across Gita, Sundarkand, and Hanuman Chalisa.
-5. Add a Chapters Index screen (Section 15) with a Language Toggle (Section 16) and a list of chapter cards. Render the same Language Toggle once in the reader's persistent toggle row too â€” same control, two surfaces, shared state.
-6. Build a Reader screen that scopes the pager to a single chapter (one verse per page, chapter-scoped counter).
-7. Add 1â€“3 faded sketches to `mobile/assets/<module>/` â€” for v1 a single image covering all verses is acceptable if sourcing more is a separate ticket.
-8. Flip the Home card from `coming` to `active`. Active modules sort above `coming` ones in the library list.
-
-**Shared rules for any module:**
-
-- Keep the pill vocabulary consistent: `à¤¦à¥‹à¤¹à¤¾`, `à¤šà¥Œà¤ªà¤¾à¤ˆ`, `à¤¶à¥à¤²à¥‹à¤•`, `à¤®à¤‚à¤¤à¥à¤°`, etc., always paired with a Latin subtitle or chapter.verse number.
-- Never hard-code colours, spacings, or font names in a component â€” always pull from the theme.
-- If a token is missing, add it to `colors.ts` / `typography.ts` / `spacing.ts` first, then update this doc, then use it.
-- For bilingual prose (meaning, commentary): Cormorant Garamond 20 / 33 500 medium **non-italic** `ink` (the `meaningEnglish` token) is the English body standard. Italic is reserved for labels, fallback notes, and short flourishes.
-- **Romanization.** Pick the style that matches the source language per Â§3.1: IAST + Hunterian digraphs for Sanskrit verses (Gita, embedded shlokas); pronunciation-based ASCII for Awadhi/Hindi verses (Tulsidas chaupais and dohas). Don't impose IAST on Awadhi â€” the diacritics misrepresent recitation.
-- **Language toggle.** Reuse `useGitaLanguage()`. Render the toggle once per reader in the persistent toggle row; for sections with a subsection listing (e.g., Gita's Chapters Index), render it there too. State is shared.
-
----
-
-## 14. File Map
-
-**Documentation / reference:**
-- `design-preview.html` â€” live visual reference at repo root. Open in any browser.
-- `design.md` â€” this document.
-
-**Source content:**
-- `HanumanChalisa/hanuman-chalisa-hi-en.md` â€” curated bilingual source markdown for the Chalisa module.
-- `BhagwadGita/chapters/chapter-NN-*.md` â€” 18 published-translation Markdown files for the Gita module.
-- `scripts/parse-gita.mjs` â€” one-shot Node parser (`node scripts/parse-gita.mjs` from repo root) that reads the Gita Markdown, normalises it, and writes the per-chapter JSON + manifest. Idempotent.
-- `scripts/transliterate-shloka.mjs` â€” one-shot Node script that regenerates `linesEn` (IAST) from Devanagari `lines` for **Sanskrit shlokas only** (verses where `section === 'shloka'`). Currently scoped to Sundarkand's three opening shlokas; Awadhi/Hindi verses are not regenerated mechanically (see Â§3.1). Idempotent.
-
-**Generated / committed data consumed by Metro:**
-- `mobile/src/data/gita/chapter-NN.json` â€” one per chapter, imported statically.
-- `mobile/src/data/gita/chapters-manifest.json` â€” lightweight list of `{ chapter, titleHi, titleEn, verseCount }` used by the Chapters Index.
-- `mobile/src/data/sundarkand/chapter-01..16.json` + `chapters-manifest.json` â€” 354 verses across 5 verse types (shloka, doha, chaupai, sortha, chhand), chapter-scoped like the Gita.
-- `mobile/src/data/hanuman-chalisa/hanuman-chalisa.json` â€” 43 verses (2 opening dohas + 40 chaupais + 1 closing doha).
-- Further content-module dirs under `mobile/src/data/` follow the same committed-JSON pattern: `aarti/`, `sanskar/`, `japam/`, `ramcharitmanas/`, `valmiki-ramayan/`, the chalisa dirs (`shiv-chalisa`, `durga-chalisa`, `ganesh-chalisa`, `gayatri-chalisa`, `bajrang-baan`), the Ashtakam-category legacy dir (`hanuman-ashtak`), and the stotram dirs (`shiva-strotam`, `durga-stotram`, `ganesh-stotram`, `saraswati-stotram`, `krishna-stotram`, `vishnu-sahasranama`, `ram-stuti`), plus `theerth/temples.ts`.
-
-**Registries & cross-cutting data (`mobile/src/data/`):**
-- `texts.ts` â€” the library registry (`library`): every content entry with category, deities, counts, status. Ordering is curated here (Â§21).
-- `categories.ts` â€” the Home category tiles (Â§18).
-- `deities.ts` â€” deity metadata + icon keys for the Deity Index.
-- `backgrounds.ts` â€” background-selection registry (Â§6).
-- `searchIndex.ts` â€” flat verse index behind the Search screen.
-- `versePool.ts` â€” the Daily Bhakti verse pool (Â§23).
-
-**Assets:**
-- `images/*.png` â€” Hanuman parchment sketches (consumed in `mobile/assets/chalisa/`).
-- `mobile/assets/chalisa/*` â€” Chalisa backgrounds + typed `index.ts` export.
-- `mobile/assets/gita/*` â€” Gita backgrounds (v1: `krishna_arjuna_vishvarupa.webp` is the single sketch covering all verses) + typed `index.ts` export.
-
-**Theme + state:**
-- `mobile/src/theme/colors.ts` / `typography.ts` / `spacing.ts` / `elevation.ts` / `fontScale.ts` â€” source of tokens in Sections 2â€“4 plus the reading-size presets (Â§12).
-- `mobile/src/theme/ThemeContext.tsx` â€” single source of runtime tokens.
-- `mobile/src/data/gita/language.tsx` â€” shared reading-language context + `useGitaLanguage()` hook (Â§10, Â§16).
-- `mobile/src/contexts/` â€” app state providers: bookmarks, reading progress, routine, notification preferences, audio player, font scale, panchang location, new-content tracking, etc.
-
-**Navigation & subsystems:**
-- `mobile/src/navigation/` â€” `TabNavigator` (Â§17) + per-tab stacks (`HomeStackNavigator`, `MoreStackNavigator`, `PanchangStackNavigator`, `AudioStackNavigator`), `entryRoutes.ts` (bookmark / entry navigation targets).
-- `mobile/src/panchang/` â€” panchang engine, festival data, katha content.
-- `mobile/src/notifications/` â€” daily-verse scheduler, japam alarms, vrat reminders.
-- `mobile/src/audio/` â€” audio session setup (the player context lives in `contexts/`).
-
-**Components:**
-- `mobile/src/components/LibraryCard.tsx` â€” Home library entry (Section 8).
-- `mobile/src/components/GitaChapterCard.tsx` â€” Chapters Index entry (Section 15).
-- `mobile/src/components/LanguageToggle.tsx` â€” the two-segment regional-language/English pill (Section 16).
-- `mobile/src/components/VersePage.tsx` â€” Hanuman Chalisa reader page body.
-- `mobile/src/components/GitaVersePage.tsx` â€” Gita reader page body (swap-on-toggle verse lines + meaning/commentary).
-- `mobile/src/components/SundarkandVersePage.tsx` â€” Sundarkand reader page body.
-- `mobile/src/components/Ornament.tsx` â€” the `à¥¥` verse divider (Section 5).
-
-**Screens:**
-- `mobile/src/screens/HomeScreen.tsx` â€” Home (Section 7).
-- `mobile/src/screens/ChalisaReaderScreen.tsx` â€” Chalisa Reader.
-- `mobile/src/screens/SundarkandReaderScreen.tsx` â€” Sundarkand Reader.
-- `mobile/src/screens/GitaChaptersIndexScreen.tsx` â€” Gita Chapters Index (Section 15).
-- `mobile/src/screens/GitaReaderScreen.tsx` â€” Gita Reader (chapter-scoped pager).
-- â€¦plus one `<Section>ReaderScreen` (and, for chaptered texts, `<Section>ChaptersScreen`) per content section, and the Category/Deity list, Theerth (Â§26â€“27), Daily Bhakti (Â§23), Wishlist (Â§24), Routine (Â§30â€“31), Panchang, and Search screens.
-
-When building new components, pull tokens from the theme â€” never hard-code a hex. If a token is missing, add it to `colors.ts` first, update this doc, then use it.
-
----
-
-## 15. Screen: Chapters Index (Gita-style modules)
-
-**Purpose.** Let the reader pick a chapter and set their reading language before entering the Reader. Used by modules whose natural unit is a chapter (Gita's 18 adhyÄyas; VÄlmÄ«ki RÄmÄyaá¹‡a's 7 kÄá¹‡á¸as, Â§53; future Ramcharitmanas kÄá¹‡á¸as).
-
-**Layer stack:** same as Reader (Section 9, parchment + background sketch + gradient overlay + content column).
-
-**Structure (top to bottom):**
-
-1. Status bar.
-2. **Top bar** â€” `ReaderHeader` with `variant="index"` (Â§9); never a local copy.
-   - Back button (returns to Home).
-   - Title centred: `à¤­à¤—à¤µà¤¦à¥ à¤—à¥€à¤¤à¤¾` (Hindi mode) / `Bhagavad GÄ«tÄ` (English mode) at the `index`
-     title scale â€” 22, or 20 for Latin. This is deliberately larger than the reader's 16: a
-     chapters index is a landing surface, the reader top bar is compact chrome.
-   - The balancing right-side spacer is the header's own, matching the back-button footprint.
-3. **Language toggle row** (8 top / 16 bottom padding, centred). See Section 16.
-4. **Chapter list** (28 px side padding, 12 px gap between cards). Each card is a `GitaChapterCard` (see below). Scrollable.
-
-**Chapter card (`GitaChapterCard`):**
-
-- Background: the same `cardActiveFrom â†’ cardActiveTo` gradient as the Home active library card, so active chapters feel consistent with the live module on Home.
-- Layout: `[ chapter-number thumb ]  [ tag Â· title Â· verse-count ]  [ â€º ]`
-  - Thumb: gradient `cardThumbActiveFrom â†’ cardThumbActiveTo`, 46Ã—46, radius `md`. Centre renders the chapter number in Noto Serif Devanagari 20 `parchment-soft`.
-  - Tag (above title): `à¤…à¤§à¥à¤¯à¤¾à¤¯ N` or `CHAPTER N` in Inter 10 600, `0.3em`, uppercase, `saffron-deep`.
-  - Title: rendered in the selected language â€” Hindi (Noto Serif Devanagari 17 600 `ink`) or English (Cormorant Garamond 16 400 italic `ink`). `numberOfLines={2}`.
-  - Sub: `47 à¤¶à¥à¤²à¥‹à¤•` (Hindi) or `47 verses` (English), `cardMeta` size, `ink-muted`.
-  - Right: saffron `â€º` chevron.
-- Tap â†’ Reader **resumes at the chapter's last-read verse** (`getChapterProgress` from the reading-progress context, `GitaChaptersIndexScreen.tsx`); a chapter with no prior progress opens at verse 1.
-
-**Ordering.** Chapters appear in numerical order 1â€“18. No sorting.
-
----
-
-## 16. Component: Language Toggle
-
-**Purpose.** Single source of truth for the app-wide reading language. Used on the Chapters Index (Section 15) and in every reader's persistent toggle row (Section 9).
-
-**Shape.** A deliberate **two-segment** pill (`LanguageToggle.tsx`): the left segment is the user's **chosen regional language** â€” Hindi by default, or Gujarati/Kannada if picked in the More-tab **language picker sheet** (`regionalLang`) â€” the right segment is always **English**. The segments come from `[regionalMeta, EN_META]` over the `LANGUAGES` metadata array; all four languages never render at once in the reader â€” gu/kn are chosen in More and then occupy the regional slot. The active segment is tinted with `saffron-tint` and typed in `saffron-deep`; the inactive segment is transparent and typed in `ink-muted`. Pressed (inactive) drops opacity to 0.7.
-
-```
-â”Œâ”€â”€â”€â”€â”€â”€ pill radius â”€â”€â”€â”€â”€â”€â”
-â”‚ [ à¤¹à¤¿à¤¨à¥à¤¦à¥€ ] â”‚ [ English ]  â”‚      (or [ àª—à«àªœàª°àª¾àª¤à«€ ] / [ à²•à²¨à³à²¨à²¡ ] in the left slot)
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-```
-
-- Container: `parchment-soft` background, `divider` border 1 px, `pill` radius, 3 px inner padding.
-- Each segment: `minWidth 56`, `minHeight 44`, centered.
-- Each segment shows its **full native name** in its own script/face: `à¤¹à¤¿à¤¨à¥à¤¦à¥€` Noto Serif Devanagari 15 600 Â· `English` Cormorant italic 14 Â· `àª—à«àªœàª°àª¾àª¤à«€` Gujarati serif 14 600 Â· `à²•à²¨à³à²¨à²¡` Kannada serif 13 600. The English names (`Hindi`/`English`/â€¦) are the accessibility labels; the full four-way choice lives in the More-tab **language picker sheet** (Â§37).
-
-**Behaviour.**
-
-- Tapping a segment sets `lang` to that value via the `useGitaLanguage()` hook; selecting a non-English language also updates the persisted `regionalLang`.
-- Accessibility: `accessibilityRole="radiogroup"` on the container, `accessibilityRole="radio"` + `accessibilityState={{ selected }}` on each segment.
-- 8 px `hitSlop` on each segment so the tap target meets the 44Ã—44 minimum.
-
-**State scope.** Global and **persisted** â€” `@vedansh/language` for the reading language, `@vedansh/regionalLanguage` for the regional pick (Â§10). The choice survives restarts and is shared by every section.
-
----
-
-## 17. Bottom Tab Bar
-
-**Purpose.** Persistent navigation chrome across the app's five top-level surfaces (`TabNavigator.tsx`). Replaces the previous one-scroll-no-tabs Home.
-
-**Spec:**
-
-- Position: fixed bottom, above safe area inset
-- Background: `parchment-soft` with 1px `divider` border on top edge
-- Height: 60px (content) + safe area bottom inset (`height: 60 + insets.bottom`, `paddingTop: 6`)
-- **5 tabs**, equally distributed:
-  - **Home** â€” the Home stack (catalog, readers, routine, theerth, search)
-  - **Bhakti** â€” Daily Bhakti verse of the day (Â§23)
-  - **Panchang** â€” panchang / festivals stack
-  - **Bhajan** â€” audio stack
-  - **More** â€” profile, wishlist (Â§24), reminders, settings
-- Tab labels: **reading-language localized** via `contentByLang` â€” à¤¹à¥‹à¤® Â· à¤­à¤•à¥à¤¤à¤¿ Â· à¤ªà¤‚à¤šà¤¾à¤‚à¤— Â· à¤­à¤œà¤¨ Â· à¤…à¤¨à¥à¤¯ in hi (gu/kn transliterate; English labels in en). The bar was the last chrome surface still English-only under a fully Indic screen. Type: en = `fontFamilies.inter` 10 @ **`0.4`** tracking (was `0.02`, a no-op: RN `letterSpacing` is in **px**, not em, so 0.02 px is invisible; 0.4 matches the `cardMeta` chrome token); hi/gu/kn = their bold serif title faces (`scriptTitleFont`, hi â†’ `devanagariBold`) at 10 with **no tracking** â€” tracking splits the shirorekha (Â§3). Maestro flows tap tabs by `tabBarButtonTestID` (`tab-home` â€¦ `tab-more`), never by label text, since the exposed text is now language-dependent.
-- Each tab carries a custom icon in the tint colour. Home, Bhakti, Panchang, and More are hand-built from `View` strokes; Bhajan preserves the reference filled SVG glyph: a **round filled head**, vertical stem, and square flag (`d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"`). The head **must stay filled** â€” a hollow ring reads as a broken glyph rather than a note.
-- Active tint: `saffron`; inactive: `ink-muted`. No active dot indicator â€” the tinted icon+label is the cue
-- Tap targets: full tab width Ã— full bar height (well above 44Ã—44 minimum)
-- The tab bar **stays visible inside readers**. The only exception is the immersive Vrat Katha reader (`IMMERSIVE_HOME_ROUTES = ['VratKathaReader']`), which hides the bar while focused
-
----
-
-## 18. Screen: Home (Revised)
-
-**Purpose.** Surface available content organized by category type and deity. Replaces the flat LIBRARY list from Section 7.
-
-**Structure (top to bottom):**
-
-1. Status bar area (safe region)
-2. Hero block: the **Home wordmark lockup** (Section 5) â€” `à¥ à¤µà¥‡à¤¦à¤¾à¤‚à¤¶à¤¼ à¥` on one row over the "Sacred Texts Â· Daily Reading" tagline. (Earlier revisions stacked a crest above a 34px title; the lockup is the compact replacement.)
-   - **On a catalog festival day only** (the 18 festivals of `notifications/festiveReminders.ts`): the **Festive Toran** (Â§55) hangs directly below the lockup â€” a marigold garland with the day's greeting chip. Absent every other day.
-3. **à¤†à¤œ Â· Today strip** (Â§48) â€” a one-card daily-panchang glance (vara + tithi headline, one horizontal-scroll row of observance / Abhijit / Rahu Kaal chips). Tap â†’ Panchang tab.
-4. **à¤†à¤œ à¤•à¥‡ à¤²à¤¿à¤ Â· For Today recommendations** (Â§50) â€” a compact horizontal row of name-only `FeatureCard compact` strips (196Ã—56, the same shell the DISCOVER carousel uses in its taller default form) chosen from today's vaar deity and active festival metadata. This keeps PRD-B's By-Day/By-Festival surfacing on Home without adding another calendar engine. Card tap â†’ the text itself via `navigateToEntryStart` (Â§38) â€” single-chapter texts open their reader directly rather than a one-row chapters index.
-5. **Routine banner** (Â§30), **inline** (not docked) on Home â€” the à¤¨à¤¿à¤¤à¥à¤¯ à¤¸à¤¾à¤§à¤¨à¤¾ nudge / progress / complete chip, sitting directly under the Today strip / recommendations cluster (16px gap each side). It moved out of the bottom overlay (July 2026) so it no longer floats over â€” and clips â€” the DISCOVER carousel; the "today" cluster (panchang â†’ today's recommendations â†’ today's practice) now reads as one block above the library. Still **docked** above the tab bar on Daily Bhakti (Â§21).
-6. Section label "CATEGORIES" (Inter 11, uppercase, ink-muted, 0.22em tracking)
-7. **Category grid** (3-column launcher layout, wraps as tiles are added):
-   - **Rank = usefulness + app-USP first** (July 2026). `categories.ts` array order drives the grid; the sequence is **à¤šà¤¾à¤²à¥€à¤¸à¤¾ Â· à¤†à¤°à¤¤à¥€ Â· à¤¸à¥à¤¤à¥‹à¤¤à¥à¤°à¤®à¥ Â· à¤—à¥à¤°à¤¨à¥à¤¥ Â· à¤œà¤ª** (daily-recite + flagship read + the Japa mala-counter USP) â†’ **à¤¸à¤‚à¤¸à¥à¤•à¤¾à¤° Â· à¤¤à¥€à¤°à¥à¤¥** (habit/browse USPs) â†’ the thin PRD-A parity forms **à¤•à¤µà¤š Â· à¤…à¤·à¥à¤Ÿà¤•à¤®à¥ Â· à¤¸à¥‚à¤•à¥à¤¤à¤®à¥** last (2â€“4 texts each; their NEW badges handle discovery). (**à¤¸à¥à¤¤à¥à¤¤à¤¿ is not a tile** â€” its texts fold into `stotram`, Â§41.) The grid **interleaves four non-content tiles** at ranked spots plus one at the end: **à¤µà¥à¤°à¤¤ Â· Vrat & Parv** and **à¤•à¥à¤‚à¤¡à¤²à¥€ Â· Kundali** right after à¤œà¤ª (à¤µà¥à¤°à¤¤ opens the Panchang tab's `ObservanceList` vrat catalog via `panchangTabTarget()` â€” the `entryRoutes.ts` helper carrying `initial: false` so a lazily-mounted Panchang tab keeps its calendar as the initial route; PRD-09 â€” a grid door, **not** a `ContentCategory`; content lives in the observance engine, not the library â€” and à¤•à¥à¤‚à¤¡à¤²à¥€ opens the Panchang tab's Jyotish mode, PRD-C), plus **à¤¦à¥‡à¤µà¤¤à¤¾ Â· By Deity** and **à¤‰à¤¦à¥à¤¦à¥‡à¤¶à¥à¤¯ Â· By Purpose** after à¤¤à¥€à¤°à¥à¤¥. By Deity opens `DeityIndexScreen`; By Purpose opens `BrowseByPurposeScreen` (Â§50). A **à¤®à¥à¤¹à¥‚à¤°à¥à¤¤ Â· Muhurat** tile (ghatika-dial mark, â†’ the Panchang tab's `MuhuratFinder`, PRD-16 Â§60) follows à¤•à¥à¤‚à¤¡à¤²à¥€ â€” the three Panchang-tab doors (à¤µà¥à¤°à¤¤ Â· à¤•à¥à¤‚à¤¡à¤²à¥€ Â· à¤®à¥à¤¹à¥‚à¤°à¥à¤¤) sit as one cluster after à¤œà¤ª. A **à¤¨à¤¿à¤¤à¥à¤¯ à¤¸à¤¾à¤§à¤¨à¤¾ Â· Daily Practice** tile (lotus mark, â†’ `RoutineToday`, the same surface as the RoutineBanner Â§20) is **appended last and renders full-width** as the grid's closing row, so the grid still ends clean now that the tile count is 16. HomeScreen anchors these by id (after `japam` / `theerth`, or at the end), not by index, so reordering categories keeps them in place.
-   - **16 tiles total** (10 content categories + à¤µà¥à¤°à¤¤ + à¤•à¥à¤‚à¤¡à¤²à¥€ + à¤®à¥à¤¹à¥‚à¤°à¥à¤¤ + à¤¦à¥‡à¤µà¤¤à¤¾ + à¤‰à¤¦à¥à¤¦à¥‡à¤¶à¥à¤¯ = 5 rows Ã— 3, closed by the full-width à¤¨à¤¿à¤¤à¥à¤¯ à¤¸à¤¾à¤§à¤¨à¤¾ row), flowing as a 3-column launcher grid. Any `coming` tile renders inline at its registry position as a dimmed, non-interactive "SOON" launcher (Section 19). As more PRD-A forms (e.g. à¤¸à¤¹à¤¸à¥à¤°à¤¨à¤¾à¤®) land the grid keeps growing down; it is no longer a fixed square.
-   - Gap: **10px** between tiles, **24px** side padding (`spacing.xxl`, the Home page gutter); tile width = a third of the remaining row
-   - Tap â†’ CategoryList for that category (à¤¤à¥€à¤°à¥à¤¥ opens the Theerth browse surface, Â§26; à¤µà¥à¤°à¤¤ opens the vrat catalog; à¤•à¥à¤‚à¤¡à¤²à¥€ opens Jyotish; à¤¦à¥‡à¤µà¤¤à¤¾ opens the Deity Index; à¤‰à¤¦à¥à¤¦à¥‡à¤¶à¥à¤¯ opens Browse by Purpose; à¤¨à¤¿à¤¤à¥à¤¯ à¤¸à¤¾à¤§à¤¨à¤¾ opens the daily routine)
-   - Tile spec: the **launcher variant**, Section 19
-8. Section label "DISCOVER" + **Feature Spotlight carousel** (Â§32) â€” a full-bleed horizontal row of `FeatureCard`s surfacing the app's cross-cutting sections (Daily Practice, Daily Verse, Sankalp, Pitru Smaran, Guided Pujas/à¤ªà¥‚à¤œà¤¾ à¤µà¤¿à¤§à¤¿, Pilgrimage, Home-Screen Widgets â€” the Panchang card was retired when the Today strip took over that surface). Moved *below* the grid: the prime slot now belongs to today-relevant content; the carousel keeps its per-open shuffle one swipe down.
-9. Footer mantra (Section 7 â€” token `footerMantra`, 18 @ 55% opacity) at the end of the scroll
-10. **Floating search button** (`SearchFloatingButton`) docked bottom-right â†’ opens the Search screen. Uses its default `spacing.xl` bottom offset now that the routine banner no longer docks at Home's bottom (it used to pass a banner-clearing offset). (The old Help floating button/modal never shipped.)
-
-**First-tap recovery (all Home cards).** Every tappable Home card opens on the **first** tap, not the second. iOS can cancel a child `Pressable`'s `onPress` when it lives inside a `ScrollView` even when the finger never actually drags, so a naive `onPress` intermittently no-ops the first touch. A single shared controller (`contexts/TilePressContext.tsx`, `useTilePressController` + `TilePressProvider`) remembers the action on `onPressIn`, arms a one-tick fallback on `onPressOut`, and fires it unless a real `onPress` already ran or a scroll drag intervened. `activateTile` only consumes a pending action that belongs to the current gesture: a *dragged* pending (a scroll whose press was cancelled) is never reused, so an accessibility tap â€” which invokes `onPress` with no preceding `onPressIn` â€” always runs the tapped card's own action rather than a stale one left behind by an earlier scroll. It is shared (context) across the **whole** Home surface â€” the category grid (Â§19), the Today strip (Â§48), the For-Today row (Â§50), the routine banner (Â§30), and the DISCOVER carousel (Â§32) â€” because a card lives inside the outer vertical scroll, so a vertical page-drag started on a card must suppress *that card's* fallback; a per-component copy could not see the outer scroll and would navigate on a plain scroll. Each enclosing `ScrollView` (the outer vertical one and every inner horizontal row) wires `onScrollBeginDrag` to the controller's `markTileDrag`, so a swipe is always a scroll and never a tap. Introduced for the grid in July 2026 (#219) and extended to the Today/Discover cards immediately after; the routine banner (Â§30) was the last plain-`onPress` holdout and was wired in Aug 2026 (it intermittently no-opped its first tap on Home). Pinned by `contexts/__tests__/TilePressContext.test.tsx` and `components/__tests__/RoutineBanner.test.tsx`.
-
-(A **Continue-reading card** briefly sat between the grid and DISCOVER â€” retired July 2026, Â§49.)
-
-There is **no deity chip row on Home** â€” deity browsing lives in the Deity Index screen (Â§20), and intent browsing lives behind the By Purpose tile (Â§50).
-
-**Why today-first:** a July 2026 competitive review found the previous Home never changed between visits (hero + DISCOVER carousel + 2-column catalog grid) â€” nothing on it answered "what matters today". The Today strip and the compact launcher put today's panchang state and the top-ranked sections inside the first viewport.
-
-**Gradient background:** same as Section 2 Home gradient.
-
----
-
-## 19. Component: Category Card
-
-**Purpose.** Grid tile representing a content category on the Home screen.
-
-Two status variants â€” `active` (has content) and `coming` (placeholder) â€” and two **layout variants** (`variant` prop in `CategoryCard.tsx`): `launcher` (the Home 3Ã—3 grid) and `card` (the classic 2-column gradient card, kept for the `coming` state and any future 2-column layout).
-
-**Launcher (Home grid, active):**
-
-- Column layout: a compact **glyph tile** with the name *below* it (myBhakti-review learning: label-below is what lets three columns breathe; the name-inside card can't shrink past two columns without truncating).
-- Tile: height **72**, full column width, `radii.lg`, `cardActiveFrom â†’ cardActiveTo` gradient, 1px `cardActiveBorder`, **`elevation.card`** (the theme token â€” no inline shadow literals). The tile has an opaque `cardActiveFrom` base and **no `overflow: 'hidden'`** (it would clip the iOS shadow); the gradient carries its own matching radius. `CategoryIcon` stroke vector centered.
-- Label: **one line, caption size** â€” `devPrimary 13` / `latPrimary 14` via `orderTitlesByLanguage()`, `ink`, centered, `numberOfLines 1`, 6px below the tile.
-- **Label position** (`launcherLabelPosition`): `below` (Home's default, above) or `tile` â€” the dense-index variant that centres the name *inside* the 72 pt tile over up to two lines (`launcherLabelLines`), used by the 27-tile Namkaran nakshatra grid (Â§61). Either position keeps the label at the fixed caption size; the in-tile position adds `lineHeight 21` and a `maxFontSizeMultiplier` of 1.25 and must **never** enable `adjustsFontSizeToFit` (see Â§61 for the iOS shrink bug it caused).
-- **Short English display names.** Under a ~â…“-row tile the full registry names ("Hymns & Praise", "Japa & Mantras") don't survive one line, so `categories.ts` carries an optional `shortNameEn` ("Hymns", "Japa", "Books", "Habits") used **only** by the launcher label. The **accessibility label always carries the full `nameEn`** (`"{nameEn}.{ New.?} Tap to open."`) â€” the Maestro smokes tap tiles by that full label, and screen readers keep the descriptive name.
-- `NEW` badge: same pill as the card variant, inset 6px in the tile's top-right corner.
-- **Coming (launcher).** A `status: 'coming'` tile keeps the launcher geometry: `cardSurface` tile at 55% opacity, same `elevation.card` lift as its active siblings, with the `SOON` pill (gold tint) and the caption label below; not pressable (`accessibilityState.disabled`). It does **not** fall through to the 2-column card layout.
-
-**Active (card variant):**
-
-- Background: linear-gradient `cardActiveFrom â†’ cardActiveTo` (`#FFF5E0 â†’ #F5DEAC`, same gradient as library card)
-- Border: 1px `cardActiveBorder` (`rgba(184, 98, 27, 0.4)`)
-- Shadow: **`elevation.lifted`** (Â§4 â€” offset `0,4`, opacity `0.11`, radius 12, Android 3). Was an inline `0.12` literal until July 2026.
-- Radius: **`radii.lg`** (18). Was an ad-hoc `16`, off the radius scale (Â§4).
-- Layout (vertical, centered):
-  - Icon: a `CategoryIcon` stroke vector (saffron-deep), centered above the name
-  - **One name line only** â€” the active reading language's primary via `orderTitlesByLanguage()` (`devPrimary 16` / `latPrimary 17`, `ink`), 6px below the icon. The demoted second-language line is **deliberately dropped** on Home tiles to tighten the grid (see the comment in `CategoryCard.tsx`); catalog/detail screens keep the bilingual pairing. The English `accessibilityLabel` stays intact so screen readers still announce the English name.
-- Padding: 12px vertical, 10px horizontal
-- Tap â†’ pushes CategoryList screen
-
-**Coming:**
-
-- Background: `cardSurface` flat
-- Border: 1px `divider`
-- Shadow: `sm` (runtime: **`elevation.subtle`**)
-- Card at 55% opacity
-- "SOON" pill badge: top-right corner, 8px inset. **10** (the Â§3.0 floor; was 9), 600, uppercase, 0.18em tracking, `goldTint` fill, `ink-muted` text
-- Tap disabled (no navigation)
-
-**New content (active tiles & library cards):**
-
-- Recently-added content (new since the user's last update) shows a `NEW` pill badge: top-right corner, same geometry as `SOON`. `newBadgeBg` fill (saffron tint) + `newBadgeText` (saffron-deep). Saffron â€” the primary/active accent â€” marks it as live & fresh, distinct from the muted gold `SOON`. The chip clears once the user opens that content. Carries the "NEW" text cue (never color-only, per Â§10 accessibility).
-
----
-
-## 20. Component: Deity Chip
-
-> **Superseded.** The circular deity chip row never survived past the Home redesign. Deity browsing now lives in the **Deity Index screen** (`DeityIndexScreen.tsx`, reached from the à¤¦à¥‡à¤µà¤¤à¤¾ tile in the Home grid): all 21 deities from `deities.ts` render as full-width `DeityCard` rows, each carrying a `DeityIcon` attribute vector (bow-and-arrow for Rama, bansuri for Krishna, trishul for Shiva, â€¦), over a randomly-picked deity background plate (`getRandomDeityBackground`, stable per mount). Tapping a row pushes the Deity Detail page (Â§50), which carries the essay and grouped text list. The older `DeityListScreen` remains as a plain filtered-list route for compatibility.
-
----
-
-## 21. Screen: Category List
-
-**Purpose.** Shows all items belonging to a specific category type. Reached by tapping a category tile on Home.
-
-**Structure:**
-
-1. Status bar
-2. Top bar: back button (â€¹ in 44px circle) + title "à¤—à¥à¤°à¤¨à¥à¤¥ Â· Sacred Books" â€” primary/secondary ordered by the reading language via `orderTitlesByLanguage()` (primary `ink`, demoted secondary `ink-muted`, separated by `Â·`)
-3. Item list: renders `LibraryCard` (Section 8) for each item in the category, 12px gap, 28px side padding
-4. Items render in **registry order** â€” the ordering is curated in the `library` array (`mobile/src/data/texts.ts`), not sorted at render time (every shipped entry is `active` today; `hidden` entries are filtered out)
-5. Tapping an item with prior reading progress opens a `ResumeReadingSheet` (resume at the saved verse / start over) before navigating; items with no progress navigate straight to their start
-
-Background: the category's faded sketch plate (`getCategoryBackground`, Â§6) under the parchment overlay.
-
----
-
-## 22. Screen: Deity List
-
-The legacy Deity List is the plain filtered-list fallback: same as Section 21, but filtered by deity tag instead of category. Title shows deity name: "à¤¶à¥à¤°à¥€ à¤°à¤¾à¤® Â· Shri Rama". The primary deity browse path now lands on the richer Deity Detail page (Â§50), then opens the same `LibraryCard` rows through `navigateToEntryStart()`.
-
----
-
-## 23. Screen: Daily Bhakti
-
-**Purpose.** A devotional "verse of the day" experience. Shows a random verse each time the user opens the tab.
-
-**Structure:**
-
-1. Status bar
-2. Title area (centered): "à¤¦à¥ˆà¤¨à¤¿à¤• à¤­à¤•à¥à¤¤à¤¿" (Noto Serif 20 600, ink) + "Daily Verse" (Cormorant 14 400 italic, ink-muted, 4px below)
-3. **Verse card** (centered, 28px side margins):
-   - Background: `parchment-soft` base + the verse's **reader-page sketch** â€” `BackgroundLayer` over `getReaderBackground(verse.sourceId, { stanza: verse.chapter })`, so the card carries the same faded deity/source plate as the source's own reader (the pool verse's `chapter` doubles as the kÄá¹‡á¸a/stanza key for Valmiki Ramayan / Sundarkand; sources without a plate fall back to the plain parchment gradient). Card clips it with `overflow: hidden`
-   - Border: 1px `divider`
-   - Shadow: `md` (runtime: **`elevation.raised`** â€” was an inline `0.14/24` shadow until July 2026)
-   - Radius: 18
-   - Padding: 24px
-   - Content (top to bottom):
-     - **Header row**: source pill on the left (Inter 10 600, 0.3em tracking, saffron-deep on saffron-tint bg, radius 999 â€” "à¤­à¤—à¤µà¤¦à¥ à¤—à¥€à¤¤à¤¾ Â· à¤¶à¥à¤²à¥‹à¤• 2.47" format, language-aware) Â· **BookmarkButton + ShareButton** on the right, matching the reader's in-page actions (Â§25)
-     - Verse text: verse token for the reading language, `ink`. 16px below the header row
-     - Ornament divider (Section 5 `à¥¥` style). 16px vertical margin
-     - Meaning label: single-language `à¤­à¤¾à¤µà¤¾à¤°à¥à¤¥` / `Meaning` (same treatment as Section 9)
-     - Meaning body: meaning token for the reading language, `ink-soft`
-     - **Card footer row**: source name on the left (Cormorant 12 400 italic / script serif, `ink-muted` â€” no "From" prefix) Â· an inline **`â†» next`** text pressable on the right (14px, `saffron`) that picks a new random verse. There is no separate 40px refresh circle or attribution line below the card
-4. **Routine banner** (Â§30) docked above the tab bar. This is now the **only** screen that docks it â€” Home moved its banner inline (July 2026) to de-clutter its scroll, but Daily Bhakti's single centred verse card has no comparable inline seam, so the docked chip stays here.
-
-**Gradient background:** same as Home.
-
-**Verse pool:** an explicit registry â€” `mobile/src/data/versePool.ts` â€” mapping each participating section (Gita, Sundarkand, the stotrams, chalisas, Ramcharitmanas, Valmiki Ramayan, japam mantras, sanskar verses, â€¦) into a `UniformVerse` shape. Membership is **registered per section**, not inferred from categories, so the pool only surfaces content with a well-formed verse + meaning mapping. Selection: `Math.random()` over the flat pool on each visit / `â†» next` tap.
-
-**Deep-linking:** a daily-verse reminder tap can pin the tab to a specific verse via route params (`sourceId` / `chapter` / `verseIndex`); the pinned verse is resolved from the pool by identity and shown instead of a random pick.
-
----
-
-## 24. Screen: Wishlist (saved verses)
-
-**Purpose.** Displays user-saved verses for quick re-access. Persisted locally via AsyncStorage (`BookmarksContext`). There is **no Bookmarks tab** â€” the screen is reached via **More â†’ Wishlist** (`MoreStackNavigator` â†’ `WishlistScreen.tsx`).
-
-**Structure:**
-
-1. Status bar
-2. **Top bar**: back button (44px circle) + bilingual title block â€” primary "à¤¸à¤‚à¤—à¥à¤°à¤¹" / "Saved Verses" swaps with the reading language (title face 16), the other language demoted to an 11px `ink-muted` caption beneath
-3. **Bookmark list** (28px side padding, 10px gap):
-   - Each card:
-     - Background: `parchment-soft`
-     - Border: 1px `divider`
-     - Radius: 14
-     - Padding: 14px
-     - Layout (horizontal): verse info (flex-1) + â™¥ remove button + chevron
-     - Preview text: **first 2 lines** of the verse (numberOfLines=2), 14/22, `ink`, in the reading language's serif
-     - Meta row below the preview: verse pill (`à¤¶à¥à¤²à¥‹à¤• N` / `Shloka N.M`, Cormorant SemiBold 10 on saffron-tint, radius 999) + source line (Cormorant 12 400 italic, `ink-muted`, e.g. "à¤¹à¤¨à¥à¤®à¤¾à¤¨ à¤šà¤¾à¤²à¥€à¤¸à¤¾")
-     - **â™¥ remove button**: `saffron`, 18px glyph inside a 44Ã—44 tap target â€” opens a **confirm modal** ("Remove from wishlist?" with Remove / Cancel, both â‰¥44px tall) rather than deleting immediately
-     - Chevron: `â€º`, `saffron`, right-aligned (decorative â€” hidden from a11y)
-   - Row tap â†’ navigates to that verse in its reader via `buildBookmarkTarget` (`mobile/src/navigation/entryRoutes.ts`), bubbling up to the Home tab stack
-4. **Empty state** (when no bookmarks):
-   - Centered
-   - `à¥¥` ornament (24px, ink-muted, 40% opacity)
-   - Text: "à¤…à¤­à¥€ à¤¤à¤• à¤•à¥‹à¤ˆ à¤¶à¥à¤²à¥‹à¤• à¤¸à¤¹à¥‡à¤œà¤¾ à¤¨à¤¹à¥€à¤‚" (15, ink-muted, centered â€” script serif for gu/kn)
-   - Subtext: "No verses saved yet" (Cormorant 14 400 italic, ink-muted)
-   - Hint: "Tap the â™¡ icon while reading to save verses" (Cormorant 12 400 italic, ink-muted, 60% opacity)
-
-**Gradient background:** same as Home.
-
----
-
-## 25. Component: Bookmark Button
-
-**Purpose.** Toggle button allowing users to save/unsave the current verse (`BookmarkButton.tsx`).
-
-- Position: **in-page**, in each verse page's header row (verse pill left, actions right â€” the `topActions` slot, Â§9), next to the Share button. Not in the reader top bar.
-- Shape: 34Ã—34 circle, `parchment-soft` fill, `divider` border
-- Icon rendered as text: **"â™¡"** (unsaved, `ink-muted`) / **"â™¥"** (saved, `saffron`), 16px
-- Tap: toggles bookmark state via BookmarksContext
-- Animation: light scale pulse (1.0 â†’ 1.15 â†’ 1.0, 200ms) **on save only** â€” removal stays quiet; the pulse collapses to the final frame under reduce-motion (Â§12)
-- Haptic: `Haptics.ImpactFeedbackStyle.Light` on every toggle
-- Hit slop: 12px all sides (lifts the 34px visual past the 44Ã—44 target)
-- Accessibility: `accessibilityRole="button"`, label "Add bookmark" / "Remove bookmark", `accessibilityState={{ selected }}`
-
----
-
-## 26. Screen: Theerth Browse (à¤¤à¥€à¤°à¥à¤¥)
-
-**Purpose.** Entry surface for the Theerth (pilgrimage) category â€” a browse **list**, not a map. Tapping the Theerth category tile on Home pushes this screen (`TheerthMapScreen.tsx` â€” the file keeps its historical name, but the landing view renders no map). The `<IndiaMap>` appears in the **drill-in** view after picking a state or category. Full proposal in `docs/roadmap/prds/07-temple-tour.md`.
-
-**Layer stack:**
-
-1. Flat parchment gradient only (`BackgroundLayer` with `source={null}`) â€” deliberately no faded sketch: a busy plate camouflaged the saffron map outline and pins in the drill-in view.
-2. Content column.
-
-**Structure â€” landing (top to bottom):**
-
-1. Status bar.
-2. **Top bar**: back button Â· title centred `à¤¤à¥€à¤°à¥à¤¥` (Hindi mode) / `Theerth` (English mode), reader-title style â€” title swaps on language, never stacks Â· right-side spacer to keep the title centred.
-3. **Language toggle row** (centred). Same `LanguageToggle` component as Â§16, consistent across every Theerth screen. State shared via `useGitaLanguage()` â€” do not fork.
-4. **View toggle** (segmented control, parchment-soft fill, divider border, pill radius):
-   - Two halves: `à¤°à¤¾à¤œà¥à¤¯ Â· By State` and `à¤¶à¥à¤°à¥‡à¤£à¥€ Â· By Category` (lang-swapped labels; category is the default).
-   - Active half tinted `saffron-tint` with `saffron-deep` text; inactive transparent with `ink-muted`. Halves are minWidth 100 Ã— minHeight 44, `radiogroup`/`radio` roles.
-5. **Browse card list** â€” one gradient LibraryCard-style row per **category** or **state**: `[ thumb glyph à¥¥ (category) / à¥ (state) ]  [ name Â· meta "N à¤¤à¥€à¤°à¥à¤¥ / N temples" ]  [ â€º ]`, with a NEW badge when any temple inside is still unseen. The meta line follows the Â§46 meta convention: `cardMeta` size, Inter + tracking for English only; Indic meta takes the script serif with **no** tracking (tracking splits the shirorekha). Category rows follow the curated `groupOrder` â€” the `TheerthGroup` buckets à¤¦à¥à¤µà¤¾à¤¦à¤¶ à¤œà¥à¤¯à¥‹à¤¤à¤¿à¤°à¥à¤²à¤¿à¤™à¥à¤—, à¤šà¤¾à¤° à¤§à¤¾à¤®, à¤›à¥‹à¤Ÿà¤¾ à¤šà¤¾à¤° à¤§à¤¾à¤®, à¤¶à¤•à¥à¤¤à¤¿ à¤ªà¥€à¤ , plus an "à¤…à¤¨à¥à¤¯ à¤ªà¥à¤°à¤¸à¤¿à¤¦à¥à¤§ à¤¤à¥€à¤°à¥à¤¥ Â· Other Famous Temples" bucket for ungrouped temples; state rows sort alphabetically by `stateEn`.
-
-**Structure â€” drill-in** (the same screen pushed again with a `group` or `stateEn` param):
-
-1. Top bar title becomes the category/state name; the language toggle row persists.
-2. `<IndiaMap>` (Section 28), centred, scoped to the subsection â€” pins render only for the drilled-in temples; the By-State drill-in fills the focused state.
-3. A single italic hint line below the map: `à¤ªà¤¿à¤¨ à¤›à¥‚à¤•à¤° à¤®à¤‚à¤¦à¤¿à¤° à¤•à¥€ à¤•à¤¥à¤¾ à¤ªà¤¢à¤¼à¥‡à¤‚` / `Tap a pin to read the temple's story` â€” Cormorant Garamond 12 italic, `ink-muted`, centred. (There is **no** `introHi/En` prose field on the model â€” this hint is the only copy.)
-4. Flat temple list (same browse-card rows; meta line = `city, state`), alphabetical by the localized temple name.
-
-**Data:** **71 temples** in `mobile/src/data/theerth/temples.ts`, each tagged with zero or more `groups` â€” a temple may appear under multiple yatras (Kedarnath is both Jyotirlinga and Chota Char Dham); `groups: []` lands it under Other Famous Temples.
-
-**Interactions:**
-
-- Tap pin or list row â†’ push `TheerthDetail` for that temple (and mark its NEW chip seen).
-- Long-press pin â†’ small label tooltip with temple name (lang-swapped). Auto-dismisses on release (Section 29).
-- The By State / By Category choice is component state on the landing screen; drill-ins are separate pushes, so back from a detail returns to the same view.
-
-**Gradient background:** flat parchment gradient (no sketch).
-
----
-
-## 27. Screen: Theerth Detail
-
-**Purpose.** Per-temple narrative screen. Reached by tapping a pin on the Map view (Â§26) or a row in the State list view.
-
-**Layer stack:**
-
-1. Parchment base.
-2. Faded sketch background resolved by the temple's **presiding deity**, with per-temple id overrides for shrines whose deity plate is too generic (`getTheerthBackground(temple.id, temple.deity)`, `mobile/src/data/backgrounds.ts`). There is no per-temple `background` field on the model.
-3. Parchment gradient overlay (Â§2).
-4. Vertical-scroll content column.
-
-**Structure (top to bottom):**
-
-1. Status bar.
-2. **Top bar**:
-   - Back button â€” returns to the Theerth browse surface preserving its view state.
-   - **Language toggle** centred (Â§16) â€” the temple name lives only in the hero below, never duplicated in the bar.
-   - Spacer.
-3. **Hero block** (centred):
-   - Temple name in large title type: screen-title face at 28, `ink`, centred.
-   - Subtitle line: `<city>, <state>` (lang-swapped), 14, `ink-muted`, centred (Cormorant italic for en; script serif for Indic).
-   - Deity badge: a small pill (`saffron-tint` fill, `divider` border, `pill` radius, `saffron-deep` text) reading the presiding deity's name, typed via `pillTextStyle(lang, versePill)` â€” Inter 10 600 wide-tracked uppercase for English; script serif bold with **no** tracking for Indic (tracking split "à¤¶à¤¿à¤µ" into "à¤¶à¤¿ à¤µ").
-4. Ornament divider (`à¥¥`, Â§5).
-5. **Significance section:**
-   - Label: `à¤®à¤¹à¤¿à¤®à¤¾ Â· Significance` (`Significance Â· à¤®à¤¹à¤¿à¤®à¤¾` when lang = en) â€” reading-language form leads, the other supports. Rendered in the **script serif bold** at the `meaningLabel` size (13), `saffron-deep`, uppercase, **no tracking** â€” the label is always mixed-script, so a Latin face would clip the Devanagari half and tracking would split the shirorekha.
-   - Body: **a single prose string** â€” `significanceHi` / `significanceEn` (not a paragraph array). Typography follows the meaning token for the reading language (Hindi 20/34 Noto Serif `ink-soft`; English 20/33 Cormorant 500 italic here, `ink-soft`), centred.
-6. Ornament divider.
-7. **Origin Story section:**
-   - Label: `à¤‰à¤¦à¥à¤­à¤µ à¤•à¤¥à¤¾ Â· Origin Story` (`Origin Story Â· à¤‰à¤¦à¥à¤­à¤µ à¤•à¤¥à¤¾` when lang = en). Same style as Significance label.
-   - Body: a single prose string â€” `originStoryHi` / `originStoryEn`, same typography rules.
-8. **Sources footer**:
-   - One-line attribution: `à¤¸à¥à¤°à¥‹à¤¤ â€” <label 1>, <label 2>` (`Sources â€” â€¦` in en) â€” 12 italic, `ink-muted`, centred, 70% opacity.
-   - URLs are NOT links in v1 (rendered as plain text). v2 may make them tappable.
-
-**Romanization:** Â§3.1 carve-out â€” temple-name spelling uses popular English (`Kashi Vishwanath`, not `KÄÅ›Ä« ViÅ›vanÄtha`); origin-story `*En` fields are independent prose, not transliteration.
-
----
-
-## 28. Component: India Map
-
-**Purpose.** Reusable stylised SVG India outline used by `TheerthMapScreen` and (potentially in v2) by Profile / search "by state". Rendered with `react-native-svg`. Do **not** add `react-native-maps` or any tile provider.
-
-**Visual treatment:**
-
-- SVG outline of India (mainland + visible major islands), single `saffron-deep @ 0.6 opacity` stroke at 1.2 px, no fill (the parchment shows through).
-- State boundaries (shown by default on the Theerth surface, PRD-08) as thinner `saffron @ 0.25 opacity` strokes at 0.6 px. The focused state in the By-State view is filled `saffron @ 0.12 opacity`.
-- Aspect ratio ~1:1.2 (wider tail south, narrower north â€” proportional to India's actual extent).
-- No labels on the map itself (state names are surface in the state-list view, not on pins).
-
-**Props (API):**
-
-```ts
-type IndiaMapProps = {
-  pins: Array<{ id: string; lat: number; lng: number; label: string }>;
-  width: number;               // computed by parent from screen width
-  onPinPress: (id: string) => void;
-  showStates?: boolean;        // default true on the Theerth surface (PRD-08)
-  highlightStateEn?: string;   // fill the matching state (By-State focus)
-};
-```
-
-**Projection:** equirectangular, bounded by India's extent: lat âˆˆ [6, 38] â†’ y âˆˆ [0, height]; lng âˆˆ [68, 98] â†’ x âˆˆ [0, width]. Latitude is flipped (north = top). No distortion correction â€” the ~1:1.15 viewport aspect (`width 300 Ã— height 345`) is achieved purely by the viewBox dimensions, a per-axis linear map. The pins are projected with the exact same `INDIA_PROJECTION` constants the paths were generated from, so a pin lands precisely on the real outline.
-
-**Coordinate sanity:** the component warns (dev mode only) if any pin's lat/lng falls outside the bounding box â€” catches lat/lng swaps and bad source data before they render off-screen.
-
-**Data provenance (PRD-08).** The outline + 36 state/UT boundaries are **real geography**, generated once by `scripts/build-india-map.mjs` and committed as static SVG path constants in `mobile/src/components/indiaMapPaths.generated.ts` (`INDIA_OUTLINE`, `INDIA_STATES`, `INDIA_PROJECTION`). Re-run the script to refresh; do **not** hand-edit the generated file. Sources: the **national outline** is DataMeet `india-composite` (Â© DataMeet, **CC-BY** â€” https://github.com/datameet/maps), which depicts India's official boundary including the full Jammu & Kashmir / Ladakh extent â€” Natural Earth's de-facto boundary truncates the northern Kashmir crown, so it is no longer used for the outline. The **state/UT boundaries** are public-domain Natural Earth 50m `admin_1_states_provinces` (their post-2019 state names match `TheerthTemple.stateEn`).
-
-**Performance:** paths are static committed constants (~35 KB total). No runtime simplification, no GeoJSON parsing, no map provider, no API key. Render cost is dominated by the pin count â€” bounded in practice because the map only renders in drill-in views with the subsection's pins (a state or yatra group), never all 71 temples at once.
-
----
-
-## 29. Component: Theerth Pin
-
-**Purpose.** The individual pin glyph rendered on `<IndiaMap>`.
-
-**Visual:**
-
-- Glyph: `à¥¥` in `saffron-deep`, Noto Serif Devanagari, 18 px (slightly larger than ornament dividers to read as an interactive element).
-- No background circle / no shape underlay â€” the glyph itself is the pin. This keeps the map quiet.
-- Tap-hold tooltip: small parchment-soft rectangle, `divider` border, 8 px padding, label in Noto Serif Devanagari 13 600 / Cormorant Garamond 13 400 italic (lang-swapped). Tooltip appears above the pin (or below if too close to top edge).
-
-**Interaction:**
-
-- Tap target: 44Ã—44+ invisible hit area via `hitSlop` (16 px each side), even though the visible glyph is ~18 px.
-- Tap â†’ calls `onPress(id)`.
-- Long-press (**250 ms** threshold, `delayLongPress`) â†’ shows tooltip; tooltip auto-dismisses on release.
-- Haptic on tap: `Haptics.ImpactFeedbackStyle.Light`.
-
-## 30. Component: Routine Banner & Completion Celebration
-
-**Purpose.** A banner surfacing today's à¤¨à¤¿à¤¤à¥à¤¯ à¤¸à¤¾à¤§à¤¨à¤¾ (daily routine). Two layouts via a `variant` prop: **`docked`** (default) â€” a floating chip pinned just above the tab bar, used on Daily Bhakti (Â§21); **`inline`** â€” flows in the Home scroll between the Today strip (Â§48) and CATEGORIES (Â§18), so it no longer overlays the content beneath it (July 2026 â€” the docked chip on Home floated over and clipped the DISCOVER carousel). The only visual difference is positioning + shadow direction (docked lifts upward off the bar; inline casts a soft downward card shadow); state logic and copy are identical. `RoutineBanner.tsx` + `routineBannerView.ts` (pure state logic).
-
-**Docking.** `position: absolute; bottom: spacing.sm` â€” the tab bar already owns the bottom safe-area inset (`height: 60 + insets.bottom`), so the banner must **not** add `insets.bottom` again (doing so left an ~inset-sized dead gap below it).
-
-**One line, language-aware.** A single line chosen by the active reading language (`useGitaLanguage`), never a stacked Hindi+English pair. 30px disc + tight `spacing.sm` vertical padding keep it compact.
-
-**First-tap (Home).** The whole banner is one `Pressable` that bubble-up navigates to the routine screen. On Home it lives inside the outer vertical `ScrollView`, so â€” like every other Home card â€” it routes its press through the shared first-tap controller (`onPressIn`/`onPressOut`/`onPress` â†’ `TilePressContext`, Â§18); a plain `onPress` intermittently no-opped the first tap. Outside a `TilePressProvider` (the docked usage on Daily Bhakti, Â§21) the controller's default is a no-op that runs the action immediately, so docked behaviour is unchanged.
-
-**Three states** (`bannerStatus`):
-- `nudge` (no routine) â€” dashed `gold` border, `à¤¨à¤¿` disc, "à¤…à¤ªà¤¨à¥€ à¤¨à¤¿à¤¤à¥à¤¯ à¤¸à¤¾à¤§à¤¨à¤¾ à¤¬à¤¨à¤¾à¤à¤" / "Set your daily practice" â†’ opens RoutineCreate.
-- `progress` (partial, or nothing scheduled today) â€” `goldTint` border, `doneCount/total` disc, "à¤¨à¤¿à¤¤à¥à¤¯ à¤¸à¤¾à¤§à¤¨à¤¾ Â· à¤†à¤œ" / "Daily Routine Â· Today", + a saffron progress track â†’ opens RoutineToday.
-- `complete` (all done) â€” a bloomed **lotus** mark (`LotusMark.tsx`) + "à¤¸à¤¾à¤§à¤¨à¤¾ à¤ªà¥‚à¤°à¥à¤£ Â· à¤†à¤œ" / "Complete for today". The prominent progress chip is replaced by this compact achievement badge â†’ opens RoutineToday.
-
-**Completion celebration (pushpa-varsha).** The moment today's routine becomes complete, a gentle one-shot flower shower of saffron/gold petals drifts down (`RoutineCelebration.tsx`), with a `Haptics.NotificationFeedbackType.Success` tap. Reverent, not confetti (Section 11): a soft fall + fade, no scale pops. The shower does **not** render from the banner â€” it fires app-wide from `RoutineCelebrationOverlay`, mounted once at the navigation root, so it plays on whatever screen completion happens (reading to the last page, finishing japa, or a manual mark). The once-per-day gate is `celebratedSignatureToday` persisted in `RoutineContext`: a record of today's **date + an order-independent signature of the scheduled item set** â€” so completing the same set celebrates once, while adding an item and completing again can celebrate anew; the gate is held until the context finishes loading to avoid a replay on launch. Vector art is built from `View` + `expo-linear-gradient` (no SVG â€” same convention as `CategoryIcon`). This pushpa-varsha is the **only** sanctioned exception to Â§11's no-animation stance; the Today's Practice seal (Â§31) reuses its fade, not a new effect.
-
----
-
-## 31. Screen: Today's Practice (à¤†à¤œ à¤•à¥€ à¤¸à¤¾à¤§à¤¨à¤¾)
-
-**Purpose.** The daily-driver screen the routine banner (Â§30) opens â€” today's scheduled items across all routines, presented as a devotional ledger rather than a utility checklist (PRD-10). `RoutineTodayScreen.tsx`, inside the parchment `RoutineShell`.
-
-**Screen order.** The **à¤¨à¤¿à¤¤à¥à¤¯ à¤¸à¤¾à¤§à¤¨à¤¾ daily routine leads** â€” the completion summary card + item rows render first, because a screen titled *Today's Practice* should open on what you do every day. Any enrolled prebuilt-sankalp cards (`SankalpTodayCard`, Â§46) follow **below** the routine (separated by a `spacing.xl` gap that appears only when a routine is present above them), then the ghost **Browse sankalps** button. **Both ledgers are tap-to-expand accordions:** the daily-routine summary card (below) and each sankalp card (Â§46) show only their header until tapped, then drop their item rows down â€” the two use the same row spec and the same rotating `â€º` caret cue, so the surface reads as one system. The sankalp cards are themselves ordered by `orderSadhanaCards` (Â§46): daily-cadence/active first, then resting/upcoming by nearest date, completed last. (Before July 2026 the sankalp cards rendered above the routine â€” a screen-order bug that buried the everyday practice.)
-
-**Components & where they live** (all pull tokens from the theme; no hard-coded hexes):
-- `mobile/src/components/MalaStreak.tsx` â€” the streak drawn as a bead string.
-- `mobile/src/components/PracticeSeal.tsx` â€” the completion seal (wraps `LotusMark`).
-- `mobile/src/data/routine/practiceView.ts` â€” pure view-model (summary lines, offered-time formatting, mala math), unit-tested like `routineBannerView.ts`.
-- `mobile/src/utils/useReducedMotion.ts` â€” shared reduce-motion hook (Â§12).
-
-**Completion summary card (accordion header).** One centered `parchment-soft` card (`goldTint` border, `radii.lg`, `elevation.card`, `spacing.lg` padding) at the top. **The whole card is the accordion header â€” a `Pressable` (`accessibilityRole="button"` + `accessibilityState.expanded`) that toggles the item rows below.** The rows **collapse by default** so the screen opens on a compact summary, not a long list; a centred **dropdown caret** at the foot of the card (a `â€º` rotated to point down when collapsed, up when open â€” `summaryCaret`, matching Â§46's sankalp caret) signals it. Its contents:
-- Headline: partial â†’ `{done} of {total}`; complete â†’ `{total} of {total} offered`. Latin headline uses Cormorant 600 upright; Hindi uses the Devanagari screen-title face.
-- Italic sub-line (Cormorant italic / Devanagari `meaning` in Hindi): partial â†’ `{n} reading(s) remaining`; complete â†’ `Today's practice is complete` / `à¤†à¤œ à¤•à¥€ à¤¸à¤¾à¤§à¤¨à¤¾ à¤ªà¥‚à¤°à¥à¤£`.
-- Progress strip: a goldâ†’saffron `expo-linear-gradient` fill on a `parchment-deep` track. **Hidden when complete.**
-- `MalaStreak` row + label.
-- `PracticeSeal` â€” **absent while partial; fades in (opacity only, no scale pop) when complete**, riding the Â§30 completion-fade exception; instant under reduce-motion.
-
-**Mala bead semantics (`MalaStreak`).** A horizontal string of beads filling toward a larger gold **meru** bead â€” the product's streak metaphor, never a fitness flame. `lit = min(streak, capacity)` (default capacity 7; the numeric label stays authoritative for longer streaks). Lit beads use a saffron gradient; unlit beads are `parchment-deep` with a `gold` hairline. The most-recent lit ("today") bead carries a **static** saffron ring â€” no pulse (Â§11). Streak 0 â†’ all beads unlit with a "Start your mala today" / "à¤†à¤œ à¤¸à¥‡ à¤®à¤¾à¤²à¤¾ à¤†à¤°à¤®à¥à¤­ à¤•à¤°à¥‡à¤‚" label, never a hidden component. Built from `View` + gradient (no SVG, per Â§30).
-
-**Devotional language â€” "offered" (à¤…à¤°à¥à¤ªà¤¿à¤¤).** On this screen, completing an item is framed as *offering* it, not ticking a box. An offered row reads `offered {time}` / `{time} Â· à¤…à¤°à¥à¤ªà¤¿à¤¤`; a pending row reads `Tap to read` / `à¤ªà¤¢à¤¼à¤¨à¥‡ à¤•à¥‡ à¤²à¤¿à¤ à¤Ÿà¥ˆà¤ª à¤•à¤°à¥‡à¤‚`. Completion **semantics** are unchanged from Â§30/PRD-07 (auto on reaching the last verse-page or target japa rounds; manual mark as fallback). (The banner and Profile keep their existing "à¤ªà¥‚à¤°à¥à¤£ / complete" copy for now; the "offered" register is scoped to this screen.)
-
-**Offered-at timestamp format.** 12-hour clock with meridiem â€” `7:12 AM` / `7:12 à¤ªà¥‚à¤°à¥à¤µà¤¾à¤¹à¥à¤¨` (à¤ªà¥‚à¤°à¥à¤µà¤¾à¤¹à¥à¤¨ before noon, à¤…à¤ªà¤°à¤¾à¤¹à¥à¤¨ after), via `formatOfferedTime`. A missing/sentinel time (auto-japam, which carries no per-round timestamp, or a migrated legacy mark) shows a plain `offered` / `à¤…à¤°à¥à¤ªà¤¿à¤¤` with no time.
-
-**No strikethrough.** A completed item's title is **muted (`ink-muted`), never struck through** â€” striking a sacred text reads as "cancelled," the opposite of "offered." The completion mark is a `saffron` ring that fills with a `âœ“` when offered; tapping it toggles the manual mark.
-
-**Item rows (dropdown).** Rendered only when the summary header is expanded. Title in the card-title face (16 over a 24 line â€” â‰¥1.5Ã— so Devanagari matras never clip); sub-line (`{alt title} Â· {tail}`) follows Â§46's meta convention (`scriptBodyFont` + `cardMeta` â€” never Cormorant on the mixed-script line). Rows align `flex-start` with a small optical offset on the ring and chevron so both pin to the title's **first** line instead of drifting to the middle of a wrapped two-line block. The help caption under the ledger uses the `meaning` face at 12/18 and drops down with the rows. This row spec is the shared contract Â§46's sankalp dropdown mirrors exactly.
-
-**Browse sankalps.** A ghost `RoutineButton` "à¤¤à¥ˆà¤¯à¤¾à¤° à¤¸à¤‚à¤•à¤²à¥à¤ª à¤šà¥à¤¨à¥‡à¤‚ / Browse sankalps" closes the ledger and opens the Â§46 catalog â€” one of the catalog's three standing entry points (the create-flow chooser and the Â§32 Home spotlight are the others), so sankalps stay discoverable after a routine exists.
-
-**Data (PRD-10, additive).** Manual completion now stores a timestamp: `@vedansh/routine-done` persists `{ date, marks: Record<key, epochMs> }` (was `{ date, keys: string[] }`; legacy values migrate to `marks` with timestamp `0` = "offered, time unknown"). `RoutineContext` exposes `manualDoneAt(key)`; `useRoutineToday` surfaces `doneAt` per item (manual mark time, or the reader's last-progress `updatedAt` for an auto-complete). Still date-scoped and reset at the day boundary.
-
----
-
-## 32. Home Feature Spotlight (DISCOVER carousel)
-
-**Purpose.** Raise awareness of the app's distinct sections â€” not just the catalog categories, but the *cross-cutting surfaces* a first-time user easily misses (Daily Practice, the Daily Verse tab, Sankalp, Pitru Smaran, Guided Pujas (à¤ªà¥‚à¤œà¤¾ à¤µà¤¿à¤§à¤¿ â†’ the Â§62 Vidhi Catalog, pushed on the Home stack), the Pilgrimage map, Home-Screen Widgets â€” the Panchang card was retired in favour of the Today strip, Â§48). A single horizontal carousel of feature cards sits **below the CATEGORIES grid** (Â§18) â€” it originally led the page, but the prime slot now belongs to today-relevant content (Â§48). One flexible card shell carries every section so any content fits.
-
-**Placement & label.** A `DISCOVER` section label (Inter 11 600 `0.22em` uppercase `ink-muted`, same token as `CATEGORIES`) precedes the carousel. The carousel is a horizontal `ScrollView` that **full-bleeds** to the screen edges â€” it cancels the page gutter with `marginHorizontal: -spacing.xxl` and re-pads its content (`paddingHorizontal: spacing.xxl`) so the first card aligns with the page while the next card peeks. `snapToInterval = cardWidth + gap`, `decelerationRate="fast"`, `snapToAlignment="start"`.
-
-**Touch band (Aug 2026).** The band's `contentContainerStyle` carries `paddingVertical: 10` â€” the Â§50 touch-band fix mirrored here. The cards are `Pressable`s inside the horizontal `ScrollView`, and the shared first-tap fallback (Â§ "First-tap recovery") is only suppressed when `onScrollBeginDrag` fires; an arced horizontal flick starting near the band edge can lose the first-pixel gesture negotiation to the card `Pressable` / outer vertical page-scroll, so a swipe randomly opened a card or stalled instead of scrolling. The vertical padding enlarges the *scrollable frame* and the arc tolerance â€” the touch target, not the visible cards â€” so the horizontal scroll reliably wins the drag. The `DISCOVER` label drops its own bottom margin (`marginBottom: 0` vs the shared label's 8) so the two spacings don't stack.
-
-**Where a card's target lives.** Most spotlights push on the **Home stack**, so back returns to Home. Three hand off to another tab â€” Daily Verse (a bare tab switch, no stack push), Pitru Smaran and Home-Screen Widgets (both into the More hub, whose landing screen carries a row back into each flow, Â§37). Every such hand-off **must** be built with a `*TabTarget` helper (`moreTabTarget` / `panchangTabTarget`), never a hand-rolled `{ screen, params }`: the tab bar is lazy, so without `initial: false` the target becomes that stack's *initial* route â€” dead back button, hub unreachable for the session. The widgets card shipped exactly that bug (Aug 2026) and is now guarded by `navigation/__tests__/tabTargets.test.ts`, which scans every source file for the hand-rolled form. See RULEBOOK Â§6.0.
-
-**Card width.** `min(320, screenWidth âˆ’ gutter âˆ’ 56)` so a sliver of the following card always shows (a peek cue that the row scrolls). Gap `spacing.md`.
-
-**Order shuffle.** All cards always render â€” awareness is about *coverage*, so no section is ever hidden â€” but their order is **shuffled once per app open** so a different section leads each visit and the row never reads as a static, ignored banner (`shuffleBySeed(spotlights, seed)`, `utils/shuffleBySeed.ts`). The seed is captured at screen mount (`useMemo([])`), so the order is fresh on each open yet **stable across re-renders** while the user is on Home â€” it never reshuffles mid-interaction. The shuffle is a pure seeded Fisherâ€“Yates (mulberry32 PRNG), not a raw `Math.random()` call, so it is unit-tested (same seed â†’ same permutation). This is deliberately *not* a "show one random card" pattern â€” that would surface some sections rarely and undercut the awareness goal; novelty-per-visit is Daily Bhakti's job (Â§23), not this carousel's.
-
-### Component: Feature Card (`FeatureCard.tsx`)
-
-A content-agnostic spotlight card. Every text field is **bilingual**; the card renders the slot matching the active reading language (`useGitaLanguage` + `orderTitlesByLanguage`) and demotes the other â€” same contract as the catalog cards (Â§8/Â§19). The shell:
-
-```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚ [icon tile]          EYEBROW  â”‚  header: icon tile (left) Â· eyebrow tag OR NEW badge (right)
-â”‚                               â”‚
-â”‚  à¤¶à¥€à¤°à¥à¤·à¤•            (primary)  â”‚  title â€” language-aware (dev 19 / lat 21 primary)
-â”‚  Title          (secondary)   â”‚
-â”‚  One-line description that â€¦   â”‚  blurb â€” ink-soft, numberOfLines 1 (truncates any length)
-â”‚  explains the section â€¦        â”‚
-â”‚      (flex spacer)             â”‚  pushes the CTA to the bottom so cards align
-â”‚  [ à¤–à¥‹à¤²à¥‡à¤‚  â€º ]                 â”‚  CTA pill (saffron-tint fill, saffron-deep text)
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-```
-
-- **Surface.** `cardActiveFrom â†’ cardActiveTo` gradient, `cardActiveBorder` 1px, `radii.lg`, `elevation.raised` (this is a focal hero element). `minHeight: 112` + the flex spacer keep the CTA pinned to a common baseline across cards of differing copy length.
-- **Icon tile.** 36Ã—36 (34 in `compact`), `saffronTint` fill, `radii.md`. Wraps any glyph: a `CategoryIcon` vector, the `LotusMark`, or a plain Devanagari `Text` glyph (e.g. `à¤¸à¤‚` for Sankalp) â€” the tile makes them all read as one family. Saffron-tint (light) keeps the `saffronDeep` vectors high-contrast.
-- **Eyebrow.** Short uppercase context tag (`versePill` tokens, `saffronDeep`). When `hasNew`, the eyebrow slot is **replaced** by the saffron `NEW` badge (same geometry/colour as Â§19) â€” carries the text cue, never colour-only (Â§12).
-- **Title.** `orderTitlesByLanguage`, primary `numberOfLines 1`, secondary demoted to `ink-muted`.
-- **Description.** Hindi â†’ Devanagari 13 `ink-soft`; English â†’ Cormorant italic 14 `ink-soft`. `numberOfLines 1`.
-- **CTA pill.** `saffronTint` fill, `pill` radius, label (language-aware: `à¤ªà¤¢à¤¼à¥‡à¤‚`/`Read`, `à¤¦à¥‡à¤–à¥‡à¤‚`/`View`, â€¦) + `â€º` chevron in `saffronDeep`. The whole card is the press target; the pill is a visual affordance, not a nested button.
-- **Accessibility.** Whole-card `Pressable`, `accessibilityRole="button"`, label = `"{titleEn}.{ New.?} {descEn} Tap to open."`.
-
-**`compact` variant (Aug 2026).** A **name-only strip** form of the same shell, used by the FOR TODAY row (Â§50) â€” the DISCOVER carousel keeps the tall default. Home's today cluster (strip + FOR TODAY + routine banner) was consuming most of the first screenful before the CATEGORIES grid came into view, so the FOR TODAY cards were flattened to well under half their height (**56** vs ~130):
-
-```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚ [icon]  à¤¶à¥€à¤°à¥à¤·à¤•             â€º â”‚  one row: icon tile Â· name Â· chevron
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-```
-
-- **Dropped:** the blurb, the CTA pill, and the flex spacer between them. The pill was never a button (the whole card is the press target), so the bare `â€º` chevron in `saffronDeep` carries the same affordance at a fraction of the height. `descHi/En` and `ctaHi/En` stay on `FeatureSpotlight` â€” the default variant renders both, and `desc` still reaches the compact card's **accessibility label** (below).
-- **Height** comes from the row itself â€” `paddingVertical: 11` + the 34 icon = 56 â€” with `minHeight: 0`, `paddingHorizontal: 12`. No fixed height, so a font-scale bump grows the strip instead of clipping it.
-- **Icon tile** 34Ã—34 (vs 36); **name** one step down (dev 17 / lat 18), `flex: 1`, `numberOfLines 1`.
-- **Unchanged:** gradient surface, border, `radii.lg`, `elevation.raised`, the `NEW` badge (inline after the name), and the accessibility label â€” which still carries `descEn`, so a screen reader on a festival day hears *"Vishnu Chalisa. Today is Diwali. Tap to open."* off a card that shows only the name.
-- **Width is the caller's**, and it is now load-bearing: with the blurb gone the name is the entire card, so a width that truncates it costs more here than it did on the default card. See Â§50 for the FOR TODAY row's 196 and what fits in it.
-
-**Props.** `{ item: FeatureSpotlight; width: number; onPress: () => void; compact?: boolean }`. `width` is owned by the screen (viewport-sized). `FeatureSpotlight` is `{ key, eyebrowHi/En, titleHi/En, descHi/En, ctaHi/En, icon, hasNew? }`.
-
-**Spotlight set (current).** Defined in `HomeScreen.tsx` with navigation wired per item: à¤¨à¤¿à¤¤à¥à¤¯ à¤¸à¤¾à¤§à¤¨à¤¾ â†’ `RoutineToday`; à¤¦à¥ˆà¤¨à¤¿à¤• à¤­à¤•à¥à¤¤à¤¿ â†’ `DailyBhaktiTab`; à¤¸à¤‚à¤•à¤²à¥à¤ª â†’ `SadhanaPrograms` (a direct door into the Â§46 catalog â€” glyph tile `à¤¸à¤‚`); **à¤ªà¤¿à¤¤à¥ƒ à¤¸à¥à¤®à¤°à¤£ â†’ `MoreTab/PitruSmaranList`** (standing zero-state awareness, `à¥¥` gold glyph, NEW for its launch release); à¤¤à¥€à¤°à¥à¤¥ à¤¯à¤¾à¤¤à¥à¤°à¤¾ â†’ `TheerthMap`; Home-screen widgets â†’ `MoreTab/WidgetGallery`. The former à¤†à¤œ-à¤•à¤¾-à¤ªà¤‚à¤šà¤¾à¤‚à¤— card was **retired** when the Today strip (Â§48) took over that surface â€” keeping both produced two "Today's Panchang." buttons for screen readers. Sibling-tab/More-stack targets navigate via the **parent** (`useNavigation()` â†’ bubble up), not the Home stack â€” same pattern as `RoutineBanner`/`PanchangScreen`.
-
-**Adding a spotlight.** Append a `FeatureSpotlight` to the `spotlights` array in `HomeScreen.tsx` with both-language copy, an icon node, and an `onPress`. No new tokens are needed â€” the shell reuses existing card/elevation/typography tokens.
-
----
-
-## 33. Panchang Tab (à¤ªà¤‚à¤šà¤¾à¤‚à¤—)
-
-**Purpose.** A daily Hindu almanac plus a vrat/festival companion, living in its own bottom tab (`PanchangTab` â†’ `PanchangStackNavigator`: `PanchangHome` â†’ `ObservanceList` / `ObservanceDetail` / `KathaLibrary` / `MyVrat`). Everything is computed **on-device and offline**: the engine (`mobile/src/panchang/engine.ts`) derives tithi / nakshatra / yoga / karana / vara / lunar month from `astronomy-engine` sunâ€“moon ephemerides with a linear Lahiri-style ayanamsa, so no network, no API, no panchang service. Observance dates come from bundled rules (`festivals.ts` / `festivalEngine.ts`) with a persisted per-city cache warmed off the interaction path. **Day selection is per-rule (`ObservanceRule.dayRule`, RULEBOOK Â§23):** absent â‡’ `udaya`, the tithi at sunrise, correct for the large majority; `chandrodaya` matches at **moonrise** and is what Sankashti Chaturthi and Karwa Chauth take, since the vrat ends with the moon sighting and arghya. Krishna Chaturthi typically opens mid-morning and closes before the next mid-morning, so sunrise matching named the day AFTER the night the moon is worshipped â€” Bhadrapada 2026 resolved to 1 Sep, whose 9:22 PM moonrise falls in Panchami, instead of 31 Aug, whose 8:39 PM moonrise falls in Chaturthi.
-
-**Layer stack.** Parchment base Â· faded sketch background (`panchang_celestial_almanac` via `BackgroundLayer` â€” the Â§6 exception pattern: this surface pins its own celestial sketch) Â· content ScrollView at `spacing.xxl` gutters.
-
-**Structure (top to bottom):**
-
-1. **Surface modes** â€” the fixed first control in every mode: segmented pill `à¤ªà¤‚à¤šà¤¾à¤‚à¤— Â· Panchang` / `à¤µà¥à¤°à¤¤-à¤ªà¤°à¥à¤µ Â· Vrat & Parv` / `à¤œà¥à¤¯à¥‹à¤¤à¤¿à¤· Â· Jyotish` (13 pt, active `saffron-tint`/`saffron-deep`). It must not move vertically when the selected mode changes.
-2. **Contextual Panchang header** â€” shown below the mode selector for Panchang and Vrat & Parv only; hidden in Jyotish because current city, lunar-month convention, and followed-vrat state do not apply to a birth chart. One compact row, equal-width flex sides so the centre toggle stays screen-centred:
-   - *Location chip* (left): a drawn teardrop pin (11 px, `saffron`, counter-rotated `parchment-soft` hole â€” no emoji per Â§5) + city name at 12 pt, in a `parchment-soft` pill with `divider` border. Tap â†’ Location Picker (below).
-   - *Calendar-system toggle* (centre): segmented pill `à¤ªà¥‚à¤°à¥à¤£à¤¿à¤®à¤¾à¤‚à¤¤ / à¤…à¤®à¤¾à¤¨à¥à¤¤` (Purnimant default), active half `saffron-tint` + `saffron-deep`, inactive `ink-muted`. Persisted at `@vedansh:panchang-calendar-system`.
-   - *My Vrat button* (right): 34 px circle, `gold` â˜…, with a `saffron` count badge when the user follows any vrat. â†’ MyVrat.
-3. **Calendar card** (`parchment-soft`, `divider` border, `radii.lg`, `elevation.card`): `â€¹ [full date over a one-line panchang subtitle] â€º` day stepper â€” the date block (a11y label = the full date) carries the day's identity **inside the card**: full date (reader-title face 15) over `vara Â· lunar month (+à¤…à¤§à¤¿à¤•) paksha à¤ªà¤•à¥à¤· Â· à¤µà¤¿à¤•à¥à¤°à¤® à¤¸à¤‚à¤µà¤¤à¥ N` at 11 `ink-muted`, single line, `adjustsFontSizeToFit` to 0.75 (a space placeholder while the day solves keeps the card height stable). The old standalone date-header block below the card and the redundant bottom-left `<Month> <Year>` label are **gone** â€” the date is stated once (Aug 2026 UI/UX pass; ~70pt reclaimed, the anga grid reaches the fold). Below, one action row: a `à¤®à¤¾à¤¹ à¤¦à¥‡à¤–à¥‡à¤‚ / à¤®à¤¾à¤¹ à¤›à¤¿à¤ªà¤¾à¤à¤ Â· Month view` toggle (left, `interSemiBold` 11 `saffron-deep`, padded + hitSlop to the 44pt floor; a11y `Expand calendar`/`Collapse calendar` â€” the smoke flows full-string match it, so the label lives only here; tapping the date block toggles too) and the `à¤†à¤œ Â· Today` reset pill (right â€” it returns the user to the current date after browsing, always rendered). Tapping either expand affordance opens an inline month grid â€” weekday row (Inter **10**), **six rows of seven `flex: 1` cells** (min-height 38, radius 8; never one wrapping 42-cell row divided by a `100 / 7` percentage width â€” Yoga resolves percentages in 32-bit float, so seven such cells can sum to a hair over the container and drop the seventh onto the next line, laying out six columns under the seven-column header and sliding every date off its weekday: on a 390 dp iPhone 15 Aug 2026, a Saturday, read as à¤®à¤‚à¤—à¤²à¤µà¤¾à¤°. Fixed Aug 2026; `calendarWeeks()` in `panchang/calendarGrid.ts` chunks the month and `calendarGrid.test.ts` pins column index == `getDay()`), selected day `saffron-tint` + `saffron` border, today `gold` border, and **10 pt** observance tags per day (`à¤ªà¤°à¥à¤µ` on `saffron-tint`, `à¤µà¥à¤°à¤¤` on `gold-tint`, `à¤µà¥à¤°à¤¤+` when mixed; tag box `minWidth 28 / minHeight 16 / radius 8`, line-height 14). Both were below the Â§3.0 floor until July 2026 (9 and 7); the tag box grew from 24Ã—12 to fit, and its label now goes through `pillTextStyle` â€” it had named Inter, which has no Devanagari glyphs for `à¤µà¥à¤°à¤¤`. A horizontal swipe anywhere on the card (dx > 54, mostly-horizontal) steps one day.
-4. **Day panel** (the panchang proper, once computed â€” an `ActivityIndicator` in `saffron` while the day is derived off the render path):
-   - *No standalone date header* (removed Aug 2026): the vara Â· date Â· à¤¸à¤‚à¤µà¤¤à¥ Â· paksha line lives as the calendar card's subtitle (item 3 above), so the day panel starts with the Muhurat glance card.
-   - *Muhurat glance card* (`MuhuratGlanceCard`, PRD-14): the `cardActiveFrom â†’ cardActiveTo` gradient hero, promoted to lead the day panel (directly under the calendar card, **above** the anga grid) â€” "is now auspicious?" is the live, time-sensitive answer users open Panchang for. Kicker row (Aug 2026): the `à¤†à¤œ à¤•à¤¾ à¤®à¥à¤¹à¥‚à¤°à¥à¤¤` eyebrow (`cardLatin` for en; script-bold serif, no tracking, for hi/gu/kn â€” Cormorant has no Indic glyphs, Â§3) on the left, and the **running tithi** right-aligned opposite it â€” a 10 pt `saffron-deep` `à¤¤à¤¿à¤¥à¤¿ Â· ` eyebrow tag + the tithi name at 14.5 `ink` (title face) + a quiet 11 pt `ink-soft` `à¤¤à¤• H:MM` end instant when this day's solve knows it (`formatEndInstant` short-date suffix on past-midnight ends; the à¤¤à¤• line takes the script body face outside English â€” Cormorant has no Indic glyphs, Â§3). Baseline-aligned with the eyebrow, shrink-to-fit to 0.8. Beneath that line, when the sunrise tithi hands over **within the same civil day**, a quiet 10.5 pt `ink-muted` **handover line** â€” `à¤«à¤¿à¤° <tithi> â€” à¤¶à¥‡à¤· à¤¦à¤¿à¤¨` / `then <Tithi> â€” rest of day` (`successorTithiToday()` in `panchang/prevailingTithi.ts`, pure). It is a second line, not an extension of the first, so neither has to shrink to fit both. `à¤¤à¤• 8:51 AM` alone states when the day's label stops being true and never what is true for the remaining fifteen hours â€” the gap that made a Chaturthi vrat look like it belonged to the next date the almanac heads à¤šà¤¤à¥à¤°à¥à¤¥à¥€ (Aug 2026 report). The helper returns null â€” never a misleading name â€” when the tithi runs past the next sunrise, when it ends after midnight (the à¤¤à¤• line already carries that date), and on kshaya days (the tile renders both tithis already); it is also suppressed once a today surface's live kicker has itself moved on to the successor. The tithi is the one calendar fact promoted into this first-viewport hero (the anga grid it belongs to sits past the fold on most phones), and on a today surface it is **live**: `prevailingTithi()` (`panchang/prevailingTithi.ts`, pure) walks sunrise tithi â†’ kshaya tithi â†’ successor-by-index on the minute tick, so past the end instant the kicker names the tithi actually running now â€” the successor renders name-only because its end belongs to the next day's solve, never a guess. Browsed dates keep the sunrise (udaya-vyapini) tithi. Renders only once the day's solve lands (the skeleton keeps a bare eyebrow); the anga Tithi tile below stays the canonical sunrise-tithi + kshaya detail. Then a hero "now" row (current choghadiya + quality tag when `isToday`, else the day's Abhijit) with, on a today surface, a **4pt live progress strip** under the `à¤¤à¤•` line (`saffron` fill on `divider` track, `accessibilityRole="progressbar"` with a percent `accessibilityValue`; the `useMuhurat` minute tick advances it), and â€” **while the running period is à¤¤à¥à¤¯à¤¾à¤œà¥à¤¯ only** â€” an **`à¤…à¤—à¤²à¤¾ à¤¶à¥à¤­` row** (gold 8pt dot + `à¤…à¤—à¤²à¤¾ à¤¶à¥à¤­: <name> à¤šà¥Œà¤˜à¤¡à¤¼à¤¿à¤¯à¤¾` in the title face + the start clock in Cormorant SemiBold `saffron-deep` + a script `à¤¸à¥‡` suffix outside the Latin face, Â§3): the inauspicious "now" answers "when is it good next?" inline, from the pure `nextAuspiciousPeriod()` helper in `panchang/muhurat.ts` (null late at night when nothing auspicious remains â€” the row then hides). Then a two-up `à¤°à¤¾à¤¹à¥ à¤•à¤¾à¤²` / `à¤…à¤­à¤¿à¤œà¥€à¤¤` tile pair, and a `à¤¸à¤­à¥€ à¤®à¥à¤¹à¥‚à¤°à¥à¤¤ à¤µ à¤šà¥Œà¤˜à¤¡à¤¼à¤¿à¤¯à¤¾ â†’` footer â†’ `MuhuratDetail`. While its own `useMuhurat` solve is in flight it shows a **skeleton** in the same gradient card (kicker text + muted `divider`/`parchment-soft` placeholder bars sized to the real hero row, tile pair, and footer, `accessibilityRole="progressbar"`), so the section reserves its footprint instead of popping in below the day panel. The solve comes from the shared **`panchangDayStore`** (per `locationKey` + calendar system, keyed by absolute civil date, persisted â€” Â§60), so revisiting a date, re-mounting the card, a day the Muhurat Finder already swept, and a cold app start all render instantly with no skeleton; only the live "now" read recomputes each minute. `useMuhurat` owns no cache of its own â€” `MuhuratDay`/`nowPeriods` are re-derived per call because they are pure arithmetic over the three cached days. **Times, ranges, and the quality chip use the non-italic semibold/bold Cormorant face, never the thin italic `cardLatin` (Â§3), and the chip sits on `avoidChipBg`/`goldChipBg` so it reads as a solid pill on the gradient (Â§12); avoid-chip text uses `avoidDeep` â€” the tint composites darker than the card, dropping raw `avoid` under AA (Â§2).**
-   - *Anga grid, uniform 2Ã—2*: Tithi Â· Nakshatra Â· Yoga Â· Karana each render on identical elevated tiles (`parchment-soft`, `radii.md`, `elevation.card`) â€” one size, no prominent/secondary split. Each tile: a **10 pt** `saffron-deep` type label (tracked uppercase Cormorant in English; plain script serif otherwise â€” was 9, below the Â§3.0 floor, until July 2026), the value in the active reading language only at 18 pt `ink` (single-line, `adjustsFontSizeToFit` down to a 0.8 scale so the longest name â€” "Uttara Bhadrapada" â€” fits without truncation), and `till H:MM AM/PM` when the anga ends that day. No second cross-script line. End instants that fall past midnight carry a short-date suffix (`à¤¤à¤• 2:04 AM, 12 à¤œà¥à¤²` â€” `formatEndInstant` in `panchang/muhuratFormat.ts`, shared with the Muhurat card) so a next-day end never reads as this morning; panchang convention shows end times only (an anga's start is the previous one's end, usually on the previous day). On **kshaya** days â€” a tithi or nakshatra that begins after this sunrise and ends before the next, touching neither (e.g. Ekadashi on 10 Jul 2026) â€” the Tithi/Nakshatra tile adds a second row: the skipped anga's name at 15 pt `ink` plus its own `à¤¤à¤•` line, so the day reads `à¤¦à¤¶à¤®à¥€ à¤¤à¤• 8:16 AM Â· à¤à¤•à¤¾à¤¦à¤¶à¥€ à¤¤à¤• 5:22 AM, 11 à¤œà¥à¤²` instead of Ekadashi silently vanishing between Dashami and Dwadashi. Data: `PanchangData.kshayaTithi` / `kshayaNakshatra` (engine-detected via the sunrise-to-sunrise index jump). The **Tithi tile alone** carries the same 11 pt `ink-muted` **handover line** as the glance-card kicker (`à¤«à¤¿à¤° <tithi> â€” à¤¶à¥‡à¤· à¤¦à¤¿à¤¨`, `successorTithiToday()`) under its `à¤¤à¤•` line, on the identical null rules â€” the tile headline stays the sunrise (udaya) tithi the almanac names the day by, and the handover says who holds the rest of it. No other anga carries it.
-   - *Times card*: 2Ã—2 grid â€” Sunrise, Sunset, Moonrise, Brahma Muhurta â€” each a `gold` â˜€/â˜½ text-presentation glyph (variation selector forces monochrome; "no emoji") + 10 pt label + Cormorant SemiBold 13 value.
-5. **à¤µà¥à¤°à¤¤ à¤”à¤° à¤ªà¤°à¥à¤µ** for the selected date: `ObservanceCard`s (`parchment-soft`, `radii.md`, `elevation.card`) with a category pill (`à¤µà¥à¤°à¤¤` on `gold-tint` / `à¤ªà¤°à¥à¤µ` on `saffron-tint`), deity, name â€” for `sankashti-chaturthi-vrat` the title is the **occurrence's published name** (`sankashtiOccurrenceName` in `panchang/sankashtiNames.ts`: the purnimant-month Ganapati form, e.g. `à¤¹à¥‡à¤°à¤®à¥à¤¬ à¤¸à¤‚à¤•à¤·à¥à¤Ÿà¥€ à¤šà¤¤à¥à¤°à¥à¤¥à¥€ à¤µà¥à¤°à¤¤` on the Bhadrapada day, `à¤µà¤¿à¤­à¥à¤µà¤¨` in an adhik lunation, `(à¤…à¤‚à¤—à¤¾à¤°à¤•à¥€)` appended on a Tuesday; resolver failure falls back to the rule name, and list/search/detail surfaces keep the rule name) â€” short description, a **moonrise-vrat line** on `dayRule: 'chandrodaya'` rules only (12 pt `saffron-deep`: `à¤µà¥à¤°à¤¤ à¤‡à¤¸à¥€ à¤°à¤¾à¤¤à¥à¤°à¤¿ â€” à¤šà¤‚à¤¦à¥à¤°à¥‹à¤¦à¤¯ H:MM, à¤¦à¤°à¥à¤¶à¤¨ à¤µ à¤…à¤°à¥à¤˜à¥à¤¯ à¤•à¥‡ à¤¬à¤¾à¤¦ à¤ªà¤¾à¤°à¤£` / `Kept this night â€” moonrise H:MM, parana after darshan and arghya`, from the selected day's `PanchangData.moonrise`; absent when the day has not solved). Such a vrat is kept through a night, not a calendar box â€” its tithi usually ends the next morning â€” so the card names the instant the fast is actually broken instead of leaving the reader to reconcile `à¤µà¥à¤°à¤¤` with a à¤¤à¤¿à¤¥à¤¿ line that ends before noon. Then the action pills â€” `à¥¥ à¤ªà¥‚à¤œà¤¾ à¤µà¤¿à¤§à¤¿` (**filled `saffron`** pill, `parchment` text â€” renders only when the rule's `vidhiId` resolves in `VIDHI_BY_ID`; â†’ `VidhiDetail` with the selected date, Â§61), `à¤•à¤¥à¤¾ à¤ªà¤¢à¤¼à¥‡à¤‚ Â· Read Katha` (gold-tint pill â†’ katha reader) and `à¤ªà¤¢à¤¼à¥‡à¤‚: <section>` (outline pill â†’ the linked text via `buildEntryStartTarget`, Â§38). The vidhi pill leads the row: it is the day's *performed* action, the others are readings. Below the cards, on a saved à¤ªà¤¿à¤¤à¥ƒ à¤¸à¥à¤®à¤°à¤£ observance date only, the private muted **"à¥¥ à¤¸à¥à¤®à¤°à¤£ â€” <relation>"** chip (`PitruSmaranDayChip`, `goldTint` fill + `gold` border + `inkSoft` text â€” never the festive pill style; device-only) â†’ that person's detail (Â§62).
-6. **à¤†à¤—à¤¾à¤®à¥€ Â· Upcoming** rows: coloured marker dot (`saffron` star-tier / `ink` halfmoon / `gold` default), short date, name.
-
-**Muhurat Finder door** (`MuhuratFinderDoor`, PRD-16 Â§60) â€” one shared `ListCard` in its **`flat` variant** (`parchment-soft` on a `divider` border â€” Aug 2026: the gradient is reserved for the live glance card directly above, so the door no longer reads as part of it) with a à¤¨à¤¯à¤¾/NEW badge, inserted **between the glance card and the anga grid**: "is now auspicious?" readers are the users with a date decision to make. Leading thumb: a **drawn sunrise glyph** (sun ring + three rays over a horizon bar, View-strokes like the Â§17 tab icons â€” no emoji, Â§5) in `saffron-deep` on a 46pt `saffron-tint` disc, replacing the gradient à¤®à¥ letter tile. It pushes `MuhuratFinder` in the same Panchang stack; nothing above or below it moves.
-
-**Muhurat Detail** (`MuhuratDetailScreen` â†’ shared `MuhuratCardBody`, reached from the glance-card footer â€” and, for a specific chosen day, from the Muhurat Finder day detail and Abujh rows, Â§60) â€” the gold-à¥¥-framed panchang card (Â§5): panchang + sun rows, then the full 8+8 day/night choghadiya table and à¤…à¤­à¤¿à¤œà¥€à¤¤/à¤°à¤¾à¤¹à¥/à¤—à¥à¤²à¤¿à¤•/à¤¯à¤®à¤—à¤£à¥à¤¡ rows. The panchang rows use the same `formatEndInstant` next-day suffix as the anga tiles, and kshaya days add `à¤•à¥à¤·à¤¯ à¤¤à¤¿à¤¥à¤¿` / `à¤•à¥à¤·à¤¯ à¤¨à¤•à¥à¤·à¤¤à¥à¤°` rows so the card (and its share PNG) never disagrees with the tiles. Each is a quality-tinted `Muh` row (`goldTint` auspicious / `avoidTint` avoid) with the currently-running period ring-bordered in `saffron` + an `à¤…à¤­à¥€` badge. **Name and time render in dark `ink`/`ink-soft` on both qualities** â€” the tint plus a small signal-coloured `Â· à¤¶à¥à¤­/à¤¤à¥à¤¯à¤¾à¤œà¥à¤¯` text tag carry the quality (Â§12, never colour alone); the text is never itself tinted-down (terracotta-on-`avoidTint` was muddy ~4.8:1). The quality tag, time range, and now-badge use the **non-italic semibold Cormorant face, never the thin italic `cardLatin`** (Â§3) â€” the same readability fix as the glance card. The card title (top bar + `MuhuratCardBody` heading) is **`à¤†à¤œ à¤•à¤¾ à¤ªà¤‚à¤šà¤¾à¤‚à¤—` only when the date is today** (`useMuhurat().isToday`); a specific finder/abujh-selected day reads **`à¤‡à¤¸ à¤¦à¤¿à¤¨ à¤•à¤¾ à¤ªà¤‚à¤šà¤¾à¤‚à¤—`** so it never claims to be today while the dateline shows a different day. The same body renders the shareable PNG (`variant="share"`, captured off-screen).
-
-**Catalog view** (`à¤µà¥à¤°à¤¤-à¤ªà¤°à¥à¤µ` tab): a search field (44 high, `radii.md`) over `searchObservances`; a pinned **My Vrat** row (`gold-tint` fill, 1.5 px `gold` border); an **Upcoming** horizontal card rail (compact 136Ã—72 pt cards, `radii.md`: category glyph à¥/â˜¾/âœº + uppercase date tag on top, one-line primary-language name beneath â€” no category caption); and a 2-up **Browse by type** grid of slim 60 pt half-tiles (`radii.md`, glyph in a 34 pt `saffron-tint` roundel inline-left; primary-language title 15 pt + live count â€” no secondary-language echo line): à¤µà¥à¤°à¤¤ / à¤ªà¤°à¥à¤µ / à¤‰à¤ªà¤µà¤¾à¤¸ plus a **à¤•à¤¥à¤¾** tile (à¥¥ glyph, `getKathaCount()` stories) â†’ Katha Library and a full-width **à¤ªà¥‚à¤œà¤¾ à¤µà¤¿à¤§à¤¿** tile (à¥¥ glyph, `VIDHI_ENTRIES.length` count) â†’ the Vidhi Catalog (Â§61) â€” the vidhi's always-available door, since the day-panel pill is date-dependent.
-
-**Observance List** (`ObservanceListScreen`) â€” category drill-in over the Home gradient, sorted soonest-first by next occurrence. Each row: a leading follow star (`gold` â˜… filled / `ink-muted` â˜† outline, toggles without opening the detail), name + other-language caption, and right-aligned next date + relative label (`today` / `1d` / `Nd`). In-list search field on top.
-
-**Observance Detail** (`ObservanceDetailScreen`) â€” hero (category pill + deity, name at 24 pt centred, other-language caption, and a `saffron-tint` "à¤…à¤—à¤²à¤¾ Â· Next Â· date Â· in N days" pill), then an action row: **Follow** (outline `saffron` pill; fills `saffron` with `parchment` text when following â€” following also feeds vrat reminders, Â§38) and **à¥¥ Read Katha** (filled `saffron`). Following shows a transient (3.5 s) `gold-tint` "Added to My Vrat â€” View â†’" bar. Below: **à¤®à¤¹à¤¤à¥à¤µ Â· About** prose, a katha card, and â€” **last on the page** â€” the single **"How to observe" home** (PRD-09 Phase 4 Â§65 composed with PRD-19 Phase 2B), in four states keyed off a verified upvas entry (`upvasId` â†’ `getUpvasInfo`, verified-only) and a resolving `vidhiId`: **(1) upvas only** â†’ `à¤‰à¤ªà¤µà¤¾à¤¸ à¤µà¤¿à¤§à¤¿ Â· How to observe` heading + the Â§65 fast-facts panel; **(2) vidhi only** â†’ exactly the shipped `à¤ªà¥‚à¤œà¤¾ à¤µà¤¿à¤§à¤¿ Â· How to observe` block, unchanged â€” the same card shell as the katha card (`parchment-soft`, `divider`, `radii.lg`, `elevation.card`) with a saffron à¥¥ glyph, the vidhi's bilingual title, a `N à¤šà¤°à¤£ Â· à¤²à¤—à¤­à¤— M à¤®à¤¿à¤¨à¤Ÿ` meta line, and â€º â€” tap â†’ `VidhiDetail` (Â§62) carrying the next occurrence's `dateMs` so the samagri checklist keys to the right festival date; **(3) both** â†’ the `à¤‰à¤ªà¤µà¤¾à¤¸ à¤µà¤¿à¤§à¤¿` heading, fast facts first, and the vidhi card beneath them inside the same panel, its meta line prefixed `à¤ªà¥‚à¤œà¤¾ à¤µà¤¿à¤§à¤¿ Â· ` so the card keeps its own identity; **(4) neither** â†’ no section at all. There is never a "coming soon" placeholder here â€” the parent PRD-09 Â§6.2 placeholder slot is retired.
-
-**My Vrat** (`MyVratScreen`) â€” the personal ledger: a three-cell metric band (`Following Â· Reminders on Â· This month`, Inter 22 `saffron-deep` values), a "ğŸ”” Reminder defaults" row, the **My priority** list (rows in follow order with next date and a bell button per vrat), and an **Upcoming** timeline among followed vrats. Empty state: large `gold` â˜…, "à¤…à¤­à¥€ à¤•à¥‹à¤ˆ à¤µà¥à¤°à¤¤ à¤¨à¤¹à¥€à¤‚ / No vrats yet", and a filled `saffron` "Browse à¤µà¥à¤°à¤¤-à¤ªà¤°à¥à¤µ â†’" pill.
-
-**Vrat Reminder Sheet** (`VratReminderSheet.tsx`) â€” bottom sheet for per-vrat or global-default reminder prefs. Implemented as an **in-tree absolute overlay** (not a transparent RN `Modal`) over `modal-backdrop`, so VoiceOver and the Maestro e2e snapshot can read it. Grab handle (40Ã—5, `divider`), then three option rows: *Advance notice* pills (`Off / 1 / 2 / 3 days` â€” evening before), *On the day* Switch (`saffron` track), *Day-of time* pills (`07:00 / 08:00 / Sunrise` â€” Sunrise is a labelled 06:00 proxy in v1). Selected pills fill `saffron` with `parchment` text; a filled `saffron` **Save reminders** pill commits. State lives in `VratFollowContext` (`@vedansh/vrat-follows` + `@vedansh/vrat-reminder-default`; built-in default = 1-day advance + 07:00 day-of).
-
-**Katha Library** (`KathaLibraryScreen`) â€” searchable list of every bundled bilingual katha: à¥¥ glyph, title, `<n> sections` caption, `à¤ªà¤¢à¤¼à¥‡à¤‚ Â· Read` affordance.
-
-**Vrat Katha Reader** (`VratKathaReaderScreen` + `KathaSectionPage`) â€” lives in the **Home stack** (`VratKathaReader` route; Panchang surfaces navigate cross-tab to it) and is currently the **only route in `IMMERSIVE_HOME_ROUTES`** (`TabNavigator.tsx`), so the bottom tab bar hides for immersive reading. Plain `parchment` (no sketch). Top bar: **`ReaderHeader`** (Â§9) â€” 44 px back circle Â· katha title Â· `n / m` counter; then `ReadingProgressBar` and the Language Toggle (Â§16). Until July 2026 this screen was the most-drifted top bar in the app: a 40 px button, a 16 gutter and a hard-coded 18 title, all of which the shared header replaced. Body: a horizontal paged `FlatList` of section cards â€” each page carries a `à¤ªà¥à¤°à¤¸à¤‚à¤— Â· n/m` / `Part Â· n/m` pill (`versePill` tokens on `saffron-tint`), section title at 20 pt, a vertically-compressed `à¥¥` Ornament, and body paragraphs at the shared `meaning` token (14 pt paragraph gap); long sections scroll vertically inside the page. Â§5 pager dots overlay the bottom; light haptic per page.
-
-**Location Picker** (`LocationPickerModal.tsx`) â€” a `pageSheet` modal on plain `parchment`: title `à¤¸à¥à¤¥à¤¾à¤¨ à¤šà¥à¤¨à¥‡à¤‚ Â· Choose location` + âœ•; a "ğŸ“ Use my location" row (GPS fixes **snap to the nearest pincode centroid, or the nearest bundled city when that is closer** â€” see the tier table â€” with denied/error fallback copy); a search field taking **a city name or a 6-digit pincode**; and the location list with a `saffron-deep` âœ“ on the selection. Location state (`PanchangLocationContext`, `@vedansh:panchang-location`, default **Ujjain**) is the single reference for every location-sensitive computation; changing location warms that location's observance cache after interactions settle.
-
-The list is **two browsable tiers**, rendered as one `FlatList` under two group headers (12 pt, `ink-muted`, `letterSpacing` 0.4, 14/4 pt padding, script title face), plus a **third, search-only pincode tier**:
-
-| Group header | Source | Count |
-| --- | --- | --- |
-| `à¤ªà¥à¤°à¤®à¥à¤– à¤¶à¤¹à¤° Â· Major cities` | `MAJOR_CITIES` (`panchang/locations.ts`) | 52, Ujjain first (it is `DEFAULT_LOCATION`) |
-| `à¤°à¤¾à¤œà¤¸à¥à¤¥à¤¾à¤¨ Â· à¤¤à¤¹à¤¸à¥€à¤²` / `Rajasthan Â· tehsils` | `RAJASTHAN_TEHSILS` (`panchang/rajasthanTehsils.ts`) | 342 across all 33 revenue districts |
-| `à¤ªà¤¿à¤¨à¤•à¥‹à¤¡ Â· Pincode` | `pincodeData.json` via `panchang/pincodes.ts` | 18,466 nationwide â€” **never browsable**, surfaced only by an exact 6-digit query |
-
-- **The pincode tier is deliberately not a browse list.** 18k rows is not a list anyone scrolls, and â€” decisively â€” neither source dataset carries Devanagari place names, so these entries cannot satisfy the `nameHi` contract every `City` row has. Typing a 6-digit code replaces the whole list with a single resolved row; a well-formed but unknown code renders an explanatory line rather than an empty list. Anything that is not 6 digits searches the two city tiers exactly as before.
-- **Pincode row**: title line is `416001 Â· Maharashtra` (Devanagari digits and state name in Hindi/gu/kn â€” `à¥ªà¥§à¥¬à¥¦à¥¦à¥§ Â· à¤®à¤¹à¤¾à¤°à¤¾à¤·à¥à¤Ÿà¥à¤°`), caption is `<district> Â· <taluka>` in Latin, collapsed to one name when they are equal. The caption stays Latin in every language because inventing Devanagari spellings for 18k places would be worse than a script mismatch; the title line carries the Hindi. Selecting one stores `cityId: pin-416001`.
-- **GPS picks whichever tier is genuinely closer**, never "pincode always". The geocoder's coverage is very uneven â€” 1 of 207 Jammu & Kashmir pincodes, 19 of 48 in Arunachal Pradesh â€” so a Srinagar fix finds its nearest pincode 156 km away in Doda while the bundled Srinagar entry sits on top of it. Ties go to the city, which is the better label.
-- **The 700 KB table is lazily required** and never touches the launch path: it loads after interactions settle once this sheet opens. `panchangPrefs` (which *is* the launch path, see Â§60) therefore validates a stored `pin-` record structurally instead of looking it up: a `pin-` id skips the bundled-city rebuild and is range-checked field by field, so the record is self-describing on disk.
-
-- **A tehsil is a `City` carrying `districtHi`/`districtEn`**; the national tier leaves both undefined, and the picker partitions the filtered list on that field rather than on an index. Groups whose filtered result is empty drop their header.
-- **Row**: title line is the name in the current language + `Â· <district>` at 12 pt `ink-muted` (`numberOfLines` 1, `flexShrink`). Both halves are the same language, so one script face covers them â€” per Â§3.0 never mix a Devanagari district into a Latin caption. The caption line below stays the single-script cross-reference it always was.
-- **Search** (`cityMatchesQuery`, exported from `locations.ts` and shared with the Kundali birth-city sheet) matches English name, Hindi name, and district in either script, so `alwar` surfaces all 21 Alwar tehsils.
-- **The location chip (Â§ above) keeps showing the town alone**, not `town Â· district` â€” 12 pt in a pill has no room, and the picker's âœ“ already resolves which same-named tehsil is active.
-- **Birth-city sheet** (`KundaliScreen.tsx`) shares the same list, search predicate and `Â· district` caption, and is a `FlatList` rather than a mapped `ScrollView` â€” at ~390 rows, mounting every row stalled the sheet open.
-
----
-
-## 34. Audio Tab (à¤­à¤œà¤¨) & Now Playing
-
-**Purpose.** A small devotional audio library â€” recitations of existing texts plus standalone bhajans/aartis â€” with playback that persists across the whole app. The tab (`AudioTab` â†’ `AudioStackNavigator`) holds a single `AudioLibrary` screen; the mini-player and the full Now Playing surface are **root overlays** mounted once in `App.tsx`, driven by `AudioPlayerContext`, not navigation screens.
-
-**Data.** `data/audio/tracks.ts` is a pure catalog (`AudioTrack`: bilingual title, thumb grapheme, deity, `kind: 'recitation' | 'standalone'`, `linkedTextId`, nominal duration). Audio bytes resolve separately via `assets/audio-library/index.ts` â€” a track surfaces **only** when `hasRealAudio(id)` is true, so nothing appears without a recording behind it. [13 tracks defined, 10 bundled recordings today (`gayatri-mantra`, `hare-rama`, `govinda-hari-govinda`, `har-har-bhole`, `mahamrityunjay-mantra`, plus the standalone bhajans `govind-bolo`, `om-gam-ganapataye-namah`, `narayan-hari-hari`, `jai-nandlal-ki`, `krishnaya-vasudevaya`); the rest of the catalog is a labelled prototype Phase 2 curates. All bundled takes are 128 kbps 48 kHz stereo MP3 with no embedded cover art, keeping the library â‰ˆ21 MB.]
-
-**Library screen** (`screens/audio/AudioLibraryScreen.tsx`), over the Home gradient:
-
-1. Centred screen title `à¤­à¤œà¤¨` (reader-title face at 22, language-aware).
-2. **Deity filter rail** â€” horizontal row of circular chips (Â§20 family): 54 px disc on the `cardThumbActiveFrom â†’ cardThumbActiveTo` gradient with a `parchment-soft` Devanagari glyph, 11 pt label below; the selected chip gains a 2 px `saffron` ring on a `saffron-tint` pad. A leading `à¥ Â· à¤¸à¤­à¥€/All` chip clears the filter. Only deities that actually have an available track appear.
-3. Sections with bilingual headings (`à¤œà¤¾à¤°à¥€ à¤°à¤–à¥‡à¤‚ Â· Continue listening` when a track is loaded, `à¤ªà¤¾à¤  Â· Recitations`, `à¤­à¤œà¤¨ à¤µ à¤†à¤°à¤¤à¥€ Â· Bhajans & Aartis`), each a stack of `TrackCard`s.
-
-**Track card** (`components/audio/TrackCard.tsx`) â€” the Â§8 catalog-card language on an audio row: `cardActiveFrom â†’ cardActiveTo` gradient, `cardActiveBorder`, `radii.lg`, 18 padding; a 52 px deity-icon thumb on the thumb gradient; bilingual title via `orderTitlesByLanguage` (dev 17 / lat 19 primary); sub meta `à¤ªà¤¾à¤  Â· 8:14`-style (`cardMeta` size). The tail swaps the navigate chevron for a 38 px **play disc**: `saffron-tint` + `saffron-deep` â–¶ at rest, filled `saffron` + `on-primary` âšâš for the currently playing track. Tapping a card plays the track and opens Now Playing.
-
-**Playback state** (`AudioPlayerContext`) â€” one imperative `expo-audio` player for the whole session (unlike the component-scoped `JapamAudioPlayer`), so playback survives navigation. The session is configured for background audio via `audio/audioSession.ts`: `playsInSilentMode`, with the interruption mode branched per platform in the **single `interruptionMode` field** â€” `mixWithOthers` on iOS, `duckOthers` on Android. Android must NOT rely on `interruptionModeAndroid` (expo-audio resolves `interruptionMode ?? interruptionModeAndroid`, so the iOS value overrides it) and must not use `mixWithOthers` (expo-audio then never requests audio focus, and Android 12+ force-mutes focus-less players when another app holds focus â€” the "silent playback on Android 16 devices" bug). Exposes position/duration, Â±15 s skip (`SKIP_SECONDS`), next/previous across the playable set, loop, rate 0.5â€“1.5Ã—, and `nowPlayingOpen`.
-
-**Auto-advance.** A finished track rolls straight on to the next one in the playable set â€” the library plays through without a tap, and the loop/repeat toggle is what opts out of it (repeat on = the native `loop` flag restarts the same track, so no advance). The ending is detected from `didJustFinish` **or** a reported position within `END_EPSILON_SEC` (0.35 s) of the duration while stopped, because `didJustFinish` isn't emitted uniformly across platforms (same caveat the japam bead counter works around, Â§35); a latch fires the advance exactly once per ending and re-arms as soon as playback moves off the end (resume, seek back, or a new source). Unlike the manual â—€â—€/â–¶â–¶ buttons, auto-advance does **not** wrap: at the end of the library playback stops rather than cycling the catalog indefinitely in the background.
-
-**MiniPlayer** (`components/audio/MiniPlayer.tsx`) â€” rendered once at the app root; appears whenever a track is loaded and floats over every tab/stack. Docks just above the tab bar (bottom = 60 + safe-area inset + `spacing.xs`; inset `spacing.lg` each side) â€” mirroring the RoutineBanner's docking (Â§30). Card: `parchment-soft`, `divider` border, `radii.lg`, upward shadow; 40 px deity thumb on the thumb gradient; title (reader-title face at 15) over a 3 px progress strip (`saffron` fill on `divider` track); then â–¶/âšâš (`saffron-deep`) and âœ• (stop & dismiss) buttons at 36 px. Tapping the body expands Now Playing.
-
-**Now Playing** (`screens/audio/NowPlayingScreen.tsx`) â€” a full-screen `parchment` overlay (absolute-fill, mounted app-wide in `App.tsx`; no navigation plumbing), shown when `nowPlayingOpen`:
-
-- Header: âŒ„ minimise circle Â· uppercase `Now Playing` label (swipe-hint face) Â· spacer.
-- Artwork: a 220 px `parchment-soft` framed square with the deity vector at 150 (or a 96 pt `saffron` à¥ fallback).
-- Title at 26 centred (reader-title face), subtitle `<artist/kind> Â· <deity>` in Cormorant italic `ink-muted`.
-- Seek bar: 4 px `saffron` fill on `divider` track, tap-to-seek; lining time labels either side (Cormorant SemiBold 15).
-- Transport row: `âˆ’15 Â· â—€â—€ Â· [â–¶/âšâš] Â· â–¶â–¶ Â· +15`; the play button is a 72 px `saffron` disc with `saffron-deep` rim and `on-primary` glyph.
-- Secondary row: a 44 px âŸ³ loop toggle (kept for mantra japa) â€” outline at rest, filled `saffron` when looping. It doubles as the **repeat-one** control: while it is on, a finished track restarts instead of auto-advancing to the next one.
-
-**Reader entry point.** Readers whose text has a linked recitation with real audio (via `getTrackForText` + `hasRealAudio`) show a small `saffron-deep` **â–¶** in the top bar after the page counter (`ChalisaReaderScreen.tsx`); tapping plays the recitation and opens Now Playing â€” the structural "audio hook" Â§9 reserved. Since July 2026 that `â–¶` is joined by the **read-aloud** control (Â§56), which speaks the text with the device voice for the many sections that have no recording. The two are **mutually exclusive**: both claim playback through `src/audio/playbackArbiter.ts`, so starting one silences the other â€” load-bearing on iOS, whose session is configured `mixWithOthers` and would otherwise play both at once. Read-aloud deliberately has **no mini-player and no lock-screen surface**: `expo-speech` exposes no media-session API, so it stays reader-scoped and stops when the app backgrounds.
-
----
-
-## 35. Japam (à¤œà¤ª)
-
-**Purpose.** A mantra-counting practice surface: tap (or let the audio loop count for you) through 108-bead rounds of a chosen mantra. Mantras are first-class library entries (`category: 'japam'` in `texts.ts`, sourced from `data/japam/japam.json` â€” 4 mantras today: à¥ à¤¨à¤®à¤ƒ à¤¶à¤¿à¤µà¤¾à¤¯, à¤¹à¤°à¥‡ à¤•à¥ƒà¤·à¥à¤£ à¤®à¤¹à¤¾à¤®à¤‚à¤¤à¥à¤°, à¤—à¤¾à¤¯à¤¤à¥à¤°à¥€ à¤®à¤‚à¤¤à¥à¤°, à¥ à¤¨à¤®à¥‹ à¤­à¤—à¤µà¤¤à¥‡ à¤µà¤¾à¤¸à¥à¤¦à¥‡à¤µà¤¾à¤¯), so they surface through the normal catalog/deity/search flows; `buildEntryStartTarget` routes a japam entry straight to `JapamCounter` (Home stack, lazy-loaded).
-
-**Counter screen** (`JapamCounterScreen.tsx`). Layer stack: parchment Â· per-mantra sketch (`getSourceBackground`) Â· content.
-
-1. **Top bar**: 44 px back circle Â· mantra title (language-aware) Â· a 34 px â° alarm button (opens the shared `AlarmEditorSheet` pre-locked to this mantra) Â· Share button.
-2. Language Toggle row (Â§16).
-3. **Tap surface** â€” the whole remaining column is one large Pressable (inside a ScrollView so a large-type mantra scrolls rather than clips; pressed state dims to 0.92):
-   - Mantra lines, centred, at the shared `verse` token (23/39; Latin languages use Cormorant italic scaled by the reading-size factor, Â§44).
-   - `à¥¥` Ornament.
-   - **Count block**: the current bead count as a huge `saffron-deep` numeral â€” 88 pt (76 on screens under 720 px tall, 64 under 640) â€” over `/ 108 à¤¬à¥€à¤œ` in the page-counter face; a 6 px round progress track (`saffron` fill on `dot-rest`) showing progress through the round; `N à¤†à¤µà¥ƒà¤¤à¥à¤¤à¤¿` rounds line (reader-title face at 16).
-   - Italic hint `à¤œà¤ª à¤•à¥‡ à¤²à¤¿à¤ à¤¸à¥à¤ªà¤°à¥à¤¶ à¤•à¤°à¥‡à¤‚ Â· Tap to chant` (swipe-hint token).
-   - Each tap = one bead with a light haptic; completing a round (bead 108 rolls the counter) fires a success haptic. Counts persist per mantra in `JapamCounterContext` (`@vedansh/japam-counter`). `JAPAM_BEADS_PER_ROUND = 108` (`data/japam/index.ts`).
-4. **Audio row** (`components/JapamAudioPlayer.tsx`, above a `divider` hairline): an auto-chant loop of the mantra recording (`assets/japam-audio`). A `â–¶ à¤šà¤²à¤¾à¤à¤ / Play` pill (fills `saffron` while playing) and a **Tempo** stepper (âˆ’ / 1.0Ã— / +, range 0.5â€“1.5Ã— in 0.1 steps, pitch-corrected). The clip loops natively and the bead count advances with the chanting: a single-recitation clip registers **one bead per completed loop** (loop-wrap detection on the reported position â€” reliable where `didJustFinish` isn't), while a musical rendition declares how many times it chants the mantra (`repetitions` in `assets/japam-audio`) and registers **one bead per repetition segment**, so a multi-minute kirtan doesn't count as a single bead. `autoPlay` starts the loop immediately when arriving from an alarm tap (Â§38) and **auto-stops after 30 s** (`ALARM_AUTO_STOP_MS`) so the alarm rings the mantra from the shared recording then falls silent rather than looping forever â€” reusing the same bundled mp3, with no separate size-adding alarm clip; any manual play/pause cancels the cap so a real chanting session isn't cut off. Mantras without a bundled clip show an italic "Audio not available" notice instead. Bundled today: `om-namah-shivaya` (own single-recitation clip, 1 bead/loop) plus `hare-krishna-mahamantra` and `gayatri-mantra`, which reuse the Audio-library rendition takes (`assets/audio-library/hare-rama.mp3` â‰ˆ4 reps â€” the 2:14 mahamantra rendition, `gayatri-mantra.mp3` â‰ˆ6 reps) via a relative `require` so the mp3 is bundled once rather than duplicated. The per-file `repetitions` counts are cadence estimates â€” tune them if a round drifts from 108 beads.
-5. **Actions row**: two outline buttons â€” `à¤¬à¥€à¤œ à¤ªà¥à¤¨à¤ƒ à¥¦ Â· Reset Beads` (`cardActiveBorder`, `saffron-deep` text; zeroes the current round, keeps completed rounds) and `à¤¸à¤¬ à¤¸à¤¾à¤«à¤¼ Â· Clear All` (`divider`, `ink-muted`). Both confirm via a centred modal card over `modal-backdrop` (title + italic body + filled `saffron` confirm + cancel). Disabled at 0.4 opacity when there is nothing to reset.
-
-**Mantra selection.** There is no dedicated picker screen â€” the japam category tile / deity lists / search / routine items open the counter for a specific mantra; the alarm editor's mantra picker (below) is the one in-flow chooser.
-
-**Alarms** (`JapamAlarmsScreen.tsx` in the More stack, `JapamAlarmsContext`, cap `MAX_JAPAM_ALARMS = 8`, persisted at `@vedansh/japam-alarms`):
-
-- List screen over the Home gradient: intro line ("Wake to the mantra you chose, at the time you chose."), a permission banner when notifications are denied (tap â†’ system settings; "denied" is the **effective** status of Â§38 â€” never a fresh Android install that hasn't been asked yet), alarm rows (`parchment-soft`, `radii.lg`: the time in the reader-title face â€” 12 h or 24 h per the device locale via `prefers12HourClock()`; a11y labels stay 24 h â€” mantra name, a repeat line "`Daily / Once / Weekdays / Weekends / day list` Â· `in 7 hr 25 min`" (live 30 s tick) plus "skips â€¹dateâ€º" while a skip is pending, optional uppercase label, and a `saffron` Switch), and an outline `+ Add alarm` button. (No privacy footnote â€” implementation-detail messaging like "nothing goes to the server" is deliberately not shown anywhere in the app.)
-- **AlarmEditorSheet** (exported and reused by the counter's â°) in a fade modal, internally scrollable (`maxHeight` 88 %): `TimeStepper` at **1-minute** steps (a chevron steps once per tap on press-release; the auto-repeat starts from **long-press** â€” 350 ms, then every 90 ms â€” so a scroll drag that begins on a chevron never mutates the time), a **Repeat** row of seven 38 px circular day chips (S M T W T F S; all on = Daily, none = Once â€” the summary line then warns "turns off after ringing"), the mantra picker (locked when opened from a counter), a **Label** `TextInput` (40 chars, optional), an edit-mode-only **Skip next** toggle chip showing the date it would skip, and a live "Rings in â€¦" preview line above the filled confirm button (a11y label `Confirm alarm`).
-- **Model** (`notifications/japamAlarms.ts`): `repeatDays?: number[]` (getDay() indices; absent = daily, `[]` = one-time, subset = weekly) and `skipNextDate?: 'YYYY-MM-DD'`. Pure helpers: `nextAlarmFireTimestamp(s)` (honours days + skip), the shared skip plan (`isSkipPending` / `skipOneshotPlan` â€” one pendency predicate and `:occN` id scheme for every tier), `repeatSummary`, `describeUntilFire`, `formatTimeLabel`, `prefers12HourClock`. The context clears `skipNextDate` whenever time/repeat change, prunes past skip dates on load/foreground, and **auto-disables fired one-time alarms** via the scheduler's once-armed bookkeeping (`firedOnceAlarmIds`; merge semantics â€” a past armed timestamp is evidence the alarm rang and is never overwritten, and a fired one-time alarm is never re-armed).
-- Scheduling (`notifications/japamAlarmScheduler.ts`) is tiered: Android uses the native module (`AlarmManager.setAlarmClock` + a high-importance lock-screen notification with the mantra sound on the **alarm stream** â€” `USAGE_ALARM` audio attributes, so it rings through vibrate/silent and follows the alarm volume slider like the Clock app, matching AlarmKit's override-silent semantics on iOS â€” and **Stop / Snooze 5 m** actions â€” survives Doze and reboot; the user-controlled `SCHEDULE_EXACT_ALARM` access is requested through the screen's explanatory **Alarms & reminders** banner, otherwise Android falls back to an inexact Doze-tolerant alarm; the app deliberately does not declare Play-restricted `USE_EXACT_ALARM` or `USE_FULL_SCREEN_INTENT`; the Kotlin receiver re-arms the next *repeat day* after each fire, never for one-shots, dismisses by the exact posted notification key, and suppresses a snooze fire whose base alarm is no longer armed); iOS 26+ uses AlarmKit (weekly recurrence on the selected days, `.fixed` one-shots for Once, native **Snooze** countdown button; reconcile leaves a mid-countdown alarm untouched so opening the app never swallows a snoozed re-ring; a bare `repeatDays: []` means one-shot on both platforms); older iOS / Expo Go falls back to `expo-notifications` â€” DAILY trigger for daily, one WEEKLY trigger per selected day, DATE one-shots for Once, all under a `JAPAM_EXPO_SLOT_CAP = 24` pending-slot budget (whole-alarm granularity, soonest-first) so japam can't crowd the daily-verse window out of iOS's 64-pending cap, plus a `japam-alarm` notification category carrying a **Snooze 5 min** action (`maybeHandleJapamSnoozeResponse`, wired in App.tsx on the **live listener only** â€” the cold-start "last response" is ignored so a stale snooze tap can't schedule a phantom ring). A pending skip-next on recurrence-owning tiers is armed as discrete one-shots â€” `ALARMKIT_SKIP_ONESHOT_COUNT = 7` / `EXPO_SKIP_ONESHOT_COUNT = 4` â€” and reverts to plain recurrence on the next foreground reconcile. `scheduleJapamAlarms` is idempotent and **serialized** (concurrent reconciles chain, last caller wins) â€” cancel-then-reschedule on any change; in-flight `:snooze` one-shots for live alarms are spared while orphaned ones (alarm deleted/disabled) are cancelled. Tapping the alarm deep-links into the counter with `autoPlay` (Â§38).
-- **Ring tune** (`assets/japam-alarm-sounds/index.ts`): the alarm rings the chosen mantra's own bundled clip â€” a â‰¤30 s mono 22.05 kHz PCM WAV resolved by `getJapamAlarmSoundName(mantraId)` on every tier (AlarmKit `.named()`, the Android receiver's `res/raw` lookup by underscored mantra id, and a per-mantra expo notification channel, since Android 8+ pins a channel's sound at creation). Android channels use **`-v2`/`:v2` ids** on both tiers: the v1 channels rang on the notification stream (muted by vibrate/silent and the notification-volume slider â€” the "no alarm volume on Android" bug) and a pinned channel can't be re-attributed, so the alarm-stream fix ships as fresh channels while the v1 ones are deleted on ensure. The Kotlin receiver's channel sound is a **name-based** `android.resource://<pkg>/raw/<name>` URI, never the int resource id (raw ids renumber across app updates and silently kill a pinned sound). Bundled today: `om-namah-shivaya` (single recitation, ~5.6 s) plus `hare-krishna-mahamantra` and `gayatri-mantra` (28 s loudness-normalised, faded excerpts cut from the Audio-library takes). A mantra without a clip (`om-namo-bhagavate-vasudevaya`) falls back to the system tone. A new clip must **also** be listed in `app.json` â†’ `expo-notifications.sounds[]` â€” without that it isn't copied into the native bundles and the alarm silently falls back to the default chime. The bundled clip **filenames use underscores** (`om_namah_shivaya.wav`), not the hyphenated mantra id: `expo-notifications` copies each file into Android `res/raw/` verbatim and rejects hyphens at prebuild, so a hyphenated filename fails the Android build. The receiver bridges the two with `mantraId.replace('-','_')`.
-
----
-
-## 36. Search
-
-**Purpose.** On-device search across the entire library â€” sections, deities, and every verse â€” built from the same bundled data the readers load. No network, no service, no query logging; the index builds lazily on first open (`data/searchIndex.ts`).
-
-**Entry point â€” floating button** (`components/SearchFloatingButton.tsx`). A 48 px circle, `parchment-soft` fill, 1 px `divider` border, holding a `saffron` âŒ• glyph at 26 (reader-title face). Anchored absolute at `right: spacing.xl`, `bottom: spacing.xl` (the default). It used to pass a banner-clearing offset on Home to sit above the docked RoutineBanner; since that banner moved inline (Â§30, July 2026) the FAB uses the default offset and keeps a positive `zIndex` so it stays above the scroll content. Currently rendered on Home only; tap â†’ `Search` (Home stack).
-
-**Search screen** (`SearchScreen.tsx`), over the Home gradient:
-
-1. **Top bar**: 44 px back circle + a pill-shaped input row (`parchment-soft`, `divider`, `radii.md`, 44 high): `saffron` âŒ•, the `TextInput` (Inter 500 at 15, language-aware placeholder "à¤¶à¥à¤²à¥‹à¤•, à¤ªà¤¾à¤ , à¤®à¤‚à¤¤à¥à¤° à¤–à¥‹à¤œà¥‡à¤‚â€¦"), and a âœ• clear button while typing. The input auto-focuses ~200 ms after mount.
-2. **Empty state** (no query): *Recent* chips (last 6 queries, `@vedansh/search-recent`; pill chips with per-chip âœ• and a `Clear All` action) and a *Popular* 2-up grid of four fallback sections (Hanuman Chalisa, Gita, Sundarkand, Shiva Stotram) as thumb-glyph cells.
-3. **Results** â€” grouped rows under `sectionLabel`-style headers with counts (`à¤ªà¤¾à¤  Â· Sections`, `à¤¦à¥‡à¤µà¤¤à¤¾ Â· Deities`, `à¤¶à¥à¤²à¥‹à¤• Â· Verses`):
-   - *Section row*: Devanagari thumb glyph (`saffron-deep`), name in the active language, Hindi subtitle, `saffron` â€º. Tap â†’ the section's start via `navigateToEntryStart` (Â§38) â€” chalisa readers, chapters indexes, aarti/sanskar readers, the japam counter, or the Theerth map as appropriate. **Vidhi rows** (PRD-19 Phase 2B) ride this group too â€” one row per published vidhi (à¥¥ thumb, `à¤ªà¥‚à¤œà¤¾ à¤µà¤¿à¤§à¤¿ Â· N à¤šà¤°à¤£` subtitle); their sourceId is the vidhi id and tap opens `VidhiDetail` (Â§62) instead of a reader â€” pushed on the Home stack, which registers the vidhi flow alongside the Panchang one, so back returns to the search results.
-   - *Deity row*: `gold` à¥ thumb; tap â†’ `DeityList` filtered by that deity.
-   - *Verse row*: the matched verse's first line in the verse face at 17, source Â· label meta in Cormorant italic; tap â†’ **that verse in its reader** via `buildProgressTarget` (chapter + verse index), falling back to the section start.
-   - Verse hits are capped at `VERSE_RESULT_CAP = 50`, with an italic "More results â€” type a more specific query" note when clipped.
-4. **Zero state**: dimmed `à¥¥`, "à¤•à¥‹à¤ˆ à¤ªà¤°à¤¿à¤£à¤¾à¤® à¤¨à¤¹à¥€à¤‚ / No matches found", and a hint to try a Devanagari word or section name.
-
-**Index coverage.** Sections (every active library entry **plus one row per published vidhi** â€” vidhis are procedures, so they contribute no verse entries), deities, and verses from every text module â€” the nine chalisas, aartis, japam mantras, Gita, Sundarkand, all stotram modules, Ramcharitmanas, Valmiki Ramayan, sanskar items, and the Theerth temples. Standard `lines`/`linesEn` shapes are picked up automatically when a section is added (RULEBOOK Â§7).
-
-**Normalization** (`data/searchNormalize.ts`) â€” one pure fold applied to both index and query, so Devanagari and Latin queries meet in the middle: Unicode NFD with the combining nukta stripped (à¤•à¤¼ â‡„ à¤•), lowercase, IAST diacritics folded to ASCII (`ká¹›á¹£á¹‡a` â†’ `krsna`, so a plain-ASCII query matches the romanized corpus), punctuation dropped **including daá¹‡á¸a `à¥¤`/`à¥¥`**, whitespace collapsed. Ranking is exact > prefix > substring per field (`MatchRank`), idempotent and unit-tested.
-
----
-
-## 37. More Hub & Profile
-
-**Purpose.** The settings-and-self tab (`MoreTab` â†’ `MoreStackNavigator`: `MoreHome` â†’ `Profile` / `Wishlist` / `Reminders` / `JapamAlarms`). One scroll over the Home gradient, **16 px gutters**, three grouped sections ~22 apart. **All hub chrome is single-language** (the selected reading language only) â€” bilingual pairing is reserved for actual reading content, never navigation/settings (V4 redesign).
-
-**Hub** (`MoreScreen.tsx`), top to bottom:
-
-1. **Title** â€” one left-aligned line, selected language only (`à¤…à¤¨à¥à¤¯` / `More` / `àª…àª¨à«àª¯` / `à²‡à²¨à³à²¨à²·à³à²Ÿà³`), 30 pt in the script's title face (`latinBold` for en, `scriptTitleFont` for hi/gu/kn). No `More` subtitle.
-2. **Three grouped inset lists** â€” each is an uppercase **group label** (`saffron-deep`, 13; Latin gets tracking + uppercase via the chrome font, Indic drops both) above one **list container** (`parchment-soft`, **`radii.lg`**, 1 px `divider`, `overflow:hidden`, **`elevation.subtle`**) whose rows are split by hairline `divider` top-borders. Standard row anatomy: `[38 px icon tile, radii.sm] [label 18]  â€¦  [state 15 ink-muted] [chevron â€º 19 gold]`. The container radius was an ad-hoc 20 and the icon tile 11, both off the radius scale (Â§4), with a hand-rolled shadow; all three are tokens as of July 2026, padding 15Ã—16, pressed â†’ `saffron-tint` wash.
-   - **à¤¸à¤¾à¤§à¤¨à¤¾ / Practice** â€” a compact **profile hero row** (tinted `cardActiveFrom â†’ cardActiveTo` gradient, 52 px circular `saffron` à¥ badge, `à¤¸à¤¾à¤§à¤• à¤ªà¥à¤°à¥‹à¤«à¤¼à¤¾à¤‡à¤²` title, sub-line "**`N`** à¤¶à¥à¤²à¥‹à¤• Â· **`N`** à¤¶à¥à¤°à¥ƒà¤‚à¤–à¤²à¤¾" = lifetime verses + streak in `saffron`; the old `rounds` count is dropped; a11y "Open Sadhak profile" â†’ Profile), then **à¤¸à¤‚à¤—à¥à¤°à¤¹** (â™¥ `saffron`, state = saved count; label matches the WishlistScreen title â†’ Wishlist Â§24), **à¤¸à¥à¤®à¤°à¤£** (à¥ `gold`, state = reminder time(s) or Off â†’ Reminder Settings Â§38), **à¤œà¤ª à¤…à¤²à¤¾à¤°à¥à¤®** (â° `saffron-deep`, state = active count â†’ Â§35).
-   - **à¤à¤ª / App** â€” **à¤­à¤¾à¤·à¤¾** (à¤… `gold`, state = current language's native name; opens the **Language picker sheet**, not an inline grid), **à¤ªà¤¾à¤  à¤•à¤¾ à¤†à¤•à¤¾à¤°** (Aa `saffron`, state = à¤®à¤¾à¤¨à¤•/à¤¬à¤¡à¤¼à¤¾; opens the **Reading-size picker sheet**, Â§43), **à¤ªà¤¾à¤  à¤¸à¥à¤¨à¥‡à¤‚ / Read Aloud** (â™ªï¸ `saffron-deep` at 15, state = what will be spoken + the rate via the exported `readAloudRowLabel`, or `à¤‰à¤ªà¤²à¤¬à¥à¤§ à¤¨à¤¹à¥€à¤‚` when the device has no voice; opens the **Read-aloud settings sheet**, Â§56), **à¤à¤ª à¤¸à¤¾à¤à¤¾ à¤•à¤°à¥‡à¤‚**
-     Both settings rows are also feature-tour spotlight targets (`languageRow` / `readingSizeRow`, Â§47 steps 23â€“24): each `SettingsRow` is wrapped in a measurable `View` and registers a `scrollNodeIntoView` reveal against the More `ScrollView`, since the App group can sit below the fold. The tour ends on them, and the post-tour setup sheet then asks the user to set both. (â†— `saffron`; OS share sheet via `buildAppShareMessage(lang)`, `data/shareLinks.ts` â€” the localized `APP_SHARE_INVITE` + `SMART_LINK`. The invite is a **multi-line feature list**, not a one-liner: a "complete bhakti in one app" lede, five `â€¢` bullets â€” texts (Gita/Sundarkand/Chalisa/Aarti/Stotra), japa mala + alarms, Panchang (vrat-festival/muhurat/kundali/rashifal), bhajan audio + daily verse, nitya-sadhana routine â€” a four-script "read in" language line, then the download CTA with the smart link. Plain `â€¢` bullets, no emoji per Â§5.), **à¤à¤ª à¤•à¥‹ à¤°à¥‡à¤Ÿà¤¿à¤‚à¤— à¤¦à¥‡à¤‚ / Rate the App** (â˜… `gold` at 18, no state, a11y label constant "Rate the app") â€” the manual entry point for the rating sheet (Â§54): it calls `open()`, bypassing the auto-ask gate and spending no ask slot, and keeps working even after the user has opted out of the automatic prompt. Last in the group: **Instagram à¤ªà¤° à¤«à¤¼à¥‰à¤²à¥‹ à¤•à¤°à¥‡à¤‚ / Follow on Instagram** (â—‰ `saffron-deep` at 19, state = the `@vedansh.app` handle, a11y label constant "Follow on Instagram") â€” `Linking.openURL(INSTAGRAM_URL)` from the same `data/shareLinks.ts`, falling back to an `Alert` naming the handle if the OS can't open it. The link is the canonical `https://www.instagram.com/â€¦` form, **not** `instagram://`: a custom scheme would need `LSApplicationQueriesSchemes` / `android.queries` in `app.json` (a store rebuild), whereas the https URL is claimed by the installed Instagram app via universal/app links and degrades to the browser otherwise â€” so the row ships over OTA.
-   - **à¤œà¤¾à¤¨à¤•à¤¾à¤°à¥€ / Info** â€” **à¤ªà¤°à¤¿à¤šà¤¯ à¤µ à¤…à¤¸à¥à¤µà¥€à¤•à¤°à¤£** (â“˜ `ink-muted`; opens the pageSheet disclaimer modal with the bilingual disclaimer + "Report an Error" CTA), **à¤¤à¥à¤°à¥à¤Ÿà¤¿ à¤¸à¥‚à¤šà¤¿à¤¤ à¤•à¤°à¥‡à¤‚** (âš‘ `ink-muted`; `mailto` via `buildDiscrepancyMailto`), and **à¤à¤ª à¤­à¥à¤°à¤®à¤£ à¤«à¤¿à¤° à¤¦à¥‡à¤–à¥‡à¤‚ / Show App Tour** (â†» `gold`; a11y label constant "Show App Tour") which calls `resetTour()` to replay the first-launch feature tour on demand (Â§47).
-
-**Picker sheets** â€” `LanguagePickerSheet.tsx` and `ReadingSizePickerSheet.tsx` are bottom-sheet `Modal`s (slide up, `modalBackdrop`, grabber, `parchmentHighlight`) following the `AddToRoutineSheet` pattern. Language lists the four `LANGUAGES` as radios each in its own script; picking one applies it (`useGitaLanguage`, Â§16) and closes. Reading-size shows the M/L pills + the live "à¤¶à¥à¤°à¥€ à¤°à¤¾à¤® à¤œà¤¯ à¤°à¤¾à¤®" sample (Â§43) + a Done button; picking a size keeps the sheet open so the preview updates. The first-run setup sheet (Â§47) is the same two choices in one bilingual sheet, shown once after the walkthrough.
-
-*Removed in V4:* the tall bilingual header + `More` subtitle, the big 3-stat profile card (â†’ compact hero row), the inline 2Ã—2 language grid and inline reading-size card (â†’ rows opening sheets), and the Panchang methodology card (it duplicated the Panchang tab, Â§33).
-
-**Profile** (`ProfileScreen.tsx`) â€” the à¤¸à¤¾à¤§à¤• insights surface, fed by `UserActivityContext` (reads, japam beads/rounds, per-source and per-mantra tallies, all local):
-
-1. **Identity card** (gradient, `radii.lg`): `saffron` à¥ crest, `à¤¸à¤¾à¤§à¤• Â· Sadhak` name pair, hairline, and a three-cell footer â€” **day streak Â· active days Â· saved verses**.
-2. **Range tabs** â€” a segmented pill `Lifetime / Monthly / Daily`; the active tab fills solid `saffron` with `on-primary` text. An italic range caption below.
-3. **Stat tile grid** â€” four tiles: Verses Read, Beads Chanted, Rounds (Mala), Days Active.
-4. **7-day trend** â€” a mini bar chart (`saffron` bars on `parchment-deep`-style tracks) of daily activity (reads + beads + roundsÃ—108), weekday labels localized.
-5. Per-source and per-mantra breakdown lists for the selected range, sorted by volume, with an empty state when the range has no activity.
-
----
-
-## 38. Notifications & Deep Links
-
-**Purpose.** All notifications are **local and on-device** â€” scheduled with `expo-notifications` (plus the native alarm tiers of Â§35); no server push. Eight families, each owning an identifier prefix so cancel/re-arm cycles never touch each other's slots: daily verse (`daily-verse`), vrat reminders (`vrat-â€¦`, PRD-09), muhurat reminders (`muhurat-reminder`, Â§60), festive reminders (`festive-reminder`), sadhana reminders (`sadhana-reminder`, Â§46), routine reminders (`routine-reminder`, Â§45 â€” PRD-07 P3), Pitru Smaran / Pitru Paksha reminders (`pitru-smaran-reminder` / `pitru-paksha-reminder`, Â§63), and japam alarms. **One OS permission grant serves all of them** â€” the daily-verse and festive defaults request it at launch, the Pitru save flow and the routine-detail reminder toggle ask on their own opt-in moments, and the remaining schedulers only ever ride whatever the user already granted.
-
-**Daily verse** (`notifications/scheduler.ts` + pure helpers in `pure.ts` / `seed.ts`; state in `NotificationPreferencesContext`, `@â€¦/prefs` + meta in AsyncStorage):
-
-- **Default on at 07:00.** Up to `MAX_REMINDER_TIMES = 4` times per day, edited in Reminder Settings (`ReminderSettingsScreen`: master Switch, per-time `TimeStepper` rows, add/remove up to the cap).
-- A rolling **30-day window** (`ROLLING_WINDOW_DAYS`) is scheduled ahead, hard-capped at iOS's 64 pending-notification budget (`IOS_PENDING_CAP`, shared fairly across configured times). Idempotent cancel-then-reschedule on every relevant change and app foreground.
-- **Deterministic verse per slot**: the local `YYYY-MM-DD` key is FNV-1a-hashed into the verse pool (`seed.ts`), so rescheduling never changes today's verse; multiple same-day times get distinct verses.
-- **Localized by reading language** (Â§10): title `à¤¦à¥ˆà¤¨à¤¿à¤• à¤­à¤•à¥à¤¤à¤¿` / `Daily Verse`, body = first verse line + `source Â· label`, all rendered through the same language helpers the readers use â€” gu/kn arrive re-scripted, en romanized.
-- **Panchang-aware title** (`notifications/dayAnga.ts` pure + `dayAngaResolver.ts` engine glue, fed by the headless `<DailyVerseAngaBridge>` in `App.tsx`). The title leads with the **fire day's** panchang context, then ` Â· ` + the base title: an observance day names its vrat/festival (`à¤¨à¤¿à¤°à¥à¤œà¤²à¤¾ à¤à¤•à¤¾à¤¦à¤¶à¥€ Â· à¤¦à¥ˆà¤¨à¤¿à¤• à¤­à¤•à¥à¤¤à¤¿`), an ordinary day its sunrise tithi with paksha (`à¤¶à¥à¤•à¥à¤² à¤à¤•à¤¾à¤¦à¤¶à¥€ Â· à¤¦à¥ˆà¤¨à¤¿à¤• à¤­à¤•à¥à¤¤à¤¿`), and Purnima/Amavasya render bare since they name their paksha implicitly. **The body never changes** â€” the verse line stays the first thing read. One observance per day is chosen deterministically (`default` visibility only, ordered by `marker` significance â†’ category â†’ id), so a reschedule can never reword a day. Past `TITLE_MAX_CHARS = 38` the ` Â· à¤¦à¥ˆà¤¨à¤¿à¤• à¤­à¤•à¥à¤¤à¤¿` suffix is dropped whole rather than letting the OS slice a festival name or a Devanagari conjunct â€” the app name is already in the notification chrome. A day with no resolved anga falls back to the plain title, so a pending or failed solve is indistinguishable from the pre-panchang behaviour.
-- **Why a bridge component**: notifications are baked at schedule time (up to 30 days ahead), so the whole window's tithi must be solved up front â€” per-day astronomy, which Â§33 established must never touch a render path, so the resolver runs behind `InteractionManager` and yields every 8 ms frame budget. Tithi is sunrise-anchored and therefore **location-dependent**, but `NotificationPreferencesProvider` sits *above* `PanchangLocationProvider`; `<DailyVerseAngaBridge>` mounts below both, resolves, and publishes up via `publishDayAngas(key, map)` â€” keyed by city + calendar system + day so a repeat publish is ignored and can't loop. Observances are skipped for any year whose location-accurate scan hasn't landed (`isObservanceDataReady`), because a festival name borrowed from Ujjain's calendar on another city's lock screen is worse than showing the tithi.
-- **Opt-in modal** (`ReminderOptInModal.tsx`, mounted app-wide): a `pageSheet` â€” lede, a `TimeStepper`, a filled `saffron` **Enable**, and a quiet uppercase *Not now*. **Ask cadence (Aug 2026)**: reminders default on, and the ask repeats until the user has confirmed a yes or a no â€” then a "no" snoozes it. Concretely: (1) the provider fires the OS permission prompt on **every cold start** that finds the permission still unanswered (with the toggle on); (2) the sheet shows from the **first app open** whenever the reminder is off, on **every open while no "no" is on record**, and after a "no" it returns once **`OPT_IN_REOFFER_SNOOZE_DAYS = 15`** days have passed â€” each further "no" restarts the clock. (The count is bumped to â‰¥ 1 during hydration, so the `appOpenCount >= 1` gate offers on the very first launch â€” a change from the earlier "earn the ask" third-open gate.) A "no" is any of: refusing the OS prompt, tapping *Not now* / closing the sheet, or switching the reminder off in Reminder Settings â€” all three stamp `lastDeclinedAt` in the notif meta (the single record the gate consults; a "yes" needs no marker since the reminder being on holds the sheet closed). The sheet never shows while the OS is **hard-blocked** (`canAskAgain: false`) â€” its Enable button could not succeed, so that state belongs to the Reminders screen's Settings banner. It also waits out a **launch OS ask in flight** (permission unanswered with any notification toggle on â€” since festive reminders default on, that includes installs whose daily verse is off): the system prompt resolves first, then the sheet follows, so two asks never stack. `lastDeclinedAt` is deliberately absent on pre-cadence installs, so users the pre-fix Android builds silently opted out (see the permission-state bullet below) get re-offered on their first open after updating.
-- **OS permission state â€” `notifications/permissionState.ts`** (shared by daily verse *and* japam alarms, Â§35, since the grant is app-wide). The module exists because `expo-notifications` reports a **never-requested** Android `POST_NOTIFICATIONS` as `denied` (it reads `areNotificationsEnabled()`, false until granted), so raw status alone cannot tell "never asked" from "user said no". It resolves an **effective** status from two extra signals: `canAskAgain` (false â‡’ hard block, Settings is the only path â€” Android < 13 and post-refusal iOS land here) and a persisted app-wide "we have shown the prompt" flag (`@vedansh/notif-permission-asked`). Only `denied` **after** we asked counts as a refusal. This is what makes the Android first-install flow behave like iOS: on a fresh Android install the app used to read `denied`, skip the launch prompt entirely, and then auto-flip the default-on toggle off, so reminders shipped silently disabled and never asked. The "keep the toggle honest" rule (enabled + denied â‡’ switch off) now runs on the effective status, so it can only fire once the user has actually been asked.
-- **Permission banner** (Reminder Settings, under the master Switch â€” shown while the effective status is `denied`): `parchment-deep` fill, 1 px `divider`, `radii.sm`, `meaning` face in `ink-soft`. Two states, because a denial has two flavours: while the OS prompt is still available it reads "Notifications are off. Tap to allow them." and re-asks (granting also switches the reminder on); once `canAskAgain` is false it reads "Notifications are disabled. Tap to open Settings." and opens the system Settings app. Localized hi/en/gu/kn.
-
-**Vrat reminders** (`vratScheduler.ts` / `vratReminderPure.ts`, armed by the headless `<VratReminderScheduler>` in `App.tsx`): derived from the user's **followed vrats** (Â§33) and their per-vrat / global reminder prefs. Each upcoming occurrence can produce an *advance* notice (evening before at `ADVANCE_HOUR = 18:00` local, 1â€“3 days ahead) and/or a *day-of* notice at the chosen morning time. Planned under a dedicated `VRAT_REMINDER_CAP = 24` pending budget â€” when over, **follow order is the priority tiebreak**. Re-arms on follow/pref/permission changes and on every app foreground; never prompts for permission itself (shares the daily-verse grant).
-
-**Festive reminders** (`notifications/festiveReminders.ts` catalog + `festiveReminderPure.ts` planner + `festiveScheduler.ts` glue, armed by the headless `<FestiveReminderScheduler>` in `App.tsx`; pref lives beside the daily verse in `NotificationPreferencesContext`).
-
-- **Default ON, no setup.** The vrat family above is opt-in (you follow a vrat first); this one is the opposite â€” every user gets one push on each famous festival without configuring anything. `festiveRemindersEnabled` defaults `true`, and a stored prefs blob written before the feature existed (no such key) also resolves to `true`, so upgraders are enabled rather than silently opted out. A hard OS denial flips it off alongside the daily verse, because a switch reading "on" for pushes the OS will never deliver is a lie; re-granting and re-toggling re-arms.
-- **Curated catalog, not the whole calendar** (`festiveReminders.ts`). 18 hand-picked famous festivals, each pinned to (a) a hand-authored Devanagari-led greeting, (b) an invitation naming a specific bundled text, and (c) that text's `LibraryEntry.id`. Two curation rules, both test-enforced: only `default`-visibility observances qualify (an `advanced`/`regional` rule on every user's lock screen misrepresents the day â€” the same gate `pickTitleObservance` applies to titles), and **every entry must name real, routable content**. A famous festival with no honest content match (Raksha Bandhan, Bhai Dooj) is simply absent rather than pointed at a loosely-related text: the whole promise of the message is that the reading it names is one tap away.
-- **Copy.** The **title is the festival's own name** (`à¤¦à¥€à¤ªà¤¾à¤µà¤²à¥€` / `Diwali`) â€” never a generic category label, and never concatenated, so no character budget can slice a Devanagari conjunct (the trap Â§3.0 and `TITLE_MAX_CHARS` exist for). The **body carries the customised message**: `<greeting> Â· <invite>` â†’ `à¤¶à¥à¤­ à¤¦à¥€à¤ªà¤¾à¤µà¤²à¥€ Â· à¤¦à¥€à¤ª à¤œà¤²à¤¾à¤à¤ à¤”à¤° à¤®à¤¹à¤¾à¤²à¤•à¥à¤·à¥à¤®à¥à¤¯à¤·à¥à¤Ÿà¤•à¤®à¥ à¤•à¤¾ à¤ªà¤¾à¤  à¤•à¤°à¥‡à¤‚à¥¤`. Rendered through `contentByLang` like every other content-bearing string (Â§10), so gu/kn arrive re-scripted from the Devanagari and en uses the authored English.
-- **Timing.** One notification, **on the day, at 07:30 local** (`FESTIVE_HOUR`/`FESTIVE_MINUTE`) â€” thirty minutes after the daily-verse default so the two never land in the same instant and read as a duplicate. No advance notice: an eve-before nudge is what following a vrat (Â§33) buys, and doubling every festival would halve the trust in the default. A festival whose 07:30 has already passed today is dropped rather than fired late.
-- **A 120-day rolling window** (`FESTIVE_WINDOW_DAYS`), far longer than the daily verse's 30, because festivals are roughly monthly and a user who does not open the app for six weeks should still get Diwali. Cheap: that window typically holds three or four festivals. Capped at `FESTIVE_REMINDER_CAP = 8` pending slots.
-- **The cap is soonest-first, not fame-first** â€” the inverse of the vrat planner's followed-first rule. Nobody opted into these, so a festival three days out must never lose its slot to a more famous one four months out; catalog (fame) order only breaks a tie between two festivals landing on the same instant. **Budget note:** the daily-verse window alone can claim up to `IOS_PENDING_CAP`, so the four families are collectively over-subscribed against iOS's 64 pending limit in the worst case (4 reminder times + many followed vrats + enrolled sankalps). This slice is deliberately the smallest of the four for that reason.
-- **Dates come from the bundled precomputed table, without a location** â€” exactly as vrat reminders resolve them. A festival's civil date shifts by at most a day across Indian cities, and the locationless path of `resolveObservancesForYear` is the offline precomputed table (Â§33), so no `<â€¦AngaBridge>`-style plumbing is needed. Reading it still runs behind `InteractionManager` so a cold start's first frames are never charged for 18 rule lookups.
-- **Own Android channel** `festive-reminders` (importance DEFAULT, `sound: 'default'`), so festival pushes can be muted in system settings without silencing the daily verse. A channel's sound and importance are pinned at creation, so changing either later needs a **new id** â€” the `-v2` dance documented for the japam channels in Â§35.
-- **Setting** (`ReminderSettingsScreen`, Â§37): a third card below Times â€” title `à¤ªà¤°à¥à¤µ à¤¸à¥à¤®à¤°à¤£` / *Festival reminders*, a subtitle stating the festival count and fire time (both read off the planner constants so the copy can't drift), and a `saffron` Switch. No time picker: the fire time is fixed.
-- **A tap lands on Home, and Home is already showing the festival** â€” see the deep-link table below and Â§50's FOR TODAY row. The catalog is the single source both surfaces read, and `festiveReminders.test.ts` asserts that on every catalog festival's own date the FOR TODAY row both contains that festival's `sourceId` and leads with a festival-attributed card. The notification's promise and the homepage cannot drift apart.
-- **Home is also dressed for the day** â€” the Festive Toran (Â§55) hangs the same catalog greeting under the wordmark on those 18 days.
-
-**Japam alarms** â€” see Â§35 for the scheduling tiers; they participate in deep-linking below.
-
-**Notification tap â†’ deep link** (`notifications/deepLink.ts`). A module-level `navigationRef` (attached to the `NavigationContainer` in `App.tsx`) lets `handleNotificationResponse` dispatch from outside the React tree; `App.tsx` wires both the cold-start response and the live `addNotificationResponseReceivedListener`. Routing by payload type:
-
-- `daily-verse` â†’ the **Daily Bhakti tab** carrying the exact verse identity (`sourceId`/`chapter`/`verseIndex`) baked into the notification â€” deliberately *not* a reader, because opening a reader would run its `setProgress` effect and clobber the user's resume position; the baked identity also survives OTA pool changes.
-- `vrat-reminder` â†’ `PanchangTab â†’ ObservanceDetail` for that rule.
-- `festive-reminder` â†’ **`HomeTab â†’ Home`**, and the reading its message named is the first card waiting there. Home's FOR TODAY row (Â§50) leads with the festival's own content on a festival day, reading the same curated catalog the notification's copy came from â€” so the invitation is honoured one tap in, not bypassed. Landing on Home rather than in a reader keeps three things true that a direct reader push would break: a tap made from a lock screen can't run a reader's `setProgress` effect and clobber the resume position (the same reason `daily-verse` stays on a tab), the day's Panchang strip and routine banner arrive alongside the reading, and a notification armed up to four months ago can't strand the user on content an OTA update has since renamed â€” Home recomputes today from today. `{ screen: 'Home' }` is passed explicitly: focusing `HomeTab` alone would restore whatever screen the Home stack was left on, possibly several readers deep. Routing gates on `ruleId` only; the payload still carries `sourceId` as the record of what the message promised.
-- `sadhana-reminder` and `routine-reminder` â†’ **`HomeTab â†’ RoutineToday`** (Today's Practice) â€” the surface where all of today's practice lives, never a reader (same resume-position rule as above). The routine payload `{ type, routineId, dateKey }` gates on `type` alone: `routineId` rides along as a record, so a stale notice for a since-deleted routine still lands safely â€” RoutineToday simply doesn't show it.
-- japam alarm â†’ `HomeTab â†’ JapamCounter` with `autoPlay: true`, so a lock-screen tap drops straight into chanting (mantra id validated against the catalog first; a stale alarm falls back to Home rather than crashing).
-
-**Route mapping â€” `navigation/entryRoutes.ts`.** The single source of truth for "open this content": `buildEntryStartTarget(entry)` maps any library entry to its start route (japam â†’ `JapamCounter`; theerth entries â†’ `TheerthMap` with a group filter; the nine chalisas â†’ `ChalisaReader`; sanskar â†’ `SanskarReader`; aartis â†’ `AartiReader`; a **multi**-chapter text â†’ its Chapters screen â€” including the `ram-aarti` alias, which maps to the `ram-stuti` reader routes), with `navigateToRoutineItem`, `buildProgressTarget` (resume / search verse hits), and `buildBookmarkTarget` (Wishlist rows, Â§24) layered on top. Panchang's "Read: <section>" links, search results, routine items, wishlist, and the Home spotlight all route through this one module, so adding a section's route once wires every surface.
-
-**Single-chapter texts skip the index (July 2026).** A "chaptered" text that ships exactly **one** chapter â€” `hanuman-ashtak`, `bajrang-baan`, `ram-stuti` (and its `ram-aarti` alias), `ramcharitmanas` â€” used to open a Chapters screen listing that single row, so reaching the verses took **two taps** from every entry surface (the Home à¤†à¤œ à¤•à¥‡ à¤²à¤¿à¤ row, By-Purpose discovery lists, search, category/deity lists, Rashifal). `buildEntryStartTarget` now sends those straight to their reader at `{ chapter: 1, initialIndex: 0 }`; a text with 2+ chapters keeps its index, because there is a real choice to make. Chapter counts are read off each text's shipped `*ChaptersManifest` (`chapterCountBySourceId` in `entryRoutes.ts`) â€” never mirrored by hand â€” so a text that gains a second chapter regains its index with no code change, and one that loses chapters stops showing a one-row list. `navigateToProgress()` follows the same rule: it normally pushes the chapters index *under* the reader so back reaches sibling chapters, and now skips that push for single-chapter texts, which have no siblings and would otherwise strand the user on the one-row list. `isChapteredEntry()` is unchanged: it still reports the **progress-key** shape (`<sourceId>::<chapter>`), which single-chapter texts keep. Pinned by `mobile/src/navigation/entryRoutes.test.ts` and `.maestro/single-chapter-open-smoke.yaml`.
-
----
-
-## 39. Share Verse Cards
-
-**Purpose.** Let a reader send any verse out of the app as a branded parchment image â€” composed off-screen, captured as a PNG, and handed to the native share sheet with a caption + install link (PRD-05). Tapping the share button opens a **target picker** (Â§39.1) with three destinations: the plain share sheet, an **Instagram post** (4:5), and an **Instagram story / reel** (9:16, Â§39.3) â€” the Instagram routes carry the same card with a per-verse hashtag block (Â§39.2). `ShareProvider` / `useShare()` in `mobile/src/utils/shareVerse.tsx`; card in `ShareCard.tsx`; picker in `ShareTargetSheet.tsx`; 9:16 wrapper in `ShareStoryCanvas.tsx`; links + captions in `mobile/src/data/shareLinks.ts`; hashtags in `mobile/src/data/shareHashtags.ts`. For a verse-less invite (the multi-line feature-list message + download link, Â§37), the More hub's **Share the App** card calls `buildAppShareMessage(lang)` from the same `shareLinks.ts` and opens the native share sheet directly.
-
-### Component: Share Button (`ShareButton.tsx`)
-
-- Same family as the Bookmark button (Â§25): 34Ã—34 circle, `parchment-soft` fill, 1 px `divider` border, `â†—` glyph in `saffron` (18, weight 600). 12 px `hitSlop`.
-- Placement: in the verse page's **header row**, right of the verse-type pill, alongside the Bookmark button (readers pass both via the verse page's `topActions` slot). Every reader carries one â€” all 15 reader screens plus Daily Bhakti and the Japam counter. Because the picker lives inside the provider, all ~24 call sites gained the Instagram destination without a single call-site change; the button's own props are unchanged. It is also the **only** share affordance elsewhere in the app: the **Today's Panchang** (Muhurat detail) header uses this same circle rather than a bespoke button, so the share glyph reads identically everywhere.
-- While a capture/share is in flight (`busy`), the button disables and drops to 50 % opacity â€” this debounces double-taps. On the Muhurat detail screen `busy` also covers the pre-ready window before the panchang is computed.
-- Accessibility: `accessibilityRole="button"`; label defaults to "Share verse" and hint to "Long-press to share a screenshot of this reader instead", but both are **optional props** â€” non-verse surfaces override them (the Panchang header passes a localized "Share panchang" label and no hint, since it has no long-press path). [The verse provider supports a `mode: 'screenshot'` capture of a caller-supplied ref, and the button accepts `onLongPress` â€” but no shipping reader currently wires `onLongPress`, so only the card path is live today.]
-
-### Component: Share Card (`ShareCard.tsx`)
-
-A fixed-size 540Ã—675 dp card (4:5 portrait), rendered **off-screen** and captured at 1080Ã—1350 px PNG â€” the WhatsApp-friendly output size. Surface: `parchment` fill under the verse's **reader-page sketch** â€” `BackgroundLayer` over `getReaderBackground(sourceId, { stanza })`, the same faded plate + parchment overlay the source's reader shows (sources without a plate fall back to the plain gradient); 1 px `divider` border (`overflow: hidden` keeps the sketch inside it), padding 28 top / 28 horizontal / 22 bottom. `sourceId` is required; `stanza` is the optional kÄá¹‡á¸a/stanza key for the per-subsection sources â€” the Valmiki Ramayan and Sundarkand readers pass the verse's own `stanza`, Daily Bhakti passes the pool verse's `chapter`. Guarded by `components/__tests__/shareCardBackground.test.tsx`.
-
-**Structure (top to bottom):**
-
-1. **Header band** (centred, 18 below): `<SECTION NAME> Â· <VERSE LABEL>` uppercased â€” `cardLatin` face at 13, `saffron-deep`, 2.4 letter-spacing. Both parts are content, so they follow the active reading language (`contentByLang`): Devanagari for `hi`, English for `en`, re-scripted for `gu`/`kn`.
-2. **Verse block** (flex-grow, centred): the verse lines at 24/40, centred, `ink`. Line source follows the language: `linesHi` for `hi`, `linesEn` (romanization) for `en`, re-scripted Devanagari for `gu`/`kn` (`verseLinesByLang`). Font family follows the script â€” Gujarati/Kannada serif cuts for `gu`/`kn`, otherwise the `verse` token's Devanagari face (which also carries the Latin romanization glyphs). This card is a Â§13-sanctioned constrained surface: it keeps its own tuned sizes rather than the reader type scale.
-3. **`à¥¥` Ornament divider** (Â§5).
-4. **Meaning** (optional): centred, `ink-soft`, at a size **chosen in JS** by `fitMeaningType` (`utils/shareCardType.ts`) â€” the largest step of an 18 â†’ 12 ladder whose estimated wrap fits the height the card has left, with `lineHeight` derived as 1.5 Ã— that size and `numberOfLines` set to the height-derived line budget. The budget subtracts the card's real chrome (padding, 13 pt header block, `Ornament`, branding footer â€” the `shareCardMetrics` constants, which the card's own StyleSheet also reads so the two cannot drift) **and the verse's actual line count**, so a four-line shloka correctly leaves the meaning less room than a two-line one. 95 % of shipped meanings land at 18/27; only the handful of Valmiki Ramayan prose meanings past ~1200 characters reach the 12 pt floor and show a readable excerpt rather than a full-length illegible one. Italic is applied **only** for `en` â€” Cormorant has a true italic cut, the Noto Serif Indic faces do not, so an italic there is a synthesised skew that blurs the matras (same rule as `captionFont`, `utils/scriptFont.ts`). Language-selected via `meaningByLang`, honouring verified native `meaningGu`/`meaningKn` overrides when the verse carries them.
-
-   **Why not platform auto-fit (August 2026).** This block shipped as italic 14/24 with `numberOfLines={5}` + `adjustsFontSizeToFit` down to `minimumFontScale={0.5}`. The 5-line cap forced nearly every real meaning to shrink, the shrink bottomed out at **7 pt** â€” below the Â§3.0 10 pt floor â€” and because `lineHeight` stayed pinned at 24 while the glyphs shrank, the leading ratio blew out to ~3.4Ã—: a scatter of tiny characters in cavernous white space, reported as unreadable in a shared WhatsApp image. That is the same trap already recorded on `CategoryCard` and Namkaran (Â§61) â€” *on iOS a multi-line label with a fixed `lineHeight` shrinks erratically and ignores `minimumFontScale`* â€” so the rule to carry forward is: **a fixed leading and platform auto-fit must never appear on the same Text.** Size it in JS, derive the leading from the size, and take the line cap from real geometry. Guarded by `components/__tests__/shareCardFit.test.tsx` (no auto-fit props, â‰¥12 pt, 1.4â€“1.7Ã— leading, upright Indic) and `utils/__tests__/shareCardType.test.ts` (the ladder, the budget, and that the fitted block still fits the card).
-5. **Branding footer** (1 px `divider` top rule, 14 above): `à¤µà¥‡à¤¦à¤¾à¤‚à¤¶à¤¼` wordmark (reader-title face, 18, `ink`) Â· `Vedansh â€” Sacred Texts, Daily Reading` (italic 12, `saffron-deep`) Â· `NOW AVAILABLE ON IOS & ANDROID` (uppercase 10, `ink-muted`, 2.0 tracking).
-
-### Â§39.1 Component: Share Target Sheet (`ShareTargetSheet.tsx`)
-
-A bottom sheet in the `LanguagePickerSheet` family (Â§37 sheet chrome): `parchment-highlight` base, 22 px top corners, 40Ã—4 grabber, `xxl` horizontal padding, `modalBackdrop` behind, backdrop tap dismisses. Opened by `share(verse, lang)` when the caller names no `target`.
-
-**Structure (top to bottom):**
-
-1. **Title** â€” `à¤¶à¥à¤²à¥‹à¤• à¤¸à¤¾à¤à¤¾ à¤•à¤°à¥‡à¤‚` / `Share this verse` / gu / kn, `cardFontByLang` at 18, `ink`, centred.
-2. **Row: Share** â€” `â†—` glyph in `saffron` (18, 22-wide column), title at 17 (`cardFontByLang`, `ink`), sub-label "WhatsApp, Messages, anywhere" at 12. 1 px `divider` bottom rule. Runs the unchanged Â§39 flow.
-3. **Row: Instagram post** â€” `â—‰` glyph, sub-label "4:5 card â€” for the feed", trailing **`4:5`** pill chip (10, `ink-muted`, 1 px `divider`, pill radius). 1 px `divider` bottom rule.
-4. **Row: Instagram story / reel** â€” `â–®` glyph, sub-label "Full screen 9:16 â€” nothing gets cropped", trailing **`9:16`** chip. Exports the Â§39.3 canvas.
-5. **Copy note** â€” one shared line under both Instagram rows: "Either way the caption + hashtags are copied â€” just paste in Instagram". It sits below the rows rather than inside each, so the two rows differ only by the thing that actually differs: the aspect.
-6. **Hashtag preview** â€” `parchment-soft` panel, 1 px `divider`, `radii.md`; an `indicSafeTag` eyebrow at 10 (`à¤¹à¥ˆà¤¶à¤Ÿà¥ˆà¤—` / `HASHTAGS` / gu / kn) over the live tag line at 12/18 in `saffron-deep`, inside a 76 dp `maxHeight` scroll. The preview is not decoration: the tags change per verse, and a reader about to post under their own name gets to see them first.
-7. **Cancel** â€” 44 pt text button, 13, `ink-muted`.
-
-**Why Instagram is two rows.** The destination decides the aspect, and the reader is the only one who knows which they are about to post. A feed post shows a 4:5 image whole; a story or reel is 9:16 and fills the frame from a 4:5 source by scaling up and cropping â€” which takes the card's header band and branding footer with it. Offering one "Share on Instagram" row means half the shares silently ship a cropped card. The aspect chip states the difference numerically as well as in prose.
-
-All three rows are 44 pt minimum and drop to 50 % opacity + `disabled` while `busy`. Every sub-label and eyebrow goes through `eyebrowTextStyle` / `indicSafeTag` (Â§3.0) rather than the Inter-based `sectionLabel` token â€” Inter has no Indic glyphs and Latin tracking splits the shirorekha. Accessibility: the rows carry the stable English labels **`Share to other apps`**, `Share on Instagram` and `Share as Instagram story or reel` â€” the first is deliberately not `Share verse`, which is the reader button's own label and would be ambiguous to an e2e selector (and to a screen reader) while the sheet is open. The Instagram row's hint states that the caption is copied; the preview exposes `Hashtags: <line>`. Guarded by `components/__tests__/ShareTargetSheet.test.tsx`.
-
-### Â§39.2 Instagram hashtags (`data/shareHashtags.ts`)
-
-**Why derived, not canned.** One fixed tag block on every share teaches Instagram nothing: a Chalisa chaupai and a Gita shloka land in the same bucket and compete with each other. Every tag is instead built from the verse being shared â€” its section title, its chapter, and the deities + category the registry (`library`, Â§41) files that text under. Change the verse and the block changes with it. Pure, bundle-only, no native deps â€” so it ships over OTA like the rest of `shareLinks.ts`.
-
-**Five slots (`MAX_HASHTAGS = 5`).** That is what Instagram accepts, and it is also roughly what Instagram's own guidance recommends â€” so the cap is right on reach grounds regardless of the ceiling. Five changes the *strategy*, not just the length: a thirty-tag block can afford to lead with the long tail and let the broad tags ride behind, but at five a tag only a handful of people search costs a fifth of the budget. The order is therefore a deliberate blend, **not** "most specific first":
-
-| # | Slot | Source | Example (Hanuman Chalisa, `hi`) |
-|---|------|--------|---------------------------------|
-| 1 | **Occasion** | the festival/vrat falling on the share date, **only when it belongs to one of the text's deities** | `#HanumanJayanti` |
-| 2 | **Name** | section when narrower than the text, else `LibraryEntry.nameEn`, IAST-folded to PascalCase | `#HanumanChalisa` |
-| 3 | **Native name** | the same title in the reading language's script â€” where that audience actually searches | `#à¤¹à¤¨à¥à¤®à¤¾à¤¨à¤šà¤¾à¤²à¥€à¤¸à¤¾` |
-| 4 | **Deity** | two tags from the entry's **primary** deity | `#Hanuman` `#JaiHanuman` |
-| 5 | **Anchor** | exactly **one** broad tag | `#Bhakti` |
-
-One broad anchor, not six: five pure-niche tags give the post nowhere big to rank, while six broad ones drown it. When a slot is free â€” `en` spends none on a native title, and most days carry no occasion â€” it is filled from the tail in priority order (vaar, chapter, second deity, category, remaining broad, language, brand). Those tiers are still built so that raising the cap is a one-constant edit rather than a redesign, but at five they mostly fall outside it. **No slot goes to the brand**: `#Vedansh` buys no reach, and the card's wordmark plus the caption's `@vedansh.app` already carry it.
-
-Worked examples: Hanuman Chalisa `en` â†’ `#HanumanChalisa #Hanuman #JaiHanuman #Bhakti #JaiShriRam`; Gita 2.47 `en` â†’ `#BhagavadGita #Krishna #JaiShreeKrishna #Bhakti #GitaChapter2`; the same Gita verse on Janmashtami â†’ `#Janmashtami` takes slot 1 and pushes the chapter out.
-
-**What is deliberately absent.** No `#viral`, `#trending`, `#explorepage`, `#fyp`. Tags with no topical relation to the post are what integrity systems look for, several in that family have been restricted outright, and they dilute the classification the specific tags exist to provide. Hashtags are in any case a modest lever since Instagram de-emphasised hashtag discovery â€” they classify a post's topic more than they distribute it â€” which is an argument for a clean block, not a loud one.
-
-**The timely tier (Â§0 and Â§3b).** The one reach advantage this app has that a generic quote account does not: the panchang engine knows what today is. Sharing a Krishna verse on Janmashtami adds `#Janmashtami` + `#Janmashtami2026` â€” hyper-relevant *and* spiking in volume on exactly the day it is used. Both timely tiers are **gated on deity relevance**: the observance's `deityEn` (plus its name) is matched against `DEITY_MATCH_TOKENS` for the deities the registry files the text under, so `#HanumanJayanti` attaches to a Hanuman Chalisa verse and to nothing else. Ungated, this would be exactly the irrelevance the paragraph above refuses. **One** observance contributes (a day can carry several, and at five slots a second festival tag crowds out the deity and the anchor), and there is no `#Janmashtami2026` year variant â€” it duplicates the topic at a fraction of the volume. `hi` also gets the festival name in Devanagari.
-
-`shareHashtags.ts` stays pure and date-free â€” resolving observances needs a location and a warmed year cache, so the **caller** supplies a `TimelyContext`. `ShareProvider` builds it from `useObservancesForDate(today, calendarSystem)` + `deityForWeekday()`, with `useTodayKey` rolling it over at midnight/foreground. The resolve is `InteractionManager`-deferred and shares the year cache Home's Today strip already warms, so it adds no work the app wasn't doing. Absent a `timely` input the block is byte-identical to the date-free one.
-
-**Slug rules.** Latin titles run through the search normalizer (`data/searchNormalize.ts`) so IAST diacritics fold (`Bhagavad GÄ«tÄ` â†’ `BhagavadGita`) and dandas/`Â·`/punctuation drop before the words join. Native-script titles keep `\p{L}`, `\p{N}` **and `\p{M}`** â€” matras are combining marks, and stripping them would shred the word â€” and drop everything else including spaces. `gu`/`kn` re-script the Devanagari title the same way every other content string does. Output is deduped case-insensitively, capped at `MAX_HASHTAGS = 30`, and drops anything over 40 characters or with no letter in it. Deterministic: the same verse + language always produces the same block, so a re-share reuses tags Instagram has already indexed the account under.
-
-**One cap for both formats.** Post and story share the same five â€” a story's tags live in a text sticker, where five is if anything generous. `buildVerseHashtags` still takes a `limit`, but it is **clamped** to `MAX_HASHTAGS`: it can only shrink the block, never widen it past what the platform accepts.
-
-**Caption.** `buildInstagramCaption` (`shareLinks.ts`) = the Â§39 verse caption, then `<Follow line> @vedansh.app`, then a **blank line**, then the tag line; `format: 'story'` trims the tag line to the story cap. The blank line is deliberate â€” Instagram collapses a caption after ~3 lines, so the preview shows the verse and not the tags. Guarded by `utils/__tests__/shareHashtags.test.ts`.
-
-**Why the clipboard.** Instagram accepts no pre-filled caption from a share intent on either platform, and the Stories pasteboard route needs a native module (and a store rebuild). So the Instagram branch copies the caption to the clipboard via RN's deprecated-but-present `Clipboard` â€” the same API `NameDetailSheet` already uses, i.e. no new native dependency and the whole feature ships OTA â€” then opens the share sheet with the PNG. The sheet's sub-label tells the reader the caption is waiting to be pasted.
-
-### Â§39.3 Story / Reel canvas (`ShareStoryCanvas.tsx`, `utils/shareStoryLayout.ts`)
-
-**The failure it fixes.** The share card is 4:5 â€” the tallest aspect a feed post shows whole. Posted to a **Story** or a **Reel**, which are 9:16, Instagram scales the image up to fill the frame and crops the overflow off the top and bottom: exactly the header band and the branding footer. Reported from the field after Â§39.1 shipped.
-
-**Two separate hazards.** *Crop* is solved by exporting a true 1080Ã—1920 frame, so nothing is scaled to fill. *Chrome* is solved by keeping the card out of the strips Instagram paints over: the avatar/progress row at the top, the Reel caption + audio strip at the bottom. `storySafeInsets` is the **union** of Story and Reel vertical chrome â€” top 120, bottom 165 dp (Ã—2 = 240 / 330 px) â€” so one exported image is safe posted either way.
-
-**No horizontal inset, deliberately.** A Reel also paints a like/comment/share rail down the right edge (~100 px). An inset wide enough to clear it would force the card below its native 540 dp width â€” i.e. a scale transform on the very view handed to `captureRef`. The cheaper trade is to run the card full-bleed horizontally and let the rail sit over its 28 dp internal padding: the rail overlaps the card's margin, never its text.
-
-**Geometry.** Canvas 540Ã—960 dp, captured at 1080Ã—1920. The insets are chosen so a native 540Ã—675 card fits the band at **scale 1** â€” 120 + 675 + 165 = 960 â€” so `placeStoryCard()` returns scale 1 and the captured hierarchy is plain and unscaled. The scale is kept as a backstop for a card that outgrows the band, and `shareStoryLayout.test.ts` fails loudly if the shipped size ever stops fitting at 1:1. The card is centred **in the safe box, not the canvas** â€” canvas-centring would drop the branding footer under the Reel caption strip.
-
-**Neither re-laid-out nor transformed.** Re-flowing the card at story width would re-wrap the verse lines and re-run `fitMeaningType` against different geometry, silently changing a composition Â§39's fit tests pin; scaling it would put a transform on the captured view. It gets neither. Behind it sits the same source sketch, full-bleed, so the frame reads as a designed story rather than a letterboxed screenshot.
-
-> **August 2026 â€” the story row was reported crashing** and never reaching Instagram, while post and plain Share worked. The transform was the one construct the story path had that the working post path did not, so it was removed in favour of the scale-1 geometry above. Whether that was the cause is **unconfirmed** â€” it could not be reproduced without a device. If it recurs, the next suspects are memory (a 540Ã—960 dp view at density 3 is a ~19 MB bitmap before the scale to 1080Ã—1920, against ~13 MB for the post) and `captureRef` on a view positioned off-screen at âˆ’10000.
-
-Guarded by `utils/__tests__/shareStoryLayout.test.ts` (9:16 export, card wholly inside the safe box, uniform scale, safe-box centring) and the capture-size assertions in `utils/__tests__/shareVerseTarget.test.tsx`.
-
-### Share flow (`ShareProvider` / `useShare()`)
-
-0. `share(verse, lang)` with no `opts.target` opens the target picker (Â§39.1) and returns; the picker calls back with `'system'` or `'instagram'`. A caller that already knows the destination passes `opts.target` and skips the sheet.
-1. The chosen target mounts the card **off-screen** (absolute-positioned at âˆ’10000,âˆ’10000, `pointerEvents="none"`) inside the provider, waits one animation frame + 60 ms for layout/fonts, then captures it with `react-native-view-shot`'s `captureRef` (PNG, quality 1, tmpfile, scaled to 1080Ã—1350).
-2. A **text caption** is always built via `buildShareCaption` (`shareLinks.ts`): section Â· verse label header, the quoted first verse line, then a language-localised CTA ("Read on Vedansh:" / "Vedansh à¤à¤ª à¤ªà¤° à¤ªà¤¢à¤¼à¥‡à¤‚:" / gu / kn equivalents) followed by the public smart link (`SMART_LINK`, a GitHub Pages redirect page; `APP_STORE_URL` / `PLAY_STORE_URL` constants live alongside it). Bundle-only â€” no runtime fetch.
-3. **Instagram target:** the off-screen mount is the plain card for `format: 'post'` and the Â§39.3 canvas for `format: 'story'`, captured at 1080Ã—1350 or 1080Ã—1920 accordingly. The caption is `buildInstagramCaption` (verse caption + `@handle` + the five-tag block, Â§39.2), copied to the clipboard, and the PNG always goes out through `expo-sharing` on **both** platforms â€” the RN Share `message` would ride along uselessly (Instagram drops it) and on some builds pushes Instagram out of the activity list in favour of text-capable targets. `dialogTitle: 'Share on Instagram'`.
-4. **Platform split (system target):** iOS shares image + caption together through RN `Share.share({ message, url })` (UIActivityViewController fills WhatsApp's caption field automatically). Android's RN Share drops file URIs, so the image goes through `expo-sharing`'s `shareAsync` (mimeType `image/png`) and the caption is left to the user â€” the branding footer on the card itself carries the fallback.
-5. **Fallbacks:** capture failure on an **Instagram** target â†’ a localized "Couldn't share just now" alert, because Instagram accepts an image or nothing and a text-only sheet simply would not list it â€” which reads as the button doing nothing. Capture failure on the system target â†’ text-only `Share.share(caption)`; `Sharing.isAvailableAsync()` false â†’ the same text-only path; sheet dismissal / any error is swallowed. An in-flight ref guarantees one share at a time; `busy` drives the button's disabled state.
-
-**Files:** `mobile/src/components/ShareButton.tsx`, `ShareCard.tsx`, `ShareStoryCanvas.tsx`, `ShareTargetSheet.tsx`, `mobile/src/utils/shareVerse.tsx`, `mobile/src/utils/shareCardType.ts`, `mobile/src/utils/shareStoryLayout.ts`, `mobile/src/data/shareLinks.ts`, `mobile/src/data/shareHashtags.ts`. `ShareProvider` mounts once in `App.tsx` and owns both the off-screen card and the target picker. Tests: `utils/__tests__/shareHashtags.test.ts`, `utils/__tests__/shareStoryLayout.test.ts`, `utils/__tests__/shareVerseTarget.test.tsx`, `components/__tests__/ShareTargetSheet.test.tsx`, e2e `mobile/.maestro/share-target-smoke.yaml`.
-
----
-
-## 40. Reading Progress & Resume
-
-**Purpose.** Remember where the reader stopped in every text â€” and every chapter of every text â€” so a returning reader lands back mid-verse instead of at page 1. Powers the thin progress bar in readers, the resume sheet on the listing screens, silent per-chapter auto-jump, and the routine engine's auto-completion (Â§31). `mobile/src/contexts/ReadingProgressContext.tsx`.
-
-### What's persisted
-
-One AsyncStorage blob at `@vedansh/reading-progress`: a map of entries `{ sourceId, chapter?, verseIndex, updatedAt }` keyed by `<sourceId>` for linear texts and `<sourceId>::<chapter>` for chaptered ones â€” **each chapter keeps its own resume position**. On hydrate, legacy stores are migrated in place: bare-`sourceId` keys are re-keyed to the composite form, `sourceId`s are canonicalised (Â§44 migration), and colliding entries keep the most recent `updatedAt`. Two read paths:
-
-- `getProgress(sourceId)` â€” the **latest** position across all subsections (drives the book-level resume sheet).
-- `getChapterProgress(sourceId, chapter)` â€” the saved position within one subsection (drives chapter auto-jump).
-
-Readers write on every page change (`setProgress` from the pager's current index); writes are deduped when the verseIndex hasn't changed, and each write also logs a read into `UserActivityContext` (feeding streaks and routine auto-completion).
-
-### Component: Reading Progress Bar (`ReadingProgressBar.tsx`)
-
-The continuous form of the `n / total` page counter. A 3 px full-width track in `divider` with a `saffron` fill at `current/total` % (pill-radius fill). Sits directly under the reader top bar, above the toggle row, on every reader. Renders nothing when `total â‰¤ 0`.
-
-### Component: Resume Reading Sheet (`ResumeReadingSheet.tsx`)
-
-**When it appears.** On `CategoryListScreen` and `DeityListScreen`: tapping an entry whose saved book-level progress has `verseIndex > 0` opens this sheet instead of navigating. (Entries with no progress, progress at verse 1, or while storage is still hydrating navigate straight to the start.) The Chapters Index screens do **not** show it â€” tapping a chapter card silently resumes at `getChapterProgress(...).verseIndex` (subsection auto-jump).
-
-**Spec.** A centred modal over `modalBackdrop` â€” max width 420, `radii.lg`, `cardActiveBorder` 1 px, `parchment` base under a `cardActiveFrom â†’ cardActiveTo` gradient (the active-card treatment, Â§8):
-
-1. Text title via `orderTitlesByLanguage` (dev primary 20 / secondary 13; lat primary 22 / secondary 12), then a 1 px `divider` rule.
-2. Prompt: `à¤œà¤¹à¤¾à¤ à¤›à¥‹à¤¡à¤¼à¤¾ à¤¥à¤¾, à¤µà¤¹à¥€à¤‚ à¤¸à¥‡ à¤œà¤¾à¤°à¥€ à¤°à¤–à¥‡à¤‚?` (reader-title face, 17, `ink`) over `Resume where you left off?` (italic 13, `ink-soft`).
-3. **Last-read card**: `parchment-soft`, `divider` border, `radii.md`; `à¤…à¤‚à¤¤à¤¿à¤® à¤ªà¤ à¤¿à¤¤` / `LAST READ` in the `sectionLabel` token over the pre-formatted location at 16 in the active script (via `formatLocation`, which speaks each source's vocabulary â€” `à¤…à¤§à¥à¤¯à¤¾à¤¯ N Â· à¤¶à¥à¤²à¥‹à¤• M` for Gita, `à¤¸à¤°à¥à¤—` for Sundarkand, `à¤¸à¥à¤¤à¥‹à¤¤à¥à¤°` for stotrams, `à¤•à¤¾à¤£à¥à¤¡ â€¦ Â· à¤ªà¤¦` for Ramcharitmanas, `à¤•à¤¾à¤£à¥à¤¡ â€¦ Â· à¤¶à¥à¤²à¥‹à¤•` for Valmiki Ramayan, plain `à¤ªà¤¦ N` for chalisas/aartis).
-4. Primary button: solid `saffron`, `radii.md`, `à¤œà¤¾à¤°à¥€ à¤°à¤–à¥‡à¤‚ Â· Resume` in `onPrimary`.
-5. Secondary button: outlined `cardActiveBorder`, `à¤†à¤°à¤‚à¤­ à¤¸à¥‡ à¤ªà¤¢à¤¼à¥‡à¤‚ Â· Start Over` in `saffron-deep`.
-6. `Cancel` â€” italic 13 `ink-muted`, 44 pt min-height text button.
-
-**Behaviour.** Resume â†’ navigate to the saved position (`navigateToProgress`). Start Over on a **chaptered** entry clears only the chapter being resumed (`clearChapterProgress`) and reopens that chapter at verse 1 â€” sibling chapters keep their positions; on a linear entry it clears the whole source and opens at the start. Every exit path also `markSeen`s the entry (clears its NEW badge, Â§44). Backdrop tap dismisses.
-
-### Chapter auto-advance (transition cards)
-
-Multi-chapter readers must let the reader swipe **across** chapter boundaries (the RULEBOOK Â§3 auto-advance contract). The pager data is `[PrevChapterCard?] + verses + [NextChapterCard?]` â€” the prev card omitted on the first chapter, the next card on the last. Each transition card (`NextChapterCard.tsx` / `PrevChapterCard.tsx`) is a full-width page, content centred with 12 gap: a language-aware `à¤…à¤—à¤²à¤¾ / Next` (or `à¤ªà¤¿à¤›à¤²à¤¾ / Previous`) label at 14 `ink-muted`, the neighbouring chapter's title at 20 `saffron-deep` (italic when lang = en), and a 32 pt `â€º` / `â€¹` chevron in `saffron-deep`. When the transition page becomes â‰¥ 60 % visible, the reader fires a **Medium** haptic and, after a 400 ms beat, `navigation.replace`s itself with the neighbouring chapter â€” replace, not push, so back always returns to the chapter list. The prev path lands on the previous chapter's **last** verse (`initialIndex: prevVerseCount âˆ’ 1`). A `hasNavigatedRef` latch prevents double-fire; the prepended prev card shifts all indices by one (`offset = isFirstChapter ? 0 : 1`).
-
-### Component: Jump-to-Start (`JumpToStartButton.tsx`)
-
-A floating pill anchored bottom-right of the verse pager (16/16 inset, clear of the centred pager dots) rendered only when the reader is past verse 1 â€” a one-tap return after a subsection auto-jump, without swiping back through every page. `parchment-soft` fill, `cardActiveBorder` 1 px, `pill` radius, **`elevation.lifted`** (Â§4 â€” was an inline `0.18/10` shadow); `â‡¤` glyph (15) + language-aware label `à¤†à¤°à¤‚à¤­` / `Start` (13, italic for en) in `saffron-deep`. Tap scrolls (animated) to index 0 of the current chapter.
-
-**Files:** `mobile/src/contexts/ReadingProgressContext.tsx`, `mobile/src/components/ReadingProgressBar.tsx`, `ResumeReadingSheet.tsx`, `JumpToStartButton.tsx`, `NextChapterCard.tsx`, `PrevChapterCard.tsx`, `mobile/src/utils/formatLocation.ts`; consumers `GitaReaderScreen.tsx` (canonical), `CategoryListScreen.tsx`, `DeityListScreen.tsx`, `GitaChaptersIndexScreen.tsx`.
-
----
-
-## 41. Content Module Catalog & Registry
-
-**Purpose.** One data registry â€” the `library` array in `mobile/src/data/texts.ts` â€” is the single source of truth for everything the catalog surfaces show: Home's category tiles, `CategoryListScreen`, `DeityIndexScreen` / `DeityListScreen`, the routine Add-Content list, the Daily Bhakti verse pool, and NEW-badge tracking. Screens never hand-list content; they filter this array (RULEBOOK Â§2 rows 11â€“13: "no edit needed" â€” adding a section means appending one `LibraryEntry`).
-
-> **Supersedes Â§10's two-module framing.** Â§10 documents the original Chalisa + Gita content shapes and remains authoritative for those shapes and for the per-module-type discipline ("shapes stay separate"). The catalog has since grown to ~40 entries across 7 categories; this section documents the registry and shape *families* that grew out of Â§10's pattern.
-
-### `LibraryEntry` (the registry row)
-
-```ts
-type LibraryEntry = {
-  id: string;                  // route slug + asset folder + progress/bookmark sourceId
-  nameHi: string; nameEn: string;
-  sub: string; subEn: string;  // listing subtitle per language ("40 à¤šà¥Œà¤ªà¤¾à¤ˆ + 3 à¤¦à¥‹à¤¹à¤¾ Â· à¤…à¤°à¥à¤¥ à¤¸à¤¹à¤¿à¤¤")
-  thumb: string;               // single Devanagari glyph for the card thumb
-  status: 'active' | 'coming';
-  category: ContentCategory;   // which Home tile it lives under
-  deities: Deity[];            // cross-reference tags (â‰¥ 1)
-  verseCount?: number;         // imported from the module's data, never hand-typed
-  hidden?: boolean;            // omit from all listings
-  addedInVersion?: string;     // semver debut marker â†’ seeds the NEW badge (Â§44)
-};
-```
-
-`verseCount` and counted subtitles are computed from the module's own exported totals (`sundarkandTotal`, `shivChalisaCounts.totalVerses`, â€¦) so the card can never drift from the data (RULEBOOK Â§11.10). Japam entries are spread into the array from `japamMantras`, so a new mantra automatically becomes a catalog row.
-
-### Category set (`mobile/src/data/categories.ts`)
-
-Ten categories, all `active`: `granth` (à¤—à¥à¤°à¤¨à¥à¤¥ Â· Sacred Books) Â· `stotram` (à¤¸à¥à¤¤à¥‹à¤¤à¥à¤°à¤®à¥ Â· Hymns & Praise) Â· `chalisa` (à¤šà¤¾à¤²à¥€à¤¸à¤¾) Â· `japam` (à¤œà¤ª Â· Japa & Mantras) Â· `aarti` (à¤†à¤°à¤¤à¥€) Â· `theerth` (à¤¤à¥€à¤°à¥à¤¥ Â· Pilgrimage) Â· `sanskar` (à¤¸à¤‚à¤¸à¥à¤•à¤¾à¤° Â· Good Habits) Â· `ashtakam` (à¤…à¤·à¥à¤Ÿà¤•à¤®à¥ Â· Ashtakam â€” standalone Ashtak/Ashtakam texts; PRD-A rows use multi-instance `AshtakamReader`, while the pre-existing Sankat Mochan Hanuman Ashtak keeps its dedicated chaptered reader) Â· `suktam` (à¤¸à¥‚à¤•à¥à¤¤à¤®à¥ Â· Suktam â€” PRD-A; multi-instance `SuktamReader`) Â· `kavacham` (à¤•à¤µà¤š Â· Kavacham â€” PRD-A; multi-instance `KavachamReader`). Each PRD-A form dispatches its texts through one reader on an `<form>Id` route param. **Stuti** (à¤¸à¥à¤¤à¥à¤¤à¤¿ Â· Krishna Stuti, Durga Stuti) is a fourth PRD-A form that is **not a category** â€” its texts are filed under `stotram` (folded July 2026: à¤¸à¥à¤¤à¥à¤¤à¤¿ â‰ˆ à¤¸à¥à¤¤à¥‹à¤¤à¥à¤°à¤®à¥, and Ram Stuti already lived there) yet still render through the multi-instance `StutiReader` (routed by `stutiId`). `HomeScreen` renders all category tiles from data (`coming` ones, when present, render as disabled "SOON" launchers) and appends a **hand-wired à¤¦à¥‡à¤µà¤¤à¤¾ Â· By Deity tile** that opens `DeityIndexScreen` (Â§42) instead of a category list. (This supersedes Â§18's "6 tiles" list.) `japam` tiles route to the counter UI, `theerth` to the map (Â§26); everything else goes through `CategoryListScreen` â†’ `entryRoutes.ts`.
-
-### Deity set (`mobile/src/data/deities.ts`)
-
-Twenty-one deities, each `{ id, nameHi, nameEn, iconKey }`: rama (bowArrow) Â· krishna (bansuriPeacockFeather) Â· vishnu (chakra) Â· shiva (trishul) Â· hanuman (gada) Â· durga (lotus) Â· ganesha (modak) Â· savitr / à¤®à¤¾à¤ à¤—à¤¾à¤¯à¤¤à¥à¤°à¥€ (surya) Â· saraswati (veena) Â· lakshmi / à¤®à¤¾à¤ à¤²à¤•à¥à¤·à¥à¤®à¥€ (lakshmi ğŸª”) Â· surya / à¤¸à¥‚à¤°à¥à¤¯ à¤¦à¥‡à¤µ (suryadev ğŸŒ) Â· radha / à¤°à¤¾à¤§à¤¾ à¤°à¤¾à¤¨à¥€ (radha ğŸŒ¸) Â· kartikeya / à¤•à¤¾à¤°à¥à¤¤à¤¿à¤•à¥‡à¤¯ (kartikeya ğŸ¦š) Â· kubera / à¤•à¥à¤¬à¥‡à¤° (kubera ğŸ’) Â· ganga / à¤®à¤¾à¤ à¤—à¤‚à¤—à¤¾ (ganga ğŸŒŠ) Â· parvati / à¤®à¤¾à¤ à¤ªà¤¾à¤°à¥à¤µà¤¤à¥€ (parvati ğŸŒº) Â· narasimha / à¤¨à¤°à¤¸à¤¿à¤‚à¤¹ (narasimha ğŸ¦) Â· dattatreya / à¤¦à¤¤à¥à¤¤à¤¾à¤¤à¥à¤°à¥‡à¤¯ (dattatreya ğŸ•‰ï¸) Â· shani / à¤¶à¤¨à¤¿ à¤¦à¥‡à¤µ (shani ğŸª) Â· kali / à¤®à¤¾à¤ à¤•à¤¾à¤²à¥€ (kali ğŸŒ‘) Â· navagraha / à¤¨à¤µà¤—à¥à¤°à¤¹ (navagraha ğŸŒŒ). `getDeityMeta` / `deityIconKey` are the lookup helpers; the icon system is Â§42. (PRD-A deity expansion Â§A.4.2 complete July 2026: 9 â†’ 21, each new deity shipped with â‰¥1 source-verified text; note the `surya` deity id is distinct from savitr's `surya` icon key.)
-
-### Data-shape families (one directory per module under `mobile/src/data/`)
-
-- **Linear `lines`/`linesEn` verses (swap-on-toggle, Â§3.1/Â§10)** â€” one JSON, one `Verse[]`, no chapters. Three registry-driven *multi-instance* readers dispatch on a route param instead of importing one section's data (RULEBOOK Â§3): **chalisas** (`chalisaRegistry.ts` â†’ hanuman/shiv/durga/ganesh/gayatri/ram/krishna/vishnu/saraswati chalisa dirs â€” nine total), **aartis** (`aarti/index.ts` `aartiCollection`, 8 aartis, `refrain`/`stanza` verse types; the Aarti *category* also lists a 9th card, `ram-aarti`, which is an alias that opens the existing `ram-stuti` Stotram content rather than an `aartiCollection` entry), **sanskar** (8 practice modules â€” prabhati-shloka, surya-namaskar, tulsi-puja, bhojan-mantra, gau-seva, sandhya-deepam, ratri-shloka, vidyarambha-prarthana â€” whose `SanskarVerse` adds `vidhiHi/En` method prose and `intro`/`mantra`/`step`/`vidhi` types).
-- **Chaptered `chapter-NN.json` + `chapters-manifest.json`** â€” the Gita pattern (Â§10, Â§15): `gita/` (18 chapters, sanskrit + transliteration + meaning + commentary), `sundarkand/` (16 sargas), `shiva-strotam/` (4), `durga-stotram/` (3), `ganesh-stotram/` (3), `saraswati-stotram/` (3), `vishnu-sahasranama/` (4), `krishna-stotram/` (2), `ramcharitmanas/` (1 â€” Mangalacharan only today), `valmiki-ramayan/` (7 kÄá¹‡á¸as / 648 sargas / 23,289 verified verse records, Â§53), plus single-chapter `hanuman-ashtak/`, `bajrang-baan/`, `ram-stuti/`. Each `index.ts` is a typed loader with module-load invariants; the large Valmiki payload is the exception that validates lazily per loaded kÄá¹‡á¸a.
-- **Japam** (`japam/japam.json`) â€” mantras with round targets; routes to the counter, not a verse pager.
-- **Theerth** (`theerth/temples.ts`) â€” the prose-per-temple shape of Â§26â€“27 / RULEBOOK Â§12; no verse pages. Temples carry their own `addedInVersion` for NEW tracking (Â§44).
-
-**RULEBOOK Â§1 is the intake contract** for every row above: mandatory `id`/names/`sub`/`thumb`/`category`/`deities`, per-verse `lines` + `meaningHi` + `meaningEn` (both languages â€” the toggle must work on every page), optional commentary, background sketches per Â§6. Gujarati/Kannada are never authored â€” derived at runtime (Â§3.1).
-
-### NEW badges
-
-`addedInVersion` marks the semver in which an entry's content shipped. It is used **only to seed** the debut state for upgrading users (entries newer than the `1.2.0` feature baseline light up NEW); ongoing detection is content-ID-set based, so any id later added to the registry is automatically NEW for existing users. Full lifecycle in Â§44; badge visual in Â§19.
-
-**Files:** `mobile/src/data/texts.ts`, `categories.ts`, `deities.ts`, `chalisaRegistry.ts`, per-module dirs under `mobile/src/data/`, `mobile/src/navigation/entryRoutes.ts`; contract in `RULEBOOK.md` Â§1â€“2.
-
----
-
-## 42. Deity Index
-
-**Purpose.** The "browse by deity" front door. Tapping the à¤¦à¥‡à¤µà¤¤à¤¾ Â· By Deity tile on Home (the eighth category tile, Â§41) pushes this screen: one card per deity, each opening the deity-filtered listing (Â§22). `mobile/src/screens/DeityIndexScreen.tsx`.
-
-**Structure (top to bottom):**
-
-1. Status bar (safe area).
-2. **Top bar** (`spacing.xxl` gutter): 44 px circular back button (`parchment-soft` fill, `divider` border, `â€¹` in `ink-soft`) + title `à¤¦à¥‡à¤µà¤¤à¤¾ Â· By Deity` via `orderTitlesByLanguage` (primary 16 `ink`, secondary 13 `ink-muted`, dot-separated on one baseline).
-3. **Deity card list** â€” vertical `ScrollView`, `spacing.xxl` side padding, `spacing.md` gap. All deities from `deities.ts` (twenty-one â€” PRD-A Â§A.4.2 complete; enumeration mirrored in Â§41), in registry order.
-
-**Background.** A `BackgroundLayer` with a **random deity sketch** â€” the index isn't tied to one deity, so it draws from the deity background pool (`getRandomDeityBackground`), chosen once per visit (`useMemo([])`) so it's stable while open and fresh on the next visit. This is a sanctioned variation on Â§6's deterministic rule, matching the image backdrop every other listing screen carries.
-
-**Per-card data.** Item count line = the number of active, non-hidden library entries tagged with the deity ("5 texts", English-only meta). `hasNew` = any of those entries is still NEW (Â§44) â€” the deity card inherits the badge until its texts are acknowledged, mirroring the per-text chips inside its list.
-
-### Component: Deity Card (`DeityCard.tsx`)
-
-Wears the active LibraryCard treatment (Â§8): `cardActiveFrom â†’ cardActiveTo` gradient fill, 1 px `cardActiveBorder`, `radii.lg`, raised shadow, 14 padding, horizontal layout with 12 gap:
-
-- **Avatar**: 44Ã—44 circle in the `cardThumbActiveFrom â†’ cardThumbActiveTo` gradient, containing a `DeityIcon` (below); falls back to the deity's first two Devanagari characters.
-- **Names** via `orderTitlesByLanguage` (dev 16/12, lat 18/11): primary in `ink`, secondary italic `ink-muted`, then the count line at 10 `ink-muted`.
-- Right `â€º` chevron in `saffron`.
-- **NEW pill** top-right when `hasNew`: `newBadgeBg` fill, `newBadgeText` text, `pill` radius, **10 pt** uppercase (was 9, below the Â§3.0 floor) â€” same geometry as Â§19.
-- Whole card is the press target; a11y label reads name + count + "New." when badged.
-
-### Deity Icon system (`DeityIcon.tsx` + `deityGlyphs/`)
-
-Each deity's avatar glyph is a compact **symbolic attribute**, not a portrait (design spec: `docs/superpowers/specs/2026-05-08-deity-icons-design.md`). All 21 icon keys render as **hand-built vector glyphs** â€” pure `View` compositions, no SVG per the Â§30 convention and no emoji per Â§5 â€” one file per key under `mobile/src/components/deityGlyphs/`, registered in a total `Record<DeityIconKey, ComponentType>` so a deity added without a drawn glyph fails typecheck.
-
-- **Canvas + scaling:** every glyph draws inside a uniform 36Ã—36 dp centered canvas (`DeityIcon` wraps it with a `deity-glyph-<key>` testID) and is transform-scaled for other sizes (`size` prop; MiniPlayer 26, cards 36, Now Playing 150). The layout box stays 36Ã—36 at every size â€” consumers center it in fixed frames.
-- **Baked illustration palette** (`deityGlyphs/palette.ts`): warm ink-brown `#733207` silhouettes/strokes (borderWidth ~1.3â€“2), gold `#D49A35` accent fills, plus goldSoft/cream and the peacock leafGreen/teal/deepBlue/featherYellow family (also used for Ganga's cool-water waves) and a flame orange. Deliberate illustration colors baked into the art, not theme tokens â€” the glyphs sit on the fixed `cardThumbActiveFrom â†’ cardThumbActiveTo` medallion gradient. **The cool hues (leafGreen/teal/deepBlue) are the one sanctioned exception to the warm-only "never green/red" rule (Â§2), and are bounded to these glyph files** â€” painted attributes, never signals. Nothing here may be imported into UI chrome; chrome takes its colour from `theme/colors.ts` only.
-- **The 21 attributes:** bow-and-arrow (rama), bansuri + peacock-feather plume (krishna), Sudarshana chakra (vishnu), trishul (shiva), gada (hanuman), open lotus (durga), modak (ganesha), eight-ray sun (savitr), veena (saraswati), coins-into-lotus (lakshmi), rising sun over horizon (suryadev), lotus bud on stem (radha), vel spear (kartikeya), treasure pot (kubera), descending waves (ganga), five-petal blossom (parvati), lion emblem in a mane ring (narasimha), hand-drawn à¥ (dattatreya), ringed graha (shani), khadga (kali), nine-dot yantra (navagraha).
-- **Fallback:** an undefined `iconKey` renders the deity's first two Devanagari characters â€” never a blank avatar.
-
-**Interactions.** Tap a card â†’ push the Deity Detail page (Â§50) for that deity â€” essay plus grouped `LibraryCard` rows, resume-sheet behaviour (Â§40), and NEW clearing (Â§44). `DeityListScreen` remains a compatibility route for plain filtered lists.
-
-**Files:** `mobile/src/screens/DeityIndexScreen.tsx`, `mobile/src/components/DeityCard.tsx`, `DeityIcon.tsx`, `mobile/src/data/deities.ts`; spec `docs/superpowers/specs/2026-05-08-deity-icons-design.md`.
-
----
-
-## 43. Reading Size Setting
-
-**Purpose.** A two-preset reading-text size control (PRD-04, slice 2) â€” comfort sizing for verse and meaning text without letting UI chrome reflow or clip. `mobile/src/theme/fontScale.ts` + `mobile/src/contexts/FontScaleContext.tsx` + `mobile/src/components/ReadingSizePickerSheet.tsx`.
-
-### Presets
-
-Exactly two (product decision), in `FONT_SCALES`:
-
-| Preset | Label | Factor |
-| --- | --- | --- |
-| `M` (default) | à¤®à¤¾à¤¨à¤• Â· Standard | 1.0 |
-| `L` | à¤¬à¤¡à¤¼à¤¾ Â· Large | 1.15 |
-
-### What scales
-
-Only the reading-content tokens listed in `READING_STYLE_KEYS`: `verse`, `meaning`, `verseLatin`, `verseGujarati`, `verseKannada`, `meaningEnglish`, `meaningGujarati`, `meaningKannada` â€” i.e. verse + meaning across every script. `scaleTypography` multiplies each token's `fontSize` **and** `lineHeight` by the factor (rounded) so leading stays proportional; factor 1 returns the input untouched. Everything else â€” `screenTitle`, `readerTitle`, `pageCounter`, pills, labels, card titles â€” is chrome and **never scales**, so top bars, toggles, and cards cannot clip.
-
-### Plumbing
-
-`FontScaleProvider` mounts in `App.tsx` **above** `ThemeProvider`; `ThemeProvider` reads `useFontScale()` and serves `scaleTypography(typography, factor)` as `theme.typography`. Because every reader already pulls its type from the theme (Â§3 "no hardcoded fontSize on reading content"), the entire app scales with **zero per-screen work** â€” this is the payoff of the one-reading-type-scale rule. Persisted at `@vedansh/font-scale` (the raw `'M'`/`'L'` string); unknown/corrupt values fall back to `M`.
-
-### Component: Reading Size Picker Sheet (`ReadingSizePickerSheet.tsx`)
-
-Opened from the **à¤ªà¤¾à¤  à¤•à¤¾ à¤†à¤•à¤¾à¤°** row on the More hub (Â§37; the row's state text shows the current preset). A bottom-sheet `Modal` (slide up, `modalBackdrop`, grabber, `parchmentHighlight`) â€” single-language chrome:
-
-1. **Header**: title "à¤ªà¤¾à¤  à¤•à¤¾ à¤†à¤•à¤¾à¤° / Reading size" over the sub "à¤¶à¥à¤²à¥‹à¤• à¤µ à¤…à¤°à¥à¤¥ à¤•à¥‡ à¤…à¤•à¥à¤·à¤°à¥‹à¤‚ à¤•à¤¾ à¤†à¤•à¤¾à¤° / Verse & meaning text size", both in the selected language only. All four reading languages have native copy.
-2. **Preset pills** (`radiogroup`; each pill a `radio` with `selected` state): Standard / Large, labelled in the active language. Selected: `saffron` border + `saffron-tint` fill + `saffron` âœ“ prefix, label in `saffron-deep`; unselected: `divider` border, `ink`. Pill labels are chrome â€” fixed size by design.
-3. **Live sample line** â€” "à¤¶à¥à¤°à¥€ à¤°à¤¾à¤® à¤œà¤¯ à¤°à¤¾à¤®" (per-script variants incl. IAST for en) rendered with the *same* verse token the readers consume, so it grows/shrinks the instant a pill is tapped. This is the preview; there is no separate preview machinery.
-4. **Done button** (`saffron`) closes the sheet. Picking a size does **not** auto-close, so the preview change stays visible for comparison. `readingSizeLabel(scale, lang)` is exported for the More row's state text, and `READING_SIZE_SAMPLE` for the first-run setup sheet (Â§47), which previews the same line with the same verse token. The read-aloud sheet (Â§56) **speaks** that same line as its voice preview, so all three surfaces preview with identical words.
-
-**First run:** the same two presets are offered on the post-tour setup sheet (Â§47) alongside the language choice, so the preference is set once at install rather than discovered later on the More hub.
-
-### Interplay with OS font scaling (Â§12)
-
-The preset multiplies the app's own type tokens; it does not replace platform accessibility. No component sets `allowFontScaling={false}` (there are zero overrides in `src/`), so the OS-level font multiplier still applies on top of the preset per React Native's default â€” Â§12's "use the system's user-chosen font-scale" holds.
-
-**Files:** `mobile/src/theme/fontScale.ts`, `mobile/src/contexts/FontScaleContext.tsx`, `mobile/src/theme/ThemeContext.tsx`, `mobile/src/components/ReadingSizePickerSheet.tsx`, `mobile/src/screens/MoreScreen.tsx`; design note `docs/superpowers/specs/2026-06-30-font-scale-ui-design.md`.
-
----
-
-## 44. NEW-Content & Update Surfaces
-
-**Purpose.** Two complementary "something new" mechanisms: the saffron **NEW badge** that marks content a user hasn't opened yet (`NewContentContext.tsx`), and the **OTA update-ready modal** that offers a one-tap reload when a fresh bundle has been downloaded in the background (`UpdateReadyModal.tsx`). Plus the `sourceId` migration layer that keeps a user's bookmarks and progress stable while content ids evolve.
-
-### NEW badge lifecycle (`mobile/src/contexts/NewContentContext.tsx`)
-
-**Model.** One AsyncStorage blob (`@vedansh/new-content-state`) holds `knownIds` â€” the set of acknowledged content. The *discoverable* universe is every active, non-hidden `LibraryEntry` **plus every theerth temple** (temple keys namespaced `theerth-temple:<id>` so they can never collide with a text id). An id is NEW iff it is discoverable and **not** in `knownIds` â€” so any content added to the registry after the user's state was written is automatically NEW, with no version bookkeeping at runtime.
-
-**Debut seeding (first run of the feature).** With no stored state, the provider classifies the user:
-
-- **Upgrader** â€” any of five deliberate-action keys exists in storage (bookmarks, reading progress, recent searches, japam counter, saved language). Seeded with everything known **except** entries whose `addedInVersion` compares above the `1.2.0` pre-feature baseline (`compareSemver`, `mobile/src/utils/semverCompare.ts` â€” a dependency-free numeric segment compare) â€” those debut as NEW.
-- **Fresh install** â€” everything seeded as known; a brand-new user sees no badges (nothing is "new to them").
-- Storage failure â†’ treat everything as known; the safe fallback is *no* badges, never all badges.
-
-**Clearing.** `markSeen(id)` persists the acknowledgment the moment the user **opens** the content â€” the category/deity list press handler and both resume-sheet exits call it (Â§40) â€” matching Â§19's "the chip clears once the user opens that content".
-
-**Surfaces.** `isNew(id)` â†’ the NEW pill on `LibraryCard` (Â§8) and `DeityCard` (Â§42), and temple pins/rows. `hasNewInCategory(categoryId)` â†’ the badge on Home's category tiles (Â§19) and the FeatureCard eyebrow swap (Â§32); the DeityIndex derives a per-deity badge from its texts. Badge visual: `newBadgeBg` fill + `newBadgeText` text (saffron family = live & fresh, vs the muted gold `SOON`), always carrying the "NEW" text cue (Â§12). Dev-only `devSimulateUpgrade` / `devResetNewState` hooks exist for the Maestro badge flows.
-
-### OTA update prompt (`mobile/src/components/UpdateReadyModal.tsx`)
-
-`expo-updates` keeps its default flow: check + background-download on launch, apply on next cold start. The modal closes the "next cold start" gap without blocking startup: `Updates.useUpdates().isUpdatePending` flips true once a bundle is staged, and the modal appears â€” only when `Updates.isEnabled` (never in dev clients / Expo Go, where `reloadAsync` throws). Mounted once in `App.tsx` inside the provider stack.
-
-**Spec.** Centred card over `modalBackdrop`: `parchment` fill, `radii.lg`, `spacing.xxl` padding, max width 360.
-
-- Title "à¤¨à¤¯à¤¾ à¤…à¤ªà¤¡à¥‡à¤Ÿ à¤¤à¥ˆà¤¯à¤¾à¤° à¤¹à¥ˆ / A fresh update is ready" â€” 20, reader-title face (script serif for gu/kn), `ink`.
-- Body â€” 15/23 `ink-soft`, meaning face: "New content and improvements have been downloaded. Apply them now, or they'll apply automatically next time you open the app." (all four languages authored).
-- Primary: solid `saffron`, `radii.md`, "à¤…à¤­à¥€ à¤…à¤ªà¤¡à¥‡à¤Ÿ à¤•à¤°à¥‡à¤‚ / Update now" in `onPrimary` â†’ `Updates.reloadAsync()` (busy-guarded; on a native failure it dismisses and lets the default next-launch path apply the update).
-- Secondary: "Later" â€” uppercase 13, `ink-muted` text button.
-
-**Dismissal is per-staged-update:** "Later" latches for the session, but the latch resets when a *newer* update is staged, so a fresh download re-prompts.
-
-### sourceId migration (`mobile/src/data/sourceIdMigration.ts`)
-
-Content ids have changed shape over time (aartis were once addressed positionally as `aarti-N` / bookmark ids `aarti:N:M`; canonical form is the library id, e.g. `om-jai-jagdish`). `canonicalSourceId` and `canonicalBookmarkId` normalise legacy values, and are applied **on hydrate** by `BookmarksContext` and `ReadingProgressContext` (and defensively by Wishlist reads) â€” so an upgrade never strands a user's saved verses or resume positions. The reading-progress migration additionally re-keys legacy per-book entries to the per-chapter composite keys (Â§40). Unknown ids pass through unchanged.
-
-**Files:** `mobile/src/contexts/NewContentContext.tsx`, `mobile/src/components/UpdateReadyModal.tsx`, `mobile/src/data/sourceIdMigration.ts`, `mobile/src/utils/semverCompare.ts`; registry field `addedInVersion` in Â§41.
-
----
-
-## 45. Daily Routine Suite (beyond Â§30/Â§31)
-
-**Purpose.** The management surfaces around à¤¨à¤¿à¤¤à¥à¤¯ à¤¸à¤¾à¤§à¤¨à¤¾: browsing routines, creating one, filling it with content, and editing it â€” plus the in-reader affordance that adds the current text to a routine. Complements Â§30 (the Home banner + celebration) and Â§31 (the Today's Practice ledger those open into). Data model per PRD-07: routines of complete reciting units (whole section / one chapter / a japam round-target), scheduled `daily` or per-weekday.
-
-### Component: RoutineShell (`mobile/src/components/RoutineShell.tsx`)
-
-The shared chrome for the routine management screens: by default a full-screen `parchmentHighlight â†’ parchmentGradientEnd` gradient (the Â§2 Home gradient tokens â€” flat, for the utility/ledger surfaces), safe-area top, and a top bar (`spacing.xxl` gutter): 44 px circular back button (`parchment-soft` / `divider`), a 16 pt title that **swaps** by reading language (RULEBOOK Â§3 â€” never stacked), and an optional right-slot action. It also accepts an optional `background` image source: passed one, it renders the shared `BackgroundLayer` (sepia sketch + Â§2 overlay) instead of the flat gradient, so **content** surfaces (the Sadhana catalog + detail, Â§46) sit on the same sketch backdrop as the rest of the catalog while management/ledger screens stay flat. `BackgroundLayer`'s no-source fallback is that exact parchment gradient, so unpassed callers are unchanged. The file also exports `RoutineButton` â€” the suite's standard button: solid `saffron` with `onPrimary` label, or `ghost` (transparent, 1 px `goldTint` border, `saffron` label); `radii.md`, `spacing.md` vertical padding, 16 pt script-aware label on a 24 line (â‰¥1.5Ã— â€” RN clips Devanagari top matras like à¥‡à¤‚ below ~1.45Ã—).
-
-### Screen: My Routines (`RoutineListScreen.tsx`)
-
-`RoutineShell` titled `à¤®à¥‡à¤°à¥€ à¤¸à¤¾à¤§à¤¨à¤¾à¤à¤ Â· My Routines`. Reached from Today's Practice (Â§31) â€” one routine card per `Routine`:
-
-- Card: the warm **active Library Card** language (Â§8) â€” `cardActiveFrom â†’ cardActiveTo` gradient fill, 1 px `cardActiveBorder`, `radii.lg`, `elevation.card`, `spacing.lg` padding, `spacing.md` gap between cards, saffron `â€º` chevron (26) at the tail. (Was a flat `parchment-soft`/`divider` box; July 2026 review aligned it with the catalog cards.)
-- Row: routine name (card-title face at the `cardHindi` token size, script-aware via `scriptTitleFont`, `ink`) + a mode pill (`saffronTint` fill, `pill` radius, `versePill` type via `pillTextStyle` in `saffron-deep`, 8/3 padding): `à¤¦à¥ˆà¤¨à¤¿à¤• / DAILY` or `à¤µà¤¾à¤° / WEEKDAY`.
-- Meta line: "N items" â€” Â§46 meta convention (`scriptBodyFont` + `cardMeta`, `ink-muted`; never Cormorant on the Indic string).
-- Tap â†’ `RoutineDetail`. Below the list, two ghost `RoutineButton`s: "à¤¨à¤ˆ à¤¸à¤¾à¤§à¤¨à¤¾ à¤¬à¤¨à¤¾à¤à¤ / New routine" â†’ `RoutineCreate`, then "à¤¤à¥ˆà¤¯à¤¾à¤° à¤¸à¤‚à¤•à¤²à¥à¤ª à¤šà¥à¤¨à¥‡à¤‚ / Browse sankalps" â†’ the Â§46 catalog. Empty state: a centred "No routines yet" line (14, `ink-muted`).
-
-### Screen: Create Routine (`CreateRoutineScreen.tsx`)
-
-A three-step wizard on the same gradient (its own top bar: the back button steps `mode â†’ name â†’ choose` before popping). Each step leads with a centred bilingual heading (screen-title face at 22 over a secondary in the *other* language â€” Cormorant italic when the secondary is English, the `meaning` face when it is Hindi; Cormorant has no Devanagari glyphs).
-
-1. **Choose** â€” the Â§46 fork: `à¤…à¤ªà¤¨à¥€ à¤¸à¤¾à¤§à¤¨à¤¾ à¤¬à¤¨à¤¾à¤à¤ / Build your own` (â†’ Name) vs `à¤¤à¥ˆà¤¯à¤¾à¤° à¤¸à¤‚à¤•à¤²à¥à¤ª à¤šà¥à¤¨à¥‡à¤‚ / Choose a prebuilt sankalp` (â†’ the Sadhana catalog).
-2. **Name** â€” two labelled `TextInput`s (Hindi name / English name; `sectionLabel` labels via `pillTextStyle`, `parchmentHighlight` fill, `divider` border, `radii.md`). Either language suffices â€” the blank one falls back to the filled one on create. Primary button "à¤†à¤—à¥‡ / Next" (disabled until non-empty).
-3. **Mode** â€” two selectable cards: `à¤¦à¥ˆà¤¨à¤¿à¤• â€” à¤¹à¤° à¤¦à¤¿à¤¨ à¤à¤• à¤œà¥ˆà¤¸à¤¾ / Daily â€” same every day` and `à¤µà¤¾à¤° à¤…à¤¨à¥à¤¸à¤¾à¤° / By weekday â€” changes per day` ("each day has its own deity and texts"). Primary "à¤¸à¤¾à¤§à¤¨à¤¾ à¤¬à¤¨à¤¾à¤à¤ / Create routine" â†’ `createRoutine(...)` then **`navigation.replace`** into `RoutineAddItems` (back from add-items skips the wizard).
-
-All wizard cards (`ModeCard`) carry the warm Â§8 gradient fill (`cardActiveFrom â†’ cardActiveTo`); the border marks selection â€” 1.5 px `saffron` selected, 1 px `cardActiveBorder` unselected. Titles at the `cardHindi` token size (script-aware); descriptions in the `meaning` face at 13/20. The wizard's primary button label sits on a 24 line (â‰¥1.5Ã— of its 16 size â€” Devanagari matras clip below that).
-
-### Screen: Add Content (`RoutineAddItemsScreen.tsx`)
-
-`RoutineShell` titled `à¤¸à¤¾à¤®à¤—à¥à¤°à¥€ à¤œà¥‹à¤¡à¤¼à¥‡à¤‚ Â· Add Content`. Lists every active, non-hidden library entry **except theerth** (a map tour can't be practised as a daily item). For **weekday** routines, a 7-day strip sits on top (Sunâ€“Sat chips, defaulting to today; selected chip gets the 1.5 px `saffron` border) â€” every add below is tagged to the selected day.
-
-- Row: 34 px thumb (`saffronTint`, `radii.sm`, the entry's Devanagari `thumb` glyph in `saffron-deep`) Â· name (14) with an optional `à¤¸à¥à¤à¤¾à¤µ / SUGGESTED` pill (`goldTint` fill, `versePill` in `saffron-deep`) Â· unit meta ("à¤ªà¥‚à¤°à¤¾ à¤ªà¤¾à¤  / Whole text", or "1 à¤®à¤¾à¤²à¤¾ Â· 108" for japam) Â· a `ï¼‹` toggle in `saffron` that flips to a `gold` âœ“ when added. Rows are separated by 1 px `divider` hairlines.
-- **Vaar deity suggestions:** for weekday routines the list is *sorted* suggested-first â€” entries whose `deities` include `deityForWeekday(day)` (see scheduling below) float to the top and wear the SUGGESTED pill. Always a suggestion, never a constraint.
-- Adds are whole-unit here: `section` items (or `japam` with `targetRounds: 1`); the footnote says chapter-level selection is "coming soon" **on this screen** â€” chapter granularity already exists via the reader sheet (below).
-- "à¤ªà¥‚à¤°à¥à¤£ / Done" â†’ `RoutineToday` (Â§31).
-
-### Screen: Routine Detail (`RoutineDetailScreen.tsx`)
-
-`RoutineShell` titled with the routine's name; right slot is a `saffron` `ï¼‹` â†’ Add Content. For weekday routines, a read-only 7-column vaar grid tops the screen: each day chip shows its short label over the presiding-deity label (`deityLabelForWeekday`) in `saffron-deep`. Below the vaar grid (or first, for daily routines) sits the **à¤¸à¥à¤®à¤°à¤£ / Reminder card** (next subsection). Item rows: resolved title + sub (`resolveRoutineItem` â€” "à¤…à¤§à¥à¤¯à¤¾à¤¯ 1 / Chapter 1", "à¤ªà¥‚à¤°à¤¾ à¤ªà¤¾à¤  / Whole text", "N à¤®à¤¾à¤²à¤¾ / N mala") plus the item's scheduled day shorts; tapping the row opens the item's reader (`navigateToRoutineItem`); a `Ã—` removes it. Bottom: ghost "à¤‡à¤¸ à¤¸à¤¾à¤§à¤¨à¤¾ à¤•à¥‹ à¤¹à¤Ÿà¤¾à¤à¤ / Delete this routine" â€” deletion drops the routine from context and a focused-effect guard pops back exactly once (goBack in the handler double-popped; the comments document the bug).
-
-### Routine Detail â€” à¤¸à¥à¤®à¤°à¤£ / Reminder card (PRD-07 Phase 3)
-
-The per-routine reminder opt-in (the final PRD-07 phase; PRD `docs/roadmap/prds/07-routine-reminders-phase3.md`, prototype `docs/routine-reminders-prototype.html`). A `sectionLabel` eyebrow `à¤¸à¥à¤®à¤°à¤£ / Reminder` over a `parchment-soft` card (1 px `goldTint` border, `radii.lg`, `spacing.md` padding) between the weekday strip and the item list:
-
-- **Toggle row** â€” title `à¤¦à¥ˆà¤¨à¤¿à¤• à¤¸à¥à¤®à¤°à¤£ / Daily reminder` (weekday routines: `à¤¸à¤¾à¤ªà¥à¤¤à¤¾à¤¹à¤¿à¤• à¤¸à¥à¤®à¤°à¤£ / Weekly reminder`) in the card-title face (`scriptTitleFont` at the `cardHindi` size), a state sub-line in `cardMeta`/`meaning` ("à¤¬à¤‚à¤¦ â€” à¤šà¤¾à¤²à¥‚ à¤•à¤°à¤¨à¥‡ à¤ªà¤° à¤¸à¤®à¤¯ à¤šà¥à¤¨à¥‡à¤‚ / Off by default â€” turn on to pick a time" when off), and a `saffron`-track Switch (a11y "Toggle routine reminder"). **Off by default** â€” the presence of the `reminder` field on the routine record *is* the switch; no parallel boolean.
-- **Turning ON is the permission moment** (never the scheduler's): `undetermined` â†’ the shared `requestPermission()`; the reminder time persists **only after a grant** (a refusal leaves the toggle honestly off â€” the Pitru-Smaran honesty pattern). Effective status comes from `NotificationPreferencesContext` / `permissionState.ts`, so a never-asked Android install reads `undetermined`, not `denied`. On a **hard denial** (`canAskAgain: false`) the whole toggle row is replaced by the settings-path banner ("à¤¸à¥‚à¤šà¤¨à¤¾à¤à¤ à¤¬à¤‚à¤¦ à¤¹à¥ˆà¤‚ â€” Settings à¤®à¥‡à¤‚ à¤¸à¤•à¥à¤·à¤® à¤•à¤°à¥‡à¤‚" â†’ `Linking.openSettings()`), the Â§38 banner's second flavour.
-- **When on**: a `TimeStepper` row (Â§52a control, same as Reminder Settings / Japam Alarms) above a 1 px `divider` hairline, defaulting to **07:00** â€” user-chosen, so no collision-offset games. Under it a centred weekday-aware caption at 12/18 (`meaning`/`cardMeta` face, `ink-muted`): daily â†’ "à¤ªà¥à¤°à¤¤à¤¿à¤¦à¤¿à¤¨ à¤‡à¤¸à¥€ à¤¸à¤®à¤¯ / Every day at this time"; weekday â†’ "à¤•à¥‡à¤µà¤² à¤¸à¥‹à¤® Â· à¤¶à¤¨à¤¿ â€” à¤‡à¤¸ à¤¸à¤¾à¤§à¤¨à¤¾ à¤•à¥‡ à¤¦à¤¿à¤¨à¥‹à¤‚ à¤ªà¤° / Only Mon Â· Sat â€” this sadhana's days" (the union of item weekdays via `WEEKDAY_LABELS[..].shortHi`/`short`); an **empty union** (no items yet) warns "à¤•à¥‹à¤ˆ à¤¦à¤¿à¤¨ à¤¨à¤¿à¤°à¥à¤§à¤¾à¤°à¤¿à¤¤ à¤¨à¤¹à¥€à¤‚ â€” à¤ªà¤¹à¤²à¥‡ à¤¸à¤¾à¤®à¤—à¥à¤°à¥€ à¤œà¥‹à¤¡à¤¼à¥‡à¤‚ / No days scheduled â€” add content first" and schedules nothing.
-- Scheduling itself is the Â§38 `routine-reminder` family: pure planner `notifications/routineReminderPure.ts` (weekday filter + `completedToday` suppression are planner inputs; `ROUTINE_REMINDER_CAP = 12`, `ROUTINE_WINDOW_DAYS = 7`), glue `routineScheduler.ts`, headless `<RoutineReminderScheduler>` in `App.tsx`. Copy: title `à¤¨à¤¿à¤¤à¥à¤¯ à¤¸à¤¾à¤§à¤¨à¤¾ à¤¸à¥à¤®à¤°à¤£`, body `Â«nameHiÂ» Â· à¤†à¤œ à¤•à¥€ à¤¸à¤¾à¤§à¤¨à¤¾` (`nameEn` fallback for a blank Hindi name); a tap lands on `HomeTab â†’ RoutineToday`. Pinned by `.maestro/routine-reminder-smoke.yaml` (card presence only â€” flipping the toggle raises the native permission dialog) plus the tsx/Jest suites named in the flow's header.
-
-### Component: Add-to-Routine button & sheet
-
-- **`AddToRoutineButton.tsx`** â€” the `ï¼‹` (22 pt, `saffron`, 12 hitSlop) sitting beside the `LanguageToggle` in **every reader's toggle row** (chaptered readers pass the current `chapter`). Tap â†’ `openAddToRoutine(sourceId, chapter)`.
-- **`RoutineSheetProvider.tsx`** mounts a single app-level `AddToRoutineSheet` and exposes that opener via context â€” one sheet instance, any reader.
-- **`AddToRoutineSheet.tsx`** â€” a bottom sheet (slide-up `Modal` over `modalBackdrop`): `parchmentHighlight` panel, 22 px top radii, `divider` grabber bar. Header: "Add â€¹nameâ€º" (18, language-aware) over an italic secondary carrying the *other* language. For chaptered sources a **"à¤•à¥à¤¯à¤¾ à¤œà¥‹à¤¡à¤¼à¥‡à¤‚ / What to add"** chip row offers `à¤ªà¥‚à¤°à¤¾ / Whole` plus one chip per chapter (from `chaptersForSource`), pre-selected to the chapter being read. Below, every routine as a checklist row â€” a 22 px `radii.sm` checkbox (`gold` outline â†’ filled `saffron` with `onPrimary` âœ“ when this unit is in the routine) + name + mode pill; tapping toggles add/remove. Adding to a weekday routine schedules the item for **today's** weekday. Footer: "ï¼‹ New routine" closes the sheet and deep-navigates to `RoutineCreate` via the navigation ref.
-
-### Scheduling data (`mobile/src/data/routine/`)
-
-- `types.ts` â€” `Routine { id, nameHi, nameEn, mode: 'daily' | 'weekday', items, createdAt, reminder? }` (`reminder?: RoutineReminder = { hour, minute }` â€” optional and additive, PRD-07 P3: presence = reminders on, absent = off, so legacy records need no migration); `RoutineItem { kind: 'section' | 'chapter' | 'japam' | 'vidhi', sourceId, chapter?, targetRounds?, weekdays? }` (weekdays 0 = Sun â€¦ 6 = Sat); `itemRunsOn` (daily = always); `routineItemKey` for completion tracking. Item granularity is a complete reciting unit, never a single verse â€” that's Daily Bhakti's job (Â§23). The `vidhi` kind (PRD-19 Phase 2B) carries a vidhi id as `sourceId`: it resolves to the vidhi title with a `à¤ªà¥‚à¤œà¤¾ à¤µà¤¿à¤§à¤¿` sub-line, its row tap routes to `VidhiDetail` (Â§62), and completion is **manual-mark only** â€” conduct state lives in AsyncStorage outside the reading-progress contexts, so `isItemAutoComplete` never auto-completes it.
-- `vaar.ts` â€” the weekday â†’ deity maps. `VAAR_DEITY` is the **content-filter** tag and must exist in the catalog: Sun savitr (Surya) Â· Mon shiva Â· Tue hanuman Â· Wed ganesha Â· Thu vishnu Â· Fri durga Â· Sat hanuman. `WEEKDAY_DEITY_LABEL` is the **display** name and may honour tradition beyond the catalog â€” Saturday reads "à¤¶à¤¨à¤¿ à¤¦à¥‡à¤µ Â· à¤¹à¤¨à¥à¤®à¤¾à¤¨ / Shani Dev Â· Hanuman" while surfacing Hanuman content. `WEEKDAY_LABELS` carries `hi`/`en`/`short`/`shortHi` per day (`shortHi` â€” à¤°à¤µà¤¿ â€¦ à¤¶à¤¨à¤¿ â€” feeds the reminder card's day-list caption).
-- `units.ts` + `useRoutineToday.ts` â€” completion is **derived, not stored**: an item is auto-complete when persisted reading progress reached the unit's last verse-page *today* (last positions memoised from the verse pool) or japa rounds â‰¥ target from today's UserActivity totals; a manual mark (Â§31's offered-marks store) wins over auto. `useRoutineToday()` composes routines + progress + activity into `{ entries, doneCount, total, hasRoutine }` with per-entry `doneMode` and `doneAt` â€” the single view-model behind the banner (Â§30), Today's Practice (Â§31), and the celebration gate.
-
-**Files:** `mobile/src/screens/RoutineListScreen.tsx`, `CreateRoutineScreen.tsx`, `RoutineAddItemsScreen.tsx`, `RoutineDetailScreen.tsx`; `mobile/src/components/RoutineShell.tsx`, `AddToRoutineButton.tsx`, `AddToRoutineSheet.tsx`, `RoutineReminderScheduler.tsx`; `mobile/src/contexts/RoutineContext.tsx` (incl. `setReminder`), `RoutineSheetProvider.tsx`; `mobile/src/data/routine/{types,vaar,units,useRoutineToday,chapters}.ts`; `mobile/src/notifications/{routineReminderPure,routineScheduler}.ts`. PRDs: `docs/roadmap/prds/07-daily-routine-sadhana.md` + `07-routine-reminders-phase3.md`.
-
----
-
-## 46. Sadhana Programs (à¤¸à¤‚à¤•à¤²à¥à¤ª)
-
-**Purpose.** Prebuilt, multi-day devotional vows (a *sankalp*) â€” a 41-day Hanuman Chalisa anushthan, the GÄ«tÄ in 18 days, Navratri's nine Durga nights, Shravan Somvar. Each program references EXISTING library content by id (no new content); a user's enrollment + per-day progress persist on-device (`SadhanaContext`, like `RoutineContext`). PRD-11.
-
-**Entry points (three, all standing).** The catalog must never depend on the create-routine flow alone (July 2026 review: with a routine already added it was 5 taps deep behind "New routine"): (1) the `CreateRoutineScreen` **'choose'** step forks "Build your own" vs **"Choose a prebuilt sankalp"**; (2) ghost "à¤¤à¥ˆà¤¯à¤¾à¤° à¤¸à¤‚à¤•à¤²à¥à¤ª à¤šà¥à¤¨à¥‡à¤‚ / Browse sankalps" buttons on Today's Practice (Â§31) and My Routines (Â§45); (3) the à¤¸à¤‚à¤•à¤²à¥à¤ª Home spotlight card (Â§32). Pinned by `SankalpTouchpoints.test.tsx`.
-
-### Screen: Sadhana catalog (`SadhanaProgramListScreen.tsx`)
-
-`RoutineShell` titled `à¤¸à¤‚à¤•à¤²à¥à¤ª Â· Sadhana Programs`, **on a sketch background** â€” a multi-deity index, so it passes `getRandomDeityBackground()` (memoised per mount, same convention as the By-Deity index Â§42), not the flat gradient. Intro line in `meaning` prose. Programs group under `sectionLabel` eyebrows â€” **In progress**, **Available**, **Completed sankalps** â€” rendered via `pillTextStyle` (Inter uppercase for `en`; script serif, no tracking, for hi/gu/kn).
-
-Cards follow the **active Library Card** language (Â§8): every program is startable, so there is **no** dormant/"coming" (flat) variant â€” all cards carry the warm `cardActiveFrom â†’ cardActiveTo` gradient, `cardActiveBorder`, and the raised shadow, with a `cardThumbActiveFrom â†’ cardThumbActiveTo` gradient thumb bearing the program's Devanagari `thumb` glyph (`à¤¹` / `à¤­` / `à¤¦à¥` / `à¤¶à¤¿`, reused from the underlying text). Titles show **both** reading languages ordered by the active one via `orderTitlesByLanguage()` (dev 17/13, lat 19/12); no subtitle line (kept terse â€” the pill carries the state). Tail: a status pill (`parchmentHighlight` fill, `goldTint` border, `cardMeta` type in `saffron-deep` via `pillTextStyle`) reading `Day n / N` (active), `N days` (available), or `âœ“ Complete` (done), then the saffron `â€º` chevron (26). Completed cards dim to 0.9 opacity. Each card is a `Pressable` with an explicit English a11y label `<titleEn>. <subtitleEn>. Tap to open.` â†’ `SadhanaProgramDetail`.
-
-### Screen: Sankalp detail (`SadhanaProgramDetailScreen.tsx`)
-
-`RoutineShell` titled `à¤¸à¤‚à¤•à¤²à¥à¤ª Â· Sankalp`, on the program's **deity** sketch background (`getDeityBackground(program.deity)`). Centred title (script-aware) â€” **no subtitle line**: `subtitleHi/En` restated the title's duration ("â€¦ â€” à¥ªà¥§ à¤¦à¤¿à¤¨" + "A 41-day sankalp") and padded the screen (July 2026 review; the fields still feed the catalog card's a11y label). Then an intro card (`parchment-soft`, `goldTint`, `elevation.card`) with the sankalp framing. Before enrolling: primary `RoutineButton` **"à¤¸à¤‚à¤•à¤²à¥à¤ª à¤²à¥‡à¤‚ / Begin this sankalp"** (or "à¤«à¤¿à¤° à¤¸à¥‡ à¤¸à¤‚à¤•à¤²à¥à¤ª à¤²à¥‡à¤‚ / Begin again" if completed) â†’ `enroll()` then navigates straight to Today's Practice. While active: a "à¤¦à¥ˆà¤¨à¤¿à¤• à¤¸à¥à¤®à¤°à¤£ / Daily reminder" toggle row, "à¤†à¤œ à¤•à¥€ à¤¸à¤¾à¤§à¤¨à¤¾ / Today's practice", and a ghost **"à¤¸à¤‚à¤•à¤²à¥à¤ª à¤¸à¥à¤¥à¤—à¤¿à¤¤ à¤•à¤°à¥‡à¤‚ / Set this sankalp aside"** (`abandon()` â†’ back). Footer note (the `meaning` face at 12/18): the grace rule ("miss a day and the sankalp pauses, it never breaks") â€” the footer is the rule's **only** home; program intros must not restate it (pinned in `progress.test.ts`; the hanuman-41 intro once duplicated it on-screen). All type is token-sourced; status/reminder lines use `scriptBodyFont` + `cardMeta` (never Cormorant on Devanagari).
-
-### Component: SankalpTodayCard (`SankalpTodayCard.tsx`)
-
-One enrolled sankalp's card on the Today's Practice ledger (Â§31) â€” flat `parchment-soft` + `elevation.card`, `saffron` border, matching the ledger aesthetic (not the catalog's gradient). The card is a **tap-to-expand accordion**: its header is always visible and its unit rows **collapse by default, dropping down only when the header is tapped** â€” so a sankalp with several units stays a compact ledger row until opened, and a card can grow (more content added later) without dominating the screen.
-
-**Header (always visible, tappable when there are units to reveal):** Eyebrow (`sectionLabel` via `pillTextStyle`, `saffron-deep`): `Sankalp Â· n / N` in every non-terminal state (or `à¤ªà¥‚à¤°à¥à¤£à¤¾à¤¹à¥à¤¤à¤¿ / Sankalp complete`). **`n` is `completedDayCount(enrollment)` â€” days actually offered, not `status.dayIndex`** â€” so completing today's day ticks it `0/N â†’ 1/N` and it agrees with the List/Detail status pills (which already read `completedDayCount`). Using `dayIndex` (the day you are *on* = done + 1) would show `1/N` on a fresh day 1 before anything is done and stay `1/N` after completing it â€” the counter would never move on completion. Then the program title (`cardHindi + 3`). On the title's right, a **dropdown caret** (a `â€º` rotated to point **down** when collapsed and **up** when open) appears whenever there is something to expand; the header carries `accessibilityRole="button"` + `accessibilityState.expanded` (absent on `done-today`/`completed`, which have no units to drop down, leaving the header a plain block). **Below the title, a multi-day progress bar** â€” the same gradient track as the Â§31 routine summary card (7 px, `radii.pill`, `parchment-deep` track, `goldâ†’saffron` fill spanning `completedDayCount / totalDays`, `accessibilityRole="progressbar"`) â€” so an enrolled sankalp reads as an in-progress commitment at a glance, not only today's unit. It shows in every non-terminal state (`active` / `done-today` / `waiting`) and is **hidden once `completed`**, where the à¤ªà¥‚à¤°à¥à¤£à¤¾à¤¹à¥à¤¤à¤¿ seal is the terminal marker and a full bar would be redundant. All state prose (waiting / done-today / completed lines) sits at **caption scale (14/21)**, not the reading-body token â€” at 20/34 the card read as a prose block (July 2026 review: "too verbose").
-
-**Units dropdown (hidden until the header is tapped).** The dropped-down rows **match the Â§31 daily-routine ledger row exactly** â€” 28 px offering ring (filled `saffron` âœ“ when done, `marginTop: -2` to optically centre on the 24-line title), title `cardHindi` at **16/24**, a `cardMeta` sub-line, `â€º` at **18/24**, `flex-start` alignment (ring/chevron pin to the title's first line), gap 14, 14 px vertical padding, and **bottom** hairline dividers (last row borderless) â€” so a sankalp's practice reads identically to the everyday routine once opened. A top hairline (`itemsSheet`) sets the dropdown off from the header. Per-state row behaviour:
-
-- **active** â€” each unit row is committable: the offering ring's a11y label **names its item** (`Mark offered â€” â€¹titleEnâ€º`) so it never collides with Â§31's generic routine circles; tapping it commits the day. Auto-commit still fires once every unit is genuinely done today (`isItemAutoComplete`), independent of whether the card is expanded (the root `SadhanaCompletionOverlay` owns commit). Completing the vow plays the Â§31 `PracticeSeal` (à¤ªà¥‚à¤°à¥à¤£à¤¾à¤¹à¥à¤¤à¤¿) once.
-- **done-today** â€” a calm "Today's reading is done. Come back tomorrow" line; no units, so no dropdown.
-- **waiting** (calendar-gated: weekday off-day / festival window not open) â€” the resting copy ("Your sankalp begins 11 Oct." / "Resting today â€” â€¦") **plus the next selected unit as a tap-to-read preview** inside the dropdown, so an upcoming sankalp never opens onto an empty dead end (the day is not committable until the gate opens). The preview row carries **no offering check circle** â€” that affordance belongs to `active` alone; a rest-day read cannot advance the vow, so the row reads as a preview ("à¤à¤²à¤• Â· à¤ªà¤¢à¤¼à¤¨à¥‡ à¤•à¥‡ à¤²à¤¿à¤ à¤Ÿà¥ˆà¤ª à¤•à¤°à¥‡à¤‚ / Preview Â· Tap to read"), never a to-do whose empty circle would falsely promise the `n / N` counter will move.
-- **completed** â€” the seal + a "Your N-day sankalp is complete ğŸ™" line; no units, so no dropdown.
-
-### Data & resolver (`mobile/src/data/sadhana/`)
-
-`types.ts` â€” `SadhanaProgram { id, titleHi/En, thumb, subtitleHi/En, deity?, introHi/En, cadence, day? | days? }` (uniform `day` vs per-day `days`); `SadhanaCadence` = `consecutive` | `weekday` | `festival-window`; `SadhanaEnrollment { programId, startedOn, status: 'active'|'completed'|'abandoned', completedDays, completedOn? }`. `progress.ts` `resolveSadhanaToday()` returns the `active | done-today | waiting | completed` view-status (grace-by-default: a day is "spent" only when completed; the `waiting` status carries `items` for the preview). `useSadhanaToday.ts` composes enrollment + program + panchang schedule + reading/japa progress into the per-card view-model, then orders the ledger via the pure `orderSadhanaCards` (in `progress.ts`): **the daily practice leads** â€” practicable-today `active` cards first, `consecutive` (daily) cadence ahead of a calendar-gated day that only happens to be eligible today â€” then `done-today`, then resting/upcoming `waiting` sankalps **by nearest date first** (`whenKey`; undated last), and `completed` sankalps last. Ties keep enrollment order (stable sort). Backing tests: `progress.test.ts` (resolver + catalog well-formedness incl. thumb + `orderSadhanaCards` ledger order), `SankalpTodayCard.test.tsx` (waiting-preview + the days-completed eyebrow + the multi-day progress bar), `SadhanaCompletion.integration.test.tsx` (mounts the real `SadhanaCompletionOverlay` over the real providers and asserts a day auto-commits when reading reaches the unit's last verse-page â€” consecutive **and** weekday-on-eligible-day â€” with a negative partway case; guards the "routine completes but sankalp doesn't" class of bug). e2e: `.maestro/sadhana-sankalp-smoke.yaml` (consecutive) + `sadhana-calendar-preview-smoke.yaml` (calendar-gated preview).
-
-**Files:** `mobile/src/screens/SadhanaProgramListScreen.tsx`, `SadhanaProgramDetailScreen.tsx`; `mobile/src/components/SankalpTodayCard.tsx`; `mobile/src/contexts/SadhanaContext.tsx`; `mobile/src/data/sadhana/{types,programs,progress,useSadhanaToday}.ts`. PRD: `docs/roadmap/prds/11-sadhana-programs.md`.
-
----
-
-## 47. Feature Tour & What's New
-
-**Purpose.** Three onboarding surfaces that answer "what's in this app?" without a manual. The **first-launch feature tour** (`FeatureTour.tsx`) is an in-context, ~24-step guided walkthrough that navigates the user through the real app, **rings the element each step describes**, and anchors a compact tooltip to it. The **first-run setup sheet** (`OnboardingSetupSheet.tsx`) opens the moment the tour closes and asks the fresh installer to pick a **reading language** and a **reading size** â€” the two settings the walkthrough's last steps point at. The **What's New sheet** (`WhatsNewModal.tsx`) fires once after an update and lists only that release's new features. All three are gated by `TourContext.tsx` and mounted in `App.tsx` inside the provider stack; the tour renders as a **top-level in-tree overlay** (last child of the root view, above the navigator, mini-player and tab bar), the setup sheet is a transparent `Modal` beside it, and What's New stays a `Modal` inside `NavigationContainer`. Complements Â§44 (NEW badge / OTA prompt) â€” those mark *content*; this orients the *app*.
-
-**First-run sequence:** tour (â‰ˆ24 steps, non-interactive) â†’ setup sheet (language + size, interactive) â†’ app. A returning user gets neither: What's New instead.
-
-### First-launch tour (`mobile/src/components/FeatureTour.tsx`)
-
-**In-context, not a slideshow.** An **in-tree** translucent overlay (absolute-fill `View`, not a native `Modal`) sits above the whole app over a `rgba(15,10,5,0.55)` ink scrim â€” the real screen reads through behind it. It is deliberately *not* a `Modal` for two reasons: (1) it draws a highlight ring **over** the live UI, and (2) it stays in the accessibility tree so e2e/Maestro can drive it â€” a `Modal` presents in a separate window that `config.yaml`'s `snapshotKeyHonorModalViews:false` reads *through*, making the tour invisible to the harness. A `Pressable` scrim swallows touches, so only the tour's own controls advance it â€” it stays linear. On every step change the tour dispatches `navigationRef.dispatch(CommonActions.navigate(...))` (deferred through `InteractionManager.runAfterInteractions`), so the user actually lands on the surface the copy describes.
-
-**Measured spotlight.** Each step names an on-screen element via `targetId`, registered with `useTourTarget(id, reveal?)` in the owning screen (`components/tour/tourTargets.ts` â€” a module-singleton ref registry). After navigating, the tour first calls the target's optional `reveal()` â€” a `scrollNodeIntoView(scrollRef, targetRef)` that scrolls a below-the-fold target (the Japa/Theerth tiles, the categories grid, the reminder "+ Add" row, the japam add-alarm button) on-screen â€” then measures the element (`measureInWindow`) and rings it with a `saffron` highlight (2px border + soft `saffron` glow, rect inflated ~6px). Measurement is **settle-aware**: the tour re-measures across frames and always keeps the latest rect, committing only once it holds still for `MEASURE_STABLE_FRAMES` past a `MEASURE_MIN_TRIES` warm-up (or hits the `MEASURE_MAX_TRIES` cap) â€” `measureSettled()` in `placement.ts`, pure + unit-tested. This stops a freshly-navigated screen (whose header/content shifts for several frames, and whose muhurat card mounts a few frames late) from ringing a stale, pre-layout spot. **After the frame loop settles, a low-frequency poll** (`REMEASURE_POLL_MS`) keeps re-revealing + re-measuring for as long as the step is shown: some screens hydrate their content **asynchronously** (e.g. Japam alarms load from AsyncStorage *after* the ~0.8s frame cap), and the empty-state layout looks "stable" to the frame loop â€” so the ring would otherwise freeze on the target's pre-hydration position (the "+ Add alarm" button ends up ringed over the alarm row that loaded in beneath it). The poll follows the target to its final spot no matter how late/slow the load is (device-agnostic â€” no fixed time window); a `sameRect` guard makes it a no-op (no re-render) once nothing moves, and it is torn down when the step changes. Steps with no stable element â€” the five bottom-tab overview steps, or a target that may be absent on first launch â€” omit `targetId` and ring the **destination tab** instead (computed from `TAB_ORDER` + default-tab-bar geometry). `placeTourCard` (`components/tour/placement.ts`, pure + unit-tested) sits the card in the band opposite the ring so it never covers it and points the arrow at it; if the element can't be measured it falls back to the step's declared `anchor`/`pointer`. This replaces the original anchor-only card, which covered ~half the screen and pointed at nothing specific. **The fit decision uses the card's real rendered height, not a fixed guess** â€” `FeatureTour` reports the card+arrow height via `onLayout` and feeds it back into `placeTourCard`, so a card that grows with the bilingual copy, the type scale, or a shorter device is never placed on a side too small to hold it (which previously let it cover the very element it rings). `CARD_HEIGHT_EST` only seeds the first frame before the measurement lands. When **neither** side can hold the whole card, the card pins flush to a safe-area edge with the arrow still leading back toward the target â€” top-pinned (arrow down) only when the whole card fits the safe viewport *and* there is more room above the target (clearing a low target), otherwise bottom-pinned (arrow up) so the card's Back/Next controls stay on-screen even for a card taller than the viewport (large type scale).
-
-**Card spec.** `parchment-soft` fill, `divider` border, `radii.lg`, 18 padding, **`elevation.overlay`** (Â§4 â€” the tier for floating above a scrim; was an inline off-palette `#0a0604` shadow until July 2026). Header (pinned to the top of the overlay, not the card): step counter `n / N` (left) + `Skip` (right), `cardLatin`, `parchment`, tracked-uppercase. The card holds a `readerTitle`-face Hindi title (20, `ink`, centred) over an italic `subtitle`-face English title (13, `ink-muted`); a `divider` hairline; then a bilingual body (`meaning` face â€” Hindi 14/24 `ink`, English 12/20 `ink-soft` at 0.85). Footer: a `dotRest`/`saffron` progress-dot row, then **Back** (secondary outline, `divider` border, disabled + 0.3 opacity on step 1) and **Next Â· à¤†à¤—à¥‡** / on the last step **Done Â· à¤ªà¥‚à¤°à¥à¤£** (primary solid `saffron`, `onPrimary`, `radii.md`). a11y labels are constant English â€” `Skip tour`, `Previous step`, `Next step`, `Done` â€” so e2e is language-independent.
-
-**Bilingual, always.** The tour renders Hindi (primary) **and** English (secondary) on every card and never branches on `lang`. It is a first-run welcome shown before any reading language is chosen (default `hi`), and the app's identity is Hindi-led-bilingual (Â§1); showing both is the welcome, not a localization bug (contrast the What's New sheet below, which *does* honour the reading language because it fires for returning users). Because it never picks hi-or-en by `lang`, it doesn't trip the gu/kn ternary hazard (wiki `concepts/languages`).
-
-**Steps (~24), in order** (`mobile/src/data/tour/steps.ts` â€” each: `id`, `navigateTo`, optional `targetId`, `anchor`/`pointer` fallback, bilingual title/body). The sequence is a guided walkthrough: **(1â€“5) the five bottom tabs** â€” Home, Daily Bhakti, Panchang, Bhajan, More â€” each a **tab-ring** (no element target); **(6â€“11) Home** â€” routine card (`routineCard`, the inline `RoutineBanner` under the Today strip), categories grid (`categoriesGrid`), Japa tile (`japaTile`) â†’ Japa inside / mantra list (`HomeTab/CategoryList{japam}`, `japamInside`), Theerth tile (`theerthTile`) â†’ Theerth inside / temple map (`HomeTab/TheerthMap`, `theerthInside`); **(12â€“13) Bhakti** â€” Daily Verse (`dailyVerse`), Share (`shareButton`); **(14â€“18) Panchang** â€” Daily Muhurat / Choghadiya card (`muhuratCard`), the Vrat & Parv segment (`panchangSegment`), the vrat list (`PanchangTab/ObservanceList{vrat}`, `vratList`), the â˜… follow affordance (`vratFollow`), My Vrat & reminders (`PanchangTab/MyVrat`, `myVrat`); **(19) Bhajan** â€” the library (`AudioTab`, `bhajanInside`); **(20â€“24) More** â€” Daily Reminder toggle (`MoreTab/Reminders`, `reminderToggle`), reminder times (`reminderTimes`), Japam Alarm add button (`MoreTab/JapamAlarms`, `japamAdd`), then the two rows the setup sheet asks for next: **Language** (`MoreTab/MoreHome`, `languageRow`) and **Reading Size** (`readingSizeRow`) â€” so the user has seen where both live *before* being asked to choose, and knows where to change them later. Both wrap their `SettingsRow` in a measurable `View` in `MoreScreen` and declare a `scrollNodeIntoView` reveal (the App group sits below the fold on smaller devices). Because the overlay is non-interactive, the vrat drill (16â€“18) auto-navigates and *describes* the â˜…-follow / ğŸ””-reminder affordances rather than expecting a tap. A compile-time check pins every `navigateTo.name` to a real `TabParamList` tab; `TAB_ORDER` maps each to its bar index for the tab-ring fallback. `TourNavTarget` allows a nested `{ screen, params }` for `HomeTab`, `MoreTab`, and `PanchangTab` (the last widened to reach `ObservanceList`/`MyVrat`). Element targets register via `useTourTarget(id, reveal?)` in `HomeScreen`, `CategoryListScreen`, `TheerthMapScreen`, `DailyBhaktiScreen`, `PanchangScreen`, `ObservanceListScreen`, `MyVratScreen`, `AudioLibraryScreen`, and `ReminderSettingsScreen`/`JapamAlarmsScreen`.
-
-### First-run setup sheet (`mobile/src/components/OnboardingSetupSheet.tsx`)
-
-**Purpose.** The walkthrough *shows* where language and reading size live; this sheet is where the first-run user actually **sets** them. Before it existed, a fresh install silently defaulted to Hindi at Standard size and a Gujarati/Kannada/English reader had to go find the More hub to fix it.
-
-**Structure.** A bottom-sheet transparent `Modal` (slide up, `modalBackdrop`, grabber, `parchmentHighlight`, `radii` 22 top corners, `elevation.overlay`, `maxHeight: 88%` with the body in a `ScrollView` so large type scales still reach the button):
-
-1. **Eyebrow** â€” `à¤¸à¥à¤µà¤¾à¤—à¤¤ à¤¹à¥ˆ Â· Welcome` (`readerTitle`, 13, `saffron-deep`, centred).
-2. **Title** â€” `à¤­à¤¾à¤·à¤¾ à¤šà¥à¤¨à¥‡à¤‚` (`readerTitle` 24, `ink`) over italic `Choose your reading language` (`subtitle` 14, `ink-muted`), then a two-line note â€” "à¤¬à¤¾à¤¦ à¤®à¥‡à¤‚ à¤•à¤­à¥€ à¤­à¥€ 'à¤…à¤§à¤¿à¤•' à¤¸à¥‡ à¤¬à¤¦à¤² à¤¸à¤•à¤¤à¥‡ à¤¹à¥ˆà¤‚à¥¤ / You can change this any time from More." (`meaning` 12, `ink-soft`).
-3. **Language list** (`radiogroup`, `parchment-soft` card, `divider` border, `radii.lg`) â€” one `radio` row per entry in `LANGUAGES`: the language's own name in its **own script face** (`fontFamilies.latin` / `gujaratiBold` / `kannadaBold` / `readerTitle`, 19), its English name (`inter` 12, `ink-muted`) as secondary, and a `saffron` âœ“ when selected (selected row: `saffron-tint` fill, `saffron-deep` label). Tapping applies immediately via `setLang` â€” the same shared state as every Language Toggle (Â§37), so nothing is staged or "saved" later.
-4. **Reading size** â€” `à¤ªà¤¾à¤  à¤•à¤¾ à¤†à¤•à¤¾à¤°` / italic `Reading size` headings, then the Â§43 two-preset pill row (`radiogroup`; `à¤®à¤¾à¤¨à¤• Â· Standard` / `à¤¬à¤¡à¤¼à¤¾ Â· Large`, selected = `saffron` border + `saffron-tint` + âœ“). Applies live via `setScale`; picking one does **not** dismiss the sheet.
-5. **Live preview** â€” `READING_SIZE_SAMPLE[lang]` (exported from `ReadingSizePickerSheet`, so both sheets preview the same words) rendered with the reader's own `verseToken(lang)`, so it re-scripts and re-sizes on every tap.
-6. **Begin** â€” solid `saffron`, `onPrimary`, `à¤†à¤°à¤‚à¤­ à¤•à¤°à¥‡à¤‚ Â· Begin`; calls `markOnboardingSetupCompleted()`. **The backdrop is deliberately not dismissable** â€” a stray tap must not skip the language choice; `Begin` (accepting the defaults) is the only exit.
-
-**Bilingual, always** â€” like the tour, it runs *before* a reading language exists, so every chrome string is Hindi over English and nothing branches on `lang` (the language options need no translation: each is written in its own script). a11y labels are constant English â€” `Hindi` / `English` / `Gujarati` / `Kannada` (matching the Â§37 picker, so `language-smoke` selectors are shared), `Standard reading size` / `Large reading size` (qualified, because `snapshotKeyHonorModalViews:false` lets Maestro read the More rows *behind* the sheet, whose size state text is the bare word), and `Begin`. Self-mounts on `useTour().shouldShowOnboardingSetup` behind the same rising-edge ref guard as the tour.
-
-### What's New sheet (`mobile/src/components/WhatsNewModal.tsx`)
-
-`pageSheet` Modal, `parchment` fill. Header: title (`pick`-localized "What's New / à¤¨à¤ˆ à¤¸à¥à¤µà¤¿à¤§à¤¾à¤à¤ / â€¦", `titleFontByLang`, 20, `ink`) over a `vX.Y.Z` version line (`cardLatin` italic, tracked-uppercase, `ink-muted`); a `saffron` âœ• close. Body: a scroll of items, each a `saffron` bullet dot + title (17) + body (14/24, `ink-soft`). Footer: a solid-`saffron` "Got it" (localized). **Language-correct for all four:** text routes through `contentByLang(lang, hi, en)` (gu/kn re-script the Hindi) and fonts through `titleFontByLang` / `meaningToken` so gu/kn never render as tofu in a Devanagari face â€” this sheet fires for returning users who already have a reading language set, so it must not use a bare hi/en ternary (wiki `concepts/languages` Gotchas).
-
-### Gating & persistence (`mobile/src/contexts/TourContext.tsx`)
-
-Three AsyncStorage keys hold the last-seen **version string**: `@vedansh/tour-completed-v`, `@vedansh/whats-new-seen-v`, and `@vedansh/onboarding-setup-v`. A further signal â€” whether any deliberate-action key from a prior session exists (`UPGRADER_SIGNAL_KEYS`, re-exported from `NewContentContext`, Â§44) â€” separates a genuine fresh install from a returning user on the debut release (both lack the tour keys). This realises "**install â†’ full tour, update â†’ new-features-only**".
-
-- **Fresh install** (no prior-usage keys, tour key absent) â†’ `shouldShowFirstLaunchTour`. Completing or skipping (`markTourCompleted`) writes **both** keys to `APP_TOUR_VERSION`, so a brand-new user is never then double-prompted with the What's New sheet.
-- **Update launch** (returning user â€” a prior-usage key exists) â†’ the tour is suppressed and `shouldShowWhatsNew` fires instead: a `whatsNew` entry exists for `APP_TOUR_VERSION` **and** the what's-new key â‰  `APP_TOUR_VERSION`. `markWhatsNewSeen` advances only the what's-new key (never retroactively completes the tour). This is what makes the debut version's own release notes reachable â€” without the install/upgrade split they never would be (a tour-completer has already "seen" this version).
-- **Setup sheet** â†’ `shouldShowOnboardingSetup` fires when the setup key is absent, the tour's own gate has **closed**, and the session is a fresh install or a replay. So it is suppressed while the tour is up, opens the instant the tour is completed *or skipped* (the language choice matters either way), and never appears for a returning user â€” they already have a language. `markTourCompleted` deliberately does **not** write the setup key; `markOnboardingSetupCompleted` writes it alone.
-- **Replay** â†’ `resetTour()` sets an in-memory replay flag **and** clears all three keys, forcing the first-launch tour regardless of install-vs-upgrade classification or a prior completion (More â†’ "Show App Tour", Â§37) â€” and the setup sheet after it, so replay reproduces the real first-run sequence. The setup sheet's arming flag is **separate** from the tour's `replayRequested` (which `markTourCompleted` clears at exactly the moment the sheet is due to open); only `markOnboardingSetupCompleted` clears it.
-- `markTourCompleted`/`markWhatsNewSeen`/`resetTour` flip in-memory state **before** the awaited AsyncStorage write (mirroring `NotificationPreferences.persistMeta`), so a self-mounting surface that hides on dismissal can't read a stale "should show" and bounce back open. The surfaces additionally edge-guard auto-open with a ref (open once per episode, keyed on the gate â€” never on local `visible`).
-- Storage-read failure defaults to a fresh install (still orients the user); a `getAllKeys` failure defaults to "returning user" (show the lighter What's New, not the full tour, to someone who may already know the app). Write failures still flip in-memory state so the surface doesn't loop within a session.
-
-**Content lives in `mobile/src/data/tour/whatsNew.ts`:** `APP_TOUR_VERSION` (must equal `app.json` `expo.version`), a per-version `whatsNew` map of bilingual `items`, and `getWhatsNewForVersion()` (returns null for unknown or empty entries â†’ sheet suppressed).
-
-**Files:** `mobile/src/components/FeatureTour.tsx`, `OnboardingSetupSheet.tsx`, `WhatsNewModal.tsx`; `mobile/src/components/tour/{tourTargets,placement}.ts` (spotlight registry + `reveal`/`scrollNodeIntoView` + pure card placement + `measureSettled`); `mobile/src/contexts/TourContext.tsx`; `mobile/src/data/tour/{steps,whatsNew}.ts`; the spotlight refs live in `HomeScreen`, `CategoryListScreen`, `TheerthMapScreen`, `DailyBhaktiScreen`, `PanchangScreen`, `ObservanceListScreen`, `MyVratScreen`, `AudioLibraryScreen`, `ReminderSettingsScreen`, `JapamAlarmsScreen`, `MoreScreen` (and `RoutineBanner` forwards a `bannerRef`); wired in `mobile/App.tsx` (top-level overlay + setup sheet), replay row in `MoreScreen.tsx` (Â§37). Tests: `src/contexts/__tests__/TourContext.test.tsx`, `src/components/__tests__/FeatureTour.test.tsx`, `src/components/__tests__/OnboardingSetupSheet.test.tsx`, `src/components/__tests__/tourPlacement.test.ts`, `src/data/__tests__/tourContent.jest.test.ts`; e2e `.maestro/feature-tour-e2e.yaml` (+ `_launch.yaml` dismisses the auto-tour **and** the setup sheet for every other flow).
-
----
-
-## 48. Home Today Strip (à¤†à¤œ à¤•à¤¾ à¤ªà¤‚à¤šà¤¾à¤‚à¤—)
-
-**Purpose.** Make Home answer *"what matters today"*, not only *"what can I read"*. One glance-card between the wordmark hero and the CATEGORIES grid (Â§18) surfaces the day's panchang state; the full detail stays on the Panchang tab. This closed the daily-freshness gap identified in the July 2026 competitive review â€” the previous Home rendered identically on every visit.
-
-**Structure (`TodayStrip.tsx`):**
-
-1. **Eyebrow row** â€” `à¤†à¤œ à¤•à¤¾ à¤ªà¤‚à¤šà¤¾à¤‚à¤—` / `Today's Panchang` via **`eyebrowTextStyle()`** (`utils/langType.ts`, 12, `saffron-deep`; italic Cormorant + tracking for en, script-bold serif with no tracking for hi/gu/kn â€” Cormorant has no Indic glyphs and Latin tracking splits the shirorekha, Â§3; the Muhurat glance card shares the same helper) with a `saffron-deep` `â€º` affordance right-aligned (`saffron` fails the 4.5:1 floor on the gradient).
-2. **Headline** â€” hi/gu/kn `{vara} Â· {paksha} {tithi}` (e.g. `à¤¶à¤¨à¤¿à¤µà¤¾à¤° Â· à¤¶à¥à¤•à¥à¤² à¤à¤•à¤¾à¤¦à¤¶à¥€`); en `{vara} Â· {tithi} ({paksha})` (e.g. `Saturday Â· Ekadashi (Shukla)`), one line: script-bold serif for hi/gu/kn (`scriptTitleFont`), `latinBold 17` (+0.3 tracking) for en; `ink`. Paksha display names come from `PAKSHA_NAMES_HI/EN` (`panchang/names.ts`). Shows `â€”` while the day is unresolved â€” but on a returning launch it should never be seen: the launch prefetch (Â§61) warms the day from disk at process start, so the seeded `useMuhurat` composes on the strip's first render and the headline paints with the rest of Home. The `â€”` is the genuine cold state (fresh install, city just changed, day not yet on disk), not a routine startup frame.
-3. **Chip row** â€” **one fixed-height horizontal-scroll row** (`ScrollView horizontal`, no indicator, gap 6; full-bleed via âˆ’14 margin / +14 content padding so a clipped chip peeks at the card edge and signals the scroll). The July 2026 shipped version let the chips *wrap*, which on narrow devices stacked up to four pills into a tall block; the row now never wraps â€” overflow scrolls sideways instead, so the card height is the same on every device. Drags scroll; plain taps still bubble to the card `Pressable` (a ScrollView only claims the responder on move). **Overflow drifts ONCE, on a timer, after the launch has settled** (~24px/s, ~1.8s pause at each end; `AUTO_SCROLL_*` in `TodayStrip.tsx`): when the content is wider than the row, the row crawls to the end and back a single time so hidden chips surface without a drag, and then rests. It is **not** an `Animated.loop` â€” that is the whole history of this affordance, and the reason it is now a plain `setTimeout` stepping a number. The drift cannot use the native driver (it drives `scrollTo`), so as an `Animated` animation it cost a `requestAnimationFrame` tick **and** a `scrollTo` bridge call every frame, endlessly, on the one screen every launch lands on. Its first casualty was `isInteraction` â€” which defaults to `!useNativeDriver`, so every drift and pause claimed an `InteractionManager` handle and Home almost never reported an idle UI, starving the day's observance chips, the pitru match, the muhurat/festive schedulers, the widget writer and the strip's own midnight rollover (Â§61). Declaring `isInteraction: false` (Aug 2026) unblocked all of that â€” and by letting the observance chips finally arrive it *created* the overflow that starts the drift, so Home traded "never idle" for one endless JS-thread animation racing every deferred solve on the launch path, with taps landing late behind it. A decorative reveal cannot hold the JS thread at 60Hz, and no flag was going to fix that. Current shape: a self-scheduling `setTimeout` at **`AUTO_SCROLL_TICK_MS` 50** (â‰ˆ1.2px a tick â€” imperceptible stepping at this speed, a third of the wake-ups), which ticks **only while actually drifting** (an end pause is one idle timer, not 108 no-op frames), pushes `scrollTo` **only when the rounded pixel changes**, waits **`AUTO_SCROLL_SETTLE_MS` 1200 after the last content change** so the launch's own churn keeps pushing it clear rather than racing it, and **stops for good after one out-and-back** â€” Home then goes fully idle. Lifecycle contract: the first user drag stops it **for good**; it **pauses while the Home tab is unfocused** (`useIsFocused` â€” bottom-tab screens stay mounted, so an ungated pass would burn JS-thread frames from other tabs); it never runs under reduce-motion (**`useReducedMotion`** â€” the shared subscribed hook, Â§11, so a mid-session preference flip stops/allows it live); it only starts once the row has a measured width and >8px of real overflow; and a **genuine content-width change** (the deferred chips landing, a language switch, the midnight rollover) is the one thing that re-arms exactly one fresh pass â€” re-serving the settle delay with it, so several changes in a row collapse into one drift after the last of them. Every timer it owns lives in the same ref and is cleared by `stopAutoScroll`, so nothing can tick after unmount. Pinned by `TodayStrip.test.tsx` â†’ "chip-row auto-drift" (silent through the settle window; reaches the far offset and returns to 0; then silent for a further 60s). One normalized chip list so the pill spec exists once: up to **2 observance chips** for today (`saffronTint` fill, `saffron-deep` text), then an **Abhijit chip** (`goldChipBg` fill, `saffron-deep`) and a **Rahu Kaal chip** (`avoidChipBg` fill, **`avoidDeep`** text â€” the tint composites darker than the card, so raw `avoid` drops under AA there; terracotta, never red, PRD-14). The kaal chip's label comes from the `KaalWindow`'s own `nameHi/nameEn` (KAAL_NAMES, `muhurat.ts`) â€” no duplicated literals. Chip names render via `pillTextStyle()` (Inter for en; script serif, no tracking, for Indic); the **time ranges render in `latinSemiBold` 11** â€” never the thin italic (Â§3) â€” and use **`formatRangeCompact()`** (`muhuratFormat.ts`): the shared meridiem written once (`3:37 â€“ 5:13 PM`), full form when the window crosses noon/midnight.
-
-**Surface.** `cardActiveFrom â†’ cardActiveTo` gradient, 1px `cardActiveBorder`, `radii.lg`, **`elevation.raised`** (theme token). Opaque `cardActiveFrom` base, no `overflow: 'hidden'` (it would clip the iOS shadow) â€” the gradient carries its own radius. The Â§19/Â§32 card family.
-
-**Behaviour.**
-
-- Whole card is one `Pressable` â†’ parent-tab navigate to `PanchangTab` (same bubble-up pattern as `RoutineBanner`). It opens on the **first** tap: the card is wired to the shared Home first-tap controller (`onPressIn`/`onPressOut`/`onPress` â†’ `TilePressContext`, Â§18), and the chip row's `onScrollBeginDrag` marks a horizontal chip swipe as a scroll so it never opens the tab.
-- Data comes from **one solve**: `useMuhurat(today, calendarSystem, { live: false })` supplies both the muhurat windows **and** the day's `PanchangData` (cached, off the render path); observances ride the lighter `useObservancesForDate` (split out of `usePanchangForSelection` so the strip never pays for the upcoming-window resolution it doesn't render). `live: false` skips the per-minute tick â€” the strip shows only static day windows; the date instead rolls over via **`useTodayKey()`** (`utils/useTodayKey.ts`): a timer just past local midnight plus an AppState foreground re-check, so an overnight-backgrounded app never shows yesterday's panchang. A mid-session observance-store upgrade re-resolves the chips **without** clearing them first (no blink; `useObservancesForDate` resets only when the day/city/system changes). The calendar system itself is a **module-level store** (`usePanchangCalendarSystem`), so a purnimant/amanta change on the Panchang tab propagates to the mounted Home strip immediately.
-- The public **à¤ªà¤¿à¤¤à¥ƒ à¤ªà¤•à¥à¤· chip** takes the same three-rule cache path as every other panchang answer here (`usePitruSmaranSolves`, Â§63): seed synchronously from the in-memory window, hydrate from disk **immediately** (I/O, which also primes the engine's own window memo), and defer **only astronomy** behind `InteractionManager`. The split is exact: a known fortnight that today falls *outside* is a date comparison and answers for free (the ~350-day case), while anything inside it needs the day's two tithi reads and therefore waits like the fortnight scan does. It shipped as a bare `setTimeout(â€¦, 0)` around the raw engine call, which put the fortnight's cold solve â€” a Bhadrapada-Purnima scan plus a 20-day amavasya walk, ~250ms on Hermes and unyielded â€” on the launch path of Home, on *every* launch, because it never went through the persisted `pitruSmaranSolves` layer that exists to make it a once-per-install cost. A solve that does run is persisted (`persistSmaranSolves`) so no later launch repeats it. Pinned by `TodayStrip.test.tsx` â†’ "Pitru-Paksha chip".
-- Accessibility: single button, label `"Today's Panchang. {vara}, {tithi}. {observances}. Tap to open."`.
-
-**Files:** `mobile/src/components/TodayStrip.tsx`; consumed by `HomeScreen.tsx` (Â§18).
-
----
-
-## 49. Continue-Reading Card (à¤œà¤¾à¤°à¥€ à¤°à¤–à¥‡à¤‚) â€” RETIRED (July 2026)
-
-**What it was.** A single-row `parchmentSoft` card below the CATEGORIES grid (Â§18) that resumed the most recent reading position (thumb tile + `à¤œà¤¾à¤°à¥€ à¤°à¤–à¥‡à¤‚` eyebrow + title + `formatLocation()` position + `à¤ªà¤¢à¤¼à¥‡à¤‚ â€º` pill), walking progress entries newest-first and routing through `navigateToProgress()`.
-
-**Why it went.** Removed by product decision in the July 2026 Home-density pass â€” the card added a third always-on block between the grid and DISCOVER, and resume already lives where reading starts: the **`ResumeReadingSheet`** behind every category list (Â§21, e2e `resume-reading-smoke.yaml`).
-
-**What survives it.**
-
-- **`ReadingProgressContext` same-page guard** (restored to the pre-card behavior): a same-verse, same-day `setProgress` is a **hard no-op** â€” no persist, no `logRead`. A recency-refresh variant (bump `updatedAt` on re-open) shipped briefly alongside this card and was **reverted by review**: routine/sadhana completion and its `doneAt` timestamp are derived *live* from `getProgress()`'s max-`updatedAt` entry (`routine/units.ts`, `useSadhanaToday`), so bumping a sibling chapter's entry on a mere re-open flipped which entry was "latest" and un-completed items finished earlier that day. Cross-day same-page writes still persist + log (streak refresh). What DID stay from that work: `setProgress`/`clearProgress` are now **identity-stable** (a `progressRef` mirror, same pattern as `UserActivityContext`'s `activityRef`), so the 15+ reader persist-effects keyed on `setProgress` no longer re-run on every write from anywhere.
-- `navigateToProgress()` (`entryRoutes.ts`) â€” still the shared resume-routing path for the sheets and notification deep links; it returns `false` for unroutable entries. (`canResumeProgress()`, the card's render gate, was deleted with the card â€” it had no other callers.)
-
-**Deleted files:** `ContinueReadingCard.tsx` (+ test), `utils/latestProgress.ts` (+ test); the `HomeScreen` slot and the `home-today-smoke.yaml` continue-reading leg went with them. Re-introducing a Home resume surface should start from this section's history (`git log --follow -- mobile/src/components/ContinueReadingCard.tsx`).
-
----
-
-## 50. Intent-Driven Discovery (à¤‰à¤¦à¥à¤¦à¥‡à¤¶à¥à¤¯)
-
-**Purpose.** PRD-B makes the expanded library findable by user need, day, festival, and deity hub. The feature is metadata-first: it never creates an astrological prescription engine and never generates devotional associations. Curated tags live in `mobile/src/data/discoveryMeta.ts`, purpose labels in `purposes.ts`, and tests pin source lines plus valid ids.
-
-### Browse by Purpose
-
-Entry point: the Home launcher grid's **à¤‰à¤¦à¥à¤¦à¥‡à¤¶à¥à¤¯ Â· By Purpose** tile (Â§18), placed next to By Deity. `BrowseByPurposeScreen.tsx` uses the same top bar/back-button treatment as Category and Deity screens, on a random deity background plate. The body is a 3-column launcher grid of purpose tiles from `purposes.ts`; each tile uses the compact `CategoryCard` launcher with an icon from the existing category icon set, plus a small English caption so the prototype's hi/en intent tiles remain visible even in Hindi mode. Tapping a purpose pushes `PurposeList`.
-
-`PurposeListScreen.tsx` mirrors `CategoryListScreen`: title is ordered by `orderTitlesByLanguage()`, background is a faded hymn plate, rows are `LibraryCard`s from `textsForPurpose(purposeId)`, and all row navigation goes through `navigateToEntryStart()`. Existing resume behaviour is preserved with `ResumeReadingSheet`.
-
-Search is a secondary entry point: `searchIndex.ts` folds each tagged text's purpose display names and ids into the section fields, so queries like `protection` or `à¤¸à¥à¤°à¤•à¥à¤·à¤¾` find the associated texts.
-
-### Reader Metadata Panel
-
-`WhenToRecitePanel.tsx` renders the text-level ritual metadata from `discoveryMeta`: best days, festivals, best time, purpose chips, and optional Viniyog rows (rishi, chandas, devata). It uses the same parchment/card surface family as other reader metadata: `cardSurface`, `cardActiveBorder`, `radii.lg`, `sectionLabel`, `cardMeta`, and saffron-tint chips.
-
-Placement is **first verse page only**: `VersePage` exposes a `belowContent` slot, and each flat reader passes the panel only when `index === 0`. The panel appears below the verse meaning inside that page's vertical scroll. Swiping to verse 2 and beyond gives plain verse pages. This avoids repeating whole-text metadata on every verse and matches the approved PRD-B prototype update.
-
-### For Today
-
-`TodayRecommendationsRow.tsx` sits below `TodayStrip` and above the Routine banner on Home. It calls `getTodayRecommendationDetails(new Date(useTodayKey()))`. The row is a horizontal scroll of `FeatureCard compact` strips (196px, the Â§32 shell); tapping opens the existing reader target via `navigateToEntryStart` and opens on the **first** tap â€” each card and the row are wired to the shared Home first-tap controller (`TilePressContext`, Â§18). It is intentionally a small row, not a second panchang card.
-
-**Name-only strip (Aug 2026).** The row used to carry the full Â§32 spotlight card â€” 292px wide, ~130 tall, blurb and CTA pill and all â€” which made Home's today cluster (Panchang strip + FOR TODAY + routine banner) fill the first screenful before a single category tile showed. It now uses the Â§32 `compact` variant: icon, name, chevron, **56** tall. The `à¤ªà¤¢à¤¼à¥‡à¤‚`/*Read* pill is gone (it was never a button â€” the whole card is the press target) and so is the blurb line â€” **on an ordinary day that line said `à¤†à¤œ à¤•à¥‡ à¤²à¤¿à¤ à¤…à¤¨à¥à¤¶à¤‚à¤¸à¤¿à¤¤` / *Recommended for today* underneath a section heading already reading à¤†à¤œ à¤•à¥‡ à¤²à¤¿à¤ / FOR TODAY**, so it spent a third of the card restating its own eyebrow. The heading carries the "for today" framing for the whole row; the card only has to name the reading. The eyebrow's own spacing tightened with it (`marginTop` 16 â†’ 12, gap 8 â†’ 6) and the width dropped 292 â†’ 196, which together take the row's block from 170 to 90 â€” about one CATEGORIES row pulled above the fold, with more of the day's recommendations visible per scroll. The abujh card (Â§57) rides the same variant, so the row stays one visual family.
-
-**Touch band (Aug 2026 follow-up).** Flattening the card to ~56pt made the horizontal swipe flaky: a swipe would randomly open a card or stall instead of scrolling. Cause â€” the cards are `Pressable`s inside the row's horizontal `ScrollView`, and the first-tap recovery (Â§ "First-tap recovery") only suppresses the tap when the ScrollView fires `onScrollBeginDrag`. In a band that thin, an arced horizontal flick starts near the band edge and the horizontal scroll loses the first-pixel gesture negotiation to the Pressable / outer vertical page-scroll, so `onScrollBeginDrag` never fires and the tap-fallback wins. Fix: the strip's `contentContainerStyle` carries `paddingVertical: 10` (and `decelerationRate="fast"`, matching the DISCOVER carousel), which enlarges the *scrollable frame* and the arc tolerance â€” the touch target, not the visible card (still ~56pt) â€” so the horizontal scroll reliably wins. The eyebrow `gap` dropped to 0 to absorb the band's own top padding. The DISCOVER carousel now carries the same touch-band padding (Â§32) â€” its taller cards made the failure rarer, not impossible, since the negotiation race is the same.
-
-**Where the festival attribution went.** The dropped blurb was not inert: on a festival day it read `à¤†à¤œ <festival> à¤¹à¥ˆ` / *Today is `<festival>`*, honouring what the morning's festive reminder promised (Â§38). That attribution is **still computed and still handed to the card** â€” `getTodayRecommendationDetails` is unchanged, and `festiveReminders.test.ts` still fails if the row and the notification disagree â€” it simply is no longer *painted*. It reaches the user two other ways, both of which resolve the same festival off the same catalog: the card's **accessibility label** (`"{titleEn}. {descEn} Tap to open."`, so VoiceOver still says *Today is Diwali*), and the **festive toran** (Â§55), which hangs its garland and greeting directly above this row on every catalog festival. A festival outside the toran's catalog (tiers 2â€“3 of the ordering above) therefore names the occasion only in the accessibility label â€” accepted deliberately when the row was shortened; revisit by restoring the blurb on festival-attributed cards alone if that tier ever needs the visual cue.
-
-**Title width.** With the blurb gone the name is the whole card, so 196 is load-bearing: it leaves ~108pt for the title after the icon, gaps and chevron. A typical name clears it (à¤¹à¤¨à¥à¤®à¤¾à¤¨ à¤šà¤¾à¤²à¥€à¤¸à¤¾ â‰ˆ 80pt at 17); the longest shipped one (à¤µà¤¿à¤·à¥à¤£à¥ à¤¸à¤¹à¤¸à¥à¤°à¤¨à¤¾à¤® à¤…à¤‚à¤¶ â‰ˆ 105pt) sits at the edge and ellipsizes under a raised system font scale. Widen `cardWrap` in `TodayRecommendationsRow`, not `FeatureCard` â€” the strip sizes to whatever width the row hands it.
-
-**Decision trail.** Four treatments were prototyped side by side at a shared 390Ã—844 fold in `today-row-compact-preview.html` at the repo root: **A** the shipped 292Ã—130 spotlight card, **B** a 248Ã—68 strip keeping the blurb, **C** this 196Ã—56 name-only strip, **D** the à¤¨à¤¿à¤¤à¥à¤¯ à¤¸à¤¾à¤§à¤¨à¤¾ launcher tile taken literally (110Ã—97, caption below the box). D was rejected â€” its caption sits *outside* the 72pt tile so it saves the least, at 110pt wide it cannot hold a text title, and it reads as a second CATEGORIES grid a screen above the real one. C was chosen over B: it is 12pt shorter per card and shows appreciably more per viewport, and the blurb it costs is recoverable through the two surfaces above.
-
-**Festival first (Aug 2026).** The recommendation order is four tiers, and the festival ones come before the weekday one: **(1)** the curated festival â†’ reading mapping in `notifications/festiveReminders.ts`, **(2)** the observance rule's own `linkSectionId` (festivals outside that curated catalog), **(3)** texts whose `bestFestivals` metadata names one of today's observances, then **(4)** `deityForWeekday()`'s vaar deity, which is what an ordinary day is made of. An ordinary day is therefore unchanged; a festival day leads with the occasion. This is not cosmetic ordering: a festive reminder (Â§38) lands the user on **Home**, so the reading its message named has to be the first thing waiting â€” both surfaces read the same catalog, and `festiveReminders.test.ts` fails if they disagree. Entries returned with a festival attribution carry `à¤†à¤œ <festival> à¤¹à¥ˆ` / *Today is `<festival>`* in place of the generic `à¤†à¤œ à¤•à¥‡ à¤²à¤¿à¤ à¤…à¤¨à¥à¤¶à¤‚à¤¸à¤¿à¤¤` / *Recommended for today* line, so the card names the occasion the notification greeted the user with. Since the row went name-only, neither line is *painted* on the card any more â€” see "Where the festival attribution went" below for the two surfaces that still deliver it. `getTodayRecommendationsForDate()` remains as the entry-only view for callers that don't need the attribution. An observance lookup that throws degrades to the weekday tier rather than emptying the row.
-
-### Deity Detail
-
-`DeityIndexScreen` now opens `DeityDetailScreen`. The detail page keeps the existing deity background and top bar, then shows a source-cited essay from `deityEssays.ts` followed by that deity's texts grouped by content form (`categories.ts` order). Each group heading uses `sectionLabel`; entries remain `LibraryCard`s and route through `navigateToEntryStart()`. `DeityListScreen` remains a compatibility fallback for direct filtered-list navigation.
-
----
-
-## 51. Kundali + Daily Rashifal (PRD-C)
-
-**Discovery and landing state.** Kundali is a permanent `CategoryCard variant="launcher"` on Home (`à¤•à¥à¤‚à¤¡à¤²à¥€ Â· Kundali`, insight glyph, NEW badge), not a shuffled Discover card. It deep-links to `PanchangHome({ initialTab: 'jyotish' })`. Panchang's top peer selector is `Panchang | Vrat & Parv | Jyotish`; it remains the fixed first control in every mode, while location/calendar-system/My Vrat controls appear beneath it only for the two Panchang-derived modes. A guest sees Create Kundali, Daily Rashifal, and one Navagraha practice card. Once a birth profile is saved, the landing becomes daily-first: the person switcher (Â§51a) leads, then the full Favour/Pause/Reflect Rashifal card, a compact Kundali reference, and the same single practice card closing the page. Returning from creation must refresh this saved state immediately. Birth city remains independent of the current Panchang location. Since PRD-20, the saved landing's guidance rows are computed by `computePersonalGuidance` from the ACTIVE person's FULL chart: the Favour/Pause/Reflect bodies stay byte-identical to the Moon-sign Rashifal (the superset lock), extended with dual à¤šà¤¨à¥à¤¦à¥à¤°-à¤¸à¥‡/à¤²à¤—à¥à¤¨-à¤¸à¥‡ house context pills and a quiet gold `à¤¦à¤¶à¤¾ à¤¸à¤‚à¤•à¥‡à¤¤ Â· Dasha note` row that appears only when a focus transit belongs to a running Vimshottari lord. The eyebrow follows Â§51a's naming rule â€” `à¤†à¤ªà¤•à¥€ à¤ªà¥‚à¤°à¥€ à¤•à¥à¤‚à¤¡à¤²à¥€ à¤¸à¥‡ Â· From your full chart` with one person saved, `<name> à¤•à¥€ à¤ªà¥‚à¤°à¥€ à¤•à¥à¤‚à¤¡à¤²à¥€ à¤¸à¥‡ Â· From <name>'s full chart` once the roster holds more than one, because "your" would then be a guess. The compact Kundali card gains a `à¤ªà¥‚à¤°à¥à¤£ à¤•à¥à¤‚à¤¡à¤²à¥€ à¤µà¤¿à¤µà¥‡à¤šà¤¨ à¤–à¥‹à¤²à¥‡à¤‚` link (Â§68) and, only while a Sade Sati phase is active, a gold-tint teaser row into Gochar (Â§67); a `à¤—à¥‹à¤šà¤° Â· Gochar` tool card sits after the contractual trio, before Guna Milan/Namkaran. Guest and error landings carry none of these â€” every PRD-20 surface requires a saved chart.
-
-**Birth input and state.** One card asks for optional name, birth date, birth time, and a bundled Indian city. Date and time are entered through pickers, not free text: the date field-button opens `CalendarDatePicker` (a parchment month-grid bottom sheet with a month/year overlay for jumping across decades, range `1900-01-01`â€¦today-IST) and the time field-button reveals the inline reminder-style `ClockTimePicker` (12-hour AM/PM stepper). Both still emit the stored contract â€” `YYYY-MM-DD` and 24-hour `HH:mm` â€” so validation, ISTâ†’UTC conversion, and persistence are unchanged; the `kundali-date-input`/`kundali-time-input` testIDs move onto the field-buttons. Tapping the time field commits a 06:00 default so the shown value and stored value always agree, and an untouched time still validates as missing. No city or â€œDefault profileâ€ is silently supplied: the city field begins at â€œChoose an Indian cityâ€, and nearby copy plainly explains that current calculation support covers Indian birth places and their local IST time. Profiles persist on-device in the birth-profile roster under `@vedansh:kundali-profiles:v1` (**Â§51a** â€” several people, one active selection; the PRD-C single-profile key migrates into it once); Edit opens the manage form for the active person, where removal is deliberately secondary to Save/Cancel. Copy explains that correct birth time matters for Lagna/houses. Loading, guest, saved, persistence-error, and corrupt-profile recovery are explicit states; a failed save/delete must never masquerade as success. Opening/closing the city picker dismisses its keyboard, and a successful calculation returns the result to its top.
-
-**Novice-first result.** The default `Overview` tab precedes `Chart | Grahas | Dasha`. Its three cards are real buttons and route to their underlying detail tabs; each tab change resets the scroll position. Rashi names pair the traditional form with a plain-English equivalent (`Karka Â· Cancer`, never the same name twice). The Lagna card uses: â€œLagna is the sign rising at birth and sets the first house. In traditional Jyotish it is the starting lens for reading the rest of the chart.â€ The Moon card uses: â€œThe Moon sign is a traditional lens on inner rhythm, and the nakshatra refines its placement. A reflection aid, not a personality verdict.â€ A Navagraha practice card routes through the existing library/reader dispatcher. Never lead a novice with an unexplained chart.
-
-**North Indian chart.** `NorthIndianChart` is a fixed-house North Indian diamond rendered with `react-native-svg`: first house at top, seventh at bottom, small numeric rashi labels, two-letter graha abbreviations. Its enclosing accessible image label narrates all twelve houses and occupants; chart geometry is never the only representation because the Grahas table carries the same values textually.
-
-**Grahas and Dasha.** Graha rows show the traditional sign plus its plain-English equivalent, degree/minute, house, actual nakshatra/pada, and `â„` for retrograde. The Dasha view leads with the current Mahadasha/Antardasha; both nested periods are running at once, so the card gives **each window its own labelled row** â€” `à¤®à¤¹à¤¾à¤¦à¤¶à¤¾` dates, progress bar and elapsed/left, then `à¤…à¤¨à¥à¤¤à¤°à¥à¤¦à¤¶à¤¾` dates, progress bar and elapsed/left (a single unlabelled range and bar under a two-lord headline read as the Antardasha lasting the whole Mahadasha). The Antardasha row is absent only when engine float accumulation leaves now outside all nine sub-periods at a boundary. Durations drop to day granularity under one month so a just-begun Antardasha never reads `0 m`. An inline `Now` Antardasha chip row follows under the caption â€œà¤‡à¤¸ à¤®à¤¹à¤¾à¤¦à¤¶à¤¾ à¤•à¥€ à¤¨à¥Œ à¤…à¤¨à¥à¤¤à¤°à¥à¤¦à¤¶à¤¾à¤à¤ / The nine Antardashas within this Mahadashaâ€, and a connected vertical timeline under the â€œà¤®à¤¹à¤¾à¤¦à¤¶à¤¾ à¤¸à¤®à¤¯à¤°à¥‡à¤–à¤¾ / MAHADASHA TIMELINEâ€ eyebrow then shows all nine Mahadashas with dates. Both levels are legitimately `Now` at once (the running Antardasha chip and its enclosing Mahadasha row), so each level is explicitly named â€” two unlabelled `Now` tags on different lords read as a bug. Both views include a short explanation before raw data, and Dasha timing is included in the accessible summary.
-
-**Rashifal.** Daily Rashifal selects the ACTIVE person's Kundali Moon sign when available, otherwise lets the user choose any of twelve signs; with more than one person saved it also carries the Â§51a switcher, and choosing a person adopts that person's natal sign. The source card says whether it came from the Kundali, and Change exposes a 12-sign grid pairing every traditional name with its plain-English equivalent. Guidance is consistently `Favour`, `Pause`, and `Reflect`; the full Rashifal page adds the supporting graha/bhava chip to each row, followed by the one existing Surya/Shani/Navagraha reader selected by the pure transit rules. The disclaimer is part of the surface, not fine print: â€œtraditional transit-based guidanceâ€”not a certain prediction.â€ No luck score, guaranteed event, fear copy, random generation, AI call, or remote horoscope feed. **Personal layer (PRD-20):** when the active person has a chart AND the selected sign equals THAT person's natal Moon sign, the guidance head adds two quiet pills â€” `à¤¤à¤¾à¤°à¤¾ à¤¬à¤² Â· <name>` (tinted by its tone: gold favourable, saffron reflective, card-surface steady) and `à¤µà¥à¤¯à¤•à¥à¤¤à¤¿à¤—à¤¤ à¤ªà¤¾à¤  Â· Personal reading` â€” and the rows show the dual-house pills and dasha note; picking any other sign strips every personal extra. The share card and its no-birth-details privacy contract are unchanged in both cases.
-
-**Sharing.** Both result surfaces use the same 4:5, 1080Ã—1350 share-preview family and expose a single header Share action. Kundali sharing is opt-in and warns that chart name, birth date, time, and city are included. Rashifal sharing includes Moon-sign guidance and the suggested existing practice, but explicitly excludes name and birth details. There is no second or floating share button inside the Kundali tabs.
-
-**Share-card fit (August 2026).** The card's height is *pinned* â€” `aspectRatio` 4:5 on a width of `min(334, screenWidth - 2 Ã— spacing.xxl)`, with `overflow: 'hidden'` â€” while everything stacked inside it is type at fixed point sizes that does not scale with width. So the Kundali diagram takes **the height that is left** (`kundaliChartSize()`: content height minus a 196 dp chrome budget for the brand header, name lockup, chip row and two-line method footer, capped at the historic `min(208, width Ã— 0.61)`), never a flat fraction of the width. Sizing it by width alone overran the box on every card below ~334 dp â€” a 360 dp phone gets 312 â€” and the `marginTop: 'auto'` method footer was the piece pushed out and clipped. The footer's own leading follows Â§3.0 (10/14, script-aware face). Both invariants are pinned by `components/__tests__/jyotishShareCardFit.test.tsx` and the footer line is asserted in `kundali-smoke.yaml`. **Known gap:** the Rashifal card's chrome is *entirely* fixed-height (three `minHeight` guidance rows + practice + disclaimer â‰ˆ 375 dp), so it has no comparable slack on â‰¤ 360 dp phones; it fits at 334 and its disclaimer leading is fixed, but the row block wants the same treatment before that card is trusted on small screens.
-
-**Surface family.** Continue the existing warm manuscript palette only: parchment gradients, `cardActiveBorder`, saffron/gold tints, `radii.lg`, theme elevation, existing script-aware type helpers, and controls that respect the Â§12 minimum â€” back buttons at 44 (both KundaliScreen and RashifalScreen drifted to 40 and were corrected in July 2026), the name field via the `TextField` `form` variant at 48 (Â§52), and the date/time via the shared `CalendarDatePicker` + `ClockTimePicker` controls (Â§52a) â€” all field-buttons at a 48 minimum. Do not introduce one-off colours for guidance rows, practice, or share cards; all variants must come from theme tokens already used by the app. English accessibility labels include both traditional and plain-English sign names and remain stable for Maestro even when Hindi is the visible reading language.
-
-**Readability sizing (July 2026).** The Â§3.0 floor (10) is a *minimum*, not a target â€” Kundali and Rashifal carry unusually dense content (sign grids, graha tables, dasha timelines), so their read-tier text sits **above** the floor for comfort: the Rashi-picker grid uses traditional name **16** / plain-English **14** on taller (`minHeight 64`) tiles; its "choose your sign" **title** reads as a heading at **15** with a **14** description and a **13** disclaimer above; the guidance-row headers/body and their grahaÂ·bhava context chips, the Kundali overview eyebrow, and the result-screen labels (`lagnaLabel`/`lagnaTranslation`, grahas `tablePrimary` **14** / `tableTranslation` **12**, `eyebrowText`, `progressCaption`, `practiceLabel`) were raised to **12** (space-constrained dasha `antarChip`/`nowTag` to **11**). Micro-chrome shared with the Panchang tab (the `jyotishSectionLabel` kicker, tab-bar) stays at the floor.
-
-**Files.** `mobile/src/panchang/kundali.ts`, `useKundali.ts`, `birthProfiles.ts`, `birthProfileStore.ts` (Â§51a), `gochar.ts`, `dashaReading.ts` (PRD-20); `NorthIndianChart.tsx`, `KundaliOverview.tsx`, `JyotishGuidanceRows.tsx`, `JyotishPracticeCard.tsx`, `JyotishShareCard.tsx`, `JyotishShareSheet.tsx`, `JyotishStateCard.tsx`, `PersonChips.tsx` (Â§51a), `CalendarDatePicker.tsx`, `ClockTimePicker.tsx`, `StepperColumn.tsx` (Â§52a); `KundaliScreen.tsx`, `RashifalScreen.tsx`; `PanchangScreen.tsx`, `HomeScreen.tsx`, Panchang navigation types/stack; `.maestro/kundali-smoke.yaml`.
-
-**Dasha reading (PRD-20 Phase 4).** The Dasha tab inserts one `à¤‡à¤¸ à¤…à¤µà¤§à¤¿ à¤•à¤¾ à¤ªà¤¾à¤  Â· Reading this period` card between the current-period block and the `à¤®à¤¹à¤¾à¤¦à¤¶à¤¾ à¤¸à¤®à¤¯à¤°à¥‡à¤–à¤¾ / MAHADASHA TIMELINE` eyebrow that heads the full timeline: title (`<lord> à¤®à¤¹à¤¾à¤¦à¤¶à¤¾ Â· <lord> à¤…à¤¨à¥à¤¤à¤°à¥à¤¦à¤¶à¤¾`), the lord's authored classical signification (every one opens `à¤ªà¤°à¤®à¥à¤ªà¤°à¤¾ à¤®à¥‡à¤‚â€¦ / Tradition linksâ€¦`), the lord's natal rashi/house placement line, and a muted Antardasha overlay line. Copy comes from `dashaReading.ts`'s typed tables â€” structural only, pinned by a banned-vocabulary engine test â€” and the card carries one complete accessibility label.
-
----
-
-## 51a. Multi-person Jyotish â€” the birth-profile roster (August 2026)
-
-**Purpose.** One phone, several people. PRD-C stored exactly ONE birth profile, so
-a household could hold one person's Kundali at a time and a second person meant
-overwriting the first. The profile is now a **roster** â€” every saved person plus
-one **active** selection â€” and every personalised surface reads that selection:
-the Kundali result, the Jyotish landing's Daily Rashifal card and chart glance,
-the Rashifal screen, and the muhurat finder's à¤†à¤ªà¤•à¥‡ à¤²à¤¿à¤ Tarabala/Chandrabala strip.
-
-**One selection, one store.** `panchang/birthProfiles.ts` is the pure model
-(validate, parse, add/update/remove/select, `activePerson`) and
-`panchang/birthProfileStore.ts` is its AsyncStorage half with one in-memory
-snapshot, a subscriber list and a serialized write queue â€” the same
-pure-store/RN-cache split as `panchangDayStore` â‡„ `panchangDayCache`. **No screen
-may keep its own "current person":** switching anywhere is true everywhere on the
-same render, which is the whole point of the feature.
-
-**Storage.** `@vedansh:kundali-profiles:v1` = `{ activeId, people[] }`; a
-`PersonProfile.id` is a persisted key, never a display string. `MAX_PEOPLE` is
-**8** â€” a household ceiling, not a technical one: at the cap the `+ à¤œà¥‹à¤¡à¤¼à¥‡à¤‚` chip
-is replaced by a plain sentence instead of failing a save silently. The shipped
-single-profile key `@vedansh:kundali-birth-profile:v1` migrates **once** into
-person one and is then removed, because leaving it would keep a readable copy of
-birth details after that person is removed. An *unreadable* legacy record is never
-deleted and still lands in the shipped corrupt-profile recovery state.
-
-**The switcher (`PersonChips.tsx`).** A horizontal chip row, never a dropdown:
-who a chart belongs to is *visible state*, not a setting â€” on a shared phone the
-wrong active person is a wrong Rashifal, and a collapsed picker hides that. Chips
-are controls, so they carry the Â§12 44 pt floor, a `1.25` font-scale cap (dense
-chrome, Â§61's rule), `radii.pill`, `saffronTint`/`saffronDeep` for the selected
-one and `parchmentSoft`/`divider` otherwise; the trailing add chip is dashed. A
-person is labelled by their **name**, or by their birth date when unnamed â€” never
-an invented "Person 2" and never an id. Labels per surface: `à¤•à¤¿à¤¸à¤•à¥€ à¤•à¥à¤‚à¤¡à¤²à¥€ Â· Whose
-chart` (Kundali), `à¤•à¤¿à¤¸à¤•à¤¾ à¤œà¥à¤¯à¥‹à¤¤à¤¿à¤· Â· Whose Jyotish` (landing), `à¤•à¤¿à¤¸à¤•à¤¾ à¤°à¤¾à¤¶à¤¿à¤«à¤² Â· Whose
-Rashifal` (Rashifal). English accessibility labels stay stable in every reading
-language: `Show Kundali for <label>`, `Show Jyotish for <label>`, `Show Rashifal
-for <label>`, `Add another person`, and the row itself is `Person switcher`.
-
-**Placement.** The switcher sits ABOVE what it changes: on the Kundali screen it
-is the first thing under the top bar in every state (so adding a second person is
-one tap from the first person's own chart), and on the Jyotish landing it sits
-between the intro and the Rashifal card. It renders only when at least one person
-is saved â€” a guest still gets the untouched creation landing.
-
-**Adding is additive, never a rewrite.** `+ à¤œà¥‹à¤¡à¤¼à¥‡à¤‚` opens a BLANK form
-(`Kundali { newPerson: true }`, heading `à¤¨à¤ˆ à¤•à¥à¤‚à¤¡à¤²à¥€ à¤œà¥‹à¤¡à¤¼à¥‡à¤‚ Â· Add another Kundali`)
-with the saved people untouched and no chip selected; `à¤¬à¤¦à¤²à¥‡à¤‚ Â· Edit` still edits
-the active person. Removing one of several people lands on a **survivor's** chart,
-not the blank form; removing the last one returns the guest state and the switcher
-disappears with them.
-
-**Whose is it?** With more than one person saved, copy that used to say "your"
-names the person instead â€” `à¤šà¤¨à¥à¤¦à¥à¤° à¤°à¤¾à¤¶à¤¿ Â· <à¤¨à¤¾à¤®> à¤•à¥€ à¤•à¥à¤‚à¤¡à¤²à¥€ à¤¸à¥‡ Â· Moon sign Â· From
-<name>'s Kundali` on the landing and Rashifal, and the muhurat strip's label
-becomes `<à¤¨à¤¾à¤®> à¤•à¥‡ à¤²à¤¿à¤ Â· For <name>`. With a single saved person every one of those
-strings is unchanged, so the solo experience is exactly what shipped.
-
-**Unchanged by design.** Birth city is still not the Panchang location; Rashifal
-remains guidance, not prediction; the muhurat strip still only annotates (it never
-re-grades a day, and no name reaches a share card or a notification); Guna Milan's
-"use saved details" copies the active person, as it always copied the saved one;
-Namkaran still never reads a birth profile at all.
-
-**Files.** `mobile/src/panchang/birthProfiles.ts`, `birthProfileStore.ts`,
-`useKundali.ts`, `useMuhuratBala.ts`; `components/PersonChips.tsx`,
-`MuhuratBalaStrip.tsx`; `KundaliScreen.tsx`, `RashifalScreen.tsx`,
-`PanchangScreen.tsx`; `navigation/types.ts`. Tests:
-`panchang/__tests__/jest/birthProfiles.jest.test.ts`,
-`screens/__tests__/MultiProfileJyotish.test.tsx`,
-`screens/__tests__/MuhuratPersonalStrip.test.tsx`;
-`.maestro/multi-profile-jyotish-smoke.yaml`.
-
----
-
-## 52. Component: Text Field (`TextField.tsx`)
-
-**Purpose.** The spec for every **standalone** text input â€” a field that owns its own height,
-border, fill and face.
-
-A July 2026 audit found three specs for one control class â€” content-search fields at 44 in
-Cormorant 15, Kundali's form inputs at 48 in Inter 14, and Kundali's modal city search at 46 â€”
-i.e. three heights, two typefaces and two padding values for the same job. The rule is now
-typographic, matching how the system already splits its faces (Â§3):
-
-| Variant | Height | Face | Padding | Use |
-| --- | --- | --- | --- | --- |
-| `search` (default) | 44 | `fontFamilies.latin` (Cormorant) 15 | 14 | Searching **content** â€” kathas, observances, the vrat catalog. The query is set in the same reading face as the results it returns. |
-| `form` | 48 | `fontFamilies.inter` 14 | 13 | **Data entry** â€” birth date, birth time, name, and the city lookup inside that form. A value is data, not devotional text. Taller to sit comfortably in a stacked form. |
-
-**Shared spec.** Full width, 1 px `divider` border, `parchmentSoft` fill, `radii.md`, `ink`
-text, `inkMuted` placeholder. Both variants clear the Â§12 44 pt touch minimum. Callers pass
-content and per-field overrides only (e.g. an error-state `borderColor`), never geometry.
-
-**Not in scope: composite search bars.** The global Search top bar (Â§36) is a `searchPill`
-*container* that owns the 44 height, border and fill, with a `âŒ•` glyph, a bare `flex: 1`
-`TextInput`, and a `âœ•` clear button as siblings. `TextField` owns exactly the geometry that
-container owns, so wrapping it there would mean two competing boxes; it deliberately stays a
-composite. **Known divergence:** that inner input is Inter 15, where this section's `search`
-variant says Cormorant 15 for content search. Aligning the app's primary search field is a
-visible change to its most-used surface and is left as an explicit product decision rather
-than folded into the July 2026 token pass â€” it is the one place the rule above is not applied.
-
-**Files:** `mobile/src/components/TextField.tsx`. Consumers: `KathaLibraryScreen`,
-`ObservanceListScreen`, `PanchangScreen` (catalog search), `KundaliScreen` (name field + city
-picker).
-
----
-
-## 52a. Components: Date & Time pickers (`CalendarDatePicker.tsx`, `ClockTimePicker.tsx`, `StepperColumn.tsx`)
-
-**Purpose.** Birth date and birth time are picked, not typed. Two shared controls replace the
-free-text `YYYY-MM-DD` / `HH:mm` fields at every Jyotish touch point (Kundali; Guna Milan groom
-and bride). Both emit the same stored strings the text fields did â€” `YYYY-MM-DD` and 24-hour
-`HH:mm` â€” so validation, ISTâ†’UTC conversion, persistence, and every engine test are untouched;
-this is an input-control swap, not a data-model change.
-
-**`CalendarDatePicker`.** A parchment bottom-sheet `Modal` (same family as the Kundali city
-picker): a 7-column month grid with the selected day as a `saffronTint` pill and a Confirm/Cancel
-footer. The grid is **six rows of seven `flex: 1` cells** (`calendarWeeks()`), never one wrapping
-row of 42 percentage-width cells â€” see Â§41's calendar card for the float-rounding failure that
-shape produces (this picker lost its seventh column on 375 dp phones). The header month-year is a
-button that opens an overlay of month chips + a scrollable year list, so a birth date decades back is two taps (month, year) rather than dozens of month
-pages. Range is `1900-01-01`â€¦today (the **IST** civil day; range checks are lexicographic on the
-`YYYY-MM-DD` strings, so they are timezone-proof); out-of-range days are muted and non-selectable.
-Days carry English `"<d> <Month> <year>"` accessibility labels for stable Maestro/Jest targeting
-regardless of reading language. Emits `YYYY-MM-DD` on Confirm.
-
-**`ClockTimePicker`.** The reminder stepper (Â§ Japam/Reminders) in 12-hour form: HR and MIN
-columns plus an AM/PM toggle. HR/MIN step the underlying 24-hour minute-of-day (so the hour
-column crosses noon/midnight the way a clock does); AM/PM is derived from the current hour and the
-toggle shifts Â±12h. Emits zero-padded 24-hour `HH:mm`. In the screens it is revealed by a
-field-button that commits a `06:00` default on first open, so the shown value and stored value
-always agree while an untouched time still validates as missing.
-
-**`StepperColumn`.** The single-column up/value/down control with the press-once-on-release +
-hold-to-repeat chevrons, extracted verbatim from `TimeStepper` so the reminder stepper and
-`ClockTimePicker` share one implementation. `TimeStepper`'s public API and behaviour are
-unchanged (its test is the guard). Do not fork the chevron/hold logic.
-
-**Files:** `mobile/src/components/CalendarDatePicker.tsx`, `ClockTimePicker.tsx`,
-`StepperColumn.tsx`; consumers `KundaliScreen.tsx`, `BirthDetailsForm.tsx`. Tests:
-`__tests__/CalendarDatePicker.test.tsx`, `ClockTimePicker.test.tsx`, `TimeStepper.test.tsx`.
-
----
-
-## 53. Section: VÄlmÄ«ki RÄmÄyaá¹‡a (à¤µà¤¾à¤²à¥à¤®à¥€à¤•à¤¿ à¤°à¤¾à¤®à¤¾à¤¯à¤£) â€” complete digital corpus
-
-**Purpose.** A Granth-category reader for Maharishi VÄlmÄ«ki's Sanskrit RÄmÄyaá¹‡a. It ships the
-complete 648-sarga Southern-recension digital corpus used by the National Sanskrit University /
-IIT Kanpur edition: **23,289 verified verse records** across all 7 kÄá¹‡á¸as. The traditional
-"24,000 Å›lokas" is a conventional total; recension and verse-count conventions differ, so the
-catalog says exactly what is bundled: `7 à¤•à¤¾à¤£à¥à¤¡ Â· 648 à¤¸à¤°à¥à¤— Â· 23289 à¤¶à¥à¤²à¥‹à¤•` / `7 kandas Â· 648 sargas
-Â· 23289 shlokas`.
-
-**Naming follows VÄlmÄ«ki, not Tulsidas.** The sixth kÄá¹‡á¸a is **à¤¯à¥à¤¦à¥à¤§à¤•à¤¾à¤£à¥à¤¡ / Yuddha Kanda** â€”
-VÄlmÄ«ki's own name for it. à¤²à¤‚à¤•à¤¾à¤•à¤¾à¤£à¥à¤¡ is Tulsidas's name for the same book in the RÄmcharitmÄnas;
-the alias is recorded in `chapter-06.json`'s `source.notes` but is not the displayed title, because
-this section is the VÄlmÄ«ki text. Likewise chapter 5 is à¤¸à¥à¤¨à¥à¤¦à¤°à¤•à¤¾à¤£à¥à¤¡ (VÄlmÄ«ki's Sanskrit
-SundarakÄá¹‡á¸a), distinct from the separate Tulsidas `sundarkand` section.
-
-**Corpus repair and provenance.** The pinned structured export contains merged verse rows. The
-reproducible `scripts/build-valmiki-ramayan.py` builder splits only on printed canonical citation
-markers, replaces 18 malformed/duplicate rows from the independent verse-by-verse mirror,
-corrects 28 corrupt or source-contaminated rows against a pinned Dravida-patha transcription and the Gita Press
-scan, and drops two UttarakÄá¹‡á¸a export artefacts that repeat the preceding verse and citation. Hindi comes from
-Gita Press prose published by RamCharit.in; combined prose ranges are repeated intact on their
-constituent verse pages. The one truncated Hindi page (2.102 after verse 9) is filled from
-independent Dharmasutra verse meanings. Source commits, hash, dates, and caveats live in every
-chapter's `source` object.
-
-**Structure.** Standard chaptered-Granth pipeline (Â§15 chapters index â†’ Â§9 reader), one chapter
-per kÄá¹‡á¸a. The chapters index passes `chapterLabelHi/En="à¤•à¤¾à¤£à¥à¤¡"/"Kanda"` and
-`unitLabelHi/En="à¤¶à¥à¤²à¥‹à¤•"/"shlokas"` (plus `unitLabelEnSingular="shloka"`) to `GitaChapterCard` â€” the
-card's defaults are the Gita's à¤…à¤§à¥à¤¯à¤¾à¤¯ / verses, which would mislabel a kÄá¹‡á¸a:
-
-| # | `titleHi` | `titleEn` | Sargas | Verse records |
-|---|---|---|---:|---:|
-| 1 | à¤¬à¤¾à¤²à¤•à¤¾à¤£à¥à¤¡ | Bala Kanda | 77 | 2,217 |
-| 2 | à¤…à¤¯à¥‹à¤§à¥à¤¯à¤¾à¤•à¤¾à¤£à¥à¤¡ | Ayodhya Kanda | 119 | 4,262 |
-| 3 | à¤…à¤°à¤£à¥à¤¯à¤•à¤¾à¤£à¥à¤¡ | Aranya Kanda | 75 | 2,439 |
-| 4 | à¤•à¤¿à¤·à¥à¤•à¤¿à¤¨à¥à¤§à¤¾à¤•à¤¾à¤£à¥à¤¡ | Kishkindha Kanda | 67 | 2,445 |
-| 5 | à¤¸à¥à¤¨à¥à¤¦à¤°à¤•à¤¾à¤£à¥à¤¡ | Sundara Kanda | 68 | 2,772 |
-| 6 | à¤¯à¥à¤¦à¥à¤§à¤•à¤¾à¤£à¥à¤¡ | Yuddha Kanda | 131 | 5,693 |
-| 7 | à¤‰à¤¤à¥à¤¤à¤°à¤•à¤¾à¤£à¥à¤¡ | Uttara Kanda | 111 | 3,461 |
-
-Source of truth for the table: `mobile/src/data/valmiki-ramayan/chapters-manifest.json` (the
-loader's per-kÄá¹‡á¸a invariants fail when a loaded payload drifts from the manifest).
-
-**Numbering authority.** Citations follow the declared National Sanskrit University / IIT Kanpur
-Southern-recension digital corpus. The complete searchable Gita Press Sanskrit-English scan was
-opened as an independent structural and verse-by-verse reference; its dated verification state is
-recorded in every chapter's `source.canonicalEditionStatus` rather than implying identical sarga
-numbering between editions.
-
-**Verse pill.** `à¤¶à¥à¤²à¥‹à¤• Â· <kÄá¹‡á¸a>.<sarga>.<Å›loka>` / `Shloka Â· <kÄá¹‡á¸a>.<sarga>.<Å›loka>` â€”
-the Gita's `à¤¶à¥à¤²à¥‹à¤• Â· à¥§.à¥§` grammar (Â§3 pill vocabulary) extended to the epic's three-part citation,
-with Devanagari numerals in `labelHi`. The decimal supplemental sarga `3.56.1` therefore renders a
-four-part citation such as `à¥©.à¥«à¥¬.à¥§.à¥§`; no reference is silently renumbered to another edition.
-
-**Background.** Per-kÄá¹‡á¸a, deterministic per verse: `ValmikiRamayanVerse.stanza` carries the
-kÄá¹‡á¸a number, and `getReaderBackground('valmiki-ramayan', verse)` maps Kiá¹£kindhÄ â†’ the
-RÄma-HanumÄn plate, Sundara â†’ the HanumÄn-crossing-the-ocean plate, and every other kÄá¹‡á¸a â†’
-the RÄma darbÄr plate (Â§6, RULEBOOK Â§3 "deterministic per verse id").
-
-**Romanization.** Sanskrit, so IAST + Hunterian digraphs per Â§3.1 (`Å›h`, `á¹£h`, `ká¹£h`, `chh`,
-`ch`, epenthetic `á¹›i`) â€” the same style as the Gita corpus, never the Awadhi ASCII used for
-Tulsidas.
-
-**Loading and cross-feature budget.** `texts.ts` reads the lightweight manifest total without
-loading scripture. `getValmikiRamayanChapter()` requires and validates only the selected kÄá¹‡á¸a,
-then caches it. Daily Bhakti and global search deliberately retain the 28 established anchor
-verses from `daily-selection.json`; indexing all 23,289 long-form verses would duplicate their
-normalized text in memory and put every multi-megabyte kÄá¹‡á¸a on a non-reader path. The complete
-corpus remains continuously readable and directly addressable in the reader.
-
-**Not a duplicate of Sundarkand.** Chapter 5 here is VÄlmÄ«ki's **Sanskrit** SundarakÄá¹‡á¸a; the
-separate `sundarkand` Granth section is Tulsidas's **Awadhi** Sundarkand. No line is shared
-between the two (RULEBOOK Â§11.11).
-
-**Files.** `mobile/src/data/valmiki-ramayan/` (`chapter-01..07.json`, `chapters-manifest.json`,
-`daily-selection.json`, `index.ts`) plus `scripts/build-valmiki-ramayan.py`,
-`mobile/src/components/ValmikiRamayanVersePage.tsx` (explicit re-export of
-`SundarkandVersePage` â€” the `lines`/`linesEn` archetype), `mobile/src/screens/
-ValmikiRamayanChaptersScreen.tsx`, `mobile/src/screens/ValmikiRamayanReaderScreen.tsx`.
-Registered in `texts.ts`, `entryRoutes.ts` (chapters + reader + chapter count),
-`HomeStackNavigator.tsx`, `backgrounds.ts`, `searchIndex.ts`, `versePool.ts`, `formatLocation.ts`.
-Tests: `src/screens/__tests__/ValmikiRamayanReaderScreen.test.tsx` (per-kÄá¹‡á¸a first-verse render),
-`readerAutoAdvance.test.tsx` (kÄá¹‡á¸a-boundary swipe contract), `chapteredTotals.test.ts`,
-`readerTypeScale.test.tsx`. E2E: `.maestro/granth-smoke.yaml`.
-
----
-
-## 54. App Rating Prompt (à¤°à¥‡à¤Ÿà¤¿à¤‚à¤—)
-
-**Purpose.** Ask engaged users for a store rating, without ever becoming a nag. Two surfaces over
-one piece of state: an **auto-opening card** that has to earn its way past a conservative gate, and
-a **permanent More row** the user can reach whenever they feel like it (Â§37).
-
-**Bundle-only, by constraint.** No `expo-store-review`, no `SKStoreReviewController`, no Play
-In-App Review. Every one of those is a native module, so a rating nudge behind one could only ship
-in a store build â€” and this repo's operating constraint (`docs/roadmap/2026-Q3-roadmap.md`) is that
-features ship inside the bundle. The sheet is therefore ours, and the primary button hands off to
-the store listing with `Linking.openURL` â€” the same reasoning that keeps the Instagram row on an
-`https://` URL (Â§37). Cost of the choice: the user leaves the app instead of rating in place, and
-the OS does not throttle us, so **we** own the throttling. Hence the gate below.
-
-**Structure** (`components/RatingPromptSheet.tsx`) â€” a centered card on a `modalBackdrop`
-(transparent `Modal`, `animationType="fade"`), matching `UpdateReadyModal` (Â§44) rather than the
-pageSheet modals: this is a short interruption, not a screen to work in. Max width 360, `radii.lg`,
-`parchment`, `spacing.xxl` padding, 12 gap, everything centered:
-
-1. **Decorative star row** â€” `â˜…â˜…â˜…â˜…â˜…` at 22 in `gold`, `letterSpacing: 3`. Says "rating" faster
-   than a sentence can. `accessibilityElementsHidden` + `importantForAccessibility="no"` so it never
-   reads as a control (Â§12) â€” it is not interactive; there is no in-app star capture.
-2. **Title** 20, `accessibilityRole="header"`, script title face â€” `Vedansh à¤†à¤ªà¤•à¥‹ à¤•à¥ˆà¤¸à¤¾ à¤²à¤—à¤¾?` /
-   `Enjoying Vedansh?` / `Vedansh àª•à«‡àªµà«àª‚ àª²àª¾àª—à«àª¯à«àª‚?` / `Vedansh à²¹à³‡à²—à²¿à²¦à³†?`
-3. **Lede** 15/23 `ink-soft`, script body face â€” one sentence on why it helps, one on the cost
-   ("à¤à¤• à¤®à¤¿à¤¨à¤Ÿ à¤²à¤—à¥‡à¤—à¤¾" / "It takes a minute").
-4. **Primary** â€” `saffron` fill, `radii.md`, 44 min-height: `à¤°à¥‡à¤Ÿà¤¿à¤‚à¤— à¤¦à¥‡à¤‚` / `Rate Vedansh` /
-   `àª°à«‡àªŸàª¿àª‚àª— àª†àªªà«‹` / `à²°à³‡à²Ÿà²¿à²‚à²—à³ à²¨à³€à²¡à²¿`. A11y label is the constant `"Rate Vedansh on the store"`.
-5. **`à¤¬à¤¾à¤¦ à¤®à¥‡à¤‚` / Maybe later** â€” 13 `ink-muted`, the tracked-uppercase secondary treatment. The
-   card's last element, and the only exit besides rating.
-
-**Two actions, no permanent opt-out** (product decision, Aug 2026: "only now and later"). The
-earlier third button â€” `à¤«à¤¿à¤° à¤¨ à¤ªà¥‚à¤›à¥‡à¤‚` / Don't ask again â€” is **removed**. Consequence, stated
-plainly: with `MAX_ASKS` at `null` there is now no state a user can reach from this card that stops
-the 5-day cadence except rating. `outcome: 'declined'` and `afterDeclined` survive in the model so
-the gate still honours a state written by an earlier build, and so a Settings-side opt-out has a
-home if one is added â€” see RULEBOOK Â§6.2 for the risk posture and the mitigations on the table.
-
-All four languages are hand-authored via `pick` (this is UI chrome, not content, so nothing is
-transliterated), and Indic labels drop Latin tracking/uppercase per Â§3.
-
-**The gate** (`data/ratingPrompt.ts`, pure). The sheet may auto-open only when **all** hold:
-
-| Condition | Threshold | Why |
-|---|---|---|
-| Outcome still `pending` | â€” | `rated` and `declined` are terminal. Only `rated` is reachable from the sheet; `declined` is honoured for back-compat (see below) |
-| Auto-opens so far | `< MAX_ASKS` (**`null` â€” no ceiling**) | Uncapped by product decision: keep asking until the user rates or opts out |
-| Cold starts | `â‰¥ MIN_APP_OPENS` (5) | Earn the ask â€” a rating nudge waits for real return visits (the reminder opt-in no longer gates on this; see Â§38) |
-| Distinct active days | `â‰¥ MIN_ACTIVE_DAYS` (3) | A habit, not a visit |
-| Lifetime verse reads | `â‰¥ MIN_VERSE_READS` (20) | Filters users who opened but never read |
-| Since the last ask | `â‰¥ REASK_COOLDOWN_DAYS` (5) | The quiet period, and now the **only** thing spacing asks out â€” with no lifetime ceiling it is load-bearing, not a scheduling detail |
-| No other surface asking | â€” | Tour, onboarding setup, What's New, reminder opt-in (Â§47/Â§38) |
-
-Engagement numbers come from `UserActivityContext.lifetimeTotals()`; the cold-start count is read
-from the **notification meta's** `appOpenCount` rather than a second counter â€” one "how many times
-have they come back" number, already incremented once per cold start, serving both asks (the rating's earned 5-open gate and the opt-in's first-open gate).
-
-**Persistence & lifecycle** (`contexts/RatingPromptContext.tsx`). One AsyncStorage blob,
-`@vedansh/rating-prompt`: `{ askCount, lastAskedAt, outcome }`, defensively parsed (junk fields fall
-back to defaults, never crash). Behaviour:
-
-- Eligibility is evaluated once per app session; the sheet then opens after
-  **`RATING_PROMPT_DELAY_MS` = 2500 ms**, so Home has settled first â€” a prompt on the launch frame
-  reads as an ad. If eligibility lapses before the timer fires, the timer is cleared.
-- **Opening consumes an ask slot and starts the cooldown** (`afterAsked`). A swipe-away still
-  counts as "we asked" â€” the cooldown, not the outcome, is what silences the second ask.
-- **Primary** â†’ `afterRated` (terminal) + `Linking.openURL(storeReviewUrl(Platform.OS))`. iOS gets
-  `â€¦?action=write-review` (the App Store review composer); Play has no listing equivalent, so
-  Android lands on the listing, whose rating stars are the first thing on the page. If the OS
-  refuses the deep link, it falls back to the plain listing, then fails **silently** â€” a broken
-  hand-off must not throw an error at a user who just tried to do us a favour. "Rated" records the
-  *hand-off*, not a review the app cannot observe.
-- **Maybe later** â†’ close only; the same card returns after the 5-day cooldown, indefinitely. This
-  is the sheet's only non-terminal exit, and the `Modal`'s `onRequestClose` (Android back) maps to
-  it too â€” so a back press is a "later", never an opt-out.
-- The **More row** calls `open()`, which bypasses the gate and spends **no** ask slot â€” a user who
-  went looking has opted in. It keeps working after `declined`; opting out silences the auto-ask.
-
-**Placement.** `<RatingPromptSheet />` mounts last in `App.tsx`, inside `RatingPromptProvider`
-(itself inside `TourProvider` + `NotificationPreferencesProvider`, whose flags the gate reads).
-
-**Files.** `mobile/src/data/ratingPrompt.ts` (state, gate, store URLs),
-`mobile/src/contexts/RatingPromptContext.tsx`, `mobile/src/components/RatingPromptSheet.tsx`,
-row in `mobile/src/screens/MoreScreen.tsx`, store URLs from `mobile/src/data/shareLinks.ts`.
-Tests: `src/data/__tests__/ratingPrompt.jest.test.ts` (every gate clause, cooldown boundary,
-defensive parse, URL shapes), `src/components/__tests__/RatingPromptSheet.test.tsx` (delay,
-persisted outcomes, refusal to stack, the two-action shape, all four languages, a11y-hidden stars),
-`src/screens/__tests__/MoreScreen.test.tsx` (the row opens the sheet instead of leaving the app).
-E2E: `.maestro/rating-prompt-smoke.yaml` â€” the manual path only; the auto path's thresholds are
-unreachable under `clearState`, so the gate is unit-tested instead.
-
----
-
-## 55. Festive Toran (à¤ªà¤°à¥à¤µ à¤¤à¥‹à¤°à¤£)
-
-**Purpose.** On each of the **18 catalog festivals** (`mobile/src/notifications/festiveReminders.ts` â€” the same list that drives the Â§38 festive reminder), Home hangs a toran below the wordmark: a sagging garland string of marigolds and leaves with a chip underneath carrying the festival's greeting. The doorway is dressed for the day, all day, and interrupts nothing. Every other day of the year Home is untouched. Component: `mobile/src/components/FestiveToran.tsx`; mounted by `HomeScreen` between the hero lockup and the Today strip.
-
-**Which festival.** `getTodayFestival(date)` (`mobile/src/data/discoveryMeta.ts`): the **first** of today's observances that is in the festive catalog, else null. It walks `getObservancesForDate` in the same order as the For-Today row's tier 1 (Â§50), so the garland, the leading FOR TODAY card, and the morning's notification always name the same festival â€” including on a day two catalog festivals share (all three consistently take the first-resolved one). An observance solve that throws simply hangs no garland. Resolution keys off `useTodayKey()` in HomeScreen, so the toran appears/vanishes on the day boundary without a relaunch.
-
-**Structure.**
-- **String**: one SVG path (`M-4 6 Q150 44 304 6`, `preserveAspectRatio="none"` so it stretches to any width), stroked `saffronDeep` at 0.55 opacity.
-- **Ornaments**: 5 marigolds alternating with 4 leaves at fixed stations along the sag (`y = 6 + 19Â·sin(Ï€x/300)`). Marigolds are **View compositions** â€” 8 rotated petals alternating `cardThumbActiveFrom`/`cardThumbActiveTo` around a `saffronDeep` core â€” the same drawn-blossom grammar as the Â§30 pushpa-varsha and the Â§42 deity glyphs. Leaves are asymmetric-radius `gold` views. **No emoji, no images** (Â§42's rule).
-- **Greeting chip**: centered under the garland â€” `goldChipBg` fill, `cardActiveBorder` border, `saffronDeep` text at **12 pt** (Â§3.0 floor respected), face via `titleScriptFont` so hi renders in the Devanagari serif, gu/kn in their re-scripted SemiBold cuts, en in the card title face. Copy = the catalog's `greetingHi`/`greetingEn` through `contentByLang` â€” identical wording to the notification body's greeting.
-
-**Motion (Â§11).** One sway: Â±0.7Â° rotation about the string's tie-line (`transformOrigin: '50% 0%'`), 6 s per full alternate cycle, native driver. `useReducedMotion()` hangs the garland still â€” no other animation exists on the surface.
-
-**Layout.** The component always occupies its fixed `TORAN_HEIGHT` (90 dp: 46 garland + ~26 chip + ~16 clearance so the greeting chip never touches the Today strip's Panchang banner below it), so once mounted it can never nudge the Today strip (the Â§48 reserved-height lesson). It scrolls away with the wordmark â€” deliberately not pinned.
-
-**A11y (Â§12).** The garland is decorative: `accessibilityElementsHidden` + `importantForAccessibility="no-hide-descendants"`. The chip's greeting text is the surface's one accessible element.
-
-**Colours.** Theme tokens only â€” `saffronDeep`, `gold`, `cardThumbActiveFrom/To`, `goldChipBg`, `cardActiveBorder`. Nothing outside Â§2's warm palette; the baked deity-glyph palette is *not* used here.
-
-**Decision trail.** Chosen as Option A of four prototyped treatments (`festive-theme-preview.html` at the repo root: toran / utsav banner / pushpa-varsha one-shot / full skin). The banner duplicated the FOR TODAY festival card; the one-shot shower and the full skin are parked. Scope locked: all 18 festivals (not just `star`-marker majors), not pinned, no shower.
-
-**Tests.** `components/__tests__/FestiveToran.test.tsx` (ornament census, reserved height, per-language greeting + face, decorative-garland a11y, reduce-motion mount; fake timers because of the sway loop) and the `getTodayFestival` block in `notifications/__tests__/festiveReminders.test.ts` (every catalog festival's own date hangs a garland whose greeting matches the catalog and agrees with the FOR TODAY lead; ordinary day â†’ null; Diwali â†’ `diwali`). E2E deliberately none: festival dates make the surface non-deterministic under `clearState` â€” same rationale as the Â§54 auto path.
-
----
-
-## 56. Read Aloud (à¤ªà¤¾à¤  à¤¸à¥à¤¨à¥‡à¤‚) â€” on-device TTS
-
-**Purpose.** Let the device speak the verse on screen. The app's answer to "I want to listen"
-has been *recorded* recitation (Â§34), but only 5 real recordings exist for 13 catalog tracks, so
-most texts have no audio at all and commissioning more costs money, licensing and binary size
-(`docs/roadmap/prds/02-verse-audio.md`). On-device TTS closes that gap for zero bytes. It is
-**assistive, never a substitute for human recitation** â€” see RULEBOOK Â§11.15.
-
-**Scope (v1).** `GitaReaderScreen` and `ChalisaReaderScreen` (the latter is a registry reader, so
-all 9 chalisas are covered). The remaining 18 readers are unchanged; the shared hook and adapter
-already handle every verse shape, so fan-out is wiring only.
-
-### 56.1 What is spoken, and in which voice
-
-Verse lines first, then the à¤­à¤¾à¤µà¤¾à¤°à¥à¤¥ (**on by default**), then Gita commentary (off by default).
-One utterance **per verse line** â€” the gap between utterances then lands on the visual line
-break, which for a chaupai or doha half-line is where a reciter breathes.
-
-**Each reading language is spoken in its own voice, or not at all.** Read-aloud never substitutes
-one language for another, so what is heard is exactly what is on screen:
-
-| Reading language | Spoken source | Voice |
-| --- | --- | --- |
-| `hi` | Devanagari lines + `meaningHi` | `hi-IN` |
-| `en` | `linesEn` / `transliteration` + `meaningEn` | `en-IN`, else `en-US` |
-| `gu` | the on-screen Gujarati lines + `meaningGu` (or the re-scripted fallback) | `gu-IN` |
-| `kn` | the on-screen Kannada lines + `meaningKn` (or the re-scripted fallback) | `kn-IN` |
-
-The spoken text therefore comes straight from the same `verseLinesByLang` / `meaningByLang`
-helpers the page renders with â€” including the authored native meanings, which a substitution
-would have silently discarded.
-
-**One accent per language â€” the Indian one.** The devotional content is Hindi/Sanskrit in
-Devanagari, so the app deliberately offers only the **Indian** voice for each reading language
-(`voicesForTarget` lists `-IN` voices only; the Voice picker never presents American/British/etc.).
-English is the sole language with a fallback: a device without an `en-IN` voice is common, so rather
-than go silent it falls back to **`en-US` only** â€” the near-universal default English voice â€” and to
-no other accent (`FALLBACK_LOCALE` in `voices.ts`). That `en-US` voice is reachable only as this
-invisible resolution fallback; it is never shown as a choice. Hindi/Gujarati/Kannada have no
-non-Indian accent and therefore no fallback: their `-IN` voice or *unavailable* (Â§56.4). English is
-still English either way, so "heard === seen" holds â€” this is an accent fallback within one
-language, not the cross-language substitution the module forbids.
-
-**A language whose voice the device lacks reports read-aloud unavailable for that language**
-(Â§56.4), naming it in its own script and, on Android, offering a hop to TTS settings to install
-it. The alternative â€” quietly speaking Hindi instead â€” would have the user reading one script
-while hearing another language, and both platforms' silent-fallback behaviour makes that easy to
-ship by accident: the guard is that `start()` refuses outright when availability is `unavailable`,
-so the engine is never handed text it cannot voice.
-
-**Cost to accept:** gu/kn coverage depends on that voice being installed, which is less common
-than Hindi. That is a real limitation of the honest design, surfaced plainly rather than hidden.
-Switching the app's reading language switches the whole voice section â€” voices are stored per
-language (`voiceByTarget`), and a saved identifier is only honoured if it still speaks that
-language, so a stale preference can never leak a voice across languages.
-
-Dandas are normalized for the synthesizer (`à¥¤` â†’ a sentence stop; engines otherwise read a bare
-danda as nothing, or aloud as "vertical line"). **Only the string handed to the synthesizer is
-touched** â€” displayed, shared and indexed text is never altered (RULEBOOK Â§11.15).
-
-### 56.2 The reader control
-
-Lives on the **language-toggle row**, pinned to the **right edge** while the à¤¹à¤¿à¤¨à¥à¤¦à¥€/English
-toggle + add-to-routine group stays centred (`readAloudSlot`: `position: absolute`, `right: 16`,
-vertically centred within the row's content box). It sits directly below the reading-progress bar,
-clear of it, and inline with the toggle â€” one always-visible, screen-level control per reader. It is
-*not* in `ReaderHeader`'s `right` slot (which was cramped beside the counter + recorded `â–¶`, and
-forced the centred title off-axis via a widened `sideWidth`), and *not* in the verse page's
-`topActions`, which renders once per page and would put N copies of a screen-level control into
-`listExtraData`.
-
-It is a **labelled pill** (icon + text), not a bare glyph, so the affordance is legible â€” the
-July-2026 first cut was a lone `â™ª` at 15 with no label, which read as decoration and was easy to
-miss.
-
-| State | Pill | Visible label | a11y label |
-| --- | --- | --- | --- |
-| Idle | `â–¶ï¸` + label, `saffron-deep` on a `saffron-tint` fill, `cardActiveBorder`, `radii.sm` | `à¤¸à¥à¤¨à¥‡à¤‚` / `Listen` / `àª¸àª¾àª‚àª­àª³à«‹` / `à²•à³‡à²³à²¿` | `Read aloud` |
-| Speaking | `âšâš` + label, same fill | `à¤°à¥‹à¤•à¥‡à¤‚` / `Pause` / `àª¥à«‹àª­à«‹` / `à²µà²¿à²°à²¾à²®` | `Pause reading aloud` |
-| No voice installed | `â–¶ï¸` + label, `ink-muted` on `parchment-soft`, `divider`, `accessibilityState.disabled` | `à¤¸à¥à¤¨à¥‡à¤‚` / `Listen` â€¦ | `Read aloud unavailable` |
-
-`â–¶ï¸`/`âšâš` carry the trailing U+FE0E text variation selector so they render monochrome, never as
-colour emoji (Â§5 "no emoji", same treatment as the Panchang â˜€/â˜½ glyphs in Â§33). The **visible
-label is localized** to the reading language, but the **`accessibilityLabel` stays English and
-un-localized**, the same rule and reason as `ReaderHeader`'s back label: Maestro taps it literally
-and the default reading language is `hi`. The play `â–¶ï¸` is shared with the recorded-audio control
-(which stays in the header); the "Listen" label is what distinguishes the two where both appear
-(Chalisa). The More â†’ Read Aloud *settings* row keeps the `â™ª` note (`READ_ALOUD_GLYPH`) â€” it is a
-settings entry, not a play control.
-
-With the pill off the header, `sideWidth` is back to the bare-counter size â€” Gita `60`; Chalisa
-`60`, or `84` when a recorded `â–¶` shares the header. The pill always shows its full label now (no
-`compact` on the reader screens) since the toggle row has the room.
-
-**The muted state is deliberate.** Hiding the control when no voice exists would leave the user
-with no way to learn why read-aloud never appears. Pressing it explains, and on Android offers
-`com.android.settings.TTS_SETTINGS`; iOS gets the Settings path in words (no deep link exists to
-Spoken Content).
-
-**Suppressed entirely under a screen reader.** VoiceOver/TalkBack already read each page's
-`accessibilityLabel`; two voices at once is a defect, not a feature.
-
-### 56.3 Pause, auto-advance, and the swipe latch
-
-**Pause is line-granular and identical on both platforms.** Android's native module has no
-`pause`/`resume` at all, so the app never calls `Speech.pause` â€” pause stops the engine and
-records the chunk; resume re-speaks that line from its start. That is also the honest human
-behaviour, and lines run 1â€“2 s.
-
-Finishing a page scrolls to the next and keeps speaking. A **manual swipe re-targets rather than
-stops** â€” the user wants the page they just moved to. A pending-page latch distinguishes the
-controller's own scroll (which fires the same viewability/scroll handlers) from a user swipe, with
-a 250 ms trailing debounce so a multi-page flick starts one session. A page with no text is
-skipped; a chapter-transition sentinel **stops** the session rather than reading across the
-boundary (v1). If a scroll never lands within 600 ms the session ends, because
-`onScrollToIndexFailed` is a no-op in every reader and the alternative is speaking an invisible page.
-
-**Speech stops** on reader exit, on a `sourceId` change, and when the app backgrounds. There is
-no mini-player and no lock-screen surface in v1: expo-speech exposes no media-session API, and
-auto-advancing a screen the user cannot see is worse than silence.
-
-### 56.4 Availability is a first-class state
-
-Both platforms fall back to the device default voice for an unavailable language **silently** â€”
-neither fires an error callback. So voices are probed at startup (`getAvailableVoicesAsync`, raced
-against a 4 s timeout because Android's engine binds slowly), the control is gated on the result,
-and a **3 s `onStart` watchdog** catches the OEM engine that reports a language then emits nothing.
-Availability is resolved **for the active reading language**, so it changes when the language does.
-The probe re-runs when the app foregrounds while unavailable, so installing voice data and coming
-back just works.
-
-### 56.5 Settings
-
-**More â†’ à¤à¤ª / App â†’ Read Aloud**, below Reading Size. State text comes from
-`readAloudRowLabel(prefs, lang, availability)` â€” exported from the sheet so row and sheet cannot
-drift, exactly as `readingSizeLabel` does (Â§43). Reads `à¤¶à¥à¤²à¥‹à¤• à¤µ à¤…à¤°à¥à¤¥ Â· 1.0Ã—`, or `à¤‰à¤ªà¤²à¤¬à¥à¤§ à¤¨à¤¹à¥€à¤‚`.
-Icon `â™ªï¸` on `saffron-deep`. The row sits **after** the two feature-tour anchor rows: RULEBOOK
-Â§6.1 pins the tour's final steps to Language + Reading Size and the tour resolves them by ref, so
-a later row is safe **as long as no tour step is added for it** â€” v1 adds none.
-
-**`ReadAloudSettingsSheet`** is a structural clone of `ReadingSizePickerSheet` (Â§43): transparent
-slide `Modal`, backdrop `Pressable` â†’ close, grabber, `parchment-highlight`, radio pills, a Done
-button that does not auto-close on selection. Sub-header names it a device voice
-("à¤‰à¤ªà¤•à¤°à¤£ à¤•à¥€ à¤†à¤µà¤¾à¤œà¤¼ à¤¸à¥‡ â€” à¤®à¤¾à¤¨à¤µ à¤ªà¤¾à¤  à¤¨à¤¹à¥€à¤‚"). Sections:
-
-1. **à¤†à¤µà¤¾à¤œà¤¼ / Voice** â€” `à¤¸à¥à¤µà¤¤à¤ƒ / Automatic` plus up to 4 probed voices **for the active reading
-   language**, Enhanced first, each showing the OS voice name, under a line naming that language.
-   Replaced by the explainer + a TTS-settings hop + a "à¤«à¤¿à¤° à¤¦à¥‡à¤–à¥‡à¤‚ / Check again" re-probe when the
-   device has no voice for it.
-2. **à¤—à¤¤à¤¿ / Speed** â€” the Â§57 `RateStepper`, 0.5â€“1.5 in 0.1 steps.
-3. **à¤•à¥à¤¯à¤¾ à¤ªà¤¢à¤¼à¥‡à¤‚ / What to read** â€” `à¤…à¤°à¥à¤¥ à¤­à¥€` (on) and `à¤µà¥à¤¯à¤¾à¤–à¥à¤¯à¤¾ à¤­à¥€` (off), `accessibilityRole="switch"`.
-4. **à¤¸à¥à¤¨à¤•à¤° à¤¦à¥‡à¤–à¥‡à¤‚ / Preview** â€” speaks `READING_SIZE_SAMPLE[lang]`, reused from Â§43. The only way
-   a user can judge a voice.
-
-Persisted at `@vedansh/read-aloud` (`rate`, `voiceByTarget` â€” one slot per reading language,
-`readMeaning`, `readCommentary`), validated field by field on hydrate.
-
-### 56.6 Mutual exclusion
-
-Recorded audio (Â§34), the japam loop (Â§35) and read-aloud are **mutually exclusive**, arbitrated by
-`src/audio/playbackArbiter.ts`. Each source registers a stopper and claims playback before
-starting. This is a module singleton rather than a context field so no consumer's contract changes.
-It is load-bearing on iOS, where the audio session is configured `mixWithOthers` â€” without it a
-bhajan and a spoken verse literally play over each other.
-
-iOS passes `useApplicationAudioSession: true`. Without it `AVSpeechSynthesizer` builds its own
-session and **the hardware mute switch silences speech**. Trade-off: under `mixWithOthers`, TTS
-does not duck other apps on iOS â€” the same behaviour recorded playback already has.
-
-**Files:** `mobile/src/readAloud/` (`prefs.ts`, `verseAdapter.ts`, `verseScript.ts`,
-`pronounce.ts`, `voices.ts`) Â· `mobile/src/contexts/ReadAloudContext.tsx`,
-`ReadAloudPrefsContext.tsx` Â· `mobile/src/audio/playbackArbiter.ts` Â·
-`mobile/src/screens/_useReaderReadAloud.ts` Â·
-`mobile/src/components/readAloud/ReadAloudButton.tsx` Â· `ReadAloudSettingsSheet.tsx`.
-Requires a **store release, not an OTA** â€” `expo-speech` is a native module.
-
----
-
-## 57. Component: Rate Stepper (`RateStepper.tsx`)
-
-**Purpose.** The `âˆ’ 1.0Ã— +` control for a playback or speech rate. Extracted from
-`JapamAudioPlayer`'s tempo block when read-aloud needed the same control, on the same reasoning
-that produced `ReaderHeader` (Â§7) and `TextField` (Â§52) â€” one spec, two callers.
-
-**Spec.** Optional italic 11 pt caption (`ink-muted`) above a row of `32Ã—32` `radii.md`
-`divider`-bordered buttons with `âˆ’`/`+` at 18 in `ink-soft`, `hitSlop` 8, either side of the value
-in the page-counter face at 14 with `minWidth: 38`. A button at its bound is `disabled` at 0.4
-opacity and reports `accessibilityState.disabled`. Float comparisons use an epsilon, because 0.1
-steps land on 1.4999999999999998. Button labels are the un-localized `Slower` / `Faster` so Maestro
-can drive them in any reading language.
-
-**Callers.** `JapamAudioPlayer` (tempo, 0.5â€“1.5, caption `à¤—à¤¤à¤¿ / Tempo`) and
-`ReadAloudSettingsSheet` (speech rate, same range, no caption â€” the sheet supplies its own section
-label). Bounds and step are props; the japam player owns expo-audio's limits and read-aloud owns
-`src/readAloud/prefs.ts`'s, which deliberately duplicate the numbers rather than share a constant,
-because they are different concerns that happen to agree today.
-
-**Files:** `mobile/src/components/RateStepper.tsx`.
-
----
-
-## 58. Guna Milan (à¤…à¤·à¥à¤Ÿà¤•à¥‚à¤Ÿ à¤®à¤¿à¤²à¤¾à¤¨) â€” PRD-16
-
-**Purpose.** A traditional 36-guna Ashtakoota marriage-compatibility calculation with every step visible â€” a calm, private tool, not a verdict. No red-alarm treatment, fear copy, remedy upsell, or hidden noon assumption. PRD: `docs/roadmap/prds/16-guna-milan.md`.
-
-**Placement.** A card below Kundali and Rashifal on the à¤œà¥à¤¯à¥‹à¤¤à¤¿à¤· landing (`PanchangScreen`'s `JyotishLanding`), with the standard versioned NEW badge. Tap pushes `GunaMilan` inside the **Panchang stack** (`PanchangStackParamList` â€” not a duplicate root route); back and screen tracking follow the Â§51 Jyotish screens.
-
-**Input.** Two `BirthDetailsForm` cards keep the directional roles **à¤µà¤° Â· Groom** and **à¤µà¤§à¥‚ Â· Bride** (never assuming the device owner is the groom). Each offers "à¤®à¥‡à¤°à¥‡ à¤µà¤¿à¤µà¤°à¤£ à¤¯à¤¹à¤¾à¤" to copy the saved Kundali's name/date/time into that role only. Name uses the Â§52 `TextField` `form` variant (48); date and time are entered through the shared Â§52a pickers â€” the date field-button opens `CalendarDatePicker` and, when the time is known, the inline reminder-style `ClockTimePicker` (12-hour AM/PM stepper) sits where the field was. Name is optional display-only; date (`YYYY-MM-DD`) and 24-hour `HH:mm` are IST calculation inputs â€” the pickers still emit exactly those strings, so validation/parsing is untouched. The **"à¤œà¥à¤à¤¾à¤¤ à¤¨à¤¹à¥€à¤‚ Â· Unknown"** time control is preserved verbatim (it stores `null`); when the time is known but not yet set, a "à¤¸à¤®à¤¯ à¤šà¥à¤¨à¥‡à¤‚ Â· Select time" field-button reveals the stepper and commits a 06:00 default. No birthplace is requested in v1 (only Moon longitude is needed), and the flow **never** reuses `LocationPickerModal` â€” it must not mutate the global Panchang location.
-
-**Unknown time is an interval, not noon.** "à¤œà¥à¤à¤¾à¤¤ à¤¨à¤¹à¥€à¤‚" never substitutes 12:00 and never persists a fabricated time. The engine enumerates every nakshatra/charana/rashi/Vashya-boundary classification the Moon can occupy across the full `00:00â€“23:59:59` IST civil day (Cartesian product when both times are unknown). If all possibilities agree, the exact result shows with an "all times checked" note; if any koota changes, a minâ€“max **range** with the varying kootas shows instead â€” with no single dial fill and no exact-share action.
-
-**Result.** An exact result shows a 36-point `react-native-svg` dial (the HTML prototype's conic gradient is illustrative only), the pinned band label, optional names/roles, and eight expandable koota rows (only one open at a time; rows expand/collapse instantly with no animation â€” matching the app, where no screen animates an expandable row â€” so there is no motion to gate on reduced-motion). Each row shows score/max, a `gold` bar, the inputs used, and a Hindi-first explanation. Nadi/Bhakoot findings use `avoidTint` background with `avoidDeep` text/border â€” never color-only; a zero stays understandable by text. A dosha/cancellation banner states which rule fired and whether a supported cancellation applies, without ever silently rewriting the base score. Standing disclaimer: **"à¤¯à¤¹ à¤ªà¤¾à¤°à¤®à¥à¤ªà¤°à¤¿à¤• à¤…à¤·à¥à¤Ÿà¤•à¥‚à¤Ÿ à¤—à¤£à¤¨à¤¾ à¤¹à¥ˆ â€” à¤®à¤¾à¤°à¥à¤—à¤¦à¤°à¥à¤¶à¤¨ à¤¹à¥‡à¤¤à¥, à¤¨à¤¿à¤°à¥à¤£à¤¯ à¤¹à¥‡à¤¤à¥ à¤¨à¤¹à¥€à¤‚à¥¤"**
-
-**Share.** Reuses the Â§51 `JyotishShareSheet` (4:5, 1080Ã—1350, `react-native-view-shot` â†’ `expo-sharing`) with a `GunaMilanShareCard`. The card is a strict allow-list â€” optional names + à¤µà¤°/à¤µà¤§à¥‚ roles, exact total, band, eight component scores, disclaimer, `à¥ à¤µà¥‡à¤¦à¤¾à¤‚à¤¶à¤¼` footer â€” and **never** contains birth date, time, location, saved-profile id, or hidden metadata (`buildGunaMilanShareModel` cannot serialize the input object). Share is unavailable for a time-uncertain range.
-
-**Privacy & persistence.** Inputs are session-only by default. An explicit, initially-unchecked "à¤®à¤¿à¤²à¤¾à¤¨ à¤µà¤¿à¤µà¤°à¤£ à¤¯à¤¾à¤¦ à¤°à¤–à¥‡à¤‚ Â· Remember match details" toggle says only "à¤…à¤—à¤²à¥€ à¤¬à¤¾à¤° à¤¯à¤¹ à¤«à¤¼à¥‰à¤°à¥à¤® à¤ªà¤¹à¤²à¥‡ à¤¸à¥‡ à¤­à¤°à¤¾ à¤®à¤¿à¤²à¥‡à¤—à¤¾ Â· Prefill this form next time", stores a versioned record under `@vedansh:guna-milan-draft:v1`, and has a visible clear action; a previous match is never restored implicitly. Local diagnostics (start/complete/preview/share-sheet-opened counts) live under `@vedansh:guna-milan-metrics:v1` and carry no PII. Per RULEBOOK Â§3, screen and share copy do not expose on-device/offline/internet/account/storage implementation details.
-
-**A11y & i18n (Â§12).** Controls â‰¥ 44; expandable rows expose button role, accessible name, and expanded state; the dial and range carry screen-reader summaries; the primary **à¤®à¤¿à¤²à¤¾à¤¨ à¤•à¤°à¥‡à¤‚** action stays keyboard-safe. All visible copy and accessibility labels ship in hi/en/gu/kn â€” gu/kn re-script the Devanagari via `contentByLang`/`meaningByLang` per the language design, and faces use `scriptTitleFont`/`scriptBodyFont`. English accessibility labels stay stable for Maestro/Jest even when the visible reading language is not English.
-
-**Colours.** Warm-manuscript tokens only â€” `parchment`/`parchmentSoft`, `ink`/`inkMuted`, `saffronDeep`/`saffronTint`, `gold`, `divider`, `avoidTint`/`avoidDeep`, `onPrimary`, `cardActiveFrom`. No raw red/green; no one-off colours.
-
-**Convention.** The calculation is pinned in `docs/roadmap/conventions/guna-milan-v1.md` (`vedansh-ashtakoota-v1`): tables/matrices, à¤µà¤°â†’à¤µà¤§à¥‚ direction, half-point scores, the exact 15Â° Vashya splits, band boundaries and DrikPanchang Bhakoot/Nadi modifiers, and the one auditable Bhakoot cancellation (same rashi-lord or Graha-Maitri 5). Convention lives as data in `gunaMilanConvention.ts`; a table change requires a new convention id and fixture review. Domain sign-off of the tables remains a human gate (PRD gate 1).
-
-**Files.** `mobile/src/panchang/gunaMilan.ts`, `gunaMilanConvention.ts`, `gunaMilanDisplay.ts`, `gunaMilanShare.ts`, `gunaMilanState.ts`; `components/BirthDetailsForm.tsx`, `GunaMilanShareCard.tsx`; `screens/GunaMilanScreen.tsx`; `screens/PanchangScreen.tsx`, Panchang navigation types/stack; `components/JyotishShareSheet.tsx` (shared).
-
-**Tests.** `panchang/__tests__/gunaMilan.engine.test.ts` (normalization, every pada/nakshatra/rashi boundary, the 15Â° Vashya splits, the full 108Ã—108 sweep pinning each koota's complete reachable value set, directional rules, IST parsing, unknown-day enumeration, source purity), `gunaMilan.golden.test.ts` (independently published Mini/Jose 20/36 and Chitra/Uttara-Ashadha 19.5/36 fixtures plus every Bhakoot cancellation branch and the same-Nadi 28/36 band case), `screens/__tests__/GunaMilanExperience.test.tsx` (either-role autofill, expansion state, unknown-time range, share allow-list, opt-in persistence), and `.maestro/guna-milan-smoke.yaml` (Panchang-stack nav/back, autofill, exact result, expand, privacy-safe share preview, unknown-time range â€” run on iOS and Android).
-
----
-
-## 59. Home-Screen Widgets (à¤¹à¥‹à¤®-à¤¸à¥à¤•à¥à¤°à¥€à¤¨ à¤µà¤¿à¤œà¥‡à¤Ÿ) â€” PRD-15
-
-**Purpose.** Move Vedansh's three highest-frequency glances â€” today's verse, today's Panchang, and today's japa â€” off the app and onto the OS home/lock screen as quiet ambient surfaces, so the daily-return loop no longer depends on the user remembering to open the app or on an interruptive notification. The widgets are the parchment system rendered on the OS canvas: `parchment-hi â†’ parchment`, à¥ brand mark, script-aware serif content, **no emoji** (Â§42's rule). JS precomputes a dated bundle; native code only validates, selects the correct dated entry, and renders â€” it performs no astronomy or network work at draw time.
-
-**One content type per widget kind; the size is the user's choice (Aug 2026).** The launch build hard-coded the mapping inside a single "ambient" kind â€” `systemSmall` drew the verse, `systemMedium` drew the Panchang â€” which is exactly backwards for the content: a shloka truncated after four words in the small square (`à¤ˆà¤¶à¤¾à¤¨à¤ƒ à¤ªà¥à¤°à¤¾à¤£à¤¦à¤ƒ à¤ªà¥à¤°à¤¾à¤£à¥‹ à¤œà¥à¤¯à¥‡à¤·à¥à¤ à¤ƒ à¤¶à¥à¤°à¥‡à¤·à¥à¤ à¤ƒ à¤ªà¥à¤°à¤œà¤¾à¤ªà¤¤à¤¿à¤ƒà¥¤ Â· à¤¹à¤¿à¤°à¤£à¥à¤¯à¤—â€¦`) while a one-word tithi headline floated in a field of empty parchment on the wide rectangle. Every content type is now its **own widget kind** â€” the OS gallery lists them separately, and the size is picked at add time and changed afterwards (iOS: swipe the size in the picker; Android: drag the widget's edges). Each kind renders **every size it advertises**, so no size is a truncated afterthought. The declaration lives once in `mobile/src/widgets/catalog.ts` (`WIDGET_CATALOG`: content â†’ native kind, offered sizes, recommended size) and `catalog.test.ts` fails if the iOS `supportedFamilies`, the Android providers/`appwidget-provider` resources, or the in-app gallery drift from it.
-
-**Surfaces.**
-- **à¤†à¤œ à¤•à¤¾ à¤¶à¥à¤²à¥‹à¤• â€” `VedanshVerseWidget` / `VedanshVerseWidgetProvider` (wide Â· large Â· small; best at wide).** The deterministic Daily-Bhakti selection for the device-local day. **Wide** (iOS `systemMedium`, Android 4Ã—2 default cell) gives the verse the line width it was written for â€” the **whole verse flowed** as one paragraph (`flowedVerse()`: padas joined with ` Â· `, mirrored by the Swift `flowedVerse` and the Kotlin `padas.joinToString(" Â· ")`) across the three lines the cell budgets, plus the source; **large** (iOS `systemLarge`, Android any tall cell) gives each pada its **own line from `lines`**; **small** (iOS `systemSmall`, Android any cell <180 dp wide) is the only cell that reads the planner's excerpt (`twoLineExcerpt`), and drops the source â€” all that fits. The full verse + source stay in the accessibility label. Tap â†’ the exact Daily Bhakti entry.
-  - **The excerpt is a small-cell string, and only the small cell may read it (Aug 2026 fix).** Wide drew it too, so `twoLineExcerpt`'s 88-character cap â€” a budget for the 13 pt square â€” ellipsized any verse past it on a card sized for three 16 pt lines: BG 5.12 (90 characters flowed) shipped as `â€¦à¤…à¤¯à¥à¤•à¥à¤¤à¤ƒ à¤•à¤¾à¤®à¤•à¤¾à¤°à¥‡à¤£ à¤«à¤²à¥‡ à¤¸à¤•à¥à¤¤à¥‹â€¦` with its third line empty and its closing pada gone. Every cell wider than the square now reads the full `lines` the payload has always carried and lets the platform shrink (`minimumScaleFactor(0.8)`) or ellipsize (`android:ellipsize="end"` on `widget_title`) only when a verse genuinely overruns. `catalog.test.ts` fails if either native surface reads `excerpt` outside its small/narrow branch, or if the Android title view loses its ellipsize. Rule: **a cap tuned for one cell size must never be applied on the shared payload path.**
-- **à¤†à¤œ à¤•à¤¾ à¤ªà¤‚à¤šà¤¾à¤‚à¤— â€” `VedanshPanchangWidget` / `VedanshPanchangWidgetProvider` (small Â· wide Â· large Â· lock; best at small).** Represented **IST** date + tithi headline + vrat line, carrying the selected city and calendar system. **Small** is the glance (date, tithi, vrat, sunrise); **wide** adds Rahu Kaal on the timing line; **large** gives sunrise / Rahu Kaal / Abhijit a labelled row each from the PRD-14 (Â§48) engine. Tap â†’ Panchang on the represented date.
-- **à¤œà¤ª-à¤¸à¤¾à¤§à¤¨à¤¾ â€” `VedanshJapamWidget` (small Â· wide Â· lock).** **Japam-only** (not the broader `UserActivityContext.currentStreak()`): beads toward the first 108 of the day, staying full after 108; caption shows actual beads/rounds and a separately computed japa-active-day streak. Payload carries `lastUsedMantraId?`; tap â†’ that mantra's counter when present, else the Japam library â€” it never invents a default mantra. Read-only in v1. No Android provider yet (`androidProvider` is undefined in the catalog, and the gallery therefore offers no add button for it there).
-- **iOS lock-screen accessory (Phase 2).** Inline (on the Panchang kind) = represented tithi / vrat name on observance days; circular (on the Japam kind) = japa-only progress/streak with a numeric/text cue that survives monochrome + tinted appearances. Advertised only on the supported OS family.
-- **Android home.** Two receivers, each with its own `appwidget-provider` resource so the launcher's picker offers them separately with the right default cell â€” `vedansh_widget_panchang_info` targets 2Ã—2, `vedansh_widget_verse_info` targets 4Ã—2 â€” and both stay `resizeMode="horizontal|vertical"`. Rendering is width/height responsive within a kind (compact Panchang drops the city and Rahu Kaal; a verse cell â‰¥180 dp tall gives each pada its own line, a cell <180 dp wide drops to the excerpt, and everything between flows the full `lines` across three lines). Midnight refresh is **best-effort**, never exact â€” every layout exposes the represented date and rejects expired data.
-- **Section eyebrows** (`à¤†à¤œ à¤•à¤¾ à¤¶à¥à¤²à¥‹à¤•`, `à¤œà¤ª-à¤¸à¤¾à¤§à¤¨à¤¾`) are the one piece of widget copy the payload does not carry, so both native surfaces localize them in all four reading languages â€” they used to fall back to Devanagari inside a Gujarati/Kannada widget.
-
-**In-app surfaces.**
-- **More row** â€” `à¤¹à¥‹à¤®-à¤¸à¥à¤•à¥à¤°à¥€à¤¨ à¤µà¤¿à¤œà¥‡à¤Ÿ` in the App group of `MoreScreen.tsx` (icon `â–¦`, `testID="more-home-widgets"`), with a one-release NEW label, â†’ `WidgetGallery` on the More stack (`MoreStackNavigator.tsx`).
-- **Widget Gallery** (`mobile/src/screens/WidgetGalleryScreen.tsx`) â€” one card per widget kind, each renders a live preview from the **same validated payload contract** the native consumers read (so a preview can never claim freshness the widget won't have) at that kind's **recommended** size â€” the verse facsimile therefore shows the wide cell's flowed full verse over three lines, not the small cell's excerpt â€” then a **size row** listing the sizes that kind can be placed at with its best size marked (`saffronTint` pill, `saffronDeep` text; labels from `widgetSizeLabel()` in all four languages), then â€” Android only, and only for a content type that has a provider â€” a **per-kind** `requestPinAppWidget()` button (`testID="widget-add-{content}"`) that pins *that* widget rather than one catch-all. The facsimile keeps its single `accessible` node; the size row is one combined a11y node so the pills are not read one-by-one, and the add button stays a real button outside both. Add instructions are platform-specific and now say how to choose/change the size (iOS: swipe sideways in the picker; Android: long-press and drag the edges). Recovery copy renders in the cards when the payload is missing/expired/corrupt. Refreshes on focus, on a 5 s poll while active, and on app foreground.
-- **Home Discover card** (Â§18 / `HomeScreen.tsx` `spotlights`) â€” one launch-release `FeatureCard` spotlight (`key: 'home-widgets'`, `hasNew`, `à¤µà¤¿` glyph in the `saffronDeep`/`typography.thumb` grammar of the Â§46 à¤¸à¤‚à¤•à¤²à¥à¤ª card) whose CTA opens the Widget Gallery via `rootNav.navigate('MoreTab', { screen: 'WidgetGallery' })`. Order is shuffled per open like every other spotlight.
-
-**Recovery / expired states.** The native reader validates schema, required fields, dates, and freshness before rendering, and fails **closed** â€” it never shows partially decoded values or an old entry labelled as today: first-run/missing â†’ `à¤µà¤¿à¤œà¥‡à¤Ÿ à¤¤à¥ˆà¤¯à¤¾à¤° à¤•à¤°à¤¨à¥‡ à¤¹à¥‡à¤¤à¥ à¤µà¥‡à¤¦à¤¾à¤‚à¤¶à¤¼ à¤–à¥‹à¤²à¥‡à¤‚`; corrupt/incompatible â†’ the same safe open-app card; Panchang expired â†’ `à¤ªà¤‚à¤šà¤¾à¤‚à¤— à¤¤à¤¾à¤œà¤¼à¤¾ à¤•à¤°à¤¨à¥‡ à¤¹à¥‡à¤¤à¥ à¤µà¥‡à¤¦à¤¾à¤‚à¤¶à¤¼ à¤–à¥‹à¤²à¥‡à¤‚` with no old tithi; verse expired â†’ a neutral open-app card; Japam snapshot old â†’ a refresh prompt (the in-app gallery drops to the recovery card), never an old count as today's. A successful in-app write requests an immediate native reload rather than waiting for the next timeline tick.
-
-**Architecture.** A versioned, bundle-only document â€” `WidgetPayloadV1` (`mobile/src/widgets/contract.ts`: `schemaVersion`, provenance, `locale`, a ~14-day IST Panchang window, a device-local verse window, and a Japam snapshot). A **pure planner** (`planner.ts` â€” no React/storage/network/wall-clock/native) builds dated entries; a **deferred coordinator** (`WidgetCoordinator.tsx`, mounted in `App.tsx` outside `NavigationContainer`) runs *after* `InteractionManager` settles â€” it dynamically `import()`s the planner so the Panchang graph never loads on Home's first-frame path â€” dedupes by a stable key over day/location/calendar/language/japam revision, throttles writes, atomically persists, then requests a native reload. Transport is the App Group file on iOS (`group.com.prashantsharma.vedansh.widgets`, `mobile/modules/home-widgets-ios/`) and a dedicated SharedPreferences payload on Android. Deep links use the `vedansh://widget/{verse|panchang|japam}` scheme (`deepLink.ts`), dispatched on cold + warm start from `App.tsx`.
-
-**Native targets.** A real WidgetKit **app extension** target (`VedanshWidgets`, bundle id `â€¦vedansh.widgets`, iOS 16+) generated by the CNG config plugins (`mobile/plugins/withHomeWidgets.js`, `withHomeWidgetsIos.js`, sources under `mobile/plugins/home-widgets/`), with App Group entitlements on both app + extension and the four-language serif faces (Noto Serif Devanagari/Gujarati/Kannada + Inter, 500/600) copied into the extension. Android ships an AppWidget provider + RemoteViews under the same plugin. `mobile/ios/` is prebuild output (gitignored) â€” the plugin is the source of truth.
-
-**Design compliance (Â§2/Â§3/Â§9).** The in-app gallery (`WidgetGalleryScreen`) draws colours from `useTheme()`, geometry from the shared `spacing`/`radii` scales (preview cards use the `radii.lg` card corner, the CTA is a `radii.pill`), and the preview eyebrow from the shared **`eyebrowTextStyle(lang)`** helper (Â§48) â€” italic Cormorant + tracking for en, script serif with **no** tracking for hi/gu/kn, so the Devanagari shirorekha is never split. The preview cards' facsimile body/headline sizes are layout-tuned to mirror the OS widget (like the Â§54 ShareCard) and stay â‰¥10 pt. On the native side, theme token values are mirrored into the extension through **one reviewed mapping** (`WidgetTheme` in `VedanshWidgets.swift` â€” `parchmentSoft`/`ink`/`inkMuted`/`saffronDeep`/`gold`, not scattered `Color(red:â€¦)` literals; the Android RemoteViews layout mirrors the same hex). Because the widget forces a fixed light `parchmentSoft` container background, **every glyph is given an explicit token colour** â€” `ink` for titles/verse/numerals, `inkMuted` for source/metadata/round lines, `saffronDeep` for eyebrows, `gold` for the à¥ brand â€” and native text **never** falls back to SwiftUI's scheme-adaptive `.primary`/`.secondary`, which would invert to light shades in dark mode (invisible on the cream) and, even in light mode, render `.secondary` as a sub-AA washed-out gray. Section-label eyebrows render in the script serif for hi/gu/kn (Inter for en); text on terracotta-tinted surfaces uses `avoidDeep`. Meaningful widget text stays **â‰¥10 pt** (labels that can't fit are removed, not shrunk); numerals/times/status labels use a non-italic **â‰¥600** face â€” italic Cormorant is limited to short prose flourishes; state is never colour-only (the streak carries a number/label, avoid windows carry their names); the verse has a deterministic two-line fit with the full text in the accessibility label, and large-text snapshots must not clip Devanagari matras.
-
-**Tests.** Pure/fixture suites under `mobile/src/widgets/__tests__/` â€” `contract` (schema round-trip; missing/corrupt/incompatible/expired rejection; all-four-languages required; dedup-key sensitivity), `catalog` (contentâ†”size parity across the gallery, the Swift `supportedFamilies`, the Kotlin providers, the manifest receivers in `withHomeWidgets.js` and the `appwidget-provider`/layout resources they name â€” plus the verse-is-wide-first / Panchang-is-small-first rule this section exists for), `planner` (japa streak, >108, IST vs device-local boundaries, two-line determinism), `planPayload` (real 14-day payload, process-TZ isolation), `deepLink` (verse/Panchang/japam parse + routing + cold-start retry), `startup` (coordinator does no static Panchang import; one iOS kind per content type). A committed fixture (`fixtures/widget-payload-v1.json`) is decoded by TypeScript, Swift, and Kotlin to pin cross-language parity. Maestro `mobile/.maestro/home-widgets-smoke.yaml` covers the More-row â†’ gallery path and the three deep links. **Device-only gates** (PRD-15 Â§5/Â§8, not automatable here): EAS multi-target sign + physical-device install, per-size render/VoiceOver/large-text screenshots â€” now **every kind Ã— every advertised size**, since each is a real placement a user can choose â€” and the per-kind Android pin flow.
-
----
-
-## 60. Event Muhurat Finder (à¤¶à¥à¤­ à¤®à¥à¤¹à¥‚à¤°à¥à¤¤ à¤–à¥‹à¤œ, PRD-16)
-
-**Purpose.** Answer *"which day should I do this on?"* from the shipped panchang/muhurat/jyotish primitives â€” ranked days with the auspicious windows inside each, fully offline. Answer-first: the recommendation leads; the panchang reasoning is inspected second.
-
-**Structure.** Four screens in the Panchang stack (`MuhuratFinder` â†’ `MuhuratResults` â†’ `MuhuratDayDetail`; `AbujhDays` beside them):
-
-1. **Occasion picker** (`MuhuratFinderScreen`) â€” the one decision. A 58pt-row list of the six occasions from `EVENT_RULES` (`panchang/eventMuhurat.ts`), each row Devanagari title + counterpart caption, then the **à¤µà¤¿à¤¶à¥‡à¤· à¤¶à¥à¤­ à¤¦à¤¿à¤¨ / Special auspicious days** door (`AbujhDays`). The window is fixed at `FINDER_WINDOW_DAYS` (~3 months); no range chooser on the primary path.
-2. **Ranked results** (`MuhuratResultsScreen`) â€” **à¤¸à¤°à¥à¤µà¥‹à¤¤à¥à¤¤à¤® à¤¤à¤¿à¤¥à¤¿à¤¯à¤¾à¤** (rank 1 takes the `cardActive` treatment + `elevation.lifted`; the rank-1 tier line carries the provenance suffix **Â· à¤¦à¥ƒà¤•à¥à¤ªà¤‚à¤šà¤¾à¤‚à¤— à¤ªà¤¦à¥à¤§à¤¤à¤¿**) then **à¤…à¤¨à¥à¤¯ à¤‰à¤ªà¤¯à¥à¤•à¥à¤¤ à¤¤à¤¿à¤¥à¤¿à¤¯à¤¾à¤**. Each card: short date + weekday â†’ quiet tier text â†’ **the best window as the dominant element** (`cardHindi` 17). Two tiers only â€” **à¤¶à¥à¤°à¥‡à¤·à¥à¤  / à¤®à¤§à¥à¤¯à¤®** â€” never a score (the Â§51 no-luck-score rule extends here). **Empty-with-reason**: a zero-result window renders the gold-à¥¥ card naming the dominant doshas with their day-counts, then **à¤‡à¤¸à¤•à¥‡ à¤¬à¤¾à¤¦ à¤ªà¤¹à¤²à¥€ à¤¤à¤¿à¤¥à¤¿à¤¯à¤¾à¤** â€” the first qualifying days beyond the window (the hook keeps scanning to ~260 days).
-3. **Day detail** (`MuhuratDayDetailScreen`) â€” **Answer â†’ Action â†’ Evidence.** The answer block reuses the `cardActive` gradient + à¥¥ mark: date, panchang line, tier pill on `goldChipBg` (or the terracotta *not-suitable* pill on `avoidChipBg`), and the best window at `cardHindi` 22. Below it the **à¤¦à¤¿à¤¨ à¤•à¥‡ à¤¸à¤­à¥€ à¤¶à¥à¤­ à¤¸à¤®à¤¯** pill links to the shipped `MuhuratDetail` (`{ dateMs }`), and a **ShareButton** in the top bar (shareable = non-excluded days only) captures `MuhuratFinderShareCard` off-screen â€” occasion, date, panchang line, tier + convention, best + next windows, purohit line, à¥ à¤µà¥‡à¤¦à¤¾à¤‚à¤¶à¤¼ brand â€” via the same `view-shot` â†’ `expo-sharing` pipeline as `MuhuratDetailScreen`; the card carries no personal data by construction. Evidence renders under the actions: à¤…à¤¨à¥à¤•à¥‚à¤²/à¤¸à¤¾à¤®à¤¾à¤¨à¥à¤¯ factor rows, the full per-occasion dosha checklist (**à¤‰à¤ªà¤¸à¥à¤¥à¤¿à¤¤ / à¤¨à¤¹à¥€à¤‚** â€” words, never colour alone, Â§12), and up to three further windows on `goldTint` rows. Footer: *à¤ªà¤°à¤®à¥à¤ªà¤°à¤¾à¤à¤ à¤­à¤¿à¤¨à¥à¤¨ à¤¹à¥‹ à¤¸à¤•à¤¤à¥€ à¤¹à¥ˆà¤‚à¥¤ à¤ªà¥à¤°à¥‹à¤¹à¤¿à¤¤ à¤¸à¥‡ à¤ªà¥à¤·à¥à¤Ÿà¤¿ à¤•à¤°à¥‡à¤‚à¥¤*
-4. **Abujh calendar** (`AbujhDaysScreen`) â€” days needing no shuddhi, resolved by the **festival engine** (`ABUJH_RULE_IDS`, `panchang/abujhMuhurat.ts`) plus computed Guru/Ravi Pushya days. The festival resolve is bounded by its **date horizon only** â€” a count cap silently truncated the list to Dussehra plus the Pushya days for the whole of Phase 1 (RULEBOOK Â§17.8) â€” and an abujh day now lifts the **seasonal** bars in the finder (chaturmas, guru/shukra asta) so the two screens cannot contradict each other on those. Each row routes to that day's `MuhuratDetail`. It shares the finder's day cache and **paints progressively** â€” the cheap (precomputed) festival days appear first, then the Guru/Ravi Pushya days stream in â€” so the screen never sits on a bare spinner (the earlier "stuck on click" on a real device). Every day-solve is individually guarded, so a single malformed solve is skipped instead of stranding the spinner.
-
-**Entries.** Home grid **à¤®à¥à¤¹à¥‚à¤°à¥à¤¤** tile after à¤•à¥à¤‚à¤¡à¤²à¥€ (Â§18, NEW badge); the **MuhuratFinderDoor** row on the Panchang tab (between glance card and anga grid). Both are additive.
-
-**Month-view overlay.** Results carry a **à¤•à¥ˆà¤²à¥‡à¤‚à¤¡à¤° à¤®à¥‡à¤‚ à¤¦à¥‡à¤–à¥‡à¤‚** pill â†’ `PanchangHome` with a `muhuratOverlay: { occasionId, days }` param. The existing month grid rings those days (`goldTint` fill + 1.5px `gold` border â€” selection still wins; cell a11y labels append "Muhurat day", never colour alone Â§12), auto-expands the calendar, and shows a dismissable `goldTint` chip naming the occasion ("â€¦ â€” à¤¶à¥à¤­ à¤¦à¤¿à¤¨ à¤˜à¥‡à¤°à¥‡ à¤®à¥‡à¤‚", âœ• clears the param). One calendar vocabulary â€” the finder marks the shipped grid, it does not fork it.
-
-**Engine (Phase 2 â€” TRD-16/P2).** `panchang/eventMuhurat.ts` is pure (same boundary as `kundali.ts`; guarded by a source-purity test) and grades in **two passes**: a DAY pass for doshas that hold sunrise-to-sunset (adhik Â· vyatipata Â· vaidhriti Â· **chaturmas** Â· **masa** Â· **guru/shukra asta**), then a **WINDOW pass** â€” bhadra-overlapped windows dropped, each survivor graded on the anga prevailing **at its start** (`angaAt`, kshaya-aware: the skipped anga comes first, then *its* successor) plus the anga doshas at that instant (rikta Â· amavasya Â· panchak). Every offered window carries its **own tier and factors**; the day's tier is the best window's, shreshtha windows lead. **à¤­à¤¦à¥à¤°à¤¾ is an interval, not a whole-day flag**: `engine.ts` now solves `karana.endTime` (a 6Â°-elongation twin of the tithi bisection â€” `PANCHANG_DAY_CACHE_VERSION` bumped to 2), `bhadraInterval` spans sunrise â†’ that end, and windows inside it are dropped, never clipped; a bhadra that outlasts every window still excludes the day and names à¤¬à¤¦à¥à¤°à¤¾ in the reasons. Chaturmas is derived from the sunrise anga (Devshayani â†’ Dev Uthani, kshaya-safe, **purnimant-normalised** so the user's amanta setting cannot move the season); **masa shuddhi** is a lookup against the same normalised month (per-occasion `masa.barred`, DRAFT â€” only Upanayana's table is populated pending Â§10). Asta uses `getSiderealPlanetLongitude` at local noon (orbs 10Â°/11Â°; the 8Â° retrograde-Shukra variant is an open RULEBOOK Â§17 question). `useMuhuratFinder` scans one panchang solve per day, chunked behind `InteractionManager` + `setTimeout(0)` like `useMuhurat`.
-
-**Thirteen occasions, grouped picker.** `EVENT_RULES` now carries à¤­à¤µà¤¨ (Griha Pravesh, Bhumi Pujan) Â· à¤¸à¤‚à¤¸à¥à¤•à¤¾à¤° (Namkaran, Vidyarambh, **Mundan, Annaprashan, Karnavedha, Upanayana**) Â· à¤•à¥à¤°à¤¯ à¤µ à¤†à¤°à¤®à¥à¤­ (Vahan, Vyapar, **Sampatti, Swarna**, and â€” Phase 3 â€” **à¤¯à¤¾à¤¤à¥à¤°à¤¾**, which joins this group rather than taking its own row); the picker renders three `sectionLabel` groups over the same `ListCard` rows â€” no new card grammar, à¤…à¤¬à¥‚à¤ door still last. Annaprashan's 6thâ€“8th-month guidance is caption copy (the same plain-occasion treatment Namkaran shipped with â€” a within-window mode remains future work). All thirteen tables are DRAFT (`verified: false`).
-
-**Phase 3 â€” à¤²à¤—à¥à¤¨-grade windows (PRD-16/P3, Aug 2026).** `panchang/lagnaSweep.ts` (pure) tiles every civil day into its 12â€“13 ascendant-rashi spans: a closed-form `ascendantSiderealLongitude` in `kundali.ts` (mathematically identical to `computeLagna`'s bisected root â€” agreement < 1e-12Â° verified) is swept from sunrise to next sunrise and each 30Â° crossing is bisected **in time**. The spans live in **`DayInputs.lagnas`** (one store, every surface shares the solve â€” measured cost +3.6% on `computeDayInputs`, far inside the â‰¤ 25% gate, so the in-store default holds and **`PANCHANG_DAY_CACHE_VERSION` is 3**). The window pass now **splits first, grades second**: each surviving window splits at every lagna boundary AND every anga changeover inside it (kshaya-aware â€” the skipped anga inserts its own segment); split parts under **24 minutes (~1 ghatika)** are dropped, never clipped; each segment is graded at its own start, so nothing is "graded at start and flagged" any more â€” the segment IS the window. Lagna is a **factor, not a fourth chip**: a *preferred* lagna sets `factors.lagna` (tie-break + evidence word), a *barred* lagna demotes à¤¶à¥à¤°à¥‡à¤·à¥à¤  â†’ à¤®à¤§à¥à¤¯à¤® and never excludes a day; **the per-occasion tables ship EMPTY DRAFT** (grading inert, pinned by test) pending the two-source review in `docs/roadmap/conventions/muhurat-lagna-v1.md`. **Hora** (`panchang/hora.ts`, pure, not persisted): 12 + 12 unequal planetary hours, weekday-lord first; **evidence and tie-break only** â€” segment ordering runs tier â†’ preferred lagna â†’ window priority (Amrit â†’ Abhijit â†’ Shubh â†’ rest, unchanged since Phase 1) â†’ benefic hora (à¤—à¥à¤°à¥/à¤¶à¥à¤•à¥à¤°/à¤¬à¥à¤§) â†’ time, so hora can never move a tier or leapfrog the priority order. **Late-onset Vishti is solved** (the Â§0.3 prerequisite): `engine.ts` fills `PanchangData.lateVishti` when the karana after the sunrise karana is Vishti, and `bhadraInterval` returns it, so an afternoon Bhadra drops windows exactly like a sunrise one (27 Aug 2026 â€” the eve-of-Raksha-Bandhan Bhadra â€” is the re-pinned example: Phase 2 offered its Purnima windows blindly; Phase 3 honestly excludes the day naming à¤¬à¤¦à¥à¤°à¤¾). **à¤¯à¤¾à¤¤à¥à¤°à¤¾ + à¤¦à¤¿à¤¶à¤¾ à¤¶à¥‚à¤²**: the results screen alone shows an 8-direction à¤¦à¤¿à¤¶à¤¾ chip row above the list (persists through the re-scan a chosen direction starts); the chosen direction's shool days are excluded **with the reason naming the direction**; direction is scan-time input, never persisted (a followed à¤¯à¤¾à¤¤à¥à¤°à¤¾ day re-grades direction-free). à¤¦à¤¿à¤¶à¤¾ à¤¶à¥‚à¤² rows are DRAFT in the same convention doc; intercardinal directions carry no shool in v1 (recorded variant choice).
-
-**Phase 3 UI.** Result cards stay the identical `ListCard` â€” the best-window line gains a quiet **lagna chip** (`à¤¶à¥à¤­ 8:05 â€“ 9:31 AM Â· à¤µà¥ƒà¤¶à¥à¤šà¤¿à¤• à¤²à¤—à¥à¤¨`), and when the best window is a lagna-split part its contiguous sibling renders as a second line with an italic `à¤²à¤—à¥à¤¨ à¤¸à¥€à¤®à¤¾ à¤ªà¤° à¤µà¤¿à¤­à¤¾à¤œà¤¿à¤¤` note (anga-split siblings don't â€” their chips would be identical; the detail carries that story). Day detail: the best-window line in the answer block appends `Â· <rashi> à¤²à¤—à¥à¤¨`; the "à¤¯à¤¹ à¤¤à¤¿à¤¥à¤¿ à¤•à¥à¤¯à¥‹à¤‚?" evidence gains a **à¤²à¤—à¥à¤¨ row** (span + à¤…à¤¨à¥à¤•à¥‚à¤²/à¤¸à¤¾à¤®à¤¾à¤¨à¥à¤¯ â€” splitting guarantees the span covers the whole window, so the sub-line can say so truthfully) and a **à¤¹à¥‹à¤°à¤¾ row** whose verdict word is **à¤¸à¤¾à¤•à¥à¤·à¥à¤¯** (evidence only â€” wording, not colour, keeps it visibly outside the tier contract); each windows-list row appends its segment's lagna beside the tier word. The share card gains the best window's lagna line only â€” general panchang data, still no personal data by construction (open question Â§14.7: drop without engine change if it clutters the 4:5 card).
-
-**Phase 4 â€” personalised Tarabala/Chandrabala (PRD-16/P4, Aug 2026).** `panchang/taraChandraBala.ts` (pure integer arithmetic) + `useMuhuratBala`: with a **saved Kundali profile** â€” never re-asked, nothing derived ever persisted â€” every candidate day gains a quiet **à¤†à¤ªà¤•à¥‡ à¤²à¤¿à¤** strip: the 9-tara word (inclusive janmaâ†’day count reduced mod 9; à¤µà¤¿à¤ªà¤¤à¥/à¤ªà¥à¤°à¤¤à¥à¤¯à¤°à¤¿/à¤µà¤§ unfavourable, à¤œà¤¨à¥à¤® **contested** â€” the shown word à¤®à¤¤ à¤­à¤¿à¤¨à¥à¤¨ is an open review question) and the chandra position (4/8/12 unfavourable, the 8th rendering **à¤šà¤‚à¤¦à¥à¤°à¤¾à¤·à¥à¤Ÿà¤®**, the strongest warm-avoid word the strip can show). Evaluation instant is the best window's nakshatra (`angaAtWindow ?? sunriseAnga`) and the day Moon's rashi at the window start, so the strip can never contradict the recommended window. **It annotates, never re-grades**: no tier change, no exclusion, no reordering â€” the general verdict stays identical across users and across every rider (share card, reminder scheduler, â˜… chip, month overlay). Both class tables are **DRAFT** pending `docs/roadmap/conventions/muhurat-tarabala-v1.md`'s two-source review, and the convention **deliberately diverges from the Guna Milan Tara koota** (divergence test-pinned â€” never reuse that matrix). UI: one tint+word row (`MuhuratBalaStrip variant="row"`) under the result card's window lines; a full-width strip (`variant="card"`) between answer and actions on the day detail, with a one-line explainer naming the à¤œà¤¨à¥à¤® à¤¨à¤•à¥à¤·à¤¤à¥à¤°/à¤°à¤¾à¤¶à¤¿ it counted from (auditable against the Kundali screen) and stating "à¤¯à¤¹ à¤¦à¤¿à¤¨ à¤•à¥€ à¤¶à¥à¤°à¥‡à¤£à¥€ à¤¨à¤¹à¥€à¤‚ à¤¬à¤¦à¤²à¤¤à¤¾". **No-profile state: the strip simply isn't there** â€” no modal, no badge, no per-card CTA; the ONLY trace is one italic footer line on the results list (`à¤•à¥à¤‚à¤¡à¤²à¥€ à¤¸à¤¹à¥‡à¤œà¤¨à¥‡ à¤ªà¤° à¤¹à¤° à¤¦à¤¿à¤¨ à¤†à¤ªà¤•à¥‡ à¤¤à¤¾à¤°à¤¾/à¤šà¤¨à¥à¤¦à¥à¤° à¤¬à¤² à¤•à¥‡ à¤¸à¤¾à¤¥ à¤¦à¤¿à¤–à¥‡à¤—à¤¾`), styled as the disclaimer beside it, deep-linking to the shipped Kundali screen â€” struck at the first design review if it reads as a nag, never migrated onto cards or the detail. **Privacy:** the strip never reaches `MuhuratFinderShareCard` (which stays "no personal data by construction") or any notification copy â€” both absences test-pinned; no cache-version bump (nothing in `DayInputs` changes; the profile key is outside the derived-cache universe).
-
-**Day detail, Phase 2 additions.** The windows list gains the **à¤­à¤¦à¥à¤°à¤¾ row struck through in place** (the Rahu Kaal treatment â€” the user sees it was considered) with a à¤µà¤°à¥à¤œà¥à¤¯ word-tag, and every other-window row carries its **tier word**. The "à¤¯à¤¹ à¤¤à¤¿à¤¥à¤¿ à¤•à¥à¤¯à¥‹à¤‚?" factor rows state the anga **at the best window** as the verdict, with the sunrise (udaya) anga as a quiet second line when they differ â€” the Panchang tab shows the udaya anga and always will, so without that line our own two screens would look contradictory. **Blast radius (TRD Â§1.2):** solving `karana.endTime` also makes the Panchang tab's Karana tile and the daily Muhurat card's Karana row show their end instant, with no change in those surfaces â€” wanted, since Tithi/Nakshatra already do.
-
-**Localisation & type.** Every string is authored Devanagari + English through `contentByLang` (gu/kn derive); verdict words are à¤…à¤¨à¥à¤•à¥‚à¤² / à¤¸à¤¾à¤®à¤¾à¤¨à¥à¤¯ / à¤‰à¤ªà¤¸à¥à¤¥à¤¿à¤¤ / à¤¨à¤¹à¥€à¤‚ â€” never Latin chips. Devanagari text carries no letterSpacing; section labels drop their tracking outside `en`. Warm palette only; tier/dosha signalling is tint + word (Â§12).
-
-**Shared components (no forks â€” Â§7/Â§9, RULEBOOK Â§9).** All four screens use the canonical **`ReaderHeader`** (`variant="index"`, like GunaMilan Â§58) â€” `[back] Â· centred title Â· right slot` â€” never a local top-bar/back copy; the day detail passes the shared **`ShareButton`** into its `right` slot. Secondary context that used to live as a header subtitle is a content line instead (the picker's "à¤†à¤ª à¤•à¥à¤¯à¤¾ à¤•à¤°à¤¨à¥‡ à¤œà¤¾ à¤°à¤¹à¥‡ à¤¹à¥ˆà¤‚?" prompt; the results' `city Â· à¤¦à¥ƒà¤•à¥à¤ªà¤‚à¤šà¤¾à¤‚à¤— à¤ªà¤¦à¥à¤§à¤¤à¤¿` line, which also carries the on-surface provenance).
-
-Every list item in the feature is the shared **`ListCard`** (`components/ListCard.tsx`) â€” the app's library list-card grammar extracted so muhurat doesn't fork its own look: a separate rounded card with the `cardActiveFromâ†’cardActiveTo` gradient + `cardActiveBorder` + `radii.lg` + `elevation.card`, a leading `CardThumb` (52pt gradient square), a title/subtitle column, and the standard 26pt saffron chevron. **No add-to-routine `+`** (that stays `LibraryCard`-specific). It is used by the **occasion picker** (thumb = Devanagari glyph, title = occasion, caption = counterpart), the **result cards** and **Abujh cards** (thumb = day number, title = month Â· weekday, then tier, then the best window), and the **`MuhuratFinderDoor`** (via the card's **`flat` variant** â€” `parchment-soft` on `divider`, no gradient, so it defers to the glance card above it, Â§33; thumb = a drawn sunrise glyph on a `saffron-tint` disc, title + à¤¨à¤¯à¤¾/NEW badge, subtitle). **Every result card is identical â€” there is no "hero" first card and no ordinal digits**; rank is carried by list order + the à¤¸à¤°à¥à¤µà¥‹à¤¤à¥à¤¤à¤® / à¤…à¤¨à¥à¤¯ à¤‰à¤ªà¤¯à¥à¤•à¥à¤¤ section labels, matching the app's uniform-list convention.
-
-**Performance â€” one day-store for the whole subsystem.** The per-day inputs (panchang solve + asta flags) live in the framework-free **`panchang/panchangDayStore.ts`**, keyed by **absolute civil date** (`YYYY-MM-DD`) within a scope of **`locationKey` + calendar system** â€” the app's canonical location key (cityId, else `lat,lng@2dp`), the same one the observance cache and the engine's Observer cache use, so a GPS fix with no cityId can never alias another city's days. Absolute-date keying (rather than an index off a scan's start day) is what makes a solved day survive a **midnight rollover** and an entry that starts on a different day. The store is bounded to **`MAX_CITIES` = 5 scopes, LRU**: a 6th city evicts only the least-recently-used one and fires eviction listeners; touring cities never evicts the ones under the cap.
-
-**Every** panchang surface reads that one store â€” the picker warmup (`useMuhuratFinderWarmup`), the occasion scan (`useMuhuratFinder`), the abujh scan (`scanAbujhDays`), the day detail (`MuhuratDayDetailScreen`), **and the daily surfaces**: Home's Today strip and the daily Muhurat card (`useMuhurat`) plus the Panchang tab's own day (`useTodayPanchang` / `usePanchangForSelection` / `usePanchangForDate`). So a day solved by any surface is free for all the others: the finder's ~90-day sweep also warms Home's today/tomorrow, and Home's solve warms the finder. None of these hooks keeps a private cache â€” `useMuhurat`'s old `SOLVE_CACHE` and the finder's old index-keyed `DAY_INPUT_CACHE` are both gone, and `MuhuratDay`/`nowPeriods` are re-derived per call because they are pure arithmetic over the cached days. Scans stay chunked behind `InteractionManager`, and yields are skipped for fully-cached chunks so a warm surface never flashes the spinner. Store and scan core live outside React precisely so they are unit-testable under the tsx engine suite (`panchangDayStore.test.ts`, `muhuratFinderScan.test.ts`).
-
-**One deliberate exception: the widget writer.** `widgets/planPayload.ts` solves with `civilTimeZone: WIDGET_TIME_ZONE` (its 14-day snapshot is IST-anchored, not device-local), and the scope key models only (location, calendar system) â€” so routing it through this store would alias its days onto the app's and hand one of the two readers the wrong day. `ScanOptions` declares `civilTimeZone?: never`, making that a compile error rather than a silent correctness bug.
-
-**Persistence.** Those solves are also written to disk, so re-entering any surface â€” or **cold-starting the app** â€” no longer re-solves. **`panchang/panchangDayCache.ts`** is the only module that touches AsyncStorage (the same `observanceStore` â‡„ `observanceCache` split, and the reason the store stays RN-free): one key per `(scope, civil day)` under `@vedansh:panchang-days:v<VERSION>:<scope>:<YYYY-MM-DD>`. Hooks `await hydratePanchangDays(...)` the range they need **before** solving and fire-and-forget `persistPanchangDays(...)` after; hydrate short-circuits with **no storage call at all** when the range is already warm, so a warm re-entry never waits on disk. Retention runs from **`RETAINED_PAST_DAYS` = 2** days back â€” one day is the hard requirement (`useMuhurat`'s pre-dawn correction reads yesterday's night choghadiya, so a today-onward cutoff left Home solving a day on every launch), the second is margin for the date picker's back-navigation; the same cutoff governs persist AND purge, so the sweep can never delete what persist just wrote. Older and stale-version keys are purged **once per session** (the sweep reads the whole AsyncStorage keyspace, and what it collects can only appear between launches or at midnight, so re-running it per cold range only put a full scan in front of the first hydrate of every day) and â€” since Aug 2026 â€” **after the read, unawaited**: it is pure housekeeping, because a stale-version key lives under a different key prefix and can never be returned by a current-prefix `multiGet`, while a still-readable day past the retention window is a *correct* solve for that day. Putting it in front of the `multiGet` meant the first cold surface of every launch waited on a whole-keyspace scan to learn nothing it needed. `panchangDayCacheSwept()` exists so the cache's own tests can await it; production code never may. An LRU eviction drops that city's disk keys too.
-
-**Reading the cache is I/O; only solving is CPU (Aug 2026).** `useMuhurat` used to run its whole chain behind one `runAfterInteractions` + `setTimeout(0)`, so even a full cache hit could not reach the screen until the UI reported itself idle â€” Home's `à¤†à¤œ à¤•à¤¾ à¤ªà¤‚à¤šà¤¾à¤‚à¤—` kept its `â€”` headline for the duration, which reads exactly like a cache that isn't there. Hydration is disk I/O the JS thread does not perform, so it now starts immediately and paints the moment disk answers; the interaction gate is reserved for what actually competes for the thread â€” astronomy for days disk did *not* have, and the roll-forward. Its sibling fix is in the Today strip itself (Â§48): the chip auto-scroll was holding an InteractionManager handle indefinitely, so on Home "idle" almost never arrived â€” and its follow-up is there too, because releasing the handle left the animation itself running forever at 60Hz on the launch path (Â§48 now drifts once, on a timer, after a settle delay), and the strip's à¤ªà¤¿à¤¤à¥ƒ à¤ªà¤•à¥à¤· chip was solving its fortnight in a bare `setTimeout(0)` outside the persisted layer built for exactly that solve. **Neither runs until the scope key is real**: `usePanchangLocation` reports the default city and `usePanchangCalendarSystem` reports purnimant while both hydrate from AsyncStorage, so a user on any other city or on amanta was spending a hydrate, three solves and a seven-day roll-forward on a scope discarded a tick later â€” on the launch path, ahead of the real one. `useMuhurat` now gates on `isLoading` + `usePanchangCalendarHydrated()`, the same pair `WidgetCoordinator` has always gated on. Pinned by `panchangDayRouting.jest.test.ts` (a disk hit paints with the interaction queue held open; nothing runs on a placeholder location) and `panchangDayCache.jest.test.ts` (the read lands with the sweep stalled).
-
-**The read starts at process launch, not after Home mounts (Aug 2026).** Third and last shape of the same report, and the one the two fixes above could not reach: not *what* stood in front of the read, but *when the read was allowed to begin*. The scope key needs BOTH panchang preferences, and they were read separately â€” the city from `PanchangLocationProvider`'s effect, the calendar system **lazily, by its first subscriber**, which is Home's Today strip, mounted only once `AppReadyGate` has opened the splash on the font-scale/language reads. So the `multiGet` that answers "what is today's panchang" was the launch's **third serial storage round trip**, behind a screen that had already painted everything else from bundled JS. A warm cache still read as a cold card, because the card is the one thing on Home that cannot render without disk.
-
-**`panchang/panchangPrefs.ts`** now owns both preferences behind **one memoized `multiGet`** (they are read together because together they are the scope key), and **`panchang/panchangLaunchPrefetch.ts`** turns that straight into warm days. `App.tsx` calls `prefetchTodayPanchang()` at **module scope**, beside the derived-cache reset and for the same reason â€” it must be in flight before React renders anything that reads it â€” so the preference read and the day read run *concurrently with* the splash gate instead of after it. By the time `TodayStrip` renders, the three civil days it needs are already in `panchangDayStore`, `usePanchangCalendarHydrated()` is already true, and `PanchangLocationProvider`'s lazy initializer starts on the user's real city with `isLoading` already false â€” so `useMuhurat`'s cache-only `useState` seed composes on the **first render** and the headline arrives in the same frame as the rest of Home. Three constraints hold it honest: the prefetch is **hydrate-only and never solves** (moving I/O earlier must not move CPU onto the launch path â€” astronomy stays behind `InteractionManager`); it warms exactly `todayMuhuratDayKeys()`, the shared helper `useMuhurat` reads through, because a prefetch that warms a different three days is a prefetch that does nothing (`composeSolved` returns null on ANY miss); the provider now issues **no storage read of its own**, awaiting the shared one, so the launch spends a single panchang-preferences round trip rather than two; and only a **successful** read is memoized, because one shared read that caches its own failure would pin the session to the fallback city with no retry. Pinned by `panchangLaunchPrefetch.jest.test.ts` â€” including a deliberate non-vacuity case asserting that *without* the prefetch the first render is still blank.
-
-**Roll-forward â€” the window must lead the surfaces, not end with them (Aug 2026).** Home's Today strip reads three civil days (yesterday's night window, today, tomorrow's sunrise) and used to persist exactly those three. So the persisted window always *ended* at tomorrow, and the first launch after every midnight found its own "tomorrow" missing â€” and `composeSolved` returns null on ANY miss, so the strip fell back to its `â€”` headline while the deferred path ran a purge sweep, a `multiGet`, and a fresh solve. Once per calendar day, for as long as the app was installed: a working persistent cache that still read to the user as "today's panchang is computed every day". **`panchang/panchangDayPrewarm.ts`** closes it â€” after the day's own solve lands, a today surface rolls the window **`PREWARM_DAYS` = 7** days past today (matching `FOLLOW_CHIP_HORIZON_DAYS`, so the strip's followed-muhurat chip lands warm too), then persists. A rollover then costs zero astronomy for anything on screen; the only solve left is the far edge of the window sliding one day out, in the background, for a day nothing reads. The warm is RN-free (the `InteractionManager` boundary belongs to `useMuhurat`), chunked with a yield every 2 real solves, cancelled on unmount, guarded so the two mounted today surfaces can't race the same cold days, and it never feeds React state â€” nothing re-renders because of it. Free when there is nothing to do: a warm range never reaches storage at all. Six extra keys per city. Storage is therefore bounded by 5 cities Ã— one scan horizon (~231 KB per city at ~906 B/day for a 260-day sweep). `Date` fields are tagged generically by `panchangDaySerde.ts` (a plain `JSON.stringify` would flatten `sunrise`/`endTime` to strings that never revive, silently changing what the user sees). **Only a location or calendar-system change forces fresh solves** â€” a different scope.
-
-**Build-change reset â€” the backstop under both cache versions (Aug 2026).** Hand-maintained cache versions only invalidate what someone remembered to invalidate, and a device that already scanned keeps serving the old engine's output forever, so a forgotten bump means the fix reaches only fresh installs. `utils/derivedCacheReset.ts` closes that class of bug: on every launch it compares a **build fingerprint** against the one the device last ran and, if it moved, clears the derived caches *before anything reads them*. The fingerprint (`utils/buildFingerprint.ts`) is `updateId | runtimeVersion | expoConfig.version | native build number` â€” the OTA id catches every OTA (and a rollback to the embedded bundle), `runtimeVersion` the store release (policy `appVersion`), the bundle's own version the same thing if that policy ever changes, and the build number a rebuild of the *same* version, which the other three share. Cost is asymmetric on purpose: a needless sweep costs one launch's re-solves, a stale cache costs the user the fix.
-
-**Scope is engine-computed calendar output only, and that boundary is the whole safety story.** Swept: `@vedansh:panchang-days:` (the per-day panchang/muhurat solves, plus the legacy `muhurat-days:` root), `@vedansh:observances:` (the per-city festival/vrat date scans â€” same engine family, and where a wrong DATE would sit), and `@vedansh:pitru-solves:` (the solved à¤ªà¤¿à¤¤à¥ƒ à¤¸à¥à¤®à¤°à¤£ occurrences and Pitru Paksha windows, Â§63 â€” the answer a scan over hundreds of those days produced, keyed by tithi alone). **Never** swept: the chosen city and calendar system (`@vedansh:panchang-location` / `panchang-calendar-system` â€” panchang-shaped and the easiest mistake here; clearing them silently returns the user to Ujjain), notification bookkeeping that mirrors what is actually scheduled with the OS, and every piece of practice, history, follow, birth detail and Pitru Smaran entry, none of which any engine can recompute â€” note that `@vedansh/pitru-smaran` (the family ledger the user typed) and `@vedansh:pitru-solves:` (dates derived from it) differ by one character and sit on opposite sides of this line. Also deliberately out of scope: `@vedansh/widget:last-plan-key-v1` â€” derived, but not calendar output, and it needs no help since `WidgetCoordinator` re-plans every pass and rewrites whenever the payload actually changes. `derivedCacheReset.test.ts` enumerates the full non-swept key set â€” the out-of-scope derived key included â€” and fails if any allowlisted prefix ever starts matching one.
-
-Two mechanics hold it together. `App.tsx` registers the reset at **module scope**, not in an effect, and both caches `await awaitDerivedCacheReset()` before touching storage â€” on hydrate so nothing reads days the sweep is about to delete, and on persist so nothing writes days it will wipe while the session's bookkeeping believes they are safe. And the reset module imports **AsyncStorage only**: `expo-updates`/`expo-constants` are untranspiled ESM Jest cannot parse, so the fingerprint read is isolated in its own module (the same reason `panchangDayStore` stays RN-free) â€” otherwise the gate would drag them into ~90 suites. A failed sweep leaves the fingerprint unwritten so the next launch retries, rather than recording a reset that never happened.
-
-> **RULE â€” bump `PANCHANG_DAY_CACHE_VERSION` (`panchang/panchangDaySerde.ts`) whenever the panchang engine changes**, or whenever persisted days could otherwise serve stale results (a change to `DayInputs`' shape, to `computeDayInputs`, or to the asta flags). Devices that already scanned keep hydrating the OLD engine's days forever otherwise, and the fix ships only to fresh installs â€” the same trap as `observanceCache`'s `CACHE_VERSION` (Â§ the Panchang gotchas). Two further preconditions hold the shared store together: keys use `locationKey`, and **no consumer may mutate a returned `PanchangData`** â€” every reader gets the same instance, so an in-place write corrupts the other surfaces and the persisted copy. Correctness is pinned by `dayCacheParity.e2e.test.ts` (*fresh == cached == serializeâ†’revive* over a full year Ã— 3 locations Ã— 2 calendar systems), `panchangDayImmutability.test.ts` (the no-mutation invariant, with a self-test proving the guard isn't vacuous), `__tests__/jest/panchangDayCache.jest.test.ts` (storage, including the once-per-session sweep), `__tests__/jest/panchangDayPrewarm.jest.test.ts` (the roll-forward window, its in-flight guard and cancellation), `__tests__/jest/panchangDayRouting.jest.test.ts` (the daily surfaces solve zero days when the store or disk is warm â€” **plus a real midnight rollover**, faking `Date` alone so the hooks' deferred chain still runs on real timers; a Maestro flow cannot move the device clock, so this is the only place that gate can live), and `.maestro/panchang-day-cache-smoke.yaml` (the cold-start journey).
-
-**Follow & remind (PRD-16 Â§6.7).** The day detail's **action band** carries a single **â˜† à¤‡à¤¸ à¤®à¥à¤¹à¥‚à¤°à¥à¤¤ à¤•à¤¾ à¤…à¤¨à¥à¤¸à¤°à¤£ à¤•à¤°à¥‡à¤‚** pill above the shipped `à¤¦à¤¿à¤¨ à¤•à¥‡ à¤¸à¤­à¥€ à¤¶à¥à¤­ à¤¸à¤®à¤¯` link â€” so Answer â†’ Action â†’ Evidence still holds, and follow is offered *after* the day is read rather than while scanning (every result card stays identical, so there is no per-card â˜…). An **excluded day offers no follow affordance at all**. Following opens the **shared `VratReminderSheet`** (extended with optional `dayOfOptions`/`subtitle`/`dayOfLabel`/`footnote` â€” not forked, Â§7/Â§9) carrying one muhurat-only choice, **à¤®à¥à¤¹à¥‚à¤°à¥à¤¤ à¤¸à¥‡ 30 à¤®à¤¿à¤¨à¤Ÿ à¤ªà¤¹à¤²à¥‡**, alongside 07:00/08:00. Saving with both notices off unfollows. The followed state replaces the CTA with a quiet `saffronTint` row that **states the resolved fire times** (`tabular-nums`, `numberOfLines={1}`) rather than "Reminder on" â€” the only way a user can see that changing city moved them â€” plus a **à¤¬à¤¦à¤²à¥‡à¤‚** re-entry.
-
-Storage is `contexts/MuhuratFollowContext.tsx`, a sibling of the vrat store rather than a reuse: a muhurat follow keys **one civil day** (`{occasionId}:{YYYY-MM-DD}`), sorts soonest-first, and **prunes itself once past**. Notifications are the seventh family â€” pure planner `notifications/muhuratReminderPure.ts` (prefix `muhurat-reminder`, cap 8 soonest-first, `ADVANCE_HOUR` shared with the vrat planner) + `muhuratScheduler.ts` glue + headless `<MuhuratReminderScheduler>`. **`clampDayOf` pulls the day-of notice back to `windowStart âˆ’ 30 min`** whatever the user picked, because a muhurat is a time: the 17 Aug 2026 Vahan window opens 6:07 AM and a literal 07:00 would arrive after it. Windows are **never persisted** â€” the scheduler re-derives each follow's window from `panchangDayStore` and re-arms on **location and calendar-system change**; a followed day that re-grades to `excluded` fires nothing and says so in words (Â§12). A tap deep-links to `MuhuratDayDetail {occasionId, dateMs}` with the date carried in the payload (an advance notice is read on a different day than it names).
-
-**Three contextual surfaces, zero chrome when unused.** â‘  Home's **Today strip** gains a `saffronTint` â˜… chip leading the row (`à¤µà¤¾à¤¹à¤¨ à¤•à¥à¤°à¤¯ Â· à¤¸à¥‹à¤® 6:07 AM` â†’ that day's detail) only while a follow sits inside `FOLLOW_CHIP_HORIZON_DAYS` (7) and still grades. â‘¡ Home's **FOR TODAY** row gains an `cardActive` **à¤…à¤¬à¥‚à¤ à¤®à¥à¤¹à¥‚à¤°à¥à¤¤** card on abujh days (`useTodayAbujh`) â†’ `AbujhDays`; on a catalogued festival day it slots **second** so the festival card still leads (`festiveReminders.test.ts` pins that promise). â‘¢ **`MyVratScreen`** grows an **à¤…à¤¨à¥à¤¸à¤°à¤£ à¤•à¤¿à¤ à¤®à¥à¤¹à¥‚à¤°à¥à¤¤** section â€” one â˜… inventory, not two â€” whose rows carry a date + countdown and re-solve to show drift in words. That screen's empty state now gates on both follow counts, since a user can follow a muhurat before any vrat.
-
-**Known limits (post-Phase 3/4).** Rule tables are DRAFT pending Â§10 review (RULEBOOK Â§17 â€” release gate), now including the masa tables, the lagna-preference/hora/à¤¦à¤¿à¤¶à¤¾-à¤¶à¥‚à¤² tables (`muhurat-lagna-v1.md` â€” the lagna tables ship EMPTY, so that factor is inert until review) and the Tarabala/Chandrabala classes (`muhurat-tarabala-v1.md`); both convention docs were authored **without content egress**, so their Â§10 sourcing is entirely outstanding. Two Phase-2 limits are CLOSED: windows straddling a changeover are now split, and late-onset Vishti is solved. Still open: yoga end-times stay unsolved by design (Vyatipata/Vaidhriti remain day-level); Abhijit-on-Wednesday (the minute-grade windows make the always-emit choice more visible); Chandra-vasa for à¤¯à¤¾à¤¤à¥à¤°à¤¾ (out of v1); the à¤œà¤¨à¥à¤®-tara word and an opt-in "prefer my good days" sort (both carried to the tarabala review). **The abujhâ†”finder contradiction is only partly closed**: seasonal bars now yield, but an abujh day can still be excluded by a per-day dosha (Akshaya Navami on a rikta tithi) or by failing the occasion's nakshatra/tithi/vara match (Dhanteras, excluded on factors alone) â€” while the Abujh screen calls the same day auspicious in its entirety. Â§4.2's wording is stronger than what ships; RULEBOOK Â§17.8 carries the decision to Â§10. Following an **occasion** as a standing interest ("tell me when a à¤¶à¥à¤°à¥‡à¤·à¥à¤  day appears") remains out of scope â€” this slice follows *days*. Maestro `muhurat-phase3-smoke.yaml` / `muhurat-phase4-smoke.yaml` are authored but still need their first device runs (iOS and Android reported separately, per the e2e policy).
-
----
-
-## 61. Namkaran (à¤¨à¤¾à¤®à¤•à¤°à¤£) â€” PRD-17
-
-**Purpose and placement.** Namkaran supplies a traditional starting sound from the birth Moon and a shelf of reviewed names; it never ranks names, scores them, or makes claims about the child. It is the fourth shipped `JyotishToolCard`, immediately below Guna Milan in both guest and saved-profile Jyotish landings, and pushes `Namkaran` â†’ `NamkaranResult` (and `Namkaran`/`NamkaranResult` â†’ `NamkaranRashi`) inside the existing Panchang stack. Phase 1 deliberately has no Home tile and no vidhi module.
-
-**Charana is primary; rashi is a peer entry, never a second answer.** The nakshatra charana is the finer calculation â€” one of 108 cells â€” and a rashi is exactly nine of those cells derived from the same table (convention Â§4), so the hero, the name index, the filters, the shortlist, the muhurat door, and the share model all stay charana-keyed. What rashi gets is *reachability*, because families are far more often told the Moon sign than the charana: a third browse door (`à¤°à¤¾à¤¶à¤¿ à¤¸à¥‡ à¤šà¥à¤¨à¥‡à¤‚`) on the entry screen using the same 3-column launcher grid over twelve tiles, and the `NamkaranRashi` detail it lands on. Rashi is never rendered as a competing hero, a ranked alternative, or a second syllable table.
-
-**Input and privacy.** The child mode of the shared `BirthDetailsForm` renders date + IST time only: no name, city, saved-Kundali autofill, or global Panchang-location mutation. Unknown time is stored as `null` and enumerates the whole IST civil day; noon is never fabricated. Birth input is session-only unless the initially-off `Remember birth details` switch is selected; its supporting copy says only that the form will be prefilled next time. The opt-out uses an invalidating mutation queue so clearing wins over an in-flight save. The shortlist is a separate id-only record and survives clearing birth input.
-
-**Answer grammar.** An exact result leads with the one new answer component, `NamaksharCard`: `cardActiveFrom â†’ cardActiveTo`, gold `à¥¥`, lifted elevation, a generous line box for the syllable, pronunciation aid, then nakshatra/pada/rashi provenance. The 58 pt syllable (54 pt on the share card) pins **no `lineHeight`** â€” its box is the container's `minHeight` 96 instead. A fixed leading under the natural Devanagari line box sliced everything above the shirorekha (`à¤•à¥‡` shipped as `à¤•` plus a stub, August 2026) and, being fixed, could not follow `maxFontSizeMultiplier` either, so it clipped again at the top type step. Every micro label across these surfaces â€” the `à¥¥ à¤¨à¤¾à¤®à¤¾à¤•à¥à¤·à¤°` eyebrow, `à¤¨à¤¾à¤® à¤¦à¥‡à¤–à¥‡à¤‚`, `à¤•à¥ˆà¤¸à¥‡ à¤¨à¤¿à¤•à¤²à¤¾?`, `à¤°à¤¾à¤¶à¤¿ à¤…à¤¨à¥à¤¸à¤¾à¤° à¤…à¤•à¥à¤·à¤°`, `à¤šà¥à¤¨à¥‡ à¤¨à¤¾à¤® à¤¶à¥‡à¤¯à¤° à¤®à¥‡à¤‚ à¤œà¥‹à¤¡à¤¼à¥‡à¤‚`, `à¤¦à¤¿à¤¨ à¤•à¥€ à¤à¤• à¤¸à¤®à¥à¤­à¤¾à¤µà¤¨à¤¾`, the rashi detail's `à¤°à¤¾à¤¶à¤¿ à¤•à¥‡ à¤¨à¥Œ à¤šà¤°à¤£` and `à¤‡à¤¸ à¤¦à¤¿à¤¨ à¤•à¥€ à¤¸à¤®à¥à¤­à¤¾à¤µà¤¨à¤¾`, and the share card's two eyebrows â€” routes through `pillTextStyle` (Â§3.0): they shipped as Inter + Latin tracking, which has no Indic glyphs and prises each cluster apart. Guarded by `components/__tests__/namkaranTypeFit.test.tsx` across all four languages. Unknown-time results have no hero and no share action; every candidate is a uniform shipped `ListCard` with an IST window. Each candidate **opens** that charana's full result â€” hero, context, names, shortlist â€” carrying `fromUnknownTime`, which keeps a `à¤¦à¤¿à¤¨ à¤•à¥€ à¤à¤• à¤¸à¤®à¥à¤­à¤¾à¤µà¤¨à¤¾ Â· One of the day's possibilities` notice above the hero and suppresses the exact-syllable share and its shortlist opt-in (Â§8.3 invariant 5). Uniform rows are the anti-ranking discipline; being navigable is not ranking. The flag is what suppresses the share, not the basis: the identical charana reached deliberately through a nakshatra or rashi browse still shares, because a browse is a table lookup rather than a claim about this child's birth. The flag also travels through the rashi detail â€” an uncertain result opens `NamkaranRashi` with `dayCharanas`, so those rows mark as that day's possibilities and re-flag on open. Without that the detail would be a side door back to the share the range path withholds (RULEBOOK Â§18.3/Â§18.8). The two path-B doors, four pada choices, name rows, and muhurat door are also `ListCard`. The 27-choice nakshatra selector is the deliberate compact exception: the shipped Home `CategoryCard variant="launcher"` in a 3-column Ã— 9-row grid, with the current-language name fitted inside the tile over at most two lines and no ordinal-number title. This is an explicit index variant of Â§18's label-below launcher: the in-tile label holds **one fixed size** (13 pt Devanagari / 14 pt Latin, `lineHeight` 21, `numberOfLines={2}`, `maxFontSizeMultiplier` 1.25) across all 27 tiles â€” no platform auto-fit. It deliberately does **not** use `adjustsFontSizeToFit`: on iOS a multi-line label with a fixed `lineHeight` shrinks erratically and ignores `minimumFontScale`, so scattered tiles (à¤¹à¤¸à¥à¤¤ Â· à¤šà¤¿à¤¤à¥à¤°à¤¾ Â· à¤¸à¥à¤µà¤¾à¤¤à¥€) collapsed to a few points beside full-size neighbours (August 2026). Two lines at the fixed size clear every shipped name â€” the longest word in any of them is ~6 Devanagari clusters â€” so nothing needs to shrink. It replaces the former 27 full-width rows without creating a new card grammar. The name list is a `FlatList` with word+tint gender, length, and shortlist states; its header ends with `paddingBottom` 14 so the first name card clears the length-filter chips â€” a `gap` only spaces the header's own children, and with zero clearance the card's upward shadow bled onto the chips and the two read as one overlapping block.
-
-**Rashi cross-check and detail.** The result's `RASHI SOUNDS` card derives its cells from `rashiCharanaEntries` â€” nine *charanas*, not a flattened syllable list, so the 3Ã—3 shape survives charanas that carry alternates (Makara spans Shravana's dual à¤œ/à¤– series: nine charanas, thirteen syllables). Each cell is a 44 pt control that opens that charana's names â€” except the cell(s) this result already shows, which render as a marked, non-interactive `à¤¯à¤¹à¥€ Â· this one` state (word + tint, greyscale-legible per Â§12) because pushing a duplicate of the screen being read is not a destination. A `Rashi naming detail` row opens `NamkaranRashi`. The `NamaksharCard` hero itself is never tappable (`accessibilityRole="summary"`): it *is* the answer, with its names already listed below it. An unknown-time result renders **one card per distinct rashi the day touched** (`distinctRashiIndices`) with a line saying the Moon changed rashi, because roughly one day in two crosses a 30Â° boundary and naming only the first candidate's rashi would rank a candidate the range path refuses to rank. `NamkaranRashiScreen` is the detail: a summary card (rashi name, charana/sound counts, the nine glyphs), then the nine charanas grouped by nakshatra as `ListCard` rows carrying the pada, its sounds, a lazily-counted name total when the corpus has one, and a thin-charana note. Both surfaces state plainly that charana-naming and rashi-naming are both in use.
-
-**Share boundary.** Exact results reuse `JyotishShareSheet` and a fixed 4:5 `NamkaranShareCard`. Its model allow-lists syllables, nakshatra, pada, rashi, disclaimer, and brand. Shortlisted names require a fresh per-share opt-in and are capped with an overflow line; birth date/time, location, basis, longitude, profile identifiers, and hidden metadata cannot enter the model. An unknown-time range has no exact share.
-
-**Content and release state.** `namakshar-v1` remains `verified:false`; the convention and full name corpus are release blockers under RULEBOOK Â§18. The checked-in shards are an explicitly `releaseEligible:false` development sample used to exercise the UI/privacy flow without inventing editorial sign-off â€” 17 names over 9 of 108 charanas, so most charanas legitimately render the "not yet available" empty state on a dev build. The production corpus must meet the attestation and 12+12-per-charana/fallback contract before the card is exposed in a release.
-
-**Corpus shape â€” 27 shards and a count index.** The corpus is **one file per nakshatra**, `data/namkaran/names.<NN>-<slug>.json` (`names.00-ashwini.json` â€¦ `names.26-revati.json`), behind a **static** require map in `data/namkaran/index.ts`; Metro cannot resolve a computed require path, and listing the 27 literally also keeps the shard set auditable. The split is keyed to nakshatra because `charana â†’ nakshatra` is `floor(c/4)`, which makes both an exact result and a thin-charana fallback exactly one shard â€” the fallback needs a whole nakshatra, and a nakshatra *is* a file. Worst case is an unknown-time day straddling a nakshatra boundary: two shards, ~58 KB. A name whose charanas span two nakshatras lives in both shards, byte-identical, de-duplicated by id at load. Per-charana name counts for the rashi detail's nine count lines come from generated `counts.json` (`npx tsx scripts/namkaran-build-index.mts`), **not** from loading shards to tally them: a rashi's nine charanas span up to three nakshatras, so tallying would pull three files to print nine numbers and undo the sharding. No surface loads the whole corpus â€” there is deliberately no full-corpus loader to reach for. Budgets and the reviewed decision behind them: RULEBOOK Â§18.4a.
-
-**Fallback notice tracks the fallback, not the wish for one.** The `à¤ªà¥à¤°à¤šà¤²à¤¿à¤¤ à¤¨à¤¾à¤® à¤¸à¥€à¤®à¤¿à¤¤ à¤¹à¥ˆà¤‚` line renders only when the nakshatra-level broadening was actually **applied**, which means exact results only. A range deliberately does not broaden â€” widening to one candidate's nakshatra would privilege that candidate, the exact ranking the unknown-time path refuses to do â€” so on a range the notice stays away rather than describing a broadening that never happened. It shipped keyed to "fallback was wanted" and so claimed the whole nakshatra while still listing one charana's names (August 2026). Both directions are pinned in `screens/__tests__/NamkaranExperience.test.tsx`; the range case needs a fixture day whose charanas are all nameless (charanas 60â€“64 at present), since a span touching a charana that *has* a dev name passes vacuously.
-
-**Customer-copy boundary.** Screens and share output describe the tradition, actions, and outcomes only. They never expose on-device/offline/internet/account/storage implementation details, convention or schema versions, DRAFT/review status, or corpus eligibility. Release gates remain enforced by metadata and tests rather than customer-facing warnings. The `à¤•à¥ˆà¤¸à¥‡ à¤¨à¤¿à¤•à¤²à¤¾?` line may name the Lahiri method and explain Moon nakshatra + pada â†’ starting sound.
-
-**Design system.** Existing warm tokens only; no emoji or new colours. All controls are at least 44 pt and field buttons remain 48 pt. The nakshatra and rashi grids use the same 72 pt launcher tiles, gradient, border, elevation, and three-column spacing as Home. Visible strings route through `contentByLang`/`meaningByLang`, gu/kn re-script from Devanagari, and English accessibility labels stay stable for Maestro. Files: `panchang/namkaran*.ts`, `data/namkaran/`, `screens/Namkaran*` (including `NamkaranRashiScreen`), `components/NamaksharCard`, `NameDetailSheet`, `NamkaranShareCard`.
-
----
-
-## 62. Puja Vidhi (à¤ªà¥‚à¤œà¤¾ à¤µà¤¿à¤§à¤¿ â€” guided step-by-step puja flows, PRD-19)
-
-**Purpose.** Own the *performed* moment of a festival or personal remembrance day: samagri gathered beforehand, every step guided in hand, and applicable katha/aarti/prayer texts opened from readers the app already ships. The catalog ships seven Vidhis: the six festive household procedures plus **à¤ªà¤¿à¤¤à¥ƒ à¤¤à¤¿à¤²-à¤¤à¤°à¥à¤ªà¤£ à¤¸à¥à¤®à¤°à¤£** (10 steps), a narrow, mantra-free household remembrance guide â€” 106 steps total. It explicitly is not complete Shraddha and carries no pinda/bhojana/homa sequence, fixed formula, direction or sacred-thread rule. Beyond the katha/aarti hand-offs, Phase 2B added liturgy hand-off steps into shipped verified sections; the personal guide adds optional Gita chapter 15/2 hand-offs without retyping either chapter.
-
-**Entries â€” no new Home category** (the launcher grid stays closed): the day panel's `à¥¥ à¤ªà¥‚à¤œà¤¾ à¤µà¤¿à¤§à¤¿` ObservanceCard pill (Â§33.5, driven by `vidhiId` on the observance rule â€” the identical hook mechanism as `kathaId`), the **à¤ªà¥‚à¤œà¤¾ à¤µà¤¿à¤§à¤¿** tile on the Vrat & Parv catalog's Browse-by-type grid (Â§33) â€” the always-available door, since the pill is date-dependent â€” and, since Phase 2B: **search rows** (one section-group row per vidhi, Â§36), the **Observance Detail "à¤ªà¥‚à¤œà¤¾ à¤µà¤¿à¤§à¤¿ Â· How to observe" card** (Â§33), and a **Home DISCOVER spotlight** (Â§32).
-
-**Back always retraces the journey â€” the flow is registered on all three hosting stacks.** The routes are declared once in `VidhiStackParamList`, intersected into Home, Panchang and More, and registered by all three navigators. Home discovery/search/routine, Panchang observance/catalog, and More's Pitru Smaran doors therefore push in place. Conduct hand-offs use `navigateToHomeStackTarget`, which pushes locally when the enclosing stack owns the reader and otherwise falls back to `HomeTab`. `GitaReader` is also mounted on More so the personal-tithi guide's only two reader hand-offs return directly to the conduct step.
-
-**Data.** `mobile/src/data/vidhi/` â€” `types.ts` adds optional `anchor:'personal-tithi'` and a `gita` ref alongside katha/section refs. Festival entries retain `festivalIds` and deity tags; the personal entry deliberately has neither. **Convention/source fields and `sourceUrl` are review-only and never render** â€” pinned across every page of all seven entries. Checklist + resume state remain under `@vedansh/vidhi-checklist`: samagri is keyed by vidhi + occurrence date and conduct progress by vidhi + civil day. Personal routes carry only `{vidhiId,dateMs}`; no remembered name, relation or entry id enters Vidhi state.
-
-### 62.1 Vidhi Catalog (`VidhiCatalogScreen`)
-
-`ReaderHeader variant="index"` ("à¤ªà¥‚à¤œà¤¾ à¤µà¤¿à¤§à¤¿à¤¯à¤¾à¤"), then one card per published vidhi following the **Â§8 LibraryCard active-variant spec rebuilt from the same tokens** (`LibraryCard` itself is coupled to `LibraryEntry` + the routine sheet): `cardActiveFromâ†’cardActiveTo` gradient, `cardActiveBorder`, `radii.lg`, `elevation.raised`, 52pt first-letter thumb (`cardThumbActive*` gradient, `radii.md`, `typography.thumb`), `orderTitlesByLanguage` title pair (dev 17/lat 19 primary), and a localized `cardMeta` sub-line (`16 à¤šà¤°à¤£ Â· à¤²à¤—à¤­à¤— 60 à¤®à¤¿à¤¨à¤Ÿ Â· à¤•à¤¥à¤¾ à¤¸à¤¹à¤¿à¤¤` / `16 steps Â· About 60 min Â· with katha`), saffron 26pt â€º. No source-verification or tradition copy is published on the catalog surface.
-
-### 62.2 Vidhi Detail (`VidhiDetailScreen` â€” `{ vidhiId, dateMs? }`)
-
-`ReaderHeader variant="index"` with the vidhi title; under it a quiet duration-only line (`à¤²à¤—à¤­à¤— 60 à¤®à¤¿à¤¨à¤Ÿ` / `About 60 min`, `ink-muted` 12, italic for Latin). For **recurring** vidhis only (a `festivalIds` rule with `recurrence: 'monthly'` â€” today that is Satyanarayan on every purnima) the header's right slot carries the shared `AddToRoutineButton` (ï¼‹, `sourceId` = the vidhi id) feeding the Â§31 routine sheet; annual festival pujas do not offer it. Tradition and source attribution remain internal review metadata and are not published. Then a **two-segment control** `à¤¤à¥ˆà¤¯à¤¾à¤°à¥€ Â· à¤¸à¤¾à¤®à¤—à¥à¤°à¥€ / à¤ªà¥‚à¤œà¤¾ Â· N à¤šà¤°à¤£` (13pt, the Â§33.1 segmented-pill pattern: `parchmentSoft` track, `divider` border, `radii.pill`, selected half `saffronTint` + `saffronDeep`).
-
-- **à¤¤à¥ˆà¤¯à¤¾à¤°à¥€** â€” the samagri checklist reuses Â§31 Today's Practice's summary-accordion + ledger language: an always-visible progress summary (`n / m à¤¸à¤¾à¤®à¤—à¥à¤°à¥€ à¤¤à¥ˆà¤¯à¤¾à¤°`, remaining count, goldâ†’saffron track, rotating caret) expands/collapses the rows below. Rows have `divider` hairlines and the **Â§31 routine check circle** (28pt, 2px `saffron` ring, fills `saffron` with an `onPrimary` âœ“; `accessibilityRole="checkbox"`), bilingual item/meta copy (checked â†’ `ink-muted`, **never struck through**), qty in the meta line, and a `divider`-outline `à¤µà¥ˆà¤•à¤²à¥à¤ªà¤¿à¤•` chip on optional rows. State persists per the festival date passed in `dateMs` (falls back to today) â€” a fresh occurrence starts a fresh list. One action: **à¤¸à¥‚à¤šà¥€ à¤¸à¤¾à¤à¤¾ à¤•à¤°à¥‡à¤‚** (ghost `goldTint`-border button) â†’ the OS share sheet with the plain-text list (RN `Share.share`, same mechanism as MoreScreen's share row) â€” the family shopping message, no image pipeline, nothing personal.
-- **à¤ªà¥‚à¤œà¤¾** â€” the phase-grouped step list (à¤†à¤°à¤®à¥à¤­ Â· à¤®à¥à¤–à¥à¤¯ à¤ªà¥‚à¤œà¤¾ Â· à¤¸à¤®à¤¾à¤ªà¤¨ labels in `saffronDeep` 12), each step a `parchmentSoft` `radii.md` row: 30pt numbered circle, title, and a caption naming what the step carries (`à¥¥ à¤®à¤¨à¥à¤¤à¥à¤° à¤¸à¤¹à¤¿à¤¤` / `à¤•à¤¥à¤¾ à¤ªà¤¾à¤ ` / `à¤†à¤°à¤¤à¥€` for aarti-section refs / `à¤ªà¤¾à¤ ` for other section refs). Tapping a step or the filled-`saffron` **à¤ªà¥‚à¤œà¤¾ à¤ªà¥à¤°à¤¾à¤°à¤®à¥à¤­ à¤•à¤°à¥‡à¤‚** button enters conduct mode (at that step / step 0). When today's saved conduct step exists a `goldTint` **à¤œà¤¹à¤¾à¤ à¤¥à¥‡ à¤µà¤¹à¥€à¤‚ à¤¸à¥‡ Â· n/N** resume row leads the list (rehydrated on focus, so returning from conduct refreshes it).
-
-### 62.3 Conduct mode (`VidhiConductScreen` â€” `{ vidhiId, dateMs?, initialStep? }`)
-
-Full-screen, one step per page, a horizontal paged `FlatList` exactly like the readers (light haptic per page turn, Â§11). `ReaderHeader variant="reader"` carries the vidhi title and a step-scoped `n / m` counter (`pageCounter` italic). The only page-turn control is the familiar left/right swipe; there are no previous/next buttons and no swipe-instruction copy. One 6pt **progress dot per step** sits at the bottom (active dot `saffronDeep`, stretched to 18pt â€” the Hanuman Chalisa/current-reader pager treatment).
-
-- **Step page** (each page a vertical ScrollView): a Daily Bhakti-style reading card (`parchmentSoft`, `divider` border, `radii.lg`, `elevation.raised`, 20 padding) containing a saffron-tint phase pill + `à¤šà¤°à¤£ n`, step title (21, script title face), and the authored instruction at the shared **`meaning` reading token** via `meaningToken(lang)` (reading-size setting respected for free).
-- **Mantra section** (steps carrying a transcribed mantra): the shared reader `Ornament`, then a quiet `à¤®à¤¨à¥à¤¤à¥à¤° Â· Mantra` label, Devanagari at `footerMantra` size with 2Ã— leading, and IAST beneath (`latinItalic` 12.5/21, `ink-muted`) inside the same reading card â€” no nested bespoke mantra card.
-- **Read-aloud** renders **once at screen level** (a centred `ReadAloudButton` slot between the header and the dots â€” RULEBOOK Â§3: the shared `useReaderReadAloud` hook, never a raw `Speech.speak`, and never a per-page copy inside the pager). Conduct pages expose reader-shaped fields (`lines`/`linesEn` for mantra steps, `bodyHi`/`bodyEn` for instruction-only steps), so the shipped TTS adapter speaks every page â€” mantra plus instruction â€” with zero vidhi-specific speech code.
-- **Hand-off card** (steps that ARE a shipped text): 1.4px `saffron` border (`gold` for personal remembrance), `radii.lg` â€” the target's title + a "returns here after" caption that is category-aware (à¤•à¤¥à¤¾ à¤ªà¤¢à¤¼à¤•à¤°â€¦ for kathas, à¤†à¤°à¤¤à¥€ à¤ªà¥‚à¤°à¥à¤£ à¤•à¤°â€¦ for aarti sections, à¤ªà¤¾à¤  à¤ªà¥‚à¤°à¥à¤£ à¤•à¤°â€¦ for stotram/sanskar/Gita sections); katha refs deep-link to `VratKathaReader {kathaId}`, section refs route through `buildEntryStartTarget`, and Gita refs route by chapter â€” the vidhi never re-types a shipped text (RULEBOOK Â§11.11). Every ref goes through `navigateToHomeStackTarget`; Home pushes its readers locally, and More locally owns `GitaReader`, so Back returns to the step in both live guide paths.
-- **Completion** â€” quiet by design: a **static 84pt à¥ seal** (`gold` 2px ring on `goldTint`), `à¤ªà¥‚à¤œà¤¾ à¤¸à¤®à¥à¤ªà¤¨à¥à¤¨` (20), and a `title Â· N à¤šà¤°à¤£ à¤ªà¥‚à¤°à¥à¤£` caption. It does not repeat the katha/aarti actions already completed in the guided steps. The step dots disappear on this terminal page. **No celebration animation** â€” the routine pushpa-varsha mechanism is deliberately not wired; a puja ends in shanti, not confetti. Reaching completion clears the saved conduct step. Exit at any page saves the step index for today's civil day (the detail screen's resume row).
-- **Keep-awake** (Phase 2B): the screen holds `useKeepAwake()` (`expo-keep-awake`) for the whole conduct session â€” wet hands cannot re-wake a locked phone mid-puja â€” and announces it to screen readers once on entry (`AccessibilityInfo.announceForAccessibility`, Â§12).
-
-**Localisation.** Titles/instructions flow through `contentByLang`/`meaningByLang` (gu/kn derive); **mantras stay Devanagari + IAST in every language** (Â§3.1 â€” Sanskrit is not re-scripted or hidden behind the toggle here; the IAST line is the romanization). No emoji anywhere â€” à¥¥/à¥ glyphs (Â§5).
-
-**Files.** `mobile/src/data/vidhi/{types,index,checklistStore,satyanarayan-puja,diwali-lakshmi-ganesh-puja,ganesh-chaturthi-sthapana,navratri-ghatasthapana,karwa-chauth-puja,maha-shivaratri-puja,shraddha-tarpan-vidhi}.ts` Â· `mobile/src/screens/Vidhi{Catalog,Detail,Conduct}Screen.tsx` Â· festival pill + tile in `mobile/src/screens/PanchangScreen.tsx` Â· personal doors in `mobile/src/screens/{PitruSmaranDetailScreen,PitruPakshaOverviewScreen}.tsx` and `mobile/src/components/PitruPakshaDayChip.tsx` Â· routes in `mobile/src/navigation/{types.ts,PanchangStackNavigator.tsx,HomeStackNavigator.tsx,MoreStackNavigator.tsx}` (one shared `VidhiStackParamList`, registered on all three stacks) Â· `vidhiId` hooks in `mobile/src/panchang/{types,festivals}.ts`. Phase 2B surfaces: search rows in `data/searchIndex.ts` + routing in `screens/SearchScreen.tsx` Â· the How-to-observe card in `screens/ObservanceDetailScreen.tsx` Â· the DISCOVER spotlight in `screens/HomeScreen.tsx` Â· keep-awake in `VidhiConductScreen.tsx` (`expo-keep-awake`) Â· the `vidhi` routine-item kind in `data/routine/{types,units}.ts`, `components/AddToRoutineSheet.tsx`, `navigation/entryRoutes.ts` and the detail-header `AddToRoutineButton`. Tests: `src/data/__tests__/vidhiContent.test.ts` (tsx â€” seven-entry registry, refs + Phase 2B liturgy hand-offs, source contract + Devanagari well-formedness), `src/data/__tests__/searchIndex.test.ts` (vidhi rows), `src/screens/__tests__/{VidhiScreens,PitruSmaranScreens}.test.tsx` and `src/components/__tests__/PitruPakshaDayChip.test.tsx` (Jest â€” all screens, personal occurrence doors, Gita hand-off and registry-wide source privacy), `src/navigation/__tests__/vidhiBackNavigation.test.ts` (Jest â€” the three registrations, the single shared param list, and that every door pushes in place), `src/navigation/entryRoutes.test.ts` (tsx â€” the routine-item route and both `navigateToHomeStackTarget` branches), `.maestro/{vidhi-smoke,pitru-smaran}.yaml` (e2e).
-
----
-
-## 63. Pitru Smaran (à¤ªà¤¿à¤¤à¥ƒ à¤¸à¥à¤®à¤°à¤£, PRD-17)
-
-**Purpose.** Tithi-based family remembrance: record each departed family member once â€” by tithi (à¤®à¤¾à¤˜ à¤•à¥ƒà¤·à¥à¤£ à¤…à¤·à¥à¤Ÿà¤®à¥€) or by Gregorian death date â€” and the app answers **"à¤‡à¤¸ à¤µà¤°à¥à¤· à¤•à¤¬?"**, **"à¤ªà¤¿à¤¤à¥ƒ à¤ªà¤•à¥à¤· à¤®à¥‡à¤‚ à¤•à¤¿à¤¸ à¤¦à¤¿à¤¨?"**, and **"à¤‰à¤¸ à¤¦à¤¿à¤¨ à¤•à¥à¤¯à¤¾ à¤•à¤°à¥‡à¤‚?"** (linked à¤—à¥€à¤¤à¤¾ à¤ªà¤¾à¤ ) permanently. A quiet, private surface under the **More hub**; entries live only in AsyncStorage (`@vedansh/pitru-smaran`, versioned `{version:1, entries:[]}`) and every date is solved on-device by the festival engine's conventions.
-
-**Tone (locked, PRD-17 Â§5).** No streaks, no celebration animation, no share surfaces, no NEW-badge styling *inside* the feature (the More row carries the standard hub NEW state for one release, like Widgets). Muted registers only â€” `goldTint` / `gold` / `parchmentSoft` / ink tones; `saffron` appears solely as interactive affordance (buttons, chevrons, the standard detail "à¤…à¤—à¤²à¤¾" pill) and the family marker dot, never as celebratory accent. The word everywhere is **à¤¸à¥à¤®à¤°à¤£**.
-
-**Engine (`mobile/src/panchang/pitruSmaran.ts` â€” pure, RN-free, `tsx --test`).** `deriveTithiRuleFromDate` (sunrise anga, purnimant), `solveNextOccurrence` (shares `matchesLunarTithiRuleOnDate` with the festival engine â€” kshaya fallback, vriddhi dedupe, adhik-maas nija guard, exported from `festivalEngine.ts` for exactly this reuse), `pitruPakshaWindow` (à¤­à¤¾à¤¦à¥à¤°à¤ªà¤¦ à¤ªà¥‚à¤°à¥à¤£à¤¿à¤®à¤¾ Â· Pratipada Shraddha Â· à¤¸à¤°à¥à¤µà¤ªà¤¿à¤¤à¥ƒ à¤…à¤®à¤¾à¤µà¤¸à¥à¤¯à¤¾ â€” the closing amavasya is matched month-free so an adhik-Ashwin year can't orphan it), `pakshaShraddhaDay` (person's tithi mapped into the Mahalaya krishna paksha; à¤ªà¥‚à¤°à¥à¤£à¤¿à¤®à¤¾ tithi â†’ Purnima Shraddha on the à¤ªà¥‚à¤°à¥à¤£à¤¿à¤®à¤¾ itself; unknown tithi â†’ à¤¸à¤°à¥à¤µà¤ªà¤¿à¤¤à¥ƒ à¤…à¤®à¤¾à¤µà¤¸à¥à¤¯à¤¾), `entryMatchesDate` (the day-chip predicate). Fixtures pinned against published DrikPanchang-convention dates in `src/panchang/__tests__/pitruSmaran.test.ts` (normal year, kshaya tithi, adhik-maas year, the 2025/2026 paksha windows). Display formatting is centralised in `pitruSmaranDisplay.ts` (the `gunaMilanDisplay` pattern).
-
-**Structure â€” four routes in `MoreStackParamList` (`PitruSmaranList` / `PitruSmaranEdit` / `PitruSmaranDetail` / `PitruPakshaOverview`), all over the Home gradient with `ReaderHeader variant="index"` and `spacing.xxl` gutters. All engine solves run off the render path (`setTimeout(0)` effects), spinner in `saffron` while solving:**
-
-1. **More hub row** (Â§37, à¤¸à¤¾à¤§à¤¨à¤¾ group after à¤œà¤ª à¤…à¤²à¤¾à¤°à¥à¤®): à¥¥ glyph on a `gold` icon tile, label à¤ªà¤¿à¤¤à¥ƒ à¤¸à¥à¤®à¤°à¤£, state = `NEW` when empty (hub mechanism, one release), else `N Â· <soonest short date>`. â†’ PitruSmaranList.
-2. **List** (`PitruSmaranListScreen`) â€” the Â§33 ObservanceList row pattern: 34 px circular à¥¥ lead (1 px `goldTint` border on `parchmentHighlight`, `inkMuted` glyph), relation (+ optional `Â· name`) at 15, tithi-in-words caption at 13 `inkMuted` (unknown â†’ "à¤¤à¤¿à¤¥à¤¿ à¤…à¤œà¥à¤à¤¾à¤¤ â€” à¤¸à¤°à¥à¤µà¤ªà¤¿à¤¤à¥ƒ à¤…à¤®à¤¾à¤µà¤¸à¥à¤¯à¤¾"), right-aligned next date + relative `Nd` label (13, `inkSoft`, Latin semibold for en), sorted soonest-first. A seasonal **à¤ªà¤¿à¤¤à¥ƒ à¤ªà¤•à¥à¤· banner** (1 px `gold` border, `parchmentSoft`, `radii.lg`) appears only within 30 days before / during the fortnight â†’ PitruPakshaOverview. Below: the outline **+ à¤¸à¥à¤®à¤°à¤£ à¤œà¥‹à¤¡à¤¼à¥‡à¤‚** button (1.5 px `gold`, `radii.md`, 48 min-height, `saffronDeep` text) and an italic privacy footer ("à¤¯à¤¹ à¤¸à¥‚à¤šà¥€ à¤•à¥‡à¤µà¤² à¤‡à¤¸à¥€ à¤«à¤¼à¥‹à¤¨ à¤ªà¤° à¤°à¤¹à¤¤à¥€ à¤¹à¥ˆâ€¦"). Empty state: dimmed à¥¥, "à¤…à¤ªà¤¨à¥‡ à¤ªà¤¿à¤¤à¤°à¥‹à¤‚ à¤•à¥€ à¤¤à¤¿à¤¥à¤¿à¤¯à¤¾à¤ à¤œà¥‹à¤¡à¤¼à¥‡à¤‚" + one explanatory line â€” two reverent lines, no illustration.
-3. **Add/Edit** (`PitruSmaranEditScreen`) â€” relation chips (à¤ªà¤¿à¤¤à¤¾à¤œà¥€ / à¤®à¤¾à¤¤à¤¾à¤œà¥€ / à¤¦à¤¾à¤¦à¤¾à¤œà¥€ / à¤¦à¤¾à¤¦à¥€à¤œà¥€ / à¤¨à¤¾à¤¨à¤¾à¤œà¥€ / à¤¨à¤¾à¤¨à¥€à¤œà¥€ / à¤…à¤¨à¥à¤¯ from `SMARAN_RELATIONS`), optional name (**`TextField variant="form"`**, placeholder "à¤•à¥‡à¤µà¤² à¤†à¤ªà¤•à¥‡ à¤²à¤¿à¤ â€” à¤•à¤¹à¥€à¤‚ à¤”à¤° à¤¨à¤¹à¥€à¤‚ à¤¦à¤¿à¤–à¥‡à¤—à¤¾"), then a true two-segment mode control (`à¤¤à¤¿à¤¥à¤¿ à¤œà¥à¤à¤¾à¤¤ à¤¹à¥ˆ` / `à¤•à¥‡à¤µà¤² à¤¤à¤¾à¤°à¥€à¤–à¤¼ à¤œà¥à¤à¤¾à¤¤ à¤¹à¥ˆ`): 1 px `gold` outer boundary, 3 px internal gap, 44 px segments, and a separately bounded `saffronTint` + `gold` active segment with `saffronDeep` title text. Tithi mode: month/paksha/tithi picker chips built from the engine's own `names.ts` enumerations (selected chip `saffronTint` + `saffron` border), plus the **à¤¤à¤¿à¤¥à¤¿ à¤…à¤œà¥à¤à¤¾à¤¤ â€” à¤¸à¤°à¥à¤µà¤ªà¤¿à¤¤à¥ƒ à¤…à¤®à¤¾à¤µà¤¸à¥à¤¯à¤¾** toggle row (`goldTint` when on). Date mode: DD/MM/YYYY `TextField variant="form"` â†’ the computed tithi renders IN WORDS in a **confirmation card** (1 px `gold` border, `parchmentHighlight`, `radii.md` â€” "à¤ªà¤‚à¤šà¤¾à¤‚à¤— à¤¸à¥‡ à¤¨à¤¿à¤•à¤²à¥€ à¤¤à¤¿à¤¥à¤¿ â€” à¤ªà¥à¤·à¥à¤Ÿà¤¿ à¤•à¤°à¥‡à¤‚") that gates Save; a silent conversion is never persisted, and **à¤¤à¤¿à¤¥à¤¿ à¤¸à¥à¤µà¤¯à¤‚ à¤šà¥à¤¨à¥‡à¤‚** (ghost button) flips to the manual pickers pre-filled. Save = filled `saffron`, `radii.md`, 48, disabled at 0.4 opacity.
-4. **Detail** (`PitruSmaranDetailScreen`) â€” the Â§33 ObservanceDetail hero: à¥¥ à¥ à¥¥ ornament (`gold`, letter-spacing 6), name 24 pt centred, "à¤¶à¥à¤°à¤¾à¤¦à¥à¤§ à¤¤à¤¿à¤¥à¤¿: <words>" caption, and the `saffronTint` **"à¤…à¤—à¤²à¤¾ Â· <date> Â· in N days"** pill. Rows (`parchmentSoft`, `divider`, `radii.md`): à¤…à¤—à¤²à¥‡ à¤µà¤°à¥à¤·, the person's Pitru Paksha mapping, the dedicated reminder switch, then a muted-gold **à¤ªà¤¿à¤¤à¥ƒ à¤¤à¤¿à¤²-à¤¤à¤°à¥à¤ªà¤£ à¤¸à¥à¤®à¤°à¤£** door above the two Gita rows. The door passes whichever upcoming solved annual/Paksha date is sooner as `dateMs`; it passes no person id, name or relation. The guide is a limited household remembrance, not complete Shraddha. The two existing **à¤—à¥€à¤¤à¤¾ à¤ªà¤¾à¤ ** rows still deep-link à¤…à¤§à¥à¤¯à¤¾à¤¯ 15 and 2. **The four solved dates arrive in two stages, in reading order:** the hero pill is published on its own solve, and à¤…à¤—à¤²à¥‡ à¤µà¤°à¥à¤· + à¤ªà¤¿à¤¤à¥ƒ à¤ªà¤•à¥à¤· follow; the guide door appears only once an occurrence exists, with no loading placeholder.
-5. **Pitru Paksha overview** (`PitruPakshaOverviewScreen`) â€” title à¤ªà¤¿à¤¤à¥ƒ à¤ªà¤•à¥à¤· `<year>`, date-range hero and the fortnight as Â§33.6 Upcoming rows. Beneath the calendar, one muted-gold **à¤ªà¤¿à¤¤à¥ƒ à¤¤à¤¿à¤²-à¤¤à¤°à¥à¤ªà¤£ à¤¸à¥à¤®à¤°à¤£** door opens the guide for the first family-matched day, falling back to the fortnight start when the ledger is empty. Individual dates remain calendar rows rather than each growing a launcher.
-6. **Panchang day chips** (`PitruSmaranDayChip` / `PitruPakshaDayChip` + `usePitruSmaranForDate`, Â§33 day panel) â€” personal annual/Paksha dates retain the muted **"à¥¥ à¤¸à¥à¤®à¤°à¤£ â€” <relation>"** pill â†’ person detail. During the public fortnight, the saffron-tint season chip â†’ overview; on **à¤¸à¤°à¥à¤µà¤ªà¤¿à¤¤à¥ƒ à¤…à¤®à¤¾à¤µà¤¸à¥à¤¯à¤¾ only**, a second muted-gold **`à¥¥ à¤¤à¤¿à¤²-à¤¤à¤°à¥à¤ªà¤£ à¤µà¤¿à¤§à¤¿`** chip opens the registered guide directly with that civil date. The public door contains no private ledger data.
-7. **Vrat & Parv catalog pinned row** â€” directly under My Vrat, the identical pinned-ledger treatment (`goldTint`, 1.5 px `gold`, `radii.lg`): à¥¥ + à¤ªà¤¿à¤¤à¥ƒ à¤¸à¥à¤®à¤°à¤£, live entry count, and the soonest next date. Tap â†’ the same More-stack remembrance list. The empty invitation is standing and cannot be dismissed, so the planning surface never loses its only zero-entry door.
-8. **Home Today strip** â€” matching private Smaran chips lead the row on annual or mapped-family dates so a person's action stays visible and stationary before horizontal overflow; the public Pitru-Paksha daily label and ordinary observance/muhurat chips follow. Touching the row stops its idle auto-drift before dispatching a chip action. The Today card shell is a non-pressable container while its Panchang header and each nested chip are separate accessible buttons; otherwise iOS collapses or intercepts the children and the promised person-detail tap is unreachable to VoiceOver.
-9. **Home DISCOVER** â€” a standing launch-release `FeatureCard` exists even with zero saved people: `à¥¥` gold glyph, a one-line annual-answer explanation, and **à¤¸à¥à¤®à¤°à¤£ à¤œà¥‹à¤¡à¤¼à¥‡à¤‚ / Set up** â†’ `MoreTab/PitruSmaranList`. This is awareness, not the personal ledger treatment; the actual list and Panchang row remain quiet/muted.
-
-**Notifications â€” two defaults, two namespaces.** `FestiveReminderScheduler` arms the public, default-on Pitru-Paksha tier behind the existing festive preference: 18:00 on the eve of Bhadrapada Purnima and the eve of Sarvapitri Amavasya, fixed copy that never names a person, tap â†’ `PitruPakshaOverview`. `PitruSmaranReminderScheduler` arms only entries whose per-person switch is ON: day-before + day-of, private copy naming the saved relation, tap â†’ `PitruSmaranDetail`. Both use pure planners, separate identifier prefixes, bounded pending slices, foreground/language/data re-arm, and cancellation that never touches another notification family. Personal reminders own an Android channel; the public season intentionally shares `festive-reminders` because the same preference controls both.
-
-**Performance â€” the answers are cached, not re-derived.** Every date on these surfaces is a tithi scan over hundreds of civil days (`scanForRule` â†’ `computeTithiAndMonth`). Measured cold on a desktop JIT, the detail screen's four solves cost ~423 ms â€” next occurrence 117, the year after it 259, the fortnight window 43, the mapping 3 â€” which on Hermes is the multi-second stall reported in August 2026 on a screen whose content the user had already saved. The engine memos are per-process, so every cold launch paid it again, and the two doors that reach the detail WITHOUT the list (the Panchang/Home `à¥¥ à¤¸à¥à¤®à¤°à¤£` chip and the personal notification deep link) paid all of it with nothing warm. `panchang/pitruSmaranSolves.ts` now persists the answers â€” occurrences per tithi rule, windows per year â€” under `@vedansh:pitru-solves:`, versioned with `PANCHANG_DAY_CACHE_VERSION` and swept by the build-change reset (Â§60). Records are keyed by **tithi only** (`m11-krishna-8`), never by entry id, relation or name, so two people on one tithi share one record and the cache discloses nothing the ledger does not. The list solves through the same cache and then **prewarms** the detail's dates on its own idle time, one occurrence deeper than the screen shows, so the launch right after someone's shraddha is still a hit.
-
-**Privacy & non-goals.** Nothing syncs, nothing shares, no export in v1 (PRD-06 is the future transfer path). Public season notification copy is identical on every device; personal notification copy exists only after the user deliberately saves that person's entry and the OS notification grant succeeds. No Gregorian-anniversary mode, no gotra/genealogy fields.
-
-**Files.** `panchang/pitruSmaran.ts` Â· `panchang/pitruSmaranDisplay.ts` Â· `panchang/pitruSmaranSolves.ts` Â· `panchang/usePitruSmaranSolves.ts` Â· `panchang/usePitruSmaranForDate.ts` Â· `contexts/PitruSmaranContext.tsx` Â· `screens/PitruSmaranListScreen.tsx` / `PitruSmaranEditScreen.tsx` / `PitruSmaranDetailScreen.tsx` / `PitruPakshaOverviewScreen.tsx` Â· `components/PitruSmaranDayChip.tsx` / `PitruPakshaDayChip.tsx` / `PitruSmaranReminderScheduler.tsx` Â· `notifications/pitruSmaranReminderPure.ts` / `pitruSmaranScheduler.ts` / `pitruPakshaReminderPure.ts` / `pitruPakshaScheduler.ts` Â· catalog row in `PanchangScreen.tsx` Â· Home integration in `TodayStrip.tsx` Â· routes in `navigation/types.ts` + `MoreStackNavigator.tsx`. Tests: `panchang/__tests__/pitruSmaran.test.ts` (tsx), `panchang/__tests__/jest/pitruSmaranSolves.jest.test.ts`, `notifications/__tests__/pitruReminderPure.test.ts` / `pitruSchedulers.jest.test.ts`, component/context/screen suites, and `.maestro/pitru-smaran.yaml`. PRD: `docs/roadmap/prds/17-pitru-smaran.md`; prototype: `docs/pitru-smaran-prototype.html`.
-
----
-
-## 64. App Launch & First Frame
-
-**Purpose.** One place for the launch contract every other section assumes: **Home's first visible frame is already its final frame.** Nothing may reflow, insert, or shift after the native splash lifts â€” a launch-time layout jump reads as jank on every screen the app will ever show, and an immediate first press must land on the tile the user aimed at.
-
-**The reveal pipeline (`mobile/App.tsx`).**
-1. `SplashScreen.preventAutoHideAsync()` at module scope; the derived-cache reset and `prefetchTodayPanchang()` start beside it (Â§60) so storage is already in flight before React renders anything.
-2. The five font families gate the provider tree (`fontsReady`) â€” an unloaded family silently falls back to the system font (Â§3), so no text renders before the real faces exist.
-3. **`AppReadyGate`** holds the splash until the two **layout-critical** preferences have hydrated â€” font scale and reading language â€” because both change Home geometry. The splash hides via the gate's `useEffect` + a belt-and-braces `onLayout` on the mounted tree.
-4. **Safe-area insets are seeded, not awaited**: the root `SafeAreaProvider` receives `initialMetrics={initialWindowMetrics}`. Without it the provider renders nothing until the first native inset event crosses the launch-busy JS thread, and the tree then mounts on whatever that event carried â€” on Android cold starts under `edgeToEdgeEnabled` that can be a pre-attach zero, so Home painted flush under the status bar, sat unresponsive behind the mount burst, and lurched down by the status-bar height when the corrected insets applied (the August 2026 "launch jerk" report). With the seed, the first committed frame carries its final insets and any later inset event is a no-op.
-
-**Geometry that must stay reserved.** Surfaces that hydrate after the reveal must occupy their final space from the first frame â€” never insert or grow later: the Today strip reserves its 24 pt chip row before the deferred Panchang solve lands (Â§48); `RoutineBanner`'s three states share one height (`minHeight 57` = the progress variant's natural height) so the nudge â†’ progress flip on routine hydration cannot move the CATEGORIES grid (Â§31); `FestiveToran` is a fixed `TORAN_HEIGHT` box resolved synchronously from the bundled catalog (Â§55). Anything new above the Home grid inherits this rule.
-
-**CPU stays off the reveal.** Astronomy, the 7-day prewarm, widget payload planning, and every reminder scheduler run behind `InteractionManager` after the splash lifts (Â§59/Â§60) â€” the launch path spends I/O only. Moving work earlier must never move CPU onto it.
-
-**Files.** `mobile/App.tsx` (`AppReadyGate`, `SafeAreaProvider` seeding) Â· `mobile/src/panchang/panchangLaunchPrefetch.ts` Â· reserved-geometry owners per their sections.
-
-## 65. à¤‰à¤ªà¤µà¤¾à¤¸ à¤µà¤¿à¤§à¤¿ â€” Structured Upvas/Fasting Content (PRD-09 Phase 4)
-
-**Purpose.** The Observance Detail's last section answers the fasting devotee's actual question â€” *what kind of fast, from when to when, and when do I break it* â€” from verified bundled data plus one honest engine-derived time line. It completes PRD-09: the location half of the original Phase 4 shipped separately (Â§ location picker), and this is the content half.
-
-**Data.** `mobile/src/panchang/upvasContent/` mirrors `kathaContent/`: one-default-export entry modules under `entries/`, an `index.ts` array, and the accessor `mobile/src/panchang/upvasContent.ts` whose module-scope IIFE asserts invariants (unique ids, non-empty bilingual pairs, â‰¥2 `referenceUrls`, `boundTithi` iff tithi-bound). `UpvasInfoEntry` (`panchang/types.ts`): `fastType` (`nirjala | phalahar | one-meal | night-vigil`), one-line `fastTypeNote*`, `window {kind, text*}`, optional `parana {kind, boundTithi?, text*}`, `strictness*`, optional `whoObserves*`, `status ('draft' | 'verified')`, review-only `source`. **`getUpvasInfo` exposes `verified` entries only** â€” a draft is indistinguishable from no entry at every call site, so the section is simply absent until the two-source review clears (RULEBOOK Â§20). Observance rules attach via the optional **`upvasId`** hook (`festivals.ts`), the identical mechanism as `kathaId`/`vidhiId`; many rules share one entry (all Ekadashis except à¤¨à¤¿à¤°à¥à¤œà¤²à¤¾ â†’ `ekadashi-upvas`). The v1 starter set is 8 entries covering ~35 rules (Ekadashi family, à¤¨à¤¿à¤°à¥à¤œà¤²à¤¾, Purnima/Satyanarayan, Pradosh, Sankashti, Karwa Chauth, Shivaratri, Janmashtami); **all eight were source-verified on 2026-08-19** and are exposed through the verified-only accessor.
-
-**Structure (states 1/3 of Â§33's four-state home).** Inside the `à¤‰à¤ªà¤µà¤¾à¤¸ à¤µà¤¿à¤§à¤¿ Â· How to observe` section (same `blockHeading` treatment as à¤®à¤¹à¤¤à¥à¤µ/à¤•à¤¥à¤¾), one **non-interactive information panel** (`parchment-soft`, `divider` border, `radii.lg`, `elevation.card` â€” the Pitru detail's quiet fact-row language; no chevron, no navigation):
-- **Fast-type chip row** â€” a filled `saffron` pill (`radii.pill`, text through `pillTextStyle`, 1.15 font-scale cap â€” Â§3.0 Devanagari micro-type discipline) with the chip label à¤¨à¤¿à¤°à¥à¤œà¤²à¤¾ / à¤«à¤²à¤¾à¤¹à¤¾à¤° / à¤à¤• à¤¸à¤®à¤¯ à¤­à¥‹à¤œà¤¨ / à¤°à¤¾à¤¤à¥à¤°à¤¿ à¤œà¤¾à¤—à¤°à¤£, then the one-line `fastTypeNote` beside it; `divider` rule beneath.
-- **à¤‰à¤ªà¤µà¤¾à¤¸ à¤•à¤¾à¤² row** â€” 84 pt micro label (`pillTextStyle`, `saffron-deep`, 1.25 cap) + `window.text` (meaning body face, `ink-soft`, 13/20).
-- **à¤ªà¤¾à¤°à¤£ row** â€” same label treatment + `parana.text` (always rendered â€” text is canonical). Beneath it, only when derivable, the **computed line** (`gold-tint` box, `radii.md`): `à¤ªà¤¾à¤°à¤£ Â· date Â· start â€“ end` for `next-day-sunrise-tithi-bound` (parana-day sunrise â†’ bound-tithi end via the pure `upvasParana.ts`; `formatRangeCompact`, or `formatEndInstant` when the end crosses midnight) or `à¤šà¤‚à¤¦à¥à¤°à¥‹à¤¦à¤¯ Â· date Â· time` for `same-day-after-moonrise`; a 10 pt muted subline names the Panchang location it was computed for. Derivation nulls (tithi ended pre-sunrise, kshaya, null moonrise, `text-only` kind) render nothing â€” **never an invented time**. Solves go through the shared `panchangDayStore` (hydrate immediately, astronomy behind `InteractionManager` â€” `useUpvasParana.ts`), and nothing about the parana is persisted: it re-derives per render, so a city change can never serve a stale time.
-- **Footnotes** â€” `strictness` then optional `whoObserves`, muted meaning face, 12/18.
-
-All copy flows through `contentByLang`/`meaningByLang` (gu/kn derive from the Devanagari; English fields stay English). Fact text scales freely; chip and labels cap at 1.15/1.25 like other dense chrome.
-
-**Files.** `mobile/src/panchang/upvasContent/{_helpers,index,entries/*}.ts` Â· `mobile/src/panchang/upvasContent.ts` Â· `mobile/src/panchang/upvasParana.ts` (pure) Â· `mobile/src/panchang/useUpvasParana.ts` (store bridge) Â· `upvasId` hooks in `mobile/src/panchang/{types,festivals}.ts` Â· the section in `mobile/src/screens/ObservanceDetailScreen.tsx`. Tests: `src/panchang/__tests__/upvasContent.test.ts` + `upvasParana.test.ts` (tsx), `src/screens/__tests__/ObservanceDetailScreen.test.tsx` (Jest â€” the Â§33 four-state rendering matrix, incl. no-placeholder and draft-invisibility pins). The vrat-catalog Maestro assertion on a verified detail page is deferred until the registry exposes its first verified entry (PRD-09/P4 Â§10).
-
-### 65.1 à¤­à¥‹à¤— Â· à¤¨à¥ˆà¤µà¥‡à¤¦à¥à¤¯ Â· à¤µà¥à¤°à¤¤ à¤­à¥‹à¤œà¤¨ (PRD-23)
-
-**Purpose and placement.** Food/offerings are an independent answer after the existing About, Katha and How-to-observe material. A verified `bhogId` adds `à¤­à¥‹à¤— Â· à¤¨à¥ˆà¤µà¥‡à¤¦à¥à¤¯ Â· à¤­à¥‹à¤œà¤¨ / Offerings & food` as the final Observance Detail block; it does not create a fifth state in Â§33's upvas/vidhi composition. Vidhi preparation shows the same guidance above its samagri summary.
-
-**Panel.** `BhogGuidancePanel` is a quiet, read-only `parchment-soft` card with `divider`, `radii.lg`, and `elevation.card`. Its sections appear only when populated: Offer; During the fast; Avoid during the fast; Do not offer; Parana meal; then a muted tradition/variant note. Micro labels use `pillTextStyle` at 11 pt with a 1.25 cap; meaning text is 13/20 and can scale normally. No chevron, source, status, recipe image, commerce action, or wellness language.
-
-**Preparation shopping.** Additive kitchen items sit in their own `à¤­à¥‹à¤— à¤”à¤° à¤°à¤¸à¥‹à¤ˆ à¤•à¥€ à¤–à¤°à¥€à¤¦à¤¾à¤°à¥€ / Bhog & kitchen shopping` ledger beneath the ritual samagri accordion. Rows reuse the 44 pt-plus samagri checkbox language and persist in the same vidhi/date record with namespaced keys. Kitchen checks do not change the samagri progress total. Share output appends a separately headed kitchen section.
-
-**Content discipline.** Offerings, permitted fast food, abstained food, prohibited offerings, and abhisheka materials never collapse into one list. Common regional forms name their region; variant notes are plain customer guidance, while sources and verification metadata stay private. See RULEBOOK Â§21 and `docs/roadmap/prds/23-bhog-naivedya-vrat-food.md`.
-
-**Files.** `mobile/src/panchang/bhogContent.ts` Â· `panchang/types.ts` / `festivals.ts` (`bhogId`) Â· `components/BhogGuidancePanel.tsx` Â· `screens/ObservanceDetailScreen.tsx` Â· `screens/VidhiDetailScreen.tsx`; tests in `panchang/__tests__/bhogContent.test.ts` and the two screen suites; device path in `.maestro/vidhi-smoke.yaml`.
-
-## 66. à¤µà¤¾à¤¸à¥à¤¤à¥ à¤¦à¤¿à¤¶à¤¾ â€” Disha Chakra, Room Guidance & Ghar-ka-Mandir (PRD-24)
-
-**Purpose.** The household direction questions â€” mandir facing, kitchen corner, sleeping head-direction, tulsi, main door, the home shrine's upkeep â€” answered as *classical convention with its reason*, anchored by a live compass that is honest about its own accuracy. Never a verdict on a home: no dosha language, no remedies, no fear copy (PRD-24 Â§2).
-
-**à¤¦à¤¿à¤¶à¤¾ à¤šà¤•à¥à¤° (`components/DishaChakra.tsx`).** A 264 pt `react-native-svg` rose: `parchment-soft` ring with `divider` stroke, 45Â° ticks, the 8 dik labels (`DISHA_LABELS` â€” cardinal 15 pt `ink`, intercardinal 11.5 pt `ink-soft`, the faced dik `saffron-deep`), rotating under a **fixed** `saffron-deep` top needle so the label under the needle is the direction faced. Labels counter-rotate (each glyph stays upright). The open centre is a `background` circle labelled à¤¬à¥à¤°à¤¹à¥à¤®à¤¸à¥à¤¥à¤¾à¤¨ (11 pt muted) with the faced dik + rounded degrees beneath in `saffron-deep` â€” the centre is the Brahmasthan itself, never a needle pivot. Pure presentation: heading and dik arrive as props.
-
-**Honest accuracy (screen contract).** `useCompassHeading` (`vastu/useCompassHeading.ts`) wraps `expo-sensors` Magnetometer: wrap-aware smoothing and heading math live pure in `vastu/compass.ts`. Status vocabulary â€” `starting`, `ok`, `unreliable` (field magnitude has left Earth's 25â€“65 ÂµT band for 5+ samples â†’ the figure-8 calibration hint in `saffron-deep`, dial keeps moving), `unavailable` (no magnetometer â†’ the screen opens in manual mode). Heading is corrected to TRUE north by the selected panchang city's bundled WMM declination (`data/vastu/declination.ts`, PRD-24 Â§3); the correction is silent. The 8-dik chip row (the Â§60 à¤¯à¤¾à¤¤à¥à¤°à¤¾ chip idiom, `vastu-disha-*` testIDs) is always rendered â€” a chip tap enters manual mode (sensor subscription removed), tapping the active chip returns live; with no sensor there is no live to return to. **The sensor never gates the content.**
-
-**Guidance surfaces (`screens/VastuDishaScreen.tsx`).** Below the chakra + status line: `à¤‡à¤¸ à¤¦à¤¿à¤¶à¤¾ à¤®à¥‡à¤‚ / In this direction` â€” the room entries whose `directions` include the faced dik, emphasised with `card-active-border`; then `à¤•à¤•à¥à¤·-à¤¦à¤°-à¤•à¤•à¥à¤· / Room by room` â€” every verified `VastuRoomEntry` as a quiet `parchment-soft` card (title + dik line, convention 13/20 `ink-soft`, `à¤•à¤¾à¤°à¤£ Â·` reason 12/18 muted, `à¤œà¤¹à¤¾à¤ à¤¸à¤‚à¤­à¤µ à¤¨ à¤¹à¥‹ Â·` accommodation when stated); then `à¤˜à¤° à¤•à¤¾ à¤®à¤‚à¤¦à¤¿à¤° / The home mandir` â€” `MandirGuidanceEntry` cards with bulleted rows, a warning-toned `à¤Ÿà¤¾à¤²à¥‡à¤‚ / Avoid` block (the Â§65.1 split), and a muted family-tradition note. A closing muted line restates the stance: convention, not verdict. All copy flows `contentByLang`/`meaningByLang`/`pick` (gu/kn derive or are hand-authored per helper contract).
-
-**Doors.** More hub â†’ à¤¸à¤¾à¤§à¤¨à¤¾ group row `à¤µà¤¾à¤¸à¥à¤¤à¥ à¤¦à¤¿à¤¶à¤¾ / Vastu Disha` (`more-vastu-disha`, NEW state for one release â€” the Â§59 widget-row pattern). A à¤—à¥ƒà¤¹ à¤ªà¥à¤°à¤µà¥‡à¤¶ muhurat result renders the `muhurat-vastu-door` ListCard under the location line (PRD-24 Â§6); `VastuDisha` is registered on both the More and Panchang stacks (the PRD-19 multi-stack door pattern) so each door pushes in place and Back retraces the journey.
-
-**Release.** `expo-sensors` is native â€” store release only, never OTA at the old runtime; ships with the 1.5.0 `whatsNew` entry and `APP_TOUR_VERSION` bump.
-
-**Files.** `mobile/src/vastu/{compass,useCompassHeading}.ts` Â· `mobile/src/data/vastu/{types,roomGuidance,mandirGuidance,declination}.ts` Â· `components/DishaChakra.tsx` Â· `screens/VastuDishaScreen.tsx` Â· doors in `screens/MoreScreen.tsx` + `screens/MuhuratResultsScreen.tsx` Â· stack registrations in `navigation/{MoreStackNavigator,PanchangStackNavigator}.tsx` + `navigation/types.ts` Â· regen method `mobile/scripts/generate-declination.md`. Tests: `src/vastu/__tests__/compass.test.ts`, `src/data/vastu/__tests__/vastuContent.test.ts`, `src/screens/__tests__/VastuDishaScreen.test.tsx`; device path `.maestro/vastu-disha-smoke.yaml`. See RULEBOOK Â§22 and `docs/roadmap/prds/24-vastu-disha.md`.
-
----
-
-## 67. Gochar (à¤—à¥‹à¤šà¤° â€” transits vs the saved chart) + Weekly Outlook â€” PRD-20
-
-**Purpose.** The daily "personal astrologer" surface: today's nine grahas read against the saved chart, the Sade Sati state, a seven-day outlook, and upcoming sign changes â€” all offline, deterministic, and guidance-framed (RULEBOOK Â§14.3/Â§14.5). Requires a saved chart; guests get an explanation plus Create Kundali, and the error state keeps the re-enter recovery.
-
-**Structure (top â†’ bottom).** RashifalScreen-family chrome: 44 pt back button, `à¤—à¥‹à¤šà¤° Â· Gochar` title with an IST date caption; then the framing note (`à¤ªà¤¾à¤°à¤®à¥à¤ªà¤°à¤¿à¤• à¤—à¥‹à¤šà¤° à¤¦à¥ƒà¤·à¥à¤Ÿà¤¿â€”à¤¨à¤¿à¤¶à¥à¤šà¤¿à¤¤ à¤­à¤µà¤¿à¤·à¥à¤¯à¤µà¤¾à¤£à¥€ à¤¨à¤¹à¥€à¤‚` â€” same info-mark row as Rashifal); a two-fact reference card (janma rashi Â· Lagna, traditional + plain-English pairs); the **transit table** (`cardActiveFrom`/`cardActiveBorder`, one row per graha in `GRAHA_ORDER`: gold support dot when the transit sits in a `TRANSIT_SUPPORT_HOUSES` house from the Moon, graha name with `â„` where retrograde, transit rashi, house-from-Moon, house-from-Lagna; 44 pt rows; a legend row closes the table). The whole table carries ONE accessibility label narrating every transit (the Â§51 chart text-equivalence rule). Then **active house-theme chips** (`<n> à¤­à¤¾à¤µ Â· <HOUSE_THEME>` pills for each supportive house â€” feature E's transit half; no standalone lens screen); the **weekly strip** (seven 44 pt rows: weekday+date, tone dot â€” gold favourable / saffron reflective / divider steady â€” Moon rashi Â· chandra-bala house Â· tara name, and the tone word; a muted basis footnote states `à¤†à¤§à¤¾à¤°: à¤šà¤¨à¥à¤¦à¥à¤° à¤¬à¤² à¤µ à¤¤à¤¾à¤°à¤¾ à¤¬à¤² â€” à¤ªà¤¾à¤°à¤®à¥à¤ªà¤°à¤¿à¤• à¤¦à¥ƒà¤·à¥à¤Ÿà¤¿, à¤…à¤‚à¤• à¤¯à¤¾ à¤¨à¤¿à¤°à¥à¤£à¤¯ à¤¨à¤¹à¥€à¤‚`; every row's accessibility label is its full basis line); the **Sade Sati card** (prominent `cardActiveFrom` + elevation only while a phase runs, quiet parchment otherwise; headline + guidance body from the engine's authored copy, the bisected `à¤¶à¤¨à¤¿ à¤•à¤¾ à¤…à¤—à¤²à¤¾ à¤°à¤¾à¤¶à¤¿-à¤ªà¥à¤°à¤µà¥‡à¤¶` boundary date once the deferred solve lands, and a `à¤¶à¤¨à¤¿ à¤…à¤·à¥à¤Ÿà¤•à¤®à¥ à¤ªà¤¢à¤¼à¥‡à¤‚` practice link â€” allow-listed id via `buildEntryStartTarget()` â€” only while active); finally **à¤†à¤—à¤¾à¤®à¥€ à¤°à¤¾à¤¶à¤¿-à¤ªà¥à¤°à¤µà¥‡à¤¶** rows (Jupiter/Saturn/Rahu â‰¤ 400 days, Sun/Mars/Mercury/Venus â‰¤ 45; `à¤—à¤£à¤¨à¤¾ à¤¹à¥‹ à¤°à¤¹à¥€ à¤¹à¥ˆâ€¦` placeholder until the deferred solve lands).
-
-**Solve discipline.** Snapshot + phase + weekly render synchronously (cheap fixed-anchor longitudes); the ingress day-walks and the Sade Sati boundary defer behind `InteractionManager` + `setTimeout(0)` â€” the `useMuhurat` pattern. Nothing is persisted and no panchang cache is touched: every quantity derives from the 06:00 IST anchor and is location-free.
-
-**Sharing.** None, by decision (PRD-20 Â§4): the surface inherently exposes janma rashi and Sade Sati state. Any future card must use the Kundali-style birth-details warning, never the Rashifal share path.
-
-**Entries.** `à¤—à¥‹à¤šà¤°` tool card on the saved Jyotish landing (after the contractual trio) and the Sade Sati teaser on the compact Kundali card (Â§51). No Home tile in v1.
-
-**Shared primitive.** The tara/chandra-bala arithmetic and classes come from `panchang/taraChandraBala.ts` (Â§60's personalised muhurat strip owns it); PRD-20 only maps its classes onto the three display tones. The Gochar header follows Â§51a's naming rule â€” `à¤†à¤ªà¤•à¥€ à¤•à¥à¤‚à¤¡à¤²à¥€` with one person saved, `<name> à¤•à¥€ à¤•à¥à¤‚à¤¡à¤²à¥€` once the roster holds more than one.
-
-**Files.** `mobile/src/panchang/gochar.ts`, `weeklyOutlook.ts` (pure, both delegating to `taraChandraBala.ts`); `mobile/src/screens/GocharScreen.tsx`; route in `navigation/types.ts` + `PanchangStackNavigator.tsx`; entries in `PanchangScreen.tsx`. Tests: `src/panchang/__tests__/gochar.engine.test.ts`, `weeklyOutlook.engine.test.ts` (tsx), `src/screens/__tests__/GocharExperience.test.tsx` (Jest), `.maestro/gochar-smoke.yaml`.
-
----
-
-## 68. Compiled Kundali Report (à¤ªà¥‚à¤°à¥à¤£ à¤•à¥à¤‚à¤¡à¤²à¥€ à¤µà¤¿à¤µà¥‡à¤šà¤¨) â€” PRD-20 Phase 6
-
-**Purpose.** The one-shot AstroTalk-class deliverable: a long scrollable reading compiled from the saved chart. Everything is composed from typed phrase tables in a pure engine into a **versioned, fully serializable `KundaliReportModel`** (plain JSON, no `Date` instances â€” pinned by a serde round-trip test; deliberately the grounding object a future AI phase would consume, PRD-20 Â§5).
-
-**Structure.** Disclaimer band (gold tint) â†’ North Indian chart card â†’ eleven section cards in fixed order: `summary` (birth facts: name/date/time/city/Lagna/Moon/nakshatra as label:value rows capped at 1.25 font multiplier) Â· `lagna` (rising sign quality + Lagna-lord placement) Â· `moon` (Moon-sign quality + janma nakshatra) Â· six life areas (career 10th Â· relationships 7th Â· wealth 2/11 Â· self-and-routine 1/6 Â· home-and-learning 4/5 Â· dharma 9th â€” each house's sign, classical lord and its placement, occupants; an empty house is stated plainly; every area closes with the own-judgement line) Â· `observations` (Sade Sati always; **Mangal Dosha display-gated off** behind `includeMangalDosha` pending product/content review â€” when enabled its copy is prevalence-normalizing and never uses the dosha label; **Kaal Sarp excluded by decision** and pinned absent by test) Â· `vimshottari` (nine `à¤†à¤¯à¥ Xâ€“Y à¤µà¤°à¥à¤·` Mahadasha lines reusing Â§51's per-lord themes, current period flagged) â†’ closing disclaimer band. Section cards carry one full accessibility label each; a practice link renders only from the section's allow-listed `practiceSourceId` through `buildEntryStartTarget()`.
-
-**Sharing.** One header Share action â†’ the existing warned Kundali 4:5 share (chart summary card; `à¤‡à¤¸ à¤•à¤¾à¤°à¥à¤¡ à¤®à¥‡à¤‚ à¤¨à¤¾à¤®, à¤œà¤¨à¥à¤® à¤¤à¤¿à¤¥à¤¿, à¤¸à¤®à¤¯ à¤”à¤° à¤¨à¤—à¤° à¤¶à¤¾à¤®à¤¿à¤² à¤¹à¥ˆà¤‚`). Never the Rashifal no-birth-details path. Full-document PDF export is explicitly deferred (`expo-print` would be a new dependency needing its own review). **Full-text handoff:** the SAME share sheet carries a secondary `à¤ªà¥‚à¤°à¥à¤£ à¤ªà¤¾à¤  à¤¸à¤¾à¤à¤¾ à¤•à¤°à¥‡à¤‚ Â· Share full text` action (an optional `JyotishShareSheet` extension â€” `detailTitle/Subtitle` + `onShareDetail`; omitting the props keeps every other Jyotish share byte-identical). It shares the COMPLETE export as plain text via the OS share sheet â€” birth details, the nine-graha table (degrees/nakshatra/pada/house/â„), the full Vimshottari date table, every report section's English prose with facts, both disclaimers, and the machine-readable `KundaliReportModel` JSON â€” so the user can hand the reading to notes or an AI assistant of their choice for a deeper conversation. It is engine-rendered by the pure `panchang/kundaliHandoff.ts` (`buildKundaliHandoffText`); the sheet's privacy line is the shared warning surface and must name the birth details BOTH actions carry ("à¤•à¤¾à¤°à¥à¤¡ à¤”à¤° à¤ªà¥‚à¤°à¥à¤£ à¤ªà¤¾à¤  â€” à¤¦à¥‹à¤¨à¥‹à¤‚ à¤®à¥‡à¤‚â€¦"). The app itself never contacts any service â€” the user carries the text. Framing inside the export states plainly that the interpretive sections are traditional guidance, not predictions.
-
-**Entries.** `à¤ªà¥‚à¤°à¥à¤£ à¤•à¥à¤‚à¤¡à¤²à¥€ à¤µà¤¿à¤µà¥‡à¤šà¤¨` CTA under the Kundali Overview tab and the link on the landing's compact Kundali card (Â§51). Guest/loading/error states mirror Gochar's (Â§67).
-
-**Files.** `mobile/src/panchang/kundaliReportModel.ts` (types), `kundaliReport.ts` (pure engine, incl. `computeMangalDosha` + `RASHI_LORD`), `kundaliHandoff.ts` (full-text export); `mobile/src/screens/KundaliReportScreen.tsx`; route in `navigation/types.ts` + `PanchangStackNavigator.tsx`; CTA in `KundaliScreen.tsx`, link in `PanchangScreen.tsx`. Tests: `src/panchang/__tests__/kundaliReport.engine.test.ts` (tsx â€” serde round-trip, all-12-lagna sweep, Mangal truth table, no-Kaal-Sarp pin), `kundaliHandoff.engine.test.ts`, `src/screens/__tests__/KundaliReportExperience.test.tsx` (Jest), `.maestro/kundali-report-smoke.yaml`.
-
----
-
-## 69. à¤¦à¤¾à¤¨-à¤ªà¥à¤£à¥à¤¯ â€” Educate-First Giving: Journey, Ledger & Daan-Dwaar (PRD-26)
-
-**Purpose.** The third limb of the japaâ€“vratâ€“daan tripod: *educate first* (why the tradition gives, in the shastra's own words), a private on-device ledger second, and an external hand-off to verified organizations strictly last. The IA contract (PRD-26 Â§2.7) is structural, not tonal: the home carries **zero** give affordances, the directory is never a tab and is reachable ONLY from a journey's terminal step, and "record in my register" always precedes "give elsewhere". No punya scores, streaks, totals, goals or fear copy anywhere â€” pinned by the copy-guard test.
-
-**à¤¦à¤¾à¤¨-à¤ªà¥à¤£à¥à¤¯ home (`screens/DaanPunyaScreen.tsx`).** ReaderHeader (index). Sections in Â§4a order: `à¤†à¤œ à¤•à¥‡ à¤¦à¤¾à¤¨ à¤•à¤¾ à¤®à¤¹à¤¤à¥à¤µ` â€” the first daan-covered observance of today (`useObservancesForDate` â†’ `getDaanOccasionForRule`; card absent on uncovered days, never a placeholder) with the journey door; `à¤‡à¤¸ à¤µà¤¾à¤° à¤•à¤¾ à¤¦à¤¾à¤¨` â€” 7 vaar chips (`daan-vaar-*`, muhurat chip idiom) over the shared `data/daan/vaar.ts` table (one table with PRD-21); `à¤¶à¤¾à¤¸à¥à¤¤à¥à¤° à¤•à¥à¤¯à¤¾ à¤•à¤¹à¤¤à¥‡ à¤¹à¥ˆà¤‚` â€” the verse spine rendered inline and in full (`daan-principle-*` cards: Devanagari via `verseLinesByLang`, gold uppercase cite, meaning via `meaningByLang`; the Gita card alone carries a `à¤—à¥€à¤¤à¤¾ à¤®à¥‡à¤‚ à¤ªà¤¢à¤¼à¥‡à¤‚` chip deep-linking `GitaReader {chapter:17}`); `à¤¦à¤¾à¤¨ à¤•à¥€ à¤•à¤¥à¤¾à¤à¤` â€” the five teaching-katha rows; and one quiet `à¤®à¥‡à¤°à¤¾ à¤¦à¤¾à¤¨-à¤ªà¥à¤£à¥à¤¯ à¤–à¤¾à¤¤à¤¾` door (`daan-ledger-door`) at the end. Closing muted stance line.
-
-**à¤¦à¤¾à¤¨-à¤¯à¤¾à¤¤à¥à¤°à¤¾ (`screens/DaanJourneyScreen.tsx`).** The Â§4a journey as a stepper â€” à¤®à¤¹à¤¤à¥à¤µ â†’ à¤¶à¤¾à¤¸à¥à¤¤à¥à¤° â†’ à¤•à¤¥à¤¾ (skipped when the occasion carries none) â†’ à¤•à¥à¤¯à¤¾ à¤¦à¥‡à¤‚ â†’ à¤¸à¤‚à¤•à¤²à¥à¤ª-à¤­à¤¾à¤µ â€” with progress dots (active 22 pt saffron pill, rest 7 pt border dots) and à¤ªà¥€à¤›à¥‡/à¤†à¤—à¥‡ pills. **Terminal actions exist in the tree only on the last step** (`daan-journey-record` filled saffron, leading; `daan-journey-directory` outlined, trailing, copy `à¤¦à¤¾à¤¨-à¤¦à¥à¤µà¤¾à¤° (à¤¬à¤¾à¤¹à¤°à¥€)`), followed by the muted "à¤°à¥à¤• à¤œà¤¾à¤¨à¤¾ à¤­à¥€ à¤ªà¥‚à¤°à¥à¤£ à¤¹à¥ˆ" line. Shipped kathas open `VratKathaReader` cross-tab; teaching-kathas open `DaanKatha`.
-
-**à¤–à¤¾à¤¤à¤¾ (`screens/DaanLedgerScreen.tsx` + `DaanEntryScreen.tsx`, `contexts/DaanLedgerContext.tsx`).** A smaran register: entries grouped by civil month, each row category + panchang tithi stamp (`makeTithiStamp` â€” lunar month, paksha, tithi, vara, hi/en) + optional note; à¤—à¥à¤ªà¥à¤¤ entries render date + `à¤—à¥à¤ªà¥à¤¤ à¤¦à¤¾à¤¨` on a `goldChipBg` card â€” their note/amount/occasion are stripped BEFORE persistence (`sanitizeLedgerEntry`; validator rejects unsanitized gupt rows). Storage `@vedansh/daan-ledger:v1` (versioned payload, tolerant hydration â€” the PRD-17 pattern). No totals anywhere; the CSV export (`buildLedgerCsv`, gupt rows stay bare even there) leaves via the OS `Share` sheet only. The entry form: auto tithi field, 9 category chips (`daan-cat-*`; only date+category required â€” the 10-second U6 form), the à¤—à¥à¤ªà¥à¤¤ switch (removes the detail fields from the tree), note + amount via `TextField variant="form"`. Empty state teaches Sudama instead of nagging.
-
-**à¤¦à¤¾à¤¨-à¤¦à¥à¤µà¤¾à¤° (`screens/DaanDirectoryScreen.tsx` + `DaanDirectoryDetailScreen.tsx`).** List grouped à¤…à¤¨à¥à¤¨à¤•à¥à¤·à¥‡à¤¤à¥à¤° â†’ à¤¦à¥‡à¤µà¤¸à¥à¤¥à¤¾à¤¨ à¤Ÿà¥à¤°à¤¸à¥à¤Ÿ â†’ à¤¸à¥‡à¤µà¤¾-à¤¸à¤‚à¤¸à¥à¤¥à¤¾à¤à¤ â†’ à¤¸à¥‡à¤µà¤¾-à¤ªà¥‹à¤°à¥à¤Ÿà¤² under the `à¤¦à¥‡à¤¶à¥‡ à¤•à¤¾à¤²à¥‡ à¤š à¤ªà¤¾à¤¤à¥à¤°à¥‡` line. Detail is educate-first even here: the work â†’ the verification card (`card-active-border`: registration *kind*, official domain, `âœ“ à¤¦à¥‹ à¤¸à¥à¤µà¤¤à¤‚à¤¤à¥à¤° à¤¸à¥à¤°à¥‹à¤¤à¥‹à¤‚ à¤¸à¥‡ à¤¸à¤¤à¥à¤¯à¤¾à¤ªà¤¿à¤¤ Â· date` â€” trust rendered to the user) â†’ related teaching-katha â†’ the action row (record filled + leading; `à¤¦à¤¾à¤¨ à¤•à¤°à¥‡à¤‚ (à¤¬à¤¾à¤¹à¤°à¥€)` outlined) over the "à¤à¤ª à¤‡à¤¸ à¤²à¥‡à¤¨-à¤¦à¥‡à¤¨ à¤•à¤¾ à¤¹à¤¿à¤¸à¥à¤¸à¤¾ à¤¨à¤¹à¥€à¤‚ à¤¹à¥ˆ" line. `à¤¦à¤¾à¤¨ à¤•à¤°à¥‡à¤‚` opens an inline interstitial card (`daan-org-interstitial`: the official URL named, "à¤¨ à¤°à¤¾à¤¶à¤¿ à¤²à¥‡à¤¤à¤¾ à¤¹à¥ˆ, à¤¨ à¤ªà¥à¤·à¥à¤Ÿà¤¿, à¤¨ à¤…à¤‚à¤¶", à¤°à¤¹à¤¨à¥‡ à¤¦à¥‡à¤‚ / à¤–à¥‹à¤²à¥‡à¤‚ â†—) before `Linking.openURL(donateUrl)`; after a hand-off ONE gentle record-offer card renders (`daan-org-return-offer`) â€” declining is silent. e-RaktKosh's `nonMonetary` note states the hand-off is donor registration, not money.
-
-**à¤¦à¤¾à¤¨-à¤•à¤¥à¤¾ (`screens/DaanKathaScreen.tsx`).** Story paragraphs 14/25 `ink-soft` via `commentaryByLang`, the `à¤¶à¤¿à¤•à¥à¤·à¤¾` panel (`goldChipBg`, gold uppercase label, `saffron-deep` teaching + serif-italic English), the rendered canonical source line, à¥¥ à¥ à¥¥ endcap.
-
-**Doors.** More hub â†’ à¤¸à¤¾à¤§à¤¨à¤¾ group row `à¤¦à¤¾à¤¨-à¤ªà¥à¤£à¥à¤¯ / Daan Punya` (`more-daan-punya`, NEW state for one release). Observance Detail â†’ `à¤‡à¤¸ à¤¦à¤¿à¤¨ à¤•à¤¾ à¤¦à¤¾à¤¨` â€” **always the last section** (`observance-daan-door`), rendered only when `getDaanOccasionForRule(ruleId)` matches (exact ids beat suffix families; uncovered days render nothing). All daan screens registered on the More AND Panchang stacks (PRD-19 multi-stack pattern); `DaanPunya` itself is More-only.
-
-**Release.** Pure JS + AsyncStorage â€” OTA-safe. The store-policy review gate (PRD-26 Â§6.1) still applies to the release *carrying the directory*: it rides a store release for review visibility even without a native module.
-
-**Files.** `mobile/src/data/daan/{types,principles,occasions,vaar,kathas,directory,ledger,index}.ts` Â· `contexts/DaanLedgerContext.tsx` Â· `screens/Daan{Punya,Journey,Ledger,Entry,Directory,DirectoryDetail,Katha}Screen.tsx` Â· doors in `screens/MoreScreen.tsx` + `screens/ObservanceDetailScreen.tsx` Â· registrations in `navigation/{MoreStackNavigator,PanchangStackNavigator}.tsx` + `navigation/types.ts` (DaanStackParamList) Â· provider in `App.tsx`. Tests: `src/data/daan/__tests__/daanContent.test.ts`, `src/contexts/__tests__/DaanLedgerContext.test.tsx`, `src/screens/__tests__/DaanScreens.test.tsx`; device path `.maestro/daan-punya-smoke.yaml`. See RULEBOOK Â§24 and `docs/roadmap/prds/26-daan-punya.md`.
+YªçŠx-®éÜj×¢ëiºÚ+Š§j[h‘éÜ¢éí×­ôë¤èµ©hºÚn¶X§zÍHÈ™Y[œÚ8 %\ÚYÛˆŞ\İ[B‚”™Y™\™[˜ÙHØİ[Y[›Üˆ[™Y[œÚÈXYX]XH[Ù[\È
+[[X[ˆÚ[\ØK˜[XÚ\š]X[˜\ËšYØ]˜Yñ*İ1 Kİ[™\šØ[™[™]\™HØXÜ™Y]^[Ù[\ÊK‚‚•HÛİ\˜ÙK[Ù‹]]š\İX[™Y™\™[˜ÙH\È\ÚYÛ‹\™]šY]Ëš[]H™\È›ÛİˆÜ[ˆ]ÈÙYH]™H[ØÚİ\ÈÙˆÛYH[™™XY\ˆØÜ™Y[œËˆ\ÈØİ[Y[Ø\\™\ÈHÚÙ[œËÛÛ\Û™[Ë[™[\ÈÛÈHØ[YH[™İXYÙHØ[ˆ™H™KX\YY[ˆ™XXİ˜]]™K‚‚‹KKB‚ˆÈÈKˆ[ÜÛÜB‚‹H
+Š”\˜ÚY[Yš\œİŠŠˆH\Úİ[™Y[ZÙH[ˆÛX[\ØÜš\›İHÛÜÜŞH[Ù\›ˆ™XY\‹ˆØ\›HÜ™X[H˜\ÙKÙ\XH[šËØY™œ›Û‹ÙÛÛXØÙ[Ë‚‹H
+Š”™]™\™[›İXÛÜ˜]]™KŠŠˆÜ›˜[Y[][Ûˆ\ÈZ[š[X[ˆHÚ[™ÛH8)iXÛ\\È]šY\‹Ú[\HÜ™\İÛˆÛYKˆ™]™\ˆÛ]\ˆH™\œÙK‚‹H
+Š•^\ÈH\›ËŠŠˆ]™\HØÜ™Y[ˆ^\İÈÈØ\œH]˜[˜YØ\šHÜ˜XÙY[Kˆ˜XÚÙÜ›İ[™È\™H˜YYÚÙ]Ú\È]Ú]™Z[™H\˜ÚY[İ™\›^H8 %^H]\İ™]™\ˆšYÚH^‚‹H
+Š›ÛÚË[ZÙHXÚ[™ËŠŠˆÛ™H™\œÙH\ˆYÙKİÚ\HÈY˜[˜ÙKˆ›È[™\ÜÈØÜ›Û[ˆH™XY\‹‚‹H
+Šš[[™İX[][™K[YŠŠˆ]\È[™™\œÙ\È[ˆ]˜[˜YØ\šNÈ][ˆ
+ÛÜ›[Ü˜[Ø\˜[[Û™][XÊH\ÈH]ZY]ÙXÛÛ™\HX™[™]™\ˆH˜[œÛ][Û‹‚‚‹KKB‚ˆÈÈ‹ˆÛÛÜˆÚÙ[œÂ‚ŸÚÙ[ˆ^›ÛHŸKKHKKHKKHŸ\˜ÚY[ÑŒÑMĞÎXš[X\H˜XÚÙÜ›İ[™›Üˆ™XY\ˆİ\™˜XÙ\ÈŸ\˜ÚY[\ÛÙÑQ‘˜YÚ\ˆ\˜ÚY[›Üˆ[›™\ˆØ\™È
+Ú]HÛÙÛXÚYİÈ›ÜˆY
+H[™›]ÛÛ›ÛÈŸ\˜ÚY[YY\ÑNQPŒX›İÛKYYÙHÜ˜YY[[]˜]Yİ\™˜XÙ\ÈŸ[šØÌPLLØš[X\H]˜[˜YØ\šH›ÙH^ˆY\[™Yœ›ÛHÌ‘ŒQLL›ÜˆÛÛ˜\İ8 %ŒMKŒHÛˆ\˜ÚY[
+ĞĞQÈPPJKˆÙYHÛÛÜœËØÈÛÛÜœË˜ÛÛ˜\İ\İØˆŸ[šË\ÛÙÍPLĞLQXÙXÛÛ™\H^ÈYX[š[™È›ÙH
+ŒÎŒJHŸ[šË[]]YÍ‘MLŒÌ\X\HÈY]Y]HÈXÙZÛ\œÈÈ[[İYÙXÛÛ™\K[[™İXYÙH[™KˆY\[™Yœ›ÛHÎMMØ
+ÚXÚÛ›H™XXÚYŒŒJHÈKNŒH
+ĞĞQÈPJKˆŸØY™œ›Û˜ĞŒŒP˜š[X\HXØÙ[Xİ]™Hİ]\Ë\œ›İÜÈŸØY™œ›Û‹YY\ÎLÑL˜İ›Û™ÈXØÙ[YÙ\ˆİX™[ÈŸÛÛĞMĞÌÍÙXÛÛ™\HXØÙ[Ü™\İÙXİ[ÛˆYÜÈŸ]šY\˜™Ø˜JLÎŒ‹LKŒN
+X›Ü™\œËØ\™İ][™\ÈŸ™]Ğ˜YÙP™Ø™Ø˜JNNËŒMŠX“‘UÈˆ˜YÙHš[8 %ØY™œ›Ûˆ[
+™XÙ[KXYYÛÛ[
+HŸ™]Ğ˜YÙU^ÎLÑL˜“‘UÈˆ˜YÙH^8 %ØY™œ›Û‹YY\Ÿ]›ÚYÎQML‘X]]Y\œ˜XÛİH8 %[˜]\ÜXÚ[İ\Ëø))8)cx)+ø)/¸)'8)cx)+È[Z[™ÜÈ
+˜ZKÑİ[ZØKÖX[XYØ[™K]›ÚYÚÙÚY^XJKˆØ\›H[]K
+Š›™]™\ˆ™Y
+ŠÈ‘LMˆŸ]›ÚY[™Ø˜JMNÍ‹ŒLŠXš[™Z[™[ˆ]›ÚY›İËˆ]\ÜXÚ[İ\È›İÜÈ™]\ÙHÛÛ[È]X[]H\È[Ø^\ÈX™[Y[ˆ^ÛÈ
+0©ÌLŠKˆŸ]›ÚYÚ\™ØÈÛÛÚ\™Ø™Ø˜JMNÍ‹ŒŒ
+XÈ™Ø˜JM‹LL‹ŒŒŠXš[™Z[™H]X[]H
+Š˜Ú\Ü[
+Šˆ
+]›ÚYÈ]\ÜXÚ[İ\ÊHÛˆH]Z\˜]Û[˜ÙHØ\™ˆY\\ˆ[ˆH›İÈ[ÈÛÈH[™XYÈ\È]ÈİÛˆİ\™˜XÙHÛˆHØ\™Xİ]™XÜ˜YY[8 %HŒL¸ $ÌŒM›İÈ[ÈÙ\™HÛÈ˜Z[È™YÚ\İ\ˆ\ÈHÚ\
+0©ÌÌJKˆŸ]›ÚYY\ÍĞLÍÌŒ˜^
+Š›ÛŠŠˆH]›ÚYÚ\[ˆ˜]È]›ÚYÛX\œÈPHÛˆHØ\™İ\™˜XÙ\È]›ÜÈÈŒËNŒHÛÛ\ÜÚ]YÛˆ]›ÚYÚ\™Øİ™\ˆHÜ˜YY[	ÜÈ\šÈİÜ8 %Ú\^\Ù\È\ÈY\\ˆİ]È[›™YÚ]ÛÛ\ÜÚ][™ÈX][ˆÛÛÜœË˜ÛÛ˜\İ\İØˆ‚ŠŠ’ÛYHÜ˜YY[
+Šˆ
+Ü8¡¤ˆ›İÛJNˆÑ‘PÑ8¡¤ˆÑŒQLĞ‘˜
+\˜ÚY[YÚYÚ8¡¤ˆ\˜ÚY[Ü˜YY[[™[ˆÛÛÜœËØ
+K‚‚ŠŠ”™XY\ˆİ™\›^JŠˆ
+ÛˆÜÙˆ˜XÚÙÜ›İ[™[XYÙJNˆ™\XØ[Ü˜YY[˜™Ø˜JËŒÌKŒKJX8¡¤ˆ™Ø˜JËŒÌKŒKMJX8¡¤ˆ™Ø˜JËŒÌKŒKÍJX8¡¤ˆ™Ø˜JŒÌËŒMËMÍËMJX‚‚ŠŠ˜XÚÙÜ›İ[™[XYÙHš[\œÎŠŠˆHÔÔÈš[\ˆİXÚÈ
+ÜXÚ]NˆL˜Ù\XJŒÍJHØ]\˜]JJHœšYÚ™\ÜÊKŒŠX
+H\Y\ÈÛ›HÈ\ÚYÛ‹\™]šY]Ëš[ˆ[ˆ™XXİ˜]]™HHÚÙ]Ú™[™\œÈ[™š[\™Y8 %˜XÚÙÜ›İ[™^Y\‹ŞÙ]È›È[XYÙTİ[XÜXÚ]HÜˆ[8 %[™H˜YHÛÛY\ÈÛÛ[Hœ›ÛHH\˜ÚY[İ™\›^HÜ˜YY[İXÚÙYX›İ™H]‚‚ˆÈÈÈØÛÜHÙˆHØ\›K[Û›H[B‚•H[]H\ÈØ\›HX[\ØÜš\8 %
+Š›™]™\ˆÜ™Y[‹Ü™Y
+Šˆ8 %[™ÚYÛ˜[ÛÛİ\œÈİ^H[œÚYH]Š]›ÚY\ÈH]]Y\œ˜XÛİK]\ÜXÚ[İ\È™]\Ù\ÈHÛÛ[È›İ[Ø^\ÈØ\œHH^İYK°©ÌLŠKˆ\È[HÛİ™\›œÈ
+Š[YHÛÛİ\ˆ[™RHÚ›ÛYJŠ‹K™Kˆ]™\][™È[‚˜[Øš[KÜÜ˜Ëİ[YKØÛÛÜœËØ‚‚ŠŠ“Û™HØ[˜İ[Û™Y^Ù\[ÛŠŠˆH˜ZÙYZ]KYÛ\[\İ˜][Ûˆ[]BŠ[Øš[KÜÜ˜ËØÛÛ\Û™[ËÙZ]QÛ\ËÜ[]KØ0©ÍŠHØ\œšY\ÈÛÛÛXXÛØÚËİØ]\ˆY\È8 %˜XY‘Ü™Y[ˆÌMÍÌMQX[ÌÑ˜Y\›YHÌQXˆ^H\™H
+ŠœZ[Y]šX]\ÈÙˆB˜\™]™\ˆÚYÛ˜[ÊŠˆÜš\Ú˜IÜÈ™X]\‹Ø\ZÙ^XIÜÈ[YKØ[™ØIÜÈØ]™\ËˆH›İ[™\H\ÂÚ]X]\œÈ8 %›İ[™È[ˆ]š[HX^H™H[\ÜY[ÈÚ›ÛYH
+›È˜YÙKÚ\›Ü™\‹İ]B˜ÛÛİ\ˆÜˆXÛÛˆ[İ]ÚYHHÛ\š[\ÊKˆÚ›ÛYHZÙ\È]ÈÛÛİ\ˆœ›ÛHÛÛÜœËØÛ›K‚›İš[\ÈØ\œH\È›İHÛÈH^Ù\[ÛˆØ[››İ™HZ\İZÙ[ˆ›ÜˆH™XÙY[‚‚‹KKB‚ˆÈÈËˆ\ÙÜ˜\B‚•ÛÈ\Y˜XÙ\Ë›İ\ˆ›Û\Ë‚‚Ÿ\Y˜XÙH\ØYÙHŸKKHKKHŸ
+Š“›İÈÙ\šYˆ]˜[˜YØ\šJŠˆ[]˜[˜YØ\šNˆ]\Ë™\œÙ\ËYX[š[™È›ÙKØ\™˜[Y\ËˆÙZYÚÈÍLÍŒÍÌˆŸ
+ŠÛÜ›[Ü˜[Ø\˜[[Û™
+Šˆ][ˆİX]\ËYÙHÛİ[\œËİÚ\H[Ë][XÈX™[ËˆÙZYÚÈÍL›Üˆ›ÙH›ÜÙK
+ŠŒ›Û‹Z][XÊŠˆ›Üˆ˜[œÛ]\˜][Ûˆ[™][ˆÚ\\ˆ[X™\œËŒ][XÈ›ÜˆÙXİ[ÛˆX™[Ëˆ][XÈ\È™\Ù\™Y›ÜˆX™[È[™ÚÜ›İ\š\Ú\ÎÈÛ™È›ÜÙH\È[Ø^\È›ÛX[ˆ
+›Û‹Z][XÊHÈÙY\[™Û\Ú\˜YÜ˜\È™XYX›Hİ™\ˆH˜YY\˜ÚY[™ËˆŸ
+Š“›İÈÙ\šYˆİZ˜\˜]JŠˆ[İZ˜\˜]H
+İX™XY[™È[™İXYÙJNˆ]\Ë™\œÙ\ËYX[š[™È›ÙKØ\™˜[Y\ËˆÙZYÚÈLÍŒˆØ[YH˜[Z[KİÙZYÚÈ\ÈH]˜[˜YØ\šHİ]ÛÈH™XY[™È\HØØ[HØ\œšY\Èİ™\ˆ[˜Ú[™ÙYˆŸ
+Š“›İÈÙ\šYˆØ[›˜YJŠˆ[Ø[›˜YH
+Û˜™XY[™È[™İXYÙJNˆ]\Ë™\œÙ\ËØ\™˜[Y\È
+Ø[›˜YHYX[š[™È›ÜÙH›ÛİÜÈ[™Û\Ú
+KˆÙZYÚÈLÍŒˆŸ
+Š’[\ŠŠˆÛ›H›Üˆ[HRHÚ›ÛYHÚ\™H™XY[™ÈÛÛ[\È›İ[›Û™YˆØYYšXH^ËYÛÛÙÛKY›ÛËÚ[\˜[ˆ\Ş
+LÍŒ
+H[™Ø\œšYYHHÙXİ[Û“X™[È™\œÙT[ÈØ\™Y]XÚÙ[œÈ
+\ÙÜ˜\KØ
+K\ÈHX‹X˜\ˆX™[Ëˆ[™XË\ØÜš\[ÛX™[^İØ\ÈÙ™ˆ[\ˆÈHØÜš\Ù\šYˆšXH[^İ[J
+X
+][ËÛ[™Õ\KØ
+H8 %[\ˆ\È›È[™XÈÛ\È[™][ˆ˜XÚÚ[™ÈÜ]ÈHÚ\›Ü™ZÚKˆ‚ŠŠ‘›Û˜[Z[Y\ÈÛÛYHœ›ÛHÚÙ[œË™]™\ˆœ›ÛHİš[™È]\˜[ËŠŠˆ[Ø^\Â˜›Û˜[Z[Y\ËŠ˜
+[Øš[KÜÜ˜Ëİ[YKİ\ÙÜ˜\KØ
+H8 %™]™\ˆH[™]\Y˜	Ò[\—ÍŒÙ[ZP›Û	ØˆH˜[Z[Hİš[™È]˜[Y\È[ˆ[›ØYYÜˆZ\ÜÜ[Y˜XÙH˜Z[ÂŠŠœÚ[[JŠˆ[ˆ™XXİ˜]]™NˆH›ÙH\İ™[™\œÈ[ˆHŞ\İ[H›Ûˆ]\È^XİHİÂ™›İ\ˆØ[Ú]\ÈÚ\Y™Y™\™[˜Ú[™È›İÔØ[œÑ]˜[˜YØ\šWÍŒÙ[ZP›ÛH˜[Z[HH\™]™\‚š[œİ[YÜˆØYY8 %[˜ÛY[™ÈH[İ\ÚÚ\™HØ\™ÚXÚ\È^ÜY\È[ˆ[XYÙH[™œÚ\™Yİ]ÚYHH\ˆLHİXÚ]\˜[ÈXÜ›ÜÜÈŒÈš[\ÈÙ\™HZYÜ˜]YÈÚÙ[œÈ[ˆ[BŒŒ‹ˆ
+Š‘[™›Ü˜ÙYŠŠˆ\Û[˜ÛÛ™šYËšœØ˜[œÈ›ÛY˜[Z[Hİš[™È]\˜[Èİ]ÚYHÜ˜Ëİ[YKØ‚‚ˆÈÈÈËŒHL›ÛÜ‚‚ŠŠ“›ÈRHÚ›ÛYH™[™\œÈ™[İÈLŠŠˆH›Û\ØØ[HŞ\İ[H
+0©ÌLŠH[X™\˜][H™]™\ˆØØ[\Â˜Ú›ÛYH8 %Û›H™XY[™ÈÛÛ[8 %ÛÈHÈ˜YÙH\ÈÈ›Ü™]™\‹]]™\HXØÙ\ÜÚXš[]BœÙ][™ËˆL\ÈHØØ[IÜÈİÛˆ›ÛÜˆ
+™\œÙT[LØ\™Y]XLJNÈ[][™ÈÛX[\ˆØ\Â˜™[İÈHŞ\İ[IÜÈİ]YZ[š[][K‚‚H[HŒˆ]Y]›İ[™LÚ›ÛYHÚ]\È]ø $ÎHXÜ›ÜÜÈ[˜Ú[™Ëİ[™[K˜\ÚY˜[•Y\]Z\˜][™HØ][ÙÈØ\™Ëˆ[Ù\™H˜Z\ÙYÈL[™HÛÈš^Y\Ú^™HÚ\Â]Ûİ[[ˆ]™HÛ\YÙ\™HÜ›İÛˆ˜]\ˆ[ˆš[[YYˆHØ[[™\ˆ]UYØŠ0åÌLˆ8¡¤ˆ0åÌMˆ8 %]ÈX™[Ø[ˆ™H]˜[˜YØ\šKÚÜÙHX]˜\ÈÛ\™[İÈŒK0åÈXY[™ÊH[™H[˜Ú[™Èİ\˜YÙX
+MH8¡¤ˆMŠK‚‚ŠŠ“XY[™È\È\ÙˆH›ÛÜ‹ŠŠˆHL[™H™YYÈ
+Š¸¢iHK0åÈXY[™ÊŠˆ
+M
+HÚ[™]™\ˆ]Ø[‚˜Ø\œH[™XÈ^È[™RZYÚOOH›ÛÚ^™XÚ]ÈHš\œİ˜\Ù[[™HÛÈYÚ]HÜÙ‚H[™H\ÈÛXÙYÙ™‹ÚXÚ™XYÈ\Èš[[YY^˜]\ˆ[ˆYÚ^ˆ[™HÚ›ÛYH[™B]Ø[ˆ™[™\ˆ[™XÈ]\İ
+›˜[YJˆH˜XÙH]\ÈHØÜš\8 %[\ˆÙ\È›İ[™HÔÂ™˜[˜XÚÉÜÈY]šXÜÈ\™H[\ˆ[ˆ[Hš^YXY[™ÈØ[ˆ™YXİÛÈ›İ]H]›İYÚ˜[^İ[XÈØÜš\]Q›Û
+][ËÛ[™Õ\KØ
+H8 %Üˆ[™XÔØY™UYØ›ÜˆHZ^YXØ\ÙB›ZXÜ›ÈYÜÈ
+8)+ø).x)`0­È\ÈÛ™X8)kÈ8)&¸),8)(È0­ÈLˆ8)!x)%x)cx)-ø),
+H]ÙY\Z\ˆ][ˆØ\ÙH[™˜XÚÚ[™È[ˆ[™Û\Ú˜]]\İ›İØ\œHZ]\ˆİ™\ˆ]˜[˜YØ\šKˆ›İ[™\ÈÙˆ\Èš]H[İ\ÚœÚ\™HØ\™È[ˆ]Yİ\İŒˆ™YHZXÜ›È[™\ÈÚ\Y]LÌL[™Hİ[™[HXY\‚Š[\ˆ
+ÈH]˜[˜YØ\šHX™[
+H™[™\™Y8)'8)*8)cx)+ˆ8)%x)`x) ¸)(x),¸)`\È¸)'8)*8)cx)+ˆ8)%x)`x) ¸)(x),¸)/ˆˆÚ[H]ÈY]Ù›Ûİ\ˆÜİš]ÈÚ\›Ü™ZÚKˆİX\™YHÛÛ\Û™[Ë××İ\İ××ËÚ[İ\ÚÚ\™PØ\™š]\İŞˆ›İ[™\È™Xİ\œ™YÛˆ˜[ZØ\˜[ˆH›ÜšYÚ]\ˆ
+0©ÍŒJH8 %HNÍÎ\›ÈŞ[X›HÜ›ÜY8)%x)aØ[™š]™H[\‹]˜XÚÙYZXÜ›ÈX™[ÈÜ]Z\ˆÛ\İ\œÈ8 %ÛÈ™X]™š^YXY[™ÈÛˆH]˜[˜YØ\šH[™Hˆ[™’[\ˆÛˆ[ˆ[™XÈX™[ˆ\ÈHÛÈ[™ÜÈÈÚXÚÈÛˆ[H™]ÈØ\™›İ\ÈÛ™HØÜ™Y[‰ÜÈ\İÜKˆ]ÈİX\™\ÈÛÛ\Û™[Ë××İ\İ××ËÛ˜[ZØ\˜[•\Qš]\İŞÚXÚ[ÛÈ[œÈ]H\›È[™H[œÈ
+Š››ÊŠˆXY[™È][ˆHš^Y›ŞØ[››İ›ÛİÈX^›ÛÚ^™S][\Y\˜ˆH\™›Ü›HÙˆHØ[YH˜][\ÈHš^YXY[™ÈZ\™YÚ]
+Šœ]›Ü›H]]ËYš]
+ŠˆY\İÑ›ÛÚ^™UÑš]ØØ[\ÈHÛ\È[™X]™\È[™RZYÚÚ\™H]Ø\ËÛÈHXY[™È˜][ÈÜ›İÜÈ\ÈH^Úš[šÜÈ8 %H™\œÙHÚ\™HØ\™	ÜÈYX[š[™È™XXÚYÈ[œÚYHÙˆXY[™È™Y›Ü™H]Ø\ÈÚ^™Y[ˆ”È[œİXY
+0©ÌÎJKˆ
+ŠHš^Y[™RZYÚ[™Y\İÑ›ÛÚ^™UÑš]]\İ™]™\ˆÚ]ÛˆHØ[YH^
+ŠÈÚ^™H[ˆ”Ë\š]™HHXY[™Èœ›ÛH]Ú^™K‚‚ŠŠ‘[™›Ü˜ÙYŠŠˆ\Û[˜ÛÛ™šYËšœØ˜[œÈ›ÛÚ^™X™[İÈLİ]ÚYHÜ˜Ëİ[YKØ‚‚ŠŠ“Û™HØİ[Y[Y^Ù\[ÛŠŠˆ›Ü[™X[Ú\ÙY\ÈİX‹LL[X™\œÈ™XØ]\ÙHÜÙH\™BŠŠšY]Ğ›Ş[š]ÊŠ‹›İÚ[È8 %^HØØ[HÚ]HÚ\	ÜÈÚ^™X›ÜÛÈH˜Ú›ÛYHØ[‚›™]™\ˆÜ›İÈˆ™[Z\ÙHÙ\È›İÛˆ™X\ÛÛš[™È\È™XÛÜ™Y]HØ[Ú]K‚‚ŠŠ•H[ˆ][XÈÛÜ›[Ü˜[˜XÙH
+][’][XØ
+H\È™]™\ˆ\ÙY›Üˆ[Y\˜[ËÛØÚÈ[Y\Ë˜[™Ù\Ë]X[]HÚ\ËÜˆİ]\ÈX™[ÊŠˆ8 %Û›H›Üˆ›ÜÙHİX]\È[™ÚÜ›İ\š\Ú\ËˆÜÙHÙXÛÛ™\H[[Y[È\ÙHH
+Š››Û‹Z][XÈ8¢iMŒ˜XÙJŠˆ
+][”Ù[ZP›ÛÈ][›Û
+NˆH[ˆ][XÈİ›ÚÙ\ÈØ\Úİ]YØZ[œİ\˜ÚY[[™HØ\™Xİ]™XÜ˜YY[]™[ˆÚ[ˆHÛÛÜˆXÚšXØ[HÛX\œÈĞĞQÈPKÛÈH[YHÜˆÚ\Ù][ˆ][XÈ™XYÈ[‹]š\ÚX›Kˆ\È\È™Y[ˆ™KYš^YÙ]™\˜[[Y\È
+K™ËˆH]Z\˜]Û[˜ÙKXØ\™[Y\È	ˆ]\ÜXÚ[İ\ËØ]›ÚYÚ\0©ÌÌJH8 %™X]œÛX[ÙXÛÛ™\H^[ˆ][XÈÛˆHYÚİ\™˜XÙHˆ\ÈH™XYXš[]HY™XİÛˆÚYÚ‚‚ˆÈÈÈËŒH›ÛX[š^˜][Ûˆİ[HHÛİ\˜ÙH[™İXYÙB‚•H][‹\ØÜš\[™\Ñ[˜È˜[œÛ]\˜][Û˜šY[\È™[™\™Y™\HY™™\™[H\[™[™ÈÛˆHÛİ\˜ÙH[™İXYÙHÙˆH™\œÙKˆ\ÙHH[H]X]Ú\ÈH
+œÛİ\˜ÙJ‹›İH
+›[Ù[J‚‚ŠŠ”Ø[œÚÜš]™\œÙ\È8¡¤ˆPTÕ
+È[\šX[ˆYÜ˜\ËŠŠ‚•\È\Y\ÈÈHšYØ]˜Yñ*İ1 H[ˆ[
+˜[œÛ]\˜][Û–×X
+H[™ÈHØ[œÚÜš]ÚÚØ\È[X™YY[ˆİ\ˆ^È
+K™Ë‹H™YHÜ[š[™ÈÚÚØ\È[ˆİ[™\šØ[™Ú\™HÙXİ[ÛˆOOH	ÜÚÚØIØ
+K‚‚‹HXXÜš]XÜÈ[ˆØÛÜNˆ1 H1*È1jÈ8nfÈ8ngH8naH0ìH8nkH8n#H8naÈ1fÈ8nhÈ8n)H8n`X‚‹HYÜ˜\Îˆ1fÚ
+8)-ˆ
+È\Ü\˜]JKønhÚ
+8)%x)cx)-ÊKÚ
+8)&ÊKÚ
+8)&ŠKˆ[ˆ\[]XÈX›ÛİÜÈ8nfØ
+K™Ë‹8nfÚ]\± qfÚ˜X8nfÚ]]±*Ø
+H8 %\ÈX]Ú\ÈHÜ[\ˆšZİU™Y[K\İ[H›ÛX[š^˜][ÛˆHÚ]HÛÜœ\È[™XYH\Ù\Ë›İİšXİØ[œÚÜš]PTÕ
+8nfİ\± xnhønk\˜X
+K‚‹H™Y™\™[˜ÙH
+Ú]HKŒJN‚‚˜™8nfÚ]\± qfÚ˜H]± XÚB™\›XKZønhÚ]™Hİ\KZønhÚ]™HØ[X]™]1 H]^]]Ø]˜xn)B›q [XZñ xn)H1 xnaøn#X]± qfÚÚZ]˜HÚ[XZİ\˜]HØpìZ˜^XB˜‚ŠŠ]ØYHÈ[™H™\œÙ\È8¡¤ˆ›Û[˜ÚX][Û‹X˜\ÙYTĞÒRH
+›ÈXXÜš]XÜÊKŠŠ‚•\È\Y\ÈÈİ[™\šØ[™	ÜÈÚ]\Z\ËÚ\ËÛÜ\Ë[™Ú[™Ë[™È[Ùˆ[[X[ˆÚ[\ØH
+Ü[š[™ÈÚ\ËÚ]\Z\ËÛÜÚ[™ÈÚJKˆ[ÚY\ÉÜÈ]ØYH\È™XÚ]YÚ]ØÚØKY[][Ûˆ[™™YÚ[Û˜[ÛÛœÛÛ˜[˜\šX][ÛœÈ]İšXİPTÕÙ\È›İØ\\™H8 %PTÕXZ1 X±*Ü˜HšZÜ˜[XH˜Z˜\˜xn`Yñ*ØÙ\È›İX]ÚİÈ8)+¸).x)/¸)+8)`8),8)+8)/ø)%x)cx),8)+ˆ8)+8)'8),8) ¸)%ø)`\ÈXİX[HÚ[Y]XZXX™Y\ˆšZÜ˜[H˜Z˜\˜[™ÙYXÙ\ËˆH›ÛX[š^˜][Ûˆ\È[™Xİ\˜]YÈ™Y›Xİ™XÚ]][ÛÈÈ›İ™YÙ[™\˜]HYXÚ[šXØ[Hœ›ÛHH]˜[˜YØ\šK‚‚Ÿ™\œÙK[[™H›ÛX[š^˜][ÛˆŸKK_KK_Ÿ8§$ÈØ[œÚÜš]ÚÚØH8nfÚ]\± qfÚ˜H]± XÚX
+Ú]JHŸ8§$ÈØ[œÚÜš]ÚÚØH± [q HÜ8nfÚZ1 H˜YÚ\]H8nfÚY^YIÜÛXY1*ŞYX
+İ[™\šØ[™Ü[š[™ÈÚÚØJHŸ8§$È]ØYHÚ]\ZHXZXX™Y\ˆšZÜ˜[H˜Z˜\˜[™ÙYX
+[[X[ˆÚ[\ØJHŸ8§$È]ØYHÚHYZY[ˆ[H˜X[šZÙKİ[Z\˜]H]˜[‹Zİ[XX\‹˜Ÿ8§%Èš]\˜\Ú˜H]˜XÚX›ÜˆHØ[œÚÜš]™\œÙH
+XXÜš]XÜÈ›ÜY
+HŸ8§%ÈXZ1 X±*Ü˜HšZÜ˜[XH˜Z˜\˜xn`Yñ*Ø›Üˆ[ˆ]ØYHÚ]\ZH
+PTÕ[\ÜÙYÚ\™H]Ù\Û‰İš]
+H‚ŠŠ‘İZ˜\˜]HÈØ[›˜YH
+İXÈÛ˜
+H\™HØÜš\ÛÛ™\œÚ[Û‹›İ›ÛX[š^˜][Û‹ŠŠˆ\È0©ÌËŒHÛİ™\›œÈÛ›HH
+“][Šˆ[™\Ñ[˜Ø˜[œÛ]\˜][Û˜šY[Ú\™HØÚØKY[][Ûˆ[™™XÚ]][ÛˆX[˜ÙHX]\‹ˆHİZ˜\˜]H[™Ø[›˜YH™XY[™È[™İXYÙ\È[œİXY™[™\ˆH]˜[˜YØ\šH™K\ØÜš\YÈHÚ\İ\ˆœ˜ZZHØÜš\
+[Øš[KÜÜ˜Ëİ][Ëİ˜[œÛ]\˜]KØ
+H8 %[ˆÜÙÜ˜\K\™\Ù\š[™ÈNŒHÛÙ\Ú[X\[™ËÚXÚ\È^XİHİÈ\ÈÛÛ[\Èš[Y™YÚ[Û˜[KˆYXÚ[šXØ[ÛÛ™\œÚ[Ûˆ\ÈÛÜœ™Xİ\™H™XÚ\Ù[H™XØ]\ÙH]\È
+››İ
+ˆ›ÛX[š^˜][Û‹ˆ
+İKÚÛˆØ\œH›È]]Ü™YÛÛ[šY[ÎÈÙYH•SP“ÓÒÈ0©ÌKŠB‚ŠŠ•\ÈÚÛHÙXİ[ÛˆÙ\È“Õ\HÎŠŠ‚‚‹HÚ\\ˆ]\ÉÈ[™Û\ÚİX]\È
+K™Ë‹šYØ]˜Yñ*İ1 X\š[˜IÜÈ[[[XX
+B‹H™\œÙK\[İX]\È
+K™Ë‹Ú\\ˆXÜ[š[™ØÛÜÚ[™Ø
+B‹HXœ˜\KXØ\™[™Û\Ú˜[Y\È
+K™Ë‹[[X[ˆÚ[\ØXİ[™\šØ[™
+B‹HRHÚ›ÛYH8 %Ûİ[È
+È™\œÙ\Ø
+K[È
+8¡¤İÚ\H8¡¤˜
+KX™[È
+YX[š[™ØÛÛ[Y[\X
+B‹H
+Š•Y\›ÜÙKŠŠˆÚYÛšYšXØ[˜ÙRKÑ[˜[™ÜšYÚ[”İÜRKÑ[˜ÛˆXXÚY\[\X\™H[™\[™[›ÜÙH˜[œÛ][ÛœË›İ›ÛX[š^˜][ÛœÈÙˆHØ[YH™\œÙH[™Kˆ[\H˜[Y\È
+ÛÛ[˜]Ø\ÚHš\ÚØ[˜]
+H\ÙHÜ[\ˆ[™Û\ÚÜ[[™ÜË›İPTÕ‚‚•\ÙH™[XZ[ˆ[ˆ]™\Y^H[™Û\ÚˆH[™[ÙˆÛÛ[[ÛˆØ[œÚÜš]\›\ÈÙY\Z\ˆÛÛ™[[Û˜[Ü[[™Èİ]ÚYH™\œÙK[[™\È
+ñ*İ1 Xñ xnaøn#XX
+H8 %HXXÜš]XË[Ü‹[›İØ[™[Û™ÜÈÈHY]ÜšX[X[K›İ\È[K‚‚ŠŠ”™[™\š[™È^[İ]
+Šˆ\È[Ù[K\ÜXÚYšXÎ‚‚‹H
+Š”İØ\[Û‹]ÙÙÛH
+[[Ù[\ËÚ]H[˜ÛYY
+NŠŠˆHÙÙÛHİØ\È]˜[˜YØ\šH8¡¥›ÛX[š^˜][Ûˆ[ˆXÙKÛÈÛ›HÛ™HØÜš\\Èš\ÚX›H]H[YH
+™\œÙS[™\ĞS[™Ø
+KˆÙYH0©ÎHÈ0©ÌLˆØ[œÚÜš]ÚÚØ\ÈİØ\ÈPTÕ
+HÚ]IÜÈ˜[œÛ]\˜][Û–×Xİ[™\šØ[™	ÜÈÜ[š[™ÈÚÚØ\ÊNÈ]ØYHÚ]\Z\ÈİØ\È›Û[˜ÚX][Û‹X˜\ÙYTĞÒRKˆ
+[ˆX\›Y\ˆÚ]H™]š\Ú[Ûˆ™[™\™Y›İØÜš\ÈÚYKXK\ÚYNÈHÚ\Y™XY\œÈ\ÙHÛ™HØÜš\]H[YH]™\]Ú\™KŠB‚ˆÈÈÈ\HØØ[B‚•\ÈX›H\ÈH
+ŠœÚ[™ÛHÛİ\˜ÙHÙˆ]
+Šˆ›Üˆ™XY[™ËXÛÛ[Ú^š[™Ë[\[Y[Y[ˆ[Øš[KÜÜ˜Ëİ[YKİ\ÙÜ˜\KØˆ]™\H™XY\ˆÙXİ[Ûˆ[™]™\Hİ\™˜XÙH]ÚİÜÈ™\œÙHÈ˜[œÛ]\˜][ÛˆÈYX[š[™ÈÈÛÛ[Y[\HÛÛœİ[Y\È\ÙHÚÙ[œÈ8 %
+Š››È\™ÛÙY›ÛÚ^™XØ[™RZYÚÛˆ™XY[™ÈÛÛ[
+Š‹›È\‹\ÙXİ[ÛˆØØ[Kˆ›İ[™İXYÙ\È™[™\ˆHYX[š[™È]HØ[YHÚ^™K[™H™\œÙHÚ]ÈX›İ™HHYX[š[™ËˆÙYH•SP“ÓÒË›Y0©ÌÈ
+“Û™H™XY[™È\HØØ[HŠH[™HİX\™\İ][Øš[KÜÜ˜ËØÛÛ\Û™[Ë××İ\İ××ËÜ™XY\•\TØØ[K\İŞ‚‚Ÿ›ÛH\Y˜XÙHÚ^™HÙZYÚ›İ\ÈŸKKHKKHKKHKKHKKHŸØÜ™Y[ˆ]H
+8).8)*8)/¸))8)*
+H›İÈÙ\šYˆ]˜[˜YØ\šHÍŒ]\‹\ÜXÚ[™ÈŒY[XŸ™XY\ˆÜX˜\ˆ]H›İÈÙ\šYˆ]˜[˜YØ\šHMˆŒŸ™\œÙH›ÙH
+]˜[˜YØ\šJH›İÈÙ\šYˆ]˜[˜YØ\šHŒÈL[™KZZYÚKÈŸ˜[œÛ]\˜][Ûˆ
+][ˆPTÕ
+HÛÜ›[Ü˜[Ø\˜[[Û™Œ[šØ[™KZZYÚÍKˆÚ]ÈÛ™Hİ\X›İ™HHYX[š[™È
+Œ
+HÛÈH™\œÙHİ^\ÈÛZ[˜[8 %Z\œ›ÜœÈH]˜[˜YØ\šH™\œÙx¡¥YX[š[™ÈY\˜\˜ÚKˆÛÜ›[Ü˜[	ÜÈÛX[ZZYÚ™XYÈÛX[\ˆ[ˆ]˜[˜YØ\šKÛÈ]ZÙ\ÈH™]È^˜HÚ[ÎÈ[\YMÈ8¡¤ˆŒ8¡¤ˆˆŸYX[š[™È›ÙH
+[™JH›İÈÙ\šYˆ]˜[˜YØ\šHŒL[šË\ÛÙ[™KZZYÚÍ
+8¢bKÊKˆ[\YMH8¡¤ˆŒÈX]ÚH[™Û\ÚYX[š[™ÈÚ^™KÛÈ›İ[™İXYÙ\È™XY]Û™HYX[š[™ÈØØ[KˆŸYX[š[™È›ÙH
+[™Û\Ú
+HÛÜ›[Ü˜[Ø\˜[[Û™ŒLYY][H›Û‹Z][XÈ[šØ[™KZZYÚÌËˆ][XÈØ\È™]š[İ\ÛH\ÙY[™™Z™XİY\ÈÛÈ[ˆİ™\ˆH\˜ÚY[™ÎÈYY][K]ÙZYÚ›ÛX[ˆ\ÈHÚ\[™ÈÜXËˆ[\Yœ›ÛHN8¡¤ˆŒˆÛÜ›[Ü˜[	ÜÈÛX[ZZYÚ™XYÛÈÛX[YØZ[œİH]˜[˜YØ\šHYX[š[™È›ÙKˆŸÛÛ[Y[\H›ÙH
+[™JH›İÈÙ\šYˆ]˜[˜YØ\šHŒL[šË\ÛÙ[™KZZYÚÍˆ\˜YÜ˜\Ø\MˆÛÛ[Y[\H™]\Ù\ÈHYX[š[™ØÚÙ[ˆ8 %Û™H™XY[™ÈØØ[K›ÈÛX[\ˆÛÛ[Y[\HY\ˆ
+ÙYH›ÙTİ[X[ˆÚ]U™\œÙTYÙKŞ
+KˆŸÛÛ[Y[\H›ÙH
+[™Û\Ú
+HÛÜ›[Ü˜[Ø\˜[[Û™ŒLYY][H›Û‹Z][XÈ[šØ[™KZZYÚÌËˆ\˜YÜ˜\Ø\MˆØ[YHYX[š[™Ñ[™Û\ÚÚÙ[ˆ\ÈH[™Û\ÚYX[š[™È›ÙKˆŸÛÛ[Y[\H˜[˜XÚÈ›İHÛÜ›[Ü˜[Ø\˜[[Û™M][XÈ[šË[]]YÙ[™YˆÚİÛˆÚ[ˆHÙ[XİY[™İXYÙH\È›ÈÛÛ[Y[\H›Üˆ\È™\œÙH]Hİ\ˆ[™İXYÙHÙ\È
+K™Ë‹Ú]HÚ\\ˆH\ÈÛ›HŒŒ	H[™Û\ÚÛÛ[Y[\HÛİ™\˜YÙH[ˆHX›\ÚYÛİ\˜ÙJKˆŸØ\™˜[YH
+š[X\H[™İXYÙJH›İÈÙ\šYˆ]˜[˜YØ\šH
+JHÈÛÜ›[Ü˜[Ø\˜[[Û™
+[ŠHM8 $ÌŒˆŒÙ[ZX›Û\šYÚ
+JHÈ
+ŠÌ›Û
+Šˆ\šYÚ
+ÈŒØ˜XÚÚ[™È
+[ŠH›ÛZ[™[Ü[™HÛˆØ][ÙËØ]YÛÜKZ]K[™™\İ[YK\ÚY]]\ËˆH
+Š˜Xİ]™H™XY[™È[™İXYÙJŠˆZÙ\È\ÈÛİ8 %]˜[˜YØ\šKYš\œİHY˜][
+	ÚIØ
+K[™Û\ÚYš\œİÚ[ˆHÙÙÛH\È	Ù[‰Øˆ
+Š•ÙZYÚ›ÛİÜÈHÛİ›İHØÜš\ŠŠˆHÛÈØÜš\ÈØ\œHY™™\™[
+›ÜXØ[
+ˆÙZYÚ]HØ[YHÚ[Ú^™H
+]˜[˜YØ\šH™XYÈ\šËÙ[œÙKÛÜ›[Ü˜[™XYÈYÚ
+KÛÈH[™Û\Úš[X\H\Ù\ÈHX]šY\ˆ›Û˜XÙH
+Š˜[™
+Šˆ\ÈÚ^™YHİ\\™Ù\ˆ[ˆH]˜[˜YØ\šHš[X\H]XXÚØ[Ú]H
+K™ËˆØ]YÛÜPØ\™]š[X\HMØœÈ]”š[X\HM˜ÈXœ˜\PØ\™NXœÈMØ
+H8 %İ\Ú\ÙH[ˆ[™Û\Ú\š[X\H]H™XYÈ\ÈHY\ˆÙˆ]È[[İY[™H[™KˆÜ™\š[™ËİÙZYÚİ˜XÚÚ[™È\ÈÙ[˜[\ÙY[ˆÜ™\•]\ĞS[™İXYÙJ
+XÈ\‹\ØÜš\ÜXØ[Ú^™\È\™H\ÜÙYHXXÚØ[\‹ˆŸØ\™˜[YH
+ÙXÛÛ™\H[™İXYÙJHÛÜ›[Ü˜[Ø\˜[[Û™][XÈ
+[ŠHÈ›İÈÙ\šYˆ]˜[˜YØ\šH
+JHLx $ÌLÈ][XÈ
+[ŠHÈLYY][H
+JH[šË[]]YYÚ\ˆİ\Ü[™È[™H™[İÈHš[X\H]H8 %H[™İXYÙH
+››İ
+ˆÙ[XİYˆÚ^™YŒ¸ $ÍH™[İÈHš[X\H[™[[İYÈ[šË[]]Y
+›İ[šË\ÛÙ
+HXÜ›ÜÜÈ
+Š˜[
+ŠˆØ[Ú]\ÈÛÈ]™XYÈ\ÈHØ\[Û‹›İHY\‹ˆŸÚ\\ˆØ\™]H
+[™JH›İÈÙ\šYˆ]˜[˜YØ\šHMÈŒÚ]HÚ\\œÈ[™^ˆŸÚ\\ˆØ\™]H
+[™Û\Ú
+HÛÜ›[Ü˜[Ø\˜[[Û™Mˆ][XÈÚ]HÚ\\œÈ[™^Ú[ˆ[™İXYÙHÙÙÛHH[™Û\ÚˆŸÚ\\ˆYÈ
+8)!x))ø)cx)+ø)/¸)+È˜ÈÒTTˆ˜
+H[\ˆLŒŒÙ[X˜XÚÚ[™Ë\\˜Ø\ÙKØY™œ›Û‹YY\ˆŸ[™İXYÙHÙÙÛH
+[™H[ŠH›İÈÙ\šYˆ]˜[˜YØ\šHMHŒXİ]™NˆØY™œ›Û‹YY\È[˜Xİ]™Nˆ[šË[]]YˆŸ[™İXYÙHÙÙÛH
+[™Û\Ú[ŠHÛÜ›[Ü˜[Ø\˜[[Û™M][XÈXİ]™NˆØY™œ›Û‹YY\È[˜Xİ]™Nˆ[šË[]]YˆŸYÙHÛİ[\ˆ
+K™Ë‹HÈØ
+HÛÜ›[Ü˜[Ø\˜[[Û™M][XÈ[š[™ÈšYİ\™\ÈŸÙXİ[ÛˆX™[
+P”T–X
+H[\ˆ
+[ŠHÈØÜš\Ù\šYˆ›Û
+p­Ùİp­ÚÛŠHLHŒŒŒ™[X˜XÚÚ[™Ë\\˜Ø\ÙKˆ][‹[Û›HX™[È
+ĞUQÓÔ’QTØTĞÓÕ‘T˜P”T–X
+HÜ™XYHÚÙ[ˆ\™XİKˆ
+Šš[[™İX[
+Šˆ^YXœ›İÜÈ
+8)!¸)'8)%x)aÈ8),¸)/ø)#ØÈ“ÔˆÑVX8)%x)+8)*¸)/¸)(8)%x),8)aø) ˜Z]HØ]YÛÜH›İÜË[˜Ú[™ËÔ˜\ÚY˜[ÚXÚÙ\œÊH]\İ›İ]HHÚÙ[ˆ›İYÚ[^İ[J
+X
+][ËÛ[™Õ\KØ
+H8 %[\ˆ\È›È[™XÈÛ\È
+Ú[[Ş\İ[H˜[˜XÚÊH[™ŒŒ™[X˜XÚÚ[™ÈÜ]ÈHÚ\›Ü™ZÚKÛÈ[™XÈØÜš\ÈİØ\ÈHØÜš\Ù\šYˆÚ]
+Š››ÊŠˆ˜XÚÚ[™ÈÜˆØ\ÙH˜[œÙ›Ü›KˆİX\™YH][Ë××İ\İ××ËÛ[™Õ\K\İØˆŸ™\œÙK]\H[
+8))¸)bø).x)/˜8)&¸)c8)*¸)/¸)"0­ÈX8)-¸)cx),¸)bø)%H0­ÈKŒX
+H[\ˆ
+[ŠHÈØÜš\Ù\šYˆ›Û
+p­Ùİp­ÚÛŠHLŒØY™œ›Û‹YY\Ûˆ[Y™Ëˆ[™Û\Ú[ÈÙY\[\ˆ
+ÈŒÙ[X˜XÚÚ[™È
+È\\˜Ø\ÙNÈ[™XË\ØÜš\[È™[™\ˆ[ˆHØÜš\Ù\šYˆ›ÛÚ]
+Š››ÊŠˆ˜XÚÚ[™ÈÜˆØ\ÙH˜[œÙ›Ü›HšXH[^İ[J
+X
+][ËÛ[™Õ\KØ
+KˆŸYX[š[™ÈÈÛÛ[Y[\HX™[
+8)+x)/¸)-x)/¸),8)cx))XÈYX[š[™Ø8)-x)cx)+ø)/¸)%¸)cx)+ø)/˜ÈÛÛ[Y[\X
+HÛÜ›[Ü˜[Ø\˜[[Û™
+[ŠHÈØÜš\Ù\šYˆ›Û
+p­Ùİp­ÚÛŠHLÈŒ][XÈ
+[ŠHÈÙ[ZX›Û
+[™XÊH
+Š”Ú[™ÛK[[™İXYÙJŠˆHX™[™[™\œÈÛ›H[ˆH™XY[™È[™İXYÙH8 %8)+x)/¸)-x)/¸),8)cx))X
+JHÈYX[š[™Ø
+[ŠHÈ8*«x*¯¸*­x*¯¸*¬8*ãx*©X
+İJHÈ8,«x,¯¸,­x,¯¸,¬8,ãx,©X
+ÛŠK[™8)-x)cx)+ø)/¸)%¸)cx)+ø)/˜ÈÛÛ[Y[\X]Ëˆ›Èš[[™İX[İ\Z\‹›ÈÜ™\ˆ›\[™Ëˆ[™Û\ÚÙY\ÈŒM[X˜XÚÚ[™È
+È][XÈ
+È\\˜Ø\ÙNÈ[™XÈØÜš\È\ÙHHØÜš\Ù\šYˆ›ÛÚ]›È˜XÚÚ[™ËˆØY™œ›Û‹YY\Ù[™YˆÙYHHX™[İ[[™È[ˆÚ]U™\œÙTYÙKŞÈ™\œÙTYÙKŞˆŸİXˆYÛ[™HÈİÚ\H[ÛÜ›[Ü˜[Ø\˜[[Û™L¸ $ÌMH][XÈ‚‹KKB‚ˆÈÈˆ^[İ]ÚÙ[œÂ‚ŸÚÙ[ˆ˜[YHŸKKHKKHŸØÜ™Y[ˆÚYHY[™È8 $ÌŸØ\™Y[™ÈNŸØ\™Ø\
+\İ
+HL˜ŸÙXİ[Û‹]Ë\ÙXİ[Ûˆ™\XØ[Ø\ŒŸØ\™˜Y]\ÈNŸ[Xˆ˜Y]\ÈMŸ[˜Y]\ÈNNXŸİ\™˜XÙH˜Y]\È
+™XY\ˆİ™\›^H[™Ë]ËŠHÍ˜ÛˆÛ™HØÜ™Y[ˆÛ›H‚ˆÈÈÈİ]\œÂ‚ˆ
+Š”[[YHÚÙ[œÈ
+Ûİ\˜ÙHÙˆ]ˆ[Øš[KÜÜ˜Ëİ[YKÜÜXÚ[™ËØ
+KŠŠˆÛÈİ]\œË›İÛ™N‚ˆÜXÚ[™ËœØÜ™Y[‘İ]\˜
+
+ŠŒ
+ŠŠH›ÜˆØ][ÙÈ[™XˆØÜ™Y[œË[™ÜXÚ[™Ëœ™XY[™Ñİ]\˜ˆ
+
+ŠŒŒŠŠŠH›Üˆ™XY\‹ØÚ\\ˆİ\™˜XÙ\ËÚ\™HH™XY[™ÈÛÛ[[ˆØ[È[Ü™H[™H[™İ‚ˆHŒˆØ\È›\ÜÙY[ÈHÚÙ[ˆ[ˆ[HŒˆ8 %]™\H™XY\ˆ[™Ú\\œÈÜ˜\ˆYˆ[™\[™[HÛÛ™\™ÙYÛˆ]Ú[HHXÛ\™YÚÙ[ˆØZYˆ™XY\’XY\˜
+0©ÎJBˆÛÛœİ[Y\È™XY[™Ñİ]\˜ÛÈHŒÌˆ™XY\‹ØÚ\\ˆØÜ™Y[œÈÚ\™HÛ™H˜[YK‚‚ˆØ\™Y[™Ë[Y[™È[™[Ù[[œÙ]È]\[ˆÈ\]X[Œˆ\™H
+Š››İ
+Šˆİ]\œÂˆ[™\™H›İ^XİYÈ\ÙH\ÈÚÙ[‹‚‚ˆÈÈÈ˜YZB‚ˆ
+Š”[[YHÚÙ[œÈ
+Ûİ\˜ÙHÙˆ]ˆ[Øš[KÜÜ˜Ëİ[YKÜÜXÚ[™ËØ
+KŠŠˆÛ™H\İ\ØØ[N‚ˆ˜YZKœÛX
+ŠŒL
+Šˆ0­È˜YZK›Y
+ŠŒM
+Šˆ0­È˜YZK›Ø
+ŠŒN
+Šˆ0­È˜YZK
+ŠŒŒŠŠˆ0­È˜YZKœ[
+ŠNNJŠ‹‚ˆØ\ÈYY[ˆ[HŒˆ›ÜˆHÚ\™Y
+ŠÚ\˜İ[\ˆ˜XÚËX]ÛˆÛÛ›Û
+Šˆ8 %[ˆÙ‚ˆ\ÈŒˆ8 %›İÈ\ÙYH™XY\’XY\‹Ş
+]™\H™XY\‹Ú[™^Ü˜\ŠH[™˜\ÚY˜[ØÜ™Y[‹ŞˆY\ˆ[ˆ]Y]›İ[™[ˆYZØÈ˜YZH
+LKL‹MKM‹MËŒŒ‹‹ÌŠH[™›Û™HÙˆ[BˆÛˆHØØ[K‚‚ˆ
+Š“›İÚÙ[š\ÙYÛˆ\œÜÙNŠŠˆ[ˆ
+š[˜ÚY[[
+ˆÚ\˜ÛH8 %H˜Y]\È]\È^XİH[ˆ]È›Ş8 %ˆÙY\ÈH˜\™H]\˜[ˆHZ]PØ\™]˜]\ˆ
+›Ü™\”˜Y]\ÎˆŒ˜
+KH›Ùš[H˜YÙK[™Bˆ[˜Ú[™È[Ûİ\\‹\ÈÈZ]QÛ\ËØ
+ÈØ]YÛÜRXÛÛ˜[\İ˜][Ûˆ[\›˜[ËˆØ\™Âˆ[HÈ[ÛÜ›™\œÈ[™HÛ™HÚ\™Y˜XÚÈÛÛ›ÛZÙHHÚÙ[ÈÛ™K[Ù™ˆÚ\˜Û\Èİ^Bˆ]\˜[Ë‚‚ˆÈÈÈ[]˜][Û‚‚Ÿ]™[ÚYİÈŸKKHKKHŸÛX\œ™Ø˜JŒÌLŒŠX8 %Y˜][Ø\™ŸY™Ø˜JŒÌLŒM
+X8 %Xİ]™HØ\™ŸØÌŒ™Ø˜JŒÌLŒŒŠX8 %Û™Hœ˜[YH[ˆ™]šY]ÈÛ›H‚ˆ
+Š”[[YHÚÙ[œÈ
+Ûİ\˜ÙHÙˆ]ˆ[Øš[KÜÜ˜Ëİ[YKÙ[]˜][Û‹Ø
+KŠŠˆ™XXİ˜]]™H^ÜÙ\Âˆš]™H˜[YY[]˜][ÛœÈ˜]\ˆ[ˆHÛKÛYÛØØØ[HX›İ™Kˆ[Ú\™HÛ™HØ\›HÚYİÂˆÛÛİ\‹Yš[™YÛ˜ÙH\ÈÌĞÌQLX8 %™]™\ˆ™K]\Y]HØ[Ú]K‚‚ˆÚÙ[ˆÙ™œÙ]0­ÈÜXÚ]H0­È˜Y]\È0­È[™›ÚY\ÙHˆKKHKKHKKHˆ[]˜][Û‹œİXXX0­ÈŒ˜0­È0­ÈX[KÚ[˜Xİ]™HØ\™Ü›İ\Y[\İİ\™˜XÙHˆ[]˜][Û‹˜Ø\™˜0­ÈŒL0­È˜0­È˜Y˜][Ø\™ˆ[]˜][Û‹›YY0­ÈŒLX0­ÈL˜0­ÈØXİ]™KÜÙ[XİYØ][ÙÈ[KÚ\\ˆØ\™ˆ[]˜][Û‹œ˜Z\ÙY˜0­ÈŒM˜0­ÈM0­ÈXHÛ™H›ØØ[[[Y[ÛˆHØÜ™Y[ˆˆ[]˜][Û‹›İ™\›^X˜0­ÈŒX0­ÈM0­ÈL›Ø]ÈX›İ™HHØÜš[H
+™X]\™K]İ\ˆØ\™
+H‚ˆİXXYY[™İ™\›^XÙ\™HYY[ˆ[HŒˆ[ˆ]Y]›İ[™Mš[\Âˆ[™\›Û[™ÈÚYİÜËÛÈØ\™È›Ø]Y]ÛYÚHY™™\™[ZYÚËHØ\›H^Ø\Âˆ™K]\YH[™
+Ú]ÌØÌYLXØ\Ú[™ÈšY
+K[™Hİ\ˆØ\™\ÙY[ˆÙ™‹\[]BˆÌLŒˆHY\œÈX›İ™H\™HHÛ\İ\œÈ]]Y]›İ[™ÛÈ]™\H™X[İ\™˜XÙH\ÈBˆÚÙ[‹ˆHÜ™X[H[]H\È™\HİÈšYİ\™KYÜ›İ[™ÛÛ˜\İÛÈØ\™İ\™˜XÙ\È]\İ™BˆÜ\]YH›ÜˆH[™›ÚYÚYİÈÈ™[™\‹‚‚ˆ
+Š‘[™›Ü˜ÙYŠŠˆ\Û[˜ÛÛ™šYËšœØ˜[œÈH^]\˜[ÛˆÚYİĞÛÛÜ˜İ]ÚYHÜ˜Ëİ[YKØ‚‚‹KKB‚ˆÈÈKˆXÛÛ›ÙÜ˜\H	ˆÜ›˜[Y[Â‚‹H
+Š’ÛYHÛÜ™X\šÈ
+Ü™\İØÚİ\
+KŠŠˆHÚ[™ÛHÛÛ\Xİ›İÎˆ[ˆ[H0­È8)dÚ\˜ÛH0­È8)-x)aø))¸)/¸) ¸)-¸)/0­È8)dÚ\˜ÛH0­È[ˆ[KÚ]HØXÜ™Y^È0­ÈZ[H™XY[™ØYÛ[™H™[™X]ˆ8)dÛˆ
+Š˜›İ
+ŠˆÚY\ÈÙˆHÛÜ™X\šËˆ[\ÈŒœÚ\˜Û\ÈÌ
+8)dN\
+K]HÜØY™œ›Ûˆİ›ÚÙHK\›İÈØ\LKˆ[\[Y[Y[ˆÛYUÛÜ™X\šËŞˆ\È™\XÙYHÛ\ˆİXÚÙYÜ™\İ
+ÈÍ]HÈ™XÛZ[HLÙˆ\›ÈZYÚÚ[HÙY\[™ÈHÙ[\™Y[\‹[ZÙH\ÜÙ[˜ÙK‚‹H
+Š•™\œÙH]šY\‹ŠŠˆ8)iXÙ[\™Y™]ÙY[ˆÛÈ\Üš^›Û[[\ËÚYKØY™œ›Ûˆ]Œ	HÜXÚ]Kˆ\ÙH™]ÙY[ˆ™\œÙH[™YX[š[™ÈÛˆ]™\H™XY\ˆYÙK‚‹H
+Š˜XÚÈÚ]œ›Û‹ŠŠˆ8 .X[œÚYHH
+Š
+ŠˆÚ\˜ÛHÚ]\˜ÚY[\ÛÙš[[™]šY\˜›Ü™\ˆ8 %HÚ\˜ÛH]Ù[ˆYY]ÈH0åÍLL^H\™Ù]
+Ú[\ØT™XY\”ØÜ™Y[‹Şİ[\Ë˜˜XÚØ
+Kˆœ›İÜÙHØÜ™Y[œÈ]ÙY\HÛX[\ˆÍš\İX[Ü]\Ú]]ÛÜM‹‚‹H
+Š‘›ÜØ\™Ú]œ›Û‹ŠŠˆÚ[™ÛH8 .˜[ˆØY™œ›ÛˆÛˆXİ]™HØ\™Ë‚‹H
+Š”YÙ\ˆİËŠŠˆœÚ\˜Û\Ë™Ø˜JLÎŒ‹LKŒJX™\İ[™Ëˆİ\œ™[YÙHİˆØY™œ›Û‹YY\ÚYN˜Y]\ÈNNH
+[
+K‚‹H
+Š“›È[[ÚšKˆ›ÈİÜËŠŠˆÛ›H[™Y˜]Ûˆ˜YYÚÙ]Ú\È\È˜XÚÙÜ›İ[™Ë‚‚‹KKB‚ˆÈÈ‹ˆ˜XÚÙÜ›İ[™[XYÙHŞ\İ[B‚‘›İ\ˆ˜YYš[YÙHÚÙ]Ú\ÈÙ\™HH[[X[ˆ^Ë[™Y][Øš[KØ\ÜÙ]ËØÚ[\ØKØ
+Ûİ\˜ÙH\[ˆÚ[XYÙ\ËØ
+N‚‚ŒKˆ[[X[—ÜÚ]KÙXœŒ‹ˆ˜[WÚ[[X[‹ÙXœŒËˆ[[X[—Û[šØYZ[‹ÙXœˆ[[X[—ÜÙXKÙXœ‚ˆÈÈÈ›İ][Ûˆ[B‚‹HÙ[Xİ[Ûˆ\È
+Š™]\›Z[š\İXÈ\ˆ™\œÙJŠ‹™\ÛÛ™YHHİ\˜]Y™YÚ\İH8 %[Øš[KÜÜ˜ËÙ]KØ˜XÚÙÜ›İ[™ËØ
+Ù]™XY\˜XÚÙÜ›İ[™
+Ûİ\˜ÙRY™\œÙJX
+H8 %
+Š››İ
+ŠˆH	HØ\Ú‚ˆH
+Š’[[X[ˆÚ[\ØNŠŠˆH[™\XÚÙY\‹]™\œÙHİ™\œšYHX\
+[[X[Ú[\ØSİ™\œšY\ØÙ^YYH™\œÙHY8 %K™ËˆÚ]\ZKLNØÚ]\ZKLNX8¡¤ˆHÙXKXÜ›ÜÜÚ[™ÈÚÙ]Ú
+KÚ]˜[WÚ[[X[‹ÙXœ\ÈHY˜][›Üˆ]™\Hİ\ˆ™\œÙK‚ˆH
+Š”İ[™\šØ[™ŠŠˆİ[˜K\˜[™ÙHXÚÙ]È8 %İ[˜\Èx $ÍÙXKx $ÌLHÚ]KL¸ $ÌN[šØKYZ[‹™[XZ[™\ˆ˜[KR[[X[‹‚ˆH
+Š‘]™\Hİ\ˆÛİ\˜ÙNŠŠˆÛ™H[›™Y[XYÙH\ˆÛİ\˜ÙHY
+Ûİ\˜ÙP˜XÚÙÜ›İ[™Ø
+K\ÈØ]YÛÜKÙZ]H˜[˜XÚÈX\È›Üˆœ›İÜÙHØÜ™Y[œË‚‹HHÚ]™[ˆ™\œÙH\™Y›Ü™H[Ø^\ÈÚİÜÈHØ[YH[XYÙH8 %İX›H\ÈH\Ù\ˆİÚ\\È˜XÚÈ[™›Ü8 %]HX\[™È\Èİ\˜]YÈX]ÚH™\œÙIÜÈİÜH™X]™]™\ˆ™K\›ÛY\ˆ™[™\‹‚‹H\HH[XYÙH\ÈHÛİ™\˜\Ú^™Y˜XÚÙÜ›İ[™ˆ[ˆİXÚÈH\˜ÚY[İ™\›^H
+ÙXİ[ÛˆŠHÛˆÜˆ[ˆHÛÛ[‚‚ŠŠ‘^Ù\[Ûˆ8 %Y\ŠŠˆY\]Z[ØÜ™Y[œÈ™\ÛÛ™HZ\ˆ˜XÚÙÜ›İ[™H
+Šœ™\ÚY[™ÈZ]JŠ‹Ú]\‹][\Hİ™\œšY\È›ÜˆÚš[™\ÈÚÜÙHZ]H]H\ÈÛÈÙ[™\šXÈ
+Ù]Y\˜XÚÙÜ›İ[™
+[\RYZ]RY
+X[ˆ˜XÚÙÜ›İ[™ËØ
+KˆHœ›İÜÙKÛX\İ\™˜XÙH\Ù\È›È˜XÚÙÜ›İ[™[XYÙH8 %Û›HH›]\˜ÚY[Ü˜YY[™Z[™Hİ[\ÙY[™XHÕ‘Èİ][™K‚‚ˆÈÈÈY[™È[Ü™H[Ù[\Â‚•Ú[ˆ˜[XÚ\š]X[˜\ÈÈÚ]H[Ù[\È\™HYY™]È˜YYÚÙ]Ú\ÈÚİ[›ÛİÈHØ[YH™X]Y[ˆØ\›H\˜ÚY[Û™KL	HÜXÚ]HY\ˆÙ\XKİXš™XİÙ[\™YÜˆÜX[˜ÚÜ™YÛÈH›İÛH\™ÙˆH[XYÙHİ^\ÈÛX[ˆ›ÜˆHYX[š[™È›ØÚË‚‚‹KKB‚ˆÈÈËˆØÜ™Y[ˆÛYHÈ[™^‚ˆ
+Š”İ\\œÙYYŠŠˆHŒHÛ™K\ØÜ›ÛX‹[\ÜÈÛYH
+\›È]H
+È›]P”T–HØ\™\İ
+H\È™Y[ˆ™\XÙYHHX˜™YÛYH[ˆ
+Š”ÙXİ[ÛˆN
+Šˆ8 %ÛÜ™X\šÈ\›ËTĞÓÕ‘TˆØ\›İ\Ù[[™Ø]YÛÜHÜšYˆ\ÈXY[™È\ÈÙ\ÛÈÙXİ[Ûˆ[X™\š[™ÈÛÎÈH›]Xœ˜\H\İ›İÈ]™\È[œÚYHHØ]YÛÜH\İØÜ™Y[œÈ
+0©ÌŒJK‚‚•HÛ™H[[Y[]Ø\œšY\Èİ™\ˆ\ÈH
+Š™›Ûİ\ˆX[˜JŠˆ8)iH8)-¸)cx),8)`8),8)/¸)+¸)&¸)*8)cx))¸)cx),8)&¸),8)(ø)c8)-¸),8)(ø) ˆ8)*¸)cx),8)*¸))¸)cx)+ø)aÈ8)iX8 %›İÈÙ\šYˆ]˜[˜YØ\šH
+ŠŒN
+Šˆ
+ÚÙ[ˆ›Ûİ\“X[˜X\ÙÜ˜\KØ
+K[šË[]]Y]MIHÜXÚ]KÙ[™Y]H[™ÙˆHÛYHØÜ›ÛÛÛ[‚‚‹KKB‚ˆÈÈˆÛÛ\Û™[ˆXœ˜\HØ\™‚•ÛÈ˜\šX[ÎˆXİ]™X
+]™H[Ù[JH[™ÛÛZ[™Ø
+XÙZÛ\ŠK‚‚˜–È[XˆHÈ˜[YH
+[™JHHÈ8 .ˆÜˆ˜YÙHBˆÈ˜[YKY[ˆ
+][ˆ][XË]]Y
+HBˆÈİXˆY]H
+Ûİ[ËİX]JHB˜‚ˆÈÈÈXİ]™B‚‹H˜XÚÙÜ›İ[™ˆ[™X\‹YÜ˜YY[Ñ‘‘QL8¡¤ˆÑQPPØ‹H›Ü™\ˆ™Ø˜JNNË
+X‹HÚYİÎˆY
+[[YNˆ
+Š˜[]˜][Û‹œ˜Z\ÙY
+ŠŠB‹H[XˆÜ˜YY[ÑLH8¡¤ˆÑLLMXÚ]H^	ÜÈš\œİ]˜[˜YØ\šH]\ˆ
+8).X8),8)/˜8)+X8).8)`X
+H[ˆÚ]K›İÈÙ\šYˆ]˜[˜YØ\šHŒ‹‚‹HšYÚÚYNˆØY™œ›Ûˆ8 .˜Ú]œ›Û‹‚‚ˆÈÈÈÛÛZ[™Â‚‹H˜XÚÙÜ›İ[™ˆ™Ø˜JMKLŒÍKÌŠX‹H›Ü™\ˆ]šY\˜‹HÚYİÎˆÛX
+[[YNˆ
+Š˜[]˜][Û‹œİXX
+ŠŠB‹H[Xˆ›]ÑŒQLŒØÚ]ØY™œ›Û‹YY\]\‹‚‹HÛÛ[
+[Xˆ
+È˜[Y\ÊH]MIHÜXÚ]HÛÈ]ÛÚÜÈÜ›X[]İ[YÚX›K‚‹HÜ\šYÚ[˜YÙNˆÓÓÓ˜
+
+ŠŒL
+Š‹\\˜Ø\ÙKŒN[H˜XÚÚ[™Ë™Ø˜JM‹LL‹ŒM
+Xš[8 %Ø\ÈK™[İÈH0©ÌËŒ›ÛÜŠK‚‚ˆÈÈÈÛÛ[\ˆØ\™‚Ÿ^^[\HŸKKHKKHŸ˜[YH
+[™JH8).x)*8)`x)+¸)/¸)*8)&¸)/¸),¸)`8).8)/˜Ÿ˜[YKY[ˆ[[X[ˆÚ[\ØXŸİXˆÈ™\œÙ\È0­È[™HÚ]YX[š[™Ø‚•\[™ÈXİ]™XØ\™8¡¤ˆ\Ú™XY\ˆ
+ÙXİ[ÛˆJH›Üˆ][Ù[K‚‚‹KKB‚ˆÈÈKˆØÜ™Y[ˆ^™XY\‚‚ŠŠ”\œÜÙKŠŠˆÚİÈÛ™H™\œÙH]H[YHÚ]]ÈYX[š[™È
+[™›Üˆ][K[^Y\™Y^ÈZÙHÚ]K]ÈÛÛ[Y[\JHİ™\ˆH\˜ÚY[][YÚÙ]Ú˜XÚÙÜ›İ[™‚‚\Y\ÈÈ›İ™XY\œÈ8 %H[[X[ˆÚ[\ØH™XY\ˆ
+[™X\‹Ú[™ÛH^
+H[™HšYØ]˜Yñ*İ1 H™XY\ˆ
+Ú\\‹\ØÛÜY[™İXYÙK]ÙÙÛXX›JKˆİXİ\˜[Y™™\™[˜Ù\È\ˆ[Ù[H\™HØ[Yİ][›[™K‚‚ŠŠ“^Y\ˆİXÚÈ
+˜XÚÈÈœ›Û
+NŠŠ‚‚ŒKˆ\˜ÚY[˜\ÙHÛÛÜ‹‚Œ‹ˆ˜XÚÙÜ›İ[™[XYÙH
+ÙXİ[ÛˆŠKÛİ™\˜Ù\XK][Y‚ŒËˆ\˜ÚY[Ü˜YY[İ™\›^H
+ÙXİ[ÛˆŠK‚ˆÛÛ[ÛÛ[[ˆ8 %]™\H™\œÙHYÙH\ÈH™\XØ[ØÜ›ÛšY]Ø
+™\œÙ\È
+ÈÛÛ[Y[\HX^H^ÙYYØÜ™Y[ˆZYÚ
+KÚ]
+Š›İÛHY[™ÊŠˆÛÈH\İ[™HÛX\œÈHYÙ\‹Yİİ™\›^H
+Ú]U™\œÙTYÙKŞÈ™\œÙTYÙKŞØÜ›ÛÛÛ[
+K‚‚ŠŠ”İXİ\™H
+ÜÈ›İÛJNŠŠ‚‚ŒKˆİ]\È˜\‹‚Œ‹ˆ
+Š•Ü˜\ŠŠˆ8 %[Ø^\È™XY\’XY\˜
+ÙYH™[İÊNÈ™]™\ˆHØØ[ÛÜK‚ˆH˜XÚÈ]Ûˆ8 %™]\›œÈÈH™]š[İ\Èİ\™˜XÙH
+HØ]YÛÜH\İ›ÜˆÚ[\ØNÈÚ\\œÈ[™^›ÜˆÚ]H8 %Û™H]™[\[ˆHİXÚË›İ[Ø^\ÈÛYJK‚ˆH]KˆÚ[\ØNˆ8).x)*8)`x)+¸)/¸)*8)&¸)/¸),¸)`8).8)/˜ˆÚ]Nˆ8)!x))ø)cx)+ø)/¸)+Èˆ0­È]RO˜
+[™H[ÙJHÜˆÚ\\ˆˆ0­È]Q[˜
+[™Û\Ú[ÙJK‚ˆH›ÙÜ™\ÜÈÛİ[\ˆ
+HÈØÛÜ›[Ü˜[Ø\˜[[Û™][XÊKˆÛİ[\ˆ\È
+Š˜Ú\\‹\ØÛÜY
+Šˆ›ÜˆÚ]H
+™\Ù]È\ˆÚ\\ŠK
+Š™Øİ[Y[\ØÛÜY
+Šˆ›ÜˆÚ[\ØK‚ŒËˆ
+Š”™XY[™È›ÙÜ™\ÜÈ˜\ŠŠˆ
+™XY[™Ô›ÙÜ™\ÜĞ˜\‹Ş
+H8 %H[ˆØY™œ›Ûˆ˜XÚÈ\™XİH[™\ˆHÜ˜\ˆÚİÚ[™ÈÜÚ][ÛˆÚ][ˆHÚ\\‹ÙØİ[Y[‚ˆ
+Š•ÙÙÛH›İÊŠˆ8 %™[™\™Y
+Š›Û˜ÙH\ˆ™XY\ŠŠ‹[ˆH\œÚ\İ[›İÈX›İ™HHYÙ\ˆ
+›İÛˆ]™\H™\œÙHYÙJNˆ[™İXYÙUÙÙÛX
+ÙXİ[ÛˆMŠH
+ÈYÔ›İ][™P]Û˜Ù[™Y‚Kˆ
+Š•™\œÙH\™XJŠˆ
+›^LKÜš^›Û[Y[™ÎÈXXÚYÙHØÜ›ÛÈ™\XØ[HÚ]›İÛHY[™ÈÛÈH\İ[™HÛX\œÈHİÊN‚ˆH
+Š’XY\ˆ›İÊŠˆ
+[‹\YÙJNˆ™\œÙK]\H[ÛˆHY
+Š›ÛÚÛX\šÈ
+ÈÚ\™H]ÛœÈÛˆHšYÚ
+Šˆ8 %HXİ[ÛœÈ™[™\ˆÛˆ]™\H™\œÙHYÙHšXHHYÙIÜÈÜXİ[ÛœØ›Ü
+Ú]U™\œÙTYÙKŞÈ™\œÙTYÙKŞ
+K›İ[ˆHÜ˜\‹‚ˆH™\œÙK]\H[8 %›ØØX[\H\ÈÛÛœÚ\İ[XÜ›ÜÜÈ[Ù[\Îˆ8))¸)bø).x)/ˆ0­ÈÜ[š[™ØÈ8)&¸)c8)*¸)/¸)"0­È˜È8).8)+¸)/¸)*¸)*8))¸)bø).x)/ˆ0­ÈÛÜÚ[™ØÈ8)-¸)cx),¸)bø)%H0­È‹“XÈ]\™H8)+¸) ¸))8)cx),]Ëˆ\\˜Ø\ÙH[\ˆLŒÙ[H›Üˆ[™Û\ÚÈØÜš\Ù\šYˆ›Û›È˜XÚÚ[™Ë›Üˆ[™XÈØÜš\È
+[^İ[J
+X
+NÈØY™œ›Û‹YY\ÛˆØY™œ›Û‹][‚ˆH™\œÙH[™\È8 %™[™\™Y[ˆH™XY[™È[™İXYÙIÜÈØÜš\
+ŠœİØ\Y[ˆXÙHHHÙÙÛJŠˆÛˆ]™\H™XY\‹Ú]H[˜ÛYY
+™\œÙS[™\ĞS[™Ø
+È™\œÙUÚÙ[˜
+Nˆ]˜[˜YØ\šHŒËÌÎH›ÜˆXH][ˆ›ÛX[š^˜][Ûˆ
+ÛÜ›[Ü˜[Ø\˜[[Û™ÌÍHŒ
+H›Üˆ[˜™K\ØÜš\YİZ˜\˜]KÒØ[›˜YHŒËÌÎH›ÜˆİXØÛ˜ˆXXÚ[™HÛˆ]ÈİÛˆ›İÎÈ™\Ù\™HHÜšYÚ[˜[[™Hœ™XZÜÈœ›ÛHH”ÓÓ‹ˆÛ›HÛ™HØÜš\\Èš\ÚX›H]H[YK‚ˆHÜ›˜[Y[]šY\ˆ
+ÙXİ[ÛˆJK‚ˆH
+Š“YX[š[™ÊŠˆÙXİ[Û‚ˆHX™[8 %
+ŠœÚ[™ÛK[[™İXYÙJŠ‹[ˆH™XY[™È[™İXYÙHÛ›Nˆ8)+x)/¸)-x)/¸),8)cx))X
+JHÈYX[š[™Ø
+[ŠHÈ8*«x*¯¸*­x*¯¸*¬8*ãx*©X
+İJHÈ8,«x,¯¸,­x,¯¸,¬8,ãx,©X
+ÛŠKˆÛÜ›[Ü˜[Ø\˜[[Û™LÈŒ][XÈ
+ÈŒM[X˜XÚÚ[™È›Üˆ[™Û\ÚÈØÜš\Ù\šYˆ›Û›È˜XÚÚ[™Ë›Üˆ[™XËˆØY™œ›Û‹YY\Ù[™Yˆ›Èš[[™İX[İ\Z\‹›ÈÜ™\ˆ›\[™Ë‚ˆH›ÙNˆ[™H]ŒÌÍ›İÈÙ\šYˆ]˜[˜YØ\šHL[šË\ÛÙÈ[™Û\Ú]ŒÌÌÈÛÜ›[Ü˜[Ø\˜[[Û™LYY][H›Û‹Z][XÈ[šØ8 %Û™HYX[š[™ÈØØ[HXÜ›ÜÜÈ[™İXYÙ\ËˆÛ›HÛ™H[™İXYÙH™[™\œÈ]H[YH˜\ÙYÛˆH[™İXYÙHÙÙÛH
+ÙXİ[ÛˆMŠK‚ˆHÜ›˜[Y[]šY\ˆ
+Ú]HÛ›H8 %Ù\\˜]\ÈYX[š[™Èœ›ÛHÛÛ[Y[\JK‚ˆH
+ŠÛÛ[Y[\JŠˆÙXİ[Ûˆ
+Ú]HÛ›JN‚ˆHX™[8)-x)cx)+ø)/¸)%¸)cx)+ø)/˜
+JHÈÛÛ[Y[\X
+[ŠH8 %Ø[YHÚ[™ÛK[[™İXYÙH™X]Y[\ÈHYX[š[™ÈX™[‚ˆH›ÙNˆ\œ˜^HÙˆ\˜YÜ˜\ËMØ\™]ÙY[ˆ\˜YÜ˜\Ëˆ\ÙÜ˜\HX]Ú\ÈHYX[š[™È›ÙH›ÜˆHÙ[XİY[™İXYÙH
+Ø[YHÚÙ[œÈ8 %›ÈÛX[\ˆÛÛ[Y[\HY\ŠK‚ˆH
+Š‘[\KXÛÛ[Y[\H˜[˜XÚËŠŠˆYˆHÙ[XİY[™İXYÙH\È›ÈÛÛ[Y[\H›Üˆ\È™\œÙH]Hİ\ˆ[™İXYÙHÙ\ËYHH\˜YÜ˜\›ÙH[™™[™\ˆHÚ[™ÛH][XÈ[™H[œİXYˆ^[™YÛÛ[Y[\H\È]˜Z[X›H[ˆ[™HÛ›H›Üˆ\È™\œÙK˜
+Üˆ[™H[˜[ÙİYJH8 %ÛÜ›[Ü˜[Ø\˜[[Û™M][XË[šË[]]YÙ[™Yˆ\È\ÈİÈH™XY\ˆ[™\ÈHÜ\œÙH[™Û\ÚXÛÛ[Y[\HÛİ™\˜YÙH[ˆÚ\\ˆHÙˆHÚ]HÛİ\˜ÙK‚ˆHYˆ
+Š˜›İ
+Šˆ[™İXYÙ\È\™H[\HHÚÛHÛÛ[Y[\H›ØÚÈ
+[˜ÛY[™ÈÜ›˜[Y[
+ÈX™[
+H\ÈY[ˆ[\™[K‚‹ˆ
+Š›İÛH˜\ŠŠˆ
+Š˜Ù[™YYÙ\ˆİÈÛ›JŠ‹İ™\›ZY™X\ˆH›İÛHYÙH8 %\™H\È›È8¡¤İÚ\H8¡¤˜[ˆİÈXÚÙ]HÚ\\ˆ[ÈHÙYÛY[È›ÜˆÚ]H
+ÛÈHÎ]™\œÙHÚ\\ˆİ[š]ÈÛ™Hİ˜XÚÊNÈÚ[\ØH\Ù\È]ÈØİ[Y[\ØÛÜYXÚÙ][™Ë‚‚ŠŠ’[\˜Xİ[Û‹ŠŠ‚‚‹HÜš^›Û[İÚ\H
+YÙ\ŠKˆYYYÙHİÚ\Hœ›ÛHš\œİYÙHÜˆšYÚYYÙHœ›ÛH\İYÙHÚİ[›İ[˜ÙK›İ\ÛZ\ÜË‚‹H[™İXYÙHÙÙÛNˆ™[™\™Y
+Š›Û˜ÙH\ˆ™XY\ŠŠˆ[ˆH\œÚ\İ[ÙÙÛH›İÈ
+ÙXİ[ÛˆMŠH›Üˆ[š[[™İX[[Ù[\È8 %Ú]Kİ[™\šØ[™[[X[ˆÚ[\ØK[™H™\İˆÙXİ[ÛœÈ]]™HHİXœÙXİ[Ûˆ\İ[™È
+K™Ë‹Ú]IÜÈÚ\\œÈ[™^ÙXİ[ÛˆMJHSÓÈİ\™˜XÙHHÙÙÛH\™Kˆ›İİ\™˜XÙ\ÈÚ\™Hİ]HšXH\ÙQÚ]S[™İXYÙJ
+X8 %Ø[YHÛÛ›ÛÛÈØÜ™Y[œËÛ™HÛİ\˜ÙHÙˆ]‚‹HÚ\\ˆ]]ËXY˜[˜ÙH
+Ú\\™Y™XY\œÊNˆHYÙ\ˆ\[™ËÜ™\[™ÈÚ\\‹]˜[œÚ][ÛˆØ\™È
+™^Ú\\Ø\™ŞÈ™]Ú\\Ø\™Ş
+HÛÈİÚ\[™È\İHÚ\\ˆYÙHY˜[˜Ù\ÈÈH™ZYÚ›İ\š[™ÈÚ\\‹‚‹HHÚ]H™XY\ˆY][Û˜[HÚİÜÈH[\Ôİ\]Û˜
+›Ø][™ËÛ˜ÙHH™XY\ˆ\È\İHš\œİ™\œÙJHÈ™]\›ˆÈ™\œÙHK‚‹H\ZÛÛˆH™\œÙH
+]\™JNˆ]Y[È^X˜XÚÈÛÚÈ8 %X]™HİXİ\˜[ÜXÙH›İËÛ‰İÚ\[[]Y[È[™Ëˆ
+^ÈÚ]™XÛÜ™Y]Y[Èİ\™˜XÙHH8¥­˜^HY™›Ü™[˜ÙH[ˆHÜ˜\ˆ[œİXYŠB‹H˜XÚÈ]ÛˆÜˆÙ\İ\™H™]\›œÈÛ™H]™[\‚‚ŠŠ”›ÙÜ™\ÜÈÛİ[\‹ŠŠ‚‚‹HÚ[\ØNˆİ[HÜ[š[™ÈÚ\È
+ÈÚ]\Z\È
+ÈÛÜÚ[™ÈÚ\È
+ˆ
+È
+ÈHHØ
+KˆÛİ[\ˆÚİÜÈİ\œ™[[™^
+ÈHÈİ[‚‹HÚ]Nˆİ[HÚ\\ˆ™\œÙHÛİ[
+K™Ë‹Ø›ÜˆÚ\\ˆJKˆÛİ[\ˆÚİÜÈİ\œ™[[™^
+ÈHÈÚ\\•™\œÙPÛİ[ˆİÚ]Ú[™ÈÚ\\œÈ™\Ù]ÈHÛİ[\‹‚‚ˆÈÈÈÛÛ\Û™[ˆ™XY\ˆXY\ˆ
+™XY\’XY\‹Ş
+B‚ŠŠ”\œÜÙKŠŠˆHÛ™H™XY\‹ØÚ\\ˆÜ˜\ˆØ˜XÚ×HØÙ[™Y]WHÜšYÚÛİXˆ]™\Bœ™XY\ˆ[™Ú\\œÈØÜ™Y[ˆÛÛœİ[Y\È]È›Û™HX^H™KZ[\[Y[]‚‚•[[[HŒˆ[ŒÌˆÙˆÜÙHØÜ™Y[œÈØ\œšYYZ\ˆİÛˆÛÜHÙˆ\È›ØÚË[™HÛÜY\ÂšYšYY8 %Y[™ÒÜš^›Û[Mˆ
+Š˜[™
+ŠˆŒ‹Y[™Ğ›İÛXÌLÌL‹˜XÚÈ]ÛœÈ]˜\ÈÙ[\ÈÛ™H]H\™XÛÙYÈN[œİXYÙˆH™XY\•]XÚÙ[‹ˆ^˜Xİ[™È]™š^YHšY[™\ÈHÚYHY™™Xİœ˜]Ø]T™XY\‰ÜÈ[™\œÚ^™Y˜XÚÈ]Û‹‚‚ŠŠ”ÜXËŠŠ‚‚‹H›İÎˆÜXÚ[™Ëœ™XY[™Ñİ]\˜
+ŒŠHÜš^›Û[0­ÈÜ0­ÈL˜›İÛH0­ÈÜXÙKX™]ÙY[˜‚‹H
+Š˜XÚÈÛÛ›Û
+Šˆ0åÍÚ\˜ÛK˜YZK\˜ÚY[ÛÙš[]šY\˜›Ü™\‹8 .X]ˆŒˆ[ˆ[šË\ÛÙ]ÛÜ^ÌMŸXÜXÚ]HØÚ[H™\ÜÙY‚‹H
+Š•]JŠˆ›^ˆXÙ[™Y[X™\“Ù“[™\Ï^Ì_X]Q›ÛS[™Ê[™ÊX][XÈ›Ü‚ˆ[™Û\ÚÛ›KˆÛÈ˜[YYØØ[\ÈšXH˜\šX[8 %
+Š˜™XY\˜
+Šˆ
+Y˜][
+H]ˆ\ÙÜ˜\Kœ™XY\•]K™›ÛÚ^™X
+MŠK[™
+Š˜[™^
+Šˆ]Œˆ
+Œ›Üˆ][‹ÚÜÙHÛX[\‚ˆZZYÚ™YYÈ\ÜÈ›ÛZ[˜[Ú^™JH›ÜˆÚ\\œËÚ[™^[™[™ÈØÜ™Y[œËˆÛÈ˜[Y\È˜]\ˆ[‚ˆHÛÜÙH[X™\ˆÛÈHY\˜\˜ÚHİ^\ÈHXÚ\Ú[Û‹‚‹H
+Š”ÚYHÛÛ[[œÊŠˆÛÈ˜[[˜Ú[™ÈÜXÙ\œÈÙˆ\]X[ÚYUÚYÙY\H]HÜXØ[BˆÙ[™YÈ›İ]\İÛX\ˆHÚY\ˆÚYIÜÈÛÛ[ˆY˜][ÈÈ
+ŠŒLŒ
+ŠˆÚ[ˆHšYÚÛİˆ\È™\Ù[
+Ûİ[\ˆ
+ÈÜ[Û˜[]Y[È]ÛŠH[™
+Š
+ŠˆÚ[ˆ]\È›İˆØÜ™Y[œÈÚ]Bˆ˜\œ›İÈ˜Z[[™ÈÛİX^H\ÜÈHÛX[\ˆ˜[YH
+Ú]T™XY\ˆ\ÜÙ\ÈŒ
+K‚‹H
+Š˜šYÚ
+ŠˆÛİØ\œšY\ÈHYÙHÛİ[\‹H8¥­˜]Y[ÈY™›Ü™[˜ÙK[™[HXİ[ÛœË‚‚ŠŠXØÙ\ÜÚXš[]HX™[ŠŠˆH˜XÚÈÛÛ›Û\ÈX™[Y˜XÚÈ˜8 %[X™\˜][H[™Û\Ú[™ŠŠ››İ
+ŠˆØØ[^™YˆHXY\İ›È›İÜÈ\]İš[™È]\˜[H
+Z]KXœ›İÜÙK\Û[ÚÙX˜œ˜]XØ][ÙË\Û[ÚÙX
+H[™HY˜][™XY[™È[™İXYÙH\ÈXÛÈØØ[^š[™È]\™Hœ™XZÜÂ™L™KˆØÜ™Y[œÈİ™\œšYH]Ú\™HH\İ[˜][Ûˆ\ÈÛÜ˜[Z[™È
+˜XÚÈÈÚ\\œÈ˜˜˜XÚÈÈÛYH˜˜XÚÈÈİİ˜[H\İ˜
+K‚‚ŠŠ‘š[\ÎŠŠˆ[Øš[KÜÜ˜ËØÛÛ\Û™[ËÔ™XY\’XY\‹Ş‚‚‹KKB‚ˆÈÈLˆÛÛ[[Ù[‚‘XXÚ[Ù[H›Ü›X[\Ù\È]ÈÛİ\˜ÙH[ÈH\Y[Ù[K\ÜXÚYšXÈÚ\KˆÚ\\Èİ^HÙ\\˜]HÛÈÛ™H[Ù[IÜÈ™XY\ˆ™]™\ˆ\ÈÈÛ›İÈ[›İ\ˆ[Ù[IÜÈ›ØØX[\H
+Ú[\ØHÙ\Û‰İÛ›İÈ	ÜÚÚØIØÈÚ]HÙ\Û‰İÛ›İÈ	ØÚ]\ZIØ
+KˆHÚ\™Y™XY\ˆX^H™H[›ÙXÙY]\ˆšXHHœ›ØY\ˆ[š[Ûˆ8 %[[[‹ÙY\\\È[Ù[K[ØØ[‚‚ˆÈÈÈÚ[\ØH
+[™X\‹Ú[™ÛK]^
+B‚”Ûİ\˜ÙNˆ[[X[Ú[\ØKÚ[[X[‹XÚ[\ØKZKY[‹›Y
+[™Xİ\˜]Yš[[™İX[X\šÙİÛŠH8¡¤ˆÙ[™\˜]YÛÛ[Z]Y[Øš[KÜÜ˜ËÙ]KÚ[[X[‹XÚ[\ØKÚ[[X[‹XÚ[\ØKšœÛÛ˜\Y[™[˜\šX[XÚXÚÙY[ˆ[Øš[KÜÜ˜ËÙ]KÚ[[X[‹XÚ[\ØKÚ[™^Ø‚‚˜Â\H[[X[Ú[\ØU™\œÙHHÂˆYˆİš[™ÎÈËÈK™Ëˆ›Ü[š[™ËYÚKLH‹˜Ú]\ZKLH‹˜ÛÜÚ[™ËYÚH‚ˆ\Nˆ	ÙÚIÈ	ØÚ]\ZIÎÂˆÙXİ[Ûˆ	ÛÜ[š[™ÉÈ	Ø›ÙIÈ	ØÛÜÚ[™ÉÎÂˆ[X™\Îˆ[X™\ÈËÈ™\Ù[›Üˆ[X™\™Y™\œÙ\ÂˆX™[Nˆİš[™ÎÈËÈK™Ëˆ¸))¸)bø).x)/ˆH‹¸)&¸)c8)*¸)/¸)"H‹¸).8)+¸)/¸)*¸)*8))¸)bø).x)/ˆ‚ˆX™[[ˆİš[™ÎÈËÈK™Ëˆ‘ÚHH‹Ú]\ZHH‹ÛÜÚ[™ÈÚH‚ˆ[™\Îˆİš[™Ö×NÈËÈ˜]È]˜[˜YØ\šH[™\Ë[ˆÜ™\‚ˆ[™\Ñ[ˆİš[™Ö×NÈËÈ›Û[˜ÚX][Û‹X˜\ÙY›ÛX[š^˜][Û‹NŒHÚ][™\ÂˆYX[š[™ÒNˆİš[™ÎÈËÈ[™H›ÜÙBˆYX[š[™Ñ[ˆİš[™ÎÈËÈ[™Û\Ú›ÜÙBˆYX[š[™ÑİOÎˆİš[™ÎÈËÈ™\šYšYY˜]]™HİZ˜\˜]HYX[š[™È
+XœÙ[8¡¤ˆ˜[œÛ]\˜][Ûˆ˜[˜XÚÊBˆYX[š[™ÒÛÎˆİš[™ÎÈËÈ™\šYšYY˜]]™HØ[›˜YHYX[š[™È
+XœÙ[8¡¤ˆ˜[œÛ]\˜][Ûˆ˜[˜XÚÊBŸNÂ˜‚ŠŠ“Ü™\ˆ›Üˆ[[X[ˆÚ[\ØNŠŠˆÜ[š[™×ÙÚ\ÖÌ‹—X8¡¤ˆÚ]\Z\ÖÌ‹ŒÎWX8¡¤ˆÛÜÚ[™×ÙÚX‚‚ˆÈÈÈÚ]H
+Ú\\‹\ØÛÜY][K[^Y\™Yš[[™İX[
+B‚”Ûİ\˜ÙNˆšYİØYÚ]KØÚ\\œËØÚ\\‹S“‹J‹›Y
+X›\ÚY˜[œÛ][Ûˆ
+ÈÛÛ[Y[\JKˆ\œÙYHØÜš\ËÜ\œÙKYÚ]K›ZœØ[È[Øš[KÜÜ˜ËÙ]KÙÚ]KØÚ\\‹S“‹šœÛÛ˜[™HÜ[]™[Ú\\œË[X[šY™\İšœÛÛ˜ˆ\œÙ\ˆİ]]\ÈÛÛ[Z]Y8 %Y]›È[™\È”ÓÓˆİ]XØ[KÛÈÙ[™\˜]Y]H]\İ]™H[ˆHÛİ\˜ÙH™YKˆ™K\[›š[™ÈH\œÙ\ˆÚİ[›ÙXÙHH]KZY[XØ[Y™‹‚‚˜Â\HÚ]U™\œÙHHÂˆYˆİš[™ÎÈËÈ˜™ËOÚ\\‹O[X™\ˆˆK™Ëˆ˜™ËLKLH‚ˆÚ\\ˆ[X™\ÈËÈx $ÌNˆ[X™\ˆ[X™\ÈËÈx $ØÚ\\‹™\œÙPÛİ[ˆØ[œÚÜš]ˆİš[™Ö×NÈËÈ]˜[˜YØ\šH[™\È
+8¢iHŠBˆ˜[œÛ]\˜][Ûˆİš[™Ö×NÈËÈPTÕ[™\ËNŒHÚ]Ø[œÚÜš]Ú\™HÜÜÚX›BˆYX[š[™ÒNˆİš[™ÎÈËÈ[™H\˜\˜\ÙH
+›Û‹Y[\JBˆYX[š[™Ñ[ˆİš[™ÎÈËÈ[™Û\Ú\˜\˜\ÙH
+›Û‹Y[\JBˆÛÛ[Y[\RNˆİš[™Ö×NÈËÈ[™H\˜YÜ˜\È8 %X^H™H×HÚ[ˆÛİ\˜ÙHXÚÜÈ]ˆÛÛ[Y[\Q[ˆİš[™Ö×NÈËÈ[™Û\Ú\˜YÜ˜\È8 %X^H™H×HÚ[ˆÛİ\˜ÙHXÚÜÈ]ˆYX[š[™ÑİOÎˆİš[™ÎÈËÈ™\šYšYY˜]]™HİZ˜\˜]HYX[š[™È
+XœÙ[8¡¤ˆ˜[œÛ]\˜][Ûˆ˜[˜XÚÊBˆYX[š[™ÒÛÎˆİš[™ÎÈËÈ™\šYšYY˜]]™HØ[›˜YHYX[š[™È
+XœÙ[8¡¤ˆ˜[œÛ]\˜][Ûˆ˜[˜XÚÊBŸNÂ‚\HÚ]PÚ\\ˆHÂˆÚ\\ˆ[X™\Âˆ]RNˆİš[™ÎÈËÈK™Ëˆ¸)!x),8)cx)'8)`x)*8)-x)/ø)-ø)/¸))¸)+ø)bø)%È‚ˆ]Q[ˆİš[™ÎÈËÈK™Ëˆ\š[˜IÜÈ[[[XH‚ˆ™\œÙPÛİ[ˆ[X™\Âˆİ[[X\ROÎˆİš[™ÎÂˆİ[[X\Q[Îˆİš[™ÎÂˆ™\œÙ\ÎˆÚ]U™\œÙV×NÂŸNÂ˜‚ŠŠ•İ[È
+ÛÛ[Z]Y]JNŠŠˆNÚ\\œÈ0­ÈÌH™\œÙ\ËˆÚ\\ˆ™\œÙHÛİ[È˜\HŒ8 $ÍÎ‚‚ŠŠ”İ[™\šØ[™›ÛİÜÈHØ[YHÚ\\‹\ØÛÜYÚ\JŠ‹›İH[™X\ˆÚ[\ØHÛ™NˆMˆÚ\\œÈ0­ÈÍM™\œÙ\ËÛÛ[Z]Y\È[Øš[KÜÜ˜ËÙ]KÜİ[™\šØ[™ØÚ\\‹LK‹ŒM‹šœÛÛ˜
+ÈÚ\\œË[X[šY™\İšœÛÛ˜Ú]]ÈİÛˆ™\œÙH›ØØX[\H
+ÚÚØKÚKÚ]\ZKÛÜKÚ[™
+K‚‚ŠŠ”Ûİ\˜ÙKY]H[\ÈH\œÙ\ˆ[™›Ü˜Ù\ÎŠŠ‚‚‹H]™\H™\œÙH]\İ]™H]X\İˆØ[œÚÜš][™\ÈY\ˆÜ][™ÈÛˆxnaøn#XH
+8)i
+KˆÚ[ˆHÛİ\˜ÙHÜ˜[\ÈHÚÛHÚÚØHÛÈÛ™H[™KH\œÙ\ˆÜ]ÈÛˆÚ[™ÛH8)i
+›İ8)i8)i
+H[™™X]XÚ\ÈH˜Z[[™È8)i8)i‹“x)i8)i™\œÙH[X™\ˆÈH™XÙY[™ÈÚ[šË‚‹H]™\H™\œÙH]\İ]™HH›Û‹Y[\HYX[š[™ÒX[™YX[š[™Ñ[˜‚‹HÛÛ[Y[\H\˜YÜ˜\ÈÚÜ\ˆ[ˆLÛÛ[Ú\˜Xİ\œÈ
+Y\ˆİš\[™È[˜İX][Ûˆ[™xnaøn#XJH\™H›ÜY\ÈXÙZÛ\ˆ[šY\È8 %HX›\ÚYÛİ\˜ÙHÛÛY][Y\È[Z]ÈHÛ™H˜[™\ˆ
+Š‘[™Û\ÚÛÛ[Y[\JŠ˜›Üˆ™\œÙ\ÈH˜[œÛ]ÜˆÚÚ\YˆH\œÙ\ˆ\›œÈÜÙH[È×X˜]\ˆ[ˆÙY\[™ÈHÚÜİ\˜YÜ˜\‚‹H[\HÛÛ[Y[\H[ˆÛ™H[™İXYÙH\ÈÛ\˜]Y\ÈÛ™È\ÈHİ\ˆ[™İXYÙH\ÈÜ[]YˆYˆ›İ\™H[\HH\œÙ\ˆ˜Z[ÈİY‚‚ˆÈÈÈ\Ü^HX™[›ØØX[\B‚’ÙY\H™\œÙK\[›ØØX[\HÛÛœÚ\İ[XÜ›ÜÜÈ[Ù[\È8 %XXÚ[Z\œÈH]˜[˜YØ\šH\›HÚ]H][ˆİX]HÜˆ[X™\‚‚‹HÚX
+ÈÙXİ[ÛˆOOH	ÛÜ[š[™ÉØ8¡¤ˆ[™XYÈ8))¸)bø).x)/ˆ0­ÈÜ[š[™Ø
+Üˆ0­È˜Yˆ][\JK‚‹HÚ]\ZX8¡¤ˆ[™XYÈ8)&¸)c8)*¸)/¸)"0­È[X™\˜‚‹HÚX
+ÈÙXİ[ÛˆOOH	ØÛÜÚ[™ÉØ8¡¤ˆ[™XYÈ8).8)+¸)/¸)*¸)*8))¸)bø).x)/ˆ0­ÈÛÜÚ[™Ø‚‹HÚ]H™\œÙH8¡¤ˆ[™XYÈ8)-¸)cx),¸)bø)%H0­ÈÚ\\‹™\œÙO˜
+K™Ëˆ8)-¸)cx),¸)bø)%H0­ÈKŒX
+K‚‹H]\™Nˆ8)+¸) ¸))8)cx),8).8)`¸))8)cx),]Ëˆ8 %[Ø^\ÈZ\™YÚ]H][ˆİX]K‚‚ˆÈÈÈ[™İXYÙHİ]H
+Ú]JB‚•H\Ø\œšY\ÈHÚ[™ÛH™XY[™Ë[[™İXYÙH™Y™\™[˜ÙH
+[™ÈH	ÚIÈ	Ù[‰È	ÙİIÈ	ÚÛ‰Ø
+H^ÜÙYšXHH™XXİÛÛ^
+\ÙQÚ]S[™İXYÙJ
+X
+KˆY˜][	ÚIØ
+Šœ\œÚ\İY
+Šˆ[ˆ\Ş[˜ÔİÜ˜YÙX]™Y[œÚÛ[™İXYÙXˆHÛÛ^[ÛÈØ\œšY\È™YÚ[Û˜[[™Ø
+	ÚIÈ	ÙİIÈ	ÚÛ‰Ø8 %™]™\ˆ	Ù[‰Ø
+KH\Ù\‰ÜÈÚÜÙ[ˆ™YÚ[Û˜[ØÜš\\œÚ\İYÙ\\˜][H]™Y[œÚÜ™YÚ[Û˜[[™İXYÙXÈ]™YYÈH‹\ÙYÛY[™XY\ˆÙÙÛH
+ÙXİ[ÛˆMŠH[™\È\]YÚ[™]™\ˆH›Û‹Q[™Û\Ú[™İXYÙH\ÈÙ[XİY
+[Øš[KÜÜ˜ËÙ]KÙÚ]KÛ[™İXYÙKŞ
+KˆHØ[YHÛÚÈ\ÈÚ\™YXÜ›ÜÜÈ]™\HÙXİ[Ûˆ8 %\™H\È›È\‹\ÙXİ[ÛˆÛÛ^ˆHÙÙÛH\È™[™\™Y›İÛˆİXœÙXİ[Ûˆ\İ[™ÜÈ
+Ú\\œÈ[™^ÙXİ[ÛˆMJH[™Û˜ÙH\ˆ™XY\ˆ[ˆH\œÚ\İ[ÙÙÛH›İÈ
+ÙXİ[ÛˆJKˆÛˆ
+Š™]™\JŠˆ™XY\ˆ8 %Ú]H[˜ÛYY8 %HÙÙÛHİØ\ÈH™\œÙH[™\È[ˆXÙH™]ÙY[ˆ]˜[˜YØ\šH
+[™\Ö×XØØ[œÚÜš]×X
+H[™H›ÛX[š^˜][Ûˆ
+[™\Ñ[–×XØ˜[œÛ]\˜][Û–×X
+NÈYX[š[™È
+ÈÛÛ[Y[\H›ÛİÈHØ[YHÙ[Xİ[Û‹ˆ›ÜˆİXØÛ˜
+Š™]™\][™È™[™\œÈ[ˆHÙ[XİYØÜš\
+Šˆ][[YH
+0©ÌËŒJNˆ™\œÙH[™\Ë]\ËYX[š[™Ë[™ÛÛ[Y[\H\™HH]˜[˜YØ\šH™K\ØÜš\YÈİZ˜\˜]HÈØ[›˜YK^Ù\Ú\™H™\šYšYY˜]]™HYX[š[™ÑİXØYX[š[™ÒÛ˜šY[È^\İ
+ÙYH•SP“ÓÒÈ0©ÌJKˆHZ[K]™\œÙH›İYšXØ][Ûˆ\ÈØØ[^™YHØ[YHØ^K‚‚‹KKB‚ˆÈÈLKˆ[İ[Ûˆ	ˆ\XÜÂ‚‹HYÙH˜[œÚ][ÛœÎˆ˜]]™HÜš^›Û[İÚ\KY˜][Üš[™Ëˆ›Èİ\İÛHX\Ú[™È[ˆŒK‚‹HÛˆYÙHÚ[™ÙNˆHYÚ\XÈ\
+\XÜË’[\Xİ™YY˜XÚÔİ[K“YÚ
+HYˆ[›š[™ÈÛˆ]šXÙK‚‹H]›ÚYÜ›ÜÜÙ˜Y\ÈÜˆØØ[HY™™XİÈ[ˆŒH8 %^HšYÚHX[\ØÜš\Y]\Ü‹‚‹HHÛ™HØ[˜İ[Û™Y[š[X]Y[ÛY[\ÈH›İ][™KXÛÛ\][Ûˆ\ÚK]˜\œÚH
+0©ÌÌ
+NˆHÛÙ˜[
+È˜YK
+Š››ÈØØ[HÜÊŠ‹‚‹HHÙ^IÜÈ˜XİXÙHÛÛ\][Ûˆ
+ŠœÙX[
+Šˆ
+˜XİXÙTÙX[0©ÌÌ
+H\X\œÈÚ]HœšYYˆ
+Š›ÜXÚ]H˜YHÛ›JŠˆ8 %›ÈØØ[HÜˆ›İ]H8 %šY[™È]ÛÛ\][Û‹[[ÛY[^Ù\[ÛÈ]Û›ÜœÈ™YXÙK[[İ[Ûˆ
+\ÙT™YXÙY[İ[Û˜
+HH\X\š[™È[œİ[KˆH
+Š›X[JŠˆİ™XZÈ
+X[Tİ™XZØ
+H\È[H
+Šœİ]XÊŠˆHÙ^KX™XY\ÈX\šÙYÚ]Hİ]XÈš[™Ë™]™\ˆH[ÙK‚‚‹KKB‚ˆÈÈL‹ˆXØÙ\ÜÚXš[]B‚‹HZ[š[][H\\™Ù]ˆ0åÍ›Üˆ˜XÚÈ]Û‹Ø\™\[™YÙ\ˆİË‚‹H
+Š•HZ[š[][H\ÈX›İ]H
+İXÚ
+ˆ\™Ù]ÚXÚ]ÛÜÛİ[ÈİØ\™Èš\İX[ˆÛÛœÚ\İ[˜ŞH\ÈHÙ\\˜]H[KŠŠˆHÛÛ›ÛÛX[\ˆ[ˆ\ÈXØÙ\X›HÛ›HÚ[‚ˆ]ÛÜœš[™ÜÈH™X[\™Ù]È8¢iM
+˜[™
+ˆHÛX[\ˆÚ^™H\ÈH[X™\˜]HÚÚXÙH›Ü‚ˆ]ÛÛ›ÛÛ\ÜËˆ˜XÚÈ]ÛœÈ\™H
+Š˜[Ø^\Èš\İX[JŠˆ8 %^H\™HHÛ™HÛÛ›ÛBˆ\Ù\ˆYY]ÈÛˆ]™\HØÜ™Y[‹ÛÈH[[Û™ÈÈ™XYÈ\ÈHZ\İZÙH]™[ˆİYÚ]È]ÛÜˆÛX\™YHZ[š[][H
+İ[™[H[™˜\ÚY˜[›İšYYÈ[™Ù\™HÛÜœ™XİY[ˆ[BˆŒÈ™XY\’XY\˜›İÈİÛœÈH™XY\‹ØÚ\\ˆØ\ÙJKˆ
+Š‘Øİ[Y[YÚ^™H^Ù\[ÛŠŠˆBˆ[˜Ú[™ÈØ[[™\ˆ[Ûİ\\ˆİ^\ÈÍ0åÌÍ8 %Hİ\\ˆ\È›İH˜XÚÈ]Ûˆ[™Ü›İÙÂˆH[ÛXY\ˆ8 %Ú]]ÛÜ^ÌLXZÚ[™È]È™X[\™Ù]ÈM‚‹H
+ŠÚ›ÛYH™]™\ˆØØ[\ËÛÈ]\ÈH\™L›ÛÜŠŠˆ
+0©ÌËŒ
+KˆH™XY[™Ë\Ú^™H™\Ù]Âˆ][\H™XY[™ÈÚÙ[œÈÛ›KÚXÚYX[œÈ[ˆ[™\œÚ^™YX™[Ø[ˆ™]™\ˆ™H[›\™ÙYH[BˆXØÙ\ÜÚXš[]HÙ][™ÎÈ™X]İX‹LLÚ›ÛYH\È[ˆXØÙ\ÜÚXš[]HY™Xİ]]]Üš[™È[YK‚‹H[œİ\™HÛÛ˜\İÛˆ^İ™\ˆH\˜ÚY[İ™\›^KˆHİ™\›^HÜXÚYšYY[ˆÙXİ[ÛˆˆÙY\È[šØ]ˆÎŒHÛˆHYÚ\İ\™XHÙˆ]™\Hİ\YY˜XÚÙÜ›İ[™‚‹H
+Š‘]™\H^[[Y[ÛX\œÈĞĞQÈPH
+NŒJHYØZ[œİ]È
+˜XİX[
+ˆ™[™\™Yİ\™˜XÙH8 %›İ\İ˜\ÙH\˜ÚY[ŠŠˆÙXÛÛ™\KÛY]Y]H^ÚYÛ˜[ÛÛÜœÈ
+]›ÚYØY™œ›Û‘Y\
+K[™Ú\X™[È\™Hœ™\]Y[HXÙYÛˆ\˜ÚY[ÛÙ[\Ë[[ËÜˆHØ\™Xİ]™XÜ˜YY[ÚXÚ\™H
+›YÚ\Šˆ[ˆ\˜ÚY[ÈÛÛ˜\İ]\İ™HÚXÚÙYYØZ[œİÜÙHİ\™˜XÙ\È
+ÛÜœİØ\ÙHHHYÚ\İÜ˜YY[İÜØ\™Xİ]™Qœ›ÛX
+Kˆ[Øš[KÜÜ˜Ëİ[YK××İ\İ××ËØÛÛÜœË˜ÛÛ˜\İ\İØ[œÈHÚYÛ˜[ÛÛÜœÈYØZ[œİHØ\™İ\™˜XÙ\ÈÛÈH[]HÙXZÈØ[‰İÚ[[H›Ü[H™[İÈPKˆÛÈ›Ü˜Ù\ÈØ]\ÙHH™Xİ\œš[™È™˜Z[ÙXÛÛ™\H^ˆ™YÜ™\ÜÚ[Ûˆ[™›İ]\İ™H]›ÚYYˆ
+JHHÛÛÜˆ]Û›H\ÜÙYPHÛˆ˜\ÙH\˜ÚY[[™
+ŠHH[ˆ][XÈ˜XÙH[™\˜İ][™ÈHYX\İ\™Y˜][È
+0©ÌÊH8 %ÛX[ÙXÛÛ™\H^\Ù\ÈH›Û‹Z][XÈ8¢iMŒ˜XÙK‚‹Hİ\Ü[˜[ZXÈ\NˆH[‹X\™XY[™Ë\Ú^™HÙ][™ÈÙ™™\œÈ
+ŠÛÈ™\Ù]È8 %H
+0åÌKŒY˜][
+H[™
+0åÌKŒMJJŠˆ
+[Øš[KÜÜ˜Ëİ[YKÙ›ÛØØ[KØ
+K][\Z[™È›ÛÚ^™X[™[™RZYÚÙˆH™XY[™ÈÚÙ[œÈÛ›H
+™\œÙKÛYX[š[™ÈXÜ›ÜÜÈ[ØÜš\ÊKÛÈH™\œÙH›ÙHÜÈİ]\›İ[™
+ŠŒŠŠˆ[‹X\Ú[HRHÚ›ÛYH
+]\ËÛİ[\œËX™[ÊH™]™\ˆØØ[\È[™›İ[™ÈÛ\Ë‚‹HHÔË[]™[›ÛØØ[Hİ[][\Y\ÈÛˆÜ8 %[İÑ›ÛØØ[[™Ø\È›İ\ØX›Y[]Ú\™H8 %ÛÈ]˜[˜YØ\šH[ÛÈÛ›İ\œÈHŞ\İ[IÜÈ\Ù\‹XÚÜÙ[ˆØØ[K›İHš^YÚ[Ú^™K‚‹H[XØÙ[[Û›H[™›Ü›X][Ûˆ
+ØY™œ›Ûˆ[ØY™œ›ÛˆÚ]œ›ÛŠH]\İ[ÛÈØ\œHH^ÜˆÚ\HİYH8 %™]™\ˆÛÛÜˆ[Û™K‚‹H
+Š’Û›Üˆœ™YXÙH[İ[Ûˆ‹ŠŠˆ\ÙT™YXÙY[İ[Û˜
+[Øš[KÜÜ˜Ëİ][Ëİ\ÙT™YXÙY[İ[Û‹Ø
+H™XYÈXØÙ\ÜÚXš[]R[™›Ëš\Ô™YXÙS[İ[Û‘[˜X›Y
+
+X[™İ^\È[ˆŞ[˜ÈšXH™YXÙS[İ[ÛÚ[™ÙYÈ[š[X]Y[˜[˜Ù\È
+K™Ëˆ˜XİXÙTÙX[
+HÛÛ\ÙHÈZ\ˆš[˜[œ˜[YHÚ[ˆ]\ÈÛ‹ˆ™Y™\ˆİ]XÈ\ÚYÛœÈ
+K™ËˆX[Tİ™XZØ
+HÛÈ›İ[™È™YYÈ\ØX›[™Ë‚‹H
+Š‘XÛÜ˜]]™H™XİÜˆ\\ÈY[ˆœ›ÛH\ÜÚ\İ]™HXÚŠŠˆ™XYÜÙX[\Ù]È[\Ü[›ÜXØÙ\ÜÚXš[]OH››ËZYKY\ØÙ[™[È˜ÈXØÙ\ÜÚXš[]Q[[Y[ÒY[˜ÈHX[H^ÜÙ\ÈHÚ[™ÛH^X™[
+K™ËˆÈ^HX[HŠHšXHXØÙ\ÜÚXš[]SX™[[™ÛÛ\][ÛˆX\šÜÈØ\œH[ˆXØÙ\ÜÚXš[]Tİ]O^ŞÈÚXÚÙY_X\ÈH^X™[™]™\ˆÛÛÜˆ[Û™K‚‚‹KKB‚ˆÈÈLËˆ]\™H[Ù[\È
+^[œÚ[Ûˆ›İ\ÊB‚•Ú[ˆH™]È^\ÈYYXÚÈH]\›ˆ]š]ÈHÛİ\˜ÙN‚‚ŠŠ“[™X\ˆ^
+Ú[™ÛH›İË8¢iŒL™\œÙ\ÊH8 %ZÙH[[X[ˆÚ[\ØNŠŠ‚‚ŒKˆYHÛİ\˜ÙH”ÓÓˆ[™\ˆ]ÈİÛˆ›Û\ˆ
+K™Ë‹˜[XÚ\š]X[˜\ËÜ˜[XÚ\š]X[˜\ËšKšœÛÛ˜
+K‚Œ‹ˆ›Ü›X[^™HÈH\‹[[Ù[H™\œÙV×X[Ù[[ˆÙXİ[ÛˆL‚ŒËˆY¸ $ÌÈ˜YYÚÙ]Ú\ÈÈÚ[XYÙ\ËØ]X]ÚH^	ÜÈİÜH[™›ÛİÈH™X]Y[[ˆÙXİ[Ûˆ‹‚ˆ›\HÛYHØ\™œ›ÛHÛÛZ[™ØÈXİ]™X‚KˆÚ\™HÛYH8¡¤ˆ™XY\ˆ\™XİK‚‚ŠŠÚ\\‹X˜\ÙY^
+][KZ[™™Y™\œÙ\Ëš[[™İX[Ú]ÛÛ[Y[\JH8 %ZÙHšYØ]˜Yñ*İ1 NŠŠ‚‚ŒKˆYHÛİ\˜ÙHX\šÙİÛˆš[\È[™\ˆ[Ù[O‹ØÚ\\œËØÚ\\‹S“‹J‹›Y\Ú[™ÈHØ[YHÈÈÈ‘È‹“X
+È
+Š”ÙXİ[Ûˆ˜[YJŠ˜›Ü›X]HÚ]H\œÙ\ˆÛÛœİ[Y\È
+ÜˆÜš]HH[Ù[K\ÜXÚYšXÈ\œÙ\ˆÚ]HØ[YHİ]]Ú\JK‚Œ‹ˆÙ[™\˜]H\‹XÚ\\ˆ”ÓÓœÈšXHHZ[][YH›ÙHØÜš\[™ÛÛ[Z]Hİ]]È[Øš[KÜÜ˜ËÙ]KÏ[Ù[O‹ØÚ\\‹S“‹šœÛÛ˜
+ÈÚ\\œË[X[šY™\İšœÛÛ˜‚ŒËˆYš[™HH[Ù[IÜÈÛÛ[\\È
+Ú\HZ\œ›ÜœÈÚ]IÜÈÚ]U™\œÙXÈÚ]PÚ\\˜
+H[ˆ[Øš[KÜÜ˜ËÙ]KÏ[Ù[O‹Ú[™^ØÚ][Ù[K[ØY[˜\šX[È
+Ú\\ˆÛİ[™\œÙHÛİ[\ˆÚ\\‹›È\XØ]HYË]X\İÛ™H[™İXYÙHÜ[]Y›ÜˆÜ[Û˜[ÙXİ[ÛœÊK‚ˆ™]\ÙHH^\İ[™È\ÙQÚ]S[™İXYÙJ
+XÛÛ^
+[Øš[KÜÜ˜ËÙ]KÙÚ]KÛ[™İXYÙKŞ
+H8 %È›İÜ™X]HH\˜[[\‹[[Ù[HÛÛ^ˆHÛÚÈ\È[™XYHÚ\™YXÜ›ÜÜÈÚ]Kİ[™\šØ[™[™[[X[ˆÚ[\ØK‚KˆYHÚ\\œÈ[™^ØÜ™Y[ˆ
+ÙXİ[ÛˆMJHÚ]H[™İXYÙHÙÙÛH
+ÙXİ[ÛˆMŠH[™H\İÙˆÚ\\ˆØ\™Ëˆ™[™\ˆHØ[YH[™İXYÙHÙÙÛHÛ˜ÙH[ˆH™XY\‰ÜÈ\œÚ\İ[ÙÙÛH›İÈÛÈ8 %Ø[YHÛÛ›ÛÛÈİ\™˜XÙ\ËÚ\™Yİ]K‚‹ˆZ[H™XY\ˆØÜ™Y[ˆ]ØÛÜ\ÈHYÙ\ˆÈHÚ[™ÛHÚ\\ˆ
+Û™H™\œÙH\ˆYÙKÚ\\‹\ØÛÜYÛİ[\ŠK‚ËˆYx $ÌÈ˜YYÚÙ]Ú\ÈÈ[Øš[KØ\ÜÙ]ËÏ[Ù[O‹Ø8 %›ÜˆŒHHÚ[™ÛH[XYÙHÛİ™\š[™È[™\œÙ\È\ÈXØÙ\X›HYˆÛİ\˜Ú[™È[Ü™H\ÈHÙ\\˜]HXÚÙ]‚ˆ›\HÛYHØ\™œ›ÛHÛÛZ[™ØÈXİ]™XˆXİ]™H[Ù[\ÈÛÜX›İ™HÛÛZ[™ØÛ™\È[ˆHXœ˜\H\İ‚‚ŠŠ”Ú\™Y[\È›Üˆ[H[Ù[NŠŠ‚‚‹HÙY\H[›ØØX[\HÛÛœÚ\İ[ˆ8))¸)bø).x)/˜8)&¸)c8)*¸)/¸)"8)-¸)cx),¸)bø)%X8)+¸) ¸))8)cx),]Ë‹[Ø^\ÈZ\™YÚ]H][ˆİX]HÜˆÚ\\‹™\œÙH[X™\‹‚‹H™]™\ˆ\™XÛÙHÛÛİ\œËÜXÚ[™ÜËÜˆ›Û˜[Y\È[ˆHÛÛ\Û™[8 %[Ø^\È[œ›ÛHH[YK‚‹HYˆHÚÙ[ˆ\ÈZ\ÜÚ[™ËY]ÈÛÛÜœËØÈ\ÙÜ˜\KØÈÜXÚ[™ËØš\œİ[ˆ\]H\ÈØË[ˆ\ÙH]‚‹H›Üˆš[[™İX[›ÜÙH
+YX[š[™ËÛÛ[Y[\JNˆÛÜ›[Ü˜[Ø\˜[[Û™ŒÈÌÈLYY][H
+Š››Û‹Z][XÊŠˆ[šØ
+HYX[š[™Ñ[™Û\ÚÚÙ[ŠH\ÈH[™Û\Ú›ÙHİ[™\™ˆ][XÈ\È™\Ù\™Y›ÜˆX™[Ë˜[˜XÚÈ›İ\Ë[™ÚÜ›İ\š\Ú\Ë‚‹H
+Š”›ÛX[š^˜][Û‹ŠŠˆXÚÈHİ[H]X]Ú\ÈHÛİ\˜ÙH[™İXYÙH\ˆ0©ÌËŒNˆPTÕ
+È[\šX[ˆYÜ˜\È›ÜˆØ[œÚÜš]™\œÙ\È
+Ú]K[X™YYÚÚØ\ÊNÈ›Û[˜ÚX][Û‹X˜\ÙYTĞÒRH›Üˆ]ØYKÒ[™H™\œÙ\È
+[ÚY\ÈÚ]\Z\È[™Ú\ÊKˆÛ‰İ[\ÜÙHPTÕÛˆ]ØYH8 %HXXÜš]XÜÈZ\Ü™\™\Ù[™XÚ]][Û‹‚‹H
+Š“[™İXYÙHÙÙÛKŠŠˆ™]\ÙH\ÙQÚ]S[™İXYÙJ
+Xˆ™[™\ˆHÙÙÛHÛ˜ÙH\ˆ™XY\ˆ[ˆH\œÚ\İ[ÙÙÛH›İÎÈ›ÜˆÙXİ[ÛœÈÚ]HİXœÙXİ[Ûˆ\İ[™È
+K™Ë‹Ú]IÜÈÚ\\œÈ[™^
+K™[™\ˆ]\™HÛËˆİ]H\ÈÚ\™Y‚‚‹KKB‚ˆÈÈMˆš[HX\‚ŠŠ‘Øİ[Y[][ÛˆÈ™Y™\™[˜ÙNŠŠ‚‹H\ÚYÛ‹\™]šY]Ëš[8 %]™Hš\İX[™Y™\™[˜ÙH]™\È›ÛİˆÜ[ˆ[ˆ[Hœ›İÜÙ\‹‚‹H\ÚYÛ‹›Y8 %\ÈØİ[Y[‚‚ŠŠ”Ûİ\˜ÙHÛÛ[ŠŠ‚‹H[[X[Ú[\ØKÚ[[X[‹XÚ[\ØKZKY[‹›Y8 %İ\˜]Yš[[™İX[Ûİ\˜ÙHX\šÙİÛˆ›ÜˆHÚ[\ØH[Ù[K‚‹HšYİØYÚ]KØÚ\\œËØÚ\\‹S“‹J‹›Y8 %NX›\ÚY]˜[œÛ][ÛˆX\šÙİÛˆš[\È›ÜˆHÚ]H[Ù[K‚‹HØÜš\ËÜ\œÙKYÚ]K›ZœØ8 %Û™K\Úİ›ÙH\œÙ\ˆ
+›ÙHØÜš\ËÜ\œÙKYÚ]K›ZœØœ›ÛH™\È›Ûİ
+H]™XYÈHÚ]HX\šÙİÛ‹›Ü›X[\Ù\È][™Üš]\ÈH\‹XÚ\\ˆ”ÓÓˆ
+ÈX[šY™\İˆY[\İ[‚‹HØÜš\Ëİ˜[œÛ]\˜]K\ÚÚØK›ZœØ8 %Û™K\Úİ›ÙHØÜš\]™YÙ[™\˜]\È[™\Ñ[˜
+PTÕ
+Hœ›ÛH]˜[˜YØ\šH[™\Ø›Üˆ
+Š”Ø[œÚÜš]ÚÚØ\ÈÛ›JŠˆ
+™\œÙ\ÈÚ\™HÙXİ[ÛˆOOH	ÜÚÚØIØ
+Kˆİ\œ™[HØÛÜYÈİ[™\šØ[™	ÜÈ™YHÜ[š[™ÈÚÚØ\ÎÈ]ØYKÒ[™H™\œÙ\È\™H›İ™YÙ[™\˜]YYXÚ[šXØ[H
+ÙYH0©ÌËŒJKˆY[\İ[‚‚ŠŠ‘Ù[™\˜]YÈÛÛ[Z]Y]HÛÛœİ[YYHY]›ÎŠŠ‚‹H[Øš[KÜÜ˜ËÙ]KÙÚ]KØÚ\\‹S“‹šœÛÛ˜8 %Û™H\ˆÚ\\‹[\ÜYİ]XØ[K‚‹H[Øš[KÜÜ˜ËÙ]KÙÚ]KØÚ\\œË[X[šY™\İšœÛÛ˜8 %YÚÙZYÚ\İÙˆÈÚ\\‹]RK]Q[‹™\œÙPÛİ[X\ÙYHHÚ\\œÈ[™^‚‹H[Øš[KÜÜ˜ËÙ]KÜİ[™\šØ[™ØÚ\\‹LK‹ŒM‹šœÛÛ˜
+ÈÚ\\œË[X[šY™\İšœÛÛ˜8 %ÍM™\œÙ\ÈXÜ›ÜÜÈH™\œÙH\\È
+ÚÚØKÚKÚ]\ZKÛÜKÚ[™
+KÚ\\‹\ØÛÜYZÙHHÚ]K‚‹H[Øš[KÜÜ˜ËÙ]KÚ[[X[‹XÚ[\ØKÚ[[X[‹XÚ[\ØKšœÛÛ˜8 %È™\œÙ\È
+ˆÜ[š[™ÈÚ\È
+ÈÚ]\Z\È
+ÈHÛÜÚ[™ÈÚJK‚‹H\\ˆÛÛ[[[Ù[H\œÈ[™\ˆ[Øš[KÜÜ˜ËÙ]KØ›ÛİÈHØ[YHÛÛ[Z]YR”ÓÓˆ]\›ˆX\KØØ[œÚØ\‹Ø˜\[KØ˜[XÚ\š]X[˜\ËØ˜[ZZÚK\˜[X^X[‹ØHÚ[\ØH\œÈ
+Ú]‹XÚ[\ØX\™ØKXÚ[\ØXØ[™\ÚXÚ[\ØXØ^X]šKXÚ[\ØX˜Zœ˜[™ËX˜X[˜
+KH\ÚZØ[KXØ]YÛÜHYØXŞH\ˆ
+[[X[‹X\ÚZØ
+K[™Hİİ˜[H\œÈ
+Ú]˜K\İ›İ[X\™ØK\İİ˜[XØ[™\Ú\İİ˜[XØ\˜\İØ]K\İİ˜[XÜš\Ú˜K\İİ˜[Xš\ÚK\ØZ\Ü˜[˜[XX˜[K\İ]X
+K\ÈY\İ[\\ËØ‚‚ŠŠ”™YÚ\İšY\È	ˆÜ›ÜÜËXİ][™È]H
+[Øš[KÜÜ˜ËÙ]KØ
+NŠŠ‚‹H^ËØ8 %HXœ˜\H™YÚ\İH
+Xœ˜\X
+Nˆ]™\HÛÛ[[HÚ]Ø]YÛÜKZ]Y\ËÛİ[Ëİ]\ËˆÜ™\š[™È\Èİ\˜]Y\™H
+0©ÌŒJK‚‹HØ]YÛÜšY\ËØ8 %HÛYHØ]YÛÜH[\È
+0©ÌN
+K‚‹HZ]Y\ËØ8 %Z]HY]Y]H
+ÈXÛÛˆÙ^\È›ÜˆHZ]H[™^‚‹H˜XÚÙÜ›İ[™ËØ8 %˜XÚÙÜ›İ[™\Ù[Xİ[Ûˆ™YÚ\İH
+0©ÍŠK‚‹HÙX\˜Ú[™^Ø8 %›]™\œÙH[™^™Z[™HÙX\˜ÚØÜ™Y[‹‚‹H™\œÙTÛÛØ8 %HZ[HšZİH™\œÙHÛÛ
+0©ÌŒÊK‚‚ŠŠ\ÜÙ]ÎŠŠ‚‹H[XYÙ\ËÊ‹œ™Ø8 %[[X[ˆ\˜ÚY[ÚÙ]Ú\È
+ÛÛœİ[YY[ˆ[Øš[KØ\ÜÙ]ËØÚ[\ØKØ
+K‚‹H[Øš[KØ\ÜÙ]ËØÚ[\ØKÊ˜8 %Ú[\ØH˜XÚÙÜ›İ[™È
+È\Y[™^Ø^Ü‚‹H[Øš[KØ\ÜÙ]ËÙÚ]KÊ˜8 %Ú]H˜XÚÙÜ›İ[™È
+ŒNˆÜš\Ú˜WØ\š[˜Wİš\Ú˜\\KÙXœ\ÈHÚ[™ÛHÚÙ]ÚÛİ™\š[™È[™\œÙ\ÊH
+È\Y[™^Ø^Ü‚‚ŠŠ•[YH
+Èİ]NŠŠ‚‹H[Øš[KÜÜ˜Ëİ[YKØÛÛÜœËØÈ\ÙÜ˜\KØÈÜXÚ[™ËØÈ[]˜][Û‹ØÈ›ÛØØ[KØ8 %Ûİ\˜ÙHÙˆÚÙ[œÈ[ˆÙXİ[ÛœÈ¸ $Í\ÈH™XY[™Ë\Ú^™H™\Ù]È
+0©ÌLŠK‚‹H[Øš[KÜÜ˜Ëİ[YKÕ[YPÛÛ^Ş8 %Ú[™ÛHÛİ\˜ÙHÙˆ[[YHÚÙ[œË‚‹H[Øš[KÜÜ˜ËÙ]KÙÚ]KÛ[™İXYÙKŞ8 %Ú\™Y™XY[™Ë[[™İXYÙHÛÛ^
+È\ÙQÚ]S[™İXYÙJ
+XÛÚÈ
+0©ÌL0©ÌMŠK‚‹H[Øš[KÜÜ˜ËØÛÛ^ËØ8 %\İ]H›İšY\œÎˆ›ÛÚÛX\šÜË™XY[™È›ÙÜ™\ÜË›İ][™K›İYšXØ][Ûˆ™Y™\™[˜Ù\Ë]Y[È^Y\‹›ÛØØ[K[˜Ú[™ÈØØ][Û‹™]ËXÛÛ[˜XÚÚ[™Ë]Ë‚‚ŠŠ“˜]šYØ][Ûˆ	ˆİXœŞ\İ[\ÎŠŠ‚‹H[Øš[KÜÜ˜ËÛ˜]šYØ][Û‹Ø8 %X“˜]šYØ]Ü˜
+0©ÌMÊH
+È\‹]XˆİXÚÜÈ
+ÛYTİXÚÓ˜]šYØ]Ü˜[Ü™TİXÚÓ˜]šYØ]Ü˜[˜Ú[™ÔİXÚÓ˜]šYØ]Ü˜]Y[ÔİXÚÓ˜]šYØ]Ü˜
+K[T›İ]\ËØ
+›ÛÚÛX\šÈÈ[H˜]šYØ][Ûˆ\™Ù]ÊK‚‹H[Øš[KÜÜ˜ËÜ[˜Ú[™ËØ8 %[˜Ú[™È[™Ú[™K™\İ]˜[]KØ]HÛÛ[‚‹H[Øš[KÜÜ˜ËÛ›İYšXØ][ÛœËØ8 %Z[K]™\œÙHØÚY[\‹˜\[H[\›\Ëœ˜]™[Z[™\œË‚‹H[Øš[KÜÜ˜ËØ]Y[ËØ8 %]Y[ÈÙ\ÜÚ[ÛˆÙ]\
+H^Y\ˆÛÛ^]™\È[ˆÛÛ^ËØ
+K‚‚ŠŠÛÛ\Û™[ÎŠŠ‚‹H[Øš[KÜÜ˜ËØÛÛ\Û™[ËÓXœ˜\PØ\™Ş8 %ÛYHXœ˜\H[H
+ÙXİ[Ûˆ
+K‚‹H[Øš[KÜÜ˜ËØÛÛ\Û™[ËÑÚ]PÚ\\Ø\™Ş8 %Ú\\œÈ[™^[H
+ÙXİ[ÛˆMJK‚‹H[Øš[KÜÜ˜ËØÛÛ\Û™[ËÓ[™İXYÙUÙÙÛKŞ8 %HÛË\ÙYÛY[™YÚ[Û˜[[[™İXYÙKÑ[™Û\Ú[
+ÙXİ[ÛˆMŠK‚‹H[Øš[KÜÜ˜ËØÛÛ\Û™[ËÕ™\œÙTYÙKŞ8 %[[X[ˆÚ[\ØH™XY\ˆYÙH›ÙK‚‹H[Øš[KÜÜ˜ËØÛÛ\Û™[ËÑÚ]U™\œÙTYÙKŞ8 %Ú]H™XY\ˆYÙH›ÙH
+İØ\[Û‹]ÙÙÛH™\œÙH[™\È
+ÈYX[š[™ËØÛÛ[Y[\JK‚‹H[Øš[KÜÜ˜ËØÛÛ\Û™[ËÔİ[™\šØ[™™\œÙTYÙKŞ8 %İ[™\šØ[™™XY\ˆYÙH›ÙK‚‹H[Øš[KÜÜ˜ËØÛÛ\Û™[ËÓÜ›˜[Y[Ş8 %H8)iX™\œÙH]šY\ˆ
+ÙXİ[ÛˆJK‚‚ŠŠ”ØÜ™Y[œÎŠŠ‚‹H[Øš[KÜÜ˜ËÜØÜ™Y[œËÒÛYTØÜ™Y[‹Ş8 %ÛYH
+ÙXİ[ÛˆÊK‚‹H[Øš[KÜÜ˜ËÜØÜ™Y[œËĞÚ[\ØT™XY\”ØÜ™Y[‹Ş8 %Ú[\ØH™XY\‹‚‹H[Øš[KÜÜ˜ËÜØÜ™Y[œËÔİ[™\šØ[™™XY\”ØÜ™Y[‹Ş8 %İ[™\šØ[™™XY\‹‚‹H[Øš[KÜÜ˜ËÜØÜ™Y[œËÑÚ]PÚ\\œÒ[™^ØÜ™Y[‹Ş8 %Ú]HÚ\\œÈ[™^
+ÙXİ[ÛˆMJK‚‹H[Øš[KÜÜ˜ËÜØÜ™Y[œËÑÚ]T™XY\”ØÜ™Y[‹Ş8 %Ú]H™XY\ˆ
+Ú\\‹\ØÛÜYYÙ\ŠK‚‹H8 )œ\ÈÛ™HÙXİ[Û”™XY\”ØÜ™Y[˜
+[™›ÜˆÚ\\™Y^ËÙXİ[ÛÚ\\œÔØÜ™Y[˜
+H\ˆÛÛ[ÙXİ[Û‹[™HØ]YÛÜKÑZ]H\İY\
+0©Ì¸ $ÌÊKZ[HšZİH
+0©ÌŒÊKÚ\Ú\İ
+0©Ì
+K›İ][™H
+0©ÌÌ8 $ÌÌJK[˜Ú[™Ë[™ÙX\˜ÚØÜ™Y[œË‚‚•Ú[ˆZ[[™È™]ÈÛÛ\Û™[Ë[ÚÙ[œÈœ›ÛHH[YH8 %™]™\ˆ\™XÛÙHH^ˆYˆHÚÙ[ˆ\ÈZ\ÜÚ[™ËY]ÈÛÛÜœËØš\œİ\]H\ÈØË[ˆ\ÙH]‚‚‹KKB‚ˆÈÈMKˆØÜ™Y[ˆÚ\\œÈ[™^
+Ú]K\İ[H[Ù[\ÊB‚ŠŠ”\œÜÙKŠŠˆ]H™XY\ˆXÚÈHÚ\\ˆ[™Ù]Z\ˆ™XY[™È[™İXYÙH™Y›Ü™H[\š[™ÈH™XY\‹ˆ\ÙYH[Ù[\ÈÚÜÙH˜]\˜[[š]\ÈHÚ\\ˆ
+Ú]IÜÈNYq ^X\ÎÈ± [q*ÚÚH± [q ^XxnaØIÜÈÈñ xnaøn#X\Ë0©ÍLÎÈ]\™H˜[XÚ\š]X[˜\Èñ xnaøn#X\ÊK‚‚ŠŠ“^Y\ˆİXÚÎŠŠˆØ[YH\È™XY\ˆ
+ÙXİ[ÛˆK\˜ÚY[
+È˜XÚÙÜ›İ[™ÚÙ]Ú
+ÈÜ˜YY[İ™\›^H
+ÈÛÛ[ÛÛ[[ŠK‚‚ŠŠ”İXİ\™H
+ÜÈ›İÛJNŠŠ‚‚ŒKˆİ]\È˜\‹‚Œ‹ˆ
+Š•Ü˜\ŠŠˆ8 %™XY\’XY\˜Ú]˜\šX[Hš[™^˜
+0©ÎJNÈ™]™\ˆHØØ[ÛÜK‚ˆH˜XÚÈ]Ûˆ
+™]\›œÈÈÛYJK‚ˆH]HÙ[™Yˆ8)+x)%ø)-x))¸)cH8)%ø)`8))8)/˜
+[™H[ÙJHÈšYØ]˜Yñ*İ1 X
+[™Û\Ú[ÙJH]H[™^ˆ]HØØ[H8 %Œ‹ÜˆŒ›Üˆ][‹ˆ\È\È[X™\˜][H\™Ù\ˆ[ˆH™XY\‰ÜÈMˆBˆÚ\\œÈ[™^\ÈH[™[™Èİ\™˜XÙKH™XY\ˆÜ˜\ˆ\ÈÛÛ\XİÚ›ÛYK‚ˆHH˜[[˜Ú[™ÈšYÚ\ÚYHÜXÙ\ˆ\ÈHXY\‰ÜÈİÛ‹X]Ú[™ÈH˜XÚËX]Ûˆ›Ûİš[‚ŒËˆ
+Š“[™İXYÙHÙÙÛH›İÊŠˆ
+ÜÈMˆ›İÛHY[™ËÙ[™Y
+KˆÙYHÙXİ[ÛˆM‹‚ˆ
+ŠÚ\\ˆ\İ
+Šˆ
+ÚYHY[™ËLˆØ\™]ÙY[ˆØ\™ÊKˆXXÚØ\™\ÈHÚ]PÚ\\Ø\™
+ÙYH™[İÊKˆØÜ›ÛX›K‚‚ŠŠÚ\\ˆØ\™
+Ú]PÚ\\Ø\™
+NŠŠ‚‚‹H˜XÚÙÜ›İ[™ˆHØ[YHØ\™Xİ]™Qœ›ÛH8¡¤ˆØ\™Xİ]™UØÜ˜YY[\ÈHÛYHXİ]™HXœ˜\HØ\™ÛÈXİ]™HÚ\\œÈ™Y[ÛÛœÚ\İ[Ú]H]™H[Ù[HÛˆÛYK‚‹H^[İ]ˆÈÚ\\‹[[X™\ˆ[XˆHÈYÈ0­È]H0­È™\œÙKXÛİ[HÈ8 .ˆXˆH[XˆÜ˜YY[Ø\™[XXİ]™Qœ›ÛH8¡¤ˆØ\™[XXİ]™UØ°åÍ‹˜Y]\ÈYˆÙ[™H™[™\œÈHÚ\\ˆ[X™\ˆ[ˆ›İÈÙ\šYˆ]˜[˜YØ\šHŒ\˜ÚY[\ÛÙ‚ˆHYÈ
+X›İ™H]JNˆ8)!x))ø)cx)+ø)/¸)+È˜ÜˆÒTTˆ˜[ˆ[\ˆLŒŒÙ[X\\˜Ø\ÙKØY™œ›Û‹YY\‚ˆH]Nˆ™[™\™Y[ˆHÙ[XİY[™İXYÙH8 %[™H
+›İÈÙ\šYˆ]˜[˜YØ\šHMÈŒ[šØ
+HÜˆ[™Û\Ú
+ÛÜ›[Ü˜[Ø\˜[[Û™Mˆ][XÈ[šØ
+Kˆ[X™\“Ù“[™\Ï^ÌŸX‚ˆHİXˆÈ8)-¸)cx),¸)bø)%X
+[™JHÜˆÈ™\œÙ\Ø
+[™Û\Ú
+KØ\™Y]XÚ^™K[šË[]]Y‚ˆHšYÚˆØY™œ›Ûˆ8 .˜Ú]œ›Û‹‚‹H\8¡¤ˆ™XY\ˆ
+Šœ™\İ[Y\È]HÚ\\‰ÜÈ\İ\™XY™\œÙJŠˆ
+Ù]Ú\\”›ÙÜ™\ÜØœ›ÛHH™XY[™Ë\›ÙÜ™\ÜÈÛÛ^Ú]PÚ\\œÒ[™^ØÜ™Y[‹Ş
+NÈHÚ\\ˆÚ]›Èš[Üˆ›ÙÜ™\ÜÈÜ[œÈ]™\œÙHK‚‚ŠŠ“Ü™\š[™ËŠŠˆÚ\\œÈ\X\ˆ[ˆ[Y\šXØ[Ü™\ˆx $ÌNˆ›ÈÛÜ[™Ë‚‚‹KKB‚ˆÈÈM‹ˆÛÛ\Û™[ˆ[™İXYÙHÙÙÛB‚ŠŠ”\œÜÙKŠŠˆÚ[™ÛHÛİ\˜ÙHÙˆ]›ÜˆH\]ÚYH™XY[™È[™İXYÙKˆ\ÙYÛˆHÚ\\œÈ[™^
+ÙXİ[ÛˆMJH[™[ˆ]™\H™XY\‰ÜÈ\œÚ\İ[ÙÙÛH›İÈ
+ÙXİ[ÛˆJK‚‚ŠŠ”Ú\KŠŠˆH[X™\˜]H
+ŠÛË\ÙYÛY[
+Šˆ[
+[™İXYÙUÙÙÛKŞ
+NˆHYÙYÛY[\ÈH\Ù\‰ÜÈ
+Š˜ÚÜÙ[ˆ™YÚ[Û˜[[™İXYÙJŠˆ8 %[™HHY˜][ÜˆİZ˜\˜]KÒØ[›˜YHYˆXÚÙY[ˆH[Ü™K]Xˆ
+Š›[™İXYÙHXÚÙ\ˆÚY]
+Šˆ
+™YÚ[Û˜[[™Ø
+H8 %HšYÚÙYÛY[\È[Ø^\È
+Š‘[™Û\Ú
+Š‹ˆHÙYÛY[ÈÛÛYHœ›ÛHÜ™YÚ[Û˜[Y]KS—ÓQUWXİ™\ˆHS‘ÕPQÑTØY]Y]H\œ˜^NÈ[›İ\ˆ[™İXYÙ\È™]™\ˆ™[™\ˆ]Û˜ÙH[ˆH™XY\ˆ8 %İKÚÛˆ\™HÚÜÙ[ˆ[ˆ[Ü™H[™[ˆØØİ\HH™YÚ[Û˜[ÛİˆHXİ]™HÙYÛY[\È[YÚ]ØY™œ›Û‹][[™\Y[ˆØY™œ›Û‹YY\ÈH[˜Xİ]™HÙYÛY[\È˜[œÜ\™[[™\Y[ˆ[šË[]]Yˆ™\ÜÙY
+[˜Xİ]™JH›ÜÈÜXÚ]HÈË‚‚˜¸¥#8¥ 8¥ 8¥ 8¥ 8¥ 8¥ [˜Y]\È8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥$¸¥ ˆÈ8).x)/ø)*8)cx))¸)`H8¥ ˆÈ[™Û\ÚH8¥ ˆ
+ÜˆÈ8*¥ø*àx*§8*¬8*¯¸*©8*àHÈÈ8,¥x,ª8,ãx,ª8,¨HH[ˆHYÛİ
+B¸¥%8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥&˜‚‹HÛÛZ[™\ˆ\˜ÚY[\ÛÙ˜XÚÙÜ›İ[™]šY\˜›Ü™\ˆH[˜Y]\ËÈ[›™\ˆY[™Ë‚‹HXXÚÙYÛY[ˆZ[•ÚYM˜Z[’ZYÚÙ[\™Y‚‹HXXÚÙYÛY[ÚİÜÈ]È
+Š™[˜]]™H˜[YJŠˆ[ˆ]ÈİÛˆØÜš\Ù˜XÙNˆ8).x)/ø)*8)cx))¸)`›İÈÙ\šYˆ]˜[˜YØ\šHMHŒ0­È[™Û\ÚÛÜ›[Ü˜[][XÈM0­È8*¥ø*àx*§8*¬8*¯¸*©8*àİZ˜\˜]HÙ\šYˆMŒ0­È8,¥x,ª8,ãx,ª8,¨XØ[›˜YHÙ\šYˆLÈŒˆH[™Û\Ú˜[Y\È
+[™XØ[™Û\Úø )ŠH\™HHXØÙ\ÜÚXš[]HX™[ÎÈH[›İ\‹]Ø^HÚÚXÙH]™\È[ˆH[Ü™K]Xˆ
+Š›[™İXYÙHXÚÙ\ˆÚY]
+Šˆ
+0©ÌÍÊK‚‚ŠŠ™Z]š[İ\‹ŠŠ‚‚‹H\[™ÈHÙYÛY[Ù]È[™ØÈ]˜[YHšXHH\ÙQÚ]S[™İXYÙJ
+XÛÚÎÈÙ[Xİ[™ÈH›Û‹Q[™Û\Ú[™İXYÙH[ÛÈ\]\ÈH\œÚ\İY™YÚ[Û˜[[™Ø‚‹HXØÙ\ÜÚXš[]NˆXØÙ\ÜÚXš[]T›ÛOHœ˜Y[ÙÜ›İ\˜ÛˆHÛÛZ[™\‹XØÙ\ÜÚXš[]T›ÛOHœ˜Y[È˜
+ÈXØÙ\ÜÚXš[]Tİ]O^ŞÈÙ[XİY_XÛˆXXÚÙYÛY[‚‹H]ÛÜÛˆXXÚÙYÛY[ÛÈH\\™Ù]YY]ÈH0åÍZ[š[][K‚‚ŠŠ”İ]HØÛÜKŠŠˆÛØ˜[[™
+Šœ\œÚ\İY
+Šˆ8 %™Y[œÚÛ[™İXYÙX›ÜˆH™XY[™È[™İXYÙK™Y[œÚÜ™YÚ[Û˜[[™İXYÙX›ÜˆH™YÚ[Û˜[XÚÈ
+0©ÌL
+KˆHÚÚXÙHİ\š]™\È™\İ\È[™\ÈÚ\™YH]™\HÙXİ[Û‹‚‚‹KKB‚ˆÈÈMËˆ›İÛHXˆ˜\‚‚ŠŠ”\œÜÙKŠŠˆ\œÚ\İ[˜]šYØ][ÛˆÚ›ÛYHXÜ›ÜÜÈH\	ÜÈš]™HÜ[]™[İ\™˜XÙ\È
+X“˜]šYØ]Ü‹Ş
+Kˆ™\XÙ\ÈH™]š[İ\ÈÛ™K\ØÜ›Û[›Ë]XœÈÛYK‚‚ŠŠ”ÜXÎŠŠ‚‚‹HÜÚ][Ûˆš^Y›İÛKX›İ™HØY™H\™XH[œÙ]‹H˜XÚÙÜ›İ[™ˆ\˜ÚY[\ÛÙÚ]\]šY\˜›Ü™\ˆÛˆÜYÙB‹HZYÚˆŒ
+ÛÛ[
+H
+ÈØY™H\™XH›İÛH[œÙ]
+ZYÚˆŒ
+È[œÙ]Ë˜›İÛXY[™ÕÜˆ˜
+B‹H
+ŠHXœÊŠ‹\]X[H\İšX]Y‚ˆH
+Š’ÛYJŠˆ8 %HÛYHİXÚÈ
+Ø][ÙË™XY\œË›İ][™KY\ÙX\˜Ú
+BˆH
+ŠšZİJŠˆ8 %Z[HšZİH™\œÙHÙˆH^H
+0©ÌŒÊBˆH
+Š”[˜Ú[™ÊŠˆ8 %[˜Ú[™ÈÈ™\İ]˜[ÈİXÚÂˆH
+ŠšZ˜[ŠŠˆ8 %]Y[ÈİXÚÂˆH
+Š“[Ü™JŠˆ8 %›Ùš[KÚ\Ú\İ
+0©Ì
+K™[Z[™\œËÙ][™ÜÂ‹HXˆX™[Îˆ
+Šœ™XY[™Ë[[™İXYÙHØØ[^™Y
+ŠˆšXHÛÛ[S[™Ø8 %8).x)bø)+ˆ0­È8)+x)%x)cx))8)/È0­È8)*¸) ¸)&¸)/¸) ¸)%È0­È8)+x)'8)*0­È8)!x)*8)cx)+È[ˆH
+İKÚÛˆ˜[œÛ]\˜]NÈ[™Û\ÚX™[È[ˆ[ŠKˆH˜\ˆØ\ÈH\İÚ›ÛYHİ\™˜XÙHİ[[™Û\Ú[Û›H[™\ˆH[H[™XÈØÜ™Y[‹ˆ\Nˆ[ˆH›Û˜[Z[Y\Ëš[\˜L
+Š˜
+Šˆ˜XÚÚ[™È
+Ø\ÈŒ˜H›Ë[Üˆ“ˆ]\”ÜXÚ[™Ø\È[ˆ
+Šœ
+Š‹›İ[KÛÈŒˆ\È[š\ÚX›NÈX]Ú\ÈHØ\™Y]XÚ›ÛYHÚÙ[ŠNÈKÙİKÚÛˆHZ\ˆ›ÛÙ\šYˆ]H˜XÙ\È
+ØÜš\]Q›ÛH8¡¤ˆ]˜[˜YØ\šP›Û
+H]LÚ]
+Š››È˜XÚÚ[™ÊŠˆ8 %˜XÚÚ[™ÈÜ]ÈHÚ\›Ü™ZÚH
+0©ÌÊKˆXY\İ›È›İÜÈ\XœÈHX˜\]Û•\İQ
+X‹ZÛYX8 )ˆX‹[[Ü™X
+K™]™\ˆHX™[^Ú[˜ÙHH^ÜÙY^\È›İÈ[™İXYÙKY\[™[‚‹HXXÚXˆØ\œšY\ÈHİ\İÛHXÛÛˆ[ˆH[ÛÛİ\‹ˆÛYKšZİK[˜Ú[™Ë[™[Ü™H\™H[™XZ[œ›ÛHšY]Øİ›ÚÙ\ÎÈšZ˜[ˆ™\Ù\™\ÈH™Y™\™[˜ÙHš[YÕ‘ÈÛ\ˆH
+Šœ›İ[™š[YXY
+Š‹™\XØ[İ[K[™Ü]X\™H›YÈ
+H“LLˆİŒLMPMHMMÕÚŒÚMˆ˜
+KˆHXY
+Š›]\İİ^Hš[Y
+Šˆ8 %HÛİÈš[™È™XYÈ\ÈHœ›ÚÙ[ˆÛ\˜]\ˆ[ˆH›İK‚‹HXİ]™H[ˆØY™œ›Û˜È[˜Xİ]™Nˆ[šË[]]Yˆ›ÈXİ]™Hİ[™XØ]Üˆ8 %H[YXÛÛŠÛX™[\ÈHİYB‹H\\™Ù]Îˆ[XˆÚY0åÈ[˜\ˆZYÚ
+Ù[X›İ™H0åÍZ[š[][JB‹HHXˆ˜\ˆ
+Šœİ^\Èš\ÚX›H[œÚYH™XY\œÊŠ‹ˆHÛ›H^Ù\[Ûˆ\ÈH[[Y\œÚ]™Hœ˜]Ø]H™XY\ˆ
+SSQT”ÒU‘WÒÓQWÔ“ÕUTÈHÉÕœ˜]Ø]T™XY\‰×X
+KÚXÚY\ÈH˜\ˆÚ[H›Øİ\ÙY‚‹KKB‚ˆÈÈNˆØÜ™Y[ˆÛYH
+™]š\ÙY
+B‚ŠŠ”\œÜÙKŠŠˆİ\™˜XÙH]˜Z[X›HÛÛ[Ü™Ø[š^™YHØ]YÛÜH\H[™Z]Kˆ™\XÙ\ÈH›]P”T–H\İœ›ÛHÙXİ[ÛˆË‚‚ŠŠ”İXİ\™H
+ÜÈ›İÛJNŠŠ‚‚ŒKˆİ]\È˜\ˆ\™XH
+ØY™H™YÚ[ÛŠBŒ‹ˆ\›È›ØÚÎˆH
+Š’ÛYHÛÜ™X\šÈØÚİ\
+Šˆ
+ÙXİ[ÛˆJH8 %8)d8)-x)aø))¸)/¸) ¸)-¸)/8)dÛˆÛ™H›İÈİ™\ˆH”ØXÜ™Y^È0­ÈZ[H™XY[™ÈˆYÛ[™Kˆ
+X\›Y\ˆ™]š\Ú[ÛœÈİXÚÙYHÜ™\İX›İ™HHÍ]NÈHØÚİ\\ÈHÛÛ\Xİ™\XÙ[Y[ŠBˆH
+Š“ÛˆHØ][ÙÈ™\İ]˜[^HÛ›JŠˆ
+HN™\İ]˜[ÈÙˆ›İYšXØ][ÛœËÙ™\İ]™T™[Z[™\œËØ
+NˆH
+Š‘™\İ]™HÜ˜[ŠŠˆ
+0©ÍMJH[™ÜÈ\™XİH™[İÈHØÚİ\8 %HX\šYÛÛØ\›[™Ú]H^IÜÈÜ™Y][™ÈÚ\ˆXœÙ[]™\Hİ\ˆ^K‚ŒËˆ
+Š¸)!¸)'0­ÈÙ^Hİš\
+Šˆ
+0©Í
+H8 %HÛ™KXØ\™Z[K\[˜Ú[™ÈÛ[˜ÙH
+˜\˜H
+È]HXY[™KÛ™HÜš^›Û[\ØÜ›Û›İÈÙˆØœÙ\˜[˜ÙHÈXšZš]È˜ZHØX[Ú\ÊKˆ\8¡¤ˆ[˜Ú[™ÈX‹‚ˆ
+Š¸)!¸)'8)%x)aÈ8),¸)/ø)#È0­È›ÜˆÙ^H™XÛÛ[Y[™][ÛœÊŠˆ
+0©ÍL
+H8 %HÛÛ\XİÜš^›Û[›İÈÙˆ˜[YK[Û›H™X]\™PØ\™ÛÛ\Xİİš\È
+NM°åÍM‹HØ[YHÚ[HTĞÓÕ‘TˆØ\›İ\Ù[\Ù\È[ˆ]È[\ˆY˜][›Ü›JHÚÜÙ[ˆœ›ÛHÙ^IÜÈ˜X\ˆZ]H[™Xİ]™H™\İ]˜[Y]Y]Kˆ\ÈÙY\È‘P‰ÜÈKQ^KĞKQ™\İ]˜[İ\™˜XÚ[™ÈÛˆÛYHÚ]İ]Y[™È[›İ\ˆØ[[™\ˆ[™Ú[™KˆØ\™\8¡¤ˆH^]Ù[ˆšXH˜]šYØ]UÑ[Tİ\
+0©ÌÎ
+H8 %Ú[™ÛKXÚ\\ˆ^ÈÜ[ˆZ\ˆ™XY\ˆ\™XİH˜]\ˆ[ˆHÛ™K\›İÈÚ\\œÈ[™^‚Kˆ
+Š”›İ][™H˜[›™\ŠŠˆ
+0©ÌÌ
+K
+Šš[›[™JŠˆ
+›İØÚÙY
+HÛˆÛYH8 %H8)*8)/ø))8)cx)+È8).8)/¸))ø)*8)/ˆYÙHÈ›ÙÜ™\ÜÈÈÛÛ\]HÚ\Ú][™È\™XİH[™\ˆHÙ^Hİš\È™XÛÛ[Y[™][ÛœÈÛ\İ\ˆ
+MœØ\XXÚÚYJKˆ][İ™Yİ]ÙˆH›İÛHİ™\›^H
+[HŒŠHÛÈ]›ÈÛ™Ù\ˆ›Ø]Èİ™\ˆ8 %[™Û\È8 %HTĞÓÕ‘TˆØ\›İ\Ù[ÈHÙ^HˆÛ\İ\ˆ
+[˜Ú[™È8¡¤ˆÙ^IÜÈ™XÛÛ[Y[™][ÛœÈ8¡¤ˆÙ^IÜÈ˜XİXÙJH›İÈ™XYÈ\ÈÛ™H›ØÚÈX›İ™HHXœ˜\Kˆİ[
+Š™ØÚÙY
+ŠˆX›İ™HHXˆ˜\ˆÛˆZ[HšZİH
+0©ÌŒJK‚‹ˆÙXİ[ÛˆX™[ĞUQÓÔ’QTÈˆ
+[\ˆLK\\˜Ø\ÙK[šË[]]YŒŒ™[H˜XÚÚ[™ÊBËˆ
+ŠØ]YÛÜHÜšY
+Šˆ
+ËXÛÛ[[ˆ][˜Ú\ˆ^[İ]Ü˜\È\È[\È\™HYY
+N‚ˆH
+Š”˜[šÈH\ÙY[™\ÜÈ
+È\UTÔš\œİ
+Šˆ
+[HŒŠKˆØ]YÛÜšY\ËØ\œ˜^HÜ™\ˆš]™\ÈHÜšYÈHÙ\]Y[˜ÙH\È
+Š¸)&¸)/¸),¸)`8).8)/ˆ0­È8)!¸),8))8)`0­È8).8)cx))8)bø))8)cx),8)+¸)cH0­È8)%ø)cx),8)*8)cx))H0­È8)'8)*ŠŠˆ
+Z[K\™XÚ]H
+È›YÜÚ\™XY
+ÈH˜\HX[KXÛİ[\ˆTÔ
+H8¡¤ˆ
+Š¸).8) ¸).8)cx)%x)/¸),0­È8))8)`8),8)cx))JŠˆ
+Xš]Øœ›İÜÙHTÔÊH8¡¤ˆH[ˆ‘PH\š]H›Ü›\È
+Š¸)%x)-x)&ˆ0­È8)!x)-ø)cx)'ø)%x)+¸)cH0­È8).8)`¸)%x)cx))8)+¸)cJŠˆ\İ
+¸ $Í^ÈXXÚÈZ\ˆ‘UÈ˜YÙ\È[™H\ØÛİ™\JKˆ
+
+Š¸).8)cx))8)`x))8)/È\È›İH[JŠˆ8 %]È^È›Û[Èİİ˜[X0©ÍKŠHHÜšY
+Šš[\›X]™\È›İ\ˆ›Û‹XÛÛ[[\ÊŠˆ]˜[šÙYÜİÈ\ÈÛ™H]H[™ˆ
+Š¸)-x)cx),8))0­Èœ˜]	ˆ\ŠŠˆ[™
+Š¸)%x)`x) ¸)(x),¸)`0­Èİ[™[JŠˆšYÚY\ˆ8)'8)*ˆ
+8)-x)cx),8))Ü[œÈH[˜Ú[™ÈX‰ÜÈØœÙ\˜[˜ÙS\İœ˜]Ø][ÙÈšXH[˜Ú[™ÕX•\™Ù]
+
+X8 %H[T›İ]\ËØ[\ˆØ\œZ[™È[š]X[ˆ˜[ÙXÛÈH^š[K[[İ[Y[˜Ú[™ÈXˆÙY\È]ÈØ[[™\ˆ\ÈH[š]X[›İ]NÈ‘LH8 %HÜšYÛÜ‹
+Š››İ
+ŠˆHÛÛ[Ø]YÛÜXÈÛÛ[]™\È[ˆHØœÙ\˜[˜ÙH[™Ú[™K›İHXœ˜\H8 %[™8)%x)`x) ¸)(x),¸)`Ü[œÈH[˜Ú[™ÈX‰ÜÈ[İ\Ú[ÙK‘PÊK\È
+Š¸))¸)aø)-x))8)/ˆ0­ÈHZ]JŠˆ[™
+Š¸)"x))¸)cx))¸)aø)-¸)cx)+È0­ÈH\œÜÙJŠˆY\ˆ8))8)`8),8)cx))KˆHZ]HÜ[œÈZ]R[™^ØÜ™Y[˜ÈH\œÜÙHÜ[œÈœ›İÜÙPT\œÜÙTØÜ™Y[˜
+0©ÍL
+KˆH
+Š¸)+¸)`x).x)`¸),8)cx))0­È]Z\˜]
+Šˆ[H
+Ú]ZØKYX[X\šË8¡¤ˆH[˜Ú[™ÈX‰ÜÈ]Z\˜]š[™\˜‘LMˆ0©ÍŒ
+H›ÛİÜÈ8)%x)`x) ¸)(x),¸)`8 %H™YH[˜Ú[™Ë]XˆÛÜœÈ
+8)-x)cx),8))0­È8)%x)`x) ¸)(x),¸)`0­È8)+¸)`x).x)`¸),8)cx))
+HÚ]\ÈÛ™HÛ\İ\ˆY\ˆ8)'8)*‹ˆH
+Š¸)*8)/ø))8)cx)+È8).8)/¸))ø)*8)/ˆ0­ÈZ[H˜XİXÙJŠˆ[H
+İ\ÈX\šË8¡¤ˆ›İ][™UÙ^XHØ[YHİ\™˜XÙH\ÈH›İ][™P˜[›™\ˆ0©ÌŒ
+H\È
+Š˜\[™Y\İ[™™[™\œÈ[]ÚY
+Šˆ\ÈHÜšY	ÜÈÛÜÚ[™È›İËÛÈHÜšYİ[[™ÈÛX[ˆ›İÈ]H[HÛİ[\ÈM‹ˆÛYTØÜ™Y[ˆ[˜ÚÜœÈ\ÙHHY
+Y\ˆ˜\[XÈY\Üˆ]H[™
+K›İH[™^ÛÈ™[Ü™\š[™ÈØ]YÛÜšY\ÈÙY\È[H[ˆXÙK‚ˆH
+ŠŒMˆ[\Èİ[
+Šˆ
+LÛÛ[Ø]YÛÜšY\È
+È8)-x)cx),8))
+È8)%x)`x) ¸)(x),¸)`
+È8)+¸)`x).x)`¸),8)cx))
+È8))¸)aø)-x))8)/ˆ
+È8)"x))¸)cx))¸)aø)-¸)cx)+ÈHH›İÜÈ0åÈËÛÜÙYHH[]ÚY8)*8)/ø))8)cx)+È8).8)/¸))ø)*8)/ˆ›İÊK›İÚ[™È\ÈHËXÛÛ[[ˆ][˜Ú\ˆÜšYˆ[HÛÛZ[™Ø[H™[™\œÈ[›[™H]]È™YÚ\İHÜÚ][Ûˆ\ÈH[[YY›Û‹Z[\˜Xİ]™H”ÓÓÓˆˆ][˜Ú\ˆ
+ÙXİ[ÛˆNJKˆ\È[Ü™H‘PH›Ü›\È
+K™Ëˆ8).8).x).8)cx),8)*8)/¸)+ŠH[™HÜšYÙY\ÈÜ›İÚ[™ÈİÛÈ]\È›ÈÛ™Ù\ˆHš^YÜ]X\™K‚ˆHØ\ˆ
+ŠŒL
+Šˆ™]ÙY[ˆ[\Ë
+ŠŒ
+ŠˆÚYHY[™È
+ÜXÚ[™ËHÛYHYÙHİ]\ŠNÈ[HÚYHH\™ÙˆH™[XZ[š[™È›İÂˆH\8¡¤ˆØ]YÛÜS\İ›Üˆ]Ø]YÛÜH
+8))8)`8),8)cx))HÜ[œÈHY\œ›İÜÙHİ\™˜XÙK0©ÌÈ8)-x)cx),8))Ü[œÈHœ˜]Ø][ÙÎÈ8)%x)`x) ¸)(x),¸)`Ü[œÈ[İ\ÚÈ8))¸)aø)-x))8)/ˆÜ[œÈHZ]H[™^È8)"x))¸)cx))¸)aø)-¸)cx)+ÈÜ[œÈœ›İÜÙHH\œÜÙNÈ8)*8)/ø))8)cx)+È8).8)/¸))ø)*8)/ˆÜ[œÈHZ[H›İ][™JBˆH[HÜXÎˆH
+Š›][˜Ú\ˆ˜\šX[
+Š‹ÙXİ[ÛˆNBˆÙXİ[ÛˆX™[‘TĞÓÕ‘Tˆˆ
+È
+Š‘™X]\™HÜİYÚØ\›İ\Ù[
+Šˆ
+0©ÌÌŠH8 %H[X›YYÜš^›Û[›İÈÙˆ™X]\™PØ\™Èİ\™˜XÚ[™ÈH\	ÜÈÜ›ÜÜËXİ][™ÈÙXİ[ÛœÈ
+Z[H˜XİXÙKZ[H™\œÙKØ[šØ[]HÛX\˜[‹İZYYZ˜\Ëø)*¸)`¸)'8)/ˆ8)-x)/ø))ø)/Ë[Üš[XYÙKÛYKTØÜ™Y[ˆÚYÙ]È8 %H[˜Ú[™ÈØ\™Ø\È™]\™YÚ[ˆHÙ^Hİš\ÛÚÈİ™\ˆ]İ\™˜XÙJKˆ[İ™Y
+˜™[İÊˆHÜšYˆHš[YHÛİ›İÈ™[Û™ÜÈÈÙ^K\™[]˜[ÛÛ[ÈHØ\›İ\Ù[ÙY\È]È\‹[Ü[ˆÚY™›HÛ™HİÚ\HİÛ‹‚Kˆ›Ûİ\ˆX[˜H
+ÙXİ[ÛˆÈ8 %ÚÙ[ˆ›Ûİ\“X[˜XNMIHÜXÚ]JH]H[™ÙˆHØÜ›ÛŒLˆ
+Š‘›Ø][™ÈÙX\˜Ú]ÛŠŠˆ
+ÙX\˜Ú›Ø][™Ğ]Û˜
+HØÚÙY›İÛK\šYÚ8¡¤ˆÜ[œÈHÙX\˜ÚØÜ™Y[‹ˆ\Ù\È]ÈY˜][ÜXÚ[™Ë›İÛHÙ™œÙ]›İÈ]H›İ][™H˜[›™\ˆ›ÈÛ™Ù\ˆØÚÜÈ]ÛYIÜÈ›İÛH
+]\ÙYÈ\ÜÈH˜[›™\‹XÛX\š[™ÈÙ™œÙ]
+Kˆ
+HÛ[›Ø][™È]Û‹Û[Ù[™]™\ˆÚ\YŠB‚ŠŠ‘š\œİ]\™XÛİ™\H
+[ÛYHØ\™ÊKŠŠˆ]™\H\X›HÛYHØ\™Ü[œÈÛˆH
+Š™š\œİ
+Šˆ\›İHÙXÛÛ™ˆSÔÈØ[ˆØ[˜Ù[HÚ[™\ÜØX›X	ÜÈÛ”™\ÜØÚ[ˆ]]™\È[œÚYHHØÜ›ÛšY]Ø]™[ˆÚ[ˆHš[™Ù\ˆ™]™\ˆXİX[H˜YÜËÛÈH˜Z]™HÛ”™\ÜØ[\›Z][H›Ë[ÜÈHš\œİİXÚˆHÚ[™ÛHÚ\™YÛÛ›Û\ˆ
+ÛÛ^ËÕ[T™\ÜĞÛÛ^Ş\ÙU[T™\ÜĞÛÛ›Û\˜
+È[T™\ÜÔ›İšY\˜
+H™[Y[X™\œÈHXİ[ÛˆÛˆÛ”™\ÜÒ[˜\›\ÈHÛ™K]XÚÈ˜[˜XÚÈÛˆÛ”™\ÜÓİ][™š\™\È][›\ÜÈH™X[Û”™\ÜØ[™XYH˜[ˆÜˆHØÜ›Û˜YÈ[\™[™YˆXİ]˜]U[XÛ›HÛÛœİ[Y\ÈH[™[™ÈXİ[Ûˆ]™[Û™ÜÈÈHİ\œ™[Ù\İ\™NˆH
+™˜YÙÙY
+ˆ[™[™È
+HØÜ›ÛÚÜÙH™\ÜÈØ\ÈØ[˜Ù[Y
+H\È™]™\ˆ™]\ÙYÛÈ[ˆXØÙ\ÜÚXš[]H\8 %ÚXÚ[›ÚÙ\ÈÛ”™\ÜØÚ]›È™XÙY[™ÈÛ”™\ÜÒ[˜8 %[Ø^\È[œÈH\YØ\™	ÜÈİÛˆXİ[Ûˆ˜]\ˆ[ˆHİ[HÛ™HY™Z[™H[ˆX\›Y\ˆØÜ›Ûˆ]\ÈÚ\™Y
+ÛÛ^
+HXÜ›ÜÜÈH
+ŠÚÛJŠˆÛYHİ\™˜XÙH8 %HØ]YÛÜHÜšY
+0©ÌNJKHÙ^Hİš\
+0©Í
+KH›Ü‹UÙ^H›İÈ
+0©ÍL
+KH›İ][™H˜[›™\ˆ
+0©ÌÌ
+K[™HTĞÓÕ‘TˆØ\›İ\Ù[
+0©ÌÌŠH8 %™XØ]\ÙHHØ\™]™\È[œÚYHHİ]\ˆ™\XØ[ØÜ›ÛÛÈH™\XØ[YÙKY˜YÈİ\YÛˆHØ\™]\İİ\™\ÜÈ
+]Ø\™	ÜÊˆ˜[˜XÚÎÈH\‹XÛÛ\Û™[ÛÜHÛİ[›İÙYHHİ]\ˆØÜ›Û[™Ûİ[˜]šYØ]HÛˆHZ[ˆØÜ›ÛˆXXÚ[˜ÛÜÚ[™ÈØÜ›ÛšY]Ø
+Hİ]\ˆ™\XØ[Û™H[™]™\H[›™\ˆÜš^›Û[›İÊHÚ\™\ÈÛ”ØÜ›Û™YÚ[‘˜YØÈHÛÛ›Û\‰ÜÈX\šÕ[Q˜YØÛÈHİÚ\H\È[Ø^\ÈHØÜ›Û[™™]™\ˆH\ˆ[›ÙXÙY›ÜˆHÜšY[ˆ[HŒˆ
+ÌŒNJH[™^[™YÈHÙ^KÑ\ØÛİ™\ˆØ\™È[[YYX][HY\ÈH›İ][™H˜[›™\ˆ
+0©ÌÌ
+HØ\ÈH\İZ[‹XÛ”™\ÜØÛİ][™Ø\ÈÚ\™Y[ˆ]YÈŒˆ
+][\›Z][H›Ë[ÜY]Èš\œİ\ÛˆÛYJKˆ[›™YHÛÛ^Ë××İ\İ××ËÕ[T™\ÜĞÛÛ^\İŞ[™ÛÛ\Û™[Ë××İ\İ××ËÔ›İ][™P˜[›™\‹\İŞ‚‚ŠH
+ŠÛÛ[YK\™XY[™ÈØ\™
+ŠˆœšYY›HØ]™]ÙY[ˆHÜšY[™TĞÓÕ‘Tˆ8 %™]\™Y[HŒ‹0©ÍKŠB‚•\™H\È
+Š››ÈZ]HÚ\›İÈÛˆÛYJŠˆ8 %Z]Hœ›İÜÚ[™È]™\È[ˆHZ]H[™^ØÜ™Y[ˆ
+0©ÌŒ
+K[™[[œ›İÜÚ[™È]™\È™Z[™HH\œÜÙH[H
+0©ÍL
+K‚‚ŠŠ•ÚHÙ^KYš\œİŠŠˆH[HŒˆÛÛ\]]]™H™]šY]È›İ[™H™]š[İ\ÈÛYH™]™\ˆÚ[™ÙY™]ÙY[ˆš\Ú]È
+\›È
+ÈTĞÓÕ‘TˆØ\›İ\Ù[
+È‹XÛÛ[[ˆØ][ÙÈÜšY
+H8 %›İ[™ÈÛˆ][œİÙ\™YÚ]X]\œÈÙ^H‹ˆHÙ^Hİš\[™HÛÛ\Xİ][˜Ú\ˆ]Ù^IÜÈ[˜Ú[™Èİ]H[™HÜ\˜[šÙYÙXİ[ÛœÈ[œÚYHHš\œİšY]ÜÜ‚‚ŠŠ‘Ü˜YY[˜XÚÙÜ›İ[™ŠŠˆØ[YH\ÈÙXİ[ÛˆˆÛYHÜ˜YY[‚‚‹KKB‚ˆÈÈNKˆÛÛ\Û™[ˆØ]YÛÜHØ\™‚ŠŠ”\œÜÙKŠŠˆÜšY[H™\™\Ù[[™ÈHÛÛ[Ø]YÛÜHÛˆHÛYHØÜ™Y[‹‚‚•ÛÈİ]\È˜\šX[È8 %Xİ]™X
+\ÈÛÛ[
+H[™ÛÛZ[™Ø
+XÙZÛ\ŠH8 %[™ÛÈ
+Š›^[İ]˜\šX[ÊŠˆ
+˜\šX[›Ü[ˆØ]YÛÜPØ\™Ş
+Nˆ][˜Ú\˜
+HÛYHğåÌÈÜšY
+H[™Ø\™
+HÛ\ÜÚXÈ‹XÛÛ[[ˆÜ˜YY[Ø\™Ù\›ÜˆHÛÛZ[™Øİ]H[™[H]\™H‹XÛÛ[[ˆ^[İ]
+K‚‚ŠŠ“][˜Ú\ˆ
+ÛYHÜšYXİ]™JNŠŠ‚‚‹HÛÛ[[ˆ^[İ]ˆHÛÛ\Xİ
+Š™Û\[JŠˆÚ]H˜[YH
+˜™[İÊˆ]
+^PšZİK\™]šY]ÈX\›š[™ÎˆX™[X™[İÈ\ÈÚ]]È™YHÛÛ[[œÈœ™X]NÈH˜[YKZ[œÚYHØ\™Ø[‰İÚš[šÈ\İÛÈÛÛ[[œÈÚ]İ][˜Ø][™ÊK‚‹H[NˆZYÚ
+ŠÌŠŠ‹[ÛÛ[[ˆÚY˜YZK›ØØ\™Xİ]™Qœ›ÛH8¡¤ˆØ\™Xİ]™UØÜ˜YY[\Ø\™Xİ]™P›Ü™\˜
+Š˜[]˜][Û‹˜Ø\™
+Šˆ
+H[YHÚÙ[ˆ8 %›È[›[™HÚYİÈ]\˜[ÊKˆH[H\È[ˆÜ\]YHØ\™Xİ]™Qœ›ÛX˜\ÙH[™
+Š››Èİ™\™›İÎˆ	ÚY[‰Ø
+Šˆ
+]Ûİ[Û\HSÔÈÚYİÊNÈHÜ˜YY[Ø\œšY\È]ÈİÛˆX]Ú[™È˜Y]\ËˆØ]YÛÜRXÛÛ˜İ›ÚÙH™XİÜˆÙ[\™Y‚‹HX™[ˆ
+Š›Û™H[™KØ\[ÛˆÚ^™JŠˆ8 %]”š[X\HLØÈ]š[X\HMšXHÜ™\•]\ĞS[™İXYÙJ
+X[šØÙ[\™Y[X™\“Ù“[™\ÈXœ™[İÈH[K‚‹H
+Š“X™[ÜÚ][ÛŠŠˆ
+][˜Ú\“X™[ÜÚ][Û˜
+Nˆ™[İØ
+ÛYIÜÈY˜][X›İ™JHÜˆ[X8 %H[œÙKZ[™^˜\šX[]Ù[™\ÈH˜[YH
+š[œÚYJˆHÌˆ[Hİ™\ˆ\ÈÛÈ[™\È
+][˜Ú\“X™[[™\Ø
+K\ÙYHHË][H˜[ZØ\˜[ˆ˜ZÜÚ]˜HÜšY
+0©ÍŒJKˆZ]\ˆÜÚ][ÛˆÙY\ÈHX™[]Hš^YØ\[ÛˆÚ^™NÈH[‹][HÜÚ][ÛˆYÈ[™RZYÚŒX[™HX^›ÛÚ^™S][\Y\˜ÙˆKŒH[™]\İ
+Š›™]™\ŠŠˆ[˜X›HY\İÑ›ÛÚ^™UÑš]
+ÙYH0©ÍŒH›ÜˆHSÔÈÚš[šÈYÈ]Ø]\ÙY
+K‚‹H
+Š”ÚÜ[™Û\Ú\Ü^H˜[Y\ËŠŠˆ[™\ˆH¸¡dË\›İÈ[HH[™YÚ\İH˜[Y\È
+’[[œÈ	ˆ˜Z\ÙH‹’˜\H	ˆX[˜\ÈŠHÛ‰İİ\š]™HÛ™H[™KÛÈØ]YÛÜšY\ËØØ\œšY\È[ˆÜ[Û˜[ÚÜ˜[YQ[˜
+’[[œÈ‹’˜\H‹›ÛÚÜÈ‹’Xš]ÈŠH\ÙY
+Š›Û›JŠˆHH][˜Ú\ˆX™[ˆH
+Š˜XØÙ\ÜÚXš[]HX™[[Ø^\ÈØ\œšY\ÈH[˜[YQ[˜
+Šˆ
+Û˜[YQ[ŸKÈ™]ËßH\ÈÜ[‹ˆ˜
+H8 %HXY\İ›ÈÛ[ÚÙ\È\[\ÈH][X™[[™ØÜ™Y[ˆ™XY\œÈÙY\H\ØÜš\]™H˜[YK‚‹H‘UØ˜YÙNˆØ[YH[\ÈHØ\™˜\šX[[œÙ]œ[ˆH[IÜÈÜ\šYÚÛÜ›™\‹‚‹H
+ŠÛÛZ[™È
+][˜Ú\ŠKŠŠˆHİ]\Îˆ	ØÛÛZ[™ÉØ[HÙY\ÈH][˜Ú\ˆÙ[ÛY]NˆØ\™İ\™˜XÙX[H]MIHÜXÚ]KØ[YH[]˜][Û‹˜Ø\™Y\È]ÈXİ]™HÚX›[™ÜËÚ]HÓÓÓ˜[
+ÛÛ[
+H[™HØ\[ÛˆX™[™[İÎÈ›İ™\ÜØX›H
+XØÙ\ÜÚXš[]Tİ]K™\ØX›Y
+Kˆ]Ù\È
+Š››İ
+Šˆ˜[›İYÚÈH‹XÛÛ[[ˆØ\™^[İ]‚‚ŠŠXİ]™H
+Ø\™˜\šX[
+NŠŠ‚‚‹H˜XÚÙÜ›İ[™ˆ[™X\‹YÜ˜YY[Ø\™Xİ]™Qœ›ÛH8¡¤ˆØ\™Xİ]™UØ
+Ñ‘‘QL8¡¤ˆÑQPPØØ[YHÜ˜YY[\ÈXœ˜\HØ\™
+B‹H›Ü™\ˆ\Ø\™Xİ]™P›Ü™\˜
+™Ø˜JNNË
+X
+B‹HÚYİÎˆ
+Š˜[]˜][Û‹›YY
+Šˆ
+0©Í8 %Ù™œÙ]ÜXÚ]HŒLX˜Y]\ÈL‹[™›ÚYÊKˆØ\È[ˆ[›[™HŒL˜]\˜[[[[HŒ‹‚‹H˜Y]\Îˆ
+Š˜˜YZK›Ø
+Šˆ
+N
+KˆØ\È[ˆYZØÈM˜Ù™ˆH˜Y]\ÈØØ[H
+0©Í
+K‚‹H^[İ]
+™\XØ[Ù[\™Y
+N‚ˆHXÛÛˆHØ]YÛÜRXÛÛ˜İ›ÚÙH™XİÜˆ
+ØY™œ›Û‹YY\
+KÙ[\™YX›İ™HH˜[YBˆH
+Š“Û™H˜[YH[™HÛ›JŠˆ8 %HXİ]™H™XY[™È[™İXYÙIÜÈš[X\HšXHÜ™\•]\ĞS[™İXYÙJ
+X
+]”š[X\HM˜È]š[X\HMØ[šØ
+Kœ™[İÈHXÛÛ‹ˆH[[İYÙXÛÛ™[[™İXYÙH[™H\È
+Š™[X™\˜][H›ÜY
+ŠˆÛˆÛYH[\ÈÈYÚ[ˆHÜšY
+ÙYHHÛÛ[Y[[ˆØ]YÛÜPØ\™Ş
+NÈØ][ÙËÙ]Z[ØÜ™Y[œÈÙY\Hš[[™İX[Z\š[™ËˆH[™Û\ÚXØÙ\ÜÚXš[]SX™[İ^\È[XİÛÈØÜ™Y[ˆ™XY\œÈİ[[››İ[˜ÙHH[™Û\Ú˜[YK‚‹HY[™ÎˆLœ™\XØ[LÜš^›Û[‹H\8¡¤ˆ\Ú\ÈØ]YÛÜS\İØÜ™Y[‚‚ŠŠÛÛZ[™ÎŠŠ‚‚‹H˜XÚÙÜ›İ[™ˆØ\™İ\™˜XÙX›]‹H›Ü™\ˆ\]šY\˜‹HÚYİÎˆÛX
+[[YNˆ
+Š˜[]˜][Û‹œİXX
+ŠŠB‹HØ\™]MIHÜXÚ]B‹H”ÓÓÓˆˆ[˜YÙNˆÜ\šYÚÛÜ›™\‹[œÙ]ˆ
+ŠŒL
+Šˆ
+H0©ÌËŒ›ÛÜÈØ\ÈJKŒ\\˜Ø\ÙKŒN[H˜XÚÚ[™ËÛÛ[š[[šË[]]Y^‹H\\ØX›Y
+›È˜]šYØ][ÛŠB‚ŠŠ“™]ÈÛÛ[
+Xİ]™H[\È	ˆXœ˜\HØ\™ÊNŠŠ‚‚‹H™XÙ[KXYYÛÛ[
+™]ÈÚ[˜ÙHH\Ù\‰ÜÈ\İ\]JHÚİÜÈH‘UØ[˜YÙNˆÜ\šYÚÛÜ›™\‹Ø[YHÙ[ÛY]H\ÈÓÓÓ˜ˆ™]Ğ˜YÙP™Øš[
+ØY™œ›Ûˆ[
+H
+È™]Ğ˜YÙU^
+ØY™œ›Û‹YY\
+KˆØY™œ›Ûˆ8 %Hš[X\KØXİ]™HXØÙ[8 %X\šÜÈ]\È]™H	ˆœ™\Ú\İ[˜İœ›ÛHH]]YÛÛÓÓÓ˜ˆHÚ\ÛX\œÈÛ˜ÙHH\Ù\ˆÜ[œÈ]ÛÛ[ˆØ\œšY\ÈH“‘UÈˆ^İYH
+™]™\ˆÛÛÜ‹[Û›K\ˆ0©ÌLXØÙ\ÜÚXš[]JK‚‚‹KKB‚ˆÈÈŒˆÛÛ\Û™[ˆZ]HÚ\‚ˆ
+Š”İ\\œÙYYŠŠˆHÚ\˜İ[\ˆZ]HÚ\›İÈ™]™\ˆİ\š]™Y\İHÛYH™Y\ÚYÛ‹ˆZ]Hœ›İÜÚ[™È›İÈ]™\È[ˆH
+Š‘Z]H[™^ØÜ™Y[ŠŠˆ
+Z]R[™^ØÜ™Y[‹Ş™XXÚYœ›ÛHH8))¸)aø)-x))8)/ˆ[H[ˆHÛYHÜšY
+Nˆ[ŒHZ]Y\Èœ›ÛHZ]Y\ËØ™[™\ˆ\È[]ÚYZ]PØ\™›İÜËXXÚØ\œZ[™ÈHZ]RXÛÛ˜]šX]H™XİÜˆ
+›İËX[™X\œ›İÈ›Üˆ˜[XK˜[œİ\šH›ÜˆÜš\Ú˜Kš\Ú[›ÜˆÚ]˜K8 )ŠKİ™\ˆH˜[™Û[K\XÚÙYZ]H˜XÚÙÜ›İ[™]H
+Ù]˜[™ÛQZ]P˜XÚÙÜ›İ[™İX›H\ˆ[İ[
+Kˆ\[™ÈH›İÈ\Ú\ÈHZ]H]Z[YÙH
+0©ÍL
+KÚXÚØ\œšY\ÈH\ÜØ^H[™Ü›İ\Y^\İˆHÛ\ˆZ]S\İØÜ™Y[˜™[XZ[œÈ\ÈHZ[ˆš[\™Y[\İ›İ]H›ÜˆÛÛ\]Xš[]K‚‚‹KKB‚ˆÈÈŒKˆØÜ™Y[ˆØ]YÛÜH\İ‚ŠŠ”\œÜÙKŠŠˆÚİÜÈ[][\È™[Û™Ú[™ÈÈHÜXÚYšXÈØ]YÛÜH\Kˆ™XXÚYH\[™ÈHØ]YÛÜH[HÛˆÛYK‚‚ŠŠ”İXİ\™NŠŠ‚‚ŒKˆİ]\È˜\‚Œ‹ˆÜ˜\ˆ˜XÚÈ]Ûˆ
+8 .H[ˆÚ\˜ÛJH
+È]H¸)%ø)cx),8)*8)cx))H0­ÈØXÜ™Y›ÛÚÜÈˆ8 %š[X\KÜÙXÛÛ™\HÜ™\™YHH™XY[™È[™İXYÙHšXHÜ™\•]\ĞS[™İXYÙJ
+X
+š[X\H[šØ[[İYÙXÛÛ™\H[šË[]]YÙ\\˜]YH0­Ø
+BŒËˆ][H\İˆ™[™\œÈXœ˜\PØ\™
+ÙXİ[Ûˆ
+H›ÜˆXXÚ][H[ˆHØ]YÛÜKLœØ\ÚYHY[™Âˆ][\È™[™\ˆ[ˆ
+Šœ™YÚ\İHÜ™\ŠŠˆ8 %HÜ™\š[™È\Èİ\˜]Y[ˆHXœ˜\X\œ˜^H
+[Øš[KÜÜ˜ËÙ]Kİ^ËØ
+K›İÛÜY]™[™\ˆ[YH
+]™\HÚ\Y[H\ÈXİ]™XÙ^NÈY[˜[šY\È\™Hš[\™Yİ]
+BKˆ\[™È[ˆ][HÚ]š[Üˆ™XY[™È›ÙÜ™\ÜÈÜ[œÈH™\İ[YT™XY[™ÔÚY]
+™\İ[YH]HØ]™Y™\œÙHÈİ\İ™\ŠH™Y›Ü™H˜]šYØ][™ÎÈ][\ÈÚ]›È›ÙÜ™\ÜÈ˜]šYØ]Hİ˜ZYÚÈZ\ˆİ\‚˜XÚÙÜ›İ[™ˆHØ]YÛÜIÜÈ˜YYÚÙ]Ú]H
+Ù]Ø]YÛÜP˜XÚÙÜ›İ[™0©ÍŠH[™\ˆH\˜ÚY[İ™\›^K‚‚‹KKB‚ˆÈÈŒ‹ˆØÜ™Y[ˆZ]H\İ‚•HYØXŞHZ]H\İ\ÈHZ[ˆš[\™Y[\İ˜[˜XÚÎˆØ[YH\ÈÙXİ[ÛˆŒK]š[\™YHZ]HYÈ[œİXYÙˆØ]YÛÜKˆ]HÚİÜÈZ]H˜[YNˆ¸)-¸)cx),8)`8),8)/¸)+ˆ0­ÈÚšH˜[XH‹ˆHš[X\HZ]Hœ›İÜÙH]›İÈ[™ÈÛˆHšXÚ\ˆZ]H]Z[YÙH
+0©ÍL
+K[ˆÜ[œÈHØ[YHXœ˜\PØ\™›İÜÈ›İYÚ˜]šYØ]UÑ[Tİ\
+
+X‚‚‹KKB‚ˆÈÈŒËˆØÜ™Y[ˆZ[HšZİB‚ŠŠ”\œÜÙKŠŠˆH]›İ[Û˜[™\œÙHÙˆH^Hˆ^\šY[˜ÙKˆÚİÜÈH˜[™ÛH™\œÙHXXÚ[YHH\Ù\ˆÜ[œÈHX‹‚‚ŠŠ”İXİ\™NŠŠ‚‚ŒKˆİ]\È˜\‚Œ‹ˆ]H\™XH
+Ù[\™Y
+Nˆ¸))¸)b8)*8)/ø)%H8)+x)%x)cx))8)/Èˆ
+›İÈÙ\šYˆŒŒ[šÊH
+È‘Z[H™\œÙHˆ
+ÛÜ›[Ü˜[M][XË[šË[]]Y™[İÊBŒËˆ
+Š•™\œÙHØ\™
+Šˆ
+Ù[\™YÚYHX\™Ú[œÊN‚ˆH˜XÚÙÜ›İ[™ˆ\˜ÚY[\ÛÙ˜\ÙH
+ÈH™\œÙIÜÈ
+Šœ™XY\‹\YÙHÚÙ]Ú
+Šˆ8 %˜XÚÙÜ›İ[™^Y\˜İ™\ˆÙ]™XY\˜XÚÙÜ›İ[™
+™\œÙKœÛİ\˜ÙRYÈİ[˜Nˆ™\œÙK˜Ú\\ˆJXÛÈHØ\™Ø\œšY\ÈHØ[YH˜YYZ]KÜÛİ\˜ÙH]H\ÈHÛİ\˜ÙIÜÈİÛˆ™XY\ˆ
+HÛÛ™\œÙIÜÈÚ\\˜İX›\È\ÈHñ xnaøn#XKÜİ[˜HÙ^H›Üˆ˜[ZZÚH˜[X^X[ˆÈİ[™\šØ[™ÈÛİ\˜Ù\ÈÚ]İ]H]H˜[˜XÚÈÈHZ[ˆ\˜ÚY[Ü˜YY[
+KˆØ\™Û\È]Ú]İ™\™›İÎˆY[˜ˆH›Ü™\ˆ\]šY\˜ˆHÚYİÎˆY
+[[YNˆ
+Š˜[]˜][Û‹œ˜Z\ÙY
+Šˆ8 %Ø\È[ˆ[›[™HŒMÌÚYİÈ[[[HŒŠBˆH˜Y]\ÎˆNˆHY[™ÎˆˆHÛÛ[
+ÜÈ›İÛJN‚ˆH
+Š’XY\ˆ›İÊŠˆÛİ\˜ÙH[ÛˆHY
+[\ˆLŒŒÙ[H˜XÚÚ[™ËØY™œ›Û‹YY\ÛˆØY™œ›Û‹][™Ë˜Y]\ÈNNH8 %¸)+x)%ø)-x))¸)cH8)%ø)`8))8)/ˆ0­È8)-¸)cx),¸)bø)%H‹Èˆ›Ü›X][™İXYÙKX]Ø\™JH0­È
+Š›ÛÚÛX\šĞ]Ûˆ
+ÈÚ\™P]ÛŠŠˆÛˆHšYÚX]Ú[™ÈH™XY\‰ÜÈ[‹\YÙHXİ[ÛœÈ
+0©ÌJBˆH™\œÙH^ˆ™\œÙHÚÙ[ˆ›ÜˆH™XY[™È[™İXYÙK[šØˆMœ™[İÈHXY\ˆ›İÂˆHÜ›˜[Y[]šY\ˆ
+ÙXİ[ÛˆH8)iXİ[JKˆMœ™\XØ[X\™Ú[‚ˆHYX[š[™ÈX™[ˆÚ[™ÛK[[™İXYÙH8)+x)/¸)-x)/¸),8)cx))XÈYX[š[™Ø
+Ø[YH™X]Y[\ÈÙXİ[ÛˆJBˆHYX[š[™È›ÙNˆYX[š[™ÈÚÙ[ˆ›ÜˆH™XY[™È[™İXYÙK[šË\ÛÙˆH
+ŠØ\™›Ûİ\ˆ›İÊŠˆÛİ\˜ÙH˜[YHÛˆHY
+ÛÜ›[Ü˜[Lˆ][XÈÈØÜš\Ù\šY‹[šË[]]Y8 %›È‘œ›ÛHˆ™Yš^
+H0­È[ˆ[›[™H
+Š˜8¡®È™^
+Šˆ^™\ÜØX›HÛˆHšYÚ
+MØY™œ›Û˜
+H]XÚÜÈH™]È˜[™ÛH™\œÙKˆ\™H\È›ÈÙ\\˜]H™Yœ™\ÚÚ\˜ÛHÜˆ]šX][Ûˆ[™H™[İÈHØ\™ˆ
+Š”›İ][™H˜[›™\ŠŠˆ
+0©ÌÌ
+HØÚÙYX›İ™HHXˆ˜\‹ˆ\È\È›İÈH
+Š›Û›JŠˆØÜ™Y[ˆ]ØÚÜÈ]8 %ÛYH[İ™Y]È˜[›™\ˆ[›[™H
+[HŒŠHÈKXÛ]\ˆ]ÈØÜ›Û]Z[HšZİIÜÈÚ[™ÛHÙ[™Y™\œÙHØ\™\È›ÈÛÛ\\˜X›H[›[™HÙX[KÛÈHØÚÙYÚ\İ^\È\™K‚‚ŠŠ‘Ü˜YY[˜XÚÙÜ›İ[™ŠŠˆØ[YH\ÈÛYK‚‚ŠŠ•™\œÙHÛÛŠŠˆ[ˆ^XÚ]™YÚ\İH8 %[Øš[KÜÜ˜ËÙ]Kİ™\œÙTÛÛØ8 %X\[™ÈXXÚ\XÚ\][™ÈÙXİ[Ûˆ
+Ú]Kİ[™\šØ[™Hİİ˜[\ËÚ[\Ø\Ë˜[XÚ\š]X[˜\Ë˜[ZZÚH˜[X^X[‹˜\[HX[˜\ËØ[œÚØ\ˆ™\œÙ\Ë8 )ŠH[ÈH[šY›Ü›U™\œÙXÚ\KˆY[X™\œÚ\\È
+Šœ™YÚ\İ\™Y\ˆÙXİ[ÛŠŠ‹›İ[™™\œ™Yœ›ÛHØ]YÛÜšY\ËÛÈHÛÛÛ›Hİ\™˜XÙ\ÈÛÛ[Ú]HÙ[Y›Ü›YY™\œÙH
+ÈYX[š[™ÈX\[™ËˆÙ[Xİ[ÛˆX]œ˜[™ÛJ
+Xİ™\ˆH›]ÛÛÛˆXXÚš\Ú]È8¡®È™^\‚‚ŠŠ‘Y\[[šÚ[™ÎŠŠˆHZ[K]™\œÙH™[Z[™\ˆ\Ø[ˆ[ˆHXˆÈHÜXÚYšXÈ™\œÙHšXH›İ]H\˜[\È
+Ûİ\˜ÙRYÈÚ\\˜È™\œÙR[™^
+NÈH[›™Y™\œÙH\È™\ÛÛ™Yœ›ÛHHÛÛHY[]H[™ÚİÛˆ[œİXYÙˆH˜[™ÛHXÚË‚‚‹KKB‚ˆÈÈˆØÜ™Y[ˆÚ\Ú\İ
+Ø]™Y™\œÙ\ÊB‚ŠŠ”\œÜÙKŠŠˆ\Ü^\È\Ù\‹\Ø]™Y™\œÙ\È›Üˆ]ZXÚÈ™KXXØÙ\ÜËˆ\œÚ\İYØØ[HšXH\Ş[˜ÔİÜ˜YÙH
+›ÛÚÛX\šÜĞÛÛ^
+Kˆ\™H\È
+Š››È›ÛÚÛX\šÜÈXŠŠˆ8 %HØÜ™Y[ˆ\È™XXÚYšXH
+Š“[Ü™H8¡¤ˆÚ\Ú\İ
+Šˆ
+[Ü™TİXÚÓ˜]šYØ]Ü˜8¡¤ˆÚ\Ú\İØÜ™Y[‹Ş
+K‚‚ŠŠ”İXİ\™NŠŠ‚‚ŒKˆİ]\È˜\‚Œ‹ˆ
+Š•Ü˜\ŠŠˆ˜XÚÈ]Ûˆ
+Ú\˜ÛJH
+Èš[[™İX[]H›ØÚÈ8 %š[X\H¸).8) ¸)%ø)cx),8).HˆÈ”Ø]™Y™\œÙ\ÈˆİØ\ÈÚ]H™XY[™È[™İXYÙH
+]H˜XÙHMŠKHİ\ˆ[™İXYÙH[[İYÈ[ˆL\[šË[]]YØ\[Ûˆ™[™X]ŒËˆ
+Š›ÛÚÛX\šÈ\İ
+Šˆ
+ÚYHY[™ËLØ\
+N‚ˆHXXÚØ\™‚ˆH˜XÚÙÜ›İ[™ˆ\˜ÚY[\ÛÙˆH›Ü™\ˆ\]šY\˜ˆH˜Y]\ÎˆMˆHY[™ÎˆMˆH^[İ]
+Üš^›Û[
+Nˆ™\œÙH[™›È
+›^LJH
+È8¦iH™[[İ™H]Ûˆ
+ÈÚ]œ›Û‚ˆH™]šY]È^ˆ
+Š™š\œİˆ[™\ÊŠˆÙˆH™\œÙH
+[X™\“Ù“[™\ÏLŠKMÌŒ‹[šØ[ˆH™XY[™È[™İXYÙIÜÈÙ\šY‚ˆHY]H›İÈ™[İÈH™]šY]Îˆ™\œÙH[
+8)-¸)cx),¸)bø)%H˜ÈÚÚØH‹“XÛÜ›[Ü˜[Ù[ZP›ÛLÛˆØY™œ›Û‹][˜Y]\ÈNNJH
+ÈÛİ\˜ÙH[™H
+ÛÜ›[Ü˜[Lˆ][XË[šË[]]YK™Ëˆ¸).x)*8)`x)+¸)/¸)*8)&¸)/¸),¸)`8).8)/ˆŠBˆH
+Š¸¦iH™[[İ™H]ÛŠŠˆØY™œ›Û˜NÛ\[œÚYHH0åÍ\\™Ù]8 %Ü[œÈH
+Š˜ÛÛ™š\›H[Ù[
+Šˆ
+”™[[İ™Hœ›ÛHÚ\Ú\İÈˆÚ]™[[İ™HÈØ[˜Ù[›İ8¢iM[
+H˜]\ˆ[ˆ[][™È[[YYX][BˆHÚ]œ›Ûˆ8 .˜ØY™œ›Û˜šYÚX[YÛ™Y
+XÛÜ˜]]™H8 %Y[ˆœ›ÛHLL^JBˆH›İÈ\8¡¤ˆ˜]šYØ]\ÈÈ]™\œÙH[ˆ]È™XY\ˆšXHZ[›ÛÚÛX\šÕ\™Ù]
+[Øš[KÜÜ˜ËÛ˜]šYØ][Û‹Ù[T›İ]\ËØ
+KX˜›[™È\ÈHÛYHXˆİXÚÂˆ
+Š‘[\Hİ]JŠˆ
+Ú[ˆ›È›ÛÚÛX\šÜÊN‚ˆHÙ[\™YˆH8)iXÜ›˜[Y[
+[šË[]]Y	HÜXÚ]JBˆH^ˆ¸)!x)+x)`8))8)%H8)%x)bø)"8)-¸)cx),¸)bø)%H8).8).x)aø)'8)/ˆ8)*8).x)`8) ˆˆ
+MK[šË[]]YÙ[\™Y8 %ØÜš\Ù\šYˆ›ÜˆİKÚÛŠBˆHİX^ˆ“›È™\œÙ\ÈØ]™YY]ˆ
+ÛÜ›[Ü˜[M][XË[šË[]]Y
+BˆH[ˆ•\H8¦hHXÛÛˆÚ[H™XY[™ÈÈØ]™H™\œÙ\Èˆ
+ÛÜ›[Ü˜[Lˆ][XË[šË[]]YŒ	HÜXÚ]JB‚ŠŠ‘Ü˜YY[˜XÚÙÜ›İ[™ŠŠˆØ[YH\ÈÛYK‚‚‹KKB‚ˆÈÈKˆÛÛ\Û™[ˆ›ÛÚÛX\šÈ]Û‚‚ŠŠ”\œÜÙKŠŠˆÙÙÛH]Ûˆ[İÚ[™È\Ù\œÈÈØ]™Kİ[œØ]™HHİ\œ™[™\œÙH
+›ÛÚÛX\šĞ]Û‹Ş
+K‚‚‹HÜÚ][Ûˆ
+Šš[‹\YÙJŠ‹[ˆXXÚ™\œÙHYÙIÜÈXY\ˆ›İÈ
+™\œÙH[YXİ[ÛœÈšYÚ8 %HÜXİ[ÛœØÛİ0©ÎJK™^ÈHÚ\™H]Û‹ˆ›İ[ˆH™XY\ˆÜ˜\‹‚‹HÚ\NˆÍ0åÌÍÚ\˜ÛK\˜ÚY[\ÛÙš[]šY\˜›Ü™\‚‹HXÛÛˆ™[™\™Y\È^ˆ
+Šˆ¸¦hHŠŠˆ
+[œØ]™Y[šË[]]Y
+HÈ
+Šˆ¸¦iHŠŠˆ
+Ø]™YØY™œ›Û˜
+KMœ‹H\ˆÙÙÛ\È›ÛÚÛX\šÈİ]HšXH›ÛÚÛX\šÜĞÛÛ^‹H[š[X][ÛˆYÚØØ[H[ÙH
+KŒ8¡¤ˆKŒMH8¡¤ˆKŒŒ\ÊH
+Š›ÛˆØ]™HÛ›JŠˆ8 %™[[İ˜[İ^\È]ZY]ÈH[ÙHÛÛ\Ù\ÈÈHš[˜[œ˜[YH[™\ˆ™YXÙK[[İ[Ûˆ
+0©ÌLŠB‹H\XÎˆ\XÜË’[\Xİ™YY˜XÚÔİ[K“YÚÛˆ]™\HÙÙÛB‹H]ÛÜˆLœ[ÚY\È
+YÈHÍš\İX[\İH0åÍ\™Ù]
+B‹HXØÙ\ÜÚXš[]NˆXØÙ\ÜÚXš[]T›ÛOH˜]Ûˆ˜X™[Y›ÛÚÛX\šÈˆÈ”™[[İ™H›ÛÚÛX\šÈ‹XØÙ\ÜÚXš[]Tİ]O^ŞÈÙ[XİY_X‚‹KKB‚ˆÈÈ‹ˆØÜ™Y[ˆY\œ›İÜÙH
+8))8)`8),8)cx))JB‚ŠŠ”\œÜÙKŠŠˆ[Hİ\™˜XÙH›ÜˆHY\
+[Üš[XYÙJHØ]YÛÜH8 %Hœ›İÜÙH
+Š›\İ
+Š‹›İHX\ˆ\[™ÈHY\Ø]YÛÜH[HÛˆÛYH\Ú\È\ÈØÜ™Y[ˆ
+Y\X\ØÜ™Y[‹Ş8 %Hš[HÙY\È]È\İÜšXØ[˜[YK]H[™[™ÈšY]È™[™\œÈ›ÈX\
+KˆH[™XSX\˜\X\œÈ[ˆH
+Š™š[Z[ŠŠˆšY]ÈY\ˆXÚÚ[™ÈHİ]HÜˆØ]YÛÜKˆ[›ÜÜØ[[ˆØÜËÜ›ØYX\Ü™ËÌË][\K]İ\‹›Y‚‚ŠŠ“^Y\ˆİXÚÎŠŠ‚‚ŒKˆ›]\˜ÚY[Ü˜YY[Û›H
+˜XÚÙÜ›İ[™^Y\˜Ú]Ûİ\˜ÙO^Û[X
+H8 %[X™\˜][H›È˜YYÚÙ]ÚˆH\ŞH]HØ[[İY›YÙYHØY™œ›ÛˆX\İ][™H[™[œÈ[ˆHš[Z[ˆšY]Ë‚Œ‹ˆÛÛ[ÛÛ[[‹‚‚ŠŠ”İXİ\™H8 %[™[™È
+ÜÈ›İÛJNŠŠ‚‚ŒKˆİ]\È˜\‹‚Œ‹ˆ
+Š•Ü˜\ŠŠˆ˜XÚÈ]Ûˆ0­È]HÙ[™Y8))8)`8),8)cx))X
+[™H[ÙJHÈY\
+[™Û\Ú[ÙJK™XY\‹]]Hİ[H8 %]HİØ\ÈÛˆ[™İXYÙK™]™\ˆİXÚÜÈ0­ÈšYÚ\ÚYHÜXÙ\ˆÈÙY\H]HÙ[™Y‚ŒËˆ
+Š“[™İXYÙHÙÙÛH›İÊŠˆ
+Ù[™Y
+KˆØ[YH[™İXYÙUÙÙÛXÛÛ\Û™[\È0©ÌM‹ÛÛœÚ\İ[XÜ›ÜÜÈ]™\HY\ØÜ™Y[‹ˆİ]HÚ\™YšXH\ÙQÚ]S[™İXYÙJ
+X8 %È›İ›ÜšË‚ˆ
+Š•šY]ÈÙÙÛJŠˆ
+ÙYÛY[YÛÛ›Û\˜ÚY[\ÛÙš[]šY\ˆ›Ü™\‹[˜Y]\ÊN‚ˆHÛÈ[™\Îˆ8),8)/¸)'8)cx)+È0­ÈHİ]X[™8)-¸)cx),8)aø)(ø)`0­ÈHØ]YÛÜX
+[™Ë\İØ\YX™[ÎÈØ]YÛÜH\ÈHY˜][
+K‚ˆHXİ]™H[ˆ[YØY™œ›Û‹][Ú]ØY™œ›Û‹YY\^È[˜Xİ]™H˜[œÜ\™[Ú][šË[]]Yˆ[™\È\™HZ[•ÚYL0åÈZ[’ZYÚ˜Y[ÙÜ›İ\Ø˜Y[Ø›Û\Ë‚Kˆ
+Šœ›İÜÙHØ\™\İ
+Šˆ8 %Û™HÜ˜YY[Xœ˜\PØ\™\İ[H›İÈ\ˆ
+Š˜Ø]YÛÜJŠˆÜˆ
+Šœİ]JŠˆÈ[XˆÛ\8)iH
+Ø]YÛÜJHÈ8)d
+İ]JHHÈ˜[YH0­ÈY]H“ˆ8))8)`8),8)cx))HÈˆ[\\ÈˆHÈ8 .ˆXÚ]H‘UÈ˜YÙHÚ[ˆ[H[\H[œÚYH\Èİ[[œÙY[‹ˆHY]H[™H›ÛİÜÈH0©ÍˆY]HÛÛ™[[ÛˆØ\™Y]XÚ^™K[\ˆ
+È˜XÚÚ[™È›Üˆ[™Û\ÚÛ›NÈ[™XÈY]HZÙ\ÈHØÜš\Ù\šYˆÚ]
+Š››ÊŠˆ˜XÚÚ[™È
+˜XÚÚ[™ÈÜ]ÈHÚ\›Ü™ZÚJKˆØ]YÛÜH›İÜÈ›ÛİÈHİ\˜]YÜ›İ\Ü™\˜8 %HY\Ü›İ\XÚÙ]È8))¸)cx)-x)/¸))¸)-ˆ8)'8)cx)+ø)bø))8)/ø),8)cx),¸)/ø)&x)cx)%Ë8)&¸)/¸),8))ø)/¸)+‹8)&ø)bø)'ø)/ˆ8)&¸)/¸),8))ø)/¸)+‹8)-¸)%x)cx))8)/È8)*¸)`8)(\È[ˆ¸)!x)*8)cx)+È8)*¸)cx),8).8)/ø))¸)cx))È8))8)`8),8)cx))H0­Èİ\ˆ˜[[İ\È[\\ÈˆXÚÙ]›Üˆ[™Ü›İ\Y[\\ÎÈİ]H›İÜÈÛÜ[X™]XØ[HHİ]Q[˜‚‚ŠŠ”İXİ\™H8 %š[Z[ŠŠˆ
+HØ[YHØÜ™Y[ˆ\ÚYYØZ[ˆÚ]HÜ›İ\Üˆİ]Q[˜\˜[JN‚‚ŒKˆÜ˜\ˆ]H™XÛÛY\ÈHØ]YÛÜKÜİ]H˜[YNÈH[™İXYÙHÙÙÛH›İÈ\œÚ\İË‚Œ‹ˆ[™XSX\˜
+ÙXİ[Ûˆ
+KÙ[™YØÛÜYÈHİXœÙXİ[Ûˆ8 %[œÈ™[™\ˆÛ›H›ÜˆHš[YZ[ˆ[\\ÎÈHKTİ]Hš[Z[ˆš[ÈH›Øİ\ÙYİ]K‚ŒËˆHÚ[™ÛH][XÈ[[™H™[İÈHX\ˆ8)*¸)/ø)*8)&ø)`¸)%x),8)+¸) ¸))¸)/ø),8)%x)`8)%x))x)/ˆ8)*¸)(¸)/8)aø) ˜È\H[ˆÈ™XYH[\IÜÈİÜX8 %ÛÜ›[Ü˜[Ø\˜[[Û™Lˆ][XË[šË[]]YÙ[™Yˆ
+\™H\È
+Š››ÊŠˆ[›ÒKÑ[˜›ÜÙHšY[ÛˆH[Ù[8 %\È[\ÈHÛ›HÛÜKŠBˆ›][\H\İ
+Ø[YHœ›İÜÙKXØ\™›İÜÎÈY]H[™HHÚ]Kİ]X
+K[X™]XØ[HHØØ[^™Y[\H˜[YK‚‚ŠŠ‘]NŠŠˆ
+ŠÌH[\\ÊŠˆ[ˆ[Øš[KÜÜ˜ËÙ]KİY\İ[\\ËØXXÚYÙÙYÚ]™\›ÈÜˆ[Ü™HÜ›İ\Ø8 %H[\HX^H\X\ˆ[™\ˆ][\HX]˜\È
+ÙY\›˜]\È›İ[İ\›[™ØH[™ÚİHÚ\ˆ[JNÈÜ›İ\Îˆ×X[™È][™\ˆİ\ˆ˜[[İ\È[\\Ë‚‚ŠŠ’[\˜Xİ[ÛœÎŠŠ‚‚‹H\[ˆÜˆ\İ›İÈ8¡¤ˆ\ÚY\]Z[›Üˆ][\H
+[™X\šÈ]È‘UÈÚ\ÙY[ŠK‚‹HÛ™Ë\™\ÜÈ[ˆ8¡¤ˆÛX[X™[ÛÛ\Ú][\H˜[YH
+[™Ë\İØ\Y
+Kˆ]]ËY\ÛZ\ÜÙ\ÈÛˆ™[X\ÙH
+ÙXİ[ÛˆJK‚‹HHHİ]HÈHØ]YÛÜHÚÚXÙH\ÈÛÛ\Û™[İ]HÛˆH[™[™ÈØÜ™Y[Èš[Z[œÈ\™HÙ\\˜]H\Ú\ËÛÈ˜XÚÈœ›ÛHH]Z[™]\›œÈÈHØ[YHšY]Ë‚‚ŠŠ‘Ü˜YY[˜XÚÙÜ›İ[™ŠŠˆ›]\˜ÚY[Ü˜YY[
+›ÈÚÙ]Ú
+K‚‚‹KKB‚ˆÈÈËˆØÜ™Y[ˆY\]Z[‚ŠŠ”\œÜÙKŠŠˆ\‹][\H˜\œ˜]]™HØÜ™Y[‹ˆ™XXÚYH\[™ÈH[ˆÛˆHX\šY]È
+0©ÌŠHÜˆH›İÈ[ˆHİ]H\İšY]Ë‚‚ŠŠ“^Y\ˆİXÚÎŠŠ‚‚ŒKˆ\˜ÚY[˜\ÙK‚Œ‹ˆ˜YYÚÙ]Ú˜XÚÙÜ›İ[™™\ÛÛ™YHH[\IÜÈ
+Šœ™\ÚY[™ÈZ]JŠ‹Ú]\‹][\HYİ™\œšY\È›ÜˆÚš[™\ÈÚÜÙHZ]H]H\ÈÛÈÙ[™\šXÈ
+Ù]Y\˜XÚÙÜ›İ[™
+[\KšY[\K™Z]JX[Øš[KÜÜ˜ËÙ]KØ˜XÚÙÜ›İ[™ËØ
+Kˆ\™H\È›È\‹][\H˜XÚÙÜ›İ[™šY[ÛˆH[Ù[‚ŒËˆ\˜ÚY[Ü˜YY[İ™\›^H
+0©ÌŠK‚ˆ™\XØ[\ØÜ›ÛÛÛ[ÛÛ[[‹‚‚ŠŠ”İXİ\™H
+ÜÈ›İÛJNŠŠ‚‚ŒKˆİ]\È˜\‹‚Œ‹ˆ
+Š•Ü˜\ŠŠ‚ˆH˜XÚÈ]Ûˆ8 %™]\›œÈÈHY\œ›İÜÙHİ\™˜XÙH™\Ù\š[™È]ÈšY]Èİ]K‚ˆH
+Š“[™İXYÙHÙÙÛJŠˆÙ[™Y
+0©ÌMŠH8 %H[\H˜[YH]™\ÈÛ›H[ˆH\›È™[İË™]™\ˆ\XØ]Y[ˆH˜\‹‚ˆHÜXÙ\‹‚ŒËˆ
+Š’\›È›ØÚÊŠˆ
+Ù[™Y
+N‚ˆH[\H˜[YH[ˆ\™ÙH]H\NˆØÜ™Y[‹]]H˜XÙH][šØÙ[™Y‚ˆHİX]H[™NˆÚ]O‹İ]O˜
+[™Ë\İØ\Y
+KM[šË[]]YÙ[™Y
+ÛÜ›[Ü˜[][XÈ›Üˆ[ÈØÜš\Ù\šYˆ›Üˆ[™XÊK‚ˆHZ]H˜YÙNˆHÛX[[
+ØY™œ›Û‹][š[]šY\˜›Ü™\‹[˜Y]\ËØY™œ›Û‹YY\^
+H™XY[™ÈH™\ÚY[™ÈZ]IÜÈ˜[YK\YšXH[^İ[J[™Ë™\œÙT[
+X8 %[\ˆLŒÚYK]˜XÚÙY\\˜Ø\ÙH›Üˆ[™Û\ÚÈØÜš\Ù\šYˆ›ÛÚ]
+Š››ÊŠˆ˜XÚÚ[™È›Üˆ[™XÈ
+˜XÚÚ[™ÈÜ]¸)-¸)/ø)-Hˆ[È¸)-¸)/È8)-HŠK‚ˆÜ›˜[Y[]šY\ˆ
+8)iX0©ÍJK‚Kˆ
+Š”ÚYÛšYšXØ[˜ÙHÙXİ[ÛŠŠ‚ˆHX™[ˆ8)+¸).x)/ø)+¸)/ˆ0­ÈÚYÛšYšXØ[˜ÙX
+ÚYÛšYšXØ[˜ÙH0­È8)+¸).x)/ø)+¸)/˜Ú[ˆ[™ÈH[ŠH8 %™XY[™Ë[[™İXYÙH›Ü›HXYËHİ\ˆİ\ÜËˆ™[™\™Y[ˆH
+ŠœØÜš\Ù\šYˆ›Û
+Šˆ]HYX[š[™ÓX™[Ú^™H
+LÊKØY™œ›Û‹YY\\\˜Ø\ÙK
+Š››È˜XÚÚ[™ÊŠˆ8 %HX™[\È[Ø^\ÈZ^Y\ØÜš\ÛÈH][ˆ˜XÙHÛİ[Û\H]˜[˜YØ\šH[ˆ[™˜XÚÚ[™ÈÛİ[Ü]HÚ\›Ü™ZÚK‚ˆH›ÙNˆ
+Š˜HÚ[™ÛH›ÜÙHİš[™ÊŠˆ8 %ÚYÛšYšXØ[˜ÙRXÈÚYÛšYšXØ[˜ÙQ[˜
+›İH\˜YÜ˜\\œ˜^JKˆ\ÙÜ˜\H›ÛİÜÈHYX[š[™ÈÚÙ[ˆ›ÜˆH™XY[™È[™İXYÙH
+[™HŒÌÍ›İÈÙ\šYˆ[šË\ÛÙÈ[™Û\ÚŒÌÌÈÛÜ›[Ü˜[L][XÈ\™K[šË\ÛÙ
+KÙ[™Y‚‹ˆÜ›˜[Y[]šY\‹‚Ëˆ
+Š“ÜšYÚ[ˆİÜHÙXİ[ÛŠŠ‚ˆHX™[ˆ8)"x))¸)cx)+x)-H8)%x))x)/ˆ0­ÈÜšYÚ[ˆİÜX
+ÜšYÚ[ˆİÜH0­È8)"x))¸)cx)+x)-H8)%x))x)/˜Ú[ˆ[™ÈH[ŠKˆØ[YHİ[H\ÈÚYÛšYšXØ[˜ÙHX™[‚ˆH›ÙNˆHÚ[™ÛH›ÜÙHİš[™È8 %ÜšYÚ[”İÜRXÈÜšYÚ[”İÜQ[˜Ø[YH\ÙÜ˜\H[\Ë‚ˆ
+Š”Ûİ\˜Ù\È›Ûİ\ŠŠ‚ˆHÛ™K[[™H]šX][Ûˆ8).8)cx),8)bø))8 %X™[O‹X™[˜
+Ûİ\˜Ù\È8 %8 )˜[ˆ[ŠH8 %Lˆ][XË[šË[]]YÙ[™YÌ	HÜXÚ]K‚ˆHT“È\™H“Õ[šÜÈ[ˆŒH
+™[™\™Y\ÈZ[ˆ^
+KˆŒˆX^HXZÙH[H\X›K‚‚ŠŠ”›ÛX[š^˜][ÛŠŠˆ0©ÌËŒHØ\™K[İ]8 %[\K[˜[YHÜ[[™È\Ù\ÈÜ[\ˆ[™Û\Ú
+Ø\ÚHš\ÚØ[˜]›İñ qfñ*Èšqfİ˜[± ]X
+NÈÜšYÚ[‹\İÜH
+‘[˜šY[È\™H[™\[™[›ÜÙK›İ˜[œÛ]\˜][Û‹‚‚‹KKB‚ˆÈÈˆÛÛ\Û™[ˆ[™XHX\‚ŠŠ”\œÜÙKŠŠˆ™]\ØX›Hİ[\ÙYÕ‘È[™XHİ][™H\ÙYHY\X\ØÜ™Y[˜[™
+İ[X[H[ˆŒŠHH›Ùš[HÈÙX\˜Ú˜Hİ]H‹ˆ™[™\™YÚ]™XXİ[˜]]™K\İ™ØˆÈ
+Š››İ
+ŠˆY™XXİ[˜]]™K[X\ØÜˆ[H[H›İšY\‹‚‚ŠŠ•š\İX[™X]Y[ŠŠ‚‚‹HÕ‘Èİ][™HÙˆ[™XH
+XZ[›[™
+Èš\ÚX›HXZ›Üˆ\Û[™ÊKÚ[™ÛHØY™œ›Û‹YY\ˆÜXÚ]Xİ›ÚÙH]KŒˆ›Èš[
+H\˜ÚY[ÚİÜÈ›İYÚ
+K‚‹Hİ]H›İ[™\šY\È
+ÚİÛˆHY˜][ÛˆHY\İ\™˜XÙK‘L
+H\È[›™\ˆØY™œ›ÛˆŒHÜXÚ]Xİ›ÚÙ\È]ˆˆH›Øİ\ÙYİ]H[ˆHKTİ]HšY]È\Èš[YØY™œ›ÛˆŒLˆÜXÚ]X‚‹H\ÜXİ˜][ÈŒNŒKŒˆ
+ÚY\ˆZ[Ûİ]˜\œ›İÙ\ˆ›Ü8 %›ÜÜ[Û˜[È[™XIÜÈXİX[^[
+K‚‹H›ÈX™[ÈÛˆHX\]Ù[ˆ
+İ]H˜[Y\È\™Hİ\™˜XÙH[ˆHİ]K[\İšY]Ë›İÛˆ[œÊK‚‚ŠŠ”›ÜÈ
+TJNŠŠ‚‚˜Â\H[™XSX\›ÜÈHÂˆ[œÎˆ\œ˜^OÈYˆİš[™ÎÈ]ˆ[X™\È™Îˆ[X™\ÈX™[ˆİš[™ÈOÂˆÚYˆ[X™\ÈËÈÛÛ\]YH\™[œ›ÛHØÜ™Y[ˆÚYˆÛ”[”™\ÜÎˆ
+Yˆİš[™ÊHOˆ›ÚYÂˆÚİÔİ]\ÏÎˆ›ÛÛX[ÈËÈY˜][YHÛˆHY\İ\™˜XÙH
+‘L
+BˆYÚYÚİ]Q[Îˆİš[™ÎÈËÈš[HX]Ú[™Èİ]H
+KTİ]H›Øİ\ÊBŸNÂ˜‚ŠŠ”›Ú™Xİ[ÛŠŠˆ\]Z\™Xİ[™İ[\‹›İ[™YH[™XIÜÈ^[ˆ]8¢"Í‹ÎH8¡¤ˆH8¢"ÌZYÚNÈ™È8¢"ÍNH8¡¤ˆ8¢"ÌÚYKˆ]]YH\È›\Y
+›ÜHÜ
+Kˆ›È\İÜ[ÛˆÛÜœ™Xİ[Ûˆ8 %HŒNŒKŒMHšY]ÜÜ\ÜXİ
+ÚYÌ0åÈZYÚÍX
+H\ÈXÚY]™Y\™[HHHšY]Ğ›Ş[Y[œÚ[ÛœËH\‹X^\È[™X\ˆX\ˆH[œÈ\™H›Ú™XİYÚ]H^XİØ[YHS‘PWÔ“Ò‘PÕSÓ˜ÛÛœİ[ÈH]ÈÙ\™HÙ[™\˜]Yœ›ÛKÛÈH[ˆ[™È™XÚ\Ù[HÛˆH™X[İ][™K‚‚ŠŠÛÛÜ™[˜]HØ[š]NŠŠˆHÛÛ\Û™[Ø\›œÈ
+]ˆ[ÙHÛ›JHYˆ[H[‰ÜÈ]Û™È˜[Èİ]ÚYHH›İ[™[™È›Ş8 %Ø]Ú\È]Û™ÈİØ\È[™˜YÛİ\˜ÙH]H™Y›Ü™H^H™[™\ˆÙ™‹\ØÜ™Y[‹‚‚ŠŠ‘]H›İ™[˜[˜ÙH
+‘L
+KŠŠˆHİ][™H
+ÈÍˆİ]KÕU›İ[™\šY\È\™H
+Šœ™X[Ù[ÙÜ˜\JŠ‹Ù[™\˜]YÛ˜ÙHHØÜš\ËØZ[Z[™XK[X\›ZœØ[™ÛÛ[Z]Y\Èİ]XÈÕ‘È]ÛÛœİ[È[ˆ[Øš[KÜÜ˜ËØÛÛ\Û™[ËÚ[™XSX\]Ë™Ù[™\˜]YØ
+S‘PWÓÕUS‘XS‘PWÔÕUTØS‘PWÔ“Ò‘PÕSÓ˜
+Kˆ™K\[ˆHØÜš\È™Yœ™\ÚÈÈ
+Š››İ
+Šˆ[™YY]HÙ[™\˜]Yš[KˆÛİ\˜Ù\ÎˆH
+Š›˜][Û˜[İ][™JŠˆ\È]SYY][™XKXÛÛ\ÜÚ]X
+0ªH]SYY]
+ŠĞËP–JŠˆ8 %Î‹ËÙÚ]X‹˜ÛÛKÙ][YY]ÛX\ÊKÚXÚ\XİÈ[™XIÜÈÙ™šXÚX[›İ[™\H[˜ÛY[™ÈH[˜[[]H	ˆØ\ÚZ\ˆÈYZÚ^[8 %˜]\˜[X\	ÜÈKY˜XİÈ›İ[™\H[˜Ø]\ÈH›Ü\›ˆØ\ÚZ\ˆÜ›İÛ‹ÛÈ]\È›ÈÛ™Ù\ˆ\ÙY›ÜˆHİ][™KˆH
+Šœİ]KÕU›İ[™\šY\ÊŠˆ\™HX›XËYÛXZ[ˆ˜]\˜[X\LHYZ[—ÌWÜİ]\×Ü›İš[˜Ù\Ø
+Z\ˆÜİLŒNHİ]H˜[Y\ÈX]ÚY\[\Kœİ]Q[˜
+K‚‚ŠŠ”\™›Ü›X[˜ÙNŠŠˆ]È\™Hİ]XÈÛÛ[Z]YÛÛœİ[È
+ŒÍHĞˆİ[
+Kˆ›È[[YHÚ[\YšXØ][Û‹›ÈÙ[Ò”ÓÓˆ\œÚ[™Ë›ÈX\›İšY\‹›ÈTHÙ^Kˆ™[™\ˆÛÜİ\ÈÛZ[˜]YHH[ˆÛİ[8 %›İ[™Y[ˆ˜XİXÙH™XØ]\ÙHHX\Û›H™[™\œÈ[ˆš[Z[ˆšY]ÜÈÚ]HİXœÙXİ[Û‰ÜÈ[œÈ
+Hİ]HÜˆX]˜HÜ›İ\
+K™]™\ˆ[ÌH[\\È]Û˜ÙK‚‚‹KKB‚ˆÈÈKˆÛÛ\Û™[ˆY\[‚‚ŠŠ”\œÜÙKŠŠˆH[™]šYX[[ˆÛ\™[™\™YÛˆ[™XSX\˜‚‚ŠŠ•š\İX[ŠŠ‚‚‹HÛ\ˆ8)iX[ˆØY™œ›Û‹YY\›İÈÙ\šYˆ]˜[˜YØ\šKN
+ÛYÚH\™Ù\ˆ[ˆÜ›˜[Y[]šY\œÈÈ™XY\È[ˆ[\˜Xİ]™H[[Y[
+K‚‹H›È˜XÚÙÜ›İ[™Ú\˜ÛHÈ›ÈÚ\H[™\›^H8 %HÛ\]Ù[ˆ\ÈH[‹ˆ\ÈÙY\ÈHX\]ZY]‚‹H\ZÛÛÛ\ˆÛX[\˜ÚY[\ÛÙ™Xİ[™ÛK]šY\˜›Ü™\‹Y[™ËX™[[ˆ›İÈÙ\šYˆ]˜[˜YØ\šHLÈŒÈÛÜ›[Ü˜[Ø\˜[[Û™LÈ][XÈ
+[™Ë\İØ\Y
+KˆÛÛ\\X\œÈX›İ™HH[ˆ
+Üˆ™[İÈYˆÛÈÛÜÙHÈÜYÙJK‚‚ŠŠ’[\˜Xİ[ÛŠŠ‚‚‹H\\™Ù]ˆ0åÍ
+È[š\ÚX›H]\™XHšXH]ÛÜ
+MˆXXÚÚYJK]™[ˆİYÚHš\ÚX›HÛ\\ÈŒN‚‹H\8¡¤ˆØ[ÈÛ”™\ÜÊY
+X‚‹HÛ™Ë\™\ÜÈ
+
+ŠŒL\ÊŠˆ™\ÚÛ[^SÛ™Ô™\ÜØ
+H8¡¤ˆÚİÜÈÛÛ\ÈÛÛ\]]ËY\ÛZ\ÜÙ\ÈÛˆ™[X\ÙK‚‹H\XÈÛˆ\ˆ\XÜË’[\Xİ™YY˜XÚÔİ[K“YÚ‚‚ˆÈÈÌˆÛÛ\Û™[ˆ›İ][™H˜[›™\ˆ	ˆÛÛ\][ÛˆÙ[Xœ˜][Û‚‚ŠŠ”\œÜÙKŠŠˆH˜[›™\ˆİ\™˜XÚ[™ÈÙ^IÜÈ8)*8)/ø))8)cx)+È8).8)/¸))ø)*8)/ˆ
+Z[H›İ][™JKˆÛÈ^[İ]ÈšXHH˜\šX[›Üˆ
+Š˜ØÚÙY
+Šˆ
+Y˜][
+H8 %H›Ø][™ÈÚ\[›™Y\İX›İ™HHXˆ˜\‹\ÙYÛˆZ[HšZİH
+0©ÌŒJNÈ
+Š˜[›[™X
+Šˆ8 %›İÜÈ[ˆHÛYHØÜ›Û™]ÙY[ˆHÙ^Hİš\
+0©Í
+H[™ĞUQÓÔ’QTÈ
+0©ÌN
+KÛÈ]›ÈÛ™Ù\ˆİ™\›^\ÈHÛÛ[™[™X]]
+[HŒˆ8 %HØÚÙYÚ\ÛˆÛYH›Ø]Yİ™\ˆ[™Û\YHTĞÓÕ‘TˆØ\›İ\Ù[
+KˆHÛ›Hš\İX[Y™™\™[˜ÙH\ÈÜÚ][Ûš[™È
+ÈÚYİÈ\™Xİ[Ûˆ
+ØÚÙYYÈ\Ø\™Ù™ˆH˜\È[›[™HØ\İÈHÛÙİÛØ\™Ø\™ÚYİÊNÈİ]HÙÚXÈ[™ÛÜH\™HY[XØ[ˆ›İ][™P˜[›™\‹Ş
+È›İ][™P˜[›™\•šY]ËØ
+\™Hİ]HÙÚXÊK‚‚ŠŠ‘ØÚÚ[™ËŠŠˆÜÚ][ÛˆXœÛÛ]NÈ›İÛNˆÜXÚ[™ËœÛX8 %HXˆ˜\ˆ[™XYHİÛœÈH›İÛHØY™KX\™XH[œÙ]
+ZYÚˆŒ
+È[œÙ]Ë˜›İÛX
+KÛÈH˜[›™\ˆ]\İ
+Š››İ
+ŠˆY[œÙ]Ë˜›İÛXYØZ[ˆ
+Ú[™ÈÛÈY[ˆš[œÙ]\Ú^™YXYØ\™[İÈ]
+K‚‚ŠŠ“Û™H[™K[™İXYÙKX]Ø\™KŠŠˆHÚ[™ÛH[™HÚÜÙ[ˆHHXİ]™H™XY[™È[™İXYÙH
+\ÙQÚ]S[™İXYÙX
+K™]™\ˆHİXÚÙY[™JÑ[™Û\ÚZ\‹ˆÌ\ØÈ
+ÈYÚÜXÚ[™ËœÛX™\XØ[Y[™ÈÙY\]ÛÛ\Xİ‚‚ŠŠ‘š\œİ]\
+ÛYJKŠŠˆHÚÛH˜[›™\ˆ\ÈÛ™H™\ÜØX›X]X˜›K]\˜]šYØ]\ÈÈH›İ][™HØÜ™Y[‹ˆÛˆÛYH]]™\È[œÚYHHİ]\ˆ™\XØ[ØÜ›ÛšY]ØÛÈ8 %ZÙH]™\Hİ\ˆÛYHØ\™8 %]›İ]\È]È™\ÜÈ›İYÚHÚ\™Yš\œİ]\ÛÛ›Û\ˆ
+Û”™\ÜÒ[˜ØÛ”™\ÜÓİ]ØÛ”™\ÜØ8¡¤ˆ[T™\ÜĞÛÛ^0©ÌN
+NÈHZ[ˆÛ”™\ÜØ[\›Z][H›Ë[ÜYHš\œİ\ˆİ]ÚYHH[T™\ÜÔ›İšY\˜
+HØÚÙY\ØYÙHÛˆZ[HšZİK0©ÌŒJHHÛÛ›Û\‰ÜÈY˜][\ÈH›Ë[Ü][œÈHXİ[Ûˆ[[YYX][KÛÈØÚÙY™Z]š[İ\ˆ\È[˜Ú[™ÙY‚‚ŠŠ•™YHİ]\ÊŠˆ
+˜[›™\”İ]\Ø
+N‚‹HYÙX
+›È›İ][™JH8 %\ÚYÛÛ›Ü™\‹8)*8)/Ø\ØË¸)!x)*¸)*8)`8)*8)/ø))8)cx)+È8).8)/¸))ø)*8)/ˆ8)+8)*8)/¸)#ø) HˆÈ”Ù][İ\ˆZ[H˜XİXÙHˆ8¡¤ˆÜ[œÈ›İ][™PÜ™X]K‚‹H›ÙÜ™\ÜØ
+\X[Üˆ›İ[™ÈØÚY[YÙ^JH8 %ÛÛ[›Ü™\‹Û™PÛİ[İİ[\ØË¸)*8)/ø))8)cx)+È8).8)/¸))ø)*8)/ˆ0­È8)!¸)'ˆÈ‘Z[H›İ][™H0­ÈÙ^H‹
+ÈHØY™œ›Ûˆ›ÙÜ™\ÜÈ˜XÚÈ8¡¤ˆÜ[œÈ›İ][™UÙ^K‚‹HÛÛ\]X
+[Û™JH8 %H›ÛÛYY
+Š›İ\ÊŠˆX\šÈ
+İ\ÓX\šËŞ
+H
+È¸).8)/¸))ø)*8)/ˆ8)*¸)`¸),8)cx)(È0­È8)!¸)'ˆÈÛÛ\]H›ÜˆÙ^H‹ˆH›ÛZ[™[›ÙÜ™\ÜÈÚ\\È™\XÙYH\ÈÛÛ\XİXÚY]™[Y[˜YÙH8¡¤ˆÜ[œÈ›İ][™UÙ^K‚‚ŠŠÛÛ\][ÛˆÙ[Xœ˜][Ûˆ
+\ÚK]˜\œÚJKŠŠˆH[ÛY[Ù^IÜÈ›İ][™H™XÛÛY\ÈÛÛ\]KHÙ[HÛ™K\Úİ›İÙ\ˆÚİÙ\ˆÙˆØY™œ›Û‹ÙÛÛ][ÈšYÈİÛˆ
+›İ][™PÙ[Xœ˜][Û‹Ş
+KÚ]H\XÜË“›İYšXØ][Û‘™YY˜XÚÕ\K”İXØÙ\ÜØ\ˆ™]™\™[›İÛÛ™™]H
+ÙXİ[ÛˆLJNˆHÛÙ˜[
+È˜YK›ÈØØ[HÜËˆHÚİÙ\ˆÙ\È
+Š››İ
+Šˆ™[™\ˆœ›ÛHH˜[›™\ˆ8 %]š\™\È\]ÚYHœ›ÛH›İ][™PÙ[Xœ˜][Û“İ™\›^X[İ[YÛ˜ÙH]H˜]šYØ][Ûˆ›ÛİÛÈ]^\ÈÛˆÚ]]™\ˆØÜ™Y[ˆÛÛ\][Ûˆ\[œÈ
+™XY[™ÈÈH\İYÙKš[š\Ú[™È˜\KÜˆHX[X[X\šÊKˆHÛ˜ÙK\\‹Y^HØ]H\ÈÙ[Xœ˜]YÚYÛ˜]\™UÙ^X\œÚ\İY[ˆ›İ][™PÛÛ^ˆH™XÛÜ™ÙˆÙ^IÜÈ
+Š™]H
+È[ˆÜ™\‹Z[™\[™[ÚYÛ˜]\™HÙˆHØÚY[Y][HÙ]
+Šˆ8 %ÛÈÛÛ\][™ÈHØ[YHÙ]Ù[Xœ˜]\ÈÛ˜ÙKÚ[HY[™È[ˆ][H[™ÛÛ\][™ÈYØZ[ˆØ[ˆÙ[Xœ˜]H[™]ÎÈHØ]H\È[[[HÛÛ^š[š\Ú\ÈØY[™ÈÈ]›ÚYH™\^HÛˆ][˜Úˆ™XİÜˆ\\ÈZ[œ›ÛHšY]Ø
+È^Ë[[™X\‹YÜ˜YY[
+›ÈÕ‘È8 %Ø[YHÛÛ™[[Ûˆ\ÈØ]YÛÜRXÛÛ˜
+Kˆ\È\ÚK]˜\œÚH\ÈH
+Š›Û›JŠˆØ[˜İ[Û™Y^Ù\[ÛˆÈ0©ÌLIÜÈ›ËX[š[X][Ûˆİ[˜ÙNÈHÙ^IÜÈ˜XİXÙHÙX[
+0©ÌÌJH™]\Ù\È]È˜YK›İH™]ÈY™™Xİ‚‚‹KKB‚ˆÈÈÌKˆØÜ™Y[ˆÙ^IÜÈ˜XİXÙH
+8)!¸)'8)%x)`8).8)/¸))ø)*8)/ŠB‚ŠŠ”\œÜÙKŠŠˆHZ[KYš]™\ˆØÜ™Y[ˆH›İ][™H˜[›™\ˆ
+0©ÌÌ
+HÜ[œÈ8 %Ù^IÜÈØÚY[Y][\ÈXÜ›ÜÜÈ[›İ][™\Ë™\Ù[Y\ÈH]›İ[Û˜[YÙ\ˆ˜]\ˆ[ˆH][]HÚXÚÛ\İ
+‘LL
+Kˆ›İ][™UÙ^TØÜ™Y[‹Ş[œÚYHH\˜ÚY[›İ][™TÚ[‚‚ŠŠ”ØÜ™Y[ˆÜ™\‹ŠŠˆH
+Š¸)*8)/ø))8)cx)+È8).8)/¸))ø)*8)/ˆZ[H›İ][™HXYÊŠˆ8 %HÛÛ\][Ûˆİ[[X\HØ\™
+È][H›İÜÈ™[™\ˆš\œİ™XØ]\ÙHHØÜ™Y[ˆ]Y
+•Ù^IÜÈ˜XİXÙJˆÚİ[Ü[ˆÛˆÚ][İHÈ]™\H^Kˆ[H[œ›ÛY™XZ[\Ø[šØ[Ø\™È
+Ø[šØ[Ù^PØ\™0©ÍŠH›ÛİÈ
+Š˜™[İÊŠˆH›İ][™H
+Ù\\˜]YHHÜXÚ[™ËØ\]\X\œÈÛ›HÚ[ˆH›İ][™H\È™\Ù[X›İ™H[JK[ˆHÚÜİ
+Šœ›İÜÙHØ[šØ[ÊŠˆ]Û‹ˆ
+Š›İYÙ\œÈ\™H\]ËY^[™XØÛÜ™[ÛœÎŠŠˆHZ[K\›İ][™Hİ[[X\HØ\™
+™[İÊH[™XXÚØ[šØ[Ø\™
+0©ÍŠHÚİÈÛ›HZ\ˆXY\ˆ[[\Y[ˆ›ÜZ\ˆ][H›İÜÈİÛˆ8 %HÛÈ\ÙHHØ[YH›İÈÜXÈ[™HØ[YH›İ][™È8 .˜Ø\™]İYKÛÈHİ\™˜XÙH™XYÈ\ÈÛ™HŞ\İ[KˆHØ[šØ[Ø\™È\™H[\Ù[™\ÈÜ™\™YHÜ™\”ØY[˜PØ\™Ø
+0©ÍŠNˆZ[KXØY[˜ÙKØXİ]™Hš\œİ[ˆ™\İ[™Ëİ\ÛÛZ[™ÈH™X\™\İ]KÛÛ\]Y\İˆ
+™Y›Ü™H[HŒˆHØ[šØ[Ø\™È™[™\™YX›İ™HH›İ][™H8 %HØÜ™Y[‹[Ü™\ˆYÈ]\šYYH]™\Y^H˜XİXÙKŠB‚ŠŠÛÛ\Û™[È	ˆÚ\™H^H]™JŠˆ
+[[ÚÙ[œÈœ›ÛHH[YNÈ›È\™XÛÙY^\ÊN‚‹H[Øš[KÜÜ˜ËØÛÛ\Û™[ËÓX[Tİ™XZËŞ8 %Hİ™XZÈ˜]Ûˆ\ÈH™XYİš[™Ë‚‹H[Øš[KÜÜ˜ËØÛÛ\Û™[ËÔ˜XİXÙTÙX[Ş8 %HÛÛ\][ÛˆÙX[
+Ü˜\Èİ\ÓX\šØ
+K‚‹H[Øš[KÜÜ˜ËÙ]KÜ›İ][™KÜ˜XİXÙUšY]ËØ8 %\™HšY]Ë[[Ù[
+İ[[X\H[™\ËÙ™™\™Y][YH›Ü›X][™ËX[HX]
+K[š]]\İYZÙH›İ][™P˜[›™\•šY]ËØ‚‹H[Øš[KÜÜ˜Ëİ][Ëİ\ÙT™YXÙY[İ[Û‹Ø8 %Ú\™Y™YXÙK[[İ[ÛˆÛÚÈ
+0©ÌLŠK‚‚ŠŠÛÛ\][Ûˆİ[[X\HØ\™
+XØÛÜ™[ÛˆXY\ŠKŠŠˆÛ™HÙ[\™Y\˜ÚY[\ÛÙØ\™
+ÛÛ[›Ü™\‹˜YZK›Ø[]˜][Û‹˜Ø\™ÜXÚ[™Ë›ØY[™ÊH]HÜˆ
+Š•HÚÛHØ\™\ÈHXØÛÜ™[ÛˆXY\ˆ8 %H™\ÜØX›X
+XØÙ\ÜÚXš[]T›ÛOH˜]Ûˆ˜
+ÈXØÙ\ÜÚXš[]Tİ]K™^[™Y
+H]ÙÙÛ\ÈH][H›İÜÈ™[İËŠŠˆH›İÜÈ
+Š˜ÛÛ\ÙHHY˜][
+ŠˆÛÈHØÜ™Y[ˆÜ[œÈÛˆHÛÛ\Xİİ[[X\K›İHÛ™È\İÈHÙ[™Y
+Š™›ÜİÛˆØ\™]
+Šˆ]H›ÛİÙˆHØ\™
+H8 .˜›İ]YÈÚ[İÛˆÚ[ˆÛÛ\ÙY\Ú[ˆÜ[ˆ8 %İ[[X\PØ\™]X]Ú[™È0©Í‰ÜÈØ[šØ[Ø\™]
+HÚYÛ˜[È]ˆ]ÈÛÛ[Î‚‹HXY[™Nˆ\X[8¡¤ˆÙÛ™_HÙˆİİ[XÈÛÛ\]H8¡¤ˆİİ[HÙˆİİ[HÙ™™\™Yˆ][ˆXY[™H\Ù\ÈÛÜ›[Ü˜[Œ\šYÚÈ[™H\Ù\ÈH]˜[˜YØ\šHØÜ™Y[‹]]H˜XÙK‚‹H][XÈİX‹[[™H
+ÛÜ›[Ü˜[][XÈÈ]˜[˜YØ\šHYX[š[™Ø[ˆ[™JNˆ\X[8¡¤ˆÛŸH™XY[™ÊÊH™[XZ[š[™ØÈÛÛ\]H8¡¤ˆÙ^IÜÈ˜XİXÙH\ÈÛÛ\]XÈ8)!¸)'8)%x)`8).8)/¸))ø)*8)/ˆ8)*¸)`¸),8)cx)(Ø‚‹H›ÙÜ™\ÜÈİš\ˆHÛÛ8¡¤œØY™œ›Ûˆ^Ë[[™X\‹YÜ˜YY[š[ÛˆH\˜ÚY[YY\˜XÚËˆ
+Š’Y[ˆÚ[ˆÛÛ\]KŠŠ‚‹HX[Tİ™XZØ›İÈ
+ÈX™[‚‹H˜XİXÙTÙX[8 %
+Š˜XœÙ[Ú[H\X[È˜Y\È[ˆ
+ÜXÚ]HÛ›K›ÈØØ[HÜ
+HÚ[ˆÛÛ\]JŠ‹šY[™ÈH0©ÌÌÛÛ\][Û‹Y˜YH^Ù\[ÛÈ[œİ[[™\ˆ™YXÙK[[İ[Û‹‚‚ŠŠ“X[H™XYÙ[X[XÜÈ
+X[Tİ™XZØ
+KŠŠˆHÜš^›Û[İš[™ÈÙˆ™XYÈš[[™ÈİØ\™H\™Ù\ˆÛÛ
+Š›Y\JŠˆ™XY8 %H›ÙXİ	ÜÈİ™XZÈY]\Ü‹™]™\ˆHš]™\ÜÈ›[YKˆ]HZ[Šİ™XZËØ\XÚ]JX
+Y˜][Ø\XÚ]HÎÈH[Y\šXÈX™[İ^\È]]Üš]]]™H›ÜˆÛ™Ù\ˆİ™XZÜÊKˆ]™XYÈ\ÙHHØY™œ›ÛˆÜ˜YY[È[›]™XYÈ\™H\˜ÚY[YY\Ú]HÛÛZ\›[™KˆH[Üİ\™XÙ[]
+Ù^HŠH™XYØ\œšY\ÈH
+Šœİ]XÊŠˆØY™œ›Ûˆš[™È8 %›È[ÙH
+0©ÌLJKˆİ™XZÈ8¡¤ˆ[™XYÈ[›]Ú]H”İ\[İ\ˆX[HÙ^HˆÈ¸)!¸)'8).8)aÈ8)+¸)/¸),¸)/ˆ8)!¸),8)+¸)cx)+H8)%x),8)aø) ˆˆX™[™]™\ˆHY[ˆÛÛ\Û™[ˆZ[œ›ÛHšY]Ø
+ÈÜ˜YY[
+›ÈÕ‘Ë\ˆ0©ÌÌ
+K‚‚ŠŠ‘]›İ[Û˜[[™İXYÙH8 %›Ù™™\™Yˆ
+8)!x),8)cx)*¸)/ø))
+KŠŠˆÛˆ\ÈØÜ™Y[‹ÛÛ\][™È[ˆ][H\Èœ˜[YY\È
+›Ù™™\š[™Êˆ]›İXÚÚ[™ÈH›Şˆ[ˆÙ™™\™Y›İÈ™XYÈÙ™™\™Yİ[Y_XÈİ[Y_H0­È8)!x),8)cx)*¸)/ø))ÈH[™[™È›İÈ™XYÈ\È™XYÈ8)*¸)(¸)/8)*8)aÈ8)%x)aÈ8),¸)/ø)#È8)'ø)b8)*ˆ8)%x),8)aø) ˜ˆÛÛ\][Ûˆ
+ŠœÙ[X[XÜÊŠˆ\™H[˜Ú[™ÙYœ›ÛH0©ÌÌÔ‘LÈ
+]]ÈÛˆ™XXÚ[™ÈH\İ™\œÙK\YÙHÜˆ\™Ù]˜\H›İ[™ÎÈX[X[X\šÈ\È˜[˜XÚÊKˆ
+H˜[›™\ˆ[™›Ùš[HÙY\Z\ˆ^\İ[™È¸)*¸)`¸),8)cx)(ÈÈÛÛ\]HˆÛÜH›Üˆ›İÎÈH›Ù™™\™Yˆ™YÚ\İ\ˆ\ÈØÛÜYÈ\ÈØÜ™Y[‹ŠB‚ŠŠ“Ù™™\™YX][Y\İ[\›Ü›X]ŠŠˆL‹Zİ\ˆÛØÚÈÚ]Y\šYY[H8 %ÎŒLˆSXÈÎŒLˆ8)*¸)`¸),8)cx)-x)/¸).x)cx)*
+8)*¸)`¸),8)cx)-x)/¸).x)cx)*™Y›Ü™H›ÛÛ‹8)!x)*¸),8)/¸).x)cx)*Y\ŠKšXH›Ü›X]Ù™™\™Y[YXˆHZ\ÜÚ[™ËÜÙ[[™[[YH
+]]ËZ˜\[KÚXÚØ\œšY\È›È\‹\›İ[™[Y\İ[\ÜˆHZYÜ˜]YYØXŞHX\šÊHÚİÜÈHZ[ˆÙ™™\™YÈ8)!x),8)cx)*¸)/ø))Ú]›È[YK‚‚ŠŠ“›ÈİšZÙ]›İYÚŠŠˆHÛÛ\]Y][IÜÈ]H\È
+Š›]]Y
+[šË[]]Y
+K™]™\ˆİXÚÈ›İYÚ
+Šˆ8 %İšZÚ[™ÈHØXÜ™Y^™XYÈ\È˜Ø[˜Ù[YˆHÜÜÚ]HÙˆ›Ù™™\™YˆˆHÛÛ\][ÛˆX\šÈ\ÈHØY™œ›Û˜š[™È]š[ÈÚ]H8§$ØÚ[ˆÙ™™\™YÈ\[™È]ÙÙÛ\ÈHX[X[X\šË‚‚ŠŠ’][H›İÜÈ
+›ÜİÛŠKŠŠˆ™[™\™YÛ›HÚ[ˆHİ[[X\HXY\ˆ\È^[™Yˆ]H[ˆHØ\™]]H˜XÙH
+Mˆİ™\ˆH[™H8 %8¢iLKpåÈÛÈ]˜[˜YØ\šHX]˜\È™]™\ˆÛ\
+NÈİX‹[[™H
+Ø[]_H0­ÈİZ[X
+H›ÛİÜÈ0©Í‰ÜÈY]HÛÛ™[[Ûˆ
+ØÜš\›ÙQ›Û
+ÈØ\™Y]X8 %™]™\ˆÛÜ›[Ü˜[ÛˆHZ^Y\ØÜš\[™JKˆ›İÜÈ[YÛˆ›^\İ\Ú]HÛX[ÜXØ[Ù™œÙ]ÛˆHš[™È[™Ú]œ›ÛˆÛÈ›İ[ˆÈH]IÜÈ
+Š™š\œİ
+Šˆ[™H[œİXYÙˆšY[™ÈÈHZYHÙˆHÜ˜\YÛË[[™H›ØÚËˆH[Ø\[Ûˆ[™\ˆHYÙ\ˆ\Ù\ÈHYX[š[™Ø˜XÙH]L‹ÌN[™›ÜÈİÛˆÚ]H›İÜËˆ\È›İÈÜXÈ\ÈHÚ\™YÛÛ˜Xİ0©Í‰ÜÈØ[šØ[›ÜİÛˆZ\œ›ÜœÈ^XİK‚‚ŠŠœ›İÜÙHØ[šØ[ËŠŠˆHÚÜİ›İ][™P]Û˜¸))8)b8)+ø)/¸),8).8) ¸)%x),¸)cx)*ˆ8)&¸)`x)*8)aø) ˆÈœ›İÜÙHØ[šØ[ÈˆÛÜÙ\ÈHYÙ\ˆ[™Ü[œÈH0©ÍˆØ][ÙÈ8 %Û™HÙˆHØ][ÙÉÜÈ™YHİ[™[™È[HÚ[È
+HÜ™X]KY›İÈÚÛÜÙ\ˆ[™H0©ÌÌˆÛYHÜİYÚ\™HHİ\œÊKÛÈØ[šØ[Èİ^H\ØÛİ™\˜X›HY\ˆH›İ][™H^\İË‚‚ŠŠ‘]H
+‘LLY]]™JKŠŠˆX[X[ÛÛ\][Ûˆ›İÈİÜ™\ÈH[Y\İ[\ˆ™Y[œÚÜ›İ][™KYÛ™X\œÚ\İÈÈ]KX\šÜÎˆ™XÛÜ™Ù^K\ØÚ\ÏˆX
+Ø\ÈÈ]KÙ^\Îˆİš[™Ö×HXÈYØXŞH˜[Y\ÈZYÜ˜]HÈX\šÜØÚ][Y\İ[\H›Ù™™\™Y[YH[šÛ›İÛˆŠKˆ›İ][™PÛÛ^^ÜÙ\ÈX[X[Û™P]
+Ù^JXÈ\ÙT›İ][™UÙ^Xİ\™˜XÙ\ÈÛ™P]\ˆ][H
+X[X[X\šÈ[YKÜˆH™XY\‰ÜÈ\İ\›ÙÜ™\ÜÈ\]Y]›Üˆ[ˆ]]ËXÛÛ\]JKˆİ[]K\ØÛÜY[™™\Ù]]H^H›İ[™\K‚‚‹KKB‚ˆÈÈÌ‹ˆÛYH™X]\™HÜİYÚ
+TĞÓÕ‘TˆØ\›İ\Ù[
+B‚ŠŠ”\œÜÙKŠŠˆ˜Z\ÙH]Ø\™[™\ÜÈÙˆH\	ÜÈ\İ[˜İÙXİ[ÛœÈ8 %›İ\İHØ][ÙÈØ]YÛÜšY\Ë]H
+˜Ü›ÜÜËXİ][™Èİ\™˜XÙ\ÊˆHš\œİ][YH\Ù\ˆX\Ú[HZ\ÜÙ\È
+Z[H˜XİXÙKHZ[H™\œÙHX‹Ø[šØ[]HÛX\˜[‹İZYYZ˜\È
+8)*¸)`¸)'8)/ˆ8)-x)/ø))ø)/È8¡¤ˆH0©ÍŒˆšYHØ][ÙË\ÚYÛˆHÛYHİXÚÊKH[Üš[XYÙHX\ÛYKTØÜ™Y[ˆÚYÙ]È8 %H[˜Ú[™ÈØ\™Ø\È™]\™Y[ˆ˜]›İ\ˆÙˆHÙ^Hİš\0©Í
+KˆHÚ[™ÛHÜš^›Û[Ø\›İ\Ù[Ùˆ™X]\™HØ\™ÈÚ]È
+Š˜™[İÈHĞUQÓÔ’QTÈÜšY
+Šˆ
+0©ÌN
+H8 %]ÜšYÚ[˜[HYHYÙK]Hš[YHÛİ›İÈ™[Û™ÜÈÈÙ^K\™[]˜[ÛÛ[
+0©Í
+KˆÛ™H›^X›HØ\™Ú[Ø\œšY\È]™\HÙXİ[ÛˆÛÈ[HÛÛ[š]Ë‚‚ŠŠ”XÙ[Y[	ˆX™[ŠŠˆHTĞÓÕ‘T˜ÙXİ[ÛˆX™[
+[\ˆLHŒŒŒ™[X\\˜Ø\ÙH[šË[]]YØ[YHÚÙ[ˆ\ÈĞUQÓÔ’QTØ
+H™XÙY\ÈHØ\›İ\Ù[ˆHØ\›İ\Ù[\ÈHÜš^›Û[ØÜ›ÛšY]Ø]
+Š™[X›YYÊŠˆÈHØÜ™Y[ˆYÙ\È8 %]Ø[˜Ù[ÈHYÙHİ]\ˆÚ]X\™Ú[’Üš^›Û[ˆ\ÜXÚ[™Ë[™™K\YÈ]ÈÛÛ[
+Y[™ÒÜš^›Û[ˆÜXÚ[™Ë
+HÛÈHš\œİØ\™[YÛœÈÚ]HYÙHÚ[HH™^Ø\™YZÜËˆÛ˜\Ò[\˜[HØ\™ÚY
+ÈØ\XÙ[\˜][Û”˜]OH™˜\İ˜Û˜\Ğ[YÛ›Y[Hœİ\˜‚‚ŠŠ•İXÚ˜[™
+]YÈŒŠKŠŠˆH˜[™	ÜÈÛÛ[ÛÛZ[™\”İ[XØ\œšY\ÈY[™Õ™\XØ[ˆL8 %H0©ÍLİXÚX˜[™š^Z\œ›Ü™Y\™KˆHØ\™È\™H™\ÜØX›XÈ[œÚYHHÜš^›Û[ØÜ›ÛšY]Ø[™HÚ\™Yš\œİ]\˜[˜XÚÈ
+0©È‘š\œİ]\™XÛİ™\HŠH\ÈÛ›Hİ\™\ÜÙYÚ[ˆÛ”ØÜ›Û™YÚ[‘˜YØš\™\ÎÈ[ˆ\˜ÙYÜš^›Û[›XÚÈİ\[™È™X\ˆH˜[™YÙHØ[ˆÜÙHHš\œİ\^[Ù\İ\™H™YÛİX][ÛˆÈHØ\™™\ÜØX›XÈİ]\ˆ™\XØ[YÙK\ØÜ›ÛÛÈHİÚ\H˜[™Û[HÜ[™YHØ\™Üˆİ[Y[œİXYÙˆØÜ›Û[™ËˆH™\XØ[Y[™È[›\™Ù\ÈH
+œØÜ›ÛX›Hœ˜[YJˆ[™H\˜ÈÛ\˜[˜ÙH8 %HİXÚ\™Ù]›İHš\ÚX›HØ\™È8 %ÛÈHÜš^›Û[ØÜ›Û™[XX›HÚ[œÈH˜YËˆHTĞÓÕ‘T˜X™[›ÜÈ]ÈİÛˆ›İÛHX\™Ú[ˆ
+X\™Ú[›İÛNˆœÈHÚ\™YX™[	ÜÈ
+HÛÈHÛÈÜXÚ[™ÜÈÛ‰İİXÚË‚‚ŠŠ•Ú\™HHØ\™	ÜÈ\™Ù]]™\ËŠŠˆ[ÜİÜİYÚÈ\ÚÛˆH
+Š’ÛYHİXÚÊŠ‹ÛÈ˜XÚÈ™]\›œÈÈÛYKˆ™YH[™Ù™ˆÈ[›İ\ˆXˆ8 %Z[H™\œÙH
+H˜\™HXˆİÚ]Ú›ÈİXÚÈ\Ú
+K]HÛX\˜[ˆ[™ÛYKTØÜ™Y[ˆÚYÙ]È
+›İ[ÈH[Ü™HX‹ÚÜÙH[™[™ÈØÜ™Y[ˆØ\œšY\ÈH›İÈ˜XÚÈ[ÈXXÚ›İË0©ÌÍÊKˆ]™\HİXÚ[™[Ù™ˆ
+Š›]\İ
+Šˆ™HZ[Ú]H
+•X•\™Ù][\ˆ
+[Ü™UX•\™Ù]È[˜Ú[™ÕX•\™Ù]
+K™]™\ˆH[™\›ÛYÈØÜ™Y[‹\˜[\ÈXˆHXˆ˜\ˆ\È^KÛÈÚ]İ][š]X[ˆ˜[ÙXH\™Ù]™XÛÛY\È]İXÚÉÜÈ
+š[š]X[
+ˆ›İ]H8 %XY˜XÚÈ]Û‹Xˆ[œ™XXÚX›H›ÜˆHÙ\ÜÚ[Û‹ˆHÚYÙ]ÈØ\™Ú\Y^XİH]YÈ
+]YÈŒŠH[™\È›İÈİX\™YH˜]šYØ][Û‹××İ\İ××ËİX•\™Ù]Ë\İØÚXÚØØ[œÈ]™\HÛİ\˜ÙHš[H›ÜˆH[™\›ÛY›Ü›KˆÙYH•SP“ÓÒÈ0©Í‹Œ‚‚ŠŠØ\™ÚYŠŠˆZ[ŠÌŒØÜ™Y[•ÚY8¢$ˆİ]\ˆ8¢$ˆMŠXÛÈHÛ]™\ˆÙˆH›ÛİÚ[™ÈØ\™[Ø^\ÈÚİÜÈ
+HYZÈİYH]H›İÈØÜ›ÛÊKˆØ\ÜXÚ[™Ë›Y‚‚ŠŠ“Ü™\ˆÚY™›KŠŠˆ[Ø\™È[Ø^\È™[™\ˆ8 %]Ø\™[™\ÜÈ\ÈX›İ]
+˜Ûİ™\˜YÙJ‹ÛÈ›ÈÙXİ[Ûˆ\È]™\ˆY[ˆ8 %]Z\ˆÜ™\ˆ\È
+ŠœÚY™›YÛ˜ÙH\ˆ\Ü[ŠŠˆÛÈHY™™\™[ÙXİ[ÛˆXYÈXXÚš\Ú][™H›İÈ™]™\ˆ™XYÈ\ÈHİ]XËYÛ›Ü™Y˜[›™\ˆ
+ÚY™›PTÙYY
+ÜİYÚËÙYY
+X][ËÜÚY™›PTÙYYØ
+KˆHÙYY\ÈØ\\™Y]ØÜ™Y[ˆ[İ[
+\ÙSY[[Ê×JX
+KÛÈHÜ™\ˆ\Èœ™\ÚÛˆXXÚÜ[ˆY]
+ŠœİX›HXÜ›ÜÜÈ™K\™[™\œÊŠˆÚ[HH\Ù\ˆ\ÈÛˆÛYH8 %]™]™\ˆ™\ÚY™›\ÈZYZ[\˜Xİ[Û‹ˆHÚY™›H\ÈH\™HÙYYYš\Ú\¸ $ÖX]\È
+][™\œLÌˆ“‘ÊK›İH˜]ÈX]œ˜[™ÛJ
+XØ[ÛÈ]\È[š]]\İY
+Ø[YHÙYY8¡¤ˆØ[YH\›]]][ÛŠKˆ\È\È[X™\˜][H
+››İ
+ˆHœÚİÈÛ™H˜[™ÛHØ\™ˆ]\›ˆ8 %]Ûİ[İ\™˜XÙHÛÛYHÙXİ[ÛœÈ˜\™[H[™[™\˜İ]H]Ø\™[™\ÜÈÛØ[È›İ™[K\\‹]š\Ú]\ÈZ[HšZİIÜÈ›Øˆ
+0©ÌŒÊK›İ\ÈØ\›İ\Ù[	ÜË‚‚ˆÈÈÈÛÛ\Û™[ˆ™X]\™HØ\™
+™X]\™PØ\™Ş
+B‚HÛÛ[XYÛ›ÜİXÈÜİYÚØ\™ˆ]™\H^šY[\È
+Š˜š[[™İX[
+ŠÈHØ\™™[™\œÈHÛİX]Ú[™ÈHXİ]™H™XY[™È[™İXYÙH
+\ÙQÚ]S[™İXYÙX
+ÈÜ™\•]\ĞS[™İXYÙX
+H[™[[İ\ÈHİ\ˆ8 %Ø[YHÛÛ˜Xİ\ÈHØ][ÙÈØ\™È
+0©Îğ©ÌNJKˆHÚ[‚‚˜¸¥#8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥$¸¥ ˆÚXÛÛˆ[WHVQP”“ÕÈ8¥ ˆXY\ˆXÛÛˆ[H
+Y
+H0­È^YXœ›İÈYÈÔˆ‘UÈ˜YÙH
+šYÚ
+B¸¥ ˆ8¥ ‚¸¥ ˆ8)-¸)`8),8)cx)-ø)%H
+š[X\JH8¥ ˆ]H8 %[™İXYÙKX]Ø\™H
+]ˆNHÈ]ŒHš[X\JB¸¥ ˆ]H
+ÙXÛÛ™\JH8¥ ‚¸¥ ˆÛ™K[[™H\ØÜš\[Ûˆ]8 )ˆ8¥ ˆ›\˜ˆ8 %[šË\ÛÙ[X™\“Ù“[™\ÈH
+[˜Ø]\È[H[™İ
+B¸¥ ˆ^Z[œÈHÙXİ[Ûˆ8 )ˆ8¥ ‚¸¥ ˆ
+›^ÜXÙ\ŠH8¥ ˆ\Ú\ÈHÕHÈH›İÛHÛÈØ\™È[YÛ‚¸¥ ˆÈ8)%¸)bø),¸)aø) ˆ8 .ˆH8¥ ˆÕH[
+ØY™œ›Û‹][š[ØY™œ›Û‹YY\^
+B¸¥%8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥&˜‚‹H
+Š”İ\™˜XÙKŠŠˆØ\™Xİ]™Qœ›ÛH8¡¤ˆØ\™Xİ]™UØÜ˜YY[Ø\™Xİ]™P›Ü™\˜\˜YZK›Ø[]˜][Û‹œ˜Z\ÙY
+\È\ÈH›ØØ[\›È[[Y[
+KˆZ[’ZYÚˆLL˜
+ÈH›^ÜXÙ\ˆÙY\HÕH[›™YÈHÛÛ[[Ûˆ˜\Ù[[™HXÜ›ÜÜÈØ\™ÈÙˆY™™\š[™ÈÛÜH[™İ‚‹H
+Š’XÛÛˆ[KŠŠˆÍ°åÌÍˆ
+Í[ˆÛÛ\Xİ
+KØY™œ›Û•[š[˜YZK›YˆÜ˜\È[HÛ\ˆHØ]YÛÜRXÛÛ˜™XİÜ‹Hİ\ÓX\šØÜˆHZ[ˆ]˜[˜YØ\šH^Û\
+K™Ëˆ8).8) ˜›ÜˆØ[šØ[
+H8 %H[HXZÙ\È[H[™XY\ÈÛ™H˜[Z[KˆØY™œ›Û‹][
+YÚ
+HÙY\ÈHØY™œ›Û‘Y\™XİÜœÈYÚXÛÛ˜\İ‚‹H
+Š‘^YXœ›İËŠŠˆÚÜ\\˜Ø\ÙHÛÛ^YÈ
+™\œÙT[ÚÙ[œËØY™œ›Û‘Y\
+KˆÚ[ˆ\Ó™]ØH^YXœ›İÈÛİ\È
+Šœ™\XÙY
+ŠˆHHØY™œ›Ûˆ‘UØ˜YÙH
+Ø[YHÙ[ÛY]KØÛÛİ\ˆ\È0©ÌNJH8 %Ø\œšY\ÈH^İYK™]™\ˆÛÛİ\‹[Û›H
+0©ÌLŠK‚‹H
+Š•]KŠŠˆÜ™\•]\ĞS[™İXYÙXš[X\H[X™\“Ù“[™\ÈXÙXÛÛ™\H[[İYÈ[šË[]]Y‚‹H
+Š‘\ØÜš\[Û‹ŠŠˆ[™H8¡¤ˆ]˜[˜YØ\šHLÈ[šË\ÛÙÈ[™Û\Ú8¡¤ˆÛÜ›[Ü˜[][XÈM[šË\ÛÙˆ[X™\“Ù“[™\ÈX‚‹H
+ŠÕH[ŠŠˆØY™œ›Û•[š[[˜Y]\ËX™[
+[™İXYÙKX]Ø\™Nˆ8)*¸)(¸)/8)aø) ˜Ø™XY8))¸)aø)%¸)aø) ˜ØšY]Ø8 )ŠH
+È8 .˜Ú]œ›Ûˆ[ˆØY™œ›Û‘Y\ˆHÚÛHØ\™\ÈH™\ÜÈ\™Ù]ÈH[\ÈHš\İX[Y™›Ü™[˜ÙK›İH™\İY]Û‹‚‹H
+ŠXØÙ\ÜÚXš[]KŠŠˆÚÛKXØ\™™\ÜØX›XXØÙ\ÜÚXš[]T›ÛOH˜]Ûˆ˜X™[Hİ]Q[ŸKÈ™]ËßHÙ\ØÑ[ŸH\ÈÜ[‹ˆ˜‚‚ŠŠ˜ÛÛ\Xİ˜\šX[
+]YÈŒŠKŠŠˆH
+Š›˜[YK[Û›Hİš\
+Šˆ›Ü›HÙˆHØ[YHÚ[\ÙYHH“ÔˆÑVH›İÈ
+0©ÍL
+H8 %HTĞÓÕ‘TˆØ\›İ\Ù[ÙY\ÈH[Y˜][ˆÛYIÜÈÙ^HÛ\İ\ˆ
+İš\
+È“ÔˆÑVH
+È›İ][™H˜[›™\ŠHØ\ÈÛÛœİ[Z[™È[ÜİÙˆHš\œİØÜ™Y[™[™Y›Ü™HHĞUQÓÔ’QTÈÜšYØ[YH[ÈšY]ËÛÈH“ÔˆÑVHØ\™ÈÙ\™H›][™YÈÙ[[™\ˆ[ˆZ\ˆZYÚ
+
+ŠMŠŠˆœÈŒLÌ
+N‚‚˜¸¥#8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥$¸¥ ˆÚXÛÛ—H8)-¸)`8),8)cx)-ø)%H8 .ˆ8¥ ˆÛ™H›İÎˆXÛÛˆ[H0­È˜[YH0­ÈÚ]œ›Û‚¸¥%8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥&˜‚‹H
+Š‘›ÜYŠŠˆH›\˜‹HÕH[[™H›^ÜXÙ\ˆ™]ÙY[ˆ[KˆH[Ø\È™]™\ˆH]Ûˆ
+HÚÛHØ\™\ÈH™\ÜÈ\™Ù]
+KÛÈH˜\™H8 .˜Ú]œ›Ûˆ[ˆØY™œ›Û‘Y\Ø\œšY\ÈHØ[YHY™›Ü™[˜ÙH]Hœ˜Xİ[ÛˆÙˆHZYÚˆ\ØÒKÑ[˜[™İRKÑ[˜İ^HÛˆ™X]\™TÜİYÚ8 %HY˜][˜\šX[™[™\œÈ›İ[™\ØØİ[™XXÚ\ÈHÛÛ\XİØ\™	ÜÈ
+Š˜XØÙ\ÜÚXš[]HX™[
+Šˆ
+™[İÊK‚‹H
+Š’ZYÚ
+ŠˆÛÛY\Èœ›ÛHH›İÈ]Ù[ˆ8 %Y[™Õ™\XØ[ˆLX
+ÈHÍXÛÛˆHMˆ8 %Ú]Z[’ZYÚˆY[™ÒÜš^›Û[ˆL˜ˆ›Èš^YZYÚÛÈH›Û\ØØ[H[\Ü›İÜÈHİš\[œİXYÙˆÛ\[™È]‚‹H
+Š’XÛÛˆ[JŠˆÍ0åÌÍ
+œÈÍŠNÈ
+Š›˜[YJŠˆÛ™Hİ\İÛˆ
+]ˆMÈÈ]N
+K›^ˆX[X™\“Ù“[™\ÈX‚‹H
+Š•[˜Ú[™ÙYŠŠˆÜ˜YY[İ\™˜XÙK›Ü™\‹˜YZK›Ø[]˜][Û‹œ˜Z\ÙYH‘UØ˜YÙH
+[›[™HY\ˆH˜[YJK[™HXØÙ\ÜÚXš[]HX™[8 %ÚXÚİ[Ø\œšY\È\ØÑ[˜ÛÈHØÜ™Y[ˆ™XY\ˆÛˆH™\İ]˜[^HX\œÈ
+ˆ•š\ÚHÚ[\ØKˆÙ^H\È]Ø[Kˆ\ÈÜ[‹ˆŠˆÙ™ˆHØ\™]ÚİÜÈÛ›HH˜[YK‚‹H
+Š•ÚY\ÈHØ[\‰ÜÊŠ‹[™]\È›İÈØYX™X\š[™ÎˆÚ]H›\˜ˆÛÛ™HH˜[YH\ÈH[\™HØ\™ÛÈHÚY][˜Ø]\È]ÛÜİÈ[Ü™H\™H[ˆ]YÛˆHY˜][Ø\™ˆÙYH0©ÍL›ÜˆH“ÔˆÑVH›İÉÜÈNMˆ[™Ú]š]È[ˆ]‚‚ŠŠ”›ÜËŠŠˆÈ][Nˆ™X]\™TÜİYÚÈÚYˆ[X™\ÈÛ”™\ÜÎˆ
+
+HOˆ›ÚYÈÛÛ\XİÎˆ›ÛÛX[ˆXˆÚY\ÈİÛ™YHHØÜ™Y[ˆ
+šY]ÜÜ\Ú^™Y
+Kˆ™X]\™TÜİYÚ\ÈÈÙ^K^YXœ›İÒKÑ[‹]RKÑ[‹\ØÒKÑ[‹İRKÑ[‹XÛÛ‹\Ó™]ÏÈX‚‚ŠŠ”ÜİYÚÙ]
+İ\œ™[
+KŠŠˆYš[™Y[ˆÛYTØÜ™Y[‹ŞÚ]˜]šYØ][ÛˆÚ\™Y\ˆ][Nˆ8)*8)/ø))8)cx)+È8).8)/¸))ø)*8)/ˆ8¡¤ˆ›İ][™UÙ^XÈ8))¸)b8)*8)/ø)%H8)+x)%x)cx))8)/È8¡¤ˆZ[PšZİUX˜È8).8) ¸)%x),¸)cx)*ˆ8¡¤ˆØY[˜T›ÙÜ˜[\Ø
+H\™XİÛÜˆ[ÈH0©ÍˆØ][ÙÈ8 %Û\[H8).8) ˜
+NÈ
+Š¸)*¸)/ø))8)`È8).8)cx)+¸),8)(È8¡¤ˆ[Ü™UX‹Ô]TÛX\˜[“\İ
+Šˆ
+İ[™[™È™\›Ë\İ]H]Ø\™[™\ÜË8)iXÛÛÛ\‘UÈ›Üˆ]È][˜Ú™[X\ÙJNÈ8))8)`8),8)cx))H8)+ø)/¸))8)cx),8)/ˆ8¡¤ˆY\X\ÈÛYK\ØÜ™Y[ˆÚYÙ]È8¡¤ˆ[Ü™UX‹ÕÚYÙ]Ø[\XˆH›Ü›Y\ˆ8)!¸)'x)%x)/‹x)*¸) ¸)&¸)/¸) ¸)%ÈØ\™Ø\È
+Šœ™]\™Y
+ŠˆÚ[ˆHÙ^Hİš\
+0©Í
+HÛÚÈİ™\ˆ]İ\™˜XÙH8 %ÙY\[™È›İ›ÙXÙYÛÈ•Ù^IÜÈ[˜Ú[™Ëˆˆ]ÛœÈ›ÜˆØÜ™Y[ˆ™XY\œËˆÚX›[™Ë]X‹Ó[Ü™K\İXÚÈ\™Ù]È˜]šYØ]HšXHH
+Šœ\™[
+Šˆ
+\ÙS˜]šYØ][ÛŠ
+X8¡¤ˆX˜›H\
+K›İHÛYHİXÚÈ8 %Ø[YH]\›ˆ\È›İ][™P˜[›™\˜Ø[˜Ú[™ÔØÜ™Y[˜‚‚ŠŠY[™ÈHÜİYÚŠŠˆ\[™H™X]\™TÜİYÚÈHÜİYÚØ\œ˜^H[ˆÛYTØÜ™Y[‹ŞÚ]›İ[[™İXYÙHÛÜK[ˆXÛÛˆ›ÙK[™[ˆÛ”™\ÜØˆ›È™]ÈÚÙ[œÈ\™H™YYY8 %HÚ[™]\Ù\È^\İ[™ÈØ\™Ù[]˜][Û‹İ\ÙÜ˜\HÚÙ[œË‚‚‹KKB‚ˆÈÈÌËˆ[˜Ú[™ÈXˆ
+8)*¸) ¸)&¸)/¸) ¸)%ÊB‚ŠŠ”\œÜÙKŠŠˆHZ[H[™H[X[˜XÈ\ÈHœ˜]Ù™\İ]˜[ÛÛ\[š[Û‹]š[™È[ˆ]ÈİÛˆ›İÛHXˆ
+[˜Ú[™ÕX˜8¡¤ˆ[˜Ú[™ÔİXÚÓ˜]šYØ]Ü˜ˆ[˜Ú[™ÒÛYX8¡¤ˆØœÙ\˜[˜ÙS\İÈØœÙ\˜[˜ÙQ]Z[ÈØ]SXœ˜\XÈ^Uœ˜]
+Kˆ]™\][™È\ÈÛÛ\]Y
+Š›Û‹Y]šXÙH[™Ù™›[™JŠˆH[™Ú[™H
+[Øš[KÜÜ˜ËÜ[˜Ú[™ËÙ[™Ú[™KØ
+H\š]™\È]HÈ˜ZÜÚ]˜HÈ[ÙØHÈØ\˜[˜HÈ˜\˜HÈ[˜\ˆ[Ûœ›ÛH\İ›Û›Û^KY[™Ú[™Xİ[¸ $Û[ÛÛˆ\[Y\šY\ÈÚ]H[™X\ˆZ\šK\İ[H^X[˜[\ØKÛÈ›È™]ÛÜšË›ÈTK›È[˜Ú[™ÈÙ\šXÙKˆØœÙ\˜[˜ÙH]\ÈÛÛYHœ›ÛH[™Y[\È
+™\İ]˜[ËØÈ™\İ]˜[[™Ú[™KØ
+HÚ]H\œÚ\İY\‹XÚ]HØXÚHØ\›YYÙ™ˆH[\˜Xİ[Ûˆ]ˆ
+Š‘^HÙ[Xİ[Ûˆ\È\‹\[H
+ØœÙ\˜[˜ÙT[K™^T[X•SP“ÓÒÈ0©ÌŒÊNŠŠˆXœÙ[8¡äˆY^XXH]H]İ[œš\ÙKÛÜœ™Xİ›ÜˆH\™ÙHXZ›Üš]NÈÚ[™›Ù^XXX]Ú\È]
+Š›[ÛÛœš\ÙJŠˆ[™\ÈÚ]Ø[šØ\ÚHÚ]\H[™Ø\ØHÚ]]ZÙKÚ[˜ÙHHœ˜][™ÈÚ]H[ÛÛˆÚYÚ[™È[™\™ÚXKˆÜš\Ú˜HÚ]\H\XØ[HÜ[œÈZY[[Ü›š[™È[™ÛÜÙ\È™Y›Ü™HH™^ZY[[Ü›š[™ËÛÈİ[œš\ÙHX]Ú[™È˜[YYH^HQ•TˆHšYÚH[ÛÛˆ\ÈÛÜœÚ\Y8 %šY˜\YHŒˆ™\ÛÛ™YÈHÙ\ÚÜÙHNŒŒˆH[ÛÛœš\ÙH˜[È[ˆ[˜Ú[ZK[œİXYÙˆÌH]YËÚÜÙHŒÎHH[ÛÛœš\ÙH˜[È[ˆÚ]\K‚‚ŠŠ“^Y\ˆİXÚËŠŠˆ\˜ÚY[˜\ÙH0­È˜YYÚÙ]Ú˜XÚÙÜ›İ[™
+[˜Ú[™×ØÙ[\İX[Ø[X[˜XØšXH˜XÚÙÜ›İ[™^Y\˜8 %H0©Íˆ^Ù\[Ûˆ]\›ˆ\Èİ\™˜XÙH[œÈ]ÈİÛˆÙ[\İX[ÚÙ]Ú
+H0­ÈÛÛ[ØÜ›ÛšY]È]ÜXÚ[™Ëİ]\œË‚‚ŠŠ”İXİ\™H
+ÜÈ›İÛJNŠŠ‚‚ŒKˆ
+Š”İ\™˜XÙH[Ù\ÊŠˆ8 %Hš^Yš\œİÛÛ›Û[ˆ]™\H[ÙNˆÙYÛY[Y[8)*¸) ¸)&¸)/¸) ¸)%È0­È[˜Ú[™ØÈ8)-x)cx),8))x)*¸),8)cx)-H0­Èœ˜]	ˆ\˜È8)'8)cx)+ø)bø))8)/ø)-È0­È[İ\Ú
+LÈXİ]™HØY™œ›Û‹][ØØY™œ›Û‹YY\
+Kˆ]]\İ›İ[İ™H™\XØ[HÚ[ˆHÙ[XİY[ÙHÚ[™Ù\Ë‚Œ‹ˆ
+ŠÛÛ^X[[˜Ú[™ÈXY\ŠŠˆ8 %ÚİÛˆ™[İÈH[ÙHÙ[XİÜˆ›Üˆ[˜Ú[™È[™œ˜]	ˆ\ˆÛ›NÈY[ˆ[ˆ[İ\Ú™XØ]\ÙHİ\œ™[Ú]K[˜\‹[[ÛÛÛ™[[Û‹[™›ÛİÙY]œ˜]İ]HÈ›İ\HÈHš\Ú\ˆÛ™HÛÛ\Xİ›İË\]X[]ÚY›^ÚY\ÈÛÈHÙ[™HÙÙÛHİ^\ÈØÜ™Y[‹XÙ[™Y‚ˆH
+“ØØ][ÛˆÚ\
+ˆ
+Y
+NˆH˜]ÛˆX\™›Ü[ˆ
+LHØY™œ›Û˜Ûİ[\‹\›İ]Y\˜ÚY[\ÛÙÛH8 %›È[[ÚšH\ˆ0©ÍJH
+ÈÚ]H˜[YH]Lˆ[ˆH\˜ÚY[\ÛÙ[Ú]]šY\˜›Ü™\‹ˆ\8¡¤ˆØØ][ÛˆXÚÙ\ˆ
+™[İÊK‚ˆH
+Ø[[™\‹\Ş\İ[HÙÙÛJˆ
+Ù[™JNˆÙYÛY[Y[8)*¸)`¸),8)cx)(ø)/ø)+¸)/¸) ¸))È8)!x)+¸)/¸)*8)cx))
+\›š[X[Y˜][
+KXİ]™H[ˆØY™œ›Û‹][
+ÈØY™œ›Û‹YY\[˜Xİ]™H[šË[]]Yˆ\œÚ\İY]™Y[œÚœ[˜Ú[™ËXØ[[™\‹\Ş\İ[X‚ˆH
+“^Hœ˜]]ÛŠˆ
+šYÚ
+NˆÍÚ\˜ÛKÛÛ8¦!KÚ]HØY™œ›Û˜Ûİ[˜YÙHÚ[ˆH\Ù\ˆ›ÛİÜÈ[Hœ˜]ˆ8¡¤ˆ^Uœ˜]‚ŒËˆ
+ŠØ[[™\ˆØ\™
+Šˆ
+\˜ÚY[\ÛÙ]šY\˜›Ü™\‹˜YZK›Ø[]˜][Û‹˜Ø\™
+Nˆ8 .HÙ[]Hİ™\ˆHÛ™K[[™H[˜Ú[™ÈİX]WH8 .˜^Hİ\\ˆ8 %H]H›ØÚÈ
+LL^HX™[HH[]JHØ\œšY\ÈH^IÜÈY[]H
+Šš[œÚYHHØ\™
+Šˆ[]H
+™XY\‹]]H˜XÙHMJHİ™\ˆ˜\˜H0­È[˜\ˆ[Û
+
+ø)!x))ø)/ø)%JHZÜÚH8)*¸)%x)cx)-È0­È8)-x)/ø)%x)cx),8)+ˆ8).8) ¸)-x))8)cH˜]LH[šË[]]YÚ[™ÛH[™KY\İÑ›ÛÚ^™UÑš]ÈÍH
+HÜXÙHXÙZÛ\ˆÚ[HH^HÛÛ™\ÈÙY\ÈHØ\™ZYÚİX›JKˆHÛİ[™[Û™H]KZXY\ˆ›ØÚÈ™[İÈHØ\™[™H™Y[™[›İÛK[Y[ÛˆYX\˜X™[\™H
+Š™ÛÛ™JŠˆ8 %H]H\Èİ]YÛ˜ÙH
+]YÈŒˆRKÕV\ÜÎÈÌ™XÛZ[YYH[™ØHÜšY™XXÚ\ÈH›Û
+Kˆ™[İËÛ™HXİ[Ûˆ›İÎˆH8)+¸)/¸).H8))¸)aø)%¸)aø) ˆÈ8)+¸)/¸).H8)&ø)/ø)*¸)/¸)#ø) H0­È[ÛšY]ØÙÙÛH
+Y[\”Ù[ZP›ÛLHØY™œ›Û‹YY\YY
+È]ÛÜÈH›ÛÜÈLL^H^[™Ø[[™\˜ØÛÛ\ÙHØ[[™\˜8 %HÛ[ÚÙH›İÜÈ[\İš[™ÈX]Ú]ÛÈHX™[]™\ÈÛ›H\™NÈ\[™ÈH]H›ØÚÈÙÙÛ\ÈÛÊH[™H8)!¸)'0­ÈÙ^X™\Ù][
+šYÚ8 %]™]\›œÈH\Ù\ˆÈHİ\œ™[]HY\ˆœ›İÜÚ[™Ë[Ø^\È™[™\™Y
+Kˆ\[™ÈZ]\ˆ^[™Y™›Ü™[˜ÙHÜ[œÈ[ˆ[›[™H[ÛÜšY8 %ÙYZÙ^H›İÈ
+[\ˆ
+ŠŒL
+ŠŠK
+ŠœÚ^›İÜÈÙˆÙ]™[ˆ›^ˆXÙ[ÊŠˆ
+Z[‹ZZYÚÎ˜Y]\ÈÈ™]™\ˆÛ™HÜ˜\[™È‹XÙ[›İÈ]šYYHHLÈØ\˜Ù[YÙHÚY8 %[ÙØH™\ÛÛ™\È\˜Ù[YÙ\È[ˆÌ‹Xš]›Ø]ÛÈÙ]™[ˆİXÚÙ[ÈØ[ˆİ[HÈHZ\ˆİ™\ˆHÛÛZ[™\ˆ[™›ÜHÙ]™[ÛÈH™^[™K^Z[™Èİ]Ú^ÛÛ[[œÈ[™\ˆHÙ]™[‹XÛÛ[[ˆXY\ˆ[™ÛY[™È]™\H]HÙ™ˆ]ÈÙYZÙ^NˆÛˆHÎLTÛ™HMH]YÈŒ‹HØ]\™^K™XY\È8)+¸) ¸)%ø),¸)-x)/¸),ˆš^Y]YÈŒÈØ[[™\•ÙYZÜÊ
+X[ˆ[˜Ú[™ËØØ[[™\‘ÜšYØÚ[šÜÈH[Û[™Ø[[™\‘ÜšY\İØ[œÈÛÛ[[ˆ[™^OHÙ]^J
+X
+KÙ[XİY^HØY™œ›Û‹][
+ÈØY™œ›Û˜›Ü™\‹Ù^HÛÛ›Ü™\‹[™
+ŠŒL
+ŠˆØœÙ\˜[˜ÙHYÜÈ\ˆ^H
+8)*¸),8)cx)-XÛˆØY™œ›Û‹][8)-x)cx),8))ÛˆÛÛ][8)-x)cx),8))
+ØÚ[ˆZ^YÈYÈ›ŞZ[•ÚYÈZ[’ZYÚMˆÈ˜Y]\È[™KZZYÚM
+Kˆ›İÙ\™H™[İÈH0©ÌËŒ›ÛÜˆ[[[HŒˆ
+H[™ÊNÈHYÈ›ŞÜ™]Èœ›ÛH0åÌLˆÈš][™]ÈX™[›İÈÛÙ\È›İYÚ[^İ[X8 %]Y˜[YY[\‹ÚXÚ\È›È]˜[˜YØ\šHÛ\È›Üˆ8)-x)cx),8))ˆHÜš^›Û[İÚ\H[]Ú\™HÛˆHØ\™
+ˆM[ÜİKZÜš^›Û[
+Hİ\ÈÛ™H^K‚ˆ
+Š‘^H[™[
+Šˆ
+H[˜Ú[™È›Ü\‹Û˜ÙHÛÛ\]Y8 %[ˆXİ]š]R[™XØ]Ü˜[ˆØY™œ›Û˜Ú[HH^H\È\š]™YÙ™ˆH™[™\ˆ]
+N‚ˆH
+“›Èİ[™[Û™H]HXY\Šˆ
+™[[İ™Y]YÈŒŠNˆH˜\˜H0­È]H0­È8).8) ¸)-x))8)cH0­ÈZÜÚH[™H]™\È\ÈHØ[[™\ˆØ\™	ÜÈİX]H
+][HÈX›İ™JKÛÈH^H[™[İ\ÈÚ]H]Z\˜]Û[˜ÙHØ\™‚ˆH
+“]Z\˜]Û[˜ÙHØ\™
+ˆ
+]Z\˜]Û[˜ÙPØ\™‘LM
+NˆHØ\™Xİ]™Qœ›ÛH8¡¤ˆØ\™Xİ]™UØÜ˜YY[\›Ë›Û[İYÈXYH^H[™[
+\™XİH[™\ˆHØ[[™\ˆØ\™
+Š˜X›İ™JŠˆH[™ØHÜšY
+H8 %š\È›İÈ]\ÜXÚ[İ\ÏÈˆ\ÈH]™K[YK\Ù[œÚ]]™H[œİÙ\ˆ\Ù\œÈÜ[ˆ[˜Ú[™È›Ü‹ˆÚXÚÙ\ˆ›İÈ
+]YÈŒŠNˆH8)!¸)'8)%x)/ˆ8)+¸)`x).x)`¸),8)cx))^YXœ›İÈ
+Ø\™][˜›Üˆ[ÈØÜš\X›ÛÙ\šY‹›È˜XÚÚ[™Ë›ÜˆKÙİKÚÛˆ8 %ÛÜ›[Ü˜[\È›È[™XÈÛ\Ë0©ÌÊHÛˆHY[™H
+Šœ[›š[™È]JŠˆšYÚX[YÛ™YÜÜÚ]H]8 %HLØY™œ›Û‹YY\8))8)/ø))x)/È0­È^YXœ›İÈYÈ
+ÈH]H˜[YH]MH[šØ
+]H˜XÙJH
+ÈH]ZY]LH[šË\ÛÙ8))8)%H“SX[™[œİ[Ú[ˆ\È^IÜÈÛÛ™HÛ›İÜÈ]
+›Ü›X][™[œİ[ÚÜY]HİY™š^Ûˆ\İ[ZYšYÚ[™ÎÈH8))8)%H[™HZÙ\ÈHØÜš\›ÙH˜XÙHİ]ÚYH[™Û\Ú8 %ÛÜ›[Ü˜[\È›È[™XÈÛ\Ë0©ÌÊKˆ˜\Ù[[™KX[YÛ™YÚ]H^YXœ›İËÚš[šË]ËYš]Èˆ™[™X]][™KÚ[ˆHİ[œš\ÙH]H[™Èİ™\ˆ
+ŠÚ][ˆHØ[YHÚ]š[^JŠ‹H]ZY]LH[šË[]]Y
+Šš[™İ™\ˆ[™JŠˆ8 %8)*ø)/ø),]Oˆ8 %8)-¸)aø)-È8))¸)/ø)*È[ˆ]Oˆ8 %™\İÙˆ^X
+İXØÙ\ÜÛÜ•]UÙ^J
+X[ˆ[˜Ú[™ËÜ™]˜Z[[™Õ]KØ\™JKˆ]\ÈHÙXÛÛ™[™K›İ[ˆ^[œÚ[ÛˆÙˆHš\œİÛÈ™Z]\ˆ\ÈÈÚš[šÈÈš]›İˆ8))8)%HLHSX[Û™Hİ]\ÈÚ[ˆH^IÜÈX™[İÜÈ™Z[™ÈYH[™™]™\ˆÚ]\ÈYH›ÜˆH™[XZ[š[™ÈšYY[ˆİ\œÈ8 %HØ\]XYHHÚ]\Hœ˜]ÛÚÈZÙH]™[Û™ÙYÈH™^]HH[X[˜XÈXYÈ8)&¸))8)`x),8)cx))x)`
+]YÈŒˆ™\Ü
+KˆH[\ˆ™]\›œÈ[8 %™]™\ˆHZ\ÛXY[™È˜[YH8 %Ú[ˆH]H[œÈ\İH™^İ[œš\ÙKÚ[ˆ][™ÈY\ˆZYšYÚ
+H8))8)%H[™H[™XYHØ\œšY\È]]JK[™ÛˆÜÚ^XH^\È
+H[H™[™\œÈ›İ]\È[™XYJNÈ]\È[ÛÈİ\™\ÜÙYÛ˜ÙHHÙ^Hİ\™˜XÙIÜÈ]™HÚXÚÙ\ˆ\È]Ù[ˆ[İ™YÛˆÈHİXØÙ\ÜÛÜ‹ˆH]H\ÈHÛ™HØ[[™\ˆ˜Xİ›Û[İY[È\Èš\œİ]šY]ÜÜ\›È
+H[™ØHÜšY]™[Û™ÜÈÈÚ]È\İH›ÛÛˆ[ÜİÛ™\ÊK[™ÛˆHÙ^Hİ\™˜XÙH]\È
+Š›]™JŠˆ™]˜Z[[™Õ]J
+X
+[˜Ú[™ËÜ™]˜Z[[™Õ]KØ\™JHØ[ÜÈİ[œš\ÙH]H8¡¤ˆÜÚ^XH]H8¡¤ˆİXØÙ\ÜÛÜ‹XKZ[™^ÛˆHZ[]HXÚËÛÈ\İH[™[œİ[HÚXÚÙ\ˆ˜[Y\ÈH]HXİX[H[›š[™È›İÈ8 %HİXØÙ\ÜÛÜˆ™[™\œÈ˜[YK[Û›H™XØ]\ÙH]È[™™[Û™ÜÈÈH™^^IÜÈÛÛ™K™]™\ˆHİY\ÜËˆœ›İÜÙY]\ÈÙY\Hİ[œš\ÙH
+Y^XK]X\[šJH]Kˆ™[™\œÈÛ›HÛ˜ÙHH^IÜÈÛÛ™H[™È
+HÚÙ[]ÛˆÙY\ÈH˜\™H^YXœ›İÊNÈH[™ØH]H[H™[İÈİ^\ÈHØ[›ÛšXØ[İ[œš\ÙK]]H
+ÈÜÚ^XH]Z[ˆ[ˆH\›È››İÈˆ›İÈ
+İ\œ™[ÚÙÚY^XH
+È]X[]HYÈÚ[ˆ\ÕÙ^X[ÙHH^IÜÈXšZš]
+HÚ]ÛˆHÙ^Hİ\™˜XÙKH
+Š]™H›ÙÜ™\ÜÈİš\
+Šˆ[™\ˆH8))8)%X[™H
+ØY™œ›Û˜š[Ûˆ]šY\˜˜XÚËXØÙ\ÜÚXš[]T›ÛOHœ›ÙÜ™\ÜØ˜\ˆ˜Ú]H\˜Ù[XØÙ\ÜÚXš[]U˜[YXÈH\ÙS]Z\˜]Z[]HXÚÈY˜[˜Ù\È]
+K[™8 %
+ŠÚ[HH[›š[™È\š[Ù\È8))8)cx)+ø)/¸)'8)cx)+ÈÛ›JŠˆ8 %[ˆ
+Š˜8)!x)%ø),¸)/ˆ8)-¸)`x)+X›İÊŠˆ
+ÛÛİ
+È8)!x)%ø),¸)/ˆ8)-¸)`x)+Nˆ˜[YOˆ8)&¸)c8)&8)(x)/8)/ø)+ø)/˜[ˆH]H˜XÙH
+ÈHİ\ÛØÚÈ[ˆÛÜ›[Ü˜[Ù[ZP›ÛØY™œ›Û‹YY\
+ÈHØÜš\8).8)aØİY™š^İ]ÚYHH][ˆ˜XÙK0©ÌÊNˆH[˜]\ÜXÚ[İ\È››İÈˆ[œİÙ\œÈÚ[ˆ\È]ÛÛÙ™^Èˆ[›[™Kœ›ÛHH\™H™^]\ÜXÚ[İ\Ô\š[Ù
+
+X[\ˆ[ˆ[˜Ú[™ËÛ]Z\˜]Ø
+[]H]šYÚÚ[ˆ›İ[™È]\ÜXÚ[İ\È™[XZ[œÈ8 %H›İÈ[ˆY\ÊKˆ[ˆHÛË]\8),8)/¸).x)`H8)%x)/¸),˜È8)!x)+x)/ø)'8)`8))[HZ\‹[™H8).8)+x)`8)+¸)`x).x)`¸),8)cx))8)-H8)&¸)c8)&8)(x)/8)/ø)+ø)/ˆ8¡¤˜›Ûİ\ˆ8¡¤ˆ]Z\˜]]Z[ˆÚ[H]ÈİÛˆ\ÙS]Z\˜]ÛÛ™H\È[ˆ›YÚ]ÚİÜÈH
+ŠœÚÙ[]ÛŠŠˆ[ˆHØ[YHÜ˜YY[Ø\™
+ÚXÚÙ\ˆ^
+È]]Y]šY\˜Ø\˜ÚY[\ÛÙXÙZÛ\ˆ˜\œÈÚ^™YÈH™X[\›È›İË[HZ\‹[™›Ûİ\‹XØÙ\ÜÚXš[]T›ÛOHœ›ÙÜ™\ÜØ˜\ˆ˜
+KÛÈHÙXİ[Ûˆ™\Ù\™\È]È›Ûİš[[œİXYÙˆÜ[™È[ˆ™[İÈH^H[™[ˆHÛÛ™HÛÛY\Èœ›ÛHHÚ\™Y
+Š˜[˜Ú[™Ñ^TİÜ™X
+Šˆ
+\ˆØØ][Û’Ù^X
+ÈØ[[™\ˆŞ\İ[KÙ^YYHXœÛÛ]HÚ]š[]K\œÚ\İY8 %0©ÍŒ
+KÛÈ™]š\Ú][™ÈH]K™K[[İ[[™ÈHØ\™H^HH]Z\˜]š[™\ˆ[™XYHİÙ\[™HÛÛ\İ\[™[™\ˆ[œİ[HÚ]›ÈÚÙ[]ÛÈÛ›HH]™H››İÈˆ™XY™XÛÛ\]\ÈXXÚZ[]Kˆ\ÙS]Z\˜]İÛœÈ›ÈØXÚHÙˆ]ÈİÛˆ8 %]Z\˜]^XØ›İÔ\š[ÙØ\™H™KY\š]™Y\ˆØ[™XØ]\ÙH^H\™H\™H\š]Y]XÈİ™\ˆH™YHØXÚY^\Ëˆ
+Š•[Y\Ë˜[™Ù\Ë[™H]X[]HÚ\\ÙHH›Û‹Z][XÈÙ[ZX›ÛØ›ÛÛÜ›[Ü˜[˜XÙK™]™\ˆH[ˆ][XÈØ\™][˜
+0©ÌÊK[™HÚ\Ú]ÈÛˆ]›ÚYÚ\™ØØÛÛÚ\™ØÛÈ]™XYÈ\ÈHÛÛY[ÛˆHÜ˜YY[
+0©ÌLŠNÈ]›ÚYXÚ\^\Ù\È]›ÚYY\8 %H[ÛÛ\ÜÚ]\È\šÙ\ˆ[ˆHØ\™›Ü[™È˜]È]›ÚY[™\ˆPH
+0©ÌŠKŠŠ‚ˆH
+[™ØHÜšY[šY›Ü›H°åÌŠˆ]H0­È˜ZÜÚ]˜H0­È
+Š“š]XH[ÙØJŠˆ0­ÈØ\˜[˜HXXÚ™[™\ˆÛˆY[XØ[[]˜]Y[\È
+\˜ÚY[\ÛÙ˜YZK›Y[]˜][Û‹˜Ø\™
+H8 %Û™HÚ^™K›È›ÛZ[™[ÜÙXÛÛ™\HÜ]ˆXXÚ[NˆH
+ŠŒL
+ŠˆØY™œ›Û‹YY\\HX™[
+˜XÚÙY\\˜Ø\ÙHÛÜ›[Ü˜[[ˆ[™Û\ÚÈZ[ˆØÜš\Ù\šYˆİ\Ú\ÙH8 %Ø\ÈK™[İÈH0©ÌËŒ›ÛÜ‹[[[HŒŠKH˜[YH[ˆHXİ]™H™XY[™È[™İXYÙHÛ›H]N[šØ
+Ú[™ÛK[[™KY\İÑ›ÛÚ^™UÑš]İÛˆÈHØØ[HÛÈHÛ™Ù\İ˜[YH8 %•]\˜HšY˜\YHˆ8 %š]ÈÚ]İ][˜Ø][ÛŠK[™[“SHSKÔXÚ[ˆH[™ØH[™È]^Kˆ›ÈÙXÛÛ™Ü›ÜÜË\ØÜš\[™Kˆ[™[œİ[È]˜[\İZYšYÚØ\œHHÚÜY]HİY™š^
+8))8)%HŒSKLˆ8)'8)`x),˜8 %›Ü›X][™[œİ[[ˆ[˜Ú[™ËÛ]Z\˜]›Ü›X]ØÚ\™YÚ]H]Z\˜]Ø\™
+HÛÈH™^Y^H[™™]™\ˆ™XYÈ\È\È[Ü›š[™ÎÈ[˜Ú[™ÈÛÛ™[[ÛˆÚİÜÈ[™[Y\ÈÛ›H
+[ˆ[™ØIÜÈİ\\ÈH™]š[İ\ÈÛ™IÜÈ[™\İX[HÛˆH™]š[İ\È^JKˆÛˆ
+ŠšÜÚ^XJŠˆ^\È8 %H]HÜˆ˜ZÜÚ]˜H]™YÚ[œÈY\ˆ\Èİ[œš\ÙH[™[™È™Y›Ü™HH™^İXÚ[™È™Z]\ˆ
+K™ËˆZØY\ÚHÛˆL[ŒŠH8 %H]KÓ˜ZÜÚ]˜H[HYÈHÙXÛÛ™›İÎˆHÚÚ\Y[™ØIÜÈ˜[YH]MH[šØ\È]ÈİÛˆ8))8)%X[™KÛÈH^H™XYÈ8))¸)-¸)+¸)`8))8)%HŒMˆSH0­È8)#ø)%x)/¸))¸)-¸)`8))8)%HNŒŒˆSKLH8)'8)`x),˜[œİXYÙˆZØY\ÚHÚ[[H˜[š\Ú[™È™]ÙY[ˆ\Ú[ZH[™ØY\ÚKˆ]Nˆ[˜Ú[™Ñ]KšÜÚ^XU]XÈÜÚ^XS˜ZÜÚ]˜X
+[™Ú[™KY]XİYšXHHİ[œš\ÙK]Ë\İ[œš\ÙH[™^[\
+KˆH
+Š•]H[H[Û™JŠˆØ\œšY\ÈHØ[YHLH[šË[]]Y
+Šš[™İ™\ˆ[™JŠˆ\ÈHÛ[˜ÙKXØ\™ÚXÚÙ\ˆ
+8)*ø)/ø),]Oˆ8 %8)-¸)aø)-È8))¸)/ø)*İXØÙ\ÜÛÜ•]UÙ^J
+X
+H[™\ˆ]È8))8)%X[™KÛˆHY[XØ[[[\È8 %H[HXY[™Hİ^\ÈHİ[œš\ÙH
+Y^XJH]HH[X[˜XÈ˜[Y\ÈH^HK[™H[™İ™\ˆØ^\ÈÚÈÛÈH™\İÙˆ]ˆ›Èİ\ˆ[™ØHØ\œšY\È]ˆ
+Š•H[ÙØH[H\ÈX™[Y8)*8)/ø))8)cx)+È8)+ø)bø)%ÈÈš]XH[ÙØK™]™\ˆ˜\™H8)+ø)bø)%ÊŠˆ
+‘LË•SP“ÓÒÈ0©Ì
+NˆHËXŞXÛHİ[ŠÓ[ÛÛˆ[ÙØH8 %Û™HÙˆÚXÚ\È]\˜[H˜[YY8).8)/ø))¸)cx))ø)/È8 %]\İİ^H\İ[™İZ\ÚX›Hœ›ÛHH8)-¸)`x)+H8)+ø)bø)%ÈØ\™\™XİH™[İÈ]‚ˆH
+¸)-¸)`x)+H8)+ø)bø)%ÈØ\™
+ˆ
+ÚXš[ÙØPØ\™‘LÈ8 %0©ÍJNˆ\™XİH[™\ˆH[™ØHÜšY
+Š›Û›HÛˆ^\ÈHÚXš[ÙØH›Ü›\ÊŠˆ8 %™\›ÈÚ›ÛYHİ\Ú\ÙH
+™\Ù[[Ü‹XXœÙ[\ÈH[\™H›ØØX[\NÈ›È[\Hİ]K›È››È[ÙØHÙ^HˆÛÜJKˆH\˜ÚY[\ÛÙØ]šY\˜Ø˜YZK›ØØ\™ˆH8)-¸)`x)+H8)+ø)bø)%Ø^YXœ›İË[ˆÛ™H›İÈ\ˆÚ[™İÈ8 %HÚ\™Y]Z\˜]Ú\
+[ÙØHÛ™NˆÛÛÚ\™Ø
+ÈØY™œ›Û‘Y\[¸ )ˆ8)+ø)bø)%Èˆ˜[YJHÚ]HÚ[™İÈ˜[™ÙHšYÚX[YÛ™Y
+ÛÜ›[Ü˜[Ù[ZP›Û›Üˆ[ÈHØÜš\›ÙH˜XÙHİ\Ú\ÙK™XØ]\ÙH›Ü›X][™[œİ[	ÜÈ\İ[ZYšYÚÚÜY]HİY™š^\È]˜[˜YØ\šH8 %H[™ØK][H˜XÙH[JKˆÚ[™İÜÈ[ˆ˜ZÜÚ]˜K]Ë[˜ZÜÚ]˜HšXH\ÙTÚXš[ÙØX8¡¤ˆÛÛ\]TÚXš[ÙØ\Ø
+İÜ™KX˜XÚÙY›Èš]˜]HØXÚJNÈHŒLˆ^[™YZİ\ˆİ[H\È™]™\ˆ\ÙY‚ˆH
+•[Y\ÈØ\™
+ˆ°åÌˆÜšY8 %İ[œš\ÙKİ[œÙ][ÛÛœš\ÙKœ˜ZXH]Z\H8 %XXÚHÛÛ8¦ ø¦/H^\™\Ù[][ÛˆÛ\
+˜\šX][ÛˆÙ[XİÜˆ›Ü˜Ù\È[Û›ØÚ›ÛYNÈ››È[[ÚšHŠH
+ÈLX™[
+ÈÛÜ›[Ü˜[Ù[ZP›ÛLÈ˜[YK‚Kˆ
+Š¸)-x)cx),8))8)%8),8)*¸),8)cx)-JŠˆ›ÜˆHÙ[XİY]NˆØœÙ\˜[˜ÙPØ\™È
+\˜ÚY[\ÛÙ˜YZK›Y[]˜][Û‹˜Ø\™
+HÚ]HØ]YÛÜH[
+8)-x)cx),8))ÛˆÛÛ][È8)*¸),8)cx)-XÛˆØY™œ›Û‹][
+KZ]K˜[YH8 %›ÜˆØ[šØ\ÚKXÚ]\K]œ˜]H]H\ÈH
+Š›ØØİ\œ™[˜ÙIÜÈX›\ÚY˜[YJŠˆ
+Ø[šØ\ÚSØØİ\œ™[˜ÙS˜[YX[ˆ[˜Ú[™ËÜØ[šØ\ÚS˜[Y\ËØˆH\›š[X[[[ÛØ[˜\]H›Ü›KK™Ëˆ8).x)aø),8)+¸)cx)+8).8) ¸)%x)-ø)cx)'ø)`8)&¸))8)`x),8)cx))x)`8)-x)cx),8))ÛˆHšY˜\YH^K8)-x)/ø)+x)`x)-x)*[ˆ[ˆYZÈ[˜][Û‹
+8)!x) ¸)%ø)/¸),8)%x)`
+X\[™YÛˆHY\Ù^NÈ™\ÛÛ™\ˆ˜Z[\™H˜[È˜XÚÈÈH[H˜[YK[™\İÜÙX\˜ÚÙ]Z[İ\™˜XÙ\ÈÙY\H[H˜[YJH8 %ÚÜ\ØÜš\[Û‹H
+Š›[ÛÛœš\ÙK]œ˜][™JŠˆÛˆ^T[Nˆ	ØÚ[™›Ù^XIØ[\ÈÛ›H
+LˆØY™œ›Û‹YY\ˆ8)-x)cx),8))8)!ø).8)`8),8)/¸))8)cx),8)/È8 %8)&¸) ¸))¸)cx),8)bø))¸)+È“SK8))¸),8)cx)-¸)*8)-H8)!x),8)cx)&8)cx)+È8)%x)aÈ8)+8)/¸))ˆ8)*¸)/¸),8)(ØÈÙ\\ÈšYÚ8 %[ÛÛœš\ÙH“SK\˜[˜HY\ˆ\œÚ[ˆ[™\™ÚXXœ›ÛHHÙ[XİY^IÜÈ[˜Ú[™Ñ]K›[ÛÛœš\ÙXÈXœÙ[Ú[ˆH^H\È›İÛÛ™Y
+KˆİXÚHœ˜]\ÈÙ\›İYÚHšYÚ›İHØ[[™\ˆ›Ş8 %]È]H\İX[H[™ÈH™^[Ü›š[™È8 %ÛÈHØ\™˜[Y\ÈH[œİ[H˜\İ\ÈXİX[Hœ›ÚÙ[ˆ[œİXYÙˆX]š[™ÈH™XY\ˆÈ™XÛÛ˜Ú[H8)-x)cx),8))Ú]H8))8)/ø))x)/È[™H][™È™Y›Ü™H›ÛÛ‹ˆ[ˆHXİ[Ûˆ[È8 %8)iH8)*¸)`¸)'8)/ˆ8)-x)/ø))ø)/Ø
+
+Š™š[YØY™œ›Û˜
+Šˆ[\˜ÚY[^8 %™[™\œÈÛ›HÚ[ˆH[IÜÈšYRY™\ÛÛ™\È[ˆ’QWĞ–WÒQÈ8¡¤ˆšYQ]Z[Ú]HÙ[XİY]K0©ÍŒJK8)%x))x)/ˆ8)*¸)(¸)/8)aø) ˆ0­È™XYØ]X
+ÛÛ][[8¡¤ˆØ]H™XY\ŠH[™8)*¸)(¸)/8)aø) ˆÙXİ[Û˜
+İ][™H[8¡¤ˆH[šÙY^šXHZ[[Tİ\\™Ù]0©ÌÎ
+KˆHšYH[XYÈH›İÎˆ]\ÈH^IÜÈ
+œ\™›Ü›YY
+ˆXİ[Û‹Hİ\œÈ\™H™XY[™ÜËˆ™[İÈHØ\™ËÛˆHØ]™Y8)*¸)/ø))8)`È8).8)cx)+¸),8)(ÈØœÙ\˜[˜ÙH]HÛ›KHš]˜]H]]Y
+Šˆ¸)iH8).8)cx)+¸),8)(È8 %™[][ÛˆŠŠˆÚ\
+]TÛX\˜[‘^PÚ\ÛÛ[š[
+ÈÛÛ›Ü™\ˆ
+È[šÔÛÙ^8 %™]™\ˆH™\İ]™H[İ[NÈ]šXÙK[Û›JH8¡¤ˆ]\œÛÛ‰ÜÈ]Z[
+0©ÍŒŠK‚‹ˆ
+Š¸)!¸)%ø)/¸)+¸)`0­È\ÛÛZ[™ÊŠˆ›İÜÎˆÛÛİ\™YX\šÙ\ˆİ
+ØY™œ›Û˜İ\‹]Y\ˆÈ[šØ[›[ÛÛˆÈÛÛY˜][
+KÚÜ]K˜[YK‚‚ŠŠ“]Z\˜]š[™\ˆÛÜŠŠˆ
+]Z\˜]š[™\‘ÛÜ˜‘LMˆ0©ÍŒ
+H8 %Û™HÚ\™Y\İØ\™[ˆ]È
+Š˜›]˜\šX[
+Šˆ
+\˜ÚY[\ÛÙÛˆH]šY\˜›Ü™\ˆ8 %]YÈŒˆHÜ˜YY[\È™\Ù\™Y›ÜˆH]™HÛ[˜ÙHØ\™\™XİHX›İ™KÛÈHÛÜˆ›ÈÛ™Ù\ˆ™XYÈ\È\Ùˆ]
+HÚ]H8)*8)+ø)/‹Ó‘UÈ˜YÙK[œÙ\Y
+Š˜™]ÙY[ˆHÛ[˜ÙHØ\™[™H[™ØHÜšY
+Šˆš\È›İÈ]\ÜXÚ[İ\ÏÈˆ™XY\œÈ\™HH\Ù\œÈÚ]H]HXÚ\Ú[ÛˆÈXZÙKˆXY[™È[XˆH
+Š™˜]Ûˆİ[œš\ÙHÛ\
+Šˆ
+İ[ˆš[™È
+È™YH˜^\Èİ™\ˆHÜš^›Ûˆ˜\‹šY]Ë\İ›ÚÙ\ÈZÙHH0©ÌMÈXˆXÛÛœÈ8 %›È[[ÚšK0©ÍJH[ˆØY™œ›Û‹YY\ÛˆHœØY™œ›Û‹][\ØË™\XÚ[™ÈHÜ˜YY[8)+¸)`H]\ˆ[Kˆ]\Ú\È]Z\˜]š[™\˜[ˆHØ[YH[˜Ú[™ÈİXÚÎÈ›İ[™ÈX›İ™HÜˆ™[İÈ][İ™\Ë‚‚ŠŠ“]Z\˜]]Z[
+Šˆ
+]Z\˜]]Z[ØÜ™Y[˜8¡¤ˆÚ\™Y]Z\˜]Ø\™›ÙX™XXÚYœ›ÛHHÛ[˜ÙKXØ\™›Ûİ\ˆ8 %[™›ÜˆHÜXÚYšXÈÚÜÙ[ˆ^Kœ›ÛHH]Z\˜]š[™\ˆ^H]Z[[™XZš›İÜË0©ÍŒ
+H8 %HÛÛx)iKYœ˜[YY[˜Ú[™ÈØ\™
+0©ÍJNˆ[˜Ú[™È
+Èİ[ˆ›İÜË[ˆH[
+Î^KÛšYÚÚÙÚY^XHX›H[™8)!x)+x)/ø)'8)`8))ø),8)/¸).x)`Kø)%ø)`x),¸)/ø)%Kø)+ø)+¸)%ø)(ø)cx)(H›İÜËˆH[˜Ú[™È›İÜÈ\ÙHHØ[YH›Ü›X][™[œİ[™^Y^HİY™š^\ÈH[™ØH[\Ë[™ÜÚ^XH^\ÈY8)%x)cx)-ø)+È8))8)/ø))x)/ØÈ8)%x)cx)-ø)+È8)*8)%x)cx)-ø))8)cx),›İÜÈÛÈHØ\™
+[™]ÈÚ\™H‘ÊH™]™\ˆ\ØYÜ™Y\ÈÚ]H[\ËˆH[ÙØH›İÈ\ÈX™[Y
+Š¸)*8)/ø))8)cx)+È8)+ø)bø)%ÊŠˆ
+H‘LÈÛÛ\Ú[Ûˆ[K0©ÍJK[™8 %[˜\šX[Û›KZÙHH8)*8)/ø))8)cx)+È8)+ø)bø)%Ëø)%x),8)(È›İÜÈ[\Ù[™\È8 %H
+Š¸)-¸)`x)+H8)+ø)bø)%ÊŠˆ›İÈ\ˆ™\Ù[[ÙØH›ÛİÜÈ]
+[˜[YOˆ0­ÈÚ[™İÏ˜È[™[Û›HÚ[ˆHÚ[™İÈÜ[œÈ]İ[œš\ÙKİ\8 $Ù[™ÛˆHZYY^HÛœÙ]È\š]™Y\ˆ™[™\ˆœ›ÛHÛÛ\]TÚXš[ÙØ\ÊY›™^İ[œš\ÙJX™]™\ˆØXÚY
+KˆXXÚ\ÈH]X[]K][Y]Z›İÈ
+ÛÛ[]\ÜXÚ[İ\ÈÈ]›ÚY[]›ÚY
+HÚ]Hİ\œ™[K\[›š[™È\š[Ùš[™ËX›Ü™\™Y[ˆØY™œ›Û˜
+È[ˆ8)!x)+x)`˜YÙKˆ
+Š“˜[YH[™[YH™[™\ˆ[ˆ\šÈ[šØØ[šË\ÛÙÛˆ›İ]X[]Y\ÊŠˆ8 %H[\ÈHÛX[ÚYÛ˜[XÛÛİ\™Y0­È8)-¸)`x)+Kø))8)cx)+ø)/¸)'8)cx)+Ø^YÈØ\œHH]X[]H
+0©ÌL‹™]™\ˆÛÛİ\ˆ[Û™JNÈH^\È™]™\ˆ]Ù[ˆ[YYİÛˆ
+\œ˜XÛİK[Û‹X]›ÚY[Ø\È]YHŒJKˆH]X[]HYË[YH˜[™ÙK[™›İËX˜YÙH\ÙHH
+Š››Û‹Z][XÈÙ[ZX›ÛÛÜ›[Ü˜[˜XÙK™]™\ˆH[ˆ][XÈØ\™][˜
+Šˆ
+0©ÌÊH8 %HØ[YH™XYXš[]Hš^\ÈHÛ[˜ÙHØ\™ˆHØ\™]H
+Ü˜\ˆ
+È]Z\˜]Ø\™›ÙXXY[™ÊH\È
+Š˜8)!¸)'8)%x)/ˆ8)*¸) ¸)&¸)/¸) ¸)%ØÛ›HÚ[ˆH]H\ÈÙ^JŠˆ
+\ÙS]Z\˜]
+
+Kš\ÕÙ^X
+NÈHÜXÚYšXÈš[™\‹ØXZš\Ù[XİY^H™XYÈ
+Š˜8)!ø).8))¸)/ø)*8)%x)/ˆ8)*¸) ¸)&¸)/¸) ¸)%Ø
+ŠˆÛÈ]™]™\ˆÛZ[\ÈÈ™HÙ^HÚ[HH][[™HÚİÜÈHY™™\™[^KˆHØ[YH›ÙH™[™\œÈHÚ\™XX›H‘È
+˜\šX[HœÚ\™H˜Ø\\™YÙ™‹\ØÜ™Y[ŠK‚‚ŠŠØ][ÙÈšY]ÊŠˆ
+8)-x)cx),8))x)*¸),8)cx)-XXŠNˆHÙX\˜ÚšY[
+YÚ˜YZK›Y
+Hİ™\ˆÙX\˜ÚØœÙ\˜[˜Ù\ØÈH[›™Y
+Š“^Hœ˜]
+Šˆ›İÈ
+ÛÛ][š[KHÛÛ›Ü™\ŠNÈ[ˆ
+Š•\ÛÛZ[™ÊŠˆÜš^›Û[Ø\™˜Z[
+ÛÛ\XİLÍ°åÍÌˆØ\™Ë˜YZK›YˆØ]YÛÜHÛ\8)dø¦/‹ø§.ˆ
+È\\˜Ø\ÙH]HYÈÛˆÜÛ™K[[™Hš[X\K[[™İXYÙH˜[YH™[™X]8 %›ÈØ]YÛÜHØ\[ÛŠNÈ[™H‹]\
+Šœ›İÜÙHH\JŠˆÜšYÙˆÛ[HŒ[‹][\È
+˜YZK›YÛ\[ˆHÍØY™œ›Û‹][›İ[™[[›[™K[YÈš[X\K[[™İXYÙH]HMH
+È]™HÛİ[8 %›ÈÙXÛÛ™\K[[™İXYÙHXÚÈ[™JNˆ8)-x)cx),8))È8)*¸),8)cx)-HÈ8)"x)*¸)-x)/¸).\ÈH
+Š¸)%x))x)/ŠŠˆ[H
+8)iHÛ\Ù]Ø]PÛİ[
+
+XİÜšY\ÊH8¡¤ˆØ]HXœ˜\H[™H[]ÚY
+Š¸)*¸)`¸)'8)/ˆ8)-x)/ø))ø)/ÊŠˆ[H
+8)iHÛ\’QWÑS•’QTË›[™İÛİ[
+H8¡¤ˆHšYHØ][ÙÈ
+0©ÍŒJH8 %HšYIÜÈ[Ø^\ËX]˜Z[X›HÛÜ‹Ú[˜ÙHH^K\[™[[\È]KY\[™[‚‚ŠŠ“ØœÙ\˜[˜ÙH\İ
+Šˆ
+ØœÙ\˜[˜ÙS\İØÜ™Y[˜
+H8 %Ø]YÛÜHš[Z[ˆİ™\ˆHÛYHÜ˜YY[ÛÜYÛÛÛ™\İYš\œİH™^ØØİ\œ™[˜ÙKˆXXÚ›İÎˆHXY[™È›ÛİÈİ\ˆ
+ÛÛ8¦!Hš[YÈ[šË[]]Y8¦!ˆİ][™KÙÙÛ\ÈÚ]İ]Ü[š[™ÈH]Z[
+K˜[YH
+Èİ\‹[[™İXYÙHØ\[Û‹[™šYÚX[YÛ™Y™^]H
+È™[]]™HX™[
+Ù^XÈYÈ™
+Kˆ[‹[\İÙX\˜ÚšY[ÛˆÜ‚‚ŠŠ“ØœÙ\˜[˜ÙH]Z[
+Šˆ
+ØœÙ\˜[˜ÙQ]Z[ØÜ™Y[˜
+H8 %\›È
+Ø]YÛÜH[
+ÈZ]K˜[YH]Ù[™Yİ\‹[[™İXYÙHØ\[Û‹[™HØY™œ›Û‹][¸)!x)%ø),¸)/ˆ0­È™^0­È]H0­È[ˆˆ^\Èˆ[
+K[ˆ[ˆXİ[Ûˆ›İÎˆ
+Š‘›ÛİÊŠˆ
+İ][™HØY™œ›Û˜[Èš[ÈØY™œ›Û˜Ú]\˜ÚY[^Ú[ˆ›ÛİÚ[™È8 %›ÛİÚ[™È[ÛÈ™YYÈœ˜]™[Z[™\œË0©ÌÎ
+H[™
+Š¸)iH™XYØ]JŠˆ
+š[YØY™œ›Û˜
+Kˆ›ÛİÚ[™ÈÚİÜÈH˜[œÚY[
+ËHÊHÛÛ][YYÈ^Hœ˜]8 %šY]È8¡¤ˆˆ˜\‹ˆ™[İÎˆ
+Š¸)+¸).x))8)cx)-H0­ÈX›İ]
+Šˆ›ÜÙKHØ]HØ\™[™8 %
+Š›\İÛˆHYÙJŠˆ8 %HÚ[™ÛH
+Šˆ’İÈÈØœÙ\™HˆÛYJŠˆ
+‘LH\ÙH0©ÍHÛÛ\ÜÙYÚ]‘LNH\ÙHŠK[ˆ›İ\ˆİ]\ÈÙ^YYÙ™ˆH™\šYšYY\˜\È[H
+\˜\ÒY8¡¤ˆÙ]\˜\Ò[™›Ø™\šYšYY[Û›JH[™H™\ÛÛš[™ÈšYRYˆ
+ŠŠJH\˜\ÈÛ›JŠˆ8¡¤ˆ8)"x)*¸)-x)/¸).8)-x)/ø))ø)/È0­ÈİÈÈØœÙ\™XXY[™È
+ÈH0©ÍH˜\İY˜XİÈ[™[È
+ŠŠŠHšYHÛ›JŠˆ8¡¤ˆ^XİHHÚ\Y8)*¸)`¸)'8)/ˆ8)-x)/ø))ø)/È0­ÈİÈÈØœÙ\™X›ØÚË[˜Ú[™ÙY8 %HØ[YHØ\™Ú[\ÈHØ]HØ\™
+\˜ÚY[\ÛÙ]šY\˜˜YZK›Ø[]˜][Û‹˜Ø\™
+HÚ]HØY™œ›Ûˆ8)iHÛ\HšYIÜÈš[[™İX[]KHˆ8)&¸),8)(È0­È8),¸)%ø)+x)%ÈH8)+¸)/ø)*8)'ØY]H[™K[™8 .ˆ8 %\8¡¤ˆšYQ]Z[
+0©ÍŒŠHØ\œZ[™ÈH™^ØØİ\œ™[˜ÙIÜÈ]S\ØÛÈHØ[XYÜšHÚXÚÛ\İÙ^\ÈÈHšYÚ™\İ]˜[]NÈ
+ŠŠÊH›İ
+Šˆ8¡¤ˆH8)"x)*¸)-x)/¸).8)-x)/ø))ø)/ØXY[™Ë˜\İ˜XİÈš\œİ[™HšYHØ\™™[™X][H[œÚYHHØ[YH[™[]ÈY]H[™H™Yš^Y8)*¸)`¸)'8)/ˆ8)-x)/ø))ø)/È0­ÈÛÈHØ\™ÙY\È]ÈİÛˆY[]NÈ
+ŠŠ
+H™Z]\ŠŠˆ8¡¤ˆ›ÈÙXİ[Ûˆ][ˆ\™H\È™]™\ˆH˜ÛÛZ[™ÈÛÛÛˆˆXÙZÛ\ˆ\™H8 %H\™[‘LH0©Í‹ŒˆXÙZÛ\ˆÛİ\È™]\™Y‚‚ŠŠ“^Hœ˜]
+Šˆ
+^Uœ˜]ØÜ™Y[˜
+H8 %H\œÛÛ˜[YÙ\ˆH™YKXÙ[Y]šXÈ˜[™
+›ÛİÚ[™È0­È™[Z[™\œÈÛˆ0­È\È[Û[\ˆŒˆØY™œ›Û‹YY\˜[Y\ÊKH¼'å%™[Z[™\ˆY˜][Èˆ›İËH
+Š“^Hš[Üš]JŠˆ\İ
+›İÜÈ[ˆ›ÛİÈÜ™\ˆÚ]™^]H[™H™[]Ûˆ\ˆœ˜]
+K[™[ˆ
+Š•\ÛÛZ[™ÊŠˆ[Y[[™H[[Û™È›ÛİÙYœ˜]Ëˆ[\Hİ]Nˆ\™ÙHÛÛ8¦!K¸)!x)+x)`8)%x)bø)"8)-x)cx),8))8)*8).x)`8) ˆÈ›Èœ˜]ÈY]‹[™Hš[YØY™œ›Û˜œ›İÜÙH8)-x)cx),8))x)*¸),8)cx)-H8¡¤ˆˆ[‚‚ŠŠ•œ˜]™[Z[™\ˆÚY]
+Šˆ
+œ˜]™[Z[™\”ÚY]Ş
+H8 %›İÛHÚY]›Üˆ\‹]œ˜]ÜˆÛØ˜[YY˜][™[Z[™\ˆ™YœËˆ[\[Y[Y\È[ˆ
+Šš[‹]™YHXœÛÛ]Hİ™\›^JŠˆ
+›İH˜[œÜ\™[“ˆ[Ù[
+Hİ™\ˆ[Ù[X˜XÚÙ›ÜÛÈ›ÚXÙSİ™\ˆ[™HXY\İ›ÈL™HÛ˜\ÚİØ[ˆ™XY]ˆÜ˜Xˆ[™H
+0åÍK]šY\˜
+K[ˆ™YHÜ[Ûˆ›İÜÎˆ
+Y˜[˜ÙH›İXÙJˆ[È
+Ù™ˆÈHÈˆÈÈ^\Ø8 %]™[š[™È™Y›Ü™JK
+“ÛˆH^JˆİÚ]Ú
+ØY™œ›Û˜˜XÚÊK
+‘^K[Ùˆ[YJˆ[È
+ÎŒÈŒÈİ[œš\ÙX8 %İ[œš\ÙH\ÈHX™[YŒ›ŞH[ˆŒJKˆÙ[XİY[Èš[ØY™œ›Û˜Ú]\˜ÚY[^ÈHš[YØY™œ›Û˜
+Š”Ø]™H™[Z[™\œÊŠˆ[ÛÛ[Z]Ëˆİ]H]™\È[ˆœ˜]›ÛİĞÛÛ^
+™Y[œÚİœ˜]Y›ÛİÜØ
+È™Y[œÚİœ˜]\™[Z[™\‹YY˜][ÈZ[Z[ˆY˜][HKY^HY˜[˜ÙH
+ÈÎŒ^K[ÙŠK‚‚ŠŠ’Ø]HXœ˜\JŠˆ
+Ø]SXœ˜\TØÜ™Y[˜
+H8 %ÙX\˜ÚX›H\İÙˆ]™\H[™Yš[[™İX[Ø]Nˆ8)iHÛ\]KˆÙXİ[ÛœØØ\[Û‹8)*¸)(¸)/8)aø) ˆ0­È™XYY™›Ü™[˜ÙK‚‚ŠŠ•œ˜]Ø]H™XY\ŠŠˆ
+œ˜]Ø]T™XY\”ØÜ™Y[˜
+ÈØ]TÙXİ[Û”YÙX
+H8 %]™\È[ˆH
+Š’ÛYHİXÚÊŠˆ
+œ˜]Ø]T™XY\˜›İ]NÈ[˜Ú[™Èİ\™˜XÙ\È˜]šYØ]HÜ›ÜÜË]XˆÈ]
+H[™\Èİ\œ™[HH
+Š›Û›H›İ]H[ˆSSQT”ÒU‘WÒÓQWÔ“ÕUTØ
+Šˆ
+X“˜]šYØ]Ü‹Ş
+KÛÈH›İÛHXˆ˜\ˆY\È›Üˆ[[Y\œÚ]™H™XY[™ËˆZ[ˆ\˜ÚY[
+›ÈÚÙ]Ú
+KˆÜ˜\ˆ
+Š˜™XY\’XY\˜
+Šˆ
+0©ÎJH8 %˜XÚÈÚ\˜ÛH0­ÈØ]H]H0­ÈˆÈXÛİ[\È[ˆ™XY[™Ô›ÙÜ™\ÜĞ˜\˜[™H[™İXYÙHÙÙÛH
+0©ÌMŠKˆ[[[HŒˆ\ÈØÜ™Y[ˆØ\ÈH[ÜİYšYYÜ˜\ˆ[ˆH\ˆH]Û‹HMˆİ]\ˆ[™H\™XÛÙYN]K[ÙˆÚXÚHÚ\™YXY\ˆ™\XÙYˆ›ÙNˆHÜš^›Û[YÙY›]\İÙˆÙXİ[ÛˆØ\™È8 %XXÚYÙHØ\œšY\ÈH8)*¸)cx),8).8) ¸)%È0­È‹ÛXÈ\0­È‹ÛX[
+™\œÙT[ÚÙ[œÈÛˆØY™œ›Û‹][
+KÙXİ[Ûˆ]H]ŒH™\XØ[KXÛÛ\™\ÜÙY8)iXÜ›˜[Y[[™›ÙH\˜YÜ˜\È]HÚ\™YYX[š[™ØÚÙ[ˆ
+M\˜YÜ˜\Ø\
+NÈÛ™ÈÙXİ[ÛœÈØÜ›Û™\XØ[H[œÚYHHYÙKˆ0©ÍHYÙ\ˆİÈİ™\›^HH›İÛNÈYÚ\XÈ\ˆYÙK‚‚ŠŠ“ØØ][ÛˆXÚÙ\ŠŠˆ
+ØØ][Û”XÚÙ\“[Ù[Ş
+H8 %HYÙTÚY][Ù[ÛˆZ[ˆ\˜ÚY[ˆ]H8).8)cx))x)/¸)*8)&¸)`x)*8)aø) ˆ0­ÈÚÛÜÙHØØ][Û˜
+È8§%NÈH¼'äãH\ÙH^HØØ][Ûˆˆ›İÈ
+ÔÈš^\È
+ŠœÛ˜\ÈH™X\™\İ[˜ÛÙHÙ[›ÚYÜˆH™X\™\İ[™YÚ]HÚ[ˆ]\ÈÛÜÙ\ŠŠˆ8 %ÙYHHY\ˆX›H8 %Ú][šYYÙ\œ›Üˆ˜[˜XÚÈÛÜJNÈHÙX\˜ÚšY[ZÚ[™È
+Š˜HÚ]H˜[YHÜˆH‹YYÚ][˜ÛÙJŠÈ[™HØØ][Ûˆ\İÚ]HØY™œ›Û‹YY\8§$ÈÛˆHÙ[Xİ[Û‹ˆØØ][Ûˆİ]H
+[˜Ú[™ÓØØ][ÛÛÛ^™Y[œÚœ[˜Ú[™Ë[ØØ][Û˜Y˜][
+Š•Zš˜Z[ŠŠŠH\ÈHÚ[™ÛH™Y™\™[˜ÙH›Üˆ]™\HØØ][Û‹\Ù[œÚ]]™HÛÛ\]][ÛÈÚ[™Ú[™ÈØØ][ÛˆØ\›\È]ØØ][Û‰ÜÈØœÙ\˜[˜ÙHØXÚHY\ˆ[\˜Xİ[ÛœÈÙ]K‚‚•H\İ\È
+ŠÛÈœ›İÜØX›HY\œÊŠ‹™[™\™Y\ÈÛ™H›]\İ[™\ˆÛÈÜ›İ\XY\œÈ
+Lˆ[šË[]]Y]\”ÜXÚ[™ØMÍY[™ËØÜš\]H˜XÙJK\ÈH
+Š\™ÙX\˜Ú[Û›H[˜ÛÙHY\ŠŠ‚‚ŸÜ›İ\XY\ˆÛİ\˜ÙHÛİ[ŸKKHKKHKKHŸ8)*¸)cx),8)+¸)`x)%ˆ8)-¸).x),0­ÈXZ›ÜˆÚ]Y\ØPR“Ô—ĞÒUQTØ
+[˜Ú[™ËÛØØ][ÛœËØ
+HL‹Zš˜Z[ˆš\œİ
+]\ÈQUSÓĞĞUSÓ˜
+HŸ8),8)/¸)'8).8)cx))x)/¸)*0­È8))8).x).8)`8),˜È˜Z˜\İ[ˆ0­ÈZÚ[ØRTÕS—ÕRÒSØ
+[˜Ú[™ËÜ˜Z˜\İ[•ZÚ[ËØ
+HÍˆXÜ›ÜÜÈ[ÌÈ™]™[YH\İšXİÈŸ8)*¸)/ø)*8)%x)bø)(H0­È[˜ÛÙX[˜ÛÙQ]KšœÛÛ˜šXH[˜Ú[™ËÜ[˜ÛÙ\ËØNˆ˜][ÛÚYH8 %
+Š›™]™\ˆœ›İÜØX›JŠ‹İ\™˜XÙYÛ›HH[ˆ^Xİ‹YYÚ]]Y\H‚‹H
+Š•H[˜ÛÙHY\ˆ\È[X™\˜][H›İHœ›İÜÙH\İŠŠˆNÈ›İÜÈ\È›İH\İ[[Û™HØÜ›ÛË[™8 %XÚ\Ú]™[H8 %™Z]\ˆÛİ\˜ÙH]\Ù]Ø\œšY\È]˜[˜YØ\šHXÙH˜[Y\ËÛÈ\ÙH[šY\ÈØ[››İØ]\ÙHH˜[YRXÛÛ˜Xİ]™\HÚ]X›İÈ\Ëˆ\[™ÈH‹YYÚ]ÛÙH™\XÙ\ÈHÚÛH\İÚ]HÚ[™ÛH™\ÛÛ™Y›İÎÈHÙ[Y›Ü›YY][šÛ›İÛˆÛÙH™[™\œÈ[ˆ^[˜]ÜH[™H˜]\ˆ[ˆ[ˆ[\H\İˆ[][™È]\È›İˆYÚ]ÈÙX\˜Ú\ÈHÛÈÚ]HY\œÈ^XİH\È™Y›Ü™K‚‹H
+Š”[˜ÛÙH›İÊŠˆ]H[™H\ÈMŒH0­ÈXZ\˜\Ú˜X
+]˜[˜YØ\šHYÚ]È[™İ]H˜[YH[ˆ[™KÙİKÚÛˆ8 %8)j¸)iø)k8)i¸)i¸)iÈ0­È8)+¸).x)/¸),8)/¸)-ø)cx)'ø)cx),
+KØ\[Ûˆ\È\İšXİˆ0­È[ZØO˜[ˆ][‹ÛÛ\ÙYÈÛ™H˜[YHÚ[ˆ^H\™H\]X[ˆHØ\[Ûˆİ^\È][ˆ[ˆ]™\H[™İXYÙH™XØ]\ÙH[™[[™È]˜[˜YØ\šHÜ[[™ÜÈ›ÜˆNÈXÙ\ÈÛİ[™HÛÜœÙH[ˆHØÜš\Z\ÛX]ÚÈH]H[™HØ\œšY\ÈH[™KˆÙ[Xİ[™ÈÛ™HİÜ™\ÈÚ]RYˆ[‹MMŒX‚‹H
+Š‘ÔÈXÚÜÈÚXÚ]™\ˆY\ˆ\ÈÙ[Z[™[HÛÜÙ\ŠŠ‹™]™\ˆœ[˜ÛÙH[Ø^\È‹ˆHÙ[ØÛÙ\‰ÜÈÛİ™\˜YÙH\È™\H[™]™[ˆ8 %HÙˆŒÈ˜[[]H	ˆØ\ÚZ\ˆ[˜ÛÙ\ËNHÙˆ[ˆ\[˜XÚ[˜Y\Ú8 %ÛÈHÜš[˜YØ\ˆš^š[™È]È™X\™\İ[˜ÛÙHMMˆÛH]Ø^H[ˆÙHÚ[HH[™YÜš[˜YØ\ˆ[HÚ]ÈÛˆÜÙˆ]ˆY\ÈÛÈÈHÚ]KÚXÚ\ÈH™]\ˆX™[‚‹H
+Š•HÌĞˆX›H\È^š[H™\]Z\™Y
+Šˆ[™™]™\ˆİXÚ\ÈH][˜Ú]ˆ]ØYÈY\ˆ[\˜Xİ[ÛœÈÙ]HÛ˜ÙH\ÈÚY]Ü[œËˆ[˜Ú[™Ô™YœØ
+ÚXÚ
+š\ÊˆH][˜Ú]ÙYH0©ÍŒ
+H\™Y›Ü™H˜[Y]\ÈHİÜ™Y[‹X™XÛÜ™İXİ\˜[H[œİXYÙˆÛÚÚ[™È]\ˆH[‹XYÚÚ\ÈH[™YXÚ]H™XZ[[™\È˜[™ÙKXÚXÚÙYšY[HšY[ÛÈH™XÛÜ™\ÈÙ[‹Y\ØÜšXš[™ÈÛˆ\ÚË‚‚‹H
+ŠHZÚ[\ÈHÚ]XØ\œZ[™È\İšXİXØ\İšXİ[˜
+ŠÈH˜][Û˜[Y\ˆX]™\È›İ[™Yš[™Y[™HXÚÙ\ˆ\][ÛœÈHš[\™Y\İÛˆ]šY[˜]\ˆ[ˆÛˆ[ˆ[™^ˆÜ›İ\ÈÚÜÙHš[\™Y™\İ[\È[\H›ÜZ\ˆXY\‹‚‹H
+Š”›İÊŠˆ]H[™H\ÈH˜[YH[ˆHİ\œ™[[™İXYÙH
+È0­È\İšXİ˜]Lˆ[šË[]]Y
+[X™\“Ù“[™\ØK›^Úš[šØ
+Kˆ›İ[™\È\™HHØ[YH[™İXYÙKÛÈÛ™HØÜš\˜XÙHÛİ™\œÈ[H8 %\ˆ0©ÌËŒ™]™\ˆZ^H]˜[˜YØ\šH\İšXİ[ÈH][ˆØ\[Û‹ˆHØ\[Ûˆ[™H™[İÈİ^\ÈHÚ[™ÛK\ØÜš\Ü›ÜÜË\™Y™\™[˜ÙH][Ø^\ÈØ\Ë‚‹H
+Š”ÙX\˜Ú
+Šˆ
+Ú]SX]Ú\Ô]Y\X^ÜYœ›ÛHØØ][ÛœËØ[™Ú\™YÚ]Hİ[™[Hš\XÚ]HÚY]
+HX]Ú\È[™Û\Ú˜[YK[™H˜[YK[™\İšXİ[ˆZ]\ˆØÜš\ÛÈ[Ø\˜İ\™˜XÙ\È[ŒH[Ø\ˆZÚ[Ë‚‹H
+Š•HØØ][ÛˆÚ\
+0©ÈX›İ™JHÙY\ÈÚİÚ[™ÈHİÛˆ[Û™JŠ‹›İİÛˆ0­È\İšXİ8 %Lˆ[ˆH[\È›È›ÛÛK[™HXÚÙ\‰ÜÈ8§$È[™XYH™\ÛÛ™\ÈÚXÚØ[YK[˜[YYZÚ[\ÈXİ]™K‚‹H
+Šš\XÚ]HÚY]
+Šˆ
+İ[™[TØÜ™Y[‹Ş
+HÚ\™\ÈHØ[YH\İÙX\˜Ú™YXØ]H[™0­È\İšXİØ\[Û‹[™\ÈH›]\İ˜]\ˆ[ˆHX\YØÜ›ÛšY]Ø8 %]ŒÎL›İÜË[İ[[™È]™\H›İÈİ[YHÚY]Ü[‹‚‚‹KKB‚ˆÈÈÍˆ]Y[ÈXˆ
+8)+x)'8)*
+H	ˆ›İÈ^Z[™Â‚ŠŠ”\œÜÙKŠŠˆHÛX[]›İ[Û˜[]Y[ÈXœ˜\H8 %™XÚ]][ÛœÈÙˆ^\İ[™È^È\Èİ[™[Û™HšZ˜[œËØX\\È8 %Ú]^X˜XÚÈ]\œÚ\İÈXÜ›ÜÜÈHÚÛH\ˆHXˆ
+]Y[ÕX˜8¡¤ˆ]Y[ÔİXÚÓ˜]šYØ]Ü˜
+HÛÈHÚ[™ÛH]Y[ÓXœ˜\XØÜ™Y[ÈHZ[šK\^Y\ˆ[™H[›İÈ^Z[™Èİ\™˜XÙH\™H
+Šœ›Ûİİ™\›^\ÊŠˆ[İ[YÛ˜ÙH[ˆ\Şš]™[ˆH]Y[Ô^Y\ÛÛ^›İ˜]šYØ][ÛˆØÜ™Y[œË‚‚ŠŠ‘]KŠŠˆ]KØ]Y[Ëİ˜XÚÜËØ\ÈH\™HØ][ÙÈ
+]Y[Õ˜XÚØˆš[[™İX[]K[XˆÜ˜\[YKZ]KÚ[™ˆ	Ü™XÚ]][Û‰È	Üİ[™[Û™IØ[šÙY^Y›ÛZ[˜[\˜][ÛŠKˆ]Y[È]\È™\ÛÛ™HÙ\\˜][HšXH\ÜÙ]ËØ]Y[Ë[Xœ˜\KÚ[™^Ø8 %H˜XÚÈİ\™˜XÙ\È
+Š›Û›JŠˆÚ[ˆ\Ô™X[]Y[ÊY
+X\ÈYKÛÈ›İ[™È\X\œÈÚ]İ]H™XÛÜ™[™È™Z[™]ˆÌLÈ˜XÚÜÈYš[™YL[™Y™XÛÜ™[™ÜÈÙ^H
+Ø^X]šK[X[˜X\™K\˜[XXÛİš[™KZ\šKYÛİš[™X\‹Z\‹XšÛXXZ[\š]][š˜^K[X[˜X\ÈHİ[™[Û™HšZ˜[œÈÛİš[™X›ÛØÛKYØ[KYØ[˜\]^YK[˜[XZ˜\˜^X[‹Z\šKZ\šX˜ZK[˜[™[ZÚXÜš\Ú˜^XK]˜\İY]˜^XX
+NÈH™\İÙˆHØ][ÙÈ\ÈHX™[Y›İİ\H\ÙHˆİ\˜]\Ëˆ[[™YZÙ\È\™HLØœÈÒˆİ\™[ÈTÈÚ]›È[X™YYÛİ™\ˆ\ÙY\[™ÈHXœ˜\H8¢bŒHP‹—B‚ŠŠ“Xœ˜\HØÜ™Y[ŠŠˆ
+ØÜ™Y[œËØ]Y[ËĞ]Y[ÓXœ˜\TØÜ™Y[‹Ş
+Kİ™\ˆHÛYHÜ˜YY[‚‚ŒKˆÙ[™YØÜ™Y[ˆ]H8)+x)'8)*
+™XY\‹]]H˜XÙH]Œ‹[™İXYÙKX]Ø\™JK‚Œ‹ˆ
+Š‘Z]Hš[\ˆ˜Z[
+Šˆ8 %Üš^›Û[›İÈÙˆÚ\˜İ[\ˆÚ\È
+0©ÌŒ˜[Z[JNˆM\ØÈÛˆHØ\™[XXİ]™Qœ›ÛH8¡¤ˆØ\™[XXİ]™UØÜ˜YY[Ú]H\˜ÚY[\ÛÙ]˜[˜YØ\šHÛ\LHX™[™[İÎÈHÙ[XİYÚ\ØZ[œÈHˆØY™œ›Û˜š[™ÈÛˆHØY™œ›Û‹][YˆHXY[™È8)d0­È8).8)+x)`Ğ[Ú\ÛX\œÈHš[\‹ˆÛ›HZ]Y\È]XİX[H]™H[ˆ]˜Z[X›H˜XÚÈ\X\‹‚ŒËˆÙXİ[ÛœÈÚ]š[[™İX[XY[™ÜÈ
+8)'8)/¸),8)`8),8)%¸)aø) ˆ0­ÈÛÛ[YH\İ[š[™ØÚ[ˆH˜XÚÈ\ÈØYY8)*¸)/¸)(0­È™XÚ]][ÛœØ8)+x)'8)*8)-H8)!¸),8))8)`0­ÈšZ˜[œÈ	ˆX\\Ø
+KXXÚHİXÚÈÙˆ˜XÚĞØ\™Ë‚‚ŠŠ•˜XÚÈØ\™
+Šˆ
+ÛÛ\Û™[ËØ]Y[ËÕ˜XÚĞØ\™Ş
+H8 %H0©ÎØ][ÙËXØ\™[™İXYÙHÛˆ[ˆ]Y[È›İÎˆØ\™Xİ]™Qœ›ÛH8¡¤ˆØ\™Xİ]™UØÜ˜YY[Ø\™Xİ]™P›Ü™\˜˜YZK›ØNY[™ÎÈHLˆZ]KZXÛÛˆ[XˆÛˆH[XˆÜ˜YY[Èš[[™İX[]HšXHÜ™\•]\ĞS[™İXYÙX
+]ˆMÈÈ]NHš[X\JNÈİXˆY]H8)*¸)/¸)(0­ÈŒM\İ[H
+Ø\™Y]XÚ^™JKˆHZ[İØ\ÈH˜]šYØ]HÚ]œ›Ûˆ›ÜˆHÎ
+Šœ^H\ØÊŠˆØY™œ›Û‹][
+ÈØY™œ›Û‹YY\8¥­ˆ]™\İš[YØY™œ›Û˜
+ÈÛ‹\š[X\X8§f¸§fˆ›ÜˆHİ\œ™[H^Z[™È˜XÚËˆ\[™ÈHØ\™^\ÈH˜XÚÈ[™Ü[œÈ›İÈ^Z[™Ë‚‚ŠŠ”^X˜XÚÈİ]JŠˆ
+]Y[Ô^Y\ÛÛ^
+H8 %Û™H[\\˜]]™H^ËX]Y[Ø^Y\ˆ›ÜˆHÚÛHÙ\ÜÚ[Ûˆ
+[›ZÙHHÛÛ\Û™[\ØÛÜY˜\[P]Y[Ô^Y\˜
+KÛÈ^X˜XÚÈİ\š]™\È˜]šYØ][Û‹ˆHÙ\ÜÚ[Ûˆ\ÈÛÛ™šYİ\™Y›Üˆ˜XÚÙÜ›İ[™]Y[ÈšXH]Y[ËØ]Y[ÔÙ\ÜÚ[Û‹Øˆ^\Ò[”Ú[[[ÙXÚ]H[\œ\[Ûˆ[ÙHœ˜[˜ÚY\ˆ]›Ü›H[ˆH
+ŠœÚ[™ÛH[\œ\[Û“[ÙXšY[
+Šˆ8 %Z^Ú]İ\œØÛˆSÔËXÚÓİ\œØÛˆ[™›ÚYˆ[™›ÚY]\İ“Õ™[HÛˆ[\œ\[Û“[ÙP[™›ÚY
+^ËX]Y[È™\ÛÛ™\È[\œ\[Û“[ÙHÏÈ[\œ\[Û“[ÙP[™›ÚYÛÈHSÔÈ˜[YHİ™\œšY\È]
+H[™]\İ›İ\ÙHZ^Ú]İ\œØ
+^ËX]Y[È[ˆ™]™\ˆ™\]Y\İÈ]Y[È›Øİ\Ë[™[™›ÚYLŠÈ›Ü˜ÙK[]]\È›Øİ\Ë[\ÜÈ^Y\œÈÚ[ˆ[›İ\ˆ\ÛÈ›Øİ\È8 %HœÚ[[^X˜XÚÈÛˆ[™›ÚYMˆ]šXÙ\ÈˆYÊKˆ^ÜÙ\ÈÜÚ][Û‹Ù\˜][Û‹0¬LMHÈÚÚ\
+ÒÒTÔÑPÓÓ‘Ø
+K™^Ü™]š[İ\ÈXÜ›ÜÜÈH^XX›HÙ]ÛÜ˜]Hx $ÌKpåË[™›İÔ^Z[™ÓÜ[˜‚‚ŠŠ]]ËXY˜[˜ÙKŠŠˆHš[š\ÚY˜XÚÈ›ÛÈİ˜ZYÚÛˆÈH™^Û™H[ˆH^XX›HÙ]8 %HXœ˜\H^\È›İYÚÚ]İ]H\[™HÛÜÜ™\X]ÙÙÛH\ÈÚ]ÜÈİ]Ùˆ]
+™\X]ÛˆHH˜]]™HÛÜ›YÈ™\İ\ÈHØ[YH˜XÚËÛÈ›ÈY˜[˜ÙJKˆH[™[™È\È]XİYœ›ÛHY\İš[š\Ú
+Š›ÜŠŠˆH™\ÜYÜÚ][ÛˆÚ][ˆS‘ÑTÒSÓ—ÔÑPØ
+ŒÍHÊHÙˆH\˜][ÛˆÚ[HİÜY™XØ]\ÙHY\İš[š\Ú\Û‰İ[Z]Y[šY›Ü›[HXÜ›ÜÜÈ]›Ü›\È
+Ø[YHØ]™X]H˜\[H™XYÛİ[\ˆÛÜšÜÈ\›İ[™0©ÌÍJNÈH]Úš\™\ÈHY˜[˜ÙH^XİHÛ˜ÙH\ˆ[™[™È[™™KX\›\È\ÈÛÛÛˆ\È^X˜XÚÈ[İ™\ÈÙ™ˆH[™
+™\İ[YKÙYZÈ˜XÚËÜˆH™]ÈÛİ\˜ÙJKˆ[›ZÙHHX[X[8¥à8¥àø¥­¸¥­ˆ]ÛœË]]ËXY˜[˜ÙHÙ\È
+Š››İ
+ŠˆÜ˜\ˆ]H[™ÙˆHXœ˜\H^X˜XÚÈİÜÈ˜]\ˆ[ˆŞXÛ[™ÈHØ][ÙÈ[™Yš[š][H[ˆH˜XÚÙÜ›İ[™‚‚ŠŠ“Z[šT^Y\ŠŠˆ
+ÛÛ\Û™[ËØ]Y[ËÓZ[šT^Y\‹Ş
+H8 %™[™\™YÛ˜ÙH]H\›ÛİÈ\X\œÈÚ[™]™\ˆH˜XÚÈ\ÈØYY[™›Ø]Èİ™\ˆ]™\HX‹ÜİXÚËˆØÚÜÈ\İX›İ™HHXˆ˜\ˆ
+›İÛHHŒ
+ÈØY™KX\™XH[œÙ]
+ÈÜXÚ[™ËØÈ[œÙ]ÜXÚ[™Ë›ØXXÚÚYJH8 %Z\œ›Üš[™ÈH›İ][™P˜[›™\‰ÜÈØÚÚ[™È
+0©ÌÌ
+KˆØ\™ˆ\˜ÚY[\ÛÙ]šY\˜›Ü™\‹˜YZK›Ø\Ø\™ÚYİÎÈZ]H[XˆÛˆH[XˆÜ˜YY[È]H
+™XY\‹]]H˜XÙH]MJHİ™\ˆHÈ›ÙÜ™\ÜÈİš\
+ØY™œ›Û˜š[Ûˆ]šY\˜˜XÚÊNÈ[ˆ8¥­‹ø§f¸§fˆ
+ØY™œ›Û‹YY\
+H[™8§%H
+İÜ	ˆ\ÛZ\ÜÊH]ÛœÈ]Íˆˆ\[™ÈH›ÙH^[™È›İÈ^Z[™Ë‚‚ŠŠ“›İÈ^Z[™ÊŠˆ
+ØÜ™Y[œËØ]Y[ËÓ›İÔ^Z[™ÔØÜ™Y[‹Ş
+H8 %H[\ØÜ™Y[ˆ\˜ÚY[İ™\›^H
+XœÛÛ]KYš[[İ[Y\]ÚYH[ˆ\ŞÈ›È˜]šYØ][Ûˆ[Xš[™ÊKÚİÛˆÚ[ˆ›İÔ^Z[™ÓÜ[˜‚‚‹HXY\ˆ8£!Z[š[Z\ÙHÚ\˜ÛH0­È\\˜Ø\ÙH›İÈ^Z[™ØX™[
+İÚ\KZ[˜XÙJH0­ÈÜXÙ\‹‚‹H\ÛÜšÎˆHŒŒ\˜ÚY[\ÛÙœ˜[YYÜ]X\™HÚ]HZ]H™XİÜˆ]ML
+ÜˆHMˆØY™œ›Û˜8)d˜[˜XÚÊK‚‹H]H]ˆÙ[™Y
+™XY\‹]]H˜XÙJKİX]H\\İÚÚ[™ˆ0­ÈZ]O˜[ˆÛÜ›[Ü˜[][XÈ[šË[]]Y‚‹HÙYZÈ˜\ˆØY™œ›Û˜š[Ûˆ]šY\˜˜XÚË\]Ë\ÙYZÎÈ[š[™È[YHX™[ÈZ]\ˆÚYH
+ÛÜ›[Ü˜[Ù[ZP›ÛMJK‚‹H˜[œÜÜ›İÎˆ8¢$ŒMH0­È8¥à8¥à0­Èø¥­‹ø§f¸§f—H0­È8¥­¸¥­ˆ0­È
+ÌMXÈH^H]Ûˆ\ÈHÌˆØY™œ›Û˜\ØÈÚ]ØY™œ›Û‹YY\š[H[™Û‹\š[X\XÛ\‚‹HÙXÛÛ™\H›İÎˆH8§ìÈÛÜÙÙÛH
+Ù\›ÜˆX[˜H˜\JH8 %İ][™H]™\İš[YØY™œ›Û˜Ú[ˆÛÜ[™Ëˆ]İX›\È\ÈH
+Šœ™\X][Û™JŠˆÛÛ›ÛˆÚ[H]\ÈÛ‹Hš[š\ÚY˜XÚÈ™\İ\È[œİXYÙˆ]]ËXY˜[˜Ú[™ÈÈH™^Û™K‚‚ŠŠ”™XY\ˆ[HÚ[ŠŠˆ™XY\œÈÚÜÙH^\ÈH[šÙY™XÚ]][ÛˆÚ]™X[]Y[È
+šXHÙ]˜XÚÑ›Ü•^
+È\Ô™X[]Y[Ø
+HÚİÈHÛX[ØY™œ›Û‹YY\
+Š¸¥­ŠŠˆ[ˆHÜ˜\ˆY\ˆHYÙHÛİ[\ˆ
+Ú[\ØT™XY\”ØÜ™Y[‹Ş
+NÈ\[™È^\ÈH™XÚ]][Ûˆ[™Ü[œÈ›İÈ^Z[™È8 %HİXİ\˜[˜]Y[ÈÛÚÈˆ0©ÎH™\Ù\™YˆÚ[˜ÙH[HŒˆ]8¥­˜\È›Ú[™YHH
+Šœ™XYX[İY
+ŠˆÛÛ›Û
+0©ÍMŠKÚXÚÜXZÜÈH^Ú]H]šXÙH›ÚXÙH›ÜˆHX[HÙXİ[ÛœÈ]]™H›È™XÛÜ™[™ËˆHÛÈ\™H
+Š›]]X[H^Û\Ú]™JŠˆ›İÛZ[H^X˜XÚÈ›İYÚÜ˜ËØ]Y[ËÜ^X˜XÚĞ\˜š]\‹ØÛÈİ\[™ÈÛ™HÚ[[˜Ù\ÈHİ\ˆ8 %ØYX™X\š[™ÈÛˆSÔËÚÜÙHÙ\ÜÚ[Ûˆ\ÈÛÛ™šYİ\™YZ^Ú]İ\œØ[™Ûİ[İ\Ú\ÙH^H›İ]Û˜ÙKˆ™XYX[İY[X™\˜][H\È
+Š››ÈZ[šK\^Y\ˆ[™›ÈØÚË\ØÜ™Y[ˆİ\™˜XÙJŠˆ^Ë\ÜYXÚ^ÜÙ\È›ÈYYXK\Ù\ÜÚ[ÛˆTKÛÈ]İ^\È™XY\‹\ØÛÜY[™İÜÈÚ[ˆH\˜XÚÙÜ›İ[™Ë‚‚‹KKB‚ˆÈÈÍKˆ˜\[H
+8)'8)*ŠB‚ŠŠ”\œÜÙKŠŠˆHX[˜KXÛİ[[™È˜XİXÙHİ\™˜XÙNˆ\
+Üˆ]H]Y[ÈÛÜÛİ[›Üˆ[İJH›İYÚLX™XY›İ[™ÈÙˆHÚÜÙ[ˆX[˜KˆX[˜\È\™Hš\œİXÛ\ÜÈXœ˜\H[šY\È
+Ø]YÛÜNˆ	Ú˜\[IØ[ˆ^ËØÛİ\˜ÙYœ›ÛH]KÚ˜\[KÚ˜\[KšœÛÛ˜8 %X[˜\ÈÙ^Nˆ8)d8)*8)+¸) È8)-¸)/ø)-x)/¸)+Ë8).x),8)aÈ8)%x)`ø)-ø)cx)(È8)+¸).x)/¸)+¸) ¸))8)cx),8)%ø)/¸)+ø))8)cx),8)`8)+¸) ¸))8)cx),8)d8)*8)+¸)bÈ8)+x)%ø)-x))8)aÈ8)-x)/¸).8)`x))¸)aø)-x)/¸)+ÊKÛÈ^Hİ\™˜XÙH›İYÚH›Ü›X[Ø][ÙËÙZ]KÜÙX\˜Ú›İÜÎÈZ[[Tİ\\™Ù]›İ]\ÈH˜\[H[Hİ˜ZYÚÈ˜\[PÛİ[\˜
+ÛYHİXÚË^K[ØYY
+K‚‚ŠŠÛİ[\ˆØÜ™Y[ŠŠˆ
+˜\[PÛİ[\”ØÜ™Y[‹Ş
+Kˆ^Y\ˆİXÚÎˆ\˜ÚY[0­È\‹[X[˜HÚÙ]Ú
+Ù]Ûİ\˜ÙP˜XÚÙÜ›İ[™
+H0­ÈÛÛ[‚‚ŒKˆ
+Š•Ü˜\ŠŠˆ˜XÚÈÚ\˜ÛH0­ÈX[˜H]H
+[™İXYÙKX]Ø\™JH0­ÈHÍ8£ì[\›H]Ûˆ
+Ü[œÈHÚ\™Y[\›QY]Ü”ÚY]™K[ØÚÙYÈ\ÈX[˜JH0­ÈÚ\™H]Û‹‚Œ‹ˆ[™İXYÙHÙÙÛH›İÈ
+0©ÌMŠK‚ŒËˆ
+Š•\İ\™˜XÙJŠˆ8 %HÚÛH™[XZ[š[™ÈÛÛ[[ˆ\ÈÛ™H\™ÙH™\ÜØX›H
+[œÚYHHØÜ›ÛšY]ÈÛÈH\™ÙK]\HX[˜HØÜ›ÛÈ˜]\ˆ[ˆÛ\ÎÈ™\ÜÙYİ]H[\ÈÈLŠN‚ˆHX[˜H[™\ËÙ[™Y]HÚ\™Y™\œÙXÚÙ[ˆ
+ŒËÌÎNÈ][ˆ[™İXYÙ\È\ÙHÛÜ›[Ü˜[][XÈØØ[YHH™XY[™Ë\Ú^™H˜XİÜ‹0©Í
+K‚ˆH8)iXÜ›˜[Y[‚ˆH
+ŠÛİ[›ØÚÊŠˆHİ\œ™[™XYÛİ[\ÈHYÙHØY™œ›Û‹YY\[Y\˜[8 %
+ÍˆÛˆØÜ™Y[œÈ[™\ˆÌŒ[[™\ˆ
+H8 %İ™\ˆÈL8)+8)`8)'[ˆHYÙKXÛİ[\ˆ˜XÙNÈHˆ›İ[™›ÙÜ™\ÜÈ˜XÚÈ
+ØY™œ›Û˜š[Ûˆİ\™\İ
+HÚİÚ[™È›ÙÜ™\ÜÈ›İYÚH›İ[™Èˆ8)!¸)-x)`ø))8)cx))8)/Ø›İ[™È[™H
+™XY\‹]]H˜XÙH]MŠK‚ˆH][XÈ[8)'8)*ˆ8)%x)aÈ8),¸)/ø)#È8).8)cx)*¸),8)cx)-ˆ8)%x),8)aø) ˆ0­È\ÈÚ[
+İÚ\KZ[ÚÙ[ŠK‚ˆHXXÚ\HÛ™H™XYÚ]HYÚ\XÎÈÛÛ\][™ÈH›İ[™
+™XYL›ÛÈHÛİ[\ŠHš\™\ÈHİXØÙ\ÜÈ\XËˆÛİ[È\œÚ\İ\ˆX[˜H[ˆ˜\[PÛİ[\ÛÛ^
+™Y[œÚÚ˜\[KXÛİ[\˜
+KˆTSWĞ‘PQ×ÔT—Ô“ÕS‘HL
+]KÚ˜\[KÚ[™^Ø
+K‚ˆ
+Š]Y[È›İÊŠˆ
+ÛÛ\Û™[ËÒ˜\[P]Y[Ô^Y\‹ŞX›İ™HH]šY\˜Z\›[™JNˆ[ˆ]]ËXÚ[ÛÜÙˆHX[˜H™XÛÜ™[™È
+\ÜÙ]ËÚ˜\[KX]Y[Ø
+KˆH8¥­ˆ8)&¸),¸)/¸)#ø) HÈ^X[
+š[ÈØY™œ›Û˜Ú[H^Z[™ÊH[™H
+Š•[\ÊŠˆİ\\ˆ
+8¢$ˆÈKŒ0åÈÈ
+Ë˜[™ÙHx $ÌKpåÈ[ˆŒHİ\Ë]ÚXÛÜœ™XİY
+KˆHÛ\ÛÜÈ˜]]™[H[™H™XYÛİ[Y˜[˜Ù\ÈÚ]HÚ[[™ÎˆHÚ[™ÛK\™XÚ]][ÛˆÛ\™YÚ\İ\œÈ
+Š›Û™H™XY\ˆÛÛ\]YÛÜ
+Šˆ
+ÛÜ]Ü˜\]Xİ[ÛˆÛˆH™\ÜYÜÚ][Ûˆ8 %™[XX›HÚ\™HY\İš[š\Ú\Û‰İ
+KÚ[HH]\ÚXØ[™[™][ÛˆXÛ\™\ÈİÈX[H[Y\È]Ú[ÈHX[˜H
+™\]][ÛœØ[ˆ\ÜÙ]ËÚ˜\[KX]Y[Ø
+H[™™YÚ\İ\œÈ
+Š›Û™H™XY\ˆ™\]][ÛˆÙYÛY[
+Š‹ÛÈH][K[Z[]HÚ\[ˆÙ\Û‰İÛİ[\ÈHÚ[™ÛH™XYˆ]]Ô^Xİ\ÈHÛÜ[[YYX][HÚ[ˆ\œš]š[™Èœ›ÛH[ˆ[\›H\
+0©ÌÎ
+H[™
+Š˜]]Ë\İÜÈY\ˆÌÊŠˆ
+ST“WĞUU×ÔÕÔÓTØ
+HÛÈH[\›Hš[™ÜÈHX[˜Hœ›ÛHHÚ\™Y™XÛÜ™[™È[ˆ˜[ÈÚ[[˜]\ˆ[ˆÛÜ[™È›Ü™]™\ˆ8 %™]\Ú[™ÈHØ[YH[™Y\ËÚ]›ÈÙ\\˜]HÚ^™KXY[™È[\›HÛ\È[HX[X[^KÜ]\ÙHØ[˜Ù[ÈHØ\ÛÈH™X[Ú[[™ÈÙ\ÜÚ[Ûˆ\Û‰İİ]Ù™‹ˆX[˜\ÈÚ]İ]H[™YÛ\ÚİÈ[ˆ][XÈ]Y[È›İ]˜Z[X›Hˆ›İXÙH[œİXYˆ[™YÙ^NˆÛK[˜[XZ\Ú]˜^XX
+İÛˆÚ[™ÛK\™XÚ]][ÛˆÛ\H™XYÛÛÜ
+H\È\™KZÜš\Ú˜K[XZ[X[˜X[™Ø^X]šK[X[˜XÚXÚ™]\ÙHH]Y[Ë[Xœ˜\H™[™][ÛˆZÙ\È
+\ÜÙ]ËØ]Y[Ë[Xœ˜\KÚ\™K\˜[XK›\Ø8¢b™\È8 %HŒMXZ[X[˜H™[™][Û‹Ø^X]šK[X[˜K›\Ø8¢bˆ™\ÊHšXHH™[]]™H™\]Z\™XÛÈH\È\È[™YÛ˜ÙH˜]\ˆ[ˆ\XØ]YˆH\‹Yš[H™\]][ÛœØÛİ[È\™HØY[˜ÙH\İ[X]\È8 %[™H[HYˆH›İ[™šYÈœ›ÛHL™XYË‚Kˆ
+ŠXİ[ÛœÈ›İÊŠˆÛÈİ][™H]ÛœÈ8 %8)+8)`8)'8)*¸)`x)*8) È8)iˆ0­È™\Ù]™XYØ
+Ø\™Xİ]™P›Ü™\˜ØY™œ›Û‹YY\^È™\›Ù\ÈHİ\œ™[›İ[™ÙY\ÈÛÛ\]Y›İ[™ÊH[™8).8)+8).8)/¸)*ø)/0­ÈÛX\ˆ[
+]šY\˜[šË[]]Y
+Kˆ›İÛÛ™š\›HšXHHÙ[™Y[Ù[Ø\™İ™\ˆ[Ù[X˜XÚÙ›Ü
+]H
+È][XÈ›ÙH
+Èš[YØY™œ›Û˜ÛÛ™š\›H
+ÈØ[˜Ù[
+Kˆ\ØX›Y]ÜXÚ]HÚ[ˆ\™H\È›İ[™ÈÈ™\Ù]‚‚ŠŠ“X[˜HÙ[Xİ[Û‹ŠŠˆ\™H\È›ÈYXØ]YXÚÙ\ˆØÜ™Y[ˆ8 %H˜\[HØ]YÛÜH[HÈZ]H\İÈÈÙX\˜ÚÈ›İ][™H][\ÈÜ[ˆHÛİ[\ˆ›ÜˆHÜXÚYšXÈX[˜NÈH[\›HY]Ü‰ÜÈX[˜HXÚÙ\ˆ
+™[İÊH\ÈHÛ™H[‹Y›İÈÚÛÜÙ\‹‚‚ŠŠ[\›\ÊŠˆ
+˜\[P[\›\ÔØÜ™Y[‹Ş[ˆH[Ü™HİXÚË˜\[P[\›\ĞÛÛ^Ø\PVÒTSWĞST“TÈH\œÚ\İY]™Y[œÚÚ˜\[KX[\›\Ø
+N‚‚‹H\İØÜ™Y[ˆİ™\ˆHÛYHÜ˜YY[ˆ[›È[™H
+•ØZÙHÈHX[˜H[İHÚÜÙK]H[YH[İHÚÜÙKˆŠKH\›Z\ÜÚ[Ûˆ˜[›™\ˆÚ[ˆ›İYšXØ][ÛœÈ\™H[šYY
+\8¡¤ˆŞ\İ[HÙ][™ÜÎÈ™[šYYˆ\ÈH
+Š™Y™™Xİ]™JŠˆİ]\ÈÙˆ0©ÌÎ8 %™]™\ˆHœ™\Ú[™›ÚY[œİ[]\Û‰İ™Y[ˆ\ÚÙYY]
+K[\›H›İÜÈ
+\˜ÚY[\ÛÙ˜YZK›ØˆH[YH[ˆH™XY\‹]]H˜XÙH8 %LˆÜˆ\ˆH]šXÙHØØ[HšXH™Y™\œÌL’İ\ÛØÚÊ
+XÈLL^HX™[Èİ^H8 %X[˜H˜[YKH™\X][™H˜Z[HÈÛ˜ÙHÈÙYZÙ^\ÈÈÙYZÙ[™ÈÈ^H\İ0­È[ˆÈˆHZ[˜ˆ
+]™HÌÈXÚÊH\ÈœÚÚ\È8 .Y]x .ˆˆÚ[HHÚÚ\\È[™[™ËÜ[Û˜[\\˜Ø\ÙHX™[[™HØY™œ›Û˜İÚ]Ú
+K[™[ˆİ][™H
+ÈY[\›X]Û‹ˆ
+›Èš]˜XŞH›Ûİ›İH8 %[\[Y[][Û‹Y]Z[Y\ÜØYÚ[™ÈZÙH››İ[™ÈÛÙ\ÈÈHÙ\™\ˆˆ\È[X™\˜][H›İÚİÛˆ[]Ú\™H[ˆH\ŠB‹H
+Š[\›QY]Ü”ÚY]
+Šˆ
+^ÜY[™™]\ÙYHHÛİ[\‰ÜÈ8£ì
+H[ˆH˜YH[Ù[[\›˜[HØÜ›ÛX›H
+X^ZYÚ	JNˆ[YTİ\\˜]
+ŠŒK[Z[]JŠˆİ\È
+HÚ]œ›Ûˆİ\ÈÛ˜ÙH\ˆ\Ûˆ™\ÜË\™[X\ÙNÈH]]Ë\™\X]İ\Èœ›ÛH
+Š›Û™Ë\™\ÜÊŠˆ8 %ÍL\Ë[ˆ]™\HL\È8 %ÛÈHØÜ›Û˜YÈ]™YÚ[œÈÛˆHÚ]œ›Ûˆ™]™\ˆ]]]\ÈH[YJKH
+Š”™\X]
+Šˆ›İÈÙˆÙ]™[ˆÎÚ\˜İ[\ˆ^HÚ\È
+ÈHÈˆÎÈ[ÛˆHZ[K›Û™HHÛ˜ÙH8 %Hİ[[X\H[™H[ˆØ\›œÈ\›œÈÙ™ˆY\ˆš[™Ú[™ÈŠKHX[˜HXÚÙ\ˆ
+ØÚÙYÚ[ˆÜ[™Yœ›ÛHHÛİ[\ŠKH
+Š“X™[
+Šˆ^[œ]
+Ú\œËÜ[Û˜[
+K[ˆY][[ÙK[Û›H
+Š”ÚÚ\™^
+ŠˆÙÙÛHÚ\ÚİÚ[™ÈH]H]Ûİ[ÚÚ\[™H]™H”š[™ÜÈ[ˆ8 )ˆˆ™]šY]È[™HX›İ™HHš[YÛÛ™š\›H]Ûˆ
+LL^HX™[ÛÛ™š\›H[\›X
+K‚‹H
+Š“[Ù[
+Šˆ
+›İYšXØ][ÛœËÚ˜\[P[\›\ËØ
+Nˆ™\X]^\ÏÎˆ[X™\–×X
+Ù]^J
+H[™XÙ\ÎÈXœÙ[HZ[K×XHÛ™K][YKİXœÙ]HÙYZÛJH[™ÚÚ\™^]OÎˆ	ÖVVVKSSKQ	Øˆ\™H[\œÎˆ™^[\›Qš\™U[Y\İ[\
+ÊX
+Û›İ\œÈ^\È
+ÈÚÚ\
+KHÚ\™YÚÚ\[ˆ
+\ÔÚÚ\[™[™ØÈÚÚ\Û™\Úİ[˜8 %Û™H[™[˜ŞH™YXØ]H[™›ØØÓ˜YØÚ[YH›Üˆ]™\HY\ŠK™\X]İ[[X\X\ØÜšX™U[[š\™X›Ü›X][YSX™[™Y™\œÌL’İ\ÛØÚØˆHÛÛ^ÛX\œÈÚÚ\™^]XÚ[™]™\ˆ[YKÜ™\X]Ú[™ÙK[™\È\İÚÚ\]\ÈÛˆØYÙ›Ü™YÜ›İ[™[™
+Š˜]]ËY\ØX›\Èš\™YÛ™K][YH[\›\ÊŠˆšXHHØÚY[\‰ÜÈÛ˜ÙKX\›YY›ÛÚÚÙY\[™È
+š\™YÛ˜ÙP[\›RYØÈY\™ÙHÙ[X[XÜÈ8 %H\İ\›YY[Y\İ[\\È]šY[˜ÙHH[\›H˜[™È[™\È™]™\ˆİ™\Üš][‹[™Hš\™YÛ™K][YH[\›H\È™]™\ˆ™KX\›YY
+K‚‹HØÚY[[™È
+›İYšXØ][ÛœËÚ˜\[P[\›TØÚY[\‹Ø
+H\ÈY\™Yˆ[™›ÚY\Ù\ÈH˜]]™H[Ù[H
+[\›SX[˜YÙ\‹œÙ][\›PÛØÚØ
+ÈHYÚZ[\Ü[˜ÙHØÚË\ØÜ™Y[ˆ›İYšXØ][ÛˆÚ]HX[˜HÛİ[™ÛˆH
+Š˜[\›Hİ™X[JŠˆ8 %TĞQÑWĞST“X]Y[È]šX]\ËÛÈ]š[™ÜÈ›İYÚšXœ˜]KÜÚ[[[™›ÛİÜÈH[\›H›Û[YHÛY\ˆZÙHHÛØÚÈ\X]Ú[™È[\›RÚ]	ÜÈİ™\œšYK\Ú[[Ù[X[XÜÈÛˆSÔÈ8 %[™
+Š”İÜÈÛ›ÛŞ™HHJŠˆXİ[ÛœÈ8 %İ\š]™\ÈŞ™H[™™X›ÛİÈH\Ù\‹XÛÛ›ÛYĞÒQSWÑVPÕĞST“XXØÙ\ÜÈ\È™\]Y\İY›İYÚHØÜ™Y[‰ÜÈ^[˜]ÜH
+Š[\›\È	ˆ™[Z[™\œÊŠˆ˜[›™\‹İ\Ú\ÙH[™›ÚY˜[È˜XÚÈÈ[ˆ[™^XİŞ™K]Û\˜[[\›NÈH\[X™\˜][HÙ\È›İXÛ\™H^K\™\İšXİYTÑWÑVPÕĞST“XÜˆTÑWÑ•SÔĞÔ‘QS—ÒS•S•ÈHÛİ[ˆ™XÙZ]™\ˆ™KX\›\ÈH™^
+œ™\X]^JˆY\ˆXXÚš\™K™]™\ˆ›ÜˆÛ™K\ÚİË\ÛZ\ÜÙ\ÈHH^XİÜİY›İYšXØ][ÛˆÙ^K[™İ\™\ÜÙ\ÈHÛ›ÛŞ™Hš\™HÚÜÙH˜\ÙH[\›H\È›ÈÛ™Ù\ˆ\›YY
+NÈSÔÈŠÈ\Ù\È[\›RÚ]
+ÙYZÛH™Xİ\œ™[˜ÙHÛˆHÙ[XİY^\Ë™š^YÛ™K\ÚİÈ›ÜˆÛ˜ÙK˜]]™H
+Š”Û›ÛŞ™JŠˆÛİ[İÛˆ]ÛÈ™XÛÛ˜Ú[HX]™\ÈHZYXÛİ[İÛˆ[\›H[İXÚYÛÈÜ[š[™ÈH\™]™\ˆİØ[İÜÈHÛ›ÛŞ™Y™K\š[™ÎÈH˜\™H™\X]^\Îˆ×XYX[œÈÛ™K\ÚİÛˆ›İ]›Ü›\ÊNÈÛ\ˆSÔÈÈ^ÈÛÈ˜[È˜XÚÈÈ^Ë[›İYšXØ][ÛœØ8 %RSHšYÙÙ\ˆ›ÜˆZ[KÛ™HÑQRÓHšYÙÙ\ˆ\ˆÙ[XİY^KUHÛ™K\ÚİÈ›ÜˆÛ˜ÙK[[™\ˆHTSWÑV×ÔÓÕĞĞTH[™[™Ë\ÛİYÙ]
+ÚÛKX[\›HÜ˜[[\š]KÛÛÛ™\İYš\œİ
+HÛÈ˜\[HØ[‰İÜ›İÙHZ[K]™\œÙHÚ[™İÈİ]ÙˆSÔÉÜÈ\[™[™ÈØ\\ÈH˜\[KX[\›X›İYšXØ][ÛˆØ]YÛÜHØ\œZ[™ÈH
+Š”Û›ÛŞ™HHZ[ŠŠˆXİ[Ûˆ
+X^X™R[™R˜\[TÛ›ÛŞ™T™\ÜÛœÙXÚ\™Y[ˆ\ŞÛˆH
+Š›]™H\İ[™\ˆÛ›JŠˆ8 %HÛÛ\İ\›\İ™\ÜÛœÙHˆ\ÈYÛ›Ü™YÛÈHİ[HÛ›ÛŞ™H\Ø[‰İØÚY[HH[ÛHš[™ÊKˆH[™[™ÈÚÚ\[™^Ûˆ™Xİ\œ™[˜ÙK[İÛš[™ÈY\œÈ\È\›YY\È\ØÜ™]HÛ™K\ÚİÈ8 %ST“RÒUÔÒÒTÓÓ‘TÒÕĞÓÕS•HØÈV×ÔÒÒTÓÓ‘TÒÕĞÓÕS•H8 %[™™]™\ÈÈZ[ˆ™Xİ\œ™[˜ÙHÛˆH™^›Ü™YÜ›İ[™™XÛÛ˜Ú[KˆØÚY[R˜\[P[\›\Ø\ÈY[\İ[[™
+ŠœÙ\šX[^™Y
+Šˆ
+ÛÛ˜İ\œ™[™XÛÛ˜Ú[\ÈÚZ[‹\İØ[\ˆÚ[œÊH8 %Ø[˜Ù[][‹\™\ØÚY[HÛˆ[HÚ[™ÙNÈ[‹Y›YÚœÛ›ÛŞ™XÛ™K\ÚİÈ›Üˆ]™H[\›\È\™HÜ\™YÚ[HÜœ[™YÛ™\È
+[\›H[]YÙ\ØX›Y
+H\™HØ[˜Ù[Yˆ\[™ÈH[\›HY\[[šÜÈ[ÈHÛİ[\ˆÚ]]]Ô^X
+0©ÌÎ
+K‚‹H
+Š”š[™È[™JŠˆ
+\ÜÙ]ËÚ˜\[KX[\›K\Ûİ[™ËÚ[™^Ø
+NˆH[\›Hš[™ÜÈHÚÜÙ[ˆX[˜IÜÈİÛˆ[™YÛ\8 %H8¢iÌÈ[Û›ÈŒ‹ŒHÒˆÓHĞUˆ™\ÛÛ™YHÙ]˜\[P[\›TÛİ[™˜[YJX[˜RY
+XÛˆ]™\HY\ˆ
+[\›RÚ]›˜[YY
+
+XH[™›ÚY™XÙZ]™\‰ÜÈ™\ËÜ˜]ØÛÚİ\H[™\œØÛÜ™YX[˜HY[™H\‹[X[˜H^È›İYšXØ][ÛˆÚ[›™[Ú[˜ÙH[™›ÚY
+È[œÈHÚ[›™[	ÜÈÛİ[™]Ü™X][ÛŠKˆ[™›ÚYÚ[›™[È\ÙH
+Š˜]Œ˜ØŒ˜YÊŠˆÛˆ›İY\œÎˆHŒHÚ[›™[È˜[™ÈÛˆH›İYšXØ][Ûˆİ™X[H
+]]YHšXœ˜]KÜÚ[[[™H›İYšXØ][Û‹]›Û[YHÛY\ˆ8 %H››È[\›H›Û[YHÛˆ[™›ÚYˆYÊH[™H[›™YÚ[›™[Ø[‰İ™H™KX]šX]YÛÈH[\›K\İ™X[Hš^Ú\È\Èœ™\ÚÚ[›™[ÈÚ[HHŒHÛ™\È\™H[]YÛˆ[œİ\™KˆHÛİ[ˆ™XÙZ]™\‰ÜÈÚ[›™[Ûİ[™\ÈH
+Š›˜[YKX˜\ÙY
+Šˆ[™›ÚYœ™\Ûİ\˜ÙN‹ËÏÙÏ‹Ü˜]ËÏ˜[YO˜T’K™]™\ˆH[™\Ûİ\˜ÙHY
+˜]ÈYÈ™[[X™\ˆXÜ›ÜÜÈ\\]\È[™Ú[[HÚ[H[›™YÛİ[™
+Kˆ[™YÙ^NˆÛK[˜[XZ\Ú]˜^XX
+Ú[™ÛH™XÚ]][Û‹KˆÊH\È\™KZÜš\Ú˜K[XZ[X[˜X[™Ø^X]šK[X[˜X
+ÈİY™\ÜË[›Ü›X[\ÙY˜YY^Ù\œÈİ]œ›ÛHH]Y[Ë[Xœ˜\HZÙ\ÊKˆHX[˜HÚ]İ]HÛ\
+ÛK[˜[[ËXšYØ]˜]K]˜\İY]˜^XX
+H˜[È˜XÚÈÈHŞ\İ[HÛ™KˆH™]ÈÛ\]\İ
+Š˜[ÛÊŠˆ™H\İY[ˆ\šœÛÛ˜8¡¤ˆ^Ë[›İYšXØ][ÛœËœÛİ[™Ö×X8 %Ú]İ]]]\Û‰İÛÜYY[ÈH˜]]™H[™\È[™H[\›HÚ[[H˜[È˜XÚÈÈHY˜][Ú[YKˆH[™YÛ\
+Š™š[[˜[Y\È\ÙH[™\œØÛÜ™\ÊŠˆ
+ÛWÛ˜[XZÜÚ]˜^XKØ]˜
+K›İH\[˜]YX[˜HYˆ^Ë[›İYšXØ][ÛœØÛÜY\ÈXXÚš[H[È[™›ÚY™\ËÜ˜]ËØ™\˜˜][H[™™Z™XİÈ\[œÈ]™XZ[ÛÈH\[˜]Yš[[˜[YH˜Z[ÈH[™›ÚYZ[ˆH™XÙZ]™\ˆœšYÙ\ÈHÛÈÚ]X[˜RYœ™\XÙJ	ËIË	×ÉÊX‚‚‹KKB‚ˆÈÈÍ‹ˆÙX\˜Ú‚ŠŠ”\œÜÙKŠŠˆÛ‹Y]šXÙHÙX\˜ÚXÜ›ÜÜÈH[\™HXœ˜\H8 %ÙXİ[ÛœËZ]Y\Ë[™]™\H™\œÙH8 %Z[œ›ÛHHØ[YH[™Y]HH™XY\œÈØYˆ›È™]ÛÜšË›ÈÙ\šXÙK›È]Y\HÙÙÚ[™ÎÈH[™^Z[È^š[HÛˆš\œİÜ[ˆ
+]KÜÙX\˜Ú[™^Ø
+K‚‚ŠŠ‘[HÚ[8 %›Ø][™È]ÛŠŠˆ
+ÛÛ\Û™[ËÔÙX\˜Ú›Ø][™Ğ]Û‹Ş
+KˆHÚ\˜ÛK\˜ÚY[\ÛÙš[H]šY\˜›Ü™\‹Û[™ÈHØY™œ›Û˜8£%HÛ\]ˆ
+™XY\‹]]H˜XÙJKˆ[˜ÚÜ™YXœÛÛ]H]šYÚˆÜXÚ[™Ë›İÛNˆÜXÚ[™Ë
+HY˜][
+Kˆ]\ÙYÈ\ÜÈH˜[›™\‹XÛX\š[™ÈÙ™œÙ]ÛˆÛYHÈÚ]X›İ™HHØÚÙY›İ][™P˜[›™\ÈÚ[˜ÙH]˜[›™\ˆ[İ™Y[›[™H
+0©ÌÌ[HŒŠHHPˆ\Ù\ÈHY˜][Ù™œÙ][™ÙY\ÈHÜÚ]]™H’[™^ÛÈ]İ^\ÈX›İ™HHØÜ›ÛÛÛ[ˆİ\œ™[H™[™\™YÛˆÛYHÛ›NÈ\8¡¤ˆÙX\˜Ú
+ÛYHİXÚÊK‚‚ŠŠ”ÙX\˜ÚØÜ™Y[ŠŠˆ
+ÙX\˜ÚØÜ™Y[‹Ş
+Kİ™\ˆHÛYHÜ˜YY[‚‚ŒKˆ
+Š•Ü˜\ŠŠˆ˜XÚÈÚ\˜ÛH
+ÈH[\Ú\Y[œ]›İÈ
+\˜ÚY[\ÛÙ]šY\˜˜YZK›YYÚ
+NˆØY™œ›Û˜8£%KH^[œ]
+[\ˆL]MK[™İXYÙKX]Ø\™HXÙZÛ\ˆ¸)-¸)cx),¸)bø)%K8)*¸)/¸)(8)+¸) ¸))8)cx),8)%¸)bø)'8)aø) ¸ )ˆŠK[™H8§%HÛX\ˆ]ÛˆÚ[H\[™ËˆH[œ]]]ËY›Øİ\Ù\ÈŒŒ\ÈY\ˆ[İ[‚Œ‹ˆ
+Š‘[\Hİ]JŠˆ
+›È]Y\JNˆ
+”™XÙ[
+ˆÚ\È
+\İˆ]Y\šY\Ë™Y[œÚÜÙX\˜Ú\™XÙ[È[Ú\ÈÚ]\‹XÚ\8§%H[™HÛX\ˆ[Xİ[ÛŠH[™H
+”Ü[\Šˆ‹]\ÜšYÙˆ›İ\ˆ˜[˜XÚÈÙXİ[ÛœÈ
+[[X[ˆÚ[\ØKÚ]Kİ[™\šØ[™Ú]˜Hİİ˜[JH\È[X‹YÛ\Ù[Ë‚ŒËˆ
+Š”™\İ[ÊŠˆ8 %Ü›İ\Y›İÜÈ[™\ˆÙXİ[Û“X™[\İ[HXY\œÈÚ]Ûİ[È
+8)*¸)/¸)(0­ÈÙXİ[ÛœØ8))¸)aø)-x))8)/ˆ0­ÈZ]Y\Ø8)-¸)cx),¸)bø)%H0­È™\œÙ\Ø
+N‚ˆH
+”ÙXİ[Ûˆ›İÊˆ]˜[˜YØ\šH[XˆÛ\
+ØY™œ›Û‹YY\
+K˜[YH[ˆHXİ]™H[™İXYÙK[™HİX]KØY™œ›Û˜8 .‹ˆ\8¡¤ˆHÙXİ[Û‰ÜÈİ\šXH˜]šYØ]UÑ[Tİ\
+0©ÌÎ
+H8 %Ú[\ØH™XY\œËÚ\\œÈ[™^\ËX\KÜØ[œÚØ\ˆ™XY\œËH˜\[HÛİ[\‹ÜˆHY\X\\È\›ÜšX]Kˆ
+Š•šYH›İÜÊŠˆ
+‘LNH\ÙHŠHšYH\ÈÜ›İ\ÛÈ8 %Û™H›İÈ\ˆX›\ÚYšYH
+8)iH[X‹8)*¸)`¸)'8)/ˆ8)-x)/ø))ø)/È0­Èˆ8)&¸),8)(ØİX]JNÈZ\ˆÛİ\˜ÙRY\ÈHšYHY[™\Ü[œÈšYQ]Z[
+0©ÍŒŠH[œİXYÙˆH™XY\ˆ8 %\ÚYÛˆHÛYHİXÚËÚXÚ™YÚ\İ\œÈHšYH›İÈ[Û™ÜÚYHH[˜Ú[™ÈÛ™KÛÈ˜XÚÈ™]\›œÈÈHÙX\˜Ú™\İ[Ë‚ˆH
+‘Z]H›İÊˆÛÛ8)d[XÈ\8¡¤ˆZ]S\İš[\™YH]Z]K‚ˆH
+•™\œÙH›İÊˆHX]ÚY™\œÙIÜÈš\œİ[™H[ˆH™\œÙH˜XÙH]MËÛİ\˜ÙH0­ÈX™[Y]H[ˆÛÜ›[Ü˜[][XÎÈ\8¡¤ˆ
+Š]™\œÙH[ˆ]È™XY\ŠŠˆšXHZ[›ÙÜ™\ÜÕ\™Ù]
+Ú\\ˆ
+È™\œÙH[™^
+K˜[[™È˜XÚÈÈHÙXİ[Ûˆİ\‚ˆH™\œÙH]È\™HØ\Y]‘T”ÑWÔ‘TÕSĞĞTHLÚ][ˆ][XÈ“[Ü™H™\İ[È8 %\HH[Ü™HÜXÚYšXÈ]Y\Hˆ›İHÚ[ˆÛ\Y‚ˆ
+Š–™\›Èİ]JŠˆ[[YY8)iX¸)%x)bø)"8)*¸),8)/ø)(ø)/¸)+ˆ8)*8).x)`8) ˆÈ›ÈX]Ú\È›İ[™‹[™H[ÈHH]˜[˜YØ\šHÛÜ™ÜˆÙXİ[Ûˆ˜[YK‚‚ŠŠ’[™^Ûİ™\˜YÙKŠŠˆÙXİ[ÛœÈ
+]™\HXİ]™HXœ˜\H[H
+Šœ\ÈÛ™H›İÈ\ˆX›\ÚYšYJŠˆ8 %šY\È\™H›ØÙY\™\ËÛÈ^HÛÛšX]H›È™\œÙH[šY\ÊKZ]Y\Ë[™™\œÙ\Èœ›ÛH]™\H^[Ù[H8 %Hš[™HÚ[\Ø\ËX\\Ë˜\[HX[˜\ËÚ]Kİ[™\šØ[™[İİ˜[H[Ù[\Ë˜[XÚ\š]X[˜\Ë˜[ZZÚH˜[X^X[‹Ø[œÚØ\ˆ][\Ë[™HY\[\\Ëˆİ[™\™[™\ØØ[™\Ñ[˜Ú\\È\™HXÚÙY\]]ÛX]XØ[HÚ[ˆHÙXİ[Ûˆ\ÈYY
+•SP“ÓÒÈ0©ÍÊK‚‚ŠŠ“›Ü›X[^˜][ÛŠŠˆ
+]KÜÙX\˜Ú›Ü›X[^™KØ
+H8 %Û™H\™H›Û\YYÈ›İ[™^[™]Y\KÛÈ]˜[˜YØ\šH[™][ˆ]Y\šY\ÈYY][ˆHZYNˆ[šXÛÙH‘‘Ú]HÛÛXš[š[™ÈZİHİš\Y
+8)%x)/8¡á8)%JKİÙ\˜Ø\ÙKPTÕXXÜš]XÜÈ›ÛYÈTĞÒRH
+ønfønhønaØX8¡¤ˆÜœÛ˜XÛÈHZ[‹PTĞÒRH]Y\HX]Ú\ÈH›ÛX[š^™YÛÜœ\ÊK[˜İX][Ûˆ›ÜY
+Šš[˜ÛY[™Èxnaøn#XH8)iØ8)iX
+Š‹Ú]\ÜXÙHÛÛ\ÙYˆ˜[šÚ[™È\È^Xİˆ™Yš^ˆİXœİš[™È\ˆšY[
+X]Ú˜[šØ
+KY[\İ[[™[š]]\İY‚‚‹KKB‚ˆÈÈÍËˆ[Ü™HXˆ	ˆ›Ùš[B‚ŠŠ”\œÜÙKŠŠˆHÙ][™ÜËX[™\Ù[ˆXˆ
+[Ü™UX˜8¡¤ˆ[Ü™TİXÚÓ˜]šYØ]Ü˜ˆ[Ü™RÛYX8¡¤ˆ›Ùš[XÈÚ\Ú\İÈ™[Z[™\œØÈ˜\[P[\›\Ø
+KˆÛ™HØÜ›Ûİ™\ˆHÛYHÜ˜YY[
+ŠŒMˆİ]\œÊŠ‹™YHÜ›İ\YÙXİ[ÛœÈŒŒˆ\\ˆ
+Š[XˆÚ›ÛYH\ÈÚ[™ÛK[[™İXYÙJŠˆ
+HÙ[XİY™XY[™È[™İXYÙHÛ›JH8 %š[[™İX[Z\š[™È\È™\Ù\™Y›ÜˆXİX[™XY[™ÈÛÛ[™]™\ˆ˜]šYØ][Û‹ÜÙ][™ÜÈ
+™Y\ÚYÛŠK‚‚ŠŠ’XŠŠˆ
+[Ü™TØÜ™Y[‹Ş
+KÜÈ›İÛN‚‚ŒKˆ
+Š•]JŠˆ8 %Û™HYX[YÛ™Y[™KÙ[XİY[™İXYÙHÛ›H
+8)!x)*8)cx)+ØÈ[Ü™XÈ8*¡x*ª8*ãx*«ØÈ8,¡ø,ª8,ãx,ª8,­ø,ãx,§ø,àX
+KÌ[ˆHØÜš\	ÜÈ]H˜XÙH
+][›Û›Üˆ[‹ØÜš\]Q›Û›ÜˆKÙİKÚÛŠKˆ›È[Ü™XİX]K‚Œ‹ˆ
+Š•™YHÜ›İ\Y[œÙ]\İÊŠˆ8 %XXÚ\È[ˆ\\˜Ø\ÙH
+Š™Ü›İ\X™[
+Šˆ
+ØY™œ›Û‹YY\LÎÈ][ˆÙ]È˜XÚÚ[™È
+È\\˜Ø\ÙHšXHHÚ›ÛYH›Û[™XÈ›ÜÈ›İ
+HX›İ™HÛ™H
+Š›\İÛÛZ[™\ŠŠˆ
+\˜ÚY[\ÛÙ
+Š˜˜YZK›Ø
+Š‹H]šY\˜İ™\™›İÎšY[˜
+Š˜[]˜][Û‹œİXX
+ŠŠHÚÜÙH›İÜÈ\™HÜ]HZ\›[™H]šY\˜ÜX›Ü™\œËˆİ[™\™›İÈ[˜]Û^NˆÌÎXÛÛˆ[K˜YZKœÛWHÛX™[NH8 )ˆÜİ]HMH[šË[]]YHØÚ]œ›Ûˆ8 .ˆNHÛÛXˆHÛÛZ[™\ˆ˜Y]\ÈØ\È[ˆYZØÈŒ[™HXÛÛˆ[HLK›İÙ™ˆH˜Y]\ÈØØ[H
+0©Í
+KÚ]H[™\›ÛYÚYİÎÈ[™YH\™HÚÙ[œÈ\ÈÙˆ[HŒ‹Y[™ÈMpåÌM‹™\ÜÙY8¡¤ˆØY™œ›Û‹][Ø\Ú‚ˆH
+Š¸).8)/¸))ø)*8)/ˆÈ˜XİXÙJŠˆ8 %HÛÛ\Xİ
+Šœ›Ùš[H\›È›İÊŠˆ
+[YØ\™Xİ]™Qœ›ÛH8¡¤ˆØ\™Xİ]™UØÜ˜YY[LˆÚ\˜İ[\ˆØY™œ›Û˜8)d˜YÙK8).8)/¸))ø)%H8)*¸)cx),8)bø)*ø)/8)/¸)!ø),˜]KİX‹[[™HŠŠ˜˜
+Šˆ8)-¸)cx),¸)bø)%H0­È
+Š˜˜
+Šˆ8)-¸)cx),8)`ø) ¸)%¸),¸)/ˆˆHY™][YH™\œÙ\È
+Èİ™XZÈ[ˆØY™œ›Û˜ÈHÛ›İ[™ØÛİ[\È›ÜYÈLL^H“Ü[ˆØYZÈ›Ùš[Hˆ8¡¤ˆ›Ùš[JK[ˆ
+Š¸).8) ¸)%ø)cx),8).JŠˆ
+8¦iHØY™œ›Û˜İ]HHØ]™YÛİ[ÈX™[X]Ú\ÈHÚ\Ú\İØÜ™Y[ˆ]H8¡¤ˆÚ\Ú\İ0©Ì
+K
+Š¸).8)cx)+¸),8)(ÊŠˆ
+8)dÛÛİ]HH™[Z[™\ˆ[YJÊHÜˆÙ™ˆ8¡¤ˆ™[Z[™\ˆÙ][™ÜÈ0©ÌÎ
+K
+Š¸)'8)*ˆ8)!x),¸)/¸),8)cx)+ŠŠˆ
+8£ìØY™œ›Û‹YY\İ]HHXİ]™HÛİ[8¡¤ˆ0©ÌÍJK‚ˆH
+Š¸)$8)*ˆÈ\
+Šˆ8 %
+Š¸)+x)/¸)-ø)/ŠŠˆ
+8)!HÛÛİ]HHİ\œ™[[™İXYÙIÜÈ˜]]™H˜[YNÈÜ[œÈH
+Š“[™İXYÙHXÚÙ\ˆÚY]
+Š‹›İ[ˆ[›[™HÜšY
+K
+Š¸)*¸)/¸)(8)%x)/ˆ8)!¸)%x)/¸),
+Šˆ
+XHØY™œ›Û˜İ]HH8)+¸)/¸)*8)%Kø)+8)(x)/8)/ÈÜ[œÈH
+Š”™XY[™Ë\Ú^™HXÚÙ\ˆÚY]
+Š‹0©ÍÊK
+Š¸)*¸)/¸)(8).8)`x)*8)aø) ˆÈ™XY[İY
+Šˆ
+8¦j»î#ˆØY™œ›Û‹YY\]MKİ]HHÚ]Ú[™HÜÚÙ[ˆ
+ÈH˜]HšXHH^ÜY™XY[İY›İÓX™[Üˆ8)"x)*¸),¸)+8)cx))È8)*8).x)`8) ˜Ú[ˆH]šXÙH\È›È›ÚXÙNÈÜ[œÈH
+Š”™XYX[İYÙ][™ÜÈÚY]
+Š‹0©ÍMŠK
+Š¸)$8)*ˆ8).8)/¸)'x)/ˆ8)%x),8)aø) ŠŠ‚ˆ›İÙ][™ÜÈ›İÜÈ\™H[ÛÈ™X]\™K]İ\ˆÜİYÚ\™Ù]È
+[™İXYÙT›İØÈ™XY[™ÔÚ^™T›İØ0©ÍÈİ\ÈŒø $Ì
+NˆXXÚÙ][™ÜÔ›İØ\ÈÜ˜\Y[ˆHYX\İ\˜X›HšY]Ø[™™YÚ\İ\œÈHØÜ›Û›ÙR[ÕšY]Ø™]™X[YØZ[œİH[Ü™HØÜ›ÛšY]ØÚ[˜ÙHH\Ü›İ\Ø[ˆÚ]™[İÈH›ÛˆHİ\ˆ[™ÈÛˆ[K[™HÜİ]İ\ˆÙ]\ÚY][ˆ\ÚÜÈH\Ù\ˆÈÙ]›İˆ
+8¡¥ÈØY™œ›Û˜ÈÔÈÚ\™HÚY]šXHZ[\Ú\™SY\ÜØYÙJ[™ÊX]KÜÚ\™S[šÜËØ8 %HØØ[^™YTÔÒT‘WÒS•’UX
+ÈÓPT•ÓS’ØˆH[š]H\ÈH
+Š›][K[[™H™X]\™H\İ
+Š‹›İHÛ™K[[™\ˆH˜ÛÛ\]HšZİH[ˆÛ™H\ˆYKš]™H8 (˜[]È8 %^È
+Ú]KÔİ[™\šØ[™ĞÚ[\ØKĞX\KÔİİ˜JK˜\HX[H
+È[\›\Ë[˜Ú[™È
+œ˜]Y™\İ]˜[Û]Z\˜]Úİ[™[KÜ˜\ÚY˜[
+KšZ˜[ˆ]Y[È
+ÈZ[H™\œÙKš]XK\ØY[˜H›İ][™H8 %H›İ\‹\ØÜš\œ™XY[ˆˆ[™İXYÙH[™K[ˆHİÛ›ØYÕHÚ]HÛX\[šËˆZ[ˆ8 (˜[]Ë›È[[ÚšH\ˆ0©ÍKŠK
+Š¸)$8)*ˆ8)%x)bÈ8),8)aø)'ø)/ø) ¸)%È8))¸)aø) ˆÈ˜]HH\
+Šˆ
+8¦!HÛÛ]N›Èİ]KLL^HX™[ÛÛœİ[”˜]HH\ŠH8 %HX[X[[HÚ[›ÜˆH˜][™ÈÚY]
+0©ÍM
+Nˆ]Ø[ÈÜ[Š
+X\\ÜÚ[™ÈH]]ËX\ÚÈØ]H[™Ü[™[™È›È\ÚÈÛİ[™ÙY\ÈÛÜšÚ[™È]™[ˆY\ˆH\Ù\ˆ\ÈÜYİ]ÙˆH]]ÛX]XÈ›Û\ˆ\İ[ˆHÜ›İ\ˆ
+Š’[œİYÜ˜[H8)*¸),8)*ø)/8)bx),¸)bÈ8)%x),8)aø) ˆÈ›ÛİÈÛˆ[œİYÜ˜[JŠˆ
+8¥âHØY™œ›Û‹YY\]NKİ]HHH™Y[œÚ˜\[™KLL^HX™[ÛÛœİ[‘›ÛİÈÛˆ[œİYÜ˜[HŠH8 %[šÚ[™Ë›Ü[•T“
+S”ÕQÔSWÕT“
+Xœ›ÛHHØ[YH]KÜÚ\™S[šÜËØ˜[[™È˜XÚÈÈ[ˆ[\˜[Z[™ÈH[™HYˆHÔÈØ[‰İÜ[ˆ]ˆH[šÈ\ÈHØ[›ÛšXØ[Î‹ËİİİËš[œİYÜ˜[K˜ÛÛKø )˜›Ü›K
+Š››İ
+Šˆ[œİYÜ˜[N‹ËØˆHİ\İÛHØÚ[YHÛİ[™YYĞ\XØ][Û”]Y\šY\ÔØÚ[Y\ØÈ[™›ÚYœ]Y\šY\Ø[ˆ\šœÛÛ˜
+HİÜ™H™XZ[
+KÚ\™X\ÈHÈT“\ÈÛZ[YYHH[œİ[Y[œİYÜ˜[H\šXH[š]™\œØ[Ø\[šÜÈ[™YÜ˜Y\ÈÈHœ›İÜÙ\ˆİ\Ú\ÙH8 %ÛÈH›İÈÚ\Èİ™\ˆÕK‚ˆH
+Š¸)'8)/¸)*8)%x)/¸),8)`È[™›ÊŠˆ8 %
+Š¸)*¸),8)/ø)&¸)+È8)-H8)!x).8)cx)-x)`8)%x),8)(ÊŠˆ
+8¤æ[šË[]]YÈÜ[œÈHYÙTÚY]\ØÛZ[Y\ˆ[Ù[Ú]Hš[[™İX[\ØÛZ[Y\ˆ
+È”™\Ü[ˆ\œ›ÜˆˆÕJK
+Š¸))8)cx),8)`x)'ø)/È8).8)`¸)&¸)/ø))8)%x),8)aø) ŠŠˆ
+8¦¤H[šË[]]YÈXZ[ØšXHZ[\ØÜ™\[˜ŞSXZ[Ø
+K[™
+Š¸)$8)*ˆ8)+x)cx),8)+¸)(È8)*ø)/ø),8))¸)aø)%¸)aø) ˆÈÚİÈ\İ\ŠŠˆ
+8¡®ÈÛÛÈLL^HX™[ÛÛœİ[”ÚİÈ\İ\ˆŠHÚXÚØ[È™\Ù]İ\Š
+XÈ™\^HHš\œİ[][˜Ú™X]\™Hİ\ˆÛˆ[X[™
+0©ÍÊK‚‚ŠŠ”XÚÙ\ˆÚY]ÊŠˆ8 %[™İXYÙTXÚÙ\”ÚY]Ş[™™XY[™ÔÚ^™TXÚÙ\”ÚY]Ş\™H›İÛK\ÚY][Ù[È
+ÛYH\[Ù[˜XÚÙ›ÜÜ˜X˜™\‹\˜ÚY[YÚYÚ
+H›ÛİÚ[™ÈHYÔ›İ][™TÚY]]\›‹ˆ[™İXYÙH\İÈH›İ\ˆS‘ÕPQÑTØ\È˜Y[ÜÈXXÚ[ˆ]ÈİÛˆØÜš\ÈXÚÚ[™ÈÛ™H\Y\È]
+\ÙQÚ]S[™İXYÙX0©ÌMŠH[™ÛÜÙ\Ëˆ™XY[™Ë\Ú^™HÚİÜÈHKÓ[È
+ÈH]™H¸)-¸)cx),8)`8),8)/¸)+ˆ8)'8)+È8),8)/¸)+ˆˆØ[\H
+0©ÍÊH
+ÈHÛ™H]ÛÈXÚÚ[™ÈHÚ^™HÙY\ÈHÚY]Ü[ˆÛÈH™]šY]È\]\ËˆHš\œİ\[ˆÙ]\ÚY]
+0©ÍÊH\ÈHØ[YHÛÈÚÚXÙ\È[ˆÛ™Hš[[™İX[ÚY]ÚİÛˆÛ˜ÙHY\ˆHØ[İ›İYÚ‚‚Š”™[[İ™Y[ˆŠˆH[š[[™İX[XY\ˆ
+È[Ü™XİX]KHšYÈË\İ]›Ùš[HØ\™
+8¡¤ˆÛÛ\Xİ\›È›İÊKH[›[™H°åÌˆ[™İXYÙHÜšY[™[›[™H™XY[™Ë\Ú^™HØ\™
+8¡¤ˆ›İÜÈÜ[š[™ÈÚY]ÊK[™H[˜Ú[™ÈY]ÙÛÙŞHØ\™
+]\XØ]YH[˜Ú[™ÈX‹0©ÌÌÊK‚‚ŠŠ”›Ùš[JŠˆ
+›Ùš[TØÜ™Y[‹Ş
+H8 %H8).8)/¸))ø)%H[œÚYÚÈİ\™˜XÙK™YH\Ù\Xİ]š]PÛÛ^
+™XYË˜\[H™XYËÜ›İ[™Ë\‹\Ûİ\˜ÙH[™\‹[X[˜H[Y\Ë[ØØ[
+N‚‚ŒKˆ
+Š’Y[]HØ\™
+Šˆ
+Ü˜YY[˜YZK›Ø
+NˆØY™œ›Û˜8)dÜ™\İ8).8)/¸))ø)%H0­ÈØYZØ˜[YHZ\‹Z\›[™K[™H™YKXÙ[›Ûİ\ˆ8 %
+Š™^Hİ™XZÈ0­ÈXİ]™H^\È0­ÈØ]™Y™\œÙ\ÊŠ‹‚Œ‹ˆ
+Š”˜[™ÙHXœÊŠˆ8 %HÙYÛY[Y[Y™][YHÈ[ÛHÈZ[XÈHXİ]™HXˆš[ÈÛÛYØY™œ›Û˜Ú]Û‹\š[X\X^ˆ[ˆ][XÈ˜[™ÙHØ\[Ûˆ™[İË‚ŒËˆ
+Š”İ][HÜšY
+Šˆ8 %›İ\ˆ[\Îˆ™\œÙ\È™XY™XYÈÚ[Y›İ[™È
+X[JK^\ÈXİ]™K‚ˆ
+ŠËY^H™[™
+Šˆ8 %HZ[šH˜\ˆÚ\
+ØY™œ›Û˜˜\œÈÛˆ\˜ÚY[YY\\İ[H˜XÚÜÊHÙˆZ[HXİ]š]H
+™XYÈ
+È™XYÈ
+È›İ[™ğåÌL
+KÙYZÙ^HX™[ÈØØ[^™Y‚Kˆ\‹\Ûİ\˜ÙH[™\‹[X[˜Hœ™XZÙİÛˆ\İÈ›ÜˆHÙ[XİY˜[™ÙKÛÜYH›Û[YKÚ][ˆ[\Hİ]HÚ[ˆH˜[™ÙH\È›ÈXİ]š]K‚‚‹KKB‚ˆÈÈÎˆ›İYšXØ][ÛœÈ	ˆY\[šÜÂ‚ŠŠ”\œÜÙKŠŠˆ[›İYšXØ][ÛœÈ\™H
+Š›ØØ[[™Û‹Y]šXÙJŠˆ8 %ØÚY[YÚ]^Ë[›İYšXØ][ÛœØ
+\ÈH˜]]™H[\›HY\œÈÙˆ0©ÌÍJNÈ›ÈÙ\™\ˆ\ÚˆZYÚ˜[Z[Y\ËXXÚİÛš[™È[ˆY[YšY\ˆ™Yš^ÛÈØ[˜Ù[Ü™KX\›HŞXÛ\È™]™\ˆİXÚXXÚİ\‰ÜÈÛİÎˆZ[H™\œÙH
+Z[K]™\œÙX
+Kœ˜]™[Z[™\œÈ
+œ˜]x )˜‘LJK]Z\˜]™[Z[™\œÈ
+]Z\˜]\™[Z[™\˜0©ÍŒ
+K™\İ]™H™[Z[™\œÈ
+™\İ]™K\™[Z[™\˜
+KØY[˜H™[Z[™\œÈ
+ØY[˜K\™[Z[™\˜0©ÍŠK›İ][™H™[Z[™\œÈ
+›İ][™K\™[Z[™\˜0©ÍH8 %‘LÈÊK]HÛX\˜[ˆÈ]HZÜÚH™[Z[™\œÈ
+]K\ÛX\˜[‹\™[Z[™\˜È]K\ZÜÚK\™[Z[™\˜0©ÍŒÊK[™˜\[H[\›\Ëˆ
+Š“Û™HÔÈ\›Z\ÜÚ[ÛˆÜ˜[Ù\™\È[Ùˆ[JŠˆ8 %HZ[K]™\œÙH[™™\İ]™HY˜][È™\]Y\İ]]][˜ÚH]HØ]™H›İÈ[™H›İ][™KY]Z[™[Z[™\ˆÙÙÛH\ÚÈÛˆZ\ˆİÛˆÜZ[ˆ[ÛY[Ë[™H™[XZ[š[™ÈØÚY[\œÈÛ›H]™\ˆšYHÚ]]™\ˆH\Ù\ˆ[™XYHÜ˜[Y‚‚ŠŠ‘Z[H™\œÙJŠˆ
+›İYšXØ][ÛœËÜØÚY[\‹Ø
+È\™H[\œÈ[ˆ\™KØÈÙYYØÈİ]H[ˆ›İYšXØ][Û”™Y™\™[˜Ù\ĞÛÛ^8 )‹Ü™YœØ
+ÈY]H[ˆ\Ş[˜ÔİÜ˜YÙJN‚‚‹H
+Š‘Y˜][Ûˆ]ÎŒŠŠˆ\ÈPVÔ‘SRS‘T—ÕSQTÈH[Y\È\ˆ^KY]Y[ˆ™[Z[™\ˆÙ][™ÜÈ
+™[Z[™\”Ù][™ÜÔØÜ™Y[˜ˆX\İ\ˆİÚ]Ú\‹][YH[YTİ\\˜›İÜËYÜ™[[İ™H\ÈHØ\
+K‚‹HH›Û[™È
+ŠŒÌY^HÚ[™İÊŠˆ
+“ÓS‘×ÕÒS‘Õ×ÑVTØ
+H\ÈØÚY[YZXY\™XØ\Y]SÔÉÜÈ[™[™Ë[›İYšXØ][ÛˆYÙ]
+SÔ×ÔS‘S‘×ĞĞTÚ\™Y˜Z\›HXÜ›ÜÜÈÛÛ™šYİ\™Y[Y\ÊKˆY[\İ[Ø[˜Ù[][‹\™\ØÚY[HÛˆ]™\H™[]˜[Ú[™ÙH[™\›Ü™YÜ›İ[™‚‹H
+Š‘]\›Z[š\İXÈ™\œÙH\ˆÛİ
+ŠˆHØØ[VVVKSSKQÙ^H\È“•‹LXKZ\ÚY[ÈH™\œÙHÛÛ
+ÙYYØ
+KÛÈ™\ØÚY[[™È™]™\ˆÚ[™Ù\ÈÙ^IÜÈ™\œÙNÈ][\HØ[YKY^H[Y\ÈÙ]\İ[˜İ™\œÙ\Ë‚‹H
+Š“ØØ[^™YH™XY[™È[™İXYÙJŠˆ
+0©ÌL
+Nˆ]H8))¸)b8)*8)/ø)%H8)+x)%x)cx))8)/ØÈZ[H™\œÙX›ÙHHš\œİ™\œÙH[™H
+ÈÛİ\˜ÙH0­ÈX™[[™[™\™Y›İYÚHØ[YH[™İXYÙH[\œÈH™XY\œÈ\ÙH8 %İKÚÛˆ\œš]™H™K\ØÜš\Y[ˆ›ÛX[š^™Y‚‹H
+Š”[˜Ú[™ËX]Ø\™H]JŠˆ
+›İYšXØ][ÛœËÙ^P[™ØKØ\™H
+È^P[™ØT™\ÛÛ™\‹Ø[™Ú[™HÛYK™YHHXY\ÜÈZ[U™\œÙP[™ØPœšYÙO˜[ˆ\Ş
+KˆH]HXYÈÚ]H
+Š™š\™H^IÜÊŠˆ[˜Ú[™ÈÛÛ^[ˆ0­È
+ÈH˜\ÙH]Nˆ[ˆØœÙ\˜[˜ÙH^H˜[Y\È]Èœ˜]Ù™\İ]˜[
+8)*8)/ø),8)cx)'8),¸)/ˆ8)#ø)%x)/¸))¸)-¸)`0­È8))¸)b8)*8)/ø)%H8)+x)%x)cx))8)/Ø
+K[ˆÜ™[˜\H^H]Èİ[œš\ÙH]HÚ]ZÜÚH
+8)-¸)`x)%x)cx),ˆ8)#ø)%x)/¸))¸)-¸)`0­È8))¸)b8)*8)/ø)%H8)+x)%x)cx))8)/Ø
+K[™\›š[XKĞ[X]˜\ŞXH™[™\ˆ˜\™HÚ[˜ÙH^H˜[YHZ\ˆZÜÚH[\XÚ]Kˆ
+Š•H›ÙH™]™\ˆÚ[™Ù\ÊŠˆ8 %H™\œÙH[™Hİ^\ÈHš\œİ[™È™XYˆÛ™HØœÙ\˜[˜ÙH\ˆ^H\ÈÚÜÙ[ˆ]\›Z[š\İXØ[H
+Y˜][š\ÚXš[]HÛ›KÜ™\™YHX\šÙ\˜ÚYÛšYšXØ[˜ÙH8¡¤ˆØ]YÛÜH8¡¤ˆY
+KÛÈH™\ØÚY[HØ[ˆ™]™\ˆ™]ÛÜ™H^Kˆ\İUWÓPVĞÒT”ÈHÎH0­È8))¸)b8)*8)/ø)%H8)+x)%x)cx))8)/ØİY™š^\È›ÜYÚÛH˜]\ˆ[ˆ][™ÈHÔÈÛXÙHH™\İ]˜[˜[YHÜˆH]˜[˜YØ\šHÛÛš[˜İ8 %H\˜[YH\È[™XYH[ˆH›İYšXØ][ÛˆÚ›ÛYKˆH^HÚ]›È™\ÛÛ™Y[™ØH˜[È˜XÚÈÈHZ[ˆ]KÛÈH[™[™ÈÜˆ˜Z[YÛÛ™H\È[™\İ[™İZ\ÚX›Hœ›ÛHH™K\[˜Ú[™È™Z]š[İ\‹‚‹H
+Š•ÚHHœšYÙHÛÛ\Û™[
+Šˆ›İYšXØ][ÛœÈ\™H˜ZÙY]ØÚY[H[YH
+\ÈÌ^\ÈZXY
+KÛÈHÚÛHÚ[™İÉÜÈ]H]\İ™HÛÛ™Y\œ›Û8 %\‹Y^H\İ›Û›Û^KÚXÚ0©ÌÌÈ\İX›\ÚY]\İ™]™\ˆİXÚH™[™\ˆ]ÛÈH™\ÛÛ™\ˆ[œÈ™Z[™[\˜Xİ[Û“X[˜YÙ\˜[™ZY[È]™\H\Èœ˜[YHYÙ]ˆ]H\Èİ[œš\ÙKX[˜ÚÜ™Y[™\™Y›Ü™H
+Š›ØØ][Û‹Y\[™[
+Š‹]›İYšXØ][Û”™Y™\™[˜Ù\Ô›İšY\˜Ú]È
+˜X›İ™Jˆ[˜Ú[™ÓØØ][Û”›İšY\˜ÈZ[U™\œÙP[™ØPœšYÙO˜[İ[È™[İÈ›İ™\ÛÛ™\Ë[™X›\Ú\È\šXHX›\Ú^P[™Ø\ÊÙ^KX\
+X8 %Ù^YYHÚ]H
+ÈØ[[™\ˆŞ\İ[H
+È^HÛÈH™\X]X›\Ú\ÈYÛ›Ü™Y[™Ø[‰İÛÜˆØœÙ\˜[˜Ù\È\™HÚÚ\Y›Üˆ[HYX\ˆÚÜÙHØØ][Û‹XXØİ\˜]HØØ[ˆ\Û‰İ[™Y
+\ÓØœÙ\˜[˜ÙQ]T™XYX
+K™XØ]\ÙHH™\İ]˜[˜[YH›Üœ›İÙYœ›ÛHZš˜Z[‰ÜÈØ[[™\ˆÛˆ[›İ\ˆÚ]IÜÈØÚÈØÜ™Y[ˆ\ÈÛÜœÙH[ˆÚİÚ[™ÈH]K‚‹H
+Š“ÜZ[ˆ[Ù[
+Šˆ
+™[Z[™\“Ü[“[Ù[Ş[İ[Y\]ÚYJNˆHYÙTÚY]8 %YKH[YTİ\\˜Hš[YØY™œ›Û˜
+Š‘[˜X›JŠ‹[™H]ZY]\\˜Ø\ÙH
+“›İ›İÊ‹ˆ
+Š\ÚÈØY[˜ÙH
+]YÈŒŠJŠˆ™[Z[™\œÈY˜][Û‹[™H\ÚÈ™\X]È[[H\Ù\ˆ\ÈÛÛ™š\›YYHY\ÈÜˆH›È8 %[ˆH››ÈˆÛ›ÛŞ™\È]ˆÛÛ˜Ü™][Nˆ
+JHH›İšY\ˆš\™\ÈHÔÈ\›Z\ÜÚ[Ûˆ›Û\Ûˆ
+Š™]™\HÛÛİ\
+Šˆ]š[™ÈH\›Z\ÜÚ[Ûˆİ[[˜[œİÙ\™Y
+Ú]HÙÙÛHÛŠNÈ
+ŠHHÚY]ÚİÜÈœ›ÛHH
+Š™š\œİ\Ü[ŠŠˆÚ[™]™\ˆH™[Z[™\ˆ\ÈÙ™‹Ûˆ
+Š™]™\HÜ[ˆÚ[H›È››Èˆ\ÈÛˆ™XÛÜ™
+Š‹[™Y\ˆH››Èˆ]™]\›œÈÛ˜ÙH
+Š˜ÔÒS—Ô‘SÑ‘‘T—ÔÓ“ÓÖ‘WÑVTÈHMX
+Šˆ^\È]™H\ÜÙY8 %XXÚ\\ˆ››Èˆ™\İ\ÈHÛØÚËˆ
+HÛİ[\È[\YÈ8¢iHH\š[™ÈY˜][Û‹ÛÈH\Ü[Ûİ[HXØ]HÙ™™\œÈÛˆH™\Hš\œİ][˜Ú8 %HÚ[™ÙHœ›ÛHHX\›Y\ˆ™X\›ˆH\ÚÈˆ\™[Ü[ˆØ]KŠHH››Èˆ\È[HÙˆ™Y\Ú[™ÈHÔÈ›Û\\[™È
+“›İ›İÊˆÈÛÜÚ[™ÈHÚY]ÜˆİÚ]Ú[™ÈH™[Z[™\ˆÙ™ˆ[ˆ™[Z[™\ˆÙ][™ÜÈ8 %[™YHİ[\\İXÛ[™Y][ˆH›İYˆY]H
+HÚ[™ÛH™XÛÜ™HØ]HÛÛœİ[ÎÈHY\Èˆ™YYÈ›ÈX\šÙ\ˆÚ[˜ÙHH™[Z[™\ˆ™Z[™ÈÛˆÛÈHÚY]ÛÜÙY
+KˆHÚY]™]™\ˆÚİÜÈÚ[HHÔÈ\È
+Šš\™X›ØÚÙY
+Šˆ
+Ø[\ÚĞYØZ[ˆ˜[ÙX
+H8 %]È[˜X›H]ÛˆÛİ[›İİXØÙYYÛÈ]İ]H™[Û™ÜÈÈH™[Z[™\œÈØÜ™Y[‰ÜÈÙ][™ÜÈ˜[›™\‹ˆ][ÛÈØZ]Èİ]H
+Š›][˜ÚÔÈ\ÚÈ[ˆ›YÚ
+Šˆ
+\›Z\ÜÚ[Ûˆ[˜[œİÙ\™YÚ][H›İYšXØ][ÛˆÙÙÛHÛˆ8 %Ú[˜ÙH™\İ]™H™[Z[™\œÈY˜][Û‹][˜ÛY\È[œİ[ÈÚÜÙHZ[H™\œÙH\ÈÙ™ŠNˆHŞ\İ[H›Û\™\ÛÛ™\Èš\œİ[ˆHÚY]›ÛİÜËÛÈÛÈ\ÚÜÈ™]™\ˆİXÚËˆ\İXÛ[™Y]\È[X™\˜][HXœÙ[Ûˆ™KXØY[˜ÙH[œİ[ËÛÈ\Ù\œÈH™KYš^[™›ÚYZ[ÈÚ[[HÜYİ]
+ÙYHH\›Z\ÜÚ[Û‹\İ]H[]™[İÊHÙ]™K[Ù™™\™YÛˆZ\ˆš\œİÜ[ˆY\ˆ\][™Ë‚‹H
+Š“ÔÈ\›Z\ÜÚ[Ûˆİ]H8 %›İYšXØ][ÛœËÜ\›Z\ÜÚ[Û”İ]KØ
+Šˆ
+Ú\™YHZ[H™\œÙH
+˜[™
+ˆ˜\[H[\›\Ë0©ÌÍKÚ[˜ÙHHÜ˜[\È\]ÚYJKˆH[Ù[H^\İÈ™XØ]\ÙH^Ë[›İYšXØ][ÛœØ™\ÜÈH
+Š›™]™\‹\™\]Y\İY
+Šˆ[™›ÚYÔÕÓ“ÕQ’PĞUSÓ”Ø\È[šYY
+]™XYÈ\™S›İYšXØ][ÛœÑ[˜X›Y
+
+X˜[ÙH[[Ü˜[Y
+KÛÈ˜]Èİ]\È[Û™HØ[››İ[›™]™\ˆ\ÚÙYˆœ›ÛH\Ù\ˆØZY›È‹ˆ]™\ÛÛ™\È[ˆ
+Š™Y™™Xİ]™JŠˆİ]\Èœ›ÛHÛÈ^˜HÚYÛ˜[ÎˆØ[\ÚĞYØZ[˜
+˜[ÙH8¡äˆ\™›ØÚËÙ][™ÜÈ\ÈHÛ›H]8 %[™›ÚYLÈ[™Üİ\™Y\Ø[SÔÈ[™\™JH[™H\œÚ\İY\]ÚYHÙH]™HÚİÛˆH›Û\ˆ›YÈ
+™Y[œÚÛ›İY‹\\›Z\ÜÚ[Û‹X\ÚÙY
+KˆÛ›H[šYY
+Š˜Y\ŠŠˆÙH\ÚÙYÛİ[È\ÈH™Y\Ø[ˆ\È\ÈÚ]XZÙ\ÈH[™›ÚYš\œİZ[œİ[›İÈ™Z]™HZÙHSÔÎˆÛˆHœ™\Ú[™›ÚY[œİ[H\\ÙYÈ™XY[šYYÚÚ\H][˜Ú›Û\[\™[K[™[ˆ]]ËY›\HY˜][[ÛˆÙÙÛHÙ™‹ÛÈ™[Z[™\œÈÚ\YÚ[[H\ØX›Y[™™]™\ˆ\ÚÙYˆHšÙY\HÙÙÛHÛ™\İˆ[H
+[˜X›Y
+È[šYY8¡äˆİÚ]ÚÙ™ŠH›İÈ[œÈÛˆHY™™Xİ]™Hİ]\ËÛÈ]Ø[ˆÛ›Hš\™HÛ˜ÙHH\Ù\ˆ\ÈXİX[H™Y[ˆ\ÚÙY‚‹H
+Š”\›Z\ÜÚ[Ûˆ˜[›™\ŠŠˆ
+™[Z[™\ˆÙ][™ÜË[™\ˆHX\İ\ˆİÚ]Ú8 %ÚİÛˆÚ[HHY™™Xİ]™Hİ]\È\È[šYY
+Nˆ\˜ÚY[YY\š[H]šY\˜˜YZKœÛXYX[š[™Ø˜XÙH[ˆ[šË\ÛÙˆÛÈİ]\Ë™XØ]\ÙHH[šX[\ÈÛÈ›]›İ\œÎˆÚ[HHÔÈ›Û\\Èİ[]˜Z[X›H]™XYÈ“›İYšXØ][ÛœÈ\™HÙ™‹ˆ\È[İÈ[Kˆˆ[™™KX\ÚÜÈ
+Ü˜[[™È[ÛÈİÚ]Ú\ÈH™[Z[™\ˆÛŠNÈÛ˜ÙHØ[\ÚĞYØZ[˜\È˜[ÙH]™XYÈ“›İYšXØ][ÛœÈ\™H\ØX›Yˆ\ÈÜ[ˆÙ][™ÜËˆˆ[™Ü[œÈHŞ\İ[HÙ][™ÜÈ\ˆØØ[^™YKÙ[‹ÙİKÚÛ‹‚‚ŠŠ•œ˜]™[Z[™\œÊŠˆ
+œ˜]ØÚY[\‹ØÈœ˜]™[Z[™\”\™KØ\›YYHHXY\ÜÈœ˜]™[Z[™\”ØÚY[\˜[ˆ\Ş
+Nˆ\š]™Yœ›ÛHH\Ù\‰ÜÈ
+Š™›ÛİÙYœ˜]ÊŠˆ
+0©ÌÌÊH[™Z\ˆ\‹]œ˜]ÈÛØ˜[™[Z[™\ˆ™YœËˆXXÚ\ÛÛZ[™ÈØØİ\œ™[˜ÙHØ[ˆ›ÙXÙH[ˆ
+˜Y˜[˜ÙJˆ›İXÙH
+]™[š[™È™Y›Ü™H]QSÑWÒÕTˆHNŒØØ[x $ÌÈ^\ÈZXY
+H[™ÛÜˆH
+™^K[ÙŠˆ›İXÙH]HÚÜÙ[ˆ[Ü›š[™È[YKˆ[›™Y[™\ˆHYXØ]Y”UÔ‘SRS‘T—ĞĞTH[™[™ÈYÙ]8 %Ú[ˆİ™\‹
+Š™›ÛİÈÜ™\ˆ\ÈHš[Üš]HYXœ™XZÊŠ‹ˆ™KX\›\ÈÛˆ›ÛİËÜ™Y‹Ü\›Z\ÜÚ[ÛˆÚ[™Ù\È[™Ûˆ]™\H\›Ü™YÜ›İ[™È™]™\ˆ›Û\È›Üˆ\›Z\ÜÚ[Ûˆ]Ù[ˆ
+Ú\™\ÈHZ[K]™\œÙHÜ˜[
+K‚‚ŠŠ‘™\İ]™H™[Z[™\œÊŠˆ
+›İYšXØ][ÛœËÙ™\İ]™T™[Z[™\œËØØ][ÙÈ
+È™\İ]™T™[Z[™\”\™KØ[›™\ˆ
+È™\İ]™TØÚY[\‹ØÛYK\›YYHHXY\ÜÈ™\İ]™T™[Z[™\”ØÚY[\˜[ˆ\ŞÈ™Yˆ]™\È™\ÚYHHZ[H™\œÙH[ˆ›İYšXØ][Û”™Y™\™[˜Ù\ĞÛÛ^
+K‚‚‹H
+Š‘Y˜][Ó‹›ÈÙ]\ŠŠˆHœ˜]˜[Z[HX›İ™H\ÈÜZ[ˆ
+[İH›ÛİÈHœ˜]š\œİ
+NÈ\ÈÛ™H\ÈHÜÜÚ]H8 %]™\H\Ù\ˆÙ]ÈÛ™H\ÚÛˆXXÚ˜[[İ\È™\İ]˜[Ú]İ]ÛÛ™šYİ\š[™È[][™Ëˆ™\İ]™T™[Z[™\œÑ[˜X›YY˜][ÈYX[™HİÜ™Y™YœÈ›ØˆÜš][ˆ™Y›Ü™HH™X]\™H^\İY
+›ÈİXÚÙ^JH[ÛÈ™\ÛÛ™\ÈÈYXÛÈ\Ü˜Y\œÈ\™H[˜X›Y˜]\ˆ[ˆÚ[[HÜYİ]ˆH\™ÔÈ[šX[›\È]Ù™ˆ[Û™ÜÚYHHZ[H™\œÙK™XØ]\ÙHHİÚ]Ú™XY[™È›Ûˆˆ›Üˆ\Ú\ÈHÔÈÚ[™]™\ˆ[]™\ˆ\ÈHYNÈ™KYÜ˜[[™È[™™K]ÙÙÛ[™È™KX\›\Ë‚‹H
+Šİ\˜]YØ][ÙË›İHÚÛHØ[[™\ŠŠˆ
+™\İ]™T™[Z[™\œËØ
+KˆN[™\XÚÙY˜[[İ\È™\İ]˜[ËXXÚ[›™YÈ
+JHH[™X]]Ü™Y]˜[˜YØ\šK[YÜ™Y][™Ë
+ŠH[ˆ[š]][Ûˆ˜[Z[™ÈHÜXÚYšXÈ[™Y^[™
+ÊH]^	ÜÈXœ˜\Q[KšYˆÛÈİ\˜][Ûˆ[\Ë›İ\İY[™›Ü˜ÙYˆÛ›HY˜][]š\ÚXš[]HØœÙ\˜[˜Ù\È]X[YH
+[ˆY˜[˜ÙYØ™YÚ[Û˜[[HÛˆ]™\H\Ù\‰ÜÈØÚÈØÜ™Y[ˆZ\Ü™\™\Ù[ÈH^H8 %HØ[YHØ]HXÚÕ]SØœÙ\˜[˜ÙX\Y\ÈÈ]\ÊK[™
+Š™]™\H[H]\İ˜[YH™X[›İ]X›HÛÛ[
+Š‹ˆH˜[[İ\È™\İ]˜[Ú]›ÈÛ™\İÛÛ[X]Ú
+˜ZÜÚH˜[™[‹šZHÛÚŠH\ÈÚ[\HXœÙ[˜]\ˆ[ˆÚ[Y]HÛÜÙ[K\™[]Y^ˆHÚÛH›ÛZ\ÙHÙˆHY\ÜØYÙH\È]H™XY[™È]˜[Y\È\ÈÛ™H\]Ø^K‚‹H
+ŠÛÜKŠŠˆH
+Š]H\ÈH™\İ]˜[	ÜÈİÛˆ˜[YJŠˆ
+8))¸)`8)*¸)/¸)-x),¸)`È]Ø[X
+H8 %™]™\ˆHÙ[™\šXÈØ]YÛÜHX™[[™™]™\ˆÛÛ˜Ø][˜]YÛÈ›ÈÚ\˜Xİ\ˆYÙ]Ø[ˆÛXÙHH]˜[˜YØ\šHÛÛš[˜İ
+H˜\0©ÌËŒ[™UWÓPVĞÒT”Ø^\İ›ÜŠKˆH
+Š˜›ÙHØ\œšY\ÈHİ\İÛZ\ÙYY\ÜØYÙJŠˆÜ™Y][™Ïˆ0­È[š]O˜8¡¤ˆ8)-¸)`x)+H8))¸)`8)*¸)/¸)-x),¸)`0­È8))¸)`8)*ˆ8)'8),¸)/¸)#ø) H8)%8),8)+¸).x)/¸),¸)%x)cx)-ø)cx)+¸)cx)+ø)-ø)cx)'ø)%x)+¸)cH8)%x)/ˆ8)*¸)/¸)(8)%x),8)aø) ¸)iˆ™[™\™Y›İYÚÛÛ[S[™ØZÙH]™\Hİ\ˆÛÛ[X™X\š[™Èİš[™È
+0©ÌL
+KÛÈİKÚÛˆ\œš]™H™K\ØÜš\Yœ›ÛHH]˜[˜YØ\šH[™[ˆ\Ù\ÈH]]Ü™Y[™Û\Ú‚‹H
+Š•[Z[™ËŠŠˆÛ™H›İYšXØ][Û‹
+Š›ÛˆH^K]ÎŒÌØØ[
+Šˆ
+‘TÕU‘WÒÕT˜Ø‘TÕU‘WÓRS•UX
+H8 %\HZ[]\ÈY\ˆHZ[K]™\œÙHY˜][ÛÈHÛÈ™]™\ˆ[™[ˆHØ[YH[œİ[[™™XY\ÈH\XØ]Kˆ›ÈY˜[˜ÙH›İXÙNˆ[ˆ]™KX™Y›Ü™HYÙH\ÈÚ]›ÛİÚ[™ÈHœ˜]
+0©ÌÌÊH^\Ë[™İX›[™È]™\H™\İ]˜[Ûİ[[™HH\İ[ˆHY˜][ˆH™\İ]˜[ÚÜÙHÎŒÌ\È[™XYH\ÜÙYÙ^H\È›ÜY˜]\ˆ[ˆš\™Y]K‚‹H
+ŠHLŒY^H›Û[™ÈÚ[™İÊŠˆ
+‘TÕU‘WÕÒS‘Õ×ÑVTØ
+K˜\ˆÛ™Ù\ˆ[ˆHZ[H™\œÙIÜÈÌ™XØ]\ÙH™\İ]˜[È\™H›İYÚH[ÛH[™H\Ù\ˆÚÈÙ\È›İÜ[ˆH\›ÜˆÚ^ÙYZÜÈÚİ[İ[Ù]]Ø[KˆÚX\ˆ]Ú[™İÈ\XØ[HÛÈ™YHÜˆ›İ\ˆ™\İ]˜[ËˆØ\Y]‘TÕU‘WÔ‘SRS‘T—ĞĞTH[™[™ÈÛİË‚‹H
+Š•HØ\\ÈÛÛÛ™\İYš\œİ›İ˜[YKYš\œİ
+Šˆ8 %H[™\œÙHÙˆHœ˜][›™\‰ÜÈ›ÛİÙYYš\œİ[Kˆ›Ø›ÙHÜY[È\ÙKÛÈH™\İ]˜[™YH^\Èİ]]\İ™]™\ˆÜÙH]ÈÛİÈH[Ü™H˜[[İ\ÈÛ™H›İ\ˆ[ÛÈİ]ÈØ][ÙÈ
+˜[YJHÜ™\ˆÛ›Hœ™XZÜÈHYH™]ÙY[ˆÛÈ™\İ]˜[È[™[™ÈÛˆHØ[YH[œİ[ˆ
+ŠYÙ]›İNŠŠˆHZ[K]™\œÙHÚ[™İÈ[Û™HØ[ˆÛZ[H\ÈSÔ×ÔS‘S‘×ĞĞTÛÈH›İ\ˆ˜[Z[Y\È\™HÛÛXİ]™[Hİ™\‹\İXœØÜšX™YYØZ[œİSÔÉÜÈ[™[™È[Z][ˆHÛÜœİØ\ÙH
+™[Z[™\ˆ[Y\È
+ÈX[H›ÛİÙYœ˜]È
+È[œ›ÛYØ[šØ[ÊKˆ\ÈÛXÙH\È[X™\˜][HHÛX[\İÙˆH›İ\ˆ›Üˆ]™X\ÛÛ‹‚‹H
+Š‘]\ÈÛÛYHœ›ÛHH[™Y™XÛÛ\]YX›KÚ]İ]HØØ][ÛŠŠˆ8 %^XİH\Èœ˜]™[Z[™\œÈ™\ÛÛ™H[KˆH™\İ]˜[	ÜÈÚ]š[]HÚYÈH][ÜİH^HXÜ›ÜÜÈ[™X[ˆÚ]Y\Ë[™HØØ][Û›\ÜÈ]Ùˆ™\ÛÛ™SØœÙ\˜[˜Ù\Ñ›Ü–YX\˜\ÈHÙ™›[™H™XÛÛ\]YX›H
+0©ÌÌÊKÛÈ›È8 )[™ØPœšYÙO˜\İ[H[Xš[™È\È™YYYˆ™XY[™È]İ[[œÈ™Z[™[\˜Xİ[Û“X[˜YÙ\˜ÛÈHÛÛİ\	ÜÈš\œİœ˜[Y\È\™H™]™\ˆÚ\™ÙY›ÜˆN[HÛÚİ\Ë‚‹H
+Š“İÛˆ[™›ÚYÚ[›™[
+Šˆ™\İ]™K\™[Z[™\œØ
+[\Ü[˜ÙHQUSÛİ[™ˆ	ÙY˜][	Ø
+KÛÈ™\İ]˜[\Ú\ÈØ[ˆ™H]]Y[ˆŞ\İ[HÙ][™ÜÈÚ]İ]Ú[[˜Ú[™ÈHZ[H™\œÙKˆHÚ[›™[	ÜÈÛİ[™[™[\Ü[˜ÙH\™H[›™Y]Ü™X][Û‹ÛÈÚ[™Ú[™ÈZ]\ˆ]\ˆ™YYÈH
+Š›™]ÈY
+Šˆ8 %H]Œ˜[˜ÙHØİ[Y[Y›ÜˆH˜\[HÚ[›™[È[ˆ0©ÌÍK‚‹H
+Š”Ù][™ÊŠˆ
+™[Z[™\”Ù][™ÜÔØÜ™Y[˜0©ÌÍÊNˆH\™Ø\™™[İÈ[Y\È8 %]H8)*¸),8)cx)-H8).8)cx)+¸),8)(ØÈ
+‘™\İ]˜[™[Z[™\œÊ‹HİX]Hİ][™ÈH™\İ]˜[Ûİ[[™š\™H[YH
+›İ™XYÙ™ˆH[›™\ˆÛÛœİ[ÈÛÈHÛÜHØ[‰İšY
+K[™HØY™œ›Û˜İÚ]Úˆ›È[YHXÚÙ\ˆHš\™H[YH\Èš^Y‚‹H
+ŠH\[™ÈÛˆÛYK[™ÛYH\È[™XYHÚİÚ[™ÈH™\İ]˜[
+Šˆ8 %ÙYHHY\[[šÈX›H™[İÈ[™0©ÍL	ÜÈ“ÔˆÑVH›İËˆHØ][ÙÈ\ÈHÚ[™ÛHÛİ\˜ÙH›İİ\™˜XÙ\È™XY[™™\İ]™T™[Z[™\œË\İØ\ÜÙ\È]Ûˆ]™\HØ][ÙÈ™\İ]˜[	ÜÈİÛˆ]HH“ÔˆÑVH›İÈ›İÛÛZ[œÈ]™\İ]˜[	ÜÈÛİ\˜ÙRY[™XYÈÚ]H™\İ]˜[X]šX]YØ\™ˆH›İYšXØ][Û‰ÜÈ›ÛZ\ÙH[™HÛY\YÙHØ[››İšY\\‚‹H
+Š’ÛYH\È[ÛÈ™\ÜÙY›ÜˆH^JŠˆ8 %H™\İ]™HÜ˜[ˆ
+0©ÍMJH[™ÜÈHØ[YHØ][ÙÈÜ™Y][™È[™\ˆHÛÜ™X\šÈÛˆÜÙHN^\Ë‚‚ŠŠ’˜\[H[\›\ÊŠˆ8 %ÙYH0©ÌÍH›ÜˆHØÚY[[™ÈY\œÎÈ^H\XÚ\]H[ˆY\[[šÚ[™È™[İË‚‚ŠŠ“›İYšXØ][Ûˆ\8¡¤ˆY\[šÊŠˆ
+›İYšXØ][ÛœËÙY\[šËØ
+KˆH[Ù[K[]™[˜]šYØ][Û”™Y˜
+]XÚYÈH˜]šYØ][ÛÛÛZ[™\˜[ˆ\Ş
+H]È[™S›İYšXØ][Û”™\ÜÛœÙX\Ü]Úœ›ÛHİ]ÚYHH™XXİ™YNÈ\ŞÚ\™\È›İHÛÛ\İ\™\ÜÛœÙH[™H]™HY›İYšXØ][Û”™\ÜÛœÙT™XÙZ]™Y\İ[™\˜ˆ›İ][™ÈH^[ØY\N‚‚‹HZ[K]™\œÙX8¡¤ˆH
+Š‘Z[HšZİHXŠŠˆØ\œZ[™ÈH^Xİ™\œÙHY[]H
+Ûİ\˜ÙRYØÚ\\˜Ø™\œÙR[™^
+H˜ZÙY[ÈH›İYšXØ][Ûˆ8 %[X™\˜][H
+››İ
+ˆH™XY\‹™XØ]\ÙHÜ[š[™ÈH™XY\ˆÛİ[[ˆ]ÈÙ]›ÙÜ™\ÜØY™™Xİ[™ÛØ˜™\ˆH\Ù\‰ÜÈ™\İ[YHÜÚ][ÛÈH˜ZÙYY[]H[ÛÈİ\š]™\ÈÕHÛÛÚ[™Ù\Ë‚‹Hœ˜]\™[Z[™\˜8¡¤ˆ[˜Ú[™ÕXˆ8¡¤ˆØœÙ\˜[˜ÙQ]Z[›Üˆ][K‚‹H™\İ]™K\™[Z[™\˜8¡¤ˆ
+Š˜ÛYUXˆ8¡¤ˆÛYX
+Š‹[™H™XY[™È]ÈY\ÜØYÙH˜[YY\ÈHš\œİØ\™ØZ][™È\™KˆÛYIÜÈ“ÔˆÑVH›İÈ
+0©ÍL
+HXYÈÚ]H™\İ]˜[	ÜÈİÛˆÛÛ[ÛˆH™\İ]˜[^K™XY[™ÈHØ[YHİ\˜]YØ][ÙÈH›İYšXØ][Û‰ÜÈÛÜHØ[YHœ›ÛH8 %ÛÈH[š]][Ûˆ\ÈÛ›İ\™YÛ™H\[‹›İ\\ÜÙYˆ[™[™ÈÛˆÛYH˜]\ˆ[ˆ[ˆH™XY\ˆÙY\È™YH[™ÜÈYH]H\™Xİ™XY\ˆ\ÚÛİ[œ™XZÎˆH\XYHœ›ÛHHØÚÈØÜ™Y[ˆØ[‰İ[ˆH™XY\‰ÜÈÙ]›ÙÜ™\ÜØY™™Xİ[™ÛØ˜™\ˆH™\İ[YHÜÚ][Ûˆ
+HØ[YH™X\ÛÛˆZ[K]™\œÙXİ^\ÈÛˆHXŠKH^IÜÈ[˜Ú[™Èİš\[™›İ][™H˜[›™\ˆ\œš]™H[Û™ÜÚYHH™XY[™Ë[™H›İYšXØ][Ûˆ\›YY\È›İ\ˆ[ÛÈYÛÈØ[‰İİ˜[™H\Ù\ˆÛˆÛÛ[[ˆÕH\]H\ÈÚ[˜ÙH™[˜[YY8 %ÛYH™XÛÛ\]\ÈÙ^Hœ›ÛHÙ^KˆÈØÜ™Y[ˆ	ÒÛYIÈX\È\ÜÙY^XÚ]Nˆ›Øİ\Ú[™ÈÛYUX˜[Û™HÛİ[™\İÜ™HÚ]]™\ˆØÜ™Y[ˆHÛYHİXÚÈØ\ÈYÛ‹ÜÜÚX›HÙ]™\˜[™XY\œÈY\ˆ›İ][™ÈØ]\ÈÛˆ[RYÛ›NÈH^[ØYİ[Ø\œšY\ÈÛİ\˜ÙRY\ÈH™XÛÜ™ÙˆÚ]HY\ÜØYÙH›ÛZ\ÙY‚‹HØY[˜K\™[Z[™\˜[™›İ][™K\™[Z[™\˜8¡¤ˆ
+Š˜ÛYUXˆ8¡¤ˆ›İ][™UÙ^X
+Šˆ
+Ù^IÜÈ˜XİXÙJH8 %Hİ\™˜XÙHÚ\™H[ÙˆÙ^IÜÈ˜XİXÙH]™\Ë™]™\ˆH™XY\ˆ
+Ø[YH™\İ[YK\ÜÚ][Ûˆ[H\ÈX›İ™JKˆH›İ][™H^[ØYÈ\K›İ][™RY]RÙ^HXØ]\ÈÛˆ\X[Û™Nˆ›İ][™RYšY\È[Û™È\ÈH™XÛÜ™ÛÈHİ[H›İXÙH›ÜˆHÚ[˜ÙKY[]Y›İ][™Hİ[[™ÈØY™[H8 %›İ][™UÙ^HÚ[\HÙ\Û‰İÚİÈ]‚‹H˜\[H[\›H8¡¤ˆÛYUXˆ8¡¤ˆ˜\[PÛİ[\˜Ú]]]Ô^NˆYXÛÈHØÚË\ØÜ™Y[ˆ\›ÜÈİ˜ZYÚ[ÈÚ[[™È
+X[˜HY˜[Y]YYØZ[œİHØ][ÙÈš\œİÈHİ[H[\›H˜[È˜XÚÈÈÛYH˜]\ˆ[ˆÜ˜\Ú[™ÊK‚‚ŠŠ”›İ]HX\[™È8 %˜]šYØ][Û‹Ù[T›İ]\ËØŠŠˆHÚ[™ÛHÛİ\˜ÙHÙˆ]›Üˆ›Ü[ˆ\ÈÛÛ[ˆZ[[Tİ\\™Ù]
+[JXX\È[HXœ˜\H[HÈ]Èİ\›İ]H
+˜\[H8¡¤ˆ˜\[PÛİ[\˜ÈY\[šY\È8¡¤ˆY\X\Ú]HÜ›İ\š[\ÈHš[™HÚ[\Ø\È8¡¤ˆÚ[\ØT™XY\˜ÈØ[œÚØ\ˆ8¡¤ˆØ[œÚØ\”™XY\˜ÈX\\È8¡¤ˆX\T™XY\˜ÈH
+Š›][JŠ‹XÚ\\ˆ^8¡¤ˆ]ÈÚ\\œÈØÜ™Y[ˆ8 %[˜ÛY[™ÈH˜[KXX\X[X\ËÚXÚX\ÈÈH˜[K\İ]X™XY\ˆ›İ]\ÊKÚ]˜]šYØ]UÔ›İ][™R][XZ[›ÙÜ™\ÜÕ\™Ù]
+™\İ[YHÈÙX\˜Ú™\œÙH]ÊK[™Z[›ÛÚÛX\šÕ\™Ù]
+Ú\Ú\İ›İÜË0©Ì
+H^Y\™YÛˆÜˆ[˜Ú[™ÉÜÈ”™XYˆÙXİ[Ûˆˆ[šÜËÙX\˜Ú™\İ[Ë›İ][™H][\ËÚ\Ú\İ[™HÛYHÜİYÚ[›İ]H›İYÚ\ÈÛ™H[Ù[KÛÈY[™ÈHÙXİ[Û‰ÜÈ›İ]HÛ˜ÙHÚ\™\È]™\Hİ\™˜XÙK‚‚ŠŠ”Ú[™ÛKXÚ\\ˆ^ÈÚÚ\H[™^
+[HŒŠKŠŠˆH˜Ú\\™Yˆ^]Ú\È^XİH
+Š›Û™JŠˆÚ\\ˆ8 %[[X[‹X\ÚZØ˜Zœ˜[™ËX˜X[˜˜[K\İ]X
+[™]È˜[KXX\X[X\ÊK˜[XÚ\š]X[˜\Ø8 %\ÙYÈÜ[ˆHÚ\\œÈØÜ™Y[ˆ\İ[™È]Ú[™ÛH›İËÛÈ™XXÚ[™ÈH™\œÙ\ÈÛÚÈ
+ŠÛÈ\ÊŠˆœ›ÛH]™\H[Hİ\™˜XÙH
+HÛYH8)!¸)'8)%x)aÈ8),¸)/ø)#È›İËKT\œÜÙH\ØÛİ™\H\İËÙX\˜ÚØ]YÛÜKÙZ]H\İË˜\ÚY˜[
+KˆZ[[Tİ\\™Ù]›İÈÙ[™ÈÜÙHİ˜ZYÚÈZ\ˆ™XY\ˆ]ÈÚ\\ˆK[š]X[[™^ˆXÈH^Ú]ŠÈÚ\\œÈÙY\È]È[™^™XØ]\ÙH\™H\ÈH™X[ÚÚXÙHÈXZÙKˆÚ\\ˆÛİ[È\™H™XYÙ™ˆXXÚ^	ÜÈÚ\Y
+Ú\\œÓX[šY™\İ
+Ú\\Ûİ[TÛİ\˜ÙRY[ˆ[T›İ]\ËØ
+H8 %™]™\ˆZ\œ›Ü™YH[™8 %ÛÈH^]ØZ[œÈHÙXÛÛ™Ú\\ˆ™YØZ[œÈ]È[™^Ú]›ÈÛÙHÚ[™ÙK[™Û™H]ÜÙ\ÈÚ\\œÈİÜÈÚİÚ[™ÈHÛ™K\›İÈ\İˆ˜]šYØ]UÔ›ÙÜ™\ÜÊ
+X›ÛİÜÈHØ[YH[Nˆ]›Ü›X[H\Ú\ÈHÚ\\œÈ[™^
+[™\ŠˆH™XY\ˆÛÈ˜XÚÈ™XXÚ\ÈÚX›[™ÈÚ\\œË[™›İÈÚÚ\È]\Ú›ÜˆÚ[™ÛKXÚ\\ˆ^ËÚXÚ]™H›ÈÚX›[™ÜÈ[™Ûİ[İ\Ú\ÙHİ˜[™H\Ù\ˆÛˆHÛ™K\›İÈ\İˆ\ĞÚ\\™Y[J
+X\È[˜Ú[™ÙYˆ]İ[™\ÜÈH
+Šœ›ÙÜ™\ÜËZÙ^JŠˆÚ\H
+Ûİ\˜ÙRYÚ\\˜
+KÚXÚÚ[™ÛKXÚ\\ˆ^ÈÙY\ˆ[›™YH[Øš[KÜÜ˜ËÛ˜]šYØ][Û‹Ù[T›İ]\Ë\İØ[™›XY\İ›ËÜÚ[™ÛKXÚ\\‹[Ü[‹\Û[ÚÙKX[[‚‚‹KKB‚ˆÈÈÎKˆÚ\™H™\œÙHØ\™Â‚ŠŠ”\œÜÙKŠŠˆ]H™XY\ˆÙ[™[H™\œÙHİ]ÙˆH\\ÈHœ˜[™Y\˜ÚY[[XYÙH8 %ÛÛ\ÜÙYÙ™‹\ØÜ™Y[‹Ø\\™Y\ÈH‘Ë[™[™YÈH˜]]™HÚ\™HÚY]Ú]HØ\[Ûˆ
+È[œİ[[šÈ
+‘LJKˆ\[™ÈHÚ\™H]ÛˆÜ[œÈH
+Š\™Ù]XÚÙ\ŠŠˆ
+0©ÌÎKŒJHÚ]™YH\İ[˜][ÛœÎˆHZ[ˆÚ\™HÚY][ˆ
+Š’[œİYÜ˜[HÜİ
+Šˆ
+JK[™[ˆ
+Š’[œİYÜ˜[HİÜHÈ™Y[
+Šˆ
+NŒM‹0©ÌÎKŒÊH8 %H[œİYÜ˜[H›İ]\ÈØ\œHHØ[YHØ\™Ú]H\‹]™\œÙH\ÚYÈ›ØÚÈ
+0©ÌÎKŒŠKˆÚ\™T›İšY\˜È\ÙTÚ\™J
+X[ˆ[Øš[KÜÜ˜Ëİ][ËÜÚ\™U™\œÙKŞÈØ\™[ˆÚ\™PØ\™ŞÈXÚÙ\ˆ[ˆÚ\™U\™Ù]ÚY]ŞÈNŒMˆÜ˜\\ˆ[ˆÚ\™TİÜPØ[˜\ËŞÈ[šÜÈ
+ÈØ\[ÛœÈ[ˆ[Øš[KÜÜ˜ËÙ]KÜÚ\™S[šÜËØÈ\ÚYÜÈ[ˆ[Øš[KÜÜ˜ËÙ]KÜÚ\™R\ÚYÜËØˆ›ÜˆH™\œÙK[\ÜÈ[š]H
+H][K[[™H™X]\™K[\İY\ÜØYÙH
+ÈİÛ›ØY[šË0©ÌÍÊKH[Ü™HX‰ÜÈ
+Š”Ú\™HH\
+ŠˆØ\™Ø[ÈZ[\Ú\™SY\ÜØYÙJ[™ÊXœ›ÛHHØ[YHÚ\™S[šÜËØ[™Ü[œÈH˜]]™HÚ\™HÚY]\™XİK‚‚ˆÈÈÈÛÛ\Û™[ˆÚ\™H]Ûˆ
+Ú\™P]Û‹Ş
+B‚‹HØ[YH˜[Z[H\ÈH›ÛÚÛX\šÈ]Ûˆ
+0©ÌJNˆÍ0åÌÍÚ\˜ÛK\˜ÚY[\ÛÙš[H]šY\˜›Ü™\‹8¡¥ØÛ\[ˆØY™œ›Û˜
+NÙZYÚŒ
+KˆLˆ]ÛÜ‚‹HXÙ[Y[ˆ[ˆH™\œÙHYÙIÜÈ
+ŠšXY\ˆ›İÊŠ‹šYÚÙˆH™\œÙK]\H[[Û™ÜÚYHH›ÛÚÛX\šÈ]Ûˆ
+™XY\œÈ\ÜÈ›İšXHH™\œÙHYÙIÜÈÜXİ[ÛœØÛİ
+Kˆ]™\H™XY\ˆØ\œšY\ÈÛ™H8 %[MH™XY\ˆØÜ™Y[œÈ\ÈZ[HšZİH[™H˜\[HÛİ[\‹ˆ™XØ]\ÙHHXÚÙ\ˆ]™\È[œÚYHH›İšY\‹[ŒØ[Ú]\ÈØZ[™YH[œİYÜ˜[H\İ[˜][ÛˆÚ]İ]HÚ[™ÛHØ[\Ú]HÚ[™ÙNÈH]Û‰ÜÈİÛˆ›ÜÈ\™H[˜Ú[™ÙYˆ]\È[ÛÈH
+Š›Û›JŠˆÚ\™HY™›Ü™[˜ÙH[Ù]Ú\™H[ˆH\ˆH
+Š•Ù^IÜÈ[˜Ú[™ÊŠˆ
+]Z\˜]]Z[
+HXY\ˆ\Ù\È\ÈØ[YHÚ\˜ÛH˜]\ˆ[ˆH™\ÜÚÙH]Û‹ÛÈHÚ\™HÛ\™XYÈY[XØ[H]™\]Ú\™K‚‹HÚ[HHØ\\™KÜÚ\™H\È[ˆ›YÚ
+\ŞX
+KH]Ûˆ\ØX›\È[™›ÜÈÈL	HÜXÚ]H8 %\ÈX›İ[˜Ù\ÈİX›K]\ËˆÛˆH]Z\˜]]Z[ØÜ™Y[ˆ\ŞX[ÛÈÛİ™\œÈH™K\™XYHÚ[™İÈ™Y›Ü™HH[˜Ú[™È\ÈÛÛ\]Y‚‹HXØÙ\ÜÚXš[]NˆXØÙ\ÜÚXš[]T›ÛOH˜]Ûˆ˜ÈX™[Y˜][ÈÈ”Ú\™H™\œÙHˆ[™[È“Û™Ë\™\ÜÈÈÚ\™HHØÜ™Y[œÚİÙˆ\È™XY\ˆ[œİXY‹]›İ\™H
+Š›Ü[Û˜[›ÜÊŠˆ8 %›Û‹]™\œÙHİ\™˜XÙ\Èİ™\œšYH[H
+H[˜Ú[™ÈXY\ˆ\ÜÙ\ÈHØØ[^™Y”Ú\™H[˜Ú[™ÈˆX™[[™›È[Ú[˜ÙH]\È›ÈÛ™Ë\™\ÜÈ]
+KˆÕH™\œÙH›İšY\ˆİ\ÜÈH[ÙNˆ	ÜØÜ™Y[œÚİ	ØØ\\™HÙˆHØ[\‹\İ\YY™Y‹[™H]ÛˆXØÙ\ÈÛ“Û™Ô™\ÜØ8 %]›ÈÚ\[™È™XY\ˆİ\œ™[HÚ\™\ÈÛ“Û™Ô™\ÜØÛÈÛ›HHØ\™]\È]™HÙ^K—B‚ˆÈÈÈÛÛ\Û™[ˆÚ\™HØ\™
+Ú\™PØ\™Ş
+B‚Hš^Y\Ú^™HM0åÍÍHØ\™
+HÜ˜Z]
+K™[™\™Y
+Š›Ù™‹\ØÜ™Y[ŠŠˆ[™Ø\\™Y]L0åÌLÍL‘È8 %HÚ]Ğ\YœšY[™Hİ]]Ú^™Kˆİ\™˜XÙNˆ\˜ÚY[š[[™\ˆH™\œÙIÜÈ
+Šœ™XY\‹\YÙHÚÙ]Ú
+Šˆ8 %˜XÚÙÜ›İ[™^Y\˜İ™\ˆÙ]™XY\˜XÚÙÜ›İ[™
+Ûİ\˜ÙRYÈİ[˜HJXHØ[YH˜YY]H
+È\˜ÚY[İ™\›^HHÛİ\˜ÙIÜÈ™XY\ˆÚİÜÈ
+Ûİ\˜Ù\ÈÚ]İ]H]H˜[˜XÚÈÈHZ[ˆÜ˜YY[
+NÈH]šY\˜›Ü™\ˆ
+İ™\™›İÎˆY[˜ÙY\ÈHÚÙ]Ú[œÚYH]
+KY[™ÈÜÈÜš^›Û[ÈŒˆ›İÛKˆÛİ\˜ÙRY\È™\]Z\™YÈİ[˜X\ÈHÜ[Û˜[ñ xnaøn#XKÜİ[˜HÙ^H›ÜˆH\‹\İXœÙXİ[ÛˆÛİ\˜Ù\È8 %H˜[ZZÚH˜[X^X[ˆ[™İ[™\šØ[™™XY\œÈ\ÜÈH™\œÙIÜÈİÛˆİ[˜XZ[HšZİH\ÜÙ\ÈHÛÛ™\œÙIÜÈÚ\\˜ˆİX\™YHÛÛ\Û™[Ë××İ\İ××ËÜÚ\™PØ\™˜XÚÙÜ›İ[™\İŞ‚‚ŠŠ”İXİ\™H
+ÜÈ›İÛJNŠŠ‚‚ŒKˆ
+Š’XY\ˆ˜[™
+Šˆ
+Ù[™YN™[İÊNˆÑPÕSÓˆSQOˆ0­È‘T”ÑHP‘S˜\\˜Ø\ÙY8 %Ø\™][˜˜XÙH]LËØY™œ›Û‹YY\‹]\‹\ÜXÚ[™Ëˆ›İ\È\™HÛÛ[ÛÈ^H›ÛİÈHXİ]™H™XY[™È[™İXYÙH
+ÛÛ[S[™Ø
+Nˆ]˜[˜YØ\šH›ÜˆX[™Û\Ú›Üˆ[˜™K\ØÜš\Y›ÜˆİXØÛ˜‚Œ‹ˆ
+Š•™\œÙH›ØÚÊŠˆ
+›^YÜ›İËÙ[™Y
+NˆH™\œÙH[™\È]ÍÙ[™Y[šØˆ[™HÛİ\˜ÙH›ÛİÜÈH[™İXYÙNˆ[™\ÒX›ÜˆX[™\Ñ[˜
+›ÛX[š^˜][ÛŠH›Üˆ[˜™K\ØÜš\Y]˜[˜YØ\šH›ÜˆİXØÛ˜
+™\œÙS[™\ĞS[™Ø
+Kˆ›Û˜[Z[H›ÛİÜÈHØÜš\8 %İZ˜\˜]KÒØ[›˜YHÙ\šYˆİ]È›ÜˆİXØÛ˜İ\Ú\ÙHH™\œÙXÚÙ[‰ÜÈ]˜[˜YØ\šH˜XÙH
+ÚXÚ[ÛÈØ\œšY\ÈH][ˆ›ÛX[š^˜][ÛˆÛ\ÊKˆ\ÈØ\™\ÈH0©ÌLË\Ø[˜İ[Û™YÛÛœİ˜Z[™Yİ\™˜XÙNˆ]ÙY\È]ÈİÛˆ[™YÚ^™\È˜]\ˆ[ˆH™XY\ˆ\HØØ[K‚ŒËˆ
+Š˜8)iXÜ›˜[Y[]šY\ŠŠˆ
+0©ÍJK‚ˆ
+Š“YX[š[™ÊŠˆ
+Ü[Û˜[
+NˆÙ[™Y[šË\ÛÙ]HÚ^™H
+Š˜ÚÜÙ[ˆ[ˆ”ÊŠˆHš]YX[š[™Õ\X
+][ËÜÚ\™PØ\™\KØ
+H8 %H\™Ù\İİ\Ùˆ[ˆN8¡¤ˆLˆY\ˆÚÜÙH\İ[X]YÜ˜\š]ÈHZYÚHØ\™\ÈYÚ][™RZYÚ\š]™Y\ÈKH0åÈ]Ú^™H[™[X™\“Ù“[™\ØÙ]ÈHZYÚY\š]™Y[™HYÙ]ˆHYÙ]İX˜XİÈHØ\™	ÜÈ™X[Ú›ÛYH
+Y[™ËLÈXY\ˆ›ØÚËÜ›˜[Y[œ˜[™[™È›Ûİ\ˆ8 %HÚ\™PØ\™Y]šXÜØÛÛœİ[ËÚXÚHØ\™	ÜÈİÛˆİ[TÚY][ÛÈ™XYÈÛÈHÛÈØ[››İšY
+H
+Š˜[™H™\œÙIÜÈXİX[[™HÛİ[
+Š‹ÛÈH›İ\‹[[™HÚÚØHÛÜœ™XİHX]™\ÈHYX[š[™È\ÜÈ›ÛÛH[ˆHÛË[[™HÛ™KˆMH	HÙˆÚ\YYX[š[™ÜÈ[™]NÌÎÈÛ›HH[™[Ùˆ˜[ZZÚH˜[X^X[ˆ›ÜÙHYX[š[™ÜÈ\İŒLŒÚ\˜Xİ\œÈ™XXÚHLˆ›ÛÜˆ[™ÚİÈH™XYX›H^Ù\œ˜]\ˆ[ˆH[[[™İ[YÚX›HÛ™Kˆ][XÈ\È\YY
+Š›Û›JŠˆ›Üˆ[˜8 %ÛÜ›[Ü˜[\ÈHYH][XÈİ]H›İÈÙ\šYˆ[™XÈ˜XÙ\ÈÈ›İÛÈ[ˆ][XÈ\™H\ÈHŞ[\Ú\ÙYÚÙ]È]›\œÈHX]˜\È
+Ø[YH[H\ÈØ\[Û‘›Û][ËÜØÜš\›ÛØ
+Kˆ[™İXYÙK\Ù[XİYšXHYX[š[™ĞS[™ØÛ›İ\š[™È™\šYšYY˜]]™HYX[š[™ÑİXØYX[š[™ÒÛ˜İ™\œšY\ÈÚ[ˆH™\œÙHØ\œšY\È[K‚‚ˆ
+Š•ÚH›İ]›Ü›H]]ËYš]
+]Yİ\İŒŠKŠŠˆ\È›ØÚÈÚ\Y\È][XÈMÌÚ][X™\“Ù“[™\Ï^Í_X
+ÈY\İÑ›ÛÚ^™UÑš]İÛˆÈZ[š[][Q›ÛØØ[O^Ì_XˆHK[[™HØ\›Ü˜ÙY™X\›H]™\H™X[YX[š[™ÈÈÚš[šËHÚš[šÈ›İÛYYİ]]
+ŠÈ
+Šˆ8 %™[İÈH0©ÌËŒL›ÛÜˆ8 %[™™XØ]\ÙH[™RZYÚİ^YY[›™Y]Ú[HHÛ\ÈÚ˜[šËHXY[™È˜][È›]Èİ]ÈŒË0åÎˆHØØ]\ˆÙˆ[HÚ\˜Xİ\œÈ[ˆØ]™\››İ\ÈÚ]HÜXÙK™\ÜY\È[œ™XYX›H[ˆHÚ\™YÚ]Ğ\[XYÙKˆ]\ÈHØ[YH˜\[™XYH™XÛÜ™YÛˆØ]YÛÜPØ\™[™˜[ZØ\˜[ˆ
+0©ÍŒJH8 %
+›ÛˆSÔÈH][K[[™HX™[Ú]Hš^Y[™RZYÚÚš[šÜÈ\œ˜]XØ[H[™YÛ›Ü™\ÈZ[š[][Q›ÛØØ[X
+ˆ8 %ÛÈH[HÈØ\œH›ÜØ\™\Îˆ
+Š˜Hš^YXY[™È[™]›Ü›H]]ËYš]]\İ™]™\ˆ\X\ˆÛˆHØ[YH^ŠŠˆÚ^™H][ˆ”Ë\š]™HHXY[™Èœ›ÛHHÚ^™K[™ZÙHH[™HØ\œ›ÛH™X[Ù[ÛY]KˆİX\™YHÛÛ\Û™[Ë××İ\İ××ËÜÚ\™PØ\™š]\İŞ
+›È]]ËYš]›ÜË8¢iLLˆK8 $ÌKğåÈXY[™Ë\šYÚ[™XÊH[™][Ë××İ\İ××ËÜÚ\™PØ\™\K\İØ
+HY\‹HYÙ][™]Hš]Y›ØÚÈİ[š]ÈHØ\™
+K‚Kˆ
+Šœ˜[™[™È›Ûİ\ŠŠˆ
+H]šY\˜Ü[KMX›İ™JNˆ8)-x)aø))¸)/¸) ¸)-¸)/ÛÜ™X\šÈ
+™XY\‹]]H˜XÙKN[šØ
+H0­È™Y[œÚ8 %ØXÜ™Y^ËZ[H™XY[™Ø
+][XÈL‹ØY™œ›Û‹YY\
+H0­È“ÕÈURSP“HÓˆSÔÈ	ˆS‘“ÒQ
+\\˜Ø\ÙHL[šË[]]Y‹Œ˜XÚÚ[™ÊK‚‚ˆÈÈÈ0©ÌÎKŒHÛÛ\Û™[ˆÚ\™H\™Ù]ÚY]
+Ú\™U\™Ù]ÚY]Ş
+B‚H›İÛHÚY][ˆH[™İXYÙTXÚÙ\”ÚY]˜[Z[H
+0©ÌÍÈÚY]Ú›ÛYJNˆ\˜ÚY[ZYÚYÚ˜\ÙKŒˆÜÛÜ›™\œË0åÍÜ˜X˜™\‹Üš^›Û[Y[™Ë[Ù[˜XÚÙ›Ü™Z[™˜XÚÙ›Ü\\ÛZ\ÜÙ\ËˆÜ[™YHÚ\™J™\œÙK[™ÊXÚ[ˆHØ[\ˆ˜[Y\È›È\™Ù]‚‚ŠŠ”İXİ\™H
+ÜÈ›İÛJNŠŠ‚‚ŒKˆ
+Š•]JŠˆ8 %8)-¸)cx),¸)bø)%H8).8)/¸)'x)/ˆ8)%x),8)aø) ˜ÈÚ\™H\È™\œÙXÈİHÈÛ‹Ø\™›ÛS[™Ø]N[šØÙ[™Y‚Œ‹ˆ
+Š”›İÎˆÚ\™JŠˆ8 %8¡¥ØÛ\[ˆØY™œ›Û˜
+NŒ‹]ÚYHÛÛ[[ŠK]H]MÈ
+Ø\™›ÛS[™Ø[šØ
+KİX‹[X™[•Ú]Ğ\Y\ÜØYÙ\Ë[]Ú\™Hˆ]L‹ˆH]šY\˜›İÛH[Kˆ[œÈH[˜Ú[™ÙY0©ÌÎH›İË‚ŒËˆ
+Š”›İÎˆ[œİYÜ˜[HÜİ
+Šˆ8 %8¥âXÛ\İX‹[X™[HØ\™8 %›ÜˆH™YY‹˜Z[[™È
+Š˜X
+Šˆ[Ú\
+L[šË[]]YH]šY\˜[˜Y]\ÊKˆH]šY\˜›İÛH[K‚ˆ
+Š”›İÎˆ[œİYÜ˜[HİÜHÈ™Y[
+Šˆ8 %8¥«˜Û\İX‹[X™[‘[ØÜ™Y[ˆNŒMˆ8 %›İ[™ÈÙ]ÈÜ›ÜY‹˜Z[[™È
+Š˜NŒM˜
+ŠˆÚ\ˆ^ÜÈH0©ÌÎKŒÈØ[˜\Ë‚Kˆ
+ŠÛÜH›İJŠˆ8 %Û™HÚ\™Y[™H[™\ˆ›İ[œİYÜ˜[H›İÜÎˆ‘Z]\ˆØ^HHØ\[Ûˆ
+È\ÚYÜÈ\™HÛÜYY8 %\İ\İH[ˆ[œİYÜ˜[H‹ˆ]Ú]È™[İÈH›İÜÈ˜]\ˆ[ˆ[œÚYHXXÚÛÈHÛÈ›İÜÈY™™\ˆÛ›HHH[™È]XİX[HY™™\œÎˆH\ÜXİ‚‹ˆ
+Š’\ÚYÈ™]šY]ÊŠˆ8 %\˜ÚY[\ÛÙ[™[H]šY\˜˜YZK›YÈ[ˆ[™XÔØY™UYØ^YXœ›İÈ]L
+8).x)b8)-¸)'ø)b8)%ØÈTÒQÔØÈİHÈÛŠHİ™\ˆH]™HYÈ[™H]L‹ÌN[ˆØY™œ›Û‹YY\[œÚYHHÍˆX^ZYÚØÜ›ÛˆH™]šY]È\È›İXÛÜ˜][ÛˆHYÜÈÚ[™ÙH\ˆ™\œÙK[™H™XY\ˆX›İ]ÈÜİ[™\ˆZ\ˆİÛˆ˜[YHÙ]ÈÈÙYH[Hš\œİ‚Ëˆ
+ŠØ[˜Ù[
+Šˆ8 %^]Û‹LË[šË[]]Y‚‚ŠŠ•ÚH[œİYÜ˜[H\ÈÛÈ›İÜËŠŠˆH\İ[˜][ÛˆXÚY\ÈH\ÜXİ[™H™XY\ˆ\ÈHÛ›HÛ™HÚÈÛ›İÜÈÚXÚ^H\™HX›İ]ÈÜİˆH™YYÜİÚİÜÈHH[XYÙHÚÛNÈHİÜHÜˆ™Y[\ÈNŒMˆ[™š[ÈHœ˜[YHœ›ÛHHHÛİ\˜ÙHHØØ[[™È\[™Ü›Ü[™È8 %ÚXÚZÙ\ÈHØ\™	ÜÈXY\ˆ˜[™[™œ˜[™[™È›Ûİ\ˆÚ]]ˆÙ™™\š[™ÈÛ™H”Ú\™HÛˆ[œİYÜ˜[Hˆ›İÈYX[œÈ[ˆHÚ\™\ÈÚ[[HÚ\HÜ›ÜYØ\™ˆH\ÜXİÚ\İ]\ÈHY™™\™[˜ÙH[Y\šXØ[H\ÈÙ[\È[ˆ›ÜÙK‚‚[™YH›İÜÈ\™HZ[š[][H[™›ÜÈL	HÜXÚ]H
+È\ØX›YÚ[H\ŞXˆ]™\HİX‹[X™[[™^YXœ›İÈÛÙ\È›İYÚ^YXœ›İÕ^İ[XÈ[™XÔØY™UYØ
+0©ÌËŒ
+H˜]\ˆ[ˆH[\‹X˜\ÙYÙXİ[Û“X™[ÚÙ[ˆ8 %[\ˆ\È›È[™XÈÛ\È[™][ˆ˜XÚÚ[™ÈÜ]ÈHÚ\›Ü™ZÚKˆXØÙ\ÜÚXš[]NˆH›İÜÈØ\œHHİX›H[™Û\ÚX™[È
+Š˜Ú\™HÈİ\ˆ\Ø
+Š‹Ú\™HÛˆ[œİYÜ˜[X[™Ú\™H\È[œİYÜ˜[HİÜHÜˆ™Y[8 %Hš\œİ\È[X™\˜][H›İÚ\™H™\œÙXÚXÚ\ÈH™XY\ˆ]Û‰ÜÈİÛˆX™[[™Ûİ[™H[XšYİ[İ\ÈÈ[ˆL™HÙ[XİÜˆ
+[™ÈHØÜ™Y[ˆ™XY\ŠHÚ[HHÚY]\ÈÜ[‹ˆH[œİYÜ˜[H›İÉÜÈ[İ]\È]HØ\[Ûˆ\ÈÛÜYYÈH™]šY]È^ÜÙ\È\ÚYÜÎˆ[™O˜ˆİX\™YHÛÛ\Û™[Ë××İ\İ××ËÔÚ\™U\™Ù]ÚY]\İŞ‚‚ˆÈÈÈ0©ÌÎKŒˆ[œİYÜ˜[H\ÚYÜÈ
+]KÜÚ\™R\ÚYÜËØ
+B‚ŠŠ•ÚH\š]™Y›İØ[›™YŠŠˆÛ™Hš^YYÈ›ØÚÈÛˆ]™\HÚ\™HXXÚ\È[œİYÜ˜[H›İ[™ÎˆHÚ[\ØHÚ]\ZH[™HÚ]HÚÚØH[™[ˆHØ[YHXÚÙ][™ÛÛ\]HÚ]XXÚİ\‹ˆ]™\HYÈ\È[œİXYZ[œ›ÛHH™\œÙH™Z[™ÈÚ\™Y8 %]ÈÙXİ[Ûˆ]K]ÈÚ\\‹[™HZ]Y\È
+ÈØ]YÛÜHH™YÚ\İH
+Xœ˜\X0©ÍJHš[\È]^[™\‹ˆÚ[™ÙHH™\œÙH[™H›ØÚÈÚ[™Ù\ÈÚ]]ˆ\™K[™K[Û›K›È˜]]™H\È8 %ÛÈ]Ú\Èİ™\ˆÕHZÙHH™\İÙˆÚ\™S[šÜËØ‚‚ŠŠ‘š]™HÛİÈ
+PVÒTÒQÔÈHX
+KŠŠˆ]\ÈÚ][œİYÜ˜[HXØÙ\Ë[™]\È[ÛÈ›İYÚHÚ][œİYÜ˜[IÜÈİÛˆİZY[˜ÙH™XÛÛ[Y[™È8 %ÛÈHØ\\ÈšYÚÛˆ™XXÚÜ›İ[™È™YØ\™\ÜÈÙˆHÙZ[[™Ëˆš]™HÚ[™Ù\ÈH
+œİ˜]YŞJ‹›İ\İH[™İˆH\K]YÈ›ØÚÈØ[ˆY™›Ü™ÈXYÚ]HÛ™ÈZ[[™]Hœ›ØYYÜÈšYH™Z[™]]š]™HHYÈÛ›HH[™[Ùˆ[ÜHÙX\˜ÚÛÜİÈHšYÙˆHYÙ]ˆHÜ™\ˆ\È\™Y›Ü™HH[X™\˜]H›[™
+Š››İ
+Šˆ›[ÜİÜXÚYšXÈš\œİ‚‚ŸÈÛİÛİ\˜ÙH^[\H
+[[X[ˆÚ[\ØKX
+HŸKK_KKKKK_KKKKKKK_KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK_ŸH
+Š“ØØØ\Ú[ÛŠŠˆH™\İ]˜[İœ˜]˜[[™ÈÛˆHÚ\™H]K
+Š›Û›HÚ[ˆ]™[Û™ÜÈÈÛ™HÙˆH^	ÜÈZ]Y\ÊŠˆÒ[[X[’˜^X[XŸˆ
+Š“˜[YJŠˆÙXİ[ÛˆÚ[ˆ˜\œ›İÙ\ˆ[ˆH^[ÙHXœ˜\Q[K›˜[YQ[˜PTÕY›ÛYÈ\ØØ[Ø\ÙHÒ[[X[Ú[\ØXŸÈ
+Š“˜]]™H˜[YJŠˆHØ[YH]H[ˆH™XY[™È[™İXYÙIÜÈØÜš\8 %Ú\™H]]YY[˜ÙHXİX[HÙX\˜Ú\Èø).x)*8)`x)+¸)/¸)*8)&¸)/¸),¸)`8).8)/˜Ÿ
+Š‘Z]JŠˆÛÈYÜÈœ›ÛHH[IÜÈ
+Šœš[X\JŠˆZ]HÒ[[X[˜Ò˜ZR[[X[˜ŸH
+Š[˜ÚÜŠŠˆ^XİH
+Š›Û™JŠˆœ›ØYYÈĞšZİX‚“Û™Hœ›ØY[˜ÚÜ‹›İÚ^ˆš]™H\™K[šXÚHYÜÈÚ]™HHÜİ›İÚ\™HšYÈÈ˜[šËÚ[HÚ^œ›ØYÛ™\È›İÛˆ]ˆÚ[ˆHÛİ\Èœ™YH8 %[˜Ü[™È›Û™HÛˆH˜]]™H]K[™[Üİ^\ÈØ\œH›ÈØØØ\Ú[Ûˆ8 %]\Èš[Yœ›ÛHHZ[[ˆš[Üš]HÜ™\ˆ
+˜X\‹Ú\\‹ÙXÛÛ™Z]KØ]YÛÜK™[XZ[š[™Èœ›ØY[™İXYÙKœ˜[™
+KˆÜÙHY\œÈ\™Hİ[Z[ÛÈ]˜Z\Ú[™ÈHØ\\ÈHÛ™KXÛÛœİ[Y]˜]\ˆ[ˆH™Y\ÚYÛ‹]]š]™H^H[ÜİH˜[İ]ÚYH]ˆ
+Š“›ÈÛİÛÙ\ÈÈHœ˜[™
+ŠˆÕ™Y[œÚ^\È›È™XXÚ[™HØ\™	ÜÈÛÜ™X\šÈ\ÈHØ\[Û‰ÜÈ™Y[œÚ˜\[™XYHØ\œH]‚‚•ÛÜšÙY^[\\Îˆ[[X[ˆÚ[\ØH[˜8¡¤ˆÒ[[X[Ú[\ØHÒ[[X[ˆÒ˜ZR[[X[ˆĞšZİHÒ˜ZTÚšT˜[XÈÚ]H‹È[˜8¡¤ˆĞšYØ]˜YÚ]HÒÜš\Ú˜HÒ˜ZTÚ™YRÜš\Ú˜HĞšZİHÑÚ]PÚ\\Œ˜ÈHØ[YHÚ]H™\œÙHÛˆ˜[›X\Ú[ZH8¡¤ˆÒ˜[›X\Ú[ZXZÙ\ÈÛİH[™\Ú\ÈHÚ\\ˆİ]‚‚ŠŠ•Ú]\È[X™\˜][HXœÙ[ŠŠˆ›Èİš\˜[İ™[™[™ØÙ^Ü™\YÙXÙ\ˆYÜÈÚ]›ÈÜXØ[™[][ÛˆÈHÜİ\™HÚ][YÜš]HŞ\İ[\ÈÛÚÈ›Ü‹Ù]™\˜[[ˆ]˜[Z[H]™H™Y[ˆ™\İšXİYİ]šYÚ[™^H[]HHÛ\ÜÚYšXØ][ÛˆHÜXÚYšXÈYÜÈ^\İÈ›İšYKˆ\ÚYÜÈ\™H[ˆ[HØ\ÙHH[Ù\İ]™\ˆÚ[˜ÙH[œİYÜ˜[HKY[\\Ú\ÙY\ÚYÈ\ØÛİ™\H8 %^HÛ\ÜÚYHHÜİ	ÜÈÜXÈ[Ü™H[ˆ^H\İšX]H]8 %ÚXÚ\È[ˆ\™İ[Y[›ÜˆHÛX[ˆ›ØÚË›İHİYÛ™K‚‚ŠŠ•H[Y[HY\ˆ
+0©Ì[™0©ÌØŠKŠŠˆHÛ™H™XXÚY˜[YÙH\È\\È]HÙ[™\šXÈ][İHXØÛİ[Ù\È›İˆH[˜Ú[™È[™Ú[™HÛ›İÜÈÚ]Ù^H\ËˆÚ\š[™ÈHÜš\Ú˜H™\œÙHÛˆ˜[›X\Ú[ZHYÈÒ˜[›X\Ú[ZX
+ÈÒ˜[›X\Ú[ZLŒ˜8 %\\‹\™[]˜[
+˜[™
+ˆÜZÚ[™È[ˆ›Û[YHÛˆ^XİHH^H]\È\ÙYˆ›İ[Y[HY\œÈ\™H
+Š™Ø]YÛˆZ]H™[]˜[˜ÙJŠˆHØœÙ\˜[˜ÙIÜÈZ]Q[˜
+\È]È˜[YJH\ÈX]ÚYYØZ[œİRUWÓPUÒÕÒÑS”Ø›ÜˆHZ]Y\ÈH™YÚ\İHš[\ÈH^[™\‹ÛÈÒ[[X[’˜^X[X]XÚ\ÈÈH[[X[ˆÚ[\ØH™\œÙH[™È›İ[™È[ÙKˆ[™Ø]Y\ÈÛİ[™H^XİHH\œ™[]˜[˜ÙHH\˜YÜ˜\X›İ™H™Y\Ù\Ëˆ
+Š“Û™JŠˆØœÙ\˜[˜ÙHÛÛšX]\È
+H^HØ[ˆØ\œHÙ]™\˜[[™]š]™HÛİÈHÙXÛÛ™™\İ]˜[YÈÜ›İÙÈİ]HZ]H[™H[˜ÚÜŠK[™\™H\È›ÈÒ˜[›X\Ú[ZLŒ˜YX\ˆ˜\šX[8 %]\XØ]\ÈHÜXÈ]Hœ˜Xİ[ÛˆÙˆH›Û[YKˆX[ÛÈÙ]ÈH™\İ]˜[˜[YH[ˆ]˜[˜YØ\šK‚‚˜Ú\™R\ÚYÜËØİ^\È\™H[™]KYœ™YH8 %™\ÛÛš[™ÈØœÙ\˜[˜Ù\È™YYÈHØØ][Ûˆ[™HØ\›YYYX\ˆØXÚKÛÈH
+Š˜Ø[\ŠŠˆİ\Y\ÈH[Y[PÛÛ^ˆÚ\™T›İšY\˜Z[È]œ›ÛH\ÙSØœÙ\˜[˜Ù\Ñ›Ü‘]JÙ^KØ[[™\”Ş\İ[JX
+ÈZ]Q›Ü•ÙYZÙ^J
+XÚ]\ÙUÙ^RÙ^X›Û[™È]İ™\ˆ]ZYšYÚÙ›Ü™YÜ›İ[™ˆH™\ÛÛ™H\È[\˜Xİ[Û“X[˜YÙ\˜YY™\œ™Y[™Ú\™\ÈHYX\ˆØXÚHÛYIÜÈÙ^Hİš\[™XYHØ\›\ËÛÈ]YÈ›ÈÛÜšÈH\Ø\Û‰İÚ[™ËˆXœÙ[H[Y[X[œ]H›ØÚÈ\È]KZY[XØ[ÈH]KYœ™YHÛ™K‚‚ŠŠ”ÛYÈ[\ËŠŠˆ][ˆ]\È[ˆ›İYÚHÙX\˜Ú›Ü›X[^™\ˆ
+]KÜÙX\˜Ú›Ü›X[^™KØ
+HÛÈPTÕXXÜš]XÜÈ›Û
+šYØ]˜Yñ*İ1 X8¡¤ˆšYØ]˜YÚ]X
+H[™[™\ËØ0­ØÜ[˜İX][Ûˆ›Ü™Y›Ü™HHÛÜ™È›Ú[‹ˆ˜]]™K\ØÜš\]\ÈÙY\ÓXÓŸX
+Š˜[™Ó_X
+Šˆ8 %X]˜\È\™HÛÛXš[š[™ÈX\šÜË[™İš\[™È[HÛİ[Ú™YHÛÜ™8 %[™›Ü]™\][™È[ÙH[˜ÛY[™ÈÜXÙ\ËˆİXØÛ˜™K\ØÜš\H]˜[˜YØ\šH]HHØ[YHØ^H]™\Hİ\ˆÛÛ[İš[™ÈÙ\Ëˆİ]]\ÈY\YØ\ÙKZ[œÙ[œÚ]]™[KØ\Y]PVÒTÒQÔÈHÌ[™›ÜÈ[][™Èİ™\ˆÚ\˜Xİ\œÈÜˆÚ]›È]\ˆ[ˆ]ˆ]\›Z[š\İXÎˆHØ[YH™\œÙH
+È[™İXYÙH[Ø^\È›ÙXÙ\ÈHØ[YH›ØÚËÛÈH™K\Ú\™H™]\Ù\ÈYÜÈ[œİYÜ˜[H\È[™XYH[™^YHXØÛİ[[™\‹‚‚ŠŠ“Û™HØ\›Üˆ›İ›Ü›X]ËŠŠˆÜİ[™İÜHÚ\™HHØ[YHš]™H8 %HİÜIÜÈYÜÈ]™H[ˆH^İXÚÙ\‹Ú\™Hš]™H\ÈYˆ[][™ÈÙ[™\›İ\ËˆZ[™\œÙR\ÚYÜØİ[ZÙ\ÈH[Z]]]\È
+Š˜Û[\Y
+ŠˆÈPVÒTÒQÔØˆ]Ø[ˆÛ›HÚš[šÈH›ØÚË™]™\ˆÚY[ˆ]\İÚ]H]›Ü›HXØÙ\Ë‚‚ŠŠØ\[Û‹ŠŠˆZ[[œİYÜ˜[PØ\[Û˜
+Ú\™S[šÜËØ
+HHH0©ÌÎH™\œÙHØ\[Û‹[ˆ›ÛİÈ[™Oˆ™Y[œÚ˜\[ˆH
+Š˜›[šÈ[™JŠ‹[ˆHYÈ[™NÈ›Ü›X]ˆ	ÜİÜIØš[\ÈHYÈ[™HÈHİÜHØ\ˆH›[šÈ[™H\È[X™\˜]H8 %[œİYÜ˜[HÛÛ\Ù\ÈHØ\[ÛˆY\ˆŒÈ[™\ËÛÈH™]šY]ÈÚİÜÈH™\œÙH[™›İHYÜËˆİX\™YH][Ë××İ\İ××ËÜÚ\™R\ÚYÜË\İØ‚‚ŠŠ•ÚHHÛ\›Ø\™ŠŠˆ[œİYÜ˜[HXØÙ\È›È™KYš[YØ\[Ûˆœ›ÛHHÚ\™H[[ÛˆZ]\ˆ]›Ü›K[™HİÜšY\È\İX›Ø\™›İ]H™YYÈH˜]]™H[Ù[H
+[™HİÜ™H™XZ[
+KˆÛÈH[œİYÜ˜[Hœ˜[˜ÚÛÜY\ÈHØ\[ÛˆÈHÛ\›Ø\™šXH“‰ÜÈ\™XØ]YX]\™\Ù[Û\›Ø\™8 %HØ[YHTH˜[YQ]Z[ÚY][™XYH\Ù\ËK™Kˆ›È™]È˜]]™H\[™[˜ŞH[™HÚÛH™X]\™HÚ\ÈÕH8 %[ˆÜ[œÈHÚ\™HÚY]Ú]H‘ËˆHÚY]	ÜÈİX‹[X™[[ÈH™XY\ˆHØ\[Ûˆ\ÈØZ][™ÈÈ™H\İY‚‚ˆÈÈÈ0©ÌÎKŒÈİÜHÈ™Y[Ø[˜\È
+Ú\™TİÜPØ[˜\ËŞ][ËÜÚ\™TİÜS^[İ]Ø
+B‚ŠŠ•H˜Z[\™H]š^\ËŠŠˆHÚ\™HØ\™\ÈH8 %H[\İ\ÜXİH™YYÜİÚİÜÈÚÛKˆÜİYÈH
+Š”İÜJŠˆÜˆH
+Š”™Y[
+Š‹ÚXÚ\™HNŒM‹[œİYÜ˜[HØØ[\ÈH[XYÙH\Èš[Hœ˜[YH[™Ü›ÜÈHİ™\™›İÈÙ™ˆHÜ[™›İÛNˆ^XİHHXY\ˆ˜[™[™Hœ˜[™[™È›Ûİ\‹ˆ™\ÜYœ›ÛHHšY[Y\ˆ0©ÌÎKŒHÚ\Y‚‚ŠŠ•ÛÈÙ\\˜]H^˜\™ËŠŠˆ
+Ü›Ü
+ˆ\ÈÛÛ™YH^Ü[™ÈHYHL0åÌNLŒœ˜[YKÛÈ›İ[™È\ÈØØ[YÈš[ˆ
+Ú›ÛYJˆ\ÈÛÛ™YHÙY\[™ÈHØ\™İ]ÙˆHİš\È[œİYÜ˜[HZ[Èİ™\ˆH]˜]\‹Ü›ÙÜ™\ÜÈ›İÈ]HÜH™Y[Ø\[Ûˆ
+È]Y[Èİš\]H›İÛKˆİÜTØY™R[œÙ]Ø\ÈH
+Š[š[ÛŠŠˆÙˆİÜH[™™Y[™\XØ[Ú›ÛYH8 %ÜLŒ›İÛHMH
+0åÌˆHÈÌÌ
+H8 %ÛÈÛ™H^ÜY[XYÙH\ÈØY™HÜİYZ]\ˆØ^K‚‚ŠŠ“›ÈÜš^›Û[[œÙ][X™\˜][KŠŠˆH™Y[[ÛÈZ[ÈHZÙKØÛÛ[Y[ÜÚ\™H˜Z[İÛˆHšYÚYÙH
+ŒL
+Kˆ[ˆ[œÙ]ÚYH[›İYÚÈÛX\ˆ]Ûİ[›Ü˜ÙHHØ\™™[İÈ]È˜]]™HMÚY8 %K™KˆHØØ[H˜[œÙ›Ü›HÛˆH™\HšY]È[™YÈØ\\™T™Y˜ˆHÚX\\ˆ˜YH\ÈÈ[ˆHØ\™[X›YYÜš^›Û[H[™]H˜Z[Ú]İ™\ˆ]È[\›˜[Y[™ÎˆH˜Z[İ™\›\ÈHØ\™	ÜÈX\™Ú[‹™]™\ˆ]È^‚‚ŠŠ‘Ù[ÛY]KŠŠˆØ[˜\ÈM0åÎMŒØ\\™Y]L0åÌNLŒˆH[œÙ]È\™HÚÜÙ[ˆÛÈH˜]]™HM0åÍÍHØ\™š]ÈH˜[™]
+ŠœØØ[HJŠˆ8 %LŒ
+ÈÍH
+ÈMHHMŒ8 %ÛÈXÙTİÜPØ\™
+
+X™]\›œÈØØ[HH[™HØ\\™YY\˜\˜ÚH\ÈZ[ˆ[™[œØØ[YˆHØØ[H\ÈÙ\\ÈH˜XÚÜİÜ›ÜˆHØ\™]İ]Ü›İÜÈH˜[™[™Ú\™TİÜS^[İ]\İØ˜Z[ÈİYHYˆHÚ\YÚ^™H]™\ˆİÜÈš][™È]NŒKˆHØ\™\ÈÙ[™Y
+Šš[ˆHØY™H›Ş›İHØ[˜\ÊŠˆ8 %Ø[˜\ËXÙ[š[™ÈÛİ[›ÜHœ˜[™[™È›Ûİ\ˆ[™\ˆH™Y[Ø\[Ûˆİš\‚‚ŠŠ“™Z]\ˆ™K[ZY[İ]›Üˆ˜[œÙ›Ü›YYŠŠˆ™KY›İÚ[™ÈHØ\™]İÜHÚYÛİ[™K]Ü˜\H™\œÙH[™\È[™™K\[ˆš]YX[š[™Õ\XYØZ[œİY™™\™[Ù[ÛY]KÚ[[HÚ[™Ú[™ÈHÛÛ\ÜÚ][Ûˆ0©ÌÎIÜÈš]\İÈ[ÈØØ[[™È]Ûİ[]H˜[œÙ›Ü›HÛˆHØ\\™YšY]Ëˆ]Ù]È™Z]\‹ˆ™Z[™]Ú]ÈHØ[YHÛİ\˜ÙHÚÙ]Ú[X›YYÛÈHœ˜[YH™XYÈ\ÈH\ÚYÛ™YİÜH˜]\ˆ[ˆH]\˜›ŞYØÜ™Y[œÚİ‚‚ˆ
+Š]Yİ\İŒˆ8 %HİÜH›İÈØ\È™\ÜYÜ˜\Ú[™ÊŠˆ[™™]™\ˆ™XXÚ[™È[œİYÜ˜[KÚ[HÜİ[™Z[ˆÚ\™HÛÜšÙYˆH˜[œÙ›Ü›HØ\ÈHÛ™HÛÛœİXİHİÜH]Y]HÛÜšÚ[™ÈÜİ]Y›İÛÈ]Ø\È™[[İ™Y[ˆ˜]›İ\ˆÙˆHØØ[KLHÙ[ÛY]HX›İ™KˆÚ]\ˆ]Ø\ÈHØ]\ÙH\È
+Š[˜ÛÛ™š\›YY
+Šˆ8 %]Ûİ[›İ™H™\›ÙXÙYÚ]İ]H]šXÙKˆYˆ]™Xİ\œËH™^İ\ÜXİÈ\™HY[[ÜH
+HM0åÎMŒšY]È][œÚ]HÈ\ÈHŒNHPˆš]X\™Y›Ü™HHØØ[HÈL0åÌNLŒYØZ[œİŒLÈPˆ›ÜˆHÜİ
+H[™Ø\\™T™Y˜ÛˆHšY]ÈÜÚ][Û™YÙ™‹\ØÜ™Y[ˆ]8¢$ŒL‚‚‘İX\™YH][Ë××İ\İ××ËÜÚ\™TİÜS^[İ]\İØ
+NŒMˆ^ÜØ\™ÚÛH[œÚYHHØY™H›Ş[šY›Ü›HØØ[KØY™KX›ŞÙ[š[™ÊH[™HØ\\™K\Ú^™H\ÜÙ\[ÛœÈ[ˆ][Ë××İ\İ××ËÜÚ\™U™\œÙU\™Ù]\İŞ‚‚ˆÈÈÈÚ\™H›İÈ
+Ú\™T›İšY\˜È\ÙTÚ\™J
+X
+B‚ŒˆÚ\™J™\œÙK[™ÊXÚ]›ÈÜË\™Ù]Ü[œÈH\™Ù]XÚÙ\ˆ
+0©ÌÎKŒJH[™™]\›œÎÈHXÚÙ\ˆØ[È˜XÚÈÚ]	ÜŞ\İ[IØÜˆ	Ú[œİYÜ˜[IØˆHØ[\ˆ][™XYHÛ›İÜÈH\İ[˜][Ûˆ\ÜÙ\ÈÜË\™Ù][™ÚÚ\ÈHÚY]‚ŒKˆHÚÜÙ[ˆ\™Ù][İ[ÈHØ\™
+Š›Ù™‹\ØÜ™Y[ŠŠˆ
+XœÛÛ]K\ÜÚ][Û™Y]8¢$ŒL8¢$ŒLÚ[\‘]™[ÏH››Û™H˜
+H[œÚYHH›İšY\‹ØZ]ÈÛ™H[š[X][Ûˆœ˜[YH
+ÈŒ\È›Üˆ^[İ]Ù›ÛË[ˆØ\\™\È]Ú]™XXİ[˜]]™K]šY]Ë\Úİ	ÜÈØ\\™T™Y˜
+‘Ë]X[]HK\š[KØØ[YÈL0åÌLÍL
+K‚Œ‹ˆH
+Š^Ø\[ÛŠŠˆ\È[Ø^\ÈZ[šXHZ[Ú\™PØ\[Û˜
+Ú\™S[šÜËØ
+NˆÙXİ[Ûˆ0­È™\œÙHX™[XY\‹H][İYš\œİ™\œÙH[™K[ˆH[™İXYÙK[ØØ[\ÙYÕH
+”™XYÛˆ™Y[œÚˆˆÈ•™Y[œÚ8)$8)*ˆ8)*¸),8)*¸)(¸)/8)aø) ˆˆÈİHÈÛˆ\]Z]˜[[ÊH›ÛİÙYHHX›XÈÛX\[šÈ
+ÓPT•ÓS’ØHÚ]XˆYÙ\È™Y\™XİYÙNÈTÔÕÔ‘WÕT“ÈVWÔÕÔ‘WÕT“ÛÛœİ[È]™H[Û™ÜÚYH]
+Kˆ[™K[Û›H8 %›È[[YH™]Ú‚ŒËˆ
+Š’[œİYÜ˜[H\™Ù]ŠŠˆHÙ™‹\ØÜ™Y[ˆ[İ[\ÈHZ[ˆØ\™›Üˆ›Ü›X]ˆ	ÜÜİ	Ø[™H0©ÌÎKŒÈØ[˜\È›Üˆ›Ü›X]ˆ	ÜİÜIØØ\\™Y]L0åÌLÍLÜˆL0åÌNLŒXØÛÜ™[™ÛKˆHØ\[Ûˆ\ÈZ[[œİYÜ˜[PØ\[Û˜
+™\œÙHØ\[Ûˆ
+È[™X
+ÈHš]™K]YÈ›ØÚË0©ÌÎKŒŠKÛÜYYÈHÛ\›Ø\™[™H‘È[Ø^\ÈÛÙ\Èİ]›İYÚ^Ë\Ú\š[™ØÛˆ
+Š˜›İ
+Šˆ]›Ü›\È8 %H“ˆÚ\™HY\ÜØYÙXÛİ[šYH[Û™È\Ù[\ÜÛH
+[œİYÜ˜[H›ÜÈ]
+H[™ÛˆÛÛYHZ[È\Ú\È[œİYÜ˜[Hİ]ÙˆHXİ]š]H\İ[ˆ˜]›İ\ˆÙˆ^XØ\X›H\™Ù]ËˆX[ÙÕ]Nˆ	ÔÚ\™HÛˆ[œİYÜ˜[IØ‚ˆ
+Š”]›Ü›HÜ]
+Ş\İ[H\™Ù]
+NŠŠˆSÔÈÚ\™\È[XYÙH
+ÈØ\[ÛˆÙÙ]\ˆ›İYÚ“ˆÚ\™KœÚ\™JÈY\ÜØYÙK\›JX
+RPXİ]š]UšY]ĞÛÛ›Û\ˆš[ÈÚ]Ğ\	ÜÈØ\[ÛˆšY[]]ÛX]XØ[JKˆ[™›ÚY	ÜÈ“ˆÚ\™H›ÜÈš[HT’\ËÛÈH[XYÙHÛÙ\È›İYÚ^Ë\Ú\š[™Ø	ÜÈÚ\™P\Ş[˜Ø
+Z[YU\H[XYÙKÜ™Ø
+H[™HØ\[Ûˆ\ÈYÈH\Ù\ˆ8 %Hœ˜[™[™È›Ûİ\ˆÛˆHØ\™]Ù[ˆØ\œšY\ÈH˜[˜XÚË‚Kˆ
+Š‘˜[˜XÚÜÎŠŠˆØ\\™H˜Z[\™HÛˆ[ˆ
+Š’[œİYÜ˜[JŠˆ\™Ù]8¡¤ˆHØØ[^™YÛİ[‰İÚ\™H\İ›İÈˆ[\™XØ]\ÙH[œİYÜ˜[HXØÙ\È[ˆ[XYÙHÜˆ›İ[™È[™H^[Û›HÚY]Ú[\HÛİ[›İ\İ]8 %ÚXÚ™XYÈ\ÈH]ÛˆÚ[™È›İ[™ËˆØ\\™H˜Z[\™HÛˆHŞ\İ[H\™Ù]8¡¤ˆ^[Û›HÚ\™KœÚ\™JØ\[ÛŠXÈÚ\š[™Ëš\Ğ]˜Z[X›P\Ş[˜Ê
+X˜[ÙH8¡¤ˆHØ[YH^[Û›H]ÈÚY]\ÛZ\ÜØ[È[H\œ›Üˆ\ÈİØ[İÙYˆ[ˆ[‹Y›YÚ™YˆİX\˜[Y\ÈÛ™HÚ\™H]H[YNÈ\ŞXš]™\ÈH]Û‰ÜÈ\ØX›Yİ]K‚‚ŠŠ‘š[\ÎŠŠˆ[Øš[KÜÜ˜ËØÛÛ\Û™[ËÔÚ\™P]Û‹ŞÚ\™PØ\™ŞÚ\™TİÜPØ[˜\ËŞÚ\™U\™Ù]ÚY]Ş[Øš[KÜÜ˜Ëİ][ËÜÚ\™U™\œÙKŞ[Øš[KÜÜ˜Ëİ][ËÜÚ\™PØ\™\KØ[Øš[KÜÜ˜Ëİ][ËÜÚ\™TİÜS^[İ]Ø[Øš[KÜÜ˜ËÙ]KÜÚ\™S[šÜËØ[Øš[KÜÜ˜ËÙ]KÜÚ\™R\ÚYÜËØˆÚ\™T›İšY\˜[İ[ÈÛ˜ÙH[ˆ\Ş[™İÛœÈ›İHÙ™‹\ØÜ™Y[ˆØ\™[™H\™Ù]XÚÙ\‹ˆ\İÎˆ][Ë××İ\İ××ËÜÚ\™R\ÚYÜË\İØ][Ë××İ\İ××ËÜÚ\™TİÜS^[İ]\İØ][Ë××İ\İ××ËÜÚ\™U™\œÙU\™Ù]\İŞÛÛ\Û™[Ë××İ\İ××ËÔÚ\™U\™Ù]ÚY]\İŞL™H[Øš[KË›XY\İ›ËÜÚ\™K]\™Ù]\Û[ÚÙKX[[‚‚‹KKB‚ˆÈÈˆ™XY[™È›ÙÜ™\ÜÈ	ˆ™\İ[YB‚ŠŠ”\œÜÙKŠŠˆ™[Y[X™\ˆÚ\™HH™XY\ˆİÜY[ˆ]™\H^8 %[™]™\HÚ\\ˆÙˆ]™\H^8 %ÛÈH™]\›š[™È™XY\ˆ[™È˜XÚÈZY]™\œÙH[œİXYÙˆ]YÙHKˆİÙ\œÈH[ˆ›ÙÜ™\ÜÈ˜\ˆ[ˆ™XY\œËH™\İ[YHÚY]ÛˆH\İ[™ÈØÜ™Y[œËÚ[[\‹XÚ\\ˆ]]ËZ[\[™H›İ][™H[™Ú[™IÜÈ]]ËXÛÛ\][Ûˆ
+0©ÌÌJKˆ[Øš[KÜÜ˜ËØÛÛ^ËÔ™XY[™Ô›ÙÜ™\ÜĞÛÛ^Ş‚‚ˆÈÈÈÚ]	ÜÈ\œÚ\İY‚“Û™H\Ş[˜ÔİÜ˜YÙH›Øˆ]™Y[œÚÜ™XY[™Ë\›ÙÜ™\ÜØˆHX\Ùˆ[šY\ÈÈÛİ\˜ÙRYÚ\\Ë™\œÙR[™^\]Y]XÙ^YYHÛİ\˜ÙRY˜›Üˆ[™X\ˆ^È[™Ûİ\˜ÙRYÚ\\˜›ÜˆÚ\\™YÛ™\È8 %
+Š™XXÚÚ\\ˆÙY\È]ÈİÛˆ™\İ[YHÜÚ][ÛŠŠ‹ˆÛˆY˜]KYØXŞHİÜ™\È\™HZYÜ˜]Y[ˆXÙNˆ˜\™KXÛİ\˜ÙRYÙ^\È\™H™KZÙ^YYÈHÛÛ\ÜÚ]H›Ü›KÛİ\˜ÙRYÈ\™HØ[›ÛšXØ[\ÙY
+0©ÍZYÜ˜][ÛŠK[™ÛÛY[™È[šY\ÈÙY\H[Üİ™XÙ[\]Y]ˆÛÈ™XY]Î‚‚‹HÙ]›ÙÜ™\ÜÊÛİ\˜ÙRY
+X8 %H
+Š›]\İ
+ŠˆÜÚ][ÛˆXÜ›ÜÜÈ[İXœÙXİ[ÛœÈ
+š]™\ÈH›ÛÚË[]™[™\İ[YHÚY]
+K‚‹HÙ]Ú\\”›ÙÜ™\ÜÊÛİ\˜ÙRYÚ\\ŠX8 %HØ]™YÜÚ][ÛˆÚ][ˆÛ™HİXœÙXİ[Ûˆ
+š]™\ÈÚ\\ˆ]]ËZ[\
+K‚‚”™XY\œÈÜš]HÛˆ]™\HYÙHÚ[™ÙH
+Ù]›ÙÜ™\ÜØœ›ÛHHYÙ\‰ÜÈİ\œ™[[™^
+NÈÜš]\È\™HY\YÚ[ˆH™\œÙR[™^\Û‰İÚ[™ÙY[™XXÚÜš]H[ÛÈÙÜÈH™XY[È\Ù\Xİ]š]PÛÛ^
+™YY[™Èİ™XZÜÈ[™›İ][™H]]ËXÛÛ\][ÛŠK‚‚ˆÈÈÈÛÛ\Û™[ˆ™XY[™È›ÙÜ™\ÜÈ˜\ˆ
+™XY[™Ô›ÙÜ™\ÜĞ˜\‹Ş
+B‚•HÛÛ[[İ\È›Ü›HÙˆHˆÈİ[YÙHÛİ[\‹ˆHÈ[]ÚY˜XÚÈ[ˆ]šY\˜Ú]HØY™œ›Û˜š[]İ\œ™[İİ[	H
+[\˜Y]\Èš[
+KˆÚ]È\™XİH[™\ˆH™XY\ˆÜ˜\‹X›İ™HHÙÙÛH›İËÛˆ]™\H™XY\‹ˆ™[™\œÈ›İ[™ÈÚ[ˆİ[8¢i‚‚ˆÈÈÈÛÛ\Û™[ˆ™\İ[YH™XY[™ÈÚY]
+™\İ[YT™XY[™ÔÚY]Ş
+B‚ŠŠ•Ú[ˆ]\X\œËŠŠˆÛˆØ]YÛÜS\İØÜ™Y[˜[™Z]S\İØÜ™Y[˜ˆ\[™È[ˆ[HÚÜÙHØ]™Y›ÛÚË[]™[›ÙÜ™\ÜÈ\È™\œÙR[™^ˆÜ[œÈ\ÈÚY][œİXYÙˆ˜]šYØ][™Ëˆ
+[šY\ÈÚ]›È›ÙÜ™\ÜË›ÙÜ™\ÜÈ]™\œÙHKÜˆÚ[HİÜ˜YÙH\Èİ[Y˜][™È˜]šYØ]Hİ˜ZYÚÈHİ\ŠHHÚ\\œÈ[™^ØÜ™Y[œÈÈ
+Š››İ
+ŠˆÚİÈ]8 %\[™ÈHÚ\\ˆØ\™Ú[[H™\İ[Y\È]Ù]Ú\\”›ÙÜ™\ÜÊ‹‹ŠK™\œÙR[™^
+İXœÙXİ[Ûˆ]]ËZ[\
+K‚‚ŠŠ”ÜXËŠŠˆHÙ[™Y[Ù[İ™\ˆ[Ù[˜XÚÙ›Ü8 %X^ÚYŒ˜YZK›ØØ\™Xİ]™P›Ü™\˜H\˜ÚY[˜\ÙH[™\ˆHØ\™Xİ]™Qœ›ÛH8¡¤ˆØ\™Xİ]™UØÜ˜YY[
+HXİ]™KXØ\™™X]Y[0©Î
+N‚‚ŒKˆ^]HšXHÜ™\•]\ĞS[™İXYÙX
+]ˆš[X\HŒÈÙXÛÛ™\HLÎÈ]š[X\HŒˆÈÙXÛÛ™\HLŠK[ˆHH]šY\˜[K‚Œ‹ˆ›Û\ˆ8)'8).x)/¸) H8)&ø)bø)(x)/8)/ˆ8))x)/‹8)-x).x)`8) ˆ8).8)aÈ8)'8)/¸),8)`8),8)%¸)aø) Ø
+™XY\‹]]H˜XÙKMË[šØ
+Hİ™\ˆ™\İ[YHÚ\™H[İHYÙ™Ø
+][XÈLË[šË\ÛÙ
+K‚ŒËˆ
+Š“\İ\™XYØ\™
+Šˆ\˜ÚY[\ÛÙ]šY\˜›Ü™\‹˜YZK›YÈ8)!x) ¸))8)/ø)+ˆ8)*¸)(8)/ø))ÈTÕ‘PQ[ˆHÙXİ[Û“X™[ÚÙ[ˆİ™\ˆH™KY›Ü›X]YØØ][Ûˆ]Mˆ[ˆHXİ]™HØÜš\
+šXH›Ü›X]ØØ][Û˜ÚXÚÜXZÜÈXXÚÛİ\˜ÙIÜÈ›ØØX[\H8 %8)!x))ø)cx)+ø)/¸)+Èˆ0­È8)-¸)cx),¸)bø)%HX›ÜˆÚ]K8).8),8)cx)%Ø›Üˆİ[™\šØ[™8).8)cx))8)bø))8)cx),›Üˆİİ˜[\Ë8)%x)/¸)(ø)cx)(H8 )ˆ0­È8)*¸))˜›Üˆ˜[XÚ\š]X[˜\Ë8)%x)/¸)(ø)cx)(H8 )ˆ0­È8)-¸)cx),¸)bø)%X›Üˆ˜[ZZÚH˜[X^X[‹Z[ˆ8)*¸))ˆ˜›ÜˆÚ[\Ø\ËØX\\ÊK‚ˆš[X\H]ÛˆÛÛYØY™œ›Û˜˜YZK›Y8)'8)/¸),8)`8),8)%¸)aø) ˆ0­È™\İ[YX[ˆÛ”š[X\X‚KˆÙXÛÛ™\H]Ûˆİ][™YØ\™Xİ]™P›Ü™\˜8)!¸),8) ¸)+H8).8)aÈ8)*¸)(¸)/8)aø) ˆ0­Èİ\İ™\˜[ˆØY™œ›Û‹YY\‚‹ˆØ[˜Ù[8 %][XÈLÈ[šË[]]YZ[‹ZZYÚ^]Û‹‚‚ŠŠ™Z]š[İ\‹ŠŠˆ™\İ[YH8¡¤ˆ˜]šYØ]HÈHØ]™YÜÚ][Ûˆ
+˜]šYØ]UÔ›ÙÜ™\ÜØ
+Kˆİ\İ™\ˆÛˆH
+Š˜Ú\\™Y
+Šˆ[HÛX\œÈÛ›HHÚ\\ˆ™Z[™È™\İ[YY
+ÛX\Ú\\”›ÙÜ™\ÜØ
+H[™™[Ü[œÈ]Ú\\ˆ]™\œÙHH8 %ÚX›[™ÈÚ\\œÈÙY\Z\ˆÜÚ][ÛœÎÈÛˆH[™X\ˆ[H]ÛX\œÈHÚÛHÛİ\˜ÙH[™Ü[œÈ]Hİ\ˆ]™\H^]][ÛÈX\šÔÙY[˜ÈH[H
+ÛX\œÈ]È‘UÈ˜YÙK0©Í
+Kˆ˜XÚÙ›Ü\\ÛZ\ÜÙ\Ë‚‚ˆÈÈÈÚ\\ˆ]]ËXY˜[˜ÙH
+˜[œÚ][ÛˆØ\™ÊB‚“][KXÚ\\ˆ™XY\œÈ]\İ]H™XY\ˆİÚ\H
+Š˜XÜ›ÜÜÊŠˆÚ\\ˆ›İ[™\šY\È
+H•SP“ÓÒÈ0©ÌÈ]]ËXY˜[˜ÙHÛÛ˜Xİ
+KˆHYÙ\ˆ]H\ÈÔ™]Ú\\Ø\™×H
+È™\œÙ\È
+ÈÓ™^Ú\\Ø\™×X8 %H™]ˆØ\™ÛZ]YÛˆHš\œİÚ\\‹H™^Ø\™ÛˆH\İˆXXÚ˜[œÚ][ÛˆØ\™
+™^Ú\\Ø\™ŞÈ™]Ú\\Ø\™Ş
+H\ÈH[]ÚYYÙKÛÛ[Ù[™YÚ]LˆØ\ˆH[™İXYÙKX]Ø\™H8)!x)%ø),¸)/ˆÈ™^
+Üˆ8)*¸)/ø)&ø),¸)/ˆÈ™]š[İ\Ø
+HX™[]M[šË[]]YH™ZYÚ›İ\š[™ÈÚ\\‰ÜÈ]H]ŒØY™œ›Û‹YY\
+][XÈÚ[ˆ[™ÈH[ŠK[™HÌˆ8 .˜È8 .XÚ]œ›Ûˆ[ˆØY™œ›Û‹YY\ˆÚ[ˆH˜[œÚ][ÛˆYÙH™XÛÛY\È8¢iHŒ	Hš\ÚX›KH™XY\ˆš\™\ÈH
+Š“YY][JŠˆ\XÈ[™Y\ˆH\È™X]˜]šYØ][Û‹œ™\XÙXÈ]Ù[ˆÚ]H™ZYÚ›İ\š[™ÈÚ\\ˆ8 %™\XÙK›İ\ÚÛÈ˜XÚÈ[Ø^\È™]\›œÈÈHÚ\\ˆ\İˆH™]ˆ][™ÈÛˆH™]š[İ\ÈÚ\\‰ÜÈ
+Š›\İ
+Šˆ™\œÙH
+[š]X[[™^ˆ™]•™\œÙPÛİ[8¢$ˆX
+KˆH\Ó˜]šYØ]Y™Y˜]Ú™]™[ÈİX›KYš\™NÈH™\[™Y™]ˆØ\™ÚYÈ[[™XÙ\ÈHÛ™H
+Ù™œÙ]H\Ñš\œİÚ\\ˆÈˆX
+K‚‚ˆÈÈÈÛÛ\Û™[ˆ[\]ËTİ\
+[\Ôİ\]Û‹Ş
+B‚H›Ø][™È[[˜ÚÜ™Y›İÛK\šYÚÙˆH™\œÙHYÙ\ˆ
+M‹ÌMˆ[œÙ]ÛX\ˆÙˆHÙ[™YYÙ\ˆİÊH™[™\™YÛ›HÚ[ˆH™XY\ˆ\È\İ™\œÙHH8 %HÛ™K]\™]\›ˆY\ˆHİXœÙXİ[Ûˆ]]ËZ[\Ú]İ]İÚ\[™È˜XÚÈ›İYÚ]™\HYÙKˆ\˜ÚY[\ÛÙš[Ø\™Xİ]™P›Ü™\˜H[˜Y]\Ë
+Š˜[]˜][Û‹›YY
+Šˆ
+0©Í8 %Ø\È[ˆ[›[™HŒNÌLÚYİÊNÈ8¡éÛ\
+MJH
+È[™İXYÙKX]Ø\™HX™[8)!¸),8) ¸)+XÈİ\
+LË][XÈ›Üˆ[ŠH[ˆØY™œ›Û‹YY\ˆ\ØÜ›ÛÈ
+[š[X]Y
+HÈ[™^ÙˆHİ\œ™[Ú\\‹‚‚ŠŠ‘š[\ÎŠŠˆ[Øš[KÜÜ˜ËØÛÛ^ËÔ™XY[™Ô›ÙÜ™\ÜĞÛÛ^Ş[Øš[KÜÜ˜ËØÛÛ\Û™[ËÔ™XY[™Ô›ÙÜ™\ÜĞ˜\‹Ş™\İ[YT™XY[™ÔÚY]Ş[\Ôİ\]Û‹Ş™^Ú\\Ø\™Ş™]Ú\\Ø\™Ş[Øš[KÜÜ˜Ëİ][ËÙ›Ü›X]ØØ][Û‹ØÈÛÛœİ[Y\œÈÚ]T™XY\”ØÜ™Y[‹Ş
+Ø[›ÛšXØ[
+KØ]YÛÜS\İØÜ™Y[‹ŞZ]S\İØÜ™Y[‹ŞÚ]PÚ\\œÒ[™^ØÜ™Y[‹Ş‚‚‹KKB‚ˆÈÈKˆÛÛ[[Ù[HØ][ÙÈ	ˆ™YÚ\İB‚ŠŠ”\œÜÙKŠŠˆÛ™H]H™YÚ\İH8 %HXœ˜\X\œ˜^H[ˆ[Øš[KÜÜ˜ËÙ]Kİ^ËØ8 %\ÈHÚ[™ÛHÛİ\˜ÙHÙˆ]›Üˆ]™\][™ÈHØ][ÙÈİ\™˜XÙ\ÈÚİÎˆÛYIÜÈØ]YÛÜH[\ËØ]YÛÜS\İØÜ™Y[˜Z]R[™^ØÜ™Y[˜ÈZ]S\İØÜ™Y[˜H›İ][™HYPÛÛ[\İHZ[HšZİH™\œÙHÛÛ[™‘UËX˜YÙH˜XÚÚ[™ËˆØÜ™Y[œÈ™]™\ˆ[™[\İÛÛ[È^Hš[\ˆ\È\œ˜^H
+•SP“ÓÒÈ0©Ìˆ›İÜÈLx $ÌLÎˆ››ÈY]™YYYˆ8 %Y[™ÈHÙXİ[ÛˆYX[œÈ\[™[™ÈÛ™HXœ˜\Q[X
+K‚‚ˆ
+Š”İ\\œÙY\È0©ÌL	ÜÈÛË[[Ù[Hœ˜[Z[™ËŠŠˆ0©ÌLØİ[Y[ÈHÜšYÚ[˜[Ú[\ØH
+ÈÚ]HÛÛ[Ú\\È[™™[XZ[œÈ]]Üš]]]™H›ÜˆÜÙHÚ\\È[™›ÜˆH\‹[[Ù[K]\H\ØÚ\[™H
+œÚ\\Èİ^HÙ\\˜]HŠKˆHØ][ÙÈ\ÈÚ[˜ÙHÜ›İÛˆÈ[šY\ÈXÜ›ÜÜÈÈØ]YÛÜšY\ÎÈ\ÈÙXİ[ÛˆØİ[Y[ÈH™YÚ\İH[™Ú\H
+™˜[Z[Y\Êˆ]Ü™]Èİ]Ùˆ0©ÌL	ÜÈ]\›‹‚‚ˆÈÈÈXœ˜\Q[X
+H™YÚ\İH›İÊB‚˜Â\HXœ˜\Q[HHÂˆYˆİš[™ÎÈËÈ›İ]HÛYÈ
+È\ÜÙ]›Û\ˆ
+È›ÙÜ™\ÜËØ›ÛÚÛX\šÈÛİ\˜ÙRYˆ˜[YRNˆİš[™ÎÈ˜[YQ[ˆİš[™ÎÂˆİXˆİš[™ÎÈİX‘[ˆİš[™ÎÈËÈ\İ[™ÈİX]H\ˆ[™İXYÙH
+8)&¸)c8)*¸)/¸)"
+ÈÈ8))¸)bø).x)/ˆ0­È8)!x),8)cx))H8).8).x)/ø))ŠBˆ[Xˆİš[™ÎÈËÈÚ[™ÛH]˜[˜YØ\šHÛ\›ÜˆHØ\™[X‚ˆİ]\Îˆ	ØXİ]™IÈ	ØÛÛZ[™ÉÎÂˆØ]YÛÜNˆÛÛ[Ø]YÛÜNÈËÈÚXÚÛYH[H]]™\È[™\‚ˆZ]Y\ÎˆZ]V×NÈËÈÜ›ÜÜË\™Y™\™[˜ÙHYÜÈ
+8¢iHJBˆ™\œÙPÛİ[Îˆ[X™\ÈËÈ[\ÜYœ›ÛHH[Ù[IÜÈ]K™]™\ˆ[™]\YˆY[Îˆ›ÛÛX[ÈËÈÛZ]œ›ÛH[\İ[™ÜÂˆYY[•™\œÚ[ÛÎˆİš[™ÎÈËÈÙ[]™\ˆX]X\šÙ\ˆ8¡¤ˆÙYYÈH‘UÈ˜YÙH
+0©Í
+BŸNÂ˜‚˜™\œÙPÛİ[[™Ûİ[YİX]\È\™HÛÛ\]Yœ›ÛHH[Ù[IÜÈİÛˆ^ÜYİ[È
+İ[™\šØ[™İ[Ú]Ú[\ØPÛİ[Ëİ[™\œÙ\Ø8 )ŠHÛÈHØ\™Ø[ˆ™]™\ˆšYœ›ÛHH]H
+•SP“ÓÒÈ0©ÌLKŒL
+Kˆ˜\[H[šY\È\™HÜ™XY[ÈH\œ˜^Hœ›ÛH˜\[SX[˜\ØÛÈH™]ÈX[˜H]]ÛX]XØ[H™XÛÛY\ÈHØ][ÙÈ›İË‚‚ˆÈÈÈØ]YÛÜHÙ]
+[Øš[KÜÜ˜ËÙ]KØØ]YÛÜšY\ËØ
+B‚•[ˆØ]YÛÜšY\Ë[Xİ]™XˆÜ˜[
+8)%ø)cx),8)*8)cx))H0­ÈØXÜ™Y›ÛÚÜÊH0­Èİİ˜[X
+8).8)cx))8)bø))8)cx),8)+¸)cH0­È[[œÈ	ˆ˜Z\ÙJH0­ÈÚ[\ØX
+8)&¸)/¸),¸)`8).8)/ŠH0­È˜\[X
+8)'8)*ˆ0­È˜\H	ˆX[˜\ÊH0­ÈX\X
+8)!¸),8))8)`
+H0­ÈY\
+8))8)`8),8)cx))H0­È[Üš[XYÙJH0­ÈØ[œÚØ\˜
+8).8) ¸).8)cx)%x)/¸),0­ÈÛÛÙXš]ÊH0­È\ÚZØ[X
+8)!x)-ø)cx)'ø)%x)+¸)cH0­È\ÚZØ[H8 %İ[™[Û™H\ÚZËĞ\ÚZØ[H^ÎÈ‘PH›İÜÈ\ÙH][KZ[œİ[˜ÙH\ÚZØ[T™XY\˜Ú[HH™KY^\İ[™ÈØ[šØ][ØÚ[ˆ[[X[ˆ\ÚZÈÙY\È]ÈYXØ]YÚ\\™Y™XY\ŠH0­ÈİZİ[X
+8).8)`¸)%x)cx))8)+¸)cH0­ÈİZİ[H8 %‘PNÈ][KZ[œİ[˜ÙHİZİ[T™XY\˜
+H0­ÈØ]˜XÚ[X
+8)%x)-x)&ˆ0­ÈØ]˜XÚ[H8 %‘PNÈ][KZ[œİ[˜ÙHØ]˜XÚ[T™XY\˜
+KˆXXÚ‘PH›Ü›H\Ü]Ú\È]È^È›İYÚÛ™H™XY\ˆÛˆ[ˆ›Ü›O’Y›İ]H\˜[Kˆ
+Š”İ]JŠˆ
+8).8)cx))8)`x))8)/È0­ÈÜš\Ú˜Hİ]K\™ØHİ]JH\ÈH›İ\‘PH›Ü›H]\È
+Š››İHØ]YÛÜJŠˆ8 %]È^È\™Hš[Y[™\ˆİİ˜[X
+›ÛY[HŒˆ8).8)cx))8)`x))8)/È8¢b8).8)cx))8)bø))8)cx),8)+¸)cK[™˜[Hİ]H[™XYH]™Y\™JHY]İ[™[™\ˆ›İYÚH][KZ[œİ[˜ÙHİ]T™XY\˜
+›İ]YHİ]RY
+KˆÛYTØÜ™Y[˜™[™\œÈ[Ø]YÛÜH[\Èœ›ÛH]H
+ÛÛZ[™ØÛ™\ËÚ[ˆ™\Ù[™[™\ˆ\È\ØX›Y”ÓÓÓˆˆ][˜Ú\œÊH[™\[™ÈH
+Šš[™]Ú\™Y8))¸)aø)-x))8)/ˆ0­ÈHZ]H[JŠˆ]Ü[œÈZ]R[™^ØÜ™Y[˜
+0©ÍŠH[œİXYÙˆHØ]YÛÜH\İˆ
+\Èİ\\œÙY\È0©ÌN	ÜÈˆ[\Èˆ\İŠH˜\[X[\È›İ]HÈHÛİ[\ˆRKY\ÈHX\
+0©ÌŠNÈ]™\][™È[ÙHÛÙ\È›İYÚØ]YÛÜS\İØÜ™Y[˜8¡¤ˆ[T›İ]\ËØ‚‚ˆÈÈÈZ]HÙ]
+[Øš[KÜÜ˜ËÙ]KÙZ]Y\ËØ
+B‚•Ù[K[Û™HZ]Y\ËXXÚÈY˜[YRK˜[YQ[‹XÛÛ’Ù^HXˆ˜[XH
+›İĞ\œ›İÊH0­ÈÜš\Ú˜H
+˜[œİ\šTXXÛØÚÑ™X]\ŠH0­Èš\ÚH
+ÚZÜ˜JH0­ÈÚ]˜H
+š\Ú[
+H0­È[[X[ˆ
+ØYJH0­È\™ØH
+İ\ÊH0­ÈØ[™\ÚH
+[ÙZÊH0­ÈØ]š]ˆÈ8)+¸)/¸) H8)%ø)/¸)+ø))8)cx),8)`
+İ\XJH0­ÈØ\˜\İØ]H
+™Y[˜JH0­ÈZÜÚZHÈ8)+¸)/¸) H8),¸)%x)cx)-ø)cx)+¸)`
+ZÜÚZH<'ê¥
+H0­Èİ\XHÈ8).85ßNº¶‰ËkºwµçYH™XYÈY[XØ[HÈH]™\Y^H›İ][™HÛ˜ÙHÜ[™YˆHÜZ\›[™H
+][\ÔÚY]
+HÙ]ÈH›ÜİÛˆÙ™ˆœ›ÛHHXY\‹ˆ\‹\İ]H›İÈ™Z]š[İ\‚‚‹H
+Š˜Xİ]™JŠˆ8 %XXÚ[š]›İÈ\ÈÛÛ[Z]X›NˆHÙ™™\š[™Èš[™ÉÜÈLL^HX™[
+Š›˜[Y\È]È][JŠˆ
+X\šÈÙ™™\™Y8 %8 .]]Q[¸ .˜
+HÛÈ]™]™\ˆÛÛY\ÈÚ]0©ÌÌIÜÈÙ[™\šXÈ›İ][™HÚ\˜Û\ÎÈ\[™È]ÛÛ[Z]ÈH^Kˆ]]ËXÛÛ[Z]İ[š\™\ÈÛ˜ÙH]™\H[š]\ÈÙ[Z[™[HÛ™HÙ^H
+\Ò][P]]ĞÛÛ\]X
+K[™\[™[ÙˆÚ]\ˆHØ\™\È^[™Y
+H›ÛİØY[˜PÛÛ\][Û“İ™\›^XİÛœÈÛÛ[Z]
+KˆÛÛ\][™ÈH›İÈ^\ÈH0©ÌÌH˜XİXÙTÙX[
+8)*¸)`¸),8)cx)(ø)/¸).x)`x))8)/ÊHÛ˜ÙK‚‹H
+Š™Û™K]Ù^JŠˆ8 %HØ[H•Ù^IÜÈ™XY[™È\ÈÛ™KˆÛÛYH˜XÚÈÛ[Üœ›İÈˆ[™NÈ›È[š]ËÛÈ›È›ÜİÛ‹‚‹H
+ŠØZ][™ÊŠˆ
+Ø[[™\‹YØ]YˆÙYZÙ^HÙ™‹Y^HÈ™\İ]˜[Ú[™İÈ›İÜ[ŠH8 %H™\İ[™ÈÛÜH
+–[İ\ˆØ[šØ[™YÚ[œÈLHØİˆˆÈ”™\İ[™ÈÙ^H8 %8 )ˆŠH
+Šœ\ÈH™^Ù[XİY[š]\ÈH\]Ë\™XY™]šY]ÊŠˆ[œÚYHH›ÜİÛ‹ÛÈ[ˆ\ÛÛZ[™ÈØ[šØ[™]™\ˆÜ[œÈÛÈ[ˆ[\HXY[™
+H^H\È›İÛÛ[Z]X›H[[HØ]HÜ[œÊKˆH™]šY]È›İÈØ\œšY\È
+Š››ÈÙ™™\š[™ÈÚXÚÈÚ\˜ÛJŠˆ8 %]Y™›Ü™[˜ÙH™[Û™ÜÈÈXİ]™X[Û™NÈH™\İY^H™XYØ[››İY˜[˜ÙHH›İËÛÈH›İÈ™XYÈ\ÈH™]šY]È
+¸)'x),¸)%H0­È8)*¸)(¸)/8)*8)aÈ8)%x)aÈ8),¸)/ø)#È8)'ø)b8)*ˆ8)%x),8)aø) ˆÈ™]šY]È0­È\È™XYŠK™]™\ˆHËYÈÚÜÙH[\HÚ\˜ÛHÛİ[˜[Ù[H›ÛZ\ÙHHˆÈ˜Ûİ[\ˆÚ[[İ™K‚‹H
+Š˜ÛÛ\]Y
+Šˆ8 %HÙX[
+ÈH–[İ\ˆ‹Y^HØ[šØ[\ÈÛÛ\]H<'æcÈˆ[™NÈ›È[š]ËÛÈ›È›ÜİÛ‹‚‚ˆÈÈÈ]H	ˆ™\ÛÛ™\ˆ
+[Øš[KÜÜ˜ËÙ]KÜØY[˜KØ
+B‚˜\\ËØ8 %ØY[˜T›ÙÜ˜[HÈY]RKÑ[‹[X‹İX]RKÑ[‹Z]OË[›ÒKÑ[‹ØY[˜ÙK^OÈ^\ÏÈX
+[šY›Ü›H^XœÈ\‹Y^H^\Ø
+NÈØY[˜PØY[˜ÙXHÛÛœÙXİ]]™XÙYZÙ^X™\İ]˜[]Ú[™İØÈØY[˜Q[œ›ÛY[È›ÙÜ˜[RYİ\YÛ‹İ]\Îˆ	ØXİ]™Iß	ØÛÛ\]Y	ß	ØX˜[™Û™Y	ËÛÛ\]Y^\ËÛÛ\]YÛÈXˆ›ÙÜ™\ÜËØ™\ÛÛ™TØY[˜UÙ^J
+X™]\›œÈHXİ]™HÛ™K]Ù^HØZ][™ÈÛÛ\]YšY]Ë\İ]\È
+Ü˜XÙKXKYY˜][ˆH^H\ÈœÜ[ˆÛ›HÚ[ˆÛÛ\]YÈHØZ][™Øİ]\ÈØ\œšY\È][\Ø›ÜˆH™]šY]ÊKˆ\ÙTØY[˜UÙ^KØÛÛ\ÜÙ\È[œ›ÛY[
+È›ÙÜ˜[H
+È[˜Ú[™ÈØÚY[H
+È™XY[™ËÚ˜\H›ÙÜ™\ÜÈ[ÈH\‹XØ\™šY]Ë[[Ù[[ˆÜ™\œÈHYÙ\ˆšXHH\™HÜ™\”ØY[˜PØ\™Ø
+[ˆ›ÙÜ™\ÜËØ
+Nˆ
+ŠHZ[H˜XİXÙHXYÊŠˆ8 %˜XİXØX›K]Ù^HXİ]™XØ\™Èš\œİÛÛœÙXİ]]™X
+Z[JHØY[˜ÙHZXYÙˆHØ[[™\‹YØ]Y^H]Û›H\[œÈÈ™H[YÚX›HÙ^H8 %[ˆÛ™K]Ù^X[ˆ™\İ[™Ëİ\ÛÛZ[™ÈØZ][™ØØ[šØ[È
+Š˜H™X\™\İ]Hš\œİ
+Šˆ
+Ú[’Ù^XÈ[™]Y\İ
+K[™ÛÛ\]YØ[šØ[È\İˆY\ÈÙY\[œ›ÛY[Ü™\ˆ
+İX›HÛÜ
+Kˆ˜XÚÚ[™È\İÎˆ›ÙÜ™\ÜË\İØ
+™\ÛÛ™\ˆ
+ÈØ][ÙÈÙ[Y›Ü›YY™\ÜÈ[˜Ûˆ[Xˆ
+ÈÜ™\”ØY[˜PØ\™ØYÙ\ˆÜ™\ŠKØ[šØ[Ù^PØ\™\İŞ
+ØZ][™Ë\™]šY]È
+ÈH^\ËXÛÛ\]Y^YXœ›İÈ
+ÈH][KY^H›ÙÜ™\ÜÈ˜\ŠKØY[˜PÛÛ\][Û‹š[YÜ˜][Û‹\İŞ
+[İ[ÈH™X[ØY[˜PÛÛ\][Û“İ™\›^Xİ™\ˆH™X[›İšY\œÈ[™\ÜÙ\ÈH^H]]ËXÛÛ[Z]ÈÚ[ˆ™XY[™È™XXÚ\ÈH[š]	ÜÈ\İ™\œÙK\YÙH8 %ÛÛœÙXİ]]™H
+Š˜[™
+ŠˆÙYZÙ^K[Û‹Y[YÚX›KY^H8 %Ú]H™YØ]]™H\Ø^HØ\ÙNÈİX\™ÈHœ›İ][™HÛÛ\]\È]Ø[šØ[Ù\Û‰İˆÛ\ÜÈÙˆYÊKˆL™Nˆ›XY\İ›ËÜØY[˜K\Ø[šØ[\Û[ÚÙKX[[
+ÛÛœÙXİ]]™JH
+ÈØY[˜KXØ[[™\‹\™]šY]Ë\Û[ÚÙKX[[
+Ø[[™\‹YØ]Y™]šY]ÊK‚‚ŠŠ‘š[\ÎŠŠˆ[Øš[KÜÜ˜ËÜØÜ™Y[œËÔØY[˜T›ÙÜ˜[S\İØÜ™Y[‹ŞØY[˜T›ÙÜ˜[Q]Z[ØÜ™Y[‹ŞÈ[Øš[KÜÜ˜ËØÛÛ\Û™[ËÔØ[šØ[Ù^PØ\™ŞÈ[Øš[KÜÜ˜ËØÛÛ^ËÔØY[˜PÛÛ^ŞÈ[Øš[KÜÜ˜ËÙ]KÜØY[˜KŞİ\\Ë›ÙÜ˜[\Ë›ÙÜ™\ÜË\ÙTØY[˜UÙ^_KØˆ‘ˆØÜËÜ›ØYX\Ü™ËÌLK\ØY[˜K\›ÙÜ˜[\Ë›Y‚‚‹KKB‚ˆÈÈËˆ™X]\™Hİ\ˆ	ˆÚ]	ÜÈ™]Â‚ŠŠ”\œÜÙKŠŠˆ™YHÛ˜›Ø\™[™Èİ\™˜XÙ\È][œİÙ\ˆÚ]	ÜÈ[ˆ\È\ÈˆÚ]İ]HX[X[ˆH
+Š™š\œİ[][˜Ú™X]\™Hİ\ŠŠˆ
+™X]\™Uİ\‹Ş
+H\È[ˆ[‹XÛÛ^Œ\İ\İZYYØ[İ›İYÚ]˜]šYØ]\ÈH\Ù\ˆ›İYÚH™X[\
+Šœš[™ÜÈH[[Y[XXÚİ\\ØÜšX™\ÊŠ‹[™[˜ÚÜœÈHÛÛ\XİÛÛ\È]ˆH
+Š™š\œİ\[ˆÙ]\ÚY]
+Šˆ
+Û˜›Ø\™[™ÔÙ]\ÚY]Ş
+HÜ[œÈH[ÛY[Hİ\ˆÛÜÙ\È[™\ÚÜÈHœ™\Ú[œİ[\ˆÈXÚÈH
+Šœ™XY[™È[™İXYÙJŠˆ[™H
+Šœ™XY[™ÈÚ^™JŠˆ8 %HÛÈÙ][™ÜÈHØ[İ›İYÚ	ÜÈ\İİ\ÈÚ[]ˆH
+Š•Ú]	ÜÈ™]ÈÚY]
+Šˆ
+Ú]Ó™]Ó[Ù[Ş
+Hš\™\ÈÛ˜ÙHY\ˆ[ˆ\]H[™\İÈÛ›H]™[X\ÙIÜÈ™]È™X]\™\Ëˆ[™YH\™HØ]YHİ\ÛÛ^Ş[™[İ[Y[ˆ\Ş[œÚYHH›İšY\ˆİXÚÎÈHİ\ˆ™[™\œÈ\ÈH
+ŠÜ[]™[[‹]™YHİ™\›^JŠˆ
+\İÚ[ÙˆH›ÛİšY]ËX›İ™HH˜]šYØ]Ü‹Z[šK\^Y\ˆ[™Xˆ˜\ŠKHÙ]\ÚY]\ÈH˜[œÜ\™[[Ù[™\ÚYH][™Ú]	ÜÈ™]Èİ^\ÈH[Ù[[œÚYH˜]šYØ][ÛÛÛZ[™\˜ˆÛÛ\[Y[È0©Í
+‘UÈ˜YÙHÈÕH›Û\
+H8 %ÜÙHX\šÈ
+˜ÛÛ[
+È\ÈÜšY[ÈH
+˜\
+‹‚‚ŠŠ‘š\œİ\[ˆÙ\]Y[˜ÙNŠŠˆİ\ˆ
+8¢bİ\Ë›Û‹Z[\˜Xİ]™JH8¡¤ˆÙ]\ÚY]
+[™İXYÙH
+ÈÚ^™K[\˜Xİ]™JH8¡¤ˆ\ˆH™]\›š[™È\Ù\ˆÙ]È™Z]\ˆÚ]	ÜÈ™]È[œİXY‚‚ˆÈÈÈš\œİ[][˜Úİ\ˆ
+[Øš[KÜÜ˜ËØÛÛ\Û™[ËÑ™X]\™Uİ\‹Ş
+B‚ŠŠ’[‹XÛÛ^›İHÛY\ÚİËŠŠˆ[ˆ
+Šš[‹]™YJŠˆ˜[œÛXÙ[İ™\›^H
+XœÛÛ]KYš[šY]Ø›İH˜]]™H[Ù[
+HÚ]ÈX›İ™HHÚÛH\İ™\ˆH™Ø˜JMKLKMJX[šÈØÜš[H8 %H™X[ØÜ™Y[ˆ™XYÈ›İYÚ™Z[™]ˆ]\È[X™\˜][H
+››İ
+ˆH[Ù[›ÜˆÛÈ™X\ÛÛœÎˆ
+JH]˜]ÜÈHYÚYÚš[™È
+Š›İ™\ŠŠˆH]™HRK[™
+ŠH]İ^\È[ˆHXØÙ\ÜÚXš[]H™YHÛÈL™KÓXY\İ›ÈØ[ˆš]™H]8 %H[Ù[™\Ù[È[ˆHÙ\\˜]HÚ[™İÈ]ÛÛ™šYËX[[	ÜÈÛ˜\ÚİÙ^RÛ›Ü“[Ù[šY]ÜÎ™˜[ÙX™XYÈ
+›İYÚ
+‹XZÚ[™ÈHİ\ˆ[š\ÚX›HÈH\›™\ÜËˆH™\ÜØX›XØÜš[HİØ[İÜÈİXÚ\ËÛÈÛ›HHİ\‰ÜÈİÛˆÛÛ›ÛÈY˜[˜ÙH]8 %]İ^\È[™X\‹ˆÛˆ]™\Hİ\Ú[™ÙHHİ\ˆ\Ü]Ú\È˜]šYØ][Û”™Y‹™\Ü]Ú
+ÛÛ[[ÛXİ[ÛœË›˜]šYØ]J‹‹ŠJX
+Y™\œ™Y›İYÚ[\˜Xİ[Û“X[˜YÙ\‹œ[Y\’[\˜Xİ[ÛœØ
+KÛÈH\Ù\ˆXİX[H[™ÈÛˆHİ\™˜XÙHHÛÜH\ØÜšX™\Ë‚‚ŠŠ“YX\İ\™YÜİYÚŠŠˆXXÚİ\˜[Y\È[ˆÛ‹\ØÜ™Y[ˆ[[Y[šXH\™Ù]Y™YÚ\İ\™YÚ]\ÙUİ\•\™Ù]
+Y™]™X[ÊX[ˆHİÛš[™ÈØÜ™Y[ˆ
+ÛÛ\Û™[Ëİİ\‹İİ\•\™Ù]ËØ8 %H[Ù[K\Ú[™Û]Ûˆ™Yˆ™YÚ\İJKˆY\ˆ˜]šYØ][™ËHİ\ˆš\œİØ[ÈH\™Ù]	ÜÈÜ[Û˜[™]™X[
+
+X8 %HØÜ›Û›ÙR[ÕšY]ÊØÜ›Û™Y‹\™Ù]™YŠX]ØÜ›ÛÈH™[İË]KY›Û\™Ù]
+H˜\KÕY\[\ËHØ]YÛÜšY\ÈÜšYH™[Z[™\ˆŠÈYˆ›İËH˜\[HYX[\›H]ÛŠHÛ‹\ØÜ™Y[ˆ8 %[ˆYX\İ\™\ÈH[[Y[
+YX\İ\™R[•Ú[™İØ
+H[™š[™ÜÈ]Ú]HØY™œ›Û˜YÚYÚ
+œ›Ü™\ˆ
+ÈÛÙØY™œ›Û˜ÛİË™Xİ[™›]Yœ
+KˆYX\İ\™[Y[\È
+ŠœÙ]KX]Ø\™JŠˆHİ\ˆ™K[YX\İ\™\ÈXÜ›ÜÜÈœ˜[Y\È[™[Ø^\ÈÙY\ÈH]\İ™XİÛÛ[Z][™ÈÛ›HÛ˜ÙH]ÛÈİ[›ÜˆQPTÕT‘WÔÕP“WÑ”SQTØ\İHQPTÕT‘WÓRS—Õ’QTØØ\›K]\
+Üˆ]ÈHQPTÕT‘WÓPVÕ’QTØØ\
+H8 %YX\İ\™TÙ]Y
+
+X[ˆXÙ[Y[Ø\™H
+È[š]]\İYˆ\ÈİÜÈHœ™\ÚK[˜]šYØ]YØÜ™Y[ˆ
+ÚÜÙHXY\‹ØÛÛ[ÚYÈ›ÜˆÙ]™\˜[œ˜[Y\Ë[™ÚÜÙH]Z\˜]Ø\™[İ[ÈH™]Èœ˜[Y\È]JHœ›ÛHš[™Ú[™ÈHİ[K™K[^[İ]Üİˆ
+ŠY\ˆHœ˜[YHÛÜÙ]\ËHİËYœ™\]Y[˜ŞHÛ
+Šˆ
+‘SQPTÕT‘WÔÓÓTØ
+HÙY\È™K\™]™X[[™È
+È™K[YX\İ\š[™È›Üˆ\ÈÛ™È\ÈHİ\\ÈÚİÛˆÛÛYHØÜ™Y[œÈY˜]HZ\ˆÛÛ[
+Š˜\Ş[˜Ú›Û›İ\ÛJŠˆ
+K™Ëˆ˜\[H[\›\ÈØYœ›ÛH\Ş[˜ÔİÜ˜YÙH
+˜Y\ŠˆHŒÈœ˜[YHØ\
+K[™H[\K\İ]H^[İ]ÛÚÜÈœİX›HˆÈHœ˜[YHÛÜ8 %ÛÈHš[™ÈÛİ[İ\Ú\ÙHœ™Y^™HÛˆH\™Ù]	ÜÈ™KZY˜][ÛˆÜÚ][Ûˆ
+HŠÈY[\›Hˆ]Ûˆ[™È\š[™ÙYİ™\ˆH[\›H›İÈ]ØYY[ˆ™[™X]]
+KˆHÛ›ÛİÜÈH\™Ù]È]Èš[˜[Üİ›ÈX]\ˆİÈ]KÜÛİÈHØY\È
+]šXÙKXYÛ›ÜİXÈ8 %›Èš^Y[YHÚ[™İÊNÈHØ[YT™XİİX\™XZÙ\È]H›Ë[Ü
+›È™K\™[™\ŠHÛ˜ÙH›İ[™È[İ™\Ë[™]\ÈÜ›ˆİÛˆÚ[ˆHİ\Ú[™Ù\Ëˆİ\ÈÚ]›ÈİX›H[[Y[8 %Hš]™H›İÛK]Xˆİ™\šY]Èİ\ËÜˆH\™Ù]]X^H™HXœÙ[Ûˆš\œİ][˜Ú8 %ÛZ]\™Ù]Y[™š[™ÈH
+Š™\İ[˜][ÛˆXŠŠˆ[œİXY
+ÛÛ\]Yœ›ÛHP—ÓÔ‘T˜
+ÈY˜][]X‹X˜\ˆÙ[ÛY]JKˆXÙUİ\Ø\™
+ÛÛ\Û™[Ëİİ\‹ÜXÙ[Y[Ø\™H
+È[š]]\İY
+HÚ]ÈHØ\™[ˆH˜[™ÜÜÚ]HHš[™ÈÛÈ]™]™\ˆÛİ™\œÈ][™Ú[ÈH\œ›İÈ]]ÈYˆH[[Y[Ø[‰İ™HYX\İ\™Y]˜[È˜XÚÈÈHİ\	ÜÈXÛ\™Y[˜ÚÜ˜ØÚ[\˜ˆ\È™\XÙ\ÈHÜšYÚ[˜[[˜ÚÜ‹[Û›HØ\™ÚXÚÛİ™\™Yš[ˆHØÜ™Y[ˆ[™Ú[Y]›İ[™ÈÜXÚYšXËˆ
+Š•Hš]XÚ\Ú[Ûˆ\Ù\ÈHØ\™	ÜÈ™X[™[™\™YZYÚ›İHš^YİY\ÜÊŠˆ8 %™X]\™Uİ\˜™\ÜÈHØ\™
+Ø\œ›İÈZYÚšXHÛ“^[İ][™™YYÈ]˜XÚÈ[ÈXÙUİ\Ø\™ÛÈHØ\™]Ü›İÜÈÚ]Hš[[™İX[ÛÜKH\HØØ[KÜˆHÚÜ\ˆ]šXÙH\È™]™\ˆXÙYÛˆHÚYHÛÈÛX[ÈÛ]
+ÚXÚ™]š[İ\ÛH]]Ûİ™\ˆH™\H[[Y[]š[™ÜÊKˆĞT‘ÒRQÒÑTÕÛ›HÙYYÈHš\œİœ˜[YH™Y›Ü™HHYX\İ\™[Y[[™ËˆÚ[ˆ
+Š›™Z]\ŠŠˆÚYHØ[ˆÛHÚÛHØ\™HØ\™[œÈ›\ÚÈHØY™KX\™XHYÙHÚ]H\œ›İÈİ[XY[™È˜XÚÈİØ\™H\™Ù]8 %Ü\[›™Y
+\œ›İÈİÛŠHÛ›HÚ[ˆHÚÛHØ\™š]ÈHØY™HšY]ÜÜ
+˜[™
+ˆ\™H\È[Ü™H›ÛÛHX›İ™HH\™Ù]
+ÛX\š[™ÈHİÈ\™Ù]
+Kİ\Ú\ÙH›İÛK\[›™Y
+\œ›İÈ\
+HÛÈHØ\™	ÜÈ˜XÚËÓ™^ÛÛ›ÛÈİ^HÛ‹\ØÜ™Y[ˆ]™[ˆ›ÜˆHØ\™[\ˆ[ˆHšY]ÜÜ
+\™ÙH\HØØ[JK‚‚ŠŠØ\™ÜXËŠŠˆ\˜ÚY[\ÛÙš[]šY\˜›Ü™\‹˜YZK›ØNY[™Ë
+Š˜[]˜][Û‹›İ™\›^X
+Šˆ
+0©Í8 %HY\ˆ›Üˆ›Ø][™ÈX›İ™HHØÜš[NÈØ\È[ˆ[›[™HÙ™‹\[]HÌLŒÚYİÈ[[[HŒŠKˆXY\ˆ
+[›™YÈHÜÙˆHİ™\›^K›İHØ\™
+Nˆİ\Ûİ[\ˆˆÈ˜
+Y
+H
+ÈÚÚ\
+šYÚ
+KØ\™][˜\˜ÚY[˜XÚÙY]\\˜Ø\ÙKˆHØ\™ÛÈH™XY\•]XY˜XÙH[™H]H
+Œ[šØÙ[™Y
+Hİ™\ˆ[ˆ][XÈİX]XY˜XÙH[™Û\Ú]H
+LË[šË[]]Y
+NÈH]šY\˜Z\›[™NÈ[ˆHš[[™İX[›ÙH
+YX[š[™Ø˜XÙH8 %[™HMÌ[šØ[™Û\ÚL‹ÌŒ[šË\ÛÙ]JKˆ›Ûİ\ˆHİ™\İØØY™œ›Û˜›ÙÜ™\ÜËYİ›İË[ˆ
+Š˜XÚÊŠˆ
+ÙXÛÛ™\Hİ][™K]šY\˜›Ü™\‹\ØX›Y
+ÈŒÈÜXÚ]HÛˆİ\JH[™
+Š“™^0­È8)!¸)%ø)aÊŠˆÈÛˆH\İİ\
+Š‘Û™H0­È8)*¸)`¸),8)cx)(ÊŠˆ
+š[X\HÛÛYØY™œ›Û˜Û”š[X\X˜YZK›Y
+KˆLL^HX™[È\™HÛÛœİ[[™Û\Ú8 %ÚÚ\İ\˜™]š[İ\Èİ\™^İ\Û™X8 %ÛÈL™H\È[™İXYÙKZ[™\[™[‚‚ŠŠš[[™İX[[Ø^\ËŠŠˆHİ\ˆ™[™\œÈ[™H
+š[X\JH
+Š˜[™
+Šˆ[™Û\Ú
+ÙXÛÛ™\JHÛˆ]™\HØ\™[™™]™\ˆœ˜[˜Ú\ÈÛˆ[™Øˆ]\ÈHš\œİ\[ˆÙ[ÛÛYHÚİÛˆ™Y›Ü™H[H™XY[™È[™İXYÙH\ÈÚÜÙ[ˆ
+Y˜][X
+K[™H\	ÜÈY[]H\È[™K[YXš[[™İX[
+0©ÌJNÈÚİÚ[™È›İ\ÈHÙ[ÛÛYK›İHØØ[^˜][ÛˆYÈ
+ÛÛ˜\İHÚ]	ÜÈ™]ÈÚY]™[İËÚXÚ
+™Ù\ÊˆÛ›İ\ˆH™XY[™È[™İXYÙH™XØ]\ÙH]š\™\È›Üˆ™]\›š[™È\Ù\œÊKˆ™XØ]\ÙH]™]™\ˆXÚÜÈK[Ü‹Y[ˆH[™Ø]Ù\Û‰İš\HİKÚÛˆ\›˜\H^˜\™
+ÚZÚHÛÛ˜Ù\ËÛ[™İXYÙ\Ø
+K‚‚ŠŠ”İ\È
+Œ
+K[ˆÜ™\ŠŠˆ
+[Øš[KÜÜ˜ËÙ]Kİİ\‹Üİ\ËØ8 %XXÚˆY˜]šYØ]UØÜ[Û˜[\™Ù]Y[˜ÚÜ˜ØÚ[\˜˜[˜XÚËš[[™İX[]KØ›ÙJKˆHÙ\]Y[˜ÙH\ÈHİZYYØ[İ›İYÚˆ
+ŠŠx $ÍJHHš]™H›İÛHXœÊŠˆ8 %ÛYKZ[HšZİK[˜Ú[™ËšZ˜[‹[Ü™H8 %XXÚH
+ŠX‹\š[™ÊŠˆ
+›È[[Y[\™Ù]
+NÈ
+ŠŠ¸ $ÌLJHÛYJŠˆ8 %›İ][™HØ\™
+›İ][™PØ\™H[›[™H›İ][™P˜[›™\˜[™\ˆHÙ^Hİš\
+KØ]YÛÜšY\ÈÜšY
+Ø]YÛÜšY\ÑÜšY
+K˜\H[H
+˜\U[X
+H8¡¤ˆ˜\H[œÚYHÈX[˜H\İ
+ÛYUX‹ĞØ]YÛÜS\İÚ˜\[_X˜\[R[œÚYX
+KY\[H
+Y\[X
+H8¡¤ˆY\[œÚYHÈ[\HX\
+ÛYUX‹ÕY\X\Y\[œÚYX
+NÈ
+ŠŠL¸ $ÌLÊHšZİJŠˆ8 %Z[H™\œÙH
+Z[U™\œÙX
+KÚ\™H
+Ú\™P]Û˜
+NÈ
+ŠŠM8 $ÌN
+H[˜Ú[™ÊŠˆ8 %Z[H]Z\˜]ÈÚÙÚY^XHØ\™
+]Z\˜]Ø\™
+KHœ˜]	ˆ\ˆÙYÛY[
+[˜Ú[™ÔÙYÛY[
+KHœ˜]\İ
+[˜Ú[™ÕX‹ÓØœÙ\˜[˜ÙS\İİœ˜]Xœ˜]\İ
+KH8¦!H›ÛİÈY™›Ü™[˜ÙH
+œ˜]›ÛİØ
+K^Hœ˜]	ˆ™[Z[™\œÈ
+[˜Ú[™ÕX‹Ó^Uœ˜]^Uœ˜]
+NÈ
+ŠŠNJHšZ˜[ŠŠˆ8 %HXœ˜\H
+]Y[ÕX˜šZ˜[’[œÚYX
+NÈ
+ŠŠŒ8 $Ì
+H[Ü™JŠˆ8 %Z[H™[Z[™\ˆÙÙÛH
+[Ü™UX‹Ô™[Z[™\œØ™[Z[™\•ÙÙÛX
+K™[Z[™\ˆ[Y\È
+™[Z[™\•[Y\Ø
+K˜\[H[\›HY]Ûˆ
+[Ü™UX‹Ò˜\[P[\›\Ø˜\[PY
+K[ˆHÛÈ›İÜÈHÙ]\ÚY]\ÚÜÈ›Üˆ™^ˆ
+Š“[™İXYÙJŠˆ
+[Ü™UX‹Ó[Ü™RÛYX[™İXYÙT›İØ
+H[™
+Š”™XY[™ÈÚ^™JŠˆ
+™XY[™ÔÚ^™T›İØ
+H8 %ÛÈH\Ù\ˆ\ÈÙY[ˆÚ\™H›İ]™H
+˜™Y›Ü™Jˆ™Z[™È\ÚÙYÈÚÛÜÙK[™Û›İÜÈÚ\™HÈÚ[™ÙH[H]\‹ˆ›İÜ˜\Z\ˆÙ][™ÜÔ›İØ[ˆHYX\İ\˜X›HšY]Ø[ˆ[Ü™TØÜ™Y[˜[™XÛ\™HHØÜ›Û›ÙR[ÕšY]Ø™]™X[
+H\Ü›İ\Ú]È™[İÈH›ÛÛˆÛX[\ˆ]šXÙ\ÊKˆ™XØ]\ÙHHİ™\›^H\È›Û‹Z[\˜Xİ]™KHœ˜]š[
+M¸ $ÌN
+H]]Ë[˜]šYØ]\È[™
+™\ØÜšX™\ÊˆH8¦!KY›ÛİÈÈ<'å%\™[Z[™\ˆY™›Ü™[˜Ù\È˜]\ˆ[ˆ^Xİ[™ÈH\ˆHÛÛ\[K][YHÚXÚÈ[œÈ]™\H˜]šYØ]UË›˜[YXÈH™X[X”\˜[S\İXÈP—ÓÔ‘T˜X\ÈXXÚÈ]È˜\ˆ[™^›ÜˆHX‹\š[™È˜[˜XÚËˆİ\“˜]•\™Ù][İÜÈH™\İYÈØÜ™Y[‹\˜[\ÈX›ÜˆÛYUX˜[Ü™UX˜[™[˜Ú[™ÕX˜
+H\İÚY[™YÈ™XXÚØœÙ\˜[˜ÙS\İØ^Uœ˜]
+Kˆ[[Y[\™Ù]È™YÚ\İ\ˆšXH\ÙUİ\•\™Ù]
+Y™]™X[ÊX[ˆÛYTØÜ™Y[˜Ø]YÛÜS\İØÜ™Y[˜Y\X\ØÜ™Y[˜Z[PšZİTØÜ™Y[˜[˜Ú[™ÔØÜ™Y[˜ØœÙ\˜[˜ÙS\İØÜ™Y[˜^Uœ˜]ØÜ™Y[˜]Y[ÓXœ˜\TØÜ™Y[˜[™™[Z[™\”Ù][™ÜÔØÜ™Y[˜Ø˜\[P[\›\ÔØÜ™Y[˜‚‚ˆÈÈÈš\œİ\[ˆÙ]\ÚY]
+[Øš[KÜÜ˜ËØÛÛ\Û™[ËÓÛ˜›Ø\™[™ÔÙ]\ÚY]Ş
+B‚ŠŠ”\œÜÙKŠŠˆHØ[İ›İYÚ
+œÚİÜÊˆÚ\™H[™İXYÙH[™™XY[™ÈÚ^™H]™NÈ\ÈÚY]\ÈÚ\™HHš\œİ\[ˆ\Ù\ˆXİX[H
+ŠœÙ]ÊŠˆ[Kˆ™Y›Ü™H]^\İYHœ™\Ú[œİ[Ú[[HY˜][YÈ[™H]İ[™\™Ú^™H[™HİZ˜\˜]KÒØ[›˜YKÑ[™Û\Ú™XY\ˆYÈÛÈš[™H[Ü™HXˆÈš^]‚‚ŠŠ”İXİ\™KŠŠˆH›İÛK\ÚY]˜[œÜ\™[[Ù[
+ÛYH\[Ù[˜XÚÙ›ÜÜ˜X˜™\‹\˜ÚY[YÚYÚ˜YZXŒˆÜÛÜ›™\œË[]˜][Û‹›İ™\›^XX^ZYÚˆ	XÚ]H›ÙH[ˆHØÜ›ÛšY]ØÛÈ\™ÙH\HØØ[\Èİ[™XXÚH]ÛŠN‚‚ŒKˆ
+Š‘^YXœ›İÊŠˆ8 %8).8)cx)-x)/¸)%ø))8).x)b0­ÈÙ[ÛÛYX
+™XY\•]XLËØY™œ›Û‹YY\Ù[™Y
+K‚Œ‹ˆ
+Š•]JŠˆ8 %8)+x)/¸)-ø)/ˆ8)&¸)`x)*8)aø) ˜
+™XY\•]X[šØ
+Hİ™\ˆ][XÈÚÛÜÙH[İ\ˆ™XY[™È[™İXYÙX
+İX]XM[šË[]]Y
+K[ˆHÛË[[™H›İH8 %¸)+8)/¸))ˆ8)+¸)aø) ˆ8)%x)+x)`8)+x)`	ø)!x))ø)/ø)%IÈ8).8)aÈ8)+8))¸),ˆ8).8)%x))8)aÈ8).x)b8) ¸)iÈ[İHØ[ˆÚ[™ÙH\È[H[YHœ›ÛH[Ü™Kˆˆ
+YX[š[™ØL‹[šË\ÛÙ
+K‚ŒËˆ
+Š“[™İXYÙH\İ
+Šˆ
+˜Y[ÙÜ›İ\\˜ÚY[\ÛÙØ\™]šY\˜›Ü™\‹˜YZK›Ø
+H8 %Û™H˜Y[Ø›İÈ\ˆ[H[ˆS‘ÕPQÑTØˆH[™İXYÙIÜÈİÛˆ˜[YH[ˆ]È
+Š›İÛˆØÜš\˜XÙJŠˆ
+›Û˜[Z[Y\Ë›][˜ÈİZ˜\˜]P›ÛÈØ[›˜YP›ÛÈ™XY\•]XNJK]È[™Û\Ú˜[YH
+[\˜L‹[šË[]]Y
+H\ÈÙXÛÛ™\K[™HØY™œ›Û˜8§$ÈÚ[ˆÙ[XİY
+Ù[XİY›İÎˆØY™œ›Û‹][š[ØY™œ›Û‹YY\X™[
+Kˆ\[™È\Y\È[[YYX][HšXHÙ][™Ø8 %HØ[YHÚ\™Yİ]H\È]™\H[™İXYÙHÙÙÛH
+0©ÌÍÊKÛÈ›İ[™È\ÈİYÙYÜˆœØ]™Yˆ]\‹‚ˆ
+Š”™XY[™ÈÚ^™JŠˆ8 %8)*¸)/¸)(8)%x)/ˆ8)!¸)%x)/¸),È][XÈ™XY[™ÈÚ^™XXY[™ÜË[ˆH0©ÍÈÛË\™\Ù][›İÈ
+˜Y[ÙÜ›İ\È8)+¸)/¸)*8)%H0­Èİ[™\™È8)+8)(x)/8)/ˆ0­È\™ÙXÙ[XİYHØY™œ›Û˜›Ü™\ˆ
+ÈØY™œ›Û‹][
+È8§$ÊKˆ\Y\È]™HšXHÙ]ØØ[XÈXÚÚ[™ÈÛ™HÙ\È
+Š››İ
+Šˆ\ÛZ\ÜÈHÚY]‚Kˆ
+Š“]™H™]šY]ÊŠˆ8 %‘PQS‘×ÔÒV‘WÔĞSTVÛ[™×X
+^ÜYœ›ÛH™XY[™ÔÚ^™TXÚÙ\”ÚY]ÛÈ›İÚY]È™]šY]ÈHØ[YHÛÜ™ÊH™[™\™YÚ]H™XY\‰ÜÈİÛˆ™\œÙUÚÙ[Š[™ÊXÛÈ]™K\ØÜš\È[™™K\Ú^™\ÈÛˆ]™\H\‚‹ˆ
+Š™YÚ[ŠŠˆ8 %ÛÛYØY™œ›Û˜Û”š[X\X8)!¸),8) ¸)+H8)%x),8)aø) ˆ0­È™YÚ[˜ÈØ[ÈX\šÓÛ˜›Ø\™[™ÔÙ]\ÛÛ\]Y
+
+Xˆ
+Š•H˜XÚÙ›Ü\È[X™\˜][H›İ\ÛZ\ÜØX›JŠˆ8 %Hİ˜^H\]\İ›İÚÚ\H[™İXYÙHÚÚXÙNÈ™YÚ[˜
+XØÙ\[™ÈHY˜][ÊH\ÈHÛ›H^]‚‚ŠŠš[[™İX[[Ø^\ÊŠˆ8 %ZÙHHİ\‹][œÈ
+˜™Y›Ü™JˆH™XY[™È[™İXYÙH^\İËÛÈ]™\HÚ›ÛYHİš[™È\È[™Hİ™\ˆ[™Û\Ú[™›İ[™Èœ˜[˜Ú\ÈÛˆ[™Ø
+H[™İXYÙHÜ[ÛœÈ™YY›È˜[œÛ][ÛˆXXÚ\ÈÜš][ˆ[ˆ]ÈİÛˆØÜš\
+KˆLL^HX™[È\™HÛÛœİ[[™Û\Ú8 %[™XÈ[™Û\ÚÈİZ˜\˜]XÈØ[›˜YX
+X]Ú[™ÈH0©ÌÍÈXÚÙ\‹ÛÈ[™İXYÙK\Û[ÚÙXÙ[XİÜœÈ\™HÚ\™Y
+Kİ[™\™™XY[™ÈÚ^™XÈ\™ÙH™XY[™ÈÚ^™X
+]X[YšYY™XØ]\ÙHÛ˜\ÚİÙ^RÛ›Ü“[Ù[šY]ÜÎ™˜[ÙX]ÈXY\İ›È™XYH[Ü™H›İÜÈ
+˜™Z[™
+ˆHÚY]ÚÜÙHÚ^™Hİ]H^\ÈH˜\™HÛÜ™
+K[™™YÚ[˜ˆÙ[‹[[İ[ÈÛˆ\ÙUİ\Š
+KœÚİ[ÚİÓÛ˜›Ø\™[™ÔÙ]\™Z[™HØ[YHš\Ú[™ËYYÙH™YˆİX\™\ÈHİ\‹‚‚ˆÈÈÈÚ]	ÜÈ™]ÈÚY]
+[Øš[KÜÜ˜ËØÛÛ\Û™[ËÕÚ]Ó™]Ó[Ù[Ş
+B‚˜YÙTÚY][Ù[\˜ÚY[š[ˆXY\ˆ]H
+XÚØ[ØØ[^™Y•Ú]	ÜÈ™]ÈÈ8)*8)"8).8)`x)-x)/ø))ø)/¸)#ø) HÈ8 )ˆ‹]Q›ÛS[™ØŒ[šØ
+Hİ™\ˆH––K–˜™\œÚ[Ûˆ[™H
+Ø\™][˜][XË˜XÚÙY]\\˜Ø\ÙK[šË[]]Y
+NÈHØY™œ›Û˜8§%HÛÜÙKˆ›ÙNˆHØÜ›ÛÙˆ][\ËXXÚHØY™œ›Û˜[]İ
+È]H
+MÊH
+È›ÙH
+MÌ[šË\ÛÙ
+Kˆ›Ûİ\ˆHÛÛYXØY™œ›Û˜‘Ûİ]ˆ
+ØØ[^™Y
+Kˆ
+Š“[™İXYÙKXÛÜœ™Xİ›Üˆ[›İ\ŠŠˆ^›İ]\È›İYÚÛÛ[S[™Ê[™ËK[ŠX
+İKÚÛˆ™K\ØÜš\H[™JH[™›ÛÈ›İYÚ]Q›ÛS[™ØÈYX[š[™ÕÚÙ[˜ÛÈİKÚÛˆ™]™\ˆ™[™\ˆ\ÈÙH[ˆH]˜[˜YØ\šH˜XÙH8 %\ÈÚY]š\™\È›Üˆ™]\›š[™È\Ù\œÈÚÈ[™XYH]™HH™XY[™È[™İXYÙHÙ]ÛÈ]]\İ›İ\ÙHH˜\™HKÙ[ˆ\›˜\H
+ÚZÚHÛÛ˜Ù\ËÛ[™İXYÙ\ØÛİÚ\ÊK‚‚ˆÈÈÈØ][™È	ˆ\œÚ\İ[˜ÙH
+[Øš[KÜÜ˜ËØÛÛ^ËÕİ\ÛÛ^Ş
+B‚•™YH\Ş[˜ÔİÜ˜YÙHÙ^\ÈÛH\İ\ÙY[ˆ
+Š™\œÚ[Ûˆİš[™ÊŠˆ™Y[œÚİİ\‹XÛÛ\]Y]˜™Y[œÚİÚ]Ë[™]Ë\ÙY[‹]˜[™™Y[œÚÛÛ˜›Ø\™[™Ë\Ù]\]˜ˆH\\ˆÚYÛ˜[8 %Ú]\ˆ[H[X™\˜]KXXİ[ÛˆÙ^Hœ›ÛHHš[ÜˆÙ\ÜÚ[Ûˆ^\İÈ
+TÔQT—ÔÒQÓSÒÑVTØ™KY^ÜYœ›ÛH™]ĞÛÛ[ÛÛ^0©Í
+H8 %Ù\\˜]\ÈHÙ[Z[™Hœ™\Ú[œİ[œ›ÛHH™]\›š[™È\Ù\ˆÛˆHX]™[X\ÙH
+›İXÚÈHİ\ˆÙ^\ÊKˆ\È™X[\Ù\ÈŠŠš[œİ[8¡¤ˆ[İ\‹\]H8¡¤ˆ™]ËY™X]\™\Ë[Û›JŠˆ‹‚‚‹H
+Š‘œ™\Ú[œİ[
+Šˆ
+›Èš[Ü‹]\ØYÙHÙ^\Ëİ\ˆÙ^HXœÙ[
+H8¡¤ˆÚİ[ÚİÑš\œİ][˜Úİ\˜ˆÛÛ\][™ÈÜˆÚÚ\[™È
+X\šÕİ\ÛÛ\]Y
+HÜš]\È
+Š˜›İ
+ŠˆÙ^\ÈÈTÕÕT—Õ‘T”ÒSÓ˜ÛÈHœ˜[™[™]È\Ù\ˆ\È™]™\ˆ[ˆİX›K\›Û\YÚ]HÚ]	ÜÈ™]ÈÚY]‚‹H
+Š•\]H][˜Ú
+Šˆ
+™]\›š[™È\Ù\ˆ8 %Hš[Ü‹]\ØYÙHÙ^H^\İÊH8¡¤ˆHİ\ˆ\Èİ\™\ÜÙY[™Úİ[ÚİÕÚ]Ó™]Øš\™\È[œİXYˆHÚ]Ó™]Ø[H^\İÈ›ÜˆTÕÕT—Õ‘T”ÒSÓ˜
+Š˜[™
+ŠˆHÚ]	ÜË[™]ÈÙ^H8¢hTÕÕT—Õ‘T”ÒSÓ˜ˆX\šÕÚ]Ó™]ÔÙY[˜Y˜[˜Ù\ÈÛ›HHÚ]	ÜË[™]ÈÙ^H
+™]™\ˆ™]›ØXİ]™[HÛÛ\]\ÈHİ\ŠKˆ\È\ÈÚ]XZÙ\ÈHX]™\œÚ[Û‰ÜÈİÛˆ™[X\ÙH›İ\È™XXÚX›H8 %Ú]İ]H[œİ[İ\Ü˜YHÜ]^H™]™\ˆÛİ[™H
+Hİ\‹XÛÛ\]\ˆ\È[™XYHœÙY[ˆˆ\È™\œÚ[ÛŠK‚‹H
+Š”Ù]\ÚY]
+Šˆ8¡¤ˆÚİ[ÚİÓÛ˜›Ø\™[™ÔÙ]\š\™\ÈÚ[ˆHÙ]\Ù^H\ÈXœÙ[Hİ\‰ÜÈİÛˆØ]H\È
+Š˜ÛÜÙY
+Š‹[™HÙ\ÜÚ[Ûˆ\ÈHœ™\Ú[œİ[ÜˆH™\^KˆÛÈ]\Èİ\™\ÜÙYÚ[HHİ\ˆ\È\Ü[œÈH[œİ[Hİ\ˆ\ÈÛÛ\]Y
+›ÜˆÚÚ\Y
+ˆ
+H[™İXYÙHÚÚXÙHX]\œÈZ]\ˆØ^JK[™™]™\ˆ\X\œÈ›ÜˆH™]\›š[™È\Ù\ˆ8 %^H[™XYH]™HH[™İXYÙKˆX\šÕİ\ÛÛ\]Y[X™\˜][HÙ\È
+Š››İ
+ŠˆÜš]HHÙ]\Ù^NÈX\šÓÛ˜›Ø\™[™ÔÙ]\ÛÛ\]YÜš]\È][Û™K‚‹H
+Š”™\^JŠˆ8¡¤ˆ™\Ù]İ\Š
+XÙ]È[ˆ[‹[Y[[ÜH™\^H›YÈ
+Š˜[™
+ŠˆÛX\œÈ[™YHÙ^\Ë›Ü˜Ú[™ÈHš\œİ[][˜Úİ\ˆ™YØ\™\ÜÈÙˆ[œİ[]œË]\Ü˜YHÛ\ÜÚYšXØ][ÛˆÜˆHš[ÜˆÛÛ\][Ûˆ
+[Ü™H8¡¤ˆ”ÚİÈ\İ\ˆ‹0©ÌÍÊH8 %[™HÙ]\ÚY]Y\ˆ]ÛÈ™\^H™\›ÙXÙ\ÈH™X[š\œİ\[ˆÙ\]Y[˜ÙKˆHÙ]\ÚY]	ÜÈ\›Z[™È›YÈ\È
+ŠœÙ\\˜]JŠˆœ›ÛHHİ\‰ÜÈ™\^T™\]Y\İY
+ÚXÚX\šÕİ\ÛÛ\]YÛX\œÈ]^XİHH[ÛY[HÚY]\ÈYHÈÜ[ŠNÈÛ›HX\šÓÛ˜›Ø\™[™ÔÙ]\ÛÛ\]YÛX\œÈ]‚‹HX\šÕİ\ÛÛ\]YØX\šÕÚ]Ó™]ÔÙY[˜Ø™\Ù]İ\˜›\[‹[Y[[ÜHİ]H
+Š˜™Y›Ü™JŠˆH]ØZ]Y\Ş[˜ÔİÜ˜YÙHÜš]H
+Z\œ›Üš[™È›İYšXØ][Û”™Y™\™[˜Ù\Ëœ\œÚ\İY]X
+KÛÈHÙ[‹[[İ[[™Èİ\™˜XÙH]Y\ÈÛˆ\ÛZ\ÜØ[Ø[‰İ™XYHİ[HœÚİ[ÚİÈˆ[™›İ[˜ÙH˜XÚÈÜ[‹ˆHİ\™˜XÙ\ÈY][Û˜[HYÙKYİX\™]]Ë[Ü[ˆÚ]H™Yˆ
+Ü[ˆÛ˜ÙH\ˆ\\ÛÙKÙ^YYÛˆHØ]H8 %™]™\ˆÛˆØØ[š\ÚX›X
+K‚‹HİÜ˜YÙK\™XY˜Z[\™HY˜][ÈÈHœ™\Ú[œİ[
+İ[ÜšY[ÈH\Ù\ŠNÈHÙ][Ù^\Ø˜Z[\™HY˜][ÈÈœ™]\›š[™È\Ù\ˆˆ
+ÚİÈHYÚ\ˆÚ]	ÜÈ™]Ë›İH[İ\‹ÈÛÛY[Û™HÚÈX^H[™XYHÛ›İÈH\
+KˆÜš]H˜Z[\™\Èİ[›\[‹[Y[[ÜHİ]HÛÈHİ\™˜XÙHÙ\Û‰İÛÜÚ][ˆHÙ\ÜÚ[Û‹‚‚ŠŠÛÛ[]™\È[ˆ[Øš[KÜÜ˜ËÙ]Kİİ\‹İÚ]Ó™]ËØŠŠˆTÕÕT—Õ‘T”ÒSÓ˜
+]\İ\]X[\šœÛÛ˜^Ë™\œÚ[Û˜
+KH\‹]™\œÚ[ÛˆÚ]Ó™]ØX\Ùˆš[[™İX[][\Ø[™Ù]Ú]Ó™]Ñ›Ü•™\œÚ[ÛŠ
+X
+™]\›œÈ[›Üˆ[šÛ›İÛˆÜˆ[\H[šY\È8¡¤ˆÚY]İ\™\ÜÙY
+K‚‚ŠŠ‘š[\ÎŠŠˆ[Øš[KÜÜ˜ËØÛÛ\Û™[ËÑ™X]\™Uİ\‹ŞÛ˜›Ø\™[™ÔÙ]\ÚY]ŞÚ]Ó™]Ó[Ù[ŞÈ[Øš[KÜÜ˜ËØÛÛ\Û™[Ëİİ\‹Şİİ\•\™Ù]ËXÙ[Y[KØ
+ÜİYÚ™YÚ\İH
+È™]™X[ØØÜ›Û›ÙR[ÕšY]Ø
+È\™HØ\™XÙ[Y[
+ÈYX\İ\™TÙ]Y
+NÈ[Øš[KÜÜ˜ËØÛÛ^ËÕİ\ÛÛ^ŞÈ[Øš[KÜÜ˜ËÙ]Kİİ\‹ŞÜİ\ËÚ]Ó™]ßKØÈHÜİYÚ™YœÈ]™H[ˆÛYTØÜ™Y[˜Ø]YÛÜS\İØÜ™Y[˜Y\X\ØÜ™Y[˜Z[PšZİTØÜ™Y[˜[˜Ú[™ÔØÜ™Y[˜ØœÙ\˜[˜ÙS\İØÜ™Y[˜^Uœ˜]ØÜ™Y[˜]Y[ÓXœ˜\TØÜ™Y[˜™[Z[™\”Ù][™ÜÔØÜ™Y[˜˜\[P[\›\ÔØÜ™Y[˜[Ü™TØÜ™Y[˜
+[™›İ][™P˜[›™\˜›ÜØ\™ÈH˜[›™\”™Y˜
+NÈÚ\™Y[ˆ[Øš[KĞ\Ş
+Ü[]™[İ™\›^H
+ÈÙ]\ÚY]
+K™\^H›İÈ[ˆ[Ü™TØÜ™Y[‹Ş
+0©ÌÍÊKˆ\İÎˆÜ˜ËØÛÛ^Ë××İ\İ××ËÕİ\ÛÛ^\İŞÜ˜ËØÛÛ\Û™[Ë××İ\İ××ËÑ™X]\™Uİ\‹\İŞÜ˜ËØÛÛ\Û™[Ë××İ\İ××ËÓÛ˜›Ø\™[™ÔÙ]\ÚY]\İŞÜ˜ËØÛÛ\Û™[Ë××İ\İ××Ëİİ\”XÙ[Y[\İØÜ˜ËÙ]K××İ\İ××Ëİİ\ÛÛ[š™\İ\İØÈL™H›XY\İ›ËÙ™X]\™K]İ\‹YL™KX[[
+
+ÈÛ][˜ÚX[[\ÛZ\ÜÙ\ÈH]]Ë]İ\ˆ
+Š˜[™
+ŠˆHÙ]\ÚY]›Üˆ]™\Hİ\ˆ›İÊK‚‚‹KKB‚ˆÈÈˆÛYHÙ^Hİš\
+8)!¸)'8)%x)/ˆ8)*¸) ¸)&¸)/¸) ¸)%ÊB‚ŠŠ”\œÜÙKŠŠˆXZÙHÛYH[œİÙ\ˆ
+ˆÚ]X]\œÈÙ^HŠ‹›İÛ›H
+ˆÚ]Ø[ˆH™XYŠ‹ˆÛ™HÛ[˜ÙKXØ\™™]ÙY[ˆHÛÜ™X\šÈ\›È[™HĞUQÓÔ’QTÈÜšY
+0©ÌN
+Hİ\™˜XÙ\ÈH^IÜÈ[˜Ú[™Èİ]NÈH[]Z[İ^\ÈÛˆH[˜Ú[™ÈX‹ˆ\ÈÛÜÙYHZ[KYœ™\Ú™\ÜÈØ\Y[YšYY[ˆH[HŒˆÛÛ\]]]™H™]šY]È8 %H™]š[İ\ÈÛYH™[™\™YY[XØ[HÛˆ]™\Hš\Ú]‚‚ŠŠ”İXİ\™H
+Ù^Tİš\Ş
+NŠŠ‚‚ŒKˆ
+Š‘^YXœ›İÈ›İÊŠˆ8 %8)!¸)'8)%x)/ˆ8)*¸) ¸)&¸)/¸) ¸)%ØÈÙ^IÜÈ[˜Ú[™ØšXH
+Š˜^YXœ›İÕ^İ[J
+X
+Šˆ
+][ËÛ[™Õ\KØL‹ØY™œ›Û‹YY\È][XÈÛÜ›[Ü˜[
+È˜XÚÚ[™È›Üˆ[‹ØÜš\X›ÛÙ\šYˆÚ]›È˜XÚÚ[™È›ÜˆKÙİKÚÛˆ8 %ÛÜ›[Ü˜[\È›È[™XÈÛ\È[™][ˆ˜XÚÚ[™ÈÜ]ÈHÚ\›Ü™ZÚK0©ÌÎÈH]Z\˜]Û[˜ÙHØ\™Ú\™\ÈHØ[YH[\ŠHÚ]HØY™œ›Û‹YY\8 .˜Y™›Ü™[˜ÙHšYÚX[YÛ™Y
+ØY™œ›Û˜˜Z[ÈHNŒH›ÛÜˆÛˆHÜ˜YY[
+K‚Œ‹ˆ
+Š’XY[™JŠˆ8 %KÙİKÚÛˆİ˜\˜_H0­ÈÜZÜÚ_Hİ]_X
+K™Ëˆ8)-¸)*8)/ø)-x)/¸),0­È8)-¸)`x)%x)cx),ˆ8)#ø)%x)/¸))¸)-¸)`
+NÈ[ˆİ˜\˜_H0­Èİ]_H
+ÜZÜÚ_JX
+K™ËˆØ]\™^H0­ÈZØY\ÚH
+ÚZÛJX
+KÛ™H[™NˆØÜš\X›ÛÙ\šYˆ›ÜˆKÙİKÚÛˆ
+ØÜš\]Q›Û
+K][›ÛMØ
+
+ÌŒÈ˜XÚÚ[™ÊH›Üˆ[È[šØˆZÜÚH\Ü^H˜[Y\ÈÛÛYHœ›ÛHRÔÒWÓSQT×ÒKÑS˜
+[˜Ú[™ËÛ˜[Y\ËØ
+KˆÚİÜÈ8 %Ú[HH^H\È[œ™\ÛÛ™Y8 %]ÛˆH™]\›š[™È][˜Ú]Úİ[™]™\ˆ™HÙY[ˆH][˜Ú™Y™]Ú
+0©ÍŒJHØ\›\ÈH^Hœ›ÛH\ÚÈ]›ØÙ\ÜÈİ\ÛÈHÙYYY\ÙS]Z\˜]ÛÛ\ÜÙ\ÈÛˆHİš\	ÜÈš\œİ™[™\ˆ[™HXY[™HZ[ÈÚ]H™\İÙˆÛYKˆH8 %\ÈHÙ[Z[™HÛÛİ]H
+œ™\Ú[œİ[Ú]H\İÚ[™ÙY^H›İY]Ûˆ\ÚÊK›İH›İ][™Hİ\\œ˜[YK‚ŒËˆ
+ŠÚ\›İÊŠˆ8 %
+Š›Û™Hš^YZZYÚÜš^›Û[\ØÜ›Û›İÊŠˆ
+ØÜ›ÛšY]ÈÜš^›Û[›È[™XØ]Ü‹Ø\È[X›YYšXH8¢$ŒMX\™Ú[ˆÈ
+ÌMÛÛ[Y[™ÈÛÈHÛ\YÚ\YZÜÈ]HØ\™YÙH[™ÚYÛ˜[ÈHØÜ›Û
+KˆH[HŒˆÚ\Y™\œÚ[Ûˆ]HÚ\È
+Ü˜\
+‹ÚXÚÛˆ˜\œ›İÈ]šXÙ\ÈİXÚÙY\È›İ\ˆ[È[ÈH[›ØÚÎÈH›İÈ›İÈ™]™\ˆÜ˜\È8 %İ™\™›İÈØÜ›ÛÈÚY]Ø^\È[œİXYÛÈHØ\™ZYÚ\ÈHØ[YHÛˆ]™\H]šXÙKˆ˜YÜÈØÜ›ÛÈZ[ˆ\Èİ[X˜›HÈHØ\™™\ÜØX›X
+HØÜ›ÛšY]ÈÛ›HÛZ[\ÈH™\ÜÛ™\ˆÛˆ[İ™JKˆ
+Š“İ™\™›İÈšYÈÓÑKÛˆH[Y\‹Y\ˆH][˜Ú\ÈÙ]Y
+Šˆ
+ŒÜËŒKÈ]\ÙH]XXÚ[™ÈUU×ÔĞÔ“ÓÊ˜[ˆÙ^Tİš\Ş
+NˆÚ[ˆHÛÛ[\ÈÚY\ˆ[ˆH›İËH›İÈÜ˜]ÛÈÈH[™[™˜XÚÈHÚ[™ÛH[YHÛÈY[ˆÚ\Èİ\™˜XÙHÚ]İ]H˜YË[™[ˆ™\İËˆ]\È
+Š››İ
+Šˆ[ˆ[š[X]Y›ÛÜ8 %]\ÈHÚÛH\İÜHÙˆ\ÈY™›Ü™[˜ÙK[™H™X\ÛÛˆ]\È›İÈHZ[ˆÙ][Y[İ]İ\[™ÈH[X™\‹ˆHšYØ[››İ\ÙHH˜]]™Hš]™\ˆ
+]š]™\ÈØÜ›ÛØ
+KÛÈ\È[ˆ[š[X]Y[š[X][Ûˆ]ÛÜİH™\]Y\İ[š[X][Û‘œ˜[YXXÚÈ
+Š˜[™
+ŠˆHØÜ›ÛØœšYÙHØ[]™\Hœ˜[YK[™\ÜÛKÛˆHÛ™HØÜ™Y[ˆ]™\H][˜Ú[™ÈÛ‹ˆ]Èš\œİØ\İX[HØ\È\Ò[\˜Xİ[Û˜8 %ÚXÚY˜][ÈÈ]\ÙS˜]]™Qš]™\˜ÛÈ]™\HšY[™]\ÙHÛZ[YY[ˆ[\˜Xİ[Û“X[˜YÙ\˜[™H[™ÛYH[[Üİ™]™\ˆ™\ÜY[ˆYHRKİ\š[™ÈH^IÜÈØœÙ\˜[˜ÙHÚ\ËH]HX]ÚH]Z\˜]Ù™\İ]™HØÚY[\œËHÚYÙ]Üš]\ˆ[™Hİš\	ÜÈİÛˆZYšYÚ›Ûİ™\ˆ
+0©ÍŒJKˆXÛ\š[™È\Ò[\˜Xİ[Ûˆ˜[ÙX
+]YÈŒŠH[˜›ØÚÙY[Ùˆ]8 %[™H][™ÈHØœÙ\˜[˜ÙHÚ\Èš[˜[H\œš]™H]
+˜Ü™X]Y
+ˆHİ™\™›İÈ]İ\ÈHšYÛÈÛYH˜YY›™]™\ˆYHˆ›ÜˆÛ™H[™\ÜÈ”Ë]™XY[š[X][Ûˆ˜XÚ[™È]™\HY™\œ™YÛÛ™HÛˆH][˜Ú]Ú]\È[™[™È]H™Z[™]ˆHXÛÜ˜]]™H™]™X[Ø[››İÛH”È™XY]Œ‹[™›È›YÈØ\ÈÛÚ[™ÈÈš^]ˆİ\œ™[Ú\NˆHÙ[‹\ØÚY[[™ÈÙ][Y[İ]]
+Š˜UU×ÔĞÔ“ÓÕPÒ×ÓTØL
+Šˆ
+8¢bKŒœHXÚÈ8 %[\\˜Ù\X›Hİ\[™È]\ÈÜYYH\™ÙˆHØZÙK]\ÊKÚXÚXÚÜÈ
+Š›Û›HÚ[HXİX[HšY[™ÊŠˆ
+[ˆ[™]\ÙH\ÈÛ™HYH[Y\‹›İL›Ë[Üœ˜[Y\ÊK\Ú\ÈØÜ›ÛØ
+Š›Û›HÚ[ˆH›İ[™Y^[Ú[™Ù\ÊŠ‹ØZ]È
+Š˜UU×ÔĞÔ“ÓÔÑUWÓTØLŒY\ˆH\İÛÛ[Ú[™ÙJŠˆÛÈH][˜Ú	ÜÈİÛˆÚ\›ˆÙY\È\Ú[™È]ÛX\ˆ˜]\ˆ[ˆ˜XÚ[™È][™
+ŠœİÜÈ›ÜˆÛÛÙY\ˆÛ™Hİ]X[™X˜XÚÊŠˆ8 %ÛYH[ˆÛÙ\È[HYKˆY™XŞXÛHÛÛ˜XİˆHš\œİ\Ù\ˆ˜YÈİÜÈ]
+Š™›ÜˆÛÛÙ
+ŠÈ]
+Šœ]\Ù\ÈÚ[HHÛYHXˆ\È[™›Øİ\ÙY
+Šˆ
+\ÙR\Ñ›Øİ\ÙY8 %›İÛK]XˆØÜ™Y[œÈİ^H[İ[YÛÈ[ˆ[™Ø]Y\ÜÈÛİ[\›ˆ”Ë]™XYœ˜[Y\Èœ›ÛHİ\ˆXœÊNÈ]™]™\ˆ[œÈ[™\ˆ™YXÙK[[İ[Ûˆ
+
+Š˜\ÙT™YXÙY[İ[Û˜
+Šˆ8 %HÚ\™YİXœØÜšX™YÛÚË0©ÌLKÛÈHZY\Ù\ÜÚ[Ûˆ™Y™\™[˜ÙH›\İÜËØ[İÜÈ]]™JNÈ]Û›Hİ\ÈÛ˜ÙHH›İÈ\ÈHYX\İ\™YÚY[™Ùˆ™X[İ™\™›İÎÈ[™H
+Š™Ù[Z[™HÛÛ[]ÚYÚ[™ÙJŠˆ
+HY™\œ™YÚ\È[™[™ËH[™İXYÙHİÚ]ÚHZYšYÚ›Ûİ™\ŠH\ÈHÛ™H[™È]™KX\›\È^XİHÛ™Hœ™\Ú\ÜÈ8 %™K\Ù\š[™ÈHÙ]H[^HÚ]]ÛÈÙ]™\˜[Ú[™Ù\È[ˆH›İÈÛÛ\ÙH[ÈÛ™HšYY\ˆH\İÙˆ[Kˆ]™\H[Y\ˆ]İÛœÈ]™\È[ˆHØ[YH™Yˆ[™\ÈÛX\™YHİÜ]]ÔØÜ›ÛÛÈ›İ[™ÈØ[ˆXÚÈY\ˆ[›[İ[ˆ[›™YHÙ^Tİš\\İŞ8¡¤ˆ˜Ú\\›İÈ]]ËYšYˆ
+Ú[[›İYÚHÙ]HÚ[™İÎÈ™XXÚ\ÈH˜\ˆÙ™œÙ][™™]\›œÈÈÈ[ˆÚ[[›ÜˆH\\ˆŒÊKˆÛ™H›Ü›X[^™YÚ\\İÛÈH[ÜXÈ^\İÈÛ˜ÙNˆ\È
+ŠŒˆØœÙ\˜[˜ÙHÚ\ÊŠˆ›ÜˆÙ^H
+ØY™œ›Û•[š[ØY™œ›Û‹YY\^
+K[ˆ[ˆ
+ŠXšZš]Ú\
+Šˆ
+ÛÛÚ\™Øš[ØY™œ›Û‹YY\
+H[™H
+Š”˜ZHØX[Ú\
+Šˆ
+]›ÚYÚ\™Øš[
+Š˜]›ÚYY\
+Šˆ^8 %H[ÛÛ\ÜÚ]\È\šÙ\ˆ[ˆHØ\™ÛÈ˜]È]›ÚY›ÜÈ[™\ˆPH\™NÈ\œ˜XÛİK™]™\ˆ™Y‘LM
+KˆHØX[Ú\	ÜÈX™[ÛÛY\Èœ›ÛHHØX[Ú[™İØ	ÜÈİÛˆ˜[YRKÛ˜[YQ[˜
+ĞPSÓSQTË]Z\˜]Ø
+H8 %›È\XØ]Y]\˜[ËˆÚ\˜[Y\È™[™\ˆšXH[^İ[J
+X
+[\ˆ›Üˆ[ÈØÜš\Ù\šY‹›È˜XÚÚ[™Ë›Üˆ[™XÊNÈH
+Š[YH˜[™Ù\È™[™\ˆ[ˆ][”Ù[ZP›ÛLJŠˆ8 %™]™\ˆH[ˆ][XÈ
+0©ÌÊH8 %[™\ÙH
+Š˜›Ü›X]˜[™ÙPÛÛ\Xİ
+
+X
+Šˆ
+]Z\˜]›Ü›X]Ø
+NˆHÚ\™YY\šYY[HÜš][ˆÛ˜ÙH
+ÎŒÍÈ8 $ÈNŒLÈX
+K[›Ü›HÚ[ˆHÚ[™İÈÜ›ÜÜÙ\È›ÛÛ‹ÛZYšYÚ‚‚ŠŠ”İ\™˜XÙKŠŠˆØ\™Xİ]™Qœ›ÛH8¡¤ˆØ\™Xİ]™UØÜ˜YY[\Ø\™Xİ]™P›Ü™\˜˜YZK›Ø
+Š˜[]˜][Û‹œ˜Z\ÙY
+Šˆ
+[YHÚÙ[ŠKˆÜ\]YHØ\™Xİ]™Qœ›ÛX˜\ÙK›Èİ™\™›İÎˆ	ÚY[‰Ø
+]Ûİ[Û\HSÔÈÚYİÊH8 %HÜ˜YY[Ø\œšY\È]ÈİÛˆ˜Y]\ËˆH0©ÌNKğ©ÌÌˆØ\™˜[Z[K‚‚ŠŠ™Z]š[İ\‹ŠŠ‚‚‹HÚÛHØ\™\ÈÛ™H™\ÜØX›X8¡¤ˆ\™[]Xˆ˜]šYØ]HÈ[˜Ú[™ÕX˜
+Ø[YHX˜›K]\]\›ˆ\È›İ][™P˜[›™\˜
+Kˆ]Ü[œÈÛˆH
+Š™š\œİ
+Šˆ\ˆHØ\™\ÈÚ\™YÈHÚ\™YÛYHš\œİ]\ÛÛ›Û\ˆ
+Û”™\ÜÒ[˜ØÛ”™\ÜÓİ]ØÛ”™\ÜØ8¡¤ˆ[T™\ÜĞÛÛ^0©ÌN
+K[™HÚ\›İÉÜÈÛ”ØÜ›Û™YÚ[‘˜YØX\šÜÈHÜš^›Û[Ú\İÚ\H\ÈHØÜ›ÛÛÈ]™]™\ˆÜ[œÈHX‹‚‹H]HÛÛY\Èœ›ÛH
+Š›Û™HÛÛ™JŠˆ\ÙS]Z\˜]
+Ù^KØ[[™\”Ş\İ[KÈ]™Nˆ˜[ÙHJXİ\Y\È›İH]Z\˜]Ú[™İÜÈ
+Š˜[™
+ŠˆH^IÜÈ[˜Ú[™Ñ]X
+ØXÚYÙ™ˆH™[™\ˆ]
+NÈØœÙ\˜[˜Ù\ÈšYHHYÚ\ˆ\ÙSØœÙ\˜[˜Ù\Ñ›Ü‘]X
+Ü]İ]Ùˆ\ÙT[˜Ú[™Ñ›Ü”Ù[Xİ[Û˜ÛÈHİš\™]™\ˆ^\È›ÜˆH\ÛÛZ[™Ë]Ú[™İÈ™\ÛÛ][Ûˆ]Ù\Û‰İ™[™\ŠKˆ]™Nˆ˜[ÙXÚÚ\ÈH\‹[Z[]HXÚÈ8 %Hİš\ÚİÜÈÛ›Hİ]XÈ^HÚ[™İÜÎÈH]H[œİXY›ÛÈİ™\ˆšXH
+Š˜\ÙUÙ^RÙ^J
+X
+Šˆ
+][Ëİ\ÙUÙ^RÙ^KØ
+NˆH[Y\ˆ\İ\İØØ[ZYšYÚ\È[ˆ\İ]H›Ü™YÜ›İ[™™KXÚXÚËÛÈ[ˆİ™\›šYÚX˜XÚÙÜ›İ[™Y\™]™\ˆÚİÜÈY\İ\™^IÜÈ[˜Ú[™ËˆHZY\Ù\ÜÚ[ÛˆØœÙ\˜[˜ÙK\İÜ™H\Ü˜YH™K\™\ÛÛ™\ÈHÚ\È
+ŠÚ]İ]
+ŠˆÛX\š[™È[Hš\œİ
+›È›[šÎÈ\ÙSØœÙ\˜[˜Ù\Ñ›Ü‘]X™\Ù]ÈÛ›HÚ[ˆH^KØÚ]KÜŞ\İ[HÚ[™Ù\ÊKˆHØ[[™\ˆŞ\İ[H]Ù[ˆ\ÈH
+Š›[Ù[K[]™[İÜ™JŠˆ
+\ÙT[˜Ú[™ĞØ[[™\”Ş\İ[X
+KÛÈH\›š[X[Ø[X[HÚ[™ÙHÛˆH[˜Ú[™ÈXˆ›ÜYØ]\ÈÈH[İ[YÛYHİš\[[YYX][K‚‹HHX›XÈ
+Š¸)*¸)/ø))8)`È8)*¸)%x)cx)-ÈÚ\
+ŠˆZÙ\ÈHØ[YH™YK\[HØXÚH]\È]™\Hİ\ˆ[˜Ú[™È[œİÙ\ˆ\™H
+\ÙT]TÛX\˜[”ÛÛ™\Ø0©ÍŒÊNˆÙYYŞ[˜Ú›Û›İ\ÛHœ›ÛHH[‹[Y[[ÜHÚ[™İËY˜]Hœ›ÛH\ÚÈ
+Šš[[YYX][JŠˆ
+KÓËÚXÚ[ÛÈš[Y\ÈH[™Ú[™IÜÈİÛˆÚ[™İÈY[[ÊK[™Y™\ˆ
+Š›Û›H\İ›Û›Û^JŠˆ™Z[™[\˜Xİ[Û“X[˜YÙ\˜ˆHÜ]\È^XİˆHÛ›İÛˆ›ÜšYÚ]Ù^H˜[È
+›İ]ÚYJˆ\ÈH]HÛÛ\\š\ÛÛˆ[™[œİÙ\œÈ›Üˆœ™YH
+HŒÍLY^HØ\ÙJKÚ[H[][™È[œÚYH]™YYÈH^IÜÈÛÈ]H™XYÈ[™\™Y›Ü™HØZ]ÈZÙHH›ÜšYÚØØ[ˆÙ\Ëˆ]Ú\Y\ÈH˜\™HÙ][Y[İ]
+8 )‹
+X\›İ[™H˜]È[™Ú[™HØ[ÚXÚ]H›ÜšYÚ	ÜÈÛÛÛÛ™H8 %HšY˜\YKT\›š[XHØØ[ˆ\ÈHŒY^H[X]˜\ŞXHØ[ËŒL\ÈÛˆ\›Y\È[™[ZY[Y8 %ÛˆH][˜Ú]ÙˆÛYKÛˆ
+™]™\Jˆ][˜Ú™XØ]\ÙH]™]™\ˆÙ[›İYÚH\œÚ\İY]TÛX\˜[”ÛÛ™\Ø^Y\ˆ]^\İÈÈXZÙH]HÛ˜ÙK\\‹Z[œİ[ÛÜİˆHÛÛ™H]Ù\È[ˆ\È\œÚ\İY
+\œÚ\İÛX\˜[”ÛÛ™\Ø
+HÛÈ›È]\ˆ][˜Ú™\X]È]ˆ[›™YHÙ^Tİš\\İŞ8¡¤ˆ”]KTZÜÚHÚ\‹‚‹HXØÙ\ÜÚXš[]NˆÚ[™ÛH]Û‹X™[•Ù^IÜÈ[˜Ú[™Ëˆİ˜\˜_Kİ]_KˆÛØœÙ\˜[˜Ù\ßKˆ\ÈÜ[‹ˆ˜‚‚ŠŠ‘š[\ÎŠŠˆ[Øš[KÜÜ˜ËØÛÛ\Û™[ËÕÙ^Tİš\ŞÈÛÛœİ[YYHÛYTØÜ™Y[‹Ş
+0©ÌN
+K‚‚‹KKB‚ˆÈÈKˆÛÛ[YKT™XY[™ÈØ\™
+8)'8)/¸),8)`8),8)%¸)aø) ŠH8 %‘UT‘Q
+[HŒŠB‚ŠŠ•Ú]]Ø\ËŠŠˆHÚ[™ÛK\›İÈ\˜ÚY[ÛÙØ\™™[İÈHĞUQÓÔ’QTÈÜšY
+0©ÌN
+H]™\İ[YYH[Üİ™XÙ[™XY[™ÈÜÚ][Ûˆ
+[Xˆ[H
+È8)'8)/¸),8)`8),8)%¸)aø) ˜^YXœ›İÈ
+È]H
+È›Ü›X]ØØ][ÛŠ
+XÜÚ][Ûˆ
+È8)*¸)(¸)/8)aø) ˆ8 .˜[
+KØ[Ú[™È›ÙÜ™\ÜÈ[šY\È™]Ù\İYš\œİ[™›İ][™È›İYÚ˜]šYØ]UÔ›ÙÜ™\ÜÊ
+X‚‚ŠŠ•ÚH]Ù[ŠŠˆ™[[İ™YH›ÙXİXÚ\Ú[Ûˆ[ˆH[HŒˆÛYKY[œÚ]H\ÜÈ8 %HØ\™YYH\™[Ø^\Ë[Ûˆ›ØÚÈ™]ÙY[ˆHÜšY[™TĞÓÕ‘T‹[™™\İ[YH[™XYH]™\ÈÚ\™H™XY[™Èİ\ÎˆH
+Š˜™\İ[YT™XY[™ÔÚY]
+Šˆ™Z[™]™\HØ]YÛÜH\İ
+0©ÌŒKL™H™\İ[YK\™XY[™Ë\Û[ÚÙKX[[
+K‚‚ŠŠ•Ú]İ\š]™\È]ŠŠ‚‚‹H
+Š˜™XY[™Ô›ÙÜ™\ÜĞÛÛ^Ø[YK\YÙHİX\™
+Šˆ
+™\İÜ™YÈH™KXØ\™™Z]š[ÜŠNˆHØ[YK]™\œÙKØ[YKY^HÙ]›ÙÜ™\ÜØ\ÈH
+Šš\™›Ë[Ü
+Šˆ8 %›È\œÚ\İ›ÈÙÔ™XYˆH™XÙ[˜ŞK\™Yœ™\Ú˜\šX[
+[\\]Y]Ûˆ™K[Ü[ŠHÚ\YœšYY›H[Û™ÜÚYH\ÈØ\™[™Ø\È
+Šœ™]™\YH™]šY]ÊŠˆ›İ][™KÜØY[˜HÛÛ\][Ûˆ[™]ÈÛ™P][Y\İ[\\™H\š]™Y
+›]™Jˆœ›ÛHÙ]›ÙÜ™\ÜÊ
+X	ÜÈX^X\]Y][H
+›İ][™Kİ[š]ËØ\ÙTØY[˜UÙ^X
+KÛÈ[\[™ÈHÚX›[™ÈÚ\\‰ÜÈ[HÛˆHY\™H™K[Ü[ˆ›\YÚXÚ[HØ\È›]\İˆ[™[‹XÛÛ\]Y][\Èš[š\ÚYX\›Y\ˆ]^KˆÜ›ÜÜËY^HØ[YK\YÙHÜš]\Èİ[\œÚ\İ
+ÈÙÈ
+İ™XZÈ™Yœ™\Ú
+KˆÚ]Qİ^Hœ›ÛH]ÛÜšÎˆÙ]›ÙÜ™\ÜØØÛX\”›ÙÜ™\ÜØ\™H›İÈ
+ŠšY[]K\İX›JŠˆ
+H›ÙÜ™\ÜÔ™Y˜Z\œ›Ü‹Ø[YH]\›ˆ\È\Ù\Xİ]š]PÛÛ^	ÜÈXİ]š]T™Y˜
+KÛÈHMJÈ™XY\ˆ\œÚ\İYY™™XİÈÙ^YYÛˆÙ]›ÙÜ™\ÜØ›ÈÛ™Ù\ˆ™K\[ˆÛˆ]™\HÜš]Hœ›ÛH[]Ú\™K‚‹H˜]šYØ]UÔ›ÙÜ™\ÜÊ
+X
+[T›İ]\ËØ
+H8 %İ[HÚ\™Y™\İ[YK\›İ][™È]›ÜˆHÚY]È[™›İYšXØ][ÛˆY\[šÜÎÈ]™]\›œÈ˜[ÙX›Üˆ[œ›İ]X›H[šY\Ëˆ
+Ø[”™\İ[YT›ÙÜ™\ÜÊ
+XHØ\™	ÜÈ™[™\ˆØ]KØ\È[]YÚ]HØ\™8 %]Y›Èİ\ˆØ[\œËŠB‚ŠŠ‘[]Yš[\ÎŠŠˆÛÛ[YT™XY[™ĞØ\™Ş
+
+È\İ
+K][ËÛ]\İ›ÙÜ™\ÜËØ
+
+È\İ
+NÈHÛYTØÜ™Y[˜Ûİ[™HÛYK]Ù^K\Û[ÚÙKX[[ÛÛ[YK\™XY[™ÈYÈÙ[Ú][Kˆ™KZ[›ÙXÚ[™ÈHÛYH™\İ[YHİ\™˜XÙHÚİ[İ\œ›ÛH\ÈÙXİ[Û‰ÜÈ\İÜH
+Ú]ÙÈKY›ÛİÈKH[Øš[KÜÜ˜ËØÛÛ\Û™[ËĞÛÛ[YT™XY[™ĞØ\™Ş
+K‚‚‹KKB‚ˆÈÈLˆ[[Qš]™[ˆ\ØÛİ™\H
+8)"x))¸)cx))¸)aø)-¸)cx)+ÊB‚ŠŠ”\œÜÙKŠŠˆ‘PˆXZÙ\ÈH^[™YXœ˜\Hš[™X›HH\Ù\ˆ™YY^K™\İ]˜[[™Z]HX‹ˆH™X]\™H\ÈY]Y]KYš\œİˆ]™]™\ˆÜ™X]\È[ˆ\İ›ÛÙÚXØ[™\ØÜš\[Ûˆ[™Ú[™H[™™]™\ˆÙ[™\˜]\È]›İ[Û˜[\ÜÛØÚX][ÛœËˆİ\˜]YYÜÈ]™H[ˆ[Øš[KÜÜ˜ËÙ]KÙ\ØÛİ™\SY]KØ\œÜÙHX™[È[ˆ\œÜÙ\ËØ[™\İÈ[ˆÛİ\˜ÙH[™\È\È˜[YYË‚‚ˆÈÈÈœ›İÜÙHH\œÜÙB‚‘[HÚ[ˆHÛYH][˜Ú\ˆÜšY	ÜÈ
+Š¸)"x))¸)cx))¸)aø)-¸)cx)+È0­ÈH\œÜÙJŠˆ[H
+0©ÌN
+KXÙY™^ÈHZ]Kˆœ›İÜÙPT\œÜÙTØÜ™Y[‹Ş\Ù\ÈHØ[YHÜ˜\‹Ø˜XÚËX]Ûˆ™X]Y[\ÈØ]YÛÜH[™Z]HØÜ™Y[œËÛˆH˜[™ÛHZ]H˜XÚÙÜ›İ[™]KˆH›ÙH\ÈHËXÛÛ[[ˆ][˜Ú\ˆÜšYÙˆ\œÜÙH[\Èœ›ÛH\œÜÙ\ËØÈXXÚ[H\Ù\ÈHÛÛ\XİØ]YÛÜPØ\™][˜Ú\ˆÚ][ˆXÛÛˆœ›ÛHH^\İ[™ÈØ]YÛÜHXÛÛˆÙ]\ÈHÛX[[™Û\ÚØ\[ÛˆÛÈH›İİ\IÜÈKÙ[ˆ[[[\È™[XZ[ˆš\ÚX›H]™[ˆ[ˆ[™H[ÙKˆ\[™ÈH\œÜÙH\Ú\È\œÜÙS\İ‚‚˜\œÜÙS\İØÜ™Y[‹ŞZ\œ›ÜœÈØ]YÛÜS\İØÜ™Y[˜ˆ]H\ÈÜ™\™YHÜ™\•]\ĞS[™İXYÙJ
+X˜XÚÙÜ›İ[™\ÈH˜YY[[ˆ]K›İÜÈ\™HXœ˜\PØ\™Èœ›ÛH^Ñ›Ü”\œÜÙJ\œÜÙRY
+X[™[›İÈ˜]šYØ][ÛˆÛÙ\È›İYÚ˜]šYØ]UÑ[Tİ\
+
+Xˆ^\İ[™È™\İ[YH™Z]š[İ\ˆ\È™\Ù\™YÚ]™\İ[YT™XY[™ÔÚY]‚‚”ÙX\˜Ú\ÈHÙXÛÛ™\H[HÚ[ˆÙX\˜Ú[™^Ø›ÛÈXXÚYÙÙY^	ÜÈ\œÜÙH\Ü^H˜[Y\È[™YÈ[ÈHÙXİ[ÛˆšY[ËÛÈ]Y\šY\ÈZÙH›İXİ[Û˜Üˆ8).8)`x),8)%x)cx)-ø)/˜š[™H\ÜÛØÚX]Y^Ë‚‚ˆÈÈÈ™XY\ˆY]Y]H[™[‚˜Ú[•Ô™XÚ]T[™[Ş™[™\œÈH^[]™[š]X[Y]Y]Hœ›ÛH\ØÛİ™\SY]Xˆ™\İ^\Ë™\İ]˜[Ë™\İ[YK\œÜÙHÚ\Ë[™Ü[Û˜[š[š^[ÙÈ›İÜÈ
+š\ÚKÚ[™\Ë]˜]JKˆ]\Ù\ÈHØ[YH\˜ÚY[ØØ\™İ\™˜XÙH˜[Z[H\Èİ\ˆ™XY\ˆY]Y]NˆØ\™İ\™˜XÙXØ\™Xİ]™P›Ü™\˜˜YZK›ØÙXİ[Û“X™[Ø\™Y]X[™ØY™œ›Û‹][Ú\Ë‚‚”XÙ[Y[\È
+Š™š\œİ™\œÙHYÙHÛ›JŠˆ™\œÙTYÙX^ÜÙ\ÈH™[İĞÛÛ[Ûİ[™XXÚ›]™XY\ˆ\ÜÙ\ÈH[™[Û›HÚ[ˆ[™^OOHˆH[™[\X\œÈ™[İÈH™\œÙHYX[š[™È[œÚYH]YÙIÜÈ™\XØ[ØÜ›ÛˆİÚ\[™ÈÈ™\œÙHˆ[™™^[Û™Ú]™\ÈZ[ˆ™\œÙHYÙ\Ëˆ\È]›ÚYÈ™\X][™ÈÚÛK]^Y]Y]HÛˆ]™\H™\œÙH[™X]Ú\ÈH\›İ™Y‘Pˆ›İİ\H\]K‚‚ˆÈÈÈ›ÜˆÙ^B‚˜Ù^T™XÛÛ[Y[™][ÛœÔ›İËŞÚ]È™[İÈÙ^Tİš\[™X›İ™HH›İ][™H˜[›™\ˆÛˆÛYKˆ]Ø[ÈÙ]Ù^T™XÛÛ[Y[™][Û‘]Z[Ê™]È]J\ÙUÙ^RÙ^J
+JJXˆH›İÈ\ÈHÜš^›Û[ØÜ›ÛÙˆ™X]\™PØ\™ÛÛ\Xİİš\È
+NMœH0©ÌÌˆÚ[
+NÈ\[™ÈÜ[œÈH^\İ[™È™XY\ˆ\™Ù]šXH˜]šYØ]UÑ[Tİ\[™Ü[œÈÛˆH
+Š™š\œİ
+Šˆ\8 %XXÚØ\™[™H›İÈ\™HÚ\™YÈHÚ\™YÛYHš\œİ]\ÛÛ›Û\ˆ
+[T™\ÜĞÛÛ^0©ÌN
+Kˆ]\È[[[Û˜[HHÛX[›İË›İHÙXÛÛ™[˜Ú[™ÈØ\™‚‚ŠŠ“˜[YK[Û›Hİš\
+]YÈŒŠKŠŠˆH›İÈ\ÙYÈØ\œHH[0©ÌÌˆÜİYÚØ\™8 %LœÚYKŒLÌ[›\˜ˆ[™ÕH[[™[8 %ÚXÚXYHÛYIÜÈÙ^HÛ\İ\ˆ
+[˜Ú[™Èİš\
+È“ÔˆÑVH
+È›İ][™H˜[›™\ŠHš[Hš\œİØÜ™Y[™[™Y›Ü™HHÚ[™ÛHØ]YÛÜH[HÚİÙYˆ]›İÈ\Ù\ÈH0©ÌÌˆÛÛ\Xİ˜\šX[ˆXÛÛ‹˜[YKÚ]œ›Û‹
+ŠMŠŠˆ[ˆH8)*¸)(¸)/8)aø) ˜Ê”™XY
+ˆ[\ÈÛÛ™H
+]Ø\È™]™\ˆH]Ûˆ8 %HÚÛHØ\™\ÈH™\ÜÈ\™Ù]
+H[™ÛÈ\ÈH›\˜ˆ[™H8 %
+Š›Ûˆ[ˆÜ™[˜\H^H][™HØZY8)!¸)'8)%x)aÈ8),¸)/ø)#È8)!x)*8)`x)-¸) ¸).8)/ø))È
+”™XÛÛ[Y[™Y›ÜˆÙ^Jˆ[™\›™X]HÙXİ[ÛˆXY[™È[™XYH™XY[™È8)!¸)'8)%x)aÈ8),¸)/ø)#ÈÈ“ÔˆÑVJŠ‹ÛÈ]Ü[H\™ÙˆHØ\™™\İ][™È]ÈİÛˆ^YXœ›İËˆHXY[™ÈØ\œšY\ÈH™›ÜˆÙ^Hˆœ˜[Z[™È›ÜˆHÚÛH›İÎÈHØ\™Û›H\ÈÈ˜[YHH™XY[™ËˆH^YXœ›İÉÜÈİÛˆÜXÚ[™ÈYÚ[™YÚ]]
+X\™Ú[•ÜMˆ8¡¤ˆL‹Ø\8¡¤ˆŠH[™HÚY›ÜYLˆ8¡¤ˆNM‹ÚXÚÙÙ]\ˆZÙHH›İÉÜÈ›ØÚÈœ›ÛHMÌÈL8 %X›İ]Û™HĞUQÓÔ’QTÈ›İÈ[YX›İ™HH›ÛÚ][Ü™HÙˆH^IÜÈ™XÛÛ[Y[™][ÛœÈš\ÚX›H\ˆØÜ›ÛˆHXZšØ\™
+0©ÍMÊHšY\ÈHØ[YH˜\šX[ÛÈH›İÈİ^\ÈÛ™Hš\İX[˜[Z[K‚‚ŠŠ•İXÚ˜[™
+]YÈŒˆ›ÛİË]\
+KŠŠˆ›][š[™ÈHØ\™ÈMœXYHHÜš^›Û[İÚ\H›ZŞNˆHİÚ\HÛİ[˜[™Û[HÜ[ˆHØ\™Üˆİ[[œİXYÙˆØÜ›Û[™ËˆØ]\ÙH8 %HØ\™È\™H™\ÜØX›XÈ[œÚYHH›İÉÜÈÜš^›Û[ØÜ›ÛšY]Ø[™Hš\œİ]\™XÛİ™\H
+0©È‘š\œİ]\™XÛİ™\HŠHÛ›Hİ\™\ÜÙ\ÈH\Ú[ˆHØÜ›ÛšY]Èš\™\ÈÛ”ØÜ›Û™YÚ[‘˜YØˆ[ˆH˜[™][‹[ˆ\˜ÙYÜš^›Û[›XÚÈİ\È™X\ˆH˜[™YÙH[™HÜš^›Û[ØÜ›ÛÜÙ\ÈHš\œİ\^[Ù\İ\™H™YÛİX][ÛˆÈH™\ÜØX›HÈİ]\ˆ™\XØ[YÙK\ØÜ›ÛÛÈÛ”ØÜ›Û™YÚ[‘˜YØ™]™\ˆš\™\È[™H\Y˜[˜XÚÈÚ[œËˆš^ˆHİš\	ÜÈÛÛ[ÛÛZ[™\”İ[XØ\œšY\ÈY[™Õ™\XØ[ˆL
+[™XÙ[\˜][Û”˜]OH™˜\İ˜X]Ú[™ÈHTĞÓÕ‘TˆØ\›İ\Ù[
+KÚXÚ[›\™Ù\ÈH
+œØÜ›ÛX›Hœ˜[YJˆ[™H\˜ÈÛ\˜[˜ÙH8 %HİXÚ\™Ù]›İHš\ÚX›HØ\™
+İ[Mœ
+H8 %ÛÈHÜš^›Û[ØÜ›Û™[XX›HÚ[œËˆH^YXœ›İÈØ\›ÜYÈÈXœÛÜ˜ˆH˜[™	ÜÈİÛˆÜY[™ËˆHTĞÓÕ‘TˆØ\›İ\Ù[›İÈØ\œšY\ÈHØ[YHİXÚX˜[™Y[™È
+0©ÌÌŠH8 %]È[\ˆØ\™ÈXYHH˜Z[\™H˜\™\‹›İ[\ÜÜÚX›KÚ[˜ÙHH™YÛİX][Ûˆ˜XÙH\ÈHØ[YK‚‚ŠŠ•Ú\™HH™\İ]˜[]šX][ÛˆÙ[ŠŠˆH›ÜY›\˜ˆØ\È›İ[™\ˆÛˆH™\İ]˜[^H]™XY8)!¸)'™\İ]˜[ˆ8).x)bÈ
+•Ù^H\È™\İ]˜[˜
+‹Û›İ\š[™ÈÚ]H[Ü›š[™ÉÜÈ™\İ]™H™[Z[™\ˆ›ÛZ\ÙY
+0©ÌÎ
+Kˆ]]šX][Ûˆ\È
+Šœİ[ÛÛ\]Y[™İ[[™YÈHØ\™
+Šˆ8 %Ù]Ù^T™XÛÛ[Y[™][Û‘]Z[Ø\È[˜Ú[™ÙY[™™\İ]™T™[Z[™\œË\İØİ[˜Z[ÈYˆH›İÈ[™H›İYšXØ][Ûˆ\ØYÜ™YH8 %]Ú[\H\È›ÈÛ™Ù\ˆ
+œZ[Y
+‹ˆ]™XXÚ\ÈH\Ù\ˆÛÈİ\ˆØ^\Ë›İÙˆÚXÚ™\ÛÛ™HHØ[YH™\İ]˜[Ù™ˆHØ[YHØ][ÙÎˆHØ\™	ÜÈ
+Š˜XØÙ\ÜÚXš[]HX™[
+Šˆ
+İ]Q[ŸKˆÙ\ØÑ[ŸH\ÈÜ[‹ˆ˜ÛÈ›ÚXÙSİ™\ˆİ[Ø^\È
+•Ù^H\È]Ø[JŠK[™H
+Š™™\İ]™HÜ˜[ŠŠˆ
+0©ÍMJKÚXÚ[™ÜÈ]ÈØ\›[™[™Ü™Y][™È\™XİHX›İ™H\È›İÈÛˆ]™\HØ][ÙÈ™\İ]˜[ˆH™\İ]˜[İ]ÚYHHÜ˜[‰ÜÈØ][ÙÈ
+Y\œÈ¸ $ÌÈÙˆHÜ™\š[™ÈX›İ™JH\™Y›Ü™H˜[Y\ÈHØØØ\Ú[ÛˆÛ›H[ˆHXØÙ\ÜÚXš[]HX™[8 %XØÙ\Y[X™\˜][HÚ[ˆH›İÈØ\ÈÚÜ[™YÈ™]š\Ú]H™\İÜš[™ÈH›\˜ˆÛˆ™\İ]˜[X]šX]YØ\™È[Û™HYˆ]Y\ˆ]™\ˆ™YYÈHš\İX[İYK‚‚ŠŠ•]HÚYŠŠˆÚ]H›\˜ˆÛÛ™HH˜[YH\ÈHÚÛHØ\™ÛÈNMˆ\ÈØYX™X\š[™Îˆ]X]™\ÈŒL›ÜˆH]HY\ˆHXÛÛ‹Ø\È[™Ú]œ›Û‹ˆH\XØ[˜[YHÛX\œÈ]
+8).x)*8)`x)+¸)/¸)*8)&¸)/¸),¸)`8).8)/ˆ8¢b]MÊNÈHÛ™Ù\İÚ\YÛ™H
+8)-x)/ø)-ø)cx)(ø)`H8).8).x).8)cx),8)*8)/¸)+ˆ8)!x) ¸)-ˆ8¢bL\
+HÚ]È]HYÙH[™[\Ú^™\È[™\ˆH˜Z\ÙYŞ\İ[H›ÛØØ[KˆÚY[ˆØ\™Ü˜\[ˆÙ^T™XÛÛ[Y[™][ÛœÔ›İØ›İ™X]\™PØ\™8 %Hİš\Ú^™\ÈÈÚ]]™\ˆÚYH›İÈ[™È]‚‚ŠŠ‘XÚ\Ú[Ûˆ˜Z[ŠŠˆ›İ\ˆ™X]Y[ÈÙ\™H›İİ\YÚYHHÚYH]HÚ\™YÎL0åÎ›Û[ˆÙ^K\›İËXÛÛ\Xİ\™]šY]Ëš[]H™\È›Ûİˆ
+ŠJŠˆHÚ\YL°åÌLÌÜİYÚØ\™
+ŠŠŠˆH0åÍİš\ÙY\[™ÈH›\˜‹
+ŠÊŠˆ\ÈNM°åÍMˆ˜[YK[Û›Hİš\
+Š‘
+ŠˆH8)*8)/ø))8)cx)+È8).8)/¸))ø)*8)/ˆ][˜Ú\ˆ[HZÙ[ˆ]\˜[H
+LL0åÎMËØ\[Ûˆ™[İÈH›Ş
+KˆØ\È™Z™XİY8 %]ÈØ\[ÛˆÚ]È
+›İ]ÚYJˆHÌœ[HÛÈ]Ø]™\ÈHX\İ]LLÚYH]Ø[››İÛH^]K[™]™XYÈ\ÈHÙXÛÛ™ĞUQÓÔ’QTÈÜšYHØÜ™Y[ˆX›İ™HH™X[Û™KˆÈØ\ÈÚÜÙ[ˆİ™\ˆˆ]\ÈLœÚÜ\ˆ\ˆØ\™[™ÚİÜÈ\™XÚXX›H[Ü™H\ˆšY]ÜÜ[™H›\˜ˆ]ÛÜİÈ\È™XÛİ™\˜X›H›İYÚHÛÈİ\™˜XÙ\ÈX›İ™K‚‚ŠŠ‘™\İ]˜[š\œİ
+]YÈŒŠKŠŠˆH™XÛÛ[Y[™][ÛˆÜ™\ˆ\È›İ\ˆY\œË[™H™\İ]˜[Û™\ÈÛÛYH™Y›Ü™HHÙYZÙ^HÛ™Nˆ
+ŠŠJJŠˆHİ\˜]Y™\İ]˜[8¡¤ˆ™XY[™ÈX\[™È[ˆ›İYšXØ][ÛœËÙ™\İ]™T™[Z[™\œËØ
+ŠŠŠJŠˆHØœÙ\˜[˜ÙH[IÜÈİÛˆ[šÔÙXİ[Û’Y
+™\İ]˜[Èİ]ÚYH]İ\˜]YØ][ÙÊK
+ŠŠÊJŠˆ^ÈÚÜÙH™\İ™\İ]˜[ØY]Y]H˜[Y\ÈÛ™HÙˆÙ^IÜÈØœÙ\˜[˜Ù\Ë[ˆ
+ŠŠ
+JŠˆZ]Q›Ü•ÙYZÙ^J
+X	ÜÈ˜X\ˆZ]KÚXÚ\ÈÚ][ˆÜ™[˜\H^H\ÈXYHÙ‹ˆ[ˆÜ™[˜\H^H\È\™Y›Ü™H[˜Ú[™ÙYÈH™\İ]˜[^HXYÈÚ]HØØØ\Ú[Û‹ˆ\È\È›İÛÜÛY]XÈÜ™\š[™ÎˆH™\İ]™H™[Z[™\ˆ
+0©ÌÎ
+H[™ÈH\Ù\ˆÛˆ
+Š’ÛYJŠ‹ÛÈH™XY[™È]ÈY\ÜØYÙH˜[YY\ÈÈ™HHš\œİ[™ÈØZ][™È8 %›İİ\™˜XÙ\È™XYHØ[YHØ][ÙË[™™\İ]™T™[Z[™\œË\İØ˜Z[ÈYˆ^H\ØYÜ™YKˆ[šY\È™]\›™YÚ]H™\İ]˜[]šX][ÛˆØ\œH8)!¸)'™\İ]˜[ˆ8).x)bÈ
+•Ù^H\È™\İ]˜[˜
+ˆ[ˆXÙHÙˆHÙ[™\šXÈ8)!¸)'8)%x)aÈ8),¸)/ø)#È8)!x)*8)`x)-¸) ¸).8)/ø))È
+”™XÛÛ[Y[™Y›ÜˆÙ^Jˆ[™KÛÈHØ\™˜[Y\ÈHØØØ\Ú[ÛˆH›İYšXØ][ÛˆÜ™Y]YH\Ù\ˆÚ]ˆÚ[˜ÙHH›İÈÙ[˜[YK[Û›K™Z]\ˆ[™H\È
+œZ[Y
+ˆÛˆHØ\™[H[Ü™H8 %ÙYH•Ú\™HH™\İ]˜[]šX][ÛˆÙ[ˆ™[İÈ›ÜˆHÛÈİ\™˜XÙ\È]İ[[]™\ˆ]ˆÙ]Ù^T™XÛÛ[Y[™][ÛœÑ›Ü‘]J
+X™[XZ[œÈ\ÈH[K[Û›HšY]È›ÜˆØ[\œÈ]Û‰İ™YYH]šX][Û‹ˆ[ˆØœÙ\˜[˜ÙHÛÚİ\]›İÜÈYÜ˜Y\ÈÈHÙYZÙ^HY\ˆ˜]\ˆ[ˆ[\Z[™ÈH›İË‚‚ˆÈÈÈZ]H]Z[‚˜Z]R[™^ØÜ™Y[˜›İÈÜ[œÈZ]Q]Z[ØÜ™Y[˜ˆH]Z[YÙHÙY\ÈH^\İ[™ÈZ]H˜XÚÙÜ›İ[™[™Ü˜\‹[ˆÚİÜÈHÛİ\˜ÙKXÚ]Y\ÜØ^Hœ›ÛHZ]Q\ÜØ^\ËØ›ÛİÙYH]Z]IÜÈ^ÈÜ›İ\YHÛÛ[›Ü›H
+Ø]YÛÜšY\ËØÜ™\ŠKˆXXÚÜ›İ\XY[™È\Ù\ÈÙXİ[Û“X™[È[šY\È™[XZ[ˆXœ˜\PØ\™È[™›İ]H›İYÚ˜]šYØ]UÑ[Tİ\
+
+XˆZ]S\İØÜ™Y[˜™[XZ[œÈHÛÛ\]Xš[]H˜[˜XÚÈ›Üˆ\™Xİš[\™Y[\İ˜]šYØ][Û‹‚‚‹KKB‚ˆÈÈLKˆİ[™[H
+ÈZ[H˜\ÚY˜[
+‘PÊB‚ŠŠ‘\ØÛİ™\H[™[™[™Èİ]KŠŠˆİ[™[H\ÈH\›X[™[Ø]YÛÜPØ\™˜\šX[H›][˜Ú\ˆ˜ÛˆÛYH
+8)%x)`x) ¸)(x),¸)`0­Èİ[™[X[œÚYÚÛ\‘UÈ˜YÙJK›İHÚY™›Y\ØÛİ™\ˆØ\™ˆ]Y\[[šÜÈÈ[˜Ú[™ÒÛYJÈ[š]X[Xˆ	Ú[İ\Ú	ÈJXˆ[˜Ú[™ÉÜÈÜY\ˆÙ[XİÜˆ\È[˜Ú[™Èœ˜]	ˆ\ˆ[İ\ÚÈ]™[XZ[œÈHš^Yš\œİÛÛ›Û[ˆ]™\H[ÙKÚ[HØØ][Û‹ØØ[[™\‹\Ş\İ[KÓ^Hœ˜]ÛÛ›ÛÈ\X\ˆ™[™X]]Û›H›ÜˆHÛÈ[˜Ú[™ËY\š]™Y[Ù\ËˆHİY\İÙY\ÈÜ™X]Hİ[™[KZ[H˜\ÚY˜[[™Û™H˜]˜YÜ˜ZH˜XİXÙHØ\™ˆÛ˜ÙHHš\›Ùš[H\ÈØ]™YH[™[™È™XÛÛY\ÈZ[KYš\œİˆH\œÛÛˆİÚ]Ú\ˆ
+0©ÍLXJHXYË[ˆH[˜]›İ\‹Ô]\ÙKÔ™Y›Xİ˜\ÚY˜[Ø\™HÛÛ\Xİİ[™[H™Y™\™[˜ÙK[™HØ[YHÚ[™ÛH˜XİXÙHØ\™ÛÜÚ[™ÈHYÙKˆ™]\›š[™Èœ›ÛHÜ™X][Ûˆ]\İ™Yœ™\Ú\ÈØ]™Yİ]H[[YYX][Kˆš\Ú]H™[XZ[œÈ[™\[™[ÙˆHİ\œ™[[˜Ú[™ÈØØ][Û‹ˆÚ[˜ÙH‘LŒHØ]™Y[™[™ÉÜÈİZY[˜ÙH›İÜÈ\™HÛÛ\]YHÛÛ\]T\œÛÛ˜[İZY[˜ÙXœ›ÛHHPÕU‘H\œÛÛ‰ÜÈ•SÚ\ˆH˜]›İ\‹Ô]\ÙKÔ™Y›Xİ›ÙY\Èİ^H]KZY[XØ[ÈH[ÛÛ‹\ÚYÛˆ˜\ÚY˜[
+Hİ\\œÙ]ØÚÊK^[™YÚ]X[8)&¸)*8)cx))¸)cx),x).8)aËø),¸)%ø)cx)*x).8)aÈİ\ÙHÛÛ^[È[™H]ZY]ÛÛ8))¸)-¸)/ˆ8).8) ¸)%x)aø))0­È\ÚH›İX›İÈ]\X\œÈÛ›HÚ[ˆH›Øİ\È˜[œÚ]™[Û™ÜÈÈH[›š[™Èš[\Úİ\šHÜ™ˆH^YXœ›İÈ›ÛİÜÈ0©ÍLXIÜÈ˜[Z[™È[H8 %8)!¸)*¸)%x)`8)*¸)`¸),8)`8)%x)`x) ¸)(x),¸)`8).8)aÈ0­Èœ›ÛH[İ\ˆ[Ú\Ú]Û™H\œÛÛˆØ]™Y˜[YOˆ8)%x)`8)*¸)`¸),8)`8)%x)`x) ¸)(x),¸)`8).8)aÈ0­Èœ›ÛH˜[YO‰ÜÈ[Ú\Û˜ÙHH›Üİ\ˆÛÈ[Ü™H[ˆÛ™K™XØ]\ÙH[İ\ˆˆÛİ[[ˆ™HHİY\ÜËˆHÛÛ\Xİİ[™[HØ\™ØZ[œÈH8)*¸)`¸),8)cx)(È8)%x)`x) ¸)(x),¸)`8)-x)/ø)-x)aø)&¸)*8)%¸)bø),¸)aø) ˜[šÈ
+0©Í
+H[™Û›HÚ[HHØYHØ]H\ÙH\ÈXİ]™KHÛÛ][X\Ù\ˆ›İÈ[ÈÛØÚ\ˆ
+0©ÍÊNÈH8)%ø)bø)&¸),0­ÈÛØÚ\˜ÛÛØ\™Ú]ÈY\ˆHÛÛ˜XİX[š[Ë™Y›Ü™Hİ[˜HZ[[‹Ó˜[ZØ\˜[‹ˆİY\İ[™\œ›Üˆ[™[™ÜÈØ\œH›Û™HÙˆ\ÙH8 %]™\H‘LŒİ\™˜XÙH™\]Z\™\ÈHØ]™YÚ\‚‚ŠŠš\[œ][™İ]KŠŠˆÛ™HØ\™\ÚÜÈ›ÜˆÜ[Û˜[˜[YKš\]Kš\[YK[™H[™Y[™X[ˆÚ]Kˆ]H[™[YH\™H[\™Y›İYÚXÚÙ\œË›İœ™YH^ˆH]HšY[X]ÛˆÜ[œÈØ[[™\‘]TXÚÙ\˜
+H\˜ÚY[[ÛYÜšY›İÛHÚY]Ú]H[ÛŞYX\ˆİ™\›^H›Üˆ[\[™ÈXÜ›ÜÜÈXØY\Ë˜[™ÙHNLLKLX8 )Ù^KRTÕ
+H[™H[YHšY[X]Ûˆ™]™X[ÈH[›[™H™[Z[™\‹\İ[HÛØÚÕ[YTXÚÙ\˜
+L‹Zİ\ˆSKÔHİ\\ŠKˆ›İİ[[Z]HİÜ™YÛÛ˜Xİ8 %VVVKSSKQ[™Zİ\ˆ›[X8 %ÛÈ˜[Y][Û‹TÕ8¡¤•UÈÛÛ™\œÚ[Û‹[™\œÚ\İ[˜ÙH\™H[˜Ú[™ÙYÈHİ[™[KY]KZ[œ]Øİ[™[K][YKZ[œ]\İQÈ[İ™HÛÈHšY[X]ÛœËˆ\[™ÈH[YHšY[ÛÛ[Z]ÈHŒY˜][ÛÈHÚİÛˆ˜[YH[™İÜ™Y˜[YH[Ø^\ÈYÜ™YK[™[ˆ[İXÚY[YHİ[˜[Y]\È\ÈZ\ÜÚ[™Ëˆ›ÈÚ]HÜˆ8 'Y˜][›Ùš[x 'H\ÈÚ[[Hİ\YYˆHÚ]HšY[™YÚ[œÈ]8 'ÚÛÜÙH[ˆ[™X[ˆÚ]x 'K[™™X\˜HÛÜHZ[›H^Z[œÈ]İ\œ™[Ø[İ[][Ûˆİ\ÜÛİ™\œÈ[™X[ˆš\XÙ\È[™Z\ˆØØ[TÕ[YKˆ›Ùš[\È\œÚ\İÛ‹Y]šXÙH[ˆHš\\›Ùš[H›Üİ\ˆ[™\ˆ™Y[œÚšİ[™[K\›Ùš[\ÎŒX
+
+Š°©ÍLXJŠˆ8 %Ù]™\˜[[ÜKÛ™HXİ]™HÙ[Xİ[ÛÈH‘PÈÚ[™ÛK\›Ùš[HÙ^HZYÜ˜]\È[È]Û˜ÙJNÈY]Ü[œÈHX[˜YÙH›Ü›H›ÜˆHXİ]™H\œÛÛ‹Ú\™H™[[İ˜[\È[X™\˜][HÙXÛÛ™\HÈØ]™KĞØ[˜Ù[ˆÛÜH^Z[œÈ]ÛÜœ™Xİš\[YHX]\œÈ›ÜˆYÛ˜KÚİ\Ù\ËˆØY[™ËİY\İØ]™Y\œÚ\İ[˜ÙKY\œ›Ü‹[™ÛÜœ\\›Ùš[H™XÛİ™\H\™H^XÚ]İ]\ÎÈH˜Z[YØ]™KÙ[]H]\İ™]™\ˆX\Ü]Y\˜YH\ÈİXØÙ\ÜËˆÜ[š[™ËØÛÜÚ[™ÈHÚ]HXÚÙ\ˆ\ÛZ\ÜÙ\È]ÈÙ^X›Ø\™[™HİXØÙ\ÜÙ[Ø[İ[][Ûˆ™]\›œÈH™\İ[È]ÈÜ‚‚ŠŠ“›İšXÙKYš\œİ™\İ[ŠŠˆHY˜][İ™\šY]ØXˆ™XÙY\ÈÚ\Ü˜Z\È\ÚXˆ]È™YHØ\™È\™H™X[]ÛœÈ[™›İ]HÈZ\ˆ[™\›Z[™È]Z[XœÎÈXXÚXˆÚ[™ÙH™\Ù]ÈHØÜ›ÛÜÚ][Û‹ˆ˜\ÚH˜[Y\ÈZ\ˆH˜Y][Û˜[›Ü›HÚ]HZ[‹Q[™Û\Ú\]Z]˜[[
+Ø\šØH0­ÈØ[˜Ù\˜™]™\ˆHØ[YH˜[YHÚXÙJKˆHYÛ˜HØ\™\Ù\Îˆ8 'YÛ˜H\ÈHÚYÛˆš\Ú[™È]š\[™Ù]ÈHš\œİİ\ÙKˆ[ˆ˜Y][Û˜[[İ\Ú]\ÈHİ\[™È[œÈ›Üˆ™XY[™ÈH™\İÙˆHÚ\¸ 'HH[ÛÛˆØ\™\Ù\Îˆ8 'H[ÛÛˆÚYÛˆ\ÈH˜Y][Û˜[[œÈÛˆ[›™\ˆš]K[™H˜ZÜÚ]˜H™Yš[™\È]ÈXÙ[Y[ˆH™Y›Xİ[ÛˆZY›İH\œÛÛ˜[]H™\™Xİ¸ 'HH˜]˜YÜ˜ZH˜XİXÙHØ\™›İ]\È›İYÚH^\İ[™ÈXœ˜\KÜ™XY\ˆ\Ü]Ú\‹ˆ™]™\ˆXYH›İšXÙHÚ][ˆ[™^Z[™YÚ\‚‚ŠŠ“›Ü[™X[ˆÚ\ŠŠˆ›Ü[™X[Ú\\ÈHš^YZİ\ÙH›Ü[™X[ˆX[[Û™™[™\™YÚ]™XXİ[˜]]™K\İ™Øˆš\œİİ\ÙH]ÜÙ]™[]›İÛKÛX[[Y\šXÈ˜\ÚHX™[ËÛË[]\ˆÜ˜ZHX˜œ™]šX][ÛœËˆ]È[˜ÛÜÚ[™ÈXØÙ\ÜÚX›H[XYÙHX™[˜\œ˜]\È[Ù[™Hİ\Ù\È[™ØØİ\[ÎÈÚ\Ù[ÛY]H\È™]™\ˆHÛ›H™\™\Ù[][Ûˆ™XØ]\ÙHHÜ˜Z\ÈX›HØ\œšY\ÈHØ[YH˜[Y\È^X[K‚‚ŠŠ‘Ü˜Z\È[™\ÚKŠŠˆÜ˜ZH›İÜÈÚİÈH˜Y][Û˜[ÚYÛˆ\È]ÈZ[‹Q[™Û\Ú\]Z]˜[[YÜ™YKÛZ[]Kİ\ÙKXİX[˜ZÜÚ]˜KÜYK[™8¡'˜›Üˆ™]›ÙÜ˜YKˆH\ÚHšY]ÈXYÈÚ]Hİ\œ™[XZY\ÚKĞ[\™\ÚNÈ›İ™\İY\š[ÙÈ\™H[›š[™È]Û˜ÙKÛÈHØ\™Ú]™\È
+Š™XXÚÚ[™İÈ]ÈİÛˆX™[Y›İÊŠˆ8 %8)+¸).x)/¸))¸)-¸)/˜]\Ë›ÙÜ™\ÜÈ˜\ˆ[™[\ÙYÛY[ˆ8)!x)*8)cx))8),8)cx))¸)-¸)/˜]\Ë›ÙÜ™\ÜÈ˜\ˆ[™[\ÙYÛY
+HÚ[™ÛH[›X™[Y˜[™ÙH[™˜\ˆ[™\ˆHÛË[Ü™XY[™H™XY\ÈH[\™\ÚH\İ[™ÈHÚÛHXZY\ÚJKˆH[\™\ÚH›İÈ\ÈXœÙ[Û›HÚ[ˆ[™Ú[™H›Ø]XØİ[][][ÛˆX]™\È›İÈİ]ÚYH[š[™HİX‹\\š[ÙÈ]H›İ[™\Kˆ\˜][ÛœÈ›ÜÈ^HÜ˜[[\š]H[™\ˆÛ™H[ÛÛÈH\İX™Yİ[ˆ[\™\ÚH™]™\ˆ™XYÈXˆ[ˆ[›[™H›İØ[\™\ÚHÚ\›İÈ›ÛİÜÈ[™\ˆHØ\[Ûˆ8 '8)!ø).8)+¸).x)/¸))¸)-¸)/ˆ8)%x)`8)*8)c8)!x)*8)cx))8),8)cx))¸)-¸)/¸)#ø) HÈHš[™H[\™\Ú\ÈÚ][ˆ\ÈXZY\Úx 'K[™HÛÛ›™XİY™\XØ[[Y[[™H[™\ˆH8 '8)+¸).x)/¸))¸)-¸)/ˆ8).8)+¸)+ø),8)aø)%¸)/ˆÈPRQTÒHSQSS‘x 'H^YXœ›İÈ[ˆÚİÜÈ[š[™HXZY\Ú\ÈÚ]]\Ëˆ›İ]™[È\™HYÚ][X][H›İØ]Û˜ÙH
+H[›š[™È[\™\ÚHÚ\[™]È[˜ÛÜÚ[™ÈXZY\ÚH›İÊKÛÈXXÚ]™[\È^XÚ]H˜[YY8 %ÛÈ[›X™[Y›İØYÜÈÛˆY™™\™[Ü™È™XY\ÈHYËˆ›İšY]ÜÈ[˜ÛYHHÚÜ^[˜][Ûˆ™Y›Ü™H˜]È]K[™\ÚH[Z[™È\È[˜ÛYY[ˆHXØÙ\ÜÚX›Hİ[[X\K‚‚ŠŠ”˜\ÚY˜[ŠŠˆZ[H˜\ÚY˜[Ù[XİÈHPÕU‘H\œÛÛ‰ÜÈİ[™[H[ÛÛˆÚYÛˆÚ[ˆ]˜Z[X›Kİ\Ú\ÙH]ÈH\Ù\ˆÚÛÜÙH[HÙˆÙ[™HÚYÛœÎÈÚ][Ü™H[ˆÛ™H\œÛÛˆØ]™Y][ÛÈØ\œšY\ÈH0©ÍLXHİÚ]Ú\‹[™ÚÛÜÚ[™ÈH\œÛÛˆYÜÈ]\œÛÛ‰ÜÈ˜][ÚYÛ‹ˆHÛİ\˜ÙHØ\™Ø^\ÈÚ]\ˆ]Ø[YHœ›ÛHHİ[™[K[™Ú[™ÙH^ÜÙ\ÈHL‹\ÚYÛˆÜšYZ\š[™È]™\H˜Y][Û˜[˜[YHÚ]]ÈZ[‹Q[™Û\Ú\]Z]˜[[ˆİZY[˜ÙH\ÈÛÛœÚ\İ[H˜]›İ\˜]\ÙX[™™Y›XİÈH[˜\ÚY˜[YÙHYÈHİ\Ü[™ÈÜ˜ZKØš]˜HÚ\ÈXXÚ›İË›ÛİÙYHHÛ™H^\İ[™Èİ\XKÔÚ[šKÓ˜]˜YÜ˜ZH™XY\ˆÙ[XİYHH\™H˜[œÚ][\ËˆH\ØÛZ[Y\ˆ\È\ÙˆHİ\™˜XÙK›İš[™Hš[ˆ8 '˜Y][Û˜[˜[œÚ]X˜\ÙYİZY[˜Ùx %›İHÙ\Z[ˆ™YXİ[Û‹¸ 'H›ÈXÚÈØÛÜ™KİX\˜[YY]™[™X\ˆÛÜK˜[™ÛHÙ[™\˜][Û‹RHØ[Üˆ™[[İHÜ›ÜØÛÜH™YYˆ
+Š”\œÛÛ˜[^Y\ˆ
+‘LŒ
+NŠŠˆÚ[ˆHXİ]™H\œÛÛˆ\ÈHÚ\S‘HÙ[XİYÚYÛˆ\]X[ÈU\œÛÛ‰ÜÈ˜][[ÛÛˆÚYÛ‹HİZY[˜ÙHXYYÈÛÈ]ZY][È8 %8))8)/¸),8)/ˆ8)+8),ˆ0­È˜[YO˜
+[YH]ÈÛ™NˆÛÛ˜]›İ\˜X›KØY™œ›Ûˆ™Y›Xİ]™KØ\™\İ\™˜XÙHİXYJH[™8)-x)cx)+ø)%x)cx))8)/ø)%ø))8)*¸)/¸)(0­È\œÛÛ˜[™XY[™Ø8 %[™H›İÜÈÚİÈHX[Zİ\ÙH[È[™\ÚH›İNÈXÚÚ[™È[Hİ\ˆÚYÛˆİš\È]™\H\œÛÛ˜[^˜KˆHÚ\™HØ\™[™]È›ËXš\Y]Z[Èš]˜XŞHÛÛ˜Xİ\™H[˜Ú[™ÙY[ˆ›İØ\Ù\Ë‚‚ŠŠ”Ú\š[™ËŠŠˆ›İ™\İ[İ\™˜XÙ\È\ÙHHØ[YHKL0åÌLÍLÚ\™K\™]šY]È˜[Z[H[™^ÜÙHHÚ[™ÛHXY\ˆÚ\™HXİ[Û‹ˆİ[™[HÚ\š[™È\ÈÜZ[ˆ[™Ø\›œÈ]Ú\˜[YKš\]K[YK[™Ú]H\™H[˜ÛYYˆ˜\ÚY˜[Ú\š[™È[˜ÛY\È[ÛÛ‹\ÚYÛˆİZY[˜ÙH[™HİYÙÙ\İY^\İ[™È˜XİXÙK]^XÚ]H^ÛY\È˜[YH[™š\]Z[Ëˆ\™H\È›ÈÙXÛÛ™Üˆ›Ø][™ÈÚ\™H]Ûˆ[œÚYHHİ[™[HXœË‚‚ŠŠ”Ú\™KXØ\™š]
+]Yİ\İŒŠKŠŠˆHØ\™	ÜÈZYÚ\È
+œ[›™Y
+ˆ8 %\ÜXİ˜][ØHÛˆHÚYÙˆZ[ŠÌÍØÜ™Y[•ÚYHˆ0åÈÜXÚ[™Ë
+XÚ]İ™\™›İÎˆ	ÚY[‰Ø8 %Ú[H]™\][™ÈİXÚÙY[œÚYH]\È\H]š^YÚ[Ú^™\È]Ù\È›İØØ[HÚ]ÚYˆÛÈHİ[™[HXYÜ˜[HZÙ\È
+ŠHZYÚ]\ÈY
+Šˆ
+İ[™[PÚ\Ú^™J
+XˆÛÛ[ZYÚZ[\ÈHNMˆÚ›ÛYHYÙ]›ÜˆHœ˜[™XY\‹˜[YHØÚİ\Ú\›İÈ[™ÛË[[™HY]Ù›Ûİ\‹Ø\Y]H\İÜšXÈZ[ŠŒÚY0åÈŒJX
+K™]™\ˆH›]œ˜Xİ[ÛˆÙˆHÚYˆÚ^š[™È]HÚY[Û™Hİ™\œ˜[ˆH›ŞÛˆ]™\HØ\™™[İÈŒÌÍ8 %HÍŒÛ™HÙ]ÈÌLˆ8 %[™HX\™Ú[•Üˆ	Ø]]ÉØY]Ù›Ûİ\ˆØ\ÈHYXÙH\ÚYİ][™Û\YˆH›Ûİ\‰ÜÈİÛˆXY[™È›ÛİÜÈ0©ÌËŒ
+LÌMØÜš\X]Ø\™H˜XÙJKˆ›İ[˜\šX[È\™H[›™YHÛÛ\Û™[Ë××İ\İ××ËÚ[İ\ÚÚ\™PØ\™š]\İŞ[™H›Ûİ\ˆ[™H\È\ÜÙ\Y[ˆİ[™[K\Û[ÚÙKX[[ˆ
+Š’Û›İÛˆØ\ŠŠˆH˜\ÚY˜[Ø\™	ÜÈÚ›ÛYH\È
+™[\™[Jˆš^YZZYÚ
+™YHZ[’ZYÚİZY[˜ÙH›İÜÈ
+È˜XİXÙH
+È\ØÛZ[Y\ˆ8¢bÍÍH
+KÛÈ]\È›ÈÛÛ\\˜X›HÛXÚÈÛˆ8¢iÍŒÛ™\ÎÈ]š]È]ÌÍ[™]È\ØÛZ[Y\ˆXY[™È\Èš^Y]H›İÈ›ØÚÈØ[ÈHØ[YH™X]Y[™Y›Ü™H]Ø\™\È\İYÛˆÛX[ØÜ™Y[œË‚‚ŠŠ”İ\™˜XÙH˜[Z[KŠŠˆÛÛ[YHH^\İ[™ÈØ\›HX[\ØÜš\[]HÛ›Nˆ\˜ÚY[Ü˜YY[ËØ\™Xİ]™P›Ü™\˜ØY™œ›Û‹ÙÛÛ[Ë˜YZK›Ø[YH[]˜][Û‹^\İ[™ÈØÜš\X]Ø\™H\H[\œË[™ÛÛ›ÛÈ]™\ÜXİH0©ÌLˆZ[š[][H8 %˜XÚÈ]ÛœÈ]
+›İİ[™[TØÜ™Y[ˆ[™˜\ÚY˜[ØÜ™Y[ˆšYYÈ[™Ù\™HÛÜœ™XİY[ˆ[HŒŠKH˜[YHšY[šXHH^šY[›Ü›X˜\šX[]
+0©ÍLŠK[™H]Kİ[YHšXHHÚ\™YØ[[™\‘]TXÚÙ\˜
+ÈÛØÚÕ[YTXÚÙ\˜ÛÛ›ÛÈ
+0©ÍL˜JH8 %[šY[X]ÛœÈ]HZ[š[][KˆÈ›İ[›ÙXÙHÛ™K[Ù™ˆÛÛİ\œÈ›ÜˆİZY[˜ÙH›İÜË˜XİXÙKÜˆÚ\™HØ\™ÎÈ[˜\šX[È]\İÛÛYHœ›ÛH[YHÚÙ[œÈ[™XYH\ÙYHH\ˆ[™Û\ÚXØÙ\ÜÚXš[]HX™[È[˜ÛYH›İ˜Y][Û˜[[™Z[‹Q[™Û\ÚÚYÛˆ˜[Y\È[™™[XZ[ˆİX›H›ÜˆXY\İ›È]™[ˆÚ[ˆ[™H\ÈHš\ÚX›H™XY[™È[™İXYÙK‚‚ŠŠ”™XYXš[]HÚ^š[™È
+[HŒŠKŠŠˆH0©ÌËŒ›ÛÜˆ
+L
+H\ÈH
+›Z[š[][J‹›İH\™Ù]8 %İ[™[H[™˜\ÚY˜[Ø\œH[\İX[H[œÙHÛÛ[
+ÚYÛˆÜšYËÜ˜ZHX›\Ë\ÚH[Y[[™\ÊKÛÈZ\ˆ™XY]Y\ˆ^Ú]È
+Š˜X›İ™JŠˆH›ÛÜˆ›ÜˆÛÛY›ÜˆH˜\ÚK\XÚÙ\ˆÜšY\Ù\È˜Y][Û˜[˜[YH
+ŠŒMŠŠˆÈZ[‹Q[™Û\Ú
+ŠŒM
+ŠˆÛˆ[\ˆ
+Z[’ZYÚ
+H[\ÎÈ]È˜ÚÛÜÙH[İ\ˆÚYÛˆˆ
+Š]JŠˆ™XYÈ\ÈHXY[™È]
+ŠŒMJŠˆÚ]H
+ŠŒM
+Šˆ\ØÜš\[Ûˆ[™H
+ŠŒLÊŠˆ\ØÛZ[Y\ˆX›İ™NÈHİZY[˜ÙK\›İÈXY\œËØ›ÙH[™Z\ˆÜ˜Zp­Øš]˜HÛÛ^Ú\ËHİ[™[Hİ™\šY]È^YXœ›İË[™H™\İ[\ØÜ™Y[ˆX™[È
+YÛ˜SX™[ØYÛ˜U˜[œÛ][Û˜Ü˜Z\ÈX›Tš[X\X
+ŠŒM
+ŠˆÈX›U˜[œÛ][Û˜
+ŠŒLŠŠ‹^YXœ›İÕ^›ÙÜ™\ÜĞØ\[Û˜˜XİXÙSX™[
+HÙ\™H˜Z\ÙYÈ
+ŠŒLŠŠˆ
+ÜXÙKXÛÛœİ˜Z[™Y\ÚH[\Ú\Ø›İÕYØÈ
+ŠŒLJŠŠKˆZXÜ›ËXÚ›ÛYHÚ\™YÚ]H[˜Ú[™ÈXˆ
+H[İ\ÚÙXİ[Û“X™[ÚXÚÙ\‹X‹X˜\ŠHİ^\È]H›ÛÜ‹‚‚ŠŠ‘š[\ËŠŠˆ[Øš[KÜÜ˜ËÜ[˜Ú[™ËÚİ[™[KØ\ÙRİ[™[KØš\›Ùš[\ËØš\›Ùš[TİÜ™KØ
+0©ÍLXJKÛØÚ\‹Ø\ÚT™XY[™ËØ
+‘LŒ
+NÈ›Ü[™X[Ú\Şİ[™[Sİ™\šY]ËŞ[İ\ÚİZY[˜ÙT›İÜËŞ[İ\Ú˜XİXÙPØ\™Ş[İ\ÚÚ\™PØ\™Ş[İ\ÚÚ\™TÚY]Ş[İ\Úİ]PØ\™Ş\œÛÛÚ\ËŞ
+0©ÍLXJKØ[[™\‘]TXÚÙ\‹ŞÛØÚÕ[YTXÚÙ\‹Şİ\\ÛÛ[[‹Ş
+0©ÍL˜JNÈİ[™[TØÜ™Y[‹Ş˜\ÚY˜[ØÜ™Y[‹ŞÈ[˜Ú[™ÔØÜ™Y[‹ŞÛYTØÜ™Y[‹Ş[˜Ú[™È˜]šYØ][Ûˆ\\ËÜİXÚÎÈ›XY\İ›ËÚİ[™[K\Û[ÚÙKX[[‚‚ŠŠ‘\ÚH™XY[™È
+‘LŒ\ÙH
+KŠŠˆH\ÚHXˆ[œÙ\ÈÛ™H8)!ø).8)!x)-x))ø)/È8)%x)/ˆ8)*¸)/¸)(0­È™XY[™È\È\š[ÙØ\™™]ÙY[ˆHİ\œ™[\\š[Ù›ØÚÈ[™H8)+¸).x)/¸))¸)-¸)/ˆ8).8)+¸)+ø),8)aø)%¸)/ˆÈPRQTÒHSQSS‘X^YXœ›İÈ]XYÈH[[Y[[™Nˆ]H
+Ü™ˆ8)+¸).x)/¸))¸)-¸)/ˆ0­ÈÜ™ˆ8)!x)*8)cx))8),8)cx))¸)-¸)/˜
+KHÜ™	ÜÈ]]Ü™YÛ\ÜÚXØ[ÚYÛšYšXØ][Ûˆ
+]™\HÛ™HÜ[œÈ8)*¸),8)+¸)cx)*¸),8)/ˆ8)+¸)aø) ¸ )ˆÈ˜Y][Ûˆ[šÜø )˜
+KHÜ™	ÜÈ˜][˜\ÚKÚİ\ÙHXÙ[Y[[™K[™H]]Y[\™\ÚHİ™\›^H[™KˆÛÜHÛÛY\Èœ›ÛH\ÚT™XY[™ËØ	ÜÈ\YX›\È8 %İXİ\˜[Û›K[›™YHH˜[›™Y]›ØØX[\H[™Ú[™H\İ8 %[™HØ\™Ø\œšY\ÈÛ™HÛÛ\]HXØÙ\ÜÚXš[]HX™[‚‚‹KKB‚ˆÈÈLXKˆ][K\\œÛÛˆ[İ\Ú8 %Hš\\›Ùš[H›Üİ\ˆ
+]Yİ\İŒŠB‚ŠŠ”\œÜÙKŠŠˆÛ™HÛ™KÙ]™\˜[[ÜKˆ‘PÈİÜ™Y^XİHÓ‘Hš\›Ùš[KÛÂ˜Hİ\ÙZÛÛİ[ÛÛ™H\œÛÛ‰ÜÈİ[™[H]H[YH[™HÙXÛÛ™\œÛÛˆYX[›İ™\Üš][™ÈHš\œİˆH›Ùš[H\È›İÈH
+Šœ›Üİ\ŠŠˆ8 %]™\HØ]™Y\œÛÛˆ\Â›Û™H
+Š˜Xİ]™JŠˆÙ[Xİ[Ûˆ8 %[™]™\H\œÛÛ˜[\ÙYİ\™˜XÙH™XYÈ]Ù[Xİ[Û‚Hİ[™[H™\İ[H[İ\Ú[™[™ÉÜÈZ[H˜\ÚY˜[Ø\™[™Ú\Û[˜ÙKH˜\ÚY˜[ØÜ™Y[‹[™H]Z\˜]š[™\‰ÜÈ8)!¸)*¸)%x)aÈ8),¸)/ø)#È\˜X˜[KĞÚ[™˜X˜[Hİš\‚‚ŠŠ“Û™HÙ[Xİ[Û‹Û™HİÜ™KŠŠˆ[˜Ú[™ËØš\›Ùš[\ËØ\ÈH\™H[Ù[Š˜[Y]K\œÙKYİ\]KÜ™[[İ™KÜÙ[XİXİ]™T\œÛÛ˜
+H[™˜[˜Ú[™ËØš\›Ùš[TİÜ™KØ\È]È\Ş[˜ÔİÜ˜YÙH[ˆÚ]Û™H[‹[Y[[ÜBœÛ˜\ÚİHİXœØÜšX™\ˆ\İ[™HÙ\šX[^™YÜš]H]Y]YH8 %HØ[YBœ\™K\İÜ™KÔ“‹XØXÚHÜ]\È[˜Ú[™Ñ^TİÜ™X8¡á[˜Ú[™Ñ^PØXÚXˆ
+Š“›ÈØÜ™Y[‚›X^HÙY\]ÈİÛˆ˜İ\œ™[\œÛÛˆŠŠˆİÚ]Ú[™È[]Ú\™H\ÈYH]™\]Ú\™HÛˆBœØ[YH™[™\‹ÚXÚ\ÈHÚÛHÚ[ÙˆH™X]\™K‚‚ŠŠ”İÜ˜YÙKŠŠˆ™Y[œÚšİ[™[K\›Ùš[\ÎŒXHÈXİ]™RY[ÜV×HXÈB˜\œÛÛ”›Ùš[KšY\ÈH\œÚ\İYÙ^K™]™\ˆH\Ü^Hİš[™ËˆPVÔSÔX\ÂŠŠ
+Šˆ8 %Hİ\ÙZÛÙZ[[™Ë›İHXÚšXØ[Û™Nˆ]HØ\H
+È8)'8)bø)(x)/8)aø) ˜Ú\š\È™\XÙYHHZ[ˆÙ[[˜ÙH[œİXYÙˆ˜Z[[™ÈHØ]™HÚ[[KˆHÚ\YœÚ[™ÛK\›Ùš[HÙ^H™Y[œÚšİ[™[KXš\\›Ùš[NŒXZYÜ˜]\È
+Š›Û˜ÙJŠˆ[Âœ\œÛÛˆÛ™H[™\È[ˆ™[[İ™Y™XØ]\ÙHX]š[™È]Ûİ[ÙY\H™XYX›HÛÜHÙ‚˜š\]Z[ÈY\ˆ]\œÛÛˆ\È™[[İ™Yˆ[ˆ
+[œ™XYX›JˆYØXŞH™XÛÜ™\È™]™\‚™[]Y[™İ[[™È[ˆHÚ\YÛÜœ\\›Ùš[H™XÛİ™\Hİ]K‚‚ŠŠ•HİÚ]Ú\ˆ
+\œÛÛÚ\ËŞ
+KŠŠˆHÜš^›Û[Ú\›İË™]™\ˆH›ÜİÛ‚ÚÈHÚ\™[Û™ÜÈÈ\È
+š\ÚX›Hİ]J‹›İHÙ][™È8 %ÛˆHÚ\™YÛ™HBÜ›Û™ÈXİ]™H\œÛÛˆ\ÈHÜ›Û™È˜\ÚY˜[[™HÛÛ\ÙYXÚÙ\ˆY\È]ˆÚ\Â˜\™HÛÛ›ÛËÛÈ^HØ\œHH0©ÌLˆ›ÛÜ‹HKŒX›Û\ØØ[HØ\
+[œÙB˜Ú›ÛYK0©ÍŒIÜÈ[JK˜YZKœ[ØY™œ›Û•[ØØY™œ›Û‘Y\›ÜˆHÙ[XİY›Û™H[™\˜ÚY[ÛÙØ]šY\˜İ\Ú\ÙNÈH˜Z[[™ÈYÚ\\È\ÚYˆBœ\œÛÛˆ\ÈX™[YHZ\ˆ
+Š›˜[YJŠ‹ÜˆHZ\ˆš\]HÚ[ˆ[›˜[YY8 %™]™\‚˜[ˆ[™[Y”\œÛÛˆˆˆ[™™]™\ˆ[ˆYˆX™[È\ˆİ\™˜XÙNˆ8)%x)/ø).8)%x)`8)%x)`x) ¸)(x),¸)`0­ÈÚÜÙB˜Ú\
+İ[™[JK8)%x)/ø).8)%x)/ˆ8)'8)cx)+ø)bø))8)/ø)-È0­ÈÚÜÙH[İ\Ú
+[™[™ÊK8)%x)/ø).8)%x)/ˆ8),8)/¸)-¸)/ø)*ø),ˆ0­ÈÚÜÙB”˜\ÚY˜[
+˜\ÚY˜[
+Kˆ[™Û\ÚXØÙ\ÜÚXš[]HX™[Èİ^HİX›H[ˆ]™\H™XY[™Â›[™İXYÙNˆÚİÈİ[™[H›ÜˆX™[˜ÚİÈ[İ\Ú›ÜˆX™[˜ÚİÈ˜\ÚY˜[™›ÜˆX™[˜Y[›İ\ˆ\œÛÛ˜[™H›İÈ]Ù[ˆ\È\œÛÛˆİÚ]Ú\˜‚‚ŠŠ”XÙ[Y[ŠŠˆHİÚ]Ú\ˆÚ]ÈP“Õ‘HÚ]]Ú[™Ù\ÎˆÛˆHİ[™[HØÜ™Y[ˆ]š\ÈHš\œİ[™È[™\ˆHÜ˜\ˆ[ˆ]™\Hİ]H
+ÛÈY[™ÈHÙXÛÛ™\œÛÛˆ\Â›Û™H\œ›ÛHHš\œİ\œÛÛ‰ÜÈİÛˆÚ\
+K[™ÛˆH[İ\Ú[™[™È]Ú]Â˜™]ÙY[ˆH[›È[™H˜\ÚY˜[Ø\™ˆ]™[™\œÈÛ›HÚ[ˆ]X\İÛ™H\œÛÛ‚š\ÈØ]™Y8 %HİY\İİ[Ù]ÈH[İXÚYÜ™X][Ûˆ[™[™Ë‚‚ŠŠY[™È\ÈY]]™K™]™\ˆH™]Üš]KŠŠˆ
+È8)'8)bø)(x)/8)aø) ˜Ü[œÈH“S’È›Ü›BŠİ[™[HÈ™]Ô\œÛÛˆYHXXY[™È8)*8)"8)%x)`x) ¸)(x),¸)`8)'8)bø)(x)/8)aø) ˆ0­ÈY[›İ\ˆİ[™[X
+BÚ]HØ]™Y[ÜH[İXÚY[™›ÈÚ\Ù[XİYÈ8)+8))¸),¸)aø) ˆ0­ÈY]İ[Y]ÂHXİ]™H\œÛÛ‹ˆ™[[İš[™ÈÛ™HÙˆÙ]™\˜[[ÜH[™ÈÛˆH
+Šœİ\š]›Ü‰ÜÊŠˆÚ\››İH›[šÈ›Ü›NÈ™[[İš[™ÈH\İÛ™H™]\›œÈHİY\İİ]H[™HİÚ]Ú\‚™\Ø\X\œÈÚ][K‚‚ŠŠ•ÚÜÙH\È]ÊŠˆÚ][Ü™H[ˆÛ™H\œÛÛˆØ]™YÛÜH]\ÙYÈØ^H[İ\ˆ‚›˜[Y\ÈH\œÛÛˆ[œİXY8 %8)&¸)*8)cx))¸)cx),8),8)/¸)-¸)/È0­È8)*8)/¸)+ˆ8)%x)`8)%x)`x) ¸)(x),¸)`8).8)aÈ0­È[ÛÛˆÚYÛˆ0­Èœ›ÛB˜[YO‰ÜÈİ[™[XÛˆH[™[™È[™˜\ÚY˜[[™H]Z\˜]İš\	ÜÈX™[˜™XÛÛY\È8)*8)/¸)+ˆ8)%x)aÈ8),¸)/ø)#È0­È›Üˆ˜[YO˜ˆÚ]HÚ[™ÛHØ]™Y\œÛÛˆ]™\HÛ™HÙˆÜÙBœİš[™ÜÈ\È[˜Ú[™ÙYÛÈHÛÛÈ^\šY[˜ÙH\È^XİHÚ]Ú\Y‚‚ŠŠ•[˜Ú[™ÙYH\ÚYÛ‹ŠŠˆš\Ú]H\Èİ[›İH[˜Ú[™ÈØØ][ÛÈ˜\ÚY˜[œ™[XZ[œÈİZY[˜ÙK›İ™YXİ[ÛÈH]Z\˜]İš\İ[Û›H[››İ]\È
+]™]™\‚œ™KYÜ˜Y\ÈH^K[™›È˜[YH™XXÚ\ÈHÚ\™HØ\™ÜˆH›İYšXØ][ÛŠNÈİ[˜HZ[[‰ÜÂˆ\ÙHØ]™Y]Z[ÈˆÛÜY\ÈHXİ]™H\œÛÛ‹\È][Ø^\ÈÛÜYYHØ]™YÛ™NÂ“˜[ZØ\˜[ˆİ[™]™\ˆ™XYÈHš\›Ùš[H][‚‚ŠŠ‘š[\ËŠŠˆ[Øš[KÜÜ˜ËÜ[˜Ú[™ËØš\›Ùš[\ËØš\›Ùš[TİÜ™KØ˜\ÙRİ[™[KØ\ÙS]Z\˜]˜[KØÈÛÛ\Û™[ËÔ\œÛÛÚ\ËŞ˜]Z\˜]˜[Tİš\ŞÈİ[™[TØÜ™Y[‹Ş˜\ÚY˜[ØÜ™Y[‹Ş˜[˜Ú[™ÔØÜ™Y[‹ŞÈ˜]šYØ][Û‹İ\\ËØˆ\İÎ‚˜[˜Ú[™Ë××İ\İ××ËÚ™\İØš\›Ùš[\Ëš™\İ\İØ˜ØÜ™Y[œË××İ\İ××ËÓ][T›Ùš[R[İ\Ú\İŞ˜ØÜ™Y[œË××İ\İ××ËÓ]Z\˜]\œÛÛ˜[İš\\İŞÂ˜›XY\İ›ËÛ][K\›Ùš[KZ[İ\Ú\Û[ÚÙKX[[‚‚‹KKB‚ˆÈÈL‹ˆÛÛ\Û™[ˆ^šY[
+^šY[Ş
+B‚ŠŠ”\œÜÙKŠŠˆHÜXÈ›Üˆ]™\H
+Šœİ[™[Û™JŠˆ^[œ]8 %HšY[]İÛœÈ]ÈİÛˆZYÚ˜›Ü™\‹š[[™˜XÙK‚‚H[HŒˆ]Y]›İ[™™YHÜXÜÈ›ÜˆÛ™HÛÛ›ÛÛ\ÜÈ8 %ÛÛ[\ÙX\˜ÚšY[È][‚ÛÜ›[Ü˜[MKİ[™[IÜÈ›Ü›H[œ]È][ˆ[\ˆM[™İ[™[IÜÈ[Ù[Ú]HÙX\˜Ú]ˆ8 %šK™Kˆ™YHZYÚËÛÈ\Y˜XÙ\È[™ÛÈY[™È˜[Y\È›ÜˆHØ[YH›Ø‹ˆH[H\È›İÂ\ÙÜ˜\XËX]Ú[™ÈİÈHŞ\İ[H[™XYHÜ]È]È˜XÙ\È
+0©ÌÊN‚‚Ÿ˜\šX[ZYÚ˜XÙHY[™È\ÙHŸKKHKKHKKHKKHKKHŸÙX\˜Ú
+Y˜][
+H›Û˜[Z[Y\Ë›][˜
+ÛÜ›[Ü˜[
+HMHMÙX\˜Ú[™È
+Š˜ÛÛ[
+Šˆ8 %Ø]\ËØœÙ\˜[˜Ù\ËHœ˜]Ø][ÙËˆH]Y\H\ÈÙ][ˆHØ[YH™XY[™È˜XÙH\ÈH™\İ[È]™]\›œËˆŸ›Ü›X›Û˜[Z[Y\Ëš[\˜MLÈ
+Š‘]H[JŠˆ8 %š\]Kš\[YK˜[YK[™HÚ]HÛÚİ\[œÚYH]›Ü›KˆH˜[YH\È]K›İ]›İ[Û˜[^ˆ[\ˆÈÚ]ÛÛY›ÜX›H[ˆHİXÚÙY›Ü›Kˆ‚ŠŠ”Ú\™YÜXËŠŠˆ[ÚYH]šY\˜›Ü™\‹\˜ÚY[ÛÙš[˜YZK›Y[šØ^[šÓ]]YXÙZÛ\‹ˆ›İ˜\šX[ÈÛX\ˆH0©ÌLˆİXÚZ[š[][KˆØ[\œÈ\ÜÂ˜ÛÛ[[™\‹YšY[İ™\œšY\ÈÛ›H
+K™Ëˆ[ˆ\œ›Ü‹\İ]H›Ü™\ÛÛÜ˜
+K™]™\ˆÙ[ÛY]K‚‚ŠŠ“›İ[ˆØÛÜNˆÛÛ\ÜÚ]HÙX\˜Ú˜\œËŠŠˆHÛØ˜[ÙX\˜ÚÜ˜\ˆ
+0©ÌÍŠH\ÈHÙX\˜Ú[Š˜ÛÛZ[™\Šˆ]İÛœÈHZYÚ›Ü™\ˆ[™š[Ú]H8£%XÛ\H˜\™H›^ˆX˜^[œ][™H8§%XÛX\ˆ]Ûˆ\ÈÚX›[™ÜËˆ^šY[İÛœÈ^XİHHÙ[ÛY]H]˜ÛÛZ[™\ˆİÛœËÛÈÜ˜\[™È]\™HÛİ[YX[ˆÛÈÛÛ\][™È›Ş\ÎÈ][X™\˜][Hİ^\ÈB˜ÛÛ\ÜÚ]Kˆ
+Š’Û›İÛˆ]™\™Ù[˜ÙNŠŠˆ][›™\ˆ[œ]\È[\ˆMKÚ\™H\ÈÙXİ[Û‰ÜÈÙX\˜Ú˜\šX[Ø^\ÈÛÜ›[Ü˜[MH›ÜˆÛÛ[ÙX\˜Úˆ[YÛš[™ÈH\	ÜÈš[X\HÙX\˜ÚšY[\ÈBš\ÚX›HÚ[™ÙHÈ]È[Üİ]\ÙYİ\™˜XÙH[™\ÈY\È[ˆ^XÚ]›ÙXİXÚ\Ú[Ûˆ˜]\‚[ˆ›ÛY[ÈH[HŒˆÚÙ[ˆ\ÜÈ8 %]\ÈHÛ™HXÙHH[HX›İ™H\È›İ\YY‚‚ŠŠ‘š[\ÎŠŠˆ[Øš[KÜÜ˜ËØÛÛ\Û™[ËÕ^šY[ŞˆÛÛœİ[Y\œÎˆØ]SXœ˜\TØÜ™Y[˜˜ØœÙ\˜[˜ÙS\İØÜ™Y[˜[˜Ú[™ÔØÜ™Y[˜
+Ø][ÙÈÙX\˜Ú
+Kİ[™[TØÜ™Y[˜
+˜[YHšY[
+ÈÚ]BœXÚÙ\ŠK‚‚‹KKB‚ˆÈÈL˜KˆÛÛ\Û™[Îˆ]H	ˆ[YHXÚÙ\œÈ
+Ø[[™\‘]TXÚÙ\‹ŞÛØÚÕ[YTXÚÙ\‹Şİ\\ÛÛ[[‹Ş
+B‚ŠŠ”\œÜÙKŠŠˆš\]H[™š\[YH\™HXÚÙY›İ\YˆÛÈÚ\™YÛÛ›ÛÈ™\XÙHB™œ™YK]^VVVKSSKQÈ›[XšY[È]]™\H[İ\ÚİXÚÚ[
+İ[™[NÈİ[˜HZ[[ˆÜ›ÛÛB˜[™œšYJKˆ›İ[Z]HØ[YHİÜ™Yİš[™ÜÈH^šY[ÈY8 %VVVKSSKQ[™Zİ\‚˜›[X8 %ÛÈ˜[Y][Û‹TÕ8¡¤•UÈÛÛ™\œÚ[Û‹\œÚ\İ[˜ÙK[™]™\H[™Ú[™H\İ\™H[İXÚYÂ\È\È[ˆ[œ]XÛÛ›ÛİØ\›İH]K[[Ù[Ú[™ÙK‚‚ŠŠ˜Ø[[™\‘]TXÚÙ\˜ŠŠˆH\˜ÚY[›İÛK\ÚY][Ù[
+Ø[YH˜[Z[H\ÈHİ[™[HÚ]BœXÚÙ\ŠNˆHËXÛÛ[[ˆ[ÛÜšYÚ]HÙ[XİY^H\ÈHØY™œ›Û•[[[™HÛÛ™š\›KĞØ[˜Ù[™›Ûİ\‹ˆHÜšY\È
+ŠœÚ^›İÜÈÙˆÙ]™[ˆ›^ˆXÙ[ÊŠˆ
+Ø[[™\•ÙYZÜÊ
+X
+K™]™\ˆÛ™HÜ˜\[™Âœ›İÈÙˆˆ\˜Ù[YÙK]ÚYÙ[È8 %ÙYH0©ÍIÜÈØ[[™\ˆØ\™›ÜˆH›Ø]\›İ[™[™È˜Z[\™H]œÚ\H›ÙXÙ\È
+\ÈXÚÙ\ˆÜİ]ÈÙ]™[ÛÛ[[ˆÛˆÍÍHÛ™\ÊKˆHXY\ˆ[Û^YX\ˆ\ÈB˜]Ûˆ]Ü[œÈ[ˆİ™\›^HÙˆ[ÛÚ\È
+ÈHØÜ›ÛX›HYX\ˆ\İÛÈHš\]HXØY\È˜XÚÈ\ÈÛÈ\È
+[ÛYX\ŠH˜]\ˆ[ˆŞ™[œÈÙˆ[ÛœYÙ\Ëˆ˜[™ÙH\ÈNLLKLX8 )Ù^H
+H
+Š’TÕ
+ŠˆÚ]š[^NÈ˜[™ÙHÚXÚÜÈ\™H^XÛÙÜ˜\XÈÛˆB˜VVVKSSKQİš[™ÜËÛÈ^H\™H[Y^›Û™K\›ÛÙŠNÈİ][Ù‹\˜[™ÙH^\È\™H]]Y[™›Û‹\Ù[XİX›K‚‘^\ÈØ\œH[™Û\Úˆ[ÛˆYX\ˆ˜XØÙ\ÜÚXš[]HX™[È›ÜˆİX›HXY\İ›ËÒ™\İ\™Ù][™Âœ™YØ\™\ÜÈÙˆ™XY[™È[™İXYÙKˆ[Z]ÈVVVKSSKQÛˆÛÛ™š\›K‚‚ŠŠ˜ÛØÚÕ[YTXÚÙ\˜ŠŠˆH™[Z[™\ˆİ\\ˆ
+0©È˜\[KÔ™[Z[™\œÊH[ˆL‹Zİ\ˆ›Ü›Nˆˆ[™RS‚˜ÛÛ[[œÈ\È[ˆSKÔHÙÙÛKˆ‹ÓRSˆİ\H[™\›Z[™ÈZİ\ˆZ[]K[Ù‹Y^H
+ÛÈHİ\‚˜ÛÛ[[ˆÜ›ÜÜÙ\È›ÛÛ‹ÛZYšYÚHØ^HHÛØÚÈÙ\ÊNÈSKÔH\È\š]™Yœ›ÛHHİ\œ™[İ\ˆ[™BÙÙÛHÚYÈ0¬LLšˆ[Z]È™\›Ë\YYZİ\ˆ›[Xˆ[ˆHØÜ™Y[œÈ]\È™]™X[YHB™šY[X]Ûˆ]ÛÛ[Z]ÈHŒY˜][Ûˆš\œİÜ[‹ÛÈHÚİÛˆ˜[YH[™İÜ™Y˜[YB˜[Ø^\ÈYÜ™YHÚ[H[ˆ[İXÚY[YHİ[˜[Y]\È\ÈZ\ÜÚ[™Ë‚‚ŠŠ˜İ\\ÛÛ[[˜ŠŠˆHÚ[™ÛKXÛÛ[[ˆ\İ˜[YKÙİÛˆÛÛ›ÛÚ]H™\ÜË[Û˜ÙK[Û‹\™[X\ÙH
+ÂšÛ]Ë\™\X]Ú]œ›ÛœË^˜XİY™\˜˜][Hœ›ÛH[YTİ\\˜ÛÈH™[Z[™\ˆİ\\ˆ[™˜ÛØÚÕ[YTXÚÙ\˜Ú\™HÛ™H[\[Y[][Û‹ˆ[YTİ\\˜	ÜÈX›XÈTH[™™Z]š[İ\ˆ\™B[˜Ú[™ÙY
+]È\İ\ÈHİX\™
+KˆÈ›İ›ÜšÈHÚ]œ›Û‹ÚÛÙÚXË‚‚ŠŠ‘š[\ÎŠŠˆ[Øš[KÜÜ˜ËØÛÛ\Û™[ËĞØ[[™\‘]TXÚÙ\‹ŞÛØÚÕ[YTXÚÙ\‹Ş˜İ\\ÛÛ[[‹ŞÈÛÛœİ[Y\œÈİ[™[TØÜ™Y[‹Şš\]Z[Ñ›Ü›KŞˆ\İÎ‚˜×İ\İ××ËĞØ[[™\‘]TXÚÙ\‹\İŞÛØÚÕ[YTXÚÙ\‹\İŞ[YTİ\\‹\İŞ‚‚‹KKB‚ˆÈÈLËˆÙXİ[Ûˆ± [q*ÚÚH± [q ^XxnaØH
+8)-x)/¸),¸)cx)+¸)`8)%x)/È8),8)/¸)+¸)/¸)+ø)(ÊH8 %ÛÛ\]HYÚ][ÛÜœ\Â‚ŠŠ”\œÜÙKŠŠˆHÜ˜[XØ]YÛÜH™XY\ˆ›ÜˆXZ\š\ÚH± [q*ÚÚIÜÈØ[œÚÜš]± [q ^XxnaØKˆ]Ú\ÈB˜ÛÛ\]H\Ø\™ØHÛİ]\›‹\™XÙ[œÚ[ÛˆYÚ][ÛÜœ\È\ÙYHH˜][Û˜[Ø[œÚÜš][š]™\œÚ]HÂ’RUØ[œ\ˆY][Ûˆ
+ŠŒŒËH™\šYšYY™\œÙH™XÛÜ™ÊŠˆXÜ›ÜÜÈ[Èñ xnaøn#X\ËˆH˜Y][Û˜[ˆŒ1fÛÚØ\Èˆ\ÈHÛÛ™[[Û˜[İ[È™XÙ[œÚ[Ûˆ[™™\œÙKXÛİ[ÛÛ™[[ÛœÈY™™\‹ÛÈB˜Ø][ÙÈØ^\È^XİHÚ]\È[™YˆÈ8)%x)/¸)(ø)cx)(H0­È8).8),8)cx)%È0­ÈŒÌH8)-¸)cx),¸)bø)%XÈÈØ[™\È0­ÈØ\™Ø\Â°­ÈŒÌHÚÚØ\Ø‚‚ŠŠ“˜[Z[™È›ÛİÜÈ± [q*ÚÚK›İ[ÚY\ËŠŠˆHÚ^ñ xnaøn#XH\È
+Š¸)+ø)`x))¸)cx))ø)%x)/¸)(ø)cx)(HÈ]YHØ[™JŠˆ8 %•± [q*ÚÚIÜÈİÛˆ˜[YH›Üˆ]ˆ8),¸) ¸)%x)/¸)%x)/¸)(ø)cx)(H\È[ÚY\ÉÜÈ˜[YH›ÜˆHØ[YH›ÛÚÈ[ˆH± [XÚ\š]q [˜\ÎÂH[X\È\È™XÛÜ™Y[ˆÚ\\‹L‹šœÛÛ˜	ÜÈÛİ\˜ÙK››İ\Ø]\È›İH\Ü^YY]K™XØ]\ÙB\ÈÙXİ[Ûˆ\ÈH± [q*ÚÚH^ˆZÙ]Ú\ÙHÚ\\ˆH\È8).8)`x)*8)cx))¸),8)%x)/¸)(ø)cx)(H
+± [q*ÚÚIÜÈØ[œÚÜš]”İ[™\˜Zñ xnaøn#XJK\İ[˜İœ›ÛHHÙ\\˜]H[ÚY\Èİ[™\šØ[™ÙXİ[Û‹‚‚ŠŠÛÜœ\È™\Z\ˆ[™›İ™[˜[˜ÙKŠŠˆH[›™YİXİ\™Y^ÜÛÛZ[œÈY\™ÙY™\œÙH›İÜËˆBœ™\›ÙXÚX›HØÜš\ËØZ[]˜[ZZÚK\˜[X^X[‹œXZ[\ˆÜ]ÈÛ›HÛˆš[YØ[›ÛšXØ[Ú]][Û‚›X\šÙ\œË™\XÙ\ÈNX[›Ü›YYÙ\XØ]H›İÜÈœ›ÛHH[™\[™[™\œÙKXK]™\œÙHZ\œ›Ü‹˜ÛÜœ™XİÈÛÜœ\ÜˆÛİ\˜ÙKXÛÛ[Z[˜]Y›İÜÈYØZ[œİH[›™Y˜]šYK\]H˜[œØÜš\[Ûˆ[™HÚ]H™\ÜÂœØØ[‹[™›ÜÈÛÈ]\˜Zñ xnaøn#XH^Ü\Y˜XİÈ]™\X]H™XÙY[™È™\œÙH[™Ú]][Û‹ˆ[™HÛÛY\Èœ›ÛB‘Ú]H™\ÜÈ›ÜÙHX›\ÚYH˜[PÚ\š]š[ÈÛÛXš[™Y›ÜÙH˜[™Ù\È\™H™\X]Y[XİÛˆZ\‚˜ÛÛœİ]Y[™\œÙHYÙ\ËˆHÛ™H[˜Ø]Y[™HYÙH
+‹ŒLˆY\ˆ™\œÙHJH\Èš[Yœ›ÛBš[™\[™[\›X\İ]˜H™\œÙHYX[š[™ÜËˆÛİ\˜ÙHÛÛ[Z]Ë\Ú]\Ë[™Ø]™X]È]™H[ˆ]™\B˜Ú\\‰ÜÈÛİ\˜ÙXØš™Xİ‚‚ŠŠ”İXİ\™KŠŠˆİ[™\™Ú\\™YQÜ˜[\[[™H
+0©ÌMHÚ\\œÈ[™^8¡¤ˆ0©ÎH™XY\ŠKÛ™HÚ\\‚œ\ˆñ xnaøn#XKˆHÚ\\œÈ[™^\ÜÙ\ÈÚ\\“X™[KÑ[H¸)%x)/¸)(ø)cx)(H‹È’Ø[™H˜[™˜[š]X™[KÑ[H¸)-¸)cx),¸)bø)%H‹ÈœÚÚØ\È˜
+\È[š]X™[[”Ú[™İ[\HœÚÚØH˜
+HÈÚ]PÚ\\Ø\™8 %B˜Ø\™	ÜÈY˜][È\™HHÚ]IÜÈ8)!x))ø)cx)+ø)/¸)+ÈÈ™\œÙ\ËÚXÚÛİ[Z\ÛX™[Hñ xnaøn#XN‚‚ŸÈ]RX]Q[˜Ø\™Ø\È™\œÙH™XÛÜ™ÈŸKK_KK_KK_KKNŸKKNŸŸH8)+8)/¸),¸)%x)/¸)(ø)cx)(H˜[HØ[™HÍÈ‹ŒMÈŸˆ8)!x)+ø)bø))ø)cx)+ø)/¸)%x)/¸)(ø)cx)(H^[ÙXHØ[™HLNHŒˆŸÈ8)!x),8)(ø)cx)+ø)%x)/¸)(ø)cx)(H\˜[XHØ[™HÍH‹ÎHŸ8)%x)/ø)-ø)cx)%x)/ø)*8)cx))ø)/¸)%x)/¸)(ø)cx)(HÚ\ÚÚ[™HØ[™HÈ‹HŸH8).8)`x)*8)cx))¸),8)%x)/¸)(ø)cx)(Hİ[™\˜HØ[™H‹ÍÌˆŸˆ8)+ø)`x))¸)cx))ø)%x)/¸)(ø)cx)(H]YHØ[™HLÌHKLÈŸÈ8)"x))8)cx))8),8)%x)/¸)(ø)cx)(H]\˜HØ[™HLLHËŒH‚”Ûİ\˜ÙHÙˆ]›ÜˆHX›Nˆ[Øš[KÜÜ˜ËÙ]Kİ˜[ZZÚK\˜[X^X[‹ØÚ\\œË[X[šY™\İšœÛÛ˜
+B›ØY\‰ÜÈ\‹Zñ xnaøn#XH[˜\šX[È˜Z[Ú[ˆHØYY^[ØYšYÈœ›ÛHHX[šY™\İ
+K‚‚ŠŠ“[X™\š[™È]]Üš]KŠŠˆÚ]][ÛœÈ›ÛİÈHXÛ\™Y˜][Û˜[Ø[œÚÜš][š]™\œÚ]HÈRUØ[œ\‚”Ûİ]\›‹\™XÙ[œÚ[ÛˆYÚ][ÛÜœ\ËˆHÛÛ\]HÙX\˜ÚX›HÚ]H™\ÜÈØ[œÚÜš]Q[™Û\ÚØØ[ˆØ\Â›Ü[™Y\È[ˆ[™\[™[İXİ\˜[[™™\œÙKXK]™\œÙH™Y™\™[˜ÙNÈ]È]Y™\šYšXØ][Ûˆİ]H\Âœ™XÛÜ™Y[ˆ]™\HÚ\\‰ÜÈÛİ\˜ÙK˜Ø[›ÛšXØ[Y][Û”İ]\Ø˜]\ˆ[ˆ[\Z[™ÈY[XØ[Ø\™ØB›[X™\š[™È™]ÙY[ˆY][ÛœË‚‚ŠŠ•™\œÙH[ŠŠˆ8)-¸)cx),¸)bø)%H0­Èñ xnaøn#XO‹Ø\™ØO‹1fÛÚØO˜ÈÚÚØH0­Èñ xnaøn#XO‹Ø\™ØO‹1fÛÚØO˜8 %HÚ]IÜÈ8)-¸)cx),¸)bø)%H0­È8)iË¸)iØÜ˜[[X\ˆ
+0©ÌÈ[›ØØX[\JH^[™YÈH\XÉÜÈ™YK\\Ú]][Û‹Ú]]˜[˜YØ\šH[Y\˜[È[ˆX™[XˆHXÚ[X[İ\[Y[[Ø\™ØHËM‹ŒX\™Y›Ü™H™[™\œÈB™›İ\‹\\Ú]][ÛˆİXÚ\È8)jK¸)jø)k¸)iË¸)iØÈ›È™Y™\™[˜ÙH\ÈÚ[[H™[[X™\™YÈ[›İ\ˆY][Û‹‚‚ŠŠ˜XÚÙÜ›İ[™ŠŠˆ\‹Zñ xnaøn#XK]\›Z[š\İXÈ\ˆ™\œÙNˆ˜[ZZÚT˜[X^X[•™\œÙKœİ[˜XØ\œšY\ÈBšñ xnaøn#XH[X™\‹[™Ù]™XY\˜XÚÙÜ›İ[™
+	İ˜[ZZÚK\˜[X^X[‰Ë™\œÙJXX\ÈÚxnhÚÚ[™1 H8¡¤ˆB”± [XKR[[q [ˆ]Kİ[™\˜H8¡¤ˆH[[q [‹XÜ›ÜÜÚ[™Ë]K[ØÙX[ˆ]K[™]™\Hİ\ˆñ xnaøn#XH8¡¤‚H± [XH\˜± \ˆ]H
+0©Í‹•SP“ÓÒÈ0©ÌÈ™]\›Z[š\İXÈ\ˆ™\œÙHYŠK‚‚ŠŠ”›ÛX[š^˜][Û‹ŠŠˆØ[œÚÜš]ÛÈPTÕ
+È[\šX[ˆYÜ˜\È\ˆ0©ÌËŒH
+1fÚ8nhÚønhÚÚ˜Ú\[]XÈ8nfÚX
+H8 %HØ[YHİ[H\ÈHÚ]HÛÜœ\Ë™]™\ˆH]ØYHTĞÒRH\ÙY›Ü‚•[ÚY\Ë‚‚ŠŠ“ØY[™È[™Ü›ÜÜËY™X]\™HYÙ]ŠŠˆ^ËØ™XYÈHYÚÙZYÚX[šY™\İİ[Ú]İ]›ØY[™ÈØÜš\\™KˆÙ]˜[ZZÚT˜[X^X[Ú\\Š
+X™\]Z\™\È[™˜[Y]\ÈÛ›HHÙ[XİYñ xnaøn#XK[ˆØXÚ\È]ˆZ[HšZİH[™ÛØ˜[ÙX\˜Ú[X™\˜][H™]Z[ˆH\İX›\ÚY[˜ÚÜ‚™\œÙ\Èœ›ÛHZ[K\Ù[Xİ[Û‹šœÛÛ˜È[™^[™È[ŒËHÛ™ËY›Ü›H™\œÙ\ÈÛİ[\XØ]HZ\‚››Ü›X[^™Y^[ˆY[[ÜH[™]]™\H][K[YYØX]Hñ xnaøn#XHÛˆH›Û‹\™XY\ˆ]ˆHÛÛ\]B˜ÛÜœ\È™[XZ[œÈÛÛ[[İ\ÛH™XYX›H[™\™XİHY™\ÜØX›H[ˆH™XY\‹‚‚ŠŠ“›İH\XØ]HÙˆİ[™\šØ[™ŠŠˆÚ\\ˆH\™H\È± [q*ÚÚIÜÈ
+Š”Ø[œÚÜš]
+Šˆİ[™\˜Zñ xnaøn#XNÈBœÙ\\˜]Hİ[™\šØ[™Ü˜[ÙXİ[Ûˆ\È[ÚY\ÉÜÈ
+Š]ØYJŠˆİ[™\šØ[™ˆ›È[™H\ÈÚ\™Y˜™]ÙY[ˆHÛÈ
+•SP“ÓÒÈ0©ÌLKŒLJK‚‚ŠŠ‘š[\ËŠŠˆ[Øš[KÜÜ˜ËÙ]Kİ˜[ZZÚK\˜[X^X[‹Ø
+Ú\\‹LK‹ŒËšœÛÛ˜Ú\\œË[X[šY™\İšœÛÛ˜˜Z[K\Ù[Xİ[Û‹šœÛÛ˜[™^Ø
+H\ÈØÜš\ËØZ[]˜[ZZÚK\˜[X^X[‹œX˜[Øš[KÜÜ˜ËØÛÛ\Û™[ËÕ˜[ZZÚT˜[X^X[•™\œÙTYÙKŞ
+^XÚ]™KY^ÜÙ‚˜İ[™\šØ[™™\œÙTYÙX8 %H[™\ØØ[™\Ñ[˜\˜Ú]\JK[Øš[KÜÜ˜ËÜØÜ™Y[œËÂ•˜[ZZÚT˜[X^X[Ú\\œÔØÜ™Y[‹Ş[Øš[KÜÜ˜ËÜØÜ™Y[œËÕ˜[ZZÚT˜[X^X[”™XY\”ØÜ™Y[‹Ş‚”™YÚ\İ\™Y[ˆ^ËØ[T›İ]\ËØ
+Ú\\œÈ
+È™XY\ˆ
+ÈÚ\\ˆÛİ[
+K˜ÛYTİXÚÓ˜]šYØ]Ü‹Ş˜XÚÙÜ›İ[™ËØÙX\˜Ú[™^Ø™\œÙTÛÛØ›Ü›X]ØØ][Û‹Ø‚•\İÎˆÜ˜ËÜØÜ™Y[œË××İ\İ××ËÕ˜[ZZÚT˜[X^X[”™XY\”ØÜ™Y[‹\İŞ
+\‹Zñ xnaøn#XHš\œİ]™\œÙH™[™\ŠK˜™XY\]]ĞY˜[˜ÙK\İŞ
+ñ xnaøn#XKX›İ[™\HİÚ\HÛÛ˜Xİ
+KÚ\\™Yİ[Ë\İØ˜™XY\•\TØØ[K\İŞˆL‘Nˆ›XY\İ›ËÙÜ˜[\Û[ÚÙKX[[‚‚‹KKB‚ˆÈÈMˆ\˜][™È›Û\
+8),8)aø)'ø)/ø) ¸)%ÊB‚ŠŠ”\œÜÙKŠŠˆ\ÚÈ[™ØYÙY\Ù\œÈ›ÜˆHİÜ™H˜][™ËÚ]İ]]™\ˆ™XÛÛZ[™ÈH˜YËˆÛÈİ\™˜XÙ\Èİ™\‚›Û™HYXÙHÙˆİ]Nˆ[ˆ
+Š˜]]Ë[Ü[š[™ÈØ\™
+Šˆ]\ÈÈX\›ˆ]ÈØ^H\İHÛÛœÙ\˜]]™HØ]K[™˜H
+Šœ\›X[™[[Ü™H›İÊŠˆH\Ù\ˆØ[ˆ™XXÚÚ[™]™\ˆ^H™Y[ZÙH]
+0©ÌÍÊK‚‚ŠŠ[™K[Û›KHÛÛœİ˜Z[ŠŠˆ›È^Ë\İÜ™K\™]šY]Ø›ÈÒÔİÜ™T™]šY]ĞÛÛ›Û\˜›È^B’[‹P\™]šY]Ëˆ]™\HÛ™HÙˆÜÙH\ÈH˜]]™H[Ù[KÛÈH˜][™ÈYÙH™Z[™Û™HÛİ[Û›HÚ\š[ˆHİÜ™HZ[8 %[™\È™\ÉÜÈÜ\˜][™ÈÛÛœİ˜Z[
+ØÜËÜ›ØYX\ÌŒ‹TLË\›ØYX\›Y
+H\È]™™X]\™\ÈÚ\[œÚYHH[™KˆHÚY]\È\™Y›Ü™Hİ\œË[™Hš[X\H]Ûˆ[™ÈÙ™ˆÂHİÜ™H\İ[™ÈÚ][šÚ[™Ë›Ü[•T“8 %HØ[YH™X\ÛÛš[™È]ÙY\ÈH[œİYÜ˜[H›İÈÛˆ[‚˜Î‹ËØT“
+0©ÌÍÊKˆÛÜİÙˆHÚÚXÙNˆH\Ù\ˆX]™\ÈH\[œİXYÙˆ˜][™È[ˆXÙK[™HÔÈÙ\È›İ›İH\ËÛÈ
+ŠÙJŠˆİÛˆH›İ[™Ëˆ[˜ÙHHØ]H™[İË‚‚ŠŠ”İXİ\™JŠˆ
+ÛÛ\Û™[ËÔ˜][™Ô›Û\ÚY]Ş
+H8 %HÙ[\™YØ\™ÛˆH[Ù[˜XÚÙ›ÜŠ˜[œÜ\™[[Ù[[š[X][Û•\OH™˜YH˜
+KX]Ú[™È\]T™XYS[Ù[
+0©Í
+H˜]\ˆ[ˆBœYÙTÚY][Ù[Îˆ\È\ÈHÚÜ[\œ\[Û‹›İHØÜ™Y[ˆÈÛÜšÈ[‹ˆX^ÚYÍŒ˜YZK›Ø˜\˜ÚY[ÜXÚ[™ËY[™ËLˆØ\]™\][™ÈÙ[\™Y‚‚ŒKˆ
+Š‘XÛÜ˜]]™Hİ\ˆ›İÊŠˆ8 %8¦!x¦!x¦!x¦!x¦!X]Œˆ[ˆÛÛ]\”ÜXÚ[™ÎˆØˆØ^\Èœ˜][™Èˆ˜\İ\‚ˆ[ˆHÙ[[˜ÙHØ[‹ˆXØÙ\ÜÚXš[]Q[[Y[ÒY[˜
+È[\Ü[›ÜXØÙ\ÜÚXš[]OH››È˜ÛÈ]™]™\‚ˆ™XYÈ\ÈHÛÛ›Û
+0©ÌLŠH8 %]\È›İ[\˜Xİ]™NÈ\™H\È›È[‹X\İ\ˆØ\\™K‚Œ‹ˆ
+Š•]JŠˆŒXØÙ\ÜÚXš[]T›ÛOHšXY\ˆ˜ØÜš\]H˜XÙH8 %™Y[œÚ8)!¸)*¸)%x)bÈ8)%x)b8).8)/ˆ8),¸)%ø)/ØÂˆ[š›ŞZ[™È™Y[œÚØÈ™Y[œÚ8*¥x*áø*­x*àx* ˆ8*¬¸*¯¸*¥ø*ãx*«ø*àx* ØÈ™Y[œÚ8,®x,áø,¥ø,¯ø,©¸,áØŒËˆ
+Š“YJŠˆMKÌŒÈ[šË\ÛÙØÜš\›ÙH˜XÙH8 %Û™HÙ[[˜ÙHÛˆÚH][ËÛ™HÛˆHÛÜİˆ
+¸)#ø)%H8)+¸)/ø)*8)'È8),¸)%ø)aø)%ø)/ˆˆÈ’]ZÙ\ÈHZ[]HŠK‚ˆ
+Š”š[X\JŠˆ8 %ØY™œ›Û˜š[˜YZK›YZ[‹ZZYÚˆ8),8)aø)'ø)/ø) ¸)%È8))¸)aø) ˜È˜]H™Y[œÚÂˆ8*¬8*áø*§ø*¯ø* ¸*¥È8*¡¸*ª¸*âØÈ8,¬8,áø,§ø,¯ø, ¸,¥ø,ãH8,ª8,à8,¨x,¯ØˆLL^HX™[\ÈHÛÛœİ[”˜]H™Y[œÚÛˆHİÜ™H˜‚Kˆ
+Š˜8)+8)/¸))ˆ8)+¸)aø) ˜ÈX^X™H]\ŠŠˆ8 %LÈ[šË[]]YH˜XÚÙY]\\˜Ø\ÙHÙXÛÛ™\H™X]Y[ˆBˆØ\™	ÜÈ\İ[[Y[[™HÛ›H^]™\ÚY\È˜][™Ë‚‚ŠŠ•ÛÈXİ[ÛœË›È\›X[™[Ü[İ]
+Šˆ
+›ÙXİXÚ\Ú[Û‹]YÈŒˆ›Û›H›İÈ[™]\ˆŠKˆB™X\›Y\ˆ\™]Ûˆ8 %8)*ø)/ø),8)*8)*¸)`¸)&ø)aø) ˜ÈÛ‰İ\ÚÈYØZ[ˆ8 %\È
+Šœ™[[İ™Y
+Š‹ˆÛÛœÙ\]Y[˜ÙKİ]YœZ[›NˆÚ]PVĞTÒÔØ][\™H\È›İÈ›Èİ]HH\Ù\ˆØ[ˆ™XXÚœ›ÛH\ÈØ\™]İÜÂHKY^HØY[˜ÙH^Ù\˜][™Ëˆİ]ÛÛYNˆ	ÙXÛ[™Y	Ø[™Y\‘XÛ[™Yİ\š]™H[ˆH[Ù[ÛÂHØ]Hİ[Û›İ\œÈHİ]HÜš][ˆH[ˆX\›Y\ˆZ[[™ÛÈHÙ][™ÜË\ÚYHÜ[İ]\ÈBšÛYHYˆÛ™H\ÈYY8 %ÙYH•SP“ÓÒÈ0©Í‹Œˆ›ÜˆHš\ÚÈÜİ\™H[™HZ]YØ][ÛœÈÛˆHX›K‚‚[›İ\ˆ[™İXYÙ\È\™H[™X]]Ü™YšXHXÚØ
+\È\ÈRHÚ›ÛYK›İÛÛ[ÛÈ›İ[™È\Â˜[œÛ]\˜]Y
+K[™[™XÈX™[È›Ü][ˆ˜XÚÚ[™Ëİ\\˜Ø\ÙH\ˆ0©ÌË‚‚ŠŠ•HØ]JŠˆ
+]KÜ˜][™Ô›Û\Ø\™JKˆHÚY]X^H]]Ë[Ü[ˆÛ›HÚ[ˆ
+Š˜[
+ŠˆÛ‚‚ŸÛÛ™][Ûˆ™\ÚÛÚHŸKK_KK_KK_Ÿİ]ÛÛYHİ[[™[™Ø8 %˜]Y[™XÛ[™Y\™H\›Z[˜[ˆÛ›H˜]Y\È™XXÚX›Hœ›ÛHHÚY]ÈXÛ[™Y\ÈÛ›İ\™Y›Üˆ˜XÚËXÛÛ\]
+ÙYH™[İÊHŸ]]Ë[Ü[œÈÛÈ˜\ˆPVĞTÒÔØ
+
+Š˜[8 %›ÈÙZ[[™ÊŠŠH[˜Ø\YH›ÙXİXÚ\Ú[ÛˆÙY\\ÚÚ[™È[[H\Ù\ˆ˜]\ÈÜˆÜÈİ]ŸÛÛİ\È8¢iHRS—ĞTÓÔS”Ø
+JHX\›ˆH\ÚÈ8 %H˜][™ÈYÙHØZ]È›Üˆ™X[™]\›ˆš\Ú]È
+H™[Z[™\ˆÜZ[ˆ›ÈÛ™Ù\ˆØ]\ÈÛˆ\ÎÈÙYH0©ÌÎ
+HŸ\İ[˜İXİ]™H^\È8¢iHRS—ĞPÕU‘WÑVTØ
+ÊHHXš]›İHš\Ú]ŸY™][YH™\œÙH™XYÈ8¢iHRS—Õ‘T”ÑWÔ‘PQØ
+Œ
+Hš[\œÈ\Ù\œÈÚÈÜ[™Y]™]™\ˆ™XYŸÚ[˜ÙHH\İ\ÚÈ8¢iH‘PTÒ×ĞÓÓÓÕÓ—ÑVTØ
+JHH]ZY]\š[Ù[™›İÈH
+Š›Û›JŠˆ[™ÈÜXÚ[™È\ÚÜÈİ]8 %Ú]›ÈY™][YHÙZ[[™È]\ÈØYX™X\š[™Ë›İHØÚY[[™È]Z[Ÿ›Èİ\ˆİ\™˜XÙH\ÚÚ[™È8 %İ\‹Û˜›Ø\™[™ÈÙ]\Ú]	ÜÈ™]Ë™[Z[™\ˆÜZ[ˆ
+0©ÍËğ©ÌÎ
+H‚‘[™ØYÙ[Y[[X™\œÈÛÛYHœ›ÛH\Ù\Xİ]š]PÛÛ^›Y™][YUİ[Ê
+XÈHÛÛ\İ\Ûİ[\È™XY™œ›ÛHH
+Š››İYšXØ][ÛˆY]IÜÊŠˆ\Ü[Ûİ[˜]\ˆ[ˆHÙXÛÛ™Ûİ[\ˆ8 %Û™HšİÈX[H[Y\Âš]™H^HÛÛYH˜XÚÈˆ[X™\‹[™XYH[˜Ü™[Y[YÛ˜ÙH\ˆÛÛİ\Ù\š[™È›İ\ÚÜÈ
+H˜][™ÉÜÈX\›™YK[Ü[ˆØ]H[™HÜZ[‰ÜÈš\œİ[Ü[ˆØ]JK‚‚ŠŠ”\œÚ\İ[˜ÙH	ˆY™XŞXÛJŠˆ
+ÛÛ^ËÔ˜][™Ô›Û\ÛÛ^Ş
+KˆÛ™H\Ş[˜ÔİÜ˜YÙH›Ø‹˜™Y[œÚÜ˜][™Ë\›Û\ˆÈ\ÚĞÛİ[\İ\ÚÙY]İ]ÛÛYHXY™[œÚ]™[H\œÙY
+[šÈšY[È˜[˜˜XÚÈÈY˜][Ë™]™\ˆÜ˜\Ú
+Kˆ™Z]š[İ\‚‚‹H[YÚXš[]H\È]˜[X]YÛ˜ÙH\ˆ\Ù\ÜÚ[ÛÈHÚY][ˆÜ[œÈY\‚ˆ
+Š˜US‘×Ô“ÓTÑSVWÓTØHL\ÊŠ‹ÛÈÛYH\ÈÙ]Yš\œİ8 %H›Û\ÛˆH][˜Úœ˜[YBˆ™XYÈ\È[ˆYˆYˆ[YÚXš[]H\Ù\È™Y›Ü™HH[Y\ˆš\™\ËH[Y\ˆ\ÈÛX\™Y‚‹H
+Š“Ü[š[™ÈÛÛœİ[Y\È[ˆ\ÚÈÛİ[™İ\ÈHÛÛÛİÛŠŠˆ
+Y\\ÚÙY
+KˆHİÚ\KX]Ø^Hİ[ˆÛİ[È\ÈÙH\ÚÙYˆ8 %HÛÛÛİÛ‹›İHİ]ÛÛYK\ÈÚ]Ú[[˜Ù\ÈHÙXÛÛ™\ÚË‚‹H
+Š”š[X\JŠˆ8¡¤ˆY\”˜]Y
+\›Z[˜[
+H
+È[šÚ[™Ë›Ü[•T“
+İÜ™T™]šY]Õ\›
+]›Ü›K“ÔÊJXˆSÔÈÙ]Âˆ8 )ØXİ[Û]Üš]K\™]šY]Ø
+H\İÜ™H™]šY]ÈÛÛ\ÜÙ\ŠNÈ^H\È›È\İ[™È\]Z]˜[[ÛÂˆ[™›ÚY[™ÈÛˆH\İ[™ËÚÜÙH˜][™Èİ\œÈ\™HHš\œİ[™ÈÛˆHYÙKˆYˆHÔÂˆ™Y\Ù\ÈHY\[šË]˜[È˜XÚÈÈHZ[ˆ\İ[™Ë[ˆ˜Z[È
+ŠœÚ[[JŠˆ8 %Hœ›ÚÙ[‚ˆ[™[Ù™ˆ]\İ›İ›İÈ[ˆ\œ›Üˆ]H\Ù\ˆÚÈ\İšYYÈÈ\ÈH˜]›İ\‹ˆ”˜]Yˆ™XÛÜ™ÈBˆ
+š[™[Ù™Š‹›İH™]šY]ÈH\Ø[››İØœÙ\™K‚‹H
+Š“X^X™H]\ŠŠˆ8¡¤ˆÛÜÙHÛ›NÈHØ[YHØ\™™]\›œÈY\ˆHKY^HÛÛÛİÛ‹[™Yš[š][Kˆ\Âˆ\ÈHÚY]	ÜÈÛ›H›Û‹]\›Z[˜[^][™H[Ù[	ÜÈÛ”™\]Y\İÛÜÙX
+[™›ÚY˜XÚÊHX\ÈÂˆ]ÛÈ8 %ÛÈH˜XÚÈ™\ÜÈ\ÈH›]\ˆ‹™]™\ˆ[ˆÜ[İ]‚‹HH
+Š“[Ü™H›İÊŠˆØ[ÈÜ[Š
+XÚXÚ\\ÜÙ\ÈHØ]H[™Ü[™È
+Š››ÊŠˆ\ÚÈÛİ8 %H\Ù\ˆÚÂˆÙ[ÛÚÚ[™È\ÈÜY[‹ˆ]ÙY\ÈÛÜšÚ[™ÈY\ˆXÛ[™YÈÜ[™Èİ]Ú[[˜Ù\ÈH]]ËX\ÚË‚‚ŠŠ”XÙ[Y[ŠŠˆ˜][™Ô›Û\ÚY]Ï˜[İ[È\İ[ˆ\Ş[œÚYH˜][™Ô›Û\›İšY\˜Š]Ù[ˆ[œÚYHİ\”›İšY\˜
+È›İYšXØ][Û”™Y™\™[˜Ù\Ô›İšY\˜ÚÜÙH›YÜÈHØ]H™XYÊK‚‚ŠŠ‘š[\ËŠŠˆ[Øš[KÜÜ˜ËÙ]KÜ˜][™Ô›Û\Ø
+İ]KØ]KİÜ™HT“ÊK˜[Øš[KÜÜ˜ËØÛÛ^ËÔ˜][™Ô›Û\ÛÛ^Ş[Øš[KÜÜ˜ËØÛÛ\Û™[ËÔ˜][™Ô›Û\ÚY]Şœ›İÈ[ˆ[Øš[KÜÜ˜ËÜØÜ™Y[œËÓ[Ü™TØÜ™Y[‹ŞİÜ™HT“Èœ›ÛH[Øš[KÜÜ˜ËÙ]KÜÚ\™S[šÜËØ‚•\İÎˆÜ˜ËÙ]K××İ\İ××ËÜ˜][™Ô›Û\š™\İ\İØ
+]™\HØ]HÛ]\ÙKÛÛÛİÛˆ›İ[™\K™Y™[œÚ]™H\œÙKT“Ú\\ÊKÜ˜ËØÛÛ\Û™[Ë××İ\İ××ËÔ˜][™Ô›Û\ÚY]\İŞ
+[^Kœ\œÚ\İYİ]ÛÛY\Ë™Y\Ø[ÈİXÚËHÛËXXİ[ÛˆÚ\K[›İ\ˆ[™İXYÙ\ËLL^KZY[ˆİ\œÊK˜Ü˜ËÜØÜ™Y[œË××İ\İ××ËÓ[Ü™TØÜ™Y[‹\İŞ
+H›İÈÜ[œÈHÚY][œİXYÙˆX]š[™ÈH\
+K‚‘L‘Nˆ›XY\İ›ËÜ˜][™Ë\›Û\\Û[ÚÙKX[[8 %HX[X[]Û›NÈH]]È]	ÜÈ™\ÚÛÈ\™B[œ™XXÚX›H[™\ˆÛX\”İ]XÛÈHØ]H\È[š]]\İY[œİXY‚‚‹KKB‚ˆÈÈMKˆ™\İ]™HÜ˜[ˆ
+8)*¸),8)cx)-H8))8)bø),8)(ÊB‚ŠŠ”\œÜÙKŠŠˆÛˆXXÚÙˆH
+ŠŒNØ][ÙÈ™\İ]˜[ÊŠˆ
+[Øš[KÜÜ˜ËÛ›İYšXØ][ÛœËÙ™\İ]™T™[Z[™\œËØ8 %HØ[YH\İ]š]™\ÈH0©ÌÎ™\İ]™H™[Z[™\ŠKÛYH[™ÜÈHÜ˜[ˆ™[İÈHÛÜ™X\šÎˆHØYÙÚ[™ÈØ\›[™İš[™ÈÙˆX\šYÛÛÈ[™X]™\ÈÚ]HÚ\[™\›™X]Ø\œZ[™ÈH™\İ]˜[	ÜÈÜ™Y][™ËˆHÛÜØ^H\È™\ÜÙY›ÜˆH^K[^K[™[\œ\È›İ[™Ëˆ]™\Hİ\ˆ^HÙˆHYX\ˆÛYH\È[İXÚYˆÛÛ\Û™[ˆ[Øš[KÜÜ˜ËØÛÛ\Û™[ËÑ™\İ]™UÜ˜[‹ŞÈ[İ[YHÛYTØÜ™Y[˜™]ÙY[ˆH\›ÈØÚİ\[™HÙ^Hİš\‚‚ŠŠ•ÚXÚ™\İ]˜[ŠŠˆÙ]Ù^Q™\İ]˜[
+]JX
+[Øš[KÜÜ˜ËÙ]KÙ\ØÛİ™\SY]KØ
+NˆH
+Š™š\œİ
+ŠˆÙˆÙ^IÜÈØœÙ\˜[˜Ù\È]\È[ˆH™\İ]™HØ][ÙË[ÙH[ˆ]Ø[ÜÈÙ]ØœÙ\˜[˜Ù\Ñ›Ü‘]X[ˆHØ[YHÜ™\ˆ\ÈH›Ü‹UÙ^H›İÉÜÈY\ˆH
+0©ÍL
+KÛÈHØ\›[™HXY[™È“ÔˆÑVHØ\™[™H[Ü›š[™ÉÜÈ›İYšXØ][Ûˆ[Ø^\È˜[YHHØ[YH™\İ]˜[8 %[˜ÛY[™ÈÛˆH^HÛÈØ][ÙÈ™\İ]˜[ÈÚ\™H
+[™YHÛÛœÚ\İ[HZÙHHš\œİ\™\ÛÛ™YÛ™JKˆ[ˆØœÙ\˜[˜ÙHÛÛ™H]›İÜÈÚ[\H[™ÜÈ›ÈØ\›[™ˆ™\ÛÛ][ÛˆÙ^\ÈÙ™ˆ\ÙUÙ^RÙ^J
+X[ˆÛYTØÜ™Y[‹ÛÈHÜ˜[ˆ\X\œËİ˜[š\Ú\ÈÛˆH^H›İ[™\HÚ]İ]H™[][˜Ú‚‚ŠŠ”İXİ\™KŠŠ‚‹H
+Š”İš[™ÊŠˆÛ™HÕ‘È]
+KMˆLMLÌ˜™\Ù\™P\ÜXİ˜][ÏH››Û™H˜ÛÈ]İ™]Ú\ÈÈ[HÚY
+Kİ›ÚÙYØY™œ›Û‘Y\]MHÜXÚ]K‚‹H
+Š“Ü›˜[Y[ÊŠˆHX\šYÛÛÈ[\›˜][™ÈÚ]X]™\È]š^Yİ][ÛœÈ[Û™ÈHØYÈ
+HHˆ
+ÈNp­ÜÚ[Š3àÌÌ
+X
+KˆX\šYÛÛÈ\™H
+Š•šY]ÈÛÛ\ÜÚ][ÛœÊŠˆ8 %›İ]Y][È[\›˜][™ÈØ\™[XXİ]™Qœ›ÛXØØ\™[XXİ]™UØ\›İ[™HØY™œ›Û‘Y\ÛÜ™H8 %HØ[YH˜]Û‹X›ÜÜÛÛHÜ˜[[X\ˆ\ÈH0©ÌÌ\ÚK]˜\œÚH[™H0©ÍˆZ]HÛ\ËˆX]™\È\™H\Ş[[Y]šXË\˜Y]\ÈÛÛšY]ÜËˆ
+Š“›È[[ÚšK›È[XYÙ\ÊŠˆ
+0©Í‰ÜÈ[JK‚‹H
+Š‘Ü™Y][™ÈÚ\
+ŠˆÙ[\™Y[™\ˆHØ\›[™8 %ÛÛÚ\™Øš[Ø\™Xİ]™P›Ü™\˜›Ü™\‹ØY™œ›Û‘Y\^]
+ŠŒLˆ
+Šˆ
+0©ÌËŒ›ÛÜˆ™\ÜXİY
+K˜XÙHšXH]TØÜš\›ÛÛÈH™[™\œÈ[ˆH]˜[˜YØ\šHÙ\šY‹İKÚÛˆ[ˆZ\ˆ™K\ØÜš\YÙ[ZP›Ûİ]Ë[ˆ[ˆHØ\™]H˜XÙKˆÛÜHHHØ][ÙÉÜÈÜ™Y][™ÒXØÜ™Y][™Ñ[˜›İYÚÛÛ[S[™Ø8 %Y[XØ[ÛÜ™[™ÈÈH›İYšXØ][Ûˆ›ÙIÜÈÜ™Y][™Ë‚‚ŠŠ“[İ[Ûˆ
+0©ÌLJKŠŠˆÛ™HİØ^Nˆ0¬Lğ¬›İ][ÛˆX›İ]Hİš[™ÉÜÈYK[[™H
+˜[œÙ›Ü›SÜšYÚ[ˆ	ÍL	H	IØ
+KˆÈ\ˆ[[\›˜]HŞXÛK˜]]™Hš]™\‹ˆ\ÙT™YXÙY[İ[ÛŠ
+X[™ÜÈHØ\›[™İ[8 %›Èİ\ˆ[š[X][Ûˆ^\İÈÛˆHİ\™˜XÙK‚‚ŠŠ“^[İ]ŠŠˆHÛÛ\Û™[[Ø^\ÈØØİ\Y\È]Èš^YÔS—ÒRQÒ
+LˆˆØ\›[™
+ÈŒˆÚ\
+ÈŒMˆÛX\˜[˜ÙHÛÈHÜ™Y][™ÈÚ\™]™\ˆİXÚ\ÈHÙ^Hİš\	ÜÈ[˜Ú[™È˜[›™\ˆ™[İÈ]
+KÛÈÛ˜ÙH[İ[Y]Ø[ˆ™]™\ˆYÙHHÙ^Hİš\
+H0©Í™\Ù\™YZZYÚ\ÜÛÛŠKˆ]ØÜ›ÛÈ]Ø^HÚ]HÛÜ™X\šÈ8 %[X™\˜][H›İ[›™Y‚‚ŠŠLL^H
+0©ÌLŠKŠŠˆHØ\›[™\ÈXÛÜ˜]]™NˆXØÙ\ÜÚXš[]Q[[Y[ÒY[˜
+È[\Ü[›ÜXØÙ\ÜÚXš[]OH››ËZYKY\ØÙ[™[È˜ˆHÚ\	ÜÈÜ™Y][™È^\ÈHİ\™˜XÙIÜÈÛ™HXØÙ\ÜÚX›H[[Y[‚‚ŠŠÛÛİ\œËŠŠˆ[YHÚÙ[œÈÛ›H8 %ØY™œ›Û‘Y\ÛÛØ\™[XXİ]™Qœ›ÛKÕØÛÛÚ\™ØØ\™Xİ]™P›Ü™\˜ˆ›İ[™Èİ]ÚYH0©Ì‰ÜÈØ\›H[]NÈH˜ZÙYZ]KYÛ\[]H\È
+››İ
+ˆ\ÙY\™K‚‚ŠŠ‘XÚ\Ú[Ûˆ˜Z[ŠŠˆÚÜÙ[ˆ\ÈÜ[ÛˆHÙˆ›İ\ˆ›İİ\Y™X]Y[È
+™\İ]™K][YK\™]šY]Ëš[]H™\È›ÛİˆÜ˜[ˆÈ]Ø]ˆ˜[›™\ˆÈ\ÚK]˜\œÚHÛ™K\ÚİÈ[ÚÚ[ŠKˆH˜[›™\ˆ\XØ]YH“ÔˆÑVH™\İ]˜[Ø\™ÈHÛ™K\ÚİÚİÙ\ˆ[™H[ÚÚ[ˆ\™H\šÙYˆØÛÜHØÚÙYˆ[N™\İ]˜[È
+›İ\İİ\˜[X\šÙ\ˆXZ›ÜœÊK›İ[›™Y›ÈÚİÙ\‹‚‚ŠŠ•\İËŠŠˆÛÛ\Û™[Ë××İ\İ××ËÑ™\İ]™UÜ˜[‹\İŞ
+Ü›˜[Y[Ù[œİ\Ë™\Ù\™YZYÚ\‹[[™İXYÙHÜ™Y][™È
+È˜XÙKXÛÜ˜]]™KYØ\›[™LL^K™YXÙK[[İ[Ûˆ[İ[È˜ZÙH[Y\œÈ™XØ]\ÙHÙˆHİØ^HÛÜ
+H[™HÙ]Ù^Q™\İ]˜[›ØÚÈ[ˆ›İYšXØ][ÛœË××İ\İ××ËÙ™\İ]™T™[Z[™\œË\İØ
+]™\HØ][ÙÈ™\İ]˜[	ÜÈİÛˆ]H[™ÜÈHØ\›[™ÚÜÙHÜ™Y][™ÈX]Ú\ÈHØ][ÙÈ[™YÜ™Y\ÈÚ]H“ÔˆÑVHXYÈÜ™[˜\H^H8¡¤ˆ[È]Ø[H8¡¤ˆ]Ø[X
+KˆL‘H[X™\˜][H›Û™Nˆ™\İ]˜[]\ÈXZÙHHİ\™˜XÙH›Û‹Y]\›Z[š\İXÈ[™\ˆÛX\”İ]X8 %Ø[YH˜][Û˜[H\ÈH0©ÍM]]È]‚‚‹KKB‚ˆÈÈM‹ˆ™XY[İY
+8)*¸)/¸)(8).8)`x)*8)aø) ŠH8 %Û‹Y]šXÙHÂ‚ŠŠ”\œÜÙKŠŠˆ]H]šXÙHÜXZÈH™\œÙHÛˆØÜ™Y[‹ˆH\	ÜÈ[œİÙ\ˆÈ’HØ[È\İ[ˆ‚š\È™Y[ˆ
+œ™XÛÜ™Y
+ˆ™XÚ]][Ûˆ
+0©ÌÍ
+K]Û›HH™X[™XÛÜ™[™ÜÈ^\İ›ÜˆLÈØ][ÙÈ˜XÚÜËÛÂ›[Üİ^È]™H›È]Y[È][[™ÛÛ[Z\ÜÚ[Ûš[™È[Ü™HÛÜİÈ[Û™^KXÙ[œÚ[™È[™š[˜\HÚ^™BŠØÜËÜ›ØYX\Ü™ËÌ‹]™\œÙKX]Y[Ë›Y
+KˆÛ‹Y]šXÙHÈÛÜÙ\È]Ø\›Üˆ™\›È]\Ëˆ]\ÂŠŠ˜\ÜÚ\İ]™K™]™\ˆHİXœİ]]H›Üˆ[X[ˆ™XÚ]][ÛŠŠˆ8 %ÙYH•SP“ÓÒÈ0©ÌLKŒMK‚‚ŠŠ”ØÛÜH
+ŒJKŠŠˆÚ]T™XY\”ØÜ™Y[˜[™Ú[\ØT™XY\”ØÜ™Y[˜
+H]\ˆ\ÈH™YÚ\İH™XY\‹ÛÂ˜[HÚ[\Ø\È\™HÛİ™\™Y
+KˆH™[XZ[š[™ÈN™XY\œÈ\™H[˜Ú[™ÙYÈHÚ\™YÛÚÈ[™Y\\‚˜[™XYH[™H]™\H™\œÙHÚ\KÛÈ˜[‹[İ]\ÈÚ\š[™ÈÛ›K‚‚ˆÈÈÈM‹ŒHÚ]\ÈÜÚÙ[‹[™[ˆÚXÚ›ÚXÙB‚•™\œÙH[™\Èš\œİ[ˆH8)+x)/¸)-x)/¸),8)cx))H
+
+Š›ÛˆHY˜][
+ŠŠK[ˆÚ]HÛÛ[Y[\H
+Ù™ˆHY˜][
+K‚“Û™H]\˜[˜ÙH
+Šœ\ˆ™\œÙH[™JŠˆ8 %HØ\™]ÙY[ˆ]\˜[˜Ù\È[ˆ[™ÈÛˆHš\İX[[™B˜œ™XZËÚXÚ›ÜˆHÚ]\ZHÜˆÚH[‹[[™H\ÈÚ\™HH™XÚ]\ˆœ™X]\Ë‚‚ŠŠ‘XXÚ™XY[™È[™İXYÙH\ÈÜÚÙ[ˆ[ˆ]ÈİÛˆ›ÚXÙKÜˆ›İ][ŠŠˆ™XYX[İY™]™\ˆİXœİ]]\Â›Û™H[™İXYÙH›Üˆ[›İ\‹ÛÈÚ]\ÈX\™\È^XİHÚ]\ÈÛˆØÜ™Y[‚‚Ÿ™XY[™È[™İXYÙHÜÚÙ[ˆÛİ\˜ÙH›ÚXÙHŸKKHKKHKKHŸX]˜[˜YØ\šH[™\È
+ÈYX[š[™ÒXKRS˜Ÿ[˜[™\Ñ[˜È˜[œÛ]\˜][Û˜
+ÈYX[š[™Ñ[˜[‹RS˜[ÙH[‹UTØŸİXHÛ‹\ØÜ™Y[ˆİZ˜\˜]H[™\È
+ÈYX[š[™ÑİX
+ÜˆH™K\ØÜš\Y˜[˜XÚÊHİKRS˜ŸÛ˜HÛ‹\ØÜ™Y[ˆØ[›˜YH[™\È
+ÈYX[š[™ÒÛ˜
+ÜˆH™K\ØÜš\Y˜[˜XÚÊHÛ‹RS˜‚•HÜÚÙ[ˆ^\™Y›Ü™HÛÛY\Èİ˜ZYÚœ›ÛHHØ[YH™\œÙS[™\ĞS[™ØÈYX[š[™ĞS[™Øš[\œÈHYÙH™[™\œÈÚ]8 %[˜ÛY[™ÈH]]Ü™Y˜]]™HYX[š[™ÜËÚXÚHİXœİ]][Û‚Ûİ[]™HÚ[[H\ØØ\™Y‚‚ŠŠ“Û™HXØÙ[\ˆ[™İXYÙH8 %H[™X[ˆÛ™KŠŠˆH]›İ[Û˜[ÛÛ[\È[™KÔØ[œÚÜš][‚‘]˜[˜YØ\šKÛÈH\[X™\˜][HÙ™™\œÈÛ›HH
+Š’[™X[ŠŠˆ›ÚXÙH›ÜˆXXÚ™XY[™È[™İXYÙBŠ›ÚXÙ\Ñ›Ü•\™Ù]\İÈRS˜›ÚXÙ\ÈÛ›NÈH›ÚXÙHXÚÙ\ˆ™]™\ˆ™\Ù[È[Y\šXØ[‹Ğœš]\ÚÙ]ËŠK‚‘[™Û\Ú\ÈHÛÛH[™İXYÙHÚ]H˜[˜XÚÎˆH]šXÙHÚ]İ][ˆ[‹RS˜›ÚXÙH\ÈÛÛ[[Û‹ÛÈ˜]\‚[ˆÛÈÚ[[]˜[È˜XÚÈÈ
+Š˜[‹UTØÛ›JŠˆ8 %H™X\‹][š]™\œØ[Y˜][[™Û\Ú›ÚXÙH8 %[™Â››Èİ\ˆXØÙ[
+SPÒ×ÓĞĞSX[ˆ›ÚXÙ\ËØ
+Kˆ][‹UTØ›ÚXÙH\È™XXÚX›HÛ›H\È\Âš[š\ÚX›H™\ÛÛ][Ûˆ˜[˜XÚÎÈ]\È™]™\ˆÚİÛˆ\ÈHÚÚXÙKˆ[™KÑİZ˜\˜]KÒØ[›˜YH]™H›Â››Û‹R[™X[ˆXØÙ[[™\™Y›Ü™H›È˜[˜XÚÎˆZ\ˆRS˜›ÚXÙHÜˆ
+[˜]˜Z[X›Jˆ
+0©ÍM‹
+Kˆ[™Û\Ú\Âœİ[[™Û\ÚZ]\ˆØ^KÛÈšX\™OOHÙY[ˆˆÛÈ8 %\È\È[ˆXØÙ[˜[˜XÚÈÚ][ˆÛ™B›[™İXYÙK›İHÜ›ÜÜË[[™İXYÙHİXœİ]][ÛˆH[Ù[H›Ü˜šYË‚‚ŠŠH[™İXYÙHÚÜÙH›ÚXÙHH]šXÙHXÚÜÈ™\ÜÈ™XYX[İY[˜]˜Z[X›H›Üˆ][™İXYÙJŠ‚Š0©ÍM‹
+K˜[Z[™È][ˆ]ÈİÛˆØÜš\[™Ûˆ[™›ÚYÙ™™\š[™ÈHÜÈÈÙ][™ÜÈÈ[œİ[š]ˆH[\›˜]]™H8 %]ZY]HÜXZÚ[™È[™H[œİXY8 %Ûİ[]™HH\Ù\ˆ™XY[™ÈÛ™HØÜš\Ú[HX\š[™È[›İ\ˆ[™İXYÙK[™›İ]›Ü›\ÉÈÚ[[Y˜[˜XÚÈ™Z]š[İ\ˆXZÙ\È]X\ŞHÂœÚ\HXØÚY[ˆHİX\™\È]İ\
+
+X™Y\Ù\Èİ]šYÚÚ[ˆ]˜Z[Xš[]H\È[˜]˜Z[X›XœÛÈH[™Ú[™H\È™]™\ˆ[™Y^]Ø[››İ›ÚXÙK‚‚ŠŠÛÜİÈXØÙ\ŠŠˆİKÚÛˆÛİ™\˜YÙH\[™ÈÛˆ]›ÚXÙH™Z[™È[œİ[YÚXÚ\È\ÜÈÛÛ[[Û‚[ˆ[™Kˆ]\ÈH™X[[Z]][ÛˆÙˆHÛ™\İ\ÚYÛ‹İ\™˜XÙYZ[›H˜]\ˆ[ˆY[‹‚”İÚ]Ú[™ÈH\	ÜÈ™XY[™È[™İXYÙHİÚ]Ú\ÈHÚÛH›ÚXÙHÙXİ[Ûˆ8 %›ÚXÙ\È\™HİÜ™Y\‚›[™İXYÙH
+›ÚXÙPU\™Ù]
+K[™HØ]™YY[YšY\ˆ\ÈÛ›HÛ›İ\™YYˆ]İ[ÜXZÜÈ]›[™İXYÙKÛÈHİ[H™Y™\™[˜ÙHØ[ˆ™]™\ˆXZÈH›ÚXÙHXÜ›ÜÜÈ[™İXYÙ\Ë‚‚‘[™\È\™H›Ü›X[^™Y›ÜˆHŞ[\Ú^™\ˆ
+8)i8¡¤ˆHÙ[[˜ÙHİÜÈ[™Ú[™\Èİ\Ú\ÙH™XYH˜\™B™[™H\È›İ[™ËÜˆ[İY\È™\XØ[[™HŠKˆ
+Š“Û›HHİš[™È[™YÈHŞ[\Ú^™\ˆ\ÂİXÚY
+Šˆ8 %\Ü^YYÚ\™Y[™[™^Y^\È™]™\ˆ[\™Y
+•SP“ÓÒÈ0©ÌLKŒMJK‚‚ˆÈÈÈM‹ŒˆH™XY\ˆÛÛ›Û‚“]™\ÈÛˆH
+Š›[™İXYÙK]ÙÙÛH›İÊŠ‹[›™YÈH
+ŠœšYÚYÙJŠˆÚ[HH8).x)/ø)*8)cx))¸)`Ñ[™Û\ÚÙÙÛH
+ÈY]Ë\›İ][™HÜ›İ\İ^\ÈÙ[™Y
+™XY[İYÛİˆÜÚ][ÛˆXœÛÛ]XšYÚˆM˜™\XØ[HÙ[™YÚ][ˆH›İÉÜÈÛÛ[›Ş
+Kˆ]Ú]È\™XİH™[İÈH™XY[™Ë\›ÙÜ™\ÜÈ˜\‹˜ÛX\ˆÙˆ][™[›[™HÚ]HÙÙÛH8 %Û™H[Ø^\Ë]š\ÚX›KØÜ™Y[‹[]™[ÛÛ›Û\ˆ™XY\‹ˆ]\ÂŠ››İ
+ˆ[ˆ™XY\’XY\˜	ÜÈšYÚÛİ
+ÚXÚØ\ÈÜ˜[\Y™\ÚYHHÛİ[\ˆ
+È™XÛÜ™Y8¥­˜[™™›Ü˜ÙYHÙ[™Y]HÙ™‹X^\ÈšXHHÚY[™YÚYUÚY
+K[™
+››İ
+ˆ[ˆH™\œÙHYÙIÜÂ˜ÜXİ[ÛœØÚXÚ™[™\œÈÛ˜ÙH\ˆYÙH[™Ûİ[]ˆÛÜY\ÈÙˆHØÜ™Y[‹[]™[ÛÛ›Û[Â˜\İ^˜Q]X‚‚’]\ÈH
+Š›X™[Y[
+Šˆ
+XÛÛˆ
+È^
+K›İH˜\™HÛ\ÛÈHY™›Ü™[˜ÙH\ÈYÚX›H8 %B’[KLŒˆš\œİİ]Ø\ÈHÛ™H8¦j˜]MHÚ]›ÈX™[ÚXÚ™XY\ÈXÛÜ˜][Ûˆ[™Ø\ÈX\ŞHÂ›Z\ÜË‚‚Ÿİ]H[š\ÚX›HX™[LL^HX™[ŸKKHKKHKKHKKHŸYH8¥­»î#˜
+ÈX™[ØY™œ›Û‹YY\ÛˆHØY™œ›Û‹][š[Ø\™Xİ]™P›Ü™\˜˜YZKœÛX8).8)`x)*8)aø) ˜È\İ[˜È8*®8*¯¸* ¸*«x*¬ø*âØÈ8,¥x,áø,¬ø,¯Ø™XY[İYŸÜXZÚ[™È8§f¸§f˜
+ÈX™[Ø[YHš[8),8)bø)%x)aø) ˜È]\ÙXÈ8*©x*âø*«x*âØÈ8,­x,¯ø,¬8,¯¸,«˜]\ÙH™XY[™È[İYŸ›È›ÚXÙH[œİ[Y8¥­»î#˜
+ÈX™[[šË[]]YÛˆ\˜ÚY[\ÛÙ]šY\˜XØÙ\ÜÚXš[]Tİ]K™\ØX›Y8).8)`x)*8)aø) ˜È\İ[˜8 )ˆ™XY[İY[˜]˜Z[X›X‚˜8¥­»î#˜Ø8§f¸§f˜Ø\œHH˜Z[[™ÈJÑ‘LH^˜\šX][ÛˆÙ[XİÜˆÛÈ^H™[™\ˆ[Û›ØÚ›ÛYK™]™\ˆ\Â˜ÛÛİ\ˆ[[ÚšH
+0©ÍH››È[[ÚšH‹Ø[YH™X]Y[\ÈH[˜Ú[™È8¦ ø¦/HÛ\È[ˆ0©ÌÌÊKˆH
+Šš\ÚX›B›X™[\ÈØØ[^™Y
+ŠˆÈH™XY[™È[™İXYÙK]H
+Š˜XØÙ\ÜÚXš[]SX™[İ^\È[™Û\Ú[™[‹[ØØ[^™Y
+Š‹HØ[YH[H[™™X\ÛÛˆ\È™XY\’XY\˜	ÜÈ˜XÚÈX™[ˆXY\İ›È\È]]\˜[B˜[™HY˜][™XY[™È[™İXYÙH\ÈXˆH^H8¥­»î#˜\ÈÚ\™YÚ]H™XÛÜ™YX]Y[ÈÛÛ›ÛŠÚXÚİ^\È[ˆHXY\ŠNÈH“\İ[ˆˆX™[\ÈÚ]\İ[™İZ\Ú\ÈHÛÈÚ\™H›İ\X\‚ŠÚ[\ØJKˆH[Ü™H8¡¤ˆ™XY[İY
+œÙ][™ÜÊˆ›İÈÙY\ÈH8¦j˜›İH
+‘PQĞSÕQÑÓT
+H8 %]\ÈBœÙ][™ÜÈ[K›İH^HÛÛ›Û‚‚•Ú]H[Ù™ˆHXY\‹ÚYUÚY\È˜XÚÈÈH˜\™KXÛİ[\ˆÚ^™H8 %Ú]HŒÈÚ[\ØB˜ŒÜˆÚ[ˆH™XÛÜ™Y8¥­˜Ú\™\ÈHXY\‹ˆH[[Ø^\ÈÚİÜÈ]È[X™[›İÈ
+›Â˜ÛÛ\XİÛˆH™XY\ˆØÜ™Y[œÊHÚ[˜ÙHHÙÙÛH›İÈ\ÈH›ÛÛK‚‚ŠŠ•H]]Yİ]H\È[X™\˜]KŠŠˆY[™ÈHÛÛ›ÛÚ[ˆ›È›ÚXÙH^\İÈÛİ[X]™HH\Ù\‚Ú]›ÈØ^HÈX\›ˆÚH™XYX[İY™]™\ˆ\X\œËˆ™\ÜÚ[™È]^Z[œË[™Ûˆ[™›ÚYÙ™™\œÂ˜ÛÛK˜[™›ÚYœÙ][™ÜË•×ÔÑUS‘ÔØÈSÔÈÙ]ÈHÙ][™ÜÈ][ˆÛÜ™È
+›ÈY\[šÈ^\İÈÂ”ÜÚÙ[ˆÛÛ[
+K‚‚ŠŠ”İ\™\ÜÙY[\™[H[™\ˆHØÜ™Y[ˆ™XY\‹ŠŠˆ›ÚXÙSİ™\‹Õ[Ğ˜XÚÈ[™XYH™XYXXÚYÙIÜÂ˜XØÙ\ÜÚXš[]SX™[ÈÛÈ›ÚXÙ\È]Û˜ÙH\ÈHY™Xİ›İH™X]\™K‚‚ˆÈÈÈM‹ŒÈ]\ÙK]]ËXY˜[˜ÙK[™HİÚ\H]Ú‚ŠŠ”]\ÙH\È[™KYÜ˜[[\ˆ[™Y[XØ[Ûˆ›İ]›Ü›\ËŠŠˆ[™›ÚY	ÜÈ˜]]™H[Ù[H\È›Â˜]\ÙXØ™\İ[YX][ÛÈH\™]™\ˆØ[ÈÜYXÚœ]\ÙX8 %]\ÙHİÜÈH[™Ú[™H[™œ™XÛÜ™ÈHÚ[šÎÈ™\İ[YH™K\ÜXZÜÈ][™Hœ›ÛH]Èİ\ˆ]\È[ÛÈHÛ™\İ[X[‚˜™Z]š[İ\‹[™[™\È[ˆx $ÌˆË‚‚‘š[š\Ú[™ÈHYÙHØÜ›ÛÈÈH™^[™ÙY\ÈÜXZÚ[™ËˆH
+Š›X[X[İÚ\H™K]\™Ù]È˜]\ˆ[‚œİÜÊŠˆ8 %H\Ù\ˆØ[ÈHYÙH^H\İ[İ™YËˆH[™[™Ë\YÙH]Ú\İ[™İZ\Ú\ÈB˜ÛÛ›Û\‰ÜÈİÛˆØÜ›Û
+ÚXÚš\™\ÈHØ[YHšY]ØXš[]KÜØÜ›Û[™\œÊHœ›ÛHH\Ù\ˆİÚ\KÚ]˜HL\È˜Z[[™ÈX›İ[˜ÙHÛÈH][K\YÙH›XÚÈİ\ÈÛ™HÙ\ÜÚ[Û‹ˆHYÙHÚ]›È^\ÂœÚÚ\YÈHÚ\\‹]˜[œÚ][ÛˆÙ[[™[
+ŠœİÜÊŠˆHÙ\ÜÚ[Ûˆ˜]\ˆ[ˆ™XY[™ÈXÜ›ÜÜÈB˜›İ[™\H
+ŒJKˆYˆHØÜ›Û™]™\ˆ[™ÈÚ][ˆŒ\ÈHÙ\ÜÚ[Ûˆ[™Ë™XØ]\ÙB˜Û”ØÜ›ÛÒ[™^˜Z[Y\ÈH›Ë[Ü[ˆ]™\H™XY\ˆ[™H[\›˜]]™H\ÈÜXZÚ[™È[ˆ[š\ÚX›HYÙK‚‚ŠŠ”ÜYXÚİÜÊŠˆÛˆ™XY\ˆ^]ÛˆHÛİ\˜ÙRYÚ[™ÙK[™Ú[ˆH\˜XÚÙÜ›İ[™Ëˆ\™H\Â››ÈZ[šK\^Y\ˆ[™›ÈØÚË\ØÜ™Y[ˆİ\™˜XÙH[ˆŒNˆ^Ë\ÜYXÚ^ÜÙ\È›ÈYYXK\Ù\ÜÚ[ÛˆTK[™˜]]ËXY˜[˜Ú[™ÈHØÜ™Y[ˆH\Ù\ˆØ[››İÙYH\ÈÛÜœÙH[ˆÚ[[˜ÙK‚‚ˆÈÈÈM‹]˜Z[Xš[]H\ÈHš\œİXÛ\ÜÈİ]B‚›İ]›Ü›\È˜[˜XÚÈÈH]šXÙHY˜][›ÚXÙH›Üˆ[ˆ[˜]˜Z[X›H[™İXYÙH
+ŠœÚ[[JŠˆ8 %›™Z]\ˆš\™\È[ˆ\œ›ÜˆØ[˜XÚËˆÛÈ›ÚXÙ\È\™H›Ø™Y]İ\\
+Ù]]˜Z[X›U›ÚXÙ\Ğ\Ş[˜Ø˜XÙY˜YØZ[œİHÈ[Y[İ]™XØ]\ÙH[™›ÚY	ÜÈ[™Ú[™Hš[™ÈÛİÛJKHÛÛ›Û\ÈØ]YÛˆH™\İ[˜[™H
+ŠŒÈÈÛ”İ\Ø]ÚÙÊŠˆØ]Ú\ÈHÑSH[™Ú[™H]™\ÜÈH[™İXYÙH[ˆ[Z]È›İ[™Ë‚]˜Z[Xš[]H\È™\ÛÛ™Y
+Š™›ÜˆHXİ]™H™XY[™È[™İXYÙJŠ‹ÛÈ]Ú[™Ù\ÈÚ[ˆH[™İXYÙHÙ\Ë‚•H›Ø™H™K\[œÈÚ[ˆH\›Ü™YÜ›İ[™ÈÚ[H[˜]˜Z[X›KÛÈ[œİ[[™È›ÚXÙH]H[™ÛÛZ[™Â˜˜XÚÈ\İÛÜšÜË‚‚ˆÈÈÈM‹HÙ][™ÜÂ‚ŠŠ“[Ü™H8¡¤ˆ8)$8)*ˆÈ\8¡¤ˆ™XY[İY
+Š‹™[İÈ™XY[™ÈÚ^™Kˆİ]H^ÛÛY\Èœ›ÛB˜™XY[İY›İÓX™[
+™YœË[™Ë]˜Z[Xš[]JX8 %^ÜYœ›ÛHHÚY]ÛÈ›İÈ[™ÚY]Ø[››İ™šY^XİH\È™XY[™ÔÚ^™SX™[Ù\È
+0©ÍÊKˆ™XYÈ8)-¸)cx),¸)bø)%H8)-H8)!x),8)cx))H0­ÈKŒ0åØÜˆ8)"x)*¸),¸)+8)cx))È8)*8).x)`8) ˜‚’XÛÛˆ8¦j»î#˜ÛˆØY™œ›Û‹YY\ˆH›İÈÚ]È
+Š˜Y\ŠŠˆHÛÈ™X]\™K]İ\ˆ[˜ÚÜˆ›İÜÎˆ•SP“ÓÒÂ°©Í‹ŒH[œÈHİ\‰ÜÈš[˜[İ\ÈÈ[™İXYÙH
+È™XY[™ÈÚ^™H[™Hİ\ˆ™\ÛÛ™\È[HH™Y‹ÛÂ˜H]\ˆ›İÈ\ÈØY™H
+Š˜\ÈÛ™È\È›Èİ\ˆİ\\ÈYY›Üˆ]
+Šˆ8 %ŒHYÈ›Û™K‚‚ŠŠ˜™XY[İYÙ][™ÜÔÚY]
+Šˆ\ÈHİXİ\˜[ÛÛ™HÙˆ™XY[™ÔÚ^™TXÚÙ\”ÚY]
+0©ÍÊNˆ˜[œÜ\™[œÛYH[Ù[˜XÚÙ›Ü™\ÜØX›X8¡¤ˆÛÜÙKÜ˜X˜™\‹\˜ÚY[ZYÚYÚ˜Y[È[ËHÛ™B˜]Ûˆ]Ù\È›İ]]ËXÛÜÙHÛˆÙ[Xİ[Û‹ˆİX‹ZXY\ˆ˜[Y\È]H]šXÙH›ÚXÙBŠ¸)"x)*¸)%x),8)(È8)%x)`8)!¸)-x)/¸)'8)/8).8)aÈ8 %8)+¸)/¸)*8)-H8)*¸)/¸)(8)*8).x)`8) ˆŠKˆÙXİ[ÛœÎ‚‚ŒKˆ
+Š¸)!¸)-x)/¸)'8)/È›ÚXÙJŠˆ8 %8).8)cx)-x))8) ÈÈ]]ÛX]XØ\È\È›Ø™Y›ÚXÙ\È
+Š™›ÜˆHXİ]™H™XY[™Âˆ[™İXYÙJŠ‹[š[˜ÙYš\œİXXÚÚİÚ[™ÈHÔÈ›ÚXÙH˜[YK[™\ˆH[™H˜[Z[™È][™İXYÙK‚ˆ™\XÙYHH^Z[™\ˆ
+ÈHË\Ù][™ÜÈÜ
+ÈH¸)*ø)/ø),8))¸)aø)%¸)aø) ˆÈÚXÚÈYØZ[ˆˆ™K\›Ø™HÚ[ˆBˆ]šXÙH\È›È›ÚXÙH›Üˆ]‚Œ‹ˆ
+Š¸)%ø))8)/ÈÈÜYY
+Šˆ8 %H0©ÍMÈ˜]Tİ\\˜x $ÌKH[ˆŒHİ\Ë‚ŒËˆ
+Š¸)%x)cx)+ø)/ˆ8)*¸)(¸)/8)aø) ˆÈÚ]È™XY
+Šˆ8 %8)!x),8)cx))H8)+x)`
+ÛŠH[™8)-x)cx)+ø)/¸)%¸)cx)+ø)/ˆ8)+x)`
+Ù™ŠKXØÙ\ÜÚXš[]T›ÛOHœİÚ]Ú˜‚ˆ
+Š¸).8)`x)*8)%x),8))¸)aø)%¸)aø) ˆÈ™]šY]ÊŠˆ8 %ÜXZÜÈ‘PQS‘×ÔÒV‘WÔĞSTVÛ[™×X™]\ÙYœ›ÛH0©ÍËˆHÛ›HØ^BˆH\Ù\ˆØ[ˆYÙHH›ÚXÙK‚‚”\œÚ\İY]™Y[œÚÜ™XYX[İY
+˜]X›ÚXÙPU\™Ù]8 %Û™HÛİ\ˆ™XY[™È[™İXYÙK˜™XYYX[š[™Ø™XYÛÛ[Y[\X
+K˜[Y]YšY[HšY[ÛˆY˜]K‚‚ˆÈÈÈM‹ˆ]]X[^Û\Ú[Û‚‚”™XÛÜ™Y]Y[È
+0©ÌÍ
+KH˜\[HÛÜ
+0©ÌÍJH[™™XYX[İY\™H
+Š›]]X[H^Û\Ú]™JŠ‹\˜š]˜]YB˜Ü˜ËØ]Y[ËÜ^X˜XÚĞ\˜š]\‹ØˆXXÚÛİ\˜ÙH™YÚ\İ\œÈHİÜ\ˆ[™ÛZ[\È^X˜XÚÈ™Y›Ü™Bœİ\[™Ëˆ\È\ÈH[Ù[HÚ[™Û]Ûˆ˜]\ˆ[ˆHÛÛ^šY[ÛÈ›ÈÛÛœİ[Y\‰ÜÈÛÛ˜XİÚ[™Ù\Ë‚’]\ÈØYX™X\š[™ÈÛˆSÔËÚ\™HH]Y[ÈÙ\ÜÚ[Ûˆ\ÈÛÛ™šYİ\™YZ^Ú]İ\œØ8 %Ú]İ]]B˜šZ˜[ˆ[™HÜÚÙ[ˆ™\œÙH]\˜[H^Hİ™\ˆXXÚİ\‹‚‚šSÔÈ\ÜÙ\È\ÙP\XØ][Û]Y[ÔÙ\ÜÚ[ÛˆYXˆÚ]İ]]U”ÜYXÚŞ[\Ú^™\˜Z[È]ÈİÛ‚œÙ\ÜÚ[Ûˆ[™
+ŠH\™Ø\™H]]HİÚ]ÚÚ[[˜Ù\ÈÜYXÚ
+Š‹ˆ˜YK[Ù™ˆ[™\ˆZ^Ú]İ\œØÂ™Ù\È›İXÚÈİ\ˆ\ÈÛˆSÔÈ8 %HØ[YH™Z]š[İ\ˆ™XÛÜ™Y^X˜XÚÈ[™XYH\Ë‚‚ŠŠ‘š[\ÎŠŠˆ[Øš[KÜÜ˜ËÜ™XY[İYØ
+™YœËØ™\œÙPY\\‹Ø™\œÙTØÜš\Ø˜›Û›İ[˜ÙKØ›ÚXÙ\ËØ
+H0­È[Øš[KÜÜ˜ËØÛÛ^ËÔ™XY[İYÛÛ^Ş˜™XY[İY™YœĞÛÛ^Ş0­È[Øš[KÜÜ˜ËØ]Y[ËÜ^X˜XÚĞ\˜š]\‹Ø0­Â˜[Øš[KÜÜ˜ËÜØÜ™Y[œË×İ\ÙT™XY\”™XY[İYØ0­Â˜[Øš[KÜÜ˜ËØÛÛ\Û™[ËÜ™XY[İYÔ™XY[İY]Û‹Ş0­È™XY[İYÙ][™ÜÔÚY]Ş‚”™\]Z\™\ÈH
+ŠœİÜ™H™[X\ÙK›İ[ˆÕJŠˆ8 %^Ë\ÜYXÚ\ÈH˜]]™H[Ù[K‚‚‹KKB‚ˆÈÈMËˆÛÛ\Û™[ˆ˜]Hİ\\ˆ
+˜]Tİ\\‹Ş
+B‚ŠŠ”\œÜÙKŠŠˆH8¢$ˆKŒ0åÈ
+ØÛÛ›Û›ÜˆH^X˜XÚÈÜˆÜYXÚ˜]Kˆ^˜XİYœ›ÛB˜˜\[P]Y[Ô^Y\˜	ÜÈ[\È›ØÚÈÚ[ˆ™XYX[İY™YYYHØ[YHÛÛ›ÛÛˆHØ[YH™X\ÛÛš[™Â]›ÙXÙY™XY\’XY\˜
+0©ÍÊH[™^šY[
+0©ÍLŠH8 %Û™HÜXËÛÈØ[\œË‚‚ŠŠ”ÜXËŠŠˆÜ[Û˜[][XÈLHØ\[Ûˆ
+[šË[]]Y
+HX›İ™HH›İÈÙˆÌ°åÌÌ˜˜YZK›Y˜]šY\˜X›Ü™\™Y]ÛœÈÚ]8¢$˜Ø
+Ø]N[ˆ[šË\ÛÙ]ÛÜZ]\ˆÚYHÙˆH˜[YBš[ˆHYÙKXÛİ[\ˆ˜XÙH]MÚ]Z[•ÚYˆÎˆH]Ûˆ]]È›İ[™\È\ØX›Y]›ÜXÚ]H[™™\ÜÈXØÙ\ÜÚXš[]Tİ]K™\ØX›Yˆ›Ø]ÛÛ\\š\ÛÛœÈ\ÙH[ˆ\Ú[Û‹™XØ]\ÙHŒBœİ\È[™ÛˆKNNNNNNNNNNNNNNˆ]ÛˆX™[È\™HH[‹[ØØ[^™YÛİÙ\˜È˜\İ\˜ÛÈXY\İ›Â˜Ø[ˆš]™H[H[ˆ[H™XY[™È[™İXYÙK‚‚ŠŠØ[\œËŠŠˆ˜\[P]Y[Ô^Y\˜
+[\Ëx $ÌKKØ\[Ûˆ8)%ø))8)/ÈÈ[\Ø
+H[™˜™XY[İYÙ][™ÜÔÚY]
+ÜYXÚ˜]KØ[YH˜[™ÙK›ÈØ\[Ûˆ8 %HÚY]İ\Y\È]ÈİÛˆÙXİ[Û‚›X™[
+Kˆ›İ[™È[™İ\\™H›ÜÎÈH˜\[H^Y\ˆİÛœÈ^ËX]Y[ÉÜÈ[Z]È[™™XYX[İYİÛœÂ˜Ü˜ËÜ™XY[İYÜ™YœËØ	ÜËÚXÚ[X™\˜][H\XØ]HH[X™\œÈ˜]\ˆ[ˆÚ\™HHÛÛœİ[˜™XØ]\ÙH^H\™HY™™\™[ÛÛ˜Ù\›œÈ]\[ˆÈYÜ™YHÙ^K‚‚ŠŠ‘š[\ÎŠŠˆ[Øš[KÜÜ˜ËØÛÛ\Û™[ËÔ˜]Tİ\\‹Ş‚‚‹KKB‚ˆÈÈNˆİ[˜HZ[[ˆ
+8)!x)-ø)cx)'ø)%x)`¸)'È8)+¸)/ø),¸)/¸)*
+H8 %‘LM‚‚ŠŠ”\œÜÙKŠŠˆH˜Y][Û˜[Í‹Yİ[˜H\ÚZÛÛİHX\œšXYÙKXÛÛ\]Xš[]HØ[İ[][ÛˆÚ]]™\Hİ\š\ÚX›H8 %HØ[Kš]˜]HÛÛ›İH™\™Xİˆ›È™YX[\›H™X]Y[™X\ˆÛÜK™[YYH\Ù[ÜˆY[ˆ›ÛÛˆ\Üİ[\[Û‹ˆ‘ˆØÜËÜ›ØYX\Ü™ËÌM‹Yİ[˜K[Z[[‹›Y‚‚ŠŠ”XÙ[Y[ŠŠˆHØ\™™[İÈİ[™[H[™˜\ÚY˜[ÛˆH8)'8)cx)+ø)bø))8)/ø)-È[™[™È
+[˜Ú[™ÔØÜ™Y[˜	ÜÈ[İ\Ú[™[™Ø
+KÚ]Hİ[™\™™\œÚ[Û™Y‘UÈ˜YÙKˆ\\Ú\Èİ[˜SZ[[˜[œÚYHH
+Š”[˜Ú[™ÈİXÚÊŠˆ
+[˜Ú[™ÔİXÚÔ\˜[S\İ8 %›İH\XØ]H›Ûİ›İ]JNÈ˜XÚÈ[™ØÜ™Y[ˆ˜XÚÚ[™È›ÛİÈH0©ÍLH[İ\ÚØÜ™Y[œË‚‚ŠŠ’[œ]ŠŠˆÛÈš\]Z[Ñ›Ü›XØ\™ÈÙY\H\™Xİ[Û˜[›Û\È
+Š¸)-x),0­ÈÜ›ÛÛJŠˆ[™
+Š¸)-x))ø)`ˆ0­ÈœšYJŠˆ
+™]™\ˆ\Üİ[Z[™ÈH]šXÙHİÛ™\ˆ\ÈHÜ›ÛÛJKˆXXÚÙ™™\œÈ¸)+¸)aø),8)aÈ8)-x)/ø)-x),8)(È8)+ø).x)/¸) HˆÈÛÜHHØ]™Yİ[™[IÜÈ˜[YKÙ]Kİ[YH[È]›ÛHÛ›Kˆ˜[YH\Ù\ÈH0©ÍLˆ^šY[›Ü›X˜\šX[
+
+NÈ]H[™[YH\™H[\™Y›İYÚHÚ\™Y0©ÍL˜HXÚÙ\œÈ8 %H]HšY[X]ÛˆÜ[œÈØ[[™\‘]TXÚÙ\˜[™Ú[ˆH[YH\ÈÛ›İÛ‹H[›[™H™[Z[™\‹\İ[HÛØÚÕ[YTXÚÙ\˜
+L‹Zİ\ˆSKÔHİ\\ŠHÚ]ÈÚ\™HHšY[Ø\Ëˆ˜[YH\ÈÜ[Û˜[\Ü^K[Û›NÈ]H
+VVVKSSKQ
+H[™Zİ\ˆ›[X\™HTÕØ[İ[][Ûˆ[œ]È8 %HXÚÙ\œÈİ[[Z]^XİHÜÙHİš[™ÜËÛÈ˜[Y][Û‹Ü\œÚ[™È\È[İXÚYˆH
+Šˆ¸)'8)cx)'¸)/¸))8)*8).x)`8) ˆ0­È[šÛ›İÛˆŠŠˆ[YHÛÛ›Û\È™\Ù\™Y™\˜˜][H
+]İÜ™\È[
+NÈÚ[ˆH[YH\ÈÛ›İÛˆ]›İY]Ù]H¸).8)+¸)+È8)&¸)`x)*8)aø) ˆ0­ÈÙ[Xİ[YHˆšY[X]Ûˆ™]™X[ÈHİ\\ˆ[™ÛÛ[Z]ÈHŒY˜][ˆ›Èš\XÙH\È™\]Y\İY[ˆŒH
+Û›H[ÛÛˆÛ™Ú]YH\È™YYY
+K[™H›İÈ
+Š›™]™\ŠŠˆ™]\Ù\ÈØØ][Û”XÚÙ\“[Ù[8 %]]\İ›İ]]]HHÛØ˜[[˜Ú[™ÈØØ][Û‹‚‚ŠŠ•[šÛ›İÛˆ[YH\È[ˆ[\˜[›İ›ÛÛ‹ŠŠˆ¸)'8)cx)'¸)/¸))8)*8).x)`8) ˆˆ™]™\ˆİXœİ]]\ÈLŒ[™™]™\ˆ\œÚ\İÈH˜XœšXØ]Y[YKˆH[™Ú[™H[[Y\˜]\È]™\H˜ZÜÚ]˜KØÚ\˜[˜KÜ˜\ÚKÕ˜\ÚXKX›İ[™\HÛ\ÜÚYšXØ][ÛˆH[ÛÛˆØ[ˆØØİ\HXÜ›ÜÜÈH[Œ8 $ÌŒÎNNNXTÕÚ]š[^H
+Ø\\ÚX[ˆ›ÙXİÚ[ˆ›İ[Y\È\™H[šÛ›İÛŠKˆYˆ[ÜÜÚXš[]Y\ÈYÜ™YKH^Xİ™\İ[ÚİÜÈÚ][ˆ˜[[Y\ÈÚXÚÙYˆ›İNÈYˆ[HÛÛİHÚ[™Ù\ËHZ[¸ $ÛX^
+Šœ˜[™ÙJŠˆÚ]H˜\Z[™ÈÛÛİ\ÈÚİÜÈ[œİXY8 %Ú]›ÈÚ[™ÛHX[š[[™›È^Xİ\Ú\™HXİ[Û‹‚‚ŠŠ”™\İ[ŠŠˆ[ˆ^Xİ™\İ[ÚİÜÈHÍ‹\Ú[™XXİ[˜]]™K\İ™ØX[
+HS›İİ\IÜÈÛÛšXÈÜ˜YY[\È[\İ˜]]™HÛ›JKH[›™Y˜[™X™[Ü[Û˜[˜[Y\ËÜ›Û\Ë[™ZYÚ^[™X›HÛÛİH›İÜÈ
+Û›HÛ™HÜ[ˆ]H[YNÈ›İÜÈ^[™ØÛÛ\ÙH[œİ[HÚ]›È[š[X][Ûˆ8 %X]Ú[™ÈH\Ú\™H›ÈØÜ™Y[ˆ[š[X]\È[ˆ^[™X›H›İÈ8 %ÛÈ\™H\È›È[İ[ÛˆÈØ]HÛˆ™YXÙY[[İ[ÛŠKˆXXÚ›İÈÚİÜÈØÛÜ™KÛX^HÛÛ˜\‹H[œ]È\ÙY[™H[™KYš\œİ^[˜][Û‹ˆ˜YKĞšZÛÛİš[™[™ÜÈ\ÙH]›ÚY[˜XÚÙÜ›İ[™Ú]]›ÚYY\^Ø›Ü™\ˆ8 %™]™\ˆÛÛÜ‹[Û›NÈH™\›Èİ^\È[™\œİ[™X›HH^ˆHÜÚKØØ[˜Ù[][Ûˆ˜[›™\ˆİ]\ÈÚXÚ[Hš\™Y[™Ú]\ˆHİ\ÜYØ[˜Ù[][Ûˆ\Y\ËÚ]İ]]™\ˆÚ[[H™]Üš][™ÈH˜\ÙHØÛÜ™Kˆİ[™[™È\ØÛZ[Y\ˆ
+Šˆ¸)+ø).H8)*¸)/¸),8)+¸)cx)*¸),8)/ø)%H8)!x)-ø)cx)'ø)%x)`¸)'È8)%ø)(ø)*8)/ˆ8).x)b8 %8)+¸)/¸),8)cx)%ø))¸),8)cx)-¸)*8).x)aø))8)`K8)*8)/ø),8)cx)(ø)+È8).x)aø))8)`H8)*8).x)`8) ¸)iŠŠ‚‚ŠŠ”Ú\™KŠŠˆ™]\Ù\ÈH0©ÍLH[İ\ÚÚ\™TÚY]
+KL0åÌLÍL™XXİ[˜]]™K]šY]Ë\Úİ8¡¤ˆ^Ë\Ú\š[™Ø
+HÚ]Hİ[˜SZ[[”Ú\™PØ\™ˆHØ\™\ÈHİšXİ[İË[\İ8 %Ü[Û˜[˜[Y\È
+È8)-x),ø)-x))ø)`ˆ›Û\Ë^Xİİ[˜[™ZYÚÛÛ\Û™[ØÛÜ™\Ë\ØÛZ[Y\‹8)d8)-x)aø))¸)/¸) ¸)-¸)/›Ûİ\ˆ8 %[™
+Š›™]™\ŠŠˆÛÛZ[œÈš\]K[YKØØ][Û‹Ø]™Y\›Ùš[HYÜˆY[ˆY]Y]H
+Z[İ[˜SZ[[”Ú\™S[Ù[Ø[››İÙ\šX[^™HH[œ]Øš™Xİ
+KˆÚ\™H\È[˜]˜Z[X›H›ÜˆH[YK][˜Ù\Z[ˆ˜[™ÙK‚‚ŠŠ”š]˜XŞH	ˆ\œÚ\İ[˜ÙKŠŠˆ[œ]È\™HÙ\ÜÚ[Û‹[Û›HHY˜][ˆ[ˆ^XÚ][š]X[K][˜ÚXÚÙY¸)+¸)/ø),¸)/¸)*8)-x)/ø)-x),8)(È8)+ø)/¸))ˆ8),8)%¸)aø) ˆ0­È™[Y[X™\ˆX]Ú]Z[ÈˆÙÙÛHØ^\ÈÛ›H¸)!x)%ø),¸)`8)+8)/¸),8)+ø).H8)*ø)/8)bx),8)cx)+ˆ8)*¸).x),¸)aÈ8).8)aÈ8)+x),8)/ˆ8)+¸)/ø),¸)aø)%ø)/ˆ0­È™Yš[\È›Ü›H™^[YH‹İÜ™\ÈH™\œÚ[Û™Y™XÛÜ™[™\ˆ™Y[œÚ™İ[˜K[Z[[‹Y˜YŒX[™\ÈHš\ÚX›HÛX\ˆXİ[ÛÈH™]š[İ\ÈX]Ú\È™]™\ˆ™\İÜ™Y[\XÚ]KˆØØ[XYÛ›ÜİXÜÈ
+İ\ØÛÛ\]KÜ™]šY]ËÜÚ\™K\ÚY][Ü[™YÛİ[ÊH]™H[™\ˆ™Y[œÚ™İ[˜K[Z[[‹[Y]šXÜÎŒX[™Ø\œH›ÈRKˆ\ˆ•SP“ÓÒÈ0©ÌËØÜ™Y[ˆ[™Ú\™HÛÜHÈ›İ^ÜÙHÛ‹Y]šXÙKÛÙ™›[™KÚ[\›™]ØXØÛİ[ÜİÜ˜YÙH[\[Y[][Ûˆ]Z[Ë‚‚ŠŠLL^H	ˆLNˆ
+0©ÌLŠKŠŠˆÛÛ›ÛÈ8¢iHÈ^[™X›H›İÜÈ^ÜÙH]Ûˆ›ÛKXØÙ\ÜÚX›H˜[YK[™^[™Yİ]NÈHX[[™˜[™ÙHØ\œHØÜ™Y[‹\™XY\ˆİ[[X\šY\ÎÈHš[X\H
+Š¸)+¸)/ø),¸)/¸)*8)%x),8)aø) ŠŠˆXİ[Ûˆİ^\ÈÙ^X›Ø\™\ØY™Kˆ[š\ÚX›HÛÜH[™XØÙ\ÜÚXš[]HX™[ÈÚ\[ˆKÙ[‹ÙİKÚÛˆ8 %İKÚÛˆ™K\ØÜš\H]˜[˜YØ\šHšXHÛÛ[S[™ØØYX[š[™ĞS[™Ø\ˆH[™İXYÙH\ÚYÛ‹[™˜XÙ\È\ÙHØÜš\]Q›ÛØØÜš\›ÙQ›Ûˆ[™Û\ÚXØÙ\ÜÚXš[]HX™[Èİ^HİX›H›ÜˆXY\İ›ËÒ™\İ]™[ˆÚ[ˆHš\ÚX›H™XY[™È[™İXYÙH\È›İ[™Û\Ú‚‚ŠŠÛÛİ\œËŠŠˆØ\›K[X[\ØÜš\ÚÙ[œÈÛ›H8 %\˜ÚY[Ø\˜ÚY[ÛÙ[šØØ[šÓ]]YØY™œ›Û‘Y\ØØY™œ›Û•[ÛÛ]šY\˜]›ÚY[Ø]›ÚYY\Û”š[X\XØ\™Xİ]™Qœ›ÛXˆ›È˜]È™YÙÜ™Y[È›ÈÛ™K[Ù™ˆÛÛİ\œË‚‚ŠŠÛÛ™[[Û‹ŠŠˆHØ[İ[][Ûˆ\È[›™Y[ˆØÜËÜ›ØYX\ØÛÛ™[[ÛœËÙİ[˜K[Z[[‹]ŒK›Y
+™Y[œÚX\ÚZÛÛİK]ŒX
+NˆX›\ËÛX]šXÙ\Ë8)-x),8¡¤¸)-x))ø)`ˆ\™Xİ[Û‹[‹\Ú[ØÛÜ™\ËH^XİMp¬˜\ÚXHÜ]Ë˜[™›İ[™\šY\È[™šZÔ[˜Ú[™ÈšZÛÛİÓ˜YH[ÙYšY\œË[™HÛ™H]Y]X›HšZÛÛİØ[˜Ù[][Ûˆ
+Ø[YH˜\ÚK[Ü™ÜˆÜ˜ZKSXZ]šHJKˆÛÛ™[[Ûˆ]™\È\È]H[ˆİ[˜SZ[[ÛÛ™[[Û‹ØÈHX›HÚ[™ÙH™\]Z\™\ÈH™]ÈÛÛ™[[ÛˆY[™š^\™H™]šY]ËˆÛXZ[ˆÚYÛ‹[Ù™ˆÙˆHX›\È™[XZ[œÈH[X[ˆØ]H
+‘Ø]HJK‚‚ŠŠ‘š[\ËŠŠˆ[Øš[KÜÜ˜ËÜ[˜Ú[™ËÙİ[˜SZ[[‹Øİ[˜SZ[[ÛÛ™[[Û‹Øİ[˜SZ[[‘\Ü^KØİ[˜SZ[[”Ú\™KØİ[˜SZ[[”İ]KØÈÛÛ\Û™[ËĞš\]Z[Ñ›Ü›KŞİ[˜SZ[[”Ú\™PØ\™ŞÈØÜ™Y[œËÑİ[˜SZ[[”ØÜ™Y[‹ŞÈØÜ™Y[œËÔ[˜Ú[™ÔØÜ™Y[‹Ş[˜Ú[™È˜]šYØ][Ûˆ\\ËÜİXÚÎÈÛÛ\Û™[ËÒ[İ\ÚÚ\™TÚY]Ş
+Ú\™Y
+K‚‚ŠŠ•\İËŠŠˆ[˜Ú[™Ë××İ\İ××ËÙİ[˜SZ[[‹™[™Ú[™K\İØ
+›Ü›X[^˜][Û‹]™\HYKÛ˜ZÜÚ]˜KÜ˜\ÚH›İ[™\KHMp¬˜\ÚXHÜ]ËH[L0åÌLİÙY\[›š[™ÈXXÚÛÛİIÜÈÛÛ\]H™XXÚX›H˜[YHÙ]\™Xİ[Û˜[[\ËTÕ\œÚ[™Ë[šÛ›İÛ‹Y^H[[Y\˜][Û‹Ûİ\˜ÙH\š]JKİ[˜SZ[[‹™ÛÛ[‹\İØ
+[™\[™[HX›\ÚYZ[šKÒ›ÜÙHŒÌÍˆ[™Ú]˜KÕ]\˜KP\ÚYHNKKÌÍˆš^\™\È\È]™\HšZÛÛİØ[˜Ù[][Ûˆœ˜[˜Ú[™HØ[YKS˜YHÌÍˆ˜[™Ø\ÙJKØÜ™Y[œË××İ\İ××ËÑİ[˜SZ[[‘^\šY[˜ÙK\İŞ
+Z]\‹\›ÛH]]Ùš[^[œÚ[Ûˆİ]K[šÛ›İÛ‹][YH˜[™ÙKÚ\™H[İË[\İÜZ[ˆ\œÚ\İ[˜ÙJK[™›XY\İ›ËÙİ[˜K[Z[[‹\Û[ÚÙKX[[
+[˜Ú[™Ë\İXÚÈ˜]‹Ø˜XÚË]]Ùš[^Xİ™\İ[^[™š]˜XŞK\ØY™HÚ\™H™]šY]Ë[šÛ›İÛ‹][YH˜[™ÙH8 %[ˆÛˆSÔÈ[™[™›ÚY
+K‚‚‹KKB‚ˆÈÈNKˆÛYKTØÜ™Y[ˆÚYÙ]È
+8).x)bø)+‹x).8)cx)%x)cx),8)`8)*8)-x)/ø)'8)aø)'ÊH8 %‘LMB‚ŠŠ”\œÜÙKŠŠˆ[İ™H™Y[œÚ	ÜÈ™YHYÚ\İYœ™\]Y[˜ŞHÛ[˜Ù\È8 %Ù^IÜÈ™\œÙKÙ^IÜÈ[˜Ú[™Ë[™Ù^IÜÈ˜\H8 %Ù™ˆH\[™ÛÈHÔÈÛYKÛØÚÈØÜ™Y[ˆ\È]ZY][XšY[İ\™˜XÙ\ËÛÈHZ[K\™]\›ˆÛÜ›ÈÛ™Ù\ˆ\[™ÈÛˆH\Ù\ˆ™[Y[X™\š[™ÈÈÜ[ˆH\ÜˆÛˆ[ˆ[\œ\]™H›İYšXØ][Û‹ˆHÚYÙ]È\™HH\˜ÚY[Ş\İ[H™[™\™YÛˆHÔÈØ[˜\Îˆ\˜ÚY[ZH8¡¤ˆ\˜ÚY[8)dœ˜[™X\šËØÜš\X]Ø\™HÙ\šYˆÛÛ[
+Š››È[[ÚšJŠˆ
+0©Í‰ÜÈ[JKˆ”È™XÛÛ\]\ÈH]Y[™NÈ˜]]™HÛÙHÛ›H˜[Y]\ËÙ[XİÈHÛÜœ™Xİ]Y[K[™™[™\œÈ8 %]\™›Ü›\È›È\İ›Û›Û^HÜˆ™]ÛÜšÈÛÜšÈ]˜]È[YK‚‚ŠŠ“Û™HÛÛ[\H\ˆÚYÙ]Ú[™ÈHÚ^™H\ÈH\Ù\‰ÜÈÚÚXÙH
+]YÈŒŠKŠŠˆH][˜ÚZ[\™XÛÙYHX\[™È[œÚYHHÚ[™ÛH˜[XšY[ˆÚ[™8 %Ş\İ[TÛX[™]ÈH™\œÙKŞ\İ[SYY][X™]ÈH[˜Ú[™È8 %ÚXÚ\È^XİH˜XÚİØ\™È›ÜˆHÛÛ[ˆHÚÚØH[˜Ø]YY\ˆ›İ\ˆÛÜ™È[ˆHÛX[Ü]X\™H
+8)"8)-¸)/¸)*8) È8)*¸)cx),8)/¸)(ø))¸) È8)*¸)cx),8)/¸)(ø)bÈ8)'8)cx)+ø)aø)-ø)cx)(8) È8)-¸)cx),8)aø)-ø)cx)(8) È8)*¸)cx),8)'8)/¸)*¸))8)/ø) ø)i0­È8).x)/ø),8)(ø)cx)+ø)%ø )˜
+HÚ[HHÛ™K]ÛÜ™]HXY[™H›Ø]Y[ˆHšY[Ùˆ[\H\˜ÚY[ÛˆHÚYH™Xİ[™ÛKˆ]™\HÛÛ[\H\È›İÈ]È
+Š›İÛˆÚYÙ]Ú[™
+Šˆ8 %HÔÈØ[\H\İÈ[HÙ\\˜][K[™HÚ^™H\ÈXÚÙY]Y[YH[™Ú[™ÙYY\Ø\™È
+SÔÎˆİÚ\HHÚ^™H[ˆHXÚÙ\È[™›ÚYˆ˜YÈHÚYÙ]	ÜÈYÙ\ÊKˆXXÚÚ[™™[™\œÈ
+Š™]™\HÚ^™H]Y™\\Ù\ÊŠ‹ÛÈ›ÈÚ^™H\ÈH[˜Ø]YY\İYÚˆHXÛ\˜][Ûˆ]™\ÈÛ˜ÙH[ˆ[Øš[KÜÜ˜ËİÚYÙ]ËØØ][ÙËØ
+ÒQÑUĞĞUSÑØˆÛÛ[8¡¤ˆ˜]]™HÚ[™Ù™™\™YÚ^™\Ë™XÛÛ[Y[™YÚ^™JH[™Ø][ÙË\İØ˜Z[ÈYˆHSÔÈİ\ÜY˜[Z[Y\ØH[™›ÚY›İšY\œËØ\ÚYÙ]\›İšY\˜™\Ûİ\˜Ù\ËÜˆH[‹X\Ø[\HšYœ›ÛH]‚‚ŠŠ”İ\™˜XÙ\ËŠŠ‚‹H
+Š¸)!¸)'8)%x)/ˆ8)-¸)cx),¸)bø)%H8 %™Y[œÚ™\œÙUÚYÙ]È™Y[œÚ™\œÙUÚYÙ]›İšY\˜
+ÚYH0­È\™ÙH0­ÈÛX[È™\İ]ÚYJKŠŠˆH]\›Z[š\İXÈZ[KPšZİHÙ[Xİ[Ûˆ›ÜˆH]šXÙK[ØØ[^Kˆ
+Š•ÚYJŠˆ
+SÔÈŞ\İ[SYY][X[™›ÚY0åÌˆY˜][Ù[
+HÚ]™\ÈH™\œÙHH[™HÚY]Ø\ÈÜš][ˆ›Üˆ8 %H
+ŠÚÛH™\œÙH›İÙY
+Šˆ\ÈÛ™H\˜YÜ˜\
+›İÙY™\œÙJ
+XˆY\È›Ú[™YÚ]0­ÈZ\œ›Ü™YHHİÚY›İÙY™\œÙX[™HÛİ[ˆY\Ëš›Ú[•Ôİš[™Êˆ0­ÈŠX
+HXÜ›ÜÜÈH™YH[™\ÈHÙ[YÙ]Ë\ÈHÛİ\˜ÙNÈ
+Š›\™ÙJŠˆ
+SÔÈŞ\İ[S\™ÙX[™›ÚY[H[Ù[
+HÚ]™\ÈXXÚYH]È
+Š›İÛˆ[™Hœ›ÛH[™\Ø
+ŠÈ
+ŠœÛX[
+Šˆ
+SÔÈŞ\İ[TÛX[[™›ÚY[HÙ[NÚYJH\ÈHÛ›HÙ[]™XYÈH[›™\‰ÜÈ^Ù\œ
+ÛÓ[™Q^Ù\œ
+K[™›ÜÈHÛİ\˜ÙH8 %[]š]ËˆH[™\œÙH
+ÈÛİ\˜ÙHİ^H[ˆHXØÙ\ÜÚXš[]HX™[ˆ\8¡¤ˆH^XİZ[HšZİH[K‚ˆH
+Š•H^Ù\œ\ÈHÛX[XÙ[İš[™Ë[™Û›HHÛX[Ù[X^H™XY]
+]YÈŒˆš^
+KŠŠˆÚYH™]È]ÛËÛÈÛÓ[™Q^Ù\œ	ÜÈXÚ\˜Xİ\ˆØ\8 %HYÙ]›ÜˆHLÈÜ]X\™H8 %[\Ú^™Y[H™\œÙH\İ]ÛˆHØ\™Ú^™Y›Üˆ™YHMˆ[™\Îˆ‘ÈKŒLˆ
+LÚ\˜Xİ\œÈ›İÙY
+HÚ\Y\È8 )¸)!x)+ø)`x)%x)cx))8) È8)%x)/¸)+¸)%x)/¸),8)aø)(È8)*ø),¸)aÈ8).8)%x)cx))8)bø )˜Ú]]È\™[™H[\H[™]ÈÛÜÚ[™ÈYHÛÛ™Kˆ]™\HÙ[ÚY\ˆ[ˆHÜ]X\™H›İÈ™XYÈH[[™\ØH^[ØY\È[Ø^\ÈØ\œšYY[™]ÈH]›Ü›HÚš[šÈ
+Z[š[][TØØ[Q˜XİÜŠ
+X
+HÜˆ[\Ú^™H
+[™›ÚY™[\Ú^™OH™[™˜ÛˆÚYÙ]İ]X
+HÛ›HÚ[ˆH™\œÙHÙ[Z[™[Hİ™\œ[œËˆØ][ÙË\İØ˜Z[ÈYˆZ]\ˆ˜]]™Hİ\™˜XÙH™XYÈ^Ù\œİ]ÚYH]ÈÛX[Û˜\œ›İÈœ˜[˜ÚÜˆYˆH[™›ÚY]HšY]ÈÜÙ\È]È[\Ú^™Kˆ[Nˆ
+Š˜HØ\[™Y›ÜˆÛ™HÙ[Ú^™H]\İ™]™\ˆ™H\YYÛˆHÚ\™Y^[ØY]ŠŠ‚‹H
+Š¸)!¸)'8)%x)/ˆ8)*¸) ¸)&¸)/¸) ¸)%È8 %™Y[œÚ[˜Ú[™ÕÚYÙ]È™Y[œÚ[˜Ú[™ÕÚYÙ]›İšY\˜
+ÛX[0­ÈÚYH0­È\™ÙH0­ÈØÚÎÈ™\İ]ÛX[
+KŠŠˆ™\™\Ù[Y
+Š’TÕ
+Šˆ]H
+È]HXY[™H
+Èœ˜][™KØ\œZ[™ÈHÙ[XİYÚ]H[™Ø[[™\ˆŞ\İ[Kˆ
+Š”ÛX[
+Šˆ\ÈHÛ[˜ÙH
+]K]Kœ˜]İ[œš\ÙJNÈ
+ŠÚYJŠˆYÈ˜ZHØX[ÛˆH[Z[™È[™NÈ
+Š›\™ÙJŠˆÚ]™\Èİ[œš\ÙHÈ˜ZHØX[ÈXšZš]HX™[Y›İÈXXÚœ›ÛHH‘LM
+0©Í
+H[™Ú[™Kˆ\8¡¤ˆ[˜Ú[™ÈÛˆH™\™\Ù[Y]K‚‹H
+Š¸)'8)*‹x).8)/¸))ø)*8)/ˆ8 %™Y[œÚ˜\[UÚYÙ]
+ÛX[0­ÈÚYH0­ÈØÚÊKŠŠˆ
+Š’˜\[K[Û›JŠˆ
+›İHœ›ØY\ˆ\Ù\Xİ]š]PÛÛ^˜İ\œ™[İ™XZÊ
+X
+Nˆ™XYÈİØ\™Hš\œİLÙˆH^Kİ^Z[™È[Y\ˆLÈØ\[ÛˆÚİÜÈXİX[™XYËÜ›İ[™È[™HÙ\\˜][HÛÛ\]Y˜\KXXİ]™KY^Hİ™XZËˆ^[ØYØ\œšY\È\İ\ÙYX[˜RYØÈ\8¡¤ˆ]X[˜IÜÈÛİ[\ˆÚ[ˆ™\Ù[[ÙHH˜\[HXœ˜\H8 %]™]™\ˆ[™[ÈHY˜][X[˜Kˆ™XY[Û›H[ˆŒKˆ›È[™›ÚY›İšY\ˆY]
+[™›ÚY›İšY\˜\È[™Yš[™Y[ˆHØ][ÙË[™HØ[\H\™Y›Ü™HÙ™™\œÈ›ÈY]Ûˆ›Üˆ]\™JK‚‹H
+ŠšSÔÈØÚË\ØÜ™Y[ˆXØÙ\ÜÛÜH
+\ÙHŠKŠŠˆ[›[™H
+ÛˆH[˜Ú[™ÈÚ[™
+HH™\™\Ù[Y]HÈœ˜]˜[YHÛˆØœÙ\˜[˜ÙH^\ÎÈÚ\˜İ[\ˆ
+ÛˆH˜\[HÚ[™
+HH˜\K[Û›H›ÙÜ™\ÜËÜİ™XZÈÚ]H[Y\šXËİ^İYH]İ\š]™\È[Û›ØÚ›ÛYH
+È[Y\X\˜[˜Ù\ËˆY™\\ÙYÛ›HÛˆHİ\ÜYÔÈ˜[Z[K‚‹H
+Š[™›ÚYÛYKŠŠˆÛÈ™XÙZ]™\œËXXÚÚ]]ÈİÛˆ\ÚYÙ]\›İšY\˜™\Ûİ\˜ÙHÛÈH][˜Ú\‰ÜÈXÚÙ\ˆÙ™™\œÈ[HÙ\\˜][HÚ]HšYÚY˜][Ù[8 %™Y[œÚİÚYÙ]Ü[˜Ú[™×Ú[™›Ø\™Ù]È°åÌ‹™Y[œÚİÚYÙ]İ™\œÙWÚ[™›Ø\™Ù]È0åÌˆ8 %[™›İİ^H™\Ú^™S[ÙOHšÜš^›Û[™\XØ[˜ˆ™[™\š[™È\ÈÚYÚZYÚ™\ÜÛœÚ]™HÚ][ˆHÚ[™
+ÛÛ\Xİ[˜Ú[™È›ÜÈHÚ]H[™˜ZHØX[ÈH™\œÙHÙ[8¢iLN[Ú]™\ÈXXÚYH]ÈİÛˆ[™KHÙ[NÚYH›ÜÈÈH^Ù\œ[™]™\][™È™]ÙY[ˆ›İÜÈH[[™\ØXÜ›ÜÜÈ™YH[™\ÊKˆZYšYÚ™Yœ™\Ú\È
+Š˜™\İYY™›Ü
+Š‹™]™\ˆ^Xİ8 %]™\H^[İ]^ÜÙ\ÈH™\™\Ù[Y]H[™™Z™XİÈ^\™Y]K‚‹H
+Š”ÙXİ[Ûˆ^YXœ›İÜÊŠˆ
+8)!¸)'8)%x)/ˆ8)-¸)cx),¸)bø)%X8)'8)*‹x).8)/¸))ø)*8)/˜
+H\™HHÛ™HYXÙHÙˆÚYÙ]ÛÜHH^[ØYÙ\È›İØ\œKÛÈ›İ˜]]™Hİ\™˜XÙ\ÈØØ[^™H[H[ˆ[›İ\ˆ™XY[™È[™İXYÙ\È8 %^H\ÙYÈ˜[˜XÚÈÈ]˜[˜YØ\šH[œÚYHHİZ˜\˜]KÒØ[›˜YHÚYÙ]‚‚ŠŠ’[‹X\İ\™˜XÙ\ËŠŠ‚‹H
+Š“[Ü™H›İÊŠˆ8 %8).x)bø)+‹x).8)cx)%x)cx),8)`8)*8)-x)/ø)'8)aø)'Ø[ˆH\Ü›İ\Ùˆ[Ü™TØÜ™Y[‹Ş
+XÛÛˆ8¥©˜\İQH›[Ü™KZÛYK]ÚYÙ]È˜
+KÚ]HÛ™K\™[X\ÙH‘UÈX™[8¡¤ˆÚYÙ]Ø[\XÛˆH[Ü™HİXÚÈ
+[Ü™TİXÚÓ˜]šYØ]Ü‹Ş
+K‚‹H
+Š•ÚYÙ]Ø[\JŠˆ
+[Øš[KÜÜ˜ËÜØÜ™Y[œËÕÚYÙ]Ø[\TØÜ™Y[‹Ş
+H8 %Û™HØ\™\ˆÚYÙ]Ú[™XXÚ™[™\œÈH]™H™]šY]Èœ›ÛHH
+ŠœØ[YH˜[Y]Y^[ØYÛÛ˜Xİ
+ŠˆH˜]]™HÛÛœİ[Y\œÈ™XY
+ÛÈH™]šY]ÈØ[ˆ™]™\ˆÛZ[Hœ™\Ú™\ÜÈHÚYÙ]ÛÛ‰İ]™JH]]Ú[™	ÜÈ
+Šœ™XÛÛ[Y[™Y
+ŠˆÚ^™H8 %H™\œÙH˜XÜÚ[Z[H\™Y›Ü™HÚİÜÈHÚYHÙ[	ÜÈ›İÙY[™\œÙHİ™\ˆ™YH[™\Ë›İHÛX[Ù[	ÜÈ^Ù\œ8 %[ˆH
+ŠœÚ^™H›İÊŠˆ\İ[™ÈHÚ^™\È]Ú[™Ø[ˆ™HXÙY]Ú]]È™\İÚ^™HX\šÙY
+ØY™œ›Û•[[ØY™œ›Û‘Y\^ÈX™[Èœ›ÛHÚYÙ]Ú^™SX™[
+
+X[ˆ[›İ\ˆ[™İXYÙ\ÊK[ˆ8 %[™›ÚYÛ›K[™Û›H›ÜˆHÛÛ[\H]\ÈH›İšY\ˆ8 %H
+Šœ\‹ZÚ[™
+Šˆ™\]Y\İ[\ÚYÙ]
+
+X]Ûˆ
+\İQHÚYÙ]XY^ØÛÛ[H˜
+H][œÈ
+]
+ˆÚYÙ]˜]\ˆ[ˆÛ™HØ]ÚX[ˆH˜XÜÚ[Z[HÙY\È]ÈÚ[™ÛHXØÙ\ÜÚX›X›ÙNÈHÚ^™H›İÈ\ÈÛ™HÛÛXš[™YLL^H›ÙHÛÈH[È\™H›İ™XYÛ™KXK[Û™K[™HY]Ûˆİ^\ÈH™X[]Ûˆİ]ÚYH›İˆY[œİXİ[ÛœÈ\™H]›Ü›K\ÜXÚYšXÈ[™›İÈØ^HİÈÈÚÛÜÙKØÚ[™ÙHHÚ^™H
+SÔÎˆİÚ\HÚY]Ø^\È[ˆHXÚÙ\È[™›ÚYˆÛ™Ë\™\ÜÈ[™˜YÈHYÙ\ÊKˆ™XÛİ™\HÛÜH™[™\œÈ[ˆHØ\™ÈÚ[ˆH^[ØY\ÈZ\ÜÚ[™ËÙ^\™YØÛÜœ\ˆ™Yœ™\Ú\ÈÛˆ›Øİ\ËÛˆHHÈÛÚ[HXİ]™K[™Ûˆ\›Ü™YÜ›İ[™‚‹H
+Š’ÛYH\ØÛİ™\ˆØ\™
+Šˆ
+0©ÌNÈÛYTØÜ™Y[‹ŞÜİYÚØ
+H8 %Û™H][˜Ú\™[X\ÙH™X]\™PØ\™ÜİYÚ
+Ù^Nˆ	ÚÛYK]ÚYÙ]ÉØ\Ó™]Ø8)-x)/ØÛ\[ˆHØY™œ›Û‘Y\Ø\ÙÜ˜\K[X˜Ü˜[[X\ˆÙˆH0©Íˆ8).8) ¸)%x),¸)cx)*ˆØ\™
+HÚÜÙHÕHÜ[œÈHÚYÙ]Ø[\HšXH›Ûİ˜]‹›˜]šYØ]J	Ó[Ü™UX‰ËÈØÜ™Y[ˆ	ÕÚYÙ]Ø[\IÈJXˆÜ™\ˆ\ÈÚY™›Y\ˆÜ[ˆZÙH]™\Hİ\ˆÜİYÚ‚‚ŠŠ”™XÛİ™\HÈ^\™Yİ]\ËŠŠˆH˜]]™H™XY\ˆ˜[Y]\ÈØÚ[XK™\]Z\™YšY[Ë]\Ë[™œ™\Ú™\ÜÈ™Y›Ü™H™[™\š[™Ë[™˜Z[È
+Š˜ÛÜÙY
+Šˆ8 %]™]™\ˆÚİÜÈ\X[HXÛÙY˜[Y\ÈÜˆ[ˆÛ[HX™[Y\ÈÙ^Nˆš\œİ\[‹ÛZ\ÜÚ[™È8¡¤ˆ8)-x)/ø)'8)aø)'È8))8)b8)+ø)/¸),8)%x),8)*8)aÈ8).x)aø))8)`H8)-x)aø))¸)/¸) ¸)-¸)/8)%¸)bø),¸)aø) ˜ÈÛÜœ\Ú[˜ÛÛ\]X›H8¡¤ˆHØ[YHØY™HÜ[‹X\Ø\™È[˜Ú[™È^\™Y8¡¤ˆ8)*¸) ¸)&¸)/¸) ¸)%È8))8)/¸)'8)/8)/ˆ8)%x),8)*8)aÈ8).x)aø))8)`H8)-x)aø))¸)/¸) ¸)-¸)/8)%¸)bø),¸)aø) ˜Ú]›ÈÛ]NÈ™\œÙH^\™Y8¡¤ˆH™]]˜[Ü[‹X\Ø\™È˜\[HÛ˜\ÚİÛ8¡¤ˆH™Yœ™\Ú›Û\
+H[‹X\Ø[\H›ÜÈÈH™XÛİ™\HØ\™
+K™]™\ˆ[ˆÛÛİ[\ÈÙ^IÜËˆHİXØÙ\ÜÙ[[‹X\Üš]H™\]Y\İÈ[ˆ[[YYX]H˜]]™H™[ØY˜]\ˆ[ˆØZ][™È›ÜˆH™^[Y[[™HXÚË‚‚ŠŠ\˜Ú]Xİ\™KŠŠˆH™\œÚ[Û™Y[™K[Û›HØİ[Y[8 %ÚYÙ]^[ØYŒX
+[Øš[KÜÜ˜ËİÚYÙ]ËØÛÛ˜XİØˆØÚ[XU™\œÚ[Û˜›İ™[˜[˜ÙKØØ[XHŒMY^HTÕ[˜Ú[™ÈÚ[™İËH]šXÙK[ØØ[™\œÙHÚ[™İË[™H˜\[HÛ˜\Úİ
+KˆH
+Šœ\™H[›™\ŠŠˆ
+[›™\‹Ø8 %›È™XXİÜİÜ˜YÙKÛ™]ÛÜšËİØ[XÛØÚËÛ˜]]™JHZ[È]Y[šY\ÎÈH
+Š™Y™\œ™YÛÛÜ™[˜]ÜŠŠˆ
+ÚYÙ]ÛÛÜ™[˜]Ü‹Ş[İ[Y[ˆ\Şİ]ÚYH˜]šYØ][ÛÛÛZ[™\˜
+H[œÈ
+˜Y\Šˆ[\˜Xİ[Û“X[˜YÙ\˜Ù]\È8 %][˜[ZXØ[H[\Ü
+
+XÈH[›™\ˆÛÈH[˜Ú[™ÈÜ˜\™]™\ˆØYÈÛˆÛYIÜÈš\œİYœ˜[YH]8 %Y\\ÈHHİX›HÙ^Hİ™\ˆ^KÛØØ][Û‹ØØ[[™\‹Û[™İXYÙKÚ˜\[H™]š\Ú[Û‹›İ\ÈÜš]\Ë]ÛZXØ[H\œÚ\İË[ˆ™\]Y\İÈH˜]]™H™[ØYˆ˜[œÜÜ\ÈH\Ü›İ\š[HÛˆSÔÈ
+Ü›İ\˜ÛÛKœ˜\Ú[Ú\›XK™Y[œÚÚYÙ]Ø[Øš[KÛ[Ù[\ËÚÛYK]ÚYÙ]ËZ[ÜËØ
+H[™HYXØ]YÚ\™Y™Y™\™[˜Ù\È^[ØYÛˆ[™›ÚYˆY\[šÜÈ\ÙHH™Y[œÚ‹ËİÚYÙ]Şİ™\œÙ_[˜Ú[™ß˜\[_XØÚ[YH
+Y\[šËØ
+K\Ü]ÚYÛˆÛÛ
+ÈØ\›Hİ\œ›ÛH\Ş‚‚ŠŠ“˜]]™H\™Ù]ËŠŠˆH™X[ÚYÙ]Ú]
+Š˜\^[œÚ[ÛŠŠˆ\™Ù]
+™Y[œÚÚYÙ]Ø[™HY8 )™Y[œÚÚYÙ]ØSÔÈMŠÊHÙ[™\˜]YHHÓ‘ÈÛÛ™šYÈYÚ[œÈ
+[Øš[KÜYÚ[œËİÚ]ÛYUÚYÙ]ËšœØÚ]ÛYUÚYÙ]Ò[ÜËšœØÛİ\˜Ù\È[™\ˆ[Øš[KÜYÚ[œËÚÛYK]ÚYÙ]ËØ
+KÚ]\Ü›İ\[][Y[ÈÛˆ›İ\
+È^[œÚ[Ûˆ[™H›İ\‹[[™İXYÙHÙ\šYˆ˜XÙ\È
+›İÈÙ\šYˆ]˜[˜YØ\šKÑİZ˜\˜]KÒØ[›˜YH
+È[\‹LÍŒ
+HÛÜYY[ÈH^[œÚ[Û‹ˆ[™›ÚYÚ\È[ˆ\ÚYÙ]›İšY\ˆ
+È™[[İUšY]ÜÈ[™\ˆHØ[YHYÚ[‹ˆ[Øš[KÚ[ÜËØ\È™XZ[İ]]
+Ú]YÛ›Ü™Y
+H8 %HYÚ[ˆ\ÈHÛİ\˜ÙHÙˆ]‚‚ŠŠ‘\ÚYÛˆÛÛ\X[˜ÙH
+0©Ì‹ğ©ÌËğ©ÎJKŠŠˆH[‹X\Ø[\H
+ÚYÙ]Ø[\TØÜ™Y[˜
+H˜]ÜÈÛÛİ\œÈœ›ÛH\ÙU[YJ
+XÙ[ÛY]Hœ›ÛHHÚ\™YÜXÚ[™ØØ˜YZXØØ[\È
+™]šY]ÈØ\™È\ÙHH˜YZK›ØØ\™ÛÜ›™\‹HÕH\ÈH˜YZKœ[
+K[™H™]šY]È^YXœ›İÈœ›ÛHHÚ\™Y
+Š˜^YXœ›İÕ^İ[J[™ÊX
+Šˆ[\ˆ
+0©Í
+H8 %][XÈÛÜ›[Ü˜[
+È˜XÚÚ[™È›Üˆ[‹ØÜš\Ù\šYˆÚ]
+Š››ÊŠˆ˜XÚÚ[™È›ÜˆKÙİKÚÛ‹ÛÈH]˜[˜YØ\šHÚ\›Ü™ZÚH\È™]™\ˆÜ]ˆH™]šY]ÈØ\™ÉÈ˜XÜÚ[Z[H›ÙKÚXY[™HÚ^™\È\™H^[İ]][™YÈZ\œ›ÜˆHÔÈÚYÙ]
+ZÙHH0©ÍMÚ\™PØ\™
+H[™İ^H8¢iLLˆÛˆH˜]]™HÚYK[YHÚÙ[ˆ˜[Y\È\™HZ\œ›Ü™Y[ÈH^[œÚ[Ûˆ›İYÚ
+Š›Û™H™]šY]ÙYX\[™ÊŠˆ
+ÚYÙ][YX[ˆ™Y[œÚÚYÙ]ËœİÚY8 %\˜ÚY[ÛÙØ[šØØ[šÓ]]YØØY™œ›Û‘Y\ØÛÛ›İØØ]\™YÛÛÜŠ™Y¸ )ŠX]\˜[ÎÈH[™›ÚY™[[İUšY]ÜÈ^[İ]Z\œ›ÜœÈHØ[YH^
+Kˆ™XØ]\ÙHHÚYÙ]›Ü˜Ù\ÈHš^YYÚ\˜ÚY[ÛÙÛÛZ[™\ˆ˜XÚÙÜ›İ[™
+Š™]™\HÛ\\ÈÚ]™[ˆ[ˆ^XÚ]ÚÙ[ˆÛÛİ\ŠŠˆ8 %[šØ›Üˆ]\Ëİ™\œÙKÛ[Y\˜[Ë[šÓ]]Y›ÜˆÛİ\˜ÙKÛY]Y]KÜ›İ[™[™\ËØY™œ›Û‘Y\›Üˆ^YXœ›İÜËÛÛ›ÜˆH8)dœ˜[™8 %[™˜]]™H^
+Š›™]™\ŠŠˆ˜[È˜XÚÈÈİÚYRIÜÈØÚ[YKXY\]™Hœš[X\XØœÙXÛÛ™\XÚXÚÛİ[[™\ÈYÚÚY\È[ˆ\šÈ[ÙH
+[š\ÚX›HÛˆHÜ™X[JH[™]™[ˆ[ˆYÚ[ÙK™[™\ˆœÙXÛÛ™\X\ÈHİX‹PPHØ\ÚY[İ]Ü˜^KˆÙXİ[Û‹[X™[^YXœ›İÜÈ™[™\ˆ[ˆHØÜš\Ù\šYˆ›ÜˆKÙİKÚÛˆ
+[\ˆ›Üˆ[ŠNÈ^Ûˆ\œ˜XÛİK][Yİ\™˜XÙ\È\Ù\È]›ÚYY\ˆYX[š[™Ù[ÚYÙ]^İ^\È
+Š¸¢iLL
+Šˆ
+X™[È]Ø[‰İš]\™H™[[İ™Y›İÚ[šÊNÈ[Y\˜[Ëİ[Y\ËÜİ]\ÈX™[È\ÙHH›Û‹Z][XÈ
+Š¸¢iMŒ
+Šˆ˜XÙH8 %][XÈÛÜ›[Ü˜[\È[Z]YÈÚÜ›ÜÙH›İ\š\Ú\ÎÈİ]H\È™]™\ˆÛÛİ\‹[Û›H
+Hİ™XZÈØ\œšY\ÈH[X™\‹ÛX™[]›ÚYÚ[™İÜÈØ\œHZ\ˆ˜[Y\ÊNÈH™\œÙH\ÈH]\›Z[š\İXÈÛË[[™Hš]Ú]H[^[ˆHXØÙ\ÜÚXš[]HX™[[™\™ÙK]^Û˜\ÚİÈ]\İ›İÛ\]˜[˜YØ\šHX]˜\Ë‚‚ŠŠ•\İËŠŠˆ\™KÙš^\™HİZ]\È[™\ˆ[Øš[KÜÜ˜ËİÚYÙ]Ë××İ\İ××ËØ8 %ÛÛ˜Xİ
+ØÚ[XH›İ[™]š\ÈZ\ÜÚ[™ËØÛÜœ\Ú[˜ÛÛ\]X›KÙ^\™Y™Z™Xİ[ÛÈ[Y›İ\‹[[™İXYÙ\È™\]Z\™YÈY\ZÙ^HÙ[œÚ]]š]JKØ][ÙØ
+ÛÛ[8¡¥Ú^™H\š]HXÜ›ÜÜÈHØ[\KHİÚYİ\ÜY˜[Z[Y\ØHÛİ[ˆ›İšY\œËHX[šY™\İ™XÙZ]™\œÈ[ˆÚ]ÛYUÚYÙ]ËšœØ[™H\ÚYÙ]\›İšY\˜Û^[İ]™\Ûİ\˜Ù\È^H˜[YH8 %\ÈH™\œÙKZ\Ë]ÚYKYš\œİÈ[˜Ú[™ËZ\Ë\ÛX[Yš\œİ[H\ÈÙXİ[Ûˆ^\İÈ›ÜŠK[›™\˜
+˜\Hİ™XZËŒLTÕœÈ]šXÙK[ØØ[›İ[™\šY\ËÛË[[™H]\›Z[š\ÛJK[”^[ØY
+™X[MY^H^[ØY›ØÙ\ÜËUˆ\ÛÛ][ÛŠKY\[šØ
+™\œÙKÔ[˜Ú[™ËÚ˜\[H\œÙH
+È›İ][™È
+ÈÛÛ\İ\™]JKİ\\
+ÛÛÜ™[˜]ÜˆÙ\È›Èİ]XÈ[˜Ú[™È[\ÜÈÛ™HSÔÈÚ[™\ˆÛÛ[\JKˆHÛÛ[Z]Yš^\™H
+š^\™\ËİÚYÙ]\^[ØY]ŒKšœÛÛ˜
+H\ÈXÛÙYH\TØÜš\İÚY[™Ûİ[ˆÈ[ˆÜ›ÜÜË[[™İXYÙH\š]KˆXY\İ›È[Øš[KË›XY\İ›ËÚÛYK]ÚYÙ]Ë\Û[ÚÙKX[[Ûİ™\œÈH[Ü™K\›İÈ8¡¤ˆØ[\H][™H™YHY\[šÜËˆ
+Š‘]šXÙK[Û›HØ]\ÊŠˆ
+‘LMH0©ÍKğ©Î›İ]]ÛX]X›H\™JNˆPTÈ][K]\™Ù]ÚYÛˆ
+È\ÚXØ[Y]šXÙH[œİ[\‹\Ú^™H™[™\‹Õ›ÚXÙSİ™\‹Û\™ÙK]^ØÜ™Y[œÚİÈ8 %›İÈ
+Š™]™\HÚ[™0åÈ]™\HY™\\ÙYÚ^™JŠ‹Ú[˜ÙHXXÚ\ÈH™X[XÙ[Y[H\Ù\ˆØ[ˆÚÛÜÙH8 %[™H\‹ZÚ[™[™›ÚY[ˆ›İË‚‚‹KKB‚ˆÈÈŒˆ]™[]Z\˜]š[™\ˆ
+8)-¸)`x)+H8)+¸)`x).x)`¸),8)cx))8)%¸)bø)'‘LMŠB‚ŠŠ”\œÜÙKŠŠˆ[œİÙ\ˆ
+ˆÚXÚ^HÚİ[HÈ\ÈÛÈŠˆœ›ÛHHÚ\Y[˜Ú[™ËÛ]Z\˜]Ú[İ\Úš[Z]]™\È8 %˜[šÙY^\ÈÚ]H]\ÜXÚ[İ\ÈÚ[™İÜÈ[œÚYHXXÚ[HÙ™›[™Kˆ[œİÙ\‹Yš\œİˆH™XÛÛ[Y[™][ÛˆXYÎÈH[˜Ú[™È™X\ÛÛš[™È\È[œÜXİYÙXÛÛ™‚‚ŠŠ”İXİ\™KŠŠˆ›İ\ˆØÜ™Y[œÈ[ˆH[˜Ú[™ÈİXÚÈ
+]Z\˜]š[™\˜8¡¤ˆ]Z\˜]™\İ[Ø8¡¤ˆ]Z\˜]^Q]Z[ÈXZš^\Ø™\ÚYH[JN‚‚ŒKˆ
+Š“ØØØ\Ú[ÛˆXÚÙ\ŠŠˆ
+]Z\˜]š[™\”ØÜ™Y[˜
+H8 %HÛ™HXÚ\Ú[Û‹ˆHN\›İÈ\İÙˆHÚ^ØØØ\Ú[ÛœÈœ›ÛHU‘S•Ô•STØ
+[˜Ú[™ËÙ]™[]Z\˜]Ø
+KXXÚ›İÈ]˜[˜YØ\šH]H
+ÈÛİ[\œ\Ø\[Û‹[ˆH
+Š¸)-x)/ø)-¸)aø)-È8)-¸)`x)+H8))¸)/ø)*ÈÜXÚX[]\ÜXÚ[İ\È^\ÊŠˆÛÜˆ
+XZš^\Ø
+KˆHÚ[™İÈ\Èš^Y]’S‘T—ÕÒS‘Õ×ÑVTØ
+ŒÈ[ÛÊNÈ›È˜[™ÙHÚÛÜÙ\ˆÛˆHš[X\H]‚Œ‹ˆ
+Š”˜[šÙY™\İ[ÊŠˆ
+]Z\˜]™\İ[ÔØÜ™Y[˜
+H8 %
+Š¸).8),8)cx)-x)bø))8)cx))8)+ˆ8))8)/ø))x)/ø)+ø)/¸) JŠˆ
+˜[šÈHZÙ\ÈHØ\™Xİ]™X™X]Y[
+È[]˜][Û‹›YYÈH˜[šËLHY\ˆ[™HØ\œšY\ÈH›İ™[˜[˜ÙHİY™š^
+Š°­È8))¸)`ø)%x)cx)*¸) ¸)&¸)/¸) ¸)%È8)*¸))¸)cx))ø))8)/ÊŠŠH[ˆ
+Š¸)!x)*8)cx)+È8)"x)*¸)+ø)`x)%x)cx))8))8)/ø))x)/ø)+ø)/¸) JŠ‹ˆXXÚØ\™ˆÚÜ]H
+ÈÙYZÙ^H8¡¤ˆ]ZY]Y\ˆ^8¡¤ˆ
+ŠH™\İÚ[™İÈ\ÈHÛZ[˜[[[Y[
+Šˆ
+Ø\™[™XMÊKˆÛÈY\œÈÛ›H8 %
+Š¸)-¸)cx),8)aø)-ø)cx)(È8)+¸))ø)cx)+ø)+ŠŠˆ8 %™]™\ˆHØÛÜ™H
+H0©ÍLH›Ë[XÚË\ØÛÜ™H[H^[™È\™JKˆ
+Š‘[\K]Ú]\™X\ÛÛŠŠˆH™\›Ë\™\İ[Ú[™İÈ™[™\œÈHÛÛx)iHØ\™˜[Z[™ÈHÛZ[˜[ÜÚ\ÈÚ]Z\ˆ^KXÛİ[Ë[ˆ
+Š¸)!ø).8)%x)aÈ8)+8)/¸))ˆ8)*¸).x),¸)`8))8)/ø))x)/ø)+ø)/¸) JŠˆ8 %Hš\œİ]X[YZ[™È^\È™^[Û™HÚ[™İÈ
+HÛÚÈÙY\ÈØØ[›š[™ÈÈŒŒ^\ÊK‚ŒËˆ
+Š‘^H]Z[
+Šˆ
+]Z\˜]^Q]Z[ØÜ™Y[˜
+H8 %
+Š[œİÙ\ˆ8¡¤ˆXİ[Ûˆ8¡¤ˆ]šY[˜ÙKŠŠˆH[œİÙ\ˆ›ØÚÈ™]\Ù\ÈHØ\™Xİ]™XÜ˜YY[
+È8)iHX\šÎˆ]K[˜Ú[™È[™KY\ˆ[ÛˆÛÛÚ\™Ø
+ÜˆH\œ˜XÛİH
+››İ\İZ]X›Jˆ[Ûˆ]›ÚYÚ\™Ø
+K[™H™\İÚ[™İÈ]Ø\™[™XŒ‹ˆ™[İÈ]H
+Š¸))¸)/ø)*8)%x)aÈ8).8)+x)`8)-¸)`x)+H8).8)+¸)+ÊŠˆ[[šÜÈÈHÚ\Y]Z\˜]]Z[
+È]S\ÈX
+K[™H
+Š”Ú\™P]ÛŠŠˆ[ˆHÜ˜\ˆ
+Ú\™XX›HH›Û‹Y^ÛYY^\ÈÛ›JHØ\\™\È]Z\˜]š[™\”Ú\™PØ\™Ù™‹\ØÜ™Y[ˆ8 %ØØØ\Ú[Û‹]K[˜Ú[™È[™KY\ˆ
+ÈÛÛ™[[Û‹™\İ
+È™^Ú[™İÜË\›Ú][™K8)d8)-x)aø))¸)/¸) ¸)-¸)/œ˜[™8 %šXHHØ[YHšY]Ë\Úİ8¡¤ˆ^Ë\Ú\š[™Ø\[[™H\È]Z\˜]]Z[ØÜ™Y[˜ÈHØ\™Ø\œšY\È›È\œÛÛ˜[]HHÛÛœİXİ[Û‹ˆ]šY[˜ÙH™[™\œÈ[™\ˆHXİ[ÛœÎˆ8)!x)*8)`x)%x)`¸),‹ø).8)/¸)+¸)/¸)*8)cx)+È˜XİÜˆ›İÜËH[\‹[ØØØ\Ú[ÛˆÜÚHÚXÚÛ\İ
+
+Š¸)"x)*¸).8)cx))x)/ø))È8)*8).x)`8) ŠŠˆ8 %ÛÜ™Ë™]™\ˆÛÛİ\ˆ[Û™K0©ÌLŠK[™\È™YH\\ˆÚ[™İÜÈÛˆÛÛ[›İÜËˆ›Ûİ\ˆ
+¸)*¸),8)+¸)cx)*¸),8)/¸)#ø) H8)+x)/ø)*8)cx)*8).x)bÈ8).8)%x))8)`8).x)b8) ¸)i8)*¸)`x),8)bø).x)/ø))8).8)aÈ8)*¸)`x)-ø)cx)'ø)/È8)%x),8)aø) ¸)i
+‚ˆ
+ŠXZšØ[[™\ŠŠˆ
+XZš^\ÔØÜ™Y[˜
+H8 %^\È™YY[™È›ÈÚYK™\ÛÛ™YHH
+Š™™\İ]˜[[™Ú[™JŠˆ
+P•R’Ô•SWÒQØ[˜Ú[™ËØXZš]Z\˜]Ø
+H\ÈÛÛ\]Yİ\KÔ˜]šH\ÚXH^\ËˆH™\İ]˜[™\ÛÛ™H\È›İ[™YH]È
+Š™]HÜš^›ÛˆÛ›JŠˆ8 %HÛİ[Ø\Ú[[H[˜Ø]YH\İÈ\ÜÙZ˜H\ÈH\ÚXH^\È›ÜˆHÚÛHÙˆ\ÙHH
+•SP“ÓÒÈ0©ÌMË
+H8 %[™[ˆXZš^H›İÈYÈH
+ŠœÙX\ÛÛ˜[
+Šˆ˜\œÈ[ˆHš[™\ˆ
+Ú]\›X\Ëİ\KÜÚZÜ˜H\İJHÛÈHÛÈØÜ™Y[œÈØ[››İÛÛ˜YXİXXÚİ\ˆÛˆÜÙKˆXXÚ›İÈ›İ]\ÈÈ]^IÜÈ]Z\˜]]Z[ˆ]Ú\™\ÈHš[™\‰ÜÈ^HØXÚH[™
+ŠœZ[È›ÙÜ™\ÜÚ]™[JŠˆ8 %HÚX\
+™XÛÛ\]Y
+H™\İ]˜[^\È\X\ˆš\œİ[ˆHİ\KÔ˜]šH\ÚXH^\Èİ™X[H[ˆ8 %ÛÈHØÜ™Y[ˆ™]™\ˆÚ]ÈÛˆH˜\™HÜ[›™\ˆ
+HX\›Y\ˆœİXÚÈÛˆÛXÚÈˆÛˆH™X[]šXÙJKˆ]™\H^K\ÛÛ™H\È[™]šYX[HİX\™YÛÈHÚ[™ÛHX[›Ü›YYÛÛ™H\ÈÚÚ\Y[œİXYÙˆİ˜[™[™ÈHÜ[›™\‹‚‚ŠŠ‘[šY\ËŠŠˆÛYHÜšY
+Š¸)+¸)`x).x)`¸),8)cx))
+Šˆ[HY\ˆ8)%x)`x) ¸)(x),¸)`
+0©ÌN‘UÈ˜YÙJNÈH
+Š“]Z\˜]š[™\‘ÛÜŠŠˆ›İÈÛˆH[˜Ú[™ÈXˆ
+™]ÙY[ˆÛ[˜ÙHØ\™[™[™ØHÜšY
+Kˆ›İ\™HY]]™K‚‚ŠŠ“[Û]šY]Èİ™\›^KŠŠˆ™\İ[ÈØ\œHH
+Š¸)%x)b8),¸)aø) ¸)(x),8)+¸)aø) ˆ8))¸)aø)%¸)aø) ŠŠˆ[8¡¤ˆ[˜Ú[™ÒÛYXÚ]H]Z\˜]İ™\›^NˆÈØØØ\Ú[Û’Y^\ÈX\˜[KˆH^\İ[™È[ÛÜšYš[™ÜÈÜÙH^\È
+ÛÛ[š[
+ÈK\ÛÛ›Ü™\ˆ8 %Ù[Xİ[Ûˆİ[Ú[œÎÈÙ[LL^HX™[È\[™“]Z\˜]^H‹™]™\ˆÛÛİ\ˆ[Û™H0©ÌLŠK]]ËY^[™ÈHØ[[™\‹[™ÚİÜÈH\ÛZ\ÜØX›HÛÛ[Ú\˜[Z[™ÈHØØØ\Ú[Ûˆ
+¸ )ˆ8 %8)-¸)`x)+H8))¸)/ø)*8)&8)aø),8)aÈ8)+¸)aø) ˆ‹8§%HÛX\œÈH\˜[JKˆÛ™HØ[[™\ˆ›ØØX[\H8 %Hš[™\ˆX\šÜÈHÚ\YÜšY]Ù\È›İ›ÜšÈ]‚‚ŠŠ‘[™Ú[™H
+\ÙHˆ8 %‘LM‹ÔŠKŠŠˆ[˜Ú[™ËÙ]™[]Z\˜]Ø\È\™H
+Ø[YH›İ[™\H\Èİ[™[KØÈİX\™YHHÛİ\˜ÙK\\š]H\İ
+H[™Ü˜Y\È[ˆ
+ŠÛÈ\ÜÙ\ÊŠˆHVH\ÜÈ›ÜˆÜÚ\È]Ûİ[œš\ÙK]Ë\İ[œÙ]
+YZÈ0­ÈX]\]H0­È˜ZYš]H0­È
+Š˜Ú]\›X\ÊŠˆ0­È
+Š›X\ØJŠˆ0­È
+Š™İ\KÜÚZÜ˜H\İJŠŠK[ˆH
+Š•ÒS‘ÕÈ\ÜÊŠˆ8 %šY˜K[İ™\›\YÚ[™İÜÈ›ÜYXXÚİ\š]›ÜˆÜ˜YYÛˆH[™ØH™]˜Z[[™È
+Š˜]]Èİ\
+Šˆ
+[™ØP]ÜÚ^XKX]Ø\™NˆHÚÚ\Y[™ØHÛÛY\Èš\œİ[ˆ
+š]ÊˆİXØÙ\ÜÛÜŠH\ÈH[™ØHÜÚ\È]][œİ[
+šZİH0­È[X]˜\ŞXH0­È[˜ÚZÊKˆ]™\HÙ™™\™YÚ[™İÈØ\œšY\È]È
+Š›İÛˆY\ˆ[™˜XİÜœÊŠÈH^IÜÈY\ˆ\ÈH™\İÚ[™İÉÜËÚ™\ÚHÚ[™İÜÈXYˆ
+Š¸)+x))¸)cx),8)/ˆ\È[ˆ[\˜[›İHÚÛKY^H›YÊŠˆ[™Ú[™KØ›İÈÛÛ™\ÈØ\˜[˜K™[™[YX
+H°¬Y[Û™Ø][ÛˆÚ[ˆÙˆH]Hš\ÙXİ[Ûˆ8 %SÒS‘×ÑVWĞĞPÒWÕ‘T”ÒSÓ˜[\YÈŠKšY˜R[\˜[Ü[œÈİ[œš\ÙH8¡¤ˆ][™[™Ú[™İÜÈ[œÚYH]\™H›ÜY™]™\ˆÛ\YÈHšY˜H]İ]\İÈ]™\HÚ[™İÈİ[^ÛY\ÈH^H[™˜[Y\È8)+8))¸)cx),8)/ˆ[ˆH™X\ÛÛœËˆÚ]\›X\È\È\š]™Yœ›ÛHHİ[œš\ÙH[™ØH
+]œÚ^X[šH8¡¤ˆ]ˆ][šKÜÚ^XK\ØY™K
+Šœ\›š[X[[›Ü›X[\ÙY
+ŠˆÛÈH\Ù\‰ÜÈ[X[HÙ][™ÈØ[››İ[İ™HHÙX\ÛÛŠNÈ
+Š›X\ØHÚYJŠˆ\ÈHÛÚİ\YØZ[œİHØ[YH›Ü›X[\ÙY[Û
+\‹[ØØØ\Ú[ÛˆX\ØK˜˜\œ™YQ•8 %Û›H\[˜^X[˜IÜÈX›H\ÈÜ[]Y[™[™È0©ÌL
+Kˆ\İH\Ù\ÈÙ]ÚY\™X[[™]Û™Ú]YX]ØØ[›ÛÛˆ
+Ü˜œÈL0¬ÌLp¬ÈH0¬™]›ÙÜ˜YKTÚZÜ˜H˜\šX[\È[ˆÜ[ˆ•SP“ÓÒÈ0©ÌMÈ]Y\İ[ÛŠKˆ\ÙS]Z\˜]š[™\˜ØØ[œÈÛ™H[˜Ú[™ÈÛÛ™H\ˆ^KÚ[šÙY™Z[™[\˜Xİ[Û“X[˜YÙ\˜
+ÈÙ][Y[İ]
+
+XZÙH\ÙS]Z\˜]‚‚ŠŠ•\Y[ˆØØØ\Ú[ÛœËÜ›İ\YXÚÙ\‹ŠŠˆU‘S•Ô•STØ›İÈØ\œšY\È8)+x)-x)*
+ÜšZH˜]™\Úš[ZHZ˜[ŠH0­È8).8) ¸).8)cx)%x)/¸),
+˜[ZØ\˜[‹šYX\˜[Xš
+Š“][™[‹[›˜\˜\Ú[‹Ø\›˜]™YK\[˜^X[˜JŠŠH0­È8)%x)cx),8)+È8)-H8)!¸),8)+¸)cx)+H
+˜Z[‹X\\‹
+Š”Ø[\]KİØ\›˜JŠ‹[™8 %\ÙHÈ8 %
+Š¸)+ø)/¸))8)cx),8)/ŠŠ‹ÚXÚ›Ú[œÈ\ÈÜ›İ\˜]\ˆ[ˆZÚ[™È]ÈİÛˆ›İÊNÈHXÚÙ\ˆ™[™\œÈ™YHÙXİ[Û“X™[Ü›İ\Èİ™\ˆHØ[YH\İØ\™›İÜÈ8 %›È™]ÈØ\™Ü˜[[X\‹8)!x)+8)`¸)'HÛÜˆİ[\İˆ[›˜\˜\Ú[‰ÜÈ8 $Î[[ÛİZY[˜ÙH\ÈØ\[ÛˆÛÜH
+HØ[YHZ[‹[ØØØ\Ú[Ûˆ™X]Y[˜[ZØ\˜[ˆÚ\YÚ]8 %HÚ][‹]Ú[™İÈ[ÙH™[XZ[œÈ]\™HÛÜšÊKˆ[\Y[ˆX›\È\™HQ•
+™\šYšYYˆ˜[ÙX
+K‚‚ŠŠ”\ÙHÈ8 %8),¸)%ø)cx)*YÜ˜YHÚ[™İÜÈ
+‘LM‹ÔË]YÈŒŠKŠŠˆ[˜Ú[™ËÛYÛ˜TİÙY\Ø
+\™JH[\È]™\HÚ]š[^H[È]ÈL¸ $ÌLÈ\ØÙ[™[\˜\ÚHÜ[œÎˆHÛÜÙYY›Ü›H\ØÙ[™[ÚY\™X[Û™Ú]YX[ˆİ[™[KØ
+X][X]XØ[HY[XØ[ÈÛÛ\]SYÛ˜X	ÜÈš\ÙXİY›Ûİ8 %YÜ™Y[Y[YKLL°¬™\šYšYY
+H\ÈİÙ\œ›ÛHİ[œš\ÙHÈ™^İ[œš\ÙH[™XXÚÌ0¬Ü›ÜÜÚ[™È\Èš\ÙXİY
+Šš[ˆ[YJŠ‹ˆHÜ[œÈ]™H[ˆ
+Š˜^R[œ]Ë›YÛ˜\Ø
+Šˆ
+Û™HİÜ™K]™\Hİ\™˜XÙHÚ\™\ÈHÛÛ™H8 %YX\İ\™YÛÜİ
+ÌË‰HÛˆÛÛ\]Q^R[œ]Ø˜\ˆ[œÚYHH8¢iIHØ]KÛÈH[‹\İÜ™HY˜][ÛÈ[™
+Š˜SÒS‘×ÑVWĞĞPÒWÕ‘T”ÒSÓ˜\ÈÊŠŠKˆHÚ[™İÈ\ÜÈ›İÈ
+ŠœÜ]Èš\œİÜ˜Y\ÈÙXÛÛ™
+ŠˆXXÚİ\š]š[™ÈÚ[™İÈÜ]È]]™\HYÛ˜H›İ[™\HS‘]™\H[™ØHÚ[™Ù[İ™\ˆ[œÚYH]
+ÜÚ^XKX]Ø\™H8 %HÚÚ\Y[™ØH[œÙ\È]ÈİÛˆÙYÛY[
+NÈÜ]\È[™\ˆ
+ŠŒZ[]\È
+ŒHÚ]ZØJJŠˆ\™H›ÜY™]™\ˆÛ\YÈXXÚÙYÛY[\ÈÜ˜YY]]ÈİÛˆİ\ÛÈ›İ[™È\È™Ü˜YY]İ\[™›YÙÙYˆ[H[Ü™H8 %HÙYÛY[TÈHÚ[™İËˆYÛ˜H\ÈH
+Š™˜XİÜ‹›İH›İ\Ú\
+ŠˆH
+œ™Y™\œ™Y
+ˆYÛ˜HÙ]È˜XİÜœË›YÛ˜X
+YKXœ™XZÈ
+È]šY[˜ÙHÛÜ™
+KH
+˜˜\œ™Y
+ˆYÛ˜H[[İ\È8)-¸)cx),8)aø)-ø)cx)(8¡¤ˆ8)+¸))ø)cx)+ø)+ˆ[™™]™\ˆ^ÛY\ÈH^NÈ
+ŠH\‹[ØØØ\Ú[ÛˆX›\ÈÚ\STHQ•
+Šˆ
+Ü˜Y[™È[™\[›™YH\İ
+H[™[™ÈHÛË\Ûİ\˜ÙH™]šY]È[ˆØÜËÜ›ØYX\ØÛÛ™[[ÛœËÛ]Z\˜][YÛ˜K]ŒK›Yˆ
+Š’Ü˜JŠˆ
+[˜Ú[™ËÚÜ˜KØ\™K›İ\œÚ\İY
+NˆLˆ
+ÈLˆ[™\]X[[™]\Hİ\œËÙYZÙ^K[Ü™š\œİÈ
+Š™]šY[˜ÙH[™YKXœ™XZÈÛ›JŠˆ8 %ÙYÛY[Ü™\š[™È[œÈY\ˆ8¡¤ˆ™Y™\œ™YYÛ˜H8¡¤ˆÚ[™İÈš[Üš]H
+[\š]8¡¤ˆXšZš]8¡¤ˆÚXš8¡¤ˆ™\İ[˜Ú[™ÙYÚ[˜ÙH\ÙHJH8¡¤ˆ™[™YšXÈÜ˜H
+8)%ø)`x),8)`Kø)-¸)`x)%x)cx),ø)+8)`x))ÊH8¡¤ˆ[YKÛÈÜ˜HØ[ˆ™]™\ˆ[İ™HHY\ˆÜˆX\œ›ÙÈHš[Üš]HÜ™\‹ˆ
+Š“]K[ÛœÙ]š\ÚH\ÈÛÛ™Y
+Šˆ
+H0©ÌŒÈ™\™\]Z\Ú]JNˆ[™Ú[™KØš[È[˜Ú[™Ñ]K›]Uš\ÚXÚ[ˆHØ\˜[˜HY\ˆHİ[œš\ÙHØ\˜[˜H\Èš\ÚK[™šY˜R[\˜[™]\›œÈ]ÛÈ[ˆY\››ÛÛˆšY˜H›ÜÈÚ[™İÜÈ^XİHZÙHHİ[œš\ÙHÛ™H
+È]YÈŒˆ8 %H]™K[Ù‹T˜ZÜÚKP˜[™[ˆšY˜H8 %\ÈH™K\[›™Y^[\Nˆ\ÙHˆÙ™™\™Y]È\›š[XHÚ[™İÜÈ›[™NÈ\ÙHÈÛ™\İH^ÛY\ÈH^H˜[Z[™È8)+8))¸)cx),8)/ŠKˆ
+Š¸)+ø)/¸))8)cx),8)/ˆ
+È8))¸)/ø)-¸)/ˆ8)-¸)`¸),ŠŠˆH™\İ[ÈØÜ™Y[ˆ[Û™HÚİÜÈ[ˆY\™Xİ[Ûˆ8))¸)/ø)-¸)/ˆÚ\›İÈX›İ™HH\İ
+\œÚ\İÈ›İYÚH™K\ØØ[ˆHÚÜÙ[ˆ\™Xİ[Ûˆİ\ÊNÈHÚÜÙ[ˆ\™Xİ[Û‰ÜÈÚÛÛ^\È\™H^ÛYY
+ŠÚ]H™X\ÛÛˆ˜[Z[™ÈH\™Xİ[ÛŠŠÈ\™Xİ[Ûˆ\ÈØØ[‹][YH[œ]™]™\ˆ\œÚ\İY
+H›ÛİÙY8)+ø)/¸))8)cx),8)/ˆ^H™KYÜ˜Y\È\™Xİ[Û‹Yœ™YJKˆ8))¸)/ø)-¸)/ˆ8)-¸)`¸),ˆ›İÜÈ\™HQ•[ˆHØ[YHÛÛ™[[ÛˆØÎÈ[\˜Ø\™[˜[\™Xİ[ÛœÈØ\œH›ÈÚÛÛ[ˆŒH
+™XÛÜ™Y˜\šX[ÚÚXÙJK‚‚ŠŠ”\ÙHÈRKŠŠˆ™\İ[Ø\™Èİ^HHY[XØ[\İØ\™8 %H™\İ]Ú[™İÈ[™HØZ[œÈH]ZY]
+Š›YÛ˜HÚ\
+Šˆ
+8)-¸)`x)+HŒH8 $ÈNŒÌHSH0­È8)-x)`ø)-¸)cx)&¸)/ø)%H8),¸)%ø)cx)*
+K[™Ú[ˆH™\İÚ[™İÈ\ÈHYÛ˜K\Ü]\]ÈÛÛYİ[İ\ÈÚX›[™È™[™\œÈ\ÈHÙXÛÛ™[™HÚ][ˆ][XÈ8),¸)%ø)cx)*8).8)`8)+¸)/ˆ8)*¸),8)-x)/ø)+x)/¸)'8)/ø))›İH
+[™ØK\Ü]ÚX›[™ÜÈÛ‰İ8 %Z\ˆÚ\ÈÛİ[™HY[XØ[ÈH]Z[Ø\œšY\È]İÜJKˆ^H]Z[ˆH™\İ]Ú[™İÈ[™H[ˆH[œİÙ\ˆ›ØÚÈ\[™È0­È˜\ÚOˆ8),¸)%ø)cx)*ÈH¸)+ø).H8))8)/ø))x)/È8)%x)cx)+ø)bø) Èˆ]šY[˜ÙHØZ[œÈH
+Š¸),¸)%ø)cx)*›İÊŠˆ
+Ü[ˆ
+È8)!x)*8)`x)%x)`¸),‹ø).8)/¸)+¸)/¸)*8)cx)+È8 %Ü][™ÈİX\˜[Y\ÈHÜ[ˆÛİ™\œÈHÚÛHÚ[™İËÛÈHİX‹[[™HØ[ˆØ^HÛÈ][JH[™H
+Š¸).x)bø),8)/ˆ›İÊŠˆÚÜÙH™\™XİÛÜ™\È
+Š¸).8)/¸)%x)cx)-ø)cx)+ÊŠˆ
+]šY[˜ÙHÛ›H8 %ÛÜ™[™Ë›İÛÛİ\‹ÙY\È]š\ÚX›Hİ]ÚYHHY\ˆÛÛ˜Xİ
+NÈXXÚÚ[™İÜË[\İ›İÈ\[™È]ÈÙYÛY[	ÜÈYÛ˜H™\ÚYHHY\ˆÛÜ™ˆHÚ\™HØ\™ØZ[œÈH™\İÚ[™İÉÜÈYÛ˜H[™HÛ›H8 %Ù[™\˜[[˜Ú[™È]Kİ[›È\œÛÛ˜[]HHÛÛœİXİ[Ûˆ
+Ü[ˆ]Y\İ[Ûˆ0©ÌMÎˆ›ÜÚ]İ][™Ú[™HÚ[™ÙHYˆ]Û]\œÈHHØ\™
+K‚‚ŠŠ”\ÙH8 %\œÛÛ˜[\ÙY\˜X˜[KĞÚ[™˜X˜[H
+‘LM‹Ô]YÈŒŠKŠŠˆ[˜Ú[™Ëİ\˜PÚ[™˜P˜[KØ
+\™H[YÙ\ˆ\š]Y]XÊH
+È\ÙS]Z\˜]˜[XˆÚ]H
+ŠœØ]™Yİ[™[H›Ùš[JŠˆ8 %™]™\ˆ™KX\ÚÙY›İ[™È\š]™Y]™\ˆ\œÚ\İY8 %]™\HØ[™Y]H^HØZ[œÈH]ZY]
+Š¸)!¸)*¸)%x)aÈ8),¸)/ø)#ÊŠˆİš\ˆHK]\˜HÛÜ™
+[˜Û\Ú]™H˜[›Xx¡¤™^HÛİ[™YXÙY[ÙNÈ8)-x)/ø)*¸))8)cKø)*¸)cx),8))8)cx)+ø),8)/Ëø)-x))È[™˜]›İ\˜X›K8)'8)*8)cx)+ˆ
+Š˜ÛÛ\İY
+Šˆ8 %HÚİÛˆÛÜ™8)+¸))8)+x)/ø)*8)cx)*\È[ˆÜ[ˆ™]šY]È]Y\İ[ÛŠH[™HÚ[™˜HÜÚ][Ûˆ
+ÎÌLˆ[™˜]›İ\˜X›KH™[™\š[™È
+Š¸)&¸) ¸))¸)cx),8)/¸)-ø)cx)'ø)+ŠŠ‹Hİ›Û™Ù\İØ\›KX]›ÚYÛÜ™Hİš\Ø[ˆÚİÊKˆ]˜[X][Ûˆ[œİ[\ÈH™\İÚ[™İÉÜÈ˜ZÜÚ]˜H
+[™ØP]Ú[™İÈÏÈİ[œš\ÙP[™ØX
+H[™H^H[ÛÛ‰ÜÈ˜\ÚH]HÚ[™İÈİ\ÛÈHİš\Ø[ˆ™]™\ˆÛÛ˜YXİH™XÛÛ[Y[™YÚ[™İËˆ
+Š’][››İ]\Ë™]™\ˆ™KYÜ˜Y\ÊŠˆ›ÈY\ˆÚ[™ÙK›È^Û\Ú[Û‹›È™[Ü™\š[™È8 %HÙ[™\˜[™\™Xİİ^\ÈY[XØ[XÜ›ÜÜÈ\Ù\œÈ[™XÜ›ÜÜÈ]™\HšY\ˆ
+Ú\™HØ\™™[Z[™\ˆØÚY[\‹8¦!HÚ\[Ûİ™\›^JKˆ›İÛ\ÜÈX›\È\™H
+Š‘Q•
+Šˆ[™[™ÈØÜËÜ›ØYX\ØÛÛ™[[ÛœËÛ]Z\˜]]\˜X˜[K]ŒK›Y	ÜÈÛË\Ûİ\˜ÙH™]šY]Ë[™HÛÛ™[[Ûˆ
+Š™[X™\˜][H]™\™Ù\Èœ›ÛHHİ[˜HZ[[ˆ\˜HÛÛİJŠˆ
+]™\™Ù[˜ÙH\İ\[›™Y8 %™]™\ˆ™]\ÙH]X]š^
+KˆRNˆÛ™H[
+İÛÜ™›İÈ
+]Z\˜]˜[Tİš\˜\šX[Hœ›İÈ˜
+H[™\ˆH™\İ[Ø\™	ÜÈÚ[™İÈ[™\ÎÈH[]ÚYİš\
+˜\šX[H˜Ø\™˜
+H™]ÙY[ˆ[œİÙ\ˆ[™Xİ[ÛœÈÛˆH^H]Z[Ú]HÛ™K[[™H^Z[™\ˆ˜[Z[™ÈH8)'8)*8)cx)+ˆ8)*8)%x)cx)-ø))8)cx),ø),8)/¸)-¸)/È]Ûİ[Yœ›ÛH
+]Y]X›HYØZ[œİHİ[™[HØÜ™Y[ŠH[™İ][™È¸)+ø).H8))¸)/ø)*8)%x)`8)-¸)cx),8)aø)(ø)`8)*8).x)`8) ˆ8)+8))¸),¸))8)/ˆ‹ˆ
+Š“›Ë\›Ùš[Hİ]NˆHİš\Ú[\H\Û‰İ\™JŠˆ8 %›È[Ù[›È˜YÙK›È\‹XØ\™ÕNÈHÓ“H˜XÙH\ÈÛ™H][XÈ›Ûİ\ˆ[™HÛˆH™\İ[È\İ
+8)%x)`x) ¸)(x),¸)`8).8).x)aø)'8)*8)aÈ8)*¸),8).x),8))¸)/ø)*8)!¸)*¸)%x)aÈ8))8)/¸),8)/‹ø)&¸)*8)cx))¸)cx),8)+8),ˆ8)%x)aÈ8).8)/¸))H8))¸)/ø)%¸)aø)%ø)/˜
+Kİ[Y\ÈH\ØÛZ[Y\ˆ™\ÚYH]Y\[[šÚ[™ÈÈHÚ\Yİ[™[HØÜ™Y[ˆ8 %İXÚÈ]Hš\œİ\ÚYÛˆ™]šY]ÈYˆ]™XYÈ\ÈH˜YË™]™\ˆZYÜ˜]YÛÈØ\™ÈÜˆH]Z[ˆ
+Š”š]˜XŞNŠŠˆHİš\™]™\ˆ™XXÚ\È]Z\˜]š[™\”Ú\™PØ\™
+ÚXÚİ^\È››È\œÛÛ˜[]HHÛÛœİXİ[ÛˆŠHÜˆ[H›İYšXØ][ÛˆÛÜH8 %›İXœÙ[˜Ù\È\İ\[›™YÈ›ÈØXÚK]™\œÚ[Ûˆ[\
+›İ[™È[ˆ^R[œ]ØÚ[™Ù\ÎÈH›Ùš[HÙ^H\Èİ]ÚYHH\š]™YXØXÚH[š]™\œÙJK‚‚ŠŠ¸)-¸)`x)+H8)+ø)bø)%È[››İ][Ûˆ
+‘LÈ8 %0©ÍJKŠŠˆ™\İ[Ø\™È[™H^H]Z[Ø\œHH^IÜÈÚXš[ÙØ\È\È[ˆ
+Š˜[››İ][Ûˆ™\ÚYHH™\™Xİ™]™\ˆ[œÚYH]
+ŠˆÚXš[ÙØ\Ñ›Ü‘]X
+]Z\˜]š[™\”ØØ[‹Ø
+H™XYÈHØ[YH^HİÜ™H
+˜™\ÚYJˆ™\™Xİ›Ü‘]X[™]™[]Z\˜]ØÙ\È›İ[\ÜÚXš[ÙØKØ
+Ûİ\˜ÙKYİX\™\İ
+H8 %ÛÈY\œËÜ™\š[™ËÙXİ[ÛœËH[\Hİ]H[™]™\HšY\ˆ
+Ú\™HØ\™™[Z[™\ˆØÚY[\‹8¦!HÚ\[Ûİ™\›^KXZš\İ
+H\™H]KZY[XØ[Ú][™Ú]İ]][™[ˆÙ™œÙ]Ø[ˆ™]™\ˆÜ™Y\[ˆ\ÈHœÛX[ˆY]ˆÛˆH
+Šœ™\İ[Ø\™
+ŠˆH[ÙØH™[™\œÈ\ÈÚ\È™]ÙY[ˆHY\ˆ[™H[™H™\İ]Ú[™İÈ[™H
+Û™H]Z\˜]Ú\\ˆ[ÙØHÙ^K[ÙØHÛ™K[¸ )ˆ8)+ø)bø)%Èˆ˜[Y\ÎÈÛÛ\]YY™\œ™YY\ˆHØØ[ˆÙ]\ËÛÈ]™\HİÜ™H™XY\ÈHØXÚH]ÈÚ›Û›ÛÙÚXØ[İY\ˆÜ™\ˆ[İXÚY8 %8)%x)cx),8)+ˆ8))8)/ø))x)/È8).8)aÈ8).x)b8)+ø)bø)%È8).8)aÈ8)*8).x)`8) ŠKˆH
+Š™^H]Z[
+Šˆ™[™\œÈHÚ\™YÚXš[ÙØPØ\™
+Ú\È
+ÈÚ[™İÜÈ›İYÚ›Ü›X][™[œİ[
+H™]ÙY[ˆH[œİÙ\ˆ›ØÚÈ[™H8)!¸)*¸)%x)aÈ8),¸)/ø)#Èİš\8 %[˜ÛY[™ÈÛˆ[ˆ
+Š™^ÛYY
+Šˆ^K™XØ]\ÙHHÜÚH[™H[ÙØHÛÙ^\İ[™H\™Y\Ù\ÈÈ™][NÈH^ÛYY[œİÙ\ˆ›ØÚÈ[ÛÈØZ[œÈ
+Š™ÜÚHÚ\ÊŠˆ˜[Z[™ÈH™\Ù[ÜÚ\È
+]Z\˜]Ú\ÜÚHÛ™Nˆ]›ÚYÚ\™Ø
+È]›ÚYY\
+HX›İ™HH[8)"x)*¸).8)cx))x)/ø))ø)*8).x)`8) ˆÚXÚÛ\İˆHÚ\™HØ\™[X™\˜][HÙ\È
+Š››İ
+ŠˆØZ[ˆH[ÙØH[™H[ˆŒH
+‘LÈ0©ÎJKˆX›\È\™HQ•[ˆØÜËÜ›ØYX\ØÛÛ™[[ÛœËÜÚXš^[ÙØK]ŒK›Y
+™[X\ÙKYØ][™Ë•SP“ÓÒÈ0©Ì
+K‚‚ŠŠ‘^H]Z[\ÙHˆY][ÛœËŠŠˆHÚ[™İÜÈ\İØZ[œÈH
+Š¸)+x))¸)cx),8)/ˆ›İÈİXÚÈ›İYÚ[ˆXÙJŠˆ
+H˜ZHØX[™X]Y[8 %H\Ù\ˆÙY\È]Ø\ÈÛÛœÚY\™Y
+HÚ]H8)-x),8)cx)'8)cx)+ÈÛÜ™]YË[™]™\Hİ\‹]Ú[™İÈ›İÈØ\œšY\È]È
+ŠY\ˆÛÜ™
+Š‹ˆH¸)+ø).H8))8)/ø))x)/È8)%x)cx)+ø)bø) Èˆ˜XİÜˆ›İÜÈİ]HH[™ØH
+Š˜]H™\İÚ[™İÊŠˆ\ÈH™\™XİÚ]Hİ[œš\ÙH
+Y^XJH[™ØH\ÈH]ZY]ÙXÛÛ™[™HÚ[ˆ^HY™™\ˆ8 %H[˜Ú[™ÈXˆÚİÜÈHY^XH[™ØH[™[Ø^\ÈÚ[ÛÈÚ]İ]][™Hİ\ˆİÛˆÛÈØÜ™Y[œÈÛİ[ÛÚÈÛÛ˜YXİÜKˆ
+Š›\İ˜Y]\È
+‘0©ÌKŒŠNŠŠˆÛÛš[™ÈØ\˜[˜K™[™[YX[ÛÈXZÙ\ÈH[˜Ú[™ÈX‰ÜÈØ\˜[˜H[H[™HZ[H]Z\˜]Ø\™	ÜÈØ\˜[˜H›İÈÚİÈZ\ˆ[™[œİ[Ú]›ÈÚ[™ÙH[ˆÜÙHİ\™˜XÙ\È8 %Ø[YÚ[˜ÙH]KÓ˜ZÜÚ]˜H[™XYHË‚‚ŠŠ“ØØ[\Ø][Ûˆ	ˆ\KŠŠˆ]™\Hİš[™È\È]]Ü™Y]˜[˜YØ\šH
+È[™Û\Ú›İYÚÛÛ[S[™Ø
+İKÚÛˆ\š]™JNÈ™\™XİÛÜ™È\™H8)!x)*8)`x)%x)`¸),ˆÈ8).8)/¸)+¸)/¸)*8)cx)+ÈÈ8)"x)*¸).8)cx))x)/ø))È8)*8).x)`8) ˆ8 %™]™\ˆ][ˆÚ\Ëˆ]˜[˜YØ\šH^Ø\œšY\È›È]\”ÜXÚ[™ÎÈÙXİ[ÛˆX™[È›ÜZ\ˆ˜XÚÚ[™Èİ]ÚYH[˜ˆØ\›H[]HÛ›NÈY\‹ÙÜÚHÚYÛ˜[[™È\È[
+ÈÛÜ™
+0©ÌLŠK‚‚ŠŠ”Ú\™YÛÛ\Û™[È
+›È›ÜšÜÈ8 %0©ÍËğ©ÎK•SP“ÓÒÈ0©ÎJKŠŠˆ[›İ\ˆØÜ™Y[œÈ\ÙHHØ[›ÛšXØ[
+Š˜™XY\’XY\˜
+Šˆ
+˜\šX[Hš[™^˜ZÙHİ[˜SZ[[ˆ0©ÍN
+H8 %Ø˜XÚ×H0­ÈÙ[™Y]H0­ÈšYÚÛİ8 %™]™\ˆHØØ[ÜX˜\‹Ø˜XÚÈÛÜNÈH^H]Z[\ÜÙ\ÈHÚ\™Y
+Š˜Ú\™P]Û˜
+Šˆ[È]ÈšYÚÛİˆÙXÛÛ™\HÛÛ^]\ÙYÈ]™H\ÈHXY\ˆİX]H\ÈHÛÛ[[™H[œİXY
+HXÚÙ\‰ÜÈ¸)!¸)*ˆ8)%x)cx)+ø)/ˆ8)%x),8)*8)aÈ8)'8)/ˆ8),8).x)aÈ8).x)b8) Èˆ›Û\ÈH™\İ[ÉÈÚ]H0­È8))¸)`ø)%x)cx)*¸) ¸)&¸)/¸) ¸)%È8)*¸))¸)cx))ø))8)/Ø[™KÚXÚ[ÛÈØ\œšY\ÈHÛ‹\İ\™˜XÙH›İ™[˜[˜ÙJK‚‚‘]™\H\İ][H[ˆH™X]\™H\ÈHÚ\™Y
+Š˜\İØ\™
+Šˆ
+ÛÛ\Û™[ËÓ\İØ\™Ş
+H8 %H\	ÜÈXœ˜\H\İXØ\™Ü˜[[X\ˆ^˜XİYÛÈ]Z\˜]Ù\Û‰İ›ÜšÈ]ÈİÛˆÛÚÎˆHÙ\\˜]H›İ[™YØ\™Ú]HØ\™Xİ]™Qœ›Ûx¡¤˜Ø\™Xİ]™UØÜ˜YY[
+ÈØ\™Xİ]™P›Ü™\˜
+È˜YZK›Ø
+È[]˜][Û‹˜Ø\™HXY[™ÈØ\™[X˜
+LœÜ˜YY[Ü]X\™JKH]KÜİX]HÛÛ[[‹[™Hİ[™\™œØY™œ›ÛˆÚ]œ›Û‹ˆ
+Š“›ÈY]Ë\›İ][™H
+Ø
+Šˆ
+]İ^\ÈXœ˜\PØ\™\ÜXÚYšXÊKˆ]\È\ÙYHH
+Š›ØØØ\Ú[ÛˆXÚÙ\ŠŠˆ
+[XˆH]˜[˜YØ\šHÛ\]HHØØØ\Ú[Û‹Ø\[ÛˆHÛİ[\œ\
+KH
+Šœ™\İ[Ø\™ÊŠˆ[™
+ŠXZšØ\™ÊŠˆ
+[XˆH^H[X™\‹]HH[Û0­ÈÙYZÙ^K[ˆY\‹[ˆH™\İÚ[™İÊK[™H
+Š˜]Z\˜]š[™\‘ÛÜ˜
+Šˆ
+šXHHØ\™	ÜÈ
+Š˜›]˜\šX[
+Šˆ8 %\˜ÚY[\ÛÙÛˆ]šY\˜›ÈÜ˜YY[ÛÈ]Y™\œÈÈHÛ[˜ÙHØ\™X›İ™H]0©ÌÌÎÈ[XˆHH˜]Ûˆİ[œš\ÙHÛ\ÛˆHØY™œ›Û‹][\ØË]H
+È8)*8)+ø)/‹Ó‘UÈ˜YÙKİX]JKˆ
+Š‘]™\H™\İ[Ø\™\ÈY[XØ[8 %\™H\È›Èš\›Èˆš\œİØ\™[™›ÈÜ™[˜[YÚ]ÊŠÈ˜[šÈ\ÈØ\œšYYH\İÜ™\ˆ
+ÈH8).8),8)cx)-x)bø))8)cx))8)+ˆÈ8)!x)*8)cx)+È8)"x)*¸)+ø)`x)%x)cx))ÙXİ[ÛˆX™[ËX]Ú[™ÈH\	ÜÈ[šY›Ü›K[\İÛÛ™[[Û‹‚‚ŠŠ”\™›Ü›X[˜ÙH8 %Û™H^K\İÜ™H›ÜˆHÚÛHİXœŞ\İ[KŠŠˆH\‹Y^H[œ]È
+[˜Ú[™ÈÛÛ™H
+È\İH›YÜÊH]™H[ˆHœ˜[Y]ÛÜšËYœ™YH
+Š˜[˜Ú[™ËÜ[˜Ú[™Ñ^TİÜ™KØ
+Š‹Ù^YYH
+Š˜XœÛÛ]HÚ]š[]JŠˆ
+VVVKSSKQ
+HÚ][ˆHØÛÜHÙˆ
+Š˜ØØ][Û’Ù^X
+ÈØ[[™\ˆŞ\İ[JŠˆ8 %H\	ÜÈØ[›ÛšXØ[ØØ][ÛˆÙ^H
+Ú]RY[ÙH]™Ğ™
+KHØ[YHÛ™HHØœÙ\˜[˜ÙHØXÚH[™H[™Ú[™IÜÈØœÙ\™\ˆØXÚH\ÙKÛÈHÔÈš^Ú]›ÈÚ]RYØ[ˆ™]™\ˆ[X\È[›İ\ˆÚ]IÜÈ^\ËˆXœÛÛ]KY]HÙ^Z[™È
+˜]\ˆ[ˆ[ˆ[™^Ù™ˆHØØ[‰ÜÈİ\^JH\ÈÚ]XZÙ\ÈHÛÛ™Y^Hİ\š]™HH
+Š›ZYšYÚ›Ûİ™\ŠŠˆ[™[ˆ[H]İ\ÈÛˆHY™™\™[^KˆHİÜ™H\È›İ[™YÈ
+Š˜PVĞÒUQTØHHØÛÜ\Ë•JŠˆHÚ]H]šXİÈÛ›HHX\İ\™XÙ[K]\ÙYÛ™H[™š\™\È]šXİ[Ûˆ\İ[™\œÎÈİ\š[™ÈÚ]Y\È™]™\ˆ]šXİÈHÛ™\È[™\ˆHØ\‚‚ŠŠ‘]™\JŠˆ[˜Ú[™Èİ\™˜XÙH™XYÈ]Û™HİÜ™H8 %HXÚÙ\ˆØ\›]\
+\ÙS]Z\˜]š[™\•Ø\›]\
+KHØØØ\Ú[ÛˆØØ[ˆ
+\ÙS]Z\˜]š[™\˜
+KHXZšØØ[ˆ
+ØØ[XZš^\Ø
+KH^H]Z[
+]Z\˜]^Q]Z[ØÜ™Y[˜
+K
+Š˜[™HZ[Hİ\™˜XÙ\ÊŠˆÛYIÜÈÙ^Hİš\[™HZ[H]Z\˜]Ø\™
+\ÙS]Z\˜]
+H\ÈH[˜Ú[™ÈX‰ÜÈİÛˆ^H
+\ÙUÙ^T[˜Ú[™ØÈ\ÙT[˜Ú[™Ñ›Ü”Ù[Xİ[Û˜È\ÙT[˜Ú[™Ñ›Ü‘]X
+KˆÛÈH^HÛÛ™YH[Hİ\™˜XÙH\Èœ™YH›Üˆ[Hİ\œÎˆHš[™\‰ÜÈLY^HİÙY\[ÛÈØ\›\ÈÛYIÜÈÙ^KİÛ[Üœ›İË[™ÛYIÜÈÛÛ™HØ\›\ÈHš[™\‹ˆ›Û™HÙˆ\ÙHÛÚÜÈÙY\ÈHš]˜]HØXÚH8 %\ÙS]Z\˜]	ÜÈÛÓÓ‘WĞĞPÒX[™Hš[™\‰ÜÈÛ[™^ZÙ^YYVWÒS”UĞĞPÒX\™H›İÛÛ™K[™]Z\˜]^XØ›İÔ\š[ÙØ\™H™KY\š]™Y\ˆØ[™XØ]\ÙH^H\™H\™H\š]Y]XÈİ™\ˆHØXÚY^\ËˆØØ[œÈİ^HÚ[šÙY™Z[™[\˜Xİ[Û“X[˜YÙ\˜[™ZY[È\™HÚÚ\Y›Üˆ[KXØXÚYÚ[šÜÈÛÈHØ\›Hİ\™˜XÙH™]™\ˆ›\Ú\ÈHÜ[›™\‹ˆİÜ™H[™ØØ[ˆÛÜ™H]™Hİ]ÚYH™XXİ™XÚ\Ù[HÛÈ^H\™H[š]]\İX›H[™\ˆHŞ[™Ú[™HİZ]H
+[˜Ú[™Ñ^TİÜ™K\İØ]Z\˜]š[™\”ØØ[‹\İØ
+K‚‚ŠŠ“Û™H[X™\˜]H^Ù\[ÛˆHÚYÙ]Üš]\‹ŠŠˆÚYÙ]ËÜ[”^[ØYØÛÛ™\ÈÚ]Ú]š[[YV›Û™NˆÒQÑUÕSQWÖ“Ó‘X
+]ÈMY^HÛ˜\Úİ\ÈTÕX[˜ÚÜ™Y›İ]šXÙK[ØØ[
+K[™HØÛÜHÙ^H[Ù[ÈÛ›H
+ØØ][Û‹Ø[[™\ˆŞ\İ[JH8 %ÛÈ›İ][™È]›İYÚ\ÈİÜ™HÛİ[[X\È]È^\ÈÛÈH\	ÜÈ[™[™Û™HÙˆHÛÈ™XY\œÈHÜ›Û™È^KˆØØ[“Ü[ÛœØXÛ\™\ÈÚ]š[[YV›Û™OÎˆ™]™\˜XZÚ[™È]HÛÛ\[H\œ›Üˆ˜]\ˆ[ˆHÚ[[ÛÜœ™Xİ™\ÜÈYË‚‚ŠŠ”\œÚ\İ[˜ÙKŠŠˆÜÙHÛÛ™\È\™H[ÛÈÜš][ˆÈ\ÚËÛÈ™KY[\š[™È[Hİ\™˜XÙH8 %Üˆ
+Š˜ÛÛ\İ\[™ÈH\
+Šˆ8 %›ÈÛ™Ù\ˆ™K\ÛÛ™\Ëˆ
+Š˜[˜Ú[™ËÜ[˜Ú[™Ñ^PØXÚKØ
+Šˆ\ÈHÛ›H[Ù[H]İXÚ\È\Ş[˜ÔİÜ˜YÙH
+HØ[YHØœÙ\˜[˜ÙTİÜ™X8¡áØœÙ\˜[˜ÙPØXÚXÜ][™H™X\ÛÛˆHİÜ™Hİ^\È“‹Yœ™YJNˆÛ™HÙ^H\ˆ
+ØÛÜKÚ]š[^JX[™\ˆ™Y[œÚœ[˜Ú[™ËY^\Î‘T”ÒSÓØÛÜOVVVKSSKQ˜ˆÛÚÜÈ]ØZ]Y˜]T[˜Ú[™Ñ^\Ê‹‹ŠXH˜[™ÙH^H™YY
+Š˜™Y›Ü™JŠˆÛÛš[™È[™š\™KX[™Y›Ü™Ù]\œÚ\İ[˜Ú[™Ñ^\Ê‹‹ŠXY\ÈY˜]HÚÜXÚ\˜İZ]ÈÚ]
+Š››ÈİÜ˜YÙHØ[][
+ŠˆÚ[ˆH˜[™ÙH\È[™XYHØ\›KÛÈHØ\›H™KY[H™]™\ˆØZ]ÈÛˆ\ÚËˆ™][[Ûˆ[œÈœ›ÛH
+Š˜‘URS‘QÔTÕÑVTØHŠŠˆ^\È˜XÚÈ8 %Û™H^H\ÈH\™™\]Z\™[Y[
+\ÙS]Z\˜]	ÜÈ™KY]ÛˆÛÜœ™Xİ[Ûˆ™XYÈY\İ\™^IÜÈšYÚÚÙÚY^XKÛÈHÙ^K[ÛØ\™İ]Ù™ˆYÛYHÛÛš[™ÈH^HÛˆ]™\H][˜Ú
+KHÙXÛÛ™\ÈX\™Ú[ˆ›ÜˆH]HXÚÙ\‰ÜÈ˜XÚË[˜]šYØ][ÛÈHØ[YHİ]Ù™ˆÛİ™\›œÈ\œÚ\İS‘\™ÙKÛÈHİÙY\Ø[ˆ™]™\ˆ[]HÚ]\œÚ\İ\İÜ›İKˆÛ\ˆ[™İ[K]™\œÚ[ÛˆÙ^\È\™H\™ÙY
+Š›Û˜ÙH\ˆÙ\ÜÚ[ÛŠŠˆ
+HİÙY\™XYÈHÚÛH\Ş[˜ÔİÜ˜YÙHÙ^\ÜXÙK[™Ú]]ÛÛXİÈØ[ˆÛ›H\X\ˆ™]ÙY[ˆ][˜Ú\ÈÜˆ]ZYšYÚÛÈ™K\[›š[™È]\ˆÛÛ˜[™ÙHÛ›H]H[ØØ[ˆ[ˆœ›ÛÙˆHš\œİY˜]HÙˆ]™\H^JH[™8 %Ú[˜ÙH]YÈŒˆ8 %
+Š˜Y\ˆH™XY[˜]ØZ]Y
+Šˆ]\È\™Hİ\ÙZÙY\[™Ë™XØ]\ÙHHİ[K]™\œÚ[ÛˆÙ^H]™\È[™\ˆHY™™\™[Ù^H™Yš^[™Ø[ˆ™]™\ˆ™H™]\›™YHHİ\œ™[\™Yš^][QÙ]Ú[HHİ[\™XYX›H^H\İH™][[ÛˆÚ[™İÈ\ÈH
+˜ÛÜœ™Xİ
+ˆÛÛ™H›Üˆ]^Kˆ][™È][ˆœ›ÛÙˆH][QÙ]YX[Hš\œİÛÛİ\™˜XÙHÙˆ]™\H][˜ÚØZ]YÛˆHÚÛKZÙ^\ÜXÙHØØ[ˆÈX\›ˆ›İ[™È]™YYYˆ[˜Ú[™Ñ^PØXÚTİÙ\
+
+X^\İÈÛÈHØXÚIÜÈİÛˆ\İÈØ[ˆ]ØZ]]È›ÙXİ[ÛˆÛÙH™]™\ˆX^Kˆ[ˆ•H]šXİ[Ûˆ›ÜÈ]Ú]IÜÈ\ÚÈÙ^\ÈÛË‚‚ŠŠ”™XY[™ÈHØXÚH\ÈKÓÎÈÛ›HÛÛš[™È\ÈÔH
+]YÈŒŠKŠŠˆ\ÙS]Z\˜]\ÙYÈ[ˆ]ÈÚÛHÚZ[ˆ™Z[™Û™H[Y\’[\˜Xİ[ÛœØ
+ÈÙ][Y[İ]
+
+XÛÈ]™[ˆH[ØXÚH]Ûİ[›İ™XXÚHØÜ™Y[ˆ[[HRH™\ÜY]Ù[ˆYH8 %ÛYIÜÈ8)!¸)'8)%x)/ˆ8)*¸) ¸)&¸)/¸) ¸)%ØÙ\]È8 %XY[™H›ÜˆH\˜][Û‹ÚXÚ™XYÈ^XİHZÙHHØXÚH]\Û‰İ\™KˆY˜][Ûˆ\È\ÚÈKÓÈH”È™XYÙ\È›İ\™›Ü›KÛÈ]›İÈİ\È[[YYX][H[™Z[ÈH[ÛY[\ÚÈ[œİÙ\œÎÈH[\˜Xİ[ÛˆØ]H\È™\Ù\™Y›ÜˆÚ]XİX[HÛÛ\]\È›ÜˆH™XY8 %\İ›Û›Û^H›Üˆ^\È\ÚÈY
+››İ
+ˆ]™K[™H›ÛY›ÜØ\™ˆ]ÈÚX›[™Èš^\È[ˆHÙ^Hİš\]Ù[ˆ
+0©Í
+NˆHÚ\]]Ë\ØÜ›ÛØ\ÈÛ[™È[ˆ[\˜Xİ[Û“X[˜YÙ\ˆ[™H[™Yš[š][KÛÈÛˆÛYHšYHˆ[[Üİ™]™\ˆ\œš]™Y8 %[™]È›ÛİË]\\È\™HÛË™XØ]\ÙH™[X\Ú[™ÈH[™HYH[š[X][Ûˆ]Ù[ˆ[›š[™È›Ü™]™\ˆ]ŒˆÛˆH][˜Ú]
+0©Í›İÈšYÈÛ˜ÙKÛˆH[Y\‹Y\ˆHÙ]H[^JK[™Hİš\	ÜÈ8)*¸)/ø))8)`È8)*¸)%x)cx)-ÈÚ\Ø\ÈÛÛš[™È]È›ÜšYÚ[ˆH˜\™HÙ][Y[İ]
+
+Xİ]ÚYHH\œÚ\İY^Y\ˆZ[›Üˆ^XİH]ÛÛ™Kˆ
+Š“™Z]\ˆ[œÈ[[HØÛÜHÙ^H\È™X[
+Šˆ\ÙT[˜Ú[™ÓØØ][Û˜™\ÜÈHY˜][Ú]H[™\ÙT[˜Ú[™ĞØ[[™\”Ş\İ[X™\ÜÈ\›š[X[Ú[H›İY˜]Hœ›ÛH\Ş[˜ÔİÜ˜YÙKÛÈH\Ù\ˆÛˆ[Hİ\ˆÚ]HÜˆÛˆ[X[HØ\ÈÜ[™[™ÈHY˜]K™YHÛÛ™\È[™HÙ]™[‹Y^H›ÛY›ÜØ\™ÛˆHØÛÜH\ØØ\™YHXÚÈ]\ˆ8 %ÛˆH][˜Ú]ZXYÙˆH™X[Û™Kˆ\ÙS]Z\˜]›İÈØ]\ÈÛˆ\ÓØY[™Ø
+È\ÙT[˜Ú[™ĞØ[[™\’Y˜]Y
+
+XHØ[YHZ\ˆÚYÙ]ÛÛÜ™[˜]Ü˜\È[Ø^\ÈØ]YÛ‹ˆ[›™YH[˜Ú[™Ñ^T›İ][™Ëš™\İ\İØ
+H\ÚÈ]Z[ÈÚ]H[\˜Xİ[Ûˆ]Y]YH[Ü[È›İ[™È[œÈÛˆHXÙZÛ\ˆØØ][ÛŠH[™[˜Ú[™Ñ^PØXÚKš™\İ\İØ
+H™XY[™ÈÚ]HİÙY\İ[Y
+K‚‚ŠŠ•H™XYİ\È]›ØÙ\ÜÈ][˜Ú›İY\ˆÛYH[İ[È
+]YÈŒŠKŠŠˆ\™[™\İÚ\HÙˆHØ[YH™\Ü[™HÛ™HHÛÈš^\ÈX›İ™HÛİ[›İ™XXÚˆ›İ
+Ú]
+ˆİÛÙ[ˆœ›ÛÙˆH™XY]
+Ú[ˆH™XYØ\È[İÙYÈ™YÚ[Š‹ˆHØÛÜHÙ^H™YYÈ“Õ[˜Ú[™È™Y™\™[˜Ù\Ë[™^HÙ\™H™XYÙ\\˜][H8 %HÚ]Hœ›ÛH[˜Ú[™ÓØØ][Û”›İšY\˜	ÜÈY™™XİHØ[[™\ˆŞ\İ[H
+Š›^š[KH]Èš\œİİXœØÜšX™\ŠŠ‹ÚXÚ\ÈÛYIÜÈÙ^Hİš\[İ[YÛ›HÛ˜ÙH\™XYQØ]X\ÈÜ[™YHÜ\ÚÛˆH›Û\ØØ[KÛ[™İXYÙH™XYËˆÛÈH][QÙ]][œİÙ\œÈÚ]\ÈÙ^IÜÈ[˜Ú[™ÈˆØ\ÈH][˜Ú	ÜÈ
+Š\™Ù\šX[İÜ˜YÙH›İ[™š\
+Š‹™Z[™HØÜ™Y[ˆ]Y[™XYHZ[Y]™\][™È[ÙHœ›ÛH[™Y”ËˆHØ\›HØXÚHİ[™XY\ÈHÛÛØ\™™XØ]\ÙHHØ\™\ÈHÛ™H[™ÈÛˆÛYH]Ø[››İ™[™\ˆÚ]İ]\ÚË‚‚ŠŠ˜[˜Ú[™ËÜ[˜Ú[™Ô™YœËØ
+Šˆ›İÈİÛœÈ›İ™Y™\™[˜Ù\È™Z[™
+Š›Û™HY[[Ú^™Y][QÙ]
+Šˆ
+^H\™H™XYÙÙ]\ˆ™XØ]\ÙHÙÙ]\ˆ^H\™HHØÛÜHÙ^JK[™
+Š˜[˜Ú[™ËÜ[˜Ú[™Ó][˜Ú™Y™]ÚØ
+Šˆ\›œÈ]İ˜ZYÚ[ÈØ\›H^\Ëˆ\ŞØ[È™Y™]ÚÙ^T[˜Ú[™Ê
+X]
+Š›[Ù[HØÛÜJŠ‹™\ÚYHH\š]™YXØXÚH™\Ù][™›ÜˆHØ[YH™X\ÛÛˆ8 %]]\İ™H[ˆ›YÚ™Y›Ü™H™XXİ™[™\œÈ[][™È]™XYÈ]8 %ÛÈH™Y™\™[˜ÙH™XY[™H^H™XY[ˆ
+˜ÛÛ˜İ\œ™[HÚ]
+ˆHÜ\ÚØ]H[œİXYÙˆY\ˆ]ˆHH[YHÙ^Tİš\™[™\œËH™YHÚ]š[^\È]™YYÈ\™H[™XYH[ˆ[˜Ú[™Ñ^TİÜ™X\ÙT[˜Ú[™ĞØ[[™\’Y˜]Y
+
+X\È[™XYHYK[™[˜Ú[™ÓØØ][Û”›İšY\˜	ÜÈ^H[š]X[^™\ˆİ\ÈÛˆH\Ù\‰ÜÈ™X[Ú]HÚ]\ÓØY[™Ø[™XYH˜[ÙH8 %ÛÈ\ÙS]Z\˜]	ÜÈØXÚK[Û›H\ÙTİ]XÙYYÛÛ\ÜÙ\ÈÛˆH
+Š™š\œİ™[™\ŠŠˆ[™HXY[™H\œš]™\È[ˆHØ[YHœ˜[YH\ÈH™\İÙˆÛYKˆ™YHÛÛœİ˜Z[ÈÛ]Û™\İˆH™Y™]Ú\È
+ŠšY˜]K[Û›H[™™]™\ˆÛÛ™\ÊŠˆ
+[İš[™ÈKÓÈX\›Y\ˆ]\İ›İ[İ™HÔHÛÈH][˜Ú]8 %\İ›Û›Û^Hİ^\È™Z[™[\˜Xİ[Û“X[˜YÙ\˜
+NÈ]Ø\›\È^XİHÙ^S]Z\˜]^RÙ^\Ê
+XHÚ\™Y[\ˆ\ÙS]Z\˜]™XYÈ›İYÚ™XØ]\ÙHH™Y™]Ú]Ø\›\ÈHY™™\™[™YH^\È\ÈH™Y™]Ú]Ù\È›İ[™È
+ÛÛ\ÜÙTÛÛ™Y™]\›œÈ[ÛˆS–HZ\ÜÊNÈH›İšY\ˆ›İÈ\ÜİY\È
+Š››ÈİÜ˜YÙH™XYÙˆ]ÈİÛŠŠ‹]ØZ][™ÈHÚ\™YÛ™KÛÈH][˜ÚÜ[™ÈHÚ[™ÛH[˜Ú[™Ë\™Y™\™[˜Ù\È›İ[™š\˜]\ˆ[ˆÛÎÈ[™Û›HH
+ŠœİXØÙ\ÜÙ[
+Šˆ™XY\ÈY[[Ú^™Y™XØ]\ÙHÛ™HÚ\™Y™XY]ØXÚ\È]ÈİÛˆ˜Z[\™HÛİ[[ˆHÙ\ÜÚ[ÛˆÈH˜[˜XÚÈÚ]HÚ]›È™]Kˆ[›™YH[˜Ú[™Ó][˜Ú™Y™]Úš™\İ\İØ8 %[˜ÛY[™ÈH[X™\˜]H›Û‹]˜XİZ]HØ\ÙH\ÜÙ\[™È]
+Ú]İ]
+ˆH™Y™]ÚHš\œİ™[™\ˆ\Èİ[›[šË‚‚ŠŠ”›ÛY›ÜØ\™8 %HÚ[™İÈ]\İXYHİ\™˜XÙ\Ë›İ[™Ú][H
+]YÈŒŠKŠŠˆÛYIÜÈÙ^Hİš\™XYÈ™YHÚ]š[^\È
+Y\İ\™^IÜÈšYÚÚ[™İËÙ^KÛ[Üœ›İÉÜÈİ[œš\ÙJH[™\ÙYÈ\œÚ\İ^XİHÜÙH™YKˆÛÈH\œÚ\İYÚ[™İÈ[Ø^\È
+™[™Y
+ˆ]Û[Üœ›İË[™Hš\œİ][˜ÚY\ˆ]™\HZYšYÚ›İ[™]ÈİÛˆÛ[Üœ›İÈˆZ\ÜÚ[™È8 %[™ÛÛ\ÜÙTÛÛ™Y™]\›œÈ[ÛˆS–HZ\ÜËÛÈHİš\™[˜XÚÈÈ]È8 %XY[™HÚ[HHY™\œ™Y]˜[ˆH\™ÙHİÙY\H][QÙ][™Hœ™\ÚÛÛ™KˆÛ˜ÙH\ˆØ[[™\ˆ^K›Üˆ\ÈÛ™È\ÈH\Ø\È[œİ[YˆHÛÜšÚ[™È\œÚ\İ[ØXÚH]İ[™XYÈH\Ù\ˆ\ÈÙ^IÜÈ[˜Ú[™È\ÈÛÛ\]Y]™\H^H‹ˆ
+Š˜[˜Ú[™ËÜ[˜Ú[™Ñ^T™]Ø\›KØ
+ŠˆÛÜÙ\È]8 %Y\ˆH^IÜÈİÛˆÛÛ™H[™ËHÙ^Hİ\™˜XÙH›ÛÈHÚ[™İÈ
+Š˜‘UĞT“WÑVTØHÊŠˆ^\È\İÙ^H
+X]Ú[™È“ÓÕ×ĞÒTÒÔ’V“Ó—ÑVTØÛÈHİš\	ÜÈ›ÛİÙY[]Z\˜]Ú\[™ÈØ\›HÛÊK[ˆ\œÚ\İËˆH›Ûİ™\ˆ[ˆÛÜİÈ™\›È\İ›Û›Û^H›Üˆ[][™ÈÛˆØÜ™Y[ÈHÛ›HÛÛ™HY\ÈH˜\ˆYÙHÙˆHÚ[™İÈÛY[™ÈÛ™H^Hİ][ˆH˜XÚÙÜ›İ[™›ÜˆH^H›İ[™È™XYËˆHØ\›H\È“‹Yœ™YH
+H[\˜Xİ[Û“X[˜YÙ\˜›İ[™\H™[Û™ÜÈÈ\ÙS]Z\˜]
+KÚ[šÙYÚ]HZY[]™\Hˆ™X[ÛÛ™\ËØ[˜Ù[YÛˆ[›[İ[İX\™YÛÈHÛÈ[İ[YÙ^Hİ\™˜XÙ\ÈØ[‰İ˜XÙHHØ[YHÛÛ^\Ë[™]™]™\ˆ™YYÈ™XXİİ]H8 %›İ[™È™K\™[™\œÈ™XØ]\ÙHÙˆ]ˆœ™YHÚ[ˆ\™H\È›İ[™ÈÈÎˆHØ\›H˜[™ÙH™]™\ˆ™XXÚ\ÈİÜ˜YÙH][ˆÚ^^˜HÙ^\È\ˆÚ]KˆİÜ˜YÙH\È\™Y›Ü™H›İ[™YHHÚ]Y\È0åÈÛ™HØØ[ˆÜš^›Ûˆ
+ŒŒÌHĞˆ\ˆÚ]H]Lˆ‹Ù^H›ÜˆHŒY^HİÙY\
+Kˆ]XšY[È\™HYÙÙYÙ[™\šXØ[HH[˜Ú[™Ñ^TÙ\™KØ
+HZ[ˆ”ÓÓ‹œİš[™ÚYXÛİ[›][ˆİ[œš\ÙXØ[™[YXÈİš[™ÜÈ]™]™\ˆ™]š]™KÚ[[HÚ[™Ú[™ÈÚ]H\Ù\ˆÙY\ÊKˆ
+Š“Û›HHØØ][ÛˆÜˆØ[[™\‹\Ş\İ[HÚ[™ÙH›Ü˜Ù\Èœ™\ÚÛÛ™\ÊŠˆ8 %HY™™\™[ØÛÜK‚‚ŠŠZ[XÚ[™ÙH™\Ù]8 %H˜XÚÜİÜ[™\ˆ›İØXÚH™\œÚ[ÛœÈ
+]YÈŒŠKŠŠˆ[™[XZ[Z[™YØXÚH™\œÚ[ÛœÈÛ›H[˜[Y]HÚ]ÛÛY[Û™H™[Y[X™\™YÈ[˜[Y]K[™H]šXÙH][™XYHØØ[›™YÙY\ÈÙ\š[™ÈHÛ[™Ú[™IÜÈİ]]›Ü™]™\‹ÛÈH›Ü™Ûİ[ˆ[\YX[œÈHš^™XXÚ\ÈÛ›Hœ™\Ú[œİ[Ëˆ][ËÙ\š]™YØXÚT™\Ù]ØÛÜÙ\È]Û\ÜÈÙˆYÎˆÛˆ]™\H][˜Ú]ÛÛ\\™\ÈH
+Š˜Z[š[™Ù\œš[
+ŠˆYØZ[œİHÛ™HH]šXÙH\İ˜[ˆ[™Yˆ][İ™YÛX\œÈH\š]™YØXÚ\È
+˜™Y›Ü™H[][™È™XYÈ[J‹ˆHš[™Ù\œš[
+][ËØZ[š[™Ù\œš[Ø
+H\È\]RY[[YU™\œÚ[Ûˆ^ĞÛÛ™šYË™\œÚ[Ûˆ˜]]™HZ[[X™\˜8 %HÕHYØ]Ú\È]™\HÕH
+[™H›Û˜XÚÈÈH[X™YY[™JK[[YU™\œÚ[Û˜HİÜ™H™[X\ÙH
+ÛXŞH\™\œÚ[Û˜
+KH[™IÜÈİÛˆ™\œÚ[ÛˆHØ[YH[™ÈYˆ]ÛXŞH]™\ˆÚ[™Ù\Ë[™HZ[[X™\ˆH™XZ[ÙˆH
+œØ[YJˆ™\œÚ[Û‹ÚXÚHİ\ˆ™YHÚ\™KˆÛÜİ\È\Ş[[Y]šXÈÛˆ\œÜÙNˆH™YY\ÜÈİÙY\ÛÜİÈÛ™H][˜Ú	ÜÈ™K\ÛÛ™\ËHİ[HØXÚHÛÜİÈH\Ù\ˆHš^‚‚ŠŠ”ØÛÜH\È[™Ú[™KXÛÛ\]YØ[[™\ˆİ]]Û›K[™]›İ[™\H\ÈHÚÛHØY™]HİÜKŠŠˆİÙ\ˆ™Y[œÚœ[˜Ú[™ËY^\Î˜
+H\‹Y^H[˜Ú[™ËÛ]Z\˜]ÛÛ™\Ë\ÈHYØXŞH]Z\˜]Y^\Î˜›Ûİ
+K™Y[œÚ›ØœÙ\˜[˜Ù\Î˜
+H\‹XÚ]H™\İ]˜[İœ˜]]HØØ[œÈ8 %Ø[YH[™Ú[™H˜[Z[K[™Ú\™HHÜ›Û™ÈUHÛİ[Ú]
+K[™™Y[œÚœ]K\ÛÛ™\Î˜
+HÛÛ™Y8)*¸)/ø))8)`È8).8)cx)+¸),8)(ÈØØİ\œ™[˜Ù\È[™]HZÜÚHÚ[™İÜË0©ÍŒÈ8 %H[œİÙ\ˆHØØ[ˆİ™\ˆ[™™YÈÙˆÜÙH^\È›ÙXÙYÙ^YYH]H[Û™JKˆ
+Š“™]™\ŠŠˆİÙ\ˆHÚÜÙ[ˆÚ]H[™Ø[[™\ˆŞ\İ[H
+™Y[œÚœ[˜Ú[™Ë[ØØ][Û˜È[˜Ú[™ËXØ[[™\‹\Ş\İ[X8 %[˜Ú[™Ë\Ú\Y[™HX\ÚY\İZ\İZÙH\™NÈÛX\š[™È[HÚ[[H™]\›œÈH\Ù\ˆÈZš˜Z[ŠK›İYšXØ][Ûˆ›ÛÚÚÙY\[™È]Z\œ›ÜœÈÚ]\ÈXİX[HØÚY[YÚ]HÔË[™]™\HYXÙHÙˆ˜XİXÙK\İÜK›ÛİËš\]Z[[™]HÛX\˜[ˆ[K›Û™HÙˆÚXÚ[H[™Ú[™HØ[ˆ™XÛÛ\]H8 %›İH]™Y[œÚÜ]K\ÛX\˜[˜
+H˜[Z[HYÙ\ˆH\Ù\ˆ\Y
+H[™™Y[œÚœ]K\ÛÛ™\Î˜
+]\È\š]™Yœ›ÛH]
+HY™™\ˆHÛ™HÚ\˜Xİ\ˆ[™Ú]ÛˆÜÜÚ]HÚY\ÈÙˆ\È[™Kˆ[ÛÈ[X™\˜][Hİ]ÙˆØÛÜNˆ™Y[œÚİÚYÙ]›\İ\[‹ZÙ^K]ŒX8 %\š]™Y]›İØ[[™\ˆİ]][™]™YYÈ›È[Ú[˜ÙHÚYÙ]ÛÛÜ™[˜]Ü˜™K\[œÈ]™\H\ÜÈ[™™]Üš]\ÈÚ[™]™\ˆH^[ØYXİX[HÚ[™Ù\Ëˆ\š]™YØXÚT™\Ù]\İØ[[Y\˜]\ÈH[›Û‹\İÙ\Ù^HÙ]8 %Hİ][Ù‹\ØÛÜH\š]™YÙ^H[˜ÛYY8 %[™˜Z[ÈYˆ[H[İÛ\İY™Yš^]™\ˆİ\ÈX]Ú[™ÈÛ™K‚‚•ÛÈYXÚ[šXÜÈÛ]ÙÙ]\‹ˆ\Ş™YÚ\İ\œÈH™\Ù]]
+Š›[Ù[HØÛÜJŠ‹›İ[ˆ[ˆY™™Xİ[™›İØXÚ\È]ØZ]]ØZ]\š]™YØXÚT™\Ù]
+
+X™Y›Ü™HİXÚ[™ÈİÜ˜YÙH8 %ÛˆY˜]HÛÈ›İ[™È™XYÈ^\ÈHİÙY\\ÈX›İ]È[]K[™Ûˆ\œÚ\İÛÈ›İ[™ÈÜš]\È^\È]Ú[Ú\HÚ[HHÙ\ÜÚ[Û‰ÜÈ›ÛÚÚÙY\[™È™[Y]™\È^H\™HØY™Kˆ[™H™\Ù][Ù[H[\ÜÈ
+Š\Ş[˜ÔİÜ˜YÙHÛ›JŠˆ^Ë]\]\ØØ^ËXÛÛœİ[Ø\™H[˜[œÜ[YTÓH™\İØ[››İ\œÙKÛÈHš[™Ù\œš[™XY\È\ÛÛ]Y[ˆ]ÈİÛˆ[Ù[H
+HØ[YH™X\ÛÛˆ[˜Ú[™Ñ^TİÜ™Xİ^\È“‹Yœ™YJH8 %İ\Ú\ÙHHØ]HÛİ[˜YÈ[H[ÈLİZ]\ËˆH˜Z[YİÙY\X]™\ÈHš[™Ù\œš[[Üš][ˆÛÈH™^][˜Ú™]šY\Ë˜]\ˆ[ˆ™XÛÜ™[™ÈH™\Ù]]™]™\ˆ\[™Y‚‚ˆ
+Š”•SH8 %[\SÒS‘×ÑVWĞĞPÒWÕ‘T”ÒSÓ˜
+[˜Ú[™ËÜ[˜Ú[™Ñ^TÙ\™KØ
+HÚ[™]™\ˆH[˜Ú[™È[™Ú[™HÚ[™Ù\ÊŠ‹ÜˆÚ[™]™\ˆ\œÚ\İY^\ÈÛİ[İ\Ú\ÙHÙ\™Hİ[H™\İ[È
+HÚ[™ÙHÈ^R[œ]Ø	ÈÚ\KÈÛÛ\]Q^R[œ]ØÜˆÈH\İH›YÜÊKˆ]šXÙ\È][™XYHØØ[›™YÙY\Y˜][™ÈHÓ[™Ú[™IÜÈ^\È›Ü™]™\ˆİ\Ú\ÙK[™Hš^Ú\ÈÛ›HÈœ™\Ú[œİ[È8 %HØ[YH˜\\ÈØœÙ\˜[˜ÙPØXÚX	ÜÈĞPÒWÕ‘T”ÒSÓ˜
+0©ÈH[˜Ú[™ÈÛİÚ\ÊKˆÛÈ\\ˆ™XÛÛ™][ÛœÈÛHÚ\™YİÜ™HÙÙ]\ˆÙ^\È\ÙHØØ][Û’Ù^X[™
+Š››ÈÛÛœİ[Y\ˆX^H]]]HH™]\›™Y[˜Ú[™Ñ]X
+Šˆ8 %]™\H™XY\ˆÙ]ÈHØ[YH[œİ[˜ÙKÛÈ[ˆ[‹\XÙHÜš]HÛÜœ\ÈHİ\ˆİ\™˜XÙ\È[™H\œÚ\İYÛÜKˆÛÜœ™Xİ™\ÜÈ\È[›™YH^PØXÚT\š]K™L™K\İØ
+
+™œ™\ÚOHØXÚYOHÙ\šX[^™x¡¤œ™]š]™Jˆİ™\ˆH[YX\ˆ0åÈÈØØ][ÛœÈ0åÈˆØ[[™\ˆŞ\İ[\ÊK[˜Ú[™Ñ^R[[]]Xš[]K\İØ
+H›Ë[]]][Ûˆ[˜\šX[Ú]HÙ[‹]\İ›İš[™ÈHİX\™\Û‰İ˜Xİ[İ\ÊK×İ\İ××ËÚ™\İÜ[˜Ú[™Ñ^PØXÚKš™\İ\İØ
+İÜ˜YÙK[˜ÛY[™ÈHÛ˜ÙK\\‹\Ù\ÜÚ[ÛˆİÙY\
+K×İ\İ××ËÚ™\İÜ[˜Ú[™Ñ^T™]Ø\›Kš™\İ\İØ
+H›ÛY›ÜØ\™Ú[™İË]È[‹Y›YÚİX\™[™Ø[˜Ù[][ÛŠK×İ\İ××ËÚ™\İÜ[˜Ú[™Ñ^T›İ][™Ëš™\İ\İØ
+HZ[Hİ\™˜XÙ\ÈÛÛ™H™\›È^\ÈÚ[ˆHİÜ™HÜˆ\ÚÈ\ÈØ\›H8 %
+Šœ\ÈH™X[ZYšYÚ›Ûİ™\ŠŠ‹˜ZÚ[™È]X[Û™HÛÈHÛÚÜÉÈY™\œ™YÚZ[ˆİ[[œÈÛˆ™X[[Y\œÎÈHXY\İ›È›İÈØ[››İ[İ™HH]šXÙHÛØÚËÛÈ\È\ÈHÛ›HXÙH]Ø]HØ[ˆ]™JK[™›XY\İ›ËÜ[˜Ú[™ËY^KXØXÚK\Û[ÚÙKX[[
+HÛÛ\İ\›İ\›™^JK‚‚ŠŠ‘›ÛİÈ	ˆ™[Z[™
+‘LMˆ0©Í‹ÊKŠŠˆH^H]Z[	ÜÈ
+Š˜Xİ[Ûˆ˜[™
+ŠˆØ\œšY\ÈHÚ[™ÛH
+Š¸¦!ˆ8)!ø).8)+¸)`x).x)`¸),8)cx))8)%x)/ˆ8)!x)*8)`x).8),8)(È8)%x),8)aø) ŠŠˆ[X›İ™HHÚ\Y8))¸)/ø)*8)%x)aÈ8).8)+x)`8)-¸)`x)+H8).8)+¸)+Ø[šÈ8 %ÛÈ[œİÙ\ˆ8¡¤ˆXİ[Ûˆ8¡¤ˆ]šY[˜ÙHİ[ÛË[™›ÛİÈ\ÈÙ™™\™Y
+˜Y\ŠˆH^H\È™XY˜]\ˆ[ˆÚ[HØØ[›š[™È
+]™\H™\İ[Ø\™İ^\ÈY[XØ[ÛÈ\™H\È›È\‹XØ\™8¦!JKˆ[ˆ
+Š™^ÛYY^HÙ™™\œÈ›È›ÛİÈY™›Ü™[˜ÙH][
+Š‹ˆ›ÛİÚ[™ÈÜ[œÈH
+ŠœÚ\™Yœ˜]™[Z[™\”ÚY]
+Šˆ
+^[™YÚ]Ü[Û˜[^SÙ“Ü[ÛœØØİX]XØ^SÙ“X™[Ø›Ûİ›İX8 %›İ›ÜšÙY0©ÍËğ©ÎJHØ\œZ[™ÈÛ™H]Z\˜][Û›HÚÚXÙK
+Š¸)+¸)`x).x)`¸),8)cx))8).8)aÈÌ8)+¸)/ø)*8)'È8)*¸).x),¸)aÊŠ‹[Û™ÜÚYHÎŒÌŒˆØ]š[™ÈÚ]›İ›İXÙ\ÈÙ™ˆ[™›ÛİÜËˆH›ÛİÙYİ]H™\XÙ\ÈHÕHÚ]H]ZY]ØY™œ›Û•[›İÈ]
+Šœİ]\ÈH™\ÛÛ™Yš\™H[Y\ÊŠˆ
+X[\‹[[\Ø[X™\“Ù“[™\Ï^Ì_X
+H˜]\ˆ[ˆ”™[Z[™\ˆÛˆˆ8 %HÛ›HØ^HH\Ù\ˆØ[ˆÙYH]Ú[™Ú[™ÈÚ]H[İ™Y[H8 %\ÈH
+Š¸)+8))¸),¸)aø) ŠŠˆ™KY[K‚‚”İÜ˜YÙH\ÈÛÛ^ËÓ]Z\˜]›ÛİĞÛÛ^ŞHÚX›[™ÈÙˆHœ˜]İÜ™H˜]\ˆ[ˆH™]\ÙNˆH]Z\˜]›ÛİÈÙ^\È
+Š›Û™HÚ]š[^JŠˆ
+ÛØØØ\Ú[Û’YNÖVVVKSSKQX
+KÛÜÈÛÛÛ™\İYš\œİ[™
+Šœ[™\È]Ù[ˆÛ˜ÙH\İ
+Š‹ˆ›İYšXØ][ÛœÈ\™HHÙ]™[˜[Z[H8 %\™H[›™\ˆ›İYšXØ][ÛœËÛ]Z\˜]™[Z[™\”\™KØ
+™Yš^]Z\˜]\™[Z[™\˜Ø\ÛÛÛ™\İYš\œİQSÑWÒÕT˜Ú\™YÚ]Hœ˜][›™\ŠH
+È]Z\˜]ØÚY[\‹ØÛYH
+ÈXY\ÜÈ]Z\˜]™[Z[™\”ØÚY[\˜ˆ
+Š˜Û[\^SÙ˜[ÈH^K[Ùˆ›İXÙH˜XÚÈÈÚ[™İÔİ\8¢$ˆÌZ[˜
+ŠˆÚ]]™\ˆH\Ù\ˆXÚÙY™XØ]\ÙHH]Z\˜]\ÈH[YNˆHMÈ]YÈŒˆ˜Z[ˆÚ[™İÈÜ[œÈŒÈSH[™H]\˜[ÎŒÛİ[\œš]™HY\ˆ]ˆÚ[™İÜÈ\™H
+Š›™]™\ˆ\œÚ\İY
+Šˆ8 %HØÚY[\ˆ™KY\š]™\ÈXXÚ›ÛİÉÜÈÚ[™İÈœ›ÛH[˜Ú[™Ñ^TİÜ™X[™™KX\›\ÈÛˆ
+Š›ØØ][Ûˆ[™Ø[[™\‹\Ş\İ[HÚ[™ÙJŠÈH›ÛİÙY^H]™KYÜ˜Y\ÈÈ^ÛYYš\™\È›İ[™È[™Ø^\ÈÛÈ[ˆÛÜ™È
+0©ÌLŠKˆH\Y\[[šÜÈÈ]Z\˜]^Q]Z[ÛØØØ\Ú[Û’Y]S\ßXÚ]H]HØ\œšYY[ˆH^[ØY
+[ˆY˜[˜ÙH›İXÙH\È™XYÛˆHY™™\™[^H[ˆ]˜[Y\ÊK‚‚ŠŠ•™YHÛÛ^X[İ\™˜XÙ\Ë™\›ÈÚ›ÛYHÚ[ˆ[\ÙYŠŠˆ8¤hÛYIÜÈ
+Š•Ù^Hİš\
+ŠˆØZ[œÈHØY™œ›Û•[8¦!HÚ\XY[™ÈH›İÈ
+8)-x)/¸).x)*8)%x)cx),8)+È0­È8).8)bø)+ˆŒÈSX8¡¤ˆ]^IÜÈ]Z[
+HÛ›HÚ[HH›ÛİÈÚ]È[œÚYH“ÓÕ×ĞÒTÒÔ’V“Ó—ÑVTØ
+ÊH[™İ[Ü˜Y\Ëˆ8¤hHÛYIÜÈ
+Š‘“ÔˆÑVJŠˆ›İÈØZ[œÈ[ˆØ\™Xİ]™X
+Š¸)!x)+8)`¸)'H8)+¸)`x).x)`¸),8)cx))
+ŠˆØ\™ÛˆXZš^\È
+\ÙUÙ^PXZš
+H8¡¤ˆXZš^\ØÈÛˆHØ][ÙİYY™\İ]˜[^H]ÛİÈ
+ŠœÙXÛÛ™
+ŠˆÛÈH™\İ]˜[Ø\™İ[XYÈ
+™\İ]™T™[Z[™\œË\İØ[œÈ]›ÛZ\ÙJKˆ8¤hˆ
+Š˜^Uœ˜]ØÜ™Y[˜
+ŠˆÜ›İÜÈ[ˆ
+Š¸)!x)*8)`x).8),8)(È8)%x)/ø)#È8)+¸)`x).x)`¸),8)cx))
+ŠˆÙXİ[Ûˆ8 %Û™H8¦!H[™[ÜK›İÛÈ8 %ÚÜÙH›İÜÈØ\œHH]H
+ÈÛİ[İÛˆ[™™K\ÛÛ™HÈÚİÈšY[ˆÛÜ™Ëˆ]ØÜ™Y[‰ÜÈ[\Hİ]H›İÈØ]\ÈÛˆ›İ›ÛİÈÛİ[ËÚ[˜ÙHH\Ù\ˆØ[ˆ›ÛİÈH]Z\˜]™Y›Ü™H[Hœ˜]‚‚ŠŠ’Û›İÛˆ[Z]È
+ÜİT\ÙHËÍ
+KŠŠˆ[HX›\È\™HQ•[™[™È0©ÌL™]šY]È
+•SP“ÓÒÈ0©ÌMÈ8 %™[X\ÙHØ]JK›İÈ[˜ÛY[™ÈHX\ØHX›\ËHYÛ˜K\™Y™\™[˜ÙKÚÜ˜Kø))¸)/ø)-¸)/‹x)-¸)`¸),ˆX›\È
+]Z\˜][YÛ˜K]ŒK›Y8 %HYÛ˜HX›\ÈÚ\STKÛÈ]˜XİÜˆ\È[™\[[™]šY]ÊH[™H\˜X˜[KĞÚ[™˜X˜[HÛ\ÜÙ\È
+]Z\˜]]\˜X˜[K]ŒK›Y
+NÈ›İÛÛ™[[ÛˆØÜÈÙ\™H]]Ü™Y
+ŠÚ]İ]ÛÛ[YÜ™\ÜÊŠ‹ÛÈZ\ˆ0©ÌLÛİ\˜Ú[™È\È[\™[Hİ]İ[™[™ËˆÛÈ\ÙKLˆ[Z]È\™HÓÔÑQˆÚ[™İÜÈİ˜Y[™ÈHÚ[™Ù[İ™\ˆ\™H›İÈÜ][™]K[ÛœÙ]š\ÚH\ÈÛÛ™Yˆİ[Ü[ˆ[ÙØH[™][Y\Èİ^H[œÛÛ™YH\ÚYÛˆ
+X]\]KÕ˜ZYš]H™[XZ[ˆ^K[]™[
+NÈXšZš][Û‹UÙY™\Ù^H
+HZ[]KYÜ˜YHÚ[™İÜÈXZÙHH[Ø^\ËY[Z]ÚÚXÙH[Ü™Hš\ÚX›JNÈÚ[™˜K]˜\ØH›Üˆ8)+ø)/¸))8)cx),8)/ˆ
+İ]ÙˆŒJNÈH8)'8)*8)cx)+‹]\˜HÛÜ™[™[ˆÜZ[ˆœ™Y™\ˆ^HÛÛÙ^\ÈˆÛÜ
+›İØ\œšYYÈH\˜X˜[H™]šY]ÊKˆ
+Š•HXZš8¡¥š[™\ˆÛÛ˜YXİ[Ûˆ\ÈÛ›H\HÛÜÙY
+ŠˆÙX\ÛÛ˜[˜\œÈ›İÈZY[][ˆXZš^HØ[ˆİ[™H^ÛYYHH\‹Y^HÜÚH
+ZÜÚ^XH˜]˜[ZHÛˆHšZİH]JHÜˆH˜Z[[™ÈHØØØ\Ú[Û‰ÜÈ˜ZÜÚ]˜Kİ]Kİ˜\˜HX]Ú
+[\˜\Ë^ÛYYÛˆ˜XİÜœÈ[Û™JH8 %Ú[HHXZšØÜ™Y[ˆØ[ÈHØ[YH^H]\ÜXÚ[İ\È[ˆ]È[\™]Kˆ0©ÍŒ‰ÜÈÛÜ™[™È\Èİ›Û™Ù\ˆ[ˆÚ]Ú\ÎÈ•SP“ÓÒÈ0©ÌMËØ\œšY\ÈHXÚ\Ú[ÛˆÈ0©ÌLˆ›ÛİÚ[™È[ˆ
+Š›ØØØ\Ú[ÛŠŠˆ\ÈHİ[™[™È[\™\İ
+[YHÚ[ˆH8)-¸)cx),8)aø)-ø)cx)(^H\X\œÈŠH™[XZ[œÈİ]ÙˆØÛÜH8 %\ÈÛXÙH›ÛİÜÈ
+™^\Ê‹ˆXY\İ›È]Z\˜]\\ÙLË\Û[ÚÙKX[[È]Z\˜]\\ÙM\Û[ÚÙKX[[\™H]]Ü™Y]İ[™YYZ\ˆš\œİ]šXÙH[œÈ
+SÔÈ[™[™›ÚY™\ÜYÙ\\˜][K\ˆHL™HÛXŞJK‚‚‹KKB‚ˆÈÈŒKˆ˜[ZØ\˜[ˆ
+8)*8)/¸)+¸)%x),8)(ÊH8 %‘LMÂ‚ŠŠ”\œÜÙH[™XÙ[Y[ŠŠˆ˜[ZØ\˜[ˆİ\Y\ÈH˜Y][Û˜[İ\[™ÈÛİ[™œ›ÛHHš\[ÛÛˆ[™HÚ[ˆÙˆ™]šY]ÙY˜[Y\ÎÈ]™]™\ˆ˜[šÜÈ˜[Y\ËØÛÜ™\È[KÜˆXZÙ\ÈÛZ[\ÈX›İ]HÚ[ˆ]\ÈH›İ\Ú\Y[İ\ÚÛÛØ\™[[YYX][H™[İÈİ[˜HZ[[ˆ[ˆ›İİY\İ[™Ø]™Y\›Ùš[H[İ\Ú[™[™ÜË[™\Ú\È˜[ZØ\˜[˜8¡¤ˆ˜[ZØ\˜[”™\İ[
+[™˜[ZØ\˜[˜Ø˜[ZØ\˜[”™\İ[8¡¤ˆ˜[ZØ\˜[”˜\ÚX
+H[œÚYHH^\İ[™È[˜Ú[™ÈİXÚËˆ\ÙHH[X™\˜][H\È›ÈÛYH[H[™›ÈšYH[Ù[K‚‚ŠŠÚ\˜[˜H\Èš[X\NÈ˜\ÚH\ÈHY\ˆ[K™]™\ˆHÙXÛÛ™[œİÙ\‹ŠŠˆH˜ZÜÚ]˜HÚ\˜[˜H\ÈHš[™\ˆØ[İ[][Ûˆ8 %Û™HÙˆLÙ[È8 %[™H˜\ÚH\È^XİHš[™HÙˆÜÙHÙ[È\š]™Yœ›ÛHHØ[YHX›H
+ÛÛ™[[Ûˆ0©Í
+KÛÈH\›ËH˜[YH[™^Hš[\œËHÚÜ\İH]Z\˜]ÛÜ‹[™HÚ\™H[Ù[[İ^HÚ\˜[˜KZÙ^YYˆÚ]˜\ÚHÙ]È\È
+œ™XXÚXš[]J‹™XØ]\ÙH˜[Z[Y\È\™H˜\ˆ[Ü™HÙ[ˆÛH[ÛÛˆÚYÛˆ[ˆHÚ\˜[˜NˆH\™œ›İÜÙHÛÜˆ
+8),8)/¸)-¸)/È8).8)aÈ8)&¸)`x)*8)aø) ˜
+HÛˆH[HØÜ™Y[ˆ\Ú[™ÈHØ[YHËXÛÛ[[ˆ][˜Ú\ˆÜšYİ™\ˆÙ[™H[\Ë[™H˜[ZØ\˜[”˜\ÚX]Z[][™ÈÛ‹ˆ˜\ÚH\È™]™\ˆ™[™\™Y\ÈHÛÛ\][™È\›ËH˜[šÙY[\›˜]]™KÜˆHÙXÛÛ™Ş[X›HX›K‚‚ŠŠ’[œ][™š]˜XŞKŠŠˆHÚ[[ÙHÙˆHÚ\™Yš\]Z[Ñ›Ü›X™[™\œÈ]H
+ÈTÕ[YHÛ›Nˆ›È˜[YKÚ]KØ]™YRİ[™[H]]Ùš[ÜˆÛØ˜[[˜Ú[™Ë[ØØ][Ûˆ]]][Û‹ˆ[šÛ›İÛˆ[YH\ÈİÜ™Y\È[[™[[Y\˜]\ÈHÚÛHTÕÚ]š[^NÈ›ÛÛˆ\È™]™\ˆ˜XœšXØ]Yˆš\[œ]\ÈÙ\ÜÚ[Û‹[Û›H[›\ÜÈH[š]X[K[Ù™ˆ™[Y[X™\ˆš\]Z[ØİÚ]Ú\ÈÙ[XİYÈ]Èİ\Ü[™ÈÛÜHØ^\ÈÛ›H]H›Ü›HÚ[™H™Yš[Y™^[YKˆHÜ[İ]\Ù\È[ˆ[˜[Y][™È]]][Ûˆ]Y]YHÛÈÛX\š[™ÈÚ[œÈİ™\ˆ[ˆ[‹Y›YÚØ]™KˆHÚÜ\İ\ÈHÙ\\˜]HY[Û›H™XÛÜ™[™İ\š]™\ÈÛX\š[™Èš\[œ]‚‚ŠŠ[œİÙ\ˆÜ˜[[X\‹ŠŠˆ[ˆ^Xİ™\İ[XYÈÚ]HÛ™H™]È[œİÙ\ˆÛÛ\Û™[˜[XZÜÚ\Ø\™ˆØ\™Xİ]™Qœ›ÛH8¡¤ˆØ\™Xİ]™UØÛÛ8)iXYY[]˜][Û‹HÙ[™\›İ\È[™H›Ş›ÜˆHŞ[X›K›Û[˜ÚX][ÛˆZY[ˆ˜ZÜÚ]˜KÜYKÜ˜\ÚH›İ™[˜[˜ÙKˆHNŞ[X›H
+MÛˆHÚ\™HØ\™
+H[œÈ
+Š››È[™RZYÚ
+Šˆ8 %]È›Ş\ÈHÛÛZ[™\‰ÜÈZ[’ZYÚMˆ[œİXYˆHš^YXY[™È[™\ˆH˜]\˜[]˜[˜YØ\šH[™H›ŞÛXÙY]™\][™ÈX›İ™HHÚ\›Ü™ZÚH
+8)%x)aØÚ\Y\È8)%X\ÈHİX‹]Yİ\İŒŠH[™™Z[™Èš^YÛİ[›İ›ÛİÈX^›ÛÚ^™S][\Y\˜Z]\‹ÛÈ]Û\YYØZ[ˆ]HÜ\Hİ\ˆ]™\HZXÜ›ÈX™[XÜ›ÜÜÈ\ÙHİ\™˜XÙ\È8 %H8)iH8)*8)/¸)+¸)/¸)%x)cx)-ø),^YXœ›İË8)*8)/¸)+ˆ8))¸)aø)%¸)aø) ˜8)%x)b8).8)aÈ8)*8)/ø)%x),¸)/Ø8),8)/¸)-¸)/È8)!x)*8)`x).8)/¸),8)!x)%x)cx)-ø),8)&¸)`x)*8)aÈ8)*8)/¸)+ˆ8)-¸)aø)+ø),8)+¸)aø) ˆ8)'8)bø)(x)/8)aø) ˜8))¸)/ø)*8)%x)`8)#ø)%H8).8)+¸)cx)+x)/¸)-x)*8)/˜H˜\ÚH]Z[	ÜÈ8),8)/¸)-¸)/È8)%x)aÈ8)*8)c8)&¸),8)(Ø[™8)!ø).8))¸)/ø)*8)%x)`8).8)+¸)cx)+x)/¸)-x)*8)/˜[™HÚ\™HØ\™	ÜÈÛÈ^YXœ›İÜÈ8 %›İ]\È›İYÚ[^İ[X
+0©ÌËŒ
+Nˆ^HÚ\Y\È[\ˆ
+È][ˆ˜XÚÚ[™ËÚXÚ\È›È[™XÈÛ\È[™š\Ù\ÈXXÚÛ\İ\ˆ\\ˆİX\™YHÛÛ\Û™[Ë××İ\İ××ËÛ˜[ZØ\˜[•\Qš]\İŞXÜ›ÜÜÈ[›İ\ˆ[™İXYÙ\Ëˆ[šÛ›İÛ‹][YH™\İ[È]™H›È\›È[™›ÈÚ\™HXİ[ÛÈ]™\HØ[™Y]H\ÈH[šY›Ü›HÚ\Y\İØ\™Ú][ˆTÕÚ[™İËˆXXÚØ[™Y]H
+Š›Ü[œÊŠˆ]Ú\˜[˜IÜÈ[™\İ[8 %\›ËÛÛ^˜[Y\ËÚÜ\İ8 %Ø\œZ[™Èœ›ÛU[šÛ›İÛ•[YXÚXÚÙY\ÈH8))¸)/ø)*8)%x)`8)#ø)%H8).8)+¸)cx)+x)/¸)-x)*8)/ˆ0­ÈÛ™HÙˆH^IÜÈÜÜÚXš[]Y\Ø›İXÙHX›İ™HH\›È[™İ\™\ÜÙ\ÈH^Xİ\Ş[X›HÚ\™H[™]ÈÚÜ\İÜZ[ˆ
+0©ÎŒÈ[˜\šX[JKˆ[šY›Ü›H›İÜÈ\™HH[K\˜[šÚ[™È\ØÚ\[™NÈ™Z[™È˜]šYØX›H\È›İ˜[šÚ[™ËˆH›YÈ\ÈÚ]İ\™\ÜÙ\ÈHÚ\™K›İH˜\Ú\ÎˆHY[XØ[Ú\˜[˜H™XXÚY[X™\˜][H›İYÚH˜ZÜÚ]˜HÜˆ˜\ÚHœ›İÜÙHİ[Ú\™\Ë™XØ]\ÙHHœ›İÜÙH\ÈHX›HÛÚİ\˜]\ˆ[ˆHÛZ[HX›İ]\ÈÚ[	ÜÈš\ˆH›YÈ[ÛÈ˜]™[È›İYÚH˜\ÚH]Z[8 %[ˆ[˜Ù\Z[ˆ™\İ[Ü[œÈ˜[ZØ\˜[”˜\ÚXÚ]^PÚ\˜[˜\ØÛÈÜÙH›İÜÈX\šÈ\È]^IÜÈÜÜÚXš[]Y\È[™™KY›YÈÛˆÜ[‹ˆÚ]İ]]H]Z[Ûİ[™HHÚYHÛÜˆ˜XÚÈÈHÚ\™HH˜[™ÙH]Ú]ÛÈ
+•SP“ÓÒÈ0©ÌNŒËğ©ÌN
+KˆHÛÈ]PˆÛÜœË›İ\ˆYHÚÚXÙ\Ë˜[YH›İÜË[™]Z\˜]ÛÜˆ\™H[ÛÈ\İØ\™ˆHËXÚÚXÙH˜ZÜÚ]˜HÙ[XİÜˆ\ÈH[X™\˜]HÛÛ\Xİ^Ù\[ÛˆHÚ\YÛYHØ]YÛÜPØ\™˜\šX[H›][˜Ú\ˆ˜[ˆHËXÛÛ[[ˆ0åÈK\›İÈÜšYÚ]Hİ\œ™[[[™İXYÙH˜[YHš]Y[œÚYHH[Hİ™\ˆ][ÜİÛÈ[™\È[™›ÈÜ™[˜[[[X™\ˆ]Kˆ\È\È[ˆ^XÚ][™^˜\šX[Ùˆ0©ÌN	ÜÈX™[X™[İÈ][˜Ú\ˆH[‹][HX™[ÛÈ
+Š›Û™Hš^YÚ^™JŠˆ
+LÈ]˜[˜YØ\šHÈM][‹[™RZYÚŒK[X™\“Ù“[™\Ï^ÌŸXX^›ÛÚ^™S][\Y\˜KŒJHXÜ›ÜÜÈ[È[\È8 %›È]›Ü›H]]ËYš]ˆ][X™\˜][HÙ\È
+Š››İ
+Šˆ\ÙHY\İÑ›ÛÚ^™UÑš]ˆÛˆSÔÈH][K[[™HX™[Ú]Hš^Y[™RZYÚÚš[šÜÈ\œ˜]XØ[H[™YÛ›Ü™\ÈZ[š[][Q›ÛØØ[XÛÈØØ]\™Y[\È
+8).x).8)cx))0­È8)&¸)/ø))8)cx),8)/ˆ0­È8).8)cx)-x)/¸))8)`
+HÛÛ\ÙYÈH™]ÈÚ[È™\ÚYH[\Ú^™H™ZYÚ›İ\œÈ
+]Yİ\İŒŠKˆÛÈ[™\È]Hš^YÚ^™HÛX\ˆ]™\HÚ\Y˜[YH8 %HÛ™Ù\İÛÜ™[ˆ[HÙˆ[H\Èˆ]˜[˜YØ\šHÛ\İ\œÈ8 %ÛÈ›İ[™È™YYÈÈÚš[šËˆ]™\XÙ\ÈH›Ü›Y\ˆÈ[]ÚY›İÜÈÚ]İ]Ü™X][™ÈH™]ÈØ\™Ü˜[[X\‹ˆH˜[YH\İ\ÈH›]\İÚ]ÛÜ™
+İ[Ù[™\‹[™İ[™ÚÜ\İİ]\ÎÈ]ÈXY\ˆ[™ÈÚ]Y[™Ğ›İÛXMÛÈHš\œİ˜[YHØ\™ÛX\œÈH[™İYš[\ˆÚ\È8 %HØ\Û›HÜXÙ\ÈHXY\‰ÜÈİÛˆÚ[™[‹[™Ú]™\›ÈÛX\˜[˜ÙHHØ\™	ÜÈ\Ø\™ÚYİÈ›YÛÈHÚ\È[™HÛÈ™XY\ÈÛ™Hİ™\›\[™È›ØÚË‚‚ŠŠ”˜\ÚHÜ›ÜÜËXÚXÚÈ[™]Z[ŠŠˆH™\İ[	ÜÈTÒHÓÕS‘ØØ\™\š]™\È]ÈÙ[Èœ›ÛH˜\ÚPÚ\˜[˜Q[šY\Ø8 %š[™H
+˜Ú\˜[˜\Ê‹›İH›][™YŞ[X›H\İÛÈHğåÌÈÚ\Hİ\š]™\ÈÚ\˜[˜\È]Ø\œH[\›˜]\È
+XZØ\˜HÜ[œÈÚ˜]˜[˜IÜÈX[8)'ø)%ˆÙ\šY\Îˆš[™HÚ\˜[˜\Ë\Y[ˆŞ[X›\ÊKˆXXÚÙ[\ÈHÛÛ›Û]Ü[œÈ]Ú\˜[˜IÜÈ˜[Y\È8 %^Ù\HÙ[
+ÊH\È™\İ[[™XYHÚİÜËÚXÚ™[™\ˆ\ÈHX\šÙY›Û‹Z[\˜Xİ]™H8)+ø).x)`0­È\ÈÛ™Xİ]H
+ÛÜ™
+È[Ü™^\ØØ[K[YÚX›H\ˆ0©ÌLŠH™XØ]\ÙH\Ú[™ÈH\XØ]HÙˆHØÜ™Y[ˆ™Z[™È™XY\È›İH\İ[˜][Û‹ˆH˜\ÚH˜[Z[™È]Z[›İÈÜ[œÈ˜[ZØ\˜[”˜\ÚXˆH˜[XZÜÚ\Ø\™\›È]Ù[ˆ\È™]™\ˆ\X›H
+XØÙ\ÜÚXš[]T›ÛOHœİ[[X\H˜
+Nˆ]
+š\ÊˆH[œİÙ\‹Ú]]È˜[Y\È[™XYH\İY™[İÈ]ˆ[ˆ[šÛ›İÛ‹][YH™\İ[™[™\œÈ
+Š›Û™HØ\™\ˆ\İ[˜İ˜\ÚHH^HİXÚY
+Šˆ
+\İ[˜İ˜\ÚR[™XÙ\Ø
+HÚ]H[™HØ^Z[™ÈH[ÛÛˆÚ[™ÙY˜\ÚK™XØ]\ÙH›İYÚHÛ™H^H[ˆÛÈÜ›ÜÜÙ\ÈHÌ0¬›İ[™\H[™˜[Z[™ÈÛ›HHš\œİØ[™Y]IÜÈ˜\ÚHÛİ[˜[šÈHØ[™Y]HH˜[™ÙH]™Y\Ù\ÈÈ˜[šËˆ˜[ZØ\˜[”˜\ÚTØÜ™Y[˜\ÈH]Z[ˆHİ[[X\HØ\™
+˜\ÚH˜[YKÚ\˜[˜KÜÛİ[™Ûİ[ËHš[™HÛ\ÊK[ˆHš[™HÚ\˜[˜\ÈÜ›İ\YH˜ZÜÚ]˜H\È\İØ\™›İÜÈØ\œZ[™ÈHYK]ÈÛİ[™ËH^š[KXÛİ[Y˜[YHİ[Ú[ˆHÛÜœ\È\ÈÛ™K[™H[‹XÚ\˜[˜H›İKˆ›İİ\™˜XÙ\Èİ]HZ[›H]Ú\˜[˜K[˜[Z[™È[™˜\ÚK[˜[Z[™È\™H›İ[ˆ\ÙK‚‚ŠŠ”Ú\™H›İ[™\KŠŠˆ^Xİ™\İ[È™]\ÙH[İ\ÚÚ\™TÚY][™Hš^YH˜[ZØ\˜[”Ú\™PØ\™ˆ]È[Ù[[İË[\İÈŞ[X›\Ë˜ZÜÚ]˜KYK˜\ÚK\ØÛZ[Y\‹[™œ˜[™ˆÚÜ\İY˜[Y\È™\]Z\™HHœ™\Ú\‹\Ú\™HÜZ[ˆ[™\™HØ\YÚ][ˆİ™\™›İÈ[™NÈš\]Kİ[YKØØ][Û‹˜\Ú\ËÛ™Ú]YK›Ùš[HY[YšY\œË[™Y[ˆY]Y]HØ[››İ[\ˆH[Ù[ˆ[ˆ[šÛ›İÛ‹][YH˜[™ÙH\È›È^XİÚ\™K‚‚ŠŠÛÛ[[™™[X\ÙHİ]KŠŠˆ˜[XZÜÚ\‹]ŒX™[XZ[œÈ™\šYšYY™˜[ÙXÈHÛÛ™[[Ûˆ[™[˜[YHÛÜœ\È\™H™[X\ÙH›ØÚÙ\œÈ[™\ˆ•SP“ÓÒÈ0©ÌNˆHÚXÚÙYZ[ˆÚ\™È\™H[ˆ^XÚ]H™[X\ÙQ[YÚX›N™˜[ÙX]™[ÜY[Ø[\H\ÙYÈ^\˜Ú\ÙHHRKÜš]˜XŞH›İÈÚ]İ][™[[™ÈY]ÜšX[ÚYÛ‹[Ù™ˆ8 %MÈ˜[Y\Èİ™\ˆHÙˆLÚ\˜[˜\ËÛÈ[ÜİÚ\˜[˜\ÈYÚ][X][H™[™\ˆH››İY]]˜Z[X›Hˆ[\Hİ]HÛˆH]ˆZ[ˆH›ÙXİ[ÛˆÛÜœ\È]\İYY]H]\İ][Ûˆ[™LŠÌL‹\\‹XÚ\˜[˜KÙ˜[˜XÚÈÛÛ˜Xİ™Y›Ü™HHØ\™\È^ÜÙY[ˆH™[X\ÙK‚‚ŠŠÛÜœ\ÈÚ\H8 %ÈÚ\™È[™HÛİ[[™^ŠŠˆHÛÜœ\È\È
+Š›Û™Hš[H\ˆ˜ZÜÚ]˜JŠ‹]KÛ˜[ZØ\˜[‹Û˜[Y\Ë“‹OÛYÏ‹šœÛÛ˜
+˜[Y\ËŒX\ÚÚ[šKšœÛÛ˜8 )ˆ˜[Y\ËŒ‹\™]˜]KšœÛÛ˜
+K™Z[™H
+Šœİ]XÊŠˆ™\]Z\™HX\[ˆ]KÛ˜[ZØ\˜[‹Ú[™^ØÈY]›ÈØ[››İ™\ÛÛ™HHÛÛ\]Y™\]Z\™H][™\İ[™ÈHÈ]\˜[H[ÛÈÙY\ÈHÚ\™Ù]]Y]X›KˆHÜ]\ÈÙ^YYÈ˜ZÜÚ]˜H™XØ]\ÙHÚ\˜[˜H8¡¤ˆ˜ZÜÚ]˜X\È›ÛÜŠËÍ
+XÚXÚXZÙ\È›İ[ˆ^Xİ™\İ[[™H[‹XÚ\˜[˜H˜[˜XÚÈ^XİHÛ™HÚ\™8 %H˜[˜XÚÈ™YYÈHÚÛH˜ZÜÚ]˜K[™H˜ZÜÚ]˜H
+š\ÊˆHš[KˆÛÜœİØ\ÙH\È[ˆ[šÛ›İÛ‹][YH^Hİ˜Y[™ÈH˜ZÜÚ]˜H›İ[™\NˆÛÈÚ\™ËNĞ‹ˆH˜[YHÚÜÙHÚ\˜[˜\ÈÜ[ˆÛÈ˜ZÜÚ]˜\È]™\È[ˆ›İÚ\™Ë]KZY[XØ[KY\XØ]YHY]ØYˆ\‹XÚ\˜[˜H˜[YHÛİ[È›ÜˆH˜\ÚH]Z[	ÜÈš[™HÛİ[[™\ÈÛÛYHœ›ÛHÙ[™\˜]YÛİ[ËšœÛÛ˜
+œŞØÜš\ËÛ˜[ZØ\˜[‹XZ[Z[™^›]Ø
+K
+Š››İ
+Šˆœ›ÛHØY[™ÈÚ\™ÈÈ[H[NˆH˜\ÚIÜÈš[™HÚ\˜[˜\ÈÜ[ˆ\È™YH˜ZÜÚ]˜\ËÛÈ[Z[™ÈÛİ[[™YHš[\ÈÈš[š[™H[X™\œÈ[™[™ÈHÚ\™[™Ëˆ›Èİ\™˜XÙHØYÈHÚÛHÛÜœ\È8 %\™H\È[X™\˜][H›È[XÛÜœ\ÈØY\ˆÈ™XXÚ›Ü‹ˆYÙ]È[™H™]šY]ÙYXÚ\Ú[Ûˆ™Z[™[Nˆ•SP“ÓÒÈ0©ÌNK‚‚ŠŠ‘˜[˜XÚÈ›İXÙH˜XÚÜÈH˜[˜XÚË›İHÚ\Ú›ÜˆÛ™KŠŠˆH8)*¸)cx),8)&¸),¸)/ø))8)*8)/¸)+ˆ8).8)`8)+¸)/ø))8).x)b8) ˜[™H™[™\œÈÛ›HÚ[ˆH˜ZÜÚ]˜K[]™[œ›ØY[š[™ÈØ\ÈXİX[H
+Š˜\YY
+Š‹ÚXÚYX[œÈ^Xİ™\İ[ÈÛ›KˆH˜[™ÙH[X™\˜][HÙ\È›İœ›ØY[ˆ8 %ÚY[š[™ÈÈÛ™HØ[™Y]IÜÈ˜ZÜÚ]˜HÛİ[š]š[YÙH]Ø[™Y]KH^Xİ˜[šÚ[™ÈH[šÛ›İÛ‹][YH]™Y\Ù\ÈÈÈ8 %ÛÈÛˆH˜[™ÙHH›İXÙHİ^\È]Ø^H˜]\ˆ[ˆ\ØÜšXš[™ÈHœ›ØY[š[™È]™]™\ˆ\[™Yˆ]Ú\YÙ^YYÈ™˜[˜XÚÈØ\ÈØ[Yˆ[™ÛÈÛZ[YYHÚÛH˜ZÜÚ]˜HÚ[Hİ[\İ[™ÈÛ™HÚ\˜[˜IÜÈ˜[Y\È
+]Yİ\İŒŠKˆ›İ\™Xİ[ÛœÈ\™H[›™Y[ˆØÜ™Y[œË××İ\İ××ËÓ˜[ZØ\˜[‘^\šY[˜ÙK\İŞÈH˜[™ÙHØ\ÙH™YYÈHš^\™H^HÚÜÙHÚ\˜[˜\È\™H[˜[Y[\ÜÈ
+Ú\˜[˜\ÈŒ8 $Í]™\Ù[
+KÚ[˜ÙHHÜ[ˆİXÚ[™ÈHÚ\˜[˜H]
+š\ÊˆH]ˆ˜[YH\ÜÙ\È˜Xİ[İ\ÛK‚‚ŠŠİ\İÛY\‹XÛÜH›İ[™\KŠŠˆØÜ™Y[œÈ[™Ú\™Hİ]]\ØÜšX™HH˜Y][Û‹Xİ[ÛœË[™İ]ÛÛY\ÈÛ›Kˆ^H™]™\ˆ^ÜÙHÛ‹Y]šXÙKÛÙ™›[™KÚ[\›™]ØXØÛİ[ÜİÜ˜YÙH[\[Y[][Ûˆ]Z[ËÛÛ™[[ÛˆÜˆØÚ[XH™\œÚ[ÛœËQ•Ü™]šY]Èİ]\ËÜˆÛÜœ\È[YÚXš[]Kˆ™[X\ÙHØ]\È™[XZ[ˆ[™›Ü˜ÙYHY]Y]H[™\İÈ˜]\ˆ[ˆİ\İÛY\‹Y˜XÚ[™ÈØ\›š[™ÜËˆH8)%x)b8).8)aÈ8)*8)/ø)%x),¸)/Ø[™HX^H˜[YHHZ\šHY]Ù[™^Z[ˆ[ÛÛˆ˜ZÜÚ]˜H
+ÈYH8¡¤ˆİ\[™ÈÛİ[™‚‚ŠŠ‘\ÚYÛˆŞ\İ[KŠŠˆ^\İ[™ÈØ\›HÚÙ[œÈÛ›NÈ›È[[ÚšHÜˆ™]ÈÛÛİ\œËˆ[ÛÛ›ÛÈ\™H]X\İ[™šY[]ÛœÈ™[XZ[ˆˆH˜ZÜÚ]˜H[™˜\ÚHÜšYÈ\ÙHHØ[YHÌˆ][˜Ú\ˆ[\ËÜ˜YY[›Ü™\‹[]˜][Û‹[™™YKXÛÛ[[ˆÜXÚ[™È\ÈÛYKˆš\ÚX›Hİš[™ÜÈ›İ]H›İYÚÛÛ[S[™ØØYX[š[™ĞS[™ØİKÚÛˆ™K\ØÜš\œ›ÛH]˜[˜YØ\šK[™[™Û\ÚXØÙ\ÜÚXš[]HX™[Èİ^HİX›H›ÜˆXY\İ›Ëˆš[\Îˆ[˜Ú[™ËÛ˜[ZØ\˜[Š‹Ø]KÛ˜[ZØ\˜[‹ØØÜ™Y[œËÓ˜[ZØ\˜[Š˜
+[˜ÛY[™È˜[ZØ\˜[”˜\ÚTØÜ™Y[˜
+KÛÛ\Û™[ËÓ˜[XZÜÚ\Ø\™˜[YQ]Z[ÚY]˜[ZØ\˜[”Ú\™PØ\™‚‚‹KKB‚ˆÈÈŒ‹ˆZ˜HšYH
+8)*¸)`¸)'8)/ˆ8)-x)/ø))ø)/È8 %İZYYİ\XK\İ\Z˜H›İÜË‘LNJB‚ŠŠ”\œÜÙKŠŠˆİÛˆH
+œ\™›Ü›YY
+ˆ[ÛY[ÙˆH™\İ]˜[Üˆ\œÛÛ˜[™[Y[Xœ˜[˜ÙH^NˆØ[XYÜšHØ]\™Y™Y›Ü™Z[™]™\Hİ\İZYY[ˆ[™[™\XØX›HØ]KØX\KÜ˜^Y\ˆ^ÈÜ[™Yœ›ÛH™XY\œÈH\[™XYHÚ\ËˆHØ][ÙÈÚ\ÈÙ]™[ˆšY\ÎˆHÚ^™\İ]™Hİ\ÙZÛ›ØÙY\™\È\È
+Š¸)*¸)/ø))8)`È8))8)/ø),‹x))8),8)cx)*¸)(È8).8)cx)+¸),8)(ÊŠˆ
+Lİ\ÊKH˜\œ›İËX[˜KYœ™YHİ\ÙZÛ™[Y[Xœ˜[˜ÙHİZYH8 %Lˆİ\Èİ[ˆ]^XÚ]H\È›İÛÛ\]HÚ˜YH[™Ø\œšY\È›È[™KØšÚ˜[˜KÚÛXHÙ\]Y[˜ÙKš^Y›Ü›][K\™Xİ[ÛˆÜˆØXÜ™Y]™XY[Kˆ™^[Û™HØ]KØX\H[™[Ù™œË\ÙHˆYY]\™ŞH[™[Ù™ˆİ\È[ÈÚ\Y™\šYšYYÙXİ[ÛœÎÈH\œÛÛ˜[İZYHYÈÜ[Û˜[Ú]HÚ\\ˆMKÌˆ[™[Ù™œÈÚ]İ]™]\[™ÈZ]\ˆÚ\\‹‚‚ŠŠ‘[šY\È8 %›È™]ÈÛYHØ]YÛÜJŠˆ
+H][˜Ú\ˆÜšYİ^\ÈÛÜÙY
+NˆH^H[™[	ÜÈ8)iH8)*¸)`¸)'8)/ˆ8)-x)/ø))ø)/ØØœÙ\˜[˜ÙPØ\™[
+0©ÌÌËKš]™[ˆHšYRYÛˆHØœÙ\˜[˜ÙH[H8 %HY[XØ[ÛÚÈYXÚ[š\ÛH\ÈØ]RY
+KH
+Š¸)*¸)`¸)'8)/ˆ8)-x)/ø))ø)/ÊŠˆ[HÛˆHœ˜]	ˆ\ˆØ][ÙÉÜÈœ›İÜÙKXK]\HÜšY
+0©ÌÌÊH8 %H[Ø^\ËX]˜Z[X›HÛÜ‹Ú[˜ÙHH[\È]KY\[™[8 %[™Ú[˜ÙH\ÙHˆ
+ŠœÙX\˜Ú›İÜÊŠˆ
+Û™HÙXİ[Û‹YÜ›İ\›İÈ\ˆšYK0©ÌÍŠKH
+Š“ØœÙ\˜[˜ÙH]Z[¸)*¸)`¸)'8)/ˆ8)-x)/ø))ø)/È0­ÈİÈÈØœÙ\™HˆØ\™
+Šˆ
+0©ÌÌÊK[™H
+Š’ÛYHTĞÓÕ‘TˆÜİYÚ
+Šˆ
+0©ÌÌŠK‚‚ŠŠ˜XÚÈ[Ø^\È™]˜XÙ\ÈH›İ\›™^H8 %H›İÈ\È™YÚ\İ\™YÛˆ[™YHÜİ[™ÈİXÚÜËŠŠˆH›İ]\È\™HXÛ\™YÛ˜ÙH[ˆšYTİXÚÔ\˜[S\İ[\œÙXİY[ÈÛYK[˜Ú[™È[™[Ü™K[™™YÚ\İ\™YH[™YH˜]šYØ]ÜœËˆÛYH\ØÛİ™\KÜÙX\˜ÚÜ›İ][™K[˜Ú[™ÈØœÙ\˜[˜ÙKØØ][ÙË[™[Ü™IÜÈ]HÛX\˜[ˆÛÜœÈ\™Y›Ü™H\Ú[ˆXÙKˆÛÛ™Xİ[™[Ù™œÈ\ÙH˜]šYØ]UÒÛYTİXÚÕ\™Ù]ÚXÚ\Ú\ÈØØ[HÚ[ˆH[˜ÛÜÚ[™ÈİXÚÈİÛœÈH™XY\ˆ[™İ\Ú\ÙH˜[È˜XÚÈÈÛYUX˜ˆÚ]T™XY\˜\È[ÛÈ[İ[YÛˆ[Ü™HÛÈH\œÛÛ˜[]]HİZYIÜÈÛ›HÛÈ™XY\ˆ[™[Ù™œÈ™]\›ˆ\™XİHÈHÛÛ™Xİİ\‚‚ŠŠ‘]KŠŠˆ[Øš[KÜÜ˜ËÙ]KİšYKØ8 %\\ËØYÈÜ[Û˜[[˜ÚÜ‰Ü\œÛÛ˜[]]IØ[™HÚ]X™Yˆ[Û™ÜÚYHØ]KÜÙXİ[Ûˆ™YœËˆ™\İ]˜[[šY\È™]Z[ˆ™\İ]˜[YØ[™Z]HYÜÎÈH\œÛÛ˜[[H[X™\˜][H\È™Z]\‹ˆ
+ŠÛÛ™[[Û‹ÜÛİ\˜ÙHšY[È[™Ûİ\˜ÙU\›\™H™]šY]Ë[Û›H[™™]™\ˆ™[™\ŠŠˆ8 %[›™YXÜ›ÜÜÈ]™\HYÙHÙˆ[Ù]™[ˆ[šY\ËˆÚXÚÛ\İ
+È™\İ[YHİ]H™[XZ[ˆ[™\ˆ™Y[œÚİšYKXÚXÚÛ\İˆØ[XYÜšH\ÈÙ^YYHšYH
+ÈØØİ\œ™[˜ÙH]H[™ÛÛ™Xİ›ÙÜ™\ÜÈHšYH
+ÈÚ]š[^Kˆ\œÛÛ˜[›İ]\ÈØ\œHÛ›HİšYRY]S\ßXÈ›È™[Y[X™\™Y˜[YK™[][ÛˆÜˆ[HY[\œÈšYHİ]K‚‚ˆÈÈÈŒ‹ŒHšYHØ][ÙÈ
+šYPØ][ÙÔØÜ™Y[˜
+B‚˜™XY\’XY\ˆ˜\šX[Hš[™^˜
+¸)*¸)`¸)'8)/ˆ8)-x)/ø))ø)/ø)+ø)/¸) HŠK[ˆÛ™HØ\™\ˆX›\ÚYšYH›ÛİÚ[™ÈH
+Š°©ÎXœ˜\PØ\™Xİ]™K]˜\šX[ÜXÈ™XZ[œ›ÛHHØ[YHÚÙ[œÊŠˆ
+Xœ˜\PØ\™]Ù[ˆ\ÈÛİ\YÈXœ˜\Q[X
+ÈH›İ][™HÚY]
+NˆØ\™Xİ]™Qœ›Ûx¡¤˜Ø\™Xİ]™UØÜ˜YY[Ø\™Xİ]™P›Ü™\˜˜YZK›Ø[]˜][Û‹œ˜Z\ÙYLœš\œİ[]\ˆ[Xˆ
+Ø\™[XXİ]™J˜Ü˜YY[˜YZK›Y\ÙÜ˜\K[X˜
+KÜ™\•]\ĞS[™İXYÙX]HZ\ˆ
+]ˆMËÛ]NHš[X\JK[™HØØ[^™YØ\™Y]XİX‹[[™H
+Mˆ8)&¸),8)(È0­È8),¸)%ø)+x)%ÈŒ8)+¸)/ø)*8)'È0­È8)%x))x)/ˆ8).8).x)/ø))ÈMˆİ\È0­ÈX›İ]ŒZ[ˆ0­ÈÚ]Ø]X
+KØY™œ›Ûˆœ8 .‹ˆ›ÈÛİ\˜ÙK]™\šYšXØ][ÛˆÜˆ˜Y][ÛˆÛÜH\ÈX›\ÚYÛˆHØ][ÙÈİ\™˜XÙK‚‚ˆÈÈÈŒ‹ŒˆšYH]Z[
+šYQ]Z[ØÜ™Y[˜8 %ÈšYRY]S\ÏÈX
+B‚˜™XY\’XY\ˆ˜\šX[Hš[™^˜Ú]HšYH]NÈ[™\ˆ]H]ZY]\˜][Û‹[Û›H[™H
+8),¸)%ø)+x)%ÈŒ8)+¸)/ø)*8)'ØÈX›İ]ŒZ[˜[šË[]]YL‹][XÈ›Üˆ][ŠKˆ›Üˆ
+Šœ™Xİ\œš[™ÊŠˆšY\ÈÛ›H
+H™\İ]˜[YØ[HÚ]™Xİ\œ™[˜ÙNˆ	Û[ÛIØ8 %Ù^H]\ÈØ]X[˜\˜^X[ˆÛˆ]™\H\›š[XJHHXY\‰ÜÈšYÚÛİØ\œšY\ÈHÚ\™YYÔ›İ][™P]Û˜
+;ï"ËÛİ\˜ÙRYHHšYHY
+H™YY[™ÈH0©ÌÌH›İ][™HÚY]È[›X[™\İ]˜[Z˜\ÈÈ›İÙ™™\ˆ]ˆ˜Y][Ûˆ[™Ûİ\˜ÙH]šX][Ûˆ™[XZ[ˆ[\›˜[™]šY]ÈY]Y]H[™\™H›İX›\ÚYˆ[ˆH
+ŠÛË\ÙYÛY[ÛÛ›Û
+Šˆ8))8)b8)+ø)/¸),8)`0­È8).8)/¸)+¸)%ø)cx),8)`È8)*¸)`¸)'8)/ˆ0­Èˆ8)&¸),8)(Ø
+LÜH0©ÌÌËŒHÙYÛY[Y\[]\›ˆ\˜ÚY[ÛÙ˜XÚË]šY\˜›Ü™\‹˜YZKœ[Ù[XİY[ˆØY™œ›Û•[
+ÈØY™œ›Û‘Y\
+K‚‚‹H
+Š¸))8)b8)+ø)/¸),8)`
+Šˆ8 %HØ[XYÜšHÚXÚÛ\İ™]\Ù\È0©ÌÌHÙ^IÜÈ˜XİXÙIÜÈİ[[X\KXXØÛÜ™[Ûˆ
+ÈYÙ\ˆ[™İXYÙNˆ[ˆ[Ø^\Ë]š\ÚX›H›ÙÜ™\ÜÈİ[[X\H
+ˆÈH8).8)/¸)+¸)%ø)cx),8)`8))8)b8)+ø)/¸),™[XZ[š[™ÈÛİ[ÛÛ8¡¤œØY™œ›Ûˆ˜XÚË›İ][™ÈØ\™]
+H^[™ËØÛÛ\Ù\ÈH›İÜÈ™[İËˆ›İÜÈ]™H]šY\˜Z\›[™\È[™H
+Š°©ÌÌH›İ][™HÚXÚÈÚ\˜ÛJŠˆ
+œØY™œ›Û˜š[™Ëš[ÈØY™œ›Û˜Ú][ˆÛ”š[X\X8§$ÎÈXØÙ\ÜÚXš[]T›ÛOH˜ÚXÚØ›Ş˜
+Kš[[™İX[][KÛY]HÛÜH
+ÚXÚÙY8¡¤ˆ[šË[]]Y
+Š›™]™\ˆİXÚÈ›İYÚ
+ŠŠK]H[ˆHY]H[™K[™H]šY\˜[İ][™H8)-x)b8)%x),¸)cx)*¸)/ø)%XÚ\ÛˆÜ[Û˜[›İÜËˆİ]H\œÚ\İÈ\ˆH™\İ]˜[]H\ÜÙY[ˆ]S\Ø
+˜[È˜XÚÈÈÙ^JH8 %Hœ™\ÚØØİ\œ™[˜ÙHİ\ÈHœ™\Ú\İˆÛ™HXİ[Ûˆ
+Š¸).8)`¸)&¸)`8).8)/¸)'x)/ˆ8)%x),8)aø) ŠŠˆ
+ÚÜİÛÛ[X›Ü™\ˆ]ÛŠH8¡¤ˆHÔÈÚ\™HÚY]Ú]HZ[‹]^\İ
+“ˆÚ\™KœÚ\™XØ[YHYXÚ[š\ÛH\È[Ü™TØÜ™Y[‰ÜÈÚ\™H›İÊH8 %H˜[Z[HÚÜ[™ÈY\ÜØYÙK›È[XYÙH\[[™K›İ[™È\œÛÛ˜[‚‹H
+Š¸)*¸)`¸)'8)/ŠŠˆ8 %H\ÙKYÜ›İ\Yİ\\İ
+8)!¸),8)+¸)cx)+H0­È8)+¸)`x)%¸)cx)+È8)*¸)`¸)'8)/ˆ0­È8).8)+¸)/¸)*¸)*X™[È[ˆØY™œ›Û‘Y\LŠKXXÚİ\H\˜ÚY[ÛÙ˜YZK›Y›İÎˆÌ[X™\™YÚ\˜ÛK]K[™HØ\[Ûˆ˜[Z[™ÈÚ]Hİ\Ø\œšY\È
+8)iH8)+¸)*8)cx))8)cx),8).8).x)/ø))È8)%x))x)/ˆ8)*¸)/¸)(È8)!¸),8))8)`›ÜˆX\K\ÙXİ[Ûˆ™YœÈÈ8)*¸)/¸)(›Üˆİ\ˆÙXİ[Ûˆ™YœÊKˆ\[™ÈHİ\ÜˆHš[YXØY™œ›Û˜
+Š¸)*¸)`¸)'8)/ˆ8)*¸)cx),8)/¸),8)+¸)cx)+H8)%x),8)aø) ŠŠˆ]Ûˆ[\œÈÛÛ™Xİ[ÙH
+]]İ\Èİ\
+KˆÚ[ˆÙ^IÜÈØ]™YÛÛ™Xİİ\^\İÈHÛÛ[
+Š¸)'8).x)/¸) H8))x)aÈ8)-x).x)`8) ˆ8).8)aÈ0­È‹ÓŠŠˆ™\İ[YH›İÈXYÈH\İ
+™ZY˜]YÛˆ›Øİ\ËÛÈ™]\›š[™Èœ›ÛHÛÛ™Xİ™Yœ™\Ú\È]
+K‚‚ˆÈÈÈŒ‹ŒÈÛÛ™Xİ[ÙH
+šYPÛÛ™XİØÜ™Y[˜8 %ÈšYRY]S\ÏË[š]X[İ\ÈX
+B‚‘[\ØÜ™Y[‹Û™Hİ\\ˆYÙKHÜš^›Û[YÙY›]\İ^XİHZÙHH™XY\œÈ
+YÚ\XÈ\ˆYÙH\›‹0©ÌLJKˆ™XY\’XY\ˆ˜\šX[Hœ™XY\ˆ˜Ø\œšY\ÈHšYH]H[™Hİ\\ØÛÜYˆÈXÛİ[\ˆ
+YÙPÛİ[\˜][XÊKˆHÛ›HYÙK]\›ˆÛÛ›Û\ÈH˜[Z[X\ˆYÜšYÚİÚ\NÈ\™H\™H›È™]š[İ\ËÛ™^]ÛœÈ[™›ÈİÚ\KZ[œİXİ[ÛˆÛÜKˆÛ™Hœ
+Šœ›ÙÜ™\ÜÈİ\ˆİ\
+ŠˆÚ]È]H›İÛH
+Xİ]™HİØY™œ›Û‘Y\İ™]ÚYÈN8 %H[[X[ˆÚ[\ØKØİ\œ™[\™XY\ˆYÙ\ˆ™X]Y[
+K‚‚‹H
+Š”İ\YÙJŠˆ
+XXÚYÙHH™\XØ[ØÜ›ÛšY]ÊNˆHZ[HšZİK\İ[H™XY[™ÈØ\™
+\˜ÚY[ÛÙ]šY\˜›Ü™\‹˜YZK›Ø[]˜][Û‹œ˜Z\ÙYŒY[™ÊHÛÛZ[š[™ÈHØY™œ›Û‹][\ÙH[
+È8)&¸),8)(È˜İ\]H
+ŒKØÜš\]H˜XÙJK[™H]]Ü™Y[œİXİ[Ûˆ]HÚ\™Y
+Š˜YX[š[™Ø™XY[™ÈÚÙ[ŠŠˆšXHYX[š[™ÕÚÙ[Š[™ÊX
+™XY[™Ë\Ú^™HÙ][™È™\ÜXİY›Üˆœ™YJK‚‹H
+Š“X[˜HÙXİ[ÛŠŠˆ
+İ\ÈØ\œZ[™ÈH˜[œØÜšX™YX[˜JNˆHÚ\™Y™XY\ˆÜ›˜[Y[[ˆH]ZY]8)+¸)*8)cx))8)cx),0­ÈX[˜XX™[]˜[˜YØ\šH]›Ûİ\“X[˜XÚ^™HÚ]°åÈXY[™Ë[™PTÕ™[™X]
+][’][XØL‹KÌŒK[šË[]]Y
+H[œÚYHHØ[YH™XY[™ÈØ\™8 %›È™\İY™\ÜÚÙHX[˜HØ\™‚‹H
+Š”™XYX[İY
+Šˆ™[™\œÈ
+Š›Û˜ÙH]ØÜ™Y[ˆ]™[
+Šˆ
+HÙ[™Y™XY[İY]Û˜Ûİ™]ÙY[ˆHXY\ˆ[™HİÈ8 %•SP“ÓÒÈ0©ÌÎˆHÚ\™Y\ÙT™XY\”™XY[İYÛÚË™]™\ˆH˜]ÈÜYXÚœÜXZØ[™™]™\ˆH\‹\YÙHÛÜH[œÚYHHYÙ\ŠKˆÛÛ™XİYÙ\È^ÜÙH™XY\‹\Ú\YšY[È
+[™\ØØ[™\Ñ[˜›ÜˆX[˜Hİ\Ë›ÙRXØ›ÙQ[˜›Üˆ[œİXİ[Û‹[Û›Hİ\ÊKÛÈHÚ\YÈY\\ˆÜXZÜÈ]™\HYÙH8 %X[˜H\È[œİXİ[Ûˆ8 %Ú]™\›ÈšYK\ÜXÚYšXÈÜYXÚÛÙK‚‹H
+Š’[™[Ù™ˆØ\™
+Šˆ
+İ\È]T‘HHÚ\Y^
+NˆKØY™œ›Û˜›Ü™\ˆ
+ÛÛ›Üˆ\œÛÛ˜[™[Y[Xœ˜[˜ÙJK˜YZK›Ø8 %H\™Ù]	ÜÈ]H
+ÈHœ™]\›œÈ\™HY\ˆˆØ\[Ûˆ]\ÈØ]YÛÜKX]Ø\™H
+8)%x))x)/ˆ8)*¸)(¸)/8)%x),8 )ˆ›ÜˆØ]\Ë8)!¸),8))8)`8)*¸)`¸),8)cx)(È8)%x),8 )ˆ›ÜˆX\HÙXİ[ÛœË8)*¸)/¸)(8)*¸)`¸),8)cx)(È8)%x),8 )ˆ›Üˆİİ˜[KÜØ[œÚØ\‹ÑÚ]HÙXİ[ÛœÊNÈØ]H™YœÈY\[[šÈÈœ˜]Ø]T™XY\ˆÚØ]RYXÙXİ[Ûˆ™YœÈ›İ]H›İYÚZ[[Tİ\\™Ù][™Ú]H™YœÈ›İ]HHÚ\\ˆ8 %HšYH™]™\ˆ™K]\\ÈHÚ\Y^
+•SP“ÓÒÈ0©ÌLKŒLJKˆ]™\H™YˆÛÙ\È›İYÚ˜]šYØ]UÒÛYTİXÚÕ\™Ù]ÈÛYH\Ú\È]È™XY\œÈØØ[K[™[Ü™HØØ[HİÛœÈÚ]T™XY\˜ÛÈ˜XÚÈ™]\›œÈÈHİ\[ˆ›İ]™HİZYH]Ë‚‹H
+ŠÛÛ\][ÛŠŠˆ8 %]ZY]H\ÚYÛˆH
+Šœİ]XÈ8)dÙX[
+Šˆ
+ÛÛœš[™ÈÛˆÛÛ[
+K8)*¸)`¸)'8)/ˆ8).8)+¸)cx)*¸)*8)cx)*
+Œ
+K[™H]H0­Èˆ8)&¸),8)(È8)*¸)`¸),8)cx)(ØØ\[Û‹ˆ]Ù\È›İ™\X]HØ]KØX\HXİ[ÛœÈ[™XYHÛÛ\]Y[ˆHİZYYİ\ËˆHİ\İÈ\Ø\X\ˆÛˆ\È\›Z[˜[YÙKˆ
+Š“›ÈÙ[Xœ˜][Ûˆ[š[X][ÛŠŠˆ8 %H›İ][™H\ÚK]˜\œÚHYXÚ[š\ÛH\È[X™\˜][H›İÚ\™YÈHZ˜H[™È[ˆÚ[K›İÛÛ™™]Kˆ™XXÚ[™ÈÛÛ\][ÛˆÛX\œÈHØ]™YÛÛ™Xİİ\ˆ^]][HYÙHØ]™\ÈHİ\[™^›ÜˆÙ^IÜÈÚ]š[^H
+H]Z[ØÜ™Y[‰ÜÈ™\İ[YH›İÊK‚‹H
+Š’ÙY\X]ØZÙJŠˆ
+\ÙHŠNˆHØÜ™Y[ˆÛÈ\ÙRÙY\]ØZÙJ
+X
+^ËZÙY\X]ØZÙX
+H›ÜˆHÚÛHÛÛ™XİÙ\ÜÚ[Ûˆ8 %Ù][™ÈØ[››İ™K]ØZÙHHØÚÙYÛ™HZY\Z˜H8 %[™[››İ[˜Ù\È]ÈØÜ™Y[ˆ™XY\œÈÛ˜ÙHÛˆ[H
+XØÙ\ÜÚXš[]R[™›Ë˜[››İ[˜ÙQ›ÜXØÙ\ÜÚXš[]X0©ÌLŠK‚‚ŠŠ“ØØ[\Ø][Û‹ŠŠˆ]\ËÚ[œİXİ[ÛœÈ›İÈ›İYÚÛÛ[S[™ØØYX[š[™ĞS[™Ø
+İKÚÛˆ\š]™JNÈ
+Š›X[˜\Èİ^H]˜[˜YØ\šH
+ÈPTÕ[ˆ]™\H[™İXYÙJŠˆ
+0©ÌËŒH8 %Ø[œÚÜš]\È›İ™K\ØÜš\YÜˆY[ˆ™Z[™HÙÙÛH\™NÈHPTÕ[™H\ÈH›ÛX[š^˜][ÛŠKˆ›È[[ÚšH[]Ú\™H8 %8)iKø)dÛ\È
+0©ÍJK‚‚ŠŠ‘š[\ËŠŠˆ[Øš[KÜÜ˜ËÙ]KİšYKŞİ\\Ë[™^ÚXÚÛ\İİÜ™KØ]X[˜\˜^X[‹\Z˜K]Ø[K[ZÜÚZKYØ[™\Ú\Z˜KØ[™\ÚXÚ]\K\İ\[˜K˜]œ˜]šKYÚ]\İ\[˜KØ\ØKXÚ]]\Z˜KXZK\Ú]˜\˜]šK\Z˜KÚ˜YK]\œ[‹]šY_KØ0­È[Øš[KÜÜ˜ËÜØÜ™Y[œËÕšY^ĞØ][ÙË]Z[ÛÛ™XİTØÜ™Y[‹Ş0­È™\İ]˜[[
+È[H[ˆ[Øš[KÜÜ˜ËÜØÜ™Y[œËÔ[˜Ú[™ÔØÜ™Y[‹Ş0­È\œÛÛ˜[ÛÜœÈ[ˆ[Øš[KÜÜ˜ËÜØÜ™Y[œËŞÔ]TÛX\˜[‘]Z[ØÜ™Y[‹]TZÜÚSİ™\šY]ÔØÜ™Y[ŸKŞ[™[Øš[KÜÜ˜ËØÛÛ\Û™[ËÔ]TZÜÚQ^PÚ\Ş0­È›İ]\È[ˆ[Øš[KÜÜ˜ËÛ˜]šYØ][Û‹Şİ\\ËË[˜Ú[™ÔİXÚÓ˜]šYØ]Ü‹ŞÛYTİXÚÓ˜]šYØ]Ü‹Ş[Ü™TİXÚÓ˜]šYØ]Ü‹ŞX
+Û™HÚ\™YšYTİXÚÔ\˜[S\İ™YÚ\İ\™YÛˆ[™YHİXÚÜÊH0­ÈšYRYÛÚÜÈ[ˆ[Øš[KÜÜ˜ËÜ[˜Ú[™ËŞİ\\Ë™\İ]˜[ßKØˆ\ÙHˆİ\™˜XÙ\ÎˆÙX\˜Ú›İÜÈ[ˆ]KÜÙX\˜Ú[™^Ø
+È›İ][™È[ˆØÜ™Y[œËÔÙX\˜ÚØÜ™Y[‹Ş0­ÈHİË]Ë[ØœÙ\™HØ\™[ˆØÜ™Y[œËÓØœÙ\˜[˜ÙQ]Z[ØÜ™Y[‹Ş0­ÈHTĞÓÕ‘TˆÜİYÚ[ˆØÜ™Y[œËÒÛYTØÜ™Y[‹Ş0­ÈÙY\X]ØZÙH[ˆšYPÛÛ™XİØÜ™Y[‹Ş
+^ËZÙY\X]ØZÙX
+H0­ÈHšYX›İ][™KZ][HÚ[™[ˆ]KÜ›İ][™KŞİ\\Ë[š]ßKØÛÛ\Û™[ËĞYÔ›İ][™TÚY]Ş˜]šYØ][Û‹Ù[T›İ]\ËØ[™H]Z[ZXY\ˆYÔ›İ][™P]Û˜ˆ\İÎˆÜ˜ËÙ]K××İ\İ××ËİšYPÛÛ[\İØ
+Ş8 %Ù]™[‹Y[H™YÚ\İK™YœÈ
+È\ÙHˆ]\™ŞH[™[Ù™œËÛİ\˜ÙHÛÛ˜Xİ
+È]˜[˜YØ\šHÙ[Y›Ü›YY™\ÜÊKÜ˜ËÙ]K××İ\İ××ËÜÙX\˜Ú[™^\İØ
+šYH›İÜÊKÜ˜ËÜØÜ™Y[œË××İ\İ××ËŞÕšYTØÜ™Y[œË]TÛX\˜[”ØÜ™Y[œßK\İŞ[™Ü˜ËØÛÛ\Û™[Ë××İ\İ××ËÔ]TZÜÚQ^PÚ\\İŞ
+™\İ8 %[ØÜ™Y[œË\œÛÛ˜[ØØİ\œ™[˜ÙHÛÜœËÚ]H[™[Ù™ˆ[™™YÚ\İK]ÚYHÛİ\˜ÙHš]˜XŞJKÜ˜ËÛ˜]šYØ][Û‹××İ\İ××ËİšYP˜XÚÓ˜]šYØ][Û‹\İØ
+™\İ8 %H™YH™YÚ\İ˜][ÛœËHÚ[™ÛHÚ\™Y\˜[H\İ[™]]™\HÛÜˆ\Ú\È[ˆXÙJKÜ˜ËÛ˜]šYØ][Û‹Ù[T›İ]\Ë\İØ
+Ş8 %H›İ][™KZ][H›İ]H[™›İ˜]šYØ]UÒÛYTİXÚÕ\™Ù]œ˜[˜Ú\ÊK›XY\İ›ËŞİšYK\Û[ÚÙK]K\ÛX\˜[ŸKX[[
+L™JK‚‚‹KKB‚ˆÈÈŒËˆ]HÛX\˜[ˆ
+8)*¸)/ø))8)`È8).8)cx)+¸),8)(Ë‘LMÊB‚ŠŠ”\œÜÙKŠŠˆ]KX˜\ÙY˜[Z[H™[Y[Xœ˜[˜ÙNˆ™XÛÜ™XXÚ\\Y˜[Z[HY[X™\ˆÛ˜ÙH8 %H]H
+8)+¸)/¸)&8)%x)`ø)-ø)cx)(È8)!x)-ø)cx)'ø)+¸)`
+HÜˆHÜ™YÛÜšX[ˆX]]H8 %[™H\[œİÙ\œÈ
+Šˆ¸)!ø).8)-x),8)cx)-È8)%x)+ÈŠŠ‹
+Šˆ¸)*¸)/ø))8)`È8)*¸)%x)cx)-È8)+¸)aø) ˆ8)%x)/ø).8))¸)/ø)*ÈŠŠ‹[™
+Šˆ¸)"x).8))¸)/ø)*8)%x)cx)+ø)/ˆ8)%x),8)aø) ÈŠŠˆ
+[šÙY8)%ø)`8))8)/ˆ8)*¸)/¸)(
+H\›X[™[KˆH]ZY]š]˜]Hİ\™˜XÙH[™\ˆH
+Š“[Ü™HXŠŠÈ[šY\È]™HÛ›H[ˆ\Ş[˜ÔİÜ˜YÙH
+™Y[œÚÜ]K\ÛX\˜[˜™\œÚ[Û™Yİ™\œÚ[ÛŒK[šY\Î–×_X
+H[™]™\H]H\ÈÛÛ™YÛ‹Y]šXÙHHH™\İ]˜[[™Ú[™IÜÈÛÛ™[[ÛœË‚‚ŠŠ•Û™H
+ØÚÙY‘LMÈ0©ÍJKŠŠˆ›Èİ™XZÜË›ÈÙ[Xœ˜][Ûˆ[š[X][Û‹›ÈÚ\™Hİ\™˜XÙ\Ë›È‘UËX˜YÙHİ[[™È
+š[œÚYJˆH™X]\™H
+H[Ü™H›İÈØ\œšY\ÈHİ[™\™Xˆ‘UÈİ]H›ÜˆÛ™H™[X\ÙKZÙHÚYÙ]ÊKˆ]]Y™YÚ\İ\œÈÛ›H8 %ÛÛ[ÈÛÛÈ\˜ÚY[ÛÙÈ[šÈÛ™\ÎÈØY™œ›Û˜\X\œÈÛÛ[H\È[\˜Xİ]™HY™›Ü™[˜ÙH
+]ÛœËÚ]œ›ÛœËHİ[™\™]Z[¸)!x)%ø),¸)/ˆˆ[
+H[™H˜[Z[HX\šÙ\ˆİ™]™\ˆ\ÈÙ[Xœ˜]ÜHXØÙ[ˆHÛÜ™]™\]Ú\™H\È
+Š¸).8)cx)+¸),8)(ÊŠ‹‚‚ŠŠ‘[™Ú[™H
+[Øš[KÜÜ˜ËÜ[˜Ú[™ËÜ]TÛX\˜[‹Ø8 %\™K“‹Yœ™YKŞK]\İ
+KŠŠˆ\š]™U]T[Qœ›ÛQ]X
+İ[œš\ÙH[™ØK\›š[X[
+KÛÛ™S™^ØØİ\œ™[˜ÙX
+Ú\™\ÈX]Ú\Ó[˜\•]T[SÛ‘]XÚ]H™\İ]˜[[™Ú[™H8 %ÜÚ^XH˜[˜XÚËœšYHY\KYZË[XX\ÈšZ˜HİX\™^ÜYœ›ÛH™\İ]˜[[™Ú[™KØ›Üˆ^XİH\È™]\ÙJK]TZÜÚUÚ[™İØ
+8)+x)/¸))¸)cx),8)*¸))ˆ8)*¸)`¸),8)cx)(ø)/ø)+¸)/ˆ0­È˜]\YHÚ˜YH0­È8).8),8)cx)-x)*¸)/ø))8)`È8)!x)+¸)/¸)-x).8)cx)+ø)/ˆ8 %HÛÜÚ[™È[X]˜\ŞXH\ÈX]ÚY[ÛYœ™YHÛÈ[ˆYZËP\ÚÚ[ˆYX\ˆØ[‰İÜœ[ˆ]
+KZÜÚTÚ˜YQ^X
+\œÛÛ‰ÜÈ]HX\Y[ÈHXZ[^XHÜš\Ú˜HZÜÚNÈ8)*¸)`¸),8)cx)(ø)/ø)+¸)/ˆ]H8¡¤ˆ\›š[XHÚ˜YHÛˆH8)*¸)`¸),8)cx)(ø)/ø)+¸)/ˆ]Ù[È[šÛ›İÛˆ]H8¡¤ˆ8).8),8)cx)-x)*¸)/ø))8)`È8)!x)+¸)/¸)-x).8)cx)+ø)/ŠK[SX]Ú\Ñ]X
+H^KXÚ\™YXØ]JKˆš^\™\È[›™YYØZ[œİX›\ÚYšZÔ[˜Ú[™ËXÛÛ™[[Ûˆ]\È[ˆÜ˜ËÜ[˜Ú[™Ë××İ\İ××ËÜ]TÛX\˜[‹\İØ
+›Ü›X[YX\‹ÜÚ^XH]KYZË[XX\ÈYX\‹HŒKÌŒˆZÜÚHÚ[™İÜÊKˆ\Ü^H›Ü›X][™È\ÈÙ[˜[\ÙY[ˆ]TÛX\˜[‘\Ü^KØ
+Hİ[˜SZ[[‘\Ü^X]\›ŠK‚‚ŠŠ”İXİ\™H8 %›İ\ˆ›İ]\È[ˆ[Ü™TİXÚÔ\˜[S\İ
+]TÛX\˜[“\İÈ]TÛX\˜[‘Y]È]TÛX\˜[‘]Z[È]TZÜÚSİ™\šY]Ø
+K[İ™\ˆHÛYHÜ˜YY[Ú]™XY\’XY\ˆ˜\šX[Hš[™^˜[™ÜXÚ[™Ëİ]\œËˆ[[™Ú[™HÛÛ™\È[ˆÙ™ˆH™[™\ˆ]
+Ù][Y[İ]
+
+XY™™XİÊKÜ[›™\ˆ[ˆØY™œ›Û˜Ú[HÛÛš[™ÎŠŠ‚‚ŒKˆ
+Š“[Ü™HXˆ›İÊŠˆ
+0©ÌÍË8).8)/¸))ø)*8)/ˆÜ›İ\Y\ˆ8)'8)*ˆ8)!x),¸)/¸),8)cx)+ŠNˆ8)iHÛ\ÛˆHÛÛXÛÛˆ[KX™[8)*¸)/ø))8)`È8).8)cx)+¸),8)(Ëİ]HH‘UØÚ[ˆ[\H
+XˆYXÚ[š\ÛKÛ™H™[X\ÙJK[ÙHˆ0­ÈÛÛÛ™\İÚÜ]O˜ˆ8¡¤ˆ]TÛX\˜[“\İ‚Œ‹ˆ
+Š“\İ
+Šˆ
+]TÛX\˜[“\İØÜ™Y[˜
+H8 %H0©ÌÌÈØœÙ\˜[˜ÙS\İ›İÈ]\›ˆÍÚ\˜İ[\ˆ8)iHXY
+HÛÛ[›Ü™\ˆÛˆ\˜ÚY[YÚYÚ[šÓ]]YÛ\
+K™[][Ûˆ
+
+ÈÜ[Û˜[0­È˜[YX
+H]MK]KZ[‹]ÛÜ™ÈØ\[Ûˆ]LÈ[šÓ]]Y
+[šÛ›İÛˆ8¡¤ˆ¸))8)/ø))x)/È8)!x)'8)cx)'¸)/¸))8 %8).8),8)cx)-x)*¸)/ø))8)`È8)!x)+¸)/¸)-x).8)cx)+ø)/ˆŠKšYÚX[YÛ™Y™^]H
+È™[]]™H™X™[
+LË[šÔÛÙ][ˆÙ[ZX›Û›Üˆ[ŠKÛÜYÛÛÛ™\İYš\œİˆHÙX\ÛÛ˜[
+Š¸)*¸)/ø))8)`È8)*¸)%x)cx)-È˜[›™\ŠŠˆ
+HÛÛ›Ü™\‹\˜ÚY[ÛÙ˜YZK›Ø
+H\X\œÈÛ›HÚ][ˆÌ^\È™Y›Ü™HÈ\š[™ÈH›ÜšYÚ8¡¤ˆ]TZÜÚSİ™\šY]Ëˆ™[İÎˆHİ][™H
+ŠŠÈ8).8)cx)+¸),8)(È8)'8)bø)(x)/8)aø) ŠŠˆ]Ûˆ
+KHÛÛ˜YZK›YZ[‹ZZYÚØY™œ›Û‘Y\^
+H[™[ˆ][XÈš]˜XŞH›Ûİ\ˆ
+¸)+ø).H8).8)`¸)&¸)`8)%x)aø)-x),ˆ8)!ø).8)`8)*ø)/8)bø)*8)*¸),8),8).x))8)`8).x)b8 )ˆŠKˆ[\Hİ]Nˆ[[YY8)iK¸)!x)*¸)*8)aÈ8)*¸)/ø))8),8)bø) ˆ8)%x)`8))8)/ø))x)/ø)+ø)/¸) H8)'8)bø)(x)/8)aø) ˆˆ
+ÈÛ™H^[˜]ÜH[™H8 %ÛÈ™]™\™[[™\Ë›È[\İ˜][Û‹‚ŒËˆ
+ŠYÑY]
+Šˆ
+]TÛX\˜[‘Y]ØÜ™Y[˜
+H8 %™[][ÛˆÚ\È
+8)*¸)/ø))8)/¸)'8)`È8)+¸)/¸))8)/¸)'8)`È8))¸)/¸))¸)/¸)'8)`È8))¸)/¸))¸)`8)'8)`È8)*8)/¸)*8)/¸)'8)`È8)*8)/¸)*8)`8)'8)`È8)!x)*8)cx)+Èœ›ÛHÓPTS—Ô‘SUSÓ”Ø
+KÜ[Û˜[˜[YH
+
+Š˜^šY[˜\šX[H™›Ü›H˜
+Š‹XÙZÛ\ˆ¸)%x)aø)-x),ˆ8)!¸)*¸)%x)aÈ8),¸)/ø)#È8 %8)%x).x)`8) ˆ8)%8),8)*8).x)`8) ˆ8))¸)/ø)%¸)aø)%ø)/ˆŠK[ˆHYHÛË\ÙYÛY[[ÙHÛÛ›Û
+8))8)/ø))x)/È8)'8)cx)'¸)/¸))8).x)bÈ8)%x)aø)-x),ˆ8))8)/¸),8)`8)%¸)/8)'8)cx)'¸)/¸))8).x)b
+NˆHÛÛİ]\ˆ›İ[™\KÈ[\›˜[Ø\ÙYÛY[Ë[™HÙ\\˜][H›İ[™YØY™œ›Û•[
+ÈÛÛXİ]™HÙYÛY[Ú]ØY™œ›Û‘Y\]H^ˆ]H[ÙNˆ[ÛÜZÜÚKİ]HXÚÙ\ˆÚ\ÈZ[œ›ÛHH[™Ú[™IÜÈİÛˆ˜[Y\ËØ[[Y\˜][ÛœÈ
+Ù[XİYÚ\ØY™œ›Û•[
+ÈØY™œ›Û˜›Ü™\ŠK\ÈH
+Š¸))8)/ø))x)/È8)!x)'8)cx)'¸)/¸))8 %8).8),8)cx)-x)*¸)/ø))8)`È8)!x)+¸)/¸)-x).8)cx)+ø)/ŠŠˆÙÙÛH›İÈ
+ÛÛ[Ú[ˆÛŠKˆ]H[ÙNˆÓSKÖVVVH^šY[˜\šX[H™›Ü›H˜8¡¤ˆHÛÛ\]Y]H™[™\œÈSˆÓÔ‘È[ˆH
+Š˜ÛÛ™š\›X][ÛˆØ\™
+Šˆ
+HÛÛ›Ü™\‹\˜ÚY[YÚYÚ˜YZK›Y8 %¸)*¸) ¸)&¸)/¸) ¸)%È8).8)aÈ8)*8)/ø)%x),¸)`8))8)/ø))x)/È8 %8)*¸)`x)-ø)cx)'ø)/È8)%x),8)aø) ˆŠH]Ø]\ÈØ]™NÈHÚ[[ÛÛ™\œÚ[Ûˆ\È™]™\ˆ\œÚ\İY[™
+Š¸))8)/ø))x)/È8).8)cx)-x)+ø) ˆ8)&¸)`x)*8)aø) ŠŠˆ
+ÚÜİ]ÛŠH›\ÈÈHX[X[XÚÙ\œÈ™KYš[YˆØ]™HHš[YØY™œ›Û˜˜YZK›Y\ØX›Y]ÜXÚ]K‚ˆ
+Š‘]Z[
+Šˆ
+]TÛX\˜[‘]Z[ØÜ™Y[˜
+H8 %H0©ÌÌÈØœÙ\˜[˜ÙQ]Z[\›Îˆ8)iH8)d8)iHÜ›˜[Y[
+ÛÛ]\‹\ÜXÚ[™ÈŠK˜[YHÙ[™Y¸)-¸)cx),8)/¸))¸)cx))È8))8)/ø))x)/ÎˆÛÜ™ÏˆˆØ\[Û‹[™HØY™œ›Û•[
+Šˆ¸)!x)%ø),¸)/ˆ0­È]Oˆ0­È[ˆˆ^\ÈŠŠˆ[ˆ›İÜÈ
+\˜ÚY[ÛÙ]šY\˜˜YZK›Y
+Nˆ8)!x)%ø),¸)aÈ8)-x),8)cx)-ËH\œÛÛ‰ÜÈ]HZÜÚHX\[™ËHYXØ]Y™[Z[™\ˆİÚ]Ú[ˆH]]YYÛÛ
+Š¸)*¸)/ø))8)`È8))8)/ø),‹x))8),8)cx)*¸)(È8).8)cx)+¸),8)(ÊŠˆÛÜˆX›İ™HHÛÈÚ]H›İÜËˆHÛÜˆ\ÜÙ\ÈÚXÚ]™\ˆ\ÛÛZ[™ÈÛÛ™Y[›X[ÔZÜÚH]H\ÈÛÛÛ™\ˆ\È]S\ØÈ]\ÜÙ\È›È\œÛÛˆY˜[YHÜˆ™[][Û‹ˆHİZYH\ÈH[Z]Yİ\ÙZÛ™[Y[Xœ˜[˜ÙK›İÛÛ\]HÚ˜YKˆHÛÈ^\İ[™È
+Š¸)%ø)`8))8)/ˆ8)*¸)/¸)(
+Šˆ›İÜÈİ[Y\[[šÈ8)!x))ø)cx)+ø)/¸)+ÈMH[™‹ˆ
+Š•H›İ\ˆÛÛ™Y]\È\œš]™H[ˆÛÈİYÙ\Ë[ˆ™XY[™ÈÜ™\ŠŠˆH\›È[\ÈX›\ÚYÛˆ]ÈİÛˆÛÛ™K[™8)!x)%ø),¸)aÈ8)-x),8)cx)-È
+È8)*¸)/ø))8)`È8)*¸)%x)cx)-È›ÛİÎÈHİZYHÛÜˆ\X\œÈÛ›HÛ˜ÙH[ˆØØİ\œ™[˜ÙH^\İËÚ]›ÈØY[™ÈXÙZÛ\‹‚Kˆ
+Š”]HZÜÚHİ™\šY]ÊŠˆ
+]TZÜÚSİ™\šY]ÔØÜ™Y[˜
+H8 %]H8)*¸)/ø))8)`È8)*¸)%x)cx)-ÈYX\˜]K\˜[™ÙH\›È[™H›ÜšYÚ\È0©ÌÌËˆ\ÛÛZ[™È›İÜËˆ™[™X]HØ[[™\‹Û™H]]YYÛÛ
+Š¸)*¸)/ø))8)`È8))8)/ø),‹x))8),8)cx)*¸)(È8).8)cx)+¸),8)(ÊŠˆÛÜˆÜ[œÈHİZYH›ÜˆHš\œİ˜[Z[K[X]ÚY^K˜[[™È˜XÚÈÈH›ÜšYÚİ\Ú[ˆHYÙ\ˆ\È[\Kˆ[™]šYX[]\È™[XZ[ˆØ[[™\ˆ›İÜÈ˜]\ˆ[ˆXXÚÜ›İÚ[™ÈH][˜Ú\‹‚‹ˆ
+Š”[˜Ú[™È^HÚ\ÊŠˆ
+]TÛX\˜[‘^PÚ\È]TZÜÚQ^PÚ\
+È\ÙT]TÛX\˜[‘›Ü‘]X0©ÌÌÈ^H[™[
+H8 %\œÛÛ˜[[›X[ÔZÜÚH]\È™]Z[ˆH]]Y
+Šˆ¸)iH8).8)cx)+¸),8)(È8 %™[][ÛˆŠŠˆ[8¡¤ˆ\œÛÛˆ]Z[ˆ\š[™ÈHX›XÈ›ÜšYÚHØY™œ›Û‹][ÙX\ÛÛˆÚ\8¡¤ˆİ™\šY]ÎÈÛˆ
+Š¸).8),8)cx)-x)*¸)/ø))8)`È8)!x)+¸)/¸)-x).8)cx)+ø)/ˆÛ›JŠ‹HÙXÛÛ™]]YYÛÛ
+Š˜8)iH8))8)/ø),‹x))8),8)cx)*¸)(È8)-x)/ø))ø)/Ø
+ŠˆÚ\Ü[œÈH™YÚ\İ\™YİZYH\™XİHÚ]]Ú]š[]KˆHX›XÈÛÜˆÛÛZ[œÈ›Èš]˜]HYÙ\ˆ]K‚Ëˆ
+Š•œ˜]	ˆ\ˆØ][ÙÈ[›™Y›İÊŠˆ8 %\™XİH[™\ˆ^Hœ˜]HY[XØ[[›™Y[YÙ\ˆ™X]Y[
+ÛÛ[KHÛÛ˜YZK›Ø
+Nˆ8)iH
+È8)*¸)/ø))8)`È8).8)cx)+¸),8)(Ë]™H[HÛİ[[™HÛÛÛ™\İ™^]Kˆ\8¡¤ˆHØ[YH[Ü™K\İXÚÈ™[Y[Xœ˜[˜ÙH\İˆH[\H[š]][Ûˆ\Èİ[™[™È[™Ø[››İ™H\ÛZ\ÜÙYÛÈH[›š[™Èİ\™˜XÙH™]™\ˆÜÙ\È]ÈÛ›H™\›ËY[HÛÜ‹‚ˆ
+Š’ÛYHÙ^Hİš\
+Šˆ8 %X]Ú[™Èš]˜]HÛX\˜[ˆÚ\ÈXYH›İÈÛˆ[›X[ÜˆX\YY˜[Z[H]\ÈÛÈH\œÛÛ‰ÜÈXİ[Ûˆİ^\Èš\ÚX›H[™İ][Û˜\H™Y›Ü™HÜš^›Û[İ™\™›İÎÈHX›XÈ]KTZÜÚHZ[HX™[[™Ü™[˜\HØœÙ\˜[˜ÙKÛ]Z\˜]Ú\È›ÛİËˆİXÚ[™ÈH›İÈİÜÈ]ÈYH]]ËYšY™Y›Ü™H\Ü]Ú[™ÈHÚ\Xİ[Û‹ˆHÙ^HØ\™Ú[\ÈH›Û‹\™\ÜØX›HÛÛZ[™\ˆÚ[H]È[˜Ú[™ÈXY\ˆ[™XXÚ™\İYÚ\\™HÙ\\˜]HXØÙ\ÜÚX›H]ÛœÎÈİ\Ú\ÙHSÔÈÛÛ\Ù\ÈÜˆ[\˜Ù\ÈHÚ[™[ˆ[™H›ÛZ\ÙY\œÛÛ‹Y]Z[\\È[œ™XXÚX›HÈ›ÚXÙSİ™\‹‚Kˆ
+Š’ÛYHTĞÓÕ‘TŠŠˆ8 %Hİ[™[™È][˜Ú\™[X\ÙH™X]\™PØ\™^\İÈ]™[ˆÚ]™\›ÈØ]™Y[ÜNˆ8)iXÛÛÛ\HÛ™K[[™H[›X[X[œİÙ\ˆ^[˜][Û‹[™
+Š¸).8)cx)+¸),8)(È8)'8)bø)(x)/8)aø) ˆÈÙ]\
+Šˆ8¡¤ˆ[Ü™UX‹Ô]TÛX\˜[“\İˆ\È\È]Ø\™[™\ÜË›İH\œÛÛ˜[YÙ\ˆ™X]Y[ÈHXİX[\İ[™[˜Ú[™È›İÈ™[XZ[ˆ]ZY]Û]]Y‚‚ŠŠ“›İYšXØ][ÛœÈ8 %ÛÈY˜][ËÛÈ˜[Y\ÜXÙ\ËŠŠˆ™\İ]™T™[Z[™\”ØÚY[\˜\›\ÈHX›XËY˜][[Ûˆ]KTZÜÚHY\ˆ™Z[™H^\İ[™È™\İ]™H™Y™\™[˜ÙNˆNŒÛˆH]™HÙˆšY˜\YH\›š[XH[™H]™HÙˆØ\˜\]šH[X]˜\ŞXKš^YÛÜH]™]™\ˆ˜[Y\ÈH\œÛÛ‹\8¡¤ˆ]TZÜÚSİ™\šY]Øˆ]TÛX\˜[”™[Z[™\”ØÚY[\˜\›\ÈÛ›H[šY\ÈÚÜÙH\‹\\œÛÛˆİÚ]Ú\ÈÓˆ^KX™Y›Ü™H
+È^K[Ù‹š]˜]HÛÜH˜[Z[™ÈHØ]™Y™[][Û‹\8¡¤ˆ]TÛX\˜[‘]Z[ˆ›İ\ÙH\™H[›™\œËÙ\\˜]HY[YšY\ˆ™Yš^\Ë›İ[™Y[™[™ÈÛXÙ\Ë›Ü™YÜ›İ[™Û[™İXYÙKÙ]H™KX\›K[™Ø[˜Ù[][Ûˆ]™]™\ˆİXÚ\È[›İ\ˆ›İYšXØ][Ûˆ˜[Z[Kˆ\œÛÛ˜[™[Z[™\œÈİÛˆ[ˆ[™›ÚYÚ[›™[ÈHX›XÈÙX\ÛÛˆ[[[Û˜[HÚ\™\È™\İ]™K\™[Z[™\œØ™XØ]\ÙHHØ[YH™Y™\™[˜ÙHÛÛ›ÛÈ›İ‚‚ŠŠ”\™›Ü›X[˜ÙH8 %H[œİÙ\œÈ\™HØXÚY›İ™KY\š]™YŠŠˆ]™\H]HÛˆ\ÙHİ\™˜XÙ\È\ÈH]HØØ[ˆİ™\ˆ[™™YÈÙˆÚ]š[^\È
+ØØ[‘›Ü”[X8¡¤ˆÛÛ\]U]P[™[Û
+KˆYX\İ\™YÛÛÛˆH\ÚİÜ’UH]Z[ØÜ™Y[‰ÜÈ›İ\ˆÛÛ™\ÈÛÜİŒÈ\È8 %™^ØØİ\œ™[˜ÙHLMËHYX\ˆY\ˆ]NKH›ÜšYÚÚ[™İÈËHX\[™ÈÈ8 %ÚXÚÛˆ\›Y\È\ÈH][K\ÙXÛÛ™İ[™\ÜY[ˆ]Yİ\İŒˆÛˆHØÜ™Y[ˆÚÜÙHÛÛ[H\Ù\ˆY[™XYHØ]™YˆH[™Ú[™HY[[ÜÈ\™H\‹\›ØÙ\ÜËÛÈ]™\HÛÛ][˜ÚZY]YØZ[‹[™HÛÈÛÜœÈ]™XXÚH]Z[ÒUÕUH\İ
+H[˜Ú[™ËÒÛYH8)iH8).8)cx)+¸),8)(ØÚ\[™H\œÛÛ˜[›İYšXØ][ÛˆY\[šÊHZY[Ùˆ]Ú]›İ[™ÈØ\›Kˆ[˜Ú[™ËÜ]TÛX\˜[”ÛÛ™\ËØ›İÈ\œÚ\İÈH[œİÙ\œÈ8 %ØØİ\œ™[˜Ù\È\ˆ]H[KÚ[™İÜÈ\ˆYX\ˆ8 %[™\ˆ™Y[œÚœ]K\ÛÛ™\Î˜™\œÚ[Û™YÚ]SÒS‘×ÑVWĞĞPÒWÕ‘T”ÒSÓ˜[™İÙ\HHZ[XÚ[™ÙH™\Ù]
+0©ÍŒ
+Kˆ™XÛÜ™È\™HÙ^YYH
+Š]HÛ›JŠˆ
+LLKZÜš\Ú˜KN
+K™]™\ˆH[HY™[][ÛˆÜˆ˜[YKÛÈÛÈ[ÜHÛˆÛ™H]HÚ\™HÛ™H™XÛÜ™[™HØXÚH\ØÛÜÙ\È›İ[™ÈHYÙ\ˆÙ\È›İˆH\İÛÛ™\È›İYÚHØ[YHØXÚH[™[ˆ
+Šœ™]Ø\›\ÊŠˆH]Z[	ÜÈ]\ÈÛˆ]ÈİÛˆYH[YKÛ™HØØİ\œ™[˜ÙHY\\ˆ[ˆHØÜ™Y[ˆÚİÜËÛÈH][˜ÚšYÚY\ˆÛÛY[Û™IÜÈÚ˜YH\Èİ[H]‚‚ŠŠ”š]˜XŞH	ˆ›Û‹YÛØ[ËŠŠˆ›İ[™ÈŞ[˜ÜË›İ[™ÈÚ\™\Ë›È^Ü[ˆŒH
+‘Lˆ\ÈH]\™H˜[œÙ™\ˆ]
+KˆX›XÈÙX\ÛÛˆ›İYšXØ][ÛˆÛÜH\ÈY[XØ[Ûˆ]™\H]šXÙNÈ\œÛÛ˜[›İYšXØ][ÛˆÛÜH^\İÈÛ›HY\ˆH\Ù\ˆ[X™\˜][HØ]™\È]\œÛÛ‰ÜÈ[H[™HÔÈ›İYšXØ][ÛˆÜ˜[İXØÙYYËˆ›ÈÜ™YÛÜšX[‹X[›š]™\œØ\H[ÙK›ÈÛİ˜KÙÙ[™X[ÙŞHšY[Ë‚‚ŠŠ‘š[\ËŠŠˆ[˜Ú[™ËÜ]TÛX\˜[‹Ø0­È[˜Ú[™ËÜ]TÛX\˜[‘\Ü^KØ0­È[˜Ú[™ËÜ]TÛX\˜[”ÛÛ™\ËØ0­È[˜Ú[™Ëİ\ÙT]TÛX\˜[”ÛÛ™\ËØ0­È[˜Ú[™Ëİ\ÙT]TÛX\˜[‘›Ü‘]KØ0­ÈÛÛ^ËÔ]TÛX\˜[ÛÛ^Ş0­ÈØÜ™Y[œËÔ]TÛX\˜[“\İØÜ™Y[‹ŞÈ]TÛX\˜[‘Y]ØÜ™Y[‹ŞÈ]TÛX\˜[‘]Z[ØÜ™Y[‹ŞÈ]TZÜÚSİ™\šY]ÔØÜ™Y[‹Ş0­ÈÛÛ\Û™[ËÔ]TÛX\˜[‘^PÚ\ŞÈ]TZÜÚQ^PÚ\ŞÈ]TÛX\˜[”™[Z[™\”ØÚY[\‹Ş0­È›İYšXØ][ÛœËÜ]TÛX\˜[”™[Z[™\”\™KØÈ]TÛX\˜[”ØÚY[\‹ØÈ]TZÜÚT™[Z[™\”\™KØÈ]TZÜÚTØÚY[\‹Ø0­ÈØ][ÙÈ›İÈ[ˆ[˜Ú[™ÔØÜ™Y[‹Ş0­ÈÛYH[YÜ˜][Ûˆ[ˆÙ^Tİš\Ş0­È›İ]\È[ˆ˜]šYØ][Û‹İ\\ËØ
+È[Ü™TİXÚÓ˜]šYØ]Ü‹Şˆ\İÎˆ[˜Ú[™Ë××İ\İ××ËÜ]TÛX\˜[‹\İØ
+Ş
+K[˜Ú[™Ë××İ\İ××ËÚ™\İÜ]TÛX\˜[”ÛÛ™\Ëš™\İ\İØ›İYšXØ][ÛœË××İ\İ××ËÜ]T™[Z[™\”\™K\İØÈ]TØÚY[\œËš™\İ\İØÛÛ\Û™[ØÛÛ^ÜØÜ™Y[ˆİZ]\Ë[™›XY\İ›ËÜ]K\ÛX\˜[‹X[[ˆ‘ˆØÜËÜ›ØYX\Ü™ËÌMË\]K\ÛX\˜[‹›YÈ›İİ\NˆØÜËÜ]K\ÛX\˜[‹\›İİ\Kš[‚‚‹KKB‚ˆÈÈˆ\][˜Ú	ˆš\œİœ˜[YB‚ŠŠ”\œÜÙKŠŠˆÛ™HXÙH›ÜˆH][˜ÚÛÛ˜Xİ]™\Hİ\ˆÙXİ[Ûˆ\Üİ[Y\Îˆ
+Š’ÛYIÜÈš\œİš\ÚX›Hœ˜[YH\È[™XYH]Èš[˜[œ˜[YKŠŠˆ›İ[™ÈX^H™Y›İË[œÙ\ÜˆÚYY\ˆH˜]]™HÜ\ÚYÈ8 %H][˜Ú][YH^[İ][\™XYÈ\È˜[šÈÛˆ]™\HØÜ™Y[ˆH\Ú[]™\ˆÚİË[™[ˆ[[YYX]Hš\œİ™\ÜÈ]\İ[™ÛˆH[HH\Ù\ˆZ[YY]‚‚ŠŠ•H™]™X[\[[™H
+[Øš[KĞ\Ş
+KŠŠ‚ŒKˆÜ\ÚØÜ™Y[‹œ™]™[]]ÒYP\Ş[˜Ê
+X][Ù[HØÛÜNÈH\š]™YXØXÚH™\Ù][™™Y™]ÚÙ^T[˜Ú[™Ê
+Xİ\™\ÚYH]
+0©ÍŒ
+HÛÈİÜ˜YÙH\È[™XYH[ˆ›YÚ™Y›Ü™H™XXİ™[™\œÈ[][™Ë‚Œ‹ˆHš]™H›Û˜[Z[Y\ÈØ]HH›İšY\ˆ™YH
+›ÛÔ™XYX
+H8 %[ˆ[›ØYY˜[Z[HÚ[[H˜[È˜XÚÈÈHŞ\İ[H›Û
+0©ÌÊKÛÈ›È^™[™\œÈ™Y›Ü™HH™X[˜XÙ\È^\İ‚ŒËˆ
+Š˜\™XYQØ]X
+ŠˆÛÈHÜ\Ú[[HÛÈ
+Š›^[İ]XÜš]XØ[
+Šˆ™Y™\™[˜Ù\È]™HY˜]Y8 %›ÛØØ[H[™™XY[™È[™İXYÙH8 %™XØ]\ÙH›İÚ[™ÙHÛYHÙ[ÛY]KˆHÜ\ÚY\ÈšXHHØ]IÜÈ\ÙQY™™Xİ
+ÈH™[X[™Xœ˜XÙ\ÈÛ“^[İ]ÛˆH[İ[Y™YK‚ˆ
+Š”ØY™KX\™XH[œÙ]È\™HÙYYY›İ]ØZ]Y
+ŠˆH›ÛİØY™P\™XT›İšY\˜™XÙZ]™\È[š]X[Y]šXÜÏ^Ú[š]X[Ú[™İÓY]šXÜßXˆÚ]İ]]H›İšY\ˆ™[™\œÈ›İ[™È[[Hš\œİ˜]]™H[œÙ]]™[Ü›ÜÜÙ\ÈH][˜ÚX\ŞH”È™XY[™H™YH[ˆ[İ[ÈÛˆÚ]]™\ˆ]]™[Ø\œšYY8 %Ûˆ[™›ÚYÛÛİ\È[™\ˆYÙUÑYÙQ[˜X›Y]Ø[ˆ™HH™KX]XÚ™\›ËÛÈÛYHZ[Y›\Ú[™\ˆHİ]\È˜\‹Ø][œ™\ÜÛœÚ]™H™Z[™H[İ[\œİ[™\˜ÚYİÛˆHHİ]\ËX˜\ˆZYÚÚ[ˆHÛÜœ™XİY[œÙ]È\YY
+H]Yİ\İŒˆ›][˜Ú™\šÈˆ™\Ü
+KˆÚ]HÙYYHš\œİÛÛ[Z]Yœ˜[YHØ\œšY\È]Èš[˜[[œÙ]È[™[H]\ˆ[œÙ]]™[\ÈH›Ë[Ü‚‚ŠŠ‘Ù[ÛY]H]]\İİ^H™\Ù\™YŠŠˆİ\™˜XÙ\È]Y˜]HY\ˆH™]™X[]\İØØİ\HZ\ˆš[˜[ÜXÙHœ›ÛHHš\œİœ˜[YH8 %™]™\ˆ[œÙ\ÜˆÜ›İÈ]\ˆHÙ^Hİš\™\Ù\™\È]ÈÚ\›İÈ™Y›Ü™HHY™\œ™Y[˜Ú[™ÈÛÛ™H[™È
+0©Í
+NÈ›İ][™P˜[›™\˜	ÜÈ™YHİ]\ÈÚ\™HÛ™HZYÚ
+Z[’ZYÚMØHH›ÙÜ™\ÜÈ˜\šX[	ÜÈ˜]\˜[ZYÚ
+HÛÈHYÙH8¡¤ˆ›ÙÜ™\ÜÈ›\Ûˆ›İ][™HY˜][ÛˆØ[››İ[İ™HHĞUQÓÔ’QTÈÜšY
+0©ÌÌJNÈ™\İ]™UÜ˜[˜\ÈHš^YÔS—ÒRQÒ›Ş™\ÛÛ™YŞ[˜Ú›Û›İ\ÛHœ›ÛHH[™YØ][ÙÈ
+0©ÍMJKˆ[][™È™]ÈX›İ™HHÛYHÜšY[š\š]È\È[K‚‚ŠŠÔHİ^\ÈÙ™ˆH™]™X[ŠŠˆ\İ›Û›Û^KHËY^H™]Ø\›KÚYÙ]^[ØY[›š[™Ë[™]™\H™[Z[™\ˆØÚY[\ˆ[ˆ™Z[™[\˜Xİ[Û“X[˜YÙ\˜Y\ˆHÜ\ÚYÈ
+0©ÍNKğ©ÍŒ
+H8 %H][˜Ú]Ü[™ÈKÓÈÛ›Kˆ[İš[™ÈÛÜšÈX\›Y\ˆ]\İ™]™\ˆ[İ™HÔHÛÈ]‚‚ŠŠ‘š[\ËŠŠˆ[Øš[KĞ\Ş
+\™XYQØ]XØY™P\™XT›İšY\˜ÙYY[™ÊH0­È[Øš[KÜÜ˜ËÜ[˜Ú[™ËÜ[˜Ú[™Ó][˜Ú™Y™]ÚØ0­È™\Ù\™YYÙ[ÛY]HİÛ™\œÈ\ˆZ\ˆÙXİ[ÛœË‚‚ˆÈÈKˆ8)"x)*¸)-x)/¸).8)-x)/ø))ø)/È8 %İXİ\™Y\˜\ËÑ˜\İ[™ÈÛÛ[
+‘LH\ÙH
+B‚ŠŠ”\œÜÙKŠŠˆHØœÙ\˜[˜ÙH]Z[	ÜÈ\İÙXİ[Ûˆ[œİÙ\œÈH˜\İ[™È]›İYIÜÈXİX[]Y\İ[Ûˆ8 %
+Ú]Ú[™Ùˆ˜\İœ›ÛHÚ[ˆÈÚ[‹[™Ú[ˆÈHœ™XZÈ]
+ˆ8 %œ›ÛH™\šYšYY[™Y]H\ÈÛ™HÛ™\İ[™Ú[™KY\š]™Y[YH[™Kˆ]ÛÛ\]\È‘LNˆHØØ][Ûˆ[ˆÙˆHÜšYÚ[˜[\ÙHÚ\YÙ\\˜][H
+0©ÈØØ][ÛˆXÚÙ\ŠK[™\È\ÈHÛÛ[[‹‚‚ŠŠ‘]KŠŠˆ[Øš[KÜÜ˜ËÜ[˜Ú[™Ëİ\˜\ĞÛÛ[ØZ\œ›ÜœÈØ]PÛÛ[ØˆÛ™KYY˜][Y^Ü[H[Ù[\È[™\ˆ[šY\ËØ[ˆ[™^Ø\œ˜^K[™HXØÙ\ÜÛÜˆ[Øš[KÜÜ˜ËÜ[˜Ú[™Ëİ\˜\ĞÛÛ[ØÚÜÙH[Ù[K\ØÛÜHRQ‘H\ÜÙ\È[˜\šX[È
+[š\]YHYË›Û‹Y[\Hš[[™İX[Z\œË8¢iLˆ™Y™\™[˜ÙU\›Ø›İ[™]XY™ˆ]KX›İ[™
+Kˆ\˜\Ò[™›Ñ[X
+[˜Ú[™Ëİ\\ËØ
+Nˆ˜\İ\X
+š\š˜[H[Z\ˆÛ™K[YX[šYÚ]šYÚ[
+KÛ™K[[™H˜\İ\S›İJ˜Ú[™İÈÚÚ[™^
+ŸXÜ[Û˜[\˜[˜HÚÚ[™›İ[™]OË^
+ŸXİšXİ™\ÜÊ˜Ü[Û˜[ÚÓØœÙ\™\Ê˜İ]\È
+	Ù˜Y	È	İ™\šYšYY	ÊX™]šY]Ë[Û›HÛİ\˜ÙXˆ
+Š˜Ù]\˜\Ò[™›Ø^ÜÙ\È™\šYšYY[šY\ÈÛ›JŠˆ8 %H˜Y\È[™\İ[™İZ\ÚX›Hœ›ÛH›È[H]]™\HØ[Ú]KÛÈHÙXİ[Ûˆ\ÈÚ[\HXœÙ[[[HÛË\Ûİ\˜ÙH™]šY]ÈÛX\œÈ
+•SP“ÓÒÈ0©ÌŒ
+KˆØœÙ\˜[˜ÙH[\È]XÚšXHHÜ[Û˜[
+Š˜\˜\ÒY
+ŠˆÛÚÈ
+™\İ]˜[ËØ
+KHY[XØ[YXÚ[š\ÛH\ÈØ]RYØšYRYÈX[H[\ÈÚ\™HÛ™H[H
+[ZØY\Ú\È^Ù\8)*8)/ø),8)cx)'8),¸)/ˆ8¡¤ˆZØY\ÚK]\˜\Ø
+KˆHŒHİ\\ˆÙ]\È[šY\ÈÛİ™\š[™ÈŒÍH[\È
+ZØY\ÚH˜[Z[K8)*8)/ø),8)cx)'8),¸)/‹\›š[XKÔØ]X[˜\˜^X[‹˜YÜÚØ[šØ\ÚKØ\ØHÚ]]Ú]˜\˜]šK˜[›X\Ú[ZJNÈ
+Š˜[ZYÚÙ\™HÛİ\˜ÙK]™\šYšYYÛˆŒ‹LLNJŠˆ[™\™H^ÜÙY›İYÚH™\šYšYY[Û›HXØÙ\ÜÛÜ‹‚‚ŠŠ”İXİ\™H
+İ]\ÈKÌÈÙˆ0©ÌÌÉÜÈ›İ\‹\İ]HÛYJKŠŠˆ[œÚYHH8)"x)*¸)-x)/¸).8)-x)/ø))ø)/È0­ÈİÈÈØœÙ\™XÙXİ[Ûˆ
+Ø[YH›ØÚÒXY[™Ø™X]Y[\È8)+¸).x))8)cx)-Kø)%x))x)/ŠKÛ™H
+Š››Û‹Z[\˜Xİ]™H[™›Ü›X][Ûˆ[™[
+Šˆ
+\˜ÚY[\ÛÙ]šY\˜›Ü™\‹˜YZK›Ø[]˜][Û‹˜Ø\™8 %H]H]Z[	ÜÈ]ZY]˜Xİ\›İÈ[™İXYÙNÈ›ÈÚ]œ›Û‹›È˜]šYØ][ÛŠN‚‹H
+Š‘˜\İ]\HÚ\›İÊŠˆ8 %Hš[YØY™œ›Û˜[
+˜YZKœ[^›İYÚ[^İ[XKŒMH›Û\ØØ[HØ\8 %0©ÌËŒ]˜[˜YØ\šHZXÜ›Ë]\H\ØÚ\[™JHÚ]HÚ\X™[8)*8)/ø),8)cx)'8),¸)/ˆÈ8)*ø),¸)/¸).x)/¸),È8)#ø)%H8).8)+¸)+È8)+x)bø)'8)*È8),8)/¸))8)cx),8)/È8)'8)/¸)%ø),8)(Ë[ˆHÛ™K[[™H˜\İ\S›İX™\ÚYH]È]šY\˜[H™[™X]‚‹H
+Š¸)"x)*¸)-x)/¸).8)%x)/¸),ˆ›İÊŠˆ8 %ZXÜ›ÈX™[
+[^İ[XØY™œ›Û‹YY\KŒHØ\
+H
+ÈÚ[™İË^
+YX[š[™È›ÙH˜XÙK[šË\ÛÙLËÌŒ
+K‚‹H
+Š¸)*¸)/¸),8)(È›İÊŠˆ8 %Ø[YHX™[™X]Y[
+È\˜[˜K^
+[Ø^\È™[™\™Y8 %^\ÈØ[›ÛšXØ[
+Kˆ™[™X]]Û›HÚ[ˆ\š]˜X›KH
+Š˜ÛÛ\]Y[™JŠˆ
+ÛÛ][›Ş˜YZK›Y
+Nˆ8)*¸)/¸),8)(È0­È]H0­Èİ\8 $È[™›Üˆ™^Y^K\İ[œš\ÙK]]KX›İ[™
+\˜[˜KY^Hİ[œš\ÙH8¡¤ˆ›İ[™]]H[™šXHH\™H\˜\Ô\˜[˜KØÈ›Ü›X]˜[™ÙPÛÛ\XİÜˆ›Ü›X][™[œİ[Ú[ˆH[™Ü›ÜÜÙ\ÈZYšYÚ
+HÜˆ8)&¸) ¸))¸)cx),8)bø))¸)+È0­È]H0­È[YX›ÜˆØ[YKY^KXY\‹[[ÛÛœš\ÙXÈHL]]YİX›[™H˜[Y\ÈH[˜Ú[™ÈØØ][Ûˆ]Ø\ÈÛÛ\]Y›Ü‹ˆ\š]˜][Ûˆ[È
+]H[™Y™K\İ[œš\ÙKÜÚ^XK[[ÛÛœš\ÙK^[Û›XÚ[™
+H™[™\ˆ›İ[™È8 %
+Š›™]™\ˆ[ˆ[™[Y[YJŠ‹ˆÛÛ™\ÈÛÈ›İYÚHÚ\™Y[˜Ú[™Ñ^TİÜ™X
+Y˜]H[[YYX][K\İ›Û›Û^H™Z[™[\˜Xİ[Û“X[˜YÙ\˜8 %\ÙU\˜\Ô\˜[˜KØ
+K[™›İ[™ÈX›İ]H\˜[˜H\È\œÚ\İYˆ]™KY\š]™\È\ˆ™[™\‹ÛÈHÚ]HÚ[™ÙHØ[ˆ™]™\ˆÙ\™HHİ[H[YK‚‹H
+Š‘›Ûİ›İ\ÊŠˆ8 %İšXİ™\ÜØ[ˆÜ[Û˜[ÚÓØœÙ\™\Ø]]YYX[š[™È˜XÙKL‹ÌN‚‚[ÛÜH›İÜÈ›İYÚÛÛ[S[™ØØYX[š[™ĞS[™Ø
+İKÚÛˆ\š]™Hœ›ÛHH]˜[˜YØ\šNÈ[™Û\ÚšY[Èİ^H[™Û\Ú
+Kˆ˜Xİ^ØØ[\Èœ™Y[NÈÚ\[™X™[ÈØ\]KŒMKÌKŒHZÙHİ\ˆ[œÙHÚ›ÛYK‚‚ŠŠ‘š[\ËŠŠˆ[Øš[KÜÜ˜ËÜ[˜Ú[™Ëİ\˜\ĞÛÛ[Ş×Ú[\œË[™^[šY\ËÊŸKØ0­È[Øš[KÜÜ˜ËÜ[˜Ú[™Ëİ\˜\ĞÛÛ[Ø0­È[Øš[KÜÜ˜ËÜ[˜Ú[™Ëİ\˜\Ô\˜[˜KØ
+\™JH0­È[Øš[KÜÜ˜ËÜ[˜Ú[™Ëİ\ÙU\˜\Ô\˜[˜KØ
+İÜ™HœšYÙJH0­È\˜\ÒYÛÚÜÈ[ˆ[Øš[KÜÜ˜ËÜ[˜Ú[™ËŞİ\\Ë™\İ]˜[ßKØ0­ÈHÙXİ[Ûˆ[ˆ[Øš[KÜÜ˜ËÜØÜ™Y[œËÓØœÙ\˜[˜ÙQ]Z[ØÜ™Y[‹Şˆ\İÎˆÜ˜ËÜ[˜Ú[™Ë××İ\İ××Ëİ\˜\ĞÛÛ[\İØ
+È\˜\Ô\˜[˜K\İØ
+Ş
+KÜ˜ËÜØÜ™Y[œË××İ\İ××ËÓØœÙ\˜[˜ÙQ]Z[ØÜ™Y[‹\İŞ
+™\İ8 %H0©ÌÌÈ›İ\‹\İ]H™[™\š[™ÈX]š^[˜Ûˆ›Ë\XÙZÛ\ˆ[™˜YZ[š\ÚXš[]H[œÊKˆHœ˜]XØ][ÙÈXY\İ›È\ÜÙ\[ÛˆÛˆH™\šYšYY]Z[YÙH\ÈY™\œ™Y[[H™YÚ\İH^ÜÙ\È]Èš\œİ™\šYšYY[H
+‘LKÔ0©ÌL
+K‚‚ˆÈÈÈKŒH8)+x)bø)%È0­È8)*8)b8)-x)aø))¸)cx)+È0­È8)-x)cx),8))8)+x)bø)'8)*
+‘LŒÊB‚ŠŠ”\œÜÙH[™XÙ[Y[ŠŠˆ›ÛÙÛÙ™™\š[™ÜÈ\™H[ˆ[™\[™[[œİÙ\ˆY\ˆH^\İ[™ÈX›İ]Ø]H[™İË]Ë[ØœÙ\™HX]\šX[ˆH™\šYšYYšÙÒYYÈ8)+x)bø)%È0­È8)*8)b8)-x)aø))¸)cx)+È0­È8)+x)bø)'8)*ÈÙ™™\š[™ÜÈ	ˆ›ÛÙ\ÈHš[˜[ØœÙ\˜[˜ÙH]Z[›ØÚÎÈ]Ù\È›İÜ™X]HHšYİ]H[ˆ0©ÌÌÉÜÈ\˜\ËİšYHÛÛ\ÜÚ][Û‹ˆšYH™\\˜][ÛˆÚİÜÈHØ[YHİZY[˜ÙHX›İ™H]ÈØ[XYÜšHİ[[X\K‚‚ŠŠ”[™[ŠŠˆšÙÑİZY[˜ÙT[™[\ÈH]ZY]™XY[Û›H\˜ÚY[\ÛÙØ\™Ú]]šY\˜˜YZK›Ø[™[]˜][Û‹˜Ø\™ˆ]ÈÙXİ[ÛœÈ\X\ˆÛ›HÚ[ˆÜ[]YˆÙ™™\È\š[™ÈH˜\İÈ]›ÚY\š[™ÈH˜\İÈÈ›İÙ™™\È\˜[˜HYX[È[ˆH]]Y˜Y][Û‹İ˜\šX[›İKˆZXÜ›ÈX™[È\ÙH[^İ[X]LHÚ]HKŒHØ\ÈYX[š[™È^\ÈLËÌŒ[™Ø[ˆØØ[H›Ü›X[Kˆ›ÈÚ]œ›Û‹Ûİ\˜ÙKİ]\Ë™XÚ\H[XYÙKÛÛ[Y\˜ÙHXİ[Û‹ÜˆÙ[™\ÜÈ[™İXYÙK‚‚ŠŠ”™\\˜][ÛˆÚÜ[™ËŠŠˆY]]™HÚ]Ú[ˆ][\ÈÚ][ˆZ\ˆİÛˆ8)+x)bø)%È8)%8),8),8).8)bø)"8)%x)`8)%¸),8)`8))¸)/¸),8)`ÈšÙÈ	ˆÚ]Ú[ˆÚÜ[™ØYÙ\ˆ™[™X]Hš]X[Ø[XYÜšHXØÛÜ™[Û‹ˆ›İÜÈ™]\ÙHH\\ÈØ[XYÜšHÚXÚØ›Ş[™İXYÙH[™\œÚ\İ[ˆHØ[YHšYKÙ]H™XÛÜ™Ú]˜[Y\ÜXÙYÙ^\ËˆÚ]Ú[ˆÚXÚÜÈÈ›İÚ[™ÙHHØ[XYÜšH›ÙÜ™\ÜÈİ[ˆÚ\™Hİ]]\[™ÈHÙ\\˜][HXYYÚ]Ú[ˆÙXİ[Û‹‚‚ŠŠÛÛ[\ØÚ\[™KŠŠˆÙ™™\š[™ÜË\›Z]Y˜\İ›ÛÙXœİZ[™Y›ÛÙ›ÚXš]YÙ™™\š[™ÜË[™Xš\ÚZØHX]\šX[È™]™\ˆÛÛ\ÙH[ÈÛ™H\İˆÛÛ[[Ûˆ™YÚ[Û˜[›Ü›\È˜[YHZ\ˆ™YÚ[ÛÈ˜\šX[›İ\È\™HZ[ˆİ\İÛY\ˆİZY[˜ÙKÚ[HÛİ\˜Ù\È[™™\šYšXØ][ÛˆY]Y]Hİ^Hš]˜]KˆÙYH•SP“ÓÒÈ0©ÌŒH[™ØÜËÜ›ØYX\Ü™ËÌŒËXšÙË[˜Z]™YXK]œ˜]Y›ÛÙ›Y‚‚ŠŠ‘š[\ËŠŠˆ[Øš[KÜÜ˜ËÜ[˜Ú[™ËØšÙĞÛÛ[Ø0­È[˜Ú[™Ëİ\\ËØÈ™\İ]˜[ËØ
+šÙÒY
+H0­ÈÛÛ\Û™[ËĞšÙÑİZY[˜ÙT[™[Ş0­ÈØÜ™Y[œËÓØœÙ\˜[˜ÙQ]Z[ØÜ™Y[‹Ş0­ÈØÜ™Y[œËÕšYQ]Z[ØÜ™Y[‹ŞÈ\İÈ[ˆ[˜Ú[™Ë××İ\İ××ËØšÙĞÛÛ[\İØ[™HÛÈØÜ™Y[ˆİZ]\ÎÈ]šXÙH][ˆ›XY\İ›ËİšYK\Û[ÚÙKX[[‚‚ˆÈÈ‹ˆ8)-x)/¸).8)cx))8)`H8))¸)/ø)-¸)/ˆ8 %\ÚHÚZÜ˜K›ÛÛHİZY[˜ÙH	ˆÚ\‹ZØKSX[™\ˆ
+‘L
+B‚ŠŠ”\œÜÙKŠŠˆHİ\ÙZÛ\™Xİ[Ûˆ]Y\İ[ÛœÈ8 %X[™\ˆ˜XÚ[™ËÚ]Ú[ˆÛÜ›™\‹ÛY\[™ÈXYY\™Xİ[Û‹[ÚKXZ[ˆÛÜ‹HÛYHÚš[™IÜÈ\ÙY\8 %[œİÙ\™Y\È
+˜Û\ÜÚXØ[ÛÛ™[[ÛˆÚ]]È™X\ÛÛŠ‹[˜ÚÜ™YHH]™HÛÛ\\ÜÈ]\ÈÛ™\İX›İ]]ÈİÛˆXØİ\˜XŞKˆ™]™\ˆH™\™XİÛˆHÛYNˆ›ÈÜÚH[™İXYÙK›È™[YYY\Ë›È™X\ˆÛÜH
+‘L0©ÌŠK‚‚ŠŠ¸))¸)/ø)-¸)/ˆ8)&¸)%x)cx),
+ÛÛ\Û™[ËÑ\ÚPÚZÜ˜KŞ
+KŠŠˆH™XXİ[˜]]™K\İ™Ø›ÜÙNˆ\˜ÚY[\ÛÙš[™ÈÚ]]šY\˜İ›ÚÙKp¬XÚÜËHZÈX™[È
+TÒWÓP‘SØ8 %Ø\™[˜[MH[šØ[\˜Ø\™[˜[LKH[šË\ÛÙH˜XÙYZÈØY™œ›Û‹YY\
+K›İ][™È[™\ˆH
+Š™š^Y
+ŠˆØY™œ›Û‹YY\Ü™YYHÛÈHX™[[™\ˆH™YYH\ÈH\™Xİ[Ûˆ˜XÙYˆX™[ÈÛİ[\‹\›İ]H
+XXÚÛ\İ^\È\šYÚ
+KˆHÜ[ˆÙ[™H\ÈH˜XÚÙÜ›İ[™Ú\˜ÛHX™[Y8)+8)cx),8).x)cx)+¸).8)cx))x)/¸)*
+LH]]Y
+HÚ]H˜XÙYZÈ
+È›İ[™YYÜ™Y\È™[™X][ˆØY™œ›Û‹YY\8 %HÙ[™H\ÈHœ˜ZX\İ[ˆ]Ù[‹™]™\ˆH™YYH]›İˆ\™H™\Ù[][ÛˆXY[™È[™ZÈ\œš]™H\È›ÜË‚‚ŠŠ’Û™\İXØİ\˜XŞH
+ØÜ™Y[ˆÛÛ˜Xİ
+KŠŠˆ\ÙPÛÛ\\ÜÒXY[™Ø
+˜\İKİ\ÙPÛÛ\\ÜÒXY[™ËØ
+HÜ˜\È^Ë\Ù[œÛÜœØXYÛ™]ÛY]\ˆÜ˜\X]Ø\™HÛ[Ûİ[™È[™XY[™ÈX]]™H\™H[ˆ˜\İKØÛÛ\\ÜËØˆİ]\È›ØØX[\H8 %İ\[™ØÚØ[œ™[XX›X
+šY[XYÛš]YH\ÈYX\	ÜÈx $ÍH0­U˜[™›ÜˆJÈØ[\\È8¡¤ˆHšYİ\™KNØ[Xœ˜][Ûˆ[[ˆØY™œ›Û‹YY\X[ÙY\È[İš[™ÊK[˜]˜Z[X›X
+›ÈXYÛ™]ÛY]\ˆ8¡¤ˆHØÜ™Y[ˆÜ[œÈ[ˆX[X[[ÙJKˆXY[™È\ÈÛÜœ™XİYÈ•QH›ÜHHÙ[XİY[˜Ú[™ÈÚ]IÜÈ[™YÓSHXÛ[˜][Ûˆ
+]Kİ˜\İKÙXÛ[˜][Û‹Ø‘L0©ÌÊNÈHÛÜœ™Xİ[Ûˆ\ÈÚ[[ˆHYZÈÚ\›İÈ
+H0©ÍŒ8)+ø)/¸))8)cx),8)/ˆÚ\Y[ÛK˜\İKY\ÚKJ˜\İQÊH\È[Ø^\È™[™\™Y8 %HÚ\\[\œÈX[X[[ÙH
+Ù[œÛÜˆİXœØÜš\[Ûˆ™[[İ™Y
+K\[™ÈHXİ]™HÚ\™]\›œÈ]™NÈÚ]›ÈÙ[œÛÜˆ\™H\È›È]™HÈ™]\›ˆËˆ
+Š•HÙ[œÛÜˆ™]™\ˆØ]\ÈHÛÛ[ŠŠ‚‚ŠŠ‘İZY[˜ÙHİ\™˜XÙ\È
+ØÜ™Y[œËÕ˜\İQ\ÚTØÜ™Y[‹Ş
+KŠŠˆ™[İÈHÚZÜ˜H
+Èİ]\È[™Nˆ8)!ø).8))¸)/ø)-¸)/ˆ8)+¸)aø) ˆÈ[ˆ\È\™Xİ[Û˜8 %H›ÛÛH[šY\ÈÚÜÙH\™Xİ[ÛœØ[˜ÛYHH˜XÙYZË[\\Ú\ÙYÚ]Ø\™XXİ]™KX›Ü™\˜È[ˆ8)%x)%x)cx)-Ëx))¸),x)%x)%x)cx)-ÈÈ›ÛÛHH›ÛÛX8 %]™\H™\šYšYY˜\İT›ÛÛQ[X\ÈH]ZY]\˜ÚY[\ÛÙØ\™
+]H
+ÈZÈ[™KÛÛ™[[ÛˆLËÌŒ[šË\ÛÙ8)%x)/¸),8)(È0­Ø™X\ÛÛˆL‹ÌN]]Y8)'8).x)/¸) H8).8) ¸)+x)-H8)*8).x)bÈ0­ØXØÛÛ[[Ù][ÛˆÚ[ˆİ]Y
+NÈ[ˆ8)&8),8)%x)/ˆ8)+¸) ¸))¸)/ø),ÈHÛYHX[™\˜8 %X[™\‘İZY[˜ÙQ[XØ\™ÈÚ][]Y›İÜËHØ\›š[™Ë]Û™Y8)'ø)/¸),¸)aø) ˆÈ]›ÚY›ØÚÈ
+H0©ÍKŒHÜ]
+K[™H]]Y˜[Z[K]˜Y][Ûˆ›İKˆHÛÜÚ[™È]]Y[™H™\İ]\ÈHİ[˜ÙNˆÛÛ™[[Û‹›İ™\™Xİˆ[ÛÜH›İÜÈÛÛ[S[™ØØYX[š[™ĞS[™ØØXÚØ
+İKÚÛˆ\š]™HÜˆ\™H[™X]]Ü™Y\ˆ[\ˆÛÛ˜Xİ
+K‚‚ŠŠ‘ÛÜœËŠŠˆ[Ü™HXˆ8¡¤ˆ8).8)/¸))ø)*8)/ˆÜ›İ\›İÈ8)-x)/¸).8)cx))8)`H8))¸)/ø)-¸)/ˆÈ˜\İH\ÚX
+[Ü™K]˜\İKY\ÚX‘UÈİ]H›ÜˆÛ™H™[X\ÙH8 %H0©ÍNHÚYÙ]\›İÈ]\›ŠKˆH8)%ø)`ø).H8)*¸)cx),8)-x)aø)-ˆ]Z\˜]™\İ[™[™\œÈH]Z\˜]]˜\İKYÛÜ˜\İØ\™[™\ˆHØØ][Ûˆ[™H
+‘L0©ÍŠNÈ˜\İQ\ÚX\È™YÚ\İ\™YÛˆ›İH[Ü™H[™[˜Ú[™ÈİXÚÜÈ
+H‘LNH][K\İXÚÈÛÜˆ]\›ŠHÛÈXXÚÛÜˆ\Ú\È[ˆXÙH[™˜XÚÈ™]˜XÙ\ÈH›İ\›™^K‚‚ŠŠ”™[X\ÙKŠŠˆ^Ë\Ù[œÛÜœØ\È˜]]™H8 %İÜ™H™[X\ÙHÛ›K™]™\ˆÕH]HÛ[[YNÈÚ\ÈÚ]HKKŒÚ]Ó™]Ø[H[™TÕÕT—Õ‘T”ÒSÓ˜[\‚‚ŠŠ‘š[\ËŠŠˆ[Øš[KÜÜ˜Ëİ˜\İKŞØÛÛ\\ÜË\ÙPÛÛ\\ÜÒXY[™ßKØ0­È[Øš[KÜÜ˜ËÙ]Kİ˜\İKŞİ\\Ë›ÛÛQİZY[˜ÙKX[™\‘İZY[˜ÙKXÛ[˜][ÛŸKØ0­ÈÛÛ\Û™[ËÑ\ÚPÚZÜ˜KŞ0­ÈØÜ™Y[œËÕ˜\İQ\ÚTØÜ™Y[‹Ş0­ÈÛÜœÈ[ˆØÜ™Y[œËÓ[Ü™TØÜ™Y[‹Ş
+ÈØÜ™Y[œËÓ]Z\˜]™\İ[ÔØÜ™Y[‹Ş0­ÈİXÚÈ™YÚ\İ˜][ÛœÈ[ˆ˜]šYØ][Û‹ŞÓ[Ü™TİXÚÓ˜]šYØ]Ü‹[˜Ú[™ÔİXÚÓ˜]šYØ]ÜŸKŞ
+È˜]šYØ][Û‹İ\\ËØ0­È™YÙ[ˆY]Ù[Øš[KÜØÜš\ËÙÙ[™\˜]KYXÛ[˜][Û‹›Yˆ\İÎˆÜ˜Ëİ˜\İK××İ\İ××ËØÛÛ\\ÜË\İØÜ˜ËÙ]Kİ˜\İK××İ\İ××Ëİ˜\İPÛÛ[\İØÜ˜ËÜØÜ™Y[œË××İ\İ××ËÕ˜\İQ\ÚTØÜ™Y[‹\İŞÈ]šXÙH]›XY\İ›Ëİ˜\İKY\ÚK\Û[ÚÙKX[[ˆÙYH•SP“ÓÒÈ0©ÌŒˆ[™ØÜËÜ›ØYX\Ü™ËÌ]˜\İKY\ÚK›Y‚‚‹KKB‚ˆÈÈËˆÛØÚ\ˆ
+8)%ø)bø)&¸),8 %˜[œÚ]ÈœÈHØ]™YÚ\
+H
+ÈÙYZÛHİ]ÛÚÈ8 %‘LŒ‚ŠŠ”\œÜÙKŠŠˆHZ[Hœ\œÛÛ˜[\İ›ÛÙÙ\ˆˆİ\™˜XÙNˆÙ^IÜÈš[™HÜ˜Z\È™XYYØZ[œİHØ]™YÚ\HØYHØ]Hİ]KHÙ]™[‹Y^Hİ]ÛÚË[™\ÛÛZ[™ÈÚYÛˆÚ[™Ù\È8 %[Ù™›[™K]\›Z[š\İXË[™İZY[˜ÙKYœ˜[YY
+•SP“ÓÒÈ0©ÌMŒËğ©ÌMJKˆ™\]Z\™\ÈHØ]™YÚ\ÈİY\İÈÙ][ˆ^[˜][Ûˆ\ÈÜ™X]Hİ[™[K[™H\œ›Üˆİ]HÙY\ÈH™KY[\ˆ™XÛİ™\K‚‚ŠŠ”İXİ\™H
+Ü8¡¤ˆ›İÛJKŠŠˆ˜\ÚY˜[ØÜ™Y[‹Y˜[Z[HÚ›ÛYNˆ˜XÚÈ]Û‹8)%ø)bø)&¸),0­ÈÛØÚ\˜]HÚ][ˆTÕ]HØ\[ÛÈ[ˆHœ˜[Z[™È›İH
+8)*¸)/¸),8)+¸)cx)*¸),8)/ø)%H8)%ø)bø)&¸),8))¸)`ø)-ø)cx)'ø)/ø %8)*8)/ø)-¸)cx)&¸)/ø))8)+x)-x)/ø)-ø)cx)+ø)-x)/¸)(ø)`8)*8).x)`8) ˜8 %Ø[YH[™›Ë[X\šÈ›İÈ\È˜\ÚY˜[
+NÈHÛËY˜Xİ™Y™\™[˜ÙHØ\™
+˜[›XH˜\ÚH0­ÈYÛ˜K˜Y][Û˜[
+ÈZ[‹Q[™Û\ÚZ\œÊNÈH
+Š˜[œÚ]X›JŠˆ
+Ø\™Xİ]™Qœ›ÛXØØ\™Xİ]™P›Ü™\˜Û™H›İÈ\ˆÜ˜ZH[ˆÔRWÓÔ‘T˜ˆÛÛİ\ÜİÚ[ˆH˜[œÚ]Ú]È[ˆHS”ÒUÔÕTÔ•ÒÕTÑTØİ\ÙHœ›ÛHH[ÛÛ‹Ü˜ZH˜[YHÚ]8¡'˜Ú\™H™]›ÙÜ˜YK˜[œÚ]˜\ÚKİ\ÙKYœ›ÛKS[ÛÛ‹İ\ÙKYœ›ÛKSYÛ˜NÈ›İÜÎÈHYÙ[™›İÈÛÜÙ\ÈHX›JKˆHÚÛHX›HØ\œšY\ÈÓ‘HXØÙ\ÜÚXš[]HX™[˜\œ˜][™È]™\H˜[œÚ]
+H0©ÍLHÚ\^Y\]Z]˜[[˜ÙH[JKˆ[ˆ
+Š˜Xİ]™Hİ\ÙK][YHÚ\ÊŠˆ
+ˆ8)+x)/¸)-H0­ÈÕTÑWÕSQO˜[È›ÜˆXXÚİ\Ü]™Hİ\ÙH8 %™X]\™HIÜÈ˜[œÚ][È›Èİ[™[Û™H[œÈØÜ™Y[ŠNÈH
+ŠÙYZÛHİš\
+Šˆ
+Ù]™[ˆ›İÜÎˆÙYZÙ^JÙ]KÛ™Hİ8 %ÛÛ˜]›İ\˜X›HÈØY™œ›Ûˆ™Y›Xİ]™HÈ]šY\ˆİXYH8 %[ÛÛˆ˜\ÚH0­ÈÚ[™˜KX˜[Hİ\ÙH0­È\˜H˜[YK[™HÛ™HÛÜ™ÈH]]Y˜\Ú\È›Ûİ›İHİ]\È8)!¸))ø)/¸),ˆ8)&¸)*8)cx))¸)cx),8)+8),ˆ8)-H8))8)/¸),8)/ˆ8)+8),ˆ8 %8)*¸)/¸),8)+¸)cx)*¸),8)/ø)%H8))¸)`ø)-ø)cx)'ø)/Ë8)!x) ¸)%H8)+ø)/ˆ8)*8)/ø),8)cx)(ø)+È8)*8).x)`8) ˜È]™\H›İÉÜÈXØÙ\ÜÚXš[]HX™[\È]È[˜\Ú\È[™JNÈH
+Š”ØYHØ]HØ\™
+Šˆ
+›ÛZ[™[Ø\™Xİ]™Qœ›ÛX
+È[]˜][ÛˆÛ›HÚ[HH\ÙH[œË]ZY]\˜ÚY[İ\Ú\ÙNÈXY[™H
+ÈİZY[˜ÙH›ÙHœ›ÛHH[™Ú[™IÜÈ]]Ü™YÛÜKHš\ÙXİY8)-¸)*8)/È8)%x)/ˆ8)!x)%ø),¸)/ˆ8),8)/¸)-¸)/Ëx)*¸)cx),8)-x)aø)-˜›İ[™\H]HÛ˜ÙHHY™\œ™YÛÛ™H[™Ë[™H8)-¸)*8)/È8)!x)-ø)cx)'ø)%x)+¸)cH8)*¸)(¸)/8)aø) ˜˜XİXÙH[šÈ8 %[İË[\İYYšXHZ[[Tİ\\™Ù]
+
+X8 %Û›HÚ[HXİ]™JNÈš[˜[H
+Š¸)!¸)%ø)/¸)+¸)`8),8)/¸)-¸)/Ëx)*¸)cx),8)-x)aø)-ŠŠˆ›İÜÈ
+\]\‹ÔØ]\›‹Ô˜ZH8¢i^\Ëİ[‹ÓX\œËÓY\˜İ\KÕ™[\È8¢iNÈ8)%ø)(ø)*8)/ˆ8).x)bÈ8),8).x)`8).x)b8 )˜XÙZÛ\ˆ[[HY™\œ™YÛÛ™H[™ÊK‚‚ŠŠ”ÛÛ™H\ØÚ\[™KŠŠˆÛ˜\Úİ
+È\ÙH
+ÈÙYZÛH™[™\ˆŞ[˜Ú›Û›İ\ÛH
+ÚX\š^YX[˜ÚÜˆÛ™Ú]Y\ÊNÈH[™Ü™\ÜÈ^K]Ø[ÜÈ[™HØYHØ]H›İ[™\HY™\ˆ™Z[™[\˜Xİ[Û“X[˜YÙ\˜
+ÈÙ][Y[İ]
+
+X8 %H\ÙS]Z\˜]]\›‹ˆ›İ[™È\È\œÚ\İY[™›È[˜Ú[™ÈØXÚH\ÈİXÚYˆ]™\H]X[]H\š]™\Èœ›ÛHHŒTÕ[˜ÚÜˆ[™\ÈØØ][Û‹Yœ™YK‚‚ŠŠ”Ú\š[™ËŠŠˆ›Û™KHXÚ\Ú[Ûˆ
+‘LŒ0©Í
+NˆHİ\™˜XÙH[š\™[H^ÜÙ\È˜[›XH˜\ÚH[™ØYHØ]Hİ]Kˆ[H]\™HØ\™]\İ\ÙHHİ[™[K\İ[Hš\Y]Z[ÈØ\›š[™Ë™]™\ˆH˜\ÚY˜[Ú\™H]‚‚ŠŠ‘[šY\ËŠŠˆ8)%ø)bø)&¸),ÛÛØ\™ÛˆHØ]™Y[İ\Ú[™[™È
+Y\ˆHÛÛ˜XİX[š[ÊH[™HØYHØ]HX\Ù\ˆÛˆHÛÛ\Xİİ[™[HØ\™
+0©ÍLJKˆ›ÈÛYH[H[ˆŒK‚‚ŠŠ”Ú\™Yš[Z]]™KŠŠˆH\˜KØÚ[™˜KX˜[H\š]Y]XÈ[™Û\ÜÙ\ÈÛÛYHœ›ÛH[˜Ú[™Ëİ\˜PÚ[™˜P˜[KØ
+0©ÍŒ	ÜÈ\œÛÛ˜[\ÙY]Z\˜]İš\İÛœÈ]
+NÈ‘LŒÛ›HX\È]ÈÛ\ÜÙ\ÈÛÈH™YH\Ü^HÛ™\ËˆHÛØÚ\ˆXY\ˆ›ÛİÜÈ0©ÍLXIÜÈ˜[Z[™È[H8 %8)!¸)*¸)%x)`8)%x)`x) ¸)(x),¸)`Ú]Û™H\œÛÛˆØ]™Y˜[YOˆ8)%x)`8)%x)`x) ¸)(x),¸)`Û˜ÙHH›Üİ\ˆÛÈ[Ü™H[ˆÛ™K‚‚ŠŠ‘š[\ËŠŠˆ[Øš[KÜÜ˜ËÜ[˜Ú[™ËÙÛØÚ\‹ØÙYZÛSİ]ÛÚËØ
+\™K›İ[YØ][™ÈÈ\˜PÚ[™˜P˜[KØ
+NÈ[Øš[KÜÜ˜ËÜØÜ™Y[œËÑÛØÚ\”ØÜ™Y[‹ŞÈ›İ]H[ˆ˜]šYØ][Û‹İ\\ËØ
+È[˜Ú[™ÔİXÚÓ˜]šYØ]Ü‹ŞÈ[šY\È[ˆ[˜Ú[™ÔØÜ™Y[‹Şˆ\İÎˆÜ˜ËÜ[˜Ú[™Ë××İ\İ××ËÙÛØÚ\‹™[™Ú[™K\İØÙYZÛSİ]ÛÚË™[™Ú[™K\İØ
+Ş
+KÜ˜ËÜØÜ™Y[œË××İ\İ××ËÑÛØÚ\‘^\šY[˜ÙK\İŞ
+™\İ
+K›XY\İ›ËÙÛØÚ\‹\Û[ÚÙKX[[‚‚‹KKB‚ˆÈÈˆÛÛ\[Yİ[™[H™\Ü
+8)*¸)`¸),8)cx)(È8)%x)`x) ¸)(x),¸)`8)-x)/ø)-x)aø)&¸)*
+H8 %‘LŒ\ÙH‚‚ŠŠ”\œÜÙKŠŠˆHÛ™K\Úİ\İ›Õ[ËXÛ\ÜÈ[]™\˜X›NˆHÛ™ÈØÜ›ÛX›H™XY[™ÈÛÛ\[Yœ›ÛHHØ]™YÚ\ˆ]™\][™È\ÈÛÛ\ÜÙYœ›ÛH\Y˜\ÙHX›\È[ˆH\™H[™Ú[™H[ÈH
+Š™\œÚ[Û™Y[HÙ\šX[^˜X›Hİ[™[T™\Ü[Ù[
+Šˆ
+Z[ˆ”ÓÓ‹›È]X[œİ[˜Ù\È8 %[›™YHHÙ\™H›İ[™]š\\İÈ[X™\˜][HHÜ›İ[™[™ÈØš™XİH]\™HRH\ÙHÛİ[ÛÛœİ[YK‘LŒ0©ÍJK‚‚ŠŠ”İXİ\™KŠŠˆ\ØÛZ[Y\ˆ˜[™
+ÛÛ[
+H8¡¤ˆ›Ü[™X[ˆÚ\Ø\™8¡¤ˆ[]™[ˆÙXİ[ÛˆØ\™È[ˆš^YÜ™\ˆİ[[X\X
+š\˜XİÎˆ˜[YKÙ]Kİ[YKØÚ]KÓYÛ˜KÓ[ÛÛ‹Û˜ZÜÚ]˜H\ÈX™[˜[YH›İÜÈØ\Y]KŒH›Û][\Y\ŠH0­ÈYÛ˜X
+š\Ú[™ÈÚYÛˆ]X[]H
+ÈYÛ˜K[Ü™XÙ[Y[
+H0­È[ÛÛ˜
+[ÛÛ‹\ÚYÛˆ]X[]H
+È˜[›XH˜ZÜÚ]˜JH0­ÈÚ^Y™H\™X\È
+Ø\™Y\ˆL0­È™[][ÛœÚ\Èİ0­ÈÙX[‹ÌLH0­ÈÙ[‹X[™\›İ][™HKÍˆ0­ÈÛYKX[™[X\›š[™ÈÍH0­È\›XH]8 %XXÚİ\ÙIÜÈÚYÛ‹Û\ÜÚXØ[Ü™[™]ÈXÙ[Y[ØØİ\[ÎÈ[ˆ[\Hİ\ÙH\Èİ]YZ[›NÈ]™\H\™XHÛÜÙ\ÈÚ]HİÛ‹ZYÙ[Y[[™JH0­ÈØœÙ\˜][ÛœØ
+ØYHØ]H[Ø^\ÎÈ
+Š“X[™Ø[ÜÚH\Ü^KYØ]YÙ™ŠŠˆ™Z[™[˜ÛYSX[™Ø[ÜÚX[™[™È›ÙXİØÛÛ[™]šY]È8 %Ú[ˆ[˜X›Y]ÈÛÜH\È™]˜[[˜ÙK[›Ü›X[^š[™È[™™]™\ˆ\Ù\ÈHÜÚHX™[È
+Š’ØX[Ø\œ^ÛYYHXÚ\Ú[ÛŠŠˆ[™[›™YXœÙ[H\İ
+H0­Èš[\Úİ\šX
+š[™H8)!¸)+ø)`H8 $ÖH8)-x),8)cx)-ØXZY\ÚH[™\È™]\Ú[™È0©ÍLIÜÈ\‹[Ü™[Y\Ëİ\œ™[\š[Ù›YÙÙY
+H8¡¤ˆÛÜÚ[™È\ØÛZ[Y\ˆ˜[™ˆÙXİ[ÛˆØ\™ÈØ\œHÛ™H[XØÙ\ÜÚXš[]HX™[XXÚÈH˜XİXÙH[šÈ™[™\œÈÛ›Hœ›ÛHHÙXİ[Û‰ÜÈ[İË[\İY˜XİXÙTÛİ\˜ÙRY›İYÚZ[[Tİ\\™Ù]
+
+X‚‚ŠŠ”Ú\š[™ËŠŠˆÛ™HXY\ˆÚ\™HXİ[Ûˆ8¡¤ˆH^\İ[™ÈØ\›™Yİ[™[HHÚ\™H
+Ú\İ[[X\HØ\™È8)!ø).8)%x)/¸),8)cx)(H8)+¸)aø) ˆ8)*8)/¸)+‹8)'8)*8)cx)+ˆ8))8)/ø))x)/Ë8).8)+¸)+È8)%8),8)*8)%ø),8)-¸)/¸)+¸)/ø),ˆ8).x)b8) ˜
+Kˆ™]™\ˆH˜\ÚY˜[›ËXš\Y]Z[È]ˆ[YØİ[Y[ˆ^Ü\È^XÚ]HY™\œ™Y
+^Ë\š[Ûİ[™HH™]È\[™[˜ŞH™YY[™È]ÈİÛˆ™]šY]ÊKˆ
+Š‘[]^[™Ù™ŠŠˆHĞSQHÚ\™HÚY]Ø\œšY\ÈHÙXÛÛ™\H8)*¸)`¸),8)cx)(È8)*¸)/¸)(8).8)/¸)'x)/ˆ8)%x),8)aø) ˆ0­ÈÚ\™H[^Xİ[Ûˆ
+[ˆÜ[Û˜[[İ\ÚÚ\™TÚY]^[œÚ[Ûˆ8 %]Z[]KÔİX]X
+ÈÛ”Ú\™Q]Z[ÈÛZ][™ÈH›ÜÈÙY\È]™\Hİ\ˆ[İ\ÚÚ\™H]KZY[XØ[
+Kˆ]Ú\™\ÈHÓÓTUH^Ü\ÈZ[ˆ^šXHHÔÈÚ\™HÚY]8 %š\]Z[ËHš[™KYÜ˜ZHX›H
+YÜ™Y\ËÛ˜ZÜÚ]˜KÜYKÚİ\ÙKø¡'ŠKH[š[\Úİ\šH]HX›K]™\H™\ÜÙXİ[Û‰ÜÈ[™Û\Ú›ÜÙHÚ]˜XİË›İ\ØÛZ[Y\œË[™HXXÚ[™K\™XYX›Hİ[™[T™\Ü[Ù[”ÓÓˆ8 %ÛÈH\Ù\ˆØ[ˆ[™H™XY[™ÈÈ›İ\ÈÜˆ[ˆRH\ÜÚ\İ[ÙˆZ\ˆÚÚXÙH›ÜˆHY\\ˆÛÛ™\œØ][Û‹ˆ]\È[™Ú[™K\™[™\™YHH\™H[˜Ú[™ËÚİ[™[R[™Ù™‹Ø
+Z[İ[™[R[™Ù™•^
+NÈHÚY]	ÜÈš]˜XŞH[™H\ÈHÚ\™YØ\›š[™Èİ\™˜XÙH[™]\İ˜[YHHš\]Z[È“ÕXİ[ÛœÈØ\œH
+¸)%x)/¸),8)cx)(H8)%8),8)*¸)`¸),8)cx)(È8)*¸)/¸)(8 %8))¸)bø)*8)bø) ˆ8)+¸)aø) ¸ )ˆŠKˆH\]Ù[ˆ™]™\ˆÛÛXİÈ[HÙ\šXÙH8 %H\Ù\ˆØ\œšY\ÈH^ˆœ˜[Z[™È[œÚYHH^Üİ]\ÈZ[›H]H[\œ™]]™HÙXİ[ÛœÈ\™H˜Y][Û˜[İZY[˜ÙK›İ™YXİ[ÛœË‚‚ŠŠ‘[šY\ËŠŠˆ8)*¸)`¸),8)cx)(È8)%x)`x) ¸)(x),¸)`8)-x)/ø)-x)aø)&¸)*ÕH[™\ˆHİ[™[Hİ™\šY]ÈXˆ[™H[šÈÛˆH[™[™ÉÜÈÛÛ\Xİİ[™[HØ\™
+0©ÍLJKˆİY\İÛØY[™ËÙ\œ›Üˆİ]\ÈZ\œ›ÜˆÛØÚ\‰ÜÈ
+0©ÍÊK‚‚ŠŠ‘š[\ËŠŠˆ[Øš[KÜÜ˜ËÜ[˜Ú[™ËÚİ[™[T™\Ü[Ù[Ø
+\\ÊKİ[™[T™\ÜØ
+\™H[™Ú[™K[˜ÛˆÛÛ\]SX[™Ø[ÜÚX
+ÈTÒWÓÔ‘
+Kİ[™[R[™Ù™‹Ø
+[]^^Ü
+NÈ[Øš[KÜÜ˜ËÜØÜ™Y[œËÒİ[™[T™\ÜØÜ™Y[‹ŞÈ›İ]H[ˆ˜]šYØ][Û‹İ\\ËØ
+È[˜Ú[™ÔİXÚÓ˜]šYØ]Ü‹ŞÈÕH[ˆİ[™[TØÜ™Y[‹Ş[šÈ[ˆ[˜Ú[™ÔØÜ™Y[‹Şˆ\İÎˆÜ˜ËÜ[˜Ú[™Ë××İ\İ××ËÚİ[™[T™\Ü™[™Ú[™K\İØ
+Ş8 %Ù\™H›İ[™]š\[LL‹[YÛ˜HİÙY\X[™Ø[]X›K›ËRØX[TØ\œ[ŠKİ[™[R[™Ù™‹™[™Ú[™K\İØÜ˜ËÜØÜ™Y[œË××İ\İ××ËÒİ[™[T™\Ü^\šY[˜ÙK\İŞ
+™\İ
+K›XY\İ›ËÚİ[™[K\™\Ü\Û[ÚÙKX[[‚‚‹KKB‚ˆÈÈKˆ8)-¸)`x)+H8)+ø)bø)%È8 %HY]]™H]Z\˜]›ØØX[\H
+‘LÊB‚ŠŠ”\œÜÙKŠŠˆ˜[YHÚ]\ÈÜXÚX[H
+œšYÚ
+ˆX›İ]H^K[ˆ^XİHH™YÚ\İ\ˆHÜÚH›ØØX[\H[™XYH\Ù\ÎˆHÚXš[ÙØH\È
+Šœ™\Ù[ÜˆXœÙ[Ú]]ÈÚ[™İÈİ]Y
+Šˆ8 %™]™\ˆHØÛÜ™KH\˜Ù[YÙKH›XÚÚY\İ^H‹Üˆ[ˆÙ™œÙ]YØZ[œİHÜÚKˆH[™Ú[™HYÙ[™HÜÚRÙ^XÈ[™™\›È[ÙØ\ÎÈ\ÈÙXİ[Ûˆ\ÈHİ\ˆ[ˆÙˆ]^\Ë[™[X™\˜][H›İ[™È[Ü™H
+›İ[™ˆ0©ÌËŒÈ™Z™XİYHİ[™[Û™H^K\]X[]HØÛÜ™NÈ›İ[™H0©ÌÈ™Z™XİYİ[™[Û™HÜÚHØ\›š[™ÜÈ8 %›İİ[˜Ù\ÈÛ\™JK‚‚ŠŠ•HŒHÙ]ŠŠˆ8).8),8)cx)-x)/¸),8)cx))H8).8)/ø))¸)cx))ø)/È
+± \˜H0åÈ˜ZÜÚ]˜JK8)!x)+¸)`ø))8).8)/ø))¸)cx))ø)/È
+Hİ›Û™Ù\ˆÛ™K\\‹]± \˜HZ\ˆ8 %[Ø^\È[ÛÈH8).8),8)cx)-x)/¸),8)cx))H›İÊK8),8)-x)/È8)+ø)bø)%È
+[˜Û\Ú]™Hİ[¸¡¤“[ÛÛˆ˜ZÜÚ]˜HÛİ[8¢"Í‹ÎKÌLÌLËÌŒ
+K[™8))¸)cx)-x)/ø)*¸)`x)-ø)cx)%x),È8))8)cx),8)/ø)*¸)`x)-ø)cx)%x),
+8)+x))¸)cx),8)/ˆ]H0åÈ8),8)-x)/Ëø)+¸) ¸)%ø),‹ø)-¸)*8)/È± \˜H0åÈH˜\ÚK\Ü[›š[™È˜ZÜÚ]˜HÙ]ÊKˆİ\KÔ˜]šH\ÚXHİ^HÚ\™H^HÚ\8 %HÛÛ\]YXZš^\È
+0©ÍŒ
+H8 %Û™HÛÛ˜Ù\Û™HÛYNÈHİ[™^KT\ÚXH^HX^HÛ™\İHØ\œH›İHXZšØ\™[™H8).8),8)cx)-x)/¸),8)cx))H8).8)/ø))¸)cx))ø)/ÈÚ\‚‚ŠŠ‘[™Ú[™H
+[˜Ú[™ËÜÚXš[ÙØKØ
+KŠŠˆ\™H
+İ[™[K\İ[H›İ[™\NÈÛİ\˜ÙK\\š]H\İ
+NˆÛÛ\]TÚXš[ÙØ\Ê™^İ[œš\ÙJXİ]ÈH™YXÈ± \˜KY^HÜİ[œš\ÙK™^İ[œš\ÙJH]]™\HÛÛ™Y[™ØH[™
+ÜÚ^XH[™È[˜ÛYY8 %HÚ\YÜÚ^XKX]Ø\™H[™ØP]™]™\ˆ[™^
+ÈXXÜ›ÜÜÈHÜÚ^XJK]˜[X]\ÈXXÚÙYÛY[]]Èİ\
+8),8)-x)/ÉÜÈİ[ˆ˜ZÜÚ]˜HÛÈ8 %™XÛÜ™YŒH˜\šX[
+K[™Y\™Ù\ÈY˜XÙ[X]Ú\È[ÈÚ[™İÜÎÈHÚ[™İÈ™]™\ˆÜ›ÜÜÙ\ÈH™^İ[œš\ÙKÚ\™HH± \˜H˜XİÜˆÚ[™Ù\ËˆX›\È\™H[›™Y
+Šœ›İËY›Ü‹\›İÊŠˆYØZ[œİØÜËÜ›ØYX\ØÛÛ™[[ÛœËÜÚXš^[ÙØK]ŒK›Y[™Ú\Q•
+ÒP’ÖSÑĞWÔÓÕTÑK™\šYšYYˆ˜[ÙX\İ\[›™Y™[X\ÙKYØ][™È8 %•SP“ÓÒÈ0©Ì
+Kˆ™XXİ™XXÚ\È]›İYÚ\ÙTÚXš[ÙØX
+H[ˆÛÛ\ÜÚ][Ûˆİ™\ˆ\ÙS]Z\˜]8 %HÚ\™Y^HİÜ™K›Èš]˜]HØXÚJH[™ÛˆHš[™\‹ÚXš[ÙØ\Ñ›Ü‘]X
+]Z\˜]š[™\”ØØ[‹ØH™\™Xİ›Ü‘]XÛË\ÛÛ™HÛÛ˜Xİ
+Kˆ›İ[™È[ˆ^R[œ]ØÚ[™Ù\ËÛÈ
+Š››ÈSÒS‘×ÑVWĞĞPÒWÕ‘T”ÒSÓ˜[\
+Šˆ™[Û™ÜÈÈ\È™X]\™K‚‚ŠŠ•H˜[Z[™ÈÛÛ\Ú[Ûˆ
+\™[K•SP“ÓÒÈ0©Ì
+KŠŠˆH^HØ\™	ÜÈ^\İ[™È8)+ø)bø)%ÈšY[\ÈÛ™HÙˆHÈ
+Š›š]XJŠˆ[ÙØ\È8 %[ˆ[œ™[]Yİ[ŠÓ[ÛÛˆØ[İ[][Û‹Û™HÙˆÚXÚ\È]\˜[H˜[YY8).8)/ø))¸)cx))ø)/ËˆÛÎˆ]šY[\ÈX™[Y
+Š¸)*8)/ø))8)cx)+È8)+ø)bø)%ÈÈš]XH[ÙØJŠˆ]™\]Ú\™H]™[™\œÈ
+[™ØH[H0©ÌÌËZ[H]Z\˜]Ø\™0©ÌÌÊNÈHÚXš[ÙØH[Ø^\È™[™\œÈ[™\ˆH
+Š¸)-¸)`x)+H8)+ø)bø)%ÊŠˆÜ›İ\X™[Ú]]È[¸ )ˆ8)+ø)bø)%Èˆ˜[YNÈ™Z]\ˆX^H]™\ˆ™[™\ˆ[ˆHİ\‰ÜÈÛİ‚‚ŠŠ”İ\™˜XÙ\ËŠŠˆ8¤h[˜Ú[™È^HØ\™8 %ÚXš[ÙØPØ\™[™\ˆH[™ØHÜšY
+0©ÌÌË
+Nˆ™\›ÈÚ›ÛYHÛˆXœÙ[^\Ëˆ8¤hHZ[H]Z\˜]
+]Z\˜]Ø\™›ÙX[˜\šX[
+H8 %H8)-¸)`x)+H8)+ø)bø)%È›İÈ\ˆ™\Ù[[ÙØHY\ˆ8)*8)/ø))8)cx)+È8)+ø)bø)%Ëø)%x),8)(È
+0©ÌÌÊNÈHÚ\™H˜\šX[[X™\˜][HÛZ]È]ZÙHÜÙH›İÜËˆ8¤hˆ]™[]Z\˜]š[™\ˆ
+0©ÍŒ
+H8 %Ú\ÈÛˆ™\İ[Ø\™ËHÚ\™YØ\™ÛˆH^H]Z[
+^ÛYY^\È[˜ÛYY8 %ÜÚ\È[™[ÙØ\ÈÛÙ^\İ[™\™H™]™\ˆ™]Y
+KÜÚHÚ\ÈÛˆH^ÛYY[œİÙ\ˆ›ØÚÈ›İYÚHØ[YHÛÛ\Û™[ˆ
+Š˜]Z\˜]Ú\
+Šˆ\ÈHÛ™HÚ\ˆÛ™Nˆ	Ş[ÙØIÈ	ÙÜÚIØÛÜ™
+È[
+0©ÌLŠK›Èš[YÈœİ›Û™Èˆ˜\šX[8 %HY\˜\˜ÚH™]ÙY[ˆ[ÙØ\ÈÛİ[™HHØÛÜ™HÙX\š[™ÈHÛÜİ[YK‚‚ŠŠ•[YH›Ü›X][™È
+\™[JKŠŠˆ\ÙHÚ[™İÜÈ[ˆ˜ZÜÚ]˜K]Ë[˜ZÜÚ]˜H[™›İ][™[H[™\İZYšYÚˆ]™\H[™™[™\œÈ›İYÚHÚ\Y›Ü›X][™[œİ[
+šXH›Ü›X]˜[™ÙQ[™]Ø\™XÚ\™HH˜[™ÙH\ÈÚİÛŠH8 %L‹Zİ\ˆÛØÚÈ
+ÈÚÜY]HİY™š^ÛˆHY™™\™[Ú]š[^KˆHš[Y\[˜Ú[™È^[™YZİ\ˆİ[H
+ŒLŠH^\İÈ›İÚ\™H[ˆH\[™]\İ›İ™H[›ÙXÙYˆ[™[Û›H™[™\š[™È\È[İÙYÛÛ[HÚ\™HHÚ[™İÈÜ[œÈ]İ[œš\ÙH
+H[™ØK\›İÈÛÛ™[[ÛˆÛˆHZ[H]Z\˜]Ø\™
+NÈHZYY^HÛœÙ][Ø^\ÈÚİÜÈ]Èİ\‚‚ŠŠ‘š[\ËŠŠˆ[˜Ú[™ËÜÚXš[ÙØKØ0­È[˜Ú[™Ëİ\ÙTÚXš[ÙØKØ0­ÈÚXš[ÙØ\Ñ›Ü‘]X[ˆ[˜Ú[™ËÛ]Z\˜]š[™\”ØØ[‹Ø0­È›Ü›X]˜[™ÙQ[™]Ø\™X[ˆ[˜Ú[™ËÛ]Z\˜]›Ü›X]Ø0­ÈÛÛ\Û™[ËŞÓ]Z\˜]Ú\ÚXš[ÙØPØ\™KŞ0­Èİ\™˜XÙ\È[ˆØÜ™Y[œËÔ[˜Ú[™ÔØÜ™Y[‹ŞÛÛ\Û™[ËÓ]Z\˜]Ø\™›ÙKŞØÜ™Y[œËŞÓ]Z\˜]™\İ[ÔØÜ™Y[‹]Z\˜]^Q]Z[ØÜ™Y[ŸKŞˆ\İÎˆ[˜Ú[™Ë××İ\İ××ËÜÚXš[ÙØK\İØ
+X›\ÈœÈØËYXÚ[šXÜËŒˆİÙY\\š]KH]™[]Z\˜][]\İ[›İZ[\ÜİX\™
+KÛÛ\Û™[Ë××İ\İ××ËÔÚXš[ÙØPØ\™\İŞ
+Û™\ËXœÙ[Z\Ë[›İ[™ËH\İ[ZYšYÚİY™š^
+NÈ]šXÙH]›XY\İ›ËÜÚXš^[ÙØK\Û[ÚÙKX[[
+HİX›H™[X™[È
+È›İ\›™^\ÎÈHÜXÚYšXÈÚ\\È]KY\[™[[›™Y[ˆ[š]\İÈ[œİXY
+KˆÙYH•SP“ÓÒÈ0©Ì[™ØÜËÜ›ØYX\Ü™ËÌË\ÚXš^[ÙØK›Y‚ˆÈÈÌˆ8))¸)/¸)*x)*¸)`x)(ø)cx)+È8 %YXØ]KQš\œİÚ]š[™Îˆ›İ\›™^KYÙ\ˆ	ˆX[‹QØX\ˆ
+‘LŠB‚ŠŠ”\œÜÙKŠŠˆH\™[XˆÙˆH˜\x $İœ˜]8 $ÙX[ˆš\Ùˆ
+™YXØ]Hš\œİ
+ˆ
+ÚHH˜Y][ÛˆÚ]™\Ë[ˆHÚ\İ˜IÜÈİÛˆÛÜ™ÊKHš]˜]HÛ‹Y]šXÙHYÙ\ˆÙXÛÛ™[™[ˆ^\›˜[[™[Ù™ˆÈ™\šYšYYÜ™Ø[š^˜][ÛœÈİšXİH\İˆHPHÛÛ˜Xİ
+‘Lˆ0©Ì‹ÊH\ÈİXİ\˜[›İÛ˜[ˆHÛYHØ\œšY\È
+Š™\›ÊŠˆÚ]™HY™›Ü™[˜Ù\ËH\™XİÜH\È™]™\ˆHXˆ[™\È™XXÚX›HÓ“Hœ›ÛHH›İ\›™^IÜÈ\›Z[˜[İ\[™œ™XÛÜ™[ˆ^H™YÚ\İ\ˆˆ[Ø^\È™XÙY\È™Ú]™H[Ù]Ú\™H‹ˆ›È[XHØÛÜ™\Ëİ™XZÜËİ[ËÛØ[ÈÜˆ™X\ˆÛÜH[]Ú\™H8 %[›™YHHÛÜKYİX\™\İ‚‚ŠŠ¸))¸)/¸)*x)*¸)`x)(ø)cx)+ÈÛYH
+ØÜ™Y[œËÑX[”[XTØÜ™Y[‹Ş
+KŠŠˆ™XY\’XY\ˆ
+[™^
+KˆÙXİ[ÛœÈ[ˆ0©ÍHÜ™\ˆ8)!¸)'8)%x)aÈ8))¸)/¸)*8)%x)/ˆ8)+¸).x))8)cx)-X8 %Hš\œİX[‹XÛİ™\™YØœÙ\˜[˜ÙHÙˆÙ^H
+\ÙSØœÙ\˜[˜Ù\Ñ›Ü‘]X8¡¤ˆÙ]X[“ØØØ\Ú[Û‘›Ü”[XÈØ\™XœÙ[Ûˆ[˜Ûİ™\™Y^\Ë™]™\ˆHXÙZÛ\ŠHÚ]H›İ\›™^HÛÜÈ8)!ø).8)-x)/¸),8)%x)/ˆ8))¸)/¸)*8 %È˜X\ˆÚ\È
+X[‹]˜X\‹J˜]Z\˜]Ú\Y[ÛJHİ™\ˆHÚ\™Y]KÙX[‹İ˜X\‹ØX›H
+Û™HX›HÚ]‘LŒJNÈ8)-¸)/¸).8)cx))8)cx),8)%x)cx)+ø)/ˆ8)%x).x))8)aÈ8).x)b8) ˜8 %H™\œÙHÜ[™H™[™\™Y[›[™H[™[ˆ[
+X[‹\š[˜Ú\KJ˜Ø\™Îˆ]˜[˜YØ\šHšXH™\œÙS[™\ĞS[™ØÛÛ\\˜Ø\ÙHÚ]KYX[š[™ÈšXHYX[š[™ĞS[™ØÈHÚ]HØ\™[Û™HØ\œšY\ÈH8)%ø)`8))8)/ˆ8)+¸)aø) ˆ8)*¸)(¸)/8)aø) ˜Ú\Y\[[šÚ[™ÈÚ]T™XY\ˆØÚ\\ŒMßX
+NÈ8))¸)/¸)*8)%x)`8)%x))x)/¸)#ø) X8 %Hš]™HXXÚ[™ËZØ]H›İÜÎÈ[™Û™H]ZY]8)+¸)aø),8)/ˆ8))¸)/¸)*x)*¸)`x)(ø)cx)+È8)%¸)/¸))8)/˜ÛÜˆ
+X[‹[YÙ\‹YÛÜ˜
+H]H[™ˆÛÜÚ[™È]]Yİ[˜ÙH[™K‚‚ŠŠ¸))¸)/¸)*x)+ø)/¸))8)cx),8)/ˆ
+ØÜ™Y[œËÑX[’›İ\›™^TØÜ™Y[‹Ş
+KŠŠˆH0©ÍH›İ\›™^H\ÈHİ\\ˆ8 %8)+¸).x))8)cx)-H8¡¤ˆ8)-¸)/¸).8)cx))8)cx),8¡¤ˆ8)%x))x)/ˆ
+ÚÚ\YÚ[ˆHØØØ\Ú[ÛˆØ\œšY\È›Û™JH8¡¤ˆ8)%x)cx)+ø)/ˆ8))¸)aø) ˆ8¡¤ˆ8).8) ¸)%x),¸)cx)*‹x)+x)/¸)-H8 %Ú]›ÙÜ™\ÜÈİÈ
+Xİ]™HŒˆØY™œ›Ûˆ[™\İÈ›Ü™\ˆİÊH[™8)*¸)`8)&ø)aËø)!¸)%ø)aÈ[Ëˆ
+Š•\›Z[˜[Xİ[ÛœÈ^\İ[ˆH™YHÛ›HÛˆH\İİ\
+Šˆ
+X[‹Z›İ\›™^K\™XÛÜ™š[YØY™œ›Û‹XY[™ÎÈX[‹Z›İ\›™^KY\™XİÜXİ][™Y˜Z[[™ËÛÜH8))¸)/¸)*x))¸)cx)-x)/¸),
+8)+8)/¸).x),8)`
+X
+K›ÛİÙYHH]]Y¸),8)`x)%H8)'8)/¸)*8)/ˆ8)+x)`8)*¸)`¸),8)cx)(È8).x)bˆ[™KˆÚ\YØ]\ÈÜ[ˆœ˜]Ø]T™XY\˜Ü›ÜÜË]XÈXXÚ[™ËZØ]\ÈÜ[ˆX[’Ø]X‚‚ŠŠ¸)%¸)/¸))8)/ˆ
+ØÜ™Y[œËÑX[“YÙ\”ØÜ™Y[‹Ş
+ÈX[‘[TØÜ™Y[‹ŞÛÛ^ËÑX[“YÙ\ÛÛ^Ş
+KŠŠˆHÛX\˜[ˆ™YÚ\İ\ˆ[šY\ÈÜ›İ\YHÚ]š[[ÛXXÚ›İÈØ]YÛÜH
+È[˜Ú[™È]Hİ[\
+XZÙU]Tİ[\8 %[˜\ˆ[ÛZÜÚK]K˜\˜KKÙ[ŠH
+ÈÜ[Û˜[›İNÈ8)%ø)`x)*¸)cx))[šY\È™[™\ˆ]H
+È8)%ø)`x)*¸)cx))8))¸)/¸)*ÛˆHÛÛÚ\™ØØ\™8 %Z\ˆ›İKØ[[İ[ÛØØØ\Ú[Ûˆ\™Hİš\Y‘Q“Ô‘H\œÚ\İ[˜ÙH
+Ø[š]^™SYÙ\‘[XÈ˜[Y]Üˆ™Z™XİÈ[œØ[š]^™Yİ\›İÜÊKˆİÜ˜YÙH™Y[œÚÙX[‹[YÙ\ŒX
+™\œÚ[Û™Y^[ØYÛ\˜[Y˜][Ûˆ8 %H‘LMÈ]\›ŠKˆ›Èİ[È[]Ú\™NÈHÔÕˆ^Ü
+Z[YÙ\Üİ˜İ\›İÜÈİ^H˜\™H]™[ˆ\™JHX]™\ÈšXHHÔÈÚ\™XÚY]Û›KˆH[H›Ü›Nˆ]]È]HšY[HØ]YÛÜHÚ\È
+X[‹XØ]J˜ÈÛ›H]JØØ]YÛÜH™\]Z\™Y8 %HL\ÙXÛÛ™Mˆ›Ü›JKH8)%ø)`x)*¸)cx))İÚ]Ú
+™[[İ™\ÈH]Z[šY[Èœ›ÛHH™YJK›İH
+È[[İ[šXH^šY[˜\šX[H™›Ü›H˜ˆ[\Hİ]HXXÚ\ÈİY[XH[œİXYÙˆ˜YÙÚ[™Ë‚‚ŠŠ¸))¸)/¸)*x))¸)cx)-x)/¸),
+ØÜ™Y[œËÑX[‘\™XİÜTØÜ™Y[‹Ş
+ÈX[‘\™XİÜQ]Z[ØÜ™Y[‹Ş
+KŠŠˆ\İÜ›İ\Y8)!x)*8)cx)*8)%x)cx)-ø)aø))8)cx),8¡¤ˆ8))¸)aø)-x).8)cx))x)/¸)*8)'ø)cx),8).8)cx)'È8¡¤ˆ8).8)aø)-x)/‹x).8) ¸).8)cx))x)/¸)#ø) H8¡¤ˆ8).8)aø)-x)/‹x)*¸)bø),8)cx)'ø),ˆ[™\ˆH8))¸)aø)-¸)aÈ8)%x)/¸),¸)aÈ8)&ˆ8)*¸)/¸))8)cx),8)aØ[™Kˆ]Z[\ÈYXØ]KYš\œİ]™[ˆ\™NˆHÛÜšÈ8¡¤ˆH™\šYšXØ][ÛˆØ\™
+Ø\™XXİ]™KX›Ü™\˜ˆ™YÚ\İ˜][Ûˆ
+šÚ[™
+‹Ù™šXÚX[ÛXZ[‹8§$È8))¸)bÈ8).8)cx)-x))8) ¸))8)cx),8).8)cx),8)bø))8)bø) ˆ8).8)aÈ8).8))8)cx)+ø)/¸)*¸)/ø))0­È]X8 %\İ™[™\™YÈH\Ù\ŠH8¡¤ˆ™[]YXXÚ[™ËZØ]H8¡¤ˆHXİ[Ûˆ›İÈ
+™XÛÜ™š[Y
+ÈXY[™ÎÈ8))¸)/¸)*8)%x),8)aø) ˆ
+8)+8)/¸).x),8)`
+Xİ][™Y
+Hİ™\ˆH¸)$8)*ˆ8)!ø).8),¸)aø)*x))¸)aø)*8)%x)/ˆ8).x)/ø).8)cx).8)/ˆ8)*8).x)`8) ˆ8).x)bˆ[™Kˆ8))¸)/¸)*8)%x),8)aø) ˜Ü[œÈ[ˆ[›[™H[\œİ]X[Ø\™
+X[‹[Ü™ËZ[\œİ]X[ˆHÙ™šXÚX[T“˜[YY¸)*8),8)/¸)-¸)/È8),¸)aø))8)/ˆ8).x)b8)*8)*¸)`x)-ø)cx)'ø)/Ë8)*8)!x) ¸)-ˆ‹8),8).x)*8)aÈ8))¸)aø) ˆÈ8)%¸)bø),¸)aø) ˆ8¡¥ÊH™Y›Ü™H[šÚ[™Ë›Ü[•T“
+Û˜]U\›
+XÈY\ˆH[™[Ù™ˆÓ‘HÙ[H™XÛÜ™[Ù™™\ˆØ\™™[™\œÈ
+X[‹[Ü™Ë\™]\›‹[Ù™™\˜
+H8 %XÛ[š[™È\ÈÚ[[ˆKT˜ZİÛÜÚ	ÜÈ›Û“[Û™]\X›İHİ]\ÈH[™[Ù™ˆ\ÈÛ›Üˆ™YÚ\İ˜][Û‹›İ[Û™^K‚‚ŠŠ¸))¸)/¸)*x)%x))x)/ˆ
+ØÜ™Y[œËÑX[’Ø]TØÜ™Y[‹Ş
+KŠŠˆİÜH\˜YÜ˜\ÈMÌH[šË\ÛÙšXHÛÛ[Y[\PS[™ØH8)-¸)/ø)%x)cx)-ø)/˜[™[
+ÛÛÚ\™ØÛÛ\\˜Ø\ÙHX™[ØY™œ›Û‹YY\XXÚ[™È
+ÈÙ\šY‹Z][XÈ[™Û\Ú
+KH™[™\™YØ[›ÛšXØ[Ûİ\˜ÙH[™K8)iH8)d8)iH[™Ø\‚‚ŠŠ‘ÛÜœËŠŠˆ[Ü™HXˆ8¡¤ˆ8).8)/¸))ø)*8)/ˆÜ›İ\›İÈ8))¸)/¸)*x)*¸)`x)(ø)cx)+ÈÈX[ˆ[XX
+[Ü™KYX[‹\[XX‘UÈİ]H›ÜˆÛ™H™[X\ÙJKˆØœÙ\˜[˜ÙH]Z[8¡¤ˆ8)!ø).8))¸)/ø)*8)%x)/ˆ8))¸)/¸)*8 %
+Š˜[Ø^\ÈH\İÙXİ[ÛŠŠˆ
+ØœÙ\˜[˜ÙKYX[‹YÛÜ˜
+K™[™\™YÛ›HÚ[ˆÙ]X[“ØØØ\Ú[Û‘›Ü”[J[RY
+XX]Ú\È
+^XİYÈ™X]İY™š^˜[Z[Y\ÎÈ[˜Ûİ™\™Y^\È™[™\ˆ›İ[™ÊKˆ[X[ˆØÜ™Y[œÈ™YÚ\İ\™YÛˆH[Ü™HS‘[˜Ú[™ÈİXÚÜÈ
+‘LNH][K\İXÚÈ]\›ŠNÈX[”[XX]Ù[ˆ\È[Ü™K[Û›K‚‚ŠŠ”™[X\ÙKŠŠˆ\™H”È
+È\Ş[˜ÔİÜ˜YÙH8 %ÕK\ØY™KˆHİÜ™K\ÛXŞH™]šY]ÈØ]H
+‘Lˆ0©Í‹ŒJHİ[\Y\ÈÈH™[X\ÙH
+˜Ø\œZ[™ÈH\™XİÜJˆ]šY\ÈHİÜ™H™[X\ÙH›Üˆ™]šY]Èš\ÚXš[]H]™[ˆÚ]İ]H˜]]™H[Ù[K‚‚ŠŠ‘š[\ËŠŠˆ[Øš[KÜÜ˜ËÙ]KÙX[‹Şİ\\Ëš[˜Ú\\ËØØØ\Ú[ÛœË˜X\‹Ø]\Ë\™XİÜKYÙ\‹[™^KØ0­ÈÛÛ^ËÑX[“YÙ\ÛÛ^Ş0­ÈØÜ™Y[œËÑX[Ô[XK›İ\›™^KYÙ\‹[K\™XİÜK\™XİÜQ]Z[Ø]_TØÜ™Y[‹Ş0­ÈÛÜœÈ[ˆØÜ™Y[œËÓ[Ü™TØÜ™Y[‹Ş
+ÈØÜ™Y[œËÓØœÙ\˜[˜ÙQ]Z[ØÜ™Y[‹Ş0­È™YÚ\İ˜][ÛœÈ[ˆ˜]šYØ][Û‹ŞÓ[Ü™TİXÚÓ˜]šYØ]Ü‹[˜Ú[™ÔİXÚÓ˜]šYØ]ÜŸKŞ
+È˜]šYØ][Û‹İ\\ËØ
+X[”İXÚÔ\˜[S\İ
+H0­È›İšY\ˆ[ˆ\Şˆ\İÎˆÜ˜ËÙ]KÙX[‹××İ\İ××ËÙX[ÛÛ[\İØÜ˜ËØÛÛ^Ë××İ\İ××ËÑX[“YÙ\ÛÛ^\İŞÜ˜ËÜØÜ™Y[œË××İ\İ××ËÑX[”ØÜ™Y[œË\İŞÈ]šXÙH]›XY\İ›ËÙX[‹\[XK\Û[ÚÙKX[[ˆÙYH•SP“ÓÒÈ0©ÌH[™ØÜËÜ›ØYX\Ü™ËÌ‹YX[‹\[XK›Y‚

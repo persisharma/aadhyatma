@@ -158,7 +158,7 @@ No payment collection or processing; no commission or monetization of giving in 
 2. **Phase 2 adds:** directory invariants (§6.2 list); hand-off interstitial shown before any `openURL`; return-flow prompt fires at most once per hand-off; the **§2.7 surface-contract test** — the daan home renders zero external-linking affordances, and journey screens render the hand-off action only after every educate step has rendered.
 3. **Screen (Jest):** DaanPunya renders occasion line for a daan-significant fixture date; entry form saves with only date+category; ledger groups by month with tithi lines. (VirtualizedList teardown discipline per the repo gotcha.)
 4. **Maestro:** More → दान-पुण्य → नया दान → category chip → save → visible in ledger; observance-day door assertion. Every change ships with e2e per the [[e2e-verification]] policy.
-5. `npm run lint` 0 errors; `tsc` clean; **design.md §69 + RULEBOOK §24 land in the same PR as the build** (design-doc-sync rule); categories/enumeration mirrors refreshed if any registry list is doc-mirrored.
+5. `npm run lint` 0 errors; `tsc` clean; **design.md §70 + RULEBOOK §25 land in the same PR as the build** (design-doc-sync rule); categories/enumeration mirrors refreshed if any registry list is doc-mirrored.
 6. Phase 1 may ship OTA at the live store runtime; **Phase 2 must ride a store release** (§6.1) even though it contains no native module — the gate is review visibility, not the binary.
 
 ## 10. Educate content corpus — verified source spine
@@ -260,8 +260,8 @@ Sequencing note: Bucket A ships with Phase 1 (it is pure cross-linking). Buckets
   transcribed, no UPI). Implementation: `data/daan/*`, `DaanLedgerContext`, seven screens,
   `DaanStackParamList` on the More + Panchang stacks, the More-hub row and the Observance-Detail
   last-section door, provider in App.tsx. Gates: `npm test` exit 0 (169 Jest suites / 1333 tests
-  + engine 77 + widgets/data tsx suites), `npm run lint` 0 errors, `tsc` clean; design.md §69 +
-  RULEBOOK §24 + wiki page in the same commit series. The §2.7 surface contract, the journey's
+  + engine 77 + widgets/data tsx suites), `npm run lint` 0 errors, `tsc` clean; design.md §70 +
+  RULEBOOK §25 + wiki page in the same commit series. The §2.7 surface contract, the journey's
   terminal gating, the gupt two-sided guarantee, exact-beats-suffix matching, directory staleness,
   and the copy guard are all pinned in tests. One pre-existing suite
   (`vidhiBackNavigation.test.ts`) pinned the literal source shape of `MoreStackParamList` and was
