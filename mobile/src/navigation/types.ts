@@ -2,6 +2,7 @@ import type { OccasionId } from '@/panchang/eventMuhurat';
 import type { NavigatorScreenParams } from '@react-navigation/native';
 import type { ContentCategory, Deity } from '@/data/texts';
 import type { PurposeId } from '@/data/purposes';
+import type { EntityType as AskEntityType } from '@/ask/types';
 
 export type TabParamList = {
   // Nested-navigator params so cross-tab jumps (e.g. Pitru Smaran's गीता पाठ
@@ -43,7 +44,12 @@ export type GitaReaderParams = { chapter: number; initialIndex?: number };
 
 export type HomeStackParamList = VidhiStackParamList & {
   Home: undefined;
-  Search: undefined;
+  /**
+   * जिज्ञासा (PRD-25). `seed` is ask-from-context: the surface the user came
+   * from names an entity so "iska bhog kya hai" resolves against it.
+   * `initialQuery` pre-fills the box (a briefing card's "ask more" door).
+   */
+  Search: { seed?: { type: AskEntityType; id: string }; initialQuery?: string } | undefined;
   CategoryList: { categoryId: ContentCategory };
   DeityList: { deityId: Deity };
   DeityIndex: undefined;

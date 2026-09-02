@@ -31,8 +31,12 @@ function resolveSpec(spec: string, fromFile: string): string | null {
   return null;
 }
 
-/** Static imports only — `import()` and `require()` thunks are the lazy path this test rewards. */
-const STATIC_IMPORT = /(?:^|\n)\s*(?:import|export)[^;\n]*?from\s+['"]([^'"]+)['"]/g;
+/**
+ * Static VALUE imports only. `import()` and `require()` thunks are the lazy
+ * path this test rewards, and `import type` / `export type … from` are erased
+ * by Babel before Metro ever sees them, so they cost the launch nothing.
+ */
+const STATIC_IMPORT = /(?:^|\n)\s*(?:import|export)(?!\s+type\b)[^;\n]*?from\s+['"]([^'"]+)['"]/g;
 
 function walk(): Map<string, string | null> {
   const parents = new Map<string, string | null>();
