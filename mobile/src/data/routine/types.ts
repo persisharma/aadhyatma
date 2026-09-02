@@ -36,6 +36,9 @@ export type RoutineItem = {
   weekdays?: number[];
 };
 
+/** Per-routine reminder time (24h local). PRD-07 Phase 3. */
+export type RoutineReminder = { hour: number; minute: number };
+
 export type Routine = {
   id: string;
   nameHi: string;
@@ -43,6 +46,12 @@ export type Routine = {
   mode: RoutineScheduleMode;
   items: RoutineItem[];
   createdAt: number;
+  /**
+   * Per-routine reminder time. Absent/undefined = reminders off (the default).
+   * Presence IS the switch — no parallel enabled boolean to drift out of sync.
+   * Additive and optional, so legacy records need no migration.
+   */
+  reminder?: RoutineReminder;
 };
 
 /** Stable key for a routine item across a routine, used for completion tracking. */

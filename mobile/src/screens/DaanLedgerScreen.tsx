@@ -1,5 +1,5 @@
 /**
- * दान-पुण्य खाता (PRD-26 §5, design.md §67) — the smaran register. Entries
+ * दान-पुण्य खाता (PRD-26 §5, design.md §69) — the smaran register. Entries
  * grouped by civil month, each carrying its panchang tithi stamp. NO totals,
  * NO streaks, NO charts — the CSV share-sheet export is the only aggregation,
  * and it leaves the device only by the user's hand (PRD-06 posture). Gupt

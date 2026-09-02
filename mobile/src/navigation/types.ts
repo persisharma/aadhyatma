@@ -163,6 +163,10 @@ export type PanchangStackParamList = VidhiStackParamList & DaanStackParamList & 
   // ACTIVE person's details for editing.
   Kundali: { editing?: boolean; newPerson?: boolean } | undefined;
   Rashifal: { rashiIndex?: number } | undefined;
+  // Gochar (transits vs the saved chart) — PRD-20
+  Gochar: undefined;
+  // Compiled full-chart reading — PRD-20 Phase 6
+  KundaliReport: undefined;
   GunaMilan: undefined;
   Namkaran: undefined;
   /** वास्तु दिशा (PRD-24) — the griha-pravesh result's door pushes it in place

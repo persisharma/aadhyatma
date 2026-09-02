@@ -21,9 +21,13 @@ test('the registry preserves v1 and publishes all phase 2/3 profiles', () => {
     'satyanarayan-bhog',
     'hanuman-jayanti-bhog',
   ]);
-  assert.equal(BHOG_CONTENT.length, 39);
+  assert.equal(BHOG_CONTENT.length, 43);
   assert.deepEqual(BHOG_CONTENT.slice(10).map((entry) => entry.id), [
     'hartalika-teej-bhog',
+    'hariyali-teej-bhog',
+    'kajari-teej-bhog',
+    'bahula-chaturthi-bhog',
+    'bhadwa-chauth-bhog',
     'rishi-panchami-bhog',
     'durva-ashtami-bhog',
     'anant-chaturdashi-bhog',
@@ -81,13 +85,13 @@ test('every profile carries bilingual guidance and independent published sources
     assert.ok(entry.source.referenceUrls.length >= 2, `${entry.id}: needs >=2 source URLs`);
     const hosts = new Set(entry.source.referenceUrls.map((url) => new URL(url).hostname.replace(/^www\./, '')));
     assert.ok(hosts.size >= 2, `${entry.id}: sources are not independent domains`);
-    assert.match(entry.source.verificationNote, /2026-08-2[56]/u, `${entry.id}: verification is not dated`);
+    assert.match(entry.source.verificationNote, /\b\d{4}-\d{2}-\d{2}\b/u, `${entry.id}: verification is not dated`);
   }
 });
 
 test('every genuine vrat and upavas rule has verified food or offering guidance', () => {
   const eligible = OBSERVANCE_RULES.filter((rule) => rule.category === 'vrat' || rule.category === 'upavas');
-  assert.equal(eligible.length, 68);
+  assert.equal(eligible.length, 72);
   assert.deepEqual(
     eligible.filter((rule) => !rule.bhogId).map((rule) => rule.id),
     []
