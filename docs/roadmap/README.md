@@ -19,6 +19,10 @@ This folder holds the product roadmap and PRDs for upcoming releases.
   its number is retired. **PRD-25 stays reserved** for सन्ध्या वन्दन per round 1 §3.
 - [**Round 2 session prompts**](./round-2-session-prompts.md) — a self-contained build prompt per
   candidate (PRD-26 … PRD-29), one branch each, for running the four as independent sessions.
+- [**2027 Feature Bets**](./2027-feature-bets.md) — the strategic slate after Q4 2026: ten bets
+  (PRD-31 … PRD-40, numbers reserved) that compound on the bilingual per-verse corpus, with a
+  staged backend introduction. Originally drafted as PRD-10 … PRD-19; renumbered to avoid
+  collision with the numbers main assigned since.
 
 ## PRDs (Q3 2026)
 
