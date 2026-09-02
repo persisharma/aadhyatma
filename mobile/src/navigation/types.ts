@@ -104,6 +104,8 @@ export type HomeStackParamList = VidhiStackParamList & {
   // Sadhana Programs (संकल्प) — PRD-11. Reached via the create-routine fork.
   SadhanaPrograms: undefined;
   SadhanaProgramDetail: { programId: string };
+  /** आज का विधान — the जिज्ञासा briefing of standing questions (PRD-25 Phase 2). */
+  TodayVidhan: undefined;
 };
 
 export type MoreStackParamList = VidhiStackParamList & {

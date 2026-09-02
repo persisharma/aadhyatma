@@ -48,22 +48,15 @@ function cheapLooksLikeQuestion(q: string): boolean {
   return q.trim().endsWith('?');
 }
 
-export function useAsk(seed?: AskContext['seed']): UseAskResult {
-  const [engine, setEngine] = useState<AskEngine | null>(null);
+/**
+ * The AskContext every ask surface shares — location, calendar system, reading
+ * language, active sankalps — as a builder so `now` is read at ask time.
+ */
+export function useAskContextBuilder(): (seed?: AskContext['seed']) => AskContext {
   const { location } = usePanchangLocation();
   const [calendarSystem] = usePanchangCalendarSystem();
   const { lang } = useGitaLanguage();
   const sadhanaCards = useSadhanaToday();
-
-  useEffect(() => {
-    let cancelled = false;
-    loadEngine().then((e) => {
-      if (!cancelled) setEngine(e);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   const sadhana = useMemo<SadhanaSummary[]>(
     () =>
@@ -84,23 +77,42 @@ export function useAsk(seed?: AskContext['seed']): UseAskResult {
     [sadhanaCards]
   );
 
+  return useCallback(
+    (seed?: AskContext['seed']): AskContext => ({
+      now: new Date(),
+      location,
+      calendarSystem,
+      lang,
+      sadhana,
+      ...(seed ? { seed } : {}),
+    }),
+    [location, calendarSystem, lang, sadhana]
+  );
+}
+
+export function useAsk(seed?: AskContext['seed']): UseAskResult {
+  const [engine, setEngine] = useState<AskEngine | null>(null);
+  const buildContext = useAskContextBuilder();
+
+  useEffect(() => {
+    let cancelled = false;
+    loadEngine().then((e) => {
+      if (!cancelled) setEngine(e);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const seedType = seed?.type;
   const seedId = seed?.id;
 
   const ask = useCallback(
     (question: string): AskResolution | null => {
       if (!engine) return null;
-      const ctx: AskContext = {
-        now: new Date(),
-        location,
-        calendarSystem,
-        lang,
-        sadhana,
-        ...(seedType && seedId ? { seed: { type: seedType, id: seedId } } : {}),
-      };
-      return engine.askQuestion(question, ctx);
+      return engine.askQuestion(question, buildContext(seedType && seedId ? { type: seedType, id: seedId } : undefined));
     },
-    [engine, location, calendarSystem, lang, sadhana, seedType, seedId]
+    [engine, buildContext, seedType, seedId]
   );
 
   const examples = useMemo(() => (engine ? engine.askExamples() : []), [engine]);

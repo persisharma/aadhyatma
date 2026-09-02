@@ -217,6 +217,33 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                 </Pressable>
               )}
             </View>
+            {/* जिज्ञासा ask-from-context (PRD-25 Phase 3): the question box opens
+                seeded with THIS observance, so "iska bhog kya hai" / "kaise kare"
+                resolve against it without the user naming it again. Search lives
+                on the Home stack, hence the cross-tab hand-off. */}
+            <Pressable
+              onPress={() =>
+                rootNav.navigate('HomeTab', {
+                  screen: 'Search',
+                  params: { seed: { type: 'observance', id: rule.id } },
+                })
+              }
+              accessibilityRole="button"
+              accessibilityLabel={`Ask about ${rule.nameEn}`}
+              style={({ pressed }) => [
+                styles.askRow,
+                { borderColor: colors.divider, borderRadius: radii.pill, backgroundColor: colors.parchmentSoft },
+                pressed && { opacity: 0.8 },
+              ]}
+            >
+              <Text style={{ fontSize: 14, color: colors.saffron }}>⌕</Text>
+              <Text style={{ flex: 1, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.inkSoft }}>
+                {contentByLang(lang, 'इस व्रत के बारे में पूछें — कैसे करें, क्या खाएँ, कथा…', 'Ask about this observance — how, what to eat, katha…')}
+              </Text>
+              <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 12, color: colors.saffronDeep }}>
+                {contentByLang(lang, 'पूछें', 'Ask')}
+              </Text>
+            </Pressable>
             {justAdded && (
               <Pressable
                 onPress={() => navigation.navigate('MyVrat')}
@@ -472,6 +499,7 @@ const styles = StyleSheet.create({
   heroTags: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   pill: { paddingHorizontal: 10, paddingVertical: 4 },
   actionRow: { flexDirection: 'row', gap: 8, marginTop: 4, marginBottom: 4 },
+  askRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 8, marginBottom: 4, paddingHorizontal: 14, minHeight: 40, borderWidth: 1 },
   actionBtn: { flex: 1, minHeight: 40, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 14, borderWidth: 1.5 },
   confirmBar: { flexDirection: 'row', alignItems: 'center', borderWidth: 1, paddingHorizontal: 12, paddingVertical: 9, marginTop: 8 },
   block: { marginTop: 18 },
