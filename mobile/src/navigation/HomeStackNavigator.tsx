@@ -55,6 +55,7 @@ import RoutineAddItemsScreen from '@/screens/RoutineAddItemsScreen';
 import RoutineDetailScreen from '@/screens/RoutineDetailScreen';
 import SadhanaProgramListScreen from '@/screens/SadhanaProgramListScreen';
 import SadhanaProgramDetailScreen from '@/screens/SadhanaProgramDetailScreen';
+import TodayVidhanScreen from '@/screens/TodayVidhanScreen';
 import VidhiCatalogScreen from '@/screens/VidhiCatalogScreen';
 import VidhiDetailScreen from '@/screens/VidhiDetailScreen';
 import VidhiConductScreen from '@/screens/VidhiConductScreen';
@@ -240,6 +241,7 @@ export default function HomeStackNavigator() {
       <Stack.Screen name="RoutineDetail" component={RoutineDetailScreen} />
       <Stack.Screen name="SadhanaPrograms" component={SadhanaProgramListScreen} />
       <Stack.Screen name="SadhanaProgramDetail" component={SadhanaProgramDetailScreen} />
+      <Stack.Screen name="TodayVidhan" component={TodayVidhanScreen} />
       {/*
         The vidhi flow is registered here as well as on the Panchang stack
         (see VidhiStackParamList). Home's DISCOVER card, the search rows and

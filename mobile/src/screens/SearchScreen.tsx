@@ -37,6 +37,10 @@ import { contentByLang, pick } from '@/utils/localize';
 import { pillTextStyle } from '@/utils/langType';
 import { buildProgressTarget, navigateToEntryStart } from '@/navigation/entryRoutes';
 import type { HomeStackParamList } from '@/navigation/types';
+import { useAsk } from '@/ask/useAsk';
+import { navigateAskTarget } from '@/ask/actions';
+import type { AskTarget } from '@/ask/types';
+import AskAnswerCard, { AskAbstainCard } from '@/components/AskAnswerCard';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Search'>;
 
@@ -50,12 +54,12 @@ const POPULAR_FALLBACK_IDS = [
   'shiva-strotam',
 ] as const;
 
-export default function SearchScreen({ navigation }: Props) {
+export default function SearchScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const { markSeen } = useNewContent();
   const inputRef = useRef<TextInput>(null);
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(route.params?.initialQuery ?? '');
   const [recent, setRecent] = useState<string[]>([]);
 
   // Hydrate recent searches from storage.
@@ -96,6 +100,26 @@ export default function SearchScreen({ navigation }: Props) {
 
   const trimmed = query.trim();
   const hasQuery = trimmed.length > 0;
+
+  // जिज्ञासा (PRD-41): the same box answers a *question* above the library
+  // results. The engine loads lazily (one dynamic import) and warms on mount,
+  // so it is ready by the first keystroke; a plain query never sees an abstain.
+  const { ready: askReady, ask, looksLikeQuestion, examples: askExamples } = useAsk(route.params?.seed);
+  const resolution = useMemo(() => (hasQuery && askReady ? ask(trimmed) : null), [hasQuery, askReady, ask, trimmed]);
+  // Only a multi-word (or "?"-terminated) question may show the abstain card:
+  // a single interrogative mid-typing ("kab") must not flash "can't answer"
+  // before the sentence exists. Answers are unaffected — they show as soon as
+  // the resolver has one.
+  const isQuestion = hasQuery && looksLikeQuestion(trimmed) && (trimmed.includes(' ') || trimmed.endsWith('?'));
+
+  // Rotating placeholder: real answerable questions are the feature's own
+  // discovery surface. Paused while the user is typing.
+  const [placeholderIdx, setPlaceholderIdx] = useState(0);
+  useEffect(() => {
+    if (hasQuery || askExamples.length === 0) return;
+    const t = setInterval(() => setPlaceholderIdx((i) => (i + 1) % askExamples.length), 3200);
+    return () => clearInterval(t);
+  }, [hasQuery, askExamples.length]);
 
   const popular = useMemo(() => {
     return POPULAR_FALLBACK_IDS
@@ -184,8 +208,46 @@ export default function SearchScreen({ navigation }: Props) {
     inputRef.current?.focus();
   }, []);
 
+  const onAskAction = useCallback(
+    (target: AskTarget) => {
+      commitRecent(query);
+      Keyboard.dismiss();
+      navigateAskTarget(navigation as never, target);
+    },
+    [navigation, query, commitRecent]
+  );
+
   const totalHits =
     results.sections.length + results.deities.length + results.verses.length;
+
+  const askExample = askExamples[placeholderIdx % Math.max(1, askExamples.length)];
+  const placeholder = askExample
+    ? contentByLang(lang, askExample.hi, askExample.en)
+    : pick(lang, { hi: 'श्लोक, पाठ, मंत्र खोजें…', en: 'Search verses, sections, mantras…', gu: 'શ્લોક, પાઠ, મંત્ર શોધો…', kn: 'ಶ್ಲೋಕ, ಪಠ್ಯ, ಮಂತ್ರ ಹುಡುಕಿ…' });
+
+  // The answer (or, for a question-shaped query, the abstain card) heads the
+  // results list. A non-question query with no answer renders exactly as 1.4.6.
+  const askHeader =
+    hasQuery && resolution ? (
+      resolution.kind === 'answer' ? (
+        <View style={{ marginTop: spacing.sm, marginBottom: spacing.md }}>
+          <AskAnswerCard answer={resolution.answer} lang={lang} onAction={onAskAction} />
+        </View>
+      ) : isQuestion ? (
+        <View style={{ marginTop: spacing.sm, marginBottom: spacing.md }}>
+          <AskAbstainCard
+            kind={resolution.kind}
+            suggestions={resolution.kind === 'none' ? resolution.suggestions : []}
+            lang={lang}
+            libraryEmpty={totalHits === 0}
+            onSuggestion={(q) => {
+              setQuery(q);
+              inputRef.current?.focus();
+            }}
+          />
+        </View>
+      ) : null
+    ) : null;
 
   return (
     <View style={styles.root}>
@@ -227,7 +289,7 @@ export default function SearchScreen({ navigation }: Props) {
               ref={inputRef}
               value={query}
               onChangeText={setQuery}
-              placeholder={pick(lang, { hi: 'श्लोक, पाठ, मंत्र खोजें…', en: 'Search verses, sections, mantras…', gu: 'શ્લોક, પાઠ, મંત્ર શોધો…', kn: 'ಶ್ಲೋಕ, ಪಠ್ಯ, ಮಂತ್ರ ಹುಡುಕಿ…' })}
+              placeholder={placeholder}
               placeholderTextColor={colors.inkMuted}
               style={[
                 styles.input,
@@ -272,10 +334,9 @@ export default function SearchScreen({ navigation }: Props) {
             onRecentRemove={removeRecent}
             onRecentClearAll={clearAllRecent}
             onPopularPress={(id) => openSection(id)}
+            onTodayVidhan={() => navigation.navigate('TodayVidhan')}
             lang={lang}
           />
-        ) : totalHits === 0 ? (
-          <ZeroState colors={colors} typography={typography} lang={lang} />
         ) : (
           <ResultsList
             results={results}
@@ -284,6 +345,8 @@ export default function SearchScreen({ navigation }: Props) {
             spacing={spacing}
             radii={radii}
             lang={lang}
+            header={askHeader}
+            empty={askHeader ? null : <ZeroState colors={colors} typography={typography} lang={lang} />}
             onSectionPress={(h) => openSection(h.entry.sourceId)}
             onDeityPress={(h) => openDeity(h.entry.deityId)}
             onVersePress={(h) => openVerse(h.entry)}
@@ -393,10 +456,13 @@ function EmptyState({
   onRecentRemove,
   onRecentClearAll,
   onPopularPress,
+  onTodayVidhan,
   lang,
 }: {
   recent: string[];
   popular: { id: string; nameHi: string; nameEn: string; thumb: string }[];
+  /** जिज्ञासा (PRD-41): the briefing door in the question box's empty state. */
+  onTodayVidhan: () => void;
   colors: Theme['colors'];
   typography: Theme['typography'];
   spacing: Theme['spacing'];
@@ -415,6 +481,26 @@ function EmptyState({
       keyboardShouldPersistTaps="handled"
       ListHeaderComponent={
         <View style={[styles.emptyContent, { paddingHorizontal: spacing.xxl }]}>
+          <Pressable
+            onPress={onTodayVidhan}
+            accessibilityRole="button"
+            accessibilityLabel="Open Today's Vidhan"
+            style={({ pressed }) => [
+              styles.vidhanRow,
+              { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md, opacity: pressed ? 0.85 : 1 },
+            ]}
+          >
+            <Text style={[styles.vidhanGlyph, { color: colors.saffron }]}>?</Text>
+            <View style={styles.resultBody}>
+              <Text style={[styles.resultPrimary, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]} numberOfLines={1}>
+                {pick(lang, { hi: 'आज का विधान', en: "Today's Vidhan", gu: 'આજનું વિધાન', kn: 'ಇಂದಿನ ವಿಧಾನ' })}
+              </Text>
+              <Text style={[styles.resultSecondary, { color: colors.inkMuted, fontFamily: fontFamilies.inter }]} numberOfLines={1}>
+                {pick(lang, { hi: 'आज की तिथि · व्रत · शुभ समय · संकल्प', en: 'Tithi · observance · windows · sankalp', gu: 'તિથિ · વ્રત · શુભ સમય · સંકલ્પ', kn: 'ತಿಥಿ · ವ್ರತ · ಶುಭ ಸಮಯ · ಸಂಕಲ್ಪ' })}
+              </Text>
+            </View>
+            <Text style={[styles.chevron, { color: colors.saffron }]}>›</Text>
+          </Pressable>
           {recent.length > 0 ? (
             <>
               <View style={styles.recentHeader}>
@@ -581,6 +667,8 @@ function ResultsList({
   spacing,
   radii,
   lang,
+  header,
+  empty,
   onSectionPress,
   onDeityPress,
   onVersePress,
@@ -591,6 +679,10 @@ function ResultsList({
   spacing: Theme['spacing'];
   radii: Theme['radii'];
   lang: Lang;
+  /** जिज्ञासा answer / abstain card, rendered above the first group. */
+  header?: React.ReactElement | null;
+  /** Rendered when there are no library rows (and no ask header owns the space). */
+  empty?: React.ReactElement | null;
   onSectionPress: (h: SearchHit<SearchSectionEntry>) => void;
   onDeityPress: (h: SearchHit<SearchDeityEntry>) => void;
   onVersePress: (h: SearchHit<SearchVerseEntry>) => void;
@@ -646,6 +738,8 @@ function ResultsList({
       keyExtractor={(r) => r.key}
       keyboardShouldPersistTaps="handled"
       keyboardDismissMode="on-drag"
+      ListHeaderComponent={header ?? undefined}
+      ListEmptyComponent={empty ?? undefined}
       contentContainerStyle={{
         paddingHorizontal: spacing.xxl,
         paddingBottom: spacing.xxl * 3,
@@ -912,6 +1006,8 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     includeFontPadding: false,
   },
+  vidhanRow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 14, paddingVertical: 12, borderWidth: 1, marginTop: 12, marginBottom: 6 },
+  vidhanGlyph: { fontSize: 22, width: 28, textAlign: 'center' },
   emptyContent: {
     paddingTop: 4,
   },

@@ -1,0 +1,74 @@
+# जिज्ञासा · Ask Vedansh — abstain + stance guard + library non-regression
+# (PRD-41 §3.2, §3.4, §3.6; design.md §71)
+#
+# Answer-or-abstain is the feature's hard rule. This flow checks the three
+# states that are NOT an answer:
+#   1. A predictive question ("will i get the job") is DECLINED — the card
+#      carries the stance copy, not a guess and not a search fallback message.
+#   2. A question the grammar cannot ground ("what is karma") abstains with the
+#      ordinary copy, while the library results still render beneath it.
+#   3. A plain library query ("Hanuman") is NOT question-shaped, so no abstain
+#      card appears and the Sections group renders exactly as before PRD-41.
+#
+# Selector notes: abstain a11y labels are "Question declined" / "No answer";
+# the two copies are "…Vedansh does not answer those." and "We can't answer
+# that one yet." (English mode).
+
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+
+- tapOn: "Search verses, sections, and mantras"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Search input"
+    timeout: 15000
+
+# ── 1. Declined ──
+- tapOn: "Search input"
+- inputText: "will i get the job"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Question declined"
+    timeout: 15000
+- assertVisible: ".*Vedansh does not answer those.*"
+- tapOn: "Clear search"
+- waitForAnimationToEnd
+
+# ── 2. Ordinary abstain, library still answers ──
+- tapOn: "Search input"
+- inputText: "what is karma"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "No answer"
+    timeout: 15000
+- assertVisible: ".*can.t answer that one yet.*"
+- assertNotVisible: "Question declined"
+- tapOn: "Clear search"
+- waitForAnimationToEnd
+
+# ── 3. A plain query never sees an abstain card (§3.6) ──
+- tapOn: "Search input"
+- inputText: "Hanuman"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Sections.*"
+    timeout: 10000
+- assertNotVisible: "No answer"
+- assertNotVisible: "Question declined"
+- assertVisible: "Open Hanuman Chalisa"
+
+- stopApp:
+    appId: com.prashantsharma.vedansh

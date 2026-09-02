@@ -9,7 +9,7 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "lint": "expo lint",
-    "test": "npm run typecheck && npm run test:widgets && npm run test:readers && npm run test:engine && npm run test:data",
+    "test": "npm run typecheck && npm run test:widgets && npm run test:readers && npm run test:engine && npm run test:data && npm run test:ask",
     "test:readers": "jest --config jest.config.js --runInBand",
     "test:engine": "TZ=Asia/Kolkata tsx --test src/panchang/__tests__/*.test.ts",
     "test:widgets": "tsx --test src/widgets/__tests__/catalog.test.ts src/widgets/__tests__/contract.test.ts src/widgets/__tests__/planPayload.test.ts src/widgets/__tests__/planner.test.ts src/widgets/__tests__/startup.test.ts",
@@ -20,7 +20,8 @@
     "test:e2e": "maestro test .maestro/",
     "test:e2e:flow": "maestro test",
     "typecheck": "tsc --noEmit",
-    "doctor": "expo-doctor"
+    "doctor": "expo-doctor",
+    "test:ask": "TZ=Asia/Kolkata tsx --test src/ask/__tests__/*.test.ts"
   },
   "dependencies": {
     "@expo-google-fonts/cormorant-garamond": "^0.4.1",
