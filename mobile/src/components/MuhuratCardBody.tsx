@@ -6,7 +6,8 @@ import { contentByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 import { fontFamilies } from '@/theme/typography';
 import { transliterateDevanagari } from '@/utils/transliterate';
-import { formatClock, formatEndInstant, formatRange } from '@/panchang/muhuratFormat';
+import { formatClock, formatEndInstant, formatRange, formatRangeEndAware } from '@/panchang/muhuratFormat';
+import { computeShubhYogas } from '@/panchang/shubhYoga';
 import type { PanchangData, PanchangElement } from '@/panchang/types';
 import type { ChoghadiyaPeriod, KaalWindow, MuhuratDay } from '@/panchang/muhurat';
 
@@ -109,6 +110,10 @@ export default function MuhuratCardBody({
     );
   };
 
+  // Pure arithmetic over data this card already holds — derived per render
+  // like MuhuratDay itself, never cached or persisted (RULEBOOK §17.6).
+  const shubhYogas = React.useMemo(() => computeShubhYogas(p, md.nextSunrise), [p, md]);
+
   const chogName = (c: ChoghadiyaPeriod) => contentByLang(lang, c.nameHi, c.nameEn);
   const kaalName = (k: KaalWindow) => contentByLang(lang, k.nameHi, k.nameEn);
   const auspicious = md.dayChoghadiya.filter((c) => c.quality === 'auspicious');
@@ -134,8 +139,27 @@ export default function MuhuratCardBody({
         {p.kshayaTithi && <KV k={contentByLang(lang, 'क्षय तिथि', 'Kshaya Tithi')} v={elementLine(p.kshayaTithi, p.date, lang)} />}
         <KV k={contentByLang(lang, 'नक्षत्र', 'Nakshatra')} v={elementLine(p.nakshatra, p.date, lang)} />
         {p.kshayaNakshatra && <KV k={contentByLang(lang, 'क्षय नक्षत्र', 'Kshaya Nakshatra')} v={elementLine(p.kshayaNakshatra, p.date, lang)} />}
-        {variant === 'full' && <KV k={contentByLang(lang, 'योग', 'Yoga')} v={elementLine(p.yoga, p.date, lang)} />}
+        {/* नित्य योग, never bare योग — it must stay distinguishable from the
+            PRD-27 शुभ योग rows below (RULEBOOK §24 naming rule). */}
+        {variant === 'full' && <KV k={contentByLang(lang, 'नित्य योग', 'Nitya Yoga')} v={elementLine(p.yoga, p.date, lang)} />}
         {variant === 'full' && <KV k={contentByLang(lang, 'करण', 'Karana')} v={elementLine(p.karana, p.date, lang)} />}
+        {/* PRD-27: the day's शुभ योग windows — annotation, present-or-absent.
+            End instants go through formatEndInstant (short date past midnight);
+            a sunrise-start window keeps the anga rows' end-only convention, a
+            mid-day onset always shows its start. Full variant only, like the
+            नित्य योग/करण rows above. */}
+        {variant === 'full' &&
+          shubhYogas.map((w) => (
+            <KV
+              key={`${w.key}-${w.start.getTime()}`}
+              k={contentByLang(lang, 'शुभ योग', 'Shubh Yoga')}
+              v={`${contentByLang(lang, w.nameHi, w.nameEn)} · ${
+                w.fromSunrise
+                  ? formatEndInstant(w.end, p.date, lang)
+                  : formatRangeEndAware(w.start, w.end, p.date, lang)
+              }`}
+            />
+          ))}
         <Rule />
 
         <GroupLabel hi="सूर्य" en="Sun" />

@@ -13,6 +13,7 @@ import { buildEntryStartTarget, moreTabTarget } from '@/navigation/entryRoutes';
 import LocationPickerModal from '@/components/LocationPickerModal';
 import MuhuratGlanceCard from '@/components/MuhuratGlanceCard';
 import MuhuratFinderDoor from '@/components/MuhuratFinderDoor';
+import ShubhYogaCard from '@/components/ShubhYogaCard';
 import PanchangTimelineRow from '@/components/PanchangTimelineRow';
 import PitruSmaranDayChip from '@/components/PitruSmaranDayChip';
 import PitruPakshaDayChip from '@/components/PitruPakshaDayChip';
@@ -32,6 +33,7 @@ import {
   usePanchangForSelection,
   usePanchangMonthObservances,
 } from '@/panchang/usePanchang';
+import { useShubhYoga } from '@/panchang/useShubhYoga';
 import type { CalendarSystem, PanchangElement, ResolvedObservance } from '@/panchang/types';
 import { getKathaContent } from '@/panchang/kathaContent';
 import { getUpcomingObservances, searchObservances } from '@/panchang/festivalEngine';
@@ -166,6 +168,10 @@ export default function PanchangScreen({ route }: Props) {
     selectPerson: selectKundaliPerson,
   } = useKundali();
   const { panchang: p, observances, upcoming } = usePanchangForSelection(selectedDate, calendarSystem);
+  // PRD-27: the day's शुभ योग windows — store-backed (no private cache), []
+  // while the solve is in flight and on days with none, so the card below
+  // renders zero chrome for the absent case.
+  const shubhYogas = useShubhYoga(selectedDate, calendarSystem);
   const monthObservances = usePanchangMonthObservances(visibleMonth, calendarSystem);
   const monthObservanceTags = useMemo(() => {
     const tags = new Map<string, ObservanceCalendarTag>();
@@ -632,9 +638,16 @@ export default function PanchangScreen({ route }: Props) {
             <PanchangTile label={contentByLang(lang, 'नक्षत्र', 'Nakshatra')} element={p.nakshatra} kshaya={p.kshayaNakshatra} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
           </View>
           <View style={styles.angaGridSecondary}>
-            <PanchangTile label={contentByLang(lang, 'योग', 'Yoga')} element={p.yoga} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
+            {/* नित्य योग, never bare योग — the 27-cycle Sun+Moon yoga must stay
+                distinguishable from the PRD-27 शुभ योग chips below (one nitya
+                yoga is literally named सिद्धि; RULEBOOK §24 naming rule). */}
+            <PanchangTile label={contentByLang(lang, 'नित्य योग', 'Nitya Yoga')} element={p.yoga} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
             <PanchangTile label={contentByLang(lang, 'करण', 'Karana')} element={p.karana} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
           </View>
+
+          {/* PRD-27: the day's शुभ योग — present-or-absent with its window,
+              annotation only (design.md §69). Absent days render nothing. */}
+          <ShubhYogaCard yogas={shubhYogas} referenceDay={p.date} />
 
           <View style={[styles.timesCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}>
             <View style={styles.timesRow}>

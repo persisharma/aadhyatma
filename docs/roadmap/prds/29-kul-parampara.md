@@ -218,5 +218,5 @@ not because it is trapped.
   Jest store/screen suites) green; `npm run test` and `npm run lint` at 0 errors.
 - `.maestro/kul-parampara-smoke.yaml` authored and parse-checked; **device run owed** (authoring
   environment has no simulator), per the [[e2e-verification]] recipe.
-- design.md gains §69 (numbered after PRD-20's §67/§68, which merged into main mid-branch) and
-  §37's row list is refreshed in the same PR.
+- design.md gains the कुल परम्परा section — currently **§70**, renumbered twice as PRD-20 (§67/§68)
+  and PRD-27 (§69) merged into main mid-branch — and §37's row list is refreshed in the same PR.
