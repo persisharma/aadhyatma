@@ -54,12 +54,17 @@ test('App resolves a cold widget URL before navigation mounts', () => {
   const app = fs.readFileSync(path.join(process.cwd(), 'App.tsx'), 'utf8');
   const tabs = fs.readFileSync(path.join(process.cwd(), 'src/navigation/TabNavigator.tsx'), 'utf8');
   assert.match(app, /Linking\.getInitialURL\(\)/);
+  assert.match(app, /INITIAL_WIDGET_URL_TIMEOUT_MS/);
+  assert.match(app, /setTimeout\(\(\) => finish\(null\)/);
+  assert.match(app, /clearTimeout\(timeoutId\)/);
   assert.match(app, /parseWidgetDeepLink\(url\)/);
   assert.match(app, /<RootNavigator initialWidgetTarget=\{initialWidgetTarget\}/);
   assert.doesNotMatch(app, /retryWidgetDeepLink/);
   assert.match(tabs, /initialRouteName=\{initialRouteName\}/);
   assert.match(tabs, /initialWidgetTarget\?\.kind === 'verse'/);
   assert.match(tabs, /\? 'DailyBhaktiTab'/);
+  assert.match(tabs, /screen: 'JapamCounter',[\s\S]*initial: false/);
+  assert.match(tabs, /screen: 'CategoryList',[\s\S]*initial: false/);
 });
 
 test('widget planning selects indexed verses without materialising the complete pool', () => {

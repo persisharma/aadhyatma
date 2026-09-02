@@ -62,8 +62,12 @@ export default function TabNavigator({
   const homeInitialParams: TabParamList['HomeTab'] =
     initialWidgetTarget?.kind === 'japam'
       ? initialWidgetTarget.mantraId
-        ? { screen: 'JapamCounter', params: { mantraId: initialWidgetTarget.mantraId } }
-        : { screen: 'CategoryList', params: { categoryId: 'japam' } }
+        ? {
+            screen: 'JapamCounter',
+            params: { mantraId: initialWidgetTarget.mantraId },
+            initial: false,
+          }
+        : { screen: 'CategoryList', params: { categoryId: 'japam' }, initial: false }
       : undefined;
   const verseInitialParams: TabParamList['DailyBhaktiTab'] =
     initialWidgetTarget?.kind === 'verse'

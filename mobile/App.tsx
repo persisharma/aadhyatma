@@ -119,6 +119,8 @@ launchMark('app-module-body');
 // finally allowed to run, so a late one indicts whatever held the thread.
 InteractionManager.runAfterInteractions(() => launchMark('first-ui-idle'));
 
+const INITIAL_WIDGET_URL_TIMEOUT_MS = 1_000;
+
 export default function App() {
   launchMarkOnce('app-render');
   const [initialWidgetTarget, setInitialWidgetTarget] = useState<
@@ -148,15 +150,22 @@ export default function App() {
   // font gate, so ordinary launches do not gain another serial startup step.
   useEffect(() => {
     let cancelled = false;
+    let settled = false;
+    const finish = (target: WidgetDeepLinkTarget | null) => {
+      if (cancelled || settled) return;
+      settled = true;
+      clearTimeout(timeoutId);
+      setInitialWidgetTarget(target);
+    };
+    const timeoutId = setTimeout(() => finish(null), INITIAL_WIDGET_URL_TIMEOUT_MS);
     Linking.getInitialURL()
       .then((url) => {
-        if (cancelled) return;
-        setInitialWidgetTarget(
+        finish(
           url?.startsWith('vedansh://widget/') ? parseWidgetDeepLink(url) : null
         );
       })
-      .catch(() => { if (!cancelled) setInitialWidgetTarget(null); });
-    return () => { cancelled = true; };
+      .catch(() => finish(null));
+    return () => { cancelled = true; clearTimeout(timeoutId); };
   }, []);
 
   // Wire notification taps to deep-link navigation. Handles both:
