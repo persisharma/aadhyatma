@@ -1,4 +1,4 @@
-# PRD-16 — Cross-Granth Concept Search (Semantic)
+# PRD-37 — Cross-Granth Concept Search (Semantic)
 
 | | |
 |---|---|
@@ -32,7 +32,7 @@ Add a "Concept" mode to the Search screen that returns relevance-ranked verses *
 
 ## 3. Non-goals
 
-- **Free-form Q&A.** That's PRD-11 Gurudev. Concept search returns *verses*; Gurudev returns *answers*.
+- **Free-form Q&A.** That's PRD-32 Gurudev. Concept search returns *verses*; Gurudev returns *answers*.
 - **Server-side search.** Out by constraint. Embedding inference at query-time runs on-device.
 - **Multi-language semantic search across non-corpus languages** (Telugu / Tamil queries). v2.
 - **Filtering by deity / category / chapter inside concept mode** in v1. Keyword mode keeps filters; concept mode is global. Add filters in v1.7.2 if data justifies.
@@ -83,17 +83,17 @@ Add a "Concept" mode to the Search screen that returns relevance-ranked verses *
    - Tap navigates via `entryRoutes.ts` `buildProgressTarget`.
 
 7. **Empty / low-score handling.**
-   - If top-1 score < 0.35, show "Aapko Gurudev se pucchna chahiye? / Want to ask Gurudev?" with a CTA to PRD-11. Cross-feature handoff.
+   - If top-1 score < 0.35, show "Aapko Gurudev se pucchna chahiye? / Want to ask Gurudev?" with a CTA to PRD-32. Cross-feature handoff.
 
 ### In scope — v1.7.1 (concept tags surface)
 
-8. **Tag chips on result rows.** Every verse already has `tags: string[]` from PRD-11's content workstream. Show top 2 tags inline. Tap a tag → re-query with that concept.
+8. **Tag chips on result rows.** Every verse already has `tags: string[]` from PRD-32's content workstream. Show top 2 tags inline. Tap a tag → re-query with that concept.
 
 9. **"Related concepts" footer** on result page: 3–5 related concept chips ("krodha" query → "patience," "ahankara," "sthitaprajna" chips), powered by tag co-occurrence in result set.
 
 ### Out of scope
 
-- Concept search inside PRD-11 Gurudev's UI (Gurudev produces answers, not result lists).
+- Concept search inside PRD-32 Gurudev's UI (Gurudev produces answers, not result lists).
 - Real-time embeddings of user-typed text via a remote model.
 - Cross-language query expansion (Hindi query → also match English verses). v1 indexes the bilingual concatenation so a Hindi query *does* hit English-meaning verses to some degree; explicit cross-lingual query expansion is v2.
 
@@ -168,7 +168,7 @@ This is non-trivial — half of the Q3 2026 +60 MB binary budget in a single fea
 - Gold-set 50 queries pass with ≥ 70% recall and ≥ 60% cross-section diversity.
 - Latency P95 ≤ 250ms on a mid-tier device (Pixel 6a / iPhone SE 3rd gen).
 - Bundle-size impact reviewed: shipped bundled OR lazy-download path implemented.
-- Handoff to Gurudev (PRD-11) works on low-score queries.
+- Handoff to Gurudev (PRD-32) works on low-score queries.
 - All tests green; RULEBOOK §8 search-coverage assertion still passes.
 
 ## 12. Open questions

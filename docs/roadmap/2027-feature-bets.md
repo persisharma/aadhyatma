@@ -5,7 +5,16 @@
 **Owner:** Product (PM)
 **Current shipped version (assumed at planning):** 1.5.x (audio shipped via Q3 2026 PRD-02; search shipped via PRD-03; notifications shipped via PRD-01).
 
-This document is the strategic parent for the next-generation roadmap that comes *after* the Q3 2026 plan. It frames the 10 feature bets that move Vedansh from "best devotional reader" to "the spiritual companion." Each bet has a dedicated PRD under `docs/roadmap/prds/10-*.md` through `19-*.md`.
+This document is the strategic parent for the next-generation roadmap that comes *after* the Q3 2026 plan. It frames the 10 feature bets that move Vedansh from "best devotional reader" to "the spiritual companion." Each bet has a dedicated PRD under `docs/roadmap/prds/31-*.md` through `40-*.md`.
+
+> **Renumbering note (Sep 2026):** These PRDs were originally drafted as PRD-10 … PRD-19. Since
+> authoring, main assigned 10–19 to other shipped/in-flight PRDs, reserved 20–29 for the Q4 2026
+> candidate slates, and retired 30 — so this set was renumbered to **PRD-31 … PRD-40**. Some bets
+> now partially overlap work that shipped or was specced after authoring; reconcile before picking
+> one up: PRD-33 (panchang/festival anchoring) vs the shipped daily-muhurat work
+> ([PRD-14](./prds/14-daily-muhurat.md)), PRD-34 (sankalp + streaks) vs the shipped daily routine
+> ([PRD-07](./prds/07-daily-routine-sadhana.md)), and PRD-38 (read-aloud) vs
+> [PRD-13 audio follow-along](./prds/13-audio-follow-along.md).
 
 ---
 
@@ -97,11 +106,11 @@ The 10 bets below are designed to compound on (1) — every feature uses our cor
 Q3 2026's "bundle-only" was the right constraint when the product was a reader. Five of the ten bets require a backend, so 2027 introduces one — **deliberately, narrowly, and behind clean boundaries**:
 
 - **Stage 1 (Q1 2027, PRDs 10/12/13):** No backend. Bundle-only continues.
-- **Stage 2 (Q2 2027, PRD-11):** Introduce a **single, narrow backend service** for AI Gurudev only — a retrieval-augmented chat endpoint. Everything else still bundle-only. Cost: ~$0.005/query at projected volume (Claude Haiku 4.5 with prompt caching on the corpus prefix).
-- **Stage 3 (Q3 2027, PRD-15):** Extend the same backend to group state (japa circles). No additional infra family; same auth, same DB.
+- **Stage 2 (Q2 2027, PRD-32):** Introduce a **single, narrow backend service** for AI Gurudev only — a retrieval-augmented chat endpoint. Everything else still bundle-only. Cost: ~$0.005/query at projected volume (Claude Haiku 4.5 with prompt caching on the corpus prefix).
+- **Stage 3 (Q3 2027, PRD-36):** Extend the same backend to group state (japa circles). No additional infra family; same auth, same DB.
 - **Stage 4 (Q4 2027, PRDs 18/19):** Streaming partners (third-party CDN) and payment partner (Razorpay/UPI). Both behind their respective vendors' SDKs; no significant new infra of our own.
 
-**Auth & identity:** account creation becomes optional in Q1 2027 (a profile name + email for streak portability and family circle membership). Anonymous-by-default remains the path for the reading-only user. PRD-13 (sankalp) introduces this.
+**Auth & identity:** account creation becomes optional in Q1 2027 (a profile name + email for streak portability and family circle membership). Anonymous-by-default remains the path for the reading-only user. PRD-34 (sankalp) introduces this.
 
 **Data residency:** all user-identifying data (account, japa circles, donation history) is stored in India (compliance + latency). The corpus retrieval index is geo-replicated.
 
@@ -144,13 +153,13 @@ Q3 2026's "bundle-only" was the right constraint when the product was a reader. 
 
 ## 8. PRD index
 
-- [PRD-10 — Karaoke verse-sync audio](./prds/10-karaoke-verse-sync-audio.md)
-- [PRD-11 — AI Gurudev (RAG)](./prds/11-ai-gurudev-rag.md)
-- [PRD-12 — Panchang + festival anchoring](./prds/12-panchang-festival-anchoring.md)
-- [PRD-13 — Sankalp + streak system](./prds/13-sankalp-streak-system.md)
-- [PRD-14 — Personalized verse (mood-aware)](./prds/14-personalized-verse-mood-aware.md)
-- [PRD-15 — Family / group japa circles](./prds/15-family-japa-circles.md)
-- [PRD-16 — Cross-granth concept search](./prds/16-concept-search-cross-granth.md)
-- [PRD-17 — Read-aloud + voice input](./prds/17-read-aloud-voice-input.md)
-- [PRD-18 — Live darshan + scripture cross-link](./prds/18-live-darshan-cross-link.md)
-- [PRD-19 — Dakshina / donation rail](./prds/19-dakshina-donation-rail.md)
+- [PRD-31 — Karaoke verse-sync audio](./prds/31-karaoke-verse-sync-audio.md)
+- [PRD-32 — AI Gurudev (RAG)](./prds/32-ai-gurudev-rag.md)
+- [PRD-33 — Panchang + festival anchoring](./prds/33-panchang-festival-anchoring.md)
+- [PRD-34 — Sankalp + streak system](./prds/34-sankalp-streak-system.md)
+- [PRD-35 — Personalized verse (mood-aware)](./prds/35-personalized-verse-mood-aware.md)
+- [PRD-36 — Family / group japa circles](./prds/36-family-japa-circles.md)
+- [PRD-37 — Cross-granth concept search](./prds/37-concept-search-cross-granth.md)
+- [PRD-38 — Read-aloud + voice input](./prds/38-read-aloud-voice-input.md)
+- [PRD-39 — Live darshan + scripture cross-link](./prds/39-live-darshan-cross-link.md)
+- [PRD-40 — Dakshina / donation rail](./prds/40-dakshina-donation-rail.md)

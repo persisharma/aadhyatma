@@ -1,4 +1,4 @@
-# PRD-14 — Personalized Verse (Mood / Intent-Aware Daily Bhakti)
+# PRD-35 — Personalized Verse (Mood / Intent-Aware Daily Bhakti)
 
 | | |
 |---|---|
@@ -7,9 +7,9 @@
 | **Window** | Weeks 18–22 of Q2 2027 |
 | **T-shirt size** | S (~3 dev-weeks; reuses Gurudev backend) |
 | **Owner** | TBA |
-| **Depends on** | PRD-11 (AI Gurudev backend), PRD-13 (profile) |
+| **Depends on** | PRD-32 (AI Gurudev backend), PRD-34 (profile) |
 
-**Constraint break:** runs on the AI Gurudev backend from PRD-11. No new infrastructure introduced; this PRD piggybacks the existing endpoint.
+**Constraint break:** runs on the AI Gurudev backend from PRD-32. No new infrastructure introduced; this PRD piggybacks the existing endpoint.
 
 ---
 
@@ -34,9 +34,9 @@ Replace the Daily Bhakti tab's random verse with a personalized verse picked fro
 ## 3. Non-goals
 
 - **Diagnostic / mental-health framing.** We are not a therapy app. Severe distress signals route to professional resources, not verses.
-- **Free-form therapeutic chat.** Gurudev (PRD-11) handles questions; this surface delivers a single verse and explanation.
+- **Free-form therapeutic chat.** Gurudev (PRD-32) handles questions; this surface delivers a single verse and explanation.
 - **Mood graph / journaling.** Tempting but scope-creep. The check-in is a fresh signal each day, not a longitudinal tracker.
-- **Mood-driven notifications** in v1. The surface is in-app only; notifications stay deterministic (PRD-01, PRD-12, PRD-13).
+- **Mood-driven notifications** in v1. The surface is in-app only; notifications stay deterministic (PRD-01, PRD-33, PRD-34).
 - **Sharing the mood entry** itself (privacy).
 
 ## 4. User stories
@@ -119,7 +119,7 @@ Replace the Daily Bhakti tab's random verse with a personalized verse picked fro
     // …
   };
   ```
-- **Verse concept tagging.** Q2 content workstream (already noted in PRD-11 §9): every verse gets `tags: string[]`. ~3,500 verses; ~6 weeks for one content lead + reviewer.
+- **Verse concept tagging.** Q2 content workstream (already noted in PRD-32 §9): every verse gets `tags: string[]`. ~3,500 verses; ~6 weeks for one content lead + reviewer.
 - **Backend endpoint.** Re-uses the Gurudev pipeline: same retrieval, smaller output budget (2-line explanation, not multi-paragraph). Same prompt-caching prefix.
 - **Mobile client.**
   - New `mobile/src/features/dailybhakti/MoodCheckIn.tsx`.
@@ -135,7 +135,7 @@ Replace the Daily Bhakti tab's random verse with a personalized verse picked fro
 ## 8. Cost model
 
 - Re-uses Gurudev infra; smaller output budget (~150 tokens) → ~$0.003 / personalized verse.
-- 1 personalized verse / user / day × 250k MAU × 30 days = $22.5k / month at full uptake. Within the Gurudev cost envelope (PRD-11 already absorbs).
+- 1 personalized verse / user / day × 250k MAU × 30 days = $22.5k / month at full uptake. Within the Gurudev cost envelope (PRD-32 already absorbs).
 - Fallback table makes the feature degrade gracefully if cost runaway forces a temporary backend pause.
 
 ## 9. Success metrics & instrumentation

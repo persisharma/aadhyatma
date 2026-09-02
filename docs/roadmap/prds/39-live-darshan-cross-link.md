@@ -1,4 +1,4 @@
-# PRD-18 — Live Darshan + Scripture Cross-Link
+# PRD-39 — Live Darshan + Scripture Cross-Link
 
 | | |
 |---|---|
@@ -7,7 +7,7 @@
 | **Window** | Weeks 1–12 of Q4 2027 (partnerships work begins Q3 in parallel) |
 | **T-shirt size** | XL (~10 dev-weeks + a full quarter of partnership outreach) |
 | **Owner** | TBA + partnerships lead |
-| **Depends on** | PRD-11 (backend), PRD-12 (panchang for aarti timings) |
+| **Depends on** | PRD-32 (backend), PRD-33 (panchang for aarti timings) |
 
 **Constraint break:** streaming requires a third-party CDN. We **do not run the streaming infrastructure** — we embed partner-temple streams (YouTube Live, JioCinema, or temple-trust-provided RTMP→HLS). Our backend stores the stream registry; the video itself never touches us.
 
@@ -141,7 +141,7 @@ Ship live darshan streams from 3 partner temples in v1.9.0, with scripture cross
 
 ## 8. Partnerships workstream (longest pole)
 
-- Begin **Q3 2027** (parallel to PRD-15 development).
+- Begin **Q3 2027** (parallel to PRD-36 development).
 - For each partner temple:
   1. Outreach via trust office; introduce Vedansh.
   2. Sign a 1-page agreement: attribution, no recording, no monetization without partner consent, 30-day termination notice.
@@ -184,7 +184,7 @@ Ship live darshan streams from 3 partner temples in v1.9.0, with scripture cross
 | Partner stream goes down mid-aarti | Pinging detects + UI shows "stream paused" gracefully; archive fallback. |
 | Temple revokes embed rights | 30-day termination clause; replace with archive only; communicate to users transparently. |
 | App Store / Play Store policy on third-party video embeds | All partners are reputable temple trusts; clear attribution; precedent (Sri Mandir does the same). |
-| User expects to "do online puja / send offerings" via darshan | Out of scope; gentle copy clarifies. Donations (PRD-19) is a separate surface. |
+| User expects to "do online puja / send offerings" via darshan | Out of scope; gentle copy clarifies. Donations (PRD-40) is a separate surface. |
 | Stream sync mode misaligns and creates a worse experience than no sync | Ship without sync in v1.9.0; sync as opt-in in v1.9.1 with manual verify per temple. |
 | Bandwidth cost to user surprises low-data users | Player default to 360p; bandwidth warning on first play. |
 | Geo restrictions surprise NRI users | `availableRegions` field; transparent "available in India only" copy. |
@@ -206,4 +206,4 @@ Ship live darshan streams from 3 partner temples in v1.9.0, with scripture cross
 2. Recorded archive rights vary by partner — bundle a single source-of-truth or per-partner? Per-partner; flexible. Some partners may forbid archive — surface as "live only."
 3. Should darshan have its own bottom tab or nest under Home? Recommend Home tile in v1.9.0; promote to bottom tab in v1.9.1 if engagement validates.
 4. Cross-link verse-level sync timing: invest in v1.9.0 or v1.9.1? Recommend v1.9.1 — needs partner timing reliability data first.
-5. Picture-in-picture interplay with TTS read-aloud (PRD-17)? Defer; one stream at a time.
+5. Picture-in-picture interplay with TTS read-aloud (PRD-38)? Defer; one stream at a time.

@@ -1,4 +1,4 @@
-# PRD-13 — Sankalp + Streak System (Pledge-Driven Retention)
+# PRD-34 — Sankalp + Streak System (Pledge-Driven Retention)
 
 | | |
 |---|---|
@@ -9,7 +9,7 @@
 | **Owner** | TBA |
 | **Depends on** | PRD-01 (notifications), existing `UserActivityContext` |
 
-**Bundle-only constraint preserved.** Streak data, sankalp definitions, and milestone art are local. **Optional cloud backup** rides on PRD-11's backend if/when the user opts in to a profile.
+**Bundle-only constraint preserved.** Streak data, sankalp definitions, and milestone art are local. **Optional cloud backup** rides on PRD-32's backend if/when the user opts in to a profile.
 
 ---
 
@@ -19,7 +19,7 @@ Duolingo, Calm, Headspace, Strava all proved streaks are the single most powerfu
 
 Spiritual practice in Indian tradition has a stronger, more authentic framing than streaks: **sankalp** — a pledge taken before a practice begins ("I will read Hanuman Chalisa 108 times by Hanuman Jayanti"). Sankalp is culturally native, communal in feeling, less gamified-shallow than "🔥 7-day streak."
 
-We have the data (`UserActivityContext`, `JapamCounter`), the notification scaffold (PRD-01), and the deity / festival anchors (PRD-12). What we lack is the contract: ask the user what they're committing to, then help them complete it.
+We have the data (`UserActivityContext`, `JapamCounter`), the notification scaffold (PRD-01), and the deity / festival anchors (PRD-33). What we lack is the contract: ask the user what they're committing to, then help them complete it.
 
 ## 2. Goal
 
@@ -33,7 +33,7 @@ Ship a sankalp creation + tracking flow that converts "occasional reader" into "
 
 ## 3. Non-goals
 
-- **Public leaderboards.** Anti-spiritual framing; community comparisons cheapen the practice. Family circles (PRD-15) are private opt-in only.
+- **Public leaderboards.** Anti-spiritual framing; community comparisons cheapen the practice. Family circles (PRD-36) are private opt-in only.
 - **Punitive UI.** No skull / sad-face on a broken streak. Recovery is welcomed, not shamed.
 - **Paid sankalp templates.** Free.
 - **Real-money commitment** ("stake $5, lose it if you break").
@@ -60,7 +60,7 @@ Ship a sankalp creation + tracking flow that converts "occasional reader" into "
    - Entry: "Take a Sankalp" CTA on Profile, on every section's chapter listing, and at the end of every reader session.
    - Step 1: choose action (`recite chalisa`, `complete sundarkand sarga`, `count 108 japa`, `complete chapter of gita`, `read aarti`).
    - Step 2: choose section (auto-filled if entered from a section's listing).
-   - Step 3: choose target — count (e.g. 108 paths) OR end-date (e.g. by Hanuman Jayanti, surfaced via PRD-12). The picker shows linked festivals.
+   - Step 3: choose target — count (e.g. 108 paths) OR end-date (e.g. by Hanuman Jayanti, surfaced via PRD-33). The picker shows linked festivals.
    - Step 4: choose reminder time (default: 6:30am IST or user's PRD-01 default).
    - Confirm: "अहं संकल्पम् करोमि…" / "I pledge to…" with the sankalp text rendered in both languages.
 
@@ -116,7 +116,7 @@ Ship a sankalp creation + tracking flow that converts "occasional reader" into "
 - Sankalp staking / money commitment.
 - Public sankalp directory.
 - Sankalp templates created by community (UGC) — moderation cost too high in v1.
-- Multi-user shared sankalp (PRD-15 covers that).
+- Multi-user shared sankalp (PRD-36 covers that).
 
 ## 6. UX notes
 
@@ -147,7 +147,7 @@ Ship a sankalp creation + tracking flow that converts "occasional reader" into "
 - **Tests:**
   - `mobile/src/contexts/__tests__/SankalpContext.test.tsx` — create, increment, complete, abandon flows.
   - `mobile/src/contexts/__tests__/sankalpRules.test.ts` — every action type maps to the right trigger.
-  - `mobile/src/screens/__tests__/SankalpCreationScreen.test.tsx` — flow renders, end-date suggestions from PRD-12 surface correctly.
+  - `mobile/src/screens/__tests__/SankalpCreationScreen.test.tsx` — flow renders, end-date suggestions from PRD-33 surface correctly.
   - `mobile/src/screens/__tests__/SankalpCompletionScreen.test.tsx` — celebration renders, share button works.
 
 ## 8. Account / profile interplay
@@ -156,7 +156,7 @@ This PRD introduces the **optional profile**.
 
 - Default state: anonymous, all sankalps local to device.
 - A new "Save sankalp across devices" CTA appears on the sankalp confirmation screen. Tap → creates a profile (name + email, OTP via SendGrid).
-- Profile state synced to backend (introduced in PRD-11). Login flow ships *with* PRD-11 but is *demanded* by PRD-13.
+- Profile state synced to backend (introduced in PRD-32). Login flow ships *with* PRD-32 but is *demanded* by PRD-34.
 - **Uninstall + reinstall recovers sankalps** for users with a profile.
 
 ## 9. Binary-size budget
@@ -184,7 +184,7 @@ This PRD introduces the **optional profile**.
 
 | Risk | Mitigation |
 |---|---|
-| Notification fatigue (sankalp + festival from PRD-12 + daily verse from PRD-01) | Unified daily-bhakti notification — one notification per day that bundles all three contexts; user controls cadence. |
+| Notification fatigue (sankalp + festival from PRD-33 + daily verse from PRD-01) | Unified daily-bhakti notification — one notification per day that bundles all three contexts; user controls cadence. |
 | Sankalp feels gamified / cheapened | Reverent copy, Sanskrit-literate review, no fire emoji, no leaderboards. |
 | Increment matching false positives (user opens reader but doesn't actually read) | Require ≥ 70% of verses paged through within a session before crediting; matches existing `UserActivityContext` rules. |
 | Sankalp abandonment shame | Abandon flow is "Pause for now" not "Quit." Re-engageable later. |
@@ -208,4 +208,4 @@ This PRD introduces the **optional profile**.
 2. Should we offer recurring sankalps ("every Tuesday for 1 year") as a single object, or as auto-recreated nightly sankalps? Recommend single recurring object with per-day check-in.
 3. Certificate share template: deity-specific art vs. universal parchment? Recommend deity-specific (uses existing background art).
 4. Do we let the user *edit* a sankalp's target mid-flight (extend from 21 to 42 days)? Recommend yes, but logged with an "extended" badge on the certificate.
-5. Family / friend sankalp interplay with PRD-15 — keep separate or unify? Keep separate in v1, unify in PRD-15 design.
+5. Family / friend sankalp interplay with PRD-36 — keep separate or unify? Keep separate in v1, unify in PRD-36 design.

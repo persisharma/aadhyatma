@@ -1,4 +1,4 @@
-# PRD-15 — Family / Group Japa Circles (Shared Sankalp)
+# PRD-36 — Family / Group Japa Circles (Shared Sankalp)
 
 | | |
 |---|---|
@@ -7,7 +7,7 @@
 | **Window** | Weeks 1–10 of Q3 2027 |
 | **T-shirt size** | L (~9 dev-weeks; backend extension + abuse / privacy review) |
 | **Owner** | TBA |
-| **Depends on** | PRD-13 (profile + individual sankalp), PRD-11 (backend stood up) |
+| **Depends on** | PRD-34 (profile + individual sankalp), PRD-32 (backend stood up) |
 
 **Constraint break:** uses the Gurudev backend for shared-state storage. Real-time updates via long-polling (no websockets in v1).
 
@@ -58,14 +58,14 @@ Ship private circle creation + shared sankalp tracking. Measured by:
 ### In scope — v1.8.0 (japa circles)
 
 1. **Circle creation.**
-   - Entry: from Sankalp creation flow (PRD-13), a "Saath mein / With family" toggle. Or from Profile → "Mandali / Circles."
+   - Entry: from Sankalp creation flow (PRD-34), a "Saath mein / With family" toggle. Or from Profile → "Mandali / Circles."
    - Fields: circle name (e.g. "Sharma Parivaar"), deity (auto-suggests sankalp), sankalp target (count or date-based), reminder time.
    - Backend creates a `CircleId`, returns an invite URL (`https://vedansh.app/circle/abc123`).
 
 2. **Invite link.**
    - Tap-to-share via WhatsApp / iMessage / SMS. Deep-link opens the app at circle preview.
    - Preview shows circle name, sankalp target, current progress, member count (not names). "Mandali mein shamil hon? / Join this mandali?"
-   - On join, user's existing profile auto-attaches; if no profile, account creation prompt (re-uses PRD-13 + PRD-11 flow).
+   - On join, user's existing profile auto-attaches; if no profile, account creation prompt (re-uses PRD-34 + PRD-32 flow).
 
 3. **Shared sankalp pool.**
    - Each member's matching practice (japa mala completed, chalisa recited, etc.) auto-increments the circle pool.
@@ -101,7 +101,7 @@ Ship private circle creation + shared sankalp tracking. Measured by:
 
 ### In scope — v1.8.1 (chalisa / aarti pool)
 
-9. Beyond japa, circles accept any of the sankalp action types from PRD-13 (`recite`, `complete-chapter`, etc.). Shared sankalp can target "108 chalisas combined" or "Sundarkand × 21 paaths combined."
+9. Beyond japa, circles accept any of the sankalp action types from PRD-34 (`recite`, `complete-chapter`, etc.). Shared sankalp can target "108 chalisas combined" or "Sundarkand × 21 paaths combined."
 
 ### Out of scope
 
@@ -115,7 +115,7 @@ Ship private circle creation + shared sankalp tracking. Measured by:
 ## 6. UX notes
 
 - Circle name + member display-name only. No avatars, no photos.
-- Member display-name is the `sadhakName` already collected in PRD-13.
+- Member display-name is the `sadhakName` already collected in PRD-34.
 - Live counter animates upward smoothly when an event arrives — feels alive.
 - The "contribute" action is never explicit — japa beads count or paath complete inherently contribute. **Zero ceremony to participate.** This is the magic.
 - Notifications throttled aggressively: at most 1 per circle per 24h beyond milestones.
@@ -143,7 +143,7 @@ Ship private circle creation + shared sankalp tracking. Measured by:
    (long-poll 30s)
 ```
 
-- **Backend extends PRD-11.** Same service, new endpoints.
+- **Backend extends PRD-32.** Same service, new endpoints.
 - **Postgres schema:**
   ```
   circles(id, name, deity, sankalp_target_type, sankalp_target_count, sankalp_target_date, created_by, created_at, status)
@@ -171,14 +171,14 @@ Ship private circle creation + shared sankalp tracking. Measured by:
 - **Invite-link rotation** — creator can regenerate; old link goes dead.
 - **Report a circle** — any member can flag. Three independent flags → automatic suspension, manual review within 24h.
 - **Display-name conflict** — multiple "Mom" in the same circle is allowed; we don't disambiguate.
-- **GDPR / DPDP compliance** — leaving a circle removes name but retains aggregate count (anonymized contribution). "Delete account" (from PRD-13) cascades to circles: name removed from member list, contributions remain anonymized.
+- **GDPR / DPDP compliance** — leaving a circle removes name but retains aggregate count (anonymized contribution). "Delete account" (from PRD-34) cascades to circles: name removed from member list, contributions remain anonymized.
 
 ## 9. Cost & infra
 
 - Long-poll: ~30s hold per request × 4 polls / hour active × 30k circle members active = trivial at our scale (Postgres LISTEN/NOTIFY backed).
 - Push notifications: free (APNs / FCM).
 - Storage: linear with events; ~12 bytes per event; trivial.
-- Estimated incremental backend cost over PRD-11: < $500/month at 250k MAU.
+- Estimated incremental backend cost over PRD-32: < $500/month at 250k MAU.
 
 ## 10. Success metrics & instrumentation
 

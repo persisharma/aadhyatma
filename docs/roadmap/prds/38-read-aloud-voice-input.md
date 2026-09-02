@@ -1,4 +1,4 @@
-# PRD-17 — Read-Aloud + Voice Input
+# PRD-38 — Read-Aloud + Voice Input
 
 | | |
 |---|---|
@@ -7,7 +7,7 @@
 | **Window** | Weeks 14–19 of Q2 2027 |
 | **T-shirt size** | M (~4 dev-weeks) |
 | **Owner** | TBA |
-| **Depends on** | PRD-02 (audio infra), PRD-11 (Gurudev for voice input target) |
+| **Depends on** | PRD-02 (audio infra), PRD-32 (Gurudev for voice input target) |
 
 **Bundle-only constraint preserved.** Uses native OS TTS (Apple AVSpeechSynthesizer / Android TextToSpeech) and native speech recognition (`expo-speech-recognition`). No remote TTS / ASR.
 
@@ -20,11 +20,11 @@ Two large user segments are underserved by a read-only reader:
 1. **Elderly / low-literacy users.** A 65-year-old Hanuman bhakt who can recite but can't easily read 12-point Devanagari, or can't read English meaning. Today the app forces *visual* literacy.
 2. **Driving / commuting users.** Cannot read while driving but want their morning paath.
 
-Plus voice **input** is the natural modality for AI Gurudev (PRD-11): "Hanuman ne Lanka kaise jalai?" spoken into a phone in a moving auto-rickshaw beats typing.
+Plus voice **input** is the natural modality for AI Gurudev (PRD-32): "Hanuman ne Lanka kaise jalai?" spoken into a phone in a moving auto-rickshaw beats typing.
 
 Both directions — TTS reading the *meaning* of a verse, and voice search / voice Gurudev queries — are pure plumbing on top of OS-native APIs. Low risk, high accessibility moat.
 
-PRD-02 / PRD-10 already cover *audio recitation* (the verse Devanagari, performed by a human). This PRD covers reading the **meaning and commentary** via TTS, plus voice **input** for search and Gurudev.
+PRD-02 / PRD-31 already cover *audio recitation* (the verse Devanagari, performed by a human). This PRD covers reading the **meaning and commentary** via TTS, plus voice **input** for search and Gurudev.
 
 ## 2. Goal
 
@@ -42,7 +42,7 @@ Measured by:
 
 ## 3. Non-goals
 
-- **TTS of the *verse* itself.** Devanagari verses are recited by humans (PRD-02 + PRD-10). OS TTS pronouncing Sanskrit/Awadhi sounds wrong; we don't ship that. TTS is for *meaning* prose.
+- **TTS of the *verse* itself.** Devanagari verses are recited by humans (PRD-02 + PRD-31). OS TTS pronouncing Sanskrit/Awadhi sounds wrong; we don't ship that. TTS is for *meaning* prose.
 - **Custom voice cloning.**
 - **Multi-voice character TTS** ("hear Krishna speak the Gita").
 - **Voice-only navigation** ("open Hanuman Chalisa").
@@ -85,7 +85,7 @@ Measured by:
    - If verse audio (PRD-02) is playing, TTS button is disabled with a tooltip "Pause audio to use read-aloud."
    - Audio session category prevents both from playing simultaneously.
 
-5. **Karaoke-style highlight on meaning** (extends PRD-10's line-highlight pattern, but for prose).
+5. **Karaoke-style highlight on meaning** (extends PRD-31's line-highlight pattern, but for prose).
    - TTS engine fires word-boundary events on iOS; Android emits utterance-progress events.
    - Highlight the current sentence (not word — too jittery for prose).
 
@@ -160,7 +160,7 @@ Measured by:
 
 - Voice recognition is *on-device* by default on modern iOS / Android. Document this in the privacy page.
 - Older Android versions may use Google's cloud ASR; surface a one-time notice before first use.
-- Transcribed text passed to Gurudev is treated identically to typed input (subject to PRD-11's consent toggles).
+- Transcribed text passed to Gurudev is treated identically to typed input (subject to PRD-32's consent toggles).
 - TTS is fully on-device.
 
 ## 10. Bundle-size budget
@@ -188,7 +188,7 @@ Negligible.
 | Risk | Mitigation |
 |---|---|
 | Hindi TTS voice quality varies across devices | Best-available detection; iOS Siri voices are good; Android varies; surface a "Improve Hindi voice" CTA → Settings. |
-| ASR confidence drops on Devanagari technical terms | Add a "did you mean?" suggestion using PRD-16 concept search on the transcribed text. |
+| ASR confidence drops on Devanagari technical terms | Add a "did you mean?" suggestion using PRD-37 concept search on the transcribed text. |
 | Battery drain from continuous TTS | OS-managed; document chapter-length warning ("≥ 30 min audio output"). |
 | User confuses verse audio (PRD-02) with TTS read-aloud | Distinct iconography + tooltips; never play simultaneously. |
 | iOS / Android API parity drift | Use `expo-speech` and `expo-speech-recognition` abstractions; QA on both platforms. |
@@ -199,7 +199,7 @@ Negligible.
 - Read-aloud works on every verse page in both languages, with sentence highlight.
 - Reader-wide auto-advance TTS works on all chalisas, aartis, Sundarkand chapters, Gita chapters.
 - Voice search works in Hindi + English; transcription accuracy meets target on internal set.
-- Voice Gurudev works; transcription flows into PRD-11 unchanged.
+- Voice Gurudev works; transcription flows into PRD-32 unchanged.
 - Permission UX validated: granted, denied, denied-then-granted, OS-disabled-Hindi-voice all handled.
 - Accessibility manual audit (VoiceOver + TalkBack) green.
 - TestFlight 7-day soak: no crashes; user feedback channel positive.

@@ -1,4 +1,4 @@
-# PRD-11 — AI Gurudev (Scripture-Grounded Q&A via RAG)
+# PRD-32 — AI Gurudev (Scripture-Grounded Q&A via RAG)
 
 | | |
 |---|---|
@@ -7,7 +7,7 @@
 | **Window** | Weeks 8–22 of Q1 2027 (spans into Q2) |
 | **T-shirt size** | XL (~12 dev-weeks; needs backend + ML eval workstream) |
 | **Owner** | TBA |
-| **Depends on** | Backend platform (this PRD introduces it); auth (PRD-13 ships profile) |
+| **Depends on** | Backend platform (this PRD introduces it); auth (PRD-34 ships profile) |
 
 **Constraint break:** this is the **first feature to require a runtime backend.** Bundle-only no longer holds end-to-end — corpus retrieval + LLM inference run server-side. See §7 for the architecture.
 
@@ -67,7 +67,7 @@ Ship an in-app "Pucho Gurudev" / "Ask Gurudev" surface where users type or speak
 5. **Refusal policy.** If retrieval top-k similarity score < threshold OR the LLM responds with the "off-corpus" sentinel, the UI shows a polite redirect: "Yeh shastra mein nahi mila. Krupya alag prashn poochhein." / "I couldn't find this in the scriptures we carry. Try rephrasing."
 6. **Rating row.** Thumbs up / down, plus optional one-tap "why?" reasons ("off-topic," "wrong verse," "wrong meaning"). Sent to our backend for eval.
 7. **Disclaimer (always visible at the bottom).** "AI Gurudev quotes from our scriptural corpus. Not a substitute for a guru. Consult a learned teacher for personal guidance."
-8. **Rate limit.** 20 questions / day for free users; primes the donation rail in PRD-19 without paywall framing in v1.7.0 itself.
+8. **Rate limit.** 20 questions / day for free users; primes the donation rail in PRD-40 without paywall framing in v1.7.0 itself.
 
 ### In scope — v1.7.1 (Hindi)
 
@@ -80,15 +80,15 @@ Ship an in-app "Pucho Gurudev" / "Ask Gurudev" surface where users type or speak
 ### Out of scope
 
 - Image / video understanding.
-- Voice persona / TTS for the answer (PRD-17 covers TTS).
+- Voice persona / TTS for the answer (PRD-38 covers TTS).
 - Memory across sessions.
-- Free-tier-paid-tier split. Donation rail (PRD-19) is the monetization layer; Gurudev itself stays free with rate limit.
+- Free-tier-paid-tier split. Donation rail (PRD-40) is the monetization layer; Gurudev itself stays free with rate limit.
 
 ## 6. UX notes
 
 - Entry surface: top-right of Home (icon = lamp / diya); A/B test against a bottom-tab "Gurudev." Start with the icon (less invasive).
 - Input box: placeholder rotates through example questions ("Why is anger harmful?" / "What does 'sthitaprajna' mean?" / "Hanuman ne Lanka kaise jalai?").
-- Voice input via PRD-17's pipeline; release Hindi voice input together with v1.7.1.
+- Voice input via PRD-38's pipeline; release Hindi voice input together with v1.7.1.
 - Answer rendering:
   - Top: concise answer (≤ 3 paragraphs).
   - Middle: citation chips (1–4) — tap-through to reader.
@@ -125,7 +125,7 @@ Ship an in-app "Pucho Gurudev" / "Ask Gurudev" surface where users type or speak
 
 **Hosting.** Indian-region cloud (data residency). Single managed service (Render / Railway / AWS Mumbai) — no Kubernetes for v1.
 
-**Auth.** PRD-13 ships profile + anon device tokens. Gurudev uses the device token for rate limiting; no login required to ask.
+**Auth.** PRD-34 ships profile + anon device tokens. Gurudev uses the device token for rate limiting; no login required to ask.
 
 **Vector store.** `pgvector` in our managed Postgres (cheapest path; ~3,500 chunks is trivial). Pinecone if scale grows.
 
@@ -173,7 +173,7 @@ Ship an in-app "Pucho Gurudev" / "Ask Gurudev" surface where users type or speak
 | Free rate limit | 20 / day / device |
 | Burst limit | 5 / minute |
 
-At 250k MAU × 4 questions / week avg, monthly cost is ~$20k. Donation rail (PRD-19) is the offset; if conversion hits its target (~$60k MRR), Gurudev is net-positive. If not, model swap to a smaller open-source model is the fallback.
+At 250k MAU × 4 questions / week avg, monthly cost is ~$20k. Donation rail (PRD-40) is the offset; if conversion hits its target (~$60k MRR), Gurudev is net-positive. If not, model swap to a smaller open-source model is the fallback.
 
 ## 11. Success metrics & instrumentation
 
@@ -214,5 +214,5 @@ At 250k MAU × 4 questions / week avg, monthly cost is ~$20k. Donation rail (PRD
 1. Anthropic API vs. Bedrock vs. Azure for the Mumbai-region inference path? (Latency + data-residency tradeoff.)
 2. Tab vs. icon vs. bottom-sheet for the Gurudev surface? Plan: A/B in v1.7.0.
 3. Should we offer a "scholarly mode" toggle (longer answers, more citations) vs. default "simple mode"? Defer to v1.7.2 if user research justifies.
-4. Voice answer (TTS reads the response) — defer to PRD-17 integration.
+4. Voice answer (TTS reads the response) — defer to PRD-38 integration.
 5. Do we partner with a real scholar / matha for the community advisory board? Owner: founder.

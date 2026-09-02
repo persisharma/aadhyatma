@@ -1,4 +1,4 @@
-# PRD-19 — Dakshina / Donation Rail (Seva-Framed Monetization)
+# PRD-40 — Dakshina / Donation Rail (Seva-Framed Monetization)
 
 | | |
 |---|---|
@@ -7,7 +7,7 @@
 | **Window** | Weeks 6–14 of Q4 2027 (legal / compliance from Q2) |
 | **T-shirt size** | XL (~10 dev-weeks + parallel compliance / partnership) |
 | **Owner** | TBA + finance / compliance lead |
-| **Depends on** | PRD-11 (backend), PRD-13 (profile), PRD-18 (temple partnerships overlap) |
+| **Depends on** | PRD-32 (backend), PRD-34 (profile), PRD-39 (temple partnerships overlap) |
 
 **Constraint break:** introduces payments. Uses Razorpay (India) + Apple/Google IAP (subscription) — both off-the-shelf. We don't build a payment processor; we integrate.
 
@@ -25,7 +25,7 @@ We deliberately rejected prasad delivery (out by strategy — logistics) and the
 
 1. **Dakshina** — a frictionless way for a user, at the end of a paath / completion of a sankalp, to offer a small amount as gratitude. Goes to either:
    - Vedansh (supports the app + content creators).
-   - A partner temple (the cross-link from PRD-18 makes this natural).
+   - A partner temple (the cross-link from PRD-39 makes this natural).
 2. **Optional "Sadhak Seva" subscription** — ad-free forever (we have no ads anyway), priority Gurudev access (no rate limit), early-access to new sections, member crest on profile, support the project. ₹99/month or ₹999/year.
 
 Both are **opt-in, post-value moments** — not paywalls.
@@ -69,9 +69,9 @@ Ship a calm, opt-in donation surface tied to spiritual completion moments. Measu
 
 1. **Donation moment surfaces.**
    - **End-of-section completion:** after finishing a Sundarkand / chalisa / chapter, a calm screen: "Sankalp purna. Dakshina arpan karein? / Sankalp complete. Offer dakshina?" — with Skip and Offer options.
-   - **End-of-sankalp celebration (PRD-13):** the completion modal has an "Offer dakshina" CTA.
+   - **End-of-sankalp celebration (PRD-34):** the completion modal has an "Offer dakshina" CTA.
    - **Profile page:** "Support Vedansh" tile.
-   - **End-of-darshan (PRD-18):** "Donate to [Temple Name]" CTA after a stream session.
+   - **End-of-darshan (PRD-39):** "Donate to [Temple Name]" CTA after a stream session.
 
 2. **Amount picker.**
    - Default chips: ₹11, ₹21, ₹51, ₹108, ₹501. Custom amount field. Default highlighted: ₹51.
@@ -79,7 +79,7 @@ Ship a calm, opt-in donation surface tied to spiritual completion moments. Measu
 
 3. **Recipient choice.**
    - "Vedansh seva" (supports the app + content / audio creators).
-   - "Linked temple" — only if a temple is linked to the donation moment (PRD-18 partnership data).
+   - "Linked temple" — only if a temple is linked to the donation moment (PRD-39 partnership data).
    - Single radio toggle; Vedansh default.
 
 4. **Payment rails.**
@@ -97,7 +97,7 @@ Ship a calm, opt-in donation surface tied to spiritual completion moments. Measu
 
 ### In scope — v1.9.1 (temple direct donations)
 
-7. Expand temple direct donations from cross-link moments to a dedicated "Donate to a temple" surface in the Darshan tab. Each partner temple's UPI VPA / trust account is captured during PRD-18 partnership signup.
+7. Expand temple direct donations from cross-link moments to a dedicated "Donate to a temple" surface in the Darshan tab. Each partner temple's UPI VPA / trust account is captured during PRD-39 partnership signup.
 
 8. **Donation transparency.** A "Where did my donation go?" page shows the partner temple's name, trust registration number, last 12 donations from Vedansh in aggregate (anonymized).
 
@@ -106,13 +106,13 @@ Ship a calm, opt-in donation surface tied to spiritual completion moments. Measu
 9. **Sadhak Seva subscription.**
    - ₹99/month, ₹999/year (auto-renewing).
    - Benefits:
-     - Unlimited Gurudev (PRD-11): removes the 20/day rate limit.
+     - Unlimited Gurudev (PRD-32): removes the 20/day rate limit.
      - Early access to new sections (typically 4 weeks ahead of public).
      - "Sadhak" crest on profile (subtle visual).
      - Annual receipt for the full year.
      - That's it — no exclusive scripture, no exclusive audio.
    - Cancellation: one tap in profile; immediate (access continues till period end).
-   - **Family share:** one subscription covers up to 5 family members (PRD-15 circles).
+   - **Family share:** one subscription covers up to 5 family members (PRD-36 circles).
 
 ### Out of scope
 
@@ -184,7 +184,7 @@ Ship a calm, opt-in donation surface tied to spiritual completion moments. Measu
 - Estimated net at scale (250k MAU steady state):
   - One-time donations: 4% × 250k × ₹51 avg = ₹5.1 lakh / month gross; ~₹4.9L net.
   - Subscriptions: 1.5% × 250k × ₹99 = ₹3.7L / month gross; ~₹2.6L net after IAP take.
-  - **Total ~₹7.5L / month net (~$9k/mo USD)** — covers AI Gurudev (PRD-11) compute + half the team. Healthy.
+  - **Total ~₹7.5L / month net (~$9k/mo USD)** — covers AI Gurudev (PRD-32) compute + half the team. Healthy.
 
 ## 10. Success metrics & instrumentation
 

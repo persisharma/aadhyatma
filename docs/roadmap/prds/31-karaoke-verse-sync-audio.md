@@ -1,4 +1,4 @@
-# PRD-10 — Karaoke Verse-Sync Audio (Line-Level Highlight)
+# PRD-31 — Karaoke Verse-Sync Audio (Line-Level Highlight)
 
 | | |
 |---|---|
