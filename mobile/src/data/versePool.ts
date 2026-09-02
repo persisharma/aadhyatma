@@ -44,7 +44,7 @@ export type UniformVerse = {
  * than inferred from a category, so the pool only surfaces content with a
  * mapping that produces a well-formed verse + meaning.
  */
-type ChapterSummary = { chapter: number };
+type ChapterSummary = { chapter: number; verseCount: number };
 
 type ShlokaVerse = {
   number: number;
@@ -95,142 +95,276 @@ const PADA_SOURCES: readonly PadaSource[] = [
   { id: 'ramcharitmanas', manifest: ramcharitmanasChaptersManifest, getChapter: getRamcharitmanasChapter },
 ];
 
-function buildPool(): UniformVerse[] {
-  const pool: UniformVerse[] = [];
-  const entryById = new Map(library.map((e) => [e.id, e]));
-  const isActive = (id: string) => entryById.get(id)?.status === 'active';
-  const nameHi = (id: string, fallback?: string) => entryById.get(id)?.nameHi ?? fallback ?? id;
-  const nameEn = (id: string, fallback?: string) => entryById.get(id)?.nameEn ?? fallback ?? id;
+type PoolSegment = {
+  sourceId: string;
+  length: number;
+  lastPositions: readonly { chapter: number; verseIndex: number }[];
+  getAt: (offset: number) => UniformVerse | null;
+  find: (verseIndex: number, chapter?: number) => UniformVerse | null;
+};
 
-  // Bhagavad Gita — Sanskrit + transliteration.
+const entryById = new Map(library.map((entry) => [entry.id, entry]));
+const isActive = (id: string) => entryById.get(id)?.status === 'active';
+const nameHi = (id: string, fallback?: string) => entryById.get(id)?.nameHi ?? fallback ?? id;
+const nameEn = (id: string, fallback?: string) => entryById.get(id)?.nameEn ?? fallback ?? id;
+
+function gitaVerse(chapterNumber: number, verseIndex: number): UniformVerse | null {
+  const verse = getGitaChapter(chapterNumber).verses[verseIndex];
+  if (!verse) return null;
+  return {
+    sourceId: GITA_ID,
+    sourceNameHi: nameHi(GITA_ID),
+    sourceNameEn: nameEn(GITA_ID),
+    chapter: chapterNumber,
+    verseIndex,
+    textHi: verse.sanskrit,
+    textEn: verse.transliteration,
+    meaningHi: verse.meaningHi,
+    meaningEn: verse.meaningEn,
+    labelHi: `श्लोक ${chapterNumber}.${verse.number}`,
+    labelEn: `Shloka ${chapterNumber}.${verse.number}`,
+  };
+}
+
+function shlokaVerse(src: ShlokaSource, chapterNumber: number, verseIndex: number): UniformVerse | null {
+  const verse = src.getChapter(chapterNumber).verses[verseIndex];
+  if (!verse) return null;
+  return {
+    sourceId: src.id,
+    sourceNameHi: nameHi(src.id),
+    sourceNameEn: nameEn(src.id),
+    chapter: chapterNumber,
+    verseIndex,
+    textHi: verse.sanskrit,
+    textEn: verse.linesEn,
+    meaningHi: verse.meaningHi,
+    meaningEn: verse.meaningEn,
+    labelHi: `श्लोक ${chapterNumber}.${verse.number}`,
+    labelEn: `Shloka ${chapterNumber}.${verse.number}`,
+  };
+}
+
+function padaVerse(src: PadaSource, chapterNumber: number, verseIndex: number): UniformVerse | null {
+  const verse = src.getChapter(chapterNumber).verses[verseIndex];
+  if (!verse) return null;
+  return {
+    sourceId: src.id,
+    sourceNameHi: nameHi(src.id),
+    sourceNameEn: nameEn(src.id),
+    chapter: chapterNumber,
+    verseIndex,
+    textHi: verse.lines,
+    textEn: verse.linesEn,
+    meaningHi: verse.meaningHi,
+    meaningEn: verse.meaningEn,
+    labelHi: verse.labelHi,
+    labelEn: verse.labelEn,
+  };
+}
+
+/**
+ * A precomputed index of pool ranges, built entirely from tiny manifests. It
+ * preserves the old pool order without materialising any chapter payload. A
+ * caller selects one global index first, then only that verse's chapter is
+ * required and cached by its source accessor.
+ */
+function buildPoolSegments(): PoolSegment[] {
+  const segments: PoolSegment[] = [];
+
   if (isActive(GITA_ID)) {
-    for (const ch of gitaChaptersManifest) {
-      const chapter = getGitaChapter(ch.chapter);
-      chapter.verses.forEach((v, idx) => {
-        pool.push({
-          sourceId: GITA_ID,
-          sourceNameHi: nameHi(GITA_ID),
-          sourceNameEn: nameEn(GITA_ID),
-          chapter: ch.chapter,
-          verseIndex: idx,
-          textHi: v.sanskrit,
-          textEn: v.transliteration,
-          meaningHi: v.meaningHi,
-          meaningEn: v.meaningEn,
-          labelHi: `श्लोक ${ch.chapter}.${v.number}`,
-          labelEn: `Shloka ${ch.chapter}.${v.number}`,
-        });
+    for (const chapter of gitaChaptersManifest) {
+      segments.push({
+        sourceId: GITA_ID,
+        length: chapter.verseCount,
+        lastPositions: [{ chapter: chapter.chapter, verseIndex: chapter.verseCount - 1 }],
+        getAt: (offset) => gitaVerse(chapter.chapter, offset),
+        find: (verseIndex, requestedChapter) =>
+          requestedChapter === chapter.chapter ? gitaVerse(chapter.chapter, verseIndex) : null,
       });
     }
   }
 
-  // Chaptered shloka stotrams.
   for (const src of SHLOKA_SOURCES) {
     if (!isActive(src.id)) continue;
-    for (const ch of src.manifest) {
-      const chapter = src.getChapter(ch.chapter);
-      chapter.verses.forEach((v, idx) => {
-        pool.push({
-          sourceId: src.id,
-          sourceNameHi: nameHi(src.id),
-          sourceNameEn: nameEn(src.id),
-          chapter: ch.chapter,
-          verseIndex: idx,
-          textHi: v.sanskrit,
-          textEn: v.linesEn,
-          meaningHi: v.meaningHi,
-          meaningEn: v.meaningEn,
-          labelHi: `श्लोक ${ch.chapter}.${v.number}`,
-          labelEn: `Shloka ${ch.chapter}.${v.number}`,
-        });
+    for (const chapter of src.manifest) {
+      segments.push({
+        sourceId: src.id,
+        length: chapter.verseCount,
+        lastPositions: [{ chapter: chapter.chapter, verseIndex: chapter.verseCount - 1 }],
+        getAt: (offset) => shlokaVerse(src, chapter.chapter, offset),
+        find: (verseIndex, requestedChapter) =>
+          requestedChapter === chapter.chapter ? shlokaVerse(src, chapter.chapter, verseIndex) : null,
       });
     }
   }
 
-  // Chaptered pada sources (own labels).
   for (const src of PADA_SOURCES) {
     if (!isActive(src.id)) continue;
-    for (const ch of src.manifest) {
-      const chapter = src.getChapter(ch.chapter);
-      chapter.verses.forEach((v, idx) => {
-        pool.push({
-          sourceId: src.id,
-          sourceNameHi: nameHi(src.id),
-          sourceNameEn: nameEn(src.id),
-          chapter: ch.chapter,
-          verseIndex: idx,
-          textHi: v.lines,
-          textEn: v.linesEn,
-          meaningHi: v.meaningHi,
-          meaningEn: v.meaningEn,
-          labelHi: v.labelHi,
-          labelEn: v.labelEn,
-        });
+    for (const chapter of src.manifest) {
+      segments.push({
+        sourceId: src.id,
+        length: chapter.verseCount,
+        lastPositions: [{ chapter: chapter.chapter, verseIndex: chapter.verseCount - 1 }],
+        getAt: (offset) => padaVerse(src, chapter.chapter, offset),
+        find: (verseIndex, requestedChapter) =>
+          requestedChapter === chapter.chapter ? padaVerse(src, chapter.chapter, verseIndex) : null,
       });
     }
   }
 
-  // The complete Valmiki corpus is 23k verses. Keep Daily Bhakti on the
-  // established lightweight anchor set so opening the app does not load all
-  // seven multi-megabyte kāṇḍas.
+  // The complete Valmiki corpus is 23k verses. Daily Bhakti uses only this
+  // small build-time projection, never the seven multi-megabyte kāṇḍas.
   if (isActive('valmiki-ramayan')) {
-    valmikiRamayanDailySelection.forEach((v) => {
-      pool.push({
+    const getAt = (offset: number): UniformVerse | null => {
+      const verse = valmikiRamayanDailySelection[offset];
+      if (!verse) return null;
+      return {
         sourceId: 'valmiki-ramayan',
         sourceNameHi: nameHi('valmiki-ramayan'),
         sourceNameEn: nameEn('valmiki-ramayan'),
-        chapter: v.kanda,
-        verseIndex: v.numInSection - 1,
-        textHi: v.lines,
-        textEn: v.linesEn,
-        meaningHi: v.meaningHi,
-        meaningEn: v.meaningEn,
-        labelHi: v.labelHi,
-        labelEn: v.labelEn,
-      });
+        chapter: verse.kanda,
+        verseIndex: verse.numInSection - 1,
+        textHi: verse.lines,
+        textEn: verse.linesEn,
+        meaningHi: verse.meaningHi,
+        meaningEn: verse.meaningEn,
+        labelHi: verse.labelHi,
+        labelEn: verse.labelEn,
+      };
+    };
+    segments.push({
+      sourceId: 'valmiki-ramayan',
+      length: valmikiRamayanDailySelection.length,
+      lastPositions: Object.values(
+        valmikiRamayanDailySelection.reduce<Record<number, { chapter: number; verseIndex: number }>>(
+          (positions, verse) => {
+            const verseIndex = verse.numInSection - 1;
+            const current = positions[verse.kanda];
+            if (!current || verseIndex > current.verseIndex) {
+              positions[verse.kanda] = { chapter: verse.kanda, verseIndex };
+            }
+            return positions;
+          },
+          {}
+        )
+      ),
+      getAt,
+      find: (verseIndex, chapter) => {
+        const offset = valmikiRamayanDailySelection.findIndex(
+          (verse) => verse.kanda === chapter && verse.numInSection - 1 === verseIndex
+        );
+        return offset < 0 ? null : getAt(offset);
+      },
     });
   }
 
-  // Japam — one mantra per entry, no chapter.
-  for (const m of japamMantras) {
-    if (!isActive(m.id)) continue;
-    pool.push({
-      sourceId: m.id,
-      sourceNameHi: m.nameHi,
-      sourceNameEn: m.nameEn,
-      verseIndex: 0,
-      textHi: m.lines,
-      textEn: m.linesEn,
-      meaningHi: m.meaningHi,
-      meaningEn: m.meaningEn,
-      labelHi: 'मंत्र',
-      labelEn: 'Mantra',
+  // Japam entries and Sanskar projections are already small launch-path data.
+  for (const mantra of japamMantras) {
+    if (!isActive(mantra.id)) continue;
+    const getAt = (offset: number): UniformVerse | null =>
+      offset === 0
+        ? {
+            sourceId: mantra.id,
+            sourceNameHi: mantra.nameHi,
+            sourceNameEn: mantra.nameEn,
+            verseIndex: 0,
+            textHi: mantra.lines,
+            textEn: mantra.linesEn,
+            meaningHi: mantra.meaningHi,
+            meaningEn: mantra.meaningEn,
+            labelHi: 'मंत्र',
+            labelEn: 'Mantra',
+          }
+        : null;
+    segments.push({
+      sourceId: mantra.id,
+      length: 1,
+      lastPositions: [{ chapter: 1, verseIndex: 0 }],
+      getAt,
+      find: (verseIndex, chapter) => chapter == null && verseIndex === 0 ? getAt(0) : null,
     });
   }
 
-  // Sanskar — flat verse list, no chapter. `verseIndex` is the index into the
-  // full verses array so it matches the reader's bookmark/progress identity;
-  // the leading `intro` descriptor is skipped.
   for (const id of sanskarIds) {
     if (!isActive(id)) continue;
     const data = getSanskar(id);
-    data.verses.forEach((v, idx) => {
-      if (v.type === 'intro') return;
-      pool.push({
+    const verseIndices = data.verses.flatMap((verse, index) => verse.type === 'intro' ? [] : [index]);
+    const getAt = (offset: number): UniformVerse | null => {
+      const verseIndex = verseIndices[offset];
+      const verse = verseIndex == null ? undefined : data.verses[verseIndex];
+      if (!verse) return null;
+      return {
         sourceId: id,
         sourceNameHi: nameHi(id, data.titleHi),
         sourceNameEn: nameEn(id, data.titleEn),
-        verseIndex: idx,
-        textHi: v.lines,
-        textEn: v.linesEn,
-        meaningHi: v.meaningHi,
-        meaningEn: v.meaningEn,
-        labelHi: v.labelHi,
-        labelEn: v.labelEn,
-      });
+        verseIndex,
+        textHi: verse.lines,
+        textEn: verse.linesEn,
+        meaningHi: verse.meaningHi,
+        meaningEn: verse.meaningEn,
+        labelHi: verse.labelHi,
+        labelEn: verse.labelEn,
+      };
+    };
+    segments.push({
+      sourceId: id,
+      length: verseIndices.length,
+      lastPositions: [{ chapter: 1, verseIndex: Math.max(...verseIndices) }],
+      getAt,
+      find: (verseIndex, chapter) => {
+        if (chapter != null) return null;
+        const offset = verseIndices.indexOf(verseIndex);
+        return offset < 0 ? null : getAt(offset);
+      },
     });
   }
 
+  return segments;
+}
+
+const poolSegments = buildPoolSegments();
+const poolSize = poolSegments.reduce((total, segment) => total + segment.length, 0);
+
+export type VersePoolLastPositions = {
+  chapters: Record<number, number>;
+  lastChapter: number;
+};
+
+/** Completion boundaries derived from manifests, without loading verse data. */
+export function getVersePoolLastPositions(): Record<string, VersePoolLastPositions> {
+  const positions: Record<string, VersePoolLastPositions> = {};
+  for (const segment of poolSegments) {
+    for (const last of segment.lastPositions) {
+      const source = positions[segment.sourceId] ?? { chapters: {}, lastChapter: last.chapter };
+      const current = source.chapters[last.chapter];
+      if (current == null || last.verseIndex > current) source.chapters[last.chapter] = last.verseIndex;
+      if (last.chapter > source.lastChapter) source.lastChapter = last.chapter;
+      positions[segment.sourceId] = source;
+    }
+  }
+  return positions;
+}
+
+export function getVersePoolSize(): number {
+  return poolSize;
+}
+
+export function getVerseAtPoolIndex(index: number): UniformVerse | null {
+  if (!Number.isInteger(index) || index < 0 || index >= poolSize) return null;
+  let offset = index;
+  for (const segment of poolSegments) {
+    if (offset < segment.length) return segment.getAt(offset);
+    offset -= segment.length;
+  }
+  return null;
+}
+
+function buildPool(): UniformVerse[] {
+  const pool: UniformVerse[] = [];
+  for (let index = 0; index < poolSize; index += 1) {
+    const verse = getVerseAtPoolIndex(index);
+    if (verse) pool.push(verse);
+  }
   return pool;
 }
 
@@ -244,10 +378,8 @@ export function getVersePool(): UniformVerse[] {
 }
 
 export function getRandomVerse(): UniformVerse | null {
-  const pool = getVersePool();
-  if (pool.length === 0) return null;
-  const idx = Math.floor(Math.random() * pool.length);
-  return pool[idx] ?? null;
+  if (poolSize === 0) return null;
+  return getVerseAtPoolIndex(Math.floor(Math.random() * poolSize));
 }
 
 /**
@@ -262,13 +394,10 @@ export function findVerse(
   verseIndex: number,
   chapter?: number
 ): UniformVerse | null {
-  const pool = getVersePool();
-  return (
-    pool.find(
-      (v) =>
-        v.sourceId === sourceId &&
-        v.verseIndex === verseIndex &&
-        (v.chapter ?? null) === (chapter ?? null)
-    ) ?? null
-  );
+  for (const segment of poolSegments) {
+    if (segment.sourceId !== sourceId) continue;
+    const verse = segment.find(verseIndex, chapter);
+    if (verse) return verse;
+  }
+  return null;
 }
