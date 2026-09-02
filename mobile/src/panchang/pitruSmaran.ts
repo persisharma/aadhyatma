@@ -216,6 +216,18 @@ export function solveNextOccurrence(rule: TithiRule, fromDate: Date, options: So
   return scanForRule(toObservanceRule(rule), fromDate, MAX_SCAN_DAYS, options);
 }
 
+/**
+ * Does this civil day carry the rule's annual observance? The bare tithi match —
+ * kshaya-aware via the shared matcher, with NO Pitru-Paksha mapping. PRD-29's
+ * जन्म तिथि surfaces match through this: `entryMatchesDate` would additionally
+ * fire on the person's mapped shraddha day inside the Mahalaya fortnight, which
+ * is correct for the dead and wrong for the living.
+ */
+export function tithiRuleMatchesDate(rule: TithiRule, date: Date, options: SolveOptions = {}): boolean {
+  if (!isValidTithiRule(rule)) return false;
+  return matchesLunarTithiRuleOnDate(toObservanceRule(rule), startOfLocalDay(date), 'purnimant', options.location);
+}
+
 const windowCache = new Map<string, PitruPakshaWindow | null>();
 
 function windowCacheKey(gregorianYear: number, options: SolveOptions): string {

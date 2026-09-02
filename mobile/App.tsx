@@ -62,6 +62,7 @@ import VratReminderScheduler from '@/components/VratReminderScheduler';
 import MuhuratReminderScheduler from '@/components/MuhuratReminderScheduler';
 import FestiveReminderScheduler from '@/components/FestiveReminderScheduler';
 import PitruSmaranReminderScheduler from '@/components/PitruSmaranReminderScheduler';
+import JanmaTithiReminderScheduler from '@/components/JanmaTithiReminderScheduler';
 import SadhanaReminderScheduler from '@/components/SadhanaReminderScheduler';
 import RoutineReminderScheduler from '@/components/RoutineReminderScheduler';
 import DailyVerseAngaBridge from '@/components/DailyVerseAngaBridge';
@@ -274,6 +275,9 @@ export default function App() {
                                 precomputed table). */}
                             <FestiveReminderScheduler />
                             <PitruSmaranReminderScheduler />
+                            {/* जन्म तिथि (PRD-29) — per-person OPT-IN only; the
+                                planner's worst case is 8 pending (roster cap). */}
+                            <JanmaTithiReminderScheduler />
                             <SadhanaReminderScheduler />
                             {/* Per-routine reminders (PRD-07 P3). Inside
                                 RoutineProvider + NotificationPreferencesProvider

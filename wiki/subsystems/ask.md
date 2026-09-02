@@ -13,7 +13,7 @@ A **deterministic grammar over the engines the app already ships** — no model,
 no telemetry — that makes the Search box answer a question (tithi, next Ekadashi, Rahu Kaal,
 what to offer Ganesha, which way the mandir faces, a puja's vidhi…) above the library results,
 composes the आज का विधान briefing from standing questions, and ends every answer in an action.
-Spec: `design.md` §70 · contract: `RULEBOOK.md` §25 · PRD: `docs/roadmap/prds/31-jijnasa-ask-vedansh.md`
+Spec: `design.md` §71 · contract: `RULEBOOK.md` §25 · PRD: `docs/roadmap/prds/31-jijnasa-ask-vedansh.md`
 (§13 has the mechanism, measured latency, tooling decision) · clickable prototype `docs/jijnasa-ask-prototype.html`.
 
 ## Shape

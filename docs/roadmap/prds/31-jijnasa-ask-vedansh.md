@@ -6,7 +6,7 @@
 |---|---|
 | **Status** | **Phases 0–3 built (2026-09-02)** — OTA-shippable; Phase 4 (voice) deferred to a store release. See §14 build record. |
 | **Origin** | Planning session 2026-08-30, against `main` @ `b38e363`, app 1.4.6 |
-| **Design** | `design.md` **§70**; §50 carries the pointer. §48's Today strip is untouched (see §14). |
+| **Design** | `design.md` **§71**; §50 carries the pointer. §48's Today strip is untouched (see §14). |
 | **Contract** | `RULEBOOK.md` **§25** — intent registration is now part of the add-a-feature contract |
 | **Release** | **OTA-shippable through Phase 3** — pure JS, no new native dependency, no new asset family. Phase 4 (voice) is the only store-release item. |
 | **T-shirt** | L — four phases, one of which ships nothing user-visible on purpose |
@@ -231,7 +231,7 @@ The Q4 candidates doc (`2026-Q4-candidates.md`) proposed five household-practice
 Inherits `RULEBOOK.md` §0/§0.1 in full:
 
 1. **Unit + Maestro e2e with every change.** New e2e flows: ask-answer-happy-path, ask-abstain-fallback, ask-action-deeplink (per phase).
-2. **`design.md` §70 authored in the same PR series as Phase 1**, and §48 updated when Phase 2 changes the Today strip; §50 gains a pointer explaining how purposes and intents relate.
+2. **`design.md` §71 authored in the same PR series as Phase 1**, and §48 updated when Phase 2 changes the Today strip; §50 gains a pointer explaining how purposes and intents relate.
 3. **`RULEBOOK.md` §25** — the intent-registration contract: *a new user-facing capability ships with at least one registered intent, its lexicon coverage, and its golden-corpus questions.* This is the clause that makes the unlock permanent rather than a one-quarter cleanup.
 4. `npm run lint` at **0 errors**; `src/ask` tests run under `tsx --test`, never Jest.
 5. No cold-start regression; bundle delta < 250 KB.
@@ -465,7 +465,7 @@ deviated from the plan above, and what was deliberately left out.
 actions, briefing) · `AskAnswerCard` / `AskAbstainCard` · answer-first `SearchScreen` with the
 rotating placeholder and `seed` / `initialQuery` route params · `TodayVidhanScreen` (Home stack
 `TodayVidhan`) reached from a Home DISCOVER card · the ask-from-context row on
-`ObservanceDetailScreen` · design.md §70 · RULEBOOK §25 · wiki `[[ask]]`. 13 intents (§5 slate
+`ObservanceDetailScreen` · design.md §71 · RULEBOOK §25 · wiki `[[ask]]`. 13 intents (§5 slate
 minus `kundali.self`, `rashifal.day`, `theerth.find` — see below). Tests: 32 tsx cases across
 fold / lexicon / resolve / corpus / briefing / launchPath, 5 Jest cases on the card, three Maestro
 flows (`ask-answer-smoke`, `ask-abstain-smoke`, `ask-briefing-smoke`).
