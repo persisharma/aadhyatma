@@ -4,10 +4,10 @@
 
 | | |
 |---|---|
-| **Status** | Proposed — Q4 2026 flagship (Oct–Dec 2026, 13 weeks) |
+| **Status** | **Phases 0–3 built (2026-09-02)** — OTA-shippable; Phase 4 (voice) deferred to a store release. See §14 build record. |
 | **Origin** | Planning session 2026-08-30, against `main` @ `b38e363`, app 1.4.6 |
-| **Design** | `design.md` **§67** (new — authored with Phase 1); extends §50 (Intent-Driven Discovery) and §48 (Home Today Strip) |
-| **Contract** | `RULEBOOK.md` **§23** (new — intent registration becomes part of the add-a-feature contract) |
+| **Design** | `design.md` **§67**; §50 carries the pointer. §48's Today strip is untouched (see §14). |
+| **Contract** | `RULEBOOK.md` **§23** — intent registration is now part of the add-a-feature contract |
 | **Release** | **OTA-shippable through Phase 3** — pure JS, no new native dependency, no new asset family. Phase 4 (voice) is the only store-release item. |
 | **T-shirt** | L — four phases, one of which ships nothing user-visible on purpose |
 | **Bet** | #1 for the quarter. Companion build: **PRD-20 सङ्कल्प** (see §10). |
@@ -453,3 +453,53 @@ on the launch frame — and the Today strip must render from cache first, never 
 < 250 KB budget in §11, but not comfortably. If it tightens: store folded keys only (drop the human
 form, which no runtime path reads), dedupe ids into a parallel array, and let the coverage test hold
 the mapping honest.
+
+---
+
+## 14. Build record (2026-09-02)
+
+Built on branch `claude/next-qtr-prd-planning-t9z1wb` in one pass, Phases 0–3. What landed, what
+deviated from the plan above, and what was deliberately left out.
+
+**Landed.** `mobile/src/ask/` (types, fold, aliases, lexicon, resolve, intents, engine, useAsk,
+actions, briefing) · `AskAnswerCard` / `AskAbstainCard` · answer-first `SearchScreen` with the
+rotating placeholder and `seed` / `initialQuery` route params · `TodayVidhanScreen` (Home stack
+`TodayVidhan`) reached from a Home DISCOVER card · the ask-from-context row on
+`ObservanceDetailScreen` · design.md §67 · RULEBOOK §23 · wiki `[[ask]]`. 13 intents (§5 slate
+minus `kundali.self`, `rashifal.day`, `theerth.find` — see below). Tests: 32 tsx cases across
+fold / lexicon / resolve / corpus / briefing / launchPath, 5 Jest cases on the card, three Maestro
+flows (`ask-answer-smoke`, `ask-abstain-smoke`, `ask-briefing-smoke`).
+
+**Gates at ship.** Golden corpus **199 positives, 199 hit, 0 wrong** (target ≥ 85% / 0), 18
+negatives never answer (10 declined by the stance guard, 8 fall through to content search).
+`launchPath.test.ts` green: no engine module on the static launch graph. `npm run lint` 0
+errors; typecheck clean.
+
+**Deviations from the plan, with reasons.**
+- **Lexicon is derived at runtime, not generated at build.** §4.3 planned a generated file and
+  §13.6 a build-time sanscript pass. In practice the registries are already in the bundle and
+  folding ~430 forms costs ~1 ms, so deriving the lexicon lazily from the live registries is
+  strictly better: it cannot drift, and the coverage test becomes a direct sweep. Sanscript was
+  therefore not added; `fold.ts` is validated by its own tests instead. uFuzzy was also not
+  added — the phrasing misses the corpus surfaced were closed by aliases and triggers, and the
+  4 KB stays available if the unanswered log says otherwise.
+- **Phase 2 lives behind a Home DISCOVER card, not inside the Today strip.** §6 said "the Today
+  strip's detail view"; §50 records how contested that fold budget is, and the strip's
+  festival-attribution contract is pinned by `festiveReminders.test.ts`. The DISCOVER card is
+  the repo's established awareness door; promoting the briefing into the strip is a design
+  decision for a later PR, not a code change.
+- **Three §5 intents not built.** `kundali.self` / `rashifal.day` need the saved birth profile
+  (async store, per-person roster, §51a) — a Phase 3 follow-up once the profile can be read
+  synchronously into `AskContext`. `theerth.find` is served by the existing content search.
+- **Phase 2's widget variant and notification family deferred**, as §6/§9 anticipated: the
+  widget needs the native extension bridge (store release); the notification family needs a
+  decision on the shared iOS pending budget (design.md §38).
+- **Phase 4 (voice) not started** — native STT is a store release; sequence it behind PRD-24's.
+
+**What the corpus taught.** The first run scored 92.5% with one *wrong* answer ("करवा चौथ की पूजा
+कैसे करें" → `vrat.how`), which is what produced the `blockers` mechanism. The 15 misses were
+all phrasing or lexicon gaps — a one-word Devanagari compound (महाशिवरात्रि), a registry name
+with a श्री prefix (सत्यनारायण), a class member lacking the needed profile (`ruleFor` with
+`needs`), triggers absent for "kab se" / "not be offered" / bare "disha" — exactly the
+long-tail the unanswered log (§7.2) is meant to feed. §7.2's on-device log itself is not yet
+wired; the corpus test's printed misses are the offline stand-in until it is.

@@ -9,7 +9,7 @@
  * the shared day store, which the Home Today strip has usually warmed already.
  */
 import React, { useEffect, useState } from 'react';
-import { InteractionManager, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { InteractionManager, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -88,18 +88,22 @@ export default function TodayVidhanScreen({ navigation }: Props) {
             ))
           )}
 
-          <View
-            style={[styles.askMore, { marginTop: spacing.xxl, borderColor: colors.divider, borderRadius: radii.lg, backgroundColor: colors.parchmentSoft }]}
+          <Pressable
+            style={({ pressed }) => [
+              styles.askMore,
+              { marginTop: spacing.xxl, borderColor: colors.divider, borderRadius: radii.lg, backgroundColor: colors.parchmentSoft },
+              pressed && { opacity: 0.8 },
+            ]}
             accessibilityRole="button"
             accessibilityLabel="Ask something else"
-            onTouchEnd={() => navigation.navigate('Search')}
+            onPress={() => navigation.navigate('Search')}
           >
             <Text style={{ fontSize: 16, color: colors.saffron }}>⌕</Text>
             <Text style={[styles.askMoreText, { color: colors.inkSoft, fontFamily: bodyFont }]}>
               {contentByLang(lang, 'कुछ और पूछें — भोग, विधि, दिशा, मुहूर्त…', 'Ask something else — bhog, vidhi, direction, muhurat…')}
             </Text>
             <Text style={{ color: colors.saffron, fontSize: 18 }}>›</Text>
-          </View>
+          </Pressable>
         </ScrollView>
       </SafeAreaView>
     </View>

@@ -330,6 +330,7 @@ export default function SearchScreen({ navigation, route }: Props) {
             onRecentRemove={removeRecent}
             onRecentClearAll={clearAllRecent}
             onPopularPress={(id) => openSection(id)}
+            onTodayVidhan={() => navigation.navigate('TodayVidhan')}
             lang={lang}
           />
         ) : (
@@ -451,10 +452,13 @@ function EmptyState({
   onRecentRemove,
   onRecentClearAll,
   onPopularPress,
+  onTodayVidhan,
   lang,
 }: {
   recent: string[];
   popular: { id: string; nameHi: string; nameEn: string; thumb: string }[];
+  /** जिज्ञासा (PRD-25): the briefing door in the question box's empty state. */
+  onTodayVidhan: () => void;
   colors: Theme['colors'];
   typography: Theme['typography'];
   spacing: Theme['spacing'];
@@ -473,6 +477,26 @@ function EmptyState({
       keyboardShouldPersistTaps="handled"
       ListHeaderComponent={
         <View style={[styles.emptyContent, { paddingHorizontal: spacing.xxl }]}>
+          <Pressable
+            onPress={onTodayVidhan}
+            accessibilityRole="button"
+            accessibilityLabel="Open Today's Vidhan"
+            style={({ pressed }) => [
+              styles.vidhanRow,
+              { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md, opacity: pressed ? 0.85 : 1 },
+            ]}
+          >
+            <Text style={[styles.vidhanGlyph, { color: colors.saffron }]}>?</Text>
+            <View style={styles.resultBody}>
+              <Text style={[styles.resultPrimary, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]} numberOfLines={1}>
+                {pick(lang, { hi: 'आज का विधान', en: "Today's Vidhan", gu: 'આજનું વિધાન', kn: 'ಇಂದಿನ ವಿಧಾನ' })}
+              </Text>
+              <Text style={[styles.resultSecondary, { color: colors.inkMuted, fontFamily: fontFamilies.inter }]} numberOfLines={1}>
+                {pick(lang, { hi: 'आज की तिथि · व्रत · शुभ समय · संकल्प', en: 'Tithi · observance · windows · sankalp', gu: 'તિથિ · વ્રત · શુભ સમય · સંકલ્પ', kn: 'ತಿಥಿ · ವ್ರತ · ಶುಭ ಸಮಯ · ಸಂಕಲ್ಪ' })}
+              </Text>
+            </View>
+            <Text style={[styles.chevron, { color: colors.saffron }]}>›</Text>
+          </Pressable>
           {recent.length > 0 ? (
             <>
               <View style={styles.recentHeader}>
@@ -978,6 +1002,8 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     includeFontPadding: false,
   },
+  vidhanRow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 14, paddingVertical: 12, borderWidth: 1, marginTop: 12, marginBottom: 6 },
+  vidhanGlyph: { fontSize: 22, width: 28, textAlign: 'center' },
   emptyContent: {
     paddingTop: 4,
   },

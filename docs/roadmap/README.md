@@ -8,7 +8,7 @@ This folder holds the product roadmap and PRDs for upcoming releases.
 
 ## Next
 
-- [**PRD-25 — जिज्ञासा · Ask Vedansh**](./prds/25-jijnasa-ask-vedansh.md) — **proposed Q4 2026 flagship.**
+- [**PRD-25 — जिज्ञासा · Ask Vedansh**](./prds/25-jijnasa-ask-vedansh.md) — **Q4 2026 flagship; Phases 0–3 built 2026-09-02 (§14 build record).**
   An on-device, deterministic answer engine over the engines the app already ships, so the computed
   half of the product (panchang, muhurat, vrat, bhog, vidhi, vastu, kundali, theerth) becomes
   askable in one line — and every future feature is discoverable on the day it ships. Companion
