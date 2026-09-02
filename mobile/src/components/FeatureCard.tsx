@@ -55,7 +55,7 @@ type Props = {
   compact?: boolean;
 };
 
-export default function FeatureCard({
+function FeatureCard({
   item,
   width,
   onPress,
@@ -306,3 +306,8 @@ const styles = StyleSheet.create({
     lineHeight: 16,
   },
 });
+
+// Memoised like `CategoryCard`: Home renders eight of these and re-renders on
+// every context hydration at launch. The memo only helps when the screen hands
+// over stable `item`/handler props — HomeScreen memoises both.
+export default React.memo(FeatureCard);

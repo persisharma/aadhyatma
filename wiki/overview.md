@@ -2,7 +2,7 @@
 title: Overview
 type: overview
 sources: [README.md, mobile/package.json, mobile/app.json, mobile/jest.config.js, mobile/App.tsx, mobile/src/navigation/, mobile/src/data/texts.ts, mobile/src/data/backgrounds.ts, mobile/src/data/routine/, mobile/src/panchang/, mobile/src/notifications/japamAlarms.ts, mobile/assets/backgrounds/, RULEBOOK.md, design.md, scripts/, push.sh, mobile/eslint.config.js, mobile/src/theme/, mobile/src/components/ReaderHeader.tsx, mobile/src/components/TextField.tsx]
-last_verified_date: 2026-08-30
+last_verified_date: 2026-09-02
 confidence: medium
 status: current
 ---
@@ -38,6 +38,13 @@ JapamCounter, Routine, RoutineSheet, NotificationPreferences, Share) around a
 The native splash stays visible until fonts plus the persisted font-size and reading-language
 preferences have hydrated. Those preferences alter Home geometry, so this gate makes the first
 visible Home frame stable instead of moving the launcher grid immediately after landing.
+
+Everything heavier than paint is deferred behind `InteractionManager.runAfterInteractions`, and
+`App.tsx` sets `InteractionManager.setDeadline(16)` so that queue drains one task per event-loop
+turn rather than as a single batch — a tap that lands while the deferred tail runs is handled
+between tasks instead of after all of them (see [[panchang]] gotchas). Home's launcher tiles and
+DISCOVER cards are memoised behind stable handlers (`LauncherTile` / `DiscoverCard` in
+`HomeScreen.tsx`) so the dozen context hydrations at launch do not re-render them.
 
 1. **Home** → `HomeStackNavigator` (native-stack, 30+ reader screens: Gita, chalisas,
    Sundarkand, stotrams, sanskar, japam, search — plus 5 Daily-Routine screens:

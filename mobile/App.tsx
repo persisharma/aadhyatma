@@ -84,6 +84,23 @@ SplashScreen.preventAutoHideAsync().catch(() => {
 // One-time global setup: foreground notification presentation.
 configureForegroundNotificationHandler();
 
+// Run the deferred launch queue one task per event-loop turn instead of as ONE
+// batch. `runAfterInteractions` with the default deadline (-1) drains every
+// queued task inside a single `setImmediate` — and on a cold start that queue is
+// the whole post-paint tail: the Today strip's solves, six reminder schedulers,
+// the widget planner's kick-off, the tour. A touch that arrives while the batch
+// runs is not handled until the batch ends, which is why Home could be scrolled
+// (native) but not tapped (JS) for seconds after it painted. With a positive
+// deadline the manager reschedules itself via `setTimeout(0)` after the budget,
+// so queued touch events are dispatched between tasks. The budget is a ceiling
+// per turn, not a target — most tasks here are far shorter than one frame.
+InteractionManager.setDeadline(16);
+
+// Read once: `Updates`/`Constants` are the same for the whole process, and the
+// widget coordinator needs the value as a plain prop (it must not import
+// `buildFingerprint.ts` — see that file's header).
+const BUILD_FINGERPRINT = currentBuildFingerprint();
+
 // Drop the derived caches (panchang day solves, observance year scans, the widget
 // dedupe key) when the running build changes — a store update or an OTA — so a bug
 // baked into cached data cannot outlive the release that fixes it. Nothing the user
@@ -92,7 +109,7 @@ configureForegroundNotificationHandler();
 // MODULE SCOPE, not an effect: the caches await this before touching storage, and
 // registering it here is what guarantees it is in flight before React renders
 // anything that hydrates. Fire-and-forget — it never rejects.
-void resetDerivedCachesIfBuildChanged(currentBuildFingerprint());
+void resetDerivedCachesIfBuildChanged(BUILD_FINGERPRINT);
 
 // Read the panchang preferences and pull today's persisted day solves into memory
 // NOW, concurrently with the splash gate below rather than behind it. Home's
@@ -289,7 +306,7 @@ export default function App() {
                                 PanchangLocationProvider — the notification
                                 provider itself sits above it. */}
                             <DailyVerseAngaBridge />
-                            <WidgetCoordinator />
+                            <WidgetCoordinator buildFingerprint={BUILD_FINGERPRINT} />
                             <MiniPlayer />
                             <NowPlayingScreen />
                             {/* Top-level so the spotlight overlays the tab bar +

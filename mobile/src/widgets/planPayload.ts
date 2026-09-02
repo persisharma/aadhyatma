@@ -23,15 +23,36 @@ function localizedFromHindi(hi: string, en: string): WidgetLocalizedText {
   return { hi, en, gu: transliterateDevanagari(hi, 'gu'), kn: transliterateDevanagari(hi, 'kn') };
 }
 
+/**
+ * Formatters built once per process. `Intl.DateTimeFormat` construction is a
+ * native round trip on Hermes and this planner used to build nine per day — four
+ * represented-date locales plus five clock readings — on the launch path. Same
+ * fix as the engine's `zonedFormatter`; the planner is the only zoned caller.
+ */
+const dateFormatters = new Map<string, Intl.DateTimeFormat>();
+function representedDateFormatter(locale: string): Intl.DateTimeFormat {
+  let formatter = dateFormatters.get(locale);
+  if (!formatter) {
+    formatter = new Intl.DateTimeFormat(locale, { timeZone: WIDGET_TIME_ZONE, day: 'numeric', month: 'short' });
+    dateFormatters.set(locale, formatter);
+  }
+  return formatter;
+}
+let istClockFormatter: Intl.DateTimeFormat | undefined;
+
 function representedDate(key: string): WidgetLocalizedText {
   const instant = new Date(`${key}T12:00:00+05:30`);
-  const format = (locale: string) => new Intl.DateTimeFormat(locale, { timeZone: WIDGET_TIME_ZONE, day: 'numeric', month: 'short' }).format(instant);
+  const format = (locale: string) => representedDateFormatter(locale).format(instant);
   return { hi: format('hi-IN'), en: format('en-IN'), gu: format('gu-IN'), kn: format('kn-IN') };
 }
 
 function clockInIst(date: Date): string {
-  return new Intl.DateTimeFormat('en-US', { timeZone: WIDGET_TIME_ZONE, hour: 'numeric', minute: '2-digit', hour12: true }).format(date);
+  istClockFormatter ??= new Intl.DateTimeFormat('en-US', { timeZone: WIDGET_TIME_ZONE, hour: 'numeric', minute: '2-digit', hour12: true });
+  return istClockFormatter.format(date);
 }
+
+/** Cede the JS thread for one macrotask so queued touches can be handled. */
+const yieldToUi = (): Promise<void> => new Promise<void>((resolve) => setTimeout(resolve, 0));
 
 function compactRangeInIst(start: Date, end: Date): string {
   const from = clockInIst(start); const to = clockInIst(end);
@@ -60,6 +81,9 @@ export async function planWidgetPayload(input: Omit<WidgetPlannerInput, 'panchan
     const day = engineDateForCivilKey(key);
     const nextDay = engineDateForCivilKey(nextKey);
     const panchang = computePanchangForDate(day, { calendarSystem: input.calendarSystem, location: input.location, civilTimeZone: WIDGET_TIME_ZONE });
+    // Each zoned solve is the largest unbroken block in this loop; give the UI a
+    // turn between the two rather than only once per day.
+    await yieldToUi();
     const nextPanchang = computePanchangForDate(nextDay, { calendarSystem: input.calendarSystem, location: input.location, civilTimeZone: WIDGET_TIME_ZONE });
     const muhurat = computeMuhuratDay(panchang.sunrise, panchang.sunset, nextPanchang.sunrise, day.getDay());
     const observance = getObservancesForDateKey(key, input.calendarSystem, input.location)[0]?.rule;
@@ -90,7 +114,7 @@ export async function planWidgetPayload(input: Omit<WidgetPlannerInput, 'panchan
     verseDays.push({ dateKey: verseKey, sourceId: verse.sourceId, ...(verse.chapter == null ? {} : { chapter: verse.chapter }), verseIndex: verse.verseIndex, lines, excerpt, source, accessibilityLabel, deepLink: `vedansh://widget/verse?${query.toString()}` });
     // Avoid monopolising Hermes while preparing the offline window. This is an
     // orchestration yield; the payload transformation itself remains pure.
-    await new Promise<void>((resolve) => setTimeout(resolve, 0));
+    await yieldToUi();
   }
 
   return buildWidgetPayload({ ...input, writerAppVersion: appConfig.expo.version, panchangDays, verseDays });

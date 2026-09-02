@@ -29,12 +29,78 @@ import { launchMarkOnce } from '@/utils/launchTrace';
 import type { HomeStackParamList } from '@/navigation/types';
 import type { ContentCategory } from '@/data/texts';
 import { useNewContent } from '@/contexts/NewContentContext';
-import { useTilePressController, TilePressProvider } from '@/contexts/TilePressContext';
+import { useTilePressController, TilePressProvider, useTilePress } from '@/contexts/TilePressContext';
 import { shuffleBySeed } from '@/utils/shuffleBySeed';
 import { moreTabTarget, panchangTabTarget } from '@/navigation/entryRoutes';
 import { useTourTarget, scrollNodeIntoView } from '@/components/tour/tourTargets';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>;
+
+type TileItem = {
+  key: string;
+  nameHi: string;
+  nameEn: string;
+  shortNameEn?: string;
+  status: 'active' | 'coming';
+  icon?: React.ReactNode;
+  onPress: () => void;
+  hasNew?: boolean;
+};
+
+type Spotlight = FeatureSpotlight & { onPress: () => void };
+
+/**
+ * One launcher tile. Memoised, with the press wiring INSIDE it, so the sixteen
+ * `CategoryCard`s (each a gradient plus a hand-drawn glyph of a dozen views) do
+ * not re-render every time HomeScreen does. HomeScreen used to hand each card
+ * fresh `() => activateTile(...)` closures on every render, which defeated
+ * `CategoryCard`'s memo exactly when it mattered: at launch, when a dozen context
+ * providers hydrate from disk one after another and each hydration re-renders
+ * the screen. The tile-press handlers come from context and are stable; the
+ * `tile` object is stable because HomeScreen memoises the list.
+ */
+const LauncherTile = React.memo(function LauncherTile({ tile }: { tile: TileItem }) {
+  const { beginTilePress, finishTilePress, activateTile } = useTilePress();
+  const onPress = React.useCallback(() => activateTile(tile.onPress), [activateTile, tile.onPress]);
+  const onPressIn = React.useCallback(() => beginTilePress(tile.onPress), [beginTilePress, tile.onPress]);
+  return (
+    <CategoryCard
+      nameHi={tile.nameHi}
+      nameEn={tile.nameEn}
+      displayNameEn={tile.shortNameEn}
+      status={tile.status}
+      icon={tile.icon}
+      onPress={onPress}
+      onPressIn={onPressIn}
+      onPressOut={finishTilePress}
+      hasNew={tile.hasNew}
+      variant="launcher"
+    />
+  );
+});
+
+/** One DISCOVER card — the same memo boundary as `LauncherTile`, for `FeatureCard`. */
+const DiscoverCard = React.memo(function DiscoverCard({
+  spotlight,
+  width,
+}: {
+  spotlight: Spotlight;
+  width: number;
+}) {
+  const { beginTilePress, finishTilePress, activateTile } = useTilePress();
+  const { onPress: open, ...item } = spotlight;
+  const onPress = React.useCallback(() => activateTile(open), [activateTile, open]);
+  const onPressIn = React.useCallback(() => beginTilePress(open), [beginTilePress, open]);
+  return (
+    <FeatureCard
+      item={item}
+      width={width}
+      onPress={onPress}
+      onPressIn={onPressIn}
+      onPressOut={finishTilePress}
+    />
+  );
+});
 
 export default function HomeScreen({ navigation }: Props) {
   launchMarkOnce('home-render');
@@ -60,7 +126,7 @@ export default function HomeScreen({ navigation }: Props) {
   // every Home card so a vertical page-scroll started on any card suppresses its
   // fallback instead of navigating. See @/contexts/TilePressContext.
   const tilePress = useTilePressController();
-  const { beginTilePress, markTileDrag, finishTilePress, activateTile } = tilePress;
+  const { markTileDrag } = tilePress;
 
   // Festive toran (design.md §55): on the 18 catalog festivals Home hangs a
   // garland + greeting chip under the wordmark. Same festival resolution as the
@@ -70,17 +136,6 @@ export default function HomeScreen({ navigation }: Props) {
   // path the row already takes on this same render.
   const todayKey = useTodayKey();
   const todayFestival = React.useMemo(() => getTodayFestival(new Date(todayKey)), [todayKey]);
-
-  type TileItem = {
-    key: string;
-    nameHi: string;
-    nameEn: string;
-    shortNameEn?: string;
-    status: 'active' | 'coming';
-    icon?: React.ReactNode;
-    onPress: () => void;
-    hasNew?: boolean;
-  };
 
   // Launcher grid: the registry content categories (categories.ts, ranked by
   // usefulness + USP), with non-content tiles interleaved at their ranked
@@ -190,7 +245,10 @@ export default function HomeScreen({ navigation }: Props) {
 
   // Spotlight content. One flexible card shell (FeatureCard) carries every
   // section so awareness of each surface is raised from a single carousel.
-  const spotlights: (FeatureSpotlight & { onPress: () => void })[] = [
+  // Memoised (like `tiles`) so the eight DiscoverCards keep stable props across
+  // the launch's context-hydration re-renders; the icon elements are created
+  // here, so they are stable too.
+  const spotlights: Spotlight[] = React.useMemo(() => [
     {
       key: 'routine',
       titleHi: 'नित्य साधना', titleEn: 'Daily Practice',
@@ -338,14 +396,17 @@ export default function HomeScreen({ navigation }: Props) {
       ),
       onPress: () => rootNav.navigate('MoreTab', moreTabTarget('WidgetGallery')),
     },
-  ];
+  ], [navigation, rootNav, typography.thumb.fontFamily, colors.saffronDeep, colors.gold]);
 
   // All cards always render (awareness = coverage); their order is shuffled once
   // per app open so a different section leads each visit. The seed is captured
   // at mount (useMemo []), so the order is fresh on each open yet stable across
   // re-renders while the user is on Home. See utils/shuffleBySeed.
   const shuffleSeed = React.useMemo(() => Date.now(), []);
-  const orderedSpotlights = shuffleBySeed(spotlights, shuffleSeed);
+  const orderedSpotlights = React.useMemo(
+    () => shuffleBySeed(spotlights, shuffleSeed),
+    [spotlights, shuffleSeed]
+  );
 
   return (
     <View style={styles.root}>
@@ -421,18 +482,7 @@ export default function HomeScreen({ navigation }: Props) {
                 }
                 collapsable={tile.key === 'japam' || tile.key === 'theerth' ? false : undefined}
               >
-                <CategoryCard
-                  nameHi={tile.nameHi}
-                  nameEn={tile.nameEn}
-                  displayNameEn={tile.shortNameEn}
-                  status={tile.status}
-                  icon={tile.icon}
-                  onPress={() => activateTile(tile.onPress)}
-                  onPressIn={() => beginTilePress(tile.onPress)}
-                  onPressOut={finishTilePress}
-                  hasNew={tile.hasNew}
-                  variant="launcher"
-                />
+                <LauncherTile tile={tile} />
               </View>
             ))}
           </View>
@@ -482,15 +532,8 @@ export default function HomeScreen({ navigation }: Props) {
               // shared first-tap fallback so a swipe never opens a card.
               onScrollBeginDrag={markTileDrag}
             >
-              {orderedSpotlights.map(({ onPress, ...item }) => (
-                <FeatureCard
-                  key={item.key}
-                  item={item}
-                  width={featureWidth}
-                  onPress={() => activateTile(onPress)}
-                  onPressIn={() => beginTilePress(onPress)}
-                  onPressOut={finishTilePress}
-                />
+              {orderedSpotlights.map((spotlight) => (
+                <DiscoverCard key={spotlight.key} spotlight={spotlight} width={featureWidth} />
               ))}
             </ScrollView>
 

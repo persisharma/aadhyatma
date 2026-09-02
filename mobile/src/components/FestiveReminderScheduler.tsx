@@ -10,7 +10,11 @@ import {
 } from '@/notifications/festiveScheduler';
 import { FESTIVE_REMINDERS } from '@/notifications/festiveReminders';
 import type { FestiveReminderInput } from '@/notifications/festiveReminderPure';
-import { pitruPakshaWindow } from '@/panchang/pitruSmaran';
+import {
+  ensurePakshaWindow,
+  hydrateSmaranSolves,
+  persistSmaranSolves,
+} from '@/panchang/pitruSmaranSolves';
 import {
   cancelAllPitruPakshaReminders,
   schedulePitruPakshaReminders,
@@ -40,6 +44,15 @@ function startOfLocalDay(d: Date): Date {
  * which is cheap and available offline, and a festival's civil date shifts by at
  * most a day across Indian cities. Reading it still runs behind
  * `InteractionManager` so a cold start's first frames are never charged for it.
+ *
+ * The two Pitru Paksha windows (this year, next) go through the persisted
+ * `pitruSmaranSolves` layer, never the raw engine. A window is a Bhadrapada-Purnima
+ * scan plus an amavasya walk — ~75 ms on a desktop JIT, several hundred on Hermes,
+ * unyielded — and this scheduler runs on EVERY launch. The engine's own memo is
+ * per-process, so calling `pitruPakshaWindow` here re-solved NEXT year's window on
+ * every cold start (the Today strip primes only the current year's), inside the
+ * deferred batch that also holds Home's taps. Hydrate from disk first (I/O), solve
+ * only what disk lacks, persist what was solved: once per install, not per launch.
  */
 export default function FestiveReminderScheduler() {
   const { prefs, permissionStatus, isLoading } = useNotificationPreferences();
@@ -70,7 +83,7 @@ export default function FestiveReminderScheduler() {
       };
     }
 
-    const task = InteractionManager.runAfterInteractions(() => {
+    const task = InteractionManager.runAfterInteractions(async () => {
       if (cancelled) return;
       const now = new Date();
       const today = startOfLocalDay(now);
@@ -100,9 +113,15 @@ export default function FestiveReminderScheduler() {
 
       if (cancelled) return;
       scheduleFestiveReminders(inputs, now, lang).catch(() => undefined);
+
+      // Disk before astronomy: the window years this reads are exactly the two
+      // `hydrateSmaranSolves` fetches for any caller. Free when already in memory.
+      await hydrateSmaranSolves([], today);
+      if (cancelled) return;
       const windows = [today.getFullYear(), today.getFullYear() + 1]
-        .map((year) => ({ year, window: pitruPakshaWindow(year) }))
+        .map((year) => ({ year, window: ensurePakshaWindow(year) }))
         .filter((item): item is { year: number; window: NonNullable<typeof item.window> } => item.window !== null);
+      void persistSmaranSolves();
       schedulePitruPakshaReminders(windows, now, lang).catch(() => undefined);
     });
 

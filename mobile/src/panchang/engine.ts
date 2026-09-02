@@ -62,16 +62,56 @@ export function getSiderealMoonLng(date: Date, year: number): number {
 
 type CivilParts = { year: number; month: number; day: number };
 
+/**
+ * One `Intl.DateTimeFormat` per (time zone, field set), built once.
+ *
+ * Constructing a formatter is by far the most expensive thing on the
+ * `civilTimeZone` path — on Hermes it is a native round trip (ICU / NSDateFormatter)
+ * that costs more than the astronomy it brackets — and it used to happen on EVERY
+ * `civilParts` / `civilStart` call, which sit inside the tithi, nakshatra and karana
+ * bisections and the lunar-month search. A single zoned `computePanchangForDate`
+ * built well over a hundred formatters; the widget planner's 14-day window
+ * (`widgets/planPayload.ts`, the only zoned caller) took ~1 s on a desktop JIT and
+ * several seconds of JS thread on a phone — on every cold launch, holding taps.
+ * Memoising the formatter makes the zoned path cost the same as the local one.
+ * Formatters are immutable and thread-agnostic, so sharing them is safe.
+ */
+const dateTimeFormatCache = new Map<string, Intl.DateTimeFormat>();
+
+function zonedFormatter(timeZone: string, kind: 'date' | 'datetime'): Intl.DateTimeFormat {
+  const key = `${kind}:${timeZone}`;
+  let formatter = dateTimeFormatCache.get(key);
+  if (!formatter) {
+    formatter =
+      kind === 'date'
+        ? new Intl.DateTimeFormat('en-US', {
+            timeZone,
+            calendar: 'gregory',
+            numberingSystem: 'latn',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+          })
+        : new Intl.DateTimeFormat('en-US', {
+            timeZone,
+            calendar: 'gregory',
+            numberingSystem: 'latn',
+            hourCycle: 'h23',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+          });
+    dateTimeFormatCache.set(key, formatter);
+  }
+  return formatter;
+}
+
 function civilParts(date: Date, timeZone?: string): CivilParts {
   if (!timeZone) return { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() };
-  const parts = new Intl.DateTimeFormat('en-US', {
-    timeZone,
-    calendar: 'gregory',
-    numberingSystem: 'latn',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  }).formatToParts(date);
+  const parts = zonedFormatter(timeZone, 'date').formatToParts(date);
   const value = (type: Intl.DateTimeFormatPartTypes) => Number(parts.find((part) => part.type === type)?.value);
   return { year: value('year'), month: value('month'), day: value('day') };
 }
@@ -85,18 +125,7 @@ function civilStart(localDate: Date, timeZone?: string): Date {
   const target = { year: localDate.getFullYear(), month: localDate.getMonth() + 1, day: localDate.getDate() };
   const wantedUtc = Date.UTC(target.year, target.month - 1, target.day);
   let instant = wantedUtc;
-  const formatter = new Intl.DateTimeFormat('en-US', {
-    timeZone,
-    calendar: 'gregory',
-    numberingSystem: 'latn',
-    hourCycle: 'h23',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-  });
+  const formatter = zonedFormatter(timeZone, 'datetime');
   for (let iteration = 0; iteration < 4; iteration += 1) {
     const parts = formatter.formatToParts(new Date(instant));
     const value = (type: Intl.DateTimeFormatPartTypes) => Number(parts.find((part) => part.type === type)?.value);

@@ -54,9 +54,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
  * below lives under the same `@vedansh` namespace and stays:
  * - `@vedansh/widget:last-plan-key-v1` — derived, but not a computed-days cache:
  *   it is the widget writer's write-dedupe key. It also needs no help, because
- *   `WidgetCoordinator` re-plans the payload from scratch on every pass and
- *   compares keys — so a fixed engine that changes the payload changes the key
- *   and rewrites anyway, and an unchanged payload had nothing to fix.
+ *   a re-plan compares payload CONTENT — so a fixed engine that changes the
+ *   payload changes the key and rewrites anyway, and an unchanged payload had
+ *   nothing to fix.
+ * - `@vedansh/widget:last-plan-inputs-v1` — the inputs fingerprint that lets the
+ *   coordinator SKIP a re-plan (`widgets/planInputsKey.ts`). It carries the build
+ *   fingerprint itself, so the build change this sweep reacts to already misses
+ *   it and forces one fresh plan; sweeping it here would be redundant.
  * - `@vedansh:panchang-location`, `@vedansh:panchang-calendar-system` — the
  *   user's chosen city and purnimant/amanta setting. They look panchang-shaped
  *   and are the easiest mistake here: clearing them silently moves the user back

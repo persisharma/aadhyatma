@@ -80,7 +80,13 @@ export function useTilePressController(): TilePressHandlers {
     []
   );
 
-  return { beginTilePress, markTileDrag, finishTilePress, activateTile };
+  // One stable object: it is the context VALUE below, so a fresh literal per
+  // render would re-render every card on Home each time the screen re-rendered
+  // (every context hydration at launch) and defeat `CategoryCard`'s memo.
+  return React.useMemo(
+    () => ({ beginTilePress, markTileDrag, finishTilePress, activateTile }),
+    [beginTilePress, markTileDrag, finishTilePress, activateTile]
+  );
 }
 
 // Default = no enhancement: presses just run their onPress action directly, so a

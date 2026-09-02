@@ -2,7 +2,7 @@
 title: Home Widgets
 type: subsystem
 sources: [mobile/src/widgets, mobile/src/screens/WidgetGalleryScreen.tsx, mobile/plugins/withHomeWidgets.js, mobile/plugins/withHomeWidgetsIos.js, mobile/plugins/home-widgets, mobile/modules/home-widgets-ios, mobile/App.tsx]
-last_verified_date: 2026-08-24
+last_verified_date: 2026-09-02
 confidence: high
 status: current
 ---
@@ -13,7 +13,7 @@ Vedansh publishes a single versioned JSON snapshot for native Home/Lock Screen w
 
 ## Details
 
-`WidgetCoordinator` waits for interaction completion plus language, Panchang-location, Panchang-calendar, and Japam hydration. It then dynamically imports `planPayload`, builds a 14-day IST window, deduplicates/throttles writes, and sends one atomic document through `widgets/native.ts`. This keeps the Home first frame independent of the Panchang dependency graph.
+`WidgetCoordinator` waits for interaction completion plus language, Panchang-location, Panchang-calendar, and Japam hydration. It then fingerprints the plan's INPUTS (`widgets/planInputsKey.ts`: build fingerprint, locale, location, calendar system, device zone, the two window start days, a digest of the japam ledger, last mantra) and compares it with `@vedansh/widget:last-plan-inputs-v1` — a match skips the plan entirely. Otherwise it dynamically imports `planPayload`, builds a 14-day IST window, deduplicates/throttles writes, sends one atomic document through `widgets/native.ts`, and only then records the inputs key. This keeps the Home first frame independent of the Panchang dependency graph, and keeps every cold launch after the day's first one free of planner CPU. The coordinator receives the build fingerprint as a prop from `App.tsx` (it must not import `buildFingerprint.ts` — see that file).
 
 The schema is `WidgetPayloadV1` in `widgets/contract.ts`:
 
@@ -48,3 +48,4 @@ Deep links are exact and shared by warm/cold starts: verse links carry source/ch
 - A widget kind is an OS-persisted identity: renaming or removing one drops every placed instance of it. The Aug 2026 split retired `VedanshAmbientWidget` (and the single combined Android receiver) deliberately — placed instances of the old kind disappear and must be re-added from the gallery.
 - `twoLineExcerpt` is a **small-cell** budget (88 characters ≈ 4 lines at 13 pt), not a payload-wide summary. The wide verse cell rendered it too and so ellipsized any verse past the cap on a card sized for three 16 pt lines — BG 5.12 lost its closing pada with the third line empty. Only the iOS small / Android narrow (<180 dp) cell may read `excerpt`; everything wider reads `lines`. `catalog.test.ts` pins that in both native sources. Generally: never apply a size-specific cap on the shared payload path — put the full text in the payload and let the widest consumer decide.
 - Section eyebrows (`आज का श्लोक`, `जप-साधना`) are not in the payload, so both native surfaces carry their own four-language literals. Anything else user-visible must come from the payload, which is always fully localized.
+- **The planner was the launch hang (Sep 2026: "I can scroll Home but not tap for a few seconds").** It ran on EVERY cold launch — `lastRunAt` is a ref, so the 30 s throttle never applied across launches, and `LAST_PLAN_KEY` compares the *finished* payload, saving the native write but never the CPU. And the plan was ~5× dearer than it looked: the widget solves with `civilTimeZone: 'Asia/Kolkata'`, and that engine path built a fresh `Intl.DateTimeFormat` inside every bisection step (`civilParts` / `civilStart`), so 14 days × 2 zoned `computePanchangForDate` measured ~1 s on a desktop JIT (≈4 s of Hermes) yielding only once per day. Three fixes, keep all three: ① `engine.ts` memoises formatters per (zone, shape) — zoned solves now cost the same as local ones (~215 ms for the 28 on V8); ② `planPayload` memoises its own nine-per-day formatters and yields between the two solves; ③ the inputs-key skip above. Do not "fix" the skip by sweeping `last-plan-inputs-v1` in `derivedCacheReset` — the key already carries the build fingerprint, so an OTA misses it and re-plans once by itself. `planInputsKey.test.ts` pins that every planner input moves the key and that the coordinator compares before it imports the planner.
