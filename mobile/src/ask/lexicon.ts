@@ -1,6 +1,6 @@
 /**
  * The जिज्ञासा lexicon — every surface form the resolver can tag, DERIVED from
- * the registries that already ship (PRD-31 §4.3). Nothing here is hand-listed
+ * the registries that already ship (PRD-41 §4.3). Nothing here is hand-listed
  * except `aliases.ts`; a new deity, festival, occasion, room, mantra or vidhi
  * becomes askable the moment it lands in its registry, and `lexicon.test.ts`
  * fails if a registry entry produces no usable key.
@@ -22,7 +22,7 @@ import type { EntityType, LexEntry } from './types';
 
 /**
  * Recurring observance FAMILIES. "एकादशी कब है" means the next Ekadashi of any
- * name, not a specific one — PRD-31 §13.3. Members are selected from
+ * name, not a specific one — PRD-41 §13.3. Members are selected from
  * `OBSERVANCE_RULES` by id pattern so a new Ekadashi rule joins automatically.
  */
 const OBSERVANCE_CLASSES: readonly {

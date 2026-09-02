@@ -1,7 +1,7 @@
 /**
  * The UI's door to जिज्ञासा. Loads the engine through a dynamic `import()` so
  * nothing under `src/ask/` (registries, panchang engine) reaches the launch
- * graph — PRD-31 §13.7 — and warms the lexicon the moment the search surface
+ * graph — PRD-41 §13.7 — and warms the lexicon the moment the search surface
  * mounts, so the first keystroke is free.
  *
  * Context is assembled here from the same hooks every daily surface already

@@ -1,4 +1,4 @@
-# PRD-31 — जिज्ञासा · Ask Vedansh
+# PRD-41 — जिज्ञासा · Ask Vedansh
 
 > *The app computes far more than it can be asked. One line of input turns twenty-four PRDs of buried intelligence into something a household can actually reach — and makes every future feature discoverable on the day it ships.*
 
@@ -222,7 +222,7 @@ The Q4 candidates doc (`2026-Q4-candidates.md`) proposed five household-practice
 - **PRD-22 हवन — defer.** Phases B/C are content-egress-gated; Phase A's āhuti mechanic is real but it deepens a surface a minority reaches, which is precisely the ordering this PRD argues against for now.
 - **PRD-23 / 24 need no work at all** — they become askable the day their intents are registered. That is the compounding effect, demonstrated on features already paid for.
 
-**The ordering argument in one line:** with 24 PRDs shipped and no analytics, the marginal value of PRD-31 (making all 24 reachable) exceeds the marginal value of PRD-31-as-more-content — and every quarter we defer it, the backlog of unfound work grows.
+**The ordering argument in one line:** with 24 PRDs shipped and no analytics, the marginal value of PRD-41 (making all 24 reachable) exceeds the marginal value of PRD-41-as-more-content — and every quarter we defer it, the backlog of unfound work grows.
 
 ---
 

@@ -2,7 +2,7 @@
  * Hand-curated surface forms the registries and the transliterator cannot
  * produce — honorifics, regional names, common Hinglish spellings. This is the
  * ONLY hand-maintained vocabulary in `src/ask/`; everything else in the
- * lexicon is derived from code (PRD-31 §4.3).
+ * lexicon is derived from code (PRD-41 §4.3).
  *
  * Grow it from the on-device unanswered-question log (§7.2), one release at a
  * time. Every alias must point at an id that exists — `lexicon.test.ts` fails

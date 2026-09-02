@@ -1,5 +1,5 @@
 /**
- * Query folding for जिज्ञासा (PRD-31 §13.1).
+ * Query folding for जिज्ञासा (PRD-41 §13.1).
  *
  * Devanagari, IAST and Latin/Hinglish all fold to ONE ASCII key so the two
  * halves of the lexicon — and the user's typing — can meet. Pure, no I/O.
@@ -94,7 +94,7 @@ export function stem(word: string): string {
 
 /**
  * Generic devotional vocabulary that must never establish an entity on its
- * own (PRD-31 §13.3 specificity floor). "vrat" may narrow a match; it may not
+ * own (PRD-41 §13.3 specificity floor). "vrat" may narrow a match; it may not
  * pick a vrat. "kaal" is here because राहु काल stems into `kali`.
  */
 export const GENERIC_TOKENS: ReadonlySet<string> = new Set([

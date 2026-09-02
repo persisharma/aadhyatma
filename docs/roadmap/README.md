@@ -8,14 +8,14 @@ This folder holds the product roadmap and PRDs for upcoming releases.
 
 ## Next
 
-- [**PRD-31 — जिज्ञासा · Ask Vedansh**](./prds/31-jijnasa-ask-vedansh.md) — **Q4 2026 flagship; Phases 0–3 built 2026-09-02 (§14 build record).** Numbered 31 because 25 stays reserved for सन्ध्या वन्दन (round 1 §3), 26–29 are round-2 reservations and 30 is retired.
+- [**PRD-41 — जिज्ञासा · Ask Vedansh**](./prds/41-jijnasa-ask-vedansh.md) — **Q4 2026 flagship; Phases 0–3 built 2026-09-02 (§14 build record).** Numbered 41 because 25 stays reserved for सन्ध्या वन्दन (round 1 §3), 26–29 are round-2 reservations, 30 is retired and 31–40 are the 2027 feature bets.
   An on-device, deterministic answer engine over the engines the app already ships, so the computed
   half of the product (panchang, muhurat, vrat, bhog, vidhi, vastu, kundali, theerth) becomes
   askable in one line — and every future feature is discoverable on the day it ships. Companion
   build for the quarter: PRD-20 सङ्कल्प.
 - [**Q4 2026 Candidates**](./2026-Q4-candidates.md) — household-practice gap analysis and the next five
   proposed features (PRD-20 … PRD-24, numbers reserved). PRD-23 and PRD-24 shipped in Aug 2026;
-  PRD-31 §10 records where 20/21/22 sit against the flagship. Read this for what is *missing*; the
+  PRD-41 §10 records where 20/21/22 sit against the flagship. Read this for what is *missing*; the
   table below is the Q3 slate only and has not tracked PRDs 07–19.
 - [**Q4 2026 Candidates, Round 2**](./2026-Q4-candidates-round-2.md) — a second slate (PRD-26 … PRD-29,
   numbers reserved) filtered so that nothing shipped, PRD-owned, or already rejected can appear:
@@ -26,7 +26,7 @@ This folder holds the product roadmap and PRDs for upcoming releases.
 - [**Round 2 session prompts**](./round-2-session-prompts.md) — a self-contained build prompt per
   candidate (PRD-26 … PRD-29), one branch each, for running the four as independent sessions.
 - [**2027 Feature Bets**](./2027-feature-bets.md) — the strategic slate after Q4 2026: ten bets
-  (PRD-31 … PRD-40, numbers reserved) that compound on the bilingual per-verse corpus, with a
+  (PRD-41 … PRD-40, numbers reserved) that compound on the bilingual per-verse corpus, with a
   staged backend introduction. Originally drafted as PRD-10 … PRD-19; renumbered to avoid
   collision with the numbers main assigned since.
 

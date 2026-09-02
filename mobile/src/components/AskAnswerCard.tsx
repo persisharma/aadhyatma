@@ -1,5 +1,5 @@
 /**
- * जिज्ञासा answer + abstain cards (PRD-31 Phase 1, design.md §71).
+ * जिज्ञासा answer + abstain cards (PRD-41 Phase 1, design.md §71).
  *
  * The answer card is the whole feature's face: an eyebrow tag, the answer as a
  * headline, label·value rows (निषेध rows in the warm `avoid` tone), a collapsed

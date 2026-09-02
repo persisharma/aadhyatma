@@ -1,6 +1,6 @@
 /**
  * The जिज्ञासा resolver — fold → tag entities → score intents → answer or
- * abstain (PRD-31 §4.4, §13). Pure: no React, no I/O, no model. Given the same
+ * abstain (PRD-41 §4.4, §13). Pure: no React, no I/O, no model. Given the same
  * question, lexicon, intents and context it returns the same result forever.
  *
  * Answer-or-abstain is the hard rule (§3.2): an intent whose required slots are

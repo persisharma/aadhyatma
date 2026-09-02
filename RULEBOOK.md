@@ -850,7 +850,7 @@ The शुभ योग tables (`mobile/src/panchang/shubhYoga.ts`; design.md §
 7. **One chip component.** Yoga chips and dosha chips render through the shared `MuhuratChip` (`tone: 'yoga' | 'dosha'`), word + tint per §12 — never colour alone, never a forked chip per surface.
 8. **Tests.** `shubhYoga.test.ts` (tsx — tables row-for-row vs the convention doc, the ASY⊆SSY invariant, inclusive-count arithmetic with the 27-wrap, the पुष्कर triple-factor gate, kshaya/mid-day-onset/merge/next-sunrise-bound mechanics, a full-2026 sweep with non-vacuity floors, the purity guard, the import-direction guard, the draft-flag pin) and `components/__tests__/ShubhYogaCard.test.tsx` (both tones, absent-renders-nothing, the past-midnight `formatEndInstant` suffix). Device path `.maestro/shubh-yoga-smoke.yaml` covers the stable relabels and journeys; a specific chip is date-dependent and is pinned by the unit suites, not the flow.
 
-## 25. जिज्ञासा intent registration (PRD-31) — the ask contract
+## 25. जिज्ञासा intent registration (PRD-41) — the ask contract
 
 The ask engine (`mobile/src/ask/`) is a **deterministic grammar over engines that already ship**. It adds no domain logic and answers nothing it cannot ground. From this section on, a user-facing capability is not finished until it is *askable*.
 

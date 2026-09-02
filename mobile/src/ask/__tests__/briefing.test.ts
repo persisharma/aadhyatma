@@ -1,5 +1,5 @@
 /**
- * आज का विधान is standing questions through the same resolver (PRD-31 Phase 2):
+ * आज का विधान is standing questions through the same resolver (PRD-41 Phase 2):
  * the briefing always leads with the day, carries the day's observance (or the
  * next one within the look-ahead), the windows, and the sankalp only when one
  * is running. Every card is a real AskAnswer with its working and actions.

@@ -1,7 +1,7 @@
 ---
 title: जिज्ञासा · Ask Vedansh (answer engine)
 type: subsystem
-sources: [mobile/src/ask/types.ts, mobile/src/ask/fold.ts, mobile/src/ask/aliases.ts, mobile/src/ask/lexicon.ts, mobile/src/ask/resolve.ts, mobile/src/ask/intents/index.ts, mobile/src/ask/engine.ts, mobile/src/ask/useAsk.ts, mobile/src/ask/actions.ts, mobile/src/ask/briefing.ts, mobile/src/components/AskAnswerCard.tsx, mobile/src/screens/SearchScreen.tsx, mobile/src/screens/TodayVidhanScreen.tsx, mobile/src/screens/ObservanceDetailScreen.tsx, mobile/src/ask/__tests__/, docs/roadmap/prds/31-jijnasa-ask-vedansh.md]
+sources: [mobile/src/ask/types.ts, mobile/src/ask/fold.ts, mobile/src/ask/aliases.ts, mobile/src/ask/lexicon.ts, mobile/src/ask/resolve.ts, mobile/src/ask/intents/index.ts, mobile/src/ask/engine.ts, mobile/src/ask/useAsk.ts, mobile/src/ask/actions.ts, mobile/src/ask/briefing.ts, mobile/src/components/AskAnswerCard.tsx, mobile/src/screens/SearchScreen.tsx, mobile/src/screens/TodayVidhanScreen.tsx, mobile/src/screens/ObservanceDetailScreen.tsx, mobile/src/ask/__tests__/, docs/roadmap/prds/41-jijnasa-ask-vedansh.md]
 last_verified_date: 2026-09-02
 confidence: high
 status: current
@@ -13,7 +13,7 @@ A **deterministic grammar over the engines the app already ships** — no model,
 no telemetry — that makes the Search box answer a question (tithi, next Ekadashi, Rahu Kaal,
 what to offer Ganesha, which way the mandir faces, a puja's vidhi…) above the library results,
 composes the आज का विधान briefing from standing questions, and ends every answer in an action.
-Spec: `design.md` §71 · contract: `RULEBOOK.md` §25 · PRD: `docs/roadmap/prds/31-jijnasa-ask-vedansh.md`
+Spec: `design.md` §71 · contract: `RULEBOOK.md` §25 · PRD: `docs/roadmap/prds/41-jijnasa-ask-vedansh.md`
 (§13 has the mechanism, measured latency, tooling decision) · clickable prototype `docs/jijnasa-ask-prototype.html`.
 
 ## Shape

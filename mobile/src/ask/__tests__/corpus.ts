@@ -1,5 +1,5 @@
 /**
- * The golden corpus (PRD-31 §6 Phase 0). Real questions a household asks, in
+ * The golden corpus (PRD-41 §6 Phase 0). Real questions a household asks, in
  * Devanagari, Hinglish and English, each with the intent it must resolve to and
  * — where it matters — the entity id it must pick. `corpus.test.ts` gates the
  * build: ≥ 85% top-1, and ZERO wrong answers (a wrong answer is a different

@@ -1,5 +1,5 @@
 /**
- * The Phase-1 ship gate (PRD-31 §6): ≥ 85% top-1 on the golden corpus, and ZERO
+ * The Phase-1 ship gate (PRD-41 §6): ≥ 85% top-1 on the golden corpus, and ZERO
  * wrong answers. Prints the misses so the next release knows which phrasings
  * to add — the offline analogue of the on-device unanswered log (§7.2).
  */

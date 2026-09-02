@@ -1,5 +1,5 @@
 /**
- * The v1 intent slate for जिज्ञासा (PRD-31 §5). Every `resolve` calls an engine
+ * The v1 intent slate for जिज्ञासा (PRD-41 §5). Every `resolve` calls an engine
  * or registry that already ships — this file adds NO domain logic. Returning
  * `null` means abstain (a draft entry, a rule with no upvas profile, …).
  *

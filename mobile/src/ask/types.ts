@@ -1,5 +1,5 @@
 /**
- * जिज्ञासा · Ask Vedansh (PRD-31) — shared types.
+ * जिज्ञासा · Ask Vedansh (PRD-41) — shared types.
  *
  * Everything in `src/ask/` is a deterministic grammar over the engines the app
  * already ships: no model, no network, no telemetry. This file is imported by
@@ -39,7 +39,7 @@ export type LexEntry = {
   key: string;
   /**
    * A recurring observance FAMILY (ekadashi, pradosh, purnima…) rather than a
-   * named instance. Resolves to "the next one of any name" — PRD-31 §13.3.
+   * named instance. Resolves to "the next one of any name" — PRD-41 §13.3.
    */
   isClass?: boolean;
   /** Member rule ids for a class entry. */
