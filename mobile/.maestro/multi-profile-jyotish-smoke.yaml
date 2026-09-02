@@ -28,6 +28,14 @@ appId: com.prashantsharma.vedansh
       RCT_jsLocation: "127.0.0.1:8084"
 - waitForAnimationToEnd:
     timeout: 30000
+# clearState resets the notification permission — dismiss the boot alert first
+# (native alert; it blocks everything underneath).
+- tapOn:
+    text: "Allow"
+    optional: true
+- tapOn:
+    text: "Don't Allow"
+    optional: true
 - tapOn:
     text: "Skip tour"
     optional: true
@@ -35,6 +43,11 @@ appId: com.prashantsharma.vedansh
     timeout: 5000
 - tapOn:
     text: "Skip tour"
+    optional: true
+# Skipping the tour on a fresh install hands over to the language + reading-size
+# sheet — accept defaults ("Begin") so the flow lands on Home (hi/Standard baseline).
+- tapOn:
+    text: "Begin"
     optional: true
 - tapOn:
     text: "English"
@@ -59,6 +72,13 @@ appId: com.prashantsharma.vedansh
 # in every language, but the guidance headings are localized).
 - tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
+# The ऐप section (Language/Reading size) sits below the fold on standard-height
+# iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
+# tapping the off-screen row's estimated center hits the tab bar instead. Scroll first.
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
 - tapOn: "Language,.*"
 - waitForAnimationToEnd
 - extendedWaitUntil:

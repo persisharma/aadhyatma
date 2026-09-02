@@ -19,6 +19,13 @@ appId: com.prashantsharma.vedansh
 
 - tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
+# The ऐप section (Language/Reading size) sits below the fold on standard-height
+# iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
+# tapping the off-screen row's estimated center hits the tab bar instead. Scroll first.
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
 - tapOn: "Language,.*"
 - waitForAnimationToEnd
 - extendedWaitUntil:
@@ -58,10 +65,18 @@ appId: com.prashantsharma.vedansh
     visible: "Search input"
     timeout: 15000
 
-# ── 4. Back retraces: Search → briefing → Home ──
+# ── 4. Back retraces the full stack: follow-up Search → briefing → the
+#      original Search (its Vidhan door state) → Home. "Ask something else"
+#      PUSHES a fresh Search instance (the briefing sits between the two), so
+#      three Backs reach Home, not two.
 - tapOn: "Back"
 - waitForAnimationToEnd
 - assertVisible: "Today's Vidhan"
+- tapOn: "Back"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Open Today's Vidhan"
+    timeout: 15000
 - tapOn: "Back"
 - waitForAnimationToEnd
 - extendedWaitUntil:
