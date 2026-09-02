@@ -59,6 +59,14 @@ function isSadhanaReminderPayload(data: unknown): data is { type: 'sadhana-remin
   return d.type === 'sadhana-reminder' && typeof d.programId === 'string';
 }
 
+function isRoutineReminderPayload(data: unknown): data is { type: 'routine-reminder' } {
+  if (!data || typeof data !== 'object') return false;
+  // Gated on `type` only. `routineId`/`dateKey` ride along as a record but must
+  // not drive routing: a stale notification for a since-deleted routine still
+  // lands safely on RoutineToday, which simply doesn't show it.
+  return (data as Record<string, unknown>).type === 'routine-reminder';
+}
+
 function isPitruSmaranReminderPayload(data: unknown): data is { type: 'pitru-smaran-reminder'; entryId: string } {
   if (!data || typeof data !== 'object') return false;
   const d = data as Record<string, unknown>;
@@ -219,6 +227,21 @@ export function handleNotificationResponse(
   // sankalp's day is shown. Lands on the Home tab's RoutineToday screen; reading
   // progress is untouched (the user chooses to open the day's reading there).
   if (isSadhanaReminderPayload(data)) {
+    navigationRef.dispatch(
+      CommonActions.navigate({
+        name: 'HomeTab',
+        params: { screen: 'RoutineToday' },
+      } as never)
+    );
+    return true;
+  }
+
+  // A routine-reminder tap (PRD-07 P3) lands on Today's Practice — byte-for-
+  // byte the sadhana-reminder landing, and for the same reasons: RoutineToday
+  // is where all of today's practice lives (this routine, other routines,
+  // active sankalps), and a lock-screen tap must never open a reader whose
+  // `setProgress` effect could clobber the resume position.
+  if (isRoutineReminderPayload(data)) {
     navigationRef.dispatch(
       CommonActions.navigate({
         name: 'HomeTab',

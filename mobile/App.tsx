@@ -64,6 +64,7 @@ import FestiveReminderScheduler from '@/components/FestiveReminderScheduler';
 import PitruSmaranReminderScheduler from '@/components/PitruSmaranReminderScheduler';
 import JanmaTithiReminderScheduler from '@/components/JanmaTithiReminderScheduler';
 import SadhanaReminderScheduler from '@/components/SadhanaReminderScheduler';
+import RoutineReminderScheduler from '@/components/RoutineReminderScheduler';
 import DailyVerseAngaBridge from '@/components/DailyVerseAngaBridge';
 import MiniPlayer from '@/components/audio/MiniPlayer';
 import NowPlayingScreen from '@/screens/audio/NowPlayingScreen';
@@ -278,6 +279,11 @@ export default function App() {
                                 planner's worst case is 8 pending (roster cap). */}
                             <JanmaTithiReminderScheduler />
                             <SadhanaReminderScheduler />
+                            {/* Per-routine reminders (PRD-07 P3). Inside
+                                RoutineProvider + NotificationPreferencesProvider
+                                + the progress/activity providers its §7
+                                completion-suppression signal reads. */}
+                            <RoutineReminderScheduler />
                             {/* Feeds the daily-verse scheduler each fire day's
                                 tithi/vrat for its title. Must stay inside
                                 PanchangLocationProvider — the notification
