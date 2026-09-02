@@ -17,7 +17,10 @@ import type { CalendarSystem, ResolvedObservance } from './types';
 // Bump whenever OBSERVANCE_RULES or the month engine changes (the same trigger as
 // regenerating precomputedObservances.ts); stale versions are purged on hydrate.
 // v2: kshaya-tithi fallback + vriddhi dedupe in matchesLunarTithiRuleOnDate.
-const CACHE_VERSION = 2;
+// v3: chandrodaya (moonrise) day rule for Sankashti/Karwa Chauth + the Hariyali
+//     and Kajari Teej rules — covers both matcher and catalog changes, so
+//     already-scanned cities re-scan instead of hydrating the old dates.
+const CACHE_VERSION = 3;
 const KEY_ROOT = '@vedansh:observances:';
 const KEY_PREFIX = `${KEY_ROOT}v${CACHE_VERSION}:`;
 

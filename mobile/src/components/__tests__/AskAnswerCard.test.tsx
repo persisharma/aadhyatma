@@ -1,5 +1,5 @@
 /**
- * AskAnswerCard / AskAbstainCard (PRD-25 Phase 1, design.md §67): the answer
+ * AskAnswerCard / AskAbstainCard (PRD-31 Phase 1, design.md §70): the answer
  * renders its tag, headline, rows (निषेध rows in the avoid tone), the collapsed
  * working trail, provenance and actions; the primary action fires with its
  * target; the abstain card shows the decline copy for a stance-guard result

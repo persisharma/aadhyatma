@@ -217,7 +217,7 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                 </Pressable>
               )}
             </View>
-            {/* जिज्ञासा ask-from-context (PRD-25 Phase 3): the question box opens
+            {/* जिज्ञासा ask-from-context (PRD-31 Phase 3): the question box opens
                 seeded with THIS observance, so "iska bhog kya hai" / "kaise kare"
                 resolve against it without the user naming it again. Search lives
                 on the Home stack, hence the cross-tab hand-off. */}

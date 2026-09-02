@@ -1,5 +1,5 @@
 /**
- * PRD-25 §13.7: the ask engine costs the launch path ZERO. Nothing under
+ * PRD-31 §13.7: the ask engine costs the launch path ZERO. Nothing under
  * `src/ask/` except the types file and the lazy hook may be reachable through
  * STATIC imports from `index.ts`. One stray `import { askQuestion } from
  * '@/ask/engine'` in a Home-stack screen would put the registries and the

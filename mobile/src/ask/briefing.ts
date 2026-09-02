@@ -1,5 +1,5 @@
 /**
- * आज का विधान — the Phase 2 briefing (PRD-25 §6). Not a new engine: a fixed
+ * आज का विधान — the Phase 2 briefing (PRD-31 §6). Not a new engine: a fixed
  * set of STANDING QUESTIONS asked on the user's behalf through the same
  * resolver the search box uses, so every card here is an answer card and every
  * improvement to an intent improves the briefing for free.

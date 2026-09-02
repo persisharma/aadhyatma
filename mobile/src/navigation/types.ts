@@ -45,7 +45,7 @@ export type GitaReaderParams = { chapter: number; initialIndex?: number };
 export type HomeStackParamList = VidhiStackParamList & {
   Home: undefined;
   /**
-   * जिज्ञासा (PRD-25). `seed` is ask-from-context: the surface the user came
+   * जिज्ञासा (PRD-31). `seed` is ask-from-context: the surface the user came
    * from names an entity so "iska bhog kya hai" resolves against it.
    * `initialQuery` pre-fills the box (a briefing card's "ask more" door).
    */
@@ -104,7 +104,7 @@ export type HomeStackParamList = VidhiStackParamList & {
   // Sadhana Programs (संकल्प) — PRD-11. Reached via the create-routine fork.
   SadhanaPrograms: undefined;
   SadhanaProgramDetail: { programId: string };
-  /** आज का विधान — the जिज्ञासा briefing of standing questions (PRD-25 Phase 2). */
+  /** आज का विधान — the जिज्ञासा briefing of standing questions (PRD-31 Phase 2). */
   TodayVidhan: undefined;
 };
 
@@ -154,6 +154,10 @@ export type PanchangStackParamList = VidhiStackParamList & {
   // ACTIVE person's details for editing.
   Kundali: { editing?: boolean; newPerson?: boolean } | undefined;
   Rashifal: { rashiIndex?: number } | undefined;
+  // Gochar (transits vs the saved chart) — PRD-20
+  Gochar: undefined;
+  // Compiled full-chart reading — PRD-20 Phase 6
+  KundaliReport: undefined;
   GunaMilan: undefined;
   Namkaran: undefined;
   /** वास्तु दिशा (PRD-24) — the griha-pravesh result's door pushes it in place

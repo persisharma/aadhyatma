@@ -1,5 +1,5 @@
 /**
- * Anti-drift gate (PRD-25 §4.3): every registry entry the resolver can answer
+ * Anti-drift gate (PRD-31 §4.3): every registry entry the resolver can answer
  * about must produce at least one usable lexicon key, and every hand alias
  * must point at an id that exists. A new deity or festival cannot ship
  * unaskable; a renamed id cannot leave a dangling alias.

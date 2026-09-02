@@ -281,7 +281,7 @@ export default function HomeScreen({ navigation }: Props) {
       onPress: () => navigation.navigate('VidhiCatalog'),
     },
     {
-      // PRD-25 Discover card: the जिज्ञासा door. Opens the आज का विधान briefing
+      // PRD-31 Discover card: the जिज्ञासा door. Opens the आज का विधान briefing
       // (standing questions answered for today), which in turn opens the
       // answer-first search box for anything else. Pushed on the Home stack so
       // back returns here.

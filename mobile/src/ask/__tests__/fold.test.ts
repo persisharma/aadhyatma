@@ -1,5 +1,5 @@
 /**
- * Folding is the whole ballgame for Devanagari ↔ Hinglish matching (PRD-25
+ * Folding is the whole ballgame for Devanagari ↔ Hinglish matching (PRD-31
  * §13.1). Each case below is a defect the spike actually shipped with.
  */
 import assert from 'node:assert/strict';

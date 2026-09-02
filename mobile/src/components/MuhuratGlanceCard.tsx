@@ -8,7 +8,7 @@ import { scriptTitleFont, scriptBodyFont, eyebrowTextStyle } from '@/utils/langT
 import { fontFamilies } from '@/theme/typography';
 import { useMuhurat } from '@/panchang/useMuhurat';
 import { nextAuspiciousPeriod } from '@/panchang/muhurat';
-import { prevailingTithi } from '@/panchang/prevailingTithi';
+import { prevailingTithi, successorTithiToday } from '@/panchang/prevailingTithi';
 import { formatClock, formatRange, formatEndInstant } from '@/panchang/muhuratFormat';
 import type { CalendarSystem } from '@/panchang/types';
 
@@ -101,6 +101,16 @@ export default function MuhuratGlanceCard({
       ? prevailingTithi(panchang, new Date(at))
       : { nameHi: panchang.tithi.nameHi, nameEn: panchang.tithi.nameEn, endTime: panchang.tithi.endTime }
     : null;
+  // "तक 8:51 AM" states when the day's label stops being true and nothing else —
+  // leaving the remaining fifteen hours unnamed, and a reader unable to tell that
+  // a Chaturthi vrat is kept on THIS date rather than the next one headed
+  // Chaturthi. The handover line names the successor whenever it takes over
+  // within this civil day. Only while the kicker is still showing the sunrise
+  // tithi: once "now" has moved past the handover, the successor IS the kicker.
+  const handover =
+    panchang && kickerTithi && kickerTithi.nameEn === panchang.tithi.nameEn
+      ? successorTithiToday(panchang)
+      : null;
 
   return (
     <LinearGradient
@@ -119,24 +129,38 @@ export default function MuhuratGlanceCard({
           {contentByLang(lang, 'आज का मुहूर्त', "Today's Timings")}
         </Text>
         {kickerTithi && panchang && (
-          <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} style={styles.kickerTithi}>
-            <Text style={[eyebrowTextStyle(lang, 10, 0.6), { color: colors.saffronDeep }]}>
-              {contentByLang(lang, 'तिथि · ', 'Tithi · ')}
+          // A column, not one line: the handover sits UNDER the तक line rather
+          // than extending it, so the kicker never has to shrink to fit both.
+          <View style={styles.kickerTithi}>
+            <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} style={styles.kickerTithiLine}>
+              <Text style={[eyebrowTextStyle(lang, 10, 0.6), { color: colors.saffronDeep }]}>
+                {contentByLang(lang, 'तिथि · ', 'Tithi · ')}
+              </Text>
+              <Text style={{ fontFamily: titleFont, fontSize: 14.5, color: colors.ink }}>
+                {contentByLang(lang, kickerTithi.nameHi, kickerTithi.nameEn)}
+              </Text>
+              {kickerTithi.endTime && (
+                // Same face rule as the anga tiles' तक line: Latin semibold for
+                // en; the script body face otherwise — Cormorant has no Indic
+                // glyphs, and formatEndInstant's short-date suffix is Devanagari
+                // in hi (§3).
+                <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latinSemiBold : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkSoft }}>
+                  {contentByLang(lang, ' तक ', ' till ')}
+                  {formatEndInstant(kickerTithi.endTime, panchang.date, lang)}
+                </Text>
+              )}
             </Text>
-            <Text style={{ fontFamily: titleFont, fontSize: 14.5, color: colors.ink }}>
-              {contentByLang(lang, kickerTithi.nameHi, kickerTithi.nameEn)}
-            </Text>
-            {kickerTithi.endTime && (
-              // Same face rule as the anga tiles' तक line: Latin semibold for
-              // en; the script body face otherwise — Cormorant has no Indic
-              // glyphs, and formatEndInstant's short-date suffix is Devanagari
-              // in hi (§3).
-              <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latinSemiBold : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkSoft }}>
-                {contentByLang(lang, ' तक ', ' till ')}
-                {formatEndInstant(kickerTithi.endTime, panchang.date, lang)}
+            {handover && (
+              <Text
+                numberOfLines={1}
+                adjustsFontSizeToFit
+                minimumFontScale={0.8}
+                style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 10.5, color: colors.inkMuted, textAlign: 'right', marginTop: 1 }}
+              >
+                {contentByLang(lang, `फिर ${handover.nameHi} — शेष दिन`, `then ${handover.nameEn} — rest of day`)}
               </Text>
             )}
-          </Text>
+          </View>
         )}
       </View>
 
@@ -260,7 +284,8 @@ const styles = StyleSheet.create({
   // Baseline-aligned so the 12pt eyebrow and the 14.5pt tithi name share one
   // visual line; the tithi shrinks first if the row runs out of width.
   kickerRow: { flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between', gap: 10 },
-  kickerTithi: { flexShrink: 1 },
+  kickerTithi: { flexShrink: 1, alignItems: 'flex-end' },
+  kickerTithiLine: { textAlign: 'right' },
   nowRow: { flexDirection: 'row', alignItems: 'center', gap: 12, marginTop: 10 },
   dot: { width: 12, height: 12, borderRadius: 6 },
   // No fontWeight: the call site sets fontFamilies.latinBold, a static 700 file

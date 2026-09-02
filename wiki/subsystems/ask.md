@@ -13,7 +13,7 @@ A **deterministic grammar over the engines the app already ships** — no model,
 no telemetry — that makes the Search box answer a question (tithi, next Ekadashi, Rahu Kaal,
 what to offer Ganesha, which way the mandir faces, a puja's vidhi…) above the library results,
 composes the आज का विधान briefing from standing questions, and ends every answer in an action.
-Spec: `design.md` §67 · contract: `RULEBOOK.md` §23 · PRD: `docs/roadmap/prds/25-jijnasa-ask-vedansh.md`
+Spec: `design.md` §70 · contract: `RULEBOOK.md` §25 · PRD: `docs/roadmap/prds/25-jijnasa-ask-vedansh.md`
 (§13 has the mechanism, measured latency, tooling decision) · clickable prototype `docs/jijnasa-ask-prototype.html`.
 
 ## Shape
@@ -50,7 +50,7 @@ Spec: `design.md` §67 · contract: `RULEBOOK.md` §23 · PRD: `docs/roadmap/prd
 
 ## Working rules
 
-1. **A new askable feature registers an intent + corpus cases in the same PR** (RULEBOOK §23).
+1. **A new askable feature registers an intent + corpus cases in the same PR** (RULEBOOK §25).
    Entities never get hand-listed — extend `lexicon.ts` from the registry and the coverage test.
 2. **Never answer from a draft, never invent.** `resolve` returns `null`; the UI shows the abstain
    card. If you find yourself writing a fallback string in an intent, stop.

@@ -1,5 +1,5 @@
 /**
- * "Answers that act" (PRD-25 Phase 3): turn an `AskTarget` into navigation
+ * "Answers that act" (PRD-31 Phase 3): turn an `AskTarget` into navigation
  * through the helpers every other cross-tab door already uses, so a Home-stack
  * push stays in place (back retraces the question) and a Panchang / More jump
  * carries `initial: false` (the lazily-mounted-tab rule in entryRoutes.ts).

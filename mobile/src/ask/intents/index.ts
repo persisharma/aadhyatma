@@ -1,9 +1,9 @@
 /**
- * The v1 intent slate for जिज्ञासा (PRD-25 §5). Every `resolve` calls an engine
+ * The v1 intent slate for जिज्ञासा (PRD-31 §5). Every `resolve` calls an engine
  * or registry that already ships — this file adds NO domain logic. Returning
  * `null` means abstain (a draft entry, a rule with no upvas profile, …).
  *
- * Registering an intent is part of the add-a-feature contract (RULEBOOK §23):
+ * Registering an intent is part of the add-a-feature contract (RULEBOOK §25):
  * triggers in hi / en / Hinglish, the slots it needs, at least one example
  * question (chips + rotating placeholder), and a corpus entry.
  */

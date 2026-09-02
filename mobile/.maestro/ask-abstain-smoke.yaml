@@ -1,5 +1,5 @@
 # जिज्ञासा · Ask Vedansh — abstain + stance guard + library non-regression
-# (PRD-25 §3.2, §3.4, §3.6; design.md §67)
+# (PRD-31 §3.2, §3.4, §3.6; design.md §70)
 #
 # Answer-or-abstain is the feature's hard rule. This flow checks the three
 # states that are NOT an answer:
@@ -8,7 +8,7 @@
 #   2. A question the grammar cannot ground ("what is karma") abstains with the
 #      ordinary copy, while the library results still render beneath it.
 #   3. A plain library query ("Hanuman") is NOT question-shaped, so no abstain
-#      card appears and the Sections group renders exactly as before PRD-25.
+#      card appears and the Sections group renders exactly as before PRD-31.
 #
 # Selector notes: abstain a11y labels are "Question declined" / "No answer";
 # the two copies are "…Vedansh does not answer those." and "We can't answer

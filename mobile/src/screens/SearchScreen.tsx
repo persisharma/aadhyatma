@@ -101,7 +101,7 @@ export default function SearchScreen({ navigation, route }: Props) {
   const trimmed = query.trim();
   const hasQuery = trimmed.length > 0;
 
-  // जिज्ञासा (PRD-25): the same box answers a *question* above the library
+  // जिज्ञासा (PRD-31): the same box answers a *question* above the library
   // results. The engine loads lazily (one dynamic import) and warms on mount,
   // so it is ready by the first keystroke; a plain query never sees an abstain.
   const { ready: askReady, ask, looksLikeQuestion, examples: askExamples } = useAsk(route.params?.seed);
@@ -457,7 +457,7 @@ function EmptyState({
 }: {
   recent: string[];
   popular: { id: string; nameHi: string; nameEn: string; thumb: string }[];
-  /** जिज्ञासा (PRD-25): the briefing door in the question box's empty state. */
+  /** जिज्ञासा (PRD-31): the briefing door in the question box's empty state. */
   onTodayVidhan: () => void;
   colors: Theme['colors'];
   typography: Theme['typography'];
