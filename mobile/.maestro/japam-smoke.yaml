@@ -1,0 +1,59 @@
+# Japam Category Smoke Test
+#
+# Verifies the Japam category and its 4 active mantras render correctly.
+# Mantras: Om Namah Shivaya, Hare Krishna Mahamantra, Gayatri Mantra,
+#          Om Namo Bhagavate Vasudevaya.
+#
+# Japam routes to JapamCounterScreen (a counter UI with a 108-bead mala),
+# NOT a standard verse pager — per RULEBOOK §1 field 6. This flow opens the
+# Gayatri Mantra counter, then taps the bead area to drive the bead count
+# 0 → 3 (bead-count behaviour from PR #40 / #93).
+#
+# The Reset/Clear confirmation <Modal>'s backdrop is an accessible Pressable
+# (no `accessible={false}`), so iOS collapses its descendants into one node and
+# Maestro can't resolve the inner "Reset Beads"/"Cancel" buttons (verified: the
+# primary never resolves even after the fade settles, though it renders
+# visually — contrast ResumeReadingSheet, which sets accessible={false} on its
+# wrappers and IS drivable). So the reset path is not driven here; the flow
+# expects a clean counter, which the suite baseline provides (reset Vedansh
+# storage before a full run, per README).
+
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+
+# Open Japam category
+- assertVisible: "Japa & Mantras. Tap to open."
+- tapOn: "Japa & Mantras. Tap to open."
+- waitForAnimationToEnd
+
+# Verify all 4 mantras appear in CategoryList
+- extendedWaitUntil:
+    visible: "Om Namah Shivaya\\..*Tap to open\\."
+    timeout: 15000
+- assertVisible: "Hare Krishna Mahamantra\\..*Tap to open\\."
+- assertVisible: "Gayatri Mantra\\..*Tap to open\\."
+- assertVisible: "Om Namo Bhagavate Vasudevaya\\..*Tap to open\\."
+
+# Open Gayatri Mantra counter
+- tapOn: "Gayatri Mantra\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+
+# ── Counter interaction (PR #40 / #93: bead increment) ──
+# The tap-area a11y label is always English ("Gayatri Mantra. Tap to count one
+# bead. N of 108 on this round, …"), so the count assertions are
+# language-independent; the counter starts at 0 on a clean store.
+- assertVisible: ".*0 of 108 on this round.*"
+
+# Tap the bead area three times → the bead count climbs 0 → 3.
+- tapOn: ".*Tap to count one bead.*"
+- tapOn: ".*Tap to count one bead.*"
+- tapOn: ".*Tap to count one bead.*"
+- assertVisible: ".*3 of 108 on this round.*"
+
+# Back to the mantra list, then clean up (Expo Go termination resets the stack).
+- tapOn: "Back"
+- waitForAnimationToEnd
+- stopApp:
+    appId: com.prashantsharma.vedansh

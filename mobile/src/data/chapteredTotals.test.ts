@@ -5,7 +5,7 @@ type ChapterSummary = { verseCount: number };
 const cases = [
   {
     id: 'durga-stotram',
-    expectedTotal: 21,
+    expectedTotal: 33,
     load: async () => {
       const mod = await import('./durga-stotram');
       return {
@@ -16,7 +16,7 @@ const cases = [
   },
   {
     id: 'ganesh-stotram',
-    expectedTotal: 15,
+    expectedTotal: 28,
     load: async () => {
       const mod = await import('./ganesh-stotram');
       return {
@@ -27,7 +27,7 @@ const cases = [
   },
   {
     id: 'ram-stuti',
-    expectedTotal: 13,
+    expectedTotal: 9,
     load: async () => {
       const mod = await import('./ram-stuti');
       return {
@@ -49,12 +49,23 @@ const cases = [
   },
   {
     id: 'vishnu-sahasranama',
-    expectedTotal: 39,
+    expectedTotal: 79,
     load: async () => {
       const mod = await import('./vishnu-sahasranama');
       return {
         manifest: mod.vishnuSahasranamaChaptersManifest,
         total: mod.vishnuSahasranamaTotal,
+      };
+    },
+  },
+  {
+    id: 'valmiki-ramayan',
+    expectedTotal: 23289,
+    load: async () => {
+      const mod = await import('./valmiki-ramayan');
+      return {
+        manifest: mod.valmikiRamayanChaptersManifest,
+        total: mod.valmikiRamayanTotal,
       };
     },
   },

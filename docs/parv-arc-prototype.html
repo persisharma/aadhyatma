@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PRD-28 · पर्व-अर्क — Interactive Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* Mirrors mobile/src/theme/colors.ts (Aug 2026) — same token set the shipped
+       prototypes use, so these five sit in the same visual system. */
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-hi:#F6ECD0;
+    --gradient-end:#F1E3BF; --gold:#A67C34; --gold-soft:#C9B896; --gold-tint:rgba(166,124,52,0.14);
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --saffron-tint:rgba(184,98,27,0.12);
+    --ink:#1A0E03; --ink-soft:#5A3A1E; --ink-muted:#6E5230; --divider:rgba(138,62,11,0.18);
+    --card-from:#FFF5E0; --card-to:#F5DEAC; --card-border:rgba(184,98,27,0.4);
+    --new-badge-bg:rgba(184,98,27,0.16); --new-badge-text:#8A3E0B;
+    --shadow-subtle:0 1px 4px rgba(60,30,10,0.06);
+    --shadow-card:0 2px 6px rgba(60,30,10,0.10);
+    --shadow-raised:0 4px 10px rgba(60,30,10,0.14);
+    --sans:'Inter',system-ui,sans-serif;
+    --serif:'Cormorant Garamond',serif;
+    --deva:'Noto Serif Devanagari',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:#1a140c;color:#e9d9b1;padding:24px;line-height:1.5}
+  h1{font-family:var(--serif);font-weight:600;font-size:28px;color:#fff5e0;margin-bottom:2px}
+  .sub{font-style:italic;color:var(--gold-soft);font-size:14px;margin-bottom:6px;max-width:980px}
+  .legend{font-size:12.5px;color:#b7a377;margin-bottom:20px;max-width:980px}
+  .legend b{color:#e9d9b1}
+  .phaselabel{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--saffron);background:var(--saffron-tint);display:inline-block;padding:4px 12px;border-radius:20px;margin:26px 0 4px}
+  .phasedesc{font-size:12.5px;color:#b7a377;margin-bottom:14px;max-width:980px}
+  .wrap{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap}
+  .cap{width:340px;font-size:12px;color:#b7a377;margin-top:10px;text-align:left;line-height:1.55}
+  .cap b{color:#e9d9b1}
+  .cap code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:var(--gold-soft)}
+  .col{display:flex;flex-direction:column;align-items:center}
+
+  /* ---- phone frame ---- */
+  .phone{width:340px;height:720px;background:var(--parchment);border-radius:38px;
+    border:10px solid #0d0804;box-shadow:0 24px 60px rgba(0,0,0,.55);position:relative;overflow:hidden;flex:none}
+  .phone .statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);background:linear-gradient(var(--parchment-hi),var(--parchment))}
+  .screen{position:absolute;top:32px;left:0;right:0;bottom:0;overflow-y:auto;
+    background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
+  .screen::-webkit-scrollbar{width:0}
+  .pad{padding:16px 16px 26px}
+  .topbar{display:flex;align-items:center;gap:12px;padding:6px 2px 14px}
+  .back{width:44px;height:44px;border-radius:50%;border:1px solid var(--divider);background:var(--parchment-soft);
+    display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:18px;flex:none}
+  .toptitle{font-family:var(--deva);font-size:16px;color:var(--ink);flex:1}
+  .topaction{font-family:var(--sans);font-size:12px;font-weight:600;color:var(--saffron)}
+  .deva{font-family:var(--deva)}
+  .dot{position:absolute;width:20px;height:20px;border-radius:50%;background:var(--gold);color:#1a140c;
+    font-weight:700;font-size:11px;font-family:var(--sans);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 2px 6px rgba(0,0,0,.35);z-index:5}
+
+  /* ---- shared components lifted from the shipped prototypes ---- */
+  .card{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:14px;
+    padding:14px;margin-bottom:12px;box-shadow:var(--shadow-card)}
+  .catpill{display:inline-block;font-family:var(--deva);font-size:10.5px;font-weight:600;
+    color:var(--saffron-deep);background:var(--saffron-tint);border-radius:10px;padding:3px 10px}
+  .apills{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .apill{display:inline-flex;align-items:center;font-family:var(--deva);font-size:12.5px;border-radius:20px;
+    padding:8px 14px;min-height:36px}
+  .apill.gold{color:var(--saffron-deep);background:var(--gold-tint);border:1px solid transparent}
+  .apill.outline{color:var(--saffron);background:transparent;border:1px solid var(--gold-tint)}
+  .apill.filled{color:#fff8ec;background:var(--saffron);border:1px solid transparent}
+  .actionrow{display:flex;align-items:center;gap:12px;border:1px solid var(--divider);background:var(--parchment-soft);
+    border-radius:14px;padding:13px 14px;margin-bottom:10px;min-height:48px}
+  .actionrow .ai{width:34px;height:34px;border-radius:50%;border:1px solid var(--gold-tint);background:var(--parchment-hi);
+    display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:14px;color:var(--saffron-deep);flex:none}
+  .actionrow .at{flex:1}
+  .actionrow .att{font-family:var(--deva);font-size:14.5px;color:var(--ink)}
+  .actionrow .ats{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:1px}
+  .actionrow .chev{color:var(--saffron);font-size:17px}
+  .tag{font-size:10px;font-weight:600;color:var(--new-badge-text);background:var(--new-badge-bg);padding:3px 10px;
+    border-radius:999px;font-family:var(--sans);letter-spacing:.4px}
+  .sechead{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;
+    color:var(--ink-muted);margin:18px 0 8px}
+  .note{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);line-height:1.6;margin-top:10px}
+  .divider{height:1px;background:var(--divider);margin:14px 0}
+  .btn{display:flex;align-items:center;justify-content:center;min-height:50px;border-radius:14px;
+    font-family:var(--deva);font-size:15px;margin-top:14px}
+  .btn.primary{background:var(--saffron);color:#fff8ec;box-shadow:var(--shadow-raised)}
+  .btn.ghost{border:1px solid var(--gold-tint);color:var(--saffron);background:transparent}
+
+  .arc{display:flex;align-items:flex-start;gap:0;margin:14px 0 4px}
+  .arcstep{flex:1;text-align:center;position:relative}
+  .arcstep .n{width:26px;height:26px;border-radius:50%;margin:0 auto;display:flex;align-items:center;justify-content:center;
+    font-family:var(--sans);font-size:11px;font-weight:600;background:rgba(138,62,11,.12);color:var(--ink-muted);
+    border:1px solid var(--divider);position:relative;z-index:2}
+  .arcstep .n.done{background:var(--gold);color:#1a140c;border-color:transparent}
+  .arcstep .n.now{background:var(--saffron);color:#fff8ec;border-color:transparent;box-shadow:0 0 0 4px var(--saffron-tint)}
+  .arcstep .lbl{font-family:var(--deva);font-size:9.5px;color:var(--ink-muted);margin-top:5px;line-height:1.35}
+  .arcstep:before{content:'';position:absolute;top:13px;left:-50%;width:100%;height:2px;background:var(--divider);z-index:1}
+  .arcstep:first-child:before{display:none}
+  .arcstep.filled:before{background:var(--gold)}
+  .durgrid{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .dur{flex:1 1 28%;text-align:center;border:1px solid var(--gold-tint);border-radius:12px;padding:11px 4px;
+    font-family:var(--deva);font-size:13px;color:var(--ink)}
+  .dur.on{background:var(--saffron);color:#fff8ec;border-color:transparent;box-shadow:var(--shadow-raised)}
+  .dur small{display:block;font-family:var(--serif);font-style:italic;font-size:10px;color:var(--ink-muted);margin-top:3px}
+  .dur.on small{color:rgba(255,248,236,.8)}
+  .daycard{background:linear-gradient(var(--card-from),var(--card-to));border:1px solid var(--card-border);
+    border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:var(--shadow-card)}
+  .todo{display:flex;align-items:center;gap:11px;padding:11px 0}
+  .todo .bx{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--gold);flex:none;
+    display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:13px}
+  .todo .bx.on{background:var(--gold);color:#1a140c}
+  .todo .tx{flex:1;font-family:var(--deva);font-size:13.5px;color:var(--ink)}
+  .todo.done .tx{color:var(--ink-muted);text-decoration:line-through}
+  .evid{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);line-height:1.6}
+  .banner{display:flex;align-items:center;gap:11px;border-radius:14px;padding:12px 13px;margin-bottom:12px;
+    background:var(--gold-tint);border:1px solid rgba(166,124,52,.34)}
+  .banner .bi{width:32px;height:32px;border-radius:50%;background:var(--parchment-hi);border:1px solid var(--gold-tint);
+    display:flex;align-items:center;justify-content:center;font-family:var(--deva);color:var(--saffron-deep);flex:none}
+  .banner .bt{flex:1;font-family:var(--deva);font-size:13px;color:var(--ink)}
+
+</style>
+</head>
+<body>
+  <h1>पर्व-अर्क — Festival Arcs · स्थापना → विसर्जन</h1>
+  <div class="sub">PRD-28 (proposed, Q4 round 2) · Static mockups in the app's parchment system — not the live build.</div>
+  <div class="legend"><code>data/vidhi/</code> ships <code>ganesh-chaturthi-sthapana</code> and <code>navratri-ghatasthapana</code> and <b>no visarjan of anything</b> — the app knows how to install a deity and has never once concluded a rite. <code>festivals.ts</code> carries Diwali's five days as four unrelated rules and <code>ganesh-chaturthi</code>/<code>anant-chaturdashi</code> as strangers. This adds an <b>arc relation over the rules that already exist</b> (<code>arcId</code>, <code>arcRole</code>, ordinal — additive, no rule rewritten, no date changed) plus the solver that turns <i>the family's own duration choice</i> into their visarjan date. <b>The only date-critical item in the slate: Diwali falls inside Q4.</b></div>
+
+  <div class="phaselabel">1 · The choice the app has never asked for</div>
+  <div class="phasedesc">Ganesh Chaturthi is not a day, it is a household commitment of 1½, 3, 5, 7 or 10 days — and the concluding date depends on that choice, which is exactly why it cannot be a static calendar entry. The chooser appears at स्थापना, once.</div>
+  <div class="wrap">
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">गणेश चतुर्थी</div></div>
+          <div class="daycard">
+            <div class="catpill">पर्व</div>
+            <div class="deva" style="font-size:19px;color:var(--ink);margin-top:8px">गणेश चतुर्थी</div>
+            <div class="evid" style="margin-top:4px">भाद्रपद शुक्ल चतुर्थी · श्री गणेश</div>
+            <div class="apills"><div class="apill gold">पूजा विधि</div><div class="apill outline">कथा</div><div class="apill outline">भोग</div></div>
+          </div>
+          <div class="sechead">आज</div>
+          <div class="actionrow"><div class="ai">॥</div><div class="at"><div class="att">स्थापना विधि</div><div class="ats">6 चरण · तैयारी सहित</div></div><div class="chev">›</div></div>
+          <div class="note">आज के बाद ऐप चुप हो जाता है। दस दिन तक कुछ नहीं कहता, और विसर्जन का कोई ज़िक्र नहीं।</div>
+        </div></div>
+      </div>
+      <div class="cap"><b>Shipped today.</b><br/>Fully present on day 1 — vidhi, katha, bhog — and then silent for the nine days the murti is actually in the house. Anant Chaturdashi exists as an unrelated entry the app never connects to your Ganesh.</div>
+    </div>
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">स्थापना</div></div>
+          <div class="card">
+            <div class="deva" style="font-size:16px;color:var(--ink)">कितने दिन विराजेंगे?</div>
+            <div class="evid" style="margin-top:5px">परिवार और क्षेत्र के अनुसार भिन्न — जो आपके घर की परम्परा है, वही चुनें।</div>
+            <div class="durgrid">
+              <div class="dur">डेढ़ दिन</div>
+              <div class="dur">३ दिन</div>
+              <div class="dur">५ दिन</div>
+              <div class="dur">७ दिन</div>
+              <div class="dur on">१० दिन<small>अनन्त चतुर्दशी</small></div>
+              <div class="dur">बाद में</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="kv" style="display:flex;justify-content:space-between"><div class="deva" style="font-size:12.5px;color:var(--ink-muted)">स्थापना</div><div class="deva" style="font-size:13.5px;color:var(--ink)">रवि · भाद्र शु. ४</div></div>
+            <div class="divider" style="margin:8px 0"></div>
+            <div class="kv" style="display:flex;justify-content:space-between"><div class="deva" style="font-size:12.5px;color:var(--ink-muted)">आपका विसर्जन</div><div class="deva" style="font-size:13.5px;color:var(--saffron-deep)">मंगल · अनन्त चतुर्दशी</div></div>
+            <div class="evid" style="margin-top:8px">विसर्जन का शुभ समय उसी दिन निकाला जाएगा।</div>
+          </div>
+          <div class="btn primary">स्थापना आरम्भ करें</div>
+          <div class="note">यह चुनाव आपके घर का है — ऐप केवल तिथि निकालता है, सुझाव नहीं देता।</div>
+        </div></div>
+      </div>
+      <div class="cap"><b>The duration chooser — the whole mechanic.</b><br/>Five traditional durations plus "decide later". The choice is <b>occurrence-scoped user state</b>, the exact shape <code>vidhi/checklistStore.ts</code> and PRD-23's grocery checklist already use — no new storage pattern.</div>
+    </div>
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">गणेश उत्सव</div><div class="topaction">दिन ४</div></div>
+          <div class="daycard">
+            <div class="arc">
+              <div class="arcstep filled"><div class="n done">१</div><div class="lbl">स्थापना</div></div>
+              <div class="arcstep filled"><div class="n done">२</div><div class="lbl"></div></div>
+              <div class="arcstep filled"><div class="n done">३</div><div class="lbl"></div></div>
+              <div class="arcstep filled"><div class="n now">४</div><div class="lbl">आज</div></div>
+              <div class="arcstep"><div class="n">५</div><div class="lbl"></div></div>
+              <div class="arcstep"><div class="n">…</div><div class="lbl"></div></div>
+              <div class="arcstep"><div class="n">१०</div><div class="lbl">विसर्जन</div></div>
+            </div>
+            <div class="divider"></div>
+            <div class="evid" style="text-align:center">छह दिन शेष · विसर्जन मंगलवार</div>
+          </div>
+          <div class="sechead">आज</div>
+          <div class="card" style="padding:6px 14px">
+            <div class="todo done"><div class="bx on">✓</div><div class="tx">प्रातः आरती</div></div>
+            <div class="divider" style="margin:0"></div>
+            <div class="todo"><div class="bx"></div><div class="tx">भोग · मोदक</div></div>
+            <div class="divider" style="margin:0"></div>
+            <div class="todo"><div class="bx"></div><div class="tx">सायं आरती</div></div>
+          </div>
+          <div class="actionrow"><div class="ai">॥</div><div class="at"><div class="att">गणेश चालीसा</div><div class="ats">नित्य पाठ</div></div><div class="chev">›</div></div>
+          <div class="note">दिन २–९ पर ऐप के पास अभी कहने को कुछ नहीं है। यही वह खाली जगह है जो यह PRD भरता है।</div>
+        </div></div>
+      </div>
+      <div class="cap"><b>Mid-arc — day 4 of 10.</b><br/>The strip answers the live question: where am I, what is today, how much is left. This converts the year's biggest single-day spikes into multi-week windows, at the moment attention is already given.</div>
+    </div>
+
+  </div>
+
+  <div class="phaselabel">2 · The conclusion the app has never had</div>
+  <div class="phasedesc">The visarjan reminder is scheduled from the family's own choice through a shipped notification family — no new plumbing. The vidhi text itself is sourced content, so it lands behind the gate PRD-23 proved passable.</div>
+  <div class="wrap">
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="toptitle" style="font-size:20px">आज</div><div class="topaction">जयपुर ›</div></div>
+          <div class="banner"><div class="bi">॥</div><div class="bt">आज विसर्जन · शुभ समय 10:42 — 12:16</div><div class="chev" style="color:var(--saffron);font-size:17px">›</div></div>
+          <div class="daycard">
+            <div class="arc">
+              <div class="arcstep filled"><div class="n done">१</div><div class="lbl">स्थापना</div></div>
+              <div class="arcstep filled"><div class="n done">…</div><div class="lbl"></div></div>
+              <div class="arcstep filled"><div class="n done">९</div><div class="lbl"></div></div>
+              <div class="arcstep filled"><div class="n now">१०</div><div class="lbl">विसर्जन</div></div>
+            </div>
+            <div class="divider"></div>
+            <div class="deva" style="font-size:16px;color:var(--ink);text-align:center">अनन्त चतुर्दशी</div>
+            <div class="evid" style="text-align:center;margin-top:3px">दस दिन पूर्ण</div>
+          </div>
+          <div class="sechead">विसर्जन विधि</div>
+          <div class="actionrow"><div class="ai">१</div><div class="at"><div class="att">उत्तर पूजा</div><div class="ats">विदाई की पूजा</div></div><div class="chev">›</div></div>
+          <div class="actionrow"><div class="ai">२</div><div class="at"><div class="att">आरती व क्षमा प्रार्थना</div><div class="ats">जाने-अनजाने की क्षमा</div></div><div class="chev">›</div></div>
+          <div class="actionrow"><div class="ai">३</div><div class="at"><div class="att">विसर्जन</div><div class="ats">जल में या घर पर</div></div><div class="chev">›</div></div>
+          <div class="note">Text shown here is illustrative placeholder — the vidhi ships source-verified or not at all.</div>
+        </div></div>
+      </div>
+      <div class="cap"><b>Visarjan day — computed from <i>your</i> day 1.</b><br/>The reminder rides a shipped notification family. The muhurat window comes from the engine that already dates every other occasion. Only the step text is new content.</div>
+    </div>
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">दीपावली</div><div class="topaction">दिन २</div></div>
+          <div class="daycard">
+            <div class="arc">
+              <div class="arcstep filled"><div class="n done">१</div><div class="lbl">धनतेरस</div></div>
+              <div class="arcstep filled"><div class="n now">२</div><div class="lbl">छोटी दिवाली</div></div>
+              <div class="arcstep"><div class="n">३</div><div class="lbl">दीपावली</div></div>
+              <div class="arcstep"><div class="n">४</div><div class="lbl">गोवर्धन</div></div>
+              <div class="arcstep"><div class="n">५</div><div class="lbl">भाई दूज</div></div>
+            </div>
+            <div class="divider"></div>
+            <div class="evid" style="text-align:center">पाँच दिन का पर्व · आज दूसरा</div>
+          </div>
+          <div class="sechead">आज · नरक चतुर्दशी</div>
+          <div class="card">
+            <div class="evid">अभ्यंग स्नान प्रातः, यमराज हेतु दीप दक्षिण दिशा में।</div>
+            <div class="apills"><div class="apill gold">कथा</div><div class="apill outline">भोग</div></div>
+          </div>
+          <div class="sechead">कल</div>
+          <div class="actionrow"><div class="ai">३</div><div class="at"><div class="att">दीपावली · लक्ष्मी पूजन</div><div class="ats">प्रदोष काल 17:48 — 20:22</div></div><div class="chev">›</div></div>
+          <div class="actionrow" style="opacity:.7"><div class="ai">४</div><div class="at"><div class="att">गोवर्धन पूजा</div><div class="ats">परसों</div></div><div class="chev">›</div></div>
+        </div></div>
+      </div>
+      <div class="cap"><b>Diwali — the second consumer, and the deadline.</b><br/>Four existing rules gain one <code>arcId</code> and become one observance. <b>Diwali falls inside Q4</b>: if the arc misses it, this frame's value defers a full year.</div>
+    </div>
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">नवरात्रि</div><div class="topaction">दिन ८</div></div>
+          <div class="daycard">
+            <div class="arc">
+              <div class="arcstep filled"><div class="n done">१</div><div class="lbl">घटस्थापना</div></div>
+              <div class="arcstep filled"><div class="n done">…</div><div class="lbl"></div></div>
+              <div class="arcstep filled"><div class="n now">८</div><div class="lbl">अष्टमी</div></div>
+              <div class="arcstep"><div class="n">९</div><div class="lbl">कन्या पूजन</div></div>
+              <div class="arcstep"><div class="n">१०</div><div class="lbl">विसर्जन</div></div>
+            </div>
+            <div class="divider"></div>
+            <div class="evid" style="text-align:center">कल कन्या पूजन — सामग्री सूची तैयार है</div>
+          </div>
+          <div class="sechead">कल के लिए</div>
+          <div class="card" style="padding:6px 14px">
+            <div class="todo"><div class="bx"></div><div class="tx">हलवा · चना · पूरी</div></div>
+            <div class="divider" style="margin:0"></div>
+            <div class="todo"><div class="bx"></div><div class="tx">कन्याओं हेतु भेंट</div></div>
+          </div>
+          <div class="note">भोग सूची PRD-23 से आती है — यह अर्क उसे केवल सही दिन पर लाता है।</div>
+        </div></div>
+      </div>
+      <div class="cap"><b>Navratri — where the arc pays off twice.</b><br/>The arc knows tomorrow is Kanya Pujan, so PRD-23's <i>shipped</i> bhog list and grocery checklist surface a day early, when the shopping actually happens. New value from content already in the binary.</div>
+    </div>
+
+  </div>
+
+  <div class="phaselabel">Open questions this prototype does not settle</div>
+  <div class="phasedesc">
+    <b>1.</b> Which durations ship (1½ / 3 / 5 / 7 / 10) and does any default? Recommended: offer the set, <b>default to nothing</b> — regional and household variance is wide and a default reads as a prescription.<br/>
+    <b>2.</b> What happens when a user never chooses? The arc must degrade to today's behaviour (independent days), never nag.<br/>
+    <b>3.</b> Visarjan vidhi text is sourced content and ships <code>verified</code> or invisible — the arc, solver and strip must be useful without it, which is why they are Phase A.<br/>
+    <b>4.</b> Do Navratri and Diwali arcs re-use the same <code>arcRole</code> vocabulary, or does Diwali need a fifth role for a day that is neither sthapana nor visarjan? Prototype assumes <code>'day'</code> covers it.
+  </div>
+</body>
+</html>

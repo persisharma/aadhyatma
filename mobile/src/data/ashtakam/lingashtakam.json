@@ -1,0 +1,178 @@
+{
+  "id": "lingashtakam",
+  "titleHi": "लिङ्गाष्टकम्",
+  "titleEn": "Lingashtakam",
+  "deity": "shiva",
+  "source": {
+    "baseText": "Lingashtakam — cross-verified across three authoritative sources; all 8 verses concordant",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_shiva/lingashhMean.html",
+      "https://shlokam.org/shloka/lingashtakam.htm",
+      "https://amitray.com/stotram/lingashtakam/"
+    ],
+    "retrievedOn": "2026-07-22",
+    "notes": "Verse 3 opening reads सर्व सुगन्ध (majority: shlokam, amitray); sanskritdocuments has the variant सर्वसुगन्धि. Meaning unchanged."
+  },
+  "verses": [
+    {
+      "id": "lingashtakam-1",
+      "number": 1,
+      "labelHi": "श्लोक · १",
+      "labelEn": "Shloka · 1",
+      "lines": [
+        "ब्रह्ममुरारि सुरार्चित लिङ्गं",
+        "निर्मलभासित शोभित लिङ्गम्।",
+        "जन्मज दुःख विनाशक लिङ्गं",
+        "तत्प्रणमामि सदाशिव लिङ्गम्॥"
+      ],
+      "linesEn": [
+        "brahmamurāri surārcita liṅgaṃ",
+        "nirmalabhāsita śobhita liṅgam",
+        "janmaja duḥkha vināśaka liṅgaṃ",
+        "tat-praṇamāmi sadāśiva liṅgam"
+      ],
+      "meaningHi": "जो लिङ्ग ब्रह्मा, विष्णु (मुरारि) और समस्त देवताओं द्वारा पूजित है, जो निर्मल एवं देदीप्यमान होकर सुशोभित है, और जो जन्म से उत्पन्न होने वाले दुःखों का नाश करता है — उस सदाशिव-स्वरूप लिङ्ग को मैं प्रणाम करता हूँ। यह श्लोक शिव को जन्म-मरण के दुःख से मुक्ति देने वाले परम मंगलकारी के रूप में स्मरण करता है।",
+      "meaningEn": "I bow to that Lingam, the eternal Shiva — worshipped by Brahma, Vishnu (Murari) and all the gods, pure and resplendent in form, and the destroyer of the sorrow born of birth. The verse invokes Shiva as the auspicious one who frees the devotee from the suffering of the cycle of birth."
+    },
+    {
+      "id": "lingashtakam-2",
+      "number": 2,
+      "labelHi": "श्लोक · २",
+      "labelEn": "Shloka · 2",
+      "lines": [
+        "देवमुनि प्रवरार्चित लिङ्गं",
+        "कामदहन करुणाकर लिङ्गम्।",
+        "रावण दर्प विनाशन लिङ्गं",
+        "तत्प्रणमामि सदाशिव लिङ्गम्॥"
+      ],
+      "linesEn": [
+        "devamuni pravarārcita liṅgaṃ",
+        "kāmadahana karuṇākara liṅgam",
+        "rāvaṇa darpa vināśana liṅgaṃ",
+        "tat-praṇamāmi sadāśiva liṅgam"
+      ],
+      "meaningHi": "जो लिङ्ग देवताओं और श्रेष्ठ मुनियों द्वारा पूजित है, जो कामदेव का दहन करने वाला और करुणा का आगार है, तथा जिसने रावण के अहंकार का नाश किया — उस सदाशिव-स्वरूप लिङ्ग को मैं प्रणाम करता हूँ।",
+      "meaningEn": "I bow to that Lingam, the eternal Shiva — worshipped by the gods and the foremost sages, the burner of desire (Kama) yet the abode of compassion, who destroyed the pride of Ravana."
+    },
+    {
+      "id": "lingashtakam-3",
+      "number": 3,
+      "labelHi": "श्लोक · ३",
+      "labelEn": "Shloka · 3",
+      "lines": [
+        "सर्व सुगन्ध सुलेपित लिङ्गं",
+        "बुद्धि विवर्धन कारण लिङ्गम्।",
+        "सिद्ध सुरासुर वन्दित लिङ्गं",
+        "तत्प्रणमामि सदाशिव लिङ्गम्॥"
+      ],
+      "linesEn": [
+        "sarva sugandha sulepita liṅgaṃ",
+        "buddhi vivardhana kāraṇa liṅgam",
+        "siddha surāsura vandita liṅgaṃ",
+        "tat-praṇamāmi sadāśiva liṅgam"
+      ],
+      "meaningHi": "जो लिङ्ग सब प्रकार के सुगन्धित द्रव्यों से भली-भाँति लेपित है, जो बुद्धि की वृद्धि का कारण है, और जो सिद्धों, देवताओं तथा असुरों द्वारा वन्दित है — उस सदाशिव-स्वरूप लिङ्ग को मैं प्रणाम करता हूँ।",
+      "meaningEn": "I bow to that Lingam, the eternal Shiva — anointed with every fragrance, the cause of the growth of wisdom, and revered by the Siddhas, the gods and the demons alike."
+    },
+    {
+      "id": "lingashtakam-4",
+      "number": 4,
+      "labelHi": "श्लोक · ४",
+      "labelEn": "Shloka · 4",
+      "lines": [
+        "कनक महामणि भूषित लिङ्गं",
+        "फणिपति वेष्टित शोभित लिङ्गम्।",
+        "दक्षसुयज्ञ विनाशन लिङ्गं",
+        "तत्प्रणमामि सदाशिव लिङ्गम्॥"
+      ],
+      "linesEn": [
+        "kanaka mahāmaṇi bhūṣita liṅgaṃ",
+        "phaṇipati veṣṭita śobhita liṅgam",
+        "dakṣasuyajña vināśana liṅgaṃ",
+        "tat-praṇamāmi sadāśiva liṅgam"
+      ],
+      "meaningHi": "जो लिङ्ग स्वर्ण और महामणियों से विभूषित है, जो सर्पराज (वासुकि) से वेष्टित होकर सुशोभित है, और जिसने दक्ष के यज्ञ का विनाश किया — उस सदाशिव-स्वरूप लिङ्ग को मैं प्रणाम करता हूँ।",
+      "meaningEn": "I bow to that Lingam, the eternal Shiva — adorned with gold and great jewels, radiant with the king of serpents coiled around it, who destroyed the (arrogant) sacrifice of Daksha."
+    },
+    {
+      "id": "lingashtakam-5",
+      "number": 5,
+      "labelHi": "श्लोक · ५",
+      "labelEn": "Shloka · 5",
+      "lines": [
+        "कुङ्कुम चन्दन लेपित लिङ्गं",
+        "पङ्कज हार सुशोभित लिङ्गम्।",
+        "सञ्चित पाप विनाशन लिङ्गं",
+        "तत्प्रणमामि सदाशिव लिङ्गम्॥"
+      ],
+      "linesEn": [
+        "kuṅkuma candana lepita liṅgaṃ",
+        "paṅkaja hāra suśobhita liṅgam",
+        "sañcita pāpa vināśana liṅgaṃ",
+        "tat-praṇamāmi sadāśiva liṅgam"
+      ],
+      "meaningHi": "जो लिङ्ग कुङ्कुम और चन्दन से लेपित है, जो कमल-पुष्पों की माला से सुशोभित है, और जो संचित पापों का नाश करता है — उस सदाशिव-स्वरूप लिङ्ग को मैं प्रणाम करता हूँ।",
+      "meaningEn": "I bow to that Lingam, the eternal Shiva — anointed with saffron and sandal paste, graced with a garland of lotuses, the destroyer of accumulated sins."
+    },
+    {
+      "id": "lingashtakam-6",
+      "number": 6,
+      "labelHi": "श्लोक · ६",
+      "labelEn": "Shloka · 6",
+      "lines": [
+        "देवगणार्चित सेवित लिङ्गं",
+        "भावैर्भक्तिभिरेव च लिङ्गम्।",
+        "दिनकर कोटि प्रभाकर लिङ्गं",
+        "तत्प्रणमामि सदाशिव लिङ्गम्॥"
+      ],
+      "linesEn": [
+        "devagaṇārcita sevita liṅgaṃ",
+        "bhāvairbhaktibhireva ca liṅgam",
+        "dinakara koṭi prabhākara liṅgaṃ",
+        "tat-praṇamāmi sadāśiva liṅgam"
+      ],
+      "meaningHi": "जो लिङ्ग देवगणों द्वारा पूजित और सेवित है, जो शुद्ध भाव और भक्ति से ही आराधित होता है, और जो करोड़ों सूर्यों के समान प्रकाशमान है — उस सदाशिव-स्वरूप लिङ्ग को मैं प्रणाम करता हूँ।",
+      "meaningEn": "I bow to that Lingam, the eternal Shiva — worshipped and served by the hosts of gods, adored through pure feeling and devotion, radiant like a million suns."
+    },
+    {
+      "id": "lingashtakam-7",
+      "number": 7,
+      "labelHi": "श्लोक · ७",
+      "labelEn": "Shloka · 7",
+      "lines": [
+        "अष्टदलोपरिवेष्टित लिङ्गं",
+        "सर्वसमुद्भव कारण लिङ्गम्।",
+        "अष्टदरिद्र विनाशन लिङ्गं",
+        "तत्प्रणमामि सदाशिव लिङ्गम्॥"
+      ],
+      "linesEn": [
+        "aṣṭadalopariveṣṭita liṅgaṃ",
+        "sarvasamudbhava kāraṇa liṅgam",
+        "aṣṭadaridra vināśana liṅgaṃ",
+        "tat-praṇamāmi sadāśiva liṅgam"
+      ],
+      "meaningHi": "जो लिङ्ग आठ दलों (कमल की आठ पंखुड़ियों) से घिरा हुआ है, जो समस्त सृष्टि की उत्पत्ति का कारण है, और जो आठों प्रकार की दरिद्रता का नाश करता है — उस सदाशिव-स्वरूप लिङ्ग को मैं प्रणाम करता हूँ।",
+      "meaningEn": "I bow to that Lingam, the eternal Shiva — encircled by the eight petals (of the lotus), the cause of all creation, and the destroyer of the eightfold poverty."
+    },
+    {
+      "id": "lingashtakam-8",
+      "number": 8,
+      "labelHi": "श्लोक · ८",
+      "labelEn": "Shloka · 8",
+      "lines": [
+        "सुरगुरु सुरवर पूजित लिङ्गं",
+        "सुरवन पुष्प सदार्चित लिङ्गम्।",
+        "परात्परं परमात्मक लिङ्गं",
+        "तत्प्रणमामि सदाशिव लिङ्गम्॥"
+      ],
+      "linesEn": [
+        "suraguru suravara pūjita liṅgaṃ",
+        "suravana puṣpa sadārcita liṅgam",
+        "parātparaṃ paramātmaka liṅgaṃ",
+        "tat-praṇamāmi sadāśiva liṅgam"
+      ],
+      "meaningHi": "जो लिङ्ग देवगुरु (बृहस्पति) और श्रेष्ठ देवताओं द्वारा पूजित है, जो देवलोक के उपवनों के पुष्पों से सदैव अर्चित है, और जो परात्पर (सबसे परे) एवं परमात्म-स्वरूप है — उस सदाशिव-स्वरूप लिङ्ग को मैं प्रणाम करता हूँ।",
+      "meaningEn": "I bow to that Lingam, the eternal Shiva — worshipped by the preceptor of the gods and the greatest of the devas, ever adored with flowers from the celestial gardens, higher than the highest and of the nature of the Supreme Self."
+    }
+  ]
+}

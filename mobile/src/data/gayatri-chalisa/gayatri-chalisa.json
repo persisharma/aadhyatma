@@ -1,0 +1,798 @@
+{
+  "titleHi": "गायत्री चालीसा",
+  "titleEn": "Gayatri Chalisa",
+  "subtitleHi": "40 चौपाई + 3 दोहा · अर्थ सहित",
+  "subtitleEn": "40 Chaupai + 3 Doha · with meaning",
+  "language": "hi",
+  "script": "devanagari",
+  "source": {
+    "baseText": "Traditional Gayatri Chalisa (Gayatri Pariwar / Shriram Sharma Acharya version), cross-checked against HinduNidhi, TheBhajan, and SanatanWeb.",
+    "referenceUrls": [
+      "https://hindunidhi.com/sri-gayatri-chalisa-hindi/",
+      "https://www.thebhajan.com/chalisa/gayatri-chalisa/",
+      "https://sanatanweb.com/gayatri-chalisa/"
+    ],
+    "retrievedOn": "2026-07-22"
+  },
+  "counts": {
+    "openingDohas": 2,
+    "chaupais": 40,
+    "closingDohas": 1,
+    "totalVerses": 43
+  },
+  "verses": [
+    {
+      "id": "opening-doha-1",
+      "type": "doha",
+      "section": "opening",
+      "number": 1,
+      "labelHi": "दोहा · १",
+      "labelEn": "Doha · 1",
+      "lines": [
+        "ह्रीं श्रीं क्लीं मेधा प्रभा, जीवन ज्योति प्रचण्ड।",
+        "शान्ति क्रान्ति जागृति प्रगति, रचना शक्ति अखण्ड॥"
+      ],
+      "linesEn": [
+        "Hreem shreem kleem medhaa prabhaa, jeevana jyoti prachanda.",
+        "Shaanti kraanti jaagriti pragati, rachanaa shakti akhanda."
+      ],
+      "meaningHi": "बीज-मन्त्र ह्रीं, श्रीं और क्लीं के रूप में हे माँ, आप बुद्धि, प्रभा और जीवन की प्रचण्ड ज्योति हैं; शान्ति, क्रान्ति, जागृति, प्रगति और सृजन की अखण्ड शक्ति आप ही हैं।",
+      "meaningEn": "In the seed-mantras Hreem, Shreem and Kleem, O Mother, you are intellect, radiance and the blazing light of life; you are the unbroken power of peace, transformation, awakening, progress and creation."
+    },
+    {
+      "id": "opening-doha-2",
+      "type": "doha",
+      "section": "opening",
+      "number": 2,
+      "labelHi": "दोहा · २",
+      "labelEn": "Doha · 2",
+      "lines": [
+        "जगत जननी मंगल करनि, गायत्री सुखधाम।",
+        "प्रणवों सावित्री स्वधा, स्वाहा पूरन काम॥"
+      ],
+      "linesEn": [
+        "Jagata jananee mangala karani, gaayatree sukhadhaama.",
+        "Pranavon saavitree svadhaa, svaahaa poorana kaama."
+      ],
+      "meaningHi": "आप जगत की जननी और सबका मंगल करने वाली हैं, गायत्री सुख का धाम हैं; प्रणव (ॐ), सावित्री, स्वधा और स्वाहा के रूप में आप समस्त कामनाओं को पूर्ण करती हैं।",
+      "meaningEn": "You are the mother of the world and the source of all well-being, Gayatri the abode of joy; as Pranava (Om), Savitri, Svadha and Svaha, you fulfil every desire."
+    },
+    {
+      "id": "chaupai-01",
+      "type": "chaupai",
+      "section": "body",
+      "number": 1,
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "भूर्भुवः स्वः ॐ युत जननी।",
+        "गायत्री नित कलिमल दहनी॥"
+      ],
+      "linesEn": [
+        "Bhoorbhuvah svah Om yuta jananee.",
+        "Gaayatree nita kalimala dahanee."
+      ],
+      "meaningHi": "भूः, भुवः, स्वः और ॐ से युक्त हे जननी गायत्री, आप नित्य ही कलियुग के पापों-मलों को भस्म कर देती हैं।",
+      "meaningEn": "O Mother Gayatri, joined with Bhuh, Bhuvah, Svah and Om, you daily burn away the sins and impurities of the age of Kali."
+    },
+    {
+      "id": "chaupai-02",
+      "type": "chaupai",
+      "section": "body",
+      "number": 2,
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "अक्षर चौबीस परम पुनीता।",
+        "इनमें बसें शास्त्र श्रुति गीता॥"
+      ],
+      "linesEn": [
+        "Akshara chaubeesa parama puneetaa.",
+        "Inamen basen shaastra shruti geetaa."
+      ],
+      "meaningHi": "आपके चौबीस अक्षर परम पवित्र हैं; इन्हीं में समस्त शास्त्र, श्रुति (वेद) और गीता का सार बसता है।",
+      "meaningEn": "Your twenty-four syllables are supremely holy; within them dwell all the scriptures, the Vedas and the Gita."
+    },
+    {
+      "id": "chaupai-03",
+      "type": "chaupai",
+      "section": "body",
+      "number": 3,
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "शाश्वत सतोगुणी सतरूपा।",
+        "सत्य सनातन सुधा अनूपा॥"
+      ],
+      "linesEn": [
+        "Shaashvata satogunee sataroopaa.",
+        "Satya sanaatana sudhaa anoopaa."
+      ],
+      "meaningHi": "आप शाश्वत, सतोगुण-स्वरूपा और सत्यमयी हैं; सत्य-सनातन तथा अमृत के समान अनुपम हैं।",
+      "meaningEn": "You are eternal, the embodiment of pure goodness (sattva) and of truth; ever-existing and incomparable like nectar."
+    },
+    {
+      "id": "chaupai-04",
+      "type": "chaupai",
+      "section": "body",
+      "number": 4,
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "हंसारूढ़ श्वेताम्बर धारी।",
+        "स्वर्ण कान्ति शुचि गगन बिहारी॥"
+      ],
+      "linesEn": [
+        "Hansaaroodha shvetaambara dhaaree.",
+        "Svarna kaanti shuchi gagana bihaaree."
+      ],
+      "meaningHi": "हंस पर विराजमान, श्वेत वस्त्र धारण करने वाली, स्वर्ण-कान्ति से युक्त और पवित्र होकर आकाश में विचरने वाली हैं।",
+      "meaningEn": "Seated upon a swan, robed in white, golden-hued and pure, you move gracefully through the heavens."
+    },
+    {
+      "id": "chaupai-05",
+      "type": "chaupai",
+      "section": "body",
+      "number": 5,
+      "labelHi": "चौपाई · ५",
+      "labelEn": "Chaupai · 5",
+      "lines": [
+        "पुस्तक पुष्प कमण्डलु माला।",
+        "शुभ्र वर्ण तनु नयन विशाला॥"
+      ],
+      "linesEn": [
+        "Pustaka pushpa kamandalu maalaa.",
+        "Shubhra varna tanu nayana vishaalaa."
+      ],
+      "meaningHi": "हाथों में पुस्तक, पुष्प, कमण्डलु और माला धारण किए, श्वेत वर्ण की देह और विशाल नेत्रों वाली हैं।",
+      "meaningEn": "Bearing a book, flowers, a water-pot and a rosary, of fair complexion and with large, beautiful eyes."
+    },
+    {
+      "id": "chaupai-06",
+      "type": "chaupai",
+      "section": "body",
+      "number": 6,
+      "labelHi": "चौपाई · ६",
+      "labelEn": "Chaupai · 6",
+      "lines": [
+        "ध्यान धरत पुलकित हिय होई।",
+        "सुख उपजत दुःख दुर्मति खोई॥"
+      ],
+      "linesEn": [
+        "Dhyaana dharata pulakita hiya hoee.",
+        "Sukha upajata duhkha durmati khoee."
+      ],
+      "meaningHi": "आपका ध्यान करते ही हृदय पुलकित हो उठता है; सुख उत्पन्न होता है और दुःख तथा कुबुद्धि नष्ट हो जाते हैं।",
+      "meaningEn": "Merely meditating on you thrills the heart; joy arises, and sorrow and wrong-mindedness are destroyed."
+    },
+    {
+      "id": "chaupai-07",
+      "type": "chaupai",
+      "section": "body",
+      "number": 7,
+      "labelHi": "चौपाई · ७",
+      "labelEn": "Chaupai · 7",
+      "lines": [
+        "कामधेनु तुम सुर तरु छाया।",
+        "निराकार की अद्भुत माया॥"
+      ],
+      "linesEn": [
+        "Kaamadhenu tuma sura taru chhaayaa.",
+        "Niraakaara kee adbhuta maayaa."
+      ],
+      "meaningHi": "आप कामधेनु और कल्पवृक्ष की छाया के समान मनोकामना पूर्ण करने वाली हैं; निराकार परमात्मा की अद्भुत माया आप ही हैं।",
+      "meaningEn": "You are like the wish-granting cow and the shade of the celestial tree; you are the wondrous power (maya) of the formless Supreme."
+    },
+    {
+      "id": "chaupai-08",
+      "type": "chaupai",
+      "section": "body",
+      "number": 8,
+      "labelHi": "चौपाई · ८",
+      "labelEn": "Chaupai · 8",
+      "lines": [
+        "तुम्हरी शरण गहै जो कोई।",
+        "तरै सकल संकट सों सोई॥"
+      ],
+      "linesEn": [
+        "Tumharee sharana gahai jo koee.",
+        "Tarai sakala sankata son soee."
+      ],
+      "meaningHi": "जो कोई भी आपकी शरण ग्रहण करता है, वह समस्त संकटों से तर जाता है।",
+      "meaningEn": "Whoever takes refuge in you crosses over every calamity."
+    },
+    {
+      "id": "chaupai-09",
+      "type": "chaupai",
+      "section": "body",
+      "number": 9,
+      "labelHi": "चौपाई · ९",
+      "labelEn": "Chaupai · 9",
+      "lines": [
+        "सरस्वती लक्ष्मी तुम काली।",
+        "दिपै तुम्हारी ज्योति निराली॥"
+      ],
+      "linesEn": [
+        "Sarasvatee lakshmee tuma kaalee.",
+        "Dipai tumhaaree jyoti niraalee."
+      ],
+      "meaningHi": "सरस्वती, लक्ष्मी और काली — ये सब आप ही हैं; आपकी निराली ज्योति सर्वत्र प्रकाशित होती है।",
+      "meaningEn": "Saraswati, Lakshmi and Kali — all these are you; your unique radiance shines everywhere."
+    },
+    {
+      "id": "chaupai-10",
+      "type": "chaupai",
+      "section": "body",
+      "number": 10,
+      "labelHi": "चौपाई · १०",
+      "labelEn": "Chaupai · 10",
+      "lines": [
+        "तुम्हरी महिमा पार न पावैं।",
+        "जो शारद शत मुख गुण गावैं॥"
+      ],
+      "linesEn": [
+        "Tumharee mahimaa paara na paavain.",
+        "Jo shaarada shata mukha guna gaavain."
+      ],
+      "meaningHi": "आपकी महिमा का पार कोई नहीं पा सकता, भले ही शारदा सैकड़ों मुखों से आपके गुण गाएँ।",
+      "meaningEn": "None can reach the limit of your glory, though Sharada were to sing your praises with a hundred mouths."
+    },
+    {
+      "id": "chaupai-11",
+      "type": "chaupai",
+      "section": "body",
+      "number": 11,
+      "labelHi": "चौपाई · ११",
+      "labelEn": "Chaupai · 11",
+      "lines": [
+        "चार वेद की मातु पुनीता।",
+        "तुम ब्रह्माणी गौरी सीता॥"
+      ],
+      "linesEn": [
+        "Chaara veda kee maatu puneetaa.",
+        "Tuma brahmaanee gauree seetaa."
+      ],
+      "meaningHi": "आप चारों वेदों की पवित्र माता हैं; आप ही ब्रह्माणी, गौरी और सीता हैं।",
+      "meaningEn": "You are the holy mother of the four Vedas; you are Brahmani, Gauri and Sita."
+    },
+    {
+      "id": "chaupai-12",
+      "type": "chaupai",
+      "section": "body",
+      "number": 12,
+      "labelHi": "चौपाई · १२",
+      "labelEn": "Chaupai · 12",
+      "lines": [
+        "महामंत्र जितने जग माहीं।",
+        "कोऊ गायत्री सम नाहीं॥"
+      ],
+      "linesEn": [
+        "Mahaamantra jitane jaga maaheen.",
+        "Kooo gaayatree sama naaheen."
+      ],
+      "meaningHi": "संसार में जितने भी महामन्त्र हैं, उनमें कोई भी गायत्री के समान नहीं है।",
+      "meaningEn": "Of all the great mantras in the world, none is equal to Gayatri."
+    },
+    {
+      "id": "chaupai-13",
+      "type": "chaupai",
+      "section": "body",
+      "number": 13,
+      "labelHi": "चौपाई · १३",
+      "labelEn": "Chaupai · 13",
+      "lines": [
+        "सुमिरत हिय में ज्ञान प्रकासै।",
+        "आलस पाप अविद्या नासै॥"
+      ],
+      "linesEn": [
+        "Sumirata hiya men jnaana prakaasai.",
+        "Aalasa paapa avidyaa naasai."
+      ],
+      "meaningHi": "आपका स्मरण करते ही हृदय में ज्ञान का प्रकाश हो जाता है और आलस्य, पाप तथा अविद्या नष्ट हो जाते हैं।",
+      "meaningEn": "Remembering you kindles the light of knowledge in the heart, and laziness, sin and ignorance are destroyed."
+    },
+    {
+      "id": "chaupai-14",
+      "type": "chaupai",
+      "section": "body",
+      "number": 14,
+      "labelHi": "चौपाई · १४",
+      "labelEn": "Chaupai · 14",
+      "lines": [
+        "सृष्टि बीज जग जननि भवानी।",
+        "कालरात्रि वरदा कल्याणी॥"
+      ],
+      "linesEn": [
+        "Srishti beeja jaga janani bhavaanee.",
+        "Kaalaraatri varadaa kalyaanee."
+      ],
+      "meaningHi": "आप सृष्टि की बीज-रूपा जगज्जननी भवानी हैं, तथा कालरात्रि एवं वरदान देने वाली कल्याणी हैं।",
+      "meaningEn": "You are Bhavani, mother of the world and the seed of creation; you are Kalaratri and the boon-granting Kalyani."
+    },
+    {
+      "id": "chaupai-15",
+      "type": "chaupai",
+      "section": "body",
+      "number": 15,
+      "labelHi": "चौपाई · १५",
+      "labelEn": "Chaupai · 15",
+      "lines": [
+        "ब्रह्मा विष्णु रुद्र सुर जेते।",
+        "तुम सों पावें सुरता तेते॥"
+      ],
+      "linesEn": [
+        "Brahmaa vishnu rudra sura jete.",
+        "Tuma son paaven surataa tete."
+      ],
+      "meaningHi": "ब्रह्मा, विष्णु, रुद्र आदि जितने भी देवता हैं, वे सब आपसे ही अपनी देवत्व-शक्ति पाते हैं।",
+      "meaningEn": "Brahma, Vishnu, Rudra and all the gods derive their divine power from you alone."
+    },
+    {
+      "id": "chaupai-16",
+      "type": "chaupai",
+      "section": "body",
+      "number": 16,
+      "labelHi": "चौपाई · १६",
+      "labelEn": "Chaupai · 16",
+      "lines": [
+        "तुम भक्तन की भक्त तुम्हारे।",
+        "जननिहिं पुत्र प्राण ते प्यारे॥"
+      ],
+      "linesEn": [
+        "Tuma bhaktana kee bhakta tumhaare.",
+        "Jananihin putra praana te pyaare."
+      ],
+      "meaningHi": "आप अपने भक्तों की हैं और भक्त आपके हैं; जैसे माता को पुत्र प्राणों से भी प्रिय होते हैं, वैसे ही वे आपको प्रिय हैं।",
+      "meaningEn": "You belong to your devotees and they to you; as children are dearer than life to a mother, so are they dear to you."
+    },
+    {
+      "id": "chaupai-17",
+      "type": "chaupai",
+      "section": "body",
+      "number": 17,
+      "labelHi": "चौपाई · १७",
+      "labelEn": "Chaupai · 17",
+      "lines": [
+        "महिमा अपरम्पार तुम्हारी।",
+        "जय जय जय त्रिपदा भयहारी॥"
+      ],
+      "linesEn": [
+        "Mahimaa aparampaara tumhaaree.",
+        "Jaya jaya jaya tripadaa bhayahaaree."
+      ],
+      "meaningHi": "आपकी महिमा अपरम्पार है; हे भय हरने वाली त्रिपदा (तीन चरणों वाली गायत्री), आपकी बारम्बार जय हो।",
+      "meaningEn": "Your glory is boundless; victory again and again to you, O three-footed Tripada Gayatri, remover of fear."
+    },
+    {
+      "id": "chaupai-18",
+      "type": "chaupai",
+      "section": "body",
+      "number": 18,
+      "labelHi": "चौपाई · १८",
+      "labelEn": "Chaupai · 18",
+      "lines": [
+        "पूरित सकल ज्ञान विज्ञाना।",
+        "तुम सम अधिक न जग में आना॥"
+      ],
+      "linesEn": [
+        "Poorita sakala jnaana vijnaanaa.",
+        "Tuma sama adhika na jaga men aanaa."
+      ],
+      "meaningHi": "समस्त ज्ञान और विज्ञान आपमें पूर्ण रूप से विद्यमान हैं; इस जगत में आपके समान या आपसे बढ़कर कोई नहीं आया।",
+      "meaningEn": "All knowledge and wisdom are complete within you; none equal to or greater than you has ever come into this world."
+    },
+    {
+      "id": "chaupai-19",
+      "type": "chaupai",
+      "section": "body",
+      "number": 19,
+      "labelHi": "चौपाई · १९",
+      "labelEn": "Chaupai · 19",
+      "lines": [
+        "तुमहिं जानि कछु रहै न शेषा।",
+        "तुमहिं पाय कछु रहै न क्लेशा॥"
+      ],
+      "linesEn": [
+        "Tumahin jaani kachhu rahai na sheshaa.",
+        "Tumahin paaya kachhu rahai na kleshaa."
+      ],
+      "meaningHi": "आपको जान लेने पर कुछ भी शेष (जानने को) नहीं रहता, और आपको पा लेने पर कोई क्लेश नहीं रह जाता।",
+      "meaningEn": "Once you are known, nothing remains to be known; once you are attained, no affliction remains."
+    },
+    {
+      "id": "chaupai-20",
+      "type": "chaupai",
+      "section": "body",
+      "number": 20,
+      "labelHi": "चौपाई · २०",
+      "labelEn": "Chaupai · 20",
+      "lines": [
+        "जानत तुमहिं तुमहिं ह्वै जाई।",
+        "पारस परसि कुधातु सुहाई॥"
+      ],
+      "linesEn": [
+        "Jaanata tumahin tumahin hvai jaaee.",
+        "Paarasa parasi kudhaatu suhaaee."
+      ],
+      "meaningHi": "आपको जानने वाला आपमें ही एकरूप हो जाता है — जैसे पारस के स्पर्श से कुधातु भी सुहावना स्वर्ण बन जाता है।",
+      "meaningEn": "One who knows you becomes one with you — as base metal touched by the philosopher's stone turns to lustrous gold."
+    },
+    {
+      "id": "chaupai-21",
+      "type": "chaupai",
+      "section": "body",
+      "number": 21,
+      "labelHi": "चौपाई · २१",
+      "labelEn": "Chaupai · 21",
+      "lines": [
+        "तुम्हरी शक्ति दिपै सब ठाई।",
+        "माता तुम सब ठौर समाई॥"
+      ],
+      "linesEn": [
+        "Tumharee shakti dipai saba thaaee.",
+        "Maataa tuma saba thaura samaaee."
+      ],
+      "meaningHi": "आपकी शक्ति सब स्थानों पर प्रकाशित होती है; हे माता, आप सर्वत्र समाई हुई हैं।",
+      "meaningEn": "Your power shines in every place; O Mother, you pervade all."
+    },
+    {
+      "id": "chaupai-22",
+      "type": "chaupai",
+      "section": "body",
+      "number": 22,
+      "labelHi": "चौपाई · २२",
+      "labelEn": "Chaupai · 22",
+      "lines": [
+        "ग्रह नक्षत्र ब्रह्माण्ड घनेरे।",
+        "सब गतिवान तुम्हारे प्रेरे॥"
+      ],
+      "linesEn": [
+        "Graha nakshatra brahmaanda ghanere.",
+        "Saba gativaana tumhaare prere."
+      ],
+      "meaningHi": "अनगिनत ग्रह, नक्षत्र और ब्रह्माण्ड — ये सब आपकी ही प्रेरणा से गतिशील हैं।",
+      "meaningEn": "The countless planets, stars and universes all move by your inspiration."
+    },
+    {
+      "id": "chaupai-23",
+      "type": "chaupai",
+      "section": "body",
+      "number": 23,
+      "labelHi": "चौपाई · २३",
+      "labelEn": "Chaupai · 23",
+      "lines": [
+        "सकल सृष्टि की प्राण विधाता।",
+        "पालक पोषक नाशक त्राता॥"
+      ],
+      "linesEn": [
+        "Sakala srishti kee praana vidhaataa.",
+        "Paalaka poshaka naashaka traataa."
+      ],
+      "meaningHi": "आप समस्त सृष्टि की प्राण-विधात्री हैं; पालन करने वाली, पोषण करने वाली, संहार करने वाली और रक्षा करने वाली आप ही हैं।",
+      "meaningEn": "You are the life-giver of all creation — its sustainer, nourisher, destroyer and protector."
+    },
+    {
+      "id": "chaupai-24",
+      "type": "chaupai",
+      "section": "body",
+      "number": 24,
+      "labelHi": "चौपाई · २४",
+      "labelEn": "Chaupai · 24",
+      "lines": [
+        "मातेश्वरी दया व्रत धारी।",
+        "तुम सन तरे पातकी भारी॥"
+      ],
+      "linesEn": [
+        "Maateshvaree dayaa vrata dhaaree.",
+        "Tuma sana tare paatakee bhaaree."
+      ],
+      "meaningHi": "हे मातेश्वरी, आप दया का व्रत धारण करती हैं; आपके आश्रय से बड़े-बड़े पापी भी तर जाते हैं।",
+      "meaningEn": "O Divine Mother, you keep the vow of compassion; by your shelter even the greatest sinners are redeemed."
+    },
+    {
+      "id": "chaupai-25",
+      "type": "chaupai",
+      "section": "body",
+      "number": 25,
+      "labelHi": "चौपाई · २५",
+      "labelEn": "Chaupai · 25",
+      "lines": [
+        "जापर कृपा तुम्हारी होई।",
+        "तापर कृपा करें सब कोई॥"
+      ],
+      "linesEn": [
+        "Jaapara kripaa tumhaaree hoee.",
+        "Taapara kripaa karen saba koee."
+      ],
+      "meaningHi": "जिस पर आपकी कृपा होती है, उस पर सभी लोग कृपा करने लगते हैं।",
+      "meaningEn": "Upon whomever your grace falls, everyone else too becomes gracious."
+    },
+    {
+      "id": "chaupai-26",
+      "type": "chaupai",
+      "section": "body",
+      "number": 26,
+      "labelHi": "चौपाई · २६",
+      "labelEn": "Chaupai · 26",
+      "lines": [
+        "मंद बुद्धि ते बुद्धि बल पावें।",
+        "रोगी रोग रहित हो जावें॥"
+      ],
+      "linesEn": [
+        "Manda buddhi te buddhi bala paaven.",
+        "Rogee roga rahita ho jaaven."
+      ],
+      "meaningHi": "मन्दबुद्धि व्यक्ति बुद्धि और बल पा लेता है, और रोगी रोग से रहित हो जाता है।",
+      "meaningEn": "The dull-witted gain intelligence and strength, and the sick become free of disease."
+    },
+    {
+      "id": "chaupai-27",
+      "type": "chaupai",
+      "section": "body",
+      "number": 27,
+      "labelHi": "चौपाई · २७",
+      "labelEn": "Chaupai · 27",
+      "lines": [
+        "दारिद मिटै कटै सब पीरा।",
+        "नाशै दुःख हरै भव भीरा॥"
+      ],
+      "linesEn": [
+        "Daarida mitai katai saba peeraa.",
+        "Naashai duhkha harai bhava bheeraa."
+      ],
+      "meaningHi": "दरिद्रता मिट जाती है, समस्त पीड़ाएँ कट जाती हैं; दुःख नष्ट होते हैं और संसार-भय दूर हो जाता है।",
+      "meaningEn": "Poverty is erased and all pains are cut away; sorrows perish and worldly fear is dispelled."
+    },
+    {
+      "id": "chaupai-28",
+      "type": "chaupai",
+      "section": "body",
+      "number": 28,
+      "labelHi": "चौपाई · २८",
+      "labelEn": "Chaupai · 28",
+      "lines": [
+        "गृह क्लेश चित चिन्ता भारी।",
+        "नासै गायत्री भय हारी॥"
+      ],
+      "linesEn": [
+        "Griha klesha chita chintaa bhaaree.",
+        "Naasai gaayatree bhaya haaree."
+      ],
+      "meaningHi": "घर का क्लेश और चित्त की भारी चिन्ता — भय हरने वाली गायत्री इन सबको नष्ट कर देती हैं।",
+      "meaningEn": "Household strife and the heavy anxieties of the mind — Gayatri, remover of fear, destroys them all."
+    },
+    {
+      "id": "chaupai-29",
+      "type": "chaupai",
+      "section": "body",
+      "number": 29,
+      "labelHi": "चौपाई · २९",
+      "labelEn": "Chaupai · 29",
+      "lines": [
+        "सन्तति हीन सुसन्तति पावें।",
+        "सुख सम्पत्ति युत मोद मनावें॥"
+      ],
+      "linesEn": [
+        "Santati heena susantati paaven.",
+        "Sukha sampatti yuta moda manaaven."
+      ],
+      "meaningHi": "सन्तानहीन को सुयोग्य सन्तान प्राप्त होती है, और वह सुख-सम्पत्ति सहित आनन्द मनाता है।",
+      "meaningEn": "The childless obtain worthy offspring and rejoice, blessed with happiness and prosperity."
+    },
+    {
+      "id": "chaupai-30",
+      "type": "chaupai",
+      "section": "body",
+      "number": 30,
+      "labelHi": "चौपाई · ३०",
+      "labelEn": "Chaupai · 30",
+      "lines": [
+        "भूत पिशाच सबै भय खावें।",
+        "यम के दूत निकट नहिं आवें॥"
+      ],
+      "linesEn": [
+        "Bhoota pishaacha sabai bhaya khaaven.",
+        "Yama ke doota nikata nahin aaven."
+      ],
+      "meaningHi": "भूत-पिशाच सब भय से भाग जाते हैं, और यम के दूत निकट नहीं आते।",
+      "meaningEn": "Ghosts and evil spirits flee in fear, and the messengers of Yama (death) do not draw near."
+    },
+    {
+      "id": "chaupai-31",
+      "type": "chaupai",
+      "section": "body",
+      "number": 31,
+      "labelHi": "चौपाई · ३१",
+      "labelEn": "Chaupai · 31",
+      "lines": [
+        "जो सधवा सुमिरें चित लाई।",
+        "अछत सुहाग सदा सुखदाई॥"
+      ],
+      "linesEn": [
+        "Jo sadhavaa sumiren chita laaee.",
+        "Achhata suhaaga sadaa sukhadaaee."
+      ],
+      "meaningHi": "जो सुहागिन स्त्री चित्त लगाकर आपका स्मरण करती है, उसका सुहाग अक्षय रहकर सदा सुख देने वाला होता है।",
+      "meaningEn": "The married woman who remembers you with a focused heart keeps her wedded fortune unbroken and ever joyful."
+    },
+    {
+      "id": "chaupai-32",
+      "type": "chaupai",
+      "section": "body",
+      "number": 32,
+      "labelHi": "चौपाई · ३२",
+      "labelEn": "Chaupai · 32",
+      "lines": [
+        "घर वर सुखप्रद लहैं कुमारी।",
+        "विधवा रहें सत्य व्रत धारी॥"
+      ],
+      "linesEn": [
+        "Ghara vara sukhaprada lahain kumaaree.",
+        "Vidhavaa rahen satya vrata dhaaree."
+      ],
+      "meaningHi": "कुमारी कन्याओं को सुखदायक घर और वर मिलता है, और विधवाएँ सत्य-व्रत धारण कर पवित्र जीवन बिताती हैं।",
+      "meaningEn": "Unmarried maidens obtain a happy home and husband, and widows, holding to the vow of truth, live pure lives."
+    },
+    {
+      "id": "chaupai-33",
+      "type": "chaupai",
+      "section": "body",
+      "number": 33,
+      "labelHi": "चौपाई · ३३",
+      "labelEn": "Chaupai · 33",
+      "lines": [
+        "जयति जयति जगदम्ब भवानी।",
+        "तुम सम और दयालु न दानी॥"
+      ],
+      "linesEn": [
+        "Jayati jayati jagadamba bhavaanee.",
+        "Tuma sama aura dayaalu na daanee."
+      ],
+      "meaningHi": "हे जगदम्बा भवानी, आपकी बारम्बार जय हो; आपके समान दयालु और दानी दूसरा कोई नहीं है।",
+      "meaningEn": "Victory again and again to you, Jagadamba Bhavani; none is as compassionate and generous as you."
+    },
+    {
+      "id": "chaupai-34",
+      "type": "chaupai",
+      "section": "body",
+      "number": 34,
+      "labelHi": "चौपाई · ३४",
+      "labelEn": "Chaupai · 34",
+      "lines": [
+        "जो सद्गुरु सों दीक्षा पावें।",
+        "सो साधन को सफल बनावें॥"
+      ],
+      "linesEn": [
+        "Jo sadguru son deekshaa paaven.",
+        "So saadhana ko saphala banaaven."
+      ],
+      "meaningHi": "जो सद्गुरु से दीक्षा प्राप्त करता है, वह अपनी साधना को सफल बना लेता है।",
+      "meaningEn": "One who receives initiation from a true guru makes his spiritual practice fruitful."
+    },
+    {
+      "id": "chaupai-35",
+      "type": "chaupai",
+      "section": "body",
+      "number": 35,
+      "labelHi": "चौपाई · ३५",
+      "labelEn": "Chaupai · 35",
+      "lines": [
+        "सुमिरन करें सुरुचि बड़भागी।",
+        "लहैं मनोरथ गृही विरागी॥"
+      ],
+      "linesEn": [
+        "Sumirana karen suruchi badabhaagee.",
+        "Lahain manoratha grihee viraagee."
+      ],
+      "meaningHi": "जो सुरुचि (श्रद्धा) से आपका स्मरण करता है वह बड़भागी है; गृहस्थ और विरक्त दोनों अपने मनोरथ पा लेते हैं।",
+      "meaningEn": "Blessed is the one who remembers you with devotion; both householder and renunciate attain their heart's desire."
+    },
+    {
+      "id": "chaupai-36",
+      "type": "chaupai",
+      "section": "body",
+      "number": 36,
+      "labelHi": "चौपाई · ३६",
+      "labelEn": "Chaupai · 36",
+      "lines": [
+        "अष्ट सिद्धि नवनिधि की दाता।",
+        "सब समर्थ गायत्री माता॥"
+      ],
+      "linesEn": [
+        "Ashta siddhi navanidhi kee daataa.",
+        "Saba samartha gaayatree maataa."
+      ],
+      "meaningHi": "आठों सिद्धियों और नौ निधियों की दात्री आप ही हैं; हे गायत्री माता, आप सब कुछ करने में समर्थ हैं।",
+      "meaningEn": "You are the giver of the eight siddhis and nine treasures; O Mother Gayatri, you are all-capable."
+    },
+    {
+      "id": "chaupai-37",
+      "type": "chaupai",
+      "section": "body",
+      "number": 37,
+      "labelHi": "चौपाई · ३७",
+      "labelEn": "Chaupai · 37",
+      "lines": [
+        "ऋषि मुनि यती तपस्वी योगी।",
+        "आरत अर्थी चिन्तित भोगी॥"
+      ],
+      "linesEn": [
+        "Rishi muni yatee tapasvee yogee.",
+        "Aarata arthee chintita bhogee."
+      ],
+      "meaningHi": "ऋषि, मुनि, यती, तपस्वी और योगी; तथा आर्त, अर्थी, चिन्तित और भोगी — सभी आपकी शरण आते हैं।",
+      "meaningEn": "Sages, ascetics, monks, penitents and yogis; and the distressed, the seeker, the anxious and the pleasure-bound — all come to your refuge."
+    },
+    {
+      "id": "chaupai-38",
+      "type": "chaupai",
+      "section": "body",
+      "number": 38,
+      "labelHi": "चौपाई · ३८",
+      "labelEn": "Chaupai · 38",
+      "lines": [
+        "जो जो शरण तुम्हारी आवें।",
+        "सो सो मन वांछित फल पावें॥"
+      ],
+      "linesEn": [
+        "Jo jo sharana tumhaaree aaven.",
+        "So so mana vaanchhita phala paaven."
+      ],
+      "meaningHi": "जो-जो आपकी शरण में आता है, वह-वह अपने मनवांछित फल को प्राप्त कर लेता है।",
+      "meaningEn": "Whoever comes to your refuge obtains the fruit that his heart desires."
+    },
+    {
+      "id": "chaupai-39",
+      "type": "chaupai",
+      "section": "body",
+      "number": 39,
+      "labelHi": "चौपाई · ३९",
+      "labelEn": "Chaupai · 39",
+      "lines": [
+        "बल बुद्धि विद्या शील स्वभाऊ।",
+        "धन वैभव यश तेज उछाऊ॥"
+      ],
+      "linesEn": [
+        "Bala buddhi vidyaa sheela svabhaaoo.",
+        "Dhana vaibhava yasha teja uchhaaoo."
+      ],
+      "meaningHi": "बल, बुद्धि, विद्या और शुभ स्वभाव; धन, वैभव, यश और तेज —",
+      "meaningEn": "Strength, intellect, learning and noble character; wealth, splendour, fame and radiance —"
+    },
+    {
+      "id": "chaupai-40",
+      "type": "chaupai",
+      "section": "body",
+      "number": 40,
+      "labelHi": "चौपाई · ४०",
+      "labelEn": "Chaupai · 40",
+      "lines": [
+        "सकल बढ़ें उपजें सुख नाना।",
+        "जो यह पाठ करै धरि ध्याना॥"
+      ],
+      "linesEn": [
+        "Sakala badhen upajen sukha naanaa.",
+        "Jo yaha paatha karai dhari dhyaanaa."
+      ],
+      "meaningHi": "जो व्यक्ति ध्यानपूर्वक इस पाठ को करता है, उसके ये सब गुण बढ़ते हैं और अनेक प्रकार के सुख उत्पन्न होते हैं।",
+      "meaningEn": "— all these increase, and manifold joys arise, for the one who recites this text with concentration."
+    },
+    {
+      "id": "closing-doha",
+      "type": "doha",
+      "section": "closing",
+      "labelHi": "दोहा",
+      "labelEn": "Doha",
+      "lines": [
+        "यह चालीसा भक्ति युत, पाठ करै जो कोई।",
+        "तापर कृपा प्रसन्नता, गायत्री की होय॥"
+      ],
+      "linesEn": [
+        "Yaha chaaleesaa bhakti yuta, paatha karai jo koee.",
+        "Taapara kripaa prasannataa, gaayatree kee hoya."
+      ],
+      "meaningHi": "जो कोई भक्तिपूर्वक इस चालीसा का पाठ करता है, उस पर गायत्री माता की कृपा और प्रसन्नता सदा बनी रहती है।",
+      "meaningEn": "Whoever recites this Chalisa with devotion, upon them the grace and pleasure of Mother Gayatri ever abide."
+    }
+  ]
+}

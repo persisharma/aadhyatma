@@ -58,6 +58,20 @@ Learnings are auto-captured after each /ship run. Read before starting the phase
 **Example:** Skipped `/codex:adversarial-review` across two plan rounds because `codex:adversarial-review` didn't appear in the skills registry at session start. Wrote "self-adversarial pass (no external codex harness in this environment)" — but skills and slash commands live in separate registries; the slash command was wired to `codex-companion.mjs` and callable, I just hadn't checked. User caught the shortcut.
 **Resolution pattern:** If a ship phase references `/codex:*` or any external reviewer, try the invocation rather than inferring absence from a skills-list scan. When a real failure happens, surface the error — never quietly swap a real reviewer for a self-review.
 
+### entryRoutes.ts has 5 routing functions, not 3 — count them before planning
+
+**Seen:** 1x — 2026-05-24
+**Category:** route-coverage
+**Example:** Plan v1 said "register in navigateToEntryStart, buildProgressTarget, buildBookmarkTarget" (3 functions). Codex adversarial review found 5: also navigateToProgress and navigateToBookmark. Missing any one causes dead resume/bookmark links from that path.
+**Resolution pattern:** Before listing registration points in a plan, `grep 'export function' entryRoutes.ts` and enumerate all public functions. Every routing helper that dispatches on entry ID or sourceId needs a new branch.
+
+### backgrounds.ts runtime coverage validator will crash the app if entries are added without backgrounds
+
+**Seen:** 1x — 2026-05-24
+**Category:** boot-crash
+**Example:** Plan had Task 14 (add LibraryEntry items) but Task 11 (register backgrounds) could easily be done after. The IIFE in backgrounds.ts runs on module import and throws if any active non-hidden library entry lacks a sourceBackgrounds mapping. Adding entries before backgrounds = app crash on boot.
+**Resolution pattern:** When adding new library entries, always register their sourceBackgrounds BEFORE setting status to 'active'. Alternatively, add entries as `hidden: true` first, then flip to visible after backgrounds are wired.
+
 ### Single-chapter stotrams should use verse count in `sub` field, not chapter count
 
 **Seen:** 1x — 2026-05-23
@@ -71,3 +85,30 @@ Learnings are auto-captured after each /ship run. Read before starting the phase
 **Category:** tooling
 **Example:** Codex companion hit OpenAI usage limit during adversarial review. Performed thorough manual code-verified adversarial review as fallback, checking 6 specific challenges against actual source files. The manual review caught the same sub-field wording issue that pattern-matching alone would have found.
 **Resolution pattern:** Always attempt the codex invocation first. If it fails with a rate limit or auth error, perform a manual adversarial review verifying each challenge against actual code (not just reasoning about it). Document the failure and the manual findings.
+
+### "New content since last update" must be content-ID-set diffing, NOT app-version comparison, when content ships via OTA
+
+**Seen:** 1x — 2026-05-29
+**Category:** design-mechanism
+**Example:** NEW-chip plan proposed `addedInVersion` vs a stored `lastSeenVersion`. app.json has `runtimeVersion.policy: "appVersion"` → OTA updates CANNOT bump `version`, so version-based detection never fires for OTA content drops (the feature's own stated use case). Also the feature's debut release has no stored version for any user → everyone treated as fresh → nothing shows. Codex flagged both as high severity. Fix: persist a `knownIds` set; "new" = a discoverable library id absent from `knownIds`; `markSeen` adds to the set. Version-agnostic, OTA-safe, persists-until-tapped, no resurrection.
+**Resolution pattern:** For "what's new since you last used the app" on an OTA-capable client, diff the current catalog of IDs against a persisted seen-set. Reserve version numbers only for a one-time debut seed. Verify against the actual update-delivery mechanism (OTA vs store build) before choosing version-based logic.
+
+### Fresh-vs-upgrade detection must key off user-action-only storage keys, never mount-written ones
+
+**Seen:** 1x — 2026-05-29
+**Category:** race-condition
+**Example:** To distinguish a returning user from a fresh install at a feature's debut, the plan scanned `AsyncStorage.getAllKeys()` for any `@vedansh/*` key. But sibling providers (NotificationPreferences writes `@vedansh/notif-meta`, UserActivity) write keys ON MOUNT during the same cold start, racing the detector → a genuine fresh install can be misclassified as an upgrader (and, here, would flip accessibilityLabels and break Maestro's fresh-install selectors). Fix: scan only keys written exclusively by deliberate user action in a prior session (bookmarks, reading-progress, search-recent, japam-counter, language); exclude any key a provider may write on mount.
+**Resolution pattern:** When using "does prior app data exist?" as an install-vs-upgrade signal, enumerate which keys are written on mount vs. only on user action, and gate on the user-action-only subset. Also seed/diff only user-discoverable (active && !hidden) ids so prelanded hidden/coming content isn't silently pre-acknowledged.
+### Derive content-batch/pilot sizes from actual data ids, never a grep/substring count
+
+**Seen:** 1x — 2026-06-23
+**Category:** plan-assumption
+**Example:** Plan sized the Hanuman Chalisa translation pilot at "45 meanings" from a `meaningHi` substring grep; codex adversarial review found the section has 43 verses and `index.ts` enforces `counts.totalVerses`. The grep over-counted.
+**Resolution pattern:** Before sizing a content batch, enumerate the section's actual verse ids from its data module/JSON; cross-check against any `counts.totalVerses` invariant. Never hand-enter or grep-estimate the total.
+
+### Model-fusion agreement is an advisory confidence signal, NOT a quality gate for sensitive-domain translation
+
+**Seen:** 1x — 2026-06-23
+**Category:** design-mechanism
+**Example:** Plan treated Claude+Codex agreement + self-rated confidence as sufficient to ship native scripture meanings. Codex flagged that two models can agree on the same Hindi-calque or theological error — agreement proves consistency, not correctness.
+**Resolution pattern:** For devotional/legal/medical MT, use inter-model agreement only as an advisory confidence score feeding a reviewer queue. Never auto-ship the agreed output as authoritative; gate live shipping on human/gold-sample review (or ship only a clearly-labelled high-confidence band with transliteration fallback for the rest).

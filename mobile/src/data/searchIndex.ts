@@ -6,7 +6,7 @@
  * is lazy (first call to {@link getSearchIndex}) so it doesn't impact cold
  * boot.
  *
- * Adding a new section: see RULEBOOK §8. If the section uses the standard
+ * Adding a new section: see RULEBOOK §7. If the section uses the standard
  * `lines`/`linesEn` or `sanskrit`/`linesEn`/`transliteration` field shape it
  * is picked up automatically once added to `library` in `texts.ts`. A section
  * with a novel verse shape needs a new branch in {@link buildVerseEntries}.
@@ -15,12 +15,22 @@
 import { library, type LibraryEntry } from './texts';
 import { deities } from './deities';
 import { getChalisa, type ChalisaId } from './chalisaRegistry';
+import { getAshtakam, ashtakamIds, type AshtakamId } from './ashtakam';
+import { getSuktam, suktamIds, type SuktamId } from './suktam';
+import { getKavacham, kavachamIds, type KavachamId } from './kavacham';
+import { getStuti, stutiIds, type StutiId } from './stuti';
 import {
   aartiCollection,
   aartiIdByIndex,
   type AartiVerse,
 } from './aarti';
 import { japamMantras, type JapamMantra } from './japam';
+import {
+  temples,
+  templesInGroup,
+  type TempleEntry,
+  type TheerthGroup,
+} from './theerth/temples';
 import {
   getGitaChapter,
   gitaChaptersManifest,
@@ -40,6 +50,10 @@ import {
   getDurgaStotramChapter,
   durgaStotramChaptersManifest,
 } from './durga-stotram';
+import {
+  getSaraswatiStotramChapter,
+  saraswatiStotramChaptersManifest,
+} from './saraswati-stotram';
 import {
   getGaneshStotramChapter,
   ganeshStotramChaptersManifest,
@@ -70,6 +84,14 @@ import {
   ramcharitmanasChaptersManifest,
   type RamcharitmanasVerse,
 } from './ramcharitmanas';
+import {
+  valmikiRamayanDailySelection,
+  type ValmikiRamayanVerse,
+} from './valmiki-ramayan';
+import { getSanskar, sanskarIds } from './sanskar';
+import { VIDHI_ENTRIES, type VidhiEntry } from './vidhi';
+import { getPurposeMeta } from './purposes';
+import { purposesForText } from './discoveryMeta';
 import { MatchRank, normalize, rankAny } from './searchNormalize';
 
 const CHALISA_IDS: readonly ChalisaId[] = [
@@ -77,7 +99,17 @@ const CHALISA_IDS: readonly ChalisaId[] = [
   'shiv-chalisa',
   'durga-chalisa',
   'ganesh-chalisa',
+  'gayatri-chalisa',
+  'ram-chalisa',
+  'krishna-chalisa',
+  'vishnu-chalisa',
+  'saraswati-chalisa',
 ];
+
+const ASHTAKAM_IDS: readonly AshtakamId[] = ashtakamIds;
+const SUKTAM_IDS: readonly SuktamId[] = suktamIds;
+const KAVACHAM_IDS: readonly KavachamId[] = kavachamIds;
+const STUTI_IDS: readonly StutiId[] = stutiIds;
 
 /** Cap how many verses can come back from a single query (UX + perf). */
 export const VERSE_RESULT_CAP = 50;
@@ -184,15 +216,48 @@ function build(): SearchIndex {
 }
 
 function buildSectionEntries(): readonly SearchSectionEntry[] {
-  return library.map((entry) => sectionEntry(entry));
+  // Vidhi rows ride the section group (PRD-19 Phase 2B): a vidhi is a
+  // procedure, not a text, so it contributes a single openable row (no verse
+  // entries). SearchScreen routes vidhi sourceIds to VidhiDetail.
+  return [...library.map((entry) => sectionEntry(entry)), ...VIDHI_ENTRIES.map(vidhiSectionEntry)];
+}
+
+function vidhiSectionEntry(vidhi: VidhiEntry): SearchSectionEntry {
+  const personal = vidhi.anchor === 'personal-tithi';
+  const subtitleHi = `${personal ? 'स्मरण विधि' : 'पूजा विधि'} · ${vidhi.steps.length} चरण`;
+  const fields = [
+    vidhi.titleHi,
+    vidhi.titleEn,
+    subtitleHi,
+    personal ? 'तर्पण विधि पितृ स्मरण श्राद्ध मार्गदर्शिका' : 'पूजा विधि',
+    personal ? 'Tarpana Shraddha Pitru remembrance guide' : 'Puja Vidhi',
+    'vidhi',
+  ];
+  const fieldsNorm = fields.map(normalize);
+  return {
+    type: 'section',
+    id: `section:${vidhi.id}`,
+    sourceId: vidhi.id,
+    displayHi: vidhi.titleHi,
+    displayEn: vidhi.titleEn,
+    subtitleHi,
+    thumb: '॥',
+    norm: fieldsNorm.join(' '),
+    fieldsNorm,
+  };
 }
 
 function sectionEntry(entry: LibraryEntry): SearchSectionEntry {
+  const purposeFields = purposesForText(entry.id).flatMap((purposeId) => {
+    const purpose = getPurposeMeta(purposeId);
+    return [purpose.nameHi, purpose.nameEn, purpose.id];
+  });
   const fields = [
     entry.nameHi,
     entry.nameEn,
     entry.sub,
     entry.thumb,
+    ...purposeFields,
   ];
   const fieldsNorm = fields.map(normalize);
   return {
@@ -236,6 +301,26 @@ function buildVerseEntries(): readonly SearchVerseEntry[] {
       continue;
     }
 
+    if (ASHTAKAM_IDS.includes(entry.id as AshtakamId)) {
+      pushAshtakamVerses(verses, entry);
+      continue;
+    }
+
+    if (SUKTAM_IDS.includes(entry.id as SuktamId)) {
+      pushSuktamVerses(verses, entry);
+      continue;
+    }
+
+    if (KAVACHAM_IDS.includes(entry.id as KavachamId)) {
+      pushKavachamVerses(verses, entry);
+      continue;
+    }
+
+    if (STUTI_IDS.includes(entry.id as StutiId)) {
+      pushStutiVerses(verses, entry);
+      continue;
+    }
+
     if (entry.id === 'bhagavad-gita') {
       pushChapteredGita(verses, entry);
       continue;
@@ -262,6 +347,16 @@ function buildVerseEntries(): readonly SearchVerseEntry[] {
         entry,
         durgaStotramChaptersManifest,
         getDurgaStotramChapter
+      );
+      continue;
+    }
+
+    if (entry.id === 'saraswati-stotram') {
+      pushChapteredShivaStrotamShape(
+        verses,
+        entry,
+        saraswatiStotramChaptersManifest,
+        getSaraswatiStotramChapter
       );
       continue;
     }
@@ -301,7 +396,9 @@ function buildVerseEntries(): readonly SearchVerseEntry[] {
       continue;
     }
 
-    if (entry.id === 'ram-stuti') {
+    if (entry.id === 'ram-stuti' || entry.id === 'ram-aarti') {
+      // 'ram-aarti' is the Aarti-list alias for the Ram Stuti content, so it
+      // indexes the same verses under its own sourceId (see texts.ts / entryRoutes.ts).
       pushChapteredShivaStrotamShape(
         verses,
         entry,
@@ -326,13 +423,28 @@ function buildVerseEntries(): readonly SearchVerseEntry[] {
       continue;
     }
 
+    if (entry.id === 'valmiki-ramayan') {
+      pushChapteredValmikiRamayan(verses, entry);
+      continue;
+    }
+
     if (entry.category === 'aarti') {
       pushAarti(verses, entry);
       continue;
     }
 
+    if (entry.category === 'sanskar') {
+      pushSanskar(verses, entry);
+      continue;
+    }
+
     if (entry.category === 'japam') {
       pushJapam(verses, entry);
+      continue;
+    }
+
+    if (entry.category === 'theerth') {
+      pushTheerth(verses, entry);
       continue;
     }
 
@@ -346,6 +458,86 @@ function buildVerseEntries(): readonly SearchVerseEntry[] {
 function pushChalisaVerses(out: SearchVerseEntry[], entry: LibraryEntry) {
   const chalisa = getChalisa(entry.id);
   chalisa.verses.forEach((v, idx) => {
+    out.push(
+      makeVerseEntry({
+        sourceId: entry.id,
+        sectionNameHi: entry.nameHi,
+        sectionNameEn: entry.nameEn,
+        verseIndex: idx,
+        labelHi: v.labelHi,
+        labelEn: v.labelEn,
+        linesHi: v.lines,
+        linesEn: v.linesEn,
+        meaningHi: v.meaningHi,
+        meaningEn: v.meaningEn,
+      })
+    );
+  });
+}
+
+function pushAshtakamVerses(out: SearchVerseEntry[], entry: LibraryEntry) {
+  const ashtakam = getAshtakam(entry.id);
+  ashtakam.verses.forEach((v, idx) => {
+    out.push(
+      makeVerseEntry({
+        sourceId: entry.id,
+        sectionNameHi: entry.nameHi,
+        sectionNameEn: entry.nameEn,
+        verseIndex: idx,
+        labelHi: v.labelHi,
+        labelEn: v.labelEn,
+        linesHi: v.lines,
+        linesEn: v.linesEn,
+        meaningHi: v.meaningHi,
+        meaningEn: v.meaningEn,
+      })
+    );
+  });
+}
+
+function pushStutiVerses(out: SearchVerseEntry[], entry: LibraryEntry) {
+  const stuti = getStuti(entry.id);
+  stuti.verses.forEach((v, idx) => {
+    out.push(
+      makeVerseEntry({
+        sourceId: entry.id,
+        sectionNameHi: entry.nameHi,
+        sectionNameEn: entry.nameEn,
+        verseIndex: idx,
+        labelHi: v.labelHi,
+        labelEn: v.labelEn,
+        linesHi: v.lines,
+        linesEn: v.linesEn,
+        meaningHi: v.meaningHi,
+        meaningEn: v.meaningEn,
+      })
+    );
+  });
+}
+
+function pushKavachamVerses(out: SearchVerseEntry[], entry: LibraryEntry) {
+  const kavacham = getKavacham(entry.id);
+  kavacham.verses.forEach((v, idx) => {
+    out.push(
+      makeVerseEntry({
+        sourceId: entry.id,
+        sectionNameHi: entry.nameHi,
+        sectionNameEn: entry.nameEn,
+        verseIndex: idx,
+        labelHi: v.labelHi,
+        labelEn: v.labelEn,
+        linesHi: v.lines,
+        linesEn: v.linesEn,
+        meaningHi: v.meaningHi,
+        meaningEn: v.meaningEn,
+      })
+    );
+  });
+}
+
+function pushSuktamVerses(out: SearchVerseEntry[], entry: LibraryEntry) {
+  const suktam = getSuktam(entry.id);
+  suktam.verses.forEach((v, idx) => {
     out.push(
       makeVerseEntry({
         sourceId: entry.id,
@@ -491,12 +683,87 @@ function pushChapteredRamcharitmanas(
   }
 }
 
+function pushChapteredValmikiRamayan(out: SearchVerseEntry[], entry: LibraryEntry) {
+  // Index the established anchor selection, not all 23k verses. The global
+  // index duplicates normalized text in memory; indexing the complete epic
+  // would make opening Search load every kāṇḍa and materially regress startup.
+  valmikiRamayanDailySelection.forEach((v: ValmikiRamayanVerse) => {
+    out.push(
+      makeVerseEntry({
+        sourceId: entry.id,
+        sectionNameHi: entry.nameHi,
+        sectionNameEn: entry.nameEn,
+        chapter: v.kanda,
+        verseIndex: v.numInSection - 1,
+        labelHi: v.labelHi,
+        labelEn: v.labelEn,
+        linesHi: v.lines,
+        linesEn: v.linesEn,
+        meaningHi: v.meaningHi,
+        meaningEn: v.meaningEn,
+      })
+    );
+  });
+}
+
 function pushAarti(out: SearchVerseEntry[], entry: LibraryEntry) {
   const idx = (aartiIdByIndex as readonly string[]).indexOf(entry.id);
   if (idx < 0) return;
   const aarti = aartiCollection[idx];
   if (!aarti) return;
   aarti.verses.forEach((v: AartiVerse, verseIdx) => {
+    out.push(
+      makeVerseEntry({
+        sourceId: entry.id,
+        sectionNameHi: entry.nameHi,
+        sectionNameEn: entry.nameEn,
+        verseIndex: verseIdx,
+        labelHi: v.labelHi,
+        labelEn: v.labelEn,
+        linesHi: v.lines,
+        linesEn: v.linesEn,
+        meaningHi: v.meaningHi,
+        meaningEn: v.meaningEn,
+      })
+    );
+  });
+}
+
+const THEERTH_ENTRY_TO_GROUP: Record<string, TheerthGroup | 'all'> = {
+  'dvadasha-jyotirlinga': 'jyotirlinga',
+  'char-dham': 'char-dham',
+  'chota-char-dham': 'chota-char-dham',
+  'shakti-peeth': 'shakti-peeth',
+  'famous-theerth': 'all',
+};
+
+function pushTheerth(out: SearchVerseEntry[], entry: LibraryEntry) {
+  const filter = THEERTH_ENTRY_TO_GROUP[entry.id];
+  if (!filter) return;
+  const list: readonly TempleEntry[] =
+    filter === 'all' ? temples : templesInGroup(filter);
+  list.forEach((t, idx) => {
+    out.push(
+      makeVerseEntry({
+        sourceId: entry.id,
+        sectionNameHi: entry.nameHi,
+        sectionNameEn: entry.nameEn,
+        verseIndex: idx,
+        labelHi: t.nameHi,
+        labelEn: t.nameEn,
+        linesHi: [t.nameHi, `${t.cityHi}, ${t.stateHi}`],
+        linesEn: [t.nameEn, `${t.cityEn}, ${t.stateEn}`],
+        meaningHi: `${t.significanceHi}\n${t.originStoryHi}`,
+        meaningEn: `${t.significanceEn}\n${t.originStoryEn}`,
+      })
+    );
+  });
+}
+
+function pushSanskar(out: SearchVerseEntry[], entry: LibraryEntry) {
+  if (!(sanskarIds as readonly string[]).includes(entry.id)) return;
+  const sanskar = getSanskar(entry.id);
+  sanskar.verses.forEach((v, verseIdx) => {
     out.push(
       makeVerseEntry({
         sourceId: entry.id,

@@ -1,0 +1,145 @@
+{
+  "titleHi": "श्रीराधाष्टकम्",
+  "titleEn": "Radhashtakam",
+  "deity": "radha",
+  "source": {
+    "baseText": "Shri Radhashtakam (Nimbarkacharya-krita, 'नमस्ते श्रियै राधिकायै') — the 8-verse ashtakam proper; cross-verified across authoritative stotra sources, all 8 verses concordant on the adopted recension.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_devii/rAdhAShTakam3.html",
+      "https://nirmalamsamskritam.com/shri-radha-shlokas/",
+      "https://www.siva.sh/radhashtakam"
+    ],
+    "retrievedOn": "2026-07-23",
+    "notes": "Attributed to Jagadguru Nimbarkacharya (इति श्रीनिम्बार्काचार्यविरचितम्). Adopts the sanskritdocuments.org critical reading, concordant with nirmalamsamskritam and siva.sh: v3 तं/नामकीर्त्या/यच्छत्, v4 प्रेमडोरेण/मयीष्टिम्, v5 समामोक्ष्यमाणा/चिन्तये, v6 रोमाञ्चिताङ्गैरहं/मां विचक्षे, v7 यद् अङ्कावलोके/दर्शयान्तर्हृदिस्थं. A popular devotional recension (sanatanshakti.in, revivingcultures.com) differs (v3 त्वं/नामकृत्या/यच्छ, v5 सदा मोक्ष्यमाणा, v6 रोमाञ्चिताङ्गी, v7 पदाङ्कावलोके/दर्शयान्तर्हृदीतो) — flagged for §5 review. Phalashruti (v9, इदं त्वष्टकं…) omitted, consistent with the other ashtakams. NOT the Rupa Goswami, Padma-Purana, or Raghunath Das Radhashtakams (distinct texts)."
+  },
+  "verses": [
+    {
+      "id": "radhashtakam-1",
+      "number": 1,
+      "labelHi": "श्लोक · १",
+      "labelEn": "Shloka · 1",
+      "lines": [
+        "नमस्ते श्रियै राधिकायै परायै नमस्ते नमस्ते मुकुन्दप्रियायै।",
+        "सदानन्दरूपे प्रसीद त्वमन्तःप्रकाशे स्फुरन्ती मुकुन्देन सार्धम्॥"
+      ],
+      "linesEn": [
+        "namaste śriyai rādhikāyai parāyai namaste namaste mukundapriyāyai",
+        "sadānandarūpe prasīda tvamantaḥprakāśe sphurantī mukundena sārdham"
+      ],
+      "meaningHi": "श्रीराधिके! तुम्हीं श्री (लक्ष्मी) हो, तुम्हें नमस्कार है; तुम्हीं पराशक्ति हो, तुम मुकुन्द की प्रियतमा हो, तुम्हें बार-बार नमस्कार है। हे सदानन्दस्वरूपा देवी! मेरे अन्तःकरण के प्रकाश में श्रीकृष्ण के साथ सुशोभित होती हुई मुझ पर प्रसन्न होओ।",
+      "meaningEn": "Salutations to you, Shri Radhika, who are Shri (Lakshmi) herself, the supreme Shakti; salutations again and again to you, the beloved of Mukunda. O embodiment of everlasting bliss, shining together with Mukunda in the light of my inner heart, be gracious unto me."
+    },
+    {
+      "id": "radhashtakam-2",
+      "number": 2,
+      "labelHi": "श्लोक · २",
+      "labelEn": "Shloka · 2",
+      "lines": [
+        "स्ववासोपहारं यशोदासुतं वा स्वदध्यादिचौरं समाराधयन्तीम्।",
+        "स्वदाम्नोदरे या बबन्धाशु नीव्या प्रपद्ये नु दामोदरप्रेयसीं ताम्॥"
+      ],
+      "linesEn": [
+        "svavāsopahāraṃ yaśodāsutaṃ vā svadadhyādicauraṃ samārādhayantīm",
+        "svadāmnodare yā babandhāśu nīvyā prapadye nu dāmodarapreyasīṃ tām"
+      ],
+      "meaningHi": "जो अपने वस्त्रों का अपहरण करने वाले तथा अपना दूध-दही-माखन चुराने वाले यशोदानन्दन श्रीकृष्ण की ही आराधना करती हैं, और जिन्होंने अपनी डोर से उन्हें शीघ्र बाँध लिया — उन दामोदर-प्रिया श्रीराधा की मैं शरण लेता हूँ।",
+      "meaningEn": "She lovingly worships the son of Yashoda even as he steals her garments and her curd and butter, and with her own cord she swiftly bound him about the waist — I take refuge in her, the beloved of Damodara."
+    },
+    {
+      "id": "radhashtakam-3",
+      "number": 3,
+      "labelHi": "श्लोक · ३",
+      "labelEn": "Shloka · 3",
+      "lines": [
+        "दुराराध्यमाराध्य कृष्णं वशे तं महाप्रेमपूरेण राधाभिधाभूः।",
+        "स्वयं नामकीर्त्या हरौ प्रेम यच्छत् प्रपन्नाय मे कृष्णरूपे समक्षम्॥"
+      ],
+      "linesEn": [
+        "durārādhyamārādhya kṛṣṇaṃ vaśe taṃ mahāpremapūreṇa rādhābhidhābhūḥ",
+        "svayaṃ nāmakīrtyā harau prema yacchat prapannāya me kṛṣṇarūpe samakṣam"
+      ],
+      "meaningHi": "जिन श्रीकृष्ण की आराधना अत्यन्त कठिन है, उनकी आराधना कर तुमने महाप्रेम के प्रवाह से उन्हें वश में कर लिया — इसी आराधना से तुम 'राधा' नाम से विख्यात हुईं। हे कृष्णस्वरूपिणि! अपने नाम के कीर्तन मात्र से मुझ शरणागत को श्रीहरि का प्रेम प्रत्यक्ष प्रदान करो।",
+      "meaningEn": "Worshipping Krishna, so hard to worship, you brought him under your sway by the flood of your great love, and thus came to bear the name Radha. O you who are one with Krishna, through the very chanting of your name grant me, who am surrendered, love for Hari made manifest."
+    },
+    {
+      "id": "radhashtakam-4",
+      "number": 4,
+      "labelHi": "श्लोक · ४",
+      "labelEn": "Shloka · 4",
+      "lines": [
+        "मुकुन्दस्त्वया प्रेमडोरेण बद्धः पतङ्गो यथा त्वामनुभ्राम्यमाणः।",
+        "उपक्रीडयन् हार्दमेवानुगच्छन् कृपावर्तते कारयातो मयीष्टिम्॥"
+      ],
+      "linesEn": [
+        "mukundastvayā premaḍoreṇa baddhaḥ pataṅgo yathā tvāmanubhrāmyamāṇaḥ",
+        "upakrīḍayan hārdamevānugacchan kṛpāvartate kārayāto mayīṣṭim"
+      ],
+      "meaningHi": "तुम्हारी प्रेम-डोर से बँधे हुए मुकुन्द पतंगे की भाँति सदा तुम्हारे चारों ओर घूमते रहते हैं, समीप रहकर क्रीड़ा करते और तुम्हारे हृदय-भाव का ही अनुसरण करते हैं। हे कृपामयी! कृपा करके मुझसे भी अपनी आराधना करवाओ।",
+      "meaningEn": "Mukunda, bound by your cord of love, circles ever around you like a moth about a flame, sporting near you and following the promptings of your heart. Your grace flows to all — be gracious, and cause me too to render you worship."
+    },
+    {
+      "id": "radhashtakam-5",
+      "number": 5,
+      "labelHi": "श्लोक · ५",
+      "labelEn": "Shloka · 5",
+      "lines": [
+        "व्रजन्तीं स्ववृन्दावने नित्यकालं मुकुन्देन साकं विधायाङ्कमालाम्।",
+        "समामोक्ष्यमाणानुकम्पाकटाक्षैः श्रियं चिन्तये सच्चिदानन्दरूपाम्॥"
+      ],
+      "linesEn": [
+        "vrajantīṃ svavṛndāvane nityakālaṃ mukundena sākaṃ vidhāyāṅkamālām",
+        "samāmokṣyamāṇānukampākaṭākṣaiḥ śriyaṃ cintaye saccidānandarūpām"
+      ],
+      "meaningHi": "जो नित्यकाल मुकुन्द के साथ अपनी लीलाभूमि वृन्दावन में विहार करती हैं, और जिनके करुणा-भरे कृपा-कटाक्ष भक्तों को मुक्त करते हैं — उन सच्चिदानन्दस्वरूपा श्री (राधा) का मैं चिन्तन करता हूँ।",
+      "meaningEn": "I meditate upon Shri (Radha), whose form is being, consciousness and bliss — she who wanders eternally with Mukunda in her own Vrindavana, garlanding him in her embrace, and whose compassionate sidelong glances set souls free."
+    },
+    {
+      "id": "radhashtakam-6",
+      "number": 6,
+      "labelHi": "श्लोक · ६",
+      "labelEn": "Shloka · 6",
+      "lines": [
+        "मुकुन्दानुरागेण रोमाञ्चिताङ्गैरहं वेप्यमानां तनुस्वेदबिन्दुम्।",
+        "महाहार्दवृष्ट्या कृपापाङ्गदृष्ट्या समालोकयन्तीं कदा मां विचक्षे॥"
+      ],
+      "linesEn": [
+        "mukundānurāgeṇa romāñcitāṅgairahaṃ vepyamānāṃ tanusvedabindum",
+        "mahāhārdavṛṣṭyā kṛpāpāṅgadṛṣṭyā samālokayantīṃ kadā māṃ vicakṣe"
+      ],
+      "meaningHi": "मुकुन्द के प्रति गहन अनुराग से जिनके अंग रोमांचित और कम्पित रहते हैं तथा सूक्ष्म स्वेदबिन्दुओं से सुशोभित होते हैं, और जो महान् प्रेम की वर्षा करती हुई कृपा-कटाक्ष से मेरी ओर देखती हैं — मैं उनका दर्शन कब पाऊँगा?",
+      "meaningEn": "When shall I behold her — her limbs thrilling and trembling with love for Mukunda, adorned with fine beads of perspiration, as she looks upon me with a sidelong glance of grace, showering the rain of her boundless affection?"
+    },
+    {
+      "id": "radhashtakam-7",
+      "number": 7,
+      "labelHi": "श्लोक · ७",
+      "labelEn": "Shloka · 7",
+      "lines": [
+        "यद् अङ्कावलोके महालालसौघं मुकुन्दः करोति स्वयं ध्येयपादः।",
+        "पदं राधिके ते सदा दर्शयान्तर्हृदिस्थं नमन्तं किरद्रोचिषं माम्॥"
+      ],
+      "linesEn": [
+        "yad aṅkāvaloke mahālālasaughaṃ mukundaḥ karoti svayaṃ dhyeyapādaḥ",
+        "padaṃ rādhike te sadā darśayāntarhṛdisthaṃ namantaṃ kiradrociṣaṃ mām"
+      ],
+      "meaningHi": "श्रीराधिके! स्वयं ध्यान करने योग्य चरणों वाले मुकुन्द भी जिनके चरण-चिह्नों के दर्शन की महती लालसा रखते हैं — मैं नमस्कार करता हूँ; मेरे हृदय में ज्योति बिखेरते हुए अपने उन्हीं चरणों का मुझे सदा दर्शन कराओ।",
+      "meaningEn": "O Radhika, even Mukunda, whose own feet are the object of meditation, holds a great flood of longing to gaze upon the mark of your feet. Ever reveal that foot of yours within my heart, scattering its radiance upon me as I bow before you."
+    },
+    {
+      "id": "radhashtakam-8",
+      "number": 8,
+      "labelHi": "श्लोक · ८",
+      "labelEn": "Shloka · 8",
+      "lines": [
+        "सदा राधिकानाम जिह्वाग्रतः स्यात् सदा राधिकारूपमक्ष्यग्र आस्ताम्।",
+        "श्रुतौ राधिकाकीर्तिरन्तःस्वभावे गुणा राधिकायाः श्रिया एतद् ईहे॥"
+      ],
+      "linesEn": [
+        "sadā rādhikānāma jihvāgrataḥ syāt sadā rādhikārūpamakṣyagra āstām",
+        "śrutau rādhikākīrtirantaḥsvabhāve guṇā rādhikāyāḥ śriyā etad īhe"
+      ],
+      "meaningHi": "मेरी जिह्वा के अग्रभाग पर सदा श्रीराधिका का नाम रहे, नेत्रों के समक्ष सदा उनका रूप प्रकाशित हो, कानों में उनकी कीर्ति गूँजती रहे और अन्तःकरण में लक्ष्मीस्वरूपा श्रीराधा के गुणों का चिन्तन बना रहे — यही मेरी कामना है।",
+      "meaningEn": "May the name of Radhika be ever on the tip of my tongue, her form ever before my eyes, her glory ever in my ears, and her virtues ever within my innermost nature — this, by the grace of Shri, is all I seek."
+    }
+  ]
+}

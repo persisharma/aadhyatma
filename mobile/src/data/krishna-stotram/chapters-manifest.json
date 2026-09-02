@@ -1,8 +1,14 @@
 [
   {
     "chapter": 1,
-    "titleHi": "कृष्ण अष्टकम्",
-    "titleEn": "Krishna Ashtakam",
-    "verseCount": 9
+    "titleHi": "कृष्णाष्टकम्",
+    "titleEn": "Krishnashtakam",
+    "verseCount": 10
+  },
+  {
+    "chapter": 2,
+    "titleHi": "कृष्ण प्रणाम मन्त्र",
+    "titleEn": "Krishna Pranama Mantra",
+    "verseCount": 2
   }
 ]

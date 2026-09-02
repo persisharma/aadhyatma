@@ -1,0 +1,92 @@
+# Daily Bhakti Tab Smoke Test
+#
+# Daily Bhakti is a BOTTOM-TAB screen (TabNavigator.tsx, tabBarLabel "Bhakti"),
+# like Panchang — so this flow taps the tab bar, not a Home category card.
+#
+# This is the screen a daily-reminder notification lands on. Maestro cannot
+# deterministically schedule a local notification for a future instant,
+# background the app, and tap the OS notification — so the notification-TAP +
+# deep-link path is NOT covered here. That logic is unit-tested instead:
+#   - src/notifications/__tests__/reminderVerseLookup.test.ts
+#       (verse-identity round-trip via findVerse; per-slot distinctness)
+#   - src/notifications/__tests__/scheduler.test.ts (fire-date helpers)
+# This flow covers the LANDING SCREEN itself: that it renders a verse and the
+# "next" control swaps to another verse without breaking.
+#
+# Verifies:
+#   1. The Bhakti tab is reachable from the bottom tab bar.
+#   2. The verse card renders (the "Daily Verse" subtitle + "Meaning" section).
+#   3. The "↻ next" control fetches another verse and the screen stays intact.
+#   4. Global reading-language switching reflects on the screen.
+#
+# Why we switch to English first:
+#   The screen reads the GLOBAL reading language (useGitaLanguage); the default
+#   is Hindi, so most on-screen text is Devanagari, which Maestro's iOS
+#   accessibility tree can't reliably read (see README "Element selection
+#   rules"). We flip the default to English on the More tab, then assert real
+#   content in English. We restore Hindi at the end (best-effort).
+#
+# Selector notes (mirroring panchang-smoke.yaml, verified conventions):
+#   - Bottom tabs expose accessibilityText "<Label>, tab, N of 4", so we match
+#     "Bhakti, tab.*". Bare "Bhakti" is avoided to stay anchored to the tab.
+#   - "Daily Verse" is a constant Latin subtitle rendered in both languages →
+#     reliable anchor regardless of reading language.
+#   - "Meaning" is the section label in English mode (isHindi ? 'अर्थ' : 'Meaning').
+#   - The next control exposes accessibilityLabel "Next verse" in English mode
+#     (isHindi ? 'अगला श्लोक' : 'Next verse') — reliable, unlike the "↻ next" glyph.
+
+appId: com.prashantsharma.vedansh
+---
+# ── Step 1: Boot Vedansh in Expo Go (exits on Home) ──
+- runFlow: _launch.yaml
+
+# ── Step 2: Set global reading language to English (More tab) ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- tapOn: "Language,.*"   # More now opens a Language picker sheet, not inline pills
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── Step 3: Open the Bhakti tab ──
+- tapOn: { id: "tab-bhakti" }
+- waitForAnimationToEnd
+
+# ── Step 4: Assert the verse card rendered ──
+- extendedWaitUntil:
+    visible: "Daily Verse"
+    timeout: 15000
+- assertVisible: "Meaning.*"
+
+# ── Step 5: "next" swaps to another verse; the screen stays intact ──
+# The "Next verse" control sits below the verse + Meaning block, off-screen on
+# Android's shorter viewport — scroll to it (no-op when already visible on iOS).
+- scrollUntilVisible:
+    element:
+      text: "Next verse"
+    direction: DOWN
+    centerElement: true
+    timeout: 10000
+- tapOn: "Next verse"
+- waitForAnimationToEnd
+- assertVisible: "Daily Verse"
+- assertVisible: "Meaning.*"
+
+# ── Step 6: Restore Hindi (best-effort) ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- tapOn:
+    text: "Language,.*"   # open the Language picker sheet (best-effort restore)
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "Hindi"
+    optional: true
+- waitForAnimationToEnd
+
+# Clean up — Expo Go termination resets navigation stack for the next flow.
+- stopApp:
+    appId: com.prashantsharma.vedansh

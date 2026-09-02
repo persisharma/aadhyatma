@@ -1,0 +1,162 @@
+{
+  "titleHi": "नवग्रह स्तोत्रम्",
+  "titleEn": "Navagraha Stotram",
+  "deity": "navagraha",
+  "source": {
+    "baseText": "Navagraha Stotram (Vyasa-krita, 'जपाकुसुमसङ्काशं') — one salutation verse per graha in the canonical order Surya→Ketu; cross-verified, all sources concordant.",
+    "referenceUrls": [
+      "https://sa.wikisource.org/wiki/नवग्रहस्तोत्रम्",
+      "https://sanskritdocuments.org/doc_z_misc_navagraha/navanew.pdf",
+      "https://mantra.tips/en/mantras/navagraha-stotram",
+      "https://stotra.vastucart.in/stotra/navagraha-stotra"
+    ],
+    "retrievedOn": "2026-07-23",
+    "notes": "Attributed to Sage Vyasa (इति श्रीव्यासविरचितम् आदित्यादिनवग्रहस्तोत्रम्); the standard Navagraha-puja text. All four sources concordant; orthography follows wikisource/vastucart (सङ्काशं, सम्भवम्, सन्निभम्, नीलाञ्जन, मार्तण्ड — SD prints the anusvara forms संकाशं/संभवम्, same words). Per-verse labels carry the graha name (सूर्य…केतु) as in the sources. The 3-verse phalashruti (इति व्यासमुखोद्गीतं…) omitted, consistent with the other texts. Distinct from the Brahmanda-Purana नवग्रहपीडाहरस्तोत्रम् and the वेदैर्ज्योतिर्मयत्वे stotram (both separate texts)."
+  },
+  "verses": [
+    {
+      "id": "navagraha-stotram-1",
+      "number": 1,
+      "labelHi": "सूर्य · १",
+      "labelEn": "Surya · 1",
+      "lines": [
+        "जपाकुसुमसङ्काशं काश्यपेयं महाद्युतिम्।",
+        "तमोऽरिं सर्वपापघ्नं प्रणतोऽस्मि दिवाकरम्॥"
+      ],
+      "linesEn": [
+        "japākusumasaṅkāśaṃ kāśyapeyaṃ mahādyutim",
+        "tamo'riṃ sarvapāpaghnaṃ praṇato'smi divākaram"
+      ],
+      "meaningHi": "जपा (अड़हुल) के फूल के समान अरुण कान्ति वाले, कश्यप-वंशज, महातेजस्वी, अन्धकार के शत्रु और समस्त पापों का नाश करने वाले दिवाकर (सूर्यदेव) को मैं प्रणाम करता हूँ।",
+      "meaningEn": "I bow to the day-maker Surya — glowing like the crimson hibiscus flower, descendant of Kashyapa, of mighty radiance, the enemy of darkness and destroyer of every sin."
+    },
+    {
+      "id": "navagraha-stotram-2",
+      "number": 2,
+      "labelHi": "चन्द्र · २",
+      "labelEn": "Chandra · 2",
+      "lines": [
+        "दधिशङ्खतुषाराभं क्षीरोदार्णवसम्भवम्।",
+        "नमामि शशिनं सोमं शम्भोर्मुकुटभूषणम्॥"
+      ],
+      "linesEn": [
+        "dadhiśaṅkhatuṣārābhaṃ kṣīrodārṇavasambhavam",
+        "namāmi śaśinaṃ somaṃ śambhormukuṭabhūṣaṇam"
+      ],
+      "meaningHi": "दही, शंख और हिम के समान श्वेत आभा वाले, क्षीरसागर से उत्पन्न, शशि-चिह्न धारण करने वाले, शम्भु के मुकुट के आभूषण सोम (चन्द्रदेव) को मैं नमस्कार करता हूँ।",
+      "meaningEn": "I bow to Soma the Moon — white as curd, conch and frost, arisen from the ocean of milk, bearing the hare, the ornament upon Shambhu's crown."
+    },
+    {
+      "id": "navagraha-stotram-3",
+      "number": 3,
+      "labelHi": "मङ्गल · ३",
+      "labelEn": "Mangal · 3",
+      "lines": [
+        "धरणीगर्भसम्भूतं विद्युत्कान्तिसमप्रभम्।",
+        "कुमारं शक्तिहस्तं तं मङ्गलं प्रणमाम्यहम्॥"
+      ],
+      "linesEn": [
+        "dharaṇīgarbhasambhūtaṃ vidyutkāntisamaprabham",
+        "kumāraṃ śaktihastaṃ taṃ maṅgalaṃ praṇamāmyaham"
+      ],
+      "meaningHi": "पृथ्वी के गर्भ से उत्पन्न, विद्युत के समान कान्ति वाले, हाथ में शक्ति धारण किये उस कुमार मङ्गल (मंगल ग्रह) को मैं प्रणाम करता हूँ।",
+      "meaningEn": "I bow to Mangala (Mars) — born from the womb of the Earth, radiant as a flash of lightning, the youth who bears the shakti lance in his hand."
+    },
+    {
+      "id": "navagraha-stotram-4",
+      "number": 4,
+      "labelHi": "बुध · ४",
+      "labelEn": "Budha · 4",
+      "lines": [
+        "प्रियङ्गुकलिकाश्यामं रूपेणाप्रतिमं बुधम्।",
+        "सौम्यं सौम्यगुणोपेतं तं बुधं प्रणमाम्यहम्॥"
+      ],
+      "linesEn": [
+        "priyaṅgukalikāśyāmaṃ rūpeṇāpratimaṃ budham",
+        "saumyaṃ saumyaguṇopetaṃ taṃ budhaṃ praṇamāmyaham"
+      ],
+      "meaningHi": "प्रियंगु की कली के समान श्याम वर्ण वाले, रूप में अनुपम, सोम-पुत्र (सौम्य) और सौम्य गुणों से युक्त उस बुध (बुध ग्रह) को मैं प्रणाम करता हूँ।",
+      "meaningEn": "I bow to Budha (Mercury) — dark as the bud of the priyangu creeper, of unequalled beauty, the Moon's son, gentle and endowed with gentle virtues."
+    },
+    {
+      "id": "navagraha-stotram-5",
+      "number": 5,
+      "labelHi": "बृहस्पति · ५",
+      "labelEn": "Brihaspati · 5",
+      "lines": [
+        "देवानां च ऋषीणां च गुरुं काञ्चनसन्निभम्।",
+        "बुद्धिभूतं त्रिलोकेशं तं नमामि बृहस्पतिम्॥"
+      ],
+      "linesEn": [
+        "devānāṃ ca ṛṣīṇāṃ ca guruṃ kāñcanasannibham",
+        "buddhibhūtaṃ trilokeśaṃ taṃ namāmi bṛhaspatim"
+      ],
+      "meaningHi": "देवताओं और ऋषियों के गुरु, स्वर्ण के समान कान्ति वाले, बुद्धि के मूर्त स्वरूप, त्रिलोक के स्वामी उन बृहस्पति (गुरु ग्रह) को मैं नमस्कार करता हूँ।",
+      "meaningEn": "I bow to Brihaspati (Jupiter) — preceptor of the gods and of the sages, lustrous as gold, wisdom incarnate, lord of the three worlds."
+    },
+    {
+      "id": "navagraha-stotram-6",
+      "number": 6,
+      "labelHi": "शुक्र · ६",
+      "labelEn": "Shukra · 6",
+      "lines": [
+        "हिमकुन्दमृणालाभं दैत्यानां परमं गुरुम्।",
+        "सर्वशास्त्रप्रवक्तारं भार्गवं प्रणमाम्यहम्॥"
+      ],
+      "linesEn": [
+        "himakundamṛṇālābhaṃ daityānāṃ paramaṃ gurum",
+        "sarvaśāstrapravaktāraṃ bhārgavaṃ praṇamāmyaham"
+      ],
+      "meaningHi": "हिम, कुन्द-पुष्प और कमल-नाल के समान श्वेत आभा वाले, दैत्यों के परम गुरु, समस्त शास्त्रों के प्रवक्ता भार्गव (शुक्र ग्रह) को मैं प्रणाम करता हूँ।",
+      "meaningEn": "I bow to Bhargava (Venus) — bright as frost, white jasmine and the lotus-stem, supreme preceptor of the daityas, the expounder of all the shastras."
+    },
+    {
+      "id": "navagraha-stotram-7",
+      "number": 7,
+      "labelHi": "शनि · ७",
+      "labelEn": "Shani · 7",
+      "lines": [
+        "नीलाञ्जनसमाभासं रविपुत्रं यमाग्रजम्।",
+        "छायामार्तण्डसम्भूतं तं नमामि शनैश्चरम्॥"
+      ],
+      "linesEn": [
+        "nīlāñjanasamābhāsaṃ raviputraṃ yamāgrajam",
+        "chāyāmārtaṇḍasambhūtaṃ taṃ namāmi śanaiścaram"
+      ],
+      "meaningHi": "नीले अंजन के समान आभा वाले, सूर्य-पुत्र, यम के अग्रज, छाया और मार्तण्ड (सूर्य) से उत्पन्न उन शनैश्चर (शनि ग्रह) को मैं नमस्कार करता हूँ।",
+      "meaningEn": "I bow to Shanaishchara (Saturn) — dark-gleaming as blue collyrium, son of the Sun and elder brother of Yama, born of Chhaya and Martanda."
+    },
+    {
+      "id": "navagraha-stotram-8",
+      "number": 8,
+      "labelHi": "राहु · ८",
+      "labelEn": "Rahu · 8",
+      "lines": [
+        "अर्धकायं महावीर्यं चन्द्रादित्यविमर्दनम्।",
+        "सिंहिकागर्भसम्भूतं तं राहुं प्रणमाम्यहम्॥"
+      ],
+      "linesEn": [
+        "ardhakāyaṃ mahāvīryaṃ candrādityavimardanam",
+        "siṃhikāgarbhasambhūtaṃ taṃ rāhuṃ praṇamāmyaham"
+      ],
+      "meaningHi": "आधे शरीर वाले, महापराक्रमी, चन्द्र और सूर्य का मर्दन (ग्रहण) करने वाले, सिंहिका के गर्भ से उत्पन्न उस राहु को मैं प्रणाम करता हूँ।",
+      "meaningEn": "I bow to Rahu — half-bodied yet of mighty valour, the eclipser of the Moon and the Sun, born from the womb of Simhika."
+    },
+    {
+      "id": "navagraha-stotram-9",
+      "number": 9,
+      "labelHi": "केतु · ९",
+      "labelEn": "Ketu · 9",
+      "lines": [
+        "पलाशपुष्पसङ्काशं तारकाग्रहमस्तकम्।",
+        "रौद्रं रौद्रात्मकं घोरं तं केतुं प्रणमाम्यहम्॥"
+      ],
+      "linesEn": [
+        "palāśapuṣpasaṅkāśaṃ tārakāgrahamastakam",
+        "raudraṃ raudrātmakaṃ ghoraṃ taṃ ketuṃ praṇamāmyaham"
+      ],
+      "meaningHi": "पलाश के फूल के समान अरुण आभा वाले, ताराओं और ग्रहों में शीर्षस्थ, रौद्र, रौद्र स्वभाव वाले और घोर उस केतु को मैं प्रणाम करता हूँ।",
+      "meaningEn": "I bow to Ketu — glowing like the red palasha flower, foremost among the stars and planets, fierce, of fearsome nature, and dreadful."
+    }
+  ]
+}

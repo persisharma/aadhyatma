@@ -1,69 +1,321 @@
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import type { LibraryEntry } from '@/data/texts';
+import { library, type LibraryEntry } from '@/data/texts';
+import type { RoutineItem } from '@/data/routine/types';
 import type { BookmarkRef } from '@/contexts/BookmarksContext';
 import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
 import { aartiIndexById } from '@/data/aarti';
+import { ashtakamIds as ashtakamIdList } from '@/data/ashtakam';
+import { stutiIds as stutiIdList } from '@/data/stuti';
+import { shivaStrotamChaptersManifest } from '@/data/shiva-strotam';
+import { durgaStotramChaptersManifest } from '@/data/durga-stotram';
+import { saraswatiStotramChaptersManifest } from '@/data/saraswati-stotram';
+import { ganeshStotramChaptersManifest } from '@/data/ganesh-stotram';
+import { vishnuSahasranamaChaptersManifest } from '@/data/vishnu-sahasranama';
+import { hanumanAshtakChaptersManifest } from '@/data/hanuman-ashtak';
+import { krishnaStotramChaptersManifest } from '@/data/krishna-stotram';
+import { bajrangBaanChaptersManifest } from '@/data/bajrang-baan';
+import { ramStutiChaptersManifest } from '@/data/ram-stuti';
+import { ramcharitmanasChaptersManifest } from '@/data/ramcharitmanas';
+import { valmikiRamayanChaptersManifest } from '@/data/valmiki-ramayan';
+import { sundarkandChaptersManifest } from '@/data/sundarkand';
+import { gitaChaptersManifest } from '@/data/gita';
 import { canonicalSourceId } from '@/data/sourceIdMigration';
-import type { HomeStackParamList } from './types';
+import type { HomeStackParamList, MoreStackParamList, PanchangStackParamList } from './types';
 
 type Nav = NativeStackNavigationProp<HomeStackParamList>;
 
-const chalisaIds = new Set(['hanuman-chalisa', 'shiv-chalisa', 'durga-chalisa', 'ganesh-chalisa']);
+/**
+ * Nested-navigation params for a screen inside the Panchang tab's stack.
+ * Always sets `initial: false`: without it, navigating a LAZILY-mounted
+ * Panchang tab makes the target the stack's *initial* route, leaving the
+ * calendar (PanchangHome) unreachable for the whole session. Every cross-tab
+ * caller (the Home व्रत tile, the vrat-reminder deep link, feature-tour
+ * steps) must build its params through this helper rather than hand-rolling
+ * the `{ screen, params }` shape.
+ */
+export function panchangTabTarget<T extends keyof PanchangStackParamList>(
+  screen: T,
+  params?: PanchangStackParamList[T]
+): { screen: T; params: PanchangStackParamList[T]; initial: false } {
+  return { screen, params: params as PanchangStackParamList[T], initial: false };
+}
+
+/**
+ * Nested-navigation params for a screen inside the More tab's stack — the
+ * `panchangTabTarget` rule, applied to the other lazily-mounted tab.
+ *
+ * The Home DISCOVER widgets spotlight hand-rolled `{ screen: 'WidgetGallery' }`
+ * without `initial: false`, so tapping it before ever opening the More tab made
+ * the gallery the More stack's *initial* route: its back button had nothing to
+ * pop, and the whole hub (Wishlist, Profile, Reminders, Japam Alarms, Pitru
+ * Smaran) stayed unreachable for the rest of the session. Build every MoreTab
+ * hand-off through this helper rather than the raw `{ screen, params }` shape —
+ * `navigation/__tests__/tabTargets.test.ts` fails the hand-rolled form.
+ */
+export function moreTabTarget<T extends keyof MoreStackParamList>(
+  screen: T,
+  params?: MoreStackParamList[T]
+): { screen: T; params: MoreStackParamList[T]; initial: false } {
+  return { screen, params: params as MoreStackParamList[T], initial: false };
+}
+
+/**
+ * Open a reader target from a vidhi mounted on any of its three entry stacks.
+ * Push in place when the enclosing stack owns the target route — back then
+ * retraces the guide — and cross-tab to Home otherwise. Most readers live only
+ * on Home; GitaReader is also registered on More for the personal-tithi guide.
+ */
+export function navigateToHomeStackTarget(
+  nav: {
+    navigate: (name: string, params?: object) => void;
+    getState?: () => { routeNames?: readonly string[] } | undefined;
+  },
+  target: { screen: string; params?: object }
+): void {
+  if (nav.getState?.()?.routeNames?.includes(target.screen)) {
+    nav.navigate(target.screen, target.params);
+    return;
+  }
+  nav.navigate('HomeTab', { screen: target.screen, params: target.params });
+}
+
+const chalisaIds = new Set([
+  'hanuman-chalisa',
+  'shiv-chalisa',
+  'durga-chalisa',
+  'ganesh-chalisa',
+  'gayatri-chalisa',
+  'ram-chalisa',
+  'krishna-chalisa',
+  'vishnu-chalisa',
+  'saraswati-chalisa',
+]);
+
+// Ashtakam (अष्टकम्) multi-instance form — one AshtakamReader dispatches on
+// `ashtakamId`, mirroring the chalisa routing above (PRD-A). Derived from the
+// data registry so new ashtakams route without touching this file (a hardcoded
+// mirror here silently orphaned mahalakshmi-/surya-ashtakam from the library).
+const ashtakamIds = new Set<string>(ashtakamIdList);
+
+// Suktam (सूक्तम्) multi-instance form — one SuktamReader dispatches on `suktamId`.
+const suktamIds = new Set(['devi-suktam', 'purusha-suktam', 'narayana-suktam']);
+
+// Kavacham (कवच) multi-instance form — one KavachamReader dispatches on `kavachamId`.
+const kavachamIds = new Set([
+  'rama-raksha-stotra',
+  'ganesha-kavacham',
+  'shiva-kavacham',
+  'durga-kavach',
+]);
+
+// Stuti (स्तुति) multi-instance form — one StutiReader dispatches on `stutiId`.
+// Derived from the data registry (same rationale as ashtakamIds above).
+const stutiIds = new Set<string>(stutiIdList);
+
+const theerthIds = new Set([
+  'dvadasha-jyotirlinga',
+  'char-dham',
+  'chota-char-dham',
+  'shakti-peeth',
+  'famous-theerth',
+]);
+// A theerth library entry maps to a category drill-in on the map (or the
+// listing for the all-temples "famous-theerth" entry).
+const THEERTH_ENTRY_TO_GROUP: Record<string, string | undefined> = {
+  'dvadasha-jyotirlinga': 'jyotirlinga',
+  'char-dham': 'char-dham',
+  'chota-char-dham': 'chota-char-dham',
+  'shakti-peeth': 'shakti-peeth',
+  'famous-theerth': undefined,
+};
+function theerthEntryParams(id: string): { group?: string } {
+  const group = THEERTH_ENTRY_TO_GROUP[id];
+  return group ? { group } : {};
+}
+const sanskarIds = new Set(['prabhati-shloka', 'surya-namaskar', 'tulsi-puja', 'bhojan-mantra', 'gau-seva', 'sandhya-deepam', 'ratri-shloka', 'vidyarambha-prarthana']);
 
 const stotramChaptersRouteById: Record<string, keyof HomeStackParamList> = {
   'shiva-strotam': 'ShivaStrotamChapters',
   'durga-stotram': 'DurgaStotramChapters',
+  'saraswati-stotram': 'SaraswatiStotramChapters',
   'ganesh-stotram': 'GaneshStotramChapters',
   'vishnu-sahasranama': 'VishnuSahasranamaChapters',
   'hanuman-ashtak': 'HanumanAshtakChapters',
   'krishna-stotram': 'KrishnaStotramChapters',
   'bajrang-baan': 'BajrangBaanChapters',
   'ram-stuti': 'RamStutiChapters',
+  // Ram's aarti (library id 'ram-aarti') reuses the Ram Stuti content, so it
+  // opens the same chapters/reader routes rather than the index-based AartiReader.
+  'ram-aarti': 'RamStutiChapters',
   'ramcharitmanas': 'RamcharitmanasChapters',
+  'valmiki-ramayan': 'ValmikiRamayanChapters',
   'sundarkand': 'SundarkandChapters',
   'bhagavad-gita': 'GitaChapters',
+};
+
+/**
+ * How many chapters (subsections) each chaptered text actually ships, read
+ * straight off the shipped manifests rather than mirrored by hand — a hardcoded
+ * count here would go stale the moment a text gains or loses a chapter (the
+ * same failure mode that once orphaned mahalakshmi-/surya-ashtakam above).
+ * `texts.ts` already imports these modules to compute its verse counts, so this
+ * adds no weight to the bundle.
+ *
+ * Used to skip the chapters index for single-chapter texts — see
+ * `buildEntryStartTarget`.
+ */
+const chapterCountBySourceId: Record<string, number> = {
+  'shiva-strotam': shivaStrotamChaptersManifest.length,
+  'durga-stotram': durgaStotramChaptersManifest.length,
+  'saraswati-stotram': saraswatiStotramChaptersManifest.length,
+  'ganesh-stotram': ganeshStotramChaptersManifest.length,
+  'vishnu-sahasranama': vishnuSahasranamaChaptersManifest.length,
+  'hanuman-ashtak': hanumanAshtakChaptersManifest.length,
+  'krishna-stotram': krishnaStotramChaptersManifest.length,
+  'bajrang-baan': bajrangBaanChaptersManifest.length,
+  'ram-stuti': ramStutiChaptersManifest.length,
+  // ram-aarti reuses the Ram Stuti content, so it inherits its chapter count.
+  'ram-aarti': ramStutiChaptersManifest.length,
+  'ramcharitmanas': ramcharitmanasChaptersManifest.length,
+  'valmiki-ramayan': valmikiRamayanChaptersManifest.length,
+  'sundarkand': sundarkandChaptersManifest.length,
+  'bhagavad-gita': gitaChaptersManifest.length,
 };
 
 const stotramReaderRouteBySourceId: Record<string, keyof HomeStackParamList> = {
   'shiva-strotam': 'ShivaStrotamReader',
   'durga-stotram': 'DurgaStotramReader',
+  'saraswati-stotram': 'SaraswatiStotramReader',
   'ganesh-stotram': 'GaneshStotramReader',
   'vishnu-sahasranama': 'VishnuSahasranamaReader',
   'hanuman-ashtak': 'HanumanAshtakReader',
   'krishna-stotram': 'KrishnaStotramReader',
   'bajrang-baan': 'BajrangBaanReader',
   'ram-stuti': 'RamStutiReader',
+  'ram-aarti': 'RamStutiReader',
   'ramcharitmanas': 'RamcharitmanasReader',
+  'valmiki-ramayan': 'ValmikiRamayanReader',
   'sundarkand': 'SundarkandReader',
   'bhagavad-gita': 'GitaReader',
 };
 
-export function navigateToEntryStart(nav: Nav, entry: LibraryEntry): boolean {
+export function buildEntryStartTarget(entry: LibraryEntry): BookmarkTarget | null {
   if (entry.category === 'japam') {
-    nav.navigate('JapamCounter', { mantraId: entry.id });
-    return true;
+    return { screen: 'JapamCounter', params: { mantraId: entry.id } };
+  }
+  if (entry.category === 'theerth' && theerthIds.has(entry.id)) {
+    return { screen: 'TheerthMap', params: theerthEntryParams(entry.id) };
   }
   if (chalisaIds.has(entry.id)) {
-    nav.navigate('ChalisaReader', { initialIndex: 0, chalisaId: entry.id });
-    return true;
+    return { screen: 'ChalisaReader', params: { initialIndex: 0, chalisaId: entry.id } };
+  }
+  if (ashtakamIds.has(entry.id)) {
+    return { screen: 'AshtakamReader', params: { initialIndex: 0, ashtakamId: entry.id } };
+  }
+  if (suktamIds.has(entry.id)) {
+    return { screen: 'SuktamReader', params: { initialIndex: 0, suktamId: entry.id } };
+  }
+  if (kavachamIds.has(entry.id)) {
+    return { screen: 'KavachamReader', params: { initialIndex: 0, kavachamId: entry.id } };
+  }
+  if (stutiIds.has(entry.id)) {
+    return { screen: 'StutiReader', params: { initialIndex: 0, stutiId: entry.id } };
+  }
+  if (sanskarIds.has(entry.id)) {
+    return { screen: 'SanskarReader', params: { initialIndex: 0, sanskarId: entry.id } };
   }
   const aartiIndex = (aartiIndexById as Record<string, number>)[entry.id];
   if (aartiIndex != null) {
-    nav.navigate('AartiReader', { aartiIndex });
-    return true;
+    return { screen: 'AartiReader', params: { aartiIndex } };
   }
   const chaptersRoute = stotramChaptersRouteById[entry.id];
   if (chaptersRoute) {
-    (nav.navigate as (name: keyof HomeStackParamList) => void)(chaptersRoute);
+    // A single-chapter text has nothing to choose from: its chapters index is a
+    // one-row list, so routing through it costs a second tap and shows no
+    // information the card didn't already carry. Open the reader directly.
+    // Every "open this text" surface starts here — the Home FOR TODAY row, the
+    // By-Purpose discovery lists, search, category/deity lists, Rashifal — so
+    // fixing it once fixes the two-tap open everywhere.
+    const readerRoute = stotramReaderRouteBySourceId[entry.id];
+    if (readerRoute && chapterCountBySourceId[entry.id] === 1) {
+      return { screen: readerRoute, params: { chapter: 1, initialIndex: 0 } };
+    }
+    return { screen: chaptersRoute, params: {} };
+  }
+  return null;
+}
+
+export function navigateToEntryStart(nav: Nav, entry: LibraryEntry): boolean {
+  const target = buildEntryStartTarget(entry);
+  if (!target) return false;
+  if (Object.keys(target.params).length === 0) {
+    (nav.navigate as (name: keyof HomeStackParamList) => void)(target.screen);
+  } else {
+    (nav.navigate as (name: keyof HomeStackParamList, params: object) => void)(target.screen, target.params);
+  }
+  return true;
+}
+
+/**
+ * Open the content for a routine item. Whole sections defer to
+ * `navigateToEntryStart`; a `chapter` item opens that chapter's reader; japam
+ * opens the counter. Returns false if the source is unknown / unroutable.
+ */
+export function navigateToRoutineItem(nav: Nav, item: RoutineItem): boolean {
+  if (item.kind === 'vidhi') {
+    // The vidhi flow (PRD-19) is registered on the Home stack as well as the
+    // Panchang one, so a routine item opens it in place and back returns to
+    // the routine rather than to the Panchang calendar.
+    nav.navigate('VidhiDetail', { vidhiId: item.sourceId });
     return true;
   }
+  if (item.kind === 'japam') {
+    nav.navigate('JapamCounter', { mantraId: item.sourceId });
+    return true;
+  }
+  if (item.kind === 'chapter' && item.chapter != null) {
+    const readerRoute = stotramReaderRouteBySourceId[item.sourceId];
+    if (!readerRoute) return false;
+    (nav.navigate as (name: keyof HomeStackParamList, params: object) => void)(readerRoute, {
+      chapter: item.chapter,
+      initialIndex: 0,
+    });
+    return true;
+  }
+  const entry = library.find((e) => e.id === item.sourceId);
+  if (entry) return navigateToEntryStart(nav, entry);
   return false;
 }
 
+// (A `canResumeProgress` pre-check predicate mirroring navigateToProgress's
+// branches lived here as the render gate of the retired Home continue-reading
+// card — deleted with the card, design.md §49. navigateToProgress itself
+// returns false for unroutable entries, which is the contract the remaining
+// callers rely on.)
 export function navigateToProgress(nav: Nav, progress: ReadingProgress): boolean {
   const sourceId = canonicalSourceId(progress.sourceId);
   if (chalisaIds.has(sourceId)) {
     nav.navigate('ChalisaReader', { initialIndex: progress.verseIndex, chalisaId: sourceId });
+    return true;
+  }
+  if (ashtakamIds.has(sourceId)) {
+    nav.navigate('AshtakamReader', { initialIndex: progress.verseIndex, ashtakamId: sourceId });
+    return true;
+  }
+  if (suktamIds.has(sourceId)) {
+    nav.navigate('SuktamReader', { initialIndex: progress.verseIndex, suktamId: sourceId });
+    return true;
+  }
+  if (kavachamIds.has(sourceId)) {
+    nav.navigate('KavachamReader', { initialIndex: progress.verseIndex, kavachamId: sourceId });
+    return true;
+  }
+  if (stutiIds.has(sourceId)) {
+    nav.navigate('StutiReader', { initialIndex: progress.verseIndex, stutiId: sourceId });
+    return true;
+  }
+  if (sanskarIds.has(sourceId)) {
+    nav.navigate('SanskarReader', { initialIndex: progress.verseIndex, sanskarId: sourceId });
     return true;
   }
   const aartiIndex = (aartiIndexById as Record<string, number>)[sourceId];
@@ -73,6 +325,15 @@ export function navigateToProgress(nav: Nav, progress: ReadingProgress): boolean
   }
   const readerRoute = stotramReaderRouteBySourceId[sourceId];
   if (readerRoute && progress.chapter != null) {
+    // Push the chapter (subsection) index under the reader so pressing back from
+    // the reader lands on the subsection list rather than the section list — lets
+    // the user reach sibling chapters after resuming. Skipped for single-chapter
+    // texts: there are no siblings to reach, so the push only strands the user on
+    // a one-row list when they press back (same rule as buildEntryStartTarget).
+    const chaptersRoute = stotramChaptersRouteById[sourceId];
+    if (chaptersRoute && chapterCountBySourceId[sourceId] !== 1) {
+      (nav.navigate as (name: keyof HomeStackParamList) => void)(chaptersRoute);
+    }
     (nav.navigate as (name: keyof HomeStackParamList, params: object) => void)(readerRoute, {
       chapter: progress.chapter,
       initialIndex: progress.verseIndex,
@@ -80,6 +341,15 @@ export function navigateToProgress(nav: Nav, progress: ReadingProgress): boolean
     return true;
   }
   return false;
+}
+
+/**
+ * True when an entry opens a chapter (subsection) index rather than a single
+ * flat reader — i.e. progress is tracked per `<sourceId>::<chapter>` and the
+ * section-level resume sheet must route through the subsection list.
+ */
+export function isChapteredEntry(entry: LibraryEntry): boolean {
+  return stotramChaptersRouteById[entry.id] != null;
 }
 
 function chapterFromBookmark(bm: BookmarkRef): number | null {
@@ -110,10 +380,46 @@ export function buildProgressTarget(p: {
   verseIndex: number;
 }): BookmarkTarget | null {
   const sourceId = canonicalSourceId(p.sourceId);
+  if (theerthIds.has(sourceId)) {
+    return {
+      screen: 'TheerthMap',
+      params: theerthEntryParams(sourceId),
+    };
+  }
   if (chalisaIds.has(sourceId)) {
     return {
       screen: 'ChalisaReader',
       params: { initialIndex: p.verseIndex, chalisaId: sourceId },
+    };
+  }
+  if (ashtakamIds.has(sourceId)) {
+    return {
+      screen: 'AshtakamReader',
+      params: { initialIndex: p.verseIndex, ashtakamId: sourceId },
+    };
+  }
+  if (suktamIds.has(sourceId)) {
+    return {
+      screen: 'SuktamReader',
+      params: { initialIndex: p.verseIndex, suktamId: sourceId },
+    };
+  }
+  if (kavachamIds.has(sourceId)) {
+    return {
+      screen: 'KavachamReader',
+      params: { initialIndex: p.verseIndex, kavachamId: sourceId },
+    };
+  }
+  if (stutiIds.has(sourceId)) {
+    return {
+      screen: 'StutiReader',
+      params: { initialIndex: p.verseIndex, stutiId: sourceId },
+    };
+  }
+  if (sanskarIds.has(sourceId)) {
+    return {
+      screen: 'SanskarReader',
+      params: { sanskarId: sourceId, initialIndex: p.verseIndex },
     };
   }
   const aartiIndex = (aartiIndexById as Record<string, number>)[sourceId];
@@ -145,6 +451,12 @@ export function buildBookmarkTarget(bm: BookmarkRef): BookmarkTarget | null {
     return {
       screen: 'ChalisaReader',
       params: { initialIndex: bm.verseIndex, chalisaId: sourceId },
+    };
+  }
+  if (sanskarIds.has(sourceId)) {
+    return {
+      screen: 'SanskarReader',
+      params: { sanskarId: sourceId, initialIndex: bm.verseIndex },
     };
   }
   const aartiIndex = (aartiIndexById as Record<string, number>)[sourceId];

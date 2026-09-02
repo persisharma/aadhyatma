@@ -1,0 +1,120 @@
+# Vrat Follow + My Vrat + Reminders Smoke (PRD-09 P2 + P3)
+#
+# Verifies the follow/prioritise/remind journey on top of the catalog:
+#   1. Open a vrat's detail from the व्रत-पर्व catalog and Follow it.
+#   2. The "Added — View in My Vrat" confirmation routes to the My Vrat screen.
+#   3. My Vrat shows the metric band (incl. "Reminders on"), the priority list,
+#      and the "Reminder defaults" door.
+#   4. The per-row reminder bell opens the reminder sheet (advance / on-the-day /
+#      day-of time), and "Save reminders" persists.
+#   5. Cleanup: unfollow so the flow is repeatable.
+#
+# Language note (same as the other panchang smokes): the screen reads the global
+# reading language; default Hindi is Devanagari which Maestro's iOS tree can't
+# read, so we flip to English on More first.
+#
+# Selector notes:
+#   - Detail Follow button accessibilityLabel is "Follow" → "Following".
+#   - The confirmation Pressable's label is "Added — View in My Vrat".
+#   - My Vrat per-row bell label is "Reminders for <NameEn>".
+#   - The defaults door label is "Reminder defaults"; sheet pills expose their
+#     English label ("2 days", "Save reminders").
+
+appId: com.prashantsharma.vedansh
+---
+# ── Boot Vedansh (exits on Home) ──
+- runFlow: _launch.yaml
+
+# ── Global reading language → English ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- tapOn: "Language,.*"   # More now opens a Language picker sheet, not inline pills
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── Panchang → Vrat & Parv ──
+- tapOn: { id: "tab-panchang" }
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Vrat & Parv"
+    timeout: 30000
+- tapOn: "Vrat & Parv"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Browse by type"
+    timeout: 15000
+
+# ── Search a vrat → open its detail → Follow ──
+- tapOn: "Search vrat, festival, upvas, katha…"
+- inputText: "Nirjala"
+- hideKeyboard
+- extendedWaitUntil:
+    visible: "Nirjala Ekadashi"
+    timeout: 15000
+- tapOn: "Nirjala Ekadashi"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "About"
+    timeout: 15000
+- tapOn: "Follow"
+- extendedWaitUntil:
+    visible: "Following"
+    timeout: 10000
+
+# ── Reach My Vrat via the persistent catalog button ──
+# The inline "Added — View in My Vrat" confirmation auto-dismisses ~3.5s after
+# Follow and is bottom-anchored (where the dev LogBox also sits), so it's too
+# racy for Android e2e. Instead go back to the catalog and tap its pinned
+# "My Vrat" entry — same destination, deterministic on both platforms.
+- tapOn: "Back"
+- waitForAnimationToEnd
+- tapOn: "My Vrat.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "My priority"
+    timeout: 15000
+- assertVisible: "Reminders on"
+- assertVisible: "Reminder defaults"
+
+# ── Per-row reminder bell → reminder sheet → save ──
+- tapOn: "Reminders for Nirjala Ekadashi"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Advance notice"
+    timeout: 10000
+- assertVisible: "On the day"
+- assertVisible: "Day-of time"
+- tapOn: "2 days"
+- tapOn: "Save reminders"
+- waitForAnimationToEnd
+
+# ── Cleanup: best-effort unfollow. The next run's _launch clearState wipes all
+# follows regardless, so a cleanup hiccup must not fail the (already-verified)
+# flow — every step here is optional. In My Vrat the row exposes a "Following"
+# status; opening the vrat and toggling it back to "Follow" is tidiness only.
+- tapOn:
+    text: "Nirjala Ekadashi"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "Following"
+    optional: true
+- waitForAnimationToEnd
+
+# ── Restore Hindi default (best-effort) + cleanup ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- tapOn:
+    text: "Language,.*"   # open the Language picker sheet (best-effort restore)
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "Hindi"
+    optional: true
+- waitForAnimationToEnd
+- stopApp:
+    appId: com.prashantsharma.vedansh

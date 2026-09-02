@@ -1,0 +1,178 @@
+{
+  "id": "achyutashtakam",
+  "titleHi": "अच्युताष्टकम्",
+  "titleEn": "Achyutashtakam",
+  "deity": "vishnu",
+  "source": {
+    "baseText": "Achyutashtakam (Achyutam Keshavam) of Adi Shankaracharya — cross-verified; Devanagari + IAST concordant across sources (the 8-verse hymn; the 9th phalashruti is omitted here)",
+    "referenceUrls": [
+      "https://shlokam.org/shloka/achyutashtakam.htm",
+      "https://hinducalculator.com/stotram/achyutashtakam/",
+      "https://stotra.in/translation/en/sri-vishnu/achyut-ashtakam"
+    ],
+    "retrievedOn": "2026-07-22",
+    "notes": "This is the 'Achyutam Keshavam Rama Narayanam' Achyutashtakam (Vishnu/Krishna/Rama), distinct from the 'Achyutachyuta Hare... Shripate Shamaya Duhkham' hymn of the same name."
+  },
+  "verses": [
+    {
+      "id": "achyutashtakam-1",
+      "number": 1,
+      "labelHi": "श्लोक · १",
+      "labelEn": "Shloka · 1",
+      "lines": [
+        "अच्युतं केशवं रामनारायणं",
+        "कृष्णदामोदरं वासुदेवं हरिम्।",
+        "श्रीधरं माधवं गोपिकावल्लभं",
+        "जानकीनायकं रामचन्द्रं भजे॥"
+      ],
+      "linesEn": [
+        "acyutaṃ keśavaṃ rāmanārāyaṇaṃ",
+        "kṛṣṇadāmodaraṃ vāsudevaṃ harim",
+        "śrīdharaṃ mādhavaṃ gopikāvallabhaṃ",
+        "jānakīnāyakaṃ rāmacandraṃ bhaje"
+      ],
+      "meaningHi": "मैं उन रामचन्द्र का भजन करता हूँ, जो अच्युत (कभी न च्युत होने वाले), केशव, राम-नारायण, कृष्ण-दामोदर, वासुदेव, हरि, श्रीधर, माधव, गोपिकावल्लभ (गोपियों के प्रिय) और जानकीनायक (सीता के स्वामी) के नामों से विख्यात हैं। यह अष्टक भगवान के अनेक नामों की मालारूप स्तुति है।",
+      "meaningEn": "I sing in praise of Ramachandra — known as Achyuta (the infallible), Keshava, Rama-Narayana, Krishna-Damodara, Vasudeva, Hari, Shridhara, Madhava, Gopika-vallabha (beloved of the gopis), and Janaki-nayaka (Lord of Sita). The hymn is a garland of the Lord's many names."
+    },
+    {
+      "id": "achyutashtakam-2",
+      "number": 2,
+      "labelHi": "श्लोक · २",
+      "labelEn": "Shloka · 2",
+      "lines": [
+        "अच्युतं केशवं सत्यभामाधवं",
+        "माधवं श्रीधरं राधिकाराधितम्।",
+        "इन्दिरामन्दिरं चेतसा सुन्दरं",
+        "देवकीनन्दनं नन्दनं सन्दधे॥"
+      ],
+      "linesEn": [
+        "acyutaṃ keśavaṃ satyabhāmādhavaṃ",
+        "mādhavaṃ śrīdharaṃ rādhikārādhitam",
+        "indirāmandiraṃ cetasā sundaraṃ",
+        "devakīnandanaṃ nandanaṃ sandadhe"
+      ],
+      "meaningHi": "मैं मन से उन अच्युत को प्रणामपूर्वक धारण करता हूँ, जो केशव हैं, सत्यभामा के स्वामी हैं, माधव और श्रीधर हैं, राधिका द्वारा आराधित हैं, लक्ष्मी (इन्दिरा) के मन्दिरस्वरूप हैं, हृदय से सुन्दर हैं, देवकीनन्दन और सबके आनन्ददायक हैं।",
+      "meaningEn": "With my mind I offer salutation to Achyuta — Keshava, the consort of Satyabhama, Madhava and Shridhara, adored by Radhika, the very temple of Lakshmi (Indira), beautiful of heart, the son of Devaki and the delight of all."
+    },
+    {
+      "id": "achyutashtakam-3",
+      "number": 3,
+      "labelHi": "श्लोक · ३",
+      "labelEn": "Shloka · 3",
+      "lines": [
+        "विष्णवे जिष्णवे शङ्खिने चक्रिणे",
+        "रुक्मिणीरागिणे जानकीजानये।",
+        "वल्लवीवल्लभायार्चितायात्मने",
+        "कंसविध्वंसिने वंशिने ते नमः॥"
+      ],
+      "linesEn": [
+        "viṣṇave jiṣṇave śaṅkhine cakriṇe",
+        "rukmiṇīrāgiṇe jānakījānaye",
+        "vallavīvallabhāyārcitāyātmane",
+        "kaṃsavidhvaṃsine vaṃśine te namaḥ"
+      ],
+      "meaningHi": "उन विष्णु को नमस्कार है — जो सदा विजयी (जिष्णु) हैं, शङ्ख और चक्र धारण करते हैं, रुक्मिणी के प्रेमी हैं, जानकी के पति (राम) हैं, गोपियों के प्रिय हैं, पूजित परमात्मा हैं, कंस के विध्वंसक हैं और वंशी (बाँसुरी) बजाने वाले हैं — आपको नमस्कार है।",
+      "meaningEn": "Salutations to Vishnu — the ever-victorious (Jishnu), bearer of the conch and discus, beloved of Rukmini, consort of Janaki (as Rama), dear to the cowherdesses, the worshipped Self, the destroyer of Kamsa, and the player of the flute — salutations to you."
+    },
+    {
+      "id": "achyutashtakam-4",
+      "number": 4,
+      "labelHi": "श्लोक · ४",
+      "labelEn": "Shloka · 4",
+      "lines": [
+        "कृष्ण गोविन्द हे राम नारायण",
+        "श्रीपते वासुदेवाजित श्रीनिधे।",
+        "अच्युतानन्त हे माधवाधोक्षज",
+        "द्वारकानायक द्रौपदीरक्षक॥"
+      ],
+      "linesEn": [
+        "kṛṣṇa govinda he rāma nārāyaṇa",
+        "śrīpate vāsudevājita śrīnidhe",
+        "acyutānanta he mādhavādhokṣaja",
+        "dvārakānāyaka draupadīrakṣaka"
+      ],
+      "meaningHi": "हे कृष्ण! हे गोविन्द! हे राम! हे नारायण! हे श्रीपति! हे वासुदेव! हे अजित! हे श्रीनिधि! हे अच्युत! हे अनन्त! हे माधव! हे अधोक्षज! हे द्वारकानायक! हे द्रौपदी के रक्षक! (मुझ पर कृपा करें)।",
+      "meaningEn": "O Krishna! O Govinda! O Rama! O Narayana! O Shripati (Lord of Lakshmi)! O Vasudeva! O Unconquered! O Treasure of Lakshmi! O Achyuta! O Ananta! O Madhava! O Adhokshaja! O Lord of Dvaraka! O Protector of Draupadi! (be gracious to me)."
+    },
+    {
+      "id": "achyutashtakam-5",
+      "number": 5,
+      "labelHi": "श्लोक · ५",
+      "labelEn": "Shloka · 5",
+      "lines": [
+        "राक्षसक्षोभितः सीतया शोभितो",
+        "दण्डकारण्यभूपुण्यताकारणः।",
+        "लक्ष्मणेनान्वितो वानरैः सेवितो",
+        "ऽगस्त्यसम्पूजितो राघवः पातु माम्॥"
+      ],
+      "linesEn": [
+        "rākṣasakṣobhitaḥ sītayā śobhito",
+        "daṇḍakāraṇyabhūpuṇyatākāraṇaḥ",
+        "lakṣmaṇenānvito vānaraiḥ sevito",
+        "'gastyasampūjito rāghavaḥ pātu mām"
+      ],
+      "meaningHi": "जो राक्षसों द्वारा क्षुब्ध किए जाने पर भी सीता के साथ सुशोभित हैं, जो दण्डक वन की भूमि की पवित्रता के कारण बने, जो लक्ष्मण से युक्त हैं, वानरों से सेवित हैं और अगस्त्य द्वारा सम्पूजित हैं — वे राघव (राम) मेरी रक्षा करें।",
+      "meaningEn": "He who, though harried by demons, shone resplendent with Sita; who became the cause of the sanctity of the Dandaka forest; who was accompanied by Lakshmana, served by the vanaras, and worshipped by Agastya — may that Raghava (Rama) protect me."
+    },
+    {
+      "id": "achyutashtakam-6",
+      "number": 6,
+      "labelHi": "श्लोक · ६",
+      "labelEn": "Shloka · 6",
+      "lines": [
+        "धेनुकारिष्टकोऽनिष्टकृद्द्वेषिणां",
+        "केशिहा कंसहृद्वंशिकावादकः।",
+        "पूतनाकोपकः सूरजाखेलनो",
+        "बालगोपालकः पातु मां सर्वदा॥"
+      ],
+      "linesEn": [
+        "dhenukāriṣṭako'niṣṭakṛddveṣiṇāṃ",
+        "keśihā kaṃsahṛdvaṃśikāvādakaḥ",
+        "pūtanākopakaḥ sūrajākhelano",
+        "bālagopālakaḥ pātu māṃ sarvadā"
+      ],
+      "meaningHi": "जो धेनुक और अरिष्ट (असुरों) का संहारक है, द्वेषियों का अनिष्ट करने वाला है, केशी का वधकर्ता है, कंस के प्राणों को हरने वाला और वंशी बजाने वाला है, पूतना पर कुपित हुआ, यमुना (सूर्यपुत्री) के तट पर क्रीड़ा करने वाला — वह बालगोपाल सदा मेरी रक्षा करे।",
+      "meaningEn": "He who slew the demons Dhenuka and Arishta, who works the undoing of the malicious, the killer of Keshi, the breaker of Kamsa and player of the flute, who grew wrathful at Putana, who sports by the Yamuna (daughter of the Sun) — may that young cowherd (Bala-gopala) ever protect me."
+    },
+    {
+      "id": "achyutashtakam-7",
+      "number": 7,
+      "labelHi": "श्लोक · ७",
+      "labelEn": "Shloka · 7",
+      "lines": [
+        "विद्युदुद्द्योतवान्प्रस्फुरद्वाससं",
+        "प्रावृडम्भोदवत्प्रोल्लसद्विग्रहम्।",
+        "वन्यया मालया शोभितोरःस्थलं",
+        "लोहिताङ्घ्रिद्वयं वारिजाक्षं भजे॥"
+      ],
+      "linesEn": [
+        "vidyududdyotavānprasphuradvāsasaṃ",
+        "prāvṛḍambhodavatprollasadvigraham",
+        "vanyayā mālayā śobhitoraḥsthalaṃ",
+        "lohitāṅghridvayaṃ vārijākṣaṃ bhaje"
+      ],
+      "meaningHi": "जिनका वस्त्र बिजली की चमक-सा देदीप्यमान है, जिनका शरीर वर्षा-ऋतु के मेघ के समान उल्लसित (श्यामल) है, जिनका वक्षःस्थल वनपुष्पों की माला से सुशोभित है, जिनके दोनों चरण लाल (अरुण) हैं — उन कमलनयन को मैं भजता हूँ।",
+      "meaningEn": "I worship the lotus-eyed Lord whose garment flashes like lightning, whose form glows dark like a monsoon rain-cloud, whose chest is adorned with a garland of wild flowers, and whose two feet are reddish."
+    },
+    {
+      "id": "achyutashtakam-8",
+      "number": 8,
+      "labelHi": "श्लोक · ८",
+      "labelEn": "Shloka · 8",
+      "lines": [
+        "कुञ्चितैः कुन्तलैर्भ्राजमानाननं",
+        "रत्नमौलिं लसत्कुण्डलं गण्डयोः।",
+        "हारकेयूरकं कङ्कणप्रोज्ज्वलं",
+        "किङ्किणीमञ्जुलं श्यामलं तं भजे॥"
+      ],
+      "linesEn": [
+        "kuñcitaiḥ kuntalairbhrājamānānanaṃ",
+        "ratnamauliṃ lasatkuṇḍalaṃ gaṇḍayoḥ",
+        "hārakeyūrakaṃ kaṅkaṇaprojjvalaṃ",
+        "kiṅkiṇīmañjulaṃ śyāmalaṃ taṃ bhaje"
+      ],
+      "meaningHi": "जिनका मुख घुँघराले केशों से सुशोभित है, जिनके मस्तक पर रत्नजड़ित मुकुट और कपोलों पर झिलमिलाते कुण्डल हैं, जो हार व केयूर (बाजूबन्द) से युक्त और चमकते कङ्कणों से देदीप्यमान हैं, जिनकी करधनी की घुँघरियाँ मधुर ध्वनि करती हैं — उन श्यामल (श्रीकृष्ण) को मैं भजता हूँ।",
+      "meaningEn": "I worship that dark-hued Lord (Shyamala) whose face is radiant with curly locks, who wears a jewel-set crown and glittering earrings upon His cheeks, who is graced with necklaces and armlets and brilliant bracelets, and whose girdle-bells tinkle sweetly."
+    }
+  ]
+}

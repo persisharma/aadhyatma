@@ -6,10 +6,13 @@
   "language": "hi-en",
   "script": "Devanagari + Latin",
   "source": {
-    "baseText": "Durga Chalisa by Devidas",
-    "devanagariReference": "sanatanweb.com, timesnowhindi.com, patrika.com",
-    "meaningsAttribution": "Generated with scholarly commentary",
-    "retrievedOn": "2026-05-23"
+    "baseText": "Durga Chalisa by Devidas, checked against Drik Panchang, HinduNidhi, and GreenMesg editions.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/chalisa/durga-mata/durga-mata-chalisa.html?ck=1&lang=hi",
+      "https://hindunidhi.com/durga-chalisa-hindi/",
+      "https://greenmesg.org/stotras/durga/durga_chalisa.php"
+    ],
+    "retrievedOn": "2026-05-30"
   },
   "counts": {
     "openingDohas": 0,
@@ -18,46 +21,824 @@
     "totalVerses": 41
   },
   "verses": [
-    {"id": "chaupai-01", "type": "chaupai", "section": "body", "number": 1, "labelHi": "चौपाई १", "labelEn": "Chaupai 1", "lines": ["नमो नमो दुर्गे सुख करनी।", "नमो नमो अम्बे दुःख हरनी॥"], "linesEn": ["Namo namo Durge sukh karanee.", "Namo namo Ambe duhkh haranee."], "meaningHi": "हे दुर्गा माँ! आपको बारम्बार नमस्कार। आप सुख प्रदान करने वाली हैं। हे अम्बे! आपको नमन — आप दुःखों को हरने वाली हैं।", "meaningEn": "Salutations again and again to Durga, the bestower of happiness. Salutations to Ambe, the remover of sorrows."},
-    {"id": "chaupai-02", "type": "chaupai", "section": "body", "number": 2, "labelHi": "चौपाई २", "labelEn": "Chaupai 2", "lines": ["निरंकार है ज्योति तुम्हारी।", "तिहूँ लोक फैली उजियारी॥"], "linesEn": ["Nirankaar hai jyoti tumhaaree.", "Tihoon lok failee ujiyaaree."], "meaningHi": "आपकी ज्योति निराकार है। तीनों लोकों में आपका प्रकाश फैला हुआ है।", "meaningEn": "Your radiance is formless (infinite). Your light has spread across all three worlds."},
-    {"id": "chaupai-03", "type": "chaupai", "section": "body", "number": 3, "labelHi": "चौपाई ३", "labelEn": "Chaupai 3", "lines": ["शशि ललाट मुख महाविशाला।", "नेत्र लाल भृकुटी विकराला॥"], "linesEn": ["Shashi lalaat mukh mahaavishaala.", "Netra laal bhrikutee vikraala."], "meaningHi": "आपके ललाट पर चन्द्रमा है, मुख अत्यन्त विशाल है। नेत्र लाल हैं और भौंहें विकराल हैं।", "meaningEn": "The moon adorns your forehead, your face is vast. Your eyes are red and eyebrows fierce."},
-    {"id": "chaupai-04", "type": "chaupai", "section": "body", "number": 4, "labelHi": "चौपाई ४", "labelEn": "Chaupai 4", "lines": ["रूप मातु को अधिक सुहावे।", "दरश करत जन अति सुख पावे॥"], "linesEn": ["Roop maatu ko adhik suhaave.", "Darash karat jan ati sukh paave."], "meaningHi": "माता का रूप अत्यन्त सुन्दर है। दर्शन करने से भक्त अत्यन्त सुख प्राप्त करते हैं।", "meaningEn": "Mother's form is extremely beautiful. By having her darshan, devotees attain great happiness."},
-    {"id": "chaupai-05", "type": "chaupai", "section": "body", "number": 5, "labelHi": "चौपाई ५", "labelEn": "Chaupai 5", "lines": ["तुम संसार शक्ति जग माहीं।", "तुम बिन कार्य होत नहिं काहीं॥"], "linesEn": ["Tum sansaar shakti jag maaheen.", "Tum bin kaarya hot naheen kaaheen."], "meaningHi": "आप इस संसार में शक्ति स्वरूप हैं। आपके बिना कोई भी कार्य सम्भव नहीं है।", "meaningEn": "You are the power (Shakti) in this world. Without you, nothing can be accomplished."},
-    {"id": "chaupai-06", "type": "chaupai", "section": "body", "number": 6, "labelHi": "चौपाई ६", "labelEn": "Chaupai 6", "lines": ["तुम्हीं पाताल लोक में करी।", "तुम्हीं सदा रक्षा करती अमृत बारी॥"], "linesEn": ["Tumheen paataal lok mein karee.", "Tumheen sada raksha karatee amrit baaree."], "meaningHi": "आप ही पाताल लोक में भी व्याप्त हैं। आप ही सदा अमृत की वर्षा से रक्षा करती हैं।", "meaningEn": "You pervade even the netherworld. You always protect by showering nectar."},
-    {"id": "chaupai-07", "type": "chaupai", "section": "body", "number": 7, "labelHi": "चौपाई ७", "labelEn": "Chaupai 7", "lines": ["परलोक सुधार सब करी।", "तुम्हीं स्वर्ग में सब सुख भरी॥"], "linesEn": ["Parlok sudhaar sab karee.", "Tumheen swarg mein sab sukh bharee."], "meaningHi": "आपने परलोक को भी सुधारा है। स्वर्ग में भी आपने ही सब सुख भरे हैं।", "meaningEn": "You have set right the afterworld too. In heaven as well, you have filled all happiness."},
-    {"id": "chaupai-08", "type": "chaupai", "section": "body", "number": 8, "labelHi": "चौपाई ८", "labelEn": "Chaupai 8", "lines": ["तुम पातालं सुधारणहारी।", "तुम ही अनसुइया महिमा अपारी॥"], "linesEn": ["Tum paataalam sudhaaranahaaree.", "Tum hee Anasuiyaa mahimaa apaaree."], "meaningHi": "आप पाताल को भी सुधारने वाली हैं। आपकी महिमा अनसूया (ईर्ष्यारहित) और अपार है।", "meaningEn": "You are the one who reforms even the netherworld. Your glory is without envy and boundless."},
-    {"id": "chaupai-09", "type": "chaupai", "section": "body", "number": 9, "labelHi": "चौपाई ९", "labelEn": "Chaupai 9", "lines": ["तुम्हीं जगत की आदि भवानी।", "विश्व विदित सबको गुण खानी॥"], "linesEn": ["Tumheen jagat kee aadi Bhavaanee.", "Vishwa vidit sabko gun khaanee."], "meaningHi": "आप ही जगत की आदि (मूल) भवानी हैं। सम्पूर्ण विश्व में विदित है कि आप गुणों की खान हैं।", "meaningEn": "You are the primordial Bhavani of the world. The whole world knows you are a mine of virtues."},
-    {"id": "chaupai-10", "type": "chaupai", "section": "body", "number": 10, "labelHi": "चौपाई १०", "labelEn": "Chaupai 10", "lines": ["दुर्गम काज जगत के जेते।", "सुगम अनुग्रह तुम्हरे तेते॥"], "linesEn": ["Durgam kaaj jagat ke jete.", "Sugam anugrah tumhare tete."], "meaningHi": "संसार के जितने भी दुर्गम (कठिन) कार्य हैं, आपकी अनुग्रह (कृपा) से वे सब सुगम (आसान) हो जाते हैं।", "meaningEn": "However difficult the tasks of the world may be, by your grace they all become easy."},
-    {"id": "chaupai-11", "type": "chaupai", "section": "body", "number": 11, "labelHi": "चौपाई ११", "labelEn": "Chaupai 11", "lines": ["तुम बिन कोउ न पूजत धाम।", "भक्ति करे कोई सदा सुभ काम॥"], "linesEn": ["Tum bin kou na poojat dhaam.", "Bhakti kare koee sada subh kaam."], "meaningHi": "आपके बिना कोई धाम (तीर्थ) नहीं पूजता। जो भक्ति करता है, उसके सदा शुभ कार्य होते हैं।", "meaningEn": "Without you, no one worships at holy places. Whoever performs devotion always has auspicious deeds."},
-    {"id": "chaupai-12", "type": "chaupai", "section": "body", "number": 12, "labelHi": "चौपाई १२", "labelEn": "Chaupai 12", "lines": ["तुम्हीं नाशिनी दुष्ट दुखन की।", "तुम्हीं विनाशिनी विपत घनन की॥"], "linesEn": ["Tumhee naashinee dusht dukhan kee.", "Tumhee vinaashinee vipat ghanan kee."], "meaningHi": "आप ही दुष्टों और दुखों की नाशिनी हैं। आप ही विपत्तियों के समूह की विनाशिनी हैं।", "meaningEn": "You alone are the destroyer of the wicked and their sorrows. You alone annihilate the accumulation of calamities."},
-    {"id": "chaupai-13", "type": "chaupai", "section": "body", "number": 13, "labelHi": "चौपाई १३", "labelEn": "Chaupai 13", "lines": ["हरो रोग भव मूल समूला।", "ममता लालच करो निर्मूला॥"], "linesEn": ["Haro rog bhav mool samoola.", "Mamata laalach karo nirmoolaa."], "meaningHi": "भव (संसार) के मूल रोगों को समूल (जड़ सहित) नष्ट कीजिए। ममता और लालच को निर्मूल (जड़ से समाप्त) कीजिए।", "meaningEn": "Destroy the root diseases of worldly existence completely. Uproot attachment and greed entirely."},
-    {"id": "chaupai-14", "type": "chaupai", "section": "body", "number": 14, "labelHi": "चौपाई १४", "labelEn": "Chaupai 14", "lines": ["जापर कृपा तुम्हारी होई।", "तापर कृपा करे सब कोई॥"], "linesEn": ["Jaapar kripa tumhaaree hoee.", "Taapar kripa kare sab koee."], "meaningHi": "जिस पर आपकी कृपा होती है, उस पर सब लोग कृपा करते हैं (सबका स्नेह प्राप्त होता है)।", "meaningEn": "Upon whom your grace falls, everyone shows kindness to that person."},
-    {"id": "chaupai-15", "type": "chaupai", "section": "body", "number": 15, "labelHi": "चौपाई १५", "labelEn": "Chaupai 15", "lines": ["मन्द बुद्धि तुम करो सुजानी।", "काम क्रोध मद लोभ निवारी॥"], "linesEn": ["Mand buddhi tum karo sujaanee.", "Kaam krodh mad lobh nivaaree."], "meaningHi": "मन्द बुद्धि वालों को आप सुजान (बुद्धिमान) बना देती हैं। काम, क्रोध, मद और लोभ को दूर कर देती हैं।", "meaningEn": "You transform dull intellect into wisdom. You remove lust, anger, pride, and greed."},
-    {"id": "chaupai-16", "type": "chaupai", "section": "body", "number": 16, "labelHi": "चौपाई १६", "labelEn": "Chaupai 16", "lines": ["दुष्ट भूत मारि विघ्न हरो।", "नैना नीर बहा मत करो॥"], "linesEn": ["Dusht bhoot maari vighn haro.", "Nainaa neer bahaa mat karo."], "meaningHi": "दुष्ट भूतों को मारिए, विघ्नों को हरिए। हमारी आँखों से आँसू मत बहाइए (हमें रुलाइए मत)।", "meaningEn": "Slay evil spirits and remove obstacles. Do not let tears flow from our eyes."},
-    {"id": "chaupai-17", "type": "chaupai", "section": "body", "number": 17, "labelHi": "चौपाई १७", "labelEn": "Chaupai 17", "lines": ["शरणागत की रक्षा करो।", "कष्ट निकट नहिं आवन दरो॥"], "linesEn": ["Sharanaagat kee raksha karo.", "Kasht nikat naheen aavan daro."], "meaningHi": "शरणागत (शरण में आए हुए) की रक्षा कीजिए। कष्ट को निकट न आने दीजिए।", "meaningEn": "Protect those who seek your refuge. Do not let suffering come near them."},
-    {"id": "chaupai-18", "type": "chaupai", "section": "body", "number": 18, "labelHi": "चौपाई १८", "labelEn": "Chaupai 18", "lines": ["जो सालें दुष्ट देवजन को।", "परम प्रकोपी महामारी हो॥"], "linesEn": ["Jo saalen dusht devjan ko.", "Param prakopee mahaamaaree ho."], "meaningHi": "जो दुष्ट देवभक्तों को सालते (सताते) हैं, आप उन पर परम प्रकोप करने वाली महामारी (शक्ति) बनती हैं।", "meaningEn": "Those wicked ones who torment devotees of the gods, you become the fierce epidemic force against them."},
-    {"id": "chaupai-19", "type": "chaupai", "section": "body", "number": 19, "labelHi": "चौपाई १९", "labelEn": "Chaupai 19", "lines": ["सब दुष्टन को शीश हटाओ।", "भक्तन के संकट मिटाओ॥"], "linesEn": ["Sab dushtan ko sheesh hataao.", "Bhaktan ke sankat mitaao."], "meaningHi": "सब दुष्टों का शीश (सिर) उतार दीजिए। भक्तों के संकट मिटाइए।", "meaningEn": "Strike down all the wicked. Remove the afflictions of devotees."},
-    {"id": "chaupai-20", "type": "chaupai", "section": "body", "number": 20, "labelHi": "चौपाई २०", "labelEn": "Chaupai 20", "lines": ["करो कृपा हे माता दया करो।", "बोलत शरण परूँ ठौर दो॥"], "linesEn": ["Karo kripa he Maata daya karo.", "Bolat sharan paroon thaur do."], "meaningHi": "हे माता! कृपा कीजिए, दया कीजिए। मैं पुकारता हूँ — शरण में हूँ, ठौर (आश्रय) दीजिए।", "meaningEn": "O Mother! Show mercy, have compassion. I cry out in refuge, give me shelter."},
-    {"id": "chaupai-21", "type": "chaupai", "section": "body", "number": 21, "labelHi": "चौपाई २१", "labelEn": "Chaupai 21", "lines": ["ज्योति जले दिन और रात।", "महिमा तासु अगम अपरम्पार॥"], "linesEn": ["Jyoti jale din aur raat.", "Mahimaa taasu agam aparampaar."], "meaningHi": "ज्योति (अखण्ड दीप) दिन-रात जलती है। उसकी (देवी की) महिमा अगम्य और अपरम्पार (सीमा-रहित) है।", "meaningEn": "The flame burns day and night. Her glory is unfathomable and boundless."},
-    {"id": "chaupai-22", "type": "chaupai", "section": "body", "number": 22, "labelHi": "चौपाई २२", "labelEn": "Chaupai 22", "lines": ["देवी माहात्म्य जो कोई गावे।", "शिव ब्रह्मा सनकादिक ध्यावे॥"], "linesEn": ["Devee mahaatmya jo koee gaave.", "Shiv Brahma Sanakaadik dhyaave."], "meaningHi": "जो कोई देवी-माहात्म्य गाता है — शिव, ब्रह्मा, सनकादिक भी देवी का ध्यान करते हैं।", "meaningEn": "Whoever sings the Devi Mahatmya — even Shiva, Brahma, and the Sanakadik sages meditate upon the Goddess."},
-    {"id": "chaupai-23", "type": "chaupai", "section": "body", "number": 23, "labelHi": "चौपाई २३", "labelEn": "Chaupai 23", "lines": ["नमो नमो जगदम्बे सारे।", "मोहि सदा रक्षा करो हमारे॥"], "linesEn": ["Namo namo Jagdambe saare.", "Mohi sada raksha karo hamaare."], "meaningHi": "हे जगदम्बे! आपको नमन। सदा मेरी रक्षा कीजिए।", "meaningEn": "Salutations to Jagdamba (World Mother). Always protect me."},
-    {"id": "chaupai-24", "type": "chaupai", "section": "body", "number": 24, "labelHi": "चौपाई २४", "labelEn": "Chaupai 24", "lines": ["हिंसक दुष्ट दैत्य मद भारे।", "भूमि विचरत त्राहि त्राहि पुकारे॥"], "linesEn": ["Hinsak dusht daitya mad bhaare.", "Bhoomi vicharat traahi traahi pukaare."], "meaningHi": "हिंसक, दुष्ट और मद से भरे दैत्य भूमि पर विचरते थे। भक्त 'त्राहि-त्राहि' (बचाओ-बचाओ) पुकारते थे।", "meaningEn": "Violent, wicked, pride-filled demons roamed the earth. Devotees cried 'Save us! Save us!'"},
-    {"id": "chaupai-25", "type": "chaupai", "section": "body", "number": 25, "labelHi": "चौपाई २५", "labelEn": "Chaupai 25", "lines": ["तब माता दुर्गे दुखमोचन।", "भये प्रकट करि असुर विमोचन॥"], "linesEn": ["Tab Maata Durge dukhmochan.", "Bhaye prakat kari asur vimochan."], "meaningHi": "तब माता दुर्गा — दुखमोचन (दुख से मुक्ति देने वाली) — प्रकट हुईं और असुरों का विमोचन (विनाश/मुक्ति) किया।", "meaningEn": "Then Mother Durga, the liberator from sorrow, manifested and destroyed the demons."},
-    {"id": "chaupai-26", "type": "chaupai", "section": "body", "number": 26, "labelHi": "चौपाई २६", "labelEn": "Chaupai 26", "lines": ["महिषासुर नृप अति अभिमानी।", "जीते सकल देव रजधानी॥"], "linesEn": ["Mahishaasur nrip ati abhimaanee.", "Jeete sakal dev rajdhaanee."], "meaningHi": "महिषासुर राजा अत्यन्त अभिमानी था। उसने सभी देवताओं की राजधानी जीत ली।", "meaningEn": "King Mahishasura was extremely arrogant. He conquered the capital of all the gods."},
-    {"id": "chaupai-27", "type": "chaupai", "section": "body", "number": 27, "labelHi": "चौपाई २७", "labelEn": "Chaupai 27", "lines": ["देवन सकल मिली विनती करी।", "दुर्गा तब आईं महिषासुर परी॥"], "linesEn": ["Devan sakal mili vintee karee.", "Durga tab aaeen Mahishaasur paree."], "meaningHi": "सभी देवताओं ने मिलकर विनती की। तब दुर्गा आईं और महिषासुर पर चढ़ाई की।", "meaningEn": "All the gods together made a prayer. Then Durga came and fell upon Mahishasura."},
-    {"id": "chaupai-28", "type": "chaupai", "section": "body", "number": 28, "labelHi": "चौपाई २८", "labelEn": "Chaupai 28", "lines": ["आशीष देउ माता जगदम्बा।", "सुख सम्पत्ति दे काटो कलम्बा॥"], "linesEn": ["Aashish deu Maata Jagdambaa.", "Sukh sampatti de kaato kalambaa."], "meaningHi": "हे जगदम्बा माता! आशीर्वाद दीजिए। सुख-सम्पत्ति दीजिए और दुख-दरिद्रता काट दीजिए।", "meaningEn": "O Mother Jagdamba! Bless us. Give happiness and prosperity, cut away sorrow and poverty."},
-    {"id": "chaupai-29", "type": "chaupai", "section": "body", "number": 29, "labelHi": "चौपाई २९", "labelEn": "Chaupai 29", "lines": ["सिंहासन पर विराजमान।", "तिलक शोभ ललाट में भान॥"], "linesEn": ["Sinhaasan par viraajmaan.", "Tilak shobh lalaat mein bhaan."], "meaningHi": "आप सिंहासन पर विराजमान हैं। ललाट पर तिलक सूर्य के समान शोभित है।", "meaningEn": "You are seated upon the throne. The tilak on your forehead shines like the sun."},
-    {"id": "chaupai-30", "type": "chaupai", "section": "body", "number": 30, "labelHi": "चौपाई ३०", "labelEn": "Chaupai 30", "lines": ["कोटि रतन जगमगत ताहारा।", "ऐसो शृंगार करे संसारा॥"], "linesEn": ["Koti ratan jagmagat taahaaraa.", "Aiso shringaar kare sansaaraa."], "meaningHi": "करोड़ों रत्न जगमगा रहे हैं। ऐसा श्रृंगार जो सारे संसार को मोहित करे।", "meaningEn": "Millions of gems sparkle. Such adornment that enchants the entire world."},
-    {"id": "chaupai-31", "type": "chaupai", "section": "body", "number": 31, "labelHi": "चौपाई ३१", "labelEn": "Chaupai 31", "lines": ["माँ अम्बे शुभ मंगलकारी।", "बुरे रोग मिटावो महतारी॥"], "linesEn": ["Maan Ambe shubh mangalakaaree.", "Bure rog mitaavo mahtaaree."], "meaningHi": "हे माँ अम्बे! शुभ और मंगलकारी! हे महतारी (माता)! बुरे रोगों को मिटाइए।", "meaningEn": "O Mother Ambe! Auspicious and benevolent one! O Mother! Remove all terrible diseases."},
-    {"id": "chaupai-32", "type": "chaupai", "section": "body", "number": 32, "labelHi": "चौपाई ३२", "labelEn": "Chaupai 32", "lines": ["तुम हो सदा शुद्ध सुखकारी।", "चन्द्र सूर्य तारा हितकारी॥"], "linesEn": ["Tum ho sada shuddh sukhkaaree.", "Chandra Soorya taaraa hitkaaree."], "meaningHi": "आप सदा शुद्ध और सुखकारी हैं। चन्द्र, सूर्य, तारे — सब आपकी कृपा से हितकारी (चमकते) हैं।", "meaningEn": "You are always pure and happiness-giving. Moon, sun, and stars all shine benevolently by your grace."},
-    {"id": "chaupai-33", "type": "chaupai", "section": "body", "number": 33, "labelHi": "चौपाई ३३", "labelEn": "Chaupai 33", "lines": ["तारिणी तुम तन धन की।", "पुत्र सुख सम्पत्ति मन की॥"], "linesEn": ["Taarinee tum tan dhan kee.", "Putra sukh sampatti man kee."], "meaningHi": "आप तन, धन, पुत्र, सुख और मन की सम्पत्ति — सबकी तारिणी (उद्धारिणी) हैं।", "meaningEn": "You are the savior of body, wealth, sons, happiness, and peace of mind."},
-    {"id": "chaupai-34", "type": "chaupai", "section": "body", "number": 34, "labelHi": "चौपाई ३४", "labelEn": "Chaupai 34", "lines": ["माता तुम्हारी शरण तकाऊँ।", "और कहाँ मैं ठौर पाऊँ॥"], "linesEn": ["Maata tumhaaree sharan takaauoon.", "Aur kahaan main thaur paauoon."], "meaningHi": "हे माता! मैं आपकी शरण ताकता हूँ। और कहाँ मुझे ठौर (आश्रय) मिलेगा?", "meaningEn": "O Mother! I seek your refuge. Where else would I find shelter?"},
-    {"id": "chaupai-35", "type": "chaupai", "section": "body", "number": 35, "labelHi": "चौपाई ३५", "labelEn": "Chaupai 35", "lines": ["तुम बिन कौन हमारी परम।", "तुम ही करत सकल भवखण्डन॥"], "linesEn": ["Tum bin kaun hamaaree param.", "Tum hee karat sakal bhavkhandan."], "meaningHi": "आपके बिना कौन हमारा परम (सर्वश्रेष्ठ) आश्रय है? आप ही सम्पूर्ण भव (संसार) के बन्धनों को खण्डित करती हैं।", "meaningEn": "Without you, who is our supreme refuge? You alone shatter all the bonds of worldly existence."},
-    {"id": "chaupai-36", "type": "chaupai", "section": "body", "number": 36, "labelHi": "चौपाई ३६", "labelEn": "Chaupai 36", "lines": ["दुर्गा पूजा प्रेम से करें।", "पूरन आस मनोरथ भरें॥"], "linesEn": ["Durga pooja prem se karein.", "Pooran aas manorath bharein."], "meaningHi": "जो दुर्गा की पूजा प्रेम से करता है, उसकी सब आशाएँ पूर्ण होती हैं और मनोरथ (इच्छाएँ) भर जाते हैं।", "meaningEn": "Whoever worships Durga with love, all their hopes are fulfilled and desires granted."},
-    {"id": "chaupai-37", "type": "chaupai", "section": "body", "number": 37, "labelHi": "चौपाई ३७", "labelEn": "Chaupai 37", "lines": ["दुर्गा चालीसा जो गावे।", "सब सुख भोग परम पद पावे॥"], "linesEn": ["Durga Chaaleesaa jo gaave.", "Sab sukh bhog param pad paave."], "meaningHi": "जो दुर्गा चालीसा गाता है, वह सब सुख भोगता है और परम पद (मोक्ष) प्राप्त करता है।", "meaningEn": "One who sings the Durga Chalisa enjoys all happiness and attains the supreme state (liberation)."},
-    {"id": "chaupai-38", "type": "chaupai", "section": "body", "number": 38, "labelHi": "चौपाई ३८", "labelEn": "Chaupai 38", "lines": ["देवी कवच सदा नर ध्यावे।", "कबहुँ न दैन्य ताहि दुख पावे॥"], "linesEn": ["Devee kavach sada nar dhyaave.", "Kabahoon na dainya taahi dukh paave."], "meaningHi": "जो मनुष्य सदा देवी कवच का ध्यान करता है, उसे कभी दीनता और दुख नहीं सताता।", "meaningEn": "The person who always meditates on the Devi Kavach never suffers poverty or sorrow."},
-    {"id": "chaupai-39", "type": "chaupai", "section": "body", "number": 39, "labelHi": "चौपाई ३९", "labelEn": "Chaupai 39", "lines": ["भाव भक्ति मन लाई।", "जन्म जन्म के पाप नसाई॥"], "linesEn": ["Bhaav bhakti man laaee.", "Janm janm ke paap nasaaee."], "meaningHi": "भाव-भक्ति मन लगाकर कीजिए। जन्म-जन्म के पाप नष्ट हो जाएँगे।", "meaningEn": "Perform heartfelt devotion with concentration. The sins of many lifetimes will be destroyed."},
-    {"id": "chaupai-40", "type": "chaupai", "section": "body", "number": 40, "labelHi": "चौपाई ४०", "labelEn": "Chaupai 40", "lines": ["देविदास शरण निज जानी।", "करहु कृपा जगदम्ब भवानी॥"], "linesEn": ["Devidaas sharan nij jaanee.", "Karahu kripa Jagdamb Bhavaanee."], "meaningHi": "देविदास (कवि) ने आपकी शरण को अपना जाना है। हे जगदम्ब भवानी! कृपा कीजिए।", "meaningEn": "Devidas (the poet) has taken your refuge as his own. O Jagdamba Bhavani! Bestow your grace."},
-    {"id": "closing-doha", "type": "doha", "section": "closing", "labelHi": "दोहा", "labelEn": "Doha", "lines": ["शरणागत रक्षा करे, भक्त रहे नि:शंक।", "मैं आया तेरी शरण में, मातु लिजिये अंक॥"], "linesEn": ["Sharanaagat raksha kare, bhakt rahe nishank.", "Main aaya teree sharan mein, maatu lijiye ank."], "meaningHi": "शरणागतों की रक्षा कीजिए, भक्त निःशंक (निर्भय) रहें। मैं आपकी शरण में आया हूँ, हे माता! मुझे अंक (गोद) में ले लीजिए।", "meaningEn": "Protect those who seek refuge, let devotees remain fearless. I have come to your shelter, O Mother! Take me in your embrace."}
+    {
+      "id": "chaupai-01",
+      "type": "chaupai",
+      "section": "body",
+      "number": 1,
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "नमो नमो दुर्गे सुख करनी।",
+        "नमो नमो अम्बे दुःख हरनी॥"
+      ],
+      "linesEn": [
+        "Namo namo Durge sukh karanee.",
+        "Namo namo Ambe duhkh haranee."
+      ],
+      "meaningHi": "हे सुख देने वाली दुर्गे, आपको बार-बार नमस्कार; हे दुःख हरने वाली अम्बे, आपको बार-बार प्रणाम।",
+      "meaningEn": "Salutations again and again to Durga, giver of happiness; salutations again and again to Mother Amba, remover of sorrow.",
+      "meaningGu": "હે સુખ આપનારી દુર્ગે, આપને વારંવાર નમસ્કાર; હે દુઃખ હરનારી અંબે, આપને વારંવાર પ્રણામ.",
+      "meaningKn": "ಸುಖವನ್ನು ನೀಡುವ ದುರ್ಗೆಯೇ, ನಿನಗೆ ಮತ್ತೆ ಮತ್ತೆ ನಮಸ್ಕಾರ; ದುಃಖವನ್ನು ಹರಿಸುವ ಅಂಬೆಯೇ, ನಿನಗೆ ಮತ್ತೆ ಮತ್ತೆ ಪ್ರಣಾಮ."
+    },
+    {
+      "id": "chaupai-02",
+      "type": "chaupai",
+      "section": "body",
+      "number": 2,
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "निराकार है ज्योति तुम्हारी।",
+        "तिहूँ लोक फैली उजियारी॥"
+      ],
+      "linesEn": [
+        "Niraakaara hai jyoti tumhaaree.",
+        "Tihoon loka phailee ujiyaaree."
+      ],
+      "meaningHi": "आपकी ज्योति निराकार है; उसका उजाला तीनों लोकों में फैला हुआ है।",
+      "meaningEn": "Your light is formless; its radiance is spread through all three worlds.",
+      "meaningGu": "આપની જ્યોતિ નિરાકાર છે; તેનો ઉજાસ ત્રણેય લોકમાં ફેલાયેલો છે.",
+      "meaningKn": "ನಿಮ್ಮ ಜ್ಯೋತಿ ನಿರಾಕಾರವಾಗಿದೆ; ಅದರ ಬೆಳಕು ಮೂರೂ ಲೋಕಗಳಲ್ಲಿ ಹರಡಿದೆ."
+    },
+    {
+      "id": "chaupai-03",
+      "type": "chaupai",
+      "section": "body",
+      "number": 3,
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "शशि ललाट मुख महाविशाला।",
+        "नेत्र लाल भृकुटि विकराला॥"
+      ],
+      "linesEn": [
+        "Shashi lalaata mukha mahaavishaalaa.",
+        "Netr laala bhrikuti vikaraalaa."
+      ],
+      "meaningHi": "आपके मस्तक पर चन्द्रमा सुशोभित है, मुख विशाल है, नेत्र लाल और भृकुटि (भौंहें) विकराल हैं।",
+      "meaningEn": "The moon adorns your forehead, your face is vast, your eyes are red and your brows are fierce.",
+      "meaningGu": "આપના મસ્તક પર ચંદ્ર શોભે છે, મુખ વિશાળ છે, નેત્ર લાલ અને ભ્રૂકુટિ (ભમ્મર) વિકરાળ છે.",
+      "meaningKn": "ನಿಮ್ಮ ಹಣೆಯ ಮೇಲೆ ಚಂದ್ರನು ಶೋಭಿಸುತ್ತಾನೆ, ಮುಖವು ವಿಶಾಲವಾಗಿದೆ, ಕಣ್ಣುಗಳು ಕೆಂಪಾಗಿವೆ ಮತ್ತು ಹುಬ್ಬುಗಳು ಭಯಂಕರವಾಗಿವೆ."
+    },
+    {
+      "id": "chaupai-04",
+      "type": "chaupai",
+      "section": "body",
+      "number": 4,
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "रूप मातु को अधिक सुहावे।",
+        "दरश करत जन अति सुख पावे॥"
+      ],
+      "linesEn": [
+        "Roop maatu ko adhik suhaave.",
+        "Darash karat jan ati sukh paave."
+      ],
+      "meaningHi": "हे माता, आपका रूप अत्यन्त सुहावना है; आपके दर्शन कर भक्त परम सुख पाते हैं।",
+      "meaningEn": "Mother, your form is exceedingly lovely; beholding you, devotees attain great joy.",
+      "meaningGu": "હે માતા, આપનું રૂપ અત્યંત મનોહર છે; આપનાં દર્શન કરીને ભક્ત પરમ સુખ પામે છે.",
+      "meaningKn": "ತಾಯಿಯೇ, ನಿಮ್ಮ ರೂಪವು ಅತ್ಯಂತ ಮನೋಹರವಾಗಿದೆ; ನಿಮ್ಮ ದರ್ಶನ ಮಾಡಿ ಭಕ್ತರು ಪರಮ ಸುಖವನ್ನು ಪಡೆಯುತ್ತಾರೆ."
+    },
+    {
+      "id": "chaupai-05",
+      "type": "chaupai",
+      "section": "body",
+      "number": 5,
+      "labelHi": "चौपाई · ५",
+      "labelEn": "Chaupai · 5",
+      "lines": [
+        "तुम संसार शक्ति लय कीना।",
+        "पालन हेतु अन्न धन दीना॥"
+      ],
+      "linesEn": [
+        "Tuma sansaara shakti laya keenaa.",
+        "Paalana hetu anna dhana deenaa."
+      ],
+      "meaningHi": "आप ही समस्त संसार की शक्ति को धारण करती हैं और उसके पालन के लिए अन्न तथा धन प्रदान करती हैं।",
+      "meaningEn": "You hold within yourself the power of the whole world, and for its sustenance you bestow food and wealth.",
+      "meaningGu": "આપ જ સમસ્ત સંસારની શક્તિને ધારણ કરો છો અને તેના પાલન માટે અન્ન તથા ધન આપો છો.",
+      "meaningKn": "ನೀವೇ ಸಮಸ್ತ ಜಗತ್ತಿನ ಶಕ್ತಿಯನ್ನು ಧರಿಸಿದ್ದೀರಿ ಮತ್ತು ಅದರ ಪೋಷಣೆಗಾಗಿ ಅನ್ನ ಹಾಗೂ ಧನವನ್ನು ಕರುಣಿಸುತ್ತೀರಿ."
+    },
+    {
+      "id": "chaupai-06",
+      "type": "chaupai",
+      "section": "body",
+      "number": 6,
+      "labelHi": "चौपाई · ६",
+      "labelEn": "Chaupai · 6",
+      "lines": [
+        "अन्नपूर्णा हुई जग पाला।",
+        "तुम ही आदि सुन्दरी बाला॥"
+      ],
+      "linesEn": [
+        "Annapoornaa huee jaga paalaa.",
+        "Tuma hee aadi sundaree baalaa."
+      ],
+      "meaningHi": "अन्नपूर्णा के रूप में आपने जगत का पालन किया; आप ही आदि सुन्दरी बाला (आदिशक्ति) हैं।",
+      "meaningEn": "As Annapurna you nourish the world; you alone are the primordial beautiful maiden, the Adi Shakti.",
+      "meaningGu": "અન્નપૂર્ણાના રૂપે આપે જગતનું પાલન કર્યું; આપ જ આદિ સુંદરી બાલા (આદિશક્તિ) છો.",
+      "meaningKn": "ಅನ್ನಪೂರ್ಣೆಯ ರೂಪದಲ್ಲಿ ನೀವು ಜಗತ್ತನ್ನು ಪೋಷಿಸಿದಿರಿ; ನೀವೇ ಆದಿ ಸುಂದರಿ ಬಾಲೆ (ಆದಿಶಕ್ತಿ)."
+    },
+    {
+      "id": "chaupai-07",
+      "type": "chaupai",
+      "section": "body",
+      "number": 7,
+      "labelHi": "चौपाई · ७",
+      "labelEn": "Chaupai · 7",
+      "lines": [
+        "प्रलयकाल सब नाशन हारी।",
+        "तुम गौरी शिवशंकर प्यारी॥"
+      ],
+      "linesEn": [
+        "Pralayakaala saba naashana haaree.",
+        "Tuma gauree shivashankara pyaaree."
+      ],
+      "meaningHi": "प्रलयकाल में आप सबका संहार करने वाली हैं; आप ही गौरी हैं और शिवशंकर को प्रिय हैं।",
+      "meaningEn": "At the time of dissolution you destroy all; you are Gauri, the beloved of Lord Shiva.",
+      "meaningGu": "પ્રલયકાળે આપ સૌનો સંહાર કરનારી છો; આપ જ ગૌરી છો અને શિવશંકરને પ્રિય છો.",
+      "meaningKn": "ಪ್ರಳಯಕಾಲದಲ್ಲಿ ನೀವು ಎಲ್ಲವನ್ನೂ ಸಂಹರಿಸುವವರು; ನೀವೇ ಗೌರಿ ಮತ್ತು ಶಿವಶಂಕರನಿಗೆ ಪ್ರಿಯರು."
+    },
+    {
+      "id": "chaupai-08",
+      "type": "chaupai",
+      "section": "body",
+      "number": 8,
+      "labelHi": "चौपाई · ८",
+      "labelEn": "Chaupai · 8",
+      "lines": [
+        "शिव योगी तुम्हरे गुण गावें।",
+        "ब्रह्मा विष्णु तुम्हें नित ध्यावें॥"
+      ],
+      "linesEn": [
+        "Shiva yogee tumhare guna gaaven.",
+        "Brahmaa vishnu tumhen nita dhyaaven."
+      ],
+      "meaningHi": "शिव और योगीजन आपके गुण गाते हैं; ब्रह्मा और विष्णु नित्य आपका ध्यान करते हैं।",
+      "meaningEn": "Shiva and the yogis sing your virtues; Brahma and Vishnu meditate upon you daily.",
+      "meaningGu": "શિવ અને યોગીજનો આપના ગુણ ગાય છે; બ્રહ્મા અને વિષ્ણુ નિત્ય આપનું ધ્યાન ધરે છે.",
+      "meaningKn": "ಶಿವ ಮತ್ತು ಯೋಗಿಗಳು ನಿಮ್ಮ ಗುಣಗಳನ್ನು ಹಾಡುತ್ತಾರೆ; ಬ್ರಹ್ಮ ಮತ್ತು ವಿಷ್ಣು ನಿತ್ಯವೂ ನಿಮ್ಮನ್ನು ಧ್ಯಾನಿಸುತ್ತಾರೆ."
+    },
+    {
+      "id": "chaupai-09",
+      "type": "chaupai",
+      "section": "body",
+      "number": 9,
+      "labelHi": "चौपाई · ९",
+      "labelEn": "Chaupai · 9",
+      "lines": [
+        "रूप सरस्वती को तुम धारा।",
+        "दे सुबुद्धि ऋषि-मुनिन उबारा॥"
+      ],
+      "linesEn": [
+        "Roopa sarasvatee ko tuma dhaaraa.",
+        "De subuddhi rishi-munina ubaaraa."
+      ],
+      "meaningHi": "आपने सरस्वती का रूप धारण किया और सद्बुद्धि देकर ऋषि-मुनियों का उद्धार किया।",
+      "meaningEn": "You took the form of Saraswati and, granting right wisdom, uplifted the sages and seers.",
+      "meaningGu": "આપે સરસ્વતીનું રૂપ ધારણ કર્યું અને સદ્‌બુદ્ધિ આપીને ઋષિ-મુનિઓનો ઉદ્ધાર કર્યો.",
+      "meaningKn": "ನೀವು ಸರಸ್ವತಿಯ ರೂಪವನ್ನು ಧರಿಸಿ, ಸದ್ಬುದ್ಧಿಯನ್ನು ನೀಡಿ ಋಷಿ-ಮುನಿಗಳನ್ನು ಉದ್ಧರಿಸಿದಿರಿ."
+    },
+    {
+      "id": "chaupai-10",
+      "type": "chaupai",
+      "section": "body",
+      "number": 10,
+      "labelHi": "चौपाई · १०",
+      "labelEn": "Chaupai · 10",
+      "lines": [
+        "धरा रूप नरसिंह को अम्बा।",
+        "प्रगट भईं फाड़कर खम्बा॥"
+      ],
+      "linesEn": [
+        "Dharaa roopa narasinha ko ambaa.",
+        "Pragata bhaeen phaadakara khambaa."
+      ],
+      "meaningHi": "हे अम्बा, आपने नरसिंह का रूप धारण किया और खम्भे को फाड़कर प्रकट हुईं।",
+      "meaningEn": "O Mother, you took the form of Narasimha and appeared by bursting forth from the pillar.",
+      "meaningGu": "હે અંબા, આપે નરસિંહનું રૂપ ધારણ કર્યું અને થાંભલાને ચીરીને પ્રગટ થયાં.",
+      "meaningKn": "ಅಂಬೆಯೇ, ನೀವು ನರಸಿಂಹನ ರೂಪವನ್ನು ಧರಿಸಿ ಕಂಬವನ್ನು ಸೀಳಿ ಪ್ರಕಟಗೊಂಡಿರಿ."
+    },
+    {
+      "id": "chaupai-11",
+      "type": "chaupai",
+      "section": "body",
+      "number": 11,
+      "labelHi": "चौपाई · ११",
+      "labelEn": "Chaupai · 11",
+      "lines": [
+        "रक्षा कर प्रह्लाद बचायो।",
+        "हिरण्याक्ष को स्वर्ग पठायो॥"
+      ],
+      "linesEn": [
+        "Rakshaa kara prahlaada bachaayo.",
+        "Hiranyaaksh ko svarga pathaayo."
+      ],
+      "meaningHi": "आपने प्रह्लाद की रक्षा कर उसे बचाया और (हिरण्यकशिपु) दैत्य का वध कर उसका उद्धार किया।",
+      "meaningEn": "You protected and saved Prahlad, and by slaying the demon (Hiranyakashipu) granted him his release.",
+      "meaningGu": "આપે પ્રહ્‌લાદની રક્ષા કરીને તેને બચાવ્યો અને (હિરણ્યકશિપુ) દૈત્યનો વધ કરીને તેનો ઉદ્ધાર કર્યો.",
+      "meaningKn": "ನೀವು ಪ್ರಹ್ಲಾದನನ್ನು ರಕ್ಷಿಸಿ ಕಾಪಾಡಿದಿರಿ ಮತ್ತು (ಹಿರಣ್ಯಕಶಿಪು) ದೈತ್ಯನನ್ನು ಸಂಹರಿಸಿ ಅವನಿಗೆ ಮುಕ್ತಿಯನ್ನು ಕರುಣಿಸಿದಿರಿ."
+    },
+    {
+      "id": "chaupai-12",
+      "type": "chaupai",
+      "section": "body",
+      "number": 12,
+      "labelHi": "चौपाई · १२",
+      "labelEn": "Chaupai · 12",
+      "lines": [
+        "लक्ष्मी रूप धरो जग माहीं।",
+        "श्री नारायण अंग समाहीं॥"
+      ],
+      "linesEn": [
+        "Lakshmee roopa dharo jaga maaheen.",
+        "Shree naaraayana anga samaaheen."
+      ],
+      "meaningHi": "आपने जगत में लक्ष्मी का रूप धारण किया और श्री नारायण के अंग (वामभाग) में समाई रहती हैं।",
+      "meaningEn": "You took the form of Lakshmi in the world and abide as a part of Lord Narayana.",
+      "meaningGu": "આપે જગતમાં લક્ષ્મીનું રૂપ ધારણ કર્યું અને શ્રી નારાયણના અંગ (વામભાગ)માં સમાઈ રહો છો.",
+      "meaningKn": "ನೀವು ಜಗತ್ತಿನಲ್ಲಿ ಲಕ್ಷ್ಮಿಯ ರೂಪವನ್ನು ಧರಿಸಿ, ಶ್ರೀ ನಾರಾಯಣನ ಅಂಗದಲ್ಲಿ (ಎಡಭಾಗದಲ್ಲಿ) ನೆಲೆಸಿರುತ್ತೀರಿ."
+    },
+    {
+      "id": "chaupai-13",
+      "type": "chaupai",
+      "section": "body",
+      "number": 13,
+      "labelHi": "चौपाई · १३",
+      "labelEn": "Chaupai · 13",
+      "lines": [
+        "क्षीरसिन्धु में करत विलासा।",
+        "दयासिन्धु दीजै मन आसा॥"
+      ],
+      "linesEn": [
+        "Ksheerasindhu men karata vilaasaa.",
+        "Dayaasindhu deejai mana aasaa."
+      ],
+      "meaningHi": "आप क्षीरसागर में विलास करती हैं; हे दयासागर, मेरे मन की आशा पूर्ण कीजिए।",
+      "meaningEn": "You delight in the ocean of milk; O ocean of compassion, fulfil the hopes of my heart.",
+      "meaningGu": "આપ ક્ષીરસાગરમાં વિલાસ કરો છો; હે દયાસાગર, મારા મનની આશા પૂર્ણ કરો.",
+      "meaningKn": "ನೀವು ಕ್ಷೀರಸಾಗರದಲ್ಲಿ ವಿಹರಿಸುತ್ತೀರಿ; ದಯಾಸಾಗರಳೇ, ನನ್ನ ಮನಸ್ಸಿನ ಆಶೆಯನ್ನು ಪೂರೈಸಿ."
+    },
+    {
+      "id": "chaupai-14",
+      "type": "chaupai",
+      "section": "body",
+      "number": 14,
+      "labelHi": "चौपाई · १४",
+      "labelEn": "Chaupai · 14",
+      "lines": [
+        "हिंगलाज में तुम्हीं भवानी।",
+        "महिमा अमित न जात बखानी॥"
+      ],
+      "linesEn": [
+        "Hingalaaja men tumheen bhavaanee.",
+        "Mahimaa amita na jaata bakhaanee."
+      ],
+      "meaningHi": "हिंगलाज (शक्तिपीठ) में आप ही भवानी रूप में विराजती हैं; आपकी अपार महिमा का वर्णन नहीं किया जा सकता।",
+      "meaningEn": "At Hinglaj you yourself dwell as Bhavani; your boundless glory cannot be described.",
+      "meaningGu": "હિંગળાજ (શક્તિપીઠ)માં આપ જ ભવાની રૂપે વિરાજો છો; આપની અપાર મહિમાનું વર્ણન કરી શકાતું નથી.",
+      "meaningKn": "ಹಿಂಗಳಾಜದಲ್ಲಿ (ಶಕ್ತಿಪೀಠದಲ್ಲಿ) ನೀವೇ ಭವಾನಿಯ ರೂಪದಲ್ಲಿ ನೆಲೆಸಿದ್ದೀರಿ; ನಿಮ್ಮ ಅಪಾರ ಮಹಿಮೆಯನ್ನು ವರ್ಣಿಸಲಾಗದು."
+    },
+    {
+      "id": "chaupai-15",
+      "type": "chaupai",
+      "section": "body",
+      "number": 15,
+      "labelHi": "चौपाई · १५",
+      "labelEn": "Chaupai · 15",
+      "lines": [
+        "मातंगी अरु धूमावति माता।",
+        "भुवनेश्वरी बगला सुख दाता॥"
+      ],
+      "linesEn": [
+        "Maatangee aru dhoomaavati maataa.",
+        "Bhuvaneshvaree bagalaa sukha daataa."
+      ],
+      "meaningHi": "आप ही मातंगी और माता धूमावती हैं, आप ही भुवनेश्वरी और सुख देने वाली बगलामुखी हैं।",
+      "meaningEn": "You are Matangi and Mother Dhumavati, Bhuvaneshwari and Bagalamukhi, the giver of happiness.",
+      "meaningGu": "આપ જ માતંગી અને માતા ધૂમાવતી છો, આપ જ ભુવનેશ્વરી અને સુખ આપનારી બગલામુખી છો.",
+      "meaningKn": "ನೀವೇ ಮಾತಂಗಿ ಮತ್ತು ಮಾತೆ ಧೂಮಾವತಿ, ನೀವೇ ಭುವನೇಶ್ವರಿ ಮತ್ತು ಸುಖವನ್ನು ನೀಡುವ ಬಗಲಾಮುಖಿ."
+    },
+    {
+      "id": "chaupai-16",
+      "type": "chaupai",
+      "section": "body",
+      "number": 16,
+      "labelHi": "चौपाई · १६",
+      "labelEn": "Chaupai · 16",
+      "lines": [
+        "श्री भैरव तारा जग तारिणी।",
+        "छिन्न भाल भव दुःख निवारिणी॥"
+      ],
+      "linesEn": [
+        "Shree bhairava taaraa jaga taarinee.",
+        "Chhinna bhaala bhava duhkha nivaarinee."
+      ],
+      "meaningHi": "आप ही भैरवी और तारा हैं, जगत को तारने वाली हैं; छिन्नमस्ता रूप में संसार के दुःख दूर करती हैं।",
+      "meaningEn": "You are Bhairavi and Tara, the saviour of the world; as Chhinnamasta you dispel the sorrows of worldly existence.",
+      "meaningGu": "આપ જ ભૈરવી અને તારા છો, જગતને તારનારી છો; છિન્નમસ્તા રૂપે સંસારનાં દુઃખ દૂર કરો છો.",
+      "meaningKn": "ನೀವೇ ಭೈರವಿ ಮತ್ತು ತಾರಾ, ಜಗತ್ತನ್ನು ಉದ್ಧರಿಸುವವರು; ಛಿನ್ನಮಸ್ತೆಯ ರೂಪದಲ್ಲಿ ಸಂಸಾರದ ದುಃಖಗಳನ್ನು ನಿವಾರಿಸುತ್ತೀರಿ."
+    },
+    {
+      "id": "chaupai-17",
+      "type": "chaupai",
+      "section": "body",
+      "number": 17,
+      "labelHi": "चौपाई · १७",
+      "labelEn": "Chaupai · 17",
+      "lines": [
+        "केहरि वाहन सोह भवानी।",
+        "लांगुर वीर चलत अगवानी॥"
+      ],
+      "linesEn": [
+        "Kehari vaahana soha bhavaanee.",
+        "Laangura veera chalata agavaanee."
+      ],
+      "meaningHi": "हे भवानी, आप सिंह की सवारी पर सुशोभित हैं; वीर लांगुर (हनुमान) आगे चलकर आपकी अगवानी करते हैं।",
+      "meaningEn": "O Bhavani, you shine mounted upon a lion; the brave Languri (Hanuman) walks ahead, leading the way before you.",
+      "meaningGu": "હે ભવાની, આપ સિંહની સવારી પર શોભો છો; વીર લાંગુર (હનુમાન) આગળ ચાલીને આપની અગવાની કરે છે.",
+      "meaningKn": "ಭವಾನಿಯೇ, ನೀವು ಸಿಂಹದ ವಾಹನದ ಮೇಲೆ ಶೋಭಿಸುತ್ತೀರಿ; ವೀರ ಲಾಂಗೂರ (ಹನುಮಂತ) ಮುಂದೆ ಸಾಗಿ ನಿಮ್ಮನ್ನು ಬರಮಾಡಿಕೊಳ್ಳುತ್ತಾನೆ."
+    },
+    {
+      "id": "chaupai-18",
+      "type": "chaupai",
+      "section": "body",
+      "number": 18,
+      "labelHi": "चौपाई · १८",
+      "labelEn": "Chaupai · 18",
+      "lines": [
+        "कर में खप्पर-खड्ग विराजै।",
+        "जाको देख काल डर भाजे॥"
+      ],
+      "linesEn": [
+        "Kara men khappara-khadga viraajai.",
+        "Jaako dekha kaala dara bhaaje."
+      ],
+      "meaningHi": "आपके हाथों में खप्पर और खड्ग सुशोभित हैं, जिन्हें देखकर काल (मृत्यु) भी डरकर भाग जाता है।",
+      "meaningEn": "In your hands the skull-bowl and sword gleam; seeing them, even Death flees in fear.",
+      "meaningGu": "આપના હાથમાં ખપ્પર અને ખડ્ગ શોભે છે, જેને જોઈને કાળ (મૃત્યુ) પણ ડરીને ભાગી જાય છે.",
+      "meaningKn": "ನಿಮ್ಮ ಕೈಗಳಲ್ಲಿ ಖಪ್ಪರ ಮತ್ತು ಖಡ್ಗ ಶೋಭಿಸುತ್ತವೆ, ಅವುಗಳನ್ನು ನೋಡಿ ಕಾಲನೂ (ಮೃತ್ಯುವೂ) ಹೆದರಿ ಓಡಿಹೋಗುತ್ತಾನೆ."
+    },
+    {
+      "id": "chaupai-19",
+      "type": "chaupai",
+      "section": "body",
+      "number": 19,
+      "labelHi": "चौपाई · १९",
+      "labelEn": "Chaupai · 19",
+      "lines": [
+        "सोहै अस्त्र और त्रिशूला।",
+        "जाते उठत शत्रु हिय शूला॥"
+      ],
+      "linesEn": [
+        "Sohai astr aura trishoolaa.",
+        "Jaate uthata shatru hiya shoolaa."
+      ],
+      "meaningHi": "आपके अस्त्र-शस्त्र और त्रिशूल शोभा देते हैं, जिन्हें देखकर शत्रुओं के हृदय में शूल-सी पीड़ा उठती है।",
+      "meaningEn": "Your weapons and trident shine; at their sight a piercing pain rises in the hearts of your enemies.",
+      "meaningGu": "આપનાં અસ્ત્ર-શસ્ત્ર અને ત્રિશૂળ શોભા આપે છે, જેને જોઈને શત્રુઓના હૃદયમાં શૂળ જેવી પીડા ઊઠે છે.",
+      "meaningKn": "ನಿಮ್ಮ ಅಸ್ತ್ರ-ಶಸ್ತ್ರ ಮತ್ತು ತ್ರಿಶೂಲ ಶೋಭಿಸುತ್ತವೆ, ಅವುಗಳನ್ನು ಕಂಡು ಶತ್ರುಗಳ ಎದೆಯಲ್ಲಿ ಶೂಲದಂತಹ ನೋವು ಏಳುತ್ತದೆ."
+    },
+    {
+      "id": "chaupai-20",
+      "type": "chaupai",
+      "section": "body",
+      "number": 20,
+      "labelHi": "चौपाई · २०",
+      "labelEn": "Chaupai · 20",
+      "lines": [
+        "नगर कोटि में तुम्हीं विराजत।",
+        "तिहुंलोक में डंका बाजत॥"
+      ],
+      "linesEn": [
+        "Nagara koti men tumheen viraajata.",
+        "Tihunloka men dankaa baajata."
+      ],
+      "meaningHi": "असंख्य नगरों और दुर्गों में आप ही विराजती हैं; तीनों लोकों में आपकी कीर्ति का डंका बजता है।",
+      "meaningEn": "You reside in countless cities and fortresses; your glory resounds like a drumbeat through all three worlds.",
+      "meaningGu": "અસંખ્ય નગરો અને કિલ્લાઓમાં આપ જ વિરાજો છો; ત્રણેય લોકમાં આપની કીર્તિનો ડંકો વાગે છે.",
+      "meaningKn": "ಅಸಂಖ್ಯ ನಗರಗಳಲ್ಲಿ ಮತ್ತು ಕೋಟೆಗಳಲ್ಲಿ ನೀವೇ ನೆಲೆಸಿದ್ದೀರಿ; ಮೂರೂ ಲೋಕಗಳಲ್ಲಿ ನಿಮ್ಮ ಕೀರ್ತಿಯ ಡಂಕೆ ಮೊಳಗುತ್ತದೆ."
+    },
+    {
+      "id": "chaupai-21",
+      "type": "chaupai",
+      "section": "body",
+      "number": 21,
+      "labelHi": "चौपाई · २१",
+      "labelEn": "Chaupai · 21",
+      "lines": [
+        "शुम्भ निशुम्भ दानव तुम मारे।",
+        "रक्तबीज शंखन संहारे॥"
+      ],
+      "linesEn": [
+        "Shumbha nishumbha daanava tuma maare.",
+        "Raktabeeja shankhana sanhaare."
+      ],
+      "meaningHi": "आपने शुम्भ और निशुम्भ दैत्यों का वध किया और रक्तबीज आदि असुरों का संहार किया।",
+      "meaningEn": "You slew the demons Shumbha and Nishumbha and destroyed Raktabija and the other asuras.",
+      "meaningGu": "આપે શુંભ અને નિશુંભ દૈત્યોનો વધ કર્યો અને રક્તબીજ આદિ અસુરોનો સંહાર કર્યો.",
+      "meaningKn": "ನೀವು ಶುಂಭ ಮತ್ತು ನಿಶುಂಭ ದೈತ್ಯರನ್ನು ಸಂಹರಿಸಿದಿರಿ ಮತ್ತು ರಕ್ತಬೀಜ ಮೊದಲಾದ ಅಸುರರನ್ನು ನಾಶಮಾಡಿದಿರಿ."
+    },
+    {
+      "id": "chaupai-22",
+      "type": "chaupai",
+      "section": "body",
+      "number": 22,
+      "labelHi": "चौपाई · २२",
+      "labelEn": "Chaupai · 22",
+      "lines": [
+        "महिषासुर नृप अति अभिमानी।",
+        "जेहि अघ भार मही अकुलानी॥"
+      ],
+      "linesEn": [
+        "Mahishaasura nripa ati abhimaanee.",
+        "Jehi agha bhaara mahee akulaanee."
+      ],
+      "meaningHi": "महिषासुर नामक अत्यन्त अभिमानी राजा था, जिसके पापों के भार से पृथ्वी व्याकुल हो उठी थी।",
+      "meaningEn": "Mahishasura was a most arrogant demon-king, under the weight of whose sins the earth grew distressed.",
+      "meaningGu": "મહિષાસુર નામનો અત્યંત અભિમાની રાજા હતો, જેના પાપોના ભારથી પૃથ્વી વ્યાકુળ થઈ ઊઠી હતી.",
+      "meaningKn": "ಮಹಿಷಾಸುರ ಎಂಬ ಅತ್ಯಂತ ಅಹಂಕಾರಿ ರಾಜನಿದ್ದನು, ಅವನ ಪಾಪಗಳ ಭಾರದಿಂದ ಭೂಮಿಯು ತತ್ತರಿಸಿಹೋಗಿತ್ತು."
+    },
+    {
+      "id": "chaupai-23",
+      "type": "chaupai",
+      "section": "body",
+      "number": 23,
+      "labelHi": "चौपाई · २३",
+      "labelEn": "Chaupai · 23",
+      "lines": [
+        "रूप कराल कालिका धारा।",
+        "सेन सहित तुम तिहि संहारा॥"
+      ],
+      "linesEn": [
+        "Roopa karaala kaalikaa dhaaraa.",
+        "Sena sahita tuma tihi sanhaaraa."
+      ],
+      "meaningHi": "आपने कालिका का विकराल रूप धारण कर सेना सहित उस (महिषासुर) का संहार किया।",
+      "meaningEn": "Assuming the terrible form of Kalika, you destroyed him along with his entire army.",
+      "meaningGu": "આપે કાલિકાનું વિકરાળ રૂપ ધારણ કરીને સેના સહિત તે (મહિષાસુર)નો સંહાર કર્યો.",
+      "meaningKn": "ನೀವು ಕಾಲಿಕೆಯ ಭಯಂಕರ ರೂಪವನ್ನು ಧರಿಸಿ, ಸೈನ್ಯ ಸಹಿತ ಆ (ಮಹಿಷಾಸುರನನ್ನು) ಸಂಹರಿಸಿದಿರಿ."
+    },
+    {
+      "id": "chaupai-24",
+      "type": "chaupai",
+      "section": "body",
+      "number": 24,
+      "labelHi": "चौपाई · २४",
+      "labelEn": "Chaupai · 24",
+      "lines": [
+        "परी गाढ़ सन्तन पर जब-जब।",
+        "भई सहाय मातु तुम तब तब॥"
+      ],
+      "linesEn": [
+        "Paree gaadha santana para jaba-jaba.",
+        "Bhaee sahaaya maatu tuma taba taba."
+      ],
+      "meaningHi": "हे माता, जब-जब संतों पर भारी विपत्ति पड़ी, तब-तब आपने उनकी सहायता की।",
+      "meaningEn": "O Mother, whenever grave calamity befell the saints, each time you came to their aid.",
+      "meaningGu": "હે માતા, જ્યારે જ્યારે સંતો પર ભારે વિપત્તિ આવી પડી, ત્યારે ત્યારે આપે તેમની સહાય કરી.",
+      "meaningKn": "ತಾಯಿಯೇ, ಸಂತರ ಮೇಲೆ ಯಾವಾಗ ಯಾವಾಗ ಭಾರೀ ಸಂಕಟ ಬಂದೆರಗಿತೋ, ಆಗಾಗಲೆಲ್ಲ ನೀವು ಅವರಿಗೆ ನೆರವಾದಿರಿ."
+    },
+    {
+      "id": "chaupai-25",
+      "type": "chaupai",
+      "section": "body",
+      "number": 25,
+      "labelHi": "चौपाई · २५",
+      "labelEn": "Chaupai · 25",
+      "lines": [
+        "अमरपुरी अरु बासव लोका।",
+        "तब महिमा सब रहें अशोका॥"
+      ],
+      "linesEn": [
+        "Amarapuree aru baasava lokaa.",
+        "Taba mahimaa saba rahen ashokaa."
+      ],
+      "meaningHi": "अमरपुरी (स्वर्ग) और इन्द्रलोक आदि सब आपकी महिमा से शोकरहित (सुखी) रहते हैं।",
+      "meaningEn": "The city of the immortals and the realm of Indra all remain free of sorrow through your glory.",
+      "meaningGu": "અમરપુરી (સ્વર્ગ) અને ઇન્દ્રલોક આદિ સૌ આપની મહિમાથી શોકરહિત (સુખી) રહે છે.",
+      "meaningKn": "ಅಮರಪುರಿ (ಸ್ವರ್ಗ) ಮತ್ತು ಇಂದ್ರಲೋಕ ಮೊದಲಾದವೆಲ್ಲವೂ ನಿಮ್ಮ ಮಹಿಮೆಯಿಂದ ಶೋಕರಹಿತವಾಗಿ (ಸುಖವಾಗಿ) ಇರುತ್ತವೆ."
+    },
+    {
+      "id": "chaupai-26",
+      "type": "chaupai",
+      "section": "body",
+      "number": 26,
+      "labelHi": "चौपाई · २६",
+      "labelEn": "Chaupai · 26",
+      "lines": [
+        "ज्वाला में है ज्योति तुम्हारी।",
+        "तुम्हें सदा पूजें नर-नारी॥"
+      ],
+      "linesEn": [
+        "Jvaalaa men hai jyoti tumhaaree.",
+        "Tumhen sadaa poojen nara-naaree."
+      ],
+      "meaningHi": "ज्वालाजी में आपकी ज्योति सदा प्रज्वलित रहती है; नर-नारी सदा आपकी पूजा करते हैं।",
+      "meaningEn": "Your flame burns ever at Jwala; men and women worship you always.",
+      "meaningGu": "જ્વાળાજીમાં આપની જ્યોતિ સદા પ્રજ્વલિત રહે છે; નર-નારી સદા આપની પૂજા કરે છે.",
+      "meaningKn": "ಜ್ವಾಲಾಜಿಯಲ್ಲಿ ನಿಮ್ಮ ಜ್ಯೋತಿ ಸದಾ ಪ್ರಜ್ವಲಿಸುತ್ತಿರುತ್ತದೆ; ಗಂಡಸರು-ಹೆಂಗಸರು ಸದಾ ನಿಮ್ಮನ್ನು ಪೂಜಿಸುತ್ತಾರೆ."
+    },
+    {
+      "id": "chaupai-27",
+      "type": "chaupai",
+      "section": "body",
+      "number": 27,
+      "labelHi": "चौपाई · २७",
+      "labelEn": "Chaupai · 27",
+      "lines": [
+        "प्रेम भक्ति से जो यश गावै।",
+        "दुःख दारिद्र निकट नहिं आवें॥"
+      ],
+      "linesEn": [
+        "Prema bhakti se jo yasha gaavai.",
+        "Duhkha daaridra nikata nahin aaven."
+      ],
+      "meaningHi": "जो प्रेम और भक्ति से आपका यश गाता है, उसके निकट दुःख और दरिद्रता नहीं आती।",
+      "meaningEn": "Whoever sings your glory with love and devotion — sorrow and poverty never come near them.",
+      "meaningGu": "જે પ્રેમ અને ભક્તિથી આપનો યશ ગાય છે, તેની પાસે દુઃખ અને દરિદ્રતા આવતાં નથી.",
+      "meaningKn": "ಯಾರು ಪ್ರೇಮ ಮತ್ತು ಭಕ್ತಿಯಿಂದ ನಿಮ್ಮ ಯಶಸ್ಸನ್ನು ಹಾಡುತ್ತಾರೋ, ಅವರ ಬಳಿಗೆ ದುಃಖ ಮತ್ತು ಬಡತನ ಸುಳಿಯುವುದಿಲ್ಲ."
+    },
+    {
+      "id": "chaupai-28",
+      "type": "chaupai",
+      "section": "body",
+      "number": 28,
+      "labelHi": "चौपाई · २८",
+      "labelEn": "Chaupai · 28",
+      "lines": [
+        "ध्यावे तुम्हें जो नर मन लाई।",
+        "जन्म-मरण ताकौ छुटि जाई॥"
+      ],
+      "linesEn": [
+        "Dhyaave tumhen jo nara mana laaee.",
+        "Janma-marana taakau chhuti jaaee."
+      ],
+      "meaningHi": "जो मनुष्य मन लगाकर आपका ध्यान करता है, उसका जन्म-मरण का बन्धन छूट जाता है।",
+      "meaningEn": "The one who meditates on you with a focused mind is freed from the cycle of birth and death.",
+      "meaningGu": "જે મનુષ્ય મન લગાવીને આપનું ધ્યાન ધરે છે, તેનું જન્મ-મરણનું બંધન છૂટી જાય છે.",
+      "meaningKn": "ಯಾವ ಮನುಷ್ಯನು ಮನಸ್ಸಿಟ್ಟು ನಿಮ್ಮನ್ನು ಧ್ಯಾನಿಸುತ್ತಾನೋ, ಅವನ ಜನ್ಮ-ಮರಣದ ಬಂಧನವು ಬಿಡುಗಡೆಯಾಗುತ್ತದೆ."
+    },
+    {
+      "id": "chaupai-29",
+      "type": "chaupai",
+      "section": "body",
+      "number": 29,
+      "labelHi": "चौपाई · २९",
+      "labelEn": "Chaupai · 29",
+      "lines": [
+        "जोगी सुर मुनि कहत पुकारी।",
+        "योग न हो बिन शक्ति तुम्हारी॥"
+      ],
+      "linesEn": [
+        "Jogee sura muni kahata pukaaree.",
+        "Yoga na ho bina shakti tumhaaree."
+      ],
+      "meaningHi": "योगी, देवता और मुनि पुकार कर कहते हैं कि आपकी शक्ति के बिना योग सिद्ध नहीं होता।",
+      "meaningEn": "Yogis, gods and sages proclaim aloud that no union (yoga) is possible without your power.",
+      "meaningGu": "યોગી, દેવતા અને મુનિ પોકારીને કહે છે કે આપની શક્તિ વિના યોગ સિદ્ધ થતો નથી.",
+      "meaningKn": "ಯೋಗಿಗಳು, ದೇವತೆಗಳು ಮತ್ತು ಮುನಿಗಳು ಕೂಗಿ ಹೇಳುತ್ತಾರೆ — ನಿಮ್ಮ ಶಕ್ತಿ ಇಲ್ಲದೆ ಯೋಗವು ಸಿದ್ಧಿಸುವುದಿಲ್ಲ ಎಂದು."
+    },
+    {
+      "id": "chaupai-30",
+      "type": "chaupai",
+      "section": "body",
+      "number": 30,
+      "labelHi": "चौपाई · ३०",
+      "labelEn": "Chaupai · 30",
+      "lines": [
+        "शंकर आचारज तप कीनो।",
+        "काम अरु क्रोध जीति सब लीनो॥"
+      ],
+      "linesEn": [
+        "Shankara aachaaraja tapa keeno.",
+        "Kaama aru krodha jeeti saba leeno."
+      ],
+      "meaningHi": "आचार्य शंकर ने कठोर तप किया और काम तथा क्रोध को पूर्णतः जीत लिया।",
+      "meaningEn": "The teacher Shankara performed severe austerities and conquered both lust and anger completely.",
+      "meaningGu": "આચાર્ય શંકરે કઠોર તપ કર્યું અને કામ તથા ક્રોધને સંપૂર્ણપણે જીતી લીધાં.",
+      "meaningKn": "ಆಚಾರ್ಯ ಶಂಕರರು ಕಠಿಣ ತಪಸ್ಸನ್ನು ಮಾಡಿ, ಕಾಮ ಮತ್ತು ಕ್ರೋಧವನ್ನು ಸಂಪೂರ್ಣವಾಗಿ ಗೆದ್ದರು."
+    },
+    {
+      "id": "chaupai-31",
+      "type": "chaupai",
+      "section": "body",
+      "number": 31,
+      "labelHi": "चौपाई · ३१",
+      "labelEn": "Chaupai · 31",
+      "lines": [
+        "निशिदिन ध्यान धरो शंकर को।",
+        "काहु काल नहिं सुमिरो तुमको॥"
+      ],
+      "linesEn": [
+        "Nishidina dhyaana dharo shankara ko.",
+        "Kaahu kaala nahin sumiro tumako."
+      ],
+      "meaningHi": "वे दिन-रात शंकर (शिव) का ध्यान धरते रहे, परन्तु किसी समय आपका स्मरण नहीं किया।",
+      "meaningEn": "Day and night he meditated upon Shankar (Shiva), but never once remembered You.",
+      "meaningGu": "તેઓ રાત-દિવસ શંકર (શિવ)નું ધ્યાન ધરતા રહ્યા, પરંતુ કોઈ સમયે આપનું સ્મરણ ન કર્યું.",
+      "meaningKn": "ಅವರು ಹಗಲಿರುಳು ಶಂಕರನ (ಶಿವನ) ಧ್ಯಾನವನ್ನು ಮಾಡುತ್ತಿದ್ದರು, ಆದರೆ ಯಾವ ಸಮಯದಲ್ಲೂ ನಿಮ್ಮನ್ನು ಸ್ಮರಿಸಲಿಲ್ಲ."
+    },
+    {
+      "id": "chaupai-32",
+      "type": "chaupai",
+      "section": "body",
+      "number": 32,
+      "labelHi": "चौपाई · ३२",
+      "labelEn": "Chaupai · 32",
+      "lines": [
+        "शक्ति रूप को मरम न पायो।",
+        "शक्ति गई तब मन पछितायो॥"
+      ],
+      "linesEn": [
+        "Shakti roopa ko marama na paayo.",
+        "Shakti gaee taba mana pachhitaayo."
+      ],
+      "meaningHi": "वे शक्ति-स्वरूप का मर्म न समझ सके; जब उनकी शक्ति चली गई तब मन में पछताए।",
+      "meaningEn": "He failed to grasp the essence of Shakti; when his power departed, he repented in his heart.",
+      "meaningGu": "તેઓ શક્તિ-સ્વરૂપનો મર્મ સમજી ન શક્યા; જ્યારે તેમની શક્તિ ચાલી ગઈ ત્યારે મનમાં પસ્તાયા.",
+      "meaningKn": "ಅವರು ಶಕ್ತಿ-ಸ್ವರೂಪದ ಮರ್ಮವನ್ನು ಅರಿಯಲಾಗಲಿಲ್ಲ; ಅವರ ಶಕ್ತಿ ಹೊರಟುಹೋದಾಗ ಮನಸ್ಸಿನಲ್ಲಿ ಪಶ್ಚಾತ್ತಾಪಪಟ್ಟರು."
+    },
+    {
+      "id": "chaupai-33",
+      "type": "chaupai",
+      "section": "body",
+      "number": 33,
+      "labelHi": "चौपाई · ३३",
+      "labelEn": "Chaupai · 33",
+      "lines": [
+        "शरणागत हुई कीर्ति बखानी।",
+        "जय जय जय जगदम्ब भवानी॥"
+      ],
+      "linesEn": [
+        "Sharanaagata huee keerti bakhaanee.",
+        "Jaya jaya jaya jagadamba bhavaanee."
+      ],
+      "meaningHi": "तब उन्होंने शरण में आकर आपकी कीर्ति का बखान किया — जय जय जय जगदम्बा भवानी!",
+      "meaningEn": "Then, taking refuge, he extolled your fame: 'Victory, victory, victory to Jagadamba Bhavani!'",
+      "meaningGu": "ત્યારે તેમણે શરણમાં આવીને આપની કીર્તિનું વર્ણન કર્યું — જય જય જય જગદંબા ભવાની!",
+      "meaningKn": "ಆಗ ಅವರು ಶರಣಾಗಿ ಬಂದು ನಿಮ್ಮ ಕೀರ್ತಿಯನ್ನು ಕೊಂಡಾಡಿದರು — ಜಯ ಜಯ ಜಯ ಜಗದಂಬಾ ಭವಾನಿ!"
+    },
+    {
+      "id": "chaupai-34",
+      "type": "chaupai",
+      "section": "body",
+      "number": 34,
+      "labelHi": "चौपाई · ३४",
+      "labelEn": "Chaupai · 34",
+      "lines": [
+        "भई प्रसन्न आदि जगदम्बा।",
+        "दई शक्ति नहिं कीन विलम्बा॥"
+      ],
+      "linesEn": [
+        "Bhaee prasanna aadi jagadambaa.",
+        "Daee shakti nahin keena vilambaa."
+      ],
+      "meaningHi": "आदि जगदम्बा प्रसन्न हुईं और बिना विलम्ब किए उन्हें पुनः शक्ति प्रदान कर दी।",
+      "meaningEn": "The primordial Jagadamba was pleased and, without delay, restored his power to him.",
+      "meaningGu": "આદિ જગદંબા પ્રસન્ન થયાં અને વિલંબ કર્યા વિના તેમને ફરી શક્તિ પ્રદાન કરી દીધી.",
+      "meaningKn": "ಆದಿ ಜಗದಂಬೆ ಪ್ರಸನ್ನರಾದರು ಮತ್ತು ತಡಮಾಡದೆ ಅವರಿಗೆ ಮತ್ತೆ ಶಕ್ತಿಯನ್ನು ದಯಪಾಲಿಸಿದರು."
+    },
+    {
+      "id": "chaupai-35",
+      "type": "chaupai",
+      "section": "body",
+      "number": 35,
+      "labelHi": "चौपाई · ३५",
+      "labelEn": "Chaupai · 35",
+      "lines": [
+        "मोको मातु कष्ट अति घेरो।",
+        "तुम बिन कौन हरै दुःख मेरो॥"
+      ],
+      "linesEn": [
+        "Moko maatu kashta ati ghero.",
+        "Tuma bina kauna harai duhkha mero."
+      ],
+      "meaningHi": "हे माता, मुझे अनेक कष्टों ने घेर रखा है; आपके बिना मेरा दुःख कौन हर सकता है?",
+      "meaningEn": "O Mother, afflictions surround me on every side; who but you can take away my sorrow?",
+      "meaningGu": "હે માતા, મને અનેક કષ્ટોએ ઘેરી લીધો છે; આપના વિના મારું દુઃખ કોણ હરી શકે?",
+      "meaningKn": "ತಾಯಿಯೇ, ನನ್ನನ್ನು ಅನೇಕ ಕಷ್ಟಗಳು ಸುತ್ತುವರಿದಿವೆ; ನೀವಿಲ್ಲದೆ ನನ್ನ ದುಃಖವನ್ನು ಯಾರು ಹರಿಸಬಲ್ಲರು?"
+    },
+    {
+      "id": "chaupai-36",
+      "type": "chaupai",
+      "section": "body",
+      "number": 36,
+      "labelHi": "चौपाई · ३६",
+      "labelEn": "Chaupai · 36",
+      "lines": [
+        "आशा तृष्णा निपट सतावे।",
+        "मोह मदादिक सब विनशावै॥"
+      ],
+      "linesEn": [
+        "Aashaa trishnaa nipata sataave.",
+        "Moha madaadika saba vinashaavai."
+      ],
+      "meaningHi": "आशा और तृष्णा मुझे अत्यन्त सताती हैं; कृपया मोह, मद आदि सब विकारों का नाश कर दीजिए।",
+      "meaningEn": "Hope and craving torment me sorely; destroy, I pray, all my delusion, pride and like failings.",
+      "meaningGu": "આશા અને તૃષ્ણા મને ખૂબ સતાવે છે; કૃપા કરીને મોહ, મદ આદિ સર્વ વિકારોનો નાશ કરી દો.",
+      "meaningKn": "ಆಸೆ ಮತ್ತು ತೃಷ್ಣೆ ನನ್ನನ್ನು ಬಹಳವಾಗಿ ಬಾಧಿಸುತ್ತವೆ; ದಯವಿಟ್ಟು ಮೋಹ, ಮದ ಮೊದಲಾದ ಎಲ್ಲ ವಿಕಾರಗಳನ್ನು ನಾಶಮಾಡಿ."
+    },
+    {
+      "id": "chaupai-37",
+      "type": "chaupai",
+      "section": "body",
+      "number": 37,
+      "labelHi": "चौपाई · ३७",
+      "labelEn": "Chaupai · 37",
+      "lines": [
+        "शत्रु नाश कीजै महारानी।",
+        "सुमिरौं इकचित तुम्हें भवानी॥"
+      ],
+      "linesEn": [
+        "Shatru naasha keejai mahaaraanee.",
+        "Sumiraun ikachita tumhen bhavaanee."
+      ],
+      "meaningHi": "हे महारानी, मेरे शत्रुओं का नाश कीजिए; हे भवानी, मैं एकाग्र चित्त से आपका स्मरण करता हूँ।",
+      "meaningEn": "O great Queen, destroy my enemies; O Bhavani, with single-minded focus I remember you.",
+      "meaningGu": "હે મહારાણી, મારા શત્રુઓનો નાશ કરો; હે ભવાની, હું એકાગ્ર ચિત્તે આપનું સ્મરણ કરું છું.",
+      "meaningKn": "ಮಹಾರಾಣಿಯೇ, ನನ್ನ ಶತ್ರುಗಳನ್ನು ನಾಶಮಾಡಿ; ಭವಾನಿಯೇ, ನಾನು ಏಕಾಗ್ರ ಚಿತ್ತದಿಂದ ನಿಮ್ಮನ್ನು ಸ್ಮರಿಸುತ್ತೇನೆ."
+    },
+    {
+      "id": "chaupai-38",
+      "type": "chaupai",
+      "section": "body",
+      "number": 38,
+      "labelHi": "चौपाई · ३८",
+      "labelEn": "Chaupai · 38",
+      "lines": [
+        "करो कृपा हे मातु दयाला।",
+        "ऋद्धि-सिद्धि दे करहु निहाला॥"
+      ],
+      "linesEn": [
+        "Karo kripaa he maatu dayaalaa.",
+        "Riddhi-siddhi de karahu nihaalaa."
+      ],
+      "meaningHi": "हे दयालु माता, कृपा कीजिए; ऋद्धि-सिद्धि देकर मुझे निहाल (कृतार्थ) कर दीजिए।",
+      "meaningEn": "Show your grace, O compassionate Mother; bless me with prosperity and attainment, and make me content.",
+      "meaningGu": "હે દયાળુ માતા, કૃપા કરો; ઋદ્ધિ-સિદ્ધિ આપીને મને નિહાલ (કૃતાર્થ) કરી દો.",
+      "meaningKn": "ದಯಾಳು ತಾಯಿಯೇ, ಕೃಪೆ ತೋರಿ; ಋದ್ಧಿ-ಸಿದ್ಧಿಯನ್ನು ನೀಡಿ ನನ್ನನ್ನು ಧನ್ಯನನ್ನಾಗಿ ಮಾಡಿ."
+    },
+    {
+      "id": "chaupai-39",
+      "type": "chaupai",
+      "section": "body",
+      "number": 39,
+      "labelHi": "चौपाई · ३९",
+      "labelEn": "Chaupai · 39",
+      "lines": [
+        "जब लगि जियउं दया फल पाऊं।",
+        "तुम्हरो यश मैं सदा सुनाऊं॥"
+      ],
+      "linesEn": [
+        "Jaba lagi jiyaun dayaa phala paaoon.",
+        "Tumharo yasha main sadaa sunaaoon."
+      ],
+      "meaningHi": "जब तक मैं जीऊँ, आपकी दया का फल पाता रहूँ और सदा आपका यश सुनाता रहूँ।",
+      "meaningEn": "As long as I live, may I enjoy the fruit of your grace and ever proclaim your glory.",
+      "meaningGu": "જ્યાં સુધી હું જીવું, આપની દયાનું ફળ પામતો રહું અને સદા આપનો યશ સંભળાવતો રહું.",
+      "meaningKn": "ನಾನು ಬದುಕಿರುವವರೆಗೂ ನಿಮ್ಮ ದಯೆಯ ಫಲವನ್ನು ಪಡೆಯುತ್ತಿರಲಿ ಮತ್ತು ಸದಾ ನಿಮ್ಮ ಯಶಸ್ಸನ್ನು ಹಾಡುತ್ತಿರಲಿ."
+    },
+    {
+      "id": "chaupai-40",
+      "type": "chaupai",
+      "section": "body",
+      "number": 40,
+      "labelHi": "चौपाई · ४०",
+      "labelEn": "Chaupai · 40",
+      "lines": [
+        "दुर्गा चालीसा जो नित गावै।",
+        "सब सुख भोग परमपद पावै॥"
+      ],
+      "linesEn": [
+        "Durgaa chaaleesaa jo nita gaavai.",
+        "Saba sukha bhoga paramapada paavai."
+      ],
+      "meaningHi": "जो प्रतिदिन दुर्गा चालीसा गाता है, वह समस्त सुख भोगकर परमपद (मोक्ष) प्राप्त करता है।",
+      "meaningEn": "Whoever sings the Durga Chalisa daily enjoys every happiness and attains the supreme state.",
+      "meaningGu": "જે પ્રતિદિન દુર્ગા ચાલીસા ગાય છે, તે સમસ્ત સુખ ભોગવીને પરમપદ (મોક્ષ) પ્રાપ્ત કરે છે.",
+      "meaningKn": "ಯಾರು ಪ್ರತಿದಿನ ದುರ್ಗಾ ಚಾಲೀಸೆಯನ್ನು ಹಾಡುತ್ತಾರೋ, ಅವರು ಸಮಸ್ತ ಸುಖಗಳನ್ನು ಭೋಗಿಸಿ ಪರಮಪದವನ್ನು (ಮೋಕ್ಷವನ್ನು) ಪಡೆಯುತ್ತಾರೆ."
+    },
+    {
+      "id": "closing-doha",
+      "type": "doha",
+      "section": "closing",
+      "labelHi": "दोहा",
+      "labelEn": "Doha",
+      "lines": [
+        "देवीदास शरण निज जानी।",
+        "करहु कृपा जगदम्ब भवानी॥"
+      ],
+      "linesEn": [
+        "Deveedaasa sharana nija jaanee.",
+        "Karahu kripaa jagadamba bhavaanee."
+      ],
+      "meaningHi": "देवीदास को अपनी शरण में आया जानकर, हे जगदम्बा भवानी, उस पर कृपा कीजिए।",
+      "meaningEn": "Knowing Devidas to have taken refuge in you, O Jagadamba Bhavani, bestow your grace upon him.",
+      "meaningGu": "દેવીદાસને પોતાની શરણમાં આવેલો જાણીને, હે જગદંબા ભવાની, તેના પર કૃપા કરો.",
+      "meaningKn": "ದೇವೀದಾಸನು ನಿಮ್ಮ ಶರಣಿಗೆ ಬಂದಿರುವನೆಂದು ತಿಳಿದು, ಜಗದಂಬಾ ಭವಾನಿಯೇ, ಅವನ ಮೇಲೆ ಕೃಪೆ ತೋರಿ."
+    }
   ]
 }

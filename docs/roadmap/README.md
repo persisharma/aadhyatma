@@ -6,6 +6,20 @@ This folder holds the product roadmap and PRDs for upcoming releases.
 
 - [**Q3 2026 Roadmap**](./2026-Q3-roadmap.md) — Jul–Sep 2026
 
+## Next
+
+- [**Q4 2026 Candidates**](./2026-Q4-candidates.md) — household-practice gap analysis and the next five
+  proposed features (PRD-20 … PRD-24, numbers reserved). Read this for what is *missing*; the table
+  below is the Q3 slate only and has not tracked PRDs 07–19.
+- [**Q4 2026 Candidates, Round 2**](./2026-Q4-candidates-round-2.md) — a second slate (PRD-26 … PRD-29,
+  numbers reserved) filtered so that nothing shipped, PRD-owned, or already rejected can appear:
+  memorization/recall, the muhurat engine's missing auspicious yogas, festival arcs
+  (sthapana → visarjan), and the family lineage record with living janma tithis. Each has a
+  prototype. **PRD-30** (household roster) was proposed and dropped by product decision — round 2 §3.4;
+  its number is retired. **PRD-25 stays reserved** for सन्ध्या वन्दन per round 1 §3.
+- [**Round 2 session prompts**](./round-2-session-prompts.md) — a self-contained build prompt per
+  candidate (PRD-26 … PRD-29), one branch each, for running the four as independent sessions.
+
 ## PRDs (Q3 2026)
 
 | ID | Title | Target release |
@@ -16,6 +30,7 @@ This folder holds the product roadmap and PRDs for upcoming releases.
 | [PRD-04](./prds/04-reading-comfort.md) | Reading comfort pack (font scale, dark mode, sleep timer) | v1.7.0 |
 | [PRD-05](./prds/05-share-verse-card.md) | Share verse on WhatsApp (image + app link) | v1.7.1 |
 | [PRD-06](./prds/06-foundation-hardening.md) | Test foundation, local crash log, on-device backup export/import | continuous |
+| [PRD-17](./prds/17-namkaran.md) | Namkaran — traditional namakshar and reviewed name suggestions | gated |
 
 ## Constraint
 

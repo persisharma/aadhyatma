@@ -1,0 +1,270 @@
+# Multi-person Jyotish (birth-profile roster) native-build smoke
+#
+# Verifies the "whose chart is this" switcher end to end: a second person is
+# added WITHOUT overwriting the first, both appear in the switcher, switching
+# moves the Kundali result, and the Jyotish landing's daily guidance follows the
+# same selection and names whose Kundali it came from.
+#
+# Person one is the PRD-C golden fixture (Aarav · 14 Aug 1992 · 05:42 · Ujjain →
+# Karka Lagna, Kumbha Moon), so the chart assertions after a switch are exact
+# rather than "something changed". Person two (Meera · 3 Feb 1996 · Jaipur) keeps
+# the committed 06:00 default time so the flow does not step the clock 60+ times;
+# only her NAME is asserted, which is what this feature is about.
+#
+# The muhurat आपके लिए strip follows the same selection (it reads the same
+# store). Its naming is pinned in Jest — MuhuratPersonalStrip.test.tsx — because
+# reaching a graded muhurat day depends on the run date.
+#
+# Prerequisite: install the native debug app on the target simulator with
+# `npx expo run:ios --device <UDID> --port 8084`, per the e2e-verification
+# runbook (isolated simulator + worktree Metro port).
+
+appId: com.prashantsharma.vedansh
+---
+- launchApp:
+    appId: com.prashantsharma.vedansh
+    clearState: true
+    arguments:
+      RCT_jsLocation: "127.0.0.1:8084"
+- waitForAnimationToEnd:
+    timeout: 30000
+- tapOn:
+    text: "Skip tour"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 5000
+- tapOn:
+    text: "Skip tour"
+    optional: true
+- tapOn:
+    text: "English"
+    optional: true
+- tapOn:
+    text: "Begin|आरंभ करें"
+    optional: true
+- tapOn:
+    text: "Close"
+    optional: true
+- tapOn:
+    text: "Got it"
+    optional: true
+- tapOn:
+    text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
+    optional: true
+- extendedWaitUntil:
+    visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
+    timeout: 60000
+
+# English for stable visible-text assertions (accessibility labels stay English
+# in every language, but the guidance headings are localized).
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+
+# ---------------------------------------------------------------- person one
+- scrollUntilVisible:
+    element:
+      text: "Kundali. New. Tap to open."
+    direction: DOWN
+    timeout: 15000
+    centerElement: true
+- tapOn: "Kundali. New. Tap to open."
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Create Kundali"
+    timeout: 15000
+# A guest has nobody to switch between, so the switcher must not exist yet.
+- assertNotVisible: "Person switcher"
+- tapOn: "Create Kundali"
+- waitForAnimationToEnd
+- tapOn:
+    text: "Edit birth details"
+    optional: true
+- tapOn:
+    id: "kundali-name-input"
+- eraseText: 40
+- inputText: "Aarav"
+- tapOn:
+    id: "kundali-date-input"
+- waitForAnimationToEnd
+- tapOn: ".*tap to change year"
+- tapOn: "Month August"
+- repeat:
+    times: 4
+    commands:
+      - swipe:
+          start: "50%, 70%"
+          end: "50%, 50%"
+          duration: 250
+- tapOn: "Year 1992"
+- tapOn: "14 August 1992"
+- tapOn: "Confirm date"
+- waitForAnimationToEnd
+- tapOn:
+    id: "kundali-time-input"
+- waitForAnimationToEnd
+- repeat:
+    times: 18
+    commands:
+      - tapOn: "Decrease Minute"
+- tapOn:
+    id: "kundali-time-input"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: "kundali-city-button"
+    direction: DOWN
+    timeout: 10000
+- tapOn:
+    id: "kundali-city-button"
+- waitForAnimationToEnd
+- tapOn:
+    id: "kundali-city-search"
+- inputText: "Ujjain"
+- tapOn: "Select Ujjain birth city"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: "kundali-generate-button"
+    direction: DOWN
+    timeout: 10000
+- tapOn:
+    id: "kundali-generate-button"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Kundali result"
+    timeout: 20000
+
+# With one person saved the switcher appears, so adding a second is discoverable
+# from the first person's own chart.
+- scrollUntilVisible:
+    element:
+      text: "Show Kundali for Aarav"
+    direction: UP
+    timeout: 10000
+- assertVisible: "Add another person"
+
+# --------------------------------------------------------------- person two
+- tapOn: "Add another person"
+- waitForAnimationToEnd
+- assertVisible: "Add another Kundali"
+# The saved person's details must NOT be carried into the new form.
+- assertVisible: "Birth city, not selected"
+- tapOn:
+    id: "kundali-name-input"
+- eraseText: 40
+- inputText: "Meera"
+- tapOn:
+    id: "kundali-date-input"
+- waitForAnimationToEnd
+- tapOn: ".*tap to change year"
+- tapOn: "Month February"
+- repeat:
+    times: 4
+    commands:
+      - swipe:
+          start: "50%, 70%"
+          end: "50%, 50%"
+          duration: 250
+- tapOn: "Year 1996"
+- tapOn: "3 February 1996"
+- tapOn: "Confirm date"
+- waitForAnimationToEnd
+# Tapping the time field commits the 06:00 default — enough for a valid profile.
+- tapOn:
+    id: "kundali-time-input"
+- waitForAnimationToEnd
+- tapOn:
+    id: "kundali-time-input"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: "kundali-city-button"
+    direction: DOWN
+    timeout: 10000
+- tapOn:
+    id: "kundali-city-button"
+- waitForAnimationToEnd
+- tapOn:
+    id: "kundali-city-search"
+- inputText: "Jaipur"
+- tapOn: "Select Jaipur birth city"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: "kundali-generate-button"
+    direction: DOWN
+    timeout: 10000
+- tapOn:
+    id: "kundali-generate-button"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Kundali result"
+    timeout: 20000
+
+# Both people are saved; the newest is the one being read.
+- scrollUntilVisible:
+    element:
+      text: "Show Kundali for Meera"
+    direction: UP
+    timeout: 10000
+- assertVisible: "Show Kundali for Aarav"
+
+# Switching moves the chart itself, not just the heading: Aarav's golden Lagna
+# and Moon come back.
+- tapOn: "Show Kundali for Aarav"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Karka Lagna · Cancer rising. Learn more in chart."
+    direction: DOWN
+    timeout: 15000
+- assertVisible: "Karka Lagna · Cancer rising. Learn more in chart."
+- assertVisible: "Kumbha Moon · Aquarius. Learn more in grahas."
+
+# ------------------------------------------------- the landing follows along
+- tapOn: "Back"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Your Jyotish today"
+    timeout: 15000
+- assertVisible: "Whose Jyotish"
+- assertVisible: "Show Jyotish for Aarav"
+- assertVisible: "Show Jyotish for Meera"
+# More than one person saved, so the guidance names whose chart it came from
+# instead of saying "your Kundali".
+- assertVisible: ".*From Aarav.s Kundali"
+- assertVisible: "Kumbha"
+- tapOn: "Show Jyotish for Meera"
+- waitForAnimationToEnd
+- assertVisible: ".*From Meera.s Kundali"
+
+# Daily Rashifal opens for the person the landing is showing.
+- scrollUntilVisible:
+    element:
+      text: "Open Daily Rashifal"
+    direction: DOWN
+    timeout: 15000
+- tapOn: "Open Daily Rashifal"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Daily Rashifal"
+    timeout: 15000
+- assertVisible: "Whose Rashifal"
+- assertVisible: "From Meera’s Kundali"
+- assertVisible: ".*not a certain prediction.*"
+- tapOn: "Show Rashifal for Aarav"
+- waitForAnimationToEnd
+- assertVisible: "From Aarav’s Kundali"
+- assertVisible: ".*Aquarius.*"
+
+- stopApp:
+    appId: com.prashantsharma.vedansh

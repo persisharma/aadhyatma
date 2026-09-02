@@ -1,0 +1,55 @@
+# PRD-15 — run this same in-app/deep-link flow on both native platforms.
+# Launcher/WidgetKit rendering needs separate native evidence because it is
+# outside the app accessibility tree Maestro controls.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: { id: "more-home-widgets" }
+    centerElement: true
+- tapOn: { id: "more-home-widgets" }
+- extendedWaitUntil:
+    visible: "Daily verse widget preview"
+    timeout: 15000
+- assertVisible: "Panchang widget preview"
+- assertVisible: "Japam widget preview"
+# Each content type advertises its own sizes, with the best one marked (PRD-15 §59).
+- assertVisible: "Wide · best|चौड़ा · सुझाव|પહોળું · સૂચિત|ಅಗಲ · ಶಿಫಾರಸು"
+- assertVisible: "Small · best|छोटा · सुझाव|નાનું · સૂચિત|ಚಿಕ್ಕದು · ಶಿಫಾರಸು"
+- assertVisible: "How to add|कैसे जोड़ें|કેવી રીતે ઉમેરવું|ಹೇಗೆ ಸೇರಿಸುವುದು"
+# Android pins one specific widget per card — there is no catch-all add button.
+- runFlow:
+    when: { platform: Android }
+    commands:
+      - assertVisible: "Add Vedansh verse widget"
+      - assertVisible: "Add Vedansh panchang widget"
+- tapOn: "Back"
+
+# iOS foregrounds a native "Open in Vedansh?" confirm sheet the first time a
+# custom-scheme URL is opened while the app is running; tap through it so the
+# deep link is actually delivered. Optional so it's a no-op on Android and on
+# subsequent links where iOS no longer prompts.
+- openLink: "vedansh://widget/verse?sourceId=bhagavad-gita&chapter=1&verseIndex=0"
+- tapOn: { text: "Open", optional: true }
+- extendedWaitUntil:
+    visible: "दैनिक भक्ति|Daily Verse"
+    timeout: 15000
+- openLink: "vedansh://widget/panchang?date=2030-01-15"
+- tapOn: { text: "Open", optional: true }
+- extendedWaitUntil:
+    visible: ".*15.*2030.*"
+    timeout: 15000
+- openLink: "vedansh://widget/japam?mantraId=om-namah-shivaya"
+- tapOn: { text: "Open", optional: true }
+- extendedWaitUntil:
+    visible: "Om Namah Shivaya|ॐ नमः शिवाय"
+    timeout: 15000
+- openLink: "vedansh://widget/japam"
+- tapOn: { text: "Open", optional: true }
+- extendedWaitUntil:
+    visible: "Japa & Mantras|जप"
+    timeout: 15000
+- stopApp:
+    appId: com.prashantsharma.vedansh

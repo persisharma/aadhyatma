@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PRD-16 next slice · Follow &amp; Remind — Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Inter:wght@500;600&display=swap" rel="stylesheet" />
+<style>
+  /* Tokens mirrored 1:1 from mobile/src/theme/*.ts — same block as
+     docs/muhurat-finder-prototype.html so the two prototypes cannot drift. */
+  :root{
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-deep:#E9D9B1;
+    --parchment-hi:#F6ECD0; --gradient-end:#F1E3BF;
+    --ink:#1A0E03; --ink-soft:#5A3A1E; --ink-muted:#6E5230;
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --gold:#A67C34;
+    --divider:rgba(138,62,11,0.18);
+    --saffron-tint:rgba(184,98,27,0.12);
+    --gold-tint:rgba(166,124,52,0.14); --gold-chip:rgba(166,124,52,0.22);
+    --avoid:#9E4A2E; --avoid-tint:rgba(158,74,46,0.12); --avoid-chip:rgba(158,74,46,0.20);
+    --avoid-deep:#7A3722;
+    --new-badge-bg:rgba(184,98,27,0.16); --new-badge-text:#8A3E0B;
+    --card-surface:rgba(255,250,235,0.72);
+    --card-active-from:#FFF5E0; --card-active-to:#F5DEAC;
+    --card-active-border:rgba(184,98,27,0.4);
+    --modal-backdrop:rgba(47,30,16,0.55); --on-primary:#FFFFFF;
+    --s-xs:4px; --s-sm:8px; --s-md:12px; --s-lg:16px; --s-xl:20px; --s-xxl:24px;
+    --r-sm:10px; --r-md:14px; --r-lg:18px; --r-xl:22px; --r-pill:999px;
+    --e-subtle:0 1px 4px rgba(60,30,10,.06); --e-card:0 2px 6px rgba(60,30,10,.10);
+    --e-lifted:0 4px 12px rgba(60,30,10,.11); --e-raised:0 6px 14px rgba(60,30,10,.16);
+    --e-overlay:0 6px 14px rgba(60,30,10,.25);
+    --deva:'Noto Serif Devanagari',serif;
+    --latin:'Cormorant Garamond',serif;
+    --inter:'Inter',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--inter);font-weight:500;background:#24160B;color:var(--parchment-deep);padding:24px;line-height:1.5}
+  h1{font-family:var(--latin);font-weight:600;font-size:28px;color:var(--parchment-hi);margin-bottom:2px}
+  .sub{font-family:var(--latin);font-style:italic;color:var(--gold);font-size:15px;margin-bottom:6px;max-width:1040px}
+  .legend{font-size:12.5px;color:#B79B6B;margin-bottom:20px;max-width:1040px;line-height:1.7}
+  .legend b{color:var(--parchment-deep)}
+  .legend code{background:rgba(246,236,208,.08);padding:1px 5px;border-radius:4px;font-size:11.5px}
+  .wrap{display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap}
+  .col{display:flex;flex-direction:column;align-items:center}
+  .cap{width:340px;font-size:12px;color:#B79B6B;margin-top:10px;text-align:left;line-height:1.65}
+  .cap b{color:var(--parchment-deep)} .cap code{font-size:11px;background:rgba(246,236,208,.08);padding:1px 4px;border-radius:3px}
+  .cap .newmark{color:var(--gold);font-weight:600}
+
+  .phone{width:340px;height:730px;background:var(--parchment);border-radius:38px;border:10px solid #120A03;
+    box-shadow:0 24px 60px rgba(0,0,0,.55);position:relative;overflow:hidden;flex:none}
+  .statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 var(--s-xxl);
+    font-size:12px;font-weight:600;color:var(--ink);background:var(--parchment-hi)}
+  .screen{position:absolute;top:32px;left:0;right:0;bottom:56px;overflow-y:auto;
+    background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
+  .screen.notab{bottom:0}
+  .screen::-webkit-scrollbar{width:0}
+  .pad{padding:var(--s-md) var(--s-lg) var(--s-xxl)}
+  .padx{padding:var(--s-md) var(--s-xxl) var(--s-xxl)}
+
+  .tabbar{position:absolute;bottom:0;left:0;right:0;height:56px;background:var(--parchment-soft);
+    border-top:1px solid var(--divider);display:flex;align-items:stretch}
+  .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+    font-family:var(--inter);font-size:10px;color:var(--ink-muted)}
+  .tab svg{stroke:var(--ink-muted)}
+  .tab.on{color:var(--saffron)} .tab.on svg{stroke:var(--saffron)}
+
+  /* ── Home ── */
+  .hero{text-align:center;padding:var(--s-md) 0 var(--s-lg)}
+  .hero .crest{display:flex;align-items:center;justify-content:center;gap:var(--s-md)}
+  .hero .om{font-family:var(--deva);font-size:15px;color:var(--saffron)}
+  .hero .rule{height:1px;width:34px;background:var(--saffron);opacity:.5}
+  .hero .wm{font-family:var(--deva);font-weight:600;font-size:30px;color:var(--ink);line-height:1.4}
+  .hero .tag{font-family:var(--latin);font-style:italic;font-size:15px;letter-spacing:.6px;color:var(--ink-soft)}
+
+  .strip{background:var(--card-surface);border:1px solid var(--divider);border-radius:var(--r-md);
+    padding:var(--s-md) var(--s-lg);margin-bottom:var(--s-md);box-shadow:var(--e-card)}
+  .strip .head{font-family:var(--latin);font-weight:700;font-size:16px;color:var(--ink)}
+  .strip .head .sep{color:var(--ink-muted);font-weight:500}
+  .chiprow{display:flex;gap:var(--s-sm);margin-top:var(--s-sm);overflow:hidden}
+  .schip{font-family:var(--latin);font-weight:600;font-size:12.5px;padding:5px 11px;border-radius:var(--r-pill);
+    white-space:nowrap;flex:none}
+  .schip.gold{background:var(--gold-chip);color:var(--saffron-deep)}
+  .schip.avoid{background:var(--avoid-chip);color:var(--avoid-deep)}
+  .schip.follow{background:var(--saffron-tint);color:var(--saffron-deep);border:1px solid var(--card-active-border);
+    display:inline-flex;align-items:center;gap:5px}
+  .schip.follow .st{color:var(--gold);font-size:11px}
+
+  .rowhead{font-family:var(--inter);font-weight:600;font-size:11px;letter-spacing:2.4px;text-transform:uppercase;
+    color:var(--ink-muted);margin:var(--s-lg) 0 var(--s-sm)}
+  .ftrow{display:flex;gap:var(--s-md);overflow:hidden}
+  .ftcard{flex:none;width:200px;background:var(--card-surface);border:1px solid var(--divider);
+    border-radius:var(--r-md);padding:var(--s-md);box-shadow:var(--e-subtle)}
+  .ftcard.abujh{background:linear-gradient(var(--card-active-from),var(--card-active-to));
+    border-color:var(--card-active-border);box-shadow:var(--e-lifted)}
+  .ftcard .occ{font-family:var(--inter);font-weight:600;font-size:9.5px;letter-spacing:1.6px;text-transform:uppercase;
+    color:var(--saffron-deep);margin-bottom:3px}
+  .ftcard .t{font-family:var(--deva);font-weight:600;font-size:14px;color:var(--ink);line-height:1.5}
+  .ftcard .d{font-family:var(--latin);font-style:italic;font-size:12px;color:var(--ink-muted);margin-top:2px}
+
+  .rbanner{display:flex;align-items:center;gap:var(--s-md);background:linear-gradient(var(--card-active-from),var(--card-active-to));
+    border:1px solid var(--card-active-border);border-radius:var(--r-md);padding:var(--s-md) var(--s-lg);
+    margin-top:var(--s-md);box-shadow:var(--e-card)}
+  .rbanner .lotus{color:var(--saffron);flex:none;display:flex}
+  .rbanner .t{flex:1;font-family:var(--deva);font-weight:600;font-size:14px;color:var(--ink);line-height:1.5}
+  .rbanner .t small{display:block;font-family:var(--latin);font-style:italic;font-weight:400;font-size:12px;color:var(--ink-muted)}
+  .rbanner .chev{color:var(--saffron)}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--s-md)}
+  .gtile2{background:var(--card-surface);border:1px solid var(--divider);border-radius:var(--r-md);
+    padding:var(--s-md) var(--s-sm);min-height:76px;display:flex;flex-direction:column;align-items:center;
+    justify-content:center;text-align:center;box-shadow:var(--e-subtle);position:relative}
+  .gtile2 .hi{font-family:var(--deva);font-weight:600;font-size:15px;color:var(--ink);line-height:1.5}
+  .gtile2 .en{font-family:var(--latin);font-style:italic;font-size:11px;color:var(--ink-muted);line-height:1.4}
+
+  /* ── nav / shared ── */
+  .navrow{display:flex;align-items:center;gap:var(--s-md);margin-bottom:var(--s-md)}
+  .back{width:34px;height:34px;border-radius:var(--r-xl);border:1px solid var(--divider);
+    background:var(--parchment-soft);display:flex;align-items:center;justify-content:center;color:var(--saffron);
+    font-size:16px;flex:none;box-shadow:var(--e-subtle)}
+  .title{flex:1;text-align:center;font-family:var(--latin);font-weight:700;font-size:19px;color:var(--ink);line-height:1.3}
+  .navslot{width:34px;height:34px;display:flex;align-items:center;justify-content:center;color:var(--saffron);flex:none}
+  .sechead{font-family:var(--inter);font-weight:600;font-size:10px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--ink-muted);margin:var(--s-lg) 0 var(--s-sm)}
+
+  .answer{background:linear-gradient(var(--card-active-from),var(--card-active-to));
+    border:1px solid var(--card-active-border);border-radius:var(--r-lg);padding:var(--s-lg);
+    text-align:center;margin-bottom:var(--s-md);box-shadow:var(--e-raised)}
+  .danda{font-family:var(--deva);font-size:18px;color:var(--gold);line-height:1.6}
+  .answer .ad{font-family:var(--latin);font-weight:700;font-size:28px;color:var(--ink);line-height:1.15}
+  .answer .aw{font-family:var(--latin);font-size:13px;color:var(--ink-soft);margin-top:2px;line-height:1.6}
+  .tierpill{display:inline-block;margin-top:var(--s-sm);background:var(--gold-chip);color:var(--saffron-deep);
+    border-radius:var(--r-sm);padding:4px 10px;font-family:var(--latin);font-weight:600;font-size:12.5px}
+  .tierpill.no{background:var(--avoid-chip);color:var(--avoid-deep)}
+  .answer .abest{margin-top:var(--s-md);padding-top:var(--s-md);border-top:1px solid var(--divider)}
+  .answer .albl{font-family:var(--inter);font-weight:600;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-muted)}
+  .answer .abig{font-family:var(--latin);font-weight:700;font-size:24px;color:var(--ink);margin-top:3px;white-space:nowrap}
+  .answer .anm{font-family:var(--latin);font-weight:600;font-size:14px;color:var(--saffron-deep);margin-top:2px}
+
+  .cta{margin-top:var(--s-md);background:var(--saffron);color:var(--on-primary);border-radius:var(--r-pill);
+    padding:13px;text-align:center;font-family:var(--latin);font-weight:700;font-size:16px;box-shadow:var(--e-card);
+    display:flex;align-items:center;justify-content:center;gap:8px}
+  .cta2{margin-top:var(--s-sm);border:1px solid var(--divider);color:var(--saffron-deep);
+    border-radius:var(--r-pill);padding:12px;text-align:center;font-family:var(--latin);font-weight:600;font-size:15px;
+    background:var(--parchment-soft);display:flex;align-items:center;justify-content:center;gap:8px}
+  .cta .st,.cta2 .st{font-size:14px}
+  /* Followed state: the CTA becomes a two-line status row, not a filled button. */
+  .followed{margin-top:var(--s-md);border:1px solid var(--card-active-border);background:var(--saffron-tint);
+    border-radius:var(--r-md);padding:11px var(--s-lg);display:flex;align-items:center;gap:var(--s-md)}
+  .followed .st{color:var(--gold);font-size:16px;flex:none}
+  .followed .ft{flex:1;min-width:0}
+  .followed .h{font-family:var(--latin);font-weight:700;font-size:15px;color:var(--ink);line-height:1.35}
+  .followed .s{font-family:var(--latin);font-size:12.5px;color:var(--ink-soft);line-height:1.5;white-space:nowrap}
+  .followed .edit{font-family:var(--latin);font-weight:600;font-size:13.5px;color:var(--saffron-deep);flex:none}
+
+  .disclose{display:flex;align-items:center;font-family:var(--latin);font-weight:600;font-size:15px;color:var(--saffron-deep);
+    padding:var(--s-md) 2px;border-top:1px solid var(--divider);margin-top:var(--s-sm)}
+  .disclose .chev{margin-left:auto;color:var(--saffron)}
+  .disc{margin-top:var(--s-md);font-family:var(--latin);font-style:italic;font-size:12px;
+    color:var(--ink-muted);line-height:1.6;text-align:center}
+  .jrow{display:flex;align-items:center;gap:var(--s-md);background:var(--card-surface);border:1px solid var(--divider);
+    border-radius:var(--r-md);padding:10px var(--s-lg);margin-bottom:var(--s-sm);box-shadow:var(--e-subtle)}
+  .jrow .k{font-family:var(--latin);font-weight:600;font-size:14px;color:var(--ink);width:78px;flex:none}
+  .jrow .v{flex:1;font-family:var(--latin);font-size:13.5px;color:var(--ink-soft)}
+  .jrow .verdict{font-family:var(--latin);font-weight:600;font-size:13px;color:var(--saffron-deep)}
+
+  /* ── empty-with-reason ── */
+  .empty{background:linear-gradient(var(--card-active-from),var(--card-active-to));
+    border:1px solid var(--card-active-border);border-radius:var(--r-lg);
+    padding:var(--s-lg);text-align:center;box-shadow:var(--e-raised)}
+  .empty .eh{font-family:var(--latin);font-weight:700;font-size:17px;color:var(--ink);line-height:1.5;margin-bottom:var(--s-sm)}
+  .empty .eb{font-family:var(--latin);font-size:14px;color:var(--ink-soft);line-height:1.6}
+  .whycard{margin-top:var(--s-md);background:var(--gold-tint);border:1px solid var(--divider);
+    border-radius:var(--r-md);padding:var(--s-md);text-align:left}
+  .whycard .wh{font-family:var(--inter);font-weight:600;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+    color:var(--saffron-deep);margin-bottom:4px}
+  .whycard .wb{font-family:var(--latin);font-size:13.5px;color:var(--ink-soft);line-height:1.6}
+  .whycard .wb b{font-weight:700;color:var(--ink)}
+  .res{background:var(--card-surface);border:1px solid var(--divider);border-radius:var(--r-md);
+    padding:var(--s-md) var(--s-lg);margin-bottom:var(--s-sm);box-shadow:var(--e-card);display:flex;gap:var(--s-md);align-items:center}
+  .thumb{width:44px;height:44px;border-radius:var(--r-sm);flex:none;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(var(--saffron),var(--saffron-deep));font-family:var(--latin);font-weight:700;
+    font-size:19px;color:var(--parchment-soft)}
+  .rbody{flex:1;min-width:0}
+  .rdate{font-family:var(--latin);font-weight:700;font-size:16px;color:var(--ink);line-height:1.3}
+  .rtier{font-family:var(--latin);font-weight:600;font-size:13px;color:var(--saffron-deep);margin-top:1px}
+  .rtime{font-family:var(--latin);font-size:13px;color:var(--ink-soft);white-space:nowrap}
+  .chev{color:var(--saffron);flex:none;font-size:22px}
+
+  /* ── bottom sheet ── */
+  .backdrop{position:absolute;inset:0;background:var(--modal-backdrop)}
+  .sheet{position:absolute;left:0;right:0;bottom:0;background:var(--parchment);border-top:1px solid var(--divider);
+    border-top-left-radius:var(--r-lg);border-top-right-radius:var(--r-lg);padding:10px var(--s-xl) 30px;
+    box-shadow:var(--e-overlay)}
+  .handle{width:40px;height:5px;border-radius:2.5px;background:var(--divider);margin:0 auto var(--s-md)}
+  .sheet .sh{font-family:var(--deva);font-weight:600;font-size:17px;color:var(--ink)}
+  .sheet .ss{font-family:var(--latin);font-style:italic;font-size:12px;color:var(--ink-muted);margin-top:2px;margin-bottom:14px}
+  .optrow{padding:13px 0;border-bottom:1px solid var(--divider)}
+  .optrow.inline{display:flex;align-items:center;justify-content:space-between}
+  .optrow.last{border-bottom:none}
+  .optlbl{font-family:var(--deva);font-size:14px;color:var(--ink)}
+  .opthint{font-family:var(--latin);font-style:italic;font-size:11px;color:var(--ink-muted);margin-top:1px}
+  .pillrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .pill{border:1px solid var(--saffron);border-radius:var(--r-pill);min-height:34px;padding:0 13px;
+    display:flex;align-items:center;font-family:var(--inter);font-weight:600;font-size:12px;color:var(--saffron-deep)}
+  .pill.on{background:var(--saffron);color:var(--parchment)}
+  .pill.off{opacity:.4}
+  .switch{width:46px;height:27px;border-radius:14px;background:var(--saffron);position:relative;flex:none}
+  .switch::after{content:"";position:absolute;top:2.5px;right:2.5px;width:22px;height:22px;border-radius:11px;background:var(--parchment)}
+  .savebtn{margin-top:var(--s-md);background:var(--saffron);color:var(--parchment);border-radius:var(--r-pill);
+    min-height:46px;display:flex;align-items:center;justify-content:center;font-family:var(--inter);font-weight:600;font-size:14px}
+  .sheetnote{margin-top:10px;font-family:var(--latin);font-style:italic;font-size:11.5px;color:var(--ink-muted);text-align:center;line-height:1.55}
+
+  /* ── follow inventory rows ── */
+  .frow{display:flex;align-items:center;gap:var(--s-md);background:var(--card-surface);border:1px solid var(--divider);
+    border-radius:var(--r-md);padding:var(--s-md) var(--s-lg);margin-bottom:var(--s-sm);box-shadow:var(--e-subtle)}
+  .frow .fs{color:var(--gold);font-size:15px;flex:none}
+  .frow .fb{flex:1;min-width:0}
+  .frow .h{font-family:var(--deva);font-weight:600;font-size:14px;color:var(--ink);line-height:1.5}
+  .frow .s{font-family:var(--latin);font-size:12.5px;color:var(--ink-soft);line-height:1.5}
+  .frow .s.warn{color:var(--avoid-deep)}
+  .frow .when{font-family:var(--latin);font-weight:700;font-size:14px;color:var(--saffron-deep);flex:none;text-align:right}
+  .frow .when small{display:block;font-weight:500;font-size:11px;color:var(--ink-muted)}
+  .frow.past{opacity:.55}
+
+  /* ── lock screen ── */
+  .lock{position:absolute;inset:0;background:linear-gradient(160deg,#2B1A0C,#120A03);padding:64px 16px 0}
+  .lockclock{text-align:center;color:var(--parchment-hi);font-family:var(--latin);font-weight:600;margin-bottom:30px}
+  .lockclock .t{font-size:56px;line-height:1.05}
+  .lockclock .d{font-size:15px;color:var(--gold);font-style:italic}
+  .notif{background:rgba(246,236,208,.13);backdrop-filter:blur(8px);border:1px solid rgba(246,236,208,.14);
+    border-radius:var(--r-lg);padding:12px 14px;margin-bottom:10px}
+  .notif .nh{display:flex;align-items:center;gap:7px;margin-bottom:4px}
+  .notif .app{font-family:var(--inter);font-weight:600;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:#D8C08A}
+  .notif .ago{margin-left:auto;font-family:var(--inter);font-size:10.5px;color:#A98F62}
+  .notif .nt{font-family:var(--deva);font-weight:600;font-size:14px;color:var(--parchment-hi);line-height:1.5}
+  .notif .nb{font-family:var(--latin);font-size:14px;color:#D8C08A;line-height:1.5;margin-top:2px}
+  .lockcap{margin-top:16px;font-family:var(--latin);font-style:italic;font-size:12px;color:#8E7550;text-align:center;line-height:1.6}
+
+  .note{margin-top:34px;max-width:1040px;font-size:12.5px;color:#B79B6B;line-height:1.75}
+  .note h2{font-family:var(--latin);color:var(--parchment-hi);font-size:22px;margin:30px 0 4px;font-weight:600}
+  .note h3{font-family:var(--latin);color:var(--parchment-hi);font-size:17px;margin:18px 0 6px;font-weight:600}
+  .note b{color:var(--parchment-deep)}
+  .note code{background:rgba(246,236,208,.08);padding:1px 5px;border-radius:4px;font-size:11.5px}
+  .note ul{margin:4px 0 0 18px} .note li{margin-bottom:6px}
+  .note table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
+  .note th{text-align:left;color:var(--parchment-deep);border-bottom:1px solid rgba(246,236,208,.2);padding:6px 8px;vertical-align:top}
+  .note td{border-bottom:1px solid rgba(246,236,208,.08);padding:6px 8px;vertical-align:top}
+  .tagnew{color:#E0B269;font-weight:600}
+  .tagreuse{color:#8FA86B;font-weight:600}
+</style>
+</head>
+<body>
+
+<h1>Follow &amp; Remind — the Event Muhurat Finder's next slice</h1>
+<p class="sub">PRD-16 §6.7 · design.md §60 · the slice named in the PRD header: follow/remind, the Today-strip chip, and the FOR TODAY abujh card. <b>Shipped Aug 2026</b> — captions marked "changed during implementation" record where the built thing diverged from this plan.</p>
+<p class="legend">
+  <b>Everything already shipped is drawn as it ships.</b> The finder's four screens, the day-detail Answer&rarr;Action&rarr;Evidence
+  block, the share button, the Today strip, the FOR TODAY row and the Home grid are all v1.4.5 as-built; this prototype only adds
+  the follow layer on top of them. <b><span class="tagnew">Gold-marked</span></b> captions call out the new pixels.<br />
+  <b>All dates, times and verdicts below are real engine output</b> — <code>eventMuhurat.ts</code> + <code>panchangDayStore.ts</code> run
+  for <b>Bengaluru</b>, purnimant, anchored at <b>14 Aug 2026</b>. Vahan: 13 श्रेष्ठ / 15 मध्यम in the 92-day window; Griha Pravesh:
+  0 / 0, chaturmas on all 92 days, first date after = <b>25 Nov 2026</b>. Rule tables remain <b>DRAFT</b> (RULEBOOK §17, §10 pending).
+</p>
+
+<div class="wrap">
+
+  <!-- ── 1. HOME — Today-strip follow chip ─────────────────── -->
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>6:52</span><span>5G ▮83</span></div>
+      <div class="screen"><div class="padx">
+
+        <div class="hero">
+          <div class="crest">
+            <span class="rule"></span><span class="om">ॐ</span>
+            <span class="wm">वेदांश़</span>
+            <span class="om">ॐ</span><span class="rule"></span>
+          </div>
+          <div class="tag">Sacred Texts · Daily Reading</div>
+        </div>
+
+        <div class="strip">
+          <div class="head">Friday <span class="sep">·</span> Dwitiya <span class="sep">· Shravana Shukla</span></div>
+          <div class="chiprow">
+            <span class="schip follow"><span class="st">★</span>Vahan · Mon 6:07 AM</span>
+            <span class="schip gold">Abhijit 11:59 AM – 12:49 PM</span>
+            <span class="schip avoid">Rahu Kaal 10:50 AM – 12:24 PM</span>
+          </div>
+        </div>
+
+        <div class="rowhead">For Today</div>
+        <div class="ftrow">
+          <div class="ftcard"><div class="t">शुक्रवार · श्री सूक्तम्</div><div class="d">Friday's recitation</div></div>
+          <div class="ftcard"><div class="t">कनकधारा स्तोत्रम्</div><div class="d">Recommended today</div></div>
+        </div>
+
+        <div class="rbanner">
+          <div class="lotus"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20c-4 0-7-2.6-8-6 2.2.4 3.9 0 5-.8C9.5 15 10.6 17 12 20Zm0 0c4 0 7-2.6 8-6-2.2.4-3.9 0-5-.8-.5 1.8-1.6 3.8-3 6.8Zm0 0c-1.8-3.6-1.8-8 0-12 1.8 4 1.8 8.4 0 12Z"/></svg></div>
+          <div class="t">नित्य साधना<small>2 of 3 done today · continue</small></div>
+          <div class="chev">›</div>
+        </div>
+
+        <div class="rowhead">Categories</div>
+        <div class="grid">
+          <div class="gtile2"><div class="hi">चालीसा</div><div class="en">Chalisa</div></div>
+          <div class="gtile2"><div class="hi">आरती</div><div class="en">Aarti</div></div>
+          <div class="gtile2"><div class="hi">स्तोत्रम्</div><div class="en">Hymns</div></div>
+          <div class="gtile2"><div class="hi">ग्रन्थ</div><div class="en">Sacred Books</div></div>
+          <div class="gtile2"><div class="hi">जप</div><div class="en">Japa</div></div>
+          <div class="gtile2"><div class="hi">व्रत</div><div class="en">Vrat &amp; Parv</div></div>
+          <div class="gtile2"><div class="hi">कुंडली</div><div class="en">Kundali</div></div>
+          <div class="gtile2"><div class="hi">मुहूर्त</div><div class="en">Muhurat</div></div>
+          <div class="gtile2"><div class="hi">संस्कार</div><div class="en">Good Habits</div></div>
+        </div>
+      </div></div>
+      <div class="tabbar">
+        <div class="tab on"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7"/><path d="M6.5 10v9h11v-9"/></svg>Home</div>
+        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M12 4v16"/><path d="M7 5c0 4 2.2 6 5 6s5-2 5-6"/></svg>Bhakti</div>
+        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/><path d="M12 5h5M19 12v5M12 19H7M5 12V7"/></svg>Panchang</div>
+        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V6l8-2v12"/><circle cx="7" cy="18" r="2"/><circle cx="15" cy="16" r="2"/></svg>Bhajan</div>
+        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><circle cx="8.5" cy="12" r=".8" fill="currentColor"/><circle cx="12" cy="12" r=".8" fill="currentColor"/><circle cx="15.5" cy="12" r=".8" fill="currentColor"/></svg>More</div>
+      </div>
+    </div>
+    <p class="cap"><b>1 · Home — one contextual chip.</b> <span class="newmark">NEW:</span> a <b>★ follow chip leads the Today-strip
+      chip row</b> — <code>★ Vahan · Mon 6:07 AM</code>, tap &rarr; that day's <code>MuhuratDayDetail</code>. It is
+      <i>contextual</i>: it exists only while a followed muhurat is within 7 days, so a user who follows nothing sees exactly
+      today's app. Same pill spec as the gold/avoid chips, `saffronTint` fill + `cardActiveBorder` — a third tint, not a new
+      vocabulary. The row already auto-drifts on overflow (<code>TodayStrip.tsx</code>), so a fourth chip needs no layout work.
+      Everything else on this screen is shipped and untouched.</p>
+  </div>
+
+  <!-- ── 2. DAY DETAIL — unfollowed ────────────────────────── -->
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>6:52</span><span>5G ▮83</span></div>
+      <div class="screen notab"><div class="pad">
+        <div class="navrow">
+          <div class="back">‹</div>
+          <div class="title">वाहन क्रय</div>
+          <div class="navslot"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4"/><path d="m8 8 4-4 4 4"/><path d="M5 13v6h14v-6"/></svg></div>
+        </div>
+
+        <div class="answer">
+          <div class="danda">॥</div>
+          <div class="ad">17 अगस्त</div>
+          <div class="aw">सोमवार · श्रावण शुक्ल पंचमी · चित्रा</div>
+          <div class="tierpill">श्रेष्ठ · दृक्पंचांग पद्धति</div>
+          <div class="abest">
+            <div class="albl">सर्वोत्तम समय</div>
+            <div class="abig">6:07 – 7:41 AM</div>
+            <div class="anm">अमृत</div>
+          </div>
+        </div>
+
+        <div class="cta"><span class="st">☆</span>इस मुहूर्त का अनुसरण करें</div>
+        <div class="cta2">दिन के सभी शुभ समय ›</div>
+
+        <div class="sechead">यह तिथि क्यों?</div>
+        <div class="jrow"><div class="k">नक्षत्र</div><div class="v">चित्रा</div><div class="verdict">अनुकूल</div></div>
+        <div class="jrow"><div class="k">तिथि</div><div class="v">पंचमी</div><div class="verdict">अनुकूल</div></div>
+        <div class="jrow"><div class="k">वार</div><div class="v">सोमवार</div><div class="verdict">अनुकूल</div></div>
+
+        <div class="disclose">दोष जाँच — सभी निर्दोष<span class="chev">›</span></div>
+        <div class="disc">परम्पराएँ भिन्न हो सकती हैं। पुरोहित से पुष्टि करें।</div>
+      </div></div>
+    </div>
+    <p class="cap"><b>2 · Day detail — where follow lives.</b> Shipped screen; the answer block, timings link, share button,
+      evidence rows and disclaimer are all as-built. <span class="newmark">NEW:</span> a single <b>☆ इस मुहूर्त का अनुसरण करें</b>
+      primary pill in the <i>action</i> band — above the existing <code>दिन के सभी शुभ समय</code> link, still above the evidence,
+      so Answer&rarr;Action&rarr;Evidence is preserved. <b>Follow is offered here and nowhere else in the results flow</b>: design.md
+      §60 says every result card is identical, so no per-card ★ — a follow is a decision you make after reading the day, not while
+      scanning. Excluded days show no follow affordance at all.</p>
+  </div>
+
+  <!-- ── 3. REMINDER SHEET ─────────────────────────────────── -->
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>6:52</span><span>5G ▮83</span></div>
+      <div class="screen notab" style="filter:brightness(.97)"><div class="pad">
+        <div class="navrow">
+          <div class="back">‹</div>
+          <div class="title">वाहन क्रय</div>
+          <div class="navslot"></div>
+        </div>
+        <div class="answer">
+          <div class="danda">॥</div>
+          <div class="ad">17 अगस्त</div>
+          <div class="aw">सोमवार · श्रावण शुक्ल पंचमी · चित्रा</div>
+          <div class="tierpill">श्रेष्ठ · दृक्पंचांग पद्धति</div>
+          <div class="abest">
+            <div class="albl">सर्वोत्तम समय</div>
+            <div class="abig">6:07 – 7:41 AM</div>
+            <div class="anm">अमृत</div>
+          </div>
+        </div>
+      </div></div>
+      <div class="backdrop"></div>
+      <div class="sheet">
+        <div class="handle"></div>
+        <div class="sh">अनुस्मारक</div>
+        <div class="ss">वाहन क्रय · सोम 17 अगस्त, अमृत 6:07 AM</div>
+
+        <div class="optrow">
+          <div class="optlbl">पहले से सूचना</div>
+          <div class="opthint">day(s) before, evening</div>
+          <div class="pillrow">
+            <div class="pill">बंद</div>
+            <div class="pill on">1 दिन</div>
+            <div class="pill">2 दिन</div>
+            <div class="pill">3 दिन</div>
+          </div>
+        </div>
+
+        <div class="optrow inline">
+          <div>
+            <div class="optlbl">मुहूर्त के दिन</div>
+            <div class="opthint">morning reminder</div>
+          </div>
+          <div class="switch"></div>
+        </div>
+
+        <div class="optrow last">
+          <div class="optlbl">दिन का समय</div>
+          <div class="opthint">local · window-aware</div>
+          <div class="pillrow">
+            <div class="pill on">मुहूर्त से 30 मिनट पहले</div>
+            <div class="pill">07:00</div>
+            <div class="pill">08:00</div>
+          </div>
+        </div>
+
+        <div class="savebtn">सहेजें</div>
+        <div class="sheetnote">07:00 चुनने पर भी सूचना मुहूर्त से पहले ही आएगी — यहाँ मुहूर्त 6:07 AM है।</div>
+      </div>
+    </div>
+    <p class="cap"><b>3 · The reminder sheet — the vrat sheet, generalised.</b> <code>VratReminderSheet.tsx</code> ships exactly this
+      layout (in-tree overlay, advance pills, on-the-day switch, time pills, saffron save). <span class="newmark">NEW:</span> one
+      extra day-of option — <b>मुहूर्त से 30 मिनट पहले</b> — because a muhurat is a <i>time</i>, not a day.
+      <b>Do not fork the sheet</b>: add an optional <code>dayOfOptions</code> prop and pass the muhurat set (§7/§9, RULEBOOK §9).
+      <b>The clamp is the interesting bit</b> — this window opens at 6:07 AM, so a literal 07:00 day-of notice would fire
+      <i>after</i> the muhurat began. The planner clamps day-of to <code>min(chosen, windowStart − 30 min)</code> and the footnote
+      says so. Default stays the shipped one: 1 day advance + day-of on.</p>
+  </div>
+
+  <!-- ── 4. DAY DETAIL — followed ──────────────────────────── -->
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>6:53</span><span>5G ▮83</span></div>
+      <div class="screen notab"><div class="pad">
+        <div class="navrow">
+          <div class="back">‹</div>
+          <div class="title">वाहन क्रय</div>
+          <div class="navslot"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4"/><path d="m8 8 4-4 4 4"/><path d="M5 13v6h14v-6"/></svg></div>
+        </div>
+
+        <div class="answer">
+          <div class="danda">॥</div>
+          <div class="ad">17 अगस्त</div>
+          <div class="aw">सोमवार · श्रावण शुक्ल पंचमी · चित्रा</div>
+          <div class="tierpill">श्रेष्ठ · दृक्पंचांग पद्धति</div>
+          <div class="abest">
+            <div class="albl">सर्वोत्तम समय</div>
+            <div class="abig">6:07 – 7:41 AM</div>
+            <div class="anm">अमृत</div>
+          </div>
+        </div>
+
+        <div class="followed">
+          <span class="st">★</span>
+          <div class="ft">
+            <div class="h">अनुसरण किया</div>
+            <div class="s">रवि शाम 6:00 · सोम 5:37 AM</div>
+          </div>
+          <div class="edit">बदलें</div>
+        </div>
+        <div class="cta2">दिन के सभी शुभ समय ›</div>
+
+        <div class="sechead">यह तिथि क्यों?</div>
+        <div class="jrow"><div class="k">नक्षत्र</div><div class="v">चित्रा</div><div class="verdict">अनुकूल</div></div>
+        <div class="jrow"><div class="k">तिथि</div><div class="v">पंचमी</div><div class="verdict">अनुकूल</div></div>
+        <div class="jrow"><div class="k">वार</div><div class="v">सोमवार</div><div class="verdict">अनुकूल</div></div>
+
+        <div class="disclose">दोष जाँच — सभी निर्दोष<span class="chev">›</span></div>
+        <div class="disc">परम्पराएँ भिन्न हो सकती हैं। पुरोहित से पुष्टि करें।</div>
+      </div></div>
+    </div>
+    <p class="cap"><b>4 · Followed state — a status row, not a lit-up button.</b> <span class="newmark">NEW:</span> the CTA collapses
+      into a quiet <code>saffronTint</code> row that <b>states the two fire times in full</b> — <code>रवि शाम 6:00</code> (advance,
+      <code>ADVANCE_HOUR</code> 18 shared with the vrat planner) and <code>सोम 5:37 AM</code> (day-of, clamped 30 min before the
+      6:07 AM Amrit window). <b>बदलें</b> reopens the sheet; long-press or an off/off save unfollows. Showing the resolved
+      times — rather than "Reminder on" — is what makes an offline reminder trustworthy, and it is the only way the user can
+      notice that changing city moved them.</p>
+  </div>
+
+  <!-- ── 5. EMPTY-WITH-REASON — the season follow ──────────── -->
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>6:54</span><span>5G ▮83</span></div>
+      <div class="screen notab"><div class="pad">
+        <div class="navrow">
+          <div class="back">‹</div>
+          <div class="title">गृह प्रवेश</div>
+          <div class="navslot"></div>
+        </div>
+        <div style="font-family:var(--latin);font-size:13px;color:var(--ink-muted);text-align:center;margin-bottom:var(--s-md)">
+          Bengaluru · दृक्पंचांग पद्धति
+        </div>
+
+        <div class="empty">
+          <div class="danda">॥</div>
+          <div class="eh">अगले 3 महीनों में कोई शुभ मुहूर्त नहीं</div>
+          <div class="eb">यह चातुर्मास है — गृह प्रवेश इस काल में वर्जित है।<br />देव उठनी एकादशी <b>21 नवम्बर</b> को काल समाप्त होगा।</div>
+          <div class="whycard">
+            <div class="wh">क्यों</div>
+            <div class="wb"><b>चातुर्मास</b> — 92 में से 92 दिन · <b>रिक्ता तिथि</b> — 19 दिन · <b>पंचक</b> — 15 दिन ·
+              <b>शुक्र अस्त</b> — 13 दिन · <b>भद्रा</b> — 9 दिन</div>
+          </div>
+        </div>
+
+        <div class="cta"><span class="st">☆</span>25 नवम्बर के लिए स्मरण कराएँ</div>
+
+        <div class="sechead">इसके बाद पहली तिथियाँ</div>
+        <div class="res">
+          <div class="thumb">25</div>
+          <div class="rbody">
+            <div class="rdate">नवम्बर · बुधवार</div>
+            <div class="rtier">मध्यम</div>
+            <div class="rtime">अभिजित 11:43 AM – 12:29 PM</div>
+          </div>
+          <span class="chev">›</span>
+        </div>
+        <div class="res">
+          <div class="thumb">26</div>
+          <div class="rbody">
+            <div class="rdate">नवम्बर · गुरुवार</div>
+            <div class="rtier">श्रेष्ठ</div>
+            <div class="rtime">अभिजित 11:43 AM – 12:29 PM</div>
+          </div>
+          <span class="chev">›</span>
+        </div>
+        <div class="disc">परम्पराएँ भिन्न हो सकती हैं। पुरोहित से पुष्टि करें।</div>
+      </div></div>
+    </div>
+    <p class="cap"><b>5 · Empty-with-reason finally ends in an action.</b> The gold-॥ card, the dosha day-counts and
+      <b>इसके बाद पहली तिथियाँ</b> all ship today (real output: chaturmas on 92/92 days; first dates 25 &amp; 26 Nov 2026).
+      <span class="newmark">NEW:</span> a follow on <b>the first date that actually qualifies</b> — this is the follow PRD-16 §8
+      measures (<i>"empty-result sessions ending in a reminder for a later date ≥ 30%"</i>).
+      <b>Changed during implementation:</b> the plan called for a second follow <i>kind</i> targeting the season boundary
+      (21 Nov 2026, Dev Uthani). It was dropped. The boundary is not actionable — the first real Griha Pravesh muhurat is
+      25 Nov, so a 21 Nov notice arrives four days early with nothing to do — and it inherited the kshaya ambiguity (§9.2 lists
+      Dev Uthani 2026 as both 20 and 21 Nov). Targeting a graded day keeps <b>one</b> follow kind, one code path, and a notice
+      that names a real window.</p>
+  </div>
+
+  <!-- ── 6. FOLLOW INVENTORY ───────────────────────────────── -->
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>6:55</span><span>5G ▮83</span></div>
+      <div class="screen notab"><div class="pad">
+        <div class="navrow">
+          <div class="back">‹</div>
+          <div class="title">मेरे व्रत</div>
+          <div class="navslot"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 3a5 5 0 0 0-5 5c0 5-2 6-2 6h14s-2-1-2-6a5 5 0 0 0-5-5Z"/><path d="M10.5 20a2 2 0 0 0 3 0"/></svg></div>
+        </div>
+
+        <div class="sechead" style="margin-top:0">अनुसरण किए व्रत</div>
+        <div class="frow">
+          <span class="fs">★</span>
+          <div class="fb">
+            <div class="h">एकादशी</div>
+            <div class="s">1 दिन पहले · 07:00</div>
+          </div>
+          <div class="when">29 अग<small>15द</small></div>
+        </div>
+        <div class="frow">
+          <span class="fs">★</span>
+          <div class="fb">
+            <div class="h">प्रदोष व्रत</div>
+            <div class="s">1 दिन पहले · 07:00</div>
+          </div>
+          <div class="when">25 अग<small>11द</small></div>
+        </div>
+
+        <div class="sechead">अनुसरण किए मुहूर्त</div>
+        <div class="frow">
+          <span class="fs">★</span>
+          <div class="fb">
+            <div class="h">वाहन क्रय · श्रेष्ठ</div>
+            <div class="s">1 दिन पहले · अमृत 6:07 AM</div>
+          </div>
+          <div class="when">17 अग<small>3द</small></div>
+        </div>
+        <div class="frow">
+          <span class="fs">★</span>
+          <div class="fb">
+            <div class="h">गृह प्रवेश · मध्यम</div>
+            <div class="s">1 दिन पहले · अभिजित 11:43 AM</div>
+          </div>
+          <div class="when">25 नव<small>103द</small></div>
+        </div>
+        <div class="frow">
+          <span class="fs">★</span>
+          <div class="fb">
+            <div class="h">विद्यारम्भ · मध्यम</div>
+            <div class="s warn">स्थान बदला — अब उपयुक्त नहीं</div>
+          </div>
+          <div class="when">2 सित<small>19द</small></div>
+        </div>
+
+        <div class="disc">बीत चुके मुहूर्त स्वतः हट जाते हैं।</div>
+      </div></div>
+    </div>
+    <p class="cap"><b>6 · One follow inventory, not two.</b> <span class="newmark">NEW:</span> a second section inside the shipped
+      <code>MyVratScreen</code> rather than a new screen — the ★ badge already means "things I follow", and splitting it would make
+      the user check two places. Muhurat follows are <b>one-shot and dated</b>, so they carry a date + countdown and
+      <b>self-prune once past</b> (a vrat follow is a recurring rule and never expires — the single biggest divergence from the
+      vrat model). Row 3 shows the honest failure case: the user changed city, the day re-graded to excluded, so the row says so
+      in words and its notices are suppressed rather than silently firing a stale time (§12 — never colour alone).</p>
+  </div>
+
+  <!-- ── 7. FOR TODAY — abujh card ─────────────────────────── -->
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>6:20</span><span>5G ▮91</span></div>
+      <div class="screen"><div class="padx">
+        <div class="hero">
+          <div class="crest">
+            <span class="rule"></span><span class="om">ॐ</span>
+            <span class="wm">वेदांश़</span>
+            <span class="om">ॐ</span><span class="rule"></span>
+          </div>
+          <div class="tag">Sacred Texts · Daily Reading</div>
+        </div>
+
+        <div class="strip">
+          <div class="head">Sunday <span class="sep">·</span> Saptami <span class="sep">· Kartik Krishna</span></div>
+          <div class="chiprow">
+            <span class="schip gold">Ravi Pushya Yoga</span>
+            <span class="schip gold">Abhijit 11:39 AM – 12:26 PM</span>
+            <span class="schip avoid">Rahu Kaal 4:25 – 5:52 PM</span>
+          </div>
+        </div>
+
+        <div class="rowhead">For Today</div>
+        <div class="ftrow">
+          <div class="ftcard abujh">
+            <div class="occ">अबूझ मुहूर्त</div>
+            <div class="t">रवि पुष्य योग</div>
+            <div class="d">Auspicious all day — no shuddhi needed</div>
+          </div>
+          <div class="ftcard"><div class="t">रविवार · आदित्य हृदय स्तोत्रम्</div><div class="d">Sunday's recitation</div></div>
+        </div>
+
+        <div class="rbanner">
+          <div class="lotus"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20c-4 0-7-2.6-8-6 2.2.4 3.9 0 5-.8C9.5 15 10.6 17 12 20Zm0 0c4 0 7-2.6 8-6-2.2.4-3.9 0-5-.8-.5 1.8-1.6 3.8-3 6.8Zm0 0c-1.8-3.6-1.8-8 0-12 1.8 4 1.8 8.4 0 12Z"/></svg></div>
+          <div class="t">नित्य साधना<small>1 of 3 done today · continue</small></div>
+          <div class="chev">›</div>
+        </div>
+
+        <div class="rowhead">Categories</div>
+        <div class="grid">
+          <div class="gtile2"><div class="hi">चालीसा</div><div class="en">Chalisa</div></div>
+          <div class="gtile2"><div class="hi">आरती</div><div class="en">Aarti</div></div>
+          <div class="gtile2"><div class="hi">स्तोत्रम्</div><div class="en">Hymns</div></div>
+        </div>
+      </div></div>
+      <div class="tabbar">
+        <div class="tab on"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7"/><path d="M6.5 10v9h11v-9"/></svg>Home</div>
+        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M12 4v16"/><path d="M7 5c0 4 2.2 6 5 6s5-2 5-6"/></svg>Bhakti</div>
+        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/><path d="M12 5h5M19 12v5M12 19H7M5 12V7"/></svg>Panchang</div>
+        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V6l8-2v12"/><circle cx="7" cy="18" r="2"/><circle cx="15" cy="16" r="2"/></svg>Bhajan</div>
+        <div class="tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><circle cx="8.5" cy="12" r=".8" fill="currentColor"/><circle cx="12" cy="12" r=".8" fill="currentColor"/><circle cx="15.5" cy="12" r=".8" fill="currentColor"/></svg>More</div>
+      </div>
+    </div>
+    <p class="cap"><b>7 · The FOR TODAY abujh card — 1 Nov 2026, real Ravi Pushya.</b> <span class="newmark">NEW:</span> on an abujh
+      day the FOR TODAY row gains a <code>cardActive</code> card naming the day and its one promise — <i>auspicious in its
+      entirety, no shuddhi needed</i> — tapping through to <code>AbujhDays</code>. <b>The ordering constraint is a real test
+      coupling:</b> <code>festiveReminders.test.ts</code> asserts the row <i>leads</i> with the festival card on the 18 catalogued
+      festivals, so the abujh card must sit <b>after</b> the festival tier and only lead on abujh days that are not festive-catalog
+      days (Guru/Ravi Pushya, exactly this case). The chip row also names the yoga — same source, one truth.</p>
+  </div>
+
+  <!-- ── 8. LOCK SCREEN ────────────────────────────────────── -->
+  <div class="col">
+    <div class="phone">
+      <div class="lock">
+        <div class="lockclock">
+          <div class="t">5:37</div>
+          <div class="d">Monday, 17 August</div>
+        </div>
+        <div class="notif">
+          <div class="nh"><span class="app">वेदांश़</span><span class="ago">now</span></div>
+          <div class="nt">मुहूर्त स्मरण</div>
+          <div class="nb">आज वाहन क्रय का मुहूर्त — अमृत 6:07 – 7:41 AM</div>
+        </div>
+        <div class="notif" style="opacity:.62">
+          <div class="nh"><span class="app">वेदांश़</span><span class="ago">yesterday 6:00 PM</span></div>
+          <div class="nt">मुहूर्त स्मरण</div>
+          <div class="nb">कल वाहन क्रय का मुहूर्त · Vehicle purchase tomorrow</div>
+        </div>
+        <div class="notif" style="opacity:.45">
+          <div class="nh"><span class="app">वेदांश़</span><span class="ago">yesterday 6:00 PM</span></div>
+          <div class="nt">व्रत स्मरण</div>
+          <div class="nb">कल प्रदोष व्रत · Pradosh Vrat tomorrow</div>
+        </div>
+        <p class="lockcap">A followed muhurat and a followed vrat, from two planners<br />sharing one prefix discipline and one OS budget.</p>
+      </div>
+    </div>
+    <p class="cap"><b>8 · Two notices, no new mechanism.</b> <span class="newmark">NEW:</span> a seventh notification family,
+      prefix <code>muhurat-reminder</code>, same shape as every other one — pure planner + thin glue + a headless
+      <code>&lt;MuhuratReminderScheduler&gt;</code> in <code>App.tsx</code>. <b>Day-of copy carries the window</b>, because the
+      window is the whole point; the vrat family's day-of copy names only the day. Tapping either deep-links to
+      <code>MuhuratDayDetail {occasionId, dateMs}</code> via <code>notifications/deepLink.ts</code>. No quiet hours — removed in
+      #70 and not reintroduced here. The 5:37 AM fire is the clamp from screen 3 doing its job.</p>
+  </div>
+
+</div>
+
+<div class="note">
+
+  <h2>The plan behind the pixels</h2>
+
+  <h3>1. What is reused verbatim, and the one place the vrat model does not fit</h3>
+  <p>PRD-16 §6.7 says <i>"Reuse the vrat follow-and-remind pattern verbatim."</i> The <b>pattern</b> transfers exactly — a
+  local-first follow context, a pure planner with <code>now</code> parameterised, thin scheduling glue, a headless scheduler
+  component, one identifier prefix. The <b>store</b> does not, because of one structural difference:</p>
+  <table>
+    <tr><th style="width:22%"></th><th style="width:39%">Vrat follow (shipped)</th><th style="width:39%">Muhurat follow (new)</th></tr>
+    <tr><td><b>Key</b></td><td><code>ruleId</code> — a recurring <code>ObservanceRule</code></td><td><code>{occasionId}:{YYYY-MM-DD}</code> — one specific day</td></tr>
+    <tr><td><b>Next date</b></td><td>computed each time by the festival engine</td><td>the date <i>is</i> the key</td></tr>
+    <tr><td><b>Lifetime</b></td><td>forever — Ekadashi comes round again</td><td><b>one-shot; prunes once past</b></td></tr>
+    <tr><td><b>Priority under the cap</b></td><td>follow order (user-ranked)</td><td><b>soonest first</b> — a dated one-shot has no other sane ranking</td></tr>
+    <tr><td><b>Time granularity</b></td><td>the day (07:00 morning notice)</td><td><b>the window</b> (6:07 AM) — hence the clamp</td></tr>
+    <tr><td><b>Empty state</b></td><td>—</td><td>the same follow, targeting the <b>first qualifying date</b> — one kind, not two (see screen 5)</td></tr>
+    <tr><td><b>Pref model</b></td><td colspan="2"><span class="tagreuse">SHARED</span> — <code>VratReminderPref</code> (<code>advanceDays 0|1|2|3</code>, <code>dayOf</code>, <code>dayOfTime</code>) is imported, not re-declared. Default stays 1 day + 07:00.</td></tr>
+  </table>
+
+  <h3>2. Files</h3>
+  <table>
+    <tr><th style="width:34%">File</th><th style="width:12%"></th><th>What it does</th></tr>
+    <tr><td><code>contexts/MuhuratFollowContext.tsx</code></td><td><span class="tagnew">NEW</span></td><td>Mirrors <code>VratFollowContext</code> line for line — AsyncStorage under <code>@vedansh/muhurat-follows</code>, load-time <code>normalize()</code>, idempotent follow/unfollow, <code>setReminder</code>. Adds one thing: <b>prune-on-load</b> of entries whose date is past.</td></tr>
+    <tr><td><code>notifications/muhuratReminderPure.ts</code></td><td><span class="tagnew">NEW</span></td><td><code>planMuhuratReminders(inputs, now, cap)</code>; <code>MUHURAT_NOTIF_PREFIX = 'muhurat-reminder'</code>, <code>MUHURAT_REMINDER_CAP = 8</code>. Imports <code>ADVANCE_HOUR</code> from <code>vratReminderPure</code> so the two evening notices cannot drift apart. Owns the day-of clamp. Pure, <code>tsx --test</code>-able.</td></tr>
+    <tr><td><code>notifications/muhuratScheduler.ts</code></td><td><span class="tagnew">NEW</span></td><td>Cancel-then-reschedule over the prefix; resolves each follow's window from <code>panchangDayStore</code> at plan time.</td></tr>
+    <tr><td><code>components/MuhuratReminderScheduler.tsx</code></td><td><span class="tagnew">NEW</span></td><td>Headless, armed in <code>App.tsx</code> beside the other six. Re-plans on follows change, <b>location change, and calendar-system change</b>.</td></tr>
+    <tr><td><code>components/VratReminderSheet.tsx</code></td><td><span class="tagreuse">EXTEND</span></td><td>Optional <code>dayOfOptions</code> + <code>subtitle</code> props so the muhurat variant gets its window pill. No fork (§7/§9, RULEBOOK §9).</td></tr>
+    <tr><td><code>screens/MuhuratDayDetailScreen.tsx</code></td><td><span class="tagreuse">EXTEND</span></td><td>Follow CTA / followed row in the action band (screens 2 &amp; 4).</td></tr>
+    <tr><td><code>screens/MuhuratResultsScreen.tsx</code></td><td><span class="tagreuse">EXTEND</span></td><td>Season-open CTA in the empty state only. No per-card ★.</td></tr>
+    <tr><td><code>screens/MyVratScreen.tsx</code></td><td><span class="tagreuse">EXTEND</span></td><td>Second section: अनुसरण किए मुहूर्त.</td></tr>
+    <tr><td><code>components/TodayStrip.tsx</code></td><td><span class="tagreuse">EXTEND</span></td><td>One more entry at the head of the existing <code>chips</code> array. The row already reserves its height and auto-drifts.</td></tr>
+    <tr><td><code>components/TodayRecommendationsRow.tsx</code><br /><code>data/discoveryMeta.ts</code></td><td><span class="tagreuse">EXTEND</span></td><td>A non-<code>LibraryEntry</code> spotlight for the abujh card, inserted <b>after</b> the festival tier.</td></tr>
+    <tr><td><code>notifications/deepLink.ts</code></td><td><span class="tagreuse">EXTEND</span></td><td><code>muhurat-reminder</code> &rarr; <code>MuhuratDayDetail {occasionId, dateMs}</code>.</td></tr>
+  </table>
+
+  <h3>3. Gotchas this slice has to get right</h3>
+  <ul>
+    <li><b>Never store a computed time.</b> A follow stores <code>occasionId</code> + civil date only. The window is re-derived
+      from <code>panchangDayStore</code> at plan time, because <b>every window is sunrise-derived and a city change moves all of
+      them</b> (design.md §60, PRD §6.1). Storing "6:07 AM" would silently lie the moment the user travels.</li>
+    <li><b>Re-plan on location and calendar-system change</b> — the same two inputs that scope the day store. This is the
+      scheduler's trigger set, not just "follows changed".</li>
+    <li><b>Verdict drift.</b> A followed day can re-grade to <code>excluded</code> after a location change. Keep the follow,
+      mark the row in words, suppress its notices — never fire a reminder for a day the engine now rejects (screen 6, row 3).</li>
+    <li><b>Prune or the store lies.</b> One-shot follows must be dropped once past, or the ★ count grows forever and
+      <code>reminderCount</code> counts notices that can never fire.</li>
+    <li><b>The shared iOS 64-slot budget now has seven claimants.</b> Cap at 8 and rank soonest-first; log the truncation count
+      the way <code>planVratReminders</code> does.</li>
+    <li><b>Day-of clamp.</b> <code>min(chosen dayOfTime, windowStart − 30 min)</code>. Without it, an early-Amrit window (6:07 AM
+      here) gets a 07:00 notice that arrives after the muhurat opened — the feature failing at the one job it has.</li>
+    <li><b>FOR TODAY ordering is test-enforced.</b> <code>festiveReminders.test.ts</code> asserts the leading card on the 18
+      catalogued festivals; the abujh card goes after the festival tier or that suite goes red.</li>
+    <li><b>No quiet hours</b> (removed in #70). <b>No new palette</b> — saffronTint/goldChip/avoidChip only, word + tint never
+      colour alone (§12). All copy authored Devanagari + English through <code>contentByLang</code>; the followed-state times use
+      <code>tabular-nums</code> + <code>nowrap</code> so font-scale L cannot wrap them (PRD §6.1).</li>
+  </ul>
+
+  <h3>4. Test &amp; e2e gates (RULEBOOK §0, §9)</h3>
+  <ul>
+    <li><code>muhuratReminderPure.test.ts</code> — advance/day-of fire times, the clamp, cap truncation ordering, season-open kind,
+      and the prune boundary at midnight. Runs under <code>npm run test:data</code> beside <code>vratReminderPure.test.ts</code>.</li>
+    <li><code>MuhuratFollowContext.test.tsx</code> — normalize/de-dup/prune, mirroring the shipped <code>VratFollowContext.test.tsx</code>.</li>
+    <li>A routing test that a location change re-plans (the same shape as the day-store routing test that caught the
+      <code>RETAINED_PAST_DAYS</code> bug by counting engine calls, not by inspection).</li>
+    <li><code>.maestro/muhurat-follow-smoke.yaml</code> — finder &rarr; occasion &rarr; day detail &rarr; follow &rarr; sheet &rarr;
+      save &rarr; followed state &rarr; MyVrat shows the row; plus the empty-with-reason season-follow path.</li>
+    <li><b>design.md §60 and RULEBOOK §17 updated in the same PR</b> (design-doc-sync rule) — §60's "Known Phase-1 limits" line
+      currently reads <i>"follow/remind is the next slice"</i> and must move to a described surface.</li>
+  </ul>
+
+  <h3>5. Open questions worth deciding before code</h3>
+  <ul>
+    <li><b>Should the empty state also NAME the season boundary?</b> Resolved for the follow itself (it targets the first
+      qualifying date), but the copy could still say "चातुर्मास 21 नवम्बर को समाप्त" as information. That needs a festival-engine
+      lookup and inherits the kshaya ambiguity (Dev Uthani 2026 is listed as both 20 and 21 Nov, PRD §9.2) — deferred.</li>
+    <li><b>Follow the day, or follow the occasion?</b> Following <i>वाहन क्रय</i> as a standing interest ("tell me when a
+      श्रेष्ठ day appears") is a larger, more valuable feature — and a much bigger one, since it needs a background re-scan.
+      This slice deliberately follows <i>days</i>. Worth naming as a Phase-2 candidate rather than leaving implied.</li>
+    <li><b>Does the Today-strip chip window stay at 7 days?</b> Shorter keeps Home quiet; longer makes the follow feel alive.</li>
+    <li><b>Should an abujh day be followable too?</b> Screen 7 only announces it. An abujh day has no window to clamp to, so it
+      would reuse the plain vrat 07:00 shape — cheap, but it adds a third follow kind.</li>
+  </ul>
+
+  <p style="margin-top:22px"><b>Provenance.</b> Every date, time, tier, dosha count and panchang line in this file is output from
+  the shipped engine (<code>eventMuhurat.ts</code> + <code>panchangDayStore.ts</code>, Bengaluru, purnimant, 14 Aug 2026 anchor) —
+  not drafted. Rule tables are still <b>DRAFT</b> pending the RULEBOOK §17 / §10 content review, which remains the release gate
+  for the whole finder, follow layer included.</p>
+
+</div>
+
+</body>
+</html>

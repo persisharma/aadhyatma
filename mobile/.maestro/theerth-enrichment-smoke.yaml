@@ -1,0 +1,113 @@
+# Theerth Enrichment Smoke Test (enrich-teerth-section)
+#
+# Verifies EVERY newly-added live temple is plotted + reachable end-to-end:
+#   - 14 India-located Ashtadasha Maha Shakti Peeths (By Category → Shakti Peeth)
+#   - 10 gap-state + lokdevta shrines        (By Category → Other Famous Temples)
+#   - the detail path + sourced prose        (Vetrimalai Murugan → Sources footer)
+#   - the 3 newly-covered states             (By State → Andaman / Chandigarh / Nagaland)
+#
+# Notes for maintainers:
+#  - Maestro's text selector is a FULL-text regex, so partial names use `.*…*`.
+#  - Each scroll asserts the temple's MAP PIN (TheerthPin sets accessibilityLabel
+#    = the name); all pins are on-screen at once, which is exactly the "is it
+#    plotted?" check we want. List rows expose only the name (the BrowseCard's
+#    accessibilityLabel collapses its city meta), and the dense map clusters pins,
+#    so the detail tap uses Vetrimalai Murugan — its Andaman pin sits alone with no
+#    neighbour to mis-route the tap. Khatu Shyam's KRISHNA badge + background
+#    override are covered deterministically in TheerthDetailScreen.test.tsx.
+appId: com.prashantsharma.vedansh
+---
+# Native dev-client build: launch reconnects to Metro and lands on Home.
+- launchApp:
+    appId: com.prashantsharma.vedansh
+    clearState: true
+- waitForAnimationToEnd:
+    timeout: 30000
+- tapOn:
+    text: "Allow"
+    optional: true
+- tapOn:
+    text: "Don't Allow"
+    optional: true
+- tapOn:
+    text: "Skip tour"
+    optional: true
+- tapOn:
+    text: "Close"
+    optional: true
+- tapOn:
+    text: "Got it"
+    optional: true
+
+- extendedWaitUntil:
+    visible: ".*Pilgrimage.*Tap to open.*"
+    timeout: 120000
+- tapOn: ".*Pilgrimage.*Tap to open.*"
+- waitForAnimationToEnd
+# Force English via the listing's LanguageToggle (testID; the segment isn't
+# reliably tappable by the text "English").
+- tapOn:
+    id: "lang-toggle-en"
+- waitForAnimationToEnd
+- assertVisible: "By Category"
+
+# ── Shakti Peeth (now 21): every one of the 14 new Ashtadasha shrines is plotted ─
+- tapOn: "By Category"
+- waitForAnimationToEnd
+- tapOn: "Shakti Peeth"
+- waitForAnimationToEnd:
+    timeout: 15000
+- scrollUntilVisible: { element: { text: ".*Bhramaramba.*" }, direction: DOWN, timeout: 30000 }
+- scrollUntilVisible: { element: { text: ".*Biraja.*" }, direction: DOWN, timeout: 30000 }
+- scrollUntilVisible: { element: { text: ".*Chamundeshwari.*" }, direction: DOWN, timeout: 30000 }
+- scrollUntilVisible: { element: { text: ".*Harsiddhi.*" }, direction: DOWN, timeout: 30000 }
+- scrollUntilVisible: { element: { text: ".*Jogulamba.*" }, direction: DOWN, timeout: 30000 }
+- scrollUntilVisible: { element: { text: ".*Kamakshi.*" }, direction: DOWN, timeout: 30000 }
+- scrollUntilVisible: { element: { text: ".*Madhaveswari.*" }, direction: DOWN, timeout: 30000 }
+- scrollUntilVisible: { element: { text: ".*Mahalakshmi.*" }, direction: DOWN, timeout: 30000 }
+- scrollUntilVisible: { element: { text: ".*Mangala Gauri.*" }, direction: DOWN, timeout: 30000 }
+- scrollUntilVisible: { element: { text: ".*Manikyamba.*" }, direction: DOWN, timeout: 30000 }
+- scrollUntilVisible: { element: { text: ".*Puruhutika.*" }, direction: DOWN, timeout: 30000 }
+- scrollUntilVisible: { element: { text: ".*Renuka.*" }, direction: DOWN, timeout: 30000 }
+- scrollUntilVisible: { element: { text: ".*Shrinkhala.*" }, direction: DOWN, timeout: 30000 }
+- scrollUntilVisible: { element: { text: ".*Vishalakshi.*" }, direction: DOWN, timeout: 30000 }
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# ── Other Famous Temples: every one of the 10 gap-state + lokdevta shrines ──────
+- scrollUntilVisible: { element: { text: "Other Famous Temples" }, direction: DOWN, timeout: 15000 }
+- tapOn: "Other Famous Temples"
+- waitForAnimationToEnd:
+    timeout: 15000
+- scrollUntilVisible: { element: { text: ".*Baba Ramdev.*" }, direction: DOWN, timeout: 30000 }
+- scrollUntilVisible: { element: { text: ".*Dimapur Kalibari.*" }, direction: DOWN, timeout: 30000 }
+- scrollUntilVisible: { element: { text: ".*Gogaji.*" }, direction: DOWN, timeout: 30000 }
+- scrollUntilVisible: { element: { text: ".*ISKCON Chandigarh.*" }, direction: DOWN, timeout: 30000 }
+- scrollUntilVisible: { element: { text: ".*Khandoba.*" }, direction: DOWN, timeout: 30000 }
+- scrollUntilVisible: { element: { text: ".*Khatu Shyam.*" }, direction: DOWN, timeout: 30000 }
+- scrollUntilVisible: { element: { text: ".*Mahasu Devta.*" }, direction: DOWN, timeout: 30000 }
+- scrollUntilVisible: { element: { text: ".*Sabarimala.*" }, direction: DOWN, timeout: 30000 }
+- scrollUntilVisible: { element: { text: ".*Veer Tejaji.*" }, direction: DOWN, timeout: 30000 }
+- scrollUntilVisible: { element: { text: ".*Vetrimalai Murugan.*" }, direction: DOWN, timeout: 30000 }
+# Detail path: tap the isolated Andaman pin (no neighbour to mis-route) → sourced prose
+- tapOn:
+    text: ".*Vetrimalai Murugan.*"
+    index: 0
+- extendedWaitUntil:
+    visible: ".*Sources.*"
+    timeout: 15000
+- assertVisible: ".*Vetrimalai Murugan.*"
+- tapOn: "Back"
+- waitForAnimationToEnd
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# ── By State: the 3 newly-covered states/UTs ───────────────────────────────────
+- tapOn: "By State"
+- waitForAnimationToEnd
+- scrollUntilVisible: { element: { text: ".*Andaman.*" }, direction: DOWN, timeout: 30000 }
+- scrollUntilVisible: { element: { text: ".*Chandigarh.*" }, direction: DOWN, timeout: 30000 }
+- scrollUntilVisible: { element: { text: ".*Nagaland.*" }, direction: DOWN, timeout: 30000 }
+
+- stopApp:
+    appId: com.prashantsharma.vedansh

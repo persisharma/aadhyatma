@@ -1,0 +1,46 @@
+name: CI
+
+# Test gate for the mobile app. Runs typecheck + the Jest/tsx suites so loop PRs
+# (and any PR touching mobile/) get a real red/green signal to block merge on.
+
+on:
+  pull_request:
+    paths:
+      - 'mobile/**'
+  push:
+    branches: [main]
+    paths:
+      - 'mobile/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Reader/component tests
+        run: npm run test:readers
+
+      - name: Engine tests
+        run: npm run test:engine
+
+      - name: Observance date verification (festival dates vs muhurta-based astronomy)
+        run: npm run verify:observances
+
+      - name: Data tests
+        run: npm run test:data

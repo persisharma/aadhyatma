@@ -16,3 +16,21 @@
 
 # macOS
 .DS_Store
+
+# Natural Earth download cache for build-india-map.mjs
+scripts/.cache/
+
+# Marketing reel pipeline — regenerable outputs (keep the tooling, ignore the artifacts)
+marketing/linkedin/shots/
+marketing/linkedin/frames/
+marketing/linkedin/slides/
+marketing/linkedin/*.mp4
+marketing/linkedin/.metro.log
+marketing/instagram/shots/
+marketing/instagram/frames/
+marketing/instagram/carousel/
+marketing/instagram/*.mp4
+
+# Source research artifacts — kept local only; verified content lives as text and
+# sources are cited by public URL (never commit these)
+tmp/

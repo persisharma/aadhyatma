@@ -3,6 +3,7 @@
 // Run from repo root:  node scripts/parse-gita.mjs
 
 import { readFileSync, writeFileSync, readdirSync, mkdirSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -10,6 +11,16 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, '..');
 const SRC_DIR = join(REPO_ROOT, 'BhagwadGita', 'chapters');
 const OUT_DIR = join(REPO_ROOT, 'mobile', 'src', 'data', 'gita');
+
+const GITA_SOURCE = {
+  baseText: 'Bhagavad Gita source markdown in BhagwadGita/chapters; verse count follows the 701-shloka recension with chapter 13 counted as 35 verses.',
+  referenceUrls: [
+    'https://www.holy-bhagavad-gita.org/chapter/13',
+    'https://sgsgitafoundation.org/tutorial.html',
+    'https://en.wikipedia.org/wiki/Bhagavad_Gita'
+  ],
+  retrievedOn: '2026-05-30'
+};
 
 const REQUIRED_SECTIONS = [
   'Sanskrit Shloka',
@@ -94,7 +105,7 @@ function extractVerseSections(block) {
 // Some source verses cram all Sanskrit onto a single line. Split on single daṇḍa
 // (।) — not double daṇḍa (।।) which is the verse-end marker. Also split speaker
 // prefixes ("अर्जुन उवाच") when they're glued to the following verse text.
-const SPEAKER_RE = /^((?:श्री\s*)?(?:भगवान्?|धृतराष्ट्र|सञ्जय|संजय|अर्जुन|श्रीकृष्ण|कृष्ण)\s*उवाच)([।]?)(.*)$/u;
+const SPEAKER_RE = /^((?:श्री\s*)?(?:भगवानुवाच|भगवान्?\s*उवाच|धृतराष्ट्र\s*उवाच|सञ्जय\s*उवाच|संजय\s*उवाच|अर्जुन\s*उवाच|श्रीकृष्ण\s*उवाच|कृष्ण\s*उवाच))([।]?)(.*)$/u;
 
 function mergeVerseNumberTrailing(chunks) {
   const result = [];
@@ -217,11 +228,40 @@ function parseChapterFile(filePath) {
     verseCount: declaredVerseCount,
     summaryHi,
     summaryEn,
+    source: GITA_SOURCE,
     verses,
   };
 }
 
+// This parser is a whitespace-only pass-through: whatever Devanagari the source
+// markdown holds lands in shipped JSON verbatim. That is how 28 malformed clusters
+// (भक्ितयोगेन for भक्तियोगेन, and friends) reached the reader as dotted circles, and
+// why hand-patching the JSON never held — the next regeneration overwrote it.
+// Delegate to the canonical validator rather than reimplementing the rule here; a
+// partial copy of the rule is what let the class through in the first place.
+function assertSourceDevanagariWellFormed() {
+  const verifier = join(REPO_ROOT, 'mobile', 'scripts', 'verify-devanagari.mts');
+  const result = spawnSync('npx', ['tsx', verifier, 'BhagwadGita/chapters'], {
+    cwd: join(REPO_ROOT, 'mobile'),
+    encoding: 'utf8',
+  });
+  if (result.error || result.status === null) {
+    throw new Error(
+      `cannot run the Devanagari well-formedness gate (${result.error?.message ?? 'no exit status'}).\n` +
+        `Run "npm run verify:devanagari" in mobile/ manually before regenerating. RULEBOOK §11.14.`
+    );
+  }
+  if (result.status !== 0) {
+    process.stderr.write(result.stdout ?? '');
+    throw new Error(
+      'BhagwadGita/chapters contains malformed Devanagari — regeneration would ship dotted circles (U+25CC).\n' +
+        'Fix the chapter markdown, not the generated JSON. RULEBOOK §11.14.'
+    );
+  }
+}
+
 function main() {
+  assertSourceDevanagariWellFormed();
   mkdirSync(OUT_DIR, { recursive: true });
   const files = readdirSync(SRC_DIR)
     .filter((f) => /^chapter-\d{2}-.+\.md$/.test(f))

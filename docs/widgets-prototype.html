@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PRD-15 · Home-Screen Widgets — Interactive Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --parchment:#f3e7c9; --parchment-soft:#f8efd6; --parchment-hi:#fff5e0;
+    --gradient-end:#e9d9b1; --gold:#a67c34; --gold-soft:#c9b896; --gold-tint:#d8c393;
+    --saffron:#b8621b; --saffron-deep:#8a3e0b; --saffron-tint:rgba(184,98,27,0.10);
+    --ink:#2f1e10; --ink-soft:#5c4326; --ink-muted:#8a6a47; --divider:#d9c9a6;
+    --sans:'Inter',system-ui,sans-serif;
+    --serif:'Cormorant Garamond',serif;
+    --deva:'Noto Serif Devanagari',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:#1a140c;color:#e9d9b1;padding:24px;line-height:1.5}
+  h1{font-family:var(--serif);font-weight:600;font-size:28px;color:#fff5e0;margin-bottom:2px}
+  .sub{font-style:italic;color:var(--gold-soft);font-size:14px;margin-bottom:6px;max-width:920px}
+  .legend{font-size:12.5px;color:#b7a377;margin-bottom:20px;max-width:920px}
+  .legend b{color:#e9d9b1}
+  .phaselabel{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--saffron);background:var(--saffron-tint);display:inline-block;padding:4px 12px;border-radius:20px;margin:26px 0 4px}
+  .phasedesc{font-size:12.5px;color:#b7a377;margin-bottom:14px;max-width:920px}
+  .wrap{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap}
+  .cap{width:340px;font-size:12px;color:#b7a377;margin-top:10px;text-align:left;line-height:1.55}
+  .cap b{color:#e9d9b1}
+  .cap .n{display:inline-flex;width:16px;height:16px;border-radius:50%;background:var(--gold);color:#1a140c;
+    font-weight:600;font-size:10.5px;align-items:center;justify-content:center;margin-right:5px;vertical-align:1px}
+  .col{display:flex;flex-direction:column;align-items:center}
+
+  /* ---- phone frame ---- */
+  .phone{width:340px;height:720px;background:var(--parchment);border-radius:38px;
+    border:10px solid #0d0804;box-shadow:0 24px 60px rgba(0,0,0,.55);position:relative;overflow:hidden;flex:none}
+  .phone.os{background:linear-gradient(165deg,#241a2e 0%,#3a2438 45%,#1c1424 100%)}
+  .phone .statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);background:linear-gradient(var(--parchment-hi),var(--parchment))}
+  .phone.os .statusbar{color:#f5eee2;background:transparent}
+  .screen{position:absolute;top:32px;left:0;right:0;bottom:0;overflow-y:auto;
+    background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
+  .phone.os .screen{background:transparent}
+  .screen::-webkit-scrollbar{width:0}
+  .pad{padding:16px 16px 26px}
+  .topbar{display:flex;align-items:center;gap:12px;padding:6px 2px 14px}
+  .back{width:38px;height:38px;border-radius:50%;border:1px solid var(--divider);background:var(--parchment-soft);
+    display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:18px}
+  .toptitle{font-family:var(--deva);font-size:16px;color:var(--ink);flex:1}
+  .deva{font-family:var(--deva)}
+
+  .dot{position:absolute;width:20px;height:20px;border-radius:50%;background:var(--gold);color:#1a140c;
+    font-weight:700;font-size:11px;font-family:var(--sans);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 2px 6px rgba(0,0,0,.35);z-index:5}
+
+  /* ---- OS home screen bits ---- */
+  .oshome{padding:14px 20px}
+  .iconrow{display:flex;gap:18px;justify-content:space-between;margin-bottom:18px}
+  .appicon{width:58px;text-align:center;font-size:9.5px;color:#e8e0f0}
+  .appicon .ic{width:56px;height:56px;border-radius:14px;margin:0 auto 4px;background:linear-gradient(150deg,#4a4a55,#2e2e38);
+    display:flex;align-items:center;justify-content:center;font-size:22px;color:#cfc8dc}
+  .appicon .ic.vedansh{background:linear-gradient(150deg,var(--parchment-hi),var(--gold-tint));color:var(--saffron-deep);
+    font-family:var(--deva);font-size:26px}
+  .osdock{position:absolute;bottom:12px;left:16px;right:16px;height:74px;border-radius:24px;
+    background:rgba(255,255,255,.14);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:space-around;padding:0 8px}
+
+  /* widgets — parchment system rendered on the OS canvas */
+  .wgt{border-radius:20px;background:linear-gradient(160deg,var(--parchment-hi),var(--parchment));
+    box-shadow:0 8px 22px rgba(0,0,0,.35);overflow:hidden;position:relative}
+  .wgt-sm{width:142px;height:142px;padding:12px}
+  .wgt-md{width:300px;height:142px;padding:13px 15px}
+  .wgt .kicker{font-size:10px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--saffron-deep);font-family:var(--sans)}
+  .wgt .om{position:absolute;right:11px;top:9px;font-family:var(--deva);font-size:12px;color:var(--gold)}
+  .wgtlabel{font-size:9.5px;color:#e8e0f0;text-align:center;margin-top:5px}
+
+  /* verse widget */
+  .wv .verse{font-family:var(--deva);font-size:13.5px;color:var(--ink);line-height:1.75;margin-top:6px}
+  .wv .src{font-family:var(--serif);font-style:italic;font-size:10px;color:var(--ink-muted);position:absolute;bottom:10px;left:12px;right:12px}
+
+  /* panchang widget */
+  .wp .tithi{font-family:var(--deva);font-size:17px;color:var(--ink);margin-top:5px}
+  .wp .sub2{font-family:var(--deva);font-size:11px;color:var(--ink-soft);margin-top:2px}
+  .wp .cols{display:flex;gap:10px;margin-top:9px}
+  .wp .cell{flex:1;background:var(--parchment-soft);border:1px solid var(--divider);border-radius:10px;padding:6px 8px}
+  .wp .cl{font-size:10px;font-weight:600;letter-spacing:.25px;text-transform:uppercase;color:var(--ink-muted);font-family:var(--sans)}
+  .wp .cv{font-family:var(--deva);font-size:11.5px;color:var(--ink);margin-top:1px}
+  .wp .cv.avoid{color:#7a3722;font-weight:600}
+
+  /* streak widget */
+  .ws{display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .ws .ring{width:74px;height:74px;border-radius:50%;margin-top:4px;position:relative;
+    background:conic-gradient(var(--saffron) 0deg 252deg,var(--divider) 252deg 360deg);
+    display:flex;align-items:center;justify-content:center}
+  .ws .ring .in{width:58px;height:58px;border-radius:50%;background:var(--parchment-hi);
+    display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .ws .ring .num{font-family:var(--deva);font-size:19px;color:var(--ink);line-height:1}
+  .ws .ring .lb{font-size:10px;font-family:var(--sans);font-weight:600;color:var(--ink-muted);letter-spacing:.2px;margin-top:2px}
+  .ws .foot{font-family:var(--deva);font-size:10px;color:var(--ink-soft);margin-top:7px}
+
+  /* stale state */
+  .wstale{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:14px}
+  .wstale .o{font-family:var(--deva);font-size:26px;color:var(--gold)}
+  .wstale .t{font-family:var(--deva);font-size:12.5px;color:var(--ink);margin-top:6px;line-height:1.6}
+  .wstale .s{font-family:var(--serif);font-style:italic;font-size:10px;color:var(--ink-muted);margin-top:4px}
+
+  /* ---- lock screen ---- */
+  .lock{padding:40px 20px 0;text-align:center;color:#f5eee2}
+  .lock .ldate{font-size:14px;font-weight:500;opacity:.9}
+  .lock .ltime{font-size:66px;font-weight:600;letter-spacing:1px;line-height:1.05;margin-top:2px}
+  .lockwgt-row{display:flex;gap:10px;justify-content:center;margin-top:14px;align-items:center}
+  .lw-inline{background:rgba(255,255,255,.16);border-radius:14px;padding:6px 14px;font-family:var(--deva);font-size:12.5px;color:#fff}
+  .lw-circ{width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.16);position:relative;
+    display:flex;align-items:center;justify-content:center}
+  .lw-circ .ring2{width:44px;height:44px;border-radius:50%;background:conic-gradient(#f2c97e 0deg 252deg,rgba(255,255,255,.25) 252deg 360deg);
+    display:flex;align-items:center;justify-content:center}
+  .lw-circ .in2{width:34px;height:34px;border-radius:50%;background:#3a2438;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .lw-circ .n2{font-family:var(--deva);font-size:13px;color:#fff;line-height:1}
+  .lw-circ .l2{font-size:10px;font-weight:600;color:#f5eee2}
+  .locknotif{margin:150px 14px 0;background:rgba(255,255,255,.14);backdrop-filter:blur(6px);border-radius:18px;padding:12px 14px;text-align:left;color:#fff}
+  .locknotif .nt{font-size:12px;font-weight:600}
+  .locknotif .ns{font-size:11.5px;opacity:.85;margin-top:2px;font-family:var(--deva)}
+
+  /* ---- in-app screens ---- */
+  .morerow{display:flex;align-items:center;gap:13px;padding:15px 4px;border-bottom:1px solid var(--divider)}
+  .morerow .mi{width:36px;height:36px;border-radius:50%;border:1px solid var(--gold-tint);background:var(--parchment-hi);
+    display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:15px;color:var(--saffron-deep);flex:none}
+  .morerow .mt{flex:1}
+  .morerow .mtt{font-family:var(--deva);font-size:15.5px;color:var(--ink)}
+  .morerow .mts{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:1px}
+  .morerow .chev{color:var(--saffron);font-size:17px}
+  .tag{font-size:10px;font-weight:600;color:var(--saffron-deep);background:var(--saffron-tint);padding:2px 7px;border-radius:8px;font-family:var(--sans)}
+
+  .gallcard{border:1px solid var(--divider);background:var(--parchment-soft);border-radius:16px;padding:14px;margin-bottom:14px}
+  .gallcard .gt{font-family:var(--deva);font-size:15.5px;color:var(--ink)}
+  .gallcard .gs{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);margin-top:2px;margin-bottom:10px}
+  .gallpreview{background:linear-gradient(165deg,#241a2e,#3a2438);border-radius:14px;padding:14px;display:flex;justify-content:center}
+  .steps{margin-top:10px}
+  .step{display:flex;gap:9px;font-family:var(--deva);font-size:12.5px;color:var(--ink-soft);line-height:1.7;margin-bottom:4px}
+  .step .sn{width:18px;height:18px;border-radius:50%;background:var(--saffron-tint);color:var(--saffron-deep);
+    font-family:var(--sans);font-size:10.5px;font-weight:600;display:flex;align-items:center;justify-content:center;flex:none;margin-top:3px}
+  .note{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);text-align:center;margin-top:12px;line-height:1.6}
+  .addbtn{margin-top:10px;border:0;border-radius:12px;background:var(--saffron-deep);color:var(--parchment-hi);
+    min-height:44px;width:100%;font-family:var(--sans);font-size:12px;font-weight:600}
+
+  .tabbar{position:sticky;bottom:0;height:52px;background:var(--parchment-soft);border-top:1px solid var(--divider);display:flex}
+  .tabbar .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10px;color:var(--ink-muted)}
+  .tabbar .tab.active{color:var(--saffron)}
+  .tabbar .tab .ic{font-size:16px}
+</style>
+</head>
+<body>
+  <h1>Home-Screen Widgets — विजेट</h1>
+  <div class="sub">PRD-15 · Revised UI prototype: the three widgets on iOS/Android home &amp; lock screens, the in-app gallery, and safe freshness fallbacks. Static mockups — not the live build.</div>
+  <div class="legend">Widgets are the parchment system rendered on the OS canvas: <b>आज का श्लोक</b>, <b>आज का पंचांग</b>, and <b>जप-साधना</b>. After foreground interactions settle, the app atomically writes a versioned 14-day payload; it also rewrites on Panchang preference, language, or Japam changes and requests a native reload. Widgets render without astronomy or network work, and Home startup never imports the Panchang graph for them. Native delivery remains behind a mandatory clean-prebuild/EAS/device Phase-0 spike.</div>
+
+  <!-- ============ 1 · iOS HOME ============ -->
+  <div class="phaselabel">1 · iOS home screen — the daily ambient surface</div>
+  <div class="phasedesc">Small + medium WidgetKit sizes. The parchment card floats on any wallpaper; ॐ mark anchors the brand top-right.</div>
+  <div class="wrap">
+
+    <div class="col">
+    <div class="phone os">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="oshome">
+
+        <div class="iconrow" style="margin-top:6px">
+          <div style="position:relative"><div class="dot" style="left:-6px;top:-6px">1</div>
+          <div class="wgt wgt-sm wv" role="img" aria-label="आज का श्लोक। कर्मण्येवाधिकारस्ते मा फलेषु कदाचन। गीता अध्याय 2 श्लोक 47। खोलने के लिए टैप करें।">
+            <div class="kicker">आज का श्लोक</div><div class="om">ॐ</div>
+            <div class="verse">कर्मण्येवाधिकारस्ते<br/>मा फलेषु कदाचन।</div>
+            <div class="src">गीता २·४७ · Gita 2.47</div>
+          </div>
+          <div class="wgtlabel">वेदांश़</div></div>
+
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div class="iconrow" style="margin:0;gap:14px">
+              <div class="appicon"><div class="ic">✉</div>Mail</div>
+              <div class="appicon"><div class="ic">☁</div>Weather</div>
+            </div>
+            <div class="iconrow" style="margin:0;gap:14px">
+              <div class="appicon"><div class="ic">▤</div>Notes</div>
+              <div class="appicon"><div class="ic">◔</div>Clock</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="position:relative;margin-bottom:16px"><div class="dot" style="left:-6px;top:-6px">2</div>
+        <div class="wgt wgt-md wp" role="img" aria-label="10 अगस्त का पंचांग, जयपुर, अमांत। श्रावण शुक्ल एकादशी। सूर्योदय 6 बजकर 2 मिनट। राहु काल 7 बजकर 38 मिनट से 9 बजकर 14 मिनट। अभिजित 11 बजकर 52 मिनट से 12 बजकर 44 मिनट।">
+          <div class="kicker">१० अग॰ · पंचांग · जयपुर</div><div class="om">ॐ</div>
+          <div class="tithi">श्रावण शुक्ल एकादशी</div>
+          <div class="sub2">पुत्रदा एकादशी व्रत · सोमवार</div>
+          <div class="cols">
+            <div class="cell"><div class="cl">सूर्योदय</div><div class="cv">6:02 AM</div></div>
+            <div class="cell"><div class="cl">राहु काल</div><div class="cv avoid">7:38–9:14</div></div>
+            <div class="cell"><div class="cl">अभिजित</div><div class="cv">11:52–12:44</div></div>
+          </div>
+        </div>
+        <div class="wgtlabel">वेदांश़</div></div>
+
+        <div class="iconrow">
+          <div class="appicon"><div class="ic vedansh">ॐ</div>वेदांश़</div>
+          <div class="appicon"><div class="ic">◉</div>Camera</div>
+          <div class="appicon"><div class="ic">✆</div>Phone</div>
+          <div class="appicon"><div class="ic">✎</div>Msgs</div>
+        </div>
+
+      </div>
+      <div class="osdock">
+        <div class="appicon" style="color:#fff"><div class="ic">✆</div></div>
+        <div class="appicon"><div class="ic">✉</div></div>
+        <div class="appicon"><div class="ic">◉</div></div>
+        <div class="appicon"><div class="ic vedansh">ॐ</div></div>
+      </div>
+      </div>
+    </div>
+    <div class="cap"><b>iOS home — small verse + medium panchang.</b><br/>
+      <span class="n">1</span><b>आज का श्लोक (small)</b> — a deterministic two-line excerpt from the Daily-Bhakti pool. The native accessibility label contains the full verse and source. <b>Tap → opens Daily Bhakti</b> on the matching entry; a missing entry falls back to the Daily Bhakti index.<br/>
+      <span class="n">2</span><b>आज का पंचांग (medium)</b> — tithi + vrat + sunrise / rahu-kaal / abhijit from the precomputed payload. The header names the <b>represented date and city</b>; the payload also pins the calendar system. <b>Tap → Panchang</b> for that represented date.</div>
+    </div>
+
+    <!-- streak + stale -->
+    <div class="col">
+    <div class="phone os">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="oshome">
+
+        <div class="iconrow" style="margin-top:6px">
+          <div style="position:relative"><div class="dot" style="left:-6px;top:-6px">3</div>
+          <div class="wgt wgt-sm ws" role="img" aria-label="जप साधना। लगातार 21 जप-दिन। आज 76 जप, पहला लक्ष्य 108।">
+            <div class="kicker" style="align-self:flex-start">जप-साधना</div><div class="om">ॐ</div>
+            <div class="ring"><div class="in"><div class="num">२१</div><div class="lb">जप-दिन</div></div></div>
+            <div class="foot">आज: 76 / 108 जप</div>
+          </div>
+          <div class="wgtlabel">वेदांश़</div></div>
+
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div class="iconrow" style="margin:0;gap:14px">
+              <div class="appicon"><div class="ic">✉</div>Mail</div>
+              <div class="appicon"><div class="ic">☁</div>Weather</div>
+            </div>
+            <div class="iconrow" style="margin:0;gap:14px">
+              <div class="appicon"><div class="ic">▤</div>Notes</div>
+              <div class="appicon"><div class="ic">◔</div>Clock</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="position:relative;margin-bottom:16px"><div class="dot" style="left:-6px;top:-6px">4</div>
+        <div class="wgt wgt-md wstale" role="img" aria-label="पंचांग डेटा उपलब्ध नहीं है। ताज़ा करने के लिए वेदांश़ खोलें।">
+          <div class="o">॥ ॐ ॥</div>
+          <div class="t">पंचांग ताज़ा करने हेतु वेदांश़ खोलें</div>
+          <div class="s">Open Vedansh to refresh · no old tithi is shown</div>
+        </div>
+        <div class="wgtlabel">वेदांश़</div></div>
+
+        <div class="iconrow">
+          <div class="appicon"><div class="ic vedansh">ॐ</div>वेदांश़</div>
+          <div class="appicon"><div class="ic">◉</div>Camera</div>
+          <div class="appicon"><div class="ic">✆</div>Phone</div>
+          <div class="appicon"><div class="ic">✎</div>Msgs</div>
+        </div>
+
+      </div>
+      <div class="osdock">
+        <div class="appicon"><div class="ic">✆</div></div>
+        <div class="appicon"><div class="ic">✉</div></div>
+        <div class="appicon"><div class="ic">◉</div></div>
+        <div class="appicon"><div class="ic vedansh">ॐ</div></div>
+      </div>
+      </div>
+    </div>
+    <div class="cap"><b>Japam widget + freshness fallback.</b><br/>
+      <span class="n">3</span><b>जप-साधना (small)</b> — this is <b>Japam-only</b>: today's true count and a separately computed consecutive Japam-day streak. The ring fills at the first 108 and stays full while the true total can continue above 108. <b>Tap → last-used mantra when available; otherwise the Japam library.</b> Read-only in v1.<br/>
+      <span class="n">4</span><b>Unavailable state</b> — missing, corrupt, schema-incompatible, or expired payloads never show an old tithi. <b>Tap → opens the app</b>; a successful atomic rewrite explicitly requests the native widget reload.</div>
+    </div>
+
+    <!-- lock screen -->
+    <div class="col">
+    <div class="phone os">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="lock">
+        <div class="ldate">Monday, 10 August</div>
+        <div class="ltime">9:41</div>
+        <div class="lockwgt-row" style="position:relative">
+          <div class="dot" style="left:6px;top:-10px">5</div>
+          <div class="lw-inline">॥ श्रावण शुक्ल एकादशी · पुत्रदा एकादशी</div>
+          <div class="lw-circ" style="position:relative"><div class="dot" style="right:-9px;top:-9px">6</div>
+            <div class="ring2"><div class="in2"><div class="n2">२१</div><div class="l2">दिन</div></div></div>
+          </div>
+        </div>
+        <div class="locknotif">
+          <div class="nt">ॐ वेदांश़</div>
+          <div class="ns">पुत्रदा एकादशी आज — व्रत कथा पढ़ें ›</div>
+        </div>
+      </div></div>
+    </div>
+    <div class="cap"><b>iOS lock screen — accessory widgets.</b><br/>
+      <span class="n">5</span><b>Inline text accessory</b> above the clock: today's tithi, or the vrat name on an observance day (the highest-value glance in the category). <b>Tap → unlock → Panchang tab.</b><br/>
+      <span class="n">6</span><b>Circular accessory</b> — the Japam-day streak ring, monochrome per OS tinting rules (WidgetKit re-tints accessories; state is never colour-only). Lock-screen widgets are a separate Phase-2 deliverable after the home-widget core is proven.<br/>
+      Below: an existing PRD-01 notification shown for contrast — widgets are the <b>zero-interruption</b> counterpart to the notification families.</div>
+    </div>
+
+    <!-- android -->
+    <div class="col">
+    <div class="phone os">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="oshome">
+        <div class="iconrow" style="margin-top:6px">
+          <div class="appicon"><div class="ic">✉</div>Gmail</div>
+          <div class="appicon"><div class="ic">▶</div>Play</div>
+          <div class="appicon"><div class="ic">◈</div>Maps</div>
+          <div class="appicon"><div class="ic">☁</div>Weather</div>
+        </div>
+
+        <div style="position:relative;margin:10px 0 6px"><div class="dot" style="left:-6px;top:-6px">7</div>
+        <div class="wgt wp" role="img" aria-label="10 अगस्त का पंचांग, जयपुर। श्रावण शुक्ल एकादशी। विस्तृत विवरण के लिए टैप करें।" style="width:100%;height:158px;padding:14px 15px">
+          <div class="kicker">१० अग॰ · पंचांग · जयपुर</div><div class="om">ॐ</div>
+          <div class="tithi">श्रावण शुक्ल एकादशी</div>
+          <div class="sub2">पुत्रदा एकादशी व्रत · सोमवार</div>
+          <div class="cols">
+            <div class="cell"><div class="cl">सूर्योदय</div><div class="cv">6:02 AM</div></div>
+            <div class="cell"><div class="cl">राहु काल</div><div class="cv avoid">7:38–9:14</div></div>
+            <div class="cell"><div class="cl">अभिजित</div><div class="cv">11:52–12:44</div></div>
+          </div>
+          <div style="font-family:var(--deva);font-size:11px;color:var(--ink-soft);margin-top:9px;border-top:1px solid var(--divider);padding-top:7px">
+            आज का श्लोक: कर्मण्येवाधिकारस्ते मा फलेषु कदाचन… <span style="color:var(--saffron-deep)">›</span>
+          </div>
+        </div>
+        <div class="wgtlabel">वेदांश़ · 4×2 (resizable)</div></div>
+
+        <div class="iconrow" style="margin-top:14px">
+          <div class="appicon"><div class="ic vedansh">ॐ</div>वेदांश़</div>
+          <div class="appicon"><div class="ic">◉</div>Camera</div>
+          <div class="appicon"><div class="ic">✆</div>Phone</div>
+          <div class="appicon"><div class="ic">✎</div>Msgs</div>
+        </div>
+      </div>
+      <div class="osdock" style="border-radius:0;background:rgba(255,255,255,.10);height:60px;bottom:0;left:0;right:0">
+        <div class="appicon"><div class="ic">✆</div></div>
+        <div class="appicon"><div class="ic">✎</div></div>
+        <div class="appicon"><div class="ic vedansh">ॐ</div></div>
+        <div class="appicon"><div class="ic">◉</div></div>
+      </div>
+      </div>
+    </div>
+    <div class="cap"><b>Android — combined 4×2 widget.</b><br/>
+      <span class="n">7</span><b>One responsive AppWidget</b> (Phase 2): explicit compact, standard, and expanded layouts chosen from actual bounds. Panchang and verse zones deep-link independently. Native reads the versioned SharedPreferences payload and performs a best-effort refresh after each committed write; exact timing is OS-controlled.</div>
+    </div>
+  </div>
+
+  <!-- ============ 2 · IN-APP ============ -->
+  <div class="phaselabel">2 · In-app — discovery &amp; the Widget Gallery</div>
+  <div class="phasedesc">Widgets are useless if nobody adds them. A More-tab row + a gallery screen with per-OS add instructions closes the loop.</div>
+  <div class="wrap">
+
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="toptitle" style="font-size:20px">और · More</div></div>
+
+        <div class="morerow"><div class="mi">♡</div><div class="mt"><div class="mtt">इच्छा-सूची · Wishlist</div><div class="mts">Saved verses</div></div><div class="chev">›</div></div>
+        <div class="morerow"><div class="mi">卐</div><div class="mt"><div class="mtt">साधक प्रोफ़ाइल · Profile</div><div class="mts">Japam days · lifetime japam</div></div><div class="chev">›</div></div>
+        <div class="morerow"><div class="mi">◷</div><div class="mt"><div class="mtt">स्मरण · Reminders</div><div class="mts">Daily verse · vrat · japam alarms</div></div><div class="chev">›</div></div>
+
+        <div class="morerow" style="position:relative;border:1.4px solid var(--saffron);border-radius:14px;padding:13px 12px;margin-top:10px;background:var(--parchment-soft)">
+          <div class="dot" style="right:-8px;top:-8px">8</div>
+          <div class="mi">▦</div>
+          <div class="mt"><div class="mtt">होम-स्क्रीन विजेट <span class="tag">NEW</span></div><div class="mts">Verse · panchang · japam on your home screen</div></div>
+          <div class="chev">›</div>
+        </div>
+
+        <div class="note">बाकी पंक्तियाँ अपरिवर्तित — the new row slots into the existing MoreHome list.</div>
+      </div>
+      <div class="tabbar">
+        <div class="tab"><span class="ic">ॐ</span>Home</div>
+        <div class="tab"><span class="ic">☀</span>Bhakti</div>
+        <div class="tab"><span class="ic">☾</span>Panchang</div>
+        <div class="tab"><span class="ic">♪</span>Bhajan</div>
+        <div class="tab active"><span class="ic">⋯</span>More</div>
+      </div>
+      </div>
+    </div>
+    <div class="cap"><b>More hub — the discovery row.</b><br/>
+      <span class="n">8</span><b>New "होम-स्क्रीन विजेट" row</b> in the existing MoreHome list (beside Wishlist / Profile / Reminders), with the standard NEW badge for one release. <b>Tap → Widget Gallery.</b> A one-time Home-tab DISCOVER carousel card (existing <i>FeatureCard</i> mechanism, design.md §32) points here in the launch release.</div>
+    </div>
+
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">होम-स्क्रीन विजेट</div></div>
+
+        <div class="gallcard" style="position:relative"><div class="dot" style="right:-8px;top:-8px">9</div>
+          <div class="gt">आज का पंचांग</div>
+          <div class="gs">Tithi, vrat &amp; today's timings — at a glance</div>
+          <div class="gallpreview">
+            <div class="wgt wgt-md wp" role="img" aria-label="10 अगस्त का पंचांग, जयपुर। श्रावण शुक्ल एकादशी।" style="box-shadow:none">
+              <div class="kicker">१० अग॰ · पंचांग · जयपुर</div><div class="om">ॐ</div>
+              <div class="tithi">श्रावण शुक्ल एकादशी</div>
+              <div class="sub2">पुत्रदा एकादशी व्रत · सोमवार</div>
+              <div class="cols">
+                <div class="cell"><div class="cl">सूर्योदय</div><div class="cv">6:02</div></div>
+                <div class="cell"><div class="cl">राहु काल</div><div class="cv avoid">7:38</div></div>
+                <div class="cell"><div class="cl">अभिजित</div><div class="cv">11:52</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallcard">
+          <div class="gt">आज का श्लोक &nbsp;·&nbsp; जप-साधना</div>
+          <div class="gs">Daily verse · Japam-only ring (small widgets)</div>
+          <div class="gallpreview" style="gap:12px">
+            <div class="wgt wgt-sm wv" role="img" aria-label="आज का श्लोक। गीता अध्याय 2 श्लोक 47।" style="box-shadow:none;transform:scale(.92)">
+              <div class="kicker">आज का श्लोक</div><div class="om">ॐ</div>
+              <div class="verse" style="font-size:12px">कर्मण्येवाधिकारस्ते मा फलेषु…</div>
+              <div class="src">गीता २·४७</div>
+            </div>
+            <div class="wgt wgt-sm ws" role="img" aria-label="जप साधना। लगातार 21 जप-दिन।" style="box-shadow:none;transform:scale(.92)">
+              <div class="kicker" style="align-self:flex-start">जप-साधना</div>
+              <div class="ring" style="width:60px;height:60px"><div class="in" style="width:46px;height:46px"><div class="num" style="font-size:15px">२१</div><div class="lb">जप</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallcard" style="position:relative"><div class="dot" style="right:-8px;top:-8px">10</div>
+          <div class="gt">कैसे जोड़ें? · How to add</div>
+          <div class="steps">
+            <div class="step"><span class="sn">1</span>होम स्क्रीन पर खाली जगह देर तक दबाएँ</div>
+            <div class="step"><span class="sn">2</span>ऊपर <b>+ / Edit</b> पर टैप करें और "वेदांश़" खोजें</div>
+            <div class="step"><span class="sn">3</span>विजेट चुनें और <b>Add Widget</b> दबाएँ</div>
+          </div>
+          <button class="addbtn">Android 8+ · विजेट जोड़ें / Add widget</button>
+        </div>
+
+        <div class="note">विजेट बिना इंटरनेट के, फ़ोन पर ही बनते हैं ·<br/>widgets are computed on this device — no network, no account</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Widget Gallery — preview + add instructions.</b><br/>
+      <span class="n">9</span><b>Payload previews</b> — each gallery card renders from the same committed payload contract as the native widget. If the payload is unavailable, the preview uses the same safe fallback instead of recomputing astronomy during render.<br/>
+      <span class="n">10</span><b>Per-OS add flow</b> — iOS shows manual long-press/Edit/Add Widget instructions because apps cannot jump into the WidgetKit picker. Android 8+ may show <b>Add widget</b> via <i>requestPinAppWidget</i> when the launcher supports it, with manual steps as fallback. No permission prompt is introduced.</div>
+    </div>
+  </div>
+
+  <div class="phaselabel" style="margin-top:34px">Interaction inventory</div>
+  <div class="legend" style="max-width:920px">
+    ① Verse widget tap → Daily Bhakti tab, today's verse (entryRoutes deep link).
+    ② Panchang widget tap → Panchang tab for the represented IST date; city and calendar system come from the payload.
+    ③ Japam widget tap → last-used mantra when valid, otherwise the Japam library (read-only widget in v1).
+    ④ Missing, corrupt, incompatible, or expired payload → reverent "open Vedansh" state; tap opens the app, whose successful atomic rewrite requests a reload.
+    ⑤ Lock-screen inline tithi/vrat tap → unlock → Panchang tab.
+    ⑥ Lock-screen circular Japam streak → unlock → Japam counter (Phase 2).
+    ⑦ Android widget: panchang zone → Panchang · verse zone → Daily Bhakti; compact/standard/expanded content is selected from real bounds.
+    ⑧ More → "होम-स्क्रीन विजेट" row → Widget Gallery (plus a one-release DISCOVER card on Home).
+    ⑨ Gallery previews render from the same validated, represented-date payload as native widgets.
+    ⑩ "How to add" steps per OS; zero permission prompts anywhere in the flow.
+    Native timelines schedule the next represented-date boundary. JS planning is deferred until foreground interactions settle, deduplicated and throttled; preference/language/Japam changes can also trigger it. A versioned atomic payload and explicit native reload keep failure behavior deterministic.
+  </div>
+</body>
+</html>

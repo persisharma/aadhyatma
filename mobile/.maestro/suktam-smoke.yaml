@@ -1,0 +1,54 @@
+# Suktam Category Smoke Test (PRD-A — Content Breadth Engine)
+#
+# Suktam (सूक्तम्) is a new textual form with a multi-instance reader
+# (SuktamReader dispatches on `suktamId`), like the chalisas/ashtakams. First
+# text: Tantrokta Devi Suktam (source-verified, 30 verses). Verifies:
+#   1. Home shows the Suktam category tile
+#   2. CategoryList shows Tantrokta Devi Suktam
+#   3. Reader opens; language toggle flips Hindi → English
+#   4. Back returns to the list
+#
+# NOTE: Purusha & Narayana Suktam are intentionally absent (BLOCKED — Vedic
+# recension divergence, pending human sourcing; see prd-a-progress.md).
+# Selectors: visible text + accessibilityLabel. No pixel coordinates (§9).
+
+appId: com.prashantsharma.vedansh
+---
+# ── Step 1: Boot Vedansh in Expo Go ──
+- runFlow: _launch.yaml
+
+# ── Step 2: Find + open the Suktam category tile (scroll if needed) ──
+- scrollUntilVisible:
+    element:
+      text: "Suktam\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+- tapOn: "Suktam\\..*Tap to open\\."
+- waitForAnimationToEnd
+
+# ── Step 3: CategoryList lists the Devi Suktam; open it ──
+- extendedWaitUntil:
+    visible: "Tantrokta Devi Suktam\\..*Tap to open\\."
+    timeout: 15000
+- tapOn: "Tantrokta Devi Suktam\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+- waitForAnimationToEnd:
+    timeout: 8000
+- tapOn:
+    id: "resume-start-over"
+    optional: true
+- waitForAnimationToEnd
+
+# ── Step 4: Toggle to English; reader title shows "Tantrokta Devi Suktam" ──
+- tapOn:
+    id: "lang-toggle-en"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Tantrokta Devi Suktam"
+    timeout: 15000
+
+# ── Cleanup ──
+- stopApp:
+    appId: com.prashantsharma.vedansh

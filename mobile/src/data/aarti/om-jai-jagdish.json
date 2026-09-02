@@ -5,8 +5,18 @@
   "subtitleEn": "Aarti of Lord Vishnu",
   "deity": "vishnu",
   "language": "hi-en",
-  "source": {"baseText": "Pandit Shardha Ram Phillauri (1870)", "retrievedOn": "2026-05-23"},
-  "counts": {"totalVerses": 9},
+  "source": {
+    "baseText": "Om Jai Jagdish Hare Aarti, checked against Drik Panchang, HinduNidhi, and Bhakti Bharat.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/aarti/lord-narayan/jai-jagdish-aarti.html?ck=1&lang=hi",
+      "https://hindunidhi.com/om-jai-jagdish-hare-aarti-hindi/",
+      "https://www.bhaktibharat.com/amp/aarti/om-jai-jagdish-hare"
+    ],
+    "retrievedOn": "2026-05-30"
+  },
+  "counts": {
+    "totalVerses": 9
+  },
   "verses": [
     {
       "id": "ojj-01",
@@ -16,65 +26,69 @@
       "labelHi": "टेक",
       "labelEn": "Refrain",
       "lines": [
-        "ॐ जय जगदीश हरे, स्वामी जय जगदीश हरे।",
-        "भक्त जनों के संकट, दास जनों के संकट,",
-        "क्षण में दूर करे॥"
+        "ॐ जय जगदीश हरे, स्वामी ! जय जगदीश हरे।",
+        "भक्त जनों के संकट, क्षण में दूर करे॥"
       ],
       "linesEn": [
-        "Om jai Jagdish hare, Swami jai Jagdish hare.",
-        "Bhakt janon ke sankat, daas janon ke sankat,",
-        "Kshan mein door kare."
+        "Om jai Jagdish hare, Swami! jai Jagdish hare.",
+        "Bhakt janon ke sankat, kshan mein door kare."
       ],
       "meaningHi": "ॐ जय जगदीश (जगत के ईश्वर विष्णु) हरे। भक्तजनों और दासजनों के संकट क्षण में दूर करने वाले। यह 1870 में पंडित श्रद्धाराम फिल्लौरी द्वारा रचित भारत की सर्वाधिक प्रचलित आरती है।",
-      "meaningEn": "Om, victory to Lord Jagdish (Vishnu, Lord of the Universe). He who removes the afflictions of devotees and servants in an instant. Composed in 1870 by Pandit Shardha Ram Phillauri, this is the most widely sung aarti in India."
+      "meaningEn": "Om, victory to Lord Jagdish (Vishnu, Lord of the Universe). He who removes the afflictions of devotees and servants in an instant. Composed in 1870 by Pandit Shardha Ram Phillauri, this is the most widely sung aarti in India.",
+      "meaningGu": "ૐ જગદીશ (જગતના ઈશ્વર વિષ્ણુ) હરિનો જય હો. ભક્તજનો અને દાસજનોના સંકટ ક્ષણભરમાં દૂર કરનાર. ઈ.સ. ૧૮૭૦માં પંડિત શ્રદ્ધારામ ફિલ્લૌરીએ રચેલી આ ભારતની સૌથી પ્રચલિત આરતી છે.",
+      "meaningKn": "ಓಂ, ಜಗತ್ತಿನ ಈಶ್ವರರಾದ ಭಗವಾನ್ ವಿಷ್ಣು, ಜಗದೀಶ ಹರಿಯವರಿಗೆ ಜಯವಾಗಲಿ. ಅವರು ಭಕ್ತರ ಮತ್ತು ಸೇವಕರ ಸಂಕಟಗಳನ್ನು ಕ್ಷಣಮಾತ್ರದಲ್ಲಿ ನಿವಾರಿಸುವವರು. 1870ರಲ್ಲಿ ಪಂಡಿತ್ ಶ್ರದ್ಧಾರಾಮ್ ಫಿಲ್ಲೌರಿ ರಚಿಸಿದ ಈ ಆರತಿ ಭಾರತದಲ್ಲಿ ಅತ್ಯಂತ ವ್ಯಾಪಕವಾಗಿ ಹಾಡಲಾಗುವ ಆರತಿಯಾಗಿದೆ."
     },
     {
       "id": "ojj-02",
       "type": "stanza",
       "section": "body",
       "number": 2,
-      "labelHi": "पद 1",
-      "labelEn": "Stanza 1",
+      "labelHi": "पद · १",
+      "labelEn": "Stanza · 1",
       "lines": [
-        "जो ध्यावे फल पावे, दुख बिनसे मन का।",
-        "स्वामी दुख बिनसे मन का।",
+        "जो ध्यावे फल पावे, दुःख विनसे मन का।",
+        "स्वामी दुःख विनसे मन का।",
         "सुख सम्पत्ति घर आवे, कष्ट मिटे तन का॥"
       ],
       "linesEn": [
-        "Jo dhyaave phal paave, dukh binase man ka.",
-        "Swami dukh binase man ka.",
+        "Jo dhyaave phal paave, dukh vinse man ka.",
+        "Swami dukh vinse man ka.",
         "Sukh sampatti ghar aave, kasht mite tan ka."
       ],
       "meaningHi": "जो ध्यान करता है वह फल पाता है, मन का दुख नष्ट होता है। घर में सुख-सम्पत्ति आती है और शरीर का कष्ट मिट जाता है। यह भक्ति-मार्ग का मूल सिद्धान्त है — एकाग्र ध्यान से मानसिक और शारीरिक दोनों कष्ट दूर होते हैं।",
-      "meaningEn": "Whoever meditates receives the fruit, mental sorrows are destroyed. Happiness and prosperity come home and physical suffering ends. This is the core principle of the devotional path — focused meditation removes both mental and physical afflictions."
+      "meaningEn": "Whoever meditates receives the fruit, mental sorrows are destroyed. Happiness and prosperity come home and physical suffering ends. This is the core principle of the devotional path — focused meditation removes both mental and physical afflictions.",
+      "meaningGu": "જે ધ્યાન ધરે છે તે ફળ પામે છે અને તેના મનનું દુઃખ નાશ પામે છે. ઘરમાં સુખ-સંપત્તિ આવે છે અને શરીરનું કષ્ટ મટી જાય છે. આ ભક્તિમાર્ગનો મૂળ સિદ્ધાંત છે — એકાગ્ર ધ્યાનથી માનસિક અને શારીરિક બંને કષ્ટ દૂર થાય છે.",
+      "meaningKn": "ಯಾರು ಭಕ್ತಿಯಿಂದ ಧ್ಯಾನ ಮಾಡುತ್ತಾರೋ ಅವರು ಅದರ ಫಲವನ್ನು ಪಡೆಯುತ್ತಾರೆ; ಮನಸ್ಸಿನ ದುಃಖ ದೂರವಾಗುತ್ತದೆ. ಮನೆಯಲ್ಲಿ ಸುಖ-ಸಂಪತ್ತು ನೆಲೆಸುತ್ತದೆ ಮತ್ತು ದೇಹದ ಕಷ್ಟವೂ ನಿವಾರಣೆಯಾಗುತ್ತದೆ. ಏಕಾಗ್ರ ಧ್ಯಾನದಿಂದ ಮಾನಸಿಕ ಹಾಗೂ ಶಾರೀರಿಕ ಎರಡೂ ಕಷ್ಟಗಳು ದೂರವಾಗುತ್ತವೆ ಎಂಬುದೇ ಭಕ್ತಿಮಾರ್ಗದ ಮೂಲ ಸಿದ್ಧಾಂತವಾಗಿದೆ."
     },
     {
       "id": "ojj-03",
       "type": "stanza",
       "section": "body",
       "number": 3,
-      "labelHi": "पद 2",
-      "labelEn": "Stanza 2",
+      "labelHi": "पद · २",
+      "labelEn": "Stanza · 2",
       "lines": [
-        "मात पिता तुम मेरे, शरण गहूँ मैं किसकी।",
+        "मात-पिता तुम मेरे, शरण गहूँ मैं किसकी।",
         "स्वामी शरण गहूँ मैं किसकी।",
-        "तुम बिन और न दूजा, आस करूँ मैं जिसकी॥"
+        "तुम बिन और न दूजा, आस करूँ जिसकी॥"
       ],
       "linesEn": [
-        "Maat pitaa tum mere, sharan gahoon main kiski.",
+        "Maat-pita tum mere, sharan gahoon main kiski.",
         "Swami sharan gahoon main kiski.",
-        "Tum bin aur na doojaa, aas karoon main jiski."
+        "Tum bin aur na dooja, aas karoon jiski."
       ],
       "meaningHi": "आप ही मेरे माता-पिता हैं, मैं और किसकी शरण लूँ? आपके बिना कोई दूसरा नहीं जिससे मैं आशा रख सकूँ। यह शरणागति (अनन्य समर्पण) का भाव है — गीता 18.66 का सार।",
-      "meaningEn": "You are my mother and father, whose refuge shall I seek? There is no other besides you in whom I can place my hope. This is the sentiment of complete surrender — the essence of Gita 18.66."
+      "meaningEn": "You are my mother and father, whose refuge shall I seek? There is no other besides you in whom I can place my hope. This is the sentiment of complete surrender — the essence of Gita 18.66.",
+      "meaningGu": "આપ જ મારાં માતા-પિતા છો; હું બીજા કોની શરણે જાઉં? આપના વિના બીજું કોઈ નથી જેના પર હું આશા રાખું. આ શરણાગતિ (અનન્ય સમર્પણ)નો ભાવ છે — ગીતા ૧૮.૬૬નો સાર.",
+      "meaningKn": "ಪ್ರಭುವೇ, ನೀವೇ ನನ್ನ ತಾಯಿ-ತಂದೆ; ನಾನು ಇನ್ನಾರ ಶರಣು ಹೋಗಲಿ? ನಿಮ್ಮ ಹೊರತು ನಾನು ಆಶೆ ಇಡಬಹುದಾದ ಮತ್ತಾರೂ ಇಲ್ಲ. ಇದು ಸಂಪೂರ್ಣ ಶರಣಾಗತಿ, ಅಂದರೆ ಅನನ್ಯ ಸಮರ್ಪಣೆಯ ಭಾವ; ಗೀತೆ 18.66ರ ಸಾರವೂ ಇದೇ ಆಗಿದೆ."
     },
     {
       "id": "ojj-04",
       "type": "stanza",
       "section": "body",
       "number": 4,
-      "labelHi": "पद 3",
-      "labelEn": "Stanza 3",
+      "labelHi": "पद · ३",
+      "labelEn": "Stanza · 3",
       "lines": [
         "तुम पूरण परमात्मा, तुम अन्तर्यामी।",
         "स्वामी तुम अन्तर्यामी।",
@@ -86,35 +100,39 @@
         "Paarbrahm Parameshwar, tum sabke Swami."
       ],
       "meaningHi": "आप पूर्ण परमात्मा हैं, आप अन्तर्यामी (सबके भीतर रहने वाले) हैं। आप पारब्रह्म परमेश्वर हैं, सबके स्वामी हैं। यह वेदान्त के 'पूर्णमदः पूर्णमिदम्' और बृहदारण्यक उपनिषद के अन्तर्यामी ब्राह्मण का सार है।",
-      "meaningEn": "You are the complete Supreme Soul, you are the Inner Controller (dwelling within all). You are the Supreme Brahman, the Lord of all. This captures the Vedantic 'Purnamadah Purnamidam' and the Antaryami Brahmana of the Brihadaranyaka Upanishad."
+      "meaningEn": "You are the complete Supreme Soul, you are the Inner Controller (dwelling within all). You are the Supreme Brahman, the Lord of all. This captures the Vedantic 'Purnamadah Purnamidam' and the Antaryami Brahmana of the Brihadaranyaka Upanishad.",
+      "meaningGu": "આપ પૂર્ણ પરમાત્મા છો, આપ અંતર્યામી (સૌની ભીતર વસનાર) છો. આપ પરબ્રહ્મ પરમેશ્વર છો, સૌના સ્વામી છો. આ વેદાંતના 'પૂર્ણમદઃ પૂર્ણમિદમ્' અને બૃહદારણ્યક ઉપનિષદના અંતર્યામી બ્રાહ્મણનો સાર છે.",
+      "meaningKn": "ನೀವು ಪೂರ್ಣ ಪರಮಾತ್ಮರು; ಎಲ್ಲರ ಅಂತರಾಳದಲ್ಲಿ ನೆಲೆಸಿರುವ ಅಂತರ್ಯಾಮಿಗಳು. ನೀವು ಪರಬ್ರಹ್ಮ ಪರಮೇಶ್ವರರು, ಎಲ್ಲರ ಸ್ವಾಮಿಗಳು. ಈ ಭಾವವು ವೇದಾಂತದ ‘ಪೂರ್ಣಮದಃ ಪೂರ್ಣಮಿದಮ್’ ಮತ್ತು ಬೃಹದಾರಣ್ಯಕ ಉಪನಿಷತ್ತಿನ ಅಂತರ್ಯಾಮಿ ಬ್ರಾಹ್ಮಣದ ಸಾರವನ್ನು ವ್ಯಕ್ತಪಡಿಸುತ್ತದೆ."
     },
     {
       "id": "ojj-05",
       "type": "stanza",
       "section": "body",
       "number": 5,
-      "labelHi": "पद 4",
-      "labelEn": "Stanza 4",
+      "labelHi": "पद · ४",
+      "labelEn": "Stanza · 4",
       "lines": [
-        "तुम करुणा के सागर, तुम पालनकर्ता।",
-        "स्वामी तुम पालनकर्ता।",
+        "तुम करुणा के सागर, तुम पालन-कर्ता।",
+        "स्वामी तुम पालन-कर्ता।",
         "मैं मूरख खल कामी, कृपा करो भर्ता॥"
       ],
       "linesEn": [
-        "Tum karuna ke saagar, tum paalankartaa.",
-        "Swami tum paalankartaa.",
-        "Main moorakh khal kaamee, kripa karo Bhartaa."
+        "Tum karuna ke saagar, tum paalan-karta.",
+        "Swami tum paalan-karta.",
+        "Main moorakh khal kaami, kripa karo Bharta."
       ],
       "meaningHi": "आप करुणा के सागर हैं, आप पालन करने वाले हैं। मैं मूर्ख, दुष्ट और कामी हूँ — हे भर्ता (स्वामी), कृपा कीजिए। यह दैन्य भाव (आत्म-विनम्रता) भक्ति-मार्ग का अनिवार्य अंग है।",
-      "meaningEn": "You are the ocean of compassion, you are the sustainer. I am foolish, wicked, and lustful — O Lord, have mercy. This self-humility (Dainya Bhava) is an essential part of the devotional path."
+      "meaningEn": "You are the ocean of compassion, you are the sustainer. I am foolish, wicked, and lustful — O Lord, have mercy. This self-humility (Dainya Bhava) is an essential part of the devotional path.",
+      "meaningGu": "આપ કરુણાના સાગર છો, આપ પાલન કરનાર છો. હું મૂર્ખ, દુષ્ટ અને કામી છું — હે ભર્તા (સ્વામી), કૃપા કરો. આ દૈન્યભાવ (આત્મ-વિનમ્રતા) ભક્તિમાર્ગનું અનિવાર્ય અંગ છે.",
+      "meaningKn": "ನೀವು ಕರುಣೆಯ ಸಾಗರರು, ಎಲ್ಲರನ್ನೂ ಪಾಲಿಸುವವರು. ನಾನು ಮೂರ್ಖನು, ದುಷ್ಟನು, ಕಾಮಾಸಕ್ತನು; ಸ್ವಾಮಿಯೇ, ನನ್ನ ಮೇಲೆ ಕೃಪೆ ತೋರಿರಿ. ಈ ದೈನ್ಯಭಾವ, ಅಂದರೆ ಆತ್ಮವಿನಯ, ಭಕ್ತಿಮಾರ್ಗದ ಅವಿಭಾಜ್ಯ ಅಂಗವಾಗಿದೆ."
     },
     {
       "id": "ojj-06",
       "type": "stanza",
       "section": "body",
       "number": 6,
-      "labelHi": "पद 5",
-      "labelEn": "Stanza 5",
+      "labelHi": "पद · ५",
+      "labelEn": "Stanza · 5",
       "lines": [
         "तुम हो एक अगोचर, सबके प्राणपति।",
         "स्वामी सबके प्राणपति।",
@@ -126,47 +144,53 @@
         "Kis vidhi miloon Dayaamay, tumko main kumati."
       ],
       "meaningHi": "आप एक अगोचर (इन्द्रियों से परे) हैं, सबके प्राणों के स्वामी हैं। हे दयामय, मैं कुमति (अल्पबुद्धि) किस विधि (उपाय) से आपसे मिलूँ? यह विरह-भक्ति की व्याकुलता है — ईश्वर-प्राप्ति का मार्ग खोज रहा है।",
-      "meaningEn": "You are the one imperceptible, lord of all beings' life-breath. O merciful one, how shall I of dull intellect meet you? This is the anguish of devotion through separation — seeking the path to God."
+      "meaningEn": "You are the one imperceptible, lord of all beings' life-breath. O merciful one, how shall I of dull intellect meet you? This is the anguish of devotion through separation — seeking the path to God.",
+      "meaningGu": "આપ એક અગોચર (ઇન્દ્રિયોથી પર) છો, સૌના પ્રાણના સ્વામી છો. હે દયામય, હું અલ્પબુદ્ધિ કઈ રીતે આપને મળું? આ વિરહ-ભક્તિની વ્યાકુળતા છે — ઈશ્વર-પ્રાપ્તિનો માર્ગ શોધી રહી છે.",
+      "meaningKn": "ನೀವು ಇಂದ್ರಿಯಗಳಿಗೆ ಅಗೋಚರರಾದ ಏಕೈಕ ಪರಮಪ್ರಭು, ಎಲ್ಲ ಜೀವಿಗಳ ಪ್ರಾಣಗಳ ಸ್ವಾಮಿ. ದಯಾಮಯನೇ, ನಾನು ಕುಬುದ್ಧಿಯುಳ್ಳ ಅಲ್ಪಮತಿ; ಯಾವ ಮಾರ್ಗದಿಂದ ನಿಮ್ಮನ್ನು ಸೇರುವೆನು? ಇದು ವಿರಹಭಕ್ತಿಯ ವ್ಯಾಕುಲತೆ, ದೇವರನ್ನು ಹೊಂದುವ ದಾರಿಯನ್ನು ಹುಡುಕುವ ಭಕ್ತನ ತವಕವಾಗಿದೆ."
     },
     {
       "id": "ojj-07",
       "type": "stanza",
       "section": "body",
       "number": 7,
-      "labelHi": "पद 6",
-      "labelEn": "Stanza 6",
+      "labelHi": "पद · ६",
+      "labelEn": "Stanza · 6",
       "lines": [
-        "दीनबन्धु दुखहर्ता, ठाकुर तुम मेरे।",
-        "स्वामी ठाकुर तुम मेरे।",
-        "अपने हाथ उठाओ, अपने शरण खड़े॥"
+        "दीनबन्धु दुखहर्ता, तुम ठाकुर मेरे।",
+        "स्वामी तुम ठाकुर मेरे।",
+        "अपने हाथ उठाओ, द्वार पड़ा तेरे॥"
       ],
       "linesEn": [
-        "Deenbandhu dukhhartaa, Thaakur tum mere.",
-        "Swami Thaakur tum mere.",
-        "Apne haath uthaao, apne sharan khade."
+        "Deenbandhu dukhaharta, tum Thakur mere.",
+        "Swami tum Thakur mere.",
+        "Apne haath uthaao, dwaar pada tere."
       ],
       "meaningHi": "हे दीनबन्धु (दीनों के मित्र), दुख हरने वाले, आप मेरे ठाकुर (स्वामी) हैं। अपने हाथ उठाइए (कृपा का हस्त), आपकी शरण में खड़ा हूँ। यह करबद्ध प्रार्थना है — भक्त शरण में खड़ा कृपा-हस्त की प्रतीक्षा कर रहा है।",
-      "meaningEn": "O friend of the meek, remover of sorrow, you are my Lord. Raise your hand (of grace), I stand in your refuge. This is a prayer with folded hands — the devotee stands in surrender awaiting the hand of mercy."
+      "meaningEn": "O friend of the meek, remover of sorrow, you are my Lord. Raise your hand (of grace), I stand in your refuge. This is a prayer with folded hands — the devotee stands in surrender awaiting the hand of mercy.",
+      "meaningGu": "હે દીનબંધુ (દીનોના મિત્ર), દુઃખ હરનાર, આપ મારા ઠાકુર (સ્વામી) છો. આપનો કૃપાહસ્ત ઉઠાવો — હું આપના દ્વારે ઊભો છું. આ કરબદ્ધ પ્રાર્થના છે — ભક્ત શરણમાં ઊભો કૃપાહસ્તની પ્રતીક્ષા કરે છે.",
+      "meaningKn": "ದೀನಬಂಧುವೇ, ದುಃಖಗಳನ್ನು ಹರಿಸುವವರೇ, ನೀವು ನನ್ನ ಠಾಕುರರು, ನನ್ನ ಸ್ವಾಮಿಗಳು. ನಿಮ್ಮ ಕೃಪಾಹಸ್ತವನ್ನು ಎತ್ತಿರಿ; ನಾನು ನಿಮ್ಮ ಶರಣಿನಲ್ಲಿ ನಿಂತಿದ್ದೇನೆ. ಇದು ಕೈಮುಗಿದ ಪ್ರಾರ್ಥನೆ; ಶರಣಾಗತ ಭಕ್ತನು ಕೃಪಾಹಸ್ತಕ್ಕಾಗಿ ಕಾಯುತ್ತಿರುವ ಭಾವವಾಗಿದೆ."
     },
     {
       "id": "ojj-08",
       "type": "stanza",
       "section": "body",
       "number": 8,
-      "labelHi": "पद 7",
-      "labelEn": "Stanza 7",
+      "labelHi": "पद · ७",
+      "labelEn": "Stanza · 7",
       "lines": [
-        "विषय विकार मिटाओ, पाप हरो देवा।",
+        "विषय-विकार मिटाओ, पाप हरो देवा।",
         "स्वामी पाप हरो देवा।",
-        "श्रद्धा भक्ति बढ़ाओ, सन्तन की सेवा॥"
+        "श्रद्धा-भक्ति बढ़ाओ, सन्तन की सेवा॥"
       ],
       "linesEn": [
-        "Vishay vikaar mitaao, paap haro Devaa.",
-        "Swami paap haro Devaa.",
-        "Shraddha bhakti badhaao, santan ki sevaa."
+        "Vishay-vikaar mitaao, paap haro Deva.",
+        "Swami paap haro Deva.",
+        "Shraddha-bhakti badhaao, santan ki seva."
       ],
       "meaningHi": "विषय-विकार (इन्द्रिय-दोष) मिटाइए, पाप हरिए हे देवा। श्रद्धा और भक्ति बढ़ाइए तथा संतों की सेवा का भाव दीजिए। चार प्रार्थनाएँ एक पद में: विकार-निवृत्ति, पाप-हरण, श्रद्धा-वृद्धि, और सेवा-भाव।",
-      "meaningEn": "Remove sensory distortions, take away our sins O Lord. Increase our faith and devotion, and the spirit of serving saints. Four prayers in one verse: removal of desires, destruction of sin, growth of faith, and spirit of service."
+      "meaningEn": "Remove sensory distortions, take away our sins O Lord. Increase our faith and devotion, and the spirit of serving saints. Four prayers in one verse: removal of desires, destruction of sin, growth of faith, and spirit of service.",
+      "meaningGu": "વિષય-વિકાર (ઇન્દ્રિય-દોષ) મિટાવો, પાપ હરો હે દેવ. શ્રદ્ધા અને ભક્તિ વધારો તથા સંતોની સેવાનો ભાવ આપો. એક જ પદમાં ચાર પ્રાર્થના: વિકાર-નિવૃત્તિ, પાપ-હરણ, શ્રદ્ધા-વૃદ્ધિ અને સેવા-ભાવ.",
+      "meaningKn": "ವಿಷಯ-ವಿಕಾರಗಳನ್ನು (ಇಂದ್ರಿಯ-ದೋಷಗಳನ್ನು) ಅಳಿಸಿ, ಪಾಪವನ್ನು ಹರಿಸಿ ಹೇ ದೇವನೇ. ಶ್ರದ್ಧೆ ಮತ್ತು ಭಕ್ತಿಯನ್ನು ಹೆಚ್ಚಿಸಿ ಮತ್ತು ಸಂತರ ಸೇವೆಯ ಭಾವವನ್ನು ಕರುಣಿಸಿ. ಒಂದೇ ಪದದಲ್ಲಿ ನಾಲ್ಕು ಪ್ರಾರ್ಥನೆಗಳು: ವಿಕಾರ-ನಿವೃತ್ತಿ, ಪಾಪ-ಹರಣ, ಶ್ರದ್ಧಾ-ವೃದ್ಧಿ ಮತ್ತು ಸೇವಾ-ಭಾವ."
     },
     {
       "id": "ojj-09",
@@ -176,17 +200,19 @@
       "labelHi": "टेक",
       "labelEn": "Closing Refrain",
       "lines": [
-        "ॐ जय जगदीश हरे, स्वामी जय जगदीश हरे।",
-        "भक्त जनों के संकट, दास जनों के संकट,",
-        "क्षण में दूर करे॥"
+        "श्री जगदीशजी की आरती, जो कोई नर गावे।",
+        "स्वामी जो कोई नर गावे।",
+        "कहत शिवानन्द स्वामी, सुख संपत्ति पावे॥"
       ],
       "linesEn": [
-        "Om jai Jagdish hare, Swami jai Jagdish hare.",
-        "Bhakt janon ke sankat, daas janon ke sankat,",
-        "Kshan mein door kare."
+        "Shree Jagdishji ki aarti, jo koi nar gaave.",
+        "Swami jo koi nar gaave.",
+        "Kahat Shivaanand Swami, sukh sampatti paave."
       ],
-      "meaningHi": "समापन में प्रथम पद की पुनरावृत्ति — आरती की चक्रीय संरचना। ईश्वर की शक्ति तत्काल है, काल-बाधित नहीं। आरती कभी समाप्त नहीं होती, केवल एक चक्र पूर्ण होता है।",
-      "meaningEn": "Closing with repetition of the first verse — the circular structure of aarti. God's power is immediate, not bound by time. Aarti never truly ends — only one cycle completes."
+      "meaningHi": "जो कोई श्री जगदीशजी की आरती गाता है — शिवानन्द स्वामी कहते हैं — वह सुख और सम्पत्ति पाता है। यह आरती गाने का फल और कवि का नाम-उल्लेख है।",
+      "meaningEn": "Whoever sings Shri Jagdishji's aarti — says Shivanand Swami — receives happiness and prosperity. This closing states the fruit of singing the aarti and names the poet.",
+      "meaningGu": "જે કોઈ શ્રી જગદીશજીની આરતી ગાય છે — શિવાનંદ સ્વામી કહે છે — તે સુખ અને સંપત્તિ પામે છે. આ આરતી ગાવાનું ફળ અને કવિના નામનો ઉલ્લેખ છે.",
+      "meaningKn": "ಯಾರು ಶ್ರೀ ಜಗದೀಶಜಿಯವರ ಆರತಿಯನ್ನು ಹಾಡುತ್ತಾರೋ, ಶಿವಾನಂದ ಸ್ವಾಮಿ ಹೇಳುತ್ತಾರೆ, ಅವರು ಸುಖ ಮತ್ತು ಸಂಪತ್ತನ್ನು ಪಡೆಯುತ್ತಾರೆ. ಈ ಅಂತಿಮ ವಾಕ್ಯವು ಆರತಿ ಹಾಡುವ ಫಲವನ್ನು ತಿಳಿಸಿ, ಕವಿಯ ಹೆಸರನ್ನೂ ಉಲ್ಲೇಖಿಸುತ್ತದೆ."
     }
   ]
 }

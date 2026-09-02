@@ -90,8 +90,8 @@
       "stanza": 11,
       "numInSection": 11,
       "subSuffix": null,
-      "labelHi": "दोहा ११",
-      "labelEn": "Doha 11",
+      "labelHi": "दोहा · ११",
+      "labelEn": "Doha · 11",
       "lines": [
         "जहँ तहँ गईं सकल तब सीता कर मन सोच।",
         "मास दिवस बीतें मोहि मारिहि निसिचर पोच॥11॥"
@@ -230,8 +230,8 @@
       "stanza": 12,
       "numInSection": 12,
       "subSuffix": null,
-      "labelHi": "सोरठा १२",
-      "labelEn": "Sortha 12",
+      "labelHi": "सोरठा · १२",
+      "labelEn": "Sortha · 12",
       "lines": [
         "कपि करि हृदयँ बिचार दीन्हि मुद्रिका डारि तब।",
         "जनु असोक अंगार दीन्ह हरषि उठि कर गहेउ॥12॥"
@@ -368,8 +368,8 @@
       "stanza": 12,
       "numInSection": 12,
       "subSuffix": null,
-      "labelHi": "दोहा १२",
-      "labelEn": "Doha 12",
+      "labelHi": "दोहा · १२",
+      "labelEn": "Doha · 12",
       "lines": [
         "कपि के बचन सप्रेम सुनि उपजा मन बिस्वास",
         "जाना मन क्रम बचन यह कृपासिंधु कर दास॥13॥"
@@ -382,5 +382,14 @@
       ],
       "chapter": 6
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Ramcharitmanas, Sundarkand by Goswami Tulsidas; app content is divided into editorial reading sections, not canonical sargas.",
+    "referenceUrls": [
+      "https://hi.wikisource.org/wiki/%E0%A4%B0%E0%A4%BE%E0%A4%AE%E0%A4%9A%E0%A4%B0%E0%A4%BF%E0%A4%A4%E0%A4%AE%E0%A4%BE%E0%A4%A8%E0%A4%B8",
+      "https://www.drikpanchang.com/lyrics/ramcharitmanas/sundarkand/sundarkand-lyrics.html?ck=1&lang=en",
+      "https://en.bharatdiscovery.org/india/%E0%A4%B8%E0%A5%81%E0%A4%A8%E0%A5%81_%E0%A4%B2%E0%A4%82%E0%A4%95%E0%A5%87%E0%A4%B8_%E0%A4%B8%E0%A4%95%E0%A4%B2_%E0%A4%97%E0%A5%81%E0%A4%A8_%E0%A4%A4%E0%A5%8B%E0%A4%B0%E0%A5%87%E0%A4%82"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

@@ -1,0 +1,46 @@
+{
+  "configVersion": 0,
+  "apple": {
+    "info": {
+      "en-GB": {
+        "title": "Vedansh",
+        "subtitle": "Bhagavad Gita, Panchang & japa",
+        "privacyPolicyUrl": "https://persisharma.github.io/get-vedansh/privacy",
+        "marketingUrl": "https://persisharma.github.io/get-vedansh",
+        "supportUrl": "https://persisharma.github.io/get-vedansh",
+        "keywords": [
+          "gita", "hanuman", "chalisa", "panchang", "choghadiya", "muhurat",
+          "japa", "mantra", "aarti", "vrat", "ekadashi", "bhajan", "puja", "hindu"
+        ],
+        "promoText": "New: Daily Muhurat with Choghadiya, Rahu Kaal & Abhijit. Plus Sankalp programs, mantra alarms and a built-in bhajan player. Free, ad-free and fully offline.",
+        "description": "Vedansh (Sanskrit: \"a portion of the Vedas\") is a beautifully designed bilingual companion for Hindu devotion — sacred texts, a daily Panchang, and a practice you keep. Immerse yourself in timeless scriptures with a reverent, book-like reading experience, fully offline.\n\nSACRED LIBRARY\n- Bhagavad Gita: all 18 chapters, 701 shlokas with meaning and commentary\n- Sundarkand, Ramcharitmanas selections and Vishnu Sahasranama\n- Chalisas, aartis, stotrams and sanskar for children\n- Instant search across the whole library\n\nBILINGUAL READING\n- Every verse in Hindi (Devanagari) and English — now also Gujarati and Kannada\n- IAST transliteration for Sanskrit texts\n- One verse per page with swipe navigation\n- Adjustable reading size and a beautiful parchment-style design\n\nDAILY PANCHANG\n- Accurate tithi, nakshatra, yoga, karana and sunrise/sunset for your city, from a real astronomy engine\n- Purnimant and Amanta systems, Vikram Samvat and a full month calendar\n- Daily Muhurat: Choghadiya, Rahu Kaal and Abhijit at a glance\n- Location is optional — a city picker (default Ujjain) works without it\n\nVRAT, FESTIVALS & KATHAS\n- Browse vrats, festivals and 80+ kathas: Ekadashi, Satyanarayan, Karwa Chauth, Shivaratri and more\n- Follow the ones you observe and get gentle reminders\n\nDAILY SADHANA\n- Build a daily or weekday routine with the right deity for each day\n- Take a Sankalp: guided 4-to-41-day programs, all the way to completion\n- Track your reading and celebrate completion\n\nJAPAM MEDITATION\n- Digital bead counter for 108-bead mala rounds\n- Japam alarms: wake to your chosen mantra, with repeat days and skip-a-day\n- Multiple mantras: Om Namah Shivaya, Gayatri Mantra, Hare Krishna and more\n\nLISTEN\n- A built-in player for bhajans, mantras and aartis\n- Background audio for uninterrupted listening\n\nTHEERTH - SACRED PILGRIMAGE\n- Explore India's dhams on a real-geography map, by state, category or yatra\n- Sourced temple stories for each site\n\nYOUR SPIRITUAL JOURNEY\n- Sadhak Profile: track reads, beads, rounds and streaks\n- Bookmark and revisit favorite verses\n- Resume reading from where you left off\n- Shareable verse cards\n\nBROWSE BY DEITY\n- Explore texts by Rama, Krishna, Shiva, Hanuman, Durga or Ganesha\n\nPRIVATE BY DESIGN\n- No account, no ads, no tracking. Works fully offline; your practice stays on your device.\n\nAll texts are from public-domain Hindu classics, presented with reverence for personal study and devotion.",
+        "releaseNotes": "A big update for your daily devotion.\n\n• Daily Muhurat — the day's Choghadiya, Rahu Kaal and Abhijit muhurat, right on the Panchang.\n• Sankalp programs — guided 4-to-41-day sadhanas that carry you to completion.\n• Japam alarms — wake to your chosen mantra, with repeat days, skip-next and one-time alarms.\n• Bhajan player — a calm, built-in player for mantras, aartis and recitations.\n• A refreshed home, adjustable reading size, and a \"Share the App\" card.\n• Many performance and stability improvements.\n\nIf you're upgrading from an older version, you'll also find the Panchang, Vrat & Festival kathas, Daily Routine, Theerth pilgrimage map, and Gujarati & Kannada reading languages."
+      }
+    },
+    "categories": ["LIFESTYLE", "REFERENCE"],
+    "advisory": {
+      "alcoholTobaccoOrDrugUseOrReferences": "NONE",
+      "contests": "NONE",
+      "gamblingSimulated": "NONE",
+      "horrorOrFearThemes": "NONE",
+      "matureOrSuggestiveThemes": "NONE",
+      "medicalOrTreatmentInformation": "NONE",
+      "profanityOrCrudeHumor": "NONE",
+      "sexualContentGraphicAndNudity": "NONE",
+      "sexualContentOrNudity": "NONE",
+      "violenceCartoonOrFantasy": "NONE",
+      "violenceRealistic": "NONE",
+      "violenceRealisticProlongedGraphicOrSadistic": "NONE",
+      "gambling": false,
+      "unrestrictedWebAccess": false,
+      "kidsAgeBand": null,
+      "seventeenPlus": false,
+      "ageRatingOverride": "NONE",
+      "koreaAgeRatingOverride": "NONE"
+    },
+    "release": {
+      "automaticRelease": false,
+      "phasedRelease": true
+    }
+  }
+}

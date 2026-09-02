@@ -1,0 +1,95 @@
+# Shared boot flow — used as a subflow at the start of every category smoke test.
+#
+# Why a separate file: the Expo Go launch + project select + first-load wait
+# is identical across every smoke test. Keeping it here means a single change
+# (e.g., the Expo Go version updates and the open URL changes) ripples to all
+# flows at once.
+#
+# Caller contract:
+#   - Caller's appId MUST be com.prashantsharma.vedansh (Expo Go).
+#   - This flow exits with the Vedansh Home screen rendered and Maestro able
+#     to read past the Expo dev-menu sheet (config.yaml sets
+#     snapshotKeyHonorModalViews: false).
+#   - The Today-strip + For Today assertions are the canary that confirms the
+#     bundle finished executing. Keep these above-the-fold: Home now has daily
+#     recommendation cards before Categories, so older category tiles such as
+#     "Good Habits" can sit below the first viewport.
+#   - Expo Go can leave a native dev-menu bottom sheet open after project load;
+#     the downward swipe dismisses it when present and is harmless on Home.
+#   - On first launch one onboarding surface may auto-appear over Home and
+#     block downstream flows until dismissed: a genuine fresh install gets the
+#     feature tour (dismiss via "Skip") and then the language/size setup sheet
+#     (dismiss via "Begin"); a returning user on the debut release gets the
+#     What's New sheet (dismiss via its "Close" ✕). All optional taps are
+#     harmless no-ops once the surface has been seen, and the tour and What's
+#     New are mutually exclusive.
+appId: com.prashantsharma.vedansh
+---
+- launchApp:
+    appId: com.prashantsharma.vedansh
+    clearState: true
+    # Pin the native React Native bundle provider to this worktree's isolated
+    # Metro server. Without this launch argument it silently uses port 8081,
+    # which may belong to another worktree and produce a false green/red run.
+    arguments:
+      RCT_jsLocation: "127.0.0.1:8084"
+# clearState gives every flow a clean AsyncStorage baseline so runs are
+# order-independent and don't leak routines/bookmarks/counters between flows
+# (the native build persists state across launches, unlike an Expo Go reload).
+# Native build (dev-client) auto-reconnects to Metro and lands on Home — there
+# is no Expo Go project picker to tap. Let the bundle finish executing.
+- waitForAnimationToEnd:
+    timeout: 30000
+# clearState resets iOS permission grants, so a fresh launch pops the native
+# "…Would Like to Send You Notifications" alert over Home (the app requests
+# permission on boot for reminders/japam alarms). It's a NATIVE alert that
+# blocks the canary underneath, so dismiss it first. Optional — a no-op once the
+# grant is set at the sim level (`simctl privacy grant notifications`).
+- tapOn:
+    text: "Allow"
+    optional: true
+- tapOn:
+    text: "Don't Allow"
+    optional: true
+# Dismiss whichever first-launch onboarding surface auto-appeared BEFORE
+# asserting Home — a fresh install can show the feature tour (an OVERLAY), a
+# returning user on a debut release gets the What's New sheet, and notification
+# preferences can show the Daily Verse opt-in page sheet. All controls are
+# optional no-ops once the surface has been seen. The tour control exposes only
+# its a11y label and Maestro matches the whole string, so it must be "Skip tour",
+# not "Skip"; the Daily Verse prompt localizes "Not now", so cover every
+# supported primary language.
+- tapOn:
+    text: "Skip tour"
+    optional: true
+- waitForAnimationToEnd
+# Skipping (or finishing) the tour on a fresh install hands over to the
+# first-run language + reading-size sheet — accept its defaults with "Begin"
+# (constant English a11y label) so flows land on Home in the hi/Standard
+# baseline. Language-specific flows set their own language afterwards.
+- tapOn:
+    text: "Begin"
+    optional: true
+- tapOn:
+    text: "Close"
+    optional: true
+- tapOn:
+    text: "Got it"
+    optional: true
+- tapOn:
+    text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
+    optional: true
+- waitForAnimationToEnd
+# The Home "Today's Panchang" card is now a tappable launcher (PRD-C), so its
+# text is one merged accessibility label — "Today's Panchang. <weekday>,
+# <tithi>. … Tap to open." — exposed in English regardless of display language.
+# Maestro anchors selectors to an element's FULL text, so wildcard both ends.
+- extendedWaitUntil:
+    visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
+    timeout: 60000
+- extendedWaitUntil:
+    visible: "आज के लिए|FOR TODAY"
+    timeout: 60000
+- swipe:
+    direction: DOWN
+- waitForAnimationToEnd

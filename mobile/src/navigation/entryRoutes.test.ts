@@ -3,10 +3,13 @@ import assert from 'node:assert/strict';
 import type { BookmarkRef } from '@/contexts/BookmarksContext';
 import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
 import {
+  buildEntryStartTarget,
   buildBookmarkTarget,
   buildProgressTarget,
   navigateToBookmark,
+  navigateToHomeStackTarget,
   navigateToProgress,
+  navigateToRoutineItem,
 } from './entryRoutes';
 import type { HomeStackParamList } from './types';
 
@@ -101,6 +104,7 @@ for (const sourceId of [
   'vishnu-sahasranama',
   'hanuman-ashtak',
   'ram-stuti',
+  'valmiki-ramayan',
   'durga-stotram',
   'ganesh-stotram',
   'shiva-strotam',
@@ -143,6 +147,24 @@ for (const sourceId of [
 }
 
 // buildBookmarkTarget returns a nested-navigator descriptor.
+{
+  const target = buildEntryStartTarget({
+    id: 'vishnu-sahasranama',
+    nameHi: 'विष्णु सहस्रनाम अंश',
+    nameEn: 'Vishnu Sahasranama Excerpt',
+    sub: '',
+    subEn: '',
+    thumb: '',
+    status: 'active',
+    category: 'stotram',
+    deities: ['vishnu'],
+  });
+  assert.deepEqual(target, {
+    screen: 'VishnuSahasranamaChapters',
+    params: {},
+  });
+}
+
 {
   const target = buildBookmarkTarget(bm({
     id: 'shiv-chalisa::3',
@@ -189,6 +211,24 @@ for (const sourceId of [
   assert.deepEqual(calls, [{ name: 'AartiReader', params: { aartiIndex: 2, initialIndex: 3 } }]);
 }
 
+// Resume into a chaptered source pushes the chapter index under the reader so
+// back lands on the subsection list.
+{
+  const { nav, calls } = makeNav();
+  const progress: ReadingProgress = {
+    sourceId: 'sundarkand',
+    chapter: 3,
+    verseIndex: 7,
+    updatedAt: 0,
+  };
+  const ok = navigateToProgress(nav as never, progress);
+  assert.equal(ok, true);
+  assert.deepEqual(calls, [
+    { name: 'SundarkandChapters', params: undefined },
+    { name: 'SundarkandReader', params: { chapter: 3, initialIndex: 7 } },
+  ]);
+}
+
 // buildProgressTarget routes a chaptered notification payload correctly.
 {
   const target = buildProgressTarget({
@@ -221,4 +261,148 @@ for (const sourceId of [
     verseIndex: 4,
   });
   assert.equal(target, null);
+}
+
+// ── Single-chapter texts open their reader, not a one-row chapters index ─────
+// Regression: every "open this text" surface (Home FOR TODAY row, By-Purpose
+// discovery lists, search, category/deity lists) routes through
+// buildEntryStartTarget. Sending a single-chapter text to its chapters screen
+// showed a list with exactly one row, so opening the text took two taps.
+{
+  const entry = (id: string): Parameters<typeof buildEntryStartTarget>[0] => ({
+    id,
+    nameHi: '',
+    nameEn: '',
+    sub: '',
+    subEn: '',
+    thumb: '',
+    status: 'active',
+    category: 'stotram',
+    deities: [],
+  });
+
+  // One chapter → straight into the reader at its first verse.
+  for (const [id, screen] of [
+    ['hanuman-ashtak', 'HanumanAshtakReader'],
+    ['bajrang-baan', 'BajrangBaanReader'],
+    ['ram-stuti', 'RamStutiReader'],
+    // ram-aarti reuses the Ram Stuti content, so it inherits the same route.
+    ['ram-aarti', 'RamStutiReader'],
+    ['ramcharitmanas', 'RamcharitmanasReader'],
+  ] as const) {
+    assert.deepEqual(
+      buildEntryStartTarget(entry(id)),
+      { screen, params: { chapter: 1, initialIndex: 0 } },
+      `${id} should open its reader directly`
+    );
+  }
+
+  // More than one chapter → the index still leads, because there is a choice.
+  for (const [id, screen] of [
+    ['sundarkand', 'SundarkandChapters'],
+    ['bhagavad-gita', 'GitaChapters'],
+    ['vishnu-sahasranama', 'VishnuSahasranamaChapters'],
+    ['shiva-strotam', 'ShivaStrotamChapters'],
+    ['durga-stotram', 'DurgaStotramChapters'],
+    ['ganesh-stotram', 'GaneshStotramChapters'],
+    ['saraswati-stotram', 'SaraswatiStotramChapters'],
+    ['krishna-stotram', 'KrishnaStotramChapters'],
+    ['valmiki-ramayan', 'ValmikiRamayanChapters'],
+  ] as const) {
+    assert.deepEqual(
+      buildEntryStartTarget(entry(id)),
+      { screen, params: {} },
+      `${id} should keep its chapters index`
+    );
+  }
+}
+
+// Resuming a single-chapter text goes straight to its reader — no one-row
+// chapters index pushed underneath (pressing back would strand the user on it).
+{
+  const { nav, calls } = makeNav();
+  const ok = navigateToProgress(nav as never, {
+    sourceId: 'bajrang-baan',
+    chapter: 1,
+    verseIndex: 6,
+    updatedAt: 0,
+  });
+  assert.equal(ok, true);
+  assert.deepEqual(calls, [
+    { name: 'BajrangBaanReader', params: { chapter: 1, initialIndex: 6 } },
+  ]);
+}
+
+// A multi-chapter text keeps the index under the reader (sibling chapters).
+{
+  const { nav, calls } = makeNav();
+  const ok = navigateToProgress(nav as never, {
+    sourceId: 'vishnu-sahasranama',
+    chapter: 2,
+    verseIndex: 3,
+    updatedAt: 0,
+  });
+  assert.equal(ok, true);
+  assert.deepEqual(calls, [
+    { name: 'VishnuSahasranamaChapters', params: undefined },
+    { name: 'VishnuSahasranamaReader', params: { chapter: 2, initialIndex: 3 } },
+  ]);
+}
+
+// PRD-19 back-navigation contract. The vidhi flow is registered on the Home
+// stack as well as the Panchang one, so a routine item opens VidhiDetail IN
+// PLACE. A cross-tab `navigate('PanchangTab', …)` here left back popping to the
+// Panchang calendar — a tab the user never chose, and one whose default mode
+// carries no vidhi door to re-enter from.
+{
+  const { nav, calls } = makeNav();
+  const ok = navigateToRoutineItem(nav as never, {
+    id: 'r1',
+    kind: 'vidhi',
+    sourceId: 'satyanarayan-puja',
+    titleHi: 'श्री सत्यनारायण पूजा',
+    titleEn: 'Shri Satyanarayan Puja',
+  } as never);
+  assert.equal(ok, true);
+  assert.deepEqual(calls, [
+    { name: 'VidhiDetail', params: { vidhiId: 'satyanarayan-puja' } },
+  ]);
+}
+
+// navigateToHomeStackTarget: the conduct screen's shipped-text hand-off. The
+// readers live only on the Home stack, and the conduct screen can be mounted on
+// either — push in place when the enclosing stack already owns the route.
+{
+  const { nav, calls } = makeNav();
+  navigateToHomeStackTarget(
+    {
+      navigate: nav.navigate as never,
+      getState: () => ({ routeNames: ['Home', 'VidhiConduct', 'VratKathaReader'] }),
+    },
+    { screen: 'VratKathaReader', params: { kathaId: 'satyanarayana-vrat-katha' } }
+  );
+  assert.deepEqual(calls, [
+    { name: 'VratKathaReader', params: { kathaId: 'satyanarayana-vrat-katha' } },
+  ]);
+}
+
+// …and cross-tab when it does not (the Panchang-stack mounting).
+{
+  const { nav, calls } = makeNav();
+  navigateToHomeStackTarget(
+    {
+      navigate: nav.navigate as never,
+      getState: () => ({ routeNames: ['PanchangHome', 'VidhiConduct'] }),
+    },
+    { screen: 'VratKathaReader', params: { kathaId: 'satyanarayana-vrat-katha' } }
+  );
+  assert.deepEqual(calls, [
+    {
+      name: 'HomeTab',
+      params: {
+        screen: 'VratKathaReader',
+        params: { kathaId: 'satyanarayana-vrat-katha' },
+      },
+    },
+  ]);
 }

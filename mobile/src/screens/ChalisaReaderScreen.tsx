@@ -16,14 +16,24 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { getChalisa, type ChalisaVerse } from '@/data/chalisaRegistry';
 import { useGitaLanguage } from '@/data/gita/language';
+import { contentByLang } from '@/utils/localize';
+import ReaderHeader from '@/components/ReaderHeader';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
 import LanguageToggle from '@/components/LanguageToggle';
+import ReadingProgressBar from '@/components/ReadingProgressBar';
+import AddToRoutineButton from '@/components/AddToRoutineButton';
 import VersePage from '@/components/VersePage';
+import WhenToRecitePanel from '@/components/WhenToRecitePanel';
 import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
+import { useAudioPlayerContext } from '@/contexts/AudioPlayerContext';
+import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
+import { useReaderReadAloud } from '@/screens/_useReaderReadAloud';
+import { getTrackForText } from '@/data/audio/tracks';
+import { hasRealAudio } from '@assets/audio-library';
 import type { RootStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ChalisaReader'>;
@@ -33,17 +43,32 @@ const DOT_COUNT = 5;
 export default function ChalisaReaderScreen({ navigation, route }: Props) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
-  const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
+  const { addBookmark, removeBookmark, isBookmarked, bookmarks } = useBookmarks();
   const { setProgress } = useReadingProgress();
   const { share, busy: shareBusy } = useShare();
+  const { playTrack, openNowPlaying } = useAudioPlayerContext();
   const { width } = useWindowDimensions();
   const chalisaId = route.params?.chalisaId ?? 'hanuman-chalisa';
+  const audioTrack = useMemo(() => {
+    const t = getTrackForText(chalisaId);
+    return t && hasRealAudio(t.id) ? t : undefined;
+  }, [chalisaId]);
   const chalisa = useMemo(() => getChalisa(chalisaId), [chalisaId]);
   const verses = chalisa.verses;
   const total = verses.length;
   const listRef = useRef<FlatList<ChalisaVerse>>(null);
   const initialIndex = clampIndex(route.params?.initialIndex, total);
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
+
+  // Flat reader: list index === verse index, so no offset.
+  const readAloud = useReaderReadAloud({
+    sourceId: chalisaId,
+    data: verses,
+    offset: 0,
+    verseCount: total,
+    currentIndex,
+    listRef,
+  });
 
   useEffect(() => {
     setProgress({
@@ -101,48 +126,21 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
     [width, total]
   );
 
+  // Re-render visible pages when the language flips, a bookmark toggles, or a
+  // share is in flight — the in-page header actions depend on all three.
+  const listExtraData = useMemo(
+    () => ({ lang, bookmarks, shareBusy }),
+    [lang, bookmarks, shareBusy]
+  );
+
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
-        <View style={styles.topBar}>
-          <View style={styles.topSide}>
-            <Pressable
-              onPress={() => navigation.goBack()}
-              accessibilityRole="button"
-              accessibilityLabel="Back to home"
-              hitSlop={16}
-              style={({ pressed }) => [
-                styles.back,
-                {
-                  backgroundColor: colors.parchmentSoft,
-                  borderColor: colors.divider,
-                },
-                pressed && { opacity: 0.7 },
-              ]}
-            >
-              <Text style={[styles.backGlyph, { color: colors.inkSoft }]}>‹</Text>
-            </Pressable>
-          </View>
-
-          <Text
-            style={[
-              styles.title,
-              {
-                color: colors.ink,
-                fontFamily:
-                  lang === 'hi'
-                    ? typography.readerTitle.fontFamily
-                    : typography.cardLatin.fontFamily,
-                fontSize: typography.readerTitle.fontSize,
-                fontStyle: lang === 'en' ? 'italic' : 'normal',
-              },
-            ]}
-            numberOfLines={1}
-          >
-            {lang === 'hi' ? chalisa.titleHi : chalisa.titleEn}
-          </Text>
-
-          <View style={[styles.topSide, { alignItems: 'flex-end' }]}>
+        <ReaderHeader
+          title={contentByLang(lang, chalisa.titleHi, chalisa.titleEn)}
+          onBack={() => navigation.goBack()}
+          backAccessibilityLabel="Back to home"
+          right={
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
               <Text
                 style={[
@@ -157,51 +155,42 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
               >
                 {currentIndex + 1} / {total}
               </Text>
-              <BookmarkButton
-                isBookmarked={isBookmarked(`${chalisaId}::${currentIndex}`)}
-                onToggle={() => {
-                  const id = `${chalisaId}::${currentIndex}`;
-                  if (isBookmarked(id)) {
-                    removeBookmark(id);
-                  } else {
-                    const v = verses[currentIndex];
-                    addBookmark({
-                      id,
-                      sourceId: chalisaId,
-                      verseIndex: currentIndex,
-                      savedAt: Date.now(),
-                      previewHi: v.lines[0] ?? '',
-                      previewEn: v.linesEn[0] ?? '',
-                    });
-                  }
-                }}
-              />
-              <ShareButton
-                busy={shareBusy}
-                onPress={() => {
-                  const v = verses[currentIndex];
-                  share(
-                    {
-                      sourceId: chalisaId,
-                      sectionNameHi: chalisa.titleHi,
-                      sectionNameEn: chalisa.titleEn,
-                      verseLabelHi: v.labelHi,
-                      verseLabelEn: v.labelEn,
-                      linesHi: [...v.lines],
-                      linesEn: [...v.linesEn],
-                      meaningHi: v.meaningHi,
-                      meaningEn: v.meaningEn,
-                    },
-                    lang
-                  );
-                }}
-              />
+              {audioTrack && (
+                <Pressable
+                  onPress={() => {
+                    playTrack(audioTrack);
+                    openNowPlaying();
+                  }}
+                  accessibilityRole="button"
+                  accessibilityLabel={`Play ${audioTrack.titleEn} audio`}
+                  hitSlop={10}
+                  style={({ pressed }) => [
+                    { paddingHorizontal: 4, paddingVertical: 2 },
+                    pressed && { opacity: 0.6 },
+                  ]}
+                >
+                  <Text style={{ color: colors.saffronDeep, fontSize: 16, includeFontPadding: false }}>
+                    ▶
+                  </Text>
+                </Pressable>
+              )}
             </View>
-          </View>
-        </View>
+          }
+          // Counter (+ optional recorded ▶); the read-aloud control now lives on the
+          // toggle row, so the header side column is back to its compact size.
+          sideWidth={audioTrack ? 84 : 60}
+        />
+
+        <ReadingProgressBar current={currentIndex + 1} total={total} />
 
         <View style={styles.toggleRow}>
           <LanguageToggle />
+          <AddToRoutineButton sourceId={chalisaId} />
+          {/* Pinned to the right edge so the toggle group stays centred; the read-aloud
+              pill (▶ + "सुनें") sits inline with the toggle, clear of the progress bar. */}
+          <View style={styles.readAloudSlot}>
+            <ReadAloudButton control={readAloud} />
+          </View>
         </View>
 
         <View style={styles.listContainer}>
@@ -209,8 +198,58 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
             ref={listRef}
             data={verses as ChalisaVerse[]}
             keyExtractor={(v) => v.id}
-            renderItem={({ item }) => <VersePage verse={item} sourceId={chalisaId} width={width} />}
-            extraData={lang}
+            renderItem={({ item, index }) => (
+              <VersePage
+                verse={item}
+                sourceId={chalisaId}
+                width={width}
+                belowContent={index === 0 ? <WhenToRecitePanel sourceId={chalisaId} /> : undefined}
+                topActions={
+                  <>
+                    <BookmarkButton
+                      isBookmarked={isBookmarked(`${chalisaId}::${index}`)}
+                      onToggle={() => {
+                        const id = `${chalisaId}::${index}`;
+                        if (isBookmarked(id)) {
+                          removeBookmark(id);
+                        } else {
+                          addBookmark({
+                            id,
+                            sourceId: chalisaId,
+                            verseIndex: index,
+                            savedAt: Date.now(),
+                            previewHi: item.lines[0] ?? '',
+                            previewEn: item.linesEn[0] ?? '',
+                          });
+                        }
+                      }}
+                    />
+                    <ShareButton
+                      busy={shareBusy}
+                      onPress={() => {
+                        share(
+                          {
+                            sourceId: chalisaId,
+                            sectionNameHi: chalisa.titleHi,
+                            sectionNameEn: chalisa.titleEn,
+                            verseLabelHi: item.labelHi,
+                            verseLabelEn: item.labelEn,
+                            linesHi: [...item.lines],
+                            linesEn: [...item.linesEn],
+                            meaningHi: item.meaningHi,
+                            meaningEn: item.meaningEn,
+                            meaningGu: item.meaningGu,
+                            meaningKn: item.meaningKn,
+                          },
+                          lang
+                        );
+                      }}
+                    />
+                  </>
+                }
+              />
+            )}
+            extraData={listExtraData}
             horizontal
             pagingEnabled
             showsHorizontalScrollIndicator={false}
@@ -255,46 +294,23 @@ const styles = StyleSheet.create({
   safe: {
     flex: 1,
   },
-  topBar: {
-    paddingHorizontal: 22,
-    paddingTop: 8,
-    paddingBottom: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  topSide: {
-    width: 120,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  back: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  backGlyph: {
-    fontSize: 22,
-    lineHeight: 24,
-    marginTop: -2,
-    includeFontPadding: false,
-  },
-  title: {
-    flex: 1,
-    textAlign: 'center',
-    includeFontPadding: false,
-    marginHorizontal: 4,
-  },
   counter: {
     includeFontPadding: false,
   },
   toggleRow: {
-    paddingVertical: 6,
-    paddingBottom: 12,
+    flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
+    gap: 18,
+    paddingTop: 6,
+    paddingBottom: 12,
+  },
+  readAloudSlot: {
+    position: 'absolute',
+    right: 16,
+    top: 6,
+    bottom: 12,
+    justifyContent: 'center',
   },
   listContainer: {
     flex: 1,

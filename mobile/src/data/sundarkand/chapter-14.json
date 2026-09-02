@@ -13,7 +13,7 @@
       "labelHi": "चौपाई ४९·१",
       "labelEn": "Chaupai 49·1",
       "lines": [
-        "सुनु लंकेस सकल गुन तोरें। तातें तुम्ह अतिसय प्रिय मोरें॥।",
+        "सुनु लंकेस सकल गुन तोरें। तातें तुम्ह अतिसय प्रिय मोरें॥",
         "राम बचन सुनि बानर जूथा। सकल कहहिं जय कृपा बरूथा॥1॥"
       ],
       "meaningHi": "-हे लंकापति! सुनो, तुम्हारे अंदर उपर्युक्त सब गुण हैं। इससे तुम मुझे अत्यंत ही प्रिय हो। श्री रामजी के वचन सुनकर सब वानरों के समूह कहने लगे- कृपा के समूह श्री रामजी की जय हो",
@@ -230,8 +230,8 @@
       "stanza": 51,
       "numInSection": 51,
       "subSuffix": null,
-      "labelHi": "दोहा ५१",
-      "labelEn": "Doha 51",
+      "labelHi": "दोहा · ५१",
+      "labelEn": "Doha · 51",
       "lines": [
         "प्रभु तुम्हार कुलगुर जलधि कहिहि उपाय बिचारि॥",
         "बिनु प्रयास सागर तरिहि सकल भालु कपि धारि॥50॥"
@@ -330,8 +330,8 @@
       "stanza": 52,
       "numInSection": 52,
       "subSuffix": null,
-      "labelHi": "दोहा ५२",
-      "labelEn": "Doha 52",
+      "labelHi": "दोहा · ५२",
+      "labelEn": "Doha · 52",
       "lines": [
         "सकल चरित तिन्ह देखे धरें कपट कपि देह।",
         "प्रभु गुन हृदयँ सराहहिं सरनागत पर नेह॥51॥"
@@ -430,8 +430,8 @@
       "stanza": 53,
       "numInSection": 53,
       "subSuffix": null,
-      "labelHi": "दोहा ५३",
-      "labelEn": "Doha 53",
+      "labelHi": "दोहा · ५३",
+      "labelEn": "Doha · 53",
       "lines": [
         "कहेहु मुखागर मूढ़ सन मम संदेसु उदार।",
         "सीता देइ मिलहु न त आवा कालु तुम्हार॥52॥"
@@ -530,8 +530,8 @@
       "stanza": 54,
       "numInSection": 54,
       "subSuffix": null,
-      "labelHi": "दोहा ५४",
-      "labelEn": "Doha 54",
+      "labelHi": "दोहा · ५४",
+      "labelEn": "Doha · 54",
       "lines": [
         "की भइ भेंट कि फिरि गए श्रवन सुजसु सुनि मोर।",
         "कहसि न रिपु दल तेज बल बहुत चकित चित तोर ॥53॥"
@@ -544,5 +544,14 @@
       ],
       "chapter": 14
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Ramcharitmanas, Sundarkand by Goswami Tulsidas; app content is divided into editorial reading sections, not canonical sargas.",
+    "referenceUrls": [
+      "https://hi.wikisource.org/wiki/%E0%A4%B0%E0%A4%BE%E0%A4%AE%E0%A4%9A%E0%A4%B0%E0%A4%BF%E0%A4%A4%E0%A4%AE%E0%A4%BE%E0%A4%A8%E0%A4%B8",
+      "https://www.drikpanchang.com/lyrics/ramcharitmanas/sundarkand/sundarkand-lyrics.html?ck=1&lang=en",
+      "https://en.bharatdiscovery.org/india/%E0%A4%B8%E0%A5%81%E0%A4%A8%E0%A5%81_%E0%A4%B2%E0%A4%82%E0%A4%95%E0%A5%87%E0%A4%B8_%E0%A4%B8%E0%A4%95%E0%A4%B2_%E0%A4%97%E0%A5%81%E0%A4%A8_%E0%A4%A4%E0%A5%8B%E0%A4%B0%E0%A5%87%E0%A4%82"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

@@ -1,0 +1,145 @@
+{
+  "titleHi": "श्रीनृसिंहाष्टकम्",
+  "titleEn": "Narasimha Ashtakam",
+  "deity": "narasimha",
+  "source": {
+    "baseText": "Shri Narasimha Ashtakam ('श्रीमदकलङ्क परिपूर्ण शशिकोटि') — the 8-verse ashtakam proper; cross-verified across authoritative stotra sources, concordant.",
+    "referenceUrls": [
+      "https://stotranidhi.com/hi/sri-narasimha-ashtakam-in-sanskrit/",
+      "https://vignanam.org/samskritam/sri-narasimha-ashtakam.html",
+      "https://sanskritdocuments.org/doc_vishhnu/nrisimhAShTakam.pdf"
+    ],
+    "retrievedOn": "2026-07-23",
+    "notes": "Classical ashtakam to Nrisimha (Vishnu's man-lion avatara); refrain नरसिंह नरसिंह. stotranidhi and vignanam concordant throughout; sanskritdocuments concordant with minor print variants (v4 मौलेषु for मौलिषु — मौलिषु adopted per the two concordant sources; v4 शिरस्सु निगमानाम् per SD/vignanam where stotranidhi splits शिरः सुनिगमानाम्). Distinct from the other two Nrisimha ashtakams on SD (नीलां रमां; करावलम्ब variants). Phalashruti (v9, अष्टकमिदं…) omitted, consistent with the other ashtakams."
+  },
+  "verses": [
+    {
+      "id": "narasimha-ashtakam-1",
+      "number": 1,
+      "labelHi": "श्लोक · १",
+      "labelEn": "Shloka · 1",
+      "lines": [
+        "श्रीमदकलङ्क परिपूर्ण शशिकोटिश्रीधर मनोहर सटापटल कान्त।",
+        "पालय कृपालय भवाम्बुधिनिमग्नं दैत्यवरकाल नरसिंह नरसिंह॥"
+      ],
+      "linesEn": [
+        "śrīmadakalaṅka paripūrṇa śaśikoṭiśrīdhara manohara saṭāpaṭala kānta",
+        "pālaya kṛpālaya bhavāmbudhinimagnaṃ daityavarakāla narasiṃha narasiṃha"
+      ],
+      "meaningHi": "हे श्रीमान्, निष्कलंक, परिपूर्ण, करोड़ों चन्द्रमाओं की शोभा धारण करने वाले, मनोहर, अयाल के पटल से कान्तिमान! हे कृपा के धाम! भवसागर में डूबे हुए मुझ की रक्षा कीजिए — हे दैत्यराज के काल! नरसिंह! नरसिंह!",
+      "meaningEn": "O glorious, stainless, perfect Lord, bearing the splendour of ten million moons, enchanting one, radiant with your cascading mane! O abode of mercy, protect me, drowned in the ocean of worldly existence — O death of the mighty daitya, Narasimha, Narasimha!"
+    },
+    {
+      "id": "narasimha-ashtakam-2",
+      "number": 2,
+      "labelHi": "श्लोक · २",
+      "labelEn": "Shloka · 2",
+      "lines": [
+        "पादकमलावनत पातकिजनानां पातकदवानल पतत्रिवरकेतो।",
+        "भावन परायण भवार्तिहरया मां पाहि कृपयैव नरसिंह नरसिंह॥"
+      ],
+      "linesEn": [
+        "pādakamalāvanata pātakijanānāṃ pātakadavānala patatrivaraketo",
+        "bhāvana parāyaṇa bhavārtiharayā māṃ pāhi kṛpayaiva narasiṃha narasiṃha"
+      ],
+      "meaningHi": "आपके चरण-कमलों में प्रणत पापी जनों के पापों के लिए दावानल स्वरूप! हे गरुड़ध्वज! हे सृष्टि के भावन, परम आश्रय! भव-पीड़ा हरने वाली अपनी कृपा से ही मेरी रक्षा कीजिए — नरसिंह! नरसिंह!",
+      "meaningEn": "A forest-fire to the sins of sinners who bow at your lotus feet, O Lord whose banner bears the best of birds! O creator, O supreme resort, guard me by your grace alone, which takes away the anguish of worldly existence — Narasimha, Narasimha!"
+    },
+    {
+      "id": "narasimha-ashtakam-3",
+      "number": 3,
+      "labelHi": "श्लोक · ३",
+      "labelEn": "Shloka · 3",
+      "lines": [
+        "तुङ्गनखपङ्क्तिदलितासुरवरासृक् पङ्कनवकुङ्कुमविपङ्किलमहोरः।",
+        "पण्डितनिधान कमलालय नमस्ते पङ्कजनिषण्ण नरसिंह नरसिंह॥"
+      ],
+      "linesEn": [
+        "tuṅganakhapaṅktidalitāsuravarāsṛk paṅkanavakuṅkumavipaṅkilamahoraḥ",
+        "paṇḍitanidhāna kamalālaya namaste paṅkajaniṣaṇṇa narasiṃha narasiṃha"
+      ],
+      "meaningHi": "आपकी ऊँची नख-पंक्ति से विदीर्ण असुरराज के रक्त-पंक से आपका विशाल वक्ष नव-कुंकुम से सना-सा शोभित है। हे पण्डितों के निधान, कमला (लक्ष्मी) के आलय, कमल पर विराजमान — आपको नमस्कार, नरसिंह! नरसिंह!",
+      "meaningEn": "Your vast chest, smeared with the mire of the great asura's blood torn by your row of lofty claws, glows as though anointed with fresh kunkuma. Treasure-house of the learned, abode of Kamala, seated upon the lotus — salutations to you, Narasimha, Narasimha!"
+    },
+    {
+      "id": "narasimha-ashtakam-4",
+      "number": 4,
+      "labelHi": "श्लोक · ४",
+      "labelEn": "Shloka · 4",
+      "lines": [
+        "मौलिषु विभूषणमिवामर वराणां योगिहृदयेषु च शिरस्सु निगमानाम्।",
+        "राजदरविन्दरुचिरं पदयुगं ते देहि मम मूर्ध्नि नरसिंह नरसिंह॥"
+      ],
+      "linesEn": [
+        "mauliṣu vibhūṣaṇamivāmara varāṇāṃ yogihṛdayeṣu ca śirassu nigamānām",
+        "rājadaravindaruciraṃ padayugaṃ te dehi mama mūrdhni narasiṃha narasiṃha"
+      ],
+      "meaningHi": "जो देवश्रेष्ठों के मुकुटों पर आभूषण के समान, योगियों के हृदयों में और वेदों के शीर्षों (उपनिषदों) पर विराजते हैं — अपने उन खिले कमल-से शोभायमान युगल चरणों को मेरे मस्तक पर रखिए — नरसिंह! नरसिंह!",
+      "meaningEn": "Your two feet, lovely as resplendent lotuses — resting like ornaments upon the crowns of the foremost gods, in the hearts of yogis, and upon the heads of the Vedas — place them, Lord, upon my head, Narasimha, Narasimha!"
+    },
+    {
+      "id": "narasimha-ashtakam-5",
+      "number": 5,
+      "labelHi": "श्लोक · ५",
+      "labelEn": "Shloka · 5",
+      "lines": [
+        "वारिजविलोचन मदन्तिमदशायां क्लेशविवशीकृतसमस्तकरणायाम्।",
+        "एहि रमया सह शरण्य विहगानां नाथमधिरुह्य नरसिंह नरसिंह॥"
+      ],
+      "linesEn": [
+        "vārijavilocana madantimadaśāyāṃ kleśavivaśīkṛtasamastakaraṇāyām",
+        "ehi ramayā saha śaraṇya vihagānāṃ nāthamadhiruhya narasiṃha narasiṃha"
+      ],
+      "meaningHi": "हे कमल-नयन! मेरी अन्तिम दशा में, जब क्लेश से मेरी समस्त इन्द्रियाँ विवश हो जाएँ, हे शरण्य! पक्षिराज गरुड़ पर आरूढ़ होकर रमा (लक्ष्मी) सहित मेरे पास आइए — नरसिंह! नरसिंह!",
+      "meaningEn": "O lotus-eyed one! In my final hour, when affliction has overwhelmed all my senses, O giver of refuge, come to me with Rama (Lakshmi), riding upon the lord of birds — Narasimha, Narasimha!"
+    },
+    {
+      "id": "narasimha-ashtakam-6",
+      "number": 6,
+      "labelHi": "श्लोक · ६",
+      "labelEn": "Shloka · 6",
+      "lines": [
+        "हाटककिरीटवरहारवनमाला धाररशनामकरकुण्डलमणीन्द्रैः।",
+        "भूषितमशेषनिलयं तव वपुर्मे चेतसि चकास्तु नरसिंह नरसिंह॥"
+      ],
+      "linesEn": [
+        "hāṭakakirīṭavarahāravanamālā dhāraraśanāmakarakuṇḍalamaṇīndraiḥ",
+        "bhūṣitamaśeṣanilayaṃ tava vapurme cetasi cakāstu narasiṃha narasiṃha"
+      ],
+      "meaningHi": "स्वर्ण-मुकुट, श्रेष्ठ हार, वनमाला, करधनी, मकर-कुण्डल और मणिराजों से विभूषित, समस्त जगत का आश्रय आपका दिव्य स्वरूप मेरे चित्त में सदा प्रकाशित रहे — नरसिंह! नरसिंह!",
+      "meaningEn": "May your divine form — adorned with golden crown, choice necklaces, forest garland, girdle, makara earrings and the kingliest of gems, the dwelling of all that is — shine forever in my heart, Narasimha, Narasimha!"
+    },
+    {
+      "id": "narasimha-ashtakam-7",
+      "number": 7,
+      "labelHi": "श्लोक · ७",
+      "labelEn": "Shloka · 7",
+      "lines": [
+        "इन्दु रवि पावक विलोचन रमायाः मन्दिर महाभुजलसद्वररथाङ्ग।",
+        "सुन्दर चिराय रमतां त्वयि मनो मे नन्दित सुरेश नरसिंह नरसिंह॥"
+      ],
+      "linesEn": [
+        "indu ravi pāvaka vilocana ramāyāḥ mandira mahābhujalasadvararathāṅga",
+        "sundara cirāya ramatāṃ tvayi mano me nandita sureśa narasiṃha narasiṃha"
+      ],
+      "meaningHi": "हे चन्द्र, सूर्य और अग्नि को नेत्रों के रूप में धारण करने वाले! हे रमा के मन्दिर! जिनकी विशाल भुजा में श्रेष्ठ चक्र शोभित है! हे सुन्दर! हे देवों को आनन्दित करने वाले सुरेश! मेरा मन चिरकाल तक आप में रमता रहे — नरसिंह! नरसिंह!",
+      "meaningEn": "O Lord whose three eyes are the moon, the sun and fire, temple of Rama, whose mighty arm gleams with the noble discus! O beautiful one, lord of the gods who fills them with joy — may my mind delight in you forever, Narasimha, Narasimha!"
+    },
+    {
+      "id": "narasimha-ashtakam-8",
+      "number": 8,
+      "labelHi": "श्लोक · ८",
+      "labelEn": "Shloka · 8",
+      "lines": [
+        "माधव मुकुन्द मधुसूदन मुरारे वामन नृसिंह शरणं भव नतानाम्।",
+        "कामद घृणिन् निखिलकारण नयेयं कालममरेश नरसिंह नरसिंह॥"
+      ],
+      "linesEn": [
+        "mādhava mukunda madhusūdana murāre vāmana nṛsiṃha śaraṇaṃ bhava natānām",
+        "kāmada ghṛṇin nikhilakāraṇa nayeyaṃ kālamamareśa narasiṃha narasiṃha"
+      ],
+      "meaningHi": "हे माधव, मुकुन्द, मधुसूदन, मुरारे, वामन, नृसिंह! शरणागतों के आश्रय बनिए। हे कामनाएँ पूर्ण करने वाले, करुणामय, समस्त कारणों के कारण, अमरेश! मैं अपना समय आपके स्मरण में ही बिताऊँ — नरसिंह! नरसिंह!",
+      "meaningEn": "O Madhava, Mukunda, Madhusudana, Murari, Vamana, Nrisimha — be the refuge of those who bow before you! O granter of desires, compassionate one, cause of all causes, lord of the immortals — may I pass all my days in your remembrance, Narasimha, Narasimha!"
+    }
+  ]
+}

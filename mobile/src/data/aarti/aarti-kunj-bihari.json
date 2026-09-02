@@ -5,8 +5,18 @@
   "subtitleEn": "Aarti of Lord Krishna",
   "deity": "krishna",
   "language": "hi-en",
-  "source": {"baseText": "bhaktilok.com, timesnowhindi.com", "retrievedOn": "2026-05-23"},
-  "counts": {"totalVerses": 6},
+  "source": {
+    "baseText": "Aarti Kunj Bihari Ki, checked against Sanatan Sanstha, Sanatan Dharm, and Satvik Store editions.",
+    "referenceUrls": [
+      "https://www.sanatan.org/hindi/a/20806.html",
+      "https://sanatan-dharm.com/aarti-kunj-bihari-ki/",
+      "https://www.satvikstore.in/pages/aarti"
+    ],
+    "retrievedOn": "2026-05-31"
+  },
+  "counts": {
+    "totalVerses": 6
+  },
   "verses": [
     {
       "id": "akb-01",
@@ -22,15 +32,17 @@
         "Aarti Kunj Bihari ki, Shri Giridhar Krishna Murari ki."
       ],
       "meaningHi": "कुंजबिहारी (वृन्दावन के कुंजों में विहार करने वाले), गिरिधर (गोवर्धन पर्वत धारण करने वाले), कृष्ण मुरारी (मुर दैत्य के शत्रु) की आरती कीजिए।",
-      "meaningEn": "Perform the aarti of Kunjbihari (who plays in the bowers of Vrindavan), Giridhar (who lifted Govardhan mountain), Krishna Murari (enemy of the demon Mura)."
+      "meaningEn": "Perform the aarti of Kunjbihari (who plays in the bowers of Vrindavan), Giridhar (who lifted Govardhan mountain), Krishna Murari (enemy of the demon Mura).",
+      "meaningGu": "કુંજબિહારી (વૃંદાવનના કુંજોમાં વિહાર કરનાર), ગિરિધર (ગોવર્ધન પર્વત ધારણ કરનાર), કૃષ્ણ મુરારી (મુર દૈત્યના શત્રુ)ની આરતી કરો.",
+      "meaningKn": "ವೃಂದಾವನದ ಕುಂಜಗಳಲ್ಲಿ ವಿಹರಿಸುವ ಕುಂಜಬಿಹಾರಿ, ಗೋವರ್ಧನ ಪರ್ವತವನ್ನು ಎತ್ತಿ ಹಿಡಿದ ಗಿರಿಧರ, ಮುರ ದೈತ್ಯನ ಶತ್ರುವಾದ ಕೃಷ್ಣ ಮುರಾರಿಯ ಆರತಿಯನ್ನು ಮಾಡಿ."
     },
     {
       "id": "akb-02",
       "type": "stanza",
       "section": "body",
       "number": 2,
-      "labelHi": "पद 1",
-      "labelEn": "Stanza 1",
+      "labelHi": "पद · १",
+      "labelEn": "Stanza · 1",
       "lines": [
         "गले में बैजंती माला, बजावै मुरली मधुर बाला।",
         "श्रवण में कुण्डल झलकाला, नंद के आनंद नंदलाला।",
@@ -46,15 +58,17 @@
         "Bhramar si alak, kastoori tilak, chandra si jhalak, lalit chhavi Shyaamaa pyaari ki."
       ],
       "meaningHi": "गले में बैजन्ती माला है और मधुर बाँसुरी बजाते हैं। कानों में कुण्डल झलक रहे हैं — नन्द बाबा के आनन्द नन्दलाल। आकाश के समान श्याम कान्ति वाले शरीर के पास राधिकाजी चमक रही हैं। लताओं में बनमाली खड़े हैं। भ्रमर जैसी अलकें, कस्तूरी का तिलक, चन्द्रमा सी झलक — यह श्यामा (राधा) की प्यारी ललित छवि है।",
-      "meaningEn": "A Vaijanti garland adorns the neck, sweet flute plays in the hands. Earrings sparkle in the ears — Nanda's joy, Nandalal. With a complexion dark as the sky, Radhika shines beside him. Banmali stands among the creepers. Curls like bumblebees, a musk tilak, a moonlike glow — this is the lovely image beloved to Shyama (Radha)."
+      "meaningEn": "A Vaijanti garland adorns the neck, sweet flute plays in the hands. Earrings sparkle in the ears — Nanda's joy, Nandalal. With a complexion dark as the sky, Radhika shines beside him. Banmali stands among the creepers. Curls like bumblebees, a musk tilak, a moonlike glow — this is the lovely image beloved to Shyama (Radha).",
+      "meaningGu": "ગળામાં વૈજયંતી માળા છે અને મધુર વાંસળી વગાડે છે. કાનોમાં કુંડળ ઝળકે છે — નંદબાબાનો આનંદ નંદલાલ. આકાશ સમાન શ્યામ કાંતિવાળા શરીરની પાસે રાધિકાજી ચમકે છે. લતાઓમાં બનમાળી ઊભા છે. ભમરા જેવી અલકો, કસ્તૂરીનો તિલક, ચંદ્ર સમી ઝલક — આ શ્યામા (રાધા)ની પ્યારી લલિત છબી છે.",
+      "meaningKn": "ಅವರ ಕಂಠದಲ್ಲಿ ವೈಜಯಂತಿ ಮಾಲೆ ಶೋಭಿಸುತ್ತಿದೆ; ಅವರು ಮಧುರವಾದ ಬಾಸುರಿಯನ್ನು ನುಡಿಸುತ್ತಿದ್ದಾರೆ. ಕಿವಿಗಳಲ್ಲಿ ಕುಂಡಲಗಳು ಮಿನುಗುತ್ತಿವೆ; ನಂದಬಾಬನ ಆನಂದಸ್ವರೂಪರಾದ ನಂದಲಾಲರು. ಆಕಾಶದಂತೆ ಶ್ಯಾಮ ಕಾಂತಿಯುಳ್ಳ ಅವರ ದೇಹದ ಬಳಿಯಲ್ಲಿ ರಾಧಿಕಾಜಿ ಪ್ರಕಾಶಿಸುತ್ತಿದ್ದಾರೆ. ಲತೆಗಳ ನಡುವೆ ಬನಮಾಲಿ ನಿಂತಿದ್ದಾರೆ. ಜೇನುಹುಳಗಳಂತಿರುವ ಅಲಕಗಳು, ಕಸ್ತೂರಿ ತಿಲಕ, ಚಂದ್ರನಂತೆ ಹೊಳೆಯುವ ಕಾಂತಿ — ಇದು ಶ್ಯಾಮಾ ರಾಧೆಗೆ ಪ್ರಿಯವಾದ ಅವರ ಸುಂದರ ಲಲಿತ ರೂಪ."
     },
     {
       "id": "akb-03",
       "type": "stanza",
       "section": "body",
       "number": 3,
-      "labelHi": "पद 2",
-      "labelEn": "Stanza 2",
+      "labelHi": "पद · २",
+      "labelEn": "Stanza · 2",
       "lines": [
         "कनकमय मोर मुकुट बिलसै, देवता दरसन को तरसैं।",
         "गगन सों सुमन रासि बरसै।",
@@ -66,15 +80,17 @@
         "Baje murchang, madhur mirdang, gvaalin sang, atul rati Gop Kumaari ki."
       ],
       "meaningHi": "सोने का मोर-मुकुट विलसित है, देवता भी दर्शन को तरसते हैं। आकाश से पुष्पों की वर्षा हो रही है। मुरचंग और मधुर मृदंग बज रहे हैं — ग्वालिनों के संग गोपकुमारी (राधा) का अतुलनीय प्रेम है।",
-      "meaningEn": "A golden peacock crown shines brilliantly, even gods yearn for a glimpse. From the sky, showers of flowers rain down. The jews harp plays, sweet mridanga sounds, in the company of cowherd maidens — the incomparable love of the Gopi princess Radha."
+      "meaningEn": "A golden peacock crown shines brilliantly, even gods yearn for a glimpse. From the sky, showers of flowers rain down. The jews harp plays, sweet mridanga sounds, in the company of cowherd maidens — the incomparable love of the Gopi princess Radha.",
+      "meaningGu": "સોનાનો મોર-મુકુટ ઝળહળે છે, દેવો પણ દર્શન માટે તરસે છે. આકાશથી પુષ્પોની વર્ષા થઈ રહી છે. મુરચંગ અને મધુર મૃદંગ વાગે છે — ગ્વાલણોની સંગે ગોપકુમારી (રાધા)નો અતુલનીય પ્રેમ છે.",
+      "meaningKn": "ಚಿನ್ನದ ನವಿಲುಮುಕುಟವು ಔಜಸ್ಸಿನಿಂದ ಕಂಗೊಳಿಸುತ್ತಿದೆ; ದೇವತೆಗಳೂ ಅವರ ದರ್ಶನಕ್ಕಾಗಿ ಹಂಬಲಿಸುತ್ತಾರೆ. ಆಕಾಶದಿಂದ ಹೂವಿನ ಮಳೆ ಸುರಿಯುತ್ತಿದೆ. ಮೋರ್ಚಂಗವೂ ಮಧುರ ಮೃದಂಗವೂ ಮೊಳಗುತ್ತಿವೆ; ಗೋಪಿಯರ ಸಂಗದಲ್ಲಿ ಗೋಪಕುಮಾರಿ ರಾಧೆಯ ಅಪಾರ, ಸಾಟಿಯಿಲ್ಲದ ಪ್ರೀತಿ ವ್ಯಕ್ತವಾಗುತ್ತಿದೆ."
     },
     {
       "id": "akb-04",
       "type": "stanza",
       "section": "body",
       "number": 4,
-      "labelHi": "पद 3",
-      "labelEn": "Stanza 3",
+      "labelHi": "पद · ३",
+      "labelEn": "Stanza · 3",
       "lines": [
         "जहां ते प्रकट भई गंगा, सकल मल हारिणि श्री गंगा।",
         "स्मरन ते होत मोह भंगा।",
@@ -86,15 +102,17 @@
         "Basi Shiv sees, jataa ke beech, harai agh keech, charan chhavi Shreebanvaari ki."
       ],
       "meaningHi": "जहाँ से गंगा प्रकट हुईं — सब पापों को हरने वाली श्री गंगा। उनके स्मरण मात्र से मोह का नाश हो जाता है। शिव की जटा में बसी गंगा पापरूपी कीचड़ को हरती हैं — यह श्रीबनवारी (कृष्ण/विष्णु) के चरणों की छवि है जिनसे गंगा प्रकट हुईं।",
-      "meaningEn": "From where the Ganga appeared — Shri Ganga who washes away all sins. By mere remembrance, the bonds of delusion break. Dwelling in Shiva's matted locks, she removes the mud of sin — this describes the beauty of Sri Banwari's (Krishna/Vishnu's) feet from which Ganga emerged."
+      "meaningEn": "From where the Ganga appeared — Shri Ganga who washes away all sins. By mere remembrance, the bonds of delusion break. Dwelling in Shiva's matted locks, she removes the mud of sin — this describes the beauty of Sri Banwari's (Krishna/Vishnu's) feet from which Ganga emerged.",
+      "meaningGu": "જ્યાંથી ગંગા પ્રકટ થઈ — સર્વ પાપોને હરનાર શ્રી ગંગા. તેમના સ્મરણ માત્રથી મોહનો નાશ થઈ જાય છે. શિવની જટામાં વસેલી ગંગા પાપરૂપી કીચડને હરે છે — આ શ્રીબનવારી (કૃષ્ણ/વિષ્ણુ)ના ચરણોની છબી છે જેમાંથી ગંગા પ્રકટ થઈ.",
+      "meaningKn": "ಯಾವ ಪವಿತ್ರ ಪಾದಗಳಿಂದ ಗಂಗೆಯವರು ಪ್ರತ್ಯಕ್ಷರಾದರೋ, ಆ ಶ್ರೀಗಂಗೆಯವರು ಎಲ್ಲ ಪಾಪಗಳನ್ನು ಪರಿಹರಿಸುವವರು. ಅವರನ್ನು ಸ್ಮರಿಸಿದಷ್ಟರಿಂದಲೇ ಮೋಹದ ಬಂಧನಗಳು ಕಳಚಿಹೋಗುತ್ತವೆ. ಶಿವನ ಜಟೆಯಲ್ಲಿ ನೆಲೆಸಿರುವ ಗಂಗೆಯವರು ಪಾಪವೆಂಬ ಕೆಸರನ್ನು ತೊಳೆದುಹಾಕುತ್ತಾರೆ; ಗಂಗೆಯವರು ಉದ್ಭವಿಸಿದ ಶ್ರೀ ಬನವಾರಿಯ ಪಾದಗಳ ದಿವ್ಯ ಸೌಂದರ್ಯವೇ ಇದು."
     },
     {
       "id": "akb-05",
       "type": "stanza",
       "section": "body",
       "number": 5,
-      "labelHi": "पद 4",
-      "labelEn": "Stanza 4",
+      "labelHi": "पद · ४",
+      "labelEn": "Stanza · 4",
       "lines": [
         "चमकती उज्ज्वल तट रेनू, बज रही वृंदावन बेनू।",
         "चहुं दिसि गोपि ग्वाल धेनू।",
@@ -106,7 +124,9 @@
         "Hansat mridu mand, chaandni chand, katat bhav phand, ter sun deen dukhaaree ki."
       ],
       "meaningHi": "यमुना तट की रेत उज्ज्वल चमक रही है और वृन्दावन में बाँसुरी बज रही है। चारों दिशाओं में गोपियाँ, ग्वाल-बाल और गायें हैं। मृदु मन्द मुस्कान है, चाँदनी और चन्द्रमा हैं — संसार के बन्धन कट जाते हैं। हे दीन-दुखारी (दीनों के दुख हरने वाले), मेरी पुकार सुन लीजिए।",
-      "meaningEn": "The sand on the riverbank shines brightly and the flute plays in Vrindavan. In all four directions are gopis, cowherds, and cows. A gentle soft smile, moonlight and moon — the bonds of worldly existence are severed. O remover of the sorrows of the meek, hear my call."
+      "meaningEn": "The sand on the riverbank shines brightly and the flute plays in Vrindavan. In all four directions are gopis, cowherds, and cows. A gentle soft smile, moonlight and moon — the bonds of worldly existence are severed. O remover of the sorrows of the meek, hear my call.",
+      "meaningGu": "યમુના તટની રેત ઉજ્જ્વળ ચમકે છે અને વૃંદાવનમાં વાંસળી વાગે છે. ચારે દિશાઓમાં ગોપીઓ, ગ્વાલ-બાળ અને ગાયો છે. મૃદુ મંદ સ્મિત છે, ચાંદની અને ચંદ્ર છે — સંસારનાં બંધનો કપાઈ જાય છે. હે દીન-દુખારી (દીનોનાં દુઃખ હરનાર), મારી પુકાર સાંભળી લો.",
+      "meaningKn": "ಯಮುನಾ ತೀರದ ಮರಳು ಬೆಳಕಾಗಿ ಮಿನುಗುತ್ತಿದೆ; ವೃಂದಾವನದಲ್ಲಿ ಬಾಸುರಿಯ ನಾದ ಮೊಳಗುತ್ತಿದೆ. ನಾಲ್ಕೂ ದಿಕ್ಕುಗಳಲ್ಲಿ ಗೋಪಿಯರು, ಗ್ವಾಲಬಾಲರು ಮತ್ತು ಹಸುಗಳಿವೆ. ಮೃದು ಮಂದಹಾಸವಿದೆ, ಚಂದಿರನ ಬೆಳಕೂ ಚಂದ್ರನವೂ ಇವೆ; ಇದರಿಂದ ಸಂಸಾರದ ಬಂಧನಗಳು ಕಡಿದುಹೋಗುತ್ತವೆ. ಓ ದೀನರ ದುಃಖವನ್ನು ನೀಗಿಸುವವರೇ, ನನ್ನ ಮೊರೆಯನ್ನು ಆಲಿಸಿರಿ."
     },
     {
       "id": "akb-06",
@@ -122,7 +142,9 @@
         "Aarti Kunj Bihari ki, Shri Giridhar Krishna Murari ki."
       ],
       "meaningHi": "समापन में पुनः टेक — कुंजबिहारी की आरती। आरती की चक्रीय संरचना कृष्ण की अनन्त लीला का प्रतीक है जो सदा चलती रहती है।",
-      "meaningEn": "Closing with the refrain — the aarti of Kunjbihari. The circular structure symbolizes Krishna's infinite divine play that continues eternally."
+      "meaningEn": "Closing with the refrain — the aarti of Kunjbihari. The circular structure symbolizes Krishna's infinite divine play that continues eternally.",
+      "meaningGu": "સમાપનમાં ફરી ટેક — કુંજબિહારીની આરતી. આરતીની ચક્રીય રચના કૃષ્ણની અનંત લીલાનું પ્રતીક છે જે સદા ચાલતી રહે છે.",
+      "meaningKn": "ಕೊನೆಯಲ್ಲಿ ಮತ್ತೆ ಅದೇ ಪಲ್ಲವಿ ಬರುತ್ತದೆ — ಕುಂಜಬಿಹಾರಿಯ ಆರತಿ. ಆರತಿಯ ಈ ವೃತ್ತಾಕಾರದ ರಚನೆ ಎಂದೆಂದಿಗೂ ಮುಂದುವರಿಯುವ ಕೃಷ್ಣನ ಅನಂತ ಲೀಲೆಯ ಸಂಕೇತವಾಗಿದೆ."
     }
   ]
 }

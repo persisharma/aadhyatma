@@ -1,0 +1,1094 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Panchang · Vrat / Katha Catalog — Prototype v2 (interactive)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&amp;family=Inter:wght@500;600;700&amp;display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --parchment: #F3E7C9;
+      --parchment-soft: #F8EFD6;
+      --parchment-deep: #E9D9B1;
+      --ink: #2F1E10;
+      --ink-soft: #5A3A1E;
+      --ink-muted: #8A6A47;
+      --saffron: #B8621B;
+      --saffron-deep: #8A3E0B;
+      --gold: #A67C34;
+      --divider: rgba(138, 62, 11, 0.18);
+      --saffron-tint: rgba(184, 98, 27, 0.14);
+      --gold-tint: rgba(166, 124, 52, 0.16);
+      --green: #3f7d4f;
+      --shadow-sm: 0 1px 2px rgba(60, 30, 10, 0.06);
+      --shadow-md: 0 8px 24px rgba(60, 30, 10, 0.14);
+      --shadow-lg: 0 30px 70px rgba(20, 12, 4, 0.40);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(900px 360px at 50% -8%, rgba(184, 98, 27, 0.22), transparent 64%),
+        linear-gradient(160deg, #1a140c 0%, #2a1d10 58%, #1a140c 100%);
+      color: #eadcc2;
+      font-family: Inter, system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body { padding: 34px 20px 64px; }
+
+    /* ---------- Intro + controls ---------- */
+    .intro { max-width: 1080px; margin: 0 auto 18px; text-align: center; }
+    .intro h1 {
+      margin: 0;
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 500;
+      color: var(--parchment);
+    }
+    .intro p {
+      max-width: 800px; margin: 10px auto 0;
+      font-size: 14px; line-height: 1.55; color: #d5c39d;
+    }
+
+    .controls {
+      max-width: 1080px; margin: 18px auto 8px;
+      display: flex; flex-wrap: wrap; gap: 14px;
+      align-items: center; justify-content: center;
+    }
+    .ctl-group {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(248, 239, 214, 0.06);
+      border: 1px solid rgba(166, 124, 52, 0.3);
+      border-radius: 999px; padding: 6px 8px 6px 14px;
+    }
+    .ctl-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--gold);
+    }
+    .seg-toggle { display: flex; gap: 4px; }
+    .seg-toggle button {
+      border: 0; border-radius: 999px; padding: 7px 14px;
+      background: transparent; color: #d5c39d;
+      font-family: Inter, sans-serif; font-size: 12px; font-weight: 600; cursor: pointer;
+    }
+    .seg-toggle button.on { background: var(--saffron); color: #fff8e7; }
+
+    /* ---------- Flow map / jumper ---------- */
+    .flowmap {
+      max-width: 1080px; margin: 8px auto 26px;
+      display: flex; flex-wrap: wrap; gap: 8px;
+      align-items: center; justify-content: center;
+    }
+    .flow-node {
+      border: 1px solid rgba(166, 124, 52, 0.34);
+      border-radius: 10px; padding: 7px 11px;
+      background: rgba(248, 239, 214, 0.05);
+      color: #e7d8b6; font-size: 11px; font-weight: 600; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .flow-node:hover { border-color: var(--saffron); color: #fff; }
+    .flow-node.cur { background: var(--saffron-tint); border-color: var(--saffron); color: #fff5e4; }
+    .flow-node small {
+      font-family: "Noto Serif Devanagari", serif; font-weight: 400; opacity: 0.75; font-size: 10px;
+    }
+    .flow-arrow { color: var(--gold); font-size: 13px; opacity: 0.7; }
+    .flow-node.door { border-style: dashed; border-color: var(--gold); }
+
+    /* ---------- Phone ---------- */
+    .stage { display: flex; justify-content: center; }
+    .phone {
+      width: 392px; min-height: 812px;
+      border-radius: 46px; padding: 12px;
+      background: #0d0804;
+      box-shadow: var(--shadow-lg), 0 0 0 1px rgba(166, 124, 52, 0.18);
+      position: relative;
+    }
+    .phone::before {
+      content: ""; position: absolute; top: 20px; left: 50%;
+      transform: translateX(-50%);
+      width: 116px; height: 28px; border-radius: 18px;
+      background: #0d0804; z-index: 5;
+    }
+    .screen {
+      position: relative; height: 788px;
+      border-radius: 36px; overflow: hidden;
+      background:
+        radial-gradient(110% 42% at 50% -12%, rgba(184, 98, 27, 0.14), transparent 62%),
+        linear-gradient(180deg, #F6ECD0 0%, #F1E3BF 100%);
+      color: var(--ink);
+      display: flex; flex-direction: column;
+    }
+    .status {
+      height: 44px; padding: 0 26px 6px; flex: 0 0 auto;
+      display: flex; align-items: flex-end; justify-content: space-between;
+      font-size: 13px; font-weight: 600;
+    }
+
+    /* ---------- View switching ---------- */
+    .view { display: none; flex: 1 1 auto; min-height: 0; flex-direction: column; }
+    .view.active { display: flex; }
+    .scroll {
+      flex: 1 1 auto; min-height: 0; overflow-y: auto;
+      padding: 6px 20px 26px; scrollbar-width: thin;
+    }
+    .scroll::-webkit-scrollbar { width: 0; }
+
+    /* ---------- Headers ---------- */
+    .appbar {
+      flex: 0 0 auto; padding: 4px 18px 8px;
+      display: grid; grid-template-columns: 36px 1fr 36px; align-items: center; gap: 8px;
+    }
+    .appbar .title-hi {
+      text-align: center; margin: 0;
+      font-family: "Noto Serif Devanagari", serif; font-size: 21px; font-weight: 600; line-height: 1.05;
+    }
+    .appbar .title-en {
+      text-align: center; font-family: "Cormorant Garamond", serif; font-style: italic;
+      font-size: 12px; color: var(--ink-muted); margin-top: 1px;
+    }
+    .iconbtn {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid var(--divider); background: var(--parchment-soft);
+      color: var(--ink-soft); display: grid; place-items: center;
+      font-size: 18px; cursor: pointer; position: relative;
+    }
+    .star-badge {
+      position: absolute; top: -4px; right: -4px;
+      min-width: 17px; height: 17px; padding: 0 4px; border-radius: 999px;
+      background: var(--saffron); color: #fff8e7;
+      font-size: 10px; font-weight: 700; display: grid; place-items: center;
+    }
+    .hide { display: none !important; }
+
+    .source-pill {
+      width: fit-content; margin: 2px auto 8px; padding: 5px 14px; border-radius: 999px;
+      background: var(--saffron-tint); color: var(--saffron-deep);
+      font-family: "Noto Serif Devanagari", serif; font-size: 12px; font-weight: 600;
+    }
+
+    /* ---------- Segmented (in-screen) ---------- */
+    .segmented {
+      display: flex; gap: 3px; padding: 3px; margin: 2px 0 12px;
+      border: 1px solid var(--divider); border-radius: 999px;
+      background: rgba(248, 239, 214, 0.82);
+    }
+    .segmented button {
+      flex: 1; min-height: 36px; border: 0; border-radius: 999px;
+      background: transparent; color: var(--ink-muted);
+      font-family: "Cormorant Garamond", serif; font-size: 15px; font-weight: 600; cursor: pointer;
+    }
+    .segmented button.active { background: var(--saffron-tint); color: var(--saffron-deep); }
+    .seg3 [data-seg] { font-size: 14px; }
+
+    /* ---------- Calendar ---------- */
+    .date-nav {
+      display: grid; grid-template-columns: 34px 1fr 34px; align-items: center; gap: 8px; margin: 4px 0 8px;
+    }
+    .round {
+      width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--divider);
+      background: var(--parchment-soft); color: var(--ink-soft); display: grid; place-items: center;
+      font-size: 19px; cursor: pointer;
+    }
+    .date-label { text-align: center; font-family: "Noto Serif Devanagari", serif; font-size: 15px; font-weight: 600; }
+    .month-sub { text-align: center; font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 12px; color: var(--ink-muted); }
+    .calendar {
+      border: 1px solid var(--divider); background: rgba(248, 239, 214, 0.78);
+      border-radius: 18px; padding: 10px; box-shadow: var(--shadow-sm);
+    }
+    .calendar-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-family: "Cormorant Garamond", serif; font-size: 15px; font-weight: 600; }
+    .week, .grid { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; }
+    .week span { font-size: 9px; font-weight: 700; color: var(--ink-muted); padding-bottom: 4px; }
+    .day { min-height: 46px; border-radius: 9px; padding: 4px 1px 3px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; cursor: pointer; }
+    .day.muted { opacity: 0.36; }
+    .day.selected { background: var(--saffron-tint); box-shadow: inset 0 0 0 1px var(--saffron); }
+    .num { font-size: 12px; font-weight: 600; line-height: 1; margin-bottom: 2px; }
+    .daychip {
+      font-family: Inter, sans-serif; font-size: 8px; font-weight: 700; line-height: 1.2;
+      padding: 1px 4px; border-radius: 5px; color: var(--saffron-deep); background: var(--gold-tint);
+    }
+    .daychip.fest { background: var(--saffron-tint); }
+
+    /* ---------- Section + cards ---------- */
+    .section { margin-top: 16px; }
+    .section-row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+    .section-title { font-family: "Noto Serif Devanagari", serif; font-size: 15px; font-weight: 600; }
+    .section-meta { font-family: "Cormorant Garamond", serif; font-size: 12px; color: var(--ink-muted); cursor: pointer; }
+    .section-meta.link { color: var(--saffron-deep); font-weight: 600; }
+
+    .card {
+      border: 1px solid var(--divider); background: var(--parchment-soft);
+      border-radius: 18px; padding: 13px; box-shadow: var(--shadow-sm);
+    }
+    .card + .card { margin-top: 9px; }
+    .tap { cursor: pointer; transition: border-color .15s ease, transform .04s ease; }
+    .tap:hover { border-color: rgba(184, 98, 27, 0.4); }
+    .tap:active { transform: scale(0.995); }
+
+    .card-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .type {
+      padding: 4px 10px; border-radius: 999px; background: var(--gold-tint);
+      color: var(--saffron-deep); font-size: 11px; font-weight: 700; letter-spacing: 0.02em;
+    }
+    .type.festival { background: var(--saffron-tint); }
+    .type.upvas { background: rgba(138, 62, 11, 0.13); }
+    .type.katha { background: rgba(138, 62, 11, 0.1); }
+    .type.tracked { background: var(--green); color: #f3fff5; }
+    .deity { font-family: "Cormorant Garamond", serif; font-size: 12px; color: var(--ink-muted); }
+    .card-title { font-family: "Noto Serif Devanagari", serif; font-size: 17px; font-weight: 600; line-height: 1.3; }
+    .card-en { margin-top: 1px; font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 13px; color: var(--ink-muted); }
+    .body-copy { margin: 6px 0 0; color: var(--ink-soft); font-family: "Cormorant Garamond", serif; font-size: 14px; line-height: 1.4; }
+
+    .action-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .outline-btn, .solid-btn {
+      min-height: 38px; border-radius: 999px; padding: 0 15px;
+      border: 1px solid var(--divider); background: rgba(255, 250, 235, 0.4);
+      color: var(--saffron-deep); font-family: Inter, sans-serif; font-size: 12px; font-weight: 600; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .solid-btn { border-color: transparent; background: var(--saffron); color: #fff8e7; }
+    .solid-btn.on { background: var(--green); }
+
+    /* ---------- Search ---------- */
+    .search {
+      width: 100%; height: 44px; border: 1px solid var(--divider); border-radius: 14px;
+      background: var(--parchment-soft); padding: 0 14px; color: var(--ink);
+      font-family: "Cormorant Garamond", serif; font-size: 15px; outline: none;
+    }
+
+    /* ---------- Upcoming strip ---------- */
+    .strip { display: flex; gap: 10px; overflow-x: auto; padding: 4px 0 8px; scrollbar-width: none; }
+    .strip::-webkit-scrollbar { display: none; }
+    .up-card {
+      flex: 0 0 152px; border: 1px solid var(--divider); border-radius: 16px;
+      background: var(--parchment-soft); padding: 11px; box-shadow: var(--shadow-sm); cursor: pointer;
+    }
+    .up-date { font-family: Inter, sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--saffron-deep); }
+    .up-title { margin-top: 6px; font-family: "Noto Serif Devanagari", serif; font-size: 14px; font-weight: 600; line-height: 1.25; }
+    .up-en { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 11px; color: var(--ink-muted); }
+    .up-meta { margin-top: 8px; display: flex; align-items: center; gap: 6px; }
+    .countdown { font-family: Inter, sans-serif; font-size: 10px; font-weight: 700; color: var(--ink-muted); }
+
+    /* ---------- Category tiles ---------- */
+    .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+    .tile {
+      border: 1px solid var(--divider); border-radius: 18px; padding: 15px 14px 14px;
+      background: linear-gradient(160deg, rgba(255,250,235,0.55), rgba(248,239,214,0.18)), var(--parchment-soft);
+      box-shadow: var(--shadow-sm); cursor: pointer; min-height: 104px;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .tile:hover { border-color: rgba(184, 98, 27, 0.4); }
+    .tile-glyph { font-family: "Noto Serif Devanagari", serif; font-size: 22px; color: var(--saffron); line-height: 1; }
+    .tile-hi { font-family: "Noto Serif Devanagari", serif; font-size: 17px; font-weight: 600; margin-top: 8px; }
+    .tile-en { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 12px; color: var(--ink-muted); }
+    .tile-count { margin-top: 8px; font-family: Inter, sans-serif; font-size: 11px; font-weight: 700; color: var(--saffron-deep); }
+
+    .myvrat-row {
+      margin-top: 14px; border: 1px solid var(--divider); border-radius: 16px;
+      background: rgba(63, 125, 79, 0.08); padding: 13px 14px; cursor: pointer;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .myvrat-row:hover { border-color: var(--green); }
+    .mv-star { font-size: 20px; color: var(--saffron); }
+    .myvrat-row .mv-t { flex: 1; }
+    .mv-hi { font-family: "Noto Serif Devanagari", serif; font-size: 15px; font-weight: 600; }
+    .mv-en { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 12px; color: var(--ink-muted); }
+    .chev { color: var(--ink-muted); font-size: 20px; }
+
+    /* ---------- Drill-in list rows ---------- */
+    .grouphdr {
+      position: sticky; top: -6px; z-index: 2;
+      margin: 14px 0 8px; padding: 5px 0;
+      background: linear-gradient(180deg, #F6ECD0, rgba(246,236,208,0.92));
+      font-family: Inter, sans-serif; font-size: 10px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted);
+    }
+    .listrow {
+      display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center;
+      border-bottom: 1px solid var(--divider); padding: 12px 2px; cursor: pointer;
+    }
+    .listrow:hover .row-hi { color: var(--saffron-deep); }
+    .row-hi { font-family: "Noto Serif Devanagari", serif; font-size: 15px; font-weight: 600; line-height: 1.25; }
+    .row-en { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 12px; color: var(--ink-muted); }
+    .row-right { text-align: right; }
+    .row-next { font-family: Inter, sans-serif; font-size: 10px; font-weight: 700; color: var(--saffron-deep); }
+    .row-rel { font-family: "Cormorant Garamond", serif; font-size: 11px; color: var(--ink-muted); }
+
+    /* ---------- Detail ---------- */
+    .detail-hero { text-align: center; margin: 4px 0 10px; }
+    .detail-hero .type { display: inline-flex; margin-bottom: 8px; }
+    .detail-title { margin: 0; font-family: "Noto Serif Devanagari", serif; font-size: 25px; font-weight: 600; line-height: 1.08; }
+    .detail-sub { margin-top: 4px; font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 14px; color: var(--ink-muted); }
+    .detail-next {
+      margin: 4px auto 0; width: fit-content; padding: 5px 14px; border-radius: 999px;
+      background: var(--saffron-tint); color: var(--saffron-deep);
+      font-family: Inter, sans-serif; font-size: 11px; font-weight: 700;
+    }
+    .detail-hero .hero-tags { display: flex; gap: 8px; align-items: center; justify-content: center; margin-bottom: 8px; }
+    .detail-hero .hero-tags .type { margin-bottom: 0; }
+    .hero-deity { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 13px; color: var(--ink-muted); }
+    .detail-actions { flex-wrap: nowrap; }
+    .detail-actions > button { flex: 1; padding: 0 6px; font-size: 11.5px; justify-content: center; }
+    .block { margin-top: 16px; }
+    .block-h { font-family: "Noto Serif Devanagari", serif; font-size: 15px; font-weight: 600; margin-bottom: 7px; display: flex; align-items: center; gap: 8px; }
+    .block-h .badge-soon { font-family: Inter, sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); border: 1px solid var(--divider); border-radius: 999px; padding: 2px 7px; }
+    .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+    .fact { border: 1px solid var(--divider); border-radius: 13px; background: rgba(248, 239, 214, 0.6); padding: 10px; }
+    .fact span { display: block; font-family: Inter, sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); }
+    .fact strong { display: block; margin-top: 4px; font-family: "Noto Serif Devanagari", serif; font-size: 13px; line-height: 1.2; }
+    .nextdates { display: flex; gap: 8px; margin-top: 9px; }
+    .nextdate { flex: 1; border: 1px solid var(--divider); border-radius: 12px; background: var(--parchment-soft); padding: 9px 8px; text-align: center; }
+    .nd-d { font-family: "Cormorant Garamond", serif; font-size: 16px; font-weight: 600; color: var(--saffron-deep); }
+    .nd-y { font-family: Inter, sans-serif; font-size: 9px; font-weight: 600; color: var(--ink-muted); }
+    .soon-card { border: 1px dashed var(--gold); border-radius: 14px; background: rgba(166,124,52,0.06); padding: 12px; }
+    .soon-card p { margin: 0; color: var(--ink-soft); font-family: "Cormorant Garamond", serif; font-size: 13px; line-height: 1.4; }
+
+    .katha-cta {
+      margin-top: 9px; border: 1px solid var(--divider); border-radius: 16px;
+      background: linear-gradient(160deg, rgba(255,250,235,0.5), rgba(248,239,214,0.15)), var(--parchment-soft);
+      padding: 13px; display: flex; align-items: center; gap: 12px; cursor: pointer;
+    }
+    .katha-cta:hover { border-color: rgba(184,98,27,0.4); }
+    .katha-glyph { font-family: "Noto Serif Devanagari", serif; font-size: 24px; color: var(--saffron); }
+    .katha-cta .kc-t { flex: 1; }
+
+    /* ---------- Reader (reference) ---------- */
+    .swipe-hint { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 6px 0 8px; color: var(--ink-muted); font-family: "Cormorant Garamond", serif; font-size: 12px; }
+    .swipe-hint strong { color: var(--saffron-deep); font-family: Inter, sans-serif; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .swipe-deck { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 6px; }
+    .swipe-deck::-webkit-scrollbar { display: none; }
+    .swipe-card {
+      flex: 0 0 100%; min-height: 470px; scroll-snap-align: start;
+      border: 1px solid var(--divider); border-radius: 20px; padding: 16px;
+      background: linear-gradient(180deg, rgba(255,250,235,0.42), rgba(248,239,214,0.16)), var(--parchment-soft);
+      box-shadow: var(--shadow-sm);
+    }
+    .card-index { display: flex; justify-content: space-between; margin-bottom: 10px; color: var(--ink-muted); font-family: Inter, sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+    .card-heading { margin: 0 0 8px; font-family: "Noto Serif Devanagari", serif; font-size: 18px; font-weight: 600; line-height: 1.2; }
+    .card-copy { margin: 8px 0 0; color: var(--ink-soft); font-family: "Noto Serif Devanagari", serif; font-size: 16px; line-height: 1.5; }
+    .dots { display: flex; justify-content: center; gap: 6px; margin-top: 8px; }
+    .dot { width: 6px; height: 6px; border-radius: 999px; background: rgba(138, 62, 11, 0.24); }
+    .dot.active { width: 18px; background: var(--saffron); }
+
+    /* ---------- My Vrat ---------- */
+    .tracker-band { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin: 6px 0 14px; }
+    .metric { border: 1px solid var(--divider); border-radius: 14px; background: rgba(248, 239, 214, 0.7); padding: 11px 6px; text-align: center; }
+    .metric strong { display: block; font-family: "Cormorant Garamond", serif; font-size: 25px; color: var(--saffron-deep); line-height: 1; }
+    .metric span { display: block; margin-top: 5px; font-size: 9px; font-weight: 700; color: var(--ink-muted); letter-spacing: 0.06em; text-transform: uppercase; }
+
+    .pri-row {
+      display: grid; grid-template-columns: 26px 1fr auto; gap: 10px; align-items: center;
+      border: 1px solid var(--divider); border-radius: 16px; background: var(--parchment-soft);
+      padding: 11px 12px; box-shadow: var(--shadow-sm);
+    }
+    .pri-row + .pri-row { margin-top: 9px; }
+    .reorder { display: flex; flex-direction: column; gap: 2px; }
+    .reorder button {
+      width: 26px; height: 21px; border: 1px solid var(--divider); border-radius: 7px;
+      background: rgba(255,250,235,0.5); color: var(--ink-soft); font-size: 11px; cursor: pointer; line-height: 1; padding: 0;
+    }
+    .pri-rank { position: absolute; }
+    .pri-main { min-width: 0; cursor: pointer; }
+    .pri-hi { font-family: "Noto Serif Devanagari", serif; font-size: 15px; font-weight: 600; line-height: 1.2; }
+    .pri-en { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 12px; color: var(--ink-muted); }
+    .pri-next { margin-top: 3px; font-family: Inter, sans-serif; font-size: 10px; font-weight: 700; color: var(--saffron-deep); }
+    .pri-right { display: flex; flex-direction: column; align-items: flex-end; gap: 7px; }
+    .bell {
+      width: 38px; height: 38px; border-radius: 12px; border: 1px solid var(--divider);
+      background: rgba(255,250,235,0.5); color: var(--ink-muted); font-size: 16px; cursor: pointer; display: grid; place-items: center;
+    }
+    .bell.on { background: var(--saffron); color: #fff8e7; border-color: transparent; }
+
+    .rail { display: grid; grid-template-columns: 16px 1fr; gap: 10px; padding: 8px 0; }
+    .rail-line { width: 2px; min-height: 46px; margin: 6px auto 0; background: var(--divider); position: relative; }
+    .rail-line::before { content: ""; position: absolute; top: -6px; left: 50%; transform: translateX(-50%); width: 10px; height: 10px; border-radius: 50%; background: var(--saffron); }
+    .rail-line.dim::before { background: var(--ink-muted); }
+
+    .empty {
+      text-align: center; padding: 40px 20px; margin-top: 20px;
+      border: 1px dashed var(--divider); border-radius: 20px; background: rgba(248,239,214,0.4);
+    }
+    .empty .em-glyph { font-family: "Noto Serif Devanagari", serif; font-size: 40px; color: var(--saffron); opacity: 0.6; }
+    .empty h4 { margin: 12px 0 4px; font-family: "Noto Serif Devanagari", serif; font-size: 18px; }
+    .empty p { margin: 0 0 16px; font-family: "Cormorant Garamond", serif; font-size: 14px; color: var(--ink-muted); line-height: 1.4; }
+
+    .mini-toggle {
+      margin: 4px 0 10px; display: flex; gap: 6px; align-items: center; justify-content: center;
+      font-family: Inter, sans-serif; font-size: 10px; color: var(--ink-muted);
+    }
+    .mini-toggle button { border: 1px solid var(--divider); background: rgba(255,250,235,0.5); border-radius: 999px; padding: 4px 10px; font-size: 10px; font-weight: 600; color: var(--ink-soft); cursor: pointer; }
+    .mini-toggle button.on { background: var(--saffron-tint); color: var(--saffron-deep); border-color: var(--saffron); }
+
+    /* ---------- Reminder sheet ---------- */
+    .sheet-wrap { position: absolute; inset: 0; background: rgba(20,12,4,0.42); display: none; align-items: flex-end; z-index: 20; }
+    .sheet-wrap.open { display: flex; }
+    .sheet {
+      width: 100%; background: linear-gradient(180deg, #F8EFD6, #F1E3BF);
+      border-radius: 26px 26px 0 0; padding: 16px 20px 24px; box-shadow: 0 -20px 50px rgba(20,12,4,0.4);
+    }
+    .sheet-grab { width: 42px; height: 5px; border-radius: 999px; background: var(--divider); margin: 0 auto 12px; }
+    .sheet h3 { margin: 0 0 2px; font-family: "Noto Serif Devanagari", serif; font-size: 18px; }
+    .sheet .sub { margin: 0 0 14px; font-family: "Cormorant Garamond", serif; font-size: 13px; color: var(--ink-muted); }
+    .opt-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--divider); }
+    .opt-row .lab { font-family: "Cormorant Garamond", serif; font-size: 15px; }
+    .opt-row .lab small { display: block; font-family: Inter, sans-serif; font-size: 10px; color: var(--ink-muted); }
+    .pills { display: flex; gap: 6px; }
+    .pill { border: 1px solid var(--divider); background: rgba(255,250,235,0.5); border-radius: 999px; padding: 6px 11px; font-family: Inter, sans-serif; font-size: 11px; font-weight: 600; color: var(--ink-soft); cursor: pointer; }
+    .pill.on { background: var(--saffron); color: #fff8e7; border-color: transparent; }
+    .switch { width: 46px; height: 27px; border-radius: 999px; background: var(--divider); position: relative; cursor: pointer; flex: 0 0 auto; }
+    .switch.on { background: var(--saffron); }
+    .switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 21px; height: 21px; border-radius: 50%; background: #fff8e7; transition: left .15s ease; }
+    .switch.on::after { left: 22px; }
+
+    /* ---------- Toast ---------- */
+    .toast {
+      position: absolute; left: 50%; bottom: 26px; transform: translateX(-50%) translateY(20px);
+      background: var(--ink); color: #f6e8c9; border-radius: 14px; padding: 11px 16px;
+      font-family: Inter, sans-serif; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 12px;
+      box-shadow: var(--shadow-md); opacity: 0; pointer-events: none; transition: opacity .2s ease, transform .2s ease; z-index: 30; max-width: 320px;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+    .toast a { color: #ffce8a; text-decoration: underline; cursor: pointer; }
+
+    .footnote { max-width: 1080px; margin: 26px auto 0; text-align: center; color: #b9a67e; font-size: 12px; line-height: 1.6; }
+    .footnote code { color: #e7d8b6; }
+  </style>
+</head>
+<body>
+  <header class="intro">
+    <h1>Vrat / Katha Catalog — Prototype v2</h1>
+    <p>Interactive &amp; linked: tap tiles, cards, the ★ door, and actions to walk the real journey. The calendar stays date‑first; <strong>व्रत-पर्व (Vrat &amp; Parv)</strong> is the browse‑by‑type surface (no filter‑chip row). “My Vrat” uses <strong>Variant A</strong> — a header ★ and a pinned row open a dedicated screen.</p>
+  </header>
+
+  <div class="controls">
+    <div class="ctl-group">
+      <span class="ctl-label">My Vrat state</span>
+      <div class="seg-toggle" id="stateToggle">
+        <button data-state="full" class="on">Following</button>
+        <button data-state="empty">Empty / first‑run</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Flow map doubles as a screen jumper -->
+  <nav class="flowmap" id="flowmap">
+    <button class="flow-node door" data-go="calendar">Calendar <small>पंचांग</small></button>
+    <span class="flow-arrow">⇄</span>
+    <button class="flow-node" data-go="catalog">Vrat &amp; Parv <small>व्रत-पर्व</small></button>
+    <span class="flow-arrow">→</span>
+    <button class="flow-node" data-go="typelist">Type list</button>
+    <span class="flow-arrow">→</span>
+    <button class="flow-node" data-go="detail">Detail</button>
+    <span class="flow-arrow">→</span>
+    <button class="flow-node" data-go="reader">Katha reader</button>
+    <span class="flow-arrow">·</span>
+    <button class="flow-node" data-go="kathalib">Katha library</button>
+    <span class="flow-arrow">·</span>
+    <button class="flow-node" data-go="upcoming">Upcoming</button>
+    <span class="flow-arrow">⟶</span>
+    <button class="flow-node door" data-go="myvrat">★ My Vrat <small>मेरा व्रत</small></button>
+  </nav>
+
+  <div class="stage">
+    <div class="phone" id="phone" data-variant="A" data-state="full">
+      <div class="screen">
+        <div class="status"><span>9:41</span><span id="statusRight">भारत</span></div>
+
+        <!-- ============ CALENDAR ============ -->
+        <section class="view active" data-screen="calendar">
+          <div class="appbar">
+            <span></span>
+            <div><h2 class="title-hi">पंचांग</h2><div class="title-en">Panchang</div></div>
+            <button class="iconbtn vA-door" data-go="myvrat" title="My Vrat">★<span class="star-badge">4</span></button>
+          </div>
+          <div class="scroll">
+            <div class="source-pill">दृक् पंचांग · उज्जैन</div>
+            <div class="segmented" data-segset>
+              <button class="active" data-seg="calendar">Calendar</button>
+              <button data-seg="catalog">Vrat &amp; Parv</button>
+              <button class="vB-only hide" data-seg="myvrat">My Vrat</button>
+            </div>
+
+            <div class="date-nav">
+              <div class="round">‹</div>
+              <div><div class="date-label">१५ जून २०२६</div><div class="month-sub">June 2026 · Purnimant</div></div>
+              <div class="round">›</div>
+            </div>
+
+            <div class="calendar">
+              <div class="calendar-head"><span>June 2026</span><span>Today</span></div>
+              <div class="week"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+              <div class="grid" id="calGrid"></div>
+            </div>
+
+            <div class="section">
+              <div class="section-row"><div class="section-title">आज</div><div class="section-meta">15 June · selected</div></div>
+              <div class="card tap" data-go="detail" data-obs="sankranti">
+                <div class="card-top"><span class="type festival">Festival</span><span class="deity">Surya Deva</span></div>
+                <div class="card-title">मिथुन संक्रांति</div>
+                <div class="card-en">Mithuna Sankranti</div>
+                <p class="body-copy">Sun enters Mithuna rāśi. Tap to open the dedicated page.</p>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-row"><div class="section-title">आगामी व्रत</div><div class="section-meta link" data-go="upcoming">See all →</div></div>
+              <div class="strip" id="calStrip"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ CATALOG (browse-by-type landing) ============ -->
+        <section class="view" data-screen="catalog">
+          <div class="appbar">
+            <span></span>
+            <div><h2 class="title-hi">व्रत-पर्व</h2><div class="title-en">Vrat &amp; Parv</div></div>
+            <button class="iconbtn vA-door" data-go="myvrat" title="My Vrat">★<span class="star-badge">4</span></button>
+          </div>
+          <div class="scroll">
+            <div class="segmented" data-segset>
+              <button data-seg="calendar">Calendar</button>
+              <button class="active" data-seg="catalog">Vrat &amp; Parv</button>
+              <button class="vB-only hide" data-seg="myvrat">My Vrat</button>
+            </div>
+
+            <input class="search" placeholder="Search vrat, festival, upvas, katha…" />
+
+            <div class="section" style="margin-top:14px">
+              <div class="section-row"><div class="section-title">आगामी</div><div class="section-meta link" data-go="upcoming">Upcoming · See all →</div></div>
+              <div class="strip" id="catStrip"></div>
+            </div>
+
+            <div class="section">
+              <div class="section-row"><div class="section-title">श्रेणी से देखें</div><div class="section-meta">Browse by type</div></div>
+              <div class="tiles">
+                <div class="tile" data-go="typelist" data-type="vrat">
+                  <div class="tile-glyph">ॐ</div>
+                  <div><div class="tile-hi">व्रत</div><div class="tile-en">Vrat</div><div class="tile-count">52 observances</div></div>
+                </div>
+                <div class="tile" data-go="typelist" data-type="festival">
+                  <div class="tile-glyph">✺</div>
+                  <div><div class="tile-hi">पर्व</div><div class="tile-en">Festivals</div><div class="tile-count">41 observances</div></div>
+                </div>
+                <div class="tile" data-go="typelist" data-type="upvas">
+                  <div class="tile-glyph">☾</div>
+                  <div><div class="tile-hi">उपवास</div><div class="tile-en">Upvas</div><div class="tile-count">9 observances</div></div>
+                </div>
+                <div class="tile" data-go="kathalib" data-type="katha">
+                  <div class="tile-glyph">॥</div>
+                  <div><div class="tile-hi">कथा</div><div class="tile-en">Katha library</div><div class="tile-count">82 stories</div></div>
+                </div>
+              </div>
+
+              <!-- Variant A: explicit My Vrat door on the catalog landing -->
+              <div class="myvrat-row vA-door" data-go="myvrat">
+                <span class="mv-star">★</span>
+                <div class="mv-t"><div class="mv-hi">मेरा व्रत</div><div class="mv-en">My Vrat · 4 following · 2 reminders on</div></div>
+                <span class="chev">›</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ TYPE LIST (drill-in) ============ -->
+        <section class="view" data-screen="typelist">
+          <div class="appbar">
+            <button class="iconbtn" data-back title="Back">‹</button>
+            <div><h2 class="title-hi" id="tlTitleHi">व्रत</h2><div class="title-en" id="tlTitleEn">Vrat · 52</div></div>
+            <span></span>
+          </div>
+          <div class="scroll">
+            <input class="search" placeholder="Search within this list…" />
+            <div id="typeListBody"></div>
+          </div>
+        </section>
+
+        <!-- ============ KATHA LIBRARY ============ -->
+        <section class="view" data-screen="kathalib">
+          <div class="appbar">
+            <button class="iconbtn" data-back title="Back">‹</button>
+            <div><h2 class="title-hi">कथा संग्रह</h2><div class="title-en">Katha Library · 82</div></div>
+            <span></span>
+          </div>
+          <div class="scroll">
+            <input class="search" placeholder="Search stories…" />
+            <div id="kathaListBody"></div>
+          </div>
+        </section>
+
+        <!-- ============ OBSERVANCE DETAIL (vertical scroll) ============ -->
+        <section class="view" data-screen="detail">
+          <div class="appbar">
+            <button class="iconbtn" data-back title="Back">‹</button>
+            <div><h2 class="title-hi" style="font-size:16px">व्रत विवरण</h2></div>
+            <button class="iconbtn" id="detailStar" data-follow title="Follow">☆</button>
+          </div>
+          <div class="scroll">
+            <div class="detail-hero">
+              <div class="hero-tags">
+                <span class="type" id="dType">Vrat</span>
+                <span class="hero-deity">श्री विष्णु · Shri Vishnu</span>
+              </div>
+              <h2 class="detail-title" id="dTitleHi">निर्जला एकादशी</h2>
+              <div class="detail-sub" id="dTitleEn">Nirjala Ekadashi · Jyeshtha Shukla Ekadashi</div>
+              <div class="detail-next" id="dNext">Next · 25 June 2026 · in 10 days</div>
+            </div>
+
+            <div class="action-row detail-actions">
+              <button class="solid-btn" id="dFollowBtn" data-follow>☆ Follow</button>
+              <button class="outline-btn" data-remind>🔔 Remind</button>
+              <button class="outline-btn" data-go="reader">॥ Read Katha</button>
+            </div>
+
+            <div class="block">
+              <div class="block-h">महत्व · About</div>
+              <p class="body-copy" id="dAbout">The most revered of the 24 Ekādaśīs — observed without water (nirjala). A dedicated page explains the observance, why it appears today, and what to do next. Dates come from the Panchang resolver, not yearly crawling.</p>
+            </div>
+
+            <div class="block">
+              <div class="block-h">कथा · Story</div>
+              <div class="katha-cta" data-go="reader">
+                <span class="katha-glyph">॥</span>
+                <div class="kc-t">
+                  <div class="card-title" style="font-size:15px">एकादशी व्रत कथा</div>
+                  <div class="card-en">Ekadashi Vrat Katha · bilingual · 4 sections</div>
+                </div>
+                <span class="chev">›</span>
+              </div>
+            </div>
+
+            <div class="block">
+              <div class="block-h">उपवास विधि · How to observe <span class="badge-soon">Coming soon</span></div>
+              <div class="soon-card">
+                <p>Structured fasting guidance — fast type, parana (breaking) window, strictness presets — will appear here once authored. <strong>Phased: v1 ships without it</strong> (no such data exists in the app today).</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ KATHA READER (reference — existing screen) ============ -->
+        <section class="view" data-screen="reader">
+          <div class="appbar">
+            <button class="iconbtn" data-back title="Back">‹</button>
+            <div><h2 class="title-hi" style="font-size:16px">एकादशी व्रत कथा</h2></div>
+            <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:var(--ink-muted);text-align:right">1 / 4</span>
+          </div>
+          <div class="scroll">
+            <div class="swipe-hint"><span>Existing full‑screen reader — horizontal swipe</span><strong>Reused</strong></div>
+            <div class="swipe-deck">
+              <article class="swipe-card">
+                <div class="card-index"><span>प्रसंग · 1/4</span><span>01</span></div>
+                <h3 class="card-heading">विष्णु-स्मरण का दिन</h3>
+                <p class="card-copy">एकादशी श्रीहरि विष्णु के स्मरण का दिन है। इस दिन व्रती जल, अन्न और इन्द्रिय-संयम के साथ नारायण का ध्यान करता है…</p>
+                <p class="card-copy" style="font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic">Ekadashi is a day for remembering Śrī Hari Viṣṇu — observed with restraint of water, food and the senses…</p>
+              </article>
+              <article class="swipe-card">
+                <div class="card-index"><span>प्रसंग · 2/4</span><span>02</span></div>
+                <h3 class="card-heading">कथा का आरम्भ</h3>
+                <p class="card-copy">पाण्डव-कुल में भीमसेन को व्रत कठिन लगता था। महर्षि व्यास ने उन्हें निर्जला एकादशी का माहात्म्य बताया…</p>
+              </article>
+              <article class="swipe-card">
+                <div class="card-index"><span>प्रसंग · 3/4</span><span>03</span></div>
+                <h3 class="card-heading">माहात्म्य</h3>
+                <p class="card-copy">इस एक व्रत से वर्ष-भर की एकादशियों का फल मिलता है — ऐसा माहात्म्य वर्णित है…</p>
+              </article>
+              <article class="swipe-card">
+                <div class="card-index"><span>प्रसंग · 4/4</span><span>04</span></div>
+                <h3 class="card-heading">समापन</h3>
+                <p class="card-copy">अगले दिन सूर्योदय पर पारण कर व्रत पूर्ण होता है। श्रद्धा और संयम ही इस व्रत का सार है॥</p>
+              </article>
+            </div>
+            <div class="dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+          </div>
+        </section>
+
+        <!-- ============ UPCOMING (full list, date-grouped) ============ -->
+        <section class="view" data-screen="upcoming">
+          <div class="appbar">
+            <button class="iconbtn" data-back title="Back">‹</button>
+            <div><h2 class="title-hi">आगामी व्रत</h2><div class="title-en">Upcoming</div></div>
+            <button class="iconbtn vA-door" data-go="myvrat" title="My Vrat">★<span class="star-badge">4</span></button>
+          </div>
+          <div class="scroll" id="upcomingBody"></div>
+        </section>
+
+        <!-- ============ MY VRAT ============ -->
+        <section class="view" data-screen="myvrat">
+          <div class="appbar">
+            <button class="iconbtn vA-only" data-back title="Back">‹</button>
+            <div><h2 class="title-hi">मेरा व्रत</h2><div class="title-en">My Vrat</div></div>
+            <span></span>
+          </div>
+          <div class="scroll">
+            <!-- Variant B shows the segment here so the door stays visible -->
+            <div class="segmented vB-only hide" data-segset style="margin-top:2px">
+              <button data-seg="calendar">Calendar</button>
+              <button data-seg="catalog">Vrat &amp; Parv</button>
+              <button class="active" data-seg="myvrat">My Vrat</button>
+            </div>
+
+            <div id="myvratFull">
+              <div class="tracker-band">
+                <div class="metric"><strong>4</strong><span>Following</span></div>
+                <div class="metric"><strong>2</strong><span>Reminders on</span></div>
+                <div class="metric"><strong>3</strong><span>This month</span></div>
+              </div>
+
+              <div class="section-row"><div class="section-title">मेरी प्राथमिकता</div><div class="section-meta">Drag‑free reorder · ▲▼</div></div>
+              <div id="priList"></div>
+
+              <div class="section">
+                <div class="section-row"><div class="section-title">इस माह</div><div class="section-meta">June timeline</div></div>
+                <div class="card">
+                  <div class="rail"><div class="rail-line dim"></div><div><div class="row-hi" style="font-size:13px">२४ जून · प्रदोष व्रत</div><div class="row-en">Katha available · not following</div></div></div>
+                  <div class="rail"><div class="rail-line"></div><div><div class="row-hi" style="font-size:13px">२५ जून · निर्जला एकादशी</div><div class="row-en">Following · reminder on</div></div></div>
+                  <div class="rail"><div class="rail-line"></div><div><div class="row-hi" style="font-size:13px">२९ जून · पूर्णिमा व्रत</div><div class="row-en">Following · Satyanarayan katha linked</div></div></div>
+                </div>
+              </div>
+            </div>
+
+            <div id="myvratEmpty" class="hide">
+              <div class="empty">
+                <div class="em-glyph">★</div>
+                <h4>अभी कोई व्रत नहीं</h4>
+                <p>Follow vrats you care about — they’ll appear here in your own priority order, with reminders the day before and on the day.</p>
+                <button class="solid-btn" data-go="catalog" style="margin:0 auto">Browse Vrat &amp; Parv →</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ Reminder sheet ============ -->
+        <div class="sheet-wrap" id="sheet">
+          <div class="sheet">
+            <div class="sheet-grab"></div>
+            <h3>अनुस्मारक · Reminders</h3>
+            <p class="sub">For <strong id="sheetVrat">Nirjala Ekadashi</strong>. Local notifications only — scheduled on‑device.</p>
+            <div class="opt-row">
+              <div class="lab">Advance notice <small>day(s) before, evening</small></div>
+              <div class="pills" data-pillset="advance">
+                <button class="pill">Off</button>
+                <button class="pill on">1 day</button>
+                <button class="pill">2 days</button>
+                <button class="pill">3 days</button>
+              </div>
+            </div>
+            <div class="opt-row">
+              <div class="lab">On the day <small>morning reminder</small></div>
+              <div class="switch on" data-switch></div>
+            </div>
+            <div class="opt-row" style="border-bottom:0">
+              <div class="lab">Day‑of time <small>local</small></div>
+              <div class="pills" data-pillset="time">
+                <button class="pill on">07:00</button>
+                <button class="pill">08:00</button>
+                <button class="pill">Sunrise</button>
+              </div>
+            </div>
+            <div class="action-row" style="margin-top:12px">
+              <button class="solid-btn" id="sheetSave" style="flex:1;justify-content:center">Save reminders</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Toast -->
+        <div class="toast" id="toast"><span id="toastMsg">Added to My Vrat</span><a id="toastAction">View →</a></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="footnote">
+    Prototype only — design artifact, no app code. Tokens &amp; fonts mirror <code>theme/colors.ts</code> · <code>typography.ts</code>.
+    Linked nav, browse‑by‑type Vrat &amp; Parv, vertical detail, and the Variant‑A My Vrat flow are described in
+    <code>docs/roadmap/prds/09-vrat-katha-catalog.md</code> (written after review).
+  </p>
+
+  <script>
+    const phone = document.getElementById('phone');
+    const views = Array.from(document.querySelectorAll('.view'));
+    const flowNodes = Array.from(document.querySelectorAll('.flow-node'));
+    const statusRight = document.getElementById('statusRight');
+    let history = ['calendar'];
+
+    const statusByScreen = {
+      calendar: 'भारत', catalog: 'सूची', typelist: 'सूची', kathalib: 'कथा',
+      detail: 'व्रत', reader: 'कथा', upcoming: 'आगामी', myvrat: 'अनुसरण'
+    };
+
+    function show(screen, pushHistory = true) {
+      views.forEach(v => v.classList.toggle('active', v.dataset.screen === screen));
+      flowNodes.forEach(n => n.classList.toggle('cur', n.dataset.go === screen));
+      statusRight.textContent = statusByScreen[screen] || 'भारत';
+      // reset scroll of the newly shown view
+      const active = views.find(v => v.dataset.screen === screen);
+      if (active) { const s = active.querySelector('.scroll'); if (s) s.scrollTop = 0; }
+      if (pushHistory && history[history.length - 1] !== screen) history.push(screen);
+    }
+    function back() {
+      if (history.length > 1) { history.pop(); show(history[history.length - 1], false); }
+    }
+
+    // ---- Generic delegated taps ----
+    document.addEventListener('click', (e) => {
+      const goEl = e.target.closest('[data-go]');
+      const backEl = e.target.closest('[data-back]');
+      const segEl = e.target.closest('[data-seg]');
+      if (backEl) { back(); return; }
+      if (segEl) {
+        const seg = segEl.dataset.seg;
+        show(seg, true);
+        return;
+      }
+      if (goEl) {
+        const dest = goEl.dataset.go;
+        // type tiles set the list title
+        if (dest === 'typelist' && goEl.dataset.type) setTypeList(goEl.dataset.type);
+        show(dest, true);
+        return;
+      }
+    });
+
+    // ---- flow map jumper ----
+    flowNodes.forEach(n => n.addEventListener('click', () => { show(n.dataset.go, true); }));
+
+    // ---- Variant toggle ----
+    function applyVariant() {
+      const v = phone.dataset.variant;
+      // Variant A: header star + catalog My Vrat row visible; 3rd segment hidden; back button on My Vrat
+      document.querySelectorAll('.vA-door, .vA-only').forEach(el => el.classList.toggle('hide', v !== 'A'));
+      document.querySelectorAll('.vB-only').forEach(el => el.classList.toggle('hide', v !== 'B'));
+    }
+
+    // ---- My Vrat state toggle (full vs empty) ----
+    document.getElementById('stateToggle').addEventListener('click', (e) => {
+      const b = e.target.closest('[data-state]'); if (!b) return;
+      const st = b.dataset.state;
+      phone.dataset.state = st;
+      document.querySelectorAll('#stateToggle button').forEach(x => x.classList.toggle('on', x === b));
+      document.getElementById('myvratFull').classList.toggle('hide', st === 'empty');
+      document.getElementById('myvratEmpty').classList.toggle('hide', st !== 'empty');
+    });
+
+    // ---- Calendar grid ----
+    (function buildCalendar() {
+      const grid = document.getElementById('calGrid');
+      const marks = { 5:'fest', 9:'vrat', 11:'vrat', 15:'fest', 17:'vrat', 20:'vrat', 24:'vrat', 25:'fest', 29:'vrat' };
+      let html = '';
+      for (let d = 1; d <= 30; d++) {
+        const m = marks[d];
+        const sel = d === 15 ? ' selected' : '';
+        const chip = m ? `<span class="daychip ${m==='fest'?'fest':''}">${m==='fest'?'पर्व':'व्रत'}</span>` : '';
+        html += `<div class="day${sel}" data-go="detail">${`<span class="num">${d}</span>`}${chip}</div>`;
+      }
+      for (let d = 1; d <= 5; d++) html += `<div class="day muted"><span class="num">${d}</span></div>`;
+      grid.innerHTML = html;
+    })();
+
+    // ---- Upcoming data ----
+    const upcoming = [
+      { d:'24 JUN', rel:'in 9 days', hi:'प्रदोष व्रत', en:'Pradosh Vrat', type:'vrat' },
+      { d:'25 JUN', rel:'in 10 days', hi:'निर्जला एकादशी', en:'Nirjala Ekadashi', type:'vrat', follow:true },
+      { d:'29 JUN', rel:'in 14 days', hi:'पूर्णिमा व्रत', en:'Purnima Vrat', type:'upvas', follow:true },
+      { d:'05 JUL', rel:'in 20 days', hi:'देवशयनी एकादशी', en:'Devshayani Ekadashi', type:'vrat' },
+      { d:'13 JUL', rel:'in 28 days', hi:'सावन सोमवार', en:'Sawan Somwar', type:'vrat', follow:true }
+    ];
+    function stripCard(o) {
+      return `<div class="up-card" data-go="detail" data-obs="${o.en}">
+        <div class="up-date">${o.d}</div>
+        <div class="up-title">${o.hi}</div>
+        <div class="up-en">${o.en}</div>
+        <div class="up-meta"><span class="type ${o.type==='festival'?'festival':o.type==='upvas'?'upvas':''}" style="font-size:9px;padding:2px 7px">${o.type==='upvas'?'Upvas':o.type==='festival'?'Festival':'Vrat'}</span><span class="countdown">${o.rel}</span></div>
+      </div>`;
+    }
+    document.getElementById('calStrip').innerHTML = upcoming.map(stripCard).join('');
+    document.getElementById('catStrip').innerHTML = upcoming.map(stripCard).join('');
+
+    document.getElementById('upcomingBody').innerHTML = (function () {
+      const groups = { 'June 2026': upcoming.slice(0,3), 'July 2026': upcoming.slice(3) };
+      let html = '';
+      for (const g in groups) {
+        html += `<div class="grouphdr">${g}</div>`;
+        html += groups[g].map(o => `
+          <div class="listrow" data-go="detail" data-obs="${o.en}">
+            <div><div class="row-hi">${o.hi}${o.follow?' <span style="color:var(--saffron)">★</span>':''}</div><div class="row-en">${o.en}</div></div>
+            <div class="row-right"><div class="row-next">${o.d}</div><div class="row-rel">${o.rel}</div></div>
+          </div>`).join('');
+      }
+      return html;
+    })();
+
+    // ---- Type list content ----
+    const lists = {
+      vrat: { hi:'व्रत', en:'Vrat · 52', groups: {
+        'Ekadashi · 24': [
+          ['निर्जला एकादशी','Nirjala Ekadashi','25 Jun','in 10d'],
+          ['देवशयनी एकादशी','Devshayani Ekadashi','05 Jul','in 20d'],
+          ['कामिका एकादशी','Kamika Ekadashi','20 Jul','in 35d']
+        ],
+        'Weekly · Shiva / Devi': [
+          ['प्रदोष व्रत','Pradosh Vrat','24 Jun','in 9d'],
+          ['सावन सोमवार','Sawan Somwar','13 Jul','in 28d'],
+          ['मंगला गौरी व्रत','Mangala Gauri Vrat','14 Jul','in 29d']
+        ],
+        'Monthly': [
+          ['संकष्टी चतुर्थी','Sankashti Chaturthi','13 Jun','past'],
+          ['सत्यनारायण व्रत','Satyanarayan Vrat','29 Jun','in 14d']
+        ]
+      }},
+      festival: { hi:'पर्व', en:'Festivals · 41', groups: {
+        'This month': [
+          ['मिथुन संक्रांति','Mithuna Sankranti','15 Jun','today'],
+          ['गंगा दशहरा','Ganga Dussehra','—','past']
+        ],
+        'Major': [
+          ['राम नवमी','Ram Navami','—','annual'],
+          ['महा शिवरात्रि','Maha Shivaratri','—','annual'],
+          ['जन्माष्टमी','Janmashtami','—','annual']
+        ]
+      }},
+      upvas: { hi:'उपवास', en:'Upvas · 9', groups: {
+        'Lunar': [
+          ['पूर्णिमा व्रत','Purnima Vrat','29 Jun','in 14d'],
+          ['अमावस्या व्रत','Amavasya Vrat','—','monthly']
+        ]
+      }}
+    };
+    function setTypeList(type) {
+      const L = lists[type]; if (!L) return;
+      document.getElementById('tlTitleHi').textContent = L.hi;
+      document.getElementById('tlTitleEn').textContent = L.en;
+      let html = '';
+      for (const g in L.groups) {
+        html += `<div class="grouphdr">${g}</div>`;
+        html += L.groups[g].map(r => `
+          <div class="listrow" data-go="detail" data-obs="${r[1]}">
+            <div><div class="row-hi">${r[0]}</div><div class="row-en">${r[1]}</div></div>
+            <div class="row-right"><div class="row-next">${r[2]}</div><div class="row-rel">${r[3]}</div></div>
+          </div>`).join('');
+      }
+      document.getElementById('typeListBody').innerHTML = html;
+    }
+    setTypeList('vrat');
+
+    // ---- Katha library ----
+    const kathas = [
+      ['एकादशी व्रत कथा','Ekadashi Vrat Katha','vrat-katha'],
+      ['श्री सत्यनारायण व्रत कथा','Shri Satyanarayan Vrat Katha','vrat-katha'],
+      ['मंगला गौरी व्रत कथा','Mangala Gauri Vrat Katha','vrat-katha'],
+      ['करवा चौथ व्रत कथा','Karwa Chauth Vrat Katha','vrat-katha'],
+      ['अहोई अष्टमी व्रत कथा','Ahoi Ashtami Vrat Katha','vrat-katha'],
+      ['होली की कथा','Holi Legends','festival-legend'],
+      ['कार्तिक माहात्म्य','Kartika Mahatmya','mahatmya']
+    ];
+    document.getElementById('kathaListBody').innerHTML = `<div class="grouphdr">All stories · bilingual</div>` + kathas.map(k => `
+      <div class="listrow" data-go="reader">
+        <div><div class="row-hi">${k[0]}</div><div class="row-en">${k[1]}</div></div>
+        <div class="row-right"><span class="type katha" style="font-size:10px;padding:3px 9px">॥ Read</span></div>
+      </div>`).join('') + `<div class="grouphdr" style="text-align:center;color:var(--ink-muted)">…and 75 more</div>`;
+
+    // ---- My Vrat priority list ----
+    let pri = [
+      { hi:'निर्जला एकादशी', en:'Nirjala Ekadashi', next:'25 Jun · in 10d', bell:true },
+      { hi:'पूर्णिमा व्रत', en:'Purnima Vrat', next:'29 Jun · in 14d', bell:true },
+      { hi:'सावन सोमवार', en:'Sawan Somwar', next:'13 Jul · in 28d', bell:false },
+      { hi:'प्रदोष व्रत', en:'Pradosh Vrat', next:'24 Jun · in 9d', bell:false }
+    ];
+    function renderPri() {
+      document.getElementById('priList').innerHTML = pri.map((p, i) => `
+        <div class="pri-row">
+          <div class="reorder">
+            <button data-move="up" data-i="${i}" ${i===0?'disabled style="opacity:.3"':''}>▲</button>
+            <button data-move="down" data-i="${i}" ${i===pri.length-1?'disabled style="opacity:.3"':''}>▼</button>
+          </div>
+          <div class="pri-main" data-go="detail">
+            <div class="pri-hi">${p.hi}</div>
+            <div class="pri-en">${p.en}</div>
+            <div class="pri-next">${p.next}</div>
+          </div>
+          <div class="pri-right">
+            <div class="bell ${p.bell?'on':''}" data-bell="${i}" title="Reminder">🔔</div>
+          </div>
+        </div>`).join('');
+    }
+    renderPri();
+    document.getElementById('priList').addEventListener('click', (e) => {
+      const mv = e.target.closest('[data-move]');
+      const bl = e.target.closest('[data-bell]');
+      if (mv) {
+        e.stopPropagation();
+        const i = +mv.dataset.i;
+        const j = mv.dataset.move === 'up' ? i - 1 : i + 1;
+        if (j < 0 || j >= pri.length) return;
+        [pri[i], pri[j]] = [pri[j], pri[i]];
+        renderPri();
+        return;
+      }
+      if (bl) {
+        e.stopPropagation();
+        const i = +bl.dataset.bell;
+        pri[i].bell = !pri[i].bell;
+        renderPri();
+        if (pri[i].bell) openSheet(pri[i].en);
+        return;
+      }
+    });
+
+    // ---- Follow toggle ----
+    let following = false;
+    function setFollow(on) {
+      following = on;
+      const btn = document.getElementById('dFollowBtn');
+      const star = document.getElementById('detailStar');
+      btn.classList.toggle('on', on);
+      btn.innerHTML = on ? '★ Following' : '☆ Follow';
+      star.innerHTML = on ? '★' : '☆';
+      if (on) toast('Added to My Vrat — set a reminder?', 'View →', () => show('myvrat', true));
+      else toast('Removed from My Vrat');
+    }
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('[data-follow]')) setFollow(!following);
+      if (e.target.closest('[data-remind]')) openSheet('Nirjala Ekadashi');
+    });
+
+    // ---- Reminder sheet ----
+    const sheet = document.getElementById('sheet');
+    function openSheet(name) { document.getElementById('sheetVrat').textContent = name; sheet.classList.add('open'); }
+    sheet.addEventListener('click', (e) => {
+      if (e.target === sheet) sheet.classList.remove('open');
+      const pillBtn = e.target.closest('.pill');
+      if (pillBtn) {
+        const set = pillBtn.closest('[data-pillset]');
+        set.querySelectorAll('.pill').forEach(p => p.classList.toggle('on', p === pillBtn));
+      }
+      const sw = e.target.closest('[data-switch]');
+      if (sw) sw.classList.toggle('on');
+    });
+    document.getElementById('sheetSave').addEventListener('click', () => {
+      sheet.classList.remove('open');
+      toast('Reminders set · 1 day before + day‑of 07:00');
+    });
+
+    // ---- Toast ----
+    let toastTimer;
+    const toastEl = document.getElementById('toast');
+    const toastMsg = document.getElementById('toastMsg');
+    const toastAction = document.getElementById('toastAction');
+    function toast(msg, actionLabel, fn) {
+      clearTimeout(toastTimer);
+      toastMsg.textContent = msg;
+      if (actionLabel) { toastAction.textContent = actionLabel; toastAction.style.display = ''; toastAction.onclick = () => { toastEl.classList.remove('show'); fn && fn(); }; }
+      else { toastAction.style.display = 'none'; }
+      toastEl.classList.add('show');
+      toastTimer = setTimeout(() => toastEl.classList.remove('show'), 3200);
+    }
+
+    // init
+    applyVariant();
+  </script>
+</body>
+</html>

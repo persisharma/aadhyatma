@@ -3,15 +3,27 @@ export const fontFamilies = {
   devanagariBold: 'NotoSerifDevanagari_600SemiBold',
   latinItalic: 'CormorantGaramond_400Regular_Italic',
   latinSemiBold: 'CormorantGaramond_600SemiBold',
+  latinBold: 'CormorantGaramond_700Bold',
   latinSemiBoldItalic: 'CormorantGaramond_600SemiBold_Italic',
   latin: 'CormorantGaramond_500Medium',
+  // Sister-script serifs for the gu/kn reading languages — same Noto Serif family,
+  // same weights as the Devanagari cuts so the reading scale carries over unchanged.
+  gujarati: 'NotoSerifGujarati_500Medium',
+  gujaratiBold: 'NotoSerifGujarati_600SemiBold',
+  kannada: 'NotoSerifKannada_500Medium',
+  kannadaBold: 'NotoSerifKannada_600SemiBold',
+  // Inter carries the tiny UI chrome (section labels, verse pills, card meta,
+  // and tab labels in en — localized tab labels take their script's serif face,
+  // design.md §17) per design.md §3 — never used for reading content.
+  inter: 'Inter_500Medium',
+  interSemiBold: 'Inter_600SemiBold',
 } as const;
 
 export const typography = {
   screenTitle: {
+    // Devanagari-only token — no letterSpacing: tracking splits the shirorekha.
     fontFamily: fontFamilies.devanagariBold,
     fontSize: 34,
-    letterSpacing: 0.3,
   },
   readerTitle: {
     fontFamily: fontFamilies.devanagariBold,
@@ -24,18 +36,46 @@ export const typography = {
   },
   meaning: {
     fontFamily: fontFamilies.devanagari,
-    fontSize: 15,
-    lineHeight: 26,
+    // Hindi meaning matches the English meaning size (meaningEnglish) so the two
+    // languages read at the same scale; Devanagari's larger x-height needs a touch
+    // more leading.
+    fontSize: 20,
+    lineHeight: 34,
   },
   verseLatin: {
     fontFamily: fontFamilies.latinSemiBold,
-    fontSize: 18,
-    lineHeight: 28,
+    // English transliteration sits above the meaning (20) to mirror the Hindi
+    // verse↔meaning hierarchy. Cormorant's small x-height reads smaller than
+    // Devanagari, so it takes a few extra points to feel dominant.
+    fontSize: 24,
+    lineHeight: 35,
+  },
+  // gu/kn verse bodies share the Devanagari metrics — same x-height class, so the
+  // verse↔meaning hierarchy carries over without per-script tuning.
+  verseGujarati: {
+    fontFamily: fontFamilies.gujarati,
+    fontSize: 23,
+    lineHeight: 39,
+  },
+  verseKannada: {
+    fontFamily: fontFamilies.kannada,
+    fontSize: 23,
+    lineHeight: 39,
   },
   meaningEnglish: {
     fontFamily: fontFamilies.latin,
-    fontSize: 18,
-    lineHeight: 30,
+    fontSize: 20,
+    lineHeight: 33,
+  },
+  meaningGujarati: {
+    fontFamily: fontFamilies.gujarati,
+    fontSize: 20,
+    lineHeight: 34,
+  },
+  meaningKannada: {
+    fontFamily: fontFamilies.kannada,
+    fontSize: 20,
+    lineHeight: 34,
   },
   cardHindi: {
     fontFamily: fontFamilies.devanagariBold,
@@ -50,12 +90,14 @@ export const typography = {
     fontSize: 14,
   },
   sectionLabel: {
+    fontFamily: fontFamilies.interSemiBold,
     fontSize: 11,
     fontWeight: '600' as const,
     letterSpacing: 2.4,
     textTransform: 'uppercase' as const,
   },
   versePill: {
+    fontFamily: fontFamilies.interSemiBold,
     fontSize: 10,
     fontWeight: '600' as const,
     letterSpacing: 3,
@@ -77,6 +119,7 @@ export const typography = {
     letterSpacing: 0.6,
   },
   cardMeta: {
+    fontFamily: fontFamilies.inter,
     fontSize: 11,
     letterSpacing: 0.4,
   },
@@ -85,9 +128,9 @@ export const typography = {
     fontSize: 22,
   },
   footerMantra: {
+    // Devanagari-only token — no letterSpacing: tracking splits the shirorekha.
     fontFamily: fontFamilies.devanagari,
     fontSize: 18,
-    letterSpacing: 0.4,
   },
 } as const;
 

@@ -1,0 +1,798 @@
+{
+  "titleHi": "सरस्वती चालीसा",
+  "titleEn": "Saraswati Chalisa",
+  "subtitleHi": "40 चौपाई + 3 दोहा · अर्थ सहित",
+  "subtitleEn": "40 Chaupai + 3 Doha · with meaning",
+  "language": "hi",
+  "script": "devanagari",
+  "source": {
+    "baseText": "Traditional Saraswati Chalisa, the canonical 'जनक जननि' / 'जय श्री सकल बुद्धि बलरासी' recension signed by the poet Ramsagar in its closing doha (not the 'जय जय जय सरस्वती भवानी' variant).",
+    "referenceUrls": [
+      "https://www.mantra.tips/en/mantras/saraswati-chalisa",
+      "https://aastha.app/chalisa/saraswati-chalisa/"
+    ],
+    "retrievedOn": "2026-07-22"
+  },
+  "counts": {
+    "openingDohas": 2,
+    "chaupais": 40,
+    "closingDohas": 1,
+    "totalVerses": 43
+  },
+  "verses": [
+    {
+      "id": "opening-doha-1",
+      "type": "doha",
+      "section": "opening",
+      "number": 1,
+      "labelHi": "दोहा · १",
+      "labelEn": "Doha · 1",
+      "lines": [
+        "जनक जननि पद कमल रज, निज मस्तक पर धारि।",
+        "बन्दौं मातु सरस्वती, बुद्धि बल दे दातारि॥"
+      ],
+      "linesEn": [
+        "Janak janani pad kamal raj, nij mastak par dhaari.",
+        "Bandaun maatu saraswatee, buddhi bal de daataari."
+      ],
+      "meaningHi": "अपने माता-पिता के चरण-कमलों की धूलि को अपने मस्तक पर धारण करके, मैं माता सरस्वती को प्रणाम करता हूँ; हे दात्री, मुझे बुद्धि और बल प्रदान कीजिए।",
+      "meaningEn": "Placing on my head the dust of my parents' lotus-feet, I bow to Mother Saraswati — O giver, grant me intellect and strength."
+    },
+    {
+      "id": "opening-doha-2",
+      "type": "doha",
+      "section": "opening",
+      "number": 2,
+      "labelHi": "दोहा · २",
+      "labelEn": "Doha · 2",
+      "lines": [
+        "पूर्ण जगत में व्याप्त तव, महिमा अमित अनंतु।",
+        "रामसागर के पाप को, मातु तुही अब हन्तु॥"
+      ],
+      "linesEn": [
+        "Poorna jagat mein vyaapt tav, mahimaa amit anantu.",
+        "Raamasaagar ke paap ko, maatu tuhee ab hantu."
+      ],
+      "meaningHi": "हे माता, आपकी महिमा समस्त संसार में व्याप्त है — अमित और अनंत है; अब आप ही (कवि) रामसागर के पापों का नाश कीजिए।",
+      "meaningEn": "Your glory pervades the whole world, boundless and infinite; O Mother, now it is you alone who destroy the sins of (the poet) Ramsagar."
+    },
+    {
+      "id": "chaupai-01",
+      "type": "chaupai",
+      "section": "body",
+      "number": 1,
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "जय श्री सकल बुद्धि बलरासी।",
+        "जय सर्वज्ञ अमर अविनासी॥"
+      ],
+      "linesEn": [
+        "Jai shri sakal buddhi balaraasee.",
+        "Jai sarvagya amar avinaasee."
+      ],
+      "meaningHi": "हे समस्त बुद्धि और बल की राशि, आपकी जय हो; हे सर्वज्ञ, अमर और अविनाशी माता, आपकी जय हो।",
+      "meaningEn": "Victory to you, the store of all intellect and strength; victory to you, the all-knowing, immortal and imperishable one."
+    },
+    {
+      "id": "chaupai-02",
+      "type": "chaupai",
+      "section": "body",
+      "number": 2,
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "जय जय जय वीणाकर धारी।",
+        "करती सदा सुहंस सवारी॥"
+      ],
+      "linesEn": [
+        "Jai jai jai veenaakar dhaaree.",
+        "Karatee sadaa suhans savaaree."
+      ],
+      "meaningHi": "हे वीणा धारण करने वाली माता, आपकी बारम्बार जय हो; आप सदैव सुन्दर हंस पर सवारी करती हैं।",
+      "meaningEn": "Victory, victory, victory to the bearer of the veena; you ever ride upon the graceful swan."
+    },
+    {
+      "id": "chaupai-03",
+      "type": "chaupai",
+      "section": "body",
+      "number": 3,
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "रूप चतुर्भुजधारी माता।",
+        "सकल विश्व अन्दर विख्याता॥"
+      ],
+      "linesEn": [
+        "Roop chaturbhujadhaaree maataa.",
+        "Sakal vishva andar vikhyaataa."
+      ],
+      "meaningHi": "हे माता, आप चार भुजाओं वाला रूप धारण करती हैं; आप समस्त विश्व में विख्यात हैं।",
+      "meaningEn": "O four-armed Mother, you are renowned throughout the entire world."
+    },
+    {
+      "id": "chaupai-04",
+      "type": "chaupai",
+      "section": "body",
+      "number": 4,
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "जग में पाप बुद्धि जब होती।",
+        "जबहि धर्म की फीकी ज्योती॥"
+      ],
+      "linesEn": [
+        "Jag mein paap buddhi jab hotee.",
+        "Jabahi dharma kee pheekee jyotee."
+      ],
+      "meaningHi": "जब संसार में पाप-बुद्धि फैल जाती है, और जब धर्म की ज्योति मंद पड़ने लगती है —",
+      "meaningEn": "When sinful thinking arises in the world, and the light of dharma grows dim —"
+    },
+    {
+      "id": "chaupai-05",
+      "type": "chaupai",
+      "section": "body",
+      "number": 5,
+      "labelHi": "चौपाई · ५",
+      "labelEn": "Chaupai · 5",
+      "lines": [
+        "तबहि मातु ले निज अवतारा।",
+        "पाप हीन करती महि तारा॥"
+      ],
+      "linesEn": [
+        "Tabahi maatu le nij avataaraa.",
+        "Paap heen karatee mahi taaraa."
+      ],
+      "meaningHi": "तब माता स्वयं अपना अवतार धारण करती हैं, और पृथ्वी को पापरहित करके उसका उद्धार करती हैं।",
+      "meaningEn": "Then the Mother takes on her own incarnation, and freeing it of sin, she delivers the earth."
+    },
+    {
+      "id": "chaupai-06",
+      "type": "chaupai",
+      "section": "body",
+      "number": 6,
+      "labelHi": "चौपाई · ६",
+      "labelEn": "Chaupai · 6",
+      "lines": [
+        "बाल्मीकि जी थे हत्यारा।",
+        "तव प्रसाद जानै संसारा॥"
+      ],
+      "linesEn": [
+        "Baalmeeki jee the hatyaaraa.",
+        "Tav prasaad jaanai sansaaraa."
+      ],
+      "meaningHi": "वाल्मीकि जी पहले एक हत्यारे थे; आपके अनुग्रह से ही आज सारा संसार उन्हें (आदि कवि के रूप में) जानता है।",
+      "meaningEn": "Valmiki was once a murderer; it is by your grace, the whole world knows, that he was transformed."
+    },
+    {
+      "id": "chaupai-07",
+      "type": "chaupai",
+      "section": "body",
+      "number": 7,
+      "labelHi": "चौपाई · ७",
+      "labelEn": "Chaupai · 7",
+      "lines": [
+        "रामायण जो रचे बनाई।",
+        "आदि कवी की पदवी पाई॥"
+      ],
+      "linesEn": [
+        "Raamaayan jo rache banaaee.",
+        "Aadi kavee kee padavee paaee."
+      ],
+      "meaningHi": "उन्होंने ही रामायण की रचना की, और इसी से उन्हें आदि कवि की उपाधि प्राप्त हुई।",
+      "meaningEn": "It was he who composed the Ramayana, and thereby attained the rank of the first poet (Adi Kavi)."
+    },
+    {
+      "id": "chaupai-08",
+      "type": "chaupai",
+      "section": "body",
+      "number": 8,
+      "labelHi": "चौपाई · ८",
+      "labelEn": "Chaupai · 8",
+      "lines": [
+        "कालिदास जो भये विख्याता।",
+        "तेरी कृपा दृष्टि से माता॥"
+      ],
+      "linesEn": [
+        "Kaalidaas jo bhaye vikhyaataa.",
+        "Teree kripaa drishti se maataa."
+      ],
+      "meaningHi": "हे माता, कालिदास जो महाकवि के रूप में विख्यात हुए, वे आपकी कृपा-दृष्टि से ही ऐसे बने।",
+      "meaningEn": "Kalidasa, who became renowned as a great poet, became so only through your gracious glance, O Mother."
+    },
+    {
+      "id": "chaupai-09",
+      "type": "chaupai",
+      "section": "body",
+      "number": 9,
+      "labelHi": "चौपाई · ९",
+      "labelEn": "Chaupai · 9",
+      "lines": [
+        "तुलसी सूर आदि विद्धाना।",
+        "भये और जो ज्ञानी नाना॥"
+      ],
+      "linesEn": [
+        "Tulasee soor aadi viddhaanaa.",
+        "Bhaye aur jo gyaanee naanaa."
+      ],
+      "meaningHi": "तुलसीदास, सूरदास आदि विद्वान और उनके समान जो अनेक ज्ञानीजन हुए —",
+      "meaningEn": "Tulsidas, Surdas and other scholars, and the many other wise ones who came to be —"
+    },
+    {
+      "id": "chaupai-10",
+      "type": "chaupai",
+      "section": "body",
+      "number": 10,
+      "labelHi": "चौपाई · १०",
+      "labelEn": "Chaupai · 10",
+      "lines": [
+        "तिन्हहिं न और रहेउ अवलम्बा।",
+        "केवल कृपा आपकी अम्बा॥"
+      ],
+      "linesEn": [
+        "Tinhahin na aur raheu avalambaa.",
+        "Keval kripaa aapakee ambaa."
+      ],
+      "meaningHi": "हे अम्बा, उन सबका और कोई अवलम्बन नहीं था — उनका एकमात्र सहारा केवल आपकी कृपा ही थी।",
+      "meaningEn": "They had no other support, O Mother Amba, but only your grace alone."
+    },
+    {
+      "id": "chaupai-11",
+      "type": "chaupai",
+      "section": "body",
+      "number": 11,
+      "labelHi": "चौपाई · ११",
+      "labelEn": "Chaupai · 11",
+      "lines": [
+        "करहु कृपा सोइ मातु भवानी।",
+        "दुखित दीन निज दासहि जानी॥"
+      ],
+      "linesEn": [
+        "Karahu kripaa soi maatu bhavaanee.",
+        "Dukhit deen nij daasahi jaanee."
+      ],
+      "meaningHi": "हे माता भवानी, अपने इस दास को दुखी और दीन जानकर मुझ पर भी वैसी ही कृपा कीजिए।",
+      "meaningEn": "Show that same grace on me, O Mother Bhavani, knowing your servant to be sorrowful and lowly."
+    },
+    {
+      "id": "chaupai-12",
+      "type": "chaupai",
+      "section": "body",
+      "number": 12,
+      "labelHi": "चौपाई · १२",
+      "labelEn": "Chaupai · 12",
+      "lines": [
+        "पुत्र करै अपराध बहूता।",
+        "तेहि न धरइ चित सुन्दर माता॥"
+      ],
+      "linesEn": [
+        "Putra karai aparaadh bahootaa.",
+        "Tehi na dharai chit sundar maataa."
+      ],
+      "meaningHi": "पुत्र चाहे कितने ही अपराध क्यों न करे, स्नेहमयी सुन्दर माता उन्हें अपने चित्त में नहीं रखतीं।",
+      "meaningEn": "Though the child commits many a fault, the gracious Mother does not take it to heart."
+    },
+    {
+      "id": "chaupai-13",
+      "type": "chaupai",
+      "section": "body",
+      "number": 13,
+      "labelHi": "चौपाई · १३",
+      "labelEn": "Chaupai · 13",
+      "lines": [
+        "राखु लाज जननी अब मेरी।",
+        "विनय करूं बहु भांति घनेरी॥"
+      ],
+      "linesEn": [
+        "Raakhu laaj jananee ab meree.",
+        "Vinay karoon bahu bhaanti ghaneree."
+      ],
+      "meaningHi": "हे जननी, अब आप मेरी लाज रखिए; मैं अनेक प्रकार से आपसे बहुत-बहुत विनती करता हूँ।",
+      "meaningEn": "Preserve my honour now, O Mother; in many ways I offer you abundant prayer."
+    },
+    {
+      "id": "chaupai-14",
+      "type": "chaupai",
+      "section": "body",
+      "number": 14,
+      "labelHi": "चौपाई · १४",
+      "labelEn": "Chaupai · 14",
+      "lines": [
+        "मैं अनाथ तेरी अवलंबा।",
+        "कृपा करउ जय जय जगदंबा॥"
+      ],
+      "linesEn": [
+        "Main anaath teree avalambaa.",
+        "Kripaa karau jai jai jagadambaa."
+      ],
+      "meaningHi": "मैं अनाथ हूँ और आप ही मेरा एकमात्र सहारा हैं; हे जगदम्बा, मुझ पर कृपा कीजिए — आपकी जय हो, जय हो।",
+      "meaningEn": "I am an orphan and you are my only support; show me grace — victory, victory, O Jagadamba."
+    },
+    {
+      "id": "chaupai-15",
+      "type": "chaupai",
+      "section": "body",
+      "number": 15,
+      "labelHi": "चौपाई · १५",
+      "labelEn": "Chaupai · 15",
+      "lines": [
+        "मधु कैटभ जो अति बलवाना।",
+        "बाहुयुद्ध विष्णू ते ठाना॥"
+      ],
+      "linesEn": [
+        "Madhu kaitabh jo ati balavaanaa.",
+        "Baahuyuddh vishnoo te thaanaa."
+      ],
+      "meaningHi": "मधु और कैटभ नामक अत्यन्त बलशाली दैत्यों ने विष्णु के साथ बाहुयुद्ध (मल्लयुद्ध) आरम्भ किया।",
+      "meaningEn": "The exceedingly mighty demons Madhu and Kaitabha engaged Vishnu himself in hand-to-hand combat."
+    },
+    {
+      "id": "chaupai-16",
+      "type": "chaupai",
+      "section": "body",
+      "number": 16,
+      "labelHi": "चौपाई · १६",
+      "labelEn": "Chaupai · 16",
+      "lines": [
+        "समर हजार पांच में घोरा।",
+        "फिर भी मुख उनसे नहिं मोरा॥"
+      ],
+      "linesEn": [
+        "Samar hajaar paanch mein ghoraa.",
+        "Phir bhee mukh unase nahin moraa."
+      ],
+      "meaningHi": "पाँच हजार वर्षों तक वह भीषण संग्राम चलता रहा, फिर भी विष्णु ने उन दैत्यों से अपना मुख नहीं मोड़ा।",
+      "meaningEn": "For five thousand years the dreadful battle raged on, yet Vishnu never turned his face away from them."
+    },
+    {
+      "id": "chaupai-17",
+      "type": "chaupai",
+      "section": "body",
+      "number": 17,
+      "labelHi": "चौपाई · १७",
+      "labelEn": "Chaupai · 17",
+      "lines": [
+        "मातु सहाय भई तेहि काला।",
+        "बुद्धि विपरीत करी खलहाला॥"
+      ],
+      "linesEn": [
+        "Maatu sahaay bhaee tehi kaalaa.",
+        "Buddhi vipareet karee khalahaalaa."
+      ],
+      "meaningHi": "उस समय माता विष्णु की सहायक बनीं, और उन्होंने दुष्ट दैत्यों की बुद्धि को विपरीत कर दिया।",
+      "meaningEn": "At that hour the Mother became Vishnu's help, and she deranged the wits of the two wicked demons."
+    },
+    {
+      "id": "chaupai-18",
+      "type": "chaupai",
+      "section": "body",
+      "number": 18,
+      "labelHi": "चौपाई · १८",
+      "labelEn": "Chaupai · 18",
+      "lines": [
+        "तेहि ते मृत्यु भई खल केरी।",
+        "पुरवहु मातु मनोरथ मेरी॥"
+      ],
+      "linesEn": [
+        "Tehi te mrityu bhaee khal keree.",
+        "Puravahu maatu manorath meree."
+      ],
+      "meaningHi": "उसी से उन दुष्ट दैत्यों की मृत्यु हुई; हे माता, उसी प्रकार आप मेरी मनोकामना भी पूर्ण कीजिए।",
+      "meaningEn": "By that the death of the wicked pair came about; O Mother, in the same way fulfil my heart's desire."
+    },
+    {
+      "id": "chaupai-19",
+      "type": "chaupai",
+      "section": "body",
+      "number": 19,
+      "labelHi": "चौपाई · १९",
+      "labelEn": "Chaupai · 19",
+      "lines": [
+        "चंड मुण्ड जो थे विख्याता।",
+        "छण महुं संहारेउ तेहि माता॥"
+      ],
+      "linesEn": [
+        "Chand mund jo the vikhyaataa.",
+        "Chhan mahun sanhaareu tehi maataa."
+      ],
+      "meaningHi": "चण्ड और मुण्ड नामक जो प्रसिद्ध दैत्य थे, हे माता, आपने उन्हें एक ही क्षण में संहार कर दिया।",
+      "meaningEn": "Chanda and Munda, the two renowned demons, the Mother destroyed in a single instant."
+    },
+    {
+      "id": "chaupai-20",
+      "type": "chaupai",
+      "section": "body",
+      "number": 20,
+      "labelHi": "चौपाई · २०",
+      "labelEn": "Chaupai · 20",
+      "lines": [
+        "रक्तबीज से समरथ पापी।",
+        "सुर-मुनि हृदय धरा सब कांपी॥"
+      ],
+      "linesEn": [
+        "Raktabeej se samarath paapee.",
+        "Sur-muni hriday dharaa sab kaampee."
+      ],
+      "meaningHi": "रक्तबीज जैसा सामर्थ्यवान पापी दैत्य, जिससे देवताओं, मुनियों और पृथ्वी सबके हृदय काँप उठे थे —",
+      "meaningEn": "Raktabija, the mighty sinner at whom the hearts of gods, sages and the earth itself all trembled —"
+    },
+    {
+      "id": "chaupai-21",
+      "type": "chaupai",
+      "section": "body",
+      "number": 21,
+      "labelHi": "चौपाई · २१",
+      "labelEn": "Chaupai · 21",
+      "lines": [
+        "काटेउ सिर जिम कदली खम्बा।",
+        "बार बार बिनवउं जगदंबा॥"
+      ],
+      "linesEn": [
+        "Kaateu sir jim kadalee khambaa.",
+        "Baar baar binavaun jagadambaa."
+      ],
+      "meaningHi": "आपने उसका सिर वैसे ही काट डाला जैसे केले का तना काटा जाता है; हे जगदम्बा, मैं बार-बार आपकी विनती करता हूँ।",
+      "meaningEn": "You struck off his head as one fells a plantain trunk; again and again I pray to you, O Jagadamba."
+    },
+    {
+      "id": "chaupai-22",
+      "type": "chaupai",
+      "section": "body",
+      "number": 22,
+      "labelHi": "चौपाई · २२",
+      "labelEn": "Chaupai · 22",
+      "lines": [
+        "जग प्रसिद्ध जो शुंभ निशुंभा।",
+        "छिन में बधे ताहि तू अम्बा॥"
+      ],
+      "linesEn": [
+        "Jag prasiddh jo shumbh nishumbhaa.",
+        "Chhin mein badhe taahi too ambaa."
+      ],
+      "meaningHi": "शुम्भ और निशुम्भ नामक जो दैत्य समस्त संसार में प्रसिद्ध थे, हे अम्बा, आपने उन्हें एक ही क्षण में मार डाला।",
+      "meaningEn": "The world-famed demons Shumbha and Nishumbha — in a single moment you slew them, O Amba."
+    },
+    {
+      "id": "chaupai-23",
+      "type": "chaupai",
+      "section": "body",
+      "number": 23,
+      "labelHi": "चौपाई · २३",
+      "labelEn": "Chaupai · 23",
+      "lines": [
+        "भरत-मातु बुधि फेरेउ जाई।",
+        "रामचंद्र बनवास कराई॥"
+      ],
+      "linesEn": [
+        "Bharat-maatu budhi phereu jaaee.",
+        "Raamachandra banavaas karaaee."
+      ],
+      "meaningHi": "आपने ही जाकर भरत की माता (कैकेयी) की बुद्धि फेर दी, जिससे श्रीरामचन्द्र को वनवास हुआ।",
+      "meaningEn": "It was you who went and turned the mind of Bharata's mother (Kaikeyi), bringing about Ramachandra's exile to the forest."
+    },
+    {
+      "id": "chaupai-24",
+      "type": "chaupai",
+      "section": "body",
+      "number": 24,
+      "labelHi": "चौपाई · २४",
+      "labelEn": "Chaupai · 24",
+      "lines": [
+        "एहि विधि रावन वध तुम कीन्हा।",
+        "सुर नर मुनि सब कहुं सुख दीन्हा॥"
+      ],
+      "linesEn": [
+        "Ehi vidhi raavan vadh tum keenhaa.",
+        "Sur nar muni sab kahun sukh deenhaa."
+      ],
+      "meaningHi": "इसी प्रकार आपने रावण का वध करवाया, और देवताओं, मनुष्यों तथा मुनियों — सभी को सुख प्रदान किया।",
+      "meaningEn": "In this way you brought about Ravana's slaying, and gave joy to gods, men and sages alike."
+    },
+    {
+      "id": "chaupai-25",
+      "type": "chaupai",
+      "section": "body",
+      "number": 25,
+      "labelHi": "चौपाई · २५",
+      "labelEn": "Chaupai · 25",
+      "lines": [
+        "को समरथ तव यश गुन गाना।",
+        "निगम अनादि अनंत बखाना॥"
+      ],
+      "linesEn": [
+        "Ko samarath tav yash gun gaanaa.",
+        "Nigam anaadi anant bakhaanaa."
+      ],
+      "meaningHi": "आपके यश और गुणों का गान करने में कौन समर्थ है? वेद भी आपको अनादि और अनन्त कहकर ही बखान करते हैं।",
+      "meaningEn": "Who is able to sing your fame and virtues? Even the Vedas proclaim you to be beginningless and endless."
+    },
+    {
+      "id": "chaupai-26",
+      "type": "chaupai",
+      "section": "body",
+      "number": 26,
+      "labelHi": "चौपाई · २६",
+      "labelEn": "Chaupai · 26",
+      "lines": [
+        "विष्णु रूद्र अज सकहिं न मारी।",
+        "जिनकी हो तुम रक्षाकारी॥"
+      ],
+      "linesEn": [
+        "Vishnu rudra aj sakahin na maaree.",
+        "Jinakee ho tum rakshaakaaree."
+      ],
+      "meaningHi": "जिनकी रक्षा आप करती हैं, उन्हें विष्णु, रुद्र (शिव) और अज (ब्रह्मा) भी नहीं मार सकते।",
+      "meaningEn": "Not even Vishnu, Rudra (Shiva) and Aja (Brahma) can slay those whose protector you are."
+    },
+    {
+      "id": "chaupai-27",
+      "type": "chaupai",
+      "section": "body",
+      "number": 27,
+      "labelHi": "चौपाई · २७",
+      "labelEn": "Chaupai · 27",
+      "lines": [
+        "रक्त दन्तिका और शताक्षी।",
+        "नाम अपार है दानव भक्षी॥"
+      ],
+      "linesEn": [
+        "Rakt dantikaa aur shataakshee.",
+        "Naam apaar hai daanav bhakshee."
+      ],
+      "meaningHi": "रक्तदन्तिका और शताक्षी — आपके नाम अपार हैं, और आप दानवों का भक्षण करने वाली हैं।",
+      "meaningEn": "Raktadantika and Shatakshi — your names are countless, O devourer of demons."
+    },
+    {
+      "id": "chaupai-28",
+      "type": "chaupai",
+      "section": "body",
+      "number": 28,
+      "labelHi": "चौपाई · २८",
+      "labelEn": "Chaupai · 28",
+      "lines": [
+        "दुर्गम काज धरा पर कीन्हा।",
+        "दुर्गा नाम सकल जग लीन्हा॥"
+      ],
+      "linesEn": [
+        "Durgam kaaj dharaa par keenhaa.",
+        "Durgaa naam sakal jag leenhaa."
+      ],
+      "meaningHi": "आपने पृथ्वी पर अत्यन्त कठिन (दुर्गम) कार्य सम्पन्न किए, जिससे समस्त संसार ने आपका 'दुर्गा' नाम ग्रहण किया।",
+      "meaningEn": "You accomplished the most difficult deeds upon the earth, and so the whole world took up your name 'Durga'."
+    },
+    {
+      "id": "chaupai-29",
+      "type": "chaupai",
+      "section": "body",
+      "number": 29,
+      "labelHi": "चौपाई · २९",
+      "labelEn": "Chaupai · 29",
+      "lines": [
+        "दुर्ग आदि हरनी तू माता।",
+        "कृपा करहु जब जब सुखदाता॥"
+      ],
+      "linesEn": [
+        "Durg aadi haranee too maataa.",
+        "Kripaa karahu jab jab sukhadaataa."
+      ],
+      "meaningHi": "हे माता, आप ही समस्त कष्टों और संकटों (दुर्गों) को हरने वाली हैं; हे सुखदात्री, जब-जब आवश्यकता हो, तब-तब मुझ पर कृपा कीजिए।",
+      "meaningEn": "O Mother, you are the remover of every difficulty (durga); O giver of joy, show grace whenever it is needed."
+    },
+    {
+      "id": "chaupai-30",
+      "type": "chaupai",
+      "section": "body",
+      "number": 30,
+      "labelHi": "चौपाई · ३०",
+      "labelEn": "Chaupai · 30",
+      "lines": [
+        "नृप कोपित जो मारन चाहै।",
+        "कानन में घेरे मृग नाहै॥"
+      ],
+      "linesEn": [
+        "Nrip kopit jo maaran chaahai.",
+        "Kaanan mein ghere mrig naahai."
+      ],
+      "meaningHi": "जब कोई क्रोधित राजा किसी को मारना चाहे, अथवा जब कोई वन में हिंसक पशुओं से घिर जाए —",
+      "meaningEn": "When an angry king seeks to kill, or when one is hemmed in by wild beasts in the forest —"
+    },
+    {
+      "id": "chaupai-31",
+      "type": "chaupai",
+      "section": "body",
+      "number": 31,
+      "labelHi": "चौपाई · ३१",
+      "labelEn": "Chaupai · 31",
+      "lines": [
+        "सागर मध्य पोत के भंगे।",
+        "अति तूफान नहिं कोऊ संगे॥"
+      ],
+      "linesEn": [
+        "Saagar madhya pot ke bhange.",
+        "Ati toofaan nahin kooo sange."
+      ],
+      "meaningHi": "जब समुद्र के बीच भयंकर तूफान में जहाज टूट जाए, और कोई साथी पास न हो —",
+      "meaningEn": "When one's ship breaks in mid-ocean amid a fierce storm, with no companion at hand —"
+    },
+    {
+      "id": "chaupai-32",
+      "type": "chaupai",
+      "section": "body",
+      "number": 32,
+      "labelHi": "चौपाई · ३२",
+      "labelEn": "Chaupai · 32",
+      "lines": [
+        "भूत प्रेत बाधा या दुःख में।",
+        "हो दरिद्र अथवा संकट में॥"
+      ],
+      "linesEn": [
+        "Bhoot pret baadhaa yaa dukh mein.",
+        "Ho daridra athavaa sankat mein."
+      ],
+      "meaningHi": "जब कोई भूत-प्रेत की बाधा या दुःख में हो, अथवा दरिद्रता या किसी संकट में फँसा हो —",
+      "meaningEn": "When one is afflicted by ghosts and spirits or by sorrow, or is caught in poverty or in calamity —"
+    },
+    {
+      "id": "chaupai-33",
+      "type": "chaupai",
+      "section": "body",
+      "number": 33,
+      "labelHi": "चौपाई · ३३",
+      "labelEn": "Chaupai · 33",
+      "lines": [
+        "नाम जपे मंगल सब होई।",
+        "संशय इसमें करइ न कोई॥"
+      ],
+      "linesEn": [
+        "Naam jape mangal sab hoee.",
+        "Sanshay isamein karai na koee."
+      ],
+      "meaningHi": "आपके नाम का जप करने से सब कुछ मंगलमय हो जाता है; इसमें किसी को कोई संशय नहीं करना चाहिए।",
+      "meaningEn": "By chanting your name all becomes auspicious; in this let no one harbour any doubt."
+    },
+    {
+      "id": "chaupai-34",
+      "type": "chaupai",
+      "section": "body",
+      "number": 34,
+      "labelHi": "चौपाई · ३४",
+      "labelEn": "Chaupai · 34",
+      "lines": [
+        "पुत्रहीन जो आतुर भाई।",
+        "सबै छांड़ि पूजें एहि माई॥"
+      ],
+      "linesEn": [
+        "Putraheen jo aatur bhaaee.",
+        "Sabai chhaandi poojen ehi maaee."
+      ],
+      "meaningHi": "जो सन्तानहीन होकर व्याकुल है, वह और सब कुछ छोड़कर इसी माता की पूजा करे।",
+      "meaningEn": "Whoever is childless and anxious — setting all else aside, let them worship this Mother."
+    },
+    {
+      "id": "chaupai-35",
+      "type": "chaupai",
+      "section": "body",
+      "number": 35,
+      "labelHi": "चौपाई · ३५",
+      "labelEn": "Chaupai · 35",
+      "lines": [
+        "करै पाठ नित यह चालीसा।",
+        "होय पुत्र सुन्दर गुण ईसा॥"
+      ],
+      "linesEn": [
+        "Karai paath nit yah chaaleesaa.",
+        "Hoy putra sundar gun eesaa."
+      ],
+      "meaningHi": "जो प्रतिदिन इस चालीसा का पाठ करता है, उसे ईश्वर के समान सुन्दर और गुणवान पुत्र की प्राप्ति होती है।",
+      "meaningEn": "Whoever recites this Chalisa daily is blessed with a son, beautiful and virtuous like the Lord."
+    },
+    {
+      "id": "chaupai-36",
+      "type": "chaupai",
+      "section": "body",
+      "number": 36,
+      "labelHi": "चौपाई · ३६",
+      "labelEn": "Chaupai · 36",
+      "lines": [
+        "धूपादिक नैवेद्य चढावै।",
+        "संकट रहित अवश्य हो जावै॥"
+      ],
+      "linesEn": [
+        "Dhoopaadik naivedya chadhaavai.",
+        "Sankat rahit avashya ho jaavai."
+      ],
+      "meaningHi": "जो धूप आदि तथा नैवेद्य अर्पित करता है, वह निश्चय ही समस्त संकटों से रहित हो जाता है।",
+      "meaningEn": "Whoever offers incense and food-offerings surely becomes free of all calamity."
+    },
+    {
+      "id": "chaupai-37",
+      "type": "chaupai",
+      "section": "body",
+      "number": 37,
+      "labelHi": "चौपाई · ३७",
+      "labelEn": "Chaupai · 37",
+      "lines": [
+        "भक्ति मातु की करै हमेशा।",
+        "निकट न आवै ताहि कलेशा॥"
+      ],
+      "linesEn": [
+        "Bhakti maatu kee karai hameshaa.",
+        "Nikat na aavai taahi kleshaa."
+      ],
+      "meaningHi": "जो सदैव माता की भक्ति करता है, कोई भी क्लेश उसके निकट नहीं आता।",
+      "meaningEn": "Whoever ever performs devotion to the Mother — no affliction ever comes near them."
+    },
+    {
+      "id": "chaupai-38",
+      "type": "chaupai",
+      "section": "body",
+      "number": 38,
+      "labelHi": "चौपाई · ३८",
+      "labelEn": "Chaupai · 38",
+      "lines": [
+        "बंदी पाठ करें शत बारा।",
+        "बंदी पाश दूर हो सारा॥"
+      ],
+      "linesEn": [
+        "Bandi paath karen shat baaraa.",
+        "Bandi paash door ho saaraa."
+      ],
+      "meaningHi": "जो बन्दी (कैदी) इसका सौ बार पाठ करता है, उसके बन्धन के सारे पाश दूर हो जाते हैं।",
+      "meaningEn": "The prisoner who recites it a hundred times has every bond of his captivity loosed."
+    },
+    {
+      "id": "chaupai-39",
+      "type": "chaupai",
+      "section": "body",
+      "number": 39,
+      "labelHi": "चौपाई · ३९",
+      "labelEn": "Chaupai · 39",
+      "lines": [
+        "करहु कृपा भवमुक्ति भवानी।",
+        "मो कहं दास सदा निज जानी॥"
+      ],
+      "linesEn": [
+        "Karahu kripaa bhavamukti bhavaanee.",
+        "Mo kahan daas sadaa nij jaanee."
+      ],
+      "meaningHi": "हे भवानी, मुझे सदा अपना दास जानकर कृपा कीजिए और मुझे भवसागर से मुक्ति प्रदान कीजिए।",
+      "meaningEn": "Show grace and grant liberation from worldly bondage, O Bhavani, ever knowing me as your own servant."
+    },
+    {
+      "id": "chaupai-40",
+      "type": "chaupai",
+      "section": "body",
+      "number": 40,
+      "labelHi": "चौपाई · ४०",
+      "labelEn": "Chaupai · 40",
+      "lines": [
+        "माता सूरज कान्ति तव, अंधकार मम रूप।",
+        "डूबन ते रक्षा करहु, परूं न मैं भव-कूप॥"
+      ],
+      "linesEn": [
+        "Maataa sooraj kaanti tav, andhakaar mam roop.",
+        "Dooban te rakshaa karahu, paroon na main bhav-koop."
+      ],
+      "meaningHi": "हे माता, आप सूर्य के समान कान्तिमान हैं और मेरा स्वरूप अन्धकार के समान है; मुझे डूबने से बचाइए, जिससे मैं संसार रूपी कुएँ में न गिरूँ।",
+      "meaningEn": "O Mother, yours is the radiance of the sun and mine the form of darkness; save me from drowning, that I may not fall into the well of worldly existence."
+    },
+    {
+      "id": "closing-doha-1",
+      "type": "doha",
+      "section": "closing",
+      "number": 1,
+      "labelHi": "दोहा · १",
+      "labelEn": "Doha · 1",
+      "lines": [
+        "बल बुद्धि विद्या देहुं मोहि, सुनहु सरस्वति मातु।",
+        "अधम रामसागरहिं तुम, आश्रय देउ पुनातु॥"
+      ],
+      "linesEn": [
+        "Bal buddhi vidyaa dehun mohi, sunahu saraswati maatu.",
+        "Adham raamasaagarahin tum, aashray deu punaatu."
+      ],
+      "meaningHi": "हे सरस्वती माता, मेरी प्रार्थना सुनिए और मुझे बल, बुद्धि तथा विद्या प्रदान कीजिए; हे पवित्र करने वाली माता, आप इस अधम रामसागर को अपना आश्रय दीजिए।",
+      "meaningEn": "Grant me strength, intellect and learning; hear me, O Mother Saraswati; O purifier, give shelter to the lowly Ramsagar (the poet who signs this hymn)."
+    }
+  ]
+}

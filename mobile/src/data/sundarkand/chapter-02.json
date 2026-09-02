@@ -108,8 +108,8 @@
       "stanza": 1,
       "numInSection": 1,
       "subSuffix": null,
-      "labelHi": "दोहा १",
-      "labelEn": "Doha 1",
+      "labelHi": "दोहा · १",
+      "labelEn": "Doha · 1",
       "lines": [
         "हनूमान तेहि परसा कर पुनि कीन्ह प्रनाम।",
         "राम काजु कीन्हें बिनु मोहि कहाँ बिश्राम॥1॥"
@@ -248,8 +248,8 @@
       "stanza": 2,
       "numInSection": 2,
       "subSuffix": null,
-      "labelHi": "दोहा २",
-      "labelEn": "Doha 2",
+      "labelHi": "दोहा · २",
+      "labelEn": "Doha · 2",
       "lines": [
         "राम काजु सबु करिहहु तुम्ह बल बुद्धि निधान।",
         "आसिष देइ गई सो हरषि चलेउ हनुमान॥2॥"
@@ -262,5 +262,14 @@
       ],
       "chapter": 2
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Ramcharitmanas, Sundarkand by Goswami Tulsidas; app content is divided into editorial reading sections, not canonical sargas.",
+    "referenceUrls": [
+      "https://hi.wikisource.org/wiki/%E0%A4%B0%E0%A4%BE%E0%A4%AE%E0%A4%9A%E0%A4%B0%E0%A4%BF%E0%A4%A4%E0%A4%AE%E0%A4%BE%E0%A4%A8%E0%A4%B8",
+      "https://www.drikpanchang.com/lyrics/ramcharitmanas/sundarkand/sundarkand-lyrics.html?ck=1&lang=en",
+      "https://en.bharatdiscovery.org/india/%E0%A4%B8%E0%A5%81%E0%A4%A8%E0%A5%81_%E0%A4%B2%E0%A4%82%E0%A4%95%E0%A5%87%E0%A4%B8_%E0%A4%B8%E0%A4%95%E0%A4%B2_%E0%A4%97%E0%A5%81%E0%A4%A8_%E0%A4%A4%E0%A5%8B%E0%A4%B0%E0%A5%87%E0%A4%82"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

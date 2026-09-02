@@ -1,32 +1,93 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRoute, type RouteProp } from '@react-navigation/native';
 import { useTheme } from '@/theme/ThemeContext';
+import { elevation } from '@/theme/elevation';
+import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage } from '@/data/gita/language';
-import { getRandomVerse } from '@/data/versePool';
+import {
+  verseLinesByLang,
+  meaningByLang,
+  meaningSourceLang,
+  contentByLang,
+  pick,
+} from '@/utils/localize';
+import { verseToken, meaningToken } from '@/utils/langType';
+import { getRandomVerse, findVerse } from '@/data/versePool';
 import type { UniformVerse } from '@/data/versePool';
+import { getReaderBackground } from '@/data/backgrounds';
+import type { TabParamList } from '@/navigation/types';
+import BackgroundLayer from '@/components/BackgroundLayer';
 import Ornament from '@/components/Ornament';
 import ShareButton from '@/components/ShareButton';
 import BookmarkButton from '@/components/BookmarkButton';
 import { useShare } from '@/utils/shareVerse';
 import { useBookmarks } from '@/contexts/BookmarksContext';
+import RoutineBanner from '@/components/RoutineBanner';
+import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
+import { useTourTarget } from '@/components/tour/tourTargets';
+
+/**
+ * Resolve the verse to show on entry. When a reminder tap forwarded a verse
+ * identity, show that exact verse; if it can no longer be found (e.g. an OTA
+ * update removed it) fall back to a random one. A manual open has no identity,
+ * so it shows a random verse.
+ */
+function resolveInitialVerse(
+  sourceId?: string,
+  verseIndex?: number,
+  chapter?: number
+): UniformVerse | null {
+  if (sourceId != null && verseIndex != null) {
+    const found = findVerse(sourceId, verseIndex, chapter);
+    if (found) return found;
+  }
+  return getRandomVerse();
+}
 
 export default function DailyBhaktiScreen() {
   const { colors, typography, spacing } = useTheme();
+  // Feature-tour spotlight anchors (design.md §47).
+  const dailyVerseRef = useTourTarget('dailyVerse');
+  const shareButtonRef = useTourTarget('shareButton');
   const { lang } = useGitaLanguage();
-  const [verse, setVerse] = useState<UniformVerse | null>(() => getRandomVerse());
+  const screenTitle = orderTitlesByLanguage(lang, 'दैनिक भक्ति', 'Daily Verse', {
+    devPrimary: 22,
+    devSecondary: 14,
+    latPrimary: 22,
+    latSecondary: 14,
+  });
+  const route = useRoute<RouteProp<TabParamList, 'DailyBhaktiTab'>>();
+  const { sourceId, chapter, verseIndex } = route.params ?? {};
+  const [verse, setVerse] = useState<UniformVerse | null>(() =>
+    resolveInitialVerse(sourceId, verseIndex, chapter)
+  );
 
   const { share, busy: shareBusy } = useShare();
   const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
+
+  // Manual opens show a random verse. Arriving from a reminder tap forwards the
+  // exact verse identity baked into that notification, which locks the tab to
+  // that verse — even if the screen was already mounted (e.g. the user had
+  // browsed away with "next"). Looked up by identity, so it always matches the
+  // notification regardless of pool-size drift.
+  useEffect(() => {
+    if (sourceId == null || verseIndex == null) return;
+    const found = findVerse(sourceId, verseIndex, chapter);
+    if (found) setVerse(found);
+  }, [sourceId, chapter, verseIndex]);
 
   const refresh = useCallback(() => {
     setVerse(getRandomVerse());
   }, []);
 
-  const isHindi = lang === 'hi';
+  // Mirror each reader's bookmark-id convention: chaptered sources use
+  // `id:chapter:idx`; chapterless ones (sanskar, japam) use `id::idx`, so an
+  // empty chapter segment keeps Daily Bhakti bookmarks in sync with the reader.
   const bookmarkId = verse
-    ? `${verse.sourceId}:${verse.chapter ?? 0}:${verse.verseIndex}`
+    ? `${verse.sourceId}:${verse.chapter ?? ''}:${verse.verseIndex}`
     : '';
 
   if (!verse) {
@@ -40,7 +101,12 @@ export default function DailyBhaktiScreen() {
           <View style={[styles.empty, { paddingHorizontal: spacing.xxl }]}>
             <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 32, color: colors.inkMuted, opacity: 0.4 }}>॥</Text>
             <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 15, color: colors.inkMuted, textAlign: 'center', marginTop: 12 }}>
-              {isHindi ? 'दैनिक श्लोक उपलब्ध नहीं' : 'No verses available'}
+              {pick(lang, {
+                hi: 'दैनिक श्लोक उपलब्ध नहीं',
+                en: 'No verses available',
+                gu: 'દૈનિક શ્લોક ઉપલબ્ધ નથી',
+                kn: 'ದೈನಿಕ ಶ್ಲೋಕ ಲಭ್ಯವಿಲ್ಲ',
+              })}
             </Text>
           </View>
         </SafeAreaView>
@@ -63,34 +129,41 @@ export default function DailyBhaktiScreen() {
           <View style={styles.titleArea}>
             <Text
               style={{
-                fontFamily: typography.screenTitle.fontFamily,
-                fontSize: 22,
+                fontFamily: screenTitle.primary.fontFamily,
+                fontSize: screenTitle.primary.fontSize,
+                fontStyle: screenTitle.primary.fontStyle,
                 color: colors.ink,
                 textAlign: 'center',
               }}
             >
-              दैनिक भक्ति
+              {screenTitle.primary.text}
             </Text>
             <Text
               style={{
-                fontFamily: 'CormorantGaramond_400Regular_Italic',
-                fontSize: 14,
+                fontFamily: screenTitle.secondary.fontFamily,
+                fontSize: screenTitle.secondary.fontSize,
+                fontStyle: screenTitle.secondary.fontStyle,
                 color: colors.inkMuted,
                 textAlign: 'center',
                 marginTop: 4,
               }}
             >
-              Daily Verse
+              {screenTitle.secondary.text}
             </Text>
           </View>
 
-          {/* Verse Card */}
-          <View style={[styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
+          {/* Verse Card — carries the same faded source sketch as the verse's own
+              reader page (getReaderBackground). `chapter` doubles as the stanza/kāṇḍa
+              key for the sources whose plate varies per subsection. */}
+          <View ref={dailyVerseRef} collapsable={false} style={[styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
+            <BackgroundLayer
+              source={getReaderBackground(verse.sourceId, { stanza: verse.chapter })}
+            />
             {/* Top row: source pill + action icons */}
             <View style={styles.cardHeader}>
               <View style={[styles.pill, { backgroundColor: 'rgba(184, 98, 27, 0.1)' }]}>
                 <Text style={[styles.pillText, { color: colors.saffronDeep }]}>
-                  {isHindi ? verse.sourceNameHi : verse.sourceNameEn} · {isHindi ? verse.labelHi : verse.labelEn}
+                  {contentByLang(lang, verse.sourceNameHi, verse.sourceNameEn)} · {contentByLang(lang, verse.labelHi ?? '', verse.labelEn ?? '')}
                 </Text>
               </View>
               <View style={styles.headerActions}>
@@ -112,54 +185,47 @@ export default function DailyBhaktiScreen() {
                     }
                   }}
                 />
-                <ShareButton
-                  busy={shareBusy}
-                  onPress={() => {
-                    share(
-                      {
-                        sourceId: verse.sourceId,
-                        sectionNameHi: verse.sourceNameHi,
-                        sectionNameEn: verse.sourceNameEn,
-                        verseLabelHi: verse.labelHi ?? '',
-                        verseLabelEn: verse.labelEn ?? '',
-                        linesHi: verse.textHi,
-                        linesEn: verse.textEn,
-                        meaningHi: verse.meaningHi,
-                        meaningEn: verse.meaningEn,
-                      },
-                      lang
-                    );
-                  }}
-                />
+                <View ref={shareButtonRef} collapsable={false}>
+                  <ShareButton
+                    busy={shareBusy}
+                    onPress={() => {
+                      share(
+                        {
+                          sourceId: verse.sourceId,
+                          stanza: verse.chapter,
+                          sectionNameHi: verse.sourceNameHi,
+                          sectionNameEn: verse.sourceNameEn,
+                          verseLabelHi: verse.labelHi ?? '',
+                          verseLabelEn: verse.labelEn ?? '',
+                          linesHi: verse.textHi,
+                          linesEn: verse.textEn,
+                          meaningHi: verse.meaningHi,
+                          meaningEn: verse.meaningEn,
+                        },
+                        lang
+                      );
+                    }}
+                  />
+                </View>
               </View>
             </View>
 
-            {/* Verse text — swap based on language */}
-            {isHindi ? (
-              <Text
-                style={{
-                  fontFamily: typography.verse.fontFamily,
-                  fontSize: 19,
-                  color: colors.ink,
-                  lineHeight: 34,
-                  marginTop: 14,
-                }}
-              >
-                {verse.textHi.join('\n')}
-              </Text>
-            ) : (
-              <Text
-                style={{
-                  fontFamily: 'CormorantGaramond_600SemiBold',
-                  fontSize: 17,
-                  color: colors.ink,
-                  lineHeight: 28,
-                  marginTop: 14,
-                }}
-              >
-                {verse.textEn.length > 0 ? verse.textEn.join('\n') : verse.textHi.join('\n')}
-              </Text>
-            )}
+            {/* Verse text — script follows the reading language (gu/kn re-script the Devanagari) */}
+            <Text
+              style={{
+                fontFamily: verseToken(lang, typography).fontFamily,
+                fontSize: verseToken(lang, typography).fontSize,
+                color: colors.ink,
+                lineHeight: verseToken(lang, typography).lineHeight,
+                marginTop: 14,
+              }}
+            >
+              {verseLinesByLang(
+                lang,
+                verse.textHi,
+                verse.textEn.length > 0 ? verse.textEn : verse.textHi
+              ).join('\n')}
+            </Text>
 
             {/* Ornament divider */}
             <View style={styles.ornamentWrap}>
@@ -168,40 +234,40 @@ export default function DailyBhaktiScreen() {
 
             {/* Meaning section */}
             <Text style={[styles.meaningLabel, { color: colors.saffronDeep }]}>
-              {isHindi ? 'अर्थ' : 'Meaning'}{' '}
-              <Text style={{ fontFamily: 'CormorantGaramond_400Regular_Italic', color: colors.inkMuted }}>
-                · {isHindi ? 'Meaning' : 'अर्थ'}
+              {contentByLang(lang, 'अर्थ', 'Meaning')}{' '}
+              <Text style={{ fontFamily: fontFamilies.latinItalic, color: colors.inkMuted }}>
+                · {contentByLang(lang, 'Meaning', 'अर्थ')}
               </Text>
             </Text>
 
-            {/* Meaning text — based on language */}
+            {/* Meaning text — styled by the meaning's source language (kn meaning is English) */}
             <Text
               style={{
-                fontFamily: isHindi ? typography.meaning.fontFamily : 'CormorantGaramond_500Medium',
-                fontSize: isHindi ? 14 : 16,
-                color: colors.inkSoft,
-                lineHeight: isHindi ? 24 : 28,
+                fontFamily: meaningToken(meaningSourceLang(lang), typography).fontFamily,
+                fontSize: meaningToken(meaningSourceLang(lang), typography).fontSize,
+                color: meaningSourceLang(lang) === 'en' ? colors.ink : colors.inkSoft,
+                lineHeight: meaningToken(meaningSourceLang(lang), typography).lineHeight,
                 marginTop: 6,
               }}
             >
-              {isHindi ? verse.meaningHi : verse.meaningEn}
+              {meaningByLang(lang, verse.meaningHi, verse.meaningEn)}
             </Text>
 
             {/* Card footer: source label | next */}
             <View style={styles.cardFooter}>
               <Text
                 style={{
-                  fontFamily: 'CormorantGaramond_400Regular_Italic',
+                  fontFamily: fontFamilies.latinItalic,
                   fontSize: 11,
                   color: colors.inkMuted,
                 }}
               >
-                {isHindi ? verse.sourceNameHi : verse.sourceNameEn}
+                {contentByLang(lang, verse.sourceNameHi, verse.sourceNameEn)}
               </Text>
               <Pressable
                 onPress={refresh}
                 accessibilityRole="button"
-                accessibilityLabel={isHindi ? 'अगला श्लोक' : 'Next verse'}
+                accessibilityLabel={pick(lang, { hi: 'अगला श्लोक', en: 'Next verse', gu: 'આગળનો શ્લોક', kn: 'ಮುಂದಿನ ಶ್ಲೋಕ' })}
                 hitSlop={16}
                 style={({ pressed }) => [styles.nextBtn, pressed && { opacity: 0.7 }]}
               >
@@ -211,6 +277,7 @@ export default function DailyBhaktiScreen() {
           </View>
         </ScrollView>
       </SafeAreaView>
+      <RoutineBanner />
     </View>
   );
 }
@@ -225,11 +292,10 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     borderWidth: 1,
     padding: 20,
-    shadowColor: '#3c1e0a',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.14,
-    shadowRadius: 24,
-    elevation: 6,
+    // Clips the BackgroundLayer sketch to the rounded corners; the card's own
+    // backgroundColor keeps the iOS shadow rendering despite the clip.
+    overflow: 'hidden',
+    ...elevation.raised,
   },
   cardHeader: {
     flexDirection: 'row',
@@ -248,13 +314,13 @@ const styles = StyleSheet.create({
     flexShrink: 1,
   },
   pillText: {
-    fontFamily: 'CormorantGaramond_600SemiBold',
+    fontFamily: fontFamilies.latinSemiBold,
     fontSize: 13,
     letterSpacing: 0.3,
   },
   ornamentWrap: { marginVertical: 14 },
   meaningLabel: {
-    fontFamily: 'NotoSerifDevanagari_600SemiBold',
+    fontFamily: fontFamilies.devanagariBold,
     fontSize: 12,
   },
   cardFooter: {

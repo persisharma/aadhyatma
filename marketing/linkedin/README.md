@@ -1,0 +1,62 @@
+# LinkedIn reel pipeline (Vedansh)
+
+Reusable tooling to turn **real iOS-simulator screenshots** into on-brand 9:16 LinkedIn reels,
+plus post templates. Re-run this each release when you add a feature.
+
+```
+screenshot (Maestro on iOS sim) → branded HTML slide → headless-Chrome PNG frame → ffmpeg xfade
+```
+
+## Layout
+```
+marketing/linkedin/
+├── make-reel.js        # builds a 9:16 reel from shots/<reel>/*.png  (slide design + captions live here)
+├── capture.sh          # boots the app in Expo Go + runs the Maestro flows (portable, self-contained)
+├── flows/
+│   ├── flow-vrat.yaml      # captures the vrat/fasting-companion screens
+│   └── flow-routine.yaml   # captures the daily-routine screens (creates + deletes a demo routine)
+├── posts/
+│   ├── post-1-vrat.md      # post copy / template
+│   └── post-2-routine.md
+└── README.md
+```
+Generated outputs (`shots/`, `frames/`, `*.mp4`, `.metro.log`) are **git-ignored** — they're regenerable.
+
+## Prerequisites
+- Booted iOS simulator with **Expo Go** installed (open the app once so it's in Expo Go's "Recently opened").
+- `maestro`, `node`, `ffmpeg` on PATH, and Google Chrome installed.
+  - Override binaries if needed: `MAESTRO_BIN`, `FFMPEG_BIN`, `CHROME_BIN`.
+
+## Usage
+```bash
+cd marketing/linkedin
+./capture.sh                 # capture both reels' screenshots (starts production Metro itself)
+# ./capture.sh vrat          # or just one
+node make-reel.js vrat       # → vedansh-vrat-reel.mp4
+node make-reel.js routine    # → vedansh-routine-reel.mp4
+```
+Then attach each `.mp4` to its post in `posts/` on LinkedIn.
+
+## Editing the reels
+- **Captions / slide order / cover + outro text:** edit the `REELS` manifest near the top of `make-reel.js`.
+- **Brand (colors, fonts, phone frame):** the `C` palette + slide functions in `make-reel.js`
+  (mirrors `mobile/src/theme`: saffron `#B8621B`, parchment `#F3E7C9`, ink `#1A0E03`;
+  Cormorant Garamond + Noto Serif Devanagari).
+- **Which screens get captured:** the Maestro `flows/*.yaml` (add a `takeScreenshot: shots/<reel>/NN-name`
+  and a matching manifest entry in `make-reel.js`).
+
+## Gotchas / known limitations
+- **Always capture against production Metro** (`capture.sh` does this) — dev mode shows a LogBox
+  warning toast on some screens. (Separately: the observance-detail / My-Vrat lists currently log a
+  React "duplicate key" dev warning — minor, worth fixing in app code.)
+- Flows read the **English** reading language (the iOS a11y tree can't reliably match Devanagari).
+- `flow-vrat.yaml` follows a few vrats and does a **best-effort** unfollow at the end; if a re-run's
+  `Follow <name>` selectors don't match, manually unfollow in **My Vrat** first (or reset app data).
+- My-Vrat richness (how many vrats show) depends on which monthly vrats are near-term on the run date,
+  plus Karwa Chauth (always followed via search). Follow more in-app for a fuller shot.
+- Selectors track the app UI — if a screen is redesigned, update the matching flow.
+- Captures use the Panchang default location (**Ujjain**); it's user-settable in-app.
+
+## CTA
+Posts use the repo smart link `https://persisharma.github.io/get-vedansh/` (routes to iPhone + Android),
+defined in `mobile/src/data/shareLinks.ts`.

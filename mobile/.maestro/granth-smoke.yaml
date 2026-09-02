@@ -1,0 +1,64 @@
+# Granth Category Smoke Test
+#
+# Verifies the Granth category and its 4 active sections render correctly.
+# Sections: Bhagavad Gītā, Sundarkand, Ramcharitmanas Mangalacharan, Valmiki Ramayan.
+#
+# Bhagavad Gītā and Valmiki Ramayan have a chapter index (kāṇḍa list); the other
+# two go straight to a reader. This flow opens Valmiki Ramayan and its final
+# kāṇḍa so the complete-corpus manifest and a large payload are exercised.
+
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+
+# Verify Granth tile and open it
+- assertVisible: "Sacred Books. Tap to open."
+- tapOn: "Sacred Books. Tap to open."
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Bhagavad Gītā\\..*Tap to open\\."
+    timeout: 15000
+- assertVisible: "Sundarkand\\..*Tap to open\\."
+- assertVisible: "Ramcharitmanas Mangalacharan\\..*Tap to open\\."
+- assertVisible: "Valmiki Ramayan\\..*Tap to open\\."
+
+# Open Valmiki Ramayan chapter index
+- tapOn: "Valmiki Ramayan\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+# Dismiss Resume sheet if a prior session left reading progress
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- waitForAnimationToEnd
+
+# Switch the index to English so Maestro can read the kāṇḍa accessibility labels.
+- tapOn: "English"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Kanda 1\\. Bala Kanda\\. 2217 shlokas\\. Tap to open\\."
+    timeout: 15000
+- assertVisible: "Kanda 2\\. Ayodhya Kanda\\. 4262 shlokas\\. Tap to open\\."
+
+# Scroll through the complete seven-kāṇḍa manifest and load Uttara Kāṇḍa.
+- scrollUntilVisible:
+    element:
+      text: "Kanda 7\\. Uttara Kanda\\. 3461 shlokas\\. Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+    centerElement: true
+- tapOn: "Kanda 7\\. Uttara Kanda\\. 3461 shlokas\\. Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 30000
+- extendedWaitUntil:
+    visible: "Shloka · 7\\.1\\.1.*"
+    timeout: 30000
+
+# Reader language toggle test
+- tapOn: "Hindi"
+- waitForAnimationToEnd
+
+# Clean up for the next flow.
+- stopApp:
+    appId: com.prashantsharma.vedansh

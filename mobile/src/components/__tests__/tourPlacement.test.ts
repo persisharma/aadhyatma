@@ -1,0 +1,146 @@
+import {
+  placeTourCard,
+  tabItemRect,
+  inflateRect,
+  sameRect,
+  measureSettled,
+  CARD_GAP,
+  MEASURE_MAX_TRIES,
+  MEASURE_MIN_TRIES,
+  MEASURE_STABLE_FRAMES,
+} from '@/components/tour/placement';
+
+const screen = { width: 390, height: 844 };
+const insets = { top: 47, bottom: 34 };
+
+describe('placeTourCard', () => {
+  test('target near the top → card hugs just below it, arrow up', () => {
+    const target = { x: 20, y: 100, width: 350, height: 80 }; // bottom = 180
+    const p = placeTourCard(target, screen, insets);
+    expect(p.arrow).toBe('up');
+    expect(p.top).toBe(180 + CARD_GAP);
+    expect(p.bottom).toBeUndefined();
+  });
+
+  test('bottom-tab target → card hugs just above it, arrow down (no full-screen gap)', () => {
+    const target = { x: 0, y: 750, width: 78, height: 60 };
+    const p = placeTourCard(target, screen, insets);
+    expect(p.arrow).toBe('down');
+    // Card bottom anchored right above the target, NOT at the screen top.
+    expect(p.bottom).toBe(844 - 750 + CARD_GAP);
+    expect(p.top).toBeUndefined();
+  });
+
+  test('large target that fills the screen → card pins above the bottom inset (controls stay on-screen), arrow up', () => {
+    const big = { x: 20, y: 120, width: 360, height: 600 }; // neither side fits a card
+    const p = placeTourCard(big, screen, insets);
+    expect(p.arrow).toBe('up');
+    expect(p.bottom).toBe(insets.bottom + 8);
+    expect(p.top).toBeUndefined();
+  });
+
+  test('neither side fits but there is more room ABOVE → pins to the top inset, arrow down at the target below it', () => {
+    // Target sits low, leaving little room below and more above; a card too tall
+    // for either side pins to the roomier (top) edge and still points down at it.
+    const lowTall = { x: 20, y: 560, width: 350, height: 200 }; // bottom = 760
+    // availBelow = 844 - 34 - 760 - 10 = 40; availAbove = 560 - 47 - 10 = 503
+    const p = placeTourCard(lowTall, screen, insets, 20, 22, 600);
+    expect(p.arrow).toBe('down');
+    expect(p.top).toBe(insets.top + 8);
+    expect(p.bottom).toBeUndefined();
+  });
+
+  test('card taller than the viewport bottom-pins (controls stay reachable) even with more room above', () => {
+    // Low target → more room above, but a card taller than the safe viewport must
+    // NOT top-pin (that would push Back/Next off the bottom). It bottom-pins so the
+    // controls stay on-screen; the title clips at the top instead.
+    const lowTarget = { x: 20, y: 600, width: 350, height: 100 }; // bottom = 700
+    // availAbove = 600 - 47 - 10 = 543 > availBelow = 844 - 34 - 700 - 10 = 100
+    // usableHeight = 844 - 47 - 34 - 16 = 747; card is taller than that.
+    const p = placeTourCard(lowTarget, screen, insets, 20, 22, 800);
+    expect(p.arrow).toBe('up');
+    expect(p.bottom).toBe(insets.bottom + 8);
+    expect(p.top).toBeUndefined();
+  });
+
+  test('a taller card flips to the side that actually holds it', () => {
+    // Target high up. A short card fits just below (arrow up)…
+    const target = { x: 20, y: 90, width: 350, height: 60 }; // bottom = 150
+    const short = placeTourCard(target, screen, insets, 20, 22, 200);
+    expect(short.arrow).toBe('up');
+    expect(short.top).toBe(150 + CARD_GAP);
+    // …but once the measured card is taller than the room below it, it no longer
+    // pretends to fit there. availBelow = 844 - 34 - 150 - 10 = 650.
+    const tall = placeTourCard(target, screen, insets, 20, 22, 660);
+    expect(tall.arrow).toBe('up'); // still more room below than above here
+    expect(tall.bottom).toBe(insets.bottom + 8); // pinned, not overlapping the ring
+    expect(tall.top).toBeUndefined();
+  });
+
+  test('arrow is nudged under the target centre, clamped inside the card box', () => {
+    // Target centre far right → arrow clamps to the card's right edge.
+    const right = placeTourCard({ x: 340, y: 700, width: 40, height: 50 }, screen, insets);
+    const slotWidth = 390 - 2 * 20;
+    expect(right.arrowLeft).toBe(slotWidth - 22);
+    // Target centre far left → arrow clamps to 0.
+    const left = placeTourCard({ x: 0, y: 700, width: 20, height: 50 }, screen, insets);
+    expect(left.arrowLeft).toBe(0);
+    // Centred target → arrow near the middle of the slot.
+    const mid = placeTourCard({ x: 175, y: 700, width: 40, height: 50 }, screen, insets);
+    expect(mid.arrowLeft).toBeGreaterThan(150);
+    expect(mid.arrowLeft).toBeLessThan(180);
+  });
+});
+
+describe('sameRect', () => {
+  test('equal to the nearest pixel', () => {
+    expect(sameRect({ x: 1.2, y: 2.4, width: 3, height: 4 }, { x: 1, y: 2, width: 3, height: 4 })).toBe(true);
+    expect(sameRect({ x: 1, y: 2, width: 3, height: 4 }, { x: 9, y: 2, width: 3, height: 4 })).toBe(false);
+    expect(sameRect(null, null)).toBe(true);
+    expect(sameRect(null, { x: 0, y: 0, width: 1, height: 1 })).toBe(false);
+  });
+});
+
+describe('tabItemRect', () => {
+  test('computes an equal-width slot above the bottom inset', () => {
+    const r = tabItemRect(0, 5, screen, 34);
+    expect(r).toEqual({ x: 0, y: 844 - (60 + 34), width: 78, height: 60 });
+  });
+
+  test('indexes across the bar (3rd of 5 tabs)', () => {
+    const r = tabItemRect(2, 5, screen, 0);
+    expect(r.x).toBe(156);
+    expect(r.width).toBe(78);
+    expect(r.y).toBe(844 - 60);
+  });
+});
+
+describe('measureSettled', () => {
+  test('does not settle before the warm-up minimum, even when stable', () => {
+    expect(measureSettled(MEASURE_MIN_TRIES - 1, MEASURE_STABLE_FRAMES + 5)).toBe(false);
+  });
+
+  test('does not settle past the warm-up until the rect holds still long enough', () => {
+    expect(measureSettled(MEASURE_MIN_TRIES, MEASURE_STABLE_FRAMES - 1)).toBe(false);
+  });
+
+  test('settles once past the warm-up with a long-enough stable run', () => {
+    expect(measureSettled(MEASURE_MIN_TRIES, MEASURE_STABLE_FRAMES)).toBe(true);
+  });
+
+  test('hard-stops at the max tries regardless of stability', () => {
+    expect(measureSettled(MEASURE_MAX_TRIES, 0)).toBe(true);
+    expect(measureSettled(MEASURE_MAX_TRIES + 1, 0)).toBe(true);
+  });
+});
+
+describe('inflateRect', () => {
+  test('grows on every side and clamps origin to >= 0', () => {
+    expect(inflateRect({ x: 4, y: 2, width: 10, height: 10 }, 6)).toEqual({
+      x: 0,
+      y: 0,
+      width: 22,
+      height: 22,
+    });
+  });
+});

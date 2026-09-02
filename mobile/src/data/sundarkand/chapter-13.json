@@ -108,8 +108,8 @@
       "stanza": 43,
       "numInSection": 43,
       "subSuffix": null,
-      "labelHi": "दोहा ४३",
-      "labelEn": "Doha 43",
+      "labelHi": "दोहा · ४३",
+      "labelEn": "Doha · 43",
       "lines": [
         "सरनागत कहुँ जे तजहिं निज अनहित अनुमानि।",
         "ते नर पावँर पापमय तिन्हहि बिलोकत हानि॥43॥"
@@ -208,8 +208,8 @@
       "stanza": 44,
       "numInSection": 44,
       "subSuffix": null,
-      "labelHi": "दोहा ४४",
-      "labelEn": "Doha 44",
+      "labelHi": "दोहा · ४४",
+      "labelEn": "Doha · 44",
       "lines": [
         "उभय भाँति तेहि आनहु हँसि कह कृपानिकेत।",
         "जय कृपाल कहि कपि चले अंगद हनू समेत॥44॥"
@@ -218,7 +218,7 @@
       "meaningEn": "Let him come, whatever his intention,\" declared the ocean of mercy, Shri Ram. With joyful chants of \"Victory to the benevolent One!\", the monkeys, led by Angad and Hanuman ji, went forth to bring Vibhishan before the Lord.",
       "linesEn": [
         "Ubhay bhaanti tehi aanahu hansi kah kripaaniket",
-        "jaya karipāla kahai kapai chalae angada hanaū samaeta||44||"
+        "Jaya kripaal kahi kapi chale angad hanoo samet"
       ],
       "chapter": 13
     },
@@ -308,8 +308,8 @@
       "stanza": 45,
       "numInSection": 45,
       "subSuffix": null,
-      "labelHi": "दोहा ४५",
-      "labelEn": "Doha 45",
+      "labelHi": "दोहा · ४५",
+      "labelEn": "Doha · 45",
       "lines": [
         "श्रवन सुजसु सुनि आयउँ प्रभु भंजन भव भीर।",
         "त्राहि त्राहि आरति हरन सरन सुखद रघुबीर॥45॥"
@@ -408,8 +408,8 @@
       "stanza": 46,
       "numInSection": 46,
       "subSuffix": null,
-      "labelHi": "दोहा ४६",
-      "labelEn": "Doha 46",
+      "labelHi": "दोहा · ४६",
+      "labelEn": "Doha · 46",
       "lines": [
         "तब लगि कुसल न जीव कहुँ सपनेहुँ मन बिश्राम।",
         "जब लगि भजत न राम कहुँ सोक धाम तजि काम॥46॥"
@@ -508,8 +508,8 @@
       "stanza": 47,
       "numInSection": 47,
       "subSuffix": null,
-      "labelHi": "दोहा ४७",
-      "labelEn": "Doha 47",
+      "labelHi": "दोहा · ४७",
+      "labelEn": "Doha · 47",
       "lines": [
         "अहोभाग्य मम अमित अति राम कृपा सुख पुंज।",
         "देखेउँ नयन बिरंचि सिव सेब्य जुगल पद कंज॥47॥"
@@ -608,8 +608,8 @@
       "stanza": 48,
       "numInSection": 48,
       "subSuffix": null,
-      "labelHi": "दोहा ४८",
-      "labelEn": "Doha 48",
+      "labelHi": "दोहा · ४८",
+      "labelEn": "Doha · 48",
       "lines": [
         "सगुन उपासक परहित निरत नीति दृढ़ नेम।",
         "ते नर प्रान समान मम जिन्ह कें द्विज पद प्रेम॥48॥"
@@ -622,5 +622,14 @@
       ],
       "chapter": 13
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Ramcharitmanas, Sundarkand by Goswami Tulsidas; app content is divided into editorial reading sections, not canonical sargas.",
+    "referenceUrls": [
+      "https://hi.wikisource.org/wiki/%E0%A4%B0%E0%A4%BE%E0%A4%AE%E0%A4%9A%E0%A4%B0%E0%A4%BF%E0%A4%A4%E0%A4%AE%E0%A4%BE%E0%A4%A8%E0%A4%B8",
+      "https://www.drikpanchang.com/lyrics/ramcharitmanas/sundarkand/sundarkand-lyrics.html?ck=1&lang=en",
+      "https://en.bharatdiscovery.org/india/%E0%A4%B8%E0%A5%81%E0%A4%A8%E0%A5%81_%E0%A4%B2%E0%A4%82%E0%A4%95%E0%A5%87%E0%A4%B8_%E0%A4%B8%E0%A4%95%E0%A4%B2_%E0%A4%97%E0%A5%81%E0%A4%A8_%E0%A4%A4%E0%A5%8B%E0%A4%B0%E0%A5%87%E0%A4%82"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

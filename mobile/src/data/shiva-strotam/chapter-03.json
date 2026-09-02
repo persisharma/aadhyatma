@@ -34,5 +34,14 @@
       "meaningHi": "हम तीन नेत्रों वाले भगवान शिव की पूजा करते हैं, जो सुगन्धित हैं और सभी प्राणियों का पोषण करते हैं। जिस प्रकार एक पका हुआ ककड़ी अपनी लता के बन्धन से स्वतः मुक्त हो जाती है, उसी प्रकार हमें मृत्यु के बन्धन से मुक्ति मिले, किन्तु अमरत्व (मोक्ष) से वंचित न हों।",
       "meaningEn": "We worship the three-eyed Lord Shiva, who is fragrant and who nourishes all beings. Just as a ripe cucumber is naturally released from its bondage to the vine, may we be liberated from the bondage of death, but not from immortality (moksha)."
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Traditional Shiva mantras and Shiva Tandava Stotram, checked against Vaidika Vignanam, GreenMesg, and Sanskrit Documents references.",
+    "referenceUrls": [
+      "https://vignanam.org/devanagari/shiva-tandava-stotram.html",
+      "https://greenmesg.org/stotras/shiva/shiva_tandava_stotram.php",
+      "https://sanskritdocuments.org/doc_shiva/tANDavastotram1.html"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

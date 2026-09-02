@@ -1,0 +1,82 @@
+# Resume-Reading Smoke Test (PR #97 — per-subsection reading progress)
+#
+# Reads into Bhagavad Gītā Chapter 1, leaves, then re-opens the entry: the
+# CategoryList should pop the ResumeReadingSheet (getProgress.verseIndex > 0),
+# and "Resume" should land back at the saved verse (navigateToProgress).
+#
+# English first so chapter cards read "Chapter N. …" (see gita-smoke).
+
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+
+# ── English, then Home → Sacred Books → Bhagavad Gītā chapter index ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- tapOn: "Language,.*"   # More now opens a Language picker sheet, not inline pills
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+- tapOn: "Sacred Books\\..*Tap to open\\."
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Bhagavad Gītā\\..*Tap to open\\."
+    timeout: 15000
+- tapOn: "Bhagavad Gītā\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+# Clear any pre-existing progress so we start fresh (→ chapter index either way).
+- tapOn:
+    id: "resume-start-over"
+    optional: true
+- waitForAnimationToEnd
+
+# ── Open Chapter 1, advance to verse 2 (saves progress at verseIndex 1) ──
+- extendedWaitUntil:
+    visible: "Chapter 1\\..*Tap to open\\."
+    timeout: 15000
+- tapOn: "Chapter 1\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+- swipe:
+    direction: LEFT
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Jump to beginning"
+    timeout: 10000
+
+# ── Leave the reader: back to the chapter index, then to Sacred Books ──
+- tapOn: "Back to chapters"
+- waitForAnimationToEnd
+- tapOn: "Back to home"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Bhagavad Gītā\\..*Tap to open\\."
+    timeout: 15000
+
+# ── Re-open the entry → Resume sheet appears with the saved location ──
+- tapOn: "Bhagavad Gītā\\..*Tap to open\\."
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Resume reading"
+    timeout: 10000
+- assertVisible: "Chapter 1 · Verse 2"
+
+# ── Resume → lands back at the saved verse (mid-chapter, so the pill shows) ──
+- tapOn: "Resume reading"
+- waitForAnimationToEnd:
+    timeout: 15000
+- extendedWaitUntil:
+    visible: "Jump to beginning"
+    timeout: 10000
+
+# ── Cleanup: jump back to verse 1 (resets progress to 0) ──
+- tapOn: "Jump to beginning"
+- waitForAnimationToEnd
+- stopApp:
+    appId: com.prashantsharma.vedansh

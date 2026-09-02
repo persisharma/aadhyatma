@@ -1,0 +1,100 @@
+# Stotram Category Smoke Test
+#
+# Verifies the Stotram category sections render correctly.
+# Sections asserted here: Shiva, Durga, Saraswati, Ganesh, Vishnu Sahasranama,
+#           Krishna, Bajrang Baan, Ram Stuti, plus the PRD-A deity-expansion
+#           stotrams Kubera Stotram and Navagraha Stotram (end of the list).
+# (Krishna Stuti / Durga Stuti also live under Stotram — stuti-smoke.yaml
+# covers that fold.)
+#
+# Opens Bajrang Baan as the representative reader — it has a smoke test
+# (BajrangBaanReaderScreen.test.tsx) which validates first-verse render,
+# matching this Maestro flow's check.
+
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+
+# Open Stotram category
+- assertVisible: "Hymns & Praise\\..*Tap to open\\."
+- tapOn: "Hymns & Praise\\..*Tap to open\\."
+- waitForAnimationToEnd
+
+# Verify all 8 sections appear in CategoryList. Maestro `text` is a FULL-string
+# regex, so we match the whole LibraryCard label `<nameEn>. <sub>. [New.] Tap
+# to open.` via `\\..*Tap to open\\.`. NOTE: use the EXACT nameEn — e.g.
+# "Vishnu Sahasranama Excerpt", not "Vishnu Sahasranama". The list is taller
+# than one screen, so scroll to each lower entry.
+- extendedWaitUntil:
+    visible: "Shiva Stotram\\..*Tap to open\\."
+    timeout: 15000
+- assertVisible: "Durga Stotram\\..*Tap to open\\."
+- assertVisible: "Saraswati Stotram\\..*Tap to open\\."
+- assertVisible: "Ganesh Stotram\\..*Tap to open\\."
+- scrollUntilVisible:
+    element:
+      text: "Vishnu Sahasranama Excerpt\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Krishna Stotram\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Bajrang Baan\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Ram Stuti\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+# PRD-A deity-expansion stotrams (kubera / navagraha) — appended at the end
+# of the library, so they render last in the Stotram list (RULEBOOK §2 row 15).
+- scrollUntilVisible:
+    element:
+      text: "Kubera Stotram\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Navagraha Stotram\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+
+# Open Bajrang Baan reader
+- scrollUntilVisible:
+    element:
+      text: "Bajrang Baan\\..*Tap to open\\."
+    direction: UP
+    visibilityPercentage: 60
+    timeout: 10000
+- tapOn: "Bajrang Baan\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+# Dismiss Resume sheet if a prior session left reading progress
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- waitForAnimationToEnd
+
+# Language toggle test — the reader's LanguageToggle exposes testIDs; its
+# segments aren't reliably tappable by the visible/a11y name, so use the ids.
+- tapOn:
+    id: "lang-toggle-en"
+- waitForAnimationToEnd
+- tapOn:
+    id: "lang-toggle-hi"
+- waitForAnimationToEnd
+
+# Clean up — Expo Go termination resets navigation stack for the next flow.
+- stopApp:
+    appId: com.prashantsharma.vedansh

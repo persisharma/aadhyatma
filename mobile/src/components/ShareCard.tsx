@@ -1,9 +1,23 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
+import type { Lang } from '@/data/gita/language';
+import { contentByLang, meaningByLang, verseLinesByLang } from '@/utils/localize';
+import { fitMeaningType, meaningScriptFor, shareCardMetrics } from '@/utils/shareCardType';
+import { getReaderBackground } from '@/data/backgrounds';
+import BackgroundLayer from './BackgroundLayer';
 import Ornament from './Ornament';
 
 export type ShareCardProps = {
+  /** Source id — resolves the same faded sketch the source's reader page shows. */
+  sourceId: string;
+  /**
+   * Subsection key (kāṇḍa/stanza) for sources whose reader plate varies per
+   * subsection (Valmiki Ramayan, Sundarkand); absent, the source-level plate
+   * is used.
+   */
+  stanza?: number;
   sectionNameHi: string;
   sectionNameEn: string;
   verseLabelHi: string;
@@ -12,17 +26,50 @@ export type ShareCardProps = {
   linesEn: string[];
   meaningHi?: string;
   meaningEn?: string;
-  lang: 'hi' | 'en';
+  meaningGu?: string;
+  meaningKn?: string;
+  lang: Lang;
   width: number;
   height: number;
 };
 
 const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(props, ref) {
   const { colors, typography } = useTheme();
-  const sectionName = props.lang === 'hi' ? props.sectionNameHi : props.sectionNameEn;
-  const verseLabel = props.lang === 'hi' ? props.verseLabelHi : props.verseLabelEn;
-  const meaning = props.lang === 'hi' ? props.meaningHi : props.meaningEn;
-  const lines = props.lang === 'hi' ? props.linesHi : props.linesEn;
+  const sectionName = contentByLang(props.lang, props.sectionNameHi, props.sectionNameEn);
+  const verseLabel = contentByLang(props.lang, props.verseLabelHi, props.verseLabelEn);
+  const meaning = meaningByLang(props.lang, props.meaningHi ?? '', props.meaningEn ?? '', {
+    gu: props.meaningGu,
+    kn: props.meaningKn,
+  });
+  const lines = verseLinesByLang(props.lang, props.linesHi, props.linesEn);
+  // Constrained surface (design.md §13 sanctioned): keeps its own tuned sizes, but the
+  // font family must follow the script or gu/kn render as tofu. hi/en unchanged — en
+  // romanization keeps rendering in the Devanagari face (which carries Latin glyphs), as before.
+  const verseFont =
+    props.lang === 'gu'
+      ? fontFamilies.gujarati
+      : props.lang === 'kn'
+        ? fontFamilies.kannada
+        : typography.verse.fontFamily;
+  const meaningFont =
+    props.lang === 'hi'
+      ? typography.meaning.fontFamily
+      : props.lang === 'gu'
+        ? fontFamilies.gujarati
+        : props.lang === 'kn'
+          ? fontFamilies.kannada // kn meaning now renders in Kannada script
+          : typography.cardLatin.fontFamily; // en
+  // Deterministic size + leading for the meaning (see utils/shareCardType.ts).
+  // Platform auto-fit is deliberately not used here: with a fixed lineHeight it
+  // shrank the meaning to ~7 pt while the leading stayed at 24.
+  const meaningScript = meaningScriptFor(props.lang);
+  const meaningFit = fitMeaningType({
+    meaning,
+    verseLineCount: lines.length,
+    cardWidth: props.width,
+    cardHeight: props.height,
+    script: meaningScript,
+  });
 
   return (
     <View
@@ -38,15 +85,23 @@ const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(prop
         },
       ]}
     >
+      {/* Same faded source sketch + parchment overlay as the reader page; falls
+          back to the plain parchment gradient for sources without a plate. */}
+      <BackgroundLayer
+        source={getReaderBackground(props.sourceId, { stanza: props.stanza })}
+      />
       <View style={styles.headerBand}>
         <Text
           style={[
             styles.headerText,
             {
               color: colors.saffronDeep,
-              fontFamily: typography.cardLatin.fontFamily,
+              // Cormorant tracking for Latin; script serif with no tracking for
+              // Indic headers (tracking splits the shirorekha).
+              fontFamily: props.lang === 'en' ? typography.cardLatin.fontFamily : meaningFont,
               fontSize: 13,
             },
+            props.lang !== 'en' && { letterSpacing: 0 },
           ]}
         >
           {sectionName.toUpperCase()} · {verseLabel.toUpperCase()}
@@ -61,7 +116,7 @@ const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(prop
               styles.verseLine,
               {
                 color: colors.ink,
-                fontFamily: typography.verse.fontFamily,
+                fontFamily: verseFont,
               },
             ]}
           >
@@ -74,15 +129,18 @@ const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(prop
 
       {meaning ? (
         <Text
-          numberOfLines={5}
+          numberOfLines={meaningFit.numberOfLines}
           style={[
             styles.meaning,
             {
               color: colors.inkSoft,
-              fontFamily:
-                props.lang === 'hi'
-                  ? typography.meaning.fontFamily
-                  : typography.cardLatin.fontFamily,
+              fontFamily: meaningFont,
+              fontSize: meaningFit.fontSize,
+              lineHeight: meaningFit.lineHeight,
+              // Cormorant has a true italic cut; the Noto Serif Indic faces do
+              // not, so an italic there is a synthesised skew that blurs the
+              // matras. Same rule as `captionFont` in utils/scriptFont.ts.
+              fontStyle: meaningScript === 'latin' ? 'italic' : 'normal',
             },
           ]}
         >
@@ -134,9 +192,12 @@ export default ShareCard;
 const styles = StyleSheet.create({
   card: {
     borderWidth: 1,
-    paddingTop: 28,
-    paddingBottom: 22,
-    paddingHorizontal: 28,
+    // Keeps the BackgroundLayer sketch inside the card's 1px border.
+    overflow: 'hidden',
+    // Geometry is shared with the meaning's line budget — change both together.
+    paddingTop: shareCardMetrics.paddingTop,
+    paddingBottom: shareCardMetrics.paddingBottom,
+    paddingHorizontal: shareCardMetrics.paddingHorizontal,
     alignItems: 'stretch',
     justifyContent: 'flex-start',
   },
@@ -156,18 +217,16 @@ const styles = StyleSheet.create({
   },
   verseLine: {
     fontSize: 24,
-    lineHeight: 40,
+    lineHeight: shareCardMetrics.verseLineHeight,
     textAlign: 'center',
-    marginBottom: 2,
+    marginBottom: shareCardMetrics.verseLineMargin,
     includeFontPadding: false,
   },
   meaning: {
-    fontSize: 14,
-    lineHeight: 24,
+    // fontSize / lineHeight / fontStyle are set per-render from fitMeaningType().
     textAlign: 'center',
-    marginTop: 4,
-    fontStyle: 'italic',
-    paddingHorizontal: 12,
+    marginTop: shareCardMetrics.meaningMarginTop,
+    paddingHorizontal: shareCardMetrics.meaningPaddingHorizontal,
     includeFontPadding: false,
   },
   footer: {
@@ -177,8 +236,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   wordmarkHi: {
+    // no tracking on the Devanagari wordmark — it splits the shirorekha
     fontSize: 18,
-    letterSpacing: 1,
     includeFontPadding: false,
   },
   wordmarkLatin: {

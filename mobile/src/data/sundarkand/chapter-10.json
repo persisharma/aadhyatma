@@ -20,7 +20,7 @@
       "meaningEn": "When the tailless monkey returns to his Master, that fool will bring Him here, and then I shall see for myself the glory of his Master, which he has so loudly praised.\"",
       "linesEn": [
         "Poonchhaheen baanar tahan jaaihi. tab sath nij naathahi lai aaihi",
-        "jainaha kāi kaīnahaisai bahauta badaaī| daekhau māin tainaha kāi parabhautāī||1||"
+        "Jinh kai keenhisi bahut badaaee. dekhau main tinh kai prabhutaaee"
       ],
       "chapter": 10
     },
@@ -108,8 +108,8 @@
       "stanza": 24,
       "numInSection": 24,
       "subSuffix": null,
-      "labelHi": "दोहा २४",
-      "labelEn": "Doha 24",
+      "labelHi": "दोहा · २४",
+      "labelEn": "Doha · 24",
       "lines": [
         "हरि प्रेरित तेहि अवसर चले मरुत उनचास।",
         "अट्टहास करि गर्जा कपि बढ़ि लाग अकास॥25॥"
@@ -208,8 +208,8 @@
       "stanza": 25,
       "numInSection": 25,
       "subSuffix": null,
-      "labelHi": "दोहा २५",
-      "labelEn": "Doha 25",
+      "labelHi": "दोहा · २५",
+      "labelEn": "Doha · 25",
       "lines": [
         "पूँछ बुझाइ खोइ श्रम धरि लघु रूप बहोरि।",
         "जनकसुता कें आगें ठाढ़ भयउ कर जोरि॥26॥"
@@ -308,8 +308,8 @@
       "stanza": 26,
       "numInSection": 26,
       "subSuffix": null,
-      "labelHi": "दोहा २६",
-      "labelEn": "Doha 26",
+      "labelHi": "दोहा · २६",
+      "labelEn": "Doha · 26",
       "lines": [
         "जनकसुतहि समुझाइ करि बहु बिधि धीरजु दीन्ह।",
         "चरन कमल सिरु नाइ कपि गवनु राम पहिं कीन्ह॥27॥"
@@ -322,5 +322,14 @@
       ],
       "chapter": 10
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Ramcharitmanas, Sundarkand by Goswami Tulsidas; app content is divided into editorial reading sections, not canonical sargas.",
+    "referenceUrls": [
+      "https://hi.wikisource.org/wiki/%E0%A4%B0%E0%A4%BE%E0%A4%AE%E0%A4%9A%E0%A4%B0%E0%A4%BF%E0%A4%A4%E0%A4%AE%E0%A4%BE%E0%A4%A8%E0%A4%B8",
+      "https://www.drikpanchang.com/lyrics/ramcharitmanas/sundarkand/sundarkand-lyrics.html?ck=1&lang=en",
+      "https://en.bharatdiscovery.org/india/%E0%A4%B8%E0%A5%81%E0%A4%A8%E0%A5%81_%E0%A4%B2%E0%A4%82%E0%A4%95%E0%A5%87%E0%A4%B8_%E0%A4%B8%E0%A4%95%E0%A4%B2_%E0%A4%97%E0%A5%81%E0%A4%A8_%E0%A4%A4%E0%A5%8B%E0%A4%B0%E0%A5%87%E0%A4%82"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

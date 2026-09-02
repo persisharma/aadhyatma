@@ -1,0 +1,283 @@
+{
+  "id": "rama-raksha-stotra",
+  "titleHi": "श्रीरामरक्षास्तोत्रम्",
+  "titleEn": "Rama Raksha Stotra",
+  "deity": "rama",
+  "source": {
+    "baseText": "Shri Rama Raksha Stotra of Budha Kaushika Rishi — 38 shlokas (the numbered stotram; viniyoga + dhyana preamble omitted). Cross-verified; text universally concordant.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_raama/ramarakmean.html",
+      "https://sanatan-dharm.com/ram-raksha-stotra-sanskrit-english/"
+    ],
+    "retrievedOn": "2026-07-23",
+    "notes": "Verse 37 reads रामान्नास्ति (rāmānnāsti = rāmāt + na asti) per standard editions. Devanagari verbatim from the sources; IAST is the standard romanization of that Devanagari."
+  },
+  "verses": [
+    {
+      "id": "rama-raksha-1", "number": 1, "labelHi": "श्लोक · १", "labelEn": "Shloka · 1",
+      "lines": ["चरितं रघुनाथस्य शतकोटिप्रविस्तरम्।", "एकैकमक्षरं पुंसां महापातकनाशनम्॥"],
+      "linesEn": ["caritaṃ raghunāthasya śatakoṭi-pravistaram", "ekaikam-akṣaraṃ puṃsāṃ mahāpātaka-nāśanam"],
+      "meaningHi": "श्रीरघुनाथ (राम) का चरित्र सौ करोड़ विस्तार वाला है; उसका एक-एक अक्षर मनुष्यों के महापातकों का नाश करने वाला है।",
+      "meaningEn": "The story of Raghunatha (Rama) extends over a hundred crore (verses); each single syllable of it destroys the gravest sins of men."
+    },
+    {
+      "id": "rama-raksha-2", "number": 2, "labelHi": "श्लोक · २", "labelEn": "Shloka · 2",
+      "lines": ["ध्यात्वा नीलोत्पलश्यामं रामं राजीवलोचनम्।", "जानकीलक्ष्मणोपेतं जटामुकुटमण्डितम्॥"],
+      "linesEn": ["dhyātvā nīlotpala-śyāmaṃ rāmaṃ rājīva-locanam", "jānakī-lakṣmaṇopetaṃ jaṭāmukuṭa-maṇḍitam"],
+      "meaningHi": "नील-कमल के समान श्यामवर्ण, कमल-नयन, सीता और लक्ष्मण से युक्त तथा जटामुकुट से सुशोभित राम का ध्यान करके —",
+      "meaningEn": "Having meditated on Rama — dark as a blue lotus, lotus-eyed, accompanied by Janaki (Sita) and Lakshmana, and adorned with a crown of matted locks —"
+    },
+    {
+      "id": "rama-raksha-3", "number": 3, "labelHi": "श्लोक · ३", "labelEn": "Shloka · 3",
+      "lines": ["सासितूणधनुर्बाणपाणिं नक्तंचरान्तकम्।", "स्वलीलया जगत्त्रातुमाविर्भूतमजं विभुम्॥"],
+      "linesEn": ["sāsi-tūṇa-dhanur-bāṇa-pāṇiṃ naktaṃ-carāntakam", "svalīlayā jagat-trātum-āvirbhūtam-ajaṃ vibhum"],
+      "meaningHi": "जो हाथों में तलवार, तरकश, धनुष और बाण धारण किए हैं, राक्षसों (रात्रिचरों) के अन्तक हैं, और जो अपनी लीला से जगत् की रक्षा हेतु प्रकट हुए अजन्मा एवं व्यापक प्रभु हैं (उनका ध्यान करके) —",
+      "meaningEn": "(meditating on Him) who bears sword, quiver, bow and arrow in His hands, the destroyer of the night-roving demons, the unborn all-pervading Lord who has manifested by His own sport to protect the world —"
+    },
+    {
+      "id": "rama-raksha-4", "number": 4, "labelHi": "श्लोक · ४", "labelEn": "Shloka · 4",
+      "lines": ["रामरक्षां पठेत्प्राज्ञः पापघ्नीं सर्वकामदाम्।", "शिरो मे राघवः पातु भालं दशरथात्मजः॥"],
+      "linesEn": ["rāma-rakṣāṃ paṭhet-prājñaḥ pāpaghnīṃ sarva-kāmadām", "śiro me rāghavaḥ pātu bhālaṃ daśarathātmajaḥ"],
+      "meaningHi": "बुद्धिमान् मनुष्य को पापों का नाश करने वाली और समस्त कामनाओं को पूर्ण करने वाली इस रामरक्षा का पाठ करना चाहिए। राघव मेरे सिर की रक्षा करें, दशरथनन्दन मेरे भाल (ललाट) की रक्षा करें।",
+      "meaningEn": "The wise should recite this Rama Raksha, which destroys sins and grants every desire. May Raghava protect my head; may the son of Dasharatha protect my forehead."
+    },
+    {
+      "id": "rama-raksha-5", "number": 5, "labelHi": "श्लोक · ५", "labelEn": "Shloka · 5",
+      "lines": ["कौसल्येयो दृशौ पातु विश्वामित्रप्रियः श्रुती।", "घ्राणं पातु मखत्राता मुखं सौमित्रिवत्सलः॥"],
+      "linesEn": ["kausalyeyo dṛśau pātu viśvāmitra-priyaḥ śrutī", "ghrāṇaṃ pātu makha-trātā mukhaṃ saumitri-vatsalaḥ"],
+      "meaningHi": "कौसल्यानन्दन मेरे नेत्रों की रक्षा करें, विश्वामित्र के प्रिय मेरे कानों की, यज्ञ के रक्षक मेरी नासिका की, और लक्ष्मण के वत्सल मेरे मुख की रक्षा करें।",
+      "meaningEn": "May the son of Kausalya protect my eyes; the beloved of Vishvamitra, my ears; the guardian of the sacrifice, my nose; and He who is affectionate to Lakshmana, my mouth."
+    },
+    {
+      "id": "rama-raksha-6", "number": 6, "labelHi": "श्लोक · ६", "labelEn": "Shloka · 6",
+      "lines": ["जिह्वां विद्यानिधिः पातु कण्ठं भरतवन्दितः।", "स्कन्धौ दिव्यायुधः पातु भुजौ भग्नेशकार्मुकः॥"],
+      "linesEn": ["jihvāṃ vidyā-nidhiḥ pātu kaṇṭhaṃ bharata-vanditaḥ", "skandhau divyāyudhaḥ pātu bhujau bhagneśa-kārmukaḥ"],
+      "meaningHi": "विद्या के निधि मेरी जिह्वा की रक्षा करें, भरत द्वारा वन्दित मेरे कण्ठ की, दिव्य आयुधों वाले मेरे कन्धों की, और शिव-धनुष को भंग करने वाले मेरी भुजाओं की रक्षा करें।",
+      "meaningEn": "May the treasure-house of learning protect my tongue; He whom Bharata reveres, my throat; the wielder of divine weapons, my shoulders; and He who broke Shiva's bow, my arms."
+    },
+    {
+      "id": "rama-raksha-7", "number": 7, "labelHi": "श्लोक · ७", "labelEn": "Shloka · 7",
+      "lines": ["करौ सीतापतिः पातु हृदयं जामदग्न्यजित्।", "मध्यं पातु खरध्वंसी नाभिं जाम्बवदाश्रयः॥"],
+      "linesEn": ["karau sītāpatiḥ pātu hṛdayaṃ jāmadagnya-jit", "madhyaṃ pātu kharadhvaṃsī nābhiṃ jāmbavad-āśrayaḥ"],
+      "meaningHi": "सीतापति मेरे हाथों की रक्षा करें, परशुराम को जीतने वाले मेरे हृदय की, खर का विध्वंस करने वाले मेरे मध्य भाग की, और जाम्बवान् को शरण देने वाले मेरी नाभि की रक्षा करें।",
+      "meaningEn": "May the Lord of Sita protect my hands; the vanquisher of Parashurama, my heart; the slayer of Khara, my waist; and the refuge of Jambavan, my navel."
+    },
+    {
+      "id": "rama-raksha-8", "number": 8, "labelHi": "श्लोक · ८", "labelEn": "Shloka · 8",
+      "lines": ["सुग्रीवेशः कटी पातु सक्थिनी हनुमत्प्रभुः।", "ऊरू रघूत्तमः पातु रक्षःकुलविनाशकृत्॥"],
+      "linesEn": ["sugrīveśaḥ kaṭī pātu sakthinī hanumat-prabhuḥ", "ūrū raghūttamaḥ pātu rakṣaḥ-kula-vināśakṛt"],
+      "meaningHi": "सुग्रीव के स्वामी मेरी कटि की रक्षा करें, हनुमान् के प्रभु मेरी जाँघों की, और राक्षस-कुल का विनाश करने वाले श्रेष्ठ रघुवंशी मेरी ऊरुओं की रक्षा करें।",
+      "meaningEn": "May the lord of Sugriva protect my hips; the master of Hanuman, my thighs; and the best of the Raghus, destroyer of the demon race, my upper thighs."
+    },
+    {
+      "id": "rama-raksha-9", "number": 9, "labelHi": "श्लोक · ९", "labelEn": "Shloka · 9",
+      "lines": ["जानुनी सेतुकृत्पातु जङ्घे दशमुखान्तकः।", "पादौ विभीषणश्रीदः पातु रामोऽखिलं वपुः॥"],
+      "linesEn": ["jānunī setukṛt-pātu jaṅghe daśamukhāntakaḥ", "pādau vibhīṣaṇa-śrīdaḥ pātu rāmo'khilaṃ vapuḥ"],
+      "meaningHi": "सेतु के निर्माता मेरे घुटनों की रक्षा करें, रावण (दशमुख) के अन्तक मेरी पिंडलियों की, विभीषण को श्री (राज्य) देने वाले मेरे चरणों की, और राम मेरे सम्पूर्ण शरीर की रक्षा करें।",
+      "meaningEn": "May the builder of the bridge protect my knees; the slayer of the ten-faced (Ravana), my shins; He who granted sovereignty to Vibhishana, my feet; and may Rama protect my whole body."
+    },
+    {
+      "id": "rama-raksha-10", "number": 10, "labelHi": "श्लोक · १०", "labelEn": "Shloka · 10",
+      "lines": ["एतां रामबलोपेतां रक्षां यः सुकृती पठेत्।", "स चिरायुः सुखी पुत्री विजयी विनयी भवेत्॥"],
+      "linesEn": ["etāṃ rāma-balopetāṃ rakṣāṃ yaḥ sukṛtī paṭhet", "sa cirāyuḥ sukhī putrī vijayī vinayī bhavet"],
+      "meaningHi": "जो पुण्यात्मा राम के बल से युक्त इस रक्षा का पाठ करता है, वह दीर्घायु, सुखी, पुत्रवान्, विजयी और विनयशील होता है।",
+      "meaningEn": "The virtuous one who recites this protection, endowed with the strength of Rama, becomes long-lived, happy, blessed with children, victorious and humble."
+    },
+    {
+      "id": "rama-raksha-11", "number": 11, "labelHi": "श्लोक · ११", "labelEn": "Shloka · 11",
+      "lines": ["पातालभूतलव्योमचारिणश्छद्मचारिणः।", "न द्रष्टुमपि शक्तास्ते रक्षितं रामनामभिः॥"],
+      "linesEn": ["pātāla-bhūtala-vyoma-cāriṇaś-chadma-cāriṇaḥ", "na draṣṭum-api śaktās-te rakṣitaṃ rāma-nāmabhiḥ"],
+      "meaningHi": "पाताल, पृथ्वी और आकाश में विचरने वाले तथा छल से चलने वाले (प्राणी) राम के नामों से रक्षित व्यक्ति को देख भी नहीं सकते।",
+      "meaningEn": "Those who roam the nether world, the earth and the sky, and those who move by deceit, cannot even look upon one protected by the names of Rama."
+    },
+    {
+      "id": "rama-raksha-12", "number": 12, "labelHi": "श्लोक · १२", "labelEn": "Shloka · 12",
+      "lines": ["रामेति रामभद्रेति रामचन्द्रेति वा स्मरन्।", "नरो न लिप्यते पापैर्भुक्तिं मुक्तिं च विन्दति॥"],
+      "linesEn": ["rāmeti rāma-bhadreti rāma-candreti vā smaran", "naro na lipyate pāpair-bhuktiṃ muktiṃ ca vindati"],
+      "meaningHi": "'राम', 'रामभद्र' अथवा 'रामचन्द्र' — इस प्रकार स्मरण करता हुआ मनुष्य पापों से लिप्त नहीं होता और भोग तथा मोक्ष दोनों प्राप्त करता है।",
+      "meaningEn": "Remembering 'Rama', 'Ramabhadra' or 'Ramachandra', a person is not tainted by sins and attains both enjoyment and liberation."
+    },
+    {
+      "id": "rama-raksha-13", "number": 13, "labelHi": "श्लोक · १३", "labelEn": "Shloka · 13",
+      "lines": ["जगज्जैत्रैकमन्त्रेण रामनाम्नाभिरक्षितम्।", "यः कण्ठे धारयेत्तस्य करस्थाः सर्वसिद्धयः॥"],
+      "linesEn": ["jagaj-jaitraika-mantreṇa rāma-nāmnābhirakṣitam", "yaḥ kaṇṭhe dhārayet-tasya karasthāḥ sarva-siddhayaḥ"],
+      "meaningHi": "जो व्यक्ति जगत् को जीतने वाले एकमात्र मन्त्र 'राम' नाम से रक्षित इस (कवच) को कण्ठ में धारण करता है, समस्त सिद्धियाँ उसके हाथ में रहती हैं।",
+      "meaningEn": "One who wears at the throat this (armour), guarded by the name of Rama — the one world-conquering mantra — holds all attainments in the palm of his hand."
+    },
+    {
+      "id": "rama-raksha-14", "number": 14, "labelHi": "श्लोक · १४", "labelEn": "Shloka · 14",
+      "lines": ["वज्रपञ्जरनामेदं यो रामकवचं स्मरेत्।", "अव्याहताज्ञः सर्वत्र लभते जयमङ्गलम्॥"],
+      "linesEn": ["vajra-pañjara-nāmedaṃ yo rāma-kavacaṃ smaret", "avyāhatājñaḥ sarvatra labhate jaya-maṅgalam"],
+      "meaningHi": "'वज्रपञ्जर' नामक इस रामकवच का जो स्मरण करता है, उसकी आज्ञा कहीं भी बाधित नहीं होती और वह सर्वत्र विजय एवं मंगल प्राप्त करता है।",
+      "meaningEn": "Whoever recites this Rama armour named 'Vajra-panjara' (the diamond cage) — his command is nowhere thwarted, and he obtains victory and auspiciousness everywhere."
+    },
+    {
+      "id": "rama-raksha-15", "number": 15, "labelHi": "श्लोक · १५", "labelEn": "Shloka · 15",
+      "lines": ["आदिष्टवान्यथा स्वप्ने रामरक्षामिमां हरः।", "तथा लिखितवान्प्रातः प्रबुद्धो बुधकौशिकः॥"],
+      "linesEn": ["ādiṣṭavān-yathā svapne rāma-rakṣām-imāṃ haraḥ", "tathā likhitavān-prātaḥ prabuddho budha-kauśikaḥ"],
+      "meaningHi": "स्वप्न में भगवान् शिव (हर) ने जिस प्रकार इस रामरक्षा का आदेश दिया, उसी प्रकार प्रातःकाल जागकर बुधकौशिक ने इसे लिख दिया।",
+      "meaningEn": "As Lord Shiva (Hara) dictated this Rama Raksha in a dream, so at dawn, on waking, the sage Budha Kaushika wrote it down."
+    },
+    {
+      "id": "rama-raksha-16", "number": 16, "labelHi": "श्लोक · १६", "labelEn": "Shloka · 16",
+      "lines": ["आरामः कल्पवृक्षाणां विरामः सकलापदाम्।", "अभिरामस्त्रिलोकानां रामः श्रीमान्स नः प्रभुः॥"],
+      "linesEn": ["ārāmaḥ kalpa-vṛkṣāṇāṃ virāmaḥ sakalāpadām", "abhirāmas-trilokānāṃ rāmaḥ śrīmān-sa naḥ prabhuḥ"],
+      "meaningHi": "जो कल्पवृक्षों का उद्यान हैं, समस्त आपत्तियों के विराम (अन्त) हैं, तीनों लोकों के मनोहर हैं — वे श्रीमान् राम हमारे प्रभु हैं।",
+      "meaningEn": "He who is a garden of wish-fulfilling trees, the ceasing of all calamities, the delight of the three worlds — that glorious Rama is our Lord."
+    },
+    {
+      "id": "rama-raksha-17", "number": 17, "labelHi": "श्लोक · १७", "labelEn": "Shloka · 17",
+      "lines": ["तरुणौ रूपसम्पन्नौ सुकुमारौ महाबलौ।", "पुण्डरीकविशालाक्षौ चीरकृष्णाजिनाम्बरौ॥"],
+      "linesEn": ["taruṇau rūpa-sampannau sukumārau mahā-balau", "puṇḍarīka-viśālākṣau cīra-kṛṣṇājināmbarau"],
+      "meaningHi": "जो युवा, रूप-सम्पन्न, सुकुमार और महाबली हैं, कमल के समान विशाल नेत्रों वाले हैं, तथा वल्कल और कृष्णमृगचर्म धारण किए हुए हैं —",
+      "meaningEn": "The two who are youthful, handsome, tender and mighty, with eyes wide as lotuses, clad in bark garments and black antelope skins —"
+    },
+    {
+      "id": "rama-raksha-18", "number": 18, "labelHi": "श्लोक · १८", "labelEn": "Shloka · 18",
+      "lines": ["फलमूलाशिनौ दान्तौ तापसौ ब्रह्मचारिणौ।", "पुत्रौ दशरथस्यैतौ भ्रातरौ रामलक्ष्मणौ॥"],
+      "linesEn": ["phala-mūlāśinau dāntau tāpasau brahma-cāriṇau", "putrau daśarathasyaitau bhrātarau rāma-lakṣmaṇau"],
+      "meaningHi": "फल-मूल का आहार करने वाले, जितेन्द्रिय, तपस्वी और ब्रह्मचारी — ये दशरथ के दोनों पुत्र, भाई राम और लक्ष्मण हैं।",
+      "meaningEn": "Living on fruit and roots, self-controlled, ascetic and celibate — these two sons of Dasharatha are the brothers Rama and Lakshmana."
+    },
+    {
+      "id": "rama-raksha-19", "number": 19, "labelHi": "श्लोक · १९", "labelEn": "Shloka · 19",
+      "lines": ["शरण्यौ सर्वसत्त्वानां श्रेष्ठौ सर्वधनुष्मताम्।", "रक्षःकुलनिहन्तारौ त्रायेतां नो रघूत्तमौ॥"],
+      "linesEn": ["śaraṇyau sarva-sattvānāṃ śreṣṭhau sarva-dhanuṣmatām", "rakṣaḥ-kula-nihantārau trāyetāṃ no raghūttamau"],
+      "meaningHi": "समस्त प्राणियों के शरण्य, सब धनुर्धारियों में श्रेष्ठ और राक्षस-कुल का संहार करने वाले — वे दोनों श्रेष्ठ रघुवंशी हमारी रक्षा करें।",
+      "meaningEn": "The refuge of all beings, the foremost of all archers, the destroyers of the demon race — may those two best of the Raghus protect us."
+    },
+    {
+      "id": "rama-raksha-20", "number": 20, "labelHi": "श्लोक · २०", "labelEn": "Shloka · 20",
+      "lines": ["आत्तसज्जधनुषा विषुस्पृशा वक्षयाशुगनिषङ्गसङ्गिनौ।", "रक्षणाय मम रामलक्ष्मणावग्रतः पथि सदैव गच्छताम्॥"],
+      "linesEn": ["ātta-sajja-dhanuṣā viṣu-spṛśā-vakṣayāśuga-niṣaṅga-saṅginau", "rakṣaṇāya mama rāma-lakṣmaṇāv-agrataḥ pathi sadaiva gacchatām"],
+      "meaningHi": "प्रत्यंचा चढ़ाए धनुष लिए, बाणों को छूते हुए और अक्षय बाणों से भरे तरकश धारण किए हुए राम और लक्ष्मण मेरी रक्षा के लिए मार्ग में सदैव मेरे आगे-आगे चलें।",
+      "meaningEn": "With bows strung and ready, touching their arrows, bearing quivers full of inexhaustible shafts — may Rama and Lakshmana ever walk before me on my path, for my protection."
+    },
+    {
+      "id": "rama-raksha-21", "number": 21, "labelHi": "श्लोक · २१", "labelEn": "Shloka · 21",
+      "lines": ["सन्नद्धः कवची खड्गी चापबाणधरो युवा।", "गच्छन्मनोरथान्नश्च रामः पातु सलक्ष्मणः॥"],
+      "linesEn": ["sannaddhaḥ kavacī khaḍgī cāpa-bāṇa-dharo yuvā", "gacchan-manorathān-naśca rāmaḥ pātu sa-lakṣmaṇaḥ"],
+      "meaningHi": "कवच धारण किए, तलवार, धनुष और बाण लिए हुए, सन्नद्ध (तैयार) युवा राम, लक्ष्मण सहित, हमारे मनोरथों की ओर बढ़ते हुए हमारी रक्षा करें।",
+      "meaningEn": "Armoured and fully arrayed, bearing sword, bow and arrows, the youthful Rama with Lakshmana — moving to fulfil our heart's desires — may He protect us."
+    },
+    {
+      "id": "rama-raksha-22", "number": 22, "labelHi": "श्लोक · २२", "labelEn": "Shloka · 22",
+      "lines": ["रामो दाशरथिः शूरो लक्ष्मणानुचरो बली।", "काकुत्स्थः पुरुषः पूर्णः कौसल्येयो रघूत्तमः॥"],
+      "linesEn": ["rāmo dāśarathiḥ śūro lakṣmaṇānucaro balī", "kākutsthaḥ puruṣaḥ pūrṇaḥ kausalyeyo raghūttamaḥ"],
+      "meaningHi": "राम — दशरथनन्दन, शूरवीर, लक्ष्मण जिनके अनुचर हैं, बलवान्, ककुत्स्थ-वंशी, पूर्ण पुरुष, कौसल्यानन्दन, रघुवंश में श्रेष्ठ —",
+      "meaningEn": "Rama — son of Dasharatha, valiant, followed by Lakshmana, mighty, of the Kakutstha line, the complete Person, son of Kausalya, best of the Raghus —"
+    },
+    {
+      "id": "rama-raksha-23", "number": 23, "labelHi": "श्लोक · २३", "labelEn": "Shloka · 23",
+      "lines": ["वेदान्तवेद्यो यज्ञेशः पुराणपुरुषोत्तमः।", "जानकीवल्लभः श्रीमानप्रमेयपराक्रमः॥"],
+      "linesEn": ["vedānta-vedyo yajñeśaḥ purāṇa-puruṣottamaḥ", "jānakī-vallabhaḥ śrīmān-aprameya-parākramaḥ"],
+      "meaningHi": "वेदान्त से जानने योग्य, यज्ञों के स्वामी, पुराणपुरुषोत्तम, जानकी के प्रिय, श्रीसम्पन्न और अप्रमेय पराक्रम वाले (राम) —",
+      "meaningEn": "Knowable through Vedanta, Lord of sacrifices, the ancient Supreme Person, the beloved of Janaki, glorious, of immeasurable prowess —"
+    },
+    {
+      "id": "rama-raksha-24", "number": 24, "labelHi": "श्लोक · २४", "labelEn": "Shloka · 24",
+      "lines": ["इत्येतानि जपन्नित्यं मद्भक्तः श्रद्धयान्वितः।", "अश्वमेधाधिकं पुण्यं सम्प्राप्नोति न संशयः॥"],
+      "linesEn": ["ity-etāni japan-nityaṃ mad-bhaktaḥ śraddhayānvitaḥ", "aśvamedhādhikaṃ puṇyaṃ samprāpnoti na saṃśayaḥ"],
+      "meaningHi": "(भगवान् कहते हैं —) इन (नामों) को श्रद्धापूर्वक नित्य जपने वाला मेरा भक्त निःसन्देह अश्वमेध यज्ञ से भी अधिक पुण्य प्राप्त करता है।",
+      "meaningEn": "(The Lord says —) My devotee who daily recites these (names) with faith undoubtedly attains merit greater than that of the horse-sacrifice."
+    },
+    {
+      "id": "rama-raksha-25", "number": 25, "labelHi": "श्लोक · २५", "labelEn": "Shloka · 25",
+      "lines": ["रामं दूर्वादलश्यामं पद्माक्षं पीतवाससम्।", "स्तुवन्ति नामभिर्दिव्यैर्न ते संसारिणो नराः॥"],
+      "linesEn": ["rāmaṃ dūrvādala-śyāmaṃ padmākṣaṃ pīta-vāsasam", "stuvanti nāmabhir-divyair-na te saṃsāriṇo narāḥ"],
+      "meaningHi": "दूर्वादल के समान श्यामवर्ण, कमलनयन और पीतवस्त्रधारी राम की जो दिव्य नामों से स्तुति करते हैं, वे मनुष्य संसार-बन्धन में नहीं पड़ते।",
+      "meaningEn": "Those who praise with divine names Rama — dark as a durva-grass blade, lotus-eyed, clad in yellow — such men are no longer bound to the cycle of worldly existence."
+    },
+    {
+      "id": "rama-raksha-26", "number": 26, "labelHi": "श्लोक · २६", "labelEn": "Shloka · 26",
+      "lines": ["रामं लक्ष्मणपूर्वजं रघुवरं सीतापतिं सुन्दरं", "काकुत्स्थं करुणार्णवं गुणनिधिं विप्रप्रियं धार्मिकम्।", "राजेन्द्रं सत्यसन्धं दशरथतनयं श्यामलं शान्तमूर्तिं", "वन्दे लोकाभिरामं रघुकुलतिलकं राघवं रावणारिम्॥"],
+      "linesEn": ["rāmaṃ lakṣmaṇa-pūrvajaṃ raghu-varaṃ sītā-patiṃ sundaraṃ", "kākutsthaṃ karuṇārṇavaṃ guṇa-nidhiṃ vipra-priyaṃ dhārmikam", "rājendraṃ satya-sandhaṃ daśaratha-tanayaṃ śyāmalaṃ śānta-mūrtiṃ", "vande lokābhirāmaṃ raghu-kula-tilakaṃ rāghavaṃ rāvaṇārim"],
+      "meaningHi": "लक्ष्मण के अग्रज, रघुश्रेष्ठ, सीतापति, सुन्दर, ककुत्स्थवंशी, करुणा के सागर, गुणों के निधि, ब्राह्मणों के प्रिय, धर्मात्मा, राजराजेश्वर, सत्यप्रतिज्ञ, दशरथनन्दन, श्यामवर्ण, शान्तमूर्ति, लोकों को आनन्दित करने वाले, रघुकुल के तिलक, रावण के शत्रु — उन राघव राम की मैं वन्दना करता हूँ।",
+      "meaningEn": "I bow to Rama — elder brother of Lakshmana, best of the Raghus, Lord of Sita, beautiful, of the Kakutstha line, an ocean of compassion, a treasury of virtues, dear to the brahmanas, righteous, a sovereign among kings, true to his word, son of Dasharatha, dark-hued, of serene form, the delight of the worlds, the ornament of the Raghu race, Raghava, the foe of Ravana."
+    },
+    {
+      "id": "rama-raksha-27", "number": 27, "labelHi": "श्लोक · २७", "labelEn": "Shloka · 27",
+      "lines": ["रामाय रामभद्राय रामचन्द्राय वेधसे।", "रघुनाथाय नाथाय सीतायाः पतये नमः॥"],
+      "linesEn": ["rāmāya rāma-bhadrāya rāma-candrāya vedhase", "raghu-nāthāya nāthāya sītāyāḥ pataye namaḥ"],
+      "meaningHi": "राम को, रामभद्र को, रामचन्द्र को, विधाता को, रघुनाथ को, (सबके) नाथ को, सीता के पति को नमस्कार है।",
+      "meaningEn": "Salutations to Rama, to Ramabhadra, to Ramachandra, to the Creator, to Raghunatha, to the Lord (of all), to the husband of Sita."
+    },
+    {
+      "id": "rama-raksha-28", "number": 28, "labelHi": "श्लोक · २८", "labelEn": "Shloka · 28",
+      "lines": ["श्रीराम राम रघुनन्दन राम राम", "श्रीराम राम भरताग्रज राम राम।", "श्रीराम राम रणकर्कश राम राम", "श्रीराम राम शरणं भव राम राम॥"],
+      "linesEn": ["śrī-rāma rāma raghu-nandana rāma rāma", "śrī-rāma rāma bharatāgraja rāma rāma", "śrī-rāma rāma raṇa-karkaśa rāma rāma", "śrī-rāma rāma śaraṇaṃ bhava rāma rāma"],
+      "meaningHi": "हे श्रीराम, राम! हे रघुनन्दन राम, राम! हे भरत के अग्रज राम, राम! हे रण में कठोर (शत्रुओं के लिए) राम, राम! हे श्रीराम, राम! मेरे शरण बनो, राम, राम!",
+      "meaningEn": "O Shri Rama, Rama! O delight of the Raghus, Rama, Rama! O elder brother of Bharata, Rama, Rama! O stern one in battle, Rama, Rama! O Shri Rama, Rama — be my refuge, Rama, Rama!"
+    },
+    {
+      "id": "rama-raksha-29", "number": 29, "labelHi": "श्लोक · २९", "labelEn": "Shloka · 29",
+      "lines": ["श्रीरामचन्द्रचरणौ मनसा स्मरामि", "श्रीरामचन्द्रचरणौ वचसा गृणामि।", "श्रीरामचन्द्रचरणौ शिरसा नमामि", "श्रीरामचन्द्रचरणौ शरणं प्रपद्ये॥"],
+      "linesEn": ["śrī-rāma-candra-caraṇau manasā smarāmi", "śrī-rāma-candra-caraṇau vacasā gṛṇāmi", "śrī-rāma-candra-caraṇau śirasā namāmi", "śrī-rāma-candra-caraṇau śaraṇaṃ prapadye"],
+      "meaningHi": "श्रीरामचन्द्र के चरणों का मैं मन से स्मरण करता हूँ, वाणी से गुणगान करता हूँ, सिर से प्रणाम करता हूँ, और उन्हीं चरणों की शरण ग्रहण करता हूँ।",
+      "meaningEn": "The feet of Shri Ramachandra I remember with my mind; the feet of Shri Ramachandra I extol with my speech; the feet of Shri Ramachandra I bow to with my head; in the feet of Shri Ramachandra I take refuge."
+    },
+    {
+      "id": "rama-raksha-30", "number": 30, "labelHi": "श्लोक · ३०", "labelEn": "Shloka · 30",
+      "lines": ["माता रामो मत्पिता रामचन्द्रः", "स्वामी रामो मत्सखा रामचन्द्रः।", "सर्वस्वं मे रामचन्द्रो दयालु-", "र्नान्यं जाने नैव जाने न जाने॥"],
+      "linesEn": ["mātā rāmo mat-pitā rāma-candraḥ", "svāmī rāmo mat-sakhā rāma-candraḥ", "sarvasvaṃ me rāma-candro dayālur-", "nānyaṃ jāne naiva jāne na jāne"],
+      "meaningHi": "राम मेरी माता हैं, रामचन्द्र मेरे पिता हैं; राम मेरे स्वामी हैं, रामचन्द्र मेरे सखा हैं। दयालु रामचन्द्र ही मेरा सर्वस्व हैं; मैं किसी अन्य को नहीं जानता, नहीं जानता, नहीं जानता।",
+      "meaningEn": "Rama is my mother, Ramachandra my father; Rama is my master, Ramachandra my friend. The compassionate Ramachandra is my all-in-all; I know no other, I know not, I know not."
+    },
+    {
+      "id": "rama-raksha-31", "number": 31, "labelHi": "श्लोक · ३१", "labelEn": "Shloka · 31",
+      "lines": ["दक्षिणे लक्ष्मणो यस्य वामे च जनकात्मजा।", "पुरतो मारुतिर्यस्य तं वन्दे रघुनन्दनम्॥"],
+      "linesEn": ["dakṣiṇe lakṣmaṇo yasya vāme ca janakātmajā", "purato mārutir-yasya taṃ vande raghu-nandanam"],
+      "meaningHi": "जिनके दाहिनी ओर लक्ष्मण, बायीं ओर जनकनन्दिनी सीता और सामने हनुमान् (मारुति) विराजमान हैं — उन रघुनन्दन राम की मैं वन्दना करता हूँ।",
+      "meaningEn": "He on whose right is Lakshmana, on whose left is the daughter of Janaka (Sita), and before whom is Maruti (Hanuman) — to that delight of the Raghus I bow."
+    },
+    {
+      "id": "rama-raksha-32", "number": 32, "labelHi": "श्लोक · ३२", "labelEn": "Shloka · 32",
+      "lines": ["लोकाभिरामं रणरंगधीरं राजीवनेत्रं रघुवंशनाथम्।", "कारुण्यरूपं करुणाकरं तं श्रीरामचन्द्रं शरणं प्रपद्ये॥"],
+      "linesEn": ["lokābhirāmaṃ raṇa-raṅga-dhīraṃ rājīva-netraṃ raghu-vaṃśa-nātham", "kāruṇya-rūpaṃ karuṇā-karaṃ taṃ śrī-rāma-candraṃ śaraṇaṃ prapadye"],
+      "meaningHi": "लोकों को आनन्द देने वाले, रणभूमि में धीर, कमलनयन, रघुवंश के नाथ, करुणा के स्वरूप और करुणा की खान — उन श्रीरामचन्द्र की मैं शरण ग्रहण करता हूँ।",
+      "meaningEn": "The delight of the worlds, steadfast on the field of battle, lotus-eyed, Lord of the Raghu race, the very form of compassion and its wellspring — in that Shri Ramachandra I take refuge."
+    },
+    {
+      "id": "rama-raksha-33", "number": 33, "labelHi": "श्लोक · ३३", "labelEn": "Shloka · 33",
+      "lines": ["मनोजवं मारुततुल्यवेगं जितेन्द्रियं बुद्धिमतां वरिष्ठम्।", "वातात्मजं वानरयूथमुख्यं श्रीरामदूतं शरणं प्रपद्ये॥"],
+      "linesEn": ["mano-javaṃ māruta-tulya-vegaṃ jitendriyaṃ buddhimatāṃ variṣṭham", "vātātmajaṃ vānara-yūtha-mukhyaṃ śrī-rāma-dūtaṃ śaraṇaṃ prapadye"],
+      "meaningHi": "मन के समान वेग वाले, वायु के तुल्य गति वाले, जितेन्द्रिय, बुद्धिमानों में श्रेष्ठ, पवनपुत्र, वानर-सेना के मुख्य — उन श्रीराम के दूत (हनुमान्) की मैं शरण ग्रहण करता हूँ।",
+      "meaningEn": "Swift as thought, fleet as the wind, master of the senses, foremost among the wise, son of the Wind, chief of the vanara host — in that messenger of Shri Rama (Hanuman) I take refuge."
+    },
+    {
+      "id": "rama-raksha-34", "number": 34, "labelHi": "श्लोक · ३४", "labelEn": "Shloka · 34",
+      "lines": ["कूजन्तं रामरामेति मधुरं मधुराक्षरम्।", "आरुह्य कविताशाखां वन्दे वाल्मीकिकोकिलम्॥"],
+      "linesEn": ["kūjantaṃ rāma-rāmeti madhuraṃ madhurākṣaram", "āruhya kavitā-śākhāṃ vande vālmīki-kokilam"],
+      "meaningHi": "कविता की शाखा पर बैठकर 'राम राम' इस मधुर एवं मधुराक्षर का कूजन करने वाले वाल्मीकि-रूपी कोकिल की मैं वन्दना करता हूँ।",
+      "meaningEn": "I bow to Valmiki, the cuckoo who, perched upon the branch of poetry, sweetly warbles the honeyed, sweet-syllabled 'Rama, Rama'."
+    },
+    {
+      "id": "rama-raksha-35", "number": 35, "labelHi": "श्लोक · ३५", "labelEn": "Shloka · 35",
+      "lines": ["आपदामपहर्तारं दातारं सर्वसम्पदाम्।", "लोकाभिरामं श्रीरामं भूयो भूयो नमाम्यहम्॥"],
+      "linesEn": ["āpadām-apahartāraṃ dātāraṃ sarva-sampadām", "lokābhirāmaṃ śrī-rāmaṃ bhūyo bhūyo namāmy-aham"],
+      "meaningHi": "आपत्तियों को हरने वाले, समस्त सम्पदाओं के दाता, लोकों को आनन्द देने वाले श्रीराम को मैं बार-बार नमस्कार करता हूँ।",
+      "meaningEn": "To the remover of calamities, the giver of all prosperity, the delight of the worlds, Shri Rama — again and again I bow."
+    },
+    {
+      "id": "rama-raksha-36", "number": 36, "labelHi": "श्लोक · ३६", "labelEn": "Shloka · 36",
+      "lines": ["भर्जनं भवबीजानामर्जनं सुखसम्पदाम्।", "तर्जनं यमदूतानां रामरामेति गर्जनम्॥"],
+      "linesEn": ["bharjanaṃ bhava-bījānām-arjanaṃ sukha-sampadām", "tarjanaṃ yama-dūtānāṃ rāma-rāmeti garjanam"],
+      "meaningHi": "'राम राम' इस प्रकार की गर्जना संसार (के बीजों) को भून देने वाली, सुख-सम्पदाओं को अर्जित कराने वाली और यमदूतों को भयभीत करने वाली है।",
+      "meaningEn": "The thundering of 'Rama, Rama' roasts the seeds of worldly existence, earns happiness and prosperity, and terrifies the messengers of Death."
+    },
+    {
+      "id": "rama-raksha-37", "number": 37, "labelHi": "श्लोक · ३७", "labelEn": "Shloka · 37",
+      "lines": ["रामो राजमणिः सदा विजयते रामं रमेशं भजे", "रामेणाभिहता निशाचरचमू रामाय तस्मै नमः।", "रामान्नास्ति परायणं परतरं रामस्य दासोऽस्म्यहं", "रामे चित्तलयः सदा भवतु मे भो राम मामुद्धर॥"],
+      "linesEn": ["rāmo rāja-maṇiḥ sadā vijayate rāmaṃ rameśaṃ bhaje", "rāmeṇābhihatā niśācara-camū rāmāya tasmai namaḥ", "rāmān-nāsti parāyaṇaṃ parataraṃ rāmasya dāso'smy-ahaṃ", "rāme citta-layaḥ sadā bhavatu me bho rāma mām-uddhara"],
+      "meaningHi": "राजाओं में मणि-स्वरूप राम सदा विजयी होते हैं; रमापति राम का मैं भजन करता हूँ; राम के द्वारा राक्षसों की सेना मारी गई; उन राम को नमस्कार है। राम से बढ़कर कोई परम आश्रय नहीं है; मैं राम का दास हूँ; मेरा चित्त सदा राम में लीन रहे। हे राम! मेरा उद्धार करो।",
+      "meaningEn": "Rama, the jewel among kings, is ever victorious; I worship Rama, the Lord of Lakshmi; by Rama the host of night-demons was struck down — to that Rama, salutation. There is no higher refuge than Rama; I am Rama's servant; may my mind be ever absorbed in Rama. O Rama, uplift me!"
+    },
+    {
+      "id": "rama-raksha-38", "number": 38, "labelHi": "श्लोक · ३८", "labelEn": "Shloka · 38",
+      "lines": ["राम रामेति रामेति रमे रामे मनोरमे।", "सहस्रनाम तत्तुल्यं रामनाम वरानने॥"],
+      "linesEn": ["rāma rāmeti rāmeti rame rāme mano-rame", "sahasra-nāma tat-tulyaṃ rāma-nāma varānane"],
+      "meaningHi": "(भगवान् शिव पार्वती से कहते हैं —) 'राम राम' इस प्रकार मैं मनोरम राम में रमण करता हूँ। हे सुमुखी (पार्वती)! 'राम' नाम विष्णु-सहस्रनाम के तुल्य है।",
+      "meaningEn": "(Shiva says to Parvati —) 'Rama, Rama' — thus I delight in the enchanting Rama. O fair-faced one (Parvati), the name 'Rama' is equal to the thousand names (of Vishnu)."
+    }
+  ]
+}

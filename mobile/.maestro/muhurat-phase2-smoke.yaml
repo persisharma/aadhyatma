@@ -1,0 +1,156 @@
+# PRD-16 Phase 2 (shuddhi depth) native-build smoke
+#
+# What Phase 2 changed on-screen, end to end:
+# grouped twelve-occasion picker (three section labels, the six new occasions)
+# → results → day detail, where the windows section now carries per-window
+# tier tags and — on a Vishti day — the भद्रा interval struck through in place.
+# Also spot-checks the §1.2 blast radius: the Panchang tab's Karana tile and
+# the daily Muhurat card now show the karana's end time.
+#
+# The bhadra row is date-dependent (Vishti at sunrise ~1 day in 7), so it is
+# asserted conditionally — the deterministic pin lives in
+# eventMuhuratPhase2.test.ts (20 Aug / 3 Sep 2026).
+#
+# Prerequisite: install the native debug app on the target simulator with
+# `npx expo run:ios --device <UDID> --port 8084` (isolated-simulator recipe in
+# wiki/runbooks/e2e-verification.md). Launches the real bundle; never Expo Go.
+
+appId: com.prashantsharma.vedansh
+---
+- launchApp:
+    appId: com.prashantsharma.vedansh
+    clearState: true
+    arguments:
+      RCT_jsLocation: "127.0.0.1:8084"
+- waitForAnimationToEnd:
+    timeout: 30000
+- tapOn:
+    text: "Skip tour"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 5000
+- tapOn:
+    text: "Skip tour"
+    optional: true
+- tapOn:
+    text: "Close"
+    optional: true
+- tapOn:
+    text: "Got it"
+    optional: true
+- tapOn:
+    text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
+    optional: true
+- extendedWaitUntil:
+    visible: "Good Habits\\..*Tap to open\\."
+    timeout: 60000
+
+# English chrome for stable assertions (same recipe as the other smokes).
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+
+# ── The grouped twelve-occasion picker ───────────────────────────────────────
+- scrollUntilVisible:
+    element:
+      text: "Muhurat\\..*Tap to open\\."
+    direction: DOWN
+- tapOn: "Muhurat\\..*Tap to open\\."
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Find a Muhurat"
+    timeout: 20000
+
+# Three section labels, in order; the six Phase-2 occasions are reachable.
+- assertVisible: "Home & Land|भवन"
+- assertVisible: "Griha Pravesh"
+- scrollUntilVisible:
+    element:
+      text: "Sanskar|संस्कार"
+    direction: DOWN
+- assertVisible: "Mundan"
+- scrollUntilVisible:
+    element:
+      id: "muhurat-occasion-upanayana"
+    direction: DOWN
+- scrollUntilVisible:
+    element:
+      text: "Purchases & Beginnings|क्रय व आरम्भ"
+    direction: DOWN
+- scrollUntilVisible:
+    element:
+      id: "muhurat-occasion-swarna"
+    direction: DOWN
+- assertVisible: "Gold Purchase"
+# The abujh door stays last.
+- scrollUntilVisible:
+    element:
+      id: "muhurat-abujh-door"
+    direction: DOWN
+
+# ── A Phase-2 occasion grades end-to-end ─────────────────────────────────────
+- scrollUntilVisible:
+    element:
+      id: "muhurat-occasion-mundan"
+    direction: UP
+- tapOn:
+    id: "muhurat-occasion-mundan"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Best dates|More suitable dates|No auspicious muhurat.*"
+    timeout: 60000
+
+# ── Day detail: per-window tiers; bhadra struck through when present ─────────
+- runFlow:
+    when:
+      visible: "Shreshtha.*|Madhyam.*"
+    commands:
+      - tapOn:
+          text: "Shreshtha.*|Madhyam.*"
+          index: 0
+      - waitForAnimationToEnd
+      - extendedWaitUntil:
+          visible: ".*DrikPanchang convention.*"
+          timeout: 20000
+      - assertVisible: "Why this date"
+      # Windows section: every offered window carries its tier word.
+      - scrollUntilVisible:
+          element:
+            text: "Other windows that day|दिन के अन्य शुभ समय"
+          direction: DOWN
+          optional: true
+      # On a Vishti day the interval renders struck-through in place.
+      - runFlow:
+          when:
+            visible:
+              id: "muhurat-bhadra-row"
+          commands:
+            - assertVisible: "Bhadra|भद्रा"
+            - assertVisible: "Avoid|वर्ज्य"
+      - back
+      - waitForAnimationToEnd
+
+# ── Blast radius (§1.2): karana end time on the daily Muhurat card ──────────
+- back
+- waitForAnimationToEnd
+- tapOn: { id: "tab-panchang" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: ".*Rahu Kaal.*|.*राहु काल.*"
+    direction: DOWN
+- tapOn:
+    text: ".*Rahu Kaal.*|.*राहु काल.*"
+- waitForAnimationToEnd
+# The full card's Karana row now carries "till <time>" like Tithi/Nakshatra.
+- extendedWaitUntil:
+    visible: "Karana"
+    timeout: 20000

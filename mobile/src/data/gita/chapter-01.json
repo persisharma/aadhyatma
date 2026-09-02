@@ -629,9 +629,7 @@
         "इस श्लोकमें 'निमित्तानि पश्यामि' और 'श्रेयः अनुपश्यामि'--(टिप्पणी प0 23) इन दोनों वाक्योंसे अर्जुन यह कहना चाहते हैं कि मैं शुकुनोंको देखूँ अथवा स्वयं विचार करूँ, दोनों ही रीतिसे युद्धका आरम्भ और उसका परिणाम हमारे लिये और संसारमात्रके लिये हितकारक नहीं दीखता।",
         "सम्बन्ध-- जिसमें न तो शुभ शकुन दीखते हैं और न श्रेय ही दीखता है, ऐसी अनिष्टकारक विजयको प्राप्त करनेकी अनिच्छा अर्जुन आगेके श्लोकमें प्रकट करते हैं।"
       ],
-      "commentaryEn": [
-        "Kesava means he who has fine or luxuriant hair."
-      ]
+      "commentaryEn": ["Kesava means he who has fine or luxuriant hair."]
     },
     {
       "id": "bg-1-32",
@@ -960,5 +958,14 @@
         "1.47 एवम् thus? उक्त्वा having said? अर्जुनः Arjuna? संख्ये in the battle? रथोपस्थे on the seat of the chariot? उपाविशत् sat down? विसृज्य having cast away? सशरम् with arrow? चापम् bow? शोकसंविग्नमानसः with a mind distressed with sorrow. Thus in the Upanishads of the glorious Bhagavad Gita, the science of the Eternal, the scripture of Yoga, the dialogue between Sri Krishna and Arjuna, ends the first discourse entitledThe Yoga of the Despondency of Arjuna."
       ]
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Bhagavad Gita Sanskrit text and translations, checked against chapter-specific Holy Bhagavad Gita and Gita Supersite references; verse count follows the 701-shloka recension with chapter 13 counted as 35 verses.",
+    "referenceUrls": [
+      "https://www.holy-bhagavad-gita.org/chapter/1",
+      "https://www.gitasupersite.iitk.ac.in/srimad?language=dv&field_chapter_value=1",
+      "https://vedabase.io/en/library/bg/1/"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

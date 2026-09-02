@@ -11,29 +11,55 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { spacing } from '@/theme/spacing';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { pick } from '@/utils/localize';
+import { fontFamilies } from '@/theme/typography';
+import { scriptBodyFont } from '@/utils/langType';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
 import { MAX_REMINDER_TIMES, type TimeOfDay } from '@/notifications/pure';
+import { FESTIVE_HOUR, FESTIVE_MINUTE } from '@/notifications/festiveReminderPure';
+import { FESTIVE_REMINDERS } from '@/notifications/festiveReminders';
 import TimeStepper from '@/components/TimeStepper';
+import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import type { MoreStackParamList } from '@/navigation/types';
+import { useTourTarget, scrollNodeIntoView } from '@/components/tour/tourTargets';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'Reminders'>;
 
 const DEFAULT_NEW_TIME: TimeOfDay = { hour: 18, minute: 0 };
 
+/** The festive fire time, read off the planner so the copy can't drift from it. */
+const FESTIVE_CLOCK = `${FESTIVE_HOUR}:${`${FESTIVE_MINUTE}`.padStart(2, '0')}`;
+const FESTIVE_COUNT = FESTIVE_REMINDERS.length;
+
 export default function ReminderSettingsScreen({ navigation }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
+  // Feature-tour spotlight anchors (design.md §47): the daily-verse toggle card
+  // and the times card (which can sit below the fold → scroll it into view).
+  const remindersScrollRef = React.useRef<ScrollView>(null);
+  const reminderToggleRef = useTourTarget('reminderToggle');
+  const reminderTimesRef = useTourTarget('reminderTimes', (ref) => scrollNodeIntoView(remindersScrollRef, ref));
   const { lang } = useGitaLanguage();
   const {
     prefs,
     permissionStatus,
+    canAskAgain,
     isLoading,
     setDailyVerseEnabled,
+    setFestiveRemindersEnabled,
     setTimes,
   } = useNotificationPreferences();
 
-  const isHi = lang === 'hi';
+  const scriptSerifBold =
+    lang === 'gu' ? fontFamilies.gujaratiBold : lang === 'kn' ? fontFamilies.kannadaBold : null;
+  const screenTitle = orderTitlesByLanguage(lang, 'स्मरण', 'Reminders', {
+    devPrimary: 22,
+    devSecondary: 14,
+    latPrimary: 22,
+    latSecondary: 14,
+  });
 
   const onToggle = useCallback(
     async (next: boolean) => {
@@ -42,9 +68,25 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
     [setDailyVerseEnabled]
   );
 
-  const onOpenSystemSettings = useCallback(() => {
+  const onToggleFestive = useCallback(
+    async (next: boolean) => {
+      await setFestiveRemindersEnabled(next);
+    },
+    [setFestiveRemindersEnabled]
+  );
+
+  // The banner has two jobs, because "denied" has two flavours. While the OS
+  // prompt is still available (a single refusal on Android, where the system
+  // allows one more ask) the useful action is to ask again — `setDailyVerseEnabled`
+  // re-requests and switches the reminder on if granted. Once the OS is done
+  // asking, Settings is the only path left.
+  const onFixPermission = useCallback(() => {
+    if (canAskAgain) {
+      void setDailyVerseEnabled(true);
+      return;
+    }
     Linking.openSettings().catch(() => undefined);
-  }, []);
+  }, [canAskAgain, setDailyVerseEnabled]);
 
   const updateAt = useCallback(
     async (index: number, time: TimeOfDay) => {
@@ -107,27 +149,35 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
             <Text
               style={[
                 styles.titleHi,
-                { color: colors.ink, fontFamily: typography.readerTitle.fontFamily },
+                {
+                  color: colors.ink,
+                  fontFamily: screenTitle.primary.fontFamily,
+                  fontSize: screenTitle.primary.fontSize,
+                  fontStyle: screenTitle.primary.fontStyle,
+                },
               ]}
             >
-              {isHi ? 'स्मरण' : 'Reminders'}
+              {screenTitle.primary.text}
             </Text>
             <Text
               style={[
                 styles.titleEn,
                 {
                   color: colors.inkMuted,
-                  fontFamily: 'CormorantGaramond_400Regular_Italic',
+                  fontFamily: screenTitle.secondary.fontFamily,
+                  fontSize: screenTitle.secondary.fontSize,
+                  fontStyle: screenTitle.secondary.fontStyle,
                 },
               ]}
             >
-              {isHi ? 'Reminders' : 'स्मरण'}
+              {screenTitle.secondary.text}
             </Text>
           </View>
           <View style={styles.backSpacer} />
         </View>
 
         <ScrollView
+          ref={remindersScrollRef}
           contentContainerStyle={[
             styles.scroll,
             { paddingHorizontal: spacing.xxl, paddingBottom: spacing.xxl * 2 },
@@ -136,6 +186,8 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
         >
           {/* Daily verse toggle */}
           <View
+            ref={reminderToggleRef}
+            collapsable={false}
             style={[
               styles.card,
               {
@@ -150,10 +202,10 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                 <Text
                   style={[
                     styles.cardTitle,
-                    { color: colors.ink, fontFamily: typography.readerTitle.fontFamily },
+                    { color: colors.ink, fontFamily: scriptSerifBold ?? typography.readerTitle.fontFamily },
                   ]}
                 >
-                  {isHi ? 'दैनिक श्लोक' : 'Daily verse'}
+                  {pick(lang, { hi: 'दैनिक श्लोक', en: 'Daily verse', gu: 'દૈનિક શ્લોક', kn: 'ದೈನಿಕ ಶ್ಲೋಕ' })}
                 </Text>
                 <Text
                   style={[
@@ -164,9 +216,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                     },
                   ]}
                 >
-                  {isHi
-                    ? 'चुने हुए समयों पर श्लोक स्क्रीन पर आएँगे।'
-                    : 'A verse at every time you choose.'}
+                  {pick(lang, { hi: 'चुने हुए समयों पर श्लोक स्क्रीन पर आएँगे।', en: 'A verse at every time you choose.', gu: 'પસંદ કરેલા સમયે શ્લોક સ્ક્રીન પર આવશે.', kn: 'ಆಯ್ಕೆಮಾಡಿದ ಸಮಯಗಳಲ್ಲಿ ಶ್ಲೋಕ ಪರದೆಯಲ್ಲಿ ಬರುತ್ತದೆ.' })}
                 </Text>
               </View>
               <Switch
@@ -176,15 +226,17 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                 trackColor={{ false: colors.divider, true: colors.saffron }}
                 thumbColor={colors.parchment}
                 ios_backgroundColor={colors.divider}
-                accessibilityLabel={isHi ? 'दैनिक श्लोक चालू / बंद' : 'Toggle daily verse'}
+                accessibilityLabel={pick(lang, { hi: 'दैनिक श्लोक चालू / बंद', en: 'Toggle daily verse', gu: 'દૈનિક શ્લોક ચાલુ / બંધ', kn: 'ದೈನಿಕ ಶ್ಲೋಕ ಆನ್ / ಆಫ್' })}
               />
             </View>
 
             {permissionStatus === 'denied' && (
               <Pressable
-                onPress={onOpenSystemSettings}
+                onPress={onFixPermission}
                 accessibilityRole="button"
-                accessibilityLabel="Open iOS settings"
+                accessibilityLabel={
+                  canAskAgain ? 'Allow notifications' : 'Open system settings'
+                }
                 style={({ pressed }) => [
                   styles.permissionBanner,
                   {
@@ -204,9 +256,9 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                     },
                   ]}
                 >
-                  {isHi
-                    ? 'सूचना अनुमति बंद है — सेटिंग्स में जाकर खोलें।'
-                    : 'Notifications are disabled. Tap to open Settings.'}
+                  {canAskAgain
+                    ? pick(lang, { hi: 'सूचना अनुमति बंद है — अनुमति देने के लिए टैप करें।', en: 'Notifications are off. Tap to allow them.', gu: 'સૂચના પરવાનગી બંધ છે — પરવાનગી આપવા માટે ટૅપ કરો.', kn: 'ಅಧಿಸೂಚನೆ ಅನುಮತಿ ಆಫ್ ಆಗಿದೆ — ಅನುಮತಿ ನೀಡಲು ಟ್ಯಾಪ್ ಮಾಡಿ.' })
+                    : pick(lang, { hi: 'सूचना अनुमति बंद है — सेटिंग्स में जाकर खोलें।', en: 'Notifications are disabled. Tap to open Settings.', gu: 'સૂચના પરવાનગી બંધ છે — સેટિંગ્સમાં જઈને ખોલો.', kn: 'ಅಧಿಸೂಚನೆ ಅನುಮತಿ ಆಫ್ ಆಗಿದೆ — ಸೆಟ್ಟಿಂಗ್ಸ್ ತೆರೆಯಲು ಟ್ಯಾಪ್ ಮಾಡಿ.' })}
                 </Text>
               </Pressable>
             )}
@@ -214,6 +266,8 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
 
           {/* Times picker — supports multiple reminders */}
           <View
+            ref={reminderTimesRef}
+            collapsable={false}
             style={[
               styles.card,
               {
@@ -226,10 +280,10 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
             <Text
               style={[
                 styles.cardTitle,
-                { color: colors.ink, fontFamily: typography.readerTitle.fontFamily },
+                { color: colors.ink, fontFamily: scriptSerifBold ?? typography.readerTitle.fontFamily },
               ]}
             >
-              {isHi ? 'समय' : 'Times'}
+              {pick(lang, { hi: 'समय', en: 'Times', gu: 'સમય', kn: 'ಸಮಯ' })}
             </Text>
             <Text
               style={[
@@ -237,9 +291,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                 { color: colors.inkMuted, fontFamily: typography.meaning.fontFamily },
               ]}
             >
-              {isHi
-                ? `जब आप रोज़ श्लोक प्राप्त करना चाहें। अधिकतम ${MAX_REMINDER_TIMES} समय जोड़ सकते हैं।`
-                : `When the daily verse arrives. Add up to ${MAX_REMINDER_TIMES}.`}
+              {pick(lang, { hi: `जब आप रोज़ श्लोक प्राप्त करना चाहें। अधिकतम ${MAX_REMINDER_TIMES} समय जोड़ सकते हैं।`, en: `When the daily verse arrives. Add up to ${MAX_REMINDER_TIMES}.`, gu: `તમે રોજ શ્લોક મેળવવા માગો ત્યારે. વધુમાં વધુ ${MAX_REMINDER_TIMES} સમય ઉમેરી શકો.`, kn: `ನೀವು ಪ್ರತಿದಿನ ಶ್ಲೋಕ ಪಡೆಯಲು ಬಯಸಿದಾಗ. ಗರಿಷ್ಠ ${MAX_REMINDER_TIMES} ಸಮಯ ಸೇರಿಸಬಹುದು.` })}
             </Text>
 
             <View style={styles.timesList}>
@@ -247,6 +299,13 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                 <View key={`${t.hour}-${t.minute}-${index}`} style={styles.timeRow}>
                   <TimeStepper
                     value={t}
+                    taken={
+                      new Set(
+                        prefs.times
+                          .filter((_, i) => i !== index)
+                          .map((o) => o.hour * 60 + o.minute)
+                      )
+                    }
                     onChange={(next) => {
                       updateAt(index, next);
                     }}
@@ -256,9 +315,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                       onPress={() => removeAt(index)}
                       accessibilityRole="button"
                       accessibilityLabel={
-                        isHi
-                          ? `समय हटाएँ ${index + 1}`
-                          : `Remove reminder ${index + 1}`
+                        pick(lang, { hi: `समय हटाएँ ${index + 1}`, en: `Remove reminder ${index + 1}`, gu: `સમય દૂર કરો ${index + 1}`, kn: `ಸಮಯ ತೆಗೆದುಹಾಕಿ ${index + 1}` })
                       }
                       hitSlop={10}
                       style={({ pressed }) => [
@@ -289,7 +346,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
               <Pressable
                 onPress={addTime}
                 accessibilityRole="button"
-                accessibilityLabel={isHi ? 'समय जोड़ें' : 'Add reminder'}
+                accessibilityLabel={pick(lang, { hi: 'समय जोड़ें', en: 'Add reminder', gu: 'સમય ઉમેરો', kn: 'ಸಮಯ ಸೇರಿಸಿ' })}
                 style={({ pressed }) => [
                   styles.addBtn,
                   {
@@ -304,11 +361,13 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                     styles.addBtnText,
                     {
                       color: colors.saffronDeep,
-                      fontFamily: typography.cardLatin.fontFamily,
+                      fontFamily: lang === 'en' ? typography.cardLatin.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily),
                     },
+                    // tracking/uppercase split the shirorekha on Indic labels
+                    lang !== 'en' && { letterSpacing: 0, textTransform: 'none' as const },
                   ]}
                 >
-                  {isHi ? '+ समय जोड़ें' : '+ Add reminder'}
+                  {pick(lang, { hi: '+ समय जोड़ें', en: '+ Add reminder', gu: '+ સમય ઉમેરો', kn: '+ ಸಮಯ ಸೇರಿಸಿ' })}
                 </Text>
               </Pressable>
             )}
@@ -316,26 +375,62 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
               <Text
                 style={[
                   styles.note,
-                  { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily },
+                  { color: colors.inkMuted, fontFamily: lang === 'en' ? typography.cardLatin.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily) },
+                  lang !== 'en' && { letterSpacing: 0 },
                 ]}
               >
-                {isHi
-                  ? `अधिकतम ${MAX_REMINDER_TIMES} समय जोड़े जा सकते हैं।`
-                  : `Up to ${MAX_REMINDER_TIMES} reminders.`}
+                {pick(lang, { hi: `अधिकतम ${MAX_REMINDER_TIMES} समय जोड़े जा सकते हैं।`, en: `Up to ${MAX_REMINDER_TIMES} reminders.`, gu: `વધુમાં વધુ ${MAX_REMINDER_TIMES} સમય ઉમેરી શકાય.`, kn: `ಗರಿಷ್ಠ ${MAX_REMINDER_TIMES} ಸಮಯ ಸೇರಿಸಬಹುದು.` })}
               </Text>
             )}
           </View>
 
-          <Text
+          {/* Festive reminders — default on, no setup, one push per famous
+              festival carrying that festival's greeting + the day's reading. */}
+          <View
             style={[
-              styles.footnote,
-              { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily },
+              styles.card,
+              {
+                backgroundColor: colors.parchmentSoft,
+                borderColor: colors.divider,
+                borderRadius: radii.lg,
+              },
             ]}
           >
-            {isHi
-              ? 'सूचनाएँ इस उपकरण पर ही बनती हैं — सर्वर पर कुछ नहीं जाता।'
-              : 'Notifications are scheduled on this device. Nothing leaves your phone.'}
-          </Text>
+            <View style={styles.cardHeader}>
+              <View style={styles.cardTextBlock}>
+                <Text
+                  style={[
+                    styles.cardTitle,
+                    { color: colors.ink, fontFamily: scriptSerifBold ?? typography.readerTitle.fontFamily },
+                  ]}
+                >
+                  {pick(lang, { hi: 'पर्व स्मरण', en: 'Festival reminders', gu: 'પર્વ સ્મરણ', kn: 'ಪರ್ವ ಸ್ಮರಣ' })}
+                </Text>
+                <Text
+                  style={[
+                    styles.cardSub,
+                    { color: colors.inkMuted, fontFamily: typography.meaning.fontFamily },
+                  ]}
+                >
+                  {pick(lang, {
+                    hi: `${FESTIVE_COUNT} प्रमुख पर्वों पर सुबह ${FESTIVE_CLOCK} बजे शुभकामना, और उस दिन के पाठ का न्यौता।`,
+                    en: `A greeting at ${FESTIVE_CLOCK} am on ${FESTIVE_COUNT} major festivals, with the reading for that day one tap away.`,
+                    gu: `${FESTIVE_COUNT} મુખ્ય પર્વો પર સવારે ${FESTIVE_CLOCK} વાગ્યે શુભકામના, અને તે દિવસના પાઠનું આમંત્રણ.`,
+                    kn: `${FESTIVE_COUNT} ಪ್ರಮುಖ ಹಬ್ಬಗಳಂದು ಬೆಳಿಗ್ಗೆ ${FESTIVE_CLOCK} ಕ್ಕೆ ಶುಭಾಶಯ, ಮತ್ತು ಆ ದಿನದ ಪಾಠಕ್ಕೆ ಆಹ್ವಾನ.`,
+                  })}
+                </Text>
+              </View>
+              <Switch
+                value={prefs.festiveRemindersEnabled}
+                onValueChange={onToggleFestive}
+                disabled={isLoading}
+                trackColor={{ false: colors.divider, true: colors.saffron }}
+                thumbColor={colors.parchment}
+                ios_backgroundColor={colors.divider}
+                accessibilityLabel={pick(lang, { hi: 'पर्व स्मरण चालू / बंद', en: 'Toggle festival reminders', gu: 'પર્વ સ્મરણ ચાલુ / બંધ', kn: 'ಪರ್ವ ಸ್ಮರಣ ಆನ್ / ಆಫ್' })}
+              />
+            </View>
+          </View>
         </ScrollView>
       </SafeAreaView>
     </View>
@@ -346,7 +441,7 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
   topBar: {
-    paddingHorizontal: 22,
+    paddingHorizontal: spacing.readingGutter,
     paddingTop: 8,
     paddingBottom: 12,
     flexDirection: 'row',
@@ -463,13 +558,6 @@ const styles = StyleSheet.create({
     fontSize: 11,
     letterSpacing: 1.4,
     marginTop: 6,
-    includeFontPadding: false,
-  },
-  footnote: {
-    fontSize: 11,
-    letterSpacing: 1.4,
-    textAlign: 'center',
-    marginTop: 18,
     includeFontPadding: false,
   },
 });

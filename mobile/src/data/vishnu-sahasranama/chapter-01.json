@@ -2,7 +2,7 @@
   "chapter": 1,
   "titleHi": "पूर्वपीठिका",
   "titleEn": "Purva Pithika",
-  "verseCount": 6,
+  "verseCount": 23,
   "verses": [
     {
       "id": "vs-1-0",
@@ -39,6 +39,21 @@
       "chapter": 1,
       "number": 2,
       "sanskrit": [
+        "यस्य द्विरदवक्त्राद्याः पारिषद्याः परः शतम्।",
+        "विघ्नं निघ्नन्ति सततं विष्वक्सेनं तमाश्रये।।"
+      ],
+      "linesEn": [
+        "yasya dviradavaktrādyāḥ pāriṣhadyāḥ paraḥ śhatam",
+        "vighnaṁ nighnanti satataṁ viṣhvaksenaṁ tamāśhraye"
+      ],
+      "meaningHi": "जिनके गज-मुख (गणेश) आदि सौ से अधिक पार्षद (सेवक) सदैव विघ्नों का नाश करते हैं — उन विष्वक्सेन की मैं शरण लेता हूँ।\n\nविष्वक्सेन विष्णु के सेनापति हैं। वैष्णव परम्परा में किसी भी कार्य के आरम्भ में विष्वक्सेन की आराधना की जाती है — जैसे शैव परम्परा में गणेश की।",
+      "meaningEn": "I take refuge in Vishvaksena, whose attendants — led by the elephant-faced one (Ganesha) and numbering more than a hundred — constantly destroy all obstacles.\n\nVishvaksena is the commander-in-chief of Vishnu's army. In the Vaishnava tradition, Vishvaksena is worshipped at the beginning of any undertaking — similar to Ganesha in the Shaiva tradition."
+    },
+    {
+      "id": "vs-1-3",
+      "chapter": 1,
+      "number": 3,
+      "sanskrit": [
         "व्यासं वसिष्ठनप्तारं शक्तेः पौत्रमकल्मषम्।",
         "पराशरात्मजं वन्दे शुकतातं तपोनिधिम्।।"
       ],
@@ -50,9 +65,9 @@
       "meaningEn": "I bow to Vyasa — great-grandson of Vasishtha, grandson of Shakti, spotless one, son of Parashara, father of Shukadeva, treasury of austerity.\n\nVedavyasa composed the Mahabharata, within which he compiled this Sahasranama as heard from Bhishma. His lineage: Vasishtha → Shakti → Parashara → Vyasa → Shukadeva."
     },
     {
-      "id": "vs-1-3",
+      "id": "vs-1-4",
       "chapter": 1,
-      "number": 3,
+      "number": 4,
       "sanskrit": [
         "व्यासाय विष्णुरूपाय व्यासरूपाय विष्णवे।",
         "नमो वै ब्रह्मनिधये वासिष्ठाय नमो नमः।।"
@@ -65,9 +80,71 @@
       "meaningEn": "Salutations to Vyasa who is Vishnu's form, to Vishnu who manifested as Vyasa — repeated obeisance to the treasury of Brahman-knowledge, descendant of Vasishtha.\n\nThis verse establishes the identity of Vyasa and Vishnu — Vyasa is considered an avatar of Vishnu who appears in every Dvapara Yuga to protect dharma."
     },
     {
-      "id": "vs-1-4",
+      "id": "vs-1-5",
       "chapter": 1,
-      "number": 4,
+      "number": 5,
+      "sanskrit": [
+        "अविकाराय शुद्धाय नित्याय परमात्मने।",
+        "सदैकरूपरूपाय विष्णवे सर्वजिष्णवे।।"
+      ],
+      "linesEn": [
+        "avikārāya śhuddhāya nityāya paramātmane",
+        "sadaikarūparūpāya viṣhṇave sarvajishṇave"
+      ],
+      "meaningHi": "अविकार (परिवर्तनरहित), शुद्ध, नित्य, परमात्मा, सदा एकरूप, सर्वत्र विजयी — ऐसे विष्णु को नमस्कार।\n\nयह श्लोक विष्णु के निर्गुण स्वरूप का वर्णन करता है — वे शाश्वत, अपरिवर्तनीय, शुद्ध चेतना हैं जो सदैव एक ही रूप में स्थित रहते हैं।",
+      "meaningEn": "Salutations to Vishnu — who is changeless, pure, eternal, the Supreme Self, ever of one form, and victorious over all.\n\nThis verse describes Vishnu's formless (nirguna) aspect — He is eternal, unchanging, pure consciousness who remains ever in one form."
+    },
+    {
+      "id": "vs-1-6",
+      "chapter": 1,
+      "number": 6,
+      "sanskrit": [
+        "यस्य स्मरणमात्रेण जन्मसंसारबन्धनात्।",
+        "विमुच्यते नमस्तस्मै विष्णवे प्रभविष्णवे।।"
+      ],
+      "linesEn": [
+        "yasya smaraṇamātreṇa janmasaṁsārabandhanāt",
+        "vimuchyate namastasmai viṣhṇave prabhaviṣhṇave"
+      ],
+      "meaningHi": "जिनके केवल स्मरण मात्र से जन्म-संसार के बन्धन से मुक्ति मिलती है — उन सर्वसमर्थ विष्णु को नमस्कार।\n\nयह श्लोक नाम-स्मरण की महिमा बताता है — केवल विष्णु का स्मरण ही मोक्ष के लिए पर्याप्त है। 'प्रभविष्णु' = सृष्टि करने में समर्थ।",
+      "meaningEn": "Salutations to that Vishnu, the all-powerful creator, by whose mere remembrance one is freed from the bondage of birth and worldly existence.\n\nThis verse declares the power of nama-smarana — mere remembrance of Vishnu is sufficient for liberation. 'Prabhavishnu' = one who is capable of creation."
+    },
+    {
+      "id": "vs-1-7",
+      "chapter": 1,
+      "number": 7,
+      "sanskrit": [
+        "नमः समस्तभूतानामादिभूताय भूभृते।",
+        "अनेकरूपरूपाय विष्णवे प्रभविष्णवे।।"
+      ],
+      "linesEn": [
+        "namaḥ samastabhūtānāmādibhūtāya bhūbhṛite",
+        "anekarūparūpāya viṣhṇave prabhaviṣhṇave"
+      ],
+      "meaningHi": "समस्त प्राणियों के आदि-भूत (मूल कारण), पृथ्वी को धारण करने वाले, अनेक रूपों वाले विष्णु को नमस्कार।\n\nयह श्लोक विष्णु के सगुण रूप का वर्णन करता है — वे सृष्टि के मूल कारण हैं, पृथ्वी को धारण करते हैं (वराह अवतार), और अनेक अवतारों में प्रकट होते हैं।",
+      "meaningEn": "Salutations to Vishnu — the primal cause of all beings, upholder of the earth, and one who manifests in countless forms.\n\nThis verse describes Vishnu's saguna (with attributes) form — He is the root cause of creation, supports the earth (Varaha avatar), and appears in many incarnations."
+    },
+    {
+      "id": "vs-1-8",
+      "chapter": 1,
+      "number": 8,
+      "sanskrit": [
+        "श्रीवैशम्पायन उवाच —",
+        "श्रुत्वा धर्मानशेषेण पावनानि च सर्वशः।",
+        "युधिष्ठिरः शान्तनवं पुनरेवाभ्यभाषत।।"
+      ],
+      "linesEn": [
+        "śhrīvaiśhampāyana uvācha —",
+        "śhrutvā dharmānaśheṣheṇa pāvanāni cha sarvaśhaḥ",
+        "yudhiṣhṭhiraḥ śhāntanavaṁ punarevābhyabhāṣhata"
+      ],
+      "meaningHi": "वैशम्पायन ने कहा — समस्त धर्मों को और सभी पवित्र करने वाली बातों को सम्पूर्ण रूप से सुनकर, युधिष्ठिर ने शान्तनव (भीष्म) से पुनः कहा।\n\nवैशम्पायन व्यास के शिष्य हैं जो जनमेजय को यह कथा सुना रहे हैं। यह महाभारत की कथा-परम्परा है: व्यास → वैशम्पायन → जनमेजय।",
+      "meaningEn": "Vaishampāyana said — Having heard all the dharmas exhaustively and all the purifying practices, Yudhishthira again addressed Shantanava (Bhishma).\n\nVaishampāyana is Vyasa's disciple who narrates this story to Janamejaya. This is the narrative framework of the Mahabharata: Vyasa → Vaishampāyana → Janamejaya."
+    },
+    {
+      "id": "vs-1-9",
+      "chapter": 1,
+      "number": 9,
       "sanskrit": [
         "युधिष्ठिर उवाच —",
         "किमेकं दैवतं लोके किं वाप्येकं परायणम्।",
@@ -82,9 +159,24 @@
       "meaningEn": "Yudhishthira asked — Who is the one supreme deity in the world? What is the one ultimate refuge? By praising whom, by worshipping whom, do humans attain auspiciousness?\n\nThis is from the Anushasana Parva (Chapter 149) of the Mahabharata. After the Kurukshetra war, Yudhishthira asks these six questions to Bhishma lying on his bed of arrows."
     },
     {
-      "id": "vs-1-5",
+      "id": "vs-1-10",
       "chapter": 1,
-      "number": 5,
+      "number": 10,
+      "sanskrit": [
+        "को धर्मः सर्वधर्माणां भवतः परमो मतः।",
+        "किं जपन्मुच्यते जन्तुर्जन्मसंसारबन्धनात्।।"
+      ],
+      "linesEn": [
+        "ko dharmaḥ sarvadharmāṇāṁ bhavataḥ paramo mataḥ",
+        "kiṁ japanmuchyate janturjanmasaṁsārabandhanāt"
+      ],
+      "meaningHi": "सभी धर्मों में आपकी दृष्टि में परम धर्म कौन-सा है? क्या जपकर प्राणी जन्म-संसार के बन्धन से मुक्त होता है?\n\nयह युधिष्ठिर के शेष दो प्रश्न हैं। कुल छह प्रश्न: (1) एक देवता कौन, (2) एक आश्रय क्या, (3) किसकी स्तुति से शुभ, (4) किसकी अर्चना से शुभ, (5) सर्वोत्तम धर्म कौन-सा, (6) किसके जाप से मुक्ति।",
+      "meaningEn": "What is the highest dharma in your opinion among all dharmas? By chanting what is a creature freed from the bondage of birth and worldly existence?\n\nThese are Yudhishthira's remaining two questions. Six questions in total: (1) who is the one deity, (2) what is the ultimate refuge, (3) praising whom brings good, (4) worshipping whom brings good, (5) what is the supreme dharma, (6) what mantra grants liberation."
+    },
+    {
+      "id": "vs-1-11",
+      "chapter": 1,
+      "number": 11,
       "sanskrit": [
         "भीष्म उवाच —",
         "जगत्प्रभुं देवदेवमनन्तं पुरुषोत्तमम्।",
@@ -97,6 +189,180 @@
       ],
       "meaningHi": "भीष्म ने कहा — जगत के प्रभु, देवों के देव, अनन्त, पुरुषोत्तम (श्रेष्ठ पुरुष) की सहस्र नामों से स्तुति करता हुआ मनुष्य सदैव उन्नत (कल्याण को प्राप्त) होता है।\n\nभीष्म का उत्तर — विष्णु ही वह एक देवता हैं। उनके सहस्र (1000) नामों का जाप ही परम उपाय है। इसके बाद भीष्म सहस्रनाम का पाठ आरम्भ करते हैं।",
       "meaningEn": "Bhishma replied — The person who constantly rises (in spiritual stature) is one who praises with a thousand names the Lord of the universe, God of gods, the infinite one, Purushottama (Supreme Being).\n\nBhishma's answer — Vishnu is that one supreme deity. Chanting his thousand names is the ultimate practice. After this, Bhishma begins reciting the Sahasranama."
+    },
+    {
+      "id": "vs-1-12",
+      "chapter": 1,
+      "number": 12,
+      "sanskrit": [
+        "तमेव चार्चयन्नित्यं भक्त्या पुरुषमव्ययम्।",
+        "ध्यायन् स्तुवन् नमस्यंश्च यजमानस्तमेव च।।"
+      ],
+      "linesEn": [
+        "tameva chārcayannityaṁ bhaktyā puruṣhamavyayam",
+        "dhyāyan stuvan namasyaṁśhcha yajamānastameva cha"
+      ],
+      "meaningHi": "उन अविनाशी पुरुष की नित्य भक्तिपूर्वक अर्चना करते हुए, उनका ध्यान करते हुए, स्तुति करते हुए, नमस्कार करते हुए, और उन्हीं का यजन करते हुए —\n\nभीष्म चार साधनाएँ बताते हैं: (1) ध्यान — मन में विष्णु का स्मरण, (2) स्तवन — नामों से स्तुति, (3) नमस्कार — शरीर से प्रणाम, (4) यजन — पूजा-अर्चना।",
+      "meaningEn": "By daily worshipping with devotion that imperishable Being, by meditating upon Him, praising Him, bowing to Him, and making offerings to Him alone —\n\nBhishma prescribes four practices: (1) dhyana — remembering Vishnu in the mind, (2) stuvana — praising with names, (3) namaskara — prostrating with the body, (4) yajana — worship and offerings."
+    },
+    {
+      "id": "vs-1-13",
+      "chapter": 1,
+      "number": 13,
+      "sanskrit": [
+        "अनादिनिधनं विष्णुं सर्वलोकमहेश्वरम्।",
+        "लोकाध्यक्षं स्तुवन्नित्यं सर्वदुःखातिगो भवेत्।।"
+      ],
+      "linesEn": [
+        "anādinidhananaṁ viṣhṇuṁ sarvalokmaheśhvaram",
+        "lokādhyakṣhaṁ stuvannityaṁ sarvaduḥkhātigo bhavet"
+      ],
+      "meaningHi": "जिनका न आदि है न अन्त, सर्वलोकों के महेश्वर, लोकों के अध्यक्ष — ऐसे विष्णु की नित्य स्तुति करने वाला सभी दुःखों से पार हो जाता है।\n\nभीष्म यहाँ फल बताते हैं — सहस्रनाम पाठ का परम फल 'सर्वदुःखातिग' होना है, अर्थात् सभी कष्टों से ऊपर उठ जाना।",
+      "meaningEn": "One who constantly praises Vishnu — who has no beginning or end, the great lord of all worlds, the presider over all realms — transcends all sorrows.\n\nBhishma states the fruit — the ultimate reward of Sahasranama recitation is becoming 'sarva-duhkha-atiga', meaning rising above all suffering."
+    },
+    {
+      "id": "vs-1-14",
+      "chapter": 1,
+      "number": 14,
+      "sanskrit": [
+        "ब्रह्मण्यं सर्वधर्मज्ञं लोकानां कीर्तिवर्धनम्।",
+        "लोकनाथं महद्भूतं सर्वभूतभवोद्भवम्।।"
+      ],
+      "linesEn": [
+        "brahmaṇyaṁ sarvadharmajñaṁ lokānāṁ kīrtivardhanam",
+        "lokanāthaṁ mahadbhūtaṁ sarvabhūtabhavodbhavam"
+      ],
+      "meaningHi": "जो ब्रह्मण्य (ब्रह्म-परायण) हैं, सब धर्मों के ज्ञाता हैं, लोकों की कीर्ति बढ़ाने वाले हैं, लोकनाथ हैं, महान भूत (तत्व) हैं, और समस्त प्राणियों की उत्पत्ति के कारण हैं।\n\nभीष्म विष्णु के गुणों का विस्तार करते हैं — वे ब्राह्मण-रक्षक, धर्मज्ञ, कीर्तिवर्धक, लोकों के स्वामी, और सबकी उत्पत्ति के मूल हैं।",
+      "meaningEn": "He who is devoted to Brahman, knower of all dharmas, who enhances the glory of the worlds, lord of the worlds, the great element, and the origin of all beings.\n\nBhishma elaborates on Vishnu's qualities — protector of the sacred, knower of all righteousness, enhancer of glory, lord of worlds, and the fundamental source of all existence."
+    },
+    {
+      "id": "vs-1-15",
+      "chapter": 1,
+      "number": 15,
+      "sanskrit": [
+        "एष मे सर्वधर्माणां धर्मोऽधिकतमो मतः।",
+        "यद्भक्त्या पुण्डरीकाक्षं स्तवैरर्चेन्नरः सदा।।"
+      ],
+      "linesEn": [
+        "eṣha me sarvadharmāṇāṁ dharmo'dhikatamo mataḥ",
+        "yadbhaktyā puṇḍarīkākṣhaṁ stavairarchen naraḥ sadā"
+      ],
+      "meaningHi": "यह मेरी दृष्टि में सभी धर्मों में सर्वोत्तम धर्म है — कि मनुष्य भक्तिपूर्वक पुण्डरीकाक्ष (कमलनयन विष्णु) की सदा स्तवों (स्तोत्रों) से अर्चना करे।\n\nभीष्म युधिष्ठिर के पाँचवें प्रश्न का उत्तर देते हैं — सर्वोत्तम धर्म है भक्तिपूर्वक विष्णु की स्तुति। यह सरल है, सबके लिए सुलभ है, और किसी बाहरी साधन की आवश्यकता नहीं।",
+      "meaningEn": "This is, in my view, the highest of all dharmas — that a person should always worship the lotus-eyed Lord (Pundarikaksha) with devotion through hymns of praise.\n\nBhishma answers Yudhishthira's fifth question — the supreme dharma is devotional praise of Vishnu. It is simple, accessible to all, and requires no external resources."
+    },
+    {
+      "id": "vs-1-16",
+      "chapter": 1,
+      "number": 16,
+      "sanskrit": [
+        "परमं यो महत्तेजः परमं यो महत्तपः।",
+        "परमं यो महद्ब्रह्म परमं यः परायणम्।।"
+      ],
+      "linesEn": [
+        "paramaṁ yo mahattejah paramaṁ yo mahattapaḥ",
+        "paramaṁ yo mahadbrahma paramaṁ yaḥ parāyaṇam"
+      ],
+      "meaningHi": "जो परम महान तेज हैं, जो परम महान तप हैं, जो परम महान ब्रह्म हैं, और जो परम आश्रय (परायण) हैं।\n\nभीष्म विष्णु को चार 'परम' विशेषणों से वर्णित करते हैं: परम तेज (प्रकाश-स्वरूप), परम तप (तपस्या का मूल), परम ब्रह्म (सर्वोच्च सत्ता), और परम आश्रय (अन्तिम शरण)।",
+      "meaningEn": "He who is the supreme great brilliance, the supreme great austerity, the supreme great Brahman, and the supreme ultimate refuge.\n\nBhishma describes Vishnu with four 'supreme' epithets: supreme radiance, supreme austerity, supreme Brahman (ultimate reality), and supreme refuge (final shelter)."
+    },
+    {
+      "id": "vs-1-17",
+      "chapter": 1,
+      "number": 17,
+      "sanskrit": [
+        "पवित्राणां पवित्रं यो मङ्गलानां च मङ्गलम्।",
+        "दैवतं दैवतानां च भूतानां योऽव्ययः पिता।।"
+      ],
+      "linesEn": [
+        "pavitrāṇāṁ pavitraṁ yo maṅgalānāṁ cha maṅgalam",
+        "daivataṁ daivatānāṁ cha bhūtānāṁ yo'vyayaḥ pitā"
+      ],
+      "meaningHi": "जो पवित्रों में भी पवित्र हैं, मंगलों का भी मंगल हैं, देवताओं के भी देवता हैं, और समस्त प्राणियों के अविनाशी पिता हैं।\n\nयह श्लोक विष्णु की सर्वोच्चता स्थापित करता है — वे न केवल पवित्र हैं, बल्कि पवित्रता का भी स्रोत हैं। वे देवताओं के भी आराध्य हैं।",
+      "meaningEn": "He who is the purest of the pure, the most auspicious of all auspicious things, the deity of all deities, and the imperishable father of all beings.\n\nThis verse establishes Vishnu's supremacy — He is not merely pure but the very source of purity. He is worshipped even by the gods."
+    },
+    {
+      "id": "vs-1-18",
+      "chapter": 1,
+      "number": 18,
+      "sanskrit": [
+        "यतः सर्वाणि भूतानि भवन्त्यादियुगागमे।",
+        "यस्मिंश्च प्रलयं यान्ति पुनरेव युगक्षये।।"
+      ],
+      "linesEn": [
+        "yataḥ sarvāṇi bhūtāni bhavantyādiyugāgame",
+        "yasmiṁśhcha pralayaṁ yānti punareva yugakṣhaye"
+      ],
+      "meaningHi": "जिनसे युग के आरम्भ में समस्त प्राणी उत्पन्न होते हैं, और जिनमें युग के अन्त में पुनः प्रलय (लय) को प्राप्त होते हैं।\n\nसृष्टि-चक्र का वर्णन — विष्णु से सृष्टि का आरम्भ और विष्णु में ही प्रलय। यह वैष्णव दर्शन का मूल सिद्धान्त है।",
+      "meaningEn": "From whom all beings come into existence at the beginning of each cosmic cycle, and into whom they dissolve again at the end of the age.\n\nThis describes the cosmic cycle — creation emanates from Vishnu and dissolves back into Him. This is the fundamental principle of Vaishnava philosophy."
+    },
+    {
+      "id": "vs-1-19",
+      "chapter": 1,
+      "number": 19,
+      "sanskrit": [
+        "तस्य लोकप्रधानस्य जगन्नाथस्य भूपते।",
+        "विष्णोर्नामसहस्रं मे शृणु पापभयापहम्।।"
+      ],
+      "linesEn": [
+        "tasya lokapradhānasya jagannāthasya bhūpate",
+        "viṣhṇornāmasahasraṁ me śhṛiṇu pāpabhayāpaham"
+      ],
+      "meaningHi": "हे राजन! उन लोक-प्रधान, जगन्नाथ विष्णु के सहस्र नाम मुझसे सुनो — जो पाप और भय का नाश करने वाले हैं।\n\nभीष्म युधिष्ठिर को सम्बोधित करते हैं — 'भूपते' (हे राजा)। यहाँ से सहस्रनाम का वास्तविक आरम्भ होने वाला है। 'पापभयापह' — पाप और भय दोनों को दूर करने वाला।",
+      "meaningEn": "O King! Hear from me the thousand names of that Vishnu — the chief of the worlds, the lord of the universe — which destroy all sin and fear.\n\nBhishma addresses Yudhishthira — 'Bhupate' (O King). The actual Sahasranama is about to begin. 'Papabhayapaha' — that which removes both sin and fear."
+    },
+    {
+      "id": "vs-1-20",
+      "chapter": 1,
+      "number": 20,
+      "sanskrit": [
+        "यानि नामानि गौणानि विख्यातानि महात्मनः।",
+        "ऋषिभिः परिगीतानि तानि वक्ष्यामि भूतये।।"
+      ],
+      "linesEn": [
+        "yāni nāmāni gauṇāni vikhyātāni mahātmanaḥ",
+        "ṛiṣhibhiḥ parigītāni tāni vakṣhyāmi bhūtaye"
+      ],
+      "meaningHi": "उन महात्मा के जो गुण-वाचक प्रसिद्ध नाम हैं, जो ऋषियों द्वारा गाए गए हैं — उन्हें मैं कल्याण के लिए कहूँगा।\n\n'गौणानि' = गुणों पर आधारित नाम। ये नाम विष्णु के विभिन्न गुणों, शक्तियों और लीलाओं को प्रकट करते हैं। ऋषियों ने वेदों और पुराणों में इन्हें गाया है।",
+      "meaningEn": "Those well-known names of the great-souled One that are based on His qualities, which have been sung by the sages — I shall now recite them for your welfare.\n\n'Gaunani' = attribute-based names. These names reveal Vishnu's various qualities, powers, and divine plays. Sages have sung them in the Vedas and Puranas."
+    },
+    {
+      "id": "vs-1-21",
+      "chapter": 1,
+      "number": 21,
+      "sanskrit": [
+        "ऋषिर्नाम्नां सहस्रस्य वेदव्यासो महामुनिः।",
+        "छन्दोऽनुष्टुप् तथा देवो भगवान् देवकीसुतः।।"
+      ],
+      "linesEn": [
+        "ṛiṣhirnāmnāṁ sahasrasya vedavyāso mahāmuniḥ",
+        "chhando'nuṣhṭup tathā devo bhagavān devakīsutaḥ"
+      ],
+      "meaningHi": "इस सहस्रनाम के ऋषि महामुनि वेदव्यास हैं, छन्द अनुष्टुप् है, और देवता भगवान देवकीसुत (श्रीकृष्ण) हैं।\n\nकिसी भी मन्त्र के तीन अंग होते हैं: ऋषि (द्रष्टा), छन्द (मात्रा), और देवता (आराध्य)। यहाँ ऋषि = व्यास, छन्द = अनुष्टुप (8 अक्षर प्रति चरण), देवता = कृष्ण/विष्णु।",
+      "meaningEn": "The seer (rishi) of these thousand names is the great sage Vedavyasa, the meter (chandas) is Anushtup, and the deity is Bhagavan Devakisuta (Sri Krishna).\n\nEvery mantra has three aspects: rishi (seer), chandas (meter), and devata (deity). Here rishi = Vyasa, chandas = Anushtup (8 syllables per quarter), devata = Krishna/Vishnu."
+    },
+    {
+      "id": "vs-1-22",
+      "chapter": 1,
+      "number": 22,
+      "sanskrit": [
+        "अमृतांशूद्भवो बीजं शक्तिर्देवकीनन्दनः।",
+        "त्रिसामा हृदयं तस्य शान्त्यर्थे विनियोज्यते।।"
+      ],
+      "linesEn": [
+        "amṛitāṁśhūdbhavo bījaṁ śhaktirdevakīnandanaḥ",
+        "trisāmā hṛidayaṁ tasya śhāntyarthe viniyojyate"
+      ],
+      "meaningHi": "बीज 'अमृतांशूद्भव' (अमृत किरणों से उत्पन्न) है, शक्ति 'देवकीनन्दन' है, हृदय 'त्रिसामा' है — और यह शान्ति के लिए विनियोजित (प्रयुक्त) होता है।\n\nमन्त्र-शास्त्र के अनुसार: बीज = मन्त्र का मूल बीजाक्षर, शक्ति = मन्त्र की ऊर्जा, हृदय = मन्त्र का केन्द्र। यह स्तोत्र शान्ति-प्राप्ति के लिए है।",
+      "meaningEn": "The seed (bija) is 'Amritamshudbhava' (born of immortal rays), the power (shakti) is 'Devakinandana', the heart is 'Trisama' — and it is employed for the purpose of peace.\n\nPer mantra-shastra: bija = root syllable of the mantra, shakti = energy of the mantra, hridaya = core of the mantra. This stotram is applied for attaining peace."
     }
-  ]
+  ],
+  "source": {
+    "baseText": "Vishnu Sahasranama from Mahabharata Anushasana Parva; app stores an excerpt, with main-stotram names 1-287 only.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_vishhnu/vsahasranew.html",
+      "https://www.opensadhaka.com/stotras/vishnu-sahasranama",
+      "https://www.swami-krishnananda.org/vishnu/vishnu_3.html"
+    ],
+    "retrievedOn": "2026-05-30"
+  }
 }

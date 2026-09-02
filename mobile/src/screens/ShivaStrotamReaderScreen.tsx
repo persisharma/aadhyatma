@@ -3,7 +3,6 @@ import {
   FlatList,
   NativeScrollEvent,
   NativeSyntheticEvent,
-  Pressable,
   StyleSheet,
   Text,
   View,
@@ -24,11 +23,16 @@ import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
+import JumpToStartButton from '@/components/JumpToStartButton';
 import NextChapterCard from '@/components/NextChapterCard';
 import PrevChapterCard from '@/components/PrevChapterCard';
 import ShivaStrotamVersePage from '@/components/ShivaStrotamVersePage';
 import LanguageToggle from '@/components/LanguageToggle';
+import ReadingProgressBar from '@/components/ReadingProgressBar';
+import AddToRoutineButton from '@/components/AddToRoutineButton';
 import { clampIndex } from '@/utils/clamp';
+import { contentByLang } from '@/utils/localize';
+import ReaderHeader from '@/components/ReaderHeader';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
 import type { RootStackParamList } from '@/navigation/types';
@@ -59,7 +63,7 @@ const DOT_COUNT = 5;
 export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
-  const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
+  const { addBookmark, removeBookmark, isBookmarked, bookmarks } = useBookmarks();
   const { setProgress } = useReadingProgress();
   const { share, busy: shareBusy } = useShare();
   const { width } = useWindowDimensions();
@@ -165,13 +169,18 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
     [width]
   );
 
+  const goToStart = useCallback(() => {
+    listRef.current?.scrollToIndex({ index: offset, animated: true });
+    setCurrentIndex(0);
+  }, [offset]);
+
   const dotStyles = useMemo(() => {
     const buckets = Math.max(1, Math.ceil(verseCount / DOT_COUNT));
     const active = Math.min(DOT_COUNT - 1, Math.floor(currentIndex / buckets));
     return Array.from({ length: DOT_COUNT }, (_, i) => i === active);
   }, [verseCount, currentIndex]);
 
-  const topTitle = chapter ? (lang === 'hi' ? chapter.titleHi : chapter.titleEn) : '';
+  const topTitle = chapter ? contentByLang(lang, chapter.titleHi, chapter.titleEn) : '';
 
   const handleScroll = useCallback(
     (e: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -189,111 +198,44 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
     [width, verseCount, offset]
   );
 
+  // Re-render visible pages when the language flips, a bookmark toggles, or a
+  // share is in flight — the in-page header actions depend on all three.
+  const listExtraData = useMemo(
+    () => ({ lang, bookmarks, shareBusy }),
+    [lang, bookmarks, shareBusy]
+  );
+
   if (!chapter) return <View style={[styles.root, { backgroundColor: colors.parchment }]} />;
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
-        <View style={styles.topBar}>
-          <View style={styles.topSide}>
-            <Pressable
-              onPress={() => navigation.goBack()}
-              accessibilityRole="button"
-              accessibilityLabel="Back to stotram list"
-              hitSlop={16}
-              style={({ pressed }) => [
-                styles.back,
+        <ReaderHeader
+          title={topTitle}
+          onBack={() => navigation.goBack()}
+          backAccessibilityLabel="Back to stotram list"
+          right={
+            <Text
+              style={[
+                styles.counter,
                 {
-                  backgroundColor: colors.parchmentSoft,
-                  borderColor: colors.divider,
+                  color: colors.inkMuted,
+                  fontFamily: typography.pageCounter.fontFamily,
+                  fontSize: typography.pageCounter.fontSize,
+                  fontStyle: 'italic',
                 },
-                pressed && { opacity: 0.7 },
               ]}
             >
-              <Text style={[styles.backGlyph, { color: colors.inkSoft }]}>‹</Text>
-            </Pressable>
-          </View>
+              {currentIndex + 1} / {verseCount}
+            </Text>
+          }
+        />
 
-          <Text
-            style={[
-              styles.title,
-              {
-                color: colors.ink,
-                fontFamily:
-                  lang === 'hi'
-                    ? typography.readerTitle.fontFamily
-                    : typography.cardLatin.fontFamily,
-                fontSize: typography.readerTitle.fontSize,
-                fontStyle: lang === 'en' ? 'italic' : 'normal',
-              },
-            ]}
-            numberOfLines={1}
-          >
-            {topTitle}
-          </Text>
+        <ReadingProgressBar current={currentIndex + 1} total={verseCount} />
 
-          <View style={[styles.topSide, { alignItems: 'flex-end' }]}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-              <Text
-                style={[
-                  styles.counter,
-                  {
-                    color: colors.inkMuted,
-                    fontFamily: typography.pageCounter.fontFamily,
-                    fontSize: typography.pageCounter.fontSize,
-                    fontStyle: 'italic',
-                  },
-                ]}
-              >
-                {currentIndex + 1} / {verseCount}
-              </Text>
-              <BookmarkButton
-                isBookmarked={isBookmarked(`shiva-strotam:${chapter.chapter}:${currentIndex}`)}
-                onToggle={() => {
-                  const id = `shiva-strotam:${chapter.chapter}:${currentIndex}`;
-                  if (isBookmarked(id)) {
-                    removeBookmark(id);
-                  } else {
-                    const v = chapter.verses[currentIndex];
-                    addBookmark({
-                      id,
-                      sourceId: 'shiva-strotam',
-                      chapter: chapter.chapter,
-                      verseIndex: currentIndex,
-                      savedAt: Date.now(),
-                      previewHi: v.sanskrit[0] ?? '',
-                      previewEn: v.linesEn[0] ?? '',
-                    });
-                  }
-                }}
-              />
-              <ShareButton
-                busy={shareBusy}
-                onPress={() => {
-                  const v = chapter.verses[currentIndex];
-                  const isIntro = v.number === 0;
-                  share(
-                    {
-                      sourceId: 'shiva-strotam',
-                      sectionNameHi: chapter.titleHi,
-                      sectionNameEn: chapter.titleEn,
-                      verseLabelHi: isIntro ? 'परिचय' : `श्लोक ${v.chapter}.${v.number}`,
-                      verseLabelEn: isIntro ? 'Introduction' : `Verse ${v.chapter}.${v.number}`,
-                      linesHi: [...v.sanskrit],
-                      linesEn: [...v.linesEn],
-                      meaningHi: v.meaningHi,
-                      meaningEn: v.meaningEn,
-                    },
-                    lang
-                  );
-                }}
-              />
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.toggleRow}>
+        <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}>
           <LanguageToggle />
+          <AddToRoutineButton sourceId="shiva-strotam" chapter={chapter.chapter} />
         </View>
 
         <View style={styles.listContainer}>
@@ -301,12 +243,12 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
             ref={listRef}
             data={data}
             keyExtractor={(item) => item.id}
-            renderItem={({ item }) => {
+            renderItem={({ item, index }) => {
               if ('__type' in item && item.__type === 'transition') {
                 return (
                   <NextChapterCard
                     width={width}
-                    nextTitle={lang === 'hi' ? item.nextTitleHi : item.nextTitleEn}
+                    nextTitle={contentByLang(lang, item.nextTitleHi, item.nextTitleEn)}
                     lang={lang}
                   />
                 );
@@ -315,14 +257,66 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
                 return (
                   <PrevChapterCard
                     width={width}
-                    prevTitle={lang === 'hi' ? item.prevTitleHi : item.prevTitleEn}
+                    prevTitle={contentByLang(lang, item.prevTitleHi, item.prevTitleEn)}
                     lang={lang}
                   />
                 );
               }
-              return <ShivaStrotamVersePage verse={item} sourceId="shiva-strotam" width={width} />;
+              // List index includes the prev-transition card; bookmark ids stay
+              // keyed by the verse index within the chapter.
+              const verseIndex = index - offset;
+              const isIntro = item.number === 0;
+              return (
+                <ShivaStrotamVersePage
+                  verse={item}
+                  sourceId="shiva-strotam"
+                  width={width}
+                  topActions={
+                    <>
+                      <BookmarkButton
+                        isBookmarked={isBookmarked(`shiva-strotam:${chapter.chapter}:${verseIndex}`)}
+                        onToggle={() => {
+                          const id = `shiva-strotam:${chapter.chapter}:${verseIndex}`;
+                          if (isBookmarked(id)) {
+                            removeBookmark(id);
+                          } else {
+                            addBookmark({
+                              id,
+                              sourceId: 'shiva-strotam',
+                              chapter: chapter.chapter,
+                              verseIndex,
+                              savedAt: Date.now(),
+                              previewHi: item.sanskrit[0] ?? '',
+                              previewEn: item.linesEn[0] ?? '',
+                            });
+                          }
+                        }}
+                      />
+                      <ShareButton
+                        busy={shareBusy}
+                        onPress={() => {
+                          share(
+                            {
+                              sourceId: 'shiva-strotam',
+                              sectionNameHi: chapter.titleHi,
+                              sectionNameEn: chapter.titleEn,
+                              verseLabelHi: isIntro ? 'परिचय' : `श्लोक ${item.chapter}.${item.number}`,
+                              verseLabelEn: isIntro ? 'Introduction' : `Verse ${item.chapter}.${item.number}`,
+                              linesHi: [...item.sanskrit],
+                              linesEn: [...item.linesEn],
+                              meaningHi: item.meaningHi,
+                              meaningEn: item.meaningEn,
+                            },
+                            lang
+                          );
+                        }}
+                      />
+                    </>
+                  }
+                />
+              );
             }}
-            extraData={lang}
+            extraData={listExtraData}
             horizontal
             pagingEnabled
             showsHorizontalScrollIndicator={false}
@@ -340,6 +334,7 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
             style={styles.list}
           />
 
+          {currentIndex > 0 && <JumpToStartButton onPress={goToStart} lang={lang} />}
           <View style={styles.dotsOverlay}>
             <View style={styles.dots}>
               {dotStyles.map((isCurrent, i) => (
@@ -366,39 +361,6 @@ const styles = StyleSheet.create({
   },
   safe: {
     flex: 1,
-  },
-  topBar: {
-    paddingHorizontal: 22,
-    paddingTop: 8,
-    paddingBottom: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  topSide: {
-    width: 120,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  back: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  backGlyph: {
-    fontSize: 22,
-    lineHeight: 24,
-    marginTop: -2,
-    includeFontPadding: false,
-  },
-  title: {
-    flex: 1,
-    textAlign: 'center',
-    includeFontPadding: false,
-    marginHorizontal: 4,
   },
   counter: {
     includeFontPadding: false,
