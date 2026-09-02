@@ -17,7 +17,8 @@
 - [[panchang]] — Panchang tab: Hindu-calendar engine, festival/vrat observances, Daily Muhurat, shubh-yoga annotations (annotate-only), Kundali, deterministic Daily Rashifal, private IST-only Guna Milan, newborn-private Namkaran, and dated one-shot muhurat follows.
 - [[japam-alarms]] — Japam Alarms: repeat-days, one-time, and skip-next; native AlarmKit/AlarmManager tier with expo fallback.
 - [[audio]] — the three sound sources (recorded library, japam loop, read-aloud TTS), the playback arbiter that keeps them mutually exclusive, and the expo-speech platform traps.
-- [[notifications]] — nine local notification families (daily verse, vrat, **muhurat**, festive, sadhana, **routine**, personal Pitru Smaran, public Pitru Paksha, japam), the pure-planner + glue + headless-scheduler shape, the shared iOS pending budget, and notification-tap deep links.
+- [[notifications]] — ten local notification families (daily verse, vrat, **muhurat**, festive, sadhana, **routine**, personal Pitru Smaran, public Pitru Paksha, **janma tithi**, japam), the pure-planner + glue + headless-scheduler shape, the shared iOS pending budget, and notification-tap deep links.
+- [[kul-parampara]] — कुल परम्परा (PRD-29): janma tithis of the LIVING over the Pitru engine (list/detail/Home chip/opt-in eve reminder) + the private family record (kuldev, temple, gotra, kul vrat, notes) with its device-controlled JSON export.
 - [[home-widgets]] — cross-platform Home/Lock Screen widgets: versioned 14-day IST snapshot, atomic native bridges, generated extension/provider wiring, gallery, and exact deep links.
 - [[puja-vidhi]] — festival and personal-tithi household guidance: occurrence-scoped preparation, swipe-only conduct, private provenance, and shipped-text hand-offs.
 - [[bhog-naivedya]] — verified offerings, vrat food, prohibited offerings, parana meals, and the Vidhi kitchen-checklist integration.

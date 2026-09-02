@@ -132,6 +132,12 @@ The Panchang tab provides a Hindu-calendar almanac: date picker, festival/vrat o
 
 **Upvas/fasting content (PRD-09 Phase 4 — completes PRD-09)** (`panchang/upvasContent/` + `upvasContent.ts`, `upvasParana.ts`, `useUpvasParana.ts`; design.md §65, RULEBOOK §20): a `kathaContent/`-shaped registry of fasting facts (fast type · window · parana rule · strictness · who observes), attached to rules via `upvasId`. The 2026-08-19 source pass replaced Wikipedia/draft-egress notes with two or more procedural/traditional sources for all eight v1 entries and flipped them to `status:'verified'`; `getUpvasInfo` can now expose them. Monthly Masik Shivaratri and monthly Krishna Janmashtami no longer inherit the annual festival procedures. Observance Detail keeps one four-state “How to observe” home (upvas only, vidhi only, both, neither). Parana remains hybrid and text-canonical: `upvasParana.ts` derives a time only on honest sunrise/tithi-bound or moonrise branches and returns null on kshaya/missing/inverted cases; `useUpvasParana` bridges the shared day store without persisting a separate parana result.
 
+**कुल परम्परा and janma tithis (PRD-29)** is indexed separately at [[kul-parampara]]. It adds NO
+engine or cache of its own: janma rules come from `deriveTithiRuleFromDate` over the Kundali
+roster's birth dates, solve through the shared `pitruSmaranSolves` layer, and match days via the
+`tithiRuleMatchesDate` export on `pitruSmaran.ts` (the bare matcher — `entryMatchesDate` also fires
+on the Pitru-Paksha mapped day, which is the dead's and wrong for the living).
+
 **Bhog/naivedya and vrat food (PRD-23)** is indexed separately at [[bhog-naivedya]]. Panchang owns
 the optional `bhogId` rule hook and the Observance Detail door; the registry keeps offerings, fast
 food, abstentions, prohibitions, parana meal and regional variance separate and verified-only.
