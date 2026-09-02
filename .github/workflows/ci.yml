@@ -1,12 +1,19 @@
 name: CI
 
+# Test gate for the mobile app. Runs typecheck + the Jest/tsx suites so loop PRs
+# (and any PR touching mobile/) get a real red/green signal to block merge on.
+
 on:
   pull_request:
+    paths:
+      - 'mobile/**'
   push:
     branches: [main]
+    paths:
+      - 'mobile/**'
 
 jobs:
-  quality:
+  test:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -23,26 +30,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Typecheck (primary gate)
+      - name: Typecheck
         run: npm run typecheck
 
-      # node:assert suites run via tsx. Excludes the Jest-owned dirs
-      # (screens/utils/contexts/components __tests__ — see jest.config.js).
-      - name: Unit tests (node:assert via tsx)
-        shell: bash
-        run: |
-          set -uo pipefail
-          fail=0
-          while IFS= read -r f; do
-            echo "▶ $f"
-            if ! NODE_OPTIONS="--require $PWD/scripts/test-asset-stub.cjs" npx tsx "$f"; then
-              echo "::error file=$f::test failed"
-              fail=1
-            fi
-          done < <(find src \( -name '*.test.ts' -o -name '*.test.tsx' \) \
-                   | grep -vE '/(screens|utils|contexts|components)/__tests__/' | sort)
-          [ "$fail" -eq 0 ] || { echo "One or more tsx tests failed."; exit 1; }
-          echo "All tsx tests passed."
-
-      - name: Reader/component tests (Jest)
+      - name: Reader/component tests
         run: npm run test:readers
+
+      - name: Engine tests
+        run: npm run test:engine
+
+      - name: Observance date verification (festival dates vs muhurta-based astronomy)
+        run: npm run verify:observances
+
+      - name: Data tests
+        run: npm run test:data

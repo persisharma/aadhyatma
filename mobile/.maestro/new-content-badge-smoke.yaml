@@ -19,7 +19,7 @@
 # cannot boot in this environment, the integrated path is also covered by the
 # Jest tests (NewContentContext.test.tsx + LibraryCardNewBadge.test.tsx).
 
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
 # ── Step 1: Boot, then force a clean (nothing-new) start regardless of prior runs ──
 - runFlow: _launch.yaml
@@ -86,9 +86,19 @@ appId: host.exp.Exponent
 - waitForAnimationToEnd
 
 # ── Step 6: Restart → dismissal persisted; re-open stotram ──
+# This step verifies the seeded NEW-state + markSeen SURVIVE a restart, so it must
+# relaunch WITHOUT clearState — _launch.yaml does clearState:true (pm clear), which
+# would wipe the very AsyncStorage this step checks. A warm relaunch also skips the
+# onboarding tour (its "seen" flag persists), landing straight on Home.
 - stopApp:
-    appId: host.exp.Exponent
-- runFlow: _launch.yaml
+    appId: com.prashantsharma.vedansh
+- launchApp:
+    appId: com.prashantsharma.vedansh
+- waitForAnimationToEnd:
+    timeout: 30000
+- extendedWaitUntil:
+    visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
+    timeout: 60000
 - tapOn: "Hymns & Praise. New. Tap to open."
 - waitForAnimationToEnd
 
@@ -107,7 +117,7 @@ appId: host.exp.Exponent
 
 # ── Cleanup: reset NEW state so later flows in `maestro test .maestro/` start clean ──
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 - scrollUntilVisible:
     element:
@@ -119,4 +129,4 @@ appId: host.exp.Exponent
     id: "dev-reset-new-content"
 - waitForAnimationToEnd
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh

@@ -1,0 +1,121 @@
+{
+  "id": "krishna-stuti",
+  "titleHi": "श्री कृष्ण स्तुति",
+  "titleEn": "Krishna Stuti",
+  "deity": "krishna",
+  "source": {
+    "baseText": "Shri Krishna Stuti (Krishnaya Vasudevaya…) — a 12-verse traditional nama-stuti garland of Krishna, per VastuCart's editorial version. Distinct from Krishna Stotram / Madhurashtakam / Achyutashtakam already in the app (§10.11 checked). The iti-phalashruti frame is kept as the closing verse.",
+    "referenceUrls": [
+      "https://stotra.vastucart.in/stotra/krishna-stuti",
+      "https://stotranidhi.com/en/sri-krishna-stotram/"
+    ],
+    "retrievedOn": "2026-07-23",
+    "notes": "Traditional garland-style stuti (no single named source-text); flagged for §5 review. Verse 12 reads विनिर्मुक्तो (corrected from vastucart's transliteration typo)."
+  },
+  "verses": [
+    {
+      "id": "krishna-stuti-1", "number": 1, "labelHi": "श्लोक · १", "labelEn": "Shloka · 1",
+      "lines": ["कृष्णाय वासुदेवाय हरये परमात्मने।", "प्रणतक्लेशनाशाय गोविन्दाय नमो नमः॥"],
+      "linesEn": ["kṛṣṇāya vāsudevāya haraye paramātmane", "praṇata-kleśa-nāśāya govindāya namo namaḥ"],
+      "meaningHi": "कृष्ण को, वासुदेव को, हरि को, परमात्मा को, शरणागतों के क्लेशों का नाश करने वाले गोविन्द को बारम्बार नमस्कार है।",
+      "meaningEn": "Salutation again and again to Krishna, to Vasudeva, to Hari, to the Supreme Self — to Govinda, the destroyer of the afflictions of those who bow to Him."
+    },
+    {
+      "id": "krishna-stuti-2", "number": 2, "labelHi": "श्लोक · २", "labelEn": "Shloka · 2",
+      "lines": ["नमः पङ्कजनाभाय नमः पङ्कजमालिने।", "नमः पङ्कजनेत्राय नमस्ते पङ्कजाङ्घ्रये॥"],
+      "linesEn": ["namaḥ paṅkaja-nābhāya namaḥ paṅkaja-māline", "namaḥ paṅkaja-netrāya namas-te paṅkajāṅghraye"],
+      "meaningHi": "कमल-नाभि वाले को नमस्कार, कमल की माला धारण करने वाले को नमस्कार, कमल-नेत्र वाले को नमस्कार, और कमल-समान चरणों वाले आपको नमस्कार है।",
+      "meaningEn": "Salutation to the lotus-naveled One, to the wearer of the lotus-garland, to the lotus-eyed One, and salutation to You of the lotus-feet."
+    },
+    {
+      "id": "krishna-stuti-3", "number": 3, "labelHi": "श्लोक · ३", "labelEn": "Shloka · 3",
+      "lines": ["वनमाली गदी शार्ङ्गी शङ्खी चक्री च नन्दकी।", "श्रीमान् नारायणो विष्णुर्वासुदेवोऽभिरक्षतु॥"],
+      "linesEn": ["vanamālī gadī śārṅgī śaṅkhī cakrī ca nandakī", "śrīmān nārāyaṇo viṣṇur-vāsudevo'bhirakṣatu"],
+      "meaningHi": "वनमाला, गदा, शार्ङ्ग धनुष, शंख, चक्र और नन्दक खड्ग धारण करने वाले श्रीमान् नारायण, विष्णु, वासुदेव मेरी रक्षा करें।",
+      "meaningEn": "May the glorious Narayana, Vishnu, Vasudeva — bearer of the forest-garland, the mace, the Sharnga bow, the conch, the discus and the Nandaka sword — protect me."
+    },
+    {
+      "id": "krishna-stuti-4", "number": 4, "labelHi": "श्लोक · ४", "labelEn": "Shloka · 4",
+      "lines": ["देवकीसुतं गोविन्दं वासुदेवं जगत्पतिम्।", "देहि मे तनयं कृष्ण त्वामहं शरणं गतः॥"],
+      "linesEn": ["devakī-sutaṃ govindaṃ vāsudevaṃ jagat-patim", "dehi me tanayaṃ kṛṣṇa tvām-ahaṃ śaraṇaṃ gataḥ"],
+      "meaningHi": "देवकीनन्दन, गोविन्द, वासुदेव, जगत् के स्वामी — हे कृष्ण! मुझे सुयोग्य सन्तान प्रदान करें; मैं आपकी शरण में आया हूँ।",
+      "meaningEn": "O son of Devaki, Govinda, Vasudeva, Lord of the universe — O Krishna, grant me (worthy) progeny; I have taken refuge in You."
+    },
+    {
+      "id": "krishna-stuti-5", "number": 5, "labelHi": "श्लोक · ५", "labelEn": "Shloka · 5",
+      "lines": ["नमामि यमुनातीरवनमालाविभूषितम्।", "मुरलीगानलोलं तं वन्दे श्रीनन्दनन्दनम्॥"],
+      "linesEn": ["namāmi yamunā-tīra-vanamālā-vibhūṣitam", "muralī-gāna-lolaṃ taṃ vande śrī-nanda-nandanam"],
+      "meaningHi": "यमुना के तट पर वनमाला से विभूषित, मुरली के गान में लीन — उन श्री नन्दनन्दन (कृष्ण) को मैं प्रणाम एवं वन्दन करता हूँ।",
+      "meaningEn": "I bow to Him, adorned with the forest-garland on the bank of the Yamuna, absorbed in the song of the flute — I worship that beloved son of Nanda."
+    },
+    {
+      "id": "krishna-stuti-6", "number": 6, "labelHi": "श्लोक · ६", "labelEn": "Shloka · 6",
+      "lines": ["पीताम्बरधरं देवं कुण्डलालङ्कृतप्रभम्।", "नन्दगोपकुमारं तं वन्दे गोकुलनायकम्॥"],
+      "linesEn": ["pītāmbara-dharaṃ devaṃ kuṇḍalālaṅkṛta-prabham", "nanda-gopa-kumāraṃ taṃ vande gokula-nāyakam"],
+      "meaningHi": "पीताम्बर धारण करने वाले, कुण्डलों से अलंकृत कान्ति वाले, नन्द गोप के कुमार — उन गोकुल के नायक को मैं वन्दन करता हूँ।",
+      "meaningEn": "I worship that leader of Gokula — the yellow-robed Lord, radiant with ornamented ear-rings, the boy-son of the cowherd Nanda."
+    },
+    {
+      "id": "krishna-stuti-7", "number": 7, "labelHi": "श्लोक · ७", "labelEn": "Shloka · 7",
+      "lines": ["गोपीजनवल्लभं गोपालं गोवर्धनोद्धारम्।", "कालियमर्दनं कृष्णं वन्दे गोकुलरक्षकम्॥"],
+      "linesEn": ["gopī-jana-vallabhaṃ gopālaṃ govardhanoddhāram", "kāliya-mardanaṃ kṛṣṇaṃ vande gokula-rakṣakam"],
+      "meaningHi": "गोपियों के प्रिय, गोपाल, गोवर्धन को उठाने वाले, कालिय नाग का मर्दन करने वाले — उन गोकुल के रक्षक कृष्ण को मैं वन्दन करता हूँ।",
+      "meaningEn": "I worship Krishna, the guardian of Gokula — beloved of the gopis, the cowherd, the lifter of Govardhana, the subduer of the serpent Kaliya."
+    },
+    {
+      "id": "krishna-stuti-8", "number": 8, "labelHi": "श्लोक · ८", "labelEn": "Shloka · 8",
+      "lines": [
+        "राधाप्रियं मधुसूदनं मनोहरं",
+        "कंसध्वंसिनं शूरसेनतनयप्रभम्।",
+        "श्रीवत्सलाञ्छनं श्रीपतिमद्वयं",
+        "कृष्णं वन्दे देवकीनन्दनम्॥"
+      ],
+      "linesEn": [
+        "rādhā-priyaṃ madhusūdanaṃ manoharaṃ",
+        "kaṃsa-dhvaṃsinaṃ śūrasena-tanaya-prabham",
+        "śrīvatsa-lāñchanaṃ śrī-patim-advayaṃ",
+        "kṛṣṇaṃ vande devakī-nandanam"
+      ],
+      "meaningHi": "राधा के प्रिय, मधुसूदन, मनोहर, कंस का विनाश करने वाले, शूरसेन-वंश की कान्ति, श्रीवत्स-चिह्न धारी, अद्वितीय श्रीपति — उन देवकीनन्दन कृष्ण को मैं वन्दन करता हूँ।",
+      "meaningEn": "I worship Krishna, the son of Devaki — beloved of Radha, the slayer of Madhu, enchanting, the destroyer of Kamsa, the splendour of the Shurasena line, bearing the Shrivatsa mark, the peerless Lord of Lakshmi."
+    },
+    {
+      "id": "krishna-stuti-9", "number": 9, "labelHi": "श्लोक · ९", "labelEn": "Shloka · 9",
+      "lines": [
+        "मथुरानाथमाद्यन्तरहितं",
+        "मधुराधिपतिं सकलार्तिहरम्।",
+        "द्वारकावासिनं जगदीश्वरं",
+        "कृष्णं वन्दे शरणागतवत्सलम्॥"
+      ],
+      "linesEn": [
+        "mathurā-nātham-ādyanta-rahitaṃ",
+        "madhurādhipatiṃ sakalārti-haram",
+        "dvārakā-vāsinaṃ jagadīśvaraṃ",
+        "kṛṣṇaṃ vande śaraṇāgata-vatsalam"
+      ],
+      "meaningHi": "मथुरा के स्वामी, आदि-अन्त से रहित, मधुरा के अधिपति, समस्त पीड़ाओं को हरने वाले, द्वारका में निवास करने वाले, जगत् के ईश्वर — उन शरणागतवत्सल कृष्ण को मैं वन्दन करता हूँ।",
+      "meaningEn": "I worship Krishna, tender to those who seek refuge — the Lord of Mathura, without beginning or end, ruler of Madhura, remover of all distress, dweller in Dvaraka, the Lord of the universe."
+    },
+    {
+      "id": "krishna-stuti-10", "number": 10, "labelHi": "श्लोक · १०", "labelEn": "Shloka · 10",
+      "lines": ["यशोदानन्दनं बालं गोपवेषधरं हरिम्।", "मक्खनचोरं मनोहारिणं वन्दे कृष्णं सनातनम्॥"],
+      "linesEn": ["yaśodā-nandanaṃ bālaṃ gopa-veṣa-dharaṃ harim", "makkhana-coraṃ mano-hāriṇaṃ vande kṛṣṇaṃ sanātanam"],
+      "meaningHi": "यशोदा के आनन्ददायक, बालक, गोप-वेष धारण करने वाले, हरि, माखनचोर, मन को हरने वाले — उन सनातन कृष्ण को मैं वन्दन करता हूँ।",
+      "meaningEn": "I worship the eternal Krishna — the delight of Yashoda, the child clad as a cowherd, Hari, the butter-thief, the stealer of hearts."
+    },
+    {
+      "id": "krishna-stuti-11", "number": 11, "labelHi": "श्लोक · ११", "labelEn": "Shloka · 11",
+      "lines": ["क्षीरसागरशायिनं लक्ष्मीकान्तमनाथरक्षकम्।", "विश्वव्यापिनमीशं परात्परं कृष्णं प्रणमामि सर्वदा॥"],
+      "linesEn": ["kṣīra-sāgara-śāyinaṃ lakṣmī-kāntam-anātha-rakṣakam", "viśva-vyāpinam-īśaṃ parātparaṃ kṛṣṇaṃ praṇamāmi sarvadā"],
+      "meaningHi": "क्षीर-सागर में शयन करने वाले, लक्ष्मीपति, अनाथों के रक्षक, विश्व में व्याप्त ईश्वर, परात्पर — उन कृष्ण को मैं सदैव प्रणाम करता हूँ।",
+      "meaningEn": "I ever bow to Krishna — reclining on the ocean of milk, the beloved of Lakshmi, protector of the helpless, the all-pervading Lord, higher than the highest."
+    },
+    {
+      "id": "krishna-stuti-12", "number": 12, "labelHi": "श्लोक · १२", "labelEn": "Shloka · 12",
+      "lines": ["कृष्णस्तुतिमिमां दिव्यां यः पठेत् प्रयतः शुचिः।", "सर्वपापविनिर्मुक्तो विष्णुलोकं स गच्छति॥"],
+      "linesEn": ["kṛṣṇa-stutim-imāṃ divyāṃ yaḥ paṭhet prayataḥ śuciḥ", "sarva-pāpa-vinirmukto viṣṇu-lokaṃ sa gacchati"],
+      "meaningHi": "जो पवित्र एवं संयमी होकर इस दिव्य कृष्ण-स्तुति का पाठ करता है, वह समस्त पापों से मुक्त होकर विष्णुलोक को प्राप्त होता है।",
+      "meaningEn": "Whoever, pure and self-controlled, recites this divine Krishna Stuti is freed from all sins and attains the abode of Vishnu."
+    }
+  ]
+}

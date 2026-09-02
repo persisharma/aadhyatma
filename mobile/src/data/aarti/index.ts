@@ -4,6 +4,8 @@ import jaiGaneshDeva from './jai-ganesh-deva.json';
 import omJaiShivOmkara from './om-jai-shiv-omkara.json';
 import jaiAmbeGauri from './jai-ambe-gauri.json';
 import aartiKunjBihari from './aarti-kunj-bihari.json';
+import saraswatiAarti from './saraswati-aarti.json';
+import gayatriAarti from './gayatri-aarti.json';
 
 export type AartiVerse = {
   id: string;
@@ -16,6 +18,8 @@ export type AartiVerse = {
   linesEn: string[];
   meaningHi: string;
   meaningEn: string;
+  meaningGu?: string;
+  meaningKn?: string;
 };
 
 export type AartiData = {
@@ -37,6 +41,8 @@ export const aartiCollection: readonly AartiData[] = [
   omJaiShivOmkara as AartiData,
   jaiAmbeGauri as AartiData,
   aartiKunjBihari as AartiData,
+  saraswatiAarti as AartiData,
+  gayatriAarti as AartiData,
 ];
 
 /**
@@ -51,6 +57,8 @@ export const aartiIdByIndex = [
   'om-jai-shiv-omkara',
   'jai-ambe-gauri',
   'aarti-kunj-bihari',
+  'saraswati-aarti',
+  'gayatri-aarti',
 ] as const satisfies readonly string[];
 
 export type AartiId = (typeof aartiIdByIndex)[number];
@@ -73,8 +81,8 @@ export function getAarti(index: number): AartiData {
 }
 
 (function assertAartiInvariants() {
-  if (aartiCollection.length !== 6) {
-    throw new Error(`aarti: expected 6 aartis, got ${aartiCollection.length}`);
+  if (aartiCollection.length !== 8) {
+    throw new Error(`aarti: expected 8 aartis, got ${aartiCollection.length}`);
   }
   const seenIds = new Set<string>();
   let totalVerses = 0;

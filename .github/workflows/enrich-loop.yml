@@ -1,0 +1,103 @@
+name: Enrichment Loop
+
+# Durable, timely driver for the feature-enrichment loop. Runs /enrich-auto on a
+# schedule (independent of any Claude Code session), builds one small slice, and
+# opens/updates a PR. Safety rails live in .claude/commands/enrich-auto.md +
+# docs/enrichment-loop/scope.md (T0-T2 only, never red, never main, plan T3).
+#
+# REQUIRED: add an `ANTHROPIC_API_KEY` repo secret (Settings → Secrets → Actions).
+# Without it the run is a no-op. Trigger manually via "Run workflow" to test.
+
+on:
+  schedule:
+    # Every 3 hours at :13 UTC. GitHub Actions cron is always UTC.
+    - cron: '13 */3 * * *'
+  workflow_dispatch:
+    inputs:
+      focus:
+        description: 'Optional bias for selection (e.g. PRD-06, font-scale)'
+        required: false
+        default: ''
+
+# Don't pile up overlapping runs.
+concurrency:
+  group: enrich-loop
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  enrich:
+    runs-on: ubuntu-latest
+    env:
+      LOOP_BRANCH: claude/enrich-loop-auto
+      # secrets can be referenced in env, then read from step `if:` conditions.
+      HAS_KEY: ${{ secrets.ANTHROPIC_API_KEY != '' }}
+    steps:
+      - name: Guard — require API key
+        if: env.HAS_KEY != 'true'
+        run: echo "::warning::ANTHROPIC_API_KEY secret not set — skipping enrichment run. Add it in Settings → Secrets → Actions."
+
+      - uses: actions/checkout@v4
+        if: env.HAS_KEY == 'true'
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        if: env.HAS_KEY == 'true'
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+
+      - name: Configure git identity
+        if: env.HAS_KEY == 'true'
+        run: |
+          git config user.name "enrichment-loop[bot]"
+          git config user.email "enrichment-loop@users.noreply.github.com"
+
+      - name: Prepare working branch off main
+        if: env.HAS_KEY == 'true'
+        run: |
+          git fetch origin main
+          git checkout -B "$LOOP_BRANCH" origin/main
+
+      - name: Install mobile dependencies
+        if: env.HAS_KEY == 'true'
+        working-directory: mobile
+        run: npm ci
+
+      - name: Install Claude Code CLI
+        if: env.HAS_KEY == 'true'
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Run one enrichment cycle
+        if: env.HAS_KEY == 'true'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          FOCUS: ${{ github.event.inputs.focus }}
+        run: |
+          claude -p "Run one autonomous enrichment cycle following .claude/commands/enrich-auto.md exactly. Branch is $LOOP_BRANCH (already checked out off main). Bias: '$FOCUS'. Pick ONE highest-value small/additive T0-T2 slice from docs/enrichment-loop/backlog.md (quick wins first); for T3 write a plan instead. Build TDD, run 'npm run test:readers' and 'tsc --noEmit' in mobile/, and ONLY commit if both pass — never commit red, never touch main. Update the ledger. Do NOT open a PR (the workflow does that). End by printing what you shipped or why you deferred." \
+            --permission-mode acceptEdits \
+            --allowedTools "Bash,Read,Write,Edit,Glob,Grep" \
+            --max-turns 80
+
+      - name: Push + open/update PR
+        if: env.HAS_KEY == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ -z "$(git log origin/main..HEAD --oneline)" ]; then
+            echo "No new commits this run — nothing to push."
+            exit 0
+          fi
+          git push --force-with-lease -u origin "$LOOP_BRANCH"
+          if gh pr view "$LOOP_BRANCH" --json number >/dev/null 2>&1; then
+            echo "PR already open for $LOOP_BRANCH — push updated it."
+          else
+            gh pr create --base main --head "$LOOP_BRANCH" \
+              --title "Enrichment loop: automated slice" \
+              --body "Automated run of the feature-enrichment loop (see docs/enrichment-loop/). One small slice per run; CI gates merge."
+          fi

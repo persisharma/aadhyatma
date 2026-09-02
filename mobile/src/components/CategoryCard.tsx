@@ -2,6 +2,8 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
+import { useGitaLanguage } from '@/data/gita/language';
+import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 
 type Props = {
   nameHi: string;
@@ -9,13 +11,180 @@ type Props = {
   status: 'active' | 'coming';
   icon?: React.ReactNode;
   onPress?: () => void;
+  onPressIn?: () => void;
+  onPressOut?: () => void;
   /** When true (and active), shows a green "NEW" badge top-right. */
   hasNew?: boolean;
+  /**
+   * `card` (default): the classic gradient card with the name inside — used by
+   * any 2-column layout. `launcher`: the Home 3×3 grid tile — a compact glyph
+   * square with the name *below* it at caption size (design.md §19). The
+   * accessibility label always carries the full `nameEn` in both variants.
+   */
+  variant?: 'card' | 'launcher';
+  /** Short English label for the launcher grid; falls back to `nameEn`. */
+  displayNameEn?: string;
+  /** Compact launchers default to one line; dense named indexes may opt into two. */
+  launcherLabelLines?: 1 | 2;
+  /** Home keeps captions below; dense indexes can place the title inside the tile. */
+  launcherLabelPosition?: 'below' | 'tile';
 };
 
-export default function CategoryCard({ nameHi, nameEn, status, icon, onPress, hasNew }: Props) {
-  const { colors, typography, radii } = useTheme();
+function CategoryCard({
+  nameHi,
+  nameEn,
+  status,
+  icon,
+  onPress,
+  onPressIn,
+  onPressOut,
+  hasNew,
+  variant = 'card',
+  displayNameEn,
+  launcherLabelLines = 1,
+  launcherLabelPosition = 'below',
+}: Props) {
+  const { colors, radii, elevation } = useTheme();
+  const { lang } = useGitaLanguage();
   const isActive = status === 'active';
+  const isLauncher = variant === 'launcher';
+
+  // Home tiles show a single language line (the reader's primary). The demoted
+  // second-language line is dropped here to tighten the grid; catalog/detail
+  // screens keep the bilingual pairing. The English accessibilityLabel below is
+  // left intact, so screen readers still announce the (full) English name.
+  const { primary } = orderTitlesByLanguage(
+    lang,
+    nameHi,
+    isLauncher ? (displayNameEn ?? nameEn) : nameEn,
+    isLauncher
+      ? // Caption-sized label under the launcher tile; Latin one step up as usual.
+        { devPrimary: 13, devSecondary: 11, latPrimary: 14, latSecondary: 11 }
+      : { devPrimary: 16, devSecondary: 12, latPrimary: 17, latSecondary: 12 }
+  );
+
+  if (isLauncher) {
+    const labelInTile = launcherLabelPosition === 'tile';
+    // Deliberately no `adjustsFontSizeToFit`: on iOS a multi-line label with a
+    // fixed `lineHeight` shrinks erratically and ignores `minimumFontScale`, so
+    // scattered tiles in the 27-tile Namkaran grid collapsed to a few points
+    // while their identically sized neighbours stayed at full size. The tile is
+    // wide enough for every shipped name at this size over two lines (the
+    // longest word in any of them is ~6 Devanagari clusters), so the label
+    // holds one fixed size and caps the system multiplier instead — the grid
+    // now reads as one uniform size, which is what auto-fit was meant to do.
+    const launcherLabel = (
+      <Text
+        numberOfLines={launcherLabelLines}
+        maxFontSizeMultiplier={labelInTile ? 1.25 : undefined}
+        style={[
+          styles.launcherName,
+          labelInTile && styles.launcherNameInTile,
+          {
+            color: colors.ink,
+            fontFamily: primary.fontFamily,
+            fontSize: primary.fontSize,
+            fontStyle: primary.fontStyle,
+            letterSpacing: primary.letterSpacing,
+            lineHeight: labelInTile ? 21 : undefined,
+          },
+        ]}
+      >
+        {primary.text}
+      </Text>
+    );
+
+    if (!isActive) {
+      return (
+        <View
+          style={styles.launcher}
+          accessibilityRole="button"
+          accessibilityState={{ disabled: true }}
+          accessibilityLabel={`${nameEn}. Coming soon.`}
+        >
+          <View
+            style={[
+              styles.launcherTile,
+              styles.launcherTileComing,
+              {
+                borderRadius: radii.lg,
+                backgroundColor: colors.cardSurface,
+                borderColor: colors.divider,
+                borderWidth: 1,
+              },
+              elevation.card,
+            ]}
+          >
+            {icon}
+            {labelInTile ? launcherLabel : null}
+            <View
+              style={[
+                styles.badge,
+                styles.launcherBadge,
+                { backgroundColor: colors.goldTint, borderRadius: radii.pill },
+              ]}
+            >
+              <Text style={[styles.badgeText, { color: colors.inkMuted, letterSpacing: 1.6 }]}>
+                SOON
+              </Text>
+            </View>
+          </View>
+          {labelInTile ? null : launcherLabel}
+        </View>
+      );
+    }
+
+    return (
+      <Pressable
+        onPress={onPress}
+        onPressIn={onPressIn}
+        onPressOut={onPressOut}
+        style={({ pressed }) => [styles.launcher, pressed && styles.cardPressed]}
+        accessibilityRole="button"
+        accessibilityLabel={`${nameEn}.${hasNew ? ' New.' : ''} Tap to open.`}
+      >
+        <View
+          style={[
+            styles.launcherTile,
+            {
+              borderRadius: radii.lg,
+              borderColor: colors.cardActiveBorder,
+              borderWidth: 1,
+              // Opaque base so the Android shadow renders; the gradient carries
+              // its own radius instead of overflow:'hidden', which would clip
+              // the iOS shadow (design.md §4).
+              backgroundColor: colors.cardActiveFrom,
+            },
+            elevation.card,
+          ]}
+        >
+          <LinearGradient
+            colors={[colors.cardActiveFrom, colors.cardActiveTo]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={[styles.cardBg, { borderRadius: radii.lg }]}
+          />
+          {icon}
+          {labelInTile ? launcherLabel : null}
+          {hasNew && (
+            <View
+              style={[
+                styles.badge,
+                styles.launcherBadge,
+                { backgroundColor: colors.newBadgeBg, borderRadius: radii.pill },
+              ]}
+              pointerEvents="none"
+            >
+              <Text style={[styles.badgeText, { color: colors.newBadgeText, letterSpacing: 1.6 }]}>
+                NEW
+              </Text>
+            </View>
+          )}
+        </View>
+        {labelInTile ? null : launcherLabel}
+      </Pressable>
+    );
+  }
 
   const content = (
     <>
@@ -25,24 +194,14 @@ export default function CategoryCard({ nameHi, nameEn, status, icon, onPress, ha
           styles.nameHi,
           {
             color: colors.ink,
-            fontFamily: typography.cardHindi.fontFamily,
-            fontSize: 15,
+            fontFamily: primary.fontFamily,
+            fontSize: primary.fontSize,
+            fontStyle: primary.fontStyle,
+            letterSpacing: primary.letterSpacing,
           },
         ]}
       >
-        {nameHi}
-      </Text>
-      <Text
-        style={[
-          styles.nameEn,
-          {
-            color: colors.inkSoft,
-            fontFamily: typography.cardLatin.fontFamily,
-            fontSize: 13,
-          },
-        ]}
-      >
-        {nameEn}
+        {primary.text}
       </Text>
     </>
   );
@@ -54,14 +213,10 @@ export default function CategoryCard({ nameHi, nameEn, status, icon, onPress, ha
         style={({ pressed }) => [
           styles.card,
           {
-            borderRadius: 16,
+            borderRadius: radii.lg,
             borderColor: colors.cardActiveBorder,
             borderWidth: 1,
-            shadowColor: '#3C1E0A',
-            shadowOpacity: 0.12,
-            shadowRadius: 12,
-            shadowOffset: { width: 0, height: 4 },
-            elevation: 3,
+            ...elevation.lifted,
           },
           pressed && styles.cardPressed,
         ]}
@@ -72,7 +227,7 @@ export default function CategoryCard({ nameHi, nameEn, status, icon, onPress, ha
           colors={[colors.cardActiveFrom, colors.cardActiveTo]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
-          style={[styles.cardBg, { borderRadius: 16 }]}
+          style={[styles.cardBg, { borderRadius: radii.lg }]}
         />
         {content}
         {hasNew && (
@@ -94,16 +249,12 @@ export default function CategoryCard({ nameHi, nameEn, status, icon, onPress, ha
       style={[
         styles.card,
         {
-          borderRadius: 16,
+          borderRadius: radii.lg,
           backgroundColor: colors.cardSurface,
           borderColor: colors.divider,
           borderWidth: 1,
           opacity: 0.55,
-          shadowColor: '#3C1E0A',
-          shadowOpacity: 0.06,
-          shadowRadius: 4,
-          shadowOffset: { width: 0, height: 1 },
-          elevation: 1,
+          ...elevation.subtle,
         },
       ]}
       accessibilityRole="button"
@@ -133,7 +284,7 @@ export default function CategoryCard({ nameHi, nameEn, status, icon, onPress, ha
 const styles = StyleSheet.create({
   card: {
     position: 'relative',
-    paddingVertical: 16,
+    paddingVertical: 12,
     paddingHorizontal: 10,
     alignItems: 'center',
     justifyContent: 'center',
@@ -146,15 +297,33 @@ const styles = StyleSheet.create({
     opacity: 0.85,
   },
   iconWrap: {
-    marginBottom: 4,
+    marginBottom: 6,
   },
   nameHi: {
     textAlign: 'center',
-    marginBottom: 2,
   },
-  nameEn: {
+  launcher: {
+    alignItems: 'stretch',
+  },
+  launcherTile: {
+    height: 72,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  launcherTileComing: {
+    opacity: 0.55,
+  },
+  launcherName: {
+    marginTop: 6,
     textAlign: 'center',
-    fontStyle: 'italic',
+  },
+  launcherNameInTile: {
+    marginTop: 0,
+    paddingHorizontal: 8,
+  },
+  launcherBadge: {
+    top: 6,
+    right: 6,
   },
   badge: {
     position: 'absolute',
@@ -164,8 +333,12 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
   },
   badgeText: {
-    fontSize: 9,
+    fontSize: 10,
     fontWeight: '600',
     textTransform: 'uppercase',
   },
 });
+
+// Memoized: HomeScreen renders 9 of these with memoized icon/onPress props, so
+// unrelated Home re-renders skip reconciling the gradient + glyph subtrees.
+export default React.memo(CategoryCard);

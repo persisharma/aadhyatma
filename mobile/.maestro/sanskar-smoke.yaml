@@ -17,21 +17,29 @@
 # No pixel coordinates — modal-sheet visibility handled by config.yaml's
 # snapshotKeyHonorModalViews: false.
 
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
 # ── Step 1: Boot Vedansh in Expo Go ──
 - runFlow: _launch.yaml
 
 # ── Step 2: Verify all 6 categories visible on Home (full accessibilityLabel match) ──
 - assertVisible: "Sacred Books. Tap to open."      # Granth
-- assertVisible: "Hymns & Praise. Tap to open."    # Stotram
-- assertVisible: "Chalisa. Tap to open."
+- assertVisible: "Hymns & Praise\\..*Tap to open\\."    # Stotram
+- assertVisible: "Chalisa\\..*Tap to open\\."       # Chalisa (Gayatri Chalisa 1.4.4 → can show NEW)
 - assertVisible: "Japa & Mantras. Tap to open."    # Japam
-- assertVisible: "Aarti. Tap to open."
-- assertVisible: "Good Habits. Tap to open."       # Sanskar
+- assertVisible: "Aarti\\..*Tap to open\\."
+- assertVisible: "Good Habits\\..*Tap to open\\."       # Sanskar
 
-# ── Step 3: Open Sanskar category, verify all 7 sections (regex for LibraryCard) ──
-- tapOn: "Good Habits. Tap to open."
+# ── Step 3: Open Sanskar category, verify all 8 sections (regex for LibraryCard) ──
+# "Good Habits" is the last Home tile — low enough that a direct tap can land on
+# the bottom tab bar (→ Panchang). Center it first so the tap stays mid-screen.
+- scrollUntilVisible:
+    element:
+      text: "Good Habits\\..*Tap to open\\."
+    direction: DOWN
+    centerElement: true
+    timeout: 10000
+- tapOn: "Good Habits\\..*Tap to open\\."
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Morning Slokas\\..*Tap to open\\."
@@ -41,12 +49,32 @@ appId: host.exp.Exponent
 - assertVisible: "Meal Prayer\\..*Tap to open\\."
 - assertVisible: "Serving Cows & Birds\\..*Tap to open\\."
 - assertVisible: "Evening Lamp\\..*Tap to open\\."
-- assertVisible: "Bedtime Slokas\\..*Tap to open\\."
+# Bedtime Slokas & Vidyarambha Prarthana fall below the fold — Android's shorter
+# viewport folds after ~6 rows, so scroll to them rather than a plain
+# assertVisible (a no-op scroll when already on-screen, correct on both platforms).
+- scrollUntilVisible:
+    element:
+      text: "Bedtime Slokas\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Vidyarambha Prarthana\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
 
 # ── Step 4: Open Morning Slokas, toggle to English, assert intro pill ──
 # Maestro's iOS accessibility tree doesn't reliably expose standalone
 # Devanagari text nodes — so we toggle to English first and assert the
 # English label "Introduction" instead of "परिचय".
+# Scroll back up first — verifying Vidyarambha Prarthana above scrolled the list down.
+- scrollUntilVisible:
+    element:
+      text: "Morning Slokas\\..*Tap to open\\."
+    direction: UP
+    visibilityPercentage: 60
+    timeout: 10000
 - tapOn: "Morning Slokas\\..*Tap to open\\."
 - waitForAnimationToEnd:
     timeout: 15000
@@ -84,9 +112,9 @@ appId: host.exp.Exponent
 # ── Step 6: Restart and verify Surya Namaskar step indicator ──
 # Reopens fresh because the reader's nav stack is already deep.
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
-- tapOn: "Good Habits. Tap to open."
+- tapOn: "Good Habits\\..*Tap to open\\."
 - waitForAnimationToEnd
 - tapOn: "Surya Namaskar\\..*Tap to open\\."
 - waitForAnimationToEnd:
@@ -114,4 +142,4 @@ appId: host.exp.Exponent
 
 # ── Cleanup ──
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh

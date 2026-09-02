@@ -1,0 +1,851 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "library": "Swiss Ephemeris",
+    "libraryVersion": "2.10.03",
+    "sourceCommit": "59ac051b5a5812c684973ca0fcedb1c8c3e9c5dc",
+    "pythonBinding": "pyswisseph 2.10.3.2",
+    "siderealMode": "SIDM_LAHIRI",
+    "calculation": "calc_ut",
+    "requestedFlags": [
+      "FLG_SWIEPH",
+      "FLG_SIDEREAL",
+      "FLG_SPEED"
+    ],
+    "houseCalculation": "houses_ex, whole-sign chart derived from sidereal Ascendant",
+    "ephemerisFiles": [
+      {
+        "name": "sepl_18.se1",
+        "sha256": "ca1393ceab3a44fbc895887cf789c68819ae6a1cbc9b22225872dbe4ccd99a66",
+        "url": "https://raw.githubusercontent.com/aloistr/swisseph/59ac051b5a5812c684973ca0fcedb1c8c3e9c5dc/ephe/sepl_18.se1"
+      },
+      {
+        "name": "semo_18.se1",
+        "sha256": "1ca07bd67c24374d77226180c20a4f9996cba013697894810518e7eb582ca4f7",
+        "url": "https://raw.githubusercontent.com/aloistr/swisseph/59ac051b5a5812c684973ca0fcedb1c8c3e9c5dc/ephe/semo_18.se1"
+      }
+    ]
+  },
+  "coverage": {
+    "caseCount": 150,
+    "cityCount": 15,
+    "instantCount": 10,
+    "cityIds": [
+      "ujjain",
+      "srinagar",
+      "delhi",
+      "jaipur",
+      "dwarka",
+      "ahmedabad",
+      "mumbai",
+      "hyderabad",
+      "bengaluru",
+      "chennai",
+      "thiruvananthapuram",
+      "varanasi",
+      "kolkata",
+      "puri",
+      "guwahati"
+    ],
+    "localInstantsIst": [
+      "1950-01-15T00:01:00+05:30",
+      "1961-06-22T05:47:00+05:30",
+      "1972-12-31T23:59:00+05:30",
+      "1984-04-13T12:00:00+05:30",
+      "1992-08-14T05:42:00+05:30",
+      "2000-01-01T12:00:00+05:30",
+      "2007-07-07T07:07:00+05:30",
+      "2016-02-29T18:31:00+05:30",
+      "2024-04-08T18:30:00+05:30",
+      "2026-10-20T21:15:00+05:30"
+    ],
+    "yearRange": [
+      1950,
+      2026
+    ]
+  },
+  "locations": [
+    {
+      "id": "ujjain",
+      "latitude": 23.1765,
+      "longitude": 75.7885,
+      "elevation": 494
+    },
+    {
+      "id": "srinagar",
+      "latitude": 34.0837,
+      "longitude": 74.7973,
+      "elevation": 1585
+    },
+    {
+      "id": "delhi",
+      "latitude": 28.6139,
+      "longitude": 77.209,
+      "elevation": 216
+    },
+    {
+      "id": "jaipur",
+      "latitude": 26.9124,
+      "longitude": 75.7873,
+      "elevation": 431
+    },
+    {
+      "id": "dwarka",
+      "latitude": 22.2442,
+      "longitude": 68.9685,
+      "elevation": 9
+    },
+    {
+      "id": "ahmedabad",
+      "latitude": 23.0225,
+      "longitude": 72.5714,
+      "elevation": 53
+    },
+    {
+      "id": "mumbai",
+      "latitude": 19.076,
+      "longitude": 72.8777,
+      "elevation": 14
+    },
+    {
+      "id": "hyderabad",
+      "latitude": 17.385,
+      "longitude": 78.4867,
+      "elevation": 542
+    },
+    {
+      "id": "bengaluru",
+      "latitude": 12.9716,
+      "longitude": 77.5946,
+      "elevation": 920
+    },
+    {
+      "id": "chennai",
+      "latitude": 13.0827,
+      "longitude": 80.2707,
+      "elevation": 6
+    },
+    {
+      "id": "thiruvananthapuram",
+      "latitude": 8.5241,
+      "longitude": 76.9366,
+      "elevation": 10
+    },
+    {
+      "id": "varanasi",
+      "latitude": 25.3176,
+      "longitude": 82.9739,
+      "elevation": 81
+    },
+    {
+      "id": "kolkata",
+      "latitude": 22.5726,
+      "longitude": 88.3639,
+      "elevation": 9
+    },
+    {
+      "id": "puri",
+      "latitude": 19.8135,
+      "longitude": 85.8312,
+      "elevation": 0
+    },
+    {
+      "id": "guwahati",
+      "latitude": 26.1445,
+      "longitude": 91.7362,
+      "elevation": 55
+    }
+  ],
+  "instants": [
+    {
+      "id": "1950-01-15-0001",
+      "localBirthIst": "1950-01-15T00:01:00+05:30",
+      "dateUtc": "1950-01-14T18:31:00.000Z",
+      "expected": {
+        "ayanamsa": 23.15925171618813,
+        "lagnaByCity": {
+          "ujjain": 172.60508161576595,
+          "srinagar": 170.47212815151155,
+          "delhi": 173.20771422032527,
+          "jaipur": 172.16372617972584,
+          "dwarka": 166.43084708221448,
+          "ahmedabad": 169.67928162192507,
+          "mumbai": 170.34762955232836,
+          "hyderabad": 175.85121266008022,
+          "bengaluru": 175.58506024052065,
+          "chennai": 178.18313586491251,
+          "thiruvananthapuram": 175.5210106228409,
+          "varanasi": 178.79278296865505,
+          "kolkata": 184.14056217097507,
+          "puri": 182.3459374088224,
+          "guwahati": 186.40729835771987
+        },
+        "grahas": {
+          "sun": {
+            "longitude": 270.8793294349287,
+            "speedLongitudePerDay": 1.0188680620326778
+          },
+          "moon": {
+            "longitude": 224.68348801481554,
+            "speedLongitudePerDay": 14.199845759018201
+          },
+          "mars": {
+            "longitude": 163.5494232074264,
+            "speedLongitudePerDay": 0.28046534964447606
+          },
+          "mercury": {
+            "longitude": 277.45476852330546,
+            "speedLongitudePerDay": -1.0932084102571433
+          },
+          "jupiter": {
+            "longitude": 286.51255221112723,
+            "speedLongitudePerDay": 0.233848289544809
+          },
+          "venus": {
+            "longitude": 295.21617885230046,
+            "speedLongitudePerDay": -0.17454590454689878
+          },
+          "saturn": {
+            "longitude": 146.06079971499707,
+            "speedLongitudePerDay": -0.028171616241375867
+          },
+          "rahu": {
+            "longitude": 348.22470597773554,
+            "speedLongitudePerDay": -0.0529920527555935
+          },
+          "ketu": {
+            "longitude": 168.22470597773554,
+            "speedLongitudePerDay": -0.0529920527555935
+          }
+        },
+        "vimshottari": {
+          "firstLord": "saturn",
+          "firstStartUtc": "1933-11-12T08:24:11.771Z",
+          "firstEndUtc": "1952-11-11T22:58:59.771Z",
+          "birthAntardashaLord": "rahu"
+        }
+      }
+    },
+    {
+      "id": "1961-06-22-0547",
+      "localBirthIst": "1961-06-22T05:47:00+05:30",
+      "dateUtc": "1961-06-22T00:17:00.000Z",
+      "expected": {
+        "ayanamsa": 23.318939733889692,
+        "lagnaByCity": {
+          "ujjain": 67.31047341435288,
+          "srinagar": 72.15569275093381,
+          "delhi": 71.30531163916649,
+          "jaipur": 69.14766729988597,
+          "dwarka": 60.541961109196116,
+          "ahmedabad": 64.27531846135477,
+          "mumbai": 62.71366308610779,
+          "hyderabad": 67.12986170186832,
+          "bengaluru": 64.40705160784941,
+          "chennai": 66.91419651403106,
+          "thiruvananthapuram": 61.952238419806854,
+          "varanasi": 74.82710250376033,
+          "kolkata": 78.35556134203765,
+          "puri": 74.86597194191651,
+          "guwahati": 82.94449414280564
+        },
+        "grahas": {
+          "sun": {
+            "longitude": 67.03258776338521,
+            "speedLongitudePerDay": 0.9539579371841442
+          },
+          "moon": {
+            "longitude": 164.21838210282863,
+            "speedLongitudePerDay": 12.3485713628653
+          },
+          "mars": {
+            "longitude": 122.60043849935394,
+            "speedLongitudePerDay": 0.5814638902863879
+          },
+          "mercury": {
+            "longitude": 75.29093600384377,
+            "speedLongitudePerDay": -0.4709255788931571
+          },
+          "jupiter": {
+            "longitude": 282.6918329266915,
+            "speedLongitudePerDay": -0.08162912115986706
+          },
+          "venus": {
+            "longitude": 21.345340883227664,
+            "speedLongitudePerDay": 0.9680200488062496
+          },
+          "saturn": {
+            "longitude": 275.12672751005977,
+            "speedLongitudePerDay": -0.06033130513918011
+          },
+          "rahu": {
+            "longitude": 126.91715368084796,
+            "speedLongitudePerDay": -0.05299204169384307
+          },
+          "ketu": {
+            "longitude": 306.91715368084795,
+            "speedLongitudePerDay": -0.05299204169384307
+          }
+        },
+        "vimshottari": {
+          "firstLord": "moon",
+          "firstStartUtc": "1958-04-23T11:05:58.847Z",
+          "firstEndUtc": "1968-04-22T21:17:58.847Z",
+          "birthAntardashaLord": "jupiter"
+        }
+      }
+    },
+    {
+      "id": "1972-12-31-2359",
+      "localBirthIst": "1972-12-31T23:59:00+05:30",
+      "dateUtc": "1972-12-31T18:29:00.000Z",
+      "expected": {
+        "ayanamsa": 23.479955759138704,
+        "lagnaByCity": {
+          "ujjain": 159.5629725401347,
+          "srinagar": 158.4739507620304,
+          "delhi": 160.68924623908174,
+          "jaipur": 159.47584542473103,
+          "dwarka": 153.2712155627143,
+          "ahmedabad": 156.60584746342977,
+          "mumbai": 156.89886751280244,
+          "hyderabad": 162.28437654752966,
+          "bengaluru": 161.58911425364124,
+          "chennai": 164.23088569298088,
+          "thiruvananthapuram": 161.0822767819493,
+          "varanasi": 166.00494922448445,
+          "kolkata": 171.16040547550708,
+          "puri": 169.08743745026834,
+          "guwahati": 173.7821817422928
+        },
+        "grahas": {
+          "sun": {
+            "longitude": 256.716755831418,
+            "speedLongitudePerDay": 1.0195829131101413
+          },
+          "moon": {
+            "longitude": 214.3636333440297,
+            "speedLongitudePerDay": 11.811235903926065
+          },
+          "mars": {
+            "longitude": 217.2602023072187,
+            "speedLongitudePerDay": 0.6803060936597025
+          },
+          "mercury": {
+            "longitude": 240.80088347134253,
+            "speedLongitudePerDay": 1.471255204033039
+          },
+          "jupiter": {
+            "longitude": 264.2786630289191,
+            "speedLongitudePerDay": 0.23250676024298192
+          },
+          "venus": {
+            "longitude": 232.72549480570348,
+            "speedLongitudePerDay": 1.249125223739086
+          },
+          "saturn": {
+            "longitude": 51.83251185973337,
+            "speedLongitudePerDay": -0.07064041037660836
+          },
+          "rahu": {
+            "longitude": 263.78046246077844,
+            "speedLongitudePerDay": -0.052992030649856206
+          },
+          "ketu": {
+            "longitude": 83.78046246077844,
+            "speedLongitudePerDay": -0.052992030649856206
+          }
+        },
+        "vimshottari": {
+          "firstLord": "saturn",
+          "firstStartUtc": "1971-07-14T12:42:12.624Z",
+          "firstEndUtc": "1990-07-14T03:17:00.624Z",
+          "birthAntardashaLord": "saturn"
+        }
+      }
+    },
+    {
+      "id": "1984-04-13-1200",
+      "localBirthIst": "1984-04-13T12:00:00+05:30",
+      "dateUtc": "1984-04-13T06:30:00.000Z",
+      "expected": {
+        "ayanamsa": 23.637528307432945,
+        "lagnaByCity": {
+          "ujjain": 89.18228497352538,
+          "srinagar": 93.15317002536975,
+          "delhi": 92.70732647597973,
+          "jaipur": 90.75549827175706,
+          "dwarka": 82.79681985775349,
+          "ahmedabad": 86.29989571367176,
+          "mumbai": 84.92783518737491,
+          "hyderabad": 89.24671061421787,
+          "bengaluru": 86.73948203212336,
+          "chennai": 89.20299675010017,
+          "thiruvananthapuram": 84.4367706336161,
+          "varanasi": 96.29722769060518,
+          "kolkata": 99.9466885134837,
+          "puri": 96.7007774802317,
+          "guwahati": 104.1723829608076
+        },
+        "grahas": {
+          "sun": {
+            "longitude": 359.88488975417016,
+            "speedLongitudePerDay": 0.9794279320165966
+          },
+          "moon": {
+            "longitude": 144.49948849404657,
+            "speedLongitudePerDay": 14.960495122976605
+          },
+          "mars": {
+            "longitude": 214.34077954599306,
+            "speedLongitudePerDay": -0.09687385609222696
+          },
+          "mercury": {
+            "longitude": 12.95878712364876,
+            "speedLongitudePerDay": -0.14703203059605283
+          },
+          "jupiter": {
+            "longitude": 258.9037779596987,
+            "speedLongitudePerDay": 0.050935273385323394
+          },
+          "venus": {
+            "longitude": 343.05675464116445,
+            "speedLongitudePerDay": 1.2319507776543699
+          },
+          "saturn": {
+            "longitude": 200.91276635395474,
+            "speedLongitudePerDay": -0.06766605887618377
+          },
+          "rahu": {
+            "longitude": 45.42675263918783,
+            "speedLongitudePerDay": -0.052992036240576905
+          },
+          "ketu": {
+            "longitude": 225.42675263918784,
+            "speedLongitudePerDay": -0.052992036240576905
+          }
+        },
+        "vimshottari": {
+          "firstLord": "venus",
+          "firstStartUtc": "1967-07-14T17:44:26.353Z",
+          "firstEndUtc": "1987-07-14T14:08:26.353Z",
+          "birthAntardashaLord": "mercury"
+        }
+      }
+    },
+    {
+      "id": "1992-08-14-0542",
+      "localBirthIst": "1992-08-14T05:42:00+05:30",
+      "dateUtc": "1992-08-14T00:12:00.000Z",
+      "expected": {
+        "ayanamsa": 23.753967490461434,
+        "lagnaByCity": {
+          "ujjain": 112.30750808498784,
+          "srinagar": 114.90074884022836,
+          "delhi": 115.18913209994507,
+          "jaipur": 113.44606168094454,
+          "dwarka": 105.99182921803167,
+          "ahmedabad": 109.421775423601,
+          "mumbai": 108.4516217392382,
+          "hyderabad": 113.03417389825985,
+          "bengaluru": 110.93914967991908,
+          "chennai": 113.47613060324322,
+          "thiruvananthapuram": 109.01065110392837,
+          "varanasi": 119.24662880411067,
+          "kolkata": 123.3485523227955,
+          "puri": 120.39036004310846,
+          "guwahati": 127.15640206372255
+        },
+        "grahas": {
+          "sun": {
+            "longitude": 117.70488559296118,
+            "speedLongitudePerDay": 0.9601225072352608
+          },
+          "moon": {
+            "longitude": 303.9435875208682,
+            "speedLongitudePerDay": 11.857835820224288
+          },
+          "mars": {
+            "longitude": 48.35221831352513,
+            "speedLongitudePerDay": 0.6469362871580023
+          },
+          "mercury": {
+            "longitude": 102.25499809629515,
+            "speedLongitudePerDay": 0.10468544114358574
+          },
+          "jupiter": {
+            "longitude": 143.96651841070897,
+            "speedLongitudePerDay": 0.20397712552804625
+          },
+          "venus": {
+            "longitude": 134.5307675727953,
+            "speedLongitudePerDay": 1.2295471759903165
+          },
+          "saturn": {
+            "longitude": 290.88570709987556,
+            "speedLongitudePerDay": -0.07403735931867458
+          },
+          "rahu": {
+            "longitude": 244.07995246090613,
+            "speedLongitudePerDay": -0.052992028247220525
+          },
+          "ketu": {
+            "longitude": 64.07995246090616,
+            "speedLongitudePerDay": -0.052992028247220525
+          }
+        },
+        "vimshottari": {
+          "firstLord": "mars",
+          "firstStartUtc": "1987-01-18T11:13:16.895Z",
+          "firstEndUtc": "1994-01-18T03:57:40.895Z",
+          "birthAntardashaLord": "venus"
+        }
+      }
+    },
+    {
+      "id": "2000-01-01-1200",
+      "localBirthIst": "2000-01-01T12:00:00+05:30",
+      "dateUtc": "2000-01-01T06:30:00.000Z",
+      "expected": {
+        "ayanamsa": 23.85708358929668,
+        "lagnaByCity": {
+          "ujjain": 340.8545793598213,
+          "srinagar": 340.0447040336949,
+          "delhi": 343.1891240243307,
+          "jaipur": 341.0604049141497,
+          "dwarka": 331.7765403231836,
+          "ahmedabad": 336.5510673834815,
+          "mumbai": 336.9274636449992,
+          "hyderabad": 343.9772916459355,
+          "bengaluru": 342.5899246709731,
+          "chennai": 345.82650624565593,
+          "thiruvananthapuram": 341.5848242203743,
+          "varanasi": 350.74209946632266,
+          "kolkata": 357.3080001607495,
+          "puri": 353.5402271744361,
+          "guwahati": 2.6001477261633106
+        },
+        "grahas": {
+          "sun": {
+            "longitude": 256.28208752922654,
+            "speedLongitudePerDay": 1.0193731420324645
+          },
+          "moon": {
+            "longitude": 196.71163903590315,
+            "speedLongitudePerDay": 12.056821892617899
+          },
+          "mars": {
+            "longitude": 303.93233126574535,
+            "speedLongitudePerDay": 0.7756288599406347
+          },
+          "mercury": {
+            "longitude": 247.67956008062362,
+            "speedLongitudePerDay": 1.5550131904845201
+          },
+          "jupiter": {
+            "longitude": 1.3906213295225736,
+            "speedLongitudePerDay": 0.039948188435328706
+          },
+          "venus": {
+            "longitude": 217.4355326980057,
+            "speedLongitudePerDay": 1.2087424614146511
+          },
+          "saturn": {
+            "longitude": 16.547068717373858,
+            "speedLongitudePerDay": -0.020401938032073758
+          },
+          "rahu": {
+            "longitude": 101.19956757320953,
+            "speedLongitudePerDay": -0.052992019727111754
+          },
+          "ketu": {
+            "longitude": 281.19956757320955,
+            "speedLongitudePerDay": -0.052992019727111754
+          }
+        },
+        "vimshottari": {
+          "firstLord": "rahu",
+          "firstStartUtc": "1986-06-10T07:44:00.288Z",
+          "firstEndUtc": "2004-06-09T16:29:36.288Z",
+          "birthAntardashaLord": "venus"
+        }
+      }
+    },
+    {
+      "id": "2007-07-07-0707",
+      "localBirthIst": "2007-07-07T07:07:00+05:30",
+      "dateUtc": "2007-07-07T01:37:00.000Z",
+      "expected": {
+        "ayanamsa": 23.962021018068754,
+        "lagnaByCity": {
+          "ujjain": 97.38805365642045,
+          "srinagar": 100.90065093830053,
+          "delhi": 100.69480919627576,
+          "jaipur": 98.81876279910017,
+          "dwarka": 91.05757152814222,
+          "ahmedabad": 94.5187939488556,
+          "mumbai": 93.27233302498414,
+          "hyderabad": 97.65344640397596,
+          "bengaluru": 95.27442973263965,
+          "chennai": 97.75486150331005,
+          "thiruvananthapuram": 93.08214036079079,
+          "varanasi": 104.42083712654824,
+          "kolkata": 108.20829035772681,
+          "puri": 105.06018757056498,
+          "guwahati": 112.29008380060725
+        },
+        "grahas": {
+          "sun": {
+            "longitude": 80.63586616950485,
+            "speedLongitudePerDay": 0.9533035445578926
+          },
+          "moon": {
+            "longitude": 342.2709850376717,
+            "speedLongitudePerDay": 14.051293917981432
+          },
+          "mars": {
+            "longitude": 14.765692754319987,
+            "speedLongitudePerDay": 0.7089406457514172
+          },
+          "mercury": {
+            "longitude": 68.88128680365197,
+            "speedLongitudePerDay": -0.2400795816926463
+          },
+          "jupiter": {
+            "longitude": 227.39562935834672,
+            "speedLongitudePerDay": -0.08851851367595812
+          },
+          "venus": {
+            "longitude": 122.01268485413993,
+            "speedLongitudePerDay": 0.607458584790633
+          },
+          "saturn": {
+            "longitude": 119.0001781194686,
+            "speedLongitudePerDay": 0.10897452178971274
+          },
+          "rahu": {
+            "longitude": 315.8002807077732,
+            "speedLongitudePerDay": -0.052992013859179024
+          },
+          "ketu": {
+            "longitude": 135.8002807077732,
+            "speedLongitudePerDay": -0.052992013859179024
+          }
+        },
+        "vimshottari": {
+          "firstLord": "saturn",
+          "firstStartUtc": "1994-10-11T06:47:09.697Z",
+          "firstEndUtc": "2013-10-10T21:21:57.697Z",
+          "birthAntardashaLord": "mars"
+        }
+      }
+    },
+    {
+      "id": "2016-02-29-1831",
+      "localBirthIst": "2016-02-29T18:31:00+05:30",
+      "dateUtc": "2016-02-29T13:01:00.000Z",
+      "expected": {
+        "ayanamsa": 24.08286050499771,
+        "lagnaByCity": {
+          "ujjain": 137.42217718082964,
+          "srinagar": 138.1122698909838,
+          "delhi": 139.41543559938054,
+          "jaipur": 137.935217166256,
+          "dwarka": 131.06229782188097,
+          "ahmedabad": 134.47214803327398,
+          "mumbai": 134.13466560295137,
+          "hyderabad": 139.18873169185068,
+          "bengaluru": 137.77832760720665,
+          "chennai": 140.41593104212004,
+          "thiruvananthapuram": 136.5332593518212,
+          "varanasi": 144.17645990962833,
+          "kolkata": 148.89521614692555,
+          "puri": 146.36739394457845,
+          "guwahati": 152.111729682627
+        },
+        "grahas": {
+          "sun": {
+            "longitude": 316.2911409758544,
+            "speedLongitudePerDay": 1.0038721077354469
+          },
+          "moon": {
+            "longitude": 210.44553221868065,
+            "speedLongitudePerDay": 11.990744921646575
+          },
+          "mars": {
+            "longitude": 213.78509827537619,
+            "speedLongitudePerDay": 0.3972063613945793
+          },
+          "mercury": {
+            "longitude": 298.0499360913738,
+            "speedLongitudePerDay": 1.5655058659215524
+          },
+          "jupiter": {
+            "longitude": 145.2475658559083,
+            "speedLongitudePerDay": -0.12750198349420938
+          },
+          "venus": {
+            "longitude": 291.20500901962833,
+            "speedLongitudePerDay": 1.2370667656511745
+          },
+          "saturn": {
+            "longitude": 231.80842594433923,
+            "speedLongitudePerDay": 0.040965524211169585
+          },
+          "rahu": {
+            "longitude": 148.37338097176487,
+            "speedLongitudePerDay": -0.05299200545871163
+          },
+          "ketu": {
+            "longitude": 328.37338097176485,
+            "speedLongitudePerDay": -0.05299200545871163
+          }
+        },
+        "vimshottari": {
+          "firstLord": "jupiter",
+          "firstStartUtc": "2003-08-18T08:37:49.392Z",
+          "firstEndUtc": "2019-08-18T05:45:01.392Z",
+          "birthAntardashaLord": "moon"
+        }
+      }
+    },
+    {
+      "id": "2024-04-08-1830",
+      "localBirthIst": "2024-04-08T18:30:00+05:30",
+      "dateUtc": "2024-04-08T13:00:00.000Z",
+      "expected": {
+        "ayanamsa": 24.1961131229574,
+        "lagnaByCity": {
+          "ujjain": 172.37185074313362,
+          "srinagar": 170.1747856811544,
+          "delhi": 172.94212793560934,
+          "jaipur": 171.90879452792558,
+          "dwarka": 166.206728542826,
+          "ahmedabad": 169.44881164611627,
+          "mumbai": 170.14014853002084,
+          "hyderabad": 175.64901906432186,
+          "bengaluru": 175.40896366922493,
+          "chennai": 178.00330443582942,
+          "thiruvananthapuram": 175.37168933555398,
+          "varanasi": 178.54258448696083,
+          "kolkata": 183.90090790859705,
+          "puri": 182.1232524337413,
+          "guwahati": 186.14620553284948
+        },
+        "grahas": {
+          "sun": {
+            "longitude": 354.9867605340877,
+            "speedLongitudePerDay": 0.9830985455343427
+          },
+          "moon": {
+            "longitude": 351.86131426732766,
+            "speedLongitudePerDay": 15.02428189101688
+          },
+          "mars": {
+            "longitude": 318.68355242266995,
+            "speedLongitudePerDay": 0.7775035058194342
+          },
+          "mercury": {
+            "longitude": 0.7440443428906376,
+            "speedLongitudePerDay": -0.6254008366427095
+          },
+          "jupiter": {
+            "longitude": 24.801817829281266,
+            "speedLongitudePerDay": 0.22116061530737993
+          },
+          "venus": {
+            "longitude": 339.97520894383297,
+            "speedLongitudePerDay": 1.2353357508047815
+          },
+          "saturn": {
+            "longitude": 320.2366150267526,
+            "speedLongitudePerDay": 0.10776030274329514
+          },
+          "rahu": {
+            "longitude": 351.4641303584923,
+            "speedLongitudePerDay": -0.052991981124071844
+          },
+          "ketu": {
+            "longitude": 171.4641303584923,
+            "speedLongitudePerDay": -0.052991981124071844
+          }
+        },
+        "vimshottari": {
+          "firstLord": "mercury",
+          "firstStartUtc": "2017-08-24T11:26:02.636Z",
+          "firstEndUtc": "2034-08-24T14:22:26.636Z",
+          "birthAntardashaLord": "sun"
+        }
+      }
+    },
+    {
+      "id": "2026-10-20-2115",
+      "localBirthIst": "2026-10-20T21:15:00+05:30",
+      "dateUtc": "2026-10-20T15:45:00.000Z",
+      "expected": {
+        "ayanamsa": 24.231497831780644,
+        "lagnaByCity": {
+          "ujjain": 58.18052896828018,
+          "srinagar": 63.19983296417163,
+          "delhi": 62.30448551176996,
+          "jaipur": 60.06766117339871,
+          "dwarka": 51.173726562021194,
+          "ahmedabad": 55.03969198212102,
+          "mumbai": 53.46752958346341,
+          "hyderabad": 58.024640817948345,
+          "bengaluru": 55.267315161908535,
+          "chennai": 57.8257261076514,
+          "thiruvananthapuram": 52.80601532097399,
+          "varanasi": 65.92899619217351,
+          "kolkata": 69.51826063216464,
+          "puri": 65.93690837120428,
+          "guwahati": 74.24620727630469
+        },
+        "grahas": {
+          "sun": {
+            "longitude": 183.0364388094423,
+            "speedLongitudePerDay": 0.9937382475571533
+          },
+          "moon": {
+            "longitude": 294.97587465330304,
+            "speedLongitudePerDay": 12.295842931833814
+          },
+          "mars": {
+            "longitude": 108.48122430484068,
+            "speedLongitudePerDay": 0.5366960931239798
+          },
+          "mercury": {
+            "longitude": 205.94215659064236,
+            "speedLongitudePerDay": 0.41981722259412124
+          },
+          "jupiter": {
+            "longitude": 118.56952014084729,
+            "speedLongitudePerDay": 0.1457589187553698
+          },
+          "venus": {
+            "longitude": 188.62550965975748,
+            "speedLongitudePerDay": -0.5840748438612857
+          },
+          "saturn": {
+            "longitude": 345.828496974331,
+            "speedLongitudePerDay": -0.07312358298447859
+          },
+          "rahu": {
+            "longitude": 302.44047112837416,
+            "speedLongitudePerDay": -0.052991978621309915
+          },
+          "ketu": {
+            "longitude": 122.44047112837416,
+            "speedLongitudePerDay": -0.052991978621309915
+          }
+        },
+        "vimshottari": {
+          "firstLord": "mars",
+          "firstStartUtc": "2025-12-09T16:41:01.264Z",
+          "firstEndUtc": "2032-12-09T09:25:25.264Z",
+          "birthAntardashaLord": "rahu"
+        }
+      }
+    }
+  ]
+}

@@ -3,6 +3,9 @@ import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
+import { contentByLang } from '@/utils/localize';
+import { pillTextStyle, titleFontByLang } from '@/utils/langType';
 
 type Props = {
   visible: boolean;
@@ -28,6 +31,12 @@ export default function ResumeReadingSheet({
 }: Props) {
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
+  const title = orderTitlesByLanguage(lang, titleHi, titleEn, {
+    devPrimary: 20,
+    devSecondary: 13,
+    latPrimary: 22,
+    latSecondary: 12,
+  });
 
   return (
     <Modal
@@ -67,26 +76,29 @@ export default function ResumeReadingSheet({
                 styles.titleHi,
                 {
                   color: colors.ink,
-                  fontFamily: typography.readerTitle.fontFamily,
-                  fontSize: 20,
+                  fontFamily: title.primary.fontFamily,
+                  fontSize: title.primary.fontSize,
+                  fontStyle: title.primary.fontStyle,
+                  letterSpacing: title.primary.letterSpacing,
                 },
               ]}
               numberOfLines={1}
             >
-              {titleHi}
+              {title.primary.text}
             </Text>
             <Text
               style={[
                 styles.titleEn,
                 {
                   color: colors.inkMuted,
-                  fontFamily: typography.cardLatin.fontFamily,
-                  fontSize: 13,
+                  fontFamily: title.secondary.fontFamily,
+                  fontSize: title.secondary.fontSize,
+                  fontStyle: title.secondary.fontStyle,
                 },
               ]}
               numberOfLines={1}
             >
-              {titleEn}
+              {title.secondary.text}
             </Text>
           </View>
 
@@ -135,31 +147,24 @@ export default function ResumeReadingSheet({
             <Text
               style={[
                 styles.locationLabel,
-                {
-                  color: colors.inkMuted,
-                  fontSize: typography.sectionLabel.fontSize,
-                  fontWeight: typography.sectionLabel.fontWeight,
-                  letterSpacing: typography.sectionLabel.letterSpacing,
-                },
+                pillTextStyle(lang, typography.sectionLabel),
+                { color: colors.inkMuted },
               ]}
             >
-              {lang === 'hi' ? 'अंतिम पठित' : 'LAST READ'}
+              {contentByLang(lang, 'अंतिम पठित', 'LAST READ')}
             </Text>
             <Text
               style={[
                 styles.locationValue,
                 {
                   color: colors.ink,
-                  fontFamily:
-                    lang === 'hi'
-                      ? typography.readerTitle.fontFamily
-                      : typography.cardLatin.fontFamily,
+                  fontFamily: titleFontByLang(lang),
                   fontSize: 16,
                   fontStyle: lang === 'en' ? 'italic' : 'normal',
                 },
               ]}
             >
-              {lang === 'hi' ? locationHi : locationEn}
+              {contentByLang(lang, locationHi, locationEn)}
             </Text>
           </View>
 

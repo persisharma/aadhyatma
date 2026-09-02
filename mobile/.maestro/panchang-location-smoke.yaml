@@ -1,0 +1,108 @@
+# Panchang Location Picker Smoke Test
+#
+# Verifies the location-aware panchang flow end-to-end via the CITY PICKER path:
+#   1. The reference line defaults to Ujjain and is tappable.
+#   2. The location picker modal opens (GPS row, search field, city list).
+#   3. Searching and picking a city (Delhi) closes the modal and updates the
+#      reference line.
+#   4. The engine recomputes for the new city (time block re-renders) and the
+#      selection persists across a tab switch.
+#   5. Restoring Ujjain returns the default reference.
+#
+# The "Use my location" GPS path is NOT exercised here — Maestro cannot script
+# the native permission dialog reliably in Expo Go. The grant/deny/timeout
+# branches are unit-tested with a mocked expo-location in
+# src/contexts/__tests__/PanchangLocationContext.test.tsx.
+#
+# Selector notes:
+#   - The location chip is a Pressable whose accessibility label derives from
+#     its child text: "Location: <city>" (a bordered chip + ⌄ chevron).
+#   - City rows expose accessibilityLabel "<NameEn>" ("<NameEn>, selected" for
+#     the active one); the search field exposes "Search city".
+#   - SELECTOR COLLISION: the search TextInput's *value* is matchable text too,
+#     so typing the full "Delhi" makes `tapOn: "Delhi"` ambiguous — it resolves
+#     to the field (rendered above the list) and pops the iOS edit menu instead
+#     of selecting the row. We type a PARTIAL query ("Delh"/"Ujjai") that still
+#     filters the list to the one city but never equals the row label, so the
+#     tap lands on the row unambiguously.
+#   - English is set first for the same Devanagari/accessibility-tree reasons
+#     as panchang-smoke.yaml.
+
+appId: com.prashantsharma.vedansh
+---
+# ── Step 1: Boot Vedansh in Expo Go (exits on Home) ──
+- runFlow: _launch.yaml
+
+# ── Step 2: Set global reading language to English (More tab) ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- tapOn: "Language,.*"   # More now opens a Language picker sheet, not inline pills
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── Step 3: Open the Panchang tab; default reference is Ujjain ──
+- tapOn: { id: "tab-panchang" }
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: ".*Ujjain.*"
+    timeout: 30000
+
+# ── Step 4: Open the location picker from the reference line ──
+- tapOn: "Location: .*"
+- waitForAnimationToEnd
+- assertVisible: "Choose location"
+- assertVisible: "Use my location"
+- assertVisible: "Search city"
+
+# ── Step 5: Search for Delhi and pick it (partial query — see selector notes) ──
+- tapOn: "Search city"
+- inputText: "Delh"
+# Dismiss the soft keyboard first — on Android it covers the "Delhi" result row,
+# so the tap would land on the keyboard and leave the picker open (the reference
+# line then never updates and the sunrise block stays behind the open modal).
+- hideKeyboard
+- waitForAnimationToEnd
+- tapOn: "Delhi"
+- waitForAnimationToEnd
+
+# ── Step 6: Reference line reflects Delhi; engine output re-renders ──
+- extendedWaitUntil:
+    visible: ".*Delhi.*"
+    timeout: 15000
+# The panchang recomputes asynchronously after the location change; let it settle
+# before scrolling so the sunrise/sunset block has rendered (on Android the
+# recompute can lag the location-line update).
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Sunrise"
+    direction: DOWN
+    centerElement: true
+    timeout: 20000
+- assertVisible: "Brahma Muhurta"
+
+# ── Step 7: Selection persists across a tab switch ──
+# The Panchang list keeps its scroll position across a tab switch on Android
+# (iOS resets it), and the earlier "scroll to Sunrise" left the top reference
+# line off-screen — so scroll back up to it rather than a plain assert.
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- tapOn: { id: "tab-panchang" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: ".*Delhi.*"
+    direction: UP
+    centerElement: true
+    timeout: 15000
+
+# No explicit location/language restore needed: the next run's _launch
+# clearState wipes persisted state, so the app defaults back to Ujjain + Hindi.
+# (An in-flow restore here only added a flaky, redundant location-picker round
+# trip.) Stop the app so the next flow starts clean.
+- stopApp:
+    appId: com.prashantsharma.vedansh

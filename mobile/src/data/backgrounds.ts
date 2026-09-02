@@ -21,18 +21,43 @@ const categoryBackgrounds: Record<ContentCategory, BackgroundImage> = {
   chalisa: backgroundImages.category_chalisa_booklet_mala,
   japam: backgroundImages.category_japam_mala,
   aarti: backgroundImages.category_aarti_diya,
+  // Theerth has no faded-sketch background of its own yet — the CategoryList
+  // re-uses the granth scripture image as a neutral parchment plate while
+  // PRD-07 Phase 4 commissions a dedicated kshetra sketch. Replace once
+  // the asset lands.
+  theerth: backgroundImages.category_granth_open_scripture,
   sanskar: backgroundImages.source_gayatri_savitri_sun,
+  kavacham: backgroundImages.category_kavacham_protection,
+  // Ashtakam reuses the hymn-scroll plate (Stotram-family form). Per-text reader
+  // backgrounds resolve by source id below (Lingashtakam → Shiva sketch).
+  ashtakam: backgroundImages.category_stotram_hymn_scroll,
+  suktam: backgroundImages.category_stotram_hymn_scroll,
+  // No `stuti` key — स्तुति folded into `stotram` (not a category). Its texts
+  // resolve per-id reader backgrounds via sourceBackgrounds below.
 };
 
 const deityBackgrounds: Record<Deity, BackgroundImage> = {
   rama: backgroundImages.deity_rama_darbar,
   krishna: backgroundImages.deity_krishna_bansuri,
-  vishnu: backgroundImages.deity_krishna_bansuri,
+  vishnu: backgroundImages.source_vishnu_narayana,
   shiva: shivaStrotamImages.shiva,
   hanuman: chalisaImages.hanuman_sea,
   durga: backgroundImages.deity_durga_lion,
   ganesha: backgroundImages.deity_ganesha_modak,
-  savitr: shivaStrotamImages.shiva,
+  savitr: backgroundImages.source_gayatri_savitri_sun,
+  saraswati: backgroundImages.deity_saraswati_veena,
+  lakshmi: backgroundImages.deity_lakshmi,
+  surya: backgroundImages.deity_surya,
+  radha: backgroundImages.deity_radha_krishna,
+  kartikeya: backgroundImages.theerth_vetrimalai_murugan,
+  kubera: backgroundImages.deity_kubera,
+  ganga: backgroundImages.deity_ganga,
+  parvati: backgroundImages.deity_parvati_bhavani,
+  narasimha: backgroundImages.deity_narasimha_prahlad,
+  dattatreya: backgroundImages.deity_dattatreya,
+  shani: backgroundImages.deity_shani,
+  kali: backgroundImages.deity_kali,
+  navagraha: backgroundImages.deity_navagraha_icons,
 };
 
 const sourceBackgrounds: Record<string, BackgroundImage> = {
@@ -45,15 +70,22 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'gayatri-mantra': backgroundImages.source_gayatri_savitri_sun,
   'om-namo-bhagavate-vasudevaya': backgroundImages.source_vishnu_narayana,
   ramcharitmanas: backgroundImages.deity_rama_darbar,
+  'valmiki-ramayan': backgroundImages.deity_rama_darbar,
   'durga-stotram': backgroundImages.deity_durga_lion,
   'ganesh-stotram': backgroundImages.deity_ganesha_modak,
   'vishnu-sahasranama': backgroundImages.source_vishnu_narayana,
   'shiv-chalisa': shivaStrotamImages.shiva,
   'durga-chalisa': backgroundImages.deity_durga_lion,
   'ganesh-chalisa': backgroundImages.deity_ganesha_modak,
+  'gayatri-chalisa': backgroundImages.source_gayatri_savitri_sun,
+  'ram-chalisa': backgroundImages.deity_rama_darbar,
+  'krishna-chalisa': backgroundImages.deity_krishna_bansuri,
+  'vishnu-chalisa': backgroundImages.source_vishnu_narayana,
+  'saraswati-chalisa': backgroundImages.deity_saraswati_veena,
   'hanuman-ashtak': chalisaImages.hanuman_lankadahan,
   'bajrang-baan': chalisaImages.hanuman_lankadahan,
   'ram-stuti': backgroundImages.deity_rama_darbar,
+  'ram-aarti': backgroundImages.deity_rama_darbar,
   'krishna-stotram': backgroundImages.deity_krishna_bansuri,
   'om-jai-jagdish': backgroundImages.source_vishnu_narayana,
   'hanuman-aarti': chalisaImages.hanuman_lankadahan,
@@ -68,6 +100,35 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'gau-seva': backgroundImages.deity_krishna_bansuri,
   'sandhya-deepam': backgroundImages.category_aarti_diya,
   'ratri-shloka': backgroundImages.deity_rama_darbar,
+  'saraswati-stotram': backgroundImages.deity_saraswati_veena,
+  'saraswati-aarti': backgroundImages.deity_saraswati_veena,
+  'gayatri-aarti': backgroundImages.source_gayatri_savitri_sun,
+  'vidyarambha-prarthana': backgroundImages.deity_saraswati_veena,
+  lingashtakam: shivaStrotamImages.shiva,
+  madhurashtakam: backgroundImages.deity_krishna_bansuri,
+  achyutashtakam: backgroundImages.source_vishnu_narayana,
+  'devi-suktam': backgroundImages.deity_durga_lion,
+  'purusha-suktam': backgroundImages.source_vishnu_narayana,
+  'narayana-suktam': backgroundImages.source_vishnu_narayana,
+  'rama-raksha-stotra': backgroundImages.deity_rama_darbar,
+  'ganesha-kavacham': backgroundImages.deity_ganesha_modak,
+  'shiva-kavacham': shivaStrotamImages.shiva,
+  'durga-kavach': backgroundImages.deity_durga_lion,
+  'krishna-stuti': backgroundImages.deity_krishna_bansuri,
+  'durga-stuti-arjuna': backgroundImages.deity_durga_lion,
+  'mahalakshmi-ashtakam': backgroundImages.deity_lakshmi,
+  'surya-ashtakam': backgroundImages.deity_surya,
+  radhashtakam: backgroundImages.deity_radha_krishna,
+  'subrahmanya-ashtakam': backgroundImages.theerth_vetrimalai_murugan,
+  'kubera-stotram': backgroundImages.deity_kubera,
+  gangashtakam: backgroundImages.deity_ganga,
+  'bhavani-ashtakam': backgroundImages.deity_parvati_bhavani,
+  'narasimha-ashtakam': backgroundImages.deity_narasimha_prahlad,
+  'datta-ashtakam': backgroundImages.deity_dattatreya,
+  'shani-ashtakam': backgroundImages.deity_shani,
+  'kalika-ashtakam': backgroundImages.deity_kali,
+  rudrashtakam: shivaStrotamImages.shiva,
+  'navagraha-stotram': backgroundImages.deity_navagraha_icons,
 };
 
 const hanumanChalisaOverrides: Record<string, BackgroundImage> = {
@@ -87,6 +148,40 @@ export function getDeityBackground(deityId: Deity): BackgroundImage {
   return deityBackgrounds[deityId];
 }
 
+/**
+ * Per-temple Theerth background overrides, keyed by temple id. Used for
+ * shrines whose presiding-deity plate is too generic for the temple detail.
+ */
+const theerthBackgroundOverrides: Record<string, BackgroundImage> = {
+  'khatu-shyam': backgroundImages.theerth_khatu_shyam,
+  'vetrimalai-murugan': backgroundImages.theerth_vetrimalai_murugan,
+  sabarimala: backgroundImages.theerth_sabarimala,
+  'gogaji-gogamedi': backgroundImages.theerth_gogaji_gogamedi,
+  'tejaji-kharnal': backgroundImages.theerth_tejaji_kharnal,
+  'khandoba-jejuri': backgroundImages.theerth_khandoba_jejuri,
+  'mahasu-devta-hanol': backgroundImages.theerth_mahasu_devta_hanol,
+  ramdevra: backgroundImages.theerth_ramdevra,
+  'salasar-balaji': backgroundImages.theerth_salasar_balaji,
+  'karni-mata': backgroundImages.theerth_karni_mata,
+  'jeen-mata': backgroundImages.theerth_jeen_mata,
+};
+
+export function getTheerthBackground(templeId: string, deityId: Deity): BackgroundImage {
+  return theerthBackgroundOverrides[templeId] ?? getDeityBackground(deityId);
+}
+
+const deityBackgroundList: BackgroundImage[] = Object.values(deityBackgrounds);
+
+/**
+ * A random deity backdrop, for the "By Deity" index which isn't tied to a single
+ * deity. Callers memoize per mount (useMemo []) so the pick is stable while the
+ * screen is open but varies between visits — same spirit as the Home spotlight
+ * shuffle.
+ */
+export function getRandomDeityBackground(): BackgroundImage {
+  return deityBackgroundList[Math.floor(Math.random() * deityBackgroundList.length)];
+}
+
 export function getSourceBackground(sourceId: string): BackgroundImage | null {
   return sourceBackgrounds[sourceId] ?? null;
 }
@@ -97,6 +192,15 @@ export function getReaderBackground(
 ): BackgroundImage | null {
   if (sourceId === 'hanuman-chalisa') {
     return (verse?.id && hanumanChalisaOverrides[verse.id]) || chalisaImages.ram_hanuman;
+  }
+
+  if (sourceId === 'valmiki-ramayan') {
+    // `verse.stanza` carries the kāṇḍa number (see `ValmikiRamayanVerse`), so the
+    // plate changes per kāṇḍa and stays deterministic per verse.
+    const kanda = verse?.stanza ?? 1;
+    if (kanda === 4) return chalisaImages.ram_hanuman; // Kiṣkindhā — Rāma meets Hanumān
+    if (kanda === 5) return chalisaImages.hanuman_sea; // Sundara — Hanumān crosses the ocean
+    return backgroundImages.deity_rama_darbar;
   }
 
   if (sourceId === 'sundarkand') {
@@ -124,6 +228,11 @@ export function getReaderBackground(
   }
 
   for (const entry of library.filter((item) => item.status === 'active' && !item.hidden)) {
+    // Theerth entries open TheerthMapScreen and a per-temple detail screen that
+    // renders the temple's deity background (see TheerthDetailScreen), not a verse
+    // reader — so they have no source/reader background entry here. Category
+    // background is still enforced above.
+    if (entry.category === 'theerth') continue;
     if (!getSourceBackground(entry.id)) {
       throw new Error(`backgrounds: missing source background for ${entry.id}`);
     }

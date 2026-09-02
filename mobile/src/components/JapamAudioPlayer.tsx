@@ -1,41 +1,49 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import {
-  setAudioModeAsync,
-  useAudioPlayer,
-  useAudioPlayerStatus,
-} from 'expo-audio';
+import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
 import { useTheme } from '@/theme/ThemeContext';
-import { getJapamAudioSource } from '@assets/japam-audio';
+import { fontFamilies } from '@/theme/typography';
+import { ensureBackgroundAudioMode } from '@/audio/audioSession';
+import { claimPlayback, registerStopper } from '@/audio/playbackArbiter';
+import { getJapamAudioRepetitions, getJapamAudioSource } from '@assets/japam-audio';
+import {
+  advanceBeadProgress,
+  INITIAL_BEAD_PROGRESS,
+  type BeadProgress,
+} from '@/components/japamBeadProgress';
+import type { Lang } from '@/data/gita/language';
+import { pick } from '@/utils/localize';
+import RateStepper from './RateStepper';
 
 type Props = {
   mantraId: string;
-  lang: 'hi' | 'en';
-  /** Called once per completed audio loop (= one bead). */
-  onIteration: () => void;
+  lang: Lang;
+  /** Register newly-chanted beads. Called with the number of beads completed
+   *  since the last call (>= 1) — one per recitation, batched per status tick. */
+  onIteration: (beads: number) => void;
+  /** Start playing as soon as the audio is loaded. Used by the alarm
+   *  deep-link flow so a tap on the notification drops the user into
+   *  chanting without a second press. */
+  autoPlay?: boolean;
 };
 
 const MIN_RATE = 0.5;
 const MAX_RATE = 1.5;
 const RATE_STEP = 0.1;
 
-let audioModeConfigured = false;
-async function ensureBackgroundAudioMode() {
-  if (audioModeConfigured) return;
-  audioModeConfigured = true;
-  try {
-    await setAudioModeAsync({
-      playsInSilentMode: true,
-      shouldPlayInBackground: true,
-      interruptionMode: 'mixWithOthers',
-      interruptionModeAndroid: 'duckOthers',
-    });
-  } catch {
-    audioModeConfigured = false;
-  }
-}
+// When the counter is opened by tapping an alarm (`autoPlay`), the mantra
+// plays from the shared recording and auto-stops after this long — so the
+// alarm "rings" the mantra then falls silent, rather than looping forever.
+// Reuses the same bundled mp3 (no separate, size-adding alarm clip). Any
+// manual play/pause cancels the cap so a real chanting session isn't cut off.
+const ALARM_AUTO_STOP_MS = 30_000;
 
-export default function JapamAudioPlayer({ mantraId, lang, onIteration }: Props) {
+export default function JapamAudioPlayer({
+  mantraId,
+  lang,
+  onIteration,
+  autoPlay,
+}: Props) {
   const { colors, typography, radii } = useTheme();
   const source = useMemo(() => getJapamAudioSource(mantraId), [mantraId]);
 
@@ -49,6 +57,7 @@ export default function JapamAudioPlayer({ mantraId, lang, onIteration }: Props)
       mantraId={mantraId}
       lang={lang}
       onIteration={onIteration}
+      autoPlay={autoPlay}
       colors={colors}
       typography={typography}
       radii={radii}
@@ -68,6 +77,7 @@ function ActiveAudioPlayer({
   mantraId,
   lang,
   onIteration,
+  autoPlay,
   colors,
   typography,
   radii,
@@ -75,6 +85,22 @@ function ActiveAudioPlayer({
   const player = useAudioPlayer(source, { updateInterval: 250 });
   const status = useAudioPlayerStatus(player);
   const [rate, setRate] = useState(1.0);
+  const autoPlayedRef = useRef(false);
+  // How many times the recording chants the mantra per full playback. A plain
+  // single-recitation clip is 1 (one bead per loop); musical renditions repeat
+  // the mantra many times, so the count is spread across the clip.
+  const repetitions = useMemo(() => getJapamAudioRepetitions(mantraId), [mantraId]);
+  // Cumulative bead-counting state (loops completed, beads emitted, last
+  // position). Advanced by the pure `advanceBeadProgress` reducer each tick.
+  const progressRef = useRef<BeadProgress>(INITIAL_BEAD_PROGRESS);
+  // Pending alarm auto-stop timer (see ALARM_AUTO_STOP_MS).
+  const capTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const clearCapTimer = useCallback(() => {
+    if (capTimerRef.current) {
+      clearTimeout(capTimerRef.current);
+      capTimerRef.current = null;
+    }
+  }, []);
 
   const onIterationRef = useRef(onIteration);
   useEffect(() => {
@@ -89,6 +115,9 @@ function ActiveAudioPlayer({
   // Reset playback when the mantra changes.
   useEffect(() => {
     setRate(1.0);
+    autoPlayedRef.current = false;
+    progressRef.current = INITIAL_BEAD_PROGRESS;
+    clearCapTimer();
     if (player.isLoaded) {
       player.pause();
       player.seekTo(0).catch(() => undefined);
@@ -96,25 +125,62 @@ function ActiveAudioPlayer({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mantraId]);
 
-  // We don't use the player's native `loop` flag — instead we manually
-  // restart on `didJustFinish` so we can count loops reliably across
-  // platforms.
-  const finishedRef = useRef(false);
+  // Honour an `autoPlay` request once the file is ready. Gated on
+  // `status.isLoaded` because `play()` is a no-op before the player has
+  // loaded; gated on a ref so we don't re-trigger on every status update.
+  // The alarm wake reuses the shared recording, so cap it at
+  // ALARM_AUTO_STOP_MS — the mantra rings then stops instead of looping.
   useEffect(() => {
-    if (status.didJustFinish && !finishedRef.current) {
-      finishedRef.current = true;
-      onIterationRef.current();
-      // Restart for the next iteration.
-      player
-        .seekTo(0)
-        .then(() => {
-          player.play();
-        })
-        .catch(() => undefined);
-    } else if (!status.didJustFinish) {
-      finishedRef.current = false;
+    if (!autoPlay || autoPlayedRef.current) return;
+    if (!status.isLoaded) return;
+    autoPlayedRef.current = true;
+    try {
+      claimPlayback('japam');
+      player.play();
+      clearCapTimer();
+      capTimerRef.current = setTimeout(() => {
+        capTimerRef.current = null;
+        try {
+          player.pause();
+        } catch {
+          /* player may already be released */
+        }
+      }, ALARM_AUTO_STOP_MS);
+    } catch {
+      /* next render will retry via the gate above */
     }
-  }, [status.didJustFinish, player]);
+  }, [autoPlay, status.isLoaded, player, clearCapTimer]);
+
+  // Use the player's native `loop` flag for the auto-chant repeat. Manually
+  // restarting via `seekTo(0)` + `play()` on `didJustFinish` is unreliable on
+  // iOS: after the track finishes the restart often fails to resume and
+  // `didJustFinish` does not toggle back cleanly, which froze both the
+  // playback and the bead count. Native looping repeats gaplessly on every
+  // platform.
+  useEffect(() => {
+    player.loop = true;
+  }, [player]);
+
+  // Advance the bead count as the clip plays, via the pure `advanceBeadProgress`
+  // reducer. A single-recitation clip (`repetitions === 1`) registers one bead
+  // per completed loop; a musical rendition that chants the mantra
+  // `repetitions` times registers one bead per equal-time segment, so the count
+  // tracks the chanting rather than the multi-minute file. Position (not
+  // `didJustFinish`, which isn't emitted while `loop` is enabled and behaves
+  // inconsistently across platforms) drives the counting. A multi-bead tick is
+  // applied as ONE `onIteration(delta)` call — a single atomic counter update
+  // (one render, one persist) rather than N calls.
+  useEffect(() => {
+    if (!status.isLoaded) return;
+    const { state, delta } = advanceBeadProgress(progressRef.current, {
+      currentTime: status.currentTime ?? 0,
+      duration: status.duration ?? 0,
+      repetitions,
+      playing: !!status.playing,
+    });
+    progressRef.current = state;
+    if (delta > 0) onIterationRef.current(delta);
+  }, [status.currentTime, status.duration, status.isLoaded, status.playing, repetitions]);
 
   useEffect(() => {
     player.shouldCorrectPitch = true;
@@ -124,35 +190,60 @@ function ActiveAudioPlayer({
   // Pause and release the global audio session when unmounting.
   useEffect(() => {
     return () => {
+      clearCapTimer();
       try {
         player.pause();
       } catch {
         /* player may already be released */
       }
     };
-  }, [player]);
+  }, [player, clearCapTimer]);
+
+  // Let read-aloud / the recorded player silence this loop when they start.
+  useEffect(
+    () =>
+      registerStopper('japam', () => {
+        clearCapTimer();
+        try {
+          player.pause();
+        } catch {
+          /* player may already be released */
+        }
+      }),
+    [player, clearCapTimer]
+  );
 
   const isPlaying = status.playing;
 
   const togglePlay = useCallback(() => {
+    // A deliberate tap means the user is chanting, not just hearing the alarm
+    // out — drop the auto-stop so their session isn't cut off at 30 s.
+    clearCapTimer();
     if (status.playing) {
       player.pause();
     } else {
+      claimPlayback('japam');
       player.play();
     }
-  }, [player, status.playing]);
+  }, [player, status.playing, clearCapTimer]);
 
-  const decreaseRate = useCallback(() => {
-    setRate((r) => Math.max(MIN_RATE, +(r - RATE_STEP).toFixed(2)));
-  }, []);
-
-  const increaseRate = useCallback(() => {
-    setRate((r) => Math.min(MAX_RATE, +(r + RATE_STEP).toFixed(2)));
-  }, []);
-
-  const playLabel = lang === 'hi' ? (isPlaying ? 'विराम' : 'चलाएँ') : isPlaying ? 'Pause' : 'Play';
-  const tempoLabel = lang === 'hi' ? 'गति' : 'Tempo';
+  const playLabel = isPlaying
+    ? pick(lang, { hi: 'विराम', en: 'Pause', gu: 'વિરામ', kn: 'ವಿರಾಮ' })
+    : pick(lang, { hi: 'चलाएँ', en: 'Play', gu: 'ચલાવો', kn: 'ಚಲಾಯಿಸಿ' });
+  const tempoLabel = pick(lang, { hi: 'गति', en: 'Tempo', gu: 'ગતિ', kn: 'ಗತಿ' });
   const a11yPlay = isPlaying ? 'Pause auto-chant' : 'Play auto-chant';
+  const labelHeadFont =
+    lang === 'gu'
+      ? fontFamilies.gujaratiBold
+      : lang === 'kn'
+        ? fontFamilies.kannadaBold
+        : typography.readerTitle.fontFamily;
+  const labelSubFont =
+    lang === 'gu'
+      ? fontFamilies.gujarati
+      : lang === 'kn'
+        ? fontFamilies.kannada
+        : typography.cardLatin.fontFamily;
 
   return (
     <View style={styles.wrap}>
@@ -189,7 +280,7 @@ function ActiveAudioPlayer({
             styles.playLabel,
             {
               color: isPlaying ? colors.onPrimary : colors.saffronDeep,
-              fontFamily: typography.readerTitle.fontFamily,
+              fontFamily: labelHeadFont,
             },
           ]}
         >
@@ -197,82 +288,33 @@ function ActiveAudioPlayer({
         </Text>
       </Pressable>
 
-      <View style={styles.tempoBlock}>
-        <Text
-          style={[
-            styles.tempoLabel,
-            {
-              color: colors.inkMuted,
-              fontFamily: typography.cardLatin.fontFamily,
-            },
-          ]}
-        >
-          {tempoLabel}
-        </Text>
-        <View style={styles.tempoRow}>
-          <Pressable
-            onPress={decreaseRate}
-            accessibilityRole="button"
-            accessibilityLabel="Slower"
-            accessibilityState={{ disabled: rate <= MIN_RATE + 1e-3 }}
-            disabled={rate <= MIN_RATE + 1e-3}
-            hitSlop={8}
-            style={({ pressed }) => [
-              styles.tempoBtn,
-              {
-                borderColor: colors.divider,
-                borderRadius: radii.md,
-              },
-              pressed && { opacity: 0.7 },
-              rate <= MIN_RATE + 1e-3 && { opacity: 0.4 },
-            ]}
-          >
-            <Text style={[styles.tempoGlyph, { color: colors.inkSoft }]}>−</Text>
-          </Pressable>
-
-          <Text
-            style={[
-              styles.tempoValue,
-              {
-                color: colors.ink,
-                fontFamily: typography.pageCounter.fontFamily,
-              },
-            ]}
-          >
-            {rate.toFixed(1)}×
-          </Text>
-
-          <Pressable
-            onPress={increaseRate}
-            accessibilityRole="button"
-            accessibilityLabel="Faster"
-            accessibilityState={{ disabled: rate >= MAX_RATE - 1e-3 }}
-            disabled={rate >= MAX_RATE - 1e-3}
-            hitSlop={8}
-            style={({ pressed }) => [
-              styles.tempoBtn,
-              {
-                borderColor: colors.divider,
-                borderRadius: radii.md,
-              },
-              pressed && { opacity: 0.7 },
-              rate >= MAX_RATE - 1e-3 && { opacity: 0.4 },
-            ]}
-          >
-            <Text style={[styles.tempoGlyph, { color: colors.inkSoft }]}>+</Text>
-          </Pressable>
-        </View>
-      </View>
+      <RateStepper
+        value={rate}
+        onChange={setRate}
+        min={MIN_RATE}
+        max={MAX_RATE}
+        step={RATE_STEP}
+        label={tempoLabel}
+        labelFontFamily={labelSubFont}
+      />
     </View>
   );
 }
 
-function UnavailableNotice({ lang }: { lang: 'hi' | 'en' }) {
+function UnavailableNotice({ lang }: { lang: Lang }) {
   const { colors, typography } = useTheme();
-  const text =
-    lang === 'hi'
-      ? 'इस मंत्र की ध्वनि उपलब्ध नहीं है'
-      : 'Audio not available';
+  const text = pick(lang, {
+    hi: 'इस मंत्र की ध्वनि उपलब्ध नहीं है',
+    en: 'Audio not available',
+    gu: 'આ મંત્રનો ધ્વનિ ઉપલબ્ધ નથી',
+    kn: 'ಈ ಮಂತ್ರದ ಧ್ವನಿ ಲಭ್ಯವಿಲ್ಲ',
+  });
+  const noticeFont =
+    lang === 'gu'
+      ? fontFamilies.gujarati
+      : lang === 'kn'
+        ? fontFamilies.kannada
+        : typography.swipeHint.fontFamily;
   return (
     <View style={styles.wrap}>
       <Text
@@ -280,7 +322,7 @@ function UnavailableNotice({ lang }: { lang: 'hi' | 'en' }) {
           styles.unavailable,
           {
             color: colors.inkMuted,
-            fontFamily: typography.swipeHint.fontFamily,
+            fontFamily: noticeFont,
             fontSize: typography.swipeHint.fontSize,
           },
         ]}
@@ -316,38 +358,6 @@ const styles = StyleSheet.create({
   },
   playLabel: {
     fontSize: 14,
-    includeFontPadding: false,
-  },
-  tempoBlock: {
-    alignItems: 'center',
-  },
-  tempoLabel: {
-    fontSize: 11,
-    fontStyle: 'italic',
-    includeFontPadding: false,
-    marginBottom: 4,
-  },
-  tempoRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-  },
-  tempoBtn: {
-    width: 32,
-    height: 32,
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  tempoGlyph: {
-    fontSize: 18,
-    lineHeight: 20,
-    includeFontPadding: false,
-  },
-  tempoValue: {
-    fontSize: 14,
-    minWidth: 38,
-    textAlign: 'center',
     includeFontPadding: false,
   },
   unavailable: {

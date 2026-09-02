@@ -1,0 +1,52 @@
+# Kavacham Category Smoke Test (PRD-A — Content Breadth Engine)
+#
+# Kavacham (कवच) is a new textual form with a multi-instance reader
+# (KavachamReader dispatches on `kavachamId`), like the chalisas/ashtakams/suktams.
+# First text: Rama Raksha Stotra (source-verified, 38 shlokas). Verifies:
+#   1. Home shows the Kavacham category tile (now ACTIVE, no longer "SOON")
+#   2. CategoryList shows Rama Raksha Stotra
+#   3. Reader opens; language toggle flips Hindi → English
+#   4. Back returns to the list
+#
+# Selectors: visible text + accessibilityLabel. No pixel coordinates (§9).
+
+appId: com.prashantsharma.vedansh
+---
+# ── Step 1: Boot Vedansh in Expo Go ──
+- runFlow: _launch.yaml
+
+# ── Step 2: Find + open the Kavacham category tile (scroll if needed) ──
+- scrollUntilVisible:
+    element:
+      text: "Kavacham\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+- tapOn: "Kavacham\\..*Tap to open\\."
+- waitForAnimationToEnd
+
+# ── Step 3: CategoryList lists Rama Raksha Stotra; open it ──
+- extendedWaitUntil:
+    visible: "Rama Raksha Stotra\\..*Tap to open\\."
+    timeout: 15000
+- tapOn: "Rama Raksha Stotra\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+- waitForAnimationToEnd:
+    timeout: 8000
+- tapOn:
+    id: "resume-start-over"
+    optional: true
+- waitForAnimationToEnd
+
+# ── Step 4: Toggle to English; reader title shows "Rama Raksha Stotra" ──
+- tapOn:
+    id: "lang-toggle-en"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Rama Raksha Stotra"
+    timeout: 15000
+
+# ── Cleanup ──
+- stopApp:
+    appId: com.prashantsharma.vedansh

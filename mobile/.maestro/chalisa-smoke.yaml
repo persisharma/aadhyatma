@@ -1,29 +1,61 @@
 # Chalisa Category Smoke Test
 #
-# Verifies the Chalisa category and its 4 active sections render correctly.
-# Sections: Hanuman Chalisa, Shiv Chalisa, Durga Chalisa, Ganesh Chalisa.
+# Verifies the Chalisa category and its 9 active sections render correctly.
+# Sections: Hanuman Chalisa, Shiv Chalisa, Durga Chalisa, Ganesh Chalisa,
+# Gayatri Chalisa, Ram Chalisa, Krishna Chalisa, Vishnu Chalisa,
+# Saraswati Chalisa.
 #
 # Chalisas share ChalisaReaderScreen (multi-instance pattern, dispatched by
 # route.params.chalisaId). Opening Hanuman Chalisa verifies the dispatch
 # resolves correctly — origin of the PR #31 regression that RULEBOOK §3
 # explicitly guards against.
 
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
 
-# Open Chalisa category
-- assertVisible: "Chalisa. Tap to open."
-- tapOn: "Chalisa. Tap to open."
+# Open Chalisa category. The `.*` absorbs an optional " New." — the Chalisa
+# tile now flags NEW in upgrader state because Gayatri Chalisa is debut-new
+# (addedInVersion 1.4.4). Mirrors the stotram-smoke category-tile selector.
+- assertVisible: "Chalisa\\..*Tap to open\\."
+- tapOn: "Chalisa\\..*Tap to open\\."
 - waitForAnimationToEnd
 
-# Verify all 4 sections appear in CategoryList
+# Verify all 9 sections appear in CategoryList
 - extendedWaitUntil:
     visible: "Hanuman Chalisa\\..*Tap to open\\."
     timeout: 15000
 - assertVisible: "Shiv Chalisa\\..*Tap to open\\."
 - assertVisible: "Durga Chalisa\\..*Tap to open\\."
 - assertVisible: "Ganesh Chalisa\\..*Tap to open\\."
+- assertVisible: "Gayatri Chalisa\\..*Tap to open\\."
+- assertVisible: "Ram Chalisa\\..*Tap to open\\."
+# Krishna, Vishnu & Saraswati are below the fold on the 9-section list — scroll
+# to each. Android's shorter viewport folds earlier than iOS (Krishna, the 7th
+# row, is off-screen here), so use scrollUntilVisible rather than a plain
+# assertVisible that only sees the top rows. scrollUntilVisible is a no-op when
+# the row is already on-screen, so this stays correct on both platforms.
+- scrollUntilVisible:
+    element:
+      text: "Krishna Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Vishnu Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Saraswati Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+# Scroll back up so the reader opens from Hanuman Chalisa at the top.
+- scrollUntilVisible:
+    element:
+      text: "Hanuman Chalisa\\..*Tap to open\\."
+    direction: UP
+    timeout: 15000
 
 # Open Hanuman Chalisa reader
 - tapOn: "Hanuman Chalisa\\..*Tap to open\\."
@@ -43,4 +75,4 @@ appId: host.exp.Exponent
 
 # Clean up — Expo Go termination resets navigation stack for the next flow.
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh

@@ -1,0 +1,77 @@
+[
+  {
+    "id": "ujjain-1992",
+    "source": "Swiss Ephemeris",
+    "sourceVersion": "2.10.03",
+    "siderealMode": "Lahiri",
+    "dateUtc": "1992-08-14T00:12:00.000Z",
+    "latitude": 23.1765,
+    "longitude": 75.7885,
+    "elevation": 500,
+    "expected": {
+      "ayanamsa": 23.753967490461434,
+      "lagna": 112.30750808498784,
+      "grahas": {
+        "sun": 117.70488756488058,
+        "moon": 303.94333648375215,
+        "mars": 48.352268178794134,
+        "mercury": 102.25500416461634,
+        "jupiter": 143.9664842996813,
+        "venus": 134.53077853666065,
+        "saturn": 290.88576354994285,
+        "rahu": 244.07995246090613,
+        "ketu": 64.07995246090616
+      }
+    }
+  },
+  {
+    "id": "delhi-2000",
+    "source": "Swiss Ephemeris",
+    "sourceVersion": "2.10.03",
+    "siderealMode": "Lahiri",
+    "dateUtc": "2000-01-01T06:30:00.000Z",
+    "latitude": 28.6139,
+    "longitude": 77.209,
+    "elevation": 216,
+    "expected": {
+      "ayanamsa": 23.85708358929668,
+      "lagna": 343.1891240243307,
+      "grahas": {
+        "sun": 256.2820886281086,
+        "moon": 196.71168769046744,
+        "mars": 303.93234197794965,
+        "mercury": 247.67955816683266,
+        "jupiter": 1.3905643657957474,
+        "venus": 217.43554276125607,
+        "saturn": 16.547044078009232,
+        "rahu": 101.19956757320953,
+        "ketu": 281.19956757320955
+      }
+    }
+  },
+  {
+    "id": "bengaluru-2024",
+    "source": "Swiss Ephemeris",
+    "sourceVersion": "2.10.03",
+    "siderealMode": "Lahiri",
+    "dateUtc": "2024-04-08T13:00:00.000Z",
+    "latitude": 12.9716,
+    "longitude": 77.5946,
+    "elevation": 920,
+    "expected": {
+      "ayanamsa": 24.1961131229574,
+      "lagna": 175.40896366922493,
+      "grahas": {
+        "sun": 354.98676847079497,
+        "moon": 351.86076512660014,
+        "mars": 318.6835561975419,
+        "mercury": 0.7440384214517075,
+        "jupiter": 24.801865183310603,
+        "venus": 339.9752180562691,
+        "saturn": 320.2366473262241,
+        "rahu": 351.4641303584923,
+        "ketu": 171.4641303584923
+      }
+    }
+  }
+]

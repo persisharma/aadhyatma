@@ -1,0 +1,1239 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Panchang Vrat Catalog — Prototype</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&amp;family=Inter:wght@500;600&amp;display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --parchment: #F3E7C9;
+      --parchment-soft: #F8EFD6;
+      --parchment-deep: #E9D9B1;
+      --ink: #2F1E10;
+      --ink-soft: #5A3A1E;
+      --ink-muted: #8A6A47;
+      --saffron: #B8621B;
+      --saffron-deep: #8A3E0B;
+      --gold: #A67C34;
+      --divider: rgba(138, 62, 11, 0.18);
+      --saffron-tint: rgba(184, 98, 27, 0.14);
+      --gold-tint: rgba(166, 124, 52, 0.16);
+      --shadow-sm: 0 1px 2px rgba(60, 30, 10, 0.06);
+      --shadow-md: 0 8px 24px rgba(60, 30, 10, 0.14);
+      --shadow-lg: 0 30px 70px rgba(20, 12, 4, 0.38);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(900px 360px at 50% -8%, rgba(184, 98, 27, 0.22), transparent 64%),
+        linear-gradient(160deg, #1a140c 0%, #2a1d10 58%, #1a140c 100%);
+      color: #eadcc2;
+      font-family: Inter, system-ui, sans-serif;
+    }
+
+    body { padding: 40px 22px 56px; }
+
+    .intro {
+      max-width: 960px;
+      margin: 0 auto 28px;
+      text-align: center;
+    }
+
+    .intro h1 {
+      margin: 0;
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(30px, 4vw, 44px);
+      font-weight: 500;
+      color: var(--parchment);
+    }
+
+    .intro p {
+      max-width: 760px;
+      margin: 10px auto 0;
+      font-size: 14px;
+      line-height: 1.55;
+      color: #d5c39d;
+    }
+
+    .frames {
+      max-width: 1640px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(300px, 1fr));
+      gap: 28px;
+      align-items: start;
+    }
+
+    @media (max-width: 1480px) {
+      .frames { grid-template-columns: repeat(2, minmax(310px, 1fr)); }
+    }
+
+    @media (max-width: 760px) {
+      .frames { grid-template-columns: 1fr; justify-items: center; }
+    }
+
+    .frame-wrap { width: min(100%, 390px); }
+
+    .frame-title {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .phone {
+      width: 100%;
+      min-height: 820px;
+      border-radius: 44px;
+      padding: 12px;
+      background: #0d0804;
+      box-shadow: var(--shadow-lg), 0 0 0 1px rgba(166, 124, 52, 0.18);
+      position: relative;
+    }
+
+    .phone::before {
+      content: "";
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 112px;
+      height: 28px;
+      border-radius: 18px;
+      background: #0d0804;
+      z-index: 3;
+    }
+
+    .screen {
+      position: relative;
+      min-height: 796px;
+      border-radius: 34px;
+      overflow: hidden;
+      background:
+        radial-gradient(110% 42% at 50% -12%, rgba(184, 98, 27, 0.14), transparent 62%),
+        linear-gradient(180deg, #F6ECD0 0%, #F1E3BF 100%);
+      color: var(--ink);
+    }
+
+    .screen::after {
+      content: "॥";
+      position: absolute;
+      right: 20px;
+      bottom: 14px;
+      font-family: "Noto Serif Devanagari", serif;
+      font-size: 46px;
+      color: rgba(138, 62, 11, 0.08);
+      pointer-events: none;
+    }
+
+    .status {
+      height: 44px;
+      padding: 0 24px 6px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .content {
+      padding: 10px 22px 32px;
+    }
+
+    .top-title {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .title-hi {
+      margin: 0;
+      font-family: "Noto Serif Devanagari", serif;
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 1.1;
+    }
+
+    .title-en {
+      margin-top: 2px;
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .source-pill {
+      width: fit-content;
+      margin: 0 auto 10px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--saffron-tint);
+      color: var(--saffron-deep);
+      font-family: "Noto Serif Devanagari", serif;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .segmented {
+      display: flex;
+      gap: 3px;
+      padding: 3px;
+      border: 1px solid var(--divider);
+      border-radius: 999px;
+      background: rgba(248, 239, 214, 0.82);
+      margin: 8px 0 12px;
+    }
+
+    .segment {
+      flex: 1;
+      min-height: 34px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--ink-muted);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .segment.active {
+      background: var(--saffron-tint);
+      color: var(--saffron-deep);
+    }
+
+    .date-nav {
+      display: grid;
+      grid-template-columns: 36px 1fr 36px;
+      align-items: center;
+      gap: 8px;
+      margin: 6px 0 8px;
+    }
+
+    .round {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--divider);
+      background: var(--parchment-soft);
+      color: var(--ink-soft);
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+    }
+
+    .date-label {
+      text-align: center;
+      font-family: "Noto Serif Devanagari", serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .month-sub {
+      text-align: center;
+      margin-top: 2px;
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .calendar {
+      border: 1px solid var(--divider);
+      background: rgba(248, 239, 214, 0.78);
+      border-radius: 18px;
+      padding: 10px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .calendar-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .week, .grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+    }
+
+    .week span {
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--ink-muted);
+      padding-bottom: 4px;
+    }
+
+    .day {
+      min-height: 43px;
+      border-radius: 8px;
+      padding: 4px 1px 3px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink);
+    }
+
+    .day.muted { opacity: 0.38; }
+    .day.selected {
+      background: var(--saffron-tint);
+      box-shadow: inset 0 0 0 1px var(--saffron);
+    }
+
+    .num {
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 16px;
+      margin-top: 4px;
+      padding: 2px 5px;
+      border-radius: 999px;
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 7px;
+      font-weight: 600;
+      line-height: 1;
+      color: var(--saffron-deep);
+      background: var(--gold-tint);
+    }
+
+    .chip.fest { background: var(--saffron-tint); }
+    .chip.both { background: linear-gradient(90deg, var(--gold-tint), var(--saffron-tint)); }
+    .chip.katha { background: rgba(166, 124, 52, 0.2); }
+    .chip.upvas { background: rgba(138, 62, 11, 0.12); }
+
+    .section {
+      margin-top: 14px;
+    }
+
+    .section-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-family: "Noto Serif Devanagari", serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .section-meta {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .card {
+      border: 1px solid var(--divider);
+      background: var(--parchment-soft);
+      border-radius: 18px;
+      padding: 12px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .card + .card { margin-top: 8px; }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .type {
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: var(--gold-tint);
+      color: var(--saffron-deep);
+      font-size: 9px;
+      font-weight: 600;
+    }
+
+    .type.festival { background: var(--saffron-tint); }
+    .type.katha { background: rgba(138, 62, 11, 0.1); }
+    .type.upvas { background: rgba(138, 62, 11, 0.13); }
+
+    .deity {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .card-title {
+      font-family: "Noto Serif Devanagari", serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.35;
+    }
+
+    .card-en {
+      margin-top: 1px;
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .body-copy {
+      margin: 6px 0 0;
+      color: var(--ink-soft);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 14px;
+      line-height: 1.35;
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .outline-btn, .solid-btn {
+      min-height: 30px;
+      border-radius: 999px;
+      padding: 0 12px;
+      border: 1px solid var(--divider);
+      background: rgba(255, 250, 235, 0.34);
+      color: var(--saffron-deep);
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .solid-btn {
+      border-color: transparent;
+      background: var(--saffron);
+      color: #fff8e7;
+    }
+
+    .list-row {
+      display: grid;
+      grid-template-columns: 46px 1fr auto;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--divider);
+    }
+
+    .list-row:last-child { border-bottom: 0; }
+
+    .date-mini {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-muted);
+    }
+
+    .row-title {
+      font-family: "Noto Serif Devanagari", serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.25;
+    }
+
+    .row-en {
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .search {
+      width: 100%;
+      height: 42px;
+      border: 1px solid var(--divider);
+      border-radius: 14px;
+      background: var(--parchment-soft);
+      padding: 0 12px;
+      color: var(--ink);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .filters {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 10px 0 2px;
+      scrollbar-width: none;
+    }
+
+    .filters::-webkit-scrollbar { display: none; }
+
+    .filter {
+      flex: 0 0 auto;
+      min-height: 32px;
+      border: 1px solid var(--divider);
+      border-radius: 999px;
+      padding: 0 12px;
+      background: rgba(248, 239, 214, 0.62);
+      color: var(--ink-muted);
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .filter.active {
+      background: var(--saffron-tint);
+      color: var(--saffron-deep);
+      border-color: rgba(184, 98, 27, 0.34);
+    }
+
+    .catalog-list [data-tags] { display: block; }
+    .catalog-list[data-filter="vrat"] [data-tags]:not([data-tags~="vrat"]) { display: none; }
+    .catalog-list[data-filter="festival"] [data-tags]:not([data-tags~="festival"]) { display: none; }
+    .catalog-list[data-filter="upavas"] [data-tags]:not([data-tags~="upavas"]) { display: none; }
+    .catalog-list[data-filter="katha"] [data-tags]:not([data-tags~="katha"]) { display: none; }
+    .catalog-list[data-filter="tracked"] [data-tags]:not([data-tags~="tracked"]) { display: none; }
+
+    .catalog-card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: start;
+      border-bottom: 1px solid var(--divider);
+      padding: 12px 0;
+    }
+
+    .catalog-card:last-child { border-bottom: 0; }
+
+    .catalog-card.hide-search { display: none !important; }
+
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      background: transparent;
+      border: 0;
+      padding: 0;
+      box-shadow: none;
+    }
+
+    .catalog-grid .catalog-card {
+      min-height: 112px;
+      padding: 12px;
+      border: 1px solid var(--divider);
+      border-radius: 18px;
+      background: var(--parchment-soft);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .catalog-grid .catalog-card:hover {
+      border-color: rgba(184, 98, 27, 0.36);
+    }
+
+    .next {
+      min-width: 56px;
+      text-align: right;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .catalog-title {
+      font-family: "Noto Serif Devanagari", serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.25;
+    }
+
+    .catalog-meta {
+      margin-top: 3px;
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .tracker-band {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .metric {
+      border: 1px solid var(--divider);
+      border-radius: 14px;
+      background: rgba(248, 239, 214, 0.7);
+      padding: 10px 6px;
+      text-align: center;
+    }
+
+    .metric strong {
+      display: block;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 24px;
+      color: var(--saffron-deep);
+      line-height: 1;
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 4px;
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--ink-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .rail {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 10px;
+      padding: 8px 0;
+    }
+
+    .rail-line {
+      width: 2px;
+      min-height: 52px;
+      margin: 8px auto 0;
+      background: var(--divider);
+      position: relative;
+    }
+
+    .rail-line::before {
+      content: "";
+      position: absolute;
+      top: -7px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--saffron);
+    }
+
+    .mode-note {
+      margin: 8px 0 12px;
+      padding: 10px 12px;
+      border: 1px solid var(--divider);
+      border-radius: 16px;
+      background: rgba(248, 239, 214, 0.6);
+      color: var(--ink-soft);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 13px;
+      line-height: 1.32;
+    }
+
+    .detail-hero {
+      margin: 6px 0 10px;
+      text-align: center;
+    }
+
+    .detail-hero .type {
+      display: inline-flex;
+      margin-bottom: 8px;
+    }
+
+    .detail-title {
+      margin: 0;
+      font-family: "Noto Serif Devanagari", serif;
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 1.08;
+      color: var(--ink);
+    }
+
+    .detail-subtitle {
+      margin-top: 4px;
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-size: 14px;
+      color: var(--ink-muted);
+    }
+
+    .swipe-hint {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 8px 0;
+      color: var(--ink-muted);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 12px;
+    }
+
+    .swipe-hint strong {
+      color: var(--saffron-deep);
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .swipe-deck {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      padding-bottom: 8px;
+      overscroll-behavior-x: contain;
+    }
+
+    .swipe-deck::-webkit-scrollbar { display: none; }
+
+    .swipe-card {
+      flex: 0 0 100%;
+      min-height: 396px;
+      max-height: 456px;
+      overflow-y: auto;
+      scroll-snap-align: start;
+      border: 1px solid var(--divider);
+      background:
+        linear-gradient(180deg, rgba(255, 250, 235, 0.42), rgba(248, 239, 214, 0.16)),
+        var(--parchment-soft);
+      border-radius: 20px;
+      padding: 14px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .swipe-card.tall { max-height: 510px; }
+
+    .card-index {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      color: var(--ink-muted);
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .card-heading {
+      margin: 0 0 6px;
+      font-family: "Noto Serif Devanagari", serif;
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--ink);
+    }
+
+    .card-copy {
+      margin: 8px 0 0;
+      color: var(--ink-soft);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 15px;
+      line-height: 1.42;
+    }
+
+    .fact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .fact {
+      min-height: 68px;
+      border: 1px solid var(--divider);
+      border-radius: 14px;
+      background: rgba(248, 239, 214, 0.58);
+      padding: 10px;
+    }
+
+    .fact span {
+      display: block;
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+    }
+
+    .fact strong {
+      display: block;
+      margin-top: 4px;
+      font-family: "Noto Serif Devanagari", serif;
+      font-size: 13px;
+      line-height: 1.2;
+      color: var(--ink);
+    }
+
+    .dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(138, 62, 11, 0.24);
+    }
+
+    .dot.active {
+      width: 18px;
+      background: var(--saffron);
+    }
+
+    .reader-line {
+      padding: 9px 0;
+      border-bottom: 1px solid var(--divider);
+    }
+
+    .reader-line:last-child { border-bottom: 0; }
+  </style>
+</head>
+<body>
+  <header class="intro">
+    <h1>Panchang · Vrat Catalog Prototype</h1>
+    <p>Calendar stays date-first; catalog becomes the discovery surface. Catalog cards open dedicated detail pages with reusable swipe cards for details, panchang logic, upvas guidance, and linked katha.</p>
+  </header>
+
+  <main class="frames">
+    <section class="frame-wrap">
+      <div class="phone">
+        <div class="screen">
+          <div class="status"><span>9:41</span><span>भारत</span></div>
+          <div class="content">
+            <div class="top-title">
+              <h2 class="title-hi">पंचांग</h2>
+              <div class="title-en">Panchang</div>
+            </div>
+            <div class="source-pill">दृक् पंचांग · उज्जैन</div>
+
+            <div class="segmented" aria-label="Panchang modes">
+              <button class="segment active">Calendar</button>
+              <button class="segment">Catalog</button>
+            </div>
+
+            <div class="date-nav">
+              <div class="round">‹</div>
+              <div>
+                <div class="date-label">१५ जून २०२६</div>
+                <div class="month-sub">June 2026 · Purnimant</div>
+              </div>
+              <div class="round">›</div>
+            </div>
+
+            <div class="calendar">
+              <div class="calendar-head"><span>June 2026</span><span>Today</span></div>
+              <div class="week"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+              <div class="grid">
+                <div class="day"><span class="num">1</span></div>
+                <div class="day"><span class="num">2</span></div>
+                <div class="day"><span class="num">3</span></div>
+                <div class="day"><span class="num">4</span></div>
+                <div class="day"><span class="num">5</span><span class="chip both">Both</span></div>
+                <div class="day"><span class="num">6</span></div>
+                <div class="day"><span class="num">7</span></div>
+                <div class="day"><span class="num">8</span></div>
+                <div class="day"><span class="num">9</span><span class="chip">Vrat</span></div>
+                <div class="day"><span class="num">10</span></div>
+                <div class="day"><span class="num">11</span><span class="chip">Vrat</span></div>
+                <div class="day"><span class="num">12</span></div>
+                <div class="day"><span class="num">13</span></div>
+                <div class="day"><span class="num">14</span></div>
+                <div class="day selected"><span class="num">15</span><span class="chip fest">Fest</span></div>
+                <div class="day"><span class="num">16</span></div>
+                <div class="day"><span class="num">17</span><span class="chip">Vrat</span></div>
+                <div class="day"><span class="num">18</span></div>
+                <div class="day"><span class="num">19</span></div>
+                <div class="day"><span class="num">20</span><span class="chip">Vrat</span></div>
+                <div class="day"><span class="num">21</span></div>
+                <div class="day"><span class="num">22</span></div>
+                <div class="day"><span class="num">23</span></div>
+                <div class="day"><span class="num">24</span><span class="chip">Vrat</span></div>
+                <div class="day"><span class="num">25</span><span class="chip both">Both</span></div>
+                <div class="day"><span class="num">26</span></div>
+                <div class="day"><span class="num">27</span></div>
+                <div class="day"><span class="num">28</span></div>
+                <div class="day"><span class="num">29</span><span class="chip">Vrat</span></div>
+                <div class="day"><span class="num">30</span></div>
+                <div class="day muted"><span class="num">1</span></div>
+                <div class="day muted"><span class="num">2</span></div>
+                <div class="day muted"><span class="num">3</span></div>
+                <div class="day muted"><span class="num">4</span></div>
+                <div class="day muted"><span class="num">5</span></div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-row">
+                <div class="section-title">आज के योग</div>
+                <div class="section-meta">Selected date</div>
+              </div>
+              <div class="card">
+                <div class="card-top">
+                  <span class="type festival">Festival</span>
+                  <span class="deity">Surya Deva</span>
+                </div>
+                <div class="card-title">मिथुन संक्रांति</div>
+                <div class="card-en">Mithuna Sankranti</div>
+                <p class="body-copy">Sun enters Mithuna rashi. Calendar chip stays compact; detail appears here.</p>
+                <div class="action-row">
+                  <button class="outline-btn">View</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-row">
+                <div class="section-title">आगामी व्रत</div>
+                <div class="section-meta">This month</div>
+              </div>
+              <div class="card">
+                <div class="list-row">
+                  <div class="date-mini">25 Jun</div>
+                  <div><div class="row-title">निर्जला एकादशी</div><div class="row-en">Nirjala Ekadashi</div></div>
+                  <span class="chip katha">Katha</span>
+                </div>
+                <div class="list-row">
+                  <div class="date-mini">29 Jun</div>
+                  <div><div class="row-title">पूर्णिमा व्रत</div><div class="row-en">Purnima Vrat</div></div>
+                  <span class="chip">Vrat</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-title">Calendar View</div>
+    </section>
+
+    <section class="frame-wrap">
+      <div class="phone">
+        <div class="screen">
+          <div class="status"><span>9:41</span><span>सूची</span></div>
+          <div class="content">
+            <div class="top-title">
+              <h2 class="title-hi">व्रत सूची</h2>
+              <div class="title-en">Catalog</div>
+            </div>
+            <div class="source-pill">All Observances</div>
+
+            <div class="segmented" aria-label="Panchang modes">
+              <button class="segment">Calendar</button>
+              <button class="segment active">Catalog</button>
+            </div>
+
+            <input id="catalogSearch" class="search" placeholder="Search vrat, upvas, festival, katha" />
+
+            <div class="filters" aria-label="Catalog filters">
+              <button class="filter active" data-filter="all">All</button>
+              <button class="filter" data-filter="vrat">Vrat</button>
+              <button class="filter" data-filter="festival">Festivals</button>
+              <button class="filter" data-filter="upavas">Upvas</button>
+              <button class="filter" data-filter="katha">Katha</button>
+              <button class="filter" data-filter="tracked">Tracked</button>
+            </div>
+
+            <div class="mode-note">Tap any catalog card to open its dedicated page. The detail page uses the same reusable card shell and swaps only the content.</div>
+
+            <div id="catalogList" class="catalog-grid catalog-list" data-filter="all">
+              <article class="catalog-card" data-tags="vrat katha tracked" data-search="ekadashi nirjala vishnu vrat katha">
+                <div>
+                  <span class="type">Vrat</span>
+                  <div class="catalog-title">एकादशी व्रत</div>
+                  <div class="catalog-meta">Ekadashi · twice monthly · upvas + katha</div>
+                </div>
+                <div class="next">Open</div>
+              </article>
+              <article class="catalog-card" data-tags="vrat katha" data-search="pradosh shiva vrat katha">
+                <div>
+                  <span class="type">Vrat</span>
+                  <div class="catalog-title">प्रदोष व्रत</div>
+                  <div class="catalog-meta">Pradosh · Shiva · detail page</div>
+                </div>
+                <div class="next">Open</div>
+              </article>
+              <article class="catalog-card" data-tags="vrat upavas katha tracked" data-search="satyanarayan purnima vrat katha">
+                <div>
+                  <span class="type">Vrat</span>
+                  <div class="catalog-title">सत्यनारायण व्रत</div>
+                  <div class="catalog-meta">Purnima rule · upvas guidance · katha</div>
+                </div>
+                <div class="next">Open</div>
+              </article>
+              <article class="catalog-card" data-tags="festival" data-search="sankranti mithuna surya festival">
+                <div>
+                  <span class="type festival">Festival</span>
+                  <div class="catalog-title">संक्रांति</div>
+                  <div class="catalog-meta">Solar ingress · all 12 captured</div>
+                </div>
+                <div class="next">Open</div>
+              </article>
+              <article class="catalog-card" data-tags="vrat tracked" data-search="sawan somwar shiva shravana">
+                <div>
+                  <span class="type">Vrat</span>
+                  <div class="catalog-title">सावन सोमवार</div>
+                  <div class="catalog-meta">Seasonal · weekday-in-month rule</div>
+                </div>
+                <div class="next">Open</div>
+              </article>
+              <article class="catalog-card" data-tags="festival katha" data-search="ram navami rama katha festival">
+                <div>
+                  <span class="type festival">Festival</span>
+                  <div class="catalog-title">राम नवमी</div>
+                  <div class="catalog-meta">Festival detail · katha link</div>
+                </div>
+                <div class="next">Open</div>
+              </article>
+              <article class="catalog-card" data-tags="katha" data-search="satyanarayan vrat katha story">
+                <div>
+                  <span class="type katha">Katha</span>
+                  <div class="catalog-title">श्री सत्यनारायण व्रत कथा</div>
+                  <div class="catalog-meta">Linked reader cards</div>
+                </div>
+                <div class="next">Open</div>
+              </article>
+              <article class="catalog-card" data-tags="katha" data-search="mangala gauri vrat katha">
+                <div>
+                  <span class="type katha">Katha</span>
+                  <div class="catalog-title">मंगला गौरी व्रत कथा</div>
+                  <div class="catalog-meta">Linked to Shravana Tuesdays</div>
+                </div>
+                <div class="next">Open</div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-title">Catalog Card Hub</div>
+    </section>
+
+    <section class="frame-wrap">
+      <div class="phone">
+        <div class="screen">
+          <div class="status"><span>9:41</span><span>व्रत</span></div>
+          <div class="content">
+            <div class="detail-hero">
+              <span class="type">Vrat</span>
+              <h2 class="detail-title">निर्जला एकादशी</h2>
+              <div class="detail-subtitle">Nirjala Ekadashi · Jyeshtha Shukla Ekadashi</div>
+            </div>
+            <div class="source-pill">25 June 2026 · Ujjain</div>
+
+            <div class="swipe-hint">
+              <span>Swipe right/left between reusable cards</span>
+              <strong>1 of 4</strong>
+            </div>
+
+            <div class="swipe-deck" aria-label="Vrat detail cards">
+              <article class="swipe-card">
+                <div class="card-index"><span>Details</span><span>01</span></div>
+                <h3 class="card-heading">व्रत विवरण</h3>
+                <p class="card-copy">This dedicated page explains the observance, why it appears today, and what the user can do next. The date comes from the Panchang resolver, not yearly crawling.</p>
+                <div class="fact-grid">
+                  <div class="fact"><span>Rule</span><strong>Shukla Ekadashi</strong></div>
+                  <div class="fact"><span>Month</span><strong>Jyeshtha</strong></div>
+                  <div class="fact"><span>Deity</span><strong>Shri Vishnu</strong></div>
+                  <div class="fact"><span>Katha</span><strong>Available</strong></div>
+                </div>
+                <div class="action-row">
+                  <button class="solid-btn">Track</button>
+                  <button class="outline-btn">Reminder</button>
+                </div>
+              </article>
+
+              <article class="swipe-card">
+                <div class="card-index"><span>Upvas</span><span>02</span></div>
+                <h3 class="card-heading">उपवास मार्गदर्शन</h3>
+                <p class="card-copy">Upvas is shown as fasting guidance inside the vrat detail. Some observances may have no fasting instructions, while others can show type, start, parana, and notes.</p>
+                <div class="fact-grid">
+                  <div class="fact"><span>Fast Type</span><strong>Nirjala</strong></div>
+                  <div class="fact"><span>Parana</span><strong>Next sunrise window</strong></div>
+                  <div class="fact"><span>Strictness</span><strong>Optional presets</strong></div>
+                  <div class="fact"><span>Health</span><strong>User note area</strong></div>
+                </div>
+                <p class="card-copy">This card should be reusable across Ekadashi, Pradosh, Sankashti, Purnima, and other vrats with different content fields.</p>
+              </article>
+
+              <article class="swipe-card">
+                <div class="card-index"><span>Panchang</span><span>03</span></div>
+                <h3 class="card-heading">आज का पंचांग संबंध</h3>
+                <p class="card-copy">The app can show why this vrat matched the selected date using the same computed facts already visible in Panchang.</p>
+                <div class="fact-grid">
+                  <div class="fact"><span>Tithi</span><strong>Ekadashi at sunrise</strong></div>
+                  <div class="fact"><span>Paksha</span><strong>Shukla</strong></div>
+                  <div class="fact"><span>Sunrise</span><strong>05:43</strong></div>
+                  <div class="fact"><span>Sunset</span><strong>19:06</strong></div>
+                </div>
+                <div class="action-row">
+                  <button class="outline-btn">View Panchang</button>
+                </div>
+              </article>
+
+              <article class="swipe-card tall">
+                <div class="card-index"><span>Katha</span><span>04</span></div>
+                <h3 class="card-heading">कथा कार्ड</h3>
+                <p class="card-copy">A linked Katha appears as a card in the same deck. The app should store only metadata/source links until we add licensed or original story text.</p>
+                <div class="list-row">
+                  <div class="date-mini">Read</div>
+                  <div><div class="row-title">एकादशी व्रत कथा</div><div class="row-en">Ekadashi Vrat Katha</div></div>
+                  <span class="chip katha">Katha</span>
+                </div>
+                <div class="list-row">
+                  <div class="date-mini">Open</div>
+                  <div><div class="row-title">उत्पन्ना एकादशी कथा</div><div class="row-en">Related Katha</div></div>
+                  <span class="chip katha">Katha</span>
+                </div>
+                <p class="card-copy">If this card becomes long, it scrolls vertically inside the card. The user can still horizontally swipe to the next card from the deck edges.</p>
+              </article>
+            </div>
+
+            <div class="dots" aria-hidden="true">
+              <span class="dot active"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-title">Catalog Detail Page</div>
+    </section>
+
+    <section class="frame-wrap">
+      <div class="phone">
+        <div class="screen">
+          <div class="status"><span>9:41</span><span>अनुसरण</span></div>
+          <div class="content">
+            <div class="top-title">
+              <h2 class="title-hi">मेरा व्रत</h2>
+              <div class="title-en">My Vrat Tracker</div>
+            </div>
+            <div class="source-pill">Followed Observances</div>
+
+            <div class="tracker-band">
+              <div class="metric"><strong>4</strong><span>Following</span></div>
+              <div class="metric"><strong>9</strong><span>This month</span></div>
+              <div class="metric"><strong>3</strong><span>Katha</span></div>
+            </div>
+
+            <div class="card">
+              <div class="card-top">
+                <span class="type">Tracked</span>
+                <span class="deity">Shri Vishnu</span>
+              </div>
+              <div class="card-title">निर्जला एकादशी</div>
+              <div class="card-en">Nirjala Ekadashi · 25 June</div>
+              <p class="body-copy">Tracked items can later power reminders and completion history without changing the catalog.</p>
+              <div class="action-row">
+                <button class="solid-btn">Tracked</button>
+                <button class="outline-btn">Katha</button>
+                <button class="outline-btn">Reminder</button>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-row">
+                <div class="section-title">माह योजना</div>
+                <div class="section-meta">June</div>
+              </div>
+              <div class="card">
+                <div class="rail">
+                  <div class="rail-line"></div>
+                  <div>
+                    <div class="row-title">२४ जून · प्रदोष व्रत</div>
+                    <div class="row-en">Katha available · not tracked</div>
+                  </div>
+                </div>
+                <div class="rail">
+                  <div class="rail-line"></div>
+                  <div>
+                    <div class="row-title">२५ जून · निर्जला एकादशी</div>
+                    <div class="row-en">Tracked · reminder on</div>
+                  </div>
+                </div>
+                <div class="rail">
+                  <div class="rail-line"></div>
+                  <div>
+                    <div class="row-title">२९ जून · पूर्णिमा व्रत</div>
+                    <div class="row-en">Satyanarayan Katha linked</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-row">
+                <div class="section-title">कथा</div>
+                <div class="section-meta">Linked content</div>
+              </div>
+              <div class="card">
+                <div class="list-row">
+                  <div class="date-mini">Read</div>
+                  <div><div class="row-title">एकादशी व्रत कथा</div><div class="row-en">Ekadashi Vrat Katha</div></div>
+                  <span class="chip katha">Katha</span>
+                </div>
+                <div class="list-row">
+                  <div class="date-mini">Read</div>
+                  <div><div class="row-title">सत्यनारायण व्रत कथा</div><div class="row-en">Satyanarayan Vrat Katha</div></div>
+                  <span class="chip katha">Katha</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-title">Tracking And Linked Katha</div>
+    </section>
+  </main>
+
+  <script>
+    const list = document.getElementById('catalogList');
+    const filters = document.querySelectorAll('[data-filter]');
+    const search = document.getElementById('catalogSearch');
+    const cards = Array.from(document.querySelectorAll('.catalog-card'));
+
+    function applyCatalogState() {
+      const needle = search.value.trim().toLowerCase();
+      cards.forEach((card) => {
+        const haystack = card.dataset.search || card.textContent.toLowerCase();
+        card.classList.toggle('hide-search', needle.length > 0 && !haystack.includes(needle));
+      });
+    }
+
+    filters.forEach((button) => {
+      button.addEventListener('click', () => {
+        filters.forEach((item) => item.classList.remove('active'));
+        button.classList.add('active');
+        list.dataset.filter = button.dataset.filter;
+        applyCatalogState();
+      });
+    });
+
+    search.addEventListener('input', applyCatalogState);
+  </script>
+</body>
+</html>

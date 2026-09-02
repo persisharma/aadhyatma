@@ -1,0 +1,101 @@
+# Single-Chapter Open Smoke Test
+#
+# Regression guard: a "chaptered" text that ships exactly ONE chapter
+# (bajrang-baan, hanuman-ashtak, ram-stuti/ram-aarti, ramcharitmanas) used to
+# route through its Chapters screen, which rendered a list with a single
+# "Section 1" row. Reaching the verses therefore took TWO taps from every entry
+# surface — the Home आज के लिए row, By-Purpose discovery lists, search, and the
+# category/deity lists. `buildEntryStartTarget` now opens the reader directly
+# for those texts (design.md §38); multi-chapter texts keep their index
+# (covered by gita-smoke.yaml).
+#
+# Verifies, on Bajrang Baan as the representative single-chapter text:
+#   1. Tapping the card lands on the READER (verse pill rendered), not an index
+#   2. No "Section 1 … Tap to open." chapter row is interposed
+#   3. ONE Back returns to the category list — no index left in the stack
+#
+# Why English first: Maestro's iOS a11y tree can't reliably read Devanagari, so
+# the flow flips the global reading language to English before asserting (same
+# technique and rationale as gita-smoke.yaml). Hindi is restored at the end.
+
+appId: com.prashantsharma.vedansh
+---
+# ── Boot Vedansh (exits on Home) ──
+- runFlow: _launch.yaml
+
+# ── Set global reading language to English (More tab) ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── Home → Hymns & Praise (stotram) category ──
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Hymns & Praise\\..*Tap to open\\."
+    timeout: 15000
+- tapOn: "Hymns & Praise\\..*Tap to open\\."
+- waitForAnimationToEnd
+
+# ── Open Bajrang Baan (single chapter → reader, not an index) ──
+- scrollUntilVisible:
+    element:
+      text: "Bajrang Baan\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- tapOn: "Bajrang Baan\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+# A prior run's saved progress pops ResumeReadingSheet; "Start over" also routes
+# through navigateToEntryStart, so either path must land on the reader.
+- tapOn:
+    id: "resume-start-over"
+    optional: true
+- waitForAnimationToEnd
+
+# ── Assertion 1+2: the reader is up, and no chapters row was interposed ──
+# BajrangBaanVersePage wraps its content in an `accessible` ScrollView whose
+# a11y label starts with the verse pill ("Doha. …" for the first verse), so the
+# VERSE is what Maestro reads here. The chapters screen would instead show
+# GitaChapterCard's "Section 1. Bajrang Baan. 20 doha/chhand. Tap to open."
+- extendedWaitUntil:
+    visible: "Doha.*"
+    timeout: 15000
+- assertNotVisible: "Section 1\\..*Tap to open\\."
+
+# ── Reader language toggle round-trips (proves this is a reader, not a list) ──
+- assertVisible: "Hindi"
+- tapOn: "Hindi"
+- waitForAnimationToEnd
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── Assertion 3: ONE Back lands on the category list, not a one-row index ──
+- tapOn: "Back"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Bajrang Baan\\..*Tap to open\\."
+    timeout: 15000
+
+# ── Restore Hindi (best-effort) so later flows start from the default ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- tapOn:
+    text: "Language,.*"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "Hindi"
+    optional: true
+- waitForAnimationToEnd
+
+# Clean up — Expo Go termination resets navigation stack for the next flow.
+- stopApp:
+    appId: com.prashantsharma.vedansh

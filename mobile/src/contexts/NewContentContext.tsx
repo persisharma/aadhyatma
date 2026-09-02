@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { library } from '@/data/texts';
+import { temples } from '@/data/theerth/temples';
 import { compareSemver } from '@/utils/semverCompare';
 
 const STORAGE_KEY = '@vedansh/new-content-state';
@@ -16,8 +17,12 @@ const STORAGE_KEY = '@vedansh/new-content-state';
  * during a fresh cold-start mount. Used to distinguish a returning user
  * (upgrader) from a genuine fresh install at the feature's debut without racing
  * sibling providers that write their keys on mount (e.g. notif-meta).
+ *
+ * Exported so other debut-gated surfaces (e.g. the feature tour vs What's New
+ * split in `TourContext`) classify install-vs-upgrade with the same signal —
+ * keep this the single source of truth.
  */
-const UPGRADER_SIGNAL_KEYS = [
+export const UPGRADER_SIGNAL_KEYS = [
   '@vedansh/bookmarks',
   '@vedansh/reading-progress',
   '@vedansh/search-recent',
@@ -28,14 +33,43 @@ const UPGRADER_SIGNAL_KEYS = [
 /** An entry counts as debut-new only if its addedInVersion is above this floor. */
 const PRE_FEATURE_BASELINE = '1.2.0';
 
-/** Only user-discoverable entries participate in NEW tracking. */
+/**
+ * Temples are tracked alongside library texts but live in a separate dataset, so
+ * their NEW-state keys are namespaced to guarantee they never collide with a
+ * library entry id. Screens that render temples build their key via this helper.
+ */
+export const TEMPLE_NEW_PREFIX = 'theerth-temple:';
+export function templeNewKey(templeId: string): string {
+  return `${TEMPLE_NEW_PREFIX}${templeId}`;
+}
+
+/**
+ * Unified registry of everything that participates in NEW tracking: discoverable
+ * library texts plus every temple. Keeping one list means isNew / markSeen /
+ * hasNewInCategory work identically for texts and temples, and the upgrader-vs-
+ * fresh seeding below covers both in one pass.
+ */
+type Discoverable = { id: string; category: string; addedInVersion?: string };
+
 const discoverableEntries = library.filter((e) => e.status === 'active' && !e.hidden);
-const discoverableIds = discoverableEntries.map((e) => e.id);
-const debutNewIds = discoverableEntries
+const discoverables: Discoverable[] = [
+  ...discoverableEntries.map((e) => ({
+    id: e.id,
+    category: e.category as string,
+    addedInVersion: e.addedInVersion,
+  })),
+  ...temples.map((t) => ({
+    id: templeNewKey(t.id),
+    category: 'theerth',
+    addedInVersion: t.addedInVersion,
+  })),
+];
+const discoverableIds = discoverables.map((d) => d.id);
+const debutNewIds = discoverables
   .filter(
-    (e) => e.addedInVersion != null && compareSemver(e.addedInVersion, PRE_FEATURE_BASELINE) > 0
+    (d) => d.addedInVersion != null && compareSemver(d.addedInVersion, PRE_FEATURE_BASELINE) > 0
   )
-  .map((e) => e.id);
+  .map((d) => d.id);
 
 /** Seed for a returning user: everything discoverable is known EXCEPT debut-new. */
 function upgraderSeed(): string[] {
@@ -127,7 +161,7 @@ export function NewContentProvider({ children }: { children: React.ReactNode }) 
   const hasNewInCategory = useCallback(
     (categoryId: string) =>
       !isLoading &&
-      discoverableEntries.some((e) => e.category === categoryId && !knownIds.includes(e.id)),
+      discoverables.some((d) => d.category === categoryId && !knownIds.includes(d.id)),
     [isLoading, knownIds]
   );
 

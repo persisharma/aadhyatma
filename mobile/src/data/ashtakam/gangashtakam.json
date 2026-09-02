@@ -1,0 +1,146 @@
+{
+  "titleHi": "श्रीगङ्गाष्टकम्",
+  "titleEn": "Gangashtakam",
+  "deity": "ganga",
+  "source": {
+    "baseText": "Shri Gangashtakam (Adi Shankaracharya-krita, 'भगवति भवलीलामौलिमाले') — the 8-verse ashtakam proper; cross-verified across authoritative sources concordant on this arrangement.",
+    "referenceUrls": [
+      "https://www.srisharadapeetham.com/stotras/nadistotrani/gangashtakam",
+      "https://stotranidhi.com/en/sri-ganga-ashtakam-in-english/",
+      "https://www.ambuda.org/texts/gangashtakam/",
+      "https://sanskritdocuments.org/doc_devii/gangaashta.html"
+    ],
+    "retrievedOn": "2026-07-23",
+    "notes": "Attributed to Adi Shankaracharya (sanskritdocuments notes an alternative attribution to Agastimuni). Base = Sri Sringeri Sharada Peetham text, whose 8-verse arrangement (भवलीलामौलिमाले first, तव तीरे as v7) is concordant with stotranidhi and Ambuda; v6 कुतोऽवीची (Avichi hell — grammatical) per Sringeri. sanskritdocuments prints a variant arrangement (तव तीरे as v1, plus a 9th verse गङ्गे त्रैलोक्यसारे not in the Sringeri 8) — noted for §5. Minor variants: v5 शेषाहेरनुकारिणी (Sringeri) vs शेषाङ्गैरनुकारिणी (stotranidhi/Ambuda); v4 पातु माम् (all three) vs दृश्यते (SD). Phalashruti (गङ्गाष्टकमिदं पुण्यं…) omitted, consistent with the other ashtakams."
+  },
+  "verses": [
+    {
+      "id": "gangashtakam-1",
+      "number": 1,
+      "labelHi": "श्लोक · १",
+      "labelEn": "Shloka · 1",
+      "lines": [
+        "भगवति भवलीलामौलिमाले तवाम्भःकणमणुपरिमाणं प्राणिनो ये स्पृशन्ति।",
+        "अमरनगरनारीचामरग्राहिणीनां विगतकलिकलङ्कातङ्कमङ्के लुठन्ति॥"
+      ],
+      "linesEn": [
+        "bhagavati bhavalīlāmaulimāle tavāmbhaḥkaṇamaṇuparimāṇaṃ prāṇino ye spṛśanti",
+        "amaranagaranārīcāmaragrāhiṇīnāṃ vigatakalikalaṅkātaṅkamaṅke luṭhanti"
+      ],
+      "meaningHi": "हे भगवति! भव (शिव) की लीला के मुकुट की माला स्वरूपा गङ्गे! जो प्राणी आपके जल के अणु-भर कण का भी स्पर्श करते हैं, वे कलियुग के कलंक और भय से मुक्त होकर अमरपुरी की चामर धारण करने वाली देवांगनाओं की गोद में लालित होते हैं।",
+      "meaningEn": "O Bhagavati, garland upon the crown of Shiva's cosmic play! Beings who touch even an atom-sized drop of your water are freed of the stain and dread of Kali, and are cradled in the laps of the chamara-bearing maidens of the city of the immortals."
+    },
+    {
+      "id": "gangashtakam-2",
+      "number": 2,
+      "labelHi": "श्लोक · २",
+      "labelEn": "Shloka · 2",
+      "lines": [
+        "ब्रह्माण्डं खण्डयन्ती हरशिरसि जटावल्लिमुल्लासयन्ती स्वर्लोकादापतन्ती कनकगिरिगुहागण्डशैलात्स्खलन्ती।",
+        "क्षोणीपृष्ठे लुठन्ती दुरितचयचमूर्निर्भरं भर्त्सयन्ती पाथोधिं पूरयन्ती सुरनगरसरित्पावनी नः पुनातु॥"
+      ],
+      "linesEn": [
+        "brahmāṇḍaṃ khaṇḍayantī haraśirasi jaṭāvallimullāsayantī svarlokādāpatantī kanakagiriguhāgaṇḍaśailātskhalantī",
+        "kṣoṇīpṛṣṭhe luṭhantī duritacayacamūrnirbharaṃ bhartsayantī pāthodhiṃ pūrayantī suranagarasaritpāvanī naḥ punātu"
+      ],
+      "meaningHi": "ब्रह्माण्ड को भेदती हुई, शिव के मस्तक पर जटा-लताओं को उल्लसित करती हुई, स्वर्गलोक से उतरती हुई, सुमेरु की कन्दराओं और चट्टानों से फिसलती हुई, पृथ्वी पर लोटती हुई, पाप-समूह की सेना को डाँट कर भगाती हुई और समुद्र को भरती हुई — देवनगर की वह पावन नदी हमें पवित्र करे।",
+      "meaningEn": "Cleaving the cosmic sphere, setting the creeper-locks on Hara's head dancing, descending from heaven, tumbling down the boulders of the golden mountain's caves, rolling across the earth, fiercely routing the massed army of sins, and filling the ocean — may that purifying river of the gods' city make us pure."
+    },
+    {
+      "id": "gangashtakam-3",
+      "number": 3,
+      "labelHi": "श्लोक · ३",
+      "labelEn": "Shloka · 3",
+      "lines": [
+        "मज्जन्मातङ्गकुम्भच्युतमदमदिरामोदमत्तालिजालं स्नानैः सिद्धाङ्गनानां कुचयुगविगलत्कुङ्कुमासङ्गपिङ्गम्।",
+        "सायं प्रातर्मुनीनां कुशकुसुमचयैश्छन्नतीरस्थनीरं पायान्नो गाङ्गमम्भः करिकरमकराक्रान्तरंहस्तरङ्गम्॥"
+      ],
+      "linesEn": [
+        "majjanmātaṅgakumbhacyutamadamadirāmodamattālijālaṃ snānaiḥ siddhāṅganānāṃ kucayugavigalatkuṅkumāsaṅgapiṅgam",
+        "sāyaṃ prātarmunīnāṃ kuśakusumacayaiśchannatīrasthanīraṃ pāyānno gāṅgamambhaḥ karikaramakarākrāntaraṃhastaraṅgam"
+      ],
+      "meaningHi": "जिसमें स्नान करते हाथियों के गण्डस्थल से चूते मद की मदिरा-सी सुगन्ध से मत्त भौंरों के झुण्ड गूँजते हैं, सिद्ध-अङ्गनाओं के स्नान से बहते कुंकुम के संग से जो सुनहरा हो उठता है, सायं-प्रातः मुनियों के कुश-कुसुम समूहों से जिसका तटवर्ती जल ढका रहता है, और हाथियों की सूँड़ों तथा मकरों से जिसकी वेगवती तरंगें व्याप्त हैं — वह गङ्गाजल हमारी रक्षा करे।",
+      "meaningEn": "May Ganga's water protect us — humming with swarms of bees drunk on the wine-like fragrance of ichor dripping from bathing elephants' temples, tawny with the saffron washed from Siddha maidens at their bath, its bankside waters strewn morning and evening with the sages' kusha grass and flowers, its rushing waves overrun by elephants' trunks and makaras."
+    },
+    {
+      "id": "gangashtakam-4",
+      "number": 4,
+      "labelHi": "श्लोक · ४",
+      "labelEn": "Shloka · 4",
+      "lines": [
+        "आदावादिपितामहस्य नियमव्यापारपात्रे जलं पश्चात्पन्नगशायिनो भगवतः पादोदकं पावनम्।",
+        "भूयः शम्भुजटाविभूषणमणिर्जह्नोर्महर्षेरियं कन्या कल्मषनाशिनी भगवती भागीरथी पातु माम्॥"
+      ],
+      "linesEn": [
+        "ādāvādipitāmahasya niyamavyāpārapātre jalaṃ paścātpannagaśāyino bhagavataḥ pādodakaṃ pāvanam",
+        "bhūyaḥ śambhujaṭāvibhūṣaṇamaṇirjahnormaharṣeriyaṃ kanyā kalmaṣanāśinī bhagavatī bhāgīrathī pātu mām"
+      ],
+      "meaningHi": "जो पहले आदि-पितामह ब्रह्मा के नियम-कर्म के पात्र (कमण्डलु) का जल थी, फिर शेषशायी भगवान विष्णु का पावन पादोदक बनी, फिर शम्भु की जटाओं की विभूषण-मणि हुई, और फिर जह्नु महर्षि की कन्या — वह कल्मषनाशिनी भगवती भागीरथी मेरी रक्षा करे।",
+      "meaningEn": "First the water in the vessel of the primeval Creator's daily rites, then the hallowed water that washed the feet of the Lord who reclines upon the serpent, then the jewel adorning Shambhu's matted hair, and then the daughter of the great sage Jahnu — may that destroyer of sin, the blessed Bhagirathi, protect me."
+    },
+    {
+      "id": "gangashtakam-5",
+      "number": 5,
+      "labelHi": "श्लोक · ५",
+      "labelEn": "Shloka · 5",
+      "lines": [
+        "शैलेन्द्रादवतारिणी निजजले मज्जज्जनोत्तारिणी पारावारविहारिणी भवभयश्रेणीसमुत्सारिणी।",
+        "शेषाहेरनुकारिणी हरशिरोवल्लीदलाकारिणी काशीप्रान्तविहारिणी विजयते गङ्गा मनोहारिणी॥"
+      ],
+      "linesEn": [
+        "śailendrādavatāriṇī nijajale majjajjanottāriṇī pārāvāravihāriṇī bhavabhayaśreṇīsamutsāriṇī",
+        "śeṣāheranukāriṇī haraśirovallīdalākāriṇī kāśīprāntavihāriṇī vijayate gaṅgā manohāriṇī"
+      ],
+      "meaningHi": "जो पर्वतराज हिमालय से अवतरित होती है, अपने जल में डुबकी लगाने वालों का उद्धार करती है, समुद्र तक विहार करती है, भव-भय की पंक्तियों को दूर भगाती है, शेषनाग का अनुकरण करती (सर्पिल बहती) है, शिव के मस्तक पर वल्ली-दल का आकार धारण करती है और काशी के प्रान्त में विहार करती है — उस मनोहारिणी गङ्गा की जय हो।",
+      "meaningEn": "Victorious is the enchanting Ganga — descending from the lord of mountains, uplifting those who plunge into her waters, sporting all the way to the ocean, driving away the ranks of worldly fear, winding in imitation of the serpent Shesha, taking the form of leaf-sprays upon Hara's head, and playing about the precincts of Kashi."
+    },
+    {
+      "id": "gangashtakam-6",
+      "number": 6,
+      "labelHi": "श्लोक · ६",
+      "labelEn": "Shloka · 6",
+      "lines": [
+        "कुतोऽवीची वीचिस्तव यदि गता लोचनपथं त्वमापीता पीताम्बरपुरनिवासं वितरसि।",
+        "त्वदुत्सङ्गे गङ्गे पतति यदि कायस्तनुभृतां तदा मातः शातक्रतवपदलाभोऽप्यतिलघुः॥"
+      ],
+      "linesEn": [
+        "kuto'vīcī vīcistava yadi gatā locanapathaṃ tvamāpītā pītāmbarapuranivāsaṃ vitarasi",
+        "tvadutsaṅge gaṅge patati yadi kāyastanubhṛtāṃ tadā mātaḥ śātakratavapadalābho'pyatilaghuḥ"
+      ],
+      "meaningHi": "जिसकी दृष्टि के पथ में आपकी एक भी लहर आ गई, उसके लिए अवीचि नरक कहाँ? आपका जल पीने वाले को आप पीताम्बरधारी विष्णु के धाम का निवास प्रदान करती हैं; और हे गङ्गे! यदि देहधारियों का शरीर आपकी गोद में गिरे, तो हे माता! उसके आगे इन्द्र-पद की प्राप्ति भी अत्यन्त तुच्छ है।",
+      "meaningEn": "Whence could the Avichi hell touch one whose eyes have beheld but a single wave of yours? Drunk, you bestow residence in the city of the yellow-robed Vishnu; and if a mortal's body falls into your lap, O mother Ganga, even the attainment of Indra's throne is a trifle beside it."
+    },
+    {
+      "id": "gangashtakam-7",
+      "number": 7,
+      "labelHi": "श्लोक · ७",
+      "labelEn": "Shloka · 7",
+      "lines": [
+        "भगवति तव तीरे नीरमात्राशनोऽहं विगतविषयतृष्णः कृष्णमाराधयामि।",
+        "सकलकलुषभङ्गे स्वर्गसोपानसङ्गे तरलतरतरङ्गे देवि गङ्गे प्रसीद॥"
+      ],
+      "linesEn": [
+        "bhagavati tava tīre nīramātrāśano'haṃ vigataviṣayatṛṣṇaḥ kṛṣṇamārādhayāmi",
+        "sakalakaluṣabhaṅge svargasopānasaṅge taralatarataraṅge devi gaṅge prasīda"
+      ],
+      "meaningHi": "हे भगवति! आपके तट पर केवल जल का आहार करते हुए, विषय-तृष्णा से रहित होकर मैं श्रीकृष्ण की आराधना करता हूँ। समस्त कलुषों का नाश करने वाली, स्वर्ग की सोपान-पंक्ति से जुड़ी, अति चंचल तरंगों वाली हे देवि गङ्गे! प्रसन्न होइए।",
+      "meaningEn": "O Bhagavati, on your bank, subsisting on water alone and freed of all thirst for worldly things, I worship Krishna. O breaker of every stain, stairway joined to heaven, you of the swift and dancing waves — O Devi Ganga, be gracious."
+    },
+    {
+      "id": "gangashtakam-8",
+      "number": 8,
+      "labelHi": "श्लोक · ८",
+      "labelEn": "Shloka · 8",
+      "lines": [
+        "मातर्जाह्नवि शम्भुसङ्गमिलिते मौलौ निधायाञ्जलिं त्वत्तीरे वपुषोऽवसानसमये नारायणाङ्घ्रिद्वयम्।",
+        "सानन्दं स्मरतो भविष्यति मम प्राणप्रयाणोत्सवे भूयाद्भक्तिरविच्युता हरिहराद्वैतात्मिका शाश्वती॥"
+      ],
+      "linesEn": [
+        "mātarjāhnavi śambhusaṅgamilite maulau nidhāyāñjaliṃ tvattīre vapuṣo'vasānasamaye nārāyaṇāṅghridvayam",
+        "sānandaṃ smarato bhaviṣyati mama prāṇaprayāṇotsave bhūyādbhaktiravicyutā hariharādvaitātmikā śāśvatī"
+      ],
+      "meaningHi": "हे माता जाह्नवि! शम्भु के संग से युक्त आपके तट पर, देह के अवसान के समय, मस्तक पर अंजलि रखकर नारायण के युगल चरणों का सानन्द स्मरण करते हुए मेरा प्राण-प्रयाण उत्सव बन जाए — और हरि-हर के अद्वैत स्वरूप वाली मेरी भक्ति अविचल और शाश्वत बनी रहे।",
+      "meaningEn": "Mother Jahnavi, when this body's end comes upon your bank that is met with Shambhu's presence, with palms joined upon my head, joyfully remembering Narayana's two feet — may my life's departure become a festival, and may my devotion, one with both Hari and Hara, remain unbroken and everlasting."
+    }
+  ]
+}

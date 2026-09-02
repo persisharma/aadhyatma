@@ -1,0 +1,89 @@
+# NEW Content Badge — By-Deity surface
+#
+# The NEW badge also renders in the By-Deity list (DeityListScreen → LibraryCard),
+# a different navigation path than the CategoryList covered by
+# new-content-badge-smoke.yaml. Verifies:
+#
+#   1. RENDER — after the dev "upgrade" seed, opening Shri Krishna shows
+#      Krishna Stotram (a stotram debut-new entry, deity = krishna) WITH its NEW
+#      badge in the deity list.
+#   2. CLEAR — tapping it fires markSeen from the DeityList surface; on return the
+#      same deity list shows Krishna Stotram WITHOUT the badge (persisted).
+#
+# DeityCard label: "<NameEn>. <n> texts." → tap "Shri Krishna\..*".
+# LibraryCard label: "<NameEn>. <sub>.[ New.] Tap to open." → regex on NameEn.
+# Tapping a library card fires markSeen(id) before navigating, so tap + "Back"
+# (every reader/chapters screen exposes accessibilityLabel "Back") marks it seen.
+
+appId: com.prashantsharma.vedansh
+---
+# ── Setup: force a clean slate, then simulate an update ──
+- runFlow: _launch.yaml
+- scrollUntilVisible:
+    element:
+      id: "dev-reset-new-content"
+    direction: DOWN
+    centerElement: true
+    timeout: 10000
+- tapOn:
+    id: "dev-reset-new-content"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: "dev-seed-new-content"
+    direction: DOWN
+    centerElement: true
+    timeout: 10000
+- tapOn:
+    id: "dev-seed-new-content"
+- waitForAnimationToEnd
+
+# ── 1. RENDER: By Deity → Shri Krishna → Krishna Stotram shows NEW ──
+- scrollUntilVisible:
+    element:
+      text: "By Deity. Tap to open."
+    direction: DOWN
+    timeout: 10000
+- tapOn: "By Deity. Tap to open."
+- waitForAnimationToEnd
+- tapOn: "Shri Krishna\\..*"          # "Shri Krishna. N texts."
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Krishna Stotram\\..*New\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+
+# ── 2. CLEAR: tap it (markSeen from the deity surface), return, badge gone ──
+- tapOn: "Krishna Stotram\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+- tapOn:
+    id: "resume-start-over"
+    optional: true
+- waitForAnimationToEnd
+- tapOn: "Back"                       # reader/chapters → Krishna deity list
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Krishna Stotram\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+- assertNotVisible: "Krishna Stotram\\..*New\\..*Tap to open\\."
+
+# ── Cleanup: back to Home, reset NEW state ──
+- tapOn: "Back"                       # deity list → deity index
+- waitForAnimationToEnd
+- tapOn: "Back"                       # deity index → Home
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: "dev-reset-new-content"
+    direction: DOWN
+    centerElement: true
+    timeout: 10000
+- tapOn:
+    id: "dev-reset-new-content"
+- waitForAnimationToEnd
+- stopApp:
+    appId: com.prashantsharma.vedansh

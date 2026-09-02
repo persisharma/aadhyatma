@@ -3,11 +3,11 @@
     "name": "Vedansh",
     "slug": "vedansh",
     "scheme": "vedansh",
-    "version": "1.3.1",
+    "version": "1.5.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "newArchEnabled": false,
+    "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
@@ -16,7 +16,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.prashantsharma.vedansh",
-      "buildNumber": "17",
+      "buildNumber": "52",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "UIBackgroundModes": [
@@ -26,7 +26,7 @@
     },
     "android": {
       "package": "com.prashantsharma.vedansh",
-      "versionCode": 2,
+      "versionCode": 9,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -36,7 +36,10 @@
       "permissions": [
         "FOREGROUND_SERVICE",
         "FOREGROUND_SERVICE_MEDIA_PLAYBACK",
-        "WAKE_LOCK"
+        "WAKE_LOCK",
+        "SCHEDULE_EXACT_ALARM",
+        "POST_NOTIFICATIONS",
+        "RECEIVE_BOOT_COMPLETED"
       ]
     },
     "web": {
@@ -53,7 +56,22 @@
       [
         "expo-notifications",
         {
-          "color": "#B8621B"
+          "color": "#B8621B",
+          "sounds": [
+            "./assets/japam-alarm-sounds/om_namah_shivaya.wav",
+            "./assets/japam-alarm-sounds/hare_krishna_mahamantra.wav",
+            "./assets/japam-alarm-sounds/gayatri_mantra.wav"
+          ]
+        }
+      ],
+      "./plugins/withJapamAlarmNative.js",
+      "./plugins/withJapamAlarmIos.js",
+      "./plugins/withHomeWidgets.js",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Vedansh uses your location only to compute accurate sunrise and panchang times for your city. Location never leaves your device.",
+          "isAndroidBackgroundLocationEnabled": false
         }
       ]
     ],

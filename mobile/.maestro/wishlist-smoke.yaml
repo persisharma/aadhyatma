@@ -1,0 +1,120 @@
+# Wishlist (Bookmarks) Smoke Test — #46/#51/#55 (bookmark → wishlist round-trip)
+#
+# Bookmarks are verse-level favorites saved from the ♡ button inside a reader
+# (#51 moved bookmark + share into the shloka row). The Wishlist screen lives
+# in MoreStackNavigator (More tab → Wishlist) and lists saved verses with a
+# verse-number pill (#46/#55 fixed the pill's visibility and localization).
+#
+# This flow covers the round-trip:
+#   1. Bookmark a verse in the Sundarkand reader (BookmarkButton).
+#   2. Open the Wishlist from the More tab — the saved verse appears.
+#   3. Tapping the saved card navigates back to that verse in the reader.
+#   4. Un-bookmark there to clean up (idempotent across re-runs).
+# The in-list ♥ remove + its confirm modal can't be driven (the remove button is
+# collapsed under the row's accessible Pressable — see Step 6); removal is
+# instead covered by un-bookmarking from the reader.
+#
+# Why English first:
+#   Wishlist source labels and the confirm modal switch to English with the
+#   global reading language; in Hindi they are Devanagari. (The empty-state
+#   line "No verses saved yet" is always Latin, but a populated list is not.)
+#
+# Selector notes (verified against source):
+#   - BookmarkButton.tsx exposes "Add bookmark" / "Remove bookmark".
+#   - WishlistScreen rows expose "<Source>, <Verse>" labels; the source label
+#     for a Sundarkand bookmark contains "Sundarkand", so "Sundarkand.*" is a
+#     reliable anchor.
+#   - Tapping a saved card calls buildBookmarkTarget → navigates to the verse
+#     in HomeTab, so we land back in the reader showing "Remove bookmark".
+#
+# PRECONDITION-TOLERANT: we ensure the verse is bookmarked with an OPTIONAL tap
+# on "Add bookmark" (skipped if it is already bookmarked), so the flow does not
+# depend on whether a prior run left a bookmark. We avoid deleting arbitrary
+# pre-existing bookmarks: the destructive path only Cancels, and cleanup
+# removes the single verse this flow touched.
+
+appId: com.prashantsharma.vedansh
+---
+# ── Step 1: Boot Vedansh in Expo Go (exits on Home) ──
+- runFlow: _launch.yaml
+
+# ── Step 2: Set global reading language to English (More tab) ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- tapOn: "Language,.*"   # More now opens a Language picker sheet, not inline pills
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── Step 3: Open the Sundarkand reader (Home → Sacred Books → Sundarkand) ──
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+- assertVisible: "Sacred Books. Tap to open."
+- tapOn: "Sacred Books. Tap to open."
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Sundarkand\\..*Tap to open\\."
+    timeout: 15000
+- tapOn: "Sundarkand\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+# Sundarkand is chaptered → this lands on the SundarkandChapters index. Dismiss
+# a resume sheet if prior progress popped one (returns to the index), then open
+# Chapter 1 to reach the reader where the bookmark control lives.
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Chapter 1\\..*Tap to open\\."
+    timeout: 15000
+- tapOn: "Chapter 1\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+
+# ── Step 4: Ensure the current verse is bookmarked ──
+# Optional tap: if the verse is already bookmarked, "Add bookmark" is absent
+# (it reads "Remove bookmark") and the tap is skipped — either way it ends up
+# bookmarked.
+- tapOn:
+    text: "Add bookmark"
+    optional: true
+- waitForAnimationToEnd
+- assertVisible: "Remove bookmark"
+
+# ── Step 5: Open the Wishlist (More tab → Wishlist) ──
+# The More card's a11y label is composed ("Wishlist, N verses saved"), and
+# Maestro matches the full string — anchor with .* not the bare word.
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Wishlist.*"
+    timeout: 15000
+- tapOn: "Wishlist.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Sundarkand.*"
+    timeout: 15000
+
+# ── Step 6: Tapping the saved card navigates back to the verse; clean up ──
+# NOTE: the in-list ♥ "Remove from wishlist" button is a nested Pressable inside
+# the row's own accessible Pressable ("<Source>, <Verse>"), so iOS collapses it
+# out of the a11y tree and Maestro can't tap it — the remove-confirm modal can't
+# be driven from here. Bookmark REMOVAL is still covered below by un-bookmarking
+# from the reader (removeBookmark), which is the same context action.
+- tapOn: "Sundarkand.*"
+- waitForAnimationToEnd:
+    timeout: 15000
+- extendedWaitUntil:
+    visible: "Remove bookmark"
+    timeout: 15000
+- tapOn: "Remove bookmark"           # un-bookmark → resets state for re-runs
+- waitForAnimationToEnd
+- assertVisible: "Add bookmark"
+
+# ── Cleanup — Expo Go termination resets navigation for the next flow ──
+- stopApp:
+    appId: com.prashantsharma.vedansh

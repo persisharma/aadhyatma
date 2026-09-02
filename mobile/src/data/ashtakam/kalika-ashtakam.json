@@ -1,0 +1,178 @@
+{
+  "titleHi": "श्रीकालिकाष्टकम्",
+  "titleEn": "Kalika Ashtakam",
+  "deity": "kali",
+  "source": {
+    "baseText": "Shri Kalika Ashtakam (Adi Shankaracharya-krita; dhyana 'गलद्रक्तमुण्डावलीकण्ठमाला' + stuti, refrain स्वरूपं त्वदीयं न विन्दन्ति देवाः) — cross-verified, all sources concordant.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_devii/kAlikAShTakam.html",
+      "https://mantra.tips/en/mantras/kalika-ashtakam",
+      "https://gurukripa.org.in/blog/dash-mahavidya/kalika-ashtakam-meaning",
+      "https://siva.sh/kalika-ashtakam"
+    ],
+    "retrievedOn": "2026-07-23",
+    "notes": "Ascribed to Adi Shankaracharya (SD notes it is also said to be from the Kalirahasya). The text comprises a 3-verse dhyana (Kali's fierce iconography) + the stuti whose verses end स्वरूपं त्वदीयं न विन्दन्ति देवाः; shipped as 10 sequential verses (dhyana labeled ध्यान · 1-3). The stuti's final phalashruti verse (यदि ध्यानयुक्तं पठेद्…) omitted per house precedent. One reading adopted against the SD print: stuti v1 बभूवुः (siva.sh; grammatical perfect) where SD prints बभूबुः — flagged for §5."
+  },
+  "verses": [
+    {
+      "id": "kalika-ashtakam-1",
+      "number": 1,
+      "labelHi": "ध्यान · १",
+      "labelEn": "Dhyana · 1",
+      "lines": [
+        "गलद्रक्तमुण्डावलीकण्ठमाला महोघोररावा सुदंष्ट्रा कराला।",
+        "विवस्त्रा श्मशानालया मुक्तकेशी महाकालकामाकुला कालिकेयम्॥"
+      ],
+      "linesEn": [
+        "galadraktamuṇḍāvalīkaṇṭhamālā mahoghorarāvā sudaṃṣṭrā karālā",
+        "vivastrā śmaśānālayā muktakeśī mahākālakāmākulā kālikeyam"
+      ],
+      "meaningHi": "जिनके कण्ठ में रक्त टपकाती मुण्डों की माला है, जो महाघोर नाद करती हैं, बड़ी दाढ़ों वाली और विकराल हैं; दिगम्बरा, श्मशानवासिनी, मुक्तकेशी, महाकाल से मिलन की उत्कण्ठा से व्याकुल — यही देवी कालिका हैं।",
+      "meaningEn": "About her neck hangs a garland of severed heads dripping blood; her roar is terrible, her great fangs dreadful; unclad, dwelling in the cremation ground, her hair unbound, filled with yearning for union with Mahakala — this is Devi Kalika."
+    },
+    {
+      "id": "kalika-ashtakam-2",
+      "number": 2,
+      "labelHi": "ध्यान · २",
+      "labelEn": "Dhyana · 2",
+      "lines": [
+        "भुजेवामयुग्मे शिरोऽसिं दधाना वरं दक्षयुग्मेऽभयं वै तथैव।",
+        "सुमध्याऽपि तुङ्गस्तना भारनम्रा लसद्रक्तसृक्कद्वया सुस्मितास्या॥"
+      ],
+      "linesEn": [
+        "bhujevāmayugme śiro'siṃ dadhānā varaṃ dakṣayugme'bhayaṃ vai tathaiva",
+        "sumadhyā'pi tuṅgastanā bhāranamrā lasadraktasṛkkadvayā susmitāsyā"
+      ],
+      "meaningHi": "जो अपने वाम भुजा-युगल में मुण्ड और खड्ग धारण करती हैं तथा दक्षिण भुजा-युगल से वर और अभय प्रदान करती हैं; सुन्दर कटि वाली होकर भी उन्नत स्तनों के भार से किंचित् झुकी हुई, रक्तिम ओठों के कोरों पर मन्द मुस्कान लिये हुए हैं।",
+      "meaningEn": "In her left pair of hands she bears a severed head and a sword, while with her right pair she grants boons and fearlessness; slender-waisted yet gently bowed by the weight of her full breasts, the corners of her glistening blood-red lips playing with a soft smile."
+    },
+    {
+      "id": "kalika-ashtakam-3",
+      "number": 3,
+      "labelHi": "ध्यान · ३",
+      "labelEn": "Dhyana · 3",
+      "lines": [
+        "शवद्वन्द्वकर्णावतंसा सुकेशी लसत्प्रेतपाणिं प्रयुक्तैककाञ्ची।",
+        "शवाकारमञ्चाधिरूढा शिवाभिश्चतुर्दिक्षुशब्दायमानाऽभिरेजे॥"
+      ],
+      "linesEn": [
+        "śavadvandvakarṇāvataṃsā sukeśī lasatpretapāṇiṃ prayuktaikakāñcī",
+        "śavākāramañcādhirūḍhā śivābhiścaturdikṣuśabdāyamānā'bhireje"
+      ],
+      "meaningHi": "जिनके कानों में शव-युगल के कुण्डल हैं, केश सुन्दर हैं, कटि में प्रेत-हस्तों की चमकती करधनी है; जो शव रूपी मंच पर विराजमान हैं और चारों दिशाओं में शब्द करती शिवाओं (सियारिनों) के बीच सुशोभित हो रही हैं।",
+      "meaningEn": "Corpses adorn her two ears as earrings, her hair is lovely, and about her waist gleams a girdle strung of dead men's hands; mounted upon a couch of corpses, she shines forth amid the she-jackals howling from all four directions."
+    },
+    {
+      "id": "kalika-ashtakam-4",
+      "number": 4,
+      "labelHi": "श्लोक · १",
+      "labelEn": "Shloka · 1",
+      "lines": [
+        "विरञ्च्यादिदेवास्त्रयस्ते गुणास्त्रीन् समाराध्य कालीं प्रधाना बभूवुः।",
+        "अनादिं सुरादिं मखादिं भवादिं स्वरूपं त्वदीयं न विन्दन्ति देवाः॥"
+      ],
+      "linesEn": [
+        "virañcyādidevāstrayaste guṇāstrīn samārādhya kālīṃ pradhānā babhūvuḥ",
+        "anādiṃ surādiṃ makhādiṃ bhavādiṃ svarūpaṃ tvadīyaṃ na vindanti devāḥ"
+      ],
+      "meaningHi": "ब्रह्मा आदि तीनों देव तीनों गुणों सहित काली की समाराधना करके ही प्रधान (श्रेष्ठ) हुए। हे अनादि! हे देवों की, यज्ञों की और संसार की आदि! आपके स्वरूप को देवता भी नहीं जान पाते।",
+      "meaningEn": "Brahma and the other two gods, together with the three gunas, became supreme only by worshipping Kali. O beginningless one — source of the gods, of sacrifice, of existence itself — even the gods cannot fathom your true form."
+    },
+    {
+      "id": "kalika-ashtakam-5",
+      "number": 5,
+      "labelHi": "श्लोक · २",
+      "labelEn": "Shloka · 2",
+      "lines": [
+        "जगन्मोहिनीयं तु वाग्वादिनीयं सुहृत्पोषिणीशत्रुसंहारणीयम्।",
+        "वचस्तम्भनीयं किमुच्चाटनीयं स्वरूपं त्वदीयं न विन्दन्ति देवाः॥"
+      ],
+      "linesEn": [
+        "jaganmohinīyaṃ tu vāgvādinīyaṃ suhṛtpoṣiṇīśatrusaṃhāraṇīyam",
+        "vacastambhanīyaṃ kimuccāṭanīyaṃ svarūpaṃ tvadīyaṃ na vindanti devāḥ"
+      ],
+      "meaningHi": "ये ही जगत को मोहने वाली और वाणी की अधिष्ठात्री हैं; सुहृदों का पोषण और शत्रुओं का संहार करने वाली हैं; वाणी का स्तम्भन और उच्चाटन तक इन्हीं से होता है — फिर भी आपके स्वरूप को देवता नहीं जान पाते।",
+      "meaningEn": "She it is who enchants the world and presides over speech, who nourishes friends and destroys enemies; the stilling of speech, nay the routing of foes, is hers — yet even the gods cannot fathom your true form."
+    },
+    {
+      "id": "kalika-ashtakam-6",
+      "number": 6,
+      "labelHi": "श्लोक · ३",
+      "labelEn": "Shloka · 3",
+      "lines": [
+        "इयं स्वर्गदात्री पुनः कल्पवल्ली मनोजास्तु कामान् यथार्थं प्रकुर्यात्।",
+        "तथा ते कृतार्था भवन्तीति नित्यं स्वरूपं त्वदीयं न विन्दन्ति देवाः॥"
+      ],
+      "linesEn": [
+        "iyaṃ svargadātrī punaḥ kalpavallī manojāstu kāmān yathārthaṃ prakuryāt",
+        "tathā te kṛtārthā bhavantīti nityaṃ svarūpaṃ tvadīyaṃ na vindanti devāḥ"
+      ],
+      "meaningHi": "ये स्वर्ग देने वाली हैं और कल्पलता के समान मन में उपजी कामनाओं को यथार्थ कर देती हैं, जिससे भक्त नित्य कृतार्थ होते हैं — फिर भी आपके स्वरूप को देवता नहीं जान पाते।",
+      "meaningEn": "She is the giver of heaven and a very wish-fulfilling creeper, making the heart's desires come true, so that her devotees are ever fulfilled — yet even the gods cannot fathom your true form."
+    },
+    {
+      "id": "kalika-ashtakam-7",
+      "number": 7,
+      "labelHi": "श्लोक · ४",
+      "labelEn": "Shloka · 4",
+      "lines": [
+        "सुरापानमत्ता सुभक्तानुरक्ता लसत्पूतचित्ते सदाविर्भवत्ते।",
+        "जपध्यानपूजासुधाधौतपङ्का स्वरूपं त्वदीयं न विन्दन्ति देवाः॥"
+      ],
+      "linesEn": [
+        "surāpānamattā subhaktānuraktā lasatpūtacitte sadāvirbhavatte",
+        "japadhyānapūjāsudhādhautapaṅkā svarūpaṃ tvadīyaṃ na vindanti devāḥ"
+      ],
+      "meaningHi": "सुरापान से मत्त और अपने सुभक्तों में अनुरक्त आप उसी उज्ज्वल, पवित्र चित्त में सदा प्रकट होती हैं जिसका मैल जप, ध्यान और पूजा रूपी सुधा से धुल चुका है — फिर भी आपके स्वरूप को देवता नहीं जान पाते।",
+      "meaningEn": "Intoxicated with the celestial draught, devoted to her true devotees, you ever reveal yourself in the shining, purified heart whose mire has been washed away by the nectar of japa, meditation and worship — yet even the gods cannot fathom your true form."
+    },
+    {
+      "id": "kalika-ashtakam-8",
+      "number": 8,
+      "labelHi": "श्लोक · ५",
+      "labelEn": "Shloka · 5",
+      "lines": [
+        "चिदानन्दकन्दं हसन् मन्दमन्दं शरच्चन्द्रकोटिप्रभापुञ्जबिम्बम्।",
+        "मुनीनां कवीनां हृदि द्योतयन्तं स्वरूपं त्वदीयं न विन्दन्ति देवाः॥"
+      ],
+      "linesEn": [
+        "cidānandakandaṃ hasan mandamandaṃ śaraccandrakoṭiprabhāpuñjabimbam",
+        "munīnāṃ kavīnāṃ hṛdi dyotayantaṃ svarūpaṃ tvadīyaṃ na vindanti devāḥ"
+      ],
+      "meaningHi": "चिदानन्द के कन्द-स्वरूप, मन्द-मन्द मुस्काते हुए, शरद के करोड़ों चन्द्रमाओं की प्रभा के पुंज जैसे बिम्ब वाले, मुनियों और कवियों के हृदय में प्रकाशित होने वाले आपके स्वरूप को देवता भी नहीं जान पाते।",
+      "meaningEn": "The very root of consciousness and bliss, gently smiling, an orb like the massed radiance of ten million autumn moons, shining within the hearts of sages and poets — even the gods cannot fathom that form of yours."
+    },
+    {
+      "id": "kalika-ashtakam-9",
+      "number": 9,
+      "labelHi": "श्लोक · ६",
+      "labelEn": "Shloka · 6",
+      "lines": [
+        "महामेघकाली सुरक्तापि शुभ्रा कदाचिद् विचित्राकृतिर्योगमाया।",
+        "न बाला न वृद्धा न कामातुरापि स्वरूपं त्वदीयं न विन्दन्ति देवाः॥"
+      ],
+      "linesEn": [
+        "mahāmeghakālī suraktāpi śubhrā kadācid vicitrākṛtiryogamāyā",
+        "na bālā na vṛddhā na kāmāturāpi svarūpaṃ tvadīyaṃ na vindanti devāḥ"
+      ],
+      "meaningHi": "कभी महामेघ के समान काली, कभी अरुण-रक्त, कभी शुभ्र-श्वेत, कभी विचित्र आकृति धारण करने वाली योगमाया; न बाला, न वृद्धा, न कामातुरा युवती — आपके स्वरूप को देवता भी नहीं जान पाते।",
+      "meaningEn": "Now dark as the great storm-cloud, now deep crimson, now radiant white — Yogamaya of ever-wondrous shape; neither child, nor aged one, nor passion-stirred maiden — even the gods cannot fathom your true form."
+    },
+    {
+      "id": "kalika-ashtakam-10",
+      "number": 10,
+      "labelHi": "श्लोक · ७",
+      "labelEn": "Shloka · 7",
+      "lines": [
+        "क्षमस्वापराधं महागुप्तभावं मया लोकमध्ये प्रकाशिकृतं यत्।",
+        "तव ध्यानपूतेन चापल्यभावात् स्वरूपं त्वदीयं न विन्दन्ति देवाः॥"
+      ],
+      "linesEn": [
+        "kṣamasvāparādhaṃ mahāguptabhāvaṃ mayā lokamadhye prakāśikṛtaṃ yat",
+        "tava dhyānapūtena cāpalyabhāvāt svarūpaṃ tvadīyaṃ na vindanti devāḥ"
+      ],
+      "meaningHi": "हे माता! आपके ध्यान से पवित्र होकर भी चपलतावश जो महागुप्त भाव मैंने संसार के बीच प्रकट कर दिया, मेरा वह अपराध क्षमा कीजिए — आपके स्वरूप को देवता भी नहीं जान पाते।",
+      "meaningEn": "Forgive my offence, O Mother — that out of restlessness, though purified by meditation upon you, I have laid open this deeply hidden mystery before the world; even the gods cannot fathom your true form."
+    }
+  ]
+}

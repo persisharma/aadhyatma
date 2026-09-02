@@ -1,0 +1,108 @@
+{
+  "id": "durga-stuti-arjuna",
+  "titleHi": "दुर्गा स्तुति (अर्जुनकृत)",
+  "titleEn": "Durga Stuti (Arjuna Krita)",
+  "deity": "durga",
+  "source": {
+    "baseText": "Arjuna Krita Durga Stotram — Mahabharata, Bhishma Parva, Chapter 23 (immediately preceding the Bhagavad Gita); the hymn Arjuna recited to Durga at Krishna's bidding for victory. 13 verses. Distinct from Devi Suktam (§10.11 checked).",
+    "referenceUrls": [
+      "https://stotranidhi.com/en/sri-durga-stotram-arjuna-krutam-in-english/",
+      "https://www.mantra.tips/en/mantras/arjuna-krita-durga-stotram"
+    ],
+    "retrievedOn": "2026-07-23",
+    "notes": "Devanagari for verses 1–5 from mantra.tips; verses 6–13 transcribed from the concordant IAST (stotranidhi) + English (shastras.com Ramachander), cross-checked against sacred-texts.com Mahabharata M06.023. Universally-attested epic text (no recension divergence)."
+  },
+  "verses": [
+    {
+      "id": "durga-stuti-arjuna-1", "number": 1, "labelHi": "श्लोक · १", "labelEn": "Shloka · 1",
+      "lines": ["नमस्ते सिद्धसेनानि आर्ये मन्दरवासिनि।", "कुमारि कालि कापालि कपिले कृष्णपिङ्गले॥"],
+      "linesEn": ["namaste siddha-senāni ārye mandara-vāsini", "kumāri kāli kāpāli kapile kṛṣṇa-piṅgale"],
+      "meaningHi": "हे सिद्धों की सेनापति! हे आर्ये! हे मन्दर पर्वत पर निवास करने वाली! आपको नमस्कार है। हे कुमारी! हे काली! हे कापालि! हे कपिल-वर्णा! हे कृष्ण-पिङ्गल वर्ण वाली देवी!",
+      "meaningEn": "Salutation to You, commander of the host of the Siddhas, O noble one who dwells on Mount Mandara — O Kumari, O Kali, O Kapali, O tawny one, O dark-and-reddish-hued Goddess."
+    },
+    {
+      "id": "durga-stuti-arjuna-2", "number": 2, "labelHi": "श्लोक · २", "labelEn": "Shloka · 2",
+      "lines": ["भद्रकालि नमस्तुभ्यं महाकालि नमोऽस्तु ते।", "चण्डि चण्डे नमस्तुभ्यं तारिणि वरवर्णिनि॥"],
+      "linesEn": ["bhadrakāli namas-tubhyaṃ mahākāli namo'stu te", "caṇḍi caṇḍe namas-tubhyaṃ tāriṇi vara-varṇini"],
+      "meaningHi": "हे मंगलमयी भद्रकाली! आपको नमस्कार है; हे महाकाली! आपको नमस्कार है। हे प्रचण्ड चण्डी! आपको नमस्कार है; हे तारने वाली! हे श्रेष्ठ वर्ण वाली!",
+      "meaningEn": "Obeisance to You, O auspicious Bhadrakali; salutation to You, O great Mahakali. Obeisance to You, O fierce Chandi, O wrathful one, O deliverer of the most excellent form."
+    },
+    {
+      "id": "durga-stuti-arjuna-3", "number": 3, "labelHi": "श्लोक · ३", "labelEn": "Shloka · 3",
+      "lines": ["कात्यायनि महाभागे करालि विजये जये।", "शिखिपिच्छध्वजधरे नानाभरणभूषिते॥"],
+      "linesEn": ["kātyāyani mahā-bhāge karāli vijaye jaye", "śikhi-piccha-dhvaja-dhare nānā-bharaṇa-bhūṣite"],
+      "meaningHi": "हे महाभाग्यशालिनी कात्यायनी! हे कराली! हे विजया! हे जया! हे मयूर-पंख की ध्वजा धारण करने वाली! हे नाना आभूषणों से विभूषित देवी!",
+      "meaningEn": "O Katyayani, greatly blessed, O fearsome one, O Vijaya, O Jaya; O bearer of the peacock-feather banner, adorned with manifold ornaments."
+    },
+    {
+      "id": "durga-stuti-arjuna-4", "number": 4, "labelHi": "श्लोक · ४", "labelEn": "Shloka · 4",
+      "lines": ["अट्टशूलप्रहरणे खड्गखेटकधारिणि।", "गोपेन्द्रस्यानुजे ज्येष्ठे नन्दगोपकुलोद्भवे॥"],
+      "linesEn": ["aṭṭa-śūla-praharaṇe khaḍga-kheṭaka-dhāriṇi", "gopendrasyānuje jyeṣṭhe nanda-gopa-kulodbhave"],
+      "meaningHi": "हे भयंकर शूल से प्रहार करने वाली! हे खड्ग और ढाल धारण करने वाली! हे गोपेन्द्र (कृष्ण) की अनुजा! हे ज्येष्ठे! हे नन्द गोप के कुल में उत्पन्न होने वाली!",
+      "meaningEn": "O wielder of the dreadful spear, O bearer of sword and shield, O younger sister of Krishna the lord of cowherds, O eldest one, born in the family of the cowherd Nanda."
+    },
+    {
+      "id": "durga-stuti-arjuna-5", "number": 5, "labelHi": "श्लोक · ५", "labelEn": "Shloka · 5",
+      "lines": ["महिषासृक्प्रिये नित्यं कौशिकि पीतवासिनि।", "अट्टहासे कोकमुखे नमस्तेऽस्तु रणप्रिये॥"],
+      "linesEn": ["mahiṣāsṛk-priye nityaṃ kauśiki pīta-vāsini", "aṭṭa-hāse koka-mukhe namas-te'stu raṇa-priye"],
+      "meaningHi": "हे महिषासुर के रक्त में सदा प्रीति रखने वाली! हे पीत वस्त्र धारिणी कौशिकी! हे अट्टहास करने वाली! हे भेड़िये के समान मुख वाली! हे रणप्रिये! आपको नमस्कार है।",
+      "meaningEn": "O You who ever delight in the blood of the buffalo-demon, O Kaushiki clad in yellow, O You of loud laughter and fierce wolf-like face — salutation to You, O lover of battle!"
+    },
+    {
+      "id": "durga-stuti-arjuna-6", "number": 6, "labelHi": "श्लोक · ६", "labelEn": "Shloka · 6",
+      "lines": ["उमे शाकम्भरि श्वेते कृष्णे कैटभनाशिनि।", "हिरण्याक्षि विरूपाक्षि सुधूम्राक्षि नमोऽस्तु ते॥"],
+      "linesEn": ["ume śākambhari śvete kṛṣṇe kaiṭabha-nāśini", "hiraṇyākṣi virūpākṣi sudhūmrākṣi namo'stu te"],
+      "meaningHi": "हे उमा! हे शाकम्भरी! हे श्वेतवर्णा! हे कृष्णवर्णा! हे कैटभ का नाश करने वाली! हे स्वर्ण-नेत्रा! हे विरूपाक्षी! हे धूम्र-वर्ण नेत्रों वाली! आपको नमस्कार है।",
+      "meaningEn": "O Uma, O Shakambhari, O white-hued one, O dark-hued one, O slayer of Kaitabha; O golden-eyed, O odd-eyed, O smoke-hued-eyed one — salutation to You."
+    },
+    {
+      "id": "durga-stuti-arjuna-7", "number": 7, "labelHi": "श्लोक · ७", "labelEn": "Shloka · 7",
+      "lines": ["वेदश्रुतिमहापुण्ये ब्रह्मण्ये जातवेदसि।", "जम्बूकटकचैत्येषु नित्यं सन्निहितालये॥"],
+      "linesEn": ["vedaśruti-mahāpuṇye brahmaṇye jātavedasi", "jambūkaṭaka-caityeṣu nityaṃ sannihitālaye"],
+      "meaningHi": "हे वेद और श्रुति के समान महापुण्यमयी! हे ब्राह्मणों की हितकारिणी! हे अग्निस्वरूपा! हे जम्बूद्वीप के पर्वत-प्रान्तों के चैत्यों में सदा सन्निहित रहने वाली!",
+      "meaningEn": "O You of great merit like the Vedas and the Srutis, O benefactress of the brahmanas, O fire-natured one; O You who ever abide in the shrines upon the slopes of Jambudvipa."
+    },
+    {
+      "id": "durga-stuti-arjuna-8", "number": 8, "labelHi": "श्लोक · ८", "labelEn": "Shloka · 8",
+      "lines": ["त्वं ब्रह्मविद्या विद्यानां महानिद्रा च देहिनाम्।", "स्कन्दमातर्भगवति दुर्गे कान्तारवासिनि॥"],
+      "linesEn": ["tvaṃ brahmavidyā vidyānāṃ mahānidrā ca dehinām", "skandamātar-bhagavati durge kāntāra-vāsini"],
+      "meaningHi": "समस्त विद्याओं में आप ब्रह्मविद्या हैं, और प्राणियों की महानिद्रा भी आप ही हैं। हे स्कन्द की माता! हे भगवति! हे दुर्गे! हे दुर्गम वनों में निवास करने वाली!",
+      "meaningEn": "Among all knowledge You are the knowledge of Brahman, and You are the great sleep of embodied beings. O mother of Skanda, O Bhagavati, O Durga, O dweller in the impenetrable forests."
+    },
+    {
+      "id": "durga-stuti-arjuna-9", "number": 9, "labelHi": "श्लोक · ९", "labelEn": "Shloka · 9",
+      "lines": ["स्वाहाकारः स्वधा चैव कला काष्ठा सरस्वती।", "सावित्री वेदमाता च तथा वेदान्त उच्यते॥"],
+      "linesEn": ["svāhākāraḥ svadhā caiva kalā kāṣṭhā sarasvatī", "sāvitrī vedamātā ca tathā vedānta ucyate"],
+      "meaningHi": "आप ही स्वाहाकार और स्वधा हैं, कला और काष्ठा (काल के अंश) हैं, सरस्वती हैं; सावित्री, वेदमाता और वेदान्त भी आप ही कही जाती हैं।",
+      "meaningEn": "You are the sound Svaha and Svadha, You are Kala and Kashtha (the divisions of time), You are Saraswati; You are also called Savitri, the mother of the Vedas, and Vedanta."
+    },
+    {
+      "id": "durga-stuti-arjuna-10", "number": 10, "labelHi": "श्लोक · १०", "labelEn": "Shloka · 10",
+      "lines": ["स्तुतासि त्वं महादेवि विशुद्धेनान्तरात्मना।", "जयो भवतु मे नित्यं त्वत्प्रसादाद्रणाजिरे॥"],
+      "linesEn": ["stutāsi tvaṃ mahādevi viśuddhenāntarātmanā", "jayo bhavatu me nityaṃ tvat-prasādād-raṇājire"],
+      "meaningHi": "हे महादेवी! शुद्ध अन्तःकरण से मैंने आपकी स्तुति की है। आपकी कृपा से रणभूमि में मुझे सदा विजय प्राप्त हो।",
+      "meaningEn": "O great Goddess, I have praised You with a purified inner heart. By Your grace, may victory be ever mine on the field of battle."
+    },
+    {
+      "id": "durga-stuti-arjuna-11", "number": 11, "labelHi": "श्लोक · ११", "labelEn": "Shloka · 11",
+      "lines": ["कान्तारभयदुर्गेषु भक्तानां चालयेषु च।", "नित्यं वससि पाताले युद्धे जयसि दानवान्॥"],
+      "linesEn": ["kāntāra-bhaya-durgeṣu bhaktānāṃ cālayeṣu ca", "nityaṃ vasasi pātāle yuddhe jayasi dānavān"],
+      "meaningHi": "भयंकर वनों, दुर्गम स्थानों तथा भक्तों के घरों में — और सदा पाताल में — आप निवास करती हैं; युद्ध में आप दानवों को पराजित करती हैं।",
+      "meaningEn": "In fearful forests, in impassable places, and in the abodes of Your devotees — and ever in the nether world — You dwell; in battle You conquer the Danavas."
+    },
+    {
+      "id": "durga-stuti-arjuna-12", "number": 12, "labelHi": "श्लोक · १२", "labelEn": "Shloka · 12",
+      "lines": ["त्वं जम्भनी मोहिनी च माया ह्रीः श्रीस्तथैव च।", "सन्ध्या प्रभावती चैव सावित्री जननी तथा॥"],
+      "linesEn": ["tvaṃ jambhanī mohinī ca māyā hrīḥ śrīs-tathaiva ca", "sandhyā prabhāvatī caiva sāvitrī jananī tathā"],
+      "meaningHi": "आप ही जम्भनी (विनाशिनी), मोहिनी, माया, ह्री और श्री हैं; सन्ध्या, प्रभावती, सावित्री तथा जननी भी आप ही हैं।",
+      "meaningEn": "You are Jambhani (the crushing power), the enchantress, illusion, Hri (modesty) and Shri (fortune); You are also the twilight, the radiant one, Savitri, and the Mother."
+    },
+    {
+      "id": "durga-stuti-arjuna-13", "number": 13, "labelHi": "श्लोक · १३", "labelEn": "Shloka · 13",
+      "lines": ["तुष्टिः पुष्टिर्धृतिर्दीप्तिश्चन्द्रादित्यविवर्धिनी।", "भूतिर्भूतिमतां सङ्ख्ये वीक्ष्यसे सिद्धचारणैः॥"],
+      "linesEn": ["tuṣṭiḥ puṣṭir-dhṛtir-dīptiś-candrāditya-vivardhinī", "bhūtir-bhūtimatāṃ saṅkhye vīkṣyase siddha-cāraṇaiḥ"],
+      "meaningHi": "आप ही तुष्टि, पुष्टि, धृति और दीप्ति हैं, तथा चन्द्र और सूर्य को बढ़ाने वाली हैं; आप ऐश्वर्यवानों की ऐश्वर्य हैं, और युद्ध में सिद्ध एवं चारण आपका दर्शन करते हैं।",
+      "meaningEn": "You are contentment, nourishment, steadfastness and radiance, and the increaser of the Moon and the Sun; You are the prosperity of the prosperous, and in battle the Siddhas and Charanas behold You."
+    }
+  ]
+}

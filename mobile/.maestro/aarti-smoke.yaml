@@ -1,24 +1,25 @@
 # Aarti Category Smoke Test
 #
-# Verifies the Aarti category and its 7 active sections render correctly.
-# Sections: Om Jai Jagdish Hare, Hanuman Ji Ki Aarti, Sankat Mochan
-#           Hanumanashtak, Jai Ganesh Deva, Om Jai Shiv Omkara, Jai Ambe
-#           Gauri, Aarti Kunj Bihari Ki.
+# Verifies the Aarti category and its 9 active sections render correctly.
+# Sections: Om Jai Jagdish Hare, Hanuman Ji Ki Aarti, Jai Ganesh Deva,
+#           Om Jai Shiv Omkara, Jai Ambe Gauri, Aarti Kunj Bihari Ki,
+#           Saraswati Mata Ki Aarti, Gayatri Mata Ki Aarti,
+#           Shri Ram Chandra Ji Ki Aarti (reuses the Ram Stuti content).
 #
 # Aartis share AartiReaderScreen (multi-instance, dispatched by route param).
 # Opens Om Jai Jagdish to verify the dispatch resolves correctly.
 
-appId: host.exp.Exponent
+appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
 
 # Open Aarti category
-- assertVisible: "Aarti. Tap to open."
-- tapOn: "Aarti. Tap to open."
+- assertVisible: "Aarti\\..*Tap to open\\."
+- tapOn: "Aarti\\..*Tap to open\\."
 - waitForAnimationToEnd
 
-# Verify all 6 sections appear in CategoryList
-# (Sankat Mochan Hanumanashtak was migrated to stotram category post-merge with main.)
+# Verify all 9 sections appear in CategoryList
+# (Sankat Mochan Hanumanashtak now lives in the Ashtakam category.)
 - extendedWaitUntil:
     visible: "Om Jai Jagdish Hare\\..*Tap to open\\."
     timeout: 15000
@@ -27,8 +28,37 @@ appId: host.exp.Exponent
 - assertVisible: "Om Jai Shiv Omkara\\..*Tap to open\\."
 - assertVisible: "Jai Ambe Gauri\\..*Tap to open\\."
 - assertVisible: "Aarti Kunj Bihari Ki\\..*Tap to open\\."
+# Saraswati & Gayatri Mata Ki Aarti are the last two cards — scroll to reach them
+# (list now exceeds one screen). Gayatri (addedInVersion 1.4.4) shows a NEW badge,
+# absorbed by the `.*` in the selector.
+- scrollUntilVisible:
+    element:
+      text: "Saraswati Mata Ki Aarti\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Gayatri Mata Ki Aarti\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+# Ram's aarti is the last card — it reuses the Ram Stuti content (opens the
+# RamStuti reader), listed here under the Aarti category. NEW badge absorbed by `.*`.
+- scrollUntilVisible:
+    element:
+      text: "Shri Ram Chandra Ji Ki Aarti\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
 
 # Open Om Jai Jagdish Hare reader
+- scrollUntilVisible:
+    element:
+      text: "Om Jai Jagdish Hare\\..*Tap to open\\."
+    direction: UP
+    visibilityPercentage: 60
+    timeout: 10000
 - tapOn: "Om Jai Jagdish Hare\\..*Tap to open\\."
 - waitForAnimationToEnd:
     timeout: 15000
@@ -46,4 +76,4 @@ appId: host.exp.Exponent
 
 # Clean up — Expo Go termination resets navigation stack for the next flow.
 - stopApp:
-    appId: host.exp.Exponent
+    appId: com.prashantsharma.vedansh

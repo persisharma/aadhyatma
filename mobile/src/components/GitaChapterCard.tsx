@@ -2,7 +2,10 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
+import { elevation } from '@/theme/elevation';
 import { useGitaLanguage } from '@/data/gita/language';
+import { contentByLang } from '@/utils/localize';
+import { cardFontByLang, isLatinLang, pillTextStyle } from '@/utils/langType';
 import type { GitaChapterSummary } from '@/data/gita';
 
 type Props = {
@@ -12,6 +15,11 @@ type Props = {
   chapterLabelEn?: string;
   unitLabelHi?: string;
   unitLabelEn?: string;
+  /**
+   * English unit label for a one-verse subsection ("1 verse", not "1 verses").
+   * Devanagari needs no counterpart — श्लोक / पद are already number-agnostic.
+   */
+  unitLabelEnSingular?: string;
 };
 
 export default function GitaChapterCard({
@@ -21,18 +29,22 @@ export default function GitaChapterCard({
   chapterLabelEn = 'Chapter',
   unitLabelHi = 'श्लोक',
   unitLabelEn = 'verses',
+  unitLabelEnSingular = 'verse',
 }: Props) {
   const { colors, typography, radii } = useTheme();
   const { lang } = useGitaLanguage();
 
-  const primaryTitle = lang === 'hi' ? chapter.titleHi : chapter.titleEn;
-  const primaryFontFamily =
-    lang === 'hi' ? typography.cardHindi.fontFamily : typography.cardLatin.fontFamily;
-  const primaryFontSize = lang === 'hi' ? 17 : 16;
+  const primaryTitle = contentByLang(lang, chapter.titleHi, chapter.titleEn);
+  const primaryFontFamily = cardFontByLang(lang);
+  const primaryFontSize = isLatinLang(lang) ? 16 : 17;
   const primaryIsItalic = lang === 'en';
 
-  const chapterLabel = lang === 'hi' ? chapterLabelHi : chapterLabelEn;
-  const unitLabel = lang === 'hi' ? unitLabelHi : unitLabelEn;
+  const chapterLabel = contentByLang(lang, chapterLabelHi, chapterLabelEn);
+  const unitLabel = contentByLang(
+    lang,
+    unitLabelHi,
+    chapter.verseCount === 1 ? unitLabelEnSingular : unitLabelEn
+  );
   const chapterTag = `${chapterLabel} ${chapter.chapter}`;
   const verseMeta = `${chapter.verseCount} ${unitLabel}`;
 
@@ -82,12 +94,8 @@ export default function GitaChapterCard({
         <Text
           style={[
             styles.tag,
-            {
-              color: colors.saffronDeep,
-              fontSize: typography.versePill.fontSize,
-              letterSpacing: typography.versePill.letterSpacing,
-              fontWeight: typography.versePill.fontWeight,
-            },
+            pillTextStyle(lang, typography.versePill),
+            { color: colors.saffronDeep },
           ]}
         >
           {chapterTag.toUpperCase()}
@@ -134,11 +142,7 @@ const styles = StyleSheet.create({
     gap: 14,
     overflow: 'hidden',
     borderWidth: 1,
-    shadowColor: '#3C1E0A',
-    shadowOpacity: 0.1,
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 3,
+    ...elevation.lifted,
   },
   thumb: {
     width: 46,
@@ -161,10 +165,10 @@ const styles = StyleSheet.create({
     includeFontPadding: false,
   },
   title: {
-    includeFontPadding: false,
+    // Devanagari title — leave Android's includeFontPadding on so top matras of
+    // the chapter name aren't clipped (iOS is unaffected either way).
   },
   sub: {
-    includeFontPadding: false,
     opacity: 0.9,
   },
   chev: {

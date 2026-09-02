@@ -1,0 +1,139 @@
+# Marketing capture flow — Daily Routine / Sadhana builder (LinkedIn reel #2)
+# Self-contained (inlines _launch boot). Run with --config <mobile/.maestro/config.yaml>.
+# PRECONDITION: no routine exists (fresh state). Creates one, captures, then deletes it.
+appId: host.exp.Exponent
+---
+# ── Boot Vedansh in Expo Go (exits on Home) ──
+- launchApp:
+    appId: host.exp.Exponent
+- tapOn: "Vedansh"
+- waitForAnimationToEnd:
+    timeout: 30000
+- extendedWaitUntil:
+    visible: "Good Habits\\..*Tap to open\\."
+    timeout: 60000
+- swipe:
+    direction: DOWN
+- waitForAnimationToEnd
+
+# ── Global reading language → English, back to Home ──
+- tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn: "Home, tab.*"
+- waitForAnimationToEnd
+
+# ── Home routine banner (the create CTA) ──
+- extendedWaitUntil:
+    visible: "Set your daily practice"
+    timeout: 15000
+- takeScreenshot: shots/routine/01-home-banner
+- tapOn: "Set your daily practice"
+- waitForAnimationToEnd
+
+# ── Name the routine ──
+- extendedWaitUntil:
+    visible: "Name your routine"
+    timeout: 15000
+- tapOn: "Morning Sadhana"
+- inputText: "My Daily Sadhana"
+- hideKeyboard
+- waitForAnimationToEnd
+- takeScreenshot: shots/routine/02-name
+- tapOn: "Next"
+- waitForAnimationToEnd
+
+# ── Mode picker (Daily vs By weekday) ──
+- extendedWaitUntil:
+    visible: "Same every day, or by weekday.*"
+    timeout: 10000
+- takeScreenshot: shots/routine/03-mode
+- tapOn: "By weekday — changes per day.*"
+- waitForAnimationToEnd
+- tapOn: "Create routine"
+- waitForAnimationToEnd:
+    timeout: 15000
+
+# ── Add content (weekday) — SUGGESTED deity-of-day chip ──
+- extendedWaitUntil:
+    visible: "Add Content"
+    timeout: 15000
+- assertVisible: "SUGGESTED"
+- waitForAnimationToEnd
+- takeScreenshot: shots/routine/04-add-content
+- scrollUntilVisible:
+    element:
+      text: "Add Hanuman Chalisa"
+    direction: DOWN
+    centerElement: true
+    waitToSettleTimeoutMs: 600
+    timeout: 25000
+- tapOn: "Add Hanuman Chalisa"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Done"
+    direction: DOWN
+    centerElement: true
+    waitToSettleTimeoutMs: 600
+    timeout: 25000
+- tapOn: "Done"
+- waitForAnimationToEnd:
+    timeout: 15000
+
+# ── Today's Practice — item shows; check-off + completion shower ──
+- extendedWaitUntil:
+    visible: "Today's Practice"
+    timeout: 15000
+- assertVisible: "0 of 1.*"
+- waitForAnimationToEnd
+- takeScreenshot: shots/routine/05-today
+- tapOn: "Mark offered"
+- takeScreenshot: shots/routine/06-today-done
+- waitForAnimationToEnd
+- assertVisible: "1 of 1.*"
+
+# ── My Routines (WEEKDAY pill) ──
+- tapOn: "All routines"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "My Routines"
+    timeout: 10000
+- waitForAnimationToEnd
+- takeScreenshot: shots/routine/07-my-routines
+
+# ── Cleanup: remove item + delete routine (resets state for re-runs) ──
+- tapOn: "My Daily Sadhana.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "My Daily Sadhana"
+    timeout: 10000
+- tapOn: "Remove"
+- waitForAnimationToEnd
+- assertVisible: "No items added yet"
+- scrollUntilVisible:
+    element:
+      text: "Delete this routine"
+    direction: DOWN
+    centerElement: true
+    waitToSettleTimeoutMs: 600
+    timeout: 15000
+- tapOn: "Delete this routine"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "No routines yet"
+    timeout: 10000
+
+# ── Restore Hindi default (best-effort) + stop ──
+- tapOn: "More, tab.*"
+- waitForAnimationToEnd
+- tapOn:
+    text: "Hindi"
+    optional: true
+- waitForAnimationToEnd
+- stopApp:
+    appId: host.exp.Exponent

@@ -41,3 +41,7 @@ If a glyph is missing or renders poorly on the target platform, fall back to the
 ## Testing
 
 Run TypeScript checking after the code change. If available, inspect the Deity screen in the app or a local preview to confirm the icons are centered, readable, and do not alter card height.
+
+## Addendum (2026-07)
+
+The interim emoji path this spec tolerated as a fallback has been retired: all 21 deity icon keys (this spec's original 6 plus the additions through PRD-A) now render as hand-built `View`-composition glyphs, one file per key under `mobile/src/components/deityGlyphs/`, per design.md §42. §5's "no emoji" rule applies to deity avatars without exception; the Devanagari-initials fallback remains for an undefined icon key.

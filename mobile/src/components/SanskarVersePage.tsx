@@ -2,6 +2,14 @@ import React, { useMemo } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import {
+  verseLinesByLang,
+  meaningByLang,
+  meaningSourceLang,
+  contentByLang,
+  pick,
+} from '@/utils/localize';
+import { verseToken, meaningToken, scriptTitleFont, pillTextStyle } from '@/utils/langType';
 import { getReaderBackground } from '@/data/backgrounds';
 import BackgroundLayer from './BackgroundLayer';
 import Ornament from './Ornament';
@@ -11,9 +19,11 @@ type Props = {
   verse: SanskarVerse;
   sourceId: string;
   width: number;
+  /** Per-verse actions (bookmark/share) rendered in the page header beside the pill. */
+  topActions?: React.ReactNode;
 };
 
-export default function SanskarVersePage({ verse, sourceId, width }: Props) {
+export default function SanskarVersePage({ verse, sourceId, width, topActions }: Props) {
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
 
@@ -25,62 +35,53 @@ export default function SanskarVersePage({ verse, sourceId, width }: Props) {
 
   const pillText = useMemo(() => {
     if (isIntro) {
-      return lang === 'hi' ? 'परिचय' : 'Introduction';
+      return pick(lang, { hi: 'परिचय', en: 'Introduction', gu: 'પરિચય', kn: 'ಪರಿಚಯ' });
     }
     if (isVidhi) {
-      return lang === 'hi' ? 'विधि' : 'Method';
+      return pick(lang, { hi: 'विधि', en: 'Method', gu: 'વિધિ', kn: 'ವಿಧಿ' });
     }
     if (isStep) {
-      const label = lang === 'hi' ? verse.labelHi : verse.labelEn;
+      const label = contentByLang(lang, verse.labelHi, verse.labelEn);
       const stepNum = verse.number - 1; // subtract 1 because intro is verse 1
-      const prefix = lang === 'hi' ? `चरण ${stepNum}` : `Step ${stepNum}`;
+      const prefix = contentByLang(lang, `चरण ${stepNum}`, `Step ${stepNum}`);
       return `${prefix} · ${label}`;
     }
-    return lang === 'hi' ? verse.labelHi : verse.labelEn;
+    return contentByLang(lang, verse.labelHi, verse.labelEn);
   }, [isIntro, isStep, isVidhi, lang, verse.labelHi, verse.labelEn, verse.number]);
 
-  const verseLines = lang === 'hi' ? verse.lines : verse.linesEn;
-  const meaning = lang === 'hi' ? verse.meaningHi : verse.meaningEn;
-  const meaningLabel = lang === 'hi' ? 'भावार्थ' : 'Meaning';
+  const verseLines = verseLinesByLang(lang, verse.lines, verse.linesEn);
+  const meaning = meaningByLang(lang, verse.meaningHi, verse.meaningEn, { gu: verse.meaningGu, kn: verse.meaningKn });
+  const meaningLabel = pick(lang, { hi: 'भावार्थ', en: 'Meaning', gu: 'ભાવાર્થ', kn: 'ಭಾವಾರ್ಥ' });
   const hasVidhi = !!(verse.vidhiHi || verse.vidhiEn);
-  const vidhiContent = lang === 'hi' ? verse.vidhiHi : verse.vidhiEn;
-  const vidhiLabel = lang === 'hi' ? 'कैसे करें' : 'How to';
+  const vidhiContent = meaningByLang(lang, verse.vidhiHi ?? '', verse.vidhiEn ?? '');
+  const vidhiLabel = pick(lang, {
+    hi: 'कैसे करें',
+    en: 'How to',
+    gu: 'કેવી રીતે કરવું',
+    kn: 'ಹೇಗೆ ಮಾಡಬೇಕು',
+  });
 
+  const verseTok = verseToken(lang, typography);
   const verseLineStyle = useMemo(
-    () =>
-      lang === 'hi'
-        ? {
-            color: colors.ink,
-            fontFamily: typography.verse.fontFamily,
-            fontSize: typography.verse.fontSize,
-            lineHeight: typography.verse.lineHeight,
-          }
-        : {
-            color: colors.ink,
-            fontFamily: typography.verseLatin.fontFamily,
-            fontSize: typography.verseLatin.fontSize,
-            lineHeight: typography.verseLatin.lineHeight,
-            fontStyle: 'italic' as const,
-          },
-    [lang, colors.ink, typography.verse, typography.verseLatin]
+    () => ({
+      color: colors.ink,
+      fontFamily: verseTok.fontFamily,
+      fontSize: verseTok.fontSize,
+      lineHeight: verseTok.lineHeight,
+      fontStyle: (lang === 'en' ? 'italic' : 'normal') as 'italic' | 'normal',
+    }),
+    [lang, colors.ink, verseTok]
   );
 
+  const meaningTok = meaningToken(meaningSourceLang(lang), typography);
   const bodyStyle = useMemo(
-    () =>
-      lang === 'hi'
-        ? {
-            color: colors.inkSoft,
-            fontFamily: typography.meaning.fontFamily,
-            fontSize: typography.meaning.fontSize,
-            lineHeight: typography.meaning.lineHeight,
-          }
-        : {
-            color: colors.ink,
-            fontFamily: typography.meaningEnglish.fontFamily,
-            fontSize: typography.meaningEnglish.fontSize,
-            lineHeight: typography.meaningEnglish.lineHeight,
-          },
-    [lang, colors.ink, colors.inkSoft, typography.meaning, typography.meaningEnglish]
+    () => ({
+      color: meaningSourceLang(lang) === 'en' ? colors.ink : colors.inkSoft,
+      fontFamily: meaningTok.fontFamily,
+      fontSize: meaningTok.fontSize,
+      lineHeight: meaningTok.lineHeight,
+    }),
+    [lang, colors.ink, colors.inkSoft, meaningTok]
   );
 
   const a11yLabel = [pillText, ...verseLines, meaningLabel, meaning].join('. ');
@@ -100,26 +101,25 @@ export default function SanskarVersePage({ verse, sourceId, width }: Props) {
         accessibilityLabel={a11yLabel}
       >
         {/* Pill */}
-        <View
-          style={[
-            styles.pill,
-            { backgroundColor: colors.saffronTint, borderRadius: radii.pill },
-          ]}
-        >
-          <Text
+        <View style={styles.headerRow}>
+          <View
             style={[
-              styles.pillText,
-              {
-                color: colors.saffronDeep,
-                fontSize: typography.versePill.fontSize,
-                fontWeight: typography.versePill.fontWeight,
-                letterSpacing: typography.versePill.letterSpacing,
-              },
+              styles.pill,
+              { backgroundColor: colors.saffronTint, borderRadius: radii.pill },
             ]}
-            numberOfLines={1}
           >
-            {pillText}
-          </Text>
+            <Text
+              style={[
+                styles.pillText,
+                pillTextStyle(lang, typography.versePill),
+                { color: colors.saffronDeep },
+              ]}
+              numberOfLines={1}
+            >
+              {pillText}
+            </Text>
+          </View>
+          {topActions ? <View style={styles.headerActions}>{topActions}</View> : null}
         </View>
 
         {/* Verse lines */}
@@ -139,9 +139,9 @@ export default function SanskarVersePage({ verse, sourceId, width }: Props) {
             styles.sectionLabel,
             {
               color: colors.saffronDeep,
-              fontFamily: typography.meaningLabel.fontFamily,
+              fontFamily: lang === 'en' ? typography.meaningLabel.fontFamily : scriptTitleFont(lang, typography.readerTitle.fontFamily),
               fontSize: typography.meaningLabel.fontSize,
-              letterSpacing: typography.meaningLabel.letterSpacing,
+              letterSpacing: lang === 'en' ? typography.meaningLabel.letterSpacing : 0,
             },
           ]}
         >
@@ -159,9 +159,7 @@ export default function SanskarVersePage({ verse, sourceId, width }: Props) {
                 styles.sectionLabel,
                 {
                   color: colors.saffronDeep,
-                  fontSize: typography.sectionLabel.fontSize,
-                  fontWeight: typography.sectionLabel.fontWeight,
-                  letterSpacing: typography.sectionLabel.letterSpacing,
+                  ...pillTextStyle(lang, typography.sectionLabel),
                 },
               ]}
             >
@@ -185,13 +183,25 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingTop: 16,
-    paddingBottom: 40,
+    // Clears the pager-dots overlay and the screen/tab-bar seam so the last
+    // meaning line never reads as tucked under the bar (design.md B2).
+    paddingBottom: 64,
+  },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 18,
+  },
+  headerActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
   pill: {
     alignSelf: 'flex-start',
     paddingHorizontal: 12,
     paddingVertical: 4,
-    marginBottom: 18,
   },
   pillText: {
     textTransform: 'uppercase',
@@ -201,16 +211,15 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   verseLine: {
-    includeFontPadding: false,
+    // Devanagari verse body — keep Android's font padding (no top-matra clip).
   },
   sectionLabel: {
     textTransform: 'uppercase',
     marginBottom: 12,
     alignSelf: 'center',
-    includeFontPadding: false,
   },
   body: {
-    includeFontPadding: false,
+    // Devanagari meaning prose — keep Android's font padding (no matra clip).
   },
   vidhiSection: {
     marginTop: 28,

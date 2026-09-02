@@ -1,0 +1,102 @@
+# Sadhana calendar-gated sankalp — preselected-content preview (no dead end).
+# PRD-11 #167 follow-up.
+#
+# A calendar-anchored sankalp (festival-window / weekday) can be enrolled on a
+# day its gate is closed — Navratri in, say, July is months from its window. The
+# regression this guards: such a sankalp used to land on Today's Practice as a
+# bare resting card ("Your sankalp begins 11 Oct.") with NOTHING to read — a dead
+# end. It must instead surface the next selected unit as a tap-to-read PREVIEW so
+# the vow never opens onto an empty screen.
+#
+# Why Navratri (festival-window): its window is ~nine days a year, so on virtually
+# every run date it resolves to the `waiting` (window-upcoming) state — the exact
+# state under test — deterministically, without depending on the weekday.
+#
+# Selector notes (verified against source):
+#   - Program cards carry an explicit English a11y label
+#     "<titleEn>. <subtitleEn>. Tap to open." → match the title substring.
+#   - The SankalpTodayCard waiting state renders the resting copy PLUS the day-1
+#     unit row (its resolved reader title + "Whole text · Tap to read") — the fix.
+#   - Enrollment is 'active' even while the display resolves to waiting, so the
+#     detail screen shows the active controls ("Set this sankalp aside").
+#
+# PRECONDITION: Navratri-9 not already active (fresh install, or this flow, which
+# sets it aside at the end). Re-enrolling replaces any prior enrollment.
+
+appId: com.prashantsharma.vedansh
+---
+# ── Boot + switch to English (Devanagari isn't reliably read by Maestro) ──
+- runFlow: _launch.yaml
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- tapOn: "Language,.*"   # More now opens a Language picker sheet, not inline pills
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+
+# ── Open the sankalp catalog from the docked banner ──
+- extendedWaitUntil:
+    visible: "Set your daily practice"
+    timeout: 15000
+- tapOn: "Set your daily practice"
+- waitForAnimationToEnd
+- tapOn: "Choose a prebuilt sankalp.*"
+- waitForAnimationToEnd
+
+# ── Open the Navratri (festival-window) sankalp ──
+- extendedWaitUntil:
+    visible: "Sadhana Programs"
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Navratri — Nine Days of Durga.*"
+    direction: DOWN
+    centerElement: true
+    waitToSettleTimeoutMs: 600
+    timeout: 20000
+- tapOn: "Navratri — Nine Days of Durga.*"
+- waitForAnimationToEnd
+
+# ── Begin it — enrolls and lands on Today's Practice ──
+- extendedWaitUntil:
+    visible: "Begin this sankalp"
+    timeout: 15000
+- tapOn: "Begin this sankalp"
+- waitForAnimationToEnd:
+    timeout: 15000
+
+# ── The dead-end fix: a waiting sankalp still shows its preselected unit ──
+- extendedWaitUntil:
+    visible: "Today's Practice"
+    timeout: 15000
+# Resting copy for an upcoming festival window. The card header is an accessible
+# button (accordion), so the eyebrow + title + this prose merge into ONE label —
+# anchor with a leading .* (the "Sankalp · 0 / 9" eyebrow comes first).
+- assertVisible: ".*Your sankalp begins.*"
+# …AND the day-1 unit as a tap-to-read preview (this is what used to be missing).
+# The preview rows drop down when the card is tapped (accordion) — tap the header
+# (merged label) to expand. The item row merges title + sub into one node.
+- tapOn: ".*Sankalp · 0 / 9.*"
+- waitForAnimationToEnd
+- assertVisible: "Durga Chalisa.*Tap to read.*"
+- takeScreenshot: /tmp/vedansh-sankalp-preview
+
+# ── Cleanup — Back to the (active) detail, then set the sankalp aside ──
+- tapOn: "Back"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Set this sankalp aside"
+    timeout: 10000
+- tapOn: "Set this sankalp aside"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Sadhana Programs"
+    timeout: 10000
+
+- stopApp:
+    appId: com.prashantsharma.vedansh

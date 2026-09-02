@@ -1,0 +1,177 @@
+# PRD-16 Event Muhurat Finder native-build smoke
+#
+# Verifies both entry points and the full finder journey:
+# Home मुहूर्त tile (anchored after कुंडली) → occasion picker → ranked results
+# → day detail (answer-first, provenance line, doshas, day-timings link) →
+# back — then the Panchang-tab door and the Abujh (special auspicious days)
+# calendar routed to the day's full timings.
+#
+# Prerequisite: install the native debug app on the target simulator with
+# `npx expo run:ios --device <UDID> --port 8084` (isolated-simulator recipe in
+# wiki/runbooks/e2e-verification.md). Launches the real bundle; never Expo Go.
+
+appId: com.prashantsharma.vedansh
+---
+- launchApp:
+    appId: com.prashantsharma.vedansh
+    clearState: true
+    arguments:
+      RCT_jsLocation: "127.0.0.1:8084"
+- waitForAnimationToEnd:
+    timeout: 30000
+- tapOn:
+    text: "Skip tour"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 5000
+- tapOn:
+    text: "Skip tour"
+    optional: true
+# Post-tour setup sheet: pick English then confirm with Begin, else the
+# language sheet stays over Home and every assertion below fails.
+- tapOn:
+    text: "English"
+    optional: true
+- tapOn:
+    text: "Begin|आरंभ करें"
+    optional: true
+- tapOn:
+    text: "Close"
+    optional: true
+- tapOn:
+    text: "Got it"
+    optional: true
+- tapOn:
+    text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
+    optional: true
+- extendedWaitUntil:
+    visible: "Good Habits\\..*Tap to open\\."
+    timeout: 60000
+
+# English for stable visible-text assertions (same recipe as kundali-smoke).
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+
+# ── Entry 1: the permanent Home launcher tile (after कुंडली) ─────────────────
+- scrollUntilVisible:
+    element:
+      text: "Muhurat\\..*Tap to open\\."
+    direction: DOWN
+    # centerElement keeps the tap mid-screen; without it the grid tile settles
+    # at the bottom edge and the tap lands on the Home tab bar (resets to top).
+    centerElement: true
+- tapOn: "Muhurat\\..*Tap to open\\."
+- waitForAnimationToEnd
+
+# Occasion picker: one decision, all six occasions + the abujh door.
+- extendedWaitUntil:
+    visible: "Find a Muhurat"
+    timeout: 20000
+- assertVisible: "Griha Pravesh"
+- assertVisible: "Vehicle Purchase"
+- assertVisible: "Naming Ceremony"
+- scrollUntilVisible:
+    element:
+      text: "Special auspicious days"
+    direction: DOWN
+- scrollUntilVisible:
+    element:
+      text: "Vehicle Purchase"
+    direction: UP
+- tapOn: "Vehicle Purchase"
+- waitForAnimationToEnd
+
+# Ranked results — answer-first. The chunked sweep may take a few seconds.
+- extendedWaitUntil:
+    visible: "Best dates|More suitable dates|No auspicious muhurat.*"
+    timeout: 60000
+
+# Open the top card via its stable testID (muhurat-result-<dayOfMonth>).
+# The card is a Pressable whose accessibilityLabel is only "<date> · <weekday>"
+# — it collapses its children, so the tier word ("Shreshtha") is NOT in the a11y
+# tree and cannot be matched by text. Maestro DOES match testID by regex.
+- tapOn:
+    id: "muhurat-result-.*"
+    index: 0
+- waitForAnimationToEnd
+
+# Day detail: provenance in the copy, the evidence sections, the timings link.
+- extendedWaitUntil:
+    visible: ".*DrikPanchang convention.*|Not suitable.*"
+    timeout: 20000
+- assertVisible: "Why this date"
+# Share affordance present on shareable days (OS share sheet itself is not
+# driven from e2e — capture/dismiss is not deterministic on simulators).
+- assertVisible: "Share muhurat|मुहूर्त साझा करें"
+- scrollUntilVisible:
+    element:
+      text: "Day's full timings.*"
+    direction: DOWN
+- tapOn: "Day's full timings.*"
+- waitForAnimationToEnd
+
+# Lands on the shipped MuhuratDetail (गोल्ड-॥ card) for that date.
+- extendedWaitUntil:
+    visible: ".*Choghadiya.*|.*चौघड़िया.*"
+    timeout: 20000
+# These screens set headerShown:false with a custom "Back" chevron; the iOS
+# edge-swipe (`- back`) does not pop them, so tap the chevron by its a11y label
+# (same pattern as namkaran/pitru/vidhi flows).
+- tapOn: "Back"
+- waitForAnimationToEnd
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# ── Month-view overlay: results → View on calendar → ringed days chip ──────
+- scrollUntilVisible:
+    element:
+      id: "muhurat-view-on-calendar"
+    direction: DOWN
+- tapOn:
+    id: "muhurat-view-on-calendar"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: ".*muhurat days ringed.*|.*शुभ दिन घेरे में.*"
+    timeout: 20000
+- tapOn:
+    id: "muhurat-overlay-clear"
+- waitForAnimationToEnd
+
+# ── Entry 2: the Panchang-tab door + the Abujh calendar ─────────────────────
+- tapOn: { id: "tab-panchang" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: "muhurat-finder-door"
+    direction: DOWN
+- tapOn:
+    id: "muhurat-finder-door"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Find a Muhurat"
+    timeout: 20000
+- scrollUntilVisible:
+    element:
+      id: "muhurat-abujh-door"
+    direction: DOWN
+- tapOn:
+    id: "muhurat-abujh-door"
+- waitForAnimationToEnd
+
+# Abujh: engine-resolved special days; every hour works, so the row routes to
+# the day's timings card.
+- extendedWaitUntil:
+    visible: "Special auspicious days"
+    timeout: 20000
+- extendedWaitUntil:
+    visible: ".*no muhurat needed.*|.*Abujh.*"
+    timeout: 20000

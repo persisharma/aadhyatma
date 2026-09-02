@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PRD-27 · शुभ योग — Interactive Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* Mirrors mobile/src/theme/colors.ts (Aug 2026) — same token set the shipped
+       prototypes use, so these five sit in the same visual system. */
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-hi:#F6ECD0;
+    --gradient-end:#F1E3BF; --gold:#A67C34; --gold-soft:#C9B896; --gold-tint:rgba(166,124,52,0.14);
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --saffron-tint:rgba(184,98,27,0.12);
+    --ink:#1A0E03; --ink-soft:#5A3A1E; --ink-muted:#6E5230; --divider:rgba(138,62,11,0.18);
+    --card-from:#FFF5E0; --card-to:#F5DEAC; --card-border:rgba(184,98,27,0.4);
+    --new-badge-bg:rgba(184,98,27,0.16); --new-badge-text:#8A3E0B;
+    --shadow-subtle:0 1px 4px rgba(60,30,10,0.06);
+    --shadow-card:0 2px 6px rgba(60,30,10,0.10);
+    --shadow-raised:0 4px 10px rgba(60,30,10,0.14);
+    --sans:'Inter',system-ui,sans-serif;
+    --serif:'Cormorant Garamond',serif;
+    --deva:'Noto Serif Devanagari',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:#1a140c;color:#e9d9b1;padding:24px;line-height:1.5}
+  h1{font-family:var(--serif);font-weight:600;font-size:28px;color:#fff5e0;margin-bottom:2px}
+  .sub{font-style:italic;color:var(--gold-soft);font-size:14px;margin-bottom:6px;max-width:980px}
+  .legend{font-size:12.5px;color:#b7a377;margin-bottom:20px;max-width:980px}
+  .legend b{color:#e9d9b1}
+  .phaselabel{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--saffron);background:var(--saffron-tint);display:inline-block;padding:4px 12px;border-radius:20px;margin:26px 0 4px}
+  .phasedesc{font-size:12.5px;color:#b7a377;margin-bottom:14px;max-width:980px}
+  .wrap{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap}
+  .cap{width:340px;font-size:12px;color:#b7a377;margin-top:10px;text-align:left;line-height:1.55}
+  .cap b{color:#e9d9b1}
+  .cap code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:var(--gold-soft)}
+  .col{display:flex;flex-direction:column;align-items:center}
+
+  /* ---- phone frame ---- */
+  .phone{width:340px;height:720px;background:var(--parchment);border-radius:38px;
+    border:10px solid #0d0804;box-shadow:0 24px 60px rgba(0,0,0,.55);position:relative;overflow:hidden;flex:none}
+  .phone .statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);background:linear-gradient(var(--parchment-hi),var(--parchment))}
+  .screen{position:absolute;top:32px;left:0;right:0;bottom:0;overflow-y:auto;
+    background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
+  .screen::-webkit-scrollbar{width:0}
+  .pad{padding:16px 16px 26px}
+  .topbar{display:flex;align-items:center;gap:12px;padding:6px 2px 14px}
+  .back{width:44px;height:44px;border-radius:50%;border:1px solid var(--divider);background:var(--parchment-soft);
+    display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:18px;flex:none}
+  .toptitle{font-family:var(--deva);font-size:16px;color:var(--ink);flex:1}
+  .topaction{font-family:var(--sans);font-size:12px;font-weight:600;color:var(--saffron)}
+  .deva{font-family:var(--deva)}
+  .dot{position:absolute;width:20px;height:20px;border-radius:50%;background:var(--gold);color:#1a140c;
+    font-weight:700;font-size:11px;font-family:var(--sans);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 2px 6px rgba(0,0,0,.35);z-index:5}
+
+  /* ---- shared components lifted from the shipped prototypes ---- */
+  .card{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:14px;
+    padding:14px;margin-bottom:12px;box-shadow:var(--shadow-card)}
+  .catpill{display:inline-block;font-family:var(--deva);font-size:10.5px;font-weight:600;
+    color:var(--saffron-deep);background:var(--saffron-tint);border-radius:10px;padding:3px 10px}
+  .apills{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .apill{display:inline-flex;align-items:center;font-family:var(--deva);font-size:12.5px;border-radius:20px;
+    padding:8px 14px;min-height:36px}
+  .apill.gold{color:var(--saffron-deep);background:var(--gold-tint);border:1px solid transparent}
+  .apill.outline{color:var(--saffron);background:transparent;border:1px solid var(--gold-tint)}
+  .apill.filled{color:#fff8ec;background:var(--saffron);border:1px solid transparent}
+  .actionrow{display:flex;align-items:center;gap:12px;border:1px solid var(--divider);background:var(--parchment-soft);
+    border-radius:14px;padding:13px 14px;margin-bottom:10px;min-height:48px}
+  .actionrow .ai{width:34px;height:34px;border-radius:50%;border:1px solid var(--gold-tint);background:var(--parchment-hi);
+    display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:14px;color:var(--saffron-deep);flex:none}
+  .actionrow .at{flex:1}
+  .actionrow .att{font-family:var(--deva);font-size:14.5px;color:var(--ink)}
+  .actionrow .ats{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:1px}
+  .actionrow .chev{color:var(--saffron);font-size:17px}
+  .tag{font-size:10px;font-weight:600;color:var(--new-badge-text);background:var(--new-badge-bg);padding:3px 10px;
+    border-radius:999px;font-family:var(--sans);letter-spacing:.4px}
+  .sechead{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;
+    color:var(--ink-muted);margin:18px 0 8px}
+  .note{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);line-height:1.6;margin-top:10px}
+  .divider{height:1px;background:var(--divider);margin:14px 0}
+  .btn{display:flex;align-items:center;justify-content:center;min-height:50px;border-radius:14px;
+    font-family:var(--deva);font-size:15px;margin-top:14px}
+  .btn.primary{background:var(--saffron);color:#fff8ec;box-shadow:var(--shadow-raised)}
+  .btn.ghost{border:1px solid var(--gold-tint);color:var(--saffron);background:transparent}
+
+  .chiprow{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+  .chip{font-family:var(--deva);font-size:11.5px;border-radius:999px;padding:5px 11px;border:1px solid transparent}
+  .chip.dosha{color:var(--ink-muted);background:rgba(138,62,11,.09);border-color:var(--divider)}
+  .chip.yoga{color:var(--saffron-deep);background:var(--gold-tint);border-color:rgba(166,124,52,.34)}
+  .chip.strong{color:#fff8ec;background:var(--saffron)}
+  .daycard{background:linear-gradient(var(--card-from),var(--card-to));border:1px solid var(--card-border);
+    border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:var(--shadow-card)}
+  .kv{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0}
+  .kv .k{font-family:var(--deva);font-size:12.5px;color:var(--ink-muted)}
+  .kv .v{font-family:var(--deva);font-size:13.5px;color:var(--ink)}
+  .window{display:flex;align-items:center;gap:10px;border:1px solid var(--gold-tint);background:var(--parchment-hi);
+    border-radius:12px;padding:11px 13px;margin-top:10px}
+  .window .wt{flex:1;font-family:var(--deva);font-size:13px;color:var(--ink)}
+  .window .wv{font-family:var(--sans);font-size:12px;font-weight:600;color:var(--saffron-deep)}
+  .resultrow{display:flex;align-items:center;gap:12px;border:1px solid var(--divider);background:var(--parchment-soft);
+    border-radius:14px;padding:12px 13px;margin-bottom:10px}
+  .resultrow.lift{border-color:rgba(166,124,52,.5);background:var(--parchment-hi)}
+  .resultrow .rd{width:44px;text-align:center;flex:none}
+  .resultrow .rdn{font-family:var(--serif);font-size:19px;color:var(--ink);line-height:1}
+  .resultrow .rdm{font-family:var(--deva);font-size:10.5px;color:var(--ink-muted);margin-top:2px}
+  .resultrow .rt{flex:1}
+  .resultrow .rtt{font-family:var(--deva);font-size:13.5px;color:var(--ink)}
+  .bar{height:1px;background:var(--divider);margin:4px 0 12px}
+  .evid{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);line-height:1.6}
+
+</style>
+</head>
+<body>
+  <h1>शुभ योग — The Additive Half of the Muhurat Engine</h1>
+  <div class="sub">PRD-27 (proposed, Q4 round 2) · Static mockups in the app's parchment system — not the live build.</div>
+  <div class="legend"><code>eventMuhurat.ts</code> defines <b>twelve <code>DoshaKey</code>s and zero yogas</b>, and reads the 27 nitya yogas only to extract the two inauspicious ones (<code>yoga.index === 16 → vyatipata</code>, <code>=== 26 → vaidhriti</code>). The engine can say what is <i>wrong</i> with a day and has no vocabulary for what is specially <i>right</i> about one. This adds सर्वार्थ सिद्धि, अमृत सिद्धि, रवि and the द्विपुष्कर/त्रिपुष्कर pair as pure tables over primitives <code>PanchangData</code> already carries — nakshatra, vāra, tithi. <b>Annotate-only in v1:</b> a yoga never silently re-ranks a day.</div>
+
+  <div class="phaselabel">1 · The daily surface — where the asymmetry shows</div>
+  <div class="phasedesc">Panchang is already a daily-open surface (PRD-14's stated goal: "a daily utility people check before acting"). Today its day card can only carry dosha chips. The yoga line sits above them, in the same register — named, bounded by a time window, never scored.</div>
+  <div class="wrap">
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="toptitle" style="font-size:20px">पञ्चाङ्ग</div><div class="topaction">जयपुर ›</div></div>
+          <div class="daycard">
+            <div style="text-align:center">
+              <div class="deva" style="font-size:17px;color:var(--ink)">बुधवार · १४ अक्टूबर</div>
+              <div class="deva" style="font-size:12.5px;color:var(--ink-soft);margin-top:2px">कार्तिक कृष्ण सप्तमी</div>
+            </div>
+            <div class="divider"></div>
+            <div class="kv"><div class="k">नक्षत्र</div><div class="v">रोहिणी</div></div>
+            <div class="kv"><div class="k">योग</div><div class="v">सिद्धि</div></div>
+            <div class="kv"><div class="k">करण</div><div class="v">बव</div></div>
+            <div class="chiprow">
+              <div class="chip dosha">भद्रा</div>
+              <div class="chip dosha">पञ्चक</div>
+            </div>
+          </div>
+          <div class="sechead">आज का समय</div>
+          <div class="actionrow"><div class="ai">☀</div><div class="at"><div class="att">अभिजित मुहूर्त</div><div class="ats">11:48 — 12:34</div></div></div>
+          <div class="actionrow"><div class="ai">✕</div><div class="at"><div class="att">राहु काल</div><div class="ats">12:10 — 13:36</div></div></div>
+          <div class="note">Today the day card can only tell you what is wrong with a day.</div>
+        </div></div>
+      </div>
+      <div class="cap"><b>Shipped today.</b><br/>Two dosha chips and nothing else. A user asking "is today good for this" gets a list of absent defects and infers the rest.</div>
+    </div>
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="toptitle" style="font-size:20px">पञ्चाङ्ग</div><div class="topaction">जयपुर ›</div></div>
+          <div class="daycard">
+            <div style="text-align:center">
+              <div class="deva" style="font-size:17px;color:var(--ink)">बुधवार · १४ अक्टूबर</div>
+              <div class="deva" style="font-size:12.5px;color:var(--ink-soft);margin-top:2px">कार्तिक कृष्ण सप्तमी</div>
+            </div>
+            <div class="divider"></div>
+            <div class="kv"><div class="k">नक्षत्र</div><div class="v">रोहिणी</div></div>
+            <div class="kv"><div class="k">योग</div><div class="v">सिद्धि</div></div>
+            <div class="kv"><div class="k">करण</div><div class="v">बव</div></div>
+            <div class="chiprow">
+              <div class="chip strong">सर्वार्थ सिद्धि योग</div>
+              <div class="chip dosha">भद्रा</div>
+              <div class="chip dosha">पञ्चक</div>
+            </div>
+            <div class="window"><div class="wt">सर्वार्थ सिद्धि</div><div class="wv">सूर्योदय — 2:12 AM, १५ अक्टू</div></div>
+          </div>
+          <div class="sechead">आज का समय</div>
+          <div class="actionrow"><div class="ai">☀</div><div class="at"><div class="att">अभिजित मुहूर्त</div><div class="ats">11:48 — 12:34</div></div></div>
+          <div class="actionrow"><div class="ai">✕</div><div class="at"><div class="att">राहु काल</div><div class="ats">12:10 — 13:36</div></div></div>
+          <div class="note">बुधवार + रोहिणी — यह संयोग सर्वार्थ सिद्धि कहलाता है।</div>
+        </div></div>
+      </div>
+      <div class="cap"><b>With PRD-27.</b><br/>The yoga chip leads because it is the rarer signal, then the doshas exactly as they render today. The window matters: these yogas run <b>nakshatra-to-nakshatra</b>, not midnight-to-midnight, so the chip carries its own hours.</div>
+    </div>
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">सर्वार्थ सिद्धि योग</div></div>
+          <div class="card">
+            <div class="catpill">शुभ योग</div>
+            <div class="deva" style="font-size:18px;color:var(--ink);margin-top:8px">सर्वार्थ सिद्धि योग</div>
+            <div class="evid" style="margin-top:6px">"That which accomplishes all purposes." A named combination of the weekday with specific nakshatras, traditionally held to support what is begun within it.</div>
+            <div class="window"><div class="wt">आज</div><div class="wv">सूर्योदय — 2:12 AM, १५ अक्टू</div></div>
+          </div>
+          <div class="sechead">यह क्यों बना</div>
+          <div class="card">
+            <div class="kv"><div class="k">वार</div><div class="v">बुधवार</div></div>
+            <div class="kv"><div class="k">नक्षत्र</div><div class="v">रोहिणी</div></div>
+            <div class="divider"></div>
+            <div class="evid">बुधवार को रोहिणी, अनुराधा, हस्त, मृगशिरा या कृत्तिका — इनमें सर्वार्थ सिद्धि माना जाता है। नक्षत्र बदलते ही योग समाप्त।</div>
+          </div>
+          <div class="sechead">इस दिन के दोष</div>
+          <div class="chiprow"><div class="chip dosha">भद्रा · 09:12—19:40</div><div class="chip dosha">पञ्चक</div></div>
+          <div class="note">दोनों साथ रहते हैं। ऐप कोई अंक नहीं देता — दोनों बताकर निर्णय आप पर छोड़ता है।</div>
+        </div></div>
+      </div>
+      <div class="cap"><b>The detail — showing the working.</b><br/>Same house stance as the shipped dosha evidence: name the rule, show the two inputs that produced it, state the window. <b>Doshas and yogas coexist on one day</b> and the app refuses to net them into a verdict.</div>
+    </div>
+
+  </div>
+
+  <div class="phaselabel">2 · The finder — from permitting to recommending</div>
+  <div class="phasedesc">The Event Muhurat Finder (§60) currently filters days by dosha, so its output is a list of days that are <i>not bad</i>. A yoga annotation gives it a positive signal to show — and the open decision is whether that signal may also <b>re-order</b> the list. v1 says no.</div>
+  <div class="wrap">
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">वाहन क्रय</div><div class="topaction">फ़िल्टर</div></div>
+          <div class="evid" style="margin-bottom:12px">अक्टूबर–नवम्बर · जयपुर · 6 शुभ दिन</div>
+          <div class="resultrow lift">
+            <div class="rd"><div class="rdn">14</div><div class="rdm">अक्टू</div></div>
+            <div class="rt"><div class="rtt">बुधवार · रोहिणी</div>
+              <div class="chiprow"><div class="chip strong">सर्वार्थ सिद्धि</div><div class="chip dosha">भद्रा</div></div></div>
+            <div class="chev" style="color:var(--saffron);font-size:17px">›</div>
+          </div>
+          <div class="resultrow">
+            <div class="rd"><div class="rdn">19</div><div class="rdm">अक्टू</div></div>
+            <div class="rt"><div class="rtt">सोमवार · मृगशिरा</div>
+              <div class="chiprow"><div class="chip yoga">अमृत सिद्धि</div></div></div>
+            <div class="chev" style="color:var(--saffron);font-size:17px">›</div>
+          </div>
+          <div class="resultrow">
+            <div class="rd"><div class="rdn">27</div><div class="rdm">अक्टू</div></div>
+            <div class="rt"><div class="rtt">मंगलवार · अश्विनी</div>
+              <div class="chiprow"><div class="chip dosha">कोई योग नहीं</div></div></div>
+            <div class="chev" style="color:var(--saffron);font-size:17px">›</div>
+          </div>
+          <div class="resultrow">
+            <div class="rd"><div class="rdn">03</div><div class="rdm">नव</div></div>
+            <div class="rt"><div class="rtt">रविवार · हस्त</div>
+              <div class="chiprow"><div class="chip yoga">रवि योग</div></div></div>
+            <div class="chev" style="color:var(--saffron);font-size:17px">›</div>
+          </div>
+          <div class="bar"></div>
+          <div class="note">क्रम तिथि से है, योग से नहीं — योग केवल दिखाया जाता है।</div>
+        </div></div>
+      </div>
+      <div class="cap"><b>Annotate-only (v1, recommended).</b><br/>Order stays chronological, exactly as the shipped finder produces it. The yoga is a visible mark, not a hidden weight — so no ranking the finder has ever given changes underneath existing users.</div>
+    </div>
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">वाहन क्रय</div><div class="topaction">फ़िल्टर</div></div>
+          <div class="evid" style="margin-bottom:12px">योग वाले दिन पहले · 6 शुभ दिन</div>
+          <div class="resultrow lift">
+            <div class="rd"><div class="rdn">19</div><div class="rdm">अक्टू</div></div>
+            <div class="rt"><div class="rtt">सोमवार · मृगशिरा</div>
+              <div class="chiprow"><div class="chip strong">अमृत सिद्धि</div></div></div>
+            <div class="chev" style="color:var(--saffron);font-size:17px">›</div>
+          </div>
+          <div class="resultrow lift">
+            <div class="rd"><div class="rdn">14</div><div class="rdm">अक्टू</div></div>
+            <div class="rt"><div class="rtt">बुधवार · रोहिणी</div>
+              <div class="chiprow"><div class="chip yoga">सर्वार्थ सिद्धि</div><div class="chip dosha">भद्रा</div></div></div>
+            <div class="chev" style="color:var(--saffron);font-size:17px">›</div>
+          </div>
+          <div class="resultrow" style="opacity:.75">
+            <div class="rd"><div class="rdn">27</div><div class="rdm">अक्टू</div></div>
+            <div class="rt"><div class="rtt">मंगलवार · अश्विनी</div></div>
+            <div class="chev" style="color:var(--saffron);font-size:17px">›</div>
+          </div>
+          <div class="bar"></div>
+          <div class="note" style="color:var(--saffron-deep)">⚠ यह विकल्प हर पुराने परिणाम का क्रम बदल देता है।</div>
+        </div></div>
+      </div>
+      <div class="cap"><b>The rejected alternative — offset/re-rank.</b><br/>Tradition does allow certain yogas to offset certain doshas. But turning it on retroactively changes every ranking the shipped finder has produced, so it needs an explicit sign-off in <code>conventions/shubh-yoga-v1.md</code>, not a default.</div>
+    </div>
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="toptitle" style="font-size:20px">आज</div></div>
+          <div class="daycard" style="text-align:center">
+            <div class="catpill">अभी</div>
+            <div class="deva" style="font-size:19px;color:var(--ink);margin-top:8px">अमृत काल</div>
+            <div class="deva" style="font-size:13px;color:var(--ink-soft);margin-top:3px">07:12 तक</div>
+            <div class="divider"></div>
+            <div class="chiprow" style="justify-content:center"><div class="chip strong">सर्वार्थ सिद्धि योग</div></div>
+            <div class="evid" style="margin-top:10px">बुधवार + रोहिणी · सूर्योदय से 2:12 AM, १५ अक्टू तक</div>
+          </div>
+          <div class="sechead">आज के लिए</div>
+          <div class="actionrow"><div class="ai">₹</div><div class="at"><div class="att">क्रय व आरम्भ</div><div class="ats">आज के अनुकूल कार्य देखें</div></div><div class="chev">›</div></div>
+          <div class="actionrow"><div class="ai">☀</div><div class="at"><div class="att">चौघड़िया</div><div class="ats">अमृत · शुभ · लाभ</div></div><div class="chev">›</div></div>
+          <div class="note">द्विपुष्कर/त्रिपुष्कर इसी पट्टी पर आते हैं जब बनते हैं — तिथि × वार × नक्षत्र।</div>
+        </div></div>
+      </div>
+      <div class="cap"><b>Daily Muhurat "right now".</b><br/>The highest-traffic placement: the surface users already check before acting. A yoga here is the difference between "nothing is wrong today" and "today is specially suited" — the same facts, a usable answer.</div>
+    </div>
+
+  </div>
+
+  <div class="phaselabel">Open questions this prototype does not settle</div>
+  <div class="phasedesc">
+    <b>1.</b> <b>Offset or annotate?</b> Recommended annotate-only for v1 (frame 5 shows why the alternative is expensive). Must be pinned in <code>conventions/shubh-yoga-v1.md</code> either way.<br/>
+    <b>2.</b> Which yogas ship in v1 — सर्वार्थ सिद्धि, अमृत सिद्धि, रवि, द्विपुष्कर, त्रिपुष्कर is the proposed set; guru-puṣya and ravi-puṣya are candidates for the same table.<br/>
+    <b>3.</b> Nakshatra-boundary windows routinely cross midnight, so every yoga window must render through the shipped <code>formatEndInstant</code> — a 12-hour clock plus a short-date suffix when the end falls on a different civil day (<b>&quot;2:12 AM, १५ अक्टू&quot;</b>). The printed-panchang extended-hour style (26:12 for 2:12 the next morning) is <b>not</b> used anywhere in this app and must not be introduced by this feature.<br/>
+    <b>4.</b> Every nakshatra×vāra row is verification-gated like the four existing convention docs. These tables are printed in every published panchang, so this is the cheapest verification of anything content-bearing in either slate.
+  </div>
+</body>
+</html>

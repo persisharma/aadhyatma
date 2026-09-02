@@ -1,0 +1,288 @@
+{
+  "titleHi": "श्री कुबेर स्तोत्रम्",
+  "titleEn": "Kubera Stotram",
+  "deity": "kubera",
+  "source": {
+    "baseText": "Shri Kubera Stotram ('कुबेरो धनद श्रीदः') — 17-verse namavali-style stotram; cross-verified, both sources fully concordant on all verses.",
+    "referenceUrls": [
+      "https://vignanam.org/samskritam/kubera-stotram.html",
+      "https://stotranidhi.com/hi/sri-kubera-stotram-in-sanskrit/"
+    ],
+    "retrievedOn": "2026-07-23",
+    "notes": "Traditional Kubera stotram of epithet-garland (namavali) form; vignanam ('शुद्ध देवनागरी with the right anusvaras') and stotranidhi identical throughout. v18 (प्रातः काले पठेत्…, recitation-benefit frame) omitted, consistent with the other texts. Source spellings kept verbatim where non-standard but concordant: v2 धृढव्रतः, v3 संरक्षणोत्सकः, loose-visarga forms सर्वव्याप्तो/सोमो/शुद्धो/लोकवन्द्यो/सर्वागमज्ञो — flagged for §5 review. NOT the same text as vastucart's 'Kubera Ashtakam' (unattested elsewhere; not shipped per §10.6). No new Kubera ashtakam existed with 2-source attestation; this stotram is the verified alternative."
+  },
+  "verses": [
+    {
+      "id": "kubera-stotram-1",
+      "number": 1,
+      "labelHi": "श्लोक · १",
+      "labelEn": "Shloka · 1",
+      "lines": [
+        "कुबेरो धनद श्रीदः राजराजो धनेश्वरः।",
+        "धनलक्ष्मीप्रियतमो धनाढ्यो धनिकप्रियः॥"
+      ],
+      "linesEn": [
+        "kubero dhanada śrīdaḥ rājarājo dhaneśvaraḥ",
+        "dhanalakṣmīpriyatamo dhanāḍhyo dhanikapriyaḥ"
+      ],
+      "meaningHi": "कुबेर धन देने वाले, श्री (सम्पत्ति) देने वाले, राजाओं के राजा और धन के ईश्वर हैं; वे धनलक्ष्मी के परम प्रिय, धन से परिपूर्ण और धनिक (भक्त) जनों के प्रिय हैं।",
+      "meaningEn": "Kubera is the giver of wealth and the giver of Shri (fortune), the king of kings and the lord of riches; the dearest beloved of Dhana-Lakshmi, abounding in wealth, and dear to the prosperous."
+    },
+    {
+      "id": "kubera-stotram-2",
+      "number": 2,
+      "labelHi": "श्लोक · २",
+      "labelEn": "Shloka · 2",
+      "lines": [
+        "दाक्षिण्यो धर्मनिरतः दयावन्तो धृढव्रतः।",
+        "दिव्य लक्षण सम्पन्नो दीनार्ति जनरक्षकः॥"
+      ],
+      "linesEn": [
+        "dākṣiṇyo dharmanirataḥ dayāvanto dhṛḍhavrataḥ",
+        "divya lakṣaṇa sampanno dīnārti janarakṣakaḥ"
+      ],
+      "meaningHi": "वे उदार (दाक्षिण्यशील), धर्म में निरत, दयावान् और दृढ़व्रती हैं; दिव्य लक्षणों से सम्पन्न तथा दीन-दुखी जनों के रक्षक हैं।",
+      "meaningEn": "Gracious and generous, devoted to dharma, compassionate and firm in his vows; endowed with divine marks, he is the protector of the afflicted and the helpless."
+    },
+    {
+      "id": "kubera-stotram-3",
+      "number": 3,
+      "labelHi": "श्लोक · ३",
+      "labelEn": "Shloka · 3",
+      "lines": [
+        "धान्यलक्ष्मी समाराध्यो धैर्यलक्ष्मी विराजितः।",
+        "दयारूपो धर्मबुद्धिः धर्म संरक्षणोत्सकः॥"
+      ],
+      "linesEn": [
+        "dhānyalakṣmī samārādhyo dhairyalakṣmī virājitaḥ",
+        "dayārūpo dharmabuddhiḥ dharma saṃrakṣaṇotsakaḥ"
+      ],
+      "meaningHi": "वे धान्यलक्ष्मी सहित समाराधित और धैर्यलक्ष्मी से विराजित हैं; दया के स्वरूप, धर्मबुद्धि वाले और धर्म की रक्षा में तत्पर हैं।",
+      "meaningEn": "Worshipped together with Dhanya-Lakshmi and resplendent with Dhairya-Lakshmi; the very form of compassion, of dharmic mind, ever eager to protect dharma."
+    },
+    {
+      "id": "kubera-stotram-4",
+      "number": 4,
+      "labelHi": "श्लोक · ४",
+      "labelEn": "Shloka · 4",
+      "lines": [
+        "निधीश्वरो निरालम्बो निधीनां परिपालकः।",
+        "नियन्ता निर्गुणाकारः निष्कामो निरुपद्रवः॥"
+      ],
+      "linesEn": [
+        "nidhīśvaro nirālambo nidhīnāṃ paripālakaḥ",
+        "niyantā nirguṇākāraḥ niṣkāmo nirupadravaḥ"
+      ],
+      "meaningHi": "वे निधियों के ईश्वर और उनके परिपालक हैं, स्वयं किसी के आश्रित नहीं (निरालम्ब); नियन्ता, निर्गुण-आकार, निष्काम और निरुपद्रव हैं।",
+      "meaningEn": "Lord of the treasures and their guardian, himself dependent on none; the controller, formless beyond attributes, free of desire and free of affliction."
+    },
+    {
+      "id": "kubera-stotram-5",
+      "number": 5,
+      "labelHi": "श्लोक · ५",
+      "labelEn": "Shloka · 5",
+      "lines": [
+        "नवनाग समाराध्यो नवसङ्ख्या प्रवर्तकः।",
+        "मान्यश्चैत्ररथाधीशः महागुणगणान्वितः॥"
+      ],
+      "linesEn": [
+        "navanāga samārādhyo navasaṅkhyā pravartakaḥ",
+        "mānyaścaitrarathādhīśaḥ mahāguṇagaṇānvitaḥ"
+      ],
+      "meaningHi": "वे नौ नागों से समाराधित और नौ (नवनिधियों) की संख्या के प्रवर्तक हैं; माननीय, चैत्ररथ (दिव्य उद्यान) के अधीश्वर और महान गुणसमूहों से युक्त हैं।",
+      "meaningEn": "Worshipped by the nine Nagas and ordainer of the ninefold treasures; honoured one, lord of the celestial Chaitraratha garden, endowed with hosts of great virtues."
+    },
+    {
+      "id": "kubera-stotram-6",
+      "number": 6,
+      "labelHi": "श्लोक · ६",
+      "labelEn": "Shloka · 6",
+      "lines": [
+        "याज्ञिको यजनासक्तः यज्ञभुग्यज्ञरक्षकः।",
+        "राजचन्द्रो रमाधीशो रञ्जको राजपूजितः॥"
+      ],
+      "linesEn": [
+        "yājñiko yajanāsaktaḥ yajñabhugyajñarakṣakaḥ",
+        "rājacandro ramādhīśo rañjako rājapūjitaḥ"
+      ],
+      "meaningHi": "वे याज्ञिक, यजन में आसक्त, यज्ञ के भोक्ता और यज्ञ के रक्षक हैं; राजाओं में चन्द्रमा-सदृश, रमा (लक्ष्मी-वैभव) के अधीश, हृदयों को रंजित करने वाले और राजाओं से पूजित हैं।",
+      "meaningEn": "A performer of sacrifice and devoted to it, enjoyer and protector of the yajna; a moon among kings, lord of Rama's riches, delighter of hearts, worshipped by kings."
+    },
+    {
+      "id": "kubera-stotram-7",
+      "number": 7,
+      "labelHi": "श्लोक · ७",
+      "labelEn": "Shloka · 7",
+      "lines": [
+        "विचित्रवस्त्रवेषाढ्यः वियद्गमन मानसः।",
+        "विजयो विमलो वन्द्यो वन्दारु जनवत्सलः॥"
+      ],
+      "linesEn": [
+        "vicitravastraveṣāḍhyaḥ viyadgamana mānasaḥ",
+        "vijayo vimalo vandyo vandāru janavatsalaḥ"
+      ],
+      "meaningHi": "वे विचित्र वस्त्रों और वेश से सुशोभित हैं, आकाश-गमन में जिनका मन रमता है; विजयी, विमल, वन्दनीय और वन्दना करने वाले जनों के वत्सल हैं।",
+      "meaningEn": "Arrayed in wondrous garments and attire, his mind delighting in flight through the sky; victorious, stainless, worthy of homage, and affectionate to those who bow to him."
+    },
+    {
+      "id": "kubera-stotram-8",
+      "number": 8,
+      "labelHi": "श्लोक · ८",
+      "labelEn": "Shloka · 8",
+      "lines": [
+        "विरूपाक्ष प्रियतमो विरागी विश्वतोमुखः।",
+        "सर्वव्याप्तो सदानन्दः सर्वशक्ति समन्वितः॥"
+      ],
+      "linesEn": [
+        "virūpākṣa priyatamo virāgī viśvatomukhaḥ",
+        "sarvavyāpto sadānandaḥ sarvaśakti samanvitaḥ"
+      ],
+      "meaningHi": "वे विरूपाक्ष (शिव) के परम प्रिय, विरागी और विश्वतोमुख (सब ओर दृष्टि वाले) हैं; सर्वव्यापी, सदानन्द और समस्त शक्तियों से समन्वित हैं।",
+      "meaningEn": "Dearest to Virupaksha (Shiva), dispassionate, his gaze turned toward all directions; all-pervading, ever-blissful, endowed with every power."
+    },
+    {
+      "id": "kubera-stotram-9",
+      "number": 9,
+      "labelHi": "श्लोक · ९",
+      "labelEn": "Shloka · 9",
+      "lines": [
+        "सामदानरतः सौम्यः सर्वबाधानिवारकः।",
+        "सुप्रीतः सुलभः सोमो सर्वकार्यधुरन्धरः॥"
+      ],
+      "linesEn": [
+        "sāmadānarataḥ saumyaḥ sarvabādhānivārakaḥ",
+        "suprītaḥ sulabhaḥ somo sarvakāryadhurandharaḥ"
+      ],
+      "meaningHi": "वे साम (सान्त्वना) और दान में रत, सौम्य और समस्त बाधाओं के निवारक हैं; सुप्रसन्न, सुलभ, सोम (चन्द्रमा) के समान शीतल और समस्त कार्यों के धुरन्धर हैं।",
+      "meaningEn": "Given to conciliation and charity, gentle, the remover of every obstacle; well-pleased, easy of access, soothing as the moon, the master-bearer of all undertakings."
+    },
+    {
+      "id": "kubera-stotram-10",
+      "number": 10,
+      "labelHi": "श्लोक · १०",
+      "labelEn": "Shloka · 10",
+      "lines": [
+        "सामगानप्रियः साक्षाद्विभव श्री विराजितः।",
+        "अश्ववाहन सम्प्रीतो अखिलाण्ड प्रवर्तकः॥"
+      ],
+      "linesEn": [
+        "sāmagānapriyaḥ sākṣādvibhava śrī virājitaḥ",
+        "aśvavāhana samprīto akhilāṇḍa pravartakaḥ"
+      ],
+      "meaningHi": "वे सामगान के प्रेमी हैं और साक्षात् वैभव तथा श्री से विराजित हैं; अश्व-वाहन से प्रसन्न और अखिल ब्रह्माण्ड के प्रवर्तक हैं।",
+      "meaningEn": "Lover of the chanting of the Sama, resplendent with manifest majesty and fortune; delighting in his horse mount, the mover of the entire cosmos."
+    },
+    {
+      "id": "kubera-stotram-11",
+      "number": 11,
+      "labelHi": "श्लोक · ११",
+      "labelEn": "Shloka · 11",
+      "lines": [
+        "अव्ययोर्चन सम्प्रीतः अमृतास्वादन प्रियः।",
+        "अलकापुरसंवासी अहङ्कारविवर्जितः॥"
+      ],
+      "linesEn": [
+        "avyayorcana samprītaḥ amṛtāsvādana priyaḥ",
+        "alakāpurasaṃvāsī ahaṅkāravivarjitaḥ"
+      ],
+      "meaningHi": "वे अव्यय (अविनाशी) की अर्चना से प्रसन्न और अमृत के आस्वादन के प्रेमी हैं; अलकापुरी के निवासी और अहंकार से सर्वथा रहित हैं।",
+      "meaningEn": "Pleased by the worship of the Imperishable and fond of tasting amrita; dweller in the city of Alaka, wholly free of pride."
+    },
+    {
+      "id": "kubera-stotram-12",
+      "number": 12,
+      "labelHi": "श्लोक · १२",
+      "labelEn": "Shloka · 12",
+      "lines": [
+        "उदारबुद्धिरुद्दामवैभवो नरवाहनः।",
+        "किन्नरेशो वैश्रवणः कालचक्रप्रवर्तकः॥"
+      ],
+      "linesEn": [
+        "udārabuddhiruddāmavaibhavo naravāhanaḥ",
+        "kinnareśo vaiśravaṇaḥ kālacakrapravartakaḥ"
+      ],
+      "meaningHi": "वे उदार बुद्धि और उद्दाम (असीम) वैभव वाले तथा नरवाहन हैं; किन्नरों के ईश, विश्रवा के पुत्र (वैश्रवण) और कालचक्र के प्रवर्तक हैं।",
+      "meaningEn": "Of generous mind and boundless splendour, borne upon his palanquin of men (Naravahana); lord of the Kinnaras, son of Vishravas, the turner of the wheel of time."
+    },
+    {
+      "id": "kubera-stotram-13",
+      "number": 13,
+      "labelHi": "श्लोक · १३",
+      "labelEn": "Shloka · 13",
+      "lines": [
+        "अष्टलक्ष्म्या समायुक्तः अव्यक्तोऽमलविग्रहः।",
+        "लोकाराध्यो लोकपालो लोकवन्द्यो सुलक्षणः॥"
+      ],
+      "linesEn": [
+        "aṣṭalakṣmyā samāyuktaḥ avyakto'malavigrahaḥ",
+        "lokārādhyo lokapālo lokavandyo sulakṣaṇaḥ"
+      ],
+      "meaningHi": "वे अष्टलक्ष्मियों से समायुक्त, अव्यक्त और निर्मल विग्रह वाले हैं; लोकों से आराधित, लोकपाल, लोकवन्द्य और सुलक्षण हैं।",
+      "meaningEn": "United with the eight Lakshmis, unmanifest, of stainless form; adored by the worlds, a guardian of the world, revered by all, bearing every auspicious mark."
+    },
+    {
+      "id": "kubera-stotram-14",
+      "number": 14,
+      "labelHi": "श्लोक · १४",
+      "labelEn": "Shloka · 14",
+      "lines": [
+        "सुलभः सुभगः शुद्धो शङ्कराराधनप्रियः।",
+        "शान्तः शुद्धगुणोपेतः शाश्वतः शुद्धविग्रहः॥"
+      ],
+      "linesEn": [
+        "sulabhaḥ subhagaḥ śuddho śaṅkarārādhanapriyaḥ",
+        "śāntaḥ śuddhaguṇopetaḥ śāśvataḥ śuddhavigrahaḥ"
+      ],
+      "meaningHi": "वे सुलभ, सुभग, शुद्ध और शंकर की आराधना के प्रेमी हैं; शान्त, शुद्ध गुणों से युक्त, शाश्वत और शुद्ध विग्रह वाले हैं।",
+      "meaningEn": "Easy of access, blessed, pure, devoted to the worship of Shankara; tranquil, endowed with pure virtues, eternal, of pure form."
+    },
+    {
+      "id": "kubera-stotram-15",
+      "number": 15,
+      "labelHi": "श्लोक · १५",
+      "labelEn": "Shloka · 15",
+      "lines": [
+        "सर्वागमज्ञो सुमतिः सर्वदेवगणार्चकः।",
+        "शङ्खहस्तधरः श्रीमान् परं ज्योतिः परात्परः॥"
+      ],
+      "linesEn": [
+        "sarvāgamajño sumatiḥ sarvadevagaṇārcakaḥ",
+        "śaṅkhahastadharaḥ śrīmān paraṃ jyotiḥ parātparaḥ"
+      ],
+      "meaningHi": "वे समस्त आगमों के ज्ञाता, सुमति और समस्त देवगणों के अर्चक हैं; हाथ में शंख धारण करने वाले, श्रीमान्, परम ज्योति और परात्पर हैं।",
+      "meaningEn": "Knower of all the Agamas, wise of mind, worshipper of all the hosts of gods; bearer of the conch in hand, glorious, the supreme light, higher than the highest."
+    },
+    {
+      "id": "kubera-stotram-16",
+      "number": 16,
+      "labelHi": "श्लोक · १६",
+      "labelEn": "Shloka · 16",
+      "lines": [
+        "शमादिगुणसम्पन्नः शरण्यो दीनवत्सलः।",
+        "परोपकारी पापघ्नः तरुणादित्यसन्निभः॥"
+      ],
+      "linesEn": [
+        "śamādiguṇasampannaḥ śaraṇyo dīnavatsalaḥ",
+        "paropakārī pāpaghnaḥ taruṇādityasannibhaḥ"
+      ],
+      "meaningHi": "वे शम आदि गुणों से सम्पन्न, शरण देने योग्य और दीनों के वत्सल हैं; परोपकारी, पापों के नाशक और तरुण सूर्य के समान कान्तिमान् हैं।",
+      "meaningEn": "Endowed with tranquillity and its kindred virtues, a refuge tender to the lowly; a benefactor of others, destroyer of sins, radiant as the newly risen sun."
+    },
+    {
+      "id": "kubera-stotram-17",
+      "number": 17,
+      "labelHi": "श्लोक · १७",
+      "labelEn": "Shloka · 17",
+      "lines": [
+        "दान्तः सर्वगुणोपेतः सुरेन्द्रसमवैभवः।",
+        "विश्वख्यातो वीतभयः अनन्तानन्तसौख्यदः॥"
+      ],
+      "linesEn": [
+        "dāntaḥ sarvaguṇopetaḥ surendrasamavaibhavaḥ",
+        "viśvakhyāto vītabhayaḥ anantānantasaukhyadaḥ"
+      ],
+      "meaningHi": "वे दान्त (जितेन्द्रिय), सर्वगुणों से युक्त और देवराज इन्द्र के समान वैभव वाले हैं; विश्वविख्यात, भयरहित और अनन्त-अनन्त सौख्य देने वाले हैं।",
+      "meaningEn": "Self-controlled, possessed of every virtue, of majesty equal to Indra's; renowned through the universe, free of fear, the bestower of endless, boundless happiness."
+    }
+  ]
+}

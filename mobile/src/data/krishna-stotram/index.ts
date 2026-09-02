@@ -1,5 +1,6 @@
 import manifest from './chapters-manifest.json';
 import ch01 from './chapter-01.json';
+import ch02 from './chapter-02.json';
 
 export type KrishnaStotramVerse = {
   id: string;
@@ -9,6 +10,8 @@ export type KrishnaStotramVerse = {
   linesEn: string[];
   meaningHi: string;
   meaningEn: string;
+  meaningGu?: string;
+  meaningKn?: string;
 };
 
 export type KrishnaStotramChapter = {
@@ -34,6 +37,7 @@ export const krishnaStotramChaptersManifest: readonly KrishnaStotramChapterSumma
 
 export const krishnaStotramChapters: readonly KrishnaStotramChapter[] = [
   ch01 as KrishnaStotramChapter,
+  ch02 as KrishnaStotramChapter,
 ];
 
 export const krishnaStotramTotal = krishnaStotramChapters.reduce(
@@ -50,8 +54,8 @@ export function getKrishnaStotramChapter(chapter: number): KrishnaStotramChapter
 }
 
 (function assertKrishnaStotramInvariants() {
-  if (krishnaStotramChapters.length !== 1) {
-    throw new Error(`krishna-stotram: expected 1 chapter, got ${krishnaStotramChapters.length}`);
+  if (krishnaStotramChapters.length !== 2) {
+    throw new Error(`krishna-stotram: expected 2 chapters, got ${krishnaStotramChapters.length}`);
   }
   const seenIds = new Set<string>();
   let totalVerses = 0;
@@ -67,7 +71,7 @@ export function getKrishnaStotramChapter(chapter: number): KrishnaStotramChapter
     }
     totalVerses += c.verses.length;
   }
-  if (totalVerses !== 10) {
-    throw new Error(`krishna-stotram: expected 10 total verses, got ${totalVerses}`);
+  if (totalVerses !== 12) {
+    throw new Error(`krishna-stotram: expected 12 total verses, got ${totalVerses}`);
   }
 })();

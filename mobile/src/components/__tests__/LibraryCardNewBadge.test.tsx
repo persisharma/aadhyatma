@@ -2,6 +2,7 @@ import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Text, View as mockView } from 'react-native';
 import { NewContentProvider } from '@/contexts/NewContentContext';
+import { GitaLanguageProvider } from '@/data/gita/language';
 import LibraryCard from '@/components/LibraryCard';
 import { library, type LibraryEntry } from '@/data/texts';
 
@@ -40,9 +41,28 @@ async function renderWithProvider(entry: LibraryEntry): Promise<TestRenderer.Rea
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
-      <NewContentProvider>
-        <LibraryCard entry={entry} onPress={() => undefined} />
-      </NewContentProvider>
+      <GitaLanguageProvider initialLang="hi">
+        <NewContentProvider>
+          <LibraryCard entry={entry} onPress={() => undefined} />
+        </NewContentProvider>
+      </GitaLanguageProvider>
+    );
+  });
+  await act(async () => {
+    for (let i = 0; i < 5; i++) await Promise.resolve();
+  });
+  return tree;
+}
+
+async function renderCompactEnglish(entry: LibraryEntry): Promise<TestRenderer.ReactTestRenderer> {
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <NewContentProvider>
+          <LibraryCard entry={entry} variant="compact" onPress={() => undefined} />
+        </NewContentProvider>
+      </GitaLanguageProvider>
     );
   });
   await act(async () => {
@@ -84,5 +104,14 @@ describe('LibraryCard NEW badge (integration with NewContentProvider)', () => {
     );
     expect(labelled.length).toBeGreaterThan(0);
     expect(labelled[0].props.accessibilityLabel).toMatch(/New\./);
+  });
+
+  test('compact card renders only the primary language title', async () => {
+    const tree = await renderCompactEnglish(hanuman);
+    const text = textOf(tree);
+    expect(text).toMatch(/Hanuman Chalisa/);
+    expect(text).not.toMatch(/हनुमान चालीसा/);
+    expect(text).not.toMatch(/40 Chaupai/);
+    expect(text).not.toMatch(/with meaning/);
   });
 });

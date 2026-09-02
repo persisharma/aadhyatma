@@ -1,0 +1,145 @@
+{
+  "titleHi": "श्री शनैश्चराष्टकम्",
+  "titleEn": "Shani Ashtakam",
+  "deity": "shani",
+  "source": {
+    "baseText": "Shri Shanaishchara Ashtakam / Shanyashtakam (Dasharatha-prokta, Brahmanda Purana; 'कोणोऽन्तको रौद्रयमोऽथ बभ्रुः') — the 8-verse ashtakam proper; cross-verified across authoritative sources.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_z_misc_navagraha/shani.html",
+      "https://stotranidhi.com/hi/sri-shani-ashtakam-dasaratha-krutham-in-sanskrit/",
+      "https://hindimejane.net/stotram/shani-stotram"
+    ],
+    "retrievedOn": "2026-07-23",
+    "notes": "From the Brahmanda Purana, spoken by King Dasharatha (श्रीब्रह्माण्डपुराणे … दशरथप्रोक्तं); Trishtubh metre, refrain तस्मै नमः श्रीरविनन्दनाय. v9 names itself शन्यष्टकं — a true ashtakam. Base = sanskritdocuments (concordant with hindimejane); noted stotranidhi variants for §5: v2 सुरासुराः किम्पुरुषोरगेन्द्रा (SD/hindimejane) vs सुरासुरः किम्पुरुषा गणेन्द्रा (stotranidhi); v8 त्राता हरीशो हरते पिनाकी (SD/hindimejane) vs त्राता हरिः संहरते पिनाकी (stotranidhi, smoother grammar). vv9-11 (shanyashtakam-phala + Pippalada dasha-nama frame) omitted per house precedent. Distinct from the longer Dasharatha-krita Shani Stotram ('नमः कृष्णाय नीलाय'), whose recensions diverge heavily across sources (13v stotranidhi / 12v vastucart / 11v vignanam) — not shipped for that reason."
+  },
+  "verses": [
+    {
+      "id": "shani-ashtakam-1",
+      "number": 1,
+      "labelHi": "श्लोक · १",
+      "labelEn": "Shloka · 1",
+      "lines": [
+        "कोणोऽन्तको रौद्रयमोऽथ बभ्रुः कृष्णः शनिः पिङ्गलमन्दसौरिः।",
+        "नित्यं स्मृतो यो हरते च पीडां तस्मै नमः श्रीरविनन्दनाय॥"
+      ],
+      "linesEn": [
+        "koṇo'ntako raudrayamo'tha babhruḥ kṛṣṇaḥ śaniḥ piṅgalamandasauriḥ",
+        "nityaṃ smṛto yo harate ca pīḍāṃ tasmai namaḥ śrīravinandanāya"
+      ],
+      "meaningHi": "कोण, अन्तक, रौद्र, यम, बभ्रु, कृष्ण, शनि, पिङ्गल, मन्द और सौरि — इन नामों से जिनका नित्य स्मरण समस्त पीड़ा हर लेता है, उन श्री सूर्यनन्दन (शनिदेव) को नमस्कार।",
+      "meaningEn": "Kona, Antaka, Raudra, Yama, Babhru, Krishna, Shani, Pingala, Manda, Sauri — remembered daily by these names, he takes away all affliction; salutations to him, the blessed son of the Sun."
+    },
+    {
+      "id": "shani-ashtakam-2",
+      "number": 2,
+      "labelHi": "श्लोक · २",
+      "labelEn": "Shloka · 2",
+      "lines": [
+        "सुरासुराः किम्पुरुषोरगेन्द्रा गन्धर्वविद्याधरपन्नगाश्च।",
+        "पीड्यन्ति सर्वे विषमस्थितेन तस्मै नमः श्रीरविनन्दनाय॥"
+      ],
+      "linesEn": [
+        "surāsurāḥ kimpuruṣoragendrā gandharvavidyādharapannagāśca",
+        "pīḍyanti sarve viṣamasthitena tasmai namaḥ śrīravinandanāya"
+      ],
+      "meaningHi": "सुर, असुर, किम्पुरुष, नागराज, गन्धर्व, विद्याधर और पन्नग — प्रतिकूल स्थिति में स्थित शनि से ये सभी पीड़ित होते हैं; उन श्री सूर्यनन्दन को नमस्कार।",
+      "meaningEn": "Gods and asuras, kimpurushas and lords of serpents, gandharvas, vidyadharas and nagas — all are afflicted when he stands in an adverse position; salutations to him, the blessed son of the Sun."
+    },
+    {
+      "id": "shani-ashtakam-3",
+      "number": 3,
+      "labelHi": "श्लोक · ३",
+      "labelEn": "Shloka · 3",
+      "lines": [
+        "नरा नरेन्द्राः पशवो मृगेन्द्रा वन्याश्च ये कीटपतङ्गभृङ्गाः।",
+        "पीड्यन्ति सर्वे विषमस्थितेन तस्मै नमः श्रीरविनन्दनाय॥"
+      ],
+      "linesEn": [
+        "narā narendrāḥ paśavo mṛgendrā vanyāśca ye kīṭapataṅgabhṛṅgāḥ",
+        "pīḍyanti sarve viṣamasthitena tasmai namaḥ śrīravinandanāya"
+      ],
+      "meaningHi": "मनुष्य, राजा, पशु, मृगराज, वन्य जीव तथा कीट, पतंग और भ्रमर — प्रतिकूल शनि से ये सभी पीड़ित होते हैं; उन श्री सूर्यनन्दन को नमस्कार।",
+      "meaningEn": "Men and kings, beasts and lions, the creatures of the wild, insects, moths and bees — all suffer when he stands adverse; salutations to him, the blessed son of the Sun."
+    },
+    {
+      "id": "shani-ashtakam-4",
+      "number": 4,
+      "labelHi": "श्लोक · ४",
+      "labelEn": "Shloka · 4",
+      "lines": [
+        "देशाश्च दुर्गाणि वनानि यत्र सेनानिवेशाः पुरपत्तनानि।",
+        "पीड्यन्ति सर्वे विषमस्थितेन तस्मै नमः श्रीरविनन्दनाय॥"
+      ],
+      "linesEn": [
+        "deśāśca durgāṇi vanāni yatra senāniveśāḥ purapattanāni",
+        "pīḍyanti sarve viṣamasthitena tasmai namaḥ śrīravinandanāya"
+      ],
+      "meaningHi": "देश, दुर्ग, वन, सेना के शिविर, नगर और पत्तन — प्रतिकूल शनि से ये सब भी पीड़ित होते हैं; उन श्री सूर्यनन्दन को नमस्कार।",
+      "meaningEn": "Countries and fortresses, forests, army encampments, cities and ports — all these too are afflicted when he stands adverse; salutations to him, the blessed son of the Sun."
+    },
+    {
+      "id": "shani-ashtakam-5",
+      "number": 5,
+      "labelHi": "श्लोक · ५",
+      "labelEn": "Shloka · 5",
+      "lines": [
+        "तिलैर्यवैर्माषगुडान्नदानैर्लोहेन नीलाम्बरदानतो वा।",
+        "प्रीणाति मन्त्रैर्निजवासरे च तस्मै नमः श्रीरविनन्दनाय॥"
+      ],
+      "linesEn": [
+        "tilairyavairmāṣaguḍānnadānairlohena nīlāmbaradānato vā",
+        "prīṇāti mantrairnijavāsare ca tasmai namaḥ śrīravinandanāya"
+      ],
+      "meaningHi": "तिल, जौ, उड़द, गुड़ और अन्न के दान से, लोहे या नीले वस्त्र के दान से, तथा अपने वार (शनिवार) को मन्त्रों से जो प्रसन्न होते हैं — उन श्री सूर्यनन्दन को नमस्कार।",
+      "meaningEn": "He is pleased by gifts of sesame, barley, black gram, jaggery and grain, by the gift of iron or of blue cloth, and by mantras chanted on his own day — salutations to him, the blessed son of the Sun."
+    },
+    {
+      "id": "shani-ashtakam-6",
+      "number": 6,
+      "labelHi": "श्लोक · ६",
+      "labelEn": "Shloka · 6",
+      "lines": [
+        "प्रयागकूले यमुनातटे च सरस्वतीपुण्यजले गुहायाम्।",
+        "यो योगिनां ध्यानगतोऽपि सूक्ष्मस्तस्मै नमः श्रीरविनन्दनाय॥"
+      ],
+      "linesEn": [
+        "prayāgakūle yamunātaṭe ca sarasvatīpuṇyajale guhāyām",
+        "yo yogināṃ dhyānagato'pi sūkṣmastasmai namaḥ śrīravinandanāya"
+      ],
+      "meaningHi": "प्रयाग के कूल पर, यमुना के तट पर, सरस्वती के पुण्य जल में और गुहाओं में — जो सूक्ष्म रूप से योगियों के ध्यान में भी विराजमान हैं, उन श्री सूर्यनन्दन को नमस्कार।",
+      "meaningEn": "On the banks of Prayaga and of the Yamuna, in the holy waters of the Sarasvati and in mountain caves — subtle, he is present even within the meditation of yogis; salutations to him, the blessed son of the Sun."
+    },
+    {
+      "id": "shani-ashtakam-7",
+      "number": 7,
+      "labelHi": "श्लोक · ७",
+      "labelEn": "Shloka · 7",
+      "lines": [
+        "अन्यप्रदेशात्स्वगृहं प्रविष्टस्तदीयवारे स नरः सुखी स्यात्।",
+        "गृहाद्गतो यो न पुनः प्रयाति तस्मै नमः श्रीरविनन्दनाय॥"
+      ],
+      "linesEn": [
+        "anyapradeśātsvagṛhaṃ praviṣṭastadīyavāre sa naraḥ sukhī syāt",
+        "gṛhādgato yo na punaḥ prayāti tasmai namaḥ śrīravinandanāya"
+      ],
+      "meaningHi": "जिनके वार (शनिवार) को परदेश से अपने घर में प्रवेश करने वाला मनुष्य सुखी होता है, किन्तु उस दिन घर से प्रस्थान करने वाला पुनः शीघ्र नहीं लौट पाता — उन श्री सूर्यनन्दन को नमस्कार।",
+      "meaningEn": "On his day the man who returns to his own home from distant lands finds happiness, while one who sets out from home does not soon come back; salutations to him, the blessed son of the Sun."
+    },
+    {
+      "id": "shani-ashtakam-8",
+      "number": 8,
+      "labelHi": "श्लोक · ८",
+      "labelEn": "Shloka · 8",
+      "lines": [
+        "स्रष्टा स्वयम्भूर्भुवनत्रयस्य त्राता हरीशो हरते पिनाकी।",
+        "एकस्त्रिधा ऋग्यजुःसाममूर्तिस्तस्मै नमः श्रीरविनन्दनाय॥"
+      ],
+      "linesEn": [
+        "sraṣṭā svayambhūrbhuvanatrayasya trātā harīśo harate pinākī",
+        "ekastridhā ṛgyajuḥsāmamūrtistasmai namaḥ śrīravinandanāya"
+      ],
+      "meaningHi": "जो स्वयं त्रिलोकी के स्रष्टा (ब्रह्मा), त्राता (हरि) और संहारक (पिनाकधारी शिव) हैं — एक होकर भी त्रिधा, ऋक्-यजुः-साम वेदों की मूर्ति — उन श्री सूर्यनन्दन को नमस्कार।",
+      "meaningEn": "He is himself the self-born creator of the three worlds, their protector Hari, and their destroyer the bearer of the Pinaka — one yet threefold, embodied as the Rig, Yajur and Sama Vedas; salutations to him, the blessed son of the Sun."
+    }
+  ]
+}

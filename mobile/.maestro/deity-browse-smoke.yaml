@@ -1,0 +1,64 @@
+# By-Deity Browse Smoke Test
+#
+# The By-Deity surface (DeityIndexScreen → DeityListScreen) was only ever
+# touched by new-content-badge-deity-smoke, and only via the NEW-badge path on
+# Shri Krishna. This flow covers the GENERAL browse intent (PR #44 shipped the
+# deity surface; #84 added the NEW chip; #95 the bilingual titles) and, in
+# particular, asserts the PR #99 tagging — "Vishnu Sahasranama" listed under the
+# Shri Vishnu deity — on-screen (it was previously only unit-asserted in
+# contentCorrectness.test.ts).
+#
+# No language switch needed: DeityCard ("<NameEn>. <n> texts.") and LibraryCard
+# ("<NameEn>. <sub>. Tap to open.") both key off NameEn, and the deity index
+# item counts ("N texts") are always English.
+
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+
+# ── Home → By Deity index ──
+- scrollUntilVisible:
+    element:
+      text: "By Deity. Tap to open."
+    direction: DOWN
+    timeout: 10000
+- tapOn: "By Deity. Tap to open."
+- waitForAnimationToEnd
+
+# ── Deity index renders the deity grid (first few cards) ──
+- extendedWaitUntil:
+    visible: "Shri Rama\\..*"
+    timeout: 15000
+- assertVisible: "Shri Krishna\\..*"
+- assertVisible: "Shri Vishnu\\..*"
+
+# ── Open Shri Vishnu → his tagged texts (PR #99: Vishnu Sahasranama) ──
+- tapOn: "Shri Vishnu\\..*"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Vishnu Sahasranama.*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+
+# ── The tagged text is reachable from the deity surface ──
+- tapOn: "Vishnu Sahasranama.*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+# Dismiss the Resume sheet if a prior session left progress.
+- tapOn:
+    id: "resume-start-over"
+    optional: true
+- waitForAnimationToEnd
+# Every chapters/reader screen exposes a "Back" control.
+- extendedWaitUntil:
+    visible: "Back"
+    timeout: 15000
+- tapOn: "Back"
+- waitForAnimationToEnd
+# Back on the Vishnu deity list, the entry is still listed.
+- assertVisible: "Vishnu Sahasranama.*Tap to open\\."
+
+# Clean up — Expo Go termination resets navigation stack for the next flow.
+- stopApp:
+    appId: com.prashantsharma.vedansh

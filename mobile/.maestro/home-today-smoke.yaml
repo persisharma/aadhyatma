@@ -1,0 +1,66 @@
+# Home Today-First Smoke Test (design.md §18/§48)
+#
+# Covers the surfaces of the Home redesign (the Continue-reading card was
+# retired in July 2026 — resume lives in the ResumeReadingSheet, covered by
+# resume-reading-smoke.yaml):
+#   1. The "आज · Today" strip renders on Home (a11y label "Today's Panchang. …").
+#   2. The व्रत (Vrat & Parv) launcher tile opens the Panchang stack's
+#      ObservanceList — and, because the tile navigates via panchangTabTarget
+#      (initial: false), backing out lands on PanchangHome (the calendar),
+#      proving the vrat door did not hijack the lazily-mounted stack's
+#      initial route.
+#
+# Language note (same as panchang-smoke / vrat-catalog-smoke): default Hindi
+# renders Devanagari, which Maestro's iOS tree can't read — flip to English on
+# More first. Tile/card a11y labels are English by contract either way.
+#
+# Not covered here, deliberately: the chip row's auto-drift contract (§48 — a
+# single out-and-back after a settle delay, then a fully idle JS thread). Maestro
+# cannot observe frames, timers or CPU, and whether the row even overflows is
+# date-dependent, so a flow would be both blind and flaky. That contract lives in
+# `components/__tests__/TodayStrip.test.tsx` → "chip-row auto-drift", the same
+# reason panchang-day-cache-smoke leaves the re-solve counting to Jest.
+#
+# Selector notes (per vrat-catalog-smoke):
+#   - The PanchangHome segment Pressable exposes accessibilityLabel
+#     "Vrat and Parv", not the visible "Vrat & Parv" text.
+#   - ObservanceList's back button exposes "Back" (English mode).
+
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+
+# ── Global reading language → English (More → Language picker sheet) ──
+# The More hub shows the current reading language as a "Language, <current>" row
+# that opens LanguagePickerSheet — the old inline English/Hindi pills are gone
+# (gu/kn added a 4-way picker). Open the sheet, then pick English.
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+
+# ── 1. Today strip on Home ──
+- assertVisible: "Today's Panchang\\..*Tap to open\\."
+
+# ── 2. व्रत tile → Vrat catalog → back lands on the Panchang calendar ──
+- assertVisible: "Vrat & Parv\\..*Tap to open\\."
+- tapOn: "Vrat & Parv\\..*Tap to open\\."
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Vrat"
+    timeout: 15000
+- tapOn: "Back"
+- waitForAnimationToEnd
+# The [Panchang | Vrat & Parv | Jyotish] segment lives on PanchangHome — visible
+# only if the calendar screen sits under ObservanceList in the stack (initial: false).
+# The segment's a11y label uses the ampersand form.
+- assertVisible: "Vrat & Parv"
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd

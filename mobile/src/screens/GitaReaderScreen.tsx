@@ -3,7 +3,6 @@ import {
   FlatList,
   NativeScrollEvent,
   NativeSyntheticEvent,
-  Pressable,
   StyleSheet,
   Text,
   View,
@@ -20,13 +19,20 @@ import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
+import JumpToStartButton from '@/components/JumpToStartButton';
 import GitaVersePage from '@/components/GitaVersePage';
 import NextChapterCard from '@/components/NextChapterCard';
 import PrevChapterCard from '@/components/PrevChapterCard';
 import LanguageToggle from '@/components/LanguageToggle';
+import ReadingProgressBar from '@/components/ReadingProgressBar';
+import AddToRoutineButton from '@/components/AddToRoutineButton';
 import { clampIndex } from '@/utils/clamp';
+import { contentByLang } from '@/utils/localize';
+import ReaderHeader from '@/components/ReaderHeader';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
+import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
+import { useReaderReadAloud } from './_useReaderReadAloud';
 import type { RootStackParamList } from '@/navigation/types';
 
 type NextTransitionItem = {
@@ -103,6 +109,17 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const hasNavigatedRef = useRef(false);
 
+  // Called before the null-chapter early return below, so hook order stays stable;
+  // with no chapter it simply has zero pages to speak.
+  const readAloud = useReaderReadAloud({
+    sourceId: 'bhagavad-gita',
+    data,
+    offset,
+    verseCount,
+    currentIndex,
+    listRef,
+  });
+
   useEffect(() => {
     if (chapter == null) return;
     setProgress({
@@ -161,6 +178,11 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
     [width]
   );
 
+  const goToStart = useCallback(() => {
+    listRef.current?.scrollToIndex({ index: offset, animated: true });
+    setCurrentIndex(0);
+  }, [offset]);
+
   const dotStyles = useMemo(() => {
     const buckets = Math.max(1, Math.ceil(verseCount / DOT_COUNT));
     const active = Math.min(DOT_COUNT - 1, Math.floor(currentIndex / buckets));
@@ -168,9 +190,11 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
   }, [verseCount, currentIndex]);
 
   const topTitle = chapter
-    ? lang === 'hi'
-      ? `अध्याय ${chapter.chapter} · ${chapter.titleHi}`
-      : `Chapter ${chapter.chapter} · ${chapter.titleEn}`
+    ? contentByLang(
+        lang,
+        `अध्याय ${chapter.chapter} · ${chapter.titleHi}`,
+        `Chapter ${chapter.chapter} · ${chapter.titleEn}`
+      )
     : '';
 
   const listExtraData = useMemo(
@@ -199,45 +223,13 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
-        <View style={styles.topBar}>
-          <View style={styles.topSide}>
-            <Pressable
-              onPress={() => navigation.goBack()}
-              accessibilityRole="button"
-              accessibilityLabel="Back to chapters"
-              hitSlop={16}
-              style={({ pressed }) => [
-                styles.back,
-                {
-                  backgroundColor: colors.parchmentSoft,
-                  borderColor: colors.divider,
-                },
-                pressed && { opacity: 0.7 },
-              ]}
-            >
-              <Text style={[styles.backGlyph, { color: colors.inkSoft }]}>‹</Text>
-            </Pressable>
-          </View>
-
-          <Text
-            style={[
-              styles.title,
-              {
-                color: colors.ink,
-                fontFamily:
-                  lang === 'hi'
-                    ? typography.readerTitle.fontFamily
-                    : typography.cardLatin.fontFamily,
-                fontSize: typography.readerTitle.fontSize,
-                fontStyle: lang === 'en' ? 'italic' : 'normal',
-              },
-            ]}
-            numberOfLines={1}
-          >
-            {topTitle}
-          </Text>
-
-          <View style={[styles.topSide, { alignItems: 'flex-end' }]}>
+        <ReaderHeader
+          title={topTitle}
+          onBack={() => navigation.goBack()}
+          backAccessibilityLabel="Back to chapters"
+          // Bare counter only — the read-aloud control now lives on the toggle row.
+          sideWidth={60}
+          right={
             <Text
               style={[
                 styles.counter,
@@ -251,11 +243,19 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
             >
               {currentIndex + 1} / {verseCount}
             </Text>
-          </View>
-        </View>
+          }
+        />
+
+        <ReadingProgressBar current={currentIndex + 1} total={verseCount} />
 
         <View style={styles.toggleRow}>
           <LanguageToggle />
+          <AddToRoutineButton sourceId="bhagavad-gita" chapter={chapter.chapter} />
+          {/* Pinned to the right edge so the toggle group stays centred; the read-aloud
+              pill (▶ + "सुनें") sits inline with the toggle, clear of the progress bar. */}
+          <View style={styles.readAloudSlot}>
+            <ReadAloudButton control={readAloud} />
+          </View>
         </View>
 
         <View style={styles.listContainer}>
@@ -268,7 +268,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
                 return (
                   <NextChapterCard
                     width={width}
-                    nextTitle={lang === 'hi' ? item.nextTitleHi : item.nextTitleEn}
+                    nextTitle={contentByLang(lang, item.nextTitleHi, item.nextTitleEn)}
                     lang={lang}
                   />
                 );
@@ -277,7 +277,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
                 return (
                   <PrevChapterCard
                     width={width}
-                    prevTitle={lang === 'hi' ? item.prevTitleHi : item.prevTitleEn}
+                    prevTitle={contentByLang(lang, item.prevTitleHi, item.prevTitleEn)}
                     lang={lang}
                   />
                 );
@@ -351,6 +351,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
             style={styles.list}
           />
 
+          {currentIndex > 0 && <JumpToStartButton onPress={goToStart} lang={lang} />}
           <View style={styles.dotsOverlay}>
             <View style={styles.dots}>
               {dotStyles.map((isCurrent, i) => (
@@ -378,48 +379,25 @@ const styles = StyleSheet.create({
   safe: {
     flex: 1,
   },
-  topBar: {
-    paddingHorizontal: 22,
-    paddingTop: 8,
-    paddingBottom: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  topSide: {
-    width: 60,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  back: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  backGlyph: {
-    fontSize: 22,
-    lineHeight: 24,
-    marginTop: -2,
-    includeFontPadding: false,
-  },
-  title: {
-    flex: 1,
-    textAlign: 'center',
-    includeFontPadding: false,
-    marginHorizontal: 4,
-  },
   counter: {
     includeFontPadding: false,
     minWidth: 48,
     textAlign: 'right',
   },
   toggleRow: {
-    paddingVertical: 6,
-    paddingBottom: 12,
+    flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
+    gap: 18,
+    paddingTop: 6,
+    paddingBottom: 12,
+  },
+  readAloudSlot: {
+    position: 'absolute',
+    right: 16,
+    top: 6,
+    bottom: 12,
+    justifyContent: 'center',
   },
   listContainer: {
     flex: 1,

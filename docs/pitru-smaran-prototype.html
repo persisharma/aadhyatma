@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PRD-17 · पितृ स्मरण — Interactive Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* Mirrors mobile/src/theme/colors.ts exactly (Aug 2026) — deepened AAA/AA inks,
+       alpha divider, 0.12/0.14 tints, warm #3C1E0A shadow, card gradient tokens. */
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-hi:#F6ECD0;
+    --gradient-end:#F1E3BF; --gold:#A67C34; --gold-soft:#C9B896; --gold-tint:rgba(166,124,52,0.14);
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --saffron-tint:rgba(184,98,27,0.12);
+    --ink:#1A0E03; --ink-soft:#5A3A1E; --ink-muted:#6E5230; --divider:rgba(138,62,11,0.18);
+    --card-from:#FFF5E0; --card-to:#F5DEAC; --card-border:rgba(184,98,27,0.4);
+    --new-badge-bg:rgba(184,98,27,0.16); --new-badge-text:#8A3E0B;
+    --shadow-subtle:0 1px 4px rgba(60,30,10,0.06);   /* elevation.subtle */
+    --shadow-card:0 2px 6px rgba(60,30,10,0.10);     /* elevation.card */
+    --shadow-raised:0 4px 10px rgba(60,30,10,0.14);  /* elevation.raised */
+    --sans:'Inter',system-ui,sans-serif;
+    --serif:'Cormorant Garamond',serif;
+    --deva:'Noto Serif Devanagari',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:#1a140c;color:#e9d9b1;padding:24px;line-height:1.5}
+  h1{font-family:var(--serif);font-weight:600;font-size:28px;color:#fff5e0;margin-bottom:2px}
+  .sub{font-style:italic;color:var(--gold-soft);font-size:14px;margin-bottom:6px;max-width:920px}
+  .legend{font-size:12.5px;color:#b7a377;margin-bottom:20px;max-width:920px}
+  .legend b{color:#e9d9b1}
+  .phaselabel{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--saffron);background:var(--saffron-tint);display:inline-block;padding:4px 12px;border-radius:20px;margin:26px 0 4px}
+  .phasedesc{font-size:12.5px;color:#b7a377;margin-bottom:14px;max-width:920px}
+  .wrap{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap}
+  .cap{width:340px;font-size:12px;color:#b7a377;margin-top:10px;text-align:left;line-height:1.55}
+  .cap b{color:#e9d9b1}
+  .cap .n{display:inline-flex;width:16px;height:16px;border-radius:50%;background:var(--gold);color:#1a140c;
+    font-weight:600;font-size:10.5px;align-items:center;justify-content:center;margin-right:5px;vertical-align:1px}
+  .col{display:flex;flex-direction:column;align-items:center}
+
+  /* ---- phone frame ---- */
+  .phone{width:340px;height:720px;background:var(--parchment);border-radius:38px;
+    border:10px solid #0d0804;box-shadow:0 24px 60px rgba(0,0,0,.55);position:relative;overflow:hidden;flex:none}
+  .phone .statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);background:linear-gradient(var(--parchment-hi),var(--parchment))}
+  .screen{position:absolute;top:32px;left:0;right:0;bottom:0;overflow-y:auto;
+    background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
+  .screen::-webkit-scrollbar{width:0}
+  .pad{padding:16px 16px 26px}
+  .topbar{display:flex;align-items:center;gap:12px;padding:6px 2px 14px}
+  .back{width:44px;height:44px;border-radius:50%;border:1px solid var(--divider);background:var(--parchment-soft);
+    display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:18px}
+  .toptitle{font-family:var(--deva);font-size:16px;color:var(--ink);flex:1}
+  .topaction{font-family:var(--sans);font-size:12px;font-weight:600;color:var(--saffron)}
+  .deva{font-family:var(--deva)}
+
+  .dot{position:absolute;width:20px;height:20px;border-radius:50%;background:var(--gold);color:#1a140c;
+    font-weight:700;font-size:11px;font-family:var(--sans);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 2px 6px rgba(0,0,0,.35);z-index:5}
+
+  /* more hub rows */
+  .morerow{display:flex;align-items:center;gap:13px;padding:15px 4px;border-bottom:1px solid var(--divider);min-height:44px}
+  .morerow .mi{width:36px;height:36px;border-radius:50%;border:1px solid var(--gold-tint);background:var(--parchment-hi);
+    display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:15px;color:var(--saffron-deep);flex:none}
+  .morerow .mt{flex:1}
+  .morerow .mtt{font-family:var(--deva);font-size:15.5px;color:var(--ink)}
+  .morerow .mts{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:1px}
+  .morerow .chev{color:var(--saffron);font-size:17px}
+  .tag{font-size:10px;font-weight:600;color:var(--new-badge-text);background:var(--new-badge-bg);padding:3px 10px;border-radius:999px;font-family:var(--sans);letter-spacing:.4px}
+
+  /* person list — ObservanceList row pattern (design.md §33):
+     leading glyph · name + caption · right-aligned next date + relative label; soonest-first */
+  .obsrow{display:flex;align-items:center;gap:12px;padding:13px 2px;border-bottom:1px solid var(--divider);min-height:56px}
+  .obsrow .lead{width:34px;height:34px;border-radius:50%;border:1px solid var(--gold-tint);background:var(--parchment-hi);
+    display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:14px;color:var(--ink-muted);flex:none}
+  .obsrow .oi{flex:1;min-width:0}
+  .obsrow .oname{font-family:var(--deva);font-size:15.5px;color:var(--ink)}
+  .obsrow .ocap{font-family:var(--deva);font-size:12px;color:var(--ink-muted);margin-top:1px}
+  .obsrow .oright{text-align:right;flex:none}
+  .obsrow .odate{font-family:var(--deva);font-size:12.5px;color:var(--ink)}
+  .obsrow .orel{font-family:var(--sans);font-size:10.5px;font-weight:600;color:var(--ink-muted);margin-top:2px}
+  .ppbanner{border:1px solid var(--gold);background:linear-gradient(120deg,var(--card-from),var(--parchment-soft));
+    border-radius:18px;padding:13px 14px;margin-bottom:14px}
+  .ppbanner .bt{font-family:var(--deva);font-size:14.5px;color:var(--saffron-deep)}
+  .ppbanner .bs{font-family:var(--deva);font-size:12px;color:var(--ink-soft);margin-top:3px;line-height:1.6}
+  .addbtn{display:block;width:100%;text-align:center;background:var(--parchment-hi);color:var(--saffron-deep);
+    border:1.4px solid var(--gold);border-radius:14px;padding:13px;font-size:14.5px;font-family:var(--deva);margin-top:4px}
+  .note{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);text-align:center;margin-top:12px;line-height:1.6}
+
+  /* add form */
+  .field{margin-bottom:11px}
+  .flabel{font-size:10.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-muted);font-family:var(--sans);margin-bottom:4px}
+  .finput{min-height:48px;border:1px solid var(--divider);border-radius:14px;background:var(--parchment-hi);
+    display:flex;align-items:center;padding:0 14px;font-family:var(--deva);font-size:15px;color:var(--ink)}
+  .frow{display:flex;gap:10px}
+  .frow .field{flex:1}
+  .modeseg{display:flex;background:var(--parchment-soft);border:1px solid var(--divider);border-radius:14px;padding:3px;margin-bottom:14px}
+  .modeseg .seg{flex:1;text-align:center;padding:9px 0;border-radius:9px;font-family:var(--deva);font-size:12.5px;color:var(--ink-muted);min-height:38px}
+  .modeseg .seg.on{background:var(--parchment-hi);color:var(--saffron-deep);font-weight:600;box-shadow:var(--shadow-subtle)}
+  .confirm{border:1px solid var(--gold);background:var(--parchment-hi);border-radius:14px;padding:13px 14px;margin:4px 0 12px}
+  .confirm .ct{font-size:10.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-muted);font-family:var(--sans)}
+  .confirm .cv{font-family:var(--deva);font-size:16.5px;color:var(--ink);margin-top:3px}
+  .confirm .cs{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:3px}
+  .btn{display:block;width:100%;text-align:center;background:var(--saffron);color:#fff8ec;border:none;
+    border-radius:14px;padding:14px;font-size:15px;font-family:var(--deva);margin-top:6px;min-height:48px}
+  .btn.ghost{background:transparent;border:1px solid var(--gold-tint);color:var(--saffron)}
+
+  /* detail — ObservanceDetail hero pattern (design.md §33):
+     name 24pt centred, other-language caption, saffron-tint "अगला · date · in N days" pill */
+  .dhead{text-align:center;margin:4px 0 14px}
+  .dhead .orn{font-family:var(--deva);color:var(--gold);font-size:14px;letter-spacing:6px}
+  .dhead .dt{font-family:var(--deva);font-size:24px;color:var(--ink);margin-top:4px}
+  .dhead .ds{font-family:var(--deva);font-size:13px;color:var(--ink-soft);margin-top:3px}
+  .nextpill{display:inline-block;font-family:var(--deva);font-size:12.5px;color:var(--saffron-deep);
+    background:var(--saffron-tint);border-radius:20px;padding:7px 16px;margin-top:10px}
+  .drow{display:flex;align-items:center;gap:12px;border:1px solid var(--divider);background:var(--parchment-soft);
+    border-radius:14px;padding:13px 14px;margin-bottom:10px;min-height:44px}
+  .drow .di{flex:1}
+  .drow .dl{font-size:10.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-muted);font-family:var(--sans)}
+  .drow .dv{font-family:var(--deva);font-size:14.5px;color:var(--ink);margin-top:2px}
+  .drow .chev{color:var(--saffron);font-size:17px}
+  .toggle{width:44px;height:26px;border-radius:14px;background:var(--divider);position:relative;flex:none}
+  .toggle.on{background:var(--saffron)}
+  .toggle>i{position:absolute;top:3px;width:20px;height:20px;border-radius:50%;background:#fff8ec;left:3px}
+  .toggle.on>i{left:21px}
+  .danger{font-family:var(--deva);font-size:13px;color:var(--ink-muted);text-align:center;margin-top:14px;text-decoration:underline;text-underline-offset:3px}
+
+  /* pitru paksha overview — "आगामी · Upcoming" row pattern (design.md §33.6):
+     coloured marker dot · short date · name; family rows use the saffron star-tier dot */
+  .fortrow{display:flex;gap:11px;align-items:center;padding:11px 2px;border-bottom:1px solid var(--divider);min-height:44px}
+  .fortrow .mark{width:8px;height:8px;border-radius:50%;background:var(--gold);flex:none}
+  .fortrow .mark.fam{background:var(--saffron)}
+  .fortrow .fd{width:52px;flex:none;font-size:10.5px;color:var(--ink-muted);font-family:var(--sans)}
+  .fortrow .ft{flex:1}
+  .fortrow .ftt{font-family:var(--deva);font-size:14px;color:var(--ink)}
+  .fortrow .who{font-family:var(--deva);font-size:12.5px;color:var(--saffron-deep);margin-top:1px}
+
+  /* panchang day panel */
+  .anga{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+  .anga .cell{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:12px;padding:9px 11px}
+  .anga .al{font-size:10px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--ink-muted);font-family:var(--sans)}
+  .anga .av{font-family:var(--deva);font-size:13.5px;color:var(--ink);margin-top:2px}
+  .pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--gold-tint);background:var(--parchment-hi);
+    border-radius:20px;padding:6px 12px;font-family:var(--deva);font-size:12.5px;color:var(--saffron-deep);margin:0 6px 8px 0;min-height:32px}
+  .pill.smaran{border-color:var(--gold);color:var(--ink-soft);background:var(--parchment-soft)}
+
+  /* व्रत-पर्व catalog view (design.md §33): search 44/radii.md, pinned My-Vrat-style rows, browse tiles */
+  .searchfield{height:44px;border:1px solid var(--divider);border-radius:14px;background:var(--parchment-hi);
+    display:flex;align-items:center;gap:9px;padding:0 14px;font-family:var(--serif);font-style:italic;
+    font-size:13px;color:var(--ink-muted);margin-bottom:12px}
+  .pinrow{display:flex;align-items:center;gap:12px;background:var(--gold-tint);border:1.5px solid var(--gold);
+    border-radius:14px;padding:12px 14px;margin-bottom:10px;min-height:48px}
+  .pinrow .pi{width:30px;height:30px;border-radius:50%;background:var(--parchment-hi);border:1px solid var(--gold);
+    display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:13px;color:var(--saffron-deep);flex:none}
+  .pinrow .pt2{flex:1}
+  .pinrow .ptt{font-family:var(--deva);font-size:14.5px;color:var(--ink)}
+  .pinrow .pts{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:1px}
+  .pinrow .chev{color:var(--saffron);font-size:17px}
+  .browsegrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+  .btile{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:14px;padding:13px;min-height:44px}
+  .btile .bg1{font-family:var(--deva);font-size:15px;color:var(--ink)}
+  .btile .bg2{font-family:var(--serif);font-style:italic;font-size:11px;color:var(--ink-muted);margin-top:2px}
+
+  /* Home Today strip (design.md §18/§32 — quieter strip: one observance pill + windows line) */
+  .wordmark{text-align:center;font-family:var(--deva);font-size:22px;color:var(--saffron-deep);margin:6px 0 12px;letter-spacing:2px}
+  .todaycard{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:18px;padding:13px 14px;margin-bottom:14px;
+    box-shadow:var(--shadow-card)}
+  .todaycard .tdate{font-family:var(--deva);font-size:13.5px;color:var(--ink)}
+  .todaycard .ttithi{font-family:var(--deva);font-size:12px;color:var(--ink-soft);margin-top:2px}
+  .todaycard .tpills{display:flex;flex-wrap:wrap;margin-top:9px}
+  .todaycard .twin{font-family:var(--sans);font-size:10.5px;color:var(--ink-muted);margin-top:7px}
+  .gridrow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+  .gtile{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:14px;min-height:74px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+  .gtile .gi{font-family:var(--deva);font-size:18px;color:var(--saffron-deep)}
+  .gtile .gt2{font-family:var(--deva);font-size:11.5px;color:var(--ink)}
+
+  /* OS lock screen (for the season-reminder notification mock) */
+  .phone.os{background:linear-gradient(165deg,#241a2e 0%,#3a2438 45%,#1c1424 100%)}
+  .phone.os .statusbar{color:#f5eee2;background:transparent}
+  .phone.os .screen{background:transparent}
+  .lock{padding:40px 20px 0;text-align:center;color:#f5eee2}
+  .lock .ldate{font-size:14px;font-weight:500;opacity:.9}
+  .lock .ltime{font-size:66px;font-weight:600;letter-spacing:1px;line-height:1.05;margin-top:2px}
+  .locknotif{margin:26px 14px 0;background:rgba(255,255,255,.14);backdrop-filter:blur(6px);border-radius:18px;padding:12px 14px;text-align:left;color:#fff}
+  .locknotif .nt{font-size:12px;font-weight:600}
+  .locknotif .ns{font-size:12px;opacity:.9;margin-top:2px;font-family:var(--deva);line-height:1.6}
+  .locknotif .nm{font-size:10.5px;opacity:.6;margin-top:4px}
+
+  .tabbar{position:sticky;bottom:0;height:52px;background:var(--parchment-soft);border-top:1px solid var(--divider);display:flex}
+  .tabbar .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10px;color:var(--ink-muted)}
+  .tabbar .tab.active{color:var(--saffron)}
+  .tabbar .tab .ic{font-size:16px}
+</style>
+</head>
+<body>
+  <h1>पितृ स्मरण — Tithi-Based Family Remembrance</h1>
+  <div class="sub">PRD-17 · Interactive UI prototype. Static mockups in the app's parchment system — not the live build.</div>
+  <div class="legend">Managed from the <b>More hub</b>, but visible where devotional planning happens: a <b>pinned ledger row in the व्रत-पर्व catalog</b> (the My-Vrat slot) year-round, and the <b>Home Today strip</b> during Pitru Paksha / on family dates. Annual dates are solved by the shipped festival engine (<code style="color:#e9d9b1">lunarMonth + paksha + tithi → date</code>, kshaya/adhik-aware). Muted gold-and-ink tone throughout — <b>no streaks, no celebration, no share cards</b>. Everything stays in AsyncStorage on this device.</div>
+
+  <!-- ============ 1 · ENTRY + LIST ============ -->
+  <div class="phaselabel">1 · Entry &amp; the remembrance list</div>
+  <div class="phasedesc">A new row in the More hub (the app's personal area), leading to one card per family member with the next observance solved for the current year.</div>
+  <div class="wrap">
+
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="toptitle" style="font-size:20px">और · More</div></div>
+        <div class="morerow"><div class="mi">♡</div><div class="mt"><div class="mtt">इच्छा-सूची · Wishlist</div><div class="mts">Saved verses</div></div><div class="chev">›</div></div>
+        <div class="morerow"><div class="mi">卐</div><div class="mt"><div class="mtt">साधक प्रोफ़ाइल · Profile</div><div class="mts">Streak · lifetime japam</div></div><div class="chev">›</div></div>
+        <div class="morerow"><div class="mi">◷</div><div class="mt"><div class="mtt">स्मरण · Reminders</div><div class="mts">Daily verse · vrat · japam alarms</div></div><div class="chev">›</div></div>
+        <div class="morerow"><div class="mi">▦</div><div class="mt"><div class="mtt">होम-स्क्रीन विजेट</div><div class="mts">Verse · panchang · streak</div></div><div class="chev">›</div></div>
+
+        <div class="morerow" style="position:relative;border:1px solid var(--gold);border-radius:14px;padding:13px 12px;margin-top:10px;background:var(--parchment-soft)">
+          <div class="dot" style="right:-8px;top:-8px">1</div>
+          <div class="mi">॥</div>
+          <div class="mt"><div class="mtt">पितृ स्मरण <span class="tag">NEW</span></div><div class="mts">Shraddha &amp; punyatithi by tithi — private, on this device</div></div>
+          <div class="chev">›</div>
+        </div>
+        <div class="note">यह सूची केवल इसी फ़ोन पर रहती है ·<br/>never synced, never shared</div>
+      </div>
+      <div class="tabbar">
+        <div class="tab"><span class="ic">ॐ</span>Home</div>
+        <div class="tab"><span class="ic">☀</span>Bhakti</div>
+        <div class="tab"><span class="ic">☾</span>Panchang</div>
+        <div class="tab"><span class="ic">♪</span>Bhajan</div>
+        <div class="tab active"><span class="ic">⋯</span>More</div>
+      </div>
+      </div>
+    </div>
+    <div class="cap"><b>More hub — the private door.</b><br/>
+      <span class="n">1</span><b>New "पितृ स्मरण" row</b> beside Wishlist / Profile / Reminders — the app's existing personal area, deliberately not a Home-grid tile. Standard NEW badge for one release; the row's subtitle states the privacy contract up front. <b>Tap → the remembrance list.</b></div>
+    </div>
+
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">पितृ स्मरण</div></div>
+
+        <div class="ppbanner" style="position:relative"><div class="dot" style="right:-8px;top:-8px">2</div>
+          <div class="bt">॥ पितृ पक्ष निकट है</div>
+          <div class="bs">7 सितम्बर से — इस पखवाड़े में प्रत्येक की श्राद्ध-तिथि देखें ›</div>
+        </div>
+
+        <div class="obsrow" style="position:relative"><div class="dot" style="right:-8px;top:12px">3</div>
+          <div class="lead">॥</div>
+          <div class="oi"><div class="oname">नानाजी</div><div class="ocap">तिथि अज्ञात — सर्वपितृ अमावस्या</div></div>
+          <div class="oright"><div class="odate">21 सित 2026</div><div class="orel">41d</div></div>
+        </div>
+        <div class="obsrow">
+          <div class="lead">॥</div>
+          <div class="oi"><div class="oname">पिताजी</div><div class="ocap">माघ कृष्ण अष्टमी</div></div>
+          <div class="oright"><div class="odate">31 जन 2027</div><div class="orel">173d</div></div>
+        </div>
+        <div class="obsrow">
+          <div class="lead">॥</div>
+          <div class="oi"><div class="oname">दादीजी</div><div class="ocap">आषाढ़ शुक्ल तृतीया</div></div>
+          <div class="oright"><div class="odate">26 जून 2027</div><div class="orel">319d</div></div>
+        </div>
+
+        <button class="addbtn" style="position:relative"><span class="dot" style="left:-8px;top:10px">4</span>+ स्मरण जोड़ें · Add</button>
+        <div class="note">तिथियाँ इसी फ़ोन पर पंचांग इंजन से निकाली जाती हैं ·<br/>solved on-device by the same engine as the festivals</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>The remembrance list.</b><br/>
+      <span class="n">2</span><b>Pitru Paksha banner</b> appears only in the weeks before Bhadrapada Krishna paksha → opens the fortnight overview (last phone). Muted gold border — never the festive saffron style.<br/>
+      <span class="n">3</span><b>One row per person, on the shipped ObservanceList row pattern</b> (§33: leading glyph · name + caption · right-aligned next date + relative label, sorted soonest-first) — a ॥ lead instead of the follow star, the tithi as the caption, this year's solved date at right. <b>Tap → person detail.</b><br/>
+      <span class="n">4</span><b>+ स्मरण जोड़ें</b> → the add flow. Empty state (first run) shows two reverent lines explaining tithi-based remembrance and this same button.</div>
+    </div>
+
+    <!-- add flow -->
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">स्मरण जोड़ें</div></div>
+
+        <div class="field"><div class="flabel">सम्बन्ध</div><div class="finput">पिताजी</div></div>
+        <div class="field"><div class="flabel">नाम (वैकल्पिक)</div><div class="finput" style="color:var(--ink-muted);font-family:var(--serif);font-style:italic;font-size:13.5px">केवल आपके लिए — कहीं और नहीं दिखेगा</div></div>
+
+        <div class="modeseg" style="position:relative"><div class="dot" style="right:-8px;top:-8px">5</div>
+          <div class="seg">तिथि ज्ञात है</div><div class="seg on">केवल तारीख़ ज्ञात है</div>
+        </div>
+
+        <div class="frow">
+          <div class="field"><div class="flabel">देहावसान तिथि (अंग्रेज़ी)</div><div class="finput">3 फ़रवरी 1998</div></div>
+        </div>
+
+        <div class="confirm" style="position:relative"><div class="dot" style="right:-8px;top:-8px">6</div>
+          <div class="ct">पंचांग से निकली तिथि — पुष्टि करें</div>
+          <div class="cv">माघ कृष्ण अष्टमी</div>
+          <div class="cs">sunrise-tithi of 3 Feb 1998 · this is what repeats every year</div>
+        </div>
+
+        <button class="btn">सहेजें · Save</button>
+        <button class="btn ghost">तिथि स्वयं चुनें</button>
+        <div class="note">तिथि अज्ञात हो तो प्रविष्टि सर्वपितृ अमावस्या पर सहेजी जा सकती है</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Add flow — two ways in, one confirmation.</b><br/>
+      <span class="n">5</span><b>Mode toggle</b>: "तिथि ज्ञात है" shows the engine's own month / paksha / tithi pickers (the exact names from the Panchang tab); "केवल तारीख़ ज्ञात है" (shown) takes a Gregorian date.<br/>
+      <span class="n">6</span><b>The confirmation card is mandatory</b> — the app converts via <i>computePanchangForDate</i> and shows the tithi back in words. The user approves it; a silent conversion is never persisted. "तिथि स्वयं चुनें" switches to manual pickers if the family observes a different tithi than the computed one.</div>
+    </div>
+  </div>
+
+  <!-- ============ 2 · DETAIL + PAKSHA + PANCHANG ============ -->
+  <div class="phaselabel">2 · The annual answer — detail, Pitru Paksha, and the Panchang chip</div>
+  <div class="phasedesc">Each person's detail answers "इस वर्ष कब · पितृ पक्ष में किस दिन · उस दिन क्या करें"; saved dates surface quietly on the Panchang day panel.</div>
+  <div class="wrap">
+
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">पितृ स्मरण</div><div class="topaction">सम्पादन</div></div>
+
+        <div class="dhead" style="position:relative">
+          <div class="orn">॥ ॐ ॥</div>
+          <div class="dt">पिताजी</div>
+          <div class="ds">श्राद्ध तिथि: माघ कृष्ण अष्टमी</div>
+          <div><span class="nextpill">अगला · 31 जनवरी 2027 · in 173 days</span><span class="dot" style="right:14px;top:96px">7</span></div>
+        </div>
+
+        <div class="drow">
+          <div class="di"><div class="dl">अगले वर्ष</div><div class="dv">शुक्रवार, 20 जनवरी 2028</div></div>
+        </div>
+        <div class="drow">
+          <div class="di"><div class="dl">पितृ पक्ष 2026 में</div><div class="dv">अष्टमी श्राद्ध — 14 सितम्बर</div></div>
+        </div>
+
+        <div class="drow" style="position:relative"><div class="dot" style="right:-8px;top:10px">8</div>
+          <div class="di"><div class="dl">स्मरण सूचना</div><div class="dv">एक दिन पूर्व व उसी दिन</div></div>
+          <div class="toggle on"><i></i></div>
+        </div>
+
+        <div class="drow" style="position:relative"><div class="dot" style="right:-8px;top:10px">9</div>
+          <div class="di"><div class="dl">उस दिन पाठ</div><div class="dv">गीता — पंचदश अध्याय ›</div></div>
+        </div>
+        <div class="drow">
+          <div class="di"><div class="dl">पाठ</div><div class="dv">गीता — द्वितीय अध्याय ›</div></div>
+        </div>
+
+        <div class="danger">प्रविष्टि हटाएँ · Delete</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Person detail — the ObservanceDetail hero pattern.</b><br/>
+      <span class="n">7</span><b>The header reuses the §33 ObservanceDetail hero</b>: name at 24 pt centred, caption line, and the saffron-tint <i>"अगला · date · in N days"</i> pill — the exact affordance vrat details use. Below, next year's date and the Pitru Paksha mapping, all solved by the festival engine's rule machinery (kshaya/vriddhi handled; adhik-maas years use the nija month — pinned by fixture tests).<br/>
+      <span class="n">8</span><b>Reminders are opt-in per person</b> (default OFF — the deliberate opposite of festive reminders): day-before + day-of, fixed reverent copy, scheduled through the existing planner/budget machinery.<br/>
+      <span class="n">9</span><b>पाठ rows deep-link shipped content</b> — Gita adhyaya 15 and 2 (traditional shraddha paath), via the same <i>linkSectionId</i> mechanism festivals use. When PRD-19 ships the shraddha vidhi, it cross-links here. Delete = full confirm sheet, wipes the entry and its scheduled reminders.</div>
+    </div>
+
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">पितृ पक्ष 2026</div></div>
+        <div class="dhead">
+          <div class="dt" style="font-size:18px">7 – 21 सितम्बर</div>
+          <div class="ds">भाद्रपद कृष्ण पक्ष · आपके परिवार की श्राद्ध-तिथियाँ</div>
+        </div>
+
+        <div class="fortrow"><div class="mark"></div><div class="fd">7 सित</div><div class="ft"><div class="ftt">प्रतिपदा श्राद्ध</div></div></div>
+        <div class="fortrow" style="position:relative"><div class="dot" style="right:-8px;top:10px">10</div>
+          <div class="mark fam"></div><div class="fd">14 सित</div>
+          <div class="ft"><div class="ftt">अष्टमी श्राद्ध</div><div class="who">॥ पिताजी</div></div>
+        </div>
+        <div class="fortrow"><div class="mark"></div><div class="fd">16 सित</div><div class="ft"><div class="ftt">दशमी श्राद्ध</div></div></div>
+        <div class="fortrow" style="position:relative">
+          <div class="mark fam"></div><div class="fd">21 सित</div>
+          <div class="ft"><div class="ftt">सर्वपितृ अमावस्या — अज्ञात तिथियों हेतु</div><div class="who">॥ नानाजी</div></div>
+        </div>
+
+        <div class="note">तृतीया श्राद्ध (दादीजी) इस सूची में तब दिखेगा जब वह तिथि<br/>इस पखवाड़े में पड़े — मिलान पंचांग इंजन से।</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Pitru Paksha overview — the §33 "आगामी · Upcoming" row pattern.</b><br/>
+      <span class="n">10</span><b>Marker dot · short date · name, exactly like the day panel's Upcoming rows</b> — family-matched days carry the saffron dot (the star-tier colour) and the person's name beneath; unmatched days keep the default gold dot and render quietly. Unknown-tithi entries collect on Sarvapitri Amavasya. Reached from the list banner or the Panchang tab during the paksha.</div>
+    </div>
+
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="toptitle" style="font-size:20px">पंचांग</div><div class="topaction">जयपुर ›</div></div>
+        <div class="dhead" style="margin-bottom:10px">
+          <div class="dt" style="font-size:17px">रविवार, 31 जनवरी 2027</div>
+          <div class="ds">माघ कृष्ण अष्टमी</div>
+        </div>
+
+        <div class="anga">
+          <div class="cell"><div class="al">तिथि</div><div class="av">अष्टमी 14:22 तक</div></div>
+          <div class="cell"><div class="al">नक्षत्र</div><div class="av">स्वाति</div></div>
+          <div class="cell"><div class="al">योग</div><div class="av">वृद्धि</div></div>
+          <div class="cell"><div class="al">करण</div><div class="av">बालव</div></div>
+        </div>
+
+        <div style="position:relative"><div class="dot" style="right:-4px;top:-6px">11</div>
+          <span class="pill">☾ मासिक कालाष्टमी</span>
+          <span class="pill smaran">॥ स्मरण — पिताजी</span>
+        </div>
+
+        <div class="note" style="margin-top:16px">स्मरण-चिह्न केवल इसी फ़ोन पर दिखता है —<br/>the day panel otherwise unchanged</div>
+      </div>
+      <div class="tabbar">
+        <div class="tab"><span class="ic">ॐ</span>Home</div>
+        <div class="tab"><span class="ic">☀</span>Bhakti</div>
+        <div class="tab active"><span class="ic">☾</span>Panchang</div>
+        <div class="tab"><span class="ic">♪</span>Bhajan</div>
+        <div class="tab"><span class="ic">⋯</span>More</div>
+      </div>
+      </div>
+    </div>
+    <div class="cap"><b>Panchang day panel — the private chip.</b><br/>
+      <span class="n">11</span><b>On a saved observance date, a muted ॥ स्मरण chip</b> joins the day's observance pills — gold-toned, never the festive style, visible only on this device. <b>Tap → person detail.</b> This is the whole Panchang integration: one chip, no other change to the shipped day panel.</div>
+    </div>
+  </div>
+
+  <!-- ============ 3 · TOUCHPOINTS BEYOND MORE ============ -->
+  <div class="phaselabel">3 · Discovery touchpoints — beyond the More hub</div>
+  <div class="phasedesc">More stays the management home, but the feature is <b>seen</b> where devotional planning already happens: a pinned ledger row in the व्रत-पर्व catalog (the shipped My-Vrat slot), and the Home Today strip on the days it matters.</div>
+  <div class="wrap">
+
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="toptitle" style="font-size:20px">पंचांग</div><div class="topaction">जयपुर ›</div></div>
+        <div class="segment" style="display:flex;background:var(--parchment-soft);border:1px solid var(--divider);border-radius:12px;padding:3px;margin-bottom:14px">
+          <div style="flex:1;text-align:center;padding:8px 0;border-radius:9px;font-family:var(--deva);font-size:13px;color:var(--ink-muted)">पंचांग</div>
+          <div style="flex:1;text-align:center;padding:8px 0;border-radius:9px;font-family:var(--deva);font-size:13px;color:var(--saffron-deep);font-weight:600;background:var(--parchment-hi);box-shadow:var(--shadow-subtle)">व्रत-पर्व</div>
+          <div style="flex:1;text-align:center;padding:8px 0;border-radius:9px;font-family:var(--deva);font-size:13px;color:var(--ink-muted)">ज्योतिष</div>
+        </div>
+
+        <div class="searchfield">⌕ &nbsp;व्रत या पर्व खोजें · Search</div>
+
+        <div class="pinrow">
+          <div class="pi">★</div>
+          <div class="pt2"><div class="ptt">मेरे व्रत · My Vrat</div><div class="pts">3 following · 2 reminders on</div></div>
+          <div class="chev">›</div>
+        </div>
+
+        <div class="pinrow" style="position:relative"><div class="dot" style="right:-8px;top:-8px">12</div>
+          <div class="pi">॥</div>
+          <div class="pt2"><div class="ptt">पितृ स्मरण <span class="tag">NEW</span></div><div class="pts">3 स्मरण · अगला: 21 सित (नानाजी)</div></div>
+          <div class="chev">›</div>
+        </div>
+
+        <div style="font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin:12px 4px 8px;text-transform:uppercase;letter-spacing:.5px">Browse by type</div>
+        <div class="browsegrid">
+          <div class="btile"><div class="bg1">व्रत</div><div class="bg2">38 observances</div></div>
+          <div class="btile"><div class="bg1">पर्व</div><div class="bg2">54 festivals</div></div>
+          <div class="btile"><div class="bg1">उपवास</div><div class="bg2">12 fasts</div></div>
+          <div class="btile"><div class="bg1">॥ कथा</div><div class="bg2">61 stories</div></div>
+        </div>
+      </div>
+      <div class="tabbar">
+        <div class="tab"><span class="ic">ॐ</span>Home</div>
+        <div class="tab"><span class="ic">☀</span>Bhakti</div>
+        <div class="tab active"><span class="ic">☾</span>Panchang</div>
+        <div class="tab"><span class="ic">♪</span>Bhajan</div>
+        <div class="tab"><span class="ic">⋯</span>More</div>
+      </div>
+      </div>
+    </div>
+    <div class="cap"><b>व्रत-पर्व catalog — the year-round touchpoint.</b><br/>
+      <span class="n">12</span><b>A pinned पितृ स्मरण row directly under the shipped pinned My-Vrat row</b>, in the identical §33 pinned-row treatment (gold-tint fill, 1.5 px gold border). My Vrat is the personal <i>vrat</i> ledger; this is the personal <i>shraddha</i> ledger — structural siblings in the one view devotees already open to plan observances. The subtitle carries the live count + next date (soonest person). <b>Tap → the remembrance list</b> (same screen as the More entry). Empty state: the row still renders once, with "अपने पितरों की तिथियाँ जोड़ें" — then collapses if dismissed.</div>
+    </div>
+
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="wordmark">ॐ वेदांश़ ॐ</div>
+
+        <div class="todaycard" style="position:relative"><div class="dot" style="right:-8px;top:-8px">13</div>
+          <div class="tdate">सोमवार, 14 सितम्बर 2026</div>
+          <div class="ttithi">भाद्रपद कृष्ण अष्टमी · पितृ पक्ष</div>
+          <div class="tpills">
+            <span class="pill">☾ पितृ पक्ष — अष्टमी श्राद्ध</span>
+            <span class="pill smaran">॥ स्मरण — पिताजी</span>
+          </div>
+          <div class="twin">राहु काल 7:38–9:14 · अभिजीत 11:52–12:44</div>
+        </div>
+
+        <div class="gridrow">
+          <div class="gtile"><div class="gi">॥</div><div class="gt2">चालीसा</div></div>
+          <div class="gtile"><div class="gi">ॐ</div><div class="gt2">आरती</div></div>
+          <div class="gtile"><div class="gi">स्तो</div><div class="gt2">स्तोत्रम्</div></div>
+        </div>
+        <div class="note" style="margin-top:14px">बाक़ी होम अपरिवर्तित — the Today strip already renders<br/>the day's observance pill; स्मरण joins it only on family dates</div>
+      </div>
+      <div class="tabbar">
+        <div class="tab active"><span class="ic">ॐ</span>Home</div>
+        <div class="tab"><span class="ic">☀</span>Bhakti</div>
+        <div class="tab"><span class="ic">☾</span>Panchang</div>
+        <div class="tab"><span class="ic">♪</span>Bhajan</div>
+        <div class="tab"><span class="ic">⋯</span>More</div>
+      </div>
+      </div>
+    </div>
+    <div class="cap"><b>Home Today strip — the seasonal touchpoint.</b><br/>
+      <span class="n">13</span><b>Two moments, one shipped mechanism.</b> The Today strip (§18/§32, "one observance pill + windows line") already shows each day's observance — so once PRD-17 adds the missing Pitru Paksha rules (the engine gap: `shraddha-dates` is a dead catalog placeholder today), <i>"पितृ पक्ष — अष्टमी श्राद्ध"</i> appears here automatically like any festival pill. On a <b>family</b> date (a saved person's tithi, or their Pitru-Paksha day), the muted <i>॥ स्मरण</i> chip joins it → tap opens the person detail. Private, device-only, and quiet — no NEW badges, no counters on Home.</div>
+    </div>
+
+    <div class="col">
+    <div class="phone os">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="lock">
+        <div class="ldate">Sunday, 6 September</div>
+        <div class="ltime">9:41</div>
+
+        <div class="locknotif" style="position:relative"><div class="dot" style="right:-8px;top:-8px">14</div>
+          <div class="nt">ॐ वेदांश</div>
+          <div class="ns">कल से पितृ पक्ष — अपने पितरों का स्मरण करें · गीता पाठ ›</div>
+          <div class="nm">Festive reminder · 6:00 PM</div>
+        </div>
+
+        <div class="locknotif" style="position:relative"><div class="dot" style="right:-8px;top:-8px">15</div>
+          <div class="nt">ॐ वेदांश</div>
+          <div class="ns">कल पिताजी की पुण्यतिथि है · श्राद्ध तिथि: अष्टमी</div>
+          <div class="nm">स्मरण (opt-in) · 6:00 PM</div>
+        </div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Season reminder — the festive tier, plus the opt-in personal tier.</b><br/>
+      <span class="n">14</span><b>पितृ पक्ष rides the default-on festive reminder family</b> (#241 — same mechanism, same Reminders-hub toggle as every festival, same reading-invitation shape). Two fires a year: eve of paksha start and eve of Sarvapitri Amavasya. The copy is identical on every device and <b>never names a family member</b>. Tap → the Pitru Paksha overview (or the invitation state when no entries exist).<br/>
+      <span class="n">15</span><b>The personal tier stays opt-in, default OFF</b> — a notification naming <i>पिताजी</i> fires only because the user enabled it on that person's detail (callout ⑧). Two tiers, two defaults: the public season announces itself; the family's dates never do unless asked.</div>
+    </div>
+  </div>
+
+  <div class="phaselabel" style="margin-top:34px">Interaction inventory</div>
+  <div class="legend" style="max-width:920px">
+    ① More → पितृ स्मरण row → remembrance list.
+    ② Pitru Paksha banner (seasonal) → fortnight overview.
+    ③ Person row (ObservanceList row pattern §33, soonest-first) → detail (ObservanceDetail hero pattern).
+    ④ + स्मरण जोड़ें → add flow (empty state carries the same action).
+    ⑤ Mode toggle: tithi-known (month/paksha/tithi pickers) vs date-known (Gregorian input).
+    ⑥ Computed tithi always shown for explicit confirmation — "तिथि स्वयं चुनें" overrides manually; unknown tithi saves to Sarvapitri Amavasya.
+    ⑦ Detail solves this year + next + the Pitru Paksha day.
+    ⑧ Reminder toggle per person, default OFF, day-before + day-of.
+    ⑨ पाठ rows deep-link Gita adhyaya 15 / 2; delete = confirm sheet, cleans reminders.
+    ⑩ Fortnight overview maps every saved person to their shraddha day.
+    ⑪ Panchang day chip on observance dates → detail.
+    ⑫ व्रत-पर्व catalog: pinned पितृ स्मरण row under My Vrat (§33 pinned-row treatment, live count + next date) → remembrance list.
+    ⑬ Home Today strip: Pitru Paksha observance pill (automatic once the paksha rules exist) + the ॥ स्मरण chip on family dates → person detail.
+    ⑭ Season reminder (festive family, default-on, Reminders-hub toggle): eve of paksha start + eve of Sarvapitri Amavasya → Pitru Paksha overview; copy never names a person.
+    ⑮ Personal reminder (opt-in per person, default off): day-before + day-of on that person's dates → person detail.
+    No streaks, no celebration animation, no share surface anywhere in this feature.
+  </div>
+</body>
+</html>

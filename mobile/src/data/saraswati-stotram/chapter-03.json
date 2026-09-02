@@ -1,0 +1,46 @@
+{
+  "chapter": 3,
+  "titleHi": "मेधा सूक्त श्लोक",
+  "titleEn": "Medha Suktam Shloka",
+  "verseCount": 2,
+  "verses": [
+    {
+      "id": "ss-3-0",
+      "chapter": 3,
+      "number": 0,
+      "sanskrit": [
+        "॥ मेधा सूक्त श्लोक ॥",
+        "बुद्धि-स्मृति की वैदिक प्रार्थना"
+      ],
+      "linesEn": [
+        "Medha Suktam Shloka",
+        "A Vedic prayer for intellect & memory"
+      ],
+      "meaningHi": "महत्त्व:\n\n'मेधा' का अर्थ है धारणा-शक्ति, बुद्धि एवं स्मरण-शक्ति। यह श्लोक मेधा सूक्त (महानारायण उपनिषद्, कृष्ण यजुर्वेद) का सर्वाधिक प्रसिद्ध अंश है, जिसे छात्र स्मरण-शक्ति, एकाग्रता एवं बुद्धि की वृद्धि हेतु अध्ययन तथा परीक्षा से पूर्व बोलते हैं। यह श्लोक देवी सरस्वती के साथ-साथ इन्द्र एवं अश्विनीकुमारों का भी आह्वान करता है। आगे श्लोक एवं उसका अर्थ दिया गया है।",
+      "meaningEn": "Significance:\n\n'Medha' means the power of retention, intellect and memory. This shloka is the best-known portion of the Medha Suktam (Mahanarayana Upanishad, Krishna Yajurveda), recited by students before study and examinations to strengthen memory, concentration and intellect. It invokes Goddess Saraswati along with Indra and the Ashvins. The shloka and its meaning follow."
+    },
+    {
+      "id": "ss-3-1",
+      "chapter": 3,
+      "number": 1,
+      "sanskrit": [
+        "मेधां म इन्द्रो ददातु मेधां देवी सरस्वती।",
+        "मेधां मे अश्विनावुभावाधत्तां पुष्करस्रजा॥"
+      ],
+      "linesEn": [
+        "medhāṃ ma indro dadātu medhāṃ devī sarasvatī",
+        "medhāṃ me aśvināvubhāvādhattāṃ puṣkarasrajā"
+      ],
+      "meaningHi": "इन्द्र मुझे मेधा (धारणा-शक्ति एवं बुद्धि) प्रदान करें, देवी सरस्वती मुझे मेधा दें; कमल की माला धारण करने वाले दोनों अश्विनीकुमार मुझे मेधा प्रदान करें।\n\nयह श्लोक देवी सरस्वती के साथ-साथ इन्द्र एवं अश्विनीकुमारों का भी आह्वान करता है — अतः यह सरस्वती को नमन करने वाली एक वैदिक 'मेधा' (बुद्धि) प्रार्थना है। (यह सम्पूर्ण मेधा सूक्त का एक श्लोक है, सम्पूर्ण सूक्त नहीं; पठन हेतु वैदिक स्वर-चिह्न हटाकर दिया गया है।)",
+      "meaningEn": "May Indra grant me medha (the power of retention and intellect); may Goddess Saraswati grant me medha; may the two Ashvins, garlanded with lotuses, bestow medha upon me.\n\nThe verse invokes Goddess Saraswati alongside Indra and the Ashvins — a Vedic 'medha' (intellect) prayer that bows to Saraswati. (This is one verse from the Medha Suktam, not the complete hymn; Vedic svara accent marks are omitted for readability.)"
+    }
+  ],
+  "source": {
+    "baseText": "Medha Suktam (Mahanarayana Upanishad / Krishna Yajurveda) — the famous 'medhāṃ ma indro dadātu' verse, presented without Vedic svara marks for readability. Verified against shlokam.org and Vedadhara.",
+    "referenceUrls": [
+      "https://shlokam.org/shloka/medha-suktam.htm",
+      "https://www.vedadhara.com/medha-suktam-from-krishna-yajurveda"
+    ],
+    "retrievedOn": "2026-05-31"
+  }
+}

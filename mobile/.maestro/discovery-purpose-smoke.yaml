@@ -1,0 +1,75 @@
+# Intent Discovery Smoke Test
+#
+# PRD-B path: Home → By Purpose → Protection → Rama Raksha Stotra → reader.
+# Verifies the purpose grid, cross-deity purpose list, route dispatch, and the
+# first-page-only "When to Recite" panel.
+
+appId: com.prashantsharma.vedansh
+---
+# Native build: launch via the shared _launch subflow (clearState, first-launch
+# tour / What's New / notification dismiss, lands on Home). Category and tile
+# a11y labels are English by contract regardless of display language.
+- runFlow: _launch.yaml
+
+# Flip the reading language to English so the reader's WhenToRecitePanel renders
+# "When to Recite" / "Best Days" (Latin) rather than the default Devanagari,
+# which Maestro can't reliably read. Category/purpose tile a11y labels are
+# English by contract, so only the reader body needs this.
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+
+- extendedWaitUntil:
+    visible: "Good Habits\\..*Tap to open\\."
+    timeout: 60000
+
+# ── Home → Browse by Purpose ──
+- scrollUntilVisible:
+    element:
+      text: "By Purpose. Tap to open."
+    direction: DOWN
+    timeout: 10000
+    centerElement: true
+- tapOn: "By Purpose. Tap to open."
+- waitForAnimationToEnd
+
+# ── Purpose grid renders bilingual intent tiles ──
+- extendedWaitUntil:
+    visible: "Protection. Tap to open."
+    timeout: 15000
+- assertVisible: "Wealth. Tap to open."
+- assertVisible: "Knowledge. Tap to open."
+
+# ── Protection list shows tagged texts across deities ──
+- tapOn: "Protection. Tap to open."
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Rama Raksha Stotra.*Tap to open\\."
+    timeout: 15000
+- assertVisible: "Durga Kavach.*Tap to open\\."
+
+# ── Open a tagged text and verify the first-page metadata panel ──
+- tapOn: "Rama Raksha Stotra.*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- waitForAnimationToEnd
+# The WhenToRecitePanel sits below the verse in the reader's ScrollView — scroll
+# it into view (below the fold on Android's shorter viewport). The panel is
+# expanded by default, so "Best Days" is present once the header is on-screen.
+- scrollUntilVisible:
+    element:
+      text: ".*When to Recite.*"
+    direction: DOWN
+    timeout: 15000
+- assertVisible: ".*Best Days.*"
