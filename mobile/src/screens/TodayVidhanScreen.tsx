@@ -1,5 +1,5 @@
 /**
- * आज का विधान (PRD-31 Phase 2, design.md §70): the briefing of standing
+ * आज का विधान (PRD-31 Phase 2, design.md §71): the briefing of standing
  * questions — what is today, what today asks of me, the day's windows, my
  * sankalp — each rendered as the same AskAnswerCard the search box uses.
  *

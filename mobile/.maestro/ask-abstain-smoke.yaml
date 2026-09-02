@@ -1,5 +1,5 @@
 # जिज्ञासा · Ask Vedansh — abstain + stance guard + library non-regression
-# (PRD-31 §3.2, §3.4, §3.6; design.md §70)
+# (PRD-31 §3.2, §3.4, §3.6; design.md §71)
 #
 # Answer-or-abstain is the feature's hard rule. This flow checks the three
 # states that are NOT an answer:
