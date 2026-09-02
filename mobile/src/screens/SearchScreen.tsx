@@ -62,6 +62,14 @@ export default function SearchScreen({ navigation, route }: Props) {
   const [query, setQuery] = useState(route.params?.initialQuery ?? '');
   const [recent, setRecent] = useState<string[]>([]);
 
+  // An ask-from-context hand-off (PRD-41 Phase 3) navigates to the EXISTING
+  // Search route, which keeps this screen's state — clear the previous
+  // question so the seeded follow-up starts from an empty box (the stale text
+  // would otherwise prefix whatever the user types next).
+  useEffect(() => {
+    if (route.params?.seed) setQuery('');
+  }, [route.params?.seed]);
+
   // Hydrate recent searches from storage.
   useEffect(() => {
     let cancelled = false;
@@ -233,7 +241,11 @@ export default function SearchScreen({ navigation, route }: Props) {
         <View style={{ marginTop: spacing.sm, marginBottom: spacing.md }}>
           <AskAnswerCard answer={resolution.answer} lang={lang} onAction={onAskAction} />
         </View>
-      ) : isQuestion ? (
+      ) : isQuestion || resolution.kind === 'declined' ? (
+        // A decline is an explicit engine stance (§3.4) — DECLINE_LEXEMES only
+        // match predictive/personal framings, never a plain library query, so
+        // it must render even when the query misses the question-shape gate
+        // (e.g. "will i get the job" has no interrogative lexeme).
         <View style={{ marginTop: spacing.sm, marginBottom: spacing.md }}>
           <AskAbstainCard
             kind={resolution.kind}

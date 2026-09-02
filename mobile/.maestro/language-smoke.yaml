@@ -36,6 +36,13 @@ appId: com.prashantsharma.vedansh
 # via the "Language, <current>" row first (same pattern as home-today).
 - tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
+# The ऐप section (Language/Reading size) sits below the fold on standard-height
+# iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
+# tapping the off-screen row's estimated center hits the tab bar instead. Scroll first.
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
 - tapOn: "Language,.*"
 - waitForAnimationToEnd
 - extendedWaitUntil:
@@ -84,6 +91,13 @@ appId: com.prashantsharma.vedansh
 # open Hanuman Chalisa reader, now re-rendered in the newly chosen script.
 - tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
+# The ऐप section (Language/Reading size) sits below the fold on standard-height
+# iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
+# tapping the off-screen row's estimated center hits the tab bar instead. Scroll first.
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
 - tapOn: "Language,.*"
 - waitForAnimationToEnd
 - extendedWaitUntil:
@@ -98,6 +112,13 @@ appId: com.prashantsharma.vedansh
 # ── Restore Hindi so the next flow starts from the suite baseline ──
 - tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
+# The ऐप section (Language/Reading size) sits below the fold on standard-height
+# iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
+# tapping the off-screen row's estimated center hits the tab bar instead. Scroll first.
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
 - tapOn: "Language,.*"
 - waitForAnimationToEnd
 - extendedWaitUntil:

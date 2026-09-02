@@ -168,6 +168,15 @@ export default function PanchangScreen({ route }: Props) {
     selectPerson: selectKundaliPerson,
   } = useKundali();
   const { panchang: p, observances, upcoming } = usePanchangForSelection(selectedDate, calendarSystem);
+  // The day's one-line identity (vara · masa paksha · Vikram Samvat), shared by
+  // the date card's visible subtitle and the date button's a11y label — the
+  // explicit label would otherwise hide the subtitle from screen readers.
+  const dayIdentityHi = p
+    ? `${p.vara.nameHi} · ${p.lunarMonth.nameHi}${p.lunarMonth.isAdhik ? ' (अधिक)' : ''} ${PAKSHA_NAMES_HI[p.tithi.paksha]} पक्ष · विक्रम संवत् ${p.vikramSamvat}`
+    : null;
+  const dayIdentityEn = p
+    ? `${p.vara.nameEn} · ${p.lunarMonth.nameEn}${p.lunarMonth.isAdhik ? ' (Adhik)' : ''} ${PAKSHA_NAMES_EN[p.tithi.paksha]} Paksha · Vikram Samvat ${p.vikramSamvat}`
+    : null;
   // PRD-27: the day's शुभ योग windows — store-backed (no private cache), []
   // while the solve is in flight and on days with none, so the card below
   // renders zero chrome for the absent case.
@@ -429,12 +438,12 @@ export default function PanchangScreen({ route }: Props) {
               >
                 {/* The date block toggles the month grid like the माह देखें
                     button below — a large, natural tap target. Its a11y label is
-                    the date itself; 'Expand calendar' stays unique to the button
-                    (the smoke flows full-string match on it). */}
+                    the date plus the day identity line; 'Expand calendar' stays
+                    unique to the button (the smoke flows full-string match on it). */}
                 <Pressable
                   onPress={() => setCalendarExpanded((expanded) => !expanded)}
                   accessibilityRole="button"
-                  accessibilityLabel={formatFullDate(selectedDate, 'en')}
+                  accessibilityLabel={dayIdentityEn ? `${formatFullDate(selectedDate, 'en')}. ${dayIdentityEn}` : formatFullDate(selectedDate, 'en')}
                   style={({ pressed }) => [styles.datePagerPage, pressed && { opacity: 0.7 }]}
                 >
                   <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink, textAlign: 'center' }}>
@@ -450,13 +459,7 @@ export default function PanchangScreen({ route }: Props) {
                     minimumFontScale={0.75}
                     style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkMuted, marginTop: 2, textAlign: 'center' }}
                   >
-                    {p
-                      ? contentByLang(
-                          lang,
-                          `${p.vara.nameHi} · ${p.lunarMonth.nameHi}${p.lunarMonth.isAdhik ? ' (अधिक)' : ''} ${PAKSHA_NAMES_HI[p.tithi.paksha]} पक्ष · विक्रम संवत् ${p.vikramSamvat}`,
-                          `${p.vara.nameEn} · ${p.lunarMonth.nameEn}${p.lunarMonth.isAdhik ? ' (Adhik)' : ''} ${PAKSHA_NAMES_EN[p.tithi.paksha]} Paksha · Vikram Samvat ${p.vikramSamvat}`
-                        )
-                      : ' '}
+                    {dayIdentityHi && dayIdentityEn ? contentByLang(lang, dayIdentityHi, dayIdentityEn) : ' '}
                   </Text>
                 </Pressable>
               </View>
