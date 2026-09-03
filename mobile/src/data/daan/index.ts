@@ -1,5 +1,5 @@
 /**
- * दान-पुण्य registry accessors (PRD-26, RULEBOOK §26). Verified-only across
+ * दान-पुण्य registry accessors (PRD-26, RULEBOOK §27). Verified-only across
  * the board (the §20/§21/§22 draft-invisibility pattern), plus the one piece
  * of matching logic the touchpoints share: rule-id → occasion row, where
  * exact ids always beat suffix families (shattila-ekadashi wins over

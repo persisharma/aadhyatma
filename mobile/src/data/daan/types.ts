@@ -1,5 +1,5 @@
 /**
- * दान-पुण्य content shapes (PRD-26, RULEBOOK §26). Same registry discipline as
+ * दान-पुण्य content shapes (PRD-26, RULEBOOK §27). Same registry discipline as
  * bhog (§21) and vastu (§22): bilingual Hi/En parallel fields, a review-only
  * `source` block that is never rendered, and draft entries invisible behind
  * verified-only accessors. The educate-first IA contract (PRD-26 §2.7) is a

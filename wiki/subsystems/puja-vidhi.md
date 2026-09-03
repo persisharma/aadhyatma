@@ -1,8 +1,8 @@
 ---
 title: Puja Vidhi
 type: subsystem
-sources: [mobile/src/data/vidhi/types.ts, mobile/src/data/vidhi/index.ts, mobile/src/data/vidhi/satyanarayan-puja.ts, mobile/src/data/vidhi/diwali-lakshmi-ganesh-puja.ts, mobile/src/data/vidhi/ganesh-chaturthi-sthapana.ts, mobile/src/data/vidhi/navratri-ghatasthapana.ts, mobile/src/data/vidhi/karwa-chauth-puja.ts, mobile/src/data/vidhi/maha-shivaratri-puja.ts, mobile/src/data/vidhi/shraddha-tarpan-vidhi.ts, mobile/src/data/vidhi/checklistStore.ts, mobile/src/screens/VidhiCatalogScreen.tsx, mobile/src/screens/VidhiDetailScreen.tsx, mobile/src/screens/VidhiConductScreen.tsx, mobile/src/screens/ObservanceDetailScreen.tsx, mobile/src/screens/PitruSmaranDetailScreen.tsx, mobile/src/screens/PitruPakshaOverviewScreen.tsx, mobile/src/components/PitruPakshaDayChip.tsx, mobile/src/screens/HomeScreen.tsx, mobile/src/screens/SearchScreen.tsx, mobile/src/data/searchIndex.ts, mobile/src/data/routine/types.ts, mobile/src/data/routine/units.ts, mobile/src/components/AddToRoutineSheet.tsx, mobile/src/navigation/entryRoutes.ts, mobile/src/navigation/types.ts, mobile/src/navigation/HomeStackNavigator.tsx, mobile/src/navigation/PanchangStackNavigator.tsx, mobile/src/navigation/MoreStackNavigator.tsx, mobile/src/navigation/__tests__/vidhiBackNavigation.test.ts, mobile/src/screens/__tests__/VidhiScreens.test.tsx, mobile/src/screens/__tests__/PitruSmaranScreens.test.tsx, mobile/src/components/__tests__/PitruPakshaDayChip.test.tsx, mobile/src/data/__tests__/vidhiContent.test.ts, mobile/.maestro/pitru-smaran.yaml, docs/roadmap/prds/19-puja-vidhi.md, docs/roadmap/prds/19-shraddha-vidhi-phase3.md, docs/roadmap/conventions/shraddha-tarpan-source-dossier.md, design.md]
-last_verified_date: 2026-08-25
+sources: [mobile/src/data/vidhi/types.ts, mobile/src/data/vidhi/index.ts, mobile/src/data/vidhi/ganesh-visarjan-uttar-puja.ts, mobile/src/data/vidhi/durga-visarjan.ts, mobile/src/data/vidhi/satyanarayan-puja.ts, mobile/src/data/vidhi/diwali-lakshmi-ganesh-puja.ts, mobile/src/data/vidhi/ganesh-chaturthi-sthapana.ts, mobile/src/data/vidhi/navratri-ghatasthapana.ts, mobile/src/data/vidhi/karwa-chauth-puja.ts, mobile/src/data/vidhi/maha-shivaratri-puja.ts, mobile/src/data/vidhi/shraddha-tarpan-vidhi.ts, mobile/src/data/vidhi/checklistStore.ts, mobile/src/screens/VidhiCatalogScreen.tsx, mobile/src/screens/VidhiDetailScreen.tsx, mobile/src/screens/VidhiConductScreen.tsx, mobile/src/screens/ObservanceDetailScreen.tsx, mobile/src/screens/PitruSmaranDetailScreen.tsx, mobile/src/screens/PitruPakshaOverviewScreen.tsx, mobile/src/components/PitruPakshaDayChip.tsx, mobile/src/screens/HomeScreen.tsx, mobile/src/screens/SearchScreen.tsx, mobile/src/data/searchIndex.ts, mobile/src/data/routine/types.ts, mobile/src/data/routine/units.ts, mobile/src/components/AddToRoutineSheet.tsx, mobile/src/navigation/entryRoutes.ts, mobile/src/navigation/types.ts, mobile/src/navigation/HomeStackNavigator.tsx, mobile/src/navigation/PanchangStackNavigator.tsx, mobile/src/navigation/MoreStackNavigator.tsx, mobile/src/navigation/__tests__/vidhiBackNavigation.test.ts, mobile/src/screens/__tests__/VidhiScreens.test.tsx, mobile/src/screens/__tests__/PitruSmaranScreens.test.tsx, mobile/src/components/__tests__/PitruPakshaDayChip.test.tsx, mobile/src/data/__tests__/vidhiContent.test.ts, mobile/.maestro/pitru-smaran.yaml, docs/roadmap/prds/19-puja-vidhi.md, docs/roadmap/prds/19-shraddha-vidhi-phase3.md, docs/roadmap/conventions/shraddha-tarpan-source-dossier.md, design.md]
+last_verified_date: 2026-09-03
 confidence: high
 status: current
 ---
@@ -26,6 +26,20 @@ steps, optional transcribed mantras and shipped-text references. References incl
 section and Gita-chapter hand-offs. Source, citation URL and convention fields are retained for content
 review but never render. `checklistStore.ts` persists checked samagri by vidhi + occurrence date and conduct progress
 by vidhi + civil day under `@vedansh/vidhi-checklist`.
+
+**Verification boundary (PRD-28 Phase B, RULEBOOK §26).** `VidhiEntry.status?: 'draft' | 'verified'` —
+absent means verified (the seven PRD-19 entries). `ALL_VIDHI_ENTRIES` holds everything authored;
+**`VIDHI_ENTRIES` / `VIDHI_BY_ID` / `getVidhiById` / `getVidhiForFestival` expose verified entries
+only**, so a draft is indistinguishable from no entry on every surface (catalog count stays 7, no
+search row, no day-panel pill, no Observance Detail card, no arc door). The **visarjan family** —
+`ganesh-visarjan-uttar-puja` (hook `anant-chaturdashi`) and `durga-visarjan` (hook `dussehra`) —
+is authored **draft**: instruction-only, mantra-free, the festival-murti vs permanent-murti boundary
+stated in both languages. The authoring session (2026-09-03) had no outbound network (proxy 403), so
+no source was opened; each `canonicalEditionStatus` begins `DRAFT — NOT VERIFIED` and lists what is
+outstanding (Gita Press code 592 concluding sections + two reference URLs, concordance, named
+reviewer). Flipping the status lights up every surface with zero code change. The arc strip
+([[panchang]]) opens the Ganesh guide on the family's *own* visarjan day via
+`ArcDefinition.visarjanVidhiId`, not through the festival hook.
 
 **Stacks.** The three vidhi routes are registered on the **Home, Panchang and More stacks**,
 declared once in the shared `VidhiStackParamList` that each stack's param list intersects
@@ -85,6 +99,13 @@ the quiet static ॐ seal with the completed-step count.
 
 ## Gotchas
 
+- **Never read `ALL_VIDHI_ENTRIES` or `VIDHI_DRAFTS` from a screen, the search index, the ask
+  lexicon or the routine catalog.** They exist for review and tests. Every product surface goes
+  through `VIDHI_ENTRIES`/`getVidhiById`/`getVidhiForFestival`, which filter on
+  `isVidhiPublished`. `vidhiContent.test.ts` pins that both drafts are hidden by every accessor.
+- **A draft is held to the full §19 contract.** The content test loops over `ALL_VIDHI_ENTRIES`,
+  so a draft with a missing field or a malformed Devanagari string fails the build exactly like a
+  published entry — flipping `status` must be a review, never a rewrite.
 - Provenance is mandatory in data and tests but private in UI. Do not pass `source`, `sourceUrl`,
   `conventionLineHi` or `conventionLineEn` into renderable conduct-page objects.
 - The FlatList data includes a completion sentinel after the final step. Clamp initial indices

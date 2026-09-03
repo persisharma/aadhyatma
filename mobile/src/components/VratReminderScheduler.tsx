@@ -6,6 +6,8 @@ import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { getNextOccurrence, getRuleById } from '@/panchang/vratCatalog';
 import { scheduleVratReminders, cancelAllVratReminders } from '@/notifications/vratScheduler';
 import type { VratReminderInput } from '@/notifications/vratReminderPure';
+import { visarjanReminderInputs } from '@/panchang/arcs';
+import { useArcChoices } from '@/panchang/useArcChoices';
 
 function startOfLocalDay(d: Date): Date {
   return new Date(d.getFullYear(), d.getMonth(), d.getDate());
@@ -19,11 +21,16 @@ function startOfLocalDay(d: Date): Date {
  *
  * Permission is shared with the daily-verse scheduler — we only schedule when it
  * is already granted, and never prompt from here.
+ *
+ * PRD-28: a family's chosen visarjan (`arcChoiceStore`) rides this same
+ * family as extra inputs — the solved date gets the evening-before and 07:00
+ * day-of notices vrat followers already know. No choice ⇒ no input.
  */
 export default function VratReminderScheduler() {
   const { follows, reminderDefault, isLoading } = useVratFollows();
   const { permissionStatus } = useNotificationPreferences();
   const [calendarSystem] = usePanchangCalendarSystem();
+  const { choices: arcChoices, hydrated: arcHydrated } = useArcChoices();
   const [foregroundTick, setForegroundTick] = useState(0);
   const appStateRef = useRef<AppStateStatus>(AppState.currentState);
 
@@ -37,7 +44,7 @@ export default function VratReminderScheduler() {
   }, []);
 
   useEffect(() => {
-    if (isLoading) return undefined;
+    if (isLoading || !arcHydrated) return undefined;
     let cancelled = false;
     (async () => {
       if (permissionStatus !== 'granted') {
@@ -65,13 +72,14 @@ export default function VratReminderScheduler() {
           },
         });
       }
+      inputs.push(...visarjanReminderInputs(arcChoices, today, calendarSystem));
       if (cancelled) return;
       await scheduleVratReminders(inputs, now).catch(() => undefined);
     })();
     return () => {
       cancelled = true;
     };
-  }, [isLoading, follows, reminderDefault, permissionStatus, calendarSystem, foregroundTick]);
+  }, [isLoading, follows, reminderDefault, permissionStatus, calendarSystem, foregroundTick, arcChoices, arcHydrated]);
 
   return null;
 }
