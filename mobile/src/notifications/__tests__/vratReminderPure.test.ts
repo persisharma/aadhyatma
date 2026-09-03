@@ -111,3 +111,27 @@ function input(over: Partial<VratReminderInput>): VratReminderInput {
 {
   assert.ok(ROLLING_WINDOW_DAYS <= 64);
 }
+
+// PRD-28: an optional titleHi override rides through the planner so a solved
+// visarjan reads 'विसर्जन स्मरण'; inputs without it keep the family's title.
+{
+  const now = new Date(2026, 8, 10, 9, 0, 0, 0);
+  const occ = new Date(2026, 8, 18);
+  const { planned } = planVratReminders(
+    [
+      input({ ruleId: 'ganesh-chaturthi', nameHi: 'गणेश उत्सव विसर्जन', nameEn: 'Ganesh Utsav Visarjan', nextDate: occ, titleHi: 'विसर्जन स्मरण' }),
+      input({ ruleId: 'ekadashi', nextDate: occ, order: 1 }),
+    ],
+    now
+  );
+  const visarjanDay = planned.find((p) => p.ruleId === 'ganesh-chaturthi' && p.kind === 'dayOf')!;
+  const visarjanAdv = planned.find((p) => p.ruleId === 'ganesh-chaturthi' && p.kind === 'advance')!;
+  const ekadashi = planned.find((p) => p.ruleId === 'ekadashi' && p.kind === 'dayOf')!;
+  assert.equal(formatVratReminderContent(visarjanDay).title, 'विसर्जन स्मरण');
+  assert.equal(formatVratReminderContent(visarjanDay).body, 'आज गणेश उत्सव विसर्जन है · Ganesh Utsav Visarjan today');
+  assert.equal(formatVratReminderContent(visarjanAdv).title, 'विसर्जन स्मरण');
+  assert.equal(formatVratReminderContent(visarjanAdv).body, 'कल गणेश उत्सव विसर्जन · Ganesh Utsav Visarjan');
+  assert.equal(formatVratReminderContent(ekadashi).title, 'व्रत स्मरण');
+  assert.equal(ekadashi.titleHi, undefined, 'no override leaks onto other inputs');
+  assert.equal(visarjanDay.identifier, `${VRAT_NOTIF_PREFIX}:ganesh-chaturthi:dayOf:2026-09-18`);
+}
