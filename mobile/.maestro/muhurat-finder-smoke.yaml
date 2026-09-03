@@ -76,8 +76,9 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Find a Muhurat"
     timeout: 20000
+# "Vehicle Purchase" sits in a lower category — below the fold on Android's
+# shorter viewport, so it's validated by the scrollUntilVisible below, not here.
 - assertVisible: "Griha Pravesh"
-- assertVisible: "Vehicle Purchase"
 - assertVisible: "Naming Ceremony"
 - scrollUntilVisible:
     element:
