@@ -9,7 +9,7 @@
 //   • @react-navigation/native ships ESM the react-native Jest preset doesn't
 //     transform; deepLink only needs CommonActions.navigate (to build the
 //     action) and createNavigationContainerRef (the dispatch target).
-import { navigationRef, handleNotificationResponse, coldStartTargetFromNotification } from '../deepLink';
+import { navigationRef, handleNotificationResponse, startTargetFromNotification } from '../deepLink';
 
 jest.mock('expo-notifications', () => ({}));
 jest.mock('@react-navigation/native', () => ({
@@ -35,10 +35,19 @@ const dailyVerse = {
   verseIndex: 3,
 };
 
-describe('handleNotificationResponse', () => {
-  let dispatchSpy: jest.SpyInstance;
-  let readySpy: jest.SpyInstance;
+let dispatchSpy: jest.SpyInstance;
+let readySpy: jest.SpyInstance;
 
+beforeEach(() => {
+  dispatchSpy = jest.spyOn(navigationRef, 'dispatch').mockImplementation(() => {});
+  readySpy = jest.spyOn(navigationRef, 'isReady');
+});
+
+afterEach(() => {
+  jest.restoreAllMocks();
+});
+
+describe('handleNotificationResponse', () => {
   beforeEach(() => {
     dispatchSpy = jest.spyOn(navigationRef, 'dispatch').mockImplementation(() => {});
     readySpy = jest.spyOn(navigationRef, 'isReady');
@@ -295,23 +304,87 @@ describe('handleNotificationResponse', () => {
   });
 });
 
-describe('coldStartTargetFromNotification', () => {
-  test('a launching daily-verse tap becomes the verse start target the widget path uses', () => {
-    expect(coldStartTargetFromNotification(responseWithData(dailyVerse))).toEqual({
-      kind: 'verse',
-      sourceId: 'hanuman-chalisa',
-      verseIndex: 3,
+// The cold-start resolver is the SAME table the warm handler dispatches from:
+// whatever a tap navigates to after mount, the launching tap must make the
+// navigator's initial route — no family may land on Home first.
+describe('startTargetFromNotification', () => {
+  test('a launching daily-verse tap makes Daily Bhakti the initial tab with the baked verse', () => {
+    expect(startTargetFromNotification(responseWithData(dailyVerse))).toEqual({
+      name: 'DailyBhaktiTab',
+      params: { sourceId: 'hanuman-chalisa', verseIndex: 3 },
     });
     expect(
-      coldStartTargetFromNotification(responseWithData({ ...dailyVerse, sourceId: 'gita', chapter: 2 }))
-    ).toEqual({ kind: 'verse', sourceId: 'gita', verseIndex: 3, chapter: 2 });
+      startTargetFromNotification(responseWithData({ ...dailyVerse, sourceId: 'gita', chapter: 2 }))
+    ).toEqual({ name: 'DailyBhaktiTab', params: { sourceId: 'gita', verseIndex: 3, chapter: 2 } });
   });
 
-  test('anything but a well-formed daily verse leaves the default cold start alone', () => {
-    for (const data of [undefined, null, {}, { type: 'daily-verse' }, { type: 'festive-reminder', ruleId: 'diwali' }]) {
-      expect(coldStartTargetFromNotification(responseWithData(data))).toBeNull();
+  test('every other family resolves straight to its own screen, never Home first', () => {
+    expect(startTargetFromNotification(responseWithData({ type: 'vrat-reminder', ruleId: 'nirjala-ekadashi' }))).toEqual({
+      name: 'PanchangTab',
+      params: { screen: 'ObservanceDetail', params: { ruleId: 'nirjala-ekadashi' }, initial: false },
+    });
+    const dateMs = new Date(2026, 7, 17).getTime();
+    expect(
+      startTargetFromNotification(responseWithData({ type: 'muhurat-reminder', occasionId: 'vahan', dateMs }))
+    ).toEqual({
+      name: 'PanchangTab',
+      params: { screen: 'MuhuratDayDetail', params: { occasionId: 'vahan', dateMs }, initial: false },
+    });
+    expect(startTargetFromNotification(responseWithData({ type: 'festive-reminder', ruleId: 'diwali' }))).toEqual({
+      name: 'HomeTab',
+      params: { screen: 'Home' },
+    });
+    for (const data of [
+      { type: 'sadhana-reminder', programId: 'p1' },
+      { type: 'routine-reminder', routineId: 'gone', dateKey: '2026-09-03' },
+    ]) {
+      expect(startTargetFromNotification(responseWithData(data))).toEqual({
+        name: 'HomeTab',
+        params: { screen: 'RoutineToday' },
+      });
     }
-    expect(coldStartTargetFromNotification(null)).toBeNull();
-    expect(coldStartTargetFromNotification(undefined)).toBeNull();
+    expect(startTargetFromNotification(responseWithData({ type: 'pitru-smaran-reminder', entryId: 'e1' }))).toEqual({
+      name: 'MoreTab',
+      params: { screen: 'PitruSmaranDetail', params: { entryId: 'e1' }, initial: false },
+    });
+    expect(startTargetFromNotification(responseWithData({ type: 'janma-tithi-reminder', personId: 'p9' }))).toEqual({
+      name: 'MoreTab',
+      params: { screen: 'JanmaTithiDetail', params: { personId: 'p9' }, initial: false },
+    });
+    expect(startTargetFromNotification(responseWithData({ type: 'pitru-paksha-reminder', year: 2026 }))).toMatchObject({
+      name: 'MoreTab',
+      params: { screen: 'PitruPakshaOverview', initial: false },
+    });
+  });
+
+  test('a launching japam alarm opens the counter auto-playing; a stale mantra falls back to the ordinary launch', () => {
+    expect(startTargetFromNotification(responseWithData({ type: 'japam-alarm', alarmId: 'a1', mantraId: 'om-namah-shivaya' }))).toEqual({
+      name: 'HomeTab',
+      params: { screen: 'JapamCounter', params: { mantraId: 'om-namah-shivaya', autoPlay: true } },
+    });
+    expect(startTargetFromNotification(responseWithData({ type: 'japam-alarm', alarmId: 'a1', mantraId: 'no-such-mantra' }))).toBeNull();
+  });
+
+  test('cold and warm paths agree: the launch target is exactly what the warm handler dispatches', () => {
+    readySpy.mockReturnValue(true);
+    for (const data of [
+      dailyVerse,
+      { type: 'vrat-reminder', ruleId: 'nirjala-ekadashi' },
+      { type: 'festive-reminder', ruleId: 'diwali' },
+      { type: 'routine-reminder' },
+      { type: 'pitru-smaran-reminder', entryId: 'e1' },
+    ]) {
+      dispatchSpy.mockClear();
+      handleNotificationResponse(responseWithData(data));
+      expect(dispatchSpy.mock.calls[0][0].payload).toEqual(startTargetFromNotification(responseWithData(data)));
+    }
+  });
+
+  test('anything unrecognised leaves the default cold start alone', () => {
+    for (const data of [undefined, null, {}, { type: 'daily-verse' }, { type: 'other' }]) {
+      expect(startTargetFromNotification(responseWithData(data))).toBeNull();
+    }
+    expect(startTargetFromNotification(null)).toBeNull();
+    expect(startTargetFromNotification(undefined)).toBeNull();
   });
 });

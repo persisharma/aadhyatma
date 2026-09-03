@@ -56,38 +56,12 @@ export default function TabNavigator({
   // bar was the last surface still English-only under a fully Indic screen.
   // contentByLang transliterates the Hindi label for gu/kn.
   const tabLabel = (hi: string, en: string) => contentByLang(lang, hi, en);
-  const initialRouteName: keyof TabParamList =
-    initialTarget?.kind === 'verse'
-      ? 'DailyBhaktiTab'
-      : initialTarget?.kind === 'panchang'
-        ? 'PanchangTab'
-        : 'HomeTab';
-  const homeInitialParams: TabParamList['HomeTab'] =
-    initialTarget?.kind === 'japam'
-      ? initialTarget.mantraId
-        ? {
-            screen: 'JapamCounter',
-            params: { mantraId: initialTarget.mantraId },
-            initial: false,
-          }
-        : { screen: 'CategoryList', params: { categoryId: 'japam' }, initial: false }
-      : undefined;
-  const verseInitialParams: TabParamList['DailyBhaktiTab'] =
-    initialTarget?.kind === 'verse'
-      ? {
-          sourceId: initialTarget.sourceId,
-          verseIndex: initialTarget.verseIndex,
-          ...(initialTarget.chapter == null ? {} : { chapter: initialTarget.chapter }),
-        }
-      : undefined;
-  const panchangInitialParams: TabParamList['PanchangTab'] =
-    initialTarget?.kind === 'panchang'
-      ? {
-          screen: 'PanchangHome',
-          params: { dateMs: initialTarget.dateMs },
-          initial: false,
-        }
-      : undefined;
+  // The pre-resolved cold-start target picks the first committed tab and seeds
+  // that tab's initial params (a stack tab receives its nested
+  // `{ screen, params, initial: false }` and applies it on first mount).
+  const initialRouteName: keyof TabParamList = initialTarget?.name ?? 'HomeTab';
+  const initialParamsFor = <K extends keyof TabParamList>(tab: K): TabParamList[K] | undefined =>
+    initialTarget?.name === tab ? (initialTarget.params as TabParamList[K] | undefined) : undefined;
 
   return (
     <Tab.Navigator
@@ -112,7 +86,7 @@ export default function TabNavigator({
       <Tab.Screen
         name="HomeTab"
         component={HomeStackNavigator}
-        initialParams={homeInitialParams}
+        initialParams={initialParamsFor('HomeTab')}
         options={({ route }) => {
           const focused = getFocusedRouteNameFromRoute(route) ?? 'Home';
           return {
@@ -130,7 +104,7 @@ export default function TabNavigator({
       <Tab.Screen
         name="DailyBhaktiTab"
         component={DailyBhaktiScreen}
-        initialParams={verseInitialParams}
+        initialParams={initialParamsFor('DailyBhaktiTab')}
         options={{
           tabBarLabel: tabLabel('भक्ति', 'Bhakti'),
           tabBarButtonTestID: 'tab-bhakti',
@@ -142,7 +116,7 @@ export default function TabNavigator({
       <Tab.Screen
         name="PanchangTab"
         component={PanchangTabRoot}
-        initialParams={panchangInitialParams}
+        initialParams={initialParamsFor('PanchangTab')}
         options={{
           tabBarLabel: tabLabel('पंचांग', 'Panchang'),
           tabBarButtonTestID: 'tab-panchang',
@@ -165,6 +139,7 @@ export default function TabNavigator({
       <Tab.Screen
         name="MoreTab"
         component={MoreStackNavigator}
+        initialParams={initialParamsFor('MoreTab')}
         options={{
           tabBarLabel: tabLabel('अन्य', 'More'),
           tabBarButtonTestID: 'tab-more',

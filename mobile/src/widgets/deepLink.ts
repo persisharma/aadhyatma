@@ -3,8 +3,10 @@ import { findJapamMantra } from '@/data/japam';
 import { navigationRef } from '@/notifications/deepLink';
 import type { StartTarget } from '@/navigation/startTarget';
 
-/** Widget URLs resolve to the shared cold-start target shape (see `navigation/startTarget.ts`). */
-export type WidgetDeepLinkTarget = StartTarget;
+export type WidgetDeepLinkTarget =
+  | { kind: 'verse'; sourceId: string; verseIndex: number; chapter?: number }
+  | { kind: 'panchang'; dateMs: number }
+  | { kind: 'japam'; mantraId?: string };
 
 export function parseWidgetDeepLink(raw: string): WidgetDeepLinkTarget | null {
   try {
@@ -38,18 +40,34 @@ export function parseWidgetDeepLink(raw: string): WidgetDeepLinkTarget | null {
   return null;
 }
 
+/**
+ * The tab + params a parsed widget link names — the same `StartTarget` shape the
+ * notification taps resolve to (`navigation/startTarget.ts`). A cold widget URL
+ * becomes `TabNavigator`'s initial route through this; a warm one is dispatched
+ * as the same object below, so cold and warm links cannot drift.
+ */
+export function widgetStartTarget(target: WidgetDeepLinkTarget): StartTarget {
+  if (target.kind === 'verse') {
+    return {
+      name: 'DailyBhaktiTab',
+      params: { sourceId: target.sourceId, verseIndex: target.verseIndex, ...(target.chapter == null ? {} : { chapter: target.chapter }) },
+    };
+  }
+  if (target.kind === 'panchang') {
+    return { name: 'PanchangTab', params: { screen: 'PanchangHome', params: { dateMs: target.dateMs }, initial: false } };
+  }
+  // `initial: false` so the counter/library is pushed over Home in the Home
+  // stack rather than becoming its initial route (back must still reach Home).
+  if (target.mantraId) {
+    return { name: 'HomeTab', params: { screen: 'JapamCounter', params: { mantraId: target.mantraId }, initial: false } };
+  }
+  return { name: 'HomeTab', params: { screen: 'CategoryList', params: { categoryId: 'japam' }, initial: false } };
+}
+
 export function handleWidgetDeepLink(raw: string): boolean {
   const target = parseWidgetDeepLink(raw);
   if (!target || !navigationRef.isReady()) return false;
-  if (target.kind === 'verse') {
-    navigationRef.dispatch(CommonActions.navigate({ name: 'DailyBhaktiTab', params: { sourceId: target.sourceId, verseIndex: target.verseIndex, ...(target.chapter == null ? {} : { chapter: target.chapter }) } }));
-  } else if (target.kind === 'panchang') {
-    navigationRef.dispatch(CommonActions.navigate({ name: 'PanchangTab', params: { screen: 'PanchangHome', params: { dateMs: target.dateMs }, initial: false } }));
-  } else if (target.mantraId) {
-    navigationRef.dispatch(CommonActions.navigate({ name: 'HomeTab', params: { screen: 'JapamCounter', params: { mantraId: target.mantraId } } } as never));
-  } else {
-    navigationRef.dispatch(CommonActions.navigate({ name: 'HomeTab', params: { screen: 'CategoryList', params: { categoryId: 'japam' } } } as never));
-  }
+  navigationRef.dispatch(CommonActions.navigate(widgetStartTarget(target)));
   return true;
 }
 

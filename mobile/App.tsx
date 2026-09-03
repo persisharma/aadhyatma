@@ -48,7 +48,7 @@ import { AudioPlayerProvider } from '@/contexts/AudioPlayerContext';
 import { ReadAloudPrefsProvider } from '@/contexts/ReadAloudPrefsContext';
 import { ReadAloudProvider } from '@/contexts/ReadAloudContext';
 import {
-  coldStartTargetFromNotification,
+  startTargetFromNotification,
   handleNotificationResponse,
   navigationRef,
 } from '@/notifications/deepLink';
@@ -79,7 +79,7 @@ import { resetDerivedCachesIfBuildChanged } from '@/utils/derivedCacheReset';
 import { prefetchTodayPanchang } from '@/panchang/panchangLaunchPrefetch';
 import RootNavigator from '@/navigation/RootNavigator';
 import WidgetCoordinator from '@/widgets/WidgetCoordinator';
-import { handleWidgetDeepLink, parseWidgetDeepLink } from '@/widgets/deepLink';
+import { handleWidgetDeepLink, parseWidgetDeepLink, widgetStartTarget } from '@/widgets/deepLink';
 import { launchMark, launchMarkOnce } from '@/utils/launchTrace';
 
 SplashScreen.preventAutoHideAsync().catch(() => {
@@ -150,11 +150,12 @@ export default function App() {
 
   // Resolve the cold-start destination BEFORE mounting navigation. Two launch
   // sources can name one: a widget URL and the notification tap that launched
-  // the app. Otherwise the tab navigator commits its default Home route first,
-  // then an effect redirects to Daily Bhakti after Home has paid its mount cost
-  // — which is exactly how a notification tap used to "land on the homepage
-  // first". Both reads race the font gate under one bounded timeout, so
-  // ordinary launches do not gain another serial startup step.
+  // the app (every family — verse, vrat, muhurat, festive, routine, pitru,
+  // japam — resolves to its own screen). Otherwise the tab navigator commits
+  // its default Home route first, then an effect redirects after Home has paid
+  // its mount cost — which is exactly how a notification tap used to "land on
+  // the homepage first". Both reads race the font gate under one bounded
+  // timeout, so ordinary launches do not gain another serial startup step.
   useEffect(() => {
     let cancelled = false;
     let settled = false;
@@ -167,14 +168,17 @@ export default function App() {
     };
     const timeoutId = setTimeout(() => finish(null), INITIAL_TARGET_TIMEOUT_MS);
     const widgetTarget = Linking.getInitialURL()
-      .then((url) => (url?.startsWith('vedansh://widget/') ? parseWidgetDeepLink(url) : null))
+      .then((url) => {
+        const parsed = url?.startsWith('vedansh://widget/') ? parseWidgetDeepLink(url) : null;
+        return parsed ? widgetStartTarget(parsed) : null;
+      })
       .catch(() => null);
     const notificationTarget = Notifications.getLastNotificationResponseAsync()
       .then((response) =>
         // Snooze taps never navigate (see the cold-start handler below).
         response?.actionIdentifier === JAPAM_SNOOZE_ACTION_ID
           ? null
-          : coldStartTargetFromNotification(response)
+          : startTargetFromNotification(response)
       )
       .catch(() => null);
     // A widget URL wins outright and need not wait on the notification read.
