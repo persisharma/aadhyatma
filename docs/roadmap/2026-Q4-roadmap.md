@@ -55,9 +55,9 @@ sharing one bundle, held together by a strict design system and a 100 %-local ar
 | 22 | हवन · संस्कार विधि | Deferred by PRD-41 §10. |
 | 23 / 24 | भोग · नैवेद्य / वास्तु दिशा | **Shipped** (Aug 2026). |
 | 25 | सन्ध्या वन्दन | Reserved, no PRD. |
-| 26 | कण्ठस्थ · memorization | Candidate section + prototype; **no PRD file, not built.** |
+| 26 | कण्ठस्थ · memorization | Candidate section + prototype; PRD file written 3 Sep, **deferred** (§8), not built. |
 | 27 / 29 | शुभ योग / कुल परम्परा | **Shipped** (Aug 2026). |
-| 28 | पर्व-अर्क · festival arcs | Candidate section + prototype; **no PRD file, not built.** Diwali is inside Q4. |
+| 28 | पर्व-अर्क · festival arcs | Candidate section + prototype; PRD file written 3 Sep, **deferred** (§8), not built. Diwali is inside Q4; its pradosh day-rule fix stays on the Q4 debt line. |
 | 30 | Household roster | Retired by product decision. |
 | 31–40 | 2027 bets | Strategic parent; several need a backend. |
 | 41 | जिज्ञासा | Built (Phases 0–3). Phase 4 voice needs a store release. |
@@ -124,7 +124,7 @@ rooms of the day. PRD-04 proposed dark mode and a sleep timer in May; only the r
 shipped. `ThemeMode` still allows `'dark'` with no palette behind it; the japam loop, the bhajan
 player and read-aloud all run until stopped or the battery dies. The enrichment backlog has held
 these at the top of "quick wins" since June with the note "has design decisions". Those decisions
-are made in the PRD below. → **PRD-04 Phase 2**
+are made in the PRD below. → **PRD-04 Phase 2** (written up; deferred, §8)
 
 ---
 
