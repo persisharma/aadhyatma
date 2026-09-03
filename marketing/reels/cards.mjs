@@ -64,7 +64,7 @@ function ctaHtml({ cta, brandHi = 'ॐ वेदांश़ ॐ' }) {
     <div style="font-weight:500; font-size:40px; line-height:1.28; color:rgba(243,231,201,0.82); text-align:center; padding:0 110px; margin-top:26px;">${esc(cta)}</div>
     <div style="margin-top:64px; padding:22px 48px; border:1.5px solid ${C.saffron}; border-radius:60px;
                 font-family:'Inter',sans-serif; font-weight:600; font-size:34px; color:${C.saffron}; letter-spacing:1px;">↓  ${esc(SMART_LINK)}</div>
-    <div style="font-family:'Inter',sans-serif; font-weight:500; font-size:28px; color:rgba(243,231,201,0.6); margin-top:30px; letter-spacing:1px;">Free · iPhone &amp; Android · works offline</div>
+    <div style="font-family:'Inter',sans-serif; font-weight:500; font-size:28px; color:rgba(243,231,201,0.6); margin-top:30px; letter-spacing:1px;">Free · iPhone &amp; Android</div>
   </div>`;
   return pageShell(inner);
 }

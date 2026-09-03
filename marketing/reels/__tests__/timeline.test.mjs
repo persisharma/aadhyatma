@@ -1,64 +1,55 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { computeTimeline, beatActionMs, TIMING } from '../timeline.mjs';
+import { computeTimeline, beatCaptureDwell, TIMING } from '../timeline.mjs';
 
 const reel = {
   slug: 't',
+  hook: { en: 'hook', hi: 'हुक' },
   beats: [
-    { action: [{ tap: 'X' }], narration: { en: 'a', hi: 'अ' }, minHoldMs: 2800 },
-    { action: [], narration: { en: 'b', hi: 'ब' }, minHoldMs: 3200 }, // hold beat
+    { action: [{ tap: 'X' }], narration: { en: 'a', hi: 'अ' } },
+    { action: [], narration: { en: 'b', hi: 'ब' } },
     { action: [{ swipe: 'LEFT' }], narration: { en: 'c', hi: 'स' } },
   ],
 };
 
-test('beatActionMs: action vs hold', () => {
-  assert.equal(beatActionMs(reel.beats[0]), TIMING.EST_ACTION_MS);
-  assert.equal(beatActionMs(reel.beats[1]), TIMING.EST_HOLD_MS);
+test('beatCaptureDwell: floor vs vo+gap', () => {
+  assert.equal(beatCaptureDwell(500), TIMING.MIN_CAPTURE_DWELL_MS); // 500+gap < floor
+  assert.equal(beatCaptureDwell(5000), 5000 + TIMING.GAP_MS);
 });
 
-test('computeTimeline: floors, monotonic offsets, total is consistent', () => {
-  const durations = { hook: 2500, cta: 2000, beats: [1500, 2000, 1200] };
+test('cold-open: no intro card, hook at 0, continuous beats', () => {
+  const durations = { hook: 2000, cta: 1800, beats: [1500, 2000, 1200] };
   const tl = computeTimeline(reel, durations);
+  const G = TIMING.GAP_MS;
 
-  // intro floor: hook(2500)+TAIL(700)=3200 > MIN_INTRO(1800)
-  assert.equal(tl.introDur, 3200);
-  // cta floor: cta(2000)+TAIL(700)=2700 > MIN_CTA(2600)
-  assert.equal(tl.ctaDur, 2700);
+  assert.equal(tl.introDur, 0); // cold open — no intro card
+  assert.equal(tl.hook.voStart, 0);
+  assert.equal(tl.hook.voDur, 2000);
 
-  // beats start at introDur and are strictly increasing
-  assert.equal(tl.beats[0].segStart, tl.introDur);
+  // beat 0 starts right after the hook line (+ one gap)
+  assert.equal(tl.beats[0].voStart, 2000 + G);
+  // continuous: each line follows the previous by exactly its duration + one gap
   for (let i = 1; i < tl.beats.length; i++) {
-    assert.ok(tl.beats[i].segStart === tl.beats[i - 1].segEnd, 'segments are contiguous');
-    assert.ok(tl.beats[i].voStart > tl.beats[i - 1].voStart, 'VO offsets increase');
+    assert.equal(tl.beats[i].voStart, tl.beats[i - 1].voStart + tl.beats[i - 1].voDur + G);
   }
+  // captions ride the line exactly
+  assert.equal(tl.beats[0].captionStart, tl.beats[0].voStart);
+  assert.equal(tl.beats[0].captionEnd, tl.beats[0].voStart + tl.beats[0].voDur);
 
-  // VO always starts after the action and ends within the beat segment
-  for (const b of tl.beats) {
-    assert.ok(b.voStart >= b.segStart + b.action);
-    assert.ok(b.captionEnd <= b.segEnd + 1);
-  }
+  // appVideoDur = hook+gap + sum(vo+gap); everything overlays this one region
+  const expectApp = 2000 + G + (1500 + G) + (2000 + G) + (1200 + G);
+  assert.equal(tl.appVideoDur, expectApp);
 
-  // dwell honours the max(minHold, vo+tail) rule
-  assert.equal(tl.beats[0].dwell, 2800); // minHold 2800 > 1500+700=2200
-  assert.equal(tl.beats[2].dwell, 1200 + TIMING.TAIL_MS); // no minHold → vo+tail
+  // CTA card floors + sits at the end
+  assert.equal(tl.ctaDur, Math.max(TIMING.MIN_CTA_MS, 1800 + TIMING.CTA_LEAD_MS));
+  assert.equal(tl.cta.voStart, tl.appVideoDur);
+  assert.equal(tl.total, tl.appVideoDur + tl.ctaDur);
 
-  // total == intro + appVideo + cta, and appVideo == sum of (action+dwell)
-  const appSum = tl.beats.reduce((s, b) => s + b.action + b.dwell, 0);
-  assert.equal(tl.appVideoDur, appSum);
-  assert.equal(tl.total, tl.introDur + tl.appVideoDur + tl.ctaDur);
-  assert.equal(tl.cta.start, tl.introDur + tl.appVideoDur);
+  // capture-hold floor is independent of the (short) cut
+  assert.equal(tl.beats[2].dwell, TIMING.MIN_CAPTURE_DWELL_MS); // 1200+gap < floor
 });
 
 test('computeTimeline: rejects mismatched durations', () => {
   assert.throws(() => computeTimeline(reel, { hook: 1, cta: 1, beats: [1, 2] }), /entries/);
   assert.throws(() => computeTimeline(reel, { hook: 1, cta: 1 }), /beats/);
-});
-
-test('computeTimeline: single-beat + zero-duration edge case', () => {
-  const one = { beats: [{ action: [], narration: { en: 'x', hi: 'x' } }] };
-  const tl = computeTimeline(one, { hook: 0, cta: 0, beats: [0] });
-  assert.equal(tl.introDur, TIMING.MIN_INTRO_MS);
-  assert.equal(tl.ctaDur, TIMING.MIN_CTA_MS);
-  assert.equal(tl.beats[0].dwell, TIMING.TAIL_MS); // 0 vo + tail
-  assert.ok(tl.total > 0);
 });

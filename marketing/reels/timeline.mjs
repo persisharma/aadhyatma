@@ -1,31 +1,31 @@
 // timeline.mjs — PURE timing math for a reel. No I/O, fully unit-tested.
 //
-// Given a reel and the measured VO clip durations, compute the absolute timeline of the
-// finished video: intro card, per-beat app-video segments, and the CTA card.
-//
-// Model (see spec §3.1): the app footage is one continuous capture. Each beat = an action
-// (tap/swipe + settle) followed by a dwell during which its VO + caption play. We assume a
-// fixed action budget per beat; small real-vs-estimate drift stays well inside each multi-second
-// dwell, so the VO always lands while the correct screen is showing.
+// COLD-OPEN + CONTINUOUS-FLOW model (v3, Instagram-first):
+//  - NO branded intro card. The reel opens on live app footage in frame 0 with the HOOK as an
+//    on-screen caption + voice — so viewers see value instantly (a 3–4s intro card kills retention).
+//  - The narration runs line-to-line with only a tiny breath (no dead air); assemble.mjs time-scales
+//    the app footage to ride that continuous VO, so screens change *with* the words, like a reel.
+//  - Brand/CTA is a short card at the END only.
+// The hook + every beat are "lines" laid over one continuous app-video region [0 .. appVideoDur].
+// `dwell` is a capture-only floor (Maestro needs the screen to sit still to act); assemble
+// compresses the real capture down to appVideoDur.
 
 export const TIMING = {
-  TAIL_MS: 700, // trailing silence after a VO line, before the beat ends
-  MIN_INTRO_MS: 1800, // floor for the intro card
-  MIN_CTA_MS: 2600, // floor for the CTA card
-  EST_ACTION_MS: 1300, // assumed on-screen time for a beat's tap/swipe + settle
-  EST_HOLD_MS: 300, // assumed lead-in for a no-action ("hold") beat
+  GAP_MS: 150, // breath between lines — small, to keep narration continuous
+  MIN_CTA_MS: 2000, // short end card
+  CTA_LEAD_MS: 400, // pad after the CTA line on its card
+  MIN_CAPTURE_DWELL_MS: 2200, // per-beat capture-hold floor (reliability only, not the final cut)
 };
 
-/** Estimated pre-VO action time for a beat (ms). */
-export function beatActionMs(beat, t = TIMING) {
-  const hasAction = Array.isArray(beat.action) && beat.action.length > 0;
-  return hasAction ? t.EST_ACTION_MS : t.EST_HOLD_MS;
+/** Capture-hold floor for a beat (used only to generate the Maestro flow, not the final cut). */
+export function beatCaptureDwell(voDurMs, t = TIMING) {
+  return Math.max(t.MIN_CAPTURE_DWELL_MS, Math.round(voDurMs) + t.GAP_MS);
 }
 
 /**
  * @param reel      the reel definition ({ beats, ... })
  * @param durations { hook:ms, cta:ms, beats:[ms per beat] } — measured VO clip lengths
- * @returns { introDur, appVideoDur, ctaDur, total, hook, beats[], cta }  (all ms)
+ * @returns { introDur(=0), appVideoDur, ctaDur, total, hook, beats[], cta }  (all ms)
  */
 export function computeTimeline(reel, durations, t = TIMING) {
   if (!durations || !Array.isArray(durations.beats)) {
@@ -37,41 +37,37 @@ export function computeTimeline(reel, durations, t = TIMING) {
     );
   }
 
-  const introDur = Math.max(t.MIN_INTRO_MS, (durations.hook || 0) + t.TAIL_MS);
-  const ctaDur = Math.max(t.MIN_CTA_MS, (durations.cta || 0) + t.TAIL_MS);
+  const hookDur = durations.hook || 0;
+  // The hook overlays the opening app footage.
+  const hook = { voStart: 0, voDur: hookDur, captionStart: 0, captionEnd: hookDur };
 
   const beats = [];
-  let cursor = introDur; // absolute start of the app-video region
+  let cursor = hookDur + t.GAP_MS; // beats begin right after the hook line, over the same app video
   for (let i = 0; i < reel.beats.length; i++) {
-    const action = beatActionMs(reel.beats[i], t);
     const voDur = durations.beats[i] || 0;
-    const dwell = Math.max(reel.beats[i].minHoldMs || 0, voDur + t.TAIL_MS);
-    const segStart = cursor;
-    const voStart = cursor + action; // VO plays after the action settles
-    const segEnd = cursor + action + dwell;
+    const voStart = cursor;
     beats.push({
       index: i,
-      segStart,
-      segEnd,
-      action,
-      dwell,
+      segStart: cursor,
+      segEnd: cursor + voDur + t.GAP_MS,
       voStart,
       voDur,
       captionStart: voStart,
-      captionEnd: segEnd,
+      captionEnd: voStart + voDur,
+      dwell: beatCaptureDwell(voDur, t), // capture-only floor
     });
-    cursor = segEnd;
+    cursor += voDur + t.GAP_MS;
   }
 
-  const appVideoDur = cursor - introDur;
-  const total = cursor + ctaDur;
+  const appVideoDur = cursor; // hook + beats all ride this one continuous app region (no intro card)
+  const ctaDur = Math.max(t.MIN_CTA_MS, (durations.cta || 0) + t.CTA_LEAD_MS);
   return {
-    introDur,
+    introDur: 0, // cold open — no intro card
     appVideoDur,
     ctaDur,
-    total,
-    hook: { voStart: 0, voDur: durations.hook || 0 },
+    total: appVideoDur + ctaDur,
+    hook,
     beats,
-    cta: { start: cursor, voStart: cursor, voDur: durations.cta || 0 },
+    cta: { start: appVideoDur, voStart: appVideoDur, voDur: durations.cta || 0 },
   };
 }

@@ -124,11 +124,30 @@ link `https://persisharma.github.io/get-vedansh/` and the "Free · iPhone & Andr
 offline" line. Shared card code is extracted into `marketing/reels/cards/` so both kits can
 converge later, but v1 simply copies to avoid coupling.
 
-### 3.5 Storytelling arc
+### 3.5 Storytelling arc & authoring rules (updated 2026-08-23)
 Every script follows: **Hook** (a felt need in the first 3s) → **Turn** (enter Vedansh) →
-**Reveal** (the feature shown live, 2–4 beats) → **Payoff** (the spiritual/emotional benefit)
-→ **CTA**. Target 20–40s. Authored in both hi + en with parallel meaning (not literal
-translation — each reads naturally in its language).
+**Reveal** (the feature shown live) → **Payoff** (the spiritual/emotional benefit) → **CTA**.
+
+House rules (apply to EVERY reel):
+1. **Storytelling, not feature-telling.** Warm, devotional, second-person narration — a felt
+   need gently met. Never "the app does X / has feature Y." The app is the quiet thread.
+2. **Hindi-first for a Hindi audience.** The `hi` copy is primary and polished; `en` is a
+   faithful parallel. Reels render `--lang hi` by default.
+3. **No marketing/utility claims** — never say "free / नि:शुल्क / offline / बिना इंटरनेट /
+   works offline", price, or cross-platform tags in narration, captions, or cards.
+4. **Length ~20–30s (tight).** Aim 3–4 beats + short hook/CTA cards; ≤ ~35s hard ceiling.
+   XTTS/Eleven Hindi pacing runs long, so keep lines crisp (≤ ~5-word captions).
+5. **Coverage: 2–3 reels per feature is fine — but only the best.** Multiple *angles/hooks*
+   per topic (e.g. a Vrat "kathas" reel and a Vrat "reminders" reel) beat one bloated reel.
+   Quality over count; cut any beat that doesn't earn its seconds. (This supersedes the strict
+   one-reel-per-feature line in §2.)
+6. **Felt-need/utility hooks welcome** where they're the strongest pull — e.g. "अपना व्रत
+   चुनिए, चुनी हुई तिथि पर याद अपने आप" (choose your vrat, get reminded on your date).
+7. **Voice = the brand voice** (`viraj`). ElevenLabs (paid) for published/commercial cuts;
+   local XTTS-v2 clone (`--tts xtts`, from `refs/viraj.wav`) for free previews — note its
+   **non-commercial** license, so don't publish the XTTS cut commercially.
+
+Authored in both hi + en with parallel meaning (not literal translation).
 
 ### 3.6 Language / accessibility constraint (documented decision)
 Maestro matches the **English accessibility tree**; Devanagari labels are unreliable
@@ -237,8 +256,27 @@ The remaining 16 scripts follow the same table shape and arc; they are authored 
   Expo Go; those reels may need a **dev build** on the sim (flag per reel; noted in the plan).
 - **Sim recording resolution ≠ 1080×1920** — always scale+pad in `assemble.ts`; never assume.
 - **Back-to-back Maestro runs flake** — batch mode reboots/relaunches Expo Go between reels
-  (per the `maestro-e2e-workflow` note).
+  (per the `maestro-e2e-workflow` note). The XCUITest driver also dies (`Connection refused` on
+  its port) after ~8 flows in a session → `simctl shutdown && boot` to get a fresh driver.
 - **Secrets** — `OPENAI_API_KEY` is read from env only; never logged, echoed, or committed.
+
+### 8.1 Implemented refinements (as-built, supersede the §3.3 sketch)
+- **Per-beat capture, not one `raw.mov`** — each beat is recorded as its OWN clip and `assemble`
+  time-scales each to exactly its caption window, then concats. Uniform-scaling a single
+  continuous capture drifts captions off their screens whenever beats carry uneven navigation
+  weight (a 1-tap beat vs. an 8-tap "go to My Vrat" beat). Beat i+1 resumes where beat i left off
+  (`launchApp: {stopApp:false}`); only beat 0 asserts Home.
+- **simctl records VARIABLE frame-rate** — a static dwell records ~no frames, so a per-beat clip's
+  dwell *tail* has none. In `assemble`, apply `fps=30` FIRST (VFR→CFR, clones the held frame across
+  the dwell) so the clip's full duration survives; trim via the `trim` filter, never an `-ss` INPUT
+  seek (it corrupts frame timing on these sparse clips). `tpad`+`-t` then pin each seg to its slot.
+- **Dwell-hold must not dismiss bottom sheets** — the dwell is a tiny hold-swipe; the default at
+  `(50%,8%)` is the dimmed backdrop above a bottom sheet and dismisses it. Beats that end on a
+  sheet set `holdSwipe` to hold *inside* the sheet, dragging **up** (never the down/handle gesture).
+- **Home-ready anchor is language-stable** — wait on `CATEGORIES` (English on Home in both langs),
+  not the localized "Good Habits" heading (which vanishes after the Hindi language switch).
+- **Cold open, no intro card** — the reel opens on live app footage in frame 0 with the hook as an
+  overlay; a warm-frame (chroma) trim drops the launch/springboard prefix, guarded post-render.
 
 ## 9. Doc-sync note
 This is **marketing tooling**, not a user-facing app surface, so the `design-doc-sync`

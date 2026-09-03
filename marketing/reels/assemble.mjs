@@ -24,8 +24,8 @@ function probeDurSec(file) {
   return parseFloat(out) || 0;
 }
 
-/** First scene change after `minSec` — the app's first navigation, i.e. the end of the dead prefix. */
-function detectContentStartSec(file, minSec = 3) {
+/** First scene change after `minSec` (fallback detector). */
+function detectSceneChangeSec(file, minSec) {
   try {
     const out = execFileSync(
       FFMPEG,
@@ -37,11 +37,38 @@ function detectContentStartSec(file, minSec = 3) {
       if (t >= minSec) return t;
     }
   } catch {}
-  return minSec; // fallback
+  return minSec;
 }
 
 /**
- * @param inputs  { rawMov, intro, cta, captions:[{png,startMs,endMs}], voice:{hook,beats[],cta}, music? }
+ * End of the app-launch prefix = the first sustained "warm" (app cream/saffron) frame.
+ * The iOS springboard + splash read BLUE (chroma UAVG > VAVG); the Vedansh app reads WARM
+ * (VAVG > UAVG). Trimming to the first warm frame reliably drops the launch screens from the cold
+ * open — the correct fix vs "first scene change", which can land mid-springboard. Falls back to
+ * scene-change, then `minSec`. This is the guard that keeps launch screens out of every reel.
+ */
+function detectContentStartSec(file, minSec = 1) {
+  try {
+    const out = execFileSync(
+      FFMPEG,
+      ['-hide_banner', '-i', file, '-vf', "select='not(mod(n,10))',signalstats,metadata=print:file=-", '-f', 'null', '-'],
+      { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 1 << 27 },
+    );
+    const rows = [];
+    const re = /pts_time:([0-9.]+)[\s\S]*?UAVG=([0-9.]+)[\s\S]*?VAVG=([0-9.]+)/g;
+    let m;
+    while ((m = re.exec(out))) rows.push({ t: +m[1], u: +m[2], v: +m[3] });
+    for (let i = 0; i < rows.length; i++) {
+      const r = rows[i];
+      const sustained = i + 1 >= rows.length || rows[i + 1].v > rows[i + 1].u;
+      if (r.t >= minSec && r.v > r.u + 4 && sustained) return Math.max(0, r.t - 0.1);
+    }
+  } catch {}
+  return detectSceneChangeSec(file, Math.max(minSec, 3));
+}
+
+/**
+ * @param inputs  { clips:[mov per beat], intro, cta, captions:[{png,startMs,endMs}], voice:{hook,beats[],cta}, music? }
  * @param timeline output of computeTimeline
  * @param outFile  final mp4 path
  * @param opts     { workDir, keep }
@@ -53,46 +80,62 @@ export function assemble(inputs, timeline, outFile, opts = {}) {
   const base = path.join(work, 'base.mp4');
   const audio = path.join(work, 'audio.m4a');
 
-  // ── Pass A: trim the dead startup prefix, then time-scale the app footage to EXACTLY
-  // appVideoDur so the beats line up with the VO. Maestro's per-command overhead makes the raw
-  // capture much longer than planned; speeding up the (mostly static) reading screens is
-  // visually invisible and keeps every screen in the reel. ──
-  const rawDur = probeDurSec(inputs.rawMov);
-  const trimStart = LEAD_TRIM_OVERRIDE != null ? LEAD_TRIM_OVERRIDE : detectContentStartSec(inputs.rawMov);
-  const effective = Math.max(1, rawDur - trimStart);
-  const ratio = effective / (timeline.appVideoDur / 1000); // >1 → speed up
-  console.log(`    app footage: raw ${rawDur.toFixed(1)}s, trim@${trimStart.toFixed(1)}s → fit ${(timeline.appVideoDur/1000).toFixed(1)}s (×${ratio.toFixed(2)})`);
-  run([
-    '-ss', String(trimStart),
-    '-i', inputs.rawMov,
-    '-an',
-    '-vf',
-      `scale=${W}:${H}:force_original_aspect_ratio=decrease,` +
-      `pad=${W}:${H}:(ow-iw)/2:(oh-ih)/2:color=${PAD},` +
-      `setpts=PTS/${ratio.toFixed(4)},fps=${FPS},setsar=1,` +
-      `tpad=stop_mode=clone:stop_duration=600`,
-    '-t', ms(timeline.appVideoDur),
-    '-c:v', 'libx264', '-pix_fmt', 'yuv420p', app,
-  ]);
+  // ── Pass A: per-beat trim + time-scale. Each beat was recorded as its OWN clip; scale each to
+  // EXACTLY its caption window (outDurs[i]) and concat → app.mp4. This keeps every beat's footage
+  // under its own VO/caption — uniform-scaling one continuous capture drifts them whenever beats
+  // carry uneven navigation weight (a 1-tap beat vs. an 8-tap "go to My Vrat" beat). Maestro's
+  // per-command overhead makes each clip longer than its slot; speeding up the (mostly static)
+  // screens is visually invisible and keeps every screen in the reel. ──
+  // Per-beat output ms; beat 0 also carries the hook time (segStart 0). Σ = appVideoDur.
+  const outDurs = timeline.beats.map((b, i) => (i === 0 ? b.segEnd : b.segEnd - b.segStart));
+  const segFiles = [];
+  inputs.clips.forEach((clip, i) => {
+    const clipDur = probeDurSec(clip);
+    // Beat 0 opens the reel → trim to the first warm app frame (drops any launch/settle screen).
+    // Later beats resume on live app content, so just shave the short foreground blip.
+    const trimStart = i === 0
+      ? (LEAD_TRIM_OVERRIDE != null ? LEAD_TRIM_OVERRIDE : detectContentStartSec(clip))
+      : (clipDur > 1 ? 0.2 : 0); // never trim a short/glitched clip down to nothing
+    const effective = Math.max(0.3, clipDur - trimStart);
+    const outSec = outDurs[i] / 1000;
+    const ratio = effective / outSec; // >1 → speed up
+    const seg = path.join(work, `appseg${i}.mp4`);
+    console.log(`    beat ${i}: clip ${clipDur.toFixed(1)}s, trim@${trimStart.toFixed(1)}s → ${outSec.toFixed(1)}s (×${ratio.toFixed(2)})`);
+    // `simctl recordVideo` clips are VARIABLE-frame-rate — a static dwell records almost no frames,
+    // so its tail has none. `fps=${FPS}` FIRST converts VFR→CFR, cloning the held frame across the
+    // dwell so the full clip duration survives (a per-beat clip ends on its dwell, so without this
+    // the dwell is dropped and the seg comes out short). Trim via the filter — an `-ss` INPUT seek
+    // corrupts frame timing on these sparse clips. tpad + `-t` then pin the seg to exactly outDur.
+    run([
+      '-i', clip,
+      '-an',
+      '-vf',
+        `scale=${W}:${H}:force_original_aspect_ratio=decrease,` +
+        `pad=${W}:${H}:(ow-iw)/2:(oh-ih)/2:color=${PAD},` +
+        `fps=${FPS},trim=start=${trimStart.toFixed(3)},setpts=(PTS-STARTPTS)/${ratio.toFixed(4)},setsar=1,` +
+        `tpad=stop_mode=clone:stop_duration=600`,
+      '-t', ms(outDurs[i]),
+      '-c:v', 'libx264', '-pix_fmt', 'yuv420p', seg,
+    ]);
+    segFiles.push(seg);
+  });
+  const concatList = path.join(work, 'appconcat.txt');
+  fs.writeFileSync(concatList, segFiles.map((f) => `file '${f}'`).join('\n') + '\n');
+  run(['-f', 'concat', '-safe', '0', '-i', concatList, '-c:v', 'libx264', '-pix_fmt', 'yuv420p', app]);
 
-  // ── Pass B: intro + app + cta, then overlay caption PNGs at their cue times ──
+  // ── Pass B: cold open — app first (hook overlays it), then a short CTA card. No intro card. ──
   const caps = inputs.captions || [];
-  const bIn = [
-    '-loop', '1', '-t', ms(timeline.introDur), '-i', inputs.intro,
-    '-i', app,
-    '-loop', '1', '-t', ms(timeline.ctaDur), '-i', inputs.cta,
-  ];
-  caps.forEach((c) => bIn.push('-i', c.png)); // caption inputs are 3, 4, …
+  const bIn = ['-i', app, '-loop', '1', '-t', ms(timeline.ctaDur), '-i', inputs.cta];
+  caps.forEach((c) => bIn.push('-i', c.png)); // caption inputs are 2, 3, …
 
   const fc = [
-    `[0:v]scale=${W}:${H},fps=${FPS},setsar=1[i]`,
-    `[1:v]setsar=1[a]`,
-    `[2:v]scale=${W}:${H},fps=${FPS},setsar=1[c]`,
-    `[i][a][c]concat=n=3:v=1:a=0[bv]`,
+    `[0:v]setsar=1[a]`,
+    `[1:v]scale=${W}:${H},fps=${FPS},setsar=1[c]`,
+    `[a][c]concat=n=2:v=1:a=0[bv]`,
   ];
   let last = '[bv]';
   caps.forEach((c, k) => {
-    const inLabel = `[${3 + k}:v]`;
+    const inLabel = `[${2 + k}:v]`;
     const outLabel = k === caps.length - 1 ? '[vout]' : `[v${k}]`;
     fc.push(`${last}${inLabel}overlay=0:0:enable='between(t,${ms(c.startMs)},${ms(c.endMs)})'${outLabel}`);
     last = outLabel;
@@ -139,6 +182,20 @@ export function assemble(inputs, timeline, outFile, opts = {}) {
     outFile,
   ]);
 
-  if (!opts.keep) for (const f of [app, base, audio]) { try { fs.rmSync(f); } catch {} }
+  // Safety net: a reel must open on app content, never the iOS launch/springboard (blue).
+  try {
+    const s = execFileSync(
+      FFMPEG,
+      ['-hide_banner', '-ss', '0.4', '-i', outFile, '-frames:v', '1', '-vf', 'signalstats,metadata=print:file=-', '-f', 'null', '-'],
+      { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] },
+    );
+    const u = +(s.match(/UAVG=([0-9.]+)/)?.[1] || 0);
+    const v = +(s.match(/VAVG=([0-9.]+)/)?.[1] || 0);
+    if (u > v) {
+      console.log(`  ⚠ WARNING: reel opens on a blue/launch-looking frame (UAVG ${u.toFixed(0)} > VAVG ${v.toFixed(0)}). The trim may have leaked the app-launch screen — set REEL_LEAD_TRIM_MS or check detectContentStartSec.`);
+    }
+  } catch {}
+
+  if (!opts.keep) for (const f of [app, base, audio, concatList, ...segFiles]) { try { fs.rmSync(f); } catch {} }
   return outFile;
 }

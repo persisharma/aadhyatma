@@ -77,14 +77,14 @@ function runFlow(flow) {
 }
 
 /**
- * @param flows { prep, beats } yaml paths
- * @returns raw .mov path
+ * @param flows { prep, beats: string[] } — prep + one recorded flow per beat
+ * @returns string[] — one raw .mov clip per beat (assemble scales each to its caption window)
  */
 export async function capture(reel, lang, flows, outDir) {
   fs.mkdirSync(outDir, { recursive: true });
   const metroLog = path.join(outDir, '.metro.log');
-  const rawMov = path.join(outDir, `${reel.slug}.${lang}.raw.mov`);
-  if (fs.existsSync(rawMov)) fs.rmSync(rawMov);
+  const clips = flows.beats.map((_, i) => path.join(outDir, `${reel.slug}.${lang}.beat${i}.mov`));
+  for (const c of clips) if (fs.existsSync(c)) fs.rmSync(c);
 
   if (IS_NATIVE) {
     console.log(`  native build (${APP_ID}) — no Metro/Expo Go/seed needed`);
@@ -105,25 +105,30 @@ export async function capture(reel, lang, flows, outDir) {
   console.log('  prep flow (launch + land on Home)…');
   runFlow(flows.prep);
 
-  console.log('  recording beats flow → ' + path.basename(rawMov));
-  const rec = spawn('xcrun', ['simctl', 'io', 'booted', 'recordVideo', '--codec=h264', '--force', rawMov], {
-    stdio: 'ignore',
-  });
-  await sleep(1500); // let the recorder attach before the first action
-
-  try {
-    runFlow(flows.beats);
-  } finally {
-    await sleep(600);
-    rec.kill('SIGINT'); // simctl finalizes the file on SIGINT
-    await new Promise((resolve) => rec.on('close', resolve));
+  // Record each beat as its own clip. Beat i+1 resumes where beat i left off (its flow foregrounds
+  // with stopApp:false), so the app must stay on-screen between the separate `maestro test` runs —
+  // which it does (Maestro doesn't reset the app on flow exit, same as the prep→beats handoff).
+  for (let i = 0; i < flows.beats.length; i++) {
+    const clip = clips[i];
+    console.log(`  recording beat ${i} → ${path.basename(clip)}`);
+    const rec = spawn('xcrun', ['simctl', 'io', 'booted', 'recordVideo', '--codec=h264', '--force', clip], {
+      stdio: 'ignore',
+    });
+    await sleep(1600); // let the recorder attach before the first action (avoids 0-frame clips)
+    try {
+      runFlow(flows.beats[i]);
+    } finally {
+      await sleep(700);
+      rec.kill('SIGINT'); // simctl finalizes the file on SIGINT
+      await new Promise((resolve) => rec.on('close', resolve));
+    }
+    if (!fs.existsSync(clip) || fs.statSync(clip).size === 0) {
+      throw new Error('recordVideo produced no output: ' + clip);
+    }
+    console.log(`    beat ${i}: ${(fs.statSync(clip).size / 1e6).toFixed(1)} MB`);
   }
+
   statusBar(false);
   try { sh(`xcrun simctl terminate booted ${APP_ID}`); } catch {}
-
-  if (!fs.existsSync(rawMov) || fs.statSync(rawMov).size === 0) {
-    throw new Error('recordVideo produced no output: ' + rawMov);
-  }
-  console.log('  captured ' + (fs.statSync(rawMov).size / 1e6).toFixed(1) + ' MB');
-  return rawMov;
+  return clips;
 }

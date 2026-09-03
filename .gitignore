@@ -33,3 +33,7 @@ marketing/reels/flows/
 marketing/reels/music/
 marketing/reels/out/
 marketing/reels/**/*.mov
+
+# Reel XTTS voice-clone (local ML env + provided voice refs) — regenerable/large
+marketing/reels/.venv-xtts/
+marketing/reels/refs/

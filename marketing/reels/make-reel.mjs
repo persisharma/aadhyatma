@@ -4,7 +4,7 @@
 //   node make-reel.mjs sanskar --lang en
 //   node make-reel.mjs sanskar --lang hi --tts openai
 //   node make-reel.mjs sanskar --lang en --music music/bansuri.mp3
-//   node make-reel.mjs sanskar --lang en --reuse-capture   # skip the sim, reuse the last raw.mov
+//   node make-reel.mjs sanskar --lang en --reuse-capture   # skip the sim, reuse the last beat clips
 //
 // Stages: preflight → narrate → timeline → cards → flows → capture → captions → assemble.
 
@@ -75,17 +75,18 @@ async function main() {
   const flows = writeFlows(reel, args.lang, timeline, flowsDir);
 
   console.log('⑥ capture');
-  const rawMov = path.join(workDir, `${reel.slug}.${args.lang}.raw.mov`);
-  if (args.reuseCapture && fs.existsSync(rawMov)) {
-    console.log('  reusing ' + path.basename(rawMov));
+  const clipPaths = reel.beats.map((_, i) => path.join(workDir, `${reel.slug}.${args.lang}.beat${i}.mov`));
+  let clips;
+  if (args.reuseCapture && clipPaths.every((c) => fs.existsSync(c))) {
+    console.log('  reusing ' + clipPaths.length + ' beat clip(s)');
+    clips = clipPaths;
   } else {
-    const captured = await capture(reel, args.lang, flows, workDir);
-    if (captured !== rawMov) fs.copyFileSync(captured, rawMov);
+    clips = await capture(reel, args.lang, flows, workDir);
   }
 
   console.log('⑦ assemble');
   assemble(
-    { rawMov, intro: cards.intro, cta: cards.cta, captions, voice: nar.files, music: args.music },
+    { clips, intro: cards.intro, cta: cards.cta, captions, voice: nar.files, music: args.music },
     timeline, outFile,
     { workDir, keep: args.keep },
   );

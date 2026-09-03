@@ -16,13 +16,19 @@ const FONTS = `
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-/** PURE: which caption text shows when. Absolute ms times from the timeline. */
+/** PURE: which caption text shows when. Absolute ms times from the timeline. Cold-open: the hook
+ * is the first on-screen line (over live footage), then each beat. */
 export function captionCues(timeline, reel, lang) {
-  return timeline.beats.map((b, i) => {
+  const cues = [];
+  if (reel.hook && timeline.hook) {
+    cues.push({ index: 'hook', text: reel.hook[lang], startMs: timeline.hook.captionStart, endMs: timeline.hook.captionEnd, hook: true });
+  }
+  timeline.beats.forEach((b, i) => {
     const beat = reel.beats[i];
     const text = (beat.caption && beat.caption[lang]) || beat.narration[lang];
-    return { index: i, text, startMs: b.captionStart, endMs: b.captionEnd };
+    cues.push({ index: i, text, startMs: b.captionStart, endMs: b.captionEnd });
   });
+  return cues;
 }
 
 function captionHtml(text, lang) {
