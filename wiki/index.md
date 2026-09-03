@@ -6,7 +6,7 @@
 ## Reference Docs (in place — not copied into the wiki)
 - [`RULEBOOK.md`](../RULEBOOK.md) — integration contract for adding a content section.
 - [`design.md`](../design.md) — visual system spec (tokens, type scale, romanization rules).
-- [`docs/roadmap/`](../docs/roadmap/) — Q3 2026 roadmap + PRDs 01–07.
+- [`docs/roadmap/`](../docs/roadmap/) — Q3 2026 roadmap, the Q4 candidate slates (rounds 1–2), the [Q4 2026 roadmap](../docs/roadmap/2026-Q4-roadmap.md) (feature review + slate: PRD-42 backup/restore, PRD-28 festival arcs, PRD-26 memorization, PRD-04 P2 dark theme/sleep timer, PRD-43 world locations), and PRDs 01–43.
 - [`docs/superpowers/`](../docs/superpowers/) — deity-icon plan + design spec.
 - [`docs/content-parity/chalisa-aarti-existing-deities.md`](../docs/content-parity/chalisa-aarti-existing-deities.md) — source-candidate manifest for Chalisa/Aarti parity using only existing deity ids.
 - [`docs/content-parity/other-content-existing-deities.md`](../docs/content-parity/other-content-existing-deities.md) — full non-Chalisa/Aarti parity benchmark and acquisition waves for the existing deity taxonomy.

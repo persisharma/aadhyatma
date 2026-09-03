@@ -6,7 +6,25 @@ This folder holds the product roadmap and PRDs for upcoming releases.
 
 - [**Q3 2026 Roadmap**](./2026-Q3-roadmap.md) — Jul–Sep 2026
 
-## Next
+## Next quarter — Q4 2026 (Oct–Dec)
+
+- [**Q4 2026 Roadmap**](./2026-Q4-roadmap.md) — authored 3 Sep 2026 against app 1.5.0. §1 is a full
+  review of every shipped feature by domain; §2 audits where the app still loses or misleads a loyal
+  user; §3 is the slate. Five PRDs, one store release (1.6.0, live before Dhanteras):
+
+  | ID | Title | Solves | Ships as |
+  |---|---|---|---|
+  | [PRD-42](./prds/42-sanchay-backup-restore.md) | **संचय · Backup & Restore** — registry over every user-state key, one exporter, one importer with preview; absorbs PRD-29's export, supersedes PRD-06's backup third | ~40 keys of practice, people and family record die with the phone | Store 1.6.0 (`expo-document-picker`) |
+  | [PRD-28](./prds/28-parv-arc-festival-arcs.md) | **पर्व-अर्क · Festival arcs** — sthapana → visarjan over existing rules, family-chosen duration, arc strip + Today chip; Navratri, Diwali-5, Chhath-4, Dev Uthani → Tulsi Vivah | "what do we do today, what is left" in the densest festival quarter | OTA, two drops (9 Oct · 1 Nov) |
+  | [PRD-26](./prds/26-kanthastha-memorization.md) | **कण्ठस्थ · अभ्यास mode** — akshara-wise masking on every reader, self-marked recall, spaced review, audio-cue via read-aloud, `RoutineItemKind: 'memorize'` | no way to check you know a verse | OTA |
+  | [PRD-04 P2](./prds/04-reading-comfort-phase2-dark-sleep.md) | **रात्रि पाठ · Dark theme + sleep timer** — completes PRD-04 | pre-dawn and evening use on a bright parchment; audio that never stops | OTA (System option rides 1.6.0) |
+  | [PRD-43](./prds/43-pravasi-world-locations.md) | **प्रवासी · Vedansh beyond India** — P0 honest outside-India state, P1 world-city tier with IANA zones and zone-aware civil days; P2 (Q1 2027) birth abroad + widgets | every user outside India is silently served an Indian location | P0/P1 OTA · P2 store |
+
+  Reserved by the roadmap: **PRD-44** सङ्कल्प composer (round 1's candidate, re-numbered — 20 was taken
+  by the horoscope work), **PRD-45** more reading scripts (Telugu · Bengali · Odia · Malayalam via the
+  gu/kn pipeline). Both Q1 2027.
+
+## Q4 flagship (built)
 
 - [**PRD-41 — जिज्ञासा · Ask Vedansh**](./prds/41-jijnasa-ask-vedansh.md) — **Q4 2026 flagship; Phases 0–3 built 2026-09-02 (§14 build record).** Numbered 41 because 25 stays reserved for सन्ध्या वन्दन (round 1 §3), 26–29 are round-2 reservations, 30 is retired and 31–40 are the 2027 feature bets.
   An on-device, deterministic answer engine over the engines the app already ships, so the computed
