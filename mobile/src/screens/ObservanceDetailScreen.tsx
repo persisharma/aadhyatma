@@ -5,12 +5,14 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ObservanceDetailHero from '@/components/ObservanceDetailHero';
+import BhogGuidancePanel from '@/components/BhogGuidancePanel';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { getKathaContent } from '@/panchang/kathaContent';
 import { getUpvasInfo } from '@/panchang/upvasContent';
+import { getBhogContent } from '@/panchang/bhogContent';
 import { useUpvasParana } from '@/panchang/useUpvasParana';
 import { formatClock, formatRangeCompact, formatEndInstant, isSameLocalDay } from '@/panchang/muhuratFormat';
 import { getNextOccurrence, getRuleById } from '@/panchang/vratCatalog';
@@ -60,7 +62,7 @@ function fastTypeLabel(fastType: UpvasFastType, lang: Lang): string {
     case 'phalahar':
       return contentByLang(lang, 'फलाहार', 'Phalahar');
     case 'one-meal':
-      return contentByLang(lang, 'एक भुक्त', 'One meal');
+      return contentByLang(lang, 'एक समय भोजन', 'One meal');
     case 'night-vigil':
       return contentByLang(lang, 'रात्रि जागरण', 'Night vigil');
   }
@@ -83,6 +85,9 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
   // Verified fasting facts only — a draft entry resolves to null, so the
   // section stays absent with zero status logic here (PRD-09/P4 §8).
   const upvas = rule?.upvasId ? getUpvasInfo(rule.upvasId) : null;
+  // PRD-23 follows the same verified-only contract as upvas content. Draft
+  // food guidance never produces a placeholder or review-status UI.
+  const bhog = rule?.bhogId ? getBhogContent(rule.bhogId) : null;
   const { location } = usePanchangLocation();
   // The derived parana date/time line (null for text-only kinds, while the
   // solve is in flight, or on an honest derivation miss — text renders alone).
@@ -212,6 +217,33 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                 </Pressable>
               )}
             </View>
+            {/* जिज्ञासा ask-from-context (PRD-41 Phase 3): the question box opens
+                seeded with THIS observance, so "iska bhog kya hai" / "kaise kare"
+                resolve against it without the user naming it again. Search lives
+                on the Home stack, hence the cross-tab hand-off. */}
+            <Pressable
+              onPress={() =>
+                rootNav.navigate('HomeTab', {
+                  screen: 'Search',
+                  params: { seed: { type: 'observance', id: rule.id } },
+                })
+              }
+              accessibilityRole="button"
+              accessibilityLabel={`Ask about ${rule.nameEn}`}
+              style={({ pressed }) => [
+                styles.askRow,
+                { borderColor: colors.divider, borderRadius: radii.pill, backgroundColor: colors.parchmentSoft },
+                pressed && { opacity: 0.8 },
+              ]}
+            >
+              <Text style={{ fontSize: 14, color: colors.saffron }}>⌕</Text>
+              <Text style={{ flex: 1, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.inkSoft }}>
+                {contentByLang(lang, 'इस व्रत के बारे में पूछें — कैसे करें, क्या खाएँ, कथा…', 'Ask about this observance — how, what to eat, katha…')}
+              </Text>
+              <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 12, color: colors.saffronDeep }}>
+                {contentByLang(lang, 'पूछें', 'Ask')}
+              </Text>
+            </Pressable>
             {justAdded && (
               <Pressable
                 onPress={() => navigation.navigate('MyVrat')}
@@ -442,6 +474,14 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                 )}
               </View>
             )}
+            {bhog && (
+              <View style={styles.block}>
+                <Text style={[styles.blockHeading, { color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily) }]}>
+                  {contentByLang(lang, 'भोग · नैवेद्य · भोजन', 'Offerings & food')}
+                </Text>
+                <BhogGuidancePanel entry={bhog} testID="observance-bhog-panel" />
+              </View>
+            )}
           </ScrollView>
         )}
       </SafeAreaView>
@@ -459,6 +499,7 @@ const styles = StyleSheet.create({
   heroTags: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   pill: { paddingHorizontal: 10, paddingVertical: 4 },
   actionRow: { flexDirection: 'row', gap: 8, marginTop: 4, marginBottom: 4 },
+  askRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 8, marginBottom: 4, paddingHorizontal: 14, minHeight: 40, borderWidth: 1 },
   actionBtn: { flex: 1, minHeight: 40, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 14, borderWidth: 1.5 },
   confirmBar: { flexDirection: 'row', alignItems: 'center', borderWidth: 1, paddingHorizontal: 12, paddingVertical: 9, marginTop: 8 },
   block: { marginTop: 18 },

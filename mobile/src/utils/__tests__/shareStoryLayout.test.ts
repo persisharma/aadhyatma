@@ -62,19 +62,33 @@ describe('placeStoryCard', () => {
     // Centring in the canvas instead would push the card's branding footer down
     // under the Reel caption strip, so the two centres must NOT coincide.
     expect(place.top + place.height / 2).not.toBeCloseTo(storyCanvas.height / 2, 1);
+    expect(place.top).toBe(storySafeInsets.top);
   });
 
-  test('uses the space it has — the card is not needlessly small', () => {
+  test('the shipped card fits at 1:1 — nothing is transformed', () => {
+    // The insets exist to make this true. If it ever fails, the capture starts
+    // carrying a scale transform, which is the thing §39.3 set out to avoid.
+    expect(place.scale).toBe(1);
+    expect(place.width).toBe(CARD_WIDTH);
+    expect(place.height).toBe(CARD_HEIGHT);
+  });
+
+  test('the card fills the safe band exactly, with no horizontal inset', () => {
     const safe = storySafeBox();
-    // Width-constrained at the shipped sizes: the card should fill the safe width.
-    expect(place.width).toBeCloseTo(safe.width, 5);
-    expect(place.height).toBeLessThanOrEqual(safe.height);
+    expect(place.width).toBe(safe.width);
+    expect(place.height).toBe(safe.height);
+    expect(place.left).toBe(0);
   });
 
-  test('a card taller than the safe box is height-constrained instead', () => {
+  test('a card that outgrows the band scales down rather than overflowing', () => {
     const tall = placeStoryCard(100, 10000);
     const safe = storySafeBox();
     expect(tall.height).toBeCloseTo(safe.height, 5);
     expect(tall.width).toBeLessThanOrEqual(safe.width);
+    expect(tall.scale).toBeLessThan(1);
+  });
+
+  test('never scales a small card UP to fill the band', () => {
+    expect(placeStoryCard(100, 100).scale).toBe(1);
   });
 });

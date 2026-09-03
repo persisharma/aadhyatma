@@ -29,6 +29,7 @@ import { meaningToken, scriptBodyFont, scriptTitleFont } from '@/utils/langType'
 import { getVidhiById, type VidhiPhase, type VidhiStep } from '@/data/vidhi';
 import { clearConductStep, saveConductStep, vidhiDateKey } from '@/data/vidhi/checklistStore';
 import { library } from '@/data/texts';
+import { gitaChaptersManifest } from '@/data/gita';
 import { getKathaContent } from '@/panchang/kathaContent';
 import { buildEntryStartTarget, navigateToHomeStackTarget } from '@/navigation/entryRoutes';
 import ReaderHeader from '@/components/ReaderHeader';
@@ -87,20 +88,21 @@ type ConductPage =
 export default function VidhiConductScreen({ navigation, route }: Props) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
+  const vidhi = getVidhiById(route.params.vidhiId);
+  const isPersonalTithi = vidhi?.anchor === 'personal-tithi';
   useKeepAwake();
   useEffect(() => {
     AccessibilityInfo.announceForAccessibility(
       contentByLang(
         lang,
-        'पूजा के दौरान स्क्रीन जागृत रहेगी।',
-        'The screen will stay awake during the puja.'
+        isPersonalTithi ? 'विधि के दौरान स्क्रीन जागृत रहेगी।' : 'पूजा के दौरान स्क्रीन जागृत रहेगी।',
+        isPersonalTithi ? 'The screen will stay awake during the guide.' : 'The screen will stay awake during the puja.'
       )
     );
     // Announce once per conduct session, in the language active on entry.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const { width } = useWindowDimensions();
-  const vidhi = getVidhiById(route.params.vidhiId);
   const steps = useMemo(() => vidhi?.steps ?? [], [vidhi]);
   const todayKey = vidhiDateKey(new Date());
 
@@ -211,7 +213,11 @@ export default function VidhiConductScreen({ navigation, route }: Props) {
         <ReaderHeader
           title={contentByLang(lang, vidhi.titleHi, vidhi.titleEn)}
           onBack={() => navigation.goBack()}
-          backAccessibilityLabel={contentByLang(lang, 'पूजा विवरण पर वापस जाएँ', 'Back to puja overview')}
+          backAccessibilityLabel={contentByLang(
+            lang,
+            isPersonalTithi ? 'विधि विवरण पर वापस जाएँ' : 'पूजा विवरण पर वापस जाएँ',
+            isPersonalTithi ? 'Back to guide overview' : 'Back to puja overview'
+          )}
           right={
             <Text
               style={{
@@ -256,9 +262,10 @@ export default function VidhiConductScreen({ navigation, route }: Props) {
                   vidhiTitleHi={vidhi.titleHi}
                   vidhiTitleEn={vidhi.titleEn}
                   stepCount={steps.length}
+                  isPersonalTithi={isPersonalTithi}
                 />
               ) : (
-                <StepPage width={width} page={item} />
+                <StepPage width={width} page={item} isPersonalTithi={isPersonalTithi} />
               )
             }
           />
@@ -277,7 +284,7 @@ export default function VidhiConductScreen({ navigation, route }: Props) {
                     key={step.id}
                     style={
                       i === currentIndex
-                        ? [styles.dotActive, { backgroundColor: colors.saffronDeep }]
+                        ? [styles.dotActive, { backgroundColor: isPersonalTithi ? colors.inkSoft : colors.saffronDeep }]
                         : [styles.dot, { backgroundColor: colors.dotRest }]
                     }
                   />
@@ -292,7 +299,15 @@ export default function VidhiConductScreen({ navigation, route }: Props) {
   );
 }
 
-function StepPage({ width, page }: { width: number; page: Extract<ConductPage, { kind: 'step' }> }) {
+function StepPage({
+  width,
+  page,
+  isPersonalTithi,
+}: {
+  width: number;
+  page: Extract<ConductPage, { kind: 'step' }>;
+  isPersonalTithi: boolean;
+}) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
   const { step } = page;
@@ -319,9 +334,13 @@ function StepPage({ width, page }: { width: number; page: Extract<ConductPage, {
           ]}
         >
           <View style={styles.cardHeader}>
-            <View style={[styles.phasePill, { backgroundColor: colors.saffronTint, borderRadius: radii.pill }]}>
-              <Text style={[styles.phase, { color: colors.saffronDeep, fontFamily: titleFont }]}>
-                {contentByLang(lang, PHASE_LABELS[step.phase].hi, PHASE_LABELS[step.phase].en)}
+            <View style={[styles.phasePill, { backgroundColor: isPersonalTithi ? colors.goldTint : colors.saffronTint, borderRadius: radii.pill }]}>
+              <Text style={[styles.phase, { color: isPersonalTithi ? colors.inkSoft : colors.saffronDeep, fontFamily: titleFont }]}>
+                {contentByLang(
+                  lang,
+                  isPersonalTithi && step.phase === 'main' ? 'तर्पण व स्मरण' : PHASE_LABELS[step.phase].hi,
+                  isPersonalTithi && step.phase === 'main' ? 'Tarpana & remembrance' : PHASE_LABELS[step.phase].en
+                )}
               </Text>
             </View>
             <Text
@@ -389,7 +408,7 @@ function StepPage({ width, page }: { width: number; page: Extract<ConductPage, {
             </View>
           )}
 
-          {step.ref && <StepHandoffCard step={step} />}
+          {step.ref && <StepHandoffCard step={step} muted={isPersonalTithi} />}
         </View>
       </ScrollView>
     </View>
@@ -397,25 +416,46 @@ function StepPage({ width, page }: { width: number; page: Extract<ConductPage, {
 }
 
 /** Hand-off card: the step IS a shipped text — deep-link, never re-type (§11.11). */
-function StepHandoffCard({ step }: { step: ConductStep }) {
+function StepHandoffCard({ step, muted }: { step: ConductStep; muted: boolean }) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
   const rootNav = useNavigation<never>();
   const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
-  if (!step.ref) return null;
+  const ref = step.ref;
+  if (!ref) return null;
 
-  const isKatha = step.ref.kind === 'katha';
-  const katha = isKatha ? getKathaContent(step.ref.id) : null;
-  const entry = !isKatha ? library.find((item) => item.id === (step.ref as { id: string }).id) : null;
-  const titleHi = isKatha ? (katha?.titleHi ?? step.titleHi) : (entry?.nameHi ?? step.titleHi);
-  const titleEn = isKatha ? (katha?.titleEn ?? step.titleEn) : (entry?.nameEn ?? step.titleEn);
+  const isKatha = ref.kind === 'katha';
+  const isGita = ref.kind === 'gita';
+  const katha = ref.kind === 'katha' ? getKathaContent(ref.id) : null;
+  const entry = ref.kind === 'section' ? library.find((item) => item.id === ref.id) : null;
+  const gitaChapterNumber = ref.kind === 'gita' ? ref.chapter : null;
+  const gitaChapter = isGita
+    ? gitaChaptersManifest.find((chapter) => chapter.chapter === gitaChapterNumber)
+    : null;
+  const titleHi = isKatha
+    ? (katha?.titleHi ?? step.titleHi)
+    : isGita
+      ? `भगवद् गीता — अध्याय ${gitaChapterNumber}`
+      : (entry?.nameHi ?? step.titleHi);
+  const titleEn = isKatha
+    ? (katha?.titleEn ?? step.titleEn)
+    : isGita
+      ? `Bhagavad Gita — ${gitaChapter?.titleEn ?? `Chapter ${gitaChapterNumber}`}`
+      : (entry?.nameEn ?? step.titleEn);
   const isAarti = entry?.category === 'aarti';
 
   const open = () => {
-    if (isKatha) {
+    if (ref.kind === 'katha') {
       navigateToHomeStackTarget(rootNav, {
         screen: 'VratKathaReader',
-        params: { kathaId: step.ref!.id },
+        params: { kathaId: ref.id },
+      });
+      return;
+    }
+    if (ref.kind === 'gita') {
+      navigateToHomeStackTarget(rootNav, {
+        screen: 'GitaReader',
+        params: { chapter: ref.chapter },
       });
       return;
     }
@@ -433,7 +473,7 @@ function StepHandoffCard({ step }: { step: ConductStep }) {
       accessibilityLabel={contentByLang(lang, `${titleHi} खोलें`, `Open ${titleEn}`)}
       style={({ pressed }) => [
         styles.handoffCard,
-        { borderColor: colors.saffron, backgroundColor: colors.parchmentSoft, borderRadius: radii.lg },
+        { borderColor: muted ? colors.gold : colors.saffron, backgroundColor: colors.parchmentSoft, borderRadius: radii.lg },
         pressed && { opacity: 0.85 },
       ]}
     >
@@ -470,11 +510,13 @@ function CompletionPage({
   vidhiTitleHi,
   vidhiTitleEn,
   stepCount,
+  isPersonalTithi,
 }: {
   width: number;
   vidhiTitleHi: string;
   vidhiTitleEn: string;
   stepCount: number;
+  isPersonalTithi: boolean;
 }) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
@@ -488,12 +530,16 @@ function CompletionPage({
         showsVerticalScrollIndicator={false}
       >
         <View style={[styles.seal, { borderColor: colors.gold, backgroundColor: colors.goldTint }]}>
-          <Text style={{ fontFamily: fontFamilies.devanagari, fontSize: 36, color: colors.saffronDeep }}>
+          <Text style={{ fontFamily: fontFamilies.devanagari, fontSize: 36, color: isPersonalTithi ? colors.inkSoft : colors.saffronDeep }}>
             ॐ
           </Text>
         </View>
         <Text style={[styles.completeTitle, { color: colors.ink, fontFamily: titleFont }]}>
-          {contentByLang(lang, 'पूजा सम्पन्न', 'Puja complete')}
+          {contentByLang(
+            lang,
+            isPersonalTithi ? 'स्मरण पूर्ण' : 'पूजा सम्पन्न',
+            isPersonalTithi ? 'Remembrance complete' : 'Puja complete'
+          )}
         </Text>
         <Text
           style={{

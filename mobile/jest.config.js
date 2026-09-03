@@ -23,6 +23,10 @@ module.exports = {
     // src/readAloud holds no tsx scripts, so the plain suffix is safe here.
     '<rootDir>/src/readAloud/__tests__/**/*.test.{ts,tsx}',
     '<rootDir>/src/widgets/__tests__/**/*.jest.test.{ts,tsx}',
+    // वास्तु दिशा (PRD-24): pure compass math + content registries — neither
+    // dir holds tsx scripts, so the plain suffix is safe.
+    '<rootDir>/src/vastu/__tests__/**/*.test.{ts,tsx}',
+    '<rootDir>/src/data/vastu/__tests__/**/*.test.{ts,tsx}',
   ],
   moduleNameMapper: {
     // Audio assets aren't transformed by the RN preset — stub them so a

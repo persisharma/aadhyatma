@@ -5,6 +5,7 @@ import { karwaChauthPuja } from './karwa-chauth-puja';
 import { mahaShivaratriPuja } from './maha-shivaratri-puja';
 import { navratriGhatasthapana } from './navratri-ghatasthapana';
 import { satyanarayanPuja } from './satyanarayan-puja';
+import { shraddhaTarpanVidhi } from './shraddha-tarpan-vidhi';
 
 export type {
   VidhiEntry,
@@ -27,6 +28,7 @@ export const VIDHI_ENTRIES: readonly VidhiEntry[] = [
   navratriGhatasthapana,
   karwaChauthPuja,
   mahaShivaratriPuja,
+  shraddhaTarpanVidhi,
 ];
 
 export const VIDHI_BY_ID: ReadonlyMap<string, VidhiEntry> = new Map(

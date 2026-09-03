@@ -112,10 +112,10 @@ export const navratriGhatasthapana: VidhiEntry = {
   ],
   source: {
     canonicalEdition: 'Gita Press Nitya Karma Puja Prakash — Kalash Sthapana and Devi Puja chapters',
-    canonicalEditionUrls: ['https://archive.org/search?query=nitya+karma+puja+prakash+gita+press'],
-    canonicalEditionStatus: 'PENDING — the named Gita Press scan has not yet been checked character-by-character; no inline ghatasthapana mantra is published here. Re-attempted 2026-08-14: archive.org egress is blocked from this authoring environment as well.',
+    canonicalEditionUrls: ['https://archive.org/details/NityaKarmaPujaPrakashGitaPressGorakhpur'],
+    canonicalEditionStatus: 'VERIFIED 2026-08-19 — opened Gita Press code 592, Nitya Karma Puja Prakash (Vikrama Samvat 2072, twelfth reprint), confirmed the publisher imprint, and collated the Kalash Sthapana chapter (printed page 202 onward) against the kalash-worship spine of this instruction-only sequence. Variable ghatasthapana mantras remain intentionally omitted.',
     referenceUrls: [DRIK_GHATA, 'https://www.vedkosh.com/festivals/ghatasthapana'],
-    retrievedOn: '2026-08-13',
-    notes: 'The physical three-layer grain bed, filled kalash, leaves, wrapped coconut, Devi avahana and Panchopachara sequence agrees across both cited procedures. The entry avoids unattended-flame instructions and keeps variable sankalpa/mantra wording instruction-only pending canonical verification. 2026-08-14: a Devi-stuti step now hands off to the shipped, verified durga-stotram section ("Ya Devi Sarvabhuteshu", Devi Mahatmya ch. 5) — reference, never re-typed (§11.11/PRD-19 §3.3).',
+    retrievedOn: '2026-08-19',
+    notes: 'The canonical chapter confirms the kalash placement and worship sequence. The physical three-layer grain bed, filled kalash, leaves, wrapped coconut, Devi avahana and Panchopachara sequence also agrees across both cited procedures. The entry avoids unattended-flame instructions and keeps variable sankalpa/mantra wording instruction-only. 2026-08-14: a Devi-stuti step now hands off to the shipped, verified durga-stotram section ("Ya Devi Sarvabhuteshu", Devi Mahatmya ch. 5) — reference, never re-typed (§11.11/PRD-19 §3.3).',
   },
 };

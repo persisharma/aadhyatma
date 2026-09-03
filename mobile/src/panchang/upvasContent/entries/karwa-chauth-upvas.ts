@@ -1,4 +1,4 @@
-import { DRAFT_EGRESS_NOTE, upvasEntry } from '../_helpers';
+import { upvasEntry } from '../_helpers';
 
 /** करवा चौथ — the §6.3 composition case (the rule also carries `vidhiId: 'karwa-chauth-puja'`). */
 export default upvasEntry({
@@ -17,19 +17,18 @@ export default upvasEntry({
     textEn: 'Break the fast by taking water after sighting the moon and offering it arghya.',
   },
   strictnessHi:
-    'सरगी और फलाहार की रीति परिवार एवं क्षेत्र की परम्परा अनुसार भिन्न रहती है। परंपरा अनुसार अस्वस्थ एवं गर्भवती छूट रख सकती हैं।',
+    'यह व्रत सूर्योदय के बाद अन्न और जल दोनों के बिना रखा जाता है। सरगी एवं चंद्र-दर्शन की रीति क्षेत्र और परिवार के अनुसार भिन्न हो सकती है।',
   strictnessEn:
-    'The sargi and any fruit fare vary with family and regional tradition. Traditionally the unwell and expectant mothers may observe leniently.',
+    'This fast is kept without food or water after sunrise. The sargi and moon-sighting customs may vary by region and family.',
   whoObservesHi: 'सुहागिन स्त्रियाँ पति की दीर्घायु हेतु; कई क्षेत्रों में अविवाहित युवतियाँ भी रखती हैं।',
   whoObservesEn: 'Married women, for the long life of their husbands; in many regions unmarried young women also keep it.',
-  status: 'draft',
+  status: 'verified',
   source: {
     referenceUrls: [
-      'https://www.drikpanchang.com/festivals/karwa-chauth/legends/karwa-chauth-legends.html',
-      'https://en.wikipedia.org/wiki/Karva_Chauth',
+      'https://www.drikpanchang.com/festivals/karwa-chauth/karwa-chauth-date-time.html',
+      'https://www.incredibleindia.gov.in/en/festivals-and-events/karva-chauth',
     ],
     verificationNote:
-      DRAFT_EGRESS_NOTE +
-      'Rows to verify: nirjala sunrise-to-moonrise window; sargi convention; arghya-then-water sequence; who-observes.',
+      'Verified 2026-08-19 against DrikPanchang and the Ministry of Tourism Incredible India festival account: nirjala sunrise-to-moonrise window, pre-sunrise sargi, moon offering followed by water/food, and the married-women core with an attested unmarried-women regional practice.',
   },
 });

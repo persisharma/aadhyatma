@@ -29,6 +29,16 @@ type Props = {
   renderCard: (width: number) => React.ReactNode;
   onClose: () => void;
   onShareSheetOpened?: () => void;
+  /** Optional second share action under the card actions (PRD-20: the
+   * report's full-text handoff). The sheet's privacy line is the shared
+   * warning surface for BOTH actions — callers passing this must name the
+   * text export's contents in privacyHi/En. Omitting all detail props keeps
+   * the shipped card-only sheet byte-identical. */
+  detailTitleHi?: string;
+  detailTitleEn?: string;
+  detailSubtitleHi?: string;
+  detailSubtitleEn?: string;
+  onShareDetail?: () => void;
 };
 
 async function waitForLayout(): Promise<void> {
@@ -46,6 +56,11 @@ export default function JyotishShareSheet({
   renderCard,
   onClose,
   onShareSheetOpened,
+  detailTitleHi,
+  detailTitleEn,
+  detailSubtitleHi,
+  detailSubtitleEn,
+  onShareDetail,
 }: Props) {
   const { width: screenWidth } = useWindowDimensions();
   const { colors, typography, spacing, radii, elevation } = useTheme();
@@ -204,6 +219,48 @@ export default function JyotishShareSheet({
                 </Text>
               </Pressable>
             </View>
+            {onShareDetail && detailTitleHi && detailTitleEn && (
+              <Pressable
+                onPress={onShareDetail}
+                accessibilityRole="button"
+                accessibilityLabel="Share the full reading as text"
+                style={({ pressed }) => [
+                  styles.detail,
+                  {
+                    borderColor: colors.divider,
+                    backgroundColor: colors.parchmentSoft,
+                    borderRadius: radii.md,
+                  },
+                  pressed && { opacity: 0.72 },
+                ]}
+              >
+                <View style={{ flex: 1 }}>
+                  <Text
+                    style={{
+                      color: colors.ink,
+                      fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
+                      fontSize: 13,
+                    }}
+                  >
+                    {contentByLang(lang, detailTitleHi, detailTitleEn)}
+                  </Text>
+                  {detailSubtitleHi && detailSubtitleEn && (
+                    <Text
+                      style={{
+                        color: colors.inkMuted,
+                        fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+                        fontSize: 10.5,
+                        lineHeight: 15,
+                        marginTop: 2,
+                      }}
+                    >
+                      {meaningByLang(lang, detailSubtitleHi, detailSubtitleEn)}
+                    </Text>
+                  )}
+                </View>
+                <Text style={{ color: colors.saffronDeep, fontSize: 16 }}>⇪</Text>
+              </Pressable>
+            )}
           </ScrollView>
         </SafeAreaView>
       </View>
@@ -282,6 +339,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  detail: {
+    alignSelf: 'stretch',
+    minHeight: 52,
+    marginTop: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    paddingHorizontal: 13,
+    paddingVertical: 9,
+    borderWidth: 1,
   },
   secondaryText: {
     fontFamily: fontFamilies.interSemiBold,

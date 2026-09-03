@@ -228,6 +228,17 @@ test('state 4 — neither: no section, and never a placeholder', () => {
   }
 });
 
+test('PRD-23 — sourced bhog guidance renders without exposing provenance', () => {
+  const r = renderDetail('hanuman-jayanti');
+  const body = texts(r);
+  expect(has(r, 'observance-bhog-panel')).toBe(true);
+  expect(body).toContain('भोग · नैवेद्य · भोजन');
+  expect(body).toContain('लड्डू या घर की परम्परा का पका हुआ मिष्ठान्न');
+  expect(body).toContain('उत्तर भारतीय हनुमान मन्दिरों में लड्डू प्रचलित हैं');
+  expect(body).not.toContain('verificationNote');
+  expect(body).not.toContain('https://');
+});
+
 test('a draft (filtered) entry is indistinguishable from no entry on the screen', () => {
   // The real registry returns null for drafts; the screen must show state 2/4
   // behaviour even though the rule CARRIES an upvasId hook.

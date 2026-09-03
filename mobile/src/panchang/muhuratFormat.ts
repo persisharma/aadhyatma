@@ -57,6 +57,15 @@ export function formatShortDate(d: Date, lang: Lang): string {
  * tonight otherwise reads as this morning. Shared by every end-time surface
  * (Panchang anga tiles, Muhurat detail/share card).
  */
+/**
+ * Start–end range whose END goes through `formatEndInstant`, for windows that
+ * routinely outlive midnight (the शुभ योग windows, PRD-27): `6:24 AM – 2:12 AM,
+ * 15 अक्टू`. Never the printed-panchang extended-hour style (26:12).
+ */
+export function formatRangeEndAware(start: Date, end: Date, referenceDay: Date, lang: Lang): string {
+  return `${formatClock(start)} – ${formatEndInstant(end, referenceDay, lang)}`;
+}
+
 export function formatEndInstant(end: Date, referenceDay: Date, lang: Lang): string {
   const time = formatClock(end);
   if (isSameLocalDay(end, referenceDay)) return time;

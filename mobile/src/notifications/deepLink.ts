@@ -59,6 +59,14 @@ function isSadhanaReminderPayload(data: unknown): data is { type: 'sadhana-remin
   return d.type === 'sadhana-reminder' && typeof d.programId === 'string';
 }
 
+function isRoutineReminderPayload(data: unknown): data is { type: 'routine-reminder' } {
+  if (!data || typeof data !== 'object') return false;
+  // Gated on `type` only. `routineId`/`dateKey` ride along as a record but must
+  // not drive routing: a stale notification for a since-deleted routine still
+  // lands safely on RoutineToday, which simply doesn't show it.
+  return (data as Record<string, unknown>).type === 'routine-reminder';
+}
+
 function isPitruSmaranReminderPayload(data: unknown): data is { type: 'pitru-smaran-reminder'; entryId: string } {
   if (!data || typeof data !== 'object') return false;
   const d = data as Record<string, unknown>;
@@ -67,6 +75,12 @@ function isPitruSmaranReminderPayload(data: unknown): data is { type: 'pitru-sma
 
 function isPitruPakshaReminderPayload(data: unknown): data is { type: 'pitru-paksha-reminder' } {
   return Boolean(data && typeof data === 'object' && (data as Record<string, unknown>).type === 'pitru-paksha-reminder');
+}
+
+function isJanmaTithiReminderPayload(data: unknown): data is { type: 'janma-tithi-reminder'; personId: string } {
+  if (!data || typeof data !== 'object') return false;
+  const d = data as Record<string, unknown>;
+  return d.type === 'janma-tithi-reminder' && typeof d.personId === 'string';
 }
 
 /**
@@ -185,6 +199,20 @@ export function handleNotificationResponse(
     return true;
   }
 
+  // A janma-tithi tap (PRD-29) opens that person's detail in the More stack —
+  // the screen carrying this year's date and the day's practice. The person id
+  // is validated by the screen itself (a removed person renders its own
+  // not-found state), so a stale notice cannot crash a route.
+  if (isJanmaTithiReminderPayload(data)) {
+    navigationRef.dispatch(
+      CommonActions.navigate({
+        name: 'MoreTab',
+        params: { screen: 'JanmaTithiDetail', params: { personId: data.personId }, initial: false },
+      } as never)
+    );
+    return true;
+  }
+
   if (isPitruPakshaReminderPayload(data)) {
     navigationRef.dispatch(
       CommonActions.navigate({
@@ -199,6 +227,21 @@ export function handleNotificationResponse(
   // sankalp's day is shown. Lands on the Home tab's RoutineToday screen; reading
   // progress is untouched (the user chooses to open the day's reading there).
   if (isSadhanaReminderPayload(data)) {
+    navigationRef.dispatch(
+      CommonActions.navigate({
+        name: 'HomeTab',
+        params: { screen: 'RoutineToday' },
+      } as never)
+    );
+    return true;
+  }
+
+  // A routine-reminder tap (PRD-07 P3) lands on Today's Practice — byte-for-
+  // byte the sadhana-reminder landing, and for the same reasons: RoutineToday
+  // is where all of today's practice lives (this routine, other routines,
+  // active sankalps), and a lock-screen tap must never open a reader whose
+  // `setProgress` effect could clobber the resume position.
+  if (isRoutineReminderPayload(data)) {
     navigationRef.dispatch(
       CommonActions.navigate({
         name: 'HomeTab',

@@ -19,8 +19,12 @@ import { useTour } from '@/contexts/TourContext';
 import { useRatingPrompt } from '@/contexts/RatingPromptContext';
 import { useJapamAlarms } from '@/contexts/JapamAlarmsContext';
 import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
-import { nextObservanceForEntry } from '@/panchang/pitruSmaran';
+import { nextObservanceForEntry, solveNextOccurrence } from '@/panchang/pitruSmaran';
 import { shortDate } from '@/panchang/pitruSmaranDisplay';
+import { useJanmaTithiPeople } from '@/panchang/useJanmaTithi';
+import { useKulRecord } from '@/panchang/kulParamparaStore';
+import { isEmptyKulRecord, kuldevDisplayName } from '@/panchang/kulParampara';
+import { transliterateDevanagari } from '@/utils/transliterate';
 import { useFontScale } from '@/contexts/FontScaleContext';
 import LanguagePickerSheet from '@/components/LanguagePickerSheet';
 import ReadingSizePickerSheet, { readingSizeLabel } from '@/components/ReadingSizePickerSheet';
@@ -159,6 +163,53 @@ export default function MoreScreen({ navigation }: Props) {
       : smaranSoonest
         ? `${smaranEntries.length} · ${shortDate(smaranSoonest, lang)}`
         : `${smaranEntries.length}`;
+  // जन्म तिथि row state (PRD-29): count + the soonest Hindu birthday — the
+  // Pitru row's exact deferral (solves are memoised engine-wide; off render).
+  const { people: janmaPeople } = useJanmaTithiPeople();
+  const [janmaSoonest, setJanmaSoonest] = useState<Date | null>(null);
+  useEffect(() => {
+    if (janmaPeople.length === 0) {
+      setJanmaSoonest(null);
+      return undefined;
+    }
+    let cancelled = false;
+    const handle = setTimeout(() => {
+      const today = new Date();
+      let soonest: Date | null = null;
+      for (const { rule } of janmaPeople) {
+        if (!rule) continue;
+        try {
+          const next = solveNextOccurrence(rule, today);
+          if (next && (soonest === null || next.getTime() < soonest.getTime())) soonest = next;
+        } catch {
+          // an unsolvable rule must not break the hub row
+        }
+      }
+      if (!cancelled) setJanmaSoonest(soonest);
+    }, 0);
+    return () => {
+      cancelled = true;
+      clearTimeout(handle);
+    };
+  }, [janmaPeople]);
+  const janmaState =
+    janmaPeople.length === 0
+      ? 'NEW'
+      : janmaSoonest
+        ? `${janmaPeople.length} · ${shortDate(janmaSoonest, lang)}`
+        : `${janmaPeople.length}`;
+  // कुल परम्परा row state (PRD-29): the saved kuldev's name, or NEW.
+  const { record: kulRecord } = useKulRecord();
+  const kulHasRecord = !isEmptyKulRecord(kulRecord);
+  const kulState = kulRecord.kuldev
+    ? (lang === 'en'
+        ? kuldevDisplayName(kulRecord.kuldev, 'en')
+        : lang === 'hi'
+          ? kuldevDisplayName(kulRecord.kuldev, 'hi')
+          : transliterateDevanagari(kuldevDisplayName(kulRecord.kuldev, 'hi'), lang))
+    : kulHasRecord
+      ? pick(lang, { hi: 'सहेजा गया', en: 'Saved', gu: 'સાચવ્યું', kn: 'ಉಳಿಸಲಾಗಿದೆ' })
+      : 'NEW';
   // Feature-tour spotlight targets (§47) — both rows sit in the "App" group,
   // below the fold on smaller devices, so each declares a reveal that scrolls
   // it on-screen before the tour measures it.
@@ -328,6 +379,55 @@ export default function MoreScreen({ navigation }: Props) {
                       : 'Pitru Smaran, none saved'
                   }
                   testID="more-pitru-smaran"
+                />
+                {/* जन्म तिथि (PRD-29 Part A) — the living side of the tithi
+                    ledger: count + the soonest Hindu birthday. */}
+                <SettingsRow
+                  icon="✦"
+                  iconBg={colors.saffronDeep}
+                  iconFontFamily={typography.readerTitle.fontFamily}
+                  iconFontSize={15}
+                  label={pick(lang, { hi: 'जन्म तिथि', en: 'Janma Tithi', gu: 'જન્મ તિથિ', kn: 'ಜನ್ಮ ತಿಥಿ' })}
+                  labelFontFamily={labelFont}
+                  state={janmaState}
+                  stateFontFamily={janmaPeople.length === 0 ? fontFamilies.interSemiBold : fontFamilies.inter}
+                  onPress={() => navigation.navigate('JanmaTithiList')}
+                  accessibilityLabel={
+                    janmaPeople.length > 0
+                      ? `Janma Tithi, ${janmaPeople.length} ${janmaPeople.length === 1 ? 'person' : 'people'}`
+                      : 'Janma Tithi, none saved'
+                  }
+                  testID="more-janma-tithi"
+                />
+                {/* कुल परम्परा (PRD-29 Part B) — the family record; state names
+                    the saved kuldev once one is chosen. */}
+                <SettingsRow
+                  icon="॥"
+                  iconBg={colors.saffron}
+                  iconFontFamily={typography.readerTitle.fontFamily}
+                  iconFontSize={16}
+                  label={pick(lang, { hi: 'कुल परम्परा', en: 'Kul Parampara', gu: 'કુળ પરંપરા', kn: 'ಕುಲ ಪರಂಪರಾ' })}
+                  labelFontFamily={labelFont}
+                  state={kulState}
+                  stateFontFamily={kulHasRecord ? chromeFont : fontFamilies.interSemiBold}
+                  onPress={() => navigation.navigate('KulParampara')}
+                  accessibilityLabel={kulHasRecord ? 'Kul Parampara' : 'Kul Parampara, new'}
+                  testID="more-kul-parampara"
+                />
+                {/* वास्तु दिशा (PRD-24) — the More-row NEW state for one release,
+                    the widget-gallery pattern. */}
+                <SettingsRow
+                  icon="॰"
+                  iconBg={colors.saffron}
+                  iconFontFamily={typography.readerTitle.fontFamily}
+                  iconFontSize={18}
+                  label={pick(lang, { hi: 'वास्तु दिशा', en: 'Vastu Disha', gu: 'વાસ્તુ દિશા', kn: 'ವಾಸ್ತು ದಿಶಾ' })}
+                  labelFontFamily={labelFont}
+                  state="NEW"
+                  stateFontFamily={fontFamilies.interSemiBold}
+                  onPress={() => navigation.navigate('VastuDisha')}
+                  accessibilityLabel="Vastu Disha, new"
+                  testID="more-vastu-disha"
                 />
               </View>
             </View>

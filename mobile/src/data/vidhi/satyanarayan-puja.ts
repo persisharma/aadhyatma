@@ -277,12 +277,12 @@ export const satyanarayanPuja: VidhiEntry = {
   ],
   source: {
     canonicalEdition:
-      'Gita Press (Gorakhpur) — Satyanarayan Vrat Katha / Nitya Karma Puja Prakash (Satyanarayan puja-vidhi chapters)',
+      'Gita Press (Gorakhpur), code 1367 — Shri Satya Narayan Vrat Katha (Hindi & Sanskrit)',
     canonicalEditionUrls: [
-      'https://archive.org/search?query=nitya+karma+puja+prakash+gita+press',
+      'https://bharatiyavidya.com/product/shri-satya-narayan-vrat-katha-2/',
     ],
     canonicalEditionStatus:
-      'PENDING — the Gita Press scans on archive.org could not be opened from the authoring environment (network egress to archive.org blocked, 2026-08-12). To clear: open the Nitya Karma Puja Prakash / Satyanarayan Vrat Katha scan, check every mantra below character-by-character, then replace this status with a dated verified note (the Valmiki Ramayana source block is the worked example).',
+      'PENDING — access is no longer the blocker. On 2026-08-19 the catalogue record was opened and pinned to Gita Press code 1367 (55th edition, 16 pages), but a scan of that exact edition was not located. A widely linked download advertised as Gita Press was opened and rejected: its imprint identifies Kanha Darshan Dharmik Prakashan and it has 99 pages. Every inline mantra remains cross-checked against the procedural references below, but canonical-edition sign-off must wait for code 1367 itself.',
     referenceUrls: [
       'https://www.drikpanchang.com/hindu-gods/trimurti/lord-vishnu/puja-vidhi/satyanarayan-puja-vidhi.html',
       'https://www.drikpanchang.com/hindu-gods/trimurti/lord-vishnu/puja-vidhi/satyanarayan-puja-vidhi.html?lang=hi',
@@ -292,7 +292,7 @@ export const satyanarayanPuja: VidhiEntry = {
       'https://www.smartpuja.com/blog/satyanarayan-puja-mantra/',
       'https://blog.shlokmantra.com/kshama-prarthana/',
     ],
-    retrievedOn: '2026-08-12',
+    retrievedOn: '2026-08-19',
     notes:
       'Every mantra was cross-checked verbatim against DrikPanchang’s Satyanarayana Puja Vidhi (shodashopachara) pages and at least one independent published karmakand reference each, via search-indexed page excerpts on 2026-08-12 (direct page fetches were blocked in the authoring environment — hence the pending canonical-edition check above). The step sequence and samagri follow DrikPanchang’s published vidhi/samagri pages. The sankalp step is instruction-only because its exact liturgical wording was not verbatim-verifiable (RULEBOOK §11.3 — never approximate). Step instructions are authored fresh (RULEBOOK §9). The katha and aarti steps reference shipped texts by id (satyanarayana-vrat-katha, om-jai-jagdish) — no liturgical text is duplicated (§11.11).',
   },

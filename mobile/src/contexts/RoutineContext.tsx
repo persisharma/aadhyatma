@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { toDateKey } from '@/contexts/UserActivityContext';
-import type { Routine, RoutineItem, RoutineScheduleMode } from '@/data/routine/types';
+import type { Routine, RoutineItem, RoutineReminder, RoutineScheduleMode } from '@/data/routine/types';
 
 const ROUTINES_KEY = '@vedansh/routines';
 const DONE_KEY = '@vedansh/routine-done';
@@ -31,6 +31,9 @@ type RoutineContextValue = {
   deleteRoutine: (routineId: string) => void;
   addItem: (routineId: string, item: Omit<RoutineItem, 'id'>) => void;
   removeItem: (routineId: string, itemId: string) => void;
+  /** Set or clear the routine's reminder time (PRD-07 P3). Presence of the
+   * field is the on/off switch — pass `undefined` to turn the reminder off. */
+  setReminder: (routineId: string, reminder: RoutineReminder | undefined) => void;
   /** Manually mark an item done for today (offline-recitation fallback). */
   markManualDone: (key: string) => void;
   unmarkManualDone: (key: string) => void;
@@ -176,6 +179,24 @@ export function RoutineProvider({ children }: { children: React.ReactNode }) {
     [routines, persistRoutines]
   );
 
+  const setReminder = useCallback(
+    (routineId: string, reminder: RoutineReminder | undefined) => {
+      // Delete the key entirely when clearing (rather than storing `undefined`)
+      // so persisted JSON stays free of the field — presence is the switch.
+      persistRoutines(
+        routines.map((r) => {
+          if (r.id !== routineId) return r;
+          if (!reminder) {
+            const { reminder: _off, ...rest } = r;
+            return rest;
+          }
+          return { ...r, reminder };
+        })
+      );
+    },
+    [routines, persistRoutines]
+  );
+
   const markManualDone = useCallback(
     (key: string) => {
       // Record the moment it was offered, so the Today row can show "offered 7:12 AM".
@@ -217,6 +238,7 @@ export function RoutineProvider({ children }: { children: React.ReactNode }) {
       deleteRoutine,
       addItem,
       removeItem,
+      setReminder,
       markManualDone,
       unmarkManualDone,
       isManualDone,
@@ -231,6 +253,7 @@ export function RoutineProvider({ children }: { children: React.ReactNode }) {
       deleteRoutine,
       addItem,
       removeItem,
+      setReminder,
       markManualDone,
       unmarkManualDone,
       isManualDone,

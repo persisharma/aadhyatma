@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PRD-41 · जिज्ञासा — Interactive Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* Mirrors mobile/src/theme/colors.ts (Aug 2026). */
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-hi:#F6ECD0;
+    --gradient-end:#F1E3BF; --gold:#A67C34; --gold-soft:#C9B896; --gold-tint:rgba(166,124,52,0.14);
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --saffron-tint:rgba(184,98,27,0.12);
+    --ink:#1A0E03; --ink-soft:#5A3A1E; --ink-muted:#6E5230; --divider:rgba(138,62,11,0.18);
+    --card-from:#FFF5E0; --card-to:#F5DEAC; --card-border:rgba(184,98,27,0.4);
+    --avoid:#9E4A2E; --avoid-tint:rgba(158,74,46,0.12); --avoid-deep:#7A3722;
+    --gold-chip:rgba(166,124,52,0.22);
+    --shadow-subtle:0 1px 4px rgba(60,30,10,0.06);
+    --shadow-card:0 2px 6px rgba(60,30,10,0.10);
+    --shadow-raised:0 4px 10px rgba(60,30,10,0.14);
+    --sans:'Inter',system-ui,sans-serif;
+    --serif:'Cormorant Garamond',serif;
+    --deva:'Noto Serif Devanagari',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:#1a140c;color:#e9d9b1;padding:24px;line-height:1.5}
+  h1{font-family:var(--serif);font-weight:600;font-size:28px;color:#fff5e0;margin-bottom:2px}
+  .sub{font-style:italic;color:var(--gold-soft);font-size:14px;margin-bottom:6px;max-width:940px}
+  .legend{font-size:12.5px;color:#b7a377;margin-bottom:8px;max-width:940px}
+  .legend b{color:#e9d9b1}
+  .legend code{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:#d9c79a}
+  .phaselabel{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--saffron);background:var(--saffron-tint);display:inline-block;padding:4px 12px;border-radius:20px;margin:30px 0 4px}
+  .phasedesc{font-size:12.5px;color:#b7a377;margin-bottom:14px;max-width:940px}
+  .wrap{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap}
+  .col{display:flex;flex-direction:column;align-items:center}
+  .cap{width:340px;font-size:12px;color:#b7a377;margin-top:10px;line-height:1.55}
+  .cap b{color:#e9d9b1}
+
+  /* ---- phone frame ---- */
+  .phone{width:340px;height:720px;background:var(--parchment);border-radius:38px;
+    border:10px solid #0d0804;box-shadow:0 24px 60px rgba(0,0,0,.55);position:relative;overflow:hidden;flex:none}
+  .statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);background:linear-gradient(var(--parchment-hi),var(--parchment))}
+  .screen{position:absolute;top:32px;left:0;right:0;bottom:0;overflow-y:auto;
+    background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
+  .screen::-webkit-scrollbar{width:0}
+  .pad{padding:14px 16px 26px}
+  .topbar{display:flex;align-items:center;gap:12px;padding:4px 2px 12px}
+  .back{width:38px;height:38px;border-radius:50%;border:1px solid var(--divider);background:var(--parchment-soft);
+    display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:17px}
+  .toptitle{font-family:var(--deva);font-size:20px;color:var(--ink);flex:1}
+  .deva{font-family:var(--deva)}
+
+  /* ---- the ask field (TextField.tsx variant="search": 44pt, Cormorant) ---- */
+  .askfield{display:flex;align-items:center;gap:10px;height:46px;padding:0 14px;border-radius:14px;
+    background:var(--parchment-soft);border:1px solid var(--card-border);box-shadow:var(--shadow-subtle)}
+  .askfield.focus{border-color:var(--saffron);box-shadow:0 0 0 3px var(--saffron-tint)}
+  .askfield .mag{color:var(--saffron);font-size:15px}
+  .askfield input{flex:1;border:0;outline:0;background:transparent;font-family:var(--deva);
+    font-size:15px;color:var(--ink)}
+  .askfield input::placeholder{color:var(--ink-muted);opacity:.85}
+
+  .eyebrow{font-size:10.5px;font-weight:600;letter-spacing:1.1px;text-transform:uppercase;
+    color:var(--ink-muted);margin:16px 0 8px}
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{font-family:var(--deva);font-size:12.5px;color:var(--saffron-deep);background:var(--saffron-tint);
+    border:1px solid var(--card-border);border-radius:16px;padding:5px 11px;cursor:pointer}
+  .chip:hover{background:rgba(184,98,27,.2)}
+  .chip.plain{font-family:var(--sans);font-size:12px;color:var(--ink-soft);background:var(--parchment-soft);
+    border-color:var(--divider)}
+
+  /* ---- the answer card ---- */
+  .answer{margin-top:14px;border-radius:16px;padding:15px 15px 13px;
+    background:linear-gradient(var(--card-from),var(--card-to));
+    border:1px solid var(--card-border);box-shadow:var(--shadow-card)}
+  .answer .tag{display:inline-block;font-size:9.5px;font-weight:600;letter-spacing:.9px;text-transform:uppercase;
+    color:var(--saffron-deep);background:var(--gold-chip);border-radius:10px;padding:3px 8px;margin-bottom:9px}
+  .answer h3{font-family:var(--deva);font-size:18px;font-weight:600;color:var(--ink);line-height:1.45}
+  .answer .en{font-family:var(--serif);font-style:italic;font-size:13.5px;color:var(--ink-soft);margin-top:3px}
+  .rows{margin-top:11px;display:flex;flex-direction:column;gap:7px}
+  .row{display:flex;gap:9px;align-items:flex-start}
+  .row .k{font-size:10.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-muted);
+    width:74px;flex:none;padding-top:2px}
+  .row .v{font-family:var(--deva);font-size:13.5px;color:var(--ink);flex:1;line-height:1.5}
+  .row.neg .v{color:var(--avoid-deep)}
+  .row.neg .k{color:var(--avoid)}
+  .working{margin-top:11px;border-top:1px solid var(--divider);padding-top:9px}
+  .working summary{font-size:11.5px;font-weight:600;color:var(--saffron);cursor:pointer;list-style:none}
+  .working summary::-webkit-details-marker{display:none}
+  .working summary::before{content:'▸ ';font-size:9px}
+  .working[open] summary::before{content:'▾ '}
+  .working .t{font-family:ui-monospace,Menlo,monospace;font-size:10.5px;color:var(--ink-muted);
+    margin-top:7px;line-height:1.7}
+  .prov{margin-top:9px;font-size:10.5px;color:var(--ink-muted);line-height:1.5}
+  .prov b{color:var(--ink-soft);font-weight:600}
+  .actions{display:flex;gap:7px;margin-top:12px;flex-wrap:wrap}
+  .act{font-family:var(--deva);font-size:12.5px;padding:7px 12px;border-radius:11px;cursor:pointer;
+    background:var(--saffron);color:#fff;border:0}
+  .act.sec{background:transparent;color:var(--saffron-deep);border:1px solid var(--card-border)}
+
+  /* ---- abstain ---- */
+  .abstain{margin-top:14px;border-radius:16px;padding:14px;background:var(--parchment-soft);
+    border:1px dashed var(--card-border)}
+  .abstain .t{font-family:var(--deva);font-size:14.5px;color:var(--ink-soft);line-height:1.5}
+  .abstain .s{font-family:var(--serif);font-style:italic;font-size:12.5px;color:var(--ink-muted);margin-top:4px}
+
+  .libhit{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:12px;margin-top:7px;
+    background:var(--parchment-soft);border:1px solid var(--divider)}
+  .libhit .ic{width:26px;height:26px;border-radius:8px;background:var(--gold-tint);display:flex;
+    align-items:center;justify-content:center;font-size:12px;color:var(--gold)}
+  .libhit .n{font-family:var(--deva);font-size:13.5px;color:var(--ink);flex:1}
+  .libhit .c{color:var(--ink-muted);font-size:13px}
+
+  /* ---- trace panel ---- */
+  .trace{width:376px;background:#120d07;border:1px solid #3a2c18;border-radius:14px;padding:15px;flex:none}
+  .trace h4{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;
+    color:var(--gold);margin-bottom:3px}
+  .trace .hint{font-size:11.5px;color:#8a7a5c;margin-bottom:11px;line-height:1.5}
+  .trace pre{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#d9c79a;white-space:pre-wrap;
+    line-height:1.75;background:#0c0805;border-radius:9px;padding:11px;border:1px solid #2a2013}
+  .trace .ok{color:#c9a227}.trace .no{color:#c07a55}.trace .dim{color:#7a6a4c}
+  .metrics{display:flex;gap:8px;margin-top:11px;flex-wrap:wrap}
+  .metric{background:#0c0805;border:1px solid #2a2013;border-radius:9px;padding:7px 10px;flex:1;min-width:96px}
+  .metric .l{font-size:9.5px;letter-spacing:.7px;text-transform:uppercase;color:#7a6a4c}
+  .metric .v{font-family:ui-monospace,Menlo,monospace;font-size:14px;color:#e9d9b1;margin-top:2px}
+  .try{margin-top:12px}
+  .try .l{font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:#7a6a4c;margin-bottom:6px}
+  .try button{font-family:var(--deva);font-size:12px;color:#e9d9b1;background:#241a0e;border:1px solid #3a2c18;
+    border-radius:14px;padding:5px 10px;margin:0 5px 5px 0;cursor:pointer}
+  .try button:hover{border-color:var(--gold)}
+  .try button.neg{color:#c07a55}
+  footer{margin-top:40px;font-size:12px;color:#7a6a4c;max-width:940px;line-height:1.7;
+    border-top:1px solid #2a2013;padding-top:16px}
+  footer b{color:#b7a377}
+</style>
+</head>
+<body>
+
+<h1>PRD-41 · जिज्ञासा — Ask Vedansh</h1>
+<p class="sub">The resolver in this page is real. Type a question in Devanagari, Hinglish or English and watch it fold, tag entities, score intents, and answer — or abstain.</p>
+<p class="legend">
+  Its lexicon is <b>generated from the app's own registries</b> — 21 deities from <code>data/deities.ts</code>,
+  13 occasions from <code>EVENT_RULES</code>, 162 observance rules from <code>panchang/festivals.ts</code>, the 8 dik from
+  <code>DISHA_LABELS</code> — plus a short hand-written alias list. Answer content for bhog, vrat food and vastu is the
+  <b>verbatim shipped text</b> from <code>bhogContent.ts</code> and <code>data/vastu/roomGuidance.ts</code>.
+  Dates and times in the panchang/muhurat cards are <b>illustrative</b>: the shipped card renders whatever the engine returns.
+</p>
+
+<div class="phaselabel">Phase 1 · A — the box, at rest</div>
+<p class="phasedesc">The existing search box, re-cast. The placeholder rotates through questions the app can actually answer — which is the whole feature's discovery surface. Content search is untouched underneath.</p>
+<div class="wrap">
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>▮▮▮ ⌁ ▰</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">जिज्ञासा</div></div>
+        <div class="askfield"><span class="mag">⌕</span><input id="rot" readonly /></div>
+        <div class="eyebrow">आज पूछे जा सकते हैं</div>
+        <div class="chips">
+          <span class="chip">आज की तिथि</span><span class="chip">राहु काल</span>
+          <span class="chip">एकादशी कब है</span><span class="chip">गणेश जी को क्या चढ़ाएँ</span>
+          <span class="chip">मंदिर किस दिशा में</span><span class="chip">गृह प्रवेश का मुहूर्त</span>
+        </div>
+        <div class="eyebrow">पिछले प्रश्न</div>
+        <div class="chips">
+          <span class="chip plain">shivratri kab hai</span><span class="chip plain">व्रत में क्या खाएँ</span>
+        </div>
+        <div class="eyebrow">पुस्तकालय</div>
+        <div class="libhit"><span class="ic">◈</span><span class="n">हनुमान चालीसा</span><span class="c">›</span></div>
+        <div class="libhit"><span class="ic">◈</span><span class="n">श्रीमद् भगवद्गीता</span><span class="c">›</span></div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Nothing new to learn.</b> Same box, same position, same content results below. The only change is that a <i>question</i> now gets an answer instead of a list of texts that happen to contain the word.</div>
+  </div>
+
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>▮▮▮ ⌁ ▰</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">जिज्ञासा</div></div>
+        <div class="askfield focus"><span class="mag">⌕</span><input value="कल शिवरात्रि है क्या" readonly /></div>
+        <div class="abstain">
+          <div class="t">इसका उत्तर अभी नहीं दे सकते।</div>
+          <div class="s">We can't answer that one yet — here's what we found instead.</div>
+        </div>
+        <div class="eyebrow">शायद आप यह पूछना चाहते हैं</div>
+        <div class="chips"><span class="chip">शिवरात्रि कब है</span><span class="chip">शिवरात्रि की विधि</span></div>
+        <div class="eyebrow">पुस्तकालय में</div>
+        <div class="libhit"><span class="ic">◈</span><span class="n">शिव चालीसा</span><span class="c">›</span></div>
+        <div class="libhit"><span class="ic">◈</span><span class="n">महा शिवरात्रि व्रत कथा</span><span class="c">›</span></div>
+      </div></div>
+    </div>
+    <div class="cap"><b>The abstain state is the feature, not the failure.</b> A wrong tithi or parana time does real harm, so below the confidence threshold the app says so plainly and falls back to chips plus the search it already had. This screen must feel as designed as the answer.</div>
+  </div>
+</div>
+
+<div class="phaselabel">Phase 1 · B — live. Type anything.</div>
+<p class="phasedesc">This phone runs the resolver from <code>docs/ask-resolver-prototype.mjs</code>, in the browser, over a lexicon built from the real registries. The panel beside it is the reviewer's window — not a shipped surface.</p>
+<div class="wrap">
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>▮▮▮ ⌁ ▰</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">जिज्ञासा</div></div>
+        <div class="askfield focus"><span class="mag">⌕</span>
+          <input id="q" placeholder="कुछ भी पूछिए…" autocomplete="off" /></div>
+        <div id="out"></div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Live-as-you-type.</b> Measured at ~0.27 ms per resolve on a 2,907-form lexicon (~1.3 ms derated for Hermes), so the resolver needs no debounce of its own — see PRD §13.7.</div>
+  </div>
+
+  <div class="trace">
+    <h4>Resolver trace</h4>
+    <p class="hint">Every stage of §13.1, exposed. This is also how the answer card's "गणना देखें" row is built — the app shows the same working, in Hindi.</p>
+    <pre id="tr">type a question…</pre>
+    <div class="metrics">
+      <div class="metric"><div class="l">Lexicon</div><div class="v" id="mlex">—</div></div>
+      <div class="metric"><div class="l">Resolve</div><div class="v" id="mms">—</div></div>
+      <div class="metric"><div class="l">Verdict</div><div class="v" id="mv">—</div></div>
+    </div>
+    <div class="try">
+      <div class="l">Try these</div>
+      <div id="try"></div>
+    </div>
+  </div>
+</div>
+
+<div class="phaselabel">Phase 2 — आज का विधान</div>
+<p class="phasedesc">The same resolver, asked on the user's behalf. Standing questions — <i>what is today · what does today ask of me · what is due in my sankalp</i> — composed into the Today strip's detail view. Not a sixth tab.</p>
+<div class="wrap">
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>6:12</span><span>▮▮▮ ⌁ ▰</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">आज का विधान</div></div>
+        <div class="answer">
+          <span class="tag">आज · गुरुवार</span>
+          <h3>शुक्ल एकादशी — मोक्षदा एकादशी</h3>
+          <div class="en">Shukla Ekadashi · Mokshada Ekadashi</div>
+          <div class="rows">
+            <div class="row"><span class="k">नक्षत्र</span><span class="v">रोहिणी · 14:38 तक</span></div>
+            <div class="row"><span class="k">पारण</span><span class="v">कल 06:52 – 09:14</span></div>
+            <div class="row"><span class="k">राहु काल</span><span class="v">13:32 – 15:02</span></div>
+          </div>
+          <div class="actions"><button class="act">व्रत विधि</button><button class="act sec">क्या खाएँ</button><button class="act sec">कथा</button></div>
+        </div>
+        <div class="answer" style="margin-top:11px">
+          <span class="tag">आपकी साधना</span>
+          <h3>हनुमान चालीसा · दिन 7 / 41</h3>
+          <div class="rows"><div class="row"><span class="k">कल</span><span class="v">पूर्ण हुआ</span></div></div>
+          <div class="actions"><button class="act">आज का पाठ</button></div>
+        </div>
+        <div class="answer" style="margin-top:11px">
+          <span class="tag">आपकी कुंडली</span>
+          <h3>गुरु महादशा · शनि अन्तर्दशा</h3>
+          <div class="rows"><div class="row"><span class="k">अवधि</span><span class="v">मार्च 2027 तक</span></div></div>
+          <div class="actions"><button class="act sec">कुंडली देखें</button></div>
+        </div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Every card here is a standing question.</b> Which is why Phase 2 costs weeks and not a quarter — the engine is Phase 1's, and the only new work is composition and the launch-path discipline in §13.7.</div>
+  </div>
+</div>
+
+<footer>
+  <b>What this prototype is honest about.</b> The resolver, the lexicon and the folding are real and run in this page.
+  The bhog, vrat-food and vastu answers are the shipped verified text, provenance included.
+  Panchang and muhurat <i>values</i> are illustrative — wiring them would mean running the astronomy engine in a browser,
+  which proves nothing the engine tests don't already prove.
+  The trace panel is a review tool, not a shipped surface.
+  <br /><br />
+  <b>Known gaps, deliberately left visible.</b> Three, all Phase 0 work, and all findable in the trace panel:
+  <br/>· <b>Class vs. instance</b> — ask <i>एकादशी कब है</i> and it answers with a specific named Ekadashi rather than
+  <i>the next one of any name</i> (PRD §13.3). Recurring families need to be modelled as classes.
+  <br/>· <b>Over-eager stemming</b> — ask <i>राहु काल</i> and the trace tags <code>deity=kali</code>, because <i>काल</i>
+  stems into <i>kali</i>. Harmless here (the intent takes no deity slot) but it is the same mechanism that mis-tags
+  <i>vrat me kya khaye</i> to a specific vrat rule. The fix is a specificity floor: generic tokens
+  (<i>vrat · kaal · puja · din</i>) must never entity-tag on their own.
+  <br/>· <b>Unseen phrasings abstain</b> rather than guess (§13.5) — which is correct behaviour, and still a recall gap.
+  <br/><br/>Every one of these was found by running the thing rather than describing it. That is the argument for
+  Phase 0 shipping a golden corpus before any UI.
+</footer>
+
+<script>
+/* ============================================================
+   The resolver — ported verbatim from docs/ask-resolver-prototype.mjs
+   ============================================================ */
+const DEVA={'क':'k','ख':'kh','ग':'g','घ':'gh','ङ':'n','च':'ch','छ':'chh','ज':'j','झ':'jh','ञ':'n',
+'ट':'t','ठ':'th','ड':'d','ढ':'dh','ण':'n','त':'t','थ':'th','द':'d','ध':'dh','न':'n','प':'p','फ':'ph',
+'ब':'b','भ':'bh','म':'m','य':'y','र':'r','ल':'l','व':'v','श':'sh','ष':'sh','स':'s','ह':'h','ळ':'l',
+'अ':'a','आ':'a','इ':'i','ई':'i','उ':'u','ऊ':'u','ऋ':'ri','ए':'e','ऐ':'ai','ओ':'o','औ':'au',
+'ा':'a','ि':'i','ी':'i','ु':'u','ू':'u','ृ':'ri','े':'e','ै':'ai','ो':'o','ौ':'au',
+'ं':'n','ँ':'n','ः':'h','्':'','़':'','ऽ':''};
+const CONS=/[क-हक़-य़]/, MATRA=/[ा-्]/, SCHWA='';
+function deva(s){
+  return [...s].map((c,i)=>{const t=DEVA[c]??c;
+    return CONS.test(c)&&!MATRA.test(s[i+1]??'')?t+SCHWA:t;}).join('')
+    .replace(new RegExp(SCHWA+'(?=\\s|$)','g'),'')   // Hindi word-final schwa deletion
+    .replaceAll(SCHWA,'a');
+}
+const IAST={'ā':'a','ī':'i','ū':'u','ṛ':'ri','ṝ':'ri','ḷ':'l','ṅ':'n','ñ':'n','ṭ':'t','ḍ':'d','ṇ':'n','ś':'sh','ṣ':'sh','ḥ':'h','ṁ':'m','ṃ':'m'};
+function fold(s){
+  return deva(s.normalize('NFC').toLowerCase().replace(/[āīūṛṝḷṅñṭḍṇśṣḥṁṃ]/g,c=>IAST[c]))
+    .replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim()
+    .replace(/aa|ee|oo/g,m=>m[0]).replace(/(.)\1+/g,'$1').replace(/w/g,'v').replace(/z/g,'j');
+}
+const stem=w=>w.replace(/(ji|ni|ya|a|i)$/,'');
+
+const ENTITIES=[{"type":"deity","id":"rama","hi":"श्री राम","en":"Shri Rama"},{"type":"deity","id":"krishna","hi":"श्री कृष्ण","en":"Shri Krishna"},{"type":"deity","id":"vishnu","hi":"श्री विष्णु","en":"Shri Vishnu"},{"type":"deity","id":"shiva","hi":"श्री शिव","en":"Shri Shiva"},{"type":"deity","id":"hanuman","hi":"श्री हनुमान","en":"Shri Hanuman"},{"type":"deity","id":"durga","hi":"माँ दुर्गा","en":"Maa Durga"},{"type":"deity","id":"ganesha","hi":"श्री गणेश","en":"Shri Ganesha"},{"type":"deity","id":"savitr","hi":"माँ गायत्री","en":"Maa Gayatri"},{"type":"deity","id":"saraswati","hi":"माँ सरस्वती","en":"Maa Saraswati"},{"type":"deity","id":"lakshmi","hi":"माँ लक्ष्मी","en":"Maa Lakshmi"},{"type":"deity","id":"surya","hi":"सूर्य देव","en":"Surya Dev"},{"type":"deity","id":"radha","hi":"राधा रानी","en":"Radha Rani"},{"type":"deity","id":"kartikeya","hi":"कार्तिकेय","en":"Kartikeya"},{"type":"deity","id":"kubera","hi":"कुबेर","en":"Kubera"},{"type":"deity","id":"ganga","hi":"माँ गंगा","en":"Maa Ganga"},{"type":"deity","id":"parvati","hi":"माँ पार्वती","en":"Maa Parvati"},{"type":"deity","id":"narasimha","hi":"नरसिंह","en":"Narasimha"},{"type":"deity","id":"dattatreya","hi":"दत्तात्रेय","en":"Dattatreya"},{"type":"deity","id":"shani","hi":"शनि देव","en":"Shani Dev"},{"type":"deity","id":"kali","hi":"माँ काली","en":"Maa Kali"},{"type":"deity","id":"navagraha","hi":"नवग्रह","en":"Navagraha"},{"type":"occasion","id":"griha-pravesh","hi":"गृह प्रवेश","en":"Griha Pravesh"},{"type":"occasion","id":"vahan","hi":"वाहन क्रय","en":"Vehicle Purchase"},{"type":"occasion","id":"namkaran","hi":"नामकरण","en":"Naming Ceremony"},{"type":"occasion","id":"vidyarambh","hi":"विद्यारम्भ","en":"Starting Education"},{"type":"occasion","id":"bhumi-pujan","hi":"भूमि पूजन","en":"Bhumi Pujan"},{"type":"occasion","id":"vyapar","hi":"व्यापार आरम्भ","en":"Starting a Business"},{"type":"occasion","id":"mundan","hi":"मुंडन","en":"Mundan"},{"type":"occasion","id":"annaprashan","hi":"अन्नप्राशन","en":"Annaprashan"},{"type":"occasion","id":"karnavedha","hi":"कर्णवेध","en":"Karnavedha"},{"type":"occasion","id":"upanayana","hi":"उपनयन","en":"Upanayana"},{"type":"occasion","id":"sampatti","hi":"सम्पत्ति क्रय","en":"Property Purchase"},{"type":"occasion","id":"swarna","hi":"स्वर्ण क्रय","en":"Gold Purchase"},{"type":"occasion","id":"yatra","hi":"यात्रा","en":"Travel"},{"type":"disha","id":"east","hi":"पूर्व","en":"East"},{"type":"disha","id":"southeast","hi":"आग्नेय","en":"South-East"},{"type":"disha","id":"south","hi":"दक्षिण","en":"South"},{"type":"disha","id":"southwest","hi":"नैऋत्य","en":"South-West"},{"type":"disha","id":"west","hi":"पश्चिम","en":"West"},{"type":"disha","id":"northwest","hi":"वायव्य","en":"North-West"},{"type":"disha","id":"north","hi":"उत्तर","en":"North"},{"type":"disha","id":"northeast","hi":"ईशान","en":"North-East"},{"type":"observance","id":"satyanarayana-vrat-katha","hi":"श्री सत्यनारायण व्रत कथा","en":"Shri Satyanarayana Vrat Katha"},{"type":"observance","id":"ekadashi-vrat-katha","hi":"एकादशी व्रत कथा","en":"Ekadashi Vrat Katha"},{"type":"observance","id":"utpanna-ekadashi-katha","hi":"उत्पन्ना एकादशी कथा","en":"Utpanna Ekadashi Katha"},{"type":"observance","id":"kamada-ekadashi-katha","hi":"कामदा एकादशी व्रत कथा","en":"Kamada Ekadashi Katha"},{"type":"observance","id":"varuthini-ekadashi-katha","hi":"वरूथिनी एकादशी व्रत कथा","en":"Varuthini Ekadashi Katha"},{"type":"observance","id":"mohini-ekadashi-katha","hi":"मोहिनी एकादशी व्रत कथा","en":"Mohini Ekadashi Katha"},{"type":"observance","id":"apara-ekadashi-katha","hi":"अपरा एकादशी व्रत कथा","en":"Apara Ekadashi Katha"},{"type":"observance","id":"nirjala-ekadashi-katha","hi":"निर्जला एकादशी व्रत कथा","en":"Nirjala Ekadashi Katha"},{"type":"observance","id":"yogini-ekadashi-katha","hi":"योगिनी एकादशी व्रत कथा","en":"Yogini Ekadashi Katha"},{"type":"observance","id":"devshayani-ekadashi-katha","hi":"देवशयनी एकादशी व्रत कथा","en":"Devshayani Ekadashi Katha"},{"type":"observance","id":"kamika-ekadashi-katha","hi":"कामिका एकादशी व्रत कथा","en":"Kamika Ekadashi Katha"},{"type":"observance","id":"dwadashi-vrat-katha","hi":"द्वादशी व्रत कथा","en":"Dwadashi Vrat Katha"},{"type":"observance","id":"sankashti-chaturthi-vrat-katha","hi":"संकष्टी चतुर्थी व्रत कथा","en":"Sankashti Chaturthi Vrat Katha"},{"type":"observance","id":"sakat-chauth-vrat-katha","hi":"सकट चौथ व्रत कथा","en":"Sakat Chauth Vrat Katha"},{"type":"observance","id":"ganesha-chaturthi-vrat-katha","hi":"गणेश चतुर्थी व्रत कथा","en":"Ganesha Chaturthi Vrat Katha"},{"type":"observance","id":"pradosha-vrat-katha","hi":"प्रदोष व्रत कथा","en":"Pradosha Vrat Katha"},{"type":"observance","id":"weekday-vrat-katha","hi":"वार व्रत कथा","en":"Weekday Vrat Katha"},{"type":"observance","id":"karwa-chauth-vrat-katha","hi":"करवा चौथ व्रत कथा","en":"Karwa Chauth Vrat Katha"},{"type":"observance","id":"ahoi-ashtami-vrat-katha","hi":"अहोई अष्टमी व्रत कथा","en":"Ahoi Ashtami Vrat Katha"},{"type":"observance","id":"diwali-legends","hi":"दीपावली कथा","en":"Diwali Legends"},{"type":"observance","id":"dhanteras-legends","hi":"धनतेरस कथा","en":"Dhanteras Legends"},{"type":"observance","id":"sharad-purnima-vrat-katha","hi":"शरद पूर्णिमा व्रत कथा","en":"Sharad Purnima Vrat Katha"},{"type":"observance","id":"kojagara-puja-katha","hi":"कोजागरा पूजा कथा","en":"Kojagara Puja Katha"},{"type":"observance","id":"holi-legends","hi":"होली कथा","en":"Holi Legends"},{"type":"observance","id":"raksha-bandhan-legends","hi":"रक्षा बंधन कथा","en":"Raksha Bandhan Legends"},{"type":"observance","id":"hartalika-teej-katha","hi":"हरतालिका तीज कथा","en":"Hartalika Teej Katha"},{"type":"observance","id":"maha-shivaratri-vrat-katha","hi":"महा शिवरात्रि व्रत कथा","en":"Maha Shivaratri Vrat Katha"},{"type":"observance","id":"gangaur-vrat-katha","hi":"गणगौर व्रत कथा","en":"Gangaur Vrat Katha"},{"type":"observance","id":"sheetala-saptami-vrat-katha","hi":"शीतला सप्तमी व्रत कथा (बसोड़ा)","en":"Sheetala Saptami Vrat Katha (Basoda)"},{"type":"observance","id":"bachh-baras-vrat-katha","hi":"बछ बारस व्रत कथा","en":"Bachh Baras Vrat Katha"},{"type":"observance","id":"rama-navami-vrat-katha","hi":"राम नवमी व्रत कथा","en":"Rama Navami Vrat Katha"},{"type":"observance","id":"sita-navami-vrat-katha","hi":"सीता नवमी व्रत कथा","en":"Sita Navami Vrat Katha"},{"type":"observance","id":"hanuman-jayanti-vrat-katha","hi":"हनुमान जयंती व्रत कथा","en":"Hanuman Jayanti Vrat Katha"},{"type":"observance","id":"akshaya-tritiya-vrat-katha","hi":"अक्षय तृतीया व्रत कथा","en":"Akshaya Tritiya Vrat Katha"},{"type":"observance","id":"vat-savitri-vrat-katha","hi":"वट सावित्री व्रत कथा","en":"Vat Savitri Vrat Katha"},{"type":"observance","id":"mangala-gauri-vrat-katha","hi":"मंगला गौरी व्रत कथा","en":"Mangala Gauri Vrat Katha"},{"type":"observance","id":"nag-panchami-vrat-katha","hi":"नाग पंचमी व्रत कथा","en":"Nag Panchami Vrat Katha"},{"type":"observance","id":"varalakshmi-vrat-katha","hi":"वरलक्ष्मी व्रत कथा","en":"Varalakshmi Vrat Katha"},{"type":"observance","id":"jayaparvati-vrat-katha","hi":"जयापार्वती व्रत कथा","en":"Jayaparvati Vrat Katha"},{"type":"observance","id":"mahalakshmi-vrat-katha","hi":"महालक्ष्मी व्रत कथा","en":"Mahalakshmi Vrat Katha"},{"type":"observance","id":"rishi-panchami-vrat-katha","hi":"ऋषि पंचमी व्रत कथा","en":"Rishi Panchami Vrat Katha"},{"type":"observance","id":"anant-chaturdashi-vrat-katha","hi":"अनंत चतुर्दशी व्रत कथा","en":"Anant Chaturdashi Vrat Katha"},{"type":"observance","id":"jivitputrika-vrat-katha","hi":"जीवित्पुत्रिका व्रत कथा","en":"Jivitputrika Vrat Katha"},{"type":"observance","id":"durva-ashtami-vrat-katha","hi":"दूर्वा अष्टमी व्रत कथा","en":"Durva Ashtami Vrat Katha"},{"type":"observance","id":"ashoka-ashtami-vrat-katha","hi":"अशोक अष्टमी व्रत कथा","en":"Ashoka Ashtami Vrat Katha"},{"type":"observance","id":"parashurama-jayanti-vrat-katha","hi":"परशुराम जयंती व्रत कथा","en":"Parashurama Jayanti Vrat Katha"},{"type":"observance","id":"narasimha-jayanti-vrat-katha","hi":"नरसिंह जयंती व्रत कथा","en":"Narasimha Jayanti Vrat Katha"},{"type":"observance","id":"ganga-saptami-vrat-katha","hi":"गंगा सप्तमी व्रत कथा","en":"Ganga Saptami Vrat Katha"},{"type":"observance","id":"buddha-purnima-vrat-katha","hi":"बुद्ध पूर्णिमा व्रत कथा","en":"Buddha Purnima Vrat Katha"},{"type":"observance","id":"narada-jayanti-vrat-katha","hi":"नारद जयंती व्रत कथा","en":"Narada Jayanti Vrat Katha"},{"type":"observance","id":"shravana-mahatmya","hi":"श्रावण माहात्म्य","en":"Shravana Mahatmya"},{"type":"observance","id":"kartika-mahatmya","hi":"कार्तिक माहात्म्य","en":"Kartika Mahatmya"},{"type":"observance","id":"putrada-ekadashi-katha","hi":"पुत्रदा एकादशी व्रत कथा","en":"Putrada Ekadashi Katha"},{"type":"observance","id":"aja-ekadashi-katha","hi":"अजा एकादशी व्रत कथा","en":"Aja Ekadashi Katha"},{"type":"observance","id":"indira-ekadashi-katha","hi":"इन्दिरा एकादशी व्रत कथा","en":"Indira Ekadashi Katha"},{"type":"observance","id":"mokshada-ekadashi-katha","hi":"मोक्षदा एकादशी व्रत कथा","en":"Mokshada Ekadashi Katha"},{"type":"observance","id":"papankusha-ekadashi-katha","hi":"पापांकुशा एकादशी व्रत कथा","en":"Papankusha Ekadashi Katha"},{"type":"observance","id":"parivartini-ekadashi-katha","hi":"परिवर्तिनी एकादशी व्रत कथा","en":"Parivartini Ekadashi Katha"},{"type":"observance","id":"rama-ekadashi-katha","hi":"रमा एकादशी व्रत कथा","en":"Rama Ekadashi Katha"},{"type":"observance","id":"amalaki-ekadashi-katha","hi":"आमलकी एकादशी व्रत कथा","en":"Amalaki Ekadashi Katha"},{"type":"observance","id":"dev-uthani-ekadashi-katha","hi":"देव उठनी एकादशी व्रत कथा","en":"Dev Uthani Ekadashi Katha"},{"type":"observance","id":"jaya-ekadashi-katha","hi":"जया एकादशी व्रत कथा","en":"Jaya Ekadashi Katha"},{"type":"observance","id":"papmochani-ekadashi-katha","hi":"पापमोचनी एकादशी व्रत कथा","en":"Papmochani Ekadashi Katha"},{"type":"observance","id":"saphala-ekadashi-katha","hi":"सफला एकादशी व्रत कथा","en":"Saphala Ekadashi Katha"},{"type":"observance","id":"shattila-ekadashi-katha","hi":"षटतिला एकादशी व्रत कथा","en":"Shattila Ekadashi Katha"},{"type":"observance","id":"vijaya-ekadashi-katha","hi":"विजया एकादशी व्रत कथा","en":"Vijaya Ekadashi Katha"},{"type":"observance","id":"bhai-dooj-katha","hi":"भाई दूज कथा","en":"Bhai Dooj Katha"},{"type":"observance","id":"dussehra-katha","hi":"दशहरा कथा","en":"Dussehra Katha"},{"type":"observance","id":"govardhan-puja-katha","hi":"गोवर्धन पूजा कथा","en":"Govardhan Puja Katha"},{"type":"observance","id":"guru-purnima-katha","hi":"गुरु पूर्णिमा कथा","en":"Guru Purnima Katha"},{"type":"observance","id":"janmashtami-katha","hi":"जन्माष्टमी कथा","en":"Janmashtami Katha"},{"type":"observance","id":"vasant-panchami-katha","hi":"वसंत पंचमी कथा","en":"Vasant Panchami Katha"},{"type":"observance","id":"akshaya-navami-katha","hi":"अक्षय नवमी कथा","en":"Akshaya Navami Katha"},{"type":"observance","id":"chhath-puja-katha","hi":"छठ पूजा कथा","en":"Chhath Puja Katha"},{"type":"observance","id":"ganga-dussehra-katha","hi":"गंगा दशहरा कथा","en":"Ganga Dussehra Katha"},{"type":"observance","id":"gita-jayanti-katha","hi":"गीता जयंती कथा","en":"Gita Jayanti Katha"},{"type":"observance","id":"navratri-start-katha","hi":"नवरात्रि प्रारंभ कथा","en":"Navratri Begins Katha"},{"type":"observance","id":"vivah-panchami-katha","hi":"विवाह पंचमी कथा","en":"Vivah Panchami Katha"},{"type":"observance","id":"amavasya-vrat-katha","hi":"अमावस्या व्रत कथा","en":"Amavasya Vrat Katha"},{"type":"observance","id":"dattatreya-jayanti-katha","hi":"दत्तात्रेय जयंती कथा","en":"Dattatreya Jayanti Katha"},{"type":"observance","id":"masik-durgashtami-katha","hi":"मासिक दुर्गाष्टमी कथा","en":"Masik Durgashtami Katha"},{"type":"observance","id":"masik-kalashtami-katha","hi":"मासिक कालाष्टमी कथा","en":"Masik Kalashtami Katha"},{"type":"observance","id":"masik-krishna-janmashtami-katha","hi":"मासिक कृष्ण जन्माष्टमी कथा","en":"Masik Krishna Janmashtami Katha"},{"type":"observance","id":"skanda-sashti-katha","hi":"स्कंद षष्ठी कथा","en":"Skanda Sashti Katha"},{"type":"observance","id":"vasant-panchami","hi":"वसंत पंचमी","en":"Vasant Panchami"},{"type":"observance","id":"maha-shivaratri","hi":"महा शिवरात्रि","en":"Maha Shivaratri"},{"type":"observance","id":"holi","hi":"होली","en":"Holi"},{"type":"observance","id":"ram-navami","hi":"राम नवमी","en":"Ram Navami"},{"type":"observance","id":"hanuman-jayanti","hi":"हनुमान जयंती","en":"Hanuman Jayanti"},{"type":"observance","id":"akshaya-tritiya","hi":"अक्षय तृतीया","en":"Akshaya Tritiya"},{"type":"observance","id":"parashurama-jayanti","hi":"परशुराम जयंती","en":"Parashurama Jayanti"},{"type":"observance","id":"ganga-saptami","hi":"गंगा सप्तमी","en":"Ganga Saptami"},{"type":"observance","id":"sita-navami","hi":"सीता नवमी","en":"Sita Navami"},{"type":"observance","id":"narasimha-jayanti","hi":"नरसिंह जयंती","en":"Narasimha Jayanti"},{"type":"observance","id":"buddha-purnima","hi":"बुद्ध पूर्णिमा","en":"Buddha Purnima"},{"type":"observance","id":"narada-jayanti","hi":"नारद जयंती","en":"Narada Jayanti"},{"type":"observance","id":"ganga-dussehra","hi":"गंगा दशहरा","en":"Ganga Dussehra"},{"type":"observance","id":"guru-purnima","hi":"गुरु पूर्णिमा","en":"Guru Purnima"},{"type":"observance","id":"nag-panchami","hi":"नाग पंचमी","en":"Nag Panchami"},{"type":"observance","id":"raksha-bandhan","hi":"रक्षा बंधन","en":"Raksha Bandhan"},{"type":"observance","id":"janmashtami","hi":"जन्माष्टमी","en":"Janmashtami"},{"type":"observance","id":"hartalika-teej","hi":"हरतालिका तीज","en":"Hartalika Teej"},{"type":"observance","id":"ganesh-chaturthi","hi":"गणेश चतुर्थी","en":"Ganesh Chaturthi"},{"type":"observance","id":"rishi-panchami","hi":"ऋषि पंचमी","en":"Rishi Panchami"},{"type":"observance","id":"durva-ashtami","hi":"दूर्वा अष्टमी","en":"Durva Ashtami"},{"type":"observance","id":"anant-chaturdashi","hi":"अनंत चतुर्दशी","en":"Anant Chaturdashi"},{"type":"observance","id":"navratri-start","hi":"नवरात्रि प्रारंभ","en":"Navratri Begins"},{"type":"observance","id":"dussehra","hi":"दशहरा","en":"Dussehra"},{"type":"observance","id":"sharad-purnima","hi":"शरद पूर्णिमा","en":"Sharad Purnima"},{"type":"observance","id":"kojagara-puja","hi":"कोजागरा पूजा","en":"Kojagara Puja"},{"type":"observance","id":"karwa-chauth","hi":"करवा चौथ","en":"Karwa Chauth"},{"type":"observance","id":"ahoi-ashtami","hi":"अहोई अष्टमी","en":"Ahoi Ashtami"},{"type":"observance","id":"dhanteras","hi":"धनतेरस","en":"Dhanteras"},{"type":"observance","id":"diwali","hi":"दीपावली","en":"Diwali"},{"type":"observance","id":"govardhan-puja","hi":"गोवर्धन पूजा","en":"Govardhan Puja"},{"type":"observance","id":"bhai-dooj","hi":"भाई दूज","en":"Bhai Dooj"},{"type":"observance","id":"chhath-puja","hi":"छठ पूजा","en":"Chhath Puja"},{"type":"observance","id":"dev-uthani-ekadashi","hi":"देव उठनी एकादशी","en":"Dev Uthani Ekadashi"},{"type":"observance","id":"tulasi-vivah","hi":"तुलसी विवाह","en":"Tulasi Vivah"},{"type":"observance","id":"akshaya-navami","hi":"अक्षय नवमी","en":"Akshaya Navami"},{"type":"observance","id":"vivah-panchami","hi":"विवाह पंचमी","en":"Vivah Panchami"},{"type":"observance","id":"gita-jayanti","hi":"गीता जयंती","en":"Gita Jayanti"},{"type":"observance","id":"dattatreya-jayanti","hi":"दत्तात्रेय जयंती","en":"Dattatreya Jayanti"},{"type":"observance","id":"sankashti-chaturthi-vrat","hi":"संकष्टी चतुर्थी व्रत","en":"Sankashti Chaturthi Vrat"},{"type":"observance","id":"vinayaka-chaturthi-vrat","hi":"शुक्ल चतुर्थी व्रत","en":"Shukla Chaturthi Vrat"},{"type":"observance","id":"pradosh-vrat-shukla","hi":"शुक्ल प्रदोष व्रत","en":"Shukla Pradosh Vrat"},{"type":"observance","id":"pradosh-vrat-krishna","hi":"कृष्ण प्रदोष व्रत","en":"Krishna Pradosh Vrat"},{"type":"observance","id":"dwadashi-vrat-shukla","hi":"शुक्ल द्वादशी व्रत","en":"Shukla Dwadashi Vrat"},{"type":"observance","id":"dwadashi-vrat-krishna","hi":"कृष्ण द्वादशी व्रत","en":"Krishna Dwadashi Vrat"},{"type":"observance","id":"masik-shivaratri","hi":"मासिक शिवरात्रि","en":"Masik Shivaratri"},{"type":"observance","id":"purnima-vrat","hi":"पूर्णिमा व्रत","en":"Purnima Vrat"},{"type":"observance","id":"shree-satyanarayan-vrat","hi":"श्री सत्यनारायण व्रत","en":"Shree Satyanarayan Vrat"},{"type":"observance","id":"amavasya-vrat","hi":"अमावस्या व्रत","en":"Amavasya Vrat"},{"type":"observance","id":"skanda-sashti","hi":"स्कंद षष्ठी","en":"Skanda Sashti"},{"type":"observance","id":"masik-durgashtami","hi":"मासिक दुर्गाष्टमी","en":"Masik Durgashtami"},{"type":"observance","id":"masik-kalashtami","hi":"मासिक कालाष्टमी","en":"Masik Kalashtami"},{"type":"observance","id":"masik-krishna-janmashtami","hi":"मासिक कृष्ण जन्माष्टमी","en":"Masik Krishna Janmashtami"},{"type":"observance","id":"sawan-somwar-vrat","hi":"सावन सोमवार व्रत","en":"Sawan Somwar Vrat"},{"type":"observance","id":"mangala-gauri-vrat","hi":"मंगला गौरी व्रत","en":"Mangala Gauri Vrat"},{"type":"observance","id":"varalakshmi-vrat","hi":"वरलक्ष्मी व्रत","en":"Varalakshmi Vrat"},{"type":"observance","id":"vat-savitri-vrat","hi":"वट सावित्री व्रत","en":"Vat Savitri Vrat"},{"type":"observance","id":"jivitputrika-vrat","hi":"जीवित्पुत्रिका व्रत","en":"Jivitputrika Vrat"},{"type":"observance","id":"mahalakshmi-vrat","hi":"महालक्ष्मी व्रत","en":"Mahalakshmi Vrat"},{"type":"observance","id":"mahadwadashi","hi":"महाद्वादशी","en":"Mahadwadashi"},{"type":"observance","id":"karthigai-vrat","hi":"कार्तिगई व्रत","en":"Karthigai Vrat"},{"type":"observance","id":"shraddha-dates","hi":"श्राद्ध तिथियां","en":"Shraddha Dates"},{"type":"observance","id":"rohini-vrat","hi":"रोहिणी व्रत","en":"Rohini Vrat"},{"type":"observance","id":"chandra-darshan","hi":"चंद्र दर्शन","en":"Chandra Darshan"},{"type":"observance","id":"ishti-anvadhan","hi":"इष्टि और अन्वाधान","en":"Ishti and Anvadhan"},{"type":"observance","id":"iskcon-ekadashi","hi":"इस्कॉन एकादशी","en":"ISKCON Ekadashi"},{"type":"observance","id":"purushottam-maas","hi":"पुरुषोत्तम मास","en":"Purushottam Maas"},{"type":"observance","id":"chaturmasa","hi":"चातुर्मास","en":"Chaturmasa"},{"type":"observance","id":"navagraha-weekday-fasts","hi":"नवग्रह वार व्रत","en":"Navagraha Weekdays Fasting"},{"type":"observance","id":"deity-weekday-fasts","hi":"देवता वार व्रत","en":"Deities Weekdays Fasting"},{"type":"observance","id":"dashavatara-vrat","hi":"दशावतार व्रत","en":"Dashavatara Vrat"},{"type":"observance","id":"sakat-chauth","hi":"सकट चौथ","en":"Sakat Chauth"},{"type":"observance","id":"gangaur","hi":"गणगौर","en":"Gangaur"},{"type":"observance","id":"jayaparvati-vrat","hi":"जयापार्वती व्रत","en":"Jayaparvati Vrat"},{"type":"observance","id":"ashoka-ashtami","hi":"अशोक अष्टमी","en":"Ashoka Ashtami"},{"type":"observance","id":"asha-dashami","hi":"आशा दशमी","en":"Asha Dashami"},{"type":"observance","id":"shitala-saptami","hi":"शीतला सप्तमी","en":"Shitala Saptami"},{"type":"observance","id":"bachh-baras","hi":"बछ बारस","en":"Bachh Baras"}];
+const ALIASES=[['bajrangbali','deity','hanuman'],['hanumanji','deity','hanuman'],['shivji','deity','shiva'],
+  ['ganpati','deity','ganesha'],['gruh pravesh','occasion','griha-pravesh'],['house warming','occasion','griha-pravesh'],
+  ['mandir','room','puja'],['puja room','room','puja'],['pooja ghar','room','puja']];
+const KEYED=[];
+for(const e of ENTITIES){ for(const f of [e.hi,e.en,e.id.replace(/-/g,' ')]){
+  const k=fold(f); if(k.length>2) KEYED.push({type:e.type,id:e.id,label:e.hi,key:k}); } }
+for(const [f,type,id] of ALIASES) KEYED.push({type,id,label:f,key:fold(f)});
+
+const INTENTS=[
+ {id:'observance.next',engine:'festivalEngine.nextOccurrence()',slots:['observance'],
+  triggers:['kab hai','hai kya','kab aa','when is','kb hai','kab padegi','kitni tarikh','kab h']},
+ {id:'muhurat.event',engine:'eventMuhurat.scan() → MuhuratFinder(prefilled)',slots:['occasion'],
+  triggers:['muhurat','muhurt','shubh din','auspicious','shubh muhurat']},
+ {id:'bhog.offer',engine:'bhogContent.forDeity()',slots:['deity'],
+  triggers:['kya chadhaye','kya chadhaen','bhog','naivedya','what to offer','kya arpan','prasad kya']},
+ {id:'bhog.avoid',engine:'bhogContent.prohibited()',slots:['deity'],
+  triggers:['kya nahi chadha','nahi chadha','must not offer','nishedh','varjit','kya na chadha']},
+ {id:'vastu.direction',engine:'vastu.roomGuidance()',slots:['room','disha'],
+  triggers:['kis disha','which direction','disha me','disha mein','kaun si disha','kidhar']},
+ {id:'muhurat.now',engine:'muhurat.forNow()',slots:[],
+  triggers:['rahu kal','rahukal','rahu kala','choghadiya','abhi shubh','shubh samay']},
+ {id:'vrat.how',engine:'upvasContent.forRule()',slots:['observance'],
+  triggers:['vrat kaise','kaise kare','vrat vidhi','how to fast','vrat me kya kha','vrat mein kya kha']},
+ {id:'panchang.day',engine:'panchang.forDate()',slots:[],
+  triggers:['aaj kya','kaun si tithi','tithi kya','tithi hai','whats today','nakshatra kya','aaj ki tithi']},
+];
+for(const it of INTENTS) it.folded=it.triggers.map(fold);
+
+function resolve(q){
+  const key=fold(q), words=key.split(' '), found={};
+  for(const e of KEYED){
+    const head=e.key.split(' ').pop();
+    const hit=key.includes(e.key)||words.some(w=>stem(w)===stem(head));
+    if(hit&&(!found[e.type]||e.key.length>found[e.type].key.length)) found[e.type]=e;
+  }
+  let best=null;
+  for(const it of INTENTS){
+    const trig=it.folded.find(t=>key.includes(t)); if(!trig) continue;
+    const filled=it.slots.filter(s=>found[s]);
+    const score=trig.length+filled.length*10+(it.slots.length&&!filled.length?-8:0);
+    if(!best||score>best.score) best={it,trig,score,filled,found};
+  }
+  return {key,found,best,ok:!!best&&best.score>=6};
+}
+
+/* ============================================================
+   Answer cards. Bhog / vrat-food / vastu text is verbatim shipped
+   content; panchang + muhurat values are illustrative.
+   ============================================================ */
+const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const rows=a=>a.map(([k,v,neg])=>`<div class="row${neg?' neg':''}"><span class="k">${esc(k)}</span><span class="v">${esc(v)}</span></div>`).join('');
+const acts=a=>`<div class="actions">${a.map((t,i)=>`<button class="act${i?' sec':''}">${esc(t)}</button>`).join('')}</div>`;
+const prov=(s,n)=>`<div class="prov"><b>स्रोत · ${esc(s)}</b><br/>${esc(n)}</div>`;
+const work=t=>`<details class="working"><summary>गणना देखें · show the working</summary><div class="t">${t.map(esc).join('<br/>')}</div></details>`;
+
+const CARDS={
+ 'bhog.offer':(f)=>({tag:'नैवेद्य · '+(f.deity?.label??''),h:'श्री गणेश का नैवेद्य',en:'Naivedya for Shri Ganesha',
+   rows:[['अर्पित','मोदक या लड्डू; उपलब्ध न हो तो फल और नारियल'],['अर्पित','कोमल दूर्वा और लाल पुष्प'],
+         ['न चढ़ाएँ','सामान्य गणेश-पूजा में तुलसी न चढ़ाएँ।',1]],
+   note:'कुछ प्रकाशित गणेश चतुर्थी पद्धतियाँ उसी पर्व के दिन तुलसी का अपवाद मानती हैं; अपने परिवार की विधि में ऐसा स्पष्ट हो तभी अपनाएँ।',
+   src:['siddhivinayak.org · incredibleindia.gov.in','Verified 2026-08-25 — modak/laddoo, fruit & coconut, durva, and the ordinary Tulsi restriction are directly attested.'],
+   acts:['सामग्री सूची','गणेश चालीसा','विधि']}),
+ 'bhog.avoid':(f)=>({tag:'निषेध',h:'श्री गणेश — क्या न चढ़ाएँ',en:'What not to offer',
+   rows:[['न चढ़ाएँ','सामान्य गणेश-पूजा में तुलसी न चढ़ाएँ।',1]],
+   note:'कुछ प्रकाशित गणेश चतुर्थी पद्धतियाँ उसी पर्व के दिन तुलसी का अपवाद मानती हैं।',
+   src:['siddhivinayak.org','Verified 2026-08-25. The UI states the ordinary rule and names the exception rather than claiming a universal ban.'],
+   acts:['क्या चढ़ाएँ','विधि']}),
+ 'vrat.how':()=>({tag:'व्रत भोजन',h:'एकादशी का भोग और फलाहार',en:'Ekadashi offering and food',
+   rows:[['ग्राह्य','फल, मेवे और नारियल'],['ग्राह्य','साबूदाना, सिंघाड़ा, आलू, शकरकन्द और मूँगफली'],
+         ['वर्जित','चावल, गेहूँ, अन्य अन्न, दालें और फलियाँ',1],['वर्जित','प्याज, लहसुन और मांसाहार',1]],
+   note:'कुट्टू और सामक कुछ परिवारों में मान्य हैं और कुछ वैष्णव परम्पराओं में विवादित; अपने घर या सम्प्रदाय की रीति रखें।',
+   src:['drikpanchang.com · iskconbangalore.org','Verified 2026-08-25 — grains/beans excluded, food offered before eating, parana follows on Dwadashi.'],
+   acts:['पारण का समय','सामग्री सूची']}),
+ 'vastu.direction':()=>({tag:'वास्तु दिशा',h:'पूजा स्थान · घर का मंदिर',en:'Puja space · the home shrine',
+   rows:[['दिशा','ईशान कोण — उत्तर-पूर्व'],['मुख','पूजा करते समय मुख पूर्व या उत्तर की ओर रहे'],
+         ['न रखें','शौचालय-स्नानघर से सटी दीवार पर या सीढ़ियों के नीचे नहीं',1]],
+   src:['roomGuidance.ts · shipped','Classical convention with its reason — never a verdict on your home.'],
+   acts:['दिशा चक्र खोलें','घर का मंदिर']}),
+ 'observance.next':(f)=>({tag:'अगली तिथि',h:(f.observance?.label??'')+' — 12 दिसम्बर, गुरुवार',en:'Illustrative date — the shipped card renders the engine result',
+   rows:[['तिथि','शुक्ल एकादशी'],['पारण','13 दिसम्बर 06:52 – 09:14']],
+   work:['festivalEngine.nextOccurrence(rule, today, location)','→ prevailingTithi() · sunrise-anchored','→ upvasParana() for the parana window'],
+   acts:['व्रत विधि','क्या खाएँ','याद दिलाएँ']}),
+ 'muhurat.event':(f)=>({tag:'शुभ मुहूर्त',h:(f.occasion?.label??'')+' — 3 शुभ दिन',en:'Prefills the Muhurat Finder with this occasion',
+   rows:[['नवम्बर','11, 25, 26 — नक्षत्र व वार अनुकूल'],['टाला गया','पंचक, भद्रा, अधिक मास',1]],
+   work:['eventMuhurat.scan(EVENT_RULES[occasion], window, location)','→ nakshatra · vara · tithi · masa factors','→ dosha filter: rikta, amavasya, bhadra, panchak…'],
+   acts:['मुहूर्त खोज खोलें','याद दिलाएँ']}),
+ 'muhurat.now':()=>({tag:'आज',h:'राहु काल · 13:32 – 15:02',en:'Illustrative — computed from sunrise/sunset for your location',
+   rows:[['अभी','शुभ चौघड़िया — 11:14 तक'],['अभिजित','11:48 – 12:36']],
+   work:['muhurat.forNow(date, location)','→ Choghadiya · Rahu Kaal · Abhijit — pure'],
+   acts:['आज का मुहूर्त']}),
+ 'panchang.day':()=>({tag:'आज · गुरुवार',h:'शुक्ल एकादशी',en:'Illustrative — the shipped card renders the engine result',
+   rows:[['नक्षत्र','रोहिणी · 14:38 तक'],['मास','मार्गशीर्ष'],['संवत्','विक्रम 2083']],
+   work:['panchang.forDate(today, location) — astronomy-engine'],
+   acts:['पंचांग खोलें']}),
+};
+
+function render(r,q){
+  const out=document.getElementById('out');
+  if(!q.trim()){ out.innerHTML=''; return; }
+  if(!r.ok){
+    out.innerHTML=`<div class="abstain"><div class="t">इसका उत्तर अभी नहीं दे सकते।</div>
+      <div class="s">We can't answer that one yet — here's what we found instead.</div></div>
+      <div class="eyebrow">पुस्तकालय में खोजें</div>
+      <div class="libhit"><span class="ic">⌕</span><span class="n">${esc(q)}</span><span class="c">›</span></div>`;
+    return;
+  }
+  const c=CARDS[r.best.it.id](r.found);
+  out.innerHTML=`<div class="answer"><span class="tag">${esc(c.tag)}</span>
+    <h3>${esc(c.h)}</h3><div class="en">${esc(c.en)}</div>
+    <div class="rows">${rows(c.rows)}</div>
+    ${c.work?work(c.work):''}
+    ${c.note?`<div class="prov">${esc(c.note)}</div>`:''}
+    ${c.src?prov(c.src[0],c.src[1]):''}
+    ${acts(c.acts)}</div>`;
+}
+
+const qEl=document.getElementById('q'), trEl=document.getElementById('tr');
+document.getElementById('mlex').textContent=KEYED.length+' forms';
+function run(){
+  const q=qEl.value;
+  const t0=performance.now(); const r=resolve(q); const ms=performance.now()-t0;
+  render(r,q);
+  document.getElementById('mms').textContent=q.trim()?ms.toFixed(3)+' ms':'—';
+  document.getElementById('mv').innerHTML=!q.trim()?'—':(r.ok?'<span style="color:#c9a227">answer</span>':'<span style="color:#c07a55">abstain</span>');
+  if(!q.trim()){ trEl.textContent='type a question…'; return; }
+  const tags=Object.entries(r.found).map(([t,e])=>`  ${t.padEnd(11)}= ${e.id}  <span class="dim">(matched "${e.label}")</span>`);
+  const scores=INTENTS.map(it=>{
+    const trig=it.folded.find(t=>fold(q).includes(t));
+    if(!trig) return null;
+    const filled=it.slots.filter(s=>r.found[s]);
+    const sc=trig.length+filled.length*10+(it.slots.length&&!filled.length?-8:0);
+    return `  ${it.id.padEnd(18)} ${String(sc).padStart(3)}  <span class="dim">trigger "${trig}"${filled.length?', slot '+filled.join('+'):', no slot −8'}</span>`;
+  }).filter(Boolean);
+  trEl.innerHTML=
+`<span class="dim">1 fold</span>      "${esc(fold(q))}"
+<span class="dim">2 tag</span>
+${tags.length?tags.join('\n'):'  <span class="dim">— no entity matched</span>'}
+<span class="dim">3 score</span>  <span class="dim">(threshold 6)</span>
+${scores.length?scores.join('\n'):'  <span class="dim">— no trigger lexeme matched</span>'}
+<span class="dim">4</span> ${r.ok
+  ? `<span class="ok">→ ${r.best.it.id}</span>  <span class="dim">calls</span> ${esc(r.best.it.engine)}`
+  : '<span class="no">→ abstain</span>  <span class="dim">fallback: did-you-mean + content search</span>'}`;
+}
+qEl.addEventListener('input',run);
+
+const TRY=['गणेश जी को क्या चढ़ाएँ','ganpati ko kya chadhaye','ganesh ji ko kya nahi chadhana',
+  'मंदिर किस दिशा में','ekadashi kab hai','एकादशी कब है','vrat me kya khaye','राहु काल',
+  'gruh pravesh muhurt','आज की तिथि','kya mujhe naukri milegi','what is karma'];
+const tryEl=document.getElementById('try');
+for(const t of TRY){
+  const b=document.createElement('button');
+  b.textContent=t;
+  if(t.includes('naukri')||t.includes('karma')) b.className='neg';
+  b.onclick=()=>{qEl.value=t;run();qEl.focus();};
+  tryEl.appendChild(b);
+}
+
+/* rotating placeholder on artboard A */
+const ROT=['आज की तिथि क्या है?','एकादशी कब है?','गणेश जी को क्या चढ़ाएँ?','मंदिर किस दिशा में?','राहु काल कब है?'];
+let ri=0; const rot=document.getElementById('rot');
+rot.placeholder=ROT[0];
+setInterval(()=>{ri=(ri+1)%ROT.length;rot.placeholder=ROT[ri];},2200);
+</script>
+</body>
+</html>

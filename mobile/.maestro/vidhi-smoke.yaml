@@ -7,9 +7,10 @@
 #
 # Verifies:
 #   1. Panchang tab → Vrat & Parv → Puja Vidhi tile → vidhi catalog.
-#   2. The six-entry catalog renders; the Satyanarayan card opens detail.
-#   3. Detail: private provenance, duration, the routine-style samagri summary
-#      + checklist (a §31 check circle toggles), and the तैयारी/पूजा segments.
+#   2. The seven-entry catalog renders; the Satyanarayan card opens detail.
+#   3. Detail: private provenance, sourced Bhog/food guidance, duration, the
+#      routine-style samagri summary + occurrence-scoped kitchen/checklist rows,
+#      and the तैयारी/पूजा segments.
 #   4. पूजा segment: phase-grouped step list + "Begin the puja" → conduct mode.
 #   5. Conduct: swipe-only reader paging reaches the dhyana mantra card; the
 #      bottom carousel dots replace previous/next controls; back returns.
@@ -26,6 +27,13 @@ appId: com.prashantsharma.vedansh
 # ── Step 2: Reading language → English (More tab → Language picker) ──
 - tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
+# The ऐप section (Language/Reading size) sits below the fold on standard-height
+# iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
+# tapping the off-screen row's estimated center hits the tab bar instead. Scroll first.
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
 - tapOn: "Language,.*"
 - waitForAnimationToEnd
 - extendedWaitUntil:
@@ -44,11 +52,19 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 
 # ── Step 4: The पूजा विधि tile opens the vidhi catalog ──
-- scrollUntilVisible:
-    element:
-      text: "Puja vidhi catalog,.*"
-    direction: DOWN
-    centerElement: true
+# Keep the drag on the page gutter so the nested horizontal Upcoming rail and
+# category Pressables cannot claim it. Several measured drags are required on
+# the compact iOS viewport before the intentionally final Puja Vidhi tile enters.
+- repeat:
+    times: 8
+    commands:
+      - swipe:
+          start: 10%,85%
+          end: 10%,15%
+          duration: 700
+      - waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Puja vidhi catalog,.*"
     timeout: 15000
 - tapOn: "Puja vidhi catalog,.*"
 - waitForAnimationToEnd
@@ -66,28 +82,90 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Prepare · Samagri"
 - assertVisible: "Puja · 16 steps"
 
+# PRD-23: verified guidance renders above samagri and its groceries have their
+# own ledger rather than changing the ritual-samagri progress count.
+- assertVisible: "Bhog & food guidance"
+- assertVisible: "Shri Satyanarayan prasad"
+# Collapse the long ritual-samagri ledger before inspecting the separate Bhog
+# groceries. This also proves the summary remains the sole ritual-progress gate.
+- scrollUntilVisible:
+    element:
+      id: "vidhi-samagri-summary"
+    direction: DOWN
+    centerElement: true
+    timeout: 15000
+- tapOn: { id: "vidhi-samagri-summary" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: "vidhi-bhog-shopping-ledger"
+    direction: DOWN
+    centerElement: false
+    visibilityPercentage: 20
+    speed: 80
+    timeout: 15000
+- assertVisible: "Bhog & kitchen shopping"
+- assertVisible: "Semolina or wheat flour"
+- tapOn: { id: "vidhi-bhog-shopping-semolina-flour" }
+- runFlow:
+    when: { platform: iOS }
+    commands:
+      - assertVisible:
+          id: "vidhi-bhog-shopping-semolina-flour"
+          text: "checkbox, checked"
+- runFlow:
+    when: { platform: Android }
+    commands:
+      - assertVisible:
+          id: "vidhi-bhog-shopping-semolina-flour"
+          checked: true
+
 # ── Step 6: तैयारी — toggle one samagri check circle ──
 - scrollUntilVisible:
     element:
-      text: "Coconut (shriphala)"
-    direction: DOWN
-    centerElement: true
-    timeout: 10000
-- tapOn: "Coconut (shriphala)"
-- assertVisible:
-    text: "Coconut (shriphala)"
-    checked: true
-
-# ── Step 7: पूजा segment — phase-grouped steps, then begin ──
-- scrollUntilVisible:
-    element:
-      text: "Puja · 16 steps"
+      id: "vidhi-samagri-summary"
     direction: UP
     centerElement: true
     timeout: 10000
+- tapOn: { id: "vidhi-samagri-summary" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: "vidhi-samagri-Dhoop / incense sticks"
+    direction: DOWN
+    centerElement: true
+    timeout: 15000
+- tapOn: { id: "vidhi-samagri-Dhoop / incense sticks" }
+- runFlow:
+    when: { platform: iOS }
+    commands:
+      - assertVisible:
+          id: "vidhi-samagri-Dhoop / incense sticks"
+          text: "checkbox, checked"
+- runFlow:
+    when: { platform: Android }
+    commands:
+      - assertVisible:
+          id: "vidhi-samagri-Dhoop / incense sticks"
+          checked: true
+
+# ── Step 7: पूजा segment — phase-grouped steps, then begin ──
+# The mode selector is sticky, so it remains tappable while the ledger scrolls.
 - tapOn: "Puja · 16 steps"
 - waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Preparation"
+    direction: UP
+    centerElement: true
+    timeout: 15000
 - assertVisible: "Preparation"
+- scrollUntilVisible:
+    element:
+      text: "Main Puja"
+    direction: DOWN
+    centerElement: true
+    timeout: 15000
 - assertVisible: "Main Puja"
 - scrollUntilVisible:
     element:
@@ -119,7 +197,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "3 / 16"
 
 # ── Step 9: Exit conduct (state saved) → overview → out ──
-- tapOn: "Back to vidhi overview"
+- tapOn: "Back to puja overview"
 - waitForAnimationToEnd
 - tapOn: "Back"
 - waitForAnimationToEnd
@@ -127,6 +205,11 @@ appId: com.prashantsharma.vedansh
 # ── Step 10: Restore Hindi (best-effort) ──
 - tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
+    optional: true
 - tapOn:
     text: "Language,.*"
     optional: true

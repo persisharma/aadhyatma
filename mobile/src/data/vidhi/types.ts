@@ -27,7 +27,10 @@ export type VidhiMantra = {
 /** A hand-off into a text the app already ships — single source of truth. */
 export type VidhiRef =
   | { kind: 'katha'; id: string } // KathaContentEntry id (KATHA_CONTENT_BY_ID)
-  | { kind: 'section'; id: string }; // LibraryEntry id in texts.ts
+  | { kind: 'section'; id: string } // LibraryEntry id in texts.ts
+  | { kind: 'gita'; chapter: number }; // One Bhagavad Gita adhyaya (1–18)
+
+export type VidhiAnchor = 'festival' | 'personal-tithi';
 
 export type VidhiStep = {
   id: string;
@@ -69,6 +72,8 @@ export type VidhiEntry = {
   id: string;
   titleHi: string;
   titleEn: string;
+  /** Where occurrence dates come from. Omitted means the festival engine. */
+  anchor?: VidhiAnchor;
   /** Observance rule ids (festivals.ts) whose day panel offers this vidhi. */
   festivalIds: string[];
   /** Deity tags from the shared Deity union (texts.ts / deities.ts). */

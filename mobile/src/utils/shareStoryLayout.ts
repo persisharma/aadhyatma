@@ -16,13 +16,23 @@
  *    to fill.
  * 2. **Chrome** — Story and Reel both paint UI over the frame: the avatar and
  *    close button at the top, the reply bar at the bottom of a Story, the caption
- *    and audio strip at the bottom of a Reel, and the like/comment/share rail down
- *    the right edge of a Reel. The insets below are the **union** of Story and
- *    Reel chrome, so one exported image is safe posted either way.
+ *    and audio strip at the bottom of a Reel. The vertical insets below are the
+ *    **union** of Story and Reel chrome, so one exported image is safe posted
+ *    either way.
  *
- * All values are in dp against the {@link storyCanvas} render size; the capture
- * is taken at 2× (1080×1920). Pure module — the unit tests import it without
- * bootstrapping React Native.
+ * ## Why there is no horizontal inset
+ *
+ * A Reel also paints a like/comment/share rail down the right edge (~100 px). An
+ * inset wide enough to clear it would force the card below its native 540 dp
+ * width, i.e. a scale transform on the captured view — and the card's type sizes
+ * and its meaning-fit budget are tuned against exactly 540×675 (§39). The cheaper
+ * trade is to run the card full-bleed horizontally and let the rail sit over its
+ * 28 dp internal padding: the rail overlaps the card's margin, never its text.
+ * That keeps the capture a plain, unscaled view hierarchy.
+ *
+ * The insets below are therefore chosen so the card fits at **scale 1**. All
+ * values are dp against {@link storyCanvas}; the capture is taken at 2×.
+ * Pure module — the unit tests import it without bootstrapping React Native.
  */
 
 /** Render size of the off-screen story canvas, in dp. 2× = the 1080×1920 export. */
@@ -33,15 +43,18 @@ export const STORY_OUTPUT_WIDTH = 1080;
 export const STORY_OUTPUT_HEIGHT = 1920;
 
 /**
- * Chrome insets in dp, the union of what Story and Reel paint over the frame.
+ * Vertical chrome insets in dp, the union of what Story and Reel paint over the
+ * frame. Horizontal is 0 by design — see the header.
  *
- * - `top` 125 (250 px) — the Story avatar/progress row and the Reel header.
- * - `bottom` 170 (340 px) — the Reel caption + audio strip, which reaches lower
+ * - `top` 120 (240 px) — the Story avatar/progress row and the Reel header.
+ * - `bottom` 165 (330 px) — the Reel caption + audio strip, which reaches lower
  *   than the Story reply bar.
- * - `horizontal` 50 (100 px) — the Reel action rail on the right; mirrored on the
- *   left so the card stays optically centred rather than nudged off-axis.
+ *
+ * Their sum leaves exactly the card's 675 dp height, so `placeStoryCard` lands on
+ * scale 1 for the shipped card size. Change one and the card starts scaling —
+ * `shareStoryLayout.test.ts` fails loudly if that happens.
  */
-export const storySafeInsets = { top: 125, bottom: 170, horizontal: 50 } as const;
+export const storySafeInsets = { top: 120, bottom: 165, horizontal: 0 } as const;
 
 /** The rectangle inside the canvas that neither format crops nor covers. */
 export function storySafeBox(): { x: number; y: number; width: number; height: number } {
@@ -54,9 +67,9 @@ export function storySafeBox(): { x: number; y: number; width: number; height: n
 }
 
 export type StoryCardPlacement = {
-  /** Uniform scale applied to the natively-sized card. */
+  /** Uniform scale. 1 at the shipped card size — the canvas is sized to make it so. */
   scale: number;
-  /** Size of the scaled card's visual box, in dp. */
+  /** Size of the placed card's visual box, in dp. */
   width: number;
   height: number;
   /** Top-left of that box within the canvas, in dp. */
@@ -65,19 +78,17 @@ export type StoryCardPlacement = {
 };
 
 /**
- * Place the share card inside the safe box: the largest uniform scale that fits,
- * centred in the safe box (**not** in the canvas — centring in the canvas would
- * push the card's footer under the Reel caption strip).
+ * Place the share card inside the safe box, centred **in the safe box, not the
+ * canvas** — canvas-centring would push the card's branding footer down under the
+ * Reel caption strip.
  *
- * The card is scaled rather than re-laid-out at story dimensions on purpose. Its
- * type sizes are hand-tuned against 540×675 (§39) and its meaning block fits
- * itself to that geometry; re-flowing it at a different width would re-wrap the
- * verse lines and silently change a composition that is already guarded by
- * `shareCardFit` / `shareCardType` tests.
+ * The scale is a backstop, not a design tool: the insets are chosen so a
+ * 540×675 card fits at 1:1. It only drops below 1 if the card outgrows the band,
+ * which the tests treat as a regression to look at rather than absorb silently.
  */
 export function placeStoryCard(cardWidth: number, cardHeight: number): StoryCardPlacement {
   const safe = storySafeBox();
-  const scale = Math.min(safe.width / cardWidth, safe.height / cardHeight);
+  const scale = Math.min(1, safe.width / cardWidth, safe.height / cardHeight);
   const width = cardWidth * scale;
   const height = cardHeight * scale;
   return {

@@ -1,4 +1,4 @@
-import { DRAFT_EGRESS_NOTE, upvasEntry } from '../_helpers';
+import { upvasEntry } from '../_helpers';
 
 /** Shared by `pradosh-vrat-shukla` and `pradosh-vrat-krishna`. */
 export default upvasEntry({
@@ -17,19 +17,18 @@ export default upvasEntry({
     textEn: 'The fast is broken after the Shiva puja during the evening pradosh hour.',
   },
   strictnessHi:
-    'कोई निर्जल और कोई फलाहार रूप में रखता है; पूजा के उपरांत एक-भुक्त भोजन की रीति प्रचलित है। परंपरा अनुसार बालक, वृद्ध एवं अस्वस्थ छूट रख सकते हैं।',
+    'दिन भर उपवास रखते हुए प्रदोष काल में शिव पूजा की जाती है और पूजा के बाद व्रत खोला जाता है।',
   strictnessEn:
-    'Some keep it waterless and some on fruit fare; a single meal after the puja is the common practice. Traditionally children, the elderly, and the unwell may observe leniently.',
+    'The observance keeps the fast through the day, places Shiva puja in pradosh kaal, and breaks the fast after that puja.',
   whoObservesHi: 'शिव उपासक; शुक्ल एवं कृष्ण दोनों पक्षों की त्रयोदशी को।',
   whoObservesEn: 'Shiva devotees; on the Trayodashi of both the bright and dark fortnights.',
-  status: 'draft',
+  status: 'verified',
   source: {
     referenceUrls: [
-      'https://www.drikpanchang.com/vrat-katha/pradosha/pradosha-vrat-katha.html',
-      'https://en.wikipedia.org/wiki/Pradosha',
+      'https://www.drikpanchang.com/vrats/pradoshdates.html',
+      'https://nyganeshtemple.org/pradosham/',
     ],
     verificationNote:
-      DRAFT_EGRESS_NOTE +
-      'Rows to verify: day fast ending at the pradosh-kaal puja; definition of the pradosh hour; strictness variants.',
+      'Verified 2026-08-19 against DrikPanchang and Sri Maha Vallabha Ganapati Devasthanam: both bright- and dark-fortnight Trayodashi, a day fast, Shiva puja in the sunset-linked pradosh period, and breaking the fast after that puja.',
   },
 });

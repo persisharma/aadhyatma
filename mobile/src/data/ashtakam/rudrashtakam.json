@@ -1,0 +1,195 @@
+{
+  "id": "rudrashtakam",
+  "titleHi": "श्रीरुद्राष्टकम्",
+  "titleEn": "Rudrashtakam",
+  "deity": "shiva",
+  "source": {
+    "baseText": "Goswami Tulsidas's Sri Ramcharitmanas, Uttarakanda, Doha 107 (Gita Press reading) — the complete 8-verse Rudrashtakam with its concluding phalashruti",
+    "referenceUrls": [
+      "https://archive.org/details/shri-ramcharitmanas-gita-press-hindi/page/n1012/mode/1up",
+      "https://sanskritdocuments.org/doc_shiva/rudra8.html",
+      "https://www.drikpanchang.com/lyrics/ashtakam/gods/lord-shiva/rudra-ashtakam.html?ck=1&lang=en",
+      "https://stotranidhi.com/hi/rudrashtakam-in-sanskrit/"
+    ],
+    "retrievedOn": "2026-07-31",
+    "notes": "Preserves the Ramcharitmanas reading shared by Gita Press, Sanskrit Documents, and Drik Panchang, including the traditional Tulsidas forms प्रभाश्रीशरीरम्, भुजङ्गा, भ्रूसुनेत्रम्, दयालम्, अखण्डमजम्, त्रयःशूल, शम्भु तुभ्यम्, आपन्नमामीश, and हरतोषये. StotraNidhi's Sanskrit-normalized variants were checked but not substituted. Source couplets are split into four display rows without changing their wording. Verse 9 is the phalashruti and is included so the canonical reading is complete. Hindi and English meanings are original editorial explanations checked against the cited source meanings; the liturgical lines are the collated source text."
+  },
+  "verses": [
+    {
+      "id": "rudrashtakam-1",
+      "number": 1,
+      "labelHi": "श्लोक · १",
+      "labelEn": "Shloka · 1",
+      "lines": [
+        "नमामीशमीशाननिर्वाणरूपं",
+        "विभुं व्यापकं ब्रह्मवेदस्वरूपम्।",
+        "निजं निर्गुणं निर्विकल्पं निरीहं",
+        "चिदाकाशमाकाशवासं भजेऽहम्॥"
+      ],
+      "linesEn": [
+        "namāmīśamīśānanirvāṇarūpaṃ",
+        "vibhuṃ vyāpakaṃ brahmavedasvarūpam",
+        "nijaṃ nirguṇaṃ nirvikalpaṃ nirīhaṃ",
+        "cidākāśamākāśavāsaṃ bhaje'ham"
+      ],
+      "meaningHi": "मैं ईशों के ईश, ईशान, मोक्षस्वरूप, सर्वसमर्थ और सर्वव्यापक शिव को नमस्कार करता हूँ, जो ब्रह्म और वेदस्वरूप हैं; जो स्वयंप्रकाश, गुणों और भेदों से परे, इच्छारहित चेतन-आकाश हैं और आकाश को ही वस्त्र मानते हैं। आरम्भिक श्लोक के रूप में इसका पाठ मन को शिव के निराकार, सर्वव्यापक स्वरूप पर स्थिर करता है; इसकी महत्ता बाहरी रूप से आगे बढ़कर शुद्ध चेतना का स्मरण करने में है।",
+      "meaningEn": "I bow to Shiva, Lord of lords and ruler of Ishana, the form of liberation, mighty and all-pervading, whose nature is Brahman and the Vedas; self-revealed, beyond qualities and distinctions, desireless, the space of consciousness, clothed in space itself. As the hymn's opening salutation, this verse centres recitation on Shiva's formless, all-pervading nature; its significance is the remembrance of pure consciousness beyond outward form."
+    },
+    {
+      "id": "rudrashtakam-2",
+      "number": 2,
+      "labelHi": "श्लोक · २",
+      "labelEn": "Shloka · 2",
+      "lines": [
+        "निराकारमोंकारमूलं तुरीयं",
+        "गिराज्ञानगोतीतमीशं गिरीशम्।",
+        "करालं महाकालकालं कृपालं",
+        "गुणागारसंसारपारं नतोऽहम्॥"
+      ],
+      "linesEn": [
+        "nirākāramoṃkāramūlaṃ turīyaṃ",
+        "girājñānagotītamīśaṃ girīśam",
+        "karālaṃ mahākālakālaṃ kṛpālaṃ",
+        "guṇāgārasaṃsārapāraṃ nato'ham"
+      ],
+      "meaningHi": "मैं उन निराकार गिरीश को प्रणाम करता हूँ जो ॐकार के मूल, तुरीय अवस्था, वाणी, ज्ञान और इन्द्रियों की पहुँच से परे हैं; जो विकराल होकर भी कृपालु, महाकाल के भी काल, गुणों के भण्डार और संसार से पार हैं। स्तुति के इस भाग में भक्त शिव की पारलौकिक सत्ता का ध्यान करता है; इसकी महत्ता भय और सीमित बोध के बीच करुणामय परम आश्रय को स्मरण करने में है।",
+      "meaningEn": "I bow to the formless Lord of the mountain, the source of Om and the transcendent fourth state, beyond speech, knowledge and the senses; formidable yet compassionate, the death of Mahakala, treasury of virtues and beyond worldly existence. In this part of the hymn the devotee contemplates Shiva's transcendence; its significance is remembering a compassionate ultimate refuge amid fear and limited understanding."
+    },
+    {
+      "id": "rudrashtakam-3",
+      "number": 3,
+      "labelHi": "श्लोक · ३",
+      "labelEn": "Shloka · 3",
+      "lines": [
+        "तुषाराद्रिसंकाशगौरं गभीरं",
+        "मनोभूतकोटिप्रभाश्रीशरीरम्।",
+        "स्फुरन्मौलिकल्लोलिनीचारुगङ्गा",
+        "लसद्भालबालेन्दु कण्ठे भुजङ्गा॥"
+      ],
+      "linesEn": [
+        "tuṣārādrisaṅkāśagauraṃ gabhīraṃ",
+        "manobhūtakoṭiprabhāśrīśarīram",
+        "sphuranmaulikallolinīcārugaṅgā",
+        "lasadbhālabālendu kaṇṭhe bhujaṅgā"
+      ],
+      "meaningHi": "शिव हिमाच्छादित पर्वत के समान गौर और गम्भीर हैं; उनका श्रीमय शरीर करोड़ों कामदेवों की कान्ति जैसा प्रकाशमान है। उनकी जटाओं में तरंगमयी गङ्गा, ललाट पर बालचन्द्र और कण्ठ में सर्प सुशोभित हैं। इस श्लोक का पाठ साकार ध्यान में शिव की मूर्ति को मन में उपस्थित करता है; इसकी महत्ता गङ्गा, चन्द्र और सर्प जैसे प्रतीकों के द्वारा पवित्रता, शीतलता और निर्भयता का स्मरण करने में है।",
+      "meaningEn": "Shiva is fair and profound like a snow-covered mountain, his auspicious form radiant with the splendour of countless Kamadevas. The lovely, wave-filled Ganga shines in his locks, the young moon on his brow and a serpent at his throat. Recited as a verse of visual contemplation, it brings Shiva's form before the mind; its significance lies in remembering purity, serenity and fearlessness through the symbols of Ganga, moon and serpent."
+    },
+    {
+      "id": "rudrashtakam-4",
+      "number": 4,
+      "labelHi": "श्लोक · ४",
+      "labelEn": "Shloka · 4",
+      "lines": [
+        "चलत्कुण्डलं भ्रूसुनेत्रं विशालं",
+        "प्रसन्नाननं नीलकण्ठं दयालम्।",
+        "मृगाधीशचर्माम्बरं मुण्डमालं",
+        "प्रियं शङ्करं सर्वनाथं भजामि॥"
+      ],
+      "linesEn": [
+        "calatkuṇḍalaṃ bhrūsunetraṃ viśālaṃ",
+        "prasannānanaṃ nīlakaṇṭhaṃ dayālam",
+        "mṛgādhīśacarmāmbaraṃ muṇḍamālaṃ",
+        "priyaṃ śaṅkaraṃ sarvanāthaṃ bhajāmi"
+      ],
+      "meaningHi": "मैं उन सर्वनाथ, प्रिय शङ्कर का भजन करता हूँ जिनके कुण्डल हिल रहे हैं, सुन्दर भौंहें और विशाल नेत्र हैं, मुख प्रसन्न है और कण्ठ नील है; जो दयालु हैं, व्याघ्रचर्म धारण करते और मुण्डमाला पहनते हैं। रूप-ध्यान के इस श्लोक में शिव के उग्र चिह्नों के साथ उनका प्रसन्न और करुणामय मुख स्मरण किया जाता है; इसकी महत्ता शक्ति और दया को एक ही आराध्य में देखने में है।",
+      "meaningEn": "I worship the beloved Shankara, Lord of all, whose earrings sway, whose brows are beautiful and eyes are wide, whose face is serene and throat is blue; compassionate, clothed in tiger skin and wearing a garland of skulls. In this verse of visual contemplation, Shiva's awe-inspiring emblems are held together with his gracious face; its significance is seeing strength and compassion united in the same Lord."
+    },
+    {
+      "id": "rudrashtakam-5",
+      "number": 5,
+      "labelHi": "श्लोक · ५",
+      "labelEn": "Shloka · 5",
+      "lines": [
+        "प्रचण्डं प्रकृष्टं प्रगल्भं परेशम्",
+        "अखण्डमजं भानुकोटिप्रकाशम्।",
+        "त्रयःशूलनिर्मूलनं शूलपाणिं",
+        "भजेऽहं भवानीपतिं भावगम्यम्॥"
+      ],
+      "linesEn": [
+        "pracaṇḍaṃ prakṛṣṭaṃ pragalbhaṃ pareśam",
+        "akhaṇḍamajaṃ bhānukoṭiprakāśam",
+        "trayaḥśūlanirmūlanaṃ śūlapāṇiṃ",
+        "bhaje'haṃ bhavānīpatiṃ bhāvagamyam"
+      ],
+      "meaningHi": "मैं भवानीपति को भजता हूँ जो प्रचण्ड, श्रेष्ठ, निर्भय परमेश्वर, अखण्ड और अजन्मा हैं, करोड़ों सूर्यों के समान प्रकाशमान हैं; हाथ में त्रिशूल रखते और तीन प्रकार के शूल अर्थात् दुःखों को जड़ से मिटाते हैं, तथा सच्चे भाव से प्राप्त होते हैं। दुःख के समय इस श्लोक का पाठ आश्रय की प्रार्थना बनता है; इसकी महत्ता यह स्पष्ट करने में है कि भगवान् तक पहुँच बाहरी सामर्थ्य से नहीं, निष्कपट भाव से होती है।",
+      "meaningEn": "I worship Bhavani's Lord, fierce, exalted and fearless, the Supreme Lord, indivisible and unborn, radiant like millions of suns; holding the trident, uprooting the threefold afflictions, and reached through sincere feeling. In times of suffering this verse becomes a prayer for refuge; its significance is its declaration that the Lord is approached through genuine devotion rather than outward power."
+    },
+    {
+      "id": "rudrashtakam-6",
+      "number": 6,
+      "labelHi": "श्लोक · ६",
+      "labelEn": "Shloka · 6",
+      "lines": [
+        "कलातीतकल्याणकल्पान्तकारी",
+        "सदा सज्जनानन्ददाता पुरारी।",
+        "चिदानन्दसन्दोहमोहापहारी",
+        "प्रसीद प्रसीद प्रभो मन्मथारी॥"
+      ],
+      "linesEn": [
+        "kalātītakalyāṇakalpāntakārī",
+        "sadā sajjanānandadātā purārī",
+        "cidānandasandohamohāpahārī",
+        "prasīda prasīda prabho manmathārī"
+      ],
+      "meaningHi": "हे कलाओं से परे, कल्याणस्वरूप, कल्पान्त करने वाले, सज्जनों को सदा आनन्द देने वाले पुरारी! हे चिदानन्द के पुंज और मोह को हरने वाले मन्मथारि प्रभो, प्रसन्न होइए, प्रसन्न होइए। यहाँ वर्णन सीधे प्रार्थना में बदल जाता है; पाठ के मध्य यह श्लोक अहंकार और मोह छोड़कर अनुग्रह माँगने का अवसर देता है, और यही इसकी आध्यात्मिक महत्ता है।",
+      "meaningEn": "O Lord beyond all measures, embodiment of auspiciousness, who brings an age of creation to its end, destroyer of Tripura and constant giver of joy to the virtuous; O mass of consciousness and bliss, remover of delusion and conqueror of Kama, be gracious, be gracious. Here praise turns into a direct plea; midway through recitation, the verse invites the devotee to set aside pride and delusion and ask for grace."
+    },
+    {
+      "id": "rudrashtakam-7",
+      "number": 7,
+      "labelHi": "श्लोक · ७",
+      "labelEn": "Shloka · 7",
+      "lines": [
+        "न यावदुमानाथपादारविन्दं",
+        "भजन्तीह लोके परे वा नराणाम्।",
+        "न तावत्सुखं शान्ति सन्तापनाशं",
+        "प्रसीद प्रभो सर्वभूताधिवासम्॥"
+      ],
+      "linesEn": [
+        "na yāvadumānāthapādāravindaṃ",
+        "bhajantīha loke pare vā narāṇām",
+        "na tāvatsukhaṃ śānti santāpanāśaṃ",
+        "prasīda prabho sarvabhūtādhivāsam"
+      ],
+      "meaningHi": "जब तक मनुष्य उमानाथ के चरणकमलों का भजन नहीं करते, तब तक उन्हें इस लोक या परलोक में सुख, शान्ति और संताप से मुक्ति नहीं मिलती। हे समस्त प्राणियों में निवास करने वाले प्रभो, प्रसन्न होइए। शान्ति और दुःख-निवारण की कामना से इस श्लोक का पाठ किया जाता है; इसकी महत्ता मन को उस ईश्वर की शरण में रखने में है जो सभी जीवों के भीतर विद्यमान हैं।",
+      "meaningEn": "Until people worship the lotus feet of Uma's Lord, they do not find happiness, peace or an end to anguish in this world or the next. O Lord who dwells in every being, be gracious. This verse is recited with the longing for peace and relief from distress; its significance is placing the mind in the refuge of the divine presence within all beings."
+    },
+    {
+      "id": "rudrashtakam-8",
+      "number": 8,
+      "labelHi": "श्लोक · ८",
+      "labelEn": "Shloka · 8",
+      "lines": [
+        "न जानामि योगं जपं नैव पूजां",
+        "नतोऽहं सदा सर्वदा शम्भु तुभ्यम्।",
+        "जराजन्मदुःखौघतातप्यमानं",
+        "प्रभो पाहि आपन्नमामीश शम्भो॥"
+      ],
+      "linesEn": [
+        "na jānāmi yogaṃ japaṃ naiva pūjāṃ",
+        "nato'haṃ sadā sarvadā śambhu tubhyam",
+        "jarājanmaduḥkhaughatātapyamānaṃ",
+        "prabho pāhi āpannamāmīśa śambho"
+      ],
+      "meaningHi": "मैं योग, जप या पूजा की विधि नहीं जानता; हे शम्भु, मैं सदा-सर्वदा आपको नमस्कार करता हूँ। बुढ़ापे और जन्म के दुःखसमूह से तपे हुए, संकटग्रस्त मेरी रक्षा कीजिए, हे समर्थ प्रभो, हे शम्भो। समापन का यह श्लोक विधि के ज्ञान से अधिक विनम्र शरणागति को स्थान देता है; इसकी महत्ता यह है कि सरल, सच्ची प्रार्थना हर साधक के लिए उपलब्ध है।",
+      "meaningEn": "I do not know yoga, japa or the rites of worship; O Shambhu, I bow to you always and at every moment. Afflicted and scorched by the mass of suffering that comes with age and birth, protect me, O mighty Lord, O Shambhu. This closing verse places humble surrender above ritual expertise; its significance is that simple, sincere prayer remains open to every seeker."
+    },
+    {
+      "id": "rudrashtakam-9",
+      "number": 9,
+      "labelHi": "फलश्रुति · ९",
+      "labelEn": "Phalashruti · 9",
+      "lines": [
+        "रुद्राष्टकमिदं प्रोक्तं विप्रेण हरतोषये।",
+        "ये पठन्ति नरा भक्त्या तेषां शम्भुः प्रसीदति॥"
+      ],
+      "linesEn": [
+        "rudrāṣṭakamidaṃ proktaṃ vipreṇa haratoṣaye",
+        "ye paṭhanti narā bhaktyā teṣāṃ śambhuḥ prasīdati"
+      ],
+      "meaningHi": "यह रुद्राष्टक ब्राह्मण ने हर अर्थात् शिव को प्रसन्न करने के लिए कहा। जो मनुष्य इसका भक्तिपूर्वक पाठ करते हैं, उन पर शम्भु प्रसन्न होते हैं। अष्टक के बाद फलश्रुति के रूप में इसका पाठ समापन पर किया जाता है; इसकी महत्ता स्वयं ग्रन्थ के बताए फल—भक्ति से की गई स्तुति और शिव-प्रसन्नता—को स्मरण कराने में है।",
+      "meaningEn": "This Rudrashtakam was spoken by the Brahmin to please Hara, Lord Shiva. Shambhu is gracious to those who recite it with devotion. As the phalashruti, it is read at the conclusion of the eight-verse hymn; its significance is to restate the text's own declared fruit: devotional praise offered for Shiva's grace."
+    }
+  ]
+}

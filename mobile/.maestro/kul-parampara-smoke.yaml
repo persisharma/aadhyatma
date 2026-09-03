@@ -1,0 +1,82 @@
+# कुल परम्परा + जन्म तिथि (PRD-29) — More-hub doors, list/record empty states,
+# the edit form's stance guard, and the create → save → view round trip.
+#
+# What this covers:
+#   • More hub gains two rows: "Janma Tithi, none saved" and "Kul Parampara, new"
+#     (both in the साधना group, below Pitru Smaran).
+#   • JanmaTithiList empty state — the explainer + the Kundali door (asserted
+#     present, not tapped: the door cross-tabs into the lazily-mounted Panchang
+#     stack, which the multi-profile flow already covers).
+#   • KulParampara empty state → Edit → choose kuldevi from the registry grid +
+#     type a gotra → Save → the record screen shows the choice and the privacy
+#     line, plus the "Hand it on" export door (the export summary is asserted;
+#     the OS share sheet itself is NOT opened — Maestro cannot drive or dismiss
+#     it, the same rule as the share flows in muhurat-follow-smoke).
+#
+# Selector notes:
+#   • Rows/controls are matched on their stable English a11y labels (house
+#     rule — iOS Maestro cannot read Devanagari): "Janma Tithi, none saved",
+#     "Kul Parampara, new", "Choose Maa Durga", "Gotra, free text",
+#     "Save kul parampara record", "Hand the record on",
+#     "Share kul parampara file".
+#   • The reading language is left at the install default; every asserted
+#     string here is an a11y label, so no language flip is needed.
+
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+
+# ── More hub: both PRD-29 doors render ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: "more-janma-tithi"
+    centerElement: true
+- assertVisible: "Janma Tithi, none saved"
+- assertVisible: "Kul Parampara, new"
+
+# ── जन्म तिथि list: empty state + the Kundali door ──
+- tapOn: "Janma Tithi, none saved"
+- waitForAnimationToEnd
+- assertVisible: "Add birth details in Kundali"
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# ── कुल परम्परा: empty state → create ──
+- extendedWaitUntil:
+    visible: "Kul Parampara, new"
+    timeout: 10000
+- tapOn: "Kul Parampara, new"
+- waitForAnimationToEnd
+- assertVisible: "Create kul parampara record"
+- tapOn: "Create kul parampara record"
+- waitForAnimationToEnd
+
+# ── Edit: registry deity + free-text gotra, then save ──
+- assertVisible: "Kuldevi"
+- tapOn: "Choose Maa Durga"
+- scrollUntilVisible:
+    element:
+      text: "Gotra, free text"
+    centerElement: true
+- tapOn: "Gotra, free text"
+- inputText: "Bharadwaj"
+- hideKeyboard
+- scrollUntilVisible:
+    element:
+      text: "Save kul parampara record"
+    centerElement: true
+- tapOn: "Save kul parampara record"
+- waitForAnimationToEnd
+
+# ── Record view: the saved choice, the privacy line, the export door ──
+- assertVisible: "Edit kul parampara"
+- scrollUntilVisible:
+    element:
+      text: "Hand the record on"
+    centerElement: true
+- tapOn: "Hand the record on"
+- waitForAnimationToEnd
+# The export summary names the share action; the OS sheet is not opened.
+- assertVisible: "Share kul parampara file"

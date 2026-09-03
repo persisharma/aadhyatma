@@ -60,11 +60,10 @@ export function moreTabTarget<T extends keyof MoreStackParamList>(
 }
 
 /**
- * Open a Home-stack target from a screen that may be mounted on EITHER stack.
- * The vidhi flow (PRD-19) is registered on both the Home and the Panchang stack
- * so each door pushes in place; the readers it hands off to live only on the
- * Home stack. Push in place when the enclosing stack already owns the target
- * route — back then retraces the puja — and cross-tab otherwise.
+ * Open a reader target from a vidhi mounted on any of its three entry stacks.
+ * Push in place when the enclosing stack owns the target route — back then
+ * retraces the guide — and cross-tab to Home otherwise. Most readers live only
+ * on Home; GitaReader is also registered on More for the personal-tithi guide.
  */
 export function navigateToHomeStackTarget(
   nav: {

@@ -1,0 +1,87 @@
+# आज का विधान — the जिज्ञासा briefing (PRD-41 Phase 2, design.md §71)
+#
+# The briefing is standing questions asked on the user's behalf through the
+# same resolver as the search box. Its deterministic door for e2e is the
+# question box's empty state ("Open Today's Vidhan"); the Home DISCOVER card
+# reaches the same screen but the carousel is shuffled per open.
+#
+# Verifies:
+#   1. Search empty state → Today's Vidhan opens (header "Today's Vidhan").
+#   2. The briefing composes after interactions: at least the day card
+#      (a11y "Answer. <tithi>") renders with its working toggle.
+#   3. "Ask something else" returns to the question box.
+#   4. Back from Search lands on the briefing, Back again on Home — the screen
+#      is a Home-stack push, not a tab hijack.
+
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+# The ऐप section (Language/Reading size) sits below the fold on standard-height
+# iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
+# tapping the off-screen row's estimated center hits the tab bar instead. Scroll first.
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+
+# ── 1. The door ──
+- tapOn: "Search verses, sections, and mantras"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Open Today's Vidhan"
+    timeout: 15000
+- tapOn: "Open Today's Vidhan"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Today's Vidhan"
+    timeout: 15000
+
+# ── 2. The cards compose (after interactions; give the astronomy a moment) ──
+- extendedWaitUntil:
+    visible: "Answer.*"
+    timeout: 30000
+- assertVisible: "Show the working"
+
+# ── 3. Ask something else → Search ──
+- scrollUntilVisible:
+    element:
+      text: "Ask something else"
+    centerElement: true
+- tapOn: "Ask something else"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Search input"
+    timeout: 15000
+
+# ── 4. Back retraces the full stack: follow-up Search → briefing → the
+#      original Search (its Vidhan door state) → Home. "Ask something else"
+#      PUSHES a fresh Search instance (the briefing sits between the two), so
+#      three Backs reach Home, not two.
+- tapOn: "Back"
+- waitForAnimationToEnd
+- assertVisible: "Today's Vidhan"
+- tapOn: "Back"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Open Today's Vidhan"
+    timeout: 15000
+- tapOn: "Back"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: ".*Today.s Panchang.*"
+    timeout: 15000
+
+- stopApp:
+    appId: com.prashantsharma.vedansh

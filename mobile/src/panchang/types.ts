@@ -82,6 +82,28 @@ export type ObservanceRecurrence = 'annual' | 'monthly' | 'seasonal' | 'catalog'
 
 export type ObservanceRelativeRule = 'friday-before-purnima';
 
+/**
+ * Which instant of the civil day the rule's tithi must cover for the day to BE
+ * the observance day (the vyapini convention).
+ *
+ * - `udaya` — the tithi running at sunrise. The default, and right for the
+ *   large majority: Ekadashi, Purnima, Amavasya, Navratri, Dussehra.
+ * - `chandrodaya` — the tithi running at MOONRISE. Correct for vrats whose
+ *   defining act is the evening moon that ends the fast: Sankashti Chaturthi,
+ *   Karwa Chauth, Bahula Chaturthi. Their tithi typically begins mid-morning
+ *   and ends before the next day's mid-morning, so the sunrise answer names
+ *   the day AFTER the night on which the vrat is actually kept.
+ * - `madhyahna` — the tithi running at MIDDAY (the sunrise–sunset midpoint).
+ *   Correct where the defining worship happens at madhyahna: Ganesh Chaturthi
+ *   (sthapana), Ram Navami (janma), monthly Vinayaka Chaturthi. When the tithi
+ *   opens shortly after sunrise, the sunrise answer names the day AFTER the
+ *   midday actually worshipped (Ganesh Chaturthi 2026: 15 Sep instead of 14).
+ *
+ * The remaining non-sunrise conventions (pradosh, nishita) are not modelled
+ * yet — see `VERIFICATION.md` "±1-day muhurta shift".
+ */
+export type ObservanceDayRule = 'udaya' | 'chandrodaya' | 'madhyahna';
+
 export type ObservanceRule = {
   id: string;
   nameHi: string;
@@ -100,6 +122,11 @@ export type ObservanceRule = {
   solarLongitude?: number;
   solarIngress?: number;
   relativeRule?: ObservanceRelativeRule;
+  /**
+   * Day-selection convention (vyapini). Absent means `udaya` — every rule that
+   * does not say otherwise is fixed by the tithi at sunrise.
+   */
+  dayRule?: ObservanceDayRule;
   marker: FestivalMarker;
   deityHi: string;
   deityEn: string;
@@ -125,6 +152,12 @@ export type ObservanceRule = {
    * no entry at every call site.
    */
   upvasId?: string;
+  /**
+   * Sourced bhog/naivedya/vrat-food hook (PRD-23) — id into the
+   * `bhogContent` registry. The accessor exposes VERIFIED entries only, so a
+   * draft profile is indistinguishable from no guidance at every surface.
+   */
+  bhogId?: string;
   searchTerms?: string[];
 };
 
@@ -240,4 +273,55 @@ export type UpvasInfoEntry = {
   status: UpvasContentStatus;
   /** Review metadata — never rendered. ≥2 reference URLs per entry. */
   source: { referenceUrls: string[]; verificationNote: string };
+};
+
+// ─── Bhog / naivedya / vrat-food guidance (PRD-23) ────────────────────────
+
+export type BhogContentStatus = 'draft' | 'verified';
+
+export type BhogGuidanceItem = {
+  id: string;
+  textHi: string;
+  textEn: string;
+};
+
+export type BhogShoppingItem = {
+  id: string;
+  itemHi: string;
+  itemEn: string;
+  qty?: string;
+  optional?: boolean;
+};
+
+/**
+ * One independently reviewed food/offering profile. Eating rules and deity
+ * offerings are deliberately separate fields: food allowed during a fast is
+ * not automatically suitable naivedya, and an abhisheka ingredient is not
+ * automatically food.
+ */
+export type BhogContentEntry = {
+  id: string;
+  titleHi: string;
+  titleEn: string;
+  /** ObservanceRule ids carrying this profile through `bhogId`. */
+  observanceIds: string[];
+  /** Published vidhis whose preparation screen reuses this guidance. */
+  vidhiIds: string[];
+  offerings: BhogGuidanceItem[];
+  permittedDuringFast?: BhogGuidanceItem[];
+  abstainedDuringFast?: BhogGuidanceItem[];
+  doNotOffer?: BhogGuidanceItem[];
+  paranaMealHi?: string;
+  paranaMealEn?: string;
+  traditionNoteHi: string;
+  traditionNoteEn: string;
+  /** Additive groceries; do not duplicate the vidhi's base samagri. */
+  shoppingItems: BhogShoppingItem[];
+  status: BhogContentStatus;
+  /** Review-only provenance; never rendered. */
+  source: {
+    referenceUrls: string[];
+    verificationNote: string;
+    variantNote?: string;
+  };
 };

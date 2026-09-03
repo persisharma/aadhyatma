@@ -1,39 +1,25 @@
-import React, { useCallback, useEffect } from 'react';
-import { Linking, View } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { InteractionManager, Linking, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Notifications from 'expo-notifications';
-import {
-  useFonts as useNotoFonts,
-  NotoSerifDevanagari_500Medium,
-  NotoSerifDevanagari_600SemiBold,
-} from '@expo-google-fonts/noto-serif-devanagari';
-import {
-  useFonts as useCormorantFonts,
-  CormorantGaramond_400Regular_Italic,
-  CormorantGaramond_500Medium,
-  CormorantGaramond_600SemiBold,
-  CormorantGaramond_600SemiBold_Italic,
-  CormorantGaramond_700Bold,
-} from '@expo-google-fonts/cormorant-garamond';
-import {
-  useFonts as useGujaratiFonts,
-  NotoSerifGujarati_500Medium,
-  NotoSerifGujarati_600SemiBold,
-} from '@expo-google-fonts/noto-serif-gujarati';
-import {
-  useFonts as useKannadaFonts,
-  NotoSerifKannada_500Medium,
-  NotoSerifKannada_600SemiBold,
-} from '@expo-google-fonts/noto-serif-kannada';
-import {
-  useFonts as useInterFonts,
-  Inter_500Medium,
-  Inter_600SemiBold,
-} from '@expo-google-fonts/inter';
+import { useFonts } from 'expo-font';
+import { NotoSerifDevanagari_500Medium } from '@expo-google-fonts/noto-serif-devanagari/500Medium';
+import { NotoSerifDevanagari_600SemiBold } from '@expo-google-fonts/noto-serif-devanagari/600SemiBold';
+import { CormorantGaramond_400Regular_Italic } from '@expo-google-fonts/cormorant-garamond/400Regular_Italic';
+import { CormorantGaramond_500Medium } from '@expo-google-fonts/cormorant-garamond/500Medium';
+import { CormorantGaramond_600SemiBold } from '@expo-google-fonts/cormorant-garamond/600SemiBold';
+import { CormorantGaramond_600SemiBold_Italic } from '@expo-google-fonts/cormorant-garamond/600SemiBold_Italic';
+import { CormorantGaramond_700Bold } from '@expo-google-fonts/cormorant-garamond/700Bold';
+import { NotoSerifGujarati_500Medium } from '@expo-google-fonts/noto-serif-gujarati/500Medium';
+import { NotoSerifGujarati_600SemiBold } from '@expo-google-fonts/noto-serif-gujarati/600SemiBold';
+import { NotoSerifKannada_500Medium } from '@expo-google-fonts/noto-serif-kannada/500Medium';
+import { NotoSerifKannada_600SemiBold } from '@expo-google-fonts/noto-serif-kannada/600SemiBold';
+import { Inter_500Medium } from '@expo-google-fonts/inter/500Medium';
+import { Inter_600SemiBold } from '@expo-google-fonts/inter/600SemiBold';
 import { ThemeProvider } from '@/theme/ThemeContext';
 import { FontScaleProvider, useFontScale } from '@/contexts/FontScaleContext';
 import { lightColors } from '@/theme/colors';
@@ -76,7 +62,9 @@ import VratReminderScheduler from '@/components/VratReminderScheduler';
 import MuhuratReminderScheduler from '@/components/MuhuratReminderScheduler';
 import FestiveReminderScheduler from '@/components/FestiveReminderScheduler';
 import PitruSmaranReminderScheduler from '@/components/PitruSmaranReminderScheduler';
+import JanmaTithiReminderScheduler from '@/components/JanmaTithiReminderScheduler';
 import SadhanaReminderScheduler from '@/components/SadhanaReminderScheduler';
+import RoutineReminderScheduler from '@/components/RoutineReminderScheduler';
 import DailyVerseAngaBridge from '@/components/DailyVerseAngaBridge';
 import MiniPlayer from '@/components/audio/MiniPlayer';
 import NowPlayingScreen from '@/screens/audio/NowPlayingScreen';
@@ -86,7 +74,12 @@ import { resetDerivedCachesIfBuildChanged } from '@/utils/derivedCacheReset';
 import { prefetchTodayPanchang } from '@/panchang/panchangLaunchPrefetch';
 import RootNavigator from '@/navigation/RootNavigator';
 import WidgetCoordinator from '@/widgets/WidgetCoordinator';
-import { retryWidgetDeepLink } from '@/widgets/deepLink';
+import {
+  handleWidgetDeepLink,
+  parseWidgetDeepLink,
+  type WidgetDeepLinkTarget,
+} from '@/widgets/deepLink';
+import { launchMark, launchMarkOnce } from '@/utils/launchTrace';
 
 SplashScreen.preventAutoHideAsync().catch(() => {
   /* noop — already prevented */
@@ -119,33 +112,61 @@ void resetDerivedCachesIfBuildChanged(currentBuildFingerprint());
 // just leaves the hooks on the path they already take.
 void prefetchTodayPanchang();
 
+launchMark('app-module-body');
+
+// The idle mark lives here rather than in `launchTrace` (which imports nothing on
+// purpose) — it is the moment everything gated on `runAfterInteractions` is
+// finally allowed to run, so a late one indicts whatever held the thread.
+InteractionManager.runAfterInteractions(() => launchMark('first-ui-idle'));
+
+const INITIAL_WIDGET_URL_TIMEOUT_MS = 1_000;
+
 export default function App() {
-  const [notoLoaded] = useNotoFonts({
+  launchMarkOnce('app-render');
+  const [initialWidgetTarget, setInitialWidgetTarget] = useState<
+    WidgetDeepLinkTarget | null | undefined
+  >(undefined);
+  const [fontsReady] = useFonts({
     NotoSerifDevanagari_500Medium,
     NotoSerifDevanagari_600SemiBold,
-  });
-  const [cormorantLoaded] = useCormorantFonts({
     CormorantGaramond_400Regular_Italic,
     CormorantGaramond_500Medium,
     CormorantGaramond_600SemiBold,
     CormorantGaramond_600SemiBold_Italic,
     CormorantGaramond_700Bold,
-  });
-  const [gujaratiLoaded] = useGujaratiFonts({
     NotoSerifGujarati_500Medium,
     NotoSerifGujarati_600SemiBold,
-  });
-  const [kannadaLoaded] = useKannadaFonts({
     NotoSerifKannada_500Medium,
     NotoSerifKannada_600SemiBold,
-  });
-  const [interLoaded] = useInterFonts({
     Inter_500Medium,
     Inter_600SemiBold,
   });
 
-  const fontsReady =
-    notoLoaded && cormorantLoaded && gujaratiLoaded && kannadaLoaded && interLoaded;
+  if (fontsReady) launchMarkOnce('fonts-ready');
+
+  // Resolve a cold widget URL before mounting navigation. Otherwise the tab
+  // navigator commits its default Home route first, then an effect redirects
+  // to Daily Bhakti after Home has paid its mount cost. This read races the
+  // font gate, so ordinary launches do not gain another serial startup step.
+  useEffect(() => {
+    let cancelled = false;
+    let settled = false;
+    const finish = (target: WidgetDeepLinkTarget | null) => {
+      if (cancelled || settled) return;
+      settled = true;
+      clearTimeout(timeoutId);
+      setInitialWidgetTarget(target);
+    };
+    const timeoutId = setTimeout(() => finish(null), INITIAL_WIDGET_URL_TIMEOUT_MS);
+    Linking.getInitialURL()
+      .then((url) => {
+        finish(
+          url?.startsWith('vedansh://widget/') ? parseWidgetDeepLink(url) : null
+        );
+      })
+      .catch(() => finish(null));
+    return () => { cancelled = true; clearTimeout(timeoutId); };
+  }, []);
 
   // Wire notification taps to deep-link navigation. Handles both:
   //  (a) Cold start — app was killed; iOS launches us with the tap response,
@@ -197,24 +218,17 @@ export default function App() {
     };
   }, [fontsReady]);
 
-  // WidgetKit/AppWidget taps arrive as ordinary app links. Retry a cold-start
-  // URL briefly until the navigation container is ready; warm links dispatch
-  // immediately through the same validated parser.
+  // Cold widget URLs become the navigator's initial route above. Only warm
+  // links need an imperative dispatch after the container is already mounted.
   useEffect(() => {
-    if (!fontsReady) return undefined;
-    let cancelled = false;
-    const cancellations = new Set<() => void>();
-    const route = (url: string) => {
-      if (cancelled) return;
-      const cancel = retryWidgetDeepLink(url);
-      cancellations.add(cancel);
-    };
-    Linking.getInitialURL().then((url) => { if (url?.startsWith('vedansh://widget/')) route(url); }).catch(() => undefined);
-    const sub = Linking.addEventListener('url', ({ url }) => { if (url.startsWith('vedansh://widget/')) route(url); });
-    return () => { cancelled = true; cancellations.forEach((cancel) => cancel()); cancellations.clear(); sub.remove(); };
-  }, [fontsReady]);
+    if (!fontsReady || initialWidgetTarget === undefined) return undefined;
+    const sub = Linking.addEventListener('url', ({ url }) => {
+      if (url.startsWith('vedansh://widget/')) handleWidgetDeepLink(url);
+    });
+    return () => sub.remove();
+  }, [fontsReady, initialWidgetTarget]);
 
-  if (!fontsReady) {
+  if (!fontsReady || initialWidgetTarget === undefined) {
     return <View style={{ flex: 1, backgroundColor: lightColors.parchment }} />;
   }
 
@@ -267,7 +281,7 @@ export default function App() {
                           <View style={{ flex: 1 }}>
                             <NavigationContainer ref={navigationRef}>
                               <StatusBar style="dark" />
-                              <RootNavigator />
+                              <RootNavigator initialWidgetTarget={initialWidgetTarget} />
                               <ReminderOptInModal />
                               <UpdateReadyModal />
                               <WhatsNewModal />
@@ -287,7 +301,15 @@ export default function App() {
                                 precomputed table). */}
                             <FestiveReminderScheduler />
                             <PitruSmaranReminderScheduler />
+                            {/* जन्म तिथि (PRD-29) — per-person OPT-IN only; the
+                                planner's worst case is 8 pending (roster cap). */}
+                            <JanmaTithiReminderScheduler />
                             <SadhanaReminderScheduler />
+                            {/* Per-routine reminders (PRD-07 P3). Inside
+                                RoutineProvider + NotificationPreferencesProvider
+                                + the progress/activity providers its §7
+                                completion-suppression signal reads. */}
+                            <RoutineReminderScheduler />
                             {/* Feeds the daily-verse scheduler each fire day's
                                 tithi/vrat for its title. Must stay inside
                                 PanchangLocationProvider — the notification
@@ -349,7 +371,9 @@ function AppReadyGate({ children }: { children: React.ReactNode }) {
   const { isLoading: languageLoading } = useGitaLanguage();
   const ready = !fontScaleLoading && !languageLoading;
   const hideSplash = useCallback(() => {
-    if (ready) SplashScreen.hideAsync().catch(() => undefined);
+    if (!ready) return;
+    launchMarkOnce('splash-hidden (first frame)');
+    SplashScreen.hideAsync().catch(() => undefined);
   }, [ready]);
 
   useEffect(() => {

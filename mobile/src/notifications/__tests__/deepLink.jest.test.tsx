@@ -246,6 +246,46 @@ describe('handleNotificationResponse', () => {
     });
   });
 
+  test("a routine-reminder tap opens Today's Practice on the Home tab", () => {
+    readySpy.mockReturnValue(true);
+
+    const routine = { type: 'routine-reminder', routineId: 'r1', dateKey: '2026-08-22' };
+    expect(handleNotificationResponse(responseWithData(routine))).toBe(true);
+    expect(dispatchSpy).toHaveBeenCalledTimes(1);
+
+    // Byte-for-byte the sadhana-reminder landing: RoutineToday, never a reader,
+    // so a lock-screen tap can't run a reader's setProgress effect and clobber
+    // the resume position.
+    expect(dispatchSpy.mock.calls[0][0]).toMatchObject({
+      type: 'NAVIGATE',
+      payload: { name: 'HomeTab', params: { screen: 'RoutineToday' } },
+    });
+  });
+
+  test('a routine-reminder routes on type alone — a stale notice for a deleted routine still lands safely', () => {
+    readySpy.mockReturnValue(true);
+
+    // routineId rides along as a record but must not gate routing: RoutineToday
+    // is safe to land on regardless of whether the routine still exists.
+    expect(handleNotificationResponse(responseWithData({ type: 'routine-reminder' }))).toBe(true);
+    expect(dispatchSpy.mock.calls[0][0]).toMatchObject({
+      payload: { name: 'HomeTab', params: { screen: 'RoutineToday' } },
+    });
+  });
+
+  test('ignores payloads that merely resemble a routine reminder', () => {
+    readySpy.mockReturnValue(true);
+
+    for (const data of [
+      { type: 'routine' },
+      { type: 'routine-reminder-v2', routineId: 'r1' },
+      { routineId: 'r1', dateKey: '2026-08-22' },
+    ]) {
+      expect(handleNotificationResponse(responseWithData(data))).toBe(false);
+    }
+    expect(dispatchSpy).not.toHaveBeenCalled();
+  });
+
   test('a public Pitru Paksha reminder opens the fortnight overview', () => {
     readySpy.mockReturnValue(true);
     expect(handleNotificationResponse(responseWithData({ type: 'pitru-paksha-reminder', year: 2026 }))).toBe(true);

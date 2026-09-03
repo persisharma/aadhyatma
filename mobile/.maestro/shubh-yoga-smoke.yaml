@@ -1,0 +1,156 @@
+# PRD-27 शुभ योग native-build smoke
+#
+# What PRD-27 changed on-screen, end to end:
+# the Panchang day card's yoga anga tile is relabelled "Nitya Yoga" (the
+# RULEBOOK §24 collision rule — the 27-cycle Sun+Moon yoga must stay
+# distinguishable from the new शुभ योग chips), the daily Muhurat card carries
+# the same relabel plus a "Shubh Yoga" row when one forms, and the Event
+# Muhurat Finder's results/day-detail carry the yoga annotation.
+#
+# A specific yoga chip is DATE-DEPENDENT (सर्वार्थ सिद्धि forms roughly one day
+# in three; the पुष्कर pair a few days a year), so chips are asserted
+# conditionally here — the deterministic pins live in shubhYoga.test.ts
+# (tables row-for-row vs shubh-yoga-v1.md + a full-2026 sweep) and
+# ShubhYogaCard.test.tsx (the formatEndInstant past-midnight suffix). Same
+# reasoning as the date-dependent vidhi pill (design.md §62) and the bhadra
+# row in muhurat-phase2-smoke.yaml.
+#
+# Prerequisite: install the native debug app on the target simulator with
+# `npx expo run:ios --device <UDID> --port 8084` (isolated-simulator recipe in
+# wiki/runbooks/e2e-verification.md). Launches the real bundle; never Expo Go.
+
+appId: com.prashantsharma.vedansh
+---
+- launchApp:
+    appId: com.prashantsharma.vedansh
+    clearState: true
+    arguments:
+      RCT_jsLocation: "127.0.0.1:8084"
+- waitForAnimationToEnd:
+    timeout: 30000
+# clearState resets the notification permission — dismiss the boot alert first
+# (native alert; it blocks everything underneath).
+- tapOn:
+    text: "Allow"
+    optional: true
+- tapOn:
+    text: "Don't Allow"
+    optional: true
+- tapOn:
+    text: "Skip tour"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 5000
+- tapOn:
+    text: "Skip tour"
+    optional: true
+# Skipping the tour on a fresh install hands over to the language + reading-size
+# sheet — accept defaults ("Begin") so the flow lands on Home (hi/Standard baseline).
+- tapOn:
+    text: "Begin"
+    optional: true
+- tapOn:
+    text: "Close"
+    optional: true
+- tapOn:
+    text: "Got it"
+    optional: true
+- tapOn:
+    text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
+    optional: true
+- extendedWaitUntil:
+    # Canary: the above-the-fold Panchang card — the Good Habits tile sits below
+    # the first viewport since Home gained the daily recommendation cards.
+    visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
+    timeout: 60000
+
+# English chrome for stable assertions (same recipe as the other smokes).
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+# The ऐप section (Language/Reading size) sits below the fold on standard-height
+# iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
+# tapping the off-screen row's estimated center hits the tab bar instead. Scroll first.
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── Panchang day card: the नित्य योग relabel + the conditional yoga card ────
+- tapOn: { id: "tab-panchang" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Nitya Yoga"
+    direction: DOWN
+# When today carries a shubh yoga, the card renders under the anga grid with
+# its full "… Yoga" name and window; absent days render zero chrome.
+- runFlow:
+    when:
+      visible:
+        id: "shubh-yoga-card"
+    commands:
+      - assertVisible: "Shubh Yoga"
+      - assertVisible: ".*Siddhi Yoga.*|Ravi Yoga|.*pushkar Yoga.*"
+
+# ── Daily Muhurat (full card): relabel + conditional Shubh Yoga row ─────────
+- scrollUntilVisible:
+    element:
+      text: ".*Rahu Kaal.*|.*राहु काल.*"
+    direction: DOWN
+- tapOn:
+    text: ".*Rahu Kaal.*|.*राहु काल.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Nitya Yoga"
+    timeout: 20000
+- back
+- waitForAnimationToEnd
+
+# ── Finder: results annotate, ordering untouched; day detail carries card ───
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Muhurat\\..*Tap to open\\."
+    direction: DOWN
+- tapOn: "Muhurat\\..*Tap to open\\."
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Find a Muhurat"
+    timeout: 20000
+- scrollUntilVisible:
+    element:
+      id: "muhurat-occasion-vahan"
+    direction: DOWN
+- tapOn:
+    id: "muhurat-occasion-vahan"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Best dates|More suitable dates|No auspicious muhurat.*"
+    timeout: 60000
+- runFlow:
+    when:
+      visible: "Shreshtha.*|Madhyam.*"
+    commands:
+      - tapOn:
+          text: "Shreshtha.*|Madhyam.*"
+          index: 0
+      - waitForAnimationToEnd
+      - extendedWaitUntil:
+          visible: ".*DrikPanchang convention.*"
+          timeout: 20000
+      # The annotation coexists with the verdict when the day carries one.
+      - runFlow:
+          when:
+            visible:
+              id: "shubh-yoga-card"
+          commands:
+            - assertVisible: "Shubh Yoga"
+      - assertVisible: "Why this date"

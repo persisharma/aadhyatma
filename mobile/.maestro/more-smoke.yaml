@@ -38,6 +38,13 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Language,.*"
     timeout: 15000
+# The ऐप section (Language/Reading size) sits below the fold on standard-height
+# iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
+# tapping the off-screen row's estimated center hits the tab bar instead. Scroll first.
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
 - tapOn: "Language,.*"
 - extendedWaitUntil:
     visible: "English"
@@ -86,6 +93,11 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 
 # ── Restore Hindi (best-effort): reopen the Language sheet and pick Hindi ──
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
+    optional: true
 - tapOn:
     text: "Language,.*"
     optional: true

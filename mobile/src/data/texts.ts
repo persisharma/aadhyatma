@@ -35,6 +35,7 @@ import {
   dattaAshtakamTotal,
   shaniAshtakamTotal,
   kalikaAshtakamTotal,
+  rudrashtakamTotal,
 } from './ashtakam';
 import { deviSuktamTotal, purushaSuktamTotal, narayanaSuktamTotal } from './suktam';
 import {
@@ -828,6 +829,19 @@ export const library: readonly LibraryEntry[] = [
     category: 'ashtakam',
     deities: ['kali'],
     verseCount: kalikaAshtakamTotal,
+  },
+  {
+    id: 'rudrashtakam',
+    nameHi: 'श्रीरुद्राष्टकम्',
+    nameEn: 'Rudrashtakam',
+    sub: '८ श्लोक + १ फलश्रुति · अर्थ सहित',
+    subEn: '8 shlokas + 1 phalashruti · with meaning',
+    thumb: 'रु',
+    status: 'active',
+    category: 'ashtakam',
+    deities: ['shiva'],
+    verseCount: rudrashtakamTotal,
+    addedInVersion: '1.4.6',
   },
   // ─────────── Suktam (सूक्तम्) — PRD-A, multi-instance form ───────────
   {

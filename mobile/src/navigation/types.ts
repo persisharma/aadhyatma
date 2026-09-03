@@ -2,6 +2,7 @@ import type { OccasionId } from '@/panchang/eventMuhurat';
 import type { NavigatorScreenParams } from '@react-navigation/native';
 import type { ContentCategory, Deity } from '@/data/texts';
 import type { PurposeId } from '@/data/purposes';
+import type { EntityType as AskEntityType } from '@/ask/types';
 
 export type TabParamList = {
   // Nested-navigator params so cross-tab jumps (e.g. Pitru Smaran's गीता पाठ
@@ -20,16 +21,17 @@ export type TabParamList = {
 };
 
 /**
- * Guided puja flows (PRD-19). `dateMs` is the festival occurrence the vidhi was
- * opened for — the samagri checklist persists per that date.
+ * Guided household flows (PRD-19). `dateMs` is the festival or personal-tithi
+ * occurrence the vidhi was opened for — the samagri checklist persists per date.
  *
- * These three routes are registered on BOTH the Home stack and the Panchang
- * stack, and this shared type is the single source of truth for their params.
- * The duplication is deliberate: a vidhi journey has doors on both tabs (Home's
+ * These three routes are registered on the Home, Panchang and More stacks.
+ * This shared type is the single source of truth for their params. The
+ * duplication is deliberate: a vidhi journey has doors on three stacks (Home's
  * DISCOVER card, search rows and routine items; Panchang's Vrat & Parv tile,
- * day pill and observance detail), and a cross-tab `navigate` would leave back
+ * day pill and observance detail; More's Pitru Smaran doors), and a cross-tab
+ * `navigate` would leave back
  * popping to whichever tab root hosted the screen instead of the surface the
- * user actually came from. Registering the flow in both stacks lets every door
+ * user actually came from. Registering the flow in all three stacks lets every door
  * push in place, so back always retraces the journey.
  */
 export type VidhiStackParamList = {
@@ -38,9 +40,16 @@ export type VidhiStackParamList = {
   VidhiConduct: { vidhiId: string; dateMs?: number; initialStep?: number };
 };
 
+export type GitaReaderParams = { chapter: number; initialIndex?: number };
+
 export type HomeStackParamList = VidhiStackParamList & {
   Home: undefined;
-  Search: undefined;
+  /**
+   * जिज्ञासा (PRD-41). `seed` is ask-from-context: the surface the user came
+   * from names an entity so "iska bhog kya hai" resolves against it.
+   * `initialQuery` pre-fills the box (a briefing card's "ask more" door).
+   */
+  Search: { seed?: { type: AskEntityType; id: string }; initialQuery?: string } | undefined;
   CategoryList: { categoryId: ContentCategory };
   DeityList: { deityId: Deity };
   DeityIndex: undefined;
@@ -53,7 +62,7 @@ export type HomeStackParamList = VidhiStackParamList & {
   KavachamReader: { initialIndex?: number; kavachamId?: string } | undefined;
   StutiReader: { initialIndex?: number; stutiId?: string } | undefined;
   GitaChapters: undefined;
-  GitaReader: { chapter: number; initialIndex?: number };
+  GitaReader: GitaReaderParams;
   SundarkandChapters: undefined;
   SundarkandReader: { chapter: number; initialIndex?: number };
   ShivaStrotamChapters: undefined;
@@ -95,9 +104,11 @@ export type HomeStackParamList = VidhiStackParamList & {
   // Sadhana Programs (संकल्प) — PRD-11. Reached via the create-routine fork.
   SadhanaPrograms: undefined;
   SadhanaProgramDetail: { programId: string };
+  /** आज का विधान — the जिज्ञासा briefing of standing questions (PRD-41 Phase 2). */
+  TodayVidhan: undefined;
 };
 
-export type MoreStackParamList = {
+export type MoreStackParamList = VidhiStackParamList & {
   MoreHome: undefined;
   Wishlist: undefined;
   Profile: undefined;
@@ -109,6 +120,16 @@ export type MoreStackParamList = {
   PitruSmaranEdit: { entryId?: string } | undefined;
   PitruSmaranDetail: { entryId: string };
   PitruPakshaOverview: undefined;
+  /** वास्तु दिशा (PRD-24) — compass + room guidance; also on the Panchang stack. */
+  VastuDisha: undefined;
+  // कुल परम्परा (PRD-29) — janma tithis of the living + the family record.
+  JanmaTithiList: undefined;
+  JanmaTithiDetail: { personId: string };
+  KulParampara: undefined;
+  KulParamparaEdit: undefined;
+  KulParamparaExport: undefined;
+  /** Mounted locally so a vidhi hand-off's Back button returns to conduct. */
+  GitaReader: GitaReaderParams;
 };
 
 export type PanchangHomeMode = 'calendar' | 'catalog' | 'jyotish';
@@ -139,8 +160,15 @@ export type PanchangStackParamList = VidhiStackParamList & {
   // ACTIVE person's details for editing.
   Kundali: { editing?: boolean; newPerson?: boolean } | undefined;
   Rashifal: { rashiIndex?: number } | undefined;
+  // Gochar (transits vs the saved chart) — PRD-20
+  Gochar: undefined;
+  // Compiled full-chart reading — PRD-20 Phase 6
+  KundaliReport: undefined;
   GunaMilan: undefined;
   Namkaran: undefined;
+  /** वास्तु दिशा (PRD-24) — the griha-pravesh result's door pushes it in place
+   * here instead of hijacking the More tab (the PRD-19 multi-stack pattern). */
+  VastuDisha: undefined;
   NamkaranResult: {
     basis:
       | { kind: 'birth'; date: string; time: string | null }

@@ -142,6 +142,10 @@ export const discoveryMeta: Readonly<Record<string, DiscoveryMeta>> = {
     bestTime: 'sunrise',
     source: `${SOURCE_BUNDLED} Lingashtakam source references in ashtakam/lingashtakam.json.`,
   },
+  rudrashtakam: {
+    purposes: ['peace', 'moksha', 'devotion'],
+    source: `${SOURCE_BUNDLED} Rudrashtakam source references and its own peace, liberation, and devotion language in ashtakam/rudrashtakam.json.`,
+  },
   'durga-stuti-arjuna': {
     purposes: ['victory', 'protection', 'courage'],
     bestDays: [2, 5],
