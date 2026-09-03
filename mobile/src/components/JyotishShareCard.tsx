@@ -502,8 +502,8 @@ function KundaliShareCard(props: KundaliProps) {
         >
           {contentByLang(
             props.lang,
-            'लाहिरी अयनांश · पूर्ण राशि भाव · उपकरण पर गणना',
-            'Lahiri ayanamsa · Whole-sign houses · Computed on device'
+            'लाहिरी अयनांश · पूर्ण राशि भाव',
+            'Lahiri ayanamsa · Whole-sign houses'
           )}
           {'\n'}
           <Text style={{ color: colors.inkSoft }}>

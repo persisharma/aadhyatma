@@ -113,4 +113,46 @@ describe('CalendarDatePicker', () => {
     expect(onSelect).toHaveBeenCalledWith('1992-02-29');
     await act(async () => tree.unmount());
   });
+
+  test('the month renders six rows of exactly seven columns', async () => {
+    // The grid used to be one wrapping 42-cell row whose cells were `100 / 7`
+    // percent wide. Yoga resolves percentages in 32-bit float, so on some widths
+    // seven cells sum past the container and the seventh wraps — six columns
+    // under a seven-column header, every date one weekday off. Rows of seven make
+    // the column count structural.
+    const { tree } = await renderPicker();
+    const weeks = tree.root.findAll((n) => typeof n.props.testID === 'string' && n.props.testID.startsWith('calendar-week-'));
+    // Composite + host node per row.
+    const rows = weeks.filter((n) => typeof n.type === 'string');
+    expect(rows).toHaveLength(6);
+    rows.forEach((row) => expect(row.props.children).toHaveLength(7));
+    await act(async () => tree.unmount());
+  });
+
+  test('each day sits under its own weekday column', async () => {
+    const { tree } = await renderPicker();
+    const rows = tree.root
+      .findAll((n) => typeof n.type === 'string' && typeof n.props.testID === 'string' && n.props.testID.startsWith('calendar-week-'));
+    const seen: string[] = [];
+    rows.forEach((row) => {
+      (row.props.children as { props: { accessibilityLabel?: string } }[]).forEach((cell, column) => {
+        const label = cell.props.accessibilityLabel;
+        if (!label) return; // padding cell from an adjacent month
+        const day = new Date(label.replace(/,.*$/, ''));
+        expect(day.getDay()).toBe(column);
+        seen.push(label);
+      });
+    });
+    expect(seen).toHaveLength(31); // every day of August 1992
+    await act(async () => tree.unmount());
+  });
+
+  test('today has a stable calendar accessibility suffix for native automation', async () => {
+    const today = new Date();
+    const key = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+    const { tree } = await renderPicker({ value: key, maxDate: key });
+    const labels = tree.root.findAll((n) => typeof n.props.accessibilityLabel === 'string').map((n) => n.props.accessibilityLabel);
+    expect(labels.some((label) => label.endsWith(', Today'))).toBe(true);
+    await act(async () => tree.unmount());
+  });
 });

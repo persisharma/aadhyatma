@@ -1,0 +1,202 @@
+# PRD-20 Gochar native-build smoke
+#
+# Verifies the transit surface end to end: guest Gochar explains the chart
+# requirement → birth input (golden fixture Aarav/Ujjain) → saved Jyotish
+# landing carries the Gochar tool card → Gochar renders the framing note,
+# nine-graha table, active house themes, Sade Sati state, and the deferred
+# upcoming sign-change list.
+#
+# Prerequisite: install the native debug app on the target simulator with
+# `npx expo run:ios --device <UDID> --port 8084`. This flow launches the real
+# app bundle with React Native's native Metro-location argument; it never opens
+# Expo Go or depends on the simulator's previous packager.
+
+appId: com.prashantsharma.vedansh
+---
+- launchApp:
+    appId: com.prashantsharma.vedansh
+    clearState: true
+    arguments:
+      RCT_jsLocation: "127.0.0.1:8084"
+- waitForAnimationToEnd:
+    timeout: 30000
+# clearState resets the notification permission — dismiss the boot alert first
+# (native alert; it blocks everything underneath).
+- tapOn:
+    text: "Allow"
+    optional: true
+- tapOn:
+    text: "Don't Allow"
+    optional: true
+- tapOn:
+    text: "Skip tour"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 5000
+- tapOn:
+    text: "Skip tour"
+    optional: true
+# Skipping the tour on a fresh install hands over to the language + reading-size
+# sheet — accept defaults ("Begin") so the flow lands on Home (hi/Standard baseline).
+- tapOn:
+    text: "Begin"
+    optional: true
+- tapOn:
+    text: "English"
+    optional: true
+- tapOn:
+    text: "Begin|आरंभ करें"
+    optional: true
+- tapOn:
+    text: "Close"
+    optional: true
+- tapOn:
+    text: "Got it"
+    optional: true
+- tapOn:
+    text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
+    optional: true
+- extendedWaitUntil:
+    # Canary: the above-the-fold Panchang card — the Good Habits tile sits below
+    # the first viewport since Home gained the daily recommendation cards.
+    visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
+    timeout: 60000
+
+# Use English for stable visible-text assertions.
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+# The ऐप section (Language/Reading size) sits below the fold on standard-height
+# iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
+# tapping the off-screen row's estimated center hits the tab bar instead. Scroll first.
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+
+# Home permanent launcher → guest Jyotish landing.
+- scrollUntilVisible:
+    element:
+      text: "Kundali. New. Tap to open."
+    direction: DOWN
+    timeout: 15000
+    centerElement: true
+- tapOn: "Kundali. New. Tap to open."
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Understand Jyotish"
+    timeout: 15000
+
+# Create the golden-fixture chart (same steps as kundali-smoke).
+- tapOn: "Create Kundali"
+- waitForAnimationToEnd
+- tapOn:
+    text: "Edit birth details"
+    optional: true
+- tapOn:
+    id: "kundali-name-input"
+- eraseText: 40
+- inputText: "Aarav"
+- tapOn:
+    id: "kundali-date-input"
+- waitForAnimationToEnd
+- tapOn: ".*tap to change year"
+- tapOn: "Month August"
+- repeat:
+    times: 4
+    commands:
+      - swipe:
+          start: "50%, 70%"
+          end: "50%, 50%"
+          duration: 250
+- tapOn: "Year 1992"
+- tapOn: "14 August 1992"
+- tapOn: "Confirm date"
+- waitForAnimationToEnd
+- tapOn:
+    id: "kundali-time-input"
+- waitForAnimationToEnd
+- repeat:
+    times: 18
+    commands:
+      - tapOn: "Decrease Minute"
+- tapOn:
+    id: "kundali-time-input"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: "kundali-city-button"
+    direction: DOWN
+    timeout: 10000
+- tapOn:
+    id: "kundali-city-button"
+- waitForAnimationToEnd
+- tapOn:
+    id: "kundali-city-search"
+- inputText: "Ujjain"
+- tapOn: "Select Ujjain birth city"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: "kundali-generate-button"
+    direction: DOWN
+    timeout: 10000
+- tapOn:
+    id: "kundali-generate-button"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Kundali result"
+    timeout: 20000
+
+# Saved Jyotish landing now carries the Gochar tool card after the trio.
+- tapOn: "Back"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Your Jyotish today"
+    timeout: 15000
+- assertVisible: "From your full chart"
+- scrollUntilVisible:
+    element:
+      text: "Open Gochar"
+    direction: DOWN
+    timeout: 15000
+- assertVisible: ".*Sade Sati and upcoming sign changes.*"
+- tapOn: "Open Gochar"
+- waitForAnimationToEnd
+
+# Gochar screen: framing, reference, table, themes, Sade Sati, ingress list.
+- extendedWaitUntil:
+    visible: "Gochar"
+    timeout: 15000
+- assertVisible: ".*not a certain prediction.*"
+- assertVisible: "Moon sign"
+- assertVisible: "Lagna"
+- assertVisible: "Today’s transits"
+- assertVisible: "From Moon"
+- assertVisible: "From Lagna"
+- assertVisible: ".*retrograde.*"
+- scrollUntilVisible:
+    element:
+      text: "Sade Sati.*"
+    direction: DOWN
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Upcoming sign changes"
+    direction: DOWN
+    timeout: 15000
+# The ingress list solves behind the interaction gate; wait for a real row.
+- extendedWaitUntil:
+    visible: ".* → .*"
+    timeout: 30000
+
+- stopApp:
+    appId: com.prashantsharma.vedansh

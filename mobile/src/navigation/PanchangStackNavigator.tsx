@@ -12,7 +12,16 @@ import MuhuratDayDetailScreen from '@/screens/MuhuratDayDetailScreen';
 import AbujhDaysScreen from '@/screens/AbujhDaysScreen';
 import KundaliScreen from '@/screens/KundaliScreen';
 import RashifalScreen from '@/screens/RashifalScreen';
+import GocharScreen from '@/screens/GocharScreen';
+import KundaliReportScreen from '@/screens/KundaliReportScreen';
 import GunaMilanScreen from '@/screens/GunaMilanScreen';
+import NamkaranScreen from '@/screens/NamkaranScreen';
+import NamkaranResultScreen from '@/screens/NamkaranResultScreen';
+import NamkaranRashiScreen from '@/screens/NamkaranRashiScreen';
+import VastuDishaScreen from '@/screens/VastuDishaScreen';
+import VidhiCatalogScreen from '@/screens/VidhiCatalogScreen';
+import VidhiDetailScreen from '@/screens/VidhiDetailScreen';
+import VidhiConductScreen from '@/screens/VidhiConductScreen';
 import type { PanchangStackParamList } from './types';
 
 const Stack = createNativeStackNavigator<PanchangStackParamList>();
@@ -64,6 +73,12 @@ export default function PanchangStackNavigator() {
         component={MuhuratDayDetailScreen}
         options={{ animation: 'slide_from_right' }}
       />
+      {/* वास्तु दिशा (PRD-24) — pushed in place by the griha-pravesh door. */}
+      <Stack.Screen
+        name="VastuDisha"
+        component={VastuDishaScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
       <Stack.Screen
         name="AbujhDays"
         component={AbujhDaysScreen}
@@ -80,8 +95,48 @@ export default function PanchangStackNavigator() {
         options={{ animation: 'slide_from_right' }}
       />
       <Stack.Screen
+        name="Gochar"
+        component={GocharScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="KundaliReport"
+        component={KundaliReportScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
         name="GunaMilan"
         component={GunaMilanScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="Namkaran"
+        component={NamkaranScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="NamkaranResult"
+        component={NamkaranResultScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="NamkaranRashi"
+        component={NamkaranRashiScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="VidhiCatalog"
+        component={VidhiCatalogScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="VidhiDetail"
+        component={VidhiDetailScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="VidhiConduct"
+        component={VidhiConductScreen}
         options={{ animation: 'slide_from_right' }}
       />
     </Stack.Navigator>

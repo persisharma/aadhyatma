@@ -17,13 +17,16 @@ export type RoutineScheduleMode = 'daily' | 'weekday';
  * - `chapter` : one chapter/sarga/stotra of a chaptered source (covers both a
  *               granth chapter and a single stotra of a multi-stotra stotram).
  * - `japam`   : a mantra with a round target.
+ * - `vidhi`   : a guided puja procedure (PRD-19 Phase 2B) — e.g. the monthly
+ *               Satyanarayan puja. Completion is manual-only: conduct progress
+ *               lives in AsyncStorage outside the reading-progress contexts.
  */
-export type RoutineItemKind = 'section' | 'chapter' | 'japam';
+export type RoutineItemKind = 'section' | 'chapter' | 'japam' | 'vidhi';
 
 export type RoutineItem = {
   id: string;
   kind: RoutineItemKind;
-  /** Library entry id, or japam mantra id for `japam`. */
+  /** Library entry id, japam mantra id for `japam`, or vidhi id for `vidhi`. */
   sourceId: string;
   /** Present for `chapter`. */
   chapter?: number;
@@ -33,6 +36,9 @@ export type RoutineItem = {
   weekdays?: number[];
 };
 
+/** Per-routine reminder time (24h local). PRD-07 Phase 3. */
+export type RoutineReminder = { hour: number; minute: number };
+
 export type Routine = {
   id: string;
   nameHi: string;
@@ -40,6 +46,12 @@ export type Routine = {
   mode: RoutineScheduleMode;
   items: RoutineItem[];
   createdAt: number;
+  /**
+   * Per-routine reminder time. Absent/undefined = reminders off (the default).
+   * Presence IS the switch — no parallel enabled boolean to drift out of sync.
+   * Additive and optional, so legacy records need no migration.
+   */
+  reminder?: RoutineReminder;
 };
 
 /** Stable key for a routine item across a routine, used for completion tracking. */

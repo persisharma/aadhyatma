@@ -9,7 +9,11 @@ import AudioStackNavigator from './AudioStackNavigator';
 import DailyBhaktiScreen from '@/screens/DailyBhaktiScreen';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
+import { useGitaLanguage } from '@/data/gita/language';
+import { contentByLang } from '@/utils/localize';
+import { scriptTitleFont } from '@/utils/langType';
 import type { TabParamList } from './types';
+import type { WidgetDeepLinkTarget } from '@/widgets/deepLink';
 import {
   HomeIcon,
   BhaktiIcon,
@@ -27,8 +31,13 @@ const LazyPanchangStackNavigator = lazy(() => import('./PanchangStackNavigator')
 // setOptions) so the bar animates out cleanly and restores itself on blur.
 const IMMERSIVE_HOME_ROUTES = ['VratKathaReader'];
 
-export default function TabNavigator() {
+export default function TabNavigator({
+  initialWidgetTarget,
+}: {
+  initialWidgetTarget?: WidgetDeepLinkTarget | null;
+}) {
   const { colors } = useTheme();
+  const { lang } = useGitaLanguage();
   const insets = useSafeAreaInsets();
 
   const tabBarStyle = {
@@ -40,29 +49,71 @@ export default function TabNavigator() {
     paddingTop: 6,
   };
 
+  // Tab labels follow the reading language like the rest of the chrome — the
+  // bar was the last surface still English-only under a fully Indic screen.
+  // contentByLang transliterates the Hindi label for gu/kn.
+  const tabLabel = (hi: string, en: string) => contentByLang(lang, hi, en);
+  const initialRouteName: keyof TabParamList =
+    initialWidgetTarget?.kind === 'verse'
+      ? 'DailyBhaktiTab'
+      : initialWidgetTarget?.kind === 'panchang'
+        ? 'PanchangTab'
+        : 'HomeTab';
+  const homeInitialParams: TabParamList['HomeTab'] =
+    initialWidgetTarget?.kind === 'japam'
+      ? initialWidgetTarget.mantraId
+        ? {
+            screen: 'JapamCounter',
+            params: { mantraId: initialWidgetTarget.mantraId },
+            initial: false,
+          }
+        : { screen: 'CategoryList', params: { categoryId: 'japam' }, initial: false }
+      : undefined;
+  const verseInitialParams: TabParamList['DailyBhaktiTab'] =
+    initialWidgetTarget?.kind === 'verse'
+      ? {
+          sourceId: initialWidgetTarget.sourceId,
+          verseIndex: initialWidgetTarget.verseIndex,
+          ...(initialWidgetTarget.chapter == null ? {} : { chapter: initialWidgetTarget.chapter }),
+        }
+      : undefined;
+  const panchangInitialParams: TabParamList['PanchangTab'] =
+    initialWidgetTarget?.kind === 'panchang'
+      ? {
+          screen: 'PanchangHome',
+          params: { dateMs: initialWidgetTarget.dateMs },
+          initial: false,
+        }
+      : undefined;
+
   return (
     <Tab.Navigator
+      initialRouteName={initialRouteName}
       screenOptions={{
         headerShown: false,
         tabBarStyle,
         tabBarActiveTintColor: colors.saffron,
         tabBarInactiveTintColor: colors.inkMuted,
         tabBarLabelStyle: {
-          fontFamily: fontFamilies.inter,
+          // Inter carries only the English labels — it has no Indic glyphs; the
+          // scripts take their own serif title faces (hi → Noto Serif Devanagari).
+          fontFamily: lang === 'en' ? fontFamilies.inter : scriptTitleFont(lang, fontFamilies.devanagariBold),
           fontSize: 10,
           // RN letterSpacing is in px, not em: the previous 0.02 was invisible.
-          // 0.4 matches the cardMeta chrome token, the nearest sibling scale.
-          letterSpacing: 0.4,
+          // 0.4 matches the cardMeta chrome token, the nearest sibling scale —
+          // but tracking splits the shirorekha, so it applies to en only (§3).
+          letterSpacing: lang === 'en' ? 0.4 : 0,
         },
       }}
     >
       <Tab.Screen
         name="HomeTab"
         component={HomeStackNavigator}
+        initialParams={homeInitialParams}
         options={({ route }) => {
           const focused = getFocusedRouteNameFromRoute(route) ?? 'Home';
           return {
-            tabBarLabel: 'Home',
+            tabBarLabel: tabLabel('होम', 'Home'),
             tabBarButtonTestID: 'tab-home',
             tabBarIcon: ({ color, size }: TabIconProps) => (
               <HomeIcon color={color} size={size} />
@@ -76,8 +127,9 @@ export default function TabNavigator() {
       <Tab.Screen
         name="DailyBhaktiTab"
         component={DailyBhaktiScreen}
+        initialParams={verseInitialParams}
         options={{
-          tabBarLabel: 'Bhakti',
+          tabBarLabel: tabLabel('भक्ति', 'Bhakti'),
           tabBarButtonTestID: 'tab-bhakti',
           tabBarIcon: ({ color, size }) => (
             <BhaktiIcon color={color} accentColor={colors.saffron} size={size} />
@@ -87,8 +139,9 @@ export default function TabNavigator() {
       <Tab.Screen
         name="PanchangTab"
         component={PanchangTabRoot}
+        initialParams={panchangInitialParams}
         options={{
-          tabBarLabel: 'Panchang',
+          tabBarLabel: tabLabel('पंचांग', 'Panchang'),
           tabBarButtonTestID: 'tab-panchang',
           tabBarIcon: ({ color, size }) => (
             <PanchangIcon color={color} size={size} />
@@ -99,7 +152,7 @@ export default function TabNavigator() {
         name="AudioTab"
         component={AudioStackNavigator}
         options={{
-          tabBarLabel: 'Bhajan',
+          tabBarLabel: tabLabel('भजन', 'Bhajan'),
           tabBarButtonTestID: 'tab-bhajan',
           tabBarIcon: ({ color, size }) => (
             <MusicIcon color={color} size={size} />
@@ -110,7 +163,7 @@ export default function TabNavigator() {
         name="MoreTab"
         component={MoreStackNavigator}
         options={{
-          tabBarLabel: 'More',
+          tabBarLabel: tabLabel('अन्य', 'More'),
           tabBarButtonTestID: 'tab-more',
           tabBarIcon: ({ color, size }) => (
             <MoreIcon color={color} size={size} />

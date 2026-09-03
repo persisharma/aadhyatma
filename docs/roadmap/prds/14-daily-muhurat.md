@@ -64,7 +64,7 @@ Naming/sequence pinned to the **DrikPanchang** convention, with a fixture test m
 
 ## 6. Phasing
 1. **Phase 1** — `muhurat.ts` compute module (+ tsx tests + DrikPanchang fixture), the "Today's Timings" card, and the `MuhuratDetail` screen. Ships the whole feature.
-2. **Phase 2 (optional)** — a "Rahu Kaal soon / auspicious window now" local notification; a home-tab glance.
+2. **Phase 2 (optional)** — a "Rahu Kaal soon / auspicious window now" local notification; a home-tab glance. — **detailed in [14-daily-muhurat-notifications-phase2.md](./14-daily-muhurat-notifications-phase2.md)**
 
 ## 7. Why it fits the moat
 100% on-device, deterministic, ad-free. The incumbents bury choghadiya under astrology upsells and banner ads; Vedansh surfaces it clean and calm — the same differentiation that carries the rest of the app.

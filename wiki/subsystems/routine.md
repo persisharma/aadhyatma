@@ -1,8 +1,8 @@
 ---
 title: Daily Routine (Nitya Sadhana)
 type: subsystem
-sources: [mobile/src/data/routine/types.ts, mobile/src/data/routine/units.ts, mobile/src/data/routine/useRoutineToday.ts, mobile/src/data/routine/vaar.ts, mobile/src/data/sadhana/progress.ts, mobile/src/data/sadhana/useSadhanaToday.ts, mobile/src/contexts/RoutineContext.tsx, mobile/src/contexts/RoutineSheetProvider.tsx, mobile/src/components/RoutineBanner.tsx, mobile/src/components/SankalpTodayCard.tsx, mobile/src/components/routineBannerView.ts, mobile/src/components/AddToRoutineButton.tsx, mobile/src/components/RoutineCelebration.tsx, docs/roadmap/prds/07-daily-routine-sadhana.md, docs/roadmap/prds/11-sadhana-programs.md]
-last_verified_date: 2026-07-15
+sources: [mobile/src/data/routine/types.ts, mobile/src/data/routine/units.ts, mobile/src/data/routine/useRoutineToday.ts, mobile/src/data/routine/vaar.ts, mobile/src/data/sadhana/progress.ts, mobile/src/data/sadhana/useSadhanaToday.ts, mobile/src/contexts/RoutineContext.tsx, mobile/src/contexts/RoutineSheetProvider.tsx, mobile/src/components/RoutineBanner.tsx, mobile/src/components/SankalpTodayCard.tsx, mobile/src/components/routineBannerView.ts, mobile/src/components/AddToRoutineButton.tsx, mobile/src/components/RoutineCelebration.tsx, mobile/src/components/RoutineReminderScheduler.tsx, mobile/src/notifications/routineReminderPure.ts, mobile/src/notifications/routineScheduler.ts, mobile/src/screens/RoutineDetailScreen.tsx, docs/roadmap/prds/07-daily-routine-sadhana.md, docs/roadmap/prds/07-routine-reminders-phase3.md, docs/roadmap/prds/11-sadhana-programs.md]
+last_verified_date: 2026-08-18
 confidence: high
 status: current
 ---
@@ -10,7 +10,8 @@ status: current
 ## Summary
 
 PRD-07 (#87; fixes #109; home chip #110). Users build named routines of reciting units —
-whole sections, single chapters/stotras, or japam round-targets — scheduled `daily` or
+whole sections, single chapters/stotras, japam round-targets, or (since PRD-19 Phase 2B)
+recurring puja vidhis — scheduled `daily` or
 per-`weekday` (with a vaar deity-of-the-day suggestion). "Today's practice" is computed live:
 completion is **derived from genuine reading/japa activity today**, with a manual check-off
 fallback. All state lives in AsyncStorage; no backend.
@@ -18,10 +19,18 @@ fallback. All state lives in AsyncStorage; no backend.
 ## Details
 
 **Data model** (`src/data/routine/types.ts`): `Routine { id, nameHi, nameEn, mode, items,
-createdAt }`; `RoutineItem { kind: 'section' | 'chapter' | 'japam', sourceId, chapter?,
+createdAt, reminder? }` — `reminder?: RoutineReminder = { hour, minute }` is the PRD-07 P3
+per-routine reminder time, **optional and additive** (presence = reminders on; absent = off;
+old records need no migration and old builds ignore the key); `RoutineItem { kind: 'section' | 'chapter' | 'japam' | 'vidhi', sourceId, chapter?,
 targetRounds?, weekdays? }`. Item granularity is a complete reciting unit — never a single
 stotram verse (that is Daily Bhakti's job). `routineItemKey(routineId, itemId)` is the
-completion-tracking key.
+completion-tracking key. The `vidhi` kind (PRD-19 Phase 2B) carries a vidhi id as `sourceId`:
+`resolveRoutineItem` titles it with a `पूजा विधि` sub-line, `navigateToRoutineItem` opens
+`VidhiDetail` **on the Home stack** (which registers the vidhi flow alongside the Panchang one,
+see [[puja-vidhi]]) so back returns to the routine, and `isItemAutoComplete` always returns false for it — conduct
+state lives in AsyncStorage outside the reading-progress contexts, so completion is
+**manual-mark only**. `AddToRoutineButton` is offered on `VidhiDetailScreen` only for vidhis
+whose festival rule recurs `'monthly'` (Satyanarayan/purnima today).
 
 **Scheduling** (`vaar.ts`): in `weekday` mode each item carries weekday numbers (0=Sun…6=Sat).
 `VAAR_DEITY` maps weekday → a deity that **must exist in the catalog** (drives the SUGGESTED
@@ -32,7 +41,25 @@ don't ship — Saturday is "शनि देव · हनुमान" but surfa
 array), `@vedansh/routine-done` (`{date, keys}`; manual marks, discarded on load when date ≠
 today), `@vedansh/routine-celebrated` (plain date key; staleness checked at read time).
 API: `createRoutine(nameHi, nameEn, mode)` / `deleteRoutine` / `addItem` / `removeItem` /
-`markManualDone` / `unmarkManualDone` / `celebratedToday` / `markCelebratedToday`.
+`setReminder(routineId, reminder | undefined)` (PRD-07 P3 — clearing deletes the key from the
+persisted JSON, so presence stays the switch) / `markManualDone` / `unmarkManualDone` /
+`celebratedToday` / `markCelebratedToday`.
+
+**Per-routine reminders** (PRD-07 Phase 3 — the final PRD-07 phase; closes the PRD): the स्मरण
+card on `RoutineDetailScreen` (below the weekday strip, above the items) is the opt-in — a
+toggle (off by default), a `TimeStepper` defaulting 07:00 once on, and a weekday-aware caption
+(`daily` → "every day at this time"; `weekday` → the union of item weekdays via
+`WEEKDAY_LABELS[..].shortHi`/`short`; empty union warns "add content first" and nothing is
+scheduled). **The toggle owns the permission moment**: `undetermined` → shared
+`requestPermission()`, and the reminder persists **only after a grant**; hard denial
+(`canAskAgain: false`) replaces the row with the open-Settings banner. Scheduling is the
+[[notifications]] `routine-reminder` family (`routineReminderPure.ts` planner +
+`routineScheduler.ts` glue + headless `<RoutineReminderScheduler>` in App.tsx): daily routines
+fire daily, weekday routines only on their item-day union, cap 12 over a 7-day window, and
+**completing all of today's items cancels today's slot** (a pure `completedToday` planner input
+fed from the same composition `useRoutineToday` uses — best-effort, only while the app runs).
+A tap deep-links to `HomeTab → RoutineToday`. Pure JS over the already-linked
+`expo-notifications` — OTA-shippable.
 
 **Completion** (`units.ts` + `useRoutineToday.ts`): an item is auto-complete when persisted
 ReadingProgress reached the unit's **last verse-page today** (per-chapter last positions are
@@ -113,9 +140,19 @@ and a संकल्प Home DISCOVER spotlight card — pinned by `screens/__t
   face for Hindi prose captions, `scriptBodyFont`+`cardMeta` for meta lines, `pillTextStyle()` for
   pills/labels, and lineHeight ≥1.5× fontSize (matras clip below ~1.45×). Guarded by
   `utils/__tests__/typographySafety.test.ts`.
-- Tests: `contexts/__tests__/RoutineContext.test.tsx`, `screens/__tests__/RoutineCompletion.test.tsx`,
+- **Reminder suppression is best-effort by design** — `completedToday` only cancels today's slot
+  while the app is running to observe the completion (there is no server and expo local
+  notifications run no code at fire time). An offline recitation never marked in-app cannot
+  suppress. Same trade as every derived-completion surface here; do not "fix" it with a
+  fire-time check that cannot exist.
+- Tests: `contexts/__tests__/RoutineContext.test.tsx` (incl. `setReminder` persistence +
+  the legacy-record migration-free proof), `screens/__tests__/RoutineCompletion.test.tsx`,
   `screens/__tests__/SankalpTouchpoints.test.tsx` (catalog entry points),
-  `components/__tests__/routineBannerView.test.ts` + `RoutineBanner`/`RoutineCelebration` tests;
+  `components/__tests__/routineBannerView.test.ts` + `RoutineBanner`/`RoutineCelebration` tests,
+  `notifications/__tests__/routineReminderPure.test.ts` (tsx — planner) and the
+  `routine-reminder` cases in `notifications/__tests__/deepLink.jest.test.tsx`;
   Maestro `routine-smoke.yaml` (daily lifecycle), `routine-weekday-smoke.yaml`
-  (weekday chip, un-mark, open-into-reader, remove-item), and `sadhana-sankalp-smoke.yaml`
+  (weekday chip, un-mark, open-into-reader, remove-item), `routine-reminder-smoke.yaml`
+  (स्मरण card presence, toggle off by default — flipping it would raise the native permission
+  dialog), and `sadhana-sankalp-smoke.yaml`
   (enroll → practise → set-aside lifecycle for the consecutive Hanuman Chalisa 41-day program).

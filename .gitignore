@@ -26,6 +26,10 @@ marketing/linkedin/frames/
 marketing/linkedin/slides/
 marketing/linkedin/*.mp4
 marketing/linkedin/.metro.log
+marketing/instagram/shots/
+marketing/instagram/frames/
+marketing/instagram/carousel/
+marketing/instagram/*.mp4
 
 # Feature reel pipeline — regenerable outputs (keep the tooling, ignore the artifacts)
 marketing/reels/voice/
@@ -37,3 +41,7 @@ marketing/reels/**/*.mov
 # Reel XTTS voice-clone (local ML env + provided voice refs) — regenerable/large
 marketing/reels/.venv-xtts/
 marketing/reels/refs/
+
+# Source research artifacts — kept local only; verified content lives as text and
+# sources are cited by public URL (never commit these)
+tmp/

@@ -2,6 +2,7 @@ import { CommonActions, createNavigationContainerRef } from '@react-navigation/n
 import { panchangTabTarget } from '@/navigation/entryRoutes';
 import * as Notifications from 'expo-notifications';
 import { findJapamMantra } from '@/data/japam';
+import { EVENT_RULES } from '@/panchang/eventMuhurat';
 import { isJapamAlarmPayload } from './japamAlarms';
 import type { TabParamList } from '@/navigation/types';
 import type { NotificationPayload } from './pure';
@@ -28,6 +29,19 @@ function isVratReminderPayload(data: unknown): data is { type: 'vrat-reminder'; 
   return d.type === 'vrat-reminder' && typeof d.ruleId === 'string';
 }
 
+function isMuhuratReminderPayload(
+  data: unknown
+): data is { type: 'muhurat-reminder'; occasionId: string; dateMs: number } {
+  if (!data || typeof data !== 'object') return false;
+  const d = data as Record<string, unknown>;
+  return (
+    d.type === 'muhurat-reminder' &&
+    typeof d.occasionId === 'string' &&
+    typeof d.dateMs === 'number' &&
+    Number.isFinite(d.dateMs)
+  );
+}
+
 function isFestiveReminderPayload(
   data: unknown
 ): data is { type: 'festive-reminder'; ruleId: string } {
@@ -43,6 +57,30 @@ function isSadhanaReminderPayload(data: unknown): data is { type: 'sadhana-remin
   if (!data || typeof data !== 'object') return false;
   const d = data as Record<string, unknown>;
   return d.type === 'sadhana-reminder' && typeof d.programId === 'string';
+}
+
+function isRoutineReminderPayload(data: unknown): data is { type: 'routine-reminder' } {
+  if (!data || typeof data !== 'object') return false;
+  // Gated on `type` only. `routineId`/`dateKey` ride along as a record but must
+  // not drive routing: a stale notification for a since-deleted routine still
+  // lands safely on RoutineToday, which simply doesn't show it.
+  return (data as Record<string, unknown>).type === 'routine-reminder';
+}
+
+function isPitruSmaranReminderPayload(data: unknown): data is { type: 'pitru-smaran-reminder'; entryId: string } {
+  if (!data || typeof data !== 'object') return false;
+  const d = data as Record<string, unknown>;
+  return d.type === 'pitru-smaran-reminder' && typeof d.entryId === 'string';
+}
+
+function isPitruPakshaReminderPayload(data: unknown): data is { type: 'pitru-paksha-reminder' } {
+  return Boolean(data && typeof data === 'object' && (data as Record<string, unknown>).type === 'pitru-paksha-reminder');
+}
+
+function isJanmaTithiReminderPayload(data: unknown): data is { type: 'janma-tithi-reminder'; personId: string } {
+  if (!data || typeof data !== 'object') return false;
+  const d = data as Record<string, unknown>;
+  return d.type === 'janma-tithi-reminder' && typeof d.personId === 'string';
 }
 
 /**
@@ -99,6 +137,34 @@ export function handleNotificationResponse(
     return true;
   }
 
+  // A muhurat-reminder tap (PRD-16 §6.7) opens the followed day's detail —
+  // the screen that carries the window the notification just named, plus the
+  // reasoning behind it. Nested in the Panchang stack like the vrat route, and
+  // `panchangTabTarget` carries initial:false so a cold-start tap cannot make
+  // MuhuratDayDetail the lazily-mounted stack's initial route.
+  //
+  // The date rides the payload rather than being re-derived from "today": a
+  // notice armed days ago names ONE specific muhurat, and an advance notice is
+  // by definition read on a different day than the one it points at.
+  if (isMuhuratReminderPayload(data)) {
+    // Validate the occasion against EVENT_RULES the same way the japam route
+    // validates its mantra: a notice armed months ago must not open a screen
+    // for an occasion a later release retired.
+    const known = EVENT_RULES.find((r) => r.id === data.occasionId);
+    if (known) {
+      navigationRef.dispatch(
+        CommonActions.navigate({
+          name: 'PanchangTab',
+          params: panchangTabTarget('MuhuratDayDetail', {
+            occasionId: known.id,
+            dateMs: data.dateMs,
+          }),
+        })
+      );
+      return true;
+    }
+  }
+
   // A festive-reminder tap lands on the HOME screen, not on a reader.
   //
   // The reading stays one tap away, because Home's FOR TODAY row leads with the
@@ -123,10 +189,59 @@ export function handleNotificationResponse(
     return true;
   }
 
+  if (isPitruSmaranReminderPayload(data)) {
+    navigationRef.dispatch(
+      CommonActions.navigate({
+        name: 'MoreTab',
+        params: { screen: 'PitruSmaranDetail', params: { entryId: data.entryId }, initial: false },
+      } as never)
+    );
+    return true;
+  }
+
+  // A janma-tithi tap (PRD-29) opens that person's detail in the More stack —
+  // the screen carrying this year's date and the day's practice. The person id
+  // is validated by the screen itself (a removed person renders its own
+  // not-found state), so a stale notice cannot crash a route.
+  if (isJanmaTithiReminderPayload(data)) {
+    navigationRef.dispatch(
+      CommonActions.navigate({
+        name: 'MoreTab',
+        params: { screen: 'JanmaTithiDetail', params: { personId: data.personId }, initial: false },
+      } as never)
+    );
+    return true;
+  }
+
+  if (isPitruPakshaReminderPayload(data)) {
+    navigationRef.dispatch(
+      CommonActions.navigate({
+        name: 'MoreTab',
+        params: { screen: 'PitruPakshaOverview', initial: false },
+      } as never)
+    );
+    return true;
+  }
+
   // A sadhana-reminder tap (PRD-11) opens Today's Practice, where the active
   // sankalp's day is shown. Lands on the Home tab's RoutineToday screen; reading
   // progress is untouched (the user chooses to open the day's reading there).
   if (isSadhanaReminderPayload(data)) {
+    navigationRef.dispatch(
+      CommonActions.navigate({
+        name: 'HomeTab',
+        params: { screen: 'RoutineToday' },
+      } as never)
+    );
+    return true;
+  }
+
+  // A routine-reminder tap (PRD-07 P3) lands on Today's Practice — byte-for-
+  // byte the sadhana-reminder landing, and for the same reasons: RoutineToday
+  // is where all of today's practice lives (this routine, other routines,
+  // active sankalps), and a lock-screen tap must never open a reader whose
+  // `setProgress` effect could clobber the resume position.
+  if (isRoutineReminderPayload(data)) {
     navigationRef.dispatch(
       CommonActions.navigate({
         name: 'HomeTab',

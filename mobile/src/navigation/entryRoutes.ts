@@ -20,7 +20,7 @@ import { valmikiRamayanChaptersManifest } from '@/data/valmiki-ramayan';
 import { sundarkandChaptersManifest } from '@/data/sundarkand';
 import { gitaChaptersManifest } from '@/data/gita';
 import { canonicalSourceId } from '@/data/sourceIdMigration';
-import type { HomeStackParamList, PanchangStackParamList } from './types';
+import type { HomeStackParamList, MoreStackParamList, PanchangStackParamList } from './types';
 
 type Nav = NativeStackNavigationProp<HomeStackParamList>;
 
@@ -36,8 +36,47 @@ type Nav = NativeStackNavigationProp<HomeStackParamList>;
 export function panchangTabTarget<T extends keyof PanchangStackParamList>(
   screen: T,
   params?: PanchangStackParamList[T]
-): { screen: T; params?: PanchangStackParamList[T]; initial: false } {
-  return { screen, params, initial: false };
+): { screen: T; params: PanchangStackParamList[T]; initial: false } {
+  return { screen, params: params as PanchangStackParamList[T], initial: false };
+}
+
+/**
+ * Nested-navigation params for a screen inside the More tab's stack — the
+ * `panchangTabTarget` rule, applied to the other lazily-mounted tab.
+ *
+ * The Home DISCOVER widgets spotlight hand-rolled `{ screen: 'WidgetGallery' }`
+ * without `initial: false`, so tapping it before ever opening the More tab made
+ * the gallery the More stack's *initial* route: its back button had nothing to
+ * pop, and the whole hub (Wishlist, Profile, Reminders, Japam Alarms, Pitru
+ * Smaran) stayed unreachable for the rest of the session. Build every MoreTab
+ * hand-off through this helper rather than the raw `{ screen, params }` shape —
+ * `navigation/__tests__/tabTargets.test.ts` fails the hand-rolled form.
+ */
+export function moreTabTarget<T extends keyof MoreStackParamList>(
+  screen: T,
+  params?: MoreStackParamList[T]
+): { screen: T; params: MoreStackParamList[T]; initial: false } {
+  return { screen, params: params as MoreStackParamList[T], initial: false };
+}
+
+/**
+ * Open a reader target from a vidhi mounted on any of its three entry stacks.
+ * Push in place when the enclosing stack owns the target route — back then
+ * retraces the guide — and cross-tab to Home otherwise. Most readers live only
+ * on Home; GitaReader is also registered on More for the personal-tithi guide.
+ */
+export function navigateToHomeStackTarget(
+  nav: {
+    navigate: (name: string, params?: object) => void;
+    getState?: () => { routeNames?: readonly string[] } | undefined;
+  },
+  target: { screen: string; params?: object }
+): void {
+  if (nav.getState?.()?.routeNames?.includes(target.screen)) {
+    nav.navigate(target.screen, target.params);
+    return;
+  }
+  nav.navigate('HomeTab', { screen: target.screen, params: target.params });
 }
 
 const chalisaIds = new Set([
@@ -223,6 +262,13 @@ export function navigateToEntryStart(nav: Nav, entry: LibraryEntry): boolean {
  * opens the counter. Returns false if the source is unknown / unroutable.
  */
 export function navigateToRoutineItem(nav: Nav, item: RoutineItem): boolean {
+  if (item.kind === 'vidhi') {
+    // The vidhi flow (PRD-19) is registered on the Home stack as well as the
+    // Panchang one, so a routine item opens it in place and back returns to
+    // the routine rather than to the Panchang calendar.
+    nav.navigate('VidhiDetail', { vidhiId: item.sourceId });
+    return true;
+  }
   if (item.kind === 'japam') {
     nav.navigate('JapamCounter', { mantraId: item.sourceId });
     return true;

@@ -14,6 +14,13 @@
 # renders Devanagari, which Maestro's iOS tree can't read — flip to English on
 # More first. Tile/card a11y labels are English by contract either way.
 #
+# Not covered here, deliberately: the chip row's auto-drift contract (§48 — a
+# single out-and-back after a settle delay, then a fully idle JS thread). Maestro
+# cannot observe frames, timers or CPU, and whether the row even overflows is
+# date-dependent, so a flow would be both blind and flaky. That contract lives in
+# `components/__tests__/TodayStrip.test.tsx` → "chip-row auto-drift", the same
+# reason panchang-day-cache-smoke leaves the re-solve counting to Jest.
+#
 # Selector notes (per vrat-catalog-smoke):
 #   - The PanchangHome segment Pressable exposes accessibilityLabel
 #     "Vrat and Parv", not the visible "Vrat & Parv" text.
@@ -29,6 +36,13 @@ appId: com.prashantsharma.vedansh
 # (gu/kn added a 4-way picker). Open the sheet, then pick English.
 - tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
+# The ऐप section (Language/Reading size) sits below the fold on standard-height
+# iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
+# tapping the off-screen row's estimated center hits the tab bar instead. Scroll first.
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
 - tapOn: "Language,.*"
 - waitForAnimationToEnd
 - extendedWaitUntil:

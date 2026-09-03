@@ -1,12 +1,27 @@
-import React from 'react';
+import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Text } from 'react-native';
+import { Text, View as mockView } from 'react-native';
 import ShareCard, { type ShareCardProps } from '../ShareCard';
 
+// ShareCard now renders BackgroundLayer (the reader-page source sketch), whose
+// overlay is an expo-linear-gradient — untranspiled ESM Jest cannot parse.
+jest.mock('expo-linear-gradient', () => ({
+  LinearGradient: ({
+    children,
+    ...props
+  }: React.PropsWithChildren<Record<string, unknown>>) =>
+    mockReact.createElement(mockView, props, children),
+}));
+
 /**
- * Guard: the ShareCard is a fixed-size promo image, so a long meaning must
- * shrink to fit rather than truncate/ellipsize. This pins the shrink-to-fit
- * props so the meaning can never be silently cut off in a shared image.
+ * Guard: the ShareCard is a fixed-size promo image, so a long meaning must be
+ * fitted rather than clipped — but fitted *legibly*. The card used to hand that
+ * job to `adjustsFontSizeToFit` over `numberOfLines={5}` with a fixed
+ * `lineHeight: 24`, which drove real meanings to 7 pt inside 24 pt of leading
+ * (unreadable at thumbnail size, and the exact iOS auto-fit trap already
+ * recorded on CategoryCard). Sizing now happens in JS — `utils/shareCardType.ts`
+ * — so these pin: no platform auto-fit, a readable size, leading that scales
+ * with it, and no synthesised italic over Indic faces.
  */
 
 const longMeaning =
@@ -16,6 +31,7 @@ const longMeaning =
   'seated upon the lotus, holding a crystal rosary in her hand.';
 
 const baseProps: ShareCardProps = {
+  sourceId: 'saraswati-stotram',
   sectionNameHi: 'सरस्वती वंदना',
   sectionNameEn: 'Saraswati Vandana',
   verseLabelHi: 'श्लोक · 2.2',
@@ -29,22 +45,48 @@ const baseProps: ShareCardProps = {
   height: 675,
 };
 
-function meaningNode(props: ShareCardProps) {
+function meaningNode(props: ShareCardProps, text: string) {
   let tree: TestRenderer.ReactTestRenderer | undefined;
   act(() => {
     tree = TestRenderer.create(<ShareCard {...props} />);
   });
-  const node = tree!.root.findAllByType(Text).find((n) => n.props.children === props.meaningEn);
+  const node = tree!.root.findAllByType(Text).find((n) => n.props.children === text);
   if (!node) throw new Error('meaning Text not found in ShareCard');
   return node;
 }
 
+/** Flattened style of the meaning Text, as rendered. */
+function meaningStyle(props: ShareCardProps, text: string) {
+  const style = meaningNode(props, text).props.style as unknown;
+  return Object.assign({}, ...[style].flat(Infinity).filter(Boolean)) as Record<string, unknown>;
+}
+
 describe('ShareCard meaning fit', () => {
-  test('shrinks to fit instead of truncating', () => {
-    const node = meaningNode(baseProps);
-    expect(node.props.adjustsFontSizeToFit).toBe(true);
-    expect(typeof node.props.minimumFontScale).toBe('number');
-    expect(node.props.minimumFontScale).toBeLessThan(1);
+  test('does not hand sizing to platform auto-fit', () => {
+    const node = meaningNode(baseProps, longMeaning);
+    expect(node.props.adjustsFontSizeToFit).toBeFalsy();
+    expect(node.props.minimumFontScale).toBeUndefined();
+  });
+
+  test('fits by size + line budget, not a hard-coded five lines', () => {
+    const node = meaningNode(baseProps, longMeaning);
+    expect(node.props.numberOfLines).toBeGreaterThan(5);
+  });
+
+  test('a long meaning still renders at a readable size with scaled leading', () => {
+    const style = meaningStyle(baseProps, longMeaning);
+    const fontSize = style.fontSize as number;
+    const lineHeight = style.lineHeight as number;
+    expect(fontSize).toBeGreaterThanOrEqual(12);
+    expect(lineHeight / fontSize).toBeGreaterThanOrEqual(1.4);
+    expect(lineHeight / fontSize).toBeLessThanOrEqual(1.7);
+  });
+
+  test('Indic meanings are upright; only the Latin face uses its real italic', () => {
+    const hi = meaningStyle({ ...baseProps, lang: 'hi' }, baseProps.meaningHi!);
+    expect(hi.fontStyle).toBe('normal');
+    const en = meaningStyle(baseProps, longMeaning);
+    expect(en.fontStyle).toBe('italic');
   });
 });
 

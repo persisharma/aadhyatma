@@ -1,0 +1,16 @@
+{
+  "source": {
+    "verified": false,
+    "referenceUrls": [
+      "repo://docs/roadmap/conventions/namkaran-namakshar-v1.md",
+      "repo://docs/roadmap/prds/17-namkaran.md"
+    ],
+    "notes": "Development fixtures for UI and privacy verification only; these references define the draft contract and do not attest the names or meanings."
+  },
+  "nakshatraIndex": 13,
+  "nakshatra": "Chitra",
+  "names": [
+    { "id": "radha", "hi": "राधा", "latin": "Radha", "gender": "girl", "charanas": [54], "meaningHi": "आराधना से जुड़ा नाम; श्रीकृष्ण की परम भक्त", "meaningEn": "A name linked with worship; Krishna's foremost devotee", "root": "राध्", "deityId": "krishna", "syllableCount": 2 },
+    { "id": "ram", "hi": "राम", "latin": "Ram", "gender": "boy", "charanas": [54], "meaningHi": "आनन्द देने वाला; श्रीराम का नाम", "meaningEn": "One who delights; the name of Shri Rama", "root": "रम्", "deityId": "rama", "syllableCount": 2 }
+  ]
+}

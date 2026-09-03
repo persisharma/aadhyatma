@@ -1,0 +1,156 @@
+# PRD-16 Phase 3 (लग्न-grade windows) native-build smoke
+#
+# What Phase 3 changed on-screen, end to end:
+# results cards carry a lagna chip on the best-window line (and a quiet
+# "split at a lagna boundary" note when the best window is a split part) →
+# day detail, whose "Why this date" evidence block gains the लग्न row and the
+# साक्ष्य-marked होरा row, and whose windows list tags each segment's lagna →
+# the यात्रा occasion with its 8-direction दिशा chip row.
+#
+# A split-at-boundary best window is date-dependent, so the split note is
+# asserted conditionally — the deterministic pins live in
+# eventMuhuratPhase3.test.ts (17/19 Aug 2026, 10 Jul 2026 Bengaluru).
+#
+# Prerequisite: install the native debug app on the target simulator with
+# `npx expo run:ios --device <UDID> --port 8084` (isolated-simulator recipe in
+# wiki/runbooks/e2e-verification.md). Launches the real bundle; never Expo Go.
+
+appId: com.prashantsharma.vedansh
+---
+- launchApp:
+    appId: com.prashantsharma.vedansh
+    clearState: true
+    arguments:
+      RCT_jsLocation: "127.0.0.1:8084"
+- waitForAnimationToEnd:
+    timeout: 30000
+# clearState resets the notification permission — dismiss the boot alert first
+# (native alert; it blocks everything underneath).
+- tapOn:
+    text: "Allow"
+    optional: true
+- tapOn:
+    text: "Don't Allow"
+    optional: true
+- tapOn:
+    text: "Skip tour"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 5000
+- tapOn:
+    text: "Skip tour"
+    optional: true
+# Skipping the tour on a fresh install hands over to the language + reading-size
+# sheet — accept defaults ("Begin") so the flow lands on Home (hi/Standard baseline).
+- tapOn:
+    text: "Begin"
+    optional: true
+- tapOn:
+    text: "Close"
+    optional: true
+- tapOn:
+    text: "Got it"
+    optional: true
+- tapOn:
+    text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
+    optional: true
+- extendedWaitUntil:
+    # Canary: the above-the-fold Panchang card — the Good Habits tile sits below
+    # the first viewport since Home gained the daily recommendation cards.
+    visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
+    timeout: 60000
+
+# English chrome for stable assertions (same recipe as the other smokes).
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+# The ऐप section (Language/Reading size) sits below the fold on standard-height
+# iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
+# tapping the off-screen row's estimated center hits the tab bar instead. Scroll first.
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+
+# ── Into the finder ──────────────────────────────────────────────────────────
+- scrollUntilVisible:
+    element:
+      text: "Muhurat\\..*Tap to open\\."
+    direction: DOWN
+- tapOn: "Muhurat\\..*Tap to open\\."
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Find a Muhurat"
+    timeout: 20000
+
+# ── Results: the lagna chip on the best-window line ──────────────────────────
+- tapOn:
+    id: "muhurat-occasion-vahan"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Best dates|More suitable dates|No auspicious muhurat.*"
+    timeout: 60000
+# Every offered card's window line carries "<rashi> lagna".
+- assertVisible: ".*lagna.*|.*लग्न.*"
+# The split note is date-dependent; assert only when a split leads a card.
+- runFlow:
+    when:
+      visible: "Split at a lagna boundary|लग्न सीमा पर विभाजित"
+    commands:
+      - assertVisible: "Split at a lagna boundary|लग्न सीमा पर विभाजित"
+
+# ── Day detail: लग्न + होरा evidence rows, per-segment lagna tags ────────────
+- tapOn:
+    text: "Shreshtha.*|Madhyam.*"
+    index: 0
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: ".*DrikPanchang convention.*"
+    timeout: 20000
+- assertVisible: "Why this date"
+- scrollUntilVisible:
+    element:
+      text: "Lagna|लग्न"
+    direction: DOWN
+- assertVisible: "Prevails over the whole window|पूरे समय-खंड पर"
+- scrollUntilVisible:
+    element:
+      text: "Hora|होरा"
+    direction: DOWN
+# The साक्ष्य framing keeps hora visibly outside the tier contract.
+- assertVisible: "Evidence|साक्ष्य"
+- back
+- waitForAnimationToEnd
+- back
+- waitForAnimationToEnd
+
+# ── यात्रा: the 13th occasion and its दिशा chip row ──────────────────────────
+- scrollUntilVisible:
+    element:
+      id: "muhurat-occasion-yatra"
+    direction: DOWN
+- tapOn:
+    id: "muhurat-occasion-yatra"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Best dates|More suitable dates|No auspicious muhurat.*"
+    timeout: 60000
+# All eight direction chips render; choosing one re-scans.
+- assertVisible: { id: "muhurat-disha-east" }
+- assertVisible: { id: "muhurat-disha-northeast" }
+- tapOn: { id: "muhurat-disha-east" }
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Best dates|More suitable dates|No auspicious muhurat.*"
+    timeout: 60000
+# Deselect returns to the direction-free scan.
+- tapOn: { id: "muhurat-disha-east" }
+- waitForAnimationToEnd

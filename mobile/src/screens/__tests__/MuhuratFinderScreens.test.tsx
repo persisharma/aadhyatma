@@ -70,20 +70,24 @@ jest.mock('@/panchang/usePanchang', () => ({
 // for a pinned date so the smoke is stable and fast (the hook's own chunked
 // scan is covered by the tsx engine suite + e2e).
 jest.mock('@/panchang/useMuhuratFinder', () => {
-  const { computePanchangForDate } = jest.requireActual('@/panchang/engine');
+  const { computePanchangForDate, sunriseForDate } = jest.requireActual('@/panchang/engine');
   const { computeMuhuratDay } = jest.requireActual('@/panchang/muhurat');
   const { computeAstaFlags, evaluateDay, getEventRule, summarize } = jest.requireActual('@/panchang/eventMuhurat');
+  const { lagnaSpansForDay } = jest.requireActual('@/panchang/lagnaSweep');
   const d = new Date(2026, 7, 17); // validated shreshtha Vahan day
   const p = computePanchangForDate(d);
   const next = computePanchangForDate(new Date(2026, 7, 18));
   const m = computeMuhuratDay(p.sunrise, p.sunset, next.sunrise, d.getDay());
+  // Ujjain — the same default the real hook's location context supplies.
+  const lagnas = lagnaSpansForDay(p.sunrise, sunriseForDate(new Date(2026, 7, 18)), 23.1765, 75.7885);
   const verdict = evaluateDay(
     getEventRule('vahan'),
     d.getTime(),
     d.getDay(),
     p,
     m,
-    computeAstaFlags(new Date(2026, 7, 17, 12))
+    computeAstaFlags(new Date(2026, 7, 17, 12)),
+    { lagnas }
   );
   return {
     FINDER_WINDOW_DAYS: 92,
@@ -150,6 +154,10 @@ test('MuhuratResultsScreen ranks the validated 17 Aug 2026 Vahan day shreshtha, 
   const body = texts(r);
   expect(body).toContain('श्रेष्ठ');
   expect(body).toContain('अमृत'); // 17 Aug's best window is Amrit (engine-validated)
+  // Phase 3: the best-window line carries its lagna chip. (Jest runs on the
+  // machine timezone, not IST, so the specific rashi word is not stable here —
+  // the exact-span pins live in the tsx engine suite under TZ=Asia/Kolkata.)
+  expect(body).toContain('लग्न');
   const card = r.root.findByProps({ testID: 'muhurat-result-17' });
   act(() => card.props.onPress());
   expect(mockNavigation.navigate).toHaveBeenCalledWith(
@@ -166,6 +174,29 @@ test('MuhuratResultsScreen ranks the validated 17 Aug 2026 Vahan day shreshtha, 
     },
   });
   act(() => r.unmount());
+});
+
+test('MuhuratResultsScreen: the वास्तु दिशा door renders for griha-pravesh only (PRD-24 §6)', () => {
+  const vahan = renderWithLang(
+    <MuhuratResultsScreen
+      navigation={nav}
+      route={{ key: 'k', name: 'MuhuratResults', params: { occasionId: 'vahan' } } as never}
+    />
+  );
+  expect(vahan.root.findAllByProps({ testID: 'muhurat-vastu-door' })).toHaveLength(0);
+  act(() => vahan.unmount());
+
+  const griha = renderWithLang(
+    <MuhuratResultsScreen
+      navigation={nav}
+      route={{ key: 'k', name: 'MuhuratResults', params: { occasionId: 'griha-pravesh' } } as never}
+    />
+  );
+  act(() => {
+    griha.root.findByProps({ testID: 'muhurat-vastu-door' }).props.onPress();
+  });
+  expect(mockNavigation.navigate).toHaveBeenCalledWith('VastuDisha');
+  act(() => griha.unmount());
 });
 
 test('MuhuratDayDetailScreen renders answer-first with provenance and the doshas list', async () => {
@@ -186,6 +217,11 @@ test('MuhuratDayDetailScreen renders answer-first with provenance and the doshas
   expect(body).toContain('दृक्पंचांग'); // provenance is part of the copy, not a footer
   expect(body).toContain('अनुकूल');
   expect(body).toContain('भद्रा'); // doshas list names what was checked
+  // Phase 3: the evidence block gains the लग्न row (span prevailing over the
+  // whole best window) and the होरा row marked साक्ष्य — evidence only.
+  expect(body).toContain('लग्न');
+  expect(body).toContain('होरा');
+  expect(body).toContain('साक्ष्य');
   const link = r.root.findByProps({ testID: 'muhurat-day-timings-link' });
   act(() => link.props.onPress());
   expect(mockNavigation.navigate).toHaveBeenCalledWith('MuhuratDetail', {

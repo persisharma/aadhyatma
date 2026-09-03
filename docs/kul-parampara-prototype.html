@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PRD-29 · कुल परम्परा — Interactive Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* Mirrors mobile/src/theme/colors.ts (Aug 2026) — same token set the shipped
+       prototypes use, so these five sit in the same visual system. */
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-hi:#F6ECD0;
+    --gradient-end:#F1E3BF; --gold:#A67C34; --gold-soft:#C9B896; --gold-tint:rgba(166,124,52,0.14);
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --saffron-tint:rgba(184,98,27,0.12);
+    --ink:#1A0E03; --ink-soft:#5A3A1E; --ink-muted:#6E5230; --divider:rgba(138,62,11,0.18);
+    --card-from:#FFF5E0; --card-to:#F5DEAC; --card-border:rgba(184,98,27,0.4);
+    --new-badge-bg:rgba(184,98,27,0.16); --new-badge-text:#8A3E0B;
+    --shadow-subtle:0 1px 4px rgba(60,30,10,0.06);
+    --shadow-card:0 2px 6px rgba(60,30,10,0.10);
+    --shadow-raised:0 4px 10px rgba(60,30,10,0.14);
+    --sans:'Inter',system-ui,sans-serif;
+    --serif:'Cormorant Garamond',serif;
+    --deva:'Noto Serif Devanagari',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:#1a140c;color:#e9d9b1;padding:24px;line-height:1.5}
+  h1{font-family:var(--serif);font-weight:600;font-size:28px;color:#fff5e0;margin-bottom:2px}
+  .sub{font-style:italic;color:var(--gold-soft);font-size:14px;margin-bottom:6px;max-width:980px}
+  .legend{font-size:12.5px;color:#b7a377;margin-bottom:20px;max-width:980px}
+  .legend b{color:#e9d9b1}
+  .phaselabel{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--saffron);background:var(--saffron-tint);display:inline-block;padding:4px 12px;border-radius:20px;margin:26px 0 4px}
+  .phasedesc{font-size:12.5px;color:#b7a377;margin-bottom:14px;max-width:980px}
+  .wrap{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap}
+  .cap{width:340px;font-size:12px;color:#b7a377;margin-top:10px;text-align:left;line-height:1.55}
+  .cap b{color:#e9d9b1}
+  .cap code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:var(--gold-soft)}
+  .col{display:flex;flex-direction:column;align-items:center}
+
+  /* ---- phone frame ---- */
+  .phone{width:340px;height:720px;background:var(--parchment);border-radius:38px;
+    border:10px solid #0d0804;box-shadow:0 24px 60px rgba(0,0,0,.55);position:relative;overflow:hidden;flex:none}
+  .phone .statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);background:linear-gradient(var(--parchment-hi),var(--parchment))}
+  .screen{position:absolute;top:32px;left:0;right:0;bottom:0;overflow-y:auto;
+    background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
+  .screen::-webkit-scrollbar{width:0}
+  .pad{padding:16px 16px 26px}
+  .topbar{display:flex;align-items:center;gap:12px;padding:6px 2px 14px}
+  .back{width:44px;height:44px;border-radius:50%;border:1px solid var(--divider);background:var(--parchment-soft);
+    display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:18px;flex:none}
+  .toptitle{font-family:var(--deva);font-size:16px;color:var(--ink);flex:1}
+  .topaction{font-family:var(--sans);font-size:12px;font-weight:600;color:var(--saffron)}
+  .deva{font-family:var(--deva)}
+  .dot{position:absolute;width:20px;height:20px;border-radius:50%;background:var(--gold);color:#1a140c;
+    font-weight:700;font-size:11px;font-family:var(--sans);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 2px 6px rgba(0,0,0,.35);z-index:5}
+
+  /* ---- shared components lifted from the shipped prototypes ---- */
+  .card{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:14px;
+    padding:14px;margin-bottom:12px;box-shadow:var(--shadow-card)}
+  .catpill{display:inline-block;font-family:var(--deva);font-size:10.5px;font-weight:600;
+    color:var(--saffron-deep);background:var(--saffron-tint);border-radius:10px;padding:3px 10px}
+  .apills{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .apill{display:inline-flex;align-items:center;font-family:var(--deva);font-size:12.5px;border-radius:20px;
+    padding:8px 14px;min-height:36px}
+  .apill.gold{color:var(--saffron-deep);background:var(--gold-tint);border:1px solid transparent}
+  .apill.outline{color:var(--saffron);background:transparent;border:1px solid var(--gold-tint)}
+  .apill.filled{color:#fff8ec;background:var(--saffron);border:1px solid transparent}
+  .actionrow{display:flex;align-items:center;gap:12px;border:1px solid var(--divider);background:var(--parchment-soft);
+    border-radius:14px;padding:13px 14px;margin-bottom:10px;min-height:48px}
+  .actionrow .ai{width:34px;height:34px;border-radius:50%;border:1px solid var(--gold-tint);background:var(--parchment-hi);
+    display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:14px;color:var(--saffron-deep);flex:none}
+  .actionrow .at{flex:1}
+  .actionrow .att{font-family:var(--deva);font-size:14.5px;color:var(--ink)}
+  .actionrow .ats{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:1px}
+  .actionrow .chev{color:var(--saffron);font-size:17px}
+  .tag{font-size:10px;font-weight:600;color:var(--new-badge-text);background:var(--new-badge-bg);padding:3px 10px;
+    border-radius:999px;font-family:var(--sans);letter-spacing:.4px}
+  .sechead{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;
+    color:var(--ink-muted);margin:18px 0 8px}
+  .note{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);line-height:1.6;margin-top:10px}
+  .divider{height:1px;background:var(--divider);margin:14px 0}
+  .btn{display:flex;align-items:center;justify-content:center;min-height:50px;border-radius:14px;
+    font-family:var(--deva);font-size:15px;margin-top:14px}
+  .btn.primary{background:var(--saffron);color:#fff8ec;box-shadow:var(--shadow-raised)}
+  .btn.ghost{border:1px solid var(--gold-tint);color:var(--saffron);background:transparent}
+
+  .daycard{background:linear-gradient(var(--card-from),var(--card-to));border:1px solid var(--card-border);
+    border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:var(--shadow-card)}
+  .kv{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0}
+  .kv .k{font-family:var(--deva);font-size:12.5px;color:var(--ink-muted)}
+  .kv .v{font-family:var(--deva);font-size:13.5px;color:var(--ink);text-align:right}
+  .kv .v small{display:block;font-family:var(--serif);font-style:italic;font-size:10.5px;color:var(--ink-muted);margin-top:1px}
+  .evid{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);line-height:1.6}
+  .glyphrow{display:flex;gap:9px;margin-top:10px;flex-wrap:wrap}
+  .glyph{width:44px;height:44px;border-radius:50%;border:1px solid var(--gold-tint);background:var(--parchment-hi);
+    display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:17px;color:var(--saffron-deep)}
+  .glyph.on{background:var(--saffron);color:#fff8ec;border-color:transparent;box-shadow:var(--shadow-raised)}
+  .field{border:1px solid var(--divider);background:var(--parchment-soft);border-radius:12px;padding:11px 13px;margin-bottom:9px}
+  .field .fl{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--ink-muted)}
+  .field .fv{font-family:var(--deva);font-size:14px;color:var(--ink);margin-top:3px}
+  .field .fv.empty{color:var(--ink-muted);opacity:.65}
+  .chipsm{display:inline-block;font-family:var(--deva);font-size:10.5px;color:var(--saffron-deep);
+    background:var(--gold-tint);border-radius:999px;padding:3px 9px;margin-top:6px}
+  .strip{display:flex;align-items:center;gap:10px;border-radius:14px;padding:11px 13px;margin-bottom:10px;
+    background:var(--gold-tint);border:1px solid rgba(166,124,52,.34)}
+  .strip .si{width:32px;height:32px;border-radius:50%;background:var(--parchment-hi);border:1px solid var(--gold-tint);
+    display:flex;align-items:center;justify-content:center;font-family:var(--deva);color:var(--saffron-deep);flex:none}
+  .strip .st{flex:1;font-family:var(--deva);font-size:13px;color:var(--ink)}
+  .lock{font-family:var(--serif);font-style:italic;font-size:11px;color:var(--ink-muted);
+    border-left:2px solid var(--gold-tint);padding-left:10px;margin-top:12px;line-height:1.6}
+
+</style>
+</head>
+<body>
+  <h1>कुल परम्परा — Kuldevta, Family Observance &amp; the Tithis of the Living</h1>
+  <div class="sub">PRD-29 (proposed, Q4 round 2) · Static mockups in the app's parchment system — not the live build.</div>
+  <div class="legend">The app keeps the tithis of the <b>dead</b> with real care — PRD-17 Pitru Smaran, <code>deriveTithiRuleFromDate</code>, <code>solveNextOccurrence</code>, native-verified reminders — and <b>not one tithi of the living</b>. Multi-person birth profiles shipped in #294 and hold date, time and place for Kundali only; nothing answers "when is my Hindu birthday this year". And <code>kuldev</code>/lineage appear nowhere in source outside katha prose, though the kuldevta is the one piece of practice a family most reliably loses in a generation. <b>Zero new engine work</b>: the janma-tithi half is two existing function calls.</div>
+
+  <div class="phaselabel">1 · जन्म तिथि — the birthday nothing else in their life tracks</div>
+  <div class="phasedesc">A Hindu birthday is a tithi, not a Gregorian date. The profile already holds the birth date; <code>deriveTithiRuleFromDate</code> yields the rule and <code>solveNextOccurrence</code> yields this year's date — both shipped, tested, and already handling adhik-masa and the paksha edge cases.</div>
+  <div class="wrap">
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">मधुसूदन</div><div class="topaction">सम्पादन</div></div>
+          <div class="daycard">
+            <div class="kv"><div class="k">जन्म</div><div class="v">१२ नवम्बर १९८८<small>06:40 · जयपुर</small></div></div>
+            <div class="divider" style="margin:6px 0"></div>
+            <div class="kv"><div class="k">जन्म तिथि</div><div class="v">कार्तिक शुक्ल नवमी</div></div>
+            <div class="kv"><div class="k">इस वर्ष</div><div class="v" style="color:var(--saffron-deep)">२९ अक्टूबर<small>बुधवार · ४२ दिन शेष</small></div></div>
+            <div class="kv"><div class="k">नक्षत्र</div><div class="v">पूर्वाषाढा</div></div>
+          </div>
+          <div class="sechead">इस दिन की परम्परा</div>
+          <div class="actionrow"><div class="ai">वि</div><div class="at"><div class="att">विष्णु सहस्रनाम</div><div class="ats">पहले से ऐप में</div></div><div class="chev">›</div></div>
+          <div class="actionrow"><div class="ai">आ</div><div class="at"><div class="att">आयुष्य सूक्त</div><div class="ats">दीर्घायु हेतु</div></div><div class="chev">›</div></div>
+          <div class="actionrow"><div class="ai">🔔</div><div class="at"><div class="att">स्मरण</div><div class="ats">एक दिन पहले</div></div><div class="sw" style="width:44px;height:26px;border-radius:20px;background:var(--saffron);position:relative"><i style="position:absolute;top:3px;left:21px;width:20px;height:20px;border-radius:50%;background:#fff8ec"></i></div></div>
+          <div class="evid" style="margin-top:12px">तिथि हर वर्ष अलग अंग्रेज़ी तारीख़ पर आती है — यही कारण है कि यह भूल जाती है।</div>
+        </div></div>
+      </div>
+      <div class="cap"><b>The profile gains four lines.</b><br/>Every practice link points at a section <b>already shipped</b>. The reminder rides the existing personal notification family — the one PRD-17 built for ancestor tithis, pointed at a living person instead.</div>
+    </div>
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="toptitle" style="font-size:20px">ॐ वेदांश़ ॐ</div></div>
+          <div class="strip"><div class="si">✦</div><div class="st">आज आपकी जन्म तिथि — कार्तिक शुक्ल नवमी</div><div class="chev" style="color:var(--saffron);font-size:17px">›</div></div>
+          <div class="daycard">
+            <div class="deva" style="font-size:13px;color:var(--ink-soft);text-align:center">बुधवार · २९ अक्टूबर</div>
+            <div class="deva" style="font-size:15px;color:var(--ink);text-align:center;margin-top:2px">कार्तिक शुक्ल नवमी</div>
+            <div class="divider"></div>
+            <div class="kv"><div class="k">नक्षत्र</div><div class="v">पूर्वाषाढा</div></div>
+            <div class="kv"><div class="k">अभिजित</div><div class="v">11:48 — 12:34</div></div>
+          </div>
+          <div class="sechead">आज के लिए</div>
+          <div class="actionrow"><div class="ai">वि</div><div class="at"><div class="att">विष्णु सहस्रनाम</div><div class="ats">जन्म तिथि परम्परा</div></div><div class="chev">›</div></div>
+          <div class="actionrow"><div class="ai">ॐ</div><div class="at"><div class="att">प्रातः साधना</div><div class="ats">2 शेष</div></div><div class="chev">›</div></div>
+          <div class="evid" style="margin-top:12px">एक शान्त पंक्ति — कोई बधाई कार्ड नहीं, कोई साझा करने का आग्रह नहीं।</div>
+        </div></div>
+      </div>
+      <div class="cap"><b>The day itself, on the Home Today strip.</b><br/>One guaranteed, emotionally-loaded app-open per person per year. Deliberately <b>devotional, not social</b> — round 1 §3 rejected greeting cards, and this stays on the right side of that line.</div>
+    </div>
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">परिवार</div><div class="topaction">+ जोड़ें</div></div>
+          <div class="sechead">जीवित · जन्म तिथि</div>
+          <div class="actionrow"><div class="ai">म</div><div class="at"><div class="att">मधुसूदन</div><div class="ats">कार्तिक शु. नवमी · २९ अक्टूबर</div></div><div class="chev">›</div></div>
+          <div class="actionrow"><div class="ai">अ</div><div class="at"><div class="att">अनन्या</div><div class="ats">श्रावण कृ. तृतीया · ११ अगस्त</div></div><div class="chev">›</div></div>
+          <div class="actionrow"><div class="ai">वे</div><div class="at"><div class="att">वेदिका</div><div class="ats">माघ शु. पञ्चमी · २३ जनवरी</div></div><div class="chev">›</div></div>
+          <div class="divider"></div>
+          <div class="sechead">पितृ · स्मरण तिथि</div>
+          <div class="actionrow" style="opacity:.85"><div class="ai">प</div><div class="at"><div class="att">पितामह</div><div class="ats">आश्विन कृ. दशमी</div></div><div class="chev">›</div></div>
+          <div class="evid" style="margin-top:12px">एक ही तिथि-गणित, दोनों ओर — केवल एक जीवितों के लिए है।</div>
+        </div></div>
+      </div>
+      <div class="cap"><b>Both halves of the family, one engine.</b><br/>Pitru Smaran's per-ancestor list (shipped) and the living list side by side. The symmetry is the argument: the math was already written, only never pointed this way.</div>
+    </div>
+
+  </div>
+
+  <div class="phaselabel">2 · कुल परम्परा — the record a family loses in one generation</div>
+  <div class="phasedesc">Not an engagement feature — an <b>attachment</b> feature. It makes the app the holder of something a family cannot get anywhere else, which for a product with no account and no cloud is the only switching cost on offer. All user-entered: nothing inferred, nothing guessed.</div>
+  <div class="wrap">
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">कुल परम्परा</div><div class="topaction">सम्पादन</div></div>
+          <div class="daycard" style="text-align:center">
+            <div class="glyph" style="margin:0 auto;width:54px;height:54px;font-size:22px">दु</div>
+            <div class="deva" style="font-size:17px;color:var(--ink);margin-top:9px">कुलदेवी · श्री दुर्गा</div>
+            <div class="evid" style="margin-top:3px">जैसा परिवार में कहा जाता है</div>
+          </div>
+          <div class="field"><div class="fl">कुल मन्दिर</div><div class="fv">श्री ज्वाला जी</div><div class="chipsm">तीर्थ सूची से · काँगड़ा</div></div>
+          <div class="field"><div class="fl">गोत्र</div><div class="fv">भारद्वाज</div></div>
+          <div class="field"><div class="fl">कुल व्रत</div><div class="fv">नवरात्रि · अष्टमी</div><div class="chipsm">पर्व नियम से जुड़ा — हर वर्ष तिथि निकलेगी</div></div>
+          <div class="field"><div class="fl">परिवार की बात</div><div class="fv" style="font-size:13px;line-height:1.75">दादी कहती थीं — घर की पहली रोटी गाय की। ज्वाला जी की मन्नत तीन पीढ़ी से।</div></div>
+          <div class="lock">यह अभिलेख इसी उपकरण पर रहता है। कहीं भेजा नहीं जाता, किसी सूची में नहीं जुड़ता।</div>
+        </div></div>
+      </div>
+      <div class="cap"><b>The record.</b><br/>Kuldevta from the <b>shipped deity registry</b>; the family temple linked into the <b>73-temple Theerth registry</b> where it exists; the kul vrat linked to a real vrat rule so it dates itself every year. Free text for what only a family knows.</div>
+    </div>
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">कुलदेवी चुनें</div></div>
+          <div class="evid" style="margin-bottom:12px">जो आपके परिवार में कहा जाता है, वही चुनें। ऐप अनुमान नहीं लगाता।</div>
+          <div class="glyphrow">
+            <div class="glyph on">दु</div><div class="glyph">ल</div><div class="glyph">श</div><div class="glyph">वि</div>
+            <div class="glyph">ग</div><div class="glyph">ह</div><div class="glyph">रा</div><div class="glyph">कृ</div>
+            <div class="glyph">स</div><div class="glyph">का</div><div class="glyph">भै</div><div class="glyph">+</div>
+          </div>
+          <div class="sechead" style="margin-top:20px">कुल मन्दिर</div>
+          <div class="field"><div class="fl">तीर्थ सूची में खोजें</div><div class="fv">ज्वाला जी</div></div>
+          <div class="actionrow"><div class="ai">▲</div><div class="at"><div class="att">श्री ज्वाला जी</div><div class="ats">काँगड़ा · शक्ति पीठ</div></div><div class="chev">›</div></div>
+          <div class="actionrow"><div class="ai">✎</div><div class="at"><div class="att">सूची में नहीं है</div><div class="ats">नाम स्वयं लिखें</div></div><div class="chev">›</div></div>
+          <div class="lock">गोत्र से कुलदेवता का अनुमान कभी नहीं लगाया जाता — न जाति, न समुदाय का कोई वर्गीकरण।</div>
+        </div></div>
+      </div>
+      <div class="cap"><b>Chosen, never inferred.</b><br/>The stance guard is structural, not copy: there is no gotra→kuldevta mapping in the build to be tempted by. Temples resolve against the shipped registry with free text as a first-class fallback.</div>
+    </div>
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">आगे सौंपें</div></div>
+          <div class="card">
+            <div class="deva" style="font-size:15.5px;color:var(--ink)">कुल परम्परा · निर्यात</div>
+            <div class="evid" style="margin-top:5px">जो अभिलेख उपकरण से बाहर न जा सके, वह अपना एकमात्र काम नहीं कर पाता।</div>
+            <div class="divider"></div>
+            <div class="kv"><div class="k">कुलदेवी</div><div class="v">श्री दुर्गा</div></div>
+            <div class="kv"><div class="k">कुल मन्दिर</div><div class="v">श्री ज्वाला जी</div></div>
+            <div class="kv"><div class="k">गोत्र</div><div class="v">भारद्वाज</div></div>
+            <div class="kv"><div class="k">कुल व्रत</div><div class="v">नवरात्रि अष्टमी</div></div>
+            <div class="kv"><div class="k">जन्म तिथियाँ</div><div class="v">३ सदस्य</div></div>
+            <div class="kv"><div class="k">पितृ तिथियाँ</div><div class="v">२ प्रविष्टि</div></div>
+            <div class="btn primary">साझा करें</div>
+            <div class="btn ghost">फ़ाइल सुरक्षित रखें</div>
+          </div>
+          <div class="lock">PRD-06 के बैकअप मार्ग से — OS शेयर शीट, कोई क्लाउड नहीं। साझा करना आपका निर्णय है, ऐप का नहीं।</div>
+        </div></div>
+      </div>
+      <div class="cap"><b>Handing it on — the actual point.</b><br/>Rides PRD-06's existing device-controlled export. This is the frame that makes the feature worth building: a lineage record trapped on one phone fails at the one job it has.</div>
+    </div>
+
+  </div>
+
+  <div class="phaselabel">Open questions this prototype does not settle</div>
+  <div class="phasedesc">
+    <b>1.</b> <code>gotra</code> is <b>PRD-20's field</b>, and PRD-21 also wants the profile. That is three consumers of one <code>@vedansh:kundali-birth-profile:v1</code> migration — design it <b>once, in PRD-20</b>. This prototype assumes it already exists.<br/>
+    <b>2.</b> Does the birthday reminder default on or off? Recommended <b>off</b>, opted into per person — it is the shipped notification-preferences pattern and it keeps the shared iOS pending budget honest.<br/>
+    <b>3.</b> Adhik-masa birth tithis and tithi-kshaya recur ambiguously. <code>solveNextOccurrence</code> already resolves this for Pitru Smaran; confirm the same rule reads correctly for the living, where the stakes are lower but the surprise is larger.<br/>
+    <b>4.</b> Kul vrat is linked to a vrat rule so it dates itself. What happens when a family's observance has no rule in <code>festivals.ts</code>? Free text, un-dated, is the assumed fallback.
+  </div>
+</body>
+</html>

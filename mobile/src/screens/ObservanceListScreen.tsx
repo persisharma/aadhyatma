@@ -3,6 +3,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import ObservanceListRow from '@/components/ObservanceListRow';
 import TextField from '@/components/TextField';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
@@ -172,38 +173,38 @@ function ObservanceRow({ rule, nextDate, today, lang, colors, typography, follow
   onPress: () => void;
 }) {
   return (
-    <View style={[styles.row, { borderBottomColor: colors.divider }]}>
-      {/* Leading star — tap to follow/unfollow without opening the detail; a
-          filled gold ★ marks an already-followed vrat, an outline ☆ an un-followed one. */}
-      <Pressable
-        ref={starRef}
-        collapsable={false}
-        onPress={onToggleFollow}
-        accessibilityRole="button"
-        accessibilityState={{ selected: following }}
-        accessibilityLabel={`${following ? 'Unfollow' : 'Follow'} ${rule.nameEn}`}
-        hitSlop={8}
-        style={({ pressed }) => [styles.starBtn, pressed && { opacity: 0.5 }]}
-      >
-        <Text style={{ fontSize: 20, color: following ? colors.gold : colors.inkMuted }}>
-          {following ? '★' : '☆'}
-        </Text>
-      </Pressable>
-      <Pressable
-        onPress={onPress}
-        accessibilityRole="button"
-        accessibilityLabel={contentByLang(lang, rule.nameHi, rule.nameEn)}
-        style={({ pressed }) => [styles.rowMain, pressed && { opacity: 0.6 }]}
-      >
-        <View style={{ flex: 1, paddingRight: 10 }}>
+    <ObservanceListRow
+      leadingAction={(
+        <Pressable
+          ref={starRef}
+          collapsable={false}
+          onPress={onToggleFollow}
+          accessibilityRole="button"
+          accessibilityState={{ selected: following }}
+          accessibilityLabel={`${following ? 'Unfollow' : 'Follow'} ${rule.nameEn}`}
+          hitSlop={8}
+          style={({ pressed }) => [styles.starBtn, pressed && { opacity: 0.5 }]}
+        >
+          <Text style={{ fontSize: 20, color: following ? colors.gold : colors.inkMuted }}>
+            {following ? '★' : '☆'}
+          </Text>
+        </Pressable>
+      )}
+      title={(
+        <View style={{ paddingRight: 10 }}>
           <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
             {contentByLang(lang, rule.nameHi, rule.nameEn)}
           </Text>
+        </View>
+      )}
+      caption={(
+        <View style={{ paddingRight: 10 }}>
           <Text style={{ ...captionFont(lang === 'en' ? rule.nameHi : rule.nameEn), fontSize: 13, color: colors.inkMuted, marginTop: 2 }}>
             {lang === 'en' ? rule.nameHi : rule.nameEn}
           </Text>
         </View>
-        {nextDate && (
+      )}
+      trailing={nextDate ? (
           <View style={{ alignItems: 'flex-end' }}>
             <Text style={{ fontFamily: lang === 'en' ? fontFamilies.interSemiBold : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.inkSoft }}>
               {shortDate(nextDate, lang)}
@@ -212,9 +213,10 @@ function ObservanceRow({ rule, nextDate, today, lang, colors, typography, follow
               {relativeLabel(nextDate, today, lang)}
             </Text>
           </View>
-        )}
-      </Pressable>
-    </View>
+      ) : undefined}
+      onPress={onPress}
+      accessibilityLabel={contentByLang(lang, rule.nameHi, rule.nameEn)}
+    />
   );
 }
 
@@ -225,7 +227,5 @@ const styles = StyleSheet.create({
   backButton: { width: 36, height: 36, borderWidth: 1, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
   scroll: { paddingTop: 8, paddingBottom: 32 },
   search: { marginBottom: 8 },
-  row: { flexDirection: 'row', alignItems: 'center', borderBottomWidth: StyleSheet.hairlineWidth },
   starBtn: { width: 36, alignSelf: 'stretch', alignItems: 'center', justifyContent: 'center', marginRight: 4 },
-  rowMain: { flex: 1, flexDirection: 'row', alignItems: 'center', paddingVertical: 13 },
 });

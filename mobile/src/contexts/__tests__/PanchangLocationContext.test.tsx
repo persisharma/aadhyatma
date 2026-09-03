@@ -2,6 +2,7 @@ import React from 'react';
 import { InteractionManager } from 'react-native';
 import TestRenderer, { act } from 'react-test-renderer';
 import { PanchangLocationProvider, usePanchangLocation } from '../PanchangLocationContext';
+import { __resetPanchangPrefsForTests } from '@/panchang/panchangPrefs';
 
 // Stateful in-memory AsyncStorage mock (jest requires the `mock` prefix to
 // reference the closure variable from the hoisted factory).
@@ -78,6 +79,11 @@ async function mountAndHydrate(): Promise<TestRenderer.ReactTestRenderer> {
 beforeEach(() => {
   mockStore = {};
   jest.clearAllMocks();
+  // The provider no longer reads storage itself — it awaits the process-wide
+  // panchang-preferences read, which is memoized so the launch prefetch and every
+  // consumer share one round trip. That memo has to be cleared between tests, or
+  // each case would be served the first case's (empty) storage.
+  __resetPanchangPrefsForTests();
   // Run deferred work immediately — InteractionManager's real scheduler keeps
   // timers alive past the test run and stalls the deferred warm-up path.
   jest
@@ -143,9 +149,11 @@ describe('PanchangLocationContext', () => {
     expect(captured.location.cityId).toBe('ujjain');
   });
 
-  test('requestDeviceLocation snaps a granted GPS fix to the nearest bundled city', async () => {
+  test('requestDeviceLocation snaps a granted GPS fix to the nearest pincode', async () => {
     mockRequestPermissions.mockResolvedValue({ status: 'granted' });
-    // Near Varanasi (25.32, 82.97) but not exactly on it.
+    // Near Varanasi (25.32, 82.97) but not exactly on it. Before the pincode tier this
+    // landed on the bundled `varanasi` entry; now a Varanasi pincode sits closer, which
+    // is the point — the fix resolves to where the user actually is.
     mockLastKnown.mockResolvedValue({ coords: { latitude: 25.36, longitude: 83.01 } });
     await mountAndHydrate();
     let result: string | undefined;
@@ -154,10 +162,25 @@ describe('PanchangLocationContext', () => {
     });
     await flush();
     expect(result).toBe('granted');
-    expect(captured.location.cityId).toBe('varanasi');
+    expect(captured.location.cityId).toMatch(/^pin-\d{6}$/);
+    expect(captured.location.labelEn).toContain('Uttar Pradesh');
     expect(captured.location.source).toBe('gps');
-    expect(JSON.parse(mockStore[LOCATION_KEY]).cityId).toBe('varanasi');
+    expect(JSON.parse(mockStore[LOCATION_KEY]).cityId).toBe(captured.location.cityId);
     expect(mockWarm).toHaveBeenCalled();
+  });
+
+  test('a GPS fix keeps the bundled city when no pincode is closer', async () => {
+    mockRequestPermissions.mockResolvedValue({ status: 'granted' });
+    // Srinagar. The geocoder carries 1 of the directory's 207 Jammu & Kashmir pincodes, so
+    // the nearest one is 156 km away in Doda — the bundled city wins, and must.
+    mockLastKnown.mockResolvedValue({ coords: { latitude: 34.0837, longitude: 74.7973 } });
+    await mountAndHydrate();
+    await act(async () => {
+      await captured.requestDeviceLocation();
+    });
+    await flush();
+    expect(captured.location.cityId).toBe('srinagar');
+    expect(captured.location.source).toBe('gps');
   });
 
   test('falls back to getCurrentPositionAsync when no last-known fix exists', async () => {
@@ -170,7 +193,9 @@ describe('PanchangLocationContext', () => {
     });
     await flush();
     expect(mockCurrent).toHaveBeenCalled();
-    expect(captured.location.cityId).toBe('mumbai');
+    // Chembur, ~7 km from the bundled Mumbai centroid this used to snap to.
+    expect(captured.location.cityId).toBe('pin-400071');
+    expect(captured.location.labelEn).toContain('Mumbai');
   });
 
   test('permission denied keeps the current location and surfaces status', async () => {

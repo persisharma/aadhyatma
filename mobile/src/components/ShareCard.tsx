@@ -4,9 +4,20 @@ import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import type { Lang } from '@/data/gita/language';
 import { contentByLang, meaningByLang, verseLinesByLang } from '@/utils/localize';
+import { fitMeaningType, meaningScriptFor, shareCardMetrics } from '@/utils/shareCardType';
+import { getReaderBackground } from '@/data/backgrounds';
+import BackgroundLayer from './BackgroundLayer';
 import Ornament from './Ornament';
 
 export type ShareCardProps = {
+  /** Source id — resolves the same faded sketch the source's reader page shows. */
+  sourceId: string;
+  /**
+   * Subsection key (kāṇḍa/stanza) for sources whose reader plate varies per
+   * subsection (Valmiki Ramayan, Sundarkand); absent, the source-level plate
+   * is used.
+   */
+  stanza?: number;
   sectionNameHi: string;
   sectionNameEn: string;
   verseLabelHi: string;
@@ -48,6 +59,17 @@ const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(prop
         : props.lang === 'kn'
           ? fontFamilies.kannada // kn meaning now renders in Kannada script
           : typography.cardLatin.fontFamily; // en
+  // Deterministic size + leading for the meaning (see utils/shareCardType.ts).
+  // Platform auto-fit is deliberately not used here: with a fixed lineHeight it
+  // shrank the meaning to ~7 pt while the leading stayed at 24.
+  const meaningScript = meaningScriptFor(props.lang);
+  const meaningFit = fitMeaningType({
+    meaning,
+    verseLineCount: lines.length,
+    cardWidth: props.width,
+    cardHeight: props.height,
+    script: meaningScript,
+  });
 
   return (
     <View
@@ -63,6 +85,11 @@ const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(prop
         },
       ]}
     >
+      {/* Same faded source sketch + parchment overlay as the reader page; falls
+          back to the plain parchment gradient for sources without a plate. */}
+      <BackgroundLayer
+        source={getReaderBackground(props.sourceId, { stanza: props.stanza })}
+      />
       <View style={styles.headerBand}>
         <Text
           style={[
@@ -102,14 +129,18 @@ const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(prop
 
       {meaning ? (
         <Text
-          numberOfLines={5}
-          adjustsFontSizeToFit
-          minimumFontScale={0.5}
+          numberOfLines={meaningFit.numberOfLines}
           style={[
             styles.meaning,
             {
               color: colors.inkSoft,
               fontFamily: meaningFont,
+              fontSize: meaningFit.fontSize,
+              lineHeight: meaningFit.lineHeight,
+              // Cormorant has a true italic cut; the Noto Serif Indic faces do
+              // not, so an italic there is a synthesised skew that blurs the
+              // matras. Same rule as `captionFont` in utils/scriptFont.ts.
+              fontStyle: meaningScript === 'latin' ? 'italic' : 'normal',
             },
           ]}
         >
@@ -161,9 +192,12 @@ export default ShareCard;
 const styles = StyleSheet.create({
   card: {
     borderWidth: 1,
-    paddingTop: 28,
-    paddingBottom: 22,
-    paddingHorizontal: 28,
+    // Keeps the BackgroundLayer sketch inside the card's 1px border.
+    overflow: 'hidden',
+    // Geometry is shared with the meaning's line budget — change both together.
+    paddingTop: shareCardMetrics.paddingTop,
+    paddingBottom: shareCardMetrics.paddingBottom,
+    paddingHorizontal: shareCardMetrics.paddingHorizontal,
     alignItems: 'stretch',
     justifyContent: 'flex-start',
   },
@@ -183,18 +217,16 @@ const styles = StyleSheet.create({
   },
   verseLine: {
     fontSize: 24,
-    lineHeight: 40,
+    lineHeight: shareCardMetrics.verseLineHeight,
     textAlign: 'center',
-    marginBottom: 2,
+    marginBottom: shareCardMetrics.verseLineMargin,
     includeFontPadding: false,
   },
   meaning: {
-    fontSize: 14,
-    lineHeight: 24,
+    // fontSize / lineHeight / fontStyle are set per-render from fitMeaningType().
     textAlign: 'center',
-    marginTop: 4,
-    fontStyle: 'italic',
-    paddingHorizontal: 12,
+    marginTop: shareCardMetrics.meaningMarginTop,
+    paddingHorizontal: shareCardMetrics.meaningPaddingHorizontal,
     includeFontPadding: false,
   },
   footer: {

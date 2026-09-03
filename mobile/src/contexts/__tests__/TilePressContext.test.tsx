@@ -125,10 +125,11 @@ describe('TilePressContext wiring', () => {
     let consumed!: TilePressHandlers;
     function Tree() {
       provided = useTilePressController();
-      return React.createElement(TilePressProvider, {
-        value: provided,
-        children: React.createElement(Consumer),
-      });
+      return (
+        <TilePressProvider value={provided}>
+          <Consumer />
+        </TilePressProvider>
+      );
     }
     function Consumer() {
       consumed = useTilePress();

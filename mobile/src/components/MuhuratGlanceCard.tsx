@@ -4,10 +4,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
-import { scriptTitleFont, eyebrowTextStyle } from '@/utils/langType';
+import { scriptTitleFont, scriptBodyFont, eyebrowTextStyle } from '@/utils/langType';
 import { fontFamilies } from '@/theme/typography';
 import { useMuhurat } from '@/panchang/useMuhurat';
-import { formatClock, formatRange } from '@/panchang/muhuratFormat';
+import { nextAuspiciousPeriod } from '@/panchang/muhurat';
+import { prevailingTithi, successorTithiToday } from '@/panchang/prevailingTithi';
+import { formatClock, formatRange, formatEndInstant } from '@/panchang/muhuratFormat';
 import type { CalendarSystem } from '@/panchang/types';
 
 /**
@@ -26,7 +28,7 @@ export default function MuhuratGlanceCard({
 }) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
-  const { isToday, nowChoghadiya, muhurat } = useMuhurat(date, calendarSystem);
+  const { isToday, nowChoghadiya, muhurat, panchang } = useMuhurat(date, calendarSystem);
   const titleFont = scriptTitleFont(lang, typography.cardHindi.fontFamily);
 
   // The solve runs off the render path (and only the first time per day — it is
@@ -71,15 +73,96 @@ export default function MuhuratGlanceCard({
 
   const showNow = isToday && nowChoghadiya != null;
   const nowAvoid = nowChoghadiya?.quality === 'avoid';
+  // Live progress through the running period; the useMuhurat minute tick is what
+  // re-renders this card, so the fraction advances once a minute.
+  const at = Date.now();
+  const nowProgress = showNow
+    ? Math.min(
+        1,
+        Math.max(
+          0,
+          (at - nowChoghadiya!.start.getTime()) /
+            Math.max(1, nowChoghadiya!.end.getTime() - nowChoghadiya!.start.getTime())
+        )
+      )
+    : 0;
+  // "When is it good next?" — only while an avoid period runs (an auspicious
+  // "now" already answers the question). Null late at night when nothing
+  // auspicious remains before the next sunrise.
+  const nextShubh = showNow && nowAvoid ? nextAuspiciousPeriod(muhurat, new Date(at)) : null;
+
+  // The kicker tithi is LIVE on a today surface: a tithi usually ends mid-day
+  // (and kshaya days hold two), so past the end instant the minute tick moves
+  // this to the tithi actually running now — never a stale sunrise answer next
+  // to a live "now" row. Browsed dates keep the sunrise (udaya-vyapini) tithi,
+  // the almanac's answer for that day.
+  const kickerTithi = panchang
+    ? isToday
+      ? prevailingTithi(panchang, new Date(at))
+      : { nameHi: panchang.tithi.nameHi, nameEn: panchang.tithi.nameEn, endTime: panchang.tithi.endTime }
+    : null;
+  // "तक 8:51 AM" states when the day's label stops being true and nothing else —
+  // leaving the remaining fifteen hours unnamed, and a reader unable to tell that
+  // a Chaturthi vrat is kept on THIS date rather than the next one headed
+  // Chaturthi. The handover line names the successor whenever it takes over
+  // within this civil day. Only while the kicker is still showing the sunrise
+  // tithi: once "now" has moved past the handover, the successor IS the kicker.
+  const handover =
+    panchang && kickerTithi && kickerTithi.nameEn === panchang.tithi.nameEn
+      ? successorTithiToday(panchang)
+      : null;
 
   return (
     <LinearGradient
       colors={[colors.cardActiveFrom, colors.cardActiveTo]}
       style={[styles.card, { borderColor: colors.cardActiveBorder, borderRadius: radii.lg, padding: spacing.lg }, elevation.raised]}
     >
-      <Text style={[eyebrowTextStyle(lang, 12), { color: colors.saffronDeep }]}>
-        {contentByLang(lang, 'आज का मुहूर्त', "Today's Timings")}
-      </Text>
+      {/* Kicker row: the eyebrow on the left, the running tithi on the right —
+          the one calendar fact promoted into the first-viewport hero card (the
+          anga grid it belongs to sits past the fold on most phones). The end
+          instant renders when this day's solve knows it (the successor tithi's
+          end belongs to tomorrow's solve — name only there, never a guess);
+          formatEndInstant adds a short date on past-midnight ends. The anga
+          tile below stays the canonical sunrise-tithi + kshaya detail. */}
+      <View style={styles.kickerRow}>
+        <Text style={[eyebrowTextStyle(lang, 12), { color: colors.saffronDeep }]}>
+          {contentByLang(lang, 'आज का मुहूर्त', "Today's Timings")}
+        </Text>
+        {kickerTithi && panchang && (
+          // A column, not one line: the handover sits UNDER the तक line rather
+          // than extending it, so the kicker never has to shrink to fit both.
+          <View style={styles.kickerTithi}>
+            <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} style={styles.kickerTithiLine}>
+              <Text style={[eyebrowTextStyle(lang, 10, 0.6), { color: colors.saffronDeep }]}>
+                {contentByLang(lang, 'तिथि · ', 'Tithi · ')}
+              </Text>
+              <Text style={{ fontFamily: titleFont, fontSize: 14.5, color: colors.ink }}>
+                {contentByLang(lang, kickerTithi.nameHi, kickerTithi.nameEn)}
+              </Text>
+              {kickerTithi.endTime && (
+                // Same face rule as the anga tiles' तक line: Latin semibold for
+                // en; the script body face otherwise — Cormorant has no Indic
+                // glyphs, and formatEndInstant's short-date suffix is Devanagari
+                // in hi (§3).
+                <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latinSemiBold : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkSoft }}>
+                  {contentByLang(lang, ' तक ', ' till ')}
+                  {formatEndInstant(kickerTithi.endTime, panchang.date, lang)}
+                </Text>
+              )}
+            </Text>
+            {handover && (
+              <Text
+                numberOfLines={1}
+                adjustsFontSizeToFit
+                minimumFontScale={0.8}
+                style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 10.5, color: colors.inkMuted, textAlign: 'right', marginTop: 1 }}
+              >
+                {contentByLang(lang, `फिर ${handover.nameHi} — शेष दिन`, `then ${handover.nameEn} — rest of day`)}
+              </Text>
+            )}
+          </View>
+        )}
+      </View>
 
       {/* Hero line: current choghadiya when today, else the day's Abhijit. */}
       <View style={styles.nowRow}>
@@ -112,6 +195,21 @@ export default function MuhuratGlanceCard({
                 ? formatRange(abhijit.start, abhijit.end)
                 : ''}
           </Text>
+          {showNow && (
+            <View
+              style={[styles.progressTrack, { backgroundColor: colors.divider }]}
+              accessibilityRole="progressbar"
+              accessibilityValue={{ min: 0, max: 100, now: Math.round(nowProgress * 100) }}
+              accessibilityLabel={contentByLang(lang, 'चौघड़िया प्रगति', 'Choghadiya progress')}
+            >
+              <View
+                style={[
+                  styles.progressFill,
+                  { backgroundColor: colors.saffron, width: `${Math.round(nowProgress * 100)}%` },
+                ]}
+              />
+            </View>
+          )}
         </View>
         {showNow && (
           <Text
@@ -130,6 +228,33 @@ export default function MuhuratGlanceCard({
           </Text>
         )}
       </View>
+
+      {/* While an avoid period runs, answer the natural follow-up — "when is it
+          good next?" — inline, so the inauspicious case doesn't need a tap into
+          the detail. Quality is carried by the gold dot PLUS the text (§12). */}
+      {nextShubh && (
+        <View style={styles.nextShubhRow} accessibilityLabel={`Next auspicious: ${nextShubh.nameEn}, from ${formatClock(nextShubh.start)}`}>
+          <View style={[styles.nextDot, { backgroundColor: colors.gold }]} />
+          <Text style={{ flexShrink: 1 }} numberOfLines={1}>
+            <Text style={{ fontFamily: titleFont, fontSize: 12.5, color: colors.inkSoft }}>
+              {contentByLang(lang, 'अगला शुभ: ', 'Next auspicious: ')}
+            </Text>
+            <Text style={{ fontFamily: titleFont, fontSize: 12.5, color: colors.ink }}>
+              {contentByLang(lang, `${nextShubh.nameHi} चौघड़िया`, `${nextShubh.nameEn} Choghadiya`)}
+            </Text>
+            {/* Clock digits stay on the Latin semibold face; the Indic 'से'
+                suffix must not — Cormorant has no Indic glyphs (§3). */}
+            <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 13, color: colors.saffronDeep }}>
+              {lang === 'en' ? ` from ${formatClock(nextShubh.start)}` : ` ${formatClock(nextShubh.start)}`}
+            </Text>
+            {lang !== 'en' && (
+              <Text style={{ fontFamily: titleFont, fontSize: 12.5, color: colors.inkSoft }}>
+                {contentByLang(lang, ' से', '')}
+              </Text>
+            )}
+          </Text>
+        </View>
+      )}
 
       <View style={styles.tiles}>
         <View style={[styles.tile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }]}>
@@ -156,11 +281,20 @@ export default function MuhuratGlanceCard({
 
 const styles = StyleSheet.create({
   card: { borderWidth: 1 },
+  // Baseline-aligned so the 12pt eyebrow and the 14.5pt tithi name share one
+  // visual line; the tithi shrinks first if the row runs out of width.
+  kickerRow: { flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between', gap: 10 },
+  kickerTithi: { flexShrink: 1, alignItems: 'flex-end' },
+  kickerTithiLine: { textAlign: 'right' },
   nowRow: { flexDirection: 'row', alignItems: 'center', gap: 12, marginTop: 10 },
   dot: { width: 12, height: 12, borderRadius: 6 },
   // No fontWeight: the call site sets fontFamilies.latinBold, a static 700 file
   // that already carries the weight (see utils/langType.ts).
   tag: { fontSize: 10, letterSpacing: 0.4, textTransform: 'uppercase', paddingHorizontal: 8, paddingVertical: 3, borderRadius: 8, overflow: 'hidden' },
+  progressTrack: { height: 4, borderRadius: 2, marginTop: 8, overflow: 'hidden' },
+  progressFill: { height: 4, borderRadius: 2 },
+  nextShubhRow: { flexDirection: 'row', alignItems: 'center', gap: 7, marginTop: 10 },
+  nextDot: { width: 8, height: 8, borderRadius: 4 },
   tiles: { flexDirection: 'row', gap: 10, marginTop: 13 },
   tile: { flex: 1, borderWidth: 1, padding: 11 },
   viewAll: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 14, paddingTop: 12, borderTopWidth: 1 },

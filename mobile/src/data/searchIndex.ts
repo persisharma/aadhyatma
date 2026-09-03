@@ -89,6 +89,7 @@ import {
   type ValmikiRamayanVerse,
 } from './valmiki-ramayan';
 import { getSanskar, sanskarIds } from './sanskar';
+import { VIDHI_ENTRIES, type VidhiEntry } from './vidhi';
 import { getPurposeMeta } from './purposes';
 import { purposesForText } from './discoveryMeta';
 import { MatchRank, normalize, rankAny } from './searchNormalize';
@@ -215,7 +216,35 @@ function build(): SearchIndex {
 }
 
 function buildSectionEntries(): readonly SearchSectionEntry[] {
-  return library.map((entry) => sectionEntry(entry));
+  // Vidhi rows ride the section group (PRD-19 Phase 2B): a vidhi is a
+  // procedure, not a text, so it contributes a single openable row (no verse
+  // entries). SearchScreen routes vidhi sourceIds to VidhiDetail.
+  return [...library.map((entry) => sectionEntry(entry)), ...VIDHI_ENTRIES.map(vidhiSectionEntry)];
+}
+
+function vidhiSectionEntry(vidhi: VidhiEntry): SearchSectionEntry {
+  const personal = vidhi.anchor === 'personal-tithi';
+  const subtitleHi = `${personal ? 'स्मरण विधि' : 'पूजा विधि'} · ${vidhi.steps.length} चरण`;
+  const fields = [
+    vidhi.titleHi,
+    vidhi.titleEn,
+    subtitleHi,
+    personal ? 'तर्पण विधि पितृ स्मरण श्राद्ध मार्गदर्शिका' : 'पूजा विधि',
+    personal ? 'Tarpana Shraddha Pitru remembrance guide' : 'Puja Vidhi',
+    'vidhi',
+  ];
+  const fieldsNorm = fields.map(normalize);
+  return {
+    type: 'section',
+    id: `section:${vidhi.id}`,
+    sourceId: vidhi.id,
+    displayHi: vidhi.titleHi,
+    displayEn: vidhi.titleEn,
+    subtitleHi,
+    thumb: '॥',
+    norm: fieldsNorm.join(' '),
+    fieldsNorm,
+  };
 }
 
 function sectionEntry(entry: LibraryEntry): SearchSectionEntry {

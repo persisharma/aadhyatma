@@ -25,17 +25,19 @@ import TodayRecommendationsRow from '@/components/TodayRecommendationsRow';
 import FestiveToran from '@/components/FestiveToran';
 import { getTodayFestival } from '@/data/discoveryMeta';
 import { useTodayKey } from '@/utils/useTodayKey';
+import { launchMarkOnce } from '@/utils/launchTrace';
 import type { HomeStackParamList } from '@/navigation/types';
 import type { ContentCategory } from '@/data/texts';
 import { useNewContent } from '@/contexts/NewContentContext';
 import { useTilePressController, TilePressProvider } from '@/contexts/TilePressContext';
 import { shuffleBySeed } from '@/utils/shuffleBySeed';
-import { panchangTabTarget } from '@/navigation/entryRoutes';
+import { moreTabTarget, panchangTabTarget } from '@/navigation/entryRoutes';
 import { useTourTarget, scrollNodeIntoView } from '@/components/tour/tourTargets';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>;
 
 export default function HomeScreen({ navigation }: Props) {
+  launchMarkOnce('home-render');
   const { colors, typography, spacing } = useTheme();
   const { hasNewInCategory, devSimulateUpgrade, devResetNewState } = useNewContent();
   // Feature-tour spotlight anchors (design.md §47). Home tiles live in the
@@ -230,6 +232,79 @@ export default function HomeScreen({ navigation }: Props) {
       onPress: () => navigation.navigate('SadhanaPrograms'),
     },
     {
+      // Standing zero-state discovery door. The Today strip is contextual and
+      // the Panchang ledger is a planning surface; this card makes the feature
+      // discoverable on Home before anybody has saved a family tithi.
+      key: 'pitru-smaran',
+      titleHi: 'पितृ स्मरण', titleEn: 'Pitru Smaran',
+      descHi: 'एक बार तिथि जोड़ें—हर वर्ष श्राद्ध की सही तारीख़ जानें।',
+      descEn: 'Save a tithi once and know its shraddha date every year.',
+      ctaHi: 'स्मरण जोड़ें', ctaEn: 'Set up',
+      hasNew: true,
+      icon: (
+        <Text
+          style={{
+            fontFamily: typography.thumb.fontFamily,
+            fontSize: 22,
+            color: colors.gold,
+          }}
+        >
+          ॥
+        </Text>
+      ),
+      onPress: () => rootNav.navigate('MoreTab', moreTabTarget('PitruSmaranList')),
+    },
+    {
+      // PRD-19 Phase 2B Discover card: the vidhi catalog's Home awareness door.
+      // The Panchang day-panel pill is date-dependent and the Vrat & Parv tile
+      // is two taps deep; this card makes guided pujas discoverable on Home.
+      // Pushed on the Home stack (the vidhi flow is registered on both stacks):
+      // a cross-tab jump left back popping to the Panchang calendar, which in
+      // its default mode shows no vidhi door at all.
+      key: 'puja-vidhi',
+      titleHi: 'पूजा विधि', titleEn: 'Guided Pujas',
+      descHi: 'सत्यनारायण से शिवरात्रि तक—हर चरण, हर मन्त्र साथ।',
+      descEn: 'Satyanarayan to Shivaratri — every step, guided in hand.',
+      ctaHi: 'विधि देखें', ctaEn: 'Open',
+      hasNew: true,
+      icon: (
+        <Text
+          style={{
+            fontFamily: typography.thumb.fontFamily,
+            fontSize: 22,
+            color: colors.saffronDeep,
+          }}
+        >
+          ॥
+        </Text>
+      ),
+      onPress: () => navigation.navigate('VidhiCatalog'),
+    },
+    {
+      // PRD-41 Discover card: the जिज्ञासा door. Opens the आज का विधान briefing
+      // (standing questions answered for today), which in turn opens the
+      // answer-first search box for anything else. Pushed on the Home stack so
+      // back returns here.
+      key: 'jijnasa',
+      titleHi: 'जिज्ञासा · आज का विधान', titleEn: 'Ask Vedansh',
+      descHi: 'आज की तिथि, व्रत, भोग, मुहूर्त—एक प्रश्न में उत्तर।',
+      descEn: "Today's tithi, vrat, bhog, muhurat — answered in one line.",
+      ctaHi: 'पूछें', ctaEn: 'Ask',
+      hasNew: true,
+      icon: (
+        <Text
+          style={{
+            fontFamily: typography.thumb.fontFamily,
+            fontSize: 22,
+            color: colors.saffronDeep,
+          }}
+        >
+          ?
+        </Text>
+      ),
+      onPress: () => navigation.navigate('TodayVidhan'),
+    },
+    {
       key: 'theerth',
       titleHi: 'तीर्थ यात्रा', titleEn: 'Sacred Journeys',
       descHi: 'भारत के पवित्र मंदिरों और धामों की खोज करें।',
@@ -261,7 +336,7 @@ export default function HomeScreen({ navigation }: Props) {
           वि
         </Text>
       ),
-      onPress: () => rootNav.navigate('MoreTab', { screen: 'WidgetGallery' }),
+      onPress: () => rootNav.navigate('MoreTab', moreTabTarget('WidgetGallery')),
     },
   ];
 
@@ -366,6 +441,7 @@ export default function HomeScreen({ navigation }: Props) {
             style={[
               styles.sectionLabel,
               styles.sectionLabelSpaced,
+              styles.discoverLabel,
               {
                 color: colors.inkMuted,
                 fontSize: typography.sectionLabel.fontSize,
@@ -390,7 +466,17 @@ export default function HomeScreen({ navigation }: Props) {
               contentContainerStyle={{
                 paddingHorizontal: gridPadding,
                 gap: featureGap,
-                paddingBottom: 4,
+                // The FOR TODAY strip's touch-band fix, mirrored here: the cards
+                // are Pressables inside this horizontal ScrollView, and the shared
+                // first-tap fallback is only suppressed when onScrollBeginDrag
+                // fires. An arced horizontal flick that starts near the band edge
+                // can lose the first-pixel gesture negotiation to the card
+                // Pressable / outer vertical page-scroll — so the swipe randomly
+                // opens a card or stalls instead of scrolling. Padding the band
+                // top+bottom enlarges the scrollable frame and the arc tolerance
+                // so the horizontal scroll reliably wins the drag. It grows the
+                // touch target, not the visible cards.
+                paddingVertical: 10,
               }}
               // A horizontal swipe here is a scroll, not a tap — suppress the
               // shared first-tap fallback so a swipe never opens a card.
@@ -486,6 +572,11 @@ const styles = StyleSheet.create({
   },
   sectionLabelSpaced: {
     marginTop: 16,
+  },
+  discoverLabel: {
+    // The DISCOVER band below carries its own top padding (the touch-band fix),
+    // so drop the label's bottom margin rather than stacking the two spacings.
+    marginBottom: 0,
   },
   routineInline: {
     marginTop: 16,

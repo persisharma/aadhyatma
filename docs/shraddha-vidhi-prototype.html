@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PRD-19 Phase 3 · श्राद्ध विधि — Interactive Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* Mirrors mobile/src/theme/colors.ts exactly (Aug 2026) — deepened AAA/AA inks,
+       alpha divider, 0.12/0.14 tints, warm #3C1E0A shadow, card gradient tokens. */
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-hi:#F6ECD0;
+    --gradient-end:#F1E3BF; --gold:#A67C34; --gold-soft:#C9B896; --gold-tint:rgba(166,124,52,0.14);
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --saffron-tint:rgba(184,98,27,0.12);
+    --ink:#1A0E03; --ink-soft:#5A3A1E; --ink-muted:#6E5230; --divider:rgba(138,62,11,0.18);
+    --card-from:#FFF5E0; --card-to:#F5DEAC; --card-border:rgba(184,98,27,0.4);
+    --new-badge-bg:rgba(184,98,27,0.16); --new-badge-text:#8A3E0B;
+    --shadow-subtle:0 1px 4px rgba(60,30,10,0.06);
+    --shadow-card:0 2px 6px rgba(60,30,10,0.10);
+    --shadow-raised:0 4px 10px rgba(60,30,10,0.14);
+    --sans:'Inter',system-ui,sans-serif;
+    --serif:'Cormorant Garamond',serif;
+    --deva:'Noto Serif Devanagari',serif;
+    --illus:#8A3E0B; --illus-bg:rgba(184,98,27,0.10); --illus-border:rgba(184,98,27,0.45);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:#1a140c;color:#e9d9b1;padding:24px;line-height:1.5}
+  h1{font-family:var(--serif);font-weight:600;font-size:28px;color:#fff5e0;margin-bottom:2px}
+  .sub{font-style:italic;color:var(--gold-soft);font-size:14px;margin-bottom:6px;max-width:960px}
+  .legend{font-size:12.5px;color:#b7a377;margin-bottom:14px;max-width:960px}
+  .legend b{color:#e9d9b1}
+
+  /* THE content-gate banner — the single most important annotation on this page. */
+  .gatebanner{max-width:960px;border:2px dashed #d98a45;background:rgba(184,98,27,0.12);border-radius:14px;
+    padding:14px 18px;margin:0 0 22px;color:#f3d9b5;font-size:13px;line-height:1.65}
+  .gatebanner b{color:#ffd9a8;letter-spacing:.4px}
+
+  .phaselabel{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--saffron);background:var(--saffron-tint);display:inline-block;padding:4px 12px;border-radius:20px;margin:26px 0 4px;
+    background:rgba(184,98,27,0.22);color:#f0b984}
+  .phasedesc{font-size:12.5px;color:#b7a377;margin-bottom:14px;max-width:960px}
+  .wrap{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap}
+  .cap{width:360px;font-size:12px;color:#b7a377;margin-top:10px;text-align:left;line-height:1.55}
+  .cap b{color:#e9d9b1}
+  .cap .n{display:inline-flex;width:16px;height:16px;border-radius:50%;background:var(--gold);color:#1a140c;
+    font-weight:600;font-size:10.5px;align-items:center;justify-content:center;margin-right:5px;vertical-align:1px}
+  .col{display:flex;flex-direction:column;align-items:center}
+
+  /* ---- phone frame (house pattern; Phase-3 spec size 360×740) ---- */
+  .phone{width:360px;height:740px;background:var(--parchment);border-radius:38px;
+    border:10px solid #0d0804;box-shadow:0 24px 60px rgba(0,0,0,.55);position:relative;overflow:hidden;flex:none}
+  .phone .statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);background:linear-gradient(var(--parchment-hi),var(--parchment))}
+  .screen{position:absolute;top:32px;left:0;right:0;bottom:0;overflow-y:auto;
+    background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
+  .screen::-webkit-scrollbar{width:0}
+  .pad{padding:16px 16px 26px}
+  .topbar{display:flex;align-items:center;gap:12px;padding:6px 2px 14px}
+  .back{width:44px;height:44px;border-radius:50%;border:1px solid var(--divider);background:var(--parchment-soft);
+    display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:18px}
+  .toptitle{font-family:var(--deva);font-size:16px;color:var(--ink);flex:1}
+  .topaction{font-family:var(--sans);font-size:12px;font-weight:600;color:var(--saffron)}
+  .deva{font-family:var(--deva)}
+  .dot{position:absolute;width:20px;height:20px;border-radius:50%;background:var(--gold);color:#1a140c;
+    font-weight:700;font-size:11px;font-family:var(--sans);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 2px 6px rgba(0,0,0,.35);z-index:5}
+
+  /* ILLUSTRATIVE marker — applied to EVERY liturgical / procedural content string on this page. */
+  .illus{display:inline-block;font:600 8.5px var(--sans);letter-spacing:.5px;color:var(--illus);
+    background:var(--illus-bg);border:1px solid var(--illus-border);border-radius:999px;padding:2px 7px;
+    vertical-align:2px;margin-left:6px;white-space:nowrap}
+  .illusblock{border:1.5px dashed var(--illus-border);border-radius:12px;position:relative}
+
+  /* Pitru detail — ObservanceDetail hero (design.md §33/§63) */
+  .dhead{text-align:center;margin:4px 0 14px}
+  .dhead .orn{font-family:var(--deva);color:var(--gold);font-size:14px;letter-spacing:6px}
+  .dhead .dt{font-family:var(--deva);font-size:24px;color:var(--ink);margin-top:4px}
+  .dhead .ds{font-family:var(--deva);font-size:13px;color:var(--ink-soft);margin-top:3px}
+  .nextpill{display:inline-block;font-family:var(--deva);font-size:12.5px;color:var(--saffron-deep);
+    background:var(--saffron-tint);border-radius:20px;padding:7px 16px;margin-top:10px}
+  .drow{display:flex;align-items:center;gap:12px;border:1px solid var(--divider);background:var(--parchment-soft);
+    border-radius:14px;padding:13px 14px;margin-bottom:10px;min-height:44px}
+  .drow .di{flex:1;min-width:0}
+  .drow .dl{font:600 11px var(--sans);letter-spacing:.5px;color:var(--ink-muted)}
+  .drow .dv{font-family:var(--deva);font-size:14px;color:var(--ink);margin-top:2px}
+  .drow .dvs{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:2px}
+  .drow .chev{color:var(--saffron);font-size:17px;flex:none}
+  .tag{font-size:10px;font-weight:600;color:var(--new-badge-text);background:var(--new-badge-bg);padding:3px 10px;border-radius:999px;font-family:var(--sans);letter-spacing:.4px}
+  .switch{width:44px;height:26px;border-radius:13px;background:var(--gold);position:relative;flex:none}
+  .switch::after{content:"";position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;background:var(--parchment-hi)}
+
+  /* vidhi door row — the cross-link (muted gold treatment, NOT the festive filled pill) */
+  .vidhidoor{display:flex;align-items:center;gap:12px;border:1.4px solid var(--gold);
+    background:linear-gradient(120deg,var(--card-from),var(--parchment-soft));border-radius:14px;
+    padding:13px 14px;margin-bottom:10px;min-height:52px;box-shadow:var(--shadow-card);position:relative}
+  .vidhidoor .gi{width:36px;height:36px;border-radius:50%;border:1px solid var(--gold-tint);background:var(--parchment-hi);
+    display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:16px;color:var(--saffron-deep);flex:none}
+
+  /* prep checklist — Today's Practice summary + ledger (design.md §31/§62) */
+  .convline{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);text-align:center;margin-bottom:12px}
+  .modeseg{display:flex;background:var(--parchment-soft);border:1px solid var(--divider);border-radius:14px;padding:3px;margin-bottom:14px}
+  .modeseg .seg{flex:1;text-align:center;padding:9px 0;border-radius:9px;font-family:var(--deva);font-size:13px;color:var(--ink-muted);min-height:38px}
+  .modeseg .seg.on{background:var(--parchment-hi);color:var(--saffron-deep);font-weight:600;box-shadow:var(--shadow-subtle)}
+  .checksummary{position:relative;background:var(--parchment-soft);border:1px solid var(--gold-tint);border-radius:18px;
+    padding:14px 16px;margin-bottom:14px;box-shadow:var(--shadow-subtle)}
+  .checksummary .cst{font-family:var(--deva);font-size:14.5px;color:var(--ink)}
+  .checksummary .css{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:2px}
+  .track{height:6px;border-radius:3px;background:var(--gold-tint);margin-top:10px;overflow:hidden}
+  .track .fill{height:100%;width:33%;border-radius:3px;background:var(--gold)}
+  .ledger{border:1px solid var(--divider);border-radius:18px;background:var(--parchment-soft);overflow:hidden}
+  .lrow{display:flex;align-items:center;gap:12px;padding:13px 14px;border-bottom:1px solid var(--divider);min-height:52px}
+  .lrow:last-child{border-bottom:none}
+  .circ{width:28px;height:28px;border-radius:50%;border:1.8px solid var(--gold);flex:none;display:flex;align-items:center;justify-content:center}
+  .circ.on{background:var(--gold);color:#fff8ec;font-size:13px}
+  .lrow .li{flex:1;min-width:0}
+  .lrow .lt{font-family:var(--deva);font-size:14.5px;color:var(--ink)}
+  .lrow .lt.done{color:var(--ink-muted);text-decoration:line-through}
+  .lrow .ls{font-family:var(--serif);font-style:italic;font-size:11px;color:var(--ink-muted);margin-top:1px}
+  .qty{font:600 10.5px var(--sans);color:var(--saffron-deep);background:var(--saffron-tint);border-radius:999px;padding:3px 9px;flex:none}
+  .opt{font:600 10.5px var(--sans);color:var(--ink-muted);background:var(--gold-tint);border-radius:999px;padding:3px 9px;flex:none}
+  .sharebtn{display:block;width:100%;text-align:center;background:transparent;color:var(--saffron);
+    border:1px solid var(--gold-tint);border-radius:14px;padding:13px;font-size:13.5px;font-family:var(--deva);margin-top:14px}
+  .note{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);text-align:center;margin-top:12px;line-height:1.6}
+
+  /* conduct card — Daily Bhakti reading card + reader dots (design.md §62) */
+  .conducthead{display:flex;align-items:center;justify-content:space-between;padding:6px 2px 10px}
+  .phasepill{font-family:var(--deva);font-size:11px;font-weight:600;color:var(--saffron-deep);
+    background:var(--saffron-tint);border-radius:10px;padding:4px 11px}
+  .stepnum{font:600 11px var(--sans);letter-spacing:.5px;color:var(--ink-muted)}
+  .conductcard{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:18px;
+    padding:22px 18px;box-shadow:var(--shadow-card);min-height:470px;display:flex;flex-direction:column}
+  .conductcard .orn{font-family:var(--deva);color:var(--gold);font-size:13px;letter-spacing:6px;text-align:center}
+  .conductcard .st{font-family:var(--deva);font-size:20px;color:var(--ink);text-align:center;margin-top:10px;line-height:1.5}
+  .conductcard .si{font-family:var(--deva);font-size:14px;color:var(--ink-soft);text-align:center;margin-top:12px;line-height:1.85}
+  .handoff{margin-top:auto;border:1.4px solid var(--gold);border-radius:14px;background:linear-gradient(120deg,var(--card-from),var(--card-to));
+    padding:13px 14px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow-card)}
+  .handoff .hg{font-family:var(--deva);font-size:18px;color:var(--saffron);width:30px;text-align:center;flex:none}
+  .handoff .hi2{flex:1;min-width:0}
+  .handoff .hk{font:600 9.5px var(--sans);letter-spacing:.4px;color:var(--saffron-deep);
+    background:var(--saffron-tint);border-radius:999px;padding:3px 8px;display:inline-block}
+  .handoff .ht{font-family:var(--deva);font-size:14.5px;color:var(--ink);margin-top:4px}
+  .handoff .hs{font-family:var(--serif);font-style:italic;font-size:11px;color:var(--ink-muted);margin-top:1px}
+  .handoff .chev{color:var(--saffron);font-size:17px;flex:none}
+  .audiopill{display:inline-flex;align-items:center;gap:7px;font-family:var(--deva);font-size:12.5px;color:var(--saffron-deep);
+    background:var(--gold-tint);border:1px solid var(--gold-tint);border-radius:20px;padding:8px 15px;min-height:36px;
+    margin:14px auto 0}
+  .audiopill .ic{font-size:11px}
+  .dots{display:flex;gap:6px;justify-content:center;padding:16px 0 4px}
+  .dots i{width:6px;height:6px;border-radius:3px;background:var(--gold-tint);display:block}
+  .dots i.on{width:18px;background:var(--gold)}
+
+  /* variant selection (Part C) */
+  .varsheet{border:1px solid var(--divider);border-radius:18px;background:var(--parchment-soft);overflow:hidden;box-shadow:var(--shadow-card)}
+  .varhead{padding:13px 14px 9px;border-bottom:1px solid var(--divider)}
+  .varhead .vt{font-family:var(--deva);font-size:14.5px;color:var(--ink)}
+  .varhead .vs{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:2px}
+  .varrow{display:flex;align-items:flex-start;gap:12px;padding:13px 14px;border-bottom:1px solid var(--divider);min-height:56px}
+  .varrow:last-child{border-bottom:none}
+  .radio{width:22px;height:22px;border-radius:50%;border:1.8px solid var(--gold);flex:none;margin-top:2px;position:relative}
+  .radio.on::after{content:"";position:absolute;inset:4px;border-radius:50%;background:var(--saffron)}
+  .varrow .vi{flex:1;min-width:0}
+  .varrow .vn{font-family:var(--deva);font-size:14.5px;color:var(--ink)}
+  .varrow .vd{font-family:var(--deva);font-size:11.5px;color:var(--ink-soft);margin-top:2px;line-height:1.6}
+  .btn{display:block;width:100%;text-align:center;background:var(--saffron);color:#fff8ec;border:none;
+    border-radius:14px;padding:14px;font-size:15px;font-family:var(--deva);margin-top:14px;min-height:48px}
+
+  /* Pitru Paksha overview — PanchangTimelineRow pattern */
+  .tl{border-left:2px solid var(--gold-tint);margin-left:9px;padding-left:16px}
+  .tlrow{position:relative;padding:9px 0}
+  .tlrow .mk{position:absolute;left:-22px;top:14px;width:10px;height:10px;border-radius:50%;background:var(--gold-tint);border:1.5px solid var(--gold-soft)}
+  .tlrow.family .mk{background:var(--saffron);border-color:var(--saffron)}
+  .tlrow .td{font:600 10.5px var(--sans);letter-spacing:.4px;color:var(--ink-muted)}
+  .tlrow .tt{font-family:var(--deva);font-size:14px;color:var(--ink);margin-top:1px}
+  .tlrow .tf{font-family:var(--deva);font-size:11.5px;color:var(--saffron-deep);margin-top:1px}
+</style>
+</head>
+<body>
+
+<h1>श्राद्ध / तर्पण विधि — PRD-19 Phase 3 prototype</h1>
+<p class="sub">The seventh vidhi, anchored to a <b>personal tithi</b> instead of a festival — and the PRD-17 Pitru Smaran Phase-3 cross-link. Plus the Part-B recorded-audio affordance and Part-C variant selection, both annotated as options.</p>
+<p class="legend"><b>How to read this page:</b> each phone is one shipped-pattern screen; numbered gold dots match the numbered notes beside it. Muted gold-and-ink tone throughout — this flow deliberately carries Pitru Smaran's reverent register, never the festive saffron celebration accents.</p>
+
+<div class="gatebanner">
+  <b>⚠ EVERY LITURGICAL AND PROCEDURAL STRING BELOW IS AN ILLUSTRATIVE PLACEHOLDER — NONE OF IT IS SOURCED CONTENT.</b><br/>
+  Real shraddha/tarpan content is <b>blocked on source verification</b>: RULEBOOK §11.3 forbids authoring liturgy or claiming unopened sources, and PRD-19 §3.4's two-source verification cannot run from this authoring environment — DrikPanchang and archive.org were unreachable on 2026-08-12 and 2026-08-14 (recorded in each shipped entry's <code>canonicalEditionStatus</code>). Samagri items, step titles, instructions and sequence shown here exist only to demonstrate layout and interaction. <b>Nothing on this page may be transcribed into <code>mobile/src/data/vidhi/</code>.</b> Strings are individually marked <span class="illus" style="vertical-align:0">ILLUSTRATIVE</span>.
+</div>
+
+<!-- ============================================================ PHONE A -->
+<div class="phaselabel">Part A · The cross-link door — person detail on their shraddha day</div>
+<p class="phasedesc">PitruSmaranDetailScreen (More stack, shipped) gains one row: the <b>॥ श्राद्ध विधि</b> door, rendered only when <code>getVidhiById('shraddha-tarpan-vidhi')</code> resolves. Vidhi absent → row absent — never a placeholder.</p>
+<div class="wrap">
+<div class="col">
+<div class="phone">
+  <div class="statusbar"><span>9:41</span><span>भाद्रपद कृष्ण अष्टमी</span></div>
+  <div class="screen"><div class="pad">
+    <div class="topbar"><div class="back">‹</div><div class="toptitle">पितृ स्मरण</div><div class="topaction">सम्पादन</div></div>
+    <div class="dhead">
+      <div class="orn">॥ ॐ ॥</div>
+      <div class="dt">पिता जी</div>
+      <div class="ds">श्राद्ध तिथि: भाद्रपद कृष्ण अष्टमी</div>
+      <div><span class="nextpill">अगला · आज · अष्टमी श्राद्ध</span></div>
+    </div>
+    <div class="vidhidoor">
+      <div class="dot" style="top:-9px;right:-7px">1</div>
+      <div class="gi">॥</div>
+      <div class="di" style="flex:1;min-width:0">
+        <div class="dl" style="font:600 11px var(--sans);letter-spacing:.5px;color:var(--ink-muted)">उस दिन की विधि <span class="tag">NEW</span></div>
+        <div class="dv" style="font-family:var(--deva);font-size:15px;color:var(--ink);margin-top:2px">श्राद्ध / तर्पण विधि</div>
+        <div class="dvs" style="font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:2px">तैयारी सूची · चरण-दर-चरण मार्गदर्शन</div>
+      </div>
+      <div class="chev" style="color:var(--saffron);font-size:17px">›</div>
+    </div>
+    <div class="drow"><div class="di"><div class="dl">अगले वर्ष</div><div class="dv">सोमवार, 13 सितम्बर 2027</div></div></div>
+    <div class="drow"><div class="di"><div class="dl">पितृ पक्ष 2026 में</div><div class="dv">अष्टमी श्राद्ध — 4 अक्टू 2026</div></div><div class="dot" style="position:static;flex:none">2</div></div>
+    <div class="drow"><div class="di"><div class="dl">स्मरण अनुस्मारक</div><div class="dvs">एक दिन पहले और उसी दिन</div></div><div class="switch"></div></div>
+    <div class="drow"><div class="di"><div class="dl">उस दिन पाठ</div><div class="dv">गीता — पंचदश अध्याय</div></div><div class="chev">›</div></div>
+    <div class="drow"><div class="di"><div class="dl">पाठ</div><div class="dv">गीता — द्वितीय अध्याय</div></div><div class="chev">›</div><div class="dot" style="position:static;flex:none">3</div></div>
+    <div class="note">यह स्मरण केवल इसी फ़ोन पर रहता है।</div>
+  </div></div>
+</div>
+<p class="cap"><span class="n">1</span><b>The door pushes in place.</b> Vidhi routes join the More stack (<code>MoreStackParamList = VidhiStackParamList &amp; {…}</code>), so back retraces to this screen — never a cross-tab jump. Route params carry <b>{vidhiId, dateMs}</b> only: <b>no entryId, no name, no relation ever enters vidhi state or navigation</b>. The door leads with the sooner of the annual tithi and the Pitru-Paksha day.<br/>
+<span class="n">2</span>During the fortnight the paksha mapping row is the alternate occurrence — a second door context, same vidhi, distinct dateKey (fresh checklist).<br/>
+<span class="n">3</span>The shipped Gita-paath rows stay; the vidhi's own paath steps hand off to these same chapters (15, 2) via the new <code>{kind:'gita', chapter}</code> ref — reuse, never re-typed text.</p>
+</div>
+
+<!-- ============================================================ PHONE B -->
+<div class="col">
+<div class="phone">
+  <div class="statusbar"><span>9:41</span><span>पितृ पक्ष</span></div>
+  <div class="screen"><div class="pad">
+    <div class="topbar"><div class="back">‹</div><div class="toptitle">पितृ पक्ष 2026</div></div>
+    <div class="convline">भाद्रपद पूर्णिमा — आश्विन अमावस्या · पूर्णिमांत</div>
+    <div class="tl">
+      <div class="tlrow"><span class="mk"></span><div class="td">26 सित</div><div class="tt">पूर्णिमा श्राद्ध — पक्ष प्रारम्भ</div></div>
+      <div class="tlrow"><span class="mk"></span><div class="td">29 सित</div><div class="tt">चतुर्थी श्राद्ध</div></div>
+      <div class="tlrow family"><span class="mk"></span><div class="td">4 अक्टू</div><div class="tt">अष्टमी श्राद्ध</div><div class="tf">पिता जी</div></div>
+      <div class="tlrow family"><span class="mk"></span><div class="td">7 अक्टू</div><div class="tt">एकादशी श्राद्ध</div><div class="tf">दादी जी</div></div>
+      <div class="tlrow"><span class="mk"></span><div class="td">11 अक्टू</div><div class="tt">सर्वपितृ अमावस्या</div></div>
+    </div>
+    <div class="vidhidoor" style="margin-top:14px">
+      <div class="dot" style="top:-9px;right:-7px">4</div>
+      <div class="gi">॥</div>
+      <div class="di" style="flex:1;min-width:0">
+        <div class="dv" style="font-family:var(--deva);font-size:15px;color:var(--ink)">श्राद्ध विधि देखें</div>
+        <div class="dvs" style="font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:2px">अगला दिन: अष्टमी श्राद्ध · 4 अक्टू</div>
+      </div>
+      <div class="chev" style="color:var(--saffron);font-size:17px">›</div>
+    </div>
+    <div class="note">परिवार के दिन केसरिया चिह्न पर।<br/>यह सूची केवल इसी फ़ोन पर रहती है।</div>
+  </div></div>
+</div>
+<p class="cap"><span class="n">4</span><b>The second Part-A door:</b> one quiet row beneath the fortnight — the timeline rows themselves stay a calendar, not a launcher. Opens the vidhi detail with the soonest family-matched day as <code>dateMs</code>. The door subtitle names the <i>day</i> ("अष्टमी श्राद्ध"), <b>never the person</b> — the timeline above may show family names because it is the private ledger surface; the vidhi layer below it never receives them.</p>
+</div>
+</div>
+
+<!-- ============================================================ PHONE C -->
+<div class="phaselabel">Part A · तैयारी — tarpan samagri checklist (occurrence-scoped to the personal date)</div>
+<p class="phasedesc">The shipped VidhiDetail prep mode: Today's-Practice summary accordion + ledger rows + routine check circles. State keys to <b>vidhi + dateKey of the personal occurrence</b> — never to the person.</p>
+<div class="wrap">
+<div class="col">
+<div class="phone">
+  <div class="statusbar"><span>9:41</span><span>कल: अष्टमी श्राद्ध</span></div>
+  <div class="screen"><div class="pad">
+    <div class="topbar"><div class="back">‹</div><div class="toptitle">श्राद्ध / तर्पण विधि</div></div>
+    <div class="convline">अवसर: अष्टमी श्राद्ध · 4 अक्टूबर <span class="dot" style="position:static;display:inline-flex;vertical-align:middle">5</span></div>
+    <div class="modeseg"><div class="seg on">तैयारी</div><div class="seg">विधि</div></div>
+    <div class="checksummary illusblock">
+      <div class="dot" style="top:-9px;right:-7px">6</div>
+      <div class="cst">सामग्री सूची <span class="illus">ILLUSTRATIVE</span></div>
+      <div class="css">2 of 6 gathered · एक दिन पहले तैयार रखें</div>
+      <div class="track"><div class="fill"></div></div>
+    </div>
+    <div class="ledger illusblock">
+      <div class="lrow"><div class="circ on">✓</div><div class="li"><div class="lt done">कुश <span class="illus">ILLUSTRATIVE</span></div><div class="ls">placeholder item — pending verification</div></div></div>
+      <div class="lrow"><div class="circ on">✓</div><div class="li"><div class="lt done">काले तिल <span class="illus">ILLUSTRATIVE</span></div><div class="ls">placeholder item — pending verification</div></div><div class="qty">≈ 100 g</div></div>
+      <div class="lrow"><div class="circ"></div><div class="li"><div class="lt">जौ <span class="illus">ILLUSTRATIVE</span></div><div class="ls">placeholder item — pending verification</div></div></div>
+      <div class="lrow"><div class="circ"></div><div class="li"><div class="lt">जल-पात्र (ताम्र) <span class="illus">ILLUSTRATIVE</span></div><div class="ls">placeholder item — pending verification</div></div><div class="qty">1</div></div>
+      <div class="lrow"><div class="circ"></div><div class="li"><div class="lt">श्वेत पुष्प <span class="illus">ILLUSTRATIVE</span></div><div class="ls">placeholder item — pending verification</div></div></div>
+      <div class="lrow"><div class="circ"></div><div class="li"><div class="lt">अक्षत <span class="illus">ILLUSTRATIVE</span></div><div class="ls">placeholder item — pending verification</div></div><div class="opt">वैकल्पिक</div></div>
+    </div>
+    <div class="sharebtn">सूची साझा करें <span class="dot" style="position:static;display:inline-flex;vertical-align:middle">7</span></div>
+    <div class="note">वास्तविक सामग्री-सूची स्रोत-सत्यापन के बाद ही प्रकाशित होगी।</div>
+  </div></div>
+</div>
+<p class="cap"><span class="n">5</span><b>Occurrence line, not a person line.</b> The header names the tithi-day occurrence the door carried (dateMs). A fresh personal date starts a fresh checklist — same <code>checklistStore</code> semantics as festival dates, no schema change. Two family members on one tithi share this one occurrence (deliberate; mirrors the tithi-keyed pitru solves cache).<br/>
+<span class="n">6</span><b>Content gate, visualized:</b> the dashed border + ILLUSTRATIVE chips are prototype annotations, not app UI. In the app this list either exists fully verified or the vidhi (and every door to it) does not exist at all.<br/>
+<span class="n">7</span>Plain-text share carries <b>items only</b> — no date, no relation, no name (test-pinned).</p>
+</div>
+
+<!-- ============================================================ PHONE D -->
+<div class="col">
+<div class="phone">
+  <div class="statusbar"><span>9:41</span><span>अष्टमी श्राद्ध</span></div>
+  <div class="screen"><div class="pad" style="display:flex;flex-direction:column;min-height:100%">
+    <div class="topbar"><div class="back">‹</div><div class="toptitle">श्राद्ध / तर्पण विधि</div></div>
+    <div class="conducthead"><span class="phasepill">मुख्य</span><span class="stepnum">STEP 7 / 14</span></div>
+    <div class="conductcard illusblock">
+      <div class="dot" style="top:-9px;right:-7px">8</div>
+      <div class="orn">॥ ॐ ॥</div>
+      <div class="st">गीता पाठ <span class="illus">ILLUSTRATIVE</span></div>
+      <div class="si">इस चरण पर पंचदश अध्याय का पाठ करें। <span class="illus">ILLUSTRATIVE</span><br/><span style="font-size:12px;color:var(--ink-muted)">(placeholder instruction — the real step text is authored only after §3.4 verification)</span></div>
+      <div class="audiopill"><span class="ic">▶︎&#xFE0E;</span> सुनें · चरण-ध्वनि <span class="dot" style="position:static;display:inline-flex;vertical-align:middle">9</span></div>
+      <div class="handoff">
+        <div class="hg">॥</div>
+        <div class="hi2">
+          <span class="hk">पाठ</span>
+          <div class="ht">गीता — पंचदश अध्याय</div>
+          <div class="hs">shipped reader hand-off · returns to step 8</div>
+        </div>
+        <div class="chev">›</div>
+      </div>
+    </div>
+    <div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="note" style="margin-top:6px">बाएँ-दाएँ स्वाइप ही एकमात्र पृष्ठ-परिवर्तन है।</div>
+  </div></div>
+</div>
+<p class="cap"><span class="n">8</span><b>Conduct card = the shipped reader variant</b> (phase pill, step n/N, quiet ornament, swipe-only paging, keep-awake, stretched active dot). The Gita hand-off uses the new <code>{kind:'gita', chapter:15}</code> ref with the category-aware <b>पाठ</b> caption; from the More stack it routes via <code>navigateToHomeStackTarget</code> since the readers live on the Home stack.<br/>
+<span class="n">9</span><b>Part-B option, annotated:</b> the per-step recorded-audio pill renders <i>only if</i> the recorded-audio decision is taken and a real asset exists for the step — AAC 64 kbps mono ≈ 0.5 MB/min, bundled native assets, <b>store-release-only (not OTA)</b>, playback claimed through <code>playbackArbiter</code> (<code>kind:'recorded'</code>) so it silences TTS/japam. The PRD recommends <b>deferring Part B</b> until assets exist; without it this slot simply shows the standard TTS read-aloud control.</p>
+</div>
+</div>
+
+<!-- ============================================================ PHONE E -->
+<div class="phaselabel">Part C · Regional variants — explicit named alternates, never a silent merge</div>
+<p class="phasedesc">When a vidhi carries <code>variants[]</code>, VidhiDetail shows a परम्परा selector. Each variant is a complete alternate step-list with its own full source block and its own two-source verification — a whole content obligation, which is why Part C is an option.</p>
+<div class="wrap">
+<div class="col">
+<div class="phone">
+  <div class="statusbar"><span>9:41</span><span>अष्टमी श्राद्ध</span></div>
+  <div class="screen"><div class="pad">
+    <div class="topbar"><div class="back">‹</div><div class="toptitle">श्राद्ध / तर्पण विधि</div></div>
+    <div class="convline">अवसर: अष्टमी श्राद्ध · 4 अक्टूबर</div>
+    <div class="varsheet illusblock">
+      <div class="dot" style="top:-9px;right:-7px">10</div>
+      <div class="varhead">
+        <div class="vt">परम्परा चुनें</div>
+        <div class="vs">दोनों पूर्ण, पृथक् रूप से सत्यापित क्रम हैं — कभी मिश्रित नहीं</div>
+      </div>
+      <div class="varrow">
+        <div class="radio on"></div>
+        <div class="vi">
+          <div class="vn">उत्तर भारतीय (आधार क्रम) <span class="illus">ILLUSTRATIVE</span></div>
+          <div class="vd">14 चरण · placeholder variant label — real variants exist only after their own verification</div>
+        </div>
+      </div>
+      <div class="varrow">
+        <div class="radio"></div>
+        <div class="vi">
+          <div class="vn">दक्षिण भारतीय क्रम <span class="illus">ILLUSTRATIVE</span></div>
+          <div class="vd">16 चरण · placeholder variant label — named for what it is, selected only by the user</div>
+        </div>
+      </div>
+    </div>
+    <div class="drow" style="margin-top:14px"><div class="di"><div class="dl">ध्यान दें</div><div class="dv" style="font-size:12.5px;line-height:1.7">परम्परा बदलने पर इस अवसर की तैयारी-सूची फिर से शुरू होगी।</div></div><div class="dot" style="position:static;flex:none">11</div></div>
+    <div class="btn">विधि प्रारम्भ करें</div>
+    <div class="note">कोई परम्परा स्वतः नहीं चुनी जाती — आधार क्रम तब तक दिखता है।</div>
+  </div></div>
+</div>
+<p class="cap"><span class="n">10</span><b>Alternates are explicit:</b> the base convention is itself named in the selector; no locale guessing, no default switch, no blended "quick puja". The chosen <code>variantId</code> persists per vidhi in the checklist document. Each variant row is backed by its own <code>source</code> block (canonical edition + ≥2 references) — provenance stays private review metadata and never renders, exactly as shipped.<br/>
+<span class="n">11</span>Switching variants means different samagri and steps, so the occurrence checklist restarts — stated in words before it happens, per the honesty-over-convenience house rule.</p>
+</div>
+
+<div class="col" style="max-width:420px">
+  <div class="gatebanner" style="margin-top:0">
+    <b>Privacy contract (side annotation, applies to every phone above)</b><br/>
+    · Vidhi state (<code>@vedansh/vidhi-checklist</code>) is keyed by vidhi + dateKey (+ variantId) — never by person.<br/>
+    · Vidhi route params: <code>{vidhiId, dateMs}</code> only.<br/>
+    · No new notifications; the shipped per-person smaran reminders remain the only fires and never change copy.<br/>
+    · Nothing from this flow reaches any share card; the samagri text share carries items only.
+  </div>
+  <div class="gatebanner">
+    <b>Content gates (side annotation)</b><br/>
+    · Two-source verification (§3.4) per vidhi and per variant; Gita Press canonical edition recorded verified or honestly pending.<br/>
+    · Mantra steps ship verbatim-transcribed or instruction-only — never approximated (§11.3).<br/>
+    · Vidhi absent from the registry ⇒ every door on this page absent. No teaser states exist.<br/>
+    · The 2026-08-12 / 2026-08-14 egress attempts are the recorded precedent; authoring waits for an egress-capable environment.
+  </div>
+</div>
+</div>
+
+</body>
+</html>

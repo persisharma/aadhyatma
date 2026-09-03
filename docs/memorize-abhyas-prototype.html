@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PRD-26 · कण्ठस्थ अभ्यास — Interactive Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* Mirrors mobile/src/theme/colors.ts (Aug 2026) — same token set the shipped
+       prototypes use, so these five sit in the same visual system. */
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-hi:#F6ECD0;
+    --gradient-end:#F1E3BF; --gold:#A67C34; --gold-soft:#C9B896; --gold-tint:rgba(166,124,52,0.14);
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --saffron-tint:rgba(184,98,27,0.12);
+    --ink:#1A0E03; --ink-soft:#5A3A1E; --ink-muted:#6E5230; --divider:rgba(138,62,11,0.18);
+    --card-from:#FFF5E0; --card-to:#F5DEAC; --card-border:rgba(184,98,27,0.4);
+    --new-badge-bg:rgba(184,98,27,0.16); --new-badge-text:#8A3E0B;
+    --shadow-subtle:0 1px 4px rgba(60,30,10,0.06);
+    --shadow-card:0 2px 6px rgba(60,30,10,0.10);
+    --shadow-raised:0 4px 10px rgba(60,30,10,0.14);
+    --sans:'Inter',system-ui,sans-serif;
+    --serif:'Cormorant Garamond',serif;
+    --deva:'Noto Serif Devanagari',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:#1a140c;color:#e9d9b1;padding:24px;line-height:1.5}
+  h1{font-family:var(--serif);font-weight:600;font-size:28px;color:#fff5e0;margin-bottom:2px}
+  .sub{font-style:italic;color:var(--gold-soft);font-size:14px;margin-bottom:6px;max-width:980px}
+  .legend{font-size:12.5px;color:#b7a377;margin-bottom:20px;max-width:980px}
+  .legend b{color:#e9d9b1}
+  .phaselabel{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--saffron);background:var(--saffron-tint);display:inline-block;padding:4px 12px;border-radius:20px;margin:26px 0 4px}
+  .phasedesc{font-size:12.5px;color:#b7a377;margin-bottom:14px;max-width:980px}
+  .wrap{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap}
+  .cap{width:340px;font-size:12px;color:#b7a377;margin-top:10px;text-align:left;line-height:1.55}
+  .cap b{color:#e9d9b1}
+  .cap code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:var(--gold-soft)}
+  .col{display:flex;flex-direction:column;align-items:center}
+
+  /* ---- phone frame ---- */
+  .phone{width:340px;height:720px;background:var(--parchment);border-radius:38px;
+    border:10px solid #0d0804;box-shadow:0 24px 60px rgba(0,0,0,.55);position:relative;overflow:hidden;flex:none}
+  .phone .statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);background:linear-gradient(var(--parchment-hi),var(--parchment))}
+  .screen{position:absolute;top:32px;left:0;right:0;bottom:0;overflow-y:auto;
+    background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
+  .screen::-webkit-scrollbar{width:0}
+  .pad{padding:16px 16px 26px}
+  .topbar{display:flex;align-items:center;gap:12px;padding:6px 2px 14px}
+  .back{width:44px;height:44px;border-radius:50%;border:1px solid var(--divider);background:var(--parchment-soft);
+    display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:18px;flex:none}
+  .toptitle{font-family:var(--deva);font-size:16px;color:var(--ink);flex:1}
+  .topaction{font-family:var(--sans);font-size:12px;font-weight:600;color:var(--saffron)}
+  .deva{font-family:var(--deva)}
+  .dot{position:absolute;width:20px;height:20px;border-radius:50%;background:var(--gold);color:#1a140c;
+    font-weight:700;font-size:11px;font-family:var(--sans);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 2px 6px rgba(0,0,0,.35);z-index:5}
+
+  /* ---- shared components lifted from the shipped prototypes ---- */
+  .card{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:14px;
+    padding:14px;margin-bottom:12px;box-shadow:var(--shadow-card)}
+  .catpill{display:inline-block;font-family:var(--deva);font-size:10.5px;font-weight:600;
+    color:var(--saffron-deep);background:var(--saffron-tint);border-radius:10px;padding:3px 10px}
+  .apills{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .apill{display:inline-flex;align-items:center;font-family:var(--deva);font-size:12.5px;border-radius:20px;
+    padding:8px 14px;min-height:36px}
+  .apill.gold{color:var(--saffron-deep);background:var(--gold-tint);border:1px solid transparent}
+  .apill.outline{color:var(--saffron);background:transparent;border:1px solid var(--gold-tint)}
+  .apill.filled{color:#fff8ec;background:var(--saffron);border:1px solid transparent}
+  .actionrow{display:flex;align-items:center;gap:12px;border:1px solid var(--divider);background:var(--parchment-soft);
+    border-radius:14px;padding:13px 14px;margin-bottom:10px;min-height:48px}
+  .actionrow .ai{width:34px;height:34px;border-radius:50%;border:1px solid var(--gold-tint);background:var(--parchment-hi);
+    display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:14px;color:var(--saffron-deep);flex:none}
+  .actionrow .at{flex:1}
+  .actionrow .att{font-family:var(--deva);font-size:14.5px;color:var(--ink)}
+  .actionrow .ats{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);margin-top:1px}
+  .actionrow .chev{color:var(--saffron);font-size:17px}
+  .tag{font-size:10px;font-weight:600;color:var(--new-badge-text);background:var(--new-badge-bg);padding:3px 10px;
+    border-radius:999px;font-family:var(--sans);letter-spacing:.4px}
+  .sechead{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;
+    color:var(--ink-muted);margin:18px 0 8px}
+  .note{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);line-height:1.6;margin-top:10px}
+  .divider{height:1px;background:var(--divider);margin:14px 0}
+  .btn{display:flex;align-items:center;justify-content:center;min-height:50px;border-radius:14px;
+    font-family:var(--deva);font-size:15px;margin-top:14px}
+  .btn.primary{background:var(--saffron);color:#fff8ec;box-shadow:var(--shadow-raised)}
+  .btn.ghost{border:1px solid var(--gold-tint);color:var(--saffron);background:transparent}
+
+  /* ---- अभ्यास / memorization ---- */
+  .versecard{background:linear-gradient(var(--card-from),var(--card-to));border:1px solid var(--card-border);
+    border-radius:16px;padding:18px 16px;margin-bottom:12px;box-shadow:var(--shadow-card)}
+  .vline{font-family:var(--deva);font-size:17px;color:var(--ink);line-height:2.05;text-align:center}
+  .vline.masked{color:var(--ink-muted)}
+  .mask{display:inline-block;border-bottom:1.5px dotted rgba(138,62,11,.42);min-width:26px;height:1.1em;
+    vertical-align:-2px;margin:0 3px}
+  .mask.w{min-width:52px} .mask.xw{min-width:74px}
+  .vnum{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);text-align:center;margin-top:8px}
+  .levelbar{display:flex;gap:6px;margin:12px 0 4px}
+  .lvl{flex:1;text-align:center;font-family:var(--sans);font-size:11px;font-weight:600;padding:8px 0;border-radius:10px;
+    border:1px solid var(--gold-tint);color:var(--ink-muted);background:transparent}
+  .lvl.on{background:var(--saffron);color:#fff8ec;border-color:transparent}
+  .toggle{display:flex;align-items:center;gap:10px;border:1px solid var(--divider);background:var(--parchment-soft);
+    border-radius:14px;padding:11px 14px;margin-bottom:12px}
+  .toggle .tl{flex:1;font-family:var(--deva);font-size:14px;color:var(--ink)}
+  .sw{width:44px;height:26px;border-radius:20px;background:var(--saffron);position:relative;flex:none}
+  .sw.off{background:rgba(138,62,11,.2)}
+  .sw i{position:absolute;top:3px;left:21px;width:20px;height:20px;border-radius:50%;background:#fff8ec;box-shadow:var(--shadow-subtle)}
+  .sw.off i{left:3px}
+  .selfmark{display:flex;gap:10px;margin-top:6px}
+  .selfmark div{flex:1;text-align:center;font-family:var(--deva);font-size:14px;padding:12px 0;border-radius:12px}
+  .yes{background:var(--gold-tint);color:var(--saffron-deep)}
+  .no{border:1px solid var(--gold-tint);color:var(--ink-muted)}
+  .duerow{display:flex;align-items:center;gap:12px;border:1px solid var(--divider);background:var(--parchment-soft);
+    border-radius:14px;padding:12px 14px;margin-bottom:10px}
+  .duerow .bead{width:30px;height:30px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
+    font-family:var(--deva);font-size:13px;background:var(--parchment-hi);border:1px solid var(--gold-tint);color:var(--saffron-deep)}
+  .duerow .dt{flex:1}
+  .duerow .dtt{font-family:var(--deva);font-size:14.5px;color:var(--ink)}
+  .duerow .dts{font-family:var(--serif);font-style:italic;font-size:11px;color:var(--ink-muted);margin-top:1px}
+  .steps{display:flex;gap:4px;margin-top:5px}
+  .steps i{width:20px;height:4px;border-radius:2px;background:rgba(138,62,11,.16)}
+  .steps i.f{background:var(--gold)}
+
+</style>
+</head>
+<body>
+  <h1>कण्ठस्थ · अभ्यास — Memorization &amp; Recall</h1>
+  <div class="sub">PRD-26 (proposed, Q4 round 2) · Static mockups in the app's parchment system — not the live build.</div>
+  <div class="legend">The app has 30+ readers and <b>every one of them only ever shows the text</b>. अभ्यास adds the missing half: a mask over a text you already have, three levels deep, with a private self-marked recall and a spaced review queue. <b>No new screen for the common case</b> — it is a toggle on the reader you are already in (design.md §9). Zero sourced content: every word is already in the binary. Masking is <b>akshara-wise</b> using the repo's hand-rolled <code>SINGLE_AKSHARA</code> matcher, never <code>Intl.Segmenter</code> (ICU 15.1 GB9c splits conjuncts like ज्यो on older runtimes).</div>
+
+  <div class="phaselabel">1 · The toggle — अभ्यास on the reader you are already in</div>
+  <div class="phasedesc">Reading and practising are the same screen. The toggle sits under the reader header; turning it on masks the page in place and reveals the level bar. Turning it off returns the plain reader — nothing is lost, nothing is a separate "mode" you have to find.</div>
+  <div class="wrap">
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">हनुमान चालीसा</div><div class="topaction">अ</div></div>
+          <div class="toggle"><div class="tl">अभ्यास</div><div class="sw off"><i></i></div></div>
+          <div class="versecard">
+            <div class="vline">जय हनुमान ज्ञान गुन सागर।</div>
+            <div class="vline">जय कपीस तिहुँ लोक उजागर॥</div>
+            <div class="vnum">चौपाई १</div>
+          </div>
+          <div class="versecard">
+            <div class="vline">राम दूत अतुलित बल धामा।</div>
+            <div class="vline">अंजनि-पुत्र पवनसुत नामा॥</div>
+            <div class="vnum">चौपाई २</div>
+          </div>
+          <div class="versecard">
+            <div class="vline">महाबीर बिक्रम बजरंगी।</div>
+            <div class="vline">कुमति निवार सुमति के संगी॥</div>
+            <div class="vnum">चौपाई ३</div>
+          </div>
+        </div></div>
+      </div>
+      <div class="cap"><b>Today — the reader, unchanged.</b><br/>The अभ्यास switch is the only addition. Off by default, persisted per text, so a user who never wants it never sees a masked word.</div>
+    </div>
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">हनुमान चालीसा</div><div class="topaction">अ</div></div>
+          <div class="toggle"><div class="tl">अभ्यास</div><div class="sw"><i></i></div></div>
+          <div class="levelbar"><div class="lvl on">स्तर १</div><div class="lvl">स्तर २</div><div class="lvl">स्तर ३</div></div>
+          <div class="note" style="margin:0 0 12px">पहला शब्द दिखे — बाकी स्मरण से।</div>
+          <div class="versecard">
+            <div class="vline masked">जय <span class="mask w"></span> <span class="mask"></span> <span class="mask w"></span>।</div>
+            <div class="vline masked">जय <span class="mask w"></span> <span class="mask"></span> <span class="mask w"></span>॥</div>
+            <div class="vnum">चौपाई १</div>
+          </div>
+          <div class="versecard">
+            <div class="vline masked">राम <span class="mask"></span> <span class="mask w"></span> <span class="mask"></span>।</div>
+            <div class="vline masked">अंजनि-पुत्र <span class="mask w"></span> <span class="mask"></span>॥</div>
+            <div class="vnum">चौपाई २</div>
+          </div>
+          <div class="versecard">
+            <div class="vline masked">महाबीर <span class="mask w"></span> <span class="mask"></span>।</div>
+            <div class="vline masked">कुमति <span class="mask w"></span> <span class="mask"></span> <span class="mask"></span>॥</div>
+            <div class="vnum">चौपाई ३</div>
+          </div>
+        </div></div>
+      </div>
+      <div class="cap"><b>स्तर १ — first word of each line.</b><br/>Lightest mask. The line's shape, its length and its punctuation stay, so the page still reads as the same verse rather than as a puzzle. Mask widths follow the hidden text's akshara count.</div>
+    </div>
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">हनुमान चालीसा</div><div class="topaction">अ</div></div>
+          <div class="toggle"><div class="tl">अभ्यास</div><div class="sw"><i></i></div></div>
+          <div class="levelbar"><div class="lvl">स्तर १</div><div class="lvl on">स्तर २</div><div class="lvl">स्तर ३</div></div>
+          <div class="note" style="margin:0 0 12px">केवल पहला अक्षर — संकेत भर।</div>
+          <div class="versecard">
+            <div class="vline masked">ज<span class="mask xw"></span> <span class="mask w"></span>।</div>
+            <div class="vline masked">ज<span class="mask xw"></span> <span class="mask w"></span>॥</div>
+            <div class="vnum">चौपाई १</div>
+          </div>
+          <div class="versecard">
+            <div class="vline masked">रा<span class="mask xw"></span> <span class="mask w"></span>।</div>
+            <div class="vline masked">अं<span class="mask xw"></span> <span class="mask w"></span>॥</div>
+            <div class="vnum">चौपाई २</div>
+          </div>
+          <div class="versecard">
+            <div class="vline masked">म<span class="mask xw"></span> <span class="mask w"></span>।</div>
+            <div class="vline masked">कु<span class="mask xw"></span> <span class="mask w"></span>॥</div>
+            <div class="vnum">चौपाई ३</div>
+          </div>
+        </div></div>
+      </div>
+      <div class="cap"><b>स्तर २ — one akshara as the cue.</b><br/>This is the level that needs the splitter to be right: <b>रा</b> is one akshara (र + ा), <b>अं</b> carries its anusvara, and a naive code-unit slice would render र and अ with the matra orphaned on the next line.</div>
+    </div>
+
+  </div>
+
+  <div class="phaselabel">2 · Recall — reveal a line, then mark yourself</div>
+  <div class="phasedesc">At स्तर ३ the verse is gone and only its shape remains. Tap any line to reveal just that line. The self-mark is the whole scoring system: the user says whether it came, and the app believes them. No percentage, no grade, no streak that can be broken.</div>
+  <div class="wrap">
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">हनुमान चालीसा</div><div class="topaction">अ</div></div>
+          <div class="toggle"><div class="tl">अभ्यास</div><div class="sw"><i></i></div></div>
+          <div class="levelbar"><div class="lvl">स्तर १</div><div class="lvl">स्तर २</div><div class="lvl on">स्तर ३</div></div>
+          <div class="note" style="margin:0 0 12px">पंक्ति पर स्पर्श कर उसे देखें।</div>
+          <div class="versecard">
+            <div class="vline masked"><span class="mask xw"></span> <span class="mask xw"></span> <span class="mask w"></span>।</div>
+            <div class="vline masked"><span class="mask xw"></span> <span class="mask xw"></span> <span class="mask w"></span>॥</div>
+            <div class="vnum">चौपाई १ · १६ अक्षर</div>
+          </div>
+          <div class="versecard" style="border-color:var(--saffron)">
+            <div class="vline">राम दूत अतुलित बल धामा।</div>
+            <div class="vline masked"><span class="mask xw"></span> <span class="mask xw"></span> <span class="mask w"></span>॥</div>
+            <div class="vnum">चौपाई २ · पहली पंक्ति खुली</div>
+            <div class="selfmark"><div class="yes">आया</div><div class="no">नहीं आया</div></div>
+          </div>
+          <div class="versecard">
+            <div class="vline masked"><span class="mask xw"></span> <span class="mask w"></span> <span class="mask w"></span>।</div>
+            <div class="vline masked"><span class="mask xw"></span> <span class="mask xw"></span> <span class="mask"></span>॥</div>
+            <div class="vnum">चौपाई ३ · १६ अक्षर</div>
+          </div>
+        </div></div>
+      </div>
+      <div class="cap"><b>स्तर ३ — fully hidden, shape only.</b><br/>Line count and akshara count remain because the metre is itself a memory aid. One tap opened चौपाई २'s first line; <b>आया / नहीं आया</b> is the entire input the mastery model takes.</div>
+    </div>
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">हनुमान चालीसा</div><div class="topaction">अ</div></div>
+          <div class="card" style="text-align:center;padding:18px 16px">
+            <div class="deva" style="font-size:15px;color:var(--ink)">सुनकर दोहराएँ</div>
+            <div class="note" style="margin-top:4px">पहली पंक्ति ऐप बोलेगा — आगे आप।</div>
+            <div style="margin:16px auto 6px;width:54px;height:54px;border-radius:50%;background:var(--saffron);
+              display:flex;align-items:center;justify-content:center;color:#fff8ec;font-size:20px;box-shadow:var(--shadow-raised)">▶</div>
+            <div class="vline" style="font-size:15px;margin-top:10px">राम दूत अतुलित बल धामा।</div>
+            <div class="vline masked" style="font-size:15px"><span class="mask xw"></span> <span class="mask xw"></span> <span class="mask w"></span>॥</div>
+          </div>
+          <div class="note" style="text-align:center">expo-speech · already shipped for read-aloud (#230). No new dependency.</div>
+        </div></div>
+      </div>
+      <div class="cap"><b>Audio-cue recall.</b><br/>The shipped read-aloud layer (<code>readAloud/verseAdapter.ts</code>) reused as prompt-then-continue: the app speaks the opening line and stops. Hands-free, which is how this is actually practised — walking, or during a paath.</div>
+    </div>
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="toptitle" style="font-size:20px">अभ्यास</div><div class="topaction">सभी ›</div></div>
+          <div class="card" style="text-align:center">
+            <div class="catpill">आज</div>
+            <div class="deva" style="font-size:18px;color:var(--ink);margin-top:8px">३ पद दोहराने हैं</div>
+            <div class="note" style="margin-top:2px">पिछली बार से नौ दिन हुए।</div>
+          </div>
+          <div class="sechead">आज देय</div>
+          <div class="duerow"><div class="bead">ह</div><div class="dt"><div class="dtt">हनुमान चालीसा · चौपाई १–८</div><div class="dts">स्तर ३ · नौ दिन पहले</div><div class="steps"><i class="f"></i><i class="f"></i><i class="f"></i><i></i></div></div></div>
+          <div class="duerow"><div class="bead">गी</div><div class="dt"><div class="dtt">गीता · अध्याय १२</div><div class="dts">स्तर २ · चार दिन पहले</div><div class="steps"><i class="f"></i><i class="f"></i><i></i><i></i></div></div></div>
+          <div class="duerow"><div class="bead">ग</div><div class="dt"><div class="dtt">गायत्री मन्त्र</div><div class="dts">स्तर ३ · तीन सप्ताह पहले</div><div class="steps"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></div></div></div>
+          <div class="sechead">आगे</div>
+          <div class="duerow" style="opacity:.6"><div class="bead">वि</div><div class="dt"><div class="dtt">विष्णु सहस्रनाम · १–२०</div><div class="dts">परसों</div></div></div>
+          <div class="note">कोई अंक नहीं, कोई प्रतिशत नहीं — केवल क्या दोहराना बाकी है।</div>
+        </div></div>
+      </div>
+      <div class="cap"><b>The due queue — the retention mechanic.</b><br/>Spaced review puts a legitimately <i>due</i> item in front of the user each morning. This is PRD-11's vow mechanic without an end date: a 41-day sankalp finishes, a chalisa you are learning does not.</div>
+    </div>
+
+  </div>
+
+  <div class="phaselabel">3 · Integration, not a silo</div>
+  <div class="phasedesc"><code>RoutineItemKind</code> gains <code>'memorize'</code> — the same one-line trick PRD-19 used to add <code>'vidhi'</code> to that union. अभ्यास then lands inside नित्य साधना, Today's Practice, and the shipped completion/celebration path without a parallel bookkeeping system.</div>
+  <div class="wrap">
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">प्रातः साधना</div><div class="topaction">सम्पादन</div></div>
+          <div class="sechead">आज</div>
+          <div class="actionrow"><div class="ai">✓</div><div class="at"><div class="att">हनुमान चालीसा</div><div class="ats">पूर्ण</div></div></div>
+          <div class="actionrow" style="border-color:var(--saffron)"><div class="ai">अ</div><div class="at"><div class="att">अभ्यास · जो देय है</div><div class="ats">3 items due today</div></div><div class="chev">›</div></div>
+          <div class="actionrow"><div class="ai">ॐ</div><div class="at"><div class="att">राम नाम जप · १ माला</div><div class="ats">108</div></div><div class="chev">›</div></div>
+          <div class="divider"></div>
+          <div class="sechead">जोड़ें</div>
+          <div class="actionrow"><div class="ai">+</div><div class="at"><div class="att">पाठ</div><div class="ats">section · chapter</div></div><div class="chev">›</div></div>
+          <div class="actionrow"><div class="ai">+</div><div class="at"><div class="att">जप</div><div class="ats">japam</div></div><div class="chev">›</div></div>
+          <div class="actionrow" style="border-color:var(--saffron)"><div class="ai">+</div><div class="at"><div class="att">अभ्यास</div><div class="ats">memorize — नया</div></div><div class="chev">›</div></div>
+        </div></div>
+      </div>
+      <div class="cap"><b>A fourth routine item kind.</b><br/>One item meaning "review whatever is due", so the queue length changes daily without the user editing the routine. Completion feeds the existing <code>UserActivityContext</code> streak — no parallel bookkeeping.</div>
+    </div>
+
+    <div class="col">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">हनुमान चालीसा</div><div class="topaction">अ</div></div>
+          <div class="card" style="text-align:center;padding:22px 16px;background:linear-gradient(var(--card-from),var(--card-to));border-color:var(--card-border)">
+            <div style="font-family:var(--deva);font-size:34px;color:var(--saffron-deep)">॥</div>
+            <div class="deva" style="font-size:17px;color:var(--ink);margin-top:8px">चालीसा कण्ठस्थ हुई</div>
+            <div class="note" style="margin-top:6px">चालीस चौपाइयाँ · बिना पुस्तक के<br/>पहला अभ्यास १८ जून को।</div>
+            <div class="apills" style="justify-content:center"><div class="apill gold">दोहराते रहें</div></div>
+          </div>
+          <div class="sechead">आपका अभ्यास</div>
+          <div class="duerow"><div class="bead">✓</div><div class="dt"><div class="dtt">हनुमान चालीसा</div><div class="dts">कण्ठस्थ · अब मासिक दोहराव</div></div></div>
+          <div class="duerow"><div class="bead">गी</div><div class="dt"><div class="dtt">गीता · अध्याय १२</div><div class="dts">२० में से १४ श्लोक</div><div class="steps"><i class="f"></i><i class="f"></i><i></i><i></i></div></div></div>
+          <div class="note">यह अभिलेख निजी है — साझा नहीं होता, किसी सूची में नहीं आता।</div>
+        </div></div>
+      </div>
+      <div class="cap"><b>Arrival, then maintenance.</b><br/>Reaching कण्ठस्थ drops the item to a monthly refresh rather than removing it — the practice is keeping it, not getting it. Mirrors the shipped पूर्णाहुति completion-seal pattern (PRD-10/11).</div>
+    </div>
+
+  </div>
+
+  <div class="phaselabel">Open questions this prototype does not settle</div>
+  <div class="phasedesc">
+    <b>1.</b> Does the akshara splitter generalise from the repo's <code>SINGLE_AKSHARA</code> thumb matcher to full verse lines? Half-day spike; it decides whether masking is a day or a week.<br/>
+    <b>2.</b> Does mastery state export through PRD-06 backup? Recommended <b>yes</b> — it is the one piece of user data here that takes months to rebuild and cannot be re-derived.<br/>
+    <b>3.</b> gu/kn are runtime transliterations of the Devanagari, so the mask must be computed on the source and transliterated after, or offsets drift. Prototype shows hi only.<br/>
+    <b>4.</b> Review cadence numbers (9 days, 3 weeks above) are placeholders — the schedule needs a pass before it is pinned.
+  </div>
+</body>
+</html>

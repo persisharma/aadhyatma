@@ -11,7 +11,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import type { Lang } from '@/data/gita/language';
-import { buildCalendarMonth } from '@/panchang/calendarGrid';
+import { buildCalendarMonth, calendarWeeks } from '@/panchang/calendarGrid';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang } from '@/utils/localize';
@@ -23,6 +23,8 @@ type Props = {
   /** Current value as `YYYY-MM-DD`, or '' when unset. */
   value: string;
   lang: Lang;
+  /** Localized sheet title. Defaults to the birth-date wording used by Jyotish. */
+  title?: string;
   minDate?: string;
   maxDate?: string;
   onSelect: (date: string) => void;
@@ -62,6 +64,7 @@ export default function CalendarDatePicker({
   visible,
   value,
   lang,
+  title,
   minDate = '1900-01-01',
   maxDate,
   onSelect,
@@ -95,6 +98,8 @@ export default function CalendarDatePicker({
       : visibleMonthDate;
     return buildCalendarMonth({ visibleMonth: visibleMonthDate, selectedDate, today: new Date() });
   }, [visibleYear, visibleMonth, selectedKey]);
+  // Weeks, not one wrapping 42-cell row — see `calendarWeeks`.
+  const weeks = useMemo(() => calendarWeeks(cells), [cells]);
 
   const goMonth = (delta: number) => {
     const next = new Date(visibleYear, visibleMonth + delta, 1);
@@ -131,7 +136,7 @@ export default function CalendarDatePicker({
         >
           <View style={[styles.header, { paddingHorizontal: spacing.xxl, borderBottomColor: colors.divider }]}>
             <Text style={{ color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 18 }}>
-              {contentByLang(lang, 'जन्म तिथि चुनें', 'Choose birth date')}
+              {title ?? contentByLang(lang, 'जन्म तिथि चुनें', 'Choose birth date')}
             </Text>
             <Pressable onPress={onClose} accessibilityRole="button" accessibilityLabel="Close date picker" hitSlop={10}>
               <Text style={{ color: colors.saffronDeep, fontSize: 24 }}>×</Text>
@@ -248,8 +253,9 @@ export default function CalendarDatePicker({
                     </Text>
                   ))}
                 </View>
-                <View style={styles.grid}>
-                  {cells.map((cell) => {
+                {weeks.map((week, weekIndex) => (
+                <View key={week[0].key} testID={`calendar-week-${weekIndex}`} style={styles.dayRow}>
+                  {week.map((cell) => {
                     if (!cell.isCurrentMonth) {
                       return <View key={cell.key} style={styles.cell} />;
                     }
@@ -262,7 +268,7 @@ export default function CalendarDatePicker({
                         disabled={disabled}
                         accessibilityRole="button"
                         accessibilityState={{ selected, disabled }}
-                        accessibilityLabel={`${cell.date.getDate()} ${MONTHS_EN[cell.date.getMonth()]} ${cell.date.getFullYear()}`}
+                        accessibilityLabel={`${cell.date.getDate()} ${MONTHS_EN[cell.date.getMonth()]} ${cell.date.getFullYear()}${cell.isToday ? ', Today' : ''}`}
                         style={styles.cell}
                       >
                         <View
@@ -285,6 +291,7 @@ export default function CalendarDatePicker({
                     );
                   })}
                 </View>
+                ))}
               </>
             )}
 
@@ -341,17 +348,21 @@ const styles = StyleSheet.create({
   navArrow: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
   navArrowText: { fontSize: 26, includeFontPadding: false },
   monthTitle: { flex: 1, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
+  // Seven `flex: 1` columns per row — see the note on `dateCell` in PanchangScreen
+  // and `calendarWeeks`. A `100 / 7` percentage inside a wrapping row can round up
+  // past the container in Yoga's 32-bit float and drop a cell onto the next line,
+  // which slides every date off its weekday column (this picker on a 375 dp phone).
   weekRow: { flexDirection: 'row' },
   weekday: {
-    width: `${100 / 7}%`,
+    flex: 1,
     textAlign: 'center',
     fontFamily: fontFamilies.interSemiBold,
     fontSize: 11,
     letterSpacing: 0.5,
     paddingVertical: 6,
   },
-  grid: { flexDirection: 'row', flexWrap: 'wrap' },
-  cell: { width: `${100 / 7}%`, height: 44, alignItems: 'center', justifyContent: 'center' },
+  dayRow: { flexDirection: 'row' },
+  cell: { flex: 1, height: 44, alignItems: 'center', justifyContent: 'center' },
   dayPill: { width: 36, height: 36, alignItems: 'center', justifyContent: 'center' },
   monthStrip: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, justifyContent: 'center', marginBottom: 10 },
   monthChip: { minHeight: 36, minWidth: 52, paddingHorizontal: 10, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },

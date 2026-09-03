@@ -8,7 +8,7 @@ import { contentByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 import ReaderHeader from '@/components/ReaderHeader';
 import ListCard, { CardThumb } from '@/components/ListCard';
-import { EVENT_RULES, type OccasionId } from '@/panchang/eventMuhurat';
+import { EVENT_RULES, GROUP_LABELS, GROUP_ORDER, type OccasionId } from '@/panchang/eventMuhurat';
 import { useMuhuratFinderWarmup } from '@/panchang/useMuhuratFinder';
 import type { PanchangStackParamList } from '@/navigation/types';
 
@@ -22,6 +22,26 @@ const OCCASION_GLYPH: Record<OccasionId, string> = {
   vidyarambh: 'वि',
   'bhumi-pujan': 'भू',
   vyapar: 'व्या',
+  mundan: 'मुं',
+  annaprashan: 'अ',
+  karnavedha: 'क',
+  upanayana: 'उ',
+  sampatti: 'सं',
+  swarna: 'स्व',
+  yatra: 'या',
+};
+
+/**
+ * Occasion-specific caption lines, where the generic name is not enough. Captions
+ * follow the counterpart-caption grammar (design.md §14/§60): the caption carries the
+ * language NOT selected — `en` renders under the Devanagari title, `hi` under the
+ * English title.
+ */
+const OCCASION_CAPTION: Partial<Record<OccasionId, { hi: string; en: string }>> = {
+  annaprashan: { hi: 'छठे–आठवें मास में', en: 'Annaprashan · 6th–8th month' },
+  upanayana: { hi: 'जनेऊ संस्कार', en: 'Upanayana · Janeu' },
+  mundan: { hi: 'चूड़ाकर्ण संस्कार', en: 'Mundan · Chudakarana' },
+  yatra: { hi: 'दिशा शूल सहित', en: 'Travel · with Disha Shool' },
 };
 
 /**
@@ -71,17 +91,43 @@ export default function MuhuratFinderScreen({ navigation }: Props) {
           {contentByLang(lang, 'आप क्या करने जा रहे हैं?', 'What are you planning?')}
         </Text>
 
-        {EVENT_RULES.map((rule) => (
-          <ListCard
-            key={rule.id}
-            testID={`muhurat-occasion-${rule.id}`}
-            accessibilityLabel={contentByLang(lang, rule.nameHi, rule.nameEn)}
-            onPress={() => navigation.navigate('MuhuratResults', { occasionId: rule.id })}
-            leading={<CardThumb><Text style={glyphStyle}>{OCCASION_GLYPH[rule.id]}</Text></CardThumb>}
-          >
-            <Text style={titleStyle}>{contentByLang(lang, rule.nameHi, rule.nameEn)}</Text>
-            <Text style={captionStyle}>{lang === 'en' ? rule.nameHi : rule.nameEn}</Text>
-          </ListCard>
+        {/* Twelve occasions read as a wall without sections (TRD-16/P2 §6.1);
+            three sectionLabel groups over the same shipped ListCard rows. */}
+        {GROUP_ORDER.map((group) => (
+          <React.Fragment key={group}>
+            <Text
+              style={[
+                {
+                  fontFamily: typography.sectionLabel.fontFamily,
+                  fontSize: typography.sectionLabel.fontSize,
+                  letterSpacing: lang === 'en' ? typography.sectionLabel.letterSpacing : 0,
+                  color: colors.inkMuted,
+                  textTransform: 'uppercase' as const,
+                  marginBottom: spacing.sm,
+                },
+                group !== GROUP_ORDER[0] && { marginTop: spacing.lg },
+              ]}
+            >
+              {contentByLang(lang, GROUP_LABELS[group].hi, GROUP_LABELS[group].en)}
+            </Text>
+            {EVENT_RULES.filter((rule) => rule.group === group).map((rule) => {
+              const caption = OCCASION_CAPTION[rule.id];
+              return (
+                <ListCard
+                  key={rule.id}
+                  testID={`muhurat-occasion-${rule.id}`}
+                  accessibilityLabel={contentByLang(lang, rule.nameHi, rule.nameEn)}
+                  onPress={() => navigation.navigate('MuhuratResults', { occasionId: rule.id })}
+                  leading={<CardThumb><Text style={glyphStyle}>{OCCASION_GLYPH[rule.id]}</Text></CardThumb>}
+                >
+                  <Text style={titleStyle}>{contentByLang(lang, rule.nameHi, rule.nameEn)}</Text>
+                  <Text style={captionStyle}>
+                    {lang === 'en' ? (caption?.hi ?? rule.nameHi) : (caption?.en ?? rule.nameEn)}
+                  </Text>
+                </ListCard>
+              );
+            })}
+          </React.Fragment>
         ))}
 
         <ListCard

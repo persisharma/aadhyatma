@@ -8,7 +8,8 @@
  */
 import { library, type LibraryEntry } from '@/data/texts';
 import { findJapamMantra } from '@/data/japam';
-import { getVersePool } from '@/data/versePool';
+import { getVidhiById } from '@/data/vidhi';
+import { getVersePoolLastPositions, type VersePoolLastPositions } from '@/data/versePool';
 import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
 import type { RoutineItem } from './types';
 
@@ -21,32 +22,25 @@ export type RoutineItemDisplay = {
   entry?: LibraryEntry;
 };
 
-type LastPositions = {
-  /** chapter number → last (max) verseIndex in that chapter */
-  chapters: Record<number, number>;
-  lastChapter: number;
-};
+let cache: Record<string, VersePoolLastPositions> | null = null;
 
-let cache: Record<string, LastPositions> | null = null;
-
-/** Build, once, the last verse-page per chapter for every pooled source. */
-function lastPositionsBySource(): Record<string, LastPositions> {
+/** Build completion boundaries from manifests without loading reader payloads. */
+function lastPositionsBySource(): Record<string, VersePoolLastPositions> {
   if (cache) return cache;
-  const map: Record<string, LastPositions> = {};
-  for (const v of getVersePool()) {
-    const ch = v.chapter ?? 1;
-    const existing = map[v.sourceId] ?? { chapters: {}, lastChapter: ch };
-    if (existing.chapters[ch] == null || v.verseIndex > existing.chapters[ch]) {
-      existing.chapters[ch] = v.verseIndex;
-    }
-    if (ch > existing.lastChapter) existing.lastChapter = ch;
-    map[v.sourceId] = existing;
-  }
-  cache = map;
-  return map;
+  cache = getVersePoolLastPositions();
+  return cache;
 }
 
 export function resolveRoutineItem(item: RoutineItem): RoutineItemDisplay {
+  if (item.kind === 'vidhi') {
+    const vidhi = getVidhiById(item.sourceId);
+    return {
+      titleHi: vidhi?.titleHi ?? item.sourceId,
+      titleEn: vidhi?.titleEn ?? item.sourceId,
+      subHi: 'पूजा विधि',
+      subEn: 'Puja vidhi',
+    };
+  }
   if (item.kind === 'japam') {
     const m = findJapamMantra(item.sourceId);
     const target = item.targetRounds ?? 1;
@@ -84,6 +78,11 @@ export type CompletionCtx = {
 
 /** Whether the item counts as completed today via genuine reading / japa. */
 export function isItemAutoComplete(item: RoutineItem, ctx: CompletionCtx): boolean {
+  if (item.kind === 'vidhi') {
+    // Vidhi conduct state lives in AsyncStorage (checklistStore), outside the
+    // synchronous reading-progress/activity contexts — manual mark only.
+    return false;
+  }
   if (item.kind === 'japam') {
     return ctx.japaRoundsToday(item.sourceId) >= (item.targetRounds ?? 1);
   }

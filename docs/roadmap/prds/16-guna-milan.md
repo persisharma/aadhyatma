@@ -11,13 +11,13 @@
 
 ## 1. Problem and goal
 
-People seeking a traditional marriage compatibility calculation often encounter lead forms, opaque scores, and anxiety-driven upsells. Vedansh can offer an offline, inspectable alternative using its existing sidereal engine.
+People seeking a traditional marriage compatibility calculation often encounter lead forms, opaque scores, and anxiety-driven upsells. Vedansh can offer a private, inspectable alternative using its existing sidereal engine.
 
 The v1 goal is narrow: calculate the pinned Ashtakoota convention for two people, explain every component, express birth-time uncertainty honestly, and generate an optional privacy-safe share image.
 
 Success is measured locally and only with user-visible diagnostics:
 
-- number of Guna Milan calculations started and completed on this device;
+- number of Guna Milan calculations started and completed;
 - share-card previews generated and system share sheets opened.
 
 Do not describe a share as completed: the OS does not reliably report the downstream outcome. Do not publish aggregate adoption claims unless a separately reviewed telemetry plan is introduced.
@@ -58,9 +58,11 @@ The Moon can cross a nakshatra during a civil day, so “effect is minimal” is
 
 ### 3.4 Privacy and persistence
 
-Inputs are session-only by default. Offer an explicit unchecked **“Remember on this device”** toggle. If enabled, store a versioned record under a dedicated key, with a visible clear action. Never restore a previous match implicitly when the toggle was off.
+Inputs are session-only by default. Offer an explicit unchecked **“Remember match details”** toggle with the consequence **“Prefill this form next time.”** If enabled, store a versioned record under a dedicated key, with a visible clear action. Never restore a previous match implicitly when the toggle was off.
 
-All calculations remain on-device. No account or network is required, and this is stated beside the form.
+The architecture remains private and network-independent, but customer copy does not advertise the
+implementation. It must not mention on-device/offline operation, internet/account requirements,
+storage mechanisms, convention/schema versions, or similar technical status (RULEBOOK §3).
 
 ## 4. Pinned calculation contract
 

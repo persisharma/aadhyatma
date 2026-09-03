@@ -3,6 +3,8 @@
 // AsyncStorage, and hydrated into the in-memory observanceStore on app start —
 // the slow live scan never reruns for a city it has already covered.
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { awaitDerivedCacheReset } from '@/utils/derivedCacheReset';
+import { launchMark } from '@/utils/launchTrace';
 import { resolveObservancesForYearLiveChunked, type ObservanceLocation } from './festivalEngine';
 import { locationKey, UJJAIN_CITY_ID } from './engine';
 import {
@@ -15,7 +17,10 @@ import type { CalendarSystem, ResolvedObservance } from './types';
 // Bump whenever OBSERVANCE_RULES or the month engine changes (the same trigger as
 // regenerating precomputedObservances.ts); stale versions are purged on hydrate.
 // v2: kshaya-tithi fallback + vriddhi dedupe in matchesLunarTithiRuleOnDate.
-const CACHE_VERSION = 2;
+// v3: chandrodaya (moonrise) day rule for Sankashti/Karwa Chauth + the Hariyali
+//     and Kajari Teej rules — covers both matcher and catalog changes, so
+//     already-scanned cities re-scan instead of hydrating the old dates.
+const CACHE_VERSION = 3;
 const KEY_ROOT = '@vedansh:observances:';
 const KEY_PREFIX = `${KEY_ROOT}v${CACHE_VERSION}:`;
 
@@ -51,6 +56,11 @@ export async function hydrateObservanceCache(
   calendarSystems: CalendarSystem[],
   years: number[]
 ): Promise<void> {
+  // A build change (store update or OTA) drops these scans wholesale — hydrate
+  // after that sweep, never into the teeth of it. `warmObservanceCache` always
+  // hydrates before it scans and persists, so gating here orders the writes too.
+  await awaitDerivedCacheReset();
+
   try {
     const allKeys = await AsyncStorage.getAllKeys();
     const stale = allKeys.filter((key) => key.startsWith(KEY_ROOT) && !key.startsWith(KEY_PREFIX));
@@ -111,7 +121,12 @@ export function warmObservanceCache(
       // city the user has already navigated away from.
       if (mySeq !== latestWarmSeq) return;
       if (getStoredObservanceYear(cityId, calendarSystem, year)) continue;
+      // The heaviest thing this app can do on its own: a full year of per-day
+      // astronomy, chunked to 8ms slices but continuous for as long as it runs.
+      // Marked at both ends because a non-Ujjain city runs it ~3s into launch.
+      launchMark(`observance-scan-start ${year}`);
       const results = await resolveObservancesForYearLiveChunked(year, calendarSystem, location);
+      launchMark(`observance-scan-done ${year}`);
       const entries = serialize(results);
       setStoredObservanceYear(cityId, calendarSystem, year, entries);
       try {

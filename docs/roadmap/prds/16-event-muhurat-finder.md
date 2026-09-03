@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Phase 1 BUILT (engine + 4 screens + both entries + tests + e2e, Aug 2026) — §10 content review of the rule tables is the release gate (RULEBOOK §14); share card + month-view overlay shipped Aug 2026; follow/remind (+ Today-strip chip, FOR TODAY abujh card) are the next slice |
+| **Status** | Phase 1 BUILT (engine + 4 screens + both entries + tests + e2e, Aug 2026) — §10 content review of the rule tables is the release gate (RULEBOOK §14); share card + month-view overlay shipped Aug 2026; **follow/remind + Today-strip chip + FOR TODAY abujh card shipped Aug 2026** (see §6.7, design.md §60, RULEBOOK §17.7; prototype: [`docs/muhurat-follow-remind-prototype.html`](../../muhurat-follow-remind-prototype.html)). **Phase 2 shuddhi depth BUILT (Aug 2026)** — window-time anga (per-window, kshaya-aware), Bhadra as a solved interval, masa mechanism (tables DRAFT), six new occasions, grouped picker; see TRD-16/P2. **Phase 3 BUILT (Aug 2026)** — lagna sweep + split-and-grade windows (cache v3), hora evidence/tie-break, late-onset Vishti solved, यात्रा + दिशा शूल, drikfixture goldens landed; lagna tables ship EMPTY DRAFT pending `conventions/muhurat-lagna-v1.md` review. **Phase 4 BUILT (Aug 2026)** — Tarabala/Chandrabala strip from the saved Kundali, annotate-only, share-card/notification absence pinned; classes DRAFT pending `conventions/muhurat-tarabala-v1.md`. See [16-muhurat-finder-phase3-4.md](./16-muhurat-finder-phase3-4.md), design.md §60, RULEBOOK §17. Remaining: §10 content review (13 occasions + masa + lagna/hora/disha + tarabala tables — the sole release gate), Maestro phase3/phase4 device runs |
 | **Target release** | TBD (phased; Phase 1 is small) |
 | **T-shirt size** | Code S–M per phase · **content L** (rule tables are the real cost) |
 | **Owner** | TBA |
@@ -116,18 +116,21 @@ Each phase is independently shippable and each leans only on primitives already 
 - Window = auspicious choghadiya minus kaal slots, plus Abhijit. Kaal and day-choghadiya are both exact eighths of daytime, so exclusion is *dropping a slot*, not clipping an interval.
 - **Empty-with-reason** is a Phase-1 requirement, not a polish item — it is the single most differentiating behaviour in the feature.
 
-### Phase 2 — Shuddhi depth *(code M, content M)*
+### Phase 2 — Shuddhi depth *(code M, content L)* — **[TRD-16/P2](../trds/16-event-muhurat-finder-phase2.trd.md)**, prototype [`docs/muhurat-phase2-prototype.html`](../../muhurat-phase2-prototype.html)
+
+Measured against the shipped engine (Ujjain, 365 days from 14 Aug 2026), the four items below are **not** comparable in cost. Window-time anga is free (`tithi.endTime`/`nakshatra.endTime` are already solved) and flips **115 verdicts a year**; Bhadra-as-a-window is the only item needing new astronomy (`karana.endTime` is hardcoded `null`) and adds **+26–45% qualifying days**; masa shuddhi and the six new occasions are content. See the TRD for the ordering and the three convention decisions that gate the tables.
+
 
 - **Masa shuddhi properly**: per-occasion preferred/barred lunar months, with the Chaturmas convention **named explicitly** (three attested readings exist; see §9).
 - **Shukra/Guru asta**: one elongation test over `getSiderealPlanetLongitude()`. Verified against the 2026 run — Jupiter combust 15 Jul–13 Aug 2026, Venus combust 18–30 Oct 2026 (retrograde, inferior conjunction 24 Oct). Orb must be stated (10° flat vs 8° retrograde Venus, 11° Jupiter) because it changes real answers.
 - **Bhadra as a window**, not a sunrise flag — solve karana boundaries like tithi end-times already are.
 - **Window-time anga evaluation.** Validation against a published list showed exact agreement on three of six days and divergence on exactly the two where the nakshatra turns over within hours of sunrise. The engine reports the *sunrise* anga (udaya-vyapini, correct for the almanac); muhurat lists report the anga prevailing *during the window*. **The finder must evaluate at the candidate window** or it will disagree with every published list on early-changeover days.
 
-### Phase 3 — Lagna-grade windows *(code M)*
+### Phase 3 — Lagna-grade windows *(code M)* — **detailed in [16-muhurat-finder-phase3-4.md](./16-muhurat-finder-phase3-4.md)**
 
 Replace ~96-minute choghadiya blocks with a precise muhurat window: sweep `computeLagna()` across the day, score lagna/hora quality, and return windows to the minute. Adds the Hora layer (§4.1) and enables यात्रा with दिशा शूल.
 
-### Phase 4 — Personalised muhurat *(code S — the differentiator)*
+### Phase 4 — Personalised muhurat *(code S — the differentiator)* — **detailed in [16-muhurat-finder-phase3-4.md](./16-muhurat-finder-phase3-4.md)**
 
 PRD-C already ships a saved birth profile with the Moon's nakshatra and rashi. **Tarabala** (the 9-tara cycle from janma nakshatra to the day's nakshatra) and **Chandrabala** (Moon's rashi relative to janma rashi) are pure arithmetic over two integers each.
 
@@ -148,6 +151,14 @@ Full walkthrough in [`docs/muhurat-finder-prototype.html`](../../muhurat-finder-
 5. **Day detail** — factors, cleared-dosha list, and the day's windows with **Rahu Kaal struck through in place** so the user sees it was considered.
 6. **Personalised strip** (Phase 4) — a Tarabala/Chandrabala row on each day card when a Kundali is saved.
 7. **Reminder + share** — reuses the shipped local-notification scheduler and the muhurat share card. No new mechanism.
+
+### 6.7 Follow & remind — SHIPPED (Aug 2026)
+
+Follow is offered on the **day detail only** (every result card stays identical, design.md §60) and never on an excluded day. The `VratReminderPref` model is imported, not re-declared, and `VratReminderSheet` is extended rather than forked — but the vrat **store** does not transfer, because a vrat follow is a recurring rule while a muhurat follow is one dated civil day. That difference produces the four rules now in RULEBOOK §17.7: prune-on-load, never persist a window, excluded days fire nothing, and the day-of notice is clamped to `windowStart − 30 min` (the 17 Aug 2026 Vahan window opens 6:07 AM, so the shipped 07:00 default would have arrived after it).
+
+**One deviation from the plan.** The empty-with-reason CTA follows the **first qualifying date** rather than the season boundary. A 21 Nov Dev Uthani notice is not actionable when the first real Griha Pravesh muhurat is 25 Nov, and it would have inherited the §9.2 kshaya ambiguity. This keeps one follow kind instead of two.
+
+Still out of scope: following an **occasion** as a standing interest ("tell me when a श्रेष्ठ day appears"), which needs a background re-scan. Phase-2 candidate.
 
 Entry points: Panchang → Muhurat (primary), Home's **कुंडली/व्रत** grid neighbourhood (a **मुहूर्त** tile), and a contextual link from `MuhuratDetailScreen`.
 

@@ -75,6 +75,45 @@ describe('FeatureCard', () => {
     expect(pressable.props.accessibilityLabel).toMatch(/Tap to open\./);
   });
 
+  // The FOR TODAY strip (design.md §50) is name-only: it drops both the blurb
+  // and the CTA pill so the card is ~56 tall instead of ~130.
+  test('compact renders the name and chevron only — no blurb, no CTA label', () => {
+    const tree = render(<FeatureCard item={item} width={196} onPress={() => undefined} compact />);
+    const text = textOf(tree);
+    expect(text).toMatch(/दैनिक भक्ति/); // the name is the card
+    expect(text).not.toMatch(/श्लोक/); // blurb dropped
+    expect(text).not.toMatch(/पढ़ें/); // CTA label dropped
+    expect(text).toMatch(/›/); // chevron affordance stays
+  });
+
+  // The blurb leaves the *screen*, not the accessibility tree: on a festival day
+  // it reads "Today is Diwali", which is the attribution the morning
+  // notification promised (design.md §38/§50).
+  test('compact keeps the blurb in the accessibility label', () => {
+    const onPress = jest.fn();
+    const tree = render(<FeatureCard item={item} width={196} onPress={onPress} compact />);
+    const pressable = tree.root.find(
+      (n) =>
+        typeof n.props?.accessibilityLabel === 'string' &&
+        n.props.accessibilityLabel.includes('Daily Verse')
+    );
+    expect(pressable.props.accessibilityLabel).toMatch(/A fresh shloka every day\./);
+    expect(pressable.props.accessibilityLabel).toMatch(/Tap to open\./);
+    act(() => {
+      pressable.props.onPress();
+    });
+    expect(onPress).toHaveBeenCalledTimes(1);
+  });
+
+  test('compact still shows the NEW badge', () => {
+    const tree = render(
+      <FeatureCard item={{ ...item, hasNew: true }} width={196} onPress={() => undefined} compact />
+    );
+    const text = textOf(tree);
+    expect(text).toMatch(/NEW/);
+    expect(text).toMatch(/दैनिक भक्ति/); // name still shown alongside it
+  });
+
   test('forwards onPressIn/onPressOut for the Home first-tap fallback', () => {
     const onPressIn = jest.fn();
     const onPressOut = jest.fn();

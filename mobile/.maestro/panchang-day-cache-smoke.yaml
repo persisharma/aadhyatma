@@ -1,0 +1,219 @@
+# Persistent panchang day-cache smoke (design.md §60 "Performance"/"Persistence")
+#
+# The per-day panchang solve is the expensive unit of work behind EVERY panchang
+# surface — the finder's ~90–260 day sweep, the Abujh calendar, Home's Today
+# strip, and the Panchang tab's own day. All of them now read one shared store,
+# persisted per (location, calendar system) and hydrated on entry, so the ONLY
+# thing that should force a re-solve is changing location or calendar system.
+#
+# This flow proves the user-visible half of that: warm the cache once, then
+# COLD-START the app (a real process restart — `clearState` deliberately absent,
+# so AsyncStorage survives) and assert every surface still renders, with a much
+# tighter budget than the first-run solve. The first pass allows 60 s (the real
+# astronomy sweep); the post-restart pass allows 20 s, which a re-solve of
+# 90–260 days does not fit on a simulator but a hydrate does.
+#
+# Pass 2 also asserts the CROSS-SURFACE half of the win: Home's Today strip and
+# the Panchang tab paint from days the finder's sweep solved, without their own
+# astronomy.
+#
+# Prerequisite: install the native debug app on the target simulator with
+# `npx expo run:ios --device <UDID> --port 8084` (isolated-simulator recipe in
+# wiki/runbooks/e2e-verification.md). Launches the real bundle; never Expo Go.
+
+appId: com.prashantsharma.vedansh
+---
+# ── Pass 1: fresh install — the cache is cold, the solve is real ─────────────
+- launchApp:
+    appId: com.prashantsharma.vedansh
+    clearState: true
+    arguments:
+      RCT_jsLocation: "127.0.0.1:8084"
+- waitForAnimationToEnd:
+    timeout: 30000
+# clearState resets the notification permission — dismiss the boot alert first
+# (native alert; it blocks everything underneath).
+- tapOn:
+    text: "Allow"
+    optional: true
+- tapOn:
+    text: "Don't Allow"
+    optional: true
+- tapOn:
+    text: "Skip tour"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 5000
+- tapOn:
+    text: "Skip tour"
+    optional: true
+# Skipping the tour on a fresh install hands over to the language + reading-size
+# sheet — accept defaults ("Begin") so the flow lands on Home (hi/Standard baseline).
+- tapOn:
+    text: "Begin"
+    optional: true
+- tapOn:
+    text: "Close"
+    optional: true
+- tapOn:
+    text: "Got it"
+    optional: true
+- tapOn:
+    text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
+    optional: true
+- extendedWaitUntil:
+    # Canary: the above-the-fold Panchang card — the Good Habits tile sits below
+    # the first viewport since Home gained the daily recommendation cards.
+    visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
+    timeout: 60000
+
+# English chrome for stable visible-text assertions (same recipe as
+# muhurat-finder-smoke / kundali-smoke).
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+# The ऐप section (Language/Reading size) sits below the fold on standard-height
+# iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
+# tapping the off-screen row's estimated center hits the tab bar instead. Scroll first.
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+
+# Warm the day cache through the occasion scan…
+- scrollUntilVisible:
+    element:
+      text: "Muhurat\\..*Tap to open\\."
+    direction: DOWN
+- tapOn: "Muhurat\\..*Tap to open\\."
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Find a Muhurat"
+    timeout: 20000
+- tapOn: "Griha Pravesh"
+- extendedWaitUntil:
+    visible: "Best dates|More suitable dates|No auspicious muhurat.*"
+    timeout: 60000
+- back
+- waitForAnimationToEnd
+
+# …and through the Abujh (Special auspicious days) scan.
+- scrollUntilVisible:
+    element:
+      id: "muhurat-abujh-door"
+    direction: DOWN
+- tapOn:
+    id: "muhurat-abujh-door"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: ".*no muhurat needed.*|.*Abujh.*"
+    timeout: 60000
+
+# ── Pass 2: cold start — process restarted, in-memory store gone ─────────────
+# No `clearState`: the persisted days must survive the relaunch. This is the
+# regression the whole feature exists to prevent — re-opening the app used to
+# re-solve every day from scratch.
+- launchApp:
+    appId: com.prashantsharma.vedansh
+    arguments:
+      RCT_jsLocation: "127.0.0.1:8084"
+- waitForAnimationToEnd:
+    timeout: 30000
+# clearState resets the notification permission — dismiss the boot alert first
+# (native alert; it blocks everything underneath).
+- tapOn:
+    text: "Allow"
+    optional: true
+- tapOn:
+    text: "Don't Allow"
+    optional: true
+- tapOn:
+    text: "Skip tour"
+    optional: true
+# Skipping the tour on a fresh install hands over to the language + reading-size
+# sheet — accept defaults ("Begin") so the flow lands on Home (hi/Standard baseline).
+- tapOn:
+    text: "Begin"
+    optional: true
+- tapOn:
+    text: "Close"
+    optional: true
+- tapOn:
+    text: "Got it"
+    optional: true
+- tapOn:
+    text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
+    optional: true
+- extendedWaitUntil:
+    # Canary: the above-the-fold Panchang card — the Good Habits tile sits below
+    # the first viewport since Home gained the daily recommendation cards.
+    visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
+    timeout: 60000
+
+# Home's Today strip resolves off the hydrated store (its solve used to run on
+# every cold start). The muhurat chips only render once the day is solved.
+- extendedWaitUntil:
+    visible: "Sunrise|Rahu Kaal|Choghadiya"
+    timeout: 20000
+
+# The Panchang tab's own day, same store.
+- tapOn: { id: "tab-panchang" }
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Sunrise"
+    timeout: 20000
+- assertVisible: "Brahma Muhurta"
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+
+# Finder results from the hydrated cache — tight budget, no re-solve.
+- scrollUntilVisible:
+    element:
+      text: "Muhurat\\..*Tap to open\\."
+    direction: DOWN
+- tapOn: "Muhurat\\..*Tap to open\\."
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Find a Muhurat"
+    timeout: 20000
+- tapOn: "Griha Pravesh"
+- extendedWaitUntil:
+    visible: "Best dates|More suitable dates|No auspicious muhurat.*"
+    timeout: 20000
+
+# The day detail still resolves off cached inputs (same evidence surface).
+- tapOn:
+    text: "Shreshtha.*|Madhyam.*"
+    index: 0
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: ".*DrikPanchang convention.*|Not suitable.*"
+    timeout: 20000
+- assertVisible: "Why this date"
+- back
+- waitForAnimationToEnd
+- back
+- waitForAnimationToEnd
+
+# Special days off the same hydrated cache.
+- scrollUntilVisible:
+    element:
+      id: "muhurat-abujh-door"
+    direction: DOWN
+- tapOn:
+    id: "muhurat-abujh-door"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Special auspicious days"
+    timeout: 20000
+- extendedWaitUntil:
+    visible: ".*no muhurat needed.*|.*Abujh.*"
+    timeout: 20000
