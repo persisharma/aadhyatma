@@ -2,6 +2,7 @@ import type { OccasionId } from '@/panchang/eventMuhurat';
 import type { NavigatorScreenParams } from '@react-navigation/native';
 import type { ContentCategory, Deity } from '@/data/texts';
 import type { PurposeId } from '@/data/purposes';
+import type { EntityType as AskEntityType } from '@/ask/types';
 
 export type TabParamList = {
   // Nested-navigator params so cross-tab jumps (e.g. Pitru Smaran's गीता पाठ
@@ -43,7 +44,12 @@ export type GitaReaderParams = { chapter: number; initialIndex?: number };
 
 export type HomeStackParamList = VidhiStackParamList & {
   Home: undefined;
-  Search: undefined;
+  /**
+   * जिज्ञासा (PRD-41). `seed` is ask-from-context: the surface the user came
+   * from names an entity so "iska bhog kya hai" resolves against it.
+   * `initialQuery` pre-fills the box (a briefing card's "ask more" door).
+   */
+  Search: { seed?: { type: AskEntityType; id: string }; initialQuery?: string } | undefined;
   CategoryList: { categoryId: ContentCategory };
   DeityList: { deityId: Deity };
   DeityIndex: undefined;
@@ -98,6 +104,8 @@ export type HomeStackParamList = VidhiStackParamList & {
   // Sadhana Programs (संकल्प) — PRD-11. Reached via the create-routine fork.
   SadhanaPrograms: undefined;
   SadhanaProgramDetail: { programId: string };
+  /** आज का विधान — the जिज्ञासा briefing of standing questions (PRD-41 Phase 2). */
+  TodayVidhan: undefined;
 };
 
 /**
@@ -131,6 +139,12 @@ export type MoreStackParamList = VidhiStackParamList & DaanStackParamList & {
   PitruPakshaOverview: undefined;
   /** वास्तु दिशा (PRD-24) — compass + room guidance; also on the Panchang stack. */
   VastuDisha: undefined;
+  // कुल परम्परा (PRD-29) — janma tithis of the living + the family record.
+  JanmaTithiList: undefined;
+  JanmaTithiDetail: { personId: string };
+  KulParampara: undefined;
+  KulParamparaEdit: undefined;
+  KulParamparaExport: undefined;
   /** Mounted locally so a vidhi hand-off's Back button returns to conduct. */
   GitaReader: GitaReaderParams;
 };

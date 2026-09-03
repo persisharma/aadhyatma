@@ -1,0 +1,82 @@
+# Devotional background art smoke (PR #306)
+#
+# PR #306 added dedicated devotional background plates (11 new deity plates +
+# a Kavacham category plate) wired through data/backgrounds.ts. Maestro cannot
+# assert pixels, so this flow proves the runtime half: every screen that
+# resolves one of the NEW plates must render its content (a broken asset
+# require crashes the screen before its list draws), and each surface is
+# screenshotted for visual review.
+#
+# Covered new plates:
+#   - deity_shani                    → By Deity → Shani Dev (DeityListScreen)
+#   - deity_kali                     → By Deity → Maa Kali
+#   - category_kavacham_protection   → Home → Kavacham (CategoryListScreen)
+#
+# Data-side completeness (every deity/category resolves a plate, no dangling
+# keys) is pinned by src/data/__tests__/backgrounds.coverage.jest.test.ts;
+# this flow is the runtime/visual half.
+#
+# Selector notes: deity cards expose "<NameEn>. …" merged labels (wildcard the
+# tail); category tiles use the badge-tolerant "X\..*Tap to open\." form.
+
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+
+# ── By Deity → Shani Dev (new deity_shani plate) ──
+- scrollUntilVisible:
+    element:
+      text: "By Deity. Tap to open."
+    direction: DOWN
+    timeout: 10000
+- tapOn: "By Deity. Tap to open."
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Shani Dev\\..*"
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- tapOn: "Shani Dev\\..*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Shani Ashtakam.*"
+    timeout: 15000
+- takeScreenshot: /tmp/vedansh-bg-art-shani
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# ── By Deity → Maa Kali (new deity_kali plate) ──
+- scrollUntilVisible:
+    element:
+      text: "Maa Kali\\..*"
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- tapOn: "Maa Kali\\..*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Kalika Ashtakam.*"
+    timeout: 15000
+- takeScreenshot: /tmp/vedansh-bg-art-kali
+- tapOn: "Back"
+- waitForAnimationToEnd
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# ── Home → Kavacham (new category_kavacham_protection plate) ──
+- scrollUntilVisible:
+    element:
+      text: "Kavacham\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 30000
+- tapOn: "Kavacham\\..*Tap to open\\."
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Rama Raksha Stotra.*Tap to open\\."
+    timeout: 15000
+- takeScreenshot: /tmp/vedansh-bg-art-kavacham
+
+- stopApp:
+    appId: com.prashantsharma.vedansh

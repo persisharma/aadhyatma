@@ -153,7 +153,7 @@ export const DAAN_PRINCIPLE_ENTRIES: readonly DaanPrincipleEntry[] = [
     source: {
       referenceUrls: ['https://www.wisdomlib.org/definition/dashadana'],
       verificationNote:
-        '2026-09-01: DRAFT — the daśa-dāna enumeration is regionally split (source lists disagree on 2–3 items); needs a second concordant source naming one list, or ships with the variance stated. Invisible until then (RULEBOOK §24 draft rule).',
+        '2026-09-01: DRAFT — the daśa-dāna enumeration is regionally split (source lists disagree on 2–3 items); needs a second concordant source naming one list, or ships with the variance stated. Invisible until then (RULEBOOK §26 draft rule).',
       variantNote: 'Lists differ across Garuḍa-purāṇa-linked and regional smṛti traditions.',
     },
   },

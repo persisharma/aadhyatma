@@ -19,6 +19,7 @@ import { pillTextStyle, scriptTitleFont, eyebrowTextStyle } from '@/utils/langTy
 import { useTodayKey } from '@/utils/useTodayKey';
 import { launchMarkOnce } from '@/utils/launchTrace';
 import PitruSmaranDayChip from '@/components/PitruSmaranDayChip';
+import JanmaTithiDayChip from '@/components/JanmaTithiDayChip';
 import { moreTabTarget } from '@/navigation/entryRoutes';
 import {
   pitruPakshaObservanceForDate,
@@ -510,8 +511,10 @@ export default function TodayStrip() {
         onTouchStart={stopAutoScroll}
       >
         {/* Personal remembrance is the most time-sensitive item in this row;
-            keep it first so it is fully visible and tappable before overflow. */}
+            keep it first so it is fully visible and tappable before overflow.
+            The living's जन्म तिथि chip (PRD-29) sits beside it, same register. */}
         <PitruSmaranDayChip date={today} compact />
+        <JanmaTithiDayChip date={today} compact />
         {chips.map((chip) => {
           const action = chip.onPress ?? openPanchang;
           return (

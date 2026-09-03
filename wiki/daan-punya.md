@@ -14,7 +14,7 @@ RV 10.117.6 / TU 1.11.3 / Gita 17.20 / Anuśāsana-parva + five teaching-kathas)
 a **private on-device ledger** (tithi-stamped, gupt-daan first-class, no totals
 ever), and a **verified giving directory** whose external hand-off is the
 *terminal* act of a guided journey — never a button on the home. Design spec:
-design.md §69; content contract: RULEBOOK §24; product doc:
+design.md §72; content contract: RULEBOOK §26; product doc:
 `docs/roadmap/prds/26-daan-punya.md` (+ `docs/daan-punya-prototype.html`).
 
 ## Shape
@@ -48,12 +48,18 @@ design.md §69; content contract: RULEBOOK §24; product doc:
 - **Gupt guarantee is two-sided**: write-side `sanitizeLedgerEntry` strips
   note/amount/occasion; read-side `isDaanLedgerEntry` rejects unsanitized
   gupt rows. The CSV export keeps gupt rows bare.
-- **No totalling helper may be added** to `ledger.ts` (RULEBOOK §24.3).
+- **No totalling helper may be added** to `ledger.ts` (RULEBOOK §26.3).
 - Directory rows: org's own domain only, https, no UPI, registration *kinds*
   not numbers; `verifiedOn` > 18 months → row drops to draft via
   `isOrgRowStale`.
 
 ## Gotchas
+
+- **Launch-graph budget**: `data/daan/index.ts` loads principles/occasions/
+  kathas/directory through `require()` thunks (valmiki/pincodes pattern) —
+  DaanPunyaScreen is imported eagerly by the More stack, so a static
+  re-export puts the whole corpus on cold start (`launchGraph.test.ts`
+  caught this at the 2026-09-03 merge). Keep new registries behind thunks.
 
 - `vidhiBackNavigation.test.ts` pins the source shape of
   `navigation/types.ts` — intersecting a new param list into

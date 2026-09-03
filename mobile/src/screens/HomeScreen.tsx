@@ -281,6 +281,30 @@ export default function HomeScreen({ navigation }: Props) {
       onPress: () => navigation.navigate('VidhiCatalog'),
     },
     {
+      // PRD-41 Discover card: the जिज्ञासा door. Opens the आज का विधान briefing
+      // (standing questions answered for today), which in turn opens the
+      // answer-first search box for anything else. Pushed on the Home stack so
+      // back returns here.
+      key: 'jijnasa',
+      titleHi: 'जिज्ञासा · आज का विधान', titleEn: 'Ask Vedansh',
+      descHi: 'आज की तिथि, व्रत, भोग, मुहूर्त—एक प्रश्न में उत्तर।',
+      descEn: "Today's tithi, vrat, bhog, muhurat — answered in one line.",
+      ctaHi: 'पूछें', ctaEn: 'Ask',
+      hasNew: true,
+      icon: (
+        <Text
+          style={{
+            fontFamily: typography.thumb.fontFamily,
+            fontSize: 22,
+            color: colors.saffronDeep,
+          }}
+        >
+          ?
+        </Text>
+      ),
+      onPress: () => navigation.navigate('TodayVidhan'),
+    },
+    {
       key: 'theerth',
       titleHi: 'तीर्थ यात्रा', titleEn: 'Sacred Journeys',
       descHi: 'भारत के पवित्र मंदिरों और धामों की खोज करें।',

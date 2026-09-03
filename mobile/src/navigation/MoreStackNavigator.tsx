@@ -18,6 +18,11 @@ import DaanEntryScreen from '@/screens/DaanEntryScreen';
 import DaanDirectoryScreen from '@/screens/DaanDirectoryScreen';
 import DaanDirectoryDetailScreen from '@/screens/DaanDirectoryDetailScreen';
 import DaanKathaScreen from '@/screens/DaanKathaScreen';
+import JanmaTithiListScreen from '@/screens/JanmaTithiListScreen';
+import JanmaTithiDetailScreen from '@/screens/JanmaTithiDetailScreen';
+import KulParamparaScreen from '@/screens/KulParamparaScreen';
+import KulParamparaEditScreen from '@/screens/KulParamparaEditScreen';
+import KulParamparaExportScreen from '@/screens/KulParamparaExportScreen';
 import VidhiCatalogScreen from '@/screens/VidhiCatalogScreen';
 import VidhiDetailScreen from '@/screens/VidhiDetailScreen';
 import VidhiConductScreen from '@/screens/VidhiConductScreen';
@@ -55,6 +60,12 @@ export default function MoreStackNavigator() {
       <Stack.Screen name="DaanDirectory" component={DaanDirectoryScreen} />
       <Stack.Screen name="DaanDirectoryDetail" component={DaanDirectoryDetailScreen} />
       <Stack.Screen name="DaanKatha" component={DaanKathaScreen} />
+      {/* कुल परम्परा (PRD-29) — the living's janma tithis + the family record. */}
+      <Stack.Screen name="JanmaTithiList" component={JanmaTithiListScreen} />
+      <Stack.Screen name="JanmaTithiDetail" component={JanmaTithiDetailScreen} />
+      <Stack.Screen name="KulParampara" component={KulParamparaScreen} />
+      <Stack.Screen name="KulParamparaEdit" component={KulParamparaEditScreen} />
+      <Stack.Screen name="KulParamparaExport" component={KulParamparaExportScreen} />
       {/* Personal-tithi vidhi doors push here so Back returns to Pitru Smaran. */}
       <Stack.Screen name="VidhiCatalog" component={VidhiCatalogScreen} />
       <Stack.Screen name="VidhiDetail" component={VidhiDetailScreen} />

@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Proposed for planning review — **four** candidate PRDs (PRD-31 … PRD-34, numbers reserved — renumbered from 26–29 on 2026-09-01: PRD-26 was already claimed and built by दान-पुण्य, `prds/26-daan-punya.md`; PRD-30 stays retired). PRD-30 (घर की साधना, household roster) was proposed here and **dropped by product decision** on 2026-08-31 — see §3.4; its number is retired, not reusable. PRD-25 stays reserved for सन्ध्या वन्दन per round 1 §3. |
+| **Status** | Proposed for planning review — **four** candidate PRDs (PRD-42, PRD-27 … PRD-29 — कण्ठस्थ renumbered PRD-26 → PRD-42 on 2026-09-03: 26 is the built दान-पुण्य (`prds/26-daan-punya.md`), 31–40 are the 2027 feature bets, 41 is जिज्ञासा). PRD-30 (घर की साधना, household roster) was proposed here and **dropped by product decision** on 2026-08-31 — see §3.4; its number is retired, not reusable. PRD-25 stays reserved for सन्ध्या वन्दन per round 1 §3. |
 | **Dated** | 2026-08-27 (against `claude/next-quarter-prds-gvyobx` @ `51a7f86`, app 1.4.6) |
 | **Method** | Same household-practice audit as [round 1](./2026-Q4-candidates.md), run with a stricter filter: a candidate qualifies only if it is (a) genuinely useful and (b) **not discussed anywhere** — not shipped, not owned by PRDs 01–24, not sitting in round 1's §3 rejected table, and not in `docs/enrichment-loop/backlog.md`. Every claim below was checked against source, not against the docs. §3 records the near-misses the filter removed, including one that looked like the strongest candidate of the round. |
 | **Prototypes** | One per candidate, in the app's parchment system — linked from each section below and indexed in §6. |
@@ -35,18 +35,18 @@ Two things have moved since 2026-08-22 and both change the calculus:
    TTS, reading progress, bookmarks, japam counters, streaks, 15 multi-day Sadhana Programs — and
    no way to check whether you actually know a verse. The app supports *reading* a text forever and
    never supports the thing a devotee is actually trying to reach: **कण्ठस्थ**, having it by heart.
-   → **PRD-31**
+   → **PRD-42**
 2. **The muhurat engine is entirely subtractive.** `eventMuhurat.ts` defines **12 `DoshaKey`s and
    zero yogas**, and it reads the 27 nitya yogas only to extract the two *inauspicious* ones
    (`p.yoga.index === 16 → vyatipata`, `=== 26 → vaidhriti`). The engine can state what is wrong
    with a day and has no vocabulary for what is specially *right* about one. Round 1 rejected
    surfacing panchak as a standalone day-warning because that is fear copy — the additive half of
-   the very same axis is the on-brand inverse, and it is missing. → **PRD-32**
+   the very same axis is the on-brand inverse, and it is missing. → **PRD-27**
 3. **The app installs deities and never concludes anything.** `data/vidhi/` ships
    `ganesh-chaturthi-sthapana` and `navratri-ghatasthapana` — and **no visarjan of anything**.
    `festivals.ts` models Diwali's five days as five unrelated rules (`dhanteras`, `diwali`,
    `govardhan-puja`, `bhai-dooj`), and `ganesh-chaturthi` and `anant-chaturdashi` as strangers.
-   The biggest festivals are **arcs**, and the app only knows days. → **PRD-33**
+   The biggest festivals are **arcs**, and the app only knows days. → **PRD-28**
 
 Plus a record-keeping gap that falls out of features already shipped:
 
@@ -54,7 +54,7 @@ Plus a record-keeping gap that falls out of features already shipped:
    Smaran has `deriveTithiRuleFromDate` + `solveNextOccurrence`; multi-person birth profiles shipped
    in #294. Nothing anywhere answers "when is my Hindu birthday this year". And `kuldev`/lineage
    appear nowhere in the codebase outside katha prose, though the kuldevta is the one piece of
-   practice a family most reliably loses in a generation. → **PRD-34**
+   practice a family most reliably loses in a generation. → **PRD-29**
 
 ---
 
@@ -64,7 +64,7 @@ Ordered by my recommended build sequence: cheapest-and-ungated first.
 
 ---
 
-### PRD-31 — कण्ठस्थ · अभ्यास mode · memorization and recall
+### PRD-42 — कण्ठस्थ · अभ्यास mode · memorization and recall
 
 > *The largest untapped return on content already in the binary, at zero content cost.*
 
@@ -102,7 +102,7 @@ binary and every language is already handled.
 **The one risk, and it is already solved in-repo.** Akshara segmentation. Do **not** reach for
 `Intl.Segmenter`: `data/__tests__/contentCorrectness.test.ts` records that Indic grapheme clustering
 changed in ICU (Unicode 15.1 GB9c) and the segmenter splits conjuncts like ज्यो on older runtimes,
-which is why the repo already ships a hand-rolled `SINGLE_AKSHARA` regex for card thumbs. PRD-31
+which is why the repo already ships a hand-rolled `SINGLE_AKSHARA` regex for card thumbs. PRD-42
 generalises that matcher into a splitter and inherits its test. Second note: **gu/kn are runtime
 transliterations of the Devanagari** ([[languages]]), so masking must be computed on the source
 Devanagari and transliterated after, or the offsets drift.
@@ -114,7 +114,7 @@ believes them.
 
 ---
 
-### PRD-32 — शुभ योग · the additive half of the muhurat engine
+### PRD-27 — शुभ योग · the additive half of the muhurat engine
 
 > *Twelve doshas, zero yogas. The engine can only tell you what is wrong with a day.*
 
@@ -158,7 +158,7 @@ chips use.
 
 ---
 
-### PRD-33 — पर्व-अर्क · festival arcs, स्थापना → विसर्जन
+### PRD-28 — पर्व-अर्क · festival arcs, स्थापना → विसर्जन
 
 > *The app knows how to install a deity and has never once concluded a rite.*
 
@@ -198,7 +198,7 @@ duration is correct.
 
 ---
 
-### PRD-34 — कुल परम्परा · kuldevta, family observance, and the tithis of the living
+### PRD-29 — कुल परम्परा · kuldevta, family observance, and the tithis of the living
 
 > *The app keeps the tithis of the dead with great care and not one tithi of the living.*
 
@@ -235,7 +235,7 @@ only to disclaim it as a *matching* input, which is a scoring decision and not a
 the only computation is a function call into a shipped module.
 
 **Cross-PRD note.** `gotra` is **PRD-20's field**. Round 1 already flagged that PRD-20 and PRD-21
-must not migrate `@vedansh:kundali-birth-profile:v1` twice; PRD-34 makes it three consumers. Design
+must not migrate `@vedansh:kundali-birth-profile:v1` twice; PRD-29 makes it three consumers. Design
 that schema change **once**, in PRD-20, and have 21 and 29 consume it.
 
 **Stance guards.** Private by default, and **never inferred** — no gotra → kuldevta guessing, no
@@ -277,10 +277,10 @@ so it is out of this document by construction.
 |---|---|
 | **Device-calendar export** (`expo-calendar`) — put the year's festivals in the family's shared calendar | Real utility, but it buys a new native dependency (therefore a store release, `APP_TOUR_VERSION`, a `whatsNew` entry) to deliver roughly what seven shipped notification families already deliver. Revisit if users specifically ask for *sharing* dates rather than being reminded of them. |
 | **पूजा थाली sound toolkit** — ghanti, shankh, damru during aarti | Genuinely absent (no bell/shankh asset or code anywhere) and charming, but new audio assets mean a store release, and it is decoration standing next to five features that answer questions. |
-| **दान / सेवा ledger** — what the household actually gave, and when | PRD-21 already names the daan *items*; a ledger of past giving is record-keeping with thin daily use. Fold into PRD-34's family record later if anyone asks for it. |
+| **दान / सेवा ledger** — what the household actually gave, and when | PRD-21 already names the daan *items*; a ledger of past giving is record-keeping with thin daily use. Fold into PRD-29's family record later if anyone asks for it. |
 | **दर्शन log** over the 73 shipped temples | Cheap retention layer on an asset already built, but too adjacent to round 1's yatra-planner rejection to slip in through the side door. Hold for an explicit decision. |
-| **Children's devotional layer** | A real gap and a real audience, but content-heavy and undefined. **PRD-31's अभ्यास mode serves the concrete half of it** — drilling shlokas with a parent — at a fraction of the cost. Revisit once 31 has shipped and there is usage to look at. |
-| **Positive day-quality as a standalone daily "score"** | Out on the same grounds round 1 rejected standalone panchak warnings: the moment a day gets a number, the app is in the fortune business. PRD-32 names yogas and refuses the score. |
+| **Children's devotional layer** | A real gap and a real audience, but content-heavy and undefined. **PRD-42's अभ्यास mode serves the concrete half of it** — drilling shlokas with a parent — at a fraction of the cost. Revisit once 42 has shipped and there is usage to look at. |
+| **Positive day-quality as a standalone daily "score"** | Out on the same grounds round 1 rejected standalone panchak warnings: the moment a day gets a number, the app is in the fortune business. PRD-27 names yogas and refuses the score. |
 
 ### 3.4 Dropped after circulation: घर की साधना, the household practice roster (PRD-30)
 
@@ -313,49 +313,49 @@ panchak-or-gaṇḍamūla as standalone day warnings.
 ## 4. Sequencing
 
 ```
-PRD-31  कण्ठस्थ · memorization    ████████        OTA · zero content · zero gates
-PRD-32  शुभ योग                   ██████          OTA · tables, published everywhere
-PRD-34  कुल परम्परा                █████           OTA · user data only
-PRD-33  पर्व-अर्क                    ███░░░░░        arc+solver OTA · visarjan text sourced
+PRD-42  कण्ठस्थ · memorization    ████████        OTA · zero content · zero gates
+PRD-27  शुभ योग                   ██████          OTA · tables, published everywhere
+PRD-29  कुल परम्परा                █████           OTA · user data only
+PRD-28  पर्व-अर्क                    ███░░░░░        arc+solver OTA · visarjan text sourced
                                   └ ██ = buildable now   ░░ = gated or risk-bearing
 ```
 
-**Recommended order and why.** **PRD-31 first** — it is the cheapest feature in either round's
+**Recommended order and why.** **PRD-42 first** — it is the cheapest feature in either round's
 slate, it is the only one with literally no content and no convention sign-off, and it converts 30+
-shipped texts into a practice that compounds for years. **PRD-32 second**: small pure tables, and it
-fixes a structural asymmetry cheaply. **PRD-34 third** — no content, and its engine call is already
-written and tested. **PRD-33 fourth**, splitting the arc mechanic (now) from the visarjan text
+shipped texts into a practice that compounds for years. **PRD-27 second**: small pure tables, and it
+fixes a structural asymmetry cheaply. **PRD-29 third** — no content, and its engine call is already
+written and tested. **PRD-28 fourth**, splitting the arc mechanic (now) from the visarjan text
 (scheduled, not hoped for) — and note it is the one item here with a calendar deadline, since Diwali
 falls inside Q4. With PRD-30 dropped, **nothing left in this slate migrates existing user data.**
 
-**Cross-cutting.** PRD-34 is the *third* consumer of the birth-profile schema change (after round 1's
+**Cross-cutting.** PRD-29 is the *third* consumer of the birth-profile schema change (after round 1's
 PRD-20 gotra and PRD-21 natal Moon). Design that migration **once**, in PRD-20.
 
 **Against round 1.** These four do not compete with PRD-20/21/22/24 for the same skills: round 1's
 slate is convention-and-content-heavy, this one is mechanic-heavy. If both are wanted
-this quarter, PRD-31 and PRD-32 can run alongside PRD-20's convention sign-off without contention.
+this quarter, PRD-42 and PRD-27 can run alongside PRD-20's convention sign-off without contention.
 
 **Merge gates** (`RULEBOOK.md` §0/§0.1, and `.claude/rules/design-doc-sync.md`): unit **and** Maestro
-e2e with each change; `design.md` updated in the same PR — PRD-31 extends §9 and §45 plus a new
-section, PRD-32 extends §60, PRD-33 extends §62/§65, PRD-34 a new section plus §37; `RULEBOOK.md` gains a content contract at §22+ for each content-bearing family (PRD-32's yoga
-tables, PRD-33's visarjan vidhi); `npm run lint` at 0 errors. design.md currently ends at §65.1 and
+e2e with each change; `design.md` updated in the same PR — PRD-42 extends §9 and §45 plus a new
+section, PRD-27 extends §60, PRD-28 extends §62/§65, PRD-29 a new section plus §37; `RULEBOOK.md` gains a content contract at §22+ for each content-bearing family (PRD-27's yoga
+tables, PRD-28's visarjan vidhi); `npm run lint` at 0 errors. design.md currently ends at §65.1 and
 RULEBOOK at §21.
 
 ---
 
 ## 5. Open decisions
 
-1. **PRD-31 akshara splitter** — confirm the hand-rolled `SINGLE_AKSHARA` matcher in
+1. **PRD-42 akshara splitter** — confirm the hand-rolled `SINGLE_AKSHARA` matcher in
    `contentCorrectness.test.ts` generalises to a *splitter* over full verse lines, or whether a
    fresh one is needed. This is a half-day spike and it determines whether masking is a day's work
    or a week's. **Do not use `Intl.Segmenter`** — the repo has already recorded why (ICU/Unicode
    15.1 GB9c splits conjuncts on older runtimes).
-2. **PRD-31 mastery in backup** — should memorization state export through PRD-06? Recommend **yes**:
+2. **PRD-42 mastery in backup** — should memorization state export through PRD-06? Recommend **yes**:
    it is the one piece of user data in the app that takes years to rebuild and cannot be re-derived.
-3. **PRD-32 offset or annotate** — may a shubh yoga raise a day's standing in the finder's ranking,
+3. **PRD-27 offset or annotate** — may a shubh yoga raise a day's standing in the finder's ranking,
    or only annotate it? Recommend **annotate-only in v1**; an offset retroactively changes every
    ranking the shipped finder produces.
-4. **PRD-33 duration set** — which visarjan durations does the app offer (1½ / 3 / 5 / 7 / 10), and
+4. **PRD-28 duration set** — which visarjan durations does the app offer (1½ / 3 / 5 / 7 / 10), and
    does it default to any? Regional variance is wide; recommend offering the set and defaulting to
    nothing.
 

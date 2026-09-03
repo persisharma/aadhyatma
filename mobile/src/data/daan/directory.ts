@@ -9,7 +9,7 @@
  *    receipt always comes from the organization, never the app.
  *  - The app never collects, processes, confirms, or takes a share of any
  *    donation. The hand-off is Linking.openURL to the official page, behind
- *    the honest interstitial (design.md §69).
+ *    the honest interstitial (design.md §72).
  * Rows older than 18 months since `verifiedOn` are dropped to draft by the
  * registry test (§6.2 staleness rule).
  */

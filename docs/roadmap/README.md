@@ -8,17 +8,28 @@ This folder holds the product roadmap and PRDs for upcoming releases.
 
 ## Next
 
+- [**PRD-41 — जिज्ञासा · Ask Vedansh**](./prds/41-jijnasa-ask-vedansh.md) — **Q4 2026 flagship; Phases 0–3 built 2026-09-02 (§14 build record).** Numbered 41 because 25 stays reserved for सन्ध्या वन्दन (round 1 §3), 26–29 are round-2 reservations, 30 is retired and 31–40 are the 2027 feature bets.
+  An on-device, deterministic answer engine over the engines the app already ships, so the computed
+  half of the product (panchang, muhurat, vrat, bhog, vidhi, vastu, kundali, theerth) becomes
+  askable in one line — and every future feature is discoverable on the day it ships. Companion
+  build for the quarter: PRD-20 सङ्कल्प.
 - [**Q4 2026 Candidates**](./2026-Q4-candidates.md) — household-practice gap analysis and the next five
-  proposed features (PRD-20 … PRD-24, numbers reserved). Read this for what is *missing*; the table
-  below is the Q3 slate only and has not tracked PRDs 07–19.
-- [**Q4 2026 Candidates, Round 2**](./2026-Q4-candidates-round-2.md) — a second slate (PRD-31 … PRD-34,
+  proposed features (PRD-20 … PRD-24, numbers reserved). PRD-23 and PRD-24 shipped in Aug 2026;
+  PRD-41 §10 records where 20/21/22 sit against the flagship. Read this for what is *missing*; the
+  table below is the Q3 slate only and has not tracked PRDs 07–19.
+- [**Q4 2026 Candidates, Round 2**](./2026-Q4-candidates-round-2.md) — a second slate (PRD-27 … PRD-29 + PRD-42,
   numbers reserved) filtered so that nothing shipped, PRD-owned, or already rejected can appear:
   memorization/recall, the muhurat engine's missing auspicious yogas, festival arcs
   (sthapana → visarjan), and the family lineage record with living janma tithis. Each has a
   prototype. **PRD-30** (household roster) was proposed and dropped by product decision — round 2 §3.4;
   its number is retired. **PRD-25 stays reserved** for सन्ध्या वन्दन per round 1 §3.
 - [**Round 2 session prompts**](./round-2-session-prompts.md) — a self-contained build prompt per
-  candidate (PRD-31 … PRD-34), one branch each, for running the four as independent sessions.
+  candidate, one branch each, for running the four as independent sessions. PRD-27 and PRD-29
+  shipped in Sep 2026; कण्ठस्थ renumbered PRD-26 → PRD-42 on 2026-09-03 (26 is the built दान-पुण्य).
+- [**2027 Feature Bets**](./2027-feature-bets.md) — the strategic slate after Q4 2026: ten bets
+  (PRD-41 … PRD-40, numbers reserved) that compound on the bilingual per-verse corpus, with a
+  staged backend introduction. Originally drafted as PRD-10 … PRD-19; renumbered to avoid
+  collision with the numbers main assigned since.
 
 ## PRDs (Q3 2026)
 

@@ -1,5 +1,5 @@
 /**
- * दान-पुण्य home (PRD-26, design.md §69) — the educate-first surface. Opens on
+ * दान-पुण्य home (PRD-26, design.md §72) — the educate-first surface. Opens on
  * महत्व: today's occasion line (panchang-resolved), the vaar-daan row, the full
  * verse spine rendered inline, the teaching-kathas, and one quiet खाता door at
  * the end. THE §2.7 CONTRACT LIVES HERE: this screen renders no

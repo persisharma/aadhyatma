@@ -4,12 +4,12 @@
 |---|---|
 | **Status** | Built (2026-09-01) — all phases in one build per product direction; full gates green (169 Jest suites / 1333 tests + engine/data tsx suites, lint 0 errors, tsc clean). OTA-safe JS, but the first release carrying the directory must ride a **store release** (§6.1). Maestro flow authored (`daan-punya-smoke.yaml`); device run pending a simulator environment. |
 | **Origin** | `docs/roadmap/2026-Q3-roadmap.md` line "In-app purchases / donations (TBD, separate brief)" — this is that brief. Also closes the Q4-candidates coverage-map row "Vaar-wise daan (til on Shani, chana on Guru …) — *nothing*" jointly with PRD-21. |
-| **Design** | `design.md` §69 (shipped with the build) |
-| **Contract** | `RULEBOOK.md` §24 (shipped with the build) |
+| **Design** | `design.md` §72 (shipped with the build) |
+| **Contract** | `RULEBOOK.md` §26 (shipped with the build) |
 | **Convention** | `docs/roadmap/conventions/daan-punya-v1.md` (to be authored — see §10) |
 | **Prototype** | `docs/daan-punya-prototype.html` — interactive; demonstrates the §2.7 educate-first journey, the ledger, the terminal hand-off, and the touchpoint doors |
 | **Release** | Phase 1 **OTA-shippable** (pure JS + AsyncStorage). Phase 2 content-gated + store-policy-gated (see §7). |
-| **Number note** | PRD-25 stays soft-reserved for नित्य कर्म / सन्ध्या वन्दन (Q4-candidates §3 "Strong PRD-25"). Numbering collision resolved 2026-09-01: main's round-2 slate had independently taken 26–29 for four *unbuilt* candidates — those renumbered to PRD-31…34 (`2026-Q4-candidates-round-2.md`, `round-2-session-prompts.md`); this built feature keeps 26. Round-2 §3 had also filtered out a "दान/सेवा ledger" as thin — superseded by product direction: this PRD ships it as one layer of the educate-first feature. |
+| **Number note** | PRD-25 stays soft-reserved for सन्ध्या वन्दन. Numbering settled 2026-09-03 after two mainline waves: this built feature keeps **26**; round-2's शुभ योग/कुल परम्परा shipped on main as **27/29**, पर्व-अर्क stays **28**, कण्ठस्थ renumbered **26 → 42** (its only true collision); **31–40** are the 2027 feature bets, **41** is जिज्ञासा. Note PRD-40 (dakshina donation rail, 2027 bet) overlaps this feature's directory layer — reconcile before building it. |
 
 ---
 
@@ -158,7 +158,7 @@ No payment collection or processing; no commission or monetization of giving in 
 2. **Phase 2 adds:** directory invariants (§6.2 list); hand-off interstitial shown before any `openURL`; return-flow prompt fires at most once per hand-off; the **§2.7 surface-contract test** — the daan home renders zero external-linking affordances, and journey screens render the hand-off action only after every educate step has rendered.
 3. **Screen (Jest):** DaanPunya renders occasion line for a daan-significant fixture date; entry form saves with only date+category; ledger groups by month with tithi lines. (VirtualizedList teardown discipline per the repo gotcha.)
 4. **Maestro:** More → दान-पुण्य → नया दान → category chip → save → visible in ledger; observance-day door assertion. Every change ships with e2e per the [[e2e-verification]] policy.
-5. `npm run lint` 0 errors; `tsc` clean; **design.md §69 + RULEBOOK §24 land in the same PR as the build** (design-doc-sync rule); categories/enumeration mirrors refreshed if any registry list is doc-mirrored.
+5. `npm run lint` 0 errors; `tsc` clean; **design.md §72 + RULEBOOK §26 land in the same PR as the build** (design-doc-sync rule); categories/enumeration mirrors refreshed if any registry list is doc-mirrored.
 6. Phase 1 may ship OTA at the live store runtime; **Phase 2 must ride a store release** (§6.1) even though it contains no native module — the gate is review visibility, not the binary.
 
 ## 10. Educate content corpus — verified source spine
@@ -260,8 +260,8 @@ Sequencing note: Bucket A ships with Phase 1 (it is pure cross-linking). Buckets
   transcribed, no UPI). Implementation: `data/daan/*`, `DaanLedgerContext`, seven screens,
   `DaanStackParamList` on the More + Panchang stacks, the More-hub row and the Observance-Detail
   last-section door, provider in App.tsx. Gates: `npm test` exit 0 (169 Jest suites / 1333 tests
-  + engine 77 + widgets/data tsx suites), `npm run lint` 0 errors, `tsc` clean; design.md §69 +
-  RULEBOOK §24 + wiki page in the same commit series. The §2.7 surface contract, the journey's
+  + engine 77 + widgets/data tsx suites), `npm run lint` 0 errors, `tsc` clean; design.md §72 +
+  RULEBOOK §26 + wiki page in the same commit series. The §2.7 surface contract, the journey's
   terminal gating, the gupt two-sided guarantee, exact-beats-suffix matching, directory staleness,
   and the copy guard are all pinned in tests. One pre-existing suite
   (`vidhiBackNavigation.test.ts`) pinned the literal source shape of `MoreStackParamList` and was

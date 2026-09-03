@@ -13,6 +13,7 @@ import { buildEntryStartTarget, moreTabTarget } from '@/navigation/entryRoutes';
 import LocationPickerModal from '@/components/LocationPickerModal';
 import MuhuratGlanceCard from '@/components/MuhuratGlanceCard';
 import MuhuratFinderDoor from '@/components/MuhuratFinderDoor';
+import ShubhYogaCard from '@/components/ShubhYogaCard';
 import PanchangTimelineRow from '@/components/PanchangTimelineRow';
 import PitruSmaranDayChip from '@/components/PitruSmaranDayChip';
 import PitruPakshaDayChip from '@/components/PitruPakshaDayChip';
@@ -32,6 +33,7 @@ import {
   usePanchangForSelection,
   usePanchangMonthObservances,
 } from '@/panchang/usePanchang';
+import { useShubhYoga } from '@/panchang/useShubhYoga';
 import type { CalendarSystem, PanchangElement, ResolvedObservance } from '@/panchang/types';
 import { getKathaContent } from '@/panchang/kathaContent';
 import { getUpcomingObservances, searchObservances } from '@/panchang/festivalEngine';
@@ -166,6 +168,19 @@ export default function PanchangScreen({ route }: Props) {
     selectPerson: selectKundaliPerson,
   } = useKundali();
   const { panchang: p, observances, upcoming } = usePanchangForSelection(selectedDate, calendarSystem);
+  // The day's one-line identity (vara · masa paksha · Vikram Samvat), shared by
+  // the date card's visible subtitle and the date button's a11y label — the
+  // explicit label would otherwise hide the subtitle from screen readers.
+  const dayIdentityHi = p
+    ? `${p.vara.nameHi} · ${p.lunarMonth.nameHi}${p.lunarMonth.isAdhik ? ' (अधिक)' : ''} ${PAKSHA_NAMES_HI[p.tithi.paksha]} पक्ष · विक्रम संवत् ${p.vikramSamvat}`
+    : null;
+  const dayIdentityEn = p
+    ? `${p.vara.nameEn} · ${p.lunarMonth.nameEn}${p.lunarMonth.isAdhik ? ' (Adhik)' : ''} ${PAKSHA_NAMES_EN[p.tithi.paksha]} Paksha · Vikram Samvat ${p.vikramSamvat}`
+    : null;
+  // PRD-27: the day's शुभ योग windows — store-backed (no private cache), []
+  // while the solve is in flight and on days with none, so the card below
+  // renders zero chrome for the absent case.
+  const shubhYogas = useShubhYoga(selectedDate, calendarSystem);
   const monthObservances = usePanchangMonthObservances(visibleMonth, calendarSystem);
   const monthObservanceTags = useMemo(() => {
     const tags = new Map<string, ObservanceCalendarTag>();
@@ -423,12 +438,12 @@ export default function PanchangScreen({ route }: Props) {
               >
                 {/* The date block toggles the month grid like the माह देखें
                     button below — a large, natural tap target. Its a11y label is
-                    the date itself; 'Expand calendar' stays unique to the button
-                    (the smoke flows full-string match on it). */}
+                    the date plus the day identity line; 'Expand calendar' stays
+                    unique to the button (the smoke flows full-string match on it). */}
                 <Pressable
                   onPress={() => setCalendarExpanded((expanded) => !expanded)}
                   accessibilityRole="button"
-                  accessibilityLabel={formatFullDate(selectedDate, 'en')}
+                  accessibilityLabel={dayIdentityEn ? `${formatFullDate(selectedDate, 'en')}. ${dayIdentityEn}` : formatFullDate(selectedDate, 'en')}
                   style={({ pressed }) => [styles.datePagerPage, pressed && { opacity: 0.7 }]}
                 >
                   <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink, textAlign: 'center' }}>
@@ -444,13 +459,7 @@ export default function PanchangScreen({ route }: Props) {
                     minimumFontScale={0.75}
                     style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkMuted, marginTop: 2, textAlign: 'center' }}
                   >
-                    {p
-                      ? contentByLang(
-                          lang,
-                          `${p.vara.nameHi} · ${p.lunarMonth.nameHi}${p.lunarMonth.isAdhik ? ' (अधिक)' : ''} ${PAKSHA_NAMES_HI[p.tithi.paksha]} पक्ष · विक्रम संवत् ${p.vikramSamvat}`,
-                          `${p.vara.nameEn} · ${p.lunarMonth.nameEn}${p.lunarMonth.isAdhik ? ' (Adhik)' : ''} ${PAKSHA_NAMES_EN[p.tithi.paksha]} Paksha · Vikram Samvat ${p.vikramSamvat}`
-                        )
-                      : ' '}
+                    {dayIdentityHi && dayIdentityEn ? contentByLang(lang, dayIdentityHi, dayIdentityEn) : ' '}
                   </Text>
                 </Pressable>
               </View>
@@ -632,9 +641,16 @@ export default function PanchangScreen({ route }: Props) {
             <PanchangTile label={contentByLang(lang, 'नक्षत्र', 'Nakshatra')} element={p.nakshatra} kshaya={p.kshayaNakshatra} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
           </View>
           <View style={styles.angaGridSecondary}>
-            <PanchangTile label={contentByLang(lang, 'योग', 'Yoga')} element={p.yoga} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
+            {/* नित्य योग, never bare योग — the 27-cycle Sun+Moon yoga must stay
+                distinguishable from the PRD-27 शुभ योग chips below (one nitya
+                yoga is literally named सिद्धि; RULEBOOK §24 naming rule). */}
+            <PanchangTile label={contentByLang(lang, 'नित्य योग', 'Nitya Yoga')} element={p.yoga} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
             <PanchangTile label={contentByLang(lang, 'करण', 'Karana')} element={p.karana} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
           </View>
+
+          {/* PRD-27: the day's शुभ योग — present-or-absent with its window,
+              annotation only (design.md §69). Absent days render nothing. */}
+          <ShubhYogaCard yogas={shubhYogas} referenceDay={p.date} />
 
           <View style={[styles.timesCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}>
             <View style={styles.timesRow}>

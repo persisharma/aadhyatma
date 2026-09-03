@@ -32,6 +32,11 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     text: "Skip tour"
     optional: true
+# Skipping the tour on a fresh install hands over to the language + reading-size
+# sheet — accept defaults ("Begin") so the flow lands on Home (hi/Standard baseline).
+- tapOn:
+    text: "Begin"
+    optional: true
 - tapOn:
     text: "Close"
     optional: true

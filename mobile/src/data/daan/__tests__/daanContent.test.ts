@@ -1,5 +1,5 @@
 /**
- * दान-पुण्य registry invariants (PRD-26, RULEBOOK §24): shape and bilingual
+ * दान-पुण्य registry invariants (PRD-26, RULEBOOK §26): shape and bilingual
  * completeness, the two-reference source threshold, draft invisibility,
  * rule-id referential integrity against the LIVE observance solver, the
  * exact-beats-suffix matching contract, directory hygiene (https, no UPI,
@@ -97,7 +97,7 @@ describe('registry shape', () => {
   });
 });
 
-describe('draft invisibility (RULEBOOK §24)', () => {
+describe('draft invisibility (RULEBOOK §26)', () => {
   test('draft rows never reach the accessors', () => {
     expect(DAAN_PRINCIPLE_ENTRIES.some((e) => e.status === 'draft')).toBe(true); // dasa-dana exercises the gate
     expect(getDaanPrinciples().every((e) => e.status === 'verified')).toBe(true);

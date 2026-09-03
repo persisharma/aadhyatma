@@ -1,4 +1,4 @@
-# Q4 Round 2 — session start prompts (PRD-31 … PRD-34 — renumbered from 26–29 on 2026-09-01; PRD-26 is the built दान-पुण्य feature)
+# Q4 Round 2 — session start prompts (PRD-42, PRD-27 … PRD-29 — कण्ठस्थ renumbered from PRD-26 on 2026-09-03; 26 is the built दान-पुण्य)
 
 Four independent build sessions, one per candidate from
 [`2026-Q4-candidates-round-2.md`](./2026-Q4-candidates-round-2.md). Each prompt is self-contained:
@@ -9,10 +9,10 @@ observance detail, birth profiles) and will conflict if they share one.
 
 | PRD | Branch | Order |
 |---|---|---|
-| 31 कण्ठस्थ | `claude/prd-31-kanthasth` | 1st — cheapest, no gates |
-| 32 शुभ योग | `claude/prd-32-shubh-yoga` | 2nd — small tables |
-| 34 कुल परम्परा | `claude/prd-34-kul-parampara` | 3rd — no content |
-| 33 पर्व-अर्क | `claude/prd-33-parv-arc` | **Deadline: Diwali is in Q4** |
+| 42 कण्ठस्थ | `claude/prd-42-kanthasth` | 1st — cheapest, no gates |
+| 27 शुभ योग | `claude/prd-27-shubh-yoga` | 2nd — small tables |
+| 29 कुल परम्परा | `claude/prd-29-kul-parampara` | 3rd — no content |
+| 28 पर्व-अर्क | `claude/prd-28-parv-arc` | **Deadline: Diwali is in Q4** |
 
 Shared context every prompt assumes (repeated inside each so they stand alone): bundle-only (no
 backend, CDN, analytics SaaS or cloud sync); `wiki/index.md` first per `.claude/rules/wiki-first-lookup.md`;
@@ -21,12 +21,12 @@ backend, CDN, analytics SaaS or cloud sync); `wiki/index.md` first per `.claude/
 
 ---
 
-## PRD-31 — कण्ठस्थ · memorization and recall
+## PRD-42 — कण्ठस्थ · memorization and recall
 
 ```
-Work on branch claude/prd-31-kanthasth (create it from main).
+Work on branch claude/prd-42-kanthasth (create it from main).
 
-Build PRD-31 from docs/roadmap/2026-Q4-candidates-round-2.md §2 (PRD-31). The prototype is
+Build PRD-42 from docs/roadmap/2026-Q4-candidates-round-2.md §2 (PRD-42). The prototype is
 docs/memorize-abhyas-prototype.html — 8 frames, read it first, it is the spec's intent.
 
 The gap: the app has 30+ reader screens and every one only ever SHOWS text. Nothing anywhere
@@ -36,7 +36,7 @@ every text is already in the binary.
 
 Start by reading wiki/index.md and the [[readers]], [[routine]] and [[audio]] pages
 (.claude/rules/wiki-first-lookup.md is mandatory), then write the PRD at
-docs/roadmap/prds/31-memorization-abhyas.md following the house shape of the existing PRDs
+docs/roadmap/prds/42-memorization-abhyas.md following the house shape of the existing PRDs
 (status table, problem, goal, phases, DoD, stance guards). Then build in phases.
 
 Ship:
@@ -69,12 +69,12 @@ render a FlatList must unmount their trees, and check $? rather than trusting th
 
 ---
 
-## PRD-32 — शुभ योग · the additive half of the muhurat engine
+## PRD-27 — शुभ योग · the additive half of the muhurat engine
 
 ```
-Work on branch claude/prd-32-shubh-yoga (create it from main).
+Work on branch claude/prd-27-shubh-yoga (create it from main).
 
-Build PRD-32 from docs/roadmap/2026-Q4-candidates-round-2.md §2 (PRD-32). The prototype is
+Build PRD-27 from docs/roadmap/2026-Q4-candidates-round-2.md §2 (PRD-27). The prototype is
 docs/shubh-yoga-prototype.html — 6 frames including the REJECTED alternative; read it first.
 
 The gap: mobile/src/panchang/eventMuhurat.ts defines twelve DoshaKeys and zero yogas, and it reads
@@ -83,7 +83,7 @@ the 27 nitya yogas only to extract the two inauspicious ones (yoga.index === 16 
 and has no vocabulary for what is specially right about one.
 
 Start by reading wiki/index.md and the [[panchang]] page (.claude/rules/wiki-first-lookup.md is
-mandatory), then write docs/roadmap/prds/32-shubh-yoga.md plus the convention doc
+mandatory), then write docs/roadmap/prds/27-shubh-yoga.md plus the convention doc
 docs/roadmap/conventions/shubh-yoga-v1.md (match the shape of the four existing convention docs).
 
 Ship:
@@ -120,12 +120,12 @@ convention tables; these are printed in every published panchang, so cite two in
 
 ---
 
-## PRD-34 — कुल परम्परा · kuldevta and the tithis of the living
+## PRD-29 — कुल परम्परा · kuldevta and the tithis of the living
 
 ```
-Work on branch claude/prd-34-kul-parampara (create it from main).
+Work on branch claude/prd-29-kul-parampara (create it from main).
 
-Build PRD-34 from docs/roadmap/2026-Q4-candidates-round-2.md §2 (PRD-34). The prototype is
+Build PRD-29 from docs/roadmap/2026-Q4-candidates-round-2.md §2 (PRD-29). The prototype is
 docs/kul-parampara-prototype.html — 6 frames, read it first.
 
 The gap: the app keeps the tithis of the DEAD with real care (PRD-17 Pitru Smaran) and not one
@@ -134,7 +134,7 @@ Kundali only — nothing answers "when is my Hindu birthday this year". And kuld
 nowhere in source outside katha prose.
 
 Start by reading wiki/index.md and the [[panchang]] page (.claude/rules/wiki-first-lookup.md is
-mandatory), then write docs/roadmap/prds/34-kul-parampara.md following the house PRD shape.
+mandatory), then write docs/roadmap/prds/29-kul-parampara.md following the house PRD shape.
 
 Ship, in two parts:
 A. जन्म तिथि — ZERO new engine work. mobile/src/panchang/pitruSmaran.ts already exports
@@ -168,12 +168,12 @@ an update to §37 (More Hub & Profile), all in the same PR.
 
 ---
 
-## PRD-33 — पर्व-अर्क · festival arcs, स्थापना → विसर्जन
+## PRD-28 — पर्व-अर्क · festival arcs, स्थापना → विसर्जन
 
 ```
-Work on branch claude/prd-33-parv-arc (create it from main).
+Work on branch claude/prd-28-parv-arc (create it from main).
 
-Build PRD-33 from docs/roadmap/2026-Q4-candidates-round-2.md §2 (PRD-33). The prototype is
+Build PRD-28 from docs/roadmap/2026-Q4-candidates-round-2.md §2 (PRD-28). The prototype is
 docs/parv-arc-prototype.html — 6 frames, read it first.
 
 TIMING MATTERS ON THIS ONE: Diwali falls inside Q4. The Diwali five-day arc either lands before it
@@ -185,7 +185,7 @@ mobile/src/panchang/festivals.ts models Diwali's five days as unrelated rules (d
 govardhan-puja, bhai-dooj) and ganesh-chaturthi / anant-chaturdashi as strangers.
 
 Start by reading wiki/index.md and the [[panchang]], [[puja-vidhi]] and [[bhog-naivedya]] pages
-(.claude/rules/wiki-first-lookup.md is mandatory), then write docs/roadmap/prds/33-parv-arc.md.
+(.claude/rules/wiki-first-lookup.md is mandatory), then write docs/roadmap/prds/28-parv-arc.md.
 
 Ship, phased so the content gate cannot block the mechanic:
 - Phase A (code only, ship first): an arc relation over the rules that ALREADY exist — arcId,
@@ -224,5 +224,5 @@ in the same PR.
   with it — flag it rather than absorbing it.
 - **Two test runners:** never add `src/data` tests to Jest; they run under `tsx --test` and Jest's
   testMatch excludes them deliberately.
-- **RULEBOOK §22 is claimed twice** above (PRD-32's rule tables and PRD-33's visarjan contract).
+- **RULEBOOK §22 is claimed twice** above (PRD-27's rule tables and PRD-28's visarjan contract).
   Whichever lands second takes §23 — check the file rather than assuming.

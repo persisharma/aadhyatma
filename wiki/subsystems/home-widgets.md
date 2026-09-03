@@ -1,8 +1,8 @@
 ---
 title: Home Widgets
 type: subsystem
-sources: [mobile/src/widgets, mobile/src/screens/WidgetGalleryScreen.tsx, mobile/plugins/withHomeWidgets.js, mobile/plugins/withHomeWidgetsIos.js, mobile/plugins/home-widgets, mobile/modules/home-widgets-ios, mobile/App.tsx]
-last_verified_date: 2026-08-24
+sources: [mobile/src/widgets, mobile/src/data/versePool.ts, mobile/src/screens/WidgetGalleryScreen.tsx, mobile/plugins/withHomeWidgets.js, mobile/plugins/withHomeWidgetsIos.js, mobile/plugins/home-widgets, mobile/modules/home-widgets-ios, mobile/App.tsx]
+last_verified_date: 2026-09-02
 confidence: high
 status: current
 ---
@@ -13,7 +13,7 @@ Vedansh publishes a single versioned JSON snapshot for native Home/Lock Screen w
 
 ## Details
 
-`WidgetCoordinator` waits for interaction completion plus language, Panchang-location, Panchang-calendar, and Japam hydration. It then dynamically imports `planPayload`, builds a 14-day IST window, deduplicates/throttles writes, and sends one atomic document through `widgets/native.ts`. This keeps the Home first frame independent of the Panchang dependency graph.
+`WidgetCoordinator` waits for interaction completion plus language, Panchang-location, Panchang-calendar, and Japam hydration. It then dynamically imports `planPayload`, builds a 14-day IST window, deduplicates/throttles writes, and sends one atomic document through `widgets/native.ts`. Verse selection uses the manifest-derived range index in `data/versePool.ts`: each date resolves to a global pool index first, then loads only the selected verse's chapter. It never constructs the complete 1,362-record pool, and the planner yields between days so Home presses can run while the offline window is prepared.
 
 The schema is `WidgetPayloadV1` in `widgets/contract.ts`:
 
@@ -26,7 +26,7 @@ Content and size are independent. Each content type is its own widget kind — `
 
 Android stores the complete document as one synchronously committed SharedPreferences string, updates both `AppWidgetProvider`s, and supports per-kind launcher pin requests (`requestPinWidget(content)`). iOS writes a temporary file into the shared App Group, replaces/moves it atomically, and reloads WidgetKit timelines. The Expo config plugins generate the Android receiver/package wiring and an iOS 16 widget extension with an explicit host target dependency, Embed App Extensions phase, App Group entitlements, and bundled Indic/Latin fonts.
 
-Deep links are exact and shared by warm/cold starts: verse links carry source/chapter/index, Panchang links carry the represented civil date, and Japam links carry a known mantra id or fall back to the Japam library. The in-app Widget Gallery provides previews, recovery text, platform instructions, and Android pin actions; it does not claim to prove launcher rendering.
+Deep links are exact and shared by warm/cold starts: verse links carry source/chapter/index, Panchang links carry the represented civil date, and Japam links carry a known mantra id or fall back to the Japam library. `App.tsx` resolves a cold initial widget URL alongside the font gate and passes its validated target into `TabNavigator`, so the target tab is the navigator's initial route and Home never mounts as an intermediate screen. Warm links still dispatch through the shared handler after navigation is ready. The in-app Widget Gallery provides previews, recovery text, platform instructions, and Android pin actions; it does not claim to prove launcher rendering.
 
 ## Dependencies
 
@@ -48,3 +48,4 @@ Deep links are exact and shared by warm/cold starts: verse links carry source/ch
 - A widget kind is an OS-persisted identity: renaming or removing one drops every placed instance of it. The Aug 2026 split retired `VedanshAmbientWidget` (and the single combined Android receiver) deliberately — placed instances of the old kind disappear and must be re-added from the gallery.
 - `twoLineExcerpt` is a **small-cell** budget (88 characters ≈ 4 lines at 13 pt), not a payload-wide summary. The wide verse cell rendered it too and so ellipsized any verse past the cap on a card sized for three 16 pt lines — BG 5.12 lost its closing pada with the third line empty. Only the iOS small / Android narrow (<180 dp) cell may read `excerpt`; everything wider reads `lines`. `catalog.test.ts` pins that in both native sources. Generally: never apply a size-specific cap on the shared payload path — put the full text in the payload and let the widest consumer decide.
 - Section eyebrows (`आज का श्लोक`, `जप-साधना`) are not in the payload, so both native surfaces carry their own four-language literals. Anything else user-visible must come from the payload, which is always fully localized.
+- `getVersePool()` is a bulk compatibility/test API, not a production startup API. Home routine completion, widget planning, daily reminders, random Daily Bhakti entry, and exact deep-link lookup must use manifest positions, `getVersePoolSize()`, `getVerseAtPoolIndex()`, or `findVerse()` so they load at most the selected chapter.

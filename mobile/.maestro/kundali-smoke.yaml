@@ -19,6 +19,14 @@ appId: com.prashantsharma.vedansh
       RCT_jsLocation: "127.0.0.1:8084"
 - waitForAnimationToEnd:
     timeout: 30000
+# clearState resets the notification permission — dismiss the boot alert first
+# (native alert; it blocks everything underneath).
+- tapOn:
+    text: "Allow"
+    optional: true
+- tapOn:
+    text: "Don't Allow"
+    optional: true
 - tapOn:
     text: "Skip tour"
     optional: true
@@ -28,6 +36,11 @@ appId: com.prashantsharma.vedansh
 # Metro settles; a second optional dismissal keeps the smoke deterministic.
 - tapOn:
     text: "Skip tour"
+    optional: true
+# Skipping the tour on a fresh install hands over to the language + reading-size
+# sheet — accept defaults ("Begin") so the flow lands on Home (hi/Standard baseline).
+- tapOn:
+    text: "Begin"
     optional: true
 # The post-tour setup sheet asks for reading language + size before Home is
 # reachable. Pick English (also satisfies the English-assertion baseline) and
@@ -48,13 +61,22 @@ appId: com.prashantsharma.vedansh
     text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
     optional: true
 - extendedWaitUntil:
-    visible: "Good Habits\\..*Tap to open\\."
+    # Canary: the above-the-fold Panchang card — the Good Habits tile sits below
+    # the first viewport since Home gained the daily recommendation cards.
+    visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
     timeout: 60000
 
 # Use English for stable visible-text assertions; accessibility labels stay
 # English in every language, but the explanatory headings below are localized.
 - tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
+# The ऐप section (Language/Reading size) sits below the fold on standard-height
+# iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
+# tapping the off-screen row's estimated center hits the tab bar instead. Scroll first.
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
 - tapOn: "Language,.*"
 - waitForAnimationToEnd
 - extendedWaitUntil:

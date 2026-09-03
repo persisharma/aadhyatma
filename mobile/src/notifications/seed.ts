@@ -43,9 +43,14 @@ export function hashDateKey(key: string): number {
  * happen in production, but the caller decides how to handle).
  */
 export function pickVerseForDateKey(dateKey: string, pool: UniformVerse[]): UniformVerse | null {
-  if (pool.length === 0) return null;
-  const idx = hashDateKey(dateKey) % pool.length;
+  const idx = verseIndexForDateKey(dateKey, pool.length);
+  if (idx < 0) return null;
   return pool[idx] ?? null;
+}
+
+/** Select the deterministic global pool index without materialising the pool. */
+export function verseIndexForDateKey(dateKey: string, poolLength: number): number {
+  return poolLength === 0 ? -1 : hashDateKey(dateKey) % poolLength;
 }
 
 /** A single reminder firing: a calendar day plus a `HHMM` time-of-day. */

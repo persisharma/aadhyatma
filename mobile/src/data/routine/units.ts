@@ -9,7 +9,7 @@
 import { library, type LibraryEntry } from '@/data/texts';
 import { findJapamMantra } from '@/data/japam';
 import { getVidhiById } from '@/data/vidhi';
-import { getVersePool } from '@/data/versePool';
+import { getVersePoolLastPositions, type VersePoolLastPositions } from '@/data/versePool';
 import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
 import type { RoutineItem } from './types';
 
@@ -22,29 +22,13 @@ export type RoutineItemDisplay = {
   entry?: LibraryEntry;
 };
 
-type LastPositions = {
-  /** chapter number → last (max) verseIndex in that chapter */
-  chapters: Record<number, number>;
-  lastChapter: number;
-};
+let cache: Record<string, VersePoolLastPositions> | null = null;
 
-let cache: Record<string, LastPositions> | null = null;
-
-/** Build, once, the last verse-page per chapter for every pooled source. */
-function lastPositionsBySource(): Record<string, LastPositions> {
+/** Build completion boundaries from manifests without loading reader payloads. */
+function lastPositionsBySource(): Record<string, VersePoolLastPositions> {
   if (cache) return cache;
-  const map: Record<string, LastPositions> = {};
-  for (const v of getVersePool()) {
-    const ch = v.chapter ?? 1;
-    const existing = map[v.sourceId] ?? { chapters: {}, lastChapter: ch };
-    if (existing.chapters[ch] == null || v.verseIndex > existing.chapters[ch]) {
-      existing.chapters[ch] = v.verseIndex;
-    }
-    if (ch > existing.lastChapter) existing.lastChapter = ch;
-    map[v.sourceId] = existing;
-  }
-  cache = map;
-  return map;
+  cache = getVersePoolLastPositions();
+  return cache;
 }
 
 export function resolveRoutineItem(item: RoutineItem): RoutineItemDisplay {

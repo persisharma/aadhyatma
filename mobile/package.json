@@ -9,18 +9,19 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "lint": "expo lint",
-    "test": "npm run typecheck && npm run test:widgets && npm run test:readers && npm run test:engine && npm run test:data",
+    "test": "npm run typecheck && npm run test:widgets && npm run test:readers && npm run test:engine && npm run test:data && npm run test:ask",
     "test:readers": "jest --config jest.config.js --runInBand",
     "test:engine": "TZ=Asia/Kolkata tsx --test src/panchang/__tests__/*.test.ts",
     "test:widgets": "tsx --test src/widgets/__tests__/catalog.test.ts src/widgets/__tests__/contract.test.ts src/widgets/__tests__/planPayload.test.ts src/widgets/__tests__/planner.test.ts src/widgets/__tests__/startup.test.ts",
-    "test:data": "tsx --test src/data/__tests__/searchNormalize.test.ts src/data/__tests__/contentCorrectness.test.ts src/data/__tests__/devanagariWellFormed.test.ts src/data/__tests__/vidhiContent.test.ts src/data/__tests__/searchIndex.test.ts src/data/__tests__/launchGraph.test.ts src/data/__tests__/theerth.test.ts src/data/__tests__/namkaranCorpus.test.ts src/data/chapteredTotals.test.ts src/data/sourceIdMigration.test.ts src/data/sadhana/progress.test.ts src/panchang/muhurat.test.ts src/navigation/entryRoutes.test.ts src/notifications/__tests__/scheduler.test.ts src/notifications/__tests__/vratReminderPure.test.ts src/notifications/__tests__/muhuratReminderPure.test.ts src/notifications/__tests__/festiveReminderPure.test.ts src/notifications/__tests__/festiveReminders.test.ts src/notifications/__tests__/pitruReminderPure.test.ts src/notifications/__tests__/japamAlarms.test.ts src/notifications/__tests__/sadhanaReminder.test.ts src/notifications/__tests__/routineReminderPure.test.ts",
+    "test:data": "tsx --test src/data/__tests__/searchNormalize.test.ts src/data/__tests__/contentCorrectness.test.ts src/data/__tests__/libraryIntegrity.test.ts src/data/__tests__/devanagariWellFormed.test.ts src/data/__tests__/vidhiContent.test.ts src/data/__tests__/searchIndex.test.ts src/data/__tests__/launchGraph.test.ts src/data/__tests__/theerth.test.ts src/data/__tests__/namkaranCorpus.test.ts src/data/chapteredTotals.test.ts src/data/sourceIdMigration.test.ts src/data/sadhana/progress.test.ts src/panchang/muhurat.test.ts src/navigation/entryRoutes.test.ts src/notifications/__tests__/scheduler.test.ts src/notifications/__tests__/reminderVerseLookup.test.ts src/notifications/__tests__/vratReminderPure.test.ts src/notifications/__tests__/muhuratReminderPure.test.ts src/notifications/__tests__/festiveReminderPure.test.ts src/notifications/__tests__/festiveReminders.test.ts src/notifications/__tests__/pitruReminderPure.test.ts src/notifications/__tests__/janmaTithiReminderPure.test.ts src/notifications/__tests__/japamAlarms.test.ts src/notifications/__tests__/sadhanaReminder.test.ts src/notifications/__tests__/routineReminderPure.test.ts",
     "test:e2e:panchang-year": "TZ=Asia/Kolkata tsx --test src/panchang/__tests__/panchangVisibleYear.e2e.test.ts",
     "verify:devanagari": "tsx scripts/verify-devanagari.mts",
     "verify:observances": "TZ=Asia/Kolkata tsx scripts/verify-observances.mts",
     "test:e2e": "maestro test .maestro/",
     "test:e2e:flow": "maestro test",
     "typecheck": "tsc --noEmit",
-    "doctor": "expo-doctor"
+    "doctor": "expo-doctor",
+    "test:ask": "TZ=Asia/Kolkata tsx --test src/ask/__tests__/*.test.ts"
   },
   "dependencies": {
     "@expo-google-fonts/cormorant-garamond": "^0.4.1",

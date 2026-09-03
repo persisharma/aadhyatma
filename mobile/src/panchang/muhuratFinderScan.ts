@@ -15,6 +15,7 @@ import { getUpcomingObservances } from './festivalEngine';
 import { ABUJH_RULE_IDS, pushyaYogaFor } from './abujhMuhurat';
 import { computeMuhuratDay } from './muhurat';
 import { evaluateDay, type DayVerdict, type EventRule } from './eventMuhurat';
+import { computeShubhYogas, type ShubhYogaWindow } from './shubhYoga';
 import {
   cachedDayInputs,
   dateKeyFor,
@@ -121,6 +122,31 @@ export function verdictForDate(
     };
   } catch {
     return null;
+  }
+}
+
+/**
+ * The day's शुभ योग windows through the shared day store (PRD-27, RULEBOOK §24).
+ *
+ * ANNOTATION ONLY — deliberately outside `evaluateDay` and `verdictForDate`, so
+ * no verdict, tier, ordering or empty-state can ever depend on it. Screens call
+ * this beside (never inside) the grading path. Same two-solve contract as
+ * `verdictForDate` (this day + the next day's sunrise), so on a post-scan
+ * surface both days are cache hits. Returns [] on any solve failure — an
+ * annotation must never take down the surface it decorates.
+ */
+export function shubhYogasForDate(date: Date, opts: ScanOptions): ShubhYogaWindow[] {
+  try {
+    const map = dayStoreFor(scopeKeyFor(opts.location, opts.calendarSystem));
+    const { inputs } = cachedDayInputs(map, date, opts);
+    const { inputs: next } = cachedDayInputs(
+      map,
+      new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1),
+      opts
+    );
+    return computeShubhYogas(inputs.p, next.p.sunrise);
+  } catch {
+    return [];
   }
 }
 
