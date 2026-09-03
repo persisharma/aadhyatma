@@ -107,7 +107,7 @@ the family's own choice cannot be a calendar entry. This quarter contains, per t
 (Ujjain, purnimant): Navratri 11–21 Oct, Karwa Chauth 29 Oct, Dhanteras 7 Nov → Diwali 9 Nov →
 Govardhan 10 Nov → Bhai Dooj 11 Nov, Chhath 15 Nov, Dev Uthani Ekadashi 20 Nov → Tulsi Vivah 21 Nov,
 Gita Jayanti 20 Dec. It is the densest festival quarter of the year and the one with a hard
-deadline. → **PRD-28**
+deadline. → **PRD-28** (written up; deferred, §8)
 
 ### 2.4 Thirty readers, and no way to check you know a verse
 
@@ -115,7 +115,7 @@ Round 2's PRD-26, unchanged: the app supports reading forever and never the thin
 actually working toward — कण्ठस्थ, having it by heart. Every prerequisite ships (per-verse
 read-aloud, progress, routine completion, the akshara matcher); the mechanic does not. Zero content,
 zero convention, pure TypeScript, OTA. It remains the highest return-per-effort item on any slate the
-app has produced, and it is the one Q4 feature aimed at children and their parents. → **PRD-26**
+app has produced, and it is the one Q4 feature aimed at children and their parents. → **PRD-26** (written up; deferred, §8)
 
 ### 2.5 Evening and pre-dawn use on a bright parchment
 
@@ -130,40 +130,35 @@ are made in the PRD below. → **PRD-04 Phase 2**
 
 ## 3. The slate
 
-Five PRDs. Two are new numbers (42, 43); two convert round-2 candidate sections into build-ready PRDs
-(26, 28); one is the second phase of a Q3 PRD (04). Every one solves a problem a current user already
-has, and every one is either OTA or rides the **one store release** this quarter (§4.2).
+**Two PRDs. Product decision, 3 Sep 2026: the quarter is limited to the two items that fix what the
+app *loses* or *gets wrong* for a user who already relies on it — portability of their data, and
+correctness of their place.** The other three findings in §2 (festival arcs, memorization, dark
+theme + sleep timer) are written up as build-ready PRDs and **deferred** (§8) so they can be picked
+up without re-planning.
 
 | ID | Title | Solves | Size | Ships as |
 |---|---|---|---|---|
-| [**PRD-42**](./prds/42-sanchay-backup-restore.md) | **संचय · Backup & Restore** — one exporter over a registry of every user-state key, one importer with a preview, verified round-trip; absorbs PRD-29's export | §2.1 — a phone change no longer erases years of practice | M | **Store** (needs `expo-document-picker`) — 1.6.0 |
-| [**PRD-28**](./prds/28-parv-arc-festival-arcs.md) | **पर्व-अर्क · Festival arcs** — arc relation over existing rules; sthapana→visarjan solver with the family's chosen duration; arc strip on Observance Detail and the Today strip; Navratri, Diwali-5, Chhath-4, Dev Uthani→Tulsi Vivah as v1 consumers | §2.3 — "what do we do today, what is left" for the quarter's festivals | M | OTA, in two drops (Navratri by 9 Oct; Diwali by 1 Nov) |
-| [**PRD-26**](./prds/26-kanthastha-memorization.md) | **कण्ठस्थ · अभ्यास mode** — progressive akshara-wise masking on the shipped readers, self-marked recall, spaced review, audio-cue recall via read-aloud, `RoutineItemKind: 'memorize'` | §2.4 — the practice the app has never supported, at zero content cost | M | OTA |
-| [**PRD-04 P2**](./prds/04-reading-comfort-phase2-dark-sleep.md) | **रात्रि पाठ · Dark theme + sleep timer** — a warm-dark palette behind `ThemeMode`, in-app toggle (Light / Dark / System once the native flag flips), sleep timer across the three sound sources via the playback arbiter | §2.5 — evening and pre-dawn use | S–M | OTA (palette + timer); "System" option rides 1.6.0 |
-| [**PRD-43**](./prds/43-pravasi-world-locations.md) | **प्रवासी · Vedansh beyond India** — Phase 0 stop lying (an honest outside-India state instead of a silent snap); Phase 1 a bundled world-city tier with IANA time zones and a `civilTimeZone` scope in the day store; Phase 2 (Q1 2027) birth abroad for Kundali / Guna Milan / Namkaran, widget zone | §2.2 — correctness for every user outside India | L (phased; P0–P1 this quarter) | P0 OTA; P1 OTA; P2 Q1 2027 |
+| [**PRD-42**](./prds/42-sanchay-backup-restore.md) | **संचय · Backup & Restore** — one exporter over a registry of every user-state key, one importer with a preview, verified round-trip; absorbs PRD-29's export, supersedes PRD-06's backup third | §2.1 — a phone change no longer erases years of practice, people and the family record | M | **Store** (needs `expo-document-picker`) — 1.6.0, live before Dhanteras |
+| [**PRD-43**](./prds/43-pravasi-world-locations.md) | **प्रवासी · Vedansh beyond India** — Phase 0 an honest outside-India state instead of a silent snap; Phase 1 a bundled world-city tier with IANA time zones and zone-aware civil days; Phase 2 birth abroad for Kundali / Guna Milan / Namkaran and widget zone | §2.2 — correctness for every user outside India | L (all three phases now fit the quarter) | P0 OTA (wk 40) · P1 OTA (Nov) · P2 store 1.6.1 (Dec) |
 
-**Stretch, riding the 1.6.0 store release if it is cut anyway:** PRD-41 Phase 4 (voice input for
-जिज्ञासा — native STT) and the `userInterfaceStyle: 'automatic'` flip PRD-04 P2 needs for its
-"System" option. Neither is on the critical path; both are cheap once a native build is happening.
+**Stretch, riding a store release if it is cut anyway:** PRD-41 Phase 4 (voice input for जिज्ञासा —
+native STT) on 1.6.0 if its Phase 0 spike clears by 14 Oct. Not on the critical path.
 
-### 3.1 Why these five and not the round-1 leftovers
+### 3.1 Why only these two
 
-PRD-41 §10 already sequenced सङ्कल्प, PRD-21 and PRD-22 — and सङ्कल्प's number was consumed by the
-horoscope work, so it needs re-numbering before anything else. Those three deepen *practice* for the
-user who has already found the feature. The five above are chosen on a different criterion: **each
-one is a place where the app currently loses or misleads someone who is already loyal** (their data,
-their location, their festival week, their memorised text, their eyes at 5 a.m.). Retention of the
-found user beats depth for the unfound one this quarter; the found user is also the one who buys the
-new phone at Diwali. सङ्कल्प is re-reserved as **PRD-44** (§8) for Q1 2027, when PRD-43's world
-locations make its place/time slots correct for everyone.
+Both are **correctness and trust** items rather than depth items. Every other PRD the app has shipped
+assumes the user's data will still be there tomorrow and that the numbers on the Today strip are for
+where they stand; today neither holds for a meaningful share of loyal users. A narrow quarter also buys
+what the last two quarters did not have: capacity to retire the owed Maestro device runs and the
+`verified:false` conventions (§8, debt) rather than adding to them, and room to take PRD-43 all the
+way to Phase 2 instead of stopping at world cities.
 
 ### 3.2 What the slate does to the moat
 
 An account-less app's only switching cost is holding what the user cannot get elsewhere. PRD-42 makes
-that holding *portable*, which is the honest version of a moat — and it is the precondition for
-PRD-26 and PRD-28 adding years-to-rebuild state without turning every phone upgrade into a betrayal.
-PRD-43 widens who the moat applies to. PRD-28 and PRD-04 P2 make the festival weeks and the dark hours
-— the peak usage moments — feel finished.
+that holding *portable*, which is the honest version of a moat. PRD-43 widens who the moat applies to
+— the diaspora household with no temple down the road announcing the tithi is the user who needs an
+almanac most and is served worst today.
 
 ---
 
@@ -175,48 +170,46 @@ PRD-43 widens who the moat applies to. PRD-28 and PRD-04 P2 make the festival we
            Oct 2026                      Nov 2026                      Dec 2026
 Week       40  41  42  43  44  45  46  47  48  49  50  51  52  53
            ────────────────────────────────────────────────────────
-PRD-28     ████████░░░░████                                   OTA drop 1 (Navratri strip, 9 Oct) · drop 2 (Diwali-5 + Chhath, 1 Nov)
-PRD-04 P2  ████████████                                       palette + contrast gate → toggle → sleep timer (OTA by 25 Oct)
-PRD-42         ████████████████                               registry → exporter → importer → 1.6.0 to stores by ~28 Oct (live before Dhanteras)
-PRD-26                     ████████████████                   splitter spike → mask → mastery → routine kind (OTA, mid-Nov → early Dec)
-PRD-43     ██░░                ████████████████████           P0 honest state (OTA, wk 40) · P1 world tier + tz scope (OTA, Dec)
-Debt       ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒     owed Android/iOS Maestro device runs; shubh-yoga & EVENT_RULES §10 sign-offs
+PRD-43 P0  ████                                                   honest outside-India state (OTA, wk 40)
+PRD-42         ████████████████████                               registry → exporter (OTA) → importer → 1.6.0 to stores by ~21 Oct, live before Dhanteras (7 Nov)
+PRD-43 P1                  ████████████████                       world tier + zone-aware civil days (OTA, mid-Nov; cache v4 bump)
+PRD-43 P2                                  ████████████████       birth abroad + widget zone → 1.6.1 to stores by ~11 Dec
+Debt       ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒     owed device runs; shubh-yoga & EVENT_RULES §10 sign-offs; Diwali pradosh day rule
            ────────────────────────────────────────────────────────
 Festivals   Navratri 11–21 · KC 29 ·  Dhanteras 7 · Diwali 9 · Chhath 15 · DevUthani 20 ·   Gita Jayanti 20
-Store                                 1.6.0 ▲
+Store                                 1.6.0 ▲                                     1.6.1 ▲
 ```
 
-### 4.2 The one store release — 1.6.0
+### 4.2 Store releases
 
-Everything that needs a native build is batched into **one** App Store / Play submission, targeted
-to be live before Dhanteras (7 Nov) so the *old* phone can export before the new one is unboxed:
+**1.6.0 (submit by ~21 Oct, live before Dhanteras).** Everything that needs a native build for
+PRD-42, batched once:
 
 1. `expo-document-picker` — PRD-42's importer (the only hard dependency).
-2. `userInterfaceStyle: 'automatic'` — PRD-04 P2's "System" theme option (the in-app Light/Dark
-   toggle itself is OTA).
-3. Optional: `expo-speech-recognition` (or equivalent) — PRD-41 Phase 4 voice, if its Phase 0 spike
-   clears in time. Not a blocker.
+2. Optional: native STT for PRD-41 Phase 4, if its spike clears in time.
 
-Per the repo gotcha, this bump drags `APP_TOUR_VERSION` → `1.6.0` and a `whatsNew['1.6.0']` entry
-(backup/restore, dark theme, festival arcs, अभ्यास if landed). OTA drops before and after continue
-at the live runtime, never blindly at `app.json`'s version.
+Per the repo gotcha, the bump drags `APP_TOUR_VERSION` → `1.6.0` and a `whatsNew['1.6.0']` entry
+(backup & restore; world locations P1 if landed by then, else it goes in the next OTA's copy).
+
+**1.6.1 (submit by ~11 Dec).** PRD-43 Phase 2's widget-extension change (the snapshot follows the
+chosen city's zone) plus the roster's optional `timeZone` field. If P2 slips, 1.6.1 is not cut and P2
+moves to Q1 2027 unchanged.
+
+OTA drops before, between and after continue at the *live store runtime*, never blindly at
+`app.json`'s version.
 
 ### 4.3 Sequencing rationale
 
-- **PRD-28 first** because it has the only calendar deadline on the slate. Drop 1 is deliberately
-  thin (arc relation + strip for Navratri, no visarjan vidhi) so it can land by 9 Oct; the
-  Diwali/Chhath consumers and the duration-choice solver follow in drop 2.
-- **PRD-04 P2 in parallel** because its palette slice is additive and its contrast gate is the kind
-  of work that must not collide with a UI-heavy PRD — running it before PRD-26 touches the readers
-  is the cheap order.
-- **PRD-42 owns the store release date.** It starts in week 41 so the 1.6.0 binary is in review
-  by ~21 Oct with a week of slack for rejection.
-- **PRD-26 after 1.6.0 is submitted** so its new `@vedansh:memorize:v1` key is registered in the
-  backup registry from day one (the registry's coverage test will force it), and so the reader
-  changes land on the dark palette rather than under it.
-- **PRD-43 Phase 0 in week 40** because it is a one-screen honesty fix for a silent wrong answer —
-  the cheapest correctness win on the slate. Phase 1 lands last because its `civilTimeZone` scope
-  change bumps `PANCHANG_DAY_CACHE_VERSION` and should not race the festival-week OTA drops.
+- **PRD-43 Phase 0 first (week 40)** because it is a one-screen honesty fix for a silent wrong
+  answer — the cheapest correctness win available, and it produces the counter that measures P1.
+- **PRD-42 owns the 1.6.0 date.** The old phone must be able to export *before* Diwali; the exporter
+  and envelope go OTA as soon as they pass the round-trip gate, and the importer rides the binary.
+- **PRD-43 Phase 1 after 1.6.0 is submitted**, because its `PANCHANG_DAY_CACHE_VERSION` bump should
+  not land in the same window as a store review, and because the festive/vrat reminder switch to
+  location-aware dates for world cities is best exercised on the December observances rather than
+  Diwali week.
+- **PRD-43 Phase 2 in December** now that capacity allows it; it needs P1's `City.timeZone` in place
+  and is the one roster schema change this quarter (coordinated with the reserved PRD-44 per PRD-29 §5).
 
 ---
 
@@ -224,20 +217,18 @@ at the live runtime, never blindly at `app.json`'s version.
 
 | Metric | Baseline | Q4 target | How measured |
 |---|---|---|---|
-| Restore completions on a fresh install (PRD-42) | n/a (impossible today) | ≥ 60 % of devices that run an export within 14 days also run an import somewhere | Local counters on both sides; the import side reports the export's device-agnostic envelope id, shareable via diagnostics |
-| Arc-strip open rate on an arc day (PRD-28) | n/a | ≥ 40 % of app opens on Navratri/Diwali days reach the arc strip or its detail | Local counter |
-| Visarjan/duration choices recorded (PRD-28) | n/a | ≥ 25 % of users who open the Ganesh/Navratri sthapana vidhi set a duration (measured next Ganesh Chaturthi; Navratri this quarter) | Local counter |
-| अभ्यास sessions per weekly-active user (PRD-26) | 0 | ≥ 1.5 | Local counter |
-| Verses reaching कण्ठस्थ per 30 days (PRD-26) | 0 | ≥ 3 per user who enabled अभ्यास | Local mastery store |
-| Dark-theme adoption (PRD-04 P2) | 0 | ≥ 20 % of devices within 30 days of OTA | Local pref |
-| Sleep-timer use among audio users (PRD-04 P2) | 0 | ≥ 25 % | Local counter |
-| Outside-India devices no longer served an Indian snap (PRD-43) | unknown (silent) | 100 % see the honest state (P0); ≥ 80 % of those resolve a world city (P1) | Local counters keyed on the P0 state |
-| D30 return | ring-buffer baseline at quarter start | +3 pts vs pre-quarter cohort | Existing launch-date ring buffer |
-| Crash-free sessions | ≥ 99.5 % | hold | App Store Connect / Play Console |
+| Export events (PRD-42) | n/a | ≥ 15 % of devices with ≥ 30 activity days export within 30 days of 1.6.0 | Local counter in `backup-meta`; the one-time DISCOVER card's dismissal is the denominator proxy |
+| Import events on a fresh install (PRD-42) | n/a (impossible today) | ≥ 60 % of devices that export within 14 days also import somewhere | Local counters on both sides carrying the envelope id; verifiable only through a user's diagnostics share, so the honest field metric is the two raw counts plus review sentiment |
+| Restore round-trip fidelity (PRD-42) | n/a | 100 % of registry sections byte-equivalent after uninstall → reinstall → import on iOS and Android seeded devices | Release gate, not a field metric |
+| Outside-India devices no longer served a silent Indian snap (PRD-43 P0) | unknown (silent today) | 100 % see the honest state | Local counter keyed on the P0 state |
+| World-city adoption (PRD-43 P1) | 0 | ≥ 80 % of devices that hit the P0 state resolve a world city within 7 days of P1 | Local counter |
+| Charts for people born abroad (PRD-43 P2) | 0 | ≥ 1 non-IST birth profile on ≥ 30 % of world-city devices | Local counter |
+| D30 return | ring-buffer baseline at quarter start | +2 pts vs pre-quarter cohort | Existing launch-date ring buffer |
+| Crash-free sessions | ≥ 99.5 % | hold across two store releases | App Store Connect / Play Console |
+| Owed device runs | 6 flows authored, device run owed | 0 owed | `wiki/runbooks/e2e-verification.md` catalog |
 
-Breadth of intent families reached (PRD-41's KPI) continues to be tracked; PRD-26 and PRD-28 each
-register their intents on ship (RULEBOOK §25), so "कब है विसर्जन" and "आज अभ्यास में क्या बाकी है" are
-askable on day one.
+Both PRDs register their जिज्ञासा intents on ship (RULEBOOK §25), so "बैकअप कैसे लें" and "लंदन का
+पंचांग" are askable on day one; the breadth KPI from PRD-41 continues to be tracked.
 
 ---
 
@@ -245,15 +236,15 @@ askable on day one.
 
 | Risk | Likelihood | Mitigation |
 |---|---|---|
-| **1.6.0 misses Dhanteras** (store review, a rejected build) | Medium | Submit by 21 Oct; the exporter and the envelope are OTA-shippable *without* the importer, so at worst the old phone can still export before Diwali and import lands a week later. |
-| **A restore corrupts state** (a key written back in a shape a newer parser rejects) | Medium | Every key in the registry is imported through its owner's existing versioned parser, never raw; unknown/failed keys are reported and skipped; the preview screen lists exactly what will be written; a full round-trip test over a seeded device is the merge gate. |
-| **PRD-28 drop 1 slips past 11 Oct** | Medium | Drop 1 is scoped to *arc relation + strip*; if it misses Navratri it still serves Diwali (9 Nov), the larger target. Do not widen drop 1 to hit the date. |
-| **Dark palette regresses contrast or a background overlay looks muddy on some plates** | Medium | Palette lands first as tokens + `colors.contrast.test.ts` extension with zero screen changes; per-plate QA of the 30+ background overlays; light stays default for one release. |
-| **PRD-43 world tier ships a wrong time zone for a city** | Low–Medium | Time zones come from the IANA list bundled per city (no DST math of our own — `Intl` does it); a test pins every bundled city's zone against its coordinates via a longitude sanity band; the honest state stays available as a manual override. |
-| **`PANCHANG_DAY_CACHE_VERSION` bump in PRD-43 P1 collides with festival-week OTAs** | Low | P1 is sequenced to December, after the last arc drop. |
-| **iOS 64-pending notification budget** | Existing | PRD-28's visarjan reminder is opt-in, ≤ 4 slots; no other PRD adds a family. |
-| **Akshara splitter is harder than the `SINGLE_AKSHARA` matcher suggests** | Low–Medium | Half-day spike is PRD-26's first task; `Intl.Segmenter` is banned (recorded ICU GB9c defect). |
-| **Owed device runs accumulate** | High (already true) | Every PRD here ships its Maestro flow; the debt line in §4.1 is a standing weekly slot, Android first. |
+| **1.6.0 misses Dhanteras** (store review, a rejected build) | Medium | Submit by 21 Oct; the exporter and envelope are OTA *without* the importer, so the old phone can still export before Diwali and import lands a week later. |
+| **A restore corrupts state** (a key written back in a shape a newer parser rejects) | Medium | Every key imports through its owner's existing versioned parser, never raw; unknown/failed sections are reported and skipped; the preview lists exactly what will be written; a seeded-device round-trip is the merge gate. |
+| **A wrong time zone on one world-city row** (worse than no row) | Low–Medium | IANA ids only, `Intl` does DST; per-row tests pin `Intl` acceptance and a longitude band; the P0 honest state stays as the fallback; sources recorded in the data file header. |
+| **`PANCHANG_DAY_CACHE_VERSION` bump lands under a store review** | Low | P1 is sequenced after the 1.6.0 submission and before the 1.6.1 one. |
+| **Reminder families switching to location-aware dates for world cities changes Indian behaviour** | Low | Gated on `City.timeZone` being present — every Indian row has none; test-pinned. |
+| **P2 roster schema change collides with the reserved PRD-44 सङ्कल्प** | Low | P2 adds one optional field (`timeZone`); PRD-44 reads gotra from the कुल परम्परा record per PRD-29 §5 and does not need the roster. |
+| **Hermes `Intl` zone coverage on an Android OEM build** | Low | The widget writer already depends on it in production; a launch-time probe falls back to the P0 state if a zone is unsupported. |
+| **Two people share one backup file** (a couple) | Low | Merge default with `union-by-id`; the birth-profile cap of 8 is enforced with an overflow message. |
+| **Owed device runs keep accumulating** | Medium | The narrower slate exists partly to retire them; the debt line in §4.1 is a standing weekly slot, Android first. |
 
 ---
 
@@ -261,63 +252,64 @@ askable on day one.
 
 1. **PRD-42 import semantics — merge or replace?** Recommend **merge by default, replace on explicit
    choice**: bookmarks/follows/people union; counters take the larger value; routines/records by id,
-   incoming wins. Replace is offered on the preview screen for a "new phone, start from the backup"
-   user. Detail in PRD-42 §6.
-2. **PRD-42 destination — files only, or also QR/AirDrop-style device-to-device?** Recommend files
-   only (share sheet out, document picker in); everything else is the OS's job. Keeps the feature
-   bundle-only and platform-neutral.
-3. **PRD-28 duration set and default** — offer 1½ / 3 / 5 / 7 / 10 for Ganesh, fixed 9/10 for
-   Navratri; recommend **no default** (round 2 §5.4).
-4. **PRD-04 P2 palette direction** — "deep ink on warm dark" as sketched in PRD-04 §6 (walnut ground,
-   warm-ivory ink, muted saffron), not OLED black. Recommend adopting PRD-04's sketch as-is and
-   spending the decision budget on the background-overlay treatment instead.
-5. **PRD-43 world-city list source** — bundle a curated ~300-city list (top diaspora metros +
-   national capitals) with IANA zones, or the full GeoNames cities ≥ 100k? Recommend the curated list
-   for P1 (size, label quality, Devanagari names hand-authored like the pincode states) and hold the
-   long tail for P2.
-6. **Does the 1.6.0 build carry STT for PRD-41 Phase 4?** Depends only on whether its Phase 0 spike
-   (which library, permission copy, offline behaviour on Android OEM engines) is done by 14 Oct.
-7. **सङ्कल्प re-numbering** — confirm **PRD-44** so the round-1 cross-references can be fixed now
-   rather than when it is picked up.
+   incoming wins. Detail in PRD-42 §6.
+2. **PRD-42 destination — files only?** Recommend yes (share sheet out, document picker in); no QR,
+   no peer-to-peer, no cloud target.
+3. **PRD-43 world-city list source** — a curated ~300-city list (top diaspora metros + national
+   capitals, hand-authored Devanagari) or GeoNames ≥ 100k? Recommend curated for P1; the long tail
+   waits for evidence from the P0 counter.
+4. **PRD-43 `SNAP_MAX_KM`** — 120 km recommended; needs the sweep test showing no Indian
+   pincode/city pair exceeds it inside coverage.
+5. **Does 1.6.1 happen?** Only if PRD-43 P2 is green by ~11 Dec; otherwise P2 moves to Q1 2027 and
+   no December binary is cut.
+6. **Does 1.6.0 carry STT for PRD-41 Phase 4?** Only if its spike is done by 14 Oct.
+7. **सङ्कल्प re-numbering** — confirm **PRD-44** so round-1 cross-references can be fixed now.
 
 ---
 
-## 8. Deliberately not in this quarter (so the slate is auditable)
+## 8. Deferred and excluded (so the slate is auditable)
 
-**Considered and sequenced later, with the reason:**
+**Written up, build-ready, and deferred by the 3 Sep 2026 product decision** — each file carries a
+`Deferred` status line and needs no re-planning to pick up:
+
+| PRD | Title | Why it was a candidate | Cost of deferring |
+|---|---|---|---|
+| [PRD-28](./prds/28-parv-arc-festival-arcs.md) | पर्व-अर्क · festival arcs | §2.3 — the densest festival quarter of the year, with a Diwali deadline | Navratri/Diwali 2026 pass without an arc strip; **the Diwali pradosh day-rule fix it owned moves to the debt line** so the 9 vs 8 Nov discrepancy is still settled this quarter |
+| [PRD-26](./prds/26-kanthastha-memorization.md) | कण्ठस्थ · अभ्यास mode | §2.4 — zero-content, highest return per effort | None that compounds; its future `@vedansh:memorize:v1` key will be forced into PRD-42's registry by the coverage test when it lands |
+| [PRD-04 P2](./prds/04-reading-comfort-phase2-dark-sleep.md) | Dark theme + sleep timer | §2.5 — evening and pre-dawn use | The enrichment loop's top quick win stays queued another quarter; its design decisions are now written down, so a later build is a build, not a debate |
+
+**Sequenced later, with the reason:**
 
 | Idea | Why not Q4 |
 |---|---|
-| **सङ्कल्प composer** (round 1's #1) | Needs a place/time that is correct for everyone — PRD-43 first. Also needs the saṃvatsara/ṛtu convention sign-off that has been open since August. Reserved as **PRD-44**, Q1 2027. |
-| **PRD-21 नवग्रह उपाय**, **PRD-22 हवन** | Per PRD-41 §10: depth for the found user; the 9-row/havan content review is the cost. Q1 2027. |
-| **PRD-25 सन्ध्या वन्दन** | Narrower audience; needs the same content discipline as the vidhis. Reserved. |
-| **More reading scripts** — Telugu, Bengali, Odia, Malayalam (all 1:1 with Devanagari via the gu/kn transliteration pipeline; Marathi needs only a label since it *is* Devanagari) | A genuine reach feature and cheaper than the 2027 doc assumes (it conflated *translation* with *script*). Held because Q4 is spoken for and because the meaning text would still be transliterated Hindi, which the languages page records as a caveat. Reserve as **PRD-45**; Tamil is excluded on principle (lossy consonant set). |
-| **Audio follow-along (PRD-13)**, more recitations | Gated on real recordings landing; a content/licensing question, not an engineering one. |
-| **Namkaran release** | Blocked on human review of the 108-cell table and the 12+12 corpus — editorial work, tracked in PRD-17, not a roadmap slot. |
-| **Apple Watch / Wear OS japam counter** | Real demand (hands-free mala) but a new native surface with its own release train; belongs in the 2027 bets, not a quarter that already carries one store release. |
+| **सङ्कल्प composer** (round 1's #1) | Needs a place/time that is correct for everyone — PRD-43 first — and the saṃvatsara/ṛtu convention sign-off open since August. Reserved as **PRD-44**, Q1 2027. |
+| **PRD-21 नवग्रह उपाय**, **PRD-22 हवन** | Per PRD-41 §10: depth for the found user; content review is the cost. Q1 2027. |
+| **PRD-25 सन्ध्या वन्दन** | Narrower audience; same content discipline as the vidhis. Reserved. |
+| **More reading scripts** — Telugu, Bengali, Odia, Malayalam (1:1 with Devanagari via the gu/kn pipeline; Marathi needs only a label) | Genuine reach feature, cheaper than the 2027 doc assumes (it conflated *translation* with *script*). Reserve as **PRD-45**; Tamil excluded on principle (lossy consonant set). |
+| **Audio follow-along (PRD-13)**, more recitations | Gated on real recordings landing; content/licensing, not engineering. |
+| **Namkaran release** | Blocked on human review of the 108-cell table and the 12+12 corpus — editorial work tracked in PRD-17. |
+| **Apple Watch / Wear OS japam counter** | Real demand, but a new native surface with its own release train; a 2027 bet. |
 | **Device-calendar export**, **puja-thali sounds**, **darshan log**, **daan ledger** | Round 2 §3.3 reasons unchanged. |
 | **Anything network-backed** | Bundle-only stands. The 2027 doc owns the backend decision. |
 
-**Carry-over debt this quarter must not ignore:** owed Maestro device runs (kul-parampara,
-multi-profile, shubh-yoga, muhurat P3/P4, namkaran Android); `SHUBH_YOGA_SOURCE.verified` and the
-`EVENT_RULES` goldens; the remaining Class B day rules (pradosh Diwali/Dhanteras, nishita
-Shivaratri) — the Diwali one becomes user-visible the moment PRD-28 draws the five-day arc, so its
-convention should be settled in PRD-28 drop 2.
+**Carry-over debt this quarter must retire, now that the slate leaves room:** owed Maestro device runs
+(kul-parampara, multi-profile, shubh-yoga, muhurat P3/P4, namkaran Android); `SHUBH_YOGA_SOURCE.verified`
+and the `EVENT_RULES` goldens; the remaining Class B day rules — **the Diwali/Dhanteras pradosh rule
+is due before 7 Nov** regardless of PRD-28's deferral, because the engine currently names 9 Nov where
+published almanacs name 8 Nov (RULEBOOK §23; regenerate the precomputed table, bump `CACHE_VERSION`).
 
 ---
 
 ## 9. Definition of done — quarterly
 
 1. 1.6.0 live on both stores by 7 Nov with backup **and** restore; an uninstall → reinstall → import
-   round-trip verified on iOS and Android with a seeded device.
-2. Navratri, Diwali-5, Chhath-4 and Dev Uthani → Tulsi Vivah render as arcs on Observance Detail and
-   the Today strip; a chosen duration produces a visarjan date and an opt-in reminder.
-3. अभ्यास mode available on every reader; mastery persists and is in the backup registry; a routine
-   can carry a `memorize` item.
-4. Dark theme selectable in More, contrast test extended, light still default; sleep timer stops
-   all three sound sources.
-5. No device outside India is silently served an Indian location; world cities resolve with the
-   correct civil day and time zone.
-6. Every PRD shipped with unit + Maestro coverage, `design.md`/`RULEBOOK.md` sections in the same
+   round-trip verified on iOS and Android with a seeded device; every persisted user key is in the
+   registry or explicitly excluded, enforced by test.
+2. No device outside India is silently served an Indian location (P0); world cities resolve with the
+   correct civil day and time zone, and festive/vrat reminders follow them (P1); a birth abroad
+   produces a Kundali and the widget follows the chosen zone (P2, or explicitly moved to Q1 2027).
+3. The Diwali/Dhanteras pradosh day rule settled and shipped before Dhanteras.
+4. Zero owed Maestro device runs at quarter end.
+5. Both PRDs shipped with unit + Maestro coverage, `design.md`/`RULEBOOK.md` sections in the same
    PR, intents registered (RULEBOOK §25), lint at 0 errors.
-7. Retrospective in week 53 with this table filled in.
+6. Retrospective in week 53 with the §5 table filled in.

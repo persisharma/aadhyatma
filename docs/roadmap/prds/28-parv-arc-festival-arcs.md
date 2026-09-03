@@ -4,7 +4,7 @@
 
 | | |
 |---|---|
-| **Status** | Proposed → build-ready — Q4 2026 slate, **the one item with a calendar deadline** |
+| **Status** | **Deferred** (product decision 2026-09-03: the Q4 2026 slate is PRD-42 + PRD-43 only) — build-ready; Q1 2027 candidate. The Diwali/Dhanteras pradosh day-rule fix in §5 is **not** deferred with it — it moves to the Q4 debt line and is due before 7 Nov 2026 (roadmap §8) |
 | **Parent** | [2026-Q4-candidates-round-2.md §2 · PRD-28](../2026-Q4-candidates-round-2.md) (candidate) · [2026-Q4-roadmap.md §2.3](../2026-Q4-roadmap.md) |
 | **T-shirt size** | M — one additive relation over existing rules, one solver, one strip, one chip, one opt-in reminder planner; visarjan vidhi text sourced separately |
 | **Delivery** | OTA, in **two drops**: drop 1 (arc relation + strip + chip) by **9 Oct** for Navratri; drop 2 (duration solver, Diwali-5, Chhath-4, Dev Uthani → Tulsi Vivah, reminder) by **1 Nov**. Visarjan vidhi entries land `status: 'draft'` and flip when verified — the mechanic never waits on them |

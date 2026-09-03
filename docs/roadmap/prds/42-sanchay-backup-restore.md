@@ -4,7 +4,7 @@
 
 | | |
 |---|---|
-| **Status** | Proposed — Q4 2026 slate, owns the quarter's one store release (1.6.0) |
+| **Status** | Proposed — Q4 2026 slate (one of two), owns the quarter's committed store release (1.6.0, live before Dhanteras) |
 | **Parent** | [2026-Q4-roadmap.md §2.1 / §3](../2026-Q4-roadmap.md) · supersedes the backup third of [PRD-06](./06-foundation-hardening.md) · absorbs [PRD-29 §3.7](./29-kul-parampara.md)'s one-way export |
 | **T-shirt size** | M — one registry, one envelope, one exporter, one importer with a preview, two screens, one onboarding door |
 | **Delivery** | **Store release** — the importer needs `expo-document-picker` (absent today). The registry, envelope and exporter are pure JS over `expo-file-system` + `expo-sharing` (both already ship) and can go OTA ahead of the binary. |
@@ -86,7 +86,8 @@ with a one-line reason each (`notif-meta` mirrors what is scheduled on *this* OS
 is a dedupe; `tour-completed-v*` / `whats-new-seen-v*` / `onboarding-setup-v*` / `rating-prompt` are
 this-install UX state; `search-recent` is disposable; `derived-cache-build` is the fingerprint). A new
 persisted key without a registry entry fails CI — the same discipline `derivedCacheReset.test.ts`
-already enforces for the cache partition, and the reason PRD-26/28 cannot ship unbackupable state.
+already enforces for the cache partition, and the reason no future PRD (the deferred PRD-26/28
+included) can ship unbackupable state.
 
 ### 3.2 The envelope — `mobile/src/backup/envelope.ts` (pure)
 
@@ -237,6 +238,6 @@ the honest field metric is the two raw counts plus App Store review sentiment.
 ## 12. Why it fits
 
 PRD-29 §10 said the record is valuable because it can be handed on, not because it is trapped. This
-PRD applies that sentence to the whole app. It is also the precondition for the rest of the quarter:
-PRD-26 and PRD-28 both add state that takes months to earn, and the registry's coverage test is what
-guarantees neither can ship without a way home.
+PRD applies that sentence to the whole app. It is also the precondition for everything deferred behind
+it: PRD-26 and PRD-28 both add state that takes months to earn, and the registry's coverage test is
+what guarantees neither can ship without a way home.

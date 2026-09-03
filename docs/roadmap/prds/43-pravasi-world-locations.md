@@ -4,7 +4,7 @@
 
 | | |
 |---|---|
-| **Status** | Proposed — Q4 2026 slate: **Phase 0 + Phase 1 this quarter (OTA)**, Phase 2 in Q1 2027 |
+| **Status** | Proposed — Q4 2026 slate (one of two): **Phase 0 (wk 40, OTA) · Phase 1 (Nov, OTA) · Phase 2 (Dec, store 1.6.1 — moves to Q1 2027 if not green by ~11 Dec)** |
 | **Parent** | [2026-Q4-roadmap.md §2.2 / §3](../2026-Q4-roadmap.md) |
 | **T-shirt size** | L overall; P0 = XS, P1 = M, P2 = M |
 | **Delivery** | P0/P1 pure JS + bundled data, OTA. P1 bumps `PANCHANG_DAY_CACHE_VERSION` (solves change) and `observanceCache` `CACHE_VERSION` is untouched (matching does not change; new cities have no prior scan). P2 touches the widget extension bridge → rides a store release. |
@@ -50,8 +50,8 @@ city. The engine can already do that; the product refuses to.
 ## 2. Goal
 
 **Phase 0 — stop being wrong silently** (week 40, OTA). **Phase 1 — be right for the places the
-diaspora actually lives** (December, OTA). **Phase 2 — be right about people born abroad and on the
-home screen** (Q1 2027, store).
+diaspora actually lives** (November, OTA). **Phase 2 — be right about people born abroad and on the
+home screen** (December, store 1.6.1; Q1 2027 if it slips).
 
 Success = no device outside India is ever served an Indian location without saying so; a chosen world
 city produces sunrise/tithi/observances for *that* city's civil day; widgets and Jyotish follow in P2.
@@ -124,7 +124,7 @@ are already absolute. The muhurat family already re-derives per location.
 ("इस अक्षांश पर आज सूर्योदय/अस्त परिभाषित नहीं") rather than an indefinite skeleton — Oslo and Edmonton
 in midsummer are now reachable cities.
 
-### 3.3 Phase 2 — born abroad, and the home screen (Q1 2027, store)
+### 3.3 Phase 2 — born abroad, and the home screen (December, store 1.6.1)
 
 - **Kundali birth city**: the birth-city sheet gains the World group; `useKundali`'s IST→UTC
   conversion becomes zone-aware from the chosen city (`birthProfileToInput` carries `timeZone`; the
@@ -191,7 +191,7 @@ Namkaran birth-details form (P2) · widget snapshot (P2) · जिज्ञा�
 | Risk | Mitigation |
 |---|---|
 | A wrong zone on one row (worse than no row) | `Intl` acceptance + longitude-band + fixed-instant offset tests per row; data file header records sources |
-| Cache version bump collides with festival-week OTAs | P1 is sequenced to December (roadmap §4.3) |
+| Cache version bump lands under a store review | P1 is sequenced after the 1.6.0 submission and before 1.6.1's (roadmap §4.3) |
 | Reminder families switching to location-aware scans for world cities changes copy/dates for Indian users | Gated on `city.timeZone` present — Indian behaviour unchanged, test-pinned |
 | Hermes `Intl` zone coverage on some Android OEM builds | The widget writer already depends on it in production; add a launch-time probe that falls back to the P0 honest state if a zone is unsupported |
 | First observance scan for a world city on a slow device | Same persisted `observanceStore` path Indian non-Ujjain cities use; chunked, behind `InteractionManager` |

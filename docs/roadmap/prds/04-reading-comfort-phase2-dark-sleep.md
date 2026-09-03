@@ -4,7 +4,7 @@
 
 | | |
 |---|---|
-| **Status** | Proposed — Q4 2026 slate; completes [PRD-04](./04-reading-comfort.md) (reading size shipped as M/L in June; dark mode and sleep timer did not) |
+| **Status** | **Deferred** (product decision 2026-09-03: the Q4 2026 slate is PRD-42 + PRD-43 only) — design decisions settled below, build-ready; Q1 2027 candidate. Completes [PRD-04](./04-reading-comfort.md) (reading size shipped as M/L in June; dark mode and sleep timer did not) |
 | **Parent** | [PRD-04 §5 items 2–3, §6](./04-reading-comfort.md) · [2026-Q4-roadmap.md §2.5](../2026-Q4-roadmap.md) · enrichment backlog items 2–3 ("has design decisions") |
 | **T-shirt size** | S–M — one palette + contrast gate, a stateful `ThemeProvider`, one appearance sheet, one pure timer + one control mounted in three players |
 | **Delivery** | **OTA** for the palette, the Light/Dark toggle and the sleep timer. The **"System"** option requires `app.json` `userInterfaceStyle: 'automatic'` — a native config change that rides the 1.6.0 store release (PRD-42). Until then the sheet offers Light / Dark only |

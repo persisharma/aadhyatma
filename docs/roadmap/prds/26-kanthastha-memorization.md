@@ -4,7 +4,7 @@
 
 | | |
 |---|---|
-| **Status** | Proposed → build-ready — Q4 2026 slate |
+| **Status** | **Deferred** (product decision 2026-09-03: the Q4 2026 slate is PRD-42 + PRD-43 only) — build-ready; Q1 2027 candidate |
 | **Parent** | [2026-Q4-candidates-round-2.md §2 · PRD-26](../2026-Q4-candidates-round-2.md) (candidate) · [2026-Q4-roadmap.md §2.4](../2026-Q4-roadmap.md) |
 | **T-shirt size** | M — two pure modules, one reader overlay, one list screen, one routine item kind |
 | **Delivery** | OTA. Pure TypeScript; no new dependency, no asset, **no sourced content** — the text is already in the binary in every language |
