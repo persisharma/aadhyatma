@@ -17,8 +17,12 @@ already owned by a live PRD, nothing sitting in a rejected table, unless the rea
 no longer holds. §1 is the review; §2 is the gap audit; §3 is the slate; §4–§8 are sequencing,
 metrics, risks, decisions and exclusions.
 
-The operating constraint is unchanged: **bundle-only.** No backend, no CDN, no cloud sync, no
-analytics SaaS. Every feature below is on-device or it is not in this document.
+The operating constraint is **amended once, narrowly** (product decision 3 Sep 2026): **no Vedansh
+server.** No backend of ours, no CDN, no analytics SaaS, no account with us, no content fetched, and
+every feature works fully offline. What the amendment permits is exactly one thing: PRD-42 may
+upload the user's *own* backup file to the user's *own* Google Drive, opt-in, into an app-private
+folder, and read it back on another device. The previous wording ("no cloud sync") is retired
+because it would have forbidden that; live two-way sync between devices remains out.
 
 ---
 
@@ -138,7 +142,7 @@ up without re-planning.
 
 | ID | Title | Solves | Size | Ships as |
 |---|---|---|---|---|
-| [**PRD-42**](./prds/42-sanchay-backup-restore.md) | **संचय · Backup & Restore** — one exporter over a registry of every user-state key, one importer with a preview, verified round-trip; absorbs PRD-29's export, supersedes PRD-06's backup third | §2.1 — a phone change no longer erases years of practice, people and the family record | M | **Store** (needs `expo-document-picker`) — 1.6.0, live before Dhanteras |
+| [**PRD-42**](./prds/42-sanchay-backup-restore.md) | **संचय · Backup & Restore** — one exporter over a registry of every user-state key, one importer with a preview, verified round-trip; **plus opt-in automatic backup to the user's own Google Drive** (app-private folder, one file per device, restore through the same preview) and explicit OS device-backup rules; absorbs PRD-29's export, supersedes PRD-06's backup third | §2.1 — a phone change no longer erases years of practice, people and the family record, and the user no longer has to remember to export | L | **Store** (needs `expo-document-picker`, `expo-auth-session` + `expo-web-browser`, `expo-secure-store`) — 1.6.0, live before Dhanteras; Drive sync may flip on by OTA once Google's OAuth client is approved |
 | [**PRD-43**](./prds/43-pravasi-world-locations.md) | **प्रवासी · Vedansh beyond India** — Phase 0 an honest outside-India state instead of a silent snap; Phase 1 a bundled world-city tier with IANA time zones and zone-aware civil days; Phase 2 birth abroad for Kundali / Guna Milan / Namkaran and widget zone | §2.2 — correctness for every user outside India | L (all three phases now fit the quarter) | P0 OTA (wk 40) · P1 OTA (Nov) · P2 store 1.6.1 (Dec) |
 
 **Stretch, riding a store release if it is cut anyway:** PRD-41 Phase 4 (voice input for जिज्ञासा —
@@ -185,8 +189,12 @@ Store                                 1.6.0 ▲                                 
 **1.6.0 (submit by ~21 Oct, live before Dhanteras).** Everything that needs a native build for
 PRD-42, batched once:
 
-1. `expo-document-picker` — PRD-42's importer (the only hard dependency).
-2. Optional: native STT for PRD-41 Phase 4, if its spike clears in time.
+1. `expo-document-picker` — PRD-42's file importer.
+2. `expo-auth-session` + `expo-web-browser` + `expo-secure-store` — PRD-42's Drive sign-in and
+   token storage. The Drive REST client itself is JS, so the *switch* can ship dark in 1.6.0 and be
+   enabled by OTA the day Google approves the OAuth client (PRD-42 §10).
+3. A config plugin for Android `fullBackupContent` / `dataExtractionRules` (PRD-42 §3.8).
+4. Optional: native STT for PRD-41 Phase 4, if its spike clears in time.
 
 Per the repo gotcha, the bump drags `APP_TOUR_VERSION` → `1.6.0` and a `whatsNew['1.6.0']` entry
 (backup & restore; world locations P1 if landed by then, else it goes in the next OTA's copy).
@@ -218,6 +226,8 @@ OTA drops before, between and after continue at the *live store runtime*, never 
 | Metric | Baseline | Q4 target | How measured |
 |---|---|---|---|
 | Export events (PRD-42) | n/a | ≥ 15 % of devices with ≥ 30 activity days export within 30 days of 1.6.0 | Local counter in `backup-meta`; the one-time DISCOVER card's dismissal is the denominator proxy |
+| Drive sync enabled (PRD-42 §3.7) | n/a | ≥ 25 % of devices with ≥ 30 activity days within 30 days of the switch going live | Local flag in `backup-meta.drive.enabled` |
+| Drive upload success rate (PRD-42 §3.7) | n/a | ≥ 95 % of attempted uploads succeed within 24 h | Local success/failure counters |
 | Import events on a fresh install (PRD-42) | n/a (impossible today) | ≥ 60 % of devices that export within 14 days also import somewhere | Local counters on both sides carrying the envelope id; verifiable only through a user's diagnostics share, so the honest field metric is the two raw counts plus review sentiment |
 | Restore round-trip fidelity (PRD-42) | n/a | 100 % of registry sections byte-equivalent after uninstall → reinstall → import on iOS and Android seeded devices | Release gate, not a field metric |
 | Outside-India devices no longer served a silent Indian snap (PRD-43 P0) | unknown (silent today) | 100 % see the honest state | Local counter keyed on the P0 state |
@@ -238,6 +248,9 @@ Both PRDs register their जिज्ञासा intents on ship (RULEBOOK §25
 |---|---|---|
 | **1.6.0 misses Dhanteras** (store review, a rejected build) | Medium | Submit by 21 Oct; the exporter and envelope are OTA *without* the importer, so the old phone can still export before Diwali and import lands a week later. |
 | **A restore corrupts state** (a key written back in a shape a newer parser rejects) | Medium | Every key imports through its owner's existing versioned parser, never raw; unknown/failed sections are reported and skipped; the preview lists exactly what will be written; a seeded-device round-trip is the merge gate. |
+| **Google's OAuth consent-screen verification gates the Drive switch** (weeks; needs a public privacy policy naming the scope) | Medium | Start the Google Cloud project + consent screen in week 41; the switch ships dark in 1.6.0 and flips on by OTA; the file path is never blocked by it. |
+| **Drive sync read as "the app has a cloud now"** — stance drift, or users expecting live multi-device sync | Medium | Constraint reworded to "no Vedansh server" in §0; copy says बैकअप everywhere; restore is always an explicit preview; PRD-42 §9 non-goals pin it. |
+| **Birth details and family names uploaded by default** | Low | Off by default, opt-in with sign-in, app-private `appDataFolder`, deleted on disconnect; sensitive-data caption on the switch. |
 | **A wrong time zone on one world-city row** (worse than no row) | Low–Medium | IANA ids only, `Intl` does DST; per-row tests pin `Intl` acceptance and a longitude band; the P0 honest state stays as the fallback; sources recorded in the data file header. |
 | **`PANCHANG_DAY_CACHE_VERSION` bump lands under a store review** | Low | P1 is sequenced after the 1.6.0 submission and before the 1.6.1 one. |
 | **Reminder families switching to location-aware dates for world cities changes Indian behaviour** | Low | Gated on `City.timeZone` being present — every Indian row has none; test-pinned. |
@@ -253,8 +266,11 @@ Both PRDs register their जिज्ञासा intents on ship (RULEBOOK §25
 1. **PRD-42 import semantics — merge or replace?** Recommend **merge by default, replace on explicit
    choice**: bookmarks/follows/people union; counters take the larger value; routines/records by id,
    incoming wins. Detail in PRD-42 §6.
-2. **PRD-42 destination — files only?** Recommend yes (share sheet out, document picker in); no QR,
-   no peer-to-peer, no cloud target.
+2. **PRD-42 destinations — files + Google Drive (decided 3 Sep).** Open sub-decisions: Drive sync
+   **off by default** (recommended); hidden `appDataFolder` rather than a visible folder (recommended);
+   upload on background with a 6-hour floor plus a manual "sync now" (recommended); **iCloud Drive as
+   an automatic destination stays out of v1** (needs a native module Expo lacks; the Files path
+   already reaches it manually). No QR, no peer-to-peer.
 3. **PRD-43 world-city list source** — a curated ~300-city list (top diaspora metros + national
    capitals, hand-authored Devanagari) or GeoNames ≥ 100k? Recommend curated for P1; the long tail
    waits for evidence from the P0 counter.
@@ -304,7 +320,9 @@ published almanacs name 8 Nov (RULEBOOK §23; regenerate the precomputed table, 
 
 1. 1.6.0 live on both stores by 7 Nov with backup **and** restore; an uninstall → reinstall → import
    round-trip verified on iOS and Android with a seeded device; every persisted user key is in the
-   registry or explicitly excluded, enforced by test.
+   registry or explicitly excluded, enforced by test. **Google Drive backup sync** live (by 1.6.0 or
+   by OTA once the OAuth client is approved) with a cross-platform device-A → device-B restore
+   verified; Android backup rules declared.
 2. No device outside India is silently served an Indian location (P0); world cities resolve with the
    correct civil day and time zone, and festive/vrat reminders follow them (P1); a birth abroad
    produces a Kundali and the widget follows the chosen zone (P2, or explicitly moved to Q1 2027).

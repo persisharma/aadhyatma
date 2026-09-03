@@ -15,7 +15,10 @@ This folder holds the product roadmap and PRDs for upcoming releases.
 
   | ID | Title | Solves | Ships as |
   |---|---|---|---|
-  | [PRD-42](./prds/42-sanchay-backup-restore.md) | **संचय · Backup & Restore** — registry over every user-state key, one exporter, one importer with preview; absorbs PRD-29's export, supersedes PRD-06's backup third | ~40 keys of practice, people and family record die with the phone | Store 1.6.0 (`expo-document-picker`) |
+  | [PRD-42](./prds/42-sanchay-backup-restore.md) | **संचय · Backup & Restore** — registry over every user-state key, file export/import with preview, **opt-in automatic backup to the user's own Google Drive** (app-private folder, restore on any device); absorbs PRD-29's export, supersedes PRD-06's backup third | ~40 keys of practice, people and family record die with the phone | Store 1.6.0 (`expo-document-picker`, `expo-auth-session`, `expo-secure-store`) |
+
+  **Constraint amendment (3 Sep 2026):** "bundle-only / no cloud sync" becomes **"no Vedansh server."**
+  The user's own Google Drive may hold their backup, opt-in. Nothing else about the offline stance changes.
   | [PRD-43](./prds/43-pravasi-world-locations.md) | **प्रवासी · Vedansh beyond India** — P0 honest outside-India state, P1 world-city tier with IANA zones and zone-aware civil days, P2 birth abroad for Kundali / Guna Milan / Namkaran + widget zone | every user outside India is silently served an Indian location | P0/P1 OTA · P2 store 1.6.1 |
 
   **Deferred, build-ready** (written up in the same pass, status `Deferred`, roadmap §8):
@@ -63,7 +66,7 @@ This folder holds the product roadmap and PRDs for upcoming releases.
 
 ## Constraint
 
-**Every feature ships entirely inside the app binary.** No runtime backend, no remote CDN, no analytics SaaS, no cloud sync. Audio, festival dates, and search indices are bundled. Notifications are scheduled locally. Crash logs and backups are device-controlled (user shares them out via the OS share sheet if they choose).
+**Every feature ships entirely inside the app binary, and there is no Vedansh server.** No runtime backend of ours, no remote CDN, no analytics SaaS, no account with us. Audio, festival dates, and search indices are bundled. Notifications are scheduled locally. Crash logs and backups are device-controlled (user shares them out via the OS share sheet if they choose). **Amended 3 Sep 2026 (Q4 roadmap §0):** the one permitted network use is PRD-42's opt-in upload of the user's own backup file to the user's own Google Drive; live multi-device sync remains out.
 
 ## Convention
 

@@ -1,4 +1,4 @@
-# PRD-42 — संचय · Backup & Restore (device-to-device, user-controlled)
+# PRD-42 — संचय · Backup & Restore (file export/import + Google Drive backup sync)
 
 > *Everything a person builds in this app — the streak, the sankalp on day 38, eight people's birth details, a grandparent's tithi, the family's kuldevta — lives on one phone and dies with it. The app that keeps the family record has no way to hand it to the next phone.*
 
@@ -6,12 +6,15 @@
 |---|---|
 | **Status** | Proposed — Q4 2026 slate (one of two), owns the quarter's committed store release (1.6.0, live before Dhanteras) |
 | **Parent** | [2026-Q4-roadmap.md §2.1 / §3](../2026-Q4-roadmap.md) · supersedes the backup third of [PRD-06](./06-foundation-hardening.md) · absorbs [PRD-29 §3.7](./29-kul-parampara.md)'s one-way export |
-| **T-shirt size** | M — one registry, one envelope, one exporter, one importer with a preview, two screens, one onboarding door |
-| **Delivery** | **Store release** — the importer needs `expo-document-picker` (absent today). The registry, envelope and exporter are pure JS over `expo-file-system` + `expo-sharing` (both already ship) and can go OTA ahead of the binary. |
+| **T-shirt size** | M → L with §3.7 — one registry, one envelope, one exporter, one importer with a preview, two screens, one onboarding door, **plus the Google Drive backup-sync client (§3.7) and OS device-backup rules (§3.8)** |
+| **Delivery** | **Store release 1.6.0** — the importer needs `expo-document-picker`; Drive sync needs `expo-auth-session` + `expo-web-browser` (OAuth PKCE, no Google SDK) and `expo-secure-store` (refresh token) — all absent today. The registry, envelope and exporter are pure JS over `expo-file-system` + `expo-sharing` (both already ship) and go OTA ahead of the binary. |
+| **Constraint amendment** | Product decision 2026-09-03: **"no cloud sync" is amended to "no Vedansh server."** The user's own Google Drive may hold their backup, opt-in, app-private. See the boxed note below and roadmap §0. |
 | **Feasibility** | ✅ Confirmed against `main`: ~40 user-state keys enumerated in source; `derivedCacheReset.test.ts` already maintains the exact user-vs-cache key partition this feature needs; every store has a versioned parser (`parsePrefs`, `parseStoredBirthProfile`, `PitruSmaranContext`'s versioned payload…) to import through. |
 | **Prototype** | none yet — two screens in the shipped `SettingsRow` / information-panel language; a frame set is owed before build |
 
-**Bundle-only, and *more* private than the alternative:** the backup is a file the user creates, sees the contents of, and moves themselves — Files, iCloud Drive, Google Drive, AirDrop, WhatsApp-to-self, a cable. Vedansh never sees it, never uploads it, has no account to attach it to. Nothing here changes the "nothing leaves the device unless you share it" stance; it makes the stance survivable.
+**Two paths, one envelope.** (1) **File export/import** — the backup is a file the user creates, sees the contents of, and moves themselves: Files, iCloud Drive, Google Drive, AirDrop, WhatsApp-to-self, a cable. Vedansh never sees it. (2) **Drive backup sync (§3.7)** — the *same envelope*, uploaded automatically to a hidden, app-private folder in the **user's own Google Drive** after they sign in and switch it on, and offered for restore on any device where they sign in again.
+
+> **What the constraint amendment does and does not change.** There is still **no Vedansh server, no account with us, no analytics, no content fetched, no feature that needs a network.** The app is fully functional offline forever; Drive sync is an opt-in *destination* for a file the user already owns, stored under their Google account in a folder only this app can read (`drive.appdata`), and deleted when they disconnect the app from Google. "Nothing leaves the device unless you choose" holds — the choice is a switch instead of a share sheet. The roadmap's constraint line is reworded to say exactly this (roadmap §0).
 
 ---
 
@@ -153,18 +156,93 @@ dismisses forever on tap or swipe.
 ### 3.6 Ask intents (RULEBOOK §25)
 
 `backup.make` ("बैकअप कैसे लें", "data kaise save karein"), `backup.restore` ("पुराने फोन का डेटा",
-"restore"). Both resolve to the संचय screen; no computed answer.
+"restore"), `backup.drive` ("गूगल ड्राइव पर बैकअप", "auto backup on"). All resolve to the संचय
+screen; no computed answer.
+
+### 3.7 Drive backup sync — `backup/drive/` (the automatic half)
+
+**What the user sees.** On the संचय screen, a third card: **Google Drive पर स्वतः बैकअप** with one
+switch. Turning it on opens Google sign-in (system browser, OAuth PKCE, the single scope
+`https://www.googleapis.com/auth/drive.appdata`), then shows the connected account, **last synced
+<time>**, and a **"अभी सिंक करें"** action. Turning it off revokes the token locally and offers to
+delete the Drive copy. On a fresh install, the onboarding row (§3.5) and the restore card both offer
+**"Google से पुनर्स्थापित करें"**: sign in → the app lists its backups in the hidden folder (one per
+source device, newest first, with device name and date) → the **same preview screen** (§3.4) → the same
+importer. Nothing about restore differs by source; only where the file came from.
+
+**Why `appDataFolder`, not a visible Drive folder.** The Drive *application data folder* is invisible
+in the user's Drive UI, readable only by this app, counts against their quota (negligible — the
+envelope is well under 1 MB), and is **wiped when the user disconnects the app** in their Google
+account settings. That gives the privacy property the file path has ("only this app, only this user")
+without exposing birth details as a browsable JSON file in "My Drive". The scope is the narrowest Drive
+scope Google offers. *Phase 0 verifies the scope's current sensitivity classification and whether the
+OAuth consent screen needs Google's verification before public release; if it does, that lead time
+gates the 1.6.0 date and the file path ships alone first.*
+
+**How it works.**
+- `backup/drive/client.ts` — a ~150-line REST client over `fetch` (files.list with
+  `spaces=appDataFolder`, multipart upload/update, get media, delete). No Google SDK, no native module.
+- `backup/drive/auth.ts` — `expo-auth-session` PKCE flow; access token in memory, **refresh token in
+  `expo-secure-store`** (`vedansh.drive.refresh`), never in AsyncStorage and never in the backup itself.
+  Sign-out = revoke + delete both.
+- `backup/drive/sync.ts` (pure planner + thin glue, the notification-family shape) — decides *whether*
+  to upload: the envelope's content hash differs from `lastUploadedHash`, and the last upload is older
+  than `MIN_UPLOAD_INTERVAL` (recommend 6 h), or the user tapped "sync now". Triggers: app goes to
+  background, and once on foreground if the last attempt failed. **One file per device**
+  (`vedansh-backup-<deviceId>.json`, `deviceId` a random id in `backup-meta`, never a hardware id) —
+  two phones on one Google account never clobber each other, and restore lets the user pick which
+  phone's backup to take.
+- Offline / failure: silent retry on next trigger; the card shows "last synced" honestly; after 7 days
+  of failures a single quiet in-app line, never a notification.
+- **This is backup sync, not live sync.** No two-way merge between devices in the background. A device
+  restores from another's backup through the preview with merge or replace, exactly like a file. Live
+  multi-device sync is a different product (conflicts, presence, a server) and stays out.
+
+**Platform notes.** Works identically on iOS and Android — Google accounts are near-universal in the
+audience on both. **iCloud Drive as an automatic destination is not in v1**: it needs a native ubiquity
+container / CloudKit module Expo does not ship first-party; iOS users get Drive sync, plus the file path
+into iCloud Drive via Files today. Reconsider iCloud in Q1 2027 if iOS users ask for it (open decision
+№7).
+
+**Privacy copy.** The switch's caption names exactly what is uploaded ("your practice, saved people,
+family record — the same file as बैकअप बनाएँ"), that it is stored only in your Google account in a
+folder only Vedansh can read, and that turning it off deletes the copy. Sensitive-section wording from
+§3.3 applies.
+
+### 3.8 OS device-backup hygiene — free coverage, made deliberate
+
+Both platforms already back up app data in a whole-device backup when the user has it on, and the
+app has never declared what should and should not ride along:
+
+- **Android Auto Backup** (Google-account device backup, ≤ 25 MB per app): Expo's default manifest
+  leaves `android:allowBackup` on, so AsyncStorage's SQLite file is likely already backed up and
+  restored on a new device *of the same platform, same account*. This PRD adds explicit
+  `fullBackupContent` / `dataExtractionRules` (via a config plugin, like `withJapamAlarmNative.js`):
+  **include** the AsyncStorage database, **exclude** the derived-cache-only material where it can be
+  separated, and rely on the build-fingerprint reset for the rest. (Verify the default in the prebuilt
+  manifest during Phase 0 — the `android/` directory is not committed.)
+- **iOS iCloud device backup**: app container data is included unless marked; nothing to add, but
+  the fact is recorded so nobody "fixes" `notif-meta` by excluding the whole container.
+- **Why this is not enough on its own** (and why §3.3/§3.7 exist): same-platform only, whole-device
+  only, opt-in at the OS level the user may not have on, no preview, no selectivity, and a restored
+  `notif-meta` / `panchang-days` cache on a new device lies until the fingerprint reset runs — which is
+  exactly why the reset exists and why these rules matter.
 
 ## 4. Where it lands (surfaces, in one list)
 
-More hub row (App group) · `BackupScreen` · `RestorePreviewScreen` + result state · onboarding
-sheet row · one-time DISCOVER card · two जिज्ञासा intents · `whatsNew['1.6.0']` entry.
+More hub row (App group) · `BackupScreen` (export · restore · **Drive sync** cards) · `RestorePreviewScreen`
++ result state · Drive backup list (source device, date) · onboarding sheet row with file **and** Google
+doors · one-time DISCOVER card · three जिज्ञासा intents · `whatsNew['1.6.0']` entry.
 
 ## 5. Data model
 
-- `@vedansh:backup-meta:v1` — `{ version: 1, lastExportAt?, lastExportEnvelopeId?, lastImportAt?,
-  lastImportEnvelopeId?, discoverDismissed?: true }`. Excluded from backup and from the derived-cache
-  sweep (enumerated in `derivedCacheReset.test.ts`).
+- `@vedansh:backup-meta:v1` — `{ version: 1, deviceId, lastExportAt?, lastExportEnvelopeId?,
+  lastImportAt?, lastImportEnvelopeId?, discoverDismissed?: true, drive?: { enabled: boolean,
+  accountEmail?: string, lastUploadedAt?, lastUploadedHash?, lastError?: string } }`. Excluded from
+  backup and from the derived-cache sweep (enumerated in `derivedCacheReset.test.ts`). `deviceId` is
+  random, generated once, never derived from hardware.
+- `expo-secure-store` key `vedansh.drive.refresh` — the OAuth refresh token. Never in AsyncStorage,
+  never in the envelope, deleted on sign-out.
 - No other new persisted state. The registry is code.
 
 ## 6. Merge semantics — decided here
@@ -190,18 +268,31 @@ and **export ∘ import on an empty device reproduces the export** section-for-s
 4. **Scheduled reminder to back up** — no. One DISCOVER card once; the "last backup" line does the rest.
 5. **Should `japam-counter` (the live mala position) be included?** — yes, as `incoming-wins`; it is
    small and a mid-mala position is exactly what a phone change interrupts.
+6. **Drive sync default** — **off**, opt-in with sign-in (recommended). A default-on cloud upload of
+   birth details and family names is not this app.
+7. **iCloud Drive as an automatic destination** — not in v1 (§3.7 platform notes); revisit Q1 2027 on
+   demand. The Files-provider path already reaches iCloud Drive manually.
+8. **Upload cadence** — on background + `MIN_UPLOAD_INTERVAL` 6 h + manual "sync now" (recommended);
+   no periodic background task (no `expo-background-fetch`, no new permission).
+9. **Hidden `appDataFolder` vs a visible "Vedansh" folder** — hidden (recommended, §3.7). A visible
+   folder is browsable JSON of birth details; the file-export path already serves the user who wants
+   a file they can see.
 
 ## 8. Metrics (local, bundle-only)
 
 Export count and import count with envelope ids in `backup-meta`; the diagnostics share includes both
-so a user reporting "restore didn't take" hands over the pair. Quarter target (roadmap §5): ≥ 60 % of
-devices that export within 14 days also import somewhere — measured as the ratio of import events
-whose envelope id matches an export event *somewhere*, which only the user's own report can show, so
-the honest field metric is the two raw counts plus App Store review sentiment.
+so a user reporting "restore didn't take" hands over the pair. Drive adds: sync-enabled flag, upload
+success/failure counts, and restore-from-Drive count — all local. Quarter targets (roadmap §5): ≥ 25 %
+of devices with ≥ 30 activity days have Drive sync on within 30 days of 1.6.0; ≥ 60 % of devices that
+export or sync within 14 days also restore somewhere (only a user's own diagnostics share can pair the
+two ids, so the honest field metric is the raw counts plus review sentiment).
 
 ## 9. Non-goals
 
-- No cloud, account, sync, or automatic backup — the OS's file providers are the cloud.
+- **No Vedansh server, no Vedansh account, no live two-way sync between devices.** Drive is a
+  destination for the user's own file under their own Google account; conflicts are resolved by the
+  user on the preview screen, never in the background.
+- No iCloud Drive automatic destination in v1 (§3.7); no Dropbox/OneDrive/other providers.
 - No cross-app import (other apps' data), no CSV.
 - No restore of derived caches, OS notification bookkeeping, or this-install UX flags (§3.1 exclusions).
 - No partial "share my routine with a friend" — that is a different feature with a different privacy
@@ -217,6 +308,12 @@ the honest field metric is the two raw counts plus App Store review sentiment.
 | Notification permission differs on the new device | Prefs restore honestly; the provider's existing "hard denial flips the flag" logic runs unchanged |
 | Two phones share one backup (a couple) | `union-by-id` makes merge a reasonable outcome; birth-profile cap 8 is enforced with an overflow message |
 | The picker's file type filtering differs across OEM Android file managers | Accept `*/*` and validate by content, not by extension |
+| **Google OAuth consent verification** takes weeks or requires a privacy-policy/homepage review, gating 1.6.0 | Phase 0 checks the `drive.appdata` scope's classification and starts the consent-screen setup in week 41; the file path ships in 1.6.0 regardless and Drive sync can flip on by OTA once the client id is approved (the client is JS) |
+| Refresh token expires / is revoked (Google's 6-month inactivity or user action) | Card shows "sign in again"; the planner stops silently until then; nothing is lost because the on-device data is the source of truth |
+| Users read "sync" as live multi-device sync and expect two phones to stay identical | Copy says **बैकअप** everywhere ("Google Drive पर स्वतः बैकअप"); restore is always an explicit act through the preview |
+| Two devices on one account | One file per `deviceId`; restore lists both with device names and dates |
+| Drive quota full | Upload fails with the reason on the card; envelope is < 1 MB so this is rare and reportable |
+| A user disconnects the app in Google settings | `appDataFolder` is wiped by Google; the card shows the state on next attempt; on-device data untouched |
 
 ## 11. Tests & release gates (RULEBOOK §0/§0.1)
 
@@ -224,15 +321,24 @@ the honest field metric is the two raw counts plus App Store review sentiment.
   merge tests, idempotence + round-trip over seeded fixtures, PRD-29 legacy-file acceptance, result
   reporting on a failing section; Jest suites for both screens (preview counts, sensitive line, mode
   switch copy) and the onboarding row.
+- **Drive (unit):** `drive/client.test.ts` against a mocked `fetch` (list/upload/update/get/delete,
+  multipart body shape, 401 → refresh → retry once, 403 quota surfaced), `drive/sync.test.ts` (pure
+  planner: hash-unchanged → no upload, interval, manual override, failure backoff),
+  `drive/auth.test.ts` (token never written to AsyncStorage, sign-out deletes secure-store key), the
+  card's states (off / signed-in / last synced / needs sign-in / error).
 - **E2E:** `backup-smoke.yaml` — More → संचय → export summary → share sheet visible (Maestro cannot
-  complete a share) → restore door present. The document picker is system UI Maestro cannot drive, so
-  import is covered by the round-trip unit test — the same rationale recorded for notification taps
-  in [[e2e-verification]]. A manual **device round-trip on iOS and Android** is the release gate and
-  is recorded in this PRD's verification section when done.
-- **Docs in the same PR:** `design.md` new **§72 संचय** (screens, preview row anatomy, copy rules,
-  sensitive-line rule) + §37 More-hub rows + §47 onboarding sheet row; `RULEBOOK.md` new **§26 —
-  the backup registry contract**: *a new persisted user-state key ships with a registry section (or an
-  explicit exclusion with reason), a coverage-test pass, and a round-trip fixture.*
+  complete a share) → restore door present → Drive card present with the switch **off** (flipping it
+  opens Google's system browser, which Maestro cannot drive). The document picker and Google sign-in
+  are system UI, so import and sync are covered by the unit suites — the same rationale recorded for
+  notification taps in [[e2e-verification]]. Manual release gates, recorded in this PRD when done: a
+  **file round-trip** on iOS and Android, and a **Drive round-trip** (enable on device A → sign in on
+  device B → restore) across platforms.
+- **Docs in the same PR:** `design.md` new **§72 संचय** (screens, the three cards, preview row
+  anatomy, copy rules, sensitive-line rule, the "बैकअप not sync" copy rule) + §37 More-hub rows + §47
+  onboarding sheet row; `RULEBOOK.md` new **§26 — the backup registry contract**: *a new persisted
+  user-state key ships with a registry section (or an explicit exclusion with reason), a coverage-test
+  pass, and a round-trip fixture*; and the roadmap's §0 constraint wording. The privacy policy page
+  the store listing points at gains a paragraph on Drive sync (Google's consent screen requires it).
 - `whatsNew['1.6.0']` + `APP_TOUR_VERSION` bump; `npm run lint` at 0.
 
 ## 12. Why it fits
