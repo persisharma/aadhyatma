@@ -149,3 +149,4 @@ Ops: `ingest`, `query`, `lint`, `gap`, `prune`.
 ## [2026-09-02] ingest | Removed full verse-pool materialisation from Home routines, widgets, reminders, and Daily Bhakti; cold widget links now mount their target tab directly.
 ## [2026-09-03] ingest | cold-start notification tap now resolved pre-mount like the widget URL (shared `StartTarget`, `coldStartTargetFromNotification`) — notifications.md + home-widgets.md updated
 ## [2026-09-03] ingest | cold-start resolution extended to every notification family — `resolveNotificationTarget` is the single warm+cold table, `StartTarget` is now `{ name, params }` over TabParamList; notifications.md + home-widgets.md updated
+## [2026-09-03] ingest | widget-landing audit: all three widget URL shapes verified planner→native→parser→StartTarget; fixed HomeTab notification targets (RoutineToday, JapamCounter) missing `initial: false` as cold-start initialParams

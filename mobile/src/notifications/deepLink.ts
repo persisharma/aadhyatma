@@ -172,8 +172,13 @@ export function resolveNotificationTarget(data: unknown): StartTarget | null {
   // both open Today's Practice — where all of today's practice lives (this
   // routine, other routines, active sankalps). Reading progress is untouched;
   // the user chooses to open the day's reading there.
+  //
+  // `initial: false` matters on a COLD start: this object seeds the Home
+  // stack's initialParams, and without it RoutineToday would become the
+  // stack's initial route — back would have nothing to pop and Home itself
+  // would be unreachable for the session (the `tabTargets.test.ts` bug).
   if (isSadhanaReminderPayload(data) || isRoutineReminderPayload(data)) {
-    return { name: 'HomeTab', params: { screen: 'RoutineToday' } };
+    return { name: 'HomeTab', params: { screen: 'RoutineToday', initial: false } };
   }
 
   // A Japam-alarm tap opens the counter with the mantra preselected and the
@@ -181,10 +186,11 @@ export function resolveNotificationTarget(data: unknown): StartTarget | null {
   // user directly into chanting. The mantraId is validated against the
   // catalogue to survive content revisions (a stale alarm shouldn't crash
   // the screen); an unknown mantra resolves to nothing, i.e. plain Home.
+  // `initial: false` for the same cold-start reason as RoutineToday above.
   if (isJapamAlarmPayload(data) && findJapamMantra(data.mantraId)) {
     return {
       name: 'HomeTab',
-      params: { screen: 'JapamCounter', params: { mantraId: data.mantraId, autoPlay: true } },
+      params: { screen: 'JapamCounter', params: { mantraId: data.mantraId, autoPlay: true }, initial: false },
     };
   }
 

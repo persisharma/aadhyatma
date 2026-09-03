@@ -340,7 +340,7 @@ describe('startTargetFromNotification', () => {
     ]) {
       expect(startTargetFromNotification(responseWithData(data))).toEqual({
         name: 'HomeTab',
-        params: { screen: 'RoutineToday' },
+        params: { screen: 'RoutineToday', initial: false },
       });
     }
     expect(startTargetFromNotification(responseWithData({ type: 'pitru-smaran-reminder', entryId: 'e1' }))).toEqual({
@@ -360,7 +360,7 @@ describe('startTargetFromNotification', () => {
   test('a launching japam alarm opens the counter auto-playing; a stale mantra falls back to the ordinary launch', () => {
     expect(startTargetFromNotification(responseWithData({ type: 'japam-alarm', alarmId: 'a1', mantraId: 'om-namah-shivaya' }))).toEqual({
       name: 'HomeTab',
-      params: { screen: 'JapamCounter', params: { mantraId: 'om-namah-shivaya', autoPlay: true } },
+      params: { screen: 'JapamCounter', params: { mantraId: 'om-namah-shivaya', autoPlay: true }, initial: false },
     });
     expect(startTargetFromNotification(responseWithData({ type: 'japam-alarm', alarmId: 'a1', mantraId: 'no-such-mantra' }))).toBeNull();
   });
@@ -386,5 +386,34 @@ describe('startTargetFromNotification', () => {
     }
     expect(startTargetFromNotification(null)).toBeNull();
     expect(startTargetFromNotification(undefined)).toBeNull();
+  });
+});
+
+// Every cold-start target that names a screen INSIDE a stack tab (rather than
+// the stack's own root) must carry `initial: false`. As `initialParams` on a
+// cold start, a nested target without it makes that screen the stack's initial
+// route: back has nothing to pop and the stack's real root — Home, the Panchang
+// calendar, the More hub — is unreachable for the rest of the session.
+describe('cold-start targets keep the stack root underneath', () => {
+  const STACK_ROOTS: Record<string, string> = { HomeTab: 'Home', PanchangTab: 'PanchangHome', MoreTab: 'MoreHome' };
+  const payloads: unknown[] = [
+    { type: 'vrat-reminder', ruleId: 'nirjala-ekadashi' },
+    { type: 'muhurat-reminder', occasionId: 'vahan', dateMs: Date.now() },
+    { type: 'festive-reminder', ruleId: 'diwali' },
+    { type: 'sadhana-reminder', programId: 'p1' },
+    { type: 'routine-reminder' },
+    { type: 'pitru-smaran-reminder', entryId: 'e1' },
+    { type: 'janma-tithi-reminder', personId: 'p9' },
+    { type: 'pitru-paksha-reminder' },
+    { type: 'japam-alarm', alarmId: 'a1', mantraId: 'om-namah-shivaya' },
+  ];
+  test.each(payloads.map((p) => [(p as { type: string }).type, p]))('%s', (_type, payload) => {
+    const target = startTargetFromNotification(responseWithData(payload));
+    expect(target).not.toBeNull();
+    const params = target!.params as { screen?: string; initial?: boolean } | undefined;
+    const root = STACK_ROOTS[target!.name];
+    if (root && params?.screen && params.screen !== root) {
+      expect(params.initial).toBe(false);
+    }
   });
 });
