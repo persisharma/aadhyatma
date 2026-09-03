@@ -1,10 +1,10 @@
 import TabNavigator from './TabNavigator';
-import type { WidgetDeepLinkTarget } from '@/widgets/deepLink';
+import type { StartTarget } from './startTarget';
 
 export default function RootNavigator({
-  initialWidgetTarget,
+  initialTarget,
 }: {
-  initialWidgetTarget?: WidgetDeepLinkTarget | null;
+  initialTarget?: StartTarget | null;
 }) {
-  return <TabNavigator initialWidgetTarget={initialWidgetTarget} />;
+  return <TabNavigator initialTarget={initialTarget} />;
 }

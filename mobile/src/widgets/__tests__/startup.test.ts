@@ -50,18 +50,25 @@ test('config plugins wire the canonical fixture into both native decoders', () =
   assert.match(iosPlugin, /WidgetPayloadContract\.swift/);
 });
 
-test('App resolves a cold widget URL before navigation mounts', () => {
+test('App resolves a cold widget URL or launching notification before navigation mounts', () => {
   const app = fs.readFileSync(path.join(process.cwd(), 'App.tsx'), 'utf8');
   const tabs = fs.readFileSync(path.join(process.cwd(), 'src/navigation/TabNavigator.tsx'), 'utf8');
   assert.match(app, /Linking\.getInitialURL\(\)/);
-  assert.match(app, /INITIAL_WIDGET_URL_TIMEOUT_MS/);
+  assert.match(app, /INITIAL_TARGET_TIMEOUT_MS/);
   assert.match(app, /setTimeout\(\(\) => finish\(null\)/);
   assert.match(app, /clearTimeout\(timeoutId\)/);
   assert.match(app, /parseWidgetDeepLink\(url\)/);
-  assert.match(app, /<RootNavigator initialWidgetTarget=\{initialWidgetTarget\}/);
+  // The notification that launched the app is read in the SAME pre-mount race,
+  // so a daily-verse tap makes Daily Bhakti the initial tab instead of a
+  // post-mount redirect off Home. A widget URL still wins without waiting on it.
+  assert.match(app, /coldStartTargetFromNotification\(response\)/);
+  assert.match(app, /Promise\.all\(\[widgetTarget, notificationTarget\]\)/);
+  assert.match(app, /widgetTarget\.then\(\(target\) => \{ if \(target\) finish\(target\); \}\)/);
+  assert.match(app, /coldNotificationConsumedRef\.current\) return;/);
+  assert.match(app, /<RootNavigator initialTarget=\{initialTarget\}/);
   assert.doesNotMatch(app, /retryWidgetDeepLink/);
   assert.match(tabs, /initialRouteName=\{initialRouteName\}/);
-  assert.match(tabs, /initialWidgetTarget\?\.kind === 'verse'/);
+  assert.match(tabs, /initialTarget\?\.kind === 'verse'/);
   assert.match(tabs, /\? 'DailyBhaktiTab'/);
   assert.match(tabs, /screen: 'JapamCounter',[\s\S]*initial: false/);
   assert.match(tabs, /screen: 'CategoryList',[\s\S]*initial: false/);

@@ -9,7 +9,7 @@
 //   • @react-navigation/native ships ESM the react-native Jest preset doesn't
 //     transform; deepLink only needs CommonActions.navigate (to build the
 //     action) and createNavigationContainerRef (the dispatch target).
-import { navigationRef, handleNotificationResponse } from '../deepLink';
+import { navigationRef, handleNotificationResponse, coldStartTargetFromNotification } from '../deepLink';
 
 jest.mock('expo-notifications', () => ({}));
 jest.mock('@react-navigation/native', () => ({
@@ -292,5 +292,26 @@ describe('handleNotificationResponse', () => {
     expect(dispatchSpy.mock.calls[0][0]).toMatchObject({
       payload: { name: 'MoreTab', params: { screen: 'PitruPakshaOverview', initial: false } },
     });
+  });
+});
+
+describe('coldStartTargetFromNotification', () => {
+  test('a launching daily-verse tap becomes the verse start target the widget path uses', () => {
+    expect(coldStartTargetFromNotification(responseWithData(dailyVerse))).toEqual({
+      kind: 'verse',
+      sourceId: 'hanuman-chalisa',
+      verseIndex: 3,
+    });
+    expect(
+      coldStartTargetFromNotification(responseWithData({ ...dailyVerse, sourceId: 'gita', chapter: 2 }))
+    ).toEqual({ kind: 'verse', sourceId: 'gita', verseIndex: 3, chapter: 2 });
+  });
+
+  test('anything but a well-formed daily verse leaves the default cold start alone', () => {
+    for (const data of [undefined, null, {}, { type: 'daily-verse' }, { type: 'festive-reminder', ruleId: 'diwali' }]) {
+      expect(coldStartTargetFromNotification(responseWithData(data))).toBeNull();
+    }
+    expect(coldStartTargetFromNotification(null)).toBeNull();
+    expect(coldStartTargetFromNotification(undefined)).toBeNull();
   });
 });

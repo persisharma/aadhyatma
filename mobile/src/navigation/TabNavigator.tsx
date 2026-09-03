@@ -13,7 +13,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { scriptTitleFont } from '@/utils/langType';
 import type { TabParamList } from './types';
-import type { WidgetDeepLinkTarget } from '@/widgets/deepLink';
+import type { StartTarget } from './startTarget';
 import {
   HomeIcon,
   BhaktiIcon,
@@ -32,9 +32,12 @@ const LazyPanchangStackNavigator = lazy(() => import('./PanchangStackNavigator')
 const IMMERSIVE_HOME_ROUTES = ['VratKathaReader'];
 
 export default function TabNavigator({
-  initialWidgetTarget,
+  initialTarget,
 }: {
-  initialWidgetTarget?: WidgetDeepLinkTarget | null;
+  // Resolved by App.tsx before this mounts (a cold widget URL or the
+  // notification tap that launched the app). Making it the INITIAL route is
+  // the whole point: dispatching after mount would land on Home first.
+  initialTarget?: StartTarget | null;
 }) {
   const { colors } = useTheme();
   const { lang } = useGitaLanguage();
@@ -54,34 +57,34 @@ export default function TabNavigator({
   // contentByLang transliterates the Hindi label for gu/kn.
   const tabLabel = (hi: string, en: string) => contentByLang(lang, hi, en);
   const initialRouteName: keyof TabParamList =
-    initialWidgetTarget?.kind === 'verse'
+    initialTarget?.kind === 'verse'
       ? 'DailyBhaktiTab'
-      : initialWidgetTarget?.kind === 'panchang'
+      : initialTarget?.kind === 'panchang'
         ? 'PanchangTab'
         : 'HomeTab';
   const homeInitialParams: TabParamList['HomeTab'] =
-    initialWidgetTarget?.kind === 'japam'
-      ? initialWidgetTarget.mantraId
+    initialTarget?.kind === 'japam'
+      ? initialTarget.mantraId
         ? {
             screen: 'JapamCounter',
-            params: { mantraId: initialWidgetTarget.mantraId },
+            params: { mantraId: initialTarget.mantraId },
             initial: false,
           }
         : { screen: 'CategoryList', params: { categoryId: 'japam' }, initial: false }
       : undefined;
   const verseInitialParams: TabParamList['DailyBhaktiTab'] =
-    initialWidgetTarget?.kind === 'verse'
+    initialTarget?.kind === 'verse'
       ? {
-          sourceId: initialWidgetTarget.sourceId,
-          verseIndex: initialWidgetTarget.verseIndex,
-          ...(initialWidgetTarget.chapter == null ? {} : { chapter: initialWidgetTarget.chapter }),
+          sourceId: initialTarget.sourceId,
+          verseIndex: initialTarget.verseIndex,
+          ...(initialTarget.chapter == null ? {} : { chapter: initialTarget.chapter }),
         }
       : undefined;
   const panchangInitialParams: TabParamList['PanchangTab'] =
-    initialWidgetTarget?.kind === 'panchang'
+    initialTarget?.kind === 'panchang'
       ? {
           screen: 'PanchangHome',
-          params: { dateMs: initialWidgetTarget.dateMs },
+          params: { dateMs: initialTarget.dateMs },
           initial: false,
         }
       : undefined;

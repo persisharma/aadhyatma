@@ -5,6 +5,7 @@ import { findJapamMantra } from '@/data/japam';
 import { EVENT_RULES } from '@/panchang/eventMuhurat';
 import { isJapamAlarmPayload } from './japamAlarms';
 import type { TabParamList } from '@/navigation/types';
+import type { StartTarget } from '@/navigation/startTarget';
 import type { NotificationPayload } from './pure';
 
 /**
@@ -81,6 +82,35 @@ function isJanmaTithiReminderPayload(data: unknown): data is { type: 'janma-tith
   if (!data || typeof data !== 'object') return false;
   const d = data as Record<string, unknown>;
   return d.type === 'janma-tithi-reminder' && typeof d.personId === 'string';
+}
+
+/**
+ * Resolve the notification tap that LAUNCHED the app into a cold-start target
+ * for `TabNavigator`'s initial route — the same shape a cold widget URL yields.
+ *
+ * Only the daily verse resolves here, and it resolves to exactly what
+ * `handleNotificationResponse` would dispatch for it (the Daily Bhakti tab with
+ * the baked verse identity). The difference is timing: App.tsx reads this
+ * before `NavigationContainer` mounts, so Daily Bhakti IS the first committed
+ * tab. Dispatching the same navigate after mount — the path the live listener
+ * still takes for warm taps — commits Home first and only then redirects, and
+ * the user watches Home flash by on a tap that never asked for it.
+ *
+ * The other families land on nested stack screens (`initial: false` routes)
+ * whose parent tab is the honest first frame, so they keep the post-mount
+ * dispatch. Returns null for anything that is not a well-formed daily verse.
+ */
+export function coldStartTargetFromNotification(
+  response: Notifications.NotificationResponse | null | undefined
+): StartTarget | null {
+  const data = response?.notification?.request?.content?.data;
+  if (!isDailyVersePayload(data)) return null;
+  return {
+    kind: 'verse',
+    sourceId: data.sourceId,
+    verseIndex: data.verseIndex,
+    ...(data.chapter != null ? { chapter: data.chapter } : {}),
+  };
 }
 
 /**

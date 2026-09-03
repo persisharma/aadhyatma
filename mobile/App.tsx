@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { InteractionManager, Linking, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -47,7 +47,12 @@ import { PanchangLocationProvider } from '@/contexts/PanchangLocationContext';
 import { AudioPlayerProvider } from '@/contexts/AudioPlayerContext';
 import { ReadAloudPrefsProvider } from '@/contexts/ReadAloudPrefsContext';
 import { ReadAloudProvider } from '@/contexts/ReadAloudContext';
-import { handleNotificationResponse, navigationRef } from '@/notifications/deepLink';
+import {
+  coldStartTargetFromNotification,
+  handleNotificationResponse,
+  navigationRef,
+} from '@/notifications/deepLink';
+import type { StartTarget } from '@/navigation/startTarget';
 import ReminderOptInModal from '@/components/ReminderOptInModal';
 import UpdateReadyModal from '@/components/UpdateReadyModal';
 import FeatureTour from '@/components/FeatureTour';
@@ -74,11 +79,7 @@ import { resetDerivedCachesIfBuildChanged } from '@/utils/derivedCacheReset';
 import { prefetchTodayPanchang } from '@/panchang/panchangLaunchPrefetch';
 import RootNavigator from '@/navigation/RootNavigator';
 import WidgetCoordinator from '@/widgets/WidgetCoordinator';
-import {
-  handleWidgetDeepLink,
-  parseWidgetDeepLink,
-  type WidgetDeepLinkTarget,
-} from '@/widgets/deepLink';
+import { handleWidgetDeepLink, parseWidgetDeepLink } from '@/widgets/deepLink';
 import { launchMark, launchMarkOnce } from '@/utils/launchTrace';
 
 SplashScreen.preventAutoHideAsync().catch(() => {
@@ -119,13 +120,16 @@ launchMark('app-module-body');
 // finally allowed to run, so a late one indicts whatever held the thread.
 InteractionManager.runAfterInteractions(() => launchMark('first-ui-idle'));
 
-const INITIAL_WIDGET_URL_TIMEOUT_MS = 1_000;
+const INITIAL_TARGET_TIMEOUT_MS = 1_000;
 
 export default function App() {
   launchMarkOnce('app-render');
-  const [initialWidgetTarget, setInitialWidgetTarget] = useState<
-    WidgetDeepLinkTarget | null | undefined
-  >(undefined);
+  const [initialTarget, setInitialTarget] = useState<StartTarget | null | undefined>(
+    undefined
+  );
+  // Set when the cold-start target came from the notification that launched us,
+  // so the retry loop below does not dispatch the same tap a second time.
+  const coldNotificationConsumedRef = useRef(false);
   const [fontsReady] = useFonts({
     NotoSerifDevanagari_500Medium,
     NotoSerifDevanagari_600SemiBold,
@@ -144,27 +148,41 @@ export default function App() {
 
   if (fontsReady) launchMarkOnce('fonts-ready');
 
-  // Resolve a cold widget URL before mounting navigation. Otherwise the tab
-  // navigator commits its default Home route first, then an effect redirects
-  // to Daily Bhakti after Home has paid its mount cost. This read races the
-  // font gate, so ordinary launches do not gain another serial startup step.
+  // Resolve the cold-start destination BEFORE mounting navigation. Two launch
+  // sources can name one: a widget URL and the notification tap that launched
+  // the app. Otherwise the tab navigator commits its default Home route first,
+  // then an effect redirects to Daily Bhakti after Home has paid its mount cost
+  // — which is exactly how a notification tap used to "land on the homepage
+  // first". Both reads race the font gate under one bounded timeout, so
+  // ordinary launches do not gain another serial startup step.
   useEffect(() => {
     let cancelled = false;
     let settled = false;
-    const finish = (target: WidgetDeepLinkTarget | null) => {
+    const finish = (target: StartTarget | null, fromNotification = false) => {
       if (cancelled || settled) return;
       settled = true;
       clearTimeout(timeoutId);
-      setInitialWidgetTarget(target);
+      if (fromNotification) coldNotificationConsumedRef.current = true;
+      setInitialTarget(target);
     };
-    const timeoutId = setTimeout(() => finish(null), INITIAL_WIDGET_URL_TIMEOUT_MS);
-    Linking.getInitialURL()
-      .then((url) => {
-        finish(
-          url?.startsWith('vedansh://widget/') ? parseWidgetDeepLink(url) : null
-        );
-      })
-      .catch(() => finish(null));
+    const timeoutId = setTimeout(() => finish(null), INITIAL_TARGET_TIMEOUT_MS);
+    const widgetTarget = Linking.getInitialURL()
+      .then((url) => (url?.startsWith('vedansh://widget/') ? parseWidgetDeepLink(url) : null))
+      .catch(() => null);
+    const notificationTarget = Notifications.getLastNotificationResponseAsync()
+      .then((response) =>
+        // Snooze taps never navigate (see the cold-start handler below).
+        response?.actionIdentifier === JAPAM_SNOOZE_ACTION_ID
+          ? null
+          : coldStartTargetFromNotification(response)
+      )
+      .catch(() => null);
+    // A widget URL wins outright and need not wait on the notification read.
+    widgetTarget.then((target) => { if (target) finish(target); });
+    Promise.all([widgetTarget, notificationTarget]).then(([fromWidget, fromNotification]) => {
+      if (fromWidget) finish(fromWidget);
+      else finish(fromNotification, fromNotification != null);
+    });
     return () => { cancelled = true; clearTimeout(timeoutId); };
   }, []);
 
@@ -183,6 +201,9 @@ export default function App() {
     Notifications.getLastNotificationResponseAsync()
       .then((response) => {
         if (cancelled || !response) return;
+        // Already consumed as the navigator's initial route — dispatching it
+        // again would only re-navigate to the tab we are already on.
+        if (coldNotificationConsumedRef.current) return;
         // Defer until NavigationContainer marks itself ready, but bound the
         // retry — if navigation never readies in ~5 s, give up rather than
         // spinning forever.
@@ -221,14 +242,14 @@ export default function App() {
   // Cold widget URLs become the navigator's initial route above. Only warm
   // links need an imperative dispatch after the container is already mounted.
   useEffect(() => {
-    if (!fontsReady || initialWidgetTarget === undefined) return undefined;
+    if (!fontsReady || initialTarget === undefined) return undefined;
     const sub = Linking.addEventListener('url', ({ url }) => {
       if (url.startsWith('vedansh://widget/')) handleWidgetDeepLink(url);
     });
     return () => sub.remove();
-  }, [fontsReady, initialWidgetTarget]);
+  }, [fontsReady, initialTarget]);
 
-  if (!fontsReady || initialWidgetTarget === undefined) {
+  if (!fontsReady || initialTarget === undefined) {
     return <View style={{ flex: 1, backgroundColor: lightColors.parchment }} />;
   }
 
@@ -281,7 +302,7 @@ export default function App() {
                           <View style={{ flex: 1 }}>
                             <NavigationContainer ref={navigationRef}>
                               <StatusBar style="dark" />
-                              <RootNavigator initialWidgetTarget={initialWidgetTarget} />
+                              <RootNavigator initialTarget={initialTarget} />
                               <ReminderOptInModal />
                               <UpdateReadyModal />
                               <WhatsNewModal />

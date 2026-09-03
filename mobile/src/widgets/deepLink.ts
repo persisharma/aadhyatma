@@ -1,11 +1,10 @@
 import { CommonActions } from '@react-navigation/native';
 import { findJapamMantra } from '@/data/japam';
 import { navigationRef } from '@/notifications/deepLink';
+import type { StartTarget } from '@/navigation/startTarget';
 
-export type WidgetDeepLinkTarget =
-  | { kind: 'verse'; sourceId: string; verseIndex: number; chapter?: number }
-  | { kind: 'panchang'; dateMs: number }
-  | { kind: 'japam'; mantraId?: string };
+/** Widget URLs resolve to the shared cold-start target shape (see `navigation/startTarget.ts`). */
+export type WidgetDeepLinkTarget = StartTarget;
 
 export function parseWidgetDeepLink(raw: string): WidgetDeepLinkTarget | null {
   try {
