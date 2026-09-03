@@ -14,7 +14,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import ReaderHeader from '@/components/ReaderHeader';
 import { useGitaLanguage } from '@/data/gita/language';
-import { getDaanKatha, getDaanOccasion, getDaanPrinciples } from '@/data/daan';
+import { getDaanCause, getDaanKatha, getDaanOccasion, getDaanPrinciples } from '@/data/daan';
 import { getKathaContent } from '@/panchang/kathaContent';
 import type { DaanStackParamList } from '@/navigation/types';
 import { useTheme } from '@/theme/ThemeContext';
@@ -221,6 +221,20 @@ export default function DaanJourneyScreen({ navigation, route }: Props) {
             </View>
             {/* The journey's terminal actions — the only place the directory door exists. */}
             <View style={[styles.terminal, { borderTopColor: colors.divider }]}>
+              {occasion.causes && occasion.causes.length > 0 ? (
+                <Text
+                  testID="daan-journey-causes"
+                  style={{ fontFamily: bodyFont, fontSize: 12.5, lineHeight: 19, color: colors.saffronDeep, textAlign: 'center', marginBottom: 10 }}
+                >
+                  {contentByLang(lang, 'इस दिन की सेवा — ', 'This day serves — ')}
+                  {occasion.causes
+                    .map((id) => {
+                      const meta = getDaanCause(id);
+                      return meta ? contentByLang(lang, meta.nameHi, meta.nameEn) : id;
+                    })
+                    .join(' · ')}
+                </Text>
+              ) : null}
               <View style={styles.actionRow}>
                 <Pressable
                   testID="daan-journey-record"
@@ -237,7 +251,9 @@ export default function DaanJourneyScreen({ navigation, route }: Props) {
                   testID="daan-journey-directory"
                   accessibilityRole="button"
                   accessibilityLabel="Open the giving directory, external"
-                  onPress={() => navigation.navigate('DaanDirectory')}
+                  onPress={() =>
+                    navigation.navigate('DaanDirectory', occasion.causes ? { causes: [...occasion.causes] } : {})
+                  }
                   style={[styles.actionBtn, { borderColor: colors.saffron, borderRadius: radii.pill }]}
                 >
                   <Text style={{ fontFamily: titleFont, fontSize: 13, color: colors.saffronDeep }}>

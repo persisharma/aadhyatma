@@ -61,6 +61,13 @@ export type DaanOccasionEntry = {
   whyHi: string;
   whyEn: string;
   items: readonly DaanItem[];
+  /**
+   * The causes this day's daan traditionally serves — the occasion → प्रयोजन
+   * link (PRD-26 §5.1). The journey's terminal door opens the दान-द्वार
+   * filtered to these; omit where no cause honestly fits (the door then opens
+   * the full directory rather than an invented filter).
+   */
+  causes?: readonly DaanCause[];
   /** Shipped katha-library id (cross-link — never duplicated). */
   kathaId?: string;
   /** One of the five teaching-kathas in this registry (kathas.ts). */
@@ -115,6 +122,22 @@ export type DaanCategory =
   | 'shram'
   | 'anya';
 
+/**
+ * The प्रयोजन (cause) axis — WHOM the giving serves. Distinct from
+ * `DaanCategory`, which is the dravya (what was given) the ledger records.
+ * Metadata + the text-intent purpose bridge live in `causes.ts`.
+ */
+export type DaanCause =
+  | 'anna'
+  | 'gau'
+  | 'bal'
+  | 'vriddha'
+  | 'vidya'
+  | 'arogya'
+  | 'vastra'
+  | 'jeev'
+  | 'aapada';
+
 export type DaanOrgKind = 'anna-kshetra' | 'ngo' | 'temple-trust' | 'seva-portal';
 
 /**
@@ -129,7 +152,8 @@ export type DaanOrgEntry = {
   nameHi: string;
   nameEn: string;
   kind: DaanOrgKind;
-  categories: readonly DaanCategory[];
+  /** The causes this row serves — the दान-द्वार's grouping axis. */
+  causes: readonly DaanCause[];
   aboutHi: string;
   aboutEn: string;
   registrationHi: string;

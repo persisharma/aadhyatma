@@ -42,7 +42,7 @@ export type VidhiStackParamList = {
 
 export type GitaReaderParams = { chapter: number; initialIndex?: number };
 
-export type HomeStackParamList = VidhiStackParamList & {
+export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & {
   Home: undefined;
   /**
    * जिज्ञासा (PRD-41). `seed` is ask-from-context: the surface the user came
@@ -120,7 +120,8 @@ export type DaanStackParamList = {
   DaanJourney: { occasionId: string };
   DaanLedger: undefined;
   DaanEntry: { occasionId?: string } | undefined;
-  DaanDirectory: undefined;
+  /** `causes` pre-filters the द्वार to an occasion's प्रयोजन (PRD-26 §5.1). */
+  DaanDirectory: { causes?: string[] } | undefined;
   DaanDirectoryDetail: { orgId: string };
   DaanKatha: { kathaId: string };
 };

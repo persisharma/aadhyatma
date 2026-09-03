@@ -16,6 +16,8 @@ import { DAAN_OCCASION_ENTRIES, getDaanOccasions } from '../occasions';
 import { DAAN_VAAR_ENTRIES, DAAN_VAAR_SOURCE, getDaanVaarEntry } from '../vaar';
 import { DAAN_KATHA_ENTRIES, getDaanKatha } from '../kathas';
 import { DAAN_ORG_ENTRIES, getDaanOrgs, isOrgRowStale } from '../directory';
+import { DAAN_CAUSES, causeForPurpose, getDaanCause } from '../causes';
+import { purposes } from '@/data/purposes';
 import { getDaanOccasionForRule } from '../index';
 import {
   DAAN_CATEGORIES,
@@ -168,8 +170,8 @@ describe('directory hygiene (PRD-26 §6.2)', () => {
       expect(org.verifiedOn).toMatch(/^\d{4}-\d{2}-\d{2}$/);
       for (const field of [org.nameHi, org.nameEn, org.aboutHi, org.aboutEn, org.registrationHi, org.registrationEn]) nonEmpty(field);
       expect(Boolean(org.nonMonetaryHi)).toBe(Boolean(org.nonMonetaryEn));
-      expect(org.categories.length).toBeGreaterThan(0);
-      for (const cat of org.categories) expect(DAAN_CATEGORIES).toContain(cat);
+      expect(org.causes.length).toBeGreaterThan(0);
+      for (const cause of org.causes) expect(getDaanCause(cause)).not.toBeNull();
       checkSource(org.source);
     }
   });
@@ -251,6 +253,53 @@ describe('stance-guard copy check (PRD-26 §2.2/§2.7)', () => {
     ];
     for (const word of banned) {
       expect(corpus.includes(word)).toBe(false);
+    }
+  });
+});
+
+
+describe('the cause axis (PRD-26 §5.1)', () => {
+  test('cause metadata is complete, uniquely ided and bilingual', () => {
+    const ids = DAAN_CAUSES.map((cause) => cause.id);
+    expect(new Set(ids).size).toBe(ids.length);
+    for (const cause of DAAN_CAUSES) {
+      for (const field of [cause.nameHi, cause.nameEn, cause.whomHi, cause.whomEn]) nonEmpty(field);
+    }
+  });
+
+  test('every cause has at least one verified org row — no empty shelf can render', () => {
+    const orgs = getDaanOrgs();
+    for (const cause of DAAN_CAUSES) {
+      expect(orgs.some((org) => org.causes.includes(cause.id))).toBe(true);
+    }
+  });
+
+  test("the user's named causes all exist: food, gaushala, kids, elder care", () => {
+    for (const id of ['anna', 'gau', 'bal', 'vriddha'] as const) {
+      expect(getDaanCause(id)).not.toBeNull();
+    }
+  });
+
+  test('every occasion cause is a real cause; the occasion→cause link is total where claimed', () => {
+    for (const entry of DAAN_OCCASION_ENTRIES) {
+      for (const cause of entry.causes ?? []) expect(getDaanCause(cause)).not.toBeNull();
+    }
+    // Sankranti is the worked example in the PRD: anna · vastra · gau.
+    const sankranti = DAAN_OCCASION_ENTRIES.find((e) => e.id === 'makar-sankranti')!;
+    expect(sankranti.causes).toEqual(['anna', 'vastra', 'gau']);
+  });
+
+  test('the purpose bridge is the honest subset — and never a fruit-promise', () => {
+    // Bridged only where the app's own text-intent vocabulary names the seva.
+    expect(causeForPurpose('knowledge')?.id).toBe('vidya');
+    expect(causeForPurpose('health')?.id).toBe('arogya');
+    // Giving must never be pointed at a prosperity/wealth intent (§2.2 stance).
+    expect(causeForPurpose('wealth')).toBeNull();
+    expect(causeForPurpose('prosperity')).toBeNull();
+    // Every declared purposeId is a real PurposeId from the shipped taxonomy.
+    const known = new Set(purposes.map((p) => p.id));
+    for (const cause of DAAN_CAUSES) {
+      if (cause.purposeId) expect(known.has(cause.purposeId)).toBe(true);
     }
   });
 });

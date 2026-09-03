@@ -20,6 +20,7 @@ export const DAAN_OCCASION_ENTRIES: readonly DaanOccasionEntry[] = [
       'सूर्य के उत्तरायण होने का पर्व — परम्परा इस संधि-काल को देने का दिन कहती है: जो प्रकाश बढ़ रहा है, उसे बाँटा जाता है। शीत ऋतु में स्निग्ध तिल शरीर और दीप दोनों को पोषण देता है।',
     whyEn:
       'The sun turns north — tradition calls this junction a day for giving: the light that grows is shared. In winter, oil-rich til nourishes both body and lamp.',
+    causes: ['anna', 'vastra', 'gau'],
     items: [
       { id: 'til-gud', nameHi: 'तिल-गुड़', nameEn: 'Til-gud', reasonHi: 'शीत में स्निग्ध पोषण — संक्रान्ति का मूल दान', reasonEn: 'warming nourishment in winter — the root Sankranti gift' },
       { id: 'khichdi', nameHi: 'खिचड़ी / अन्न', nameEn: 'Khichdi / anna', reasonHi: 'अन्न-दान सर्वोपरि — अनुशासन पर्व की शिक्षा', reasonEn: 'anna-daan comes first — the Anuśāsana teaching' },
@@ -47,6 +48,7 @@ export const DAAN_OCCASION_ENTRIES: readonly DaanOccasionEntry[] = [
       'हर सौर संक्रमण — सूर्य का नई राशि में प्रवेश — परम्परा में स्नान-दान का पुण्यकाल है। कर्क संक्रान्ति से दक्षिणायन आरम्भ होता है, इसलिए उसका दान-महत्व विशेष कहा गया है।',
     whyEn:
       'Every solar ingress — the sun entering a new rashi — is a snana-daan punyakala in the tradition. Karka Sankranti opens Dakshinayana, so its giving carries special weight.',
+    causes: ['anna'],
     items: [
       { id: 'snana-daan', nameHi: 'स्नान के बाद यथाशक्ति दान', nameEn: 'Daan after the bath, per one’s means', reasonHi: 'संक्रमण-काल का पारम्परिक क्रम — स्नान, फिर दान', reasonEn: 'the traditional order of the junction — bathe, then give' },
       { id: 'anna', nameHi: 'अन्न', nameEn: 'Anna', reasonHi: 'ऋतु-संधि पर अन्न सबसे सार्वभौम पात्र-दान है', reasonEn: 'at a season-junction, food is the most universal gift' },
@@ -70,6 +72,7 @@ export const DAAN_OCCASION_ENTRIES: readonly DaanOccasionEntry[] = [
       'वैशाख शुक्ल तृतीया — परम्परा कहती है कि इस तिथि पर श्रद्धा से किया गया छोटा-सा दान भी अक्षय हो जाता है। ग्रीष्म के द्वार पर जल, छाया और अन्न देना ही इस दिन का स्वरूप है।',
     whyEn:
       'Vaishakha shukla tritiya — the tradition says even a small gift given with shraddha on this tithi becomes akshaya, undiminishing. At summer’s door, its giving is water, shade and food.',
+    causes: ['anna'],
     items: [
       { id: 'jal-ghata', nameHi: 'जल से भरा घड़ा', nameEn: 'A filled water pot', reasonHi: 'ग्रीष्म के आरम्भ पर जल-दान — कथा में यही पहला दान है', reasonEn: 'water at the start of summer — the katha’s own first gift' },
       { id: 'pankha-chhata', nameHi: 'पंखा / छाता', nameEn: 'Fan / umbrella', reasonHi: 'धूप से छाया देना — इस तिथि की पारम्परिक सूची', reasonEn: 'shade from the sun — this tithi’s traditional list' },
@@ -95,6 +98,7 @@ export const DAAN_OCCASION_ENTRIES: readonly DaanOccasionEntry[] = [
       'आश्विन कृष्ण पक्ष — पितरों के स्मरण का पखवाड़ा। श्राद्ध की परम्परा में तर्पण के साथ अन्न-दान और भोजन कराना ही पितृ-तृप्ति का घरेलू रूप है।',
     whyEn:
       'The Ashvina krishna fortnight of remembering one’s ancestors. In the shraddha tradition, anna-daan and feeding — alongside tarpana — is the household form of pitru-tripti.',
+    causes: ['anna', 'vastra'],
     items: [
       { id: 'anna-bhojan', nameHi: 'अन्न-दान · भोजन', nameEn: 'Anna-daan · bhojan', reasonHi: 'श्राद्ध का केन्द्र — भोजन कराना', reasonEn: 'the centre of shraddha — feeding' },
       { id: 'til', nameHi: 'तिल', nameEn: 'Til', reasonHi: 'तिल-तर्पण की ही सामग्री — स्मरण का द्रव्य', reasonEn: 'the very substance of til-tarpana' },
@@ -119,6 +123,7 @@ export const DAAN_OCCASION_ENTRIES: readonly DaanOccasionEntry[] = [
       'कार्तिक शुक्ल नवमी — आँवला वृक्ष के पूजन का दिन। कथा कहती है कि इस दिन आँवले की छाया में कराया गया भोजन और दिया गया दान अक्षय होता है।',
     whyEn:
       'Kartika shukla navami — the day of the amla tree. The katha says food served and gifts given in its shade this day become akshaya.',
+    causes: ['anna'],
     items: [
       { id: 'bhojan-amla', nameHi: 'आँवले की छाया में भोजन', nameEn: 'Bhojan under the amla', reasonHi: 'कथा का केन्द्रीय दृश्य — सबको एक पंक्ति में भोजन', reasonEn: 'the katha’s central scene — all fed in one row' },
       { id: 'amla-anna', nameHi: 'आँवला · अन्न', nameEn: 'Amla · anna', reasonHi: 'इस नवमी की पारम्परिक दान-वस्तुएँ', reasonEn: 'this navami’s traditional gifts' },
@@ -143,6 +148,7 @@ export const DAAN_OCCASION_ENTRIES: readonly DaanOccasionEntry[] = [
       'आषाढ़ पूर्णिमा — व्यास-पूजन का दिन। इस दिन का दान गुरु-दक्षिणा और विद्या-दान है: जिसने सिखाया उसका सम्मान, और जो सीख रहा है उसकी सहायता।',
     whyEn:
       'Ashadha purnima — the day of Vyasa-pujan. Its giving is guru-dakshina and vidya-daan: honouring the one who taught, and helping the one still learning.',
+    causes: ['vidya'],
     items: [
       { id: 'dakshina', nameHi: 'गुरु-दक्षिणा', nameEn: 'Guru-dakshina', reasonHi: 'फल-पुष्प-वस्त्र सहित सम्मान — परम्परा का क्रम', reasonEn: 'honour with fruit, flower and cloth — the traditional form' },
       { id: 'vidya', nameHi: 'विद्या-दान', nameEn: 'Vidya-daan', reasonHi: 'पुस्तकें, शुल्क, शिक्षण — सीखने वाले की सहायता', reasonEn: 'books, fees, teaching — helping a learner' },
@@ -167,6 +173,7 @@ export const DAAN_OCCASION_ENTRIES: readonly DaanOccasionEntry[] = [
       'माघ शुक्ल पंचमी — सरस्वती पूजन और विद्यारम्भ का दिन। इस दिन का स्वाभाविक दान विद्या-दान है।',
     whyEn:
       'Magha shukla panchami — Saraswati pujan and vidyarambha. Its natural giving is vidya-daan.',
+    causes: ['vidya', 'bal'],
     items: [
       { id: 'vidya', nameHi: 'विद्या-दान', nameEn: 'Vidya-daan', reasonHi: 'पुस्तकें, लेखन-सामग्री, किसी बच्चे का शुल्क', reasonEn: 'books, writing materials, a child’s school fees' },
     ],
@@ -190,6 +197,7 @@ export const DAAN_OCCASION_ENTRIES: readonly DaanOccasionEntry[] = [
       'गंगा अवतरण के दिन — जल के पर्व का दान जल ही है: प्याऊ, शरबत, जल-पात्र। ज्येष्ठ की धूप में यह सबसे प्रत्यक्ष सेवा है।',
     whyEn:
       'The days of Ganga’s descent — a water festival’s giving is water itself: a pyau, sherbet, water vessels. In the Jyeshtha heat this is the most immediate seva.',
+    causes: ['anna'],
     items: [
       { id: 'jal', nameHi: 'जल-दान · प्याऊ', nameEn: 'Jal-daan · pyau', reasonHi: 'ज्येष्ठ की धूप में जल ही पात्र-दान है', reasonEn: 'in the Jyeshtha sun, water is the fitting gift' },
     ],
@@ -213,6 +221,7 @@ export const DAAN_OCCASION_ENTRIES: readonly DaanOccasionEntry[] = [
       'कार्तिक शुक्ल प्रतिपदा — अन्नकूट का ही अर्थ है अन्न का पर्वत, जो बाँटने के लिए रचा जाता है। यही दिन बलि-प्रतिपदा भी है — दान में अहंकार गला देने वाले राजा का स्मरण।',
     whyEn:
       'Kartika shukla pratipada — Annakut literally means a mountain of food, built to be shared. The same day is Bali Pratipada — remembering the king whose giving dissolved his own ego.',
+    causes: ['anna', 'gau'],
     items: [
       { id: 'anna', nameHi: 'अन्न-दान', nameEn: 'Anna-daan', reasonHi: 'अन्नकूट का प्रसाद बाँटना ही पर्व का रूप है', reasonEn: 'sharing the Annakut prasada is the festival’s own form' },
       { id: 'gau-seva', nameHi: 'गौ-सेवा', nameEn: 'Gau-seva', reasonHi: 'गोवर्धन गौ-धन का पर्व है', reasonEn: 'Govardhan is the festival of the cow-wealth' },
@@ -236,6 +245,7 @@ export const DAAN_OCCASION_ENTRIES: readonly DaanOccasionEntry[] = [
     titleEn: 'Bachh Baras — gau-seva',
     whyHi: 'गोवत्स द्वादशी — गाय और बछड़े के पूजन का दिन; इस दिन की सेवा गौ-ग्रास और चारा है।',
     whyEn: 'Govatsa dwadashi — the day of the cow and calf; its seva is gau-gras and fodder.',
+    causes: ['gau'],
     items: [
       { id: 'gau-gras', nameHi: 'गौ-ग्रास · चारा', nameEn: 'Gau-gras · fodder', reasonHi: 'पर्व का ही विधान — गौ माता को पहला ग्रास', reasonEn: 'the observance’s own form — the first morsel to the cow' },
     ],
@@ -258,6 +268,7 @@ export const DAAN_OCCASION_ENTRIES: readonly DaanOccasionEntry[] = [
       'धनतेरस से दीपावली तक दीपों का पर्व है — दीप-दान इसका पारम्परिक रूप है, धनतेरस की संध्या का यम-दीप उसका सबसे पुराना अंग।',
     whyEn:
       'From Dhanteras to Diwali runs the festival of lamps — deep-daan is its traditional form, the Yama-deepam of Dhanteras evening its oldest limb.',
+    causes: ['anna'],
     items: [
       { id: 'deep', nameHi: 'दीप-दान · यम-दीप', nameEn: 'Deep-daan · Yama-deepam', reasonHi: 'धनतेरस की संध्या का विधान', reasonEn: 'the Dhanteras-evening observance' },
       { id: 'anna-mithai', nameHi: 'अन्न · मिठाई बाँटना', nameEn: 'Sharing anna · sweets', reasonHi: 'पर्व का प्रकाश बाँटे बिना अधूरा है', reasonEn: 'the festival’s light is incomplete unshared' },
@@ -300,6 +311,7 @@ export const DAAN_OCCASION_ENTRIES: readonly DaanOccasionEntry[] = [
     titleEn: 'Chhath prasada sharing',
     whyHi: 'सूर्य षष्ठी का महाव्रत — घाट पर ठेकुआ और प्रसाद का वितरण इस पर्व की जीवित परम्परा है।',
     whyEn: 'The great vrat of Surya shashthi — sharing thekua and prasada at the ghat is this festival’s living tradition.',
+    causes: ['anna'],
     items: [
       { id: 'thekua', nameHi: 'ठेकुआ · प्रसाद', nameEn: 'Thekua · prasada', reasonHi: 'घाट पर सबको प्रसाद — व्रत का समापन', reasonEn: 'prasada to all at the ghat — the vrat’s closing' },
     ],
@@ -323,6 +335,7 @@ export const DAAN_OCCASION_ENTRIES: readonly DaanOccasionEntry[] = [
       'नवरात्रि का समापन अष्टमी-नवमी के कन्या पूजन से होता है — नौ कन्याओं में नवदुर्गा का पूजन और भोजन। व्रत का फल परम्परा में इसी भोज से पूर्ण माना जाता है।',
     whyEn:
       'Navratri closes with the ashtami–navami kanya pujan — nine girls honoured and fed as the Navadurga. In the tradition, the vrat completes in this feeding.',
+    causes: ['anna', 'bal'],
     items: [
       { id: 'kanya-bhoj', nameHi: 'कन्या भोज — पूरी, चना, हलवा', nameEn: 'Kanya bhoj — puri, chana, halwa', reasonHi: 'अष्टमी-नवमी का पारम्परिक विधान', reasonEn: 'the traditional ashtami–navami form' },
       { id: 'bhandara', nameHi: 'भंडारा · अन्न', nameEn: 'Bhandara · anna', reasonHi: 'पर्व-समापन का सामूहिक अन्न-दान', reasonEn: 'the shared anna of the festival’s close' },
@@ -347,6 +360,7 @@ export const DAAN_OCCASION_ENTRIES: readonly DaanOccasionEntry[] = [
       'शरद की चाँदनी में रखी खीर अगले प्रातः प्रसाद रूप में बाँटी जाती है — परिवार और समाज दोनों में। कोजागरा की रात्रि का यही जीवित रूप है।',
     whyEn:
       'Kheer kept under the sharad moonlight is shared the next morning as prasada — within the family and beyond it. This is the living form of the Kojagara night.',
+    causes: ['anna'],
     items: [
       { id: 'kheer', nameHi: 'खीर-प्रसाद बाँटना', nameEn: 'Sharing the kheer prasada', reasonHi: 'चाँदनी में रखी खीर — बाँटकर ही पूर्ण', reasonEn: 'the moonlit kheer completes only in the sharing' },
     ],
@@ -370,6 +384,7 @@ export const DAAN_OCCASION_ENTRIES: readonly DaanOccasionEntry[] = [
       'मार्गशीर्ष शुक्ल एकादशी (मोक्षदा) — गीता के अवतरण का दिन। इस दिन की परम्परा गीता-दान है: ज्ञान का ग्रन्थ भेंट करना, विद्या-दान का ही उच्च रूप।',
     whyEn:
       'Margashirsha shukla ekadashi (Mokshada) — the day the Gita was spoken. Its tradition is gita-daan: gifting the book of knowledge, the highest form of vidya-daan.',
+    causes: ['vidya'],
     items: [
       { id: 'gita-daan', nameHi: 'गीता-दान — ग्रन्थ भेंट', nameEn: 'Gita-daan — gifting the Gita', reasonHi: 'ज्ञान-दान की परम्परा — इसी ऐप में पूरी गीता उपलब्ध है', reasonEn: 'the tradition of giving knowledge — this app itself carries the full Gita' },
     ],
@@ -395,6 +410,7 @@ export const DAAN_OCCASION_ENTRIES: readonly DaanOccasionEntry[] = [
       'हर अमावस्या पितृ-स्मरण की तिथि है — तिल-जल तर्पण के साथ अन्न-वस्त्र का दान उसका घरेलू रूप है। सोमवार की अमावस्या (सोमवती) पर परम्परा इसे विशेष कहती है।',
     whyEn:
       'Every amavasya is a tithi of remembering the ancestors — anna-vastra daan alongside til-jal tarpana is its household form. On a Monday amavasya (Somvati) the tradition marks it as special.',
+    causes: ['anna', 'vastra'],
     items: [
       { id: 'til-jal', nameHi: 'तिल-जल', nameEn: 'Til-jal', reasonHi: 'तर्पण की ही सामग्री', reasonEn: 'the substance of tarpana itself' },
       { id: 'anna-vastra', nameHi: 'अन्न-वस्त्र', nameEn: 'Anna-vastra', reasonHi: 'कथा में यही अमावस्या का दान है', reasonEn: 'the katha’s own amavasya gift' },
@@ -419,6 +435,7 @@ export const DAAN_OCCASION_ENTRIES: readonly DaanOccasionEntry[] = [
       'पूर्णिमा व्रत और सत्यनारायण कथा का समापन प्रसाद-वितरण है — खीर/पंचामृत और अन्न बाँटना ही इस तिथि का दान।',
     whyEn:
       'The purnima vrat and Satyanarayan katha close with prasada — sharing kheer/panchamrita and anna is this tithi’s giving.',
+    causes: ['anna'],
     items: [
       { id: 'prasad', nameHi: 'प्रसाद-वितरण · खीर', nameEn: 'Prasada sharing · kheer', reasonHi: 'कथा का विधान ही वितरण पर पूर्ण होता है', reasonEn: 'the katha’s own rite completes in distribution' },
       { id: 'anna', nameHi: 'अन्न', nameEn: 'Anna', reasonHi: 'पूर्णता की तिथि पर अन्न-दान', reasonEn: 'anna on the tithi of fullness' },
@@ -444,6 +461,7 @@ export const DAAN_OCCASION_ENTRIES: readonly DaanOccasionEntry[] = [
       'एकादशी व्रत की परम्परा पारण के साथ अन्न-दान की है — व्रती स्वयं अन्न से दूर रहकर, द्वादशी पर पहले किसी और को अन्न देता है।',
     whyEn:
       'The ekadashi tradition pairs the fast with anna-daan at parana — having abstained, the vrati first gives food to another on dwadashi.',
+    causes: ['anna'],
     items: [
       { id: 'anna-parana', nameHi: 'पारण पर अन्न-दान', nameEn: 'Anna at parana', reasonHi: 'व्रत का पूरक — पहले देना, फिर पाना', reasonEn: 'the fast’s complement — give first, then eat' },
     ],
@@ -467,6 +485,7 @@ export const DAAN_OCCASION_ENTRIES: readonly DaanOccasionEntry[] = [
       'माघ कृष्ण एकादशी का नाम ही षटतिला है — तिल के छह प्रयोग: स्नान, उबटन, हवन, तर्पण, भोजन और दान। तिल-दान इस दिन स्पष्ट विधान है।',
     whyEn:
       'The Magha krishna ekadashi is named Shattila — six uses of til: bath, ubtan, havan, tarpana, food and daan. Til-daan is this day’s explicit form.',
+    causes: ['anna'],
     items: [
       { id: 'til-daan', nameHi: 'तिल-दान', nameEn: 'Til-daan', reasonHi: 'छह प्रयोगों में छठा — दान', reasonEn: 'the sixth of the six uses — giving' },
     ],

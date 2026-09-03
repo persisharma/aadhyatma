@@ -19,12 +19,13 @@ design.md §72; content contract: RULEBOOK §27; product doc:
 
 ## Shape
 
-- **Data** — `mobile/src/data/daan/`: `principles.ts` (verse/teaching rows),
+- **Data** — `mobile/src/data/daan/`: `causes.ts` (the nine-प्रयोजन cause axis
+  + the honest text-intent purpose bridge), `principles.ts` (verse/teaching rows),
   `occasions.ts` (~17 day rows keyed to real solver rule ids), `vaar.ts`
   (7-row weekly table, shared with PRD-21), `kathas.ts` (Karna, Rantideva,
   Shibi, Bali–Vamana, Sudama — full bilingual retellings), `directory.ts`
-  (6 verified orgs: Akshaya Patra, Annamrita, TTD Annaprasadam, Goonj,
-  Belur Math, e-RaktKosh), `ledger.ts` (pure core: validation, gupt
+  (9 verified orgs: Akshaya Patra, Annamrita, TTD Annaprasadam, Goonj,
+  Belur Math, e-RaktKosh, HelpAge India, CRY, Blue Cross of India), `ledger.ts` (pure core: validation, gupt
   sanitizer, tithi stamp, CSV), `index.ts` (verified-only accessors +
   `getDaanOccasionForRule`).
 - **State** — `DaanLedgerContext` (AsyncStorage `@vedansh/daan-ledger:v1`,
@@ -49,6 +50,13 @@ design.md §72; content contract: RULEBOOK §27; product doc:
   note/amount/occasion; read-side `isDaanLedgerEntry` rejects unsanitized
   gupt rows. The CSV export keeps gupt rows bare.
 - **No totalling helper may be added** to `ledger.ts` (RULEBOOK §27.3).
+- **Two axes**: ledger `DaanCategory` = the dravya given; `DaanCause` = whom it
+  serves, and the द्वार's only grouping. Cause chips derive from the rows
+  present (never an empty shelf); occasions carry `causes` and the journey's
+  terminal door pre-filters the द्वार to them.
+- **Purpose bridge is विद्या→knowledge and आरोग्य→health ONLY** — never
+  wealth/prosperity (fruit-promise). The `PurposeList` door opens the educate
+  home, never the directory; a source-shape test pins it.
 - Directory rows: org's own domain only, https, no UPI, registration *kinds*
   not numbers; `verifiedOn` > 18 months → row drops to draft via
   `isOrgRowStale`.
