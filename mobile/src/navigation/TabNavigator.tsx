@@ -13,7 +13,6 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { scriptTitleFont } from '@/utils/langType';
 import type { TabParamList } from './types';
-import type { StartTarget } from './startTarget';
 import {
   HomeIcon,
   BhaktiIcon,
@@ -31,14 +30,7 @@ const LazyPanchangStackNavigator = lazy(() => import('./PanchangStackNavigator')
 // setOptions) so the bar animates out cleanly and restores itself on blur.
 const IMMERSIVE_HOME_ROUTES = ['VratKathaReader'];
 
-export default function TabNavigator({
-  initialTarget,
-}: {
-  // Resolved by App.tsx before this mounts (a cold widget URL or the
-  // notification tap that launched the app). Making it the INITIAL route is
-  // the whole point: dispatching after mount would land on Home first.
-  initialTarget?: StartTarget | null;
-}) {
+export default function TabNavigator() {
   const { colors } = useTheme();
   const { lang } = useGitaLanguage();
   const insets = useSafeAreaInsets();
@@ -56,16 +48,9 @@ export default function TabNavigator({
   // bar was the last surface still English-only under a fully Indic screen.
   // contentByLang transliterates the Hindi label for gu/kn.
   const tabLabel = (hi: string, en: string) => contentByLang(lang, hi, en);
-  // The pre-resolved cold-start target picks the first committed tab and seeds
-  // that tab's initial params (a stack tab receives its nested
-  // `{ screen, params, initial: false }` and applies it on first mount).
-  const initialRouteName: keyof TabParamList = initialTarget?.name ?? 'HomeTab';
-  const initialParamsFor = <K extends keyof TabParamList>(tab: K): TabParamList[K] | undefined =>
-    initialTarget?.name === tab ? (initialTarget.params as TabParamList[K] | undefined) : undefined;
-
   return (
     <Tab.Navigator
-      initialRouteName={initialRouteName}
+      initialRouteName="HomeTab"
       screenOptions={{
         headerShown: false,
         tabBarStyle,
@@ -86,7 +71,6 @@ export default function TabNavigator({
       <Tab.Screen
         name="HomeTab"
         component={HomeStackNavigator}
-        initialParams={initialParamsFor('HomeTab')}
         options={({ route }) => {
           const focused = getFocusedRouteNameFromRoute(route) ?? 'Home';
           return {
@@ -104,7 +88,6 @@ export default function TabNavigator({
       <Tab.Screen
         name="DailyBhaktiTab"
         component={DailyBhaktiScreen}
-        initialParams={initialParamsFor('DailyBhaktiTab')}
         options={{
           tabBarLabel: tabLabel('भक्ति', 'Bhakti'),
           tabBarButtonTestID: 'tab-bhakti',
@@ -116,7 +99,6 @@ export default function TabNavigator({
       <Tab.Screen
         name="PanchangTab"
         component={PanchangTabRoot}
-        initialParams={initialParamsFor('PanchangTab')}
         options={{
           tabBarLabel: tabLabel('पंचांग', 'Panchang'),
           tabBarButtonTestID: 'tab-panchang',
@@ -139,7 +121,6 @@ export default function TabNavigator({
       <Tab.Screen
         name="MoreTab"
         component={MoreStackNavigator}
-        initialParams={initialParamsFor('MoreTab')}
         options={{
           tabBarLabel: tabLabel('अन्य', 'More'),
           tabBarButtonTestID: 'tab-more',

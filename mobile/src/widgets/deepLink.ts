@@ -1,7 +1,7 @@
 import { CommonActions } from '@react-navigation/native';
 import { findJapamMantra } from '@/data/japam';
 import { navigationRef } from '@/notifications/deepLink';
-import type { StartTarget } from '@/navigation/startTarget';
+import { startTargetToNavigateAction, type StartTarget } from '@/navigation/startTarget';
 
 export type WidgetDeepLinkTarget =
   | { kind: 'verse'; sourceId: string; verseIndex: number; chapter?: number }
@@ -49,25 +49,23 @@ export function parseWidgetDeepLink(raw: string): WidgetDeepLinkTarget | null {
 export function widgetStartTarget(target: WidgetDeepLinkTarget): StartTarget {
   if (target.kind === 'verse') {
     return {
-      name: 'DailyBhaktiTab',
+      tab: 'DailyBhaktiTab',
       params: { sourceId: target.sourceId, verseIndex: target.verseIndex, ...(target.chapter == null ? {} : { chapter: target.chapter }) },
     };
   }
   if (target.kind === 'panchang') {
-    return { name: 'PanchangTab', params: { screen: 'PanchangHome', params: { dateMs: target.dateMs }, initial: false } };
+    return { tab: 'PanchangTab', screen: 'PanchangHome', params: { dateMs: target.dateMs } };
   }
-  // `initial: false` so the counter/library is pushed over Home in the Home
-  // stack rather than becoming its initial route (back must still reach Home).
   if (target.mantraId) {
-    return { name: 'HomeTab', params: { screen: 'JapamCounter', params: { mantraId: target.mantraId }, initial: false } };
+    return { tab: 'HomeTab', screen: 'JapamCounter', params: { mantraId: target.mantraId } };
   }
-  return { name: 'HomeTab', params: { screen: 'CategoryList', params: { categoryId: 'japam' }, initial: false } };
+  return { tab: 'HomeTab', screen: 'CategoryList', params: { categoryId: 'japam' } };
 }
 
 export function handleWidgetDeepLink(raw: string): boolean {
   const target = parseWidgetDeepLink(raw);
   if (!target || !navigationRef.isReady()) return false;
-  navigationRef.dispatch(CommonActions.navigate(widgetStartTarget(target)));
+  navigationRef.dispatch(CommonActions.navigate(startTargetToNavigateAction(widgetStartTarget(target))));
   return true;
 }
 

@@ -1,11 +1,10 @@
 import { CommonActions, createNavigationContainerRef } from '@react-navigation/native';
-import { moreTabTarget, panchangTabTarget } from '@/navigation/entryRoutes';
 import * as Notifications from 'expo-notifications';
 import { findJapamMantra } from '@/data/japam';
 import { EVENT_RULES } from '@/panchang/eventMuhurat';
 import { isJapamAlarmPayload } from './japamAlarms';
 import type { TabParamList } from '@/navigation/types';
-import type { StartTarget } from '@/navigation/startTarget';
+import { startTargetToNavigateAction, type StartTarget } from '@/navigation/startTarget';
 import type { NotificationPayload } from './pure';
 
 /**
@@ -103,7 +102,7 @@ export function resolveNotificationTarget(data: unknown): StartTarget | null {
   // scheduling and tapping can't shift the verse.
   if (isDailyVersePayload(data)) {
     return {
-      name: 'DailyBhaktiTab',
+      tab: 'DailyBhaktiTab',
       params: {
         sourceId: data.sourceId,
         verseIndex: data.verseIndex,
@@ -117,7 +116,7 @@ export function resolveNotificationTarget(data: unknown): StartTarget | null {
   // initial:false so a cold-start deep link can't make ObservanceDetail the
   // lazily-mounted stack's initial route (back would have nothing to pop).
   if (isVratReminderPayload(data)) {
-    return { name: 'PanchangTab', params: panchangTabTarget('ObservanceDetail', { ruleId: data.ruleId }) };
+    return { tab: 'PanchangTab', screen: 'ObservanceDetail', params: { ruleId: data.ruleId } };
   }
 
   // A muhurat-reminder tap (PRD-16 §6.7) opens the followed day's detail —
@@ -132,8 +131,9 @@ export function resolveNotificationTarget(data: unknown): StartTarget | null {
     const known = EVENT_RULES.find((r) => r.id === data.occasionId);
     if (!known) return null;
     return {
-      name: 'PanchangTab',
-      params: panchangTabTarget('MuhuratDayDetail', { occasionId: known.id, dateMs: data.dateMs }),
+      tab: 'PanchangTab',
+      screen: 'MuhuratDayDetail',
+      params: { occasionId: known.id, dateMs: data.dateMs },
     };
   }
 
@@ -149,11 +149,11 @@ export function resolveNotificationTarget(data: unknown): StartTarget | null {
   // `{ screen: 'Home' }` is explicit: focusing `HomeTab` alone would restore
   // whatever screen the Home stack was left on, which may be several readers deep.
   if (isFestiveReminderPayload(data)) {
-    return { name: 'HomeTab', params: { screen: 'Home' } };
+    return { tab: 'HomeTab', screen: 'Home' };
   }
 
   if (isPitruSmaranReminderPayload(data)) {
-    return { name: 'MoreTab', params: moreTabTarget('PitruSmaranDetail', { entryId: data.entryId }) };
+    return { tab: 'MoreTab', screen: 'PitruSmaranDetail', params: { entryId: data.entryId } };
   }
 
   // A janma-tithi tap (PRD-29) opens that person's detail in the More stack —
@@ -161,24 +161,19 @@ export function resolveNotificationTarget(data: unknown): StartTarget | null {
   // is validated by the screen itself (a removed person renders its own
   // not-found state), so a stale notice cannot crash a route.
   if (isJanmaTithiReminderPayload(data)) {
-    return { name: 'MoreTab', params: moreTabTarget('JanmaTithiDetail', { personId: data.personId }) };
+    return { tab: 'MoreTab', screen: 'JanmaTithiDetail', params: { personId: data.personId } };
   }
 
   if (isPitruPakshaReminderPayload(data)) {
-    return { name: 'MoreTab', params: moreTabTarget('PitruPakshaOverview') };
+    return { tab: 'MoreTab', screen: 'PitruPakshaOverview' };
   }
 
   // A sadhana-reminder tap (PRD-11) and a routine-reminder tap (PRD-07 P3)
   // both open Today's Practice — where all of today's practice lives (this
   // routine, other routines, active sankalps). Reading progress is untouched;
   // the user chooses to open the day's reading there.
-  //
-  // `initial: false` matters on a COLD start: this object seeds the Home
-  // stack's initialParams, and without it RoutineToday would become the
-  // stack's initial route — back would have nothing to pop and Home itself
-  // would be unreachable for the session (the `tabTargets.test.ts` bug).
   if (isSadhanaReminderPayload(data) || isRoutineReminderPayload(data)) {
-    return { name: 'HomeTab', params: { screen: 'RoutineToday', initial: false } };
+    return { tab: 'HomeTab', screen: 'RoutineToday' };
   }
 
   // A Japam-alarm tap opens the counter with the mantra preselected and the
@@ -186,11 +181,11 @@ export function resolveNotificationTarget(data: unknown): StartTarget | null {
   // user directly into chanting. The mantraId is validated against the
   // catalogue to survive content revisions (a stale alarm shouldn't crash
   // the screen); an unknown mantra resolves to nothing, i.e. plain Home.
-  // `initial: false` for the same cold-start reason as RoutineToday above.
   if (isJapamAlarmPayload(data) && findJapamMantra(data.mantraId)) {
     return {
-      name: 'HomeTab',
-      params: { screen: 'JapamCounter', params: { mantraId: data.mantraId, autoPlay: true }, initial: false },
+      tab: 'HomeTab',
+      screen: 'JapamCounter',
+      params: { mantraId: data.mantraId, autoPlay: true },
     };
   }
 
@@ -223,7 +218,7 @@ export function handleNotificationResponse(
 
   const target = resolveNotificationTarget(data);
   if (target) {
-    navigationRef.dispatch(CommonActions.navigate(target));
+    navigationRef.dispatch(CommonActions.navigate(startTargetToNavigateAction(target)));
     return true;
   }
 

@@ -10,6 +10,7 @@
 //     transform; deepLink only needs CommonActions.navigate (to build the
 //     action) and createNavigationContainerRef (the dispatch target).
 import { navigationRef, handleNotificationResponse, startTargetFromNotification } from '../deepLink';
+import { buildInitialNavigationState, startTargetToNavigateAction } from '@/navigation/startTarget';
 
 jest.mock('expo-notifications', () => ({}));
 jest.mock('@react-navigation/native', () => ({
@@ -305,67 +306,38 @@ describe('handleNotificationResponse', () => {
 });
 
 // The cold-start resolver is the SAME table the warm handler dispatches from:
-// whatever a tap navigates to after mount, the launching tap must make the
-// navigator's initial route — no family may land on Home first.
+// whatever a tap navigates to after mount, the launching tap must reach without
+// mounting Home first.
 describe('startTargetFromNotification', () => {
-  test('a launching daily-verse tap makes Daily Bhakti the initial tab with the baked verse', () => {
+  test('a launching daily-verse tap opens the Daily Bhakti tab with the baked verse', () => {
     expect(startTargetFromNotification(responseWithData(dailyVerse))).toEqual({
-      name: 'DailyBhaktiTab',
+      tab: 'DailyBhaktiTab',
       params: { sourceId: 'hanuman-chalisa', verseIndex: 3 },
     });
     expect(
       startTargetFromNotification(responseWithData({ ...dailyVerse, sourceId: 'gita', chapter: 2 }))
-    ).toEqual({ name: 'DailyBhaktiTab', params: { sourceId: 'gita', verseIndex: 3, chapter: 2 } });
+    ).toEqual({ tab: 'DailyBhaktiTab', params: { sourceId: 'gita', verseIndex: 3, chapter: 2 } });
   });
 
-  test('every other family resolves straight to its own screen, never Home first', () => {
-    expect(startTargetFromNotification(responseWithData({ type: 'vrat-reminder', ruleId: 'nirjala-ekadashi' }))).toEqual({
-      name: 'PanchangTab',
-      params: { screen: 'ObservanceDetail', params: { ruleId: 'nirjala-ekadashi' }, initial: false },
-    });
+  test('every other family resolves straight to its own screen', () => {
     const dateMs = new Date(2026, 7, 17).getTime();
-    expect(
-      startTargetFromNotification(responseWithData({ type: 'muhurat-reminder', occasionId: 'vahan', dateMs }))
-    ).toEqual({
-      name: 'PanchangTab',
-      params: { screen: 'MuhuratDayDetail', params: { occasionId: 'vahan', dateMs }, initial: false },
-    });
-    expect(startTargetFromNotification(responseWithData({ type: 'festive-reminder', ruleId: 'diwali' }))).toEqual({
-      name: 'HomeTab',
-      params: { screen: 'Home' },
-    });
-    for (const data of [
-      { type: 'sadhana-reminder', programId: 'p1' },
-      { type: 'routine-reminder', routineId: 'gone', dateKey: '2026-09-03' },
-    ]) {
-      expect(startTargetFromNotification(responseWithData(data))).toEqual({
-        name: 'HomeTab',
-        params: { screen: 'RoutineToday', initial: false },
-      });
+    const cases: [unknown, unknown][] = [
+      [{ type: 'vrat-reminder', ruleId: 'nirjala-ekadashi' }, { tab: 'PanchangTab', screen: 'ObservanceDetail', params: { ruleId: 'nirjala-ekadashi' } }],
+      [{ type: 'muhurat-reminder', occasionId: 'vahan', dateMs }, { tab: 'PanchangTab', screen: 'MuhuratDayDetail', params: { occasionId: 'vahan', dateMs } }],
+      [{ type: 'festive-reminder', ruleId: 'diwali' }, { tab: 'HomeTab', screen: 'Home' }],
+      [{ type: 'sadhana-reminder', programId: 'p1' }, { tab: 'HomeTab', screen: 'RoutineToday' }],
+      [{ type: 'routine-reminder', routineId: 'gone', dateKey: '2026-09-03' }, { tab: 'HomeTab', screen: 'RoutineToday' }],
+      [{ type: 'pitru-smaran-reminder', entryId: 'e1' }, { tab: 'MoreTab', screen: 'PitruSmaranDetail', params: { entryId: 'e1' } }],
+      [{ type: 'janma-tithi-reminder', personId: 'p9' }, { tab: 'MoreTab', screen: 'JanmaTithiDetail', params: { personId: 'p9' } }],
+      [{ type: 'pitru-paksha-reminder', year: 2026 }, { tab: 'MoreTab', screen: 'PitruPakshaOverview' }],
+      [{ type: 'japam-alarm', alarmId: 'a1', mantraId: 'om-namah-shivaya' }, { tab: 'HomeTab', screen: 'JapamCounter', params: { mantraId: 'om-namah-shivaya', autoPlay: true } }],
+    ];
+    for (const [payload, expected] of cases) {
+      expect(startTargetFromNotification(responseWithData(payload))).toEqual(expected);
     }
-    expect(startTargetFromNotification(responseWithData({ type: 'pitru-smaran-reminder', entryId: 'e1' }))).toEqual({
-      name: 'MoreTab',
-      params: { screen: 'PitruSmaranDetail', params: { entryId: 'e1' }, initial: false },
-    });
-    expect(startTargetFromNotification(responseWithData({ type: 'janma-tithi-reminder', personId: 'p9' }))).toEqual({
-      name: 'MoreTab',
-      params: { screen: 'JanmaTithiDetail', params: { personId: 'p9' }, initial: false },
-    });
-    expect(startTargetFromNotification(responseWithData({ type: 'pitru-paksha-reminder', year: 2026 }))).toMatchObject({
-      name: 'MoreTab',
-      params: { screen: 'PitruPakshaOverview', initial: false },
-    });
   });
 
-  test('a launching japam alarm opens the counter auto-playing; a stale mantra falls back to the ordinary launch', () => {
-    expect(startTargetFromNotification(responseWithData({ type: 'japam-alarm', alarmId: 'a1', mantraId: 'om-namah-shivaya' }))).toEqual({
-      name: 'HomeTab',
-      params: { screen: 'JapamCounter', params: { mantraId: 'om-namah-shivaya', autoPlay: true }, initial: false },
-    });
-    expect(startTargetFromNotification(responseWithData({ type: 'japam-alarm', alarmId: 'a1', mantraId: 'no-such-mantra' }))).toBeNull();
-  });
-
-  test('cold and warm paths agree: the launch target is exactly what the warm handler dispatches', () => {
+  test('cold and warm paths agree: the launch target dispatches what the warm handler dispatches', () => {
     readySpy.mockReturnValue(true);
     for (const data of [
       dailyVerse,
@@ -373,15 +345,25 @@ describe('startTargetFromNotification', () => {
       { type: 'festive-reminder', ruleId: 'diwali' },
       { type: 'routine-reminder' },
       { type: 'pitru-smaran-reminder', entryId: 'e1' },
+      { type: 'japam-alarm', alarmId: 'a1', mantraId: 'om-namah-shivaya' },
     ]) {
       dispatchSpy.mockClear();
       handleNotificationResponse(responseWithData(data));
-      expect(dispatchSpy.mock.calls[0][0].payload).toEqual(startTargetFromNotification(responseWithData(data)));
+      expect(dispatchSpy.mock.calls[0][0].payload).toEqual(
+        startTargetToNavigateAction(startTargetFromNotification(responseWithData(data))!)
+      );
     }
   });
 
-  test('anything unrecognised leaves the default cold start alone', () => {
-    for (const data of [undefined, null, {}, { type: 'daily-verse' }, { type: 'other' }]) {
+  test('a stale japam mantra and anything unrecognised leave the default launch alone', () => {
+    for (const data of [
+      undefined,
+      null,
+      {},
+      { type: 'daily-verse' },
+      { type: 'other' },
+      { type: 'japam-alarm', alarmId: 'a1', mantraId: 'no-such-mantra' },
+    ]) {
       expect(startTargetFromNotification(responseWithData(data))).toBeNull();
     }
     expect(startTargetFromNotification(null)).toBeNull();
@@ -389,14 +371,18 @@ describe('startTargetFromNotification', () => {
   });
 });
 
-// Every cold-start target that names a screen INSIDE a stack tab (rather than
-// the stack's own root) must carry `initial: false`. As `initialParams` on a
-// cold start, a nested target without it makes that screen the stack's initial
-// route: back has nothing to pop and the stack's real root — Home, the Panchang
-// calendar, the More hub — is unreachable for the rest of the session.
-describe('cold-start targets keep the stack root underneath', () => {
+// A cold start seeds the NavigationContainer's initialState. Two things must
+// hold for every family, and both were real bugs:
+//   1. the stack's root sits BENEATH a deeper target, so back works and the
+//      stack's hub stays reachable;
+//   2. the target appears exactly ONCE. Expressed as a tab's initialParams the
+//      nested target lived in route.params all session and was re-consumed on
+//      every return to that tab, pushing a second (third, fourth) copy — on the
+//      Panchang tab, whose root is the app's heaviest screen, until it froze.
+describe('cold-start navigation state', () => {
   const STACK_ROOTS: Record<string, string> = { HomeTab: 'Home', PanchangTab: 'PanchangHome', MoreTab: 'MoreHome' };
   const payloads: unknown[] = [
+    { ...dailyVerse },
     { type: 'vrat-reminder', ruleId: 'nirjala-ekadashi' },
     { type: 'muhurat-reminder', occasionId: 'vahan', dateMs: Date.now() },
     { type: 'festive-reminder', ruleId: 'diwali' },
@@ -407,13 +393,32 @@ describe('cold-start targets keep the stack root underneath', () => {
     { type: 'pitru-paksha-reminder' },
     { type: 'japam-alarm', alarmId: 'a1', mantraId: 'om-namah-shivaya' },
   ];
+
   test.each(payloads.map((p) => [(p as { type: string }).type, p]))('%s', (_type, payload) => {
-    const target = startTargetFromNotification(responseWithData(payload));
+    const target = startTargetFromNotification(responseWithData(payload))!;
     expect(target).not.toBeNull();
-    const params = target!.params as { screen?: string; initial?: boolean } | undefined;
-    const root = STACK_ROOTS[target!.name];
-    if (root && params?.screen && params.screen !== root) {
-      expect(params.initial).toBe(false);
+    const state = buildInitialNavigationState(target);
+
+    // Exactly one tab route, and it is the tab the target named.
+    expect(state.routes).toHaveLength(1);
+    const tabRoute = state.routes[0] as { name: string; params?: object; state?: { index?: number; routes: { name: string }[] } };
+    expect(tabRoute.name).toBe(target.tab);
+
+    if (!target.screen) {
+      // A plain tab (Daily Bhakti) carries its params directly, no nested stack.
+      expect(tabRoute.state).toBeUndefined();
+      expect(tabRoute.params).toEqual(target.params);
+      return;
     }
+
+    const routes = tabRoute.state!.routes.map((r) => r.name);
+    // The target appears once — never a duplicate of itself or of the root.
+    expect(routes.filter((n) => n === target.screen)).toHaveLength(1);
+    expect(new Set(routes).size).toBe(routes.length);
+    // The focused route is the target.
+    expect(routes[tabRoute.state!.index!]).toBe(target.screen);
+    // A deeper target keeps its stack root beneath it; a root target stands alone.
+    const root = STACK_ROOTS[target.tab];
+    expect(routes).toEqual(target.screen === root ? [target.screen] : [root, target.screen]);
   });
 });

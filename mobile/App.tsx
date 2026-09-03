@@ -52,7 +52,7 @@ import {
   handleNotificationResponse,
   navigationRef,
 } from '@/notifications/deepLink';
-import type { StartTarget } from '@/navigation/startTarget';
+import { buildInitialNavigationState, type StartTarget } from '@/navigation/startTarget';
 import ReminderOptInModal from '@/components/ReminderOptInModal';
 import UpdateReadyModal from '@/components/UpdateReadyModal';
 import FeatureTour from '@/components/FeatureTour';
@@ -304,9 +304,21 @@ export default function App() {
                         <ShareProvider>
                           <AppReadyGate>
                           <View style={{ flex: 1 }}>
-                            <NavigationContainer ref={navigationRef}>
+                            {/* The cold-start destination is the container's
+                                INITIAL STATE, not a tab's initialParams: state
+                                is consumed once at mount, whereas initialParams
+                                live in route.params all session and get
+                                re-consumed on every return to that tab —
+                                pushing the target again and again until the app
+                                froze (navigation/startTarget.ts). */}
+                            <NavigationContainer
+                              ref={navigationRef}
+                              initialState={
+                                initialTarget ? buildInitialNavigationState(initialTarget) : undefined
+                              }
+                            >
                               <StatusBar style="dark" />
-                              <RootNavigator initialTarget={initialTarget} />
+                              <RootNavigator />
                               <ReminderOptInModal />
                               <UpdateReadyModal />
                               <WhatsNewModal />

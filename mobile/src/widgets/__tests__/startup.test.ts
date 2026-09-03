@@ -61,25 +61,27 @@ test('App resolves a cold widget URL or launching notification before navigation
   assert.match(app, /parseWidgetDeepLink\(url\)/);
   assert.match(app, /widgetStartTarget\(parsed\)/);
   // The notification that launched the app is read in the SAME pre-mount race,
-  // so every family's tap makes its own screen the initial route instead of a
-  // post-mount redirect off Home. A widget URL still wins without waiting on it.
+  // so every family's tap reaches its own screen without mounting Home first.
+  // A widget URL still wins without waiting on it.
   assert.match(app, /startTargetFromNotification\(response\)/);
   assert.match(app, /Promise\.all\(\[widgetTarget, notificationTarget\]\)/);
   assert.match(app, /widgetTarget\.then\(\(target\) => \{ if \(target\) finish\(target\); \}\)/);
   assert.match(app, /coldNotificationConsumedRef\.current\) return;/);
-  assert.match(app, /<RootNavigator initialTarget=\{initialTarget\}/);
   assert.doesNotMatch(app, /retryWidgetDeepLink/);
-  // The navigator takes the target's tab as its initial route and seeds every
-  // stack tab's initialParams from it — no tab may be left out, or a target
-  // naming it silently lands on that tab's default screen.
-  assert.match(tabs, /initialRouteName=\{initialRouteName\}/);
-  assert.match(tabs, /initialTarget\?\.name \?\? 'HomeTab'/);
-  for (const tab of ['HomeTab', 'DailyBhaktiTab', 'PanchangTab', 'MoreTab']) {
-    assert.match(tabs, new RegExp(`initialParams=\\{initialParamsFor\\('${tab}'\\)\\}`));
-  }
-  // Widget japam links push over Home, never as the Home stack's initial route.
-  assert.match(widgetLink, /screen: 'JapamCounter',[\s\S]*initial: false/);
-  assert.match(widgetLink, /screen: 'CategoryList',[\s\S]*initial: false/);
+
+  // The destination is the container's initialState — consumed ONCE at mount.
+  assert.match(app, /initialState=\{[\s\S]{0,160}buildInitialNavigationState\(initialTarget\)/);
+  assert.match(app, /<RootNavigator \/>/);
+  // REGRESSION GUARD: never express a cold-start destination as a tab's
+  // initialParams. Those stay in route.params for the session, so React
+  // Navigation re-consumes a nested { screen, params } on every return to that
+  // tab and pushes the target again — the Panchang widget tap piled up copies
+  // of the app's heaviest screen until it froze (Sept 2026).
+  assert.doesNotMatch(tabs, /initialParams=/);
+  assert.match(tabs, /initialRouteName="HomeTab"/);
+  // Widget japam links push over Home rather than replacing it as the root.
+  assert.match(widgetLink, /screen: 'JapamCounter'/);
+  assert.match(widgetLink, /screen: 'CategoryList'/);
 });
 
 test('widget planning selects indexed verses without materialising the complete pool', () => {
