@@ -104,6 +104,22 @@ export type ObservanceRelativeRule = 'friday-before-purnima';
  */
 export type ObservanceDayRule = 'udaya' | 'chandrodaya' | 'madhyahna';
 
+/**
+ * Where a rule sits inside a multi-day festival arc (PRD-28, पर्व-अर्क).
+ *
+ * - `sthapana` — the day the deity is installed / the arc opens (Ganesh
+ *   Chaturthi, Navratri ghatasthapana). Always ordinal 1.
+ * - `day` — a named day inside the arc (each of Diwali's five days).
+ * - `visarjan` — the day the rite is concluded and the murti immersed
+ *   (Anant Chaturdashi for the ten-day Ganesh arc, Vijayadashami for
+ *   Navratri). The arc's LAST rule-bound ordinal.
+ *
+ * The relation is purely additive: a rule's tithi, dayRule and every other
+ * field are untouched, and a rule with no `arcId` behaves exactly as before.
+ * The arc definitions themselves live in `arcs.ts`.
+ */
+export type ArcRole = 'sthapana' | 'day' | 'visarjan';
+
 export type ObservanceRule = {
   id: string;
   nameHi: string;
@@ -127,6 +143,17 @@ export type ObservanceRule = {
    * does not say otherwise is fixed by the tithi at sunrise.
    */
   dayRule?: ObservanceDayRule;
+  /**
+   * Festival-arc membership (PRD-28) — optional and additive. `arcId` names an
+   * `ArcDefinition` in `arcs.ts`; `arcRole` says what this day IS in the arc;
+   * `arcOrdinal` is its 1-based position among the arc's rule-bound days when
+   * the arc's calendar span is at its customary length (the live ordinal is
+   * always recomputed from resolved dates — see `resolveArcOccurrence`).
+   * All three are present together or absent together (`arcs.test.ts`).
+   */
+  arcId?: string;
+  arcRole?: ArcRole;
+  arcOrdinal?: number;
   marker: FestivalMarker;
   deityHi: string;
   deityEn: string;

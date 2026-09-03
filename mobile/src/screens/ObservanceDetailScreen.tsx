@@ -6,6 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ObservanceDetailHero from '@/components/ObservanceDetailHero';
 import BhogGuidancePanel from '@/components/BhogGuidancePanel';
+import ArcStrip from '@/components/ArcStrip';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
@@ -259,6 +260,17 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                 </Text>
               </Pressable>
             )}
+
+            {/* पर्व-अर्क (PRD-28): renders only for rules inside a festival
+                arc — where today sits, the family's duration choice and solved
+                visarjan, the Kanya-Pujan preparation hand-off, the visarjan
+                vidhi door. Null for every other rule. */}
+            <ArcStrip
+              rule={rule}
+              calendarSystem={calendarSystem}
+              onOpenRule={(ruleId) => navigation.push('ObservanceDetail', { ruleId })}
+              onOpenVidhi={(vidhiId, dateMs) => navigation.navigate('VidhiDetail', { vidhiId, dateMs })}
+            />
 
             {/* About */}
             <View style={styles.block}>
