@@ -53,6 +53,7 @@ import {
   navigationRef,
 } from '@/notifications/deepLink';
 import { buildInitialNavigationState, type StartTarget } from '@/navigation/startTarget';
+import { preloadPanchangStack } from '@/navigation/lazyPanchangStack';
 import ReminderOptInModal from '@/components/ReminderOptInModal';
 import UpdateReadyModal from '@/components/UpdateReadyModal';
 import FeatureTour from '@/components/FeatureTour';
@@ -181,11 +182,26 @@ export default function App() {
           : startTargetFromNotification(response)
       )
       .catch(() => null);
+    // Landing on the Panchang tab makes its lazily-loaded stack the FIRST screen
+    // committed. Evaluate that chunk here, while the blank launch frame is still
+    // up, so the cold landing is the warm one: no suspending as the navigator
+    // mounts, and a chunk that cannot evaluate falls back to Home instead of
+    // throwing past every boundary into a dead screen. Bounded by the same
+    // timeout as the reads above.
+    const ready = async (target: StartTarget | null) => {
+      if (target?.tab !== 'PanchangTab') return target;
+      try {
+        await preloadPanchangStack();
+        return target;
+      } catch {
+        return { tab: 'HomeTab', screen: 'Home' } as StartTarget;
+      }
+    };
     // A widget URL wins outright and need not wait on the notification read.
-    widgetTarget.then((target) => { if (target) finish(target); });
-    Promise.all([widgetTarget, notificationTarget]).then(([fromWidget, fromNotification]) => {
-      if (fromWidget) finish(fromWidget);
-      else finish(fromNotification, fromNotification != null);
+    widgetTarget.then(async (target) => { if (target) finish(await ready(target)); });
+    Promise.all([widgetTarget, notificationTarget]).then(async ([fromWidget, fromNotification]) => {
+      if (fromWidget) finish(await ready(fromWidget));
+      else finish(await ready(fromNotification), fromNotification != null);
     });
     return () => { cancelled = true; clearTimeout(timeoutId); };
   }, []);

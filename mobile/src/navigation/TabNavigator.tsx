@@ -1,9 +1,11 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import HomeStackNavigator from './HomeStackNavigator';
+import StackLoadBoundary from './StackLoadBoundary';
+import { LazyPanchangStackNavigator } from './lazyPanchangStack';
 import MoreStackNavigator from './MoreStackNavigator';
 import AudioStackNavigator from './AudioStackNavigator';
 import DailyBhaktiScreen from '@/screens/DailyBhaktiScreen';
@@ -23,7 +25,6 @@ import {
 } from './tabBarIcons';
 
 const Tab = createBottomTabNavigator<TabParamList>();
-const LazyPanchangStackNavigator = lazy(() => import('./PanchangStackNavigator'));
 
 // Full-screen reader routes that should hide the bottom tab bar so it doesn't
 // compete with immersive reading. Lives at the tab level (rather than per-screen
@@ -143,21 +144,25 @@ export default function TabNavigator() {
 function PanchangTabRoot() {
   const { colors } = useTheme();
   return (
-    <Suspense
-      fallback={
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: colors.parchment,
-          }}
-        >
-          <ActivityIndicator color={colors.saffron} />
-        </View>
-      }
-    >
-      <LazyPanchangStackNavigator />
-    </Suspense>
+    // Boundary OUTSIDE Suspense: a chunk that fails to evaluate must be caught
+    // here, not thrown past the root into a dead screen (StackLoadBoundary).
+    <StackLoadBoundary>
+      <Suspense
+        fallback={
+          <View
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: colors.parchment,
+            }}
+          >
+            <ActivityIndicator color={colors.saffron} />
+          </View>
+        }
+      >
+        <LazyPanchangStackNavigator />
+      </Suspense>
+    </StackLoadBoundary>
   );
 }

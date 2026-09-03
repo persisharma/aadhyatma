@@ -65,7 +65,8 @@ test('App resolves a cold widget URL or launching notification before navigation
   // A widget URL still wins without waiting on it.
   assert.match(app, /startTargetFromNotification\(response\)/);
   assert.match(app, /Promise\.all\(\[widgetTarget, notificationTarget\]\)/);
-  assert.match(app, /widgetTarget\.then\(\(target\) => \{ if \(target\) finish\(target\); \}\)/);
+  // A widget URL still wins outright, without waiting on the notification read.
+  assert.match(app, /widgetTarget\.then\(async \(target\) => \{ if \(target\) finish\(await ready\(target\)\); \}\)/);
   assert.match(app, /coldNotificationConsumedRef\.current\) return;/);
   assert.doesNotMatch(app, /retryWidgetDeepLink/);
 
@@ -82,6 +83,22 @@ test('App resolves a cold widget URL or launching notification before navigation
   // Widget japam links push over Home rather than replacing it as the root.
   assert.match(widgetLink, /screen: 'JapamCounter'/);
   assert.match(widgetLink, /screen: 'CategoryList'/);
+
+  // A cold landing on the Panchang tab makes its lazily-loaded stack the FIRST
+  // screen committed. That chunk is evaluated during the pre-mount race, so the
+  // cold path matches the warm one and a chunk that cannot evaluate falls back
+  // to Home instead of suspending or throwing into a dead screen.
+  const lazyStack = fs.readFileSync(path.join(process.cwd(), 'src/navigation/lazyPanchangStack.ts'), 'utf8');
+  assert.match(app, /preloadPanchangStack\(\)/);
+  assert.match(app, /target\?\.tab !== 'PanchangTab'/);
+  assert.match(app, /\{ tab: 'HomeTab', screen: 'Home' \} as StartTarget/);
+  // ONE shared promise, so the preload and the React.lazy render never race two
+  // evaluations of the same chunk.
+  assert.match(lazyStack, /loading \?\?= import\('\.\/PanchangStackNavigator'\)/);
+  assert.match(lazyStack, /export const LazyPanchangStackNavigator = lazy\(load\)/);
+  assert.doesNotMatch(tabs, /lazy\(\(\) => import/);
+  // The lazy stack renders inside an error boundary, outside the Suspense one.
+  assert.match(tabs, /<StackLoadBoundary>[\s\S]*<Suspense[\s\S]*LazyPanchangStackNavigator[\s\S]*<\/Suspense>[\s\S]*<\/StackLoadBoundary>/);
 });
 
 test('widget planning selects indexed verses without materialising the complete pool', () => {
