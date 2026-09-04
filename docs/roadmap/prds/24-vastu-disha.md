@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Phase 1 built (2026-08-27) — awaiting store release (new native dependency) |
+| **Status** | Phase 1 shipped in 1.4.8 (store). Phase 2 planned — see [24-vastu-disha-phase2.md](./24-vastu-disha-phase2.md) |
 | **Origin** | `docs/roadmap/2026-Q4-candidates.md` §PRD-24 (number reserved there) |
 | **Design** | `design.md` §66 |
 | **Contract** | `RULEBOOK.md` §22 |
@@ -81,10 +81,14 @@ that never expires. On simulators and devices without a magnetometer the hook re
   muhurat result. `VastuDisha` registers on both the More and Panchang stacks so each
   door pushes in place and Back retraces the journey (the PRD-19 multi-stack pattern).
 
-### Phase 2 — later, not this build
+### Phase 2 — planned (2026-09-04)
 
 Compass-overlay floor sketching, per-room saved layouts, and a griha-pravesh checklist
-tie-in are explicitly out; nothing in the Phase 1 data shapes assumes them.
+tie-in were explicitly out of Phase 1; nothing in the Phase 1 data shapes assumes them.
+The Phase 2 plan — fused/tilt-honest heading, the complete household registry with the
+mandala zones and 32 door padas, and the saved मेरा घर map read against the user's own
+rooms — lives in [`24-vastu-disha-phase2.md`](./24-vastu-disha-phase2.md). It is
+OTA-eligible at the 1.4.8 runtime (no new native module).
 
 ## 5. Source method and release gate
 
