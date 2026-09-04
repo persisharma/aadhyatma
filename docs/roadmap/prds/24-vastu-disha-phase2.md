@@ -2,68 +2,100 @@
 
 | | |
 |---|---|
-| **Status** | Plan — drafted 2026-09-04, not yet built |
+| **Status** | Plan — drafted 2026-09-04, revised the same day with buyer/renter mode, floor-plan input, tiered rules and the AI layer; not yet built |
 | **Parent** | [PRD-24 वास्तु दिशा](./24-vastu-disha.md) §4 Phase 2 (this document IS that phase line) |
-| **Design** | `design.md` §66 (to be extended as §66.1–§66.5 in the build PRs) |
-| **Contract** | `RULEBOOK.md` §22 (rules 11–15 added in the build PRs) |
-| **T-shirt size** | Part A: M · Part B: L (content-gated, parallelisable) · Part C: L · Part D: S |
-| **Release** | **OTA-eligible at the 1.4.8 runtime.** Every native module this phase touches — `expo-sensors`, `expo-location`, `expo-haptics`, `react-native-svg` — is already in the shipped binary. Nothing here needs a store release. |
+| **Design** | `design.md` §66 (to be extended as §66.1–§66.8 in the build PRs) |
+| **Contract** | `RULEBOOK.md` §22 (rule 5 amended, rules 11–17 added — see §8) |
+| **T-shirt size** | A: M · B: L (content-gated) · C: L · D: S · E: L · F1: M (store) · F2: L (backend) |
+| **Release** | **Parts A–E and F0 ship OTA at the 1.4.8 runtime** — `expo-sensors`, `expo-location`, `expo-haptics`, `expo-sharing`, `expo-file-system`, `react-native-svg` are all in the shipped binary. **F1 needs `expo-image-picker` (new native module → store release).** **F2 needs the runtime backend** the 2027 bets introduce in Stage 2 (PRD-32); it cannot ship before that and is planned here so the data shapes are ready for it. |
 
 > **Why a Phase 2.** Phase 1 shipped (1.4.8) a live 8-dik compass with an honest accuracy
 > state, seven room conventions and the home-mandir upkeep set. That is a *reference card*
-> held up against a compass. "Fully vastu compliant for the home" means three more things,
-> and this phase delivers exactly those: **(A)** a compass trustworthy enough to place a room
-> in its 45° sector and a door in its 11.25° pada anywhere indoors; **(B)** the *complete*
-> classical household set — every room, utility and element the Vastu Purusha Mandala
-> speaks to, the nine zones with their dikpalas and elements, and the 32 door padas; and
-> **(C)** a saved map of *the user's own home* so the guidance is read against their rooms,
-> not against a generic list. Part D is the griha-pravesh tie-in Phase 1 deferred.
+> held up against a compass. A whole-home vastu companion means six more things:
+> **(A)** a compass trustworthy enough to place a room in its 45° sector and a door in its
+> 11.25° pada anywhere indoors; **(B)** the *complete* classical household set — every room,
+> utility and element, the nine mandala zones with their dikpalas and elements, the 32 door
+> padas — each rule carrying its **weight** (forbidden · prescribed · preferred); **(C)** a
+> saved map of the user's own home, assessed room by room against those weighted rules;
+> **(D)** the griha-pravesh tie-in; **(E)** a **buyer/renter mode** — pick the home type
+> (1–5 BHK, villa, plot), walk the property marking positions step by step, keep several
+> shortlisted homes and compare them; **(F)** a **floor-plan input** — mark rooms on an
+> uploaded plan offline (F1), and later let a vision model pre-read the plan and write
+> grounded pointers (F2), while the assessment itself stays the deterministic rule engine.
 
 ---
 
-## 0. What "compliant" means here — and what it never means
+## 0. The stance, amended: weighted rules, honest findings, still no score
 
-The word "compliant" is the user's; the app's register is PRD-24 §2's and does not move.
-In this document *compliant* means **complete coverage of the classical convention, read
-against the user's own home, with the traditional accommodation stated wherever the two
-differ.** It never means a verdict, a score, a percentage, a dosha, a colour-coded warning
-or a remedy. Concretely (RULEBOOK §22.5 extended, pinned by test in §7):
+Phase 1's RULEBOOK §22.5 said *never a verdict on a home*. The product decision recorded
+here (owner, 2026-09-04) is that a person choosing a flat or plot needs an **assessment**,
+and that an assessment can be honest without becoming fear copy. The register moves from
+"convention with its reason" to **"convention with its reason and its weight, read against
+your rooms"**. What stays fixed, pinned by test (§7):
 
-- A room that sits where tradition places it is **मेल · in keeping**.
-- A room that sits in the direction the texts name as the *second place* is **परंपरागत
-  विकल्प · the traditional alternate** — stated as such, not as second-best.
-- A room that sits elsewhere is **परंपरा में अन्यत्र · tradition places this elsewhere**,
-  followed immediately by the entry's `accommodation*` text. Nothing else. No count of
-  such rooms, no ordering by them, no summary line.
+- **No composite score, no percentage, no rank between homes by a number.** Counts *per
+  finding class* are allowed (a buyer needs them); a single number for a home is not.
+- **No remedies, products, yantras, or "consult our expert".** Where the texts state an
+  accommodation, the row carries it; where they do not, the row says so.
+- **No pseudo-science, no misfortune language.** The reason field keeps the classical
+  register (RULEBOOK §22.5 as shipped).
+- **The weight belongs to the rule, not to the home.** Every finding is "the texts say X
+  about this placement", never "your home is bad".
 
-Those three phrases are the *entire* comparison vocabulary of the feature. RULEBOOK §22.4
-(no universal rule by aggregation) and §22.5 (no fear/remedy/pseudo-science) apply to every
-new row verbatim.
+### 0.1 Weight of a convention (the user's "not allowed / must have / good to have")
+
+| `weight` | Sanskrit register | Meaning in the texts | Examples (to verify per §22.3) |
+|---|---|---|---|
+| `nishedha` | **निषेध** — forbidden | The texts *proscribe* a placement | toilet in ईशान; mandir under a staircase or on a bathroom wall; head north while sleeping; heavy construction on the ब्रह्मस्थान |
+| `vidhana` | **विधान** — prescribed | The texts *prescribe* a placement (with, often, a stated alternate) | kitchen आग्नेय (alt वायव्य); master bedroom नैऋत्य; puja ईशान; overhead tank नैऋत्य/पश्चिम |
+| `shreyas` | **श्रेयस्** — preferred | The texts *prefer* it; absence is not a fault | tulsi in ईशान; windows north/east; safe opening north; study facing east |
+
+Modelled as: each entry's positive placement (`directions` + `alternateDirections`) carries
+`weight: 'vidhana' | 'shreyas'`; each entry's `avoidDirections` is *always* the `nishedha`
+class (a proscription is a proscription regardless of where the room is prescribed).
+
+### 0.2 Finding classes (relation × weight) — the entire assessment vocabulary
+
+| class | Hindi label | When |
+|---|---|---|
+| `in-keeping` | **मेल** | zone ∈ `directions` |
+| `alternate` | **परंपरागत विकल्प** | zone ∈ `alternateDirections` |
+| `forbidden` | **निषिद्ध स्थान** | zone ∈ `avoidDirections` |
+| `differs` | **विधान से भिन्न** | weight `vidhana`, zone in none of the three sets |
+| `preferred-unmet` | **श्रेयस् अनुपलब्ध** | weight `shreyas`, zone in none of the three sets |
+
+Five members, no sixth. `forbidden` renders in the shipped `avoid`/`avoidDeep` tokens (the
+§65.1 निषेध split), the others in ink. Every `forbidden`/`differs` row is followed by the
+entry's accommodation text where one exists. The Phase-1 draft of this plan pinned
+"avoid never becomes a phrase"; **this revision reverses that pin by product decision** and
+records the reversal in RULEBOOK §22.5's amendment (§8).
 
 ## 1. Where Phase 1 stops (from the shipped code, not the PRD)
 
 | Area | Shipped (1.4.8) | Gap this phase closes |
 |---|---|---|
 | Heading source | Raw magnetometer via `expo-sensors`, `atan2(-x, y)`, flat-portrait only (`vastu/compass.ts`) | No tilt awareness; a phone held at 30° reads wrong with `status: 'ok'`. No use of the OS-fused, tilt-compensated heading `expo-location` already exposes. |
-| True north | Per-city WMM table keyed by the **selected panchang city** (`data/vastu/declination.ts`, 394 ids) | A user whose GPS fix snapped to the nearest bundled city gets that city's declination; a user who never picked a city gets Ujjain's. No coordinate-based value. |
+| True north | Per-city WMM table keyed by the **selected panchang city** (`data/vastu/declination.ts`, 394 ids) | A GPS fix snapped to the nearest bundled city gets that city's declination; no coordinate-based value. |
 | Reading stability | Wrap-aware EMA, α = 0.25, 5-sample unreliable debounce | No way to *hold* a reading while walking to a wall; no haptic at a sector change; no VoiceOver announcement of the faced dik changing. |
 | Precision | 45° sectors only (the classical unit — correct) | Door placement classically uses 32 padas (11.25°); the shipped `main-door` row can only say "padas exist" in prose. |
-| Registry | 7 `VastuRoomEntry` rows (puja, kitchen, main door, sleeping, tulsi, toilet, brahmasthan); 4 `MandirGuidanceEntry` rows (1 draft) | Bedrooms by member, living, dining, study, staircase, water (overhead/underground), septic, store, safe, balcony, windows, heavy furniture, parking, garden, wash area, dikpala/element zones, door padas — none exist. |
-| Data shape | `directions` (primary) + prose `accommodation*` | Alternate and avoided directions live only in prose, so nothing can be *compared*; no zone, no category, no "facing while using" field. |
-| Personalisation | None — the screen is stateless | The user cannot record their home; every visit starts from "which way am I facing right now". |
-| Ask (PRD-41) | `vastu.direction` answers from the 7 rooms; lexicon derives room forms from the registry | Nothing answers "मेरी रसोई किस दिशा में है" because there is no saved home. |
-| Doors | More hub row; griha-pravesh muhurat result | The griha-pravesh door lands on the generic screen; no checklist tie-in. |
+| Registry | 7 `VastuRoomEntry` rows; 4 `MandirGuidanceEntry` rows (1 draft) | Bedrooms by member, living, dining, study, staircase, water, septic, store, safe, balcony, windows, furniture, parking, garden, plot-level rows, dikpala/element zones, door padas — none exist. No rule carries a weight. |
+| Data shape | `directions` (primary) + prose `accommodation*` | Alternate and avoided directions live only in prose, so nothing can be *compared*; no zone, no category, no weight, no "facing while using". |
+| Personalisation | None — the screen is stateless | The user cannot record a home, let alone several. |
+| Input modes | Live compass or manual chip | No floor-plan input; no home-type template. |
+| Ask (PRD-41) | `vastu.direction` answers from the 7 rooms | Nothing answers "मेरी रसोई किस दिशा में है". |
+| Doors | More hub row; griha-pravesh muhurat result | The griha-pravesh door lands on the generic screen. |
 
-Everything in the *Shipped* column stays. Phase 2 is additive; no Phase 1 behaviour, testID
-or copy string is removed.
+Everything in the *Shipped* column stays. Phase 2 is additive; no Phase 1 testID or copy
+string is removed. (The Phase-1 closing line "not a verdict on a home" is *reworded*, not
+removed — §C3.)
 
-## 2. Product principles (Phase 1's three, plus two)
+## 2. Product principles
 
-1. **Classical convention with its reason — never a verdict on someone's home.** (PRD-24 §2.1, unchanged.)
-2. **The honest degraded state is part of the feature.** (§2.2, unchanged — and now extends to *tilt* and to the OS heading's own accuracy signal.)
-3. **One direction vocabulary.** (§2.3, unchanged — `DishaDirection` / `DISHA_ORDER` / `DISHA_LABELS` from `eventMuhurat.ts`; the pada ring is a *subdivision of a dik*, not a new vocabulary.)
-4. **Your home is yours.** The home record is one private, versioned AsyncStorage payload on this device; it is never inferred (no GPS-derived facing, no camera, no floor plan capture), never shared except through the explicit export door, and never surfaced on any public panel (Home, Today strip, widgets). The PRD-29 कुल परम्परा stance, applied to a house.
-5. **Comparison without judgement.** The three relation phrases of §0 are the whole vocabulary. No score, no percentage, no ranking, no red, no "N rooms need attention". Registry order is display order, always.
+1. **Classical convention with its reason and its weight** — sourced per RULEBOOK §22.3, never averaged into an invented universal (§22.4).
+2. **The honest degraded state is part of the feature** — now extended to tilt, to the OS heading's own accuracy signal, and to an AI pre-read the user must confirm pin by pin.
+3. **One direction vocabulary** — `DishaDirection`/`DISHA_ORDER`/`DISHA_LABELS`; the pada ring subdivides a dik, the mandala zone adds only `'center'`.
+4. **Your homes are yours.** The roster is one private, versioned AsyncStorage payload; never inferred from GPS, never on a public panel (Home, Today strip, widgets), exported only through the explicit door. Floor-plan images stay in the app's document directory and are never uploaded except by the F2 action the user taps.
+5. **The engine judges; a model never does.** Every finding comes from `assessHome()` (pure, tested). An LLM may *read a drawing* and may *phrase* the engine's output; it may not add, remove or reweight a finding.
 
 ---
 
@@ -73,364 +105,458 @@ or copy string is removed.
 
 `expo-location` (already a config plugin in `app.json`, already used by `PanchangLocationContext`)
 exposes `Location.watchHeadingAsync`, whose `HeadingObject` carries `magHeading`, `trueHeading`
-and a platform `accuracy` level. It is the OS's own sensor-fusion output — tilt-compensated,
-hard/soft-iron calibrated, and on iOS the same figure the Compass app shows.
+and a platform `accuracy` level — the OS's tilt-compensated, calibrated fusion output.
 
 - `useCompassHeading` gains a **source ladder**: `fused` (watchHeadingAsync) → `magnetometer`
-  (the shipped path) → `unavailable`. The ladder is chosen once per mount; the hook's return
-  type gains `source: 'fused' | 'magnetometer' | null` so the status line can be honest about
-  which it is using, and tests can pin the fallback.
-- `trueHeading` is used **only when ≥ 0** (iOS reports −1 when location services are off or the
-  permission is missing). Otherwise `magHeading` + the bundled declination (A3) — the shipped
-  behaviour, unchanged.
-- **No new permission prompt.** If location permission is already granted (the panchang
-  "use my location" flow), true heading comes free. If not, the feature runs on `magHeading`
-  and never asks — a compass asking for location on open is the wrong moment; the copy under
-  the dial states plainly: `सटीक उत्तर के लिए पंचांग स्थान चालू करें` when `source === 'fused'`
-  and `trueHeading < 0`.
-- Platform `accuracy` maps onto the existing vocabulary: iOS `accuracy ≤ 1` / Android
-  `accuracy ≤ 1` → `unreliable`; else `ok`. The 25–65 µT band check stays on the magnetometer
-  path only (the fused path has no raw field vector).
-- Smoothing: the fused heading is already filtered by the OS; `smoothHeading` is applied with
-  α = 0.5 (pinned) to soften Android's coarser update cadence without adding lag.
-
-Pure math stays in `vastu/compass.ts`; the ladder and subscription lifecycle stay in the hook.
-`compass.test.ts` gains the accuracy-level mapping pins; a new `useCompassHeading.test.tsx`
-(Jest, mocking both modules) pins the ladder order, the −1 true-heading fallback, and that an
-`unavailable` fused source falls through to the magnetometer rather than to `unavailable`.
+  (the shipped path) → `unavailable`; the return type gains `source` so the status line is
+  honest about which it is using and tests can pin the fallback.
+- `trueHeading` is used **only when ≥ 0** (iOS reports −1 without location permission);
+  otherwise `magHeading` + the bundled declination (A3).
+- **No new permission prompt.** Location permission already granted by the panchang "use my
+  location" flow gives true heading free; otherwise the copy under the dial reads
+  `सटीक उत्तर के लिए पंचांग स्थान चालू करें`. (§10 decision 5 can add a one-time in-Vastu ask.)
+- Platform `accuracy ≤ 1` → `unreliable`; else `ok`. The 25–65 µT band stays on the
+  magnetometer path only. Fused smoothing α = 0.5 (pinned).
 
 ## A2. Tilt honesty (magnetometer path)
 
-The shipped math assumes a flat phone and folds tilt error into "unreliable" without detecting
-it. On the magnetometer path, subscribe to `Accelerometer` (same `expo-sensors` module — no new
-dependency) and compute pitch/roll in a pure `tiltFromAccel(sample)` helper:
-
-- |pitch| or |roll| > **20°** for ≥ 5 samples → new status **`tilted`** (the fifth vocabulary
-  word). The dial keeps moving; the status line reads `फ़ोन समतल रखें — झुका हुआ फ़ोन दिशा
-  बदल देता है।` in `saffron-deep`. Below 20° the status returns to whatever the field check
-  says.
-- `tilted` outranks `unreliable` (the user can fix tilt in a second; a bad field needs a walk).
-- On the fused path `tilted` is never emitted — the OS output is already tilt-compensated.
-
-Pins: the threshold and hysteresis in `compass.test.ts`; the precedence in the hook test.
+Subscribe to `Accelerometer` (same module); pure `tiltFromAccel(sample)` → pitch/roll.
+|pitch| or |roll| > **20°** for ≥ 5 samples → new status **`tilted`** (`फ़ोन समतल रखें — झुका
+हुआ फ़ोन दिशा बदल देता है।`, `saffron-deep`; dial keeps moving). `tilted` outranks
+`unreliable`; never emitted on the fused path.
 
 ## A3. Declination by coordinates (grid), city table retained
 
-Replace "selected city only" with a two-tier lookup in `data/vastu/declination.ts`:
-
-1. **Coordinates known** (the panchang location's `latitude`/`longitude` — every `City` carries
-   them, and a GPS-snapped location is a `City`) → bilinear interpolation over a bundled
-   **1° × 1° WMM-2025 grid** covering 6–38 °N, 66–100 °E (33 × 35 = 1,155 values, ~9 KB as a
-   typed array literal). Regenerated per WMM epoch by extending
-   `mobile/scripts/generate-declination.md`.
-2. **Unknown** → `null` → magnetic, silently (RULEBOOK §22.7 unchanged).
-
-The per-city table stays as the regression oracle: a new test asserts every bundled city's
-table value and its grid interpolation agree within 0.2°. This closes the "GPS snapped me to a
-city 60 km away" case without changing any UI.
+Two-tier lookup in `data/vastu/declination.ts`: coordinates known (every `City` carries
+lat/lon) → bilinear interpolation over a bundled **1° × 1° WMM-2025 grid**, 6–38 °N,
+66–100 °E (1,155 values, ~9 KB); unknown → `null` → magnetic, silently (§22.7). The per-city
+table becomes the regression oracle (grid vs table ≤ 0.2° for every city, by test).
+`mobile/scripts/generate-declination.md` gains the grid method.
 
 ## A4. Hold, haptics, and the announced dik
 
-- **दिशा रोकें · Hold** — a pill beside the status line freezes `heading` (the subscription is
-  removed, exactly the manual-chip mechanics; the frozen dik is what `facingDik` reports). Tap
-  again to resume. This is the "walk to the wall, then read" affordance every real compass
-  session needs and the chip row cannot give (a chip *chooses*, it does not *capture*).
-- **Haptic tick** on a `facingDik` change (`expo-haptics` `selectionAsync`, already in the
-  binary), debounced to one per 400 ms. Off when the phone is in manual or hold mode.
-- **Accessibility**: `AccessibilityInfo.announceForAccessibility` of the new dik label on
-  change (rate-limited to once per 1.5 s) — the chakra's one `accessibilityLabel` already
-  narrates the current state; this adds the *change*.
-- `DishaChakra` grows to `min(screenWidth − 2·gutter, 300)` pt instead of the fixed 264.
+- **दिशा रोकें · Hold** pill freezes `heading` (subscription removed — the manual-chip
+  mechanics); tap again to resume. The capture affordance every step of C1/E2 uses.
+- **Haptic tick** on `facingDik` change (`expo-haptics` `selectionAsync`, ≤ 1 per 400 ms;
+  off in manual/hold).
+- **`announceForAccessibility`** of the new dik label on change (≤ 1 per 1.5 s).
+- `DishaChakra` grows to `min(screenWidth − 2·gutter, 300)` pt.
 
 ## A5. The pada ring (door flow only)
 
-A **32-pada ring** (11.25° each, 8 per side, drawn as a thin outer band with the pada names
-from the door-pada registry, B3) renders **only inside the door-placement step of Part C**.
-The default chakra keeps its eight labels — the classical unit for a room stays the 45° sector
-and the UI never claims per-degree precision (RULEBOOK §22.7). `padaForHeading(heading, facing)`
-lives in `compass.ts` with boundary pins like `dikForHeading`'s.
+A 32-pada ring (11.25°, names from B3) renders **only** inside the door step of C1/E2. The
+default chakra keeps eight labels; the UI never claims per-degree precision (§22.7).
+`padaForHeading(heading, facing)` in `compass.ts`, boundary-pinned like `dikForHeading`.
 
 ---
 
-# PART B — The complete household registry (content-gated)
+# PART B — The complete, weighted household registry (content-gated)
 
-Every row follows RULEBOOK §22.3 exactly: two concordant independent published domains, a
-dated claim-level `verificationNote`, a `variantNote` where traditions split. **Rows ship
-`draft` and are invisible until verified** — the §20/§21/§22 pattern. The code lands first;
-verification is data work that can proceed in parallel and in any order.
+Every row follows RULEBOOK §22.3: two concordant independent published domains, a dated
+claim-level `verificationNote`, a `variantNote` where traditions split. **Rows ship `draft`
+and are invisible until verified.** Code lands first; verification proceeds in parallel.
 
 ## B1. Type extensions (`data/vastu/types.ts`) — backward compatible
 
 ```ts
-export type VastuZone =
-  | 'east' | 'southeast' | 'south' | 'southwest' | 'west' | 'northwest' | 'north' | 'northeast'
-  | 'center';                       // = DishaDirection | 'center' — the 9 mandala zones
-
-export type VastuRoomCategory = 'worship' | 'living' | 'utility' | 'structure' | 'element' | 'activity';
+export type VastuZone = DishaDirection | 'center';            // the 9 mandala zones
+export type VastuRoomCategory =
+  | 'worship' | 'living' | 'utility' | 'structure' | 'element' | 'activity' | 'plot';
+export type VastuWeight = 'vidhana' | 'shreyas';               // positive placement weight
+export type HomeKind = 'flat' | 'villa' | 'plot';               // which templates list the row
 
 export type VastuRoomEntry = {
   …existing fields…
-  /** Classification for grouping on the screen and for Ask slot filling. Defaults to 'living'. */
-  category?: VastuRoomCategory;
-  /** The texts' stated SECOND place(s), when one exists. Typed so it can be compared, not just read. */
+  category?: VastuRoomCategory;                 // default 'living'
+  /** Weight of the PRESCRIBED placement. Default 'vidhana' (the seven shipped rows are all prescriptions). */
+  weight?: VastuWeight;
+  /** The texts' stated second place(s). Typed so it can be compared, not just read. */
   alternateDirections?: readonly DishaDirection[];
-  /** Directions the texts explicitly keep this room OUT of (e.g. toilet ∉ northeast). */
-  avoidDirections?: readonly DishaDirection[];
-  /** The direction one FACES while using the room (cook → east, study → east/north). */
+  /** Directions the texts PROSCRIBE for this room — always the निषेध class in a finding. */
+  avoidDirections?: readonly VastuZone[];       // may include 'center' (e.g. toilet, staircase)
+  /** The direction one FACES while using the room (cook → east). */
   facingWhileUsing?: readonly DishaDirection[];
+  /** Which home kinds show this row in templates; default all. Plot-level rows are ['villa','plot']. */
+  appliesTo?: readonly HomeKind[];
 };
 ```
 
 Registry invariants added to `vastuContent.test.ts`: `alternateDirections ∩ directions = ∅`;
-`avoidDirections ∩ (directions ∪ alternateDirections) = ∅`; every `avoidDirections` and
-`facingWhileUsing` value is a `DISHA_ORDER` member; `isCenter` entries carry none of the three.
-The seven shipped rows gain `alternateDirections` where their prose already states one
-(kitchen → `['northwest']`) and `avoidDirections` where already stated (toilet →
-`['northeast']`, sleeping head → `['north']` expressed on the activity row, B2) — **the prose
-does not change**, so the stance-guard grep and the screen tests stay green.
+`avoidDirections ∩ (directions ∪ alternateDirections) = ∅`; every value is a `DISHA_ORDER`
+member or `'center'`; `isCenter` entries carry none of the three placement sets; a `shreyas`
+row never carries `avoidDirections` whose sole justification is the same source claim as its
+preference (a preference and a proscription are two claims, each needing its own two-domain
+note). The seven shipped rows gain typed sets where their prose already states them
+(kitchen alt → `['northwest']`; toilet avoid → `['northeast','center']`; puja avoid → none
+typed — "not on a bathroom wall" is adjacency, not a direction, and stays prose). **Prose
+does not change**, so the stance-guard grep and screen tests stay green.
 
-## B2. New rows (target ≈ 20, each content-gated)
+## B2. New rows (≈ 24, each content-gated)
 
-Grouped by `category`. Primary / alternate / avoid are the *candidate* conventions to verify —
-the build commits nothing the two-domain check does not confirm, and a split becomes a
-`variantNote`, never an averaged rule (§22.4).
+Primary / alternate / avoid / weight below are the *candidates* to verify; a split becomes a
+`variantNote`, never an averaged rule.
 
-**living** — master bedroom (SW; alt S/W); children's bedroom (W/NW; alt E); guest room
-(NW; alt NE per some texts → variant); living/drawing room (N/E/NE; alt NW); dining (W; alt
-E/N; facing E while eating); study (NE/N/E; face E/N; avoid SW per some → variant); balcony/
-verandah (N/E; avoid S/W → variant).
+**living** — master bedroom (SW; alt S/W; `vidhana`); children's bedroom (W/NW; alt E);
+guest room (NW; alt NE → variant); living/drawing room (N/E/NE; alt NW); dining (W; alt E/N;
+facing E; `shreyas`); study (NE/N/E; face E/N; avoid SW → variant); balcony/verandah (N/E;
+`shreyas`).
 
-**utility** — store room (SW/W; light goods NW); overhead water tank (SW/W; avoid NE);
-underground tank/borewell (NE/N; avoid SW/SE); septic tank (NW; avoid NE/centre); wash/utility
-area (NW/SE — split → variant); garage/parking (NW/SE; avoid NE/SW).
+**utility** — store room (SW/W); overhead water tank (SW/W; avoid NE); underground tank/
+borewell (NE/N; avoid SW/SE); septic tank (NW; avoid NE/center); wash/utility (NW/SE → variant);
+garage/parking (NW/SE; avoid NE/SW).
 
-**structure** — staircase (S/W/SW; clockwise ascent; avoid NE/centre); windows & ventilation
-(N/E; more open than S/W); heavy furniture/almirah (SW/S/W; avoid NE); safe/locker (SW room,
-door opening north — Kubera; avoid facing S).
+**structure** — staircase (S/W/SW, clockwise ascent; avoid NE/center); windows & ventilation
+(N/E; `shreyas`); heavy furniture/almirah (SW/S/W; avoid NE; `shreyas`); safe/locker (SW room,
+door opening north; `shreyas`).
 
-**element** — garden/plants (N/E; tulsi already shipped); mirrors (N/E walls; avoid facing
-the bed → variant). *Colours by direction is deliberately excluded* — sources split widely and
-the register drifts into décor-commerce; PRD-24 §7 non-goals hold.
+**element** — garden/plants (N/E; `shreyas`); mirrors (N/E walls; avoid facing the bed →
+variant; `shreyas`). *Colours by direction excluded* (sources split; décor-commerce register).
 
-**activity** — sleeping head-direction (already shipped; re-tagged `activity`); studying/
-working facing (E/N); eating facing (E; alt N); worship facing (E/N — already in the puja row's
-prose; a typed `facingWhileUsing` makes it askable).
+**activity** — sleeping head-direction (shipped; re-tagged; avoid → `['north']`); studying/
+working facing (E/N; `shreyas`); eating facing (E; alt N; `shreyas`).
+
+**plot** (`appliesTo: ['villa','plot']`, for Part E) — plot facing / road side (N/E/NE
+favoured; every side has its auspicious padas → the door-pada rule); gate (per facing side's
+padas); plot shape (square/rectangular; irregular → variant, stated not judged); slope (toward
+N/E; avoid toward SW → verify); compound wall height (S/W higher; `shreyas`); open space
+(more N/E; `shreyas`); well/borewell (NE; avoid SW/SE); trees (large ones S/W; avoid front-of-
+door — already in the door row).
 
 ## B3. Frameworks: the mandala and the door padas (`data/vastu/mandala.ts`, `doorPadas.ts`)
 
-- **Nine zones** (`VastuZone`) each with: dikpala (Indra E · Agni SE · Yama S · Nirriti SW ·
-  Varuna W · Vayu NW · Kubera N · Ishana NE · Brahma centre), pancha-bhuta where the texts
-  assign one (jala NE · agni SE · prithvi SW · vayu NW · akasha centre), the classical
-  "quality" phrase and its reason, bilingual. Where a dikpala matches a registry deity
-  (`kubera`, and Ishana → `shiva` with a `variantNote` naming the identification), the zone
-  row carries the `deityId` so the screen can show the existing `DeityIcon` and link the
-  deity's texts — through the shipped `buildEntryStartTarget()`, never a hand-rolled route.
-  The remaining dikpalas render as text (no glyph is invented — the deity-icons no-emoji rule).
-- **32 door padas**: per facing side, the eight pada names in order (the Mayamata /
-  Vishwakarma-prakash sequence) and the set each source calls auspicious for that facing.
-  This is the fuller rule the shipped `main-door` row already points to in prose. Sources
-  *do* split on exact sets → the registry stores each source's set and the row states the
-  agreement (padas both name) as the convention and the difference as `variantNote`. Rows
-  ship `draft` until the two-domain bar is met.
-- **Ancestor photographs** (the shipped draft) — find the second domain and flip to
-  `verified`; nothing else about the row changes.
+- **Nine zones** with dikpala (Indra E · Agni SE · Yama S · Nirriti SW · Varuna W · Vayu NW ·
+  Kubera N · Ishana NE · Brahma centre), pancha-bhuta where assigned (jala NE · agni SE ·
+  prithvi SW · vayu NW · akasha centre), the classical quality phrase and reason, bilingual.
+  Where a dikpala matches a registry deity (`kubera`; Ishana → `shiva` with a `variantNote`),
+  the row carries `deityId` so the screen shows the existing `DeityIcon` and links the deity's
+  texts via `buildEntryStartTarget()`. Others render as text (no invented glyph).
+- **32 door padas**: per facing side, eight pada names in the Mayamata / Vishwakarma-prakash
+  order and each source's auspicious set; the agreement is the convention, the difference the
+  `variantNote`. `draft` until the two-domain bar is met.
+- **Ancestor photographs** (shipped draft) — second domain, flip to `verified`.
 
-## B4. Ask (PRD-41) follows automatically — with one check
+## B4. Ask (PRD-41) follows automatically
 
-`lexicon.ts` derives room surface forms from `VASTU_ROOM_ENTRIES`, so every verified row is
-askable the day it flips. Two additions: the `vastu.direction` intent reads
-`facingWhileUsing` for "किस ओर मुख करके…" questions, and the golden corpus
-(`ask/__tests__/corpus.test.ts`) gains ≥ 2 questions per new verified row, keeping the ≥ 85 %
-top-1 / zero-wrong-answer gate.
+`lexicon.ts` derives room forms from the registry, so every verified row is askable on flip.
+`vastu.direction` reads `facingWhileUsing`; the golden corpus gains ≥ 2 questions per new
+verified row (≥ 85 % top-1, zero wrong answers).
 
 ---
 
-# PART C — मेरा घर · the saved home map (the "for home" half)
+# PART C — मेरा घर · the home you live in
 
-## C1. The flow (`GharVastuSetupScreen`, three steps, skippable)
+## C1. The flow (`GharVastuSetupScreen`, skippable steps)
 
 1. **घर का मुख · Facing.** "Stand inside the main door, facing out. Hold the phone flat."
-   The chakra + A5 pada ring; **Hold** captures; the screen records `facing: DishaDirection`
-   and `doorPada: 1–8 | null`. With the sensor `unavailable` the 8 chips (and a pada picker)
-   do the same by hand — the sensor never gates the record (RULEBOOK §22.6).
+   Chakra + A5 pada ring; **Hold** captures `facing` and `doorPada`. With the sensor
+   `unavailable`, chips and a pada picker do the same by hand (§22.6).
 2. **कक्ष · Rooms.** "Stand at the centre of the home. Point the phone at each room and tap
-   it." The registry's `living`/`utility`/`structure`/`worship` rows appear as chips; tapping
-   one while a dik is faced (or held, or manually chosen) records `{ roomId, dik }`. Rooms
-   may be skipped, recorded twice (two bedrooms → `roomId` + ordinal), or marked `center`.
-3. **सारांश · Summary** → the screen in C3.
+   it." The home's **template chips** (E1 — for the lived-in home the user picks a type too,
+   or `custom`) appear; tapping one while a dik is faced/held/chosen records `{ roomId,
+   ordinal, zone }`. Skip, repeat (two bedrooms), or mark `center`.
+3. **सारांश · Assessment** → C3.
 
-Copy throughout is instruction, not evaluation. No step says "good" or "wrong".
+Copy is instruction, never evaluation, until step 3.
 
-## C2. The record (`vastu/homeRecord.ts`, `homeRecordStore.ts`)
+## C2. The record (`vastu/homeRecord.ts`, `homeRecordStore.ts`) — a roster from day one
 
 ```ts
-export type HomeRoomPlacement = { roomId: string; ordinal?: number; zone: VastuZone; recordedAt: string };
+export type HomePlacement = { roomId: string; ordinal?: number; zone: VastuZone; recordedAt: string;
+                              /** How the zone was captured — the provenance the assessment shows. */
+                              via: 'compass' | 'manual' | 'plan' | 'plan-ai-confirmed' };
 export type HomeRecord = {
-  version: 1;
-  facing: DishaDirection;
-  doorPada: number | null;                 // 1–8 within the facing side
-  rooms: readonly HomeRoomPlacement[];
-  updatedAt: string;
+  id: string; version: 1;
+  label: string;                                  // "हमारा घर", "Prestige 3BHK, 7th floor"
+  kind: HomeKind; template: string;               // e.g. 'flat-3bhk', 'villa', 'plot', 'custom'
+  role: 'living' | 'considering';                 // Part C vs Part E
+  facing: DishaDirection | null; doorPada: number | null;
+  rooms: readonly HomePlacement[];
+  plan?: { uri: string; northDeg: number; centre: { x: number; y: number } };   // F1
+  createdAt: string; updatedAt: string;
 };
+export type HomeRoster = { version: 1; homes: readonly HomeRecord[]; livingId: string | null };
 ```
 
-- Key `@vedansh:vastu-home:v1`, enumerated as a **NON-cache key** in `derivedCacheReset`
-  (the `kulParamparaStore` precedent) so a cache sweep never deletes a home.
-- Parse validates every `roomId` against the registry; a retired id is **dropped, never a
-  crash** (PRD-29's rule). Unknown `version` → treated as absent, with the raw payload left in
-  place for a future migration.
-- **One home in v1.** A roster (city flat + village house) is a real ask and is deferred to an
-  explicit product decision (§10) — the record shape leaves room (`HomeRecord[]` under a
-  `v2` key) and nothing in v1 assumes a single home *forever*.
-- **Export**: a `vastu-home` section in the PRD-29 envelope style (`format: 'vedansh-vastu-home',
-  version: 1`, display strings denormalised beside ids) via the same `expo-sharing` path. Import
-  waits for PRD-06's one importer, as kul parampara's does.
-- Nothing about the home is read by widgets, the Today strip, notifications, or Ask's briefing.
+- Key `@vedansh:vastu-homes:v1`, enumerated as a **NON-cache key** in `derivedCacheReset`
+  (the `kulParamparaStore` precedent). Cap: 12 homes (a shortlist, not a database).
+- Parse validates every `roomId`/`template` against the registries; a retired id is
+  **dropped, never a crash**; unknown `version` → treated as absent, payload left in place.
+- **Export**: `format: 'vedansh-vastu-homes', version: 1`, display strings denormalised
+  beside ids, via `expo-sharing` (the PRD-29 envelope). Import waits for PRD-06's importer.
+- Nothing about any home is read by widgets, the Today strip, notifications or the briefing.
 
-## C3. The screen (`GharVastuScreen`) — the mandala with your rooms in it
+## C3. The assessment engine and screen
 
-- **Header**: `ReaderHeader variant="index"`, title `मेरा घर · वास्तु`; header action `पुनः मापें ·
-  Re-measure` → C1 at step 2 with the record pre-filled.
-- **Mandala card**: a 3 × 3 grid (`react-native-svg`, rotated so the *facing* side is at the
-  bottom — the way one stands inside the door looking in). Each cell: zone label
-  (`DISHA_LABELS` or ब्रह्मस्थान), the dikpala name in 11 pt muted, and the user's room chips in
-  that zone. The centre cell is drawn open (the shipped Brahmasthan idiom). One accessibility
-  label narrates the whole grid (the §51 chart text-equivalence rule).
-- **मुख्य द्वार row**: facing + pada name; then exactly one of the three §0 phrases derived
-  from the door-pada registry for that facing; then the shipped `main-door` accommodation text
-  when the phrase is the third.
-- **Room rows**, in **registry order** (never re-sorted): title · `परंपरा: <directions>` ·
-  `आपके घर में: <zone>` · the relation phrase (`मेल` / `परंपरागत विकल्प` / `परंपरा में अन्यत्र`)
-  · the accommodation line when the third phrase applies. The phrase is computed by the pure
-  `relationFor(entry, zone)` in `vastu/homeRelation.ts`:
-  `directions ∋ zone → 'in-keeping'`, else `alternateDirections ∋ zone → 'alternate'`, else
-  `'elsewhere'`; `isCenter` rows compare against `'center'`. **The `avoidDirections` field is
-  never surfaced as a fourth phrase** — an avoided direction is `elsewhere` plus the
-  accommodation, exactly like any other. (Naming the avoidance would be the dosha register.)
-- **Unrecorded rooms** appear at the end as `अभी मापा नहीं · Not measured yet` with a tap into
-  C1 step 2 — quiet rows, no prompt to "complete".
-- **Closing line**: Phase 1's stance sentence, then the privacy line in the PRD-29 idiom
-  (2 px `goldTint` left border, italic muted): "यह मानचित्र केवल इस फ़ोन पर है।"
-- **Delete** in the header overflow, with the standard destructive confirm.
+**Engine — `vastu/assessHome.ts` (pure, tsx-tested).** `assessHome(record, registry) →
+HomeAssessmentModel`: for each placement, `classify(entry, zone)` per §0.2; door finding from
+the pada registry; unrecorded template rooms listed as `unmeasured`; output grouped by class
+in the fixed order `forbidden → differs → preferred-unmet → alternate → in-keeping →
+unmeasured`, **registry order within a group**, each finding carrying the entry's convention,
+reason, accommodation and `via`. The model is **versioned, fully serialisable JSON with no
+`Date` instances** (serde round-trip pinned) — deliberately the grounding object F2 consumes,
+exactly as `KundaliReportModel` was designed for PRD-32.
+
+**Screen — `GharVastuScreen`.**
+- `ReaderHeader variant="index"`, title = the home's label; actions `पुनः मापें`, overflow
+  (rename · export · delete with the destructive confirm).
+- **Mandala card**: 3 × 3 `react-native-svg` grid rotated so the facing side is at the
+  bottom (standing inside the door looking in); each cell: zone label, dikpala 11 pt muted,
+  the home's room chips (chip border in the finding-class tone); centre drawn open. One
+  accessibility label narrates the grid (§51 text-equivalence).
+- **Class summary strip**: five quiet pills, `<label> · <count>`, in the fixed order; a pill
+  with count 0 still renders (absence is information). **No total, no percentage, no bar.**
+- **Finding groups** in the fixed order, each row: title · `परंपरा: <directions> (<weight
+  word>)` · `आपके घर में: <zone>` · class label · accommodation (forbidden/differs) ·
+  `via` glyph (compass / hand / plan). `unmeasured` rows tap into C1 step 2.
+- **Closing lines**: "यह शास्त्रीय परंपरा का, भार सहित, पाठ है — घर का नहीं, स्थान का विधान।"
+  then the privacy line (2 px `goldTint` left border, italic muted).
 
 ## C4. Doors
 
-- `VastuDishaScreen`: a `मेरा घर` ListCard under the chip row — `NEW`-state until a record
-  exists, then the facing + room count as its state text. Tapping without a record → C1.
-- `MuhuratResultsScreen` griha-pravesh door: unchanged target when a record exists; **without
-  one it opens C1** ("नए घर का मुख मापें") — the move-in moment is exactly when the map is
-  first drawn.
-- More hub row: unchanged (the Phase 1 row stays the single More door; §37's row count does
-  not grow).
-- `GharVastu` and `GharVastuSetup` register on the More **and** Panchang stacks (the PRD-19
-  multi-stack pattern the Phase 1 screen already uses).
+- `VastuDishaScreen`: `मेरे घर` ListCard under the chip row — NEW until the roster has a
+  home; then `<living label> · <n> और` as state text → the roster (E3) or straight to the one
+  home.
+- `MuhuratResultsScreen` griha-pravesh door: opens C1 as `role: 'living'` when the roster has
+  no living home; else the living home.
+- More hub row unchanged. `GharVastu*` register on the More **and** Panchang stacks (the
+  PRD-19 multi-stack pattern).
 
 ## C5. Ask: `vastu.myhome`
 
-A fourteenth intent, family `vastu`: triggers "मेरा/मेरी/हमारा … किस दिशा", "ghar ka mukh",
-"mera kitchen kahan hai"; slot `room` (existing kind). Reads the store's parsed record (pure
-accessor, no React); **abstains** (returns `null`) without a record, and the abstain card's
-did-you-mean chip offers "मंदिर किस दिशा में" — the generic intent — rather than a nudge to set
-up. Answer card: headline = the zone, rows = परंपरा / आपके घर में / the relation phrase,
-working = `HomeRecord.rooms[<roomId>]`, action = `मेरा घर खोलें`. Stance guard: the
-`declined` register is untouched — this intent is factual recall of the user's own record.
+Fourteenth intent, family `vastu`: "मेरा/मेरी/हमारा … किस दिशा", "ghar ka mukh", "mera
+kitchen kahan hai"; slot `room`. Reads the roster's **living** home (pure accessor); abstains
+without one (did-you-mean chip → the generic intent). Answer rows: परंपरा (with weight) /
+आपके घर में / class label; action `मेरा घर खोलें`. The `declined` register is untouched —
+this is recall of the user's own record.
 
 ---
 
-# PART D — गृह प्रवेश tie-in (small, cross-link only)
+# PART D — गृह प्रवेश tie-in (small)
 
-- The griha-pravesh muhurat result already opens Vastu; C4 makes it open the home setup on a
-  fresh home.
-- **No griha-pravesh vidhi is authored here.** PRD-19's registry has none; when one exists,
-  its तैयारी checklist gains a `मुख्य द्वार की दिशा मापें` row that deep-links to C1 step 1.
-  This PRD adds the deep-link target (`entryRoutes.ts`) and nothing else.
+The griha-pravesh muhurat result opens C1 on a fresh roster (C4). No griha-pravesh vidhi is
+authored here; when PRD-19's registry gains one, its तैयारी checklist links to C1 step 1.
+This PRD adds the `entryRoutes.ts` deep-link target only.
+
+---
+
+# PART E — नया घर देखें · buyer / renter mode
+
+The user's framing: *anyone planning to buy or rent can use this and mark — select 2/3/4/5
+BHK, villa and so on, then mark positions step by step.* Part C's record and engine already
+carry this; Part E adds the templates, the site-visit flow, the roster and the comparison.
+
+## E1. Home-type templates (`data/vastu/homeTemplates.ts`, pure data)
+
+| template | kind | seeded room chips (registry ids × count) |
+|---|---|---|
+| `flat-1bhk` … `flat-5bhk` | flat | main door · living · kitchen · dining · puja · bedroom ×N (first = master) · toilet ×⌈N/2⌉+1 · balcony · store (3+) · study (4+) |
+| `villa` | villa | the flat set + staircase · overhead tank · underground tank · septic · parking · garden · plot rows (B2 `plot`) |
+| `plot` | plot | plot rows only + intended main-door side |
+| `custom` | any | empty; the user adds chips from the whole registry |
+
+Templates are **seed lists, not rules**: any chip can be removed or added. A template row
+whose registry entry is still `draft` is silently absent (the verified-only accessor applies
+to templates too). Pinned: every template id resolves, counts are ≥ 1, `appliesTo` respected.
+
+## E2. The site-visit flow (`GharVastuSetupScreen`, `role: 'considering'`)
+
+Step 0 **घर का प्रकार** (template picker + label + optional note field for the listing) →
+Step 1 facing (C1.1) → Step 2 rooms, **as a checklist in template order**, each chip showing
+`✓ <zone>` once captured — this is the "step by step" walk: living → kitchen → … The flow is
+resumable (a visit is interrupted by the broker); the record saves after every capture.
+For `plot`, step 1 captures the road/entry side and step 2 walks the plot rows (slope, well,
+open space…) with the compass at the plot's centre.
+
+## E3. Roster and comparison (`GharVastuRosterScreen`, `GharVastuCompareScreen`)
+
+- **Roster**: §33 ObservanceList rows — label · template · facing · a five-count micro-strip
+  in the fixed class order · `role` glyph. Living home pinned first. Swipe: rename · delete.
+  `+ नया घर` → E2. Cap 12.
+- **Compare**: pick 2–3 `considering` homes → a column per home. Rows: facing + door finding;
+  the five class counts; then every registry room present in any home, showing each home's
+  zone + class label side by side. **No winner, no ranking, no colour heat beyond the
+  finding-class tokens already in use.** Registry order. A closing line names the trade the
+  screen refuses to make: "कौन-सा घर — यह निर्णय आपका है; यहाँ केवल विधान का पाठ है।"
+- **Share a home**: the C2 export, plus a **full-text handoff** (F0) so the assessment can go
+  to a family group or the user's own assistant.
+
+## E4. Ask
+
+`vastu.myhome` gains a home slot by label ("Prestige वाले घर की रसोई") → the named home; a
+bare question still means the living home.
+
+---
+
+# PART F — Floor-plan input and the AI layer
+
+## F0. Full-text handoff (ships with E, zero backend)
+
+The PRD-20 §68 pattern: `vastu/homeHandoff.ts` renders the `HomeAssessmentModel` as plain
+text — label, template, facing + pada, every finding with convention / reason / weight /
+accommodation, the privacy note, and the JSON model — to the OS share sheet. The user may
+paste it into **any** assistant (ChatGPT, Gemini, Claude) for a conversation. The app
+contacts no service; the framing inside the export states that the findings are classical
+convention with weight, not a prediction or a valuation.
+
+## F1. Mark on a plan — offline, deterministic (store release: `expo-image-picker`)
+
+- **Input**: pick a floor-plan image (photo of the brochure page, PDF page screenshot) via
+  `expo-image-picker`; copy to the app's documents dir; store `plan.uri`. No camera module —
+  the picker's camera option is enough.
+- **Orient**: drag a north arrow over the plan (or type the plan's facing — brochures state
+  it); the arrow's angle is `plan.northDeg`. Tap once to set the **centre** (the ब्रह्मस्थान
+  pin) — default = image centre.
+- **Mark**: tap a template chip, then tap its place on the plan. Zone = `dikForHeading(angle
+  from centre to pin − northDeg)`; a pin within 12 % of the image diagonal from the centre is
+  `center`. Pins are draggable; `via: 'plan'`.
+- **Assess**: the same engine; the mandala card can toggle to **plan view** — the image under
+  the 3 × 3 overlay, pins tinted by class.
+- Pinned: the pin→zone geometry in `compass.test.ts` (north-arrow rotation, centre radius),
+  the store's `plan` serde, and that a missing image file degrades to the grid view with the
+  placements intact.
+
+## F2. AI pre-read and grounded pointers (Stage-2 backend, 2027)
+
+*The user's ask: upload an image, evaluate against the rules, let GPT/Gemini add the feature
+or suggest pointers.* The architecture keeps §2.5 intact:
+
+1. **Vision pre-read** (replaces F1's manual pins, never the confirmation): the plan image
+   goes to the backend, which calls a vision model with a strict JSON schema —
+   `{ northArrow?: deg, centre?: {x,y}, rooms: [{ label, roomId?: registry id, x, y, confidence }] }`
+   — and returns pins. Every pin lands **unconfirmed**; the user confirms/moves/deletes each
+   (`via: 'plan-ai-confirmed'`). Unconfirmed pins are not assessed. A room the model labels
+   but the registry lacks is offered as `custom` text, never assessed.
+2. **Grounded pointers**: the backend receives the `HomeAssessmentModel` JSON **only** (never
+   the image a second time, never free text from the user) and returns a short bilingual
+   narrative that must cite finding ids; the client renders only sentences whose cited ids
+   exist in the model and drops the rest (the PRD-32 citation-validation rule). The model
+   cannot add a finding, change a class or a weight, or name a remedy — the system prompt
+   forbids it and the client filter enforces it (a sentence with a `remedy/उपाय/यंत्र` token
+   is dropped, the §7 guard applied to model output).
+3. **Provider-agnostic**: the endpoint is the Stage-2 service PRD-32 stands up; the provider
+   (Anthropic / OpenAI / Google) is a server-side choice with a JSON-schema contract, so
+   "GPT or Gemini" is a config value, not an app change. **No API key ever ships in the
+   binary; BYOK is rejected** (key-handling UX, cost surprises, and a support burden the app
+   cannot carry).
+4. **Consent + privacy**: one explicit action `योजना AI से पढ़वाएँ`, a sheet stating exactly
+   what leaves the device (the image; later, the assessment JSON), nothing stored server-side
+   beyond the request, and the F0 handoff offered as the no-upload alternative.
+5. **Eval gate** (from PRD-32's method): a 40-plan labelled set; pre-read ships when ≥ 90 %
+   of rooms land in the correct zone before confirmation; pointers ship when 0 of 100 sampled
+   narratives survive the filter with an uncited or remedy sentence.
+
+Until Stage 2 exists, F2 is **designed, not built**: the model shapes (C3's grounding object,
+F1's `plan` block, the `via` provenance) are the parts that must be right now.
 
 ---
 
 ## 5. Files (planned)
 
-`mobile/src/vastu/{compass,useCompassHeading}.ts` (A1–A5) · `mobile/src/vastu/{homeRecord,homeRecordStore,homeRelation}.ts` (C2–C3) · `mobile/src/data/vastu/{types,roomGuidance,mandirGuidance,declination,mandala,doorPadas}.ts` (B) · `components/DishaChakra.tsx` (A4–A5) · `components/VastuMandalaGrid.tsx` (C3) · `screens/{VastuDishaScreen,GharVastuScreen,GharVastuSetupScreen}.tsx` · doors in `screens/MuhuratResultsScreen.tsx` · routes in `navigation/{types,MoreStackNavigator,PanchangStackNavigator}.tsx` + `entryRoutes.ts` · `ask/intents/index.ts` (`vastu.myhome`) · `utils/derivedCacheReset.ts` (NON-cache key) · `mobile/scripts/generate-declination.md` (grid regen).
+`mobile/src/vastu/{compass,useCompassHeading}.ts` (A) · `mobile/src/vastu/{homeRecord,homeRecordStore,assessHome,homeHandoff}.ts` (C, E, F0) · `mobile/src/vastu/planGeometry.ts` (F1) · `mobile/src/data/vastu/{types,roomGuidance,mandirGuidance,declination,mandala,doorPadas,homeTemplates}.ts` (B, E1) · `components/{DishaChakra,VastuMandalaGrid,VastuClassStrip,VastuPlanCanvas}.tsx` · `screens/{VastuDishaScreen,GharVastuScreen,GharVastuSetupScreen,GharVastuRosterScreen,GharVastuCompareScreen}.tsx` · doors in `screens/MuhuratResultsScreen.tsx` · routes in `navigation/{types,MoreStackNavigator,PanchangStackNavigator}.tsx` + `entryRoutes.ts` · `ask/intents/index.ts` (`vastu.myhome`) · `utils/derivedCacheReset.ts` · `mobile/scripts/generate-declination.md`.
 
-## 6. Tests (planned, per RULEBOOK §22.10 extended)
+## 6. Tests (planned, RULEBOOK §22.10 extended)
 
-- **Jest** — `compass.test.ts` (accuracy mapping, tilt threshold/hysteresis, `padaForHeading`
-  boundaries, grid interpolation vs city table ≤ 0.2°); `useCompassHeading.test.tsx` (source
-  ladder, −1 true-heading fallback, `tilted` precedence, hold removes the subscription);
-  `vastuContent.test.ts` (new set-algebra invariants, zone/dikpala completeness = 9, pada
-  registry = 8 per side × 4 sides, draft invisibility for every new row, extended copy guard);
-  `homeRecordStore.jest.test.ts` (serde round-trip, retired-id drop, unknown-version
-  passthrough, NON-cache enumeration); `homeRelation.test.ts` (the three phrases, centre
-  handling, avoid-never-a-phrase pin); `GharVastuScreens.test.tsx` (sensor-unavailable setup
-  completes by hand; registry order preserved; no numeral summary rendered).
-- **tsx** — `ask/__tests__/corpus.test.ts` additions; `launchPath.test.ts` must stay green
-  (the store module is reachable only behind the existing dynamic `import()`).
-- **Maestro** — `ghar-vastu-setup-smoke.yaml` (More → Vastu → मेरा घर → manual facing →
-  two rooms by chip → summary shows both relation rows → back); the live-heading, tilt and
-  haptic paths stay device-only release-candidate steps (simulators have no magnetometer).
+- **Jest** — `compass.test.ts` (accuracy mapping, tilt threshold/hysteresis, `padaForHeading`,
+  grid vs city ≤ 0.2°, F1 pin→zone geometry); `useCompassHeading.test.tsx` (ladder, −1
+  fallback, `tilted` precedence, hold removes the subscription); `vastuContent.test.ts` (set
+  algebra, weight defaults, zones = 9, padas = 8 × 4, template resolution, draft invisibility,
+  extended copy guard); `homeRecordStore.jest.test.ts` (serde, retired-id drop, version
+  passthrough, cap 12, NON-cache enumeration, plan-block optionality);
+  `GharVastuScreens.test.tsx` (sensor-unavailable setup completes; fixed group order; registry
+  order within groups; five pills always render; **no numeral total/percent anywhere**;
+  compare shows no winner copy).
+- **tsx** — `assessHome.test.ts` (every class reachable, serde round-trip, centre handling,
+  door finding, unmeasured listing, order pins); `homeHandoff.test.ts` (text carries every
+  finding + the framing line); `ask/__tests__/corpus.test.ts` additions; `launchPath.test.ts`
+  stays green (store and engine reachable only behind dynamic `import()`).
+- **Maestro** — `ghar-vastu-setup-smoke.yaml` (More → Vastu → मेरे घर → template 3BHK →
+  manual facing → two rooms by chip → assessment shows a forbidden and an in-keeping row →
+  back); `ghar-vastu-compare-smoke.yaml` (two considering homes → compare renders three
+  columns). Live heading, tilt, haptics, image picking (F1) are device-only RC steps.
 
 ## 7. Stance guards (pinned, not vibes)
 
-Extend `vastuContent.test.ts`'s `FORBIDDEN` list with the *comparison* register this phase
-could drift into: `/score/i`, `/\d+\s?%/`, `/अंक/`, `/गलत/`, `/wrong/i`, `/अशुभ स्थान/`,
-`/needs? (fixing|attention)/i`, `/सुधार/`. Add a screen-level pin: `GharVastuScreen` renders
-no `Text` whose content matches `/\d+ (of|में से) \d+/`. Add a store-level pin: the relation
-enum has exactly three members. Add a data pin: `avoidDirections` never reaches a renderable
-prop (the §22.8 provenance rule applied to the one field that could become a warning).
+- `FORBIDDEN` in `vastuContent.test.ts` gains the score/remedy register: `/score/i`,
+  `/\d+\s?%/`, `/अंक/`, `/rating/i`, `/needs? (fixing|attention)/i`, `/सुधार/`,
+  `/expert/i`, `/विशेषज्ञ से/`. (`निषिद्ध`, `वर्जित`, `टालें` remain legal — they are the
+  texts' own register.)
+- Screen pins: no `Text` matching `/\d+ (of|में से) \d+/` or `/%/` on `GharVastuScreen` or
+  the compare screen; the class enum has exactly five members; the group order is a frozen
+  array; the compare screen renders no superlative (`/best|सर्वोत्तम घर|winner/i`).
+- Data pin: `source`/`status`/`verificationNote` never reach renderable props (§22.8);
+  `via` does (it is the user's own provenance).
+- F2 pin (when built): the narrative filter drops any sentence without a valid finding id or
+  with a `FORBIDDEN` token; a fixture with a smuggled remedy line yields zero rendered
+  sentences from it.
 
 ## 8. Design and contract updates (same PRs, per `.claude/rules/design-doc-sync.md`)
 
-- `design.md` §66 gains: §66.1 *Fused heading, tilt & hold* (status vocabulary of five, the
-  hold pill, haptic + announcement rules); §66.2 *Pada ring* (door flow only); §66.3 *Registry
-  categories & the mandala card*; §66.4 *मेरा घर setup flow*; §66.5 *मेरा घर screen* (grid
-  spec, row anatomy, the three phrases, privacy line). §37 (More hub) unchanged; §60 chip idiom
-  unchanged.
-- `RULEBOOK.md` §22 gains rules 11–15: fused-source ladder & the no-prompt rule; tilt state;
-  the three-phrase comparison vocabulary and the never-surfaced `avoidDirections`; the home
-  record's privacy/NON-cache/export contract; the pada ring's door-flow-only scope.
-- `wiki/subsystems/vastu-disha.md` — Shape, Gotchas (add: "the OS true heading is −1 without
-  location permission — never treat it as a bearing"; "registry order is display order — a
-  sorted list is a score") and Working rules, via the `llm-wiki` skill's ingest.
+- `design.md` §66 → §66.1 fused heading/tilt/hold (five-word status vocabulary, haptic +
+  announcement rules); §66.2 pada ring; §66.3 weighted registry + mandala card; §66.4 setup /
+  site-visit flow; §66.5 assessment screen (grid, class strip, group anatomy, closing lines);
+  §66.6 roster + compare; §66.7 plan canvas (F1); §66.8 AI pre-read/pointers consent sheet (F2).
+- `RULEBOOK.md` §22: **rule 5 amended** — from "never a verdict" to "weighted convention read
+  against the user's placements; five finding classes; no composite score/percentage/rank; no
+  remedies/products/experts; classical register only"; rules 11–17 added: source ladder and
+  no-prompt; tilt; the finding vocabulary and fixed order; roster privacy/NON-cache/export/cap;
+  pada ring scope; templates are seeds not rules; the engine-judges-model-never rule with the
+  citation filter. `docs/roadmap/README.md` "Constraint" gains the F2 exception pointing at
+  the 2027 Stage-2 backend.
+- `wiki/subsystems/vastu-disha.md` — Shape, Gotchas (OS true heading is −1 without location
+  permission; registry order within a group is display order; the class enum is closed; the
+  roster key is NON-cache) and Working rules, via the `llm-wiki` skill.
 
 ## 9. Sequencing and sizing
 
 ```
-A1 fused heading + A3 grid        ████          M · OTA · ships alone, pure trust win
-B1 types + set-algebra tests      ██            S · OTA · unblocks B2/B3 and C
-C2 store + C3 relation (pure)     ████          M · OTA · testable without a screen
-C1 + C3 screens + C4 doors + C5   ██████        L · OTA · the headline
-A2 tilt · A4 hold/haptics/a11y    ███           S–M · OTA · polish, any time after A1
-B2 rows (≈20, draft → verified)   ░░░░░░░░      content-gated · parallel, data-only flips
-B3 mandala + door padas · A5 ring ░░░████       content-gated · the pada ring waits for B3
-D deep-link target                █             S · with C4
-                                  └ ██ = buildable now   ░░ = gated on verification
+A1 fused heading + A3 grid            ████            M · OTA · pure trust win, ships alone
+B1 types + weight + set-algebra tests ██              S · OTA · unblocks everything below
+C2 roster store + C3 engine (pure)    █████           M · OTA · testable without a screen
+E1 templates                          ██              S · OTA · data only
+C1/E2 setup + C3 screen + C4 doors    ███████         L · OTA · the headline
+E3 roster + compare · F0 handoff · C5 █████           M · OTA
+A2 tilt · A4 hold/haptics/a11y        ███             S–M · OTA · polish after A1
+B2 rows (≈24) + B3 mandala/padas      ░░░░░░░░░░      content-gated · parallel, data-only flips
+A5 pada ring                          ░░░░██          after B3 verifies
+F1 plan canvas (+ expo-image-picker)  ░░░░░░████      store release · pairs with the next native bump
+F2 AI pre-read + pointers             ░░░░░░░░░░░░██  2027 Stage-2 backend (PRD-32) · design now
+D deep-link target                    █               S · with C4
+                                      └ ██ = buildable now   ░░ = gated
 ```
 
-Recommended order: **A1+A3 → B1 → C2/C3 (pure) → C screens + C5 → A2/A4**, with B2/B3
-verification running alongside from day one so rows flip as the screen lands. A5 last.
-Each block is its own PR with its design.md/RULEBOOK/wiki deltas.
+Recommended order: **A1+A3 → B1 → C2/C3 (pure) + E1 → setup/assessment screens → E3/F0/C5 →
+A2/A4**, with B2/B3 verification running from day one and F1 riding the next store release.
+Each block is its own PR with its design.md / RULEBOOK / wiki deltas.
 
 ## 10. Open product decisions (block only what they gate)
 
-1. **One home vs a roster** — v1 ships one (§C2); a roster is a `v2` key and a list screen.
-   Gates nothing in this phase.
-2. **Pada precision copy** — the ring shows pada *names*; should the door row also show the
-   11.25° arc? Recommendation: names only (RULEBOOK §22.7). Gates A5 copy only.
-3. **Deity-facing table** (which way each murti faces) — sources split by deity and
-   sampradaya; recommendation: exclude, keep the shipped family-tradition note. Gates nothing.
-4. **Colours by direction** — recommendation: exclude (§B2). Gates nothing.
-5. **Location prompt** — A1 never asks. If product wants a one-time explanatory ask inside
-   Vastu, it is a copy + one-call change gated on that decision.
+1. **Per-class counts on the summary strip and roster** — this plan says yes (a buyer needs
+   them); a composite number stays out. Gates the strip copy only.
+2. **Weight of each candidate row** — assigned at verification from what the sources actually
+   say; where sources split on weight, the row states the split. Gates individual flips.
+3. **Template contents** (E1 table) — a seed list; confirm the per-BHK counts.
+4. **Pada precision copy** — names only, no 11.25° arc in copy (RULEBOOK §22.7). Gates A5.
+5. **Location ask inside Vastu** — A1 never prompts; a one-time explanatory ask is a copy +
+   one-call change.
+6. **F2 provider and cost model** — server-side config on the Stage-2 service; decide with
+   PRD-32. **BYOK rejected here.**
+7. **Deity-facing table and colours by direction** — excluded (split sources, commerce
+   register); revisit only with a two-domain dossier.
 
 ## 11. Acceptance and release gates
 
-1. Unit/Jest/tsx suites in §6 green; `npm run lint` 0 errors; `tsc` clean; `npm test` exit
-   code 0 (checked as `$?`, not the summary line — the repo gotcha).
-2. Every new registry row is `draft` unless its two-domain note is present and dated; the
-   accessor tests prove invisibility.
-3. Sensor-`unavailable` path completes the whole मेरा घर setup and renders the full summary.
-4. Maestro `ghar-vastu-setup-smoke.yaml` green on the isolated simulator recipe.
-5. Device RC step: fused vs magnetometer headings agree within one sector on two phones; tilt
-   state appears at ~20°; hold freezes; haptic ticks on sector change.
-6. `design.md` §66.1–66.5, RULEBOOK §22 rules 11–15 and the wiki page land in the same PRs.
-7. OTA publish at the live store runtime (1.4.8) — no `app.json`/`APP_TOUR_VERSION` bump is
-   required, but the `whatsNew` entry for the *next* store version describes मेरा घर.
+1. All §6 suites green; `npm run lint` 0 errors; `tsc` clean; `npm test` exit code 0 (checked
+   as `$?`, not the summary line).
+2. Every new registry row is `draft` unless its two-domain note is present and dated;
+   accessor and template tests prove invisibility.
+3. Sensor-`unavailable` path completes a full 3BHK site visit by hand and renders the grouped
+   assessment; compare renders with two hand-marked homes.
+4. Maestro flows green on the isolated simulator recipe.
+5. Device RC: fused vs magnetometer within one sector on two phones; tilt at ~20°; hold
+   freezes; haptic ticks; (F1) picker → arrow → pins → assessment on one iPhone and one Android.
+6. `design.md` §66.1–§66.8, RULEBOOK §22 (rule 5 amendment + 11–17), README constraint note,
+   and the wiki page land in the same PRs as the code they describe.
+7. A–E/F0 OTA at the live store runtime (1.4.8) with the next store version's `whatsNew`
+   describing मेरा घर; F1 with the store release that adds `expo-image-picker`
+   (`app.json` + `APP_TOUR_VERSION` + `whatsNew` triple bump); F2 only after the Stage-2
+   backend exists and the §F2.5 eval gate passes.

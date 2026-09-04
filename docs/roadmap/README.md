@@ -15,9 +15,11 @@ This folder holds the product roadmap and PRDs for upcoming releases.
   build for the quarter: PRD-20 सङ्कल्प.
 - [**PRD-24 · Phase 2 — गृह वास्तु**](./prds/24-vastu-disha-phase2.md) — plan (2026-09-04) to take the
   shipped Vastu Disha compass to a whole-home vastu companion: OS-fused, tilt-honest heading with a
-  coordinate declination grid; the complete household registry (≈20 rooms/utilities, the nine mandala
-  zones with dikpalas, the 32 door padas — content-gated); and the private मेरा घर map that reads the
-  convention against the user's own rooms in a three-phrase, verdict-free vocabulary. OTA-eligible.
+  coordinate declination grid; the complete household registry with each rule's weight (निषेध · विधान ·
+  श्रेयस्), the nine mandala zones and the 32 door padas (content-gated); the private मेरा घर roster with a
+  five-class, no-score assessment; a buyer/renter site-visit mode (1–5 BHK, villa, plot templates +
+  compare); floor-plan mark-up (store release); and an AI pre-read/pointers layer designed for the 2027
+  Stage-2 backend. Parts A–E ship OTA.
 - [**Q4 2026 Candidates**](./2026-Q4-candidates.md) — household-practice gap analysis and the next five
   proposed features (PRD-20 … PRD-24, numbers reserved). PRD-23 and PRD-24 shipped in Aug 2026;
   PRD-41 §10 records where 20/21/22 sit against the flagship. Read this for what is *missing*; the

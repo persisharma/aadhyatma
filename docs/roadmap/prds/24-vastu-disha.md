@@ -85,10 +85,12 @@ that never expires. On simulators and devices without a magnetometer the hook re
 
 Compass-overlay floor sketching, per-room saved layouts, and a griha-pravesh checklist
 tie-in were explicitly out of Phase 1; nothing in the Phase 1 data shapes assumes them.
-The Phase 2 plan — fused/tilt-honest heading, the complete household registry with the
-mandala zones and 32 door padas, and the saved मेरा घर map read against the user's own
-rooms — lives in [`24-vastu-disha-phase2.md`](./24-vastu-disha-phase2.md). It is
-OTA-eligible at the 1.4.8 runtime (no new native module).
+The Phase 2 plan — fused/tilt-honest heading, the complete household registry with each
+rule's weight (निषेध · विधान · श्रेयस्), the mandala zones and 32 door padas, the private मेरा घर
+roster with a five-class no-score assessment, a buyer/renter site-visit mode with home-type
+templates and comparison, floor-plan mark-up, and an AI pre-read layer for the 2027 Stage-2
+backend — lives in [`24-vastu-disha-phase2.md`](./24-vastu-disha-phase2.md). Parts A–E ship
+OTA at the 1.4.8 runtime; the plan amends RULEBOOK §22.5 (weighted findings, still no score).
 
 ## 5. Source method and release gate
 
