@@ -61,6 +61,7 @@ import SadhanaCompletionOverlay from '@/components/SadhanaCompletionOverlay';
 import VratReminderScheduler from '@/components/VratReminderScheduler';
 import MuhuratReminderScheduler from '@/components/MuhuratReminderScheduler';
 import FestiveReminderScheduler from '@/components/FestiveReminderScheduler';
+import ReturnReminderScheduler from '@/components/ReturnReminderScheduler';
 import PitruSmaranReminderScheduler from '@/components/PitruSmaranReminderScheduler';
 import JanmaTithiReminderScheduler from '@/components/JanmaTithiReminderScheduler';
 import SadhanaReminderScheduler from '@/components/SadhanaReminderScheduler';
@@ -300,6 +301,11 @@ export default function App() {
                                 location (festival dates come from the bundled
                                 precomputed table). */}
                             <FestiveReminderScheduler />
+                            {/* वापसी स्मरण — default-on, no setting: a ladder
+                                of weekday-deity nudges re-armed from every app
+                                open, so one fires only after 3+ days away.
+                                Needs only the shared permission grant + lang. */}
+                            <ReturnReminderScheduler />
                             <PitruSmaranReminderScheduler />
                             {/* जन्म तिथि (PRD-29) — per-person OPT-IN only; the
                                 planner's worst case is 8 pending (roster cap). */}

@@ -223,6 +223,25 @@ describe('handleNotificationResponse', () => {
     });
   });
 
+  test('a return-reminder tap lands on the Home screen, gated on type alone', () => {
+    readySpy.mockReturnValue(true);
+
+    // The weekday copy's texts are Home's FOR TODAY tier-4 lead on an ordinary
+    // day, so — like the festive tap — landing on Home honours the invitation
+    // without opening a reader. Every other field is a record, not a route key.
+    for (const data of [
+      { type: 'return-reminder', dateKey: '2026-09-07', weekday: 1, absentDays: 3 },
+      { type: 'return-reminder' },
+    ]) {
+      dispatchSpy.mockClear();
+      expect(handleNotificationResponse(responseWithData(data))).toBe(true);
+      expect(dispatchSpy).toHaveBeenCalledTimes(1);
+      expect(dispatchSpy.mock.calls[0][0]).toMatchObject({
+        payload: { name: 'HomeTab', params: { screen: 'Home' } },
+      });
+    }
+  });
+
   test('ignores a festive-reminder payload missing ruleId', () => {
     readySpy.mockReturnValue(true);
 

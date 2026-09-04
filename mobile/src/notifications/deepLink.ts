@@ -73,6 +73,12 @@ function isPitruSmaranReminderPayload(data: unknown): data is { type: 'pitru-sma
   return d.type === 'pitru-smaran-reminder' && typeof d.entryId === 'string';
 }
 
+function isReturnReminderPayload(data: unknown): data is { type: 'return-reminder' } {
+  // Gated on `type` only. `dateKey`/`weekday`/`absentDays` ride along as a record;
+  // Home recomputes today from today, so nothing in the payload may drive routing.
+  return Boolean(data && typeof data === 'object' && (data as Record<string, unknown>).type === 'return-reminder');
+}
+
 function isPitruPakshaReminderPayload(data: unknown): data is { type: 'pitru-paksha-reminder' } {
   return Boolean(data && typeof data === 'object' && (data as Record<string, unknown>).type === 'pitru-paksha-reminder');
 }
@@ -180,6 +186,22 @@ export function handleNotificationResponse(
   // `{ screen: 'Home' }` is explicit: focusing `HomeTab` alone would restore
   // whatever screen the Home stack was left on, which may be several readers deep.
   if (isFestiveReminderPayload(data)) {
+    navigationRef.dispatch(
+      CommonActions.navigate({
+        name: 'HomeTab',
+        params: { screen: 'Home' },
+      } as never)
+    );
+    return true;
+  }
+
+  // A return-reminder tap (वापसी स्मरण, §38) lands on the HOME screen for the
+  // same reasons the festive tap does: the weekday deity's texts the message
+  // named are the FOR TODAY row's tier-4 lead on an ordinary day, a lock-screen
+  // tap must never run a reader's `setProgress` effect, and a notice armed up to
+  // fifteen days ago must not pin the user to stale content — Home recomputes
+  // today from today. `{ screen: 'Home' }` is explicit for the reason above.
+  if (isReturnReminderPayload(data)) {
     navigationRef.dispatch(
       CommonActions.navigate({
         name: 'HomeTab',
