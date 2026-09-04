@@ -2318,9 +2318,17 @@ most texts have no audio at all and commissioning more costs money, licensing an
 (`docs/roadmap/prds/02-verse-audio.md`). On-device TTS closes that gap for zero bytes. It is
 **assistive, never a substitute for human recitation** — see RULEBOOK §11.15.
 
-**Scope (v1).** `GitaReaderScreen` and `ChalisaReaderScreen` (the latter is a registry reader, so
-all 9 chalisas are covered). The remaining 18 readers are unchanged; the shared hook and adapter
-already handle every verse shape, so fan-out is wiring only.
+**Scope.** **Every reader** — all 21 `<Pascal>ReaderScreen`s: Gita, the registry readers (Chalisa,
+Aarti, Ashtakam, Kavacham, Stuti, Suktam, Sanskar), the single-chapter texts (Bajrang Baan, Hanuman
+Ashtak, Krishna Stotram, Ram Stuti, Ramcharitmanas), the chaptered texts (Sundarkand, Shiva /
+Durga / Ganesh / Saraswati Stotram, Vishnu Sahasranama, Vālmīki Rāmāyaṇ) and the prose **Vrat
+Katha** reader — plus the Puja Vidhi conduct screen (§62). v1 (July 2026) shipped Gita + Chalisa
+only; the September 2026 fan-out wired the other 19 through the same hook, since the adapter
+already understood every verse shape (`sanskrit`/`lines` + `linesEn`/`transliteration`, and the
+katha `bodyHi`/`bodyEn` prose branch, which speaks the story as the *verse* part so it is never
+gated behind "read meaning"). **Japam is the one deliberate exception**: it is a counter with its
+own recorded loop (§35), not a reader, and nothing there is read aloud. A reader without the pill is
+now a defect — `readerReadAloud.test.tsx` mounts every reader and fails if one lacks it.
 
 ### 56.1 What is spoken, and in which voice
 
@@ -2397,12 +2405,18 @@ label is localized** to the reading language, but the **`accessibilityLabel` sta
 un-localized**, the same rule and reason as `ReaderHeader`'s back label: Maestro taps it literally
 and the default reading language is `hi`. The play `▶︎` is shared with the recorded-audio control
 (which stays in the header); the "Listen" label is what distinguishes the two where both appear
-(Chalisa). The More → Read Aloud *settings* row keeps the `♪` note (`READ_ALOUD_GLYPH`) — it is a
+(the registry readers with a real recording — Chalisa, Ashtakam, Kavacham, Stuti, Suktam — per
+RULEBOOK §11.15 the recorded `▶` stays first, in the header, and read-aloud second, on the toggle
+row). The More → Read Aloud *settings* row keeps the `♪` note (`READ_ALOUD_GLYPH`) — it is a
 settings entry, not a play control.
 
-With the pill off the header, `sideWidth` is back to the bare-counter size — Gita `60`; Chalisa
-`60`, or `84` when a recorded `▶` shares the header. The pill always shows its full label now (no
-`compact` on the reader screens) since the toggle row has the room.
+With the pill off the header, `sideWidth` stays at the bare-counter size on every reader — Gita
+`60`; Chalisa `60`, or `84` when a recorded `▶` shares the header — and no reader widens its header
+for read-aloud. The pill always shows its full label (no `compact` on the reader screens) since the
+toggle row has the room. The slot is the same on all 21 readers (`readAloudSlot`: `position:
+absolute`, `right: 16`, `top`/`bottom` matching the row's vertical padding, `justifyContent:
+center`); the Vrat Katha reader's shorter toggle row (6/6 rather than 6/12) is the only geometry
+that differs.
 
 **The muted state is deliberate.** Hiding the control when no voice exists would leave the user
 with no way to learn why read-aloud never appears. Pressing it explains, and on Android offers
