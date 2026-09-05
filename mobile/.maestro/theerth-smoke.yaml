@@ -49,6 +49,12 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: ".*Pilgrimage.*Tap to open.*"
     timeout: 120000
+- scrollUntilVisible:
+    element:
+      text: ".*Pilgrimage.*Tap to open.*"
+    direction: DOWN
+    centerElement: true
+    timeout: 15000
 - tapOn: ".*Pilgrimage.*Tap to open.*"
 - waitForAnimationToEnd
 

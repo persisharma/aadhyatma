@@ -185,6 +185,7 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
     const best = v.windows[0];
     const sibling = splitSibling(v.windows);
     const tier = v.tier === 'shreshtha' ? 'shreshtha' : 'madhyam';
+    const bala = balaByDate?.get(v.dateMs);
     // One chip per yoga KEY (a key can hold two windows on rare days); the
     // windows themselves live on the day detail. Order is SHUBH_YOGA_ORDER as
     // delivered — never re-sorted by any notion of strength.
@@ -192,7 +193,21 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
     return (
       <ListCard
         testID={`muhurat-result-${d.getDate()}`}
-        accessibilityLabel={`${formatShortDate(d, lang)} · ${weekdayName(v.dateMs, lang)}`}
+        accessibilityLabel={[
+          `${formatShortDate(d, lang)} · ${weekdayName(v.dateMs, lang)}`,
+          contentByLang(lang, TIER_LABELS[tier].hi, TIER_LABELS[tier].en),
+          best
+            ? `${contentByLang(lang, best.nameHi, best.nameEn)} ${formatRangeCompact(best.start, best.end)}`
+            : null,
+          best?.lagnaRashiIndex != null
+            ? `${rashiName(best.lagnaRashiIndex, lang)} ${contentByLang(lang, 'लग्न', 'lagna')}`
+            : null,
+          bala
+            ? bala.personName
+              ? contentByLang(lang, `${bala.personName} के लिए`, `For ${bala.personName}`)
+              : contentByLang(lang, 'आपके लिए', 'For you')
+            : null,
+        ].filter(Boolean).join('. ')}
         onPress={() => navigation.navigate('MuhuratDayDetail', { occasionId: rule.id, dateMs: v.dateMs })}
         leading={
           <CardThumb>
@@ -240,7 +255,7 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
             </Text>
           </>
         )}
-        {balaByDate?.get(v.dateMs) && <MuhuratBalaStrip bala={balaByDate.get(v.dateMs)} variant="row" />}
+        {bala && <MuhuratBalaStrip bala={bala} variant="row" />}
       </ListCard>
     );
   };

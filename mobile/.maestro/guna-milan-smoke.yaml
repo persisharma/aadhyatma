@@ -14,7 +14,7 @@ appId: com.prashantsharma.vedansh
     appId: com.prashantsharma.vedansh
     clearState: true
     arguments:
-      RCT_jsLocation: "127.0.0.1:8091"
+      RCT_jsLocation: "127.0.0.1:8084"
 - waitForAnimationToEnd:
     timeout: 30000
 - tapOn: { text: "Allow", optional: true }

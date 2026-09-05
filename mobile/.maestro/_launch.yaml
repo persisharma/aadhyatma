@@ -40,6 +40,14 @@ appId: com.prashantsharma.vedansh
 # is no Expo Go project picker to tap. Let the bundle finish executing.
 - waitForAnimationToEnd:
     timeout: 30000
+# On Android the cold dev-bundle fetch + JS parse can outlast the animation
+# wait, so the optional dismissal taps below would all fire on a blank screen
+# and the late-mounting feature tour would then swallow every in-flow tap.
+# Gate on the FIRST real surface (native alert, tour, setup sheet, What's New,
+# or Home itself) before dismissing anything.
+- extendedWaitUntil:
+    visible: "Allow|Skip tour|Begin|Close|Got it|.*Today.s Panchang.*|.*आज का पंचांग.*"
+    timeout: 90000
 # clearState resets iOS permission grants, so a fresh launch pops the native
 # "…Would Like to Send You Notifications" alert over Home (the app requests
 # permission on boot for reminders/japam alarms). It's a NATIVE alert that
@@ -80,6 +88,23 @@ appId: com.prashantsharma.vedansh
     text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
     optional: true
 - waitForAnimationToEnd
+# iOS can surface the alarm/timer permission alert a few seconds after the
+# notification alert. It may also survive an app-data reset because the grant
+# belongs to the simulator, not AsyncStorage. Clear it before checking Home.
+- tapOn:
+    text: "Allow"
+    optional: true
+- tapOn:
+    text: "Don.t Allow"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "SKIP|Skip|Skip tour"
+    optional: true
+- tapOn:
+    text: "Begin"
+    optional: true
+- waitForAnimationToEnd
 # The Home "Today's Panchang" card is now a tappable launcher (PRD-C), so its
 # text is one merged accessibility label — "Today's Panchang. <weekday>,
 # <tithi>. … Tap to open." — exposed in English regardless of display language.
@@ -90,6 +115,15 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "आज के लिए|FOR TODAY"
     timeout: 60000
+# Belt-and-braces: if the tour (or the follow-on setup sheet) mounted only
+# after the dismissal block above ran — seen on slow Android cold starts —
+# clear it now so it can't swallow the first in-flow tap. No-ops otherwise.
+- tapOn:
+    text: "Skip tour"
+    optional: true
+- tapOn:
+    text: "Begin"
+    optional: true
 - swipe:
     direction: DOWN
 - waitForAnimationToEnd

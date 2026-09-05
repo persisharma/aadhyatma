@@ -32,6 +32,12 @@ appId: com.prashantsharma.vedansh
 # (1) Japam Alarms card on the More screen (entry point).
 # The card is a Pressable with an explicit accessibilityLabel, which collapses
 # its child Text — so match the a11y label, not the inner "Japam Alarms" text.
+- scrollUntilVisible:
+    element:
+      text: "Japam alarms, none set"
+    direction: UP
+    centerElement: true
+    timeout: 15000
 - assertVisible: "Japam alarms, none set"
 - takeScreenshot: jalarms-1-more-card
 
@@ -69,6 +75,12 @@ appId: com.prashantsharma.vedansh
 # (6) Confirm add (defaults to 06:00, first mantra). The row's a11y label is
 # stable 24h regardless of the device's 12/24h display convention.
 - tapOn: "Confirm alarm"
+- tapOn:
+    text: "Allow"
+    optional: true
+- tapOn:
+    text: "Don’t Allow|Don't Allow"
+    optional: true
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Edit alarm at 06:00"
