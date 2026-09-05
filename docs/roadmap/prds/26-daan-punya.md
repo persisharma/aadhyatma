@@ -7,7 +7,7 @@
 | **Design** | `design.md` §72 (shipped with the build) |
 | **Contract** | `RULEBOOK.md` §27 (shipped with the build) |
 | **Convention** | `docs/roadmap/conventions/daan-punya-v1.md` (to be authored — see §10) |
-| **Prototype** | `docs/daan-punya-prototype.html` — interactive; demonstrates the §2.7 educate-first journey, the ledger, the terminal hand-off, and the touchpoint doors |
+| **Prototype** | `docs/daan-punya-prototype.html`; shipping-scope walkthrough: `docs/daan-punya-shipping.html` — interactive; demonstrates the §2.7 educate-first journey, the ledger, the terminal hand-off, and the touchpoint doors |
 | **Release** | Phase 1 **OTA-shippable** (pure JS + AsyncStorage). Phase 2 content-gated + store-policy-gated (see §7). |
 | **Number note** | PRD-25 stays soft-reserved for सन्ध्या वन्दन. Numbering settled 2026-09-03 after two mainline waves: this built feature keeps **26**; round-2's शुभ योग/कुल परम्परा shipped on main as **27/29**, पर्व-अर्क stays **28**, कण्ठस्थ renumbered **26 → 42** (its only true collision); **31–40** are the 2027 feature bets, **41** is जिज्ञासा. Note PRD-40 (dakshina donation rail, 2027 bet) overlaps this feature's directory layer — reconcile before building it. |
 
