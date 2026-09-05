@@ -324,15 +324,9 @@ export default function MoreScreen({ navigation }: Props) {
                   <Text style={[styles.chevron, { color: colors.gold }]}>›</Text>
                 </Pressable>
 
-                <SettingsRow
-                  icon="♥"
-                  iconBg={colors.saffron}
-                  label={pick(lang, { hi: 'संग्रह', en: 'Wishlist', gu: 'સંગ્રહ', kn: 'ಸಂಗ್ರಹ' })}
-                  labelFontFamily={labelFont}
-                  state={`${bookmarks.length}`}
-                  onPress={() => navigation.navigate('Wishlist')}
-                  accessibilityLabel={`Wishlist, ${bookmarks.length} verse${bookmarks.length !== 1 ? 's' : ''} saved`}
-                />
+                {/* Row order = importance (design.md §37): the daily-practice loop first
+                    (reminders → japam → saved verses), then the family & lineage records
+                    (kuldev → ancestors → birthdays), then the occasional home tool. */}
                 <SettingsRow
                   icon="ॐ"
                   iconBg={colors.gold}
@@ -360,6 +354,30 @@ export default function MoreScreen({ navigation }: Props) {
                   accessibilityLabel={
                     activeJapamAlarms.length > 0 ? `Japam alarms, ${activeJapamAlarms.length} active` : 'Japam alarms, none set'
                   }
+                />
+                <SettingsRow
+                  icon="♥"
+                  iconBg={colors.saffron}
+                  label={pick(lang, { hi: 'संग्रह', en: 'Wishlist', gu: 'સંગ્રહ', kn: 'ಸಂಗ್ರಹ' })}
+                  labelFontFamily={labelFont}
+                  state={`${bookmarks.length}`}
+                  onPress={() => navigation.navigate('Wishlist')}
+                  accessibilityLabel={`Wishlist, ${bookmarks.length} verse${bookmarks.length !== 1 ? 's' : ''} saved`}
+                />
+                {/* कुल परम्परा (PRD-29 Part B) — the family record; state names
+                    the saved kuldev once one is chosen. */}
+                <SettingsRow
+                  icon="॥"
+                  iconBg={colors.saffron}
+                  iconFontFamily={typography.readerTitle.fontFamily}
+                  iconFontSize={16}
+                  label={pick(lang, { hi: 'कुल परम्परा', en: 'Kul Parampara', gu: 'કુળ પરંપરા', kn: 'ಕುಲ ಪರಂಪರಾ' })}
+                  labelFontFamily={labelFont}
+                  state={kulState}
+                  stateFontFamily={kulHasRecord ? chromeFont : fontFamilies.interSemiBold}
+                  onPress={() => navigation.navigate('KulParampara')}
+                  accessibilityLabel={kulHasRecord ? 'Kul Parampara' : 'Kul Parampara, new'}
+                  testID="more-kul-parampara"
                 />
                 {/* पितृ स्मरण (PRD-17) — private tithi remembrance; the standard
                     More-row NEW state for one release, then count + soonest date. */}
@@ -398,21 +416,6 @@ export default function MoreScreen({ navigation }: Props) {
                       : 'Janma Tithi, none saved'
                   }
                   testID="more-janma-tithi"
-                />
-                {/* कुल परम्परा (PRD-29 Part B) — the family record; state names
-                    the saved kuldev once one is chosen. */}
-                <SettingsRow
-                  icon="॥"
-                  iconBg={colors.saffron}
-                  iconFontFamily={typography.readerTitle.fontFamily}
-                  iconFontSize={16}
-                  label={pick(lang, { hi: 'कुल परम्परा', en: 'Kul Parampara', gu: 'કુળ પરંપરા', kn: 'ಕುಲ ಪರಂಪರಾ' })}
-                  labelFontFamily={labelFont}
-                  state={kulState}
-                  stateFontFamily={kulHasRecord ? chromeFont : fontFamilies.interSemiBold}
-                  onPress={() => navigation.navigate('KulParampara')}
-                  accessibilityLabel={kulHasRecord ? 'Kul Parampara' : 'Kul Parampara, new'}
-                  testID="more-kul-parampara"
                 />
                 {/* वास्तु दिशा (PRD-24) — the More-row NEW state for one release,
                     the widget-gallery pattern. */}
