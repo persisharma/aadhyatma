@@ -35,6 +35,19 @@ export function formatRangeCompact(a: Date, b: Date): string {
 
 const MONTHS_SHORT_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const MONTHS_SHORT_HI = ['जन', 'फ़र', 'मार्च', 'अप्रै', 'मई', 'जून', 'जुल', 'अग', 'सित', 'अक्टू', 'नवं', 'दिसं'];
+const MONTHS_LONG_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const MONTHS_LONG_HI = ['जनवरी', 'फ़रवरी', 'मार्च', 'अप्रैल', 'मई', 'जून', 'जुलाई', 'अगस्त', 'सितंबर', 'अक्टूबर', 'नवंबर', 'दिसंबर'];
+
+/** "5 September" / "5 सितंबर" — the Home Today card's eyebrow date (weekday rendered separately). */
+export function formatLongDate(d: Date, lang: Lang): string {
+  const month =
+    lang === 'en'
+      ? MONTHS_LONG_EN[d.getMonth()]
+      : lang === 'hi'
+        ? MONTHS_LONG_HI[d.getMonth()]
+        : transliterateDevanagari(MONTHS_LONG_HI[d.getMonth()], lang);
+  return `${d.getDate()} ${month}`;
+}
 
 export function isSameLocalDay(a: Date, b: Date): boolean {
   return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();

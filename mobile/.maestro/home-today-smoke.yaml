@@ -3,7 +3,9 @@
 # Covers the surfaces of the Home redesign (the Continue-reading card was
 # retired in July 2026 — resume lives in the ResumeReadingSheet, covered by
 # resume-reading-smoke.yaml):
-#   1. The "आज · Today" strip renders on Home (a11y label "Today's Panchang. …").
+#   1. The "आज · Today" card renders on Home (header a11y label "Today's
+#      Panchang. …", plus its विधान door, the व्रत-पर्व and राशिफल rows and the
+#      ask field — each its own button, labelled in English by contract).
 #   2. The व्रत (Vrat & Parv) launcher tile opens the Panchang stack's
 #      ObservanceList — and, because the tile navigates via panchangTabTarget
 #      (initial: false), backing out lands on PanchangHome (the calendar),
@@ -53,8 +55,15 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
 
-# ── 1. Today strip on Home ──
+# ── 1. Today card on Home ──
 - assertVisible: "Today's Panchang\\..*Tap to open\\."
+- assertVisible: "Today's Vidhan\\. Tap to open\\."
+# The rows' content is date-dependent (which observance, whose sign); only the
+# row labels and their doors are asserted. "Vrat and Parv." is the card row —
+# the launcher tile below reads "Vrat & Parv. … Tap to open." (ampersand).
+- assertVisible: "Vrat and Parv\\..*"
+- assertVisible: "Rashifal\\..*Read\\."
+- assertVisible: "Ask Vedansh\\..*"
 
 # ── 2. व्रत tile → Vrat catalog → back lands on the Panchang calendar ──
 - assertVisible: "Vrat & Parv\\..*Tap to open\\."

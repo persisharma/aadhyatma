@@ -183,6 +183,60 @@ export function useObservancesForDate(
   return observances;
 }
 
+/**
+ * The observances coming up AFTER `date` (strictly later days), resolved off the
+ * render path on the same interaction-aware boundary as `useObservancesForDate`.
+ * For the Home Today card's व्रत-पर्व row: on a day with nothing observed it
+ * names the next one and how far off it is. Kept separate from
+ * `usePanchangForSelection` so the always-mounted Home card never pays for a
+ * day solve it does not render.
+ */
+export function useUpcomingObservances(
+  date: Date,
+  calendarSystem: CalendarSystem,
+  opts: { count?: number; withinDays?: number } = {}
+): ResolvedObservance[] {
+  const { count = 3, withinDays = UPCOMING_WINDOW_DAYS } = opts;
+  const dateMs = date.getTime();
+  const { location } = usePanchangLocation();
+  const cityId = location.cityId;
+  const storeVersion = useObservanceStoreVersion();
+
+  const [upcoming, setUpcoming] = useState<ResolvedObservance[]>([]);
+  const selectionKey = `${dateMs}|${calendarSystem}|${cityId}|${count}|${withinDays}`;
+  const lastSelectionKey = useRef<string | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    const selected = new Date(dateMs);
+    // Same no-blink rule as useObservancesForDate: reset only when the selection
+    // itself changes, never on a background store upgrade.
+    if (lastSelectionKey.current !== selectionKey) {
+      lastSelectionKey.current = selectionKey;
+      setUpcoming([]);
+    }
+    let handle: ReturnType<typeof setTimeout> | undefined;
+    const interaction = InteractionManager.runAfterInteractions(() => {
+      handle = setTimeout(() => {
+        // `getUpcomingObservances` includes `selected` itself; the caller wants
+        // what comes AFTER today, so over-fetch by the same-day slot and drop it.
+        const dayStart = new Date(selected.getFullYear(), selected.getMonth(), selected.getDate()).getTime();
+        const result = getUpcomingObservances(selected, count + 4, calendarSystem, withinDays, location)
+          .filter((o) => o.date.getTime() > dayStart)
+          .slice(0, count);
+        if (!cancelled) setUpcoming(result);
+      }, 0);
+    });
+    return () => {
+      cancelled = true;
+      interaction.cancel();
+      if (handle !== undefined) clearTimeout(handle);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectionKey, storeVersion]);
+
+  return upcoming;
+}
+
 export function usePanchangForSelection(
   date: Date,
   calendarSystem: CalendarSystem

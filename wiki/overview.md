@@ -42,7 +42,7 @@ visible Home frame stable instead of moving the launcher grid immediately after 
 1. **Home** → `HomeStackNavigator` (native-stack, 30+ reader screens: Gita, chalisas,
    Sundarkand, stotrams, sanskar, japam, search — plus 5 Daily-Routine screens:
    RoutineToday/List/Create/Detail/AddItems). HomeScreen shows the ॐ वेदांश़ ॐ `HomeWordmark`
-   (replaced `Crest`, #110), the Panchang-backed Today strip, and an inline `RoutineBanner`.
+   (replaced `Crest`, #110), the Panchang-backed Today card (`TodayStrip` — headline, live choghadiya, व्रत-पर्व, राशिफल, ask; see [[panchang]]), and an inline `RoutineBanner`.
 2. **DailyBhakti** → `DailyBhaktiScreen`.
 3. **Panchang** → lazy `PanchangStackNavigator` (PanchangScreen, observances, katha library,
    vrat, Kundali, Rashifal). Its modules are evaluated only when the tab/launcher first opens,

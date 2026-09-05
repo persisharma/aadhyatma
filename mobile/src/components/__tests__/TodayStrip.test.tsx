@@ -8,8 +8,14 @@ let mockLang: 'hi' | 'en' = 'hi';
 let mockReduceMotion = false;
 const mockNavigate = jest.fn();
 let mockObservances: unknown[] = [];
-let mockMuhurat: { muhurat: unknown; panchang: unknown } = { muhurat: null, panchang: null };
-const mockUseMuhurat = jest.fn(() => mockMuhurat);
+let mockUpcoming: unknown[] = [];
+let mockMuhurat: { muhurat: unknown; panchang: unknown; nowChoghadiya?: unknown } = {
+  muhurat: null,
+  panchang: null,
+  nowChoghadiya: null,
+};
+const mockUseMuhurat = jest.fn(() => ({ isToday: true, nowKaal: null, nowChoghadiya: null, ...mockMuhurat }));
+let mockRashifal: { hydrated: boolean; value: unknown } = { hydrated: true, value: null };
 
 jest.mock('@react-native-async-storage/async-storage', () => ({
   getItem: jest.fn(() => Promise.resolve(null)),
@@ -30,12 +36,30 @@ jest.mock('@react-navigation/native', () => ({
 }));
 jest.mock('@/utils/useReducedMotion', () => ({ useReducedMotion: () => mockReduceMotion }));
 jest.mock('@/data/gita/language', () => ({ useGitaLanguage: () => ({ lang: mockLang }) }));
+jest.mock('@/contexts/PanchangLocationContext', () => ({
+  usePanchangLocation: () => ({
+    location: {
+      cityId: 'ujjain',
+      labelHi: 'उज्जैन',
+      labelEn: 'Ujjain',
+      latitude: 23.18,
+      longitude: 75.78,
+      elevation: 0,
+      source: 'default',
+    },
+    isLoading: false,
+  }),
+}));
 jest.mock('@/panchang/usePanchang', () => ({
   usePanchangCalendarSystem: () => ['purnimant', jest.fn()],
   useObservancesForDate: () => mockObservances,
+  useUpcomingObservances: () => mockUpcoming,
 }));
 jest.mock('@/panchang/useMuhurat', () => ({
   useMuhurat: (...args: unknown[]) => mockUseMuhurat(...(args as [])),
+}));
+jest.mock('@/panchang/useHomeRashifal', () => ({
+  useHomeRashifal: () => mockRashifal,
 }));
 
 // ---- Pitru-Paksha chip: the persisted-solve layer, watched ----
@@ -54,12 +78,43 @@ jest.mock('@/panchang/pitruSmaran', () => ({
   pitruPakshaObservanceForDate: (...args: unknown[]) => mockObservanceForDate(...(args as [])),
 }));
 
+const NOW = Date.now();
+const todayMidnight = new Date(new Date().toDateString());
+const MIN = 60_000;
+
+/** A solved day: Saturday, Shukla Ekadashi in Ashadha, the tithi ending later today. */
+const tithiEnd = new Date(NOW + 3 * 60 * MIN);
 const panchangDay = {
+  date: todayMidnight,
   vara: { nameHi: 'शनिवार', nameEn: 'Saturday', index: 6 },
-  tithi: { nameHi: 'एकादशी', nameEn: 'Ekadashi', paksha: 'shukla', endTime: null },
+  tithi: { index: 10, nameHi: 'एकादशी', nameEn: 'Ekadashi', paksha: 'shukla', endTime: tithiEnd },
+  kshayaTithi: null,
+  lunarMonth: { nameHi: 'आषाढ़', nameEn: 'Ashadha', index: 3, isAdhik: false },
+  vikramSamvat: 2083,
+};
+
+const nowChoghadiya = {
+  key: 'udveg',
+  nameHi: 'उद्वेग',
+  nameEn: 'Udveg',
+  quality: 'avoid',
+  phase: 'day',
+  start: new Date(NOW - 30 * MIN),
+  end: new Date(NOW + 30 * MIN),
+};
+const nextChar = {
+  key: 'char',
+  nameHi: 'चर',
+  nameEn: 'Char',
+  quality: 'auspicious',
+  phase: 'day',
+  start: new Date(NOW + 30 * MIN),
+  end: new Date(NOW + 120 * MIN),
 };
 
 const muhuratDay = {
+  dayChoghadiya: [nowChoghadiya, nextChar],
+  nightChoghadiya: [],
   abhijit: {
     start: new Date(2026, 6, 11, 11, 17),
     end: new Date(2026, 6, 11, 12, 5),
@@ -71,6 +126,26 @@ const muhuratDay = {
     start: new Date(2026, 6, 11, 9, 0),
     end: new Date(2026, 6, 11, 10, 39),
   },
+};
+
+const solved = { muhurat: muhuratDay, panchang: panchangDay, nowChoghadiya };
+
+/** Ganesh Chaturthi, nine days out — carries a published vidhi (the तैयारी door). */
+const ganeshChaturthi = {
+  date: new Date(todayMidnight.getFullYear(), todayMidnight.getMonth(), todayMidnight.getDate() + 9),
+  rule: {
+    id: 'ganesh-chaturthi',
+    nameHi: 'गणेश चतुर्थी',
+    nameEn: 'Ganesh Chaturthi',
+    deityHi: 'श्री गणेश',
+    deityEn: 'Shri Ganesh',
+    vidhiId: 'ganesh-chaturthi-sthapana',
+  },
+};
+/** A monthly vrat with no vidhi — its door is the Observance Detail. */
+const yoginiEkadashi = {
+  date: todayMidnight,
+  rule: { id: 'yogini-ekadashi', nameHi: 'योगिनी एकादशी', nameEn: 'Yogini Ekadashi', deityHi: 'श्री विष्णु', deityEn: 'Shri Vishnu' },
 };
 
 const mountedTrees: TestRenderer.ReactTestRenderer[] = [];
@@ -129,13 +204,27 @@ function textOf(tree: TestRenderer.ReactTestRenderer): string {
     .join(' ');
 }
 
+function buttons(tree: TestRenderer.ReactTestRenderer) {
+  return tree.root.findAll(
+    (n) => n.props?.accessibilityRole === 'button' && typeof n.props?.onPress === 'function'
+  );
+}
+
+function buttonLabelled(tree: TestRenderer.ReactTestRenderer, prefix: string) {
+  const match = buttons(tree).find((n) => String(n.props.accessibilityLabel).startsWith(prefix));
+  if (!match) throw new Error(`No button labelled "${prefix}…"`);
+  return match;
+}
+
 beforeEach(() => {
   mockLang = 'hi';
   mockReduceMotion = false;
   mockNavigate.mockClear();
   mockUseMuhurat.mockClear();
   mockObservances = [];
-  mockMuhurat = { muhurat: null, panchang: null };
+  mockUpcoming = [];
+  mockMuhurat = { muhurat: null, panchang: null, nowChoghadiya: null };
+  mockRashifal = { hydrated: true, value: null };
   mockKnownWindow = null;
   mockHydrateSolves.mockClear();
   mockEnsureWindow.mockReset();
@@ -146,29 +235,46 @@ beforeEach(() => {
 });
 
 describe('TodayStrip', () => {
-  it('renders the eyebrow and a placeholder headline before the solve lands', () => {
+  it('renders the date/city eyebrow and a placeholder headline before the solve lands', () => {
     const tree = render();
     const text = textOf(tree);
-    expect(text).toContain('आज का पंचांग');
+    expect(text).toContain('आज ·');
+    expect(text).toContain('उज्जैन');
     expect(text).toContain('—');
+    // The chip row reserves its height while the day is unresolved.
     expect(tree.root.findByType(ScrollView).props.style).toEqual(
-      expect.objectContaining({ height: 24 })
+      expect.objectContaining({ height: 26 })
     );
+    // Every row is present from the first frame, so nothing below moves later.
+    expect(text).toContain('व्रत-पर्व');
+    expect(text).toContain('राशिफल');
+    expect(text).toContain('विधान');
   });
 
-  it('renders vara + paksha tithi once panchang resolves', () => {
-    mockMuhurat = { muhurat: muhuratDay, panchang: panchangDay };
+  it('renders vara + paksha tithi, then masa · samvat · the live tithi handover', () => {
+    mockMuhurat = solved;
     const text = textOf(render());
     expect(text).toContain('शनिवार · शुक्ल एकादशी');
+    expect(text).toContain('आषाढ़ · विक्रम संवत् २०८३ ·');
+    // The tithi ends three hours from now, so the line reads "एकादशी तक <clock>,
+    // फिर द्वादशी" — the successor named, never left implied.
+    expect(text).toContain('एकादशी तक');
+    expect(text).toContain('फिर द्वादशी');
   });
 
-  it('renders observance and muhurat chips with compact time ranges', () => {
-    mockObservances = [
-      { date: new Date(), rule: { id: 'yogini-ekadashi', nameHi: 'योगिनी एकादशी', nameEn: 'Yogini Ekadashi' } },
-    ];
-    mockMuhurat = { muhurat: muhuratDay, panchang: panchangDay };
+  it('shows the live choghadiya with its quality tag and the next auspicious period', () => {
+    mockMuhurat = solved;
     const text = textOf(render());
-    expect(text).toContain('योगिनी एकादशी');
+    expect(text).toContain('अभी');
+    expect(text).toContain('उद्वेग');
+    expect(text).toContain('त्याज्य');
+    expect(text).toContain('अगला शुभ');
+    expect(text).toContain('चर');
+  });
+
+  it('renders the Rahu Kaal and Abhijit chips with compact time ranges', () => {
+    mockMuhurat = solved;
+    const text = textOf(render());
     expect(text).toContain('अभिजीत');
     expect(text).toContain('राहु काल');
     // Cross-noon window keeps both meridiems; same-meridiem window compacts
@@ -178,29 +284,113 @@ describe('TodayStrip', () => {
   });
 
   it('lays the chips on one horizontal-scroll row (no wrap on narrow devices)', () => {
-    mockObservances = [
-      { date: new Date(), rule: { id: 'amavasya-vrat', nameHi: 'अमावस्या व्रत', nameEn: 'Amavasya Vrat' } },
-      { date: new Date(), rule: { id: 'somvati', nameHi: 'सोमवती अमावस्या', nameEn: 'Somvati Amavasya' } },
-    ];
-    mockMuhurat = { muhurat: muhuratDay, panchang: panchangDay };
+    mockMuhurat = solved;
     const tree = render();
-    // Both observances still render — overflow scrolls instead of wrapping.
-    const text = textOf(tree);
-    expect(text).toContain('अमावस्या व्रत');
-    expect(text).toContain('सोमवती अमावस्या');
     const scrolls = tree.root.findAllByType(ScrollView);
     expect(scrolls.length).toBe(1);
     expect(scrolls[0].props.horizontal).toBe(true);
     expect(scrolls[0].props.showsHorizontalScrollIndicator).toBe(false);
   });
 
+  describe('व्रत-पर्व row', () => {
+    it("names today's observance and opens its Observance Detail when no vidhi is published", () => {
+      mockObservances = [yoginiEkadashi];
+      mockMuhurat = solved;
+      const tree = render();
+      const text = textOf(tree);
+      expect(text).toContain('आज');
+      expect(text).toContain('योगिनी एकादशी');
+      expect(text).toContain('विवरण');
+      act(() => buttonLabelled(tree, 'Vrat and Parv.').props.onPress());
+      expect(mockNavigate).toHaveBeenCalledWith('PanchangTab', {
+        screen: 'ObservanceDetail',
+        params: { ruleId: 'yogini-ekadashi' },
+        initial: false,
+      });
+    });
+
+    it('names the next observance with its distance, and the तैयारी door opens its vidhi', () => {
+      mockUpcoming = [ganeshChaturthi];
+      mockMuhurat = solved;
+      const tree = render();
+      const text = textOf(tree);
+      expect(text).toContain('आज कोई नहीं · आगे');
+      expect(text).toContain('गणेश चतुर्थी');
+      expect(text).toContain('9 दिन में');
+      expect(text).toContain('तैयारी');
+      act(() => buttonLabelled(tree, 'Vrat and Parv.').props.onPress());
+      expect(mockNavigate).toHaveBeenCalledWith('VidhiDetail', {
+        vidhiId: 'ganesh-chaturthi-sthapana',
+        dateMs: ganeshChaturthi.date.getTime(),
+      });
+    });
+
+    it('opens the vrat catalog when nothing is coming up', () => {
+      mockMuhurat = solved;
+      const tree = render();
+      expect(textOf(tree)).toContain('आज कोई व्रत-पर्व नहीं');
+      act(() => buttonLabelled(tree, 'Vrat and Parv.').props.onPress());
+      expect(mockNavigate).toHaveBeenCalledWith('PanchangTab', {
+        screen: 'ObservanceList',
+        params: { category: 'vrat' },
+        initial: false,
+      });
+    });
+  });
+
+  describe('राशिफल row', () => {
+    it('offers the sign picker to a guest', () => {
+      const tree = render();
+      const text = textOf(tree);
+      expect(text).toContain('आज का राशिफल');
+      expect(text).toContain('अपनी राशि चुनें');
+      act(() => buttonLabelled(tree, 'Rashifal.').props.onPress());
+      expect(mockNavigate).toHaveBeenCalledWith('PanchangTab', {
+        screen: 'Rashifal',
+        params: undefined,
+        initial: false,
+      });
+    });
+
+    it("names the active person's Moon sign and the day's theme", () => {
+      mockMuhurat = solved;
+      mockRashifal = {
+        hydrated: true,
+        value: {
+          rashiIndex: 0,
+          rashiHi: 'मेष',
+          rashiEn: 'Mesha',
+          rashiWestern: 'Aries',
+          themeHi: 'दिनचर्या और सेवा का दिन',
+          themeEn: 'a day for routine and service',
+          personName: null,
+        },
+      };
+      const text = textOf(render());
+      expect(text).toContain('मेष · दिनचर्या और सेवा का दिन');
+      expect(text).toContain('चन्द्र राशि से · शनिवार');
+    });
+  });
+
+  it('seeds the ask field with a question about the observance in view', () => {
+    mockUpcoming = [ganeshChaturthi];
+    mockMuhurat = solved;
+    const tree = render();
+    expect(textOf(tree)).toContain('गणेश चतुर्थी कब है?');
+    act(() => buttonLabelled(tree, 'Ask Vedansh.').props.onPress());
+    expect(mockNavigate).toHaveBeenCalledWith('Search', { initialQuery: 'गणेश चतुर्थी कब है?' });
+  });
+
+  it("opens आज का विधान from the header door", () => {
+    const tree = render();
+    act(() => buttonLabelled(tree, "Today's Vidhan.").props.onPress());
+    expect(mockNavigate).toHaveBeenCalledWith('TodayVidhan');
+  });
+
   describe('chip-row auto-drift', () => {
     beforeEach(() => {
       jest.useFakeTimers();
-      mockObservances = [
-        { date: new Date(), rule: { id: 'amavasya-vrat', nameHi: 'अमावस्या व्रत', nameEn: 'Amavasya Vrat' } },
-      ];
-      mockMuhurat = { muhurat: muhuratDay, panchang: panchangDay };
+      mockMuhurat = solved;
     });
 
     afterEach(() => {
@@ -284,32 +474,28 @@ describe('TodayStrip', () => {
     });
   });
 
-  it('requests the static (live: false) muhurat read — no per-minute tick', () => {
+  it('requests the LIVE muhurat read — the choghadiya row moves with the clock', () => {
     render();
-    expect(mockUseMuhurat).toHaveBeenCalledWith(
-      expect.any(Date),
-      'purnimant',
-      expect.objectContaining({ live: false })
-    );
+    expect(mockUseMuhurat).toHaveBeenCalledWith(expect.any(Date), 'purnimant');
   });
 
-  it('navigates to the Panchang tab on press', () => {
-    mockMuhurat = { muhurat: muhuratDay, panchang: panchangDay };
+  it('navigates to the Panchang tab from the header', () => {
+    mockMuhurat = solved;
     const tree = render();
-    const button = tree.root.findAll(
-      (n) => n.props?.accessibilityRole === 'button' && typeof n.props?.onPress === 'function'
-    )[0];
-    act(() => button.props.onPress());
+    const header = buttons(tree)[0];
+    // The Maestro contract (home-today-smoke.yaml): the header's label opens
+    // with "Today's Panchang." and closes with "Tap to open."
+    expect(header.props.accessibilityLabel).toMatch(/^Today's Panchang\. .*Tap to open\.$/);
+    act(() => header.props.onPress());
     expect(mockNavigate).toHaveBeenCalledWith('PanchangTab');
   });
 
   it('wires the card for Home first-tap recovery (onPressIn/onPressOut)', () => {
     const tree = render();
-    const button = tree.root.findAll(
-      (n) => n.props?.accessibilityRole === 'button' && typeof n.props?.onPress === 'function'
-    )[0];
-    expect(typeof button.props.onPressIn).toBe('function');
-    expect(typeof button.props.onPressOut).toBe('function');
+    for (const button of buttons(tree)) {
+      expect(typeof button.props.onPressIn).toBe('function');
+      expect(typeof button.props.onPressOut).toBe('function');
+    }
   });
 
   describe('Pitru-Paksha chip', () => {
@@ -386,9 +572,18 @@ describe('TodayStrip', () => {
 
   it('uses English names when the reading language is English', () => {
     mockLang = 'en';
-    mockMuhurat = { muhurat: muhuratDay, panchang: panchangDay };
+    mockMuhurat = solved;
+    mockUpcoming = [ganeshChaturthi];
     const text = textOf(render());
-    expect(text).toContain("Today's Panchang");
+    expect(text).toContain('Today ·');
+    expect(text).toContain('Ujjain');
     expect(text).toContain('Saturday · Ekadashi (Shukla)');
+    expect(text).toContain('Vikram Samvat 2083');
+    expect(text).toContain('Now');
+    expect(text).toContain('Udveg');
+    expect(text).toContain('None today · next');
+    expect(text).toContain('Ganesh Chaturthi');
+    expect(text).toContain('in 9 days');
+    expect(text).toContain('When is Ganesh Chaturthi?');
   });
 });
