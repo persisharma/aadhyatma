@@ -2210,8 +2210,10 @@ Tests: `src/screens/__tests__/ValmikiRamayanReaderScreen.test.tsx` (per-kāṇ�
 ## 54. App Rating Prompt (रेटिंग)
 
 **Purpose.** Ask engaged users for a store rating, without ever becoming a nag. Two surfaces over
-one piece of state: an **auto-opening card** that has to earn its way past a conservative gate, and
-a **permanent More row** the user can reach whenever they feel like it (§37).
+one piece of state: a **moment-triggered card** that opens only right after the user has finished
+something and has to earn its way past a conservative gate, and a **permanent More row** the user
+can reach whenever they feel like it (§37). There is deliberately **no Home section and no
+cold-start ask** (product decision, Sept 2026: "keep a pop-up, ask at the moments").
 
 **Bundle-only, by constraint.** No `expo-store-review`, no `SKStoreReviewController`, no Play
 In-App Review. Every one of those is a native module, so a rating nudge behind one could only ship
@@ -2248,7 +2250,30 @@ home if one is added — see RULEBOOK §6.2 for the risk posture and the mitigat
 All four languages are hand-authored via `pick` (this is UI chrome, not content, so nothing is
 transliterated), and Indic labels drop Latin tracking/uppercase per §3.
 
-**The gate** (`data/ratingPrompt.ts`, pure). The sheet may auto-open only when **all** hold:
+**Triggers — when the card may open** (`contexts/ratingAsk.ts` + the three hosts). The card
+never opens on its own. A surface where the user has just completed something calls
+`requestAsk(trigger)`; the gate below then decides. Three moments ship, each a `RatingAskTrigger`:
+
+| Trigger | Reported by | Exactly when | Why here |
+|---|---|---|---|
+| `routine-complete` | `components/RoutineCelebrationOverlay.tsx` | The pushpa-varsha's `onDone`, i.e. after the petals and caption have faded — **not** on completion itself | Today's practice is done; the best moment in the app. Riding on `onDone` keeps the card off the shower (§11) |
+| `japa-round` | `screens/JapamCounterScreen.tsx` | On **unmount**, if at least one full mala was completed during that visit | A finished mala is a win, but a card over the bead surface would break the japa — so it waits until the user leaves |
+| `share` | `utils/shareVerse.tsx` (`ShareProvider`) | After the share resolved and actually went out: RN `Share.share` returned `sharedAction`; expo-sharing's void resolve counts as shared | The user just recommended the app to someone. A cancelled iOS sheet (`dismissedAction`) is **not** a moment |
+
+Not (yet) a trigger: **chapter completion** — the readers' auto-advance (§readers wiki) carries the
+user straight into the next chapter with no pause to ask in, so it is deferred until there is an
+"on leaving the reader" hook; **streak milestones** — covered in practice by `routine-complete`.
+
+`requestAsk` is safe to call freely: every refusal is silent and the moment simply passes. It
+refuses when the state is still hydrating (it does **not** queue — asking a few seconds after the
+moment, once storage catches up, is the launch-frame ambush this design exists to avoid), when the
+card already opened this session, when another open is already pending (two moments in quick
+succession queue **one** card, credited to the first), and whenever the gate says no. The reporting
+surfaces import `useRatingAsk()` from the light `contexts/ratingAsk.ts` module, never from
+`RatingPromptContext` — see the Placement note below.
+
+**The gate** (`data/ratingPrompt.ts`, pure). Once a moment is reported, the sheet may open only
+when **all** hold:
 
 | Condition | Threshold | Why |
 |---|---|---|
@@ -2265,14 +2290,21 @@ from the **notification meta's** `appOpenCount` rather than a second counter —
 have they come back" number, already incremented once per cold start, serving both asks (the rating's earned 5-open gate and the opt-in's first-open gate).
 
 **Persistence & lifecycle** (`contexts/RatingPromptContext.tsx`). One AsyncStorage blob,
-`@vedansh/rating-prompt`: `{ askCount, lastAskedAt, outcome }`, defensively parsed (junk fields fall
-back to defaults, never crash). Behaviour:
+`@vedansh/rating-prompt`: `{ askCount, lastAskedAt, outcome, asksByTrigger }`, defensively parsed
+(junk fields fall back to defaults, never crash; a blob from the cold-start build without
+`asksByTrigger` parses with `{}`). `asksByTrigger` counts auto-opens per `RatingAskTrigger` — the
+only way, with no analytics backend, to learn which moment actually earns the rating. Behaviour:
 
-- Eligibility is evaluated once per app session; the sheet then opens after
-  **`RATING_PROMPT_DELAY_MS` = 2500 ms**, so Home has settled first — a prompt on the launch frame
-  reads as an ad. If eligibility lapses before the timer fires, the timer is cleared.
-- **Opening consumes an ask slot and starts the cooldown** (`afterAsked`). A swipe-away still
-  counts as "we asked" — the cooldown, not the outcome, is what silences the second ask.
+- A reported, eligible moment opens the sheet after **`RATING_PROMPT_DELAY_MS` = 1200 ms**, so the
+  moment's own feedback (success haptic, last petals, the share sheet closing) finishes first — a
+  card on the same frame as the thing it is thanking the user for reads as an ad. If a first-run
+  surface claims the screen during the delay, the open is abandoned and nothing is recorded.
+- The gate is evaluated **at the moment**, against the engagement counters as they stand then,
+  read through refs (not effect dependencies) so a user paging through a reader cannot defer a
+  pending open. At most **one** auto-open per app session.
+- **Opening consumes an ask slot, starts the cooldown, and credits the trigger** (`afterAsked`).
+  A swipe-away still counts as "we asked" — the cooldown, not the outcome, is what silences the
+  second ask.
 - **Primary** → `afterRated` (terminal) + `Linking.openURL(storeReviewUrl(Platform.OS))`. iOS gets
   `…?action=write-review` (the App Store review composer); Play has no listing equivalent, so
   Android lands on the listing, whose rating stars are the first thing on the page. If the OS
@@ -2287,13 +2319,26 @@ back to defaults, never crash). Behaviour:
 
 **Placement.** `<RatingPromptSheet />` mounts last in `App.tsx`, inside `RatingPromptProvider`
 (itself inside `TourProvider` + `NotificationPreferencesProvider`, whose flags the gate reads).
+`RatingPromptProvider` also provides the light `RatingAskContext`; `ShareProvider`, the
+`RoutineCelebrationOverlay` and every screen sit inside it, so all three hosts reach `requestAsk`.
+The hosts import **`useRatingAsk` from `contexts/ratingAsk.ts`**, which has no RN/expo/storage
+imports and returns a no-op outside the provider: importing `RatingPromptContext` directly would
+drag `NotificationPreferencesContext` → `expo-notifications` into every reader/counter/share unit
+test that mounts those surfaces standalone.
 
-**Files.** `mobile/src/data/ratingPrompt.ts` (state, gate, store URLs),
-`mobile/src/contexts/RatingPromptContext.tsx`, `mobile/src/components/RatingPromptSheet.tsx`,
-row in `mobile/src/screens/MoreScreen.tsx`, store URLs from `mobile/src/data/shareLinks.ts`.
+**Files.** `mobile/src/data/ratingPrompt.ts` (state, triggers, gate, store URLs),
+`mobile/src/contexts/RatingPromptContext.tsx`, `mobile/src/contexts/ratingAsk.ts`,
+`mobile/src/components/RatingPromptSheet.tsx`, hosts in
+`mobile/src/components/RoutineCelebrationOverlay.tsx`, `mobile/src/screens/JapamCounterScreen.tsx`,
+`mobile/src/utils/shareVerse.tsx`, row in `mobile/src/screens/MoreScreen.tsx`, store URLs from
+`mobile/src/data/shareLinks.ts`.
 Tests: `src/data/__tests__/ratingPrompt.jest.test.ts` (every gate clause, cooldown boundary,
-defensive parse, URL shapes), `src/components/__tests__/RatingPromptSheet.test.tsx` (delay,
-persisted outcomes, refusal to stack, the two-action shape, all four languages, a11y-hidden stars),
+per-trigger credit, defensive parse incl. the pre-trigger blob, URL shapes),
+`src/components/__tests__/RatingPromptSheet.test.tsx` (silent cold start, each trigger opens after
+the delay and is credited, once per session, one card for two moments, a surface claiming the
+screen mid-delay, persisted outcomes, the two-action shape, all four languages, a11y-hidden stars,
+the no-op hook outside the provider), `src/components/__tests__/RoutineCelebrationOverlay.test.tsx`
+(the moment is reported on `onDone`, not on completion),
 `src/screens/__tests__/MoreScreen.test.tsx` (the row opens the sheet instead of leaving the app).
 E2E: `.maestro/rating-prompt-smoke.yaml` — the manual path only; the auto path's thresholds are
 unreachable under `clearState`, so the gate is unit-tested instead.

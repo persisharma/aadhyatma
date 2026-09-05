@@ -69,7 +69,7 @@ describe('isEligibleForRatingPrompt', () => {
 
   it('keeps asking indefinitely while MAX_ASKS is null', () => {
     // The 50th ask is as eligible as the first — only rating stops it from the sheet.
-    const state: RatingPromptState = { askCount: 50, lastAskedAt: null, outcome: 'pending' };
+    const state: RatingPromptState = { askCount: 50, lastAskedAt: null, outcome: 'pending', asksByTrigger: {} };
     expect(isEligibleForRatingPrompt(eligibleInput({ state }))).toBe(true);
   });
 
@@ -84,7 +84,7 @@ describe('isEligibleForRatingPrompt', () => {
   });
 
   it('honours the cooldown, then re-asks once it lapses', () => {
-    const asked: RatingPromptState = { askCount: 1, lastAskedAt: NOW, outcome: 'pending' };
+    const asked: RatingPromptState = { askCount: 1, lastAskedAt: NOW, outcome: 'pending', asksByTrigger: {} };
 
     // Same day, and one day short of the window: still quiet.
     expect(isEligibleForRatingPrompt(eligibleInput({ state: asked }))).toBe(false);
@@ -104,11 +104,20 @@ describe('isEligibleForRatingPrompt', () => {
 });
 
 describe('state transitions', () => {
-  it('afterAsked spends a slot and starts the cooldown', () => {
-    expect(afterAsked(RATING_PROMPT_DEFAULTS, NOW)).toEqual({
+  it('afterAsked spends a slot, starts the cooldown, and credits the moment', () => {
+    const once = afterAsked(RATING_PROMPT_DEFAULTS, NOW, 'routine-complete');
+    expect(once).toEqual({
       askCount: 1,
       lastAskedAt: NOW,
       outcome: 'pending',
+      asksByTrigger: { 'routine-complete': 1 },
+    });
+    expect(afterAsked(once, NOW, 'share').asksByTrigger).toEqual({
+      'routine-complete': 1,
+      share: 1,
+    });
+    expect(afterAsked(once, NOW, 'routine-complete').asksByTrigger).toEqual({
+      'routine-complete': 2,
     });
   });
 
@@ -129,7 +138,7 @@ describe('state transitions', () => {
     // with two actions only, so this is the whole vocabulary a user has short of
     // rating: the cadence never runs out on its own.
     for (let i = 0; i < 10; i += 1) {
-      state = afterAsked(state, NOW + i * REASK_COOLDOWN_DAYS * DAY_MS);
+      state = afterAsked(state, NOW + i * REASK_COOLDOWN_DAYS * DAY_MS, 'share');
     }
     expect(state.askCount).toBe(10);
     expect(
@@ -166,8 +175,33 @@ describe('parseRatingPromptState', () => {
   });
 
   it('round-trips a valid state', () => {
-    const state: RatingPromptState = { askCount: 1, lastAskedAt: NOW, outcome: 'pending' };
+    const state: RatingPromptState = {
+      askCount: 1,
+      lastAskedAt: NOW,
+      outcome: 'pending',
+      asksByTrigger: { 'japa-round': 1 },
+    };
     expect(parseRatingPromptState(JSON.stringify(state))).toEqual(state);
+  });
+
+  it('reads a blob from before per-moment counts existed', () => {
+    // The cold-start build persisted only three fields; they must still parse.
+    const parsed = parseRatingPromptState(
+      JSON.stringify({ askCount: 2, lastAskedAt: NOW, outcome: 'pending' })
+    );
+    expect(parsed).toEqual({ askCount: 2, lastAskedAt: NOW, outcome: 'pending', asksByTrigger: {} });
+  });
+
+  it('keeps only known moments with sane counts', () => {
+    const parsed = parseRatingPromptState(
+      JSON.stringify({
+        askCount: 1,
+        lastAskedAt: NOW,
+        outcome: 'pending',
+        asksByTrigger: { share: 2.7, 'cold-start': 4, 'japa-round': -1, 'routine-complete': 'x' },
+      })
+    );
+    expect(parsed.asksByTrigger).toEqual({ share: 2 });
   });
 
   it('drops junk fields rather than trusting them', () => {
@@ -179,7 +213,7 @@ describe('parseRatingPromptState', () => {
 
   it('floors a fractional askCount and rejects a non-positive timestamp', () => {
     const parsed = parseRatingPromptState(JSON.stringify({ askCount: 1.8, lastAskedAt: 0, outcome: 'rated' }));
-    expect(parsed).toEqual({ askCount: 1, lastAskedAt: null, outcome: 'rated' });
+    expect(parsed).toEqual({ askCount: 1, lastAskedAt: null, outcome: 'rated', asksByTrigger: {} });
   });
 });
 

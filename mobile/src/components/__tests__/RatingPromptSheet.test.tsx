@@ -1,7 +1,7 @@
 /**
  * Rating prompt (design.md §54) — sheet rendering plus the provider wiring
- * behind it: the auto-open delay, what each button persists, and the gate's
- * refusal to stack on another surface.
+ * behind it: the moment-triggered open and its settle delay, what each button
+ * persists, and the gate's refusal to stack on another surface.
  */
 
 import React from 'react';
@@ -15,12 +15,14 @@ import {
   RatingPromptProvider,
   RATING_PROMPT_DELAY_MS,
 } from '@/contexts/RatingPromptContext';
+import { useRatingAsk } from '@/contexts/ratingAsk';
 import {
   MIN_ACTIVE_DAYS,
   MIN_APP_OPENS,
   MIN_VERSE_READS,
   RATING_PROMPT_STORAGE_KEY,
   parseRatingPromptState,
+  type RatingAskTrigger,
 } from '@/data/ratingPrompt';
 
 // ── In-memory AsyncStorage so we can assert what the provider persisted ──
@@ -75,31 +77,62 @@ jest.mock('@/contexts/TourContext', () => ({
   useTour: () => mockTourFlags,
 }));
 
+/**
+ * Stand-in for a surface that reports a good moment (celebration overlay, japam
+ * counter, share flow): captures the provider's `requestAsk` so tests can fire it.
+ */
+let requestAsk: ((trigger: RatingAskTrigger) => void) | null = null;
+function MomentProbe() {
+  requestAsk = useRatingAsk();
+  return null;
+}
+
+function tree_(): React.ReactElement {
+  return (
+    <ThemeProvider>
+      <GitaLanguageProvider initialLang="en">
+        <RatingPromptProvider>
+          <MomentProbe />
+          <RatingPromptSheet />
+        </RatingPromptProvider>
+      </GitaLanguageProvider>
+    </ThemeProvider>
+  );
+}
+
 function render(): TestRenderer.ReactTestRenderer {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
-    tree = TestRenderer.create(
-      <ThemeProvider>
-        <GitaLanguageProvider initialLang="en">
-          <RatingPromptProvider>
-            <RatingPromptSheet />
-          </RatingPromptProvider>
-        </GitaLanguageProvider>
-      </ThemeProvider>
-    );
+    tree = TestRenderer.create(tree_());
   });
   return tree;
 }
 
-/** Render, let hydration settle, then run the auto-open timer to completion. */
-async function renderAndSettle(): Promise<TestRenderer.ReactTestRenderer> {
+/** Render and let hydration settle — nothing has asked yet. */
+async function renderHydrated(): Promise<TestRenderer.ReactTestRenderer> {
   const tree = render();
   await act(async () => {
     await Promise.resolve();
   });
+  return tree;
+}
+
+/** Report a moment and run the settle delay to completion. */
+async function fireMoment(trigger: RatingAskTrigger = 'routine-complete'): Promise<void> {
+  act(() => {
+    requestAsk?.(trigger);
+  });
   await act(async () => {
     jest.advanceTimersByTime(RATING_PROMPT_DELAY_MS);
   });
+}
+
+/** Render, hydrate, report a moment, and let the delay run. */
+async function renderAndSettle(
+  trigger: RatingAskTrigger = 'routine-complete'
+): Promise<TestRenderer.ReactTestRenderer> {
+  const tree = await renderHydrated();
+  await fireMoment(trigger);
   return tree;
 }
 
@@ -129,6 +162,7 @@ let openURL: jest.SpiedFunction<typeof Linking.openURL>;
 
 beforeEach(() => {
   jest.useFakeTimers();
+  requestAsk = null;
   mockStore.clear();
   mockAppOpens = MIN_APP_OPENS;
   mockOptInShowing = false;
@@ -148,13 +182,23 @@ afterEach(() => {
   jest.useRealTimers();
 });
 
-describe('auto-open gate', () => {
-  test('opens after the settle delay for an engaged user, and records the ask', async () => {
-    const tree = render();
+describe('moment-triggered ask', () => {
+  test('never opens on its own — a cold start with no moment stays silent', async () => {
+    const tree = await renderHydrated();
     await act(async () => {
-      await Promise.resolve();
+      jest.advanceTimersByTime(RATING_PROMPT_DELAY_MS * 10);
     });
-    // Nothing on screen while the delay is still running — no launch-frame ambush.
+    expect(modalVisible(tree)).toBe(false);
+    expect(mockStore.has(RATING_PROMPT_STORAGE_KEY)).toBe(false);
+  });
+
+  test('opens after the settle delay once a moment is reported, and records which one', async () => {
+    const tree = await renderHydrated();
+    act(() => {
+      requestAsk?.('routine-complete');
+    });
+    // Nothing on screen while the delay is still running — the moment's own
+    // feedback (petals, haptic) gets to finish first.
     expect(modalVisible(tree)).toBe(false);
 
     await act(async () => {
@@ -167,6 +211,43 @@ describe('auto-open gate', () => {
     expect(saved.askCount).toBe(1);
     expect(saved.outcome).toBe('pending');
     expect(saved.lastAskedAt).not.toBeNull();
+    expect(saved.asksByTrigger).toEqual({ 'routine-complete': 1 });
+  });
+
+  test('every moment is a valid trigger', async () => {
+    for (const trigger of ['japa-round', 'share'] as const) {
+      mockStore.clear();
+      const tree = await renderAndSettle(trigger);
+      expect(modalVisible(tree)).toBe(true);
+      expect(savedState().asksByTrigger).toEqual({ [trigger]: 1 });
+      act(() => tree.unmount());
+    }
+  });
+
+  test('asks at most once per session, however many moments follow', async () => {
+    const tree = await renderAndSettle('share');
+    expect(modalVisible(tree)).toBe(true);
+    act(() => {
+      pressableByLabel(tree, 'Maybe later').props.onPress();
+    });
+    expect(modalVisible(tree)).toBe(false);
+
+    await fireMoment('japa-round');
+    expect(modalVisible(tree)).toBe(false);
+    expect(savedState().askCount).toBe(1);
+  });
+
+  test('two moments in quick succession queue one card, not two', async () => {
+    const tree = await renderHydrated();
+    act(() => {
+      requestAsk?.('routine-complete');
+      requestAsk?.('share');
+    });
+    await act(async () => {
+      jest.advanceTimersByTime(RATING_PROMPT_DELAY_MS);
+    });
+    expect(modalVisible(tree)).toBe(true);
+    expect(savedState()).toMatchObject({ askCount: 1, asksByTrigger: { 'routine-complete': 1 } });
   });
 
   test('stays shut for a user who has not earned the ask yet', async () => {
@@ -185,14 +266,30 @@ describe('auto-open gate', () => {
     expect(modalVisible(await renderAndSettle())).toBe(false);
   });
 
-  test('reading activity during the delay does not defer the ask', async () => {
-    // The gate reads engagement counters through a ref precisely so this can't
-    // regress: if they were effect dependencies, every logged read would clear
-    // the pending timer and re-arm it, and a user paging through a reader would
-    // push the prompt out indefinitely.
-    const tree = render();
+  test('a surface that claims the screen during the delay cancels the open', async () => {
+    const tree = await renderHydrated();
+    act(() => {
+      requestAsk?.('routine-complete');
+    });
+    mockOptInShowing = true;
+    act(() => {
+      tree.update(tree_());
+    });
     await act(async () => {
-      await Promise.resolve();
+      jest.advanceTimersByTime(RATING_PROMPT_DELAY_MS);
+    });
+    expect(modalVisible(tree)).toBe(false);
+    expect(mockStore.has(RATING_PROMPT_STORAGE_KEY)).toBe(false);
+  });
+
+  test('reading activity during the delay does not defer the ask', async () => {
+    // The gate reads engagement counters through refs precisely so this can't
+    // regress: if the pending timer lived in an effect keyed on them, every
+    // logged read would clear and re-arm it, and a user paging through a reader
+    // would push the prompt out indefinitely.
+    const tree = await renderHydrated();
+    act(() => {
+      requestAsk?.('share');
     });
     await act(async () => {
       jest.advanceTimersByTime(RATING_PROMPT_DELAY_MS - 500);
@@ -201,15 +298,7 @@ describe('auto-open gate', () => {
     // A verse advance lands mid-delay and re-renders the provider.
     mockTotalReads = MIN_VERSE_READS + 5;
     act(() => {
-      tree.update(
-        <ThemeProvider>
-          <GitaLanguageProvider initialLang="en">
-            <RatingPromptProvider>
-              <RatingPromptSheet />
-            </RatingPromptProvider>
-          </GitaLanguageProvider>
-        </ThemeProvider>
-      );
+      tree.update(tree_());
     });
 
     await act(async () => {
@@ -224,6 +313,18 @@ describe('auto-open gate', () => {
       JSON.stringify({ askCount: 1, lastAskedAt: 1, outcome: 'rated' })
     );
     expect(modalVisible(await renderAndSettle())).toBe(false);
+  });
+
+  test('useRatingAsk is a silent no-op outside the provider', () => {
+    let fn: ((t: RatingAskTrigger) => void) | null = null;
+    function Bare() {
+      fn = useRatingAsk();
+      return null;
+    }
+    act(() => {
+      TestRenderer.create(<Bare />);
+    });
+    expect(() => fn?.('share')).not.toThrow();
   });
 });
 
@@ -313,6 +414,7 @@ describe('presentation', () => {
         <ThemeProvider>
           <GitaLanguageProvider initialLang={lang}>
             <RatingPromptProvider>
+              <MomentProbe />
               <RatingPromptSheet />
             </RatingPromptProvider>
           </GitaLanguageProvider>
@@ -322,9 +424,7 @@ describe('presentation', () => {
     await act(async () => {
       await Promise.resolve();
     });
-    await act(async () => {
-      jest.advanceTimersByTime(RATING_PROMPT_DELAY_MS);
-    });
+    await fireMoment();
 
     expect(modalVisible(tree)).toBe(true);
     const text = allText(tree);

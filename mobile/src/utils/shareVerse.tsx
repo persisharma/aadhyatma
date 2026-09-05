@@ -25,6 +25,7 @@ import {
 } from '@/utils/shareStoryLayout';
 import { pick } from '@/utils/localize';
 import type { Lang } from '@/data/gita/language';
+import { useRatingAsk } from '@/contexts/ratingAsk';
 
 export type ShareableVerse = {
   sourceId: string;
@@ -148,6 +149,9 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
   const [busy, setBusy] = useState(false);
   const inFlightRef = useRef(false);
   const cardRef = useRef<View>(null);
+  // A completed share is one of the rating moments (design.md §54). No-op when
+  // the provider is rendered without RatingPromptProvider (unit tests).
+  const requestRatingAsk = useRatingAsk();
 
   // Timely tags (design.md §39.2). Resolved by `TimelyTagsResolver`, which mounts
   // ONLY while the picker is open — see the note on that component for why this
@@ -228,6 +232,12 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
           }
         }
 
+        // Did a share actually go out? RN `Share.share` resolves with
+        // `dismissedAction` when the iOS sheet is cancelled; expo-sharing resolves
+        // the same either way, so it is taken as shared. Feeds the rating moment
+        // below (design.md §54) — a cancelled sheet is not a good moment.
+        let shared = true;
+
         if (fileUri) {
           if (target === 'instagram') {
             // Always the expo-sharing route: on iOS the RN Share `message` would
@@ -242,21 +252,21 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
                   format === 'story' ? 'Share to Instagram story' : 'Share on Instagram',
               });
             } else {
-              await Share.share(
+              shared = (await Share.share(
                 { message: caption },
                 {
                   dialogTitle:
                     format === 'story' ? 'Share to Instagram story' : 'Share on Instagram',
                 }
-              );
+              )).action === Share.sharedAction;
             }
           } else if (Platform.OS === 'ios') {
             // iOS UIActivityViewController accepts file + caption together; WhatsApp
             // populates the caption field automatically.
-            await Share.share(
+            shared = (await Share.share(
               { message: caption, url: fileUri },
               { dialogTitle: 'Share verse' }
-            );
+            )).action === Share.sharedAction;
           } else {
             // Android's RN Share drops file URIs. Use expo-sharing for the image; the
             // user types the caption in WhatsApp (the link is also printed on the card).
@@ -267,7 +277,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
                 dialogTitle: 'Share verse',
               });
             } else {
-              await Share.share({ message: caption }, { dialogTitle: 'Share verse' });
+              shared = (await Share.share({ message: caption }, { dialogTitle: 'Share verse' })).action === Share.sharedAction;
             }
           }
         } else if (target === 'instagram') {
@@ -290,8 +300,9 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
           );
         } else {
           // Image capture failed — share text-only so the user still gets something.
-          await Share.share({ message: caption }, { dialogTitle: 'Share verse' });
+          shared = (await Share.share({ message: caption }, { dialogTitle: 'Share verse' })).action === Share.sharedAction;
         }
+        if (shared) requestRatingAsk('share');
       } catch {
         // Share sheet dismissal or any other failure: swallow. The user dismissed.
       } finally {
@@ -300,7 +311,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
         inFlightRef.current = false;
       }
     },
-    []
+    [requestRatingAsk]
   );
 
   const share = useCallback(

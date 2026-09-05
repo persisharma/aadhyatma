@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState, useEffect } from 'react';
 import {
   Modal,
   Pressable,
@@ -25,6 +25,7 @@ import {
 } from '@/data/japam';
 import { useJapamCounter } from '@/contexts/JapamCounterContext';
 import { useJapamAlarms } from '@/contexts/JapamAlarmsContext';
+import { useRatingAsk } from '@/contexts/ratingAsk';
 import { useFontScale } from '@/contexts/FontScaleContext';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import JapamAudioPlayer from '@/components/JapamAudioPlayer';
@@ -78,12 +79,26 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const [alarmEditorOpen, setAlarmEditorOpen] = useState(false);
   const lastRoundRef = useRef(entry.rounds);
 
+  // Rating moment (design.md §54): a completed mala is a good time to ask, but
+  // never mid-count — a card over the bead surface would break the japa. So the
+  // rounds finished in THIS visit are tallied here and reported once, when the
+  // user leaves the screen. The gate then decides whether anything opens.
+  const requestRatingAsk = useRatingAsk();
+  const roundsThisVisitRef = useRef(0);
+  useEffect(
+    () => () => {
+      if (roundsThisVisitRef.current > 0) requestRatingAsk('japa-round');
+    },
+    [requestRatingAsk]
+  );
+
   const registerBead = useCallback(
     (beads: number = 1) => {
       if (!mantra) return;
       const next = increment(mantra.id, beads);
       if (next.rounds > lastRoundRef.current) {
         lastRoundRef.current = next.rounds;
+        roundsThisVisitRef.current += 1;
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(
           () => undefined
         );
