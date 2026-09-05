@@ -32,7 +32,13 @@ appId: com.prashantsharma.vedansh
 # (1) Japam Alarms card on the More screen (entry point).
 # The card is a Pressable with an explicit accessibilityLabel, which collapses
 # its child Text — so match the a11y label, not the inner "Japam Alarms" text.
-- assertVisible: "Japam alarms, none set"
+# The language step above scrolled More down to the ऐप section; the Japam
+# alarms card sits above it and is off-screen on standard-height iPhones.
+- scrollUntilVisible:
+    element:
+      text: "Japam alarms, none set"
+    direction: UP
+    centerElement: true
 - takeScreenshot: e2e-shots/jalarms-1-more-card
 
 # (2) Open the Japam Alarms screen — empty state

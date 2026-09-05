@@ -8,7 +8,7 @@ appId: com.prashantsharma.vedansh
     appId: com.prashantsharma.vedansh
     clearState: true
     arguments:
-      RCT_jsLocation: "127.0.0.1:8091"
+      RCT_jsLocation: "127.0.0.1:8084"
 - waitForAnimationToEnd:
     timeout: 30000
 - tapOn: { text: "Allow", optional: true }
@@ -67,7 +67,17 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Open name Keshav.*"
 - assertVisible: "Keshav"
 - assertVisible: "A name of Vishnu-Krishna"
-- assertVisible: "Copy name"
+# NameDetailSheet is a transparent <Modal>; Maestro's scrollUntilVisible can't
+# engage its inner ScrollView (documented transparent-Modal gotcha) but a
+# coordinate swipe does. On standard-height iPhones the action row sits below
+# the sheet's fold.
+- swipe:
+    start: "50%, 75%"
+    end: "50%, 45%"
+    duration: 400
+# The copy Pressable's explicit accessibilityLabel is "Copy <latin> name",
+# which overrides its inner "Copy name" text in the a11y tree.
+- assertVisible: "Copy Keshav name"
 - assertVisible: "Open Shri Krishna in Deity Index"
 - tapOn: "Close name details"
 - scrollUntilVisible:

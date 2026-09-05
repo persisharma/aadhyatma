@@ -620,11 +620,16 @@ export function AlarmEditorSheet({
       animationType="fade"
       onRequestClose={onClose}
     >
+      {/* accessible={false} keeps the backdrop/card Pressables from collapsing
+          the editor's controls into one a11y node — required for VoiceOver to
+          reach the chips/inputs individually and for Maestro to drive them. */}
       <Pressable
+        accessible={false}
         style={[styles.backdrop, { backgroundColor: colors.modalBackdrop }]}
         onPress={onClose}
       >
         <Pressable
+          accessible={false}
           onPress={(e) => e.stopPropagation()}
           style={[
             styles.editorCard,
