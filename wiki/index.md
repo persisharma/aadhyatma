@@ -10,6 +10,7 @@
 - [`docs/superpowers/`](../docs/superpowers/) — deity-icon plan + design spec.
 - [`docs/content-parity/chalisa-aarti-existing-deities.md`](../docs/content-parity/chalisa-aarti-existing-deities.md) — source-candidate manifest for Chalisa/Aarti parity using only existing deity ids.
 - [`docs/content-parity/other-content-existing-deities.md`](../docs/content-parity/other-content-existing-deities.md) — full non-Chalisa/Aarti parity benchmark and acquisition waves for the existing deity taxonomy.
+- [`marketing/store-listing/README.md`](../marketing/store-listing/README.md) — App Store / Google Play listing strategy (competitor-demand capture without ads), the Play listing copy under `marketing/store-listing/play/<locale>/`, and `check-limits.mjs`; the App Store text itself lives in `mobile/store.config.json` (en-GB + hi).
 
 ## Subsystems
 - [[readers]] — per-text paged `FlatList` reader screens; chapter auto-advance contract.

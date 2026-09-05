@@ -3,21 +3,60 @@
   "apple": {
     "info": {
       "en-GB": {
-        "title": "Vedansh",
-        "subtitle": "Bhagavad Gita, Panchang & japa",
+        "title": "Vedansh: Gita, Aarti, Panchang",
+        "subtitle": "Chalisa, Vrat Katha, Japa Mala",
         "privacyPolicyUrl": "https://persisharma.github.io/get-vedansh/privacy",
         "marketingUrl": "https://persisharma.github.io/get-vedansh",
         "supportUrl": "https://persisharma.github.io/get-vedansh",
         "keywords": [
-          "gita", "hanuman", "chalisa", "panchang", "choghadiya", "muhurat",
-          "japa", "mantra", "aarti", "vrat", "ekadashi", "bhajan", "puja", "hindu"
+          "hanuman",
+          "bhajan",
+          "mantra",
+          "puja",
+          "hindu",
+          "ramayan",
+          "sunderkand",
+          "muhurat",
+          "kundli",
+          "rashifal",
+          "ekadashi",
+          "calendar",
+          "shiv"
         ],
-        "promoText": "New: Daily Muhurat with Choghadiya, Rahu Kaal & Abhijit. Plus Sankalp programs, mantra alarms and a built-in bhajan player. Free, ad-free and fully offline.",
-        "description": "Vedansh (Sanskrit: \"a portion of the Vedas\") is a beautifully designed bilingual companion for Hindu devotion — sacred texts, a daily Panchang, and a practice you keep. Immerse yourself in timeless scriptures with a reverent, book-like reading experience, fully offline.\n\nSACRED LIBRARY\n- Bhagavad Gita: all 18 chapters, 701 shlokas with meaning and commentary\n- Sundarkand, Ramcharitmanas selections and Vishnu Sahasranama\n- Chalisas, aartis, stotrams and sanskar for children\n- Instant search across the whole library\n\nBILINGUAL READING\n- Every verse in Hindi (Devanagari) and English — now also Gujarati and Kannada\n- IAST transliteration for Sanskrit texts\n- One verse per page with swipe navigation\n- Adjustable reading size and a beautiful parchment-style design\n\nDAILY PANCHANG\n- Accurate tithi, nakshatra, yoga, karana and sunrise/sunset for your city, from a real astronomy engine\n- Purnimant and Amanta systems, Vikram Samvat and a full month calendar\n- Daily Muhurat: Choghadiya, Rahu Kaal and Abhijit at a glance\n- Location is optional — a city picker (default Ujjain) works without it\n\nVRAT, FESTIVALS & KATHAS\n- Browse vrats, festivals and 80+ kathas: Ekadashi, Satyanarayan, Karwa Chauth, Shivaratri and more\n- Follow the ones you observe and get gentle reminders\n\nDAILY SADHANA\n- Build a daily or weekday routine with the right deity for each day\n- Take a Sankalp: guided 4-to-41-day programs, all the way to completion\n- Track your reading and celebrate completion\n\nJAPAM MEDITATION\n- Digital bead counter for 108-bead mala rounds\n- Japam alarms: wake to your chosen mantra, with repeat days and skip-a-day\n- Multiple mantras: Om Namah Shivaya, Gayatri Mantra, Hare Krishna and more\n\nLISTEN\n- A built-in player for bhajans, mantras and aartis\n- Background audio for uninterrupted listening\n\nTHEERTH - SACRED PILGRIMAGE\n- Explore India's dhams on a real-geography map, by state, category or yatra\n- Sourced temple stories for each site\n\nYOUR SPIRITUAL JOURNEY\n- Sadhak Profile: track reads, beads, rounds and streaks\n- Bookmark and revisit favorite verses\n- Resume reading from where you left off\n- Shareable verse cards\n\nBROWSE BY DEITY\n- Explore texts by Rama, Krishna, Shiva, Hanuman, Durga or Ganesha\n\nPRIVATE BY DESIGN\n- No account, no ads, no tracking. Works fully offline; your practice stays on your device.\n\nAll texts are from public-domain Hindu classics, presented with reverence for personal study and devotion.",
+        "promoText": "No ads, no login, fully offline. Bhagavad Gita in Hindi & English, Hanuman Chalisa, aaj ka Panchang with Rahu Kaal, 80+ vrat kathas, japa mala & mantra alarms.",
+        "description": "Everything for daily Hindu bhakti in one calm, ad-free app, and it works without internet. Bhagavad Gita, Hanuman Chalisa, aarti sangrah, aaj ka Panchang, vrat kathas, japa mala, kundali and more, in Hindi and English.\n\nNo account. No ads. No tracking. Open it and read.\n\nSACRED LIBRARY\n- Bhagavad Gita: all 18 chapters, 701 shlokas with meaning\n- Nine chalisas: Hanuman, Shiv, Durga, Ganesh, Ram, Krishna, Gayatri, Vishnu, Saraswati\n- Sundarkand, Ramcharitmanas Mangalacharan and Valmiki Ramayan selections\n- Aarti sangrah: Om Jai Jagdish Hare, Hanuman Ji Ki Aarti, Jai Ganesh Deva, Om Jai Shiv Omkara, Jai Ambe Gauri, Aarti Kunj Bihari Ki\n- Stotras, ashtakams, kavach and suktam: Vishnu Sahasranama, Bajrang Baan, Rudrashtakam, Lingashtakam, Mahalakshmi Ashtakam, Shani Ashtakam, Navagraha Stotram, Rama Raksha Stotra, Durga Kavach, Purusha Suktam\n- Sanskar for children: morning shlokas, Surya Namaskar, Tulsi puja, meal prayer, evening lamp, bedtime shlokas\n- Instant search across the whole library\n\nBILINGUAL READING\n- Every verse in Hindi (Devanagari) and English, also readable in Gujarati and Kannada script\n- IAST transliteration for Sanskrit texts\n- One verse per page with swipe navigation, read-aloud on the Gita and chalisas\n- Adjustable reading size and a parchment-style, book-like design\n\nAAJ KA PANCHANG\n- Accurate tithi, nakshatra, yoga, karana and sunrise/sunset for your city, from a real astronomy engine\n- Shubh muhurat: Choghadiya, Rahu Kaal, Abhijit and hora at a glance\n- Purnimant and Amanta systems, Vikram Samvat and a full month calendar\n- Location is optional: a city picker (default Ujjain) works without it\n\nVRAT, FESTIVALS & KATHAS\n- 160+ vrat and festival dates: Ekadashi, Pradosh, Sankashti, Purnima, Navratri, Diwali, Karwa Chauth, Shivratri, Chhath\n- 80+ kathas: Satyanarayan, Ekadashi, Karwa Chauth, Ahoi Ashtami and more\n- Puja vidhi and bhog (naivedya) guidance for the festivals you follow\n- Follow the ones you observe and get gentle reminders\n\nDAILY SADHANA\n- Build a daily or weekday routine with the right deity for each day\n- Take a Sankalp: guided 4-to-41-day programs, all the way to completion\n- Track your reading and celebrate completion\n\nJAPAM MEDITATION\n- Digital bead counter for 108-bead mala rounds\n- Japam alarms: wake to your chosen mantra, with repeat days and skip-a-day\n- Multiple mantras: Om Namah Shivaya, Gayatri Mantra, Hare Krishna and more\n\nLISTEN\n- A built-in player for chalisa, aarti and mantra recitations\n- Background audio for uninterrupted listening\n\nKUNDALI, RASHIFAL & NAMKARAN\n- Free janam kundali with dasha and gochar, computed on your phone and never uploaded\n- Daily rashifal for your rashi\n- Guna Milan (kundli matching) and Namkaran name ideas by rashi and nakshatra\n\nTHEERTH - SACRED PILGRIMAGE\n- 70+ temples and dhams on a real-geography map: Dwadash Jyotirlinga, Char Dham, Chota Char Dham, Shakti Peeth\n- Sourced temple stories for each site\n\nWIDGETS, VASTU & MORE\n- Home and Lock Screen widgets for today's panchang and verse\n- Vastu disha compass and ghar ka mandir guidance\n- Pitru Paksha and Shraddha reminders for your family's tithis\n\nYOUR SPIRITUAL JOURNEY\n- Sadhak Profile: track reads, beads, rounds and streaks\n- Bookmark and revisit favourite verses, resume where you left off\n- Shareable verse cards\n\nBROWSE BY DEITY\n- Ram, Krishna, Shiv, Hanuman, Durga, Ganesh, Lakshmi, Saraswati, Vishnu, Surya, Shani and more\n\nPRIVATE BY DESIGN\n- No account, no ads, no tracking. Works fully offline; your practice stays on your device.\n\nAll texts are from public-domain Hindu classics, presented with reverence for personal study and devotion.",
         "releaseNotes": "A big update for your daily devotion.\n\n• Daily Muhurat — the day's Choghadiya, Rahu Kaal and Abhijit muhurat, right on the Panchang.\n• Sankalp programs — guided 4-to-41-day sadhanas that carry you to completion.\n• Japam alarms — wake to your chosen mantra, with repeat days, skip-next and one-time alarms.\n• Bhajan player — a calm, built-in player for mantras, aartis and recitations.\n• A refreshed home, adjustable reading size, and a \"Share the App\" card.\n• Many performance and stability improvements.\n\nIf you're upgrading from an older version, you'll also find the Panchang, Vrat & Festival kathas, Daily Routine, Theerth pilgrimage map, and Gujarati & Kannada reading languages."
+      },
+      "hi": {
+        "privacyPolicyUrl": "https://persisharma.github.io/get-vedansh/privacy",
+        "marketingUrl": "https://persisharma.github.io/get-vedansh",
+        "supportUrl": "https://persisharma.github.io/get-vedansh",
+        "title": "वेदांश: गीता, आरती, पंचांग",
+        "subtitle": "हनुमान चालीसा, व्रत कथा, जप",
+        "keywords": [
+          "भजन",
+          "मंत्र",
+          "पूजा",
+          "रामायण",
+          "सुंदरकांड",
+          "मुहूर्त",
+          "कुंडली",
+          "राशिफल",
+          "एकादशी",
+          "sundarkand",
+          "panchangam",
+          "horoscope",
+          "shradh"
+        ],
+        "promoText": "बिना विज्ञापन, बिना लॉगइन, पूरी तरह ऑफ़लाइन। हिंदी-अंग्रेज़ी गीता, हनुमान चालीसा, आज का पंचांग व राहु काल, 80+ व्रत कथाएँ, जप माला और मंत्र अलार्म।",
+        "description": "वेदांश रोज़ की भक्ति का शांत, विज्ञापन-मुक्त साथी है: भगवद गीता, हनुमान चालीसा, आरती संग्रह, आज का पंचांग, व्रत कथा, जप माला और बहुत कुछ, हिंदी और अंग्रेज़ी में, पूरी तरह ऑफ़लाइन। न लॉगइन, न विज्ञापन, न ट्रैकिंग।\n\nज़्यादातर भक्ति ऐप लॉगइन माँगते हैं, विज्ञापन दिखाते हैं या पैसे वाली सेवाओं की ओर धकेलते हैं। वेदांश में ऐसा कुछ नहीं है। ऐप खोलिए और पढ़िए।\n\n📖 पवित्र ग्रंथ, हिंदी और अंग्रेज़ी में\n• भगवद गीता: सभी 18 अध्याय, 701 श्लोक अर्थ सहित\n• हनुमान चालीसा, शिव चालीसा, दुर्गा चालीसा, गणेश चालीसा, राम चालीसा, कृष्ण चालीसा, गायत्री चालीसा, विष्णु चालीसा, सरस्वती चालीसा\n• सुंदरकांड, रामचरितमानस मंगलाचरण और वाल्मीकि रामायण के चुने हुए अंश\n• आरती संग्रह: ॐ जय जगदीश हरे, हनुमान जी की आरती, जय गणेश देवा, ॐ जय शिव ओंकारा, जय अम्बे गौरी, आरती कुंज बिहारी की\n• स्तोत्र, अष्टक, कवच और सूक्त: विष्णु सहस्रनाम, बजरंग बाण, रुद्राष्टकम, लिंगाष्टकम, मधुराष्टकम, महालक्ष्मी अष्टकम, शनि अष्टकम, नवग्रह स्तोत्र, राम रक्षा स्तोत्र, दुर्गा कवच, पुरुष सूक्त\n• बच्चों के लिए संस्कार: प्रातः श्लोक, सूर्य नमस्कार, तुलसी पूजा, भोजन मंत्र, संध्या दीपम, शयन श्लोक\n• गीता और चालीसा के लिए पढ़कर सुनाना; हर श्लोक देवनागरी और अंग्रेज़ी में, IAST लिप्यंतरण सहित, गुजराती और कन्नड़ लिपि में भी\n• पूरी लाइब्रेरी में तुरंत खोज\n\n🗓 आज का पंचांग, हिंदू कैलेंडर\n• आपके शहर के लिए तिथि, नक्षत्र, योग, करण, सूर्योदय और सूर्यास्त, सटीक खगोलीय गणना से\n• शुभ मुहूर्त: चौघड़िया, राहु काल, अभिजित मुहूर्त और होरा\n• पूर्णिमांत और अमांत, विक्रम संवत और पूरा मासिक कैलेंडर\n• लोकेशन वैकल्पिक है: अपना शहर चुनिए (डिफ़ॉल्ट उज्जैन), सब कुछ ऑफ़लाइन चलता है\n\n🪔 व्रत, त्योहार और कथाएँ\n• 160+ व्रत और त्योहार की तिथियाँ: एकादशी, प्रदोष, संकष्टी, पूर्णिमा, अमावस्या, नवरात्रि, दिवाली, करवा चौथ, शिवरात्रि, छठ\n• 80+ व्रत कथाएँ: सत्यनारायण कथा, एकादशी कथाएँ, करवा चौथ कथा, अहोई अष्टमी कथा और भी\n• जो त्योहार आप मानते हैं, उनकी पूजा विधि और भोग (नैवेद्य) मार्गदर्शन\n• व्रत और त्योहार के रिमाइंडर, केवल उनके लिए जो आप मानते हैं\n\n📿 जप माला और मंत्र\n• 108 मनके की माला के लिए डिजिटल जप काउंटर, स्ट्रीक सहित\n• मंत्र अलार्म: ॐ नमः शिवाय, गायत्री मंत्र, हरे कृष्ण और अन्य मंत्रों के साथ जागिए\n• संकल्प: 4 से 41 दिन की मार्गदर्शित साधना, पूर्णता तक\n• नित्य साधना: सप्ताह के हर दिन के देवता और पाठ\n\n🎵 भजन और आरती प्लेयर\n• चालीसा, आरती और मंत्र पाठ के लिए प्लेयर, बैकग्राउंड ऑडियो सहित\n\n🔯 कुंडली, राशिफल और नामकरण\n• मुफ़्त जन्म कुंडली, दशा और गोचर सहित, आपके फ़ोन पर गणना, कहीं अपलोड नहीं\n• आपकी राशि का दैनिक राशिफल\n• गुण मिलान (कुंडली मिलान) और राशि-नक्षत्र से नामकरण के सुझाव\n\n🛕 तीर्थ\n• भारत के 70+ मंदिर और धाम: द्वादश ज्योतिर्लिंग, चार धाम, छोटा चार धाम, शक्ति पीठ, हर एक की कथा सहित\n\n🏠 विजेट, वास्तु और अधिक\n• आज के पंचांग और श्लोक के होम स्क्रीन विजेट\n• वास्तु दिशा कम्पास और घर के मंदिर का मार्गदर्शन\n• पितृ पक्ष और श्राद्ध के रिमाइंडर, आपके परिवार की तिथियों के अनुसार\n• बुकमार्क, जहाँ छोड़ा वहाँ से पढ़ना, साझा करने योग्य श्लोक कार्ड, साधक प्रोफ़ाइल\n\n🔒 आपकी निजता\nन लॉगइन, न विज्ञापन, न ट्रैकिंग। पूरी तरह ऑफ़लाइन। आपकी भक्ति आपके फ़ोन में रहती है।\n\nदेवता से खोजिए: राम, कृष्ण, शिव, हनुमान, दुर्गा, गणेश, लक्ष्मी, सरस्वती, विष्णु, सूर्य, शनि और अन्य।\n\nसभी पाठ सार्वजनिक-अधिकार वाले हिंदू ग्रंथों से हैं, व्यक्तिगत अध्ययन और भक्ति के लिए श्रद्धापूर्वक प्रस्तुत।",
+        "releaseNotes": "रोज़ की भक्ति के लिए एक बड़ा अपडेट।\n\n• दैनिक मुहूर्त: आज का चौघड़िया, राहु काल और अभिजित मुहूर्त, सीधे पंचांग पर।\n• संकल्प: 4 से 41 दिन की मार्गदर्शित साधना, पूर्णता तक।\n• जप अलार्म: अपने चुने मंत्र के साथ जागिए, दोहराव के दिन और अगला-छोड़ें विकल्प सहित।\n• भजन प्लेयर: मंत्र, आरती और पाठ के लिए शांत, अंतर्निर्मित प्लेयर।\n• नया होम, समायोज्य पढ़ने का आकार और \"ऐप साझा करें\" कार्ड।\n• प्रदर्शन और स्थिरता में अनेक सुधार।\n\nपुराने संस्करण से आ रहे हैं तो पंचांग, व्रत और त्योहार कथाएँ, नित्य साधना, तीर्थ मानचित्र, और गुजराती व कन्नड़ लिपि भी मिलेंगी।"
       }
     },
-    "categories": ["LIFESTYLE", "REFERENCE"],
+    "categories": [
+      "LIFESTYLE",
+      "REFERENCE"
+    ],
     "advisory": {
       "alcoholTobaccoOrDrugUseOrReferences": "NONE",
       "contests": "NONE",
