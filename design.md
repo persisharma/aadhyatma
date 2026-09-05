@@ -242,20 +242,28 @@ This table is the **single source of truth** for reading-content sizing, impleme
 > five named elevations rather than the `sm/md/lg` scale above. All share one warm shadow
 > colour, defined once as `#3C1E0A` — never re-typed at a call site.
 >
-> | Token | Offset · opacity · radius · Android | Use |
+> | Token | Offset · opacity · radius | Use |
 > | --- | --- | --- |
-> | `elevation.subtle` | `0,1` · `0.06` · `4` · `1` | dim/inactive card, grouped-list surface |
-> | `elevation.card` | `0,2` · `0.10` · `6` · `2` | default card |
-> | `elevation.lifted` | `0,4` · `0.11` · `12` · `3` | active/selected catalog tile, chapter card |
-> | `elevation.raised` | `0,6` · `0.16` · `14` · `5` | the one focal element on a screen |
-> | `elevation.overlay` | `0,6` · `0.25` · `14` · `10` | floats above a scrim (feature-tour card) |
+> | `elevation.subtle` | `0,1` · `0.06` · `4` | dim/inactive card, grouped-list surface |
+> | `elevation.card` | `0,2` · `0.10` · `6` | default card |
+> | `elevation.lifted` | `0,4` · `0.11` · `12` | active/selected catalog tile, chapter card |
+> | `elevation.raised` | `0,6` · `0.16` · `14` | the one focal element on a screen |
+> | `elevation.overlay` | `0,6` · `0.25` · `14` | floats above a scrim (feature-tour card) |
+>
+> **Cross-platform shadow.** iOS renders each tier from the `shadow*` props (offset · opacity ·
+> radius above). Android ignores `shadow*` and — before Sep 2026 — drew its own shadow from an
+> integer `elevation` prop, a hard grey box cast on all four sides that looked nothing like the
+> soft warm lift the design intends. Each tier now also carries an Android-only `boxShadow`
+> with the same offset/blur/warm colour (and no integer `elevation`, which would double the
+> shadow), so both platforms show the identical soft warm lift. Requires the New Architecture
+> (enabled) — `boxShadow` is a no-op on the legacy renderer.
 >
 > `subtle`, `lifted` and `overlay` were added in July 2026: an audit found 14 files
 > hand-rolling shadows, so cards floated at slightly different heights, the warm hex was
 > re-typed by hand (with `#3c1e0a` casing drift), and the tour card used an off-palette
 > `#0a0604`. The tiers above are the clusters that audit found, so every real surface has a
 > token. The cream palette has very low figure-ground contrast, so card surfaces must be
-> opaque for the Android shadow to render.
+> opaque for the shadow to render.
 >
 > **Enforced:** `eslint.config.js` bans a hex literal on `shadowColor` outside `src/theme/`.
 
