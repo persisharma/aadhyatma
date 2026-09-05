@@ -98,6 +98,151 @@ removed — §C3.)
 4. **Your homes are yours.** The roster is one private, versioned AsyncStorage payload; never inferred from GPS, never on a public panel (Home, Today strip, widgets), exported only through the explicit door. Floor-plan images stay in the app's document directory and are never uploaded except by the F2 action the user taps.
 5. **The engine judges; a model never does.** Every finding comes from `assessHome()` (pure, tested). An LLM may *read a drawing* and may *phrase* the engine's output; it may not add, remove or reweight a finding.
 
+## 3. What ships — the release train
+
+Four releases, in order. Each is independently shippable and leaves the app whole; nothing
+in a later release is required for an earlier one to make sense. "OTA" means the JS bundle
+publishes to the live 1.4.8 store runtime with no app-store review.
+
+| # | Release | Carries | Vehicle | Depends on |
+|---|---|---|---|---|
+| **R1** | **भरोसेमंद दिक्सूचक · the compass you can trust** | A1 fused heading + source ladder · A3 coordinate declination grid · A2 tilt state · A4 Hold, haptic tick, announced dik, responsive dial · B1 registry types + weights (the seven shipped rows gain typed alternate/avoid sets; **no new visible content**) · RULEBOOK §22 amendment + design.md §66.1 | OTA | nothing |
+| **R2** | **मेरा घर · your home, and the one you are choosing** | C2 roster store (cap 12) · C3 assessment engine + mandala-grid screen (the one reading) · C1/E2 setup flow (Variant A: template → facing with pada ring → room walk) · E1 templates (1–5 BHK, villa, plot, custom) · E3 roster + compare · F0 full-text handoff (grid + ideal-vs-yours + findings; plan image when one exists) · C4 doors · C5 Ask `vastu.myhome` · D deep-link target · **B2/B3 rows that have passed §22.3 by ship date** (the rest stay `draft`, invisible; each later flip is a data-only OTA) · design.md §66.3–§66.6 | OTA | R1 (Hold, pada ring, weights) |
+| **R3** | **नक्शा · the floor plan** | F1 plan mark-up (picker, north arrow, centre pin, room pins → same engine, grid toggle default) · A5 pada ring on the plan's door pin · remaining B2/B3 flips · design.md §66.2, §66.7 · `whatsNew` for the version | **Store release** (`expo-image-picker` is a new native module; triple bump) | R2 |
+| **R4** | **AI पढ़ाई · the grounded summary** | F2 vision pre-read with pin-by-pin confirmation · grounded summary + pointers with citation filter · consent sheet with the image checkbox · design.md §66.8 · README constraint exception | **Stage-2 backend** (2027, PRD-32's service) | R3 + the backend + the §F2.5 eval gate |
+
+**Not shipped in any of the four, by decision:** a composite score or percentage; ranking of
+homes by a number; remedies, products, yantras or "consult an expert"; colours by direction;
+a deity-facing table; bring-your-own API key; more than 12 homes; floor-plan CAD or AR; a
+griha-pravesh vidhi (PRD-19's to author); any home data on Home, the Today strip, widgets or
+notifications.
+
+**Content gate, stated plainly.** R2 ships with whatever registry rows are *verified* on ship
+day. The engine, templates and screens are complete regardless; a template chip whose row is
+still `draft` simply does not appear. So R2's visible room list may be the seven Phase-1 rows
+plus a handful, growing by OTA data flips without a release. That is the honest shape of a
+content-gated feature and is how the bhog and vidhi registries shipped.
+
+## 4. User stories
+
+Personas: **गृहस्थ** (lives in the home), **खरीदार/किरायेदार** (choosing a home), **परिवार**
+(the relative the decision is discussed with), **बिना-सेंसर उपयोगकर्ता** (tablet, simulator,
+or a phone with a broken magnetometer), **स्क्रीन-रीडर उपयोगकर्ता**. Every story names its
+release and its acceptance criteria; the criteria are what the tests in §6 pin.
+
+### R1 — the compass you can trust
+
+- **US-01 · Fused heading.** As a गृहस्थ standing in my kitchen, I want the dial to read true
+  north the way my phone's own compass does, so that indoor rebar and a slightly tilted hand
+  do not put my kitchen in the wrong sector. *Accepts when:* on a device with location
+  permission the status line shows the fused source; without permission the dial still works
+  on magnetic heading plus the bundled declination and never prompts; with no sensor the
+  screen opens in manual mode exactly as 1.4.8 does.
+- **US-02 · Tilt honesty.** As a गृहस्थ, I want the app to tell me when my phone is not flat,
+  so that I fix my hand instead of trusting a wrong dik. *Accepts when:* on the magnetometer
+  path, >20° for five samples shows the tilt line in the warning tone and the dial keeps
+  moving; on the fused path the line never appears.
+- **US-03 · Hold.** As a गृहस्थ, I want to freeze the reading, walk to the wall, and read it
+  there, so that I do not have to read the dial while pointing. *Accepts when:* Hold removes
+  the subscription, the faced dik stays, tapping again resumes; Hold is disabled in manual
+  mode.
+- **US-04 · Felt and announced sector change.** As a स्क्रीन-रीडर उपयोगकर्ता (and as anyone
+  not looking at the screen), I want a tick and a spoken dik when the sector changes, so that
+  I can sweep the room by feel. *Accepts when:* one haptic per change (≤ 1/400 ms), one
+  announcement per change (≤ 1/1.5 s), both silent in manual/hold.
+- **US-05 · Anywhere in India.** As a गृहस्थ in a town not on the city list, I want true north
+  to be right for my coordinates, so that my panchang city choice does not skew my compass.
+  *Accepts when:* the grid value for every bundled city agrees with the city table within
+  0.2°; an unknown location stays honestly magnetic.
+
+### R2 — your home, and the one you are choosing
+
+- **US-06 · Pick the home type.** As a खरीदार, I want to choose 2/3/4/5 BHK, villa, plot or
+  custom and get the right room chips, so that I am not building the list by hand at the
+  site. *Accepts when:* every template chip resolves to a verified registry row; draft rows
+  are absent; chips can be added or removed.
+- **US-07 · Capture the facing.** As a खरीदार at the main door, I want to record which way
+  the house faces and, for a door, which pada, so that the door row can read the fuller rule.
+  *Accepts when:* Hold captures facing + pada from the ring; without a sensor the eight chips
+  and a pada picker record the same fields.
+- **US-08 · Walk the rooms step by step.** As a खरीदार, I want a checklist in template order
+  that I tap room by room while pointing, so that a broker's interruption never loses my
+  progress. *Accepts when:* the record saves after every tap; a chip shows ✓ and its zone; a
+  room can be re-measured, skipped, repeated (bedroom 2) or marked centre.
+- **US-09 · Read the home on the mandala.** As a गृहस्थ, I want to see my rooms in the nine
+  zones with the dikpala of each, the five class counts, and every room's finding in a fixed
+  order, so that I understand where tradition and my home agree and differ. *Accepts when:*
+  the grid has one accessibility label narrating it; the five pills always render, a zero
+  included; groups appear in the frozen order forbidden → differs → preferred-unmet →
+  alternate → in-keeping → unmeasured; registry order within a group; no total or percent
+  anywhere on the screen.
+- **US-10 · Understand the weight.** As a गृहस्थ, I want each row to say whether the texts
+  forbid, prescribe or prefer the placement, so that I know which findings matter. *Accepts
+  when:* each row shows the weight word; a forbidden or differs row is followed by the
+  accommodation text where one exists.
+- **US-11 · The door's pada.** As a खरीदार, I want the door row to name the pada and whether
+  the texts list it as auspicious for my facing, so that "north-facing" is not the whole
+  story. *Accepts when:* the pada name and set come from the verified door-pada registry;
+  with the registry still draft the row shows facing only, with no placeholder.
+- **US-12 · Keep several homes.** As a खरीदार visiting three flats this weekend, I want each
+  saved with a label and a type, so that I can come back to any of them. *Accepts when:* the
+  roster holds up to 12 homes; one is marked living; rename/delete/re-measure work; a retired
+  registry id in a saved home is dropped, never a crash.
+- **US-13 · Compare shortlisted homes.** As a खरीदार, I want two or three homes side by side
+  by class counts and by room, so that I can discuss them with family. *Accepts when:* the
+  compare screen shows no winner, no superlative, no colour beyond the class tokens; the
+  closing line states the decision is the user's.
+- **US-14 · Share it.** As a खरीदार, I want to send the whole reading to a family group or to
+  my own AI assistant, so that the conversation happens where I already talk. *Accepts when:*
+  the share sheet carries the grid as text, ideal-vs-yours per room, every finding with its
+  accommodation, the JSON model, and the plan image when one exists; the app contacts no
+  service.
+- **US-15 · Ask about my home.** As a गृहस्थ, I want to type "मेरी रसोई किस दिशा में है" in
+  Search and get the answer from my saved home, so that I do not open the screen for one
+  fact. *Accepts when:* the intent answers from the living home; without a saved home it
+  abstains and offers the generic direction intent; predictive questions are still declined.
+- **US-16 · From the griha-pravesh muhurat.** As a गृहस्थ who just found a move-in date, I
+  want the muhurat result to take me straight to measuring the new home, so that the map is
+  drawn at the moment it matters. *Accepts when:* the door opens setup when no living home
+  exists, else the living home.
+- **US-17 · No sensor, full feature.** As a बिना-सेंसर उपयोगकर्ता, I want every step of setup
+  and the whole assessment to work by hand, so that the feature is never a dead screen.
+  *Accepts when:* the Maestro flow completes a 3BHK site visit on a simulator.
+- **US-18 · Private by construction.** As a गृहस्थ, I want to know that my home layout lives
+  only on my phone, so that I can record it without a second thought. *Accepts when:* the
+  roster key is NON-cache; nothing reads it outside the vastu screens and the Ask intent; the
+  privacy line renders on every assessment.
+
+### R3 — the floor plan
+
+- **US-19 · Mark up the brochure plan.** As a खरीदार with a PDF plan and no site visit yet,
+  I want to pick the image, turn the north arrow to match the brochure, set the centre and
+  pin the rooms, so that I get the same assessment without standing in the flat. *Accepts
+  when:* zone comes from pure geometry (angle from centre minus north), a pin within 12 % of
+  the diagonal is centre, pins are draggable, and the grid toggle is the default reading.
+- **US-20 · See the finding on the drawing.** As a खरीदार, I want the pins tinted by class
+  over the plan, so that "the toilet in the top-right" is visible, not just named. *Accepts
+  when:* toggling plan ↔ grid shows the same findings; a missing image degrades to the grid
+  with placements intact.
+- **US-21 · Door pada on the plan.** As a खरीदार, I want the door pin to read its pada from
+  the plan's facing side, so that the door row is as complete as the compass capture.
+  *Accepts when:* the pada ring math is shared with R1's Hold capture.
+
+### R4 — the grounded summary (2027)
+
+- **US-22 · Let the AI read the plan.** As a खरीदार, I want the plan pre-read into pins that I
+  confirm one by one, so that mark-up takes seconds. *Accepts when:* no unconfirmed pin is
+  assessed; the consent sheet lists exactly what leaves the device; the F0 handoff is offered
+  as the no-upload path.
+- **US-23 · A summary I can trust.** As a गृहस्थ, I want a short summary and pointers that
+  explain the ideal versus my home in plain words, so that I understand the findings without
+  reading every row. *Accepts when:* every rendered sentence cites a finding id that exists;
+  a sentence with a remedy word or no valid id is dropped; the model never adds, removes or
+  reweights a finding; the image is included only when its checkbox is ticked.
+- **US-24 · Provider is not my problem.** As the product owner, I want the model provider to
+  be a server-side setting, so that GPT, Gemini or Claude is a config change. *Accepts
+  when:* no API key exists in the binary; the request/response contract is a JSON schema.
+
 ---
 
 # PART A — Compass trust (the sensor half)
