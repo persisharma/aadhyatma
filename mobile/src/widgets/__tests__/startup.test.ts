@@ -50,21 +50,55 @@ test('config plugins wire the canonical fixture into both native decoders', () =
   assert.match(iosPlugin, /WidgetPayloadContract\.swift/);
 });
 
-test('App resolves a cold widget URL before navigation mounts', () => {
+test('App resolves a cold widget URL or launching notification before navigation mounts', () => {
   const app = fs.readFileSync(path.join(process.cwd(), 'App.tsx'), 'utf8');
   const tabs = fs.readFileSync(path.join(process.cwd(), 'src/navigation/TabNavigator.tsx'), 'utf8');
+  const widgetLink = fs.readFileSync(path.join(process.cwd(), 'src/widgets/deepLink.ts'), 'utf8');
   assert.match(app, /Linking\.getInitialURL\(\)/);
-  assert.match(app, /INITIAL_WIDGET_URL_TIMEOUT_MS/);
+  assert.match(app, /INITIAL_TARGET_TIMEOUT_MS/);
   assert.match(app, /setTimeout\(\(\) => finish\(null\)/);
   assert.match(app, /clearTimeout\(timeoutId\)/);
   assert.match(app, /parseWidgetDeepLink\(url\)/);
-  assert.match(app, /<RootNavigator initialWidgetTarget=\{initialWidgetTarget\}/);
+  assert.match(app, /widgetStartTarget\(parsed\)/);
+  // The notification that launched the app is read in the SAME pre-mount race,
+  // so every family's tap reaches its own screen without mounting Home first.
+  // A widget URL still wins without waiting on it.
+  assert.match(app, /startTargetFromNotification\(response\)/);
+  assert.match(app, /Promise\.all\(\[widgetTarget, notificationTarget\]\)/);
+  // A widget URL still wins outright, without waiting on the notification read.
+  assert.match(app, /widgetTarget\.then\(async \(target\) => \{ if \(target\) finish\(await ready\(target\)\); \}\)/);
+  assert.match(app, /coldNotificationConsumedRef\.current\) return;/);
   assert.doesNotMatch(app, /retryWidgetDeepLink/);
-  assert.match(tabs, /initialRouteName=\{initialRouteName\}/);
-  assert.match(tabs, /initialWidgetTarget\?\.kind === 'verse'/);
-  assert.match(tabs, /\? 'DailyBhaktiTab'/);
-  assert.match(tabs, /screen: 'JapamCounter',[\s\S]*initial: false/);
-  assert.match(tabs, /screen: 'CategoryList',[\s\S]*initial: false/);
+
+  // The destination is the container's initialState — consumed ONCE at mount.
+  assert.match(app, /initialState=\{[\s\S]{0,160}buildInitialNavigationState\(initialTarget\)/);
+  assert.match(app, /<RootNavigator \/>/);
+  // REGRESSION GUARD: never express a cold-start destination as a tab's
+  // initialParams. Those stay in route.params for the session, so React
+  // Navigation re-consumes a nested { screen, params } on every return to that
+  // tab and pushes the target again — the Panchang widget tap piled up copies
+  // of the app's heaviest screen until it froze (Sept 2026).
+  assert.doesNotMatch(tabs, /initialParams=/);
+  assert.match(tabs, /initialRouteName="HomeTab"/);
+  // Widget japam links push over Home rather than replacing it as the root.
+  assert.match(widgetLink, /screen: 'JapamCounter'/);
+  assert.match(widgetLink, /screen: 'CategoryList'/);
+
+  // A cold landing on the Panchang tab makes its lazily-loaded stack the FIRST
+  // screen committed. That chunk is evaluated during the pre-mount race, so the
+  // cold path matches the warm one and a chunk that cannot evaluate falls back
+  // to Home instead of suspending or throwing into a dead screen.
+  const lazyStack = fs.readFileSync(path.join(process.cwd(), 'src/navigation/lazyPanchangStack.ts'), 'utf8');
+  assert.match(app, /preloadPanchangStack\(\)/);
+  assert.match(app, /target\?\.tab !== 'PanchangTab'/);
+  assert.match(app, /\{ tab: 'HomeTab', screen: 'Home' \} as StartTarget/);
+  // ONE shared promise, so the preload and the React.lazy render never race two
+  // evaluations of the same chunk.
+  assert.match(lazyStack, /loading \?\?= import\('\.\/PanchangStackNavigator'\)/);
+  assert.match(lazyStack, /export const LazyPanchangStackNavigator = lazy\(load\)/);
+  assert.doesNotMatch(tabs, /lazy\(\(\) => import/);
+  // The lazy stack renders inside an error boundary, outside the Suspense one.
+  assert.match(tabs, /<StackLoadBoundary>[\s\S]*<Suspense[\s\S]*LazyPanchangStackNavigator[\s\S]*<\/Suspense>[\s\S]*<\/StackLoadBoundary>/);
 });
 
 test('widget planning selects indexed verses without materialising the complete pool', () => {

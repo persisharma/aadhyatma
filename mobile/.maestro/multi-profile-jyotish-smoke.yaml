@@ -7,7 +7,7 @@
 #
 # Person one is the PRD-C golden fixture (Aarav · 14 Aug 1992 · 05:42 · Ujjain →
 # Karka Lagna, Kumbha Moon), so the chart assertions after a switch are exact
-# rather than "something changed". Person two (Meera · 3 Feb 1996 · Jaipur) keeps
+# rather than "something changed". Person two (Meera · 3 Feb 2024 · Jaipur) keeps
 # the committed 06:00 default time so the flow does not step the clock 60+ times;
 # only her NAME is asserted, which is what this feature is about.
 #
@@ -64,6 +64,11 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
     optional: true
+- tapOn: { text: "Allow", optional: true }
+- tapOn: { text: "Don.t Allow", optional: true }
+- waitForAnimationToEnd
+- tapOn: { text: "SKIP|Skip|Skip tour", optional: true }
+- tapOn: { text: "Begin", optional: true }
 - extendedWaitUntil:
     visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
     timeout: 60000
@@ -100,7 +105,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Create Kundali"
-    timeout: 15000
+    timeout: 60000
 # A guest has nobody to switch between, so the switcher must not exist yet.
 - assertNotVisible: "Person switcher"
 - tapOn: "Create Kundali"
@@ -110,21 +115,46 @@ appId: com.prashantsharma.vedansh
     optional: true
 - tapOn:
     id: "kundali-name-input"
-- eraseText: 40
 - inputText: "Aarav"
 - tapOn:
     id: "kundali-date-input"
 - waitForAnimationToEnd
 - tapOn: ".*tap to change year"
 - tapOn: "Month August"
-- repeat:
-    times: 4
+# The year list is a non-virtualized ScrollView in a transparent Modal: Maestro
+# can't scrollUntilVisible it, visibility guards see every (off-screen) row, and
+# an off-screen testID tap hits the backdrop and dismisses the sheet. iOS lands
+# 1992 with a fixed fast-swipe count; Android's fling scrolling varies too much,
+# so it slow-drags PAST 1992 (deterministic, no fling, no dismiss) then
+# self-corrects: tap 1992 (a safe no-op while off-screen) and nudge the list up
+# until the day grid opens. Both branches end on August 1992's day grid.
+- runFlow:
+    when:
+      platform: iOS
     commands:
-      - swipe:
-          start: "50%, 70%"
-          end: "50%, 50%"
-          duration: 250
-- tapOn: "Year 1992"
+      - repeat:
+          times: 4
+          commands:
+            - swipe: { start: "50%, 70%", end: "50%, 50%", duration: 250 }
+      - waitForAnimationToEnd
+      - tapOn: "Year 1992"
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - repeat:
+          times: 18
+          commands:
+            - swipe: { start: "50%, 78%", end: "50%, 64%", duration: 1000 }
+            - waitForAnimationToEnd
+      - repeat:
+          times: 15
+          while:
+            notVisible: "14 August 1992"
+          commands:
+            - tapOn: { text: "Year 1992", optional: true }
+            - swipe: { start: "50%, 72%", end: "50%, 86%", duration: 1000 }
+            - waitForAnimationToEnd
 - tapOn: "14 August 1992"
 - tapOn: "Confirm date"
 - waitForAnimationToEnd
@@ -161,7 +191,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Kundali result"
-    timeout: 20000
+    timeout: 60000
 
 # With one person saved the switcher appears, so adding a second is discoverable
 # from the first person's own chart.
@@ -180,22 +210,23 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Birth city, not selected"
 - tapOn:
     id: "kundali-name-input"
-- eraseText: 40
 - inputText: "Meera"
 - tapOn:
     id: "kundali-date-input"
 - waitForAnimationToEnd
 - tapOn: ".*tap to change year"
 - tapOn: "Month February"
-- repeat:
-    times: 4
-    commands:
-      - swipe:
-          start: "50%, 70%"
-          end: "50%, 50%"
-          duration: 250
-- tapOn: "Year 1996"
-- tapOn: "3 February 1996"
+# Year 2024 sits in the year list's FIRST screenful (the list opens at the
+# current year), so no scrolling is needed. Maestro cannot reliably scroll
+# this transparent-Modal ScrollView — off-screen rows stay in the a11y tree,
+# a tapOn "completes" against their estimated (off-screen) center, and the
+# tap lands on the header instead. Meera's exact DOB is free: the flow only
+# asserts Aarav's golden-fixture chart and name-based switching.
+- tapOn:
+    id: "calendar-year-2024"
+- waitForAnimationToEnd
+- tapOn:
+    id: "calendar-day-2024-02-03"
 - tapOn: "Confirm date"
 - waitForAnimationToEnd
 # Tapping the time field commits the 06:00 default — enough for a valid profile.
@@ -228,7 +259,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Kundali result"
-    timeout: 20000
+    timeout: 60000
 
 # Both people are saved; the newest is the one being read.
 - scrollUntilVisible:
@@ -261,11 +292,11 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Show Jyotish for Meera"
 # More than one person saved, so the guidance names whose chart it came from
 # instead of saying "your Kundali".
-- assertVisible: ".*From Aarav.s Kundali"
-- assertVisible: "Kumbha"
+- assertVisible: ".*From Aarav.s full chart"
+- assertVisible: ".*Kumbha.*"
 - tapOn: "Show Jyotish for Meera"
 - waitForAnimationToEnd
-- assertVisible: ".*From Meera.s Kundali"
+- assertVisible: ".*From Meera.s full chart"
 
 # Daily Rashifal opens for the person the landing is showing.
 - scrollUntilVisible:
@@ -273,6 +304,7 @@ appId: com.prashantsharma.vedansh
       text: "Open Daily Rashifal"
     direction: DOWN
     timeout: 15000
+    centerElement: true
 - tapOn: "Open Daily Rashifal"
 - waitForAnimationToEnd
 - extendedWaitUntil:

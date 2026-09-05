@@ -42,6 +42,11 @@ export type VratReminderInput = {
   order: number; // priority; lower = scheduled first when over the cap
   nameHi: string;
   nameEn: string;
+  /**
+   * Optional Hindi title override (PRD-28: a solved visarjan rides this family
+   * as 'विसर्जन स्मरण'). Absent ⇒ the family's 'व्रत स्मरण'.
+   */
+  titleHi?: string;
   nextDate: Date | null; // next occurrence (local), or null if unresolved
   pref: ResolvedVratReminder; // already merged with the global default
 };
@@ -53,6 +58,7 @@ export type PlannedVratNotification = {
   fireDate: Date;
   nameHi: string;
   nameEn: string;
+  titleHi?: string;
   occurrenceDateKey: string;
   advanceDays: number; // 0 for day-of
 };
@@ -107,6 +113,7 @@ export function planVratReminders(
           fireDate: fire,
           nameHi: it.nameHi,
           nameEn: it.nameEn,
+          ...(it.titleHi ? { titleHi: it.titleHi } : {}),
           occurrenceDateKey,
           advanceDays: it.pref.advanceDays,
           order: it.order,
@@ -125,6 +132,7 @@ export function planVratReminders(
           fireDate: fire,
           nameHi: it.nameHi,
           nameEn: it.nameEn,
+          ...(it.titleHi ? { titleHi: it.titleHi } : {}),
           occurrenceDateKey,
           advanceDays: 0,
           order: it.order,
@@ -146,7 +154,7 @@ export function planVratReminders(
 
 /** Hindi-led notification copy for one planned vrat notification. */
 export function formatVratReminderContent(p: PlannedVratNotification): { title: string; body: string } {
-  const title = 'व्रत स्मरण';
+  const title = p.titleHi ?? 'व्रत स्मरण';
   if (p.kind === 'dayOf') {
     return { title, body: `आज ${p.nameHi} है · ${p.nameEn} today` };
   }

@@ -19,6 +19,11 @@ appId: com.prashantsharma.vedansh
 - tapOn: { text: "Close", optional: true }
 - tapOn: { text: "Got it", optional: true }
 - tapOn: { text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ", optional: true }
+- tapOn: { text: "Allow", optional: true }
+- tapOn: { text: "Don.t Allow", optional: true }
+- waitForAnimationToEnd
+- tapOn: { text: "SKIP|Skip|Skip tour", optional: true }
+- tapOn: { text: "Begin", optional: true }
 - extendedWaitUntil:
     visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
     timeout: 60000
@@ -75,8 +80,6 @@ appId: com.prashantsharma.vedansh
     start: "50%, 75%"
     end: "50%, 45%"
     duration: 400
-# The copy Pressable's explicit accessibilityLabel is "Copy <latin> name",
-# which overrides its inner "Copy name" text in the a11y tree.
 - assertVisible: "Copy Keshav name"
 - assertVisible: "Open Shri Krishna in Deity Index"
 - tapOn: "Close name details"
@@ -88,11 +91,15 @@ appId: com.prashantsharma.vedansh
 
 # The cross-check is a real destination: nine tappable charanas, each landing on
 # that charana's names — not a read-only strip of glyphs.
+- scrollUntilVisible:
+    element: "Mrigashira pada 3, Ka. Open names."
+    direction: DOWN
+    centerElement: true
+    timeout: 10000
 - tapOn: "Mrigashira pada 3, Ka. Open names."
 - extendedWaitUntil:
     visible: "का, Ka.*Mrigashira.*pada 3.*"
     timeout: 20000
-- tapOn: "Back to Namkaran input"
 - scrollUntilVisible:
     element: "Open Mithuna rashi naming detail"
     direction: DOWN
@@ -102,6 +109,11 @@ appId: com.prashantsharma.vedansh
     visible: "THE NINE CHARANAS"
     timeout: 15000
 - assertVisible: "9 charanas.*sounds"
+- scrollUntilVisible:
+    element:
+      text: "Punarvasu"
+    direction: DOWN
+    timeout: 10000
 - assertVisible: "Punarvasu"
 - tapOn: "Back to Namkaran"
 
@@ -121,9 +133,8 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: ".*Naming Ceremony.*|.*Namkaran.*"
     timeout: 20000
-- tapOn: "Back"
-- tapOn: "Back to Namkaran input"
-- tapOn: "Back to Namkaran start"
+- tapOn: "Open Namkaran"
+- waitForAnimationToEnd
 
 # Rashi is a peer browse door, not an output-only label: twelve launcher tiles,
 # no birth data, landing on the same nine-charana detail.
@@ -144,7 +155,9 @@ appId: com.prashantsharma.vedansh
 # Path A-prime: unknown time checks every charana of the selected IST day.
 - tapOn: "Child birth date"
 - waitForAnimationToEnd
-- tapOn: "13 August 2026"
+- tapOn: "Previous month"
+- tapOn:
+    id: "calendar-day-2026-08-13"
 - tapOn: "Confirm date"
 - tapOn: "Child birth time unknown"
 - scrollUntilVisible:

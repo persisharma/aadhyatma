@@ -1,0 +1,156 @@
+# पर्व-अर्क · Festival Arcs Smoke Test (PRD-28, Phase A)
+#
+# Drives the arc strip on Observance Detail through its always-available door
+# (the Vrat & Parv catalog search → detail). The strip renders for EVERY arc
+# member on any date — before, during or after the festival — so the flow is
+# deterministic; only "today" markers, the Kanya-Pujan hand-off and the
+# visarjan-vidhi door are date-dependent and are pinned by unit tests instead
+# (`arcs.test.ts`, `ArcStrip.test.tsx`).
+#
+# Verifies:
+#   1. Ganesh Chaturthi detail: the strip ("Festival arc Ganesh Utsav"), the
+#      duration chooser offering 1½/3/5/7/10 with NOTHING pre-selected, and a
+#      "Decide later" tile.
+#   2. Choosing 5 days computes and shows "Your visarjan"; "Decide later"
+#      clears it again (the stance guard: the family decides, the app records).
+#   3. Bhai Dooj detail: the Diwali five-day arc — Dhanteras, Naraka
+#      Chaturdashi (the un-ruled day 2), Diwali, Govardhan, Bhai Dooj — with no
+#      chooser, and a rule-bound slot opens that day's own detail.
+#
+# Language: same recipe as panchang-smoke — flip the reading language to
+# English first (Devanagari is unreliable in Maestro's iOS a11y tree), restore
+# Hindi at the end (best-effort).
+#
+# Selector notes:
+#   - The strip container exposes accessibilityLabel "Festival arc <ArcNameEn>".
+#   - Duration tiles expose "1.5 days" / "3 days" / … / "10 days" / "Decide later"
+#     (accessibilityState.selected carries the choice; nothing starts selected).
+#   - Strip slots expose "<LabelEn>, day N" (e.g. "Dhanteras, day 1").
+
+appId: com.prashantsharma.vedansh
+---
+# ── Step 1: Boot Vedansh in Expo Go (exits on Home) ──
+- runFlow: _launch.yaml
+
+# ── Step 2: Reading language → English ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── Step 3: Panchang tab → Vrat & Parv → search → Ganesh Chaturthi detail ──
+- tapOn: { id: "tab-panchang" }
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Vrat & Parv"
+    timeout: 30000
+- tapOn: "Vrat & Parv"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Browse by type"
+    timeout: 15000
+# Type a prefix so the result row ("Ganesh Chaturthi") is unambiguous vs the
+# search field's own value.
+- tapOn: "Search vrat, festival, upvas, katha…"
+- inputText: "Ganesh Chat"
+- hideKeyboard
+- extendedWaitUntil:
+    visible: "Ganesh Chaturthi"
+    timeout: 15000
+- tapOn: "Ganesh Chaturthi"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "About"
+    timeout: 15000
+
+# ── Step 4: The arc strip + the chooser, nothing pre-selected ──
+- assertVisible: "Festival arc Ganesh Utsav"
+- assertVisible: "How many days will the murti stay?"
+- assertVisible: "1.5 days"
+- assertVisible: "3 days"
+- assertVisible: "5 days"
+- assertVisible: "7 days"
+- assertVisible: "10 days"
+- assertVisible: "Decide later"
+- assertNotVisible: "Your visarjan"
+- runFlow:
+    when: { platform: iOS }
+    commands:
+      - assertNotVisible:
+          text: "5 days"
+          selected: true
+      - assertNotVisible:
+          text: "10 days"
+          selected: true
+
+# ── Step 5: Choose 5 days → the solved visarjan appears; Decide later → gone ──
+- tapOn: "5 days"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Your visarjan"
+    timeout: 10000
+- assertVisible: "Sthapana"
+- tapOn: "Decide later"
+- waitForAnimationToEnd
+- assertNotVisible: "Your visarjan"
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# ── Step 6: Bhai Dooj → the Diwali five-day arc, no chooser ──
+- tapOn: "Ganesh Chat"
+- eraseText: 20
+- inputText: "Bhai"
+- hideKeyboard
+- extendedWaitUntil:
+    visible: "Bhai Dooj"
+    timeout: 15000
+- tapOn: "Bhai Dooj"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Festival arc Deepavali"
+    timeout: 15000
+- assertVisible: "Dhanteras, day 1.*"
+- assertVisible: "Naraka Chaturdashi, day 2.*"
+- assertVisible: "Diwali, day 3.*"
+- assertVisible: "Govardhan Puja, day 4.*"
+- assertVisible: "Bhai Dooj, day 5.*"
+- assertNotVisible: "How many days will the murti stay?"
+# A rule-bound slot pushes that day's own detail (its own strip, day 1 now "us").
+- tapOn: "Dhanteras, day 1.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Ask about Dhanteras"
+    timeout: 15000
+- assertVisible: "Festival arc Deepavali"
+- tapOn: "Back"
+- waitForAnimationToEnd
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# ── Step 7: Restore Hindi (best-effort) + cleanup ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
+    optional: true
+- tapOn:
+    text: "Language,.*"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "Hindi"
+    optional: true
+- waitForAnimationToEnd
+- stopApp:
+    appId: com.prashantsharma.vedansh

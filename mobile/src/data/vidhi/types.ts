@@ -68,8 +68,21 @@ export type VidhiSource = {
   notes?: string;
 };
 
+/**
+ * Verification state (PRD-28 Phase B, RULEBOOK §26). The seven PRD-19 entries
+ * predate the field and are verified by omission (absent ⇒ 'verified' — their
+ * source blocks record the review). New sourced-liturgy families (the visarjan
+ * vidhis) enter the repo as 'draft' and are USER-INVISIBLE: `VIDHI_ENTRIES`,
+ * `getVidhiById` and `getVidhiForFestival` expose verified entries only, so a
+ * draft is indistinguishable from no entry at every surface. Flipping to
+ * 'verified' is a reviewed content change (≥2 concordant published sources,
+ * named reviewer, dated note) — never authorized by automation passing.
+ */
+export type VidhiContentStatus = 'draft' | 'verified';
+
 export type VidhiEntry = {
   id: string;
+  status?: VidhiContentStatus;
   titleHi: string;
   titleEn: string;
   /** Where occurrence dates come from. Omitted means the festival engine. */
