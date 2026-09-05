@@ -2,7 +2,7 @@
 title: Daan Punya
 type: subsystem
 sources: [mobile/src/data/daan/, mobile/src/contexts/DaanLedgerContext.tsx, mobile/src/screens/DaanPunyaScreen.tsx, mobile/src/screens/DaanJourneyScreen.tsx, mobile/src/screens/DaanLedgerScreen.tsx, mobile/src/screens/DaanEntryScreen.tsx, mobile/src/screens/DaanDirectoryScreen.tsx, mobile/src/screens/DaanDirectoryDetailScreen.tsx, mobile/src/screens/DaanKathaScreen.tsx, mobile/src/screens/ObservanceDetailScreen.tsx, mobile/src/navigation/types.ts, docs/roadmap/prds/26-daan-punya.md, RULEBOOK.md, design.md]
-last_verified_date: 2026-09-01
+last_verified_date: 2026-09-05
 confidence: high
 status: current
 ---
@@ -19,8 +19,9 @@ design.md §72; content contract: RULEBOOK §27; product doc:
 
 ## Shape
 
-- **Data** — `mobile/src/data/daan/`: `causes.ts` (the nine-प्रयोजन cause axis
-  + the honest text-intent purpose bridge), `principles.ts` (verse/teaching rows),
+- **Data** — `mobile/src/data/daan/`: `causes.ts` (the nine-प्रयोजन cause axis,
+  each carrying its **mahatva** + optional paired citation/source, plus the
+  honest text-intent purpose bridge), `principles.ts` (verse/teaching rows),
   `occasions.ts` (~17 day rows keyed to real solver rule ids), `vaar.ts`
   (7-row weekly table, shared with PRD-21), `kathas.ts` (Karna, Rantideva,
   Shibi, Bali–Vamana, Sudama — full bilingual retellings), `directory.ts`
@@ -57,9 +58,16 @@ design.md §72; content contract: RULEBOOK §27; product doc:
 - **Purpose bridge is विद्या→knowledge and आरोग्य→health ONLY** — never
   wealth/prosperity (fruit-promise). The `PurposeList` door opens the educate
   home, never the directory; a source-shape test pins it.
-- Directory rows: org's own domain only, https, no UPI, registration *kinds*
-  not numbers; `verifiedOn` > 18 months → row drops to draft via
-  `isOrgRowStale`.
+- **Explain the daan, don't profile the org (§27.14)**: the mahatva lives on
+  the CAUSE and renders above the places in both grouping states. A cause whose
+  mahatva makes a textual claim carries `citeHi`/`citeEn` + `source`; one
+  written as plain tradition prose carries neither — all three fields travel
+  together or none do (pinned by test).
+- Directory rows are THIN: name, ONE `about` line, ONE `officialUrl` (own
+  domain, https, no UPI). **No** registration/80G text, account numbers, or
+  scale figures — `types.ts` is grepped by test for the banned field names.
+  `verifiedOn`/`source` are editorial only: never rendered, and `verifiedOn`
+  > 18 months drops the row to draft via `isOrgRowStale`.
 
 ## Gotchas
 

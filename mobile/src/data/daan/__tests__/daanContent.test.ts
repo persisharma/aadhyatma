@@ -162,13 +162,12 @@ describe('rule matching: exact beats suffix (PRD-26 §10.1)', () => {
 });
 
 describe('directory hygiene (PRD-26 §6.2)', () => {
-  test('https-only official channels, no UPI anywhere, dated verification', () => {
+  test('one https official link per row, no UPI, dated verification', () => {
     for (const org of DAAN_ORG_ENTRIES) {
       expect(org.officialUrl.startsWith('https://')).toBe(true);
-      expect(org.donateUrl.startsWith('https://')).toBe(true);
-      expect(org.donateUrl.toLowerCase()).not.toContain('upi');
+      expect(org.officialUrl.toLowerCase()).not.toContain('upi');
       expect(org.verifiedOn).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-      for (const field of [org.nameHi, org.nameEn, org.aboutHi, org.aboutEn, org.registrationHi, org.registrationEn]) nonEmpty(field);
+      for (const field of [org.nameHi, org.nameEn, org.aboutHi, org.aboutEn]) nonEmpty(field);
       expect(Boolean(org.nonMonetaryHi)).toBe(Boolean(org.nonMonetaryEn));
       expect(org.causes.length).toBeGreaterThan(0);
       for (const cause of org.causes) expect(getDaanCause(cause)).not.toBeNull();
@@ -176,11 +175,25 @@ describe('directory hygiene (PRD-26 §6.2)', () => {
     }
   });
 
-  test('registration copy never claims a number the app did not read', () => {
-    // Numbers are never transcribed: no long digit runs in registration lines.
+  test('a row stays a place, not a profile: one line, no paperwork, no numbers', () => {
+    // RULEBOOK §27.14 — the mahatva belongs to the CAUSE; a directory row says
+    // only what the place does. Registration/80G text and account or
+    // registration numbers are not a shape the app can carry at all.
+    const orgShape = require('node:fs').readFileSync(
+      require('node:path').join(__dirname, '..', 'types.ts'),
+      'utf8'
+    ) as string;
+    for (const banned of ['registrationHi', 'registrationEn', 'accountNumber', 'ifsc', 'upiId']) {
+      expect(orgShape).not.toContain(`${banned}:`);
+    }
     for (const org of DAAN_ORG_ENTRIES) {
-      expect(org.registrationHi).not.toMatch(/\d{5,}/);
-      expect(org.registrationEn).not.toMatch(/\d{5,}/);
+      for (const about of [org.aboutHi, org.aboutEn]) {
+        // One sentence-ish: short, and never a scale/registration claim.
+        expect(about.length).toBeLessThanOrEqual(140);
+        expect(about).not.toMatch(/\d{4,}/);
+        expect(about.toLowerCase()).not.toContain('80g');
+        expect(about).not.toContain('80G');
+      }
     }
   });
 
@@ -245,6 +258,7 @@ describe('stance-guard copy check (PRD-26 §2.2/§2.7)', () => {
       o: DAAN_OCCASION_ENTRIES.map(({ source, ...rest }) => rest),
       k: DAAN_KATHA_ENTRIES.map(({ source, ...rest }) => rest),
       d: DAAN_ORG_ENTRIES.map(({ source, ...rest }) => rest),
+      c: DAAN_CAUSES.map(({ source, ...rest }) => rest),
       v: DAAN_VAAR_ENTRIES,
     }).toLowerCase();
     const banned = [
@@ -263,7 +277,7 @@ describe('the cause axis (PRD-26 §5.1)', () => {
     const ids = DAAN_CAUSES.map((cause) => cause.id);
     expect(new Set(ids).size).toBe(ids.length);
     for (const cause of DAAN_CAUSES) {
-      for (const field of [cause.nameHi, cause.nameEn, cause.whomHi, cause.whomEn]) nonEmpty(field);
+      for (const field of [cause.nameHi, cause.nameEn, cause.whomHi, cause.whomEn, cause.mahatvaHi, cause.mahatvaEn]) nonEmpty(field);
     }
   });
 
@@ -300,6 +314,41 @@ describe('the cause axis (PRD-26 §5.1)', () => {
     const known = new Set(purposes.map((p) => p.id));
     for (const cause of DAAN_CAUSES) {
       if (cause.purposeId) expect(known.has(cause.purposeId)).toBe(true);
+    }
+  });
+});
+
+describe('cause mahatva — the द्वार explains before it lists (RULEBOOK §27.14)', () => {
+  test('every cause carries a substantial bilingual mahatva', () => {
+    for (const cause of DAAN_CAUSES) {
+      // Long enough to actually teach: this is the larger half of the screen,
+      // not a caption. `whom` is the one-liner; mahatva is the reason.
+      expect(cause.mahatvaHi.length).toBeGreaterThan(120);
+      expect(cause.mahatvaEn.length).toBeGreaterThan(120);
+      expect(cause.mahatvaHi).not.toBe(cause.whomHi);
+      expect(cause.mahatvaEn).not.toBe(cause.whomEn);
+    }
+  });
+
+  test('a mahatva that cites must be sourced; one that does not must not pretend', () => {
+    for (const cause of DAAN_CAUSES) {
+      // citeHi/citeEn/source travel together — all three or none of them.
+      const cited = [cause.citeHi, cause.citeEn, cause.source].filter(Boolean).length;
+      expect(cited === 0 || cited === 3).toBe(true);
+      if (cause.source) checkSource(cause.source);
+    }
+    // The textual claims are real ones and are the causes we anchored.
+    const cited = DAAN_CAUSES.filter((cause) => cause.source).map((cause) => cause.id).sort();
+    expect(cited).toEqual(['anna', 'bal', 'gau', 'vastra', 'vidya']);
+  });
+
+  test('the mahatva teaches, it never promises a fruit for giving', () => {
+    const corpus = DAAN_CAUSES.map((cause) => `${cause.mahatvaHi} ${cause.mahatvaEn}`).join(' ').toLowerCase();
+    for (const promise of [
+      'wealth', 'prosperity', 'riches', 'returns multiplied', 'guaranteed',
+      'धन मिलेगा', 'समृद्धि मिलेगी', 'फल मिलेगा', 'मनोकामना पूर्ण',
+    ]) {
+      expect(corpus.includes(promise)).toBe(false);
     }
   });
 });

@@ -1,10 +1,17 @@
 /**
- * पात्र-परिचय — one directory organization (PRD-26 §5 P2, §6). Educate-first
- * even here: the work → the verification (shown to the user — trust is the
- * feature) → related teaching → and only then the action row, record leading.
+ * पात्र-परिचय — one place from the दान-द्वार (PRD-26 §5 P2, §6, RULEBOOK
+ * §27.14). Deliberately THIN: the name, ONE line of what they do, the related
+ * teaching if there is one, and only then the action row with record leading.
+ *
+ * What is NOT here, by rule: registration/80G/paperwork text, account numbers,
+ * UPI, a verification badge, or any profile of the organization. The mahatva
+ * belongs to the CAUSE (rendered on the द्वार above these places) — the app
+ * explains daan, it does not advocate for organizations. Verification stays an
+ * editorial discipline in `directory.ts`, not a trust badge shown to the user.
+ *
  * The hand-off is Linking.openURL to the organization's OWN official page,
- * behind the honest interstitial: the app never collects, confirms, or takes
- * a share of anything. After a hand-off, ONE gentle record offer renders —
+ * behind the honest interstitial: the app never collects, confirms, or takes a
+ * share of anything. After a hand-off, ONE gentle record offer renders —
  * declining is silent.
  */
 import React, { useState } from 'react';
@@ -43,8 +50,9 @@ export default function DaanDirectoryDetailScreen({ navigation, route }: Props) 
 
   const openOfficial = () => {
     setHandOff('handedOff');
-    Linking.openURL(org.donateUrl).catch(() => undefined);
+    Linking.openURL(org.officialUrl).catch(() => undefined);
   };
+  const officialHost = org.officialUrl.replace(/^https?:\/\//, '');
 
   const sectionLabelStyle = {
     fontFamily: typography.sectionLabel.fontFamily,
@@ -68,36 +76,16 @@ export default function DaanDirectoryDetailScreen({ navigation, route }: Props) 
           {contentByLang(lang, org.nameHi, org.nameEn)}
         </Text>
 
-        <Text style={sectionLabelStyle}>{contentByLang(lang, 'ये क्या करते हैं', 'The work')}</Text>
-        <View style={[styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}>
-          <Text style={{ fontFamily: bodyFont, fontSize: 13, lineHeight: 21, color: colors.inkSoft }}>
-            {meaningByLang(lang, org.aboutHi, org.aboutEn)}
-          </Text>
-        </View>
-
-        <Text style={sectionLabelStyle}>{contentByLang(lang, 'सत्यापन', 'Verification')}</Text>
-        <View
-          testID="daan-org-verification"
-          style={[styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.cardActiveBorder, borderRadius: radii.lg }, elevation.card]}
+        {/* ONE line. Anything longer would make this a profile (§27.14). */}
+        <Text
+          testID="daan-org-about"
+          style={{ fontFamily: bodyFont, fontSize: 13, lineHeight: 21, color: colors.inkSoft, textAlign: 'center', marginTop: spacing.sm }}
         >
-          <Text style={{ fontFamily: bodyFont, fontSize: 12.5, lineHeight: 19, color: colors.inkSoft }}>
-            {meaningByLang(lang, org.registrationHi, org.registrationEn)}
-          </Text>
-          <Text style={{ fontFamily: bodyFont, fontSize: 12, lineHeight: 18, color: colors.inkSoft, marginTop: 6 }}>
-            {contentByLang(lang, 'आधिकारिक: ', 'Official: ')}
-            {org.officialUrl.replace(/^https?:\/\//, '')}
-          </Text>
-          <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 17, color: colors.saffronDeep, marginTop: 8 }}>
-            {contentByLang(
-              lang,
-              `✓ दो स्वतंत्र स्रोतों से सत्यापित · ${org.verifiedOn} · 18 माह में पुनः-सत्यापन`,
-              `✓ Verified against two independent sources · ${org.verifiedOn} · re-verified within 18 months`
-            )}
-          </Text>
-        </View>
+          {meaningByLang(lang, org.aboutHi, org.aboutEn)}
+        </Text>
 
         {org.nonMonetaryHi && org.nonMonetaryEn ? (
-          <View style={[styles.card, { backgroundColor: colors.goldChipBg, borderColor: colors.divider, borderRadius: radii.lg, marginTop: 4 }]}>
+          <View style={[styles.card, { backgroundColor: colors.goldChipBg, borderColor: colors.divider, borderRadius: radii.lg, marginTop: spacing.md }]}>
             <Text style={{ fontFamily: bodyFont, fontSize: 12.5, lineHeight: 19, color: colors.saffronDeep }}>
               {meaningByLang(lang, org.nonMonetaryHi, org.nonMonetaryEn)}
             </Text>
@@ -157,20 +145,20 @@ export default function DaanDirectoryDetailScreen({ navigation, route }: Props) 
             <Pressable
               testID="daan-org-give"
               accessibilityRole="button"
-              accessibilityLabel="Give, opens externally"
+              accessibilityLabel="Open the official website"
               onPress={() => setHandOff('confirming')}
               style={[styles.actionBtn, { borderColor: colors.saffron, borderRadius: radii.pill }]}
             >
               <Text style={{ fontFamily: titleFont, fontSize: 13, color: colors.saffronDeep }}>
-                {contentByLang(lang, 'दान करें (बाहरी)', 'Give (external)')}
+                {contentByLang(lang, 'आधिकारिक वेबसाइट', 'Official website')}
               </Text>
             </Pressable>
           </View>
           <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 18, color: colors.inkMuted, textAlign: 'center', marginTop: 10 }}>
             {meaningByLang(
               lang,
-              'ऐप इस लेन-देन का हिस्सा नहीं है — दान संस्था के अपने आधिकारिक माध्यम पर, ऐप के बाहर होगा।',
-              'The app is not part of this transaction — the daan happens on the organization’s own official channel, outside the app.'
+              'ऐप इस लेन-देन का हिस्सा नहीं है — दान संस्था की अपनी आधिकारिक वेबसाइट पर, ऐप के बाहर होगा।',
+              'The app is not part of this transaction — the daan happens on the organization’s own official website, outside the app.'
             )}
           </Text>
         </View>
@@ -181,13 +169,13 @@ export default function DaanDirectoryDetailScreen({ navigation, route }: Props) 
             style={[styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.cardActiveBorder, borderRadius: radii.lg, marginTop: 12 }, elevation.card]}
           >
             <Text style={{ fontFamily: titleFont, fontSize: 14.5, lineHeight: 22, color: colors.ink, textAlign: 'center' }}>
-              {contentByLang(lang, 'बाहरी माध्यम पर जा रहे हैं', 'Leaving for the official channel')}
+              {contentByLang(lang, 'आधिकारिक वेबसाइट पर जा रहे हैं', 'Leaving for the official website')}
             </Text>
             <Text style={{ fontFamily: bodyFont, fontSize: 12.5, lineHeight: 19, color: colors.inkSoft, textAlign: 'center', marginTop: 6 }}>
               {contentByLang(
                 lang,
-                `${org.donateUrl.replace(/^https?:\/\//, '')} आपके ब्राउज़र में खुलेगा। यह ऐप न राशि लेता है, न पुष्टि कर सकता है, न कोई अंश पाता है।`,
-                `${org.donateUrl.replace(/^https?:\/\//, '')} opens in your browser. This app takes no money, cannot confirm anything, and receives no share.`
+                `${officialHost} आपके ब्राउज़र में खुलेगा। यह ऐप न राशि लेता है, न पुष्टि कर सकता है, न कोई अंश पाता है।`,
+                `${officialHost} opens in your browser. This app takes no money, cannot confirm anything, and receives no share.`
               )}
             </Text>
             <View style={[styles.actionRow, { marginTop: 12 }]}>

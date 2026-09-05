@@ -14,6 +14,12 @@
  *
  * Cause chips are DERIVED from the rows present — a cause with no verified row
  * never renders a chip, so the taxonomy can never show an empty shelf.
+ *
+ * EXPLAIN BEFORE LISTING (RULEBOOK §27.14): every cause renders its **mahatva**
+ * — why this daan is held dear, with its citation where it makes a textual
+ * claim — ABOVE the places that serve it. The teaching is the larger half of
+ * the screen; the places are a short, thin list underneath. Nothing about an
+ * organization beyond its one line lives here.
  */
 import React, { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
@@ -22,7 +28,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import ReaderHeader from '@/components/ReaderHeader';
 import { useGitaLanguage } from '@/data/gita/language';
-import { DAAN_CAUSES, getDaanOrgs, type DaanCause, type DaanOrgEntry } from '@/data/daan';
+import { DAAN_CAUSES, getDaanOrgs, type DaanCause, type DaanCauseMeta, type DaanOrgEntry } from '@/data/daan';
 import type { DaanStackParamList } from '@/navigation/types';
 import { useTheme } from '@/theme/ThemeContext';
 import { contentByLang, meaningByLang } from '@/utils/localize';
@@ -66,6 +72,28 @@ export default function DaanDirectoryScreen({ navigation, route }: Props) {
     marginBottom: 4,
   };
 
+  // The teaching, above the places. Rendered identically in both grouping
+  // states so a filtered द्वार never loses the reason it exists.
+  const CauseHeading = ({ cause }: { cause: DaanCauseMeta }) => (
+    <View testID={`daan-cause-mahatva-${cause.id}`}>
+      <Text style={sectionLabelStyle}>{contentByLang(lang, cause.nameHi, cause.nameEn)}</Text>
+      <View style={[styles.mahatva, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }]}>
+        <Text style={{ fontFamily: bodyFont, fontSize: 13, lineHeight: 21, color: colors.inkSoft }}>
+          {meaningByLang(lang, cause.mahatvaHi, cause.mahatvaEn)}
+        </Text>
+        {cause.citeHi && cause.citeEn ? (
+          <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 17, color: colors.gold, marginTop: 7 }}>
+            {contentByLang(lang, cause.citeHi, cause.citeEn)}
+          </Text>
+        ) : null}
+      </View>
+      <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 17, color: colors.inkMuted, marginTop: spacing.md, marginBottom: 6 }}>
+        {contentByLang(lang, 'ये स्थान यह सेवा करते हैं — ', 'Places doing this seva — ')}
+        {meaningByLang(lang, cause.whomHi, cause.whomEn)}
+      </Text>
+    </View>
+  );
+
   const OrgRow = ({ org }: { org: DaanOrgEntry }) => (
     <Pressable
       testID={`daan-org-${org.id}`}
@@ -104,8 +132,8 @@ export default function DaanDirectoryScreen({ navigation, route }: Props) {
         <Text style={{ fontFamily: bodyFont, fontSize: 12, lineHeight: 18, color: colors.inkMuted, textAlign: 'center', marginTop: 4 }}>
           {meaningByLang(
             lang,
-            'प्रयोजन चुनें — सत्यापित पात्र। ऐप किसी लेन-देन का हिस्सा नहीं है।',
-            'Choose a cause — verified patra. The app is never part of any transaction.'
+            'पहले प्रयोजन का महत्त्व, फिर वे स्थान जो यह सेवा करते हैं। दान उनकी अपनी वेबसाइट पर होगा — ऐप किसी लेन-देन का हिस्सा नहीं है।',
+            'First why each cause matters, then the places doing that seva. The giving happens on their own website — the app is never part of any transaction.'
           )}
         </Text>
 
@@ -159,10 +187,7 @@ export default function DaanDirectoryScreen({ navigation, route }: Props) {
             const rows = orgs.filter((org) => org.causes.includes(selected));
             return (
               <View testID="daan-directory-filtered">
-                <Text style={sectionLabelStyle}>{contentByLang(lang, meta.nameHi, meta.nameEn)}</Text>
-                <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 17, color: colors.inkMuted, marginBottom: spacing.sm }}>
-                  {meaningByLang(lang, meta.whomHi, meta.whomEn)}
-                </Text>
+                <CauseHeading cause={meta} />
                 {rows.map((org) => (
                   <OrgRow key={org.id} org={org} />
                 ))}
@@ -174,10 +199,7 @@ export default function DaanDirectoryScreen({ navigation, route }: Props) {
             const rows = orgs.filter((org) => org.causes.includes(cause.id));
             return (
               <View key={cause.id} testID={`daan-cause-group-${cause.id}`}>
-                <Text style={sectionLabelStyle}>{contentByLang(lang, cause.nameHi, cause.nameEn)}</Text>
-                <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 17, color: colors.inkMuted, marginBottom: spacing.sm }}>
-                  {meaningByLang(lang, cause.whomHi, cause.whomEn)}
-                </Text>
+                <CauseHeading cause={cause} />
                 {rows.map((org) => (
                   <OrgRow key={`${cause.id}-${org.id}`} org={org} />
                 ))}
@@ -189,8 +211,8 @@ export default function DaanDirectoryScreen({ navigation, route }: Props) {
         <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 18, color: colors.inkMuted, textAlign: 'center', marginTop: spacing.lg }}>
           {meaningByLang(
             lang,
-            'यह सूची छोटी और सत्यापित रहती है — हर पंक्ति दो स्वतंत्र स्रोतों से जाँची गई; 18 माह में पुनः-सत्यापन, अन्यथा अदृश्य। जिस प्रयोजन का सत्यापित पात्र नहीं, उसका खाना ही नहीं दिखता।',
-            'This list stays small and verified — every row checked against two independent sources; re-verified within 18 months or it disappears. A cause with no verified patra shows no shelf at all.'
+            'यह सूची जान-बूझकर छोटी रखी गई है। ऐप इनका प्रतिनिधि नहीं — केवल आधिकारिक वेबसाइट तक पहुँचाता है; पात्र का चयन आपका अपना है।',
+            'This list is kept deliberately short. The app does not represent these places — it only points to their official website; choosing the patra is your own.'
           )}
         </Text>
       </ScrollView>
@@ -203,4 +225,5 @@ const styles = StyleSheet.create({
   rowCard: { borderWidth: 1, paddingHorizontal: 14, paddingVertical: 12, marginBottom: 9, flexDirection: 'row', alignItems: 'center', gap: 10 },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 7, justifyContent: 'center', marginTop: 12 },
   chip: { borderWidth: 1, paddingHorizontal: 12, paddingVertical: 6 },
+  mahatva: { borderWidth: 1, paddingHorizontal: 14, paddingVertical: 13 },
 });

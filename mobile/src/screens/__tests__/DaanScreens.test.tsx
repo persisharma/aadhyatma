@@ -39,6 +39,8 @@ jest.mock('@/panchang/usePanchang', () => ({
 import DaanPunyaScreen from '../DaanPunyaScreen';
 import DaanJourneyScreen from '../DaanJourneyScreen';
 import DaanDirectoryScreen from '../DaanDirectoryScreen';
+import DaanDirectoryDetailScreen from '../DaanDirectoryDetailScreen';
+import { getDaanOrg } from '@/data/daan';
 
 const has = (tree: TestRenderer.ReactTestRenderer, testID: string) =>
   tree.root.findAllByProps({ testID }).length > 0;
@@ -145,11 +147,13 @@ describe('दान-द्वार — the cause (प्रयोजन) axis, 
       />
     );
 
-  test('unfiltered: every live cause renders a chip AND a group', async () => {
+  test('unfiltered: every live cause renders a chip, a mahatva AND a group', async () => {
     const tree = await renderDirectory();
     for (const id of ['anna', 'gau', 'bal', 'vriddha', 'vidya', 'arogya', 'vastra', 'jeev', 'aapada']) {
       expect(has(tree, `daan-cause-${id}`)).toBe(true);
       expect(has(tree, `daan-cause-group-${id}`)).toBe(true);
+      // §27.14: the द्वार explains the प्रयोजन before it lists places.
+      expect(has(tree, `daan-cause-mahatva-${id}`)).toBe(true);
     }
     // No give affordance on the list — the hand-off lives on the detail (§2.7).
     expect(has(tree, 'daan-org-give')).toBe(false);
@@ -161,6 +165,8 @@ describe('दान-द्वार — the cause (प्रयोजन) axis, 
     const tree = await renderDirectory({ causes: ['gau'] });
     expect(has(tree, 'daan-directory-occasion-line')).toBe(true);
     expect(has(tree, 'daan-directory-filtered')).toBe(true);
+    // A filtered द्वार keeps the teaching — it never becomes a bare list.
+    expect(has(tree, 'daan-cause-mahatva-gau')).toBe(true);
     // Filtered to गौ-सेवा: TTD's Gosamrakshana row is in, Goonj (vastra) is out.
     expect(has(tree, 'daan-org-ttd-annaprasadam')).toBe(true);
     expect(has(tree, 'daan-org-goonj')).toBe(false);
@@ -213,5 +219,49 @@ describe('the purpose bridge stays an educate door (§2.7)', () => {
     expect(src).toContain("navigation.navigate('DaanPunya')");
     expect(src).not.toContain('DaanDirectory');
     expect(src).toContain('causeForPurpose');
+  });
+});
+
+describe('पात्र-परिचय — a place, not a profile (RULEBOOK §27.14)', () => {
+  const renderDetail = (orgId: string) =>
+    renderScreen(
+      <DaanDirectoryDetailScreen
+        navigation={{ ...mockNavigation } as never}
+        route={{ key: 'k', name: 'DaanDirectoryDetail', params: { orgId } } as never}
+      />
+    );
+
+  // Everything the screen renders, props included — a deliberately wide net so
+  // paperwork copy cannot slip back in through a label or an accessibility hint.
+  const textOf = (tree: TestRenderer.ReactTestRenderer) => JSON.stringify(tree.toJSON());
+
+  test('the detail carries one line and no paperwork or verification badge', async () => {
+    const tree = await renderDetail('akshaya-patra');
+    expect(has(tree, 'daan-org-about')).toBe(true);
+    // The card that used to render registration/80G and the "verified against
+    // two sources" line is gone — verification is editorial, not a badge.
+    expect(has(tree, 'daan-org-verification')).toBe(false);
+    const text = textOf(tree);
+    // Guard the guard: the collector really is reading this screen's copy.
+    expect(text).toContain('अक्षय पात्र फाउंडेशन');
+    expect(text).not.toContain('80G');
+    expect(text).not.toMatch(/सत्यापित/);
+    await act(async () => tree.unmount());
+  });
+
+  test('the only hand-off is the official website, behind the interstitial', async () => {
+    const { Linking } = require('react-native');
+    const openURL = jest.spyOn(Linking, 'openURL').mockResolvedValue(undefined as never);
+    const tree = await renderDetail('akshaya-patra');
+    // Nothing opens until the user passes the honest interstitial.
+    expect(has(tree, 'daan-org-open')).toBe(false);
+    await press(tree, 'daan-org-give');
+    expect(has(tree, 'daan-org-interstitial')).toBe(true);
+    await press(tree, 'daan-org-open');
+    expect(openURL).toHaveBeenCalledWith(getDaanOrg('akshaya-patra')!.officialUrl);
+    // And the return offer to record is gentle, after the fact — never before.
+    expect(has(tree, 'daan-org-return-offer')).toBe(true);
+    openURL.mockRestore();
+    await act(async () => tree.unmount());
   });
 });

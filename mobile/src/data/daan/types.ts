@@ -141,11 +141,16 @@ export type DaanCause =
 export type DaanOrgKind = 'anna-kshetra' | 'ngo' | 'temple-trust' | 'seva-portal';
 
 /**
- * One giving-directory row (PRD-26 §5 P2, §6.2). officialUrl/donateUrl come
- * from the organization's own domain only. Registration *kinds* are stated;
- * numbers are never transcribed unless read from an official source — receipts
- * always come from the organization, never the app. No UPI VPAs (open decision
- * #4 resolved: web-only hand-off at launch).
+ * One giving-directory row (PRD-26 §5 P2, §6.2). A row is deliberately THIN:
+ * a name, one line of what they do, and the official link the user leaves by.
+ * The teaching lives on the cause (`causes.ts` mahatva) — the द्वार explains
+ * daan, it does not profile organizations.
+ *
+ * NOT on this shape, by rule (RULEBOOK §27.14): account numbers, UPI VPAs,
+ * registration/80G/paperwork text, or any figure the app would be asserting on
+ * an organization's behalf. `verifiedOn` stays because it drives the 18-month
+ * staleness drop — verification is an internal editorial discipline, not a
+ * trust badge rendered at the user.
  */
 export type DaanOrgEntry = {
   id: string;
@@ -154,13 +159,13 @@ export type DaanOrgEntry = {
   kind: DaanOrgKind;
   /** The causes this row serves — the दान-द्वार's grouping axis. */
   causes: readonly DaanCause[];
+  /** ONE line — what they actually do. Not a profile (RULEBOOK §27.14). */
   aboutHi: string;
   aboutEn: string;
-  registrationHi: string;
-  registrationEn: string;
+  /** The ONE link the user leaves by: the org's own official page where the
+   * giving happens. https, own domain, never an aggregator or a gateway. */
   officialUrl: string;
-  donateUrl: string;
-  /** Rendered on the row — trust is the feature (PRD-26 §6.2). */
+  /** Editorial only — never rendered; drives `isOrgRowStale` (PRD-26 §6.2). */
   verifiedOn: string; // ISO date
   /** True when the hand-off is not a money donation (e.g. blood-donor registration). */
   nonMonetaryHi?: string;
