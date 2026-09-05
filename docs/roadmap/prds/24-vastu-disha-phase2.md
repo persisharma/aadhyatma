@@ -395,11 +395,16 @@ bare question still means the living home.
 ## F0. Full-text handoff (ships with E, zero backend)
 
 The PRD-20 §68 pattern: `vastu/homeHandoff.ts` renders the `HomeAssessmentModel` as plain
-text — label, template, facing + pada, every finding with convention / reason / weight /
-accommodation, the privacy note, and the JSON model — to the OS share sheet. The user may
-paste it into **any** assistant (ChatGPT, Gemini, Claude) for a conversation. The app
-contacts no service; the framing inside the export states that the findings are classical
-convention with weight, not a prediction or a valuation.
+text — label, template, facing + pada, **the grid as a 3 × 3 text table with your rooms in
+each zone**, and for every room three lines: *the ideal* (the convention's directions,
+alternates, avoided zones and its weight), *yours* (the recorded zone and how it was
+captured), *the finding* (class + accommodation) — then the privacy note and the JSON
+model. Where a plan image exists (F1), the share sheet carries the image beside the text
+(`expo-sharing` with the OS multi-item sheet; text-only where the platform cannot). The user
+may paste all of it into **any** assistant (ChatGPT, Gemini, Claude) and ask it to summarise
+or explain. The app contacts no service; the framing inside the export states that the
+findings are classical convention with weight, not a prediction or a valuation, and asks the
+reader's assistant to stay inside those findings.
 
 ## F1. Mark on a plan — offline, deterministic (store release: `expo-image-picker`)
 
@@ -429,21 +434,28 @@ or suggest pointers.* The architecture keeps §2.5 intact:
    — and returns pins. Every pin lands **unconfirmed**; the user confirms/moves/deletes each
    (`via: 'plan-ai-confirmed'`). Unconfirmed pins are not assessed. A room the model labels
    but the registry lacks is offered as `custom` text, never assessed.
-2. **Grounded pointers**: the backend receives the `HomeAssessmentModel` JSON **only** (never
-   the image a second time, never free text from the user) and returns a short bilingual
-   narrative that must cite finding ids; the client renders only sentences whose cited ids
-   exist in the model and drops the rest (the PRD-32 citation-validation rule). The model
-   cannot add a finding, change a class or a weight, or name a remedy — the system prompt
-   forbids it and the client filter enforces it (a sentence with a `remedy/उपाय/यंत्र` token
-   is dropped, the §7 guard applied to model output).
+2. **Grounded summary and pointers**: the backend receives three things and nothing else —
+   the `HomeAssessmentModel` JSON (the grid with your placements and every finding), the
+   registry rows for the rooms present (the *ideal*: directions, alternates, avoided zones,
+   weight, reason, accommodation — so the model can explain ideal-versus-yours in its own
+   words), and, **only when the user ticks it on the consent sheet**, the plan image again so
+   the summary can point at the drawing ("the kitchen in the top-right of your plan…"). It
+   returns a short bilingual narrative — a summary paragraph, then pointers — in which every
+   sentence must cite finding ids; the client renders only sentences whose cited ids exist in
+   the model and drops the rest (the PRD-32 citation-validation rule). The model cannot add
+   a finding, change a class or a weight, or name a remedy — the system prompt forbids it and
+   the client filter enforces it (a sentence with a `remedy/उपाय/यंत्र` token is dropped, the
+   §7 guard applied to model output). The user never types free text into this request —
+   questions go through Ask (C5) or the F0 handoff to their own assistant.
 3. **Provider-agnostic**: the endpoint is the Stage-2 service PRD-32 stands up; the provider
    (Anthropic / OpenAI / Google) is a server-side choice with a JSON-schema contract, so
    "GPT or Gemini" is a config value, not an app change. **No API key ever ships in the
    binary; BYOK is rejected** (key-handling UX, cost surprises, and a support burden the app
    cannot carry).
 4. **Consent + privacy**: one explicit action `योजना AI से पढ़वाएँ`, a sheet stating exactly
-   what leaves the device (the image; later, the assessment JSON), nothing stored server-side
-   beyond the request, and the F0 handoff offered as the no-upload alternative.
+   what leaves the device — the plan image for the pre-read; for the summary, the assessment
+   JSON and the registry rows, plus the image only if its checkbox is ticked — nothing stored
+   server-side beyond the request, and the F0 handoff offered as the no-upload alternative.
 5. **Eval gate** (from PRD-32's method): a 40-plan labelled set; pre-read ships when ≥ 90 %
    of rooms land in the correct zone before confirmation; pointers ship when 0 of 100 sampled
    narratives survive the filter with an uncited or remedy sentence.
