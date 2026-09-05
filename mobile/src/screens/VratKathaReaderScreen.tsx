@@ -22,6 +22,8 @@ import type { HomeStackParamList } from '@/navigation/types';
 import { contentByLang } from '@/utils/localize';
 import { scriptBodyFont } from '@/utils/langType';
 import ReaderHeader from '@/components/ReaderHeader';
+import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
+import { useReaderReadAloud } from '@/screens/_useReaderReadAloud';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'VratKathaReader'>;
 
@@ -35,6 +37,18 @@ export default function VratKathaReaderScreen({ navigation, route }: Props) {
   const total = sections.length;
   const [currentIndex, setCurrentIndex] = useState(0);
   const listRef = useRef<FlatList<KathaContentSection>>(null);
+
+  // Prose reader: each section's `bodyHi`/`bodyEn` paragraphs are the spoken text
+  // (the adapter's prose branch), one page per section, no offset. Namespaced so a
+  // katha id can never collide with a verse text's sourceId in the controller.
+  const readAloud = useReaderReadAloud({
+    sourceId: `katha-${route.params.kathaId}`,
+    data: sections,
+    offset: 0,
+    verseCount: total,
+    currentIndex,
+    listRef,
+  });
 
   const getItemLayout = useCallback(
     (_: unknown, index: number) => ({ length: width, offset: width * index, index }),
@@ -86,6 +100,10 @@ export default function VratKathaReaderScreen({ navigation, route }: Props) {
             <ReadingProgressBar current={currentIndex + 1} total={total} />
             <View style={styles.toggleRow}>
               <LanguageToggle />
+              {/* Pinned right so the toggle stays centred (design.md §56.2). */}
+              <View style={styles.readAloudSlot}>
+                <ReadAloudButton control={readAloud} />
+              </View>
             </View>
             <View style={styles.listContainer}>
               <FlatList
@@ -136,7 +154,8 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
   counter: { includeFontPadding: false, minWidth: 44, textAlign: 'right', fontStyle: 'italic' },
-  toggleRow: { paddingTop: 6, paddingBottom: 6, alignItems: 'center' },
+  toggleRow: { flexDirection: 'row', justifyContent: 'center', paddingTop: 6, paddingBottom: 6, alignItems: 'center' },
+  readAloudSlot: { position: 'absolute', right: 16, top: 6, bottom: 6, justifyContent: 'center' },
   listContainer: { flex: 1 },
   list: { flex: 1 },
   empty: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 },

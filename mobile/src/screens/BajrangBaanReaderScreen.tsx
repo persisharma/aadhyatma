@@ -20,6 +20,8 @@ import AddToRoutineButton from '@/components/AddToRoutineButton';
 import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
+import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
+import { useReaderReadAloud } from './_useReaderReadAloud';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'BajrangBaanReader'>;
@@ -39,6 +41,17 @@ export default function BajrangBaanReaderScreen({ navigation, route }: Props) {
   const verseCount = chapter?.verses.length ?? 0;
   const initialIndex = clampIndex(route.params.initialIndex, verseCount);
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
+
+  // Called before the null-chapter early return below, so hook order stays stable;
+  // single-chapter text, so the list carries no transition cards and no offset.
+  const readAloud = useReaderReadAloud({
+    sourceId: 'bajrang-baan',
+    data: chapter?.verses ?? [],
+    offset: 0,
+    verseCount,
+    currentIndex,
+    listRef,
+  });
 
   useEffect(() => {
     if (chapter == null) return;
@@ -108,7 +121,14 @@ export default function BajrangBaanReaderScreen({ navigation, route }: Props) {
 
         <ReadingProgressBar current={currentIndex + 1} total={verseCount} />
 
-        <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}><LanguageToggle /><AddToRoutineButton sourceId="bajrang-baan" chapter={chapter.chapter} /></View>
+        <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}>
+          <LanguageToggle />
+          <AddToRoutineButton sourceId="bajrang-baan" chapter={chapter.chapter} />
+          {/* Pinned right so the toggle group stays centred (design.md §56.2). */}
+          <View style={styles.readAloudSlot}>
+            <ReadAloudButton control={readAloud} />
+          </View>
+        </View>
 
         <View style={styles.listContainer}>
           <FlatList
@@ -191,6 +211,7 @@ const styles = StyleSheet.create({
   safe: { flex: 1 },
   counter: { includeFontPadding: false, minWidth: 48, textAlign: 'right' },
   toggleRow: { paddingVertical: 6, paddingBottom: 12, alignItems: 'center' },
+  readAloudSlot: { position: 'absolute', right: 16, top: 6, bottom: 12, justifyContent: 'center' },
   listContainer: { flex: 1 },
   list: { flex: 1 },
   dotsOverlay: { position: 'absolute', bottom: 4, left: 0, right: 0, alignItems: 'center' },
