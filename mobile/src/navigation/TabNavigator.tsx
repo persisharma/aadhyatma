@@ -1,9 +1,11 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import HomeStackNavigator from './HomeStackNavigator';
+import StackLoadBoundary from './StackLoadBoundary';
+import { LazyPanchangStackNavigator } from './lazyPanchangStack';
 import MoreStackNavigator from './MoreStackNavigator';
 import AudioStackNavigator from './AudioStackNavigator';
 import DailyBhaktiScreen from '@/screens/DailyBhaktiScreen';
@@ -13,7 +15,6 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { scriptTitleFont } from '@/utils/langType';
 import type { TabParamList } from './types';
-import type { WidgetDeepLinkTarget } from '@/widgets/deepLink';
 import {
   HomeIcon,
   BhaktiIcon,
@@ -24,18 +25,13 @@ import {
 } from './tabBarIcons';
 
 const Tab = createBottomTabNavigator<TabParamList>();
-const LazyPanchangStackNavigator = lazy(() => import('./PanchangStackNavigator'));
 
 // Full-screen reader routes that should hide the bottom tab bar so it doesn't
 // compete with immersive reading. Lives at the tab level (rather than per-screen
 // setOptions) so the bar animates out cleanly and restores itself on blur.
 const IMMERSIVE_HOME_ROUTES = ['VratKathaReader'];
 
-export default function TabNavigator({
-  initialWidgetTarget,
-}: {
-  initialWidgetTarget?: WidgetDeepLinkTarget | null;
-}) {
+export default function TabNavigator() {
   const { colors } = useTheme();
   const { lang } = useGitaLanguage();
   const insets = useSafeAreaInsets();
@@ -53,42 +49,9 @@ export default function TabNavigator({
   // bar was the last surface still English-only under a fully Indic screen.
   // contentByLang transliterates the Hindi label for gu/kn.
   const tabLabel = (hi: string, en: string) => contentByLang(lang, hi, en);
-  const initialRouteName: keyof TabParamList =
-    initialWidgetTarget?.kind === 'verse'
-      ? 'DailyBhaktiTab'
-      : initialWidgetTarget?.kind === 'panchang'
-        ? 'PanchangTab'
-        : 'HomeTab';
-  const homeInitialParams: TabParamList['HomeTab'] =
-    initialWidgetTarget?.kind === 'japam'
-      ? initialWidgetTarget.mantraId
-        ? {
-            screen: 'JapamCounter',
-            params: { mantraId: initialWidgetTarget.mantraId },
-            initial: false,
-          }
-        : { screen: 'CategoryList', params: { categoryId: 'japam' }, initial: false }
-      : undefined;
-  const verseInitialParams: TabParamList['DailyBhaktiTab'] =
-    initialWidgetTarget?.kind === 'verse'
-      ? {
-          sourceId: initialWidgetTarget.sourceId,
-          verseIndex: initialWidgetTarget.verseIndex,
-          ...(initialWidgetTarget.chapter == null ? {} : { chapter: initialWidgetTarget.chapter }),
-        }
-      : undefined;
-  const panchangInitialParams: TabParamList['PanchangTab'] =
-    initialWidgetTarget?.kind === 'panchang'
-      ? {
-          screen: 'PanchangHome',
-          params: { dateMs: initialWidgetTarget.dateMs },
-          initial: false,
-        }
-      : undefined;
-
   return (
     <Tab.Navigator
-      initialRouteName={initialRouteName}
+      initialRouteName="HomeTab"
       screenOptions={{
         headerShown: false,
         tabBarStyle,
@@ -109,7 +72,6 @@ export default function TabNavigator({
       <Tab.Screen
         name="HomeTab"
         component={HomeStackNavigator}
-        initialParams={homeInitialParams}
         options={({ route }) => {
           const focused = getFocusedRouteNameFromRoute(route) ?? 'Home';
           return {
@@ -127,7 +89,6 @@ export default function TabNavigator({
       <Tab.Screen
         name="DailyBhaktiTab"
         component={DailyBhaktiScreen}
-        initialParams={verseInitialParams}
         options={{
           tabBarLabel: tabLabel('भक्ति', 'Bhakti'),
           tabBarButtonTestID: 'tab-bhakti',
@@ -139,7 +100,6 @@ export default function TabNavigator({
       <Tab.Screen
         name="PanchangTab"
         component={PanchangTabRoot}
-        initialParams={panchangInitialParams}
         options={{
           tabBarLabel: tabLabel('पंचांग', 'Panchang'),
           tabBarButtonTestID: 'tab-panchang',
@@ -184,21 +144,25 @@ export default function TabNavigator({
 function PanchangTabRoot() {
   const { colors } = useTheme();
   return (
-    <Suspense
-      fallback={
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: colors.parchment,
-          }}
-        >
-          <ActivityIndicator color={colors.saffron} />
-        </View>
-      }
-    >
-      <LazyPanchangStackNavigator />
-    </Suspense>
+    // Boundary OUTSIDE Suspense: a chunk that fails to evaluate must be caught
+    // here, not thrown past the root into a dead screen (StackLoadBoundary).
+    <StackLoadBoundary>
+      <Suspense
+        fallback={
+          <View
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: colors.parchment,
+            }}
+          >
+            <ActivityIndicator color={colors.saffron} />
+          </View>
+        }
+      >
+        <LazyPanchangStackNavigator />
+      </Suspense>
+    </StackLoadBoundary>
   );
 }
