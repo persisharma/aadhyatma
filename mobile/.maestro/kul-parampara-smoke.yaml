@@ -62,7 +62,14 @@ appId: com.prashantsharma.vedansh
     centerElement: true
 - tapOn: "Gotra, free text"
 - inputText: "Bharadwaj"
-- hideKeyboard
+- runFlow:
+    when: { platform: iOS }
+    commands:
+      - tapOn: { point: "86%,90%" }
+- runFlow:
+    when: { platform: Android }
+    commands:
+      - hideKeyboard
 - scrollUntilVisible:
     element:
       text: "Save kul parampara record"

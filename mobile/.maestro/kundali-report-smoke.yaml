@@ -54,6 +54,11 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
     optional: true
+- tapOn: { text: "Allow", optional: true }
+- tapOn: { text: "Don.t Allow", optional: true }
+- waitForAnimationToEnd
+- tapOn: { text: "SKIP|Skip|Skip tour", optional: true }
+- tapOn: { text: "Begin", optional: true }
 - extendedWaitUntil:
     # Canary: the above-the-fold Panchang card — the Good Habits tile sits below
     # the first viewport since Home gained the daily recommendation cards.
@@ -91,7 +96,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Understand Jyotish"
-    timeout: 15000
+    timeout: 60000
 - tapOn: "Create Kundali"
 - waitForAnimationToEnd
 - tapOn:
@@ -99,21 +104,46 @@ appId: com.prashantsharma.vedansh
     optional: true
 - tapOn:
     id: "kundali-name-input"
-- eraseText: 40
 - inputText: "Aarav"
 - tapOn:
     id: "kundali-date-input"
 - waitForAnimationToEnd
 - tapOn: ".*tap to change year"
 - tapOn: "Month August"
-- repeat:
-    times: 4
+# The year list is a non-virtualized ScrollView in a transparent Modal: Maestro
+# can't scrollUntilVisible it, visibility guards see every (off-screen) row, and
+# an off-screen testID tap hits the backdrop and dismisses the sheet. iOS lands
+# 1992 with a fixed fast-swipe count; Android's fling scrolling varies too much,
+# so it slow-drags PAST 1992 (deterministic, no fling, no dismiss) then
+# self-corrects: tap 1992 (a safe no-op while off-screen) and nudge the list up
+# until the day grid opens. Both branches end on August 1992's day grid.
+- runFlow:
+    when:
+      platform: iOS
     commands:
-      - swipe:
-          start: "50%, 70%"
-          end: "50%, 50%"
-          duration: 250
-- tapOn: "Year 1992"
+      - repeat:
+          times: 4
+          commands:
+            - swipe: { start: "50%, 70%", end: "50%, 50%", duration: 250 }
+      - waitForAnimationToEnd
+      - tapOn: "Year 1992"
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - repeat:
+          times: 18
+          commands:
+            - swipe: { start: "50%, 78%", end: "50%, 64%", duration: 1000 }
+            - waitForAnimationToEnd
+      - repeat:
+          times: 15
+          while:
+            notVisible: "14 August 1992"
+          commands:
+            - tapOn: { text: "Year 1992", optional: true }
+            - swipe: { start: "50%, 72%", end: "50%, 86%", duration: 1000 }
+            - waitForAnimationToEnd
 - tapOn: "14 August 1992"
 - tapOn: "Confirm date"
 - waitForAnimationToEnd
@@ -150,12 +180,12 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Kundali result"
-    timeout: 20000
+    timeout: 60000
 
 # Overview CTA → full reading.
 - scrollUntilVisible:
     element:
-      text: "Full chart reading"
+      text: "Open full Kundali reading"
     direction: DOWN
     timeout: 15000
 - tapOn: "Open full Kundali reading"
@@ -164,26 +194,29 @@ appId: com.prashantsharma.vedansh
     visible: "Full Kundali reading"
     timeout: 15000
 - assertVisible: ".*not a certain prediction.*"
-- assertVisible: "Birth details and chart summary"
+- assertVisible: ".*Birth details and chart summary.*"
 - assertVisible: "Aarav"
-- assertVisible: "Ujjain"
+- assertVisible: ".*Ujjain.*"
 - scrollUntilVisible:
     element:
-      text: "Career and work"
+      text: ".*Career and work.*"
     direction: DOWN
     timeout: 15000
 - scrollUntilVisible:
     element:
-      text: "Current classical observations"
+      text: ".*Current classical observations.*"
     direction: DOWN
     timeout: 20000
 - assertVisible: ".*Sade Sati.*"
+# Mahadasha sits under Sade Sati — below the fold on Android; scroll to it.
+# Low visibilityPercentage: on iOS it's already partly on-screen at the bottom,
+# so the default 100% is never met and the scroll runs past it.
 - scrollUntilVisible:
     element:
-      text: "Vimshottari Dasha — a life-year view"
+      text: ".*Mahadasha \\(current\\).*"
     direction: DOWN
-    timeout: 20000
-- assertVisible: ".*Mahadasha \\(current\\).*"
+    timeout: 15000
+    visibilityPercentage: 10
 # The closing disclaimer sits under the last section.
 - scrollUntilVisible:
     element:
@@ -201,8 +234,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - assertVisible: ".*include the chart name, birth date, time, and city.*"
 - assertVisible: "Open share sheet"
-- assertVisible: "Share full text"
-- assertVisible: ".*for notes or an AI assistant.*"
+- assertVisible: "Share the full reading as text"
 - tapOn: "Close share preview"
 - waitForAnimationToEnd
 

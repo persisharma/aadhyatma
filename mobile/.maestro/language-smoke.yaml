@@ -55,7 +55,7 @@ appId: com.prashantsharma.vedansh
 # re-scripted the UI. (The old "પંચાંગ" assertion pointed at a Panchang card that
 # the More screen doesn't contain.) Reader-title assertions below further prove
 # the bundled Gujarati font renders verse text.
-- assertVisible: ".*ભાષા.*"
+- assertVisible: "Language, Gujarati"
 
 # ── Open a reader to confirm verse-script rendering ──
 - tapOn: { id: "tab-home" }
