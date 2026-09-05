@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Plan — drafted 2026-09-04, revised the same day with buyer/renter mode, floor-plan input, tiered rules and the AI layer; not yet built |
+| **Status** | Plan — drafted 2026-09-04, revised the same day with buyer/renter mode, floor-plan input, tiered rules and the AI layer. **UX decided 2026-09-05** (owner, from the prototype): Variant A capture + Variant C floor-plan mark-up, the **mandala grid as the single assessment reading**; the ledger reading is dropped. Not yet built |
 | **Parent** | [PRD-24 वास्तु दिशा](./24-vastu-disha.md) §4 Phase 2 (this document IS that phase line) |
 | **Design** | `design.md` §66 (to be extended as §66.1–§66.8 in the build PRs) |
 | **Contract** | `RULEBOOK.md` §22 (rule 5 amended, rules 11–17 added — see §8) |
@@ -297,6 +297,8 @@ reason, accommodation and `via`. The model is **versioned, fully serialisable JS
 `Date` instances** (serde round-trip pinned) — deliberately the grounding object F2 consumes,
 exactly as `KundaliReportModel` was designed for PRD-32.
 
+**UX decision (2026-09-05, from the prototype).** The assessment has **one** reading: the mandala grid (Variant A step 3 / Variant C grid toggle). The ledger reading (prototype Variant B) is dropped — no view toggle, no second layout to maintain. Rooms are captured by the compass walk (C1/E2, Variant A) or by pinning a floor plan (F1, Variant C); the manual chip fallback stays as the sensor-unavailable path, not as a third mode. The compare screen (E3) is unaffected — it is a roster surface, not a reading of one home.
+
 **Screen — `GharVastuScreen`.**
 - `ReaderHeader variant="index"`, title = the home's label; actions `पुनः मापें`, overflow
   (rename · export · delete with the destructive confirm).
@@ -494,7 +496,7 @@ F1's `plan` block, the `via` provenance) are the parts that must be right now.
 
 - `design.md` §66 → §66.1 fused heading/tilt/hold (five-word status vocabulary, haptic +
   announcement rules); §66.2 pada ring; §66.3 weighted registry + mandala card; §66.4 setup /
-  site-visit flow; §66.5 assessment screen (grid, class strip, group anatomy, closing lines);
+  site-visit flow; §66.5 assessment screen (grid — the only reading — class strip, group anatomy, closing lines);
   §66.6 roster + compare; §66.7 plan canvas (F1); §66.8 AI pre-read/pointers consent sheet (F2).
 - `RULEBOOK.md` §22: **rule 5 amended** — from "never a verdict" to "weighted convention read
   against the user's placements; five finding classes; no composite score/percentage/rank; no
@@ -527,6 +529,9 @@ D deep-link target                    █               S · with C4
 
 Recommended order: **A1+A3 → B1 → C2/C3 (pure) + E1 → setup/assessment screens → E3/F0/C5 →
 A2/A4**, with B2/B3 verification running from day one and F1 riding the next store release.
+With the ledger reading dropped (§C3 decision) the assessment screen is one layout; F1's
+plan canvas reuses that grid as its toggle target, so C's store-release block is smaller than
+first sized (M → S–M).
 Each block is its own PR with its design.md / RULEBOOK / wiki deltas.
 
 ## 10. Open product decisions (block only what they gate)

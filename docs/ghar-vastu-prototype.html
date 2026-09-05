@@ -30,6 +30,8 @@
   .legend code{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:#d9c79a}
   .phaselabel{font-weight:600;font-size:12px;letter-spacing:.6px;text-transform:uppercase;color:var(--saffron);background:var(--saffron-tint);
     display:inline-block;padding:4px 12px;border-radius:20px;margin:34px 0 4px}
+    .chosen{font-weight:600;font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:#1a140c;background:#f0c98a;border-radius:20px;padding:3px 10px;margin-left:8px;vertical-align:1px}
+  .dropped{font-weight:500;font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--canvas-muted);border:1px solid rgba(233,217,177,.3);border-radius:20px;padding:3px 10px;margin-left:8px;vertical-align:1px}
   .phaselabel .d{font-family:var(--deva);text-transform:none;letter-spacing:0;font-size:13px;margin-left:6px}
   h2{font-family:var(--serif);font-weight:500;font-size:22px;color:var(--canvas-hi);margin:2px 0 4px}
   .phasedesc{font-size:12.5px;color:var(--canvas-muted);margin-bottom:16px;max-width:900px}
@@ -186,7 +188,7 @@
 <p class="legend">Registry rows, pada names and weights in this prototype are <b>illustrative placeholders</b> pending the two-domain verification RULEBOOK §22.3 requires. Rooms shown in Hindi as the app renders them; English in italics is the prototype's own caption.</p>
 
 <!-- ===================== VARIANT A ===================== -->
-<div class="phaselabel">Variant A <span class="d">चक्कर · the compass walk</span></div>
+<div class="phaselabel">Variant A <span class="d">चक्कर · the compass walk</span></div><span class="chosen">Chosen · 5 Sep</span>
 <h2>Stand at the door, then at the centre — point and tap</h2>
 <p class="phasedesc">Sensor-first, for a site visit. Step 1 captures the facing (with the pada ring, since it is a door). Step 2 walks the template's rooms as a checklist: point the phone at a room, tap its chip, the faced dik is recorded. Step 3 is the assessment as a mandala with your rooms in it. <b>Drag the slider to turn the compass</b> — it stands in for the phone rotating.</p>
 <div class="wrap">
@@ -205,7 +207,7 @@
 </div>
 
 <!-- ===================== VARIANT B ===================== -->
-<div class="phaselabel">Variant B <span class="d">मंडल पर रखें · place on the mandala</span></div>
+<div class="phaselabel">Variant B <span class="d">मंडल पर रखें · place on the mandala</span></div><span class="dropped">Ledger reading dropped · compare kept</span>
 <h2>No compass needed — put each room in its cell</h2>
 <p class="phasedesc">For the person with a brochure plan in hand, or comparing listings from the sofa. Pick the facing, tap a room chip, tap the cell it sits in. The assessment reads as a <b>ledger</b> sorted by class with a stripe per row, and the third frame compares two shortlisted homes side by side. <b>Tap a chip, then a cell.</b></p>
 <div class="wrap">
@@ -224,7 +226,7 @@
 </div>
 
 <!-- ===================== VARIANT C ===================== -->
-<div class="phaselabel">Variant C <span class="d">नक्शे पर · mark the floor plan</span></div>
+<div class="phaselabel">Variant C <span class="d">नक्शे पर · mark the floor plan</span></div><span class="chosen">Chosen · grid view</span>
 <h2>Upload the plan, set north, pin the rooms</h2>
 <p class="phasedesc">Part F. Frame 1 is F1 — offline, deterministic: rotate the north arrow to match the brochure, tap a chip then tap the plan; zone comes from the angle around the centre pin. Frame 2 reads the assessment on the plan itself. Frame 3 is F2 — the AI pre-read: pins arrive unconfirmed, every one needs a tap, and the pointers cite finding ids or are dropped. <b>Turn the north slider and watch zones change.</b></p>
 <div class="wrap">
@@ -251,7 +253,7 @@
   <tr><td>B · मंडल</td><td>Brochure in hand; remote shortlisting; comparing listings</td><td>None</td><td>~2 min</td><td>OTA</td><td>User guesses zones from a plan without a north reference — the facing picker is the only anchor</td></tr>
   <tr><td>C · नक्शा</td><td>Buyers with a floor plan PDF; the most precise offline input</td><td>None (F1) · backend (F2)</td><td>~3 min after the plan is in</td><td>Store (image picker) · 2027 for F2</td><td>North arrow set wrong; F2 pin errors — both handled by confirmation, never auto-assessed</td></tr>
 </table>
-<div class="rec"><b>Recommendation.</b> Ship <b>A and B together</b> as one setup screen with two capture modes (the chips are already the shared fallback, so B is mostly A's Step 2 with a grid instead of a compass), and one assessment screen that offers both readings — the mandala (A3) as the default, the ledger (B2) one toggle away. Add <b>C's F1</b> with the next store release, reusing the same assessment. Keep F2 designed but unbuilt until the Stage-2 backend exists. The compare screen (B3) is variant-independent and ships with the roster.</div>
+<div class="rec"><b>Decision (5 Sep 2026).</b> Variant <b>A</b> is the capture flow and Variant <b>C</b> the floor-plan input; the <b>mandala grid is the one assessment reading</b> — Variant B's ledger is dropped, so the assessment screen has a single layout and C's grid toggle becomes its default. B's compare screen stays: it belongs to the roster, not to how one home is read. Ship A with the roster and compare over the air; add C's mark-up with the next store release; keep the AI pre-read designed, not built, until the Stage-2 backend exists.</div>
 
 <script>
 (function(){
@@ -420,7 +422,7 @@ renderB1();renderB2();renderB3();
 
 /* ---------------- VARIANT C ---------------- */
 const PLAN_W=300, PLAN_H=240;
-const C={north:0,center:{x:150,y:120},sel:null,pins:[],label:'Godrej Woods · 3BHK (brochure plan)',showGrid:false,mode:'pin',aiConfirmed:{},aiSheet:true};
+const C={north:0,center:{x:150,y:120},sel:null,pins:[],label:'Godrej Woods · 3BHK (brochure plan)',showGrid:true,mode:'pin',aiConfirmed:{},aiSheet:true};
 const PLAN_ROOMS=[{id:'living',x:20,y:20,w:140,h:100,hi:'बैठक'},{id:'kitchen',x:160,y:20,w:120,h:70,hi:'रसोई'},{id:'dining',x:160,y:90,w:120,h:50,hi:'भोजन'},{id:'master-bed',x:20,y:120,w:120,h:100,hi:'मुख्य शयन'},{id:'kids-bed',x:140,y:140,w:80,h:80,hi:'बच्चों का'},{id:'toilet',x:220,y:140,w:60,h:40,hi:'शौचालय'},{id:'puja',x:220,y:180,w:60,h:40,hi:'पूजा'},{id:'balcony',x:20,y:220,w:120,h:16,hi:'बालकनी'}];
 C.pins=[{id:'living',ord:1,x:80,y:70},{id:'kitchen',ord:1,x:220,y:55},{id:'dining',ord:1,x:220,y:115},{id:'master-bed',ord:1,x:80,y:170},{id:'kids-bed',ord:1,x:180,y:180},{id:'toilet',ord:1,x:250,y:160},{id:'puja',ord:1,x:250,y:200},{id:'main-door',ord:1,x:150,y:232}].map(p=>({...p,via:'plan'}));
 const AI_PINS=[{id:'living',x:82,y:66,conf:.94},{id:'kitchen',x:218,y:52,conf:.91},{id:'master-bed',x:78,y:172,conf:.88},{id:'toilet',x:252,y:158,conf:.62},{id:'puja',x:248,y:198,conf:.57},{id:'main-door',x:150,y:234,conf:.71}];
