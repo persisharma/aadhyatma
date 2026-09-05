@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>गृह वास्तु · मेरा घर</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* Mirrors mobile/src/theme/colors.ts (Sep 2026). The app is light-only; the studio canvas is dark by prototype convention. */
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-hi:#F6ECD0; --parchment-deep:#E9D9B1;
+    --gradient-end:#F1E3BF; --gold:#A67C34; --gold-soft:#C9B896; --gold-tint:rgba(166,124,52,0.14); --gold-chip:rgba(166,124,52,0.22);
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --saffron-tint:rgba(184,98,27,0.12);
+    --ink:#1A0E03; --ink-soft:#5A3A1E; --ink-muted:#6E5230; --divider:rgba(138,62,11,0.18);
+    --card-from:#FFF5E0; --card-to:#F5DEAC; --card-border:rgba(184,98,27,0.4);
+    --avoid:#9E4A2E; --avoid-tint:rgba(158,74,46,0.12); --avoid-chip:rgba(158,74,46,0.20); --avoid-deep:#7A3722;
+    --shadow-card:0 2px 6px rgba(60,30,10,0.10);
+    --canvas:#1a140c; --canvas-ink:#e9d9b1; --canvas-muted:#b7a377; --canvas-hi:#fff5e0;
+    --sans:'Inter',system-ui,sans-serif; --serif:'Cormorant Garamond',Georgia,serif; --deva:'Noto Serif Devanagari','Kohinoor Devanagari',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:var(--canvas);color:var(--canvas-ink);padding:28px 24px 60px;line-height:1.5}
+  h1{font-family:var(--serif);font-weight:600;font-size:30px;color:var(--canvas-hi);text-wrap:balance}
+  h1 .d{font-family:var(--deva);font-weight:500}
+  .sub{font-family:var(--serif);font-style:italic;color:var(--gold-soft);font-size:16px;margin:4px 0 8px;max-width:900px}
+  .legend{font-size:12.5px;color:var(--canvas-muted);margin-bottom:6px;max-width:900px}
+  .legend b{color:var(--canvas-ink)}
+  .legend code{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:#d9c79a}
+  .phaselabel{font-weight:600;font-size:12px;letter-spacing:.6px;text-transform:uppercase;color:var(--saffron);background:var(--saffron-tint);
+    display:inline-block;padding:4px 12px;border-radius:20px;margin:34px 0 4px}
+  .phaselabel .d{font-family:var(--deva);text-transform:none;letter-spacing:0;font-size:13px;margin-left:6px}
+  h2{font-family:var(--serif);font-weight:500;font-size:22px;color:var(--canvas-hi);margin:2px 0 4px}
+  .phasedesc{font-size:12.5px;color:var(--canvas-muted);margin-bottom:16px;max-width:900px}
+  .wrap{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap}
+  .col{display:flex;flex-direction:column;align-items:center}
+  .cap{width:340px;font-size:12px;color:var(--canvas-muted);margin-top:10px;line-height:1.55}
+  .cap b{color:var(--canvas-ink)}
+
+  /* ---- phone frame (repo prototype convention) ---- */
+  .phone{width:340px;height:720px;background:var(--parchment);border-radius:38px;border:10px solid #0d0804;
+    box-shadow:0 24px 60px rgba(0,0,0,.55);position:relative;overflow:hidden;flex:none;color:var(--ink)}
+  .statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);
+    background:linear-gradient(var(--parchment-hi),var(--parchment))}
+  .screen{position:absolute;top:32px;left:0;right:0;bottom:0;overflow-y:auto;background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
+  .screen::-webkit-scrollbar{width:0}
+  .pad{padding:12px 16px 26px}
+  .topbar{display:flex;align-items:center;gap:10px;padding:2px 0 10px}
+  .back{width:36px;height:36px;border-radius:50%;border:1px solid var(--divider);background:var(--parchment-soft);display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:16px;flex:none}
+  .ttl{font-family:var(--deva);font-size:19px;font-weight:600;color:var(--ink);line-height:1.2}
+  .ttl small{display:block;font-family:var(--serif);font-weight:400;font-style:italic;font-size:12.5px;color:var(--ink-muted)}
+  .steps{display:flex;gap:6px;margin:2px 0 10px}
+  .steps span{flex:1;height:3px;border-radius:2px;background:var(--divider)}
+  .steps span.on{background:var(--saffron)}
+  .lede{font-family:var(--deva);font-size:13px;line-height:1.55;color:var(--ink-soft)}
+  .lede em{font-family:var(--serif);font-size:12.5px;color:var(--ink-muted)}
+  .eyebrow{font-family:var(--sans);font-size:10.5px;letter-spacing:.7px;text-transform:uppercase;color:var(--ink-muted);margin:16px 0 7px}
+  .eyebrow .d{font-family:var(--deva);text-transform:none;letter-spacing:0;font-size:12px;color:var(--ink-soft)}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{font-family:var(--deva);font-size:12px;line-height:18px;padding:4px 10px;border-radius:20px;border:1px solid var(--divider);background:var(--parchment-soft);color:var(--ink-soft);cursor:pointer;user-select:none}
+  .chip:hover{border-color:var(--card-border)}
+  .chip.on{background:var(--gold-chip);border-color:var(--card-border);color:var(--saffron-deep)}
+  .chip.done{background:var(--gold-tint);color:var(--ink-soft)}
+  .chip.done::before{content:'✓ ';color:var(--saffron-deep)}
+  .chip .z{font-family:var(--sans);font-size:10.5px;color:var(--ink-muted);margin-left:4px}
+  .chip:focus-visible,.btn:focus-visible,.cell:focus-visible{outline:2px solid var(--saffron);outline-offset:2px}
+  .btn{font-family:var(--deva);font-size:13px;padding:9px 16px;border-radius:22px;border:1px solid var(--card-border);background:var(--parchment-soft);color:var(--saffron-deep);cursor:pointer}
+  .btn.fill{background:var(--saffron);color:#fff;border-color:var(--saffron)}
+  .btn.sm{font-size:12px;padding:6px 12px}
+  .btn.held{background:var(--gold-chip)}
+  .row{display:flex;align-items:center;gap:8px}
+  .field{display:flex;flex-direction:column;gap:4px;margin-top:8px}
+  .field label{font-size:10.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--ink-muted)}
+  .input{height:44px;border:1px solid var(--divider);border-radius:10px;background:var(--parchment-soft);padding:0 12px;font-family:var(--sans);font-size:14px;color:var(--ink);display:flex;align-items:center}
+  .card{border:1px solid var(--divider);border-radius:14px;background:var(--parchment-soft);padding:12px 14px;box-shadow:var(--shadow-card);margin-top:8px}
+  .card.active{background:linear-gradient(160deg,var(--card-from),var(--card-to));border-color:var(--card-border)}
+  .status{font-family:var(--deva);font-size:12px;line-height:1.5;text-align:center;color:var(--ink-muted);margin-top:6px;min-height:18px}
+  .status.warn{color:var(--saffron-deep)}
+  .status.tilt{color:var(--avoid-deep)}
+  .knob{display:flex;align-items:center;gap:8px;margin-top:6px;justify-content:center}
+  .knob input[type=range]{width:150px;accent-color:var(--saffron)}
+  .knob span{font-size:11px;color:var(--ink-muted);font-variant-numeric:tabular-nums;min-width:38px;text-align:right}
+  .hint{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);text-align:center}
+  .priv{border-left:2px solid var(--gold-tint);padding:6px 10px;margin-top:14px;font-family:var(--deva);font-size:11.5px;line-height:1.5;color:var(--ink-muted);font-style:italic}
+  .close{font-family:var(--deva);font-size:11.5px;line-height:1.55;color:var(--ink-muted);margin-top:14px}
+
+  /* class strip */
+  .strip{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+  .pill{font-family:var(--deva);font-size:11px;line-height:16px;padding:3px 8px;border-radius:14px;border:1px solid var(--divider);background:var(--parchment-soft);color:var(--ink-soft);font-variant-numeric:tabular-nums}
+  .pill b{font-family:var(--sans);font-weight:600;margin-left:3px}
+  .pill.c-forbidden{background:var(--avoid-chip);color:var(--avoid-deep);border-color:transparent}
+  .pill.c-in-keeping{background:var(--gold-chip);color:var(--saffron-deep);border-color:transparent}
+  .pill.c-unmeasured{opacity:.7}
+  /* finding rows */
+  .grp{margin-top:14px}
+  .grp h4{font-family:var(--deva);font-size:12.5px;font-weight:600;color:var(--ink-soft);padding-bottom:5px;border-bottom:1px solid var(--divider);display:flex;justify-content:space-between}
+  .grp h4 span{font-family:var(--sans);font-weight:500;font-size:11px;color:var(--ink-muted)}
+  .grp h4.c-forbidden{color:var(--avoid-deep)}
+  .frow{padding:9px 0 8px;border-bottom:1px solid var(--divider)}
+  .frow:last-child{border-bottom:0}
+  .frow .t{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .frow .t b{font-family:var(--deva);font-weight:600;font-size:14px;color:var(--ink)}
+  .frow .t i{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted)}
+  .frow .m{font-family:var(--deva);font-size:12px;line-height:1.55;color:var(--ink-soft);margin-top:3px}
+  .frow .m .lab{color:var(--ink-muted)}
+  .frow .m .w{font-family:var(--sans);font-size:10px;letter-spacing:.4px;text-transform:uppercase;color:var(--ink-muted);border:1px solid var(--divider);border-radius:8px;padding:0 5px;margin-left:4px;vertical-align:middle}
+  .frow .acc{font-family:var(--deva);font-size:11.5px;line-height:1.5;color:var(--ink-muted);margin-top:4px}
+  .frow .acc::before{content:'जहाँ संभव न हो · ';color:var(--saffron-deep)}
+  .frow .cls{font-family:var(--deva);font-size:11.5px;color:var(--saffron-deep);white-space:nowrap}
+  .frow .cls.c-forbidden{color:var(--avoid-deep)}
+  .via{font-size:10px;color:var(--ink-muted);margin-left:5px}
+  /* ledger variant */
+  .ledger .frow{border-left:3px solid var(--divider);padding-left:10px;margin:6px 0;border-bottom:0;background:var(--parchment-soft);border-radius:0 10px 10px 0}
+  .ledger .frow.c-forbidden{border-left-color:var(--avoid)}
+  .ledger .frow.c-differs{border-left-color:var(--saffron)}
+  .ledger .frow.c-preferred-unmet{border-left-color:var(--gold)}
+  .ledger .frow.c-alternate{border-left-color:var(--gold-soft)}
+  .ledger .frow.c-in-keeping{border-left-color:var(--gold-chip)}
+
+  /* mandala grid */
+  .mandala{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:8px;position:relative}
+  .cell{aspect-ratio:1;border:1px solid var(--divider);border-radius:8px;background:var(--parchment-soft);padding:5px 6px;display:flex;flex-direction:column;gap:3px;cursor:pointer;position:relative;min-height:84px}
+  .cell.center{background:var(--parchment-hi);border-style:dashed}
+  .cell.target{border-color:var(--saffron);box-shadow:inset 0 0 0 1px var(--saffron)}
+  .cell .zl{font-family:var(--deva);font-size:11px;font-weight:600;color:var(--ink-soft);line-height:1.2}
+  .cell .dp{font-family:var(--serif);font-style:italic;font-size:10px;color:var(--ink-muted);line-height:1.1}
+  .cell .rooms{display:flex;flex-wrap:wrap;gap:3px;margin-top:auto}
+  .cell .rc{font-family:var(--deva);font-size:9.5px;line-height:13px;padding:1px 5px;border-radius:8px;border:1px solid var(--divider);background:var(--parchment);color:var(--ink-soft);white-space:nowrap}
+  .cell .rc.c-forbidden{background:var(--avoid-chip);border-color:transparent;color:var(--avoid-deep)}
+  .cell .rc.c-in-keeping{background:var(--gold-chip);border-color:transparent;color:var(--saffron-deep)}
+  .cell .rc.c-differs{border-color:var(--saffron)}
+  .door{position:absolute;font-family:var(--deva);font-size:9.5px;color:var(--saffron-deep);background:var(--parchment-soft);border:1px solid var(--card-border);border-radius:8px;padding:0 6px;line-height:15px}
+  .mini{display:grid;grid-template-columns:repeat(3,14px);gap:2px}
+  .mini i{display:block;width:14px;height:14px;border-radius:2px;background:var(--parchment-deep);border:1px solid var(--divider)}
+  .mini i.c-forbidden{background:var(--avoid)}
+  .mini i.c-in-keeping{background:var(--gold)}
+  .mini i.c-differs{background:var(--saffron)}
+  .mini i.c-alternate,.mini i.c-preferred-unmet{background:var(--gold-soft)}
+
+  /* compare */
+  .cmp{display:grid;grid-template-columns:96px 1fr 1fr;gap:0;font-size:11.5px;margin-top:8px}
+  .cmp > div{padding:6px 5px;border-bottom:1px solid var(--divider);font-family:var(--deva);color:var(--ink-soft);line-height:1.4}
+  .cmp .h{font-weight:600;color:var(--ink);font-size:12px}
+  .cmp .k{color:var(--ink-muted);font-size:11px}
+  .cmp .c-forbidden{color:var(--avoid-deep)}
+  .cmp .c-in-keeping{color:var(--saffron-deep)}
+
+  /* plan canvas */
+  .plan{position:relative;border:1px solid var(--divider);border-radius:12px;overflow:hidden;background:#fbf4e3;cursor:crosshair;margin-top:8px}
+  .plan svg{display:block;width:100%;height:auto}
+  .pin{position:absolute;transform:translate(-50%,-100%);font-family:var(--deva);font-size:10px;line-height:14px;padding:1px 6px;border-radius:9px;background:var(--parchment-soft);border:1px solid var(--card-border);color:var(--saffron-deep);white-space:nowrap;pointer-events:none}
+  .pin::after{content:'';position:absolute;left:50%;bottom:-5px;width:6px;height:6px;background:var(--saffron-deep);border-radius:50%;transform:translateX(-50%)}
+  .pin.c-forbidden{background:var(--avoid-chip);color:var(--avoid-deep)}
+  .pin.c-in-keeping{background:var(--gold-chip)}
+  .pin.ai{border-style:dashed;opacity:.85}
+  .pin.ai::before{content:'AI · ';font-family:var(--sans);font-size:9px;letter-spacing:.3px}
+  .cpin{position:absolute;width:14px;height:14px;border-radius:50%;border:2px dashed var(--saffron-deep);transform:translate(-50%,-50%);pointer-events:none}
+  .narr{font-family:var(--deva);font-size:12.5px;line-height:1.6;color:var(--ink-soft)}
+  .cite{font-family:var(--sans);font-size:9.5px;color:var(--saffron-deep);border:1px solid var(--card-border);border-radius:7px;padding:0 4px;margin-left:2px;vertical-align:1px}
+  .sheet{position:absolute;left:0;right:0;bottom:0;background:var(--parchment-soft);border-radius:22px 22px 0 0;padding:14px 16px 20px;box-shadow:0 -6px 20px rgba(60,30,10,.18);border-top:1px solid var(--divider)}
+  .sheet h5{font-family:var(--deva);font-size:15px;font-weight:600;color:var(--ink)}
+  .sheet ul{margin:8px 0 10px 14px;font-family:var(--deva);font-size:12px;line-height:1.55;color:var(--ink-soft)}
+  .aipins{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+  .aipin{display:flex;align-items:center;gap:8px;padding:7px 10px;border:1px dashed var(--card-border);border-radius:10px;background:var(--parchment-soft);font-family:var(--deva);font-size:12px;color:var(--ink-soft)}
+  .aipin.ok{border-style:solid;background:var(--gold-tint)}
+  .aipin .sp{flex:1}
+  .aipin .conf{font-family:var(--sans);font-size:10px;color:var(--ink-muted)}
+  .aipin button{font-family:var(--deva);font-size:11px;padding:3px 8px;border-radius:12px;border:1px solid var(--divider);background:var(--parchment);color:var(--saffron-deep);cursor:pointer}
+
+  /* variant table */
+  table.vt{width:100%;max-width:1080px;border-collapse:collapse;margin-top:14px;font-size:12.5px;color:var(--canvas-ink)}
+  table.vt th,table.vt td{text-align:left;padding:9px 12px;border-bottom:1px solid rgba(233,217,177,.15);vertical-align:top;line-height:1.5}
+  table.vt th{font-family:var(--serif);font-size:15px;font-weight:600;color:var(--canvas-hi)}
+  table.vt td:first-child{color:var(--gold-soft);font-weight:600}
+  .rec{color:var(--canvas-hi);background:var(--saffron-tint);border:1px solid rgba(184,98,27,.45);border-radius:10px;padding:12px 16px;max-width:1080px;margin-top:16px;font-size:13px;line-height:1.6}
+  .rec b{color:#f0c98a}
+  @media (prefers-reduced-motion:no-preference){.chakra g.rose{transition:transform .18s ease-out}}
+</style>
+</head>
+<body>
+
+<h1><span class="d">गृह वास्तु</span> · मेरा घर — three UX variants</h1>
+<p class="sub">PRD-24 Phase 2 · how a buyer, a renter, or a householder marks a home room by room and reads it against the weighted convention. Every frame below is live: turn the compass, place rooms, watch the findings recompute.</p>
+<p class="legend"><b>Shared across all three variants</b> — the five finding classes from PRD §0.2 (<code>निषिद्ध स्थान · विधान से भिन्न · श्रेयस् अनुपलब्ध · परंपरागत विकल्प · मेल</code>), counts per class and never a total, registry order within a group, the accommodation line under every forbidden/differs row, and the privacy line. What differs is <b>how the position is captured</b> and <b>how the assessment is read</b>.</p>
+<p class="legend">Registry rows, pada names and weights in this prototype are <b>illustrative placeholders</b> pending the two-domain verification RULEBOOK §22.3 requires. Rooms shown in Hindi as the app renders them; English in italics is the prototype's own caption.</p>
+
+<!-- ===================== VARIANT A ===================== -->
+<div class="phaselabel">Variant A <span class="d">चक्कर · the compass walk</span></div>
+<h2>Stand at the door, then at the centre — point and tap</h2>
+<p class="phasedesc">Sensor-first, for a site visit. Step 1 captures the facing (with the pada ring, since it is a door). Step 2 walks the template's rooms as a checklist: point the phone at a room, tap its chip, the faced dik is recorded. Step 3 is the assessment as a mandala with your rooms in it. <b>Drag the slider to turn the compass</b> — it stands in for the phone rotating.</p>
+<div class="wrap">
+  <div class="col">
+    <div class="phone"><div class="statusbar"><span>9:41</span><span>◔ ▲ ▮</span></div><div class="screen"><div class="pad" id="a1"></div></div></div>
+    <p class="cap"><b>Step 1 · घर का प्रकार + मुख.</b> Template picker seeds the room chips (3BHK here). The chakra shows the 32-pada ring only in this step. <b>Hold</b> freezes the reading — the capture affordance. The status line is the honest-accuracy contract: try the <i>tilt</i> and <i>metal</i> toggles.</p>
+  </div>
+  <div class="col">
+    <div class="phone"><div class="statusbar"><span>9:44</span><span>◔ ▲ ▮</span></div><div class="screen"><div class="pad" id="a2"></div></div></div>
+    <p class="cap"><b>Step 2 · कक्ष.</b> A checklist in template order — the broker interrupts, the record saves after every tap. Turn the compass, tap a room chip to record the faced dik; tap <i>केंद्र</i> for the Brahmasthan. A recorded chip shows ✓ and its zone; tap again to re-measure.</p>
+  </div>
+  <div class="col">
+    <div class="phone"><div class="statusbar"><span>9:52</span><span>◔ ▲ ▮</span></div><div class="screen"><div class="pad" id="a3"></div></div></div>
+    <p class="cap"><b>Step 3 · मानचित्र-first assessment.</b> The 3×3 mandala with the dikpala in each cell and your rooms tinted by class, the five-count strip (a zero still renders), then findings grouped in the fixed order. The door row reads the pada. Live-linked to Step 2.</p>
+  </div>
+</div>
+
+<!-- ===================== VARIANT B ===================== -->
+<div class="phaselabel">Variant B <span class="d">मंडल पर रखें · place on the mandala</span></div>
+<h2>No compass needed — put each room in its cell</h2>
+<p class="phasedesc">For the person with a brochure plan in hand, or comparing listings from the sofa. Pick the facing, tap a room chip, tap the cell it sits in. The assessment reads as a <b>ledger</b> sorted by class with a stripe per row, and the third frame compares two shortlisted homes side by side. <b>Tap a chip, then a cell.</b></p>
+<div class="wrap">
+  <div class="col">
+    <div class="phone"><div class="statusbar"><span>21:10</span><span>◔ ▲ ▮</span></div><div class="screen"><div class="pad" id="b1"></div></div></div>
+    <p class="cap"><b>Placement.</b> The door glyph moves to the facing edge. A selected chip names the room to place; placing tints nothing yet — evaluation waits for the assessment screen, so placement never feels like being marked.</p>
+  </div>
+  <div class="col">
+    <div class="phone"><div class="statusbar"><span>21:14</span><span>◔ ▲ ▮</span></div><div class="screen"><div class="pad" id="b2"></div></div></div>
+    <p class="cap"><b>Ledger assessment.</b> Same engine, different reading order: the strip pinned at top, a mini-mandala beside the title, then one row per room with a class stripe on the left and the accommodation under it. Faster to scan on a phone than the grid; less spatial.</p>
+  </div>
+  <div class="col">
+    <div class="phone"><div class="statusbar"><span>21:20</span><span>◔ ▲ ▮</span></div><div class="screen"><div class="pad" id="b3"></div></div></div>
+    <p class="cap"><b>Compare.</b> Two <i>considering</i> homes, columns per home, class counts then every room's zone and class. No winner, no colour beyond the class tokens. The left column follows your placements in the first frame; the right is a saved sample.</p>
+  </div>
+</div>
+
+<!-- ===================== VARIANT C ===================== -->
+<div class="phaselabel">Variant C <span class="d">नक्शे पर · mark the floor plan</span></div>
+<h2>Upload the plan, set north, pin the rooms</h2>
+<p class="phasedesc">Part F. Frame 1 is F1 — offline, deterministic: rotate the north arrow to match the brochure, tap a chip then tap the plan; zone comes from the angle around the centre pin. Frame 2 reads the assessment on the plan itself. Frame 3 is F2 — the AI pre-read: pins arrive unconfirmed, every one needs a tap, and the pointers cite finding ids or are dropped. <b>Turn the north slider and watch zones change.</b></p>
+<div class="wrap">
+  <div class="col">
+    <div class="phone"><div class="statusbar"><span>18:02</span><span>◔ ▲ ▮</span></div><div class="screen"><div class="pad" id="c1"></div></div></div>
+    <p class="cap"><b>F1 · Mark-up.</b> The plan is a sample 3BHK drawing. Centre pin defaults to the image centre (tap <i>केंद्र</i> then the plan to move it). Pins show their zone; the class strip under the chips recomputes as north turns — the honest consequence of a wrong arrow.</p>
+  </div>
+  <div class="col">
+    <div class="phone"><div class="statusbar"><span>18:09</span><span>◔ ▲ ▮</span></div><div class="screen"><div class="pad" id="c2"></div></div></div>
+    <p class="cap"><b>Plan-view assessment.</b> The 3×3 overlay rotates with north; pins tint by class; the strip and the three leading findings follow, with <i>सब देखें</i> for the full ledger. Toggle <i>ग्रिड</i> to see the same home as Variant A's mandala.</p>
+  </div>
+  <div class="col">
+    <div class="phone"><div class="statusbar"><span>18:15</span><span>◔ ▲ ▮</span></div><div class="screen"><div class="pad" id="c3"></div></div></div>
+    <p class="cap"><b>F2 · AI pre-read (2027, Stage-2 backend).</b> The consent sheet says exactly what leaves the device. Pre-read pins are dashed until confirmed; only confirmed pins are assessed. The pointers paragraph is model prose with <span class="cite">id</span> citations — a sentence without a valid id never renders.</p>
+  </div>
+</div>
+
+<!-- ===================== COMPARISON ===================== -->
+<div class="phaselabel">Choosing</div>
+<h2>Which variant, when</h2>
+<table class="vt">
+  <tr><th>Variant</th><th>Best for</th><th>Sensor</th><th>Effort per home</th><th>Release</th><th>Risk</th></tr>
+  <tr><td>A · चक्कर</td><td>On-site visits; the lived-in home; griha-pravesh day</td><td>Needed, with the honest fallback to chips</td><td>~4 min for a 3BHK</td><td>OTA</td><td>Indoor magnetometer noise — mitigated by the fused heading and Hold</td></tr>
+  <tr><td>B · मंडल</td><td>Brochure in hand; remote shortlisting; comparing listings</td><td>None</td><td>~2 min</td><td>OTA</td><td>User guesses zones from a plan without a north reference — the facing picker is the only anchor</td></tr>
+  <tr><td>C · नक्शा</td><td>Buyers with a floor plan PDF; the most precise offline input</td><td>None (F1) · backend (F2)</td><td>~3 min after the plan is in</td><td>Store (image picker) · 2027 for F2</td><td>North arrow set wrong; F2 pin errors — both handled by confirmation, never auto-assessed</td></tr>
+</table>
+<div class="rec"><b>Recommendation.</b> Ship <b>A and B together</b> as one setup screen with two capture modes (the chips are already the shared fallback, so B is mostly A's Step 2 with a grid instead of a compass), and one assessment screen that offers both readings — the mandala (A3) as the default, the ledger (B2) one toggle away. Add <b>C's F1</b> with the next store release, reusing the same assessment. Keep F2 designed but unbuilt until the Stage-2 backend exists. The compare screen (B3) is variant-independent and ships with the roster.</div>
+
+<script>
+(function(){
+'use strict';
+/* ---------------- shared vocabulary ---------------- */
+const DIK=['north','northeast','east','southeast','south','southwest','west','northwest'];
+const L={north:'उत्तर',northeast:'ईशान',east:'पूर्व',southeast:'आग्नेय',south:'दक्षिण',southwest:'नैऋत्य',west:'पश्चिम',northwest:'वायव्य',center:'ब्रह्मस्थान'};
+const EN={north:'North',northeast:'North-East',east:'East',southeast:'South-East',south:'South',southwest:'South-West',west:'West',northwest:'North-West',center:'Centre'};
+const DIKPALA={north:'कुबेर',northeast:'ईशान',east:'इन्द्र',southeast:'अग्नि',south:'यम',southwest:'नैऋति',west:'वरुण',northwest:'वायु',center:'ब्रह्मा'};
+const GRID=[['northwest','north','northeast'],['west','center','east'],['southwest','south','southeast']];
+/* Illustrative registry (weights/sets pending §22.3 verification) */
+const REG=[
+ {id:'main-door',hi:'मुख्य द्वार',en:'Main door',dirs:['north','east','northeast'],alt:[],avoid:[],w:'vidhana',acc:'पूर्ण नियम पद-विन्यास पर है — हर दिशा में शुभ पद हैं, बने घर का द्वार बदलना परंपरा नहीं माँगती।'},
+ {id:'puja',hi:'पूजा स्थान',en:'Puja',dirs:['northeast'],alt:['east','north'],avoid:['south','southwest'],w:'vidhana',acc:'किसी भी स्वच्छ, शांत कमरे की पूर्व या उत्तर दीवार पर एक आला पर्याप्त माना जाता है।'},
+ {id:'living',hi:'बैठक',en:'Living',dirs:['north','east','northeast'],alt:['northwest'],avoid:[],w:'vidhana',acc:'बैठक जहाँ भी हो, उसका उत्तर-पूर्व भाग हल्का और खुला रखा जाता है।'},
+ {id:'kitchen',hi:'रसोई',en:'Kitchen',dirs:['southeast'],alt:['northwest'],avoid:['northeast','center'],w:'vidhana',acc:'चूल्हा कक्ष के आग्नेय कोने में और पूर्वमुख भोजन-निर्माण ही व्यावहारिक रूप है।'},
+ {id:'dining',hi:'भोजन कक्ष',en:'Dining',dirs:['west'],alt:['east','north'],avoid:[],w:'shreyas',acc:'भोजन करते समय पूर्व या उत्तर की ओर मुख रखना पर्याप्त है।'},
+ {id:'master-bed',hi:'मुख्य शयनकक्ष',en:'Master bedroom',dirs:['southwest'],alt:['south','west'],avoid:['northeast'],w:'vidhana',acc:'सोते समय सिर दक्षिण या पूर्व की ओर — कमरे की दिशा से अधिक यही बताया गया है।'},
+ {id:'kids-bed',hi:'बच्चों का कक्ष',en:'Children’s room',dirs:['west','northwest'],alt:['east'],avoid:[],w:'vidhana',acc:'अध्ययन करते समय पूर्व या उत्तर मुख रखना बताया गया रूप है।'},
+ {id:'toilet',hi:'शौचालय',en:'Toilet',dirs:['northwest','west'],alt:['south'],avoid:['northeast','center'],w:'vidhana',acc:'बने घर में शौचालय हटाना संभव नहीं — द्वार बंद रखना और ईशान को स्वच्छ रखना ही व्यावहारिक परंपरा है।'},
+ {id:'balcony',hi:'बालकनी',en:'Balcony',dirs:['north','east'],alt:['northeast'],avoid:[],w:'shreyas',acc:''},
+ {id:'store',hi:'भंडार',en:'Store',dirs:['southwest','west'],alt:['northwest'],avoid:['northeast'],w:'shreyas',acc:'भारी सामान नैऋत्य ओर, ईशान हल्का — यही बताया गया रूप है।'},
+ {id:'tulsi',hi:'तुलसी',en:'Tulsi',dirs:['north','northeast','east'],alt:[],avoid:[],w:'shreyas',acc:'उत्तर या पूर्व की बालकनी पर्याप्त मानी जाती है।'},
+];
+const R=Object.fromEntries(REG.map(r=>[r.id,r]));
+const TEMPLATES={
+ 'flat-2bhk':{hi:'2 BHK फ्लैट',rooms:['main-door','living','kitchen','puja','master-bed','kids-bed','toilet','toilet','balcony']},
+ 'flat-3bhk':{hi:'3 BHK फ्लैट',rooms:['main-door','living','kitchen','dining','puja','master-bed','kids-bed','kids-bed','toilet','toilet','balcony']},
+ 'villa':{hi:'विला · स्वतंत्र घर',rooms:['main-door','living','kitchen','dining','puja','master-bed','kids-bed','toilet','toilet','store','balcony','tulsi']},
+};
+const PADAS={east:['शिखी','पर्जन्य','जयन्त','इन्द्र','सूर्य','सत्य','भृश','अन्तरिक्ष'],south:['अनिल','पूषा','वितथ','गृहक्षत','यम','गन्धर्व','भृंगराज','मृग'],west:['पितृ','दौवारिक','सुग्रीव','पुष्पदन्त','वरुण','असुर','शोष','पापयक्ष्मा'],north:['रोग','नाग','मुख्य','भल्लाट','सोम','भुजग','अदिति','दिति']};
+const GOOD_PADA={east:[3,4],south:[3,4],west:[3,4],north:[3,4,5]};
+const CLS=['forbidden','differs','preferred-unmet','alternate','in-keeping','unmeasured'];
+const CL={forbidden:'निषिद्ध स्थान',differs:'विधान से भिन्न','preferred-unmet':'श्रेयस् अनुपलब्ध',alternate:'परंपरागत विकल्प','in-keeping':'मेल',unmeasured:'अभी मापा नहीं'};
+const WL={vidhana:'विधान',shreyas:'श्रेयस्'};
+
+function classify(e,zone){ if(zone==null) return 'unmeasured'; if(e.dirs.includes(zone)) return 'in-keeping'; if(e.alt.includes(zone)) return 'alternate'; if(e.avoid.includes(zone)) return 'forbidden'; return e.w==='vidhana'?'differs':'preferred-unmet'; }
+function dikFor(h){ h=((h%360)+360)%360; return DIK[Math.floor(((h+22.5)%360)/45)]; }
+function padaFor(h,facing){ const c={north:0,east:90,south:180,west:270}[facing]; if(c==null) return null; let d=((h-c+180)%360+360)%360-180; if(Math.abs(d)>45) return null; return Math.min(8,Math.max(1,Math.floor((d+45)/11.25)+1)); }
+function cardinalOf(dik){ return {north:'north',east:'east',south:'south',west:'west',northeast:'north',southeast:'east',southwest:'south',northwest:'west'}[dik]; }
+function assess(home){ // home: {rooms:[{id,ord,zone,via}], facing, pada}
+  const rows=home.rooms.map(p=>({...p,e:R[p.id],cls:classify(R[p.id],p.zone)}));
+  const counts=Object.fromEntries(CLS.map(c=>[c,rows.filter(r=>r.cls===c).length]));
+  const groups=CLS.map(c=>({cls:c,rows:rows.filter(r=>r.cls===c)})).filter(g=>g.rows.length);
+  return {rows,counts,groups};
+}
+function label(p){ return R[p.id].hi+(p.ord>1?' '+p.ord:''); }
+function esc(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function withOrd(ids){ const seen={}; return ids.map(id=>{seen[id]=(seen[id]||0)+1; return {id,ord:seen[id],zone:null,via:null};}); }
+
+/* ---------------- shared renderers ---------------- */
+function strip(counts, withZero=true){ return '<div class="strip">'+CLS.filter(c=>c!=='unmeasured'||counts[c]).filter(c=>withZero||counts[c]).map(c=>`<span class="pill c-${c}">${CL[c]}<b>${counts[c]}</b></span>`).join('')+'</div>'; }
+function frow(r, ledger){ const e=r.e; const zone=r.zone; const via=r.via==='compass'?'⌖':r.via==='manual'?'✎':r.via==='plan'?'▦':r.via==='plan-ai-confirmed'?'▦✓':'';
+  return `<div class="frow c-${r.cls}"><div class="t"><b>${esc(label(r))}</b><span class="cls c-${r.cls}">${CL[r.cls]}</span></div>
+  <div class="m"><span class="lab">परंपरा ·</span> ${e.dirs.map(d=>L[d]).join(' / ')}${e.alt.length?` <span class="lab">(विकल्प ${e.alt.map(d=>L[d]).join('/')})</span>`:''}<span class="w">${WL[e.w]}</span></div>
+  ${zone?`<div class="m"><span class="lab">आपके घर में ·</span> ${L[zone]}<span class="via">${via}</span></div>`:''}
+  ${(r.cls==='forbidden'||r.cls==='differs')&&e.acc?`<div class="acc">${esc(e.acc)}</div>`:''}</div>`; }
+function groups(a, ledger){ return a.groups.map(g=>`<div class="grp${ledger?' ledger':''}"><h4 class="c-${g.cls}">${CL[g.cls]}<span>${g.rows.length}</span></h4>${g.rows.map(r=>frow(r,ledger)).join('')}</div>`).join(''); }
+function doorRow(home){ if(!home.facing) return ''; const card=cardinalOf(home.facing); const p=home.pada; const good=p&&GOOD_PADA[card].includes(p);
+  return `<div class="card active"><div class="frow" style="border:0;padding:0"><div class="t"><b>मुख्य द्वार · ${L[home.facing]}</b><span class="cls ${good?'':'c-differs'}">${p?(good?'शुभ पद':'पद परंपरा में अन्यत्र'):'पद नहीं मापा'}</span></div>
+  <div class="m">${p?`<span class="lab">पद ·</span> ${p} · ${PADAS[card][p-1]} <span class="lab">(${L[card]} भाग के 8 में)</span>`:'<span class="lab">पद-वलय द्वार-चरण में दिखता है</span>'}</div>
+  ${p&&!good?`<div class="acc">${esc(R['main-door'].acc)}</div>`:''}</div></div>`; }
+function mandala(home, a, opts={}){ const byZone={}; (a?a.rows:home.rooms).forEach(r=>{ if(r.zone){(byZone[r.zone]=byZone[r.zone]||[]).push(r);} });
+  const cells=GRID.flat().map(z=>`<div class="cell${z==='center'?' center':''}${opts.target&&opts.target(z)?' target':''}" data-z="${z}" tabindex="0"><div class="zl">${L[z]}</div><div class="dp">${DIKPALA[z]}</div><div class="rooms">${(byZone[z]||[]).map(r=>`<span class="rc c-${r.cls||''}">${esc(label(r))}</span>`).join('')}</div></div>`).join('');
+  const f=home.facing; const pos={north:'top:-7px;left:50%;transform:translateX(-50%)',south:'bottom:-7px;left:50%;transform:translateX(-50%)',east:'right:-4px;top:50%;transform:translateY(-50%) rotate(90deg)',west:'left:-4px;top:50%;transform:translateY(-50%) rotate(-90deg)',northeast:'top:-7px;right:6px',northwest:'top:-7px;left:6px',southeast:'bottom:-7px;right:6px',southwest:'bottom:-7px;left:6px'}[f];
+  return `<div class="mandala">${cells}${f?`<span class="door" style="${pos}">द्वार</span>`:''}</div>`; }
+function miniMandala(a){ const m={}; a.rows.forEach(r=>{ if(r.zone&&(!m[r.zone]||CLS.indexOf(r.cls)<CLS.indexOf(m[r.zone]))) m[r.zone]=r.cls; }); return '<div class="mini">'+GRID.flat().map(z=>`<i class="c-${m[z]||''}"></i>`).join('')+'</div>'; }
+function priv(){ return '<div class="priv">यह मानचित्र केवल इस फ़ोन पर है — निर्यात आपके कहने पर ही।</div>'; }
+function closing(){ return '<p class="close">यह शास्त्रीय परंपरा का, भार सहित, पाठ है — घर का नहीं, स्थान का विधान। जो बदला नहीं जा सकता, उसका व्यावहारिक रूप परंपरा ने ही बताया है।</p>'; }
+function topbar(t,s){ return `<div class="topbar"><div class="back">‹</div><div class="ttl">${t}<small>${s}</small></div></div>`; }
+function steps(n){ return '<div class="steps">'+[1,2,3].map(i=>`<span class="${i<=n?'on':''}"></span>`).join('')+'</div>'; }
+
+/* ---------------- chakra (SVG) ---------------- */
+function chakra(heading, size, opts={}){ const S=size, C=S/2, RR=C-10, LR=C-30, CR=Math.round(S*0.16);
+  const rot=heading==null?0:-heading; const facing=heading==null?null:dikFor(heading);
+  let pad=''; if(opts.pada){ for(let i=0;i<32;i++){ const a=(i*11.25-90)*Math.PI/180; const r1=RR-2,r2=RR-(i%4===0?9:5); pad+=`<line x1="${C+Math.cos(a)*r1}" y1="${C+Math.sin(a)*r1}" x2="${C+Math.cos(a)*r2}" y2="${C+Math.sin(a)*r2}" stroke="#6E5230" stroke-width="${i%4===0?1.4:0.7}"/>`; } }
+  const ticks=DIK.map((d,i)=>{const a=(i*45-90)*Math.PI/180; return `<line x1="${C+Math.cos(a)*(RR-6)}" y1="${C+Math.sin(a)*(RR-6)}" x2="${C+Math.cos(a)*RR}" y2="${C+Math.sin(a)*RR}" stroke="#6E5230" stroke-width="1.5"/>`;}).join('');
+  const labels=DIK.map((d,i)=>{const a=(i*45-90)*Math.PI/180; const x=C+Math.cos(a)*LR,y=C+Math.sin(a)*LR; const card=i%2===0; return `<g transform="rotate(${-rot} ${x} ${y})"><text x="${x}" y="${y+(card?5:4)}" text-anchor="middle" font-family="Noto Serif Devanagari" font-size="${card?(S>200?15:12):(S>200?11.5:9.5)}" fill="${d===facing?'#8A3E0B':card?'#1A0E03':'#5A3A1E'}">${L[d]}</text></g>`;}).join('');
+  return `<svg class="chakra" viewBox="0 0 ${S} ${S}" width="${S}" height="${S}" role="img" aria-label="Compass, facing ${facing?EN[facing]:'unknown'}${heading!=null?', '+Math.round(heading)+' degrees':''}">
+  <polygon points="${C-7},22 ${C+7},22 ${C},6" fill="#8A3E0B"/>
+  <circle cx="${C}" cy="${C}" r="${RR}" fill="#F8EFD6" stroke="rgba(138,62,11,0.18)"/>
+  <g class="rose" transform="rotate(${rot} ${C} ${C})">${pad}${ticks}${labels}</g>
+  <circle cx="${C}" cy="${C}" r="${CR}" fill="#F3E7C9" stroke="rgba(138,62,11,0.18)"/>
+  <text x="${C}" y="${C-(facing?6:0)+3}" text-anchor="middle" font-family="Noto Serif Devanagari" font-size="${S>200?10.5:9}" fill="#6E5230">ब्रह्मस्थान</text>
+  ${facing?`<text x="${C}" y="${C+13}" text-anchor="middle" font-family="Noto Serif Devanagari" font-size="${S>200?13:11}" fill="#8A3E0B">${L[facing]} · ${Math.round(heading)}°</text>`:''}</svg>`; }
+function knob(id,val){ return `<div class="knob"><button class="btn sm" data-turn="-15">↺</button><input type="range" min="0" max="359" value="${val}" data-heading aria-label="Turn the compass (stands in for rotating the phone)"><button class="btn sm" data-turn="15">↻</button><span>${val}°</span></div>`; }
+
+/* ---------------- VARIANT A ---------------- */
+const A={template:'flat-3bhk',label:'Prestige 3BHK, 7th floor',heading:12,held:false,tilt:false,metal:false,facing:null,pada:null,rooms:null};
+A.rooms=withOrd(TEMPLATES[A.template].rooms);
+// sample at rest: partly measured
+const SAMPLE_A={'main-door-1':'north','living-1':'north','kitchen-1':'northeast','dining-1':'west','puja-1':'northeast','master-bed-1':'southwest','kids-bed-1':'west','kids-bed-2':'south','toilet-1':'northeast','toilet-2':'northwest','balcony-1':'east'};
+A.rooms.forEach(p=>{const z=SAMPLE_A[p.id+'-'+p.ord]; if(z){p.zone=z;p.via='compass';}}); A.facing='north'; A.pada=4;
+function aStatus(st){ if(st.tilt) return ['फ़ोन समतल रखें — झुका हुआ फ़ोन दिशा बदल देता है।','tilt']; if(st.metal) return ['रीडिंग अस्थिर है — धातु से दूर, फ़ोन ∞ आकार में घुमाएँ।','warn']; if(st.held) return ['दिशा रोकी गई — फिर चालू करने के लिए दबाएँ।','']; return ['फ़ोन समतल रखें — ऊपरी किनारा जिस ओर है, वही दिशा। (सटीक उत्तर · स्रोत: fused)','']; }
+function renderA1(){ const el=document.getElementById('a1'); const [msg,cls]=aStatus(A); const card=cardinalOf(dikFor(A.heading)); const p=padaFor(A.heading,card);
+  el.innerHTML=topbar('नया घर देखें','New home · step 1 of 3')+steps(1)+`
+  <div class="eyebrow"><span class="d">घर का प्रकार</span></div><div class="chips">${Object.entries(TEMPLATES).map(([k,t])=>`<span class="chip ${A.template===k?'on':''}" data-tpl="${k}" tabindex="0">${t.hi}</span>`).join('')}<span class="chip" tabindex="0">अपना</span></div>
+  <div class="field"><label>नाम · label</label><div class="input">${esc(A.label)}</div></div>
+  <div class="eyebrow"><span class="d">घर का मुख</span> · main door</div>
+  <p class="lede">मुख्य द्वार के भीतर खड़े होकर बाहर की ओर देखें। फ़ोन समतल रखें।<br><em>Stand inside the main door, facing out.</em></p>
+  <div style="display:flex;justify-content:center;margin-top:6px">${chakra(A.heading,232,{pada:true})}</div>
+  <div class="status ${cls}">${msg}</div>${knob('a',A.heading)}
+  <div class="row" style="justify-content:center;margin-top:8px;gap:6px"><button class="btn sm ${A.tilt?'held':''}" data-tog="tilt">tilt</button><button class="btn sm ${A.metal?'held':''}" data-tog="metal">metal</button><button class="btn ${A.held?'held':''}" data-hold>${A.held?'▶ फिर चालू':'◼ दिशा रोकें · Hold'}</button></div>
+  <div class="card active" style="margin-top:12px"><div class="row" style="justify-content:space-between"><b style="font-family:var(--deva)">मुख · ${L[dikFor(A.heading)]}</b><span style="font-family:var(--deva);font-size:12px;color:var(--saffron-deep)">${p?`पद ${p} · ${PADAS[card][p-1]}`:''}</span></div>
+  <div class="hint" style="text-align:left;margin-top:3px">${A.facing?`दर्ज: ${L[A.facing]} · पद ${A.pada||'—'}`:'अभी दर्ज नहीं'}</div>
+  <div class="row" style="margin-top:8px;gap:6px"><button class="btn sm fill" data-rec-facing>यह मुख दर्ज करें</button><button class="btn sm" data-manual>बिना सेंसर · चुनें</button></div></div>
+  <div class="row" style="justify-content:flex-end;margin-top:14px"><button class="btn fill">आगे · कक्ष ›</button></div>`;
+  wireKnob(el,h=>{if(!A.held){A.heading=h;renderA1();}});
+  el.querySelectorAll('[data-tpl]').forEach(c=>c.onclick=()=>{A.template=c.dataset.tpl;A.rooms=withOrd(TEMPLATES[A.template].rooms);A.rooms.forEach(p=>{const z=SAMPLE_A[p.id+'-'+p.ord]; if(z){p.zone=z;p.via='compass';}});renderA1();renderA2();renderA3();});
+  el.querySelectorAll('[data-tog]').forEach(b=>b.onclick=()=>{A[b.dataset.tog]=!A[b.dataset.tog];renderA1();});
+  el.querySelector('[data-hold]').onclick=()=>{A.held=!A.held;renderA1();};
+  el.querySelector('[data-rec-facing]').onclick=()=>{A.facing=dikFor(A.heading);A.pada=padaFor(A.heading,cardinalOf(A.facing));renderA1();renderA3();};
+  el.querySelector('[data-manual]').onclick=()=>{A.facing='east';A.pada=null;renderA1();renderA3();};
+}
+function wireKnob(el,cb){ const r=el.querySelector('[data-heading]'); if(!r) return; r.oninput=()=>cb(+r.value); el.querySelectorAll('[data-turn]').forEach(b=>b.onclick=()=>cb(((+r.value)+(+b.dataset.turn)+360)%360)); }
+function renderA2(){ const el=document.getElementById('a2'); const done=A.rooms.filter(r=>r.zone).length;
+  el.innerHTML=topbar('कक्ष मापें','Rooms · step 2 of 3')+steps(2)+`
+  <p class="lede">घर के केंद्र में खड़े हों। फ़ोन जिस कक्ष की ओर करें, उसका चिप दबाएँ।<br><em>Stand at the centre; point at a room, tap its chip.</em></p>
+  <div style="display:flex;justify-content:center;margin-top:4px">${chakra(A.heading,168)}</div>${knob('a2',A.heading)}
+  <div class="eyebrow"><span class="d">${esc(TEMPLATES[A.template].hi)}</span> · ${done}/${A.rooms.length} मापे</div>
+  <div class="chips">${A.rooms.map((p,i)=>`<span class="chip ${p.zone?'done':''}" data-i="${i}" tabindex="0">${esc(label(p))}${p.zone?`<span class="z">${L[p.zone]}</span>`:''}</span>`).join('')}</div>
+  <div class="row" style="margin-top:10px;gap:6px"><button class="btn sm" data-center>चयनित कक्ष = केंद्र</button><span class="hint">छूटा कक्ष बाद में भी मापा जा सकता है</span></div>
+  <div class="row" style="justify-content:space-between;margin-top:16px"><button class="btn">‹ मुख</button><button class="btn fill">सारांश देखें ›</button></div>`;
+  wireKnob(el,h=>{A.heading=h;renderA2();renderA1();});
+  el.querySelectorAll('[data-i]').forEach(c=>c.onclick=()=>{const p=A.rooms[+c.dataset.i]; if(p.zone&&A._pendingCenter){p.zone='center';p.via='manual';A._pendingCenter=false;} else {p.zone=dikFor(A.heading);p.via='compass';} renderA2();renderA3();});
+  el.querySelector('[data-center]').onclick=()=>{A._pendingCenter=true; el.querySelector('.hint').textContent='अब उस कक्ष का चिप दबाएँ जो केंद्र में है';};
+}
+function renderA3(){ const el=document.getElementById('a3'); const a=assess(A);
+  el.innerHTML=topbar(esc(A.label),`${TEMPLATES[A.template].hi} · मुख ${A.facing?L[A.facing]:'—'}`)+steps(3)+
+  `<div class="eyebrow"><span class="d">वास्तु पुरुष मंडल</span> · आपके कक्ष</div>`+mandala(A,a)+strip(a.counts)+doorRow(A)+groups(a,false)+closing()+priv()+
+  `<div class="row" style="margin-top:12px;gap:6px"><button class="btn sm">पुनः मापें</button><button class="btn sm">साझा करें · पूर्ण पाठ</button></div>`;
+}
+renderA1();renderA2();renderA3();
+
+/* ---------------- VARIANT B ---------------- */
+const B={facing:'east',sel:null,rooms:withOrd(TEMPLATES['flat-3bhk'].rooms),label:'Sobha Lake View · 3BHK'};
+const SAMPLE_B={'main-door-1':'east','living-1':'east','kitchen-1':'southeast','dining-1':'west','puja-1':'north','master-bed-1':'southwest','kids-bed-1':'northwest','toilet-1':'center','toilet-2':'west','balcony-1':'northeast'};
+B.rooms.forEach(p=>{const z=SAMPLE_B[p.id+'-'+p.ord]; if(z){p.zone=z;p.via='manual';}});
+const HOME2={label:'Brigade Meadows · 3BHK',facing:'south',pada:3,rooms:withOrd(TEMPLATES['flat-3bhk'].rooms)};
+const SAMPLE_H2={'main-door-1':'south','living-1':'north','kitchen-1':'northwest','dining-1':'east','puja-1':'northeast','master-bed-1':'south','kids-bed-1':'west','kids-bed-2':'northwest','toilet-1':'west','toilet-2':'southeast','balcony-1':'north'};
+HOME2.rooms.forEach(p=>{const z=SAMPLE_H2[p.id+'-'+p.ord]; if(z){p.zone=z;p.via='manual';}});
+function renderB1(){ const el=document.getElementById('b1'); const sel=B.sel!=null?B.rooms[B.sel]:null; const e=sel?R[sel.id]:null;
+  el.innerHTML=topbar('मंडल पर रखें','Place on the mandala')+`
+  <div class="eyebrow"><span class="d">मुख्य द्वार किस ओर</span></div><div class="chips">${DIK.map(d=>`<span class="chip ${B.facing===d?'on':''}" data-f="${d}" tabindex="0">${L[d]}</span>`).join('')}</div>
+  <div class="eyebrow"><span class="d">कक्ष चुनें, फिर खाना दबाएँ</span></div>
+  <div class="chips">${B.rooms.map((p,i)=>`<span class="chip ${B.sel===i?'on':(p.zone?'done':'')}" data-i="${i}" tabindex="0">${esc(label(p))}${p.zone&&B.sel!==i?`<span class="z">${L[p.zone]}</span>`:''}</span>`).join('')}</div>
+  ${mandala(B,null)}
+  <p class="hint" style="margin-top:8px">${sel?`${esc(label(sel))} — जिस खाने में है, उसे दबाएँ`:'रखते समय कोई मूल्यांकन नहीं — वह अगले पर्दे पर है'}</p>
+  <div class="row" style="justify-content:flex-end;margin-top:12px"><button class="btn fill">विवेचन देखें ›</button></div>`;
+  el.querySelectorAll('[data-f]').forEach(c=>c.onclick=()=>{B.facing=c.dataset.f; const md=B.rooms.find(r=>r.id==='main-door'); if(md){md.zone=B.facing;md.via='manual';} renderB1();renderB2();renderB3();});
+  el.querySelectorAll('[data-i]').forEach(c=>c.onclick=()=>{B.sel=B.sel===+c.dataset.i?null:+c.dataset.i;renderB1();});
+  el.querySelectorAll('.cell').forEach(c=>{const h=()=>{ if(B.sel==null) return; B.rooms[B.sel].zone=c.dataset.z; B.rooms[B.sel].via='manual'; B.sel=null; renderB1();renderB2();renderB3(); }; c.onclick=h; c.onkeydown=ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();h();}};});
+}
+function renderB2(){ const el=document.getElementById('b2'); const a=assess(B);
+  el.innerHTML=`<div class="topbar"><div class="back">‹</div><div class="ttl" style="flex:1">${esc(B.label)}<small>मुख ${L[B.facing]} · ledger view</small></div>${miniMandala(a)}</div>`+strip(a.counts)+`<div class="hint" style="text-align:left;margin-top:6px">क्रम: वर्ग के अनुसार, वर्ग के भीतर शास्त्र-सूची का क्रम — कोई अंक नहीं।</div>`+groups(a,true)+closing()+priv();
+}
+function renderB3(){ const el=document.getElementById('b3'); const a1=assess(B), a2=assess(HOME2); const ids=[...new Set([...B.rooms,...HOME2.rooms].map(label))];
+  const cell=(a,name)=>{const r=a.rows.find(x=>label(x)===name); return r?`<div class="c-${r.cls}">${r.zone?L[r.zone]:'—'}<br><span class="k">${CL[r.cls]}</span></div>`:'<div class="k">—</div>';};
+  el.innerHTML=topbar('तुलना','Compare · 2 homes')+`<div class="cmp"><div></div><div class="h">${esc(B.label)}</div><div class="h">${esc(HOME2.label)}</div>
+  <div class="k">मुख</div><div>${L[B.facing]}</div><div>${L[HOME2.facing]} · पद ${HOME2.pada} ${PADAS.south[HOME2.pada-1]}</div>
+  ${CLS.filter(c=>c!=='unmeasured').map(c=>`<div class="k">${CL[c]}</div><div class="c-${c}"><b>${a1.counts[c]}</b></div><div class="c-${c}"><b>${a2.counts[c]}</b></div>`).join('')}
+  ${ids.map(n=>`<div class="k" style="font-weight:600;color:var(--ink)">${esc(n)}</div>${cell(a1,n)}${cell(a2,n)}`).join('')}</div>
+  <p class="close">कौन-सा घर — यह निर्णय आपका है; यहाँ केवल विधान का पाठ है।</p>${priv()}`;
+}
+renderB1();renderB2();renderB3();
+
+/* ---------------- VARIANT C ---------------- */
+const PLAN_W=300, PLAN_H=240;
+const C={north:0,center:{x:150,y:120},sel:null,pins:[],label:'Godrej Woods · 3BHK (brochure plan)',showGrid:false,mode:'pin',aiConfirmed:{},aiSheet:true};
+const PLAN_ROOMS=[{id:'living',x:20,y:20,w:140,h:100,hi:'बैठक'},{id:'kitchen',x:160,y:20,w:120,h:70,hi:'रसोई'},{id:'dining',x:160,y:90,w:120,h:50,hi:'भोजन'},{id:'master-bed',x:20,y:120,w:120,h:100,hi:'मुख्य शयन'},{id:'kids-bed',x:140,y:140,w:80,h:80,hi:'बच्चों का'},{id:'toilet',x:220,y:140,w:60,h:40,hi:'शौचालय'},{id:'puja',x:220,y:180,w:60,h:40,hi:'पूजा'},{id:'balcony',x:20,y:220,w:120,h:16,hi:'बालकनी'}];
+C.pins=[{id:'living',ord:1,x:80,y:70},{id:'kitchen',ord:1,x:220,y:55},{id:'dining',ord:1,x:220,y:115},{id:'master-bed',ord:1,x:80,y:170},{id:'kids-bed',ord:1,x:180,y:180},{id:'toilet',ord:1,x:250,y:160},{id:'puja',ord:1,x:250,y:200},{id:'main-door',ord:1,x:150,y:232}].map(p=>({...p,via:'plan'}));
+const AI_PINS=[{id:'living',x:82,y:66,conf:.94},{id:'kitchen',x:218,y:52,conf:.91},{id:'master-bed',x:78,y:172,conf:.88},{id:'toilet',x:252,y:158,conf:.62},{id:'puja',x:248,y:198,conf:.57},{id:'main-door',x:150,y:234,conf:.71}];
+function zoneOfPin(p){ const dx=p.x-C.center.x, dy=p.y-C.center.y; const dist=Math.hypot(dx,dy); const diag=Math.hypot(PLAN_W,PLAN_H); if(dist<diag*0.12) return 'center'; const screenAng=(Math.atan2(dx,-dy)*180/Math.PI+360)%360; return dikFor(screenAng-C.north); }
+function homeC(pins){ return {label:C.label,facing:(()=>{const d=pins.find(p=>p.id==='main-door'); return d?zoneOfPin(d):null;})(),pada:null,rooms:pins.map(p=>({id:p.id,ord:p.ord||1,zone:zoneOfPin(p),via:p.via||'plan'}))}; }
+function planSvg(withGrid){ const g=withGrid?(()=>{const cx=C.center.x,cy=C.center.y,r=400,t=`rotate(${C.north} ${cx} ${cy})`; let s=''; for(let i=0;i<8;i++){const a=(i*45+22.5-90)*Math.PI/180; s+=`<line x1="${cx}" y1="${cy}" x2="${cx+Math.cos(a)*r}" y2="${cy+Math.sin(a)*r}" stroke="rgba(184,98,27,.45)" stroke-dasharray="3 3"/>`;} s+=`<circle cx="${cx}" cy="${cy}" r="${Math.hypot(PLAN_W,PLAN_H)*0.12}" fill="none" stroke="rgba(184,98,27,.6)" stroke-dasharray="3 3"/>`; return `<g transform="${t}">${s}</g>`;})():'';
+  const na=C.north; const ax=PLAN_W-26, ay=26;
+  return `<svg viewBox="0 0 ${PLAN_W} ${PLAN_H}" aria-label="Sample 3BHK floor plan">
+  <rect x="1" y="1" width="${PLAN_W-2}" height="${PLAN_H-2}" fill="#fbf4e3" stroke="#5A3A1E" stroke-width="2"/>
+  ${PLAN_ROOMS.map(r=>`<rect x="${r.x}" y="${r.y}" width="${r.w}" height="${r.h}" fill="none" stroke="#6E5230" stroke-width="1.2"/><text x="${r.x+6}" y="${r.y+14}" font-family="Noto Serif Devanagari" font-size="9.5" fill="#6E5230">${r.hi}</text>`).join('')}
+  <rect x="138" y="${PLAN_H-6}" width="24" height="6" fill="#8A3E0B"/>
+  ${g}
+  <g transform="rotate(${na} ${ax} ${ay})"><circle cx="${ax}" cy="${ay}" r="14" fill="#F8EFD6" stroke="rgba(138,62,11,.3)"/><polygon points="${ax},${ay-11} ${ax-4},${ay+2} ${ax+4},${ay+2}" fill="#8A3E0B"/><text x="${ax}" y="${ay+11}" text-anchor="middle" font-family="Noto Serif Devanagari" font-size="7" fill="#6E5230">उ</text></g></svg>`; }
+function pinsHtml(pins,a,ai){ return pins.map((p,i)=>{const r=a?a.rows[i]:null; return `<span class="pin ${r?'c-'+r.cls:''}${ai?' ai':''}" style="left:${p.x/PLAN_W*100}%;top:${p.y/PLAN_H*100}%">${esc(label({id:p.id,ord:p.ord||1}))} · ${L[zoneOfPin(p)]}</span>`;}).join('')+`<span class="cpin" style="left:${C.center.x/PLAN_W*100}%;top:${C.center.y/PLAN_H*100}%"></span>`; }
+function wirePlan(el,onTap){ const pl=el.querySelector('.plan'); if(!pl) return; pl.onclick=ev=>{const b=pl.getBoundingClientRect(); onTap({x:(ev.clientX-b.left)/b.width*PLAN_W,y:(ev.clientY-b.top)/b.height*PLAN_H});}; const n=el.querySelector('[data-north]'); if(n){n.oninput=()=>{C.north=+n.value;renderC1();renderC2();renderC3();};} }
+function renderC1(){ const el=document.getElementById('c1'); const home=homeC(C.pins); const a=assess(home); const templ=TEMPLATES['flat-3bhk'].rooms; const placed=new Set(C.pins.map(p=>p.id+'-'+(p.ord||1)));
+  el.innerHTML=topbar('नक्शे पर चिह्नित करें','Mark the floor plan · F1')+`
+  <div class="row" style="justify-content:space-between"><span class="hint">ब्रोशर का उत्तर-चिह्न मिलाएँ</span><span class="hint">उत्तर ${C.north}°</span></div>
+  <div class="knob" style="justify-content:flex-start;margin-top:2px"><input type="range" min="0" max="359" value="${C.north}" data-north aria-label="North arrow angle" style="width:100%"></div>
+  <div class="plan">${planSvg(false)}${pinsHtml(C.pins,a)}</div>
+  <div class="eyebrow"><span class="d">कक्ष चुनें, फिर नक्शे पर दबाएँ</span></div>
+  <div class="chips">${withOrd(templ).map(p=>{const k=p.id+'-'+p.ord; const on=C.sel===k; return `<span class="chip ${on?'on':(placed.has(k)?'done':'')}" data-k="${k}" tabindex="0">${esc(label(p))}</span>`;}).join('')}<span class="chip ${C.mode==='center'?'on':''}" data-centermode tabindex="0">◎ केंद्र</span></div>
+  ${strip(a.counts,false)}
+  <div class="row" style="justify-content:flex-end;margin-top:12px"><button class="btn fill">विवेचन देखें ›</button></div>`;
+  wirePlan(el,pt=>{ if(C.mode==='center'){C.center=pt;C.mode='pin';} else if(C.sel){const [id,ord]=[C.sel.replace(/-\d+$/,''),+C.sel.split('-').pop()]; const ex=C.pins.find(p=>p.id===id&&(p.ord||1)===ord); if(ex){ex.x=pt.x;ex.y=pt.y;} else C.pins.push({id,ord,x:pt.x,y:pt.y,via:'plan'}); C.sel=null;} renderC1();renderC2();renderC3(); });
+  el.querySelectorAll('[data-k]').forEach(c=>c.onclick=()=>{C.sel=C.sel===c.dataset.k?null:c.dataset.k;C.mode='pin';renderC1();});
+  el.querySelector('[data-centermode]').onclick=()=>{C.mode=C.mode==='center'?'pin':'center';C.sel=null;renderC1();};
+}
+function renderC2(){ const el=document.getElementById('c2'); const home=homeC(C.pins); const a=assess(home); const lead=a.rows.filter(r=>r.cls!=='unmeasured').sort((x,y)=>CLS.indexOf(x.cls)-CLS.indexOf(y.cls)).slice(0,3);
+  el.innerHTML=topbar(esc(C.label),`मुख ${home.facing?L[home.facing]:'—'} · plan view`)+`
+  <div class="row" style="justify-content:flex-end;gap:6px"><button class="btn sm ${C.showGrid?'':'held'}" data-v="plan">नक्शा</button><button class="btn sm ${C.showGrid?'held':''}" data-v="grid">ग्रिड</button></div>
+  ${C.showGrid?mandala(home,a):`<div class="plan" style="cursor:default">${planSvg(true)}${pinsHtml(C.pins,a)}</div>`}
+  ${strip(a.counts)}<div class="eyebrow"><span class="d">प्रमुख</span> · leading findings</div>${lead.map(r=>frow(r,false)).join('')}
+  <div class="row" style="justify-content:center;margin-top:8px"><button class="btn sm">सब देखें · ${a.rows.length}</button></div>${closing()}${priv()}`;
+  el.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{C.showGrid=b.dataset.v==='grid';renderC2();});
+}
+function renderC3(){ const el=document.getElementById('c3'); const confirmed=AI_PINS.filter(p=>C.aiConfirmed[p.id]); const home=homeC(confirmed.map(p=>({...p,ord:1,via:'plan-ai-confirmed'}))); const a=assess(home);
+  const findId=id=>{const i=a.rows.findIndex(r=>r.id===id); return i>=0?i+1:null;};
+  const sentences=[ {ids:['kitchen'],t:`रसोई ${home.rooms.find(r=>r.id==='kitchen')?L[zoneOfPin(AI_PINS.find(p=>p.id==='kitchen'))]:''} में है — आग्नेय का विधान यहाँ ${classify(R.kitchen,zoneOfPin(AI_PINS.find(p=>p.id==='kitchen')))==='in-keeping'?'पूरा होता है':'भिन्न है'}।`}, {ids:['toilet'],t:`शौचालय की स्थिति पर परंपरा का निषेध देखें और द्वार बंद रखने का व्यावहारिक रूप याद रखें।`}, {ids:['puja'],t:`पूजा स्थान के लिए पूर्व या उत्तर दीवार का विकल्प परंपरा स्वीकार करती है।`}, {ids:['__remedy'],t:`एक पिरामिड यंत्र रखने से यह ठीक हो जाएगा।`} ];
+  const rendered=sentences.map(s=>{const ids=s.ids.map(findId); if(ids.some(x=>x==null)||/यंत्र|उपाय|remed/i.test(s.t)) return null; return `<span>${esc(s.t)}${ids.map(i=>`<span class="cite">${i}</span>`).join('')}</span>`;}).filter(Boolean);
+  el.innerHTML=topbar('योजना AI से पढ़वाएँ','AI pre-read · F2 (2027)')+`
+  <div class="plan" style="cursor:default">${planSvg(false)}${pinsHtml(AI_PINS.map(p=>({...p,ord:1})),null,true)}</div>
+  <div class="eyebrow"><span class="d">पिन पुष्टि करें</span> · ${confirmed.length}/${AI_PINS.length} confirmed</div>
+  <div class="aipins">${AI_PINS.map(p=>`<div class="aipin ${C.aiConfirmed[p.id]?'ok':''}"><span>${esc(R[p.id].hi)} · ${L[zoneOfPin(p)]}</span><span class="conf">${Math.round(p.conf*100)}%</span><span class="sp"></span>${C.aiConfirmed[p.id]?`<button data-un="${p.id}">हटाएँ</button>`:`<button data-ok="${p.id}">✓ ठीक</button><button>खिसकाएँ</button>`}</div>`).join('')}</div>
+  ${confirmed.length?strip(a.counts):'<p class="hint" style="margin-top:8px">बिना पुष्टि कोई विवेचन नहीं — अपुष्ट पिन का मूल्यांकन नहीं होता।</p>'}
+  <div class="eyebrow"><span class="d">संकेत</span> · grounded pointers</div>
+  <p class="narr">${rendered.length?rendered.join(' '):'<em class="hint">पुष्ट पिनों पर ही संकेत बनते हैं।</em>'}</p>
+  <p class="hint" style="text-align:left;margin-top:6px">4 वाक्य आए, ${rendered.length} दिखे — बिना वैध id या उपाय-शब्द वाला वाक्य कभी नहीं दिखता।</p>
+  ${C.aiSheet?`<div class="sheet"><h5>यह फ़ोन से बाहर जाएगा</h5><ul><li>नक्शे की छवि (एक बार, पढ़ने के लिए)</li><li>बाद में: विवेचन का JSON — नाम या पता नहीं</li><li>सर्वर पर कुछ संग्रहीत नहीं</li></ul><div class="row" style="gap:6px"><button class="btn fill" data-consent>पढ़वाएँ</button><button class="btn" data-nocons>नहीं — पूर्ण पाठ साझा करूँगा</button></div></div>`:''}`;
+  el.querySelectorAll('[data-ok]').forEach(b=>b.onclick=()=>{C.aiConfirmed[b.dataset.ok]=true;renderC3();});
+  el.querySelectorAll('[data-un]').forEach(b=>b.onclick=()=>{delete C.aiConfirmed[b.dataset.un];renderC3();});
+  const c=el.querySelector('[data-consent]'); if(c) c.onclick=()=>{C.aiSheet=false;renderC3();}; const n=el.querySelector('[data-nocons]'); if(n) n.onclick=()=>{C.aiSheet=false;renderC3();};
+}
+C.aiConfirmed={living:true,kitchen:true,'master-bed':true};
+renderC1();renderC2();renderC3();
+})();
+</script>
+</body>
+</html>

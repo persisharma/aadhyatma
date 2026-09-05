@@ -6,6 +6,7 @@
 | **Parent** | [PRD-24 वास्तु दिशा](./24-vastu-disha.md) §4 Phase 2 (this document IS that phase line) |
 | **Design** | `design.md` §66 (to be extended as §66.1–§66.8 in the build PRs) |
 | **Contract** | `RULEBOOK.md` §22 (rule 5 amended, rules 11–17 added — see §8) |
+| **Prototype** | [`docs/ghar-vastu-prototype.html`](../../ghar-vastu-prototype.html) — three live UX variants (A · चक्कर compass walk, B · मंडल placement + ledger + compare, C · floor-plan mark-up + AI pre-read), one shared five-class engine; **registry rows, weights and pada names in it are illustrative placeholders** |
 | **T-shirt size** | A: M · B: L (content-gated) · C: L · D: S · E: L · F1: M (store) · F2: L (backend) |
 | **Release** | **Parts A–E and F0 ship OTA at the 1.4.8 runtime** — `expo-sensors`, `expo-location`, `expo-haptics`, `expo-sharing`, `expo-file-system`, `react-native-svg` are all in the shipped binary. **F1 needs `expo-image-picker` (new native module → store release).** **F2 needs the runtime backend** the 2027 bets introduce in Stage 2 (PRD-32); it cannot ship before that and is planned here so the data shapes are ready for it. |
 
