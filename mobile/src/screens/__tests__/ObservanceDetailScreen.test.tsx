@@ -23,6 +23,7 @@ import type { UpvasInfoEntry } from '@/panchang/types';
 const mockNavigation = {
   goBack: jest.fn(),
   navigate: jest.fn(),
+  push: jest.fn(),
 };
 
 jest.mock('@react-navigation/native', () => ({
@@ -74,6 +75,15 @@ jest.mock('@/panchang/vratCatalog', () => {
 const mockGetUpvasInfo = jest.fn((_id: string): UpvasInfoEntry | null => null);
 jest.mock('@/panchang/upvasContent', () => ({
   getUpvasInfo: (id: string) => mockGetUpvasInfo(id),
+}));
+
+// PRD-28 arc strip collaborators: the strip reads notification permission for
+// its reminder note and the family's occurrence-scoped choices.
+jest.mock('@/contexts/NotificationPreferencesContext', () => ({
+  useNotificationPreferences: () => ({ permissionStatus: 'granted' }),
+}));
+jest.mock('@/panchang/useArcChoices', () => ({
+  useArcChoices: () => ({ choices: {}, hydrated: true }),
 }));
 
 const mockUseUpvasParana = jest.fn((): unknown => null);
@@ -245,4 +255,37 @@ test('a draft (filtered) entry is indistinguishable from no entry on the screen'
   const r = renderDetail('karwa-chauth'); // upvasId set, registry mock returns null
   expect(has(r, 'observance-upvas-panel')).toBe(false);
   expect(texts(r)).toContain('पूजा विधि'); // falls back to the shipped vidhi-only block
+});
+
+// ─── PRD-28 पर्व-अर्क strip ─────────────────────────────────────────────────
+
+test('arc strip: absent for a rule outside every arc — every other detail page is unchanged', () => {
+  const r = renderDetail('sankashti-chaturthi-vrat');
+  expect(has(r, 'observance-arc-strip')).toBe(false);
+  expect(has(r, 'arc-duration-chooser')).toBe(false);
+});
+
+test('arc strip: the sthapana rule renders the strip + the duration chooser with nothing selected and no visarjan', () => {
+  const r = renderDetail('ganesh-chaturthi');
+  expect(has(r, 'observance-arc-strip')).toBe(true);
+  expect(has(r, 'arc-duration-chooser')).toBe(true);
+  expect(has(r, 'arc-visarjan-row')).toBe(false);
+  const body = texts(r);
+  expect(body).toContain('कितने दिन विराजेंगे?');
+  expect(body).toContain('बाद में');
+  // The shipped How-to-observe card is untouched beneath it.
+  expect(has(r, 'observance-vidhi-card')).toBe(true);
+});
+
+test('arc strip: a Diwali day renders the five-day arc without a chooser; a slot tap pushes that day’s detail', () => {
+  const r = renderDetail('bhai-dooj');
+  expect(has(r, 'observance-arc-strip')).toBe(true);
+  expect(has(r, 'arc-duration-chooser')).toBe(false);
+  const body = texts(r);
+  expect(body).toContain('धनतेरस');
+  expect(body).toContain('नरक चतुर्दशी');
+  expect(body).toContain('गोवर्धन पूजा');
+  const slot = r.root.findAllByProps({ testID: 'arc-slot-1' })[0];
+  act(() => slot.props.onPress());
+  expect(mockNavigation.push).toHaveBeenCalledWith('ObservanceDetail', { ruleId: 'dhanteras' });
 });

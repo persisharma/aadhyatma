@@ -20,7 +20,7 @@
  */
 import assert from 'node:assert/strict';
 
-import { VIDHI_BY_ID, VIDHI_ENTRIES, getVidhiForFestival } from '../vidhi';
+import { ALL_VIDHI_ENTRIES, VIDHI_BY_ID, VIDHI_DRAFTS, VIDHI_ENTRIES, getVidhiById, getVidhiForFestival, isVidhiPublished } from '../vidhi';
 import { findDevanagariDefects, describeDevanagariDefect } from '../devanagariWellFormed';
 import { KATHA_CONTENT_BY_ID } from '../../panchang/kathaContent';
 import { OBSERVANCE_RULES } from '../../panchang/festivals';
@@ -44,8 +44,12 @@ const activeLibraryIds = new Set(
 
 assert.ok(VIDHI_ENTRIES.length >= 1, 'at least one published vidhi');
 
-for (const vidhi of VIDHI_ENTRIES) {
+// Every authored entry — published AND draft — meets the content contract; a
+// draft is held to the same bar so flipping its status is a review, not a
+// rewrite (RULEBOOK §26).
+for (const vidhi of ALL_VIDHI_ENTRIES) {
   const at = `vidhi '${vidhi.id}'`;
+  const published = isVidhiPublished(vidhi);
 
   nonEmpty(vidhi.titleHi, `${at}.titleHi`);
   nonEmpty(vidhi.titleEn, `${at}.titleEn`);
@@ -71,7 +75,11 @@ for (const vidhi of VIDHI_ENTRIES) {
   for (const festivalId of vidhi.festivalIds) {
     assert.ok(ruleIds.has(festivalId), `${at}: unknown festival rule '${festivalId}'`);
     const resolved = getVidhiForFestival(festivalId);
-    assert.equal(resolved?.id, vidhi.id, `${at}: getVidhiForFestival('${festivalId}')`);
+    if (published) {
+      assert.equal(resolved?.id, vidhi.id, `${at}: getVidhiForFestival('${festivalId}')`);
+    } else {
+      assert.notEqual(resolved?.id, vidhi.id, `${at}: a DRAFT must never resolve from a festival hook`);
+    }
   }
 
   // Samagri.
@@ -179,6 +187,36 @@ for (const rule of OBSERVANCE_RULES) {
   }
 }
 
+// ─── PRD-28 Phase B — the visarjan vidhi family enters as DRAFT (RULEBOOK §26) ──
+assert.deepEqual(
+  VIDHI_DRAFTS.map((vidhi) => vidhi.id),
+  ['ganesh-visarjan-uttar-puja', 'durga-visarjan'],
+  'both visarjan entries are authored and both are draft until the two-source review'
+);
+for (const draft of VIDHI_DRAFTS) {
+  const at = `draft '${draft.id}'`;
+  assert.equal(draft.status, 'draft', `${at}.status`);
+  assert.equal(getVidhiById(draft.id), null, `${at}: getVidhiById hides drafts`);
+  assert.equal(VIDHI_BY_ID.has(draft.id), false, `${at}: not in the published map`);
+  assert.ok(!VIDHI_ENTRIES.some((v) => v.id === draft.id), `${at}: not in the published registry`);
+  assert.equal(draft.steps.some((step) => step.mantra), false, `${at}: no mantra ships unverified (§11.3)`);
+  assert.match(draft.source.canonicalEditionStatus, /^DRAFT — NOT VERIFIED/, `${at}: status says what is outstanding`);
+  assert.match(draft.source.canonicalEditionStatus, /RULEBOOK §26/, `${at}: names the contract that gates the flip`);
+  // A visarjan guide must state the clay-vs-permanent-murti boundary.
+  assert.ok(
+    draft.steps.some((step) => /permanent/.test(step.instructionEn) && /स्थायी/.test(step.instructionHi)),
+    `${at}: the permanent-murti boundary is stated`
+  );
+}
+for (const published of VIDHI_ENTRIES) {
+  assert.equal(published.status ?? 'verified', 'verified', `'${published.id}' is exposed only when verified`);
+}
+// Arc hooks: each visarjan vidhi hangs off the arc's customary visarjan rule.
+assert.deepEqual(VIDHI_DRAFTS.find((v) => v.id === 'ganesh-visarjan-uttar-puja')!.festivalIds, ['anant-chaturdashi']);
+assert.deepEqual(VIDHI_DRAFTS.find((v) => v.id === 'durga-visarjan')!.festivalIds, ['dussehra']);
+assert.equal(getVidhiForFestival('anant-chaturdashi'), null, 'no draft leaks through a festival hook');
+assert.equal(getVidhiForFestival('dussehra'), null, 'no draft leaks through a festival hook');
+
 // Published catalog pins: festival hooks, one personal-tithi guide, and
 // shipped-text hand-offs.
 assert.deepEqual(
@@ -271,7 +309,7 @@ for (const [vidhiId, ids] of expectedRefs) {
 }
 
 console.log(
-  `vidhi content: ${VIDHI_ENTRIES.length} vidhi(s), ` +
+  `vidhi content: ${VIDHI_ENTRIES.length} published vidhi(s) + ${VIDHI_DRAFTS.length} draft(s), ` +
     `${VIDHI_ENTRIES.reduce((n, v) => n + v.steps.length, 0)} steps, ` +
     `${VIDHI_ENTRIES.reduce((n, v) => n + v.steps.filter((s) => s.mantra).length, 0)} transcribed mantras — all gates green.`
 );

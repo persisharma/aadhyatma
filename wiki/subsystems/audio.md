@@ -2,7 +2,7 @@
 title: Audio & Read Aloud
 type: subsystem
 sources: [mobile/src/contexts/AudioPlayerContext.tsx, mobile/src/contexts/ReadAloudContext.tsx, mobile/src/contexts/ReadAloudPrefsContext.tsx, mobile/src/audio/audioSession.ts, mobile/src/audio/playbackArbiter.ts, mobile/src/readAloud/, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/components/ReadAloudSettingsSheet.tsx, mobile/src/components/RateStepper.tsx, mobile/src/components/JapamAudioPlayer.tsx, mobile/src/components/audio/MiniPlayer.tsx, mobile/src/screens/audio/NowPlayingScreen.tsx, mobile/src/data/audio/tracks.ts, design.md, RULEBOOK.md]
-last_verified_date: 2026-07-31
+last_verified_date: 2026-09-04
 confidence: high
 status: current
 ---
@@ -65,7 +65,12 @@ scrollToPage}`. The reader owns the FlatList, so it owns scrolling; the controll
 **Reader wiring.** `_useReaderReadAloud.ts` builds the session, owns the swipe latch, and stops on
 unmount / `sourceId` change. `ReadAloudButton` renders on the language-toggle row, pinned right
 (`readAloudSlot`), below the progress bar — not in `ReaderHeader`'s `right` slot. Enabled on
-**Gita + Chalisa** in v1; the adapter already covers every other shape, so fan-out is wiring only.
+**every reader** (all 21 `<Pascal>ReaderScreen`s, plus `VidhiConductScreen`) since 2026-09-04;
+v1 (July 2026) had shipped Gita + Chalisa only. Flat readers pass `offset: 0` and their verse
+array; chaptered readers pass the sentinel-bearing `data` + `offset` (so speech stops at a chapter
+card); single-chapter texts pass `chapter?.verses ?? []` with `offset: 0`; Vrat Katha passes its
+`sections` under a `katha-<id>` sourceId (prose branch). **Japam is the one deliberate exception**
+— it is a counter, not a reader.
 
 **One voice per reading language, or none.** `speechLangFor` is identity: hi→hi-IN, en→en-IN,
 gu→gu-IN, kn→kn-IN. The spoken text comes from the same `verseLinesByLang`/`meaningByLang` the page
@@ -122,10 +127,11 @@ so a stale non-Indian preference can never resurrect a dropped accent.
   every reader screen now reaches them transitively (`ReaderHeader` → `ReadAloudButton` →
   `ReadAloudContext` → `audioSession` → `expo-audio`). Suites that drive playback override with
   their own `jest.mock()`. Without the global stubs, 4 reader suites fail to *run*.
-- **`useReadAloud()` is a LENIENT hook** (default value, not a throw) — deliberately, so the 18
-  readers without read-aloud and their test suites need no provider. Its default reports
-  `available: false` and renders no control. The net for "provider forgotten" is
-  `readerReadAloud.test.tsx`, which mounts real readers inside real providers.
+- **`useReadAloud()` is a LENIENT hook** (default value, not a throw) — deliberately, so every
+  reader's own smoke suite mounts without a provider. Its default reports `available: false` and
+  renders no control — which also means a reader that forgot the pill looks identical to one whose
+  provider is missing. The net for both is `readerReadAloud.test.tsx`, which mounts all 21 readers
+  inside real providers and presses the pill on each.
 - **A manual swipe re-targets, it does not stop.** The controller's own `scrollToIndex` fires the
   same `onViewableItemsChanged`/`handleScroll` a user swipe does, so a pending-page latch
   distinguishes them; a 250 ms debounce keeps a multi-page flick to one session.

@@ -17,6 +17,8 @@ import WhenToRecitePanel from '@/components/WhenToRecitePanel';
 import LanguageToggle from '@/components/LanguageToggle';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
+import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
+import { useReaderReadAloud } from '@/screens/_useReaderReadAloud';
 import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
 import type { HomeStackParamList } from '@/navigation/types';
@@ -44,6 +46,16 @@ export default function AartiReaderScreen({ navigation, route }: Props) {
   const listRef = useRef<FlatList<AartiVerse>>(null);
   const initialIndex = clampIndex(route.params.initialIndex, aarti.verses.length);
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
+
+  // Flat reader: list index === verse index, so no offset.
+  const readAloud = useReaderReadAloud({
+    sourceId,
+    data: aarti.verses,
+    offset: 0,
+    verseCount: aarti.verses.length,
+    currentIndex,
+    listRef,
+  });
 
   useEffect(() => {
     setProgress({
@@ -107,7 +119,14 @@ export default function AartiReaderScreen({ navigation, route }: Props) {
 
         <ReadingProgressBar current={currentIndex + 1} total={aarti.verses.length} />
 
-        <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}><LanguageToggle /><AddToRoutineButton sourceId={sourceId} /></View>
+        <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}>
+          <LanguageToggle />
+          <AddToRoutineButton sourceId={sourceId} />
+          {/* Pinned right so the toggle group stays centred (design.md §56.2). */}
+          <View style={styles.readAloudSlot}>
+            <ReadAloudButton control={readAloud} />
+          </View>
+        </View>
 
         <View style={styles.listContainer}>
           <FlatList
@@ -192,6 +211,7 @@ const styles = StyleSheet.create({
   safe: { flex: 1 },
   counter: { includeFontPadding: false, minWidth: 48, textAlign: 'right' },
   toggleRow: { paddingVertical: 6, paddingBottom: 12, alignItems: 'center' },
+  readAloudSlot: { position: 'absolute', right: 16, top: 6, bottom: 12, justifyContent: 'center' },
   listContainer: { flex: 1 },
   list: { flex: 1 },
   dotsOverlay: { position: 'absolute', bottom: 4, left: 0, right: 0, alignItems: 'center' },
