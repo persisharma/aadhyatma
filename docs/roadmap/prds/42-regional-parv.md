@@ -9,7 +9,7 @@
 | **T-shirt size** | W1 **S** (done) · W2 **M** (the mechanism) · W3 **M** · W4 **L** · W5 **L** · W6 **M** code + **L** content · W7 **L** · W8 **M**. Realistically a **three-to-four quarter content programme** with a one-sprint code gate in front of it. |
 | **Delivery** | OTA-safe throughout: TypeScript + bundled data. No native dependency, no backend, no migration. `CACHE_VERSION` bump per wave. No `PANCHANG_DAY_CACHE_VERSION` bump in W1–W5; W6's nakshatra-in-solar-month solver may need one — decide when it is written, don't default. |
 | **Contract** | RULEBOOK **§23a** (adding an observance — written by W1) · **§23** (vyapini day selection) · **§21** (bhog) · **§20** (upvas) · **§19/§26** (vidhi, arcs) · **§11** (content integrity) · **§25** (ask intents) · design.md **§33** |
-| **Prototype owed** | W2 lens sheet (22 rows, two groups) + the Observance Detail lens caption. Two frames; not yet drawn. |
+| **Prototype** | **Drawn & signed off 2026-09-06** — [`docs/regional-parv-interactive-prd.html`](../../regional-parv-interactive-prd.html): lens sheet, detail caption, and the entry-point study. **Entry decided: pattern E** — a क्षेत्र ledger row on the व्रत-पर्व segment (third, after मेरा व्रत · पितृ स्मरण) + the dismissible seed line on the पंचांग day view. The header chip in the original proposal is **dropped**: the chip row already carries location, calendar-system and ★ follows. |
 
 > **Locked decisions (do not drift).**
 > ① **The app never asks a user to declare a religion, caste, language or community.** A lens is a *calendar* the user turns on, seeded silently from the city they already chose. Everything stays findable through search whether a lens is on or off.
@@ -124,7 +124,7 @@ Five rules about the field, all test-pinned:
 
 `STATE_LENS` is a plain map with three deliberate holes: **Delhi/NCR and Chandigarh seed nothing** (they are the default calendar plus everyone else's), and **`jain` and `sindhi` never auto-seed from anything** — they are not places, and inferring either from a postcode is exactly the profiling this PRD refuses. They are only ever a deliberate tap.
 
-The user sees one dismissible line above the day panel — *"राजस्थान के पर्व भी दिख रहे हैं · बदलें"* / *"Rajasthan's festivals are showing too · Change"* — never a modal, never an onboarding step.
+The user sees one dismissible line above the day panel — *"जयपुर के अनुसार क्षेत्रीय पर्व जोड़े गए हैं · बदलें"* / *"Regional festivals for Jaipur were added · Change"* — never a modal, never an onboarding step. **The copy names the chosen city as the provenance of the suggestion, never the person's identity** (decided 2026-09-06 with the prototype).
 
 ### 4.3 The read path and the precomputed table
 
@@ -149,10 +149,10 @@ Everything downstream of `resolveObservancesForYear` needs no change: the day pa
 
 | Surface | Change |
 |---|---|
-| Panchang header (`PanchangScreen.tsx`) | A **`क्षेत्र · Calendars`** chip beside the location chip → the lens sheet. Count badge when any lens is on. |
+| व्रत-पर्व ledger (`PanchangScreen.tsx`) | A **`क्षेत्र · Calendars`** ledger row, third after मेरा व्रत · पितृ स्मरण — the same card anatomy (icon · title · one-line state · chevron) → the lens sheet. The subtitle names the active lenses (*तेलुगु सक्रिय · और 21 उपलब्ध*), so the row itself documents the seeding. **Pattern E, decided 2026-09-06**; replaces the header chip, because the ledger is this page's existing vocabulary for persistent personal calendar state and the chip row is already full. |
 | **Lens sheet** (new, `LensPickerSheet.tsx`) | The `LocationPickerModal` shell — a `FlatList`, two group headers (`राज्य · By region`, `सम्प्रदाय · By tradition`), 22 rows: name + a one-line example (*"गणगौर, गोगा नवमी, तेजा दशमी"*) + a checkmark. No search at 22 rows, no "select all" (it would make the tab unreadable in one tap). |
 | Observance Detail (`ObservanceDetailScreen.tsx`) | A quiet lens caption under the deity line — `राजस्थान · Rajasthan`, or two when a rule carries two — so a user can always see *why* a day is on their calendar. Absent on universal rules. |
-| Seed notice (`PanchangScreen.tsx`) | The one dismissible line of §4.2, persisted at `@vedansh:panchang-lens-seen`. |
+| Seed notice (`PanchangScreen.tsx`) | The one dismissible line of §4.2 on the **पंचांग day view** — where the new dates actually appear — deep-linking to the lens sheet; persisted at `@vedansh:panchang-lens-seen`. It is the bridge for the one gap pattern E leaves: the entry row lives on the व्रत-पर्व segment, the new dates show up on the other one. |
 
 ## 5. Engine work these waves depend on
 
@@ -230,8 +230,8 @@ Sequenced by **how many users a lens serves**, not by how interesting the conten
 | Wave | What ships | Count | Gated by | Size |
 |---|---|---|---|---|
 | **W1** ✅ | Rajasthan, Bihar/Mithila, 3 pan-Hindu + RULEBOOK §23a | 17 | — | S |
-| **W2** | The lens: field, preference, seeding, filter, sheet, caption. **Zero lensed rules** — a mechanism with a visible no-op, verified by the two W1 `regional` rules converting | 0 | — | M |
-| **W3** | `jain` — 11 observances, 4 arc definitions, Rohini Vrat fixed | 12 | W2, E-3a | M |
+| **W2** | The lens: field, preference, seeding, filter, ledger row, sheet, caption. **Zero date-bearing lensed rules** — the two former `regional` orphans convert to lenses but stay unresolved until their solver waves, so the mechanism ships as a visible no-op | 0 | — | M |
+| **W3** | `jain` — 11 new observances + the Rohini Vrat repair; four fixed arc families | 12 | W2, E-3a | M |
 | **W4** | The big five: `maharashtra`, `gujarat`, `bengal`, `odisha`, `telugu` | 44 | W2, E-1, E-2, E-4, E-7 | L |
 | **W5** | The Hindi belt + east: `braj-awadh-kashi`, `karnataka`, `chhattisgarh`, `bundelkhand-malwa`, `jharkhand`, `punjab-haryana` | 27 | W2, E-2, E-4, E-7 | L |
 | **W6** | The nakshatra lenses: `tamil`, `kerala`, `assam-northeast` | 23 | W2, E-2, E-3b | M code + L content |
@@ -281,7 +281,7 @@ Everything this PRD will build. **N** = new file, **M** = modified.
 | W2-7 | Regenerate the table; `CACHE_VERSION` 4→5; **measure and record the bundle delta** | M `panchang/precomputedObservances.ts`, M `panchang/observanceCache.ts` |
 | W2-8 | Seeding from city/pincode after interactions; `@vedansh:panchang-lens-seen` | N `panchang/lensSeeding.ts` |
 | W2-9 | The lens sheet — 22 rows, two group headers, an example line each | N `components/LensPickerSheet.tsx` |
-| W2-10 | Header `क्षेत्र · Calendars` chip + count badge + the dismissible seed line | M `screens/PanchangScreen.tsx` |
+| W2-10 | क्षेत्र ledger row on the व्रत-पर्व segment + the dismissible seed line on the पंचांग day view (**pattern E**, decided 2026-09-06) | M `screens/PanchangScreen.tsx` |
 | W2-11 | Lens caption on the detail hero (one or two) | M `screens/ObservanceDetailScreen.tsx`, M `components/ObservanceDetailHero.tsx` |
 | W2-12 | Notification-title gate: exclude any lensed rule | M `notifications/dayAnga.ts`, M `notifications/dayAngaResolver.ts` |
 | W2-13 | Widget payload reads the lens set through the store, never a default | M `widgets/planPayload.ts` |
@@ -298,7 +298,7 @@ Everything this PRD will build. **N** = new file, **M** = modified.
 |---|---|---|
 | W3-1 | 11 rules (Appendix A.1), two sources each in-comment | M `panchang/festivals.ts` |
 | W3-2 | `rohini-vrat` → a real monthly nakshatra rule (needs E-3a) | M `panchang/festivals.ts` |
-| W3-3 | Two arcs: `paryushana` (8 d → Samvatsari), `das-lakshan` (10 d → Anant Chaturdashi); Navpad Oli ×2 and Ashtahnika ×3 follow | M `panchang/arcs.ts` |
+| W3-3 | Four fixed arc families: `paryushana` (Śvetāmbara, 8 d → Samvatsari), `das-lakshan` (Digambara, 10 d → Anant Chaturdashi), `navpad-oli` (twice yearly), `ashtahnika` (three times yearly) | M `panchang/arcs.ts` |
 | W3-4 | Sibling-day pins: Mahavir Nirvana ≡ `diwali`, Veer Nirvana Samvat ≡ `govardhan-puja`, Maun Ekadashi ≡ `mokshada-ekadashi`, Das Lakshan close ≡ `anant-chaturdashi` | M `panchang/festivals.ts` |
 | W3-5 | T2 bhog: `jain-parva-bhog`, and the Ayambil/Paryushana fast's own | M `panchang/bhogContentExtended.ts` |
 | W3-6 | T3 upvas: Paryushana, Samvatsari, Ayambil — fast type, window, parana | N `panchang/upvasContent/entries/*.ts`, M `panchang/upvasContent/index.ts` |
@@ -312,7 +312,7 @@ Everything this PRD will build. **N** = new file, **M** = modified.
 | W4-1 | E-1, E-2, E-4, E-5 land first (Vasubaras/Vagh Baras need pradosh; Bhogi/Kanuma need solar-offset; Pola needs monthSystem; Bonalu/Itu/Manabasa need nothing new) | see 9.0 |
 | W4-2 | 44 rules across `maharashtra` (9), `gujarat` (7), `bengal` (6), `odisha` (14), `telugu` (8) — Appendix A.2–A.6 | M `panchang/festivals.ts` |
 | W4-3 | Shared-lens rules carry arrays: Rath Yatra `['odisha','bengal']`, Vasubaras `['maharashtra','gujarat']`, Nuakhai `['odisha','chhattisgarh']`, Champa/Subrahmanya Shashthi `['maharashtra','karnataka','goa-konkan']` | M `panchang/festivals.ts` |
-| W4-4 | Six arcs: Gauri Avahan–Visarjan, Champa Shashthi, Dashama Vrat, Bathukamma, Raja Parba, Chandan Yatra (needs E-7) | M `panchang/arcs.ts` |
+| W4-4 | Six arcs: Gauri Avahan–Visarjan, Champa Shashthi, Dashama Vrat, Bathukamma, Raja Parba, Chandan Yatra (needs E-7) — plus **lens-scoped Maharashtra day labels on the existing `ganesh-utsav` arc**, which is a label change, not a new arc | M `panchang/arcs.ts` |
 | W4-5 | T2 bhog — ~10 new profiles (Vat Purnima, Kali Puja, Jagaddhatri, Savitri Amavasya, Nuakhai, Kumar Purnima, Prathamastami, Shitala Satam, Jayaparvati, Nagula Chavithi, Atla Tadde) | M `panchang/bhogContentExtended.ts` |
 | W4-6 | T3 upvas — Vat Purnima, Savitri Amavasya, Dashama Vrat | N `panchang/upvasContent/entries/*.ts` |
 | W4-7 | T4 katha — Nuakhai, Atla Tadde, Bathukamma | N `panchang/kathaContent/entries/*.ts`, M `kathaContent/index.ts`, M `festivals.ts` KATHA_CATALOG |
@@ -355,7 +355,7 @@ Everything this PRD will build. **N** = new file, **M** = modified.
 
 | # | Item | Files |
 |---|---|---|
-| W8-1 | Five arcs: Gangaur 18 d, Ramdevra Bhadva S2→S11, **Chhath ×2 four-day** (Nahay-Khay · Kharna · Sandhya Arghya · Usha Arghya — the highest-value arc in the whole PRD), Madhushravani fortnight, Sama Chakeva nine days | M `panchang/arcs.ts` |
+| W8-1 | **Six** regional arcs: Gangaur 18 d, Ramdevra Bhadva S2→S11, **Chaiti Chhath** and **Kartik Chhath** four days each (Nahay-Khay · Kharna · Sandhya Arghya · Usha Arghya — the highest-value arc in the whole PRD), Madhushravani fortnight, Sama Chakeva nine days | M `panchang/arcs.ts` |
 | W8-2 | जुड़ शीतल via E-2 | M `panchang/festivals.ts` |
 | W8-3 | Appendix B re-verification: Dhinga Gavar, Khatu Shyam Phalgun Mela, Kaila Devi, Salasar, Bihula-Bishahari, Bhagoria, Gadyachi Jatra, Halda/Phagli | M `panchang/festivals.ts` (only what clears §11.1) |
 | W8-4 | T4 katha — Goga, Tejaji, Ramdevji: three of the most-told stories in Rajasthan, and the app has none of them | N `panchang/kathaContent/entries/*.ts` |
@@ -416,12 +416,13 @@ Per wave, on top of RULEBOOK §23a:
 
 ## 13. Open decisions
 
-1. **Does a seeded lens ever un-seed when the user changes city?** Proposal: **no**. A lens is sticky once shown — a week in Chennai should not delete someone's Rajasthani calendar. Changing city may *offer* an additional lens, once.
+1. ~~**Does a seeded lens ever un-seed when the user changes city?**~~ **Decided 2026-09-06:** no. A lens is sticky once shown — a week in Chennai does not delete someone's Rajasthani calendar. A later city may offer its inactive matching calendar once, but adding it requires an explicit tap.
 2. **Should a lens ever suppress a universal rule?** Proposal: **no** (principle 2). Recorded because it will be re-proposed.
 3. **Which rules need a forced `monthSystem`?** Sama Chakeva and Madhushravani are Maithil-purnimant; the Bengali, Odia and southern entries are amanta-reckoned; Hareli/Pola is the worked case. Needs a per-rule audit before W4, including a re-check of the seventeen W1 rules.
-4. **The seed copy.** *"राजस्थान के पर्व भी दिख रहे हैं"* names a state at a user who never named one. Alternative: *"आपके पंचांग में राजस्थान के पर्व जोड़े गए हैं · बदलें"*. Decide with the W2 prototype.
-5. **Does the lens sheet belong in Panchang's header or in More?** Proposal: header, next to the calendar-system toggle, because it changes what the screen in front of you shows.
+4. ~~**The seed copy.**~~ **Decided 2026-09-06:** name the chosen city as provenance, not the person's identity — *"जयपुर के अनुसार क्षेत्रीय पर्व जोड़े गए हैं · बदलें"* / *"Regional festivals for Jaipur were added · Change"*.
+5. ~~Does the lens sheet belong in Panchang's header or in More?~~ **Decided 2026-09-06 (prototype sign-off):** neither — a **क्षेत्र ledger row** on the व्रत-पर्व segment (pattern E in the interactive PRD), because the ledger is that page's existing vocabulary for persistent personal calendar state and the header chip row is already full (location · calendar-system · ★). The seed line on the पंचांग day view bridges discovery.
 6. **Onam's vyapini rule** — sunrise-prevailing Thiruvonam, or the nakshatra's peak? Sources differ. Blocks W6; belongs in the convention doc, not in a rule.
+9. **Does the क्षेत्र ledger row appear at all when no lens is on?** Pattern E puts it third in a ledger that is otherwise personal state the user created. Proposal: yes, always — it is the only discovery path for a user whose city seeded nothing (Ujjain, Delhi), and its subtitle then reads *कोई क्षेत्रीय पंचांग नहीं · 22 उपलब्ध*.
 7. **Is Rangpanchami universal or `bundelkhand-malwa`?** It is huge in Indore and unknown in most of the country. Cross-listed in A.9 and Appendix C; decide in whichever wave reaches it.
 8. **Ugadi / Gudi Padwa / Cheti Chand / Navreh / Sanvsar Padvo** are one tithi and five observances. W1 folded them into `chaitra-navratri-start`'s description. Do they each become a lensed rule (five rows on one day for a user with five lenses on), or stay aliases? Proposal: a lensed rule **only where the observance genuinely differs** — Cheti Chand honours Jhulelal, Gudi Padwa raises a gudi, Navreh sets the thaal. Sanvsar Padvo stays an alias.
 

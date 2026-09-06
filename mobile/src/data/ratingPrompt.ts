@@ -33,18 +33,41 @@ export const RATING_PROMPT_STORAGE_KEY = '@vedansh/rating-prompt';
  */
 export type RatingPromptOutcome = 'pending' | 'rated' | 'declined';
 
+/**
+ * The moments that may open the sheet (design.md §54 "Triggers"). The ask does
+ * not fire on a cold start: a moment is a point where the user has just
+ * finished something and is likely to feel good about the app, which is when a
+ * rating request reads as a fair question rather than an interruption.
+ *
+ *  - `routine-complete` — the pushpa-varsha for today's routine has finished.
+ *
+ * One moment ships (product decision, Sept 2026: "ask when a routine is
+ * completed"). The type stays a union so a further moment is a one-literal
+ * change here plus a `requestAsk` call at the host — see RULEBOOK §6.2.
+ */
+export type RatingAskTrigger = 'routine-complete';
+
+export const RATING_ASK_TRIGGERS: readonly RatingAskTrigger[] = ['routine-complete'];
+
 export type RatingPromptState = {
   /** How many times the sheet has auto-opened (manual opens from More don't count). */
   askCount: number;
   /** Epoch ms of the last auto-open, or null if never shown. */
   lastAskedAt: number | null;
   outcome: RatingPromptOutcome;
+  /**
+   * Auto-opens broken down by the moment that caused them. Purely for learning
+   * which moment earns the rating (the app has no analytics backend), so it is
+   * additive and optional: an older blob without it parses as `{}`.
+   */
+  asksByTrigger: Partial<Record<RatingAskTrigger, number>>;
 };
 
 export const RATING_PROMPT_DEFAULTS: RatingPromptState = {
   askCount: 0,
   lastAskedAt: null,
   outcome: 'pending',
+  asksByTrigger: {},
 };
 
 /** Cold starts before we're willing to ask — mirrors the opt-in sheet's "earn the ask". */
@@ -90,10 +113,23 @@ export function parseRatingPromptState(raw: string | null): RatingPromptState {
         parsed.outcome === 'rated' || parsed.outcome === 'declined' || parsed.outcome === 'pending'
           ? parsed.outcome
           : RATING_PROMPT_DEFAULTS.outcome,
+      asksByTrigger: parseAsksByTrigger(parsed.asksByTrigger),
     };
   } catch {
     return RATING_PROMPT_DEFAULTS;
   }
+}
+
+function parseAsksByTrigger(raw: unknown): Partial<Record<RatingAskTrigger, number>> {
+  if (!raw || typeof raw !== 'object') return {};
+  const out: Partial<Record<RatingAskTrigger, number>> = {};
+  for (const trigger of RATING_ASK_TRIGGERS) {
+    const value = (raw as Record<string, unknown>)[trigger];
+    if (typeof value === 'number' && Number.isFinite(value) && value > 0) {
+      out[trigger] = Math.floor(value);
+    }
+  }
+  return out;
 }
 
 export type RatingEligibilityInput = {
@@ -130,9 +166,24 @@ export function isEligibleForRatingPrompt(input: RatingEligibilityInput): boolea
   return true;
 }
 
-/** State after the sheet auto-opens: consumes one ask slot and starts the cooldown. */
-export function afterAsked(state: RatingPromptState, now: number): RatingPromptState {
-  return { ...state, askCount: state.askCount + 1, lastAskedAt: now };
+/**
+ * State after the sheet auto-opens: consumes one ask slot, starts the cooldown,
+ * and credits the moment that opened it.
+ */
+export function afterAsked(
+  state: RatingPromptState,
+  now: number,
+  trigger: RatingAskTrigger
+): RatingPromptState {
+  return {
+    ...state,
+    askCount: state.askCount + 1,
+    lastAskedAt: now,
+    asksByTrigger: {
+      ...state.asksByTrigger,
+      [trigger]: (state.asksByTrigger[trigger] ?? 0) + 1,
+    },
+  };
 }
 
 /** State after the user taps through to the store — terminal. */
