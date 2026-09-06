@@ -4,6 +4,14 @@ const VratListUrl = 'https://www.drikpanchang.com/vrats/hindu-vrat-list.html';
 const HinduCalendarUrl = 'https://www.drikpanchang.com/calendars/hindu/hinducalendar.html';
 const VratKathaUrl = 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html';
 
+// Regional folk-deity and community observances are absent from the Drik festival
+// index, so their rules cite a different authority (RULEBOOK §11.1 lets any of the
+// listed authoritative sources stand; `observances.test.ts` pins the allowlist).
+// Every such rule also names its second, independent published source in the
+// comment above it — the field holds one URL, the contract wants two readings.
+const RajasthanTourismUrl = 'https://www.tourism.rajasthan.gov.in/fairs-and-festivals.html';
+const BiharTourismUrl = 'https://www.bihartourism.gov.in/fairs_and_festivals.html';
+
 type ObservanceSeed = Pick<ObservanceRule, 'id' | 'nameHi' | 'nameEn'> &
   Partial<Omit<ObservanceRule, 'id' | 'nameHi' | 'nameEn'>>;
 
@@ -147,7 +155,7 @@ export const KATHA_CATALOG: KathaCatalogEntry[] = [
   katha({ id: 'hartalika-teej-katha', nameHi: 'हरतालिका तीज कथा', nameEn: 'Hartalika Teej Katha', sourceUrl: 'https://www.drikpanchang.com/festivals/teej/legends/hartalika-vrat-legend.html', relatedRuleIds: ['hartalika-teej'] }),
   katha({ id: 'maha-shivaratri-vrat-katha', nameHi: 'महा शिवरात्रि व्रत कथा', nameEn: 'Maha Shivaratri Vrat Katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/maha-shivaratri/maha-shivaratri-vrat-katha.html', relatedRuleIds: ['maha-shivaratri', 'masik-shivaratri'] }),
   katha({ id: 'gangaur-vrat-katha', nameHi: 'गणगौर व्रत कथा', nameEn: 'Gangaur Vrat Katha', sourceUrl: VratKathaUrl, relatedRuleIds: ['gangaur'] }),
-  katha({ id: 'sheetala-saptami-vrat-katha', nameHi: 'शीतला सप्तमी व्रत कथा (बसोड़ा)', nameEn: 'Sheetala Saptami Vrat Katha (Basoda)', sourceUrl: VratKathaUrl, relatedRuleIds: ['shitala-saptami'] }),
+  katha({ id: 'sheetala-saptami-vrat-katha', nameHi: 'शीतला सप्तमी व्रत कथा (बसोड़ा)', nameEn: 'Sheetala Saptami Vrat Katha (Basoda)', sourceUrl: VratKathaUrl, relatedRuleIds: ['shitala-saptami', 'shitala-ashtami'] }),
   katha({ id: 'bachh-baras-vrat-katha', nameHi: 'बछ बारस व्रत कथा', nameEn: 'Bachh Baras Vrat Katha', sourceUrl: VratKathaUrl, relatedRuleIds: ['bachh-baras'] }),
   katha({ id: 'rama-navami-vrat-katha', nameHi: 'राम नवमी व्रत कथा', nameEn: 'Rama Navami Vrat Katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/rama-navami/rama-navami-vrat-katha.html', relatedRuleIds: ['ram-navami'] }),
   katha({ id: 'sita-navami-vrat-katha', nameHi: 'सीता नवमी व्रत कथा', nameEn: 'Sita Navami Vrat Katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/sita-navami/sita-navami-vrat-katha.html', relatedRuleIds: ['sita-navami'] }),
@@ -192,7 +200,7 @@ export const KATHA_CATALOG: KathaCatalogEntry[] = [
   katha({ id: 'janmashtami-katha', nameHi: 'जन्माष्टमी कथा', nameEn: 'Janmashtami Katha', kind: 'festival-legend', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['janmashtami'] }),
   katha({ id: 'vasant-panchami-katha', nameHi: 'वसंत पंचमी कथा', nameEn: 'Vasant Panchami Katha', kind: 'festival-legend', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['vasant-panchami'] }),
   katha({ id: 'akshaya-navami-katha', nameHi: 'अक्षय नवमी कथा', nameEn: 'Akshaya Navami Katha', kind: 'vrat-katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['akshaya-navami'] }),
-  katha({ id: 'chhath-puja-katha', nameHi: 'छठ पूजा कथा', nameEn: 'Chhath Puja Katha', kind: 'vrat-katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['chhath-puja'] }),
+  katha({ id: 'chhath-puja-katha', nameHi: 'छठ पूजा कथा', nameEn: 'Chhath Puja Katha', kind: 'vrat-katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['chhath-puja', 'chaiti-chhath'] }),
   katha({ id: 'ganga-dussehra-katha', nameHi: 'गंगा दशहरा कथा', nameEn: 'Ganga Dussehra Katha', kind: 'festival-legend', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['ganga-dussehra'] }),
   katha({ id: 'gita-jayanti-katha', nameHi: 'गीता जयंती कथा', nameEn: 'Gita Jayanti Katha', kind: 'festival-legend', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['gita-jayanti'] }),
   katha({ id: 'navratri-start-katha', nameHi: 'नवरात्रि प्रारंभ कथा', nameEn: 'Navratri Begins Katha', kind: 'festival-legend', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['navratri-start'] }),
@@ -204,6 +212,19 @@ export const KATHA_CATALOG: KathaCatalogEntry[] = [
   katha({ id: 'masik-krishna-janmashtami-katha', nameHi: 'मासिक कृष्ण जन्माष्टमी कथा', nameEn: 'Masik Krishna Janmashtami Katha', kind: 'vrat-katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['masik-krishna-janmashtami'] }),
   katha({ id: 'skanda-sashti-katha', nameHi: 'स्कंद षष्ठी कथा', nameEn: 'Skanda Sashti Katha', kind: 'vrat-katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['skanda-sashti'] }),
 ];
+
+/**
+ * Regional names for the two sankrantis that carry a distinct regional identity —
+ * the ingress itself is one astronomical instant, so these are ALIASES on the same
+ * rule, never separate rules. Only the names for which the observance genuinely IS
+ * the sankranti day belong here: Jur Sital (the Maithil new year) is the day AFTER
+ * Mesha Sankranti and is deliberately absent — a "solar ingress + N days" rule type
+ * does not exist yet (docs/roadmap/prds/42-regional-parv.md).
+ */
+const SANKRANTI_ALIASES: Record<string, string[]> = {
+  'mesha-sankranti': ['satuani', 'sattuan', 'satua sankranti', 'baisakhi', 'vaisakhi', 'bohag bihu', 'pohela boishakh', 'puthandu', 'vishu', 'mesha sankranti'],
+  'makar-sankranti': ['makar sankranti', 'khichdi parv', 'til sankranti', 'pongal', 'uttarayan', 'maghi'],
+};
 
 const SANKRANTI_RULES: ObservanceRule[] = [
   ['mesha-sankranti', 'मेष संक्रांति', 'Mesha Sankranti', 0],
@@ -231,16 +252,41 @@ const SANKRANTI_RULES: ObservanceRule[] = [
   deityEn: 'Surya Deva',
   shortDescriptionHi: `${nameHi} सूर्य के नए राशि प्रवेश का संक्रांति पर्व है।`,
   shortDescriptionEn: `${nameEn} marks the Sun's sidereal ingress into a new rashi.`,
-  searchTerms: ['sankranti', 'solar ingress'],
+  searchTerms: ['sankranti', 'solar ingress', ...(SANKRANTI_ALIASES[String(id)] ?? [])],
 }));
 
 export const FESTIVAL_RULES: ObservanceRule[] = [
   ...SANKRANTI_RULES,
+  // Magha Krishna Chaturthi (purnimant month 11) — the same day as Magha's monthly
+  // Sankashti (`sankashtiNames.ts`: लम्बोदर), so it MUST carry the sibling `chandrodaya`
+  // dayRule (RULEBOOK §23.4) or the two would land on different nights.
+  // Published: 6 Jan 2026 (India TV, Sunday Guardian). Katha already shipped.
+  festival({ id: 'sakat-chauth', nameHi: 'सकट चौथ', nameEn: 'Sakat Chauth', lunarMonth: 11, paksha: 'krishna', tithi: 4, dayRule: 'chandrodaya', marker: 'dot', category: 'vrat', deityHi: 'श्री गणेश', deityEn: 'Shri Ganesh', linkSectionId: 'ganesh-chalisa', shortDescriptionHi: 'माघ कृष्ण चतुर्थी को सकट चौथ (तिल चौथ) — संतान के मंगल हेतु गणेश जी और चंद्रमा का पूजन; संध्या चंद्रोदय पर अर्घ्य देकर व्रत पूर्ण होता है। यह माघ मास की संकष्टी चतुर्थी ही है।', shortDescriptionEn: 'Sakat Chauth (Til Chauth) on Magha Krishna Chaturthi — Ganesha and the moon are worshipped for children’s well-being, and the fast ends with arghya at the evening moonrise. It is Magha’s own Sankashti Chaturthi.', searchTerms: ['sakat chauth', 'til chauth', 'tilkut chauth', 'sankat chauth', 'chauth', 'magha chauth'], kathaId: 'sakat-chauth-vrat-katha', bhogId: 'ganesha-bhog' }),
   festival({ id: 'vasant-panchami', nameHi: 'वसंत पंचमी', nameEn: 'Vasant Panchami', lunarMonth: 11, paksha: 'shukla', tithi: 5, marker: 'star', deityHi: 'मां सरस्वती', deityEn: 'Maa Saraswati', kathaId: 'vasant-panchami-katha' }),
   // Krishna-paksha lunarMonth is the PURNIMANT (North-Indian) month — Maha Shivaratri is Phalguna (12), not Magha (11, its amanta name). See monthForRuleInSystem.
   festival({ id: 'maha-shivaratri', nameHi: 'महा शिवरात्रि', nameEn: 'Maha Shivaratri', lunarMonth: 12, paksha: 'krishna', tithi: 14, marker: 'star', deityHi: 'भगवान शिव', deityEn: 'Lord Shiva', linkSectionId: 'shiv-chalisa', kathaId: 'maha-shivaratri-vrat-katha', vidhiId: 'maha-shivaratri-puja', upvasId: 'maha-shivaratri-upvas', bhogId: 'maha-shivaratri-bhog' }),
   festival({ id: 'holi', nameHi: 'होली', nameEn: 'Holi', lunarMonth: 12, paksha: 'shukla', tithi: 15, marker: 'star', deityHi: 'श्री कृष्ण', deityEn: 'Shri Krishna', kathaId: 'holi-legends' }),
+  // Chaitra Krishna 7/8/10 (purnimant month 1) — the Rajasthani spring cluster that
+  // follows Holi. Published 2026: Shitala Saptami 10 Mar, Shitala Ashtami 11 Mar
+  // (HinduPad, Hindu Blog), Dasha Mata 13 Mar (India TV, News9).
+  festival({ id: 'shitala-saptami', nameHi: 'शीतला सप्तमी', nameEn: 'Shitala Saptami', lunarMonth: 1, paksha: 'krishna', tithi: 7, marker: 'dot', category: 'vrat', deityHi: 'शीतला माता', deityEn: 'Shitala Mata', shortDescriptionHi: 'चैत्र कृष्ण सप्तमी को शीतला माता का पूजन — भोजन एक दिन पहले बनाकर रखा जाता है और इस दिन चूल्हा नहीं जलाया जाता; इसे बसोड़ा कहते हैं। राजस्थान में मुख्य पूजन प्रायः अगले दिन शीतला अष्टमी को होता है।', shortDescriptionEn: 'Worship of Shitala Mata on Chaitra Krishna Saptami — the meal is cooked the previous day and the hearth stays unlit, the custom called Basoda. In Rajasthan the principal day is usually the following Shitala Ashtami.', searchTerms: ['shitala saptami', 'sheetala saptami', 'basoda', 'basoda saptami', 'shitala mata'], kathaId: 'sheetala-saptami-vrat-katha', bhogId: 'shitala-bhog' }),
+  festival({ id: 'shitala-ashtami', nameHi: 'शीतला अष्टमी (बसोड़ा)', nameEn: 'Shitala Ashtami (Basoda)', lunarMonth: 1, paksha: 'krishna', tithi: 8, marker: 'dot', category: 'vrat', deityHi: 'शीतला माता', deityEn: 'Shitala Mata', shortDescriptionHi: 'चैत्र कृष्ण अष्टमी को शीतला अष्टमी — राजस्थान, हरियाणा और गुजरात के अधिकांश घरों में यही बसोड़ा का मुख्य दिन है; एक दिन पहले बना ठंडा भोजन शीतला माता को अर्पित किया जाता है और चूल्हा नहीं जलता।', shortDescriptionEn: 'Shitala Ashtami on Chaitra Krishna Ashtami — in most households of Rajasthan, Haryana and Gujarat this is the principal Basoda day; the previous day’s cold food is offered to Shitala Mata and the hearth stays unlit.', searchTerms: ['shitala ashtami', 'sheetala ashtami', 'basoda', 'basoda ashtami', 'shitala mata'], kathaId: 'sheetala-saptami-vrat-katha', bhogId: 'shitala-bhog' }),
+  festival({ id: 'dasha-mata-vrat', nameHi: 'दशा माता व्रत', nameEn: 'Dasha Mata Vrat', lunarMonth: 1, paksha: 'krishna', tithi: 10, marker: 'dot', category: 'vrat', deityHi: 'दशा माता', deityEn: 'Dasha Mata', shortDescriptionHi: 'चैत्र कृष्ण दशमी को दशा माता का व्रत — पीपल का पूजन और दस गांठ वाला डोरा धारण; राजस्थान और गुजरात में घर की दशा सुधरने और सौभाग्य की कामना से किया जाता है।', shortDescriptionEn: 'The Dasha Mata vrat on Chaitra Krishna Dashami — worship of the peepal and the wearing of a ten-knot thread; kept in Rajasthan and Gujarat praying for the household’s fortune and well-being.', searchTerms: ['dasha mata', 'dashama', 'dasha mata vrat', 'dashamata', 'doro'], sourceUrl: RajasthanTourismUrl, bhogId: 'devi-vrat-bhog' }),
+  // Chaitra Shukla Pratipada — the tithi that opens Vasantik Navratri and the Vikram
+  // Samvat year. Ram Navami (shukla 9) already shipped without its own opening day.
+  festival({ id: 'chaitra-navratri-start', nameHi: 'चैत्र नवरात्रि प्रारंभ', nameEn: 'Chaitra Navratri Begins', lunarMonth: 1, paksha: 'shukla', tithi: 1, marker: 'star', deityHi: 'मां दुर्गा', deityEn: 'Maa Durga', linkSectionId: 'durga-stotram', shortDescriptionHi: 'चैत्र शुक्ल प्रतिपदा से वासंतिक (चैत्र) नवरात्रि प्रारंभ — घटस्थापना और नौ दिन की दुर्गा उपासना, जो राम नवमी पर पूर्ण होती है। यही तिथि विक्रम संवत का नववर्ष है और गुड़ी पड़वा, उगादि व चेटीचंड के रूप में भी मनाई जाती है।', shortDescriptionEn: 'Vasantik (Chaitra) Navratri begins on Chaitra Shukla Pratipada — ghatasthapana and nine days of Durga worship that conclude on Ram Navami. The same tithi opens the Vikram Samvat new year and is kept as Gudi Padwa, Ugadi and Cheti Chand.', searchTerms: ['chaitra navratri', 'vasant navratri', 'vasantik navratri', 'gudi padwa', 'ugadi', 'cheti chand', 'nav samvatsar', 'hindu nav varsh'], vidhiId: 'navratri-ghatasthapana', bhogId: 'navratri-bhog' }),
+  // Chaitra Shukla Tritiya — Rajasthan's Gangaur, the close of the sixteen/eighteen-day
+  // cycle begun the day after Holika Dahan. Published: 21 Mar 2026 (HinduPad, StayVista).
+  festival({ id: 'gangaur', nameHi: 'गणगौर', nameEn: 'Gangaur', lunarMonth: 1, paksha: 'shukla', tithi: 3, marker: 'star', category: 'vrat', deityHi: 'ईसर जी व गौरी माता', deityEn: 'Isar Ji and Gauri Mata', shortDescriptionHi: 'चैत्र शुक्ल तृतीया को गणगौर — ईसर जी और गौरी माता का पूजन; होलिका दहन के अगले दिन से चलने वाली पूजा इसी दिन विसर्जन के साथ पूर्ण होती है। जयपुर और उदयपुर की गणगौर सवारी प्रसिद्ध है।', shortDescriptionEn: 'Gangaur on Chaitra Shukla Tritiya — worship of Isar Ji and Gauri Mata; the cycle begun the day after Holika Dahan concludes with the immersion on this day. The Gangaur processions of Jaipur and Udaipur are famous.', searchTerms: ['gangaur', 'gangor', 'gauri tritiya', 'isar gauri', 'teej gangaur'], kathaId: 'gangaur-vrat-katha', bhogId: 'gangaur-bhog' }),
+  // Chaitra Shukla Shashthi — the spring Chhath of Bihar/Mithila, the same four-day
+  // rite as the Kartik one. Published: 24 Mar 2026 (Drik Chhath calendar, Samvat).
+  festival({ id: 'chaiti-chhath', nameHi: 'चैती छठ', nameEn: 'Chaiti Chhath', lunarMonth: 1, paksha: 'shukla', tithi: 6, marker: 'dot', category: 'upavas', deityHi: 'सूर्य देव', deityEn: 'Surya Deva', shortDescriptionHi: 'चैत्र शुक्ल षष्ठी को चैती छठ — सूर्य देव और छठी मैया की चार दिवसीय उपासना (नहाय-खाय, खरना, संध्या अर्घ्य, उषा अर्घ्य); बिहार, झारखंड, पूर्वी उत्तर प्रदेश और मिथिला में कार्तिक छठ की ही भांति की जाती है।', shortDescriptionEn: 'Chaiti Chhath on Chaitra Shukla Shashthi — the four-day worship of Surya and Chhathi Maiya (Nahay-Khay, Kharna, evening arghya, dawn arghya), kept in Bihar, Jharkhand, eastern Uttar Pradesh and Mithila exactly as the Kartik Chhath is.', searchTerms: ['chaiti chhath', 'chaitra chhath', 'chhath', 'surya shashthi', 'chhathi maiya'], kathaId: 'chhath-puja-katha', bhogId: 'chhath-bhog' }),
   festival({ id: 'ram-navami', nameHi: 'राम नवमी', nameEn: 'Ram Navami', lunarMonth: 1, paksha: 'shukla', tithi: 9, dayRule: 'madhyahna', marker: 'star', deityHi: 'श्री राम', deityEn: 'Shri Ram', linkSectionId: 'ram-stuti', kathaId: 'rama-navami-vrat-katha' }),
+  // Chaitra Shukla Trayodashi — Mahavir Janma Kalyanak. Shipped default-visible for
+  // the same reason Buddha Purnima is: a gazetted, pan-India observance. The rest of
+  // the Jain calendar is a regional wave (docs/roadmap/prds/42-regional-parv.md).
+  // Published: 31 Mar 2026 (Outlook, Daily Jagran).
+  festival({ id: 'mahavir-jayanti', nameHi: 'महावीर जयंती', nameEn: 'Mahavir Jayanti', lunarMonth: 1, paksha: 'shukla', tithi: 13, marker: 'dot', deityHi: 'भगवान महावीर', deityEn: 'Bhagwan Mahavir', shortDescriptionHi: 'चैत्र शुक्ल त्रयोदशी को भगवान महावीर का जन्म कल्याणक — जैन परंपरा का प्रमुख पर्व; प्रभात फेरी, अभिषेक और अहिंसा व संयम के उपदेशों का स्मरण।', shortDescriptionEn: 'Bhagwan Mahavir’s Janma Kalyanak on Chaitra Shukla Trayodashi — the principal festival of the Jain tradition, marked by the dawn procession, the abhisheka and remembrance of his teachings of ahimsa and restraint.', searchTerms: ['mahavir jayanti', 'mahaveer jayanti', 'janma kalyanak', 'jain', 'mahavir swami'] }),
   festival({ id: 'hanuman-jayanti', nameHi: 'हनुमान जयंती', nameEn: 'Hanuman Jayanti', lunarMonth: 1, paksha: 'shukla', tithi: 15, marker: 'star', deityHi: 'हनुमान जी', deityEn: 'Hanuman Ji', linkSectionId: 'hanuman-chalisa', kathaId: 'hanuman-jayanti-vrat-katha', bhogId: 'hanuman-jayanti-bhog' }),
   festival({ id: 'akshaya-tritiya', nameHi: 'अक्षय तृतीया', nameEn: 'Akshaya Tritiya', lunarMonth: 2, paksha: 'shukla', tithi: 3, marker: 'star', deityHi: 'श्री विष्णु', deityEn: 'Shri Vishnu', linkSectionId: 'vishnu-sahasranama', kathaId: 'akshaya-tritiya-vrat-katha' }),
   festival({ id: 'parashurama-jayanti', nameHi: 'परशुराम जयंती', nameEn: 'Parashurama Jayanti', lunarMonth: 2, paksha: 'shukla', tithi: 3, marker: 'dot', deityHi: 'भगवान परशुराम', deityEn: 'Lord Parashurama', kathaId: 'parashurama-jayanti-vrat-katha' }),
@@ -251,8 +297,16 @@ export const FESTIVAL_RULES: ObservanceRule[] = [
   // Purnimant month: Narada Jayanti is Jyeshtha (3) Krishna Pratipada, not Vaishakha (2, amanta name).
   festival({ id: 'narada-jayanti', nameHi: 'नारद जयंती', nameEn: 'Narada Jayanti', lunarMonth: 3, paksha: 'krishna', tithi: 1, marker: 'dot', deityHi: 'देवर्षि नारद', deityEn: 'Devarshi Narada', kathaId: 'narada-jayanti-vrat-katha' }),
   festival({ id: 'ganga-dussehra', nameHi: 'गंगा दशहरा', nameEn: 'Ganga Dussehra', lunarMonth: 3, paksha: 'shukla', tithi: 10, marker: 'dot', deityHi: 'मां गंगा', deityEn: 'Maa Ganga', kathaId: 'ganga-dussehra-katha' }),
+  // Ashadha Shukla Dashami. Drik lists Asha Dashami under its own vrat page; the
+  // annual observance is Ashadha's. Published: 24 Jul 2026 (Drik, SanatanaVibes).
+  festival({ id: 'asha-dashami', nameHi: 'आशा दशमी', nameEn: 'Asha Dashami', lunarMonth: 4, paksha: 'shukla', tithi: 10, marker: 'dot', category: 'vrat', deityHi: 'मां पार्वती', deityEn: 'Maa Parvati', shortDescriptionHi: 'आषाढ़ शुक्ल दशमी को आशा दशमी व्रत — मां पार्वती की उपासना और मनोकामना-पूर्ति का संकल्प।', shortDescriptionEn: 'The Asha Dashami vrat on Ashadha Shukla Dashami — worship of Maa Parvati with a resolve for the fulfilment of a heartfelt wish.', searchTerms: ['asha dashami', 'asha dasami', 'dashami vrat'], sourceUrl: VratListUrl, bhogId: 'devi-vrat-bhog' }),
   festival({ id: 'guru-purnima', nameHi: 'गुरु पूर्णिमा', nameEn: 'Guru Purnima', lunarMonth: 4, paksha: 'shukla', tithi: 15, marker: 'star', deityHi: 'गुरु परंपरा', deityEn: 'Guru Parampara', kathaId: 'guru-purnima-katha' }),
   festival({ id: 'hariyali-teej', nameHi: 'हरियाली तीज', nameEn: 'Hariyali Teej', lunarMonth: 5, paksha: 'shukla', tithi: 3, marker: 'dot', category: 'vrat', deityHi: 'मां पार्वती', deityEn: 'Maa Parvati', shortDescriptionHi: 'श्रावण शुक्ल तृतीया का स्त्रियों का व्रत — शिव-पार्वती पूजन, झूला और सौभाग्य की कामना; छोटी तीज व सिंधारा तीज भी कहलाती है।', shortDescriptionEn: 'A women’s vrat on Shravana Shukla Tritiya — Shiva–Parvati worship, swings, and prayers for marital well-being; also called Chhoti Teej or Sindhara Teej.', searchTerms: ['teej', 'chhoti teej', 'sindhara teej', 'sawan teej'], bhogId: 'hariyali-teej-bhog' }),
+  // Shravana Shukla Tritiya — the CONCLUDING day of Mithila's Madhushravani, whose
+  // daily puja/katha cycle opens on Shravana Krishna Panchami. Only the closing day
+  // is a tithi rule; the fortnight itself is not modelled. Published close: 15 Aug
+  // 2026 (The Mithila Times, Hindu Blog "Madhushravani Tritiya").
+  festival({ id: 'madhushravani', nameHi: 'मधुश्रावणी', nameEn: 'Madhushravani', lunarMonth: 5, paksha: 'shukla', tithi: 3, marker: 'dot', category: 'vrat', deityHi: 'शिव-पार्वती व विषहरा', deityEn: 'Shiva–Parvati and Vishahara', shortDescriptionHi: 'श्रावण शुक्ल तृतीया को मधुश्रावणी — मिथिला की नवविवाहिताओं का व्रत; श्रावण कृष्ण पंचमी से चलने वाले पूजन-कथा क्रम का समापन दिवस, जिसमें शिव-पार्वती और विषहरा (मनसा) का पूजन होता है।', shortDescriptionEn: 'Madhushravani on Shravana Shukla Tritiya — the vrat of the newly married women of Mithila; the closing day of the cycle of daily puja and katha begun on Shravana Krishna Panchami, honouring Shiva–Parvati and Vishahara (Manasa).', searchTerms: ['madhushravani', 'madhusravani', 'mithila', 'maithil teej', 'madhushrawani'], sourceUrl: BiharTourismUrl, bhogId: 'devi-vrat-bhog' }),
   festival({ id: 'nag-panchami', nameHi: 'नाग पंचमी', nameEn: 'Nag Panchami', lunarMonth: 5, paksha: 'shukla', tithi: 5, marker: 'dot', deityHi: 'नाग देवता', deityEn: 'Naga Devata', kathaId: 'nag-panchami-vrat-katha' }),
   festival({ id: 'raksha-bandhan', nameHi: 'रक्षा बंधन', nameEn: 'Raksha Bandhan', lunarMonth: 5, paksha: 'shukla', tithi: 15, marker: 'star', kathaId: 'raksha-bandhan-legends' }),
   // Purnimant month: Kajari Teej is Bhadrapada (6) Krishna Tritiya, not Shravana (5, its amanta name).
@@ -265,10 +319,23 @@ export const FESTIVAL_RULES: ObservanceRule[] = [
   festival({ id: 'bhadwa-chauth', nameHi: 'भादवा चौथ (चौथ माता व्रत)', nameEn: 'Bhadwa Chauth (Chauth Mata Vrat)', lunarMonth: 6, paksha: 'krishna', tithi: 4, dayRule: 'chandrodaya', marker: 'dot', category: 'vrat', deityHi: 'चौथ माता व विनायक जी', deityEn: 'Chauth Mata and Vinayak Ji', shortDescriptionHi: 'राजस्थान का सुहाग व्रत — भाद्रपद कृष्ण चतुर्थी को चौथ माता और विनायक जी का पूजन, संध्या चंद्रोदय पर अर्घ्य; चौथ का बरवाड़ा (सवाई माधोपुर) का प्रसिद्ध मेला इसी दिन भरता है।', shortDescriptionEn: 'Rajasthan’s marital-well-being vrat — Chauth Mata and Vinayak Ji worship on Bhadrapada Krishna Chaturthi, with arghya at the evening moonrise; the famed Chauth Ka Barwara (Sawai Madhopur) fair is held this day.', searchTerms: ['bhadwa chauth', 'chauth mata', 'bhaduri chauth', 'chauth'], bhogId: 'bhadwa-chauth-bhog' }),
   // Purnimant month: Janmashtami is Bhadrapada (6) Krishna Ashtami, not Shravana (5, its amanta name).
   festival({ id: 'janmashtami', nameHi: 'जन्माष्टमी', nameEn: 'Janmashtami', lunarMonth: 6, paksha: 'krishna', tithi: 8, marker: 'star', deityHi: 'श्री कृष्ण', deityEn: 'Shri Krishna', linkSectionId: 'bhagavad-gita', kathaId: 'janmashtami-katha', upvasId: 'janmashtami-upvas', bhogId: 'janmashtami-bhog' }),
+  // Bhadrapada Krishna Navami — Gogaji (Jaharveer), the folk deity of Rajasthan's
+  // Gogamedi. Published: 5 Sep 2026 (BhaktiBharat, Prokerala; Drik "Goga Navami").
+  festival({ id: 'goga-navami', nameHi: 'गोगा नवमी', nameEn: 'Goga Navami', lunarMonth: 6, paksha: 'krishna', tithi: 9, marker: 'dot', deityHi: 'गोगाजी (जाहरवीर)', deityEn: 'Gogaji (Jaharveer)', shortDescriptionHi: 'भाद्रपद कृष्ण नवमी को लोक देवता गोगाजी — जाहरवीर — का पूजन, सर्पदंश से रक्षा की कामना के साथ; गोगामेड़ी (हनुमानगढ़) का विशाल मेला इसी तिथि पर भरता है। राजस्थान, हरियाणा, पंजाब और पश्चिमी उत्तर प्रदेश में मनाई जाती है।', shortDescriptionEn: 'Worship of the folk deity Gogaji — Jaharveer — on Bhadrapada Krishna Navami, prayed to for protection from snakebite; the great Gogamedi (Hanumangarh) fair is held on this tithi. Kept across Rajasthan, Haryana, Punjab and western Uttar Pradesh.', searchTerms: ['goga navami', 'gogaji', 'goga ji', 'jaharveer', 'jahar veer', 'gogamedi', 'goga nomi', 'goga maharaj'] }),
+  // Bhadrapada Krishna Dwadashi — Rajasthan's Bachh Baras. Published: 7 Sep 2026
+  // (Drik "Bachha Baras Dwadashi"). Katha already shipped.
+  festival({ id: 'bachh-baras', nameHi: 'बछ बारस', nameEn: 'Bachh Baras', lunarMonth: 6, paksha: 'krishna', tithi: 12, marker: 'dot', category: 'vrat', deityHi: 'गौ माता', deityEn: 'Gau Mata', shortDescriptionHi: 'भाद्रपद कृष्ण द्वादशी को बछ बारस — गाय और बछड़े का पूजन; माताएं संतान के मंगल हेतु व्रत रखती हैं और इस दिन गाय का दूध-दही तथा चाकू से कटी वस्तु ग्रहण नहीं करतीं।', shortDescriptionEn: 'Bachh Baras on Bhadrapada Krishna Dwadashi — cow and calf worship; mothers keep the fast for their children’s well-being and avoid cow’s milk and curd and anything cut with a knife for the day.', searchTerms: ['bachh baras', 'bach baras', 'bachbaras', 'govatsa dwadashi', 'bachhbaras'], kathaId: 'bachh-baras-vrat-katha', bhogId: 'bachh-baras-bhog' }),
+  // Bhadrapada Shukla Dwitiya (भादवा सुदी बीज) — Baba Ramdevji's avataran; the
+  // Ramdevra/Runicha fair runs from this tithi to Bhadrapada Shukla Ekadashi.
+  // Published tithi: BankBazaar, Pincodify; 2026 date 12 Sep.
+  festival({ id: 'ramdev-jayanti', nameHi: 'रामदेव जयंती', nameEn: 'Ramdev Jayanti', lunarMonth: 6, paksha: 'shukla', tithi: 2, marker: 'dot', deityHi: 'बाबा रामदेव जी', deityEn: 'Baba Ramdevji', shortDescriptionHi: 'भाद्रपद शुक्ल द्वितीया (भादवा सुदी बीज) को बाबा रामदेव जी का अवतरण दिवस — रुणिचा/रामदेवरा (जैसलमेर) का मेला इसी तिथि से भाद्रपद शुक्ल एकादशी तक चलता है; भक्त जम्मा-जागरण और पैदल यात्रा करते हैं।', shortDescriptionEn: 'Baba Ramdevji’s birth anniversary on Bhadrapada Shukla Dwitiya (Bhadva Sudi Beej) — the Ramdevra (Runicha, Jaisalmer) fair runs from this tithi to Bhadrapada Shukla Ekadashi, with night jamma-jagarans and pilgrim walks.', searchTerms: ['ramdev jayanti', 'ramdevji', 'ramdev pir', 'ramdevra', 'runicha', 'baba ramdev', 'bhadva beej'], sourceUrl: RajasthanTourismUrl }),
   festival({ id: 'hartalika-teej', nameHi: 'हरतालिका तीज', nameEn: 'Hartalika Teej', lunarMonth: 6, paksha: 'shukla', tithi: 3, marker: 'dot', category: 'vrat', deityHi: 'मां पार्वती', deityEn: 'Maa Parvati', kathaId: 'hartalika-teej-katha', bhogId: 'hartalika-teej-bhog' }),
   festival({ id: 'ganesh-chaturthi', nameHi: 'गणेश चतुर्थी', nameEn: 'Ganesh Chaturthi', lunarMonth: 6, paksha: 'shukla', tithi: 4, dayRule: 'madhyahna', arcId: 'ganesh-utsav', arcRole: 'sthapana', arcOrdinal: 1, marker: 'star', deityHi: 'श्री गणेश', deityEn: 'Shri Ganesh', linkSectionId: 'ganesh-chalisa', kathaId: 'ganesha-chaturthi-vrat-katha', vidhiId: 'ganesh-chaturthi-sthapana', bhogId: 'ganesha-bhog' }),
   festival({ id: 'rishi-panchami', nameHi: 'ऋषि पंचमी', nameEn: 'Rishi Panchami', lunarMonth: 6, paksha: 'shukla', tithi: 5, marker: 'dot', category: 'vrat', deityHi: 'ऋषि परंपरा', deityEn: 'Rishi Parampara', kathaId: 'rishi-panchami-vrat-katha', bhogId: 'rishi-panchami-bhog' }),
   festival({ id: 'durva-ashtami', nameHi: 'दूर्वा अष्टमी', nameEn: 'Durva Ashtami', lunarMonth: 6, paksha: 'shukla', tithi: 8, marker: 'dot', category: 'vrat', deityHi: 'श्री गणेश', deityEn: 'Shri Ganesh', kathaId: 'durva-ashtami-vrat-katha', bhogId: 'durva-ashtami-bhog' }),
+  // Bhadrapada Shukla Dashami — Veer Tejaji. Published: 21 Sep 2026, and the tithi
+  // itself in BhaktiBharat + BankBazaar; Parbatsar (Nagaur) cattle fair.
+  festival({ id: 'teja-dashami', nameHi: 'तेजा दशमी', nameEn: 'Teja Dashami', lunarMonth: 6, paksha: 'shukla', tithi: 10, marker: 'dot', deityHi: 'वीर तेजाजी', deityEn: 'Veer Tejaji', shortDescriptionHi: 'भाद्रपद शुक्ल दशमी को वीर तेजाजी का स्मरण — खरनाल और परबतसर (नागौर) के पशु मेले इसी दिन से जुड़े हैं; किसान और ग्रामीण सर्पदंश से रक्षा की मान्यता से तांती बांधते हैं।', shortDescriptionEn: 'Remembrance of Veer Tejaji on Bhadrapada Shukla Dashami — the Kharnal and Parbatsar (Nagaur) cattle fairs are tied to this day, and farmers and villagers tie the protective tanti thread against snakebite.', searchTerms: ['teja dashami', 'teja dashmi', 'tejaji', 'veer teja', 'parbatsar', 'kharnal'], sourceUrl: RajasthanTourismUrl }),
   festival({ id: 'anant-chaturdashi', nameHi: 'अनंत चतुर्दशी', nameEn: 'Anant Chaturdashi', lunarMonth: 6, paksha: 'shukla', tithi: 14, arcId: 'ganesh-utsav', arcRole: 'visarjan', arcOrdinal: 10, marker: 'dot', category: 'vrat', deityHi: 'भगवान विष्णु', deityEn: 'Lord Vishnu', kathaId: 'anant-chaturdashi-vrat-katha', bhogId: 'anant-chaturdashi-bhog' }),
   festival({ id: 'navratri-start', nameHi: 'नवरात्रि प्रारंभ', nameEn: 'Navratri Begins', lunarMonth: 7, paksha: 'shukla', tithi: 1, arcId: 'sharad-navratri', arcRole: 'sthapana', arcOrdinal: 1, marker: 'star', deityHi: 'मां दुर्गा', deityEn: 'Maa Durga', linkSectionId: 'durga-stotram', kathaId: 'navratri-start-katha', vidhiId: 'navratri-ghatasthapana', bhogId: 'navratri-bhog' }),
   festival({ id: 'dussehra', nameHi: 'दशहरा', nameEn: 'Dussehra', lunarMonth: 7, paksha: 'shukla', tithi: 10, arcId: 'sharad-navratri', arcRole: 'visarjan', arcOrdinal: 10, marker: 'star', deityHi: 'श्री राम', deityEn: 'Shri Ram', linkSectionId: 'ram-stuti', kathaId: 'dussehra-katha' }),
@@ -280,10 +347,21 @@ export const FESTIVAL_RULES: ObservanceRule[] = [
   festival({ id: 'diwali', nameHi: 'दीपावली', nameEn: 'Diwali', lunarMonth: 8, paksha: 'krishna', tithi: 15, arcId: 'deepavali', arcRole: 'day', arcOrdinal: 3, marker: 'star', deityHi: 'मां लक्ष्मी', deityEn: 'Maa Lakshmi', kathaId: 'diwali-legends', vidhiId: 'diwali-lakshmi-ganesh-puja', bhogId: 'diwali-lakshmi-bhog' }),
   festival({ id: 'govardhan-puja', nameHi: 'गोवर्धन पूजा', nameEn: 'Govardhan Puja', lunarMonth: 8, paksha: 'shukla', tithi: 1, arcId: 'deepavali', arcRole: 'day', arcOrdinal: 4, marker: 'star', deityHi: 'श्री कृष्ण', deityEn: 'Shri Krishna', kathaId: 'govardhan-puja-katha' }),
   festival({ id: 'bhai-dooj', nameHi: 'भाई दूज', nameEn: 'Bhai Dooj', lunarMonth: 8, paksha: 'shukla', tithi: 2, arcId: 'deepavali', arcRole: 'day', arcOrdinal: 5, marker: 'star', kathaId: 'bhai-dooj-katha' }),
+  // Kartika Shukla Dwitiya — Yama Dwitiya, the same day as Bhai Dooj. Published:
+  // 11 Nov 2026 (Drik "Chitragupta Puja", 99Pandit).
+  festival({ id: 'chitragupta-puja', nameHi: 'चित्रगुप्त पूजा', nameEn: 'Chitragupta Puja', lunarMonth: 8, paksha: 'shukla', tithi: 2, marker: 'dot', deityHi: 'भगवान चित्रगुप्त', deityEn: 'Bhagwan Chitragupta', shortDescriptionHi: 'कार्तिक शुक्ल द्वितीया (यम द्वितीया) को चित्रगुप्त पूजा — कलम, दवात और बही-खाते का पूजन; बिहार, झारखंड और उत्तर प्रदेश के कायस्थ समाज में इसी दिन भगवान चित्रगुप्त की उपासना होती है।', shortDescriptionEn: 'Chitragupta Puja on Kartika Shukla Dwitiya (Yama Dwitiya) — the pen, the inkpot and the ledgers are worshipped; the Kayastha community of Bihar, Jharkhand and Uttar Pradesh honours Bhagwan Chitragupta on this day.', searchTerms: ['chitragupta puja', 'chitragupt', 'kalam dawat', 'dawat puja', 'kayastha', 'yama dwitiya'] }),
   festival({ id: 'chhath-puja', nameHi: 'छठ पूजा', nameEn: 'Chhath Puja', lunarMonth: 8, paksha: 'shukla', tithi: 6, marker: 'dot', category: 'upavas', deityHi: 'सूर्य देव', deityEn: 'Surya Deva', kathaId: 'chhath-puja-katha', bhogId: 'chhath-bhog' }),
+  // Kartika Shukla Saptami — Mithila's Sama Chakeva OPENS here and is immersed on
+  // Kartik Purnima; only the opening day is a tithi rule. Sources: Wikipedia
+  // (Sama Chakeva), utsav.gov.in, Bihar Museum folklore note.
+  festival({ id: 'sama-chakeva', nameHi: 'सामा-चकेवा', nameEn: 'Sama Chakeva', lunarMonth: 8, paksha: 'shukla', tithi: 7, marker: 'dot', deityHi: 'लोक परंपरा', deityEn: 'Folk tradition', shortDescriptionHi: 'कार्तिक शुक्ल सप्तमी से सामा-चकेवा — मिथिला में बहन-भाई के स्नेह का लोकपर्व; मिट्टी की सामा, चकेवा और चुगला की मूर्तियां बनाकर गीत गाए जाते हैं और कार्तिक पूर्णिमा को विसर्जन होता है।', shortDescriptionEn: 'Sama Chakeva begins on Kartika Shukla Saptami — Mithila’s folk festival of the bond between sister and brother; clay figures of Sama, Chakeva and Chugla are made and sung to, and immersed on Kartik Purnima.', searchTerms: ['sama chakeva', 'sama chakeba', 'mithila', 'maithil', 'bhai bahan'], sourceUrl: BiharTourismUrl }),
   festival({ id: 'dev-uthani-ekadashi', nameHi: 'देव उठनी एकादशी', nameEn: 'Dev Uthani Ekadashi', lunarMonth: 8, paksha: 'shukla', tithi: 11, marker: 'dot', category: 'vrat', deityHi: 'श्री विष्णु', deityEn: 'Shri Vishnu', linkSectionId: 'vishnu-sahasranama', kathaId: 'kartika-mahatmya', bhogId: 'ekadashi-food' }),
   festival({ id: 'tulasi-vivah', nameHi: 'तुलसी विवाह', nameEn: 'Tulasi Vivah', lunarMonth: 8, paksha: 'shukla', tithi: 12, marker: 'dot', deityHi: 'तुलसी माता', deityEn: 'Tulasi Mata', kathaId: 'kartika-mahatmya' }),
   festival({ id: 'akshaya-navami', nameHi: 'अक्षय नवमी', nameEn: 'Akshaya Navami', lunarMonth: 8, paksha: 'shukla', tithi: 9, marker: 'dot', category: 'vrat', kathaId: 'akshaya-navami-katha', bhogId: 'akshaya-navami-bhog' }),
+  // Kartika Purnima — Tripurari Purnima / Dev Deepawali, the close of Kartik snan.
+  // Published: 24 Nov 2026 (Drik "Kartik Purnima", SmartPuja). The monthly
+  // `purnima-vrat` already fires on this tithi; the named festival did not exist.
+  festival({ id: 'kartik-purnima', nameHi: 'कार्तिक पूर्णिमा', nameEn: 'Kartik Purnima', lunarMonth: 8, paksha: 'shukla', tithi: 15, marker: 'star', deityHi: 'भगवान शिव व श्री विष्णु', deityEn: 'Lord Shiva and Shri Vishnu', shortDescriptionHi: 'कार्तिक पूर्णिमा — त्रिपुरारी पूर्णिमा और देव दीपावली; कार्तिक स्नान और दीपदान का समापन दिवस। पुष्कर (राजस्थान) और सोनपुर (बिहार) के मेले तथा मिथिला का सामा-चकेवा विसर्जन इसी तिथि पर होते हैं।', shortDescriptionEn: 'Kartik Purnima — Tripurari Purnima and Dev Deepawali, the closing day of the Kartik snan and the lamp offerings. The Pushkar (Rajasthan) and Sonepur (Bihar) fairs and Mithila’s Sama Chakeva immersion all fall on this tithi.', searchTerms: ['kartik purnima', 'kartika purnima', 'dev deepawali', 'dev diwali', 'tripurari purnima', 'pushkar mela', 'sonepur mela', 'kartik snan'] }),
   festival({ id: 'vivah-panchami', nameHi: 'विवाह पंचमी', nameEn: 'Vivah Panchami', lunarMonth: 9, paksha: 'shukla', tithi: 5, marker: 'dot', deityHi: 'सीता राम', deityEn: 'Sita Ram', kathaId: 'vivah-panchami-katha' }),
   festival({ id: 'gita-jayanti', nameHi: 'गीता जयंती', nameEn: 'Gita Jayanti', lunarMonth: 9, paksha: 'shukla', tithi: 11, marker: 'dot', deityHi: 'श्री कृष्ण', deityEn: 'Shri Krishna', linkSectionId: 'bhagavad-gita', kathaId: 'gita-jayanti-katha' }),
   festival({ id: 'dattatreya-jayanti', nameHi: 'दत्तात्रेय जयंती', nameEn: 'Dattatreya Jayanti', lunarMonth: 9, paksha: 'shukla', tithi: 15, marker: 'dot', deityHi: 'भगवान दत्तात्रेय', deityEn: 'Lord Dattatreya', kathaId: 'dattatreya-jayanti-katha' }),
@@ -319,6 +397,18 @@ export const EKADASHI_NAMES: { lunarMonth: number; paksha: Paksha; nameHi: strin
 function slugify(value: string): string {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 }
+
+/**
+ * Regional names an Ekadashi is actually KNOWN BY in a region — the tithi is the
+ * same, so these are search aliases on the generated rule, not new rules.
+ * Bhadrapada Shukla Ekadashi is जलझूलनी / देव झूलनी ग्यारस across Rajasthan and
+ * Malwa, and the Bundi/Mewar boat processions are held on it.
+ */
+const EKADASHI_EXTRA_SEARCH_TERMS: Record<string, string[]> = {
+  'Parivartini Ekadashi': ['jaljhulani', 'jal jhulani', 'dev jhulni', 'devjhulni', 'jhulni gyaras', 'padma ekadashi', 'vaman ekadashi'],
+  'Dev Uthani Ekadashi': ['dev uthani', 'devuthani', 'prabodhini ekadashi', 'gyaras', 'khatu shyam janmotsav'],
+  'Mokshada Ekadashi': ['maun agiyaras', 'maun ekadashi'],
+};
 
 // Individual Ekadashi kathas, added incrementally. Names not listed here fall
 // back to the shared generic `ekadashi-vrat-katha` until their own katha exists.
@@ -366,7 +456,7 @@ export const EKADASHI_RULES: ObservanceRule[] = EKADASHI_NAMES.map((item) => vra
   // it carries its own (PRD-09/P4 §6.1) — same sharing as the generic katha.
   upvasId: item.nameEn === 'Nirjala Ekadashi' ? 'nirjala-ekadashi-upvas' : 'ekadashi-upvas',
   bhogId: item.nameEn === 'Nirjala Ekadashi' ? 'nirjala-ekadashi-food' : 'ekadashi-food',
-  searchTerms: ['ekadashi', 'upavas', 'vishnu'],
+  searchTerms: ['ekadashi', 'upavas', 'vishnu', ...(EKADASHI_EXTRA_SEARCH_TERMS[item.nameEn] ?? [])],
 }));
 
 export const MONTHLY_VRAT_RULES: ObservanceRule[] = [
@@ -405,13 +495,8 @@ export const ADVANCED_OBSERVANCE_RULES: ObservanceRule[] = [
   hidden({ id: 'navagraha-weekday-fasts', nameHi: 'नवग्रह वार व्रत', nameEn: 'Navagraha Weekdays Fasting', recurrence: 'catalog', ruleType: 'catalog-only', kathaId: 'weekday-vrat-katha', bhogId: 'weekday-vrat-bhog' }),
   hidden({ id: 'deity-weekday-fasts', nameHi: 'देवता वार व्रत', nameEn: 'Deities Weekdays Fasting', recurrence: 'catalog', ruleType: 'catalog-only', kathaId: 'weekday-vrat-katha', bhogId: 'weekday-vrat-bhog' }),
   hidden({ id: 'dashavatara-vrat', nameHi: 'दशावतार व्रत', nameEn: 'Dashavatara Vrat', bhogId: 'dashavatara-bhog' }),
-  hidden({ id: 'sakat-chauth', nameHi: 'सकट चौथ', nameEn: 'Sakat Chauth', kathaId: 'sakat-chauth-vrat-katha', bhogId: 'ganesha-bhog' }),
-  hidden({ id: 'gangaur', nameHi: 'गणगौर', nameEn: 'Gangaur', kathaId: 'gangaur-vrat-katha', bhogId: 'gangaur-bhog' }),
   hidden({ id: 'jayaparvati-vrat', nameHi: 'जयापार्वती व्रत', nameEn: 'Jayaparvati Vrat', kathaId: 'jayaparvati-vrat-katha', bhogId: 'jayaparvati-bhog' }),
   hidden({ id: 'ashoka-ashtami', nameHi: 'अशोक अष्टमी', nameEn: 'Ashoka Ashtami', lunarMonth: 1, paksha: 'shukla', tithi: 8, kathaId: 'ashoka-ashtami-vrat-katha', bhogId: 'devi-vrat-bhog' }),
-  hidden({ id: 'asha-dashami', nameHi: 'आशा दशमी', nameEn: 'Asha Dashami', bhogId: 'devi-vrat-bhog' }),
-  hidden({ id: 'shitala-saptami', nameHi: 'शीतला सप्तमी', nameEn: 'Shitala Saptami', kathaId: 'sheetala-saptami-vrat-katha', bhogId: 'shitala-bhog' }),
-  hidden({ id: 'bachh-baras', nameHi: 'बछ बारस', nameEn: 'Bachh Baras', kathaId: 'bachh-baras-vrat-katha', bhogId: 'bachh-baras-bhog' }),
 ];
 
 export const OBSERVANCE_RULES: ObservanceRule[] = [
