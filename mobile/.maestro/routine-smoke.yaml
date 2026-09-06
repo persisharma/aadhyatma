@@ -52,7 +52,7 @@ appId: com.prashantsharma.vedansh
 # ── Step 1b: Capture the Home brand lockup (ॐ वेदांश़ ॐ) for header-alignment
 # review. The wordmark is always Devanagari (brand), independent of language,
 # so we grab it before switching to English. Saved outside the repo. ──
-- takeScreenshot: /tmp/vedansh-home-wordmark
+- takeScreenshot: e2e-shots/vedansh-home-wordmark
 
 # ── Step 2: Set global reading language to English (More tab) ──
 - tapOn: { id: "tab-more" }
@@ -160,7 +160,7 @@ appId: com.prashantsharma.vedansh
 # The check-off circle's accessibilityLabel (PRD-10 "offered" register).
 - tapOn: "Mark offered"
 # Capture the app-wide pushpa-varsha mid-animation (transient ~2s one-shot).
-- takeScreenshot: /tmp/vedansh-celebration
+- takeScreenshot: e2e-shots/vedansh-celebration
 # Let the celebration overlay finish before reading the headline underneath.
 - waitForAnimationToEnd:
     timeout: 10000

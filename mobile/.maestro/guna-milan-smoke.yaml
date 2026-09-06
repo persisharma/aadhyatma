@@ -135,7 +135,7 @@ appId: com.prashantsharma.vedansh
     timeout: 20000
     centerElement: true
 - assertVisible: { id: "guna-milan-score-dial" }
-- takeScreenshot: guna-milan-exact-result
+- takeScreenshot: e2e-shots/guna-milan-exact-result
 - tapOn: "Varna, .* collapsed"
 - assertVisible: "Varna, .* expanded"
 - scrollUntilVisible:
@@ -187,7 +187,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Bride possible nakshatras: Ashwini · Bharani"
 - assertNotVisible: "Groom possible nakshatras:.*"
 - assertNotVisible: "Preview privacy-safe Guna Milan share card"
-- takeScreenshot: guna-milan-unknown-time-range
+- takeScreenshot: e2e-shots/guna-milan-unknown-time-range
 
 - tapOn: "Back to Jyotish"
 - waitForAnimationToEnd

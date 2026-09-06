@@ -72,6 +72,14 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Open name Keshav.*"
 - assertVisible: "Keshav"
 - assertVisible: "A name of Vishnu-Krishna"
+# NameDetailSheet is a transparent <Modal>; Maestro's scrollUntilVisible can't
+# engage its inner ScrollView (documented transparent-Modal gotcha) but a
+# coordinate swipe does. On standard-height iPhones the action row sits below
+# the sheet's fold.
+- swipe:
+    start: "50%, 75%"
+    end: "50%, 45%"
+    duration: 400
 - assertVisible: "Copy Keshav name"
 - assertVisible: "Open Shri Krishna in Deity Index"
 - tapOn: "Close name details"
@@ -162,7 +170,7 @@ appId: com.prashantsharma.vedansh
     timeout: 20000
 - assertVisible: ".*IST.*pada.*"
 - assertNotVisible: "Preview privacy-safe Namkaran share card"
-- takeScreenshot: namkaran-unknown-time-range
+- takeScreenshot: e2e-shots/namkaran-unknown-time-range
 
 # A candidate opens its own namakshar card, but stays flagged as one of the
 # day's possibilities and still offers no exact share.
@@ -173,6 +181,6 @@ appId: com.prashantsharma.vedansh
 - assertVisible: { id: "namkaran-uncertain-notice" }
 - assertVisible: { id: "namkaran-name-list" }
 - assertNotVisible: "Preview privacy-safe Namkaran share card"
-- takeScreenshot: namkaran-uncertain-candidate-detail
+- takeScreenshot: e2e-shots/namkaran-uncertain-candidate-detail
 - stopApp:
     appId: com.prashantsharma.vedansh

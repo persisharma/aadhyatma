@@ -38,6 +38,32 @@ maestro test .maestro/
 maestro test --debug-output ./maestro-debug .maestro/sanskar-smoke.yaml
 ```
 
+## Token-cheap verification (for agents)
+
+A green `maestro test` exit code is the verdict — do not read screenshots to re-confirm a pass.
+To inspect the current screen or debug a selector, use `mobile/scripts/e2e-screen-text.sh [UDID]`
+(text dump of the same a11y tree Maestro matches, ~10× cheaper than reading an image). Full
+policy: `wiki/runbooks/e2e-verification.md` § "Token-cheap verification".
+
+### Visual regression (cached goldens — zero tokens when unchanged)
+
+Flows capture visual checkpoints with `takeScreenshot: e2e-shots/<name>` (relative to `mobile/`,
+where maestro runs; captures are gitignored). After a **green** run — never seed or compare
+goldens from a failed run (its captures show mid-flow states; `rm e2e-shots/*.png` after a red):
+
+```bash
+./scripts/e2e-visual-check.sh
+```
+
+Each capture is normalized (440×956) and pixel-diffed against the committed golden in
+`.maestro/goldens/<name>.png`. Verdicts are text: `SEEDED` (first run becomes the golden),
+`PASS <diff%>`, or `FAIL <diff%> bbox=…` (exit 1). Only on FAIL does anyone look at an image —
+and then the small `e2e-shots/<name>.diff.png` (changed pixels in red), not the raw captures.
+When a UI change is intentional, delete the golden, re-run to reseed, and commit the new golden.
+Tuning via env: `E2E_VISUAL_THRESH` (default 0.10 %), `E2E_DIFF_TOL` (default 10/255),
+`E2E_DIFF_MASK_TOP` (default 0.05 — masks the status-bar clock). Animation-heavy checkpoints
+(e.g. the pushpa-varsha celebration) may need a slightly higher threshold.
+
 ## Flow conventions
 
 - **Filename**: `{feature}-{intent}.yaml` (e.g., `sanskar-smoke.yaml`, `search-navigation.yaml`)
