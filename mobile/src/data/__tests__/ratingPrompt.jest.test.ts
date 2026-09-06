@@ -112,10 +112,6 @@ describe('state transitions', () => {
       outcome: 'pending',
       asksByTrigger: { 'routine-complete': 1 },
     });
-    expect(afterAsked(once, NOW, 'share').asksByTrigger).toEqual({
-      'routine-complete': 1,
-      share: 1,
-    });
     expect(afterAsked(once, NOW, 'routine-complete').asksByTrigger).toEqual({
       'routine-complete': 2,
     });
@@ -138,7 +134,7 @@ describe('state transitions', () => {
     // with two actions only, so this is the whole vocabulary a user has short of
     // rating: the cadence never runs out on its own.
     for (let i = 0; i < 10; i += 1) {
-      state = afterAsked(state, NOW + i * REASK_COOLDOWN_DAYS * DAY_MS, 'share');
+      state = afterAsked(state, NOW + i * REASK_COOLDOWN_DAYS * DAY_MS, 'routine-complete');
     }
     expect(state.askCount).toBe(10);
     expect(
@@ -179,7 +175,7 @@ describe('parseRatingPromptState', () => {
       askCount: 1,
       lastAskedAt: NOW,
       outcome: 'pending',
-      asksByTrigger: { 'japa-round': 1 },
+      asksByTrigger: { 'routine-complete': 1 },
     };
     expect(parseRatingPromptState(JSON.stringify(state))).toEqual(state);
   });
@@ -198,10 +194,11 @@ describe('parseRatingPromptState', () => {
         askCount: 1,
         lastAskedAt: NOW,
         outcome: 'pending',
-        asksByTrigger: { share: 2.7, 'cold-start': 4, 'japa-round': -1, 'routine-complete': 'x' },
+        asksByTrigger: { 'routine-complete': 2.7, 'cold-start': 4, share: 3, 'japa-round': -1 },
       })
     );
-    expect(parsed.asksByTrigger).toEqual({ share: 2 });
+    // Unknown moments (incl. ones from a build that no longer ships them) are dropped.
+    expect(parsed.asksByTrigger).toEqual({ 'routine-complete': 2 });
   });
 
   it('drops junk fields rather than trusting them', () => {

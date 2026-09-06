@@ -214,25 +214,15 @@ describe('moment-triggered ask', () => {
     expect(saved.asksByTrigger).toEqual({ 'routine-complete': 1 });
   });
 
-  test('every moment is a valid trigger', async () => {
-    for (const trigger of ['japa-round', 'share'] as const) {
-      mockStore.clear();
-      const tree = await renderAndSettle(trigger);
-      expect(modalVisible(tree)).toBe(true);
-      expect(savedState().asksByTrigger).toEqual({ [trigger]: 1 });
-      act(() => tree.unmount());
-    }
-  });
-
   test('asks at most once per session, however many moments follow', async () => {
-    const tree = await renderAndSettle('share');
+    const tree = await renderAndSettle();
     expect(modalVisible(tree)).toBe(true);
     act(() => {
       pressableByLabel(tree, 'Maybe later').props.onPress();
     });
     expect(modalVisible(tree)).toBe(false);
 
-    await fireMoment('japa-round');
+    await fireMoment();
     expect(modalVisible(tree)).toBe(false);
     expect(savedState().askCount).toBe(1);
   });
@@ -241,7 +231,7 @@ describe('moment-triggered ask', () => {
     const tree = await renderHydrated();
     act(() => {
       requestAsk?.('routine-complete');
-      requestAsk?.('share');
+      requestAsk?.('routine-complete');
     });
     await act(async () => {
       jest.advanceTimersByTime(RATING_PROMPT_DELAY_MS);
@@ -289,7 +279,7 @@ describe('moment-triggered ask', () => {
     // would push the prompt out indefinitely.
     const tree = await renderHydrated();
     act(() => {
-      requestAsk?.('share');
+      requestAsk?.('routine-complete');
     });
     await act(async () => {
       jest.advanceTimersByTime(RATING_PROMPT_DELAY_MS - 500);
@@ -324,7 +314,7 @@ describe('moment-triggered ask', () => {
     act(() => {
       TestRenderer.create(<Bare />);
     });
-    expect(() => fn?.('share')).not.toThrow();
+    expect(() => fn?.('routine-complete')).not.toThrow();
   });
 });
 

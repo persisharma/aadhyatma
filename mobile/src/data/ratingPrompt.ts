@@ -34,23 +34,20 @@ export const RATING_PROMPT_STORAGE_KEY = '@vedansh/rating-prompt';
 export type RatingPromptOutcome = 'pending' | 'rated' | 'declined';
 
 /**
- * The moments that may open the sheet (design.md §54 "Triggers"). The ask no
- * longer fires on a cold start: each of these is a point where the user has just
+ * The moments that may open the sheet (design.md §54 "Triggers"). The ask does
+ * not fire on a cold start: a moment is a point where the user has just
  * finished something and is likely to feel good about the app, which is when a
  * rating request reads as a fair question rather than an interruption.
  *
  *  - `routine-complete` — the pushpa-varsha for today's routine has finished.
- *  - `japa-round`       — the user leaves the japam counter after completing at
- *                         least one full mala in that visit (never mid-count).
- *  - `share`            — a verse share actually went out (not a dismissed sheet).
+ *
+ * One moment ships (product decision, Sept 2026: "ask when a routine is
+ * completed"). The type stays a union so a further moment is a one-literal
+ * change here plus a `requestAsk` call at the host — see RULEBOOK §6.2.
  */
-export type RatingAskTrigger = 'routine-complete' | 'japa-round' | 'share';
+export type RatingAskTrigger = 'routine-complete';
 
-export const RATING_ASK_TRIGGERS: readonly RatingAskTrigger[] = [
-  'routine-complete',
-  'japa-round',
-  'share',
-];
+export const RATING_ASK_TRIGGERS: readonly RatingAskTrigger[] = ['routine-complete'];
 
 export type RatingPromptState = {
   /** How many times the sheet has auto-opened (manual opens from More don't count). */
