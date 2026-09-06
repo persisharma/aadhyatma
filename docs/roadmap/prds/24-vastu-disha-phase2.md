@@ -2,11 +2,11 @@
 
 | | |
 |---|---|
-| **Status** | Plan — drafted 2026-09-04, revised the same day with buyer/renter mode, floor-plan input, tiered rules and the AI layer. **UX decided 2026-09-05** (owner, from the prototype): Variant A capture + Variant C floor-plan mark-up, the **mandala grid as the single assessment reading**; the ledger reading is dropped. Not yet built |
+| **Status** | Plan — drafted 2026-09-04, revised the same day with buyer/renter mode, floor-plan input, tiered rules and the AI layer. **UX decided 2026-09-05** (owner, from the prototype): Variant A capture + Variant C floor-plan mark-up, the **mandala grid as the single assessment reading**; the ledger reading is dropped. **Amended 2026-09-06** (owner, from the journey prototype's grid branch): the manual/no-visit capture is **drag-placement on the mandala grid itself** — room chips dragged into the nine cells — not a per-room direction-chip picker; the drop point inside a cell is kept as the user's sketch. R2 core in build |
 | **Parent** | [PRD-24 वास्तु दिशा](./24-vastu-disha.md) §4 Phase 2 (this document IS that phase line) |
 | **Design** | `design.md` §66 (to be extended as §66.1–§66.8 in the build PRs) |
 | **Contract** | `RULEBOOK.md` §22 (rule 5 amended, rules 11–17 added — see §8) |
-| **Prototype** | [`docs/ghar-vastu-prototype.html`](../../ghar-vastu-prototype.html) — three live UX variants (A · चक्कर compass walk, B · मंडल placement + ledger + compare, C · floor-plan mark-up + AI pre-read), one shared five-class engine; **registry rows, weights and pada names in it are illustrative placeholders** · [`docs/ghar-vastu-journey-prototype.html`](../../ghar-vastu-journey-prototype.html) — the chosen flow end to end on one phone for a 3BHK, from the More hub through setup, assessment, share and Ask, starting from an empty roster, with a guided play mode and the physical-world controls (phone rotation, sensor state) outside the frame; includes the F1 floor-plan branch (pick → match north against the brochure's N → centre → pin rooms → the same assessment with a नक्शा/ग्रिड toggle) with its own play mode |
+| **Prototype** | [`docs/ghar-vastu-prototype.html`](../../ghar-vastu-prototype.html) — three live UX variants (A · चक्कर compass walk, B · मंडल placement + ledger + compare, C · floor-plan mark-up + AI pre-read), one shared five-class engine; **registry rows, weights and pada names in it are illustrative placeholders** · [`docs/ghar-vastu-journey-prototype.html`](../../ghar-vastu-journey-prototype.html) — the chosen flow end to end on one phone for a 3BHK, from the More hub through setup, assessment, share and Ask, starting from an empty roster, with a guided play mode and the physical-world controls (phone rotation, sensor state) outside the frame; includes the F1 floor-plan branch (pick → match north against the brochure's N → centre → pin rooms → the same assessment with a नक्शा/ग्रिड toggle) and the 5d grid branch (facing from the brochure → room chips **dragged onto the 3×3 mandala**, each chip resting where dropped inside its cell), each with its own play mode |
 | **T-shirt size** | A: M · B: L (content-gated) · C: L · D: S · E: L · F1: M (store) · F2: L (backend) |
 | **Release** | **Parts A–E and F0 ship OTA at the 1.4.8 runtime** — `expo-sensors`, `expo-location`, `expo-haptics`, `expo-sharing`, `expo-file-system`, `react-native-svg` are all in the shipped binary. **F1 needs `expo-image-picker` (new native module → store release).** **F2 needs the runtime backend** the 2027 bets introduce in Stage 2 (PRD-32); it cannot ship before that and is planned here so the data shapes are ready for it. |
 
@@ -400,6 +400,16 @@ verified row (≥ 85 % top-1, zero wrong answers).
    it." The home's **template chips** (E1 — for the lived-in home the user picks a type too,
    or `custom`) appear; tapping one while a dik is faced/held/chosen records `{ roomId,
    ordinal, zone }`. Skip, repeat (two bedrooms), or mark `center`.
+   **Without a usable sensor — or away from the home entirely — the capture is मंडल-ग्रिड
+   placement** (decided 2026-09-06): the same template chips are **dragged onto a 3×3
+   mandala** (north-up, like a brochure; zone label + dikpala per cell; the centre cell a
+   legal target). One cell per room means "mostly in this zone" — the same grain the compass
+   walk captures. The chip rests where it is dropped inside the cell and that point is stored
+   (`at`) purely as the user's sketch, re-rendered on the assessment mandala; **it never
+   affects a finding** (the engine reads the zone alone). A placed chip drags to another cell
+   to move, or back to the chip tray to clear. This replaces the bare direction-chip picker
+   as the manual path; tap-chip-then-tap-cell stays as the non-drag equivalent for assistive
+   input. Ships OTA — no image, no native module.
 3. **सारांश · Assessment** → C3.
 
 Copy is instruction, never evaluation, until step 3.
@@ -409,7 +419,10 @@ Copy is instruction, never evaluation, until step 3.
 ```ts
 export type HomePlacement = { roomId: string; ordinal?: number; zone: VastuZone; recordedAt: string;
                               /** How the zone was captured — the provenance the assessment shows. */
-                              via: 'compass' | 'manual' | 'plan' | 'plan-ai-confirmed' };
+                              via: 'compass' | 'manual' | 'plan' | 'plan-ai-confirmed';
+                              /** Grid-placement drop point inside the cell (fractions 0–1) — the
+                               * user's sketch, re-rendered on the mandala; NEVER read by the engine. */
+                              at?: { fx: number; fy: number } };
 export type HomeRecord = {
   id: string; version: 1;
   label: string;                                  // "हमारा घर", "Prestige 3BHK, 7th floor"
@@ -705,6 +718,11 @@ Each block is its own PR with its design.md / RULEBOOK / wiki deltas.
    PRD-32. **BYOK rejected here.**
 7. **Deity-facing table and colours by direction** — excluded (split sources, commerce
    register); revisit only with a two-domain dossier.
+8. **Grid placement** — decided (owner, 2026-09-06, from the journey prototype's grid
+   branch): the manual/no-visit capture is drag-placement on the 3×3 mandala; the sub-cell
+   drop point is stored and re-rendered as a sketch but is presentational only — a resizable
+   -tile "fit the square" editor is rejected (floor-plan CAD; adds no signal the engine can
+   read).
 
 ## 11. Acceptance and release gates
 
