@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
+import { androidBoxShadow } from '@/theme/elevation';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { deityIconKey } from '@/data/deities';
@@ -51,6 +52,10 @@ export default function MiniPlayer() {
             borderColor: colors.divider,
             borderRadius: radii.lg,
             shadowColor: colors.ink,
+            // Android ignores shadow*; match the iOS upward ink lift via
+            // boxShadow. (The wrap's `elevation` is for stacking only — it is
+            // transparent, so it casts no box.)
+            ...androidBoxShadow(-4, 12, 'rgba(26, 14, 3, 0.16)'),
           },
         ]}
       >
