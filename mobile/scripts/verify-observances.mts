@@ -59,6 +59,28 @@ export const ANNUAL: AnnualFestival[] = [
   { id: 'govardhan-puja', month: 8, paksha: 'shukla', tithi: 1, muhurta: 'udaya' },
   { id: 'bhai-dooj', month: 8, paksha: 'shukla', tithi: 2, muhurta: 'udaya' },
   { id: 'dev-uthani-ekadashi', month: 8, paksha: 'shukla', tithi: 11, muhurta: 'udaya' },
+
+  // Regional wave 1 (Sept 2026) — Rajasthani, Bihari/Maithil and Jain observances.
+  // `sakat-chauth` is deliberately absent: it is chandrodaya-matched and this script
+  // has no moonrise muhurta; `observanceDates.test.ts` pins it against the Sankashti
+  // series instead. `bachh-baras` IS here with its real (pradosh) muhurta, so the
+  // known Class B shift it carries is reported every run rather than forgotten.
+  { id: 'shitala-saptami', month: 1, paksha: 'krishna', tithi: 7, muhurta: 'udaya' },
+  { id: 'shitala-ashtami', month: 1, paksha: 'krishna', tithi: 8, muhurta: 'udaya' },
+  { id: 'dasha-mata-vrat', month: 1, paksha: 'krishna', tithi: 10, muhurta: 'udaya' },
+  { id: 'chaitra-navratri-start', month: 1, paksha: 'shukla', tithi: 1, muhurta: 'udaya' },
+  { id: 'gangaur', month: 1, paksha: 'shukla', tithi: 3, muhurta: 'udaya' },
+  { id: 'chaiti-chhath', month: 1, paksha: 'shukla', tithi: 6, muhurta: 'udaya' },
+  { id: 'mahavir-jayanti', month: 1, paksha: 'shukla', tithi: 13, muhurta: 'udaya' },
+  { id: 'asha-dashami', month: 4, paksha: 'shukla', tithi: 10, muhurta: 'udaya' },
+  { id: 'madhushravani', month: 5, paksha: 'shukla', tithi: 3, muhurta: 'udaya' },
+  { id: 'goga-navami', month: 6, paksha: 'krishna', tithi: 9, muhurta: 'udaya' },
+  { id: 'bachh-baras', month: 6, paksha: 'krishna', tithi: 12, muhurta: 'pradosh' },
+  { id: 'ramdev-jayanti', month: 6, paksha: 'shukla', tithi: 2, muhurta: 'udaya' },
+  { id: 'teja-dashami', month: 6, paksha: 'shukla', tithi: 10, muhurta: 'udaya' },
+  { id: 'chitragupta-puja', month: 8, paksha: 'shukla', tithi: 2, muhurta: 'udaya' },
+  { id: 'sama-chakeva', month: 8, paksha: 'shukla', tithi: 7, muhurta: 'udaya' },
+  { id: 'kartik-purnima', month: 8, paksha: 'shukla', tithi: 15, muhurta: 'udaya' },
 ];
 
 // Known-good anchors (drikpanchang/established, Ujjain/IST) — authoritative truth. When an
@@ -70,6 +92,20 @@ export const ANCHORS: Record<string, string> = {
   'ganesh-chaturthi:2025': '2025-08-27', 'ganesh-chaturthi:2026': '2026-09-14',
   'diwali:2025': '2025-10-20', 'ram-navami:2025': '2025-04-06', 'narada-jayanti:2025': '2025-05-13',
   'holi:2025': '2025-03-14', 'dussehra:2025': '2025-10-02', 'navratri-start:2025': '2025-09-22',
+  // Regional wave 1 — published civil dates gathered with the rules (see festivals.ts
+  // per-rule source comments). `bachh-baras` has NO anchor on purpose: its published
+  // date follows the pradosh muhurta this script re-derives, and pinning an anchor
+  // would hide the very Class B shift the row exists to report.
+  'gangaur:2025': '2025-03-31', 'gangaur:2026': '2026-03-21',
+  'goga-navami:2025': '2025-08-17', 'goga-navami:2026': '2026-09-05',
+  'teja-dashami:2025': '2025-09-02', 'teja-dashami:2026': '2026-09-21',
+  'shitala-ashtami:2026': '2026-03-11', 'shitala-saptami:2026': '2026-03-10',
+  'dasha-mata-vrat:2026': '2026-03-13', 'asha-dashami:2026': '2026-07-24',
+  'chaiti-chhath:2026': '2026-03-24', 'madhushravani:2026': '2026-08-15',
+  'chitragupta-puja:2026': '2026-11-11',
+  'kartik-purnima:2025': '2025-11-05', 'kartik-purnima:2026': '2026-11-24',
+  'chaitra-navratri-start:2025': '2025-03-30', 'chaitra-navratri-start:2026': '2026-03-19',
+  'mahavir-jayanti:2025': '2025-04-10', 'mahavir-jayanti:2026': '2026-03-31',
 };
 
 const ayan = (y: number) => 23.853 + 0.01396 * (y - 2000);
