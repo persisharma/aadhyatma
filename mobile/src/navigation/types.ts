@@ -42,7 +42,7 @@ export type VidhiStackParamList = {
 
 export type GitaReaderParams = { chapter: number; initialIndex?: number };
 
-export type HomeStackParamList = VidhiStackParamList & {
+export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & {
   Home: undefined;
   /**
    * जिज्ञासा (PRD-41). `seed` is ask-from-context: the surface the user came
@@ -108,7 +108,25 @@ export type HomeStackParamList = VidhiStackParamList & {
   TodayVidhan: undefined;
 };
 
-export type MoreStackParamList = VidhiStackParamList & {
+/**
+ * दान-पुण्य (PRD-26). Registered on the More AND Panchang stacks (the PRD-19
+ * multi-stack pattern): the More hub row and the Observance-Detail daan door
+ * both push in place, so Back retraces the journey. The educate-first IA
+ * contract (§2.7) lives in the screens: DaanPunya carries no external-linking
+ * affordance, and DaanDirectory is reachable only from a journey's last step.
+ */
+export type DaanStackParamList = {
+  DaanPunya: undefined;
+  DaanJourney: { occasionId: string };
+  DaanLedger: undefined;
+  DaanEntry: { occasionId?: string } | undefined;
+  /** `causes` pre-filters the द्वार to an occasion's प्रयोजन (PRD-26 §5.1). */
+  DaanDirectory: { causes?: string[] } | undefined;
+  DaanDirectoryDetail: { orgId: string };
+  DaanKatha: { kathaId: string };
+};
+
+export type MoreStackParamList = VidhiStackParamList & DaanStackParamList & {
   MoreHome: undefined;
   Wishlist: undefined;
   Profile: undefined;
@@ -136,7 +154,7 @@ export type PanchangHomeMode = 'calendar' | 'catalog' | 'jyotish';
 
 // Panchang tab stack — the date-first calendar, the "Vrat & Parv" catalog
 // (PRD-09), and the Jyotish tools landing (PRD-C).
-export type PanchangStackParamList = VidhiStackParamList & {
+export type PanchangStackParamList = VidhiStackParamList & DaanStackParamList & {
   PanchangHome:
     | {
         initialTab?: PanchangHomeMode;

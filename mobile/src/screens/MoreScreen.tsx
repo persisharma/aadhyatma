@@ -432,6 +432,20 @@ export default function MoreScreen({ navigation }: Props) {
                   accessibilityLabel="Vastu Disha, new"
                   testID="more-vastu-disha"
                 />
+                {/* दान-पुण्य (PRD-26) — the educate-first giving layer. */}
+                <SettingsRow
+                  icon="दा"
+                  iconBg={colors.saffron}
+                  iconFontFamily={typography.readerTitle.fontFamily}
+                  iconFontSize={15}
+                  label={pick(lang, { hi: 'दान-पुण्य', en: 'Daan Punya', gu: 'દાન-પુણ્ય', kn: 'ದಾನ-ಪುಣ್ಯ' })}
+                  labelFontFamily={labelFont}
+                  state="NEW"
+                  stateFontFamily={fontFamilies.interSemiBold}
+                  onPress={() => navigation.navigate('DaanPunya')}
+                  accessibilityLabel="Daan Punya, new"
+                  testID="more-daan-punya"
+                />
               </View>
             </View>
 

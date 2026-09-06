@@ -19,6 +19,12 @@ import NamkaranScreen from '@/screens/NamkaranScreen';
 import NamkaranResultScreen from '@/screens/NamkaranResultScreen';
 import NamkaranRashiScreen from '@/screens/NamkaranRashiScreen';
 import VastuDishaScreen from '@/screens/VastuDishaScreen';
+import DaanJourneyScreen from '@/screens/DaanJourneyScreen';
+import DaanLedgerScreen from '@/screens/DaanLedgerScreen';
+import DaanEntryScreen from '@/screens/DaanEntryScreen';
+import DaanDirectoryScreen from '@/screens/DaanDirectoryScreen';
+import DaanDirectoryDetailScreen from '@/screens/DaanDirectoryDetailScreen';
+import DaanKathaScreen from '@/screens/DaanKathaScreen';
 import VidhiCatalogScreen from '@/screens/VidhiCatalogScreen';
 import VidhiDetailScreen from '@/screens/VidhiDetailScreen';
 import VidhiConductScreen from '@/screens/VidhiConductScreen';
@@ -79,6 +85,15 @@ export default function PanchangStackNavigator() {
         component={VastuDishaScreen}
         options={{ animation: 'slide_from_right' }}
       />
+      {/* दान-पुण्य (PRD-26) — the Observance-Detail daan door pushes the
+          journey in place; entry/directory/katha are its terminal pushes.
+          DaanPunya itself stays More-only (the educate home has one door). */}
+      <Stack.Screen name="DaanJourney" component={DaanJourneyScreen} options={{ animation: 'slide_from_right' }} />
+      <Stack.Screen name="DaanLedger" component={DaanLedgerScreen} options={{ animation: 'slide_from_right' }} />
+      <Stack.Screen name="DaanEntry" component={DaanEntryScreen} options={{ animation: 'slide_from_right' }} />
+      <Stack.Screen name="DaanDirectory" component={DaanDirectoryScreen} options={{ animation: 'slide_from_right' }} />
+      <Stack.Screen name="DaanDirectoryDetail" component={DaanDirectoryDetailScreen} options={{ animation: 'slide_from_right' }} />
+      <Stack.Screen name="DaanKatha" component={DaanKathaScreen} options={{ animation: 'slide_from_right' }} />
       <Stack.Screen
         name="AbujhDays"
         component={AbujhDaysScreen}

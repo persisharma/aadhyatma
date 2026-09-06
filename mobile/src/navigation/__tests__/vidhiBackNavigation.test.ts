@@ -83,6 +83,6 @@ describe('vidhi back navigation', () => {
     const types = src('types.ts');
     expect(more).toContain('name="GitaReader"');
     expect(more).toContain("import GitaReaderScreen from '@/screens/GitaReaderScreen'");
-    expect(types).toMatch(/export type MoreStackParamList = VidhiStackParamList & \{[\s\S]*GitaReader: GitaReaderParams;/);
+    expect(types).toMatch(/export type MoreStackParamList = VidhiStackParamList &[\s\S]*?\{[\s\S]*GitaReader: GitaReaderParams;/);
   });
 });

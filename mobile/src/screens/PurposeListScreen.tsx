@@ -6,6 +6,10 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { getPurposeMeta } from '@/data/purposes';
+import { causeForPurpose } from '@/data/daan';
+import { contentByLang } from '@/utils/localize';
+import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
+import { fontFamilies } from '@/theme/typography';
 import { textsForPurpose } from '@/data/discoveryMeta';
 import { getCategoryBackground } from '@/data/backgrounds';
 import type { LibraryEntry } from '@/data/texts';
@@ -25,6 +29,8 @@ export default function PurposeListScreen({ navigation, route }: Props) {
   const { lang } = useGitaLanguage();
   const { purposeId } = route.params;
   const meta = getPurposeMeta(purposeId);
+  // null for every purpose the taxonomy does not honestly share with a seva.
+  const daanCause = causeForPurpose(purposeId);
   const { getProgress, clearProgress, clearChapterProgress, isLoading } = useReadingProgress();
   const { markSeen } = useNewContent();
   const [pendingEntry, setPendingEntry] = useState<LibraryEntry | null>(null);
@@ -105,6 +111,35 @@ export default function PurposeListScreen({ navigation, route }: Props) {
           {items.map((entry) => (
             <LibraryCard key={entry.id} entry={entry} onPress={() => handlePress(entry)} />
           ))}
+          {/* PRD-26 §5.1 purpose bridge — ONLY for the two intents the app's own
+              vocabulary shares with a seva (विद्या → knowledge, आरोग्य → health).
+              An educate door, never a give button (§2.7): it opens the दान-पुण्य
+              home. wealth/prosperity are deliberately unbridged — pointing
+              "give here" at a prosperity intent is the fruit-promise §2.2 bans. */}
+          {daanCause ? (
+            <Pressable
+              testID="purpose-daan-door"
+              accessibilityRole="button"
+              accessibilityLabel={`Daan for ${daanCause.nameEn}`}
+              onPress={() => navigation.navigate('DaanPunya')}
+              style={({ pressed }) => [
+                styles.daanDoor,
+                { backgroundColor: colors.parchmentSoft, borderColor: colors.divider },
+                pressed && { opacity: 0.8 },
+              ]}
+            >
+              <Text style={{ fontSize: 20, color: colors.saffron, marginRight: 12 }}>दा</Text>
+              <View style={{ flex: 1 }}>
+                <Text style={{ fontFamily: scriptTitleFont(lang, fontFamilies.devanagari), fontSize: 14.5, color: colors.ink }}>
+                  {contentByLang(lang, `${daanCause.nameHi} — इसका दान`, `${daanCause.nameEn} — the daan for it`)}
+                </Text>
+                <Text style={{ fontFamily: scriptBodyFont(lang, fontFamilies.devanagari), fontSize: 12, color: colors.inkMuted, marginTop: 2 }}>
+                  {contentByLang(lang, 'महत्व से आरम्भ — दान-पुण्य', 'Begins with why — Daan Punya')}
+                </Text>
+              </View>
+              <Text style={{ fontSize: 18, color: colors.inkMuted }}>›</Text>
+            </Pressable>
+          ) : null}
         </ScrollView>
       </SafeAreaView>
 
@@ -142,6 +177,7 @@ export default function PurposeListScreen({ navigation, route }: Props) {
 }
 
 const styles = StyleSheet.create({
+  daanDoor: { flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderRadius: 16, paddingHorizontal: 14, paddingVertical: 12 },
   root: { flex: 1 },
   safe: { flex: 1 },
   topBar: {

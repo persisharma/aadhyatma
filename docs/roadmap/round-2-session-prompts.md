@@ -1,4 +1,4 @@
-# Q4 Round 2 — session start prompts (PRD-26 … PRD-29)
+# Q4 Round 2 — session start prompts (PRD-42, PRD-27 … PRD-29 — कण्ठस्थ renumbered from PRD-26 on 2026-09-03; 26 is the built दान-पुण्य)
 
 Four independent build sessions, one per candidate from
 [`2026-Q4-candidates-round-2.md`](./2026-Q4-candidates-round-2.md). Each prompt is self-contained:
@@ -9,7 +9,7 @@ observance detail, birth profiles) and will conflict if they share one.
 
 | PRD | Branch | Order |
 |---|---|---|
-| 26 कण्ठस्थ | `claude/prd-26-kanthasth` | 1st — cheapest, no gates |
+| 42 कण्ठस्थ | `claude/prd-42-kanthasth` | 1st — cheapest, no gates |
 | 27 शुभ योग | `claude/prd-27-shubh-yoga` | 2nd — small tables |
 | 29 कुल परम्परा | `claude/prd-29-kul-parampara` | 3rd — no content |
 | 28 पर्व-अर्क | `claude/prd-28-parv-arc` | **Deadline: Diwali is in Q4** |
@@ -21,12 +21,12 @@ backend, CDN, analytics SaaS or cloud sync); `wiki/index.md` first per `.claude/
 
 ---
 
-## PRD-26 — कण्ठस्थ · memorization and recall
+## PRD-42 — कण्ठस्थ · memorization and recall
 
 ```
-Work on branch claude/prd-26-kanthasth (create it from main).
+Work on branch claude/prd-42-kanthasth (create it from main).
 
-Build PRD-26 from docs/roadmap/2026-Q4-candidates-round-2.md §2 (PRD-26). The prototype is
+Build PRD-42 from docs/roadmap/2026-Q4-candidates-round-2.md §2 (PRD-42). The prototype is
 docs/memorize-abhyas-prototype.html — 8 frames, read it first, it is the spec's intent.
 
 The gap: the app has 30+ reader screens and every one only ever SHOWS text. Nothing anywhere
@@ -36,7 +36,7 @@ every text is already in the binary.
 
 Start by reading wiki/index.md and the [[readers]], [[routine]] and [[audio]] pages
 (.claude/rules/wiki-first-lookup.md is mandatory), then write the PRD at
-docs/roadmap/prds/26-memorization-abhyas.md following the house shape of the existing PRDs
+docs/roadmap/prds/42-memorization-abhyas.md following the house shape of the existing PRDs
 (status table, problem, goal, phases, DoD, stance guards). Then build in phases.
 
 Ship:
