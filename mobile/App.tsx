@@ -72,6 +72,7 @@ import JanmaTithiReminderScheduler from '@/components/JanmaTithiReminderSchedule
 import SadhanaReminderScheduler from '@/components/SadhanaReminderScheduler';
 import RoutineReminderScheduler from '@/components/RoutineReminderScheduler';
 import DailyVerseAngaBridge from '@/components/DailyVerseAngaBridge';
+import PushTokenRegistrar from '@/components/PushTokenRegistrar';
 import MiniPlayer from '@/components/audio/MiniPlayer';
 import NowPlayingScreen from '@/screens/audio/NowPlayingScreen';
 import { ShareProvider } from '@/utils/shareVerse';
@@ -368,6 +369,12 @@ export default function App() {
                                 PanchangLocationProvider — the notification
                                 provider itself sits above it. */}
                             <DailyVerseAngaBridge />
+                            {/* Captures this install's Expo push token once the
+                                shared grant exists — the only remote-push
+                                groundwork in the tree. Schedules nothing,
+                                prompts for nothing, and uploads nothing until
+                                `PUSH_REGISTRY_ENDPOINT` is set. */}
+                            <PushTokenRegistrar />
                             <WidgetCoordinator />
                             <MiniPlayer />
                             <NowPlayingScreen />
