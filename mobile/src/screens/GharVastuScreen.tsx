@@ -17,6 +17,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import ReaderHeader from '@/components/ReaderHeader';
 import VastuMandalaGrid, { type MandalaGridChip } from '@/components/VastuMandalaGrid';
 import { useGitaLanguage } from '@/data/gita/language';
+import { getDoorPadaByIndex } from '@/data/vastu/doorPadas';
 import { getHomeTemplate } from '@/data/vastu/homeTemplates';
 import { zoneLabel } from '@/data/vastu/mandala';
 import { DISHA_LABELS } from '@/panchang/eventMuhurat';
@@ -88,10 +89,16 @@ export default function GharVastuScreen({ navigation, route }: { navigation: Nav
     )
     .join('; ');
 
+  // The measured pada surfaces only while its wall's registry rows stay
+  // verified (US-11: facing only otherwise — never a placeholder).
+  const doorPada = home.doorPada != null ? getDoorPadaByIndex(home.doorPada) : null;
+
   const subtitle = [
     template ? contentByLang(lang, template.labelHi, template.labelEn) : home.template,
     home.facing
-      ? `${contentByLang(lang, 'मुख', 'Facing')} ${contentByLang(lang, DISHA_LABELS[home.facing].hi, DISHA_LABELS[home.facing].en)}`
+      ? `${contentByLang(lang, 'मुख', 'Facing')} ${contentByLang(lang, DISHA_LABELS[home.facing].hi, DISHA_LABELS[home.facing].en)}${
+          doorPada ? ` · ${contentByLang(lang, `${doorPada.pada.nameHi} पद`, `${doorPada.pada.nameEn} pada`)}` : ''
+        }`
       : null,
     home.role === 'living' ? contentByLang(lang, 'यहाँ रहते हैं', 'We live here') : contentByLang(lang, 'देख रहे हैं', 'Viewing'),
   ]

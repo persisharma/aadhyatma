@@ -40,6 +40,7 @@ const home = (over: Partial<HomeRecord> = {}): HomeRecord => ({
   template: 'flat-3bhk',
   role: 'considering',
   facing: 'east',
+  doorPada: null,
   rooms: [
     { roomId: 'kitchen', ordinal: 1, zone: 'southeast', via: 'manual', recordedAt: '2026-09-06T10:00:00.000Z' },
   ],

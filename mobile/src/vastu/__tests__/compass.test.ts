@@ -6,6 +6,8 @@
 import { DISHA_ORDER } from '@/panchang/eventMuhurat';
 import {
   ALL_DIK,
+  cardinalSideForHeading,
+  padaForHeading,
   FIELD_MAX_UT,
   FIELD_MIN_UT,
   applyDeclination,
@@ -138,5 +140,35 @@ describe('smoothing follows the fused rung faster (§A1)', () => {
   test('α=0.5 halves the shortest-arc delta', () => {
     expect(smoothHeading(350, 10, 0.5)).toBeCloseTo(0, 5); // through north
     expect(smoothHeading(100, 120, 0.5)).toBeCloseTo(110, 5);
+  });
+});
+
+describe('door padas along a wall (PRD-24 Phase 2 §A5)', () => {
+  test('each cardinal wall owns its 90° arc, north wrapping through 0°', () => {
+    expect(cardinalSideForHeading(0)).toBe('north');
+    expect(cardinalSideForHeading(315)).toBe('north');
+    expect(cardinalSideForHeading(44.9)).toBe('north');
+    expect(cardinalSideForHeading(45)).toBe('east');
+    expect(cardinalSideForHeading(134.9)).toBe('east');
+    expect(cardinalSideForHeading(135)).toBe('south');
+    expect(cardinalSideForHeading(225)).toBe('west');
+    expect(cardinalSideForHeading(314.9)).toBe('west');
+  });
+  test('padas run 1–8 clockwise at 11.25° each; the north arc wraps through 0°', () => {
+    expect(padaForHeading(315, 'north')).toBe(1);
+    expect(padaForHeading(326.24, 'north')).toBe(1);
+    expect(padaForHeading(326.25, 'north')).toBe(2);
+    expect(padaForHeading(0, 'north')).toBe(5); // due north is the 5th pada
+    expect(padaForHeading(44.9, 'north')).toBe(8);
+    expect(padaForHeading(45, 'east')).toBe(1);
+    expect(padaForHeading(134.9, 'east')).toBe(8);
+    expect(padaForHeading(180, 'south')).toBe(5);
+    expect(padaForHeading(270, 'west')).toBe(5);
+  });
+  test('outside the wall arc → null; intercardinal facings have no wall padas', () => {
+    expect(padaForHeading(90, 'north')).toBeNull();
+    expect(padaForHeading(0, 'south')).toBeNull();
+    expect(padaForHeading(40, 'northeast')).toBeNull();
+    expect(padaForHeading(40, 'southwest')).toBeNull();
   });
 });

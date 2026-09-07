@@ -20,6 +20,7 @@ const record = (rooms: HomeRecord['rooms'], over: Partial<HomeRecord> = {}): Hom
   template: 'flat-3bhk',
   role: 'considering',
   facing: 'east',
+  doorPada: null,
   rooms,
   createdAt: '2026-09-06T09:00:00.000Z',
   updatedAt: '2026-09-06T09:00:00.000Z',

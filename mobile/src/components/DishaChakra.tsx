@@ -26,6 +26,22 @@ const CENTER_R = 44;
 
 const CARDINALS: readonly DishaDirection[] = ['north', 'east', 'south', 'west'];
 
+/**
+ * The 32-pada door ring (PRD-24 Phase 2 §A5) — rendered only when the door
+ * flow passes VERIFIED pada data for the faced wall; null keeps the dial
+ * pixel-identical to Phase 1. Names arrive localized; the auspicious set is
+ * tinted, the currently-pointed pada emphasised. Never numbers — names.
+ */
+export type PadaRing = {
+  /** The wall the ring annotates (its 90° arc), from `cardinalSideForHeading`. */
+  side: 'north' | 'east' | 'south' | 'west';
+  /** Exactly 8 localized pada names, clockwise along the wall. */
+  names: readonly string[];
+  auspicious: readonly boolean[];
+  /** 1–8 — the pada under the needle right now; null when outside the arc. */
+  activeIndex: number | null;
+};
+
 type Props = {
   /** True-north heading in [0,360) — the rose rotates by its negative. Null renders the rose unrotated. */
   heading: number | null;
@@ -33,10 +49,18 @@ type Props = {
   facingDik: DishaDirection | null;
   /** Rendered size in dp; the 264-unit viewBox scales, so geometry is untouched. */
   size?: number;
+  padaRing?: PadaRing | null;
   testID?: string;
 };
 
-export default function DishaChakra({ heading, facingDik, size = SIZE, testID = 'disha-chakra' }: Props) {
+const SIDE_ARC_START_DEG: Record<PadaRing['side'], number> = {
+  north: 315,
+  east: 45,
+  south: 135,
+  west: 225,
+};
+
+export default function DishaChakra({ heading, facingDik, size = SIZE, padaRing = null, testID = 'disha-chakra' }: Props) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
   const labelFont = scriptTitleFont(lang, typography.cardHindi.fontFamily);
@@ -62,6 +86,50 @@ export default function DishaChakra({ heading, facingDik, size = SIZE, testID = 
         <Circle cx={CX} cy={CY} r={RING_R} fill={colors.parchmentSoft} stroke={colors.divider} strokeWidth={1} />
 
         <G rotation={rotation} origin={`${CX}, ${CY}`}>
+          {/* द्वार-पद ring (§A5): 8 ticks at 11.25° along the faced wall's 90°
+              arc, each pada named; auspicious padas in saffron. Inside the
+              rotated G so the ring stays glued to its wall. */}
+          {padaRing
+            ? padaRing.names.map((name, i) => {
+                const startDeg = SIDE_ARC_START_DEG[padaRing.side] + i * 11.25;
+                const midDeg = startDeg + 11.25 / 2;
+                const midRad = ((midDeg - 90) * Math.PI) / 180;
+                const tickRad = ((startDeg - 90) * Math.PI) / 180;
+                const nameX = CX + Math.cos(midRad) * (RING_R + 13);
+                const nameY = CY + Math.sin(midRad) * (RING_R + 13);
+                const active = padaRing.activeIndex === i + 1;
+                return (
+                  <G key={`pada-${i}`}>
+                    <Line
+                      x1={CX + Math.cos(tickRad) * RING_R}
+                      y1={CY + Math.sin(tickRad) * RING_R}
+                      x2={CX + Math.cos(tickRad) * (RING_R + 6)}
+                      y2={CY + Math.sin(tickRad) * (RING_R + 6)}
+                      stroke={colors.inkMuted}
+                      strokeWidth={1}
+                    />
+                    <G rotation={midDeg} origin={`${nameX}, ${nameY}`}>
+                      <SvgText
+                        x={nameX}
+                        y={nameY + 3}
+                        textAnchor="middle"
+                        fontFamily={labelFont}
+                        fontSize={10}
+                        fill={
+                          active
+                            ? colors.saffronDeep
+                            : padaRing.auspicious[i]
+                              ? colors.saffron
+                              : colors.inkMuted
+                        }
+                      >
+                        {name}
+                      </SvgText>
+                    </G>
+                  </G>
+                );
+              })
+            : null}
           {/* 45° ticks */}
           {Array.from({ length: 8 }, (_, i) => {
             const rad = ((i * 45 - 90) * Math.PI) / 180;

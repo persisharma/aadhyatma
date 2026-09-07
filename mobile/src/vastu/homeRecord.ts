@@ -42,6 +42,10 @@ export type HomeRecord = {
   template: string;
   role: HomeRole;
   facing: DishaDirection | null;
+  /** The main door's mandala pada 1–32 (PRD-24 Phase 2 §A5/US-11) — captured
+   * by the pada ring or the manual picker; null when never measured (legacy
+   * records, grid placement, intercardinal facing). */
+  doorPada: number | null;
   rooms: readonly HomePlacement[];
   createdAt: string;
   updatedAt: string;
@@ -117,6 +121,11 @@ function parseHome(raw: unknown, validators: HomeRecordValidators): HomeRecord |
     template: validators.isTemplateKnown(template) ? template : 'custom',
     role: h.role === 'living' ? 'living' : 'considering',
     facing: isDik(h.facing) ? h.facing : null,
+    // Absent in pre-A5 payloads → null, honestly unmeasured.
+    doorPada:
+      typeof h.doorPada === 'number' && Number.isInteger(h.doorPada) && h.doorPada >= 1 && h.doorPada <= 32
+        ? h.doorPada
+        : null,
     rooms,
     createdAt: asString(h.createdAt),
     updatedAt: asString(h.updatedAt),

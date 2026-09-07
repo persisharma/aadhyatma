@@ -145,6 +145,7 @@ const gharHome = (over: Partial<HomeRecord> = {}): HomeRecord => ({
   template: 'flat-3bhk',
   role: 'considering',
   facing: 'east',
+  doorPada: null,
   rooms: [],
   createdAt: '2026-09-06T10:00:00.000Z',
   updatedAt: '2026-09-06T10:00:00.000Z',

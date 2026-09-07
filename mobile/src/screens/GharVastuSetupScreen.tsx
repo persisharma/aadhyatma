@@ -27,9 +27,11 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import DishaChakra, { type PadaRing } from '@/components/DishaChakra';
 import ReaderHeader from '@/components/ReaderHeader';
 import VastuMandalaGrid, { type MandalaGridChip } from '@/components/VastuMandalaGrid';
 import { useGitaLanguage } from '@/data/gita/language';
+import { getDoorPadasForSide } from '@/data/vastu/doorPadas';
 import { HOME_TEMPLATES, getHomeTemplate, resolveTemplateSeeds } from '@/data/vastu/homeTemplates';
 import { getVastuRoomEntries, getVastuRoomEntry } from '@/data/vastu/roomGuidance';
 import type { VastuZone } from '@/data/vastu/types';
@@ -38,6 +40,8 @@ import { useTheme } from '@/theme/ThemeContext';
 import { elevation } from '@/theme/elevation';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
+import { cardinalSideForHeading, dikForHeading, padaForHeading } from '@/vastu/compass';
+import { useCompassHeading } from '@/vastu/useCompassHeading';
 import type { HomePlacement, HomeRecord, HomeRole } from '@/vastu/homeRecord';
 import { getHomeRosterSnapshot, loadHomeRoster, saveHome } from '@/vastu/homeRecordStore';
 
@@ -75,6 +79,7 @@ function newDraft(role: HomeRole = 'considering'): HomeRecord {
     template: 'flat-3bhk',
     role,
     facing: null,
+    doorPada: null,
     rooms: seedRooms('flat-3bhk'),
     createdAt: now,
     updatedAt: now,
@@ -95,6 +100,27 @@ export default function GharVastuSetupScreen({ navigation, route }: { navigation
   });
   const [step, setStep] = useState(route.params?.homeId ? 2 : 0);
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
+
+  // ——— facing step compass (§A5): live only on step 1 and until captured;
+  // capture freezes by removing the subscription (the Hold contract).
+  const [facingCaptured, setFacingCaptured] = useState(false);
+  const sensor = useCompassHeading(step === 1 && !facingCaptured);
+  const liveDik = sensor.heading != null ? dikForHeading(sensor.heading) : null;
+  // The pada ring renders ONLY when the faced wall's rows are verified —
+  // draft data is indistinguishable from absence (US-11: facing only, no
+  // placeholder). All four sides ship draft, so this is null until the
+  // content flips land as data-only OTAs.
+  const liveSide = sensor.heading != null ? cardinalSideForHeading(sensor.heading) : null;
+  const verifiedSide = liveSide ? getDoorPadasForSide(liveSide) : null;
+  const padaRing: PadaRing | null =
+    sensor.heading != null && liveSide && verifiedSide
+      ? {
+          side: liveSide,
+          names: verifiedSide.padas.map((p) => contentByLang(lang, p.nameHi, p.nameEn)),
+          auspicious: verifiedSide.padas.map((p) => p.auspicious),
+          activeIndex: padaForHeading(sensor.heading, liveSide),
+        }
+      : null;
 
   // ——— drag state (ghost chip follows the finger; state churn kept off the move path)
   const ghostPos = useRef(new Animated.ValueXY({ x: -999, y: -999 })).current;
@@ -299,16 +325,28 @@ export default function GharVastuSetupScreen({ navigation, route }: { navigation
     }
   };
 
-  const setFacing = (dik: DishaDirection) => {
+  const setFacing = (dik: DishaDirection, via: 'manual' | 'compass' = 'manual', doorPada: number | null = null) => {
     persist({
       ...draft,
       facing: dik,
+      doorPada,
       rooms: draft.rooms.map((p) =>
         p.roomId === 'main-door'
-          ? { ...p, zone: dik, via: 'manual', recordedAt: new Date().toISOString(), at: undefined }
+          ? { ...p, zone: dik, via, recordedAt: new Date().toISOString(), at: undefined }
           : p
       ),
     });
+  };
+
+  // Hold-then-capture (§A5/US-03): freeze the dial and write facing + pada in
+  // one gesture. The pada is the GLOBAL 1–32 index, recorded only off a
+  // verified wall — otherwise it stays null, honestly unmeasured (US-11).
+  const captureFacing = () => {
+    if (sensor.heading == null || liveDik == null || liveSide == null) return;
+    const local = verifiedSide ? padaForHeading(sensor.heading, liveSide) : null;
+    const globalPada = local != null && verifiedSide ? verifiedSide.padas[local - 1]!.index : null;
+    setFacingCaptured(true);
+    setFacing(liveDik, 'compass', globalPada);
   };
 
   const finish = () => {
@@ -474,6 +512,60 @@ export default function GharVastuSetupScreen({ navigation, route }: { navigation
                   'Which way does the home face? Brochures state it; standing inside the main door looking out is the same direction.'
                 )}
               </Text>
+              {/* Live capture (§A5): stand in the door, face out, hold, save.
+                  The sensor never gates the step — the chips below always work
+                  (RULEBOOK §22.6). */}
+              {sensor.status !== 'unavailable' ? (
+                <View style={{ alignItems: 'center', marginTop: spacing.md }} testID="ghar-facing-compass">
+                  <DishaChakra
+                    heading={facingCaptured ? null : sensor.heading}
+                    facingDik={facingCaptured ? draft.facing : liveDik}
+                    padaRing={facingCaptured ? null : padaRing}
+                    size={210}
+                  />
+                  <Text
+                    style={{
+                      fontFamily: bodyFont,
+                      fontSize: 11.5,
+                      lineHeight: 17,
+                      color:
+                        sensor.status === 'unreliable' || sensor.status === 'tilted'
+                          ? colors.saffronDeep
+                          : colors.inkMuted,
+                      textAlign: 'center',
+                      marginTop: 4,
+                    }}
+                  >
+                    {facingCaptured
+                      ? contentByLang(lang, 'मुख सहेजा गया — नीचे बदल भी सकते हैं।', 'Facing saved — the chips below can change it.')
+                      : sensor.status === 'tilted'
+                        ? contentByLang(lang, 'फ़ोन समतल रखें — झुका हुआ फ़ोन दिशा बदल देता है।', 'Hold the phone flat — a tilted phone shifts the direction.')
+                        : sensor.status === 'unreliable'
+                          ? contentByLang(lang, 'रीडिंग अस्थिर है — धातु से दूर, ∞ आकार में घुमाएँ।', 'Reading is unsteady — move from metal, sweep a figure-8.')
+                          : contentByLang(lang, 'द्वार के भीतर खड़े होकर बाहर की ओर देखें।', 'Stand inside the main door, face outward.')}
+                  </Text>
+                  <Pressable
+                    testID="ghar-facing-capture"
+                    accessibilityRole="button"
+                    accessibilityLabel="Hold and save this facing"
+                    disabled={facingCaptured || sensor.heading == null}
+                    onPress={captureFacing}
+                    style={[
+                      styles.secondaryButton,
+                      {
+                        borderColor: colors.cardActiveBorder,
+                        borderRadius: radii.pill,
+                        marginTop: spacing.sm,
+                        opacity: facingCaptured || sensor.heading == null ? 0.45 : 1,
+                      },
+                    ]}
+                  >
+                    <Text style={{ fontFamily: titleFont, fontSize: 12.5, color: colors.saffronDeep }}>
+                      {contentByLang(lang, 'दिशा रोकें और सहेजें', 'Hold and save')}
+                    </Text>
+                  </Pressable>
+                </View>
+              ) : null}
               <View style={[styles.chipRow, { justifyContent: 'center', marginTop: spacing.md }]}>
                 {DISHA_ORDER.map((dik) => (
                   <Pressable
@@ -482,7 +574,10 @@ export default function GharVastuSetupScreen({ navigation, route }: { navigation
                     accessibilityRole="button"
                     accessibilityState={{ selected: draft.facing === dik }}
                     accessibilityLabel={`Facing ${DISHA_LABELS[dik].en}`}
-                    onPress={() => setFacing(dik)}
+                    onPress={() => {
+                      setFacingCaptured(true); // a chosen chip also stops the live dial
+                      setFacing(dik);
+                    }}
                     style={chipStyle(draft.facing === dik)}
                   >
                     <Text style={chipTextStyle(draft.facing === dik)}>
@@ -491,6 +586,33 @@ export default function GharVastuSetupScreen({ navigation, route }: { navigation
                   </Pressable>
                 ))}
               </View>
+              {/* Manual pada row (§A5): only when the faced wall's padas are
+                  VERIFIED — all sides ship draft, so this stays hidden until
+                  the content flips (US-11: facing only, no placeholder). */}
+              {(() => {
+                if (draft.facing == null) return null;
+                const manualSide = getDoorPadasForSide(draft.facing as never);
+                if (!manualSide) return null;
+                return (
+                  <View style={[styles.chipRow, { justifyContent: 'center', marginTop: spacing.md }]} testID="ghar-pada-row">
+                    {manualSide.padas.map((pada) => (
+                      <Pressable
+                        key={pada.index}
+                        testID={`ghar-pada-${pada.index}`}
+                        accessibilityRole="button"
+                        accessibilityState={{ selected: draft.doorPada === pada.index }}
+                        accessibilityLabel={`Door pada ${pada.nameEn}`}
+                        onPress={() => persist({ ...draft, doorPada: pada.index })}
+                        style={chipStyle(draft.doorPada === pada.index)}
+                      >
+                        <Text style={chipTextStyle(draft.doorPada === pada.index)}>
+                          {contentByLang(lang, pada.nameHi, pada.nameEn)}
+                        </Text>
+                      </Pressable>
+                    ))}
+                  </View>
+                );
+              })()}
               <View style={styles.stepNav}>
                 <Pressable
                   accessibilityRole="button"

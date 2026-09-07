@@ -419,6 +419,7 @@ const home = (overrides: Partial<HomeRecord>): HomeRecord => ({
   template: 'flat-3bhk',
   role: 'considering',
   facing: null,
+  doorPada: null,
   rooms: [],
   createdAt: '2026-09-07T00:00:00.000Z',
   updatedAt: '2026-09-07T00:00:00.000Z',

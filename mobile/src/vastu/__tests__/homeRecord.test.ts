@@ -25,6 +25,7 @@ const home = (over: Partial<HomeRecord> = {}): HomeRecord => ({
   template: 'flat-3bhk',
   role: 'considering',
   facing: 'east',
+  doorPada: null,
   rooms: [
     { roomId: 'kitchen', ordinal: 1, zone: 'southeast', via: 'manual', recordedAt: '2026-09-06T10:00:00.000Z', at: { fx: 0.4, fy: 0.6 } },
     { roomId: 'toilet', ordinal: 1, zone: null, via: null, recordedAt: null },
@@ -107,5 +108,23 @@ describe('roster invariants', () => {
   test('a livingId pointing at a missing home is dropped on parse', () => {
     const raw = JSON.stringify({ version: 1, homes: [home()], livingId: 'ghost' });
     expect(parseHomeRoster(raw, validators).livingId).toBeNull();
+  });
+});
+
+describe('doorPada (PRD-24 Phase 2 §A5)', () => {
+  test('a valid 1–32 pada round-trips; legacy payloads without one read null', () => {
+    const raw = JSON.stringify({ version: 1, homes: [{ ...home(), doorPada: 17 }], livingId: null });
+    expect(parseHomeRoster(raw, validators).homes[0]!.doorPada).toBe(17);
+    const legacy = home() as Record<string, unknown>;
+    delete legacy.doorPada;
+    const legacyRaw = JSON.stringify({ version: 1, homes: [legacy], livingId: null });
+    expect(parseHomeRoster(legacyRaw, validators).homes[0]!.doorPada).toBeNull();
+  });
+
+  test('out-of-range or non-integer padas are nulled, never a crash', () => {
+    for (const bad of [0, 33, -4, 3.5, '12', {}]) {
+      const raw = JSON.stringify({ version: 1, homes: [{ ...home(), doorPada: bad }], livingId: null });
+      expect(parseHomeRoster(raw, validators).homes[0]!.doorPada).toBeNull();
+    }
   });
 });
