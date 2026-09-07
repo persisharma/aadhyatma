@@ -12,6 +12,18 @@ import { CORPUS } from './corpus';
 warmAsk();
 const ctx = testContext({
   sadhana: [{ programId: 'hanuman-41', titleHi: 'हनुमान चालीसा', titleEn: 'Hanuman Chalisa', dayIndex: 7, total: 41, doneToday: false }],
+  // The saved living home vastu.myhome answers from (PRD-24 Phase 2 §C5).
+  vastuHome: {
+    homeId: 'home-test',
+    label: 'हमारा घर',
+    facing: 'east',
+    rooms: [
+      { roomId: 'main-door', ordinal: 1, zone: 'east' },
+      { roomId: 'kitchen', ordinal: 1, zone: 'southeast' },
+      { roomId: 'toilet', ordinal: 1, zone: 'northeast' },
+      { roomId: 'puja-room', ordinal: 1, zone: null },
+    ],
+  },
 });
 
 const positives = CORPUS.filter((c): c is Extract<typeof c, { intent: string }> => 'intent' in c);

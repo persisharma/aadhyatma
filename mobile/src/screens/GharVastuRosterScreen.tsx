@@ -4,7 +4,7 @@
  * class-count micro-strip in the frozen order. No winner, no ranking — the
  * compare screen (a later block) is a side-by-side reading, never a verdict.
  */
-import React from 'react';
+import React, { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -31,6 +31,23 @@ export default function GharVastuRosterScreen({ navigation }: { navigation: Navi
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
   const { hydrated, roster } = useHomeRoster();
 
+  // Compare selection (§E3/US-13): a buyer surface — only `considering` homes
+  // can be picked, 2–3 of them, and the result is a side-by-side READING,
+  // never a winner.
+  const [selecting, setSelecting] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<readonly string[]>([]);
+  const consideringCount = roster.homes.filter((home) => home.role === 'considering').length;
+
+  const toggleSelected = (homeId: string) => {
+    setSelectedIds((current) =>
+      current.includes(homeId)
+        ? current.filter((id) => id !== homeId)
+        : current.length >= 3
+          ? current // three columns is the readable ceiling
+          : [...current, homeId]
+    );
+  };
+
   // Living home pinned first, then newest first (store order is newest-first).
   const homes = [...roster.homes].sort((a, b) => {
     if (a.id === roster.livingId) return -1;
@@ -39,6 +56,8 @@ export default function GharVastuRosterScreen({ navigation }: { navigation: Navi
   });
 
   const HomeCard = ({ home }: { home: HomeRecord }) => {
+    const selectable = selecting && home.role === 'considering';
+    const selected = selectedIds.includes(home.id);
     const model = assessHome(home);
     const template = getHomeTemplate(home.template);
     const caption = [
@@ -53,11 +72,26 @@ export default function GharVastuRosterScreen({ navigation }: { navigation: Navi
       <Pressable
         testID={`ghar-roster-${home.id}`}
         accessibilityRole="button"
-        accessibilityLabel={`Home ${home.label}`}
-        onPress={() => navigation.navigate('GharVastu', { homeId: home.id })}
+        accessibilityState={selecting ? { selected, disabled: !selectable } : undefined}
+        accessibilityLabel={
+          selecting ? `${selectable ? 'Select' : 'Cannot compare'} home ${home.label}` : `Home ${home.label}`
+        }
+        onPress={() => {
+          if (selecting) {
+            if (selectable) toggleSelected(home.id);
+            return; // the living home stays un-selectable — compare is a buyer surface
+          }
+          navigation.navigate('GharVastu', { homeId: home.id });
+        }}
         style={[
           styles.card,
-          { backgroundColor: colors.parchmentSoft, borderColor: colors.cardActiveBorder, borderRadius: radii.lg },
+          {
+            backgroundColor: colors.parchmentSoft,
+            borderColor: selected ? colors.saffronDeep : colors.cardActiveBorder,
+            borderWidth: selected ? 2 : 1,
+            borderRadius: radii.lg,
+            opacity: selecting && !selectable ? 0.45 : 1,
+          },
           elevation.card,
         ]}
       >
@@ -110,6 +144,71 @@ export default function GharVastuRosterScreen({ navigation }: { navigation: Navi
         onBack={() => navigation.goBack()}
       />
       <ScrollView contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingBottom: spacing.xxl }}>
+        {/* Compare (§E3): appears once two considering homes exist. Selection
+            mode toggles; the confirm pill enables at 2, caps at 3. */}
+        {consideringCount >= 2 ? (
+          <View style={{ flexDirection: 'row', gap: 8, marginTop: spacing.md, alignItems: 'center' }}>
+            <Pressable
+              testID="ghar-roster-compare"
+              accessibilityRole="button"
+              accessibilityState={{ selected: selecting }}
+              accessibilityLabel={selecting ? 'Cancel compare selection' : 'Compare considering homes'}
+              onPress={() => {
+                setSelecting((current) => !current);
+                setSelectedIds([]);
+              }}
+              style={[
+                styles.comparePill,
+                {
+                  borderColor: selecting ? colors.cardActiveBorder : colors.border,
+                  backgroundColor: selecting ? colors.goldChipBg : colors.surface,
+                  borderRadius: radii.pill,
+                },
+              ]}
+            >
+              <Text style={{ fontFamily: titleFont, fontSize: 12, lineHeight: 19, color: selecting ? colors.saffronDeep : colors.inkSoft }}>
+                {selecting
+                  ? contentByLang(lang, 'रहने दें', 'Cancel')
+                  : contentByLang(lang, 'तुलना करें', 'Compare')}
+              </Text>
+            </Pressable>
+            {selecting ? (
+              <Pressable
+                testID="ghar-roster-compare-go"
+                accessibilityRole="button"
+                accessibilityLabel="See the selected homes side by side"
+                disabled={selectedIds.length < 2}
+                onPress={() => {
+                  navigation.navigate('GharVastuCompare', { homeIds: selectedIds });
+                  setSelecting(false);
+                  setSelectedIds([]);
+                }}
+                style={[
+                  styles.comparePill,
+                  {
+                    borderColor: colors.cardActiveBorder,
+                    backgroundColor: colors.saffron,
+                    borderRadius: radii.pill,
+                    opacity: selectedIds.length < 2 ? 0.45 : 1,
+                  },
+                ]}
+              >
+                <Text style={{ fontFamily: titleFont, fontSize: 12, lineHeight: 19, color: '#FFF8EC' }}>
+                  {contentByLang(lang, 'साथ-साथ देखें', 'See side by side')}
+                </Text>
+              </Pressable>
+            ) : null}
+          </View>
+        ) : null}
+        {selecting ? (
+          <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 17, color: colors.inkMuted, marginTop: 6 }}>
+            {meaningByLang(
+              lang,
+              'देखे जा रहे 2–3 घर चुनें — पाठ साथ-साथ दिखेगा, निर्णय आपका।',
+              'Pick 2–3 homes you are viewing — the readings sit side by side; the decision stays yours.'
+            )}
+          </Text>
+        ) : null}
         {hydrated && homes.length === 0 ? (
           <View style={{ alignItems: 'center', paddingTop: spacing.xxl, paddingHorizontal: spacing.lg }} testID="ghar-roster-empty">
             <Text style={{ fontFamily: titleFont, fontSize: 30, lineHeight: 40, color: colors.gold }}>॥</Text>
@@ -162,6 +261,7 @@ const styles = StyleSheet.create({
   card: { borderWidth: 1, paddingHorizontal: 14, paddingTop: 13, paddingBottom: 12, marginTop: 10 },
   strip: { flexDirection: 'row', flexWrap: 'wrap', gap: 4, marginTop: 8 },
   pill: { borderWidth: 1, paddingHorizontal: 7, paddingVertical: 2 },
+  comparePill: { borderWidth: 1, paddingHorizontal: 12, paddingVertical: 5 },
   newButton: { alignSelf: 'center', paddingHorizontal: 20, paddingVertical: 10, marginTop: 22 },
   privacy: { borderLeftWidth: 2, paddingLeft: 10, paddingVertical: 4, marginTop: 18 },
 });

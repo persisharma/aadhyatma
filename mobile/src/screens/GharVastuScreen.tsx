@@ -11,7 +11,7 @@
  * finding is "the texts say X about this placement", never "your home is bad".
  */
 import React from 'react';
-import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import ReaderHeader from '@/components/ReaderHeader';
@@ -32,6 +32,7 @@ import {
   type FindingClass,
   type HomeFinding,
 } from '@/vastu/assessHome';
+import { buildHomeHandoffText } from '@/vastu/homeHandoff';
 import { deleteHome, useHomeRoster } from '@/vastu/homeRecordStore';
 
 type Navigation = {
@@ -223,6 +224,21 @@ export default function GharVastuScreen({ navigation, route }: { navigation: Nav
         </View>
 
         <View style={{ flexDirection: 'row', gap: 8, marginTop: spacing.lg, flexWrap: 'wrap' }}>
+          <Pressable
+            testID="ghar-share"
+            accessibilityRole="button"
+            accessibilityLabel="Share this reading as text"
+            onPress={() => {
+              // Text-only today; when R3 adds record.plan, this switches to the
+              // expo-sharing multi-item sheet with the plan image attached.
+              void Share.share({ message: buildHomeHandoffText(home, model) });
+            }}
+            style={[styles.action, { borderColor: colors.cardActiveBorder, borderRadius: radii.pill }]}
+          >
+            <Text style={{ fontFamily: titleFont, fontSize: 12.5, color: colors.saffronDeep }}>
+              {contentByLang(lang, 'साझा करें', 'Share')}
+            </Text>
+          </Pressable>
           <Pressable
             testID="ghar-remeasure"
             accessibilityRole="button"

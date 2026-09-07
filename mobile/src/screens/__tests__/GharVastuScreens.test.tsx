@@ -12,6 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { GitaLanguageProvider } from '@/data/gita/language';
 import GharVastuScreen from '@/screens/GharVastuScreen';
+import GharVastuCompareScreen from '@/screens/GharVastuCompareScreen';
 import GharVastuRosterScreen from '@/screens/GharVastuRosterScreen';
 import GharVastuSetupScreen from '@/screens/GharVastuSetupScreen';
 import { FINDING_CLASS_ORDER } from '@/vastu/assessHome';
@@ -195,6 +196,95 @@ describe('GharVastuRosterScreen — the saved homes', () => {
   test('empty roster shows the empty state, never a crash', async () => {
     const r = await render(<GharVastuRosterScreen navigation={navigation} />);
     r.root.findByProps({ testID: 'ghar-roster-empty' });
+    act(() => r.unmount());
+  });
+});
+
+describe('GharVastuCompareScreen — side by side, never a verdict (US-13)', () => {
+  const homeB = () =>
+    home({
+      id: 'h2',
+      label: 'दूसरा फ़्लैट',
+      rooms: [
+        { roomId: 'main-door', ordinal: 1, zone: 'north', via: 'manual', recordedAt: '2026-09-06T10:00:00.000Z' },
+        { roomId: 'kitchen', ordinal: 1, zone: 'northwest', via: 'manual', recordedAt: '2026-09-06T10:00:00.000Z' },
+      ],
+    });
+
+  test('one column per home (2 and 3), pills render zeros, union rooms show "not measured" gaps', async () => {
+    await seedRoster([home(), homeB(), home({ id: 'h3', label: 'तीसरा' })]);
+    const two = await render(
+      <GharVastuCompareScreen navigation={navigation} route={{ params: { homeIds: ['h1', 'h2'] } }} />
+    );
+    expect(two.root.findAllByProps({ testID: 'compare-col-h1' }).length).toBeGreaterThan(0);
+    expect(two.root.findAllByProps({ testID: 'compare-col-h2' }).length).toBeGreaterThan(0);
+    // h2 never measured the toilet → its cell says not-measured, honestly.
+    expect(JSON.stringify(two.toJSON())).toContain('अभी मापा नहीं');
+    act(() => two.unmount());
+
+    const three = await render(
+      <GharVastuCompareScreen navigation={navigation} route={{ params: { homeIds: ['h1', 'h2', 'h3'] } }} />
+    );
+    for (const id of ['h1', 'h2', 'h3']) {
+      expect(three.root.findAllByProps({ testID: `compare-col-${id}` }).length).toBeGreaterThan(0);
+    }
+    act(() => three.unmount());
+  });
+
+  test('guardrails: closing line present; no winner/superlative/rank, no percent, no n-of-m', async () => {
+    await seedRoster([home(), homeB()]);
+    const r = await render(
+      <GharVastuCompareScreen navigation={navigation} route={{ params: { homeIds: ['h1', 'h2'] } }} />
+    );
+    r.root.findByProps({ testID: 'compare-closing' });
+    for (const text of texts(r)) {
+      expect(text).not.toMatch(/winner|best|सर्वोत्तम|श्रेष्ठतम|बेहतर घर|rank|क्रमांक/i);
+      expect(text).not.toMatch(/%/);
+      expect(text).not.toMatch(/\d+\s?(of|में से)\s?\d+/);
+    }
+    act(() => r.unmount());
+  });
+
+  test('an id no longer on the roster drops silently; below two the screen degrades honestly', async () => {
+    await seedRoster([home(), homeB()]);
+    const r = await render(
+      <GharVastuCompareScreen navigation={navigation} route={{ params: { homeIds: ['h1', 'h2', 'gone'] } }} />
+    );
+    expect(r.root.findAllByProps({ testID: 'compare-col-h1' }).length).toBeGreaterThan(0);
+    act(() => r.unmount());
+
+    const degraded = await render(
+      <GharVastuCompareScreen navigation={navigation} route={{ params: { homeIds: ['h1', 'gone'] } }} />
+    );
+    expect(JSON.stringify(degraded.toJSON())).toContain('कम से कम दो घर');
+    act(() => degraded.unmount());
+  });
+});
+
+describe('roster compare selection (§E3 entry)', () => {
+  test('the compare pill appears only with ≥2 considering homes', async () => {
+    await seedRoster([home({ role: 'living' }), home({ id: 'h2', role: 'considering' })], 'h1');
+    const r = await render(<GharVastuRosterScreen navigation={navigation} />);
+    expect(r.root.findAllByProps({ testID: 'ghar-roster-compare' })).toHaveLength(0);
+    act(() => r.unmount());
+  });
+
+  test('selection flow: pick two considering homes → navigate with those ids; living home un-selectable', async () => {
+    await seedRoster(
+      [home({ role: 'living' }), home({ id: 'h2' }), home({ id: 'h3' })],
+      'h1'
+    );
+    const r = await render(<GharVastuRosterScreen navigation={navigation} />);
+    await act(async () => r.root.findByProps({ testID: 'ghar-roster-compare' }).props.onPress());
+    // The confirm pill starts disabled.
+    expect(r.root.findByProps({ testID: 'ghar-roster-compare-go' }).props.disabled).toBe(true);
+    // The living home cannot join the comparison.
+    await act(async () => r.root.findByProps({ testID: 'ghar-roster-h1' }).props.onPress());
+    expect(r.root.findByProps({ testID: 'ghar-roster-compare-go' }).props.disabled).toBe(true);
+    await act(async () => r.root.findByProps({ testID: 'ghar-roster-h2' }).props.onPress());
+    await act(async () => r.root.findByProps({ testID: 'ghar-roster-h3' }).props.onPress());
+    await act(async () => r.root.findByProps({ testID: 'ghar-roster-compare-go' }).props.onPress());
+    expect(navigation.navigate).toHaveBeenCalledWith('GharVastuCompare', { homeIds: ['h2', 'h3'] });
     act(() => r.unmount());
   });
 });

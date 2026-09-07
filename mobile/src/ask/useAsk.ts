@@ -13,8 +13,9 @@ import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useSadhanaToday } from '@/data/sadhana/useSadhanaToday';
+import { useHomeRoster } from '@/vastu/homeRecordStore';
 import type { AskEngine } from './engine';
-import type { AskContext, AskResolution, Localized, SadhanaSummary } from './types';
+import type { AskContext, AskResolution, Localized, SadhanaSummary, VastuHomeSummary } from './types';
 
 export type UseAskResult = {
   /** False until the engine module has loaded (one dynamic import, once). */
@@ -77,6 +78,20 @@ export function useAskContextBuilder(): (seed?: AskContext['seed']) => AskContex
     [sadhanaCards]
   );
 
+  // The LIVING home only — the one sanctioned roster read outside the vastu
+  // screens (US-18); considering homes never enter the ask context.
+  const { roster } = useHomeRoster();
+  const vastuHome = useMemo<VastuHomeSummary | null>(() => {
+    const living = roster.livingId ? roster.homes.find((h) => h.id === roster.livingId) : undefined;
+    if (!living) return null;
+    return {
+      homeId: living.id,
+      label: living.label,
+      facing: living.facing,
+      rooms: living.rooms.map((room) => ({ roomId: room.roomId, ordinal: room.ordinal, zone: room.zone })),
+    };
+  }, [roster]);
+
   return useCallback(
     (seed?: AskContext['seed']): AskContext => ({
       now: new Date(),
@@ -84,9 +99,10 @@ export function useAskContextBuilder(): (seed?: AskContext['seed']) => AskContex
       calendarSystem,
       lang,
       sadhana,
+      vastuHome,
       ...(seed ? { seed } : {}),
     }),
-    [location, calendarSystem, lang, sadhana]
+    [location, calendarSystem, lang, sadhana, vastuHome]
   );
 }
 
