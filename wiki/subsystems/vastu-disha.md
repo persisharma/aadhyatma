@@ -93,6 +93,12 @@ Spec: `design.md` §66–§66.6 · contract: `RULEBOOK.md` §22 (rules 1–17) �
     cells stay reachable (VoiceOver AND Maestro).
 13. **मेरे घर door → the roster whenever a home exists.** Straight-to-the-one-home
     strands the user: only the roster owns `+ नया घर`.
+14. **The compass does not need activity recognition.** Vastu uses fused heading,
+    Magnetometer and Accelerometer, but never Pedometer/activity data. Because
+    `expo-sensors` bundles Pedometer support, keep
+    `android.permission.ACTIVITY_RECOGNITION` in `expo.android.blockedPermissions` in
+    `mobile/app.json`; otherwise the unused capability triggers Google Play's Health
+    apps policy declaration.
 
 ## Working rules
 
