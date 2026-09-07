@@ -238,7 +238,7 @@ const chhathBhog = profile({
   id: 'chhath-bhog',
   titleHi: 'छठ का प्रसाद और खरना',
   titleEn: 'Chhath prasad and Kharna',
-  observanceIds: ['chhath-puja'],
+  observanceIds: ['chhath-puja', 'chaiti-chhath'],
   offerings: [
     item('thekua-fruit', 'संध्या और उषा अर्घ्य के सूप में ठेकुआ, ऋतुफल, नारियल और गन्ना रखा जाता है।', 'The Sandhya and Usha Arghya baskets include thekua, seasonal fruit, coconut, and sugarcane.'),
     item('rice-laddoo', 'परम्परा में चावल का लड्डू या कसार भी अर्पित होता है।', 'Rice laddoo or kasar is also offered in the regional tradition.'),
@@ -247,8 +247,8 @@ const chhathBhog = profile({
   abstainedDuringFast: [item('nirjala', 'खरना के बाद उषा अर्घ्य तक अन्न और जल।', 'Food and water from after Kharna until Usha Arghya.')],
   paranaMealHi: 'उषा अर्घ्य के बाद प्रसाद और जल लेकर व्रत खोलें।',
   paranaMealEn: 'After Usha Arghya, conclude with water and prasad.',
-  traditionNoteHi: 'छठ का प्रसाद बिहार और पूर्वांचल की विशिष्ट शुद्धता-विधि से बनता है; सामग्री को सामान्य फलाहार से न मिलाएँ।',
-  traditionNoteEn: 'Chhath prasad follows a specific Bihar-Purvanchal purity discipline; do not merge it with generic fruit-fare.',
+  traditionNoteHi: 'छठ का प्रसाद बिहार और पूर्वांचल की विशिष्ट शुद्धता-विधि से बनता है; सामग्री को सामान्य फलाहार से न मिलाएँ। चैती छठ की चार दिवसीय विधि और प्रसाद कार्तिक छठ जैसे ही हैं, केवल ऋतुफल बदलते हैं।',
+  traditionNoteEn: 'Chhath prasad follows a specific Bihar-Purvanchal purity discipline; do not merge it with generic fruit-fare. Chaiti Chhath keeps the same four-day sequence and the same prasad as the Kartik one — only the seasonal fruit differs.',
   source: {
     referenceUrls: [
       'https://biharbhawan.gov.in/docs/eMagazine/Newsletter_Dec_2025.pdf',
@@ -391,11 +391,11 @@ const deviVratBhog = profile({
   id: 'devi-vrat-bhog',
   titleHi: 'दुर्गा और देवी-व्रत का सरल अर्पण',
   titleEn: 'Simple offering for Durga and Devi vratas',
-  observanceIds: ['masik-durgashtami', 'ashoka-ashtami', 'asha-dashami'],
+  observanceIds: ['masik-durgashtami', 'ashoka-ashtami', 'asha-dashami', 'dasha-mata-vrat', 'madhushravani'],
   offerings: [item('fruit-sweet', 'देवी को फल, पुष्प और घर की विधि का सात्त्विक मिष्ठान्न अर्पित करें।', 'Offer fruit, flowers, and the sattvik sweet prescribed by your household vidhi to Devi.')],
   permittedDuringFast: [item('family-form', 'पूर्ण उपवास, फलाहार या एक समय भोजन में से वही रूप रखें जो इस विशिष्ट व्रत की परम्परा में हो।', 'Use the complete-fast, fruit-fare, or one-meal form prescribed for that specific vrata.')],
-  traditionNoteHi: 'दुर्गाष्टमी, अशोकाष्टमी और आशा दशमी अलग व्रत हैं; साझा प्रोफाइल केवल सीधे प्रमाणित सरल अर्पण दिखाती है।',
-  traditionNoteEn: 'Durgashtami, Ashoka Ashtami, and Asha Dashami are distinct vratas; this shared profile shows only the directly supported simple offering.',
+  traditionNoteHi: 'दुर्गाष्टमी, अशोकाष्टमी, आशा दशमी, दशा माता और मधुश्रावणी अलग-अलग व्रत हैं; साझा प्रोफाइल केवल सीधे प्रमाणित सरल अर्पण दिखाती है — दशा माता का दस-गांठ डोरा और मधुश्रावणी की मैथिल विधि इसमें सम्मिलित नहीं हैं।',
+  traditionNoteEn: 'Durgashtami, Ashoka Ashtami, Asha Dashami, Dasha Mata and Madhushravani are distinct vratas; this shared profile shows only the directly supported simple offering — Dasha Mata’s ten-knot thread and Madhushravani’s Maithil sequence are not covered here.',
   source: {
     referenceUrls: [
       'https://maharashtratourism.gov.in/festivals/ghatasthapana/',
@@ -676,9 +676,9 @@ const jayaparvatiBhog = profile({
 
 const shitalaBhog = profile({
   id: 'shitala-bhog',
-  titleHi: 'शीतला सप्तमी का ठंडा भोग',
-  titleEn: 'Shitala Saptami cool bhog',
-  observanceIds: ['shitala-saptami'],
+  titleHi: 'शीतला सप्तमी–अष्टमी का ठंडा भोग',
+  titleEn: 'Shitala Saptami–Ashtami cool bhog',
+  observanceIds: ['shitala-saptami', 'shitala-ashtami'],
   offerings: [item('previous-day-food', 'क्षेत्रीय शीतला परम्परा में भोजन एक दिन पहले पकाकर ठंडा होने पर अर्पित किया जाता है।', 'In the regional Shitala tradition, food is cooked the previous day and offered after it cools.')],
   abstainedDuringFast: [item('no-fresh-fire', 'पूजा-दिन नया गरम भोजन पकाना उस परम्परा में नहीं किया जाता।', 'That tradition does not cook a fresh hot meal on the worship day.')],
   traditionNoteHi: 'बंगाल की शीतल षष्ठी, गुजरात की शीतला सातम और राजस्थान की बसोड़ा तिथियां और पकवान अलग हैं।',

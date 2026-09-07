@@ -220,3 +220,132 @@ test('Bhadwa Chauth (Chauth Mata vrat) rides the same moonrise day as Bahula Cha
     );
   }
 });
+
+// ─── Regional wave 1: Rajasthani, Bihari/Maithil and Jain observances ─────────
+// Sept 2026 report: "a lot of important dates like Goga Navami missing from the
+// calendar". Five Rajasthani rules already shipped as catalog-only entries with a
+// katha but NO tithi (Gangaur, Sakat Chauth, Shitala Saptami, Bachh Baras, Asha
+// Dashami), so they could never resolve to a day; the rest are new. Every date
+// below is a PUBLISHED civil date (Ujjain/IST), never engine output — see the
+// per-rule source comments in festivals.ts.
+const REGIONAL_PUBLISHED: Record<string, string> = {
+  // Rajasthan
+  'sakat-chauth:2025': '2025-01-17',      'sakat-chauth:2026': '2026-01-06',
+  'shitala-saptami:2026': '2026-03-10',
+  'shitala-ashtami:2026': '2026-03-11',
+  'dasha-mata-vrat:2026': '2026-03-13',
+  'gangaur:2025': '2025-03-31',           'gangaur:2026': '2026-03-21',
+  'goga-navami:2025': '2025-08-17',       'goga-navami:2026': '2026-09-05',
+  'teja-dashami:2025': '2025-09-02',      'teja-dashami:2026': '2026-09-21',
+  'bachh-baras:2025': '2025-08-20',
+  'asha-dashami:2026': '2026-07-24',
+  // Bihar / Mithila
+  'chaiti-chhath:2026': '2026-03-24',
+  'madhushravani:2026': '2026-08-15',
+  'chitragupta-puja:2026': '2026-11-11',
+  'kartik-purnima:2025': '2025-11-05',    'kartik-purnima:2026': '2026-11-24',
+  // Pan-Hindu gaps found by the same audit
+  'chaitra-navratri-start:2025': '2025-03-30', 'chaitra-navratri-start:2026': '2026-03-19',
+  'mahavir-jayanti:2025': '2025-04-10',   'mahavir-jayanti:2026': '2026-03-31',
+};
+
+test('regional wave-1 observances match their published dates exactly', () => {
+  for (const [key, expected] of Object.entries(REGIONAL_PUBLISHED)) {
+    const [id, yearStr] = key.split(':');
+    assert.equal(engineDate(id, Number(yearStr)), expected, `${key} moved`);
+  }
+});
+
+// All seventeen, including the three whose published date is contested or
+// unstated (`ramdev-jayanti`, `sama-chakeva`, `bachh-baras`) and therefore absent
+// from REGIONAL_PUBLISHED — they still must resolve, and resolve once.
+const WAVE_1_IDS = [
+  'sakat-chauth', 'shitala-saptami', 'shitala-ashtami', 'dasha-mata-vrat',
+  'chaitra-navratri-start', 'gangaur', 'chaiti-chhath', 'mahavir-jayanti',
+  'asha-dashami', 'madhushravani', 'goga-navami', 'bachh-baras',
+  'ramdev-jayanti', 'teja-dashami', 'chitragupta-puja', 'sama-chakeva',
+  'kartik-purnima',
+];
+
+test('every regional wave-1 rule resolves exactly once a year, 2024-2031', () => {
+  assert.equal(WAVE_1_IDS.length, 17);
+  for (const key of Object.keys(REGIONAL_PUBLISHED)) {
+    assert.ok(WAVE_1_IDS.includes(key.split(':')[0]), `${key} is not a wave-1 id`);
+  }
+  for (const id of WAVE_1_IDS) {
+    for (let year = 2024; year <= 2031; year += 1) {
+      const dates = engineDates(id, year);
+      assert.equal(dates.length, 1, `${id} ${year}: expected one occurrence, got ${dates.join(' ') || 'none'}`);
+    }
+  }
+});
+
+// Sibling-day invariants (RULEBOOK §23.4): rules that name the SAME tithi as an
+// already-shipped rule must land on the same civil day, or the calendar shows one
+// household observance on two nights.
+test('regional rules ride the shipped rule that shares their tithi', () => {
+  for (const year of [2024, 2025, 2026, 2027, 2028]) {
+    // Sakat Chauth IS Magha's Sankashti Chaturthi — hence the shared chandrodaya dayRule.
+    const [sakat] = engineDates('sakat-chauth', year);
+    assert.ok(
+      engineDates('sankashti-chaturthi-vrat', year).includes(sakat),
+      `${year}: Sakat Chauth ${sakat} is not a Sankashti Chaturthi day`
+    );
+    // Chitragupta Puja is Yama Dwitiya — the Bhai Dooj day.
+    assert.equal(engineDate('chitragupta-puja', year), engineDate('bhai-dooj', year), `${year}: Chitragupta ≠ Bhai Dooj`);
+    // Kartik Purnima is a Purnima, so the monthly purnima vrat must cover it.
+    const [kartikPurnima] = engineDates('kartik-purnima', year);
+    assert.ok(
+      engineDates('purnima-vrat', year).includes(kartikPurnima),
+      `${year}: Kartik Purnima ${kartikPurnima} missing from the monthly Purnima series`
+    );
+    // Madhushravani closes on Shravana Shukla Tritiya — the Hariyali Teej day.
+    assert.equal(engineDate('madhushravani', year), engineDate('hariyali-teej', year), `${year}: Madhushravani ≠ Hariyali Teej`);
+    // Basoda: Shitala Ashtami is the day after Shitala Saptami whenever neither
+    // tithi is kshaya/vriddhi; allow the 2-day gap a vriddhi Saptami produces.
+    const gap = dayDiff(engineDate('shitala-saptami', year)!, engineDate('shitala-ashtami', year)!);
+    assert.ok(gap >= 1 && gap <= 2, `${year}: Shitala Saptami→Ashtami gap is ${gap} days`);
+    // Sama Chakeva opens on Kartika Shukla Saptami — the day after Chhath's Shashthi.
+    const chhathToSama = (new Date(engineDate('sama-chakeva', year)!).getTime()
+      - new Date(engineDate('chhath-puja', year)!).getTime()) / 86400000;
+    assert.ok(chhathToSama >= 1 && chhathToSama <= 2, `${year}: Chhath → Sama Chakeva gap is ${chhathToSama} days`);
+    // Sama Chakeva is immersed on Kartik Purnima, so it must open before it.
+    assert.ok(
+      new Date(engineDate('sama-chakeva', year)!) < new Date(engineDate('kartik-purnima', year)!),
+      `${year}: Sama Chakeva does not open before its Kartik Purnima immersion`
+    );
+    // The Ramdevra fair runs Bhadrapada Shukla Dwitiya → Ekadashi, so Ramdev
+    // Jayanti opens roughly eight days before Teja Dashami (Shukla Dashami).
+    const ramdevToTeja = (new Date(engineDate('teja-dashami', year)!).getTime()
+      - new Date(engineDate('ramdev-jayanti', year)!).getTime()) / 86400000;
+    assert.ok(ramdevToTeja >= 7 && ramdevToTeja <= 9, `${year}: Ramdev Jayanti → Teja Dashami span is ${ramdevToTeja} days`);
+    // Chaitra Navratri opens the nine days that close on Ram Navami.
+    const navratri = engineDate('chaitra-navratri-start', year)!;
+    const ramNavami = engineDate('ram-navami', year)!;
+    const span = (new Date(ramNavami).getTime() - new Date(navratri).getTime()) / 86400000;
+    assert.ok(span >= 7 && span <= 10, `${year}: Chaitra Navratri → Ram Navami span is ${span} days`);
+  }
+});
+
+// Chaiti Chhath is the SPRING Chhath — the same rite six lunar months from the
+// Kartik one. Both must resolve, and they must never collapse onto one season.
+test('both Chhaths resolve, roughly half a year apart', () => {
+  for (const year of [2025, 2026, 2027]) {
+    const chaiti = engineDate('chaiti-chhath', year)!;
+    const kartik = engineDate('chhath-puja', year)!;
+    assert.ok(chaiti && kartik, `${year}: both Chhaths must resolve`);
+    const gap = dayDiff(chaiti, kartik);
+    assert.ok(gap > 180 && gap < 250, `${year}: Chhath gap is ${gap} days (${chaiti} → ${kartik})`);
+  }
+});
+
+// KNOWN, DOCUMENTED SHIFT (VERIFICATION.md Class B). Bachh Baras is worshipped in
+// the evening godhuli/pradosh hour, and Drik publishes it pradosh-vyapini — 7 Sep
+// 2026, where the udaya matcher this app uses says 8 Sep. Popular Hindi almanacs
+// reasoned from sunrise for 2025 and agreed with the engine (20 Aug). Pradosh is
+// not modelled (RULEBOOK §23.7), so the rule ships on udaya and this test pins the
+// variance so it cannot drift silently. Delete it when a `pradosh` dayRule lands.
+test('Bachh Baras stays on the udaya day, and the pradosh variance is recorded', () => {
+  assert.equal(engineDate('bachh-baras', 2025), '2025-08-20', 'published (sunrise-reasoned) 2025 date');
+  assert.equal(engineDate('bachh-baras', 2026), '2026-09-08', 'udaya day; Drik publishes 2026-09-07 (pradosh)');
+});

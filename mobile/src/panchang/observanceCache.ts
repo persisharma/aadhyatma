@@ -20,7 +20,11 @@ import type { CalendarSystem, ResolvedObservance } from './types';
 // v3: chandrodaya (moonrise) day rule for Sankashti/Karwa Chauth + the Hariyali
 //     and Kajari Teej rules — covers both matcher and catalog changes, so
 //     already-scanned cities re-scan instead of hydrating the old dates.
-const CACHE_VERSION = 3;
+// v4: regional wave 1 — seventeen catalog additions (Rajasthani, Bihari/Maithil
+//     and Jain observances; five of them promoted from catalog-only entries that
+//     had a katha but no tithi). No matcher change and no shipped date moved, but
+//     a city that already scanned would otherwise never see the new rules.
+const CACHE_VERSION = 4;
 const KEY_ROOT = '@vedansh:observances:';
 const KEY_PREFIX = `${KEY_ROOT}v${CACHE_VERSION}:`;
 

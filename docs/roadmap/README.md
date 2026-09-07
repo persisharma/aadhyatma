@@ -13,6 +13,7 @@ This folder holds the product roadmap and PRDs for upcoming releases.
   half of the product (panchang, muhurat, vrat, bhog, vidhi, vastu, kundali, theerth) becomes
   askable in one line — and every future feature is discoverable on the day it ships. Companion
   build for the quarter: PRD-20 सङ्कल्प.
+- [**PRD-42 — क्षेत्रीय पर्व · Regional, Sampradaya & Jain calendar**](./prds/42-regional-parv.md) — **Wave 1 shipped 2026-09-06** (17 observances: Rajasthan, Bihar/Mithila, and three pan-Hindu gaps the same audit surfaced). Waves 2–6 proposed: a per-state / per-sampradaya **lens** — a calendar the user turns on, seeded silently from the city they already chose, never a question about who they are — and behind it the Jain calendar and ten state calendars, 63 further candidate observances in Appendix A. Wave 2 is the gate and ships as a deliberate no-op. Owns RULEBOOK §23a, written by wave 1.
 - [**PRD-24 · Phase 2 — गृह वास्तु**](./prds/24-vastu-disha-phase2.md) — plan (2026-09-04) to take the
   shipped Vastu Disha compass to a whole-home vastu companion: OS-fused, tilt-honest heading with a
   coordinate declination grid; the complete household registry with each rule's weight (निषेध · विधान ·
