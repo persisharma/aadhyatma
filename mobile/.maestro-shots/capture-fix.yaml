@@ -1,0 +1,103 @@
+# Fix pass: Guna Milan with an excellent pairing (bride 17 Apr 1993 → 33/36,
+# computed with the app's own scorer) + Vastu chakra retake (caveat patched out).
+# Assumes the Aarav kundali + previous guna inputs are saved on the sim.
+appId: com.prashantsharma.vedansh
+---
+- launchApp:
+    appId: com.prashantsharma.vedansh
+    arguments:
+      RCT_jsLocation: "127.0.0.1:8095"
+- waitForAnimationToEnd:
+    timeout: 30000
+- tapOn: { text: "Allow", optional: true }
+- tapOn: { text: "Don't Allow", optional: true }
+- tapOn: { text: "Not now|अभी नहीं", optional: true }
+- extendedWaitUntil:
+    visible: ".*Panchang.*"
+    timeout: 120000
+
+# ── Guna Milan: edit bride to the golden excellent pairing ──
+- tapOn: { id: "tab-panchang" }
+- waitForAnimationToEnd
+- tapOn: { id: "tab-panchang", optional: true }
+- extendedWaitUntil:
+    visible: "Jyotish"
+    timeout: 20000
+- tapOn: "Jyotish"
+- extendedWaitUntil:
+    visible: "Your Jyotish today"
+    timeout: 20000
+- scrollUntilVisible:
+    element:
+      text: "Open Guna Milan"
+    direction: DOWN
+    timeout: 15000
+    centerElement: true
+- tapOn: "Open Guna Milan"
+- waitForAnimationToEnd:
+    timeout: 10000
+# Restored result view → enter edit mode; fresh form → fill groom from saved.
+- tapOn: "Use my saved Kundali details for Groom"
+- waitForAnimationToEnd
+# Bride birth date → 17 April 1993. The year overlay opens at the current year;
+# guarded ladder: while the year list is open (marker: any year row), fling and
+# try tapping 1993 — once tapped the overlay closes and remaining passes no-op.
+- scrollUntilVisible:
+    element:
+      text: "Bride birth date"
+    direction: DOWN
+    timeout: 10000
+    centerElement: true
+- tapOn: "Bride birth date"
+- waitForAnimationToEnd
+- tapOn: ".*tap to change year"
+- tapOn: "Month April"
+- repeat:
+    times: 4
+    commands:
+      - swipe: { start: "50%, 70%", end: "50%, 50%", duration: 250 }
+- tapOn:
+    text: "Year 1993"
+    optional: true
+- tapOn:
+    text: "Year 1993"
+    optional: true
+- tapOn: "17 April 1993"
+- tapOn: "Confirm date|Confirm"
+- waitForAnimationToEnd
+# One tap commits the 06:00 default (33/36 verified at this time).
+- tapOn: "Set Bride birth time"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Calculate Guna Milan"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Calculate Guna Milan"
+- scrollUntilVisible:
+    element: { id: "guna-milan-score-dial" }
+    direction: UP
+    timeout: 30000
+    centerElement: true
+- assertVisible: ".*[Ee]xcellent.*"
+- waitForAnimationToEnd
+- takeScreenshot: .context/shots-1.4.8/raw-guna-milan-iphone
+
+# ── Vastu chakra retake (no sensor caveat after the local patch) ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: { id: "more-vastu-disha" }
+    direction: DOWN
+    timeout: 15000
+    centerElement: true
+- tapOn: { id: "more-vastu-disha" }
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Room by room"
+    timeout: 20000
+- waitForAnimationToEnd
+- takeScreenshot: .context/shots-1.4.8/raw-vastu-chakra-iphone
+
+- stopApp:
+    appId: com.prashantsharma.vedansh

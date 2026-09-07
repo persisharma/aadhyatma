@@ -46,6 +46,11 @@ Spec: `design.md` §66 · contract: `RULEBOOK.md` §22 · PRD: `docs/roadmap/prd
 7. **Draft rows are invisible, not styled.** The ancestor-photos mandir entry is
    `draft` pending its second published domain — accessors filter it; no screen may
    special-case it.
+8. **The compass does not need activity recognition.** Vastu Disha reads only the
+   `expo-sensors` Magnetometer, but that package also bundles Pedometer support that can
+   add `android.permission.ACTIVITY_RECOGNITION` to the merged manifest. Keep that
+   permission in `expo.android.blockedPermissions` in `mobile/app.json`; otherwise an
+   unused sensor capability triggers Google Play's Health apps policy declaration.
 
 ## Working rules
 

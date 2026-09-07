@@ -1,0 +1,131 @@
+# iPad captures — assumes AsyncStorage cloned from the iPhone capture sim
+# (onboarding done, English, Aarav kundali + excellent guna result saved).
+appId: com.prashantsharma.vedansh
+---
+- launchApp:
+    appId: com.prashantsharma.vedansh
+    arguments:
+      RCT_jsLocation: "127.0.0.1:8095"
+- waitForAnimationToEnd:
+    timeout: 30000
+- tapOn: { text: "Allow", optional: true }
+- tapOn: { text: "Don't Allow", optional: true }
+- tapOn: { text: "Skip tour", optional: true }
+- tapOn: { text: "Begin", optional: true }
+- tapOn: { text: "Not now|अभी नहीं", optional: true }
+- extendedWaitUntil:
+    visible: ".*Panchang.*"
+    timeout: 120000
+
+# ── Jyotish landing + Kundali chart ──
+- tapOn: { id: "tab-panchang" }
+- waitForAnimationToEnd
+- tapOn: { id: "tab-panchang", optional: true }
+- extendedWaitUntil:
+    visible: "Jyotish"
+    timeout: 20000
+- tapOn: "Jyotish"
+- extendedWaitUntil:
+    visible: "Your Jyotish today"
+    timeout: 20000
+- waitForAnimationToEnd
+- takeScreenshot: .context/shots-1.4.8/raw-jyotish-today-ipad
+- scrollUntilVisible:
+    element:
+      text: "Your Kundali"
+    direction: DOWN
+    timeout: 15000
+    centerElement: true
+- tapOn: "Your Kundali"
+- waitForAnimationToEnd
+- tapOn:
+    text: "Open full Kundali|Open Kundali|View full Kundali"
+    optional: true
+- extendedWaitUntil:
+    visible: "Birth Kundali|Kundali"
+    timeout: 15000
+- tapOn:
+    text: "Chart tab"
+    optional: true
+- extendedWaitUntil:
+    visible: "North Indian chart"
+    timeout: 15000
+- waitForAnimationToEnd
+- takeScreenshot: .context/shots-1.4.8/raw-kundali-chart-ipad
+- tapOn: "Back to Jyotish|Back"
+- waitForAnimationToEnd
+
+# ── Guna Milan: groom from saved kundali, bride 17 Apr 1993 06:00 (33/36) ──
+- extendedWaitUntil:
+    visible: "Your Jyotish today"
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Open Guna Milan"
+    direction: DOWN
+    timeout: 15000
+    centerElement: true
+- tapOn: "Open Guna Milan"
+- waitForAnimationToEnd:
+    timeout: 10000
+- tapOn: "Use my saved Kundali details for Groom"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Bride birth date"
+    direction: DOWN
+    timeout: 10000
+    centerElement: true
+- tapOn: "Bride birth date"
+- waitForAnimationToEnd
+- tapOn: ".*tap to change year"
+- tapOn: "Month April"
+- repeat:
+    times: 9
+    commands:
+      - swipe: { start: "50%, 90%", end: "50%, 72%", duration: 500 }
+      - tapOn:
+          text: "Year 1993"
+          optional: true
+- tapOn:
+    text: "Year 1993"
+    optional: true
+- tapOn: "17 April 1993"
+- tapOn: "Confirm date|Confirm"
+- waitForAnimationToEnd
+- tapOn: "Set Bride birth time"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Calculate Guna Milan"
+    direction: DOWN
+    timeout: 10000
+    centerElement: true
+- tapOn: "Calculate Guna Milan|Calculate match"
+- scrollUntilVisible:
+    element: { id: "guna-milan-score-dial" }
+    direction: UP
+    timeout: 30000
+    centerElement: true
+- assertVisible: ".*[Ee]xcellent.*"
+- waitForAnimationToEnd
+- takeScreenshot: .context/shots-1.4.8/raw-guna-milan-ipad
+
+# ── Vastu chakra ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: { id: "more-vastu-disha" }
+    direction: DOWN
+    timeout: 15000
+    centerElement: true
+- tapOn: { id: "more-vastu-disha" }
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Room by room"
+    timeout: 20000
+- waitForAnimationToEnd
+- takeScreenshot: .context/shots-1.4.8/raw-vastu-chakra-ipad
+
+- stopApp:
+    appId: com.prashantsharma.vedansh
