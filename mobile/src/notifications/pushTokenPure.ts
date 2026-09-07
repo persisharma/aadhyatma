@@ -27,15 +27,130 @@
 import { hashDateKey as fnv1a } from './seed';
 
 /**
- * Where a captured token is POSTed. `null` ⇒ capture-only: the token is still
- * read and persisted locally (readable via `getCapturedPushToken()`), but the
- * app makes **no network call at all**. That is the shipped default — this repo
- * has no backend yet, and Vedansh is otherwise a fully offline app, so the
- * upload has to be switched on deliberately.
+ * Hardcoded fallback endpoint. `null` ⇒ capture-only: the token is still read
+ * and persisted locally (readable via `getCapturedPushToken()`), but the app
+ * makes **no network call at all**.
  *
- * Must be `https:` when set — see `isPushRegistryConfigured`.
+ * Prefer the env var over editing this (see `resolvePushEndpoint`); this
+ * constant exists so the endpoint *can* be pinned in source if you would
+ * rather not manage build-time config.
  */
 export const PUSH_REGISTRY_ENDPOINT: string | null = null;
+
+/**
+ * Build-time env var naming the upload endpoint, e.g.
+ * `EXPO_PUBLIC_PUSH_REGISTRY_URL=https://push.example.com/devices`.
+ *
+ * `EXPO_PUBLIC_`-prefixed vars are **inlined by babel at build time**, which is
+ * why the read at the call site must be the full literal
+ * `process.env.EXPO_PUBLIC_PUSH_REGISTRY_URL` — destructuring it or building
+ * the key dynamically defeats the inlining and yields `undefined` in a release
+ * bundle. Set it per profile in `eas.json` (or in `.env` for local runs).
+ *
+ * It is public by design: this is an endpoint URL, not a secret. Nothing here
+ * authenticates, so the endpoint must treat every request as untrusted (see the
+ * server contract in `pushToken.ts`).
+ */
+export const PUSH_REGISTRY_ENV_VAR = 'EXPO_PUBLIC_PUSH_REGISTRY_URL';
+
+/**
+ * Effective endpoint: the env var if it names a usable `https:` URL, else the
+ * source fallback, else `null` (capture-only). Pure so the precedence is
+ * pinned by a test rather than by whatever the ambient environment happens to
+ * hold.
+ */
+export function resolvePushEndpoint(
+  fromEnv: string | undefined | null,
+  fallback: string | null
+): string | null {
+  if (isPushRegistryConfigured(fromEnv ?? null)) return (fromEnv as string).trim();
+  if (isPushRegistryConfigured(fallback)) return fallback.trim();
+  return null;
+}
+
+/** Total upload attempts per sync — one try plus two retries. */
+export const PUSH_SYNC_MAX_ATTEMPTS = 3;
+
+/** Delay before the 2nd attempt; tripled for each one after (2s → 6s). */
+export const PUSH_SYNC_BASE_DELAY_MS = 2000;
+
+/** Ceiling on a single backoff wait, so the schedule cannot run away. */
+export const PUSH_SYNC_MAX_DELAY_MS = 30_000;
+
+/** Spread of the deterministic per-device jitter added to each backoff. */
+export const PUSH_SYNC_JITTER_MS = 1000;
+
+/**
+ * How an upload ended, and therefore whether trying again could ever help.
+ *
+ * - `accepted` — 2xx. Done; the fingerprint may advance.
+ * - `retryable` — the request never got a verdict (transport error, timeout) or
+ *   got one that says "not now": 408, 425, 429, or any 5xx.
+ * - `rejected` — a definitive 4xx. The payload or the credentials are wrong, so
+ *   the identical request will be rejected identically; retrying is pure waste.
+ *   The fingerprint is NOT advanced, so a server-side fix is picked up on a
+ *   later foreground.
+ */
+export type UploadOutcome = 'accepted' | 'retryable' | 'rejected';
+
+/**
+ * Classify one attempt. `null` means the request produced no HTTP status at all
+ * — offline, DNS failure, or our own abort on timeout — which is the most
+ * common case in an offline-first app and always worth another try.
+ */
+export function classifyUploadResponse(status: number | null): UploadOutcome {
+  if (status === null) return 'retryable';
+  if (status >= 200 && status < 300) return 'accepted';
+  if (status === 408 || status === 425 || status === 429) return 'retryable';
+  if (status >= 500) return 'retryable';
+  return 'rejected';
+}
+
+/** Is another attempt both allowed and potentially useful? */
+export function shouldRetryUpload(outcome: UploadOutcome, attempt: number): boolean {
+  return outcome === 'retryable' && attempt < PUSH_SYNC_MAX_ATTEMPTS;
+}
+
+/**
+ * Backoff before the attempt following `attempt`: exponential (×3), clamped,
+ * plus a per-device jitter.
+ *
+ * The jitter is a hash of the install id, **not** a random number: it still
+ * spreads a herd of devices retrying after a server outage across a one-second
+ * window, but it is reproducible in a test and needs no entropy source. Same
+ * device, same attempt ⇒ same delay, always.
+ */
+export function retryDelayMs(attempt: number, installId: string): number {
+  const exponential = PUSH_SYNC_BASE_DELAY_MS * 3 ** Math.max(0, attempt - 1);
+  const clamped = Math.min(exponential, PUSH_SYNC_MAX_DELAY_MS);
+  return clamped + (fnv1a(`${installId}:${attempt}`) % PUSH_SYNC_JITTER_MS);
+}
+
+/**
+ * Drive the attempt/backoff loop.
+ *
+ * Pure in the sense this folder means it: the two things that touch the world —
+ * making a request and waiting — are both parameters, so the whole retry policy
+ * is exercised by `tsx --test` with a fake clock and no network. Callers get
+ * back the final outcome plus how many attempts it cost.
+ *
+ * Stops on the first `accepted` or `rejected`; only a `retryable` outcome
+ * sleeps and goes round again, at most `PUSH_SYNC_MAX_ATTEMPTS` times total.
+ */
+export async function runUploadWithRetry(input: {
+  /** Perform attempt `n`, resolving to its HTTP status, or `null` if none. */
+  attempt: (n: number) => Promise<number | null>;
+  sleep: (ms: number) => Promise<void>;
+  installId: string;
+}): Promise<{ outcome: UploadOutcome; attempts: number }> {
+  let outcome: UploadOutcome = 'retryable';
+  for (let n = 1; n <= PUSH_SYNC_MAX_ATTEMPTS; n += 1) {
+    outcome = classifyUploadResponse(await input.attempt(n));
+    if (!shouldRetryUpload(outcome, n)) return { outcome, attempts: n };
+    await input.sleep(retryDelayMs(n, input.installId));
+  }
+  return { outcome, attempts: PUSH_SYNC_MAX_ATTEMPTS };
+}
 
 /**
  * EAS project the push token is minted against. Mirrors
@@ -59,10 +174,15 @@ export const PUSH_TOKEN_KEY = '@vedansh/push-token';
 export const PUSH_TOKEN_SYNC_KEY = '@vedansh/push-token-sync';
 
 /**
- * Upload timeout. Deliberately short: this is a fire-and-forget sync, and a
- * request left hanging on a flaky connection holds a socket open for no
- * user-visible benefit. A timeout is not an error worth surfacing — the next
- * foreground retries.
+ * Timeout for a *single* attempt. Deliberately short: this is a fire-and-forget
+ * sync, and a request left hanging on a flaky connection holds a socket open
+ * for no user-visible benefit. A timeout is not an error worth surfacing — it
+ * counts as a retryable attempt, and the next foreground tries again anyway.
+ *
+ * Worst case for one sync is therefore roughly
+ * `PUSH_SYNC_MAX_ATTEMPTS × PUSH_SYNC_TIMEOUT_MS` plus the backoffs (~32 s).
+ * Nothing waits on it: the caller is a headless component that ignores the
+ * result, and the in-flight guard keeps a foreground burst from stacking syncs.
  */
 export const PUSH_SYNC_TIMEOUT_MS = 8000;
 

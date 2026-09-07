@@ -44,13 +44,29 @@ function mockFetch(impl: () => unknown): jest.Mock {
 
 let fetchMock: jest.Mock;
 
+/**
+ * Run a sync under a fake clock, so the retry backoffs (~2 s then ~6 s) and the
+ * per-attempt timeout cost no real wall time. The single generous advance
+ * flushes every nested timer the retry loop schedules.
+ */
+async function underFakeClock<T>(run: () => Promise<T>): Promise<T> {
+  jest.useFakeTimers();
+  try {
+    const pending = run();
+    await jest.advanceTimersByTimeAsync(120_000);
+    return await pending;
+  } finally {
+    jest.useRealTimers();
+  }
+}
+
 beforeEach(async () => {
   jest.clearAllMocks();
   __resetPushTokenSyncState();
   await AsyncStorage.clear();
   readPermission.mockResolvedValue({ status: 'granted', canAskAgain: true });
   getToken.mockResolvedValue({ data: TOKEN });
-  fetchMock = mockFetch(() => Promise.resolve({ ok: true }));
+  fetchMock = mockFetch(() => Promise.resolve({ status: 200 }));
 });
 
 test('a first capture POSTs the registration as JSON and stores its fingerprint', async () => {
@@ -108,37 +124,67 @@ test('a reading-language change re-syncs, so pushes match the reader', async () 
   expect(JSON.parse(fetchMock.mock.calls[1][1].body).lang).toBe('gu');
 });
 
-test('being offline is a silent failure that leaves the fingerprint unset', async () => {
+test('a transient failure is retried and the retry can succeed', async () => {
+  const statuses = [null, 503, 200];
+  let call = 0;
+  fetchMock = mockFetch(() => {
+    const status = statuses[call];
+    call += 1;
+    return status === null
+      ? Promise.reject(new Error('Network request failed'))
+      : Promise.resolve({ status });
+  });
+
+  const result = await underFakeClock(() => syncPushToken({ lang: 'hi' }));
+  expect(result.status).toBe('synced');
+  expect(fetchMock).toHaveBeenCalledTimes(3);
+  expect(await AsyncStorage.getItem(PUSH_TOKEN_SYNC_KEY)).toBeTruthy();
+});
+
+test('being offline exhausts the retries, then leaves the fingerprint unset', async () => {
   fetchMock = mockFetch(() => Promise.reject(new Error('Network request failed')));
-  expect((await syncPushToken({ lang: 'hi' })).status).toBe('failed');
+  const result = await underFakeClock(() => syncPushToken({ lang: 'hi' }));
+  expect(result.status).toBe('failed');
+  expect(fetchMock).toHaveBeenCalledTimes(3);
+  // Nothing recorded ⇒ a later foreground tries the whole thing again.
   expect(await AsyncStorage.getItem(PUSH_TOKEN_SYNC_KEY)).toBeNull();
 });
 
-test('a rejected upload is retried rather than remembered as done', async () => {
-  fetchMock = mockFetch(() => Promise.resolve({ ok: false, status: 500 }));
-  expect((await syncPushToken({ lang: 'hi' })).status).toBe('failed');
-  expect(await AsyncStorage.getItem(PUSH_TOKEN_SYNC_KEY)).toBeNull();
+test('a persistent 500 is retried, then re-attempted on a later sync', async () => {
+  fetchMock = mockFetch(() => Promise.resolve({ status: 500 }));
+  expect((await underFakeClock(() => syncPushToken({ lang: 'hi' }))).status).toBe('failed');
+  expect(fetchMock).toHaveBeenCalledTimes(3);
 
-  fetchMock = mockFetch(() => Promise.resolve({ ok: true }));
+  fetchMock = mockFetch(() => Promise.resolve({ status: 200 }));
   __resetPushTokenSyncState();
   expect((await syncPushToken({ lang: 'hi' })).status).toBe('synced');
   expect(await AsyncStorage.getItem(PUSH_TOKEN_SYNC_KEY)).toBeTruthy();
 });
 
-test('a hung request is aborted rather than left holding a socket', async () => {
-  jest.useFakeTimers();
-  try {
-    fetchMock = mockFetch(
-      (...args: unknown[]) =>
-        new Promise((_resolve, reject) => {
-          const { signal } = args[1] as { signal: AbortSignal };
-          signal.addEventListener('abort', () => reject(new Error('Aborted')));
-        })
-    );
-    const pending = syncPushToken({ lang: 'hi' });
-    await jest.advanceTimersByTimeAsync(9000);
-    expect((await pending).status).toBe('failed');
-  } finally {
-    jest.useRealTimers();
-  }
+test('a 4xx is not retried, and is not remembered as done either', async () => {
+  fetchMock = mockFetch(() => Promise.resolve({ status: 400 }));
+  // Real timers: a rejection must return without ever scheduling a backoff.
+  const result = await syncPushToken({ lang: 'hi' });
+  expect(result.status).toBe('rejected');
+  expect(fetchMock).toHaveBeenCalledTimes(1);
+  expect(await AsyncStorage.getItem(PUSH_TOKEN_SYNC_KEY)).toBeNull();
+
+  // A server-side fix is picked up on the next foreground.
+  fetchMock = mockFetch(() => Promise.resolve({ status: 201 }));
+  __resetPushTokenSyncState();
+  expect((await syncPushToken({ lang: 'hi' })).status).toBe('synced');
+});
+
+test('a hung request is aborted per attempt rather than left holding a socket', async () => {
+  fetchMock = mockFetch(
+    (...args: unknown[]) =>
+      new Promise((_resolve, reject) => {
+        const { signal } = args[1] as { signal: AbortSignal };
+        signal.addEventListener('abort', () => reject(new Error('Aborted')));
+      })
+  );
+  const result = await underFakeClock(() => syncPushToken({ lang: 'hi' }));
+  expect(result.status).toBe('failed');
+  // Each attempt aborts on its own timeout instead of one hanging forever.
+  expect(fetchMock).toHaveBeenCalledTimes(3);
 });

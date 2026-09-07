@@ -32,6 +32,10 @@ module.exports = {
     // Audio assets aren't transformed by the RN preset — stub them so a
     // require('*.mp3') resolves to an asset handle instead of failing to parse.
     '\\.(mp3|wav|m4a)$': '<rootDir>/jest/audioAssetStub.js',
+    // babel-preset-expo rewrites `process.env.EXPO_PUBLIC_*` reads into an
+    // import of this virtual module, which is untranspiled ESM Jest cannot
+    // parse. The real one only re-exports process.env, so the stub is faithful.
+    '^expo/virtual/env$': '<rootDir>/jest/expoEnvStub.js',
     '^@/(.*)$': '<rootDir>/src/$1',
     '^@assets/(.*)$': '<rootDir>/assets/$1',
   },

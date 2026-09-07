@@ -20,9 +20,37 @@
  * - **Never throws and never blocks.** Every path is wrapped; the only return
  *   value is a status. Offline is the *normal* case for this app, so a failed
  *   upload is silent and simply retried on a later foreground.
- * - **Makes no network call at all** until `PUSH_REGISTRY_ENDPOINT` is set. The
- *   token is still captured locally, so the plumbing is verifiable before any
- *   data leaves the device.
+ * - **Makes no network call at all** until an endpoint is configured (env var
+ *   or source fallback — see `resolvePushEndpoint`). The token is still
+ *   captured locally, so the plumbing is verifiable before any data leaves the
+ *   device.
+ *
+ * ## Server contract
+ *
+ * `POST <endpoint>`, `content-type: application/json`, body = `DeviceRegistration`:
+ *
+ * ```json
+ * { "installId": "vd-…", "token": "ExponentPushToken[…]", "platform": "ios",
+ *   "appVersion": "1.4.8", "lang": "hi", "timezone": "Asia/Kolkata" }
+ * ```
+ *
+ * Upsert on `installId` — it is the stable key; `token` is the mutable column,
+ * and the same device WILL re-POST with a new token after a rotation. Every
+ * field is a bounded (≤ 120 char) non-empty string, but nothing here
+ * authenticates, so treat the body as untrusted input.
+ *
+ * **The status code is the whole protocol**, because it decides what the client
+ * does next (`classifyUploadResponse`):
+ *
+ * - **2xx** — accepted. The client stores a fingerprint and stops re-sending an
+ *   unchanged registration, so do not return 2xx unless the row is durable.
+ * - **5xx / 429 / 408 / 425** — the client retries, up to
+ *   `PUSH_SYNC_MAX_ATTEMPTS` with a tripling backoff. Use these for "try again".
+ * - **any other 4xx** — the client gives up for this attempt without retrying,
+ *   and without recording success. Use these for a malformed or unauthorised
+ *   request; a fix on your side is picked up on the user's next foreground.
+ *
+ * Response bodies are ignored entirely.
  */
 
 import { Platform } from 'react-native';
@@ -37,10 +65,11 @@ import {
   PUSH_TOKEN_KEY,
   PUSH_TOKEN_SYNC_KEY,
   buildDeviceRegistration,
-  isPushRegistryConfigured,
   isUsableInstallId,
   makeInstallId,
   registrationFingerprint,
+  resolvePushEndpoint,
+  runUploadWithRetry,
   shouldSyncRegistration,
 } from './pushTokenPure';
 
@@ -54,7 +83,11 @@ import {
  * - `captured` — token read and stored locally; no endpoint configured.
  * - `unchanged` — nothing a server cares about moved since the last upload.
  * - `synced` — the endpoint accepted the registration.
- * - `failed` — offline, timed out, or the endpoint rejected it. Retried later.
+ * - `failed` — offline, timed out, or 5xx, after exhausting the retries. The
+ *   fingerprint is left unset, so a later foreground tries again.
+ * - `rejected` — a definitive 4xx. Not retried within the attempt (the same
+ *   request would be rejected the same way), but not remembered either, so a
+ *   server-side fix is picked up on a later foreground.
  */
 export type PushTokenSyncStatus =
   | 'not-granted'
@@ -62,7 +95,8 @@ export type PushTokenSyncStatus =
   | 'captured'
   | 'unchanged'
   | 'synced'
-  | 'failed';
+  | 'failed'
+  | 'rejected';
 
 export type PushTokenSyncResult = {
   status: PushTokenSyncStatus;
@@ -156,12 +190,14 @@ async function readExpoPushToken(): Promise<string | null> {
 }
 
 /**
- * POST the registration, bounded by `PUSH_SYNC_TIMEOUT_MS`.
+ * One POST, bounded by `PUSH_SYNC_TIMEOUT_MS`.
  *
- * Returns whether the endpoint accepted it — only an accepted upload is allowed
- * to advance the stored fingerprint, so a 500 is retried rather than forgotten.
+ * Resolves to the HTTP status, or `null` when the request produced none at all
+ * (offline, DNS failure, or our own abort on timeout). Classifying that status
+ * — and deciding whether another attempt could help — is
+ * `classifyUploadResponse`'s job, not this function's.
  */
-async function upload(endpoint: string, body: string): Promise<boolean> {
+async function attemptUpload(endpoint: string, body: string): Promise<number | null> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), PUSH_SYNC_TIMEOUT_MS);
   try {
@@ -171,12 +207,17 @@ async function upload(endpoint: string, body: string): Promise<boolean> {
       body,
       signal: controller.signal,
     });
-    return response.ok;
+    return typeof response.status === 'number' ? response.status : null;
   } catch {
-    return false;
+    return null;
   } finally {
     clearTimeout(timer);
   }
+}
+
+/** Backoff wait. The only clock this module owns. */
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 async function runSync(lang: string, now: number): Promise<PushTokenSyncResult> {
@@ -193,9 +234,13 @@ async function runSync(lang: string, now: number): Promise<PushTokenSyncResult> 
   // is switched on.
   await write(PUSH_TOKEN_KEY, token);
 
-  if (!isPushRegistryConfigured(PUSH_REGISTRY_ENDPOINT)) {
-    return { status: 'captured', token };
-  }
+  // The full literal read is required for babel's build-time inlining of
+  // EXPO_PUBLIC_* vars — see `PUSH_REGISTRY_ENV_VAR`.
+  const endpoint = resolvePushEndpoint(
+    process.env.EXPO_PUBLIC_PUSH_REGISTRY_URL,
+    PUSH_REGISTRY_ENDPOINT
+  );
+  if (endpoint === null) return { status: 'captured', token };
 
   const registration = buildDeviceRegistration({
     installId: await getInstallId(token, now),
@@ -209,8 +254,15 @@ async function runSync(lang: string, now: number): Promise<PushTokenSyncResult> 
   const last = await read(PUSH_TOKEN_SYNC_KEY);
   if (!shouldSyncRegistration(last, registration)) return { status: 'unchanged', token };
 
-  const accepted = await upload(PUSH_REGISTRY_ENDPOINT, JSON.stringify(registration));
-  if (!accepted) return { status: 'failed', token };
+  const body = JSON.stringify(registration);
+  const { outcome } = await runUploadWithRetry({
+    attempt: () => attemptUpload(endpoint, body),
+    sleep,
+    installId: registration.installId,
+  });
+
+  if (outcome === 'rejected') return { status: 'rejected', token };
+  if (outcome !== 'accepted') return { status: 'failed', token };
 
   await write(PUSH_TOKEN_SYNC_KEY, registrationFingerprint(registration));
   return { status: 'synced', token };

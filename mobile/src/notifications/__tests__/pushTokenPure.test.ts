@@ -5,11 +5,20 @@ import { test } from 'node:test';
 import {
   EAS_PROJECT_ID,
   PUSH_REGISTRY_ENDPOINT,
+  PUSH_SYNC_BASE_DELAY_MS,
+  PUSH_SYNC_JITTER_MS,
+  PUSH_SYNC_MAX_ATTEMPTS,
+  PUSH_SYNC_MAX_DELAY_MS,
   buildDeviceRegistration,
+  classifyUploadResponse,
   isPushRegistryConfigured,
   isUsableInstallId,
   makeInstallId,
   registrationFingerprint,
+  resolvePushEndpoint,
+  retryDelayMs,
+  runUploadWithRetry,
+  shouldRetryUpload,
   shouldSyncRegistration,
 } from '../pushTokenPure';
 
@@ -98,4 +107,133 @@ test('a blank or truncated stored install id is not reused', () => {
   assert.equal(isUsableInstallId(''), false);
   assert.equal(isUsableInstallId('   '), false);
   assert.equal(isUsableInstallId('vd-1'), false);
+});
+
+test('the env var wins over the source fallback, and only https counts', () => {
+  const env = 'https://from-env.example.com/devices';
+  const src = 'https://from-source.example.com/devices';
+  assert.equal(resolvePushEndpoint(env, src), env);
+  assert.equal(resolvePushEndpoint(undefined, src), src);
+  assert.equal(resolvePushEndpoint('  ', src), src);
+  // A cleartext or malformed env value falls back rather than being trusted.
+  assert.equal(resolvePushEndpoint('http://from-env.example.com', src), src);
+  assert.equal(resolvePushEndpoint('not-a-url', null), null);
+  assert.equal(resolvePushEndpoint(undefined, null), null);
+  assert.equal(resolvePushEndpoint(` ${env} `, null), env);
+});
+
+test('status codes map to retry / accept / give-up', () => {
+  for (const ok of [200, 201, 202, 204]) {
+    assert.equal(classifyUploadResponse(ok), 'accepted', `${ok}`);
+  }
+  // No status at all: offline, DNS failure, or our own abort on timeout.
+  assert.equal(classifyUploadResponse(null), 'retryable');
+  for (const again of [408, 425, 429, 500, 502, 503, 504]) {
+    assert.equal(classifyUploadResponse(again), 'retryable', `${again}`);
+  }
+  // A definitive refusal: the same request would be refused identically.
+  for (const no of [400, 401, 403, 404, 409, 422]) {
+    assert.equal(classifyUploadResponse(no), 'rejected', `${no}`);
+  }
+});
+
+test('only a retryable outcome retries, and only within the attempt budget', () => {
+  assert.equal(shouldRetryUpload('retryable', 1), true);
+  assert.equal(shouldRetryUpload('retryable', PUSH_SYNC_MAX_ATTEMPTS - 1), true);
+  assert.equal(shouldRetryUpload('retryable', PUSH_SYNC_MAX_ATTEMPTS), false);
+  assert.equal(shouldRetryUpload('accepted', 1), false);
+  assert.equal(shouldRetryUpload('rejected', 1), false);
+});
+
+test('backoff triples, is clamped, and is jittered per device without randomness', () => {
+  const id = 'vd-abc-123456';
+  const first = retryDelayMs(1, id);
+  const second = retryDelayMs(2, id);
+  assert.ok(first >= PUSH_SYNC_BASE_DELAY_MS && first < PUSH_SYNC_BASE_DELAY_MS + PUSH_SYNC_JITTER_MS);
+  assert.ok(second >= PUSH_SYNC_BASE_DELAY_MS * 3);
+  assert.ok(second < PUSH_SYNC_BASE_DELAY_MS * 3 + PUSH_SYNC_JITTER_MS);
+
+  // Deterministic: same device + attempt ⇒ same delay, every run.
+  assert.equal(retryDelayMs(1, id), first);
+  // Two devices retrying after the same outage do not land in lockstep.
+  assert.notEqual(retryDelayMs(1, 'vd-def-654321'), first);
+
+  // Clamped, so a raised attempt budget cannot produce a runaway wait.
+  const far = retryDelayMs(12, id);
+  assert.ok(far >= PUSH_SYNC_MAX_DELAY_MS);
+  assert.ok(far < PUSH_SYNC_MAX_DELAY_MS + PUSH_SYNC_JITTER_MS);
+});
+
+/** Collects the waits a run asked for, so the schedule itself is assertable. */
+function fakeClock() {
+  const waits: number[] = [];
+  return {
+    waits,
+    sleep: async (ms: number) => {
+      waits.push(ms);
+    },
+  };
+}
+
+test('a first-attempt success makes no further request and never sleeps', async () => {
+  const clock = fakeClock();
+  const seen: number[] = [];
+  const result = await runUploadWithRetry({
+    attempt: async (n) => {
+      seen.push(n);
+      return 200;
+    },
+    sleep: clock.sleep,
+    installId: 'vd-abc-123456',
+  });
+  assert.deepEqual(result, { outcome: 'accepted', attempts: 1 });
+  assert.deepEqual(seen, [1]);
+  assert.deepEqual(clock.waits, []);
+});
+
+test('a transient failure is retried and can still succeed', async () => {
+  const clock = fakeClock();
+  const statuses = [null, 503, 200];
+  const result = await runUploadWithRetry({
+    attempt: async (n) => statuses[n - 1],
+    sleep: clock.sleep,
+    installId: 'vd-abc-123456',
+  });
+  assert.deepEqual(result, { outcome: 'accepted', attempts: 3 });
+  // Two waits for two retries, tripling.
+  assert.equal(clock.waits.length, 2);
+  assert.ok(clock.waits[1] > clock.waits[0] * 2);
+});
+
+test('retries are exhausted, not infinite', async () => {
+  const clock = fakeClock();
+  let calls = 0;
+  const result = await runUploadWithRetry({
+    attempt: async () => {
+      calls += 1;
+      return null;
+    },
+    sleep: clock.sleep,
+    installId: 'vd-abc-123456',
+  });
+  assert.deepEqual(result, { outcome: 'retryable', attempts: PUSH_SYNC_MAX_ATTEMPTS });
+  assert.equal(calls, PUSH_SYNC_MAX_ATTEMPTS);
+  // No trailing sleep after the final attempt — nothing is waiting on it.
+  assert.equal(clock.waits.length, PUSH_SYNC_MAX_ATTEMPTS - 1);
+});
+
+test('a 4xx stops immediately — re-sending an identical rejected body is waste', async () => {
+  const clock = fakeClock();
+  let calls = 0;
+  const result = await runUploadWithRetry({
+    attempt: async () => {
+      calls += 1;
+      return 400;
+    },
+    sleep: clock.sleep,
+    installId: 'vd-abc-123456',
+  });
+  assert.deepEqual(result, { outcome: 'rejected', attempts: 1 });
+  assert.equal(calls, 1);
+  assert.deepEqual(clock.waits, []);
 });
