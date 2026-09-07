@@ -32,7 +32,7 @@ test('source catalog captures default and advanced Drik Vrat list entries', () =
   assert.ok(defaultRules.every((rule) => rule.visibility === 'default'));
 
   assert.ok(allRules.some((rule) => rule.id === 'mahadwadashi' && rule.visibility === 'advanced'));
-  assert.ok(allRules.some((rule) => rule.id === 'karthigai-vrat' && rule.visibility === 'regional'));
+  assert.ok(allRules.some((rule) => rule.id === 'karthigai-vrat' && rule.visibility === 'default' && rule.lens?.includes('tamil')));
   assert.ok(allRules.some((rule) => rule.id === 'iskcon-ekadashi' && rule.visibility === 'advanced'));
   assert.ok(allRules.length > defaultRules.length);
 });
@@ -66,7 +66,7 @@ test('all surfaced observance rules have source metadata and stable rule types',
     );
     assert.ok(rule.ruleType, `${rule.id} missing ruleType`);
     assert.ok(['festival', 'vrat', 'upavas', 'katha', 'regional'].includes(rule.category), `${rule.id} category`);
-    assert.ok(['default', 'advanced', 'regional'].includes(rule.visibility), `${rule.id} visibility`);
+    assert.ok(['default', 'advanced'].includes(rule.visibility), `${rule.id} visibility`);
   }
 });
 

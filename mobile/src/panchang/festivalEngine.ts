@@ -1,19 +1,41 @@
 import { addDays } from './calendarGrid';
 import { computeTithiAndMonth, getSiderealSunLng, locationKey, tithiAtMadhyahna, tithiAtMoonrise, UJJAIN_CITY_ID } from './engine';
 import { getObservanceCatalog, OBSERVANCE_RULES } from './festivals';
+import { canonicalizeLenses, ruleIsVisibleForLenses } from './lenses';
 import { getStoredObservanceYear } from './observanceStore';
 import { PRECOMPUTED_OBSERVANCES } from './precomputedObservances';
-import type { CalendarSystem, GeoLocation, ObservanceRule, ResolvedObservance, ResolvedFestival } from './types';
+import type { CalendarSystem, GeoLocation, ObservanceLens, ObservanceRule, ResolvedObservance, ResolvedFestival } from './types';
 
 // Coordinates + the stable city id used for cache keys; omitted ⇒ Ujjain.
 export type ObservanceLocation = GeoLocation & { cityId?: string };
 
-const cache = new Map<string, ResolvedObservance[]>();
+const rawCache = new Map<string, ResolvedObservance[]>();
+const presentationCache = new Map<string, ResolvedObservance[]>();
 const ruleById = new Map(OBSERVANCE_RULES.map((rule) => [rule.id, rule] as const));
-const defaultRules = getObservanceCatalog();
+// Generation must include every default-visible rule, including lensed rules.
+// Presentation filtering is deliberately applied only after the raw table read.
+const generatedRules = getObservanceCatalog({ includeAllLenses: true });
 
 function cacheKey(year: number, calendarSystem: CalendarSystem, location?: ObservanceLocation): string {
   return `${calendarSystem}:${locationKey(location)}:${year}`;
+}
+
+function lensKey(lenses: Iterable<ObservanceLens>): string {
+  return canonicalizeLenses(lenses).join(',');
+}
+
+export function observancePresentationMemoKey(
+  year: number,
+  calendarSystem: CalendarSystem,
+  location: ObservanceLocation | undefined,
+  lenses: Iterable<ObservanceLens>
+): string {
+  return `${cacheKey(year, calendarSystem, location)}:${lensKey(lenses)}`;
+}
+
+/** Build/verification diagnostic: the raw scanner's exact rule roster. */
+export function generatedObservanceRuleIds(): readonly string[] {
+  return generatedRules.map((rule) => rule.id);
 }
 
 function isSameLocalDate(a: Date, b: Date): boolean {
@@ -28,14 +50,14 @@ function isSameLocalDate(a: Date, b: Date): boolean {
 // Other locations read the persisted observanceStore (filled by a background scan);
 // until that lands, they fall back to the Ujjain dates rather than ever running the
 // multi-second live scan on a render path.
-export function resolveObservancesForYear(
+export function resolveAllObservancesForYear(
   year: number,
   calendarSystem: CalendarSystem = 'purnimant',
   location?: ObservanceLocation
 ): ResolvedObservance[] {
   const cityId = locationKey(location);
   const key = cacheKey(year, calendarSystem, location);
-  const cached = cache.get(key);
+  const cached = rawCache.get(key);
   if (cached) return cached;
 
   if (cityId === UJJAIN_CITY_ID) {
@@ -43,20 +65,45 @@ export function resolveObservancesForYear(
     const results = precomputed
       ? reconstructPrecomputed(precomputed)
       : resolveObservancesForYearLive(year, calendarSystem);
-    cache.set(key, results);
+    rawCache.set(key, results);
     return results;
   }
 
   const stored = getStoredObservanceYear(cityId, calendarSystem, year);
   if (stored) {
     const results = reconstructPrecomputed(stored);
-    cache.set(key, results);
+    rawCache.set(key, results);
     return results;
   }
 
   // Approximate fallback — deliberately NOT memoised under this location's key, so the
   // accurate results take over as soon as the background scan / hydration lands.
-  return resolveObservancesForYear(year, calendarSystem);
+  return resolveAllObservancesForYear(year, calendarSystem);
+}
+
+/**
+ * Presentation dates: universal rules plus rules matching the active lenses.
+ * The raw per-location tables remain unfiltered, so toggles never trigger astronomy.
+ */
+export function resolveObservancesForYear(
+  year: number,
+  calendarSystem: CalendarSystem = 'purnimant',
+  location?: ObservanceLocation,
+  lenses: Iterable<ObservanceLens> = []
+): ResolvedObservance[] {
+  const canonical = canonicalizeLenses(lenses);
+  const key = observancePresentationMemoKey(year, calendarSystem, location, canonical);
+  const cached = presentationCache.get(key);
+  if (cached) return cached;
+  const active = new Set(canonical);
+  const filtered = resolveAllObservancesForYear(year, calendarSystem, location)
+    .filter(({ rule }) => ruleIsVisibleForLenses(rule.lens, active));
+  // A non-Ujjain fallback must remain replaceable when its accurate background
+  // table lands; memoising that approximate presentation would pin it forever.
+  if (locationKey(location) === UJJAIN_CITY_ID || rawCache.has(cacheKey(year, calendarSystem, location))) {
+    presentationCache.set(key, filtered);
+  }
+  return filtered;
 }
 
 // True when resolveObservancesForYear would return location-accurate dates (rather
@@ -68,7 +115,7 @@ export function isObservanceDataReady(
 ): boolean {
   const cityId = locationKey(location);
   if (cityId === UJJAIN_CITY_ID) return true;
-  return cache.has(cacheKey(year, calendarSystem, location))
+  return rawCache.has(cacheKey(year, calendarSystem, location))
     || getStoredObservanceYear(cityId, calendarSystem, year) !== null;
 }
 
@@ -94,7 +141,7 @@ export function resolveObservancesForYearLive(
   const startDate = new Date(year, 0, 1);
   const endDate = new Date(year, 11, 31);
 
-  for (const rule of defaultRules) {
+  for (const rule of generatedRules) {
     const resolved = resolveRuleDates(rule, year, startDate, endDate, calendarSystem, location);
     for (const item of resolved) {
       byId.set(`${rule.id}:${dateKey(item.date)}`, item);
@@ -153,7 +200,7 @@ export async function resolveObservancesForYearLiveChunked(
   const byId = new Map<string, ResolvedObservance>();
   const startDate = new Date(year, 0, 1);
   const endDate = new Date(year, 11, 31);
-  for (const rule of defaultRules) {
+  for (const rule of generatedRules) {
     const resolved = resolveRuleDates(rule, year, startDate, endDate, calendarSystem, location);
     for (const item of resolved) {
       byId.set(`${rule.id}:${dateKey(item.date)}`, item);
@@ -175,12 +222,13 @@ export function getUpcomingObservances(
   count: number,
   calendarSystem: CalendarSystem = 'purnimant',
   withinDays?: number,
-  location?: ObservanceLocation
+  location?: ObservanceLocation,
+  lenses: Iterable<ObservanceLens> = []
 ): ResolvedObservance[] {
   const year = fromDate.getFullYear();
   const all = [
-    ...resolveObservancesForYear(year, calendarSystem, location),
-    ...resolveObservancesForYear(year + 1, calendarSystem, location),
+    ...resolveObservancesForYear(year, calendarSystem, location, lenses),
+    ...resolveObservancesForYear(year + 1, calendarSystem, location, lenses),
   ];
   const start = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate());
   // Optional horizon: only observances within `withinDays` of the selected day.
@@ -199,9 +247,20 @@ export function getUpcomingFestivals(fromDate: Date, count: number): ResolvedFes
 export function getObservancesForDate(
   date: Date,
   calendarSystem: CalendarSystem = 'purnimant',
+  location?: ObservanceLocation,
+  lenses: Iterable<ObservanceLens> = []
+): ResolvedObservance[] {
+  return resolveObservancesForYear(date.getFullYear(), calendarSystem, location, lenses)
+    .filter((item) => isSameLocalDate(item.date, date));
+}
+
+/** Raw direct-lookup path for explicit search/detail/follow consumers. */
+export function getAllObservancesForDate(
+  date: Date,
+  calendarSystem: CalendarSystem = 'purnimant',
   location?: ObservanceLocation
 ): ResolvedObservance[] {
-  return resolveObservancesForYear(date.getFullYear(), calendarSystem, location)
+  return resolveAllObservancesForYear(date.getFullYear(), calendarSystem, location)
     .filter((item) => isSameLocalDate(item.date, date));
 }
 
@@ -211,7 +270,8 @@ export function getObservancesForDate(
 export function getObservancesForDateKey(
   dateKey: string,
   calendarSystem: CalendarSystem = 'purnimant',
-  location?: ObservanceLocation
+  location?: ObservanceLocation,
+  lenses: Iterable<ObservanceLens> = []
 ): ResolvedObservance[] {
   const year = Number(dateKey.slice(0, 4));
   const cityId = locationKey(location);
@@ -219,17 +279,22 @@ export function getObservancesForDateKey(
     ? PRECOMPUTED_OBSERVANCES[`${calendarSystem}:${year}`]
     : getStoredObservanceYear(cityId, calendarSystem, year);
   const entries = exact ?? PRECOMPUTED_OBSERVANCES[`${calendarSystem}:${year}`];
-  if (entries) return reconstructPrecomputed(entries.filter((item) => item.date === dateKey));
-  return getObservancesForDate(new Date(`${dateKey}T12:00:00`), calendarSystem, location);
+  if (entries) {
+    const active = new Set(canonicalizeLenses(lenses));
+    return reconstructPrecomputed(entries.filter((item) => item.date === dateKey))
+      .filter(({ rule }) => ruleIsVisibleForLenses(rule.lens, active));
+  }
+  return getObservancesForDate(new Date(`${dateKey}T12:00:00`), calendarSystem, location, lenses);
 }
 
 export function getObservancesForMonth(
   year: number,
   month: number,
   calendarSystem: CalendarSystem = 'purnimant',
-  location?: ObservanceLocation
+  location?: ObservanceLocation,
+  lenses: Iterable<ObservanceLens> = []
 ): ResolvedObservance[] {
-  return resolveObservancesForYear(year, calendarSystem, location)
+  return resolveObservancesForYear(year, calendarSystem, location, lenses)
     .filter((f) => f.date.getFullYear() === year && f.date.getMonth() === month);
 }
 
@@ -243,7 +308,7 @@ export function searchObservances(
 ): ObservanceRule[] {
   const normalized = normalizeSearch(query);
   if (!normalized) return [];
-  return getObservanceCatalog(options)
+  return getObservanceCatalog({ ...options, includeAllLenses: true })
     .filter((rule) => searchableText(rule).includes(normalized));
 }
 

@@ -119,14 +119,14 @@ const CATEGORY_RANK: Record<ObservanceRule['category'], number> = {
 /**
  * Choose the single observance a day's title should name.
  *
- * Only `default`-visibility rules are eligible — advanced and regional entries are
+ * Only universal `default`-visibility rules are eligible — lensed entries are
  * opt-in surfaces inside the Panchang tab, and promoting one into every user's
  * lock screen would misrepresent the day. Ordering is by significance, then
  * category, then id, so the pick is stable for a given date no matter what order
  * the resolver returns rules in. Returns null when the day has nothing to name.
  */
 export function pickTitleObservance(rules: ObservanceRule[]): ObservanceRule | null {
-  const eligible = rules.filter((r) => r.visibility === 'default');
+  const eligible = rules.filter((r) => r.visibility === 'default' && !r.lens?.length);
   if (eligible.length === 0) return null;
   const sorted = [...eligible].sort((a, b) => {
     const marker = MARKER_RANK[a.marker] - MARKER_RANK[b.marker];

@@ -67,7 +67,27 @@ export type FestivalMarker = 'star' | 'dot' | 'halfmoon';
 
 export type ObservanceCategory = 'festival' | 'vrat' | 'upavas' | 'katha' | 'regional';
 
-export type ObservanceVisibility = 'default' | 'advanced' | 'regional';
+export type ObservanceVisibility = 'default' | 'advanced';
+
+/** Optional presentation calendars. Absent means universal and always visible. */
+export type ObservanceLens =
+  // state / region — seeded silently from the chosen city
+  | 'rajasthan'
+  | 'bihar-mithila'
+  | 'maharashtra-konkan'
+  | 'gujarat'
+  | 'bengal-odisha'
+  | 'punjab-haryana'
+  | 'tamil'
+  | 'kerala'
+  | 'telugu-kannada'
+  | 'assam-northeast'
+  // सम्प्रदाय / tradition — NEVER auto-seeded; only ever a manual tap (PRD-42 locked decision ①)
+  | 'jain'
+  | 'gaudiya'
+  | 'pushtimarg'
+  | 'sri-vaishnava'
+  | 'shaiva';
 
 export type ObservanceRuleType =
   | 'lunar-tithi'
@@ -126,6 +146,8 @@ export type ObservanceRule = {
   nameEn: string;
   category: ObservanceCategory;
   visibility: ObservanceVisibility;
+  /** Absent means universal; otherwise shown when any named lens is active. */
+  lens?: ObservanceLens[];
   ruleType: ObservanceRuleType;
   recurrence: ObservanceRecurrence;
   type?: 'lunar' | 'solar';

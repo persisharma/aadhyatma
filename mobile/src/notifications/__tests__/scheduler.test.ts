@@ -346,12 +346,11 @@ function makeRule(overrides: Partial<ObservanceRule> & { id: string }): Observan
   assert.notEqual(withAnga.title, plain.title);
 }
 
-// pickTitleObservance drops non-default visibility — advanced/regional entries are
-// opt-in surfaces inside the Panchang tab, not lock-screen material.
+// pickTitleObservance drops advanced and lensed entries — neither is lock-screen material.
 {
   const advancedOnly = [
     makeRule({ id: 'a', visibility: 'advanced' }),
-    makeRule({ id: 'b', visibility: 'regional' }),
+    makeRule({ id: 'b', lens: ['jain'] }),
   ];
   assert.equal(pickTitleObservance(advancedOnly), null);
   assert.equal(pickTitleObservance([]), null);

@@ -11,13 +11,18 @@ import { hydratePanchangDays, persistPanchangDays } from './panchangDayCache';
 import {
   getCalendarSystemHydrated,
   getCalendarSystemSnapshot,
+  getLensesHydrated,
+  getLensesSnapshot,
   setCalendarSystemGlobal,
+  setLensesGlobal,
   subscribeCalendarSystem,
+  subscribeLenses,
   __resetPanchangPrefsForTests,
 } from './panchangPrefs';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import type {
   CalendarSystem,
+  ObservanceLens,
   PanchangComputationOptions,
   PanchangData,
   ResolvedFestival,
@@ -95,6 +100,17 @@ export function usePanchangCalendarHydrated(): boolean {
   return useSyncExternalStore(subscribeCalendarSystem, getCalendarSystemHydrated);
 }
 
+/** Active regional/sampradaya presentation calendars, shared across all surfaces. */
+export function useObservanceLenses(): [readonly ObservanceLens[], (next: Iterable<ObservanceLens>) => void] {
+  const lenses = useSyncExternalStore(subscribeLenses, getLensesSnapshot);
+  return [lenses, setLensesGlobal];
+}
+
+/** True only after the persisted lens set has settled. */
+export function useObservanceLensesHydrated(): boolean {
+  return useSyncExternalStore(subscribeLenses, getLensesHydrated);
+}
+
 /** Test-only: reset the module store between jest tests. Re-exported from
  * `panchangPrefs` so existing suites keep importing it from here. */
 export function __resetCalendarSystemStoreForTests(value: CalendarSystem = 'purnimant'): void {
@@ -105,6 +121,7 @@ export function useTodayPanchang(calendarSystem: CalendarSystem = 'purnimant'): 
   const todayKey = new Date().toDateString();
   const { location } = usePanchangLocation();
   const storeVersion = useObservanceStoreVersion();
+  const [lenses] = useObservanceLenses();
 
   // Today's panchang is cheap (~4ms — a handful of astronomy solves), so it is
   // safe to compute on the render path. Read through the shared store, so it is
@@ -124,14 +141,14 @@ export function useTodayPanchang(calendarSystem: CalendarSystem = 'purnimant'): 
   useEffect(() => {
     let cancelled = false;
     const handle = setTimeout(() => {
-      const result = getUpcomingObservances(new Date(), UPCOMING_MAX, calendarSystem, UPCOMING_WINDOW_DAYS, location);
+      const result = getUpcomingObservances(new Date(), UPCOMING_MAX, calendarSystem, UPCOMING_WINDOW_DAYS, location, lenses);
       if (!cancelled) setUpcoming(result);
     }, 0);
     return () => {
       cancelled = true;
       clearTimeout(handle);
     };
-  }, [todayKey, calendarSystem, location, storeVersion]);
+  }, [todayKey, calendarSystem, location, storeVersion, lenses]);
 
   return { today, upcoming };
 }
@@ -149,6 +166,8 @@ export function useObservancesForDate(
   const { location } = usePanchangLocation();
   const cityId = location.cityId;
   const storeVersion = useObservanceStoreVersion();
+  const [lenses] = useObservanceLenses();
+  const lensKey = lenses.join(',');
 
   const [observances, setObservances] = useState<ResolvedObservance[]>([]);
   // The reset-to-empty applies only when the *selection* changes (stale data
@@ -156,7 +175,7 @@ export function useObservancesForDate(
   // a background city scan landing mid-session — keeps the previous list on
   // screen until the re-resolve lands, so the always-mounted Home strip's
   // chips don't blink out for a frame on every upgrade.
-  const selectionKey = `${dateMs}|${calendarSystem}|${cityId}`;
+  const selectionKey = `${dateMs}|${calendarSystem}|${cityId}|${lensKey}`;
   const lastSelectionKey = useRef<string | null>(null);
   useEffect(() => {
     let cancelled = false;
@@ -168,7 +187,7 @@ export function useObservancesForDate(
     let handle: ReturnType<typeof setTimeout> | undefined;
     const interaction = InteractionManager.runAfterInteractions(() => {
       handle = setTimeout(() => {
-        const result = getObservancesForDate(selected, calendarSystem, location);
+        const result = getObservancesForDate(selected, calendarSystem, location, lenses);
         if (!cancelled) setObservances(result);
       }, 0);
     });
@@ -192,6 +211,8 @@ export function usePanchangForSelection(
   const { location } = usePanchangLocation();
   const cityId = location.cityId;
   const storeVersion = useObservanceStoreVersion();
+  const [lenses] = useObservanceLenses();
+  const lensKey = lenses.join(',');
 
   // Compute the day's panchang OFF the render path. The astronomy solves are quick on a
   // laptop but enough to stutter the tab on a real device, so we never run them
@@ -234,7 +255,7 @@ export function usePanchangForSelection(
     const selected = new Date(dateMs);
     setUpcoming([]);
     const handle = setTimeout(() => {
-      const result = getUpcomingObservances(selected, UPCOMING_MAX, calendarSystem, UPCOMING_WINDOW_DAYS, location);
+      const result = getUpcomingObservances(selected, UPCOMING_MAX, calendarSystem, UPCOMING_WINDOW_DAYS, location, lenses);
       if (!cancelled) setUpcoming(result);
     }, 0);
     return () => {
@@ -242,7 +263,7 @@ export function usePanchangForSelection(
       clearTimeout(handle);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dateMs, dateKey, calendarSystem, cityId, storeVersion]);
+  }, [dateMs, dateKey, calendarSystem, cityId, storeVersion, lensKey]);
 
   // While a non-Ujjain location's background scan is still running, observances stand
   // in on the India-wide (Ujjain/IST) dates, which are correct for the bundled cities
@@ -260,7 +281,9 @@ export function usePanchangMonthObservances(
   const { location } = usePanchangLocation();
   const cityId = location.cityId;
   const storeVersion = useObservanceStoreVersion();
-  const monthKey = `${visibleMonth.getFullYear()}-${visibleMonth.getMonth()}-${calendarSystem}-${cityId}`;
+  const [lenses] = useObservanceLenses();
+  const lensKey = lenses.join(',');
+  const monthKey = `${visibleMonth.getFullYear()}-${visibleMonth.getMonth()}-${calendarSystem}-${cityId}-${lensKey}`;
   const [observances, setObservances] = useState<ResolvedObservance[]>([]);
 
   useEffect(() => {
@@ -269,7 +292,7 @@ export function usePanchangMonthObservances(
     const year = visibleMonth.getFullYear();
     const month = visibleMonth.getMonth();
     const handle = setTimeout(() => {
-      const result = getObservancesForMonth(year, month, calendarSystem, location);
+      const result = getObservancesForMonth(year, month, calendarSystem, location, lenses);
       if (!cancelled) setObservances(result);
     }, 0);
     return () => {

@@ -26,13 +26,18 @@ assert.ok(FESTIVE_REMINDERS.length > 0, 'the catalog must not be empty');
 for (const entry of FESTIVE_REMINDERS) {
   const rule = RULE_BY_ID.get(entry.ruleId);
   assert.ok(rule, `festive reminder "${entry.ruleId}" is not an observance rule id`);
-  // `advanced`/`regional` rules are opt-in surfaces inside the Panchang tab.
+  // Advanced/lensed rules are opt-in surfaces inside the Panchang tab.
   // Promoting one onto every user's lock screen by default misrepresents the day
   // — the same rule `pickTitleObservance` enforces for notification titles.
   assert.equal(
     rule.visibility,
     'default',
     `festive reminder "${entry.ruleId}" must be a default-visibility observance`
+  );
+  assert.equal(
+    rule.lens?.length ?? 0,
+    0,
+    `festive reminder "${entry.ruleId}" must remain universal`
   );
   assert.ok(rule.nameHi.length > 0 && rule.nameEn.length > 0);
 }

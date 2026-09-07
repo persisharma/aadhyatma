@@ -30,6 +30,12 @@ export const CORPUS: readonly CorpusCase[] = [
   { q: 'aaj kya hai', intent: 'panchang.day' },
   { q: 'tithi kya hai aaj', intent: 'panchang.day' },
 
+  /* ---------------- observance.lens ---------------- */
+  { q: 'राजस्थान के पर्व दिख रहे हैं', intent: 'observance.lens', slot: ['lens', 'rajasthan'] },
+  { q: 'is the Jain calendar active', intent: 'observance.lens', slot: ['lens', 'jain'] },
+  { q: 'Tamil regional festivals', intent: 'observance.lens', slot: ['lens', 'tamil'] },
+  { q: 'बिहार मिथिला का क्षेत्रीय कैलेंडर', intent: 'observance.lens', slot: ['lens', 'bihar-mithila'] },
+
   /* ---------------- muhurat.now ---------------- */
   { q: 'राहु काल कब है', intent: 'muhurat.now' },
   { q: 'rahu kaal kab hai', intent: 'muhurat.now' },

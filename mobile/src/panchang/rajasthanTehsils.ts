@@ -18,7 +18,7 @@
 // same "deliberately coarse" contract the national list documents.
 import type { City } from './locations';
 
-export const RAJASTHAN_TEHSILS: City[] = [
+const RAJASTHAN_TEHSIL_ROWS: City[] = [
   // Ajmer
   { id: 'rj-ajmer', nameHi: 'अजमेर', nameEn: 'Ajmer', districtHi: 'अजमेर', districtEn: 'Ajmer', latitude: 26.4521, longitude: 74.6387, elevation: 486 },
   { id: 'rj-arain', nameHi: 'अरांई', nameEn: 'Arain', districtHi: 'अजमेर', districtEn: 'Ajmer', latitude: 26.4495, longitude: 75.0392, elevation: 437 },
@@ -395,3 +395,9 @@ export const RAJASTHAN_TEHSILS: City[] = [
   { id: 'rj-semari', nameHi: 'सेमारी', nameEn: 'Semari', districtHi: 'उदयपुर', districtEn: 'Udaipur', latitude: 24.0554, longitude: 73.8569, elevation: 287 },
   { id: 'rj-udaipur', nameHi: 'उदयपुर', nameEn: 'Udaipur', districtHi: 'उदयपुर', districtEn: 'Udaipur', latitude: 24.5858, longitude: 73.7135, elevation: 598 },
 ];
+
+/** Generated rows all belong to Rajasthan; keep the tag on the generated dataset. */
+export const RAJASTHAN_TEHSILS: City[] = RAJASTHAN_TEHSIL_ROWS.map((city) => ({
+  ...city,
+  stateCode: 'RJ',
+}));

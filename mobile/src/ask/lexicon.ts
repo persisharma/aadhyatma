@@ -17,6 +17,7 @@ import { VASTU_ROOM_ENTRIES } from '@/data/vastu/roomGuidance';
 import { japamMantras } from '@/data/japam';
 import { VIDHI_ENTRIES } from '@/data/vidhi';
 import { ALIASES } from './aliases';
+import { OBSERVANCE_LENSES } from '@/panchang/lenses';
 import { fold } from './fold';
 import type { EntityType, LexEntry } from './types';
 
@@ -70,6 +71,15 @@ function build(): Lexicon {
     if (seenRule.has(rule.id)) continue;
     seenRule.add(rule.id);
     push('observance', rule.id, rule.nameHi, [rule.nameHi, rule.nameEn, rule.id.replace(/-/g, ' '), rule.nameHi.replace(/^श्री\s+/, ''), rule.nameEn.replace(/^Shr(i|ee)\s+/i, '')]);
+  }
+  for (const lens of OBSERVANCE_LENSES) {
+    push('lens', lens.id, lens.nameHi, [
+      lens.id.replace(/-/g, ' '),
+      lens.nameHi,
+      lens.nameEn,
+      lens.examplesHi,
+      lens.examplesEn,
+    ]);
   }
   for (const cls of OBSERVANCE_CLASSES) {
     const members = OBSERVANCE_RULES.filter((r) => cls.member(r.id)).map((r) => r.id);

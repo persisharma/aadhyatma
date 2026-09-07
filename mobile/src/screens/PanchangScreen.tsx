@@ -11,6 +11,7 @@ import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { library } from '@/data/texts';
 import { buildEntryStartTarget, moreTabTarget } from '@/navigation/entryRoutes';
 import LocationPickerModal from '@/components/LocationPickerModal';
+import LensPickerSheet from '@/components/LensPickerSheet';
 import MuhuratGlanceCard from '@/components/MuhuratGlanceCard';
 import MuhuratFinderDoor from '@/components/MuhuratFinderDoor';
 import ShubhYogaCard from '@/components/ShubhYogaCard';
@@ -32,9 +33,13 @@ import {
   usePanchangCalendarSystem,
   usePanchangForSelection,
   usePanchangMonthObservances,
+  useObservanceLenses,
+  useObservanceLensesHydrated,
 } from '@/panchang/usePanchang';
 import { useShubhYoga } from '@/panchang/useShubhYoga';
-import type { CalendarSystem, PanchangElement, ResolvedObservance } from '@/panchang/types';
+import type { CalendarSystem, ObservanceLens, PanchangElement, PanchangLocation, ResolvedObservance } from '@/panchang/types';
+import { lensDefinition, OBSERVANCE_LENSES, type LensGroup } from '@/panchang/lenses';
+import { useLensSeeding } from '@/panchang/lensSeeding';
 import { getKathaContent } from '@/panchang/kathaContent';
 import { getUpcomingObservances, searchObservances } from '@/panchang/festivalEngine';
 import { successorTithiToday } from '@/panchang/prevailingTithi';
@@ -157,6 +162,10 @@ export default function PanchangScreen({ route }: Props) {
   const [calendarSystem, setCalendarSystem] = usePanchangCalendarSystem();
   const { location } = usePanchangLocation();
   const [locationPickerVisible, setLocationPickerVisible] = useState(false);
+  const [lensSheetGroup, setLensSheetGroup] = useState<LensGroup | null>(null);
+  const [lenses, setLenses] = useObservanceLenses();
+  const lensesHydrated = useObservanceLensesHydrated();
+  const lensSeed = useLensSeeding(location, lenses, lensesHydrated, setLenses);
   const {
     profile: kundaliProfile,
     chart: kundaliChart,
@@ -417,6 +426,49 @@ export default function PanchangScreen({ route }: Props) {
 
           {panchangTab === 'calendar' ? (
             <>
+          {lensSeed.notice && (
+            <View
+              testID="lens-seed-notice"
+              style={[styles.lensNotice, { backgroundColor: colors.goldTint, borderColor: colors.gold, borderRadius: radii.md }]}
+            >
+              <Text style={{ flex: 1, color: colors.inkSoft, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18 }}>
+                {lensSeed.notice.kind === 'added'
+                  ? contentByLang(
+                      lang,
+                      `${lensSeed.notice.cityHi} के अनुसार क्षेत्रीय पर्व जोड़े गए हैं`,
+                      `Regional festivals for ${lensSeed.notice.cityEn} were added`
+                    )
+                  : contentByLang(
+                      lang,
+                      `${lensSeed.notice.cityHi} का क्षेत्रीय कैलेंडर उपलब्ध है`,
+                      `The regional calendar for ${lensSeed.notice.cityEn} is available`
+                    )}
+              </Text>
+              <Pressable
+                onPress={() => lensSeed.notice?.kind === 'offer' ? lensSeed.acceptOffer() : setLensSheetGroup('state')}
+                accessibilityRole="button"
+                accessibilityLabel={lensSeed.notice.kind === 'offer'
+                  ? contentByLang(lang, 'कैलेंडर जोड़ें', 'Add calendar')
+                  : contentByLang(lang, 'कैलेंडर बदलें', 'Change calendars')}
+                style={({ pressed }) => [styles.lensNoticeAction, pressed && { opacity: 0.65 }]}
+              >
+                <Text style={{ color: colors.saffronDeep, fontFamily: fontFamilies.interSemiBold, fontSize: 12 }}>
+                  {lensSeed.notice.kind === 'offer'
+                    ? contentByLang(lang, 'जोड़ें', 'Add')
+                    : contentByLang(lang, 'बदलें', 'Change')}
+                </Text>
+              </Pressable>
+              <Pressable
+                onPress={lensSeed.dismiss}
+                accessibilityRole="button"
+                accessibilityLabel={contentByLang(lang, 'सूचना हटाएँ', 'Dismiss notice')}
+                hitSlop={10}
+                style={({ pressed }) => [styles.lensNoticeClose, pressed && { opacity: 0.65 }]}
+              >
+                <Text style={{ color: colors.inkMuted, fontSize: 14 }}>✕</Text>
+              </Pressable>
+            </View>
+          )}
           <View
             style={[styles.calendarCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}
             onTouchStart={handleCalendarTouchStart}
@@ -735,6 +787,9 @@ export default function PanchangScreen({ route }: Props) {
               onOpenVidhiCatalog={openVidhiCatalog}
               onOpenMyVrat={openMyVrat}
               onOpenPitruSmaran={openPitruSmaran}
+              onOpenLenses={(group) => setLensSheetGroup(group)}
+              lenses={lenses}
+              location={location}
               followCount={followCount}
               reminderCount={reminderCount}
             />
@@ -767,6 +822,7 @@ export default function PanchangScreen({ route }: Props) {
         </ScrollView>
       </SafeAreaView>
       <LocationPickerModal visible={locationPickerVisible} onClose={() => setLocationPickerVisible(false)} />
+      <LensPickerSheet visible={lensSheetGroup !== null} group={lensSheetGroup ?? undefined} onClose={() => setLensSheetGroup(null)} />
     </View>
   );
 }
@@ -1990,11 +2046,72 @@ function PitruSmaranCatalogRow({
   );
 }
 
+// One ledger row per lens group. क्षेत्र (state) and सम्प्रदाय (tradition) each open
+// the sheet scoped to their own section; counts/summary are computed within the group.
+function LensCatalogRow({
+  lang, group, lenses, colors, typography, radii, elevation, onPress,
+}: {
+  lang: Lang;
+  group: LensGroup;
+  lenses: readonly ObservanceLens[];
+  colors: any;
+  typography: any;
+  radii: any;
+  elevation: any;
+  onPress: () => void;
+}) {
+  const groupLensIds = OBSERVANCE_LENSES.filter((lens) => lens.group === group).map(({ id }) => id);
+  const activeIds = lenses.filter((id) => groupLensIds.includes(id));
+  const available = groupLensIds.length - activeIds.length;
+  const names = activeIds.map((lens) => lensDefinition(lens));
+  const activeSummary = names.length === 0
+    ? contentByLang(lang, `कोई सक्रिय नहीं · ${available} उपलब्ध`, `None active · ${available} available`)
+    : names.length === 1
+      ? contentByLang(lang, `${names[0].nameHi} सक्रिय · ${available} और उपलब्ध`, `${names[0].nameEn} active · ${available} more available`)
+      : contentByLang(lang, `${names[0].nameHi} +${names.length - 1} सक्रिय · ${available} उपलब्ध`, `${names[0].nameEn} +${names.length - 1} active · ${available} available`);
+
+  const isTradition = group === 'tradition';
+  const icon = isTradition ? '☸' : '⌖';
+  const title = isTradition
+    ? contentByLang(lang, 'सम्प्रदाय · कैलेंडर', 'सम्प्रदाय · Calendars')
+    : contentByLang(lang, 'क्षेत्र · कैलेंडर', 'क्षेत्र · Calendars');
+  const a11yTitle = isTradition
+    ? contentByLang(lang, 'सम्प्रदाय कैलेंडर', 'Tradition calendars')
+    : contentByLang(lang, 'क्षेत्रीय कैलेंडर', 'Regional calendars');
+
+  return (
+    <Pressable
+      testID={isTradition ? 'sampraday-catalog-row' : 'lens-catalog-row'}
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={`${a11yTitle}. ${activeSummary}`}
+      style={({ pressed }) => [
+        styles.myVratRow,
+        styles.pitruLedgerRow,
+        { backgroundColor: colors.goldTint, borderColor: colors.gold, borderRadius: radii.lg },
+        elevation.card,
+        pressed && { opacity: 0.8 },
+      ]}
+    >
+      <Text style={{ fontSize: 18, color: colors.gold, marginRight: 10 }}>{icon}</Text>
+      <View style={{ flex: 1 }}>
+        <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
+          {title}
+        </Text>
+        <Text numberOfLines={2} style={{ ...captionFont(activeSummary), fontSize: 12, color: colors.inkMuted, marginTop: 2 }}>
+          {activeSummary}
+        </Text>
+      </View>
+      <Text style={{ fontSize: 20, color: colors.inkMuted }}>›</Text>
+    </Pressable>
+  );
+}
+
 function CatalogLanding({
   lang, today, calendarSystem, query, onChangeQuery,
   colors, typography, radii, elevation,
   onOpenDetail, onOpenCategory, onOpenKathaLibrary, onOpenVidhiCatalog, onOpenMyVrat, followCount, reminderCount,
-  onOpenPitruSmaran,
+  onOpenPitruSmaran, onOpenLenses, lenses, location,
 }: {
   lang: Lang;
   today: Date;
@@ -2011,13 +2128,19 @@ function CatalogLanding({
   onOpenVidhiCatalog: () => void;
   onOpenMyVrat: () => void;
   onOpenPitruSmaran: () => void;
+  onOpenLenses: (group: LensGroup) => void;
+  lenses: readonly ObservanceLens[];
+  location: PanchangLocation;
   followCount: number;
   reminderCount: number;
 }) {
   const trimmed = query.trim();
   const results = useMemo(() => (trimmed ? searchObservances(trimmed) : []), [trimmed]);
-  const upcoming = useMemo(() => getUpcomingObservances(today, 6, calendarSystem, 150), [today, calendarSystem]);
-  const counts = useMemo(() => getCategoryCounts(), []);
+  const upcoming = useMemo(
+    () => getUpcomingObservances(today, 6, calendarSystem, 150, location, lenses),
+    [today, calendarSystem, location, lenses]
+  );
+  const counts = useMemo(() => getCategoryCounts(lenses), [lenses]);
   const kathaCount = getKathaCount();
 
   const tileMeta: Record<BrowseCategory, { glyph: string; hi: string; en: string }> = {
@@ -2105,6 +2228,26 @@ function CatalogLanding({
             radii={radii}
             elevation={elevation}
             onPress={onOpenPitruSmaran}
+          />
+          <LensCatalogRow
+            lang={lang}
+            group="state"
+            lenses={lenses}
+            colors={colors}
+            typography={typography}
+            radii={radii}
+            elevation={elevation}
+            onPress={() => onOpenLenses('state')}
+          />
+          <LensCatalogRow
+            lang={lang}
+            group="tradition"
+            lenses={lenses}
+            colors={colors}
+            typography={typography}
+            radii={radii}
+            elevation={elevation}
+            onPress={() => onOpenLenses('tradition')}
           />
           {upcoming.length > 0 && (
             <View style={{ marginTop: 14 }}>
@@ -2254,6 +2397,9 @@ const styles = StyleSheet.create({
   starBadgeText: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, lineHeight: 13 },
   myVratRow: { flexDirection: 'row', alignItems: 'center', borderWidth: 1.5, padding: 14, marginTop: 12 },
   pitruLedgerRow: { marginTop: 10 },
+  lensNotice: { minHeight: 44, flexDirection: 'row', alignItems: 'center', borderWidth: 1, paddingLeft: 12, marginTop: 10 },
+  lensNoticeAction: { minHeight: 44, minWidth: 54, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 8 },
+  lensNoticeClose: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
   segmented: { flexDirection: 'row', padding: 3, borderWidth: 1, marginTop: 10 },
   segmentOption: { flex: 1, minHeight: 38, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 14 },
   jyotishHero: { borderWidth: 1, padding: 16, marginTop: 12, flexDirection: 'row', alignItems: 'center', gap: 13 },

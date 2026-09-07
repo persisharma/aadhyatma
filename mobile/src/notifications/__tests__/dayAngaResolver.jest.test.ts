@@ -2,6 +2,8 @@ import { resolveDayAngas, ANGA_WINDOW_DAYS } from '@/notifications/dayAngaResolv
 import { toDateKey } from '@/notifications/seed';
 import { ROLLING_WINDOW_DAYS } from '@/notifications/pure';
 import * as festivalEngine from '@/panchang/festivalEngine';
+import * as dayAnga from '@/notifications/dayAnga';
+import { OBSERVANCE_RULES } from '@/panchang/festivals';
 
 // Exercises the resolver against the REAL panchang engine and the real precomputed
 // observance table (Ujjain / purnimant), so a change to either surfaces here rather
@@ -89,6 +91,26 @@ describe('resolveDayAngas', () => {
       });
     } finally {
       spy.mockRestore();
+    }
+  });
+
+  it('independently strips lensed rules before the title picker sees them', async () => {
+    const rule = OBSERVANCE_RULES.find((candidate) => candidate.id === 'karthigai-vrat');
+    expect(rule?.lens).toEqual(['tamil']);
+    const from = new Date(2026, 5, 1);
+    const lookup = jest.spyOn(festivalEngine, 'getObservancesForDate').mockReturnValue([
+      { date: from, rule: rule! },
+    ]);
+    // Deliberately relax the picker. The resolver's separate protection must
+    // still keep the lensed rule out of the notification title.
+    const picker = jest.spyOn(dayAnga, 'pickTitleObservance').mockImplementation((rules) => rules[0] ?? null);
+    try {
+      const map = await resolveDayAngas({ from, days: 1 });
+      expect(map[toDateKey(from)].observanceEn).toBeUndefined();
+      expect(picker).toHaveBeenCalledWith([]);
+    } finally {
+      lookup.mockRestore();
+      picker.mockRestore();
     }
   });
 });

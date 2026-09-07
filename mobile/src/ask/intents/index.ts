@@ -13,7 +13,9 @@ import { VIDHI_ENTRIES, getVidhiById, getVidhiForFestival } from '@/data/vidhi';
 import { getVastuRoomEntry } from '@/data/vastu/roomGuidance';
 import { BHOG_CONTENT, getBhogContent } from '@/panchang/bhogContent';
 import { EVENT_RULES, DISHA_LABELS } from '@/panchang/eventMuhurat';
-import { getObservancesForDate } from '@/panchang/festivalEngine';
+import { getAllObservancesForDate, getObservancesForDate } from '@/panchang/festivalEngine';
+import { getObservanceCatalog } from '@/panchang/festivals';
+import { lensDefinition } from '@/panchang/lenses';
 import { getKathaContent } from '@/panchang/kathaContent';
 import { classifyNow, computeMuhuratDay } from '@/panchang/muhurat';
 import { formatRangeCompact, formatShortDate, formatClock } from '@/panchang/muhuratFormat';
@@ -74,7 +76,7 @@ function nextOf(entry: LexEntry, ctx: AskContext, from: Date): ResolvedObservanc
 /** Is any member of `entry` observed on `date`? */
 function observedOn(entry: LexEntry, ctx: AskContext, date: Date): ResolvedObservance | null {
   const ids = new Set(observanceIdsFor(entry));
-  const todays = getObservancesForDate(date, ctx.calendarSystem, ctx.location);
+  const todays = getAllObservancesForDate(date, ctx.calendarSystem, ctx.location);
   return todays.find((o) => ids.has(o.rule.id)) ?? null;
 }
 
@@ -118,7 +120,7 @@ const panchangDay: AskIntent = {
     const offset = slots.dayOffset ?? 0;
     const date = dayAt(ctx, offset);
     const p = panchangFor(ctx, date);
-    const obs = getObservancesForDate(date, ctx.calendarSystem, ctx.location);
+    const obs = getObservancesForDate(date, ctx.calendarSystem, ctx.location, ctx.lenses ?? []);
     const lines = [
       { label: L('तिथि', 'Tithi'), value: L(`${PAKSHA_NAMES_HI[p.tithi.paksha]} ${p.tithi.nameHi}`, `${PAKSHA_NAMES_EN[p.tithi.paksha]} ${p.tithi.nameEn}`) },
       { label: L('नक्षत्र', 'Nakshatra'), value: L(p.nakshatra.endTime ? `${p.nakshatra.nameHi} · ${formatClock(p.nakshatra.endTime)} तक` : p.nakshatra.nameHi, p.nakshatra.endTime ? `${p.nakshatra.nameEn} · until ${formatClock(p.nakshatra.endTime)}` : p.nakshatra.nameEn) },
@@ -673,7 +675,42 @@ const sadhanaProgress: AskIntent = {
 
 /* ------------------------------------------------------------------ */
 
+const observanceLens: AskIntent = {
+  id: 'observance.lens',
+  family: 'observance',
+  triggers: [
+    'ke parv', 'ke festival', 'calendar active', 'regional calendar', 'regional festivals',
+    'के पर्व', 'के त्योहार', 'क्षेत्रीय पर्व', 'क्षेत्रीय कैलेंडर', 'कैलेंडर सक्रिय',
+  ],
+  slots: ['lens'],
+  examples: [L('राजस्थान के पर्व दिख रहे हैं?', 'Is the Rajasthan calendar active?')],
+  resolve(ctx, slots) {
+    const definition = lensDefinition(slots.lens!.id as Parameters<typeof lensDefinition>[0]);
+    const active = (ctx.lenses ?? []).includes(definition.id);
+    const rules = getObservanceCatalog({ includeAllLenses: true })
+      .filter((rule) => rule.lens?.includes(definition.id));
+    return {
+      intentId: this.id,
+      family: 'observance',
+      tag: L('क्षेत्रीय कैलेंडर', 'Regional calendar'),
+      headline: active
+        ? L(`${definition.nameHi} कैलेंडर सक्रिय है`, `${definition.nameEn} calendar is active`)
+        : L(`${definition.nameHi} कैलेंडर सक्रिय नहीं है`, `${definition.nameEn} calendar is not active`),
+      lines: [
+        { label: L('उदाहरण', 'Examples'), value: L(definition.examplesHi, definition.examplesEn) },
+        { label: L('सूची', 'Catalog'), value: L(`${rules.length} क्षेत्रीय प्रविष्टियाँ`, `${rules.length} regional entries`) },
+      ],
+      working: [`active lenses: ${(ctx.lenses ?? []).join(',') || '(none)'}`, `catalog lens=${definition.id}: ${rules.length}`],
+      actions: [{ label: L('कैलेंडर खोलें', 'Open calendars'), target: { tab: 'panchang', screen: 'PanchangHome', params: { initialTab: 'catalog' } } }],
+      confidence: 'exact',
+    };
+  },
+};
+
+/* ------------------------------------------------------------------ */
+
 export const INTENTS: readonly AskIntent[] = [
+  observanceLens,
   observanceNext,
   vratHow,
   vratFood,

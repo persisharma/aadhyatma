@@ -114,3 +114,13 @@ test('widget planning selects indexed verses without materialising the complete 
   assert.match(pool, /function getVerseAtPoolIndex/);
   assert.doesNotMatch(pool.match(/export function findVerse[\s\S]*$/)?.[0] ?? '', /getVersePool\(/);
 });
+
+test('widget coordination waits for lens hydration and replans on canonical lens changes', () => {
+  const coordinator = fs.readFileSync(path.join(process.cwd(), 'src/widgets/WidgetCoordinator.tsx'), 'utf8');
+  const planner = fs.readFileSync(path.join(process.cwd(), 'src/widgets/planPayload.ts'), 'utf8');
+  assert.match(coordinator, /useObservanceLensesHydrated/);
+  assert.match(coordinator, /!lensesHydrated/);
+  assert.match(coordinator, /lenses, deviceTimeZone/);
+  assert.match(coordinator, /lensesHydrated, location/);
+  assert.match(planner, /input\.lenses \?\? \[\]/);
+});

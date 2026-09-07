@@ -35,6 +35,7 @@ import { persistPanchangDays, __resetPanchangDayCache } from '@/panchang/panchan
 import { __resetPanchangDayPrewarm } from '@/panchang/panchangDayPrewarm';
 import {
   CALENDAR_SYSTEM_STORAGE_KEY,
+  LENS_STORAGE_KEY,
   LOCATION_STORAGE_KEY,
   loadPanchangPrefsOnce,
   peekPanchangPrefs,
@@ -134,9 +135,10 @@ beforeEach(async () => {
   mockLocation.location = BENGALURU;
 });
 
-test('both preferences cost ONE multiGet, however many consumers ask', async () => {
+test('all three preferences cost ONE multiGet, however many consumers ask', async () => {
   await AsyncStorage.setItem(LOCATION_STORAGE_KEY, JSON.stringify({ cityId: 'bengaluru', source: 'city' }));
   await AsyncStorage.setItem(CALENDAR_SYSTEM_STORAGE_KEY, 'amanta');
+  await AsyncStorage.setItem(LENS_STORAGE_KEY, 'jain,tamil');
   const multiGet = jest.spyOn(AsyncStorage, 'multiGet');
   multiGet.mockClear();
 
@@ -153,8 +155,14 @@ test('both preferences cost ONE multiGet, however many consumers ask', async () 
     (keys as string[]).includes(LOCATION_STORAGE_KEY)
   );
   expect(prefsReads).toHaveLength(1);
+  expect(prefsReads[0][0]).toEqual([
+    LOCATION_STORAGE_KEY,
+    CALENDAR_SYSTEM_STORAGE_KEY,
+    LENS_STORAGE_KEY,
+  ]);
   expect(a.location.cityId).toBe('bengaluru');
   expect(a.calendarSystem).toBe('amanta');
+  expect(a.lenses).toEqual(['jain', 'tamil']);
   expect(b).toBe(a);
   expect(c).toBe(a);
 });
@@ -278,11 +286,13 @@ test('a FAILED read is not memoized — the next caller retries', async () => {
   // change set out to fix.
   await AsyncStorage.setItem(LOCATION_STORAGE_KEY, JSON.stringify({ cityId: 'bengaluru', source: 'city' }));
   await AsyncStorage.setItem(CALENDAR_SYSTEM_STORAGE_KEY, 'amanta');
+  await AsyncStorage.setItem(LENS_STORAGE_KEY, 'jain,tamil');
   const multiGet = jest.spyOn(AsyncStorage, 'multiGet');
   multiGet.mockRejectedValueOnce(new Error('disk busy'));
 
   const first = await loadPanchangPrefsOnce();
   expect(first.location.cityId).not.toBe('bengaluru'); // fell back
+  expect(first.lenses).toEqual([]);
   // Nothing was seeded, so the provider still mounts in its loading state rather
   // than presenting the fallback city as a settled answer.
   expect(peekPanchangPrefs()).toBeNull();
@@ -291,5 +301,6 @@ test('a FAILED read is not memoized — the next caller retries', async () => {
   const second = await loadPanchangPrefsOnce();
   expect(second.location.cityId).toBe('bengaluru');
   expect(second.calendarSystem).toBe('amanta');
+  expect(second.lenses).toEqual(['jain', 'tamil']);
   expect(peekPanchangPrefs()?.location.cityId).toBe('bengaluru');
 });

@@ -29,9 +29,9 @@
  * `arcChoiceStore.ts` and passed in.
  */
 
-import { resolveObservancesForYear } from './festivalEngine';
+import { resolveAllObservancesForYear } from './festivalEngine';
 import { OBSERVANCE_RULES } from './festivals';
-import type { ArcRole, CalendarSystem, ObservanceRule, ResolvedObservance } from './types';
+import type { ArcRole, CalendarSystem, ObservanceLens, ObservanceRule, ResolvedObservance } from './types';
 import type { VratReminderInput } from '../notifications/vratReminderPure';
 
 /** The durations the app OFFERS. It recommends none of them. */
@@ -66,6 +66,8 @@ export type ArcDefinition = {
   id: string;
   nameHi: string;
   nameEn: string;
+  /** Optional presentation calendars; explicit arc choices still resolve raw dates. */
+  lens?: readonly ObservanceLens[];
   /** Rule ids in arc order. The FIRST is the anchor whose occurrence dates the arc. */
   ruleIds: readonly string[];
   /** Customary total length in days — copy only; live length comes from dates. */
@@ -160,9 +162,9 @@ export function arcDateKey(date: Date): string {
 
 function occurrencesOf(ruleId: string, aroundYear: number, calendarSystem: CalendarSystem): ResolvedObservance[] {
   const all = [
-    ...resolveObservancesForYear(aroundYear - 1, calendarSystem),
-    ...resolveObservancesForYear(aroundYear, calendarSystem),
-    ...resolveObservancesForYear(aroundYear + 1, calendarSystem),
+    ...resolveAllObservancesForYear(aroundYear - 1, calendarSystem),
+    ...resolveAllObservancesForYear(aroundYear, calendarSystem),
+    ...resolveAllObservancesForYear(aroundYear + 1, calendarSystem),
   ];
   return all
     .filter((item) => item.rule.id === ruleId)

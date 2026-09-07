@@ -16,7 +16,11 @@
 
 import { createRequire } from 'node:module';
 import { computePanchangForDate } from '../src/panchang/engine';
-import { resolveObservancesForYear } from '../src/panchang/festivalEngine';
+import {
+  resolveAllObservancesForYear,
+  resolveObservancesForYear,
+} from '../src/panchang/festivalEngine';
+import { OBSERVANCE_LENSES } from '../src/panchang/lenses';
 
 // CI runs this .mts verifier directly through tsx on Linux. In that path,
 // astronomy-engine can resolve through its CommonJS entrypoint, where strict ESM
@@ -149,7 +153,9 @@ export function classify(engine: string | null, expected: string | null): Status
 }
 
 export function engineDate(id: string, year: number): string | null {
-  const o = resolveObservancesForYear(year, 'purnimant').find((x) => x.rule.id === id);
+  // Date verification is a raw-rule concern. A user's presentation lenses must
+  // never make a sourced rule look missing to this harness.
+  const o = resolveAllObservancesForYear(year, 'purnimant').find((x) => x.rule.id === id);
   return o ? iso(o.date) : null;
 }
 
@@ -166,6 +172,8 @@ if (process.argv[1] && process.argv[1].endsWith('verify-observances.mts')) {
   const monthErrors: string[] = []; // SEVERE — the bug class just fixed
   const dayShifts: string[] = [];   // Class B — sunrise vs muhurta (pre-existing, documented)
   const kshayaMissing: string[] = []; // pre-existing kshaya-tithi drops
+  const universalBaseline: Record<number, number> = { 2025: 279, 2026: 279, 2027: 282 };
+  const universalLoadErrors: string[] = [];
 
   console.log('Observance date verification — app engine vs authoritative date\n');
   for (const year of YEARS) {
@@ -192,6 +200,22 @@ if (process.argv[1] && process.argv[1].endsWith('verify-observances.mts')) {
     const obs = resolveObservancesForYear(year, 'purnimant');
     const ekadashi = obs.filter((o) => o.rule.tithi === 11 && o.rule.category === 'vrat');
     console.log(`  ${year}: ekadashis=${ekadashi.length} (some years <24 due to kshaya)  total observances=${obs.length}`);
+    if (obs.length !== universalBaseline[year]) {
+      universalLoadErrors.push(`${year}: expected=${universalBaseline[year]} actual=${obs.length}`);
+    }
+  }
+
+  console.log('\n=== per-lens presentation coverage ===');
+  for (const lens of OBSERVANCE_LENSES) {
+    const ruleIds = new Set<string>();
+    let dates = 0;
+    for (const year of YEARS) {
+      const rows = resolveObservancesForYear(year, 'purnimant', undefined, [lens.id])
+        .filter(({ rule }) => rule.lens?.includes(lens.id));
+      dates += rows.length;
+      rows.forEach(({ rule }) => ruleIds.add(rule.id));
+    }
+    console.log(`  ${lens.id.padEnd(20)} rules=${String(ruleIds.size).padStart(2)} dates=${String(dates).padStart(3)}`);
   }
 
   console.log(`\nSUMMARY: wrong-month=${monthErrors.length}  day-shift(muhurta, Class B)=${dayShifts.length}  missing(kshaya)=${kshayaMissing.length}`);
@@ -200,6 +224,11 @@ if (process.argv[1] && process.argv[1].endsWith('verify-observances.mts')) {
   if (monthErrors.length) {
     console.log('\nFAIL — festival(s) in the WRONG LUNAR MONTH (the Janmashtami-class bug regressed):');
     for (const m of monthErrors) console.log(`  ${m}`);
+    process.exit(1);
+  }
+  if (universalLoadErrors.length) {
+    console.log('\nFAIL — the no-lens universal day load changed:');
+    for (const error of universalLoadErrors) console.log(`  ${error}`);
     process.exit(1);
   }
   console.log('\nPASS — no wrong-month errors. Day-shifts/kshaya above are the pre-existing, documented sunrise-matching limitation (VERIFICATION.md), not the month bug.');

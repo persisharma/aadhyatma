@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | **Wave 1 shipped 2026-09-06** (§14 build record) — 17 observances, data only, no new mechanism. **Waves 2–6 proposed.** Wave 2 (the lens) is the gate: waves 3–6 are content that has nowhere to live until it exists. |
+| **Status** | **Wave 1 shipped 2026-09-06** (§14) — 17 observances, data only. **Wave 2 implemented and statically verified 2026-09-06** (§15); device runs and its sequential PR remain release gates. **Waves 3–6 proposed.** |
 | **Trigger** | Sept 2026 user report: *"A lot of important dates like Goga Navami missing from calendar. Do a check for all Rajasthani and Bihari related dates. Also let's plan something around Jain specific or regional category too from different states."* |
 | **Owner surface** | Panchang tab (design.md §33) — no new tab, no new Home category, no new notification family. |
 | **T-shirt size** | W1 **S** (done) · W2 **M** (one rule field, one preference, one filter, a bigger table, four surfaces) · W3 **M** content + S code · W4 **L** content, 5 lenses · W5 **M** code (nakshatra rule types) + M content |
@@ -60,16 +60,29 @@ Success looks like a Maithil family seeing Sama Chakeva and Jur Sital where they
 6. **A folk deity is a deity.** Gogaji, Tejaji, Ramdevji, Khatu Shyamji, Chhathi Maiya, Manasa and Sama-Chakeva get the same `deityHi`/`deityEn` treatment, the same content depth and the same respect as the pan-Hindu names. No "folk" or "minor" language anywhere in user-facing copy.
 7. **No score, no ranking, no "your festivals".** A lensed day renders identically to a universal day. There is no "for you" badge and no personalisation language.
 
+### 3.1 The sampradaya selection test
+
+State lenses are bounded by geography; sampradaya lenses have no such natural edge, so they need an explicit gate or the सम्प्रदाय group accretes a long tail of niche panths. A tradition earns a lens only when **all four** hold — these are not new rules, they are the §3 principles and §10 non-goals applied to sampradayas:
+
+1. **Panchang-computable.** Its dates are tithi / nakshatra / solar-month on *this* lunar calendar. A tradition on a *different reckoning* is out — this is precisely why §10 excludes the Nanakshahi, Hijri, Gregorian-fixed and lunar-Buddhist calendars.
+2. **Additive and distinct.** It must add observances that are *not already universal*. A blanket "Vaishnava" or "Shaiva" lens fails — everyone already sees Janmashtami and Mahashivaratri. Only a *scoped* set of genuinely distinct observances qualifies.
+3. **A household community, not a timetable.** It must be a calendar households keep, not one temple's utsav schedule and not an organisation's branch-anniversary (patotsav / murti-pratishtha) feed.
+4. **Sources or silence (§11.1), both lineages named (principle 4).** Two concordant published calendars per date; where lineages differ, both ship, both named.
+
+**The clutter budget.** Because a sampradaya is never seeded (locked decision ①), every lens is a manual row a user must recognise. Its cost is discovery clutter, not profiling. **This PRD commits to a ceiling of five** — `jain`, `gaudiya`, `pushtimarg`, `sri-vaishnava`, `shaiva` — and a sixth must displace one, not extend the list, until the field signal (§8 metric 3) says otherwise.
+
 ## 4. Architecture — the lens
 
 ### 4.1 Data model (`panchang/types.ts`, `festivals.ts`)
 
 ```ts
 export type ObservanceLens =
+  // state / region — seeded silently from the chosen city
   | 'rajasthan' | 'bihar-mithila' | 'maharashtra-konkan' | 'gujarat'
   | 'bengal-odisha' | 'punjab-haryana' | 'tamil' | 'kerala'
   | 'telugu-kannada' | 'assam-northeast'
-  | 'jain';
+  // सम्प्रदाय / tradition — NEVER seeded; only ever a manual tap (locked decision ①)
+  | 'jain' | 'gaudiya' | 'pushtimarg' | 'sri-vaishnava' | 'shaiva';
 
 export type ObservanceRule = {
   // …
@@ -77,6 +90,8 @@ export type ObservanceRule = {
   lens?: ObservanceLens[];
 };
 ```
+
+**The सम्प्रदाय group (five lenses).** The tradition lenses — `jain`, `gaudiya`, `pushtimarg`, `sri-vaishnava`, `shaiva` — behave differently from the ten state lenses in exactly one way that the type does not show: **they are never auto-seeded.** A sampradaya is never inferred from a city (locked decision ①, §4.2), so each is only ever a deliberate tap in the सम्प्रदाय section of the sheet. Everything else is identical: a lens only adds, filters presentation only, and search stays lens-blind. A rule may carry **more than one lens** (e.g. `lens: ['tamil', 'sri-vaishnava']`): the read-path filter is a set-intersection, so it renders **once** when any active lens matches — no double-count. Which traditions qualify, and which were considered and set aside, is governed by the §3.1 selection test; the per-lens candidate registers are Appendix A.11–A.14. `jain`, `gaudiya` and `pushtimarg` are pure tithi calendars; `sri-vaishnava` and `shaiva` need the §5.3 nakshatra / solar-month solvers and are gated on that engine work exactly as `tamil`/`kerala` are.
 
 Three rules about the field, all test-pinned:
 
@@ -186,6 +201,8 @@ A rule is the floor, not the deliverable. Each observance in waves 3–5 is grad
 
 W2 is deliberately a no-op release. Shipping the mechanism separately from the first content that uses it is what lets the filter, the seeding and the widget/notification gates be verified against a calendar whose dates nobody's household depends on yet.
 
+**Proposed beyond W6 — the four new sampradaya lenses (§3.1, Appendix A.11–A.14).** `gaudiya` and `pushtimarg` are pure tithi calendars and can follow W2 directly (each its own content wave, §11.1 per rule). `sri-vaishnava` and `shaiva` need the §5.3 nakshatra / solar-month solvers (and `shaiva` also §5.1 `pradosh`), so they land with or after W5. None of the four adds a new mechanism — they add rules, arcs and multi-lens tags to the wave-2 lens already shipped. Shipped/implemented waves (W1–W2, §14–§15) are unchanged.
+
 ## 8. Metrics — bundle-only, as always
 
 There is no analytics SaaS and no backend (roadmap README, *Constraint*). Three honest instruments:
@@ -279,6 +296,8 @@ Regenerate `precomputedObservances.ts` and diff by rule id · bump `CACHE_VERSIO
 
 - **No Sikh Gurpurabs.** The Nanakshahi calendar is a different reckoning, not a lens over this engine. Kartik Purnima ships as Kartik Purnima; if Guru Nanak Jayanti is ever added it is its own PRD with its own calendar.
 - **No Islamic, Christian, Parsi or Buddhist calendars.** Same reason. (Buddha Purnima ships because it is a Vaishakha Purnima tithi.)
+- **No Swaminarayan sampradaya lens (deferred, with reason).** It clears test 1 (tithi-based) but not tests 3–4: its distinctly-Swaminarayan dated observances are branch-specific (BAPS ≠ Vadtal ≠ Ahmedabad ≠ ISSO gadis differ on guru-jayantis and patotsavs), and a patotsav/murti-pratishtha feed is an organisation's calendar, not a household panchang. The only fellowship-stable distinct date is Swaminarayan Jayanti (≡ Ram Navami, already universal). Revisit only if a fellowship-neutral dated set clears §11.1. Recorded here because it is the most-likely re-proposal.
+- **No broad "Vaishnava"/"Shakta" umbrella lens, no Lingayat-only lens, no sant/Nimbarka/Radhavallabh panth lenses.** They fail the §3.1 test (nothing additive over universal, or too thin / community-fragmented). Warkari (Ashadhi/Kartiki Wari) and Ayyappa (Mandala–Makaravilakku) are already inside the `maharashtra-konkan` (A.2) and `kerala` (A.8) *state* lenses, not separate traditions. Regional-language names ride `searchTerms`.
 - **No multi-language UI.** A lens changes *which observances*, never the app's language. Regional-language names ride `searchTerms` and the existing hi/en/gu/kn scheme.
 - **No per-observance toggles**, no "hide this festival", no favourites-as-filter.
 - **No location-derived automatic behaviour beyond the one-time seed.** Travelling does not change anyone's calendar (Open decision 1).
@@ -293,7 +312,7 @@ Regenerate `precomputedObservances.ts` and diff by rule id · bump `CACHE_VERSIO
 | R2 | **A lensed observance titles a stranger's notification** — the worst failure mode here. | Two independent gates (`dayAnga` excludes any `lens`, and the scheduler filters), each with its own test. W2-12. |
 | R3 | **Bundle size.** 63 rules × 8 years × 2 systems. | Measured in W2 before any content lands; lazy sibling module is the pre-agreed answer (§4.3). |
 | R4 | **Content verification is the real cost, not code.** 63 observances × 2 sources × bilingual copy. | Tier the depth (§6). Ship T1–T2 and let T4/T5 follow. A wave that cannot clear §11.1 ships fewer rules, never thinner sources. |
-| R5 | **Sect and regional disputes** — Digambara vs Śvetāmbara dates, purnimant vs amanta, Drik vs local panchang. | Principle 4 + `variantNote` in every source block + §5.4's per-rule month system. Where sources genuinely conflict, Appendix B, not a guess. |
+| R5 | **Sect and regional disputes** — Digambara vs Śvetāmbara dates, purnimant vs amanta, Drik vs local panchang. Two concrete sampradaya cases: (a) the **Gaudiya acharya panjika** differs by math (ISKCON ≠ Gaudiya Math ≠ SCSMath) — A.11 ships only the pan-Gaudiya festivals and defers the full disappearance list; (b) the **`sri-vaishnava` overlap** with `tamil`/`kerala` — A.13 relies on multi-lens rules (§4.1) so a shared observance is one rule, not two. | Principle 4 + `variantNote` in every source block + §5.4's per-rule month system + the §3.1 test's "both lineages named". Where sources genuinely conflict, Appendix B, not a guess. |
 | R6 | **Seeding feels like profiling.** A user in Patna opens the app and sees "Bihar's festivals are showing". | One dismissible line, never a modal; the copy names the *city*, not the person; `jain` never auto-seeds; Open decision 4 tests the copy. |
 | R7 | **Universal-day creep** — each wave quietly tags something universal because it feels famous. | Metric 2 in §8 is a hard gate: mean observances/day with no lens on must not move. |
 | R8 | **W5's solar-month solver leaks into `DayInputs`** and forces a `PANCHANG_DAY_CACHE_VERSION` bump nobody planned. | W5-6 makes it an explicit decision with its own line item. |
@@ -341,6 +360,30 @@ Per wave, on top of RULEBOOK §23a:
 **Known shift, shipped knowingly:** `bachh-baras` resolves at sunrise (8 Sep 2026) where Drik publishes pradosh-vyapini (7 Sep 2026), while the popular Hindi almanacs reasoned from sunrise for 2025 and agreed with the engine. No convention invented from one contested data point; pinned by a named test and a `pradosh` row in `verify-observances.mts`, and reported in the Class B list every run. §5.1 closes it.
 
 **Verification:** 2,049 tests green, lint 0 errors, `verify:observances` `wrong-month=0`, precomputed table diffed — 17 ids added, **no existing date moved**.
+
+---
+
+## 15. Build record — Wave 2 (2026-09-06)
+
+**Implemented:** the exact eleven-value `ObservanceLens` registry; additive `lens[]` rule/arc metadata; canonical `@vedansh:panchang-lenses` storage in the existing launch `multiGet`; state-code and pincode calendar suggestions; sticky one-time seeding (never Jain, never untouched Ujjain); Pattern E's `क्षेत्र · Calendars` ledger row, grouped sheet, day-view seed notice and bilingual detail caption. All controls have a 44 pt floor and the scrollable sheet renders through the existing hi/en/gu/kn language path.
+
+**Resolution boundary:** `resolveAllObservancesForYear` owns raw, unfiltered dates and is used by generation, direct search/detail, `getNextOccurrence(s)`, follows/reminders and explicit arc choices. Presentation APIs filter after the raw table read for Panchang day/month/upcoming, catalog counts/lists, Home Today, generic Ask and widgets; canonical lens sets are part of their memo keys. Persisted per-location tables remain raw. Turning a lens off therefore hides passive presentation without deleting a follow or cancelling its reminder.
+
+**Safety gates:** `visibility: 'regional'` is removed. Karthigai and Rohini now carry `tamil`/`jain` lenses and real nakshatra rule types, but remain date-less until their solver waves; Rohini also remains outside the production `vrat` category until W3 can land verified bhog/upvas content. Both daily-verse protections independently reject every rule carrying `lens`; the default-on `festive-reminder` catalog and all caps are unchanged. Widget coordination waits for lens hydration and replans on the canonical lens key.
+
+**Data and performance:** regenerated 2024–2031 × both systems with **no table diff** (the required W2 no-op), 212,052-byte table unchanged; observance cache v4→v5. Static launch graph: 6,947,367 → **6,965,130 bytes** (+17,763), 622 modules, **34,870 bytes below the unchanged 7,000,000 ceiling**. Do not spend that remaining margin on wave content; use the pre-agreed lazy sibling if later tables grow the eager graph.
+
+**Verification:** focused lens/storage/seeding/sheet/widget/Ask/notification suites and the full 414-test engine suite green; `verify:observances` reports `wrong-month=0`, zero lensed dates, and hard-pins the no-lens totals at **279 / 279 / 282** for 2025–2027. `.maestro/regional-calendar-lens-smoke.yaml` is date-independent and restores Jain off; iOS and Android device runs remain owed before release.
+
+---
+
+## 16. Build record — Foundation: five-lens union + two-row split (2026-09-07)
+
+**Implemented (mechanism/UI only — still zero date-bearing lensed rules):** the `ObservanceLens` union widened **11 → 15** with the four सम्प्रदाय lenses `gaudiya`, `pushtimarg`, `sri-vaishnava`, `shaiva` (§4.1); `lenses.ts` gains their four `group: 'tradition'` `LensDefinition` rows (hi/en names + examples). Pattern E's single `क्षेत्र · कैलेंडर` ledger row **splits into two co-equal rows** — क्षेत्र (⌖) and सम्प्रदाय (☸) — in `PanchangScreen.tsx`; each opens `LensPickerSheet` with a new `group?: 'state' | 'tradition'` prop that scopes the sheet to just that section (and its header copy). `LensCatalogRow` is now group-parametrised: its count/summary (`N active · M available`) is computed within the group, so क्षेत्र reads "…· 10 available" and सम्प्रदाय "…· 5 available". The day-view seed line opens the क्षेत्र sheet. Seeding is unchanged: **क्षेत्र seeds silently from the city, सम्प्रदाय never auto-seeds.**
+
+**Untouched:** the store, `@vedansh:panchang-lenses` serialization, the read-path filter (`ruleIsVisibleForLenses`, multi-lens intersection), seeding logic, notification/widget gates, and the precomputed table. `verify-observances.mts` and `ask/lexicon.ts` iterate `OBSERVANCE_LENSES`, so the four new lenses are picked up automatically (ask can now resolve *"शैव के पर्व"* etc.).
+
+**Verification:** `tsc --noEmit` clean; full `npm test` green; `npm run lint` **0 errors**; `verify:observances` `wrong-month=0`, all 15 lenses `dates=0`, no-lens totals unchanged at **279 / 279 / 282**. Tests updated/added: `lens.test.ts` pins the 15-value union + the five-tradition group; `LensPickerSheet.test.tsx` covers the scoped `group` prop (state-only 10 rows, tradition-only 5 rows) and the unscoped 15. `.maestro/regional-calendar-lens-smoke.yaml` rewritten to exercise both rows and their scoped sheets. design.md §33 synced. Prototype: `.context/prototypes/regional-sampraday-tworow-prototype.html`. **No `CACHE_VERSION` bump** (no table change). Device runs owed before release.
 
 ---
 
@@ -402,6 +445,67 @@ Every observance found by the audit and not yet shipped. **These tithis are what
 Five arcs (Gangaur 18 days · Ramdevra Bhadva S2→S11 · Chhath ×2 four-day · Madhushravani fortnight · Sama Chakeva nine days) · जुड़ शीतल (Mesha Sankranti + 1, §5.2) · plus the Appendix B entries that clear re-verification · T4 kathas for Goga, Tejaji and Ramdevji.
 
 **Two more `catalog-only` rules with a katha and no date** were found alongside the five W1 promoted, and belong to whichever wave reaches them first: **अशोक अष्टमी** (Chaitra S8 — the seed already *carries* the tithi and `hidden()` throws it away, which is §1.2's point 1 in one line) and **जयापार्वती व्रत** (Ashadha S13, A.3). A sweep for any remaining `hidden()` rule whose seed carries `lunarMonth`+`tithi` should run in W2 and be turned into a lint, not a memory.
+
+### A.11 `gaudiya` — Gaudiya Vaishnava / ISKCON — ~6–10 (proposed)
+
+Kept by Gaudiya Vaishnavas and the ISKCON diaspora worldwide. All tithi-based → resolvable with no new solver. Infra is warm: `krishna`/`radha`/`narasimha` deities exist and a `hidden()` `iskcon-ekadashi` rule already sits in `festivals.ts`.
+
+| Observance | Tithi | Tier | Note |
+|---|---|---|---|
+| गौर पूर्णिमा (Chaitanya Mahaprabhu) | Phalguna Purnima | T1 | The tradition's central festival; sibling of Holika/Dol |
+| राधाष्टमी | Bhadrapada S8 | T1 | Śrī Rādhā's appearance |
+| नृसिंह चतुर्दशी | Vaishakha S14 | T2 | `narasimha` deity exists |
+| नित्यानंद त्रयोदशी | Magha S13 | T1 | |
+| झूलन यात्रा | Shravana S11 → S15 | T1 | **Arc**, 5 days |
+| श्रील प्रभुपाद आविर्भाव | Bhadrapada K5 | T1 | Nandotsava day |
+| श्रील प्रभुपाद तिरोभाव | Kartika K4 | T1 | |
+
+**Scope caution (R5).** The full acharya *panjika* (appearance/disappearance of the whole disciplic succession) is long **and lineage-specific** — ISKCON, Gaudiya Math and Sri Chaitanya Saraswat Math list different souls on different tithis. Ship only the pan-Gaudiya festivals above; the exhaustive disappearance list is out of scope until a single §11.1-clearing authority is chosen. The Gaurabda era is a display label only — every date remains a tithi.
+
+### A.12 `pushtimarg` — Shri Vallabhacharya Sampradaya / Shrinathji — ~8–10 (proposed)
+
+Kept by Pushtimargi Vaishnav households (Gujarati/Rajasthani/Marwari) nationwide — a *tradition*, not a region, so it belongs in सम्प्रदाय and must **not** be folded into `gujarat`. Clean §11.1 source: the Nathdwara **Tipni** (उत्सव तथा व्रतन की टीप, VS 2083 / Vallabhabd 549) + vraj.org / vrajdwar.org.
+
+| Observance | Tithi | Tier | Note |
+|---|---|---|---|
+| अन्नकूट (Govardhan, Pushti form) | Kartika S1 | T2 | The sampradaya's signature utsav; sibling of `govardhan-puja` |
+| हिंडोला (Jhulan) | Ashadha K1 → Shravana S15 | T1 | **Arc**; the monsoon swing season |
+| पवित्रा एकादशी | Shravana S11 | T2 | Adhivas of Pavitra + Rakhi |
+| नंद महोत्सव | Bhadrapada K9 | T1 | Day after Janmashtami |
+| दान एकादशी | Bhadrapada S11 | T1 | |
+| कुंज एकादशी | Phalguna S11 | T1 | |
+| वसंत पंचमी अधिवास | Magha S5 | T1 | Adhivas of Vasant + Dol |
+| पाटोत्सव (Shrinathji) | Magha K7 | T1 | Nathdwara pratishtha day |
+
+**Scope.** Ship the *dated utsavs* only. The daily seva-pranali (shringar/bhog cycle) the Tipni prescribes is not something the app models and is out of scope.
+
+### A.13 `sri-vaishnava` — Ramanuja / Iyengar / Divya Desam — ~5 (proposed, W5-gated)
+
+Kept by Sri Vaishnavas (Iyengars) wherever they live — the Ramanuja/Visishtadvaita lineage of the 108 Divya Desams. Needs the §5.3 **nakshatra + solar-month solvers**, so it is gated on the same engine work as `tamil`/`kerala`.
+
+| Observance | Rule | Tier | Note |
+|---|---|---|---|
+| वैकुण्ठ एकादशी (Mukkoti) | Margashirsha (Dhanur) S11 | T2 | Lensed *name* + Paramapada emphasis on the existing Mokshada Ekadashi tithi — a rename, not a new date |
+| अध्ययन उत्सवम् (पगल्-पत्तु–रा-पत्तु) | Dhanurmasa, ~20 days around Vaikunta Ekadashi | T1 | **Arc** |
+| आण्डाळ् तिरुप्पावै / पावै नोम्बु | Dhanurmasa (Margazhi) daily | T1 | Andal's vrata; Tiruppavai recited |
+| आण्डाळ् तिरुक्कल्याणम् | Bhogi / Dhanurmasa close | T1 | Andal–Ranganatha wedding |
+| रामानुज जयंती | Chaitra, Ardra nakshatra | T1 | `nakshatra-in-solar-month` (§5.3) |
+
+**Scope caution (overlap).** Vaikunta Ekadashi and Dhanurmasa Tiruppavai overlap the `tamil`/`kerala` state lenses (A.7/A.8). Because a rule carries **multiple lenses** (§4.1), the shared observances render once, tagged with whichever lens is active — no double-count and no duplicate rule. The distinctly *pan-regional* value a Tamil-region user would not otherwise get is **Ramanuja Jayanti, Andal Thirukalyanam and the Adhyayana Utsavam arc framing**.
+
+### A.14 `shaiva` — distinct Shaiva vrats — ~5 (proposed, §5.1/§5.3-gated)
+
+A Shaiva lens is defensible **only as the additive vrat set below** — the universal Shiva festivals (Mahashivaratri, Kartik Purnima, the Navratris) stay universal and are never re-tagged (principle 2). Kartikeya deity exists; Nataraja is a form of the existing `shiva`.
+
+| Observance | Rule | Tier | Note |
+|---|---|---|---|
+| प्रदोष व्रत | Trayodashi at pradosh, twice monthly | T2 | Uses the §5.1 `pradosh` dayRule; a recurring rule, not a dated one |
+| मासिक शिवरात्रि | Krishna Chaturdashi, monthly | T1 | The monthly Shivaratri vrat |
+| आरुद्रा दर्शनम् / तिरुवातिरै | Ardra nakshatra in Margashirsha (Dhanur) | T2 | Nataraja's Ananda Tandava; `nakshatra-in-solar-month` (§5.3) |
+| स्कन्द षष्ठी | Kartika S6 | T1 | Murugan/Kartikeya; the Kanda Sashti fast |
+| बसव जयंती | Vaishakha S3 | T1 | Veerashaiva/Lingayat; shares Akshaya Tritiya's tithi |
+
+**Scope caution.** Leans on both §5.1 (`pradosh`) and §5.3 (nakshatra-in-solar-month) engine work, so its content wave is gated on those exactly as A.13 is.
 
 ## Appendix B — found, deliberately not shipped
 

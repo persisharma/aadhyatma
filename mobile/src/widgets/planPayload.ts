@@ -7,6 +7,7 @@ import { computeMuhuratDay } from '@/panchang/muhurat';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import { buildWidgetPayload, shiftDateKey, twoLineExcerpt, type WidgetPlannerInput } from './planner';
 import type { Lang } from '@/data/gita/language';
+import type { ObservanceLens } from '@/panchang/types';
 import { WIDGET_TIME_ZONE, widgetDateKey, type PanchangWidgetDay, type VerseWidgetDay, type WidgetLocalizedText, type WidgetPayloadV1 } from './contract';
 
 const DAYS = 14;
@@ -47,7 +48,11 @@ function sourceLabel(sourceHi: string, sourceEn: string, labelHi?: string, label
   return localizedFromHindi([sourceHi, labelHi].filter(Boolean).join(' · '), [sourceEn, labelEn].filter(Boolean).join(' · '));
 }
 
-export async function planWidgetPayload(input: Omit<WidgetPlannerInput, 'panchangDays' | 'verseDays' | 'writerAppVersion'>): Promise<WidgetPayloadV1> {
+export async function planWidgetPayload(
+  input: Omit<WidgetPlannerInput, 'panchangDays' | 'verseDays' | 'writerAppVersion'> & {
+    lenses?: readonly ObservanceLens[];
+  }
+): Promise<WidgetPayloadV1> {
   const poolSize = getVersePoolSize();
   const panchangDays: PanchangWidgetDay[] = [];
   const verseDays: VerseWidgetDay[] = [];
@@ -62,7 +67,7 @@ export async function planWidgetPayload(input: Omit<WidgetPlannerInput, 'panchan
     const panchang = computePanchangForDate(day, { calendarSystem: input.calendarSystem, location: input.location, civilTimeZone: WIDGET_TIME_ZONE });
     const nextPanchang = computePanchangForDate(nextDay, { calendarSystem: input.calendarSystem, location: input.location, civilTimeZone: WIDGET_TIME_ZONE });
     const muhurat = computeMuhuratDay(panchang.sunrise, panchang.sunset, nextPanchang.sunrise, day.getDay());
-    const observance = getObservancesForDateKey(key, input.calendarSystem, input.location)[0]?.rule;
+    const observance = getObservancesForDateKey(key, input.calendarSystem, input.location, input.lenses ?? [])[0]?.rule;
     panchangDays.push({
       dateKey: key,
       representedDate: representedDate(key),
@@ -93,5 +98,6 @@ export async function planWidgetPayload(input: Omit<WidgetPlannerInput, 'panchan
     await new Promise<void>((resolve) => setTimeout(resolve, 0));
   }
 
-  return buildWidgetPayload({ ...input, writerAppVersion: appConfig.expo.version, panchangDays, verseDays });
+  const { lenses: _lenses, ...plannerInput } = input;
+  return buildWidgetPayload({ ...plannerInput, writerAppVersion: appConfig.expo.version, panchangDays, verseDays });
 }

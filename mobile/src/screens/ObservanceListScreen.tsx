@@ -8,7 +8,7 @@ import TextField from '@/components/TextField';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
-import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
+import { useObservanceLenses, usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { getNextOccurrence, getRulesForCategory, type BrowseCategory } from '@/panchang/vratCatalog';
 import { useVratFollows } from '@/contexts/VratFollowContext';
 import type { ObservanceRule } from '@/panchang/types';
@@ -54,6 +54,7 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
   const vratListRef = useTourTarget('vratList');
   const vratFollowRef = useTourTarget('vratFollow');
   const [calendarSystem] = usePanchangCalendarSystem();
+  const [lenses] = useObservanceLenses();
   const [query, setQuery] = useState('');
   const { isFollowing, follow, unfollow } = useVratFollows();
 
@@ -62,7 +63,7 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
 
   const rows = useMemo(() => {
     // getRulesForCategory dedupes by id, so keys here are unique.
-    const withDates = getRulesForCategory(category).map((rule) => ({
+    const withDates = getRulesForCategory(category, lenses).map((rule) => ({
       rule,
       next: getNextOccurrence(rule.id, today, calendarSystem),
     }));
@@ -73,7 +74,7 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
       return at - bt;
     });
     return withDates;
-  }, [category, today, calendarSystem]);
+  }, [category, today, calendarSystem, lenses]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();

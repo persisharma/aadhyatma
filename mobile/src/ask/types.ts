@@ -6,7 +6,7 @@
  * the UI hook (`useAsk.ts`) and is therefore the ONLY module in this directory
  * that may sit on the launch import graph — keep it types-only.
  */
-import type { CalendarSystem } from '@/panchang/types';
+import type { CalendarSystem, ObservanceLens } from '@/panchang/types';
 import type { ScanLocation } from '@/panchang/panchangDayStore';
 import type { Lang } from '@/data/gita/language';
 import type {
@@ -28,7 +28,8 @@ export type EntityType =
   | 'disha'
   | 'room'
   | 'mantra'
-  | 'vidhi';
+  | 'vidhi'
+  | 'lens';
 
 export type LexEntry = {
   type: EntityType;
@@ -97,6 +98,8 @@ export type AskContext = {
   now: Date;
   location: ScanLocation;
   calendarSystem: CalendarSystem;
+  /** Active presentation calendars; direct named-observance questions remain raw. */
+  lenses?: readonly ObservanceLens[];
   lang: Lang;
   /** Active enrolments, supplied by the UI from SadhanaContext (Phase 2/3). */
   sadhana?: readonly SadhanaSummary[];

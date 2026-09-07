@@ -1,0 +1,103 @@
+# Regional calendar lens smoke (PRD-42 Wave 2 + Foundation two-row split)
+#
+# Date-independent by design: no lensed dates ship yet. This flow verifies the
+# two Pattern E entries — क्षेत्र · Calendars (state-scoped sheet) and सम्प्रदाय ·
+# Calendars (tradition-scoped sheet) — persisted checkbox state and each row's
+# ledger summary, then restores Jain to off so later flows inherit no
+# religious-calendar preference.
+
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+
+# Maestro reads the English accessibility tree reliably.
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- tapOn: "English"
+- waitForAnimationToEnd
+
+- tapOn: { id: "tab-panchang" }
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Vrat & Parv"
+    timeout: 30000
+- tapOn: "Vrat & Parv"
+- waitForAnimationToEnd
+# The क्षेत्र (state) row opens a state-only sheet — jain must NOT be here.
+- scrollUntilVisible:
+    element:
+      text: "Regional calendars\\..*"
+    direction: DOWN
+    centerElement: true
+    timeout: 15000
+- tapOn: "Regional calendars\\..*"
+- waitForAnimationToEnd
+- assertVisible: "Regional calendars"
+- assertVisible: "By state · region"
+- assertVisible: { id: "lens-row-rajasthan" }
+- tapOn: "Close"
+- waitForAnimationToEnd
+
+# The सम्प्रदाय (tradition) row opens a tradition-only sheet — jain lives here.
+- scrollUntilVisible:
+    element:
+      text: "Tradition calendars\\..*"
+    direction: DOWN
+    centerElement: true
+    timeout: 15000
+- tapOn: "Tradition calendars\\..*"
+- waitForAnimationToEnd
+- assertVisible: "Tradition calendars"
+- assertVisible: "By tradition"
+
+# Normalize a reused simulator, then prove off → on and the accessible state.
+- scrollUntilVisible:
+    element:
+      id: "lens-row-jain"
+    direction: DOWN
+    centerElement: true
+    timeout: 15000
+- tapOn: { id: "lens-row-jain" }
+- assertVisible:
+    id: "lens-row-jain"
+    text: "checkbox, checked"
+- tapOn: "Close"
+- waitForAnimationToEnd
+- assertVisible: "Tradition calendars\\. Jain active · 4 more available"
+
+# Restore the user's calendar state for the shared device.
+- tapOn: "Tradition calendars\\..*"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: "lens-row-jain"
+    direction: DOWN
+    centerElement: true
+    timeout: 15000
+- tapOn: { id: "lens-row-jain" }
+- assertVisible:
+    id: "lens-row-jain"
+    text: "checkbox, unchecked"
+- tapOn: "Close"
+- waitForAnimationToEnd
+- assertVisible: "Tradition calendars\\. None active · 5 available"
+
+# Restore Hindi default and stop.
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- tapOn: "Hindi"
+- waitForAnimationToEnd
+- stopApp:
+    appId: com.prashantsharma.vedansh

@@ -1,8 +1,8 @@
 /**
- * The two AsyncStorage-backed panchang preferences — the chosen city and the
- * purnimant/amanta calendar system — behind ONE read, issued once per process.
+ * The three AsyncStorage-backed panchang preferences — chosen city,
+ * purnimant/amanta system, and observance lenses — behind ONE process read.
  *
- * WHY THIS EXISTS. Together these two values are the *scope key* every panchang
+ * WHY THIS EXISTS. City and calendar system are the *scope key* every panchang
  * cache is keyed by, so nothing panchang-shaped can be read from disk until both
  * have landed. They used to be read separately and, worse, at different moments:
  * the city from `PanchangLocationProvider`'s effect, and the calendar system
@@ -23,15 +23,15 @@
  * early, #268 got the housekeeping out from in front of the read, and this one
  * gets the read itself off the back of the launch queue.
  *
- * WHAT CHANGES. Both preferences come from one `multiGet` that is kicked off at
+ * WHAT CHANGES. All preferences come from one `multiGet` that is kicked off at
  * module scope from `App.tsx` (see `panchangLaunchPrefetch`), concurrently with
- * the splash gate rather than behind it. Both stores are seeded SYNCHRONOUSLY the
+ * the splash gate rather than behind it. All stores are seeded SYNCHRONOUSLY the
  * moment it resolves, so by the time Home mounts, `usePanchangLocation` reports
  * the real city and `usePanchangCalendarHydrated` is already true — `useMuhurat`
  * composes from the in-memory store on its FIRST render and the headline paints
  * with the rest of Home instead of two round trips later.
  *
- * DEPENDENCIES. AsyncStorage, `locations.ts`, and `pincodes.ts` for its `isPincodeCityId`
+ * DEPENDENCIES. AsyncStorage, `locations.ts`, `lenses.ts`, and `pincodes.ts` for its `isPincodeCityId`
  * regex ONLY — that module's 566 KB table sits behind a lazy require and must never be
  * touched from here, which is why a stored pincode is validated structurally rather than
  * looked up. It must stay importable by both `PanchangLocationContext` (which pulls in
@@ -42,12 +42,14 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { DEFAULT_LOCATION, getCityById, toPanchangLocation } from './locations';
+import { canonicalizeLenses, parseStoredLenses, serializeLenses } from './lenses';
 import { isPincodeCityId } from './pincodes';
 import { launchMark } from '@/utils/launchTrace';
-import type { CalendarSystem, PanchangLocation } from './types';
+import type { CalendarSystem, ObservanceLens, PanchangLocation } from './types';
 
 export const LOCATION_STORAGE_KEY = '@vedansh:panchang-location';
 export const CALENDAR_SYSTEM_STORAGE_KEY = '@vedansh:panchang-calendar-system';
+export const LENS_STORAGE_KEY = '@vedansh:panchang-lenses';
 
 /** India bounding box — the same gate `scripts/build-pincodes.mjs` applies when generating. */
 const INDIA_BOUNDS = { latMin: 6.5, latMax: 37.6, lngMin: 68.0, lngMax: 97.5 };
@@ -169,11 +171,49 @@ export function setCalendarSystemGlobal(next: CalendarSystem): void {
   notifyCalendarSystemListeners();
 }
 
+// ── The observance-lens store ───────────────────────────────────────────────
+
+let lensValue: readonly ObservanceLens[] = [];
+let lensDirty = false;
+let lensHydrated = false;
+const lensListeners = new Set<() => void>();
+
+function notifyLensListeners(): void {
+  lensListeners.forEach((listener) => listener());
+}
+
+export function subscribeLenses(onStoreChange: () => void): () => void {
+  lensListeners.add(onStoreChange);
+  void loadPanchangPrefsOnce();
+  return () => {
+    lensListeners.delete(onStoreChange);
+  };
+}
+
+export function getLensesSnapshot(): readonly ObservanceLens[] {
+  return lensValue;
+}
+
+export function getLensesHydrated(): boolean {
+  return lensHydrated;
+}
+
+export function setLensesGlobal(values: Iterable<ObservanceLens>): void {
+  const next = canonicalizeLenses(values);
+  const serialized = serializeLenses(next);
+  lensDirty = true;
+  AsyncStorage.setItem(LENS_STORAGE_KEY, serialized).catch(() => undefined);
+  if (serialized === serializeLenses(lensValue)) return;
+  lensValue = next;
+  notifyLensListeners();
+}
+
 // ── The one launch read ─────────────────────────────────────────────────────
 
 export type PanchangPrefs = {
   location: PanchangLocation;
   calendarSystem: CalendarSystem;
+  lenses: readonly ObservanceLens[];
 };
 
 /** The settled result, readable synchronously; null until the read lands. */
@@ -193,7 +233,7 @@ export function peekPanchangPrefs(): PanchangPrefs | null {
 }
 
 /**
- * Read both preferences in ONE `multiGet` and seed both stores. Memoized: every
+ * Read all three preferences in ONE `multiGet` and seed their stores. Memoized: every
  * caller after the first gets the same promise, so the provider, the
  * calendar-system subscribers and the launch prefetch share a single round trip
  * instead of issuing one each. Never rejects — a storage failure yields the
@@ -202,7 +242,7 @@ export function peekPanchangPrefs(): PanchangPrefs | null {
  * SUCCESS is what gets memoized. A transient storage failure clears the memo so
  * the next caller retries, rather than pinning the whole session to Ujjain +
  * purnimant with no way back — the same guarantee the calendar-system read made
- * before it moved here, and easy to lose when consolidating two reads into one.
+ * before it moved here, and easy to lose when consolidating launch reads.
  */
 export function loadPanchangPrefsOnce(): Promise<PanchangPrefs> {
   if (!load) load = runLoad();
@@ -213,15 +253,18 @@ async function runLoad(): Promise<PanchangPrefs> {
   launchMark('prefs-read-start');
   let storedLocation: string | null = null;
   let storedSystem: string | null = null;
+  let storedLenses: string | null = null;
   let failed = false;
   try {
     const pairs = await AsyncStorage.multiGet([
       LOCATION_STORAGE_KEY,
       CALENDAR_SYSTEM_STORAGE_KEY,
+      LENS_STORAGE_KEY,
     ]);
     pairs.forEach(([key, value]) => {
       if (key === LOCATION_STORAGE_KEY) storedLocation = value;
       if (key === CALENDAR_SYSTEM_STORAGE_KEY) storedSystem = value;
+      if (key === LENS_STORAGE_KEY) storedLenses = value;
     });
   } catch {
     // Best-effort: fall through to the defaults, the status quo before the read,
@@ -235,6 +278,7 @@ async function runLoad(): Promise<PanchangPrefs> {
   const result: PanchangPrefs = {
     location: parseStoredLocation(storedLocation) ?? DEFAULT_LOCATION,
     calendarSystem: parseCalendarSystem(storedSystem),
+    lenses: parseStoredLenses(storedLenses),
   };
   // Seed synchronously, before anyone can await this promise, so a consumer that
   // peeks in the same tick sees the settled values. A FAILED read seeds nothing:
@@ -245,14 +289,19 @@ async function runLoad(): Promise<PanchangPrefs> {
   if (!calendarSystemDirty && result.calendarSystem !== calendarSystemValue) {
     calendarSystemValue = result.calendarSystem;
   }
+  if (!lensDirty && serializeLenses(result.lenses) !== serializeLenses(lensValue)) {
+    lensValue = result.lenses;
+  }
   // True even on failure, exactly as the old `.finally()` set it: the gate means
   // "this read is no longer pending", and leaving it false would strand
   // `useMuhurat` on a scope it never considers settled — no panchang at all.
   calendarSystemHydrated = true;
+  lensHydrated = true;
   // The scope key every panchang cache is keyed by is real from here on — the
   // gate `useMuhurat` and `WidgetCoordinator` both wait for.
   launchMark(`prefs-read-done (${result.location.cityId}/${result.calendarSystem})`);
   notifyCalendarSystemListeners();
+  notifyLensListeners();
   return result;
 }
 
@@ -262,6 +311,10 @@ export function __resetPanchangPrefsForTests(value: CalendarSystem = 'purnimant'
   calendarSystemDirty = false;
   calendarSystemHydrated = false;
   calendarSystemListeners.clear();
+  lensValue = [];
+  lensDirty = false;
+  lensHydrated = false;
+  lensListeners.clear();
   snapshot = null;
   load = null;
 }

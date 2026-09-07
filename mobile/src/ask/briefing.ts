@@ -38,7 +38,7 @@ export function composeBriefing(ctx: AskContext): BriefingSection[] {
   // 2. What today asks of me — the observance being kept, or the next one coming.
   const today = new Date(ctx.now);
   today.setHours(0, 0, 0, 0);
-  const todays = getObservancesForDate(today, ctx.calendarSystem, ctx.location);
+  const todays = getObservancesForDate(today, ctx.calendarSystem, ctx.location, ctx.lenses ?? []);
   if (todays.length > 0) {
     push(
       'observance',
@@ -46,7 +46,7 @@ export function composeBriefing(ctx: AskContext): BriefingSection[] {
       answerOf('कब है', { ...ctx, seed: { type: 'observance', id: todays[0].rule.id } })
     );
   } else {
-    const upcoming = getUpcomingObservances(today, 3, ctx.calendarSystem, BRIEFING_LOOKAHEAD_DAYS, ctx.location).find(
+    const upcoming = getUpcomingObservances(today, 3, ctx.calendarSystem, BRIEFING_LOOKAHEAD_DAYS, ctx.location, ctx.lenses ?? []).find(
       (o) => o.date.getTime() > today.getTime()
     );
     if (upcoming) {

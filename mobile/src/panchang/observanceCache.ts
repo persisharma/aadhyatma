@@ -24,7 +24,9 @@ import type { CalendarSystem, ResolvedObservance } from './types';
 //     and Jain observances; five of them promoted from catalog-only entries that
 //     had a katha but no tithi). No matcher change and no shipped date moved, but
 //     a city that already scanned would otherwise never see the new rules.
-const CACHE_VERSION = 4;
+// v5: lens foundation — persisted tables now contain every default-visible rule;
+//     presentation filtering happens after hydration so toggles never re-scan.
+const CACHE_VERSION = 5;
 const KEY_ROOT = '@vedansh:observances:';
 const KEY_PREFIX = `${KEY_ROOT}v${CACHE_VERSION}:`;
 

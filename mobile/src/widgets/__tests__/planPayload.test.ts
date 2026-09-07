@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { planWidgetPayload } from '../planPayload';
 import { DEFAULT_LOCATION } from '@/panchang/locations';
+import { OBSERVANCE_RULES } from '@/panchang/festivals';
 
 test('real bundle planner produces a dated, validated 14-day Panchang and verse window', async () => {
   const payload = await planWidgetPayload({ generatedAt: new Date('2026-08-10T06:30:00Z'), locale: 'kn', location: DEFAULT_LOCATION, calendarSystem: 'purnimant', deviceTimeZone: 'Asia/Kolkata', activity: {} });
@@ -28,5 +29,25 @@ test('Panchang dates and timings are stable when the process zone is non-IST', a
   } finally {
     if (previous === undefined) delete process.env.TZ;
     else process.env.TZ = previous;
+  }
+});
+
+test('widget Panchang presentation follows the hydrated lens set', async () => {
+  const diwali = OBSERVANCE_RULES.find((rule) => rule.id === 'diwali');
+  assert.ok(diwali);
+  const previous = diwali.lens;
+  try {
+    // Test the plumbing with a date-bearing rule; Wave 2's two real lensed
+    // placeholders intentionally resolve no dates until their solver waves.
+    diwali.lens = ['jain'];
+    const base = { generatedAt: new Date('2026-11-08T06:30:00Z'), locale: 'en' as const, location: DEFAULT_LOCATION, calendarSystem: 'purnimant' as const, deviceTimeZone: 'Asia/Kolkata', activity: {} };
+    const hidden = await planWidgetPayload({ ...base, lenses: [] });
+    const visible = await planWidgetPayload({ ...base, lenses: ['jain'] });
+    const hiddenDay = hidden.panchang.days.find((day) => day.dateKey === '2026-11-09');
+    const visibleDay = visible.panchang.days.find((day) => day.dateKey === '2026-11-09');
+    assert.notEqual(hiddenDay?.vrat?.en, 'Diwali');
+    assert.equal(visibleDay?.vrat?.en, 'Diwali');
+  } finally {
+    diwali.lens = previous;
   }
 });

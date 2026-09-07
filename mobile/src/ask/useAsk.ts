@@ -10,7 +10,7 @@
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
-import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
+import { useObservanceLenses, usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useSadhanaToday } from '@/data/sadhana/useSadhanaToday';
 import type { AskEngine } from './engine';
@@ -55,6 +55,7 @@ function cheapLooksLikeQuestion(q: string): boolean {
 export function useAskContextBuilder(): (seed?: AskContext['seed']) => AskContext {
   const { location } = usePanchangLocation();
   const [calendarSystem] = usePanchangCalendarSystem();
+  const [lenses] = useObservanceLenses();
   const { lang } = useGitaLanguage();
   const sadhanaCards = useSadhanaToday();
 
@@ -82,11 +83,12 @@ export function useAskContextBuilder(): (seed?: AskContext['seed']) => AskContex
       now: new Date(),
       location,
       calendarSystem,
+      lenses,
       lang,
       sadhana,
       ...(seed ? { seed } : {}),
     }),
-    [location, calendarSystem, lang, sadhana]
+    [location, calendarSystem, lenses, lang, sadhana]
   );
 }
 

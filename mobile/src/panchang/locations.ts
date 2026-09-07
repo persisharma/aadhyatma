@@ -10,6 +10,12 @@ import { UJJAIN_CITY_ID, UJJAIN_GEO } from './engine';
 import { RAJASTHAN_TEHSILS } from './rajasthanTehsils';
 import type { LocationSource, PanchangLocation } from './types';
 
+export type StateCode =
+  | 'AP' | 'AR' | 'AS' | 'BR' | 'CG' | 'CH' | 'DL' | 'GA' | 'GJ' | 'HP'
+  | 'HR' | 'JH' | 'JK' | 'KA' | 'KL' | 'MH' | 'ML' | 'MN' | 'MP' | 'MZ'
+  | 'NL' | 'OD' | 'PB' | 'RJ' | 'SK' | 'TN' | 'TR' | 'TS' | 'UK' | 'UP'
+  | 'WB';
+
 export type City = {
   id: string;
   nameHi: string;
@@ -21,6 +27,8 @@ export type City = {
    */
   districtHi?: string;
   districtEn?: string;
+  /** ISO 3166-2:IN subdivision code used only for one-time lens suggestions. */
+  stateCode?: StateCode;
   latitude: number;
   longitude: number;
   elevation: number;
@@ -28,7 +36,7 @@ export type City = {
 
 // Major cities and pilgrimage centres, nationwide. Ujjain must stay first —
 // `DEFAULT_LOCATION` is `CITIES[0]`.
-export const MAJOR_CITIES: City[] = [
+const MAJOR_CITY_ROWS: City[] = [
   { id: UJJAIN_CITY_ID, nameHi: 'उज्जैन', nameEn: 'Ujjain', latitude: UJJAIN_GEO.latitude, longitude: UJJAIN_GEO.longitude, elevation: UJJAIN_GEO.elevation },
   { id: 'agra', nameHi: 'आगरा', nameEn: 'Agra', latitude: 27.1767, longitude: 78.0081, elevation: 171 },
   { id: 'ahmedabad', nameHi: 'अहमदाबाद', nameEn: 'Ahmedabad', latitude: 23.0225, longitude: 72.5714, elevation: 53 },
@@ -82,6 +90,26 @@ export const MAJOR_CITIES: City[] = [
   { id: 'vijayawada', nameHi: 'विजयवाड़ा', nameEn: 'Vijayawada', latitude: 16.5062, longitude: 80.648, elevation: 23 },
   { id: 'visakhapatnam', nameHi: 'विशाखापत्तनम', nameEn: 'Visakhapatnam', latitude: 17.6868, longitude: 83.2185, elevation: 45 },
 ];
+
+const MAJOR_CITY_STATE_CODES: Record<string, StateCode> = {
+  ujjain: 'MP', agra: 'UP', ahmedabad: 'GJ', amritsar: 'PB', ayodhya: 'UP',
+  bengaluru: 'KA', bhopal: 'MP', bhubaneswar: 'OD', chandigarh: 'CH', chennai: 'TN',
+  coimbatore: 'TN', dehradun: 'UK', delhi: 'DL', dwarka: 'GJ', gaya: 'BR',
+  guwahati: 'AS', haridwar: 'UK', hyderabad: 'TS', indore: 'MP', jaipur: 'RJ',
+  jammu: 'JK', kanpur: 'UP', kochi: 'KL', kolkata: 'WB', lucknow: 'UP',
+  madurai: 'TN', mangaluru: 'KA', mathura: 'UP', mumbai: 'MH', nagpur: 'MH',
+  nashik: 'MH', panaji: 'GA', patna: 'BR', prayagraj: 'UP', pune: 'MH',
+  puri: 'OD', raipur: 'CG', rajkot: 'GJ', rameswaram: 'TN', ranchi: 'JH',
+  rishikesh: 'UK', shimla: 'HP', shirdi: 'MH', somnath: 'GJ', srinagar: 'JK',
+  surat: 'GJ', thiruvananthapuram: 'KL', tirupati: 'AP', vadodara: 'GJ',
+  varanasi: 'UP', vijayawada: 'AP', visakhapatnam: 'AP',
+};
+
+/** Every bundled major city is explicitly state-tagged; no coordinate inference. */
+export const MAJOR_CITIES: City[] = MAJOR_CITY_ROWS.map((city) => ({
+  ...city,
+  stateCode: MAJOR_CITY_STATE_CODES[city.id],
+}));
 
 // The picker partitions this on `districtEn` into two labelled groups, so the order
 // here only sets the order *within* each group — but keep the tehsils last anyway, so

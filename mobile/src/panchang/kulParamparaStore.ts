@@ -17,7 +17,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 
 import { OBSERVANCE_RULES } from './festivals';
-import { resolveObservancesForYear } from './festivalEngine';
+import { resolveAllObservancesForYear } from './festivalEngine';
 import {
   EMPTY_KUL_RECORD,
   KUL_PARAMPARA_STORAGE_KEY,
@@ -47,7 +47,7 @@ export function nextKulVratOccurrence(ruleId: string, fromDate: Date): Date | nu
   const year = fromDate.getFullYear();
   const start = new Date(year, fromDate.getMonth(), fromDate.getDate()).getTime();
   try {
-    const all = [...resolveObservancesForYear(year), ...resolveObservancesForYear(year + 1)];
+    const all = [...resolveAllObservancesForYear(year), ...resolveAllObservancesForYear(year + 1)];
     return (
       all
         .filter((item) => item.rule.id === ruleId && item.date.getTime() >= start)

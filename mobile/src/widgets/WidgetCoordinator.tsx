@@ -3,7 +3,7 @@ import { AppState, InteractionManager } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useGitaLanguage } from '@/data/gita/language';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
-import { usePanchangCalendarHydrated, usePanchangCalendarSystem } from '@/panchang/usePanchang';
+import { useObservanceLenses, useObservanceLensesHydrated, usePanchangCalendarHydrated, usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { useUserActivity } from '@/contexts/UserActivityContext';
 import { useJapamCounter } from '@/contexts/JapamCounterContext';
 import { isValidIanaTimeZone, stableWidgetPayloadKey } from './contract';
@@ -23,6 +23,8 @@ export default function WidgetCoordinator() {
   const { location, isLoading: locationLoading } = usePanchangLocation();
   const [calendarSystem] = usePanchangCalendarSystem();
   const calendarHydrated = usePanchangCalendarHydrated();
+  const [lenses] = useObservanceLenses();
+  const lensesHydrated = useObservanceLensesHydrated();
   const { activity, isLoading: activityLoading } = useUserActivity();
   const { entries, isLoading: countersLoading } = useJapamCounter();
   const lastRunAt = useRef(0);
@@ -33,7 +35,7 @@ export default function WidgetCoordinator() {
   const deviceTimeZone = isValidIanaTimeZone(resolvedTimeZone) ? resolvedTimeZone : 'UTC';
 
   useEffect(() => {
-    if (languageLoading || locationLoading || !calendarHydrated || activityLoading || countersLoading) return undefined;
+    if (languageLoading || locationLoading || !calendarHydrated || !lensesHydrated || activityLoading || countersLoading) return undefined;
     const generation = ++generationRef.current;
     let cancelled = false;
     let inFlight = false;
@@ -53,7 +55,7 @@ export default function WidgetCoordinator() {
             // Dynamic boundary preserves Home first-frame independence.
             launchMarkOnce('widget-plan-start');
             const { planWidgetPayload } = await import('./planPayload');
-            const payload = await planWidgetPayload({ generatedAt: new Date(), locale: lang, location, calendarSystem, deviceTimeZone, activity, lastUsedMantraId });
+            const payload = await planWidgetPayload({ generatedAt: new Date(), locale: lang, location, calendarSystem, lenses, deviceTimeZone, activity, lastUsedMantraId });
             launchMarkOnce('widget-plan-done (28 uncached solves)');
             // Dependency changes are allowed to finish their CPU work, but may
             // never overwrite a newer location/language/calendar/activity plan.
@@ -93,7 +95,7 @@ export default function WidgetCoordinator() {
     schedule();
     const sub = AppState.addEventListener('change', (state) => { if (state === 'active') schedule(); });
     return () => { cancelled = true; if (timer) clearTimeout(timer); sub.remove(); };
-  }, [activity, activityLoading, calendarHydrated, calendarSystem, countersLoading, deviceTimeZone, lang, languageLoading, location, locationLoading, revision, lastUsedMantraId]);
+  }, [activity, activityLoading, calendarHydrated, calendarSystem, countersLoading, deviceTimeZone, lang, languageLoading, lenses, lensesHydrated, location, locationLoading, revision, lastUsedMantraId]);
 
   return null;
 }

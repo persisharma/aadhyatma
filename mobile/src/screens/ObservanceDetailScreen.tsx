@@ -26,6 +26,7 @@ import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont, pillTextStyle } from '@/utils/langType';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import type { UpvasFastType } from '@/panchang/types';
+import { lensDefinition } from '@/panchang/lenses';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'ObservanceDetail'>;
 
@@ -158,15 +159,31 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
           >
             <ObservanceDetailHero
               leading={(
-                <View style={styles.heroTags}>
-                  <View style={[styles.pill, { backgroundColor: rule.category === 'festival' ? colors.saffronTint : colors.goldTint, borderRadius: radii.pill }]}>
-                    <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 11, color: colors.saffronDeep }}>
-                      {categoryLabel(rule.category, lang)}
+                <View style={{ alignItems: 'center' }}>
+                  <View style={styles.heroTags}>
+                    <View style={[styles.pill, { backgroundColor: rule.category === 'festival' ? colors.saffronTint : colors.goldTint, borderRadius: radii.pill }]}>
+                      <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 11, color: colors.saffronDeep }}>
+                        {categoryLabel(rule.category, lang)}
+                      </Text>
+                    </View>
+                    <Text style={{ fontFamily: fontFamilies.latin, fontSize: 13, color: colors.inkMuted }}>
+                      {contentByLang(lang, rule.deityHi, rule.deityEn)}
                     </Text>
                   </View>
-                  <Text style={{ fontFamily: fontFamilies.latin, fontSize: 13, color: colors.inkMuted }}>
-                    {contentByLang(lang, rule.deityHi, rule.deityEn)}
-                  </Text>
+                  {rule.lens?.length ? (
+                    <Text
+                      testID="observance-lens-caption"
+                      style={{ ...captionFont(rule.lens.map((lens) => lensDefinition(lens).nameEn).join(' · ')), fontSize: 12, color: colors.inkMuted, marginTop: 5 }}
+                    >
+                      {rule.lens.map((lens) => {
+                        const definition = lensDefinition(lens);
+                        const localized = contentByLang(lang, definition.nameHi, definition.nameEn);
+                        return lang === 'en'
+                          ? `${localized} · ${definition.nameHi}`
+                          : `${localized} · ${definition.nameEn}`;
+                      }).join('  ·  ')}
+                    </Text>
+                  ) : null}
                 </View>
               )}
               title={contentByLang(lang, rule.nameHi, rule.nameEn)}

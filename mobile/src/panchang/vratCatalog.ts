@@ -3,11 +3,12 @@
 // (cached/precomputed) year resolver, so they are unit-tested via `tsx --test`.
 
 import { getObservanceCatalog, OBSERVANCE_RULES } from './festivals';
-import { resolveObservancesForYear } from './festivalEngine';
+import { resolveAllObservancesForYear } from './festivalEngine';
 import { KATHA_CONTENT } from './kathaContent';
 import type {
   CalendarSystem,
   KathaContentEntry,
+  ObservanceLens,
   ObservanceRule,
   ResolvedObservance,
 } from './types';
@@ -27,14 +28,17 @@ export function getRuleById(id: string): ObservanceRule | null {
 }
 
 /** Default-visible rules of a single browsable category. */
-export function getRulesForCategory(category: BrowseCategory): ObservanceRule[] {
+export function getRulesForCategory(
+  category: BrowseCategory,
+  lenses: Iterable<ObservanceLens> = []
+): ObservanceRule[] {
   // Dedupe by id: the catalog can surface the same rule id twice, which both
   // shows a duplicate row and (with key={rule.id}) triggers React's "two children
   // with the same key" warning. Deduping here keeps the list and the category
   // counts consistent. (The underlying duplicate ids are a data issue worth
   // cleaning up at source in festivals.ts.)
   const seen = new Set<string>();
-  return getObservanceCatalog().filter((rule) => {
+  return getObservanceCatalog({ lenses }).filter((rule) => {
     if (rule.category !== category || seen.has(rule.id)) return false;
     seen.add(rule.id);
     return true;
@@ -42,10 +46,10 @@ export function getRulesForCategory(category: BrowseCategory): ObservanceRule[] 
 }
 
 /** Live counts per browsable category, for the landing tiles. */
-export function getCategoryCounts(): CategoryCount[] {
+export function getCategoryCounts(lenses: Iterable<ObservanceLens> = []): CategoryCount[] {
   return BROWSE_CATEGORIES.map((category) => ({
     category,
-    count: getRulesForCategory(category).length,
+    count: getRulesForCategory(category, lenses).length,
   }));
 }
 
@@ -68,8 +72,8 @@ export function getNextOccurrences(
   const year = fromDate.getFullYear();
   const start = new Date(year, fromDate.getMonth(), fromDate.getDate());
   const all = [
-    ...resolveObservancesForYear(year, calendarSystem),
-    ...resolveObservancesForYear(year + 1, calendarSystem),
+    ...resolveAllObservancesForYear(year, calendarSystem),
+    ...resolveAllObservancesForYear(year + 1, calendarSystem),
   ];
   return all
     .filter((item) => item.rule.id === ruleId && item.date.getTime() >= start.getTime())

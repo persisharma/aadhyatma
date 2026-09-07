@@ -257,6 +257,14 @@ test('a draft (filtered) entry is indistinguishable from no entry on the screen'
   expect(texts(r)).toContain('पूजा विधि'); // falls back to the shipped vidhi-only block
 });
 
+test('a lensed observance remains directly reachable and carries its quiet dual-script caption', () => {
+  const r = renderDetail('rohini-vrat');
+  expect(has(r, 'observance-lens-caption')).toBe(true);
+  const caption = r.root.findByProps({ testID: 'observance-lens-caption' });
+  expect(caption.props.children).toContain('जैन · Jain');
+  expect(texts(r)).toContain('रोहिणी व्रत');
+});
+
 // ─── PRD-28 पर्व-अर्क strip ─────────────────────────────────────────────────
 
 test('arc strip: absent for a rule outside every arc — every other detail page is unchanged', () => {

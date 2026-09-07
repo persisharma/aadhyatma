@@ -8,6 +8,7 @@ import { getAskLexicon } from '../lexicon';
 import { tagEntities } from '../resolve';
 import { testContext } from './_ctx';
 import { fold } from '../fold';
+import { OBSERVANCE_RULES } from '@/panchang/festivals';
 
 warmAsk();
 const ctx = testContext();
@@ -113,4 +114,31 @@ test('ask-from-context seed fills a missing slot', () => {
   const r = askQuestion('iska bhog kya hai', testContext({ seed: { type: 'deity', id: 'shiva' } }));
   assert.equal(r.kind, 'answer');
   if (r.kind === 'answer') assert.equal(r.answer.intentId, 'bhog.offer');
+});
+
+test('generic day answers respect lenses while a named observance remains directly discoverable', () => {
+  const diwali = OBSERVANCE_RULES.find((rule) => rule.id === 'diwali');
+  assert.ok(diwali);
+  const previous = diwali.lens;
+  const base = testContext({
+    now: new Date(2026, 10, 9, 10),
+    location: { cityId: 'ask-lens-test', latitude: 23.1765, longitude: 75.7885, elevation: 490 },
+  });
+  try {
+    diwali.lens = ['jain'];
+    const hidden = askQuestion('aaj kya hai', base);
+    const visible = askQuestion('aaj kya hai', { ...base, lenses: ['jain'] });
+    assert.equal(hidden.kind, 'answer');
+    assert.equal(visible.kind, 'answer');
+    if (hidden.kind === 'answer' && visible.kind === 'answer') {
+      assert.equal(hidden.answer.lines.some((line) => line.value.en.includes('Diwali')), false);
+      assert.equal(visible.answer.lines.some((line) => line.value.en.includes('Diwali')), true);
+    }
+
+    const direct = askQuestion('diwali kab hai', base);
+    assert.equal(direct.kind, 'answer');
+    if (direct.kind === 'answer') assert.equal(direct.answer.intentId, 'observance.next');
+  } finally {
+    diwali.lens = previous;
+  }
 });

@@ -118,9 +118,21 @@ test('no on-demand corpus payload is statically reachable from the app entry', (
  */
 const LAUNCH_GRAPH_BUDGET_BYTES = 7_000_000;
 
+export function launchGraphFiles(): readonly string[] {
+  return [...graph.keys()];
+}
+
+export function launchGraphMetrics(): { modules: number; bytes: number; budgetBytes: number } {
+  return {
+    modules: graph.size,
+    bytes: [...graph.keys()].reduce((sum, file) => sum + fs.statSync(file).size, 0),
+    budgetBytes: LAUNCH_GRAPH_BUDGET_BYTES,
+  };
+}
+
 test('the static launch graph stays inside its byte budget', () => {
   const sized = [...graph.keys()].map((file) => [fs.statSync(file).size, file] as const);
-  const total = sized.reduce((sum, [size]) => sum + size, 0);
+  const total = launchGraphMetrics().bytes;
   const largest = [...sized]
     .sort((a, b) => b[0] - a[0])
     .slice(0, 8)

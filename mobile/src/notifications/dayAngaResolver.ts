@@ -121,7 +121,11 @@ export async function resolveDayAngas(
       if (observancesReadyFor(date.getFullYear())) {
         try {
           const observance = pickTitleObservance(
-            getObservancesForDate(date, calendarSystem, location).map((o) => o.rule)
+            // Independent universal-only protection: even if the title picker is
+            // later relaxed, this resolver never passes a lensed rule to it.
+            getObservancesForDate(date, calendarSystem, location)
+              .map((o) => o.rule)
+              .filter((rule) => !rule.lens?.length)
           );
           if (observance) {
             anga.observanceHi = observance.nameHi;
