@@ -275,8 +275,11 @@ export default function VastuDishaScreen({ navigation }: { navigation: Navigatio
               ) : undefined
             }
             onPress={() => {
+              // Empty → setup; otherwise ALWAYS the roster (PRD §C4 offers
+              // "roster or straight to the one home" — straight-to-home would
+              // strand a one-home user with no way to add a second, since the
+              // roster owns the + नया घर button).
               if (roster.homes.length === 0) navigation.navigate('GharVastuSetup');
-              else if (roster.homes.length === 1) navigation.navigate('GharVastu', { homeId: roster.homes[0]!.id });
               else navigation.navigate('GharVastuRoster');
             }}
             accessibilityLabel="My homes — place the rooms on the mandala and read the convention"

@@ -168,12 +168,14 @@ test('मेरे घर door: NEW badge on an empty roster, tap opens setup', 
   act(() => r.unmount());
 });
 
-test('मेरे घर door: one saved home opens its reading directly, no NEW badge', async () => {
+test('मेरे घर door: a saved home opens the roster (which owns + नया घर), no NEW badge', async () => {
   await seedRoster([gharHome()]);
   const r = await renderScreen();
   const door = r.root.findByProps({ testID: 'vastu-mere-ghar-door' });
   await act(async () => door.props.onPress());
-  expect(navigation.navigate).toHaveBeenCalledWith('GharVastu', { homeId: 'h1' });
+  // Never straight to the one home: the roster is the only surface with the
+  // add button, so straight-to-home would strand a one-home user forever.
+  expect(navigation.navigate).toHaveBeenCalledWith('GharVastuRoster');
   expect(JSON.stringify(r.toJSON())).not.toContain('NEW');
   act(() => r.unmount());
 });

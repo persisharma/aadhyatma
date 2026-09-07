@@ -105,7 +105,16 @@ export default function VastuMandalaGrid({
   const clamp = (n: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, n));
 
   return (
-    <View testID={testID} accessible accessibilityLabel={accessibilityLabel} style={{ position: 'relative' }}>
+    // Grouped (one narrated element) only in READING mode. In placement mode
+    // the container must NOT be accessible: iOS would swallow the cell
+    // pressables, hiding them from VoiceOver and the e2e tree alike — the
+    // tap-a-cell assistive path exists precisely for those users.
+    <View
+      testID={testID}
+      accessible={onPressCell == null}
+      accessibilityLabel={onPressCell == null ? accessibilityLabel : undefined}
+      style={{ position: 'relative' }}
+    >
       <View style={{ gap: CELL_GAP }}>
         {MANDALA_GRID.map((row, rowIndex) => (
           <View key={rowIndex} style={{ flexDirection: 'row', gap: CELL_GAP }}>
