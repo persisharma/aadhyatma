@@ -32,7 +32,8 @@
       },
       "android": {
         "serviceAccountKeyPath": "./credentials/play-store-key.json",
-        "track": "internal"
+        "track": "production",
+        "releaseStatus": "draft"
       }
     }
   }
