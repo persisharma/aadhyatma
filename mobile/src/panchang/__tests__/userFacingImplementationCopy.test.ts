@@ -18,6 +18,15 @@ const ACTIONABLE_PLATFORM_EXCEPTIONS = new Set([
 const OUT_OF_SCOPE_SURFACES = new Set([
   'src/screens/PitruSmaranListScreen.tsx',
   'src/screens/PitruPakshaOverviewScreen.tsx',
+  // गृह वास्तु (PRD-24 Phase 2, US-18; design.md §66.4–§66.6, RULEBOOK §22.14):
+  // the roster is a private map of the user's own home, so these screens carry
+  // the PRD-mandated privacy line ("यह मानचित्र केवल इस फ़ोन पर है — कहीं भेजा
+  // नहीं जाता।") — the same deliberate on-device privacy reassurance as Pitru
+  // Smaran above, pinned by the feature's own copy tests, not implementation
+  // leakage.
+  'src/screens/GharVastuScreen.tsx',
+  'src/screens/GharVastuRosterScreen.tsx',
+  'src/screens/GharVastuCompareScreen.tsx',
 ]);
 
 const BANNED_CUSTOMER_COPY = /\b(?:on[- ]device|offline|no (?:internet|network|account)|local notifications?|computed on device|calculation stays on this device|saved on this device|stored on this device|content review pending|review-pending corpus|namakshar-v\d+)\b|ऑफलाइन|इंटरनेट|ऑन-डिवाइस|उपकरण पर गणना|इस उपकरण पर|इस फ़ोन पर|नामाक्षर-v\d+|सामग्री समीक्षा शेष|समीक्षा-अधीन/iu;
