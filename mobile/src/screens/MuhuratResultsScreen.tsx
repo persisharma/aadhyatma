@@ -34,6 +34,8 @@ import { RASHI_NAMES_HI, RASHI_NAMES_EN } from '@/panchang/kundali';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import type { Lang } from '@/data/gita/language';
 import type { PanchangStackParamList } from '@/navigation/types';
+import { buildGharVastuDoorTarget } from '@/navigation/entryRoutes';
+import { useHomeRoster } from '@/vastu/homeRecordStore';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'MuhuratResults'>;
 
@@ -78,6 +80,7 @@ function splitSibling(windows: MuhuratWindow[]): MuhuratWindow | null {
 export default function MuhuratResultsScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
+  const { roster } = useHomeRoster();
   const { location } = usePanchangLocation();
   const rule = getEventRule(route.params.occasionId);
   // यात्रा only (PRD-16/P3 §4.6): the chosen direction excludes its दिशा शूल
@@ -386,6 +389,37 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
                   {contentByLang(lang, 'मंदिर · रसोई · मुख्य द्वार — दिशा चक्र के साथ', 'Mandir · kitchen · main door — with the disha chakra')}
                 </Text>
               </ListCard>
+              {/* मेरा घर (PRD-24 Phase 2 §C4/US-16): measure the home being
+                  entered. No living home → setup (role 'living'); else the
+                  living home's reading. Pushes in place — Back returns here. */}
+              <View style={{ marginTop: spacing.sm }}>
+                <ListCard
+                  testID="muhurat-ghar-door"
+                  variant="flat"
+                  leading={
+                    <CardThumb>
+                      <Text style={{ color: colors.saffronDeep, fontFamily: typography.readerTitle.fontFamily, fontSize: 18 }}>घ</Text>
+                    </CardThumb>
+                  }
+                  onPress={() => {
+                    const target = buildGharVastuDoorTarget(roster);
+                    if (target.screen === 'GharVastu') navigation.navigate('GharVastu', target.params);
+                    else navigation.navigate('GharVastuSetup', target.params);
+                  }}
+                  accessibilityLabel="Measure the new home on the vastu mandala"
+                >
+                  <Text style={{ color: colors.ink, fontFamily: titleFont, fontSize: 15 }}>
+                    {contentByLang(lang, 'नया घर मापें', 'Measure the new home')}
+                  </Text>
+                  <Text style={{ color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily, fontSize: 11.5, lineHeight: 17 }}>
+                    {contentByLang(
+                      lang,
+                      'कक्ष मंडल पर रखें — विधान के साथ पढ़ें',
+                      'Place the rooms on the mandala — read them with the convention'
+                    )}
+                  </Text>
+                </ListCard>
+              </View>
             </View>
           )}
 

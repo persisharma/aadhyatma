@@ -63,7 +63,14 @@ appId: com.prashantsharma.vedansh
     timeout: 30000
 - tapOn: { id: "vastu-disha-southeast" }
 - waitForAnimationToEnd
-- assertVisible: "In this direction"
+# The मेरे घर door card (Phase 2 §C4) sits between the chips and this section,
+# so the faced guidance can start below the fold — scroll to the kitchen card
+# (the आग्नेय entry that must lead the faced list).
+- scrollUntilVisible:
+    element:
+      id: "vastu-room-kitchen"
+    direction: DOWN
+    timeout: 30000
 - assertVisible: "Kitchen"
 
 # ── Back out cleanly ──

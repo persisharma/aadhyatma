@@ -93,6 +93,19 @@ export type SadhanaSummary = {
   doneToday: boolean;
 };
 
+/**
+ * The LIVING home only (PRD-24 Phase 2 §C5/US-15, privacy US-18): supplied by
+ * the UI from the roster store — intents stay AsyncStorage-free so the tsx
+ * corpus run and determinism survive (the `sadhana` precedent above). Zones
+ * are `VastuZone` strings; kept structural so this file stays types-only.
+ */
+export type VastuHomeSummary = {
+  homeId: string;
+  label: string;
+  facing: string | null;
+  rooms: readonly { roomId: string; ordinal: number; zone: string | null }[];
+};
+
 export type AskContext = {
   now: Date;
   location: ScanLocation;
@@ -100,6 +113,8 @@ export type AskContext = {
   lang: Lang;
   /** Active enrolments, supplied by the UI from SadhanaContext (Phase 2/3). */
   sadhana?: readonly SadhanaSummary[];
+  /** The saved LIVING home, if any — `vastu.myhome` answers from it (US-15). */
+  vastuHome?: VastuHomeSummary | null;
   /**
    * Ask-from-context (Phase 3): the surface the question was asked from can
    * seed an entity so "iska bhog kya hai" resolves against it.

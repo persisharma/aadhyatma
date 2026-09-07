@@ -62,6 +62,9 @@ const MUST_SURVIVE = [
   // opt-ins — user data, never engine output, never swept.
   '@vedansh:kul-parampara:v1',
   '@vedansh:janma-tithi:v1',
+  // मेरा घर roster (PRD-24 Phase 2): the user's private home map — user data,
+  // never engine output, never swept.
+  '@vedansh:vastu-homes:v1',
   '@vedansh:guna-milan-draft:v1',
   '@vedansh:guna-milan-metrics:v1',
   '@vedansh:namkaran-session:v1',

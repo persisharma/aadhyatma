@@ -1,0 +1,117 @@
+# मेरा घर Setup Smoke Test (PRD-24 Phase 2 §6, design.md §66.4–§66.5)
+#
+# The sensor-free capture path a simulator can honestly drive (RULEBOOK §22.6):
+#   1. More → Vastu Disha → the "मेरे घर" door (NEW on an empty roster) opens
+#      the setup flow directly.
+#   2. Step 1 · type: the 3BHK template is the seeded default — continue.
+#   3. Step 2 · facing: the East chip records the main door (no compass needed).
+#   4. Step 3 · placement: tap-a-cell places the pre-selected room chip (the
+#      drag path is pointer-gesture UX; the tap-tap fallback is the assistive
+#      AND e2e contract).
+#   5. The assessment renders: the mandala reading, the five class pills, the
+#      share pill — and never a score/percent (pinned in Jest; here we assert
+#      the surfaces exist).
+#
+# Language note (per vastu-disha-smoke): flip reading language to English
+# first; Maestro's iOS tree can't read Devanagari.
+#
+# State note: _launch.yaml clearState gives an empty roster, so the door goes
+# straight to setup (roster/1-home routing is pinned in VastuDishaScreen.test).
+
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+
+# ── Global reading language → English (More → Language picker sheet) ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── 1. More → Vastu Disha → मेरे घर door (empty roster → setup) ──
+- tapOn: { id: "more-vastu-disha" }
+- waitForAnimationToEnd
+- assertVisible: "Vastu Disha"
+- scrollUntilVisible:
+    element:
+      id: "vastu-mere-ghar-door"
+    direction: DOWN
+    timeout: 30000
+    centerElement: true
+- tapOn: { id: "vastu-mere-ghar-door" }
+- waitForAnimationToEnd
+- assertVisible: "New home"
+
+# ── 2. Step 1 · type (flat-3bhk is the default) → next ──
+- assertVisible: "Home type"
+- scrollUntilVisible:
+    element:
+      id: "ghar-setup-next-type"
+    direction: DOWN
+    timeout: 30000
+    centerElement: true
+- tapOn: { id: "ghar-setup-next-type" }
+- waitForAnimationToEnd
+
+# ── 3. Step 2 · facing from the brochure — the East chip ──
+- scrollUntilVisible:
+    element:
+      id: "ghar-facing-east"
+    direction: DOWN
+    timeout: 30000
+    centerElement: true
+- tapOn: { id: "ghar-facing-east" }
+- tapOn: { id: "ghar-setup-next-facing" }
+- waitForAnimationToEnd
+
+# ── 4. Step 3 · placement — tap a cell, the pre-selected chip lands there ──
+- assertVisible: "Place on the mandala"
+- scrollUntilVisible:
+    element:
+      id: "mandala-cell-southeast"
+    direction: DOWN
+    timeout: 30000
+    centerElement: true
+- tapOn: { id: "mandala-cell-southeast" }
+# Door (from facing) + one room = the 2-capture floor; finish enables.
+- scrollUntilVisible:
+    element:
+      id: "ghar-setup-finish"
+    direction: DOWN
+    timeout: 30000
+    centerElement: true
+- tapOn: { id: "ghar-setup-finish" }
+- waitForAnimationToEnd
+
+# ── 5. The assessment — one reading, five pills, share ──
+- extendedWaitUntil:
+    visible:
+      id: "ghar-vastu-screen"
+    timeout: 15000
+- assertVisible: "Vastu Purusha Mandala.*"
+- assertVisible:
+    id: "ghar-pill-forbidden"
+- assertVisible:
+    id: "ghar-pill-in-keeping"
+- scrollUntilVisible:
+    element:
+      id: "ghar-share"
+    direction: DOWN
+    timeout: 30000
+    centerElement: true
+- assertVisible:
+    id: "ghar-remeasure"
+
+# ── Back out cleanly (finish replaced the route; Back returns to Vastu Disha) ──
+- tapOn: "Back"
+- waitForAnimationToEnd
+- assertVisible: "Vastu Disha"
