@@ -326,7 +326,9 @@ describe('startTargetFromNotification', () => {
       // the observance it was armed for, but backing out lands on व्रत rather than
       // the पंचांग calendar the user never asked for.
       [{ type: 'vrat-reminder', ruleId: 'nirjala-ekadashi' }, { tab: 'PanchangTab', screen: 'ObservanceDetail', params: { ruleId: 'nirjala-ekadashi' }, section: 'vrat' }],
-      [{ type: 'muhurat-reminder', occasionId: 'vahan', dateMs }, { tab: 'PanchangTab', screen: 'MuhuratDayDetail', params: { occasionId: 'vahan', dateMs } }],
+      // `section: 'panchang'` pins the root beneath the detail: muhurat windows
+      // are a calendar concern, so back lands where the finder door lives.
+      [{ type: 'muhurat-reminder', occasionId: 'vahan', dateMs }, { tab: 'PanchangTab', screen: 'MuhuratDayDetail', params: { occasionId: 'vahan', dateMs }, section: 'panchang' }],
       [{ type: 'festive-reminder', ruleId: 'diwali' }, { tab: 'HomeTab', screen: 'Home' }],
       [{ type: 'sadhana-reminder', programId: 'p1' }, { tab: 'HomeTab', screen: 'RoutineToday' }],
       [{ type: 'routine-reminder', routineId: 'gone', dateKey: '2026-09-03' }, { tab: 'HomeTab', screen: 'RoutineToday' }],

@@ -3045,7 +3045,13 @@ The selected date is already lifted into the screen that hosts all three segment
 
 ### Deep links and notifications
 
-A vrat reminder opens the **specific observance** it was armed for — that is the whole value of the notification — with `StartTarget.section = 'vrat'` naming what sits *underneath*, so `PanchangHome` mounts on व्रत and backing out of the detail lands there instead of on the पंचांग calendar the user never asked for. There is no separate standalone vrat route. `applyStartTargetSection(target, entryPoint)` writes the store on both launch timings (cold start, before `NavigationContainer` mounts, so the bar is right on the first frame; and the warm dispatch), with the entry point kept at the **call site** — that is what keeps a notification tap distinguishable from a widget tap. Home's व्रत and कुंडली launcher tiles follow the same rule with `'deeplink'`.
+**Every `PanchangTab` target names its section explicitly.** A pushed detail over an *unnamed* root inherits whatever section the store happens to hold, so backing out of it can land on a section carrying no door back into the thing you came from — the RULEBOOK §6.0 failure mode, one layer down. So:
+
+- A **vrat reminder** opens the **specific observance** it was armed for — that is the whole value of the notification — with `section: 'vrat'` naming what sits *underneath*, so backing out lands on व्रत instead of the पंचांग calendar the user never asked for. There is no separate standalone vrat route.
+- A **muhurat reminder** opens the followed day's detail with `section: 'panchang'`: muhurat windows are a calendar concern (the glance card and the finder door both live there), so back lands where they can be re-entered.
+- Home's **व्रत · कुंडली · मुहूर्त** launcher tiles follow the same rule with `'deeplink'`, since all three push onto this stack too.
+
+`notifications/__tests__/notificationLandings.jest.test.ts` pins the whole table — every family, the screen it names, whether that screen is actually **registered on the stack it is aimed at**, and that each Panchang family states its own section. `applyStartTargetSection(target, entryPoint)` writes the store on both launch timings (cold start, before `NavigationContainer` mounts, so the bar is right on the first frame; and the warm dispatch), with the entry point kept at the **call site** — that is what keeps a notification tap distinguishable from a widget tap. Home's व्रत and कुंडली launcher tiles follow the same rule with `'deeplink'`.
 
 ### Analytics: `entry_point`
 

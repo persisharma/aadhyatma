@@ -144,6 +144,13 @@ export function resolveNotificationTarget(data: unknown): StartTarget | null {
       tab: 'PanchangTab',
       screen: 'MuhuratDayDetail',
       params: { occasionId: known.id, dateMs: data.dateMs },
+      // Muhurat windows are a CALENDAR concern — the glance card and the finder
+      // door both live on the पंचांग section. Naming it explicitly makes back
+      // from this detail deterministic; without it the root keeps whatever
+      // section the store last held, so backing out of a muhurat notice could
+      // land on ज्योतिष or व्रत, neither of which carries a muhurat door
+      // (the RULEBOOK §6.0 failure mode, one layer down).
+      section: 'panchang',
     };
   }
 

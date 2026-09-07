@@ -141,8 +141,13 @@ export default function HomeScreen({ navigation }: Props) {
       status: 'active',
       icon: iconFor('muhurat'),
       hasNew: true,
-      onPress: () =>
-        rootNav.navigate('PanchangTab', panchangTabTarget('MuhuratFinder', undefined)),
+      // Same rule as the व्रत and कुंडली tiles: name the section the finder
+      // belongs to, so back from it lands on पंचांग rather than on whichever
+      // section the user last had open.
+      onPress: () => {
+        setPanchangSection('panchang', 'deeplink');
+        rootNav.navigate('PanchangTab', panchangTabTarget('MuhuratFinder', undefined));
+      },
     };
     const purposeTile: TileItem = {
       key: 'purpose',
