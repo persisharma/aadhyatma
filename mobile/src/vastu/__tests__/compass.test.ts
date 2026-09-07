@@ -14,8 +14,11 @@ import {
   fieldMagnitude,
   headingFromSample,
   isFieldPlausible,
+  isTilted,
   normalizeHeading,
   smoothHeading,
+  tiltDegreesFromAccel,
+  TILT_MAX_DEG,
 } from '../compass';
 
 describe('normalizeHeading', () => {
@@ -110,4 +113,30 @@ describe('field plausibility (the honest-accuracy band)', () => {
 
 test('the module exposes the shared dik vocabulary, not a second enum', () => {
   expect(ALL_DIK).toBe(DISHA_ORDER);
+});
+
+describe('tilt from a gravity-bearing accelerometer sample (PRD-24 Phase 2 §A2)', () => {
+  test('flat screen-up or screen-down reads 0° — sign-agnostic across platforms', () => {
+    expect(tiltDegreesFromAccel({ x: 0, y: 0, z: -1 })).toBeCloseTo(0, 5); // iOS face-up
+    expect(tiltDegreesFromAccel({ x: 0, y: 0, z: 1 })).toBeCloseTo(0, 5); // Android face-up
+  });
+  test('a 45° lean reads 45°; fully upright reads 90°', () => {
+    const c = Math.SQRT1_2;
+    expect(tiltDegreesFromAccel({ x: 0, y: c, z: -c })).toBeCloseTo(45, 5);
+    expect(tiltDegreesFromAccel({ x: 0, y: 1, z: 0 })).toBeCloseTo(90, 5);
+  });
+  test('the 20° boundary: at the limit is fine, past it is tilted', () => {
+    expect(isTilted(TILT_MAX_DEG)).toBe(false);
+    expect(isTilted(TILT_MAX_DEG + 0.01)).toBe(true);
+  });
+  test('a zero-magnitude sample reads flat — the field check guards the heading', () => {
+    expect(tiltDegreesFromAccel({ x: 0, y: 0, z: 0 })).toBe(0);
+  });
+});
+
+describe('smoothing follows the fused rung faster (§A1)', () => {
+  test('α=0.5 halves the shortest-arc delta', () => {
+    expect(smoothHeading(350, 10, 0.5)).toBeCloseTo(0, 5); // through north
+    expect(smoothHeading(100, 120, 0.5)).toBeCloseTo(110, 5);
+  });
 });

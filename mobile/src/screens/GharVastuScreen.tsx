@@ -245,7 +245,7 @@ export default function GharVastuScreen({ navigation, route }: { navigation: Nav
 }
 
 function FindingRow({ finding, cls }: { finding: HomeFinding; cls: FindingClass }) {
-  const { colors, typography, radii } = useTheme();
+  const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
   const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);

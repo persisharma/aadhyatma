@@ -35,6 +35,7 @@ import { getVastuRoomEntries, getVastuRoomEntry } from '@/data/vastu/roomGuidanc
 import type { VastuZone } from '@/data/vastu/types';
 import { DISHA_LABELS, DISHA_ORDER, type DishaDirection } from '@/panchang/eventMuhurat';
 import { useTheme } from '@/theme/ThemeContext';
+import { elevation } from '@/theme/elevation';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import type { HomePlacement, HomeRecord, HomeRole } from '@/vastu/homeRecord';
@@ -679,11 +680,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: 11,
     paddingVertical: 5,
-    elevation: 6,
-    shadowColor: '#3C1E0A',
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 4 },
+    // The dragged chip floats above the whole step, not just parchment.
+    ...elevation.overlay,
     zIndex: 20,
   },
 });

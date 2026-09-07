@@ -31,10 +31,12 @@ type Props = {
   heading: number | null;
   /** The dik to emphasise (faced or manually chosen). */
   facingDik: DishaDirection | null;
+  /** Rendered size in dp; the 264-unit viewBox scales, so geometry is untouched. */
+  size?: number;
   testID?: string;
 };
 
-export default function DishaChakra({ heading, facingDik, testID = 'disha-chakra' }: Props) {
+export default function DishaChakra({ heading, facingDik, size = SIZE, testID = 'disha-chakra' }: Props) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
   const labelFont = scriptTitleFont(lang, typography.cardHindi.fontFamily);
@@ -50,7 +52,7 @@ export default function DishaChakra({ heading, facingDik, testID = 'disha-chakra
 
   return (
     <View testID={testID} accessible accessibilityLabel={a11y} style={{ alignItems: 'center' }}>
-      <Svg width={SIZE} height={SIZE} viewBox={`0 0 ${SIZE} ${SIZE}`}>
+      <Svg width={size} height={size} viewBox={`0 0 ${SIZE} ${SIZE}`}>
         {/* Fixed needle above the rose — the top of the dial is "where I face". */}
         <Polygon
           points={`${CX - 7},22 ${CX + 7},22 ${CX},6`}

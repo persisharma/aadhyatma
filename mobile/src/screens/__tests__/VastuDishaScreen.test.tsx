@@ -116,6 +116,25 @@ test('sensor unavailable → manual mode with every guidance surface rendered', 
   act(() => r.unmount());
 });
 
+// ——— Hold (PRD-24 Phase 2 §A4/US-03) ———
+
+test('the Hold pill is disabled when the sensor is unavailable — nothing to hold', async () => {
+  const r = await renderScreen();
+  const hold = r.root.findByProps({ testID: 'vastu-hold' });
+  expect(hold.props.accessibilityState).toEqual({ selected: false, disabled: true });
+  act(() => r.unmount());
+});
+
+test('the Hold pill is disabled in manual mode — a chip already froze the dial', async () => {
+  const r = await renderScreen();
+  await act(async () => {
+    r.root.findByProps({ testID: 'vastu-disha-east' }).props.onPress();
+  });
+  const hold = r.root.findByProps({ testID: 'vastu-hold' });
+  expect(hold.props.accessibilityState.disabled).toBe(true);
+  act(() => r.unmount());
+});
+
 // ——— मेरे घर door (PRD-24 Phase 2 §C4) ———
 
 const gharHome = (over: Partial<HomeRecord> = {}): HomeRecord => ({
