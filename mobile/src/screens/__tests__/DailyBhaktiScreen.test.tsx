@@ -40,6 +40,9 @@ jest.mock('@react-navigation/native', () => ({
     name: 'DailyBhaktiTab',
     params: { sourceId: 'bhagavad-gita', chapter: 1, verseIndex: 0 },
   }),
+  // The अन्य header button (AppHeaderMenuButton) is on every tab root now, and
+  // it navigates into the More stack.
+  useNavigation: () => ({ navigate: jest.fn() }),
 }));
 
 // The docked banner drags in the routine store + navigation stack — out of

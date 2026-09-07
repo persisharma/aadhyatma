@@ -327,17 +327,37 @@ test('every PRD-C practice id resolves through the existing reader dispatcher', 
   }
 });
 
-test('Panchang mode selector stays fixed above contextual controls', () => {
+test('the section segment control is STICKY, above the scrolling content', () => {
+  // Stronger than the original "renders first" check: the segment control now
+  // sits OUTSIDE the ScrollView, so it cannot scroll away and cannot jump
+  // vertically between sections. Panchang renders its own chip row immediately
+  // under it, and a segment row that scrolled off would leave that chip row
+  // looking like the top of the screen.
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'PanchangScreen.tsx'), 'utf8');
+  const chromeRow = source.indexOf('<View style={[styles.chromeRow');
   const selector = source.indexOf('ref={panchangSegmentRef}');
+  const menuButton = source.indexOf('<AppHeaderMenuButton />');
+  // Anchor on the scroller's own ref prop, not '<ScrollView': the latter also
+  // matches the `useRef<ScrollView | null>` type annotation further up the file.
+  const scrollView = source.indexOf('ref={scrollRef}');
   const contextualHeader = source.indexOf(
-    "{panchangTab !== 'jyotish' && <View style={styles.systemHeader}>"
+    "{section !== 'jyotish' && <View style={styles.systemHeader}>"
   );
 
-  assert.ok(selector >= 0, 'Panchang mode selector exists');
+  assert.ok(chromeRow >= 0, 'the one row of chrome exists');
+  assert.ok(selector >= 0, 'the section segment control exists');
+  assert.ok(menuButton >= 0, 'अन्य rides the same chrome row');
+  assert.ok(scrollView >= 0, 'the content scroller exists');
   assert.ok(contextualHeader >= 0, 'contextual Panchang controls remain hidden in Jyotish');
+
+  assert.ok(chromeRow < selector, 'the segment control is inside the chrome row');
+  assert.ok(selector < menuButton, 'segment control then अन्य — one row, in that order');
   assert.ok(
-    selector < contextualHeader,
-    'primary mode selector renders before contextual controls and cannot jump between modes'
+    menuButton < scrollView,
+    'the whole chrome row is OUTSIDE the ScrollView, so the segment control is sticky'
+  );
+  assert.ok(
+    scrollView < contextualHeader,
+    'contextual controls scroll with the content, below the sticky chrome'
   );
 });

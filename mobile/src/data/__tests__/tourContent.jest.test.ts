@@ -1,5 +1,6 @@
 import { APP_TOUR_VERSION, getWhatsNewForVersion, whatsNew } from '@/data/tour/whatsNew';
 import { tourSteps, TAB_ORDER } from '@/data/tour/steps';
+import { TAB_BAR_SLOT_COUNT } from '@/navigation/tabBarMetrics';
 import appJson from '../../../app.json';
 
 // Tab names the tour is allowed to navigate to (mirrors TabParamList).
@@ -16,6 +17,7 @@ const VALID_TARGET_IDS = new Set([
   'theerthInside',
   'dailyVerse',
   'shareButton',
+  'headerMenu',
   'muhuratCard',
   'panchangSegment',
   'vratList',
@@ -107,13 +109,32 @@ describe('tourSteps content contract', () => {
     expect(tourSteps.at(-1)?.targetId).toBe('readingSizeRow');
   });
 
-  test('TAB_ORDER covers every valid tab with a unique index and resolves each step', () => {
-    // Ring-the-tab fallback needs a defined index for every step's destination.
+  test('TAB_ORDER covers every valid tab with an in-range slot, and resolves each step', () => {
+    // Ring-the-tab fallback needs a defined slot for every step's destination.
     expect(new Set(Object.keys(TAB_ORDER))).toEqual(VALID_TABS);
-    const indices = Object.values(TAB_ORDER);
-    expect(new Set(indices).size).toBe(indices.length);
-    tourSteps.forEach((s) => {
-      expect(TAB_ORDER[s.navigateTo.name]).toBeGreaterThanOrEqual(0);
+    // Slots are deliberately NOT unique per tab any more: the bar is
+    // होम · भक्ति · पंचांग · व्रत · ज्योतिष, so PanchangTab backs three slots while
+    // AudioTab (भजन, a segment inside भक्ति) and MoreTab (अन्य, the header icon)
+    // back none of their own and borrow the slot their content sits behind.
+    Object.values(TAB_ORDER).forEach((slot) => {
+      expect(slot).toBeGreaterThanOrEqual(0);
+      expect(slot).toBeLessThan(TAB_BAR_SLOT_COUNT);
     });
+    tourSteps.forEach((s) => {
+      expect(s.ringSlot ?? TAB_ORDER[s.navigateTo.name]).toBeGreaterThanOrEqual(0);
+      expect(s.ringSlot ?? TAB_ORDER[s.navigateTo.name]).toBeLessThan(TAB_BAR_SLOT_COUNT);
+    });
+  });
+
+  test('the three Panchang-backed tabs ring three DIFFERENT bar slots', () => {
+    // पंचांग, व्रत and ज्योतिष are one screen behind three buttons, so the route
+    // alone cannot say which button to ring — each step must pin its own slot,
+    // or the tour points at पंचांग while describing ज्योतिष.
+    const slotFor = (id: string) => {
+      const step = tourSteps.find((s) => s.id === id);
+      expect(step).toBeDefined();
+      return step!.ringSlot ?? TAB_ORDER[step!.navigateTo.name];
+    };
+    expect([slotFor('tab-panchang'), slotFor('tab-vrat'), slotFor('tab-jyotish')]).toEqual([2, 3, 4]);
   });
 });

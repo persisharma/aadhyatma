@@ -52,7 +52,11 @@ import {
   handleNotificationResponse,
   navigationRef,
 } from '@/notifications/deepLink';
-import { buildInitialNavigationState, type StartTarget } from '@/navigation/startTarget';
+import {
+  applyStartTargetSection,
+  buildInitialNavigationState,
+  type StartTarget,
+} from '@/navigation/startTarget';
 import { preloadPanchangStack } from '@/navigation/lazyPanchangStack';
 import ReminderOptInModal from '@/components/ReminderOptInModal';
 import UpdateReadyModal from '@/components/UpdateReadyModal';
@@ -165,6 +169,13 @@ export default function App() {
       settled = true;
       clearTimeout(timeoutId);
       if (fromNotification) coldNotificationConsumedRef.current = true;
+      // A PanchangTab target naming a section must write it BEFORE the
+      // navigator mounts: on a cold start `PanchangScreen` has not rendered
+      // yet, so nothing else can, and the bottom bar would otherwise highlight
+      // पंचांग for a frame over व्रत content. `fromNotification` is also what
+      // keeps a notification tap distinguishable from a widget tap in the
+      // entry_point log (handover §5).
+      if (target) applyStartTargetSection(target, fromNotification ? 'notification' : 'deeplink');
       setInitialTarget(target);
     };
     const timeoutId = setTimeout(() => finish(null), INITIAL_TARGET_TIMEOUT_MS);

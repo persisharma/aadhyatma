@@ -322,7 +322,10 @@ describe('startTargetFromNotification', () => {
   test('every other family resolves straight to its own screen', () => {
     const dateMs = new Date(2026, 7, 17).getTime();
     const cases: [unknown, unknown][] = [
-      [{ type: 'vrat-reminder', ruleId: 'nirjala-ekadashi' }, { tab: 'PanchangTab', screen: 'ObservanceDetail', params: { ruleId: 'nirjala-ekadashi' } }],
+      // `section: 'vrat'` is the layer UNDER the detail: the reminder still opens
+      // the observance it was armed for, but backing out lands on व्रत rather than
+      // the पंचांग calendar the user never asked for.
+      [{ type: 'vrat-reminder', ruleId: 'nirjala-ekadashi' }, { tab: 'PanchangTab', screen: 'ObservanceDetail', params: { ruleId: 'nirjala-ekadashi' }, section: 'vrat' }],
       [{ type: 'muhurat-reminder', occasionId: 'vahan', dateMs }, { tab: 'PanchangTab', screen: 'MuhuratDayDetail', params: { occasionId: 'vahan', dateMs } }],
       [{ type: 'festive-reminder', ruleId: 'diwali' }, { tab: 'HomeTab', screen: 'Home' }],
       [{ type: 'sadhana-reminder', programId: 'p1' }, { tab: 'HomeTab', screen: 'RoutineToday' }],

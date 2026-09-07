@@ -70,7 +70,7 @@ appId: com.prashantsharma.vedansh
 # the old inline English/Hindi pills are gone (gu/kn added a 4-way picker). The
 # sheet's rows opt out of the modal's accessibility wrappers (accessible={false}),
 # so each language radio (accessibilityLabel = "English"/"Hindi"/…) is tappable.
-- tapOn: { id: "tab-more" }
+- tapOn: { id: "header-menu" }
 - waitForAnimationToEnd
 # The ऐप section (Language/Reading size) sits below the fold on standard-height
 # iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
@@ -183,7 +183,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible:
     text: "Purnimant calendar system"
     selected: true
-- tapOn: { id: "tab-more" }
+- tapOn: { id: "header-menu" }
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:

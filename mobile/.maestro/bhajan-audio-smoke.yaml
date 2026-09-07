@@ -15,7 +15,18 @@ appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
 
-# Open the Bhajan (audio library) tab.
+# BLOCKED — pending the भक्ति container decision.
+#
+# भजन no longer has a bottom tab: the bar is होम · भक्ति · पंचांग · व्रत · ज्योतिष
+# and भजन becomes a SEGMENT inside भक्ति. `AudioTab` is still a registered route
+# (so nothing about playback changed), but there is no longer a button that
+# reaches it, and this `tab-bhajan` tap therefore cannot resolve.
+#
+# The one-line fix, once the भक्ति segment layout is settled, is:
+#     - tapOn: { id: "tab-bhakti" }
+#     - tapOn: { id: "segment-bhajan" }
+# Everything below this point — the library, the MiniPlayer, NowPlaying — is
+# unaffected and should pass unchanged.
 - tapOn: { id: "tab-bhajan" }
 - waitForAnimationToEnd
 # SectionHeading merges its Hindi + English into one a11y label

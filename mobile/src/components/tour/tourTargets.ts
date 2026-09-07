@@ -28,6 +28,7 @@ export type TourTargetId =
   | 'shareButton'
   | 'muhuratCard'
   | 'panchangSegment'
+  | 'headerMenu'
   | 'vratList'
   | 'vratFollow'
   | 'myVrat'

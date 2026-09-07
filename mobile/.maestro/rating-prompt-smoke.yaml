@@ -36,7 +36,7 @@ appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 
 # ── Step 2: Set reading language to English so the sheet copy is assertable ──
-- tapOn: { id: "tab-more" }
+- tapOn: { id: "header-menu" }
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Language,.*"

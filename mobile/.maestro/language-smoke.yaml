@@ -34,7 +34,7 @@ appId: com.prashantsharma.vedansh
 # ── Open More → Language picker sheet, select Gujarati ──
 # Language selection moved from inline radios into LanguagePickerSheet; open it
 # via the "Language, <current>" row first (same pattern as home-today).
-- tapOn: { id: "tab-more" }
+- tapOn: { id: "header-menu" }
 - waitForAnimationToEnd
 # The ऐप section (Language/Reading size) sits below the fold on standard-height
 # iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
@@ -89,7 +89,7 @@ appId: com.prashantsharma.vedansh
 # radios use Latin labels, so the same selectors work in any display script.
 # Switching tabs preserves the Home stack, so returning to Home lands back on the
 # open Hanuman Chalisa reader, now re-rendered in the newly chosen script.
-- tapOn: { id: "tab-more" }
+- tapOn: { id: "header-menu" }
 - waitForAnimationToEnd
 # The ऐप section (Language/Reading size) sits below the fold on standard-height
 # iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
@@ -110,7 +110,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "ಹನುಮಾನ ಚಾಲೀಸಾ"
 
 # ── Restore Hindi so the next flow starts from the suite baseline ──
-- tapOn: { id: "tab-more" }
+- tapOn: { id: "header-menu" }
 - waitForAnimationToEnd
 # The ऐप section (Language/Reading size) sits below the fold on standard-height
 # iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —

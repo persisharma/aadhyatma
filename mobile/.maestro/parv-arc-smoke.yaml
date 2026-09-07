@@ -33,7 +33,7 @@ appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 
 # ── Step 2: Reading language → English ──
-- tapOn: { id: "tab-more" }
+- tapOn: { id: "header-menu" }
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
@@ -47,13 +47,13 @@ appId: com.prashantsharma.vedansh
 - tapOn: "English"
 - waitForAnimationToEnd
 
-# ── Step 3: Panchang tab → Vrat & Parv → search → Ganesh Chaturthi detail ──
+# ── Step 3: Panchang tab → व्रत segment → search → Ganesh Chaturthi detail ──
 - tapOn: { id: "tab-panchang" }
 - waitForAnimationToEnd
 - extendedWaitUntil:
-    visible: "Vrat & Parv"
+    visible: "Vrat"
     timeout: 30000
-- tapOn: "Vrat & Parv"
+- tapOn: { id: "segment-vrat" }
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Browse by type"
@@ -137,7 +137,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 
 # ── Step 7: Restore Hindi (best-effort) + cleanup ──
-- tapOn: { id: "tab-more" }
+- tapOn: { id: "header-menu" }
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:

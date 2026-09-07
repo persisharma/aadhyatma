@@ -132,14 +132,32 @@ export type MoreStackParamList = VidhiStackParamList & {
   GitaReader: GitaReaderParams;
 };
 
-export type PanchangHomeMode = 'calendar' | 'catalog' | 'jyotish';
+/**
+ * The three sections of the shared पंचांग / व्रत / ज्योतिष screen.
+ *
+ * ONE vocabulary, used by the `section` route param, the segment control, the
+ * bottom-nav highlight and the analytics `section` field. It was previously
+ * `PanchangHomeMode = 'calendar' | 'catalog' | 'jyotish'`, an internal spelling
+ * that no longer matched the tabs users see; keeping two sets of names would
+ * have made the logged `section` values unreadable against the routes that
+ * produced them. `analytics/events.ts` declares a structurally identical
+ * `AnalyticsSection` so that layer carries no navigation dependency — the two
+ * are pinned together in `contexts/PanchangSectionContext.tsx`.
+ */
+export type PanchangSection = 'panchang' | 'vrat' | 'jyotish';
 
 // Panchang tab stack — the date-first calendar, the "Vrat & Parv" catalog
-// (PRD-09), and the Jyotish tools landing (PRD-C).
+// (PRD-09), and the Jyotish tools landing (PRD-C). पंचांग, व्रत and ज्योतिष are
+// three bottom-tab entry points into this ONE route, not three routes.
 export type PanchangStackParamList = VidhiStackParamList & {
   PanchangHome:
     | {
-        initialTab?: PanchangHomeMode;
+        /**
+         * Which section to open. Every cross-tab and deep-link caller sets it;
+         * the live value then lives in `PanchangSectionContext`, which the
+         * bottom-nav highlight mirrors.
+         */
+        section?: PanchangSection;
         dateMs?: number;
         /** PRD-16: ring these days (epoch ms) on the month calendar for an occasion. */
         muhuratOverlay?: { occasionId: OccasionId; days: number[] };

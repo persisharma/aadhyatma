@@ -4,7 +4,7 @@
 appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
-- tapOn: { id: "tab-more" }
+- tapOn: { id: "header-menu" }
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element: { id: "more-home-widgets" }

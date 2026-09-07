@@ -1,5 +1,15 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import {
+  ActivityIndicator,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  type NativeScrollEvent,
+  type NativeSyntheticEvent,
+} from 'react-native';
 import type { GestureResponderEvent } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -76,7 +86,9 @@ import {
 } from '@/panchang/useKundali';
 import PersonChips from '@/components/PersonChips';
 import { getCityById } from '@/panchang/locations';
-import type { PanchangHomeMode, PanchangStackParamList } from '@/navigation/types';
+import type { PanchangSection, PanchangStackParamList } from '@/navigation/types';
+import { usePanchangSection } from '@/contexts/PanchangSectionContext';
+import AppHeaderMenuButton from '@/components/AppHeaderMenuButton';
 
 const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const MONTHS_FULL_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -149,9 +161,10 @@ export default function PanchangScreen({ route }: Props) {
   const [selectedDate, setSelectedDate] = useState(() => startOfLocalDay(route.params?.dateMs ? new Date(route.params.dateMs) : new Date()));
   const [visibleMonth, setVisibleMonth] = useState(() => startOfMonth(new Date()));
   const [calendarExpanded, setCalendarExpanded] = useState(false);
-  const [panchangTab, setPanchangTab] = useState<PanchangHomeMode>(
-    route.params?.initialTab ?? 'calendar'
-  );
+  // The active section lives ABOVE this screen (PanchangSectionContext) because
+  // the bottom-nav highlight mirrors it — see the sync rule in that module. This
+  // screen reads it and writes it; it must not keep a second copy.
+  const { section, setSection, scrollToTopNonce } = usePanchangSection();
   const [catalogQuery, setCatalogQuery] = useState('');
   const calendarSwipeStart = useRef<{ x: number; y: number } | null>(null);
   const [calendarSystem, setCalendarSystem] = usePanchangCalendarSystem();
@@ -220,22 +233,33 @@ export default function PanchangScreen({ route }: Props) {
   // lands in is then its position in its own week, never a rounding outcome.
   const calendarRows = useMemo(() => calendarWeeks(calendarCells), [calendarCells]);
 
+  // A caller that names a section (a bottom-tab tap, a vrat reminder, Home's
+  // Kundali launcher, a tour step) has already written the context. This only
+  // has to catch the case where the param names a DIFFERENT section than the
+  // context holds — a cold start restored straight into the route, where
+  // nothing wrote it yet. `deeplink` is the honest attribution: an in-app tab
+  // tap or a notification tap sets the context itself first, and those writes
+  // are what this effect then agrees with rather than re-logs.
   useEffect(() => {
-    if (route.params?.initialTab) setPanchangTab(route.params.initialTab);
-  }, [route.params?.initialTab]);
+    const requested = route.params?.section;
+    if (requested && requested !== section) setSection(requested, 'deeplink');
+    // `section` is deliberately NOT a dependency: re-running after the user
+    // switches segments would drag them back to the section the route named.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [route.params?.section, setSection]);
 
   useEffect(() => {
     if (route.params?.dateMs == null || !Number.isFinite(route.params.dateMs)) return;
     const represented = startOfLocalDay(new Date(route.params.dateMs));
     setSelectedDate(represented);
     setVisibleMonth(startOfMonth(represented));
-    setPanchangTab('calendar');
+    setSection('panchang', 'deeplink');
   }, [route.params?.dateMs]);
 
   useFocusEffect(
     useCallback(() => {
-      if (panchangTab === 'jyotish') void reloadProfile();
-    }, [panchangTab, reloadProfile])
+      if (section === 'jyotish') void reloadProfile();
+    }, [section, reloadProfile])
   );
 
   const shiftSelectedDate = (days: number) => {
@@ -309,32 +333,84 @@ export default function PanchangScreen({ route }: Props) {
   const openGunaMilan = () => rootNav.navigate('GunaMilan');
   const openNamkaran = () => rootNav.navigate('Namkaran');
 
+  /**
+   * Per-segment scroll memory (§3 navigation semantics: "preserve per-segment
+   * scroll position for the duration of a session").
+   *
+   * ONE ScrollView, with the offsets remembered per section — not three mounted
+   * ScrollViews. Keeping all three alive would mount the Jyotish branch (and so
+   * a Kundali solve) the first time any section was opened, undoing the
+   * lazy-Panchang-stack work that keeps this graph off Home's startup path.
+   */
+  const scrollRef = useRef<ScrollView | null>(null);
+  const scrollOffsets = useRef<Record<PanchangSection, number>>({
+    panchang: 0,
+    vrat: 0,
+    jyotish: 0,
+  });
+  const liveOffset = useRef(0);
+  const previousSection = useRef(section);
+
+  const handleScroll = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    liveOffset.current = event.nativeEvent.contentOffset.y;
+  }, []);
+
+  // Save the outgoing section's offset and restore the incoming one. Runs as a
+  // layout effect so the restore lands in the same frame the new content is
+  // laid out in — under a plain effect the user sees one frame at the old
+  // offset before it jumps.
+  useLayoutEffect(() => {
+    const from = previousSection.current;
+    if (from === section) return;
+    scrollOffsets.current[from] = liveOffset.current;
+    previousSection.current = section;
+    const restored = scrollOffsets.current[section];
+    liveOffset.current = restored;
+    // `animated: false` — a segment switch is a lateral move, so the new
+    // section should simply BE where the user left it, not scroll there.
+    scrollRef.current?.scrollTo({ y: restored, animated: false });
+  }, [section]);
+
+  // Re-tapping the already-active tab scrolls the current segment to top
+  // (standard tab behaviour). The context only bumps the nonce, so this cannot
+  // be confused with a section change. Skips the initial render.
+  const initialScrollNonce = useRef(scrollToTopNonce);
+  useEffect(() => {
+    if (scrollToTopNonce === initialScrollNonce.current) return;
+    liveOffset.current = 0;
+    scrollOffsets.current[section] = 0;
+    scrollRef.current?.scrollTo({ y: 0, animated: true });
+  }, [scrollToTopNonce, section]);
+
   return (
     <View style={styles.root}>
       <BackgroundLayer source={backgroundImages.panchang_celestial_almanac} />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
-        <ScrollView
-          contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl }]}
-          showsVerticalScrollIndicator={false}
-        >
-          {/* Keep the primary mode switch first in every mode. Contextual
-              Panchang controls render below it so selecting Jyotish does not
-              make this segmented control jump vertically. */}
+        {/* THE one row of chrome (§6): the segment control REPLACES the screen
+            title, with अन्य beside it. Outside the ScrollView, so it is sticky —
+            Panchang renders its own chip row right under this, and a segment row
+            that scrolled away would leave that row looking like the top of the
+            screen. */}
+        <View style={[styles.chromeRow, { paddingHorizontal: spacing.xxl }]}>
           <View ref={panchangSegmentRef} collapsable={false} style={[styles.segmented, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.pill }]}>
-            {(['calendar', 'catalog', 'jyotish'] as const).map((tab) => {
-              const selected = panchangTab === tab;
+            {(['panchang', 'vrat', 'jyotish'] as const).map((tab) => {
+              const selected = section === tab;
               const labels = {
-                calendar: { hi: 'पंचांग', en: 'Panchang' },
-                catalog: { hi: 'व्रत-पर्व', en: 'Vrat & Parv' },
+                panchang: { hi: 'पंचांग', en: 'Panchang' },
+                vrat: { hi: 'व्रत', en: 'Vrat' },
                 jyotish: { hi: 'ज्योतिष', en: 'Jyotish' },
               } as const;
               return (
                 <Pressable
                   key={tab}
-                  onPress={() => setPanchangTab(tab)}
+                  onPress={() => setSection(tab, 'segment_swipe')}
                   accessibilityRole="tab"
                   accessibilityState={{ selected }}
                   accessibilityLabel={labels[tab].en}
+                  // Explicit testID: the labels are now single words, and a
+                  // Maestro `tapOn: "Vrat"` would also match "My Vrat" beside
+                  // it. Flows select the segment by id, never by label text.
+                  testID={`segment-${tab}`}
                   style={({ pressed }) => [
                     styles.segmentOption,
                     { borderRadius: radii.pill },
@@ -349,11 +425,20 @@ export default function PanchangScreen({ route }: Props) {
               );
             })}
           </View>
+          <AppHeaderMenuButton />
+        </View>
 
+        <ScrollView
+          ref={scrollRef}
+          onScroll={handleScroll}
+          scrollEventThrottle={16}
+          contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl }]}
+          showsVerticalScrollIndicator={false}
+        >
           {/* Slim system header — relevant to Panchang and Vrat only. The
               location, lunar calendar system, and My Vrat controls stay out of
               Jyotish while preserving a stable primary-navigation position. */}
-          {panchangTab !== 'jyotish' && <View style={styles.systemHeader}>
+          {section !== 'jyotish' && <View style={styles.systemHeader}>
             {/* Equal-width flex sides keep the calendar-system toggle centred on
                 screen regardless of how wide the location chip / star are. */}
             <View style={styles.headerSide}>
@@ -415,7 +500,7 @@ export default function PanchangScreen({ route }: Props) {
             </View>
           </View>}
 
-          {panchangTab === 'calendar' ? (
+          {section === 'panchang' ? (
             <>
           <View
             style={[styles.calendarCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}
@@ -718,7 +803,7 @@ export default function PanchangScreen({ route }: Props) {
             </View>
           )}
             </>
-          ) : panchangTab === 'catalog' ? (
+          ) : section === 'vrat' ? (
             <CatalogLanding
               lang={lang}
               today={today}
@@ -2224,7 +2309,8 @@ function CatalogLanding({
 const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
-  scroll: { paddingTop: 8, paddingBottom: 24 },
+  scroll: { paddingTop: 2, paddingBottom: 24 },
+  chromeRow: { flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 10, paddingBottom: 8 },
   systemHeader: { flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 10 },
   // Equal-width sides → the centre toggle is screen-centred. alignItems keeps the
   // chip hugging the left edge and the star the right.
@@ -2254,7 +2340,9 @@ const styles = StyleSheet.create({
   starBadgeText: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, lineHeight: 13 },
   myVratRow: { flexDirection: 'row', alignItems: 'center', borderWidth: 1.5, padding: 14, marginTop: 12 },
   pitruLedgerRow: { marginTop: 10 },
-  segmented: { flexDirection: 'row', padding: 3, borderWidth: 1, marginTop: 10 },
+  // `flex: 1` so अन्य sits beside it on the same row; the row owns the top
+  // margin now that the control is sticky rather than the first scroll child.
+  segmented: { flex: 1, flexDirection: 'row', padding: 3, borderWidth: 1 },
   segmentOption: { flex: 1, minHeight: 38, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 14 },
   jyotishHero: { borderWidth: 1, padding: 16, marginTop: 12, flexDirection: 'row', alignItems: 'center', gap: 13 },
   jyotishHeroIcon: { width: 58, height: 58, alignItems: 'center', justifyContent: 'center' },

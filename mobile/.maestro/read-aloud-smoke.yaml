@@ -33,7 +33,7 @@ appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 
 # ── Part 1: the settings sheet (deterministic) ────────────────────────────────
-- tapOn: { id: "tab-more" }
+- tapOn: { id: "header-menu" }
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:

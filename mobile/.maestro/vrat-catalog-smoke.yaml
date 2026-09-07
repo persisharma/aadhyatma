@@ -1,7 +1,8 @@
 # Vrat & Parv Catalog Smoke Test (PRD-09, P1)
 #
 # Verifies the new "Vrat & Parv" (व्रत-पर्व) catalog journey inside the Panchang tab:
-#   1. The [Calendar | Vrat & Parv] segment renders and switches.
+#   1. The [पंचांग | व्रत | ज्योतिष] segment renders and switches. It is also
+#      reachable straight from the व्रत bottom tab, which is the same screen.
 #   2. The browse-by-type landing shows category tiles (Vrat / Festivals / Upvas / Katha).
 #   3. The Katha tile opens the Katha library.
 #   4. A category tile drills into the per-type observance list.
@@ -14,7 +15,8 @@
 #
 # Selector notes:
 #   - The segment Pressable exposes its explicit accessibilityLabel
-#     ("Calendar" / "Vrat and Parv"), not the visible "Vrat & Parv" text.
+#     segment testIDs (segment-panchang / segment-vrat / segment-jyotish),
+#     never the label text — "Vrat" alone would also match "My Vrat".
 #   - Category tiles expose "<NameEn>, <count>" (e.g. "Vrat, 52") → match "Vrat,.*".
 #   - Back buttons on the new screens expose accessibilityLabel "Back" (English).
 #   - List/library/landing search fields expose their placeholder text.
@@ -25,7 +27,7 @@ appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 
 # ── Global reading language → English ──
-- tapOn: { id: "tab-more" }
+- tapOn: { id: "header-menu" }
 - waitForAnimationToEnd
 # The ऐप section (Language/Reading size) sits below the fold on standard-height
 # iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
@@ -42,13 +44,13 @@ appId: com.prashantsharma.vedansh
 - tapOn: "English"
 - waitForAnimationToEnd
 
-# ── Open Panchang tab, switch to the Vrat & Parv segment ──
+# ── Open Panchang tab, switch to the व्रत segment ──
 - tapOn: { id: "tab-panchang" }
 - waitForAnimationToEnd
 - extendedWaitUntil:
-    visible: "Vrat & Parv"
+    visible: "Vrat"
     timeout: 30000
-- tapOn: "Vrat & Parv"
+- tapOn: { id: "segment-vrat" }
 - waitForAnimationToEnd
 
 # ── Landing: browse-by-type tiles ──
@@ -103,7 +105,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 
 # ── Restore Hindi default (best-effort) + cleanup ──
-- tapOn: { id: "tab-more" }
+- tapOn: { id: "header-menu" }
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:

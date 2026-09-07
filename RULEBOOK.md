@@ -181,7 +181,16 @@ The slash command runs the first three; the human PR author runs the rest.
 
 ## 6. Navigation architecture
 
-The app uses a bottom tab bar with **five tabs** (`mobile/src/navigation/TabNavigator.tsx`): Home, Bhakti (Daily Bhakti), Panchang, Bhajan (Audio), and More. There is no Bookmarks tab — saved verses live at More → Wishlist (design.md §24). The tab bar **stays visible inside readers**; only the routes listed in `IMMERSIVE_HOME_ROUTES` (currently `VratKathaReader`) hide it. See design.md §17 for the full bar spec.
+The app uses a bottom tab bar with **five buttons over three routes** (`mobile/src/navigation/TabNavigator.tsx`, bar rendered by `AppTabBar.tsx`): होम · भक्ति · पंचांग · व्रत · ज्योतिष.
+
+- **पंचांग, व्रत and ज्योतिष are the SAME screen.** All three resolve to `PanchangHome` with a different `section` param. Do **not** register them as separate tab routes: three `Tab.Screen`s would mount three copies of `PanchangScreen` — three Hindu-calendar solves, three independent selected dates (a segment switch would silently reset the date), and the Jyotish copy would pull the Kundali graph in behind it.
+- **The bottom-nav highlight mirrors the active section**, which lives in `navigation/panchangSectionStore.ts`. A bar reading पंचांग while vrat content is on screen is the nav reporting the wrong location; that is the failure the store exists to prevent. See design.md §72 for the full sync rule.
+- **`AudioTab` (भजन) and `MoreTab` (अन्य) are still registered routes** — with `tabBarButton: () => null`. Only their buttons left the bar: भजन became a segment inside भक्ति, and अन्य became the `AppHeaderMenuButton` header icon on every tab root (design.md §17a). Every existing `navigate('MoreTab', moreTabTarget(...))`, notification deep link and tour step into those stacks keeps working, and **must keep working** — do not unregister them.
+- There is no Bookmarks tab — saved verses live at अन्य → Wishlist (design.md §24). The tab bar **stays visible inside readers**; only the routes listed in `IMMERSIVE_HOME_ROUTES` (currently `VratKathaReader`) hide it. See design.md §17 for the full bar spec.
+
+**Selector contract for Maestro flows.** Tap bar buttons by `testID` (`tab-home` · `tab-bhakti` · `tab-panchang` · `tab-vrat` · `tab-jyotish`), the अन्य hub by `header-menu`, and the shared screen's sections by `segment-panchang` / `segment-vrat` / `segment-jyotish` — **never by label text**. Labels are reading-language localized, and the section labels are now single words: a `tapOn: "Vrat"` also matches "My Vrat" sitting beside it.
+
+**Devanagari nav labels have a line-height floor.** भक्ति and ज्योतिष carry matras above *and* below the baseline and clip at RN's default line-height for 10 pt. The bar label is fixed at `lineHeight: 14` with `numberOfLines={1}`; any new tab label must be verified at **360 dp with the OS font scale set to Large**.
 
 New sections are registered in `mobile/src/navigation/HomeStackNavigator.tsx` (not the old `RootNavigator.tsx`). The Home screen dynamically renders categories from `mobile/src/data/categories.ts` and deities from `mobile/src/data/deities.ts` — adding a new section only requires:
 1. Adding the `LibraryEntry` to `texts.ts` (with `category` and `deities` fields)

@@ -18,6 +18,7 @@ import CategoryIcon, { type CategoryIconKey } from '@/components/CategoryIcon';
 import FeatureCard, { type FeatureSpotlight } from '@/components/FeatureCard';
 import LotusMark from '@/components/LotusMark';
 import HomeWordmark from '@/components/HomeWordmark';
+import AppHeaderMenuButton from '@/components/AppHeaderMenuButton';
 import SearchFloatingButton from '@/components/SearchFloatingButton';
 import RoutineBanner from '@/components/RoutineBanner';
 import TodayStrip from '@/components/TodayStrip';
@@ -29,6 +30,7 @@ import { launchMarkOnce } from '@/utils/launchTrace';
 import type { HomeStackParamList } from '@/navigation/types';
 import type { ContentCategory } from '@/data/texts';
 import { useNewContent } from '@/contexts/NewContentContext';
+import { usePanchangSection } from '@/contexts/PanchangSectionContext';
 import { useTilePressController, TilePressProvider } from '@/contexts/TilePressContext';
 import { shuffleBySeed } from '@/utils/shuffleBySeed';
 import { moreTabTarget, panchangTabTarget } from '@/navigation/entryRoutes';
@@ -53,6 +55,7 @@ export default function HomeScreen({ navigation }: Props) {
   // the Home stack — navigate via the parent so the action bubbles up. Same
   // pattern as RoutineBanner / PanchangScreen.
   const rootNav = useNavigation<any>();
+  const { setSection: setPanchangSection } = usePanchangSection();
 
   // First-tap recovery for the launcher tiles and the Today/Discover cards:
   // iOS can cancel a child Pressable's `onPress` when it lives inside a
@@ -100,8 +103,13 @@ export default function HomeScreen({ navigation }: Props) {
       shortNameEn: 'Vrat',
       status: 'active',
       icon: iconFor('vrat'),
-      onPress: () =>
-        rootNav.navigate('PanchangTab', panchangTabTarget('ObservanceList', { category: 'vrat' })),
+      // Same rule as the vrat reminder: the tile opens the observance LIST it
+      // promised, but the shared screen underneath is put on व्रत, so backing
+      // out lands there rather than on the पंचांग calendar.
+      onPress: () => {
+        setPanchangSection('vrat', 'deeplink');
+        rootNav.navigate('PanchangTab', panchangTabTarget('ObservanceList', { category: 'vrat' }));
+      },
     };
     const deityTile: TileItem = {
       key: 'deity',
@@ -118,11 +126,13 @@ export default function HomeScreen({ navigation }: Props) {
       status: 'active',
       icon: iconFor('insight'),
       hasNew: true,
-      onPress: () =>
-        rootNav.navigate(
-          'PanchangTab',
-          panchangTabTarget('PanchangHome', { initialTab: 'jyotish' })
-        ),
+      // Sets the shared screen's section BEFORE navigating, so the bottom-nav
+      // highlight lands on ज्योतिष with the segment rather than catching up a
+      // frame later (PanchangSectionContext's sync rule).
+      onPress: () => {
+        setPanchangSection('jyotish', 'deeplink');
+        rootNav.navigate('PanchangTab', panchangTabTarget('PanchangHome', { section: 'jyotish' }));
+      },
     };
     const muhuratTile: TileItem = {
       key: 'muhurat',
@@ -367,8 +377,14 @@ export default function HomeScreen({ navigation }: Props) {
           showsVerticalScrollIndicator={false}
           onScrollBeginDrag={markTileDrag}
         >
+          {/* अन्य rides the wordmark row rather than adding a second row of
+              chrome (§6). Absolutely positioned so the wordmark stays optically
+              centred on the screen, not centred in the space the icon leaves. */}
           <View style={styles.hero}>
             <HomeWordmark />
+            <View style={styles.heroMenu}>
+              <AppHeaderMenuButton />
+            </View>
           </View>
 
           {todayFestival && (
@@ -564,6 +580,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 6,
     marginBottom: 12,
+    // The absolutely-positioned अन्य button is anchored to this box.
+    justifyContent: 'center',
+  },
+  heroMenu: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    bottom: 0,
+    justifyContent: 'center',
   },
   sectionLabel: {
     textTransform: 'uppercase',

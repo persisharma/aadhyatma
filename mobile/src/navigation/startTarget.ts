@@ -1,5 +1,7 @@
 import type { InitialState } from '@react-navigation/native';
-import type { TabParamList } from './types';
+import { setPanchangSection } from './panchangSectionStore';
+import type { PanchangSection, TabParamList } from './types';
+import type { EntryPoint } from '@/analytics/events';
 
 /**
  * The route each stack tab keeps as its root. A cold-start target aimed deeper
@@ -40,6 +42,19 @@ export type StartTarget = {
   /** A screen in that tab's stack. Omitted when the tab itself is the destination. */
   screen?: string;
   params?: object;
+  /**
+   * Which section the shared पंचांग/व्रत/ज्योतिष screen should be on. Set by
+   * `PanchangTab` targets only.
+   *
+   * A vrat reminder still opens the specific `ObservanceDetail` it was armed
+   * for — that is the useful destination, and flattening it to a section list
+   * would throw away the one thing the notification knew. This field is the
+   * layer UNDERNEATH: it makes `PanchangHome` mount on व्रत, so backing out of
+   * the observance lands on व्रत rather than dumping the user on the calendar
+   * they never asked for. `applyStartTargetSection` also writes it to the
+   * section store, so the bottom-nav highlight is right on the first frame.
+   */
+  section?: PanchangSection;
 };
 
 /** The `NavigationContainer` `initialState` a cold start should mount with. */
@@ -48,10 +63,11 @@ export function buildInitialNavigationState(target: StartTarget): InitialState {
   if (!screen) return { index: 0, routes: [{ name: tab, params }] };
 
   const root = STACK_ROOTS[tab];
+  const rootParams = target.section ? { section: target.section } : undefined;
   const routes =
     root == null || screen === root
       ? [{ name: screen, params }]
-      : [{ name: root }, { name: screen, params }];
+      : [{ name: root, params: rootParams }, { name: screen, params }];
 
   return {
     index: 0,
@@ -72,4 +88,21 @@ export function startTargetToNavigateAction(target: StartTarget): {
   const { tab, screen, params } = target;
   if (!screen) return { name: tab, params };
   return { name: tab, params: { screen, params, initial: false } };
+}
+
+/**
+ * Write the target's section into the section store, so the bottom-nav
+ * highlight and the segment control agree from the first frame — including on a
+ * cold start, where `PanchangScreen` has not mounted yet and so cannot write it
+ * itself.
+ *
+ * Called by both launch sources with their own attribution: a notification tap
+ * passes `'notification'`, a widget or other in-app link passes `'deeplink'`.
+ * Keeping the entry point at the CALL SITE is what makes those two
+ * distinguishable in the log a month later (handover §5); resolving it inside
+ * the store would collapse them.
+ */
+export function applyStartTargetSection(target: StartTarget, entryPoint: EntryPoint): void {
+  if (!target.section) return;
+  setPanchangSection(target.section, entryPoint);
 }

@@ -15,6 +15,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { elevation } from '@/theme/elevation';
 import { useTour } from '@/contexts/TourContext';
 import { tourSteps, TAB_ORDER } from '@/data/tour/steps';
+import { TAB_BAR_BASE_HEIGHT, TAB_BAR_SLOT_COUNT } from '@/navigation/tabBarMetrics';
 import { navigationRef } from '@/notifications/deepLink';
 import { measureTourTarget, revealTourTarget, type Rect } from '@/components/tour/tourTargets';
 import {
@@ -41,8 +42,9 @@ const RING_PAD = 6;
 const CARD_HPAD = 20;
 const POINTER_W = 22;
 const POINTER_H = 14;
-const TAB_COUNT = 5;
-const TAB_BAR_CONTENT_HEIGHT = 60; // matches TabNavigator tabBarStyle height (excl. safe area)
+// Shared with the bar itself (leaf module — see tabBarMetrics).
+const TAB_COUNT = TAB_BAR_SLOT_COUNT;
+const TAB_BAR_CONTENT_HEIGHT = TAB_BAR_BASE_HEIGHT;
 
 export default function FeatureTour() {
   const { colors, typography, radii } = useTheme();
@@ -172,6 +174,9 @@ export default function FeatureTour() {
     if (navigationRef.isReady()) {
       navigationRef.resetRoot({
         index: 0,
+        // Every REGISTERED tab, not every bar button: AudioTab and MoreTab
+        // still exist as routes (भजन is a segment inside भक्ति, अन्य is the
+        // header icon), and the tour pushes screens onto both.
         routes: [
           { name: 'HomeTab' },
           { name: 'DailyBhaktiTab' },
@@ -193,11 +198,20 @@ export default function FeatureTour() {
 
   const screen = useMemo(() => ({ width: screenW, height: screenH }), [screenW, screenH]);
 
-  // Ring the measured element, else the destination tab; the card hugs whichever.
+  // Ring the measured element, else the destination's bar slot; the card hugs
+  // whichever. `ringSlot` wins over the route's default slot: पंचांग, व्रत and
+  // ज्योतिष are all `PanchangTab`, so the route alone cannot say which of the
+  // three slots a step means.
   const baseRect = useMemo(
     () =>
       targetRect ??
-      tabItemRect(TAB_ORDER[step.navigateTo.name], TAB_COUNT, screen, insets.bottom, TAB_BAR_CONTENT_HEIGHT),
+      tabItemRect(
+        step.ringSlot ?? TAB_ORDER[step.navigateTo.name],
+        TAB_COUNT,
+        screen,
+        insets.bottom,
+        TAB_BAR_CONTENT_HEIGHT
+      ),
     [targetRect, step, screen, insets.bottom]
   );
   const ringRect = useMemo(() => inflateRect(baseRect, RING_PAD), [baseRect]);

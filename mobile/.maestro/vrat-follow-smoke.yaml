@@ -26,7 +26,7 @@ appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 
 # ── Global reading language → English ──
-- tapOn: { id: "tab-more" }
+- tapOn: { id: "header-menu" }
 - waitForAnimationToEnd
 # The ऐप section (Language/Reading size) sits below the fold on standard-height
 # iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
@@ -43,13 +43,13 @@ appId: com.prashantsharma.vedansh
 - tapOn: "English"
 - waitForAnimationToEnd
 
-# ── Panchang → Vrat & Parv ──
+# ── Panchang → व्रत segment ──
 - tapOn: { id: "tab-panchang" }
 - waitForAnimationToEnd
 - extendedWaitUntil:
-    visible: "Vrat & Parv"
+    visible: "Vrat"
     timeout: 30000
-- tapOn: "Vrat & Parv"
+- tapOn: { id: "segment-vrat" }
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Browse by type"
@@ -113,7 +113,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 
 # ── Restore Hindi default (best-effort) + cleanup ──
-- tapOn: { id: "tab-more" }
+- tapOn: { id: "header-menu" }
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:

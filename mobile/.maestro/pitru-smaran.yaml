@@ -33,13 +33,13 @@ appId: com.prashantsharma.vedansh
 # ── Empty catalog invitation remains a standing Panchang entry point ──
 - tapOn: { id: "tab-panchang" }
 - waitForAnimationToEnd
-- tapOn: "Vrat & Parv"
+- tapOn: { id: "segment-vrat" }
 - extendedWaitUntil:
     visible: "Pitru Smaran.*Add remembrance dates"
     timeout: 15000
 
 # ── Open More → पितृ स्मरण ──
-- tapOn: { id: "tab-more" }
+- tapOn: { id: "header-menu" }
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
@@ -89,10 +89,10 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - assertVisible: ".*पिताजी.*"
 
-# ── Same ledger is pinned under My Vrat in the Vrat & Parv catalog ──
+# ── Same ledger is pinned under My Vrat in the व्रत catalog ──
 - tapOn: { id: "tab-panchang" }
 - waitForAnimationToEnd
-- tapOn: "Vrat & Parv"
+- tapOn: { id: "segment-vrat" }
 - extendedWaitUntil:
     visible: "Pitru Smaran.*1 entries"
     timeout: 15000

@@ -1,7 +1,11 @@
 import { CommonActions } from '@react-navigation/native';
 import { findJapamMantra } from '@/data/japam';
 import { navigationRef } from '@/notifications/deepLink';
-import { startTargetToNavigateAction, type StartTarget } from '@/navigation/startTarget';
+import {
+  applyStartTargetSection,
+  startTargetToNavigateAction,
+  type StartTarget,
+} from '@/navigation/startTarget';
 
 export type WidgetDeepLinkTarget =
   | { kind: 'verse'; sourceId: string; verseIndex: number; chapter?: number }
@@ -65,7 +69,9 @@ export function widgetStartTarget(target: WidgetDeepLinkTarget): StartTarget {
 export function handleWidgetDeepLink(raw: string): boolean {
   const target = parseWidgetDeepLink(raw);
   if (!target || !navigationRef.isReady()) return false;
-  navigationRef.dispatch(CommonActions.navigate(startTargetToNavigateAction(widgetStartTarget(target))));
+  const startTarget = widgetStartTarget(target);
+  applyStartTargetSection(startTarget, 'deeplink');
+  navigationRef.dispatch(CommonActions.navigate(startTargetToNavigateAction(startTarget)));
   return true;
 }
 

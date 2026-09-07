@@ -27,7 +27,7 @@ appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 
 # ── More hub: both PRD-29 doors render ──
-- tapOn: { id: "tab-more" }
+- tapOn: { id: "header-menu" }
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:

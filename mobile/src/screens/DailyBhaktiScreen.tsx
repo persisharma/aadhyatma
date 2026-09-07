@@ -26,6 +26,7 @@ import BookmarkButton from '@/components/BookmarkButton';
 import { useShare } from '@/utils/shareVerse';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import RoutineBanner from '@/components/RoutineBanner';
+import AppHeaderMenuButton from '@/components/AppHeaderMenuButton';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { useTourTarget } from '@/components/tour/tourTargets';
 
@@ -125,8 +126,11 @@ export default function DailyBhaktiScreen() {
           contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl }]}
           showsVerticalScrollIndicator={false}
         >
-          {/* Title */}
+          {/* Title, with अन्य on the same row — one row of chrome (§6). */}
           <View style={styles.titleArea}>
+            <View style={styles.titleMenu}>
+              <AppHeaderMenuButton />
+            </View>
             <Text
               style={{
                 fontFamily: screenTitle.primary.fontFamily,
@@ -286,7 +290,9 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
   scroll: { paddingTop: 20, paddingBottom: 80 },
-  titleArea: { marginBottom: 20, alignItems: 'center' },
+  titleArea: { marginBottom: 20, alignItems: 'center', justifyContent: 'center' },
+  // Absolute so the two title lines stay optically centred on the screen.
+  titleMenu: { position: 'absolute', right: 0, top: 0, bottom: 0, justifyContent: 'center' },
   card: {
     width: '100%',
     borderRadius: 18,

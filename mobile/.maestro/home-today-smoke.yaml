@@ -34,7 +34,7 @@ appId: com.prashantsharma.vedansh
 # The More hub shows the current reading language as a "Language, <current>" row
 # that opens LanguagePickerSheet — the old inline English/Hindi pills are gone
 # (gu/kn added a 4-way picker). Open the sheet, then pick English.
-- tapOn: { id: "tab-more" }
+- tapOn: { id: "header-menu" }
 - waitForAnimationToEnd
 # The ऐप section (Language/Reading size) sits below the fold on standard-height
 # iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
@@ -65,9 +65,9 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - tapOn: "Back"
 - waitForAnimationToEnd
-# The [Panchang | Vrat & Parv | Jyotish] segment lives on PanchangHome — visible
+# The [पंचांग | व्रत | ज्योतिष] segment lives on PanchangHome — visible
 # only if the calendar screen sits under ObservanceList in the stack (initial: false).
 # The segment's a11y label uses the ampersand form.
-- assertVisible: "Vrat & Parv"
+- assertVisible: { id: "segment-vrat" }
 - tapOn: { id: "tab-home" }
 - waitForAnimationToEnd

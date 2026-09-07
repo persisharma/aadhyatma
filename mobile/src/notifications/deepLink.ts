@@ -4,7 +4,7 @@ import { findJapamMantra } from '@/data/japam';
 import { EVENT_RULES } from '@/panchang/eventMuhurat';
 import { isJapamAlarmPayload } from './japamAlarms';
 import type { TabParamList } from '@/navigation/types';
-import { startTargetToNavigateAction, type StartTarget } from '@/navigation/startTarget';
+import { applyStartTargetSection, startTargetToNavigateAction, type StartTarget } from '@/navigation/startTarget';
 import type { NotificationPayload } from './pure';
 
 /**
@@ -115,8 +115,18 @@ export function resolveNotificationTarget(data: unknown): StartTarget | null {
   // nested inside the Panchang tab's stack. panchangTabTarget carries
   // initial:false so a cold-start deep link can't make ObservanceDetail the
   // lazily-mounted stack's initial route (back would have nothing to pop).
+  //
+  // `section: 'vrat'` sets what sits UNDERNEATH that detail. The reminder still
+  // opens the specific observance it was armed for — that is the whole value of
+  // the notification — but backing out of it now lands on व्रत instead of the
+  // पंचांग calendar the user never asked for.
   if (isVratReminderPayload(data)) {
-    return { tab: 'PanchangTab', screen: 'ObservanceDetail', params: { ruleId: data.ruleId } };
+    return {
+      tab: 'PanchangTab',
+      screen: 'ObservanceDetail',
+      params: { ruleId: data.ruleId },
+      section: 'vrat',
+    };
   }
 
   // A muhurat-reminder tap (PRD-16 §6.7) opens the followed day's detail —
@@ -218,6 +228,10 @@ export function handleNotificationResponse(
 
   const target = resolveNotificationTarget(data);
   if (target) {
+    // Before the dispatch: the bottom-nav highlight is derived from the section,
+    // so writing it first means the bar is already right on the frame the new
+    // screen commits.
+    applyStartTargetSection(target, 'notification');
     navigationRef.dispatch(CommonActions.navigate(startTargetToNavigateAction(target)));
     return true;
   }

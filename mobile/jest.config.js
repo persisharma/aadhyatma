@@ -19,6 +19,9 @@ module.exports = {
     // globs __tests__/*.test.ts straight into `tsx --test`, which cannot run them.
     '<rootDir>/src/panchang/__tests__/**/*.jest.test.{ts,tsx}',
     '<rootDir>/src/audio/__tests__/**/*.jest.test.{ts,tsx}',
+    // Analytics: the pure model runs under tsx (events.test.ts); the STORE
+    // suite needs the AsyncStorage mock, so it carries the .jest.test suffix.
+    '<rootDir>/src/analytics/__tests__/**/*.jest.test.{ts,tsx}',
     '<rootDir>/src/data/__tests__/**/*.jest.test.{ts,tsx}',
     // src/readAloud holds no tsx scripts, so the plain suffix is safe here.
     '<rootDir>/src/readAloud/__tests__/**/*.test.{ts,tsx}',

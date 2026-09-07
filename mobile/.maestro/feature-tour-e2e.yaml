@@ -13,7 +13,8 @@
 #   • Next drives the walk-through forward AND navigates the live app across the
 #     whole sequence — the 5 tabs, then the Home routine card / categories /
 #     Japa (+ mantra list) / Theerth (+ map), Bhakti verse + share, the Panchang
-#     muhurat → vrat drill, the Bhajan library, the More reminder/alarm drill,
+#     muhurat → vrat drill, the व्रत and ज्योतिष sections of that same screen,
+#     the Bhajan library, the More reminder/alarm drill,
 #     and the More Language + Reading Size rows that close the walkthrough
 #   • Back steps returns to the previous step
 #   • Done on the final step dismisses the tour
@@ -35,8 +36,8 @@ appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
 
-# ── Open More and replay the tour ──
-- tapOn: { id: "tab-more" }
+# ── Open the अन्य hub (header icon) and replay the tour ──
+- tapOn: { id: "header-menu" }
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
@@ -65,6 +66,17 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Next step"
 - waitForAnimationToEnd
 - assertVisible: "Panchang"
+
+# व्रत and ज्योतिष are the same screen as पंचांग with a different section, so
+# these two steps stay on PanchangHome and only move the segment + the bar
+# highlight.
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- assertVisible: "Vrat"
+
+- tapOn: "Next step"
+- waitForAnimationToEnd
+- assertVisible: "Jyotish"
 
 - tapOn: "Next step"
 - waitForAnimationToEnd

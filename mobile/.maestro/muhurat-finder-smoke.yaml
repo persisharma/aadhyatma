@@ -64,7 +64,7 @@ appId: com.prashantsharma.vedansh
     timeout: 60000
 
 # English for stable visible-text assertions (same recipe as kundali-smoke).
-- tapOn: { id: "tab-more" }
+- tapOn: { id: "header-menu" }
 - waitForAnimationToEnd
 # The ऐप section (Language/Reading size) sits below the fold on standard-height
 # iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
