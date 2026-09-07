@@ -45,6 +45,16 @@ export default function MoreStackNavigator() {
       <Stack.Screen name="PitruPakshaOverview" component={PitruPakshaOverviewScreen} />
       {/* वास्तु दिशा (PRD-24) — compass + room guidance. */}
       <Stack.Screen name="VastuDisha" component={VastuDishaScreen} />
+      {/* मेरा घर (PRD-24 Phase 2) — roster, setup walk and the mandala reading.
+          Loaded through require() thunks so the journey's screens (grid, engine,
+          handoff) stay OFF the static launch graph (launchGraph.test.ts budget)
+          until a door is actually opened. */}
+      {/* eslint-disable @typescript-eslint/no-require-imports */}
+      <Stack.Screen name="GharVastuRoster" getComponent={() => require('@/screens/GharVastuRosterScreen').default} />
+      <Stack.Screen name="GharVastuSetup" getComponent={() => require('@/screens/GharVastuSetupScreen').default} />
+      <Stack.Screen name="GharVastu" getComponent={() => require('@/screens/GharVastuScreen').default} />
+      <Stack.Screen name="GharVastuCompare" getComponent={() => require('@/screens/GharVastuCompareScreen').default} />
+      {/* eslint-enable @typescript-eslint/no-require-imports */}
       {/* कुल परम्परा (PRD-29) — the living's janma tithis + the family record. */}
       <Stack.Screen name="JanmaTithiList" component={JanmaTithiListScreen} />
       <Stack.Screen name="JanmaTithiDetail" component={JanmaTithiDetailScreen} />

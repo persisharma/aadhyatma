@@ -10,7 +10,10 @@
 import { deities } from '@/data/deities';
 import { japamMantras } from '@/data/japam';
 import { VIDHI_ENTRIES, getVidhiById, getVidhiForFestival } from '@/data/vidhi';
+import { zoneLabel } from '@/data/vastu/mandala';
 import { getVastuRoomEntry } from '@/data/vastu/roomGuidance';
+import type { VastuZone } from '@/data/vastu/types';
+import { FINDING_CLASS_LABELS, WEIGHT_LABELS, classifyPlacement } from '@/vastu/assessHome';
 import { BHOG_CONTENT, getBhogContent } from '@/panchang/bhogContent';
 import { EVENT_RULES, DISHA_LABELS } from '@/panchang/eventMuhurat';
 import { getObservancesForDate } from '@/panchang/festivalEngine';
@@ -567,6 +570,81 @@ const muhuratEvent: AskIntent = {
 };
 
 /* ------------------------------------------------------------------ */
+/*  vastu.myhome (PRD-24 Phase 2 §C5/US-15)                            */
+/* ------------------------------------------------------------------ */
+
+const vastuMyHome: AskIntent = {
+  id: 'vastu.myhome',
+  family: 'vastu',
+  triggers: [
+    'mera', 'meri', 'mere', 'hamara', 'hamare', 'humara', 'humare', 'apne ghar', 'mere ghar', 'hamare ghar',
+    'ghar ka mukh', 'ghar ka main door',
+    'मेरा', 'मेरी', 'मेरे', 'हमारा', 'हमारे', 'अपने घर', 'मेरे घर', 'हमारे घर', 'घर का मुख',
+  ],
+  slots: ['room'],
+  examples: [
+    L('मेरी रसोई किस दिशा में है?', 'Which direction is my kitchen in?'),
+    L('मेरे घर का मुख किस दिशा में है?', 'Which way does my home face?'),
+  ],
+  resolve(ctx, slots) {
+    // Recall of the USER's own record read with the convention — never a
+    // prediction; the declined register (dosh/phal framings) never reaches
+    // here. Without a saved living home: abstain → the did-you-mean chip
+    // offers the generic vastu.direction path (§C5).
+    const home = ctx.vastuHome;
+    if (!home) return null;
+    const entry = getVastuRoomEntry(slots.room!.id);
+    if (!entry || entry.status !== 'verified') return null;
+    const placements = home.rooms
+      .filter((room) => room.roomId === entry.id)
+      .sort((a, b) => a.ordinal - b.ordinal);
+    if (placements.length === 0) return null; // this home never listed the room
+
+    const ideal = entry.isCenter
+      ? L('ब्रह्मस्थान (केंद्र)', 'Brahmasthan (centre)')
+      : L(
+          entry.directions.map((d) => DISHA_LABELS[d].hi).join(' · '),
+          entry.directions.map((d) => DISHA_LABELS[d].en).join(' · ')
+        );
+    const weight = WEIGHT_LABELS[entry.weight ?? 'vidhana'];
+
+    const lines: AskLine[] = [
+      { label: L('परंपरा', 'Convention'), value: L(`${ideal.hi} · ${weight.hi}`, `${ideal.en} · ${weight.en}`) },
+      ...placements.map((placement) => {
+        const cls = classifyPlacement(entry, (placement.zone ?? null) as VastuZone | null);
+        const clsLabel = FINDING_CLASS_LABELS[cls];
+        const where =
+          placement.zone != null
+            ? L(zoneLabel(placement.zone as VastuZone, 'hi'), zoneLabel(placement.zone as VastuZone, 'en'))
+            : L('अभी मापा नहीं', 'Not yet measured');
+        const ordinal = placements.length > 1 ? ` ${placement.ordinal}` : '';
+        return {
+          label: L(`आपके घर में${ordinal}`, `In your home${ordinal}`),
+          value: L(`${where.hi} — ${clsLabel.hi}`, `${where.en} — ${clsLabel.en}`),
+          ...(cls === 'forbidden' ? { tone: 'avoid' as const } : {}),
+        };
+      }),
+    ];
+
+    return {
+      intentId: this.id,
+      family: 'vastu',
+      tag: L('मेरा घर · वास्तु', 'My home · Vastu'),
+      headline: L(entry.titleHi, entry.titleEn),
+      sub: L(home.label, home.label),
+      lines,
+      working: [`homeRoster.living(${home.homeId}).rooms[${entry.id}]`, 'classifyPlacement ← verified registry'],
+      provenance: L(
+        'आपका अपना रिकॉर्ड, शास्त्रीय परंपरा के साथ पढ़ा गया — घर पर निर्णय नहीं',
+        'Your own record, read with the classical convention — never a verdict on the home'
+      ),
+      actions: [{ label: L('मेरा घर खोलें', 'Open my home'), target: { tab: 'more', screen: 'GharVastu', params: { homeId: home.homeId } } }],
+      confidence: 'exact',
+    };
+  },
+};
+
+/* ------------------------------------------------------------------ */
 /*  vastu.direction                                                    */
 /* ------------------------------------------------------------------ */
 
@@ -578,6 +656,9 @@ const vastuDirection: AskIntent = {
     'which direction', 'which side', 'direction', 'disha', 'where should', 'vastu', 'kaha rakhe', 'kahan rakhe', 'kahan hona',
     'किस दिशा', 'कौन सी दिशा', 'किस तरफ', 'किस ओर', 'किधर', 'दिशा में', 'वास्तु', 'कहाँ रखें', 'कहाँ हो',
   ],
+  // Possessive questions belong to vastu.myhome — the generic convention
+  // must not answer "मेरी रसोई…" as if no home were saved (§C5).
+  blockers: ['mera', 'meri', 'mere', 'hamara', 'hamare', 'humara', 'humare', 'मेरा', 'मेरी', 'मेरे', 'हमारा', 'हमारे'],
   slots: ['room'],
   examples: [L('मंदिर किस दिशा में होना चाहिए?', 'Which direction should the mandir face?'), L('सोते समय सिर किस दिशा में?', 'Which way should my head point when sleeping?')],
   resolve(ctx, slots) {
@@ -683,6 +764,7 @@ export const INTENTS: readonly AskIntent[] = [
   bhogOffer,
   muhuratEvent,
   muhuratNow,
+  vastuMyHome, // before vastu.direction: possessives are the user's own record
   vastuDirection,
   japamMantra,
   sadhanaProgress,

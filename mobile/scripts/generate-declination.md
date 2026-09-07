@@ -17,3 +17,22 @@ Method (BGS geomag web service, no key needed):
 4. `vastuContent.test.ts` pins that every bundled city id has a value — run it.
 
 Last generated: 2026-08-27, WMM-2025, 394 entries, 0 fetch errors, range −1.7° … +2.8°.
+
+## Grid method (`src/data/vastu/declinationGrid.ts`, PRD-24 Phase 2 §A3)
+
+The grid carries one WMM value per 1° × 1° node over 6–38°N, 66–100°E (33 rows ×
+35 cols = 1,155 nodes), stored as INTEGER TENTHS of a degree, east-positive,
+row-major (latitude ascending, longitude ascending within a row). Bilinear
+interpolation serves any coordinate inside the box; outside returns null
+(silently magnetic — RULEBOOK §22.7).
+
+1. For each node, GET the same BGS endpoint as above with `latitude=<lat>`,
+   `longitude=<lon>` (integers), `altitude=0`, `date=<today>`.
+2. `declination.units` is reported as `deg (east)` — verify it, then emit
+   `Math.round(value * 10)` into `DECLINATION_GRID_TENTHS`.
+3. Update the header comment's model + evaluation date.
+4. `declinationGrid.test.ts` pins the shape AND that every bundled city's grid
+   value agrees with `DECLINATION_BY_CITY` within 0.2° — the city table is the
+   oracle; a breach means re-verify that city, never loosen the tolerance.
+
+Last generated: 2026-09-07, WMM-2025, 1,155 nodes, 0 fetch errors, range −2.2° … +4.8°.
