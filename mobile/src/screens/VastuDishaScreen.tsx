@@ -12,6 +12,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import DishaChakra from '@/components/DishaChakra';
+import ListCard, { CardThumb } from '@/components/ListCard';
 import ReaderHeader from '@/components/ReaderHeader';
 import { useGitaLanguage } from '@/data/gita/language';
 import { getMandirGuidance } from '@/data/vastu/mandirGuidance';
@@ -19,12 +20,19 @@ import { getVastuRoomEntries } from '@/data/vastu/roomGuidance';
 import type { MandirGuidanceEntry, VastuRoomEntry } from '@/data/vastu/types';
 import { DISHA_LABELS, DISHA_ORDER, type DishaDirection } from '@/panchang/eventMuhurat';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang, pick } from '@/utils/localize';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { dikForHeading } from '@/vastu/compass';
 import { useCompassHeading } from '@/vastu/useCompassHeading';
+import { useHomeRoster } from '@/vastu/homeRecordStore';
 
-export default function VastuDishaScreen({ navigation }: { navigation: { goBack: () => void } }) {
+type Navigation = {
+  goBack: () => void;
+  navigate: (route: string, params?: object) => void;
+};
+
+export default function VastuDishaScreen({ navigation }: { navigation: Navigation }) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
@@ -34,6 +42,7 @@ export default function VastuDishaScreen({ navigation }: { navigation: { goBack:
   // chip returns to live — unless the device has no magnetometer to return to.
   const [manualDik, setManualDik] = useState<DishaDirection | null>(null);
   const sensor = useCompassHeading(manualDik == null);
+  const { roster } = useHomeRoster();
 
   const liveDik = sensor.heading != null ? dikForHeading(sensor.heading) : null;
   const facingDik = manualDik ?? liveDik;
@@ -164,6 +173,50 @@ export default function VastuDishaScreen({ navigation }: { navigation: { goBack:
               </Pressable>
             );
           })}
+        </View>
+
+        {/* मेरा घर door (PRD-24 Phase 2 §C4): NEW until the roster holds a home;
+            then the card states what it holds. Routes: empty → setup, one home →
+            that home's reading, several → the roster. */}
+        <View style={{ marginTop: spacing.lg }}>
+          <ListCard
+            testID="vastu-mere-ghar-door"
+            variant="flat"
+            leading={
+              <CardThumb>
+                <Text style={{ color: colors.saffronDeep, fontFamily: typography.readerTitle.fontFamily, fontSize: 18 }}>घ</Text>
+              </CardThumb>
+            }
+            right={
+              roster.homes.length === 0 ? (
+                <Text style={{ color: colors.saffronDeep, fontFamily: fontFamilies.interSemiBold, fontSize: 10.5, letterSpacing: 0.4 }}>
+                  NEW
+                </Text>
+              ) : undefined
+            }
+            onPress={() => {
+              if (roster.homes.length === 0) navigation.navigate('GharVastuSetup');
+              else if (roster.homes.length === 1) navigation.navigate('GharVastu', { homeId: roster.homes[0]!.id });
+              else navigation.navigate('GharVastuRoster');
+            }}
+            accessibilityLabel="My homes — place the rooms on the mandala and read the convention"
+          >
+            <Text style={{ color: colors.ink, fontFamily: titleFont, fontSize: 15 }}>
+              {pick(lang, { hi: 'मेरे घर', en: 'My homes', gu: 'મારાં ઘર', kn: 'ನನ್ನ ಮನೆಗಳು' })}
+            </Text>
+            <Text style={{ color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily, fontSize: 11.5, lineHeight: 17 }}>
+              {roster.homes.length === 0
+                ? pick(lang, {
+                    hi: 'कक्षों को मंडल पर रखें — विधान का पाठ पढ़ें',
+                    en: 'Place the rooms on the mandala — read the convention',
+                    gu: 'ઓરડાઓને મંડલ પર મૂકો — વિધાનનો પાઠ વાંચો',
+                    kn: 'ಕೋಣೆಗಳನ್ನು ಮಂಡಲದ ಮೇಲೆ ಇರಿಸಿ — ವಿಧಾನದ ಪಾಠ ಓದಿ',
+                  })
+                : roster.homes.length === 1
+                  ? roster.homes[0]!.label
+                  : `${roster.homes.length} ${pick(lang, { hi: 'घर सहेजे गए', en: 'homes saved', gu: 'ઘર સાચવ્યાં', kn: 'ಮನೆಗಳು ಉಳಿಸಲಾಗಿದೆ' })}`}
+            </Text>
+          </ListCard>
         </View>
 
         {facedEntries.length > 0 && (

@@ -11,6 +11,9 @@ import PitruSmaranEditScreen from '@/screens/PitruSmaranEditScreen';
 import PitruSmaranDetailScreen from '@/screens/PitruSmaranDetailScreen';
 import PitruPakshaOverviewScreen from '@/screens/PitruPakshaOverviewScreen';
 import VastuDishaScreen from '@/screens/VastuDishaScreen';
+import GharVastuRosterScreen from '@/screens/GharVastuRosterScreen';
+import GharVastuSetupScreen from '@/screens/GharVastuSetupScreen';
+import GharVastuScreen from '@/screens/GharVastuScreen';
 import JanmaTithiListScreen from '@/screens/JanmaTithiListScreen';
 import JanmaTithiDetailScreen from '@/screens/JanmaTithiDetailScreen';
 import KulParamparaScreen from '@/screens/KulParamparaScreen';
@@ -45,6 +48,10 @@ export default function MoreStackNavigator() {
       <Stack.Screen name="PitruPakshaOverview" component={PitruPakshaOverviewScreen} />
       {/* वास्तु दिशा (PRD-24) — compass + room guidance. */}
       <Stack.Screen name="VastuDisha" component={VastuDishaScreen} />
+      {/* मेरा घर (PRD-24 Phase 2) — roster, setup walk and the mandala reading. */}
+      <Stack.Screen name="GharVastuRoster" component={GharVastuRosterScreen} />
+      <Stack.Screen name="GharVastuSetup" component={GharVastuSetupScreen} />
+      <Stack.Screen name="GharVastu" component={GharVastuScreen} />
       {/* कुल परम्परा (PRD-29) — the living's janma tithis + the family record. */}
       <Stack.Screen name="JanmaTithiList" component={JanmaTithiListScreen} />
       <Stack.Screen name="JanmaTithiDetail" component={JanmaTithiDetailScreen} />

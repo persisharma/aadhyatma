@@ -2,9 +2,11 @@ import assert from 'node:assert/strict';
 
 import type { BookmarkRef } from '@/contexts/BookmarksContext';
 import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
+import type { HomeRecord, HomeRoster } from '@/vastu/homeRecord';
 import {
   buildEntryStartTarget,
   buildBookmarkTarget,
+  buildGharVastuDoorTarget,
   buildProgressTarget,
   navigateToBookmark,
   navigateToHomeStackTarget,
@@ -405,4 +407,64 @@ for (const sourceId of [
       },
     },
   ]);
+}
+
+// ——— गृह प्रवेश → मेरा घर door (PRD-24 Phase 2 Part D / US-16) ———
+
+const home = (overrides: Partial<HomeRecord>): HomeRecord => ({
+  id: 'home-1',
+  version: 1,
+  label: 'हमारा घर',
+  kind: 'flat',
+  template: 'flat-3bhk',
+  role: 'considering',
+  facing: null,
+  rooms: [],
+  createdAt: '2026-09-07T00:00:00.000Z',
+  updatedAt: '2026-09-07T00:00:00.000Z',
+  ...overrides,
+});
+
+// An empty roster opens setup for the home being entered.
+{
+  const roster: HomeRoster = { version: 1, homes: [], livingId: null };
+  assert.deepEqual(buildGharVastuDoorTarget(roster), {
+    screen: 'GharVastuSetup',
+    params: { role: 'living' },
+  });
+}
+
+// A roster with a living home opens that home's reading.
+{
+  const roster: HomeRoster = {
+    version: 1,
+    homes: [home({ id: 'home-a', role: 'living' }), home({ id: 'home-b' })],
+    livingId: 'home-a',
+  };
+  assert.deepEqual(buildGharVastuDoorTarget(roster), {
+    screen: 'GharVastu',
+    params: { homeId: 'home-a' },
+  });
+}
+
+// Considering-only homes are not "the living home" — still setup.
+{
+  const roster: HomeRoster = {
+    version: 1,
+    homes: [home({ id: 'home-a' }), home({ id: 'home-b' })],
+    livingId: null,
+  };
+  assert.deepEqual(buildGharVastuDoorTarget(roster), {
+    screen: 'GharVastuSetup',
+    params: { role: 'living' },
+  });
+}
+
+// A stale livingId (home deleted) degrades to setup, never a crash.
+{
+  const roster: HomeRoster = { version: 1, homes: [home({ id: 'home-a' })], livingId: 'gone' };
+  assert.deepEqual(buildGharVastuDoorTarget(roster), {
+    screen: 'GharVastuSetup',
+    params: { role: 'living' },
+  });
 }

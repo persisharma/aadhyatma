@@ -19,6 +19,9 @@ import NamkaranScreen from '@/screens/NamkaranScreen';
 import NamkaranResultScreen from '@/screens/NamkaranResultScreen';
 import NamkaranRashiScreen from '@/screens/NamkaranRashiScreen';
 import VastuDishaScreen from '@/screens/VastuDishaScreen';
+import GharVastuRosterScreen from '@/screens/GharVastuRosterScreen';
+import GharVastuSetupScreen from '@/screens/GharVastuSetupScreen';
+import GharVastuScreen from '@/screens/GharVastuScreen';
 import VidhiCatalogScreen from '@/screens/VidhiCatalogScreen';
 import VidhiDetailScreen from '@/screens/VidhiDetailScreen';
 import VidhiConductScreen from '@/screens/VidhiConductScreen';
@@ -77,6 +80,23 @@ export default function PanchangStackNavigator() {
       <Stack.Screen
         name="VastuDisha"
         component={VastuDishaScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      {/* मेरा घर (PRD-24 Phase 2) — the griha-pravesh result's door pushes the
+       * journey in place here so Back returns to the muhurat result. */}
+      <Stack.Screen
+        name="GharVastuRoster"
+        component={GharVastuRosterScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="GharVastuSetup"
+        component={GharVastuSetupScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="GharVastu"
+        component={GharVastuScreen}
         options={{ animation: 'slide_from_right' }}
       />
       <Stack.Screen

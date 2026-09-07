@@ -59,6 +59,48 @@ describe('registry shape', () => {
   });
 });
 
+describe('typed placement sets (PRD-24 Phase 2 §B1)', () => {
+  test('alternateDirections never overlap directions', () => {
+    for (const entry of VASTU_ROOM_ENTRIES) {
+      for (const dik of entry.alternateDirections ?? []) {
+        expect(DISHA_ORDER).toContain(dik);
+        expect(entry.directions).not.toContain(dik);
+      }
+    }
+  });
+
+  test('avoidDirections never overlap directions or alternates, and are diks or center', () => {
+    for (const entry of VASTU_ROOM_ENTRIES) {
+      for (const zone of entry.avoidDirections ?? []) {
+        expect(zone === 'center' || DISHA_ORDER.includes(zone)).toBe(true);
+        expect(entry.directions as readonly string[]).not.toContain(zone);
+        expect((entry.alternateDirections ?? []) as readonly string[]).not.toContain(zone);
+      }
+    }
+  });
+
+  test('centre entries carry none of the three placement sets', () => {
+    for (const entry of VASTU_ROOM_ENTRIES) {
+      if (!entry.isCenter) continue;
+      expect(entry.directions).toHaveLength(0);
+      expect(entry.alternateDirections ?? []).toHaveLength(0);
+      expect(entry.avoidDirections ?? []).toHaveLength(0);
+    }
+  });
+
+  test('facingWhileUsing values are diks', () => {
+    for (const entry of VASTU_ROOM_ENTRIES) {
+      for (const dik of entry.facingWhileUsing ?? []) expect(DISHA_ORDER).toContain(dik);
+    }
+  });
+
+  test('the typed sets mirror what the shipped prose already states', () => {
+    expect(getVastuRoomEntry('kitchen')?.alternateDirections).toEqual(['northwest']);
+    expect(getVastuRoomEntry('toilet')?.avoidDirections).toEqual(['northeast', 'center']);
+    expect(getVastuRoomEntry('sleeping')?.avoidDirections).toEqual(['north']);
+  });
+});
+
 describe('source threshold (RULEBOOK §22.3)', () => {
   test('every VERIFIED entry cites ≥2 independent domains and a dated verification note', () => {
     for (const entry of [...VASTU_ROOM_ENTRIES, ...MANDIR_GUIDANCE_ENTRIES]) {
@@ -101,7 +143,9 @@ describe('stance guard (RULEBOOK §22.5) — customer copy carries no fear/remed
 
   // The forbidden register — dosha verdicts, remedies/upsell, pseudo-science,
   // misfortune threats. (वर्जित/'avoided' is convention language and stays legal.)
-  const FORBIDDEN = [/dosha/i, /दोष/, /remed/i, /उपाय/, /यंत्र/, /yantra/i, /magnet/i, /चुंबक/, /misfortune/i, /अनिष्ट/, /हानि होगी/, /detox/i, /energy field/i];
+  // Phase 2 (PRD-24 Phase 2 §7) adds the score/verdict register: no composite
+  // score, percentage, rating, or consult-an-expert copy anywhere in the registry.
+  const FORBIDDEN = [/dosha/i, /दोष/, /remed/i, /उपाय/, /यंत्र/, /yantra/i, /magnet/i, /चुंबक/, /misfortune/i, /अनिष्ट/, /हानि होगी/, /detox/i, /energy field/i, /score/i, /\d+\s?%/, /अंक/, /rating/i, /needs? (fixing|attention)/i, /सुधार/, /expert/i, /विशेषज्ञ से/];
 
   test.each([...VASTU_ROOM_ENTRIES, ...MANDIR_GUIDANCE_ENTRIES].map((e) => [e.id, e] as const))(
     '%s',
