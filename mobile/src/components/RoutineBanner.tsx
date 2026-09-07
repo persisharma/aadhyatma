@@ -2,6 +2,7 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '@/theme/ThemeContext';
+import { androidBoxShadow } from '@/theme/elevation';
 import { useGitaLanguage } from '@/data/gita/language';
 import { pick } from '@/utils/localize';
 import { useRoutineToday } from '@/data/routine/useRoutineToday';
@@ -56,7 +57,9 @@ export default function RoutineBanner({
           shadowOpacity: 0.1,
           shadowRadius: 8,
           shadowOffset: { width: 0, height: 3 },
-          elevation: 3,
+          // Android ignores shadow*; give it the same soft ink lift via
+          // boxShadow (no integer `elevation`, which draws a boxy grey box).
+          ...androidBoxShadow(3, 8, 'rgba(26, 14, 3, 0.1)'),
         }
       : {
           position: 'absolute' as const,
@@ -71,7 +74,8 @@ export default function RoutineBanner({
           shadowOpacity: 0.16,
           shadowRadius: 12,
           shadowOffset: { width: 0, height: -4 },
-          elevation: 6,
+          // Upward soft lift on Android too (no boxy integer `elevation`).
+          ...androidBoxShadow(-4, 12, 'rgba(26, 14, 3, 0.16)'),
         };
 
   const lineStyle = {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Pressable, StyleSheet, Switch, Text, View } from 'react-native';
+import { Modal, Pressable, StyleSheet, Switch, Text, View } from 'react-native';
 import { spacing } from '@/theme/spacing';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
@@ -12,10 +12,8 @@ import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 // (titleName null). Mirrors the v2 prototype: advance-notice pills, an
 // on-the-day toggle, and day-of time pills.
 //
-// Implemented as an in-tree absolute overlay rather than a transparent RN
-// <Modal>: a transparent Modal lives in a separate iOS window that the e2e
-// (Maestro) accessibility snapshot can't read into, and it merges poorly for
-// VoiceOver. An in-tree overlay stays in the RN view hierarchy.
+// Rendered in a native Modal so callers nested inside a ScrollView cannot place
+// the sheet at the bottom of the scroll content, outside the visible viewport.
 //
 // PRD-16 §6.7 reuses this sheet for muhurat follows rather than forking it
 // (§7/§9, RULEBOOK §9). A muhurat is a TIME, not a day, so the caller may pass
@@ -140,6 +138,13 @@ export default function VratReminderSheet({
   const optHint = { fontFamily: fontFamilies.latinItalic, fontSize: 11, color: colors.inkMuted, marginTop: 1 };
 
   return (
+    <Modal
+      visible
+      transparent
+      animationType="slide"
+      onRequestClose={onClose}
+      accessibilityViewIsModal
+    >
     <View style={[StyleSheet.absoluteFill, styles.overlay]} testID={testID}>
       <Pressable
         accessible={false}
@@ -207,6 +212,7 @@ export default function VratReminderSheet({
             <Text style={optHint}>{contentByLang(lang, 'सुबह का स्मरण', 'morning reminder')}</Text>
           </View>
           <Switch
+            testID="reminder-sheet-day-of"
             value={dayOf}
             onValueChange={setDayOf}
             trackColor={{ true: colors.saffron, false: colors.divider }}
@@ -268,6 +274,7 @@ export default function VratReminderSheet({
         ) : null}
       </View>
     </View>
+    </Modal>
   );
 }
 

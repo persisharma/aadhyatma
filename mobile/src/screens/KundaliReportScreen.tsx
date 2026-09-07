@@ -341,7 +341,11 @@ function ReportSectionCard({
   return (
     <View
       accessible
-      accessibilityLabel={`${section.titleEn}. ${section.bodyEn.join(' ')}`}
+      accessibilityLabel={[
+        section.titleEn,
+        ...section.facts.map((fact) => `${fact.labelEn}: ${fact.valueEn}`),
+        ...section.bodyEn,
+      ].join('. ')}
       style={[
         styles.sectionCard,
         {

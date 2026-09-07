@@ -8,6 +8,7 @@ import { useRoutines } from '@/contexts/RoutineContext';
 import { bannerStatus } from './routineBannerView';
 import { completionSignature, shouldCelebrateCompletion } from './routineCelebrationView';
 import RoutineCelebration from './RoutineCelebration';
+import { useRatingAsk } from '@/contexts/ratingAsk';
 
 /**
  * App-level watcher for the routine-completion pushpa-varsha. Mounted once at the
@@ -28,6 +29,7 @@ export default function RoutineCelebrationOverlay() {
   const { lang } = useGitaLanguage();
   const { entries, doneCount, total, hasRoutine } = useRoutineToday();
   const { celebratedSignatureToday, markCelebrated, isLoading } = useRoutines();
+  const requestRatingAsk = useRatingAsk();
 
   const status = bannerStatus({ hasRoutine, doneCount, total });
   const sig = completionSignature(entries.map((e) => e.key));
@@ -48,7 +50,17 @@ export default function RoutineCelebrationOverlay() {
   if (!shower) return null;
   return (
     <Modal visible transparent animationType="none" presentationStyle="overFullScreen" onRequestClose={() => undefined}>
-      <RoutineCelebration key={shower.sig} caption={shower.caption} onDone={() => setShower(null)} />
+      <RoutineCelebration
+        key={shower.sig}
+        caption={shower.caption}
+        onDone={() => {
+          setShower(null);
+          // The best moment in the app to ask for a rating (design.md §54): today's
+          // practice is done and the petals have settled. The gate decides whether
+          // the card actually opens; this only reports the moment.
+          requestRatingAsk('routine-complete');
+        }}
+      />
     </Modal>
   );
 }

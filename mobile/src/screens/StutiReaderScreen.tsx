@@ -32,6 +32,8 @@ import { useShare } from '@/utils/shareVerse';
 import { useAudioPlayerContext } from '@/contexts/AudioPlayerContext';
 import { getTrackForText } from '@/data/audio/tracks';
 import { hasRealAudio } from '@assets/audio-library';
+import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
+import { useReaderReadAloud } from '@/screens/_useReaderReadAloud';
 import type { RootStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'StutiReader'>;
@@ -57,6 +59,16 @@ export default function StutiReaderScreen({ navigation, route }: Props) {
   const listRef = useRef<FlatList<StutiVerse>>(null);
   const initialIndex = clampIndex(route.params?.initialIndex, total);
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
+
+  // Flat reader: list index === verse index, so no offset.
+  const readAloud = useReaderReadAloud({
+    sourceId: stutiId,
+    data: verses,
+    offset: 0,
+    verseCount: total,
+    currentIndex,
+    listRef,
+  });
 
   useEffect(() => {
     setProgress({
@@ -171,6 +183,10 @@ export default function StutiReaderScreen({ navigation, route }: Props) {
         <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}>
           <LanguageToggle />
           <AddToRoutineButton sourceId={stutiId} />
+          {/* Pinned right so the toggle group stays centred (design.md §56.2). */}
+          <View style={styles.readAloudSlot}>
+            <ReadAloudButton control={readAloud} />
+          </View>
         </View>
 
         <View style={styles.listContainer}>
@@ -281,6 +297,13 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     paddingBottom: 12,
     alignItems: 'center',
+  },
+  readAloudSlot: {
+    position: 'absolute',
+    right: 16,
+    top: 6,
+    bottom: 12,
+    justifyContent: 'center',
   },
   listContainer: {
     flex: 1,

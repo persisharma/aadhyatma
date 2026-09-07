@@ -98,11 +98,12 @@ export default function GitaVersePage({ verse, sourceId, width, topActions }: Pr
           { paddingHorizontal: spacing.screenGutter },
         ]}
         showsVerticalScrollIndicator={false}
-        accessible
-        accessibilityLabel={a11yLabel}
+        accessible={false}
       >
         <View style={styles.headerRow}>
           <View
+            accessible
+            accessibilityLabel={a11yLabel}
             style={[
               styles.pill,
               { backgroundColor: colors.saffronTint, borderRadius: radii.pill },

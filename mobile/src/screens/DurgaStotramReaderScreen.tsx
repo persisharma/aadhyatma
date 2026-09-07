@@ -22,6 +22,8 @@ import AddToRoutineButton from '@/components/AddToRoutineButton';
 import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
+import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
+import { useReaderReadAloud } from './_useReaderReadAloud';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type NextTransitionItem = {
@@ -95,6 +97,17 @@ export default function DurgaStotramReaderScreen({ navigation, route }: Props) {
   const offset = isFirstChapter ? 0 : 1;
   const hasNavigatedRef = useRef(false);
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
+
+  // Called before the null-chapter early return below, so hook order stays stable;
+  // with no chapter it simply has zero pages to speak.
+  const readAloud = useReaderReadAloud({
+    sourceId: 'durga-stotram',
+    data,
+    offset,
+    verseCount,
+    currentIndex,
+    listRef,
+  });
 
   useEffect(() => {
     if (chapter == null) return;
@@ -183,7 +196,14 @@ export default function DurgaStotramReaderScreen({ navigation, route }: Props) {
 
         <ReadingProgressBar current={currentIndex + 1} total={verseCount} />
 
-        <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}><LanguageToggle /><AddToRoutineButton sourceId="durga-stotram" chapter={chapter.chapter} /></View>
+        <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}>
+          <LanguageToggle />
+          <AddToRoutineButton sourceId="durga-stotram" chapter={chapter.chapter} />
+          {/* Pinned right so the toggle group stays centred (design.md §56.2). */}
+          <View style={styles.readAloudSlot}>
+            <ReadAloudButton control={readAloud} />
+          </View>
+        </View>
 
         <View style={styles.listContainer}>
           <FlatList
@@ -276,6 +296,7 @@ const styles = StyleSheet.create({
   safe: { flex: 1 },
   counter: { includeFontPadding: false, minWidth: 48, textAlign: 'right' },
   toggleRow: { paddingVertical: 6, paddingBottom: 12, alignItems: 'center' },
+  readAloudSlot: { position: 'absolute', right: 16, top: 6, bottom: 12, justifyContent: 'center' },
   listContainer: { flex: 1 },
   list: { flex: 1 },
   dotsOverlay: { position: 'absolute', bottom: 4, left: 0, right: 0, alignItems: 'center' },

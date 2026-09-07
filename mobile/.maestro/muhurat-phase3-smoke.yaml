@@ -54,6 +54,11 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
     optional: true
+- tapOn: { text: "Allow", optional: true }
+- tapOn: { text: "Don.t Allow", optional: true }
+- waitForAnimationToEnd
+- tapOn: { text: "SKIP|Skip|Skip tour", optional: true }
+- tapOn: { text: "Begin", optional: true }
 - extendedWaitUntil:
     # Canary: the above-the-fold Panchang card — the Good Habits tile sits below
     # the first viewport since Home gained the daily recommendation cards.
@@ -87,11 +92,19 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
 - tapOn: "Muhurat\\..*Tap to open\\."
 - waitForAnimationToEnd
+# The occasion picker pre-solves preview scans behind a spinner; on a cold
+# Android start this runs past 20 s (fine on iOS), so allow the finder budget.
 - extendedWaitUntil:
     visible: "Find a Muhurat"
-    timeout: 20000
+    timeout: 60000
 
 # ── Results: the lagna chip on the best-window line ──────────────────────────
+- scrollUntilVisible:
+    element:
+      id: "muhurat-occasion-vahan"
+    direction: DOWN
+    centerElement: true
+    timeout: 15000
 - tapOn:
     id: "muhurat-occasion-vahan"
 - waitForAnimationToEnd
@@ -109,7 +122,7 @@ appId: com.prashantsharma.vedansh
 
 # ── Day detail: लग्न + होरा evidence rows, per-segment lagna tags ────────────
 - tapOn:
-    text: "Shreshtha.*|Madhyam.*"
+    id: "muhurat-result-.*"
     index: 0
 - waitForAnimationToEnd
 - extendedWaitUntil:
@@ -127,9 +140,9 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
 # The साक्ष्य framing keeps hora visibly outside the tier contract.
 - assertVisible: "Evidence|साक्ष्य"
-- back
+- tapOn: "Back"
 - waitForAnimationToEnd
-- back
+- tapOn: "Back"
 - waitForAnimationToEnd
 
 # ── यात्रा: the 13th occasion and its दिशा chip row ──────────────────────────

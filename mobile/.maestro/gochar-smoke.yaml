@@ -168,7 +168,7 @@ appId: com.prashantsharma.vedansh
       text: "Open Gochar"
     direction: DOWN
     timeout: 15000
-- assertVisible: ".*Sade Sati and upcoming sign changes.*"
+- assertVisible: "Sade Sati is running. Open Gochar"
 - tapOn: "Open Gochar"
 - waitForAnimationToEnd
 

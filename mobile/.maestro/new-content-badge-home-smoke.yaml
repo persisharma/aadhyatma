@@ -53,7 +53,7 @@ appId: com.prashantsharma.vedansh
     timeout: 10000
 - scrollUntilVisible:
     element:
-      text: "Sacred Books. Tap to open."          # granth → plain (no badge)
+      text: "Sacred Books. New. Tap to open."     # granth → HAS badge (newly tagged granth content)
     direction: UP
     timeout: 10000
 - scrollUntilVisible:

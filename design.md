@@ -242,20 +242,28 @@ This table is the **single source of truth** for reading-content sizing, impleme
 > five named elevations rather than the `sm/md/lg` scale above. All share one warm shadow
 > colour, defined once as `#3C1E0A` — never re-typed at a call site.
 >
-> | Token | Offset · opacity · radius · Android | Use |
+> | Token | Offset · opacity · radius | Use |
 > | --- | --- | --- |
-> | `elevation.subtle` | `0,1` · `0.06` · `4` · `1` | dim/inactive card, grouped-list surface |
-> | `elevation.card` | `0,2` · `0.10` · `6` · `2` | default card |
-> | `elevation.lifted` | `0,4` · `0.11` · `12` · `3` | active/selected catalog tile, chapter card |
-> | `elevation.raised` | `0,6` · `0.16` · `14` · `5` | the one focal element on a screen |
-> | `elevation.overlay` | `0,6` · `0.25` · `14` · `10` | floats above a scrim (feature-tour card) |
+> | `elevation.subtle` | `0,1` · `0.06` · `4` | dim/inactive card, grouped-list surface |
+> | `elevation.card` | `0,2` · `0.10` · `6` | default card |
+> | `elevation.lifted` | `0,4` · `0.11` · `12` | active/selected catalog tile, chapter card |
+> | `elevation.raised` | `0,6` · `0.16` · `14` | the one focal element on a screen |
+> | `elevation.overlay` | `0,6` · `0.25` · `14` | floats above a scrim (feature-tour card) |
+>
+> **Cross-platform shadow.** iOS renders each tier from the `shadow*` props (offset · opacity ·
+> radius above). Android ignores `shadow*` and — before Sep 2026 — drew its own shadow from an
+> integer `elevation` prop, a hard grey box cast on all four sides that looked nothing like the
+> soft warm lift the design intends. Each tier now also carries an Android-only `boxShadow`
+> with the same offset/blur/warm colour (and no integer `elevation`, which would double the
+> shadow), so both platforms show the identical soft warm lift. Requires the New Architecture
+> (enabled) — `boxShadow` is a no-op on the legacy renderer.
 >
 > `subtle`, `lifted` and `overlay` were added in July 2026: an audit found 14 files
 > hand-rolling shadows, so cards floated at slightly different heights, the warm hex was
 > re-typed by hand (with `#3c1e0a` casing drift), and the tour card used an off-palette
 > `#0a0604`. The tiers above are the clusters that audit found, so every real surface has a
 > token. The cream palette has very low figure-ground contrast, so card surfaces must be
-> opaque for the Android shadow to render.
+> opaque for the shadow to render.
 >
 > **Enforced:** `eslint.config.js` bans a hex literal on `shadowColor` outside `src/theme/`.
 
@@ -1314,7 +1322,7 @@ The list is **two browsable tiers**, rendered as one `FlatList` under two group 
 
 1. **Title** — one left-aligned line, selected language only (`अन्य` / `More` / `અન્ય` / `ಇನ್ನಷ್ಟು`), 30 pt in the script's title face (`latinBold` for en, `scriptTitleFont` for hi/gu/kn). No `More` subtitle.
 2. **Three grouped inset lists** — each is an uppercase **group label** (`saffron-deep`, 13; Latin gets tracking + uppercase via the chrome font, Indic drops both) above one **list container** (`parchment-soft`, **`radii.lg`**, 1 px `divider`, `overflow:hidden`, **`elevation.subtle`**) whose rows are split by hairline `divider` top-borders. Standard row anatomy: `[38 px icon tile, radii.sm] [label 18]  …  [state 15 ink-muted] [chevron › 19 gold]`. The container radius was an ad-hoc 20 and the icon tile 11, both off the radius scale (§4), with a hand-rolled shadow; all three are tokens as of July 2026, padding 15×16, pressed → `saffron-tint` wash.
-   - **साधना / Practice** — a compact **profile hero row** (tinted `cardActiveFrom → cardActiveTo` gradient, 52 px circular `saffron` ॐ badge, `साधक प्रोफ़ाइल` title, sub-line "**`N`** श्लोक · **`N`** श्रृंखला" = lifetime verses + streak in `saffron`; the old `rounds` count is dropped; a11y "Open Sadhak profile" → Profile), then **संग्रह** (♥ `saffron`, state = saved count; label matches the WishlistScreen title → Wishlist §24), **स्मरण** (ॐ `gold`, state = reminder time(s) or Off → Reminder Settings §38), **जप अलार्म** (⏰ `saffron-deep`, state = active count → §35), **पितृ स्मरण** (॥ `gold`, state = NEW while empty, then `count · soonest date` → §63), **जन्म तिथि** (✦ `saffron-deep`, same NEW/`count · soonest` state pattern → §70), **कुल परम्परा** (॥ `saffron`, state = the saved kuldev's name, else NEW → §70), **वास्तु दिशा** (॰ `saffron`, NEW state → §66).
+   - **साधना / Practice** — a compact **profile hero row** (tinted `cardActiveFrom → cardActiveTo` gradient, 52 px circular `saffron` ॐ badge, `साधक प्रोफ़ाइल` title, sub-line "**`N`** श्लोक · **`N`** श्रृंखला" = lifetime verses + streak in `saffron`; the old `rounds` count is dropped; a11y "Open Sadhak profile" → Profile), then the rows **in importance order** (Sept 2026) — three tiers, each ranked within itself: **(a) the daily-practice loop**, most-used first: **स्मरण** (ॐ `gold`, state = reminder time(s) or Off → Reminder Settings §38; the default-on habit driver), **जप अलार्म** (⏰ `saffron-deep`, state = active count → §35), **संग्रह** (♥ `saffron`, state = saved count; label matches the WishlistScreen title → Wishlist §24); **(b) the family & lineage records**, by dharmic weight: **कुल परम्परा** (॥ `saffron`, state = the saved kuldev's name, else NEW → §70; the household's foundational record), **पितृ स्मरण** (॥ `gold`, state = NEW while empty, then `count · soonest date` → §63; the recurring shraddha duty), **जन्म तिथि** (✦ `saffron-deep`, same NEW/`count · soonest` state pattern → §70; celebration); **(c) the occasional home tool**: **वास्तु दिशा** (॰ `saffron`, NEW state → §66). A new practice row slots into its tier by the same rule rather than appending at the bottom; `MoreScreen.test.tsx` pins the order.
    - **ऐप / App** — **भाषा** (अ `gold`, state = current language's native name; opens the **Language picker sheet**, not an inline grid), **पाठ का आकार** (Aa `saffron`, state = मानक/बड़ा; opens the **Reading-size picker sheet**, §43), **पाठ सुनें / Read Aloud** (♪︎ `saffron-deep` at 15, state = what will be spoken + the rate via the exported `readAloudRowLabel`, or `उपलब्ध नहीं` when the device has no voice; opens the **Read-aloud settings sheet**, §56), **ऐप साझा करें**
      Both settings rows are also feature-tour spotlight targets (`languageRow` / `readingSizeRow`, §47 steps 23–24): each `SettingsRow` is wrapped in a measurable `View` and registers a `scrollNodeIntoView` reveal against the More `ScrollView`, since the App group can sit below the fold. The tour ends on them, and the post-tour setup sheet then asks the user to set both. (↗ `saffron`; OS share sheet via `buildAppShareMessage(lang)`, `data/shareLinks.ts` — the localized `APP_SHARE_INVITE` + `SMART_LINK`. The invite is a **multi-line feature list**, not a one-liner: a "complete bhakti in one app" lede, five `•` bullets — texts (Gita/Sundarkand/Chalisa/Aarti/Stotra), japa mala + alarms, Panchang (vrat-festival/muhurat/kundali/rashifal), bhajan audio + daily verse, nitya-sadhana routine — a four-script "read in" language line, then the download CTA with the smart link. Plain `•` bullets, no emoji per §5.), **ऐप को रेटिंग दें / Rate the App** (★ `gold` at 18, no state, a11y label constant "Rate the app") — the manual entry point for the rating sheet (§54): it calls `open()`, bypassing the auto-ask gate and spending no ask slot, and keeps working even after the user has opted out of the automatic prompt. Last in the group: **Instagram पर फ़ॉलो करें / Follow on Instagram** (◉ `saffron-deep` at 19, state = the `@vedansh.app` handle, a11y label constant "Follow on Instagram") — `Linking.openURL(INSTAGRAM_URL)` from the same `data/shareLinks.ts`, falling back to an `Alert` naming the handle if the OS can't open it. The link is the canonical `https://www.instagram.com/…` form, **not** `instagram://`: a custom scheme would need `LSApplicationQueriesSchemes` / `android.queries` in `app.json` (a store rebuild), whereas the https URL is claimed by the installed Instagram app via universal/app links and degrades to the browser otherwise — so the row ships over OTA.
    - **जानकारी / Info** — **परिचय व अस्वीकरण** (ⓘ `ink-muted`; opens the pageSheet disclaimer modal with the bilingual disclaimer + "Report an Error" CTA), **त्रुटि सूचित करें** (⚑ `ink-muted`; `mailto` via `buildDiscrepancyMailto`), and **ऐप भ्रमण फिर देखें / Show App Tour** (↻ `gold`; a11y label constant "Show App Tour") which calls `resetTour()` to replay the first-launch feature tour on demand (§47).
@@ -1367,12 +1375,19 @@ The list is **two browsable tiers**, rendered as one `FlatList` under two group 
 
 **Japam alarms** — see §35 for the scheduling tiers; they participate in deep-linking below.
 
-**Notification tap → deep link** (`notifications/deepLink.ts`). A module-level `navigationRef` (attached to the `NavigationContainer` in `App.tsx`) lets `handleNotificationResponse` dispatch from outside the React tree; `App.tsx` wires both the cold-start response and the live `addNotificationResponseReceivedListener`. Routing by payload type:
+**Notification tap → deep link** (`notifications/deepLink.ts`). A module-level `navigationRef` (attached to the `NavigationContainer` in `App.tsx`) lets `handleNotificationResponse` dispatch from outside the React tree; `App.tsx` wires both the cold-start response and the live `addNotificationResponseReceivedListener`. **One routing table, two timings (Sept 2026):** `resolveNotificationTarget(payload)` maps every family to a `StartTarget` (`navigation/startTarget.ts` — `{ tab, screen?, params? }`). A **warm** tap dispatches `startTargetToNavigateAction(target)` (`{ screen, params, initial: false }` for a nested screen, the `panchangTabTarget`/`moreTabTarget` rule). A **cold** tap — the notification that *launched* the app, read with `getLastNotificationResponseAsync` in the same pre-mount race as a cold widget URL, under the shared `INITIAL_TARGET_TIMEOUT_MS` = 1 s — becomes the `NavigationContainer`'s **`initialState`** via `buildInitialNavigationState(target)`, so the named screen is the *first* one committed and Home never mounts as an intermediate step, for every family. A deeper target is seeded with its stack root beneath it (`[MoreHome, PitruSmaranDetail]`), so back works and the hub stays reachable. A widget URL wins outright and never waits on the notification read; a consumed launch tap is not re-dispatched by the retry loop (`coldNotificationConsumedRef`); if the read misses the timeout the post-mount dispatch still catches it; a stale japam mantra resolves to null, i.e. the ordinary Home launch. `deepLink.jest.test.tsx` pins cold target == warm dispatch per family, and that each cold state holds its target exactly once above its root.
+
+> **RULE — a cold-start destination is the container's `initialState`, NEVER a tab's `initialParams`.** `initialParams` stay in `route.params` for the life of the session, so React Navigation re-consumes a nested `{ screen, params }` **every time that tab is focused again** and pushes the target a second, third, fourth time (`useNavigationBuilder`'s `!isNestedParamsConsumed` branch). The Panchang widget shipped this way and piled up copies of `PanchangHome` — the heaviest screen in the app, a full engine solve each — on every tab switch, until the tap "landed nowhere" and the app froze (Sept 2026 report). `initialState` is consumed exactly once, at mount. `startup.test.ts` fails if any `initialParams=` returns to `TabNavigator`.
+
+> **RULE — the Panchang chunk is evaluated BEFORE the navigator mounts when a cold start lands there.** `PanchangTab` is the one tab behind a dynamic boundary (`navigation/lazyPanchangStack.ts`, ~70 modules: Kundali, Rashifal, Gochar, Namkaran, Vastu, the vidhi flow). A cold landing on it — a Panchang widget tap, a vrat/muhurat notification — makes that lazy stack the *first* screen committed, a path that never ran while every launch went through Home first and reached the chunk later, warm. `App.tsx` awaits `preloadPanchangStack()` inside the existing pre-mount race (one shared promise, so the preload and the `React.lazy` render never evaluate twice), so the cold landing is the warm one, and a chunk that cannot evaluate falls back to `HomeTab → Home` instead of suspending forever or throwing past every boundary. The lazy stack also renders inside **`StackLoadBoundary`** (outside its Suspense boundary): a failed chunk then costs one tab — the bar stays up, the other tabs work, Retry re-attempts — instead of unmounting the tree into a dead screen the user cannot leave. Pinned by `startup.test.ts` and `navigation/__tests__/stackLoadBoundary.test.tsx`.
+
+Routing by payload type:
 
 - `daily-verse` → the **Daily Bhakti tab** carrying the exact verse identity (`sourceId`/`chapter`/`verseIndex`) baked into the notification — deliberately *not* a reader, because opening a reader would run its `setProgress` effect and clobber the user's resume position; the baked identity also survives OTA pool changes.
-- `vrat-reminder` → `PanchangTab → ObservanceDetail` for that rule.
+- `vrat-reminder` → `PanchangTab → ObservanceDetail` for that rule; `muhurat-reminder` → `PanchangTab → MuhuratDayDetail` for the payload's occasion + date (occasion validated against `EVENT_RULES`).
+- `pitru-smaran-reminder` → `MoreTab → PitruSmaranDetail` for the entry; `janma-tithi-reminder` → `MoreTab → JanmaTithiDetail` for the person; `pitru-paksha-reminder` → `MoreTab → PitruPakshaOverview`.
 - `festive-reminder` → **`HomeTab → Home`**, and the reading its message named is the first card waiting there. Home's FOR TODAY row (§50) leads with the festival's own content on a festival day, reading the same curated catalog the notification's copy came from — so the invitation is honoured one tap in, not bypassed. Landing on Home rather than in a reader keeps three things true that a direct reader push would break: a tap made from a lock screen can't run a reader's `setProgress` effect and clobber the resume position (the same reason `daily-verse` stays on a tab), the day's Panchang strip and routine banner arrive alongside the reading, and a notification armed up to four months ago can't strand the user on content an OTA update has since renamed — Home recomputes today from today. `{ screen: 'Home' }` is passed explicitly: focusing `HomeTab` alone would restore whatever screen the Home stack was left on, possibly several readers deep. Routing gates on `ruleId` only; the payload still carries `sourceId` as the record of what the message promised.
-- `sadhana-reminder` and `routine-reminder` → **`HomeTab → RoutineToday`** (Today's Practice) — the surface where all of today's practice lives, never a reader (same resume-position rule as above). The routine payload `{ type, routineId, dateKey }` gates on `type` alone: `routineId` rides along as a record, so a stale notice for a since-deleted routine still lands safely — RoutineToday simply doesn't show it.
+- `sadhana-reminder` and `routine-reminder` → **`HomeTab → RoutineToday`** (Today's Practice) — the surface where all of today's practice lives, never a reader (same resume-position rule as above). Home sits beneath both on a cold start (and `initial: false` on the warm dispatch does the same), so back reaches it — the `tabTargets` rule, pinned per family in `deepLink.jest.test.tsx`. The routine payload `{ type, routineId, dateKey }` gates on `type` alone: `routineId` rides along as a record, so a stale notice for a since-deleted routine still lands safely — RoutineToday simply doesn't show it.
 - japam alarm → `HomeTab → JapamCounter` with `autoPlay: true`, so a lock-screen tap drops straight into chanting (mantra id validated against the catalog first; a stale alarm falls back to Home rather than crashing).
 
 **Route mapping — `navigation/entryRoutes.ts`.** The single source of truth for "open this content": `buildEntryStartTarget(entry)` maps any library entry to its start route (japam → `JapamCounter`; theerth entries → `TheerthMap` with a group filter; the nine chalisas → `ChalisaReader`; sanskar → `SanskarReader`; aartis → `AartiReader`; a **multi**-chapter text → its Chapters screen — including the `ram-aarti` alias, which maps to the `ram-stuti` reader routes), with `navigateToRoutineItem`, `buildProgressTarget` (resume / search verse hits), and `buildBookmarkTarget` (Wishlist rows, §24) layered on top. Panchang's "Read: <section>" links, search results, routine items, wishlist, and the Home spotlight all route through this one module, so adding a section's route once wires every surface.
@@ -2195,8 +2210,10 @@ Tests: `src/screens/__tests__/ValmikiRamayanReaderScreen.test.tsx` (per-kāṇ�
 ## 54. App Rating Prompt (रेटिंग)
 
 **Purpose.** Ask engaged users for a store rating, without ever becoming a nag. Two surfaces over
-one piece of state: an **auto-opening card** that has to earn its way past a conservative gate, and
-a **permanent More row** the user can reach whenever they feel like it (§37).
+one piece of state: a **moment-triggered card** that opens only right after the user has finished
+something and has to earn its way past a conservative gate, and a **permanent More row** the user
+can reach whenever they feel like it (§37). There is deliberately **no Home section and no
+cold-start ask** (product decision, Sept 2026: "keep a pop-up, ask at the moments").
 
 **Bundle-only, by constraint.** No `expo-store-review`, no `SKStoreReviewController`, no Play
 In-App Review. Every one of those is a native module, so a rating nudge behind one could only ship
@@ -2233,7 +2250,32 @@ home if one is added — see RULEBOOK §6.2 for the risk posture and the mitigat
 All four languages are hand-authored via `pick` (this is UI chrome, not content, so nothing is
 transliterated), and Indic labels drop Latin tracking/uppercase per §3.
 
-**The gate** (`data/ratingPrompt.ts`, pure). The sheet may auto-open only when **all** hold:
+**Trigger — when the card may open** (`contexts/ratingAsk.ts` + the host). The card never
+opens on its own. The one surface where the user has just completed today's practice calls
+`requestAsk('routine-complete')`; the gate below then decides. One moment ships (product decision,
+Sept 2026: "ask when a routine is completed"):
+
+| Trigger | Reported by | Exactly when | Why here |
+|---|---|---|---|
+| `routine-complete` | `components/RoutineCelebrationOverlay.tsx` | The pushpa-varsha's `onDone`, i.e. after the petals and caption have faded — **not** on completion itself | Today's practice is done; the best moment in the app. Riding on `onDone` keeps the card off the shower (§11) |
+
+Considered and **not** shipped, so nobody re-proposes them by accident: a completed mala on the
+japam counter (a card over the bead surface breaks the japa; asking on exit was built and then cut
+in favour of the single routine moment), a completed verse share (same cut), chapter completion
+(the readers' auto-advance carries the user straight into the next chapter with no pause to ask
+in), and streak milestones (covered in practice by `routine-complete`). `RatingAskTrigger` stays a
+union so adding one back is a one-literal change plus a `requestAsk` call — see RULEBOOK §6.2.
+
+`requestAsk` is safe to call freely: every refusal is silent and the moment simply passes. It
+refuses when the state is still hydrating (it does **not** queue — asking a few seconds after the
+moment, once storage catches up, is the launch-frame ambush this design exists to avoid), when the
+card already opened this session, when another open is already pending (two moments in quick
+succession queue **one** card), and whenever the gate says no. The reporting surface imports
+`useRatingAsk()` from the light `contexts/ratingAsk.ts` module, never from `RatingPromptContext`
+— see the Placement note below.
+
+**The gate** (`data/ratingPrompt.ts`, pure). Once a moment is reported, the sheet may open only
+when **all** hold:
 
 | Condition | Threshold | Why |
 |---|---|---|
@@ -2250,14 +2292,21 @@ from the **notification meta's** `appOpenCount` rather than a second counter —
 have they come back" number, already incremented once per cold start, serving both asks (the rating's earned 5-open gate and the opt-in's first-open gate).
 
 **Persistence & lifecycle** (`contexts/RatingPromptContext.tsx`). One AsyncStorage blob,
-`@vedansh/rating-prompt`: `{ askCount, lastAskedAt, outcome }`, defensively parsed (junk fields fall
-back to defaults, never crash). Behaviour:
+`@vedansh/rating-prompt`: `{ askCount, lastAskedAt, outcome, asksByTrigger }`, defensively parsed
+(junk fields fall back to defaults, never crash; a blob from the cold-start build without
+`asksByTrigger` parses with `{}`). `asksByTrigger` counts auto-opens per `RatingAskTrigger` — the
+only way, with no analytics backend, to learn which moment actually earns the rating. Behaviour:
 
-- Eligibility is evaluated once per app session; the sheet then opens after
-  **`RATING_PROMPT_DELAY_MS` = 2500 ms**, so Home has settled first — a prompt on the launch frame
-  reads as an ad. If eligibility lapses before the timer fires, the timer is cleared.
-- **Opening consumes an ask slot and starts the cooldown** (`afterAsked`). A swipe-away still
-  counts as "we asked" — the cooldown, not the outcome, is what silences the second ask.
+- A reported, eligible moment opens the sheet after **`RATING_PROMPT_DELAY_MS` = 1200 ms**, so the
+  moment's own feedback (success haptic, last petals) finishes first — a card on the same frame as
+  the thing it is thanking the user for reads as an ad. If a first-run
+  surface claims the screen during the delay, the open is abandoned and nothing is recorded.
+- The gate is evaluated **at the moment**, against the engagement counters as they stand then,
+  read through refs (not effect dependencies) so a user paging through a reader cannot defer a
+  pending open. At most **one** auto-open per app session.
+- **Opening consumes an ask slot, starts the cooldown, and credits the trigger** (`afterAsked`).
+  A swipe-away still counts as "we asked" — the cooldown, not the outcome, is what silences the
+  second ask.
 - **Primary** → `afterRated` (terminal) + `Linking.openURL(storeReviewUrl(Platform.OS))`. iOS gets
   `…?action=write-review` (the App Store review composer); Play has no listing equivalent, so
   Android lands on the listing, whose rating stars are the first thing on the page. If the OS
@@ -2272,13 +2321,24 @@ back to defaults, never crash). Behaviour:
 
 **Placement.** `<RatingPromptSheet />` mounts last in `App.tsx`, inside `RatingPromptProvider`
 (itself inside `TourProvider` + `NotificationPreferencesProvider`, whose flags the gate reads).
+`RatingPromptProvider` also provides the light `RatingAskContext`; the `RoutineCelebrationOverlay`
+(and every screen) sits inside it, so the host reaches `requestAsk`. Hosts import **`useRatingAsk`
+from `contexts/ratingAsk.ts`**, which has no RN/expo/storage imports and returns a no-op outside the
+provider: importing `RatingPromptContext` directly would drag `NotificationPreferencesContext` →
+`expo-notifications` into any unit test that mounts the host standalone.
 
-**Files.** `mobile/src/data/ratingPrompt.ts` (state, gate, store URLs),
-`mobile/src/contexts/RatingPromptContext.tsx`, `mobile/src/components/RatingPromptSheet.tsx`,
-row in `mobile/src/screens/MoreScreen.tsx`, store URLs from `mobile/src/data/shareLinks.ts`.
+**Files.** `mobile/src/data/ratingPrompt.ts` (state, triggers, gate, store URLs),
+`mobile/src/contexts/RatingPromptContext.tsx`, `mobile/src/contexts/ratingAsk.ts`,
+`mobile/src/components/RatingPromptSheet.tsx`, host in
+`mobile/src/components/RoutineCelebrationOverlay.tsx`, row in `mobile/src/screens/MoreScreen.tsx`,
+store URLs from `mobile/src/data/shareLinks.ts`.
 Tests: `src/data/__tests__/ratingPrompt.jest.test.ts` (every gate clause, cooldown boundary,
-defensive parse, URL shapes), `src/components/__tests__/RatingPromptSheet.test.tsx` (delay,
-persisted outcomes, refusal to stack, the two-action shape, all four languages, a11y-hidden stars),
+per-trigger credit, defensive parse incl. the pre-trigger blob, URL shapes),
+`src/components/__tests__/RatingPromptSheet.test.tsx` (silent cold start, the moment opens after
+the delay and is credited, once per session, one card for two moments, a surface claiming the
+screen mid-delay, persisted outcomes, the two-action shape, all four languages, a11y-hidden stars,
+the no-op hook outside the provider), `src/components/__tests__/RoutineCelebrationOverlay.test.tsx`
+(the moment is reported on `onDone`, not on completion),
 `src/screens/__tests__/MoreScreen.test.tsx` (the row opens the sheet instead of leaving the app).
 E2E: `.maestro/rating-prompt-smoke.yaml` — the manual path only; the auto path's thresholds are
 unreachable under `clearState`, so the gate is unit-tested instead.
@@ -2318,9 +2378,17 @@ most texts have no audio at all and commissioning more costs money, licensing an
 (`docs/roadmap/prds/02-verse-audio.md`). On-device TTS closes that gap for zero bytes. It is
 **assistive, never a substitute for human recitation** — see RULEBOOK §11.15.
 
-**Scope (v1).** `GitaReaderScreen` and `ChalisaReaderScreen` (the latter is a registry reader, so
-all 9 chalisas are covered). The remaining 18 readers are unchanged; the shared hook and adapter
-already handle every verse shape, so fan-out is wiring only.
+**Scope.** **Every reader** — all 21 `<Pascal>ReaderScreen`s: Gita, the registry readers (Chalisa,
+Aarti, Ashtakam, Kavacham, Stuti, Suktam, Sanskar), the single-chapter texts (Bajrang Baan, Hanuman
+Ashtak, Krishna Stotram, Ram Stuti, Ramcharitmanas), the chaptered texts (Sundarkand, Shiva /
+Durga / Ganesh / Saraswati Stotram, Vishnu Sahasranama, Vālmīki Rāmāyaṇ) and the prose **Vrat
+Katha** reader — plus the Puja Vidhi conduct screen (§62). v1 (July 2026) shipped Gita + Chalisa
+only; the September 2026 fan-out wired the other 19 through the same hook, since the adapter
+already understood every verse shape (`sanskrit`/`lines` + `linesEn`/`transliteration`, and the
+katha `bodyHi`/`bodyEn` prose branch, which speaks the story as the *verse* part so it is never
+gated behind "read meaning"). **Japam is the one deliberate exception**: it is a counter with its
+own recorded loop (§35), not a reader, and nothing there is read aloud. A reader without the pill is
+now a defect — `readerReadAloud.test.tsx` mounts every reader and fails if one lacks it.
 
 ### 56.1 What is spoken, and in which voice
 
@@ -2397,12 +2465,18 @@ label is localized** to the reading language, but the **`accessibilityLabel` sta
 un-localized**, the same rule and reason as `ReaderHeader`'s back label: Maestro taps it literally
 and the default reading language is `hi`. The play `▶︎` is shared with the recorded-audio control
 (which stays in the header); the "Listen" label is what distinguishes the two where both appear
-(Chalisa). The More → Read Aloud *settings* row keeps the `♪` note (`READ_ALOUD_GLYPH`) — it is a
+(the registry readers with a real recording — Chalisa, Ashtakam, Kavacham, Stuti, Suktam — per
+RULEBOOK §11.15 the recorded `▶` stays first, in the header, and read-aloud second, on the toggle
+row). The More → Read Aloud *settings* row keeps the `♪` note (`READ_ALOUD_GLYPH`) — it is a
 settings entry, not a play control.
 
-With the pill off the header, `sideWidth` is back to the bare-counter size — Gita `60`; Chalisa
-`60`, or `84` when a recorded `▶` shares the header. The pill always shows its full label now (no
-`compact` on the reader screens) since the toggle row has the room.
+With the pill off the header, `sideWidth` stays at the bare-counter size on every reader — Gita
+`60`; Chalisa `60`, or `84` when a recorded `▶` shares the header — and no reader widens its header
+for read-aloud. The pill always shows its full label (no `compact` on the reader screens) since the
+toggle row has the room. The slot is the same on all 21 readers (`readAloudSlot`: `position:
+absolute`, `right: 16`, `top`/`bottom` matching the row's vertical padding, `justifyContent:
+center`); the Vrat Katha reader's shorter toggle row (6/6 rather than 6/12) is the only geometry
+that differs.
 
 **The muted state is deliberate.** Hiding the control when no voice exists would leave the user
 with no way to learn why read-aloud never appears. Pressing it explains, and on Android offers
@@ -2566,6 +2640,8 @@ because they are different concerns that happen to agree today.
 **Native targets.** A real WidgetKit **app extension** target (`VedanshWidgets`, bundle id `…vedansh.widgets`, iOS 16+) generated by the CNG config plugins (`mobile/plugins/withHomeWidgets.js`, `withHomeWidgetsIos.js`, sources under `mobile/plugins/home-widgets/`), with App Group entitlements on both app + extension and the four-language serif faces (Noto Serif Devanagari/Gujarati/Kannada + Inter, 500/600) copied into the extension. Android ships an AppWidget provider + RemoteViews under the same plugin. `mobile/ios/` is prebuild output (gitignored) — the plugin is the source of truth.
 
 **Design compliance (§2/§3/§9).** The in-app gallery (`WidgetGalleryScreen`) draws colours from `useTheme()`, geometry from the shared `spacing`/`radii` scales (preview cards use the `radii.lg` card corner, the CTA is a `radii.pill`), and the preview eyebrow from the shared **`eyebrowTextStyle(lang)`** helper (§48) — italic Cormorant + tracking for en, script serif with **no** tracking for hi/gu/kn, so the Devanagari shirorekha is never split. The preview cards' facsimile body/headline sizes are layout-tuned to mirror the OS widget (like the §54 ShareCard) and stay ≥10 pt. On the native side, theme token values are mirrored into the extension through **one reviewed mapping** (`WidgetTheme` in `VedanshWidgets.swift` — `parchmentSoft`/`ink`/`inkMuted`/`saffronDeep`/`gold`, not scattered `Color(red:…)` literals; the Android RemoteViews layout mirrors the same hex). Because the widget forces a fixed light `parchmentSoft` container background, **every glyph is given an explicit token colour** — `ink` for titles/verse/numerals, `inkMuted` for source/metadata/round lines, `saffronDeep` for eyebrows, `gold` for the ॐ brand — and native text **never** falls back to SwiftUI's scheme-adaptive `.primary`/`.secondary`, which would invert to light shades in dark mode (invisible on the cream) and, even in light mode, render `.secondary` as a sub-AA washed-out gray. Section-label eyebrows render in the script serif for hi/gu/kn (Inter for en); text on terracotta-tinted surfaces uses `avoidDeep`. Meaningful widget text stays **≥10 pt** (labels that can't fit are removed, not shrunk); numerals/times/status labels use a non-italic **≥600** face — italic Cormorant is limited to short prose flourishes; state is never colour-only (the streak carries a number/label, avoid windows carry their names); the verse has a deterministic two-line fit with the full text in the accessibility label, and large-text snapshots must not clip Devanagari matras.
+
+> **RULE — every advertised family branch attaches its own `.widgetURL`.** An accessory (Lock Screen) widget with no URL is **inert**: iOS does nothing at all when it is tapped — no launch, no error, however long you wait. The Panchang kind advertises `lock`, and its `.accessoryInline` branch rendered a bare `Text` while the `.widgetURL` sat on the else-branch's `VStack`, so the placed Lock Screen Panchang widget swallowed every tap (the Sept 2026 "the tap goes nowhere / screen stuck" report — nothing was loading because nothing was ever launched). A modifier missing from one SwiftUI branch is invisible in review, so `catalog.test.ts` now walks every `family == .accessory*` branch (plus `recovery()`, the only way back when a payload is stale) and fails if it renders no `widgetURL`; reverting the fix fails it.
 
 **Tests.** Pure/fixture suites under `mobile/src/widgets/__tests__/` — `contract` (schema round-trip; missing/corrupt/incompatible/expired rejection; all-four-languages required; dedup-key sensitivity), `catalog` (content↔size parity across the gallery, the Swift `supportedFamilies`, the Kotlin providers, the manifest receivers in `withHomeWidgets.js` and the `appwidget-provider`/layout resources they name — plus the verse-is-wide-first / Panchang-is-small-first rule this section exists for), `planner` (japa streak, >108, IST vs device-local boundaries, two-line determinism), `planPayload` (real 14-day payload, process-TZ isolation), `deepLink` (verse/Panchang/japam parse + routing + cold-start retry), `startup` (coordinator does no static Panchang import; one iOS kind per content type). A committed fixture (`fixtures/widget-payload-v1.json`) is decoded by TypeScript, Swift, and Kotlin to pin cross-language parity. Maestro `mobile/.maestro/home-widgets-smoke.yaml` covers the More-row → gallery path and the three deep links. **Device-only gates** (PRD-15 §5/§8, not automatable here): EAS multi-target sign + physical-device install, per-size render/VoiceOver/large-text screenshots — now **every kind × every advertised size**, since each is a real placement a user can choose — and the per-kind Android pin flow.
 
