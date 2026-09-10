@@ -38,6 +38,7 @@ import type { CalendarSystem, PanchangElement, ResolvedObservance } from '@/panc
 import { getKathaContent } from '@/panchang/kathaContent';
 import { getUpcomingObservances, searchObservances } from '@/panchang/festivalEngine';
 import { successorTithiToday } from '@/panchang/prevailingTithi';
+import { observanceDayNote, type ObservanceDaySolve } from '@/panchang/observanceDayNote';
 import { sankashtiOccurrenceName } from '@/panchang/sankashtiNames';
 import { getCategoryCounts, getKathaCount, type BrowseCategory } from '@/panchang/vratCatalog';
 import { VIDHI_ENTRIES, getVidhiById } from '@/data/vidhi';
@@ -678,7 +679,7 @@ export default function PanchangScreen({ route }: Props) {
                 <ObservanceCard
                   key={`${item.rule.id}-${i}`}
                   item={item}
-                  moonrise={p?.moonrise ?? null}
+                  daySolve={p ? { sunrise: p.sunrise, sunset: p.sunset, moonrise: p.moonrise, tithiIndex: p.tithi.index, tithiEnd: p.tithi.endTime } : null}
                   lang={lang}
                   colors={colors}
                   typography={typography}
@@ -1808,11 +1809,12 @@ function TimeCell({ icon, label, value, lang, colors }: { icon: string; label: s
   );
 }
 
-function ObservanceCard({ item, moonrise, lang, colors, typography, radii, elevation, onOpenLink, onOpenKatha, onOpenVidhi }: {
+function ObservanceCard({ item, daySolve, lang, colors, typography, radii, elevation, onOpenLink, onOpenKatha, onOpenVidhi }: {
   item: ResolvedObservance;
-  // This date's moonrise, when the day is solved. Only read for a chandrodaya
-  // rule, whose observance day IS the day whose moonrise its tithi covers.
-  moonrise: Date | null;
+  // This date's solved panchang, narrowed to what a day note can read (null
+  // until the day's solve lands). Which rules read which field is
+  // `observanceDayNote`'s business, not the card's.
+  daySolve: ObservanceDaySolve | null;
   lang: Lang;
   colors: any;
   typography: any;
@@ -1829,11 +1831,11 @@ function ObservanceCard({ item, moonrise, lang, colors, typography, radii, eleva
   // PRD-19: the vidhi pill renders only when the rule's vidhiId resolves to a
   // published vidhi — the identical hook mechanism as kathaId.
   const vidhi = item.rule.vidhiId ? getVidhiById(item.rule.vidhiId) : null;
-  // A moonrise vrat is kept through a night, not a calendar box: its tithi
-  // usually ends the next morning, so the card states the instant the fast is
-  // actually broken rather than leaving the reader to reconcile "व्रत" with a
-  // तिथि line that ends before noon.
-  const chandrodaya = item.rule.dayRule === 'chandrodaya' ? moonrise : null;
+  // A vrat is not a calendar box, so the card states what THIS day is for: the
+  // moonrise that breaks a chandrodaya fast, the aparahna दर्श अमावस्या is fixed
+  // by, the snan-daan morning of the udaya अमावस्या row. Pure helper, so the copy
+  // and the day logic are test-pinned away from the render path.
+  const dayNote = observanceDayNote(item.rule, daySolve, formatTime12);
   // The one generic monthly rule whose occurrences carry PUBLISHED names: the
   // Bhadrapada Sankashti is the Heramba day, an adhik lunation is Vibhuvana, a
   // Tuesday is अंगारकी — the rule name alone hid all of that. Occurrence-titled
@@ -1871,13 +1873,9 @@ function ObservanceCard({ item, moonrise, lang, colors, typography, radii, eleva
       <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted, marginTop: 4 }}>
         {meaningByLang(lang, item.rule.shortDescriptionHi, item.rule.shortDescriptionEn)}
       </Text>
-      {chandrodaya && (
+      {dayNote && (
         <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.saffronDeep, marginTop: 6 }}>
-          {contentByLang(
-            lang,
-            `व्रत इसी रात्रि — चंद्रोदय ${formatTime12(chandrodaya)}, दर्शन व अर्घ्य के बाद पारण`,
-            `Kept this night — moonrise ${formatTime12(chandrodaya)}, parana after darshan and arghya`
-          )}
+          {contentByLang(lang, dayNote.hi, dayNote.en)}
         </Text>
       )}
       <View style={styles.linkRow}>

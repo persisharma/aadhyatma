@@ -348,7 +348,7 @@ const pitruOffering = profile({
   id: 'pitru-offering',
   titleHi: 'अमावस्या और श्राद्ध का अन्न-अर्पण',
   titleEn: 'Amavasya and Shraddha food offering',
-  observanceIds: ['amavasya-vrat', 'shraddha-dates'],
+  observanceIds: ['amavasya-vrat', 'darsha-amavasya', 'shraddha-dates'],
   offerings: [
     item('til-water', 'तर्पण में जल और काले तिल अर्पित किए जाते हैं।', 'Tarpana uses water and black sesame.'),
     item('pinda-food', 'पूर्ण श्राद्ध में पिण्ड और परिवार-परम्परा का भोजन अर्पण अलग विधि से होता है।', 'A full Shraddha separately offers pinda and the food prescribed by family tradition.'),
