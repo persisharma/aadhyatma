@@ -477,13 +477,20 @@ export const MONTHLY_VRAT_RULES: ObservanceRule[] = [
   // अमावस्या); this one is aparahna-vyapini, because the पितृ तर्पण that defines it is
   // an afternoon rite. They coincide in 64 of the 99 lunations from 2024–2031 and
   // differ in the other 35, always by exactly one day.
-  // Second reading (§23a.2), published civil dates used to pin it:
-  //   Bhadrapada 2026 — amavasya 10 Sep 10:33 AM → 11 Sep 8:56 AM; दर्श अमावस्या
-  //   10 Sep, snan-daan अमावस्या 11 Sep (boldsky.com/yoga-spirituality/
-  //   darsha-amavasya-2026-…-172699.html, retrieved 2026-09-10).
-  //   Chaitra 2026 — amavasya 18 Mar 8:25 AM → 19 Mar 6:52 AM; दर्श अमावस्या 18 Mar,
-  //   udaya Chaitra Amavasya + snan-daan muhurat 19 Mar (indiatvnews.com/lifestyle/
-  //   spirituality/march-amavasya-2026-…-1033995, retrieved 2026-09-10).
+  // Drik prints the two as separate rows and names them differently: the aparahna row
+  // is "Darsha Amavasya" every month, the udaya row carries the lunar month
+  // ("Bhadrapada Amavasya", "Ashwina Amavasya"). Published civil dates from
+  // drikpanchang.com/vrats/amavasyadates.html (2026 list, read 2026-09-10) — a
+  // differing pair, a COINCIDING day, and a second differing pair:
+  //   Bhadrapada — amavasya 10 Sep 10:33 AM → 11 Sep 8:56 AM.
+  //     Sep 10 "Darsha Amavasya"; Sep 11 "Bhadrapada Amavasya".
+  //   Ashwina — amavasya 9 Oct 9:35 PM → 10 Oct 9:19 PM.
+  //     Oct 10 carries BOTH "Darsha Amavasya" and "Ashwina Amavasya".
+  //   Kartika — Nov 8 "Darsha Amavasya"; the udaya row is Nov 9.
+  // Second reading (§23a.2): Chaitra 2026 — amavasya 18 Mar 8:25 AM → 19 Mar
+  //   6:52 AM; दर्श अमावस्या 18 Mar, udaya Chaitra Amavasya + snan-daan muhurat
+  //   19 Mar (indiatvnews.com/lifestyle/spirituality/march-amavasya-2026-…-1033995,
+  //   retrieved 2026-09-10).
   upavas({ id: 'darsha-amavasya', nameHi: 'दर्श अमावस्या', nameEn: 'Darsha Amavasya', recurrence: 'monthly', paksha: 'krishna', tithi: 15, dayRule: 'aparahna', deityHi: 'पितृ तर्पण', deityEn: 'Pitru Tarpana', shortDescriptionHi: 'दर्श अमावस्या — वह दिन जिसके अपराह्न में अमावस्या तिथि व्याप्त रहती है; पितृ तर्पण, श्राद्ध और उपवास इसी दिन किए जाते हैं। जब अमावस्या सूर्योदय के बाद आरंभ होकर पूरा दिन रहती है, तब यह स्नान-दान अमावस्या से एक दिन पहले पड़ती है।', shortDescriptionEn: 'Darsha Amavasya — the day whose aparahna (afternoon) the Amavasya tithi covers; pitru tarpan, shraddha and the fast are kept on it. When the amavasya begins after sunrise and runs the rest of the day, it falls a day before the snan-daan Amavasya.', searchTerms: ['darsha amavasya', 'darsh amavasya', 'darsha amavas', 'darsh amavas', 'amavasya tarpan', 'pitru tarpan amavasya', 'darshavela amavasya'], kathaId: 'amavasya-vrat-katha', bhogId: 'pitru-offering' }),
   vrat({ id: 'skanda-sashti', nameHi: 'स्कंद षष्ठी', nameEn: 'Skanda Sashti', recurrence: 'monthly', paksha: 'shukla', tithi: 6, deityHi: 'भगवान कार्तिकेय', deityEn: 'Lord Kartikeya', kathaId: 'skanda-sashti-katha', bhogId: 'skanda-sashti-bhog' }),
   vrat({ id: 'masik-durgashtami', nameHi: 'मासिक दुर्गाष्टमी', nameEn: 'Masik Durgashtami', recurrence: 'monthly', paksha: 'shukla', tithi: 8, deityHi: 'मां दुर्गा', deityEn: 'Maa Durga', linkSectionId: 'durga-stotram', kathaId: 'masik-durgashtami-katha', bhogId: 'devi-vrat-bhog' }),

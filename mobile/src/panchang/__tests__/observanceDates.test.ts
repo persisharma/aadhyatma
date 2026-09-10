@@ -357,12 +357,32 @@ test('Bachh Baras stays on the udaya day, and the pradosh variance is recorded',
 // amavasya opens between the two, the rows land on different days. Reported from
 // the app: 10 Sep 2026 shows amavasya from 10:33 AM for the rest of the day and
 // carried no amavasya observance at all, because only the udaya rule shipped.
-// Published civil dates (Ujjain/IST), NOT engine output.
+// Published civil dates, NOT engine output — drikpanchang.com/vrats/amavasyadates.html
+// (2026 list, read 2026-09-10), which prints the two rows under different names: the
+// aparahna row is "Darsha Amavasya" every month, the udaya row carries the lunar month.
 test('Darsha Amavasya matches its published aparahna dates', () => {
-  // Bhadrapada 2026: amavasya 10 Sep 10:33 AM → 11 Sep 8:56 AM (boldsky, retrieved 2026-09-10).
-  assert.ok(engineDates('darsha-amavasya', 2026).includes('2026-09-10'));
-  // Chaitra 2026: amavasya 18 Mar 8:25 AM → 19 Mar 6:52 AM (India TV, retrieved 2026-09-10).
-  assert.ok(engineDates('darsha-amavasya', 2026).includes('2026-03-18'));
+  const darsha = engineDates('darsha-amavasya', 2026);
+  const udaya = engineDates('amavasya-vrat', 2026);
+  // Bhadrapada: amavasya 10 Sep 10:33 AM → 11 Sep 8:56 AM. Drik: Sep 10 "Darsha
+  // Amavasya", Sep 11 "Bhadrapada Amavasya". The reported case.
+  assert.ok(darsha.includes('2026-09-10'), 'Darsha 10 Sep');
+  assert.ok(udaya.includes('2026-09-11'), 'udaya row 11 Sep');
+  // Kartika: Drik puts Darsha on Nov 8, the udaya row on Nov 9.
+  assert.ok(darsha.includes('2026-11-08'), 'Darsha 8 Nov');
+  assert.ok(udaya.includes('2026-11-09'), 'udaya row 9 Nov');
+  // Chaitra: amavasya 18 Mar 8:25 AM → 19 Mar 6:52 AM (India TV, retrieved 2026-09-10).
+  assert.ok(darsha.includes('2026-03-18'), 'Darsha 18 Mar');
+  assert.ok(udaya.includes('2026-03-19'), 'udaya row 19 Mar');
+});
+
+test('Darsha Amavasya and the udaya row coincide when the amavasya covers both instants', () => {
+  // The other half of the contract, and a different path — BOTH rules fire on one
+  // day, which is what Drik prints there too. Ashwina 2026: amavasya 9 Oct 9:35 PM →
+  // 10 Oct 9:19 PM, so it covers 10 Oct's sunrise AND its aparahna, and Drik's 10 Oct
+  // row reads "Darsha Amavasya / Ashwina Amavasya". A regression that made the two
+  // rules always differ would pass every one-sided assertion above.
+  assert.ok(engineDates('darsha-amavasya', 2026).includes('2026-10-10'), 'Darsha 10 Oct');
+  assert.ok(engineDates('amavasya-vrat', 2026).includes('2026-10-10'), 'udaya row 10 Oct');
 });
 
 test('Darsha Amavasya and the udaya Amavasya Vrat stay one day apart at most', () => {
