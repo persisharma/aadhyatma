@@ -35,10 +35,10 @@ function storageKey(cityId: string, calendarSystem: CalendarSystem, year: number
 }
 
 function serialize(results: ResolvedObservance[]): StoredObservanceEntry[] {
-  return results.map(({ rule, date }) => ({
-    id: rule.id,
-    date: `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`,
-  }));
+  return results.map(({ rule, date }) => [
+    rule.id,
+    `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`,
+  ]);
 }
 
 function parseEntries(raw: string | null): StoredObservanceEntry[] | null {
@@ -48,7 +48,8 @@ function parseEntries(raw: string | null): StoredObservanceEntry[] | null {
     if (!Array.isArray(parsed)) return null;
     return parsed.filter(
       (item): item is StoredObservanceEntry =>
-        typeof item?.id === 'string' && typeof item?.date === 'string'
+        Array.isArray(item) && item.length === 2
+        && typeof item[0] === 'string' && typeof item[1] === 'string'
     );
   } catch {
     return null;

@@ -2,7 +2,7 @@ import { addDays } from './calendarGrid';
 import { computeTithiAndMonth, getSiderealSunLng, locationKey, tithiAtAparahna, tithiAtMadhyahna, tithiAtMoonrise, UJJAIN_CITY_ID } from './engine';
 import { getObservanceCatalog, OBSERVANCE_RULES } from './festivals';
 import { getStoredObservanceYear } from './observanceStore';
-import { PRECOMPUTED_OBSERVANCES } from './precomputedObservances';
+import { PRECOMPUTED_OBSERVANCES, type PackedObservance } from './precomputedObservances';
 import type { CalendarSystem, GeoLocation, ObservanceRule, ResolvedObservance, ResolvedFestival } from './types';
 
 // Coordinates + the stable city id used for cache keys; omitted ⇒ Ujjain.
@@ -72,9 +72,12 @@ export function isObservanceDataReady(
     || getStoredObservanceYear(cityId, calendarSystem, year) !== null;
 }
 
-function reconstructPrecomputed(entries: { id: string; date: string }[]): ResolvedObservance[] {
+// Both baked and device-scanned years arrive as [ruleId, date] pairs — the baked
+// table because the pair encoding keeps it inside the launch-graph byte budget
+// (see its header), the store because it mirrors the same shape on disk.
+function reconstructPrecomputed(entries: readonly PackedObservance[]): ResolvedObservance[] {
   const results: ResolvedObservance[] = [];
-  for (const { id, date } of entries) {
+  for (const [id, date] of entries) {
     const rule = ruleById.get(id);
     if (!rule) continue;
     const [y, m, d] = date.split('-').map(Number);
@@ -219,7 +222,7 @@ export function getObservancesForDateKey(
     ? PRECOMPUTED_OBSERVANCES[`${calendarSystem}:${year}`]
     : getStoredObservanceYear(cityId, calendarSystem, year);
   const entries = exact ?? PRECOMPUTED_OBSERVANCES[`${calendarSystem}:${year}`];
-  if (entries) return reconstructPrecomputed(entries.filter((item) => item.date === dateKey));
+  if (entries) return reconstructPrecomputed(entries.filter(([, date]) => date === dateKey));
   return getObservancesForDate(new Date(`${dateKey}T12:00:00`), calendarSystem, location);
 }
 

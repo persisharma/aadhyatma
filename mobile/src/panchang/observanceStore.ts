@@ -5,7 +5,9 @@
 // never form an import cycle.
 import type { CalendarSystem } from './types';
 
-export type StoredObservanceEntry = { id: string; date: string };
+// Same [ruleId, date] pair the baked table uses, so a scanned year and a baked year
+// reconstruct through one code path — and so the on-disk payload stays small.
+export type StoredObservanceEntry = [ruleId: string, date: string];
 
 const store = new Map<string, StoredObservanceEntry[]>();
 const listeners = new Set<() => void>();
