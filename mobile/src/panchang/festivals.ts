@@ -205,7 +205,7 @@ export const KATHA_CATALOG: KathaCatalogEntry[] = [
   katha({ id: 'gita-jayanti-katha', nameHi: 'गीता जयंती कथा', nameEn: 'Gita Jayanti Katha', kind: 'festival-legend', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['gita-jayanti'] }),
   katha({ id: 'navratri-start-katha', nameHi: 'नवरात्रि प्रारंभ कथा', nameEn: 'Navratri Begins Katha', kind: 'festival-legend', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['navratri-start'] }),
   katha({ id: 'vivah-panchami-katha', nameHi: 'विवाह पंचमी कथा', nameEn: 'Vivah Panchami Katha', kind: 'festival-legend', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['vivah-panchami'] }),
-  katha({ id: 'amavasya-vrat-katha', nameHi: 'अमावस्या व्रत कथा', nameEn: 'Amavasya Vrat Katha', kind: 'vrat-katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['amavasya-vrat'] }),
+  katha({ id: 'amavasya-vrat-katha', nameHi: 'अमावस्या व्रत कथा', nameEn: 'Amavasya Vrat Katha', kind: 'vrat-katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['amavasya-vrat', 'darsha-amavasya'] }),
   katha({ id: 'dattatreya-jayanti-katha', nameHi: 'दत्तात्रेय जयंती कथा', nameEn: 'Dattatreya Jayanti Katha', kind: 'festival-legend', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['dattatreya-jayanti'] }),
   katha({ id: 'masik-durgashtami-katha', nameHi: 'मासिक दुर्गाष्टमी कथा', nameEn: 'Masik Durgashtami Katha', kind: 'vrat-katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['masik-durgashtami'] }),
   katha({ id: 'masik-kalashtami-katha', nameHi: 'मासिक कालाष्टमी कथा', nameEn: 'Masik Kalashtami Katha', kind: 'vrat-katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['masik-kalashtami'] }),
@@ -470,6 +470,21 @@ export const MONTHLY_VRAT_RULES: ObservanceRule[] = [
   upavas({ id: 'purnima-vrat', nameHi: 'पूर्णिमा व्रत', nameEn: 'Purnima Vrat', recurrence: 'monthly', paksha: 'shukla', tithi: 15, deityHi: 'श्री विष्णु', deityEn: 'Shri Vishnu', kathaId: 'satyanarayana-vrat-katha', vidhiId: 'satyanarayan-puja', upvasId: 'purnima-satyanarayan-upvas', bhogId: 'satyanarayan-bhog' }),
   vrat({ id: 'shree-satyanarayan-vrat', nameHi: 'श्री सत्यनारायण व्रत', nameEn: 'Shree Satyanarayan Vrat', recurrence: 'monthly', paksha: 'shukla', tithi: 15, deityHi: 'श्री सत्यनारायण', deityEn: 'Shree Satyanarayan', linkSectionId: 'vishnu-sahasranama', kathaId: 'satyanarayana-vrat-katha', vidhiId: 'satyanarayan-puja', upvasId: 'purnima-satyanarayan-upvas', bhogId: 'satyanarayan-bhog' }),
   upavas({ id: 'amavasya-vrat', nameHi: 'अमावस्या व्रत', nameEn: 'Amavasya Vrat', recurrence: 'monthly', paksha: 'krishna', tithi: 15, deityHi: 'पितृ तर्पण', deityEn: 'Pitru Tarpana', kathaId: 'amavasya-vrat-katha', bhogId: 'pitru-offering' }),
+  // दर्श अमावस्या is the SAME amavasya as `amavasya-vrat` read by the other published
+  // convention, so §23.4's "siblings share a dayRule" does not apply here — the two
+  // conventions ARE the distinction, and Drik publishes both rows. `amavasya-vrat`
+  // stays udaya (the snan-daan day, which is also the day the tithi tile labels
+  // अमावस्या); this one is aparahna-vyapini, because the पितृ तर्पण that defines it is
+  // an afternoon rite. They coincide in 64 of the 99 lunations from 2024–2031 and
+  // differ in the other 35, always by exactly one day.
+  // Second reading (§23a.2), published civil dates used to pin it:
+  //   Bhadrapada 2026 — amavasya 10 Sep 10:33 AM → 11 Sep 8:56 AM; दर्श अमावस्या
+  //   10 Sep, snan-daan अमावस्या 11 Sep (boldsky.com/yoga-spirituality/
+  //   darsha-amavasya-2026-…-172699.html, retrieved 2026-09-10).
+  //   Chaitra 2026 — amavasya 18 Mar 8:25 AM → 19 Mar 6:52 AM; दर्श अमावस्या 18 Mar,
+  //   udaya Chaitra Amavasya + snan-daan muhurat 19 Mar (indiatvnews.com/lifestyle/
+  //   spirituality/march-amavasya-2026-…-1033995, retrieved 2026-09-10).
+  upavas({ id: 'darsha-amavasya', nameHi: 'दर्श अमावस्या', nameEn: 'Darsha Amavasya', recurrence: 'monthly', paksha: 'krishna', tithi: 15, dayRule: 'aparahna', deityHi: 'पितृ तर्पण', deityEn: 'Pitru Tarpana', shortDescriptionHi: 'दर्श अमावस्या — वह दिन जिसके अपराह्न में अमावस्या तिथि व्याप्त रहती है; पितृ तर्पण, श्राद्ध और उपवास इसी दिन किए जाते हैं। जब अमावस्या सूर्योदय के बाद आरंभ होकर पूरा दिन रहती है, तब यह स्नान-दान अमावस्या से एक दिन पहले पड़ती है।', shortDescriptionEn: 'Darsha Amavasya — the day whose aparahna (afternoon) the Amavasya tithi covers; pitru tarpan, shraddha and the fast are kept on it. When the amavasya begins after sunrise and runs the rest of the day, it falls a day before the snan-daan Amavasya.', searchTerms: ['darsha amavasya', 'darsh amavasya', 'darsha amavas', 'darsh amavas', 'amavasya tarpan', 'pitru tarpan amavasya', 'darshavela amavasya'], kathaId: 'amavasya-vrat-katha', bhogId: 'pitru-offering' }),
   vrat({ id: 'skanda-sashti', nameHi: 'स्कंद षष्ठी', nameEn: 'Skanda Sashti', recurrence: 'monthly', paksha: 'shukla', tithi: 6, deityHi: 'भगवान कार्तिकेय', deityEn: 'Lord Kartikeya', kathaId: 'skanda-sashti-katha', bhogId: 'skanda-sashti-bhog' }),
   vrat({ id: 'masik-durgashtami', nameHi: 'मासिक दुर्गाष्टमी', nameEn: 'Masik Durgashtami', recurrence: 'monthly', paksha: 'shukla', tithi: 8, deityHi: 'मां दुर्गा', deityEn: 'Maa Durga', linkSectionId: 'durga-stotram', kathaId: 'masik-durgashtami-katha', bhogId: 'devi-vrat-bhog' }),
   vrat({ id: 'masik-kalashtami', nameHi: 'मासिक कालाष्टमी', nameEn: 'Masik Kalashtami', recurrence: 'monthly', paksha: 'krishna', tithi: 8, deityHi: 'काल भैरव', deityEn: 'Kala Bhairava', kathaId: 'masik-kalashtami-katha', bhogId: 'kalashtami-bhog' }),

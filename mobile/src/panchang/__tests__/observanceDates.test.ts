@@ -349,3 +349,63 @@ test('Bachh Baras stays on the udaya day, and the pradosh variance is recorded',
   assert.equal(engineDate('bachh-baras', 2025), '2025-08-20', 'published (sunrise-reasoned) 2025 date');
   assert.equal(engineDate('bachh-baras', 2026), '2026-09-08', 'udaya day; Drik publishes 2026-09-07 (pradosh)');
 });
+
+// ─── दर्श अमावस्या (aparahna) ──────────────────────────────────────────────────
+// The same amavasya as `amavasya-vrat`, read by the other published convention.
+// पितृ तर्पण is an afternoon rite, so Drik fixes दर्श अमावस्या by the tithi over
+// aparahna and the plain snan-daan अमावस्या by the tithi at sunrise; when the
+// amavasya opens between the two, the rows land on different days. Reported from
+// the app: 10 Sep 2026 shows amavasya from 10:33 AM for the rest of the day and
+// carried no amavasya observance at all, because only the udaya rule shipped.
+// Published civil dates (Ujjain/IST), NOT engine output.
+test('Darsha Amavasya matches its published aparahna dates', () => {
+  // Bhadrapada 2026: amavasya 10 Sep 10:33 AM → 11 Sep 8:56 AM (boldsky, retrieved 2026-09-10).
+  assert.ok(engineDates('darsha-amavasya', 2026).includes('2026-09-10'));
+  // Chaitra 2026: amavasya 18 Mar 8:25 AM → 19 Mar 6:52 AM (India TV, retrieved 2026-09-10).
+  assert.ok(engineDates('darsha-amavasya', 2026).includes('2026-03-18'));
+});
+
+test('Darsha Amavasya and the udaya Amavasya Vrat stay one day apart at most', () => {
+  // They are one tithi under two conventions, so §23.4's shared-dayRule rule does
+  // NOT apply — but they may never drift further than the convention itself can
+  // move them. A larger gap means one of the two matched the wrong lunation.
+  for (const year of [2024, 2025, 2026, 2027, 2028]) {
+    const darsha = engineDates('darsha-amavasya', year);
+    const udaya = engineDates('amavasya-vrat', year);
+    assert.equal(darsha.length, udaya.length, `${year}: ${darsha.length} Darsha vs ${udaya.length} Amavasya Vrat`);
+    assert.equal(new Set(darsha).size, darsha.length, `${year}: duplicate Darsha Amavasya dates`);
+    for (let i = 0; i < darsha.length; i += 1) {
+      const gap = (new Date(udaya[i]).getTime() - new Date(darsha[i]).getTime()) / 86400000;
+      assert.ok(gap === 0 || gap === 1, `${year}: Darsha ${darsha[i]} vs Amavasya Vrat ${udaya[i]}`);
+    }
+  }
+});
+
+test('every lunation keeps exactly one Darsha Amavasya', () => {
+  // Guards both aparahna edges through the shared instant matcher: the "first of
+  // two" dedupe must not emit twice, and the udaya fallback when NO day's
+  // aparahna carries the amavasya must not drop one. Ashadha 2026 is the pinned
+  // fallback case — the amavasya ends 14 Jul 3:13:30 PM, twenty seconds before
+  // that day's aparahna midpoint, so case (c) recovers the sunrise day.
+  for (const year of [2024, 2025, 2026, 2027, 2028]) {
+    const dates = engineDates('darsha-amavasya', year);
+    assert.ok(dates.length >= 12 && dates.length <= 13, `${year}: got ${dates.length} Darsha Amavasyas`);
+    for (let i = 1; i < dates.length; i += 1) {
+      const gap = dayDiff(dates[i - 1], dates[i]);
+      assert.ok(gap >= 28 && gap <= 31, `${year}: ${dates[i - 1]} → ${dates[i]} is ${gap} days apart`);
+    }
+  }
+  assert.ok(engineDates('darsha-amavasya', 2026).includes('2026-07-14'), 'Ashadha 2026 udaya fallback');
+});
+
+test('the live aparahna matcher agrees with the shipped table (RULEBOOK §23.9)', () => {
+  // Pins the MATCHER, not the baked table: a regression is caught even without
+  // regenerating, and a stale table is caught once it is.
+  const darsha = getRuleById('darsha-amavasya');
+  const udaya = getRuleById('amavasya-vrat');
+  assert.ok(darsha && udaya, 'both amavasya rules must exist');
+  assert.equal(matchesLunarTithiRuleOnDate(darsha!, new Date(2026, 8, 10, 12), 'purnimant'), true);
+  assert.equal(matchesLunarTithiRuleOnDate(darsha!, new Date(2026, 8, 11, 12), 'purnimant'), false);
+  assert.equal(matchesLunarTithiRuleOnDate(udaya!, new Date(2026, 8, 11, 12), 'purnimant'), true);
+  assert.equal(matchesLunarTithiRuleOnDate(udaya!, new Date(2026, 8, 10, 12), 'purnimant'), false);
+});
