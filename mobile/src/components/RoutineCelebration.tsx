@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Animated, Easing, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
+import { androidBoxShadow } from '@/theme/elevation';
 import { titleScriptFont } from '@/utils/scriptFont';
 
 type Props = {
@@ -119,7 +120,7 @@ export default function RoutineCelebration({ caption, onDone }: Props) {
           },
         ]}
       >
-        <View style={[styles.captionPill, { backgroundColor: colors.parchmentSoft, borderColor: colors.goldTint, shadowColor: colors.ink }]}>
+        <View style={[styles.captionPill, { backgroundColor: colors.parchmentSoft, borderColor: colors.goldTint, shadowColor: colors.ink, ...androidBoxShadow(4, 12, 'rgba(26, 14, 3, 0.16)') }]}>
           <Text style={{ fontFamily: titleScriptFont(caption, typography.cardHindi.fontFamily), fontSize: 18, color: colors.saffronDeep }}>
             {caption}
           </Text>
@@ -216,6 +217,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.16,
     shadowRadius: 12,
     shadowOffset: { width: 0, height: 4 },
-    elevation: 6,
   },
 });

@@ -153,7 +153,14 @@ struct VedanshWidgetView: View {
     let lang = payload.locale
     if let p = payload.panchang.days.first(where: { $0.dateKey == key }) {
       if family == .accessoryInline {
+        // The Lock Screen line needs its own `.widgetURL`: the modifier below
+        // belongs to the else-branch's VStack, and an accessory widget with no
+        // URL is INERT — tapping it does nothing at all, forever, which is how
+        // the placed Lock Screen Panchang widget read as "the tap goes nowhere"
+        // (Sept 2026). Same shape as japam's `.accessoryCircular` branch.
         Text(p.vrat?.value(lang) ?? p.tithi.value(lang))
+          .widgetURL(URL(string: p.deepLink))
+          .accessibilityLabel("\(p.representedDate.value(lang)), \(p.tithi.value(lang))")
       } else {
         VStack(alignment: .leading, spacing: family == .systemLarge ? 7 : 5) {
           Text("\(p.representedDate.value(lang)) · \(payload.panchang.cityLabel.value(lang))")

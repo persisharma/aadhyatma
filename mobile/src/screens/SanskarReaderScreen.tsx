@@ -25,6 +25,8 @@ import LanguageToggle from '@/components/LanguageToggle';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
 import SanskarVersePage from '@/components/SanskarVersePage';
+import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
+import { useReaderReadAloud } from '@/screens/_useReaderReadAloud';
 import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
 import type { HomeStackParamList } from '@/navigation/types';
@@ -47,6 +49,17 @@ export default function SanskarReaderScreen({ navigation, route }: Props) {
   const listRef = useRef<FlatList<SanskarVerse>>(null);
   const initialIndex = clampIndex(route.params?.initialIndex, total);
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
+
+  // Flat reader: list index === verse index, so no offset. The adapter speaks the
+  // sanskar's `vidhiHi`/`vidhiEn` instructions with the meaning.
+  const readAloud = useReaderReadAloud({
+    sourceId: sanskarId,
+    data: verses,
+    offset: 0,
+    verseCount: total,
+    currentIndex,
+    listRef,
+  });
 
   useEffect(() => {
     setProgress({
@@ -140,6 +153,10 @@ export default function SanskarReaderScreen({ navigation, route }: Props) {
         <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}>
           <LanguageToggle />
           <AddToRoutineButton sourceId={sanskarId} />
+          {/* Pinned right so the toggle group stays centred (design.md §56.2). */}
+          <View style={styles.readAloudSlot}>
+            <ReadAloudButton control={readAloud} />
+          </View>
         </View>
 
         <View style={styles.listContainer}>
@@ -247,6 +264,13 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     paddingBottom: 12,
     alignItems: 'center',
+  },
+  readAloudSlot: {
+    position: 'absolute',
+    right: 16,
+    top: 6,
+    bottom: 12,
+    justifyContent: 'center',
   },
   listContainer: {
     flex: 1,

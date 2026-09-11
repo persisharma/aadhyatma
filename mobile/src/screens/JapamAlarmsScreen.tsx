@@ -401,8 +401,7 @@ function AlarmRow({
   return (
     <Pressable
       onPress={onPress}
-      accessibilityRole="button"
-      accessibilityLabel={`Edit alarm at ${hh}:${mm}`}
+      accessible={false}
       style={({ pressed }) => [
         styles.row,
         {
@@ -413,7 +412,14 @@ function AlarmRow({
         },
       ]}
     >
-      <View style={styles.rowText}>
+      {/* Label lives on the text block, not the row Pressable: an accessible
+          row container would collapse the Switch below out of the a11y tree. */}
+      <View
+        style={styles.rowText}
+        accessible
+        accessibilityRole="button"
+        accessibilityLabel={`Edit alarm at ${hh}:${mm}`}
+      >
         <Text
           style={[
             styles.rowTime,
@@ -620,12 +626,16 @@ export function AlarmEditorSheet({
       animationType="fade"
       onRequestClose={onClose}
     >
-      <Pressable
+      <View
         style={[styles.backdrop, { backgroundColor: colors.modalBackdrop }]}
-        onPress={onClose}
       >
         <Pressable
-          onPress={(e) => e.stopPropagation()}
+          style={StyleSheet.absoluteFill}
+          onPress={onClose}
+          accessibilityRole="button"
+          accessibilityLabel="Close alarm editor"
+        />
+        <View
           style={[
             styles.editorCard,
             {
@@ -956,8 +966,8 @@ export function AlarmEditorSheet({
             </Text>
           </Pressable>
           </ScrollView>
-        </Pressable>
-      </Pressable>
+        </View>
+      </View>
     </Modal>
   );
 }

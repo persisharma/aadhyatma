@@ -44,7 +44,7 @@ export type MuhuratDay = {
 };
 
 // Fixed 7-choghadiya wheel. Day/night sequences walk this wheel from a
-// weekday-specific start index, wrapping to fill 8 slots.
+// weekday-specific start index, wrapping to fill 8 slots (the 8th repeats the 1st).
 const WHEEL: ChoghadiyaKey[] = ['udveg', 'char', 'labh', 'amrit', 'kaal', 'shubh', 'rog'];
 
 const NAMES: Record<ChoghadiyaKey, { hi: string; en: string; quality: MuhuratQuality }> = {
@@ -59,9 +59,20 @@ const NAMES: Record<ChoghadiyaKey, { hi: string; en: string; quality: MuhuratQua
 
 // Day-choghadiya starting wheel index by weekday (0=Sun … 6=Sat). DrikPanchang:
 // Sun→Udveg, Mon→Amrit, Tue→Rog, Wed→Labh, Thu→Shubh, Fri→Char, Sat→Kaal.
+// The day sequence then walks the wheel one key at a time.
 const DAY_START_INDEX = [0, 3, 6, 2, 5, 1, 4];
-// Night sequence starts +5 around the wheel from the day start (DrikPanchang).
+const DAY_STRIDE = 1;
+// Night sequence starts +5 around the wheel from the day start (DrikPanchang:
+// Sun→Shubh, Mon→Char, Tue→Kaal, Wed→Udveg, Thu→Amrit, Fri→Rog, Sat→Labh) —
+// and KEEPS striding by 5 (≡ −2) for every following period. The night order is
+// its own cycle, Shubh → Amrit → Char → Rog → Kaal → Labh → Udveg, not the day
+// wheel read forward from a shifted start. Walking the day wheel +1 from the
+// night start got only the first period right: a Saturday evening read
+// Labh · Amrit · Kaal · Shubh … where every almanac prints Labh · Udveg · Shubh ·
+// Amrit · Char · Rog · Kaal · Labh (reported Sep 2026 as the morning's Kaal and
+// Shubh "showing again" at 10:30 PM).
 const NIGHT_OFFSET = 5;
+const NIGHT_STRIDE = 5;
 
 // Kaal = the k-th equal eighth of the daytime (1-indexed) by weekday (Sun … Sat).
 const RAHU_SEG = [8, 2, 7, 5, 6, 4, 3];
@@ -87,10 +98,11 @@ export function splitEqual(from: Date, to: Date, n: number): Array<[Date, Date]>
 function buildChoghadiya(
   parts: Array<[Date, Date]>,
   startIndex: number,
+  stride: number,
   phase: 'day' | 'night'
 ): ChoghadiyaPeriod[] {
   return parts.map(([start, end], i) => {
-    const key = WHEEL[(startIndex + i) % WHEEL.length];
+    const key = WHEEL[(startIndex + i * stride) % WHEEL.length];
     const meta = NAMES[key];
     return { key, nameHi: meta.hi, nameEn: meta.en, quality: meta.quality, phase, start, end };
   });
@@ -137,8 +149,8 @@ export function computeMuhuratDay(
     sunrise,
     sunset,
     nextSunrise,
-    dayChoghadiya: buildChoghadiya(dayParts, dayStart, 'day'),
-    nightChoghadiya: buildChoghadiya(nightParts, nightStart, 'night'),
+    dayChoghadiya: buildChoghadiya(dayParts, dayStart, DAY_STRIDE, 'day'),
+    nightChoghadiya: buildChoghadiya(nightParts, nightStart, NIGHT_STRIDE, 'night'),
     rahu: kaalFrom(dayParts, 'rahu', RAHU_SEG[wd]),
     gulika: kaalFrom(dayParts, 'gulika', GULIKA_SEG[wd]),
     yamaganda: kaalFrom(dayParts, 'yamaganda', YAMAGANDA_SEG[wd]),

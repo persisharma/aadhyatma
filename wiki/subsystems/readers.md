@@ -2,7 +2,7 @@
 title: Readers
 type: subsystem
 sources: [mobile/src/components/ReaderHeader.tsx, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, RULEBOOK.md]
-last_verified_date: 2026-08-01
+last_verified_date: 2026-09-04
 confidence: high
 status: current
 ---
@@ -35,12 +35,14 @@ parse the complete epic during startup; the platform bundle still carries every 
 - The top bar is `ReaderHeader` (`variant="reader"`; chapters/index screens pass
   `variant="index"` for the larger 22/20 title). Screens pass `title` / `onBack` / `right` and
   never geometry — RULEBOOK §3 makes a hand-rolled `topBar` block a hard reject.
-- **Read aloud** (July 2026, `GitaReaderScreen` + `ChalisaReaderScreen` only): the screen calls
-  `useReaderReadAloud({sourceId, data, offset, verseCount, currentIndex, listRef})` — every
-  argument already exists in every reader — and renders `ReadAloudButton` in the `right` slot after
-  the page counter. The hook builds the controller session (`chunksFor` returns `null` for a
+- **Read aloud** (every reader since 2026-09-04; July 2026 v1 was Gita + Chalisa only): the
+  screen calls `useReaderReadAloud({sourceId, data, offset, verseCount, currentIndex, listRef})` —
+  every argument already exists in every reader — **before** any null-chapter early return, and
+  renders `ReadAloudButton` inside `styles.readAloudSlot` on the toggle row (absolute, right 16),
+  not in the header. The hook builds the controller session (`chunksFor` returns `null` for a
   transition sentinel, so speech stops at a chapter boundary rather than crossing it), owns the
-  swipe-vs-auto-advance latch, and stops on unmount. See [[audio]].
+  swipe-vs-auto-advance latch, and stops on unmount. Japam is the only text surface without it.
+  See [[audio]].
 
 **Chapter auto-advance (the cross-subsection navigation contract).** A reader whose text has
 > 1 subsection must let the user swipe across chapter/kāṇḍa boundaries. The mechanism:
@@ -109,9 +111,10 @@ transition page). `gitaAutoAdvance.test.tsx` covers the Gita swipe path Maestro 
   pattern or it will dead-end. The test auto-covers it once its manifest length exceeds 1.
 - **`navigation.replace`, not `push`** — chapters swap in place; the back button returns to the
   chapter list, not the previous chapter.
-- **Read-aloud is deliberately absent from 18 readers, and that is invisible.** `useReadAloud()` is
-  a lenient hook whose default renders no control, which is what keeps every untouched reader suite
-  green without a provider. So "the button isn't showing" is indistinguishable from "the provider
-  isn't wired" — `src/screens/__tests__/readerReadAloud.test.tsx` exists precisely to catch the
-  latter, and a reader gaining read-aloud must be added to its table (same rule as
+- **A reader missing read-aloud is invisible at runtime.** `useReadAloud()` is a lenient hook whose
+  default renders no control, which is what keeps every reader's own smoke suite green without a
+  provider. So "the pill isn't showing" is indistinguishable from "the provider isn't wired" or
+  "this reader was scaffolded without the hook" (exactly how 19 readers sat without TTS for two
+  months after v1). `src/screens/__tests__/readerReadAloud.test.tsx` tables all 21 readers and
+  presses the pill on each; a new reader must be added to it (same rule as
   `readerAutoAdvance.test.tsx`). See [[audio]] for the platform traps.

@@ -1,6 +1,7 @@
 import { CommonActions } from '@react-navigation/native';
 import { findJapamMantra } from '@/data/japam';
 import { navigationRef } from '@/notifications/deepLink';
+import { startTargetToNavigateAction, type StartTarget } from '@/navigation/startTarget';
 
 export type WidgetDeepLinkTarget =
   | { kind: 'verse'; sourceId: string; verseIndex: number; chapter?: number }
@@ -39,18 +40,32 @@ export function parseWidgetDeepLink(raw: string): WidgetDeepLinkTarget | null {
   return null;
 }
 
+/**
+ * The tab + params a parsed widget link names — the same `StartTarget` shape the
+ * notification taps resolve to (`navigation/startTarget.ts`). A cold widget URL
+ * becomes `TabNavigator`'s initial route through this; a warm one is dispatched
+ * as the same object below, so cold and warm links cannot drift.
+ */
+export function widgetStartTarget(target: WidgetDeepLinkTarget): StartTarget {
+  if (target.kind === 'verse') {
+    return {
+      tab: 'DailyBhaktiTab',
+      params: { sourceId: target.sourceId, verseIndex: target.verseIndex, ...(target.chapter == null ? {} : { chapter: target.chapter }) },
+    };
+  }
+  if (target.kind === 'panchang') {
+    return { tab: 'PanchangTab', screen: 'PanchangHome', params: { dateMs: target.dateMs } };
+  }
+  if (target.mantraId) {
+    return { tab: 'HomeTab', screen: 'JapamCounter', params: { mantraId: target.mantraId } };
+  }
+  return { tab: 'HomeTab', screen: 'CategoryList', params: { categoryId: 'japam' } };
+}
+
 export function handleWidgetDeepLink(raw: string): boolean {
   const target = parseWidgetDeepLink(raw);
   if (!target || !navigationRef.isReady()) return false;
-  if (target.kind === 'verse') {
-    navigationRef.dispatch(CommonActions.navigate({ name: 'DailyBhaktiTab', params: { sourceId: target.sourceId, verseIndex: target.verseIndex, ...(target.chapter == null ? {} : { chapter: target.chapter }) } }));
-  } else if (target.kind === 'panchang') {
-    navigationRef.dispatch(CommonActions.navigate({ name: 'PanchangTab', params: { screen: 'PanchangHome', params: { dateMs: target.dateMs }, initial: false } }));
-  } else if (target.mantraId) {
-    navigationRef.dispatch(CommonActions.navigate({ name: 'HomeTab', params: { screen: 'JapamCounter', params: { mantraId: target.mantraId } } } as never));
-  } else {
-    navigationRef.dispatch(CommonActions.navigate({ name: 'HomeTab', params: { screen: 'CategoryList', params: { categoryId: 'japam' } } } as never));
-  }
+  navigationRef.dispatch(CommonActions.navigate(startTargetToNavigateAction(widgetStartTarget(target))));
   return true;
 }
 

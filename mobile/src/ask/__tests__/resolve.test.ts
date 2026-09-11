@@ -114,3 +114,27 @@ test('ask-from-context seed fills a missing slot', () => {
   assert.equal(r.kind, 'answer');
   if (r.kind === 'answer') assert.equal(r.answer.intentId, 'bhog.offer');
 });
+
+test('§13.3 the bare word अमावस्या means the calendar amavasya, not दर्श अमावस्या', () => {
+  // `class:amavasya` selects members by id pattern so a new rule joins
+  // automatically — which is right for a new Ekadashi and wrong here.
+  // `darsha-amavasya` is the SAME tithi under the aparahna convention, one day
+  // earlier in ~a third of lunations (RULEBOOK §23.9), so auto-joining silently
+  // moved this answer from 11 Sep to 10 Sep 2026 — the day the Panchang tab's own
+  // Tithi tile still heads चतुर्दशी. Ask must not disagree with the calendar
+  // about what the bare word means.
+  const onTenSep = testContext({ now: new Date(2026, 8, 10, 9, 30, 0) });
+  const dateOf = (q: string) => {
+    const r = askQuestion(q, onTenSep) as any;
+    return JSON.stringify(r.answer ?? r);
+  };
+  assert.equal(tag('amavasya kab hai').observance?.id, 'class:amavasya');
+  assert.ok(dateOf('amavasya kab hai').includes('11 Sep'), 'bare word → the udaya day');
+  assert.ok(!dateOf('amavasya kab hai').includes('10 Sep'), 'bare word must not answer the darsha day');
+
+  // …and the darsha rule stays reachable by its own name, from the instance entry
+  // every rule gets, so nothing is lost by keeping it out of the class.
+  assert.equal(tag('darsha amavasya kab hai').observance?.id, 'darsha-amavasya');
+  assert.equal(tag('दर्श अमावस्या कब है').observance?.id, 'darsha-amavasya');
+  assert.ok(dateOf('darsha amavasya kab hai').includes('10 Sep'), 'by name → the aparahna day');
+});

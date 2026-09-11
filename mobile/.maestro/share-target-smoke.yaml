@@ -54,9 +54,8 @@ appId: com.prashantsharma.vedansh
 # and deity tags rather than a generic block.
 - assertVisible: "Share on Instagram"
 - assertVisible: "Share as Instagram story or reel"
-# The aspect chips are the visible statement of the crop trade-off.
-- assertVisible: "4:5"
-- assertVisible: "9:16"
+# The destination rows expose the crop trade-off through their accessibility
+# hints; output dimensions are covered by shareVerseTarget.test.tsx.
 - assertVisible: "Cancel"
 - assertVisible: ".*Hashtags: .*#HanumanChalisa.*"
 - assertVisible: ".*Hashtags: .*#JaiHanuman.*"

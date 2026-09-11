@@ -34,6 +34,8 @@ import { RASHI_NAMES_HI, RASHI_NAMES_EN } from '@/panchang/kundali';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import type { Lang } from '@/data/gita/language';
 import type { PanchangStackParamList } from '@/navigation/types';
+import { buildGharVastuDoorTarget } from '@/navigation/entryRoutes';
+import { useHomeRoster } from '@/vastu/homeRecordStore';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'MuhuratResults'>;
 
@@ -78,6 +80,7 @@ function splitSibling(windows: MuhuratWindow[]): MuhuratWindow | null {
 export default function MuhuratResultsScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
+  const { roster } = useHomeRoster();
   const { location } = usePanchangLocation();
   const rule = getEventRule(route.params.occasionId);
   // यात्रा only (PRD-16/P3 §4.6): the chosen direction excludes its दिशा शूल
@@ -185,6 +188,7 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
     const best = v.windows[0];
     const sibling = splitSibling(v.windows);
     const tier = v.tier === 'shreshtha' ? 'shreshtha' : 'madhyam';
+    const bala = balaByDate?.get(v.dateMs);
     // One chip per yoga KEY (a key can hold two windows on rare days); the
     // windows themselves live on the day detail. Order is SHUBH_YOGA_ORDER as
     // delivered — never re-sorted by any notion of strength.
@@ -192,7 +196,21 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
     return (
       <ListCard
         testID={`muhurat-result-${d.getDate()}`}
-        accessibilityLabel={`${formatShortDate(d, lang)} · ${weekdayName(v.dateMs, lang)}`}
+        accessibilityLabel={[
+          `${formatShortDate(d, lang)} · ${weekdayName(v.dateMs, lang)}`,
+          contentByLang(lang, TIER_LABELS[tier].hi, TIER_LABELS[tier].en),
+          best
+            ? `${contentByLang(lang, best.nameHi, best.nameEn)} ${formatRangeCompact(best.start, best.end)}`
+            : null,
+          best?.lagnaRashiIndex != null
+            ? `${rashiName(best.lagnaRashiIndex, lang)} ${contentByLang(lang, 'लग्न', 'lagna')}`
+            : null,
+          bala
+            ? bala.personName
+              ? contentByLang(lang, `${bala.personName} के लिए`, `For ${bala.personName}`)
+              : contentByLang(lang, 'आपके लिए', 'For you')
+            : null,
+        ].filter(Boolean).join('. ')}
         onPress={() => navigation.navigate('MuhuratDayDetail', { occasionId: rule.id, dateMs: v.dateMs })}
         leading={
           <CardThumb>
@@ -240,7 +258,7 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
             </Text>
           </>
         )}
-        {balaByDate?.get(v.dateMs) && <MuhuratBalaStrip bala={balaByDate.get(v.dateMs)} variant="row" />}
+        {bala && <MuhuratBalaStrip bala={bala} variant="row" />}
       </ListCard>
     );
   };
@@ -371,6 +389,37 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
                   {contentByLang(lang, 'मंदिर · रसोई · मुख्य द्वार — दिशा चक्र के साथ', 'Mandir · kitchen · main door — with the disha chakra')}
                 </Text>
               </ListCard>
+              {/* मेरा घर (PRD-24 Phase 2 §C4/US-16): measure the home being
+                  entered. No living home → setup (role 'living'); else the
+                  living home's reading. Pushes in place — Back returns here. */}
+              <View style={{ marginTop: spacing.sm }}>
+                <ListCard
+                  testID="muhurat-ghar-door"
+                  variant="flat"
+                  leading={
+                    <CardThumb>
+                      <Text style={{ color: colors.saffronDeep, fontFamily: typography.readerTitle.fontFamily, fontSize: 18 }}>घ</Text>
+                    </CardThumb>
+                  }
+                  onPress={() => {
+                    const target = buildGharVastuDoorTarget(roster);
+                    if (target.screen === 'GharVastu') navigation.navigate('GharVastu', target.params);
+                    else navigation.navigate('GharVastuSetup', target.params);
+                  }}
+                  accessibilityLabel="Measure the new home on the vastu mandala"
+                >
+                  <Text style={{ color: colors.ink, fontFamily: titleFont, fontSize: 15 }}>
+                    {contentByLang(lang, 'नया घर मापें', 'Measure the new home')}
+                  </Text>
+                  <Text style={{ color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily, fontSize: 11.5, lineHeight: 17 }}>
+                    {contentByLang(
+                      lang,
+                      'कक्ष मंडल पर रखें — विधान के साथ पढ़ें',
+                      'Place the rooms on the mandala — read them with the convention'
+                    )}
+                  </Text>
+                </ListCard>
+              </View>
             </View>
           )}
 

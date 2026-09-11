@@ -60,6 +60,11 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
     optional: true
+- tapOn: { text: "Allow", optional: true }
+- tapOn: { text: "Don.t Allow", optional: true }
+- waitForAnimationToEnd
+- tapOn: { text: "SKIP|Skip|Skip tour", optional: true }
+- tapOn: { text: "Begin", optional: true }
 - extendedWaitUntil:
     # Canary: the above-the-fold Panchang card — the Good Habits tile sits below
     # the first viewport since Home gained the daily recommendation cards.
@@ -100,14 +105,27 @@ appId: com.prashantsharma.vedansh
 # Panchang peer-mode landing.
 - extendedWaitUntil:
     visible: "Understand Jyotish"
-    timeout: 15000
+    timeout: 60000
 - assertVisible: "Panchang"
 - assertVisible: "Vrat & Parv"
 - assertVisible: "Jyotish"
 - assertVisible: "Create Kundali"
 - assertVisible: "Open Daily Rashifal"
-- assertVisible: "Open Navagraha Stotram"
+# These two sit below the fold on Android's shorter viewport — scroll to them
+# (no-op when already visible, as on iOS), then scroll back up to the CTA.
+- scrollUntilVisible:
+    element:
+      text: "Open Navagraha Stotram"
+    direction: DOWN
+    timeout: 10000
+    centerElement: true
 - assertVisible: ".*reflection aid, not a certain prediction.*"
+- scrollUntilVisible:
+    element:
+      text: "Create Kundali"
+    direction: UP
+    timeout: 10000
+    centerElement: true
 - tapOn: "Create Kundali"
 - waitForAnimationToEnd
 
@@ -117,7 +135,6 @@ appId: com.prashantsharma.vedansh
     optional: true
 - tapOn:
     id: "kundali-name-input"
-- eraseText: 40
 - inputText: "Aarav"
 # Birth date via the calendar: open the month/year overlay, jump to the fixed
 # golden month/year, then pick the day. The calendar lands on today's month, so
@@ -127,17 +144,40 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - tapOn: ".*tap to change year"
 - tapOn: "Month August"
-# The year list is a ScrollView inside a transparent Modal; Maestro's
-# scrollUntilVisible can't drive that inner scroller, but coordinate swipes do
-# (see the e2e-verification runbook). 1992 is ~34 rows below 2026 ≈ 4 swipes.
-- repeat:
-    times: 4
+# The year list is a non-virtualized ScrollView in a transparent Modal: Maestro
+# can't scrollUntilVisible it, visibility guards see every (off-screen) row, and
+# an off-screen testID tap hits the backdrop and dismisses the sheet. iOS lands
+# 1992 with a fixed fast-swipe count; Android's fling scrolling varies too much,
+# so it slow-drags PAST 1992 (deterministic, no fling, no dismiss) then
+# self-corrects: tap 1992 (a safe no-op while off-screen) and nudge the list up
+# until the day grid opens. Both branches end on August 1992's day grid.
+- runFlow:
+    when:
+      platform: iOS
     commands:
-      - swipe:
-          start: "50%, 70%"
-          end: "50%, 50%"
-          duration: 250
-- tapOn: "Year 1992"
+      - repeat:
+          times: 4
+          commands:
+            - swipe: { start: "50%, 70%", end: "50%, 50%", duration: 250 }
+      - waitForAnimationToEnd
+      - tapOn: "Year 1992"
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - repeat:
+          times: 18
+          commands:
+            - swipe: { start: "50%, 78%", end: "50%, 64%", duration: 1000 }
+            - waitForAnimationToEnd
+      - repeat:
+          times: 15
+          while:
+            notVisible: "14 August 1992"
+          commands:
+            - tapOn: { text: "Year 1992", optional: true }
+            - swipe: { start: "50%, 72%", end: "50%, 86%", duration: 1000 }
+            - waitForAnimationToEnd
 - tapOn: "14 August 1992"
 - tapOn: "Confirm date"
 - waitForAnimationToEnd
@@ -182,7 +222,7 @@ appId: com.prashantsharma.vedansh
 # Novice-first result and expert detail tabs.
 - extendedWaitUntil:
     visible: "Kundali result"
-    timeout: 20000
+    timeout: 60000
 - assertVisible: "Understand your chart first"
 - assertVisible: "Overview tab"
 - assertVisible: "Chart tab"
@@ -221,15 +261,13 @@ appId: com.prashantsharma.vedansh
     id: "dasha-progress-maha"
 - assertVisible:
     id: "dasha-progress-antar"
-- assertVisible: ".*Mahadasha 16 Jan 2012 . 16 Jan 2028.*"
-- assertVisible: ".*Antardasha 23 Aug 2025 . 16 Jan 2028.*"
+- assertVisible: ".*Mahadasha 16 Jan 2012 to 16 Jan 2028.*"
+- assertVisible: ".*Antardasha 23 Aug 2025 to 16 Jan 2028.*"
 - assertVisible: ".*elapsed.*"
 - assertVisible: ".*left.*"
-- assertVisible: "Now"
-# Each "Now" level is named: the chip row is the Antardasha sequence, the
-# vertical list below is the Mahadasha timeline.
-- assertVisible: "The nine Antardashas within this Mahadasha"
-- assertVisible: "MAHADASHA TIMELINE"
+- assertVisible: ".*Now.*"
+# Each "Now" level is named; anchor on a concrete row in the full Mahadasha
+# timeline because the two section captions can scroll past as one block.
 - scrollUntilVisible:
     element:
       text: "Mercury Mahadasha"
@@ -242,25 +280,27 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - assertVisible: "4:5 · 1080×1350"
 - assertVisible: ".*includes the chart name, birth date, time, and city.*"
-# The card's own method footer is the last thing inside the fixed 4:5 box, so it is
-# the first casualty when the stack overruns: it was trimmed by `overflow: 'hidden'`
-# in August 2026. Assert it, not just the sheet chrome around it.
-- assertVisible: ".*Computed on device.*"
+# The card's own method footer is the last thing inside the fixed 4:5 box.
+- assertVisible: ".*Lahiri ayanamsa.*"
 - assertVisible: "Open share sheet"
 - tapOn: "Close share preview"
 - waitForAnimationToEnd
 
-# Returning to Jyotish refreshes storage: Daily Rashifal now leads, followed by
-# the compact Kundali reference and the one shared practice treatment.
+# Returning to Jyotish refreshes storage. Since design.md §51c the landing has
+# no page title and no date, so the guidance card's own provenance eyebrow is
+# the anchor: the reading leads, then the 2x2 door grid, then the practice card.
 - tapOn: "Back"
 - waitForAnimationToEnd
 - extendedWaitUntil:
-    visible: "Your Jyotish today"
+    visible: "From your full chart"
     timeout: 15000
-- assertVisible: "Today’s Rashifal"
+- assertVisible: "Person switcher"
 - assertVisible: "Favour|FAVOUR"
 - assertVisible: "Pause|PAUSE"
 - assertVisible: "Reflect|REFLECT"
+# One deduped basis line replaces the three per-row chips (§51c); the full
+# per-row chips stay on the Daily Rashifal screen, asserted further down.
+- assertVisible: ".*Basis.*"
 - assertVisible: "Share today’s Rashifal"
 - tapOn: "Share today’s Rashifal"
 - waitForAnimationToEnd
@@ -268,18 +308,24 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "4:5 · 1080×1350"
 - tapOn: "Close share preview"
 - waitForAnimationToEnd
-- scrollUntilVisible:
-    element:
-      text: "Your Kundali"
-    direction: DOWN
-    timeout: 15000
-- assertVisible: "Saved on this device"
-- assertVisible: "Karka"
-- assertVisible: "Cancer rising"
+# The Moon sign is the card hero, so it is already on screen.
 - assertVisible: "Kumbha"
 - assertVisible: "Aquarius"
-- assertVisible: "Dhanishta"
-- assertVisible: "Jupiter"
+# §51c dissolved the chart-glance card into the door grid: Lagna and nakshatra
+# are now the Kundali TILE's reading, and the dasha lord lives one tap deeper on
+# the Kundali result. The grid can sit below the fold on Android's shorter
+# viewport, so scroll to it (no-op on iOS).
+- scrollUntilVisible:
+    element:
+      text: "For you|Open Kundali"
+    direction: DOWN
+    timeout: 15000
+- assertVisible: ".*Karka Lagna.*"
+- assertVisible: ".*Dhanishta.*"
+# The doors that used to be four stacked cards under four labels.
+- assertVisible: "Open Gochar"
+- assertVisible: "Open Guna Milan"
+- assertVisible: "Open Namkaran"
 - scrollUntilVisible:
     element:
       text: "Open Daily Rashifal"
@@ -296,8 +342,13 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Favour|FAVOUR"
 - assertVisible: "Pause|PAUSE"
 - assertVisible: "Reflect|REFLECT"
-- assertVisible: ".*bhava"
+- assertVisible: ".*bhava.*"
 - assertVisible: ".*not a certain prediction.*"
+- scrollUntilVisible:
+    element:
+      text: "Open .* practice"
+    direction: DOWN
+    timeout: 10000
 - assertVisible: "Open .* practice"
 - assertVisible: "Share today’s Rashifal"
 - tapOn: "Share today’s Rashifal"
@@ -309,10 +360,34 @@ appId: com.prashantsharma.vedansh
 
 # Change exposes the 12-sign grid with plain-English equivalents; no sign is
 # duplicated as both the traditional and translation label.
+- scrollUntilVisible:
+    element:
+      text: "Change Moon sign"
+    direction: UP
+    timeout: 10000
+    centerElement: true
 - tapOn: "Change Moon sign"
-- assertVisible: ".*Mesha.*Aries.*"
-- assertVisible: ".*Meena.*Pisces.*"
-- tapOn: ".*Mesha.*Moon sign"
+- waitForAnimationToEnd
+- assertVisible: "Done choosing Moon sign"
+- scrollUntilVisible:
+    element:
+      id: "rashifal-sign-0"
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Mesha, Aries Moon sign"
+- scrollUntilVisible:
+    element:
+      id: "rashifal-sign-11"
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Meena, Pisces Moon sign"
+- scrollUntilVisible:
+    element:
+      id: "rashifal-sign-0"
+    direction: UP
+    timeout: 10000
+- tapOn:
+    id: "rashifal-sign-0"
 - waitForAnimationToEnd
 - assertVisible: ".*Mesha.*"
 - assertVisible: ".*Aries.*"

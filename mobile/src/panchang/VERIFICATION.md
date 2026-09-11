@@ -109,7 +109,7 @@ Two **pre-existing** issues it surfaces (NOT the month bug, not yet fixed) — b
 of the sunrise-only matcher:
 - **±1-day muhurta shift (Class B):** festivals fixed by a non-sunrise muhurta resolve one
   day late when their tithi starts after sunrise — remaining: Maha Shivaratri (Nishita) and
-  Diwali/Dhanteras (Pradosh). e.g. Diwali 2025 engine 21 Oct vs real 20 Oct; Maha Shivaratri
+  Diwali/Dhanteras/**Bachh Baras** (Pradosh). e.g. Diwali 2025 engine 21 Oct vs real 20 Oct; Maha Shivaratri
   2026 engine 16 Feb vs real 15 Feb.
   **The moonrise (chandrodaya) members of this class are FIXED** (Aug 2026): `ObservanceRule.dayRule`
   now carries the per-rule vyapini convention, and `sankashti-chaturthi-vrat` + `karwa-chauth` + `bahula-chaturthi` + `bhadwa-chauth`
@@ -125,6 +125,17 @@ of the sunrise-only matcher:
 - **kshaya-tithi drop:** a festival whose tithi is skipped at sunrise is dropped entirely —
   e.g. Vasant Panchami 2025, Dev Uthani Ekadashi 2026, **Navratri start 2027**. (Since fixed:
   the matcher carries a kshaya fallback, and `verify:observances` reports `missing(kshaya)=0`.)
+
+**Bachh Baras joined Class B in Sept 2026, knowingly** (regional wave 1). The Bhadrapada
+Krishna Dwadashi cow-and-calf worship happens in the evening godhuli/pradosh hour, and
+DrikPanchang publishes it pradosh-vyapini: **7 Sep 2026**, where this engine's sunrise
+matcher says 8 Sep (Dwadashi runs 7 Sep 1:33 PM → 8 Sep 11:12 AM). The popular Hindi
+almanacs are not consistent with Drik here — for 2025 they reasoned explicitly from sunrise
+("द्वादशी तिथि का सूर्योदय 20 अगस्त को होगा, इसलिए इसी दिन ये व्रत किया जाएगा") and published
+20 Aug, which is what the engine returns. Rather than invent a convention from one contested
+data point, the rule ships on `udaya` and the variance is pinned two ways: a named test in
+`observanceDates.test.ts` and a `pradosh` row in `verify-observances.mts`'s `ANNUAL`, so every
+run reports `bachh-baras` in the Class B list until a real `pradosh` dayRule lands.
 
 Closing the rest of Class B is the same three-part job the chandrodaya case took: a `dayRule`
 value, its case in the matcher, and published-date tests across several years.

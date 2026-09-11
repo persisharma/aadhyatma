@@ -242,20 +242,28 @@ This table is the **single source of truth** for reading-content sizing, impleme
 > five named elevations rather than the `sm/md/lg` scale above. All share one warm shadow
 > colour, defined once as `#3C1E0A` — never re-typed at a call site.
 >
-> | Token | Offset · opacity · radius · Android | Use |
+> | Token | Offset · opacity · radius | Use |
 > | --- | --- | --- |
-> | `elevation.subtle` | `0,1` · `0.06` · `4` · `1` | dim/inactive card, grouped-list surface |
-> | `elevation.card` | `0,2` · `0.10` · `6` · `2` | default card |
-> | `elevation.lifted` | `0,4` · `0.11` · `12` · `3` | active/selected catalog tile, chapter card |
-> | `elevation.raised` | `0,6` · `0.16` · `14` · `5` | the one focal element on a screen |
-> | `elevation.overlay` | `0,6` · `0.25` · `14` · `10` | floats above a scrim (feature-tour card) |
+> | `elevation.subtle` | `0,1` · `0.06` · `4` | dim/inactive card, grouped-list surface |
+> | `elevation.card` | `0,2` · `0.10` · `6` | default card |
+> | `elevation.lifted` | `0,4` · `0.11` · `12` | active/selected catalog tile, chapter card |
+> | `elevation.raised` | `0,6` · `0.16` · `14` | the one focal element on a screen |
+> | `elevation.overlay` | `0,6` · `0.25` · `14` | floats above a scrim (feature-tour card) |
+>
+> **Cross-platform shadow.** iOS renders each tier from the `shadow*` props (offset · opacity ·
+> radius above). Android ignores `shadow*` and — before Sep 2026 — drew its own shadow from an
+> integer `elevation` prop, a hard grey box cast on all four sides that looked nothing like the
+> soft warm lift the design intends. Each tier now also carries an Android-only `boxShadow`
+> with the same offset/blur/warm colour (and no integer `elevation`, which would double the
+> shadow), so both platforms show the identical soft warm lift. Requires the New Architecture
+> (enabled) — `boxShadow` is a no-op on the legacy renderer.
 >
 > `subtle`, `lifted` and `overlay` were added in July 2026: an audit found 14 files
 > hand-rolling shadows, so cards floated at slightly different heights, the warm hex was
 > re-typed by hand (with `#3c1e0a` casing drift), and the tour card used an off-palette
 > `#0a0604`. The tiers above are the clusters that audit found, so every real surface has a
 > token. The cream palette has very low figure-ground contrast, so card surfaces must be
-> opaque for the Android shadow to render.
+> opaque for the shadow to render.
 >
 > **Enforced:** `eslint.config.js` bans a hex literal on `shadowColor` outside `src/theme/`.
 
@@ -1159,7 +1167,7 @@ A content-agnostic spotlight card. Every text field is **bilingual**; the card r
 
 ## 33. Panchang Tab (पंचांग)
 
-**Purpose.** A daily Hindu almanac plus a vrat/festival companion, living in its own bottom tab (`PanchangTab` → `PanchangStackNavigator`: `PanchangHome` → `ObservanceList` / `ObservanceDetail` / `KathaLibrary` / `MyVrat`). Everything is computed **on-device and offline**: the engine (`mobile/src/panchang/engine.ts`) derives tithi / nakshatra / yoga / karana / vara / lunar month from `astronomy-engine` sun–moon ephemerides with a linear Lahiri-style ayanamsa, so no network, no API, no panchang service. Observance dates come from bundled rules (`festivals.ts` / `festivalEngine.ts`) with a persisted per-city cache warmed off the interaction path. **Day selection is per-rule (`ObservanceRule.dayRule`, RULEBOOK §23):** absent ⇒ `udaya`, the tithi at sunrise, correct for the large majority; `chandrodaya` matches at **moonrise** and is what Sankashti Chaturthi and Karwa Chauth take, since the vrat ends with the moon sighting and arghya. Krishna Chaturthi typically opens mid-morning and closes before the next mid-morning, so sunrise matching named the day AFTER the night the moon is worshipped — Bhadrapada 2026 resolved to 1 Sep, whose 9:22 PM moonrise falls in Panchami, instead of 31 Aug, whose 8:39 PM moonrise falls in Chaturthi.
+**Purpose.** A daily Hindu almanac plus a vrat/festival companion, living in its own bottom tab (`PanchangTab` → `PanchangStackNavigator`: `PanchangHome` → `ObservanceList` / `ObservanceDetail` / `KathaLibrary` / `MyVrat`). Everything is computed **on-device and offline**: the engine (`mobile/src/panchang/engine.ts`) derives tithi / nakshatra / yoga / karana / vara / lunar month from `astronomy-engine` sun–moon ephemerides with a linear Lahiri-style ayanamsa, so no network, no API, no panchang service. Observance dates come from bundled rules (`festivals.ts` / `festivalEngine.ts`) with a persisted per-city cache warmed off the interaction path. **Day selection is per-rule (`ObservanceRule.dayRule`, RULEBOOK §23):** absent ⇒ `udaya`, the tithi at sunrise, correct for the large majority; `chandrodaya` matches at **moonrise** and is what Sankashti Chaturthi and Karwa Chauth take, since the vrat ends with the moon sighting and arghya; `madhyahna` matches at the sunrise–sunset midpoint (Ganesh Chaturthi, Ram Navami); `aparahna` matches in the afternoon (sunrise + 0.7 × daylength) and is what **दर्श अमावस्या** takes, since पितृ तर्पण is an afternoon rite. Krishna Chaturthi typically opens mid-morning and closes before the next mid-morning, so sunrise matching named the day AFTER the night the moon is worshipped — Bhadrapada 2026 resolved to 1 Sep, whose 9:22 PM moonrise falls in Panchami, instead of 31 Aug, whose 8:39 PM moonrise falls in Chaturthi.
 
 **Layer stack.** Parchment base · faded sketch background (`panchang_celestial_almanac` via `BackgroundLayer` — the §6 exception pattern: this surface pins its own celestial sketch) · content ScrollView at `spacing.xxl` gutters.
 
@@ -1177,8 +1185,21 @@ A content-agnostic spotlight card. Every text field is **bilingual**; the card r
    - *Anga grid, uniform 2×2*: Tithi · Nakshatra · **Nitya Yoga** · Karana each render on identical elevated tiles (`parchment-soft`, `radii.md`, `elevation.card`) — one size, no prominent/secondary split. Each tile: a **10 pt** `saffron-deep` type label (tracked uppercase Cormorant in English; plain script serif otherwise — was 9, below the §3.0 floor, until July 2026), the value in the active reading language only at 18 pt `ink` (single-line, `adjustsFontSizeToFit` down to a 0.8 scale so the longest name — "Uttara Bhadrapada" — fits without truncation), and `till H:MM AM/PM` when the anga ends that day. No second cross-script line. End instants that fall past midnight carry a short-date suffix (`तक 2:04 AM, 12 जुल` — `formatEndInstant` in `panchang/muhuratFormat.ts`, shared with the Muhurat card) so a next-day end never reads as this morning; panchang convention shows end times only (an anga's start is the previous one's end, usually on the previous day). On **kshaya** days — a tithi or nakshatra that begins after this sunrise and ends before the next, touching neither (e.g. Ekadashi on 10 Jul 2026) — the Tithi/Nakshatra tile adds a second row: the skipped anga's name at 15 pt `ink` plus its own `तक` line, so the day reads `दशमी तक 8:16 AM · एकादशी तक 5:22 AM, 11 जुल` instead of Ekadashi silently vanishing between Dashami and Dwadashi. Data: `PanchangData.kshayaTithi` / `kshayaNakshatra` (engine-detected via the sunrise-to-sunrise index jump). The **Tithi tile alone** carries the same 11 pt `ink-muted` **handover line** as the glance-card kicker (`फिर <tithi> — शेष दिन`, `successorTithiToday()`) under its `तक` line, on the identical null rules — the tile headline stays the sunrise (udaya) tithi the almanac names the day by, and the handover says who holds the rest of it. No other anga carries it. **The yoga tile is labelled नित्य योग / Nitya Yoga, never bare योग** (PRD-27, RULEBOOK §24): the 27-cycle Sun+Moon yoga — one of which is literally named सिद्धि — must stay distinguishable from the शुभ योग card directly below it.
    - *शुभ योग card* (`ShubhYogaCard`, PRD-27 — §69): directly under the anga grid, **only on days a shubh yoga forms** — zero chrome otherwise (present-or-absent is the entire vocabulary; no empty state, no "no yoga today" copy). A `parchment-soft`/`divider`/`radii.lg` card: a `शुभ योग` eyebrow, then one row per window — the shared `MuhuratChip` (yoga tone: `goldChipBg` + `saffronDeep`, full "… योग" name) with the window range right-aligned (Cormorant SemiBold for en; the script body face otherwise, because `formatEndInstant`'s past-midnight short-date suffix is Devanagari — the anga-tile face rule). Windows run nakshatra-to-nakshatra via `useShubhYoga` → `computeShubhYogas` (store-backed, no private cache); the 26:12 extended-hour style is never used.
    - *Times card*: 2×2 grid — Sunrise, Sunset, Moonrise, Brahma Muhurta — each a `gold` ☀/☽ text-presentation glyph (variation selector forces monochrome; "no emoji") + 10 pt label + Cormorant SemiBold 13 value.
-5. **व्रत और पर्व** for the selected date: `ObservanceCard`s (`parchment-soft`, `radii.md`, `elevation.card`) with a category pill (`व्रत` on `gold-tint` / `पर्व` on `saffron-tint`), deity, name — for `sankashti-chaturthi-vrat` the title is the **occurrence's published name** (`sankashtiOccurrenceName` in `panchang/sankashtiNames.ts`: the purnimant-month Ganapati form, e.g. `हेरम्ब संकष्टी चतुर्थी व्रत` on the Bhadrapada day, `विभुवन` in an adhik lunation, `(अंगारकी)` appended on a Tuesday; resolver failure falls back to the rule name, and list/search/detail surfaces keep the rule name) — short description, a **moonrise-vrat line** on `dayRule: 'chandrodaya'` rules only (12 pt `saffron-deep`: `व्रत इसी रात्रि — चंद्रोदय H:MM, दर्शन व अर्घ्य के बाद पारण` / `Kept this night — moonrise H:MM, parana after darshan and arghya`, from the selected day's `PanchangData.moonrise`; absent when the day has not solved). Such a vrat is kept through a night, not a calendar box — its tithi usually ends the next morning — so the card names the instant the fast is actually broken instead of leaving the reader to reconcile `व्रत` with a तिथि line that ends before noon. Then the action pills — `॥ पूजा विधि` (**filled `saffron`** pill, `parchment` text — renders only when the rule's `vidhiId` resolves in `VIDHI_BY_ID`; → `VidhiDetail` with the selected date, §61), `कथा पढ़ें · Read Katha` (gold-tint pill → katha reader) and `पढ़ें: <section>` (outline pill → the linked text via `buildEntryStartTarget`, §38). The vidhi pill leads the row: it is the day's *performed* action, the others are readings. Below the cards, on a saved पितृ स्मरण observance date only, the private muted **"॥ स्मरण — <relation>"** chip (`PitruSmaranDayChip`, `goldTint` fill + `gold` border + `inkSoft` text — never the festive pill style; device-only) → that person's detail (§62).
+5. **व्रत और पर्व** for the selected date: `ObservanceCard`s (`parchment-soft`, `radii.md`, `elevation.card`) with a category pill (`व्रत` on `gold-tint` / `पर्व` on `saffron-tint`), deity, name — for `sankashti-chaturthi-vrat` the title is the **occurrence's published name** (`sankashtiOccurrenceName` in `panchang/sankashtiNames.ts`: the purnimant-month Ganapati form, e.g. `हेरम्ब संकष्टी चतुर्थी व्रत` on the Bhadrapada day, `विभुवन` in an adhik lunation, `(अंगारकी)` appended on a Tuesday; resolver failure falls back to the rule name, and list/search/detail surfaces keep the rule name) — short description, a **day note** (12 pt `saffron-deep`) saying what THIS day is for, from the pure `observanceDayNote()` (`panchang/observanceDayNote.ts`) over the selected day's solve; absent when the day has not solved, and null for every rule that has nothing to add. A vrat is not a calendar box, and three rules need the line. `dayRule: 'chandrodaya'` → `व्रत इसी रात्रि — चंद्रोदय H:MM, दर्शन व अर्घ्य के बाद पारण` / `Kept this night — moonrise H:MM, parana after darshan and arghya`: such a vrat is kept through a night whose tithi usually ends the next morning, so the card names the instant the fast is actually broken instead of leaving the reader to reconcile `व्रत` with a तिथि line that ends before noon. `darsha-amavasya` → `व्रत व पितृ तर्पण इसी दिन — अपराह्न H:MM–H:MM` / `Kept this day — vrat and pitru tarpan in the aparahna, H:MM–H:MM` (`aparahnaSpan()`, the whole fourth part — `tithiAtAparahna` samples only its midpoint); withheld on the lunation where the amavasya covers no aparahna at all (RULEBOOK §23.8), since naming a window it does not fill would not be true. `amavasya-vrat` → `स्नान व दान प्रातः — अमावस्या तिथि H:MM तक` / `Snan and daan at dawn — Amavasya tithi until H:MM`, and only on a genuine udaya amavasya — the matcher's kshaya fallback can seat the rule on a chaturdashi sunrise, where the tithi end is not the amavasya's. **The two amavasya rows keep their names and both keep their katha and food guidance (a household may fast on either reading), so this line is the only thing that tells them apart — without it the pair renders identically, which is what a reader reported for 10 vs 11 Sep 2026.** Then the action pills — `॥ पूजा विधि` (**filled `saffron`** pill, `parchment` text — renders only when the rule's `vidhiId` resolves in `VIDHI_BY_ID`; → `VidhiDetail` with the selected date, §61), `कथा पढ़ें · Read Katha` (gold-tint pill → katha reader) and `पढ़ें: <section>` (outline pill → the linked text via `buildEntryStartTarget`, §38). The vidhi pill leads the row: it is the day's *performed* action, the others are readings. Below the cards, on a saved पितृ स्मरण observance date only, the private muted **"॥ स्मरण — <relation>"** chip (`PitruSmaranDayChip`, `goldTint` fill + `gold` border + `inkSoft` text — never the festive pill style; device-only) → that person's detail (§62).
 6. **आगामी · Upcoming** rows: coloured marker dot (`saffron` star-tier / `ink` halfmoon / `gold` default), short date, name.
+
+**Regional coverage of the observance catalog** (Sept 2026 — the “Goga Navami is missing” audit). The catalog is **130 rules, 116 of them default-visible**; the rest are `advanced`/`regional` and reachable only through catalog search. Two rules about what goes where:
+
+- **A regional observance that a whole state keeps is `default`, not `regional`.** `visibility: 'regional'` currently means *invisible everywhere* — `getObservanceCatalog()` filters to `default` and there is no surface that opts back in — so tagging Gangaur or Chhath “regional” would have hidden them from the users who actually keep them. The identity lives in the rule's **`shortDescription*` and `searchTerms`**, which name the state, the mela and the local name (the pattern `bhadwa-chauth` set): a Tamil user sees one extra dot on a day, a Rajasthani user sees their festival. The two rules that remain `visibility: 'regional'` (`karthigai-vrat`, `rohini-vrat`) are catalog-only entries with no tithi, awaiting the opt-in surface designed in `docs/roadmap/prds/42-regional-parv.md`.
+- **A shipped katha is not a shipped date.** Five Rajasthani observances shipped a full bilingual katha while their rule was `catalog-only` — no `lunarMonth`/`tithi` at all — so they could be *read about* but never appeared on a calendar day: **गणगौर, सकट चौथ, शीतला सप्तमी, बछ बारस, आशा दशमी**. Adding a katha entry must never be mistaken for adding the observance.
+
+**Wave 1 additions (17 rules).** Rajasthan — गोगा नवमी (Bhadrapada K9, Gogamedi), रामदेव जयंती (Bhadrapada S2, Ramdevra), तेजा दशमी (Bhadrapada S10, Parbatsar), बछ बारस (Bhadrapada K12), गणगौर (Chaitra S3), शीतला सप्तमी (Chaitra K7), शीतला अष्टमी · बसोड़ा (Chaitra K8), दशा माता व्रत (Chaitra K10), सकट चौथ (Magha K4, `chandrodaya`), आशा दशमी (Ashadha S10). Bihar/Mithila — चैती छठ (Chaitra S6), मधुश्रावणी (Shravana S3), सामा-चकेवा (Kartika S7), चित्रगुप्त पूजा (Kartika S2). Pan-Hindu gaps the same audit surfaced — कार्तिक पूर्णिमा (Kartika S15; Dev Deepawali, Pushkar and Sonepur melas), चैत्र नवरात्रि प्रारंभ (Chaitra S1; also Gudi Padwa / Ugadi / Cheti Chand — Ram Navami had shipped for years with no opening day), महावीर जयंती (Chaitra S13; default-visible on the same reasoning as Buddha Purnima). Each rule cites its source in `festivals.ts` and is pinned to a **published** civil date in `observanceDates.test.ts`; `verify:observances` re-derives all but `sakat-chauth` independently.
+
+**Both amavasya rows.** An amavasya lasts about a day, so the tithi at sunrise and the tithi in the afternoon can name different dates, and both are published. The app therefore ships **two** rules on Krishna 15, exactly as Drik does: **अमावस्या व्रत** (`amavasya-vrat`, udaya — the snan-daan day, and the day the Tithi tile itself labels अमावस्या) and **दर्श अमावस्या** (`darsha-amavasya`, `aparahna` — the पितृ तर्पण / shraddha / fasting day). They coincide in 64 of the 99 lunations from 2024–2031 and differ by exactly one day in the other 35; on a coinciding day the list shows both rows, the same way पूर्णिमा व्रत and श्री सत्यनारायण व्रत already do. Drik names them differently — the aparahna row is "Darsha Amavasya" every month, the udaya row carries the lunar month ("Bhadrapada Amavasya", "Ashwina Amavasya") — and both rows are pinned against its published 2026 list: 10 Sep / 11 Sep (the reported case: amavasya runs from 10:33 AM for the rest of the 10th), 8 Nov / 9 Nov, and 10 Oct where the amavasya covers both instants and the two coincide. Retagging the single existing rule was rejected — it would have moved 35 shipped dates and split अमावस्या व्रत from सर्वपितृ अमावस्या (`pitruSmaran.ts`, udaya) in 2027 and 2031.
+
+**Known shift.** `bachh-baras` is worshipped at the evening godhuli/pradosh hour and Drik publishes it pradosh-vyapini (7 Sep 2026), while this app matches at sunrise (8 Sep 2026). Pradosh is not modelled — the same open Class B as Diwali/Dhanteras (`VERIFICATION.md`, RULEBOOK §23.7) — and the variance is test-pinned rather than left to drift.
+
+**No new notification family.** These rules are **not** added to the default-on festive-reminder catalog (§38): that list is “famous enough that every user is already observing it”, and a state festival is not. The opt-in path is the existing ★ follow → vrat reminders, which now works for all seventeen because they finally resolve to a date.
 
 **Muhurat Finder door** (`MuhuratFinderDoor`, PRD-16 §60) — one shared `ListCard` in its **`flat` variant** (`parchment-soft` on a `divider` border — Aug 2026: the gradient is reserved for the live glance card directly above, so the door no longer reads as part of it) with a नया/NEW badge, inserted **between the glance card and the anga grid**: "is now auspicious?" readers are the users with a date decision to make. Leading thumb: a **drawn sunrise glyph** (sun ring + three rays over a horizon bar, View-strokes like the §17 tab icons — no emoji, §5) in `saffron-deep` on a 46pt `saffron-tint` disc, replacing the gradient मु letter tile. It pushes `MuhuratFinder` in the same Panchang stack; nothing above or below it moves.
 
@@ -1314,7 +1335,7 @@ The list is **two browsable tiers**, rendered as one `FlatList` under two group 
 
 1. **Title** — one left-aligned line, selected language only (`अन्य` / `More` / `અન્ય` / `ಇನ್ನಷ್ಟು`), 30 pt in the script's title face (`latinBold` for en, `scriptTitleFont` for hi/gu/kn). No `More` subtitle.
 2. **Three grouped inset lists** — each is an uppercase **group label** (`saffron-deep`, 13; Latin gets tracking + uppercase via the chrome font, Indic drops both) above one **list container** (`parchment-soft`, **`radii.lg`**, 1 px `divider`, `overflow:hidden`, **`elevation.subtle`**) whose rows are split by hairline `divider` top-borders. Standard row anatomy: `[38 px icon tile, radii.sm] [label 18]  …  [state 15 ink-muted] [chevron › 19 gold]`. The container radius was an ad-hoc 20 and the icon tile 11, both off the radius scale (§4), with a hand-rolled shadow; all three are tokens as of July 2026, padding 15×16, pressed → `saffron-tint` wash.
-   - **साधना / Practice** — a compact **profile hero row** (tinted `cardActiveFrom → cardActiveTo` gradient, 52 px circular `saffron` ॐ badge, `साधक प्रोफ़ाइल` title, sub-line "**`N`** श्लोक · **`N`** श्रृंखला" = lifetime verses + streak in `saffron`; the old `rounds` count is dropped; a11y "Open Sadhak profile" → Profile), then **संग्रह** (♥ `saffron`, state = saved count; label matches the WishlistScreen title → Wishlist §24), **स्मरण** (ॐ `gold`, state = reminder time(s) or Off → Reminder Settings §38), **जप अलार्म** (⏰ `saffron-deep`, state = active count → §35), **पितृ स्मरण** (॥ `gold`, state = NEW while empty, then `count · soonest date` → §63), **जन्म तिथि** (✦ `saffron-deep`, same NEW/`count · soonest` state pattern → §70), **कुल परम्परा** (॥ `saffron`, state = the saved kuldev's name, else NEW → §70), **वास्तु दिशा** (॰ `saffron`, NEW state → §66).
+   - **साधना / Practice** — a compact **profile hero row** (tinted `cardActiveFrom → cardActiveTo` gradient, 52 px circular `saffron` ॐ badge, `साधक प्रोफ़ाइल` title, sub-line "**`N`** श्लोक · **`N`** श्रृंखला" = lifetime verses + streak in `saffron`; the old `rounds` count is dropped; a11y "Open Sadhak profile" → Profile), then the rows **in importance order** (Sept 2026) — three tiers, each ranked within itself: **(a) the daily-practice loop**, most-used first: **स्मरण** (ॐ `gold`, state = reminder time(s) or Off → Reminder Settings §38; the default-on habit driver), **जप अलार्म** (⏰ `saffron-deep`, state = active count → §35), **संग्रह** (♥ `saffron`, state = saved count; label matches the WishlistScreen title → Wishlist §24); **(b) the family & lineage records**, by dharmic weight: **कुल परम्परा** (॥ `saffron`, state = the saved kuldev's name, else NEW → §70; the household's foundational record), **पितृ स्मरण** (॥ `gold`, state = NEW while empty, then `count · soonest date` → §63; the recurring shraddha duty), **जन्म तिथि** (✦ `saffron-deep`, same NEW/`count · soonest` state pattern → §70; celebration); **(c) the occasional home tool**: **वास्तु दिशा** (॰ `saffron`, NEW state → §66). A new practice row slots into its tier by the same rule rather than appending at the bottom; `MoreScreen.test.tsx` pins the order.
    - **ऐप / App** — **भाषा** (अ `gold`, state = current language's native name; opens the **Language picker sheet**, not an inline grid), **पाठ का आकार** (Aa `saffron`, state = मानक/बड़ा; opens the **Reading-size picker sheet**, §43), **पाठ सुनें / Read Aloud** (♪︎ `saffron-deep` at 15, state = what will be spoken + the rate via the exported `readAloudRowLabel`, or `उपलब्ध नहीं` when the device has no voice; opens the **Read-aloud settings sheet**, §56), **ऐप साझा करें**
      Both settings rows are also feature-tour spotlight targets (`languageRow` / `readingSizeRow`, §47 steps 23–24): each `SettingsRow` is wrapped in a measurable `View` and registers a `scrollNodeIntoView` reveal against the More `ScrollView`, since the App group can sit below the fold. The tour ends on them, and the post-tour setup sheet then asks the user to set both. (↗ `saffron`; OS share sheet via `buildAppShareMessage(lang)`, `data/shareLinks.ts` — the localized `APP_SHARE_INVITE` + `SMART_LINK`. The invite is a **multi-line feature list**, not a one-liner: a "complete bhakti in one app" lede, five `•` bullets — texts (Gita/Sundarkand/Chalisa/Aarti/Stotra), japa mala + alarms, Panchang (vrat-festival/muhurat/kundali/rashifal), bhajan audio + daily verse, nitya-sadhana routine — a four-script "read in" language line, then the download CTA with the smart link. Plain `•` bullets, no emoji per §5.), **ऐप को रेटिंग दें / Rate the App** (★ `gold` at 18, no state, a11y label constant "Rate the app") — the manual entry point for the rating sheet (§54): it calls `open()`, bypassing the auto-ask gate and spending no ask slot, and keeps working even after the user has opted out of the automatic prompt. Last in the group: **Instagram पर फ़ॉलो करें / Follow on Instagram** (◉ `saffron-deep` at 19, state = the `@vedansh.app` handle, a11y label constant "Follow on Instagram") — `Linking.openURL(INSTAGRAM_URL)` from the same `data/shareLinks.ts`, falling back to an `Alert` naming the handle if the OS can't open it. The link is the canonical `https://www.instagram.com/…` form, **not** `instagram://`: a custom scheme would need `LSApplicationQueriesSchemes` / `android.queries` in `app.json` (a store rebuild), whereas the https URL is claimed by the installed Instagram app via universal/app links and degrades to the browser otherwise — so the row ships over OTA.
    - **जानकारी / Info** — **परिचय व अस्वीकरण** (ⓘ `ink-muted`; opens the pageSheet disclaimer modal with the bilingual disclaimer + "Report an Error" CTA), **त्रुटि सूचित करें** (⚑ `ink-muted`; `mailto` via `buildDiscrepancyMailto`), and **ऐप भ्रमण फिर देखें / Show App Tour** (↻ `gold`; a11y label constant "Show App Tour") which calls `resetTour()` to replay the first-launch feature tour on demand (§47).
@@ -1376,13 +1397,20 @@ The list is **two browsable tiers**, rendered as one `FlatList` under two group 
 
 **Japam alarms** — see §35 for the scheduling tiers; they participate in deep-linking below.
 
-**Notification tap → deep link** (`notifications/deepLink.ts`). A module-level `navigationRef` (attached to the `NavigationContainer` in `App.tsx`) lets `handleNotificationResponse` dispatch from outside the React tree; `App.tsx` wires both the cold-start response and the live `addNotificationResponseReceivedListener`. Routing by payload type:
+**Notification tap → deep link** (`notifications/deepLink.ts`). A module-level `navigationRef` (attached to the `NavigationContainer` in `App.tsx`) lets `handleNotificationResponse` dispatch from outside the React tree; `App.tsx` wires both the cold-start response and the live `addNotificationResponseReceivedListener`. **One routing table, two timings (Sept 2026):** `resolveNotificationTarget(payload)` maps every family to a `StartTarget` (`navigation/startTarget.ts` — `{ tab, screen?, params? }`). A **warm** tap dispatches `startTargetToNavigateAction(target)` (`{ screen, params, initial: false }` for a nested screen, the `panchangTabTarget`/`moreTabTarget` rule). A **cold** tap — the notification that *launched* the app, read with `getLastNotificationResponseAsync` in the same pre-mount race as a cold widget URL, under the shared `INITIAL_TARGET_TIMEOUT_MS` = 1 s — becomes the `NavigationContainer`'s **`initialState`** via `buildInitialNavigationState(target)`, so the named screen is the *first* one committed and Home never mounts as an intermediate step, for every family. A deeper target is seeded with its stack root beneath it (`[MoreHome, PitruSmaranDetail]`), so back works and the hub stays reachable. A widget URL wins outright and never waits on the notification read; a consumed launch tap is not re-dispatched by the retry loop (`coldNotificationConsumedRef`); if the read misses the timeout the post-mount dispatch still catches it; a stale japam mantra resolves to null, i.e. the ordinary Home launch. `deepLink.jest.test.tsx` pins cold target == warm dispatch per family, and that each cold state holds its target exactly once above its root.
+
+> **RULE — a cold-start destination is the container's `initialState`, NEVER a tab's `initialParams`.** `initialParams` stay in `route.params` for the life of the session, so React Navigation re-consumes a nested `{ screen, params }` **every time that tab is focused again** and pushes the target a second, third, fourth time (`useNavigationBuilder`'s `!isNestedParamsConsumed` branch). The Panchang widget shipped this way and piled up copies of `PanchangHome` — the heaviest screen in the app, a full engine solve each — on every tab switch, until the tap "landed nowhere" and the app froze (Sept 2026 report). `initialState` is consumed exactly once, at mount. `startup.test.ts` fails if any `initialParams=` returns to `TabNavigator`.
+
+> **RULE — the Panchang chunk is evaluated BEFORE the navigator mounts when a cold start lands there.** `PanchangTab` is the one tab behind a dynamic boundary (`navigation/lazyPanchangStack.ts`, ~70 modules: Kundali, Rashifal, Gochar, Namkaran, Vastu, the vidhi flow). A cold landing on it — a Panchang widget tap, a vrat/muhurat notification — makes that lazy stack the *first* screen committed, a path that never ran while every launch went through Home first and reached the chunk later, warm. `App.tsx` awaits `preloadPanchangStack()` inside the existing pre-mount race (one shared promise, so the preload and the `React.lazy` render never evaluate twice), so the cold landing is the warm one, and a chunk that cannot evaluate falls back to `HomeTab → Home` instead of suspending forever or throwing past every boundary. The lazy stack also renders inside **`StackLoadBoundary`** (outside its Suspense boundary): a failed chunk then costs one tab — the bar stays up, the other tabs work, Retry re-attempts — instead of unmounting the tree into a dead screen the user cannot leave. Pinned by `startup.test.ts` and `navigation/__tests__/stackLoadBoundary.test.tsx`.
+
+Routing by payload type:
 
 - `daily-verse` → the **Daily Bhakti tab** carrying the exact verse identity (`sourceId`/`chapter`/`verseIndex`) baked into the notification — deliberately *not* a reader, because opening a reader would run its `setProgress` effect and clobber the user's resume position; the baked identity also survives OTA pool changes.
-- `vrat-reminder` → `PanchangTab → ObservanceDetail` for that rule.
+- `vrat-reminder` → `PanchangTab → ObservanceDetail` for that rule; `muhurat-reminder` → `PanchangTab → MuhuratDayDetail` for the payload's occasion + date (occasion validated against `EVENT_RULES`).
+- `pitru-smaran-reminder` → `MoreTab → PitruSmaranDetail` for the entry; `janma-tithi-reminder` → `MoreTab → JanmaTithiDetail` for the person; `pitru-paksha-reminder` → `MoreTab → PitruPakshaOverview`.
 - `festive-reminder` → **`HomeTab → Home`**, and the reading its message named is the first card waiting there. Home's FOR TODAY row (§50) leads with the festival's own content on a festival day, reading the same curated catalog the notification's copy came from — so the invitation is honoured one tap in, not bypassed. Landing on Home rather than in a reader keeps three things true that a direct reader push would break: a tap made from a lock screen can't run a reader's `setProgress` effect and clobber the resume position (the same reason `daily-verse` stays on a tab), the day's Panchang strip and routine banner arrive alongside the reading, and a notification armed up to four months ago can't strand the user on content an OTA update has since renamed — Home recomputes today from today. `{ screen: 'Home' }` is passed explicitly: focusing `HomeTab` alone would restore whatever screen the Home stack was left on, possibly several readers deep. Routing gates on `ruleId` only; the payload still carries `sourceId` as the record of what the message promised.
 - `return-reminder` → **`HomeTab → Home`**, for the same reasons as the festive tap: the weekday deity's texts the message named are the FOR TODAY row's ordinary-day lead, a lock-screen tap must never touch a reader's resume position, and Home recomputes today from today. Gated on `type` alone — `dateKey`/`weekday`/`absentDays` ride along as a record.
-- `sadhana-reminder` and `routine-reminder` → **`HomeTab → RoutineToday`** (Today's Practice) — the surface where all of today's practice lives, never a reader (same resume-position rule as above). The routine payload `{ type, routineId, dateKey }` gates on `type` alone: `routineId` rides along as a record, so a stale notice for a since-deleted routine still lands safely — RoutineToday simply doesn't show it.
+- `sadhana-reminder` and `routine-reminder` → **`HomeTab → RoutineToday`** (Today's Practice) — the surface where all of today's practice lives, never a reader (same resume-position rule as above). Home sits beneath both on a cold start (and `initial: false` on the warm dispatch does the same), so back reaches it — the `tabTargets` rule, pinned per family in `deepLink.jest.test.tsx`. The routine payload `{ type, routineId, dateKey }` gates on `type` alone: `routineId` rides along as a record, so a stale notice for a since-deleted routine still lands safely — RoutineToday simply doesn't show it.
 - japam alarm → `HomeTab → JapamCounter` with `autoPlay: true`, so a lock-screen tap drops straight into chanting (mantra id validated against the catalog first; a stale alarm falls back to Home rather than crashing).
 
 **Route mapping — `navigation/entryRoutes.ts`.** The single source of truth for "open this content": `buildEntryStartTarget(entry)` maps any library entry to its start route (japam → `JapamCounter`; theerth entries → `TheerthMap` with a group filter; the nine chalisas → `ChalisaReader`; sanskar → `SanskarReader`; aartis → `AartiReader`; a **multi**-chapter text → its Chapters screen — including the `ram-aarti` alias, which maps to the `ram-stuti` reader routes), with `navigateToRoutineItem`, `buildProgressTarget` (resume / search verse hits), and `buildBookmarkTarget` (Wishlist rows, §24) layered on top. Panchang's "Read: <section>" links, search results, routine items, wishlist, and the Home spotlight all route through this one module, so adding a section's route once wires every surface.
@@ -1943,7 +1971,7 @@ Placement is **first verse page only**: `VersePage` exposes a `belowContent` slo
 
 ## 51. Kundali + Daily Rashifal (PRD-C)
 
-**Discovery and landing state.** Kundali is a permanent `CategoryCard variant="launcher"` on Home (`कुंडली · Kundali`, insight glyph, NEW badge), not a shuffled Discover card. It deep-links to `PanchangHome({ initialTab: 'jyotish' })`. Panchang's top peer selector is `Panchang | Vrat & Parv | Jyotish`; it remains the fixed first control in every mode, while location/calendar-system/My Vrat controls appear beneath it only for the two Panchang-derived modes. A guest sees Create Kundali, Daily Rashifal, and one Navagraha practice card. Once a birth profile is saved, the landing becomes daily-first: the person switcher (§51a) leads, then the full Favour/Pause/Reflect Rashifal card, a compact Kundali reference, and the same single practice card closing the page. Returning from creation must refresh this saved state immediately. Birth city remains independent of the current Panchang location. Since PRD-20, the saved landing's guidance rows are computed by `computePersonalGuidance` from the ACTIVE person's FULL chart: the Favour/Pause/Reflect bodies stay byte-identical to the Moon-sign Rashifal (the superset lock), extended with dual चन्द्र-से/लग्न-से house context pills and a quiet gold `दशा संकेत · Dasha note` row that appears only when a focus transit belongs to a running Vimshottari lord. The eyebrow follows §51a's naming rule — `आपकी पूरी कुंडली से · From your full chart` with one person saved, `<name> की पूरी कुंडली से · From <name>'s full chart` once the roster holds more than one, because "your" would then be a guess. The compact Kundali card gains a `पूर्ण कुंडली विवेचन खोलें` link (§68) and, only while a Sade Sati phase is active, a gold-tint teaser row into Gochar (§67); a `गोचर · Gochar` tool card sits after the contractual trio, before Guna Milan/Namkaran. Guest and error landings carry none of these — every PRD-20 surface requires a saved chart.
+**Discovery and landing state.** Kundali is a permanent `CategoryCard variant="launcher"` on Home (`कुंडली · Kundali`, insight glyph, NEW badge), not a shuffled Discover card. It deep-links to `PanchangHome({ initialTab: 'jyotish' })`. Panchang's top peer selector is `Panchang | Vrat & Parv | Jyotish`; it remains the fixed first control in every mode, while location/calendar-system/My Vrat controls appear beneath it only for the two Panchang-derived modes. A guest sees Create Kundali, Daily Rashifal, and one Navagraha practice card. Once a birth profile is saved, the landing becomes daily-first and fits ONE fold (**§51c**): the person switcher (§51a) leads, then the Favour/Pause/Reflect Rashifal card with a single आधार evidence line, then a 2×2 grid of doors that each read out for the active person, then the same single practice card closing the page. There is no page title, no date and no per-item section label — §51c has the measurements and the reasons. Returning from creation must refresh this saved state immediately. Birth city remains independent of the current Panchang location. Since PRD-20, the saved landing's guidance rows are computed by `computePersonalGuidance` from the ACTIVE person's FULL chart: the Favour/Pause/Reflect bodies stay byte-identical to the Moon-sign Rashifal (the superset lock), extended with dual चन्द्र-से/लग्न-से house context — per-row pills on the Rashifal screen, one deduped आधार summary line on the landing (§51c) — and a quiet gold `दशा संकेत · Dasha note` row that appears only when a focus transit belongs to a running Vimshottari lord. The eyebrow follows §51a's naming rule — `आपकी पूरी कुंडली से · From your full chart` with one person saved, `<name> की पूरी कुंडली से · From <name>'s full chart` once the roster holds more than one, because "your" would then be a guess. The compact Kundali card is **gone since §51c**: `पूर्ण कुंडली विवेचन` (§68) is offered by `KundaliScreen` alone, and the Sade Sati teaser (§67) became the live गोचर tile. `गोचर` is the second tile of the 2×2, before Guna Milan/Namkaran. Guest and error landings carry none of these — every PRD-20 surface requires a saved chart.
 
 **Birth input and state.** One card asks for optional name, birth date, birth time, and a bundled Indian city. Date and time are entered through pickers, not free text: the date field-button opens `CalendarDatePicker` (a parchment month-grid bottom sheet with a month/year overlay for jumping across decades, range `1900-01-01`…today-IST) and the time field-button reveals the inline reminder-style `ClockTimePicker` (12-hour AM/PM stepper). Both still emit the stored contract — `YYYY-MM-DD` and 24-hour `HH:mm` — so validation, IST→UTC conversion, and persistence are unchanged; the `kundali-date-input`/`kundali-time-input` testIDs move onto the field-buttons. Tapping the time field commits a 06:00 default so the shown value and stored value always agree, and an untouched time still validates as missing. No city or “Default profile” is silently supplied: the city field begins at “Choose an Indian city”, and nearby copy plainly explains that current calculation support covers Indian birth places and their local IST time. Profiles persist on-device in the birth-profile roster under `@vedansh:kundali-profiles:v1` (**§51a** — several people, one active selection; the PRD-C single-profile key migrates into it once); Edit opens the manage form for the active person, where removal is deliberately secondary to Save/Cancel. Copy explains that correct birth time matters for Lagna/houses. Loading, guest, saved, persistence-error, and corrupt-profile recovery are explicit states; a failed save/delete must never masquerade as success. Opening/closing the city picker dismisses its keyboard, and a successful calculation returns the result to its top.
 
@@ -1963,7 +1991,7 @@ Placement is **first verse page only**: `VersePage` exposes a `belowContent` slo
 
 **Readability sizing (July 2026).** The §3.0 floor (10) is a *minimum*, not a target — Kundali and Rashifal carry unusually dense content (sign grids, graha tables, dasha timelines), so their read-tier text sits **above** the floor for comfort: the Rashi-picker grid uses traditional name **16** / plain-English **14** on taller (`minHeight 64`) tiles; its "choose your sign" **title** reads as a heading at **15** with a **14** description and a **13** disclaimer above; the guidance-row headers/body and their graha·bhava context chips, the Kundali overview eyebrow, and the result-screen labels (`lagnaLabel`/`lagnaTranslation`, grahas `tablePrimary` **14** / `tableTranslation` **12**, `eyebrowText`, `progressCaption`, `practiceLabel`) were raised to **12** (space-constrained dasha `antarChip`/`nowTag` to **11**). Micro-chrome shared with the Panchang tab (the `jyotishSectionLabel` kicker, tab-bar) stays at the floor.
 
-**Files.** `mobile/src/panchang/kundali.ts`, `useKundali.ts`, `birthProfiles.ts`, `birthProfileStore.ts` (§51a), `gochar.ts`, `dashaReading.ts` (PRD-20); `NorthIndianChart.tsx`, `KundaliOverview.tsx`, `JyotishGuidanceRows.tsx`, `JyotishPracticeCard.tsx`, `JyotishShareCard.tsx`, `JyotishShareSheet.tsx`, `JyotishStateCard.tsx`, `PersonChips.tsx` (§51a), `CalendarDatePicker.tsx`, `ClockTimePicker.tsx`, `StepperColumn.tsx` (§52a); `KundaliScreen.tsx`, `RashifalScreen.tsx`; `PanchangScreen.tsx`, `HomeScreen.tsx`, Panchang navigation types/stack; `.maestro/kundali-smoke.yaml`.
+**Files.** `mobile/src/panchang/kundali.ts`, `useKundali.ts`, `birthProfiles.ts`, `birthProfileStore.ts` (§51a), `gochar.ts`, `dashaReading.ts` (PRD-20); `NorthIndianChart.tsx`, `KundaliOverview.tsx`, `JyotishGuidanceRows.tsx`, `JyotishToolTile.tsx` (§51c), `JyotishPracticeCard.tsx`, `JyotishShareCard.tsx`, `JyotishShareSheet.tsx`, `JyotishStateCard.tsx`, `PersonChips.tsx` (§51a), `CalendarDatePicker.tsx`, `ClockTimePicker.tsx`, `StepperColumn.tsx` (§52a); `KundaliScreen.tsx`, `RashifalScreen.tsx`; `PanchangScreen.tsx`, `HomeScreen.tsx`, Panchang navigation types/stack; `.maestro/kundali-smoke.yaml`.
 
 **Dasha reading (PRD-20 Phase 4).** The Dasha tab inserts one `इस अवधि का पाठ · Reading this period` card between the current-period block and the `महादशा समयरेखा / MAHADASHA TIMELINE` eyebrow that heads the full timeline: title (`<lord> महादशा · <lord> अन्तर्दशा`), the lord's authored classical signification (every one opens `परम्परा में… / Tradition links…`), the lord's natal rashi/house placement line, and a muted Antardasha overlay line. Copy comes from `dashaReading.ts`'s typed tables — structural only, pinned by a banned-vocabulary engine test — and the card carries one complete accessibility label.
 
@@ -1975,8 +2003,8 @@ Placement is **first verse page only**: `VersePage` exposes a `belowContent` slo
 a household could hold one person's Kundali at a time and a second person meant
 overwriting the first. The profile is now a **roster** — every saved person plus
 one **active** selection — and every personalised surface reads that selection:
-the Kundali result, the Jyotish landing's Daily Rashifal card and chart glance,
-the Rashifal screen, and the muhurat finder's आपके लिए Tarabala/Chandrabala strip.
+the Kundali result, the Jyotish landing's Rashifal card and all four of its §51c
+door tiles, the Rashifal screen, and the muhurat finder's आपके लिए Tarabala/Chandrabala strip.
 
 **One selection, one store.** `panchang/birthProfiles.ts` is the pure model
 (validate, parse, add/update/remove/select, `activePerson`) and
@@ -2043,6 +2071,95 @@ Namkaran still never reads a birth profile at all.
 `.maestro/multi-profile-jyotish-smoke.yaml`.
 
 ---
+
+## 51c. The Jyotish landing — one reading, then a 2×2 of doors (September 2026)
+
+**Purpose.** The saved-profile landing had grown to **1,645 dp of content — 2.2
+viewport folds** on a 393 × 852 dp phone, and roughly 470 dp of that carried no
+answer at all: a page header restating the card header beneath it, four section
+labels introducing one item each, the same evidence chip printed twice, the Moon
+sign stated twice, and four competing CTAs in one card. गोचर, अष्टकूट मिलान and
+नामकरण — the three newest features — were the three furthest from the fold, and
+the chart people open the tab for sat below the first one. This section is the
+answer: **703 dp, one fold**, with more information on screen than before, not
+less.
+
+**Structure (saved state).** Exactly four blocks, in this order:
+
+1. **The person switcher** (§51a), first. It no longer governs only the guidance
+   card — every tile in the grid below reads out of the same active person — so
+   it must sit above everything it changes and re-answer the whole screen on one
+   render. `birthProfileStore`'s single active selection is what makes that true.
+2. **The guidance card**, and the only thing on the screen that leads:
+   provenance eyebrow → Moon sign at 25 dp → share pill → the three
+   Favour/Pause/Reflect rows → one आधार evidence line → `पूरा राशिफल खोलें`.
+3. **The 2×2 door grid** under a `<name> के लिए · For <name>` label.
+4. **The practice card** (§51), unchanged.
+
+**No page title and no date.** The landing only ever shows today, the card's own
+eyebrow says whose chart the reading came from, and the removed intro block was
+printing the date twice inside 300 dp with "आज" a third time. So the
+`आज आपका ज्योतिष` heading, the date eyebrow, its subtitle, and the
+`आज का राशिफल` / `आपकी कुंडली` / `गोचर` / `मिलान` section labels are all gone.
+The share card still carries its own date — that is a shared artefact, not
+screen chrome.
+
+**The tiles are readings, not menu items (`JyotishToolTile.tsx`).** The stacked
+tool card it replaced spent 98 dp explaining what Gochar *is*; a tile spends 104 dp saying
+what Gochar *says for this person today*. Geometry: `width: '48.7%'`,
+`minHeight: 104`, `radii.lg`, 11/12 dp padding, a 34 dp `saffronTint` glyph tile
+and the caret on one top row, then title (14 dp, `marginTop: 'auto'`) and the
+reading line (11/16 dp — 11 pt Devanagari needs ≥ 1.4× leading, §3.0). The
+1.25 font-scale cap applies: this is dense navigation chrome (§61).
+
+| tile | reading | source |
+|---|---|---|
+| कुंडली | `<लग्न> लग्न · <नक्षत्र> <पद>` | `chart.lagnaRashiIndex`, `moon.nakshatraIndex/pada` |
+| गोचर | the Sade Sati phase word, or the descriptive fallback | `guidance.sadeSatiPhase` |
+| अष्टकूट मिलान | `<चन्द्र राशि> · <नक्षत्र> से` | `moon.rashiIndex/nakshatraIndex` |
+| नामकरण | **descriptive — no reading** | — |
+
+नामकरण is deliberately the exception: it answers for a **newborn**, not for the
+selected person, so a personalised line there would be a category error — and
+today's namakshar is gated content (`NAMAKSHAR_SOURCE.verified` is `false`), which
+the landing is not the place to promote. `SADE_SATI_PHASE_SHORT` in `gochar.ts`
+is the one home for the phase word, so a phase is never worded two ways; the
+tile reads the phase `computePersonalGuidance` already solved and must never call
+`computeSadeSati`, whose default 1,200-day ingress scan has no business running
+for a subtitle.
+
+**One live tile.** A running Sade Sati takes `cardActiveFrom`/`cardActiveBorder`
+on the गोचर tile — the §67 teaser promoted out of the buried chart card into the
+door it always pointed at. Emphasis is never the only signal (§12): the reading
+line says it in words too. Nothing else in the grid competes, and NEW stays a
+**text pill** rather than a colour dot, because §12 forbids colour-alone and a
+dot cannot distinguish NEW from SOON.
+
+**The chart-glance card is dissolved, not compressed.** Its 2×2 fact grid
+restated numbers the doors needed anyway: लग्न and नक्षत्र moved onto the कुंडली
+tile, चन्द्र राशि was already the card hero, and the दशा fact remains one tap
+away on the Kundali result. Its three CTAs go with it — `कुंडली खोलें` becomes
+the कुंडली tile, while **Edit details** and **`पूर्ण कुंडली विवेचन`** (§68) were
+already offered by `KundaliScreen` itself, which is where they now live alone.
+
+**One आधार line, not three chips.** `JyotishGuidanceRows` takes
+`showContext: 'summary'` on the landing: one deduped `आधार · <graha> <house>/<from
+lagna>` strip under the last row. Favour and Reflect routinely share a graha, so
+two of the three chips were character-for-character identical. The full per-row
+chips (`showContext: true`) stay on the Rashifal screen — the depth is one tap
+away, not deleted, and the summary strip carries the unabbreviated wording in its
+accessibility label.
+
+**Guest and error states use the same grid.** Neither has a chart, so no tile has
+a reading and every one falls back to its description — one geometry for all three
+states, never a guest-only layout. The error branch's three tiles wrap as 2 + 1.
+
+**Files.** `mobile/src/components/JyotishToolTile.tsx` (new),
+`JyotishGuidanceRows.tsx`; `mobile/src/panchang/gochar.ts`
+(`SADE_SATI_PHASE_SHORT`); `mobile/src/screens/PanchangScreen.tsx`
+(`JyotishLanding`, `styles.jyotishTileGrid`). Tests:
+`components/__tests__/JyotishToolTile.test.tsx`,
+`screens/__tests__/MultiProfileJyotish.test.tsx` (landing structure).
 
 ## 52. Component: Text Field (`TextField.tsx`)
 
@@ -2205,8 +2322,10 @@ Tests: `src/screens/__tests__/ValmikiRamayanReaderScreen.test.tsx` (per-kāṇ�
 ## 54. App Rating Prompt (रेटिंग)
 
 **Purpose.** Ask engaged users for a store rating, without ever becoming a nag. Two surfaces over
-one piece of state: an **auto-opening card** that has to earn its way past a conservative gate, and
-a **permanent More row** the user can reach whenever they feel like it (§37).
+one piece of state: a **moment-triggered card** that opens only right after the user has finished
+something and has to earn its way past a conservative gate, and a **permanent More row** the user
+can reach whenever they feel like it (§37). There is deliberately **no Home section and no
+cold-start ask** (product decision, Sept 2026: "keep a pop-up, ask at the moments").
 
 **Bundle-only, by constraint.** No `expo-store-review`, no `SKStoreReviewController`, no Play
 In-App Review. Every one of those is a native module, so a rating nudge behind one could only ship
@@ -2243,7 +2362,32 @@ home if one is added — see RULEBOOK §6.2 for the risk posture and the mitigat
 All four languages are hand-authored via `pick` (this is UI chrome, not content, so nothing is
 transliterated), and Indic labels drop Latin tracking/uppercase per §3.
 
-**The gate** (`data/ratingPrompt.ts`, pure). The sheet may auto-open only when **all** hold:
+**Trigger — when the card may open** (`contexts/ratingAsk.ts` + the host). The card never
+opens on its own. The one surface where the user has just completed today's practice calls
+`requestAsk('routine-complete')`; the gate below then decides. One moment ships (product decision,
+Sept 2026: "ask when a routine is completed"):
+
+| Trigger | Reported by | Exactly when | Why here |
+|---|---|---|---|
+| `routine-complete` | `components/RoutineCelebrationOverlay.tsx` | The pushpa-varsha's `onDone`, i.e. after the petals and caption have faded — **not** on completion itself | Today's practice is done; the best moment in the app. Riding on `onDone` keeps the card off the shower (§11) |
+
+Considered and **not** shipped, so nobody re-proposes them by accident: a completed mala on the
+japam counter (a card over the bead surface breaks the japa; asking on exit was built and then cut
+in favour of the single routine moment), a completed verse share (same cut), chapter completion
+(the readers' auto-advance carries the user straight into the next chapter with no pause to ask
+in), and streak milestones (covered in practice by `routine-complete`). `RatingAskTrigger` stays a
+union so adding one back is a one-literal change plus a `requestAsk` call — see RULEBOOK §6.2.
+
+`requestAsk` is safe to call freely: every refusal is silent and the moment simply passes. It
+refuses when the state is still hydrating (it does **not** queue — asking a few seconds after the
+moment, once storage catches up, is the launch-frame ambush this design exists to avoid), when the
+card already opened this session, when another open is already pending (two moments in quick
+succession queue **one** card), and whenever the gate says no. The reporting surface imports
+`useRatingAsk()` from the light `contexts/ratingAsk.ts` module, never from `RatingPromptContext`
+— see the Placement note below.
+
+**The gate** (`data/ratingPrompt.ts`, pure). Once a moment is reported, the sheet may open only
+when **all** hold:
 
 | Condition | Threshold | Why |
 |---|---|---|
@@ -2260,14 +2404,21 @@ from the **notification meta's** `appOpenCount` rather than a second counter —
 have they come back" number, already incremented once per cold start, serving both asks (the rating's earned 5-open gate and the opt-in's first-open gate).
 
 **Persistence & lifecycle** (`contexts/RatingPromptContext.tsx`). One AsyncStorage blob,
-`@vedansh/rating-prompt`: `{ askCount, lastAskedAt, outcome }`, defensively parsed (junk fields fall
-back to defaults, never crash). Behaviour:
+`@vedansh/rating-prompt`: `{ askCount, lastAskedAt, outcome, asksByTrigger }`, defensively parsed
+(junk fields fall back to defaults, never crash; a blob from the cold-start build without
+`asksByTrigger` parses with `{}`). `asksByTrigger` counts auto-opens per `RatingAskTrigger` — the
+only way, with no analytics backend, to learn which moment actually earns the rating. Behaviour:
 
-- Eligibility is evaluated once per app session; the sheet then opens after
-  **`RATING_PROMPT_DELAY_MS` = 2500 ms**, so Home has settled first — a prompt on the launch frame
-  reads as an ad. If eligibility lapses before the timer fires, the timer is cleared.
-- **Opening consumes an ask slot and starts the cooldown** (`afterAsked`). A swipe-away still
-  counts as "we asked" — the cooldown, not the outcome, is what silences the second ask.
+- A reported, eligible moment opens the sheet after **`RATING_PROMPT_DELAY_MS` = 1200 ms**, so the
+  moment's own feedback (success haptic, last petals) finishes first — a card on the same frame as
+  the thing it is thanking the user for reads as an ad. If a first-run
+  surface claims the screen during the delay, the open is abandoned and nothing is recorded.
+- The gate is evaluated **at the moment**, against the engagement counters as they stand then,
+  read through refs (not effect dependencies) so a user paging through a reader cannot defer a
+  pending open. At most **one** auto-open per app session.
+- **Opening consumes an ask slot, starts the cooldown, and credits the trigger** (`afterAsked`).
+  A swipe-away still counts as "we asked" — the cooldown, not the outcome, is what silences the
+  second ask.
 - **Primary** → `afterRated` (terminal) + `Linking.openURL(storeReviewUrl(Platform.OS))`. iOS gets
   `…?action=write-review` (the App Store review composer); Play has no listing equivalent, so
   Android lands on the listing, whose rating stars are the first thing on the page. If the OS
@@ -2282,13 +2433,24 @@ back to defaults, never crash). Behaviour:
 
 **Placement.** `<RatingPromptSheet />` mounts last in `App.tsx`, inside `RatingPromptProvider`
 (itself inside `TourProvider` + `NotificationPreferencesProvider`, whose flags the gate reads).
+`RatingPromptProvider` also provides the light `RatingAskContext`; the `RoutineCelebrationOverlay`
+(and every screen) sits inside it, so the host reaches `requestAsk`. Hosts import **`useRatingAsk`
+from `contexts/ratingAsk.ts`**, which has no RN/expo/storage imports and returns a no-op outside the
+provider: importing `RatingPromptContext` directly would drag `NotificationPreferencesContext` →
+`expo-notifications` into any unit test that mounts the host standalone.
 
-**Files.** `mobile/src/data/ratingPrompt.ts` (state, gate, store URLs),
-`mobile/src/contexts/RatingPromptContext.tsx`, `mobile/src/components/RatingPromptSheet.tsx`,
-row in `mobile/src/screens/MoreScreen.tsx`, store URLs from `mobile/src/data/shareLinks.ts`.
+**Files.** `mobile/src/data/ratingPrompt.ts` (state, triggers, gate, store URLs),
+`mobile/src/contexts/RatingPromptContext.tsx`, `mobile/src/contexts/ratingAsk.ts`,
+`mobile/src/components/RatingPromptSheet.tsx`, host in
+`mobile/src/components/RoutineCelebrationOverlay.tsx`, row in `mobile/src/screens/MoreScreen.tsx`,
+store URLs from `mobile/src/data/shareLinks.ts`.
 Tests: `src/data/__tests__/ratingPrompt.jest.test.ts` (every gate clause, cooldown boundary,
-defensive parse, URL shapes), `src/components/__tests__/RatingPromptSheet.test.tsx` (delay,
-persisted outcomes, refusal to stack, the two-action shape, all four languages, a11y-hidden stars),
+per-trigger credit, defensive parse incl. the pre-trigger blob, URL shapes),
+`src/components/__tests__/RatingPromptSheet.test.tsx` (silent cold start, the moment opens after
+the delay and is credited, once per session, one card for two moments, a surface claiming the
+screen mid-delay, persisted outcomes, the two-action shape, all four languages, a11y-hidden stars,
+the no-op hook outside the provider), `src/components/__tests__/RoutineCelebrationOverlay.test.tsx`
+(the moment is reported on `onDone`, not on completion),
 `src/screens/__tests__/MoreScreen.test.tsx` (the row opens the sheet instead of leaving the app).
 E2E: `.maestro/rating-prompt-smoke.yaml` — the manual path only; the auto path's thresholds are
 unreachable under `clearState`, so the gate is unit-tested instead.
@@ -2328,9 +2490,17 @@ most texts have no audio at all and commissioning more costs money, licensing an
 (`docs/roadmap/prds/02-verse-audio.md`). On-device TTS closes that gap for zero bytes. It is
 **assistive, never a substitute for human recitation** — see RULEBOOK §11.15.
 
-**Scope (v1).** `GitaReaderScreen` and `ChalisaReaderScreen` (the latter is a registry reader, so
-all 9 chalisas are covered). The remaining 18 readers are unchanged; the shared hook and adapter
-already handle every verse shape, so fan-out is wiring only.
+**Scope.** **Every reader** — all 21 `<Pascal>ReaderScreen`s: Gita, the registry readers (Chalisa,
+Aarti, Ashtakam, Kavacham, Stuti, Suktam, Sanskar), the single-chapter texts (Bajrang Baan, Hanuman
+Ashtak, Krishna Stotram, Ram Stuti, Ramcharitmanas), the chaptered texts (Sundarkand, Shiva /
+Durga / Ganesh / Saraswati Stotram, Vishnu Sahasranama, Vālmīki Rāmāyaṇ) and the prose **Vrat
+Katha** reader — plus the Puja Vidhi conduct screen (§62). v1 (July 2026) shipped Gita + Chalisa
+only; the September 2026 fan-out wired the other 19 through the same hook, since the adapter
+already understood every verse shape (`sanskrit`/`lines` + `linesEn`/`transliteration`, and the
+katha `bodyHi`/`bodyEn` prose branch, which speaks the story as the *verse* part so it is never
+gated behind "read meaning"). **Japam is the one deliberate exception**: it is a counter with its
+own recorded loop (§35), not a reader, and nothing there is read aloud. A reader without the pill is
+now a defect — `readerReadAloud.test.tsx` mounts every reader and fails if one lacks it.
 
 ### 56.1 What is spoken, and in which voice
 
@@ -2407,12 +2577,18 @@ label is localized** to the reading language, but the **`accessibilityLabel` sta
 un-localized**, the same rule and reason as `ReaderHeader`'s back label: Maestro taps it literally
 and the default reading language is `hi`. The play `▶︎` is shared with the recorded-audio control
 (which stays in the header); the "Listen" label is what distinguishes the two where both appear
-(Chalisa). The More → Read Aloud *settings* row keeps the `♪` note (`READ_ALOUD_GLYPH`) — it is a
+(the registry readers with a real recording — Chalisa, Ashtakam, Kavacham, Stuti, Suktam — per
+RULEBOOK §11.15 the recorded `▶` stays first, in the header, and read-aloud second, on the toggle
+row). The More → Read Aloud *settings* row keeps the `♪` note (`READ_ALOUD_GLYPH`) — it is a
 settings entry, not a play control.
 
-With the pill off the header, `sideWidth` is back to the bare-counter size — Gita `60`; Chalisa
-`60`, or `84` when a recorded `▶` shares the header. The pill always shows its full label now (no
-`compact` on the reader screens) since the toggle row has the room.
+With the pill off the header, `sideWidth` stays at the bare-counter size on every reader — Gita
+`60`; Chalisa `60`, or `84` when a recorded `▶` shares the header — and no reader widens its header
+for read-aloud. The pill always shows its full label (no `compact` on the reader screens) since the
+toggle row has the room. The slot is the same on all 21 readers (`readAloudSlot`: `position:
+absolute`, `right: 16`, `top`/`bottom` matching the row's vertical padding, `justifyContent:
+center`); the Vrat Katha reader's shorter toggle row (6/6 rather than 6/12) is the only geometry
+that differs.
 
 **The muted state is deliberate.** Hiding the control when no voice exists would leave the user
 with no way to learn why read-aloud never appears. Pressing it explains, and on Android offers
@@ -2576,6 +2752,8 @@ because they are different concerns that happen to agree today.
 **Native targets.** A real WidgetKit **app extension** target (`VedanshWidgets`, bundle id `…vedansh.widgets`, iOS 16+) generated by the CNG config plugins (`mobile/plugins/withHomeWidgets.js`, `withHomeWidgetsIos.js`, sources under `mobile/plugins/home-widgets/`), with App Group entitlements on both app + extension and the four-language serif faces (Noto Serif Devanagari/Gujarati/Kannada + Inter, 500/600) copied into the extension. Android ships an AppWidget provider + RemoteViews under the same plugin. `mobile/ios/` is prebuild output (gitignored) — the plugin is the source of truth.
 
 **Design compliance (§2/§3/§9).** The in-app gallery (`WidgetGalleryScreen`) draws colours from `useTheme()`, geometry from the shared `spacing`/`radii` scales (preview cards use the `radii.lg` card corner, the CTA is a `radii.pill`), and the preview eyebrow from the shared **`eyebrowTextStyle(lang)`** helper (§48) — italic Cormorant + tracking for en, script serif with **no** tracking for hi/gu/kn, so the Devanagari shirorekha is never split. The preview cards' facsimile body/headline sizes are layout-tuned to mirror the OS widget (like the §54 ShareCard) and stay ≥10 pt. On the native side, theme token values are mirrored into the extension through **one reviewed mapping** (`WidgetTheme` in `VedanshWidgets.swift` — `parchmentSoft`/`ink`/`inkMuted`/`saffronDeep`/`gold`, not scattered `Color(red:…)` literals; the Android RemoteViews layout mirrors the same hex). Because the widget forces a fixed light `parchmentSoft` container background, **every glyph is given an explicit token colour** — `ink` for titles/verse/numerals, `inkMuted` for source/metadata/round lines, `saffronDeep` for eyebrows, `gold` for the ॐ brand — and native text **never** falls back to SwiftUI's scheme-adaptive `.primary`/`.secondary`, which would invert to light shades in dark mode (invisible on the cream) and, even in light mode, render `.secondary` as a sub-AA washed-out gray. Section-label eyebrows render in the script serif for hi/gu/kn (Inter for en); text on terracotta-tinted surfaces uses `avoidDeep`. Meaningful widget text stays **≥10 pt** (labels that can't fit are removed, not shrunk); numerals/times/status labels use a non-italic **≥600** face — italic Cormorant is limited to short prose flourishes; state is never colour-only (the streak carries a number/label, avoid windows carry their names); the verse has a deterministic two-line fit with the full text in the accessibility label, and large-text snapshots must not clip Devanagari matras.
+
+> **RULE — every advertised family branch attaches its own `.widgetURL`.** An accessory (Lock Screen) widget with no URL is **inert**: iOS does nothing at all when it is tapped — no launch, no error, however long you wait. The Panchang kind advertises `lock`, and its `.accessoryInline` branch rendered a bare `Text` while the `.widgetURL` sat on the else-branch's `VStack`, so the placed Lock Screen Panchang widget swallowed every tap (the Sept 2026 "the tap goes nowhere / screen stuck" report — nothing was loading because nothing was ever launched). A modifier missing from one SwiftUI branch is invisible in review, so `catalog.test.ts` now walks every `family == .accessory*` branch (plus `recovery()`, the only way back when a payload is stale) and fails if it renders no `widgetURL`; reverting the fix fails it.
 
 **Tests.** Pure/fixture suites under `mobile/src/widgets/__tests__/` — `contract` (schema round-trip; missing/corrupt/incompatible/expired rejection; all-four-languages required; dedup-key sensitivity), `catalog` (content↔size parity across the gallery, the Swift `supportedFamilies`, the Kotlin providers, the manifest receivers in `withHomeWidgets.js` and the `appwidget-provider`/layout resources they name — plus the verse-is-wide-first / Panchang-is-small-first rule this section exists for), `planner` (japa streak, >108, IST vs device-local boundaries, two-line determinism), `planPayload` (real 14-day payload, process-TZ isolation), `deepLink` (verse/Panchang/japam parse + routing + cold-start retry), `startup` (coordinator does no static Panchang import; one iOS kind per content type). A committed fixture (`fixtures/widget-payload-v1.json`) is decoded by TypeScript, Swift, and Kotlin to pin cross-language parity. Maestro `mobile/.maestro/home-widgets-smoke.yaml` covers the More-row → gallery path and the three deep links. **Device-only gates** (PRD-15 §5/§8, not automatable here): EAS multi-target sign + physical-device install, per-size render/VoiceOver/large-text screenshots — now **every kind × every advertised size**, since each is a real placement a user can choose — and the per-kind Android pin flow.
 
@@ -2815,17 +2993,41 @@ All copy flows through `contentByLang`/`meaningByLang` (gu/kn derive from the De
 
 **Purpose.** The household direction questions — mandir facing, kitchen corner, sleeping head-direction, tulsi, main door, the home shrine's upkeep — answered as *classical convention with its reason*, anchored by a live compass that is honest about its own accuracy. Never a verdict on a home: no dosha language, no remedies, no fear copy (PRD-24 §2).
 
-**दिशा चक्र (`components/DishaChakra.tsx`).** A 264 pt `react-native-svg` rose: `parchment-soft` ring with `divider` stroke, 45° ticks, the 8 dik labels (`DISHA_LABELS` — cardinal 15 pt `ink`, intercardinal 11.5 pt `ink-soft`, the faced dik `saffron-deep`), rotating under a **fixed** `saffron-deep` top needle so the label under the needle is the direction faced. Labels counter-rotate (each glyph stays upright). The open centre is a `background` circle labelled ब्रह्मस्थान (11 pt muted) with the faced dik + rounded degrees beneath in `saffron-deep` — the centre is the Brahmasthan itself, never a needle pivot. Pure presentation: heading and dik arrive as props.
+**दिशा चक्र (`components/DishaChakra.tsx`).** A `react-native-svg` rose (264 pt default; an optional `size` prop scales the fixed 264-unit viewBox — the compass screen passes `min(width − 2·readingGutter, 300)`): `parchment-soft` ring with `divider` stroke, 45° ticks, the 8 dik labels (`DISHA_LABELS` — cardinal 15 pt `ink`, intercardinal 11.5 pt `ink-soft`, the faced dik `saffron-deep`), rotating under a **fixed** `saffron-deep` top needle so the label under the needle is the direction faced. Labels counter-rotate (each glyph stays upright). The open centre is a `background` circle labelled ब्रह्मस्थान (11 pt muted) with the faced dik + rounded degrees beneath in `saffron-deep` — the centre is the Brahmasthan itself, never a needle pivot. Pure presentation: heading and dik arrive as props. An optional `padaRing` prop (Phase 2 §A5) draws 8 ticks at 11.25° along one cardinal wall's 90° arc inside the rotated `<G>`, each pada NAMED (10 pt, auspicious padas `saffron`, the pointed pada `saffron-deep`, rest muted) — null (the default, and the shipped state while `doorPadas.ts` rows stay `draft`) renders the Phase-1 dial pixel-identically.
 
-**Honest accuracy (screen contract).** `useCompassHeading` (`vastu/useCompassHeading.ts`) wraps `expo-sensors` Magnetometer: wrap-aware smoothing and heading math live pure in `vastu/compass.ts`. Status vocabulary — `starting`, `ok`, `unreliable` (field magnitude has left Earth's 25–65 µT band for 5+ samples → the figure-8 calibration hint in `saffron-deep`, dial keeps moving), `unavailable` (no magnetometer → the screen opens in manual mode). Heading is corrected to TRUE north by the selected panchang city's bundled WMM declination (`data/vastu/declination.ts`, PRD-24 §3); the correction is silent. The 8-dik chip row (the §60 यात्रा chip idiom, `vastu-disha-*` testIDs) is always rendered — a chip tap enters manual mode (sensor subscription removed), tapping the active chip returns live; with no sensor there is no live to return to. **The sensor never gates the content.**
+**Honest accuracy (screen contract).** `useCompassHeading` (`vastu/useCompassHeading.ts`) climbs a source ladder, top rung first (Phase 2 §A1, RULEBOOK §22.11): **`fused`** — the OS's own heading via expo-location `watchHeadingAsync` (tilt-compensated fusion; TRUE north directly when `trueHeading ≥ 0`, else the OS magnetic heading + bundled declination; α = 0.5 smoothing; the location permission is only ever QUERIED — Android skips the rung ungranted, and a subscription that never emits falls down the ladder after a 2 s watchdog) → **`magnetometer`** — the Phase-1 path: expo-sensors samples through the pure wrap-aware math in `vastu/compass.ts` (α = 0.25) → **`none`**. Status vocabulary — `starting`, `ok`, `unreliable` (fused: OS calibration accuracy ≤ 1; magnetometer: field magnitude out of Earth's 25–65 µT band for 5+ samples → the figure-8 hint in `saffron-deep`, dial keeps moving), **`tilted`** (magnetometer rung only, Phase 2 §A2: >20° from flat for 5 accelerometer samples — outranks `unreliable`; the फ़ोन समतल रखें line in `saffron-deep`, dial keeps moving), `unavailable` (→ manual mode). The `ok` line names its source (fused: "फ़ोन का अपना दिक्सूचक…"); the magnetometer rung appends the copy-only hint `सटीक उत्तर के लिए पंचांग स्थान चालू करें` (`vastu-fused-hint`) — never a prompt. Declination is the coords-first lookup `getDeclination` (Phase 2 §A3): bilinear over the bundled 1°×1° WMM grid (`data/vastu/declinationGrid.ts`, 6–38°N / 66–100°E, integer tenths) → the per-city table → silently magnetic. A **दिशा रोकें / Hold** pill (`vastu-hold`, Phase 2 §A4) freezes the reading by REMOVING the subscription (disabled in manual mode and when unavailable; a chip tap clears it); `useDikFeedback` fires one `Haptics.selectionAsync` tick per faced-dik change (≥ 400 ms apart) and one localized `announceForAccessibility` (≥ 1.5 s apart), silent in manual/Hold and on first acquisition. The 8-dik chip row (the §60 यात्रा chip idiom, `vastu-disha-*` testIDs) is always rendered — a chip tap enters manual mode (sensor subscription removed), tapping the active chip returns live; with no sensor there is no live to return to. **The sensor never gates the content.**
 
 **Guidance surfaces (`screens/VastuDishaScreen.tsx`).** Below the chakra + status line: `इस दिशा में / In this direction` — the room entries whose `directions` include the faced dik, emphasised with `card-active-border`; then `कक्ष-दर-कक्ष / Room by room` — every verified `VastuRoomEntry` as a quiet `parchment-soft` card (title + dik line, convention 13/20 `ink-soft`, `कारण ·` reason 12/18 muted, `जहाँ संभव न हो ·` accommodation when stated); then `घर का मंदिर / The home mandir` — `MandirGuidanceEntry` cards with bulleted rows, a warning-toned `टालें / Avoid` block (the §65.1 split), and a muted family-tradition note. A closing muted line restates the stance: convention, not verdict. All copy flows `contentByLang`/`meaningByLang`/`pick` (gu/kn derive or are hand-authored per helper contract).
 
-**Doors.** More hub → साधना group row `वास्तु दिशा / Vastu Disha` (`more-vastu-disha`, NEW state for one release — the §59 widget-row pattern). A गृह प्रवेश muhurat result renders the `muhurat-vastu-door` ListCard under the location line (PRD-24 §6); `VastuDisha` is registered on both the More and Panchang stacks (the PRD-19 multi-stack door pattern) so each door pushes in place and Back retraces the journey.
+**Doors.** More hub → साधना group row `वास्तु दिशा / Vastu Disha` (`more-vastu-disha`, NEW state for one release — the §59 widget-row pattern). A गृह प्रवेश muhurat result renders the `muhurat-vastu-door` ListCard under the location line (PRD-24 §6) and, beneath it, the Phase-2 `muhurat-ghar-door` (`नया घर मापें` → `buildGharVastuDoorTarget`: no living home → setup as `role: 'living'`, else the living home's reading — US-16). `VastuDisha` AND the four `GharVastu*` routes are registered on both the More and Panchang stacks (the PRD-19 multi-stack door pattern) so each door pushes in place and Back retraces the journey; the GharVastu screens load through `getComponent` require() thunks so the journey stays off the static launch graph. On `VastuDishaScreen` itself, under the chip row: the `मेरे घर / My homes` flat ListCard (`vastu-mere-ghar-door`, घ thumb; NEW badge until the roster holds a home, then the home's label or `<n> घर सहेजे गए`) → setup when the roster is empty, else always the ROSTER (never straight to a lone home — the roster owns `+ नया घर`).
 
-**Release.** `expo-sensors` is native — store release only, never OTA at the old runtime; ships with the 1.5.0 `whatsNew` entry and `APP_TOUR_VERSION` bump.
+**Release.** `expo-sensors` is native — the Phase-1 feature shipped store-only with the 1.5.0 `whatsNew` entry and `APP_TOUR_VERSION` bump. Phase 2 (R1 + R2: the source ladder, tilt, Hold, declination grid, गृह वास्तु) is pure JS over modules already in the shipped binary (`expo-location`, `expo-haptics`, `expo-sensors`) and ships **OTA** at the current runtime.
 
-**Files.** `mobile/src/vastu/{compass,useCompassHeading}.ts` · `mobile/src/data/vastu/{types,roomGuidance,mandirGuidance,declination}.ts` · `components/DishaChakra.tsx` · `screens/VastuDishaScreen.tsx` · doors in `screens/MoreScreen.tsx` + `screens/MuhuratResultsScreen.tsx` · stack registrations in `navigation/{MoreStackNavigator,PanchangStackNavigator}.tsx` + `navigation/types.ts` · regen method `mobile/scripts/generate-declination.md`. Tests: `src/vastu/__tests__/compass.test.ts`, `src/data/vastu/__tests__/vastuContent.test.ts`, `src/screens/__tests__/VastuDishaScreen.test.tsx`; device path `.maestro/vastu-disha-smoke.yaml`. See RULEBOOK §22 and `docs/roadmap/prds/24-vastu-disha.md`.
+**Files.** `mobile/src/vastu/{compass,useCompassHeading,useDikFeedback,homeRecord,homeRecordStore,assessHome,homeHandoff}.ts` · `mobile/src/data/vastu/{types,roomGuidance,mandirGuidance,declination,declinationGrid,mandala,doorPadas,homeTemplates}.ts` · `components/{DishaChakra,VastuMandalaGrid}.tsx` · `screens/{VastuDishaScreen,GharVastuSetupScreen,GharVastuScreen,GharVastuRosterScreen,GharVastuCompareScreen}.tsx` · doors in `screens/MoreScreen.tsx` + `screens/MuhuratResultsScreen.tsx` · stack registrations in `navigation/{MoreStackNavigator,PanchangStackNavigator}.tsx` + `navigation/types.ts` (+ `buildGharVastuDoorTarget` in `navigation/entryRoutes.ts`) · the `vastu.myhome` intent in `ask/intents/index.ts` (+ `VastuHomeSummary` context in `ask/{types,useAsk}.ts`) · regen method `mobile/scripts/generate-declination.md`. Tests: `src/vastu/__tests__/{compass,useCompassHeading,useDikFeedback,homeRecord,homeRecordStore,assessHome,homeHandoff}.test.*`, `src/data/vastu/__tests__/{vastuContent,declinationGrid,homeTemplates}.test.ts`, `src/screens/__tests__/{VastuDishaScreen,GharVastuScreens,GharVastuPadaRing}.test.tsx`, `src/ask/__tests__/myhome.test.ts` + corpus; device paths `.maestro/{vastu-disha,ghar-vastu-setup,ghar-vastu-compare}-smoke.yaml`. See RULEBOOK §22 and `docs/roadmap/prds/24-vastu-disha-phase2.md`.
+
+### 66.1 द्वार-पद ring (Phase 2 §A5 — content-gated)
+
+The 32 border padas of the vastu purusha mandala, 8 per cardinal wall (`data/vastu/doorPadas.ts`: global indexes 1–32 clockwise from the north wall's western end at 315°, 11.25° each; names bilingual; the auspicious set flagged per wall). **Every side ships `status: 'draft'`** — the verified-only accessors return null, so the ring, the manual pada row and the assessment's pada caption are all invisible and the door flow is facing-only with NO placeholder (US-11). Each later flip to `verified` (two concordant domains, RULEBOOK §22.3) is a data-only OTA. Wall math is pure in `vastu/compass.ts` (`cardinalSideForHeading`, `padaForHeading` — null outside the wall's arc and for intercardinal facings). The setup facing step, once a wall verifies: the live dial shows the named ring; `दिशा रोकें और सहेजें` (`ghar-facing-capture`) freezes and writes `facing` + the GLOBAL `doorPada` (`via: 'compass'`); the manual path shows a pada pill row (`ghar-pada-<index>`) under the facing chips. A pada renders as its NAME — the number never reaches copy.
+
+### 66.2 गृह वास्तु record & engine (Phase 2 §B1/§C2/§C3)
+
+`HomeRecord` (`vastu/homeRecord.ts`): label, `kind`/`template`, `role: 'living' | 'considering'`, `facing`, `doorPada` (1–32 or null), `rooms: HomePlacement[]` (`{roomId, ordinal, zone, via: 'compass'|'manual'|'plan'|'plan-ai-confirmed', recordedAt, at?}` — `at` is the drop-point sketch inside a cell, {fx,fy} 0–1, never a finding input). Roster (cap 12, one `livingId`) persists at the NON-cache key `@vedansh:vastu-homes:v1` (in `derivedCacheReset`'s MUST_SURVIVE list); `homeRecordStore.ts` hydrates once, saves after every capture, and validates against the live registries on read — a retired room id is dropped, an unknown template degrades to `custom`, malformed JSON parses to the empty roster. The engine (`vastu/assessHome.ts`) is pure: `classifyPlacement` maps each placement to one of five closed classes + `unmeasured` — **निषिद्ध स्थान** (zone in `avoidDirections`, or centre for a non-centre room with avoids) → **विधान से भिन्न** (`weight: 'vidhana'`, zone neither stated nor alternate) → **श्रेयस् अनुपलब्ध** (`weight: 'shreyas'`, ditto) → **परंपरागत विकल्प** (an `alternateDirections` zone) → **मेल** — grouped in exactly that frozen order (`FINDING_CLASS_ORDER`), registry order within a group; findings carry a denormalised registry snapshot so `HomeAssessmentModel` is self-contained and serialisable. NO composite score, percent, rank, remedy or expert-referral exists anywhere in the model or its rendering (RULEBOOK §22.5 amended).
+
+### 66.3 Setup walk (`GharVastuSetupScreen`, Phase 2 §C1/§E1/§E2)
+
+Three skippable steps under a `नया घर` ReaderHeader with a 3-segment progress bar. **Step 1 · type**: role chips (`यहाँ रहते हैं` / `देख रहे हैं · खरीद/किराया`), template chips (`homeTemplates.ts`: 1–5 BHK flat, villa, custom — SEED LISTS of room chips, never layouts), per-room count steppers (main door fixed at 1), a free label input. **Step 2 · facing**: the live dial + Hold-and-save block (§66.1; hidden when unavailable) above the 8 facing chips — the brochure path; a chip records the door manually and stops the dial. **Step 3 · मंडल placement**: the 3×3 `VastuMandalaGrid` (north up), DRAG-first — a chip picked from the tray follows the finger as a ghost, the hovered cell highlights, and the chip RESTS WHERE DROPPED inside its cell (the `at` sketch); a placed chip drags to another cell to move or back to the tray to clear; tap-chip-then-tap-cell does the same without a drag (the assistive AND e2e path — in placement mode the grid container is deliberately NOT a11y-grouped so cells stay reachable). Chips stay neutral here — classes appear only on the assessment. The record saves after every capture; `सारांश देखें` enables at two captures and `navigation.replace`s to the assessment.
+
+### 66.4 Assessment (`GharVastuScreen`, Phase 2 §C3 — the ONE reading)
+
+Home label as title; subtitle template · `मुख <dik>` (+ pada name while verified) · role. Then the mandala grid in READING mode (chips tinted by finding class, resting at their sketch points; one narrated a11y label), the **class-count strip** (`ghar-pill-*`): the five pills always render — a zero is information — `unmeasured` joins only when > 0; never a total, never a percent. Then the finding groups in the frozen order (forbidden group label in `avoid-deep`), each row: title · class label · `परंपरा ·` directions (+ विकल्प) with the weight word (`विधान` / `श्रेयस्`) · `आपके घर में ·` zone + via glyph (⌖ compass / ✎ hand / ▦ plan) · `जहाँ संभव न हो ·` accommodation on forbidden/differs rows. Closing stance line + the privacy line (2 px `goldChipBg` left border, italic: the map lives only on this phone). Actions: `साझा करें` (`ghar-share` → §66.6), `पुनः मापें` (setup with `homeId`), `हटाएँ` (confirm alert → `deleteHome`). A missing home degrades to `यह घर अब सूची में नहीं है।`.
+
+### 66.5 Roster & compare (`GharVastuRosterScreen` / `GharVastuCompareScreen`, Phase 2 §E3)
+
+Roster `मेरे घर`: living home pinned first; each card label · role word · template/facing caption · a class-count micro-strip (10 pt pills, frozen order, zeros render). `+ नया घर` under the list (hidden at the cap of 12 with the delete-first line); the italic privacy note closes. **Compare** (US-13): a `तुलना करें` pill appears once ≥ 2 `considering` homes exist → selection mode (considering cards toggle a `saffron-deep` ring; the living home is un-selectable — compare is a buyer surface) → `साथ-साथ देखें` enables at 2, caps at 3 → `GharVastuCompare {homeIds}`. The compare screen: one flex column per home (label, template · मुख caption, a vertical five-pill micro-strip), a `मुख्य द्वार` row, then every room EITHER home measured (registry order, union) with `zone · class` per column or `— · अभी मापा नहीं`. **No winner, no rank, no superlative, no colour beyond the class tokens** (test-pinned); the closing line verbatim: `कौन-सा घर — यह निर्णय आपका है; यहाँ केवल विधान का पाठ है।`. Dropped ids degrade silently; < 2 remaining shows the honest empty state.
+
+### 66.6 Full-text handoff & Ask (Phase 2 §F0/§C5)
+
+`साझा करें` shares ONE plain-text document via the OS share sheet (`vastu/homeHandoff.ts`, the §68 `kundaliHandoff` twin — the app contacts no service): a framing header that names the weight vocabulary and instructs any reader (human or AI) to stay inside the findings — no added findings, no re-weighting, no remedies/products/experts; the home block; the 3×3 mandala as a text table (north up); room-by-room in the frozen order with ideal-vs-yours, the weight word and EVERY stated accommodation; the privacy line; and the serialisable `HomeAssessmentModel` as a fenced JSON tail (the designed AI grounding object — RULEBOOK §22.17's seam). The R3 plan image attaches at the screen's share call later; the builder stays text-only. **Ask** (`vastu.myhome`, US-15): possessive questions ("मेरी रसोई किस दिशा में…", "mere ghar ka mukh…") answer from the LIVING home only — परंपरा (directions + weight) / `आपके घर में` (zone or `अभी मापा नहीं`; one line per ordinal) / the class label (tone `avoid` only for forbidden), action `मेरा घर खोलें`; the summary is supplied by `useAsk`'s context builder (the one sanctioned roster read outside the vastu screens — US-18: home data never reaches Home/Today/widgets/notifications). Without a saved living home the intent abstains and the did-you-mean chip offers the generic `vastu.direction` path; possessive blockers keep the generic intent from answering as if no home existed; the declined register (dosh/phal framings) is untouched.
 
 ---
 
@@ -2901,7 +3103,7 @@ All copy flows through `contentByLang`/`meaningByLang` (gu/kn derive from the De
 
 **Purpose.** The one place a user types intent — the Search box — used to answer from the text corpus alone (`searchIndex.ts` indexes sections, deities, verses). जिज्ञासा makes the same box answer a *question* from the engines the app already ships: panchang, observances, muhurat, upvas, bhog, vidhi, katha, japam, vastu, sadhana. It is a **deterministic grammar, not a model** — bundled, offline, no network, no telemetry; the same question returns the same answer forever, and every answer shows its working (the §51 "no opaque verdict" rule generalised to the whole app). Below eligibility it **abstains** — a wrong tithi or parana time costs more than no answer — and falls back to the library search the user already had. Extends §50 (Browse by Purpose was the hand-built, content-only version of this) and leaves §48's Today strip and fold budget untouched.
 
-**Engine (`mobile/src/ask/`, pure, `tsx --test`).** `fold.ts` folds Devanagari / IAST / Hinglish to one ASCII key (inherent vowel, Hindi word-final schwa deletion, spelling noise). `lexicon.ts` DERIVES every surface form from the registries — 21 deities, 162 observance rules, 13 `EVENT_RULES` occasions, the 8 dik via `DISHA_LABELS`, 7 vastu rooms, the japam mantras, 7 vidhis — plus recurring-observance **classes** (ekadashi, pradosh, purnima, amavasya, chaturthi, shivaratri, navratri) so a bare "एकादशी" means *the next one of any name*; `aliases.ts` is the only hand list. `resolve.ts` tags entities under a **specificity floor** (generic tokens — vrat, kaal, puja, din, katha — may narrow a match, never establish one), scores intents (trigger lexeme + filled slots; a missing required slot makes the intent *ineligible*, never "low confidence"; `blockers` let a broad trigger yield to its sibling), and runs the **stance guard**: predictive / personal framing ("kya mujhe naukri milegi") is *declined*, not answered. `intents/index.ts` registers 13 intents, each calling an existing engine or a **verified-only** registry accessor (a draft entry is never answerable). `engine.ts` is the single entry, loaded only through a dynamic `import()`; `launchPath.test.ts` walks the static import graph from `index.ts` and fails if any engine module is reachable at launch (§13.7 of the PRD — launch cost is zero by test, not by hope).
+**Engine (`mobile/src/ask/`, pure, `tsx --test`).** `fold.ts` folds Devanagari / IAST / Hinglish to one ASCII key (inherent vowel, Hindi word-final schwa deletion, spelling noise). `lexicon.ts` DERIVES every surface form from the registries — 21 deities, 130 observance rules, 13 `EVENT_RULES` occasions, the 8 dik via `DISHA_LABELS`, 7 vastu rooms, the japam mantras, 7 vidhis — plus recurring-observance **classes** (ekadashi, pradosh, purnima, amavasya, chaturthi, shivaratri, navratri) so a bare "एकादशी" means *the next one of any name*; `aliases.ts` is the only hand list. `resolve.ts` tags entities under a **specificity floor** (generic tokens — vrat, kaal, puja, din, katha — may narrow a match, never establish one), scores intents (trigger lexeme + filled slots; a missing required slot makes the intent *ineligible*, never "low confidence"; `blockers` let a broad trigger yield to its sibling), and runs the **stance guard**: predictive / personal framing ("kya mujhe naukri milegi") is *declined*, not answered. `intents/index.ts` registers 13 intents, each calling an existing engine or a **verified-only** registry accessor (a draft entry is never answerable). `engine.ts` is the single entry, loaded only through a dynamic `import()`; `launchPath.test.ts` walks the static import graph from `index.ts` and fails if any engine module is reachable at launch (§13.7 of the PRD — launch cost is zero by test, not by hope).
 
 **Answer card (`components/AskAnswerCard.tsx`).** The §8 active-card gradient (`cardActiveFrom/To`, `cardActiveBorder`, `radii.lg`, `elevation.card`). Structure: a `goldChipBg` eyebrow **tag** (`eyebrowTextStyle` 10.5) · the **headline** in the language's title face, 19/28 · optional italic **sub** · **label · value rows** (78 pt micro label, value 14.5/22; a `tone: 'avoid'` row — the निषेध half — takes `avoid` / `avoidDeep`, the §65.1 split) · a hairline-ruled **`▸ गणना देखें / Show the working`** toggle revealing the computation trail (11/17 muted; collapsed by default) · the registry's own **tradition note** (12.5/19 muted) and a one-line **provenance** (11/16, never a URL) · up to **three actions**, the first a filled `saffron` pill with `onPrimary` text, the rest outlined in `cardActiveBorder`. All copy flows `contentByLang`, so gu/kn derive from the Devanagari half. `compact` tightens padding for the briefing.
 

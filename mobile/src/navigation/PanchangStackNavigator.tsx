@@ -79,6 +79,31 @@ export default function PanchangStackNavigator() {
         component={VastuDishaScreen}
         options={{ animation: 'slide_from_right' }}
       />
+      {/* मेरा घर (PRD-24 Phase 2) — the griha-pravesh result's door pushes the
+       * journey in place here so Back returns to the muhurat result. require()
+       * thunks keep the journey off the static launch graph (launchGraph budget). */}
+      {/* eslint-disable @typescript-eslint/no-require-imports */}
+      <Stack.Screen
+        name="GharVastuRoster"
+        getComponent={() => require('@/screens/GharVastuRosterScreen').default}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="GharVastuSetup"
+        getComponent={() => require('@/screens/GharVastuSetupScreen').default}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="GharVastu"
+        getComponent={() => require('@/screens/GharVastuScreen').default}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="GharVastuCompare"
+        getComponent={() => require('@/screens/GharVastuCompareScreen').default}
+        options={{ animation: 'slide_from_right' }}
+      />
+      {/* eslint-enable @typescript-eslint/no-require-imports */}
       <Stack.Screen
         name="AbujhDays"
         component={AbujhDaysScreen}

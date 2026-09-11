@@ -92,7 +92,7 @@ export function computeMuhuratDay(sunrise: Date, sunset: Date, nextSunrise: Date
 }
 ```
 
-- **Night choghadiya start** continues the wheel (offset +5 from the day start, DrikPanchang rule).
+- **Night choghadiya** starts +5 from the day start and keeps striding +5 (≡ −2) per period (DrikPanchang rule) — the night order is its own cycle (Shubh → Amrit → Char → Rog → Kaal → Labh → Udveg), not the day wheel continued from a shifted start.
 - **Abhijit** is the 8th of the 15 equal day-muhurtas (≈ solar-noon ±24 min); if a day's tithi makes it collapse it returns null (rare; card just omits it).
 - **"Now"** = the period/window whose `[start,end)` contains `now`.
 
@@ -178,6 +178,6 @@ Enumerated in PRD-14 §9 and enforced here: tokens from `colors.ts` (no hard-cod
 OTA-safe — pure JS + existing engine, no store-only assets. No feature flag needed; ship the card + detail together. Phase 2 (Rahu-Kaal/auspicious-window notifications) reuses `notifications/scheduler.ts` later.
 
 ## 14. Open technical questions
-1. **Night-choghadiya start rotation** — confirm the +5 offset against DrikPanchang in the fixture (some almanacs differ); the fixture test decides.
+1. **Night-choghadiya rotation** — resolved Sep 2026: start +5, stride +5 per period (the fixture asserts only the day start; the full 14-sequence table is pinned in `muhurat.test.ts`).
 2. **`char` quality** — treat as `auspicious` (DrikPanchang "good") vs a distinct `neutral`; default auspicious, revisit if the fixture/editorial disagrees.
 3. **Share footer** — city + date only, or add a short blessing line; keep minimal for v1.
