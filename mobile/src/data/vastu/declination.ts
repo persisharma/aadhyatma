@@ -6,6 +6,8 @@
  * method. Values are rounded to 0.1° — secular variation is ≤ ~0.2°/yr, so
  * regenerate per WMM epoch, not per release.
  */
+import { getDeclinationForCoords } from './declinationGrid';
+
 export const DECLINATION_BY_CITY: Readonly<Record<string, number>> = {
   'ujjain': 0.5,
   'agra': 1.0,
@@ -406,4 +408,21 @@ export const DECLINATION_BY_CITY: Readonly<Record<string, number>> = {
 /** East-positive declination for a bundled city, or null when unknown. */
 export function getDeclinationForCity(cityId: string): number | null {
   return DECLINATION_BY_CITY[cityId] ?? null;
+}
+
+/**
+ * The one declination lookup (PRD-24 Phase 2 §A3): coordinates first — the
+ * 1°×1° WMM grid covers anywhere in India including GPS/pincode locations the
+ * city table never knew — then the city table, then null (silently magnetic,
+ * never an invented correction).
+ */
+export function getDeclination(location: {
+  latitude: number;
+  longitude: number;
+  cityId: string;
+}): number | null {
+  return (
+    getDeclinationForCoords(location.latitude, location.longitude) ??
+    getDeclinationForCity(location.cityId)
+  );
 }

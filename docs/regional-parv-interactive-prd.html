@@ -511,7 +511,7 @@ Owner surface: <b>Panchang tab only</b> — no new tab, no new Home category, <b
 <!-- ════════════════ ③ WAVES & COVERAGE ════════════════ -->
 <section class="page" id="page-waves">
   <h2>Waves &amp; coverage — what ships, in what order, gated by what</h2>
-  <p class="note">Catalog today: <b>130 rules, 116 default-visible, ~4.5k precomputed date rows</b>. The register holds <b>141 further candidates across 22 lenses</b>, plus <b>8 universal gaps</b> that belong to no region at all (Appendix C). Click a wave.</p>
+  <p class="note">Catalog today: <b>131 rules, 117 default-visible, 4,680 precomputed date rows</b> (wave 1 merged as #333; दर्श अमावस्या added on top in #334). The register holds <b>141 further candidates across 22 lenses</b>, plus <b>8 universal gaps</b> that belong to no region at all (Appendix C). Click a wave.</p>
   <div class="wavebar">
     <button data-wave="w1" class="on">W1 · Rajasthan + Mithila <span class="wl">SHIPPED · 17 observances</span></button>
     <button data-wave="w2">W2 · The lens <span class="wl">THE GATE · mechanism, no-op</span></button>
@@ -532,7 +532,7 @@ Owner surface: <b>Panchang tab only</b> — no new tab, no new Home category, <b
   <div class="wavepane" id="wave-w2">
     <div class="dcard"><h3>Wave 2 — the lens mechanism <span class="pill gate">GATES EVERYTHING</span></h3>
       <p>18 build items (PRD §9): the <code>lens?</code> field + retiring <code>visibility:'regional'</code> · <code>stateCode</code> on cities · the preference in the launch <code>multiGet</code> · the read-path filter with the lens set in the memo key · widened generator scan (R1, the fails-open bug) · sheet + <b>ledger row</b> + seed line + detail caption · <b>the two notification gates</b> (page ④) · widget payload through the store · catalog counts lens-aware, search lens-blind · ask lexicon so <i>"राजस्थान के पर्व"</i> resolves · full test matrix + a Maestro lens-smoke flow · design.md §33/§72 + RULEBOOK §23a.5.</p>
-      <p style="margin-top:6px"><b>Ships with zero lensed rules.</b> Bundle delta of the table measured here, before any content lands (~4.5k → ~13k rows at full 149; lazy sibling module is the pre-agreed answer if it matters). <b>Prototype signed off 2026-09-06</b> — lens sheet, detail caption and the pattern-E entry study, all on page ①.</p></div>
+      <p style="margin-top:6px"><b>Ships with zero lensed rules.</b> Bundle delta of the table measured here, before any content lands (4,680 → ~13k rows at full 149; lazy sibling module is the pre-agreed answer if it matters). <b>Prototype signed off 2026-09-06</b> — lens sheet, detail caption and the pattern-E entry study, all on page ①.</p></div>
   </div>
 
   <div class="wavepane" id="wave-w3">
@@ -660,7 +660,7 @@ Owner surface: <b>Panchang tab only</b> — no new tab, no new Home category, <b
     <tr><th>#</th><th>Risk</th><th>Mitigation</th></tr>
     <tr><td>R1</td><td><b>The generator silently drops lensed rules</b> — <code>defaultRules</code> not widened; fails open (tests green, dates missing). The likeliest bug in W2.</td><td>A test that resolves a known lensed rule <i>through the precomputed table</i>, not the live scan.</td></tr>
     <tr><td>R2</td><td><b>A lensed observance titles a stranger's notification</b> — the worst failure mode of the feature.</td><td>Two independent gates (dayAnga + scheduler), each with its own test.</td></tr>
-    <tr><td>R3</td><td>Bundle size (~4.5k → ~9k rows).</td><td>Measured in W2 before content lands; lazy sibling module pre-agreed. Never a live scan.</td></tr>
+    <tr><td>R3</td><td>Bundle size (4,680 → ~13k rows).</td><td>Measured in W2 before content lands; lazy sibling module pre-agreed. Never a live scan.</td></tr>
     <tr><td>R4</td><td><b>Content verification is the real cost</b> — 63 × 2 sources × bilingual copy.</td><td>Tier the depth; ship T1–T2, let T4/T5 follow. A wave that can't clear the source bar ships fewer rules, never thinner sources.</td></tr>
     <tr><td>R7</td><td><b>Universal-day creep</b> — each wave quietly tags something universal because it feels famous.</td><td>Hard gate: mean observances/day with no lens on must not move from its W1 value (±0).</td></tr>
   </table>

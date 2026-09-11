@@ -1,0 +1,191 @@
+# Marketing capture: kundali chart / jyotish landing / rashifal / guna milan / vastu.
+# Nav cribbed from .maestro/{kundali,guna-milan,vastu-disha}-smoke.yaml (golden Aarav seed).
+# Run from repo root: maestro --udid <UDID> test mobile/.maestro-shots/capture-listing.yaml
+appId: com.prashantsharma.vedansh
+---
+- launchApp:
+    appId: com.prashantsharma.vedansh
+    clearState: true
+    arguments:
+      RCT_jsLocation: "127.0.0.1:8095"
+- waitForAnimationToEnd:
+    timeout: 30000
+- tapOn: { text: "Allow", optional: true }
+- tapOn: { text: "Don't Allow", optional: true }
+- tapOn: { text: "Skip tour", optional: true }
+- waitForAnimationToEnd:
+    timeout: 5000
+- tapOn: { text: "Skip tour", optional: true }
+- tapOn: { text: "English", optional: true }
+- tapOn: { text: "Begin|आरंभ करें", optional: true }
+- tapOn: { text: "Close", optional: true }
+- tapOn: { text: "Got it", optional: true }
+- tapOn: { text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ", optional: true }
+- tapOn: { text: "Allow", optional: true }
+- tapOn: { text: "Don.t Allow", optional: true }
+- waitForAnimationToEnd
+- tapOn: { text: "SKIP|Skip|Skip tour", optional: true }
+- tapOn: { text: "Begin", optional: true }
+- extendedWaitUntil:
+    visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
+    timeout: 120000
+
+# Reading language → English (stable labels + English marketing shots)
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── Jyotish: create the golden Kundali (Aarav · 14 Aug 1992 · Ujjain) ──
+- tapOn: { id: "tab-panchang" }
+- waitForAnimationToEnd
+- tapOn: "Jyotish"
+- extendedWaitUntil:
+    visible: "Understand Jyotish"
+    timeout: 20000
+- tapOn: "Create Kundali"
+- waitForAnimationToEnd
+- tapOn: { text: "Edit birth details", optional: true }
+- tapOn: { id: "kundali-name-input" }
+- inputText: "Aarav"
+- tapOn: { id: "kundali-date-input" }
+- waitForAnimationToEnd
+- tapOn: ".*tap to change year"
+- tapOn: "Month August"
+- repeat:
+    times: 4
+    commands:
+      - swipe: { start: "50%, 70%", end: "50%, 50%", duration: 250 }
+- tapOn: "Year 1992"
+- tapOn: "14 August 1992"
+- tapOn: "Confirm date"
+- waitForAnimationToEnd
+- tapOn: { id: "kundali-time-input" }
+- waitForAnimationToEnd
+- repeat:
+    times: 18
+    commands:
+      - tapOn: "Decrease Minute"
+- tapOn: { id: "kundali-time-input" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: { id: "kundali-city-button" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "kundali-city-button" }
+- waitForAnimationToEnd
+- tapOn: { id: "kundali-city-search" }
+- inputText: "Ujjain"
+- tapOn: "Select Ujjain birth city"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: { id: "kundali-generate-button" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "kundali-generate-button" }
+- extendedWaitUntil:
+    visible: "Kundali result"
+    timeout: 20000
+
+# Shot A: North Indian chart
+- scrollUntilVisible:
+    element:
+      text: "Karka Lagna · Cancer rising. Learn more in chart."
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Karka Lagna · Cancer rising. Learn more in chart."
+- extendedWaitUntil:
+    visible: "North Indian chart"
+    timeout: 15000
+- waitForAnimationToEnd
+- takeScreenshot: .context/shots-1.4.8/raw-kundali-chart
+
+# Shot B: Jyotish landing (rashifal-first, saved kundali)
+- tapOn: "Back to Jyotish|Back"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Your Jyotish today"
+    timeout: 20000
+- waitForAnimationToEnd
+- takeScreenshot: .context/shots-1.4.8/raw-jyotish-today
+
+# Shot C: Daily Rashifal
+- scrollUntilVisible:
+    element:
+      text: "Open Daily Rashifal"
+    direction: DOWN
+    timeout: 15000
+    centerElement: true
+- tapOn: "Open Daily Rashifal"
+- extendedWaitUntil:
+    visible: "Daily Rashifal"
+    timeout: 15000
+- waitForAnimationToEnd
+- takeScreenshot: .context/shots-1.4.8/raw-rashifal
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# Shot D: Guna Milan result (both sides from the saved Kundali)
+- scrollUntilVisible:
+    element:
+      text: "Open Guna Milan"
+    direction: DOWN
+    timeout: 15000
+    centerElement: true
+- tapOn: "Open Guna Milan"
+- extendedWaitUntil:
+    visible: "36 points, with every step visible"
+    timeout: 15000
+- tapOn: "Use my saved Kundali details for Groom"
+- tapOn: "Use my saved Kundali details for Bride"
+- scrollUntilVisible:
+    element:
+      text: "Calculate Guna Milan"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Calculate Guna Milan"
+- scrollUntilVisible:
+    element: { id: "guna-milan-score-dial" }
+    direction: UP
+    timeout: 30000
+    centerElement: true
+- waitForAnimationToEnd
+- takeScreenshot: .context/shots-1.4.8/raw-guna-milan
+
+# Shot E/F: Vastu Disha chakra + a room detail
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: { id: "more-vastu-disha" }
+    direction: DOWN
+    timeout: 15000
+    centerElement: true
+- tapOn: { id: "more-vastu-disha" }
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Room by room"
+    timeout: 20000
+- waitForAnimationToEnd
+- takeScreenshot: .context/shots-1.4.8/raw-vastu-chakra
+- scrollUntilVisible:
+    element: { id: "vastu-disha-southeast" }
+    direction: UP
+    timeout: 30000
+- tapOn: { id: "vastu-disha-southeast" }
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "In this direction"
+    timeout: 15000
+- takeScreenshot: .context/shots-1.4.8/raw-vastu-room
+
+- stopApp:
+    appId: com.prashantsharma.vedansh

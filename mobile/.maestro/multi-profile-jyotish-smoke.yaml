@@ -284,10 +284,11 @@ appId: com.prashantsharma.vedansh
 # ------------------------------------------------- the landing follows along
 - tapOn: "Back"
 - waitForAnimationToEnd
+# No page title since design.md §51c — the switcher is the landing's first
+# control, which is exactly what this flow is about.
 - extendedWaitUntil:
-    visible: "Your Jyotish today"
+    visible: "Whose Jyotish"
     timeout: 15000
-- assertVisible: "Whose Jyotish"
 - assertVisible: "Show Jyotish for Aarav"
 - assertVisible: "Show Jyotish for Meera"
 # More than one person saved, so the guidance names whose chart it came from

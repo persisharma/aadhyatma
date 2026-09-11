@@ -260,6 +260,20 @@ const SADE_SATI_COPY: Readonly<
   },
 };
 
+/**
+ * The phase word alone, for compact surfaces — the Jyotish landing's गोचर tile
+ * (design.md §51c). Same vocabulary as `SADE_SATI_COPY`'s headlines minus the
+ * parenthetical gloss, so a phase is never worded two different ways; the tile
+ * is a pointer at the full reading in Gochar, never a second reading of it.
+ */
+export const SADE_SATI_PHASE_SHORT: Readonly<
+  Record<Exclude<SadeSatiPhase, 'none'>, { hi: string; en: string }>
+> = {
+  rising: { hi: 'साढ़े साती · प्रथम चरण', en: 'Sade Sati · first phase' },
+  peak: { hi: 'साढ़े साती · द्वितीय चरण', en: 'Sade Sati · middle phase' },
+  setting: { hi: 'साढ़े साती · तृतीय चरण', en: 'Sade Sati · closing phase' },
+};
+
 export function computeSadeSati(
   chart: KundaliChart,
   date: Date,

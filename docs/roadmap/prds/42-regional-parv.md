@@ -8,7 +8,7 @@
 | **Owner surface** | Panchang tab (design.md §33) — no new tab, no new Home category, no new notification family. |
 | **T-shirt size** | W1 **S** (done) · W2 **M** (the mechanism) · W3 **M** · W4 **L** · W5 **L** · W6 **M** code + **L** content · W7 **L** · W8 **M**. Realistically a **three-to-four quarter content programme** with a one-sprint code gate in front of it. |
 | **Delivery** | OTA-safe throughout: TypeScript + bundled data. No native dependency, no backend, no migration. `CACHE_VERSION` bump per wave. No `PANCHANG_DAY_CACHE_VERSION` bump in W1–W5; W6's nakshatra-in-solar-month solver may need one — decide when it is written, don't default. |
-| **Contract** | RULEBOOK **§23a** (adding an observance — written by W1) · **§23** (vyapini day selection) · **§21** (bhog) · **§20** (upvas) · **§19/§26** (vidhi, arcs) · **§11** (content integrity) · **§25** (ask intents) · design.md **§33** |
+| **Contract** | RULEBOOK **§23a** (adding an observance — written by W1) · **§23** (vyapini day selection, incl. **§23.8** `aparahna` and **§23.9** two-conventions-two-rules) · **§21** (bhog) · **§20** (upvas) · **§19/§26** (vidhi, arcs) · **§11** (content integrity) · **§25** (ask intents) · design.md **§33** |
 | **Prototype** | **Drawn & signed off 2026-09-06** — [`docs/regional-parv-interactive-prd.html`](../../regional-parv-interactive-prd.html): lens sheet, detail caption, and the entry-point study. **Entry decided: pattern E** — a क्षेत्र ledger row on the व्रत-पर्व segment (third, after मेरा व्रत · पितृ स्मरण) + the dismissible seed line on the पंचांग day view. The header chip in the original proposal is **dropped**: the chip row already carries location, calendar-system and ★ follows. |
 
 > **Locked decisions (do not drift).**
@@ -17,7 +17,7 @@
 > ③ **A lens filters presentation only.** The precomputed table carries every rule, so toggling is instant, offline and re-runs no scan.
 > ④ **Nothing here changes an existing rule's tithi, month, paksha or `dayRule`** — the one exception is §5.1, which is its own separately-verified change and must never ride a content wave.
 > ⑤ **No new notification family, and nothing joins the default-on festive catalog.** A lensed observance reaches reminders the way every other one does: ★ follow.
-> ⑥ **Where two lineages or two regions differ, both ship, both named.** Never one as "the" date. Kashmiri Herath is Trayodashi and the app's Mahashivratri is Chaturdashi; both are correct, for different people.
+> ⑥ **Where two lineages or two regions differ, both ship, both named.** Never one as "the" date. Kashmiri Herath is Trayodashi and the app's Mahashivratri is Chaturdashi; both are correct, for different people. This is now settled repo policy, not an aspiration: **RULEBOOK §23.9**, written when दर्श अमावस्या shipped beside अमावस्या व्रत (#334) rather than retagging it.
 > ⑦ **A folk deity is a deity.** Gogaji, Tejaji, Ramdevji, Jhulelal, Chhathi Maiya, Manasa, Sama-Chakeva, Khandoba, Garia and Bathukamma get the same treatment and the same content depth as the pan-Hindu names. The words "folk", "tribal" and "minor" never appear in user-facing copy.
 
 ---
@@ -42,7 +42,7 @@ Three mechanisms, not three oversights:
 
 ### 1.3 The scale of what is still missing
 
-The catalog after W1 is **130 rules, 116 default-visible, 4,482 precomputed date rows** — and it is still, structurally, a North-Indian purnimant calendar. The full sweep across every state registers **141 further candidate observances** across 22 lenses (Appendix A) plus **8 universal gaps** that belong to no lens at all (Appendix C) — **149**.
+The catalog is **131 rules, 117 default-visible, 4,680 precomputed date rows** (wave 1's 130/116 plus दर्श अमावस्या, #334) — and it is still, structurally, a North-Indian purnimant calendar. The full sweep across every state registers **141 further candidate observances** across 22 lenses (Appendix A) plus **8 universal gaps** that belong to no lens at all (Appendix C) — **149**.
 
 Some absences are large by any measure: **Rath Yatra**, **Onam**, **Kali Puja**, **Vat Purnima**, **Radhashtami**, **Ratha Saptami**, **Bathukamma**, **Sarhul**, **Cheti Chand**, **Herath**, and the entire **Jain** calendar past Mahavir Jayanti.
 
@@ -135,7 +135,7 @@ The filter runs at **read**, not at scan:
 - `getObservancesForDateKey` reads the raw table directly (the widget/notification path) and needs the same filter applied at its own call site.
 - `searchObservances` and `getRuleById` ignore lenses entirely (principle 3).
 
-**Table growth.** 4,482 rows today → ≈13k at the full 149. Measure the bundle delta in the W2 PR and again at W4. If it matters, split the lensed years into a lazily-required sibling module keyed the same way — **do not** answer a size problem by dropping the precompute and scanning live on a render path; that scan is precisely what the precomputed table exists to prevent (wiki `[[panchang]]`, the "Panchang screen froze" incident).
+**Table growth.** 4,680 rows today → ≈13k at the full 149. Measure the bundle delta in the W2 PR and again at W4. If it matters, split the lensed years into a lazily-required sibling module keyed the same way — **do not** answer a size problem by dropping the precompute and scanning live on a render path; that scan is precisely what the precomputed table exists to prevent (wiki `[[panchang]]`, the "Panchang screen froze" incident).
 
 ### 4.4 What must not be lensed
 
@@ -158,9 +158,13 @@ Everything downstream of `resolveObservancesForYear` needs no change: the day pa
 
 Six items. Each is independently shippable, and each gates named content.
 
+> **The precedent landed while this PRD was being written.** `dayRule: 'aparahna'` shipped in #334 for दर्श अमावस्या (RULEBOOK §23.8) — the enum value, a `tithiAtAparahna` solver at sunrise + 0.7 × (sunset − sunrise), the same three-case `matchesInstantVyapiniRuleOnDate`, published-date tests. That is exactly the shape §5.1–§5.3 describe, done once end to end. **Copy it rather than re-deriving it**, and note the two things it learned: case (c) is load-bearing (Ashadha 2026's amavasya ends twenty seconds before that day's aparahna midpoint, so only the udaya fallback keeps the lunation), and a *single instant* beats "prevails anywhere in the span", which picks the wrong day when the tithi opens mid-window.
+>
+> §23.9 is the more important inheritance: **two published conventions on one tithi are two rules, not one retagged rule**, and §23.4's sibling-day requirement does not apply between them. That is now in-repo precedent for this PRD's locked decision ⑥ — and the direct answer to the Kashmiri Herath case (§9.6 W7-2), which is the same shape: one tithi, two communities, two days, both correct.
+
 ### 5.1 `dayRule: 'pradosh'` — gates Bachh Baras, Vasubaras, Vagh Baras, Dhanteras, Diwali
 
-The three-part job RULEBOOK §23.7 names: the enum value; a `tithiAtPradosh` instant solver in `engine.ts` (the pradosh window opens at sunset — gate it on the expected tithi index exactly like `tithiAtMoonrise` / `tithiAtMadhyahna`, so a year scan pays ~50 solves and not 365 per rule); and published-date tests across several years. It reuses `matchesInstantVyapiniRuleOnDate` unchanged.
+The three-part job RULEBOOK §23.7 names: the enum value; a `tithiAtPradosh` instant solver in `engine.ts` (the pradosh window opens at sunset — gate it on the expected tithi index exactly like `tithiAtMoonrise` / `tithiAtMadhyahna` / `tithiAtAparahna`, so a year scan pays ~50 solves and not 365 per rule); and published-date tests across several years. It reuses `matchesInstantVyapiniRuleOnDate` unchanged — **`aparahna` (#334) is the worked example**.
 
 It closes the `bachh-baras` shift W1 shipped knowingly (§14). **It must not retag `dhanteras` and `diwali` in the same PR as any content wave** — those two move the single most-viewed date in the app and deserve a change whose entire diff is that decision.
 
@@ -278,7 +282,7 @@ Everything this PRD will build. **N** = new file, **M** = modified.
 | W2-4 | Lens preference in the launch `multiGet`; store + hydration + `useLenses()` | M `panchang/panchangPrefs.ts`, M `panchang/panchangLaunchPrefetch.ts` |
 | W2-5 | Lens filter at the read path; **lens set in the memo key** | M `panchang/festivalEngine.ts` |
 | W2-6 | Widen the live scan + generator to all rules | M `panchang/festivalEngine.ts`, M `scripts/gen-precomputed-observances.mts` |
-| W2-7 | Regenerate the table; `CACHE_VERSION` 4→5; **measure and record the bundle delta** | M `panchang/precomputedObservances.ts`, M `panchang/observanceCache.ts` |
+| W2-7 | Regenerate the table; `CACHE_VERSION` 5→6; **measure and record the bundle delta** | M `panchang/precomputedObservances.ts`, M `panchang/observanceCache.ts` |
 | W2-8 | Seeding from city/pincode after interactions; `@vedansh:panchang-lens-seen` | N `panchang/lensSeeding.ts` |
 | W2-9 | The lens sheet — 22 rows, two group headers, an example line each | N `components/LensPickerSheet.tsx` |
 | W2-10 | क्षेत्र ledger row on the व्रत-पर्व segment + the dismissible seed line on the पंचांग day view (**pattern E**, decided 2026-09-06) | M `screens/PanchangScreen.tsx` |
@@ -316,7 +320,7 @@ Everything this PRD will build. **N** = new file, **M** = modified.
 | W4-5 | T2 bhog — ~10 new profiles (Vat Purnima, Kali Puja, Jagaddhatri, Savitri Amavasya, Nuakhai, Kumar Purnima, Prathamastami, Shitala Satam, Jayaparvati, Nagula Chavithi, Atla Tadde) | M `panchang/bhogContentExtended.ts` |
 | W4-6 | T3 upvas — Vat Purnima, Savitri Amavasya, Dashama Vrat | N `panchang/upvasContent/entries/*.ts` |
 | W4-7 | T4 katha — Nuakhai, Atla Tadde, Bathukamma | N `panchang/kathaContent/entries/*.ts`, M `kathaContent/index.ts`, M `festivals.ts` KATHA_CATALOG |
-| W4-8 | Regenerate + `CACHE_VERSION` 5→6; diff by rule id | M `precomputedObservances.ts`, `observanceCache.ts` |
+| W4-8 | Regenerate + `CACHE_VERSION` 6→7; diff by rule id | M `precomputedObservances.ts`, `observanceCache.ts` |
 | W4-9 | **Docs** — VERIFICATION.md Class B shrinks (`bachh-baras` leaves it once E-1 lands) | M `src/panchang/VERIFICATION.md`, M `design.md` |
 
 ### 9.4 W5 — Hindi belt + east (27)
@@ -443,6 +447,8 @@ Per wave, on top of RULEBOOK §23a:
 **Known shift, shipped knowingly:** `bachh-baras` resolves at sunrise (8 Sep 2026) where Drik publishes pradosh-vyapini (7 Sep 2026), while the popular Hindi almanacs reasoned from sunrise for 2025 and agreed with the engine. No convention invented from one contested data point; pinned by a named test and a `pradosh` row in `verify-observances.mts`, and reported in the Class B list every run. E-1 closes it.
 
 **Verification:** 2,049 tests green, lint 0 errors, `verify:observances` `wrong-month=0`, precomputed table diffed — 17 ids added, **no existing date moved**.
+
+**Merged to main as #333** (2026-09-10). Two changes landed on top of it before this PRD's all-states expansion was merged back, and both matter here: **#334** added दर्श अमावस्या with the `aparahna` dayRule (§5's precedent, and RULEBOOK §23.8/§23.9), taking the catalog to 131 rules / 117 default-visible / 4,680 precomputed rows and `CACHE_VERSION` to 5; **#335** reshaped the Jyotish landing and does not touch this surface.
 
 ---
 
