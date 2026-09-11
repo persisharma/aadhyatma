@@ -73,6 +73,12 @@ function isPitruSmaranReminderPayload(data: unknown): data is { type: 'pitru-sma
   return d.type === 'pitru-smaran-reminder' && typeof d.entryId === 'string';
 }
 
+function isReturnReminderPayload(data: unknown): data is { type: 'return-reminder' } {
+  // Gated on `type` only. `dateKey`/`weekday`/`absentDays` ride along as a record;
+  // Home recomputes today from today, so nothing in the payload may drive routing.
+  return Boolean(data && typeof data === 'object' && (data as Record<string, unknown>).type === 'return-reminder');
+}
+
 function isPitruPakshaReminderPayload(data: unknown): data is { type: 'pitru-paksha-reminder' } {
   return Boolean(data && typeof data === 'object' && (data as Record<string, unknown>).type === 'pitru-paksha-reminder');
 }
@@ -149,6 +155,15 @@ export function resolveNotificationTarget(data: unknown): StartTarget | null {
   // `{ screen: 'Home' }` is explicit: focusing `HomeTab` alone would restore
   // whatever screen the Home stack was left on, which may be several readers deep.
   if (isFestiveReminderPayload(data)) {
+    return { tab: 'HomeTab', screen: 'Home' };
+  }
+
+  // A return-reminder tap (वापसी स्मरण, §38) lands on Home for the same reasons
+  // as the festive tap: the weekday deity's texts the message named are the
+  // FOR TODAY row's tier-4 lead on an ordinary day, and a notice armed up to
+  // fifteen days ago must not pin the user to stale content — Home recomputes
+  // today from today.
+  if (isReturnReminderPayload(data)) {
     return { tab: 'HomeTab', screen: 'Home' };
   }
 
