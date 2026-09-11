@@ -632,11 +632,12 @@ Intent-driven discovery is metadata over bundled content, not new scripture text
 
 - Home keeps a permanent Kundali launcher; Panchang keeps Jyotish as a peer of Panchang and Vrat–Parv. Do not bury Kundali only in a carousel, More, or a second-level catalog.
 - Do not create a “Default profile” or silently preselect a birth city. Profile hydration has explicit loading/guest/saved/error states, and failed persistence must remain visible and recoverable.
-- Before a profile is saved, the Jyotish landing leads to creation. After saving, it leads with all three Daily Rashifal guidance rows, then a compact Kundali reference, then one shared practice treatment.
+- Before a profile is saved, the Jyotish landing leads to creation. After saving it must fit **one viewport fold** and carry exactly four blocks in this order (design.md §51c): the person switcher, the card with all three Daily Rashifal guidance rows plus one deduped आधार evidence line, a **2×2 grid of door tiles** that each read out for the active person, then one shared practice treatment. The landing carries no page title, no date and no section label introducing a single item; a tile whose reading is unknowable (no chart, or a door that does not answer for the selected person) falls back to a description in the same geometry, which is how the guest and error states render.
 - Results lead with Overview before Chart/Grahas/Dasha. Lagna, Moon, and Dasha insight cards are actionable; the chart must have an equivalent text representation and a full accessibility summary. Every traditional rashi name shown in English UI is paired with its plain-English equivalent.
 - The Dasha surface exposes the current Mahadasha/Antardasha, dates, elapsed and remaining time, and a full nine-period timeline. Those timing values must also be accessible to assistive technology.
 - Kundali and Rashifal share cards use the app theme and a 4:5 preview. Kundali must warn that personal birth details are included; Rashifal must state that name and birth details are excluded. Do not place duplicate share controls inside Kundali tabs.
-- Required checks: `npm run typecheck`, `npm run test:engine`, targeted Jest for new UI, and `.maestro/kundali-smoke.yaml` plus `.maestro/multi-profile-jyotish-smoke.yaml` (§14.5) on an isolated simulator/worktree Metro port. If Maestro is not run, state that explicitly before merge.
+- A landing door is `components/JyotishToolTile.tsx` — never a hand-rolled card. Its `accessibilityLabel` stays the bare English door name (`Open Gochar`) because every Maestro flow targets it; the reading goes in `accessibilityValue`. A tile's reading must come from a value the surface already computed (`guidance.sadeSatiPhase`, the chart's own lagna/nakshatra) — never a fresh solve for a subtitle, and never gated content (`NAMAKSHAR_SOURCE.verified` is `false`, so today's namakshar does not reach the landing).
+- Required checks: `npm run typecheck`, `npm run test:engine`, targeted Jest for new UI (`components/__tests__/JyotishToolTile.test.tsx` for a door change), and `.maestro/kundali-smoke.yaml` plus `.maestro/multi-profile-jyotish-smoke.yaml` (§14.5) on an isolated simulator/worktree Metro port. If Maestro is not run, state that explicitly before merge.
 
 ### 14.5 Multi-person profiles — one roster, one active selection
 
@@ -683,7 +684,7 @@ Intent-driven discovery is metadata over bundled content, not new scripture text
 
 ### 15.4 Product and verification contract
 
-- Guna Milan is a card below Kundali and Rashifal on the Jyotish landing and lives inside the Panchang stack (not a duplicate root route). Saved-Kundali autofill must work for either directional role.
+- Guna Milan is the third tile of the Jyotish landing's 2×2 door grid (design.md §51c) and lives inside the Panchang stack (not a duplicate root route). Saved-Kundali autofill must work for either directional role.
 - Required checks: `npm run typecheck`, `npm run test:engine`, targeted Jest (`GunaMilanExperience.test.tsx`), and `.maestro/guna-milan-smoke.yaml` on iOS and Android with an isolated simulator/worktree Metro port. If Maestro is not run, state that explicitly before merge.
 
 ## 16. Home-screen widgets (PRD-15)

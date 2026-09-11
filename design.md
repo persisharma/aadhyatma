@@ -1961,7 +1961,7 @@ Placement is **first verse page only**: `VersePage` exposes a `belowContent` slo
 
 ## 51. Kundali + Daily Rashifal (PRD-C)
 
-**Discovery and landing state.** Kundali is a permanent `CategoryCard variant="launcher"` on Home (`कुंडली · Kundali`, insight glyph, NEW badge), not a shuffled Discover card. It deep-links to `PanchangHome({ initialTab: 'jyotish' })`. Panchang's top peer selector is `Panchang | Vrat & Parv | Jyotish`; it remains the fixed first control in every mode, while location/calendar-system/My Vrat controls appear beneath it only for the two Panchang-derived modes. A guest sees Create Kundali, Daily Rashifal, and one Navagraha practice card. Once a birth profile is saved, the landing becomes daily-first: the person switcher (§51a) leads, then the full Favour/Pause/Reflect Rashifal card, a compact Kundali reference, and the same single practice card closing the page. Returning from creation must refresh this saved state immediately. Birth city remains independent of the current Panchang location. Since PRD-20, the saved landing's guidance rows are computed by `computePersonalGuidance` from the ACTIVE person's FULL chart: the Favour/Pause/Reflect bodies stay byte-identical to the Moon-sign Rashifal (the superset lock), extended with dual चन्द्र-से/लग्न-से house context pills and a quiet gold `दशा संकेत · Dasha note` row that appears only when a focus transit belongs to a running Vimshottari lord. The eyebrow follows §51a's naming rule — `आपकी पूरी कुंडली से · From your full chart` with one person saved, `<name> की पूरी कुंडली से · From <name>'s full chart` once the roster holds more than one, because "your" would then be a guess. The compact Kundali card gains a `पूर्ण कुंडली विवेचन खोलें` link (§68) and, only while a Sade Sati phase is active, a gold-tint teaser row into Gochar (§67); a `गोचर · Gochar` tool card sits after the contractual trio, before Guna Milan/Namkaran. Guest and error landings carry none of these — every PRD-20 surface requires a saved chart.
+**Discovery and landing state.** Kundali is a permanent `CategoryCard variant="launcher"` on Home (`कुंडली · Kundali`, insight glyph, NEW badge), not a shuffled Discover card. It deep-links to `PanchangHome({ initialTab: 'jyotish' })`. Panchang's top peer selector is `Panchang | Vrat & Parv | Jyotish`; it remains the fixed first control in every mode, while location/calendar-system/My Vrat controls appear beneath it only for the two Panchang-derived modes. A guest sees Create Kundali, Daily Rashifal, and one Navagraha practice card. Once a birth profile is saved, the landing becomes daily-first and fits ONE fold (**§51c**): the person switcher (§51a) leads, then the Favour/Pause/Reflect Rashifal card with a single आधार evidence line, then a 2×2 grid of doors that each read out for the active person, then the same single practice card closing the page. There is no page title, no date and no per-item section label — §51c has the measurements and the reasons. Returning from creation must refresh this saved state immediately. Birth city remains independent of the current Panchang location. Since PRD-20, the saved landing's guidance rows are computed by `computePersonalGuidance` from the ACTIVE person's FULL chart: the Favour/Pause/Reflect bodies stay byte-identical to the Moon-sign Rashifal (the superset lock), extended with dual चन्द्र-से/लग्न-से house context — per-row pills on the Rashifal screen, one deduped आधार summary line on the landing (§51c) — and a quiet gold `दशा संकेत · Dasha note` row that appears only when a focus transit belongs to a running Vimshottari lord. The eyebrow follows §51a's naming rule — `आपकी पूरी कुंडली से · From your full chart` with one person saved, `<name> की पूरी कुंडली से · From <name>'s full chart` once the roster holds more than one, because "your" would then be a guess. The compact Kundali card is **gone since §51c**: `पूर्ण कुंडली विवेचन` (§68) is offered by `KundaliScreen` alone, and the Sade Sati teaser (§67) became the live गोचर tile. `गोचर` is the second tile of the 2×2, before Guna Milan/Namkaran. Guest and error landings carry none of these — every PRD-20 surface requires a saved chart.
 
 **Birth input and state.** One card asks for optional name, birth date, birth time, and a bundled Indian city. Date and time are entered through pickers, not free text: the date field-button opens `CalendarDatePicker` (a parchment month-grid bottom sheet with a month/year overlay for jumping across decades, range `1900-01-01`…today-IST) and the time field-button reveals the inline reminder-style `ClockTimePicker` (12-hour AM/PM stepper). Both still emit the stored contract — `YYYY-MM-DD` and 24-hour `HH:mm` — so validation, IST→UTC conversion, and persistence are unchanged; the `kundali-date-input`/`kundali-time-input` testIDs move onto the field-buttons. Tapping the time field commits a 06:00 default so the shown value and stored value always agree, and an untouched time still validates as missing. No city or “Default profile” is silently supplied: the city field begins at “Choose an Indian city”, and nearby copy plainly explains that current calculation support covers Indian birth places and their local IST time. Profiles persist on-device in the birth-profile roster under `@vedansh:kundali-profiles:v1` (**§51a** — several people, one active selection; the PRD-C single-profile key migrates into it once); Edit opens the manage form for the active person, where removal is deliberately secondary to Save/Cancel. Copy explains that correct birth time matters for Lagna/houses. Loading, guest, saved, persistence-error, and corrupt-profile recovery are explicit states; a failed save/delete must never masquerade as success. Opening/closing the city picker dismisses its keyboard, and a successful calculation returns the result to its top.
 
@@ -1981,7 +1981,7 @@ Placement is **first verse page only**: `VersePage` exposes a `belowContent` slo
 
 **Readability sizing (July 2026).** The §3.0 floor (10) is a *minimum*, not a target — Kundali and Rashifal carry unusually dense content (sign grids, graha tables, dasha timelines), so their read-tier text sits **above** the floor for comfort: the Rashi-picker grid uses traditional name **16** / plain-English **14** on taller (`minHeight 64`) tiles; its "choose your sign" **title** reads as a heading at **15** with a **14** description and a **13** disclaimer above; the guidance-row headers/body and their graha·bhava context chips, the Kundali overview eyebrow, and the result-screen labels (`lagnaLabel`/`lagnaTranslation`, grahas `tablePrimary` **14** / `tableTranslation` **12**, `eyebrowText`, `progressCaption`, `practiceLabel`) were raised to **12** (space-constrained dasha `antarChip`/`nowTag` to **11**). Micro-chrome shared with the Panchang tab (the `jyotishSectionLabel` kicker, tab-bar) stays at the floor.
 
-**Files.** `mobile/src/panchang/kundali.ts`, `useKundali.ts`, `birthProfiles.ts`, `birthProfileStore.ts` (§51a), `gochar.ts`, `dashaReading.ts` (PRD-20); `NorthIndianChart.tsx`, `KundaliOverview.tsx`, `JyotishGuidanceRows.tsx`, `JyotishPracticeCard.tsx`, `JyotishShareCard.tsx`, `JyotishShareSheet.tsx`, `JyotishStateCard.tsx`, `PersonChips.tsx` (§51a), `CalendarDatePicker.tsx`, `ClockTimePicker.tsx`, `StepperColumn.tsx` (§52a); `KundaliScreen.tsx`, `RashifalScreen.tsx`; `PanchangScreen.tsx`, `HomeScreen.tsx`, Panchang navigation types/stack; `.maestro/kundali-smoke.yaml`.
+**Files.** `mobile/src/panchang/kundali.ts`, `useKundali.ts`, `birthProfiles.ts`, `birthProfileStore.ts` (§51a), `gochar.ts`, `dashaReading.ts` (PRD-20); `NorthIndianChart.tsx`, `KundaliOverview.tsx`, `JyotishGuidanceRows.tsx`, `JyotishToolTile.tsx` (§51c), `JyotishPracticeCard.tsx`, `JyotishShareCard.tsx`, `JyotishShareSheet.tsx`, `JyotishStateCard.tsx`, `PersonChips.tsx` (§51a), `CalendarDatePicker.tsx`, `ClockTimePicker.tsx`, `StepperColumn.tsx` (§52a); `KundaliScreen.tsx`, `RashifalScreen.tsx`; `PanchangScreen.tsx`, `HomeScreen.tsx`, Panchang navigation types/stack; `.maestro/kundali-smoke.yaml`.
 
 **Dasha reading (PRD-20 Phase 4).** The Dasha tab inserts one `इस अवधि का पाठ · Reading this period` card between the current-period block and the `महादशा समयरेखा / MAHADASHA TIMELINE` eyebrow that heads the full timeline: title (`<lord> महादशा · <lord> अन्तर्दशा`), the lord's authored classical signification (every one opens `परम्परा में… / Tradition links…`), the lord's natal rashi/house placement line, and a muted Antardasha overlay line. Copy comes from `dashaReading.ts`'s typed tables — structural only, pinned by a banned-vocabulary engine test — and the card carries one complete accessibility label.
 
@@ -1993,8 +1993,8 @@ Placement is **first verse page only**: `VersePage` exposes a `belowContent` slo
 a household could hold one person's Kundali at a time and a second person meant
 overwriting the first. The profile is now a **roster** — every saved person plus
 one **active** selection — and every personalised surface reads that selection:
-the Kundali result, the Jyotish landing's Daily Rashifal card and chart glance,
-the Rashifal screen, and the muhurat finder's आपके लिए Tarabala/Chandrabala strip.
+the Kundali result, the Jyotish landing's Rashifal card and all four of its §51c
+door tiles, the Rashifal screen, and the muhurat finder's आपके लिए Tarabala/Chandrabala strip.
 
 **One selection, one store.** `panchang/birthProfiles.ts` is the pure model
 (validate, parse, add/update/remove/select, `activePerson`) and
@@ -2061,6 +2061,95 @@ Namkaran still never reads a birth profile at all.
 `.maestro/multi-profile-jyotish-smoke.yaml`.
 
 ---
+
+## 51c. The Jyotish landing — one reading, then a 2×2 of doors (September 2026)
+
+**Purpose.** The saved-profile landing had grown to **1,645 dp of content — 2.2
+viewport folds** on a 393 × 852 dp phone, and roughly 470 dp of that carried no
+answer at all: a page header restating the card header beneath it, four section
+labels introducing one item each, the same evidence chip printed twice, the Moon
+sign stated twice, and four competing CTAs in one card. गोचर, अष्टकूट मिलान and
+नामकरण — the three newest features — were the three furthest from the fold, and
+the chart people open the tab for sat below the first one. This section is the
+answer: **703 dp, one fold**, with more information on screen than before, not
+less.
+
+**Structure (saved state).** Exactly four blocks, in this order:
+
+1. **The person switcher** (§51a), first. It no longer governs only the guidance
+   card — every tile in the grid below reads out of the same active person — so
+   it must sit above everything it changes and re-answer the whole screen on one
+   render. `birthProfileStore`'s single active selection is what makes that true.
+2. **The guidance card**, and the only thing on the screen that leads:
+   provenance eyebrow → Moon sign at 25 dp → share pill → the three
+   Favour/Pause/Reflect rows → one आधार evidence line → `पूरा राशिफल खोलें`.
+3. **The 2×2 door grid** under a `<name> के लिए · For <name>` label.
+4. **The practice card** (§51), unchanged.
+
+**No page title and no date.** The landing only ever shows today, the card's own
+eyebrow says whose chart the reading came from, and the removed intro block was
+printing the date twice inside 300 dp with "आज" a third time. So the
+`आज आपका ज्योतिष` heading, the date eyebrow, its subtitle, and the
+`आज का राशिफल` / `आपकी कुंडली` / `गोचर` / `मिलान` section labels are all gone.
+The share card still carries its own date — that is a shared artefact, not
+screen chrome.
+
+**The tiles are readings, not menu items (`JyotishToolTile.tsx`).** The stacked
+tool card it replaced spent 98 dp explaining what Gochar *is*; a tile spends 104 dp saying
+what Gochar *says for this person today*. Geometry: `width: '48.7%'`,
+`minHeight: 104`, `radii.lg`, 11/12 dp padding, a 34 dp `saffronTint` glyph tile
+and the caret on one top row, then title (14 dp, `marginTop: 'auto'`) and the
+reading line (11/16 dp — 11 pt Devanagari needs ≥ 1.4× leading, §3.0). The
+1.25 font-scale cap applies: this is dense navigation chrome (§61).
+
+| tile | reading | source |
+|---|---|---|
+| कुंडली | `<लग्न> लग्न · <नक्षत्र> <पद>` | `chart.lagnaRashiIndex`, `moon.nakshatraIndex/pada` |
+| गोचर | the Sade Sati phase word, or the descriptive fallback | `guidance.sadeSatiPhase` |
+| अष्टकूट मिलान | `<चन्द्र राशि> · <नक्षत्र> से` | `moon.rashiIndex/nakshatraIndex` |
+| नामकरण | **descriptive — no reading** | — |
+
+नामकरण is deliberately the exception: it answers for a **newborn**, not for the
+selected person, so a personalised line there would be a category error — and
+today's namakshar is gated content (`NAMAKSHAR_SOURCE.verified` is `false`), which
+the landing is not the place to promote. `SADE_SATI_PHASE_SHORT` in `gochar.ts`
+is the one home for the phase word, so a phase is never worded two ways; the
+tile reads the phase `computePersonalGuidance` already solved and must never call
+`computeSadeSati`, whose default 1,200-day ingress scan has no business running
+for a subtitle.
+
+**One live tile.** A running Sade Sati takes `cardActiveFrom`/`cardActiveBorder`
+on the गोचर tile — the §67 teaser promoted out of the buried chart card into the
+door it always pointed at. Emphasis is never the only signal (§12): the reading
+line says it in words too. Nothing else in the grid competes, and NEW stays a
+**text pill** rather than a colour dot, because §12 forbids colour-alone and a
+dot cannot distinguish NEW from SOON.
+
+**The chart-glance card is dissolved, not compressed.** Its 2×2 fact grid
+restated numbers the doors needed anyway: लग्न and नक्षत्र moved onto the कुंडली
+tile, चन्द्र राशि was already the card hero, and the दशा fact remains one tap
+away on the Kundali result. Its three CTAs go with it — `कुंडली खोलें` becomes
+the कुंडली tile, while **Edit details** and **`पूर्ण कुंडली विवेचन`** (§68) were
+already offered by `KundaliScreen` itself, which is where they now live alone.
+
+**One आधार line, not three chips.** `JyotishGuidanceRows` takes
+`showContext: 'summary'` on the landing: one deduped `आधार · <graha> <house>/<from
+lagna>` strip under the last row. Favour and Reflect routinely share a graha, so
+two of the three chips were character-for-character identical. The full per-row
+chips (`showContext: true`) stay on the Rashifal screen — the depth is one tap
+away, not deleted, and the summary strip carries the unabbreviated wording in its
+accessibility label.
+
+**Guest and error states use the same grid.** Neither has a chart, so no tile has
+a reading and every one falls back to its description — one geometry for all three
+states, never a guest-only layout. The error branch's three tiles wrap as 2 + 1.
+
+**Files.** `mobile/src/components/JyotishToolTile.tsx` (new),
+`JyotishGuidanceRows.tsx`; `mobile/src/panchang/gochar.ts`
+(`SADE_SATI_PHASE_SHORT`); `mobile/src/screens/PanchangScreen.tsx`
+(`JyotishLanding`, `styles.jyotishTileGrid`). Tests:
+`components/__tests__/JyotishToolTile.test.tsx`,
+`screens/__tests__/MultiProfileJyotish.test.tsx` (landing structure).
 
 ## 52. Component: Text Field (`TextField.tsx`)
 

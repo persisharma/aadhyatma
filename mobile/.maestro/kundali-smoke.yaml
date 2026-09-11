@@ -286,17 +286,21 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Close share preview"
 - waitForAnimationToEnd
 
-# Returning to Jyotish refreshes storage: Daily Rashifal now leads, followed by
-# the compact Kundali reference and the one shared practice treatment.
+# Returning to Jyotish refreshes storage. Since design.md §51c the landing has
+# no page title and no date, so the guidance card's own provenance eyebrow is
+# the anchor: the reading leads, then the 2x2 door grid, then the practice card.
 - tapOn: "Back"
 - waitForAnimationToEnd
 - extendedWaitUntil:
-    visible: "Your Jyotish today"
+    visible: "From your full chart"
     timeout: 15000
-- assertVisible: "Today’s Rashifal"
+- assertVisible: "Person switcher"
 - assertVisible: "Favour|FAVOUR"
 - assertVisible: "Pause|PAUSE"
 - assertVisible: "Reflect|REFLECT"
+# One deduped basis line replaces the three per-row chips (§51c); the full
+# per-row chips stay on the Daily Rashifal screen, asserted further down.
+- assertVisible: ".*Basis.*"
 - assertVisible: "Share today’s Rashifal"
 - tapOn: "Share today’s Rashifal"
 - waitForAnimationToEnd
@@ -304,29 +308,24 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "4:5 · 1080×1350"
 - tapOn: "Close share preview"
 - waitForAnimationToEnd
-- scrollUntilVisible:
-    element:
-      text: "Your Kundali"
-    direction: DOWN
-    timeout: 15000
-- scrollUntilVisible:
-    element:
-      text: "Details saved"
-    direction: DOWN
-    timeout: 10000
-- assertVisible: "Details saved"
-- assertVisible: "Karka"
-- assertVisible: "Cancer rising"
+# The Moon sign is the card hero, so it is already on screen.
 - assertVisible: "Kumbha"
 - assertVisible: "Aquarius"
-# Nakshatra + dasha lord sit lower on the saved card — below the fold on
-# Android's shorter viewport, so scroll to them (no-op on iOS).
+# §51c dissolved the chart-glance card into the door grid: Lagna and nakshatra
+# are now the Kundali TILE's reading, and the dasha lord lives one tap deeper on
+# the Kundali result. The grid can sit below the fold on Android's shorter
+# viewport, so scroll to it (no-op on iOS).
 - scrollUntilVisible:
     element:
-      text: "Dhanishta"
+      text: "For you|Open Kundali"
     direction: DOWN
-    timeout: 10000
-- assertVisible: "Jupiter"
+    timeout: 15000
+- assertVisible: ".*Karka Lagna.*"
+- assertVisible: ".*Dhanishta.*"
+# The doors that used to be four stacked cards under four labels.
+- assertVisible: "Open Gochar"
+- assertVisible: "Open Guna Milan"
+- assertVisible: "Open Namkaran"
 - scrollUntilVisible:
     element:
       text: "Open Daily Rashifal"
