@@ -4,6 +4,7 @@ import { TITHI_NAMES_HI, TITHI_NAMES_EN } from './names';
 export type PrevailingTithi = {
   nameHi: string;
   nameEn: string;
+  paksha: PanchangData['tithi']['paksha'];
   // Null when the running tithi's end is not solvable from this day's data —
   // the successor case below, whose end lands after the next sunrise and so
   // belongs to tomorrow's solve.
@@ -34,13 +35,23 @@ export type PrevailingTithi = {
 export function prevailingTithi(p: PanchangData, at: Date): PrevailingTithi {
   const { tithi, kshayaTithi } = p;
   if (!tithi.endTime || at.getTime() <= tithi.endTime.getTime()) {
-    return { nameHi: tithi.nameHi, nameEn: tithi.nameEn, endTime: tithi.endTime };
+    return { nameHi: tithi.nameHi, nameEn: tithi.nameEn, paksha: tithi.paksha, endTime: tithi.endTime };
   }
   if (kshayaTithi && (!kshayaTithi.endTime || at.getTime() <= kshayaTithi.endTime.getTime())) {
-    return { nameHi: kshayaTithi.nameHi, nameEn: kshayaTithi.nameEn, endTime: kshayaTithi.endTime };
+    return {
+      nameHi: kshayaTithi.nameHi,
+      nameEn: kshayaTithi.nameEn,
+      paksha: kshayaTithi.paksha,
+      endTime: kshayaTithi.endTime,
+    };
   }
   const successor = ((kshayaTithi ?? tithi).index + 1) % 30;
-  return { nameHi: TITHI_NAMES_HI[successor], nameEn: TITHI_NAMES_EN[successor], endTime: null };
+  return {
+    nameHi: TITHI_NAMES_HI[successor],
+    nameEn: TITHI_NAMES_EN[successor],
+    paksha: successor < 15 ? 'shukla' : 'krishna',
+    endTime: null,
+  };
 }
 
 /**
