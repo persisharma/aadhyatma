@@ -37,6 +37,7 @@ const at = (h: number, m = 0) => new Date(2026, 7, 21, h, m);
 test('before the end instant the sunrise tithi prevails, end included', () => {
   const p = day(8, at(23, 36)); // Navami till 11:36 PM
   assert.equal(prevailingTithi(p, at(5)).nameHi, 'नवमी');
+  assert.equal(prevailingTithi(p, at(5)).paksha, 'shukla');
   assert.equal(prevailingTithi(p, at(23, 36)).nameHi, 'नवमी'); // boundary is inclusive
   assert.equal(prevailingTithi(p, at(12))?.endTime?.getTime(), at(23, 36).getTime());
 });
@@ -47,6 +48,7 @@ test('past the end the successor runs, with no invented end instant', () => {
   assert.equal(after.nameHi, 'दशमी');
   assert.equal(after.nameEn, 'Dashami');
   assert.equal(after.endTime, null);
+  assert.equal(after.paksha, 'shukla');
 });
 
 test('kshaya day walks main → kshaya → successor', () => {
@@ -73,6 +75,7 @@ test('successor index wraps: Amavasya → Pratipada and Purnima → krishna Prat
   const afterPurnima = prevailingTithi(day(14, at(10)), at(11));
   assert.equal(afterPurnima.nameEn, 'Pratipada'); // 14 → 15 (krishna)
   assert.equal(afterPurnima.nameHi, TITHI_NAMES_HI[15]);
+  assert.equal(afterPurnima.paksha, 'krishna');
 });
 
 test('kshaya reference day agrees with the real engine chain (Bengaluru 10 Jul 2026)', () => {

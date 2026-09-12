@@ -56,7 +56,7 @@ jest.mock('@/panchang/pitruSmaran', () => ({
 
 const panchangDay = {
   vara: { nameHi: 'शनिवार', nameEn: 'Saturday', index: 6 },
-  tithi: { nameHi: 'एकादशी', nameEn: 'Ekadashi', paksha: 'shukla', endTime: null },
+  tithi: { index: 10, nameHi: 'एकादशी', nameEn: 'Ekadashi', paksha: 'shukla', endTime: null },
 };
 
 const muhuratDay = {
@@ -160,6 +160,30 @@ describe('TodayStrip', () => {
     mockMuhurat = { muhurat: muhuratDay, panchang: panchangDay };
     const text = textOf(render());
     expect(text).toContain('शनिवार · शुक्ल एकादशी');
+  });
+
+  it('moves the headline to the currently running tithi after the sunrise tithi ends', () => {
+    mockMuhurat = {
+      muhurat: muhuratDay,
+      panchang: {
+        ...panchangDay,
+        tithi: {
+          index: 14,
+          nameHi: 'पूर्णिमा',
+          nameEn: 'Purnima',
+          paksha: 'shukla',
+          endTime: new Date(Date.now() - 60_000),
+        },
+      },
+    };
+
+    const tree = render();
+    expect(textOf(tree)).toContain('शनिवार · कृष्ण प्रतिपदा');
+    const card = tree.root.find(
+      (node) => typeof node.props?.accessibilityLabel === 'string'
+        && node.props.accessibilityLabel.startsWith("Today's Panchang.")
+    );
+    expect(card.props.accessibilityLabel).toContain('Saturday, Pratipada.');
   });
 
   it('renders observance and muhurat chips with compact time ranges', () => {
@@ -284,12 +308,12 @@ describe('TodayStrip', () => {
     });
   });
 
-  it('requests the static (live: false) muhurat read — no per-minute tick', () => {
+  it('requests the live muhurat read so the tithi flips at its end time', () => {
     render();
     expect(mockUseMuhurat).toHaveBeenCalledWith(
       expect.any(Date),
       'purnimant',
-      expect.objectContaining({ live: false })
+      expect.objectContaining({ live: true })
     );
   });
 
