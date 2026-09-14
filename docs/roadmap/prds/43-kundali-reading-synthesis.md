@@ -4,7 +4,7 @@
 |---|---|
 | **Status** | Proposed. Follows PRD-20 Phase 6 (`kundaliReport.ts`, `KundaliReportScreen`, `kundaliHandoff.ts`). |
 | **T-shirt size** | M — one new pure engine module, one rewrite of `kundaliReport.ts`'s composition layer, no new dependency, no new screen. |
-| **Blocked on** | §2 (the §14.3 decision). Everything in Wave A ships without it; Waves B–C do not. |
+| **Blocked on** | Nothing. The §14.3 decision was taken on 14 Sep 2026 — **Option 3 (remove), with hard bans retained**. RULEBOOK §14.3 is rewritten; §14.3.6 pins the AI/network boundary separately. |
 | **Feasibility** | Every input already exists in `KundaliChart` + `computeSadeSati`. Nothing new is calculated from the ephemeris. |
 
 > **Product stance unchanged:** offline, deterministic, tradition-framed. This PRD adds *synthesis of placements the engine already has* — it does not add astrology data, AI, or network. The question it answers is whether "synthesis" is allowed to describe a person, which is a §14.3 decision, not an engineering one.
@@ -19,17 +19,21 @@ A reviewer read a full 2013-born child's report export (`buildKundaliHandoffText
 | **B — Missing composition** | no executive summary, current Maha·Antar pair not interpreted, combinations (conjunctions/yogas) never read together, sections not age-aware | Needs new composition, but stays structural. Mostly inside §14.3. |
 | **C — "Real personalised reading"** | education strengths, temperament, creativity, suitable interests, likely challenges, strengths to nurture, parent guidance | **Currently banned by RULEBOOK §14.3** and enforced by a test. Requires an explicit product/content decision. |
 
-## 2. The blocking decision (read this before scoping anything)
+## 2. The interpretation decision — TAKEN
 
-RULEBOOK §14.3 says Kundali copy "must not turn generic positions into fixed personality diagnoses or guaranteed life events." `kundaliReport.engine.test.ts` enforces the vocabulary side of it, and every authored string in `kundaliReport.ts` is deliberately written as *"tradition links this sign with …"* rather than *"this child is …"*.
+RULEBOOK §14.3 previously said Kundali copy *"must not turn generic positions into fixed personality diagnoses or guaranteed life events."* That single sentence was the entire reason the reviewer's interpretation score was 4–5/10.
 
-So the reviewer's 4–5/10 is **not a defect — it is the designed ceiling.** Raising it requires choosing one of:
+**Decision (14 Sep 2026, product):** remove it. Vedansh reads a chart the way an astrologer does — placement → combination → indication → practical direction — for a **stated purpose**.
 
-- **Option 1 — Hold the line (recommended default).** Ship Waves A and B. Interpretation stays "what tradition associates with this combination", never "what this person is like". The report gets materially better without any policy change.
-- **Option 2 — Add a named, bounded tier: *traditional indications*.** Amend §14.3 to permit **combination-level** traditional associations phrased as tendencies with an explicit hedge, in a small allow-listed set of domains (learning style, temperament, interests). Still no life events, no health/career verdicts, no fear copy. The banned-vocabulary scan is extended, not removed.
-- **Option 3 — Free-form personalised reading.** Rejected. It is the AstroTalk product PRD-20 explicitly declined to build, and it is unenforceable by a static test.
+What replaced it is not a weaker rule but a harder one. §14.3 is now seven numbered clauses; the load-bearing three are:
 
-**This PRD assumes Option 1 for Wave A/B and specifies Option 2 as Wave C, gated.** Nothing in Wave C is built until §14.3 is rewritten in the same PR series that enables it.
+1. **Derivation is mandatory.** Every interpretive statement carries a `basis` — the bhavas, lords, grahas, yoga, dasha lords and gochar it came from — and the surface renders that chain. An empty `basis` is a **build failure**. The guard moved from *"did we avoid forbidden words"* (12 regexes, trivially evaded) to *"can every sentence name its evidence"* (structural, unevadable).
+3. **Strength is counted, not asserted.** प्रबल / मध्यम / क्षीण from the number of **independent** agreeing factors. One factor can never render प्रबल. Contradictions are shown, never resolved in the flattering direction.
+5. **Hard bans survive**: longevity/death, medical/psychiatric/legal/financial directives, health prognosis, fear copy, dosha-as-curse, remedy commerce, luck scores, and every purpose gated by the subject's derived age.
+
+And §14.3.6 now pins determinism and the **AI/network ban on its own clause**, because §14.4 previously said that ban held *"until §14.3 is explicitly rewritten"* — rewriting §14.3 would silently have unpinned it. That cross-reference now points at §14.3.6 and nowhere else.
+
+**This makes Wave C unblocked and adds a new Wave D (प्रश्न), which is now the centrepiece of the work.**
 
 ## 3. Not in scope
 
@@ -153,14 +157,74 @@ The chart is a 13-year-old's, read by a parent, and the report offers **"Career 
 - **Sade Sati on a minor's chart** must be worded for a parent reading it, not an adult reading their own — this is the one place fear copy could reach a family. The existing phase copy is already calm; add a band-aware framing line and hold the banned-vocabulary scan over it.
 - `birthProfiles.ts` has no notion of the subject's age today. Age is **derived at report time, never stored** — no new persisted field, no new privacy surface.
 
-## 6. Wave C — "traditional indications" (gated on §2 Option 2)
+## 6. Wave C — indications (unblocked)
 
-Only if §14.3 is amended. Adds, per combination and per age band, an *indications* block in an allow-listed domain set: **learning style, temperament, interests, what to encourage, what needs patience**. Hard rules if it ships:
+Per combination and per age band, an `indications` block in the domains: **learning style, temperament, interests, what to encourage, where tradition counsels patience, suitable direction**. Each indication is a typed record, never a hand-written paragraph:
 
-- Phrased as traditional association + explicit hedge, never as assessment: "tradition associates this combination with …, which families often read as a cue to …" — never "she is …".
-- **No** health, no medical, no financial, no exam-outcome, no marriage-timing, no "likely challenges" phrased as prediction. "Challenges" become "where tradition counsels patience".
-- Banned-vocabulary scan extended with the second-person-diagnostic patterns (`you are`, `she is`, `he is`, `आप हैं`, `वह है`) inside indication strings.
-- The parent-guidance register is explicitly non-directive: suggestions to *observe and encourage*, never instructions about schooling or discipline.
+```ts
+export type Indication = {
+  id: string;
+  domain: 'learning' | 'temperament' | 'interests' | 'work' | 'resources' | 'relations' | 'constitution';
+  strength: 'prabal' | 'madhyam' | 'ksheen';   // counted, never asserted
+  supportingFactorIds: readonly string[];       // ≥ 3 independent → prabal
+  opposingFactorIds: readonly string[];         // non-empty → the copy must name the tension
+  basis: readonly BasisNode[];                  // REQUIRED, non-empty — empty fails the build
+  ageBand: 'child' | 'adolescent' | 'adult';
+  titleHi / titleEn / bodyHi / bodyEn: string;  // composed from phrase tables, not authored
+};
+export type BasisNode =
+  | { kind: 'bhava'; house: number }
+  | { kind: 'lord'; graha: Graha; ofHouse: number; inHouse: number }
+  | { kind: 'graha'; graha: Graha; house: number; dignity?: Dignity }
+  | { kind: 'yoga'; yogaId: string }
+  | { kind: 'dasha'; level: 'maha' | 'antar'; lord: Graha; startKey: string; endKey: string }
+  | { kind: 'gochar'; graha: Graha; fromMoonHouse: number; asOfDateKey: string };
+```
+
+`BasisNode` is the whole safety model in one type. It is what the आधार chain renders, what the test asserts is non-empty, and what makes the reading auditable by a user who distrusts the sentence.
+
+## 6a. Wave D — प्रश्न: purpose-driven readings (NEW, the centrepiece)
+
+**Prototype: [`docs/kundali-prashna-prototype.html`](../../kundali-prashna-prototype.html)** — clickable, two personas × five worked purposes, in the shipped manuscript palette.
+
+People do not consult an astrologer for a report. They arrive with a purpose: *my daughter's studies*, *should I start this venture*, *should I change jobs*. Wave D is that surface.
+
+### 6a.1 Nine purposes, typed like `EVENT_RULES`
+
+`prashnaPurposes.ts` — one record per purpose, carrying its bhavas, natural karakas, relevant dasha/gochar rules, and `minAge`:
+
+| id | पुरुषार्थ | Bhavas | Karakas | minAge |
+|---|---|---|---|---|
+| `vidya` | विद्या — study, exams | 4 · 5 · 9 | Jupiter, Mercury | 0 |
+| `vyapar` | व्यापार — business, new venture | 7 · 10 · 11 · 3 | Mercury, Jupiter, Mars | 18 |
+| `naukri` | नौकरी — job, service | 6 · 10 · 11 | Saturn, Sun | 18 |
+| `dhan` | धन — money, property | 2 · 4 · 11 | Jupiter, Venus, Mars | 18 |
+| `vivah` | विवाह — marriage | 7 · 2 · 11 | Venus, Jupiter | 21 |
+| `santan` | संतान — children | 5 · 9 | Jupiter | 21 |
+| `swasthya` | स्वास्थ्य — constitution & routine | 1 · 6 · 8 | Sun, Moon | 0 · no prognosis, ever |
+| `yatra` | यात्रा — travel, abroad | 3 · 9 · 12 | Rahu, Moon | 0 |
+| `man` | मन — peace of mind, focus | 4 · 1 · 12 | Moon | 0 |
+
+Adding a tenth purpose is a **data edit**, not an engine change — and carries the same §10 two-source verification gate `EVENT_RULES` carries. A gated purpose renders **dimmed with its reason visible**, never hidden.
+
+### 6a.2 The answer, in six fixed blocks
+
+**सार** (one-sentence answer + strength pill) → **आधार** (the basis chains) → **बल / बाधा** (two columns; both fill when factors contradict) → **काल** (dated supportive windows from `vimshottari` + `computeUpcomingIngresses`) → **दिशा** (what to actually do) → **उपाय** (allow-listed practice). One disclaimer at the foot.
+
+### 6a.3 Five deterministic passes (`prashna.ts`, pure, source-purity tested)
+
+1. **Gather** — the purpose's bhavas, their signs, lords, lord placements, occupants; karaka placements and dignity. ~12–20 typed facts.
+2. **Weigh** — each fact becomes a signed `Factor` with its `basis` attached **at creation**. Kendra/trikona and own-sign/exaltation support; 6/8/12 and debilitation resist; retrograde qualifies.
+3. **Time** — do the running Maha/Antar lords own or occupy the purpose's bhavas? What is transiting them now? When does the next relevant antardasha start? → the काल windows.
+4. **Resolve** — net the factors into a strength; ≥3 independent supports and no strong resistance → प्रबल; mixed → मध्यम **and the सार must name the tension**.
+5. **Speak** — compose from phrase tables keyed (factor kind × strength × age band). Nothing authored per chart.
+
+### 6a.4 It plugs into surfaces that already exist
+
+- **Jyotish landing (§51c)**: प्रश्न is a **full-width lead card above** the 2×2 door grid, not a fifth tile. The grid answers *"what does my chart say"*; प्रश्न answers *"what should I do"*. One insert; the one-fold constraint holds.
+- **जिज्ञासा / Ask Vedansh (§71)**: one new intent `prashna.purpose` with a required `purpose` slot, so *"क्या मुझे व्यापार शुरू करना चाहिए"* resolves in the existing grammar and deep-links to the answer. No new search surface.
+- **Muhurat Finder (PRD-16)**: दिशा for `vyapar` / `yatra` / `vivah` links out to the shipped finder for *when to begin* — the two features complete each other instead of overlapping.
+- **Practice library**: उपाय stays inside the shipped 3-id allow-list.
 
 ## 7. Model and versioning
 
@@ -176,7 +240,9 @@ Required on every PR in this series:
 - `npm run test:engine` — extended with: ordinal grammar sweep; single-disclaimer assertion; dasha dates/balance-at-birth (a fixture chart whose first Mahadasha starts years before birth — the 2013 case); `generatedDateKey` stamp present on every transit statement; `computeCombinations` purity + determinism + ≤6 cap + deterministic ranking under tie; yoga-table `verified` gate; maitri table row-for-row vs its convention doc; snapshot-line traceability; all-twelve-lagna order sweep with the new ids; existing banned-vocabulary scan still green over all new copy.
 - Targeted Jest: `KundaliReportExperience.test.tsx` (new sections render, age-band titles, one disclaimer), `KundaliExperience.test.tsx`.
 - e2e: `.maestro/kundali-report-smoke.yaml` extended with the snapshot section and a dasha row asserting a **date**, plus `kundali-smoke.yaml` kept green. If Maestro is not run on device, say so explicitly before merge.
-- Docs: `design.md` report sections + `RULEBOOK.md` §14.3/§14.4 updated in the same series (`.claude/rules/design-doc-sync.md`).
+- **Waves C/D additionally**: `basis`-completeness over every emitted `Indication` (empty = fail); strength arithmetic (one factor never yields प्रबल); the full age-gate matrix (every purpose × every band); absolute-claim scan; fatality/longevity scan (आयु, `lifespan`, `death`, मृत्यु); medical/financial-directive scan; commerce scan (`gemstone`, रत्न, `consult an astrologer`); `prashna.ts` source purity; determinism across two builds of the same (chart, purpose, now); `prashna.purpose` intent resolution + abstention; and a `swasthya` no-prognosis assertion.
+- e2e: new `.maestro/prashna-smoke.yaml` — landing lead card → purpose picker → gated purpose shows its reason → विद्या answer renders all six blocks with a non-empty आधार chain.
+- Docs: `design.md` (new §72 — the प्रश्न surface, six blocks, आधार chain spec) + `RULEBOOK.md` §14.3/§14.3.6/§14.4 updated in the same series (`.claude/rules/design-doc-sync.md`).
 
 ## 9. Sequencing
 
@@ -186,13 +252,16 @@ Required on every PR in this series:
 | **B1** | §5.2 current-period reading + maitri table | A |
 | **B2** | §5.1 `kundaliYoga.ts` + `combinations` section | A |
 | **B3** | §5.3 snapshot + §5.4 age-awareness | B1, B2 |
-| **C** | §6 indications | §2 Option 2 decision + §14.3 rewrite |
+| **C** | §6 indications (`Indication` + `BasisNode`) | B2 · §14.3 rewrite — **done** |
+| **D** | §6a प्रश्न — nine purposes, six-block answer, landing lead card, `prashna.purpose` intent | C |
 
-Wave A is the one that changes the reviewer's "wording 7/10" and most of the "machine-generated" feel, and it carries no policy risk. Wave B is where 4–5/10 interpretation moves without touching the safety contract. Wave C is a product decision, not a backlog item.
+Wave A is the one that changes the reviewer's "wording 7/10" and most of the "machine-generated" feel, and it carries no policy risk. Wave B is where 4–5/10 interpretation moves without touching the safety contract. Wave C is now unblocked. **Wave D is the actual product** — A through C exist to make it trustworthy.
 
 ## 10. Open questions
 
-1. §2: Option 1 or Option 2? Everything in Wave C hangs on it.
+1. ~~§2: which interpretation option?~~ **Settled — removed, with §14.3's hard bans retained.**
 2. Yoga allow-list — which five, and who signs off the two published sources per entry (same gate as `EVENT_RULES`)?
 3. Age bands: is 13–17 one band or two (13–15 / 16–17)?
-4. Does the **child-subject** case need its own consent framing on the report screen, given a parent is reading a minor's chart? Not on the reviewer's list; raised here because it is the larger content question behind §5.4.
+4. Does the **child-subject** case need its own consent framing, given a parent now reads purpose-driven indications about a minor? §14.3.5 closes the five adult purposes and fixes the register, but does not ask for consent.
+5. `swasthya` is the one purpose where the removed rule did real safety work. Ship it in Wave D, or hold it to a later wave with its own content review?
+6. The §10 two-source gate applies to the nine purpose records (bhava/karaka sets). Who signs those off, and does Wave D ship `verified:false` behind a flag as `EVENT_RULES` does?
