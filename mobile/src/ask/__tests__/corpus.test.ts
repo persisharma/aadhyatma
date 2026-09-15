@@ -12,6 +12,12 @@ import { CORPUS } from './corpus';
 warmAsk();
 const ctx = testContext({
   sadhana: [{ programId: 'hanuman-41', titleHi: 'हनुमान चालीसा', titleEn: 'Hanuman Chalisa', dayIndex: 7, total: 41, doneToday: false }],
+  // The saved ADULT chart prashna.purpose answers from (PRD-43). Without it the
+  // purpose-shaped questions stay declined, exactly as they did before.
+  kundali: {
+    input: { date: new Date('1995-03-15T04:30:00Z'), latitude: 23.1793, longitude: 75.7849, timezone: 'Asia/Kolkata' },
+    name: 'Aarav',
+  },
   // The saved living home vastu.myhome answers from (PRD-24 Phase 2 §C5).
   vastuHome: {
     homeId: 'home-test',

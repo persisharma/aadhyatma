@@ -8,6 +8,8 @@ import {
   getCurrentDasha,
 } from './kundali';
 import type { DashaLord, KundaliChart } from './kundali';
+import { maitriOf, type BasisNode, type Maitri } from './kundaliBasis';
+import { bhavaLabelEn, bhavaLabelHi, formatIstDateEn, formatIstDateHi } from './reportFormat';
 
 /**
  * Dasha reading — PRD-20 Phase 4.
@@ -118,5 +120,113 @@ export function buildDashaReading(
     placementEn,
     antarHi,
     antarEn,
+  };
+}
+
+/* ------------------------------------------------------------------ */
+/*  Maha × Antar pair reading — PRD-43 Wave B                          */
+/* ------------------------------------------------------------------ */
+
+/** Three-word shade per lord, for the sub-period clause. */
+export const DASHA_LORD_KEYWORDS_HI: Readonly<Record<DashaLord, string>> = {
+  ketu: 'सरलता, विरक्ति, भीतर की ओर मुड़ना',
+  venus: 'संबंध, कला, सहजता',
+  sun: 'आत्मबल, कर्तव्य, स्पष्टता',
+  moon: 'मन, पोषण, भावनात्मक लय',
+  mars: 'ऊर्जा, साहस, परिश्रम',
+  rahu: 'नवीनता, महत्वाकांक्षा, अपरिचित दिशाएँ',
+  jupiter: 'विद्या, विस्तार, धर्म',
+  saturn: 'अनुशासन, धैर्य, सेवा',
+  mercury: 'बुद्धि, संवाद, विश्लेषण',
+};
+
+export const DASHA_LORD_KEYWORDS_EN: Readonly<Record<DashaLord, string>> = {
+  ketu: 'simplicity, detachment, turning inward',
+  venus: 'relationship, art, ease',
+  sun: 'vitality, duty, clarity',
+  moon: 'mind, nurture, emotional rhythm',
+  mars: 'energy, courage, effort',
+  rahu: 'novelty, ambition, unfamiliar directions',
+  jupiter: 'learning, expansion, dharma',
+  saturn: 'discipline, patience, service',
+  mercury: 'intellect, communication, analysis',
+};
+
+const PAIR_RELATION_HI: Readonly<Record<Maitri, string>> = {
+  friend: 'परम्परा में ये दोनों ग्रह परस्पर मित्र हैं — अन्तर्दशा महादशा के स्वर को सहारा देती है, और दोनों के विषय एक ही दिशा में चलते हैं।',
+  neutral: 'परम्परा में ये दोनों ग्रह परस्पर सम हैं — अन्तर्दशा अपना अलग रंग जोड़ती है, महादशा के स्वर से टकराती नहीं।',
+  enemy: 'परम्परा में ये दोनों ग्रह परस्पर विरोधी लय के हैं — अन्तर्दशा महादशा के स्वर को खींचती है; इसे परम्परा बदलती रुचियों और धैर्य के काल की तरह पढ़ती है, न कि किसी निश्चित दिशा के।',
+};
+
+const PAIR_RELATION_EN: Readonly<Record<Maitri, string>> = {
+  friend: 'Tradition counts these two lords as friends — the sub-period supports the main period’s tone, and their themes pull the same way.',
+  neutral: 'Tradition counts these two lords as neutral to each other — the sub-period adds its own shade without cutting across the main period’s tone.',
+  enemy: 'Tradition counts these two lords as pulling in different directions — the sub-period tugs at the main period’s tone; tradition reads this as a stretch of shifting interests asking for patience, not as a fixed direction.',
+};
+
+export type DashaPairReading = {
+  mahaLord: DashaLord;
+  antarLord: DashaLord;
+  relation: Maitri;
+  antarNatalHouse: number;
+  titleHi: string;
+  titleEn: string;
+  /** Three composed paragraphs, index-aligned across languages. */
+  bodyHi: readonly string[];
+  bodyEn: readonly string[];
+  basis: readonly BasisNode[];
+};
+
+/**
+ * The running Mahadasha × Antardasha as one reading: both themes, how the two
+ * lords regard each other (naisargika maitri), and where the Antardasha lord
+ * sits natally — the part that makes it about THIS chart. Null outside the
+ * 120-year table or at a float boundary where no Antardasha contains `at`.
+ */
+export function buildDashaPairReading(chart: KundaliChart, at: Date): DashaPairReading | null {
+  const current = getCurrentDasha(chart, at);
+  if (!current || !current.antar) return null;
+  const mahaLord = current.maha.lord;
+  const antarLord = current.antar.lord;
+  const antarNatal = chart.grahas.find((position) => position.graha === antarLord);
+  if (!antarNatal) return null;
+  const relation = maitriOf(mahaLord, antarLord);
+  const mahaHi = GRAHA_NAMES_HI[mahaLord];
+  const mahaEn = GRAHA_NAMES_EN[mahaLord];
+  const antarHi = GRAHA_NAMES_HI[antarLord];
+  const antarEn = GRAHA_NAMES_EN[antarLord];
+  const seatHi = `${bhavaLabelHi(antarNatal.house)} (${HOUSE_THEME_HI[antarNatal.house - 1]})`;
+  const seatEn = `${bhavaLabelEn(antarNatal.house)} (${HOUSE_THEME_EN[antarNatal.house - 1]})`;
+
+  const bodyHi = [
+    `${mahaHi} महादशा ${formatIstDateHi(current.maha.start)} से ${formatIstDateHi(current.maha.end)} तक — ${DASHA_LORD_KEYWORDS_HI[mahaLord]} का काल। इसके भीतर ${antarHi} की अन्तर्दशा ${formatIstDateHi(current.antar.start)} से ${formatIstDateHi(current.antar.end)} तक चल रही है — ${DASHA_LORD_KEYWORDS_HI[antarLord]} का उप-काल।`,
+    PAIR_RELATION_HI[relation],
+    mahaLord === antarLord
+      ? `${antarHi} की अपनी ही अन्तर्दशा — परम्परा में महादशा का स्वर सबसे सघन इसी उप-काल में होता है।`
+      : `आपकी कुंडली में ${antarHi} ${seatHi} में है — परम्परा इस उप-काल के विषयों को उसी भाव की दृष्टि से पढ़ती है: ${HOUSE_THEME_HI[antarNatal.house - 1]} पर इस समय ${antarHi} का रंग है।`,
+  ];
+  const bodyEn = [
+    `The ${mahaEn} Mahadasha runs ${formatIstDateEn(current.maha.start)} → ${formatIstDateEn(current.maha.end)} — a period of ${DASHA_LORD_KEYWORDS_EN[mahaLord]}. Inside it, the ${antarEn} Antardasha runs ${formatIstDateEn(current.antar.start)} → ${formatIstDateEn(current.antar.end)} — a sub-period of ${DASHA_LORD_KEYWORDS_EN[antarLord]}.`,
+    PAIR_RELATION_EN[relation],
+    mahaLord === antarLord
+      ? `${antarEn}’s own Antardasha — tradition treats this sub-period as where the Mahadasha’s tone runs most concentrated.`
+      : `In this chart ${antarEn} sits in the ${seatEn} — tradition reads this sub-period’s themes through that house: matters of ${HOUSE_THEME_EN[antarNatal.house - 1]} carry ${antarEn}’s colour just now.`,
+  ];
+
+  return {
+    mahaLord,
+    antarLord,
+    relation,
+    antarNatalHouse: antarNatal.house,
+    titleHi: `${mahaHi} महादशा · ${antarHi} अन्तर्दशा`,
+    titleEn: `${mahaEn} Mahadasha · ${antarEn} Antardasha`,
+    bodyHi,
+    bodyEn,
+    basis: [
+      { kind: 'dasha', level: 'maha', lord: mahaLord, startKey: current.maha.start.toISOString().slice(0, 10), endKey: current.maha.end.toISOString().slice(0, 10) },
+      { kind: 'dasha', level: 'antar', lord: antarLord, startKey: current.antar.start.toISOString().slice(0, 10), endKey: current.antar.end.toISOString().slice(0, 10) },
+      { kind: 'relation', from: mahaLord, to: antarLord, relation },
+      { kind: 'graha', graha: antarLord, house: antarNatal.house, dignity: 'neutral' },
+    ],
   };
 }

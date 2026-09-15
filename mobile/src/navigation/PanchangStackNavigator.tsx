@@ -129,6 +129,13 @@ export default function PanchangStackNavigator() {
         component={KundaliReportScreen}
         options={{ animation: 'slide_from_right' }}
       />
+      {/* प्रश्न (PRD-43) — a require() thunk keeps the composer off the launch graph. */}
+      {/* eslint-disable-next-line @typescript-eslint/no-require-imports */}
+      <Stack.Screen
+        name="Prashna"
+        getComponent={() => require('@/screens/PrashnaScreen').default}
+        options={{ animation: 'slide_from_right' }}
+      />
       <Stack.Screen
         name="GunaMilan"
         component={GunaMilanScreen}

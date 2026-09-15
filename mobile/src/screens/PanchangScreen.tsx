@@ -303,6 +303,7 @@ export default function PanchangScreen({ route }: Props) {
   const openAddPerson = () => rootNav.navigate('Kundali', { newPerson: true });
   const openRashifal = () => rootNav.navigate('Rashifal');
   const openGochar = () => rootNav.navigate('Gochar');
+  const openPrashna = () => rootNav.navigate('Prashna');
   const openGunaMilan = () => rootNav.navigate('GunaMilan');
   const openNamkaran = () => rootNav.navigate('Namkaran');
 
@@ -754,6 +755,7 @@ export default function PanchangScreen({ route }: Props) {
               onOpenKundali={openKundali}
               onOpenRashifal={openRashifal}
               onOpenGochar={openGochar}
+              onOpenPrashna={openPrashna}
               onOpenGunaMilan={openGunaMilan}
               onOpenNamkaran={openNamkaran}
               onOpenNavagraha={() => openLinkedSection('navagraha-stotram')}
@@ -784,6 +786,7 @@ function JyotishLanding({
   onOpenKundali,
   onOpenRashifal,
   onOpenGochar,
+  onOpenPrashna,
   onOpenGunaMilan,
   onOpenNamkaran,
   onOpenNavagraha,
@@ -805,6 +808,7 @@ function JyotishLanding({
   onOpenKundali: () => void;
   onOpenRashifal: () => void;
   onOpenGochar: () => void;
+  onOpenPrashna: () => void;
   onOpenGunaMilan: () => void;
   onOpenNamkaran: () => void;
   onOpenNavagraha: () => void;
@@ -1120,6 +1124,54 @@ function JyotishLanding({
           profile.name ? `${profile.name} के लिए` : 'आपके लिए',
           profile.name ? `For ${profile.name}` : 'For you'
         )}
+        {/* प्रश्न leads the doors as a full-width card, not a fifth tile: the
+            grid answers "what does my chart say", this answers "what should I
+            do about X" — the question people actually bring (design.md §72). */}
+        <Pressable
+          onPress={onOpenPrashna}
+          accessibilityRole="button"
+          accessibilityLabel="Open Prashna"
+          testID="jyotish-prashna-door"
+          style={({ pressed }) => [
+            styles.prashnaDoor,
+            {
+              borderColor: colors.cardActiveBorder,
+              backgroundColor: colors.cardActiveFrom,
+              borderRadius: radii.lg,
+            },
+            elevation.card,
+            pressed && { opacity: 0.8 },
+          ]}
+        >
+          <View style={{ flex: 1 }}>
+            <Text
+              style={{
+                color: colors.ink,
+                fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
+                fontSize: 15,
+              }}
+            >
+              {contentByLang(lang, 'प्रश्न · अपनी कुंडली से पूछें', 'Prashna · ask your chart')}
+              <Text style={[styles.prashnaNew, { color: colors.newBadgeText }]}>  NEW</Text>
+            </Text>
+            <Text
+              style={{
+                color: colors.inkMuted,
+                fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+                fontSize: 11,
+                lineHeight: 16,
+                marginTop: 3,
+              }}
+            >
+              {meaningByLang(
+                lang,
+                'विद्या · व्यापार · नौकरी · धन · स्वास्थ्य — नौ विषय, हर उत्तर अपने आधार के साथ',
+                'Study · business · work · money · constitution — nine purposes, every answer with its basis'
+              )}
+            </Text>
+          </View>
+          <Text style={{ color: colors.saffronDeep, fontSize: 18 }}>›</Text>
+        </Pressable>
         <View style={styles.jyotishTileGrid}>
           <JyotishToolTile
             titleHi="कुंडली"
@@ -1953,6 +2005,8 @@ const styles = StyleSheet.create({
   // the chart-glance fact grid. Wrapping keeps the 3-tile state (the error
   // branch) honest as 2 + 1 rather than forcing a fixed 2x2.
   jyotishTileGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+  prashnaDoor: { flexDirection: 'row', alignItems: 'center', gap: 10, padding: 13, borderWidth: 1, marginBottom: 8, minHeight: 64 },
+  prashnaNew: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, letterSpacing: 0.8 },
   resultRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 13, borderBottomWidth: StyleSheet.hairlineWidth },
   // Compact upcoming card (design.md § catalog view): date + glyph top row and a
   // one-line name — the category caption is dropped, the ॐ/☾/✺ glyph carries it.

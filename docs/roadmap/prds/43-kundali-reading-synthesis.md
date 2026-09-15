@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Proposed. Follows PRD-20 Phase 6 (`kundaliReport.ts`, `KundaliReportScreen`, `kundaliHandoff.ts`). |
+| **Status** | **Waves A, B, C and D implemented** (15 Sep 2026) on `claude/vedansh-reading-improvements-qdk99h`. Engine, screens, Ask intent, Jest and engine suites green; `.maestro/prashna-smoke.yaml` and the updated `kundali-report-smoke.yaml` are authored but **not run on a device in this session**. §10 two-source URL review of `YOGA_DEFINITIONS` and `PRASHNA_PURPOSES` is outstanding and release-gating. |
 | **T-shirt size** | M — one new pure engine module, one rewrite of `kundaliReport.ts`'s composition layer, no new dependency, no new screen. |
 | **Blocked on** | Nothing. The §14.3 decision was taken on 14 Sep 2026 — **Option 3 (remove), with hard bans retained**. RULEBOOK §14.3 is rewritten; §14.3.6 pins the AI/network boundary separately. |
 | **Feasibility** | Every input already exists in `KundaliChart` + `computeSadeSati`. Nothing new is calculated from the ephemeris. |

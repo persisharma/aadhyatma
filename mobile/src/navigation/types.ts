@@ -178,6 +178,9 @@ export type PanchangStackParamList = VidhiStackParamList & GharVastuStackParamLi
   Gochar: undefined;
   // Compiled full-chart reading — PRD-20 Phase 6
   KundaliReport: undefined;
+  // प्रश्न — purpose-driven reading for the active person (PRD-43 Wave D).
+  // `purposeId` preselects a purpose (the Ask intent deep-links here).
+  Prashna: { purposeId?: string } | undefined;
   GunaMilan: undefined;
   Namkaran: undefined;
   /** वास्तु दिशा (PRD-24) — the griha-pravesh result's door pushes it in place
