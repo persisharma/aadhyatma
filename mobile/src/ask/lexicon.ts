@@ -103,6 +103,15 @@ function build(): Lexicon {
     push('vidhi', v.id, v.titleHi, [v.titleHi, v.titleEn, v.id.replace(/-/g, ' ')]);
   }
 
+  // प्रश्न purposes (PRD-43) — the registry carries its own hi/en/Hinglish forms.
+  // Loaded here, not at module top: `build()` runs lazily, and this file sits
+  // on the launch-graph walker's path (launchGraph budget).
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { PRASHNA_PURPOSES } = require('@/panchang/prashnaPurposes') as typeof import('@/panchang/prashnaPurposes');
+  for (const purpose of PRASHNA_PURPOSES) {
+    push('purpose', purpose.id, purpose.nameHi, [purpose.nameHi, purpose.nameEn, purpose.id, ...purpose.forms]);
+  }
+
   const labelFor = (type: EntityType, id: string) => out.find((e) => e.type === type && e.id === id)?.label ?? id;
   for (const [form, type, id] of ALIASES) {
     push(type, id, labelFor(type, id), [form]);

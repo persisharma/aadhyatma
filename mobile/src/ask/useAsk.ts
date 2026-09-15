@@ -13,6 +13,8 @@ import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useSadhanaToday } from '@/data/sadhana/useSadhanaToday';
+import { activePerson, birthProfileToInput } from '@/panchang/birthProfiles';
+import { getRosterSnapshot, loadRoster, subscribeRoster, type RosterState } from '@/panchang/birthProfileStore';
 import { useHomeRoster } from '@/vastu/homeRecordStore';
 import type { AskEngine } from './engine';
 import type { AskContext, AskResolution, Localized, SadhanaSummary, VastuHomeSummary } from './types';
@@ -58,6 +60,26 @@ export function useAskContextBuilder(): (seed?: AskContext['seed']) => AskContex
   const [calendarSystem] = usePanchangCalendarSystem();
   const { lang } = useGitaLanguage();
   const sadhanaCards = useSadhanaToday();
+  // The active person's birth INPUT for prashna.purpose (PRD-43). Read from
+  // the roster store directly, NOT through `useKundali`: that hook computes
+  // the chart and would pull `kundali.ts` → astronomy-engine onto Home's
+  // launch path via this hook (the launchGraph budget test caught it). The
+  // lazily-loaded intent computes the chart itself.
+  const [birthRoster, setBirthRoster] = useState<RosterState>(() => getRosterSnapshot());
+  useEffect(() => {
+    const unsubscribe = subscribeRoster(setBirthRoster);
+    void loadRoster().then(setBirthRoster);
+    return unsubscribe;
+  }, []);
+  const active = birthRoster.error ? null : activePerson(birthRoster.roster);
+  const kundali = useMemo(() => {
+    if (!active) return null;
+    try {
+      return { input: birthProfileToInput(active), name: active.name || null };
+    } catch {
+      return null; // an invalid stored profile is a guest to the ask engine
+    }
+  }, [active]);
 
   const sadhana = useMemo<SadhanaSummary[]>(
     () =>
@@ -100,9 +122,10 @@ export function useAskContextBuilder(): (seed?: AskContext['seed']) => AskContex
       lang,
       sadhana,
       vastuHome,
+      kundali,
       ...(seed ? { seed } : {}),
     }),
-    [location, calendarSystem, lang, sadhana, vastuHome]
+    [location, calendarSystem, lang, sadhana, vastuHome, kundali]
   );
 }
 

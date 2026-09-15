@@ -262,15 +262,28 @@ export const CORPUS: readonly CorpusCase[] = [
   { q: 'sundarkand', expect: 'none' },
 
   /* ---------------- negatives: stance guard → declined ---------------- */
-  { q: 'kya mujhe naukri milegi', expect: 'declined' },
-  { q: 'meri shadi kab hogi', expect: 'declined' },
+  { q: 'kya mujhe naukri milegi', intent: 'prashna.purpose', slot: ['purpose', 'naukri'] },
+  { q: 'meri shadi kab hogi', intent: 'prashna.purpose', slot: ['purpose', 'vivah'] },
+
+  /* ---------------- prashna.purpose (PRD-43; corpus ctx carries a saved adult chart) ---- */
+  { q: 'पढ़ाई कैसी रहेगी', intent: 'prashna.purpose', slot: ['purpose', 'vidya'] },
+  { q: 'padhai kaisi rahegi', intent: 'prashna.purpose', slot: ['purpose', 'vidya'] },
+  { q: 'क्या मुझे व्यापार शुरू करना चाहिए', intent: 'prashna.purpose', slot: ['purpose', 'vyapar'] },
+  { q: 'kya mujhe business shuru karna chahiye', intent: 'prashna.purpose', slot: ['purpose', 'vyapar'] },
+  { q: 'should i start a business', intent: 'prashna.purpose', slot: ['purpose', 'vyapar'] },
+  { q: 'naukri badalni chahiye kya', intent: 'prashna.purpose', slot: ['purpose', 'naukri'] },
+  { q: 'meri kundali me dhan kaisa hai', intent: 'prashna.purpose', slot: ['purpose', 'dhan'] },
+  { q: 'how is my health in my chart', intent: 'prashna.purpose', slot: ['purpose', 'swasthya'] },
+  { q: 'videsh yatra kab', intent: 'prashna.purpose', slot: ['purpose', 'yatra'] },
+  { q: 'मन शांत कैसे रहे', intent: 'prashna.purpose', slot: ['purpose', 'man'] },
+  /* Still declined: predictive framing with NO purpose the app can read. */
   { q: 'mera bhavishya kya hai', expect: 'declined' },
-  { q: 'will i get the job', expect: 'declined' },
+  { q: 'will i get the job', intent: 'prashna.purpose', slot: ['purpose', 'naukri'] },
   { q: 'kya mere kundali me dosh hai kya', expect: 'declined' },
   { q: 'mere ghar me dosh hai kya', expect: 'declined' },
-  { q: 'will my business grow', expect: 'declined' },
+  { q: 'will my business grow', intent: 'prashna.purpose', slot: ['purpose', 'vyapar'] },
   { q: 'meri kismat kaisi hai', expect: 'declined' },
-  { q: 'exam me pass hounga kya', expect: 'declined' },
-  { q: 'promotion milega kya', expect: 'declined' },
+  { q: 'exam me pass hounga kya', intent: 'prashna.purpose', slot: ['purpose', 'vidya'] },
+  { q: 'promotion milega kya', intent: 'prashna.purpose', slot: ['purpose', 'naukri'] },
   { q: 'kal lottery lagegi kya', expect: 'declined' },
 ];

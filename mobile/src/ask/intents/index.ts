@@ -754,6 +754,45 @@ const sadhanaProgress: AskIntent = {
 
 /* ------------------------------------------------------------------ */
 
+
+/* ------------------------------------------------------------------ */
+/*  prashna.purpose (PRD-43 Wave D)                                    */
+/* ------------------------------------------------------------------ */
+
+/* ------------------------------------------------------------------ */
+/*  prashna.purpose (PRD-43 Wave D)                                    */
+/* ------------------------------------------------------------------ */
+
+const prashnaPurpose: AskIntent = {
+  id: 'prashna.purpose',
+  family: 'jyotish',
+  // Broad on purpose: the required `purpose` slot is the gate, and the
+  // stance guard yields here only when a saved chart exists (resolve.ts).
+  triggers: [
+    'kya', 'kaisa', 'kaisi', 'kaise', 'kab', 'hoga', 'hogi', 'milega', 'milegi', 'chahiye', 'karu', 'karun', 'shuru',
+    'kundali', 'prashna', 'sawal', 'mere liye', 'meri', 'mera', 'mere',
+    'should', 'will', 'how', 'when', 'start', 'my chart', 'for me',
+    'क्या', 'कैसा', 'कैसी', 'कैसे', 'कब', 'होगा', 'होगी', 'मिलेगा', 'मिलेगी', 'चाहिए', 'करूँ', 'करूं', 'शुरू', 'कुंडली', 'प्रश्न', 'मेरी', 'मेरा', 'मेरे',
+  ],
+  slots: ['purpose'],
+  // A sadhana/japa question owns its own words even when a purpose form appears in it.
+  blockers: ['sadhana', 'sankalp', 'japa', 'japam', 'mala', 'साधना', 'संकल्प', 'जप'],
+  examples: [
+    L('पढ़ाई कैसी रहेगी?', 'How will study go?'),
+    L('क्या मुझे व्यापार शुरू करना चाहिए?', 'Should I start a business?'),
+    L('नौकरी के लिए अनुकूल समय कब है?', 'When is a supportive time for a job move?'),
+  ],
+  // The resolver and everything it needs (the composer, the chart engine, the
+  // basis labels, the registry — ~150 KB) live in `./prashnaResolve` behind a
+  // require() thunk: this module is on Home's static graph, and a top-level
+  // import here put that whole tree on the first frame (launchGraph budget).
+  resolve(ctx, slots) {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { resolvePrashna } = require('./prashnaResolve') as typeof import('./prashnaResolve');
+    return resolvePrashna(this.id, ctx, slots);
+  },
+};
+
 export const INTENTS: readonly AskIntent[] = [
   observanceNext,
   vratHow,
@@ -769,6 +808,7 @@ export const INTENTS: readonly AskIntent[] = [
   japamMantra,
   sadhanaProgress,
   panchangDay,
+  prashnaPurpose,
 ];
 
 /** Rotating-placeholder / chip examples, one per intent, in registry order. */
