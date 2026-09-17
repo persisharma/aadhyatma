@@ -35,6 +35,8 @@ import { contentByLang } from '@/utils/localize';
 import ReaderHeader from '@/components/ReaderHeader';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
+import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
+import { useReaderReadAloud } from './_useReaderReadAloud';
 import type { RootStackParamList } from '@/navigation/types';
 
 type NextTransitionItem = {
@@ -110,6 +112,17 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
   const listRef = useRef<FlatList<FlatListItem>>(null);
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const hasNavigatedRef = useRef(false);
+
+  // Called before the null-chapter early return below, so hook order stays stable;
+  // with no chapter it simply has zero pages to speak.
+  const readAloud = useReaderReadAloud({
+    sourceId: 'shiva-strotam',
+    data,
+    offset,
+    verseCount,
+    currentIndex,
+    listRef,
+  });
 
   useEffect(() => {
     if (chapter == null) return;
@@ -236,6 +249,10 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
         <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}>
           <LanguageToggle />
           <AddToRoutineButton sourceId="shiva-strotam" chapter={chapter.chapter} />
+          {/* Pinned right so the toggle group stays centred (design.md §56.2). */}
+          <View style={styles.readAloudSlot}>
+            <ReadAloudButton control={readAloud} />
+          </View>
         </View>
 
         <View style={styles.listContainer}>
@@ -371,6 +388,13 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     paddingBottom: 12,
     alignItems: 'center',
+  },
+  readAloudSlot: {
+    position: 'absolute',
+    right: 16,
+    top: 6,
+    bottom: 12,
+    justifyContent: 'center',
   },
   listContainer: {
     flex: 1,

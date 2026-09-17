@@ -1,0 +1,195 @@
+# PRD-43 प्रश्न native-build smoke
+#
+# Verifies the purpose-driven reading end to end: birth input (golden fixture
+# Aarav/Ujjain, an adult) → saved Jyotish landing carries the full-width प्रश्न
+# lead card above the door grid → purpose picker shows all nine, all open for an
+# adult → the विद्या answer renders every one of the six blocks with a
+# non-empty आधार chain, a strength pill, dated windows, and the practice link →
+# switching to व्यापार recomposes and offers the Muhurat finder hand-off.
+#
+# Prerequisite: install the native debug app on the target simulator with
+# `npx expo run:ios --device <UDID> --port 8084`. Authored with the shared
+# onboarding preamble of kundali-report-smoke.yaml; device run pending.
+
+appId: com.prashantsharma.vedansh
+---
+- launchApp:
+    appId: com.prashantsharma.vedansh
+    clearState: true
+    arguments:
+      RCT_jsLocation: "127.0.0.1:8084"
+- waitForAnimationToEnd:
+    timeout: 30000
+- tapOn: { text: "Allow", optional: true }
+- tapOn: { text: "Don't Allow", optional: true }
+- tapOn: { text: "Skip tour", optional: true }
+- waitForAnimationToEnd: { timeout: 5000 }
+- tapOn: { text: "Skip tour", optional: true }
+- tapOn: { text: "Begin", optional: true }
+- tapOn: { text: "English", optional: true }
+- tapOn: { text: "Begin|आरंभ करें", optional: true }
+- tapOn: { text: "Close", optional: true }
+- tapOn: { text: "Got it", optional: true }
+- tapOn: { text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ", optional: true }
+- tapOn: { text: "Allow", optional: true }
+- tapOn: { text: "Don.t Allow", optional: true }
+- waitForAnimationToEnd
+- tapOn: { text: "SKIP|Skip|Skip tour", optional: true }
+- tapOn: { text: "Begin", optional: true }
+- extendedWaitUntil:
+    visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
+    timeout: 60000
+
+# English for stable visible-text assertions.
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: { text: "Language,.*" }
+    centerElement: true
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil: { visible: "English", timeout: 15000 }
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+
+# Create the golden-fixture chart (same steps as kundali-report-smoke.yaml).
+- scrollUntilVisible:
+    element: { text: "Kundali. New. Tap to open." }
+    direction: DOWN
+    timeout: 15000
+    centerElement: true
+- tapOn: "Kundali. New. Tap to open."
+- waitForAnimationToEnd
+- extendedWaitUntil: { visible: "Understand Jyotish", timeout: 60000 }
+- tapOn: "Create Kundali"
+- waitForAnimationToEnd
+- tapOn: { text: "Edit birth details", optional: true }
+- tapOn: { id: "kundali-name-input" }
+- inputText: "Aarav"
+- tapOn: { id: "kundali-date-input" }
+- waitForAnimationToEnd
+- tapOn: ".*tap to change year"
+- tapOn: "Month August"
+- runFlow:
+    when: { platform: iOS }
+    commands:
+      - repeat:
+          times: 4
+          commands:
+            - swipe: { start: "50%, 70%", end: "50%, 50%", duration: 250 }
+      - waitForAnimationToEnd
+      - tapOn: "Year 1992"
+- runFlow:
+    when: { platform: Android }
+    commands:
+      - repeat:
+          times: 18
+          commands:
+            - swipe: { start: "50%, 78%", end: "50%, 64%", duration: 1000 }
+            - waitForAnimationToEnd
+      - repeat:
+          times: 15
+          while: { notVisible: "14 August 1992" }
+          commands:
+            - tapOn: { text: "Year 1992", optional: true }
+            - swipe: { start: "50%, 72%", end: "50%, 86%", duration: 1000 }
+            - waitForAnimationToEnd
+- tapOn: "14 August 1992"
+- tapOn: "Confirm date"
+- waitForAnimationToEnd
+- tapOn: { id: "kundali-time-input" }
+- waitForAnimationToEnd
+- repeat:
+    times: 18
+    commands:
+      - tapOn: "Decrease Minute"
+- tapOn: { id: "kundali-time-input" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: { id: "kundali-city-button" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "kundali-city-button" }
+- waitForAnimationToEnd
+- tapOn: { id: "kundali-city-search" }
+- inputText: "Ujjain"
+- tapOn: "Select Ujjain birth city"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: { id: "kundali-generate-button" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "kundali-generate-button" }
+- waitForAnimationToEnd
+- extendedWaitUntil: { visible: "Kundali result", timeout: 60000 }
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# Saved landing: the प्रश्न lead card sits above the door grid.
+- extendedWaitUntil:
+    visible: "Jyotish tools landing, saved profile"
+    timeout: 30000
+- scrollUntilVisible:
+    element: { id: "jyotish-prashna-door" }
+    direction: DOWN
+    timeout: 15000
+- assertVisible: ".*Prashna · ask your chart.*"
+- tapOn: "Open Prashna"
+- waitForAnimationToEnd
+
+# Purpose picker: nine purposes, all open for an adult.
+- extendedWaitUntil: { visible: "Prashna", timeout: 15000 }
+- assertVisible: "Whose chart"
+- assertVisible: ".*Aarav.*"
+- assertVisible: { id: "purpose-vidya" }
+- assertVisible: { id: "purpose-vyapar" }
+- assertVisible: { id: "purpose-swasthya" }
+- assertNotVisible: "From age 18"
+
+# विद्या answer: six blocks, strength pill, आधार chain, dated window, practice.
+- assertVisible: { id: "prashna-saar" }
+- assertVisible: { id: "prashna-strength" }
+- scrollUntilVisible:
+    element: { id: "prashna-chain-0" }
+    direction: DOWN
+    timeout: 15000
+- scrollUntilVisible:
+    element: { text: "Supports and resists" }
+    direction: DOWN
+    timeout: 15000
+- scrollUntilVisible:
+    element: { text: "Supportive windows" }
+    direction: DOWN
+    timeout: 15000
+- assertVisible: ".* → .* · now"
+- scrollUntilVisible:
+    element: { text: "Direction" }
+    direction: DOWN
+    timeout: 15000
+- scrollUntilVisible:
+    element: { text: "Practice" }
+    direction: DOWN
+    timeout: 15000
+- assertVisible: "Open Navagraha Stotram practice"
+- scrollUntilVisible:
+    element: { text: "As of .*not a certain prediction.*" }
+    direction: DOWN
+    timeout: 15000
+
+# Switch purpose: व्यापार recomposes and offers the Muhurat hand-off.
+- scrollUntilVisible:
+    element: { id: "purpose-vyapar" }
+    direction: UP
+    timeout: 15000
+- tapOn: { id: "purpose-vyapar" }
+- waitForAnimationToEnd
+- assertVisible: { id: "prashna-saar" }
+- scrollUntilVisible:
+    element: { text: "Open Muhurat finder" }
+    direction: DOWN
+    timeout: 20000
+
+- stopApp:
+    appId: com.prashantsharma.vedansh

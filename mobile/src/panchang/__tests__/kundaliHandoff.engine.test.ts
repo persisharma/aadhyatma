@@ -80,6 +80,16 @@ test('handoff text is deterministic and complete', () => {
   }
   assert.ok(text.includes(model.disclaimerEn));
   assert.ok(text.includes(model.disclaimerHi));
+
+  // PRD-43: the export is self-dating and shows every section's working.
+  assert.ok(text.includes(`as of ${model.asOfLabelEn}`));
+  const basisLines = text.split('\n').filter((line) => line.startsWith('Basis: '));
+  const interpretive = model.sections.filter((section) => (section.basis?.length ?? 0) > 0);
+  assert.equal(basisLines.length, interpretive.length, 'one Basis line per interpretive section');
+  assert.ok(basisLines.some((line) => line.includes('→')), 'chains are rendered as arrows');
+  assert.doesNotMatch(text, /\b(?:\d*[02-9])?[123]th bhava/, 'no ordinal regression in the export');
+  const prose = text.slice(0, text.indexOf('## Machine-readable'));
+  assert.equal(prose.split(model.disclaimerEn).length - 1, 1, 'disclaimer once in the export prose');
 });
 
 test('the machine-readable tail parses back to the exact report model', () => {

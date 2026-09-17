@@ -4,7 +4,7 @@
 |---|---|
 | **Companion PRD** | [PRD-26](../prds/26-daan-punya.md) |
 | **Base TRD** | [26-daan-punya.trd.md](./26-daan-punya.trd.md) — content-gathering (§3) is unchanged and still governs; this doc **supersedes its §4–§5 integration sections** |
-| **Contract** | RULEBOOK §27 · design.md §72 / §18 · wiki `daan-punya` |
+| **Contract** | RULEBOOK §27 · design.md §73 / §18 · wiki `daan-punya` |
 | **Prototype** | `docs/daan-punya-revised.html` (v3, for sign-off) |
 | **Status** | Draft — pending sign-off on the §2 contract relaxation and the §5 Home-tile collision |
 | **Feasibility** | ✅ Engineering is small (surface-level screens + one glyph + one data row). **Decided (2026-09-17):** §2.7 relaxed (skip + direct द्वार) and the Home category tile approved. **PRD-40 collision resolved — Resolution A, links-only, PRD-40 on hold** (base TRD §2). Remaining: the Home-structure coordination with the Today-First branch (§5), and the base TRD's content gap (§3). |

@@ -18,7 +18,7 @@
 #   - The location chip is a Pressable whose accessibility label derives from
 #     its child text: "Location: <city>" (a bordered chip + ⌄ chevron).
 #   - City rows expose accessibilityLabel "<NameEn>" ("<NameEn>, selected" for
-#     the active one); the search field exposes "Search city".
+#     the active one); the search field exposes "Search city or pincode".
 #   - SELECTOR COLLISION: the search TextInput's *value* is matchable text too,
 #     so typing the full "Delhi" makes `tapOn: "Delhi"` ambiguous — it resolves
 #     to the field (rendered above the list) and pops the iOS edit menu instead
@@ -63,10 +63,10 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - assertVisible: "Choose location"
 - assertVisible: "Use my location"
-- assertVisible: "Search city"
+- assertVisible: "Search city or pincode"
 
 # ── Step 5: Search for Delhi and pick it (partial query — see selector notes) ──
-- tapOn: "Search city"
+- tapOn: "Search city or pincode"
 - inputText: "Delh"
 # Dismiss the soft keyboard first — on Android it covers the "Delhi" result row,
 # so the tap would land on the keyboard and leave the picker open (the reference

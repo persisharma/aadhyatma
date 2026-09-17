@@ -96,3 +96,47 @@ test('size labels exist in all four reading languages', () => {
     }
   }
 });
+
+/**
+ * Every family branch a widget advertises must carry its own `.widgetURL`.
+ *
+ * An accessory (Lock Screen) widget with no URL is INERT: iOS does nothing at
+ * all when it is tapped — no launch, no error, forever. The Panchang widget
+ * advertised `lock` and its `.accessoryInline` branch rendered a bare `Text`
+ * while the `.widgetURL` sat on the else-branch's VStack, so the placed Lock
+ * Screen widget simply swallowed every tap (Sept 2026). A missing modifier in
+ * one SwiftUI branch is invisible in review, hence this test.
+ */
+test('every iOS family branch attaches its own widget URL', () => {
+  const swift = read('home-widgets', 'ios', 'VedanshWidgets.swift');
+
+  /** The balanced-brace body of the branch opened at `from`. */
+  const branchBody = (from: number) => {
+    const open = swift.indexOf('{', from);
+    let depth = 0;
+    for (let i = open; i < swift.length; i += 1) {
+      if (swift[i] === '{') depth += 1;
+      else if (swift[i] === '}') {
+        depth -= 1;
+        if (depth === 0) return swift.slice(open, i + 1);
+      }
+    }
+    throw new Error('unbalanced braces in VedanshWidgets.swift');
+  };
+
+  const accessoryBranches = [...swift.matchAll(/family == \.(accessory\w+)/g)];
+  // The catalog advertises `lock` for two kinds, so both accessory branches
+  // must exist and both must be tappable.
+  assert.ok(accessoryBranches.length >= 2, 'expected an accessory branch per lock-screen kind');
+  for (const match of accessoryBranches) {
+    assert.match(
+      branchBody(match.index!),
+      /\.widgetURL\(/,
+      `the ${match[1]} branch renders no widgetURL, so tapping that Lock Screen widget does nothing`
+    );
+  }
+
+  // The recovery card is reachable from every surface and every size; it is the
+  // only way back into the app when a payload is stale, so it must be tappable.
+  assert.match(branchBody(swift.indexOf('private func recovery')), /\.widgetURL\(/);
+});

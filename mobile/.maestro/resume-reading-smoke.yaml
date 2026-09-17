@@ -60,7 +60,7 @@ appId: com.prashantsharma.vedansh
 # ── Leave the reader: back to the chapter index, then to Sacred Books ──
 - tapOn: "Back to chapters"
 - waitForAnimationToEnd
-- tapOn: "Back to home"
+- tapOn: "Back"
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Bhagavad Gītā\\..*Tap to open\\."

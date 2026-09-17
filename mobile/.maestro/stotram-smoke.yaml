@@ -76,6 +76,7 @@ appId: com.prashantsharma.vedansh
       text: "Bajrang Baan\\..*Tap to open\\."
     direction: UP
     visibilityPercentage: 60
+    centerElement: true
     timeout: 10000
 - tapOn: "Bajrang Baan\\..*Tap to open\\."
 - waitForAnimationToEnd:

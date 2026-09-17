@@ -1,8 +1,8 @@
 ---
 title: E2E (Maestro) — authoring, verification, and the ship-with-e2e policy
 type: runbook
-sources: [mobile/.maestro, mobile/.maestro/README.md, mobile/.maestro/_launch.yaml, mobile/.maestro/vidhi-smoke.yaml, RULEBOOK.md]
-last_verified_date: 2026-08-25
+sources: [mobile/.maestro, mobile/.maestro/README.md, mobile/.maestro/_launch.yaml, mobile/.maestro/vidhi-smoke.yaml, mobile/scripts/e2e-screen-text.sh, mobile/scripts/e2e-visual-check.sh, RULEBOOK.md]
+last_verified_date: 2026-09-03
 confidence: high
 status: current
 ---
@@ -78,8 +78,9 @@ worktree's **own** Metro:
    Wait for `iOS Bundled … index.ts` in the Metro log.
 4. Run against that device explicitly:
    `maestro --device <UDID> test .maestro/<flow>.yaml`.
-   The screenshot in `~/.maestro/tests/<ts>/` confirms the correct bundle loaded
-   (look for the app's version, e.g. the What's New sheet showing the expected `V1.4.x`).
+   Confirm the correct bundle loaded with TEXT, not a screenshot: prove bundle freshness with
+   `curl 'http://127.0.0.1:8084/index.bundle?platform=ios&dev=true&minify=false' -o /tmp/b.out && grep -c '<UniqueStringFromYourEdit>' /tmp/b.out`
+   (must be >0), and/or run `mobile/scripts/e2e-screen-text.sh <UDID>` and check an expected label.
 
 ### Native debug build (Kundali and native-module coverage)
 
@@ -109,6 +110,43 @@ Metro or OTA state. PRD-23 used this path on Android 16 / API 36:
 3. Run `maestro --device <serial> test .maestro/<flow>.yaml`. Re-enable network after evidence collection if the emulator is shared.
 
 The PRD-23 `vidhi-smoke.yaml` run passed separately on iOS 26.4 and this Android path on 2026-08-25.
+
+## Token-cheap verification (agent policy)
+
+Reading screenshots into an LLM context costs ~1,100–1,600 tokens per full-res image; a whole
+verification session can burn hundreds of thousands of tokens on pixels that carry no extra
+information over the accessibility tree. Rules, in order:
+
+1. **A green `maestro test` exit is the verdict.** The flows are assertion-based
+   (`assertVisible` against the a11y tree). After a pass, do NOT open any screenshot —
+   including the `takeScreenshot` artifacts some flows emit (those are for humans).
+2. **"What's on screen?" → `mobile/scripts/e2e-screen-text.sh [UDID]`.** Wraps
+   `maestro hierarchy`: one line per labelled element (`[bounds] #testID label`), typically
+   ~100–300 tokens for a full screen. It prints the exact merged a11y strings Maestro
+   regex-matches, so it's also the right tool for debugging selector failures (the
+   comma-joined Pressable labels, NEW-badge variants, etc.).
+3. **Bundle freshness is proven by `curl` + `grep`** (see step 4 above), never by
+   eyeballing the run screenshot.
+4. **On a failure**, escalate in this order: (a) Maestro's console output — it names the
+   failed step and reason; (b) `e2e-screen-text.sh` against the failure state; (c) only if a
+   genuinely *visual* question remains (layout overlap, theming, clipping), read ONE
+   screenshot — downscaled first: `sips -Z 640 shot.png --out /tmp/shot-small.png`
+   (~4–5× fewer tokens than full-res).
+5. **Visual regressions are caught by the cached golden-diff harness, not by eyeballing.**
+   Flow checkpoints (`takeScreenshot: e2e-shots/<name>`) are pixel-diffed against committed
+   goldens by `mobile/scripts/e2e-visual-check.sh` (normalize to 440×956 → per-pixel compare,
+   status-bar clock masked). Unchanged screens verify at ZERO token cost (`PASS 0.014%`);
+   a real change exits 1 with a `FAIL <diff%> bbox=…` line and writes
+   `e2e-shots/<name>.diff.png` (changed pixels in red) — read that one small image, nothing
+   else. Intentional UI change → delete the golden, re-run to reseed, commit the new golden.
+   Thresholds: `E2E_VISUAL_THRESH` (default 0.10 %), `E2E_DIFF_TOL`, `E2E_DIFF_MASK_TOP`.
+6. **True visual/design review** (a new screen with no golden yet): downscale every capture
+   (`sips -Z 640`), and prefer delegating the image-reading to a subagent that returns a
+   one-line text verdict, so pixels never enter the main context.
+7. **Prefer adding an `assertVisible` over a screenshot check.** If you needed to look at a
+   screen to verify a change, encode that check as a flow assertion — it's cheaper on every
+   future run and survives as a regression gate. Reserve `takeScreenshot` checkpoints for
+   genuinely visual surfaces (layout, theming, celebration overlays).
 
 ## Gotchas
 

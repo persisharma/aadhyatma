@@ -4,10 +4,12 @@ import { verseIndexForDateKey } from '@/notifications/seed';
 import { computePanchangForDate } from '@/panchang/engine';
 import { getObservancesForDateKey } from '@/panchang/festivalEngine';
 import { computeMuhuratDay } from '@/panchang/muhurat';
+import { tithiChain } from '@/panchang/prevailingTithi';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import { buildWidgetPayload, shiftDateKey, twoLineExcerpt, type WidgetPlannerInput } from './planner';
 import type { Lang } from '@/data/gita/language';
-import { WIDGET_TIME_ZONE, widgetDateKey, type PanchangWidgetDay, type VerseWidgetDay, type WidgetLocalizedText, type WidgetPayloadV1 } from './contract';
+import type { PanchangData } from '@/panchang/types';
+import { WIDGET_TIME_ZONE, widgetDateKey, type PanchangWidgetDay, type PanchangWidgetTithi, type VerseWidgetDay, type WidgetLocalizedText, type WidgetPayloadV1 } from './contract';
 
 const DAYS = 14;
 
@@ -43,6 +45,51 @@ function localizedTiming(labelHi: string, labelEn: string, value: string): Widge
   return localizedFromHindi(`${labelHi} ${value}`, `${labelEn} ${value}`);
 }
 
+/**
+ * "तक 3:24 PM" — the तक line the Home glance draws next to its kicker tithi,
+ * precomputed per language because native draws no dates.
+ *
+ * The short date is appended exactly when the end lands on a LATER IST civil
+ * day than the entry it belongs to (the app's `formatEndInstant` rule): a
+ * bare "तक 5:22 AM" on a tithi that runs past midnight reads as this morning.
+ * The day/month faces come from `Intl` per locale, the same way
+ * `representedDate` builds the eyebrow, so the two dates in one card agree.
+ */
+function tillLabel(end: Date, dateKey: string): WidgetLocalizedText {
+  const time = clockInIst(end);
+  const sameDay = widgetDateKey(end, WIDGET_TIME_ZONE) === dateKey;
+  const value = (locale: string) => sameDay
+    ? time
+    : `${time}, ${new Intl.DateTimeFormat(locale, { timeZone: WIDGET_TIME_ZONE, day: 'numeric', month: 'short' }).format(end)}`;
+  return {
+    hi: `तक ${value('hi-IN')}`,
+    en: `till ${value('en-IN')}`,
+    gu: `${transliterateDevanagari('तक', 'gu')} ${value('gu-IN')}`,
+    kn: `${transliterateDevanagari('तक', 'kn')} ${value('kn-IN')}`,
+  };
+}
+
+/**
+ * The day's tithi chain as payload links. Truncated at the first link whose end
+ * does not advance: the decoders require strictly increasing ends (a link that
+ * did not advance would stall every native reader's forward scan), and a whole
+ * day's Panchang failing closed over a degenerate solve is a worse trade than
+ * dropping the tail nobody can order.
+ */
+function tithiSegments(panchang: PanchangData, dateKey: string): PanchangWidgetTithi[] {
+  const segments: PanchangWidgetTithi[] = [];
+  let previous = Number.NEGATIVE_INFINITY;
+  for (const link of tithiChain(panchang)) {
+    const name = localizedFromHindi(link.nameHi, link.nameEn);
+    if (!link.endTime) { segments.push({ name }); break; }
+    const ends = link.endTime.getTime();
+    if (!(ends > previous)) break;
+    previous = ends;
+    segments.push({ name, endsAt: link.endTime.toISOString(), till: tillLabel(link.endTime, dateKey) });
+  }
+  return segments;
+}
+
 function sourceLabel(sourceHi: string, sourceEn: string, labelHi?: string, labelEn?: string): WidgetLocalizedText {
   return localizedFromHindi([sourceHi, labelHi].filter(Boolean).join(' · '), [sourceEn, labelEn].filter(Boolean).join(' · '));
 }
@@ -67,6 +114,7 @@ export async function planWidgetPayload(input: Omit<WidgetPlannerInput, 'panchan
       dateKey: key,
       representedDate: representedDate(key),
       tithi: localizedFromHindi(panchang.tithi.nameHi, panchang.tithi.nameEn),
+      tithiSegments: tithiSegments(panchang, key),
       ...(observance ? { vrat: localizedFromHindi(observance.nameHi, observance.nameEn) } : {}),
       sunrise: localizedTiming('सूर्योदय', 'Sunrise', clockInIst(panchang.sunrise)),
       rahuKaal: localizedTiming('राहु काल', 'Rahu Kaal', compactRangeInIst(muhurat.rahu.start, muhurat.rahu.end)),

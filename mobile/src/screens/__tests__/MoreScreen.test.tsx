@@ -181,6 +181,29 @@ describe('MoreScreen (redesign)', () => {
     expect(text).toContain(readAloudRowLabel(DEFAULT_READ_ALOUD_PREFS, 'hi', 'unknown'));
   });
 
+  test('the Sadhana rows are ordered by importance (design.md §37)', async () => {
+    // Daily-practice loop (reminders → japam → saved verses), then family & lineage
+    // records (kuldev → ancestors → birthdays), then the occasional vastu tool. A new
+    // row must slot into its tier, not append at the bottom.
+    const tree = await renderMore(makeNav());
+    const labels = tree.root
+      .findAll((n) => typeof n.props.accessibilityLabel === 'string' && typeof n.props.onPress === 'function')
+      .map((n) => n.props.accessibilityLabel as string);
+    const idx = (prefix: string) => labels.findIndex((l) => l.startsWith(prefix));
+    const order = [
+      'Open Sadhak profile',
+      'Reminders,',
+      'Japam alarms,',
+      'Wishlist,',
+      'Kul Parampara',
+      'Pitru Smaran,',
+      'Janma Tithi,',
+      'Vastu Disha,',
+    ].map(idx);
+    expect(order.every((i) => i >= 0)).toBe(true);
+    expect(order).toEqual([...order].sort((a, b) => a - b));
+  });
+
   test('the Read Aloud row sits after the two feature-tour anchor rows', async () => {
     // RULEBOOK §6.1 pins the tour's final steps to Language + Reading Size. A row
     // below them is safe only while no tour step is added for it; this asserts the

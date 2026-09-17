@@ -61,6 +61,11 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
     optional: true
+- tapOn: { text: "Allow", optional: true }
+- tapOn: { text: "Don.t Allow", optional: true }
+- waitForAnimationToEnd
+- tapOn: { text: "SKIP|Skip|Skip tour", optional: true }
+- tapOn: { text: "Begin", optional: true }
 - extendedWaitUntil:
     # Canary: the above-the-fold Panchang card — the Good Habits tile sits below
     # the first viewport since Home gained the daily recommendation cards.
@@ -102,7 +107,7 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Best dates|More suitable dates|No auspicious muhurat.*"
     timeout: 60000
-- back
+- tapOn: "Back"
 - waitForAnimationToEnd
 
 # …and through the Abujh (Special auspicious days) scan.
@@ -114,7 +119,7 @@ appId: com.prashantsharma.vedansh
     id: "muhurat-abujh-door"
 - waitForAnimationToEnd
 - extendedWaitUntil:
-    visible: ".*no muhurat needed.*|.*Abujh.*"
+    visible: ".*no panchang shuddhi is required.*"
     timeout: 60000
 
 # ── Pass 2: cold start — process restarted, in-memory store gone ─────────────
@@ -152,6 +157,11 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
     optional: true
+- tapOn: { text: "Allow", optional: true }
+- tapOn: { text: "Don.t Allow", optional: true }
+- waitForAnimationToEnd
+- tapOn: { text: "SKIP|Skip|Skip tour", optional: true }
+- tapOn: { text: "Begin", optional: true }
 - extendedWaitUntil:
     # Canary: the above-the-fold Panchang card — the Good Habits tile sits below
     # the first viewport since Home gained the daily recommendation cards.
@@ -167,8 +177,10 @@ appId: com.prashantsharma.vedansh
 # The Panchang tab's own day, same store.
 - tapOn: { id: "tab-panchang" }
 - waitForAnimationToEnd
-- extendedWaitUntil:
-    visible: "Sunrise"
+- scrollUntilVisible:
+    element: "Sunrise"
+    direction: DOWN
+    centerElement: true
     timeout: 20000
 - assertVisible: "Brahma Muhurta"
 - tapOn: { id: "tab-home" }
@@ -191,16 +203,16 @@ appId: com.prashantsharma.vedansh
 
 # The day detail still resolves off cached inputs (same evidence surface).
 - tapOn:
-    text: "Shreshtha.*|Madhyam.*"
+    id: "muhurat-result-.*"
     index: 0
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: ".*DrikPanchang convention.*|Not suitable.*"
     timeout: 20000
 - assertVisible: "Why this date"
-- back
+- tapOn: "Back"
 - waitForAnimationToEnd
-- back
+- tapOn: "Back"
 - waitForAnimationToEnd
 
 # Special days off the same hydrated cache.
@@ -215,5 +227,5 @@ appId: com.prashantsharma.vedansh
     visible: "Special auspicious days"
     timeout: 20000
 - extendedWaitUntil:
-    visible: ".*no muhurat needed.*|.*Abujh.*"
+    visible: ".*no panchang shuddhi is required.*"
     timeout: 20000

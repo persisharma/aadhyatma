@@ -11,6 +11,9 @@ let mockCelebratedSig: string | null = null;
 let mockIsLoading = false;
 const mockMarkCelebrated = jest.fn();
 const mockHaptic = jest.fn(() => Promise.resolve());
+const mockRequestAsk = jest.fn();
+
+jest.mock('@/contexts/ratingAsk', () => ({ useRatingAsk: () => mockRequestAsk }));
 
 jest.mock('expo-haptics', () => ({
   notificationAsync: () => mockHaptic(),
@@ -67,6 +70,7 @@ beforeEach(() => {
   mockIsLoading = false;
   mockMarkCelebrated.mockClear();
   mockHaptic.mockClear();
+  mockRequestAsk.mockClear();
 });
 
 describe('RoutineCelebrationOverlay', () => {
@@ -125,5 +129,19 @@ describe('RoutineCelebrationOverlay', () => {
     );
     act(() => petals.props.onPress());
     expect(textOf(tree)).not.toContain('PETALS');
+  });
+
+  it('reports the rating moment only once the petals have settled', () => {
+    // design.md §54: the ask rides on the END of the celebration, never on the
+    // completion itself — the card must not land on top of the shower.
+    mockToday = complete([{ key: 'r1:a' }]);
+    const tree = render();
+    expect(mockRequestAsk).not.toHaveBeenCalled();
+    const petals = tree.root.find(
+      (n) => typeof n.props?.onPress === 'function' && String(n.props?.children).includes('PETALS')
+    );
+    act(() => petals.props.onPress());
+    expect(mockRequestAsk).toHaveBeenCalledTimes(1);
+    expect(mockRequestAsk).toHaveBeenCalledWith('routine-complete');
   });
 });

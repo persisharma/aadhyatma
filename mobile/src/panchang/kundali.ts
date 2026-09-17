@@ -665,7 +665,7 @@ export function indiaDateKey(date: Date): string {
   ].join('-');
 }
 
-export function computeRashifal(date: Date, rashiIndex: number): RashifalGuidance {
+export function computeRashiTransits(date: Date, rashiIndex: number) {
   if (!Number.isInteger(rashiIndex) || rashiIndex < 0 || rashiIndex > 11) {
     throw new Error(`Invalid rashi index: ${rashiIndex}`);
   }
@@ -675,8 +675,13 @@ export function computeRashifal(date: Date, rashiIndex: number): RashifalGuidanc
     const transitRashi = Math.floor(longitude / 30) % 12;
     const house = houseForRashi(transitRashi, rashiIndex);
     const supportive = TRANSIT_SUPPORT_HOUSES[graha].includes(house);
-    return { graha, house, supportive };
+    return { graha, house, supportive, transitRashi };
   });
+  return transits;
+}
+
+export function computeRashifal(date: Date, rashiIndex: number): RashifalGuidance {
+  const transits = computeRashiTransits(date, rashiIndex);
   const supportive = transits.filter((transit) => transit.supportive);
   const reflective = transits.filter((transit) => !transit.supportive);
   const favourTransit = supportive[0] ?? transits[0];

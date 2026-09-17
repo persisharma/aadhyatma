@@ -57,6 +57,54 @@ test('night choghadiya starts +5 around the wheel from the day start', () => {
   assert.equal(build(3).nightChoghadiya[0].key, 'udveg');
 });
 
+// The full published tables (DrikPanchang; identical in every standard almanac).
+// Day walks the wheel one key at a time; night is its OWN cycle
+// (Shubh → Amrit → Char → Rog → Kaal → Labh → Udveg), so it must be pinned in
+// full — checking only the first night period let a +1 walk ship for months.
+const DAY_SEQUENCE: Record<number, string[]> = {
+  0: ['udveg', 'char', 'labh', 'amrit', 'kaal', 'shubh', 'rog', 'udveg'],
+  1: ['amrit', 'kaal', 'shubh', 'rog', 'udveg', 'char', 'labh', 'amrit'],
+  2: ['rog', 'udveg', 'char', 'labh', 'amrit', 'kaal', 'shubh', 'rog'],
+  3: ['labh', 'amrit', 'kaal', 'shubh', 'rog', 'udveg', 'char', 'labh'],
+  4: ['shubh', 'rog', 'udveg', 'char', 'labh', 'amrit', 'kaal', 'shubh'],
+  5: ['char', 'labh', 'amrit', 'kaal', 'shubh', 'rog', 'udveg', 'char'],
+  6: ['kaal', 'shubh', 'rog', 'udveg', 'char', 'labh', 'amrit', 'kaal'],
+};
+const NIGHT_SEQUENCE: Record<number, string[]> = {
+  0: ['shubh', 'amrit', 'char', 'rog', 'kaal', 'labh', 'udveg', 'shubh'],
+  1: ['char', 'rog', 'kaal', 'labh', 'udveg', 'shubh', 'amrit', 'char'],
+  2: ['kaal', 'labh', 'udveg', 'shubh', 'amrit', 'char', 'rog', 'kaal'],
+  3: ['udveg', 'shubh', 'amrit', 'char', 'rog', 'kaal', 'labh', 'udveg'],
+  4: ['amrit', 'char', 'rog', 'kaal', 'labh', 'udveg', 'shubh', 'amrit'],
+  5: ['rog', 'kaal', 'labh', 'udveg', 'shubh', 'amrit', 'char', 'rog'],
+  6: ['labh', 'udveg', 'shubh', 'amrit', 'char', 'rog', 'kaal', 'labh'],
+};
+
+test('day choghadiya follow the published weekday sequence, all 8 periods', () => {
+  for (let wd = 0; wd < 7; wd++) {
+    assert.deepEqual(build(wd).dayChoghadiya.map((p) => p.key), DAY_SEQUENCE[wd], `weekday ${wd}`);
+  }
+});
+
+test('night choghadiya follow the published weekday sequence, all 8 periods', () => {
+  for (let wd = 0; wd < 7; wd++) {
+    assert.deepEqual(build(wd).nightChoghadiya.map((p) => p.key), NIGHT_SEQUENCE[wd], `weekday ${wd}`);
+  }
+});
+
+test('Saturday 10:30 PM is Shubh (then Amrit), never the morning Kaal → Shubh pair', () => {
+  // The Sep 2026 report: Bengaluru, Sat 5 Sep, sunset ≈ 18:25, next sunrise ≈ 06:09.
+  const sunrise = new Date(2026, 8, 5, 6, 9, 0);
+  const sunset = new Date(2026, 8, 5, 18, 25, 0);
+  const nextSunrise = new Date(2026, 8, 6, 6, 9, 0);
+  const md = computeMuhuratDay(sunrise, sunset, nextSunrise, 6);
+  const { nowChoghadiya } = classifyNow(md, new Date(2026, 8, 5, 22, 30, 0));
+  assert.equal(nowChoghadiya?.phase, 'night');
+  assert.equal(nowChoghadiya?.key, 'shubh');
+  const idx = md.nightChoghadiya.indexOf(nowChoghadiya!);
+  assert.equal(md.nightChoghadiya[idx + 1].key, 'amrit');
+});
+
 test('quality mapping — amrit/shubh/labh/char auspicious; udveg/kaal/rog avoid', () => {
   const md = build(0);
   const q = (k: string) => md.dayChoghadiya.find((p) => p.key === k)!.quality;

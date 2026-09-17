@@ -16,9 +16,14 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Panchang widget preview"
 - assertVisible: "Japam widget preview"
 # Each content type advertises its own sizes, with the best one marked (PRD-15 §59).
-- assertVisible: "Wide · best|चौड़ा · सुझाव|પહોળું · સૂચિત|ಅಗಲ · ಶಿಫಾರಸು"
-- assertVisible: "Small · best|छोटा · सुझाव|નાનું · સૂચિત|ಚಿಕ್ಕದು · ಶಿಫಾರಸು"
-- assertVisible: "How to add|कैसे जोड़ें|કેવી રીતે ઉમેરવું|ಹೇಗೆ ಸೇರಿಸುವುದು"
+- assertVisible: ".*(Wide · best|चौड़ा · सुझाव|પહોળું · સૂચિત|ಅಗಲ · ಶಿಫಾರಸು).*"
+- assertVisible: ".*(Small · best|छोटा · सुझाव|નાનું · સૂચિત|ಚಿಕ್ಕದು · ಶಿಫಾರಸು).*"
+- scrollUntilVisible:
+    element:
+      text: "How to add|कैसे जोड़ें|કેવી રીતે ઉમેરવું|ಹೇಗೆ ಸೇರಿಸುವುದು"
+    direction: DOWN
+    centerElement: true
+    timeout: 10000
 # Android pins one specific widget per card — there is no catch-all add button.
 - runFlow:
     when: { platform: Android }

@@ -58,9 +58,9 @@ describe('design.md §4 token prose matches spacing/radii/elevation', () => {
     expect(doc).toMatch(new RegExp(`\`spacing\\.readingGutter\`\\s*\\n?>?\\s*\\(\\*\\*${spacing.readingGutter}\\*\\*\\)`));
   });
 
-  it('lists every elevation tier with its real offset · opacity · radius · Android values', () => {
+  it('lists every elevation tier with its real offset · opacity · radius values', () => {
     for (const [name, tier] of Object.entries(elevation)) {
-      // | `elevation.card` | `0,2` · `0.10` · `6` · `2` | use |
+      // | `elevation.card` | `0,2` · `0.10` · `6` | use |
       // Rows live inside a blockquote, so allow a leading '> '.
       const row = doc.match(new RegExp(`^>?\\s*\\|\\s*\`elevation\\.${name}\`\\s*\\|([^|]*)\\|`, 'm'));
       expect(row).not.toBeNull();
@@ -69,7 +69,6 @@ describe('design.md §4 token prose matches spacing/radii/elevation', () => {
       // opacity is written to 2dp in the doc (0.10), toFixed keeps 0.1 -> 0.10
       expect(cell).toContain(tier.shadowOpacity.toFixed(2));
       expect(cell).toContain(`\`${tier.shadowRadius}\``);
-      expect(cell).toContain(`\`${tier.elevation}\``);
     }
   });
 

@@ -122,7 +122,7 @@ appId: com.prashantsharma.vedansh
 # longer individually matchable; anchor the merged label with .* on both sides.
 - assertVisible: ".*Sankalp · 0 / 41.*"
 - assertVisible: ".*Hanuman Chalisa — 41 Days.*"
-- takeScreenshot: /tmp/vedansh-sankalp-day1
+- takeScreenshot: e2e-shots/vedansh-sankalp-day1
 # The unit rows drop down only when the card is tapped (accordion). Tap the header
 # (merged label) to expand, then commit today's practice via the item check circle.
 - tapOn: ".*Sankalp · 0 / 41.*"

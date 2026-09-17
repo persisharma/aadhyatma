@@ -69,11 +69,12 @@ export default function SundarkandVersePage({ verse, sourceId, width, topActions
           { paddingHorizontal: spacing.screenGutter },
         ]}
         showsVerticalScrollIndicator={false}
-        accessible
-        accessibilityLabel={a11yLabel}
+        accessible={false}
       >
         <View style={styles.headerRow}>
           <View
+            accessible
+            accessibilityLabel={a11yLabel}
             style={[
               styles.pill,
               { backgroundColor: colors.saffronTint, borderRadius: radii.pill },

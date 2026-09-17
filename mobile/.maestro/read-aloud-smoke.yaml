@@ -1,7 +1,10 @@
-# Read Aloud (पाठ सुनें) Smoke Test — on-device TTS (design.md §53)
+# Read Aloud (पाठ सुनें) Smoke Test — on-device TTS (design.md §56)
 #
-# Covers the two surfaces the feature ships on: the More → Read Aloud settings
-# sheet, and the in-reader control on Hanuman Chalisa.
+# Covers the More → Read Aloud settings sheet and the in-reader control on two
+# readers of different shapes: Hanuman Chalisa (flat registry reader, the v1
+# surface) and Bajrang Baan (a chaptered stotram, representative of the
+# September-2026 fan-out to every reader). Every reader except Japam carries the
+# control; the unit suite readerReadAloud.test.tsx presses it on all 21.
 #
 # NATIVE BUILD ONLY. expo-speech is a native module, so this flow (like
 # bhajan-audio-smoke) cannot run under Expo Go.
@@ -110,6 +113,46 @@ appId: com.prashantsharma.vedansh
 # Leaving the reader must end the session — verified by unit test; here we just
 # confirm the navigation still works with the control mounted.
 - tapOn: "Back to home"
+- waitForAnimationToEnd
+
+# ── Part 3: the control on a fan-out reader (Bajrang Baan, Stotram category) ──
+# Same selectors as stotram-smoke.yaml. Proves the pill is on a reader other than
+# the two v1 surfaces; the muted-vs-actionable rule is identical to Part 2.
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+- assertVisible: "Hymns & Praise\\..*Tap to open\\."
+- tapOn: "Hymns & Praise\\..*Tap to open\\."
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Bajrang Baan\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- tapOn: "Bajrang Baan\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+- tapOn:
+    text: "शुरू से पढ़ें|Start from beginning|Start over from the beginning"
+    optional: true
+
+- extendedWaitUntil:
+    visible: "Read aloud|Read aloud unavailable"
+    timeout: 15000
+- tapOn:
+    text: "Read aloud"
+    optional: true
+- assertVisible:
+    text: "Pause reading aloud"
+    optional: true
+- tapOn:
+    text: "Pause reading aloud"
+    optional: true
+- assertVisible:
+    text: "Read aloud"
+    optional: true
+
+- tapOn: "Back"
 - waitForAnimationToEnd
 
 - stopApp

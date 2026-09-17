@@ -14,7 +14,7 @@ RV 10.117.6 / TU 1.11.3 / Gita 17.20 / Anuśāsana-parva + five teaching-kathas)
 a **private on-device ledger** (tithi-stamped, gupt-daan first-class, no totals
 ever), and a **verified giving directory** whose external hand-off is the
 *terminal* act of a guided journey — never a button on the home. Design spec:
-design.md §72; content contract: RULEBOOK §27; product doc:
+design.md §73; content contract: RULEBOOK §27; product doc:
 `docs/roadmap/prds/26-daan-punya.md` (+ `docs/daan-punya-prototype.html` for the design/content review, and
 `docs/daan-punya-shipping.html` — an operable walkthrough of the shipped scope whose
 content is generated from the registries, so it cannot drift from the code).

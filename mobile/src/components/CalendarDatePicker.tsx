@@ -215,6 +215,7 @@ export default function CalendarDatePicker({
                   return (
                     <Pressable
                       key={year}
+                      testID={`calendar-year-${year}`}
                       onPress={() => {
                         setVisibleYear(year);
                         setYearListOpen(false);
@@ -264,6 +265,7 @@ export default function CalendarDatePicker({
                     return (
                       <Pressable
                         key={cell.key}
+                        testID={`calendar-day-${cell.key}`}
                         onPress={() => setSelectedKey(cell.key)}
                         disabled={disabled}
                         accessibilityRole="button"

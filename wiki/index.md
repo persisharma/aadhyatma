@@ -6,7 +6,7 @@
 ## Reference Docs (in place — not copied into the wiki)
 - [`RULEBOOK.md`](../RULEBOOK.md) — integration contract for adding a content section.
 - [`design.md`](../design.md) — visual system spec (tokens, type scale, romanization rules).
-- [`docs/roadmap/`](../docs/roadmap/) — Q3 2026 roadmap + PRDs 01–41 (incl. 28 पर्व-अर्क).
+- [`docs/roadmap/`](../docs/roadmap/) — Q3 2026 roadmap + PRDs 01–42 (incl. 28 पर्व-अर्क, 42 क्षेत्रीय पर्व — the Jain/per-state lens plan).
 - [`docs/superpowers/`](../docs/superpowers/) — deity-icon plan + design spec.
 - [`docs/content-parity/chalisa-aarti-existing-deities.md`](../docs/content-parity/chalisa-aarti-existing-deities.md) — source-candidate manifest for Chalisa/Aarti parity using only existing deity ids.
 - [`docs/content-parity/other-content-existing-deities.md`](../docs/content-parity/other-content-existing-deities.md) — full non-Chalisa/Aarti parity benchmark and acquisition waves for the existing deity taxonomy.
@@ -17,12 +17,12 @@
 - [[panchang]] — Panchang tab: Hindu-calendar engine, festival/vrat observances, **festival arcs (पर्व-अर्क: sthapana → family-chosen visarjan)**, Daily Muhurat, shubh-yoga annotations (annotate-only), Kundali, deterministic Daily Rashifal, private IST-only Guna Milan, newborn-private Namkaran, and dated one-shot muhurat follows.
 - [[japam-alarms]] — Japam Alarms: repeat-days, one-time, and skip-next; native AlarmKit/AlarmManager tier with expo fallback.
 - [[audio]] — the three sound sources (recorded library, japam loop, read-aloud TTS), the playback arbiter that keeps them mutually exclusive, and the expo-speech platform traps.
-- [[notifications]] — nine local notification families (daily verse, vrat, **muhurat**, festive, sadhana, **routine**, personal Pitru Smaran, public Pitru Paksha, japam), the pure-planner + glue + headless-scheduler shape, the shared iOS pending budget, and notification-tap deep links.
+- [[notifications]] — ten local notification families (daily verse, vrat, **muhurat**, festive, **return / वापसी स्मरण**, sadhana, **routine**, personal Pitru Smaran, public Pitru Paksha, japam), the pure-planner + glue + headless-scheduler shape, the shared iOS pending budget, and notification-tap deep links.
 - [[home-widgets]] — cross-platform Home/Lock Screen widgets: versioned 14-day IST snapshot, atomic native bridges, generated extension/provider wiring, gallery, and exact deep links.
 - [[puja-vidhi]] — festival and personal-tithi household guidance: occurrence-scoped preparation, swipe-only conduct, private provenance, shipped-text hand-offs, and the verified-only status boundary (draft visarjan family).
 - [[bhog-naivedya]] — verified offerings, vrat food, prohibited offerings, parana meals, and the Vidhi kitchen-checklist integration.
 - [[ask]] — जिज्ञासा · Ask Vedansh: deterministic answer engine over the shipped engines (fold → derived lexicon → intents → answer-or-abstain), answer-first Search, आज का विधान briefing, answers that act.
-- [[vastu-disha]] — live 8-dik compass (true-north corrected, honest-accuracy states), room-by-room vastu guidance, and ghar-ka-mandir upkeep; store-release-only (expo-sensors).
+- [[vastu-disha]] — live 8-dik compass (fused→magnetometer source ladder, true-north grid correction, tilt/Hold honesty) + गृह वास्तु: mandala-grid home capture, five-class weighted readings, private roster + compare, text handoff, Ask `vastu.myhome`; Phase 1 store-gated (expo-sensors), Phase 2 OTA.
 - [[daan-punya]] — the educate-first giving layer: verse spine + five teaching-kathas, occasion/vaar coverage over real solver rule ids, the private no-totals ledger (gupt-daan structural guarantee), and the verified directory whose external hand-off is the journey's terminal act.
 
 ## Concepts

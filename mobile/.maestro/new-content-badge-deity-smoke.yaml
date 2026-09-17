@@ -42,7 +42,7 @@ appId: com.prashantsharma.vedansh
 - scrollUntilVisible:
     element:
       text: "By Deity. Tap to open."
-    direction: DOWN
+    direction: UP
     timeout: 10000
 - tapOn: "By Deity. Tap to open."
 - waitForAnimationToEnd

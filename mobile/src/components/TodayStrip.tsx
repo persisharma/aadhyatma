@@ -9,6 +9,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { useTilePress } from '@/contexts/TilePressContext';
 import { usePanchangCalendarSystem, useObservancesForDate } from '@/panchang/usePanchang';
 import { useMuhurat } from '@/panchang/useMuhurat';
+import { prevailingTithi } from '@/panchang/prevailingTithi';
 import { formatClock, formatRangeCompact } from '@/panchang/muhuratFormat';
 import { useMuhuratFollows } from '@/contexts/MuhuratFollowContext';
 import { useNextFollowedMuhurat } from '@/panchang/useMuhuratFinder';
@@ -41,8 +42,9 @@ import {
  *
  * Data comes from ONE solve: `useMuhurat` (cached, off the render path)
  * supplies both the muhurat windows and the day's PanchangData; observances
- * ride the lighter `useObservancesForDate`. `live: false` skips the per-minute
- * tick — the strip renders only static day windows.
+ * ride the lighter `useObservancesForDate`. The muhurat windows stay static,
+ * while its focus-gated minute tick keeps the headline on the tithi actually
+ * running now rather than the sunrise tithi after its end time.
  */
 /** Auto-scroll pacing for the chip row. ~24px/s reads as a drift, not a marquee. */
 const AUTO_SCROLL_PX_PER_SEC = 24;
@@ -90,16 +92,17 @@ export default function TodayStrip() {
   // Sibling tab — navigate via the parent so the action bubbles up (same
   // pattern as RoutineBanner / the Panchang spotlight card).
   const rootNav = useNavigation<any>();
+  const isFocused = useIsFocused();
   const { beginTilePress, markTileDrag, finishTilePress, activateTile } = useTilePress();
   const openPanchang = React.useCallback(() => rootNav.navigate('PanchangTab'), [rootNav]);
   const [calendarSystem] = usePanchangCalendarSystem();
 
-  // useTodayKey rolls the strip over at midnight / on app foreground — with
-  // live:false there is no minute tick, so the date needs its own trigger.
+  // useTodayKey rolls the civil date over at midnight / on app foreground.
+  // The focus-gated minute tick below handles intra-day tithi handovers.
   const todayKey = useTodayKey();
   const today = React.useMemo(() => new Date(todayKey), [todayKey]);
   const observances = useObservancesForDate(today, calendarSystem);
-  const { muhurat, panchang } = useMuhurat(today, calendarSystem, { live: false });
+  const { muhurat, panchang } = useMuhurat(today, calendarSystem, { live: isFocused });
   /**
    * The public Pitru-Paksha chip, resolved the same way every other panchang
    * answer on this card is (§48, `usePitruSmaranSolves`): a memory read paints
@@ -170,11 +173,12 @@ export default function TodayStrip() {
 
   const headlineFont =
     lang === 'en' ? fontFamilies.latinBold : scriptTitleFont(lang, fontFamilies.devanagariBold);
-  const headline = panchang
+  const liveTithi = panchang ? prevailingTithi(panchang, new Date()) : null;
+  const headline = panchang && liveTithi
     ? contentByLang(
         lang,
-        `${panchang.vara.nameHi} · ${PAKSHA_NAMES_HI[panchang.tithi.paksha]} ${panchang.tithi.nameHi}`,
-        `${panchang.vara.nameEn} · ${panchang.tithi.nameEn} (${PAKSHA_NAMES_EN[panchang.tithi.paksha]})`
+        `${panchang.vara.nameHi} · ${PAKSHA_NAMES_HI[liveTithi.paksha]} ${liveTithi.nameHi}`,
+        `${panchang.vara.nameEn} · ${liveTithi.nameEn} (${PAKSHA_NAMES_EN[liveTithi.paksha]})`
       )
     : '—';
 
@@ -279,8 +283,8 @@ export default function TodayStrip() {
     .slice(0, 2)
     .map((o) => o.rule.nameEn)
     .join(', ');
-  const a11y = panchang
-    ? `Today's Panchang. ${panchang.vara.nameEn}, ${panchang.tithi.nameEn}.${a11yFest ? ` ${a11yFest}.` : ''} Tap to open.`
+  const a11y = panchang && liveTithi
+    ? `Today's Panchang. ${panchang.vara.nameEn}, ${liveTithi.nameEn}.${a11yFest ? ` ${a11yFest}.` : ''} Tap to open.`
     : "Today's Panchang. Tap to open.";
 
   // ── Chip-row auto-scroll ──────────────────────────────────────────────────
@@ -311,7 +315,6 @@ export default function TodayStrip() {
   // it stops for good — Home goes fully idle. A genuine content change (chips
   // landing, a language switch, the midnight rollover) re-arms exactly one
   // fresh pass.
-  const isFocused = useIsFocused();
   const reduceMotion = useReducedMotion();
   const scrollRef = React.useRef<ScrollView>(null);
   type AutoScrollState = {

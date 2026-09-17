@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Companion PRD** | [PRD-26](../prds/26-daan-punya.md) |
-| **Contract** | RULEBOOK §27 · design.md §72 · wiki `daan-punya` |
+| **Contract** | RULEBOOK §27 · design.md §73 · wiki `daan-punya` |
 | **Status** | Draft — covers the work **after** the shipped build, not the build itself |
 | **Prototypes** | `docs/daan-punya-shipping.html` (what ships) · `docs/daan-punya-redesign.html` (journey redesign, approved) · `docs/daan-punya-home-placement.html` (Home doors, approved) |
 | **Feasibility** | ⚠️ The engineering is small and well-understood. The risk is entirely **(a) a product collision with PRD-40, which must be resolved before any of this ships, and (b) content sourcing under a bar that four causes currently fail.** |

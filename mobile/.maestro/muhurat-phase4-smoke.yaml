@@ -50,6 +50,11 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
     optional: true
+- tapOn: { text: "Allow", optional: true }
+- tapOn: { text: "Don.t Allow", optional: true }
+- waitForAnimationToEnd
+- tapOn: { text: "SKIP|Skip|Skip tour", optional: true }
+- tapOn: { text: "Begin", optional: true }
 - extendedWaitUntil:
     # Canary: the above-the-fold Panchang card — the Good Habits tile sits below
     # the first viewport since Home gained the daily recommendation cards.
@@ -86,6 +91,12 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Find a Muhurat"
     timeout: 20000
+- scrollUntilVisible:
+    element:
+      id: "muhurat-occasion-vahan"
+    direction: DOWN
+    centerElement: true
+    timeout: 15000
 - tapOn:
     id: "muhurat-occasion-vahan"
 - waitForAnimationToEnd
@@ -102,7 +113,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: "muhurat-bala-footer" }
 - waitForAnimationToEnd
 - extendedWaitUntil:
-    visible: "Kundali|कुंडली"
+    visible: ".*Kundali.*|.*कुंडली.*"
     timeout: 20000
 # The shipped Kundali form — same steps as kundali-smoke.yaml (which owns its
 # full coverage): picker date, stepper time, searched birth city, generate.
@@ -116,9 +127,23 @@ appId: com.prashantsharma.vedansh
     id: "kundali-date-input"
 - tapOn: ".*tap to change year"
 - tapOn: "Month August"
+- repeat:
+    times: 4
+    commands:
+      - swipe:
+          start: "50%, 70%"
+          end: "50%, 50%"
+          duration: 250
 - tapOn: "Year 1992"
-- tapOn: "14 August 1992"
+- tapOn:
+    id: "calendar-day-1992-08-14"
 - tapOn: "Confirm date"
+- waitForAnimationToEnd
+- tapOn:
+    id: "kundali-time-input"
+- waitForAnimationToEnd
+- tapOn:
+    id: "kundali-time-input"
 - waitForAnimationToEnd
 - tapOn:
     id: "kundali-city-button"
@@ -132,21 +157,28 @@ appId: com.prashantsharma.vedansh
     id: "kundali-generate-button"
 - waitForAnimationToEnd:
     timeout: 20000
-- back
+- tapOn: "Back"
 - waitForAnimationToEnd
-- back
+- tapOn: "Back"
 - waitForAnimationToEnd
 
 # ── 3. With the profile: the quiet row on cards, the strip on the detail ─────
+- runFlow:
+    when:
+      visible: "Find a Muhurat"
+    commands:
+      - tapOn:
+          id: "muhurat-occasion-vahan"
+      - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Best dates|More suitable dates"
     timeout: 60000
 - extendedWaitUntil:
-    visible: "For you|आपके लिए"
+    visible: ".*For you.*|.*आपके लिए.*"
     timeout: 30000
 - assertNotVisible: { id: "muhurat-bala-footer" }
 - tapOn:
-    text: "Shreshtha.*|Madhyam.*"
+    id: "muhurat-result-.*"
     index: 0
 - waitForAnimationToEnd
 - extendedWaitUntil:

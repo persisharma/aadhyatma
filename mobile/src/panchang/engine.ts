@@ -503,6 +503,40 @@ export function tithiAtMadhyahna(
 }
 
 /**
+ * The tithi running at this civil day's aparahna — the midpoint of the FOURTH of
+ * the five equal parts the daytime is divided into, i.e. sunrise + 0.7 × (sunset
+ * − sunrise). This is the instant an aparahna-vyapini observance is fixed by:
+ * पितृ तर्पण and shraddha are afternoon rites, so दर्श अमावस्या belongs to the day
+ * whose aparahna the amavasya covers, not the day whose sunrise it covers.
+ *
+ * The two answers differ in roughly a third of lunations, because an amavasya
+ * running ~24 h that opens between sunrise and aparahna covers this day's
+ * afternoon and the NEXT day's sunrise (Bhadrapada 2026: 10 Sep 10:33 AM →
+ * 11 Sep 8:56 AM — Drik puts दर्श अमावस्या on 10 Sep and the snan-daan अमावस्या
+ * on 11 Sep). One instant is used rather than "prevails anywhere inside the
+ * aparahna span" so the shared three-case matcher can pick a single day; the
+ * midpoint is the part of the span the tarpan is actually performed in.
+ *
+ * Same shape and same gate as `tithiAtMadhyahna`: aparahna falls between sunrise
+ * and sunset, so the tithi there can only be the sunrise tithi or its successor,
+ * and `expectedTithiIndex` lets the answer be known without solving sunset when
+ * it is neither.
+ */
+export function tithiAtAparahna(
+  localDate: Date,
+  expectedTithiIndex: number,
+  options: PanchangComputationOptions = {}
+): number | null {
+  const sunriseTithi = computeTithiAndMonth(localDate, options).tithiIndex;
+  if (sunriseTithi !== expectedTithiIndex && (sunriseTithi + 1) % 30 !== expectedTithiIndex) return null;
+  const sunrise = sunriseFor(localDate, options.location, options.civilTimeZone);
+  const sunset = sunsetFor(localDate, options.location, options.civilTimeZone);
+  const aparahna = new Date(sunrise.getTime() + 0.7 * (sunset.getTime() - sunrise.getTime()));
+  const year = aparahna.getFullYear();
+  return computeTithiIndex(getSiderealSunLng(aparahna, year), getSiderealMoonLng(aparahna, year));
+}
+
+/**
  * The tithi running at this civil day's moonrise — what a chandrodaya-vyapini
  * vrat (Sankashti Chaturthi, Karwa Chauth) is fixed by, since its defining act
  * is the moon sighting and the arghya that ends the fast.

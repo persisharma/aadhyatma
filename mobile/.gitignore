@@ -49,3 +49,6 @@ credentials/
 
 # Jest coverage output
 coverage/
+
+# Maestro e2e screenshot captures (goldens live in .maestro/goldens, committed)
+e2e-shots/*.png

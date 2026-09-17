@@ -106,12 +106,8 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 
 # ── Step 6: Bhai Dooj → the Diwali five-day arc, no chooser ──
-- tapOn: "Back"
-- waitForAnimationToEnd
-- extendedWaitUntil:
-    visible: "Browse by type"
-    timeout: 15000
-- tapOn: "Search vrat, festival, upvas, katha…"
+- tapOn: "Ganesh Chat"
+- eraseText: 20
 - inputText: "Bhai"
 - hideKeyboard
 - extendedWaitUntil:
@@ -135,8 +131,6 @@ appId: com.prashantsharma.vedansh
     visible: "Ask about Dhanteras"
     timeout: 15000
 - assertVisible: "Festival arc Deepavali"
-- tapOn: "Back"
-- waitForAnimationToEnd
 - tapOn: "Back"
 - waitForAnimationToEnd
 - tapOn: "Back"

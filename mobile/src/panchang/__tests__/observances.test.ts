@@ -46,9 +46,24 @@ test('monthly shukla Chaturthi is labelled distinctly from the Ganesh Chaturthi 
   assert.equal(shuklaChaturthi.nameHi, 'शुक्ल चतुर्थी व्रत');
 });
 
+// RULEBOOK §11.1's authoritative-source set, narrowed to the hosts observance rules
+// actually cite. Drik indexes the pan-Hindu calendar but carries no page for a folk
+// deity's mela day (Gogaji, Tejaji, Ramdevji, Sama Chakeva, Madhushravani), so those
+// rules cite a state tourism/culture portal instead. Every rule carries a SECOND,
+// independent published source in the comment above it — this field holds one URL,
+// §11.1 wants two readings. Keep this list closed: a new host is a review decision.
+const ALLOWED_SOURCE_HOSTS = [
+  'https://www.drikpanchang.com/',
+  'https://www.tourism.rajasthan.gov.in/',
+  'https://www.bihartourism.gov.in/',
+];
+
 test('all surfaced observance rules have source metadata and stable rule types', () => {
   for (const rule of OBSERVANCE_RULES) {
-    assert.ok(rule.sourceUrl?.startsWith('https://www.drikpanchang.com/'), `${rule.id} missing sourceUrl`);
+    assert.ok(
+      ALLOWED_SOURCE_HOSTS.some((host) => rule.sourceUrl?.startsWith(host)),
+      `${rule.id} sourceUrl is missing or off the §11.1 allowlist: ${rule.sourceUrl}`
+    );
     assert.ok(rule.ruleType, `${rule.id} missing ruleType`);
     assert.ok(['festival', 'vrat', 'upavas', 'katha', 'regional'].includes(rule.category), `${rule.id} category`);
     assert.ok(['default', 'advanced', 'regional'].includes(rule.visibility), `${rule.id} visibility`);

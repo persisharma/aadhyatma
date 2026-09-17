@@ -42,7 +42,7 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Shani Ashtakam.*"
     timeout: 15000
-- takeScreenshot: /tmp/vedansh-bg-art-shani
+- takeScreenshot: e2e-shots/vedansh-bg-art-shani
 - tapOn: "Back"
 - waitForAnimationToEnd
 
@@ -58,7 +58,7 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Kalika Ashtakam.*"
     timeout: 15000
-- takeScreenshot: /tmp/vedansh-bg-art-kali
+- takeScreenshot: e2e-shots/vedansh-bg-art-kali
 - tapOn: "Back"
 - waitForAnimationToEnd
 - tapOn: "Back"
@@ -76,7 +76,7 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Rama Raksha Stotra.*Tap to open\\."
     timeout: 15000
-- takeScreenshot: /tmp/vedansh-bg-art-kavacham
+- takeScreenshot: e2e-shots/vedansh-bg-art-kavacham
 
 - stopApp:
     appId: com.prashantsharma.vedansh
