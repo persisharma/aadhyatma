@@ -100,9 +100,9 @@ export function pendingFeatures(
   limit = 3,
 ): FeatureFeedEntry[] {
   return feed
-    .filter((f) => semverCompare(f.version, appVersion) <= 0)  // never advertise unshipped work
+    .filter((f) => compareSemver(f.version, appVersion) <= 0)  // never advertise unshipped work
     .filter((f) => seen[f.id] === undefined)
-    .sort((a, b) => semverCompare(b.version, a.version) || feed.indexOf(a) - feed.indexOf(b))
+    .sort((a, b) => compareSemver(b.version, a.version) || feed.indexOf(a) - feed.indexOf(b))
     .slice(0, limit);
 }
 ```
@@ -113,7 +113,7 @@ Rules that make it behave:
 2. **Opening clears it.** The card's `onPress` writes `seen[id] = appVersion` **before** the awaited AsyncStorage write, the same optimistic order `NotificationPreferences.persistMeta` and `TourContext` already use, so the card cannot bounce back on the next render.
 3. **Skipped versions still cap at three.** A user on 1.4.6 opening 1.5.0 has every intervening feature pending; newest-version-first ordering plus the cap keeps Home stable.
 4. **A removed feature must be removed from the feed.** Ids are never reused. A stale id left in a user's seen map is inert and harmless.
-5. `semverCompare` already exists (`utils/semverCompare.ts`, unit-tested for the OTA prompt). Reuse it.
+5. `compareSemver(a, b)` already exists in `utils/semverCompare.ts`, unit-tested for the OTA update prompt. Reuse it; note the function name is not the file name.
 
 **Why not a fourth registry.** `whatsNew` already curates "what shipped in version X" in the user's two languages, and is already required to be updated on every release that bumps `APP_TOUR_VERSION`. `featureFeed.ts` carries only what the What's-New sheet cannot: a stable id, an icon, and a route target. A test pins that every feed entry's `version` exists as a key in `whatsNew`, so the two cannot drift.
 
