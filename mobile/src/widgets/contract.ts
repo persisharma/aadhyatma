@@ -19,10 +19,41 @@ export type VerseWidgetDay = {
   deepLink: string;
 };
 
+/**
+ * One link of the day's tithi chain (`panchang/prevailingTithi.ts`), in order,
+ * link 0 always the sunrise (udaya-vyapini) tithi that `tithi` above names.
+ *
+ * A tithi runs ~20–27 h, so it almost always hands over MID-DAY, not at
+ * midnight. Without this chain a widget could only draw the sunrise tithi for
+ * the whole civil day, which is why the placed Panchang widget still read
+ * षष्ठी while the app's own glance had moved to सप्तमी (Sept 2026). Native
+ * readers pick the link running at draw time and schedule their next refresh
+ * ON `endsAt`, so the widget turns over at the handover the app turns over at.
+ */
+export type PanchangWidgetTithi = {
+  /** Bare tithi name — no paksha prefix, matching the Home glance kicker. */
+  name: WidgetLocalizedText;
+  /**
+   * The instant this link stops running. Omitted on the LAST link only, and
+   * only when this day's solve does not know its end (the successor's end
+   * belongs to tomorrow's solve — never a guess, exactly as `prevailingTithi`
+   * returns a null `endTime` there).
+   */
+  endsAt?: string;
+  /** Rendered "तक 3:24 PM" / "till 3:24 PM" line. Present exactly when `endsAt` is. */
+  till?: WidgetLocalizedText;
+};
+
 export type PanchangWidgetDay = {
   dateKey: string;
   representedDate: WidgetLocalizedText;
   tithi: WidgetLocalizedText;
+  /**
+   * Optional for OTA safety: a JS build that writes it stays readable by a
+   * store binary that predates it (native readers fall back to `tithi`), and a
+   * newer native reader still decodes a payload written before it existed.
+   */
+  tithiSegments?: PanchangWidgetTithi[];
   vrat?: WidgetLocalizedText;
   sunrise: WidgetLocalizedText;
   rahuKaal: WidgetLocalizedText;
@@ -121,9 +152,35 @@ function isVerseDay(value: unknown): value is VerseWidgetDay {
     exactWidgetLink(value.deepLink, '/verse', expectedQuery);
 }
 
+/**
+ * Ordered, single-ended, and anchored to the day's sunrise tithi — the three
+ * properties a native reader relies on to answer "which link is running now?"
+ * by a single forward scan. An unterminated MIDDLE link would make that scan
+ * stop early on every later instant, so it fails the whole payload closed.
+ */
+function isTithiSegments(value: unknown, sunriseTithi: WidgetLocalizedText): value is PanchangWidgetTithi[] {
+  if (!Array.isArray(value) || value.length === 0) return false;
+  let previous = Number.NEGATIVE_INFINITY;
+  for (let index = 0; index < value.length; index += 1) {
+    const segment: unknown = value[index];
+    if (!isRecord(segment) || !isLocalized(segment.name)) return false;
+    if (segment.endsAt === undefined) {
+      if (index !== value.length - 1 || segment.till !== undefined) return false;
+      continue;
+    }
+    if (!isIso(segment.endsAt) || !isLocalized(segment.till)) return false;
+    const ends = Date.parse(segment.endsAt);
+    if (!(ends > previous)) return false;
+    previous = ends;
+  }
+  const first = value[0] as PanchangWidgetTithi;
+  return LANGS.every((lang) => first.name[lang] === sunriseTithi[lang]);
+}
+
 function isPanchangDay(value: unknown): value is PanchangWidgetDay {
   return isRecord(value) && isDateKey(value.dateKey) && isLocalized(value.representedDate) &&
     isLocalized(value.tithi) && (value.vrat === undefined || isLocalized(value.vrat)) &&
+    (value.tithiSegments === undefined || isTithiSegments(value.tithiSegments, value.tithi)) &&
     isLocalized(value.sunrise) && isLocalized(value.rahuKaal) &&
     (value.abhijit === undefined || isLocalized(value.abhijit)) && typeof value.deepLink === 'string' &&
     value.deepLink === `vedansh://widget/panchang?date=${value.dateKey}`;

@@ -61,6 +61,14 @@ struct VedanshProvider: TimelineProvider {
     var dates = Set<Date>(); dates.insert(now)
     for day in payload.panchang.days {
       if let date = widgetDayFormatter(widgetIstTimeZone).date(from: day.dateKey)?.addingTimeInterval(60), date > now { dates.insert(date) }
+      // A tithi hands over MID-DAY, not at midnight, so a timeline built only
+      // from civil-day boundaries pinned the headline to the sunrise tithi for
+      // a further fifteen hours while the app's own glance had already moved on
+      // (Sept 2026). One entry ON each solved handover is what makes the widget
+      // turn over when the Panchang does (design.md §59).
+      for segment in day.tithiSegments ?? [] {
+        if let raw = segment.endsAt, let ends = widgetInstant(raw)?.addingTimeInterval(1), ends > now { dates.insert(ends) }
+      }
     }
     for day in payload.verses.days {
       if let date = widgetDayFormatter(payload.verses.timeZone).date(from: day.dateKey)?.addingTimeInterval(60), date > now { dates.insert(date) }
@@ -152,23 +160,36 @@ struct VedanshWidgetView: View {
     let key = widgetDateKey(entry.date, timeZone: widgetIstTimeZone)
     let lang = payload.locale
     if let p = payload.panchang.days.first(where: { $0.dateKey == key }) {
+      // The headline is the tithi running AT THIS ENTRY's instant, not the
+      // day's sunrise tithi — `getTimeline` above puts an entry on every solved
+      // handover so this resolves forward through the day exactly as the app's
+      // `prevailingTithi` does.
+      let running = runningTithi(p, at: entry.date)
       if family == .accessoryInline {
         // The Lock Screen line needs its own `.widgetURL`: the modifier below
         // belongs to the else-branch's VStack, and an accessory widget with no
         // URL is INERT — tapping it does nothing at all, forever, which is how
         // the placed Lock Screen Panchang widget read as "the tap goes nowhere"
         // (Sept 2026). Same shape as japam's `.accessoryCircular` branch.
-        Text(p.vrat?.value(lang) ?? p.tithi.value(lang))
+        Text(p.vrat?.value(lang) ?? running.name.value(lang))
           .widgetURL(URL(string: p.deepLink))
-          .accessibilityLabel("\(p.representedDate.value(lang)), \(p.tithi.value(lang))")
+          .accessibilityLabel("\(p.representedDate.value(lang)), \(running.name.value(lang))")
       } else {
         VStack(alignment: .leading, spacing: family == .systemLarge ? 7 : 5) {
           Text("\(p.representedDate.value(lang)) · \(payload.panchang.cityLabel.value(lang))")
             .font(.custom(fontName(lang, bold: true), size: 10)).foregroundStyle(WidgetTheme.saffronDeep)
             .lineLimit(family == .systemSmall ? 2 : 1).minimumScaleFactor(0.85)
-          Text(p.tithi.value(lang))
+          Text(running.name.value(lang))
             .font(.custom(fontName(lang, bold: true), size: family == .systemLarge ? 32 : family == .systemSmall ? 20 : 21))
             .foregroundStyle(WidgetTheme.ink).lineLimit(family == .systemSmall ? 2 : 1).minimumScaleFactor(0.75)
+          // "तक 10:48 AM" — when the headline stops being true, the one fact a
+          // dated tithi glance is useless without. Absent only when this day's
+          // solve does not know the end (the successor's end belongs to
+          // tomorrow's solve), matching the Home glance's own omission.
+          if let till = running.till {
+            Text(till.value(lang)).font(.system(size: family == .systemLarge ? 13 : 10, weight: .semibold))
+              .foregroundStyle(WidgetTheme.inkMuted).lineLimit(1).minimumScaleFactor(0.8)
+          }
           if let vrat = p.vrat {
             Text(vrat.value(lang)).font(.custom(fontName(lang, bold: false), size: 12)).foregroundStyle(WidgetTheme.inkMuted)
               .lineLimit(family == .systemSmall ? 2 : 1).minimumScaleFactor(0.85)

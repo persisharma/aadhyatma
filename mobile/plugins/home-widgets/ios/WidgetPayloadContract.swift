@@ -14,7 +14,11 @@ struct LocalizedLines: Codable {
 }
 struct VerseDay: Codable { let dateKey, sourceId: String; let chapter: Int?; let verseIndex: Int; let lines: LocalizedLines; let excerpt, source, accessibilityLabel: LocalizedText; let deepLink: String }
 struct VerseSlice: Codable { let timeZone, validThrough: String; let days: [VerseDay] }
-struct PanchangDay: Codable { let dateKey: String; let representedDate, tithi: LocalizedText; let vrat: LocalizedText?; let sunrise, rahuKaal: LocalizedText; let abhijit: LocalizedText?; let deepLink: String }
+/// One link of the day's tithi chain (contract.ts `PanchangWidgetTithi`), in
+/// order, link 0 always the sunrise tithi `PanchangDay.tithi` names. Optional
+/// end: the last link's end belongs to tomorrow's solve, never a guess.
+struct PanchangTithi: Codable { let name: LocalizedText; let endsAt: String?; let till: LocalizedText? }
+struct PanchangDay: Codable { let dateKey: String; let representedDate, tithi: LocalizedText; let tithiSegments: [PanchangTithi]?; let vrat: LocalizedText?; let sunrise, rahuKaal: LocalizedText; let abhijit: LocalizedText?; let deepLink: String }
 struct PanchangSlice: Codable { let timeZone, cityId: String; let cityLabel: LocalizedText; let calendarSystem, validThrough: String; let days: [PanchangDay] }
 struct JapamSlice: Codable { let dateKey, timeZone: String; let totalBeads, totalRounds, japaStreak: Int; let lastUsedMantraId: String?; let deepLink: String }
 struct WidgetPayload: Codable { let schemaVersion: Int; let generatedAt, writerAppVersion, locale: String; let panchang: PanchangSlice; let verses: VerseSlice; let japam: JapamSlice }
@@ -31,6 +35,24 @@ func widgetDayFormatter(_ timeZone: String) -> DateFormatter {
 }
 
 func widgetDateKey(_ date: Date, timeZone: String) -> String { widgetDayFormatter(timeZone).string(from: date) }
+
+/// Payload instants are ISO-8601 with fractional seconds, the one format the
+/// TypeScript writer emits and all three decoders agree on.
+func widgetInstant(_ raw: String) -> Date? { widgetIso.date(from: raw) }
+
+/// The tithi running at `at`, and its "तक …" line when this day's solve knows
+/// the end — the same forward scan `runningTithi` performs in planner.ts and
+/// `WidgetPayloadContract.runningTithi` performs in Kotlin. A payload written
+/// before `tithiSegments` existed falls back to the day's sunrise tithi, so an
+/// OTA'd JS writer and this binary never disagree about what is drawable.
+func runningTithi(_ day: PanchangDay, at: Date) -> (name: LocalizedText, till: LocalizedText?) {
+  guard let segments = day.tithiSegments, let last = segments.last else { return (day.tithi, nil) }
+  let running = segments.first { segment in
+    guard let raw = segment.endsAt, let ends = widgetInstant(raw) else { return true }
+    return at <= ends
+  } ?? last
+  return (running.name, running.till)
+}
 
 private func validDateKey(_ key: String) -> Bool {
   guard key.range(of: #"^\d{4}-\d{2}-\d{2}$"#, options: .regularExpression) != nil,
@@ -49,6 +71,24 @@ private func exactLink(_ raw: String, path: String, query: [String: String]) -> 
   return items.allSatisfy { item in item.value != nil && query[item.name] == item.value! }
 }
 
+/// Ordered, single-ended, anchored to the sunrise tithi — what `runningTithi`'s
+/// single forward scan relies on. An unterminated MIDDLE link would stop that
+/// scan early for every later instant, so it fails the payload closed.
+private func validTithiSegments(_ segments: [PanchangTithi]?, sunriseTithi: LocalizedText) -> Bool {
+  guard let segments = segments else { return true }
+  guard let first = segments.first else { return false }
+  var previous = Date.distantPast
+  for (index, segment) in segments.enumerated() {
+    guard let raw = segment.endsAt else {
+      guard index == segments.count - 1, segment.till == nil else { return false }
+      continue
+    }
+    guard let ends = widgetIso.date(from: raw), segment.till != nil, ends > previous else { return false }
+    previous = ends
+  }
+  return widgetLanguages.allSatisfy { first.name.value($0) == sunriseTithi.value($0) }
+}
+
 private func validate(_ value: WidgetPayload) -> Bool {
   guard value.schemaVersion == widgetSupportedSchema, widgetIso.date(from: value.generatedAt) != nil,
         !value.writerAppVersion.isEmpty, widgetLanguages.contains(value.locale), value.panchang.timeZone == widgetIstTimeZone,
@@ -62,7 +102,8 @@ private func validate(_ value: WidgetPayload) -> Bool {
         (value.japam.lastUsedMantraId == nil || !value.japam.lastUsedMantraId!.isEmpty),
         exactLink(value.japam.deepLink, path: "/japam", query: value.japam.lastUsedMantraId.map { ["mantraId": $0] } ?? [:]) else { return false }
   for day in value.panchang.days {
-    guard validDateKey(day.dateKey), day.deepLink == "vedansh://widget/panchang?date=\(day.dateKey)" else { return false }
+    guard validDateKey(day.dateKey), day.deepLink == "vedansh://widget/panchang?date=\(day.dateKey)",
+          validTithiSegments(day.tithiSegments, sunriseTithi: day.tithi) else { return false }
   }
   for day in value.verses.days {
     guard validDateKey(day.dateKey), !day.sourceId.isEmpty, day.verseIndex >= 0, (day.chapter == nil || day.chapter! >= 1),
