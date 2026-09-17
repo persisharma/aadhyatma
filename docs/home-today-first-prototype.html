@@ -105,31 +105,11 @@
   .tap{cursor:pointer}
   .tap:focus-visible{outline:2px solid var(--saffron);outline-offset:2px}
 
-  /* HERO — the merged Today strip + आज का विधान (proposed) */
-  .hero .top{display:flex;justify-content:space-between;align-items:baseline}
-  .hero .head{font-family:var(--deva);font-weight:700;font-size:19px;color:var(--ink);line-height:1.3;margin-top:3px}
-  .hero .subl{font-family:var(--deva);font-size:11px;color:var(--ink-muted);margin-top:1px}
-  .hero .now{display:flex;align-items:center;gap:8px;margin-top:10px}
-  .hero .dot{width:9px;height:9px;border-radius:50%;background:var(--avoid);box-shadow:0 0 0 3px var(--avoid-chip);flex:none}
-  .hero .dot.ok{background:var(--gold);box-shadow:0 0 0 3px var(--gold-chip)}
-  .hero .now .t{font-family:var(--deva);font-size:13.5px;color:var(--ink);flex:1}
-  .hero .now .t b{font-weight:700}
-  .hero .tag{font-family:var(--deva);font-size:10px;padding:2px 7px;border-radius:8px;background:var(--avoid-chip);color:var(--avoid-deep)}
-  .hero .prog{height:3px;border-radius:2px;background:var(--divider);margin:6px 0 0 17px;overflow:hidden}
-  .hero .prog i{display:block;height:100%;width:8%;background:var(--saffron)}
-  .hero .next{font-family:var(--deva);font-size:11.5px;color:var(--ink-soft);margin:6px 0 0 17px}
-  .hero .next b{color:var(--saffron-deep);font-family:var(--serif);font-weight:600;font-size:12px}
+  /* chip row on the Today strip (§48: अभिजीत/राहु काल pills) */
   .chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:10px -14px 0;padding:0 14px}
   .chips::-webkit-scrollbar{height:0}
-  .kv{display:flex;align-items:flex-start;gap:8px;padding-top:9px;margin-top:9px;border-top:1px solid var(--divider)}
-  .kv .k{width:52px;flex:none;font-family:var(--deva);font-size:10.5px;color:var(--ink-muted);padding-top:2px}
-  .kv .v{flex:1;font-family:var(--deva);font-size:12.5px;line-height:1.45;color:var(--ink)}
-  .kv .v small{display:block;font-size:11px;color:var(--ink-soft)}
-  .askfield{display:flex;align-items:center;gap:8px;height:38px;margin-top:12px;padding:0 12px;border-radius:12px;background:var(--parchment-soft);border:1px solid var(--card-border);box-shadow:var(--shadow-subtle)}
-  .askfield .mag{color:var(--saffron);font-size:15px}
-  .askfield .ph{font-family:var(--deva);font-size:12.5px;color:var(--ink-muted);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-  /* verse card (absorbs the Bhakti tab) */
+  /* verse card — Daily Bhakti tab only; not shown on Home in this revision */
   .verse{position:relative;overflow:hidden}
   .verse .plate{position:absolute;right:-18px;top:-10px;font-family:var(--deva);font-size:120px;color:var(--saffron);opacity:.06;line-height:1;pointer-events:none}
   .verse .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
@@ -315,13 +295,14 @@
 </head>
 <body>
 
-<h1>वेदांश़ <span class="lat">Today-First Home</span></h1>
-<div class="sub">The proposed होम, पाठ, पंचांग and अन्य surfaces rebuilt in the app's parchment system, token-exact from <code>colors.ts</code>, on Saturday 5 September 2026 in Ujjain, the day and city of the reference screenshots.</div>
-<div class="legend"><b>What the prototype claims:</b> Home answers "what does today ask of me" first, then "what do I do daily", then "what do I want to do", and the text library moves one level down into its own tab. Every engine and component shown already ships: the Today strip, the आज का विधान briefing, the Muhurat glance card's live kicker, the per-date verse selector the widget uses, the routine and sankalp trackers, the observance catalog.</div>
-<div class="legend"><b>Real vs illustrative:</b> the panchang headline, राहु काल and अभिजीत windows, the running उद्वेग chaughadiya, Gita 2.47 and its meaning, Ganesh Chaturthi on Mon 14 Sep, and every category count come from the shipped data. Tithi end times, the nakshatra, the rashifal line, streak and follow counts, and the "जारी रखें" position are <b>illustrative placeholders</b>.</div>
+<h1>वेदांश़ <span class="lat">Today-First Home</span> <span class="lat" style="font-size:17px;color:var(--gold-soft)">· rev 2</span></h1>
+<div class="sub">The proposed होम and पाठ surfaces rebuilt in the app's parchment system, token-exact from <code>colors.ts</code>, on Saturday 5 September 2026 in Ujjain, the day and city of the reference screenshots.</div>
+<div class="legend"><b>Two changes from the first pass:</b> the आज का पंचांग strip is <b>kept exactly as shipped</b> — it is not merged into a larger card, and it still opens the Panchang tab, nothing else. The <b>दैनिक श्लोक card is removed from Home</b> entirely; the daily verse stays exactly where it already lives, on the भक्ति tab, untouched. With nothing on Home embedding Ask any more, the floating search button is back too.</div>
+<div class="legend"><b>What the prototype still claims:</b> below the untouched strip and FOR TODAY row, one साधना row replaces three separate doors to the same routine/sankalp/japam state, a fixed उपकरण row replaces tools scattered across tiles and Discover cards, and नया replaces the shuffled carousel with only what this user has not opened yet. The text library moves one level down, reached from a single पाठ row rather than ten grid tiles.</div>
+<div class="legend"><b>Real vs illustrative:</b> the panchang headline and the अभिजीत/राहु काल windows, Ganesh Chaturthi on Mon 14 Sep, and every category count come from the shipped data. Streak, follow counts, and the "जारी रखें" position are <b>illustrative placeholders</b>.</div>
 
 <h2>Row 1 · अभी vs प्रस्तावित</h2>
-<div class="rowlede">Left: Home as shipped in 1.4.8 (icons approximated with letter thumbs). Right: the proposed Home, interactive. Tap the आज card to open the briefing, scroll the page, and use the tab bar. The toggle above it switches between Phase 1 (tab bar untouched, library pushed from Home) and Phase 2 (भक्ति becomes पाठ).</div>
+<div class="rowlede">Left: Home as shipped in 1.4.8 (icons approximated with letter thumbs). Right: the proposed Home, interactive — tap the आज का पंचांग strip (still opens Panchang), the पाठ row (pushes the library), a नया card, and use the tab bar; भक्ति is untouched.</div>
 
 <div class="wrap">
 
@@ -383,66 +364,64 @@
         <div class="footer">॥ श्रीरामचन्द्र चरणौ शरणं प्रपद्ये ॥</div>
       </div></div>
       <div class="fab">⌕</div>
-      <nav class="tabbar" data-active="home" data-phase="1" aria-label="tab bar, current"></nav>
+      <nav class="tabbar" data-active="home" aria-label="tab bar, current"></nav>
     </div>
     <div class="cap"><b>As shipped.</b> Two thin strips and a banner, then 16 launcher tiles, then a carousel that reshuffles every open. Eight tiles wear NEW, two of them permanently. The same feature has three doors (नित्य साधना), and the daily verse owns a whole tab.</div>
   </div>
 
   <!-- ================= PROPOSED (interactive) ================= -->
   <div class="col">
-    <div class="phaseseg" role="tablist" aria-label="Phase">
-      <button id="ph1" role="tab">चरण 1 · tab bar unchanged</button>
-      <button id="ph2" role="tab" class="on">चरण 2 · पाठ tab</button>
-    </div>
-    <div class="hint">Interactive: tap the आज card, the tabs, the पाठ row.</div>
+    <div class="phaseseg" aria-hidden="true"><button class="on" tabindex="-1">प्रस्तावित · rev 2</button></div>
+    <div class="hint">Interactive: tap the strip, the पाठ row, a नया card, and the tab bar.</div>
     <div class="phone" id="proto">
       <div class="statusbar"><span>10:52</span><span class="sig">▪▪▪ ⌒ 12</span></div>
       <div class="screen"></div>
+      <div class="fab" id="protoFab">⌕</div>
       <nav class="tabbar" aria-label="tab bar, proposed"></nav>
     </div>
-    <div class="cap"><b>Proposed Home.</b> Above the fold: the आज card (Today strip + briefing, live "now" line, the day's one action, rashifal when a chart is saved, the Ask box), the per-date श्लोक, and one साधना row. Below: आज के लिए, a fixed उपकरण grid, the library door, and नया, which only shows features the user has not opened yet. No search FAB: the Ask box is the search.</div>
+    <div class="cap"><b>Proposed Home.</b> The आज का पंचांग strip is untouched, and there is no verse card. Below it: आज के लिए (unchanged), one साधना row (routine + sankalp + japam), a fixed उपकरण row, the पाठ door, and नया — features this user has not opened yet. The search FAB is back, since nothing on Home embeds Ask any more.</div>
   </div>
 
 </div>
 
 <h2>Row 2 · the other surfaces</h2>
-<div class="rowlede">Static frames of what each tab becomes. पाठ is the new second tab. पंचांग keeps its three segments and gains a परिवार block. अन्य becomes settings only. भजन is unchanged.</div>
+<div class="rowlede">Static frames. पाठ is a screen pushed from Home's new row, not a tab — भक्ति keeps the daily verse exactly as shipped. पंचांग and अन्य show a separate, later idea (a परिवार block, a settings-only अन्य) that today's feedback didn't touch either way.</div>
 
 <div class="wrap">
   <div class="col">
     <div class="phone">
       <div class="statusbar"><span>10:52</span><span class="sig">▪▪▪ ⌒ 12</span></div>
       <div class="screen" data-static="library"></div>
-      <nav class="tabbar" data-active="second" data-phase="2"></nav>
+      <nav class="tabbar" data-active="home"></nav>
     </div>
-    <div class="cap"><b>पाठ · the library tab</b> (replaces भक्ति). Search on top, जारी रखें where reading resumes, then the two axes a devotee actually thinks in, देवता and उद्देश्य, and only then the ten text forms with their real counts. संग्रह and भजन join the grid so everything readable or listenable has one index.</div>
+    <div class="cap"><b>पाठ</b> — pushed from Home's पाठ row, back returns to Home, भक्ति stays exactly where it is. Search on top, जारी रखें where reading resumes, then the two axes a devotee actually thinks in, देवता and उद्देश्य, and only then the ten text forms with their real counts. संग्रह and भजन join the grid so everything readable or listenable has one index.</div>
   </div>
 
   <div class="col">
     <div class="phone">
       <div class="statusbar"><span>10:52</span><span class="sig">▪▪▪ ⌒ 12</span></div>
       <div class="screen" data-static="vidhan"></div>
-      <nav class="tabbar" data-active="home" data-phase="2"></nav>
+      <nav class="tabbar" data-active="home"></nav>
     </div>
-    <div class="cap"><b>आज का विधान</b>, reached by tapping the आज card. This is the shipped PRD-41 briefing, unchanged: standing questions answered through the same resolver, each with its working and an action. It moves from a shuffled Discover card to being the hero's detail view, which is where PRD-41 §6 originally placed it.</div>
+    <div class="cap"><b>आज का विधान</b> — unchanged from shipped. It's the PRD-41 briefing, reached the same way it is today, a नया/Discover card, not by tapping the Today strip: standing questions answered through the same resolver, each with its working and an action.</div>
   </div>
 
   <div class="col">
     <div class="phone">
       <div class="statusbar"><span>10:52</span><span class="sig">▪▪▪ ⌒ 12</span></div>
       <div class="screen" data-static="panchang"></div>
-      <nav class="tabbar" data-active="panchang" data-phase="2"></nav>
+      <nav class="tabbar" data-active="panchang"></nav>
     </div>
-    <div class="cap"><b>पंचांग › व्रत-पर्व</b> with the new <span class="mv">परिवार</span> block: पितृ स्मरण already lived here; जन्म तिथि and कुल परम्परा join it from the More hub. Segments, header, मेरा व्रत, आगामी and the browse tiles are as shipped. Phase 3.</div>
+    <div class="cap"><b>पंचांग › व्रत-पर्व</b> with a <span class="mv">परिवार</span> block: पितृ स्मरण already lives here; जन्म तिथि and कुल परम्परा would join it from the More hub. Segments, header, मेरा व्रत, आगामी and the browse tiles are as shipped. A separate idea — not part of today's Home change.</div>
   </div>
 
   <div class="col">
     <div class="phone">
       <div class="statusbar"><span>10:52</span><span class="sig">▪▪▪ ⌒ 12</span></div>
       <div class="screen" data-static="more"></div>
-      <nav class="tabbar" data-active="more" data-phase="2"></nav>
+      <nav class="tabbar" data-active="more"></nav>
     </div>
-    <div class="cap"><b>अन्य · settings only.</b> Profile, reminders and japam alarms stay. The household records go to पंचांग › परिवार, वास्तु to the Home उपकरण grid, संग्रह to पाठ. A one-release note tells returning users where each row went.</div>
+    <div class="cap"><b>अन्य · settings only</b> — the same separate idea: household records move to पंचांग › परिवार, वास्तु to Home's उपकरण row, संग्रह to पाठ. Not part of today's Home change.</div>
   </div>
 </div>
 
@@ -451,33 +430,30 @@
 <table>
   <thead><tr><th>Surface</th><th>Now (1.4.8)</th><th>Proposed</th></tr></thead>
   <tbody>
-    <tr><td>Today's panchang and muhurat</td><td class="now">Today strip with two chips; detail on the Panchang tab</td><td>आज card with the live "now" chaughadiya line; tap opens आज का विधान</td></tr>
-    <tr><td>Daily verse</td><td class="now">भक्ति tab, a random verse on every open</td><td>Home card, per-date verse, the same selector the widget and the notification use</td></tr>
+    <tr><td>Today's panchang and muhurat</td><td class="now">Today strip with two chips; detail on the Panchang tab</td><td>Unchanged — same strip, same tap-through to Panchang</td></tr>
+    <tr><td>Daily verse</td><td class="now">भक्ति tab, a random verse on every open</td><td>Unchanged — stays on भक्ति; not shown on Home</td></tr>
     <tr><td>Nitya sadhana, sankalp, japam streak</td><td class="now">Inline banner, full-width closing tile, two Discover cards</td><td>One साधना row</td></tr>
-    <tr><td>Today's vrat or parv, and the next one</td><td class="now">A chip on the Today strip; Panchang › व्रत-पर्व</td><td>One row in the आज card with the day's action: विधि, कथा or भोग</td></tr>
-    <tr><td>Rashifal</td><td class="now">Panchang › ज्योतिष segment</td><td>One row in the आज card when a chart is saved; ज्योतिष segment unchanged</td></tr>
-    <tr><td>जिज्ञासा · Ask</td><td class="now">Search FAB plus a shuffled Discover card</td><td>The Ask box inside the आज card, rotating through real answerable questions</td></tr>
-    <tr><td>Text library, 10 forms</td><td class="now">10 of the 16 Home tiles</td><td>पाठ tab (Phase 2); a Library screen pushed from Home's पाठ row (Phase 1)</td></tr>
-    <tr><td>Browse by deity, by purpose</td><td class="now">2 of the 16 Home tiles</td><td>The top of the पाठ tab</td></tr>
-    <tr><td>Continue reading</td><td class="now">ResumeReadingSheet behind each category list only</td><td>जारी रखें card on पाठ; Home stays free of it (§49 decision respected)</td></tr>
-    <tr><td>Saved verses · संग्रह</td><td class="now">अन्य</td><td>पाठ grid</td></tr>
-    <tr><td>Tools: पंचांग, व्रत-पर्व, मुहूर्त, कुंडली, विधि, जप, वास्तु</td><td class="now">3 Home tiles, Discover cards, doors inside Panchang segments, an अन्य row</td><td>Fixed उपकरण grid on Home, same place every visit</td></tr>
-    <tr><td>कुल परम्परा, पितृ स्मरण, जन्म तिथि</td><td class="now">अन्य › साधना group</td><td>पंचांग › व्रत-पर्व › परिवार (Phase 3)</td></tr>
+    <tr><td>Text library, 10 forms</td><td class="now">10 of the 16 Home tiles</td><td>One पाठ row on Home, pushes a Library screen</td></tr>
+    <tr><td>Browse by deity, by purpose</td><td class="now">2 of the 16 Home tiles</td><td>The top of the Library screen</td></tr>
+    <tr><td>Continue reading</td><td class="now">ResumeReadingSheet behind each category list only</td><td>जारी रखें card on the Library screen; Home stays free of it (§49 decision respected)</td></tr>
+    <tr><td>Saved verses · संग्रह</td><td class="now">अन्य</td><td>Library screen grid</td></tr>
+    <tr><td>Tools: व्रत-पर्व, मुहूर्त, कुंडली, विधि, जप, वास्तु</td><td class="now">3 Home tiles, Discover cards, doors inside Panchang segments, an अन्य row</td><td>Fixed उपकरण row on Home, same place every visit</td></tr>
+    <tr><td>जिज्ञासा · Ask</td><td class="now">Search FAB plus a shuffled Discover card</td><td>Unchanged — a नया/Discover card; the strip does not open it</td></tr>
     <tr><td>Discover carousel</td><td class="now">8 cards, reshuffled per open, 4 with a permanent NEW</td><td>नया: only features added since the user's last version and not yet opened, at most 3, cleared on open</td></tr>
-    <tr><td>NEW badges on tiles</td><td class="now">8 of 16, two hardcoded and never clearing</td><td>Lifecycle-driven only; none on the उपकरण grid unless a tool is genuinely new to this user</td></tr>
-    <tr><td>भजन</td><td class="now">Tab, 10 tracks</td><td>Unchanged; fold into पाठ later if the catalog stays small</td></tr>
-    <tr><td>Search FAB</td><td class="now">Home, bottom right</td><td>Removed; Ask box in the आज card, search field on पाठ</td></tr>
+    <tr><td>NEW badges on tiles</td><td class="now">8 of 16, two hardcoded and never clearing</td><td>Lifecycle-driven only; none on the उपकरण row unless a tool is genuinely new to this user</td></tr>
+    <tr><td>भजन</td><td class="now">Tab, 10 tracks</td><td>Unchanged</td></tr>
+    <tr><td>Search FAB</td><td class="now">Home, bottom right</td><td>Unchanged — kept on Home</td></tr>
+    <tr><td>कुल परम्परा, पितृ स्मरण, जन्म तिथि</td><td class="now">अन्य › साधना group</td><td>Untouched by this change; पंचांग › परिवार (Row 2) is a separate, later idea</td></tr>
   </tbody>
 </table>
 </div>
 
 <h2>Constraints the prototype honours</h2>
 <ul class="notes">
-  <li><b>First frame is the final frame (§64).</b> The आज card reserves its full height before the panchang solve lands; the headline paints from the cached day store exactly as the Today strip does now. Nothing above the उपकरण grid may grow after the splash lifts.</li>
-  <li><b>The Ask engine stays off the launch graph.</b> The briefing rows inside the आज card load behind the same dynamic import आज का विधान uses; the panchang headline and windows do not depend on it.</li>
-  <li><b>Festival first.</b> The toran, the leading आज के लिए card and the morning notification keep naming the same festival; the आज card's व्रत-पर्व row reads the same rule.</li>
-  <li><b>One daily verse.</b> Home, the widget and the reminder all use the per-date pool index, so a reminder tap lands on the verse it promised.</li>
-  <li><b>Phase 2 touches contracts:</b> the daily-verse cold-start target, tour steps 2 and 12–13, the Maestro flows that tap <code>tab-bhakti</code>, and design.md §17, §18, §23, §32, §48, §50, §71.</li>
+  <li><b>First frame is the final frame (§64).</b> The Today strip is untouched, so this was already true; the साधना row and the उपकरण row must reserve their height the same way, so nothing shifts once their data lands.</li>
+  <li><b>Festival first.</b> The toran, the leading आज के लिए card, the strip's own chips, and the morning notification all read the same festive catalog and observance rule, so all four keep naming the same day.</li>
+  <li><b>भक्ति stays untouched.</b> The daily-verse pool selector, the widget deep link, the reminder, and design.md §23 are exactly as shipped — none of that machinery is touched by removing the Home card.</li>
+  <li><b>Row 2's पंचांग/अन्य reorg is a separate idea.</b> It carries its own contract changes (design.md §37 for अन्य, a new § for the परिवार block) whenever it's taken up — it is not part of today's Home revision.</li>
 </ul>
 
 <!-- ======================= TEMPLATES ======================= -->
@@ -487,37 +463,13 @@
   <div class="wordmark"><span class="rule"></span><span class="om">ॐ</span><span class="name">वेदांश़</span><span class="om">ॐ</span><span class="rule"></span></div>
   <div class="tagline">Sacred Texts · Daily Reading</div>
 
-  <div class="card hero tap" data-go="vidhan" role="button" tabindex="0" aria-label="आज का विधान खोलें">
-    <div class="top"><span class="eyebrow">आज · 5 सितम्बर · उज्जैन</span><span class="eyebrow">विधान <span class="chev">›</span></span></div>
+  <div class="card oldstrip tap" data-go="panchang" role="button" tabindex="0" aria-label="Today's Panchang. Saturday, Krishna Navami. Tap to open.">
+    <div class="top"><span class="eyebrow">आज का पंचांग</span><span class="chev">›</span></div>
     <div class="head">शनिवार · कृष्ण नवमी</div>
-    <div class="subl">भाद्रपद · विक्रम संवत् २०८३ · नवमी तक <span class="lat num" style="font-weight:600">4:12 PM</span>, फिर दशमी</div>
-    <div class="now"><span class="dot"></span><span class="t">अभी <b>उद्वेग</b> चौघड़िया</span><span class="tag">त्याज्य</span></div>
-    <div class="prog"><i></i></div>
-    <div class="next">अगला शुभ · चर <b class="num">12:17 PM</b> से</div>
     <div class="chips">
-      <span class="pill avoid">राहु काल <span class="tm num">9:13 – 10:45 AM</span></span>
       <span class="pill gold">अभिजीत <span class="tm num">11:53 AM – 12:42 PM</span></span>
-      <span class="pill obs">सूर्यास्त <span class="tm num">6:25 PM</span></span>
+      <span class="pill avoid">राहु काल <span class="tm num">9:13 – 10:45 AM</span></span>
     </div>
-    <div class="kv"><span class="k">व्रत-पर्व</span><span class="v">आज कोई नहीं · आगे <b>गणेश चतुर्थी</b><small>सोमवार 14 सितम्बर · 9 दिन में</small></span><span class="btn">तैयारी ›</span></div>
-    <div class="kv"><span class="k">राशिफल</span><span class="v">मेष · संयम और सेवा का दिन<small>चन्द्र राशि से · शनिवार</small></span><span class="btn">पढ़ें ›</span></div>
-    <div class="askfield"><span class="mag">⌕</span><span class="ph">पूछें… गणेश चतुर्थी का मुहूर्त क्या है?</span></div>
-  </div>
-
-  <div class="soft verse" style="margin-top:12px">
-    <div class="plate">॥</div>
-    <div class="top"><span class="eyebrow">आज का श्लोक</span><span class="src"><span class="dv">भगवद् गीता</span> · 2.47</span></div>
-    <div class="lines">कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।<br>मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि॥</div>
-    <div class="orn">॥ ॥</div>
-    <div class="mlabel">भावार्थ</div>
-    <div class="meaning">कर्तव्य-कर्म करनेमें ही तेरा अधिकार है, फलोंमें कभी नहीं। अतः तू कर्मफलका हेतु भी मत बन और तेरी अकर्मण्यतामें भी आसक्ति न हो।</div>
-    <div class="foot"><span class="from">भगवद् गीता · अध्याय 2</span><span class="acts"><span class="ic">♪</span><span class="ic">♥</span><span class="ic">↗</span><span>↻ अन्य</span></span></div>
-  </div>
-
-  <div class="soft sadhana" style="margin-top:12px">
-    <div class="cell"><div class="k">नित्य साधना</div><div class="v"><span class="lat num">0/4</span></div><div class="bar"><i style="width:0"></i></div></div>
-    <div class="cell"><div class="k">संकल्प</div><div class="v">दिन <span class="lat num">12/41</span></div><div class="s">हनुमान चालीसा</div></div>
-    <div class="cell"><div class="k">जप</div><div class="v"><span class="lat num">3</span> दिन</div><div class="s">श्रृंखला · आज बाकी</div></div>
   </div>
 
   <div class="slabel">आज के लिए</div>
@@ -526,6 +478,12 @@
     <div class="strip"><span class="thumb">सु</span><span class="nm">सुंदरकाण्ड</span><span class="chev">›</span></div>
     <div class="strip"><span class="thumb">ब</span><span class="nm">बजरंग बाण</span><span class="chev">›</span></div>
     <div class="strip"><span class="thumb">ह</span><span class="nm">हनुमान अष्टक</span><span class="chev">›</span></div>
+  </div>
+
+  <div class="soft sadhana" style="margin-top:12px">
+    <div class="cell"><div class="k">नित्य साधना</div><div class="v"><span class="lat num">0/4</span></div><div class="bar"><i style="width:0"></i></div></div>
+    <div class="cell"><div class="k">संकल्प</div><div class="v">दिन <span class="lat num">12/41</span></div><div class="s">हनुमान चालीसा</div></div>
+    <div class="cell"><div class="k">जप</div><div class="v"><span class="lat num">3</span> दिन</div><div class="s">श्रृंखला · आज बाकी</div></div>
   </div>
 
   <div class="slabel">उपकरण</div>
@@ -602,8 +560,7 @@
 
 <template id="tpl-library">
 <div class="pad">
-  <div class="rhead pushback" hidden><span class="back tap" data-go="home" role="button" tabindex="0" aria-label="वापस">‹</span><span class="rtitle">पाठ</span></div>
-  <div class="title30 tabtitle">पाठ</div>
+  <div class="rhead"><span class="back tap" data-go="home" role="button" tabindex="0" aria-label="वापस">‹</span><span class="rtitle">पाठ</span></div>
   <div class="search"><span style="color:var(--saffron)">⌕</span><span class="ph">खोजें — हनुमान, गीता 2.47, शांति…</span></div>
 
   <div class="soft resume"><span class="thumb">सु</span><div class="t"><div class="n">जारी रखें · सुंदरकाण्ड</div><div class="s">दोहा 12 / 60 · कल पढ़ा</div><div class="bar"><i></i></div></div><span class="btn fill">पढ़ें</span></div>
@@ -716,7 +673,7 @@
     <div class="meaning">कर्तव्य-कर्म करनेमें ही तेरा अधिकार है, फलोंमें कभी नहीं। अतः तू कर्मफलका हेतु भी मत बन और तेरी अकर्मण्यतामें भी आसक्ति न हो।</div>
     <div class="foot"><span class="from">भगवद् गीता</span><span class="acts"><span>↻ next</span></span></div>
   </div>
-  <div class="note">चरण 1 में यह टैब अभी भी है; श्लोक होम पर भी दिखता है। चरण 2 में यह टैब पाठ बन जाता है।</div>
+  <div class="note">यह टैब अपरिवर्तित है — दैनिक श्लोक यहीं रहता है, होमपेज पर अब नहीं दिखाया जाता।</div>
 </div>
 </template>
 
@@ -754,28 +711,26 @@
 
 <script>
 (function(){
-  // Tab-bar icons: hand-built strokes, like the app's View-drawn glyphs (§17). The
-  // Bhajan note keeps its filled head. Phase 1 keeps भक्ति in slot 2; Phase 2 swaps it for पाठ.
+  // Tab-bar icons: hand-built strokes, like the app's View-drawn glyphs (§17).
+  // The Bhajan note keeps its filled head. Five tabs, unchanged from shipped —
+  // पाठ is a screen pushed from Home, never a tab of its own in this revision.
   var S = 'fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"';
   var ICONS = {
     home:    '<svg viewBox="0 0 24 24" '+S+'><path d="M4 11 12 4l8 7"/><path d="M6 10v9h12v-9"/><path d="M10 19v-5h4v5"/></svg>',
     bhakti:  '<svg viewBox="0 0 24 24" '+S+'><path d="M12 3c2 3 3 5 3 7a3 3 0 0 1-6 0c0-2 1-4 3-7z"/><path d="M6 18c2-1.5 10-1.5 12 0"/><path d="M7 21h10"/></svg>',
-    path:    '<svg viewBox="0 0 24 24" '+S+'><path d="M12 6c-2-1.5-5-1.8-8-1v13c3-.8 6-.5 8 1 2-1.5 5-1.8 8-1V5c-3-.8-6-.5-8 1z"/><path d="M12 6v13"/></svg>',
     panchang:'<svg viewBox="0 0 24 24" '+S+'><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/><circle cx="12" cy="15" r="1.4" fill="currentColor" stroke="none"/></svg>',
     music:   '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg>',
     more:    '<svg viewBox="0 0 24 24" '+S+'><circle cx="12" cy="12" r="8.5"/><circle cx="8.3" cy="12" r=".9" fill="currentColor"/><circle cx="12" cy="12" r=".9" fill="currentColor"/><circle cx="15.7" cy="12" r=".9" fill="currentColor"/></svg>'
   };
-  function tabs(phase){
-    return [
-      {key:'home',     label:'होम',    icon:ICONS.home},
-      phase===1 ? {key:'second', label:'भक्ति', icon:ICONS.bhakti} : {key:'second', label:'पाठ', icon:ICONS.path},
-      {key:'panchang', label:'पंचांग', icon:ICONS.panchang},
-      {key:'bhajan',   label:'भजन',    icon:ICONS.music},
-      {key:'more',     label:'अन्य',   icon:ICONS.more}
-    ];
-  }
-  function buildTabbar(nav, active, phase, interactive){
-    nav.innerHTML = tabs(phase).map(function(t){
+  var TABS = [
+    {key:'home',     label:'होम',    icon:ICONS.home},
+    {key:'second',   label:'भक्ति', icon:ICONS.bhakti},
+    {key:'panchang', label:'पंचांग', icon:ICONS.panchang},
+    {key:'bhajan',   label:'भजन',    icon:ICONS.music},
+    {key:'more',     label:'अन्य',   icon:ICONS.more}
+  ];
+  function buildTabbar(nav, active, interactive){
+    nav.innerHTML = TABS.map(function(t){
       return '<button type="button" data-tab="'+t.key+'" class="'+(t.key===active?'on':'')+'"'+(interactive?'':' tabindex="-1" aria-hidden="true"')+'>'+t.icon+'<span class="lbl">'+t.label+'</span></button>';
     }).join('');
   }
@@ -783,61 +738,42 @@
 
   // Static frames
   document.querySelectorAll('.tabbar[data-active]').forEach(function(nav){
-    buildTabbar(nav, nav.dataset.active, Number(nav.dataset.phase||2), false);
+    buildTabbar(nav, nav.dataset.active, false);
   });
   document.querySelectorAll('[data-static]').forEach(function(el){
     el.appendChild(tpl(el.dataset.static));
     el.querySelectorAll('.tap').forEach(function(t){ t.classList.remove('tap'); t.removeAttribute('tabindex'); t.removeAttribute('role'); });
   });
 
-  // Interactive frame
+  // Interactive frame. पाठ has no tab of its own — it highlights Home, the
+  // same as any other screen the Home stack pushes (VidhiDetail, TodayVidhan).
   var proto = document.getElementById('proto');
   var screen = proto.querySelector('.screen');
   var nav = proto.querySelector('.tabbar');
-  var phase = 2;
-  var TAB_FOR = {home:'home', vidhan:'home', library:'second', bhakti:'second', panchang:'panchang', bhajan:'bhajan', more:'more'};
+  var fab = document.getElementById('protoFab');
+  var TAB_FOR = {home:'home', library:'home', vidhan:'home', bhakti:'second', panchang:'panchang', bhajan:'bhajan', more:'more'};
 
-  function render(name, pushed){
+  function render(name){
     screen.innerHTML = '';
     screen.appendChild(tpl(name));
-    if (name==='library'){
-      var pb = screen.querySelector('.pushback'), tt = screen.querySelector('.tabtitle');
-      if (pushed){ pb.hidden = false; tt.hidden = true; } else { pb.hidden = true; tt.hidden = false; }
-    }
-    var activeTab = (name==='library' && pushed) ? 'home' : TAB_FOR[name];
-    buildTabbar(nav, activeTab, phase, true);
+    buildTabbar(nav, TAB_FOR[name], true);
+    fab.hidden = (name !== 'home');
     screen.scrollTop = 0;
-  }
-  function go(name){
-    if (name==='library') return render('library', phase===1);
-    render(name, false);
   }
   nav.addEventListener('click', function(e){
     var b = e.target.closest('button[data-tab]'); if(!b) return;
-    var k = b.dataset.tab;
-    if (k==='second') return render(phase===1 ? 'bhakti' : 'library', false);
-    render(k, false);
+    render(b.dataset.tab === 'second' ? 'bhakti' : b.dataset.tab);
   });
   screen.addEventListener('click', function(e){
     var t = e.target.closest('[data-go]'); if(!t) return;
-    go(t.dataset.go);
+    render(t.dataset.go);
   });
   screen.addEventListener('keydown', function(e){
     if (e.key!=='Enter' && e.key!==' ') return;
     var t = e.target.closest('[data-go]'); if(!t) return;
-    e.preventDefault(); go(t.dataset.go);
+    e.preventDefault(); render(t.dataset.go);
   });
-  function setPhase(p){
-    phase = p;
-    document.getElementById('ph1').classList.toggle('on', p===1);
-    document.getElementById('ph2').classList.toggle('on', p===2);
-    document.getElementById('ph1').setAttribute('aria-selected', p===1);
-    document.getElementById('ph2').setAttribute('aria-selected', p===2);
-    render('home', false);
-  }
-  document.getElementById('ph1').addEventListener('click', function(){ setPhase(1); });
-  document.getElementById('ph2').addEventListener('click', function(){ setPhase(2); });
-  setPhase(2);
+  render('home');
 })();
 </script>
 </body>
