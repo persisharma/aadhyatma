@@ -199,6 +199,44 @@
   .ci-diya .bowl{bottom:3px;left:1.5px;width:31px;height:13px;border:1.8px solid var(--saffron-deep);border-top:0;border-radius:0 0 16px 16px}
   .ci-diya .lip{bottom:15px;left:1px;width:32px;height:2.4px;border-radius:1px;background:var(--saffron-deep)}
 
+  /* ── OPEN variants (proposed, rev 4) ──────────────────────────────────────
+     Both keep the shipped grammar: View boxes, borders, radii, and the LotusMark
+     wrapper-rotation trick (rotate a full-frame wrapper about its own centre
+     rather than setting transformOrigin, which composites inconsistently on
+     Android — see the comment in LotusMark.tsx). Only the leaves/pages splay. */
+
+  /* खुली पोथी · ग्रन्थ — the palm-leaf pothi, opened. Wider and flatter than the
+     codex below, and rounded only on the outer edge, so the two book categories
+     stay distinguishable at tile size: leaf on the left, page on the right. */
+  .ci-granth-open{width:36px;height:28px}
+  .ci-granth-open .w{left:0;top:0;width:36px;height:28px}
+  .ci-granth-open .wL{transform:rotate(-7deg)}
+  .ci-granth-open .wR{transform:rotate(7deg)}
+  .ci-granth-open .lf{top:7px;width:16px;height:15px;border:1.8px solid var(--saffron-deep)}
+  .ci-granth-open .wL .lf{left:1.5px;border-radius:7px 2px 2px 7px}
+  .ci-granth-open .wR .lf{right:1.5px;border-radius:2px 7px 7px 2px}
+  .ci-granth-open .rl{height:1.5px;border-radius:1px;background:var(--gold)}
+  .ci-granth-open .wL .r1{left:5px;top:12px;width:9px}
+  .ci-granth-open .wL .r2{left:5px;top:16px;width:6px}
+  .ci-granth-open .wR .r1{right:5px;top:12px;width:9px}
+  .ci-granth-open .wR .r2{right:5px;top:16px;width:6px}
+  .ci-granth-open .spine{left:17.2px;top:5px;width:1.6px;height:19px;border-radius:1px;background:var(--saffron-deep)}
+
+  /* खुली पुस्तक · संस्कार — the bound book, opened */
+  .ci-veda-open{width:34px;height:30px}
+  .ci-veda-open .w{left:0;top:0;width:34px;height:30px}
+  .ci-veda-open .wL{transform:rotate(-7deg)}
+  .ci-veda-open .wR{transform:rotate(7deg)}
+  .ci-veda-open .pg{top:6px;width:14px;height:19px;border:1.7px solid var(--saffron-deep);border-radius:3px}
+  .ci-veda-open .wL .pg{left:2px}
+  .ci-veda-open .wR .pg{right:2px}
+  .ci-veda-open .rl{height:1.5px;border-radius:1px;background:var(--gold)}
+  .ci-veda-open .wL .r1{left:5px;top:11px;width:8px}
+  .ci-veda-open .wL .r2{left:5px;top:15.5px;width:6px}
+  .ci-veda-open .wR .r1{right:5px;top:11px;width:8px}
+  .ci-veda-open .wR .r2{right:5px;top:15.5px;width:6px}
+  .ci-veda-open .spine{left:16.2px;top:4px;width:1.8px;height:23px;border-radius:1px;background:var(--saffron-deep)}
+
   /* वेद पुस्तक · संस्कार (VedaManuscriptIcon) */
   .ci-veda{width:34px;height:30px}
   .ci-veda .pg{width:25px;height:22px;border:1.7px solid var(--saffron-deep);border-radius:3px}
@@ -386,7 +424,6 @@
   .myvrat .s{font-family:var(--deva);font-size:11px;color:var(--ink-muted);margin-top:1px}
   .family .fh{display:flex;align-items:center;gap:8px;margin:16px 0 6px}
   .family .fh .tt{font-family:var(--deva);font-weight:600;font-size:14px;color:var(--ink)}
-  .moved{font-family:var(--sans);font-weight:600;font-size:8.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--saffron-deep);background:var(--gold-chip);border-radius:999px;padding:2px 7px}
   .rail{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:2px 16px 6px}
   .rail::-webkit-scrollbar{height:0}
   .up{flex:none;width:126px;height:68px;border-radius:14px;border:1px solid var(--divider);background:var(--parchment-soft);box-shadow:var(--shadow-card);padding:9px 10px}
@@ -426,7 +463,14 @@
   .prof .n{font-family:var(--deva);font-weight:600;font-size:15px;color:var(--ink)}
   .prof .s{font-family:var(--deva);font-size:11.5px;color:var(--ink-muted);margin-top:2px}
   .prof .s b{color:var(--saffron);font-family:var(--serif);font-weight:600;font-size:13px}
-  .note{font-family:var(--deva);font-size:11px;line-height:1.55;color:var(--ink-soft);background:var(--gold-tint);border:1px dashed var(--card-border);border-radius:12px;padding:8px 10px;margin-top:10px}
+  /* A note ABOUT the prototype, not copy IN the app. Deliberately painted in the
+     dark board palette so it can never be mistaken for product UI: everything
+     inside a phone that sits on parchment is copy the app would really show. */
+  .note{font-family:var(--sans);font-size:10.5px;line-height:1.5;letter-spacing:.2px;color:var(--board-ink);
+    background:rgba(26,20,12,.93);border:1px dashed rgba(233,217,177,.4);border-radius:10px;padding:8px 10px;margin-top:12px}
+  .note b{color:#fff5e0;font-weight:600}
+  /* Real product copy: the one-release "where it went" notice after a reorg. */
+  .migrate{font-family:var(--deva);font-size:11px;line-height:1.55;color:var(--ink-soft);background:var(--gold-tint);border:1px solid var(--card-border);border-radius:12px;padding:8px 10px;margin-top:10px}
   .lede{font-family:var(--deva);font-size:12px;line-height:1.55;color:var(--ink-muted);margin-top:10px}
   .answer{border-radius:18px;padding:12px;background:linear-gradient(var(--card-from),var(--card-to));border:1px solid var(--card-border);box-shadow:var(--shadow-card)}
   .answer .tg{display:inline-block;font-family:var(--deva);font-size:10px;color:var(--saffron-deep);background:var(--gold-chip);border-radius:10px;padding:2px 8px}
@@ -464,10 +508,12 @@
 </head>
 <body>
 
-<h1>वेदांश़ <span class="lat">Today-First Home</span> <span class="lat" style="font-size:17px;color:var(--gold-soft)">· rev 3</span></h1>
+<h1>वेदांश़ <span class="lat">Today-First Home</span> <span class="lat" style="font-size:17px;color:var(--gold-soft)">· rev 4</span></h1>
 <div class="sub">The proposed होम and पाठ surfaces rebuilt in the app's parchment system, token-exact from <code>colors.ts</code>, on Saturday 5 September 2026 in Ujjain, the day and city of the reference screenshots.</div>
-<div class="legend"><b>New in rev 3 — the real icons.</b> Earlier passes stood the launcher glyphs in as Devanagari letters. Every tile below now draws the app's actual glyph, ported line by line from the StyleSheet in <code>CategoryIcon.tsx</code>: the mala, the diya, the ॐ, the palm-leaf manuscript, the japa counter, the kalash, the shikhara, the temple, the eight-point ashtakam star, the seeing-eye, the ghatika dial. Those icons are React Native <code>View</code> compositions — absolutely positioned boxes with borders, radii and rotations, no SVG — which is why they port to CSS exactly rather than approximately.</div>
+<div class="legend"><b>New in rev 4 — the books open.</b> The app is a reading app, yet its two book categories shipped as closed objects: ग्रन्थ as a pothi bound shut with its thread, संस्कार as a shut codex. Both are now drawn open, splayed from a centre spine with ruled lines on each side, in the same View-composition grammar. The comparison sits in the icon key below. The shipped frame on the left keeps the closed glyphs, because that is what is on the store today.</div>
+<div class="legend"><b>From rev 3 — the real icons.</b> Earlier passes stood the launcher glyphs in as Devanagari letters. Every tile below now draws the app's actual glyph, ported line by line from the StyleSheet in <code>CategoryIcon.tsx</code>: the mala, the diya, the ॐ, the palm-leaf manuscript, the japa counter, the kalash, the shikhara, the temple, the eight-point ashtakam star, the seeing-eye, the ghatika dial. Those icons are React Native <code>View</code> compositions — absolutely positioned boxes with borders, radii and rotations, no SVG — which is why they port to CSS exactly rather than approximately.</div>
 <div class="legend"><b>Two layout changes still stand from rev 2:</b> the आज का पंचांग strip is kept exactly as shipped and still opens the Panchang tab, and the दैनिक श्लोक card is gone from Home — the daily verse stays on the untouched भक्ति tab. The floating search button stays with it.</div>
+<div class="legend"><b>One rule for reading these screens:</b> everything on parchment is copy the app would really show. Anything on the dark board, inside a phone or out, is a note about the prototype. An earlier pass broke that rule by captioning the नया header with its own lifecycle rule, which is a spec line, not something a user should ever be told on screen.</div>
 <div class="legend"><b>Real vs illustrative:</b> every glyph, the panchang headline, the अभिजीत/राहु काल windows, Ganesh Chaturthi on Mon 14 Sep, and every category count come from shipped code. Streak, follow counts and the "जारी रखें" position are <b>illustrative placeholders</b>; the deity rail uses letter discs where the app draws its 21 hand-made <code>DeityIcon</code> glyphs.</div>
 
 <h2>Row 1 · अभी vs प्रस्तावित</h2>
@@ -538,7 +584,7 @@
   </div>
 
   <div class="col">
-    <div class="phaseseg" aria-hidden="true"><button class="on" tabindex="-1">प्रस्तावित · rev 3</button></div>
+    <div class="phaseseg" aria-hidden="true"><button class="on" tabindex="-1">प्रस्तावित · rev 4</button></div>
     <div class="hint">Interactive: tap the strip, the पाठ row, and the tab bar.</div>
     <div class="phone" id="proto">
       <div class="statusbar"><span>10:52</span><span class="sig">▪▪▪ ⌒ 12</span></div>
@@ -595,6 +641,9 @@
 <h2>Icon key · what each glyph is, and where it comes from</h2>
 <div class="rowlede">Fifteen of the sixteen glyphs already exist in <code>CategoryIcon.tsx</code> and move unchanged. Only वास्तु needs drawing, and only पूजा विधि keeps the danda the app already uses for it.</div>
 <div class="iconkey" id="iconkey"></div>
+
+<div class="rowlede" style="margin:22px 0 0">बंद बनाम खुला · <b style="color:var(--board-ink)">closed vs open</b> — the one glyph change this revision proposes. The app is a reading app, but its two book categories are drawn as things you store rather than things you read: ग्रन्थ is a pothi bound shut with its thread, संस्कार a closed codex. Opened, both say "read me" at a glance and keep their own silhouettes, one leaf-shaped and one rectangular, so the grid stays scannable. चालीसा keeps the mala and सूक्तम् keeps its paired leaves, because three open books in one grid would read as one blur.</div>
+<div class="iconkey" id="openkey"></div>
 
 <h2>क्या कहाँ गया · what moved where</h2>
 <div class="tablewrap">
@@ -670,7 +719,7 @@
     <div class="row"><span class="it" style="background:var(--saffron)">पा</span><div class="lb">पाठ · ग्रन्थालय<div class="st" style="font-weight:400;margin-top:1px">69 पाठ · 21 देवता · 14 उद्देश्य · भजन</div></div><span class="chev">›</span></div>
   </div>
 
-  <div class="slabel">नया<span class="more">खोलने पर हट जाता है</span></div>
+  <div class="slabel">नया</div>
   <div class="newcard"><span class="thumb sm">?</span><div class="tt"><div class="n">जिज्ञासा · पूछें</div><div class="d">तिथि, व्रत, भोग, मुहूर्त — एक प्रश्न में उत्तर</div></div><span class="pill new">NEW</span><span class="chev">›</span></div>
   <div class="newcard"><span class="thumb sm">वि</span><div class="tt"><div class="n">होम-स्क्रीन विजेट</div><div class="d">आज का श्लोक, पंचांग और जप — होम स्क्रीन पर</div></div><span class="pill new">NEW</span><span class="chev">›</span></div>
 
@@ -707,9 +756,9 @@
     <div class="cat"><div class="box"><span data-icon="mala"></span><span class="n">चालीसा</span><span class="c">9</span></div></div>
     <div class="cat"><div class="box"><span data-icon="diya"></span><span class="n">आरती</span><span class="c">9</span></div></div>
     <div class="cat"><div class="box"><span data-icon="om"></span><span class="n">स्तोत्रम्</span><span class="c">12</span></div></div>
-    <div class="cat"><div class="box"><span data-icon="granth"></span><span class="n">ग्रन्थ</span><span class="c">4</span></div></div>
+    <div class="cat"><div class="box"><span data-icon="granth-open"></span><span class="n">ग्रन्थ</span><span class="c">4</span></div></div>
     <div class="cat"><div class="box"><span data-icon="japam"></span><span class="n">जप</span><span class="c">माला</span></div></div>
-    <div class="cat"><div class="box"><span data-icon="veda"></span><span class="n">संस्कार</span><span class="c">8</span></div></div>
+    <div class="cat"><div class="box"><span data-icon="veda-open"></span><span class="n">संस्कार</span><span class="c">8</span></div></div>
     <div class="cat"><div class="box"><span data-icon="kavach"></span><span class="n">कवच</span><span class="c">4</span></div></div>
     <div class="cat"><div class="box"><span data-icon="ashtakam"></span><span class="n">अष्टकम्</span><span class="c">15</span></div></div>
     <div class="cat"><div class="box"><span data-icon="suktam"></span><span class="n">सूक्तम्</span><span class="c">3</span></div></div>
@@ -769,7 +818,7 @@
   <div class="myvrat"><span style="color:var(--gold);font-size:17px">★</span><div style="flex:1"><div class="n">मेरा व्रत</div><div class="s">2 फ़ॉलो किए · 2 अनुस्मारक</div></div><span class="chev" style="color:var(--ink-muted)">›</span></div>
 
   <div class="family">
-    <div class="fh"><span class="tt">परिवार</span><span class="moved">अन्य से यहाँ</span></div>
+    <div class="fh"><span class="tt">परिवार</span></div>
     <div class="list">
       <div class="row"><span class="it" style="background:var(--gold)">॥</span><span class="lb">पितृ स्मरण</span><span class="st">2 · 28 सित</span><span class="chev">›</span></div>
       <div class="row"><span class="it" style="background:var(--saffron-deep)">✦</span><span class="lb">जन्म तिथि</span><span class="st">3 · 12 सित</span><span class="chev">›</span></div>
@@ -812,7 +861,7 @@
   <div class="slabel" style="color:var(--ink)">भजन व आरती</div>
   <div class="track"><span class="thumb">कृ</span><div><div class="n">गोविन्द बोलो</div><div class="m">भजन · 4:48</div></div><span class="play">▶</span></div>
   <div class="track"><span class="thumb">ग</span><div><div class="n">ॐ गं गणपतये नमः</div><div class="m">भजन · 6:02</div></div><span class="play">▶</span></div>
-  <div class="note">अपरिवर्तित — यह टैब जैसा है वैसा ही रहता है।</div>
+  <div class="note"><b>Prototype note</b> · this tab is unchanged; nothing in the proposal touches it.</div>
 </div>
 </template>
 
@@ -829,14 +878,14 @@
     <div class="meaning">कर्तव्य-कर्म करनेमें ही तेरा अधिकार है, फलोंमें कभी नहीं। अतः तू कर्मफलका हेतु भी मत बन और तेरी अकर्मण्यतामें भी आसक्ति न हो।</div>
     <div class="foot"><span class="from">भगवद् गीता</span><span class="acts"><span>↻ next</span></span></div>
   </div>
-  <div class="note">यह टैब अपरिवर्तित है — दैनिक श्लोक यहीं रहता है, होमपेज पर अब नहीं दिखाया जाता।</div>
+  <div class="note"><b>Prototype note</b> · unchanged. The daily verse lives here and is no longer shown on Home.</div>
 </div>
 </template>
 
 <template id="tpl-more">
 <div class="pad">
   <div class="rtitle" style="font-size:28px;margin-top:6px">अन्य</div>
-  <div class="note">कुल परम्परा, पितृ स्मरण, जन्म तिथि अब पंचांग › परिवार में · वास्तु दिशा होम › उपकरण में · संग्रह पाठ में</div>
+  <div class="migrate">कुल परम्परा, पितृ स्मरण और जन्म तिथि अब पंचांग › परिवार में · वास्तु दिशा होम › उपकरण में · संग्रह पाठ में</div>
 
   <div class="grp">साधक</div>
   <div class="list">
@@ -898,6 +947,8 @@
     insight:  '<i class="eye"></i><i class="pupil"></i><i class="ray"></i><i class="rayL"></i><i class="rayR"></i>',
     muhurat:  '<i class="dial"></i><i class="hand"></i><i class="mark"></i><i class="base"></i>',
     lotus:    LOTUS,
+    'granth-open': '<i class="w wL"><i class="lf"></i><i class="rl r1"></i><i class="rl r2"></i></i><i class="w wR"><i class="lf"></i><i class="rl r1"></i><i class="rl r2"></i></i><i class="spine"></i>',
+    'veda-open':   '<i class="w wL"><i class="pg"></i><i class="rl r1"></i><i class="rl r2"></i></i><i class="w wR"><i class="pg"></i><i class="rl r1"></i><i class="rl r2"></i></i><i class="spine"></i>',
     vastu:    '<i class="ring"></i><i class="tN"></i><i class="tS"></i><i class="tW"></i><i class="tE"></i><i class="ndl"></i><i class="bindu"></i>',
     danda:    '॥',
     cal:      CAL_SVG
@@ -949,11 +1000,20 @@
     ['lotus','नित्य साधना','LotusMark'], ['danda','पूजा विधि','॥ danda, as today'], ['cal','पंचांग','tab-bar glyph'],
     ['vastu','वास्तु','NEW — to draw']
   ];
-  document.getElementById('iconkey').innerHTML = KEY.map(function(k){
-    var isNew = k[2].indexOf('NEW') === 0;
-    return '<div class="ikcell'+(isNew?' new':'')+'"><div class="box"><span data-icon="'+k[0]+'"></span></div>'
-      + '<div class="nm">'+k[1]+'</div><div class="src">'+k[2]+'</div></div>';
-  }).join('');
+  function keyBoard(id, rows){
+    document.getElementById(id).innerHTML = rows.map(function(k){
+      var isNew = k[2].indexOf('NEW') === 0 || k[2].indexOf('प्रस्तावित') === 0;
+      return '<div class="ikcell'+(isNew?' new':'')+'"><div class="box"><span data-icon="'+k[0]+'"></span></div>'
+        + '<div class="nm">'+k[1]+'</div><div class="src">'+k[2]+'</div></div>';
+    }).join('');
+  }
+  keyBoard('iconkey', KEY);
+  keyBoard('openkey', [
+    ['granth','ग्रन्थ','आज · closed'],
+    ['granth-open','ग्रन्थ','प्रस्तावित · open'],
+    ['veda','संस्कार','आज · closed'],
+    ['veda-open','संस्कार','प्रस्तावित · open']
+  ]);
 
   // ── Interactive frame ─────────────────────────────────────────────────────
   // पाठ has no tab of its own — it highlights Home, like any screen the Home
