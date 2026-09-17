@@ -13,7 +13,7 @@ import { eyebrowTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langT
 import { isWidgetPinSupported, readWidgetPayload, requestPinWidget } from '@/widgets/native';
 import { WIDGET_TIME_ZONE, widgetDateKey, type WidgetPayloadState } from '@/widgets/contract';
 import { widgetCatalogEntry, widgetSizeLabel, type WidgetContent } from '@/widgets/catalog';
-import { flowedVerse } from '@/widgets/planner';
+import { flowedVerse, runningTithi } from '@/widgets/planner';
 import type { MoreStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'WidgetGallery'>;
@@ -53,6 +53,7 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
     && payloadState.payload.japam.dateKey === widgetDateKey(now, payloadState.payload.japam.timeZone)
     ? payloadState.payload.japam
     : undefined;
+  const tithi = day ? runningTithi(day, now) : undefined;
   const recovery = payloadState.kind === 'expired'
     ? pick(lang, { hi: 'विजेट ताज़ा करने हेतु वेदांश़ खोलें', en: 'Open Vedansh to refresh widgets', gu: 'વિજેટ તાજું કરવા વેદાંશ઼ ખોલો', kn: 'ವಿಜೆಟ್ ನವೀಕರಿಸಲು ವೇದಾಂಶ಼ ತೆರೆಯಿರಿ' })
     : pick(lang, { hi: 'विजेट तैयार करने हेतु वेदांश़ खोलें', en: 'Open Vedansh to prepare widgets', gu: 'વિજેટ તૈયાર કરવા વેદાંશ઼ ખોલો', kn: 'ವಿಜೆಟ್ ಸಿದ್ಧಪಡಿಸಲು ವೇದಾಂಶ಼ ತೆರೆಯಿರಿ' });
@@ -78,8 +79,11 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
             {verse ? <Text style={[styles.meta, { color: colors.inkMuted }]}>{verse.source[lang]}</Text> : null}
           </Preview>
           <Preview content="panchang" title={contentByLang(lang, 'आज का पंचांग', 'Today’s Panchang')} accessibilityLabel="Panchang widget preview" colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
-            <Text style={[styles.headline, { color: colors.ink, fontFamily: titleFont }]}>{day?.tithi[lang] ?? recovery}</Text>
-            {day ? <Text style={[styles.meta, { color: colors.inkMuted }]}>{day.representedDate[lang]} · {day.sunrise[lang]} · {day.rahuKaal[lang]}</Text> : null}
+            {/* The tithi RUNNING NOW plus its तक line — a tithi hands over
+                mid-day, so the facsimile would otherwise show the sunrise tithi
+                while the placed widget (and the Home glance) had moved on. */}
+            <Text style={[styles.headline, { color: colors.ink, fontFamily: titleFont }]}>{tithi ? tithi.name[lang] : recovery}</Text>
+            {day ? <Text style={[styles.meta, { color: colors.inkMuted }]}>{[tithi?.till?.[lang], day.representedDate[lang], day.sunrise[lang], day.rahuKaal[lang]].filter(Boolean).join(' · ')}</Text> : null}
           </Preview>
           <Preview content="japam" title={contentByLang(lang, 'जप-साधना', 'Japam practice')} accessibilityLabel="Japam widget preview" colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
             <Text style={[styles.headline, { color: colors.ink, fontFamily: titleFont }]}>{japam ? `${japam.totalBeads} / 108` : recovery}</Text>

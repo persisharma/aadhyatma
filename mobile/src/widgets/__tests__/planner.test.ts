@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildWidgetPayload, computeJapaStreak, flowedVerse, twoLineExcerpt } from '../planner';
+import { buildWidgetPayload, computeJapaStreak, flowedVerse, runningTithi, twoLineExcerpt } from '../planner';
+import type { PanchangWidgetDay } from '../contract';
 import { DEFAULT_LOCATION } from '@/panchang/locations';
 
 const localized = { hi: 'अ', en: 'A', gu: 'અ', kn: 'ಅ' };
@@ -70,4 +71,38 @@ test('the flowed verse the wide/large cells render is complete and never ellipsi
   // Blank/padded padas are dropped and trimmed, exactly as the excerpt does, so
   // the two strings differ only in where they stop.
   assert.equal(flowedVerse([' अ ', '', '  ', 'ब']), 'अ · ब');
+});
+
+// ── runningTithi — the selector all three readers implement ────────────────
+// Native Swift/Kotlin run this same forward scan; keeping the TypeScript one
+// under test pins the shape the gallery facsimile and the placed widget share.
+const tithiName = (hi: string) => ({ hi, en: hi, gu: hi, kn: hi });
+const chained: PanchangWidgetDay = {
+  ...panchang('2026-09-17'),
+  tithi: tithiName('षष्ठी'),
+  tithiSegments: [
+    { name: tithiName('षष्ठी'), endsAt: '2026-09-17T05:18:16.089Z', till: tithiName('तक 10:48 AM') },
+    { name: tithiName('सप्तमी') },
+  ],
+};
+
+test('the running tithi turns over ON the handover, not at midnight', () => {
+  // Before the handover: the sunrise tithi, with the तक line that dates it.
+  assert.equal(runningTithi(chained, new Date('2026-09-17T04:00:00Z')).name.hi, 'षष्ठी');
+  assert.equal(runningTithi(chained, new Date('2026-09-17T04:00:00Z')).till?.hi, 'तक 10:48 AM');
+  // The boundary is inclusive, exactly as prevailingTithi's walk is.
+  assert.equal(runningTithi(chained, new Date('2026-09-17T05:18:16.089Z')).name.hi, 'षष्ठी');
+  // One second later the successor runs — the bug this exists for: the widget
+  // used to keep drawing षष्ठी until midnight while Home already read सप्तमी.
+  const after = runningTithi(chained, new Date('2026-09-17T05:18:17.089Z'));
+  assert.equal(after.name.hi, 'सप्तमी');
+  // No invented end: the successor's belongs to tomorrow's solve.
+  assert.equal(after.till, undefined);
+  assert.equal(runningTithi(chained, new Date('2026-09-17T18:29:00Z')).name.hi, 'सप्तमी');
+});
+
+test('a day with no chain falls back to its sunrise tithi', () => {
+  const legacy = { ...panchang('2026-09-17'), tithi: tithiName('षष्ठी') } as PanchangWidgetDay;
+  assert.equal(runningTithi(legacy, new Date('2026-09-17T18:00:00Z')).name.hi, 'षष्ठी');
+  assert.equal(runningTithi(legacy, new Date('2026-09-17T18:00:00Z')).till, undefined);
 });
