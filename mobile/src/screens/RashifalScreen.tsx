@@ -5,6 +5,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
+import RashifalLifeAreas from '@/components/RashifalLifeAreas';
+import { computeDetailedRashifal } from '@/panchang/rashifalReading';
+import { useRashifalDay } from '@/panchang/useRashifalDay';
 import JyotishGuidanceRows from '@/components/JyotishGuidanceRows';
 import JyotishPracticeCard from '@/components/JyotishPracticeCard';
 import JyotishShareCard from '@/components/JyotishShareCard';
@@ -29,6 +32,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import {
+  meaningToken,
   pillTextStyle,
   scriptBodyFont,
   scriptTitleFont,
@@ -72,7 +76,13 @@ export default function RashifalScreen({ navigation, route }: Props) {
   const [signPickerOpen, setSignPickerOpen] = useState(routeSelection === undefined);
   const [userSelected, setUserSelected] = useState(routeSelection !== undefined);
   const [shareVisible, setShareVisible] = useState(false);
-  const today = useMemo(() => new Date(), []);
+  const { date: today, offset, setOffset } = useRashifalDay();
+  const [summaryOpen, setSummaryOpen] = useState(false);
+  const selectedDateKey = today.toISOString();
+  useEffect(() => {
+    setShareVisible(false);
+    setSummaryOpen(false);
+  }, [selectedDateKey, rashiIndex, activeId]);
 
   useEffect(() => {
     if (!userSelected && routeSelection === undefined && natalMoon !== undefined) {
@@ -92,6 +102,12 @@ export default function RashifalScreen({ navigation, route }: Props) {
     return computeRashifal(today, rashiIndex);
   }, [chart, isNatalSelection, rashiIndex, today]);
   const personal = guidance && 'taraBala' in guidance ? guidance : null;
+  const detailed = useMemo(() => rashiIndex === null ? null
+    : computeDetailedRashifal(today, rashiIndex, isNatalSelection ? chart : null),
+  [today, rashiIndex, isNatalSelection, chart]);
+  // Never hand birth-derived data to the public share surface.
+  const shareGuidance = useMemo(() => rashiIndex === null ? null
+    : computeRashifal(today, rashiIndex), [today, rashiIndex]);
   const source = guidance
     ? library.find((entry) => entry.id === guidance.sourceId)
     : undefined;
@@ -149,7 +165,7 @@ export default function RashifalScreen({ navigation, route }: Props) {
                 fontSize: 18,
               }}
             >
-              {contentByLang(lang, 'आज का राशिफल', 'Daily Rashifal')}
+              {contentByLang(lang, offset === 0 ? 'आज का राशिफल' : 'दैनिक राशिफल', 'Daily Rashifal')}
             </Text>
             <Text style={[styles.caption, { color: colors.inkMuted }]}>
               {formatToday(today, lang)} · {contentByLang(lang, 'चन्द्र राशि', 'Moon sign')}
@@ -159,7 +175,7 @@ export default function RashifalScreen({ navigation, route }: Props) {
             <Pressable
               onPress={() => setShareVisible(true)}
               accessibilityRole="button"
-              accessibilityLabel="Share today’s Rashifal"
+              accessibilityLabel={offset === 0 ? 'Share today’s Rashifal' : 'Share selected day’s Rashifal'}
               style={({ pressed }) => [
                 styles.sharePill,
                 {
@@ -448,6 +464,31 @@ export default function RashifalScreen({ navigation, route }: Props) {
                 </View>
               )}
 
+              {guidance && (
+                <View style={{ flexDirection: 'row', gap: spacing.sm, marginBottom: spacing.md }}>
+                  {([
+                    { value: -1, hi: 'बीता कल', en: 'Yesterday' },
+                    { value: 0, hi: 'आज', en: 'Today' },
+                    { value: 1, hi: 'आने वाला कल', en: 'Tomorrow' },
+                  ] as const).map((day) => (
+                    <Pressable
+                      key={day.value}
+                      testID={`rashifal-day-${day.value}`}
+                      accessibilityRole="button"
+                      accessibilityLabel={`${day.en} Rashifal`}
+                      accessibilityState={{ selected: offset === day.value }}
+                      onPress={() => setOffset(day.value)}
+                      style={{ flex: 1, minHeight: 44, padding: spacing.sm, alignItems: 'center', justifyContent: 'center', borderWidth: 1,
+                        borderRadius: radii.pill, borderColor: offset === day.value ? colors.saffron : colors.divider,
+                        backgroundColor: offset === day.value ? colors.goldTint : colors.parchmentSoft }}
+                    >
+                      <Text style={{ ...pillTextStyle(lang, typography.sectionLabel), color: colors.saffronDeep, textAlign: 'center' }}>
+                        {contentByLang(lang, day.hi, day.en)}
+                      </Text>
+                    </Pressable>
+                  ))}
+                </View>
+              )}
               {guidance && rashiIndex !== null && selectedSign ? (
                 <>
                   <View
@@ -569,8 +610,35 @@ export default function RashifalScreen({ navigation, route }: Props) {
                         </View>
                       )}
                     </View>
-                    <JyotishGuidanceRows guidance={guidance} lang={lang} showContext />
+                    {detailed && (
+                      <View style={{ padding: spacing.md, gap: spacing.sm }}>
+                        <Text testID="rashifal-headline" style={{ ...meaningToken(lang, typography), color: colors.ink }}>
+                          {contentByLang(lang, detailed.headline.hi, detailed.headline.en)}
+                        </Text>
+                        <Text style={{ ...meaningToken(lang, typography), color: colors.inkSoft }}>
+                          {meaningByLang(lang, detailed.summary.hi, detailed.summary.en)}
+                        </Text>
+                      </View>
+                    )}
+                    <Pressable
+                      testID="rashifal-summary-toggle"
+                      accessibilityRole="button"
+                      accessibilityLabel="Favour, Pause and Reflect summary"
+                      accessibilityState={{ expanded: summaryOpen }}
+                      onPress={() => setSummaryOpen((open) => !open)}
+                      style={{ minHeight: 44, padding: spacing.md, borderTopWidth: 1, borderTopColor: colors.divider }}
+                    >
+                      <Text style={{ ...pillTextStyle(lang, typography.sectionLabel), color: colors.saffronDeep }}>
+                        {contentByLang(lang, 'जिसे स्थान दें · जहाँ ठहरें · चिंतन प्रश्न', 'Favour · Pause · Reflect')} {summaryOpen ? '−' : '+'}
+                      </Text>
+                    </Pressable>
+                    {summaryOpen && <JyotishGuidanceRows guidance={guidance} lang={lang} showContext />}
                   </View>
+                  {detailed && <RashifalLifeAreas
+                    key={`${selectedDateKey}-${rashiIndex}-${activeId}-${isNatalSelection}`}
+                    reading={detailed}
+                    lang={lang}
+                  />}
                   <Text
                     style={[
                       pillTextStyle(lang, typography.sectionLabel),
@@ -583,8 +651,8 @@ export default function RashifalScreen({ navigation, route }: Props) {
                   <JyotishPracticeCard
                     titleHi={source?.nameHi}
                     titleEn={source?.nameEn}
-                    subtitleHi="आज के चन्द्र-राशि मार्गदर्शन के साथ"
-                    subtitleEn="Suggested alongside today’s Moon-sign guidance"
+                    subtitleHi="चन्द्र-राशि मार्गदर्शन के साथ"
+                    subtitleEn="Suggested alongside this Moon-sign guidance"
                     accessibilityLabel={`Open ${source?.nameEn ?? 'traditional'} practice`}
                     onPress={openPractice}
                   />
@@ -648,12 +716,12 @@ export default function RashifalScreen({ navigation, route }: Props) {
         </ScrollView>
       </SafeAreaView>
 
-      {guidance && rashiIndex !== null && source && (
+      {shareGuidance && rashiIndex !== null && source && (
         <JyotishShareSheet
           visible={shareVisible}
           lang={lang}
-          titleHi={`आज का ${RASHI_NAMES_HI[rashiIndex]} राशिफल साझा करें`}
-          titleEn={`Share today’s ${RASHI_NAMES_EN[rashiIndex]} Rashifal`}
+          titleHi={`${RASHI_NAMES_HI[rashiIndex]} राशिफल साझा करें`}
+          titleEn={`Share ${RASHI_NAMES_EN[rashiIndex]} Rashifal`}
           privacyHi="केवल चन्द्र-राशि मार्गदर्शन साझा होगा। नाम या जन्म विवरण शामिल नहीं हैं।"
           privacyEn="Only Moon-sign guidance is shared. No name or birth details are included."
           onClose={() => setShareVisible(false)}
@@ -662,7 +730,7 @@ export default function RashifalScreen({ navigation, route }: Props) {
               kind="rashifal"
               width={width}
               lang={lang}
-              guidance={guidance}
+              guidance={shareGuidance}
               rashiIndex={rashiIndex}
               practiceHi={source.nameHi}
               practiceEn={source.nameEn}

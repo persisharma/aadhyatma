@@ -59,6 +59,17 @@ jest.mock('expo-location', () => ({
   hasServicesEnabledAsync: jest.fn(() => Promise.resolve(false)),
 }));
 
+// expo-haptics is untranspiled ESM like expo-location; the dik-feedback hook
+// (PRD-24 Phase 2 §A4) reaches it from every screen that mounts the compass.
+// Reader suites that pin haptics behaviour override this with their own mock.
+jest.mock('expo-haptics', () => ({
+  selectionAsync: jest.fn(() => Promise.resolve()),
+  impactAsync: jest.fn(() => Promise.resolve()),
+  notificationAsync: jest.fn(() => Promise.resolve()),
+  ImpactFeedbackStyle: { Light: 'light', Medium: 'medium', Heavy: 'heavy', Soft: 'soft', Rigid: 'rigid' },
+  NotificationFeedbackType: { Success: 'success', Warning: 'warning', Error: 'error' },
+}));
+
 jest.mock('expo-speech', () => ({
   speak: jest.fn(),
   stop: jest.fn(() => Promise.resolve()),

@@ -98,11 +98,18 @@ export type ObservanceRelativeRule = 'friday-before-purnima';
  *   (sthapana), Ram Navami (janma), monthly Vinayaka Chaturthi. When the tithi
  *   opens shortly after sunrise, the sunrise answer names the day AFTER the
  *   midday actually worshipped (Ganesh Chaturthi 2026: 15 Sep instead of 14).
+ * - `aparahna` — the tithi running in the AFTERNOON (the midpoint of the fourth
+ *   of the day's five equal parts). The convention for पितृ तर्पण and shraddha,
+ *   which are afternoon rites: `darsha-amavasya`. An amavasya that opens between
+ *   sunrise and aparahna covers this day's afternoon and tomorrow's sunrise, so
+ *   the two answers name different days (Bhadrapada 2026: 10 Sep for दर्श
+ *   अमावस्या, 11 Sep for the udaya snan-daan अमावस्या). Both are published, which
+ *   is why the two are separate rules rather than one retagged rule.
  *
  * The remaining non-sunrise conventions (pradosh, nishita) are not modelled
  * yet — see `VERIFICATION.md` "±1-day muhurta shift".
  */
-export type ObservanceDayRule = 'udaya' | 'chandrodaya' | 'madhyahna';
+export type ObservanceDayRule = 'udaya' | 'chandrodaya' | 'madhyahna' | 'aparahna';
 
 /**
  * Where a rule sits inside a multi-day festival arc (PRD-28, पर्व-अर्क).

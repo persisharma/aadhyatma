@@ -192,7 +192,7 @@ test('non-Ujjain location falls back to Ujjain observances until store fills, th
   const unsubscribe = subscribeObservanceStore(() => {
     notified = true;
   });
-  setStoredObservanceYear('kochi', 'purnimant', year, [{ id: 'diwali', date: '2026-11-09' }]);
+  setStoredObservanceYear('kochi', 'purnimant', year, [['diwali', '2026-11-09']]);
   unsubscribe();
   assert.ok(notified, 'store notifies subscribers');
   assert.equal(isObservanceDataReady(year, 'purnimant', location), true, 'ready after store fills');

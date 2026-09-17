@@ -16,7 +16,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.prashantsharma.vedansh",
-      "buildNumber": "62",
+      "buildNumber": "63",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "UIBackgroundModes": [
@@ -26,13 +26,16 @@
     },
     "android": {
       "package": "com.prashantsharma.vedansh",
-      "versionCode": 10,
+      "versionCode": 11,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
+      "blockedPermissions": [
+        "android.permission.ACTIVITY_RECOGNITION"
+      ],
       "permissions": [
         "FOREGROUND_SERVICE",
         "FOREGROUND_SERVICE_MEDIA_PLAYBACK",

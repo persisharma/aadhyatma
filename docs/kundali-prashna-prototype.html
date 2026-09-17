@@ -1,0 +1,733 @@
+<title>प्रश्न · Prashna</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Noto+Serif+Devanagari:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root{
+    /* Vedansh manuscript palette — mobile/src/theme/colors.ts (lightColors) */
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-deep:#E9D9B1;
+    --ground:#EFE1BE;
+    --ink:#1A0E03; --ink-soft:#5A3A1E; --ink-muted:#6E5230;
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --gold:#A67C34;
+    --avoid:#9E4A2E; --avoid-deep:#7A3722;
+    --divider:rgba(138,62,11,.18);
+    --saffron-tint:rgba(184,98,27,.12); --gold-tint:rgba(166,124,52,.14);
+    --avoid-tint:rgba(158,74,46,.12);
+    --card:rgba(255,250,235,.82); --card-from:#FFF5E0; --card-to:#F5DEAC;
+    --card-border:rgba(184,98,27,.4);
+    --chip:rgba(255,250,235,.55);
+    --shadow:0 1px 2px rgba(47,30,16,.07), 0 8px 26px -14px rgba(47,30,16,.4);
+    --serif:"Noto Serif Devanagari","Cormorant Garamond",Georgia,serif;
+    --latin:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+    --sans:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,sans-serif;
+  }
+  :root:not([data-theme="light"]){ }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --parchment:#241A10; --parchment-soft:#2C2015; --parchment-deep:#1B130B;
+      --ground:#15100A;
+      --ink:#F4E6C8; --ink-soft:#D8C09A; --ink-muted:#A98F68;
+      --saffron:#E08B3E; --saffron-deep:#F0A860; --gold:#CBA059;
+      --avoid:#D4795A; --avoid-deep:#E59273;
+      --divider:rgba(224,139,62,.22);
+      --saffron-tint:rgba(224,139,62,.14); --gold-tint:rgba(203,160,89,.14);
+      --avoid-tint:rgba(212,121,90,.14);
+      --card:rgba(44,32,21,.86); --card-from:#312418; --card-to:#241A10;
+      --card-border:rgba(224,139,62,.34);
+      --chip:rgba(60,44,28,.6);
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -16px rgba(0,0,0,.8);
+    }
+  }
+  :root[data-theme="dark"]{
+    --parchment:#241A10; --parchment-soft:#2C2015; --parchment-deep:#1B130B;
+    --ground:#15100A;
+    --ink:#F4E6C8; --ink-soft:#D8C09A; --ink-muted:#A98F68;
+    --saffron:#E08B3E; --saffron-deep:#F0A860; --gold:#CBA059;
+    --avoid:#D4795A; --avoid-deep:#E59273;
+    --divider:rgba(224,139,62,.22);
+    --saffron-tint:rgba(224,139,62,.14); --gold-tint:rgba(203,160,89,.14);
+    --avoid-tint:rgba(212,121,90,.14);
+    --card:rgba(44,32,21,.86); --card-from:#312418; --card-to:#241A10;
+    --card-border:rgba(224,139,62,.34);
+    --chip:rgba(60,44,28,.6);
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -16px rgba(0,0,0,.8);
+  }
+
+  *{box-sizing:border-box}
+  body{background:var(--ground);color:var(--ink);font-family:var(--sans);
+       -webkit-font-smoothing:antialiased;margin:0}
+  .wrap{max-width:1440px;margin:0 auto;padding-block:40px 72px;padding-left:20px;padding-right:20px}
+
+  /* ---------- page masthead ---------- */
+  .masthead{border-bottom:1px solid var(--divider);padding-bottom:22px;margin-bottom:34px;
+            display:flex;flex-wrap:wrap;gap:18px;align-items:flex-end;justify-content:space-between}
+  .mast-kicker{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.16em;
+               text-transform:uppercase;color:var(--saffron-deep);margin:0 0 8px}
+  h1{font-family:var(--serif);font-weight:600;font-size:clamp(30px,4.4vw,46px);line-height:1.12;
+     margin:0;text-wrap:balance;letter-spacing:-.01em}
+  h1 em{font-family:var(--latin);font-style:italic;font-weight:600;color:var(--saffron-deep)}
+  .mast-note{font-family:var(--latin);font-size:18px;line-height:1.5;color:var(--ink-soft);
+             max-width:44ch;margin:10px 0 0}
+  .themetoggle{font-family:var(--sans);font-size:12px;font-weight:500;color:var(--ink-soft);
+    background:var(--chip);border:1px solid var(--divider);border-radius:999px;padding:9px 15px;
+    cursor:pointer;min-height:40px}
+  .themetoggle:hover{border-color:var(--card-border);color:var(--ink)}
+  .themetoggle:focus-visible{outline:2px solid var(--saffron);outline-offset:2px}
+
+  /* ---------- section headers ---------- */
+  .sec{margin-top:56px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+  .sec-num{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.14em;
+           color:var(--saffron-deep);background:var(--saffron-tint);border-radius:4px;padding:4px 8px}
+  h2{font-family:var(--serif);font-weight:600;font-size:clamp(21px,2.4vw,27px);line-height:1.25;margin:0}
+  .sec-sub{font-family:var(--latin);font-size:17px;line-height:1.55;color:var(--ink-soft);
+           max-width:70ch;margin:8px 0 26px}
+  .sec-sub code{font-family:var(--sans);font-size:13px;background:var(--chip);padding:1px 5px;
+                border-radius:4px;color:var(--ink)}
+
+  /* ---------- phone frame ---------- */
+  .rail{display:flex;gap:34px;flex-wrap:wrap;align-items:flex-start}
+  .board{flex:0 0 auto;width:min(360px,100%)}
+  .board-cap{display:flex;gap:9px;align-items:baseline;margin-bottom:11px}
+  .board-cap b{font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.05em;color:var(--ink)}
+  .board-cap span{font-family:var(--sans);font-size:11.5px;color:var(--ink-muted)}
+  .phone{background:linear-gradient(175deg,var(--parchment-soft),var(--parchment));
+         border:1px solid var(--divider);border-radius:26px;padding:14px 13px 18px;box-shadow:var(--shadow);
+         overflow:hidden}
+  .statusbar{display:flex;justify-content:space-between;align-items:center;
+             font-family:var(--sans);font-size:10.5px;font-weight:600;color:var(--ink-muted);
+             padding:1px 7px 12px;letter-spacing:.02em}
+  .navrow{display:flex;align-items:center;gap:10px;padding:0 3px 13px}
+  .back{font-family:var(--latin);font-size:19px;color:var(--saffron-deep);line-height:1}
+  .navttl{font-family:var(--serif);font-size:14.5px;font-weight:600;color:var(--ink)}
+
+  /* ---------- app cards ---------- */
+  .ecard{background:var(--card);border:1px solid var(--divider);border-radius:14px;padding:13px 14px;
+         margin-bottom:11px}
+  .ecard.active{background:linear-gradient(160deg,var(--card-from),var(--card-to));
+                border-color:var(--card-border)}
+  .eyebrow{font-family:var(--sans);font-size:9.5px;font-weight:600;letter-spacing:.13em;
+           text-transform:uppercase;color:var(--saffron-deep);margin:0 0 7px}
+  .ctitle{font-family:var(--serif);font-size:15px;font-weight:600;line-height:1.35;margin:0 0 5px;color:var(--ink)}
+  .cbody{font-family:var(--serif);font-size:12.8px;line-height:1.68;color:var(--ink-soft);margin:0}
+  .cbody + .cbody{margin-top:8px}
+  .clatin{font-family:var(--latin);font-size:14px;line-height:1.55;color:var(--ink-soft);margin:5px 0 0}
+
+  /* person chips */
+  .persons{display:flex;gap:7px;margin-bottom:12px;flex-wrap:wrap}
+  .pchip{font-family:var(--sans);font-size:11.5px;font-weight:500;padding:8px 13px;border-radius:999px;
+         border:1px solid var(--divider);background:var(--chip);color:var(--ink-soft);cursor:pointer;
+         min-height:36px;display:flex;align-items:center}
+  .pchip[aria-pressed="true"]{background:var(--saffron-tint);border-color:var(--card-border);
+                              color:var(--saffron-deep);font-weight:600}
+  .pchip:focus-visible{outline:2px solid var(--saffron);outline-offset:2px}
+
+  /* door grid */
+  .doors{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .door{background:var(--card);border:1px solid var(--divider);border-radius:12px;padding:11px 12px;min-height:76px;
+        display:flex;flex-direction:column;justify-content:space-between}
+  .door.lead{grid-column:1/-1;background:linear-gradient(160deg,var(--card-from),var(--card-to));
+             border-color:var(--card-border);min-height:auto}
+  .door-h{font-family:var(--serif);font-size:13.5px;font-weight:600;color:var(--ink);margin:0}
+  .door-r{font-family:var(--serif);font-size:11px;line-height:1.5;color:var(--ink-muted);margin:5px 0 0}
+  .newtag{font-family:var(--sans);font-size:8.5px;font-weight:600;letter-spacing:.1em;
+          background:var(--saffron-tint);color:var(--saffron-deep);border-radius:3px;padding:2px 5px;margin-left:6px;
+          vertical-align:2px}
+
+  /* purpose grid */
+  .purposes{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .purpose{background:var(--card);border:1px solid var(--divider);border-radius:12px;padding:11px 11px 12px;
+           text-align:left;cursor:pointer;min-height:74px;font:inherit;color:inherit}
+  .purpose:hover{border-color:var(--card-border)}
+  .purpose:focus-visible{outline:2px solid var(--saffron);outline-offset:2px}
+  .purpose[aria-pressed="true"]{background:linear-gradient(160deg,var(--card-from),var(--card-to));
+                                border-color:var(--card-border)}
+  .purpose[disabled]{opacity:.42;cursor:not-allowed}
+  .p-hi{font-family:var(--serif);font-size:13.5px;font-weight:600;display:block;color:var(--ink)}
+  .p-en{font-family:var(--sans);font-size:10.5px;color:var(--ink-muted);display:block;margin-top:3px;line-height:1.4}
+  .p-gate{font-family:var(--sans);font-size:9px;color:var(--ink-muted);display:block;margin-top:5px;font-style:italic}
+
+  /* strength pill */
+  .pill{font-family:var(--sans);font-size:9.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+        border-radius:999px;padding:4px 9px;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+  .pill.strong{background:var(--gold-tint);color:var(--saffron-deep);border:1px solid var(--card-border)}
+  .pill.mod{background:var(--chip);color:var(--ink-soft);border:1px solid var(--divider)}
+  .pill.weak{background:var(--avoid-tint);color:var(--avoid-deep);border:1px solid rgba(158,74,46,.3)}
+  .bars{display:inline-flex;gap:2px}
+  .bars i{width:3px;height:9px;border-radius:1px;background:currentColor;opacity:.28;display:block}
+  .bars i.on{opacity:1}
+
+  /* THE EVIDENCE CHAIN — the structural device of this product */
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin:9px 0 0;
+         padding:9px 10px;background:var(--chip);border-radius:9px;
+         border-left:2px solid var(--card-border)}
+  .chain .cl{font-family:var(--sans);font-size:8.5px;font-weight:600;letter-spacing:.12em;
+             text-transform:uppercase;color:var(--saffron-deep);width:100%;margin-bottom:2px}
+  .node{font-family:var(--sans);font-size:10.5px;font-weight:500;color:var(--ink);
+        background:var(--parchment-soft);border:1px solid var(--divider);border-radius:5px;padding:3px 7px;
+        font-variant-numeric:tabular-nums}
+  .arr{color:var(--saffron);font-size:11px;line-height:1}
+
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:9px}
+  .col{background:var(--chip);border-radius:10px;padding:10px}
+  .col-h{font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;
+         margin:0 0 7px}
+  .col.bal .col-h{color:var(--saffron-deep)} .col.badha .col-h{color:var(--avoid-deep)}
+  .col ul{margin:0;padding-left:15px}
+  .col li{font-family:var(--serif);font-size:11.5px;line-height:1.55;color:var(--ink-soft);margin-bottom:6px}
+  .col li:last-child{margin-bottom:0}
+
+  /* timing */
+  .tl{margin-top:9px;display:flex;flex-direction:column;gap:7px}
+  .tw{display:flex;gap:9px;align-items:flex-start;padding:9px 10px;border-radius:9px;background:var(--chip);
+      border-left:2px solid var(--gold)}
+  .tw.dim{border-left-color:var(--divider);opacity:.82}
+  .tw-d{font-family:var(--sans);font-size:10px;font-weight:600;color:var(--ink);white-space:nowrap;
+        font-variant-numeric:tabular-nums;flex:0 0 auto;padding-top:1px}
+  .tw-t{font-family:var(--serif);font-size:11.5px;line-height:1.55;color:var(--ink-soft);margin:0}
+
+  .dirlist{margin:9px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+  .dirlist li{font-family:var(--serif);font-size:12.3px;line-height:1.6;color:var(--ink-soft);
+              padding-left:17px;position:relative}
+  .dirlist li::before{content:"—";position:absolute;left:0;color:var(--saffron);font-family:var(--sans)}
+
+  .practice{display:flex;gap:10px;align-items:center;background:linear-gradient(160deg,var(--card-from),var(--card-to));
+            border:1px solid var(--card-border);border-radius:12px;padding:11px 12px;margin-top:11px}
+  .pr-t{font-family:var(--serif);font-size:12.8px;font-weight:600;color:var(--ink);margin:0}
+  .pr-s{font-family:var(--serif);font-size:11px;color:var(--ink-muted);margin:3px 0 0;line-height:1.5}
+  .pr-go{margin-left:auto;font-family:var(--sans);font-size:10.5px;font-weight:600;color:var(--saffron-deep);
+         white-space:nowrap}
+
+  .foot{font-family:var(--serif);font-size:10.5px;line-height:1.6;color:var(--ink-muted);
+        margin:14px 3px 0;padding-top:11px;border-top:1px solid var(--divider)}
+
+  /* annotation rail */
+  .anno{flex:1 1 300px;min-width:280px;max-width:520px;padding-top:26px}
+  .anno h3{font-family:var(--serif);font-size:16px;font-weight:600;margin:0 0 10px;color:var(--ink)}
+  .anno p{font-family:var(--latin);font-size:16.5px;line-height:1.62;color:var(--ink-soft);margin:0 0 13px;max-width:58ch}
+  .anno p strong{color:var(--ink);font-weight:600}
+  .anno code{font-family:var(--sans);font-size:12.5px;background:var(--chip);padding:1px 5px;border-radius:4px;color:var(--ink)}
+  .anno ul{margin:0 0 13px;padding-left:19px}
+  .anno li{font-family:var(--latin);font-size:16.5px;line-height:1.58;color:var(--ink-soft);margin-bottom:7px}
+
+  /* mechanism table */
+  .tblwrap{overflow-x:auto;border:1px solid var(--divider);border-radius:12px;background:var(--card)}
+  table{border-collapse:collapse;width:100%;min-width:640px}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--divider);vertical-align:top}
+  th{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;
+     color:var(--saffron-deep);white-space:nowrap}
+  td{font-family:var(--sans);font-size:12.8px;line-height:1.55;color:var(--ink-soft)}
+  td:first-child{font-family:var(--serif);font-size:13.5px;color:var(--ink);font-weight:600;white-space:nowrap}
+  td b{color:var(--ink);font-weight:600}
+  tr:last-child td{border-bottom:none}
+
+  .stack{display:flex;flex-direction:column;gap:13px;counter-reset:step}
+  .step{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--divider);
+        border-radius:12px;padding:14px 16px}
+  .step-n{font-family:var(--sans);font-size:11px;font-weight:600;color:var(--saffron-deep);
+          background:var(--saffron-tint);border-radius:6px;padding:5px 9px;flex:0 0 auto;
+          font-variant-numeric:tabular-nums}
+  .step-b h4{font-family:var(--serif);font-size:14.5px;font-weight:600;margin:0 0 5px;color:var(--ink)}
+  .step-b p{font-family:var(--latin);font-size:16px;line-height:1.55;color:var(--ink-soft);margin:0;max-width:62ch}
+  .step-b p + p{margin-top:7px}
+  .step-b code{font-family:var(--sans);font-size:12.5px;background:var(--chip);padding:1px 5px;border-radius:4px;color:var(--ink)}
+
+  .warn{background:var(--avoid-tint);border:1px solid rgba(158,74,46,.3);border-radius:12px;padding:15px 17px;margin-top:20px}
+  .warn h4{font-family:var(--sans);font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+           color:var(--avoid-deep);margin:0 0 9px}
+  .warn p{font-family:var(--latin);font-size:16px;line-height:1.58;color:var(--ink-soft);margin:0 0 9px;max-width:66ch}
+  .warn p:last-child{margin-bottom:0}
+  .warn b{color:var(--ink)}
+
+  @media (max-width:720px){
+    .split{grid-template-columns:1fr}
+    .board{width:100%}
+    .anno{padding-top:4px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div>
+      <p class="mast-kicker">Vedansh · Jyotish · PRD-43 प्रोटोटाइप</p>
+      <h1>प्रश्न <em>— a chart you can ask</em></h1>
+      <p class="mast-note">Today Vedansh hands you a report and leaves. People do not go to an astrologer for a report — they go with a question. This prototype adds the question.</p>
+    </div>
+    <button class="themetoggle" id="tt" type="button">Switch theme</button>
+  </header>
+
+  <!-- ============ 1. LANDING ============ -->
+  <section class="sec">
+    <div class="sec-head"><span class="sec-num">SCREEN 1</span><h2>The Jyotish landing gains a fifth door</h2></div>
+    <p class="sec-sub">design.md §51c ships a 2×2 grid of doors that each read out for the active person. प्रश्न does not join the grid — it sits <em>above</em> it as a full-width lead, because a question is the reason someone opened this tab, and the four tiles are reference material.</p>
+    <div class="rail">
+      <div class="board">
+        <div class="board-cap"><b>Jyotish landing</b><span>saved profile · one fold</span></div>
+        <div class="phone">
+          <div class="statusbar"><span>9:41</span><span>वेदांश़</span></div>
+          <div class="persons">
+            <button class="pchip" type="button" aria-pressed="true">आराध्या</button>
+            <button class="pchip" type="button" aria-pressed="false">प्रशांत</button>
+            <button class="pchip" type="button" aria-pressed="false">+ जोड़ें</button>
+          </div>
+          <div class="ecard active">
+            <p class="eyebrow">आराध्या की पूरी कुंडली से</p>
+            <p class="ctitle">अनुकूल · धैर्य · चिंतन</p>
+            <p class="cbody">आज गुरु आपके नवम भाव पर — पढ़ने और पूछने का दिन।</p>
+            <p class="cbody" style="font-size:11px;color:var(--ink-muted);margin-top:7px">आधार · गुरु · नवम भाव · चन्द्र से चतुर्थ</p>
+          </div>
+          <div class="doors">
+            <div class="door lead">
+              <p class="door-h">प्रश्न · अपनी कुंडली से पूछें<span class="newtag">NEW</span></p>
+              <p class="door-r">विद्या · व्यापार · नौकरी · धन · स्वास्थ्य — नौ विषय, आपकी कुंडली से उत्तर</p>
+            </div>
+            <div class="door"><p class="door-h">गोचर</p><p class="door-r">साढ़े साती · द्वितीय चरण</p></div>
+            <div class="door"><p class="door-h">दशा</p><p class="door-r">शनि · राहु अन्तर्दशा</p></div>
+            <div class="door"><p class="door-h">गुण मिलान</p><p class="door-r">दो कुंडली मिलाएँ</p></div>
+            <div class="door"><p class="door-h">नामकरण</p><p class="door-r">नक्षत्र से नामाक्षर</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="anno">
+        <h3>Why it leads instead of joining the grid</h3>
+        <p>The 2×2 tiles answer <em>"what does my chart say about X"</em>. प्रश्न answers <em>"what should I do about X"</em>. Those are different products, and the second is the one people pay astrologers for.</p>
+        <p>It also gives <code>जिज्ञासा</code> (the Ask engine, §71) somewhere to route. Typing <em>"क्या मुझे व्यापार शुरू करना चाहिए"</em> into Search today hits no intent. With this shipped, it resolves to <code>prashna.purpose</code> with slot <code>vyapar</code> and opens Screen 3 directly — no new search surface, one new intent in the existing grammar.</p>
+        <h3>Nothing else on the landing moves</h3>
+        <p>The person switcher, the Rashifal card, the four tiles and the closing practice card are untouched. One insert, one fold preserved.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2. PURPOSE PICKER ============ -->
+  <section class="sec">
+    <div class="sec-head"><span class="sec-num">SCREEN 2</span><h2>Nine purposes, gated by who the chart belongs to</h2></div>
+    <p class="sec-sub">Pick a person, then a purpose. Age is derived at read time from the saved birth date and never stored. For a 13-year-old, four purposes are closed and say so — an astrologer would not read वैवाहिक जीवन for a child either.</p>
+    <div class="rail">
+      <div class="board">
+        <div class="board-cap"><b>प्रश्न — purpose picker</b><span>tap a person to see the gate change</span></div>
+        <div class="phone">
+          <div class="navrow"><span class="back">‹</span><span class="navttl">प्रश्न</span></div>
+          <div class="persons" id="personRow">
+            <button class="pchip" type="button" data-person="child" aria-pressed="true">आराध्या · 13</button>
+            <button class="pchip" type="button" data-person="adult" aria-pressed="false">प्रशांत · 38</button>
+          </div>
+          <div class="ecard">
+            <p class="eyebrow">किसके लिए</p>
+            <p class="ctitle" id="whoTitle">आराध्या · तुला लग्न · मीन चन्द्र</p>
+            <p class="cbody" id="whoSub">जन्म 2013 · शनि महादशा, राहु अन्तर्दशा चल रही है</p>
+          </div>
+          <div class="purposes" id="purposeGrid"></div>
+          <p class="foot">यह विवेचन पारम्परिक ज्योतिष पर आधारित है। हर संकेत अपना आधार साथ दिखाता है। चिकित्सा, विधिक या वित्तीय निर्णय के लिए इसका उपयोग न करें।</p>
+        </div>
+      </div>
+      <div class="anno">
+        <h3>The nine are not a menu — they are bhava sets</h3>
+        <p>Each purpose is a typed record: the bhavas it reads, the natural karakas (significators) it weighs, and which dasha lords and transits count as relevant. Nothing is free-form. See the table in section 4.</p>
+        <h3>The gate is a rule, not a hidden tile</h3>
+        <p>A closed purpose still renders, dimmed, with the reason on it. Hiding it would make the app look broken; showing it with <em>"18 वर्ष के बाद"</em> makes the boundary a visible product decision.</p>
+        <p><strong>स्वास्थ्य is gated differently for everyone:</strong> it reads constitution, routine and the classical 6th/8th significations. It never gives a prognosis, and any symptomatic wording routes to a doctor — this survives the rule change and is non-negotiable.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3. THE ANSWER ============ -->
+  <section class="sec">
+    <div class="sec-head"><span class="sec-num">SCREEN 3</span><h2>The answer, the way an astrologer gives it</h2></div>
+    <p class="sec-sub">Six blocks in a fixed order: <b>सार</b> (the short answer) → <b>आधार</b> (the working) → <b>बल / बाधा</b> (what supports, what resists) → <b>काल</b> (real dated windows) → <b>दिशा</b> (what to actually do) → <b>उपाय</b> (practice). Switch purpose or person below and the whole card recomposes.</p>
+    <div class="rail">
+      <div class="board" style="width:min(376px,100%)">
+        <div class="board-cap"><b>प्रश्न — उत्तर</b><span id="answerCap">विद्या · आराध्या</span></div>
+        <div class="phone">
+          <div class="navrow"><span class="back">‹</span><span class="navttl" id="ansNav">विद्या · पढ़ाई</span></div>
+
+          <div class="ecard active">
+            <p class="eyebrow">सार · the short answer</p>
+            <div style="display:flex;gap:9px;align-items:flex-start;justify-content:space-between">
+              <p class="ctitle" id="saarTitle" style="flex:1"></p>
+              <span class="pill strong" id="saarPill"></span>
+            </div>
+            <p class="cbody" id="saarBody"></p>
+          </div>
+
+          <div class="ecard">
+            <p class="eyebrow">आधार · why this reading</p>
+            <p class="cbody" id="aadharIntro"></p>
+            <div id="chains"></div>
+          </div>
+
+          <div class="ecard">
+            <p class="eyebrow">बल और बाधा</p>
+            <div class="split">
+              <div class="col bal"><p class="col-h">जो साथ देता है</p><ul id="balList"></ul></div>
+              <div class="col badha"><p class="col-h">जो रोकता है</p><ul id="badhaList"></ul></div>
+            </div>
+          </div>
+
+          <div class="ecard">
+            <p class="eyebrow">काल · supportive windows</p>
+            <p class="cbody" id="kaalIntro"></p>
+            <div class="tl" id="kaalList"></div>
+          </div>
+
+          <div class="ecard">
+            <p class="eyebrow">दिशा · what to do</p>
+            <ul class="dirlist" id="dishaList"></ul>
+          </div>
+
+          <div class="practice">
+            <div>
+              <p class="pr-t" id="upayaTitle"></p>
+              <p class="pr-s" id="upayaSub"></p>
+            </div>
+            <span class="pr-go">खोलें ›</span>
+          </div>
+
+          <p class="foot">१४ सितम्बर २०२६ की स्थिति के अनुसार। यह पारम्परिक ज्योतिष की दृष्टि है — निश्चित भविष्यवाणी नहीं। हर वाक्य अपना आधार ऊपर दिखाता है।</p>
+        </div>
+      </div>
+
+      <div class="anno">
+        <h3>Try it</h3>
+        <div class="persons" id="ansPersonRow" style="margin-bottom:9px">
+          <button class="pchip" type="button" data-aperson="child" aria-pressed="true">आराध्या · 13</button>
+          <button class="pchip" type="button" data-aperson="adult" aria-pressed="false">प्रशांत · 38</button>
+        </div>
+        <div class="persons" id="ansPurposeRow"></div>
+
+        <h3 style="margin-top:22px">The evidence chain is the product</h3>
+        <p>Every claim carries a <code>basis</code> trail — bhava → lord → placement → dasha → gochar — rendered as those small sans chips. <strong>Serif is the tradition speaking; sans is the machine showing its arithmetic.</strong> A reader who distrusts the sentence can audit the chips.</p>
+        <p>That is also what makes the new rule testable: a test walks every emitted indication and fails the build if <code>basis.length === 0</code>. You cannot ship an unsourced sentence even by accident.</p>
+
+        <h3>Strength is counted, not asserted</h3>
+        <p>The pill reads प्रबल / मध्यम / क्षीण from <em>how many independent factors agree</em>. One factor can never render प्रबल. When factors contradict, both columns fill and the सार names the tension instead of picking a side — which is exactly what a careful astrologer does and what a content-farm horoscope never does.</p>
+
+        <h3>Timing is a window with real dates</h3>
+        <p>Pulled from <code>chart.vimshottari</code> antardashas and <code>computeUpcomingIngresses</code>, which already ship. Never "this will happen on" — always a named period with a start and an end the user can check.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. THE MAP ============ -->
+  <section class="sec">
+    <div class="sec-head"><span class="sec-num">MAP</span><h2>What each purpose actually reads</h2></div>
+    <p class="sec-sub">This is the whole content contract. Nine rows, each a typed record in <code>prashnaPurposes.ts</code>. Adding a tenth purpose is a data edit, not an engine change — the same shape <code>EVENT_RULES</code> uses for the Muhurat finder, including its two-source verification gate.</p>
+    <div class="tblwrap">
+      <table>
+        <thead><tr><th>पुरुषार्थ</th><th>Purpose</th><th>Bhavas</th><th>Karakas</th><th>Gate</th></tr></thead>
+        <tbody>
+          <tr><td>विद्या</td><td>Study, exams, learning</td><td>4 · 5 · 9</td><td>गुरु (vidya), बुध (buddhi)</td><td>—</td></tr>
+          <tr><td>व्यापार</td><td>Business, a new venture</td><td>7 · 10 · 11 · 3</td><td>बुध (trade), गुरु (dhana), मंगल (enterprise)</td><td>18+</td></tr>
+          <tr><td>नौकरी</td><td>Job, service, promotion</td><td>6 · 10 · 11</td><td>शनि (service), सूर्य (authority)</td><td>18+</td></tr>
+          <tr><td>धन</td><td>Money, property, savings</td><td>2 · 4 · 11</td><td>गुरु, शुक्र, मंगल (property)</td><td>18+</td></tr>
+          <tr><td>विवाह</td><td>Marriage, partnership</td><td>7 · 2 · 11</td><td>शुक्र, गुरु</td><td>21+ · never for a minor</td></tr>
+          <tr><td>संतान</td><td>Children, family growth</td><td>5 · 9</td><td>गुरु</td><td>21+</td></tr>
+          <tr><td>स्वास्थ्य</td><td>Constitution &amp; routine</td><td>1 · 6 · 8</td><td>सूर्य, चन्द्र</td><td>no prognosis, ever</td></tr>
+          <tr><td>यात्रा</td><td>Travel, moving, abroad</td><td>3 · 9 · 12</td><td>राहु, चन्द्र</td><td>—</td></tr>
+          <tr><td>मन</td><td>Peace of mind, focus</td><td>4 · 1 · 12</td><td>चन्द्र</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ 5. HOW IT COMPOSES ============ -->
+  <section class="sec">
+    <div class="sec-head"><span class="sec-num">MECHANISM</span><h2>How one answer is composed</h2></div>
+    <p class="sec-sub">Five deterministic passes over data the app already computes. No new ephemeris call, no model, no network — <code>prashna.ts</code> is pure in exactly the way <code>gochar.ts</code> and <code>eventMuhurat.ts</code> are, and the same source-purity test guards it.</p>
+    <div class="stack">
+      <div class="step"><span class="step-n">01</span><div class="step-b">
+        <h4>Gather — the purpose's bhavas and karakas</h4>
+        <p>From <code>chart.houses</code> and <code>chart.grahas</code>: for each bhava in the purpose, its sign, its lord, where that lord sits, and who occupies it. Plus the natural karakas' own placements and dignity. Roughly 12–20 typed facts per purpose.</p>
+      </div></div>
+      <div class="step"><span class="step-n">02</span><div class="step-b">
+        <h4>Weigh — each fact becomes a signed factor</h4>
+        <p>A lord in a kendra or trikona supports. A lord in 6/8/12 resists. Exalted supports; debilitated resists; own sign supports; retrograde qualifies. Karaka in its own bhava-karakatva supports strongly. Each factor carries its <code>basis</code> trail from the moment it is created — there is no later step that "adds sourcing".</p>
+      </div></div>
+      <div class="step"><span class="step-n">03</span><div class="step-b">
+        <h4>Time — overlay dasha and gochar</h4>
+        <p>Does the running Mahadasha or Antardasha lord own or occupy one of the purpose's bhavas? Is a slow graha transiting them right now (<code>computeGocharSnapshot</code>)? When does the next antardasha that touches them begin (<code>chart.vimshottari</code>)? This pass produces the काल windows with real dates.</p>
+      </div></div>
+      <div class="step"><span class="step-n">04</span><div class="step-b">
+        <h4>Resolve — strength, and the tension</h4>
+        <p>Net the supporting and resisting factors. Three or more independent supports and no strong resistance → प्रबल. Mixed → मध्यम, and the सार must name the contradiction out loud. One factor alone → क्षीण, never more.</p>
+      </div></div>
+      <div class="step"><span class="step-n">05</span><div class="step-b">
+        <h4>Speak — compose, don't author</h4>
+        <p>Sentences are assembled from typed phrase tables keyed on (factor kind × strength × age band), the same technique <code>dashaReading.ts</code> already uses. <strong>No paragraph is hand-written per chart</strong>, so the output stays deterministic, translatable into all four reading languages, and machine-scannable for banned vocabulary.</p>
+      </div></div>
+    </div>
+
+    <div class="warn">
+      <h4>What the rule change does and does not open</h4>
+      <p><b>Opened:</b> Vedansh may now say what a combination indicates about a person's tendencies, learning, work and direction — because every such sentence carries its derivation and its strength, and both are testable.</p>
+      <p><b>Still closed, and not up for negotiation in this PRD:</b> longevity or death readings; medical, psychiatric, legal or financial directives; predicting another person's misfortune, divorce or death; fear copy or a dosha framed as a curse; gemstone, puja or consultation commerce; luck and compatibility scores; and any <code>Math.random</code>, AI generation, remote feed or network call. The AI/network ban was pinned to the old §14.3 text — it is now re-pinned to its own clause so that liberalising interpretation can never be read as liberalising that boundary.</p>
+      <p><b>The honest risk:</b> a purpose-driven astrologer surface is the point in this app where a user is most likely to make a real decision — quit a job, start a venture, move a child's school — on what it says. The strength pill and the evidence chain exist so that a weak reading <em>looks</em> weak. Ship the chain, or don't ship the purposes.</p>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  document.getElementById('tt').addEventListener('click',function(){
+    var cur=root.getAttribute('data-theme');
+    if(!cur){cur=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+    root.setAttribute('data-theme',cur==='dark'?'light':'dark');
+  });
+
+  var PURPOSES=[
+    {id:'vidya',hi:'विद्या',en:'Study, exams & learning',minAge:0},
+    {id:'vyapar',hi:'व्यापार',en:'Business & new venture',minAge:18},
+    {id:'naukri',hi:'नौकरी',en:'Job, service & promotion',minAge:18},
+    {id:'dhan',hi:'धन',en:'Money, property & savings',minAge:18},
+    {id:'vivah',hi:'विवाह',en:'Marriage & partnership',minAge:21},
+    {id:'santan',hi:'संतान',en:'Children & family',minAge:21},
+    {id:'swasthya',hi:'स्वास्थ्य',en:'Constitution & routine',minAge:0},
+    {id:'yatra',hi:'यात्रा',en:'Travel, moving & abroad',minAge:0},
+    {id:'man',hi:'मन',en:'Peace of mind & focus',minAge:0}
+  ];
+
+  var PEOPLE={
+    child:{age:13,name:'आराध्या',
+      title:'आराध्या · तुला लग्न · मीन चन्द्र',
+      sub:'जन्म 2013 · शनि महादशा, राहु अन्तर्दशा चल रही है'},
+    adult:{age:38,name:'प्रशांत',
+      title:'प्रशांत · सिंह लग्न · वृश्चिक चन्द्र',
+      sub:'जन्म 1988 · बुध महादशा, शुक्र अन्तर्दशा चल रही है'}
+  };
+
+  var A={
+    'child:vidya':{
+      nav:'विद्या · पढ़ाई',
+      title:'पढ़ाई में नींव मज़बूत है, गति धीमी है।',
+      strength:{w:'प्रबल',cls:'strong',bars:3},
+      body:'तुला लग्न की इस कुंडली में विद्या के तीनों भाव एक-दूसरे को सहारा दे रहे हैं, पर उनका स्वामी शनि है — इसलिए समझ देर से बैठती है और फिर हिलती नहीं।',
+      intro:'चार स्वतंत्र कारक एक ही दिशा में हैं, एक विपरीत। नीचे हर संकेत का आधार है।',
+      chains:[
+        {l:'पंचम भाव — बुद्धि और सीखना',n:['पंचम = कुम्भ','स्वामी शनि','लग्न में स्थित','केन्द्र — बलवान']},
+        {l:'गुरु — विद्या का कारक',n:['गुरु','नवम भाव में','अपने कारक-भाव में','उत्तम']},
+        {l:'सूर्य + बुध — एकादश भाव',n:['सूर्य','बुध','एकादश (सिंह)','बुधादित्य योग']},
+        {l:'चल रही दशा',n:['शनि महादशा','→ 4 जुलाई 2029','राहु अन्तर्दशा','विरोधी लय']}
+      ],
+      bal:['पंचम और चतुर्थ दोनों का स्वामी शनि लग्न में है — सीखना व्यक्तित्व का हिस्सा है, बाहर की चीज़ नहीं।',
+           'गुरु नवम भाव में — परम्परा इसे गहरी समझ और अच्छे शिक्षक मिलने से जोड़ती है।',
+           'सूर्य और बुध साथ (बुधादित्य) — समूह में, बहस और प्रश्नोत्तर में बुद्धि खुलती है।'],
+      badha:['शनि की लय धीमी है — आरम्भ में साथियों से पीछे दिख सकती हैं। यह क्षमता नहीं, गति है।',
+             'राहु अन्तर्दशा नए-नए विषयों की ओर खींचती है — एक विषय पर टिकना कठिन रहेगा।',
+             'चन्द्र षष्ठ भाव में — मन परिश्रमी है पर बेचैन; शांत दिनचर्या के बिना थकता है।'],
+      kaalIntro:'ये अवधियाँ दशा और गोचर से निकली हैं — इनमें कुछ "होगा" नहीं, इनमें प्रयास को सहारा मिलता है।',
+      kaal:[{d:'अब – जुलाई 2029',t:'शनि महादशा · नियमित, ढाँचे वाली पढ़ाई का काल। रोज़ का समय तय रखें — मात्रा से अधिक नियमितता।',dim:false},
+            {d:'नव 2027 – मार्च 2029',t:'गुरु अन्तर्दशा शनि में · विद्या-कारक अपनी अवधि में। नया विषय या नया शिक्षक जोड़ने के लिए अनुकूल।',dim:false},
+            {d:'जुलाई 2029 से',t:'बुध महादशा आरम्भ · भाषा, गणित और संवाद के वर्ष। बोर्ड और आगे की पढ़ाई इसी में पड़ती है।',dim:true}],
+      disha:['दबाव नहीं, समय दें। शनि-प्रधान विद्या-भाव धीमे शुरू होकर देर तक टिकते हैं — जल्दी का परिणाम उल्टा पड़ता है।',
+             'नियम से पढ़ने का एक निश्चित समय बनाएँ। घंटे बढ़ाने से कम, रोज़ उसी समय बैठने से अधिक लाभ।',
+             'समूह-अध्ययन, वाद-विवाद, किसी को पढ़ाकर समझना — बुधादित्य इसी में खुलता है।',
+             'रुचि बदले तो रोकें नहीं, पर हर विषय को कम से कम एक सत्र पूरा करने दें (राहु अन्तर्दशा)।'],
+      upaya:{t:'गुरु-सम्बन्धी पाठ · नवग्रह स्तोत्र',s:'गुरुवार को एक पाठ — विद्या-कारक को स्मरण करने की पारम्परिक रीति'}
+    },
+    'child:swasthya':{
+      nav:'स्वास्थ्य · प्रकृति',
+      title:'प्रकृति परिश्रमी है, पर दिनचर्या चाहिए।',
+      strength:{w:'मध्यम',cls:'mod',bars:2},
+      body:'षष्ठ भाव में चन्द्र और लग्न में शनि — परम्परा इसे सहनशील पर बेचैन प्रकृति से जोड़ती है। यहाँ केवल प्रकृति और दिनचर्या पढ़ी जाती है।',
+      intro:'यह रोग-विचार नहीं है। किसी भी लक्षण के लिए चिकित्सक से मिलें।',
+      chains:[
+        {l:'लग्न — शरीर और ऊर्जा',n:['लग्न = तुला','स्वामी शुक्र','द्वादश भाव में','विश्राम-प्रधान']},
+        {l:'षष्ठ भाव — दिनचर्या',n:['चन्द्र','षष्ठ भाव में','मीन राशि','परिश्रमी, बेचैन']},
+        {l:'गोचर',n:['शनि','मीन में','जन्म राशि पर','साढ़े साती · द्वितीय चरण']}
+      ],
+      bal:['षष्ठ भाव का चन्द्र परम्परा में परिश्रम-सहनशीलता से जुड़ा है।','शुक्र द्वादश में — विश्राम और एकांत से शीघ्र भरपाई।'],
+      badha:['मन की बेचैनी नींद और भोजन के समय पर सबसे पहले दिखती है।','साढ़े साती का मध्य चरण — परम्परा इसे नियमित दिनचर्या का काल कहती है।'],
+      kaalIntro:'दिनचर्या पर ध्यान देने योग्य काल —',
+      kaal:[{d:'अब – मार्च 2027',t:'शनि मीन में · साढ़े साती द्वितीय चरण। सोने, उठने और भोजन के समय को स्थिर रखने का काल।',dim:false},
+            {d:'मार्च 2027 से',t:'शनि मेष में · द्वितीय चरण पूर्ण। लय स्वाभाविक रूप से हल्की होती है।',dim:true}],
+      disha:['सोने और उठने का समय तय — इस कुंडली में सबसे अधिक असर इसी एक बात का है।','खेल या शारीरिक गतिविधि रोज़, प्रतिस्पर्धा के रूप में नहीं।','कोई भी लक्षण दिखे तो चिकित्सक — यह पृष्ठ उसका विकल्प नहीं है।'],
+      upaya:{t:'शनि अष्टकम',s:'शनिवार को एक पाठ — साढ़े साती के काल की पारम्परिक साधना'}
+    },
+    'adult:vyapar':{
+      nav:'व्यापार · नया उद्यम',
+      title:'उद्यम के लिए कुंडली तैयार है — साथी चुनने में सावधानी।',
+      strength:{w:'प्रबल',cls:'strong',bars:3},
+      body:'सिंह लग्न में दशम भाव का स्वामी शुक्र अपनी ही राशि में दशम में बैठा है, और गुरु पंचम में स्वराशि का है। परम्परा इसे स्वतंत्र कार्य के लिए अनुकूल कहती है। बाधा एक ही है, और वह साझेदारी में है।',
+      intro:'पाँच कारक पक्ष में, दो विपक्ष में। दोनों नीचे हैं।',
+      chains:[
+        {l:'दशम भाव — कर्म',n:['दशम = वृषभ','स्वामी शुक्र','दशम में स्वराशि','बुध के साथ']},
+        {l:'एकादश भाव — लाभ',n:['एकादश = मिथुन','स्वामी बुध','दशम में','मंगल एकादश में']},
+        {l:'सप्तम भाव — साझेदारी',n:['सप्तम = कुम्भ','स्वामी शनि','सप्तम में स्वराशि','धीमा, औपचारिक']},
+        {l:'चल रही दशा',n:['बुध महादशा','शुक्र अन्तर्दशा','→ 12 फरवरी 2028','दोनों दशम में']}
+      ],
+      bal:['शुक्र दशम भाव में अपनी राशि में — परम्परा में स्वतंत्र, रुचि-आधारित कार्य का प्रबल संकेत।',
+           'बुध और शुक्र दोनों दशम में, और चल रही महादशा-अन्तर्दशा इन्हीं दोनों की है — समय और कुंडली एक ही ओर इशारा कर रहे हैं।',
+           'गुरु पंचम में स्वराशि — पूँजी और निर्णय-बुद्धि का सहारा।',
+           'मंगल एकादश में — लाभ-भाव में उद्यम-कारक; प्रतिस्पर्धा में टिकने की क्षमता।',
+           'सूर्य नवम में उच्च का — साख और मार्गदर्शन का पारम्परिक संकेत।'],
+      badha:['सप्तम में शनि — साझेदारी धीमी, औपचारिक और शर्तों पर चलेगी। मौखिक भरोसे पर नहीं।',
+             'चन्द्र चतुर्थ में नीच का — निर्णय के समय मन का असंतोष; अकेले में बड़ा निर्णय न लें।'],
+      kaalIntro:'नीचे की अवधियाँ दशा-क्रम और गोचर से हैं। आरम्भ का दिन चुनने के लिए मुहूर्त खोजें ›',
+      kaal:[{d:'अब – 12 फर 2028',t:'बुध महादशा · शुक्र अन्तर्दशा — दोनों दशम भाव में। इस पूरी अवधि को आरम्भ और विस्तार के लिए अनुकूल माना जाता है।',dim:false},
+            {d:'अप्रैल – अक्टू 2027',t:'गुरु एकादश भाव से गोचर · परम्परा में पूँजी और नए सम्बन्धों के लिए सहायक काल।',dim:false},
+            {d:'12 फर 2028 से',t:'सूर्य अन्तर्दशा · साख और औपचारिक मान्यता का काल — पंजीकरण, अनुबंध, नाम खड़ा करना।',dim:true}],
+      disha:['स्वतंत्र रूप से आरम्भ करें; साझेदारी करनी हो तो हर शर्त लिखित — सप्तम का शनि मौखिक व्यवस्था नहीं निभाता।',
+             'कार्य ऐसा चुनें जिसमें रुचि, सौन्दर्य या सेवा हो — दशम का शुक्र यही माँगता है, शुद्ध व्यापार नहीं।',
+             'बड़ा निर्णय किसी एक विश्वस्त व्यक्ति से कहकर लें (नीच चन्द्र)।',
+             'आरम्भ की तिथि मुहूर्त खोजक से चुनें — ऐप में पहले से है।'],
+      upaya:{t:'नवग्रह स्तोत्र',s:'बुध और शुक्र की चल रही अवधि — बुधवार/शुक्रवार को एक पाठ'}
+    },
+    'adult:naukri':{
+      nav:'नौकरी · सेवा',
+      title:'पद और साख का काल है, पर बदलाव धीमा रहेगा।',
+      strength:{w:'मध्यम',cls:'mod',bars:2},
+      body:'दशम भाव बलवान है और सूर्य नवम में उच्च का है — साख बनती है। पर षष्ठ भाव का स्वामी शनि सप्तम में है, इसलिए नौकरी बदलने की प्रक्रिया लम्बी खिंचती है।',
+      intro:'तीन कारक पक्ष में, दो समय को धीमा करते हैं।',
+      chains:[
+        {l:'दशम भाव — कर्म',n:['शुक्र','दशम में स्वराशि','बुध साथ','बलवान']},
+        {l:'षष्ठ भाव — सेवा',n:['षष्ठ = मकर','स्वामी शनि','सप्तम में','धीमी प्रक्रिया']},
+        {l:'सूर्य — पद का कारक',n:['सूर्य','नवम भाव','मेष — उच्च','साख']}
+      ],
+      bal:['सूर्य नवम में उच्च का — वरिष्ठों का सहयोग और साख का पारम्परिक संकेत।',
+           'दशम में दो शुभ ग्रह — कार्यक्षेत्र में स्थान बना रहता है।',
+           'चल रही शुक्र अन्तर्दशा दशम को छूती है — मान्यता का काल।'],
+      badha:['शनि षष्ठेश होकर सप्तम में — प्रस्ताव आते हैं पर निर्णय में महीने लगते हैं। धैर्य रखें।',
+             'नीच चन्द्र — असंतोष के क्षण में इस्तीफ़ा न दें।'],
+      kaalIntro:'अनुकूल काल —',
+      kaal:[{d:'अब – 12 फर 2028',t:'शुक्र अन्तर्दशा · दशम-सम्बन्धी। भीतर पदोन्नति या भूमिका-विस्तार के लिए अनुकूल।',dim:false},
+            {d:'12 फर 2028 से',t:'सूर्य अन्तर्दशा · औपचारिक मान्यता और पद-परिवर्तन के लिए परम्परा में अधिक अनुकूल।',dim:true}],
+      disha:['अभी भीतर विस्तार माँगें; बाहर छलाँग के लिए फरवरी 2028 के बाद का काल अधिक अनुकूल है।','हर प्रस्ताव लिखित रूप में लें — सप्तम का शनि यही माँगता है।','मन के असंतोष वाले दिन कोई अन्तिम निर्णय न लें।'],
+      upaya:{t:'सूर्य अष्टकम',s:'रविवार को एक पाठ — पद और साख के कारक का स्मरण'}
+    },
+    'adult:dhan':{
+      nav:'धन · संपत्ति',
+      title:'संचय की क्षमता अच्छी है, संपत्ति में मन अस्थिर रहेगा।',
+      strength:{w:'मध्यम',cls:'mod',bars:2},
+      body:'एकादश में मंगल और गुरु पंचम में स्वराशि का — आय और निर्णय दोनों सधे हुए हैं। पर चतुर्थ भाव में नीच चन्द्र, इसलिए घर-संपत्ति के निर्णय में असंतोष बना रहता है।',
+      intro:'तीन कारक पक्ष में, एक स्पष्ट बाधा।',
+      chains:[
+        {l:'एकादश भाव — आय',n:['मंगल','एकादश में','मिथुन','उद्यम-कारक']},
+        {l:'द्वितीय भाव — संचय',n:['द्वितीय = कन्या','स्वामी बुध','दशम में','कर्म से धन']},
+        {l:'चतुर्थ भाव — संपत्ति',n:['चन्द्र','चतुर्थ में','वृश्चिक — नीच','असंतोष']}
+      ],
+      bal:['द्वितीयेश बुध दशम में — परम्परा में "कर्म से धन" का सीधा संकेत।','गुरु पंचम में स्वराशि — निवेश-निर्णय में विवेक।','मंगल एकादश में — आय के एक से अधिक स्रोत।'],
+      badha:['चतुर्थ का नीच चन्द्र — घर या भूमि के निर्णय में बार-बार मन बदलना।','शनि सप्तम में — साझा निवेश धीमा और औपचारिक।'],
+      kaalIntro:'अनुकूल काल —',
+      kaal:[{d:'अप्रैल – अक्टू 2027',t:'गुरु एकादश से गोचर · परम्परा में संचय और नए स्रोत के लिए सहायक।',dim:false},
+            {d:'12 फर 2028 से',t:'सूर्य अन्तर्दशा · स्थायी संपत्ति के औपचारिक निर्णय के लिए अधिक अनुकूल।',dim:true}],
+      disha:['आय बढ़ाने पर ध्यान दें, संपत्ति खरीदने की जल्दी नहीं — नीच चन्द्र इस निर्णय को बार-बार पलटाएगा।','साझा निवेश में सब लिखित।','यह वित्तीय सलाह नहीं है — निवेश का निर्णय अपने सलाहकार से लें।'],
+      upaya:{t:'नवग्रह स्तोत्र',s:'गुरुवार को एक पाठ'}
+    }
+  };
+  var FALLBACK={
+    nav:'प्रश्न',
+    title:'इस विषय का विवेचन इस प्रोटोटाइप में अभी नहीं बना है।',
+    strength:{w:'—',cls:'mod',bars:1},
+    body:'शिपिंग बिल्ड में सभी नौ विषय एक ही इंजन से बनते हैं। इस मॉक में पाँच भरे हुए हैं — विद्या, स्वास्थ्य, व्यापार, नौकरी और धन।',
+    intro:'ऊपर से कोई भरा हुआ विषय चुनें।',chains:[],bal:['—'],badha:['—'],
+    kaalIntro:'—',kaal:[],disha:['ऊपर विद्या, स्वास्थ्य, व्यापार, नौकरी या धन चुनें।'],
+    upaya:{t:'नवग्रह स्तोत्र',s:'सभी विषयों के लिए उपलब्ध पारम्परिक पाठ'}
+  };
+
+  var person='child', purpose='vidya';
+
+  function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;}
+
+  function renderPurposeGrid(){
+    var g=document.getElementById('purposeGrid');g.textContent='';
+    var age=PEOPLE[person].age;
+    PURPOSES.forEach(function(p){
+      var open=age>=p.minAge;
+      var b=document.createElement('button');
+      b.type='button';b.className='purpose';b.setAttribute('aria-pressed',String(open&&p.id===purpose));
+      if(!open)b.disabled=true;
+      b.appendChild(el('span','p-hi',p.hi));
+      b.appendChild(el('span','p-en',p.en));
+      if(!open)b.appendChild(el('span','p-gate',p.minAge+' वर्ष के बाद'));
+      if(p.id==='swasthya')b.appendChild(el('span','p-gate','प्रकृति व दिनचर्या — रोग-विचार नहीं'));
+      b.addEventListener('click',function(){purpose=p.id;renderAll();});
+      g.appendChild(b);
+    });
+  }
+
+  function renderPurposeChips(){
+    var r=document.getElementById('ansPurposeRow');r.textContent='';
+    var age=PEOPLE[person].age;
+    PURPOSES.filter(function(p){return age>=p.minAge;}).forEach(function(p){
+      var b=document.createElement('button');
+      b.type='button';b.className='pchip';b.textContent=p.hi;
+      b.setAttribute('aria-pressed',String(p.id===purpose));
+      b.addEventListener('click',function(){purpose=p.id;renderAll();});
+      r.appendChild(b);
+    });
+  }
+
+  function renderAnswer(){
+    var d=A[person+':'+purpose]||FALLBACK;
+    var pr=PURPOSES.filter(function(p){return p.id===purpose;})[0];
+    document.getElementById('ansNav').textContent=d.nav;
+    document.getElementById('answerCap').textContent=(pr?pr.hi:'प्रश्न')+' · '+PEOPLE[person].name;
+    document.getElementById('saarTitle').textContent=d.title;
+    document.getElementById('saarBody').textContent=d.body;
+
+    var pill=document.getElementById('saarPill');
+    pill.className='pill '+d.strength.cls;pill.textContent='';
+    pill.appendChild(document.createTextNode(d.strength.w));
+    var bars=el('span','bars');
+    for(var i=0;i<3;i++){var t=el('i',i<d.strength.bars?'on':'');bars.appendChild(t);}
+    pill.appendChild(bars);
+
+    document.getElementById('aadharIntro').textContent=d.intro;
+    var ch=document.getElementById('chains');ch.textContent='';
+    d.chains.forEach(function(c){
+      var box=el('div','chain');
+      box.appendChild(el('span','cl',c.l));
+      c.n.forEach(function(n,i){
+        if(i)box.appendChild(el('span','arr','→'));
+        box.appendChild(el('span','node',n));
+      });
+      ch.appendChild(box);
+    });
+
+    function fill(id,arr){var u=document.getElementById(id);u.textContent='';
+      arr.forEach(function(t){u.appendChild(el('li',null,t));});}
+    fill('balList',d.bal);fill('badhaList',d.badha);
+
+    document.getElementById('kaalIntro').textContent=d.kaalIntro;
+    var kl=document.getElementById('kaalList');kl.textContent='';
+    d.kaal.forEach(function(w){
+      var row=el('div','tw'+(w.dim?' dim':''));
+      row.appendChild(el('span','tw-d',w.d));
+      row.appendChild(el('p','tw-t',w.t));
+      kl.appendChild(row);
+    });
+
+    var dl=document.getElementById('dishaList');dl.textContent='';
+    d.disha.forEach(function(t){dl.appendChild(el('li',null,t));});
+
+    document.getElementById('upayaTitle').textContent=d.upaya.t;
+    document.getElementById('upayaSub').textContent=d.upaya.s;
+  }
+
+  function renderAll(){
+    document.getElementById('whoTitle').textContent=PEOPLE[person].title;
+    document.getElementById('whoSub').textContent=PEOPLE[person].sub;
+    renderPurposeGrid();renderPurposeChips();renderAnswer();
+  }
+
+  function bindPersons(rowId,attr){
+    document.getElementById(rowId).addEventListener('click',function(e){
+      var b=e.target.closest('button');if(!b||!b.getAttribute(attr))return;
+      person=b.getAttribute(attr);
+      var age=PEOPLE[person].age;
+      var cur=PURPOSES.filter(function(p){return p.id===purpose;})[0];
+      if(!cur||age<cur.minAge)purpose=(person==='child')?'vidya':'vyapar';
+      ['data-person','data-aperson'].forEach(function(a){
+        [].forEach.call(document.querySelectorAll('['+a+']'),function(x){
+          x.setAttribute('aria-pressed',String(x.getAttribute(a)===person));});});
+      renderAll();
+    });
+  }
+  bindPersons('personRow','data-person');
+  bindPersons('ansPersonRow','data-aperson');
+
+  renderAll();
+})();
+</script>

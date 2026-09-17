@@ -106,9 +106,11 @@ test('saved report renders every section in order with disclaimers at both ends'
   const text = textOf(tree);
 
   for (const heading of [
+    'Your Kundali in sixty seconds',
     'Birth details and chart summary',
     'Lagna',
     'Inner rhythm',
+    'What the placements say together',
     'Career and work',
     'Relationships',
     'Resources and gains',
@@ -116,7 +118,7 @@ test('saved report renders every section in order with disclaimers at both ends'
     'Home and learning',
     'Dharma and fortune',
     'Current classical observations',
-    'Vimshottari Dasha — a life-year view',
+    'Vimshottari Dasha — a dated life view',
   ]) {
     assert.ok(text.includes(heading), `section: ${heading}`);
   }
@@ -128,12 +130,28 @@ test('saved report renders every section in order with disclaimers at both ends'
   assert.ok(!text.includes('Mangal'));
   assert.ok(!/kaal\s*sarp/i.test(text));
 
+  // PRD-43: the top band is the dated as-of stamp; the full disclaimer
+  // renders exactly once, at the foot — never per life area.
+  const stamps = tree.root.findAllByType(Text).filter(
+    (node) =>
+      typeof node.props.children === 'string'
+      && /^As of \d{1,2} [A-Z][a-z]{2} \d{4} · traditional guidance/.test(node.props.children)
+  );
+  assert.equal(stamps.length, 1, 'one as-of stamp at the top');
   const disclaimers = tree.root.findAllByType(Text).filter(
     (node) =>
       typeof node.props.children === 'string'
-      && node.props.children.includes('not a certain prediction')
+      && node.props.children.includes('not a basis for medical, financial, or legal decisions')
   );
-  assert.ok(disclaimers.length >= 2, 'disclaimer frames the report at both ends');
+  assert.equal(disclaimers.length, 1, 'full disclaimer exactly once');
+  assert.ok(!text.includes('structural view of the houses'), 'per-area disclaimer gone');
+  assert.doesNotMatch(text, /\b[123]th bhava/, 'ordinal grammar');
+  // Every interpretive section renders its आधार chain.
+  const chains = tree.root.findAll((node) => typeof node.props.testID === 'string' && node.props.testID.startsWith('basis-'));
+  assert.ok(chains.length >= 9, `basis chains rendered: ${chains.length}`);
+  assert.ok(tree.root.findAll((node) => node.props.testID === 'basis-combinations').length > 0);
+  // Dates first, age second.
+  assert.match(text, /active at birth → \d{1,2} [A-Z][a-z]{2} \d{4}/);
   act(() => tree.unmount());
 });
 
@@ -184,9 +202,10 @@ test('one Share button offers both the card and the warned full-text export', ()
   assert.ok(message.includes('Birth place: Ujjain'));
   assert.ok(message.includes('Lagna (ascendant):'));
   assert.ok(message.includes('Vimshottari Mahadasha table'));
-  assert.ok(message.includes('## Vimshottari Dasha — a life-year view'));
+  assert.ok(message.includes('## Vimshottari Dasha — a dated life view'));
+  assert.ok(message.includes('Basis: '));
   assert.ok(message.includes('```json'));
-  assert.ok(message.includes('"reportVersion":1'));
+  assert.ok(message.includes('"reportVersion":2'));
 
   shareSpy.mockRestore();
   act(() => tree.unmount());

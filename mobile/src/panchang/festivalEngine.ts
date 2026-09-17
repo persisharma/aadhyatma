@@ -1,8 +1,8 @@
 import { addDays } from './calendarGrid';
-import { computeTithiAndMonth, getSiderealSunLng, locationKey, tithiAtMadhyahna, tithiAtMoonrise, UJJAIN_CITY_ID } from './engine';
+import { computeTithiAndMonth, getSiderealSunLng, locationKey, tithiAtAparahna, tithiAtMadhyahna, tithiAtMoonrise, UJJAIN_CITY_ID } from './engine';
 import { getObservanceCatalog, OBSERVANCE_RULES } from './festivals';
 import { getStoredObservanceYear } from './observanceStore';
-import { PRECOMPUTED_OBSERVANCES } from './precomputedObservances';
+import { PRECOMPUTED_OBSERVANCES, type PackedObservance } from './precomputedObservances';
 import type { CalendarSystem, GeoLocation, ObservanceRule, ResolvedObservance, ResolvedFestival } from './types';
 
 // Coordinates + the stable city id used for cache keys; omitted ⇒ Ujjain.
@@ -72,9 +72,12 @@ export function isObservanceDataReady(
     || getStoredObservanceYear(cityId, calendarSystem, year) !== null;
 }
 
-function reconstructPrecomputed(entries: { id: string; date: string }[]): ResolvedObservance[] {
+// Both baked and device-scanned years arrive as [ruleId, date] pairs — the baked
+// table because the pair encoding keeps it inside the launch-graph byte budget
+// (see its header), the store because it mirrors the same shape on disk.
+function reconstructPrecomputed(entries: readonly PackedObservance[]): ResolvedObservance[] {
   const results: ResolvedObservance[] = [];
-  for (const { id, date } of entries) {
+  for (const [id, date] of entries) {
     const rule = ruleById.get(id);
     if (!rule) continue;
     const [y, m, d] = date.split('-').map(Number);
@@ -219,7 +222,7 @@ export function getObservancesForDateKey(
     ? PRECOMPUTED_OBSERVANCES[`${calendarSystem}:${year}`]
     : getStoredObservanceYear(cityId, calendarSystem, year);
   const entries = exact ?? PRECOMPUTED_OBSERVANCES[`${calendarSystem}:${year}`];
-  if (entries) return reconstructPrecomputed(entries.filter((item) => item.date === dateKey));
+  if (entries) return reconstructPrecomputed(entries.filter(([, date]) => date === dateKey));
   return getObservancesForDate(new Date(`${dateKey}T12:00:00`), calendarSystem, location);
 }
 
@@ -341,18 +344,31 @@ export function matchesLunarTithiRuleOnDate(
   if (rule.dayRule === 'madhyahna') {
     return matchesInstantVyapiniRuleOnDate(rule, date, calendarSystem, location, tithiAtMadhyahna);
   }
+  if (rule.dayRule === 'aparahna') {
+    return matchesInstantVyapiniRuleOnDate(rule, date, calendarSystem, location, tithiAtAparahna);
+  }
   return matchesUdayaTithiRuleOnDate(rule, date, calendarSystem, location);
 }
 
 /**
  * Instant-vyapini day selection — the day whose GIVEN instant the tithi covers.
- * Two instants are wired: moonrise (chandrodaya — Sankashti Chaturthi, Karwa
- * Chauth, Bahula Chaturthi, whose fast ends with the night's moon) and midday
+ * Three instants are wired: moonrise (chandrodaya — Sankashti Chaturthi, Karwa
+ * Chauth, Bahula Chaturthi, whose fast ends with the night's moon), midday
  * (madhyahna — Ganesh Chaturthi's sthapana, Ram Navami's janma, the monthly
- * Vinayaka Chaturthi). The moonrise case is described below; madhyahna is the
+ * Vinayaka Chaturthi) and afternoon (aparahna — दर्श अमावस्या, whose पितृ तर्पण is
+ * an afternoon rite). The moonrise case is described below; madhyahna is the
  * identical selection at the sunrise–sunset midpoint (Ganesh Chaturthi 2026:
  * Chaturthi runs 14 Sep 7:06 AM → 15 Sep 7:44 AM, so udaya said 15 Sep while
- * every published almanac says 14 Sep, whose midday the tithi covers).
+ * every published almanac says 14 Sep, whose midday the tithi covers), and
+ * aparahna the identical selection at sunrise + 0.7 × daylength (Bhadrapada
+ * 2026: amavasya runs 10 Sep 10:33 AM → 11 Sep 8:56 AM, so दर्श अमावस्या is
+ * 10 Sep while the udaya अमावस्या व्रत stays on 11 Sep — Drik publishes both).
+ *
+ * Case (c) is load-bearing for aparahna: an amavasya can close just before a
+ * day's aparahna and so cover no day's afternoon at all (Ashadha 2026 — it runs
+ * 13 Jul 6:49 PM → 14 Jul 3:13:30 PM, and 14 Jul's aparahna midpoint is
+ * 3:13:50 PM, twenty seconds late). The udaya fallback is what keeps that
+ * lunation from vanishing; it recovers 14 Jul, the sunrise day.
  *
  * Krishna Chaturthi usually begins mid-morning and ends before the next
  * mid-morning, so the sunrise (udaya) answer names the day AFTER the night the

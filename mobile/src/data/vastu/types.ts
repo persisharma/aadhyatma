@@ -9,6 +9,31 @@ import type { DishaDirection } from '@/panchang/eventMuhurat';
 
 export type VastuContentStatus = 'draft' | 'verified';
 
+/** The nine mandala zones — the eight diks plus the ब्रह्मस्थान centre.
+ * The assessment engine's whole vocabulary of place (PRD-24 Phase 2 §B1). */
+export type VastuZone = DishaDirection | 'center';
+
+/** Registry bucket a row belongs to (template grouping only — never a rule). */
+export type VastuRoomCategory =
+  | 'worship'
+  | 'living'
+  | 'utility'
+  | 'structure'
+  | 'element'
+  | 'activity'
+  | 'plot';
+
+/**
+ * Weight of the PRESCRIBED placement (PRD-24 Phase 2 §0.1):
+ * `vidhana` (विधान — the texts prescribe it) or `shreyas` (श्रेयस् — preferred;
+ * absence is not a fault). A row's `avoidDirections` is ALWAYS the निषेध class
+ * regardless of this weight.
+ */
+export type VastuWeight = 'vidhana' | 'shreyas';
+
+/** Which home kinds list the row in templates; plot-level rows are villa/plot only. */
+export type HomeKind = 'flat' | 'villa' | 'plot';
+
 export type VastuSource = {
   /** ≥2 independent published domains; review-only, never rendered. */
   referenceUrls: string[];
@@ -31,6 +56,19 @@ export type VastuRoomEntry = {
   titleEn: string;
   directions: readonly DishaDirection[];
   isCenter?: boolean;
+  /** Registry bucket; default `'living'`. Grouping only — never a rule. */
+  category?: VastuRoomCategory;
+  /** Weight of the prescribed placement; default `'vidhana'` (the shipped rows are all prescriptions). */
+  weight?: VastuWeight;
+  /** The texts' stated second place(s) — typed so it can be COMPARED, not just read in prose. */
+  alternateDirections?: readonly DishaDirection[];
+  /** Zones the texts PROSCRIBE for this room — always the निषेध class in a finding.
+   * May include `'center'` (e.g. toilet). Typed only where the prose already states it. */
+  avoidDirections?: readonly VastuZone[];
+  /** The direction one FACES while using the room (cook → east). */
+  facingWhileUsing?: readonly DishaDirection[];
+  /** Which home kinds show this row in templates; default all. */
+  appliesTo?: readonly HomeKind[];
   conventionHi: string;
   conventionEn: string;
   reasonHi: string;

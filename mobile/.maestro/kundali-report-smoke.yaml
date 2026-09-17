@@ -193,10 +193,25 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Full Kundali reading"
     timeout: 15000
-- assertVisible: ".*not a certain prediction.*"
-- assertVisible: ".*Birth details and chart summary.*"
+# PRD-43: the top band is the dated as-of stamp; the sixty-second snapshot leads.
+- assertVisible: "As of .*not a certain prediction.*"
+- assertVisible: ".*Your Kundali in sixty seconds.*"
+- scrollUntilVisible:
+    element:
+      text: ".*Birth details and chart summary.*"
+    direction: DOWN
+    timeout: 15000
 - assertVisible: "Aarav"
 - assertVisible: ".*Ujjain.*"
+# Combinations: the Lagna lord always leads, with its आधार chain beneath.
+- scrollUntilVisible:
+    element:
+      text: ".*What the placements say together.*"
+    direction: DOWN
+    timeout: 15000
+- assertVisible: ".*Lagna lord .*"
+- assertVisible:
+    id: "basis-combinations"
 - scrollUntilVisible:
     element:
       text: ".*Career and work.*"
@@ -208,6 +223,7 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 20000
 - assertVisible: ".*Sade Sati.*"
+- assertVisible: "As of .*"
 # Mahadasha sits under Sade Sati — below the fold on Android; scroll to it.
 # Low visibilityPercentage: on iOS it's already partly on-screen at the bottom,
 # so the default 100% is never met and the scroll runs past it.
@@ -217,6 +233,8 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 15000
     visibilityPercentage: 10
+# Dates first, age second; the birth-time period is named as such.
+- assertVisible: ".*active at birth → .*"
 # The closing disclaimer sits under the last section.
 - scrollUntilVisible:
     element:

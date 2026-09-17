@@ -1,0 +1,121 @@
+# Regional Parv Smoke Test (PRD-42 wave 1)
+#
+# The defect this guards: a Rajasthani observance could ship a full katha, a bhog
+# profile and a search row while its rule was `catalog-only` — so it was findable
+# and appeared on NO calendar day. The thing worth asserting on a device is
+# therefore not a date (specific dates are date-dependent and belong to the unit
+# suites, the same rule parv-arc-smoke follows) but that a wave-1 rule reaches a
+# detail page carrying a real "Next · <date>" pill instead of nothing.
+#
+#   1. Gangaur — a rule PROMOTED from catalog-only — is reachable from the Vrat
+#      list and its detail shows both the katha it always had and the next date
+#      it never had.
+#   2. Goga Navami — the observance the Sept 2026 report named — is reachable from
+#      catalog search and likewise resolves to a next occurrence.
+#
+# Ordering note: the landing's browse-by-type tiles are replaced by results once
+# the landing search field has text, so the tile leg runs BEFORE the search leg
+# (the same order vrat-catalog-smoke uses).
+#
+# Language note (same as vrat-catalog-smoke): the screen reads the global reading
+# language; default Hindi is Devanagari which Maestro's iOS tree can't read, so we
+# flip to English on More first, then assert English content.
+#
+# Selector note: the katha button collapses its children into the explicit
+# accessibilityLabel "Read katha <Title>", so match that, never the visible text.
+
+appId: com.prashantsharma.vedansh
+---
+# ── Boot Vedansh (exits on Home) ──
+- runFlow: _launch.yaml
+
+# ── Global reading language → English ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── Open Panchang tab, switch to the Vrat & Parv segment ──
+- tapOn: { id: "tab-panchang" }
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Vrat & Parv"
+    timeout: 30000
+- tapOn: "Vrat & Parv"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Browse by type"
+    timeout: 15000
+
+# ── A promoted catalog-only rule: katha since forever, next date only now ──
+- tapOn: "Vrat,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Search within this list…"
+    timeout: 15000
+- tapOn: "Search within this list…"
+- inputText: "Gangaur"
+- hideKeyboard
+- extendedWaitUntil:
+    visible: "Gangaur"
+    timeout: 15000
+- tapOn: "Gangaur"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "About"
+    timeout: 15000
+- assertVisible: "Next · .*"
+- assertVisible: "Read katha.*"
+- assertVisible: "Follow"
+- tapOn: "Back"
+- waitForAnimationToEnd
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# ── The reported observance: catalog search → detail → it resolves to a date ──
+- extendedWaitUntil:
+    visible: "Browse by type"
+    timeout: 15000
+- tapOn: "Search vrat, festival, upvas, katha…"
+- inputText: "Goga"
+- hideKeyboard
+- extendedWaitUntil:
+    visible: "Goga Navami"
+    timeout: 15000
+- tapOn: "Goga Navami"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "About"
+    timeout: 15000
+- assertVisible: "Next · .*"
+- assertVisible: "Follow"
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# ── Restore Hindi default (best-effort) + cleanup ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
+    optional: true
+- tapOn:
+    text: "Language,.*"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "Hindi"
+    optional: true
+- waitForAnimationToEnd
+- stopApp:
+    appId: com.prashantsharma.vedansh

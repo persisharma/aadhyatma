@@ -15,6 +15,10 @@ const MAESTRO = process.env.MAESTRO_BIN || 'maestro';
 const CONFIG = path.join(MOBILE_DIR, '.maestro', 'config.yaml');
 const EXPO_GO = 'host.exp.Exponent';
 const METRO_PORT = process.env.REEL_METRO_PORT || '8081';
+// Target device: defaults to the single booted sim, but can be pinned to a specific UDID so a
+// render runs on a dedicated simulator without colliding with another booted sim (e.g. a parallel
+// e2e run). Applied to every simctl call and passed to Maestro via --device.
+const DEVICE = process.env.REEL_SIM_UDID || 'booted';
 
 const sh = (cmd) => execSync(cmd, { stdio: 'pipe', encoding: 'utf8' });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -47,8 +51,8 @@ async function ensureMetro(metroLog) {
 
 async function bootApp(metroLog) {
   console.log('  loading Vedansh into Expo Go…');
-  try { sh(`xcrun simctl terminate booted ${EXPO_GO}`); } catch {}
-  sh(`xcrun simctl openurl booted "exp://127.0.0.1:${METRO_PORT}"`);
+  try { sh(`xcrun simctl terminate ${DEVICE} ${EXPO_GO}`); } catch {}
+  sh(`xcrun simctl openurl ${DEVICE} "exp://127.0.0.1:${METRO_PORT}"`);
   for (let i = 0; i < 70; i++) {
     if (fs.existsSync(metroLog) && fs.readFileSync(metroLog, 'utf8').includes('Bundled')) {
       console.log('  bundle built');
@@ -57,7 +61,7 @@ async function bootApp(metroLog) {
     await sleep(3000);
   }
   await sleep(8000);
-  try { sh(`xcrun simctl terminate booted ${EXPO_GO}`); } catch {}
+  try { sh(`xcrun simctl terminate ${DEVICE} ${EXPO_GO}`); } catch {}
   await sleep(2000);
 }
 
@@ -65,15 +69,16 @@ function statusBar(on) {
   try {
     if (on)
       sh(
-        'xcrun simctl status_bar booted override --time "9:41" --batteryState charged ' +
+        `xcrun simctl status_bar ${DEVICE} override --time "9:41" --batteryState charged ` +
           '--batteryLevel 100 --dataNetwork wifi --wifiMode active --wifiBars 3 --cellularMode active --cellularBars 4',
       );
-    else sh('xcrun simctl status_bar booted clear');
+    else sh(`xcrun simctl status_bar ${DEVICE} clear`);
   } catch {}
 }
 
 function runFlow(flow) {
-  execFileSync(MAESTRO, ['test', '--config', CONFIG, flow], { stdio: 'inherit' });
+  const deviceArgs = DEVICE === 'booted' ? [] : ['--device', DEVICE];
+  execFileSync(MAESTRO, ['test', ...deviceArgs, '--config', CONFIG, flow], { stdio: 'inherit' });
 }
 
 /**
@@ -111,16 +116,37 @@ export async function capture(reel, lang, flows, outDir) {
   for (let i = 0; i < flows.beats.length; i++) {
     const clip = clips[i];
     console.log(`  recording beat ${i} → ${path.basename(clip)}`);
-    const rec = spawn('xcrun', ['simctl', 'io', 'booted', 'recordVideo', '--codec=h264', '--force', clip], {
+    // Guard: kill any recorder that outlived the previous beat (SIGINT to xcrun doesn't always stop
+    // the underlying simctl recording — a straggler steals this beat's clip). Start from a clean slate.
+    try { sh(`pkill -f "simctl io ${DEVICE} recordVideo" 2>/dev/null`); } catch {}
+    await sleep(800);
+    const rec = spawn('xcrun', ['simctl', 'io', DEVICE, 'recordVideo', '--codec=h264', '--force', clip], {
       stdio: 'ignore',
     });
-    await sleep(1600); // let the recorder attach before the first action (avoids 0-frame clips)
+    await sleep(4000); // let the recorder fully attach before the first action — simctl recordVideo
+                       // can take ~4s to start capturing on these sims, and a short beat that runs
+                       // during that window yields a ~0.1s frozen clip. Wait it out first.
     try {
       runFlow(flows.beats[i]);
     } finally {
-      await sleep(700);
+      await sleep(1000);
       rec.kill('SIGINT'); // simctl finalizes the file on SIGINT
       await new Promise((resolve) => rec.on('close', resolve));
+      // Belt-and-braces: SIGINT to xcrun sometimes leaves the simctl recording alive (→ a clip that
+      // over-runs into the next beat). Force-stop any straggler for this device so it finalizes here.
+      try { sh(`pkill -f "simctl io ${DEVICE} recordVideo" 2>/dev/null`); } catch {}
+    }
+    // simctl allows only ONE recordVideo at a time and is slow to release the capture device after
+    // the process exits. Without this settle, the next beat's recorder spawns before the device is
+    // free — it either over-runs (a 20-30s clip spanning neighbours) or gets starved to a ~0.1s
+    // frozen clip. Wait for the device to actually free, verified by size stabilising on disk.
+    await sleep(2500);
+    let prevSize = -1;
+    for (let w = 0; w < 20; w++) {
+      const sz = fs.existsSync(clip) ? fs.statSync(clip).size : 0;
+      if (sz > 0 && sz === prevSize) break;
+      prevSize = sz;
+      await sleep(500);
     }
     if (!fs.existsSync(clip) || fs.statSync(clip).size === 0) {
       throw new Error('recordVideo produced no output: ' + clip);
@@ -129,6 +155,6 @@ export async function capture(reel, lang, flows, outDir) {
   }
 
   statusBar(false);
-  try { sh(`xcrun simctl terminate booted ${APP_ID}`); } catch {}
+  try { sh(`xcrun simctl terminate ${DEVICE} ${APP_ID}`); } catch {}
   return clips;
 }

@@ -112,6 +112,13 @@ const FAMILIES: {
     why: 'same surface as sadhana — one place for the day’s practice',
   },
   {
+    family: 'return-reminder',
+    payload: { type: 'return-reminder', dateKey: '2026-09-17', weekday: 4, absentDays: 9 },
+    tab: 'HomeTab',
+    screen: 'Home',
+    why: 'the weekday deity’s texts it named lead Home’s FOR TODAY row, recomputed from today',
+  },
+  {
     family: 'pitru-smaran-reminder',
     payload: { type: 'pitru-smaran-reminder', entryId: 'e1' },
     tab: 'MoreTab',

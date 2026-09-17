@@ -42,6 +42,20 @@ export type VidhiStackParamList = {
 
 export type GitaReaderParams = { chapter: number; initialIndex?: number };
 
+/**
+ * मेरा घर journey (PRD-24 Phase 2). Doors on More (VastuDisha's मेरे घर card)
+ * and Panchang (the griha-pravesh muhurat result, Ask actions) — registered on
+ * both stacks so every door pushes in place and Back retraces the journey
+ * (the PRD-19 multi-stack pattern; this shared type is the single source of
+ * truth for the params).
+ */
+export type GharVastuStackParamList = {
+  GharVastuRoster: undefined;
+  GharVastuSetup: { homeId?: string; role?: 'living' | 'considering' } | undefined;
+  GharVastu: { homeId: string };
+  GharVastuCompare: { homeIds: readonly string[] };
+};
+
 export type HomeStackParamList = VidhiStackParamList & {
   Home: undefined;
   /**
@@ -108,7 +122,7 @@ export type HomeStackParamList = VidhiStackParamList & {
   TodayVidhan: undefined;
 };
 
-export type MoreStackParamList = VidhiStackParamList & {
+export type MoreStackParamList = VidhiStackParamList & GharVastuStackParamList & {
   MoreHome: undefined;
   Wishlist: undefined;
   Profile: undefined;
@@ -149,7 +163,7 @@ export type PanchangSection = 'panchang' | 'vrat' | 'jyotish';
 // Panchang tab stack — the date-first calendar, the "Vrat & Parv" catalog
 // (PRD-09), and the Jyotish tools landing (PRD-C). पंचांग, व्रत and ज्योतिष are
 // three bottom-tab entry points into this ONE route, not three routes.
-export type PanchangStackParamList = VidhiStackParamList & {
+export type PanchangStackParamList = VidhiStackParamList & GharVastuStackParamList & {
   PanchangHome:
     | {
         /**
@@ -182,6 +196,9 @@ export type PanchangStackParamList = VidhiStackParamList & {
   Gochar: undefined;
   // Compiled full-chart reading — PRD-20 Phase 6
   KundaliReport: undefined;
+  // प्रश्न — purpose-driven reading for the active person (PRD-43 Wave D).
+  // `purposeId` preselects a purpose (the Ask intent deep-links here).
+  Prashna: { purposeId?: string } | undefined;
   GunaMilan: undefined;
   Namkaran: undefined;
   /** वास्तु दिशा (PRD-24) — the griha-pravesh result's door pushes it in place

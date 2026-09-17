@@ -16,14 +16,20 @@ import JanmaTithiDetailScreen from '@/screens/JanmaTithiDetailScreen';
 import KulParamparaScreen from '@/screens/KulParamparaScreen';
 import KulParamparaEditScreen from '@/screens/KulParamparaEditScreen';
 import KulParamparaExportScreen from '@/screens/KulParamparaExportScreen';
-import VidhiCatalogScreen from '@/screens/VidhiCatalogScreen';
-import VidhiDetailScreen from '@/screens/VidhiDetailScreen';
-import VidhiConductScreen from '@/screens/VidhiConductScreen';
 import GitaReaderScreen from '@/screens/GitaReaderScreen';
 import type { MoreStackParamList } from './types';
 
 const Stack = createNativeStackNavigator<MoreStackParamList>();
 
+/**
+ * The vidhi flow loads through `require()` thunks (the `getComponent` pattern
+ * main introduced for प्रश्न). `VidhiDetailScreen` statically imports
+ * `panchang/bhogContent` → `bhogContentExtended` — ~90 KB of offering content
+ * that Hermes was evaluating before the first frame, on every cold start, for a
+ * screen nobody has opened yet. The flow is registered on three stacks
+ * (RULEBOOK §6.0.1) and two of them are static, so both had to move for the
+ * payload to actually leave the launch graph (`data/__tests__/launchGraph`).
+ */
 export default function MoreStackNavigator() {
   return (
     <Stack.Navigator
@@ -45,6 +51,16 @@ export default function MoreStackNavigator() {
       <Stack.Screen name="PitruPakshaOverview" component={PitruPakshaOverviewScreen} />
       {/* वास्तु दिशा (PRD-24) — compass + room guidance. */}
       <Stack.Screen name="VastuDisha" component={VastuDishaScreen} />
+      {/* मेरा घर (PRD-24 Phase 2) — roster, setup walk and the mandala reading.
+          Loaded through require() thunks so the journey's screens (grid, engine,
+          handoff) stay OFF the static launch graph (launchGraph.test.ts budget)
+          until a door is actually opened. */}
+      {/* eslint-disable @typescript-eslint/no-require-imports */}
+      <Stack.Screen name="GharVastuRoster" getComponent={() => require('@/screens/GharVastuRosterScreen').default} />
+      <Stack.Screen name="GharVastuSetup" getComponent={() => require('@/screens/GharVastuSetupScreen').default} />
+      <Stack.Screen name="GharVastu" getComponent={() => require('@/screens/GharVastuScreen').default} />
+      <Stack.Screen name="GharVastuCompare" getComponent={() => require('@/screens/GharVastuCompareScreen').default} />
+      {/* eslint-enable @typescript-eslint/no-require-imports */}
       {/* कुल परम्परा (PRD-29) — the living's janma tithis + the family record. */}
       <Stack.Screen name="JanmaTithiList" component={JanmaTithiListScreen} />
       <Stack.Screen name="JanmaTithiDetail" component={JanmaTithiDetailScreen} />
@@ -52,9 +68,12 @@ export default function MoreStackNavigator() {
       <Stack.Screen name="KulParamparaEdit" component={KulParamparaEditScreen} />
       <Stack.Screen name="KulParamparaExport" component={KulParamparaExportScreen} />
       {/* Personal-tithi vidhi doors push here so Back returns to Pitru Smaran. */}
-      <Stack.Screen name="VidhiCatalog" component={VidhiCatalogScreen} />
-      <Stack.Screen name="VidhiDetail" component={VidhiDetailScreen} />
-      <Stack.Screen name="VidhiConduct" component={VidhiConductScreen} />
+      {/* eslint-disable-next-line @typescript-eslint/no-require-imports */}
+      <Stack.Screen name="VidhiCatalog" getComponent={() => require('@/screens/VidhiCatalogScreen').default} />
+      {/* eslint-disable-next-line @typescript-eslint/no-require-imports */}
+      <Stack.Screen name="VidhiDetail" getComponent={() => require('@/screens/VidhiDetailScreen').default} />
+      {/* eslint-disable-next-line @typescript-eslint/no-require-imports */}
+      <Stack.Screen name="VidhiConduct" getComponent={() => require('@/screens/VidhiConductScreen').default} />
       <Stack.Screen name="GitaReader" component={GitaReaderScreen} />
     </Stack.Navigator>
   );

@@ -13,6 +13,14 @@
       "dateKey": "2099-01-01",
       "representedDate": { "hi": "1 जन", "en": "1 Jan", "gu": "1 જાન્યુ", "kn": "1 ಜನ" },
       "tithi": { "hi": "शुक्ल प्रतिपदा", "en": "Shukla Pratipada", "gu": "શુક્લ પ્રતિપદા", "kn": "ಶುಕ್ಲ ಪ್ರತಿಪದಾ" },
+      "tithiSegments": [
+        {
+          "name": { "hi": "शुक्ल प्रतिपदा", "en": "Shukla Pratipada", "gu": "શુક્લ પ્રતિપદા", "kn": "ಶುಕ್ಲ ಪ್ರತಿಪದಾ" },
+          "endsAt": "2099-01-01T09:54:00.000Z",
+          "till": { "hi": "तक 3:24 PM", "en": "till 3:24 PM", "gu": "તક 3:24 PM", "kn": "ತಕ 3:24 PM" }
+        },
+        { "name": { "hi": "शुक्ल द्वितीया", "en": "Shukla Dwitiya", "gu": "શુક્લ દ્વિતીયા", "kn": "ಶುಕ್ಲ ದ್ವಿತೀಯಾ" } }
+      ],
       "sunrise": { "hi": "सूर्योदय 6:00 AM", "en": "Sunrise 6:00 AM", "gu": "સૂર્યોદય 6:00 AM", "kn": "ಸೂರ್ಯೋದಯ 6:00 AM" },
       "rahuKaal": { "hi": "राहु काल 7:30 – 9:00 AM", "en": "Rahu Kaal 7:30 – 9:00 AM", "gu": "રાહુ કાલ 7:30 – 9:00 AM", "kn": "ರಾಹು ಕಾಲ 7:30 – 9:00 AM" },
       "deepLink": "vedansh://widget/panchang?date=2099-01-01"
