@@ -50,6 +50,11 @@ function actionStep(a) {
   // the ‹ back chevron. Fragile by nature; use only when text/id selectors don't exist.
   if (a.tapPoint) return `- tapOn:\n    point: "${a.tapPoint}"`;
   if (a.swipe) return `- swipe:\n    direction: ${a.swipe}`;
+  // Type into the focused field (tap the input first). Used to reach observances that live only
+  // behind the Vrat & Parv search box (the tappable upcoming carousel is capped and horizontal).
+  if (a.inputText) return `- inputText: "${a.inputText}"`;
+  // Dismiss the on-screen keyboard so it stops covering the search results before we tap one.
+  if (a.hideKeyboard) return `- hideKeyboard`;
   // centerElement + a lowered visibility threshold make below-the-fold taps land — the Home
   // category grid is virtualized, so a tile can be in the hierarchy (found) yet off-screen (tap
   // no-ops) unless we actually scroll it into view.
@@ -66,11 +71,29 @@ function anchorPattern(anchor, lang) {
   return lang === 'hi' && HI_ANCHORS[anchor] ? HI_ANCHORS[anchor] : `${anchor}.*`;
 }
 
+/** Optional unrecorded navigation appended to prep — so recording starts on a deeper screen
+ *  (e.g. the Vrat & Parv hub) instead of Home. Uses the same action vocabulary as beats. */
+function prerollSteps(reel) {
+  if (!reel.preroll?.length) return '';
+  return reel.preroll.map((a) => actionStep(a)).join('\n') + '\n';
+}
+
 export function generatePrepFlow(reel, lang) {
   // Native build: already onboarded; Hindi renders switch the reading language before capture.
   if (IS_NATIVE) {
-    const languageSwitch = lang === 'hi' ? `- tapOn: { id: "tab-more" }
+    // When the app already persists the target reading language (it survives relaunch), the in-app
+    // switch is redundant and its below-the-fold Language row is flake-prone — skip it via env.
+    const languageSwitch = (lang === 'hi' && !process.env.REEL_SKIP_LANG_SWITCH) ? `- tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
+# The Language row lives in the below-the-fold "APP" section (many PRACTICE rows
+# precede it), so scroll it into view first — otherwise the tap lands on an
+# off-screen element and falls through to the tab bar.
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    direction: DOWN
+    centerElement: true
+    timeout: 12000
 - tapOn: "Language,.*"
 - waitForAnimationToEnd
 - extendedWaitUntil:
@@ -101,7 +124,7 @@ appId: ${APP_ID}
     visible: "${HOME_READY}"
     timeout: 40000
 - waitForAnimationToEnd
-${languageSwitch}`;
+${languageSwitch}${prerollSteps(reel)}`;
   }
   // Expo Go: language + first-run suppression are handled by seed.mjs before this runs, so prep
   // just cold-launches the app (which reads the seed) via the Expo Go recents entry.
@@ -156,7 +179,9 @@ export function generateBeatFlow(reel, lang, timeline, i) {
     `appId: ${APP_ID}`,
     '---',
     ...(IS_NATIVE ? ['- launchApp:\n    stopApp: false'] : []),
-    ...(i === 0 && IS_NATIVE
+    // Beat 0 asserts Home only when prep leaves the app there — a preroll parks it deeper
+    // (e.g. Vrat & Parv), where the Home anchor would never appear.
+    ...(i === 0 && IS_NATIVE && !reel.preroll?.length
       ? [`- extendedWaitUntil:\n    visible: "${HOME_READY}"\n    timeout: 40000`]
       : []),
     '- waitForAnimationToEnd',
