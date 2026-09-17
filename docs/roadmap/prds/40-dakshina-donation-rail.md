@@ -11,6 +11,8 @@
 
 **Constraint break:** introduces payments. Uses Razorpay (India) + Apple/Google IAP (subscription) — both off-the-shelf. We don't build a payment processor; we integrate.
 
+**PRD-26 boundary (Resolution A):** this rail is **ON HOLD**. PRD-26 (दान-पुण्य) shipped links-only — the app collects no payment for daan and its directory carries no Vedansh-owned recipient. When this rail resumes it owns **dakshina to Vedansh / partner temples on its own surfaces** (the paath-dedication and darshan moments below), and must **never be merged into the PRD-26 daan directory** — that directory stays a links-only hand-off to third-party organizations' own channels.
+
 ---
 
 ## 1. Problem

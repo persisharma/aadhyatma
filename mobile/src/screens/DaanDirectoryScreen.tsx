@@ -3,23 +3,25 @@
  * Reached ONLY from a journey's terminal step (§2.7): not a tab, no More-hub
  * row, no other surface links it.
  *
- * Two grouping states:
- *  - unfiltered → grouped by cause in `DAAN_CAUSES` order, each heading
- *    carrying its "whom this serves" line. A row appears under every cause it
- *    serves (the theerth multi-group-tag precedent), so the axis reads as a
- *    purpose taxonomy rather than a flat list.
- *  - filtered → the flat set for one cause. `route.params.causes` arrives from
- *    the occasion (Sankranti → anna · vastra · gau), so the day points at its
- *    own door; tapping the active chip clears back to all.
+ * Two states:
+ *  - grid (nothing selected) → a tile per live cause, each carrying its name
+ *    and its "whom this serves" line. NO count anywhere (RULEBOOK §27.14).
+ *    Tapping a tile drills into that one cause. If the day arrived carrying its
+ *    own causes (`route.params.causes`), those tiles wear the gold ring so the
+ *    door points at the day's own प्रयोजन.
+ *  - filtered (a cause selected) → that cause's teaching (mahatva) above a thin
+ *    list of the places that serve it. Tapping the active chip clears back to
+ *    the grid.
  *
- * Cause chips are DERIVED from the rows present — a cause with no verified row
- * never renders a chip, so the taxonomy can never show an empty shelf.
+ * Cause tiles/chips are DERIVED from the rows present (`liveCauses`) — a cause
+ * with no verified row never renders, so the taxonomy can never show an empty
+ * shelf.
  *
- * EXPLAIN BEFORE LISTING (RULEBOOK §27.14): every cause renders its **mahatva**
- * — why this daan is held dear, with its citation where it makes a textual
- * claim — ABOVE the places that serve it. The teaching is the larger half of
- * the screen; the places are a short, thin list underneath. Nothing about an
- * organization beyond its one line lives here.
+ * EXPLAIN BEFORE LISTING (RULEBOOK §27.14): the filtered द्वार renders the
+ * cause's **mahatva** — why this daan is held dear, with its citation where it
+ * makes a textual claim — ABOVE the places that serve it. Nothing about an
+ * organization beyond its one line lives here, and the screen never shows a
+ * give/open affordance (that lives on the detail, §2.7).
  */
 import React, { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
@@ -50,17 +52,22 @@ export default function DaanDirectoryScreen({ navigation, route }: Props) {
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
 
   const orgs = getDaanOrgs();
-  // Only causes that actually have a verified row may become a chip.
+  // Only causes that actually have a verified row may become a tile.
   const liveCauses = useMemo(
     () => DAAN_CAUSES.filter((cause) => orgs.some((org) => org.causes.includes(cause.id))),
     [orgs]
   );
-  // The occasion's causes arrive as strings; keep only the live ones.
+  // The occasion's causes arrive as strings; keep only the live ones, in order.
   const occasionCauses = useMemo(() => {
     const asked = route.params?.causes ?? [];
     return liveCauses.filter((cause) => asked.includes(cause.id)).map((cause) => cause.id);
   }, [route.params?.causes, liveCauses]);
-  const [selected, setSelected] = useState<DaanCause | null>(occasionCauses[0] ?? null);
+  // Arrival routing (§5.1): exactly one live cause asked → open it filtered
+  // directly; multiple → grid with those ringed; none → plain grid.
+  const [selected, setSelected] = useState<DaanCause | null>(
+    occasionCauses.length === 1 ? occasionCauses[0] : null
+  );
+  const fromOccasion = occasionCauses.length > 0;
 
   const sectionLabelStyle = {
     fontFamily: typography.sectionLabel.fontFamily,
@@ -72,8 +79,8 @@ export default function DaanDirectoryScreen({ navigation, route }: Props) {
     marginBottom: 4,
   };
 
-  // The teaching, above the places. Rendered identically in both grouping
-  // states so a filtered द्वार never loses the reason it exists.
+  // The teaching, above the places — the filtered द्वार never loses the reason
+  // it exists (RULEBOOK §27.14).
   const CauseHeading = ({ cause }: { cause: DaanCauseMeta }) => (
     <View testID={`daan-cause-mahatva-${cause.id}`}>
       <Text style={sectionLabelStyle}>{contentByLang(lang, cause.nameHi, cause.nameEn)}</Text>
@@ -118,6 +125,36 @@ export default function DaanDirectoryScreen({ navigation, route }: Props) {
     </Pressable>
   );
 
+  // One cause tile in the grid. No count — just the name and whom it serves.
+  const CauseTile = ({ cause }: { cause: DaanCauseMeta }) => {
+    const ringed = occasionCauses.includes(cause.id);
+    return (
+      <Pressable
+        testID={`daan-cause-tile-${cause.id}`}
+        accessibilityRole="button"
+        accessibilityState={{ selected: ringed }}
+        accessibilityLabel={`Cause ${cause.nameEn}`}
+        onPress={() => setSelected(cause.id)}
+        style={[
+          styles.tile,
+          {
+            borderColor: ringed ? colors.cardActiveBorder : colors.divider,
+            backgroundColor: ringed ? colors.goldChipBg : colors.parchmentSoft,
+            borderRadius: radii.lg,
+          },
+          elevation.card,
+        ]}
+      >
+        <Text style={{ fontFamily: titleFont, fontSize: 15, lineHeight: 22, color: ringed ? colors.saffronDeep : colors.ink }}>
+          {contentByLang(lang, cause.nameHi, cause.nameEn)}
+        </Text>
+        <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 17, color: colors.inkMuted, marginTop: 4 }}>
+          {meaningByLang(lang, cause.whomHi, cause.whomEn)}
+        </Text>
+      </Pressable>
+    );
+  };
+
   return (
     <SafeAreaView style={[styles.root, { backgroundColor: colors.background }]} edges={['top']} testID="daan-directory-screen">
       <ReaderHeader
@@ -137,56 +174,44 @@ export default function DaanDirectoryScreen({ navigation, route }: Props) {
           )}
         </Text>
 
-        {occasionCauses.length > 0 ? (
-          <Text
-            testID="daan-directory-occasion-line"
-            style={{ fontFamily: bodyFont, fontSize: 12.5, lineHeight: 19, color: colors.saffronDeep, textAlign: 'center', marginTop: spacing.sm }}
-          >
-            {contentByLang(lang, 'इस दिन की सेवा — ', 'This day serves — ')}
-            {occasionCauses
-              .map((id) => {
-                const meta = DAAN_CAUSES.find((cause) => cause.id === id)!;
-                return contentByLang(lang, meta.nameHi, meta.nameEn);
-              })
-              .join(' · ')}
-          </Text>
-        ) : null}
-
-        {/* प्रयोजन chips — derived from rows present, so never an empty shelf. */}
-        <View style={styles.chips}>
-          {liveCauses.map((cause) => {
-            const active = selected === cause.id;
-            return (
-              <Pressable
-                key={cause.id}
-                testID={`daan-cause-${cause.id}`}
-                accessibilityRole="button"
-                accessibilityState={{ selected: active }}
-                accessibilityLabel={`Cause ${cause.nameEn}`}
-                onPress={() => setSelected(active ? null : cause.id)}
-                style={[
-                  styles.chip,
-                  {
-                    borderColor: active ? colors.cardActiveBorder : colors.border,
-                    backgroundColor: active ? colors.goldChipBg : colors.surface,
-                    borderRadius: radii.pill,
-                  },
-                ]}
-              >
-                <Text style={{ fontFamily: titleFont, fontSize: 12.5, lineHeight: 19, color: active ? colors.saffronDeep : colors.inkSoft }}>
-                  {contentByLang(lang, cause.nameHi, cause.nameEn)}
-                </Text>
-              </Pressable>
-            );
-          })}
-        </View>
-
         {selected ? (
           (() => {
             const meta = DAAN_CAUSES.find((cause) => cause.id === selected)!;
             const rows = orgs.filter((org) => org.causes.includes(selected));
             return (
               <View testID="daan-directory-filtered">
+                {fromOccasion ? (
+                  <Text
+                    testID="daan-directory-occasion-line"
+                    style={{ fontFamily: bodyFont, fontSize: 12.5, lineHeight: 19, color: colors.saffronDeep, textAlign: 'center', marginTop: spacing.sm }}
+                  >
+                    {contentByLang(lang, 'इस दिन की सेवा — ', 'This day serves — ')}
+                    {occasionCauses
+                      .map((id) => {
+                        const c = DAAN_CAUSES.find((cause) => cause.id === id)!;
+                        return contentByLang(lang, c.nameHi, c.nameEn);
+                      })
+                      .join(' · ')}
+                  </Text>
+                ) : null}
+                {/* The active chip: tapping it clears back to the grid. */}
+                <View style={styles.chips}>
+                  <Pressable
+                    testID={`daan-cause-${meta.id}`}
+                    accessibilityRole="button"
+                    accessibilityState={{ selected: true }}
+                    accessibilityLabel={`Cause ${meta.nameEn}`}
+                    onPress={() => setSelected(null)}
+                    style={[
+                      styles.chip,
+                      { borderColor: colors.cardActiveBorder, backgroundColor: colors.goldChipBg, borderRadius: radii.pill },
+                    ]}
+                  >
+                    <Text style={{ fontFamily: titleFont, fontSize: 12.5, lineHeight: 19, color: colors.saffronDeep }}>
+                      {contentByLang(lang, meta.nameHi, meta.nameEn)}
+                    </Text>
+                  </Pressable>
+                </View>
                 <CauseHeading cause={meta} />
                 {rows.map((org) => (
                   <OrgRow key={org.id} org={org} />
@@ -195,17 +220,11 @@ export default function DaanDirectoryScreen({ navigation, route }: Props) {
             );
           })()
         ) : (
-          liveCauses.map((cause) => {
-            const rows = orgs.filter((org) => org.causes.includes(cause.id));
-            return (
-              <View key={cause.id} testID={`daan-cause-group-${cause.id}`}>
-                <CauseHeading cause={cause} />
-                {rows.map((org) => (
-                  <OrgRow key={`${cause.id}-${org.id}`} org={org} />
-                ))}
-              </View>
-            );
-          })
+          <View testID="daan-directory-grid" style={styles.grid}>
+            {liveCauses.map((cause) => (
+              <CauseTile key={cause.id} cause={cause} />
+            ))}
+          </View>
         )}
 
         <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 18, color: colors.inkMuted, textAlign: 'center', marginTop: spacing.lg }}>
@@ -222,6 +241,8 @@ export default function DaanDirectoryScreen({ navigation, route }: Props) {
 
 const styles = StyleSheet.create({
   root: { flex: 1 },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', marginTop: 14, gap: 10 },
+  tile: { borderWidth: 1, paddingHorizontal: 13, paddingVertical: 13, flexBasis: '47%', flexGrow: 1 },
   rowCard: { borderWidth: 1, paddingHorizontal: 14, paddingVertical: 12, marginBottom: 9, flexDirection: 'row', alignItems: 'center', gap: 10 },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 7, justifyContent: 'center', marginTop: 12 },
   chip: { borderWidth: 1, paddingHorizontal: 12, paddingVertical: 6 },

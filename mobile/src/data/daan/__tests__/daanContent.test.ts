@@ -208,6 +208,20 @@ describe('directory hygiene (PRD-26 §6.2)', () => {
     expect(isOrgRowStale(org, stale)).toBe(true);
     expect(getDaanOrgs(stale).find((o) => o.id === org.id)).toBeUndefined();
   });
+
+  test('Resolution A boundary: no row hands off to a Vedansh-owned domain', () => {
+    // PRD-26 §2.7 / PRD-40 boundary (Resolution A, 2026-09-17): daan is
+    // links-only to THIRD parties. The directory must never contain a
+    // Vedansh-owned recipient — giving to the app itself belongs to PRD-40's
+    // own (currently on-hold) surfaces, never merged into the द्वार. Structural.
+    const FIRST_PARTY_MARKERS = ['vedansh'];
+    for (const org of DAAN_ORG_ENTRIES) {
+      const host = new URL(org.officialUrl).hostname.toLowerCase();
+      for (const marker of FIRST_PARTY_MARKERS) {
+        expect(host).not.toContain(marker);
+      }
+    }
+  });
 });
 
 describe('gupt-daan structural guarantee + ledger core', () => {

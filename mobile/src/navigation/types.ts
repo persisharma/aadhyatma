@@ -109,15 +109,19 @@ export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & {
 };
 
 /**
- * दान-पुण्य (PRD-26). Registered on the More AND Panchang stacks (the PRD-19
- * multi-stack pattern): the More hub row and the Observance-Detail daan door
- * both push in place, so Back retraces the journey. The educate-first IA
- * contract (§2.7) lives in the screens: DaanPunya carries no external-linking
- * affordance, and DaanDirectory is reachable only from a journey's last step.
+ * दान-पुण्य (PRD-26). Registered on the More, Panchang AND Home stacks (the
+ * PRD-19 multi-stack pattern): the More hub row, the Observance-Detail daan
+ * door and the Home launcher tile all push in place, so Back retraces the
+ * journey. IA contract (§2.7, RELAXED in the v3 redesign): educate is the
+ * DEFAULT, not a gate — the daan home carries a standing दान करें door and a
+ * quiet दान-द्वार link, and DaanDirectory is reachable from a journey's
+ * terminal step, the journey's skip, or that direct link. The app still never
+ * transacts; the hand-off is always the org's own site behind the interstitial.
  */
 export type DaanStackParamList = {
   DaanPunya: undefined;
-  DaanJourney: { occasionId: string };
+  /** `occasionId` omitted ⇒ the daily (vaar-driven) journey — covers all 365 days. */
+  DaanJourney: { occasionId?: string } | undefined;
   DaanLedger: undefined;
   DaanEntry: { occasionId?: string } | undefined;
   /** `causes` pre-filters the द्वार to an occasion's प्रयोजन (PRD-26 §5.1). */

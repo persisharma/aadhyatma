@@ -152,6 +152,18 @@ export default function HomeScreen({ navigation }: Props) {
       icon: iconFor('routine'),
       onPress: () => navigation.navigate('RoutineToday'),
     };
+    // दान-पुण्य (PRD-26) — the giving layer's standing Home door. A non-content
+    // launcher (like व्रत/कुंडली), placed just before the नित्य साधना closer.
+    const daanTile: TileItem = {
+      key: 'daan',
+      nameHi: 'दान-पुण्य',
+      nameEn: 'Daan Punya',
+      shortNameEn: 'Giving',
+      status: 'active',
+      icon: iconFor('daan'),
+      hasNew: true,
+      onPress: () => navigation.navigate('DaanPunya'),
+    };
     const result: TileItem[] = [];
     for (const c of categories) {
       result.push({
@@ -170,9 +182,9 @@ export default function HomeScreen({ navigation }: Props) {
       if (c.id === 'japam') result.push(vratTile, kundaliTile, muhuratTile);
       if (c.id === 'theerth') result.push(deityTile, purposeTile);
     }
-    // नित्य साधना closes the grid. With मुहूर्त the count is 16 = 5 full rows
-    // + this closer, which renders full-width below (PRD-16; design.md §18) so
-    // the grid still ends clean rather than on an orphan pair.
+    // दान-पुण्य sits at the tail of the 3-col grid; नित्य साधना then closes it
+    // full-width below (PRD-16/PRD-26; design.md §18) so the grid ends clean.
+    result.push(daanTile);
     result.push(nityaSadhnaTile);
     return result;
   }, [hasNewInCategory, navigation, rootNav]);
@@ -208,6 +220,17 @@ export default function HomeScreen({ navigation }: Props) {
       ctaHi: 'पढ़ें', ctaEn: 'Read',
       icon: <CategoryIcon iconKey="stotram" />,
       onPress: () => rootNav.navigate('DailyBhaktiTab'),
+    },
+    {
+      // दान-पुण्य (PRD-26) launch-awareness card — the educate-first giving layer.
+      key: 'daan-punya',
+      titleHi: 'दान-पुण्य', titleEn: 'Daan Punya',
+      descHi: 'जप · व्रत · दान — पहले महत्व, फिर देना। कभी भी।',
+      descEn: 'Japa · vrat · daan — understand first, then give. Any day.',
+      ctaHi: 'खोलें', ctaEn: 'Open',
+      hasNew: true,
+      icon: <CategoryIcon iconKey="daan" />,
+      onPress: () => navigation.navigate('DaanPunya'),
     },
     // NOTE: no Panchang spotlight here — the Today strip (§48) owns that
     // surface now; a second card produced two "Today's Panchang." buttons for

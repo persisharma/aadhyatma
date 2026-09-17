@@ -1,11 +1,14 @@
 /**
- * PRD-26 surface contracts:
- *  1. DaanPunyaScreen (the educate home) renders the mahatva-first sections —
- *     and carries ZERO give affordances: no directory door, no external link,
- *     no give button. The only doors are journey/katha/ledger (§2.7).
- *  2. DaanJourneyScreen gates its terminal actions structurally: record and
- *     the दान-द्वार button do not exist in the tree until the last step, and
- *     the directory door exists nowhere else in the app.
+ * PRD-26 surface contracts (§2.7 RELAXED in the v3 redesign — educate is the
+ * DEFAULT, not a hard gate):
+ *  1. DaanPunyaScreen (the educate home) renders the mahatva-first sections and
+ *     now carries two STANDING doors — a दान करें door (→ the journey) and a
+ *     quiet दान-द्वार link (→ the directory) — plus the ungated खाता door. It
+ *     still never transacts: no in-app give/pay control (daan-org-give/open).
+ *  2. DaanJourneyScreen is a single skippable scroll: its terminal actions are
+ *     always present (no step gating), and a skip jumps to the द्वार.
+ *  3. दान-द्वार opens as a cause grid, then drills into one cause; the hand-off
+ *     to an org's own site lives only on the detail, behind the interstitial.
  */
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
@@ -82,23 +85,27 @@ describe('DaanPunyaScreen — the educate-first home', () => {
     await act(async () => tree.unmount());
   });
 
-  test('§2.7 surface contract: zero give affordances on the home', async () => {
+  test('§2.7 relaxed: two standing doors, but the app still never transacts', async () => {
     const navigation = { ...mockNavigation } as never;
     const tree = await renderScreen(<DaanPunyaScreen navigation={navigation} route={{ key: 'k', name: 'DaanPunya' } as never} />);
-    // No directory door, no give/hand-off controls of any kind.
-    expect(has(tree, 'daan-journey-directory')).toBe(false);
+    // The donate door opens the day's journey (occasion resolved by the mock);
+    // the quiet दान-द्वार link opens the directory directly.
+    expect(has(tree, 'daan-home-donate')).toBe(true);
+    expect(has(tree, 'daan-home-dwaar')).toBe(true);
+    await press(tree, 'daan-home-donate');
+    expect(mockNavigation.navigate).toHaveBeenCalledWith('DaanJourney', { occasionId: 'makar-sankranti' });
+    await press(tree, 'daan-home-dwaar');
+    expect(mockNavigation.navigate).toHaveBeenCalledWith('DaanDirectory', {});
+    // The ledger door stays, ungated. And there is still NO in-app give/pay
+    // control anywhere on this screen — the hand-off lives on the detail only.
+    expect(has(tree, 'daan-ledger-door')).toBe(true);
     expect(has(tree, 'daan-org-give')).toBe(false);
     expect(has(tree, 'daan-org-open')).toBe(false);
-    // And no press on this screen navigates to the directory.
-    const pressables = tree.root.findAll((node) => typeof node.props.onPress === 'function');
-    for (const node of pressables) {
-      expect(node.props.testID).not.toBe('daan-journey-directory');
-    }
     await act(async () => tree.unmount());
   });
 });
 
-describe('DaanJourneyScreen — terminal actions are structural', () => {
+describe('DaanJourneyScreen — single-scroll, terminal actions always present (§2.7 relaxed)', () => {
   async function renderJourney() {
     const navigation = { ...mockNavigation } as never;
     return renderScreen(
@@ -109,30 +116,46 @@ describe('DaanJourneyScreen — terminal actions are structural', () => {
     );
   }
 
-  test('record and daan-dwaar do not exist before the last step', async () => {
+  test('occasion mode: terminal actions and skip are present without stepping', async () => {
     const tree = await renderJourney();
-    expect(has(tree, 'daan-journey-record')).toBe(false);
-    expect(has(tree, 'daan-journey-directory')).toBe(false);
+    // Educate is the default, not a gate: everything is in the tree at once.
+    expect(has(tree, 'daan-journey-skip')).toBe(true);
+    expect(has(tree, 'daan-journey-record')).toBe(true);
+    expect(has(tree, 'daan-journey-directory')).toBe(true);
+    expect(has(tree, 'daan-journey-causes')).toBe(true);
+    // The stepper is gone.
+    expect(has(tree, 'daan-journey-next')).toBe(false);
+    expect(has(tree, 'daan-journey-prev')).toBe(false);
     await act(async () => tree.unmount());
   });
 
-  test('advancing to the last step reveals record first, then the external door', async () => {
+  test('occasion mode navigates identically: record → DaanEntry, directory → DaanDirectory{causes}', async () => {
     const tree = await renderJourney();
-    // makar-sankranti has a katha (karna), so the journey runs 5 steps.
-    for (let i = 0; i < 4; i += 1) {
-      expect(has(tree, 'daan-journey-next')).toBe(true);
-      await press(tree, 'daan-journey-next');
-    }
-    expect(has(tree, 'daan-journey-next')).toBe(false);
-    expect(has(tree, 'daan-journey-record')).toBe(true);
-    expect(has(tree, 'daan-journey-directory')).toBe(true);
     await press(tree, 'daan-journey-record');
     expect(mockNavigation.navigate).toHaveBeenCalledWith('DaanEntry', { occasionId: 'makar-sankranti' });
     await press(tree, 'daan-journey-directory');
-    // The door now carries the day's प्रयोजन so the द्वार opens pre-filtered (§5.1).
+    // The door carries the day's प्रयोजन so the द्वार opens pre-filtered (§5.1).
     expect(mockNavigation.navigate).toHaveBeenCalledWith('DaanDirectory', {
       causes: ['anna', 'vastra', 'gau'],
     });
+    await act(async () => tree.unmount());
+  });
+
+  test('daily mode (no occasionId): builds from today, record → DaanEntry{}, directory → DaanDirectory{}', async () => {
+    const navigation = { ...mockNavigation } as never;
+    const tree = await renderScreen(
+      <DaanJourneyScreen navigation={navigation} route={{ key: 'k', name: 'DaanJourney', params: undefined } as never} />
+    );
+    expect(has(tree, 'daan-journey-screen')).toBe(true);
+    expect(has(tree, 'daan-journey-skip')).toBe(true);
+    expect(has(tree, 'daan-journey-record')).toBe(true);
+    expect(has(tree, 'daan-journey-directory')).toBe(true);
+    // Daily mode has no occasion causes → no causes line, and the doors carry {}.
+    expect(has(tree, 'daan-journey-causes')).toBe(false);
+    await press(tree, 'daan-journey-record');
+    expect(mockNavigation.navigate).toHaveBeenCalledWith('DaanEntry', {});
+    await press(tree, 'daan-journey-directory');
+    expect(mockNavigation.navigate).toHaveBeenCalledWith('DaanDirectory', {});
     await act(async () => tree.unmount());
   });
 });
@@ -147,17 +170,28 @@ describe('दान-द्वार — the cause (प्रयोजन) axis, 
       />
     );
 
-  test('unfiltered: every live cause renders a chip, a mahatva AND a group', async () => {
+  test('default: every live cause is a grid tile (no counts, no give)', async () => {
     const tree = await renderDirectory();
+    expect(has(tree, 'daan-directory-grid')).toBe(true);
     for (const id of ['anna', 'gau', 'bal', 'vriddha', 'vidya', 'arogya', 'vastra', 'jeev', 'aapada']) {
-      expect(has(tree, `daan-cause-${id}`)).toBe(true);
-      expect(has(tree, `daan-cause-group-${id}`)).toBe(true);
-      // §27.14: the द्वार explains the प्रयोजन before it lists places.
-      expect(has(tree, `daan-cause-mahatva-${id}`)).toBe(true);
+      expect(has(tree, `daan-cause-tile-${id}`)).toBe(true);
     }
-    // No give affordance on the list — the hand-off lives on the detail (§2.7).
+    // The grid names causes, not places — no mahatva/org rows until one is opened.
+    expect(has(tree, 'daan-directory-filtered')).toBe(false);
+    expect(has(tree, 'daan-org-akshaya-patra')).toBe(false);
+    // No give affordance anywhere — the hand-off lives on the detail (§2.7).
     expect(has(tree, 'daan-org-give')).toBe(false);
     expect(has(tree, 'daan-org-open')).toBe(false);
+    await act(async () => tree.unmount());
+  });
+
+  test('opening a cause tile drills into its mahatva + places', async () => {
+    const tree = await renderDirectory();
+    await press(tree, 'daan-cause-tile-anna');
+    expect(has(tree, 'daan-directory-filtered')).toBe(true);
+    // §27.14: the द्वार explains the प्रयोजन before it lists places.
+    expect(has(tree, 'daan-cause-mahatva-anna')).toBe(true);
+    expect(has(tree, 'daan-org-akshaya-patra')).toBe(true);
     await act(async () => tree.unmount());
   });
 
@@ -173,20 +207,26 @@ describe('दान-द्वार — the cause (प्रयोजन) axis, 
     await act(async () => tree.unmount());
   });
 
-  test('tapping the active chip clears the filter back to all causes', async () => {
+  test('tapping the active chip clears the filter back to the grid', async () => {
     const tree = await renderDirectory({ causes: ['vriddha'] });
+    // A single-cause arrival opens filtered directly.
+    expect(has(tree, 'daan-directory-filtered')).toBe(true);
     expect(has(tree, 'daan-org-helpage-india')).toBe(true);
-    expect(has(tree, 'daan-org-goonj')).toBe(false);
     await press(tree, 'daan-cause-vriddha');
+    // Cleared → back to the cause grid (tiles), no org rows shown.
     expect(has(tree, 'daan-directory-filtered')).toBe(false);
-    expect(has(tree, 'daan-org-goonj')).toBe(true);
+    expect(has(tree, 'daan-directory-grid')).toBe(true);
+    expect(has(tree, 'daan-cause-tile-vastra')).toBe(true);
+    expect(has(tree, 'daan-org-helpage-india')).toBe(false);
     await act(async () => tree.unmount());
   });
 
   test('an unknown cause in the params is ignored, never an empty shelf', async () => {
     const tree = await renderDirectory({ causes: ['not-a-cause'] });
     expect(has(tree, 'daan-directory-occasion-line')).toBe(false);
-    expect(has(tree, 'daan-cause-group-anna')).toBe(true);
+    // Falls back to the plain grid.
+    expect(has(tree, 'daan-directory-grid')).toBe(true);
+    expect(has(tree, 'daan-cause-tile-anna')).toBe(true);
     await act(async () => tree.unmount());
   });
 
@@ -197,7 +237,6 @@ describe('दान-द्वार — the cause (प्रयोजन) axis, 
         route={{ key: 'k', name: 'DaanJourney', params: { occasionId: 'makar-sankranti' } } as never}
       />
     );
-    for (let i = 0; i < 4; i += 1) await press(tree, 'daan-journey-next');
     expect(has(tree, 'daan-journey-causes')).toBe(true);
     await press(tree, 'daan-journey-directory');
     expect(mockNavigation.navigate).toHaveBeenCalledWith('DaanDirectory', {

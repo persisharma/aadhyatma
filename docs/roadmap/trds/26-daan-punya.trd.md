@@ -46,9 +46,16 @@ Routine daan-unit one-tap entry; grahan-daan (no eclipse rule ids exist in the e
 
 ---
 
-## 2. BLOCKING — the PRD-40 collision
+## 2. ~~BLOCKING~~ RESOLVED — the PRD-40 collision
 
-This is the finding that matters most, and it is not a technical problem.
+> **DECIDED (2026-09-17, product owner): Resolution A.** दान-पुण्य **collects no payment in the app —
+> links only** (hand-off to each org's own site behind the interstitial, as PRD-26 §2.1 already
+> states). **PRD-40 (the Dakshina / Donation Rail) is on hold** and does not ship alongside this.
+> Daan-punya is therefore the only giving surface for now. The boundary still holds for whenever
+> PRD-40 resumes: it owns *dakshina to Vedansh / partner temples* on its own surfaces, and the daan
+> directory must never contain a Vedansh-owned recipient — pinned by the §7 boundary test.
+
+This was the finding that mattered most, and it is not a technical problem.
 
 **PRD-26 §2.1:** *"The app never touches money. Ever. No payment collection, no processing, no
 commission, no suggested amounts."* The दान-द्वार hands off to an organisation's own website and
@@ -75,10 +82,12 @@ The incoherence is not cosmetic — PRD-26's entire stance guard, its copy-guard
 | **B** | **PRD-40 absorbs the directory.** The द्वार gains a Razorpay rail to the same nine organisations. | Kills PRD-26 §2.1, RULEBOOK §27.2, the copy guard and the interstitial. It also makes us a payment intermediary for third-party charities — the heaviest compliance path in the whole roadmap, well beyond PRD-40's own scope. Not recommended. |
 | **C** | **PRD-40 drops its one-time donation rail**, keeps only the Sadhak Seva subscription (support the app, not a donation), and PRD-26 stays the only giving surface. | Cleanest product story. Costs PRD-40 its ₹5.1L/month one-time line. A revenue call, not an engineering one. |
 
-**Recommendation: A**, with the boundary written into both PRDs, because it is reversible and
-unblocks PRD-26 now. **C is the better end-state** if the revenue model can absorb it.
+**Recommendation: A** — chosen. With PRD-40 on hold, this reduces in practice to C's product story
+(daan is the only giving surface), while keeping the door open to A proper if PRD-40 resumes. The
+boundary clause still goes into both PRDs; the §7 boundary test enforces it structurally.
 
-Nothing else in this TRD should be built until this is decided, because B would discard most of it.
+The build is unblocked. The remaining gating items are content (§3) and the §5 Home-structure
+coordination — not this collision.
 
 **Secondary overlap:** PRD-39 (Live Darshan) captures partner-temple trust data and UPI VPAs for
 PRD-40. Our directory already carries one temple trust (TTD). If PRD-39 lands, the two temple

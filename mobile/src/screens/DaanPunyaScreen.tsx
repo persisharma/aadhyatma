@@ -2,10 +2,11 @@
  * दान-पुण्य home (PRD-26, design.md §72) — the educate-first surface. Opens on
  * महत्व: today's occasion line (panchang-resolved), the vaar-daan row, the full
  * verse spine rendered inline, the teaching-kathas, and one quiet खाता door at
- * the end. THE §2.7 CONTRACT LIVES HERE: this screen renders no
- * external-linking affordance and no directory door — the directory is
- * reachable only through a journey's terminal step. Pinned by the
- * surface-contract test; do not add a give button.
+ * the end. THE RELAXED §2.7 CONTRACT LIVES HERE: educate is the default, not a
+ * gate. The home now carries a standing दान करें door (into the journey) and a
+ * quiet दान-द्वार link (into the verified-orgs directory). The app still never
+ * transacts — the hand-off is the org's own site behind the interstitial — and
+ * the खाता (ledger) is never gated.
  */
 import React, { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
@@ -71,6 +72,43 @@ export default function DaanPunyaScreen({ navigation }: Props) {
         <Text style={{ fontFamily: bodyFont, fontSize: 13, lineHeight: 20, color: colors.inkSoft, textAlign: 'center', marginTop: spacing.sm }}>
           {contentByLang(lang, 'जप · व्रत · दान — साधना का तीसरा चरण', 'Japa · vrat · daan — the third limb of sadhana')}
         </Text>
+
+        <View style={styles.doorBlock}>
+          <Pressable
+            testID="daan-home-donate"
+            accessibilityRole="button"
+            accessibilityLabel={contentByLang(lang, 'दान करें', 'Donate')}
+            onPress={() =>
+              navigation.navigate(
+                'DaanJourney',
+                todayMatch?.occasion ? { occasionId: todayMatch.occasion.id } : {}
+              )
+            }
+            style={[styles.donateBtn, { backgroundColor: colors.saffron, borderRadius: radii.pill }, elevation.card]}
+          >
+            <Text style={{ fontFamily: titleFont, fontSize: 15, color: colors.onPrimary }}>
+              {contentByLang(lang, 'दान करें', 'Donate')}
+            </Text>
+          </Pressable>
+          <Pressable
+            testID="daan-home-dwaar"
+            accessibilityRole="button"
+            accessibilityLabel={contentByLang(lang, 'दान-द्वार — सत्यापित संस्थाएँ', 'Daan-dwaar — verified orgs')}
+            onPress={() => navigation.navigate('DaanDirectory', {})}
+            style={styles.dwaarLink}
+          >
+            <Text style={{ fontFamily: titleFont, fontSize: 13, color: colors.saffronDeep }}>
+              {contentByLang(lang, 'दान-द्वार — सत्यापित संस्थाएँ ›', 'Daan-dwaar — verified orgs ›')}
+            </Text>
+          </Pressable>
+          <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 18, color: colors.gold, textAlign: 'center', marginTop: 4 }}>
+            {contentByLang(
+              lang,
+              'पहले समझें, फिर दें — या सीधे द्वार पर जाएँ।',
+              'Understand first, then give — or go straight to the door.'
+            )}
+          </Text>
+        </View>
 
         {todayMatch?.occasion ? (
           <>
@@ -240,6 +278,9 @@ const styles = StyleSheet.create({
   card: { borderWidth: 1, paddingHorizontal: 14, paddingTop: 13, paddingBottom: 13, marginBottom: 10 },
   rowCard: { borderWidth: 1, paddingHorizontal: 14, paddingVertical: 12, marginBottom: 9, flexDirection: 'row', alignItems: 'center', gap: 10 },
   journeyBtn: { borderWidth: 1.5, paddingHorizontal: 14, paddingVertical: 7, marginTop: 11, alignSelf: 'flex-start' },
+  doorBlock: { alignItems: 'center', marginTop: 14, gap: 8 },
+  donateBtn: { paddingHorizontal: 32, paddingVertical: 11, alignSelf: 'center' },
+  dwaarLink: { paddingHorizontal: 10, paddingVertical: 4, alignSelf: 'center' },
   vaarRow: { flexDirection: 'row', gap: 6, justifyContent: 'center' },
   vaarChip: { borderWidth: 1, paddingHorizontal: 10, paddingVertical: 5, minWidth: 38, alignItems: 'center' },
   vaarLine: { paddingHorizontal: 12, paddingVertical: 9, marginTop: 9 },
