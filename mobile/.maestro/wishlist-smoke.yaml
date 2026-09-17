@@ -39,7 +39,7 @@ appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 
 # ── Step 2: Set global reading language to English (More tab) ──
-- tapOn: { id: "tab-more" }
+- tapOn: { id: "header-menu" }
 - waitForAnimationToEnd
 # The ऐप section (Language/Reading size) sits below the fold on standard-height
 # iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
@@ -95,7 +95,7 @@ appId: com.prashantsharma.vedansh
 # ── Step 5: Open the Wishlist (More tab → Wishlist) ──
 # The More card's a11y label is composed ("Wishlist, N verses saved"), and
 # Maestro matches the full string — anchor with .* not the bare word.
-- tapOn: { id: "tab-more" }
+- tapOn: { id: "header-menu" }
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:

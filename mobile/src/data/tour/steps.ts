@@ -57,6 +57,12 @@ export type TourStep = {
    * rings the destination tab instead. See design.md §47.
    */
   targetId?: TourTargetId;
+  /**
+   * Bar slot to ring, overriding `TAB_ORDER[navigateTo.name]`. Needed only by
+   * the व्रत and ज्योतिष steps: all three share `PanchangTab`, so the route
+   * alone cannot say which of the three slots to point at.
+   */
+  ringSlot?: number;
   /** Fallback card position when `targetId` can't be measured. */
   anchor: TourAnchor;
   /** Fallback pointer direction when `targetId` can't be measured. */
@@ -71,16 +77,30 @@ export type TourStep = {
  * Tab order in `TabNavigator` — used to ring the destination tab when a step
  * has no measurable element target. Must mirror the `Tab.Screen` order.
  */
+/**
+ * Which BAR SLOT a step's destination rings, when the step has no measurable
+ * element target. The bar is होम · भक्ति · पंचांग · व्रत · ज्योतिष, so slots are
+ * no longer 1:1 with tab ROUTES and these values are not unique:
+ *  - `PanchangTab` backs three slots (2/3/4); a step naming it rings पंचांग,
+ *    and the व्रत / ज्योतिष steps override with `ringSlot`.
+ *  - `AudioTab` (भजन) has no slot — भजन is a segment inside भक्ति, so it rings
+ *    भक्ति, which is where the user must actually tap.
+ *  - `MoreTab` (अन्य) has no slot either; its step rings the measured
+ *    `headerMenu` icon, and this value is only a last-resort fallback.
+ */
 export const TAB_ORDER: Record<TourNavTarget['name'], number> = {
   HomeTab: 0,
   DailyBhaktiTab: 1,
   PanchangTab: 2,
-  AudioTab: 3,
-  MoreTab: 4,
+  AudioTab: 1,
+  MoreTab: 0,
 };
 
 export const tourSteps: readonly TourStep[] = [
-  // ── The five bottom tabs (tab-ring: no element target) ──────────────────────
+  // ── The five bottom tabs (tab-ring: no element target) ─────────────────────
+  // होम · भक्ति · पंचांग · व्रत · ज्योतिष. व्रत and ज्योतिष are the same screen as
+  // पंचांग with a different section, so they name PanchangTab and pin their own
+  // bar slot. भजन and अन्य are no longer slots — see below.
   {
     id: 'tab-home',
     navigateTo: { name: 'HomeTab', params: { screen: 'Home' } },
@@ -108,8 +128,30 @@ export const tourSteps: readonly TourStep[] = [
     pointer: 'up',
     titleHi: 'पंचांग',
     titleEn: 'Panchang',
-    bodyHi: 'आज की तिथि, नक्षत्र, मुहूर्त और व्रत-पर्व।',
-    bodyEn: "Today's tithi, nakshatra, muhurat, and vrats & festivals.",
+    bodyHi: 'आज की तिथि, नक्षत्र और मुहूर्त।',
+    bodyEn: "Today's tithi, nakshatra, and muhurat.",
+  },
+  {
+    id: 'tab-vrat',
+    navigateTo: { name: 'PanchangTab', params: panchangTabTarget('PanchangHome', { section: 'vrat' }) },
+    ringSlot: 3,
+    anchor: 'bottom',
+    pointer: 'up',
+    titleHi: 'व्रत',
+    titleEn: 'Vrat',
+    bodyHi: 'व्रत और पर्व — कब, क्यों और कैसे। चुनी हुई तिथि यहाँ भी वही रहती है।',
+    bodyEn: 'Vrats & festivals — when, why, and how. Your chosen date carries over here.',
+  },
+  {
+    id: 'tab-jyotish',
+    navigateTo: { name: 'PanchangTab', params: panchangTabTarget('PanchangHome', { section: 'jyotish' }) },
+    ringSlot: 4,
+    anchor: 'bottom',
+    pointer: 'up',
+    titleHi: 'ज्योतिष',
+    titleEn: 'Jyotish',
+    bodyHi: 'कुंडली, राशिफल, गुण मिलान और नामकरण — सब एक जगह।',
+    bodyEn: 'Kundali, rashifal, guna milan, and namkaran — all in one place.',
   },
   {
     id: 'tab-bhajan',
@@ -118,18 +160,21 @@ export const tourSteps: readonly TourStep[] = [
     pointer: 'up',
     titleHi: 'भजन',
     titleEn: 'Bhajan',
-    bodyHi: 'भजन व मंत्रों का पुस्तकालय — मिनी-प्लेयर साथ-साथ चलता है।',
-    bodyEn: 'A library of bhajans & mantras — a mini-player follows you around.',
+    bodyHi: 'भजन व मंत्रों का पुस्तकालय, भक्ति के भीतर — मिनी-प्लेयर साथ-साथ चलता है।',
+    bodyEn: 'A library of bhajans & mantras, inside भक्ति — a mini-player follows you around.',
   },
   {
     id: 'tab-more',
+    // अन्य left the bar for the header icon, so this step rings the measured
+    // icon at the top-right instead of a bar slot.
     navigateTo: { name: 'MoreTab' },
-    anchor: 'bottom',
-    pointer: 'up',
+    targetId: 'headerMenu',
+    anchor: 'top',
+    pointer: 'down',
     titleHi: 'अधिक',
     titleEn: 'More',
-    bodyHi: 'प्रोफ़ाइल, दैनिक स्मरण, जप-अलार्म और भाषा — सब यहाँ।',
-    bodyEn: 'Profile, daily reminders, japam alarms, and language — all here.',
+    bodyHi: 'प्रोफ़ाइल, दैनिक स्मरण, जप-अलार्म और भाषा — हर स्क्रीन के ऊपर इसी चिह्न में।',
+    bodyEn: 'Profile, daily reminders, japam alarms, and language — behind this icon on every screen.',
   },
 
   // ── Home: routine card + categories (Japa & Theerth drilled in) ─────────────
@@ -242,10 +287,10 @@ export const tourSteps: readonly TourStep[] = [
     targetId: 'panchangSegment',
     anchor: 'top',
     pointer: 'down',
-    titleHi: 'व्रत-पर्व',
-    titleEn: 'Vrat & Parv',
-    bodyHi: 'यहाँ "व्रत-पर्व" पर जाकर सभी व्रत और त्योहार देखें।',
-    bodyEn: 'Switch to "Vrat & Parv" here to browse all vrats and festivals.',
+    titleHi: 'व्रत खंड',
+    titleEn: 'Vrat section',
+    bodyHi: 'यही तीन खंड — पंचांग, व्रत, ज्योतिष — एक ही स्क्रीन हैं। चुनी हुई तिथि तीनों में वही रहती है।',
+    bodyEn: 'These three sections — Panchang, Vrat, Jyotish — are one screen. Your chosen date carries across all three.',
   },
   {
     id: 'vrat-list',

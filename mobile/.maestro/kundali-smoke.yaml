@@ -73,7 +73,7 @@ appId: com.prashantsharma.vedansh
 
 # Use English for stable visible-text assertions; accessibility labels stay
 # English in every language, but the explanatory headings below are localized.
-- tapOn: { id: "tab-more" }
+- tapOn: { id: "header-menu" }
 - waitForAnimationToEnd
 # The ऐप section (Language/Reading size) sits below the fold on standard-height
 # iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
@@ -107,8 +107,8 @@ appId: com.prashantsharma.vedansh
     visible: "Understand Jyotish"
     timeout: 60000
 - assertVisible: "Panchang"
-- assertVisible: "Vrat & Parv"
-- assertVisible: "Jyotish"
+- assertVisible: { id: "segment-vrat" }
+- assertVisible: { id: "segment-jyotish" }
 - assertVisible: "Create Kundali"
 - assertVisible: "Open Daily Rashifal"
 # These two sit below the fold on Android's shorter viewport — scroll to them

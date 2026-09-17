@@ -33,7 +33,7 @@ appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 
 # ── Open More, set reading language to English (Language row → picker sheet) ──
-- tapOn: { id: "tab-more" }
+- tapOn: { id: "header-menu" }
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Language,.*"

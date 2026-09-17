@@ -40,7 +40,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Language,.*"
 - tapOn: "English"
 - tapOn: { point: "50%,95%" }
-- tapOn: "Jyotish"
+- tapOn: { id: "segment-jyotish" }
 - scrollUntilVisible:
     element: "Open Namkaran"
     direction: DOWN

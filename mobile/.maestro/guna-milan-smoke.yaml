@@ -52,7 +52,7 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     point: "50%,95%"
 - waitForAnimationToEnd
-- tapOn: "Jyotish"
+- tapOn: { id: "segment-jyotish" }
 - extendedWaitUntil:
     visible: "Understand Jyotish"
     timeout: 20000
@@ -191,6 +191,6 @@ appId: com.prashantsharma.vedansh
 
 - tapOn: "Back to Jyotish"
 - waitForAnimationToEnd
-- assertVisible: "Jyotish"
+- assertVisible: { id: "segment-jyotish" }
 - stopApp:
     appId: com.prashantsharma.vedansh

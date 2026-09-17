@@ -9,9 +9,12 @@ import { contentByLang } from '@/utils/localize';
 import { deityIconKey } from '@/data/deities';
 import DeityIcon from '@/components/DeityIcon';
 import { useAudioPlayerContext } from '@/contexts/AudioPlayerContext';
+import { TAB_BAR_BASE_HEIGHT } from '@/navigation/tabBarMetrics';
 
-// Matches the bottom tab bar height in TabNavigator (60 + safe-area inset).
-const TAB_BAR_BASE_HEIGHT = 60;
+// The mini-player docks directly ABOVE the bottom bar and persists across every
+// tab (it is mounted at the App root, not inside a stack). Imported rather than
+// re-declared so a change to the bar's height cannot leave the player floating
+// over it or gapped above it.
 
 /**
  * Persistent mini-player. Rendered ONCE at the app root (App.tsx) so it floats

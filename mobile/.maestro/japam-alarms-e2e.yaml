@@ -12,7 +12,7 @@ appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 
 # Set reading language to English for stable assertions
-- tapOn: { id: "tab-more" }
+- tapOn: { id: "header-menu" }
 - waitForAnimationToEnd
 # The ऐप section (Language/Reading size) sits below the fold on standard-height
 # iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —

@@ -1,0 +1,1119 @@
+<title>भक्ति Tab Options</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+  /* ─────────────────────────────────────────────────────────────────────
+     Two palettes live in this page and must never mix.
+
+     1. SHELL — the studio ground the artboards sit on. Cool dark slate, so
+        the parchment phones read as objects under a light. Deliberately not
+        the app's cream, or the phones would disappear into the page.
+     2. ARTBOARD (--v-*) — Vedansh's REAL shipped tokens, copied verbatim
+        from mobile/src/theme/colors.ts. These are the client's design
+        system; nothing here is allowed to reinterpret them.
+     ───────────────────────────────────────────────────────────────────── */
+  :root {
+    --ground: #171A20;
+    --panel: #21252E;
+    --panel-2: #1B1F27;
+    --rule: #333A46;
+    --rule-soft: #2A303B;
+    --dim: #7F8899;
+    --mid: #A8B0BF;
+    --bright: #E9ECF2;
+    --accent: #D98341;
+    --accent-dim: rgba(217, 131, 65, 0.14);
+    --flag: #C4635A;
+
+    /* Vedansh light theme — mobile/src/theme/colors.ts */
+    --v-parchment: #F3E7C9;
+    --v-parchment-soft: #F8EFD6;
+    --v-parchment-hi: #F6ECD0;
+    --v-parchment-grad-end: #F1E3BF;
+    --v-ink: #1A0E03;
+    --v-ink-soft: #5A3A1E;
+    --v-ink-muted: #6E5230;
+    --v-saffron: #B8621B;
+    --v-saffron-deep: #8A3E0B;
+    --v-gold: #A67C34;
+    --v-divider: rgba(138, 62, 11, 0.18);
+    --v-saffron-tint: rgba(184, 98, 27, 0.12);
+    --v-card-surface: rgba(255, 250, 235, 0.72);
+
+    --dev: 'Noto Serif Devanagari', 'Nirmala UI', serif;
+    --lat: 'Cormorant Garamond', Georgia, serif;
+    --ui: 'Inter', system-ui, -apple-system, sans-serif;
+
+    /* Driven by the font-scale control; mirrors the OS text-size setting. */
+    --nav-scale: 1;
+  }
+
+  /* This page is a single committed visual world — a studio wall with lit
+     artboards on it. It paints its own ground and every colour explicitly,
+     so it holds on either host theme rather than half-inverting. */
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--bright);
+    font-family: var(--ui);
+    font-size: 14px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Page chrome ───────────────────────────────────────────────────── */
+
+  .masthead {
+    border-bottom: 1px solid var(--rule);
+    background: linear-gradient(180deg, #1C2028 0%, var(--ground) 100%);
+    padding: 26px 28px 22px;
+  }
+  .masthead-inner { max-width: 1180px; margin: 0 auto; }
+  .kicker {
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin: 0 0 10px;
+  }
+  h1 {
+    font-family: var(--lat);
+    font-weight: 600;
+    font-size: clamp(28px, 4vw, 40px);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin: 0 0 12px;
+    color: var(--bright);
+    text-wrap: balance;
+  }
+  h1 .dev-in-title { font-family: var(--dev); font-weight: 600; font-size: 0.86em; }
+  .standfirst {
+    max-width: 60ch;
+    margin: 0;
+    color: var(--mid);
+    font-size: 15px;
+  }
+  .standfirst strong { color: var(--bright); font-weight: 600; }
+
+  .controls {
+    max-width: 1180px;
+    margin: 20px auto 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--rule-soft);
+  }
+  .controls-label {
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .toggle {
+    display: inline-flex;
+    background: var(--panel-2);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 2px;
+    gap: 2px;
+  }
+  .toggle button {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    color: var(--mid);
+    font-family: var(--ui);
+    font-size: 12.5px;
+    font-weight: 500;
+    padding: 7px 13px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 140ms ease, color 140ms ease;
+  }
+  .toggle button:hover { color: var(--bright); }
+  .toggle button[aria-pressed="true"] {
+    background: var(--accent-dim);
+    color: var(--accent);
+  }
+  .toggle button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .hint { font-size: 12.5px; color: var(--dim); font-style: italic; font-family: var(--lat); font-size: 14px; }
+
+  /* ── The artboard rail ─────────────────────────────────────────────── */
+
+  .rail-wrap { padding: 34px 28px 0; }
+  .rail {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 360px);
+    gap: 28px;
+    overflow-x: auto;
+    padding-bottom: 14px;
+    scrollbar-width: thin;
+  }
+  @media (max-width: 1240px) {
+    .rail { grid-template-columns: repeat(3, 360px); }
+  }
+
+  .option { min-width: 0; }
+
+  .option-head { margin-bottom: 14px; }
+  .option-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 6px;
+  }
+  .option-tag .rec {
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 3px;
+    padding: 1px 5px;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+  }
+  .option-name {
+    font-family: var(--lat);
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.15;
+    margin: 0 0 4px;
+    color: var(--bright);
+  }
+  .option-sub { margin: 0; font-size: 13px; color: var(--dim); }
+
+  /* ── Phone frame ───────────────────────────────────────────────────── */
+
+  .phone {
+    width: 360px;
+    height: 700px;
+    border-radius: 26px;
+    border: 1px solid #3A4150;
+    background: var(--v-parchment);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 22px 44px -18px rgba(0, 0, 0, 0.72), 0 0 0 5px #0F1216;
+    display: flex;
+    flex-direction: column;
+    /* The app is light-only (userInterfaceStyle: "light"), so the artboard
+       never follows the host theme — it always shows the shipped palette. */
+    color: var(--v-ink);
+  }
+  .phone::after {
+    /* Parchment gradient, as the screens paint it. */
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, var(--v-parchment-hi), var(--v-parchment-grad-end));
+    z-index: 0;
+  }
+  .phone > * { position: relative; z-index: 1; }
+
+  .statusbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 18px 2px;
+    font-family: var(--ui);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--v-ink-soft);
+    font-variant-numeric: tabular-nums;
+  }
+  .statusbar span { opacity: 0.72; }
+
+  /* Tier 1 — the one row of chrome: segment control + menu icon. */
+  .chrome-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 18px 10px;
+  }
+  .segmented {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    background: var(--v-parchment-soft);
+    border: 1px solid var(--v-divider);
+    border-radius: 999px;
+    padding: 3px;
+    gap: 2px;
+  }
+  .segmented button {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    flex: 1;
+    min-width: 0;
+    min-height: 34px;
+    border-radius: 999px;
+    font-family: var(--dev);
+    font-size: calc(13px * var(--nav-scale));
+    line-height: 1.35;
+    color: var(--v-ink-muted);
+    cursor: pointer;
+    padding: 4px 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: background 170ms ease, color 170ms ease;
+  }
+  .segmented button[aria-selected="true"] {
+    background: var(--v-saffron-tint);
+    color: var(--v-saffron-deep);
+    font-weight: 600;
+  }
+  .segmented button:focus-visible { outline: 2px solid var(--v-saffron); outline-offset: -2px; }
+
+  .menu-btn {
+    appearance: none;
+    width: 36px;
+    height: 36px;
+    flex: none;
+    border-radius: 999px;
+    border: 1px solid var(--v-divider);
+    background: var(--v-parchment-soft);
+    display: grid;
+    place-items: center;
+    gap: 3px;
+    cursor: pointer;
+    padding: 0;
+  }
+  .menu-btn i {
+    display: block;
+    width: 15px;
+    height: 1.5px;
+    background: var(--v-ink-soft);
+    border-radius: 1px;
+  }
+  .menu-btn i + i { margin-top: 3px; }
+
+  /* Scrollable content body */
+  .screen-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 4px 18px 8px;
+    scrollbar-width: none;
+  }
+  .screen-body::-webkit-scrollbar { display: none; }
+  .pane[hidden] { display: none; }
+
+  /* ── App primitives, as shipped ────────────────────────────────────── */
+
+  .verse-card {
+    border-radius: 18px;
+    border: 1px solid var(--v-divider);
+    background: var(--v-parchment-soft);
+    padding: 18px;
+    box-shadow: 0 8px 20px -12px rgba(90, 58, 30, 0.4);
+  }
+  .card-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .source-pill {
+    background: rgba(184, 98, 27, 0.1);
+    border-radius: 999px;
+    padding: 3px 10px;
+    font-family: var(--dev);
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--v-saffron-deep);
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .card-actions { display: flex; gap: 10px; flex: none; color: var(--v-saffron); }
+  .verse-lines {
+    font-family: var(--dev);
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--v-ink);
+    margin: 14px 0 0;
+  }
+  .ornament {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 14px 0;
+    color: var(--v-gold);
+  }
+  .ornament::before, .ornament::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--v-divider);
+  }
+  .ornament span { font-size: 12px; }
+  .meaning-label {
+    font-family: var(--dev);
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--v-saffron-deep);
+    margin: 0;
+  }
+  .meaning-label em { font-family: var(--lat); font-style: italic; color: var(--v-ink-muted); font-weight: 400; }
+  .meaning-text {
+    font-family: var(--dev);
+    font-size: 13.5px;
+    line-height: 1.75;
+    color: var(--v-ink-soft);
+    margin: 6px 0 0;
+  }
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16px;
+    padding-top: 11px;
+    border-top: 1px solid rgba(138, 62, 11, 0.15);
+    font-family: var(--lat);
+    font-style: italic;
+    font-size: 11.5px;
+    color: var(--v-ink-muted);
+  }
+  .next-btn {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    color: var(--v-saffron);
+    font-family: var(--ui);
+    font-size: 13px;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  /* Section heading — the design.md "देवता · By Deity" style. */
+  .section-heading {
+    font-family: var(--dev);
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--v-ink);
+    margin: 18px 0 9px;
+  }
+  .section-heading em {
+    font-family: var(--lat);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 13px;
+    color: var(--v-ink-muted);
+  }
+  .section-heading:first-child { margin-top: 6px; }
+
+  /* Track rows (AudioLibraryScreen) */
+  .track {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--v-card-surface);
+    border: 1px solid var(--v-divider);
+    border-radius: 14px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+  }
+  .track-thumb {
+    width: 38px;
+    height: 38px;
+    flex: none;
+    border-radius: 10px;
+    background: #F1E0B3;
+    display: grid;
+    place-items: center;
+    color: var(--v-saffron-deep);
+    font-size: 13px;
+  }
+  .track-thumb.playing { background: linear-gradient(160deg, #F8D291, #E0A255); }
+  .track-meta { min-width: 0; flex: 1; }
+  .track-title {
+    font-family: var(--dev);
+    font-size: 14px;
+    color: var(--v-ink);
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .track-kind {
+    font-family: var(--lat);
+    font-style: italic;
+    font-size: 11.5px;
+    color: var(--v-ink-muted);
+    margin: 1px 0 0;
+  }
+  .track-play { flex: none; color: var(--v-saffron); font-size: 14px; }
+  .track-progress {
+    height: 2px;
+    border-radius: 2px;
+    background: var(--v-divider);
+    margin-top: 6px;
+    overflow: hidden;
+  }
+  .track-progress i { display: block; height: 100%; background: var(--v-saffron); border-radius: 2px; }
+
+  /* Launcher grid (HomeScreen CategoryCard variant="launcher") */
+  .launcher-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 9px;
+  }
+  .tile {
+    background: var(--v-card-surface);
+    border: 1px solid var(--v-divider);
+    border-radius: 14px;
+    min-height: 74px;
+    padding: 9px 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    text-align: center;
+  }
+  .tile-glyph { color: var(--v-saffron); font-size: 17px; line-height: 1; }
+  .tile-hi { font-family: var(--dev); font-size: 12.5px; color: var(--v-ink); line-height: 1.4; }
+  .tile-en { font-family: var(--lat); font-style: italic; font-size: 10.5px; color: var(--v-ink-muted); }
+
+  /* Mini-player — docked above the nav, persists across every tab. */
+  .mini-player {
+    margin: 0 12px 6px;
+    background: var(--v-parchment-soft);
+    border: 1px solid rgba(184, 98, 27, 0.4);
+    border-radius: 14px;
+    padding: 8px 11px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 6px 16px -8px rgba(90, 58, 30, 0.5);
+  }
+  .mini-player .track-meta .track-title { font-size: 13px; }
+  .mini-dock-note {
+    font-family: var(--ui);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--v-ink-muted);
+    text-align: center;
+    padding-bottom: 3px;
+    opacity: 0.75;
+  }
+
+  /* ── Bottom nav — the restructured 5-tab bar ───────────────────────── */
+
+  .bottom-nav {
+    display: flex;
+    border-top: 1px solid var(--v-divider);
+    background: var(--v-parchment-soft);
+    padding: 6px 0 10px;
+    flex: none;
+  }
+  .nav-tab {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 1px;
+    cursor: pointer;
+    color: var(--v-ink-muted);
+    /* The 150–200ms highlight transition the handover asks for. */
+    transition: color 175ms ease;
+  }
+  .nav-tab svg { display: block; }
+  .nav-tab .nav-label {
+    font-family: var(--dev);
+    /* §4: at least 14px of line-height, or the matras on भक्ति and ज्योतिष clip. */
+    font-size: calc(10px * var(--nav-scale));
+    line-height: calc(14px * var(--nav-scale));
+    height: calc(14px * var(--nav-scale));
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+    max-width: 100%;
+  }
+  .nav-tab[aria-current="page"] { color: var(--v-saffron); }
+  .nav-tab:focus-visible { outline: 2px solid var(--v-saffron); outline-offset: -2px; }
+
+  /* ── Spec panel under each artboard ────────────────────────────────── */
+
+  .spec {
+    margin-top: 18px;
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .tier-readout {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 13px 15px;
+    border-bottom: 1px solid var(--rule-soft);
+    background: var(--panel-2);
+  }
+  .tier-count {
+    font-family: var(--lat);
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+  .tier-count.over { color: var(--flag); }
+  .tier-why { font-size: 12px; color: var(--mid); line-height: 1.45; }
+  .tier-why b { color: var(--bright); font-weight: 600; }
+
+  .spec dl { margin: 0; padding: 4px 15px 14px; }
+  .spec dt {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-top: 13px;
+  }
+  .spec dd { margin: 4px 0 0; font-size: 12.5px; color: var(--mid); line-height: 1.55; }
+  .spec dd .dev { font-family: var(--dev); color: var(--bright); }
+  .spec dd b { color: var(--bright); font-weight: 600; }
+  .spec .cost { color: #DDA08F; }
+  .spec code {
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 11.5px;
+    background: #14171D;
+    border: 1px solid var(--rule-soft);
+    border-radius: 4px;
+    padding: 1px 5px;
+    color: var(--mid);
+  }
+
+  /* ── Closing note ──────────────────────────────────────────────────── */
+
+  .closing {
+    max-width: 1180px;
+    margin: 40px auto 0;
+    padding: 0 28px 56px;
+  }
+  .closing-inner {
+    border-top: 1px solid var(--rule);
+    padding-top: 24px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 36px;
+  }
+  @media (max-width: 860px) {
+    .closing-inner { grid-template-columns: 1fr; gap: 26px; }
+  }
+  .closing h2 {
+    font-family: var(--lat);
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0 0 10px;
+    color: var(--bright);
+  }
+  .closing p { margin: 0 0 12px; color: var(--mid); max-width: 62ch; }
+  .closing p:last-child { margin-bottom: 0; }
+  .closing strong { color: var(--bright); font-weight: 600; }
+  .closing .dev { font-family: var(--dev); color: var(--bright); }
+
+  .fixed-list { margin: 0; padding: 0; list-style: none; }
+  .fixed-list li {
+    display: grid;
+    grid-template-columns: 18px 1fr;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    font-size: 13px;
+    color: var(--mid);
+  }
+  .fixed-list li:last-child { border-bottom: 0; }
+  .fixed-list .mark { color: var(--accent); font-size: 12px; line-height: 1.5; }
+  .fixed-list .dev { font-family: var(--dev); color: var(--bright); }
+  .fixed-list b { color: var(--bright); font-weight: 600; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition-duration: 0ms !important; animation-duration: 0ms !important; }
+  }
+</style>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <p class="kicker">Bottom-nav restructure · decision needed</p>
+    <h1>Three ways to fold <span class="dev-in-title">भजन</span> into <span class="dev-in-title">भक्ति</span></h1>
+    <p class="standfirst">
+      The handover's own argument against stacked chrome is what separates these three. Every
+      artboard below is live — <strong>tap the segments and the bottom nav</strong>. All five tabs
+      are already the restructured set, so the nav itself is under review here too.
+    </p>
+    <div class="controls">
+      <span class="controls-label">OS font scale</span>
+      <div class="toggle" role="group" aria-label="OS font scale">
+        <button type="button" data-scale="1" aria-pressed="true">Default</button>
+        <button type="button" data-scale="1.3" aria-pressed="false">Large</button>
+      </div>
+      <p class="hint">Large is the 360dp clipping check from §4 — watch the matras on भक्ति and ज्योतिष, and what three segments do to option B.</p>
+    </div>
+  </div>
+</header>
+
+<div class="rail-wrap">
+  <div class="rail">
+
+    <!-- ══════════════════ OPTION A ══════════════════ -->
+    <section class="option" data-option="a">
+      <div class="option-head">
+        <p class="option-tag">Option A <span class="rec">Recommended</span></p>
+        <h2 class="option-name">Segments only</h2>
+        <p class="option-sub">भक्ति keeps its daily verse. भजन becomes its second segment.</p>
+      </div>
+
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>▮▮▮</span></div>
+
+        <div class="chrome-row">
+          <div class="segmented" role="tablist" aria-label="भक्ति sections">
+            <button type="button" role="tab" aria-selected="true" data-pane="a-bhakti">भक्ति</button>
+            <button type="button" role="tab" aria-selected="false" data-pane="a-bhajan">भजन</button>
+          </div>
+          <button type="button" class="menu-btn" aria-label="अन्य — settings, language, reminders">
+            <span><i></i><i></i><i></i></span>
+          </button>
+        </div>
+
+        <div class="screen-body">
+          <div class="pane" id="a-bhakti">
+            <div class="verse-card">
+              <div class="card-header">
+                <span class="source-pill">भगवद्गीता · अध्याय 1, श्लोक 1</span>
+                <span class="card-actions" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 2h8v12l-4-3-4 3V2z"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="3.5" r="2"/><circle cx="4" cy="8" r="2"/><circle cx="12" cy="12.5" r="2"/><path d="M5.7 7L10.3 4.5M5.7 9l4.6 2.5"/></svg>
+                </span>
+              </div>
+              <p class="verse-lines">धृतराष्ट्र उवाच |<br>धर्मक्षेत्रे कुरुक्षेत्रे समवेता युयुत्सवः |<br>मामकाः पाण्डवाश्चैव किमकुर्वत सञ्जय || 1||</p>
+              <div class="ornament"><span>❁</span></div>
+              <p class="meaning-label">अर्थ <em>· Meaning</em></p>
+              <p class="meaning-text">धृतराष्ट्र ने कहा: हे संजय, धर्मभूमि कुरुक्षेत्र में युद्ध की इच्छा से एकत्र हुए मेरे पुत्र और पाण्डु के पुत्रों ने क्या किया?</p>
+              <div class="card-footer">
+                <span>भगवद्गीता</span>
+                <button type="button" class="next-btn">↻ next</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="pane" id="a-bhajan" hidden>
+            <p class="section-heading">जारी रखें <em>Continue listening</em></p>
+            <div class="track">
+              <span class="track-thumb playing" aria-hidden="true">❙❙</span>
+              <span class="track-meta">
+                <p class="track-title">गोविन्दा हरि गोविन्दा</p>
+                <p class="track-kind">Bhajan</p>
+                <span class="track-progress"><i style="width:38%"></i></span>
+              </span>
+            </div>
+            <p class="section-heading">पाठ <em>Recitations</em></p>
+            <div class="track"><span class="track-thumb" aria-hidden="true">▸</span><span class="track-meta"><p class="track-title">हनुमान चालीसा</p><p class="track-kind">Chalisa</p></span></div>
+            <div class="track"><span class="track-thumb" aria-hidden="true">▸</span><span class="track-meta"><p class="track-title">सुन्दरकाण्ड</p><p class="track-kind">Granth</p></span></div>
+            <p class="section-heading">भजन व आरती <em>Bhajans &amp; Aartis</em></p>
+            <div class="track"><span class="track-thumb" aria-hidden="true">▸</span><span class="track-meta"><p class="track-title">अच्युतम् केशवम्</p><p class="track-kind">Bhajan</p></span></div>
+            <div class="track"><span class="track-thumb" aria-hidden="true">▸</span><span class="track-meta"><p class="track-title">ॐ जय जगदीश हरे</p><p class="track-kind">Aarti</p></span></div>
+            <div class="track"><span class="track-thumb" aria-hidden="true">▸</span><span class="track-meta"><p class="track-title">हरे राम</p><p class="track-kind">Mahamantra</p></span></div>
+          </div>
+        </div>
+
+        <p class="mini-dock-note">mini-player · persists on every tab</p>
+        <div class="mini-player">
+          <span class="track-thumb playing" aria-hidden="true">❙❙</span>
+          <span class="track-meta">
+            <p class="track-title">गोविन्दा हरि गोविन्दा</p>
+            <span class="track-progress"><i style="width:38%"></i></span>
+          </span>
+        </div>
+
+        <nav class="bottom-nav" data-nav="a" aria-label="Bottom navigation"></nav>
+      </div>
+
+      <div class="spec">
+        <div class="tier-readout">
+          <span class="tier-count" data-tier>1</span>
+          <span class="tier-why">chrome row above the first line of content — <b>the segment control replaces the screen title</b>, exactly as §3 rules for the shared screen.</span>
+        </div>
+        <dl>
+          <dt>What changes</dt>
+          <dd>A 2-up segment on the <span class="dev">भक्ति</span> tab. <span class="dev">भक्ति</span> renders today's <code>DailyBhaktiScreen</code> verbatim; <span class="dev">भजन</span> renders today's <code>AudioLibraryScreen</code> verbatim.</dd>
+          <dt>What it costs</dt>
+          <dd class="cost">The daily verse stays a tab away from <span class="dev">होम</span>, so §2's "daily content is the primary surface" is deferred, not delivered.</dd>
+          <dt>Blast radius</dt>
+          <dd><b>Smallest.</b> No Home changes, no content moves. Two screens get a shared container; neither is edited.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ══════════════════ OPTION B ══════════════════ -->
+    <section class="option" data-option="b">
+      <div class="option-head">
+        <p class="option-tag">Option B</p>
+        <h2 class="option-name">Add a library segment</h2>
+        <p class="option-sub">Three segments. The Home grid gets a second home here.</p>
+      </div>
+
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>▮▮▮</span></div>
+
+        <div class="chrome-row">
+          <div class="segmented" role="tablist" aria-label="भक्ति sections">
+            <button type="button" role="tab" aria-selected="true" data-pane="b-bhakti">भक्ति</button>
+            <button type="button" role="tab" aria-selected="false" data-pane="b-library">पुस्तकालय</button>
+            <button type="button" role="tab" aria-selected="false" data-pane="b-bhajan">भजन</button>
+          </div>
+          <button type="button" class="menu-btn" aria-label="अन्य — settings, language, reminders">
+            <span><i></i><i></i><i></i></span>
+          </button>
+        </div>
+
+        <div class="screen-body">
+          <div class="pane" id="b-bhakti">
+            <div class="verse-card">
+              <div class="card-header">
+                <span class="source-pill">भगवद्गीता · अध्याय 1, श्लोक 1</span>
+                <span class="card-actions" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 2h8v12l-4-3-4 3V2z"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="3.5" r="2"/><circle cx="4" cy="8" r="2"/><circle cx="12" cy="12.5" r="2"/><path d="M5.7 7L10.3 4.5M5.7 9l4.6 2.5"/></svg>
+                </span>
+              </div>
+              <p class="verse-lines">धृतराष्ट्र उवाच |<br>धर्मक्षेत्रे कुरुक्षेत्रे समवेता युयुत्सवः |<br>मामकाः पाण्डवाश्चैव किमकुर्वत सञ्जय || 1||</p>
+              <div class="ornament"><span>❁</span></div>
+              <p class="meaning-label">अर्थ <em>· Meaning</em></p>
+              <p class="meaning-text">धृतराष्ट्र ने कहा: हे संजय, धर्मभूमि कुरुक्षेत्र में युद्ध की इच्छा से एकत्र हुए मेरे पुत्र और पाण्डु के पुत्रों ने क्या किया?</p>
+              <div class="card-footer">
+                <span>भगवद्गीता</span>
+                <button type="button" class="next-btn">↻ next</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="pane" id="b-library" hidden data-tier="2">
+            <p class="section-heading">श्रेणियाँ <em>By Category</em></p>
+            <div class="launcher-grid">
+              <div class="tile"><span class="tile-glyph">◈</span><span class="tile-hi">चालीसा</span><span class="tile-en">Chalisa</span></div>
+              <div class="tile"><span class="tile-glyph">✦</span><span class="tile-hi">आरती</span><span class="tile-en">Aarti</span></div>
+              <div class="tile"><span class="tile-glyph">❋</span><span class="tile-hi">स्तोत्रम्</span><span class="tile-en">Hymns</span></div>
+              <div class="tile"><span class="tile-glyph">▤</span><span class="tile-hi">ग्रन्थ</span><span class="tile-en">Books</span></div>
+              <div class="tile"><span class="tile-glyph">◉</span><span class="tile-hi">जप</span><span class="tile-en">Japa</span></div>
+              <div class="tile"><span class="tile-glyph">✚</span><span class="tile-hi">संस्कार</span><span class="tile-en">Habits</span></div>
+              <div class="tile"><span class="tile-glyph">⛰</span><span class="tile-hi">तीर्थ</span><span class="tile-en">Pilgrimage</span></div>
+              <div class="tile"><span class="tile-glyph">🛡</span><span class="tile-hi">कवच</span><span class="tile-en">Kavach</span></div>
+              <div class="tile"><span class="tile-glyph">❈</span><span class="tile-hi">अष्टकम्</span><span class="tile-en">Ashtakam</span></div>
+              <div class="tile"><span class="tile-glyph">❂</span><span class="tile-hi">सूक्तम्</span><span class="tile-en">Suktam</span></div>
+              <div class="tile"><span class="tile-glyph">☾</span><span class="tile-hi">देवता</span><span class="tile-en">By Deity</span></div>
+              <div class="tile"><span class="tile-glyph">➔</span><span class="tile-hi">उद्देश्य</span><span class="tile-en">By Purpose</span></div>
+            </div>
+          </div>
+
+          <div class="pane" id="b-bhajan" hidden>
+            <p class="section-heading">जारी रखें <em>Continue listening</em></p>
+            <div class="track">
+              <span class="track-thumb playing" aria-hidden="true">❙❙</span>
+              <span class="track-meta">
+                <p class="track-title">गोविन्दा हरि गोविन्दा</p>
+                <p class="track-kind">Bhajan</p>
+                <span class="track-progress"><i style="width:38%"></i></span>
+              </span>
+            </div>
+            <p class="section-heading">पाठ <em>Recitations</em></p>
+            <div class="track"><span class="track-thumb" aria-hidden="true">▸</span><span class="track-meta"><p class="track-title">हनुमान चालीसा</p><p class="track-kind">Chalisa</p></span></div>
+            <div class="track"><span class="track-thumb" aria-hidden="true">▸</span><span class="track-meta"><p class="track-title">सुन्दरकाण्ड</p><p class="track-kind">Granth</p></span></div>
+            <p class="section-heading">भजन व आरती <em>Bhajans &amp; Aartis</em></p>
+            <div class="track"><span class="track-thumb" aria-hidden="true">▸</span><span class="track-meta"><p class="track-title">अच्युतम् केशवम्</p><p class="track-kind">Bhajan</p></span></div>
+            <div class="track"><span class="track-thumb" aria-hidden="true">▸</span><span class="track-meta"><p class="track-title">ॐ जय जगदीश हरे</p><p class="track-kind">Aarti</p></span></div>
+          </div>
+        </div>
+
+        <p class="mini-dock-note">mini-player · persists on every tab</p>
+        <div class="mini-player">
+          <span class="track-thumb playing" aria-hidden="true">❙❙</span>
+          <span class="track-meta">
+            <p class="track-title">गोविन्दा हरि गोविन्दा</p>
+            <span class="track-progress"><i style="width:38%"></i></span>
+          </span>
+        </div>
+
+        <nav class="bottom-nav" data-nav="b" aria-label="Bottom navigation"></nav>
+      </div>
+
+      <div class="spec">
+        <div class="tier-readout">
+          <span class="tier-count" data-tier>1</span>
+          <span class="tier-why">on the verse segment — but <b>switch to पुस्तकालय and it becomes 2</b>: the grid needs its own section heading, so chrome stacks right where the browsing happens.</span>
+        </div>
+        <dl>
+          <dt>What changes</dt>
+          <dd>A 3-up segment. <span class="dev">पुस्तकालय</span> mirrors the category grid that <span class="dev">होम</span> already shows, so the same 12 tiles exist in two places.</dd>
+          <dt>What it costs</dt>
+          <dd class="cost">Three Devanagari labels in a 360dp pill — <b>switch the font scale to Large</b> and <span class="dev">पुस्तकालय</span> is the first thing to truncate. Duplicated browse also splits the "where do I find things" answer in two.</dd>
+          <dt>Blast radius</dt>
+          <dd>Medium. Nothing is removed, so no regressions — but the redundancy is permanent unless the Home redesign later cleans it up.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ══════════════════ OPTION C ══════════════════ -->
+    <section class="option" data-option="c">
+      <div class="option-head">
+        <p class="option-tag">Option C</p>
+        <h2 class="option-name">Full IA move</h2>
+        <p class="option-sub">Daily content lands on होम. भक्ति is library-first. Nav is live — tap होम.</p>
+      </div>
+
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>▮▮▮</span></div>
+
+        <!-- होम — daily content is now the primary surface here -->
+        <div class="c-tab" id="c-home" hidden>
+          <div class="chrome-row">
+            <div class="segmented" style="pointer-events:none">
+              <button type="button" aria-selected="true" style="flex:0 1 auto;padding-inline:14px">होम</button>
+              <span style="flex:1"></span>
+            </div>
+            <button type="button" class="menu-btn" aria-label="अन्य — settings, language, reminders">
+              <span><i></i><i></i><i></i></span>
+            </button>
+          </div>
+          <div class="screen-body">
+            <p class="section-heading">आज के लिए <em>For today</em></p>
+            <div class="verse-card">
+              <div class="card-header">
+                <span class="source-pill">भगवद्गीता · अध्याय 1, श्लोक 1</span>
+                <span class="card-actions" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 2h8v12l-4-3-4 3V2z"/></svg>
+                </span>
+              </div>
+              <p class="verse-lines" style="font-size:15px">धर्मक्षेत्रे कुरुक्षेत्रे समवेता युयुत्सवः |<br>मामकाः पाण्डवाश्चैव किमकुर्वत सञ्जय || 1||</p>
+              <div class="ornament"><span>❁</span></div>
+              <p class="meaning-label">अर्थ <em>· Meaning</em></p>
+              <p class="meaning-text">धृतराष्ट्र ने कहा: हे संजय, धर्मभूमि कुरुक्षेत्र में युद्ध की इच्छा से एकत्र हुए मेरे पुत्र और पाण्डु के पुत्रों ने क्या किया?</p>
+            </div>
+            <div class="track" style="margin-top:12px"><span class="track-thumb" aria-hidden="true">✦</span><span class="track-meta"><p class="track-title">आज की आरती · श्री गणेश</p><p class="track-kind">Aarti for today</p></span><span class="track-play">›</span></div>
+            <div class="track"><span class="track-thumb" aria-hidden="true">◈</span><span class="track-meta"><p class="track-title">आज की चालीसा · हनुमान</p><p class="track-kind">Chalisa for today</p></span><span class="track-play">›</span></div>
+            <div class="track"><span class="track-thumb" aria-hidden="true">☾</span><span class="track-meta"><p class="track-title">तिथि · शुक्ल एकादशी</p><p class="track-kind">Tithi &amp; vrat</p></span><span class="track-play">›</span></div>
+            <div class="track"><span class="track-thumb" aria-hidden="true">✧</span><span class="track-meta"><p class="track-title">आज का राशिफल</p><p class="track-kind">Rashifal</p></span><span class="track-play">›</span></div>
+          </div>
+        </div>
+
+        <!-- भक्ति — now the full browsable library -->
+        <div class="c-tab" id="c-bhakti">
+          <div class="chrome-row">
+            <div class="segmented" role="tablist" aria-label="भक्ति sections">
+              <button type="button" role="tab" aria-selected="true" data-pane="c-library">पुस्तकालय</button>
+              <button type="button" role="tab" aria-selected="false" data-pane="c-bhajan">भजन</button>
+            </div>
+            <button type="button" class="menu-btn" aria-label="अन्य — settings, language, reminders">
+              <span><i></i><i></i><i></i></span>
+            </button>
+          </div>
+          <div class="screen-body">
+            <div class="pane" id="c-library">
+              <div class="launcher-grid">
+                <div class="tile"><span class="tile-glyph">◈</span><span class="tile-hi">चालीसा</span><span class="tile-en">Chalisa</span></div>
+                <div class="tile"><span class="tile-glyph">✦</span><span class="tile-hi">आरती</span><span class="tile-en">Aarti</span></div>
+                <div class="tile"><span class="tile-glyph">❋</span><span class="tile-hi">स्तोत्रम्</span><span class="tile-en">Hymns</span></div>
+                <div class="tile"><span class="tile-glyph">▤</span><span class="tile-hi">ग्रन्थ</span><span class="tile-en">Books</span></div>
+                <div class="tile"><span class="tile-glyph">◉</span><span class="tile-hi">जप</span><span class="tile-en">Japa</span></div>
+                <div class="tile"><span class="tile-glyph">✚</span><span class="tile-hi">संस्कार</span><span class="tile-en">Habits</span></div>
+                <div class="tile"><span class="tile-glyph">⛰</span><span class="tile-hi">तीर्थ</span><span class="tile-en">Pilgrimage</span></div>
+                <div class="tile"><span class="tile-glyph">🛡</span><span class="tile-hi">कवच</span><span class="tile-en">Kavach</span></div>
+                <div class="tile"><span class="tile-glyph">❈</span><span class="tile-hi">अष्टकम्</span><span class="tile-en">Ashtakam</span></div>
+                <div class="tile"><span class="tile-glyph">❂</span><span class="tile-hi">सूक्तम्</span><span class="tile-en">Suktam</span></div>
+                <div class="tile"><span class="tile-glyph">☾</span><span class="tile-hi">देवता</span><span class="tile-en">By Deity</span></div>
+                <div class="tile"><span class="tile-glyph">➔</span><span class="tile-hi">उद्देश्य</span><span class="tile-en">By Purpose</span></div>
+              </div>
+            </div>
+            <div class="pane" id="c-bhajan" hidden>
+              <p class="section-heading">जारी रखें <em>Continue listening</em></p>
+              <div class="track">
+                <span class="track-thumb playing" aria-hidden="true">❙❙</span>
+                <span class="track-meta">
+                  <p class="track-title">गोविन्दा हरि गोविन्दा</p>
+                  <p class="track-kind">Bhajan</p>
+                  <span class="track-progress"><i style="width:38%"></i></span>
+                </span>
+              </div>
+              <p class="section-heading">पाठ <em>Recitations</em></p>
+              <div class="track"><span class="track-thumb" aria-hidden="true">▸</span><span class="track-meta"><p class="track-title">हनुमान चालीसा</p><p class="track-kind">Chalisa</p></span></div>
+              <div class="track"><span class="track-thumb" aria-hidden="true">▸</span><span class="track-meta"><p class="track-title">सुन्दरकाण्ड</p><p class="track-kind">Granth</p></span></div>
+              <p class="section-heading">भजन व आरती <em>Bhajans &amp; Aartis</em></p>
+              <div class="track"><span class="track-thumb" aria-hidden="true">▸</span><span class="track-meta"><p class="track-title">अच्युतम् केशवम्</p><p class="track-kind">Bhajan</p></span></div>
+              <div class="track"><span class="track-thumb" aria-hidden="true">▸</span><span class="track-meta"><p class="track-title">ॐ जय जगदीश हरे</p><p class="track-kind">Aarti</p></span></div>
+            </div>
+          </div>
+        </div>
+
+        <p class="mini-dock-note">mini-player · persists on every tab</p>
+        <div class="mini-player">
+          <span class="track-thumb playing" aria-hidden="true">❙❙</span>
+          <span class="track-meta">
+            <p class="track-title">गोविन्दा हरि गोविन्दा</p>
+            <span class="track-progress"><i style="width:38%"></i></span>
+          </span>
+        </div>
+
+        <nav class="bottom-nav" data-nav="c" aria-label="Bottom navigation"></nav>
+      </div>
+
+      <div class="spec">
+        <div class="tier-readout">
+          <span class="tier-count" data-tier>1</span>
+          <span class="tier-why">and the library starts <b>immediately</b> under it — no section heading needed, because the whole segment <em>is</em> the library.</span>
+        </div>
+        <dl>
+          <dt>What changes</dt>
+          <dd>Daily aarti, chalisa, tithi and rashifal move onto <span class="dev">होम</span>. <span class="dev">भक्ति</span> becomes <span class="dev">पुस्तकालय</span> + <span class="dev">भजन</span>. This is §2 as written.</dd>
+          <dt>What it costs</dt>
+          <dd class="cost">Reaches straight into <code>HomeScreen</code> — the surface §7 says to <b>spec separately</b>. It also retires <code>DailyBhaktiScreen</code> as a tab root, which the feature tour, a reminder deep link and <code>daily-bhakti-smoke.yaml</code> all point at.</dd>
+          <dt>Blast radius</dt>
+          <dd><b>Largest.</b> Two IA changes land in one PR, and the nav restructure stops being independently reviewable.</dd>
+        </dl>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<section class="closing">
+  <div class="closing-inner">
+    <div>
+      <h2>What's already settled</h2>
+      <p>
+        These hold whichever option you pick — they're the rest of the handover, and the repo turned
+        out to be further along than §1 suggested.
+      </p>
+      <p>
+        <strong>The shared screen already exists.</strong> <code>PanchangScreen</code> ships a
+        <span class="dev">पंचांग | व्रत-पर्व | ज्योतिष</span> segment today, with the date state
+        already lifted above all three and an <code>initialTab</code> route param. So §3 is mostly
+        wiring two more tabs into a container that's already built — not building it.
+      </p>
+      <p>
+        The one genuinely new mechanism is the <strong>sync rule</strong>: the bottom highlight has to
+        follow the segment. That needs a custom tab bar reading a section context, because three tabs
+        must resolve to one mounted screen rather than three.
+      </p>
+    </div>
+    <ul class="fixed-list">
+      <li><span class="mark">▸</span><span>Bottom bar becomes <b class="dev">होम · भक्ति · पंचांग · व्रत · ज्योतिष</b>. <span class="dev">व्रत</span> takes a moon, <span class="dev">ज्योतिष</span> a star — never a second swastika beside <span class="dev">पंचांग</span>.</span></li>
+      <li><span class="mark">▸</span><span><span class="dev">अन्य</span> leaves the bar for the <b>header icon</b> on every tab. Its whole stack stays mounted and reachable — only the tab button goes.</span></li>
+      <li><span class="mark">▸</span><span>The mini-player <b>already</b> docks above the nav app-wide, from <code>App.tsx</code>. Nothing to build.</span></li>
+      <li><span class="mark">▸</span><span><code>entry_point</code> ships as a <b>local analytics seam</b> — typed, unit-tested on all four sources, one sink to swap later.</span></li>
+      <li><span class="mark">▸</span><span>Vrat reminders keep opening the <b>specific observance</b>; the screen underneath just mounts on <span class="dev">व्रत</span>, so back lands there.</span></li>
+    </ul>
+  </div>
+</section>
+
+<script>
+  // ── Bottom nav ─────────────────────────────────────────────────────────
+  // One descriptor list, rendered into every artboard, so the restructured bar
+  // is identical across all three options and can be judged on its own.
+  var TABS = [
+    { id: 'home',     hi: 'होम',     icon: 'home' },
+    { id: 'bhakti',   hi: 'भक्ति',   icon: 'diya' },
+    { id: 'panchang', hi: 'पंचांग',  icon: 'swastika' },
+    { id: 'vrat',     hi: 'व्रत',    icon: 'moon' },
+    { id: 'jyotish',  hi: 'ज्योतिष', icon: 'star' }
+  ];
+
+  var ICONS = {
+    home: '<path d="M3 10.5L11 4l8 6.5M5.5 9.5V18h11V9.5"/>',
+    // Diya with a flame — the shipped BhaktiIcon.
+    diya: '<path d="M11 3.2c1.6 2 1.6 3.6 0 5.2-1.6-1.6-1.6-3.2 0-5.2z" fill="currentColor" stroke="none"/><path d="M4.5 11h13c0 3.6-2.9 6.5-6.5 6.5S4.5 14.6 4.5 11z"/>',
+    // The existing calendar/swastika glyph, drawn as PanchangIcon draws it.
+    swastika: '<path d="M11 3.5v15M3.5 11h15M11 5.5h4.5M16.5 11v4.5M11 16.5H6.5M5.5 11V6.5"/>',
+    moon: '<path d="M14.4 3.6a7.5 7.5 0 100 14.8 7.8 7.8 0 010-14.8z"/>',
+    star: '<path d="M11 3.2l2.4 5.1 5.4.7-4 3.7 1 5.4-4.8-2.7-4.8 2.7 1-5.4-4-3.7 5.4-.7z"/>'
+  };
+
+  function svg(name) {
+    return '<svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" ' +
+      'stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+      ICONS[name] + '</svg>';
+  }
+
+  document.querySelectorAll('.bottom-nav').forEach(function (nav) {
+    // Option C's frame is nav-interactive (होम ↔ भक्ति); A and B start on भक्ति.
+    var interactive = nav.dataset.nav === 'c';
+    nav.innerHTML = TABS.map(function (t) {
+      var active = t.id === 'bhakti';
+      return '<button type="button" class="nav-tab" data-tab="' + t.id + '"' +
+        (active ? ' aria-current="page"' : '') +
+        (interactive && (t.id === 'home' || t.id === 'bhakti') ? '' : ' tabindex="-1"') +
+        '>' + svg(t.icon) + '<span class="nav-label">' + t.hi + '</span></button>';
+    }).join('');
+  });
+
+  // ── Segment controls ───────────────────────────────────────────────────
+  // The tier readout is the actual decision instrument: it counts the rows of
+  // chrome above the first line of content for the pane you're looking at.
+  function updateTier(section) {
+    var readout = section.querySelector('[data-tier]');
+    if (!readout) return;
+    var visible = section.querySelector('.pane:not([hidden])');
+    var tiers = visible && visible.dataset.tier ? Number(visible.dataset.tier) : 1;
+    readout.textContent = String(tiers);
+    readout.classList.toggle('over', tiers > 1);
+  }
+
+  document.querySelectorAll('.segmented[role="tablist"]').forEach(function (list) {
+    list.addEventListener('click', function (e) {
+      var btn = e.target.closest('button[data-pane]');
+      if (!btn) return;
+      var section = btn.closest('.option');
+      list.querySelectorAll('button[data-pane]').forEach(function (b) {
+        var on = b === btn;
+        b.setAttribute('aria-selected', String(on));
+        var pane = document.getElementById(b.dataset.pane);
+        if (pane) pane.hidden = !on;
+      });
+      updateTier(section);
+    });
+  });
+
+  // ── Option C: the nav itself switches surface ──────────────────────────
+  var cNav = document.querySelector('[data-nav="c"]');
+  if (cNav) {
+    cNav.addEventListener('click', function (e) {
+      var btn = e.target.closest('.nav-tab');
+      if (!btn || (btn.dataset.tab !== 'home' && btn.dataset.tab !== 'bhakti')) return;
+      var toHome = btn.dataset.tab === 'home';
+      document.getElementById('c-home').hidden = !toHome;
+      document.getElementById('c-bhakti').hidden = toHome;
+      cNav.querySelectorAll('.nav-tab').forEach(function (b) {
+        if (b.dataset.tab === btn.dataset.tab) b.setAttribute('aria-current', 'page');
+        else b.removeAttribute('aria-current');
+      });
+    });
+  }
+
+  // ── OS font scale ──────────────────────────────────────────────────────
+  document.querySelectorAll('.toggle button[data-scale]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.toggle button[data-scale]').forEach(function (b) {
+        b.setAttribute('aria-pressed', String(b === btn));
+      });
+      document.documentElement.style.setProperty('--nav-scale', btn.dataset.scale);
+    });
+  });
+
+  document.querySelectorAll('.option').forEach(updateTier);
+</script>

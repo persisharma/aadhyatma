@@ -173,7 +173,7 @@ export default function MyVratScreen({ navigation }: Props) {
               ]}
             >
               <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 14, color: colors.parchment }}>
-                {contentByLang(lang, 'व्रत-पर्व देखें →', 'Browse व्रत-पर्व →')}
+                {contentByLang(lang, 'व्रत देखें →', 'Browse Vrat →')}
               </Text>
             </Pressable>
           </View>

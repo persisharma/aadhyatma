@@ -6,7 +6,7 @@
 # so the deterministic door is the catalog tile.
 #
 # Verifies:
-#   1. Panchang tab → Vrat & Parv → Puja Vidhi tile → vidhi catalog.
+#   1. Panchang tab → व्रत segment → Puja Vidhi tile → vidhi catalog.
 #   2. The seven-entry catalog renders; the Satyanarayan card opens detail.
 #   3. Detail: private provenance, sourced Bhog/food guidance, duration, the
 #      routine-style samagri summary + occurrence-scoped kitchen/checklist rows,
@@ -25,7 +25,7 @@ appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 
 # ── Step 2: Reading language → English (More tab → Language picker) ──
-- tapOn: { id: "tab-more" }
+- tapOn: { id: "header-menu" }
 - waitForAnimationToEnd
 # The ऐप section (Language/Reading size) sits below the fold on standard-height
 # iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
@@ -42,13 +42,13 @@ appId: com.prashantsharma.vedansh
 - tapOn: "English"
 - waitForAnimationToEnd
 
-# ── Step 3: Panchang tab → Vrat & Parv catalog ──
+# ── Step 3: Panchang tab → व्रत segment ──
 - tapOn: { id: "tab-panchang" }
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: ".*Ujjain.*"
     timeout: 30000
-- tapOn: "Vrat & Parv"
+- tapOn: { id: "segment-vrat" }
 - waitForAnimationToEnd
 
 # ── Step 4: The पूजा विधि tile opens the vidhi catalog ──
@@ -203,7 +203,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 
 # ── Step 10: Restore Hindi (best-effort) ──
-- tapOn: { id: "tab-more" }
+- tapOn: { id: "header-menu" }
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
