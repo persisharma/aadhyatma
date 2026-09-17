@@ -48,10 +48,16 @@ appId: com.prashantsharma.vedansh
 - tapOn: "English"
 - waitForAnimationToEnd
 
-# ── Home → Sacred Books (Granth) category ──
+# ── Home → पाठ → Sacred Books (Granth) category ──
 - tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
-- assertVisible: "Sacred Books\\..*Tap to open\\."
+# The 16-tile grid left Home for the पाठ library (TRD-42 §5.3).
+- runFlow: _open-library.yaml
+- scrollUntilVisible:
+    element:
+      text: "Sacred Books\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 10000
 - tapOn: "Sacred Books\\..*Tap to open\\."
 - waitForAnimationToEnd
 

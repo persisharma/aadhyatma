@@ -45,6 +45,17 @@ export type GitaReaderParams = { chapter: number; initialIndex?: number };
 export type HomeStackParamList = VidhiStackParamList & {
   Home: undefined;
   /**
+   * पाठ — the library index Home's पाठ row pushes (TRD-42). Holds what used to
+   * be Home's CATEGORIES grid.
+   */
+  Library: undefined;
+  /**
+   * ALSO registered on MoreStack. Library's संग्रह tile pushes it here so Back
+   * returns to Library instead of stranding the user on the More tab — the same
+   * reason the vidhi trio is registered on three stacks (see above).
+   */
+  Wishlist: undefined;
+  /**
    * जिज्ञासा (PRD-41). `seed` is ask-from-context: the surface the user came
    * from names an entity so "iska bhog kya hai" resolves against it.
    * `initialQuery` pre-fills the box (a briefing card's "ask more" door).

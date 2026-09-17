@@ -25,10 +25,16 @@
 appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
+# The 16-tile grid left Home for the पाठ library (TRD-42 §5.3).
+- runFlow: _open-library.yaml
 
 # Open Hanuman Chalisa: the canonical reader, reached the same way chalisa-smoke
 # reaches it. The `.*` absorbs an optional " New." on the category tile.
-- assertVisible: "Chalisa\\..*Tap to open\\."
+- scrollUntilVisible:
+    element:
+      text: "Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 10000
 - tapOn: "Chalisa\\..*Tap to open\\."
 - waitForAnimationToEnd
 

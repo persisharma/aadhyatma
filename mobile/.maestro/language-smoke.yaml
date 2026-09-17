@@ -60,9 +60,13 @@ appId: com.prashantsharma.vedansh
 # ── Open a reader to confirm verse-script rendering ──
 - tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
-- extendedWaitUntil:
-    visible: "Chalisa\\..*Tap to open\\."
-    timeout: 15000
+# The 16-tile grid left Home for the पाठ library (TRD-42 §5.3).
+- runFlow: _open-library.yaml
+- scrollUntilVisible:
+    element:
+      text: "Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 10000
 - tapOn: "Chalisa\\..*Tap to open\\."
 - waitForAnimationToEnd
 - extendedWaitUntil:

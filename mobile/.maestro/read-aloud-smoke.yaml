@@ -75,7 +75,13 @@ appId: com.prashantsharma.vedansh
 # ── Part 2: the in-reader control on Hanuman Chalisa ──────────────────────────
 - tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
-- assertVisible: "Chalisa\\..*Tap to open\\."
+# The 16-tile grid left Home for the पाठ library (TRD-42 §5.3).
+- runFlow: _open-library.yaml
+- scrollUntilVisible:
+    element:
+      text: "Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 10000
 - tapOn: "Chalisa\\..*Tap to open\\."
 - waitForAnimationToEnd
 - extendedWaitUntil:
@@ -120,7 +126,12 @@ appId: com.prashantsharma.vedansh
 # the two v1 surfaces; the muted-vs-actionable rule is identical to Part 2.
 - tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
-- assertVisible: "Hymns & Praise\\..*Tap to open\\."
+- runFlow: _open-library.yaml
+- scrollUntilVisible:
+    element:
+      text: "Hymns & Praise\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 10000
 - tapOn: "Hymns & Praise\\..*Tap to open\\."
 - waitForAnimationToEnd
 - scrollUntilVisible:

@@ -1,7 +1,7 @@
 # Sanskar Category Smoke Test (PRD-07)
 #
 # Verifies:
-#   1. Home shows the Sanskar category tile
+#   1. The पाठ library shows the Sanskar category tile
 #   2. CategoryList shows all 7 sanskar sections
 #   3. Reader opens with the intro page (परिचय / Introduction)
 #   4. Language toggle flips text from Hindi to English
@@ -22,17 +22,28 @@ appId: com.prashantsharma.vedansh
 # ── Step 1: Boot Vedansh in Expo Go ──
 - runFlow: _launch.yaml
 
-# ── Step 2: Verify all 6 categories visible on Home (full accessibilityLabel match) ──
-- assertVisible: "Sacred Books. Tap to open."      # Granth
-- assertVisible: "Hymns & Praise\\..*Tap to open\\."    # Stotram
-- assertVisible: "Chalisa\\..*Tap to open\\."       # Chalisa (Gayatri Chalisa 1.4.4 → can show NEW)
-- assertVisible: "Japa & Mantras. Tap to open."    # Japam
-- assertVisible: "Aarti\\..*Tap to open\\."
-- assertVisible: "Good Habits\\..*Tap to open\\."       # Sanskar
+# ── Step 2: Open the पाठ library — the 16-tile grid left Home (TRD-42 §5.3) ──
+- runFlow: _open-library.yaml
 
-# ── Step 3: Open Sanskar category, verify all 8 sections (regex for LibraryCard) ──
-# "Good Habits" is the last Home tile — low enough that a direct tap can land on
-# the bottom tab bar (→ Panchang). Center it first so the tap stays mid-screen.
+# ── Step 3: Verify the 6 core category tiles (full accessibilityLabel match) ──
+# The grid runs three across in registry order, so rows 2+ fall past the fold
+# under the देवता rail and उद्देश्य chips. scrollUntilVisible is a no-op when the
+# tile is already on screen, so this reads the same on both platforms.
+- assertVisible: "Chalisa\\..*Tap to open\\."       # Chalisa (Gayatri Chalisa 1.4.4 → can show NEW)
+- assertVisible: "Aarti\\..*Tap to open\\."
+- assertVisible: "Hymns & Praise\\..*Tap to open\\."    # Stotram
+- scrollUntilVisible:
+    element:
+      text: "Sacred Books\\. Tap to open\\."   # Granth
+    direction: DOWN
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Japa & Mantras\\. Tap to open\\."   # Japam
+    direction: DOWN
+    timeout: 10000
+
+# ── Step 4: Open Sanskar category, verify all 8 sections (regex for LibraryCard) ──
 - scrollUntilVisible:
     element:
       text: "Good Habits\\..*Tap to open\\."
@@ -64,7 +75,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 60
     timeout: 10000
 
-# ── Step 4: Open Morning Slokas, toggle to English, assert intro pill ──
+# ── Step 5: Open Morning Slokas, toggle to English, assert intro pill ──
 # Maestro's iOS accessibility tree doesn't reliably expose standalone
 # Devanagari text nodes — so we toggle to English first and assert the
 # English label "Introduction" instead of "परिचय".
@@ -100,7 +111,7 @@ appId: com.prashantsharma.vedansh
     visible: "Morning Prayers"  # Section titleEn — appears in top-bar when lang=en
     timeout: 15000
 
-# ── Step 5: Swipe to next verse — intro should no longer be visible ──
+# ── Step 6: Swipe to next verse — intro should no longer be visible ──
 - swipe:
     direction: LEFT
 - waitForAnimationToEnd
@@ -109,11 +120,18 @@ appId: com.prashantsharma.vedansh
     visible: ".*Karaagre vasate Lakshmihi.*"  # Substring match (Maestro uses anchored regex)
     timeout: 10000
 
-# ── Step 6: Restart and verify Surya Namaskar step indicator ──
+# ── Step 7: Restart and verify Surya Namaskar step indicator ──
 # Reopens fresh because the reader's nav stack is already deep.
 - stopApp:
     appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
+- runFlow: _open-library.yaml
+- scrollUntilVisible:
+    element:
+      text: "Good Habits\\..*Tap to open\\."
+    direction: DOWN
+    centerElement: true
+    timeout: 10000
 - tapOn: "Good Habits\\..*Tap to open\\."
 - waitForAnimationToEnd
 - tapOn: "Surya Namaskar\\..*Tap to open\\."

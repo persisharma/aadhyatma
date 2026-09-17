@@ -12,9 +12,15 @@
 appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
+# The 16-tile grid left Home for the पाठ library (TRD-42 §5.3).
+- runFlow: _open-library.yaml
 
 # Open Aarti category
-- assertVisible: "Aarti\\..*Tap to open\\."
+- scrollUntilVisible:
+    element:
+      text: "Aarti\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 10000
 - tapOn: "Aarti\\..*Tap to open\\."
 - waitForAnimationToEnd
 

@@ -6,6 +6,8 @@ import {
 } from '@react-navigation/native-stack';
 import HomeScreen from '@/screens/HomeScreen';
 import SearchScreen from '@/screens/SearchScreen';
+import LibraryScreen from '@/screens/LibraryScreen';
+import WishlistScreen from '@/screens/WishlistScreen';
 import CategoryListScreen from '@/screens/CategoryListScreen';
 import DeityListScreen from '@/screens/DeityListScreen';
 import DeityIndexScreen from '@/screens/DeityIndexScreen';
@@ -95,6 +97,10 @@ export default function HomeStackNavigator() {
         component={SearchScreen}
         options={{ animation: 'fade' }}
       />
+      {/* पाठ — the library index (TRD-42). Wishlist rides this stack too so
+          Library → संग्रह → Back returns to Library. */}
+      <Stack.Screen name="Library" component={LibraryScreen} />
+      <Stack.Screen name="Wishlist" component={WishlistScreen} />
       <Stack.Screen name="CategoryList" component={CategoryListScreen} />
       <Stack.Screen name="DeityList" component={DeityListScreen} />
       <Stack.Screen name="DeityIndex" component={DeityIndexScreen} />

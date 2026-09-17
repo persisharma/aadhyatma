@@ -4,7 +4,7 @@
 |---|---|
 | **Companion PRD** | None yet. This TRD is written against the approved prototype. |
 | **Prototype** | [`docs/home-today-first-prototype.html`](../../home-today-first-prototype.html) (rev 4) |
-| **Status** | Draft — design for the Phase-1 build |
+| **Status** | **Shipped** (1.4.9, Sept 2026). §13's open questions are resolved in §14. |
 | **Feasibility** | ✅ OTA-shippable. Pure TS/JS, no new native dependency, no new asset, no new color. |
 | **Numbering** | 42 is the next free id: 25 reserved (सन्ध्या वन्दन), 26–29 round-2 reservations, 30 retired, 31–40 the 2027 bets, 41 जिज्ञासा. |
 
@@ -263,3 +263,42 @@ Same PR, not a follow-up:
 3. **How much of the library actually leaves Home.** The reviewer's own pushback: the app's core journey is open → tap चालीसा → read, and this design taxes it by one tap. The hybrid is to keep चालीसा · आरती · स्तोत्रम् · ग्रन्थ · जप on Home as one row and send only the thin parity forms plus देवता and उद्देश्य to Library. This costs about one row of height and removes ten tiles instead of twelve. **There is no analytics to settle it** — the app ships none by design — so this is a product call, not a measurement.
 4. **नया on a fresh install.** §4 proposes suppressing it entirely. The alternative is showing the three newest features to a new user as a mini-tour, which duplicates the real tour.
 5. **Sequencing of the पंचांग › परिवार and settings-only अन्य reorg.** Independent of this change and carries its own doc updates. Ship after, or together with a single migration notice.
+
+---
+
+## 14. As-built — what shipped, and what §13 resolved to
+
+Recorded here rather than left as open questions, since the build settled all five.
+
+| §13 question | Resolution |
+|---|---|
+| 1. The पंचांग tool tile is redundant | **Dropped.** Seven tools would have left a ragged row, so **पितृ स्मरण** took the eighth square (below). The Today strip and the tab bar remain the two doors to Panchang. |
+| 2. जारी रखें on Library | **Not built.** design.md §49 retired the card by product decision and recorded the `updatedAt` hazard; re-introducing it needed an explicit yes that was not sought in this pass. |
+| 3. How much of the library leaves Home | **All of it**, the full-move option rather than the hybrid. The cost — one extra tap on the core open → चालीसा → read journey — is real and is recorded in design.md §18's "Why this shape" rather than argued away. There is no analytics to settle it. |
+| 4. नया on a fresh install | **Suppressed.** `seedSeenForFreshInstall` marks everything seen for an install with no `UPGRADER_SIGNAL_KEYS`; only a genuine upgrade accumulates pending cards. |
+| 5. Sequencing of the पंचांग › परिवार / अन्य reorg | **Not attempted here.** Independent, carries its own doc updates. |
+
+**Three surfaces had their only standing Home door on the retired carousel.** This was the pass's
+real risk, and it is the finding worth carrying forward:
+
+- **पितृ स्मरण** — caught by `PitruSmaranTouchpoints.test.ts`. Re-homed as a **tool**, not a नया
+  card: नया clears on open, and this door must persist while the ledger is empty.
+- **संकल्प** — caught by `SankalpTouchpoints.test.tsx`. Re-homed as the साधना row's middle cell.
+- **आज का विधान** (PRD-41, shipped a fortnight earlier) — **not** caught; it had no touchpoint
+  test. It is now two taps deep, behind the ⌕ FAB's Search empty state, which is where it belongs
+  on the merits (जिज्ञासा *is* the search box) but is a downgrade nonetheless.
+  `TodayVidhanTouchpoints.test.ts` was written afterwards. design.md §71 and §18 both record it.
+
+**Scope that grew beyond §9's table.** The e2e surface was larger than the four flows listed there:
+roughly twenty Maestro flows tapped a Home category tile or the By Deity / By Purpose tiles. They
+now run a shared `_open-library.yaml` subflow after `_launch.yaml`; `new-content-badge-home-smoke.yaml`
+was renamed `new-content-badge-library-smoke.yaml`; the four Kundali flows dropped `"Kundali. New."`
+for `"Kundali\..*"`, since the tools row carries no badge.
+
+**Version.** `app.json` 1.4.8 → **1.4.9** (iOS build 62 → 63, Android versionCode 10 → 11),
+`APP_TOUR_VERSION` in lockstep (RULEBOOK §6.1), with a two-item `whatsNew['1.4.9']` entry — the
+tour only runs for fresh installs, so a returning user learns about the move from the sheet.
+
+**Gate at merge.** 184 Jest suites / 1523 tests · 400 engine · 113 data · 27 widgets · 32 ask ·
+`tsc --noEmit` clean · `npm run lint` 0 errors. Maestro flows are authored, not device-run
+(no simulator in this container) — see `wiki/runbooks/e2e-verification.md`.

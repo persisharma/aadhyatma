@@ -9,10 +9,11 @@ const VALID_TABS = new Set(['HomeTab', 'DailyBhaktiTab', 'PanchangTab', 'AudioTa
 // targetId rings its destination tab instead (design.md §47).
 const VALID_TARGET_IDS = new Set([
   'routineCard',
-  'categoriesGrid',
-  'japaTile',
+  // TRD-42: the 16-tile grid became the उपकरण row + the पाठ door, so
+  // categoriesGrid / japaTile / theerthTile retired with it.
+  'toolsRow',
+  'libraryDoor',
   'japamInside',
-  'theerthTile',
   'theerthInside',
   'dailyVerse',
   'shareButton',

@@ -73,9 +73,12 @@ summary card is the always-visible header (with a centred rotating `›` caret) 
 help caption **collapse by default, dropping down only when the summary card is tapped** (`expanded`
 state in `RoutineTodayScreen`). This mirrors the sankalp cards (see Sadhana Programs below), so both
 ledgers on the screen behave and look identical. Also: a `RoutineBanner` (pure view-model in
-`routineBannerView.ts`; single-line chip since #110) with a `variant` prop — **`inline`** on Home
-(flows in the scroll between the Today strip and CATEGORIES; July 2026 — it used to dock at the
-bottom and floated over the DISCOVER carousel) and **`docked`** above the tab bar on Daily Bhakti;
+`routineBannerView.ts`; single-line chip since #110) with a `variant` prop — **`inline`** (flows in
+a scroll rather than overlaying it; July 2026 — it used to dock at Home's bottom and floated over
+the DISCOVER carousel) and **`docked`** above the tab bar on Daily Bhakti. Since Sept 2026 the
+inline variant is Home's **empty state only**: `SadhanaRow` ([[home]]) took over the populated case,
+showing routine progress beside the संकल्प day and the japa streak, and falls back to this banner's
+`nudge` when all three are empty;
 `RoutineCelebration` (pushpa-varsha)
 plays once per day when everything is done; five native-stack routes — `RoutineToday`,
 `RoutineList`, `RoutineCreate`, `RoutineDetail`, `RoutineAddItems`; every reader's toggle row
@@ -100,10 +103,13 @@ the header is tapped** — styled identically to the §31 daily-routine ledger r
 The catalog has **three standing entry points** (July 2026 review — it used to hang solely off the
 create-routine chooser, unreachable in practice once a routine existed): the `CreateRoutineScreen`
 'choose' fork, ghost "तैयार संकल्प चुनें / Browse sankalps" buttons on `RoutineToday` + `RoutineList`,
-and a संकल्प Home DISCOVER spotlight card — pinned by `screens/__tests__/SankalpTouchpoints.test.tsx`.
+and the **संकल्प cell of Home's साधना row** — a DISCOVER spotlight card until the carousel was
+retired (TRD-42), pinned throughout by `screens/__tests__/SankalpTouchpoints.test.tsx`.
 `RoutineList` cards and the wizard's `ModeCard`s now wear the warm §8 gradient card language too.
 
 ## Dependencies
+
+- [[home]] — `SadhanaRow` is the Home surface for both this subsystem and Sadhana Programs.
 
 - [[overview]] — provider nesting: `RoutineProvider` + `RoutineSheetProvider` sit between
   JapamCounter and NotificationPreferences in `App.tsx`.

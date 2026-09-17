@@ -16,13 +16,17 @@ appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
 
-# ── Home → By Deity index ──
+# ── Home → पाठ → the deity index ──
+# The Home "By Deity" tile retired with the grid: the देवता rail now leads the
+# पाठ library, and its "All N deities" overflow chip opens the same index
+# (TRD-42 §5.3). The count is registry-derived, so match it as \\d+.
+- runFlow: _open-library.yaml
 - scrollUntilVisible:
     element:
-      text: "By Deity. Tap to open."
-    direction: DOWN
+      text: "All \\d+ deities"
+    direction: UP
     timeout: 10000
-- tapOn: "By Deity. Tap to open."
+- tapOn: "All \\d+ deities"
 - waitForAnimationToEnd
 
 # ── Deity index renders the deity grid (first few cards) ──

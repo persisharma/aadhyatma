@@ -54,9 +54,13 @@ describe('vidhi back navigation', () => {
   });
 
   test('Home-side doors push in place instead of jumping to the Panchang tab', () => {
-    const home = src('..', 'screens', 'HomeScreen.tsx');
-    expect(home).toMatch(/key: 'puja-vidhi'/);
-    expect(home).toMatch(/onPress: \(\) => navigation\.navigate\('VidhiCatalog'\)/);
+    // The Home-side vidhi door is the उपकरण tile now, not a DISCOVER card
+    // (TRD-42). It must still push on the Home stack: a cross-tab jump would
+    // leave Back popping to the Panchang calendar, which carries no vidhi door
+    // of its own in its default mode.
+    const tools = src('..', 'components', 'ToolsRow.tsx');
+    expect(tools).toMatch(/case 'vidhi':/);
+    expect(tools).toMatch(/navigation\.navigate\('VidhiCatalog'\)/);
 
     const search = src('..', 'screens', 'SearchScreen.tsx');
     expect(search).toMatch(/navigation\.navigate\('VidhiDetail', \{ vidhiId: sourceId \}\)/);
@@ -64,7 +68,7 @@ describe('vidhi back navigation', () => {
     const entryRoutes = src('entryRoutes.ts');
     expect(entryRoutes).toMatch(/nav\.navigate\('VidhiDetail', \{ vidhiId: item\.sourceId \}\)/);
 
-    for (const source of [home, search, entryRoutes]) {
+    for (const source of [tools, search, entryRoutes]) {
       expect(source).not.toMatch(/panchangTabTarget\('Vidhi/);
     }
   });

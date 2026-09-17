@@ -1,0 +1,87 @@
+# Library (पाठ) Smoke Test — TRD-42 §5.3
+#
+# Home traded its 16-tile grid for one पाठ door. This flow is the guard on that
+# trade: everything the grid used to reach must still be reachable, and the way
+# back out must land on Home rather than stranding the user on a screen that has
+# no tab of its own.
+#
+#   1. Home → पाठ door → the Library index (three browse axes on one screen).
+#   2. देवता rail + the "All N deities" overflow → DeityIndex, which the Home
+#      "By Deity" tile used to open.
+#   3. उद्देश्य chips → PurposeList directly. The old Home tile opened a purpose
+#      *index* first; the chips are that index, so the middle screen is gone.
+#   4. A form tile → CategoryList → Back → Library → Back → Home.
+#
+# Selector notes: every launcher/list a11y label is English by contract whatever
+# the reading language, so this flow needs no language flip. The deity rail is
+# capped at 8 avatars, so the overflow chip is what proves the other deities are
+# still reachable.
+
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- runFlow: _open-library.yaml
+
+# ── 1. All three browse axes on one screen ──
+- assertVisible: "Shri Rama\\. Tap to open\\."
+- assertVisible: "Protection\\. Tap to open\\."
+- scrollUntilVisible:
+    element:
+      text: "Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 10000
+
+# ── 2. देवता overflow → the deity index (the old Home "By Deity" tile) ──
+- scrollUntilVisible:
+    element:
+      text: "All \\d+ deities"
+    direction: UP
+    timeout: 10000
+- tapOn: "All \\d+ deities"
+- waitForAnimationToEnd
+# Maa Lakshmi sits past the rail's 8-avatar cap, so seeing her proves the
+# overflow really reached the full index rather than re-rendering the rail.
+- extendedWaitUntil:
+    visible: "Maa Lakshmi\\..*"
+    timeout: 15000
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# ── 3. उद्देश्य chip → the cross-deity purpose list, with no index in between ──
+- scrollUntilVisible:
+    element:
+      text: "Protection\\. Tap to open\\."
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Protection\\. Tap to open\\."
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Rama Raksha Stotra.*Tap to open\\."
+    timeout: 15000
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# ── 4. A form tile → CategoryList → back out to Home ──
+- scrollUntilVisible:
+    element:
+      text: "Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Chalisa\\..*Tap to open\\."
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Hanuman Chalisa\\..*Tap to open\\."
+    timeout: 15000
+- tapOn: "Back"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Search the library"
+    timeout: 15000
+# Library is pushed on the Home stack, so one more Back must land on Home —
+# not on the More tab, which is where a Wishlist-style registration mistake
+# would send it.
+- tapOn: "Back"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
+    timeout: 15000

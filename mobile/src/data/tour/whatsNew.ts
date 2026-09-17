@@ -26,13 +26,34 @@ export type WhatsNewEntry = {
  * Current app version. Must match `expo.version` in `mobile/app.json`. This is
  * the key against which the user's "last seen what's new" is compared.
  */
-export const APP_TOUR_VERSION = '1.4.8';
+export const APP_TOUR_VERSION = '1.4.9';
 
 /**
  * Per-version what's-new content. The latest entry is shown when the user
  * first opens this version of the app after updating.
  */
 export const whatsNew: Readonly<Record<string, WhatsNewEntry>> = {
+  '1.4.9': {
+    version: '1.4.9',
+    items: [
+      {
+        titleHi: 'नया मुख पृष्ठ',
+        titleEn: 'A new Home',
+        bodyHi:
+          'मुख पृष्ठ अब आज से शुरू होता है — पंचांग, साधना, और आठ उपकरण एक ही पंक्ति में: व्रत-पर्व, मुहूर्त, कुंडली, पूजा विधि, जप, वास्तु, तीर्थ एवं पितृ स्मरण। हर उपकरण हर बार उसी जगह मिलेगा।',
+        bodyEn:
+          'Home now opens on today — the Panchang, your sadhana, and eight tools in one fixed row: vrat & parv, muhurat, kundali, puja vidhi, japa, vastu, pilgrimage and pitru smaran. Each one sits in the same square on every visit.',
+      },
+      {
+        titleHi: 'पाठ — सारे ग्रन्थ एक जगह',
+        titleEn: 'One door to the whole library',
+        bodyHi:
+          'सोलह टाइलों की जाली अब पाठ में है। वहाँ देवता, उद्देश्य और पाठ के प्रकार — तीनों से खोजें, हर श्रेणी की गिनती सहित। मुख पृष्ठ से एक स्पर्श दूर।',
+        bodyEn:
+          'The sixteen-tile grid moved into the पाठ library. Browse by deity, by purpose or by form — all three on one screen, each category with its real count. One tap from Home.',
+      },
+    ],
+  },
   '1.4.8': {
     version: '1.4.8',
     items: [

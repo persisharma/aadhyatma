@@ -37,12 +37,15 @@ JapamCounter, Routine, RoutineSheet, NotificationPreferences, Share) around a
 
 The native splash stays visible until fonts plus the persisted font-size and reading-language
 preferences have hydrated. Those preferences alter Home geometry, so this gate makes the first
-visible Home frame stable instead of moving the launcher grid immediately after landing.
+visible Home frame stable instead of moving its rows immediately after landing.
 
 1. **Home** → `HomeStackNavigator` (native-stack, 30+ reader screens: Gita, chalisas,
    Sundarkand, stotrams, sanskar, japam, search — plus 5 Daily-Routine screens:
-   RoutineToday/List/Create/Detail/AddItems). HomeScreen shows the ॐ वेदांश़ ॐ `HomeWordmark`
-   (replaced `Crest`, #110), the Panchang-backed Today strip, and an inline `RoutineBanner`.
+   RoutineToday/List/Create/Detail/AddItems, and `Library`). HomeScreen shows the ॐ वेदांश़ ॐ
+   `HomeWordmark` (replaced `Crest`, #110), the Panchang-backed Today strip, a three-cell साधना
+   row, eight fixed उपकरण tiles, one **पाठ** door into `LibraryScreen` and a per-user **नया**
+   strip. The 16-tile category grid and the shuffling DISCOVER carousel were retired in Sept
+   2026 — see [[home]].
 2. **DailyBhakti** → `DailyBhaktiScreen`.
 3. **Panchang** → lazy `PanchangStackNavigator` (PanchangScreen, observances, katha library,
    vrat, Kundali, Rashifal). Its modules are evaluated only when the tab/launcher first opens,
@@ -57,11 +60,11 @@ Deep links and notification taps route through `navigationRef`, exported from
 
 | Module | Purpose | Key Paths |
 |---|---|---|
-| `mobile/src/screens/` | Reader & feature screens (one per text/variant) | `GitaReaderScreen`, `ChalisaReaderScreen`, `DailyBhaktiScreen`, `PanchangScreen`, `MuhuratDetailScreen`, `JapamAlarmsScreen` |
-| `mobile/src/components/` | Reusable UI | `GitaVersePage`, `LibraryCard`, `UpdateReadyModal`, `ReminderOptInModal`, `LanguageToggle`, `RoutineBanner`, `AddToRoutineButton`, `HomeWordmark`, `MuhuratGlanceCard`, `MuhuratCardBody` |
+| `mobile/src/screens/` | Reader & feature screens (one per text/variant) | `HomeScreen`, `LibraryScreen` (see [[home]]), `GitaReaderScreen`, `ChalisaReaderScreen`, `DailyBhaktiScreen`, `PanchangScreen`, `MuhuratDetailScreen`, `JapamAlarmsScreen` |
+| `mobile/src/components/` | Reusable UI | `GitaVersePage`, `LibraryCard`, `UpdateReadyModal`, `ReminderOptInModal`, `LanguageToggle`, `RoutineBanner`, `SadhanaRow`, `ToolsRow`, `NewFeaturesSection`, `AddToRoutineButton`, `HomeWordmark`, `MuhuratGlanceCard`, `MuhuratCardBody` |
 | `mobile/src/navigation/` | Nav graph + types | `RootNavigator`, `TabNavigator`, `HomeStackNavigator`, `MoreStackNavigator`, `PanchangStackNavigator`, `types.ts`, `entryRoutes.ts` |
-| `mobile/src/contexts/` | App state | `BookmarksContext`, `JapamCounterContext`, `JapamAlarmsContext`, `ReadingProgressContext`, `UserActivityContext`, `NewContentContext`, `NotificationPreferencesContext`, `RoutineContext`, `RoutineSheetProvider` |
-| `mobile/src/data/` | Bundled content + registries | `texts.ts` (library index), `searchIndex.ts`, `deities.ts`, `categories.ts`, `gita/chapter-01..18.json`, `chalisa/`, `sundarkand/`, stotram dirs, `sourceIdMigration.ts`, `routine/` (types, units, vaar, useRoutineToday — see [[routine]]) |
+| `mobile/src/contexts/` | App state | `BookmarksContext`, `JapamCounterContext`, `JapamAlarmsContext`, `ReadingProgressContext`, `UserActivityContext`, `NewContentContext` (texts), `FeatureSeenContext` (features — see [[home]]), `NotificationPreferencesContext`, `RoutineContext`, `RoutineSheetProvider`, `TilePressContext` |
+| `mobile/src/data/` | Bundled content + registries | `texts.ts` (library index), `libraryCounts.ts`, `japaStreak.ts`, `home/tools.ts` + `home/featureFeed.ts` (see [[home]]), `searchIndex.ts`, `deities.ts`, `categories.ts`, `gita/chapter-01..18.json`, `chalisa/`, `sundarkand/`, stotram dirs, `sourceIdMigration.ts`, `routine/` (types, units, vaar, useRoutineToday — see [[routine]]) |
 | `mobile/src/panchang/` | Hindu-calendar engine | `festivals.ts` + astronomy-engine; `muhurat.ts` (Choghadiya/Kaal/Abhijit engine — pure), `muhuratFormat.ts`, `useMuhurat.ts` (see [[panchang]]) |
 | `mobile/src/theme/` | Design tokens (light-only) | `ThemeContext.tsx`, `colors.ts`, `typography.ts`, `spacing.ts` (spacing + radii), `elevation.ts`, `fontScale.ts` |
 | `mobile/src/readAloud/` | Pure read-aloud layer (no React) | `verseAdapter.ts`, `verseScript.ts`, `voices.ts`, `pronounce.ts`, `prefs.ts` — see [[audio]] |

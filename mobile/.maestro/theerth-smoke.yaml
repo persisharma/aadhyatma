@@ -1,7 +1,7 @@
 # Theerth Category Smoke Test (PRD-08)
 #
 # Verifies the pilgrimage information architecture end-to-end:
-#   Home → Pilgrimage tile → LISTING (By State / By Category toggle, no map,
+#   Home → उपकरण तीर्थ tile → LISTING (By State / By Category toggle, no map,
 #   no ＋ add-to-routine) → drill into a category → real India map + flat
 #   single-category list → tap a temple → detail with sourced "Sources" footer
 #   → back to the listing → switch to By State.
@@ -11,8 +11,8 @@
 # Override the port per worktree by editing the openLink line below.
 #
 # Notes:
-#  - Maestro anchors a text selector to an element's FULL text. The Pilgrimage
-#    tile carries a NEW badge → ".*Pilgrimage.*Tap to open.*"; detail prose →
+#  - Maestro anchors a text selector to an element's FULL text, so the तीर्थ
+#    tile matches ".*Pilgrimage.*Tap to open.*"; detail prose →
 #    ".*Sources.*".
 #  - In a drill-in a temple is both a map pin and a list row → pin tap uses index 0.
 appId: com.prashantsharma.vedansh
@@ -44,10 +44,14 @@ appId: com.prashantsharma.vedansh
     text: "Got it"
     optional: true
 
-# Home → Pilgrimage tile lands directly on the Theerth listing (no intermediate
-# library-entry list anymore). The tile shows a NEW badge → regex.
-- extendedWaitUntil:
-    visible: ".*Pilgrimage.*Tap to open.*"
+# Home → the तीर्थ tile in the उपकरण row lands directly on the Theerth listing
+# (no intermediate library-entry list anymore). The row sits below the fold, so
+# scroll to it; the wildcards also absorb the NEW badge the old Home tile wore.
+- scrollUntilVisible:
+    element:
+      text: ".*Pilgrimage.*Tap to open.*"
+    direction: DOWN
+    centerElement: true
     timeout: 120000
 - tapOn: ".*Pilgrimage.*Tap to open.*"
 - waitForAnimationToEnd

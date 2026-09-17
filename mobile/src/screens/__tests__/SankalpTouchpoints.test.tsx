@@ -2,7 +2,7 @@
  * The prebuilt-sankalp catalog must stay reachable outside the create-routine
  * chooser (July 2026 review: with a routine already added, the catalog had no
  * other touchpoint). Pins the three entry points: Today's Practice, My
- * Routines, and the Home DISCOVER spotlight.
+ * Routines, and the Home साधना row (formerly the DISCOVER spotlight).
  */
 import assert from 'node:assert/strict';
 import * as fs from 'fs';
@@ -113,11 +113,15 @@ describe('sankalp catalog touchpoints', () => {
     expect(navigate).toHaveBeenCalledWith('SadhanaPrograms');
   });
 
-  it('Home DISCOVER spotlight registers the sankalp card', () => {
-    // Source-level pin: HomeScreen mounts a large provider tree, so assert the
-    // spotlight registration directly rather than mounting the whole screen.
-    const src = fs.readFileSync(path.resolve(__dirname, '..', 'HomeScreen.tsx'), 'utf8');
-    expect(src).toMatch(/key: 'sankalp'/);
-    expect(src).toMatch(/navigate\('SadhanaPrograms'\)/);
+  it('the Home साधना row carries a sankalp door', () => {
+    // The DISCOVER sankalp card became the middle cell of the साधना row
+    // (TRD-42 §5.1). Source-level pin: the row mounts three contexts, so assert
+    // the registration rather than the whole tree.
+    const row = fs.readFileSync(
+      path.resolve(__dirname, '..', '..', 'components', 'SadhanaRow.tsx'),
+      'utf8'
+    );
+    expect(row).toMatch(/'SadhanaPrograms'/);
+    expect(row).toMatch(/संकल्प/);
   });
 });

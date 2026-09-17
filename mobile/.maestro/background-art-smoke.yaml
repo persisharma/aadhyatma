@@ -8,9 +8,9 @@
 # screenshotted for visual review.
 #
 # Covered new plates:
-#   - deity_shani                    → By Deity → Shani Dev (DeityListScreen)
-#   - deity_kali                     → By Deity → Maa Kali
-#   - category_kavacham_protection   → Home → Kavacham (CategoryListScreen)
+#   - deity_shani                    → पाठ → deity index → Shani Dev (DeityListScreen)
+#   - deity_kali                     → deity index → Maa Kali
+#   - category_kavacham_protection   → पाठ → Kavacham (CategoryListScreen)
 #
 # Data-side completeness (every deity/category resolves a plate, no dangling
 # keys) is pinned by src/data/__tests__/backgrounds.coverage.jest.test.ts;
@@ -23,13 +23,17 @@ appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
 
-# ── By Deity → Shani Dev (new deity_shani plate) ──
+# ── Home → पाठ → deity index → Shani Dev (new deity_shani plate) ──
+# The Home "By Deity" tile retired with the grid: the देवता rail now leads the
+# पाठ library, and its "All N deities" overflow chip opens the same index
+# (TRD-42 §5.3). The count is registry-derived, so match it as \\d+.
+- runFlow: _open-library.yaml
 - scrollUntilVisible:
     element:
-      text: "By Deity. Tap to open."
-    direction: DOWN
+      text: "All \\d+ deities"
+    direction: UP
     timeout: 10000
-- tapOn: "By Deity. Tap to open."
+- tapOn: "All \\d+ deities"
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
@@ -46,7 +50,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Back"
 - waitForAnimationToEnd
 
-# ── By Deity → Maa Kali (new deity_kali plate) ──
+# ── Deity index → Maa Kali (new deity_kali plate) ──
 - scrollUntilVisible:
     element:
       text: "Maa Kali\\..*"
@@ -64,7 +68,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Back"
 - waitForAnimationToEnd
 
-# ── Home → Kavacham (new category_kavacham_protection plate) ──
+# ── Back out to the पाठ library → Kavacham (category_kavacham_protection) ──
 - scrollUntilVisible:
     element:
       text: "Kavacham\\..*Tap to open\\."
