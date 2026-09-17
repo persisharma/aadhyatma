@@ -91,6 +91,12 @@ const RashifalScreen = jest.requireActual<typeof import('../RashifalScreen')>(
   '../RashifalScreen'
 ).default;
 
+const renderedTrees: TestRenderer.ReactTestRenderer[] = [];
+afterEach(() => {
+  act(() => renderedTrees.splice(0).forEach((tree) => tree.unmount()));
+  jest.useRealTimers();
+});
+
 function render(node: React.ReactElement): TestRenderer.ReactTestRenderer {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
@@ -98,6 +104,7 @@ function render(node: React.ReactElement): TestRenderer.ReactTestRenderer {
       <GitaLanguageProvider initialLang="en">{node}</GitaLanguageProvider>
     );
   });
+  renderedTrees.push(tree);
   return tree;
 }
 
@@ -250,6 +257,7 @@ test('Daily Rashifal uses the saved Moon sign and remains guidance, not certaint
   });
   assert.equal(selected.props.accessibilityState.selected, true);
 
+  act(() => tree.root.findByProps({ testID: 'rashifal-summary-toggle' }).props.onPress());
   const text = textOf(tree);
   assert.ok(text.includes('not a certain prediction'));
   assert.ok(text.includes('Favour'));
@@ -282,6 +290,7 @@ test('personal reading layers only on the natal Moon sign, never on a manual pic
   );
 
   const moon = mockChart.grahas.find((position) => position.graha === 'moon')!;
+  act(() => tree.root.findByProps({ testID: 'rashifal-summary-toggle' }).props.onPress());
   let text = textOf(tree);
   assert.ok(text.includes('Personal reading'), 'natal selection carries the personal chip');
   assert.ok(text.includes('Tara bala'), 'natal selection shows tara bala');
@@ -304,6 +313,54 @@ test('personal reading layers only on the natal Moon sign, never on a manual pic
   assert.ok(!text.includes('Tara bala'));
   assert.ok(!text.includes('from Lagna'));
   assert.ok(!text.includes('Dasha note'));
+});
+
+test('detailed Rashifal expands life areas, explains their basis and shares the selected day without personal data', () => {
+  jest.useFakeTimers();
+  jest.setSystemTime(new Date('2026-09-07T10:00:00Z'));
+  const tree = render(<RashifalScreen navigation={mockNavigation as any}
+    route={{ key: 'Rashifal-detail', name: 'Rashifal' } as any} />);
+  const press = (testID: string) => act(() => tree.root.findByProps({ testID }).props.onPress());
+  const Reading = jest.requireActual<typeof import('@/components/RashifalLifeAreas')>('@/components/RashifalLifeAreas').default;
+  assert.equal(tree.root.findByProps({ testID: 'rashifal-summary-toggle' }).props.accessibilityState.expanded, false);
+  assert.ok(tree.root.findByProps({ testID: 'rashifal-body-relationships' }));
+  press('rashifal-area-work');
+  assert.equal(tree.root.findAllByProps({ testID: 'rashifal-body-relationships' }).length, 0);
+  assert.ok(tree.root.findByProps({ testID: 'rashifal-body-work' }));
+  press('rashifal-basis-work');
+  assert.ok(textOf(tree).includes('from Lagna'));
+  const initial = tree.root.findByType(Reading).props.reading;
+  assert.equal(initial.dateKey, '2026-09-07');
+  press('rashifal-day-1');
+  assert.equal(tree.root.findByType(Reading).props.reading.dateKey, '2026-09-08');
+  assert.equal(tree.root.findAllByProps({ testID: 'rashifal-body-work' }).length, 0, 'date change resets expansion');
+  act(() => tree.root.findByProps({ accessibilityLabel: 'Share selected day’s Rashifal' }).props.onPress());
+  const ShareCard = jest.requireActual<typeof import('@/components/JyotishShareCard')>('@/components/JyotishShareCard').default;
+  const shared = tree.root.findByType(ShareCard).props;
+  assert.equal(shared.guidance.dateKey, '2026-09-08');
+  assert.ok(!('taraBala' in shared.guidance));
+  assert.ok(!('lagnaRashiIndex' in shared.guidance));
+  press('rashifal-day--1');
+  assert.equal(tree.root.findByType(Reading).props.reading.dateKey, '2026-09-06');
+  assert.equal(tree.root.findAllByType(ShareCard).length, 0, 'changing day closes the share preview');
+  act(() => tree.unmount());
+  jest.useRealTimers();
+});
+
+test.each(['hi', 'en', 'gu', 'kn'] as const)('detailed reading follows the %s script for prose, labels and expanded basis', (lang) => {
+  const { computeDetailedRashifal } = jest.requireActual<typeof import('@/panchang/rashifalReading')>('@/panchang/rashifalReading');
+  const { meaningByLang, contentByLang } = jest.requireActual<typeof import('@/utils/localize')>('@/utils/localize');
+  const Reading = jest.requireActual<typeof import('@/components/RashifalLifeAreas')>('@/components/RashifalLifeAreas').default;
+  const reading = computeDetailedRashifal(new Date('2026-09-07T10:00:00Z'), 4);
+  const tree = render(<Reading reading={reading} lang={lang} />);
+  const area = reading.areas[0];
+  assert.ok(textOf(tree).includes(contentByLang(lang, area.title.hi, area.title.en)));
+  assert.ok(textOf(tree).includes(meaningByLang(lang, area.body.hi, area.body.en)));
+  act(() => tree.root.findByProps({ testID: 'rashifal-basis-relationships' }).props.onPress());
+  assert.ok(textOf(tree).includes(meaningByLang(lang, area.evidence[0].description.hi, area.evidence[0].description.en)));
+  // Danda punctuation is intentionally shared by Indic scripts.
+  if (lang !== 'hi') assert.doesNotMatch(textOf(tree), /[\u0900-\u0963\u0966-\u097f]/);
+  act(() => tree.unmount());
 });
 
 test('birth profile parsing is strict and converts India wall time to the correct UTC instant', () => {
