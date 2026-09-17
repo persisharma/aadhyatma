@@ -15,6 +15,8 @@ import {
 import FeatureCard, { type FeatureSpotlight } from '@/components/FeatureCard';
 import { navigateToEntryStart } from '@/navigation/entryRoutes';
 import { useTodayAbujh } from '@/panchang/useMuhuratFinder';
+import { usePanchangCalendarSystem, useObservancesForDate } from '@/panchang/usePanchang';
+import { getDaanOccasionForRule } from '@/data/daan';
 import { getTodayFestival } from '@/data/discoveryMeta';
 import type { HomeStackParamList } from '@/navigation/types';
 
@@ -48,6 +50,17 @@ export default function TodayRecommendationsRow() {
       return 0;
     }
   }, [abujh, today]);
+
+  // दान-पुण्य (PRD-26) FOR-TODAY card — on a day whose observance carries a daan
+  // occasion, offer the day's दान-यात्रा. Resolved off the same panchang path as
+  // DaanPunyaScreen; null (no card) on an ordinary day, so the festival card
+  // still leads and the strip is unchanged when there's no covered occasion.
+  const [calendarSystem] = usePanchangCalendarSystem();
+  const observances = useObservancesForDate(today, calendarSystem);
+  const daanOccasion = React.useMemo(
+    () => observances.map((o) => getDaanOccasionForRule(o.rule.id)).find((occ) => occ != null) ?? null,
+    [observances]
+  );
 
   if (recommendations.length === 0) return null;
 
@@ -145,6 +158,37 @@ export default function TodayRecommendationsRow() {
           // Index 0 => abujh leads; index 1 => it follows the festival card.
           return abujhIndex === 0 ? [abujhCard, card] : [card, abujhCard];
         })}
+        {daanOccasion
+          ? (() => {
+              const openDaan = () =>
+                navigation.navigate('DaanJourney', { occasionId: daanOccasion.id });
+              return (
+                <View key="daan-today" style={styles.cardWrap} testID="for-today-daan">
+                  <FeatureCard
+                    compact
+                    item={{
+                      key: 'daan-today',
+                      titleHi: daanOccasion.titleHi,
+                      titleEn: daanOccasion.titleEn,
+                      descHi: 'आज का दान',
+                      descEn: "Today's daan",
+                      ctaHi: 'खोलें',
+                      ctaEn: 'Open',
+                      icon: (
+                        <Text style={{ color: colors.saffronDeep, fontFamily: typography.thumb.fontFamily, fontSize: 19 }}>
+                          दा
+                        </Text>
+                      ),
+                    }}
+                    width={styles.cardWrap.width}
+                    onPress={() => activateTile(openDaan)}
+                    onPressIn={() => beginTilePress(openDaan)}
+                    onPressOut={finishTilePress}
+                  />
+                </View>
+              );
+            })()
+          : null}
       </ScrollView>
     </View>
   );

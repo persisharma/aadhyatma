@@ -1,0 +1,176 @@
+/**
+ * दान-पुण्य content shapes (PRD-26, RULEBOOK §27). Same registry discipline as
+ * bhog (§21) and vastu (§22): bilingual Hi/En parallel fields, a review-only
+ * `source` block that is never rendered, and draft entries invisible behind
+ * verified-only accessors. The educate-first IA contract (PRD-26 §2.7) is a
+ * *surface* rule, but two shapes here encode its data half: occasion rows never
+ * carry a give link (the directory is a separate registry reached only through
+ * a journey), and ledger entries never total.
+ */
+
+export type DaanContentStatus = 'draft' | 'verified';
+
+export type DaanSource = {
+  /** ≥2 independent references; shipped in-repo verified content counts as one
+   * (named by path), an external published domain as another. Review-only. */
+  referenceUrls: string[];
+  /** Dated adjudication note (what was checked, where sources agree). */
+  verificationNote: string;
+  variantNote?: string;
+};
+
+/** The verse/teaching spine (PRD-26 §10): Veda → Upanishad → Gita → Itihasa. */
+export type DaanPrincipleEntry = {
+  id: string;
+  titleHi: string;
+  titleEn: string;
+  /** Devanagari verse lines; absent for teaching-summary rows. */
+  verseLines?: readonly string[];
+  iastLines?: readonly string[];
+  citeHi: string;
+  citeEn: string;
+  meaningHi: string;
+  meaningEn: string;
+  /** Deep link into the bundled Gita reader (the one already-shipped layer). */
+  gitaRef?: { chapter: number; verseIndex: number };
+  status: DaanContentStatus;
+  source: DaanSource;
+};
+
+export type DaanItem = {
+  id: string;
+  nameHi: string;
+  nameEn: string;
+  reasonHi: string;
+  reasonEn: string;
+};
+
+/**
+ * One daan-significant day (or day family). `ruleIds` are exact observance/
+ * festival solver ids; `ruleIdSuffixes` match families (e.g. '-ekadashi').
+ * Exact ids always win over suffix families (PRD-26 §10.1). A day with no
+ * attested daan tradition has NO row — hosts render nothing (never a
+ * placeholder).
+ */
+export type DaanOccasionEntry = {
+  id: string;
+  ruleIds: readonly string[];
+  ruleIdSuffixes?: readonly string[];
+  titleHi: string;
+  titleEn: string;
+  whyHi: string;
+  whyEn: string;
+  items: readonly DaanItem[];
+  /**
+   * The causes this day's daan traditionally serves — the occasion → प्रयोजन
+   * link (PRD-26 §5.1). The journey's terminal door opens the दान-द्वार
+   * filtered to these; omit where no cause honestly fits (the door then opens
+   * the full directory rather than an invented filter).
+   */
+  causes?: readonly DaanCause[];
+  /** Shipped katha-library id (cross-link — never duplicated). */
+  kathaId?: string;
+  /** One of the five teaching-kathas in this registry (kathas.ts). */
+  daanKathaId?: string;
+  status: DaanContentStatus;
+  source: DaanSource;
+};
+
+/** Weekly vaar-daan row (shared vocabulary with PRD-21's graha practice). */
+export type DaanVaarEntry = {
+  /** JS getDay(): 0 = Sunday … 6 = Saturday. */
+  weekday: number;
+  vaarHi: string;
+  vaarEn: string;
+  grahaHi: string;
+  grahaEn: string;
+  itemsHi: string;
+  itemsEn: string;
+};
+
+export type DaanKathaSection = {
+  id: string;
+  paragraphsHi: readonly string[];
+  paragraphsEn: readonly string[];
+};
+
+/** A teaching-katha (PRD-26 §10.2 Bucket B) — rendered by DaanKathaScreen. */
+export type DaanKathaEntry = {
+  id: string;
+  titleHi: string;
+  titleEn: string;
+  subtitleHi: string;
+  subtitleEn: string;
+  sections: readonly DaanKathaSection[];
+  teachingHi: string;
+  teachingEn: string;
+  /** Canonical source line, rendered (e.g. "श्रीमद्भागवत 9.21"). */
+  canonHi: string;
+  canonEn: string;
+  status: DaanContentStatus;
+  source: DaanSource;
+};
+
+export type DaanCategory =
+  | 'anna'
+  | 'vastra'
+  | 'vidya'
+  | 'gau-seva'
+  | 'deep'
+  | 'dravya'
+  | 'rakt'
+  | 'shram'
+  | 'anya';
+
+/**
+ * The प्रयोजन (cause) axis — WHOM the giving serves. Distinct from
+ * `DaanCategory`, which is the dravya (what was given) the ledger records.
+ * Metadata + the text-intent purpose bridge live in `causes.ts`.
+ */
+export type DaanCause =
+  | 'anna'
+  | 'gau'
+  | 'bal'
+  | 'vriddha'
+  | 'vidya'
+  | 'arogya'
+  | 'vastra'
+  | 'jeev'
+  | 'aapada';
+
+export type DaanOrgKind = 'anna-kshetra' | 'ngo' | 'temple-trust' | 'seva-portal';
+
+/**
+ * One giving-directory row (PRD-26 §5 P2, §6.2). A row is deliberately THIN:
+ * a name, one line of what they do, and the official link the user leaves by.
+ * The teaching lives on the cause (`causes.ts` mahatva) — the द्वार explains
+ * daan, it does not profile organizations.
+ *
+ * NOT on this shape, by rule (RULEBOOK §27.14): account numbers, UPI VPAs,
+ * registration/80G/paperwork text, or any figure the app would be asserting on
+ * an organization's behalf. `verifiedOn` stays because it drives the 18-month
+ * staleness drop — verification is an internal editorial discipline, not a
+ * trust badge rendered at the user.
+ */
+export type DaanOrgEntry = {
+  id: string;
+  nameHi: string;
+  nameEn: string;
+  kind: DaanOrgKind;
+  /** The causes this row serves — the दान-द्वार's grouping axis. */
+  causes: readonly DaanCause[];
+  /** ONE line — what they actually do. Not a profile (RULEBOOK §27.14). */
+  aboutHi: string;
+  aboutEn: string;
+  /** The ONE link the user leaves by: the org's own official page where the
+   * giving happens. https, own domain, never an aggregator or a gateway. */
+  officialUrl: string;
+  /** Editorial only — never rendered; drives `isOrgRowStale` (PRD-26 §6.2). */
+  verifiedOn: string; // ISO date
+  /** True when the hand-off is not a money donation (e.g. blood-donor registration). */
+  nonMonetaryHi?: string;
+  nonMonetaryEn?: string;
+  daanKathaId?: string;
+  status: DaanContentStatus;
+  source: DaanSource;
+};

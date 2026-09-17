@@ -23,6 +23,7 @@
 - [[bhog-naivedya]] — verified offerings, vrat food, prohibited offerings, parana meals, and the Vidhi kitchen-checklist integration.
 - [[ask]] — जिज्ञासा · Ask Vedansh: deterministic answer engine over the shipped engines (fold → derived lexicon → intents → answer-or-abstain), answer-first Search, आज का विधान briefing, answers that act.
 - [[vastu-disha]] — live 8-dik compass (fused→magnetometer source ladder, true-north grid correction, tilt/Hold honesty) + गृह वास्तु: mandala-grid home capture, five-class weighted readings, private roster + compare, text handoff, Ask `vastu.myhome`; Phase 1 store-gated (expo-sensors), Phase 2 OTA.
+- [[daan-punya]] — the educate-first giving layer: verse spine + five teaching-kathas, occasion/vaar coverage over real solver rule ids, the private no-totals ledger (gupt-daan structural guarantee), and the verified directory whose external hand-off is the journey's terminal act.
 
 ## Concepts
 - [[languages]] — reading languages hi/en/gu/kn; gu/kn derived at runtime by transliterating the Devanagari; selection + typography helpers.

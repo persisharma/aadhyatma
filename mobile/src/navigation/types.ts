@@ -56,7 +56,7 @@ export type GharVastuStackParamList = {
   GharVastuCompare: { homeIds: readonly string[] };
 };
 
-export type HomeStackParamList = VidhiStackParamList & {
+export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & {
   Home: undefined;
   /**
    * जिज्ञासा (PRD-41). `seed` is ask-from-context: the surface the user came
@@ -122,7 +122,29 @@ export type HomeStackParamList = VidhiStackParamList & {
   TodayVidhan: undefined;
 };
 
-export type MoreStackParamList = VidhiStackParamList & GharVastuStackParamList & {
+/**
+ * दान-पुण्य (PRD-26). Registered on the More, Panchang AND Home stacks (the
+ * PRD-19 multi-stack pattern): the More hub row, the Observance-Detail daan
+ * door and the Home launcher tile all push in place, so Back retraces the
+ * journey. IA contract (§2.7, RELAXED in the v3 redesign): educate is the
+ * DEFAULT, not a gate — the daan home carries a standing दान करें door and a
+ * quiet दान-द्वार link, and DaanDirectory is reachable from a journey's
+ * terminal step, the journey's skip, or that direct link. The app still never
+ * transacts; the hand-off is always the org's own site behind the interstitial.
+ */
+export type DaanStackParamList = {
+  DaanPunya: undefined;
+  /** `occasionId` omitted ⇒ the daily (vaar-driven) journey — covers all 365 days. */
+  DaanJourney: { occasionId?: string } | undefined;
+  DaanLedger: undefined;
+  DaanEntry: { occasionId?: string } | undefined;
+  /** `causes` pre-filters the द्वार to an occasion's प्रयोजन (PRD-26 §5.1). */
+  DaanDirectory: { causes?: string[] } | undefined;
+  DaanDirectoryDetail: { orgId: string };
+  DaanKatha: { kathaId: string };
+};
+
+export type MoreStackParamList = VidhiStackParamList & DaanStackParamList & GharVastuStackParamList & {
   MoreHome: undefined;
   Wishlist: undefined;
   Profile: undefined;
@@ -150,7 +172,7 @@ export type PanchangHomeMode = 'calendar' | 'catalog' | 'jyotish';
 
 // Panchang tab stack — the date-first calendar, the "Vrat & Parv" catalog
 // (PRD-09), and the Jyotish tools landing (PRD-C).
-export type PanchangStackParamList = VidhiStackParamList & GharVastuStackParamList & {
+export type PanchangStackParamList = VidhiStackParamList & DaanStackParamList & GharVastuStackParamList & {
   PanchangHome:
     | {
         initialTab?: PanchangHomeMode;

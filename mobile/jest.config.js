@@ -27,6 +27,9 @@ module.exports = {
     // dir holds tsx scripts, so the plain suffix is safe.
     '<rootDir>/src/vastu/__tests__/**/*.test.{ts,tsx}',
     '<rootDir>/src/data/vastu/__tests__/**/*.test.{ts,tsx}',
+    // दान-पुण्य (PRD-26): content registries + pure ledger core — the dir
+    // holds no tsx scripts, so the plain suffix is safe.
+    '<rootDir>/src/data/daan/__tests__/**/*.test.{ts,tsx}',
   ],
   moduleNameMapper: {
     // Audio assets aren't transformed by the RN preset — stub them so a
