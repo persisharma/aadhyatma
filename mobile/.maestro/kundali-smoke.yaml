@@ -339,11 +339,67 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "From your Kundali"
 - assertVisible: ".*Kumbha.*"
 - assertVisible: ".*Aquarius.*"
-- assertVisible: "Favour|FAVOUR"
-- assertVisible: "Pause|PAUSE"
-- assertVisible: "Reflect|REFLECT"
-- assertVisible: ".*bhava.*"
 - assertVisible: ".*not a certain prediction.*"
+- scrollUntilVisible:
+    element:
+      id: "rashifal-summary-toggle"
+    direction: DOWN
+    timeout: 10000
+- tapOn:
+    id: "rashifal-summary-toggle"
+- scrollUntilVisible:
+    element:
+      text: ".*bhava.*"
+    direction: DOWN
+    timeout: 10000
+- assertVisible: ".*bhava.*"
+- scrollUntilVisible:
+    element:
+      id: "rashifal-summary-toggle"
+    direction: UP
+    timeout: 10000
+- tapOn:
+    id: "rashifal-summary-toggle"
+# Detailed areas use the existing manuscript family; each expands independently
+# of the short landing summary and explains its actual transit basis.
+- scrollUntilVisible:
+    element:
+      id: "rashifal-area-work"
+    direction: DOWN
+    timeout: 15000
+- tapOn:
+    id: "rashifal-area-work"
+- scrollUntilVisible:
+    element:
+      id: "rashifal-basis-work"
+    direction: DOWN
+    timeout: 15000
+- tapOn:
+    id: "rashifal-basis-work"
+- scrollUntilVisible:
+    element:
+      text: ".*from Lagna.*"
+    direction: DOWN
+    timeout: 15000
+- assertVisible: ".*from Lagna.*"
+# Selected date drives both reading and share preview.
+- scrollUntilVisible:
+    element:
+      id: "rashifal-day-1"
+    direction: UP
+    timeout: 15000
+- tapOn:
+    id: "rashifal-day-1"
+- assertVisible: "Share selected day’s Rashifal"
+- tapOn: "Share selected day’s Rashifal"
+- assertVisible: ".*No name or birth details are included.*"
+- tapOn: "Close share preview"
+- tapOn:
+    id: "rashifal-day--1"
+- assertVisible: "Share selected day’s Rashifal"
+- tapOn:
+    id: "rashifal-day-0"
+- assertVisible: "Share today’s Rashifal"
 - scrollUntilVisible:
     element:
       text: "Open .* practice"
