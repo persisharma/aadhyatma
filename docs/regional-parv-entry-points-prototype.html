@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PRD-42 · क्षेत्रीय पर्व — Entry-point study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Inter:wght@500;600&display=swap" rel="stylesheet" />
+<style>
+  /* Tokens mirrored 1:1 from mobile/src/theme/*.ts — same block as
+     docs/regional-parv-interactive-prd.html so the prototypes cannot drift. */
+  :root{
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-deep:#E9D9B1;
+    --parchment-hi:#F6ECD0; --gradient-end:#F1E3BF;
+    --ink:#1A0E03; --ink-soft:#5A3A1E; --ink-muted:#6E5230;
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --gold:#A67C34;
+    --divider:rgba(138,62,11,0.18);
+    --saffron-tint:rgba(184,98,27,0.12);
+    --gold-tint:rgba(166,124,52,0.14); --gold-chip:rgba(166,124,52,0.22);
+    --avoid:#9E4A2E; --avoid-tint:rgba(158,74,46,0.12);
+    --new-badge-bg:rgba(184,98,27,0.16); --new-badge-text:#8A3E0B;
+    --card-surface:rgba(255,250,235,0.72);
+    --card-active-border:rgba(184,98,27,0.4);
+    --modal-backdrop:rgba(47,30,16,0.55); --on-primary:#FFFFFF;
+    --s-xs:4px; --s-sm:8px; --s-md:12px; --s-lg:16px; --s-xl:20px; --s-xxl:24px;
+    --r-sm:10px; --r-md:14px; --r-lg:18px; --r-xl:22px; --r-pill:999px;
+    --e-subtle:0 1px 4px rgba(60,30,10,.06); --e-card:0 2px 6px rgba(60,30,10,.10);
+    --e-lifted:0 4px 12px rgba(60,30,10,.11); --e-overlay:0 6px 14px rgba(60,30,10,.25);
+    --deva:'Noto Serif Devanagari',serif;
+    --latin:'Cormorant Garamond',serif;
+    --inter:'Inter',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--inter);font-weight:500;background:#24160B;color:var(--parchment-deep);padding:24px;line-height:1.5}
+  h1{font-family:var(--latin);font-weight:600;font-size:28px;color:var(--parchment-hi);margin-bottom:2px}
+  h2{font-family:var(--latin);font-weight:600;font-size:21px;color:var(--parchment-hi);margin:0 0 4px}
+  .sub{font-family:var(--latin);font-style:italic;color:var(--gold);font-size:15px;margin-bottom:6px;max-width:1060px}
+  .legend{font-size:12.5px;color:#B79B6B;margin-bottom:14px;max-width:1060px;line-height:1.7}
+  .legend b{color:var(--parchment-deep)}
+  .legend code,.cap code,.note code,td code{background:rgba(246,236,208,.08);padding:1px 5px;border-radius:4px;font-size:11.5px}
+  .wrap{display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap}
+  .col{display:flex;flex-direction:column;align-items:center}
+  .cap{width:340px;font-size:12px;color:#B79B6B;margin-top:10px;text-align:left;line-height:1.65}
+  .cap b{color:var(--parchment-deep)}
+  .cap .newmark{color:var(--gold);font-weight:600}
+  .nav{position:sticky;top:0;z-index:50;display:flex;gap:8px;flex-wrap:wrap;padding:10px 0 12px;background:#24160B;border-bottom:1px solid rgba(246,236,208,.12);margin-bottom:22px}
+  .nav button{font-family:var(--inter);font-size:12.5px;font-weight:600;color:#B79B6B;background:rgba(246,236,208,.06);
+    border:1px solid rgba(246,236,208,.14);border-radius:var(--r-pill);padding:7px 14px;cursor:pointer}
+  .nav button.on{color:var(--parchment-hi);background:rgba(184,98,27,.28);border-color:rgba(184,98,27,.55)}
+  section.page{display:none;max-width:1160px}
+  section.page.on{display:block}
+  .note{font-size:12.5px;color:#B79B6B;line-height:1.7;max-width:1060px;margin:8px 0 16px}
+  .note b{color:var(--parchment-deep)}
+  .dcard{background:rgba(246,236,208,.05);border:1px solid rgba(246,236,208,.13);border-radius:var(--r-lg);padding:16px 18px;margin-bottom:14px}
+  .dcard h3{font-family:var(--latin);font-size:17px;color:var(--parchment-hi);margin-bottom:6px}
+  .dcard p,.dcard li{font-size:12.5px;color:#CBB183;line-height:1.7}
+  .dcard ul{padding-left:18px}
+  .dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px;margin:14px 0}
+  .pill{display:inline-block;font-size:10.5px;font-weight:600;border-radius:var(--r-pill);padding:2px 9px;vertical-align:1px}
+  .pill.done{background:rgba(90,140,70,.25);color:#B9D69A;border:1px solid rgba(140,190,110,.4)}
+  .pill.gate{background:rgba(184,98,27,.25);color:#EDB77E;border:1px solid rgba(184,98,27,.5)}
+  .pill.prop{background:rgba(246,236,208,.08);color:#B79B6B;border:1px solid rgba(246,236,208,.2)}
+  .pill.none{background:rgba(158,74,46,.22);color:#DFA089;border:1px solid rgba(158,74,46,.45)}
+  table.dk{border-collapse:collapse;width:100%;max-width:1100px;margin:10px 0 18px;font-size:12.5px}
+  table.dk th{font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:var(--gold);text-align:left;padding:6px 10px;border-bottom:1px solid rgba(246,236,208,.2)}
+  table.dk td{padding:8px 10px;border-bottom:1px solid rgba(246,236,208,.09);color:#CBB183;vertical-align:top;line-height:1.6}
+  table.dk td b{color:var(--parchment-deep)}
+  table.dk tr.rec td{background:rgba(184,98,27,.10)}
+  /* ── phone ── */
+  .phone{width:340px;height:730px;background:var(--parchment);border-radius:38px;border:10px solid #120A03;
+    box-shadow:0 24px 60px rgba(0,0,0,.55);position:relative;overflow:hidden;flex:none}
+  .statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 var(--s-xxl);
+    font-size:12px;font-weight:600;color:var(--ink);background:var(--parchment-hi)}
+  .screen{position:absolute;top:32px;left:0;right:0;bottom:56px;overflow-y:auto;
+    background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
+  .screen::-webkit-scrollbar{width:0}
+  .pad{padding:var(--s-md) var(--s-lg) var(--s-xxl)}
+  .tabbar{position:absolute;bottom:0;left:0;right:0;height:56px;background:var(--parchment-soft);
+    border-top:1px solid var(--divider);display:flex;align-items:stretch}
+  .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+    font-family:var(--inter);font-size:10px;color:var(--ink-muted)}
+  .tab.on{color:var(--saffron);font-weight:600}
+  .tab .g{font-family:var(--deva);font-size:14px}
+  /* ── panchang bits ── */
+  .seg{display:flex;background:var(--parchment-deep);border-radius:var(--r-pill);padding:3px;margin-bottom:var(--s-md)}
+  .seg span{flex:1;text-align:center;font-family:var(--deva);font-size:12px;color:var(--ink-soft);padding:6px 0;border-radius:var(--r-pill);cursor:pointer}
+  .seg span.on{background:var(--parchment-hi);color:var(--ink);font-weight:600;box-shadow:var(--e-subtle)}
+  .chips{display:flex;gap:var(--s-sm);margin-top:var(--s-sm);flex-wrap:wrap}
+  .chip{display:inline-flex;align-items:center;gap:5px;font-family:var(--inter);font-size:11px;font-weight:600;color:var(--saffron-deep);
+    background:var(--saffron-tint);border:1px solid var(--card-active-border);border-radius:var(--r-pill);padding:5px 11px;cursor:pointer}
+  .chip.plain{background:var(--card-surface);border-color:var(--divider);color:var(--ink-soft)}
+  .chip .badge{background:var(--saffron);color:var(--on-primary);border-radius:var(--r-pill);font-size:9.5px;padding:0 5px;line-height:15px}
+  .searchbar{background:var(--card-surface);border:1px solid var(--divider);border-radius:var(--r-md);padding:9px 12px;font-family:var(--deva);font-size:12px;color:var(--ink-muted);margin-top:var(--s-md);cursor:pointer}
+  .daycard{background:var(--card-surface);border:1px solid var(--divider);border-radius:var(--r-lg);padding:var(--s-lg);margin-top:var(--s-md);box-shadow:var(--e-card)}
+  .daycard .dt{font-family:var(--latin);font-weight:700;font-size:15px;color:var(--ink)}
+  .daycard .tithi{font-family:var(--deva);font-size:12px;color:var(--ink-soft);margin-top:2px}
+  .obs{display:flex;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--divider);margin-top:8px}
+  .obs .dot{width:7px;height:7px;border-radius:50%;background:var(--saffron);flex:none}
+  .obs .nm{font-family:var(--deva);font-size:13.5px;color:var(--ink);font-weight:600}
+  .obs.lensed .dot{background:var(--gold)}
+  .obs .lenscap{display:inline-block;font-family:var(--inter);font-size:9px;font-weight:600;color:var(--saffron-deep);
+    background:var(--gold-chip);border-radius:5px;padding:1px 6px;margin-left:6px;vertical-align:1px}
+  .sechead{font-size:10px;font-weight:600;letter-spacing:1.2px;color:var(--ink-muted);text-transform:uppercase;margin:var(--s-lg) 0 2px}
+  .rowcard{display:flex;align-items:center;gap:10px;background:var(--card-surface);border:1px solid var(--divider);border-radius:var(--r-lg);padding:12px 14px;margin-top:var(--s-md);box-shadow:var(--e-card);cursor:pointer}
+  .rowcard .ic{width:30px;height:30px;border-radius:50%;background:var(--gold-tint);display:flex;align-items:center;justify-content:center;color:var(--saffron-deep);font-size:14px;flex:none;font-family:var(--deva)}
+  .rowcard .t{font-family:var(--deva);font-size:14px;font-weight:600;color:var(--ink)}
+  .rowcard .s{font-family:var(--deva);font-size:10.5px;color:var(--ink-muted)}
+  .rowcard .chev{margin-left:auto;color:var(--ink-muted);font-size:16px}
+  .rowcard.newrow{border-color:var(--card-active-border);background:linear-gradient(#FFF5E0,#F5DEAC)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:var(--s-sm)}
+  .tile{background:var(--card-surface);border:1px solid var(--divider);border-radius:var(--r-lg);padding:12px 14px;box-shadow:var(--e-card);display:flex;align-items:center;gap:10px}
+  .tile .ic{width:28px;height:28px;border-radius:50%;background:var(--gold-tint);display:flex;align-items:center;justify-content:center;color:var(--saffron-deep);font-size:13px;flex:none;font-family:var(--deva)}
+  .tile .t{font-family:var(--deva);font-size:13px;font-weight:600;color:var(--ink)}
+  .tile .s{font-family:var(--deva);font-size:10px;color:var(--ink-muted)}
+  .upc{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--divider);font-family:var(--deva);font-size:12.5px;color:var(--ink)}
+  .upc .d{font-family:var(--inter);font-size:10px;color:var(--ink-muted);width:52px;flex:none}
+  /* ── sheet ── */
+  .sheetwrap{position:absolute;inset:0;z-index:20}
+  .sheetwrap[hidden]{display:none}
+  .sheetback{position:absolute;inset:0;background:var(--modal-backdrop)}
+  .sheet{position:absolute;left:0;right:0;bottom:0;background:var(--parchment-soft);border-radius:var(--r-xl) var(--r-xl) 0 0;
+    box-shadow:var(--e-overlay);padding:var(--s-lg) var(--s-lg) var(--s-xxl);max-height:600px;overflow-y:auto}
+  .sheet::-webkit-scrollbar{width:0}
+  .sheet .grab{width:36px;height:4px;border-radius:2px;background:var(--divider);margin:0 auto var(--s-md)}
+  .sheet h4{font-family:var(--deva);font-size:16px;color:var(--ink);font-weight:600}
+  .sheet .en{font-family:var(--latin);font-style:italic;font-size:12px;color:var(--ink-soft);margin-bottom:var(--s-sm)}
+  .lensgrp{font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--ink-muted);margin:var(--s-md) 0 2px;font-family:var(--inter)}
+  .lensrow{display:flex;align-items:center;gap:10px;padding:9px 4px;border-bottom:1px solid var(--divider);cursor:pointer}
+  .lensrow .nm{font-family:var(--deva);font-size:13.5px;font-weight:600;color:var(--ink)}
+  .lensrow .eg{font-family:var(--deva);font-size:10.5px;color:var(--ink-muted)}
+  .lensrow .ck{margin-left:auto;width:20px;height:20px;border-radius:50%;border:1.6px solid var(--divider);flex:none;
+    display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--on-primary)}
+  .lensrow.on .ck{background:var(--saffron);border-color:var(--saffron)}
+  /* ── alternative-specific ── */
+  .seedcard{background:linear-gradient(#FFF5E0,#F5DEAC);border:1px solid var(--card-active-border);border-radius:var(--r-lg);
+    padding:12px 14px;margin-top:var(--s-md);box-shadow:var(--e-lifted)}
+  .seedcard .t{font-family:var(--deva);font-size:13px;font-weight:600;color:var(--ink)}
+  .seedcard .s{font-family:var(--deva);font-size:11px;color:var(--ink-soft);margin-top:3px;line-height:1.6}
+  .btnrow{display:flex;gap:8px;margin-top:10px}
+  .btn{flex:1;text-align:center;font-family:var(--deva);font-size:12.5px;font-weight:600;border-radius:var(--r-md);padding:9px;cursor:pointer}
+  .btn.primary{background:var(--saffron);color:var(--on-primary);box-shadow:var(--e-lifted)}
+  .btn.ghost{background:var(--card-surface);color:var(--saffron-deep);border:1px solid var(--card-active-border)}
+  .btn.link{flex:none;background:none;color:var(--saffron-deep);text-decoration:underline;text-underline-offset:2px;padding:9px 2px;font-size:11.5px}
+  .modalwrap{position:absolute;inset:0;z-index:25}
+  .modalwrap[hidden]{display:none}
+  .modal{position:absolute;left:0;right:0;bottom:0;top:60px;background:var(--parchment-soft);border-radius:var(--r-xl) var(--r-xl) 0 0;
+    box-shadow:var(--e-overlay);padding:var(--s-lg);overflow-y:auto}
+  .modal::-webkit-scrollbar{width:0}
+  .modal .hd{display:flex;align-items:center;margin-bottom:var(--s-sm)}
+  .modal .hd h4{font-family:var(--deva);font-size:15px;color:var(--ink);font-weight:600}
+  .modal .hd .x{margin-left:auto;color:var(--ink-muted);font-size:16px;cursor:pointer}
+  .cityrow{display:flex;align-items:center;gap:8px;padding:10px 4px;border-bottom:1px solid var(--divider);font-family:var(--deva);font-size:13px;color:var(--ink);cursor:pointer}
+  .cityrow .st{font-family:var(--inter);font-size:10px;color:var(--ink-muted);margin-left:auto}
+  .cityrow.on{color:var(--saffron-deep);font-weight:600}
+  .spot{position:absolute;inset:0;z-index:30;background:rgba(26,14,3,.72)}
+  .spot[hidden]{display:none}
+  .spothole{position:absolute;left:12px;right:12px;border-radius:var(--r-lg);box-shadow:0 0 0 9999px rgba(26,14,3,.72);border:2px solid var(--saffron);background:transparent}
+  .spotcard{position:absolute;left:16px;right:16px;background:var(--parchment-soft);border-radius:var(--r-lg);padding:14px;box-shadow:var(--e-overlay)}
+  .spotcard .t{font-family:var(--deva);font-size:14px;font-weight:600;color:var(--ink)}
+  .spotcard .s{font-family:var(--deva);font-size:11.5px;color:var(--ink-soft);margin-top:4px;line-height:1.6}
+  .spotcard .foot{display:flex;align-items:center;margin-top:10px;font-family:var(--inter);font-size:11px;color:var(--ink-muted)}
+  .spotcard .foot .next{margin-left:auto;background:var(--saffron);color:var(--on-primary);border-radius:var(--r-pill);padding:5px 14px;font-weight:600;cursor:pointer}
+  .askcard{background:var(--card-surface);border:1px solid var(--divider);border-radius:var(--r-lg);padding:var(--s-lg);margin-top:var(--s-md);box-shadow:var(--e-card)}
+  .askcard .q{font-family:var(--deva);font-size:12px;color:var(--ink-muted)}
+  .askcard .a{font-family:var(--deva);font-size:13px;color:var(--ink);line-height:1.75;margin-top:6px}
+  .askact{display:flex;align-items:center;gap:8px;background:var(--gold-tint);border:1px solid var(--card-active-border);border-radius:var(--r-md);
+    padding:10px 12px;margin-top:10px;font-family:var(--deva);font-size:12.5px;font-weight:600;color:var(--saffron-deep);cursor:pointer}
+  .askact .chev{margin-left:auto}
+  .hero2{padding:var(--s-xl) var(--s-lg) var(--s-md);text-align:center;background:linear-gradient(rgba(184,98,27,.10),transparent)}
+  .hero2 .nm{font-family:var(--deva);font-weight:600;font-size:24px;color:var(--ink)}
+  .hero2 .deity{font-family:var(--latin);font-style:italic;font-size:13px;color:var(--ink-soft);margin-top:2px}
+  .hero2 .lenscap2{display:inline-block;margin-top:6px;font-family:var(--inter);font-size:10px;font-weight:600;color:var(--saffron-deep);
+    background:var(--gold-chip);border-radius:var(--r-pill);padding:2px 10px}
+  .moregrp{font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--ink-muted);margin:var(--s-lg) 0 4px;font-family:var(--inter)}
+  .morerow{display:flex;align-items:center;gap:10px;background:var(--card-surface);border:1px solid var(--divider);padding:11px 13px;
+    font-family:var(--deva);font-size:13px;color:var(--ink);cursor:pointer}
+  .morerow:first-of-type{border-radius:var(--r-lg) var(--r-lg) 0 0}
+  .morerow:last-of-type{border-radius:0 0 var(--r-lg) var(--r-lg)}
+  .morerow+.morerow{border-top:none}
+  .morerow .ic{width:26px;height:26px;border-radius:7px;background:var(--gold-tint);display:flex;align-items:center;justify-content:center;
+    color:var(--saffron-deep);font-size:12px;flex:none;font-family:var(--deva)}
+  .morerow .st{margin-left:auto;font-family:var(--inter);font-size:10.5px;color:var(--ink-muted)}
+  .morerow .chev{color:var(--ink-muted);font-size:15px}
+  /* ── controls ── */
+  .ctrl{width:300px;background:rgba(246,236,208,.05);border:1px solid rgba(246,236,208,.13);border-radius:var(--r-lg);padding:14px 16px}
+  .ctrl h3{font-family:var(--latin);font-size:16px;color:var(--parchment-hi);margin-bottom:8px}
+  .ctrl .hint{font-size:11.5px;color:#9C8154;margin-top:10px;line-height:1.65}
+  .ctrl .hint b{color:#CBB183}
+  .ctrl button{width:100%;font-family:var(--inter);font-size:12px;font-weight:600;color:#B79B6B;background:rgba(246,236,208,.06);
+    border:1px solid rgba(246,236,208,.14);border-radius:var(--r-md);padding:9px 12px;cursor:pointer;margin-top:8px;text-align:left}
+  .ctrl button.on{color:var(--parchment-hi);background:rgba(184,98,27,.28);border-color:rgba(184,98,27,.55)}
+  .scorebar{display:flex;gap:4px;align-items:center;margin-top:3px}
+  .scorebar i{width:13px;height:5px;border-radius:2px;background:rgba(246,236,208,.16);display:inline-block}
+  .scorebar i.f{background:var(--saffron)}
+  .verdict{border-left:3px solid var(--saffron);padding-left:14px;margin:16px 0}
+  .verdict p{font-size:13px;color:#CBB183;line-height:1.8}
+  .verdict b{color:var(--parchment-hi)}
+</style>
+</head>
+<body>
+
+<h1>PRD-42 · क्षेत्रीय पर्व — Entry-point study</h1>
+<p class="sub">Six clickable alternatives to "pattern E alone" — where a user actually meets the lens picker, and what each one costs.</p>
+<p class="legend"><b>Why this exists:</b> pattern E (the <code>क्षेत्र · Calendars</code> ledger row) was signed off 2026-09-06 as the lens's <b>home</b>. The row is <i>not</i> buried below a scroll — the व्रत-पर्व catalog pins its ledger rows at the very top (<code>PanchangScreen.tsx:1800</code>, <i>"pinned at the top of the catalog as the personal entry point"</i>). The real gap is the <b>segment</b>: the Panchang tab opens on पंचांग, the row lives on व्रत-पर्व, and the bridge (the seed line) is dismissible-once. A user who never taps the second segment never learns the feature exists. Pattern E is a good home and a weak doorway.
+<br><b>Every phone below is live</b> — tap the highlighted surface, toggle a lens, watch 15 Sep 2026 gain संवत्सरी. Lens state is shared across all screens on this page. Guardrails held throughout: <b>no identity question</b>, <b>a lens only ever adds</b>, <b>no notification change</b>.</p>
+
+<div class="nav">
+  <button class="on" data-page="prob">⓪ The gap</button>
+  <button data-page="a">A · Location picker</button>
+  <button data-page="b">B · Quiet-day slot</button>
+  <button data-page="c">C · Tour step</button>
+  <button data-page="d">D · More tab</button>
+  <button data-page="e">E · जिज्ञासा Ask</button>
+  <button data-page="f">F · Detail catch</button>
+  <button data-page="cmp">⑦ Compare &amp; verdict</button>
+</div>
+
+<!-- ══════════ 0 · THE GAP ══════════ -->
+<section class="page on" id="p-prob">
+  <h2>The gap, drawn</h2>
+  <p class="note">Left: what ships today on the <b>पंचांग</b> segment — the segment the tab opens on, and the one the lens actually changes. There is no lens entry here at all once the seed line is dismissed. Right: pattern E's row, which is at the top of the <b>other</b> segment. Both phones are live; the sheet is identical in every alternative — <b>only the doorway moves</b>.</p>
+  <div class="wrap">
+    <div class="col">
+      <div class="phone" data-phone="gap1">
+        <div class="statusbar"><span>4:49</span><span>▲ ● ▮</span></div>
+        <div class="screen"><div class="pad">
+          <div class="seg"><span class="on">पंचांग</span><span>व्रत-पर्व</span><span>ज्योतिष</span></div>
+          <div class="chips"><span class="chip plain">📍 बेंगलुरु</span><span class="chip plain">पूर्णिमांत</span><span class="chip">★ <span class="badge">5</span></span></div>
+          <div class="daycard" data-day="15sep">
+            <div class="dt">Tuesday 15 September 2026</div>
+            <div class="tithi">भाद्रपद शुक्ल चतुर्थी · सूर्योदय 6:12</div>
+            <div class="obs"><span class="dot"></span><span class="nm">गणेश चतुर्थी</span></div>
+            <div class="obs lensed" data-lens="jain" hidden><span class="dot"></span><span class="nm">संवत्सरी<span class="lenscap">जैन</span></span></div>
+            <div class="obs lensed" data-lens="telugu" hidden><span class="dot"></span><span class="nm">बतुकम्मा<span class="lenscap">तेलुगु</span></span></div>
+          </div>
+          <div class="sechead">दिन का मुहूर्त</div>
+          <div class="daycard"><div class="tithi">अभिजित · 11:48 – 12:36 · राहुकाल 15:12 – 16:44</div></div>
+          <div class="sechead">आगामी</div>
+          <div class="daycard" style="padding:6px 14px">
+            <div class="upc"><span class="d">17 सित</span>परिवर्तिनी एकादशी</div>
+            <div class="upc" style="border-bottom:none"><span class="d">20 सित</span>अनंत चतुर्दशी</div>
+          </div>
+        </div></div>
+        <div class="tabbar"><div class="tab"><span class="g">ॐ</span>Home</div><div class="tab"><span class="g">भ</span>Bhakti</div><div class="tab on"><span class="g">प</span>Panchang</div><div class="tab"><span class="g">स</span>Bhajan</div><div class="tab"><span class="g">⋯</span>More</div></div>
+      </div>
+      <p class="cap"><b>पंचांग segment — today, after the seed line is dismissed.</b> This is the screen the lens changes and the screen the tab opens on. It offers <b>no</b> way to reach the picker. That is the whole problem: the feature is invisible from its own result.</p>
+    </div>
+    <div class="col">
+      <div class="phone" data-phone="gap2" data-sheet>
+        <div class="statusbar"><span>4:49</span><span>▲ ● ▮</span></div>
+        <div class="screen"><div class="pad">
+          <div class="seg"><span>पंचांग</span><span class="on">व्रत-पर्व</span><span>ज्योतिष</span></div>
+          <div class="searchbar">व्रत, पर्व, उपवास, कथा खोजें…</div>
+          <div class="rowcard"><span class="ic">★</span><div><div class="t">मेरा व्रत</div><div class="s">5 फ़ॉलो किए · 3 अनुस्मारक</div></div><span class="chev">›</span></div>
+          <div class="rowcard"><span class="ic">॥</span><div><div class="t">पितृ स्मरण</div><div class="s">2 स्मरण · अगला: 5 नव</div></div><span class="chev">›</span></div>
+          <div class="rowcard newrow" data-open-sheet><span class="ic">❖</span><div><div class="t">क्षेत्र · Calendars</div><div class="s" data-lenssub>—</div></div><span class="chev">›</span></div>
+          <div class="sechead">आगामी</div>
+          <div class="daycard" style="padding:6px 14px">
+            <div class="upc"><span class="d">15 सित</span>गणेश चतुर्थी</div>
+            <div class="upc" data-lens="jain" hidden><span class="d">15 सित</span>संवत्सरी</div>
+            <div class="upc" data-lens="telugu" hidden><span class="d">~11 सित</span>बतुकम्मा</div>
+            <div class="upc" style="border-bottom:none"><span class="d">17 सित</span>परिवर्तिनी एकादशी</div>
+          </div>
+          <div class="sechead">श्रेणी से देखें</div>
+          <div class="grid2">
+            <div class="tile"><span class="ic">ॐ</span><div><div class="t">व्रत</div><div class="s">53 व्रत-पर्व</div></div></div>
+            <div class="tile"><span class="ic">☀</span><div><div class="t">पर्व</div><div class="s">41 व्रत-पर्व</div></div></div>
+          </div>
+        </div></div>
+        <div class="tabbar"><div class="tab"><span class="g">ॐ</span>Home</div><div class="tab"><span class="g">भ</span>Bhakti</div><div class="tab on"><span class="g">प</span>Panchang</div><div class="tab"><span class="g">स</span>Bhajan</div><div class="tab"><span class="g">⋯</span>More</div></div>
+      </div>
+      <p class="cap"><b>Pattern E — the shipped decision, row three, above the fold.</b> <span class="newmark">Tap it</span> to open the lens sheet used by every alternative on this page. Good vocabulary, good home, correct state line. It just requires the user to already be on a segment they may never open.</p>
+    </div>
+    <div class="ctrl">
+      <h3>Shared lens state</h3>
+      <p class="hint">Every phone on this page reads one <code>Set&lt;ObservanceLens&gt;</code>, exactly like <code>@vedansh:panchang-lenses</code>. Toggle from any sheet and all screens follow.</p>
+      <p class="hint" style="margin-top:12px"><b>Active now:</b> <span data-lenslist>—</span></p>
+      <button data-reset>↺ Reset to a fresh install (no lens)</button>
+      <p class="hint"><b>Note.</b> <code>jain</code> and <code>sindhi</code> never auto-seed from a city — they are not places, and inferring them from a postcode is the profiling §4.2 refuses. They are only ever a deliberate tap, which is why a browse path must exist no matter which doorway wins.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ A · LOCATION PICKER ══════════ -->
+<section class="page" id="p-a">
+  <h2>A · Hang it off the location picker <span class="pill gate">HIGHEST INTENT</span></h2>
+  <p class="note"><code>LocationPickerModal.tsx</code> is where the user already declares <i>"this is my place"</i> — and it is the exact moment <code>STATE_LENS[stateCode]</code> seeding fires. Instead of seeding silently and hoping the user notices, seed and <b>say so, right there</b>, with the undo in the same card. Entry: Panchang header → 📍 chip (<code>PanchangScreen.tsx:361</code>).</p>
+  <div class="wrap">
+    <div class="col">
+      <div class="phone" data-phone="a" data-sheet>
+        <div class="statusbar"><span>4:49</span><span>▲ ● ▮</span></div>
+        <div class="screen"><div class="pad">
+          <div class="seg"><span class="on">पंचांग</span><span>व्रत-पर्व</span><span>ज्योतिष</span></div>
+          <div class="chips"><span class="chip" data-open-modal>📍 <span data-city>उज्जैन</span></span><span class="chip plain">पूर्णिमांत</span><span class="chip">★ <span class="badge">5</span></span></div>
+          <div class="seedcard" data-seedcard hidden>
+            <div class="t">❖ <span data-seedcity>बेंगलुरु</span> का क्षेत्रीय पंचांग</div>
+            <div class="s"><span data-seedlens>तेलुगु–कन्नड़</span> पंचांग जोड़ें? बतुकम्मा, अट्ला तद्दे और 6 अन्य तिथियाँ आपके कैलेंडर में जुड़ेंगी। कुछ हटेगा नहीं।</div>
+            <div class="btnrow">
+              <span class="btn primary" data-seed-add>जोड़ें</span>
+              <span class="btn ghost" data-seed-skip>अभी नहीं</span>
+            </div>
+            <div class="btnrow" style="margin-top:2px"><span class="btn link" data-open-sheet>सभी 22 क्षेत्रीय पंचांग देखें ›</span></div>
+          </div>
+          <div class="daycard" data-day="15sep">
+            <div class="dt">Tuesday 15 September 2026</div>
+            <div class="tithi">भाद्रपद शुक्ल चतुर्थी · सूर्योदय 6:12</div>
+            <div class="obs"><span class="dot"></span><span class="nm">गणेश चतुर्थी</span></div>
+            <div class="obs lensed" data-lens="jain" hidden><span class="dot"></span><span class="nm">संवत्सरी<span class="lenscap">जैन</span></span></div>
+            <div class="obs lensed" data-lens="telugu" hidden><span class="dot"></span><span class="nm">बतुकम्मा<span class="lenscap">तेलुगु</span></span></div>
+          </div>
+          <div class="sechead">दिन का मुहूर्त</div>
+          <div class="daycard"><div class="tithi">अभिजित · 11:48 – 12:36 · राहुकाल 15:12 – 16:44</div></div>
+        </div></div>
+        <div class="tabbar"><div class="tab"><span class="g">ॐ</span>Home</div><div class="tab"><span class="g">भ</span>Bhakti</div><div class="tab on"><span class="g">प</span>Panchang</div><div class="tab"><span class="g">स</span>Bhajan</div><div class="tab"><span class="g">⋯</span>More</div></div>
+        <div class="modalwrap" data-modal hidden>
+          <div class="sheetback" data-close-modal></div>
+          <div class="modal">
+            <div class="hd"><h4>स्थान चुनें · Choose location</h4><span class="x" data-close-modal>✕</span></div>
+            <div class="searchbar" style="margin-top:0">शहर या 6-अंकीय पिनकोड…</div>
+            <div class="cityrow" style="color:var(--saffron-deep);font-weight:600">📍 Use my location</div>
+            <div class="moregrp">प्रमुख शहर · Major cities</div>
+            <div class="cityrow on" data-city-pick="उज्जैन" data-lens-pick="" data-lens-label="">उज्जैन<span class="st">MP · default ✓</span></div>
+            <div class="cityrow" data-city-pick="बेंगलुरु" data-lens-pick="karnataka,telugu" data-lens-label="कर्नाटक–तेलुगु">बेंगलुरु<span class="st">Karnataka</span></div>
+            <div class="cityrow" data-city-pick="जयपुर" data-lens-pick="rajasthan" data-lens-label="राजस्थान">जयपुर<span class="st">Rajasthan</span></div>
+            <div class="cityrow" data-city-pick="पटना" data-lens-pick="bihar-mithila" data-lens-label="बिहार–मिथिला">पटना<span class="st">Bihar</span></div>
+            <div class="cityrow" data-city-pick="कोच्चि" data-lens-pick="kerala" data-lens-label="केरल">कोच्चि<span class="st">Kerala</span></div>
+            <div class="cityrow" data-city-pick="नई दिल्ली" data-lens-pick="" data-lens-label="">नई दिल्ली<span class="st">NCR · no seed</span></div>
+          </div>
+        </div>
+      </div>
+      <p class="cap"><span class="newmark">Tap 📍 उज्जैन → pick बेंगलुरु.</span> The card appears where the dates will change, naming the <b>city's state</b>, never the person. Pick <b>नई दिल्ली</b> or stay on <b>उज्जैन</b> and nothing appears — the two deliberate holes in <code>STATE_LENS</code>, honoured.</p>
+    </div>
+    <div class="ctrl">
+      <h3>Why this one is strongest</h3>
+      <p class="hint"><b>Intent match.</b> It fires on a deliberate act the user just took, not on a scroll they might not make. The question "which calendar?" is a natural consequence of "which place?".</p>
+      <p class="hint"><b>No new surface.</b> Reuses a modal that already exists and already runs the seeding logic. No extra real estate on any screen.</p>
+      <p class="hint"><b>Guardrail-clean.</b> The city answered the question, so nothing asks who the user is. The copy names बेंगलुरु's state; "अभी नहीं" is a real answer that persists.</p>
+      <p class="hint"><b>Its one gap.</b> Covers only the 20 geographic lenses. <code>jain</code> and <code>sindhi</code> never seed from a place, so they still need alternative E or the ledger row. Also silent for users who never change city after install — which is why it wants pairing with B.</p>
+      <p class="hint"><b>Cost.</b> ~1 card + a persisted "offered for this city" key. Smallest build on this page.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ B · QUIET-DAY SLOT ══════════ -->
+<section class="page" id="p-b">
+  <h2>B · A quiet-day slot on the पंचांग day view <span class="pill gate">RIGHT SEGMENT</span></h2>
+  <p class="note">Most days of the year carry no observance, and the day card has visible room on exactly those days. Put a permanent, non-dismissible <code>❖ क्षेत्रीय पंचांग · 22 उपलब्ध</code> row there. It costs zero real estate when the day is busy, and it stands on the segment that actually changes — fixing pattern E's one structural gap without a second surface.</p>
+  <div class="wrap">
+    <div class="col">
+      <div class="phone" data-phone="b" data-sheet>
+        <div class="statusbar"><span>4:49</span><span>▲ ● ▮</span></div>
+        <div class="screen"><div class="pad">
+          <div class="seg"><span class="on">पंचांग</span><span>व्रत-पर्व</span><span>ज्योतिष</span></div>
+          <div class="chips"><span class="chip plain">📍 बेंगलुरु</span><span class="chip plain">पूर्णिमांत</span><span class="chip">★ <span class="badge">5</span></span></div>
+          <!-- quiet day -->
+          <div data-bday="quiet">
+            <div class="daycard">
+              <div class="dt">Thursday 24 September 2026</div>
+              <div class="tithi">आश्विन शुक्ल त्रयोदशी · सूर्योदय 6:14</div>
+              <div class="obs" style="border-top:1px solid var(--divider)"><span class="dot" style="background:var(--ink-muted);opacity:.4"></span><span class="nm" style="font-weight:500;color:var(--ink-soft)">आज कोई व्रत-पर्व नहीं</span></div>
+              <div class="rowcard newrow" data-open-sheet style="margin-top:10px">
+                <span class="ic">❖</span><div><div class="t">क्षेत्रीय पंचांग</div><div class="s" data-lenssub>—</div></div><span class="chev">›</span>
+              </div>
+            </div>
+          </div>
+          <!-- busy day -->
+          <div data-bday="busy" hidden>
+            <div class="daycard">
+              <div class="dt">Tuesday 15 September 2026</div>
+              <div class="tithi">भाद्रपद शुक्ल चतुर्थी · सूर्योदय 6:12</div>
+              <div class="obs"><span class="dot"></span><span class="nm">गणेश चतुर्थी</span></div>
+              <div class="obs lensed" data-lens="jain" hidden><span class="dot"></span><span class="nm">संवत्सरी<span class="lenscap">जैन</span></span></div>
+              <div class="obs lensed" data-lens="telugu" hidden><span class="dot"></span><span class="nm">बतुकम्मा<span class="lenscap">तेलुगु</span></span></div>
+            </div>
+          </div>
+          <div class="sechead">दिन का मुहूर्त</div>
+          <div class="daycard"><div class="tithi">अभिजित · 11:48 – 12:36 · राहुकाल 15:12 – 16:44</div></div>
+          <div class="sechead">आगामी</div>
+          <div class="daycard" style="padding:6px 14px">
+            <div class="upc"><span class="d">15 सित</span>गणेश चतुर्थी</div>
+            <div class="upc" style="border-bottom:none"><span class="d">17 सित</span>परिवर्तिनी एकादशी</div>
+          </div>
+        </div></div>
+        <div class="tabbar"><div class="tab"><span class="g">ॐ</span>Home</div><div class="tab"><span class="g">भ</span>Bhakti</div><div class="tab on"><span class="g">प</span>Panchang</div><div class="tab"><span class="g">स</span>Bhajan</div><div class="tab"><span class="g">⋯</span>More</div></div>
+      </div>
+      <p class="cap"><span class="newmark">Switch the day →</span> On a quiet day the row occupies space nothing else wants. On 15 Sep it is gone, and the card is exactly today's app. Turn जैन on from the sheet and watch the busy day gain संवत्सरी.</p>
+    </div>
+    <div class="ctrl">
+      <h3>Day under the cursor</h3>
+      <button class="on" data-bswitch="quiet">24 Sep 2026 — quiet day<br><span style="font-weight:500;color:#8F7550">no observance · row shows</span></button>
+      <button data-bswitch="busy">15 Sep 2026 — गणेश चतुर्थी<br><span style="font-weight:500;color:#8F7550">busy · row hidden</span></button>
+      <p class="hint"><b>Reach.</b> The only alternative that is <i>permanently</i> present on the segment the tab opens on. Not dismissible, so it survives the user who taps ✕ on everything.</p>
+      <p class="hint"><b>Honesty.</b> It never competes with content: it appears precisely when the card would otherwise read "आज कोई व्रत-पर्व नहीं", which is also the moment a user is most likely to want more dates.</p>
+      <p class="hint"><b>Risk.</b> A standing row on the main day view is the most "product-y" thing here; if it reads as an ad it must go. Mitigation: no badge, no colour beyond <code>gold-tint</code>, and it disappears entirely the moment the day has anything real to say.</p>
+      <p class="hint"><b>Cost.</b> One conditional row in the day card + the empty-state branch that already exists.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ C · TOUR ══════════ -->
+<section class="page" id="p-c">
+  <h2>C · A tour step <span class="pill prop">CHEAPEST</span></h2>
+  <p class="note"><code>data/tour/steps.ts</code> already walks <code>panchang-segment</code> → <code>vrat-list</code> → <code>vrat-follow</code> → <code>my-vrat</code> (<code>:240–273</code>). A <code>lens</code> step slots straight in after <code>my-vrat</code> — same spotlight machinery, same copy voice, zero new components. One-time by nature, so it is reinforcement, never the primary path.</p>
+  <div class="wrap">
+    <div class="col">
+      <div class="phone" data-phone="c" data-sheet>
+        <div class="statusbar"><span>4:49</span><span>▲ ● ▮</span></div>
+        <div class="screen"><div class="pad">
+          <div class="seg"><span>पंचांग</span><span class="on">व्रत-पर्व</span><span>ज्योतिष</span></div>
+          <div class="searchbar">व्रत, पर्व, उपवास, कथा खोजें…</div>
+          <div class="rowcard"><span class="ic">★</span><div><div class="t">मेरा व्रत</div><div class="s">5 फ़ॉलो किए · 3 अनुस्मारक</div></div><span class="chev">›</span></div>
+          <div class="rowcard"><span class="ic">॥</span><div><div class="t">पितृ स्मरण</div><div class="s">2 स्मरण · अगला: 5 नव</div></div><span class="chev">›</span></div>
+          <div class="rowcard" data-open-sheet><span class="ic">❖</span><div><div class="t">क्षेत्र · Calendars</div><div class="s" data-lenssub>—</div></div><span class="chev">›</span></div>
+          <div class="sechead">श्रेणी से देखें</div>
+          <div class="grid2">
+            <div class="tile"><span class="ic">ॐ</span><div><div class="t">व्रत</div><div class="s">53 व्रत-पर्व</div></div></div>
+            <div class="tile"><span class="ic">☀</span><div><div class="t">पर्व</div><div class="s">41 व्रत-पर्व</div></div></div>
+          </div>
+        </div></div>
+        <div class="tabbar"><div class="tab"><span class="g">ॐ</span>Home</div><div class="tab"><span class="g">भ</span>Bhakti</div><div class="tab on"><span class="g">प</span>Panchang</div><div class="tab"><span class="g">स</span>Bhajan</div><div class="tab"><span class="g">⋯</span>More</div></div>
+        <div class="spot" data-spot>
+          <div class="spothole" style="top:222px;height:58px"></div>
+          <div class="spotcard" style="top:296px">
+            <div class="t">❖ क्षेत्र · Calendars</div>
+            <div class="s">अपने क्षेत्र या परंपरा का पंचांग जोड़ें — राजस्थान, मिथिला, जैन, सिंधी और 18 अन्य। जो अभी दिख रहा है वह कभी नहीं हटेगा; तिथियाँ केवल जुड़ती हैं।</div>
+            <div class="foot"><span>चरण 9 / 12</span><span class="next" data-spot-next>ठीक है ›</span></div>
+          </div>
+        </div>
+      </div>
+      <p class="cap"><b>The tour spotlight, step 9.</b> <span class="newmark">Tap "ठीक है"</span> to dismiss and reach the live row underneath. Copy carries the "only ever adds" promise, which is the single thing a new user most needs to hear about this feature.</p>
+    </div>
+    <div class="ctrl">
+      <h3>What it does and doesn't buy</h3>
+      <p class="hint"><b>Cost.</b> Lowest on the page — one entry in an array that already exists, plus a ref on the row.</p>
+      <p class="hint"><b>Reach.</b> Only users who take the tour, once, at a moment when they have no opinion about regional calendars yet. Tour recall for step 9 of 12 is not a plan.</p>
+      <p class="hint"><b>Verdict.</b> Worth doing <i>because</i> it is nearly free. Never bank on it as the doorway — pair it with A or B.</p>
+      <p class="hint"><b>Existing neighbours:</b> <code>tab-panchang</code>, <code>panchang-segment</code>, <code>vrat-list</code>, <code>vrat-follow</code>, <code>my-vrat</code>. A <code>lens</code> step reads naturally right after <code>my-vrat</code>, since both are "your own calendar state".</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ D · MORE TAB ══════════ -->
+<section class="page" id="p-d">
+  <h2>D · A More-tab row <span class="pill prop">FINDABLE ON PURPOSE</span></h2>
+  <p class="note"><code>MoreScreen.tsx</code> already lists कुल परम्परा (<code>:374</code>), पितृ स्मरण (<code>:389</code>), जन्म तिथि (<code>:408</code>), वास्तु दिशा (<code>:427</code>) — क्षेत्र is the same species: a durable personal setting the user configures once. Low discovery by itself, but it is where people <i>go looking</i> when they half-remember a setting, and the tour already teaches the More tab.</p>
+  <div class="wrap">
+    <div class="col">
+      <div class="phone" data-phone="d" data-sheet>
+        <div class="statusbar"><span>4:49</span><span>▲ ● ▮</span></div>
+        <div class="screen"><div class="pad">
+          <div style="font-family:var(--deva);font-size:22px;font-weight:600;color:var(--ink)">और</div>
+          <div style="font-family:var(--latin);font-style:italic;font-size:12.5px;color:var(--ink-soft)">More</div>
+          <div class="moregrp">साधना · Practice</div>
+          <div class="morerow"><span class="ic">🔔</span>स्मरण<span class="st">3 सक्रिय</span><span class="chev">›</span></div>
+          <div class="morerow"><span class="ic">◷</span>जप अलार्म<span class="st">2</span><span class="chev">›</span></div>
+          <div class="morerow"><span class="ic">❐</span>संग्रह<span class="st">12</span><span class="chev">›</span></div>
+          <div class="moregrp">परिवार · Family &amp; calendar</div>
+          <div class="morerow"><span class="ic">कु</span>कुल परम्परा<span class="st">सेट</span><span class="chev">›</span></div>
+          <div class="morerow"><span class="ic">॥</span>पितृ स्मरण<span class="st">2 स्मरण</span><span class="chev">›</span></div>
+          <div class="morerow"><span class="ic">ज</span>जन्म तिथि<span class="st">1</span><span class="chev">›</span></div>
+          <div class="morerow" data-open-sheet style="border-color:var(--card-active-border);background:linear-gradient(#FFF5E0,#F5DEAC)">
+            <span class="ic">❖</span>क्षेत्र · Calendars<span class="st" data-lenssub-short>—</span><span class="chev">›</span></div>
+          <div class="moregrp">सेटिंग · Settings</div>
+          <div class="morerow"><span class="ic">वा</span>वास्तु दिशा<span class="chev">›</span></div>
+          <div class="morerow"><span class="ic">भा</span>भाषा<span class="st">हिन्दी</span><span class="chev">›</span></div>
+        </div></div>
+        <div class="tabbar"><div class="tab"><span class="g">ॐ</span>Home</div><div class="tab"><span class="g">भ</span>Bhakti</div><div class="tab"><span class="g">प</span>Panchang</div><div class="tab"><span class="g">स</span>Bhajan</div><div class="tab on"><span class="g">⋯</span>More</div></div>
+      </div>
+      <p class="cap"><b>Grouped with the other personal-calendar objects</b> — कुल परम्परा, पितृ स्मरण, जन्म तिथि. <span class="newmark">Tap the row</span> for the same sheet. This is a <i>second permanent home</i>, not a doorway; it makes the feature re-findable after the user has forgotten where it lives.</p>
+    </div>
+    <div class="ctrl">
+      <h3>Home vs doorway</h3>
+      <p class="hint">Pattern E and this row are both <b>homes</b> — places the feature durably lives. A and B are <b>doorways</b> — places a user who does not yet know the feature exists meets it.</p>
+      <p class="hint">A feature needs one good home and at least one doorway. PRD-42 currently specifies two homes (E, plus the sheet itself) and one dismissible doorway (the seed line). That is the imbalance.</p>
+      <p class="hint"><b>Cost.</b> One row. It is nearly free and duplicates nothing structurally, because <code>MoreScreen</code> rows already deep-link into Panchang-owned surfaces.</p>
+      <p class="hint"><b>Caveat.</b> Two homes for one preference means two places to keep the subtitle truthful. Test-pin both.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ E · ASK ══════════ -->
+<section class="page" id="p-e">
+  <h2>E · जिज्ञासा answers that act <span class="pill gate">THE ONLY PATH FOR jain / sindhi</span></h2>
+  <p class="note">W2-15 already plans lens names in the ask lexicon so <i>"राजस्थान के पर्व"</i> and <i>"jain calendar"</i> resolve. The ask subsystem already supports <code>actions: AskAction[]</code> (<code>ask/types.ts:100</code>) — so the answer can carry the toggle itself. For the two lenses that <b>never</b> seed from a place, a user typing their own tradition's name is exactly the deliberate tap §4.2 requires.</p>
+  <div class="wrap">
+    <div class="col">
+      <div class="phone" data-phone="e" data-sheet>
+        <div class="statusbar"><span>4:49</span><span>▲ ● ▮</span></div>
+        <div class="screen"><div class="pad">
+          <div style="font-family:var(--deva);font-size:22px;font-weight:600;color:var(--ink)">जिज्ञासा</div>
+          <div style="font-family:var(--latin);font-style:italic;font-size:12.5px;color:var(--ink-soft)">Ask Vedansh</div>
+          <div class="searchbar" style="color:var(--ink);font-family:var(--inter)">jain calendar</div>
+          <div class="askcard">
+            <div class="q">जैन पंचांग · Jain calendar</div>
+            <div class="a">ऐप में अभी <b>महावीर जयंती</b> है। जैन पंचांग चालू करने पर <b>11 और तिथियाँ</b> जुड़ेंगी — पर्युषण पर्व (8 दिन), संवत्सरी, दस लक्षण पर्व (10 दिन), क्षमावाणी, ज्ञान पंचमी, महावीर निर्वाण, मौन एकादशी, नवपद ओली और अष्टाह्निका पर्व। श्वेतांबर और दिगंबर — दोनों परंपराएँ अलग-अलग नाम से।</div>
+            <div class="askact" data-toggle-jain><span>❖</span><span data-jainbtn>जैन पंचांग जोड़ें</span><span class="chev">›</span></div>
+            <div class="a" style="font-size:11px;color:var(--ink-muted);margin-top:8px">कुछ हटेगा नहीं — जन्माष्टमी, दिवाली और बाकी सब वैसे ही रहेंगे।</div>
+          </div>
+          <div class="sechead">यह भी पूछा जाता है</div>
+          <div class="daycard" style="padding:6px 14px">
+            <div class="upc" data-open-sheet><span class="d">❖</span>सिंधी पंचांग · चेटी चंड</div>
+            <div class="upc" data-open-sheet><span class="d">❖</span>राजस्थान के पर्व</div>
+            <div class="upc" style="border-bottom:none">पर्युषण कब है?</div>
+          </div>
+        </div></div>
+        <div class="tabbar"><div class="tab"><span class="g">ॐ</span>Home</div><div class="tab"><span class="g">भ</span>Bhakti</div><div class="tab on"><span class="g">प</span>Panchang</div><div class="tab"><span class="g">स</span>Bhajan</div><div class="tab"><span class="g">⋯</span>More</div></div>
+      </div>
+      <p class="cap"><span class="newmark">Tap "जैन पंचांग जोड़ें"</span> — the answer acts, and every other phone on this page updates. The answer text is honest about what turning it on does and does not do, which is the copy the guardrails ask for anyway.</p>
+    </div>
+    <div class="ctrl">
+      <h3>Why this carries the tradition lenses</h3>
+      <p class="hint"><b>No inference, ever.</b> The user typed the word. That is a deliberate tap by any reading — no postcode, no profile, no guess.</p>
+      <p class="hint"><b>Search is already lens-blind</b> (W2-14), so a Jain user searching पर्युषण finds it whether or not the lens is on. The action just makes it stick to their calendar.</p>
+      <p class="hint"><b>Cost.</b> Lexicon + alias entries were already scoped as W2-15. The action is one <code>AskAction</code> variant on an existing type.</p>
+      <p class="hint"><b>Reach.</b> Only users who ask. But for <code>jain</code> and <code>sindhi</code> that is the <i>right</i> population — and today they have no path at all beyond scrolling a 22-row sheet they've never seen.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ F · DETAIL CATCH ══════════ -->
+<section class="page" id="p-f">
+  <h2>F · A caption on the observance detail <span class="pill prop">CATCHER, NOT DOORWAY</span></h2>
+  <p class="note">Search is lens-blind, so a user can already land on a lensed observance's detail screen without the lens on. The interactive PRD's detail caption explains <i>why</i> it is not on their calendar; making it tappable converts the highest-intent moment in the whole flow — the user is literally reading the festival they keep.</p>
+  <div class="wrap">
+    <div class="col">
+      <div class="phone" data-phone="f" data-sheet>
+        <div class="statusbar"><span>4:49</span><span>▲ ● ▮</span></div>
+        <div class="screen"><div class="hero2">
+          <div class="nm">पर्युषण पर्व</div>
+          <div class="deity">Paryushana Parva · Śvetāmbara</div>
+          <div class="lenscap2" data-fcap>❖ जैन पंचांग का पर्व — अभी आपके कैलेंडर में नहीं</div>
+        </div>
+        <div class="pad" style="padding-top:0">
+          <div class="seedcard" data-fadd>
+            <div class="t">❖ जैन पंचांग जोड़ें?</div>
+            <div class="s">पर्युषण और 11 अन्य जैन तिथियाँ आपके पंचांग में दिखेंगी। बाकी कुछ नहीं बदलेगा।</div>
+            <div class="btnrow">
+              <span class="btn primary" data-toggle-jain><span data-jainbtn2>जोड़ें</span></span>
+              <span class="btn ghost" data-fskip>अभी नहीं</span>
+            </div>
+          </div>
+          <div class="daycard">
+            <div class="dt">2026 · 29 अगस्त – 5 सितम्बर</div>
+            <div class="tithi">भाद्रपद कृष्ण द्वादशी → शुक्ल चतुर्थी · 8 दिन का अर्क</div>
+          </div>
+          <div class="sechead">परिचय</div>
+          <div class="askcard" style="margin-top:6px">
+            <div class="a">आठ दिन का आत्म-शोधन पर्व — क्षमा, तप, स्वाध्याय और प्रतिक्रमण। अंतिम दिन <b>संवत्सरी</b>, जिस पर वर्ष भर के दोषों के लिए क्षमा माँगी जाती है: <i>मिच्छामि दुक्कडम्</i>।</div>
+          </div>
+          <div class="sechead">दिगंबर परंपरा</div>
+          <div class="askcard" style="margin-top:6px">
+            <div class="a">दिगंबर परंपरा में यही काल <b>दस लक्षण पर्व</b> है — दस दिन, भाद्रपद शुक्ल पंचमी से अनंत चतुर्दशी तक। दोनों अलग पर्व हैं और ऐप में अलग-अलग नाम से आते हैं।</div>
+          </div>
+        </div></div>
+        <div class="tabbar"><div class="tab"><span class="g">ॐ</span>Home</div><div class="tab"><span class="g">भ</span>Bhakti</div><div class="tab on"><span class="g">प</span>Panchang</div><div class="tab"><span class="g">स</span>Bhajan</div><div class="tab"><span class="g">⋯</span>More</div></div>
+      </div>
+      <p class="cap"><span class="newmark">Tap जोड़ें</span> and the caption flips to "आपके कैलेंडर में". Note both lineages are named on one screen — guardrail ⑥ — so a Digambara user is not told that the Śvetāmbara eight-day form is <i>the</i> Jain observance.</p>
+    </div>
+    <div class="ctrl">
+      <h3>Highest intent, smallest reach</h3>
+      <p class="hint">A user reading a festival's detail page is as close to "yes" as this feature ever gets. But they had to find it first — which means F only ever <b>catches</b> traffic another path sent.</p>
+      <p class="hint"><b>Build it, but never count it.</b> The caption is already in the signed-off prototype; this only makes it tappable.</p>
+      <p class="hint"><b>Cost.</b> One card on <code>ObservanceDetail</code>, shown only when the observance carries a lens the user hasn't enabled.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ COMPARE ══════════ -->
+<section class="page" id="p-cmp">
+  <h2>Compare — reach × intent × cost</h2>
+  <p class="note">Reach = how many users meet it at all. Intent = how ready they are to say yes when they do. Cost = build size on top of W2-10 as already scoped. <b>Homes</b> are where the feature lives; <b>doorways</b> are where it is discovered. Today's plan has two homes and one dismissible doorway.</p>
+  <table class="dk">
+    <tr><th style="width:150px">Alternative</th><th style="width:70px">Kind</th><th style="width:96px">Reach</th><th style="width:96px">Intent</th><th style="width:96px">Cost</th><th>Covers</th><th>Its one weakness</th></tr>
+    <tr class="rec"><td><b>A · Location picker</b></td><td>Doorway</td><td><span class="scorebar"><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></td><td><span class="scorebar"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></span></td><td><span class="scorebar"><i class="f"></i><i></i><i></i><i></i></span></td><td>20 geographic lenses, at the exact moment of seeding</td><td>Silent for users who never change city; can't carry <code>jain</code>/<code>sindhi</code></td></tr>
+    <tr class="rec"><td><b>B · Quiet-day slot</b></td><td>Doorway</td><td><span class="scorebar"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></span></td><td><span class="scorebar"><i class="f"></i><i class="f"></i><i></i><i></i></span></td><td><span class="scorebar"><i class="f"></i><i class="f"></i><i></i><i></i></span></td><td>All 22 — permanently, on the segment the tab opens on</td><td>A standing row on the main day view; must never read as an ad</td></tr>
+    <tr><td>C · Tour step</td><td>Doorway</td><td><span class="scorebar"><i class="f"></i><i class="f"></i><i></i><i></i></span></td><td><span class="scorebar"><i class="f"></i><i></i><i></i><i></i></span></td><td><span class="scorebar"><i class="f"></i><i></i><i></i><i></i></span></td><td>New installs only, once</td><td>Step 9 of 12, before the user has any opinion</td></tr>
+    <tr><td>D · More-tab row</td><td>Home</td><td><span class="scorebar"><i class="f"></i><i class="f"></i><i></i><i></i></span></td><td><span class="scorebar"><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></td><td><span class="scorebar"><i class="f"></i><i></i><i></i><i></i></span></td><td>Re-finding, after the user knows it exists</td><td>Second home ⇒ second subtitle to keep truthful</td></tr>
+    <tr class="rec"><td><b>E · जिज्ञासा action</b></td><td>Doorway</td><td><span class="scorebar"><i class="f"></i><i class="f"></i><i></i><i></i></span></td><td><span class="scorebar"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></span></td><td><span class="scorebar"><i class="f"></i><i></i><i></i><i></i></span></td><td><b><code>jain</code> + <code>sindhi</code></b> — the two that never seed</td><td>Only reaches users who ask</td></tr>
+    <tr><td>F · Detail caption</td><td>Catcher</td><td><span class="scorebar"><i class="f"></i><i></i><i></i><i></i></span></td><td><span class="scorebar"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></span></td><td><span class="scorebar"><i class="f"></i><i></i><i></i><i></i></span></td><td>Traffic another path already sent</td><td>Converts, never discovers</td></tr>
+    <tr><td>— · Onboarding sheet</td><td class="pill none">REJECT</td><td><span class="scorebar"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></span></td><td><span class="scorebar"><i class="f"></i><i></i><i></i><i></i></span></td><td><span class="scorebar"><i class="f"></i><i class="f"></i><i></i><i></i></span></td><td>Everyone, at first run</td><td><b>Violates guardrail ①</b> — at first run this <i>is</i> an identity question, however it is worded</td></tr>
+    <tr><td>E<sub>orig</sub> · Ledger row</td><td>Home</td><td><span class="scorebar"><i class="f"></i><i class="f"></i><i></i><i></i></span></td><td><span class="scorebar"><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></td><td><span class="scorebar"><i class="f"></i><i></i><i></i><i></i></span></td><td>Keep as the canonical home — unchanged</td><td>Lives on a segment the user may never open</td></tr>
+  </table>
+
+  <div class="verdict">
+    <p><b>Recommendation: keep pattern E as the home; add A + B as the doorways; let E<sub>ask</sub> carry the two tradition lenses.</b></p>
+    <p>A fires at the moment of intent for every geographic lens and reuses a modal that already runs the seeding code. B is the only option that stands permanently on the segment the tab opens on, and it costs nothing on days that have content. The जिज्ञासा action is the honest path for <code>jain</code> and <code>sindhi</code>, which by design can never be seeded or inferred. C and D are cheap enough to take as well; F is already half-drawn in the signed-off prototype. Onboarding is the one to refuse outright.</p>
+    <p>None of this touches the engine, the notification families, or any shipped date. It is <b>+1 card, +1 conditional row, +1 ask action, +1 tour step, +1 More row</b> on top of W2-10 — roughly one extra sprint item, all of it OTA-safe.</p>
+  </div>
+
+  <div class="dgrid">
+    <div class="dcard"><h3>What changes in the PRD</h3><p>Open decision 5 is currently answered "pattern E, decided 2026-09-06". It stays decided — E is still the home. What needs adding is a <b>doorway</b> clause: A + B named in §9.1 as W2-10a/W2-10b, the ask action folded into W2-15, and the seed line's "dismissible" behaviour re-scoped, since B replaces the job it was doing badly.</p></div>
+    <div class="dcard"><h3>What does not change</h3><p>The sheet, the lens taxonomy, <code>@vedansh:panchang-lenses</code>, the <code>STATE_LENS</code> holes, the notification gates (W2-12), the lens-blind search (W2-14), and every guardrail. This study moves <b>entry only</b> — exactly as the original placement exploration framed it.</p></div>
+    <div class="dcard"><h3>Test gates these add</h3><p>A: the offer appears once per city change and never for Ujjain/Delhi/Chandigarh; "अभी नहीं" persists. B: the row is present iff the day has zero observances, in both calendar systems. E<sub>ask</sub>: the action toggles the lens and the corpus test covers <i>"jain calendar"</i>, <i>"जैन पंचांग"</i>, <i>"सिंधी"</i>. All three ride <code>lens.test.ts</code>, already scoped as W2-17.</p></div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var LENSES=[
+    {g:'उत्तर',items:[
+      {id:'rajasthan',hi:'राजस्थान',eg:'गोगा नवमी · गणगौर · खेतसीमावस'},
+      {id:'braj-awadh-kashi',hi:'ब्रज · अवध · काशी',eg:'बरसाना लट्ठमार · रामनवमी मेला'},
+      {id:'bundelkhand-malwa',hi:'बुंदेलखंड · मालवा',eg:'कजलियाँ · नवाखाई'},
+      {id:'punjab-haryana',hi:'पंजाब · हरियाणा',eg:'लोहड़ी · तीयाँ'},
+      {id:'uttarakhand',hi:'उत्तराखंड',eg:'हरेला · इगास बग्वाल'},
+      {id:'himachal',hi:'हिमाचल',eg:'कुल्लू दशहरा · मिंजर'},
+      {id:'kashmir',hi:'कश्मीर',eg:'हेरथ · नवरेह'}]},
+    {g:'पूर्व',items:[
+      {id:'bihar-mithila',hi:'बिहार · मिथिला',eg:'छठ · सामा चकेवा · जुड़ शीतल'},
+      {id:'jharkhand',hi:'झारखंड',eg:'सरहुल · करमा'},
+      {id:'chhattisgarh',hi:'छत्तीसगढ़',eg:'हरेली · पोला · नवाखाई'},
+      {id:'bengal',hi:'बंगाल',eg:'काली पूजा · जगद्धात्री · रथ यात्रा'},
+      {id:'odisha',hi:'ओडिशा',eg:'रथ यात्रा · रज पर्व · नुआखाई'},
+      {id:'assam-northeast',hi:'असम · पूर्वोत्तर',eg:'बिहू · अम्बुबाची'}]},
+    {g:'पश्चिम',items:[
+      {id:'gujarat',hi:'गुजरात',eg:'शीतला सातम · जयापार्वती · वसुबारस'},
+      {id:'maharashtra',hi:'महाराष्ट्र',eg:'वट पूर्णिमा · आषाढी वारी · नारळी पौर्णिमा'},
+      {id:'goa-konkan',hi:'गोवा · कोंकण',eg:'धालो · दिवज'}]},
+    {g:'दक्षिण',items:[
+      {id:'karnataka',hi:'कर्नाटक',eg:'उगादि · चम्पा षष्ठी'},
+      {id:'telugu',hi:'तेलुगु',eg:'बतुकम्मा · बोनालु · अट्ला तद्दे'},
+      {id:'tamil',hi:'तमिळ',eg:'कार्तिगई दीपम · पोंगल'},
+      {id:'kerala',hi:'केरल',eg:'ओणम · अट्टुकाल पोंगाल'}]},
+    {g:'परंपरा · Tradition',items:[
+      {id:'jain',hi:'जैन',eg:'पर्युषण · संवत्सरी · दस लक्षण · ज्ञान पंचमी'},
+      {id:'sindhi',hi:'सिंधी',eg:'चेटी चंड · थदड़ी'}]}
+  ];
+  var NAMES={}; LENSES.forEach(function(G){G.items.forEach(function(l){NAMES[l.id]=l.hi;});});
+  var TOTAL=Object.keys(NAMES).length;
+  var active=new Set();
+
+  /* ── page nav ── */
+  document.querySelectorAll('.nav button').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('.nav button').forEach(function(x){x.classList.remove('on');});
+      document.querySelectorAll('section.page').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');
+      document.getElementById('p-'+b.dataset.page).classList.add('on');
+      window.scrollTo(0,0);
+    });
+  });
+
+  /* ── build one sheet per phone that wants one ── */
+  document.querySelectorAll('.phone[data-sheet]').forEach(function(ph){
+    var w=document.createElement('div'); w.className='sheetwrap'; w.hidden=true;
+    var html='<div class="sheetback" data-close-sheet></div><div class="sheet"><div class="grab"></div>'+
+      '<h4>क्षेत्रीय पंचांग</h4><div class="en">Regional &amp; tradition calendars — a calendar only ever adds days. Nothing you see today is removed.</div>';
+    LENSES.forEach(function(G){
+      html+='<div class="lensgrp">'+G.g+'</div>';
+      G.items.forEach(function(l){
+        html+='<div class="lensrow" data-lens-id="'+l.id+'"><div><div class="nm">'+l.hi+'</div><div class="eg">'+l.eg+'</div></div><span class="ck">✓</span></div>';
+      });
+    });
+    html+='</div>';
+    w.innerHTML=html; ph.appendChild(w);
+  });
+
+  /* ── render everything from the one Set ── */
+  function subtitle(){
+    if(active.size===0) return 'कोई क्षेत्रीय पंचांग नहीं · '+TOTAL+' उपलब्ध';
+    var names=Array.from(active).map(function(id){return NAMES[id];});
+    var head=names.slice(0,2).join(' · ');
+    var rest=TOTAL-active.size;
+    return head+(names.length>2?' +'+(names.length-2):'')+' सक्रिय · और '+rest+' उपलब्ध';
+  }
+  function render(){
+    document.querySelectorAll('[data-lenssub]').forEach(function(el){el.textContent=subtitle();});
+    document.querySelectorAll('[data-lenssub-short]').forEach(function(el){
+      el.textContent=active.size===0?'कोई नहीं':active.size+' सक्रिय';});
+    document.querySelectorAll('[data-lenslist]').forEach(function(el){
+      el.textContent=active.size===0?'कोई नहीं — today’s app, byte for byte':Array.from(active).map(function(i){return NAMES[i];}).join(', ');});
+    document.querySelectorAll('[data-lens]').forEach(function(el){
+      el.hidden=!active.has(el.dataset.lens);});
+    document.querySelectorAll('.lensrow').forEach(function(r){
+      r.classList.toggle('on',active.has(r.dataset.lensId));});
+    var on=active.has('jain');
+    document.querySelectorAll('[data-jainbtn]').forEach(function(el){
+      el.textContent=on?'✓ जैन पंचांग चालू है':'जैन पंचांग जोड़ें';});
+    document.querySelectorAll('[data-jainbtn2]').forEach(function(el){
+      el.textContent=on?'✓ जुड़ गया':'जोड़ें';});
+    var fcap=document.querySelector('[data-fcap]');
+    if(fcap) fcap.textContent=on?'❖ जैन पंचांग — आपके कैलेंडर में':'❖ जैन पंचांग का पर्व — अभी आपके कैलेंडर में नहीं';
+    var fadd=document.querySelector('[data-fadd]');
+    if(fadd&&on) fadd.style.opacity='.55';
+    else if(fadd) fadd.style.opacity='1';
+  }
+
+  /* ── delegated interactions ── */
+  document.addEventListener('click',function(e){
+    var t=e.target;
+    function up(sel){return t.closest(sel);}
+    var phone=up('.phone');
+
+    if(up('[data-open-sheet]')&&phone){var sw=phone.querySelector('.sheetwrap'); if(sw) sw.hidden=false; return;}
+    if(up('[data-close-sheet]')&&phone){phone.querySelector('.sheetwrap').hidden=true; return;}
+    var row=up('.lensrow');
+    if(row){var id=row.dataset.lensId; if(active.has(id))active.delete(id); else active.add(id); render(); return;}
+    if(up('[data-toggle-jain]')){if(active.has('jain'))active.delete('jain'); else active.add('jain'); render(); return;}
+    if(up('[data-open-modal]')&&phone){phone.querySelector('[data-modal]').hidden=false; return;}
+    if(up('[data-close-modal]')&&phone){phone.querySelector('[data-modal]').hidden=true; return;}
+
+    var city=up('[data-city-pick]');
+    if(city&&phone){
+      phone.querySelectorAll('.cityrow').forEach(function(c){c.classList.remove('on');});
+      city.classList.add('on');
+      phone.querySelector('[data-city]').textContent=city.dataset.cityPick;
+      phone.querySelector('[data-modal]').hidden=true;
+      var card=phone.querySelector('[data-seedcard]');
+      var seeds=(city.dataset.lensPick||'').split(',').filter(Boolean);
+      if(seeds.length===0){card.hidden=true;}
+      else{
+        card.hidden=false;
+        card.dataset.pending=seeds.join(',');
+        phone.querySelector('[data-seedcity]').textContent=city.dataset.cityPick;
+        phone.querySelector('[data-seedlens]').textContent=city.dataset.lensLabel;
+      }
+      return;
+    }
+    if(up('[data-seed-add]')&&phone){
+      var card=phone.querySelector('[data-seedcard]');
+      (card.dataset.pending||'').split(',').filter(Boolean).forEach(function(id){active.add(id);});
+      card.hidden=true; render(); return;
+    }
+    if(up('[data-seed-skip]')&&phone){phone.querySelector('[data-seedcard]').hidden=true; return;}
+    if(up('[data-fskip]')&&phone){phone.querySelector('[data-fadd]').hidden=true; return;}
+    if(up('[data-spot-next]')&&phone){phone.querySelector('[data-spot]').hidden=true; return;}
+    if(up('[data-reset]')){active.clear(); render(); return;}
+
+    var bs=up('[data-bswitch]');
+    if(bs){
+      document.querySelectorAll('[data-bswitch]').forEach(function(x){x.classList.remove('on');});
+      bs.classList.add('on');
+      document.querySelectorAll('[data-bday]').forEach(function(d){d.hidden=(d.dataset.bday!==bs.dataset.bswitch);});
+      render(); return;
+    }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
