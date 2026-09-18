@@ -81,6 +81,22 @@ export const ANNUAL: AnnualFestival[] = [
   { id: 'chitragupta-puja', month: 8, paksha: 'shukla', tithi: 2, muhurta: 'udaya' },
   { id: 'sama-chakeva', month: 8, paksha: 'shukla', tithi: 7, muhurta: 'udaya' },
   { id: 'kartik-purnima', month: 8, paksha: 'shukla', tithi: 15, muhurta: 'udaya' },
+
+  // Universal gaps + Tamil wave (Sept 2026). Only the plain lunar-tithi rules can
+  // appear here: this table is keyed by month/paksha/tithi, so `vishwakarma-puja`
+  // (solar), the four nakshatra-in-solar-month rules, and the two solarMonth-
+  // constrained rules (`chitra-pournami`, `karkidaka-vavu`) have no row and are
+  // pinned to their published dates by observanceDates.test.ts instead.
+  { id: 'ratha-saptami', month: 11, paksha: 'shukla', tithi: 7, muhurta: 'udaya' },
+  { id: 'rang-panchami', month: 1, paksha: 'krishna', tithi: 5, muhurta: 'udaya' },
+  { id: 'shani-jayanti', month: 3, paksha: 'krishna', tithi: 15, muhurta: 'udaya' },
+  { id: 'avani-avittam', month: 5, paksha: 'shukla', tithi: 15, muhurta: 'udaya' },
+  { id: 'radha-ashtami', month: 6, paksha: 'shukla', tithi: 8, muhurta: 'udaya' },
+  // The rite is the pre-dawn abhyanga snan, but the published day has tracked the
+  // udaya Chaturdashi for every year checked, so udaya is its real day rule.
+  { id: 'hanuman-jayanti-kartik', month: 8, paksha: 'krishna', tithi: 14, muhurta: 'udaya' },
+  { id: 'gopashtami', month: 8, paksha: 'shukla', tithi: 8, muhurta: 'udaya' },
+  { id: 'champa-shashthi', month: 9, paksha: 'shukla', tithi: 6, muhurta: 'udaya' },
 ];
 
 // Known-good anchors (drikpanchang/established, Ujjain/IST) — authoritative truth. When an

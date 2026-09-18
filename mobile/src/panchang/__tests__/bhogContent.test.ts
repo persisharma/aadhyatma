@@ -91,7 +91,9 @@ test('every profile carries bilingual guidance and independent published sources
 
 test('every genuine vrat and upavas rule has verified food or offering guidance', () => {
   const eligible = OBSERVANCE_RULES.filter((rule) => rule.category === 'vrat' || rule.category === 'upavas');
-  assert.equal(eligible.length, 77);
+  // 77 → 79: सोमवती अमावस्या and कर्किडक वावु, both sharing the `pitru-offering`
+  // profile whose tradition note now names them (RULEBOOK §23a.7).
+  assert.equal(eligible.length, 79);
   assert.deepEqual(
     eligible.filter((rule) => !rule.bhogId).map((rule) => rule.id),
     []

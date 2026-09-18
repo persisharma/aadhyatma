@@ -348,14 +348,18 @@ const pitruOffering = profile({
   id: 'pitru-offering',
   titleHi: 'अमावस्या और श्राद्ध का अन्न-अर्पण',
   titleEn: 'Amavasya and Shraddha food offering',
-  observanceIds: ['amavasya-vrat', 'darsha-amavasya', 'shraddha-dates'],
+  // सोमवती अमावस्या and कर्किडक वावु are both amavasya tarpana days — the first a
+  // narrowing of `amavasya-vrat` to its Monday returns, the second Kerala's own
+  // name for the Karka amavasya — so they share this profile rather than claiming
+  // a separate cuisine the app has not sourced (RULEBOOK §23a.7).
+  observanceIds: ['amavasya-vrat', 'darsha-amavasya', 'shraddha-dates', 'somvati-amavasya', 'karkidaka-vavu'],
   offerings: [
     item('til-water', 'तर्पण में जल और काले तिल अर्पित किए जाते हैं।', 'Tarpana uses water and black sesame.'),
     item('pinda-food', 'पूर्ण श्राद्ध में पिण्ड और परिवार-परम्परा का भोजन अर्पण अलग विधि से होता है।', 'A full Shraddha separately offers pinda and the food prescribed by family tradition.'),
   ],
   permittedDuringFast: [item('amavasya-fast', 'अमावस्या का उपवास और श्राद्धकर्ता का भोजन-विधान कुलाचार के अनुसार रखें।', 'Keep the Amavasya fast and the performer’s Shraddha meal discipline according to family tradition.')],
-  traditionNoteHi: 'तर्पण, पिण्डदान, ब्राह्मण-भोजन और स्वयं व्रती का भोजन चार अलग विषय हैं; ऐप इन्हें एक सूची नहीं बनाता।',
-  traditionNoteEn: 'Tarpana, pinda, feeding others, and the observer’s own meal are four distinct matters; the app does not merge them.',
+  traditionNoteHi: 'तर्पण, पिण्डदान, ब्राह्मण-भोजन और स्वयं व्रती का भोजन चार अलग विषय हैं; ऐप इन्हें एक सूची नहीं बनाता। सोमवती अमावस्या और केरल के कर्किडक वावु में भी यही अन्न-अर्पण विधि रहती है; कर्किडक वावु का बलि तर्पण प्रायः तट पर होता है और उसका कुल-विशेष भोजन-विधान परिवार की परंपरा से चलता है।',
+  traditionNoteEn: 'Tarpana, pinda, feeding others, and the observer’s own meal are four distinct matters; the app does not merge them. Somvati Amavasya and Kerala’s Karkidaka Vavu keep this same offering discipline; the Karkidaka Vavu bali tarpanam is usually performed on a river or sea bank, and its household meal follows family tradition.',
   source: {
     referenceUrls: [
       'https://bstdc.bihar.gov.in/pitripakshamela/about.php',

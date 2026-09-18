@@ -740,6 +740,31 @@ Five arcs — **गणगौर 18 days** (Chaitra K1 → S3) · **रामद�
 
 Found while gathering the states. These belong to **everyone**, need no mechanism beyond E-1/E-5 where noted, and should not wait for a wave.
 
+> **SHIPPED 2026-09-18 — all eight, plus विश्वकर्मा पूजा and seven Tamil/Malayalam rules (16 in total).**
+> Every row below is now a live rule pinned to its published civil date in `observanceDates.test.ts`.
+> सोमवती अमावस्या did **not** need E-5: it ships as a `weekday` **constraint** on the existing
+> lunar-tithi matcher rather than a `tithi-on-weekday` rule type, so it is by construction a subset
+> of `amavasya-vrat`'s own days. रंग पंचमी was resolved universal (Open decision 7 closed).
+> हनुमान जयंती (कार्तिक) shipped as a second rule beside the Chaitra one, per locked decision ⑥.
+>
+> **विश्वकर्मा पूजा was missing from this register entirely** — a pan-India artisan festival on Kanya
+> Sankranti, absent from both the catalog and all 149 candidates. Adding it exposed a real defect:
+> `findSolarFestivalDate` returned the day *after* the ingress, so **all twelve sankrantis were a day
+> late** (Makar Sankranti 2026 as 15 Jan against a published 14 Jan). Fixed in the same change;
+> `CACHE_VERSION` → 6. See `mobile/src/panchang/VERIFICATION.md`.
+>
+> **W6 partially unblocked.** E-1 (`solarMonthAtSunrise`) and the `nakshatra` matcher now exist, so
+> कार्तिगई दीपम, थै पूसम, पंगुनि उत्तिरम, वैकासि विशाकम, चित्रा पूर्णिमा, अवनि अविट्टम and कर्किडक वावु ship —
+> all matching published dates exactly. **Open decision 6 is now evidenced, not just suspected:**
+> Thrissur Pooram and अट्टुकाल पोंगाल both resolve exactly one day late under the sunrise rule that
+> is correct for all four Tamil rules, so the Kerala pooram observances genuinely use a different
+> vyapini convention. Onam stays blocked on the same decision. आडि पूरम is blocked separately — a
+> solar month can hold Pooram twice and the almanacs take the second, which `recurrence: 'annual'`
+> cannot express, and sources disagree (Madurai Meenakshi keeps the July one), making it §23.9.
+> `karthigai-vrat` and `rohini-vrat` were corrected (both carried 1-indexed nakshatra values and
+> `catalog-only` recurrence) but deliberately left `regional`: twelve rows a year each is the
+> universal-day load metric 2 exists to protect.
+
 | Observance | Tithi | Note |
 |---|---|---|
 | **राधाष्टमी** | Bhadrapada S8 | 19 Sep 2026. Pan-Vaishnava; sibling of `durva-ashtami`. The largest single universal gap left |
