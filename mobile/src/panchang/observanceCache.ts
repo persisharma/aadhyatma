@@ -26,7 +26,14 @@ import type { CalendarSystem, ResolvedObservance } from './types';
 //     a city that already scanned would otherwise never see the new rules.
 // v5: aparahna (afternoon) day rule + the दर्श अमावस्या rule that carries it. The
 //     matcher gained a branch and the catalog gained a rule; no shipped date moved.
-const CACHE_VERSION = 5;
+// v6: universal gaps + the Tamil/Kerala wave — sixteen catalog additions, a real
+//     `nakshatra` matcher (nakshatra-in-solar-month), and the `solarMonth` /
+//     `weekday` narrowing constraints on lunar-tithi rules. UNLIKE every version
+//     above, this one DOES move shipped dates: all twelve sankrantis shift one day
+//     earlier, onto the civil day that actually contains the ingress instant
+//     (Makar Sankranti 2026 was resolving to 15 Jan against a published 14 Jan).
+//     A city that already scanned must re-scan or it keeps the old, wrong dates.
+const CACHE_VERSION = 7;
 const KEY_ROOT = '@vedansh:observances:';
 const KEY_PREFIX = `${KEY_ROOT}v${CACHE_VERSION}:`;
 

@@ -340,9 +340,14 @@ test('annual lunar festivals fall in the nija month, skipping the adhik maas', (
 });
 
 test('non-January Sankranti dates are generated from solar ingress rules', () => {
-  const ids = idsFor(new Date(2026, 1, 14));
+  // 14 Feb → 13 Feb: the sankranti day is the civil day CONTAINING the ingress,
+  // not the day after it. This pin carried the old +1 shift that
+  // `findSolarFestivalDate` applied to all twelve sankrantis (see
+  // observanceDates.test.ts "sankrantis land on the civil day that contains the
+  // ingress", which pins the corrected dates against published almanacs).
+  const ids = idsFor(new Date(2026, 1, 13));
 
-  assert.ok(ids.includes('kumbha-sankranti'), `expected Kumbha Sankranti on 2026-02-14, got ${ids.join(', ')}`);
+  assert.ok(ids.includes('kumbha-sankranti'), `expected Kumbha Sankranti on 2026-02-13, got ${ids.join(', ')}`);
 });
 
 test('weekday-in-lunar-month vrats are generated without annual crawling', () => {

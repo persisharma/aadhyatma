@@ -157,7 +157,7 @@ To prevent scope creep, these are off the table for Q3:
 - User accounts / login (would require a backend; conflicts with bundle-only constraint anyway).
 - **Anything network-backed:** cloud sync, server-pushed notifications, streaming audio, server analytics SDK, remote feature flags, server-fetched festival data. All Q4+ if ever.
 - Multi-language support beyond Hindi/English (Q4+).
-- In-app purchases / donations (TBD, separate brief; bundle-only does not preclude IAP but it's still out of scope this quarter).
+- In-app purchases / donations (TBD, separate brief; bundle-only does not preclude IAP but it's still out of scope this quarter). *Update 2026-08-30: the separate brief now exists — [PRD-26 दान-पुण्य](./prds/26-daan-punya.md), which deliberately takes the no-IAP, no-payment-collection path.*
 - New content sections beyond bug-fix data corrections. The 20+ existing sections are enough to validate the new engagement surfaces; adding more parallel to feature work re-creates the PR #31 risk.
 - A redesign of the parchment system. The design language is working; iterate, don't rebuild.
 - Web app / responsive web. The umbrella repo's `design-preview.html` is a mockup, not a target.

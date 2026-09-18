@@ -566,6 +566,52 @@ export function tithiAtMoonrise(
   return computeTithiIndex(getSiderealSunLng(moonrise, year), getSiderealMoonLng(moonrise, year));
 }
 
+// Sunrise nakshatra + sidereal solar month, memoised together: every rule that
+// needs one needs the other (a nakshatra observance is always qualified by the
+// solar month it falls in), and both read the same already-cached sunrise.
+const sunriseSkyCache = new Map<string, { nakshatraIndex: number; solarMonth: number }>();
+
+/**
+ * The nakshatra running at this civil day's sunrise (0 = Ashwini … 26 = Revati)
+ * and the sidereal solar month the Sun stands in (0 = Mesha … 11 = Meena).
+ *
+ * The solar month is simply the Sun's sidereal longitude floor-divided by 30 —
+ * the SAME quantity `SANKRANTI_RULES` resolve as ingress instants, read as a
+ * state rather than an event. It is what the Tamil and Malayalam calendars count
+ * their months by (Karthigai = Vrischika, Thai = Makara, Karkidakam = Karka), so
+ * a "nakshatra N in solar month M" observance needs no second month engine.
+ *
+ * Both are taken at sunrise for the same reason every tithi rule is: the vedic
+ * civil day begins there, and the sunrise-prevailing anga is what published
+ * almanacs name the day by.
+ */
+function sunriseSkyFor(
+  localDate: Date,
+  options: PanchangComputationOptions = {}
+): { nakshatraIndex: number; solarMonth: number } {
+  const cacheKey = `${locationKey(options.location)}:${options.civilTimeZone ?? 'local'}:${getLocalDateKey(localDate)}`;
+  const cached = sunriseSkyCache.get(cacheKey);
+  if (cached) return cached;
+
+  const year = localDate.getFullYear();
+  const sunrise = sunriseFor(localDate, options.location, options.civilTimeZone);
+  const sunLng = getSiderealSunLng(sunrise, year);
+  const result = {
+    nakshatraIndex: computeNakshatraIndex(getSiderealMoonLng(sunrise, year)),
+    solarMonth: Math.floor(sunLng / 30) % 12,
+  };
+  sunriseSkyCache.set(cacheKey, result);
+  return result;
+}
+
+export function nakshatraAtSunrise(localDate: Date, options: PanchangComputationOptions = {}): number {
+  return sunriseSkyFor(localDate, options).nakshatraIndex;
+}
+
+export function solarMonthAtSunrise(localDate: Date, options: PanchangComputationOptions = {}): number {
+  return sunriseSkyFor(localDate, options).solarMonth;
+}
+
 export function computePanchangForDate(localDate: Date, options: PanchangComputationOptions = {}): PanchangData {
   const calendarSystem = options.calendarSystem ?? 'purnimant';
   const observer = observerFor(options.location ?? UJJAIN_GEO);

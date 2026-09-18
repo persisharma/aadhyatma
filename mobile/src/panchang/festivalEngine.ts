@@ -1,5 +1,5 @@
 import { addDays } from './calendarGrid';
-import { computeTithiAndMonth, getSiderealSunLng, locationKey, tithiAtAparahna, tithiAtMadhyahna, tithiAtMoonrise, UJJAIN_CITY_ID } from './engine';
+import { computeTithiAndMonth, getSiderealSunLng, locationKey, nakshatraAtSunrise, solarMonthAtSunrise, tithiAtAparahna, tithiAtMadhyahna, tithiAtMoonrise, UJJAIN_CITY_ID } from './engine';
 import { getObservanceCatalog, OBSERVANCE_RULES } from './festivals';
 import { getStoredObservanceYear } from './observanceStore';
 import { PRECOMPUTED_OBSERVANCES, type PackedObservance } from './precomputedObservances';
@@ -189,8 +189,16 @@ export async function resolveObservancesForYearLiveChunked(
   return results;
 }
 
-export function resolveFestivalsForYear(year: number): ResolvedFestival[] {
-  return resolveObservancesForYear(year, 'purnimant');
+/**
+ * A whole year, as a user actually sees it.
+ *
+ * Takes the same lens set as every other QUERY, defaulting to empty — so this
+ * returns the unlensed year unless a caller opts in. The lens-blind superset is
+ * `resolveObservancesForYear`, which exists so the per-year cache does not depend
+ * on which calendars happen to be on; that one is the engine's, not a surface's.
+ */
+export function resolveFestivalsForYear(year: number, lenses: LensSet = NO_LENSES): ResolvedFestival[] {
+  return withLenses(resolveObservancesForYear(year, 'purnimant'), lenses);
 }
 
 export function getUpcomingObservances(
@@ -300,17 +308,23 @@ function findSolarFestivalDate(rule: ObservanceRule, year: number): ResolvedObse
   if (cached !== undefined) return cached;
   const target = rule.solarLongitude;
   let result: ResolvedObservance | null = null;
-  const previousYearDate = new Date(year, 0, 0);
-  let previousLongitude = getSiderealSunLng(previousYearDate, previousYearDate.getFullYear());
+  // The sankranti day is the civil day whose OWN span contains the ingress
+  // instant, so each step compares this day's midnight with the NEXT day's and
+  // returns `date` — the day the crossing happened during. Comparing against the
+  // PREVIOUS midnight instead (as this loop used to) names the day after: Makar
+  // Sankranti 2026 ingresses 14 Jan 3:13 PM IST and was reported as 15 Jan, and
+  // all twelve sankrantis carried the same +1 shift against every published
+  // almanac. `vishwakarma-puja` rides Kanya Sankranti and made it visible.
+  let startLongitude = getSiderealSunLng(new Date(year, 0, 1), year);
   for (let d = 1; d <= 366; d++) {
     const date = new Date(year, 0, d);
     if (date.getFullYear() !== year) break;
-    const longitude = getSiderealSunLng(date, year);
-    if (crossedSolarLongitude(previousLongitude, longitude, target)) {
+    const endLongitude = getSiderealSunLng(new Date(year, 0, d + 1), year);
+    if (crossedSolarLongitude(startLongitude, endLongitude, target)) {
       result = { date, rule };
       break;
     }
-    previousLongitude = longitude;
+    startLongitude = endLongitude;
   }
   solarDateCache.set(key, result);
   return result;
@@ -365,7 +379,61 @@ function matchesRuleOnDate(
     const { lunarMonth } = computeTithiAndMonth(date, { calendarSystem, location });
     return lunarMonth === monthForRuleInSystem(rule, calendarSystem);
   }
-  return matchesLunarTithiRuleOnDate(rule, date, calendarSystem, location);
+  if (rule.ruleType === 'nakshatra') {
+    return matchesNakshatraRuleOnDate(rule, date, location);
+  }
+  // The two optional narrowing constraints a lunar-tithi rule may carry. Both are
+  // pure filters on a day the tithi rule already matched, so they can never move a
+  // rule off its tithi — only decide which of that tithi's occurrences counts.
+  // `weekday` is free (no astronomy), so it gates before the tithi solve;
+  // `solarMonth` costs a sunrise + sun longitude, so it runs only on the days the
+  // tithi already claimed (~12 a year rather than 365).
+  if (rule.weekday !== undefined && date.getDay() !== rule.weekday) return false;
+  if (!matchesLunarTithiRuleOnDate(rule, date, calendarSystem, location)) return false;
+  return rule.solarMonth === undefined || solarMonthAtSunrise(date, { location }) === rule.solarMonth;
+}
+
+/**
+ * Nakshatra day selection — the day whose SUNRISE the target nakshatra covers,
+ * optionally narrowed to one sidereal solar month (`rule.solarMonth`).
+ *
+ * This is the Tamil/Malayalam calendar's own shape: the observance is a
+ * nakshatra, and the solar month says which of its ~12 yearly returns is THE
+ * one (Krittika every month is masik Karthigai; Krittika in Vrischika is
+ * Karthigai Deepam). Without the solar-month narrowing the same rule serves the
+ * monthly series, which is why one matcher covers both.
+ *
+ * The two edge cases are exactly the tithi matcher's, for the same reason — a
+ * nakshatra, like a tithi, is an arc the moon crosses at its own pace, so it can
+ * span two sunrises or fall between them:
+ *  1. Two sunrises (the nakshatra ran long) → the FIRST day owns it, the same
+ *     "first of two" convention `matchesUdayaTithiRuleOnDate` applies to a
+ *     vriddhi tithi.
+ *  2. No sunrise at all (it opened after one and closed before the next) → the
+ *     day it actually runs owns it, detected by the sunrise index jumping from
+ *     target-1 today to target+1 tomorrow. Without this the observance would
+ *     silently vanish for that month.
+ */
+function matchesNakshatraRuleOnDate(
+  rule: ObservanceRule,
+  date: Date,
+  location?: ObservanceLocation
+): boolean {
+  if (rule.nakshatra === undefined) return false;
+  const opts = { location };
+  const target = rule.nakshatra;
+  const inSolarMonth = rule.solarMonth === undefined
+    || solarMonthAtSunrise(date, opts) === rule.solarMonth;
+  if (!inSolarMonth) return false;
+
+  const today = nakshatraAtSunrise(date, opts);
+  if (today === target) {
+    return nakshatraAtSunrise(addDays(date, -1), opts) !== target;
+  }
+  if (today === (target + 26) % 27) {
+    return nakshatraAtSunrise(addDays(date, 1), opts) === (target + 1) % 27;
+  }
+  return false;
 }
 
 // Exported for pitruSmaran.ts (PRD-17): personal shraddha tithis must resolve with
@@ -575,11 +643,17 @@ function findRelativeRuleDates(
   if (rule.relativeRule !== 'friday-before-purnima') return [];
   if (rule.weekday === undefined || !rule.paksha || rule.tithi === undefined) return [];
 
+  // `weekday` means something DIFFERENT on a relative rule — it is the day to walk
+  // back to, not a day the anchor tithi must fall on — so it is stripped before the
+  // anchor is solved as a plain lunar-tithi rule. Without this, the lunar-tithi
+  // weekday constraint added for सोमवती अमावस्या would also demand that Shravana
+  // Purnima itself be a Friday, and Varalakshmi Vrat would resolve nowhere.
   const anchorRule: ObservanceRule = {
     ...rule,
     ruleType: 'lunar-tithi',
     recurrence: 'annual',
     relativeRule: undefined,
+    weekday: undefined,
   };
   const anchors = findObservanceDates(anchorRule, start, end, calendarSystem, location);
   return anchors.map((anchor) => {

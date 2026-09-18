@@ -170,7 +170,20 @@ export type ObservanceRule = {
   paksha?: Paksha;
   tithi?: number;
   weekday?: number;
+  /**
+   * Nakshatra index, 0 = Ashwini … 26 = Revati — the SAME indexing
+   * `PanchangData.nakshatra.index` and `nakshatraAtSunrise` use. Required by
+   * `ruleType: 'nakshatra'`; ignored otherwise.
+   */
   nakshatra?: number;
+  /**
+   * Sidereal solar month the day must fall in, 0 = Mesha … 11 = Meena. An extra
+   * CONSTRAINT, never a rule type of its own: it narrows a `nakshatra` rule to
+   * its one annual occurrence (Krittika in Vrischika = Karthigai Deepam) and a
+   * `lunar-tithi` rule to the solar month a regional calendar names it by
+   * (Amavasya in Karka = Karkidaka Vavu). Absent means unconstrained.
+   */
+  solarMonth?: number;
   solarLongitude?: number;
   solarIngress?: number;
   relativeRule?: ObservanceRelativeRule;

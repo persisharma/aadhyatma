@@ -44,9 +44,16 @@ const entries = [
 // with that prefix (same reason as mockLang above).
 let mockRecommendations: { entry: unknown; festivalHi?: string; festivalEn?: string }[] =
   entries.map((entry) => ({ entry }));
+// दान-पुण्य FOR-TODAY card rides today's observances; empty by default so the
+// ordinary-day strip is unchanged. A test flips it to a daan-covered rule.
+let mockObservances: { rule: { id: string } }[] = [];
 
 jest.mock('@react-navigation/native', () => ({
   useNavigation: () => ({ navigate: mockNavigate }),
+}));
+jest.mock('@/panchang/usePanchang', () => ({
+  usePanchangCalendarSystem: () => ['amanta'],
+  useObservancesForDate: () => mockObservances,
 }));
 jest.mock('@/data/gita/language', () => ({
   useGitaLanguage: () => ({ lang: mockLang }),
@@ -81,6 +88,8 @@ describe('TodayRecommendationsRow', () => {
     renderedFeatureCardProps.length = 0;
     mockLang = 'en';
     mockRecommendations = entries.map((entry) => ({ entry }));
+    mockObservances = [];
+    mockNavigate.mockClear();
   });
 
   // Regression: the 'आज के लिए' eyebrow reused the Latin sectionLabel token
@@ -166,5 +175,30 @@ describe('TodayRecommendationsRow', () => {
     // A horizontal swipe on the row must count as a scroll, not a tap.
     const row = tree.root.findByType(ScrollView);
     expect(typeof row.props.onScrollBeginDrag).toBe('function');
+  });
+
+  test('an ordinary day shows no दान-पुण्य FOR TODAY card', () => {
+    let tree!: TestRenderer.ReactTestRenderer;
+    act(() => {
+      tree = TestRenderer.create(<TodayRecommendationsRow />);
+    });
+    expect(tree.root.findAll((n) => n.props.testID === 'for-today-daan')).toHaveLength(0);
+    expect(renderedFeatureCardProps.some((p) => p.item.key === 'daan-today')).toBe(false);
+  });
+
+  // On a day whose observance carries a daan occasion (PRD-26), the strip
+  // appends a दान card that opens that day's journey. The festival cards still
+  // lead; the daan card trails.
+  test('a daan-covered observance appends a FOR TODAY daan card', () => {
+    mockObservances = [{ rule: { id: 'makar-sankranti' } }];
+    let tree!: TestRenderer.ReactTestRenderer;
+    act(() => {
+      tree = TestRenderer.create(<TodayRecommendationsRow />);
+    });
+    expect(tree.root.findAll((n) => n.props.testID === 'for-today-daan').length).toBeGreaterThanOrEqual(1);
+    const daanCards = renderedFeatureCardProps.filter((p) => p.item.key === 'daan-today');
+    expect(daanCards).toHaveLength(1);
+    expect(daanCards[0].compact).toBe(true);
+    expect(daanCards[0].item.titleEn).toBe('Makar Sankranti daan');
   });
 });

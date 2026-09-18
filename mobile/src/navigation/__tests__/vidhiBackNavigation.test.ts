@@ -84,7 +84,8 @@ describe('vidhi back navigation', () => {
     expect(more).toContain('name="GitaReader"');
     expect(more).toContain("import GitaReaderScreen from '@/screens/GitaReaderScreen'");
     // The intersection may carry other multi-stack flows (e.g. GharVastu,
-    // PRD-24 Phase 2) — the pin is Vidhi + a locally-mounted GitaReader.
+    // PRD-24 Phase 2; दान-पुण्य, PRD-26) — the pin is Vidhi + a locally-mounted
+    // GitaReader.
     expect(types).toMatch(/export type MoreStackParamList = VidhiStackParamList &[\s\S]*GitaReader: GitaReaderParams;/);
   });
 });
