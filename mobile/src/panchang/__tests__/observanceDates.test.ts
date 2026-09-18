@@ -429,3 +429,116 @@ test('the live aparahna matcher agrees with the shipped table (RULEBOOK §23.9)'
   assert.equal(matchesLunarTithiRuleOnDate(udaya!, new Date(2026, 8, 11, 12), 'purnimant'), true);
   assert.equal(matchesLunarTithiRuleOnDate(udaya!, new Date(2026, 8, 10, 12), 'purnimant'), false);
 });
+
+// ── Universal gaps + Tamil/Kerala wave (Sept 2026) ──────────────────────────
+//
+// Real published civil dates, each read in a source and named in the comment
+// above its rule in festivals.ts (RULEBOOK §23a.3). Source of truth — NOT engine
+// output. Unlike ANCHORS above these are EXACT: every rule here was verified to
+// the day before it shipped, and any rule that could not be was held back.
+const WAVE_2_PUBLISHED: Record<string, string> = {
+  // Appendix C — universal gaps that belong to everyone
+  'ratha-saptami:2026': '2026-01-25',
+  'rang-panchami:2026': '2026-03-08',
+  'shani-jayanti:2026': '2026-05-16',
+  'radha-ashtami:2026': '2026-09-19',
+  'hanuman-jayanti-kartik:2026': '2026-11-08',
+  'gopashtami:2026': '2026-11-17',
+  'champa-shashthi:2026': '2026-12-15',
+  // Solar — rides Kanya Sankranti
+  'vishwakarma-puja:2026': '2026-09-17',
+  // Tamil & Malayalam
+  'thai-pusam:2026': '2026-02-01',
+  'panguni-uthiram:2026': '2026-04-01',
+  'chitra-pournami:2026': '2026-05-01',
+  'vaikasi-visakam:2026': '2026-05-30',
+  'karkidaka-vavu:2026': '2026-08-12',
+  'karthigai-deepam:2026': '2026-11-24',
+};
+
+test('wave-2 observances match their published dates exactly', () => {
+  for (const [key, expected] of Object.entries(WAVE_2_PUBLISHED)) {
+    const [id, yearStr] = key.split(':');
+    assert.equal(engineDate(id, Number(yearStr)), expected, `${key} moved`);
+  }
+});
+
+const WAVE_2_IDS = [
+  'ratha-saptami', 'rang-panchami', 'shani-jayanti', 'radha-ashtami',
+  'hanuman-jayanti-kartik', 'gopashtami', 'champa-shashthi', 'vishwakarma-puja',
+  'thai-pusam', 'panguni-uthiram', 'chitra-pournami', 'vaikasi-visakam',
+  'karkidaka-vavu', 'karthigai-deepam', 'avani-avittam',
+];
+
+test('every wave-2 rule resolves exactly once a year, 2024-2031', () => {
+  assert.equal(WAVE_2_IDS.length, 15);
+  for (const key of Object.keys(WAVE_2_PUBLISHED)) {
+    assert.ok(WAVE_2_IDS.includes(key.split(':')[0]), `${key} is not a wave-2 id`);
+  }
+  for (const id of WAVE_2_IDS) {
+    for (let year = 2024; year <= 2031; year += 1) {
+      const dates = engineDates(id, year);
+      assert.equal(dates.length, 1, `${id} ${year}: expected one occurrence, got ${dates.join(' ') || 'none'}`);
+    }
+  }
+});
+
+// RULEBOOK §23.4: a rule naming the SAME tithi as a shipped rule must land on the
+// same civil day. Chitra Pournami is deliberately NOT here — it is the Purnima of
+// the Mesha SOLAR month, not of lunar Chaitra, so it must NOT track Hanuman
+// Jayanti (2026: 1 May vs 2 Apr). That non-coincidence is asserted below.
+test('wave-2 rules ride the shipped rule that shares their tithi', () => {
+  for (const year of [2024, 2025, 2026, 2027, 2028]) {
+    assert.equal(engineDate('radha-ashtami', year), engineDate('durva-ashtami', year), `${year}: Radhashtami ≠ Durva Ashtami`);
+    assert.equal(engineDate('avani-avittam', year), engineDate('raksha-bandhan', year), `${year}: Avani Avittam ≠ Raksha Bandhan`);
+    assert.equal(engineDate('shani-jayanti', year), engineDate('vat-savitri-vrat', year), `${year}: Shani Jayanti ≠ Vat Savitri`);
+    assert.equal(engineDate('vishwakarma-puja', year), engineDate('kanya-sankranti', year), `${year}: Vishwakarma Puja ≠ Kanya Sankranti`);
+    // Champa Shashthi IS Margashirsha's Skanda Shashthi.
+    const [champa] = engineDates('champa-shashthi', year);
+    assert.ok(engineDates('skanda-sashti', year).includes(champa), `${year}: Champa Shashthi ${champa} is not a Skanda Shashthi day`);
+    // Karkidaka Vavu is an amavasya, so the monthly amavasya vrat must cover it.
+    const [vavu] = engineDates('karkidaka-vavu', year);
+    assert.ok(engineDates('amavasya-vrat', year).includes(vavu), `${year}: Karkidaka Vavu ${vavu} missing from the Amavasya series`);
+    // Every Somvati Amavasya is one of the amavasya vrat's own days, and a Monday.
+    for (const somvati of engineDates('somvati-amavasya', year)) {
+      assert.ok(engineDates('amavasya-vrat', year).includes(somvati), `${year}: Somvati ${somvati} is not an Amavasya Vrat day`);
+      assert.equal(new Date(`${somvati}T12:00:00`).getDay(), 1, `${year}: Somvati ${somvati} is not a Monday`);
+    }
+  }
+});
+
+test('Chitra Pournami tracks the Mesha solar month, not lunar Chaitra', () => {
+  // The whole point of the `solarMonth` constraint. If these ever coincide for
+  // every year in the range, the constraint has stopped being applied.
+  const divergent = [2025, 2026, 2027, 2028].filter(
+    (year) => engineDate('chitra-pournami', year) !== engineDate('hanuman-jayanti', year)
+  );
+  assert.ok(divergent.length >= 3, `Chitra Pournami tracked Chaitra Purnima in ${4 - divergent.length} of 4 years`);
+  assert.equal(engineDate('chitra-pournami', 2026), '2026-05-01');
+  assert.equal(engineDate('hanuman-jayanti', 2026), '2026-04-02');
+});
+
+// The sankranti day is the civil day CONTAINING the ingress instant. This pins
+// the Sept 2026 fix to findSolarFestivalDate, which previously named the day
+// after (Makar Sankranti 2026 resolved to 15 Jan against a published 14 Jan;
+// all twelve carried the same +1 shift). Published dates, not engine output.
+const SANKRANTI_PUBLISHED: Record<string, string> = {
+  'makar-sankranti:2025': '2025-01-14', 'makar-sankranti:2026': '2026-01-14', 'makar-sankranti:2027': '2027-01-14',
+  'mesha-sankranti:2025': '2025-04-14', 'mesha-sankranti:2026': '2026-04-14',
+  'kanya-sankranti:2025': '2025-09-17', 'kanya-sankranti:2026': '2026-09-17',
+};
+
+test('sankrantis land on the civil day that contains the ingress', () => {
+  for (const [key, expected] of Object.entries(SANKRANTI_PUBLISHED)) {
+    const [id, yearStr] = key.split(':');
+    assert.equal(engineDate(id, Number(yearStr)), expected, `${key} moved`);
+  }
+  // All twelve still resolve once a year, and in ascending longitude order.
+  for (const year of [2025, 2026, 2027]) {
+    const ids = ['makar', 'kumbha', 'meena', 'mesha', 'vrishabha', 'mithuna', 'karka', 'simha', 'kanya', 'tula', 'vrishchika', 'dhanu'];
+    const dates = ids.map((id) => engineDate(`${id}-sankranti`, year));
+    for (const [i, date] of dates.entries()) assert.ok(date, `${ids[i]}-sankranti ${year} did not resolve`);
+    const sorted = [...dates].sort();
+    assert.deepEqual(dates, sorted, `${year}: sankrantis are out of order — ${dates.join(' ')}`);
+  }
+});
