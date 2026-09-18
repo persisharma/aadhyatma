@@ -1,4 +1,5 @@
 import type { KathaCatalogEntry, ObservanceRule, Paksha } from './types';
+import { ruleVisibleForLenses, type ObservanceLens } from './lenses';
 
 const VratListUrl = 'https://www.drikpanchang.com/vrats/hindu-vrat-list.html';
 const HinduCalendarUrl = 'https://www.drikpanchang.com/calendars/hindu/hinducalendar.html';
@@ -66,6 +67,7 @@ function createRule(seed: ObservanceSeed): ObservanceRule {
     nameEn: seed.nameEn,
     category,
     visibility: seed.visibility ?? 'default',
+    lens: seed.lens,
     ruleType: seed.ruleType ?? (seed.type === 'solar' ? 'solar-sankranti' : 'lunar-tithi'),
     recurrence: seed.recurrence ?? 'annual',
     type: seed.type,
@@ -444,11 +446,13 @@ export const FESTIVAL_RULES: ObservanceRule[] = [
   // matcher is `matchesNakshatraRuleOnDate`; `nakshatra` is 0-indexed from Ashwini
   // and `solarMonth` 0-indexed from Mesha (types.ts pins both).
   //
-  // They ship `default`, not `visibility: 'regional'` — RULEBOOK §23a.5: `regional`
-  // renders nowhere, and a whole state's observance may never have an invisible
-  // rule as the only home of its date. That is the wave-1 precedent (Goga Navami,
-  // Teja Dashami, Sama Chakeva all shipped default). The opt-in lens that would
-  // scope them is PRD-42 wave 2 and does not exist yet.
+  // They ship UNIVERSAL — `default` with no `lens` — and that stays right now that
+  // wave 2 exists. RULEBOOK §23a.5: a lens is additive metadata on a rule that
+  // would otherwise not ship at all, never a retagging of something already
+  // universal, and these are whole states' observances whose descriptions already
+  // name the state. That is the wave-1 precedent (Goga Navami, Teja Dashami, Sama
+  // Chakeva all shipped universal). Only a rule that would be genuine NOISE for
+  // everyone earns a lens.
   //
   // Onam is deliberately ABSENT. It needs this solver AND a 10-day arc AND the
   // vyapini convention PRD-42 leaves open (sunrise-prevailing Thiruvonam vs the
@@ -645,25 +649,22 @@ export const ADVANCED_OBSERVANCE_RULES: ObservanceRule[] = [
   // (drikpanchang.com/vrats/masik-karthigai-dates.html). Was `recurrence: 'catalog'`
   // + `nakshatra: 3`, which resolved to nothing twice over: the matcher
   // short-circuits on `catalog`, and 3 is Rohini on the 0-indexed scale the engine
-  // and `PanchangData.nakshatra.index` use — 1-indexed Krittika. Both fixed here.
-  // It stays `regional` under the §23a.5 carve-out rather than putting twelve rows
-  // a year on every user's calendar: the Tamil date's default-visible home is the
-  // annual `karthigai-deepam`, so this is not the only home of a real date.
-  // NOTE: `regional` still renders and resolves NOWHERE — `getObservanceCatalog()`
-  // returns `default` only and no surface passes `includeHidden` (PRD-42 §1.2.2).
-  // The rule is now CORRECT rather than working; it starts producing dates the day
-  // the wave-2 lens exists, with no further engine work.
-  createRule({ id: 'karthigai-vrat', nameHi: 'कार्तिगई व्रत', nameEn: 'Karthigai Vrat', category: 'regional', visibility: 'regional', recurrence: 'monthly', ruleType: 'nakshatra', marker: 'dot', sourceUrl: VratListUrl, nakshatra: 2, deityHi: 'भगवान कार्तिकेय', deityEn: 'Lord Kartikeya' }),
+  // and `PanchangData.nakshatra.index` use — 1-indexed Krittika. Both fixed in #344.
+  // PRD-42 W2 then retired `visibility: 'regional'` (RULEBOOK §23a.5): this is now
+  // `default` + `lens: ['tamil']`, which is exactly what #344's note meant by "it
+  // starts producing dates the day the wave-2 lens exists, with no further engine
+  // work". It is not the only home of its date — the annual `karthigai-deepam` is
+  // universal — so a user with no तमिऴ calendar loses nothing.
+  createRule({ id: 'karthigai-vrat', nameHi: 'कार्तिगई व्रत', nameEn: 'Karthigai Vrat', category: 'regional', visibility: 'default', lens: ['tamil'], recurrence: 'monthly', ruleType: 'nakshatra', marker: 'dot', sourceUrl: VratListUrl, nakshatra: 2, deityHi: 'भगवान कार्तिकेय', deityEn: 'Lord Kartikeya' }),
   hidden({ id: 'shraddha-dates', nameHi: 'श्राद्ध तिथियां', nameEn: 'Shraddha Dates', category: 'festival', bhogId: 'pitru-offering' }),
   // The Jain Rohini vrat — the Rohini nakshatra of every solar month. Same two
-  // faults as `karthigai-vrat` above, same fix: 4 was 1-indexed Rohini, 3 is its
-  // 0-indexed value. Stays `regional` because the Jain calendar is PRD-42's own
-  // lens wave, and so — like `karthigai-vrat` — still resolves nowhere today. This
-  // one IS the only home of its date, which §23a.5 forbids; it is left that way
-  // deliberately rather than putting twelve Jain rows a year on every user's
-  // calendar against PRD-42 locked decision ⑤. Shipping it properly is the Jain
-  // lens's job, and the rule is now correct for the day that lands.
-  createRule({ id: 'rohini-vrat', nameHi: 'रोहिणी व्रत', nameEn: 'Rohini Vrat', category: 'regional', visibility: 'regional', recurrence: 'monthly', ruleType: 'nakshatra', marker: 'dot', sourceUrl: VratListUrl, nakshatra: 3, deityHi: 'जैन व्रत परंपरा', deityEn: 'Jain vrat tradition' }),
+  // faults as `karthigai-vrat` above and the same #344 fix: 4 was 1-indexed Rohini,
+  // 3 is its 0-indexed value. #344 had to leave it invisible and noted that this
+  // one IS the only home of its date, which §23a.5 forbids — the alternative being
+  // twelve Jain rows a year on every user's calendar, against PRD-42 decision ⑤.
+  // W2 resolves exactly that tension: `default` + `lens: ['jain']` puts it on the
+  // calendar of the households that keep it and on nobody else's.
+  createRule({ id: 'rohini-vrat', nameHi: 'रोहिणी व्रत', nameEn: 'Rohini Vrat', category: 'regional', visibility: 'default', lens: ['jain'], recurrence: 'monthly', ruleType: 'nakshatra', marker: 'dot', sourceUrl: VratListUrl, nakshatra: 3, deityHi: 'जैन व्रत परंपरा', deityEn: 'Jain vrat tradition' }),
   hidden({ id: 'chandra-darshan', nameHi: 'चंद्र दर्शन', nameEn: 'Chandra Darshan', category: 'festival', ruleType: 'relative-to-lunar' }),
   hidden({ id: 'ishti-anvadhan', nameHi: 'इष्टि और अन्वाधान', nameEn: 'Ishti and Anvadhan', category: 'festival' }),
   hidden({ id: 'iskcon-ekadashi', nameHi: 'इस्कॉन एकादशी', nameEn: 'ISKCON Ekadashi', bhogId: 'ekadashi-food' }),
@@ -683,8 +684,26 @@ export const OBSERVANCE_RULES: ObservanceRule[] = [
   ...ADVANCED_OBSERVANCE_RULES,
 ];
 
-export function getObservanceCatalog(options: { includeHidden?: boolean } = {}): ObservanceRule[] {
-  return options.includeHidden
+/**
+ * The browsable catalog.
+ *
+ * `lenses` is the user's क्षेत्रीय पंचांग set; omitting it means the EMPTY set, so
+ * every existing caller keeps today's list byte for byte and a lensed rule stays
+ * out of the catalog until its calendar is turned on. `includeHidden` is the
+ * separate "advanced" axis and does not bypass the lens gate — an advanced rule
+ * that belongs to a calendar the user has not chosen is still not theirs.
+ *
+ * SEARCH IS DELIBERATELY NOT FILTERED (see `searchObservances`): a user who types
+ * पर्युषण by name has asked for it, lens or no lens.
+ */
+export function getObservanceCatalog(
+  options: { includeHidden?: boolean; lenses?: ReadonlySet<ObservanceLens> } = {}
+): ObservanceRule[] {
+  const lenses = options.lenses ?? EMPTY_LENSES;
+  const base = options.includeHidden
     ? OBSERVANCE_RULES
     : OBSERVANCE_RULES.filter((rule) => rule.visibility === 'default');
+  return base.filter((rule) => ruleVisibleForLenses(rule.lens, lenses));
 }
+
+const EMPTY_LENSES: ReadonlySet<ObservanceLens> = new Set();

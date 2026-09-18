@@ -3,14 +3,34 @@ import { computeTithiAndMonth, getSiderealSunLng, locationKey, nakshatraAtSunris
 import { getObservanceCatalog, OBSERVANCE_RULES } from './festivals';
 import { getStoredObservanceYear } from './observanceStore';
 import { PRECOMPUTED_OBSERVANCES, type PackedObservance } from './precomputedObservances';
+import { ALL_LENSES, ruleVisibleForLenses, type ObservanceLens } from './lenses';
 import type { CalendarSystem, GeoLocation, ObservanceRule, ResolvedObservance, ResolvedFestival } from './types';
+
+/**
+ * The user's क्षेत्रीय पंचांग set, as every query below takes it.
+ *
+ * Omitting it means the EMPTY set, and that default is load-bearing: every caller
+ * that has not opted in — the notification schedulers above all (a lensed rule
+ * must never title a notification) — keeps today's behaviour byte for byte.
+ */
+export type LensSet = ReadonlySet<ObservanceLens>;
+
+const NO_LENSES: LensSet = new Set();
+
+function withLenses(items: ResolvedObservance[], lenses: LensSet): ResolvedObservance[] {
+  // Fast path: nothing lensed is on, and the overwhelming majority of rules are
+  // universal, so skip the allocation entirely when no rule can be filtered out.
+  return items.filter((item) => ruleVisibleForLenses(item.rule.lens, lenses));
+}
 
 // Coordinates + the stable city id used for cache keys; omitted ⇒ Ujjain.
 export type ObservanceLocation = GeoLocation & { cityId?: string };
 
 const cache = new Map<string, ResolvedObservance[]>();
 const ruleById = new Map(OBSERVANCE_RULES.map((rule) => [rule.id, rule] as const));
-const defaultRules = getObservanceCatalog();
+// Resolved for EVERY lens, so the per-year cache never depends on the user's set;
+// each query below narrows it. See `ALL_LENSES`.
+const defaultRules = getObservanceCatalog({ lenses: ALL_LENSES });
 
 function cacheKey(year: number, calendarSystem: CalendarSystem, location?: ObservanceLocation): string {
   return `${calendarSystem}:${locationKey(location)}:${year}`;
@@ -169,8 +189,16 @@ export async function resolveObservancesForYearLiveChunked(
   return results;
 }
 
-export function resolveFestivalsForYear(year: number): ResolvedFestival[] {
-  return resolveObservancesForYear(year, 'purnimant');
+/**
+ * A whole year, as a user actually sees it.
+ *
+ * Takes the same lens set as every other QUERY, defaulting to empty — so this
+ * returns the unlensed year unless a caller opts in. The lens-blind superset is
+ * `resolveObservancesForYear`, which exists so the per-year cache does not depend
+ * on which calendars happen to be on; that one is the engine's, not a surface's.
+ */
+export function resolveFestivalsForYear(year: number, lenses: LensSet = NO_LENSES): ResolvedFestival[] {
+  return withLenses(resolveObservancesForYear(year, 'purnimant'), lenses);
 }
 
 export function getUpcomingObservances(
@@ -178,7 +206,8 @@ export function getUpcomingObservances(
   count: number,
   calendarSystem: CalendarSystem = 'purnimant',
   withinDays?: number,
-  location?: ObservanceLocation
+  location?: ObservanceLocation,
+  lenses: LensSet = NO_LENSES
 ): ResolvedObservance[] {
   const year = fromDate.getFullYear();
   const all = [
@@ -190,7 +219,9 @@ export function getUpcomingObservances(
   const end = withinDays === undefined
     ? null
     : new Date(start.getFullYear(), start.getMonth(), start.getDate() + withinDays);
-  return all
+  // Lens BEFORE slice: filtering after would let hidden rules eat the count and
+  // return fewer than `count` visible ones.
+  return withLenses(all, lenses)
     .filter((f) => f.date.getTime() >= start.getTime() && (end === null || f.date.getTime() <= end.getTime()))
     .slice(0, count);
 }
@@ -202,10 +233,14 @@ export function getUpcomingFestivals(fromDate: Date, count: number): ResolvedFes
 export function getObservancesForDate(
   date: Date,
   calendarSystem: CalendarSystem = 'purnimant',
-  location?: ObservanceLocation
+  location?: ObservanceLocation,
+  lenses: LensSet = NO_LENSES
 ): ResolvedObservance[] {
-  return resolveObservancesForYear(date.getFullYear(), calendarSystem, location)
-    .filter((item) => isSameLocalDate(item.date, date));
+  return withLenses(
+    resolveObservancesForYear(date.getFullYear(), calendarSystem, location)
+      .filter((item) => isSameLocalDate(item.date, date)),
+    lenses
+  );
 }
 
 // Date-key variant for persisted/background surfaces. Unlike Date#getFullYear
@@ -214,7 +249,8 @@ export function getObservancesForDate(
 export function getObservancesForDateKey(
   dateKey: string,
   calendarSystem: CalendarSystem = 'purnimant',
-  location?: ObservanceLocation
+  location?: ObservanceLocation,
+  lenses: LensSet = NO_LENSES
 ): ResolvedObservance[] {
   const year = Number(dateKey.slice(0, 4));
   const cityId = locationKey(location);
@@ -222,31 +258,44 @@ export function getObservancesForDateKey(
     ? PRECOMPUTED_OBSERVANCES[`${calendarSystem}:${year}`]
     : getStoredObservanceYear(cityId, calendarSystem, year);
   const entries = exact ?? PRECOMPUTED_OBSERVANCES[`${calendarSystem}:${year}`];
-  if (entries) return reconstructPrecomputed(entries.filter(([, date]) => date === dateKey));
-  return getObservancesForDate(new Date(`${dateKey}T12:00:00`), calendarSystem, location);
+  if (entries) return withLenses(reconstructPrecomputed(entries.filter(([, date]) => date === dateKey)), lenses);
+  return getObservancesForDate(new Date(`${dateKey}T12:00:00`), calendarSystem, location, lenses);
 }
 
 export function getObservancesForMonth(
   year: number,
   month: number,
   calendarSystem: CalendarSystem = 'purnimant',
-  location?: ObservanceLocation
+  location?: ObservanceLocation,
+  lenses: LensSet = NO_LENSES
 ): ResolvedObservance[] {
-  return resolveObservancesForYear(year, calendarSystem, location)
-    .filter((f) => f.date.getFullYear() === year && f.date.getMonth() === month);
+  return withLenses(
+    resolveObservancesForYear(year, calendarSystem, location)
+      .filter((f) => f.date.getFullYear() === year && f.date.getMonth() === month),
+    lenses
+  );
 }
 
 export function getFestivalsForMonth(year: number, month: number): ResolvedFestival[] {
   return getObservancesForMonth(year, month, 'purnimant');
 }
 
+/**
+ * Search is DELIBERATELY lens-blind.
+ *
+ * A user who types पर्युषण, बतुकम्मा or "jain calendar" by name has asked for that
+ * observance; answering "no results" because they have not turned on a calendar
+ * they may not know exists would be the worst version of this feature. The lens
+ * decides what appears UNASKED — on a day, in a month, in the browsable catalog —
+ * never what can be found. `getObservanceCatalog` is where the gate lives.
+ */
 export function searchObservances(
   query: string,
   options: { includeHidden?: boolean } = {}
 ): ObservanceRule[] {
   const normalized = normalizeSearch(query);
   if (!normalized) return [];
-  return getObservanceCatalog(options)
+  return getObservanceCatalog({ ...options, lenses: ALL_LENSES })
     .filter((rule) => searchableText(rule).includes(normalized));
 }
 

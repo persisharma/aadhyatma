@@ -73,6 +73,11 @@ const MUST_SURVIVE = [
   // they look panchang-shaped, and clearing them resets the user's city to Ujjain.
   '@vedansh:panchang-location',
   '@vedansh:panchang-calendar-system',
+  // क्षेत्रीय पंचांग (PRD-42 W2): the chosen calendars and the once-per-install
+  // seed marker. The marker is the half that is easy to miss — sweeping the set
+  // without it re-seeds from the city and hands back a lens the user removed.
+  '@vedansh:panchang-lenses',
+  '@vedansh:panchang-lenses-seeded',
   '@vedansh/language',
   '@vedansh/regionalLanguage',
   '@vedansh/font-scale',
