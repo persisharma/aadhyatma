@@ -15,7 +15,8 @@
 #      Stotram, Bajrang Baan, Ram Stuti — addedInVersion 1.3.0), aarti
 #      (saraswati-aarti — 1.3.1), sanskar (its 7 sections — 1.3.1, added in #88),
 #      AND chalisa (Gayatri Chalisa — 1.4.4). The categories with no debut-new
-#      content (granth, japam) + the देवता rail must render WITHOUT the badge.
+#      AND granth (newly tagged content). Only japam and the देवता rail must
+#      render WITHOUT the badge.
 #   2. CLEAR — marking all three stotram debut-new entries seen flips
 #      hasNewInCategory('stotram') to false: the tile loses its badge, persisted.
 #      (Sanskar's badge persists — only stotram's clear is asserted here.)
@@ -75,7 +76,7 @@ appId: com.prashantsharma.vedansh
     timeout: 10000
 - scrollUntilVisible:
     element:
-      text: "Sacred Books. Tap to open."          # granth → plain (no badge)
+      text: "Sacred Books. New. Tap to open."     # granth → HAS badge (newly tagged granth content)
     direction: DOWN
     timeout: 10000
 - scrollUntilVisible:

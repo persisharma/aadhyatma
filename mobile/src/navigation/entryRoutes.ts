@@ -20,6 +20,7 @@ import { valmikiRamayanChaptersManifest } from '@/data/valmiki-ramayan';
 import { sundarkandChaptersManifest } from '@/data/sundarkand';
 import { gitaChaptersManifest } from '@/data/gita';
 import { canonicalSourceId } from '@/data/sourceIdMigration';
+import type { HomeRoster } from '@/vastu/homeRecord';
 import type { HomeStackParamList, MoreStackParamList, PanchangStackParamList } from './types';
 
 type Nav = NativeStackNavigationProp<HomeStackParamList>;
@@ -77,6 +78,25 @@ export function navigateToHomeStackTarget(
     return;
   }
   nav.navigate('HomeTab', { screen: target.screen, params: target.params });
+}
+
+/**
+ * गृह प्रवेश → मेरा घर door (PRD-24 Phase 2 Part D / US-16): a fresh roster
+ * opens the setup flow for the home being entered (`role: 'living'`); a roster
+ * with a living home opens that home's reading. A roster holding only
+ * `considering` homes still opens setup — a shortlisted home is not the one
+ * being lived in. Pure — callers pass the roster; this module never touches
+ * the store (the tsx test run has no AsyncStorage).
+ */
+export function buildGharVastuDoorTarget(
+  roster: HomeRoster
+):
+  | { screen: 'GharVastuSetup'; params: { role: 'living' } }
+  | { screen: 'GharVastu'; params: { homeId: string } } {
+  const living = roster.livingId ? roster.homes.find((h) => h.id === roster.livingId) : undefined;
+  return living
+    ? { screen: 'GharVastu', params: { homeId: living.id } }
+    : { screen: 'GharVastuSetup', params: { role: 'living' } };
 }
 
 const chalisaIds = new Set([

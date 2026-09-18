@@ -11,7 +11,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { computePanchangForDate } from '../engine';
-import { prevailingTithi, successorTithiToday } from '../prevailingTithi';
+import { prevailingTithi, successorTithiToday, tithiChain } from '../prevailingTithi';
 import { TITHI_NAMES_HI, TITHI_NAMES_EN } from '../names';
 import type { PanchangData } from '../types';
 
@@ -37,6 +37,7 @@ const at = (h: number, m = 0) => new Date(2026, 7, 21, h, m);
 test('before the end instant the sunrise tithi prevails, end included', () => {
   const p = day(8, at(23, 36)); // Navami till 11:36 PM
   assert.equal(prevailingTithi(p, at(5)).nameHi, 'नवमी');
+  assert.equal(prevailingTithi(p, at(5)).paksha, 'shukla');
   assert.equal(prevailingTithi(p, at(23, 36)).nameHi, 'नवमी'); // boundary is inclusive
   assert.equal(prevailingTithi(p, at(12))?.endTime?.getTime(), at(23, 36).getTime());
 });
@@ -47,6 +48,7 @@ test('past the end the successor runs, with no invented end instant', () => {
   assert.equal(after.nameHi, 'दशमी');
   assert.equal(after.nameEn, 'Dashami');
   assert.equal(after.endTime, null);
+  assert.equal(after.paksha, 'shukla');
 });
 
 test('kshaya day walks main → kshaya → successor', () => {
@@ -73,6 +75,7 @@ test('successor index wraps: Amavasya → Pratipada and Purnima → krishna Prat
   const afterPurnima = prevailingTithi(day(14, at(10)), at(11));
   assert.equal(afterPurnima.nameEn, 'Pratipada'); // 14 → 15 (krishna)
   assert.equal(afterPurnima.nameHi, TITHI_NAMES_HI[15]);
+  assert.equal(afterPurnima.paksha, 'krishna');
 });
 
 test('kshaya reference day agrees with the real engine chain (Bengaluru 10 Jul 2026)', () => {
@@ -93,6 +96,44 @@ test('kshaya reference day agrees with the real engine chain (Bengaluru 10 Jul 2
   const successor = prevailingTithi(p, afterKshaya);
   assert.equal(successor.nameEn, 'Dwadashi');
   assert.equal(successor.endTime, null);
+});
+
+// ─── tithiChain — the walk as data, for surfaces that must RENDER it ────────
+// The home-screen widget precomputes its own refresh instants (WidgetKit and
+// AppWidget draw off a timeline, not a live clock), so it reads the links
+// instead of asking about one instant. These pin that the two can never
+// disagree: the chain IS what prevailingTithi resolves against.
+
+test('the chain is the sunrise tithi first, then the same links the walk visits', () => {
+  assert.deepEqual(tithiChain(day(8, at(23, 36))).map((link) => link.nameHi), ['नवमी', 'दशमी']);
+  // Kshaya: main → kshaya → successor, three links on one civil day.
+  const kshayaEnd = new Date(2026, 7, 22, 5, 22);
+  assert.deepEqual(
+    tithiChain(day(9, at(8, 16), { index: 10, end: kshayaEnd })).map((link) => link.nameHi),
+    ['दशमी', 'एकादशी', 'द्वादशी']
+  );
+  // A null end terminates the chain — no link is invented past what was solved.
+  assert.deepEqual(tithiChain(day(3, null)).map((link) => link.nameHi), ['चतुर्थी']);
+  assert.deepEqual(tithiChain(day(9, at(8, 16), { index: 10, end: null })).map((link) => link.nameHi), ['दशमी', 'एकादशी']);
+  // Only the last link may be open-ended, and the ends strictly advance — the
+  // two properties every reader's single forward scan depends on.
+  for (const p of [day(8, at(23, 36)), day(9, at(8, 16), { index: 10, end: kshayaEnd }), day(3, null)]) {
+    const chain = tithiChain(p);
+    assert.ok(chain.slice(0, -1).every((link) => link.endTime !== null));
+    const ends = chain.map((link) => link.endTime?.getTime()).filter((value): value is number => value !== undefined);
+    assert.deepEqual(ends, [...ends].sort((a, b) => a - b));
+    assert.equal(new Set(ends).size, ends.length);
+  }
+});
+
+test('the chain resolves to the live tithi at every instant of the day', () => {
+  const p = computePanchangForDate(new Date(2026, 6, 10), { location: BENGALURU });
+  for (let minute = 0; minute < 24 * 60; minute += 7) {
+    const instant = new Date(2026, 6, 10, 0, minute);
+    const chain = tithiChain(p);
+    const scanned = chain.find((link) => !link.endTime || instant.getTime() <= link.endTime.getTime()) ?? chain[chain.length - 1];
+    assert.equal(scanned.nameHi, prevailingTithi(p, instant).nameHi, instant.toISOString());
+  }
 });
 
 // ─── successorTithiToday — the anga tile / kicker handover line ──────────────

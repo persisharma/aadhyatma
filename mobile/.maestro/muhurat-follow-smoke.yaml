@@ -63,6 +63,11 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
     optional: true
+- tapOn: { text: "Allow", optional: true }
+- tapOn: { text: "Don.t Allow", optional: true }
+- waitForAnimationToEnd
+- tapOn: { text: "SKIP|Skip|Skip tour", optional: true }
+- tapOn: { text: "Begin", optional: true }
 - extendedWaitUntil:
     # Canary: the above-the-fold Panchang card — the Good Habits tile sits below
     # the first viewport since Home gained the daily recommendation cards.
@@ -102,6 +107,12 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Find a Muhurat"
     timeout: 20000
+- scrollUntilVisible:
+    element:
+      text: "Vehicle Purchase"
+    direction: DOWN
+    centerElement: true
+    timeout: 15000
 - tapOn: "Vehicle Purchase"
 - waitForAnimationToEnd
 
@@ -180,7 +191,8 @@ appId: com.prashantsharma.vedansh
       id: "muhurat-reminder-sheet"
     timeout: 10000
 - tapOn: "Off"
-- tapOn: "On the day"
+- tapOn:
+    id: "reminder-sheet-day-of"
 - tapOn:
     id: "reminder-sheet-save"
 - waitForAnimationToEnd

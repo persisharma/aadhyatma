@@ -34,7 +34,13 @@ const OBSERVANCE_CLASSES: readonly {
   { id: 'class:ekadashi', label: 'एकादशी', forms: ['एकादशी', 'ekadashi', 'ekadasi', 'gyaras', 'gyaaras'], member: (id) => id.endsWith('-ekadashi') || id === 'mahadwadashi' },
   { id: 'class:pradosh', label: 'प्रदोष', forms: ['प्रदोष', 'pradosh', 'pradosha'], member: (id) => id.includes('pradosh') },
   { id: 'class:purnima', label: 'पूर्णिमा', forms: ['पूर्णिमा', 'purnima', 'poonam', 'punam'], member: (id) => id.includes('purnima') },
-  { id: 'class:amavasya', label: 'अमावस्या', forms: ['अमावस्या', 'amavasya', 'amavas', 'amaavas'], member: (id) => id.includes('amavasya') },
+  // `darsha-amavasya` is deliberately NOT a member. It is the same tithi as
+  // `amavasya-vrat` under the aparahna convention (RULEBOOK §23.9), so letting it
+  // join would make the bare word answer the day BEFORE the one the Panchang tab's
+  // own Tithi tile heads अमावस्या whenever the two differ — Ask disagreeing with the
+  // calendar about what अमावस्या means. It stays reachable by its own name, which
+  // every rule gets below.
+  { id: 'class:amavasya', label: 'अमावस्या', forms: ['अमावस्या', 'amavasya', 'amavas', 'amaavas'], member: (id) => id.includes('amavasya') && id !== 'darsha-amavasya' },
   { id: 'class:chaturthi', label: 'चतुर्थी', forms: ['चतुर्थी', 'chaturthi', 'sankashti', 'संकष्टी', 'chauth'], member: (id) => id.includes('chaturthi') || id.includes('chauth') },
   { id: 'class:shivaratri', label: 'शिवरात्रि', forms: ['शिवरात्रि', 'shivratri', 'shivaratri'], member: (id) => id.includes('shivaratri') },
   { id: 'class:navratri', label: 'नवरात्रि', forms: ['नवरात्रि', 'navratri', 'navratra', 'navaratri'], member: (id) => id.includes('navratri') },
@@ -95,6 +101,15 @@ function build(): Lexicon {
 
   for (const v of VIDHI_ENTRIES) {
     push('vidhi', v.id, v.titleHi, [v.titleHi, v.titleEn, v.id.replace(/-/g, ' ')]);
+  }
+
+  // प्रश्न purposes (PRD-43) — the registry carries its own hi/en/Hinglish forms.
+  // Loaded here, not at module top: `build()` runs lazily, and this file sits
+  // on the launch-graph walker's path (launchGraph budget).
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { PRASHNA_PURPOSES } = require('@/panchang/prashnaPurposes') as typeof import('@/panchang/prashnaPurposes');
+  for (const purpose of PRASHNA_PURPOSES) {
+    push('purpose', purpose.id, purpose.nameHi, [purpose.nameHi, purpose.nameEn, purpose.id, ...purpose.forms]);
   }
 
   const labelFor = (type: EntityType, id: string) => out.find((e) => e.type === type && e.id === id)?.label ?? id;

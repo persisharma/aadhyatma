@@ -1,7 +1,7 @@
 /**
  * उपकरण — the fixed tool row on Home (TRD-42 §5.2).
  *
- * Eight launcher tiles in a static order. The registry (`data/home/tools.ts`)
+ * Nine launcher tiles in a static order. The registry (`data/home/tools.ts`)
  * holds the data; this file holds only the routing, because each tool lands on
  * a different stack and the cross-tab helpers must carry `initial: false`.
  *
@@ -10,7 +10,7 @@
  * clear. Feature novelty is नया's job now, and it clears itself.
  */
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import CategoryCard from '@/components/CategoryCard';
@@ -18,11 +18,16 @@ import CategoryIcon from '@/components/CategoryIcon';
 import { HOME_TOOLS, type HomeToolId } from '@/data/home/tools';
 import { moreTabTarget, panchangTabTarget } from '@/navigation/entryRoutes';
 import { useTilePress } from '@/contexts/TilePressContext';
+import { useTheme } from '@/theme/ThemeContext';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type Nav = NativeStackNavigationProp<HomeStackParamList>;
 
+const COLUMNS = 4;
+const GAP = 8;
+
 export default function ToolsRow({ rowRef }: { rowRef?: React.Ref<View> } = {}) {
+  const { spacing } = useTheme();
   const navigation = useNavigation<Nav>();
   // Sibling tabs live on the root navigator, so those jumps dispatch through
   // the parent — the same pattern TodayStrip and RoutineBanner use.
@@ -56,17 +61,26 @@ export default function ToolsRow({ rowRef }: { rowRef?: React.Ref<View> } = {}) 
           return navigation.navigate('TheerthMap', {});
         case 'pitru':
           return rootNav.navigate('MoreTab', moreTabTarget('PitruSmaranList'));
+        case 'daan':
+          // Registered on the Home stack, so Back retraces the Home journey.
+          return navigation.navigate('DaanPunya');
       }
     },
     [navigation, rootNav]
   );
+
+  // A fixed cell width rather than flex-grow: with nine tiles the last row
+  // holds one, and a growing cell would stretch it to the full width and read
+  // as a different kind of control. Same arithmetic LibraryScreen uses.
+  const cellWidth =
+    (Dimensions.get('window').width - 2 * spacing.xxl - (COLUMNS - 1) * GAP) / COLUMNS;
 
   return (
     <View ref={rowRef} collapsable={false} style={styles.grid}>
       {HOME_TOOLS.map((tool) => {
         const press = open(tool.id);
         return (
-          <View key={tool.id} style={styles.cell}>
+          <View key={tool.id} style={{ width: cellWidth }}>
             <CategoryCard
               nameHi={tool.nameHi}
               nameEn={tool.nameEn}
@@ -86,8 +100,5 @@ export default function ToolsRow({ rowRef }: { rowRef?: React.Ref<View> } = {}) 
 }
 
 const styles = StyleSheet.create({
-  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  // Four across: (100% − 3 gaps) / 4. basis keeps the row stable when a label
-  // wraps on a large font scale.
-  cell: { flexBasis: '22%', flexGrow: 1, minWidth: 0 },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: GAP },
 });

@@ -107,9 +107,16 @@ appId: com.prashantsharma.vedansh
     element:
       text: "Hymns & Praise. New. Tap to open."
     direction: DOWN
-    timeout: 10000
+    centerElement: true
+    timeout: 15000
 - tapOn: "Hymns & Praise. New. Tap to open."
 - waitForAnimationToEnd
+- tapOn:
+    text: "Hymns & Praise. New. Tap to open."
+    optional: true
+- extendedWaitUntil:
+    visible: "Shiva Stotram\\..*Tap to open\\."
+    timeout: 20000
 
 # ── Step 7: Ram Stuti NEW is gone (markSeen persisted); Krishna still NEW ──
 - scrollUntilVisible:

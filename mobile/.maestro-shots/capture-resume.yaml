@@ -1,0 +1,78 @@
+# Resume capture: Guna Milan result + Vastu Disha. Assumes the golden Kundali
+# (Aarav) is already saved on the sim (created by capture-listing.yaml).
+appId: com.prashantsharma.vedansh
+---
+- launchApp:
+    appId: com.prashantsharma.vedansh
+    arguments:
+      RCT_jsLocation: "127.0.0.1:8095"
+- waitForAnimationToEnd:
+    timeout: 30000
+- tapOn: { text: "Allow", optional: true }
+- tapOn: { text: "Don't Allow", optional: true }
+- tapOn: { text: "Not now|अभी नहीं", optional: true }
+- extendedWaitUntil:
+    visible: ".*Today.s Panchang.*|.*Panchang.*"
+    timeout: 120000
+
+# ── Guna Milan result ──
+- tapOn: { id: "tab-panchang" }
+- waitForAnimationToEnd
+- tapOn: "Jyotish"
+- extendedWaitUntil:
+    visible: "Your Jyotish today"
+    timeout: 20000
+- scrollUntilVisible:
+    element:
+      text: "Open Guna Milan"
+    direction: DOWN
+    timeout: 15000
+    centerElement: true
+- tapOn: "Open Guna Milan"
+- extendedWaitUntil:
+    visible: "36 points, with every step visible"
+    timeout: 15000
+- tapOn: "Use my saved Kundali details for Groom"
+- tapOn: "Use my saved Kundali details for Bride"
+- scrollUntilVisible:
+    element:
+      text: "Calculate Guna Milan"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Calculate Guna Milan"
+- scrollUntilVisible:
+    element: { id: "guna-milan-score-dial" }
+    direction: UP
+    timeout: 30000
+    centerElement: true
+- waitForAnimationToEnd
+- takeScreenshot: .context/shots-1.4.8/raw-guna-milan
+
+# ── Vastu Disha chakra + room detail ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: { id: "more-vastu-disha" }
+    direction: DOWN
+    timeout: 15000
+    centerElement: true
+- tapOn: { id: "more-vastu-disha" }
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Room by room"
+    timeout: 20000
+- waitForAnimationToEnd
+- takeScreenshot: .context/shots-1.4.8/raw-vastu-chakra
+- scrollUntilVisible:
+    element: { id: "vastu-disha-southeast" }
+    direction: UP
+    timeout: 30000
+- tapOn: { id: "vastu-disha-southeast" }
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "In this direction"
+    timeout: 15000
+- takeScreenshot: .context/shots-1.4.8/raw-vastu-room
+
+- stopApp:
+    appId: com.prashantsharma.vedansh

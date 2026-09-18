@@ -50,6 +50,12 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     centerElement: true
     timeout: 120000
+- scrollUntilVisible:
+    element:
+      text: ".*Pilgrimage.*Tap to open.*"
+    direction: DOWN
+    centerElement: true
+    timeout: 15000
 - tapOn: ".*Pilgrimage.*Tap to open.*"
 - waitForAnimationToEnd
 # Force English via the listing's LanguageToggle (testID; the segment isn't

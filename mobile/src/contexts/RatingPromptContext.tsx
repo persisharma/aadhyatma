@@ -18,11 +18,13 @@ import {
   parseRatingPromptState,
   storeListingUrl,
   storeReviewUrl,
+  type RatingAskTrigger,
   type RatingPromptState,
 } from '@/data/ratingPrompt';
 import { useUserActivity } from '@/contexts/UserActivityContext';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
 import { useTour } from '@/contexts/TourContext';
+import { RatingAskContext } from '@/contexts/ratingAsk';
 
 /**
  * Owns the app-rating ask: when it may open, what the buttons do, and the
@@ -30,11 +32,16 @@ import { useTour } from '@/contexts/TourContext';
  * gate itself is pure (`data/ratingPrompt.ts`).
  *
  * Two entry points:
- *  - Auto — once per cold start, on a `REASK_COOLDOWN_DAYS` cadence with no
- *    lifetime ceiling, only for users with real practice history, and never on
- *    top of another first-run/post-update surface. Opening records the ask and
- *    restarts the cooldown, so a swipe-away still counts as "we asked". Rating
- *    is the only outcome the sheet can reach that ends the cadence.
+ *  - Moment-triggered — a surface where the user has just finished something
+ *    (routine celebration done, a mala completed, a verse shared) calls
+ *    `requestAsk(trigger)`. The request is honoured at most once per app
+ *    session, only on a `REASK_COOLDOWN_DAYS` cadence with no lifetime ceiling,
+ *    only for users with real practice history, and never on top of another
+ *    first-run/post-update surface. Opening records the ask and restarts the
+ *    cooldown, so a swipe-away still counts as "we asked". Rating is the only
+ *    outcome the sheet can reach that ends the cadence. There is deliberately
+ *    NO cold-start trigger any more (Sept 2026): a prompt on launch interrupts
+ *    whatever the user opened the app to do.
  *  - Manual — the "Rate the App" row in More (§37) calls `open()`, which
  *    bypasses the gate and does NOT spend an ask slot. A user who goes looking
  *    for it has already opted in.
@@ -58,16 +65,23 @@ type RatingPromptContextValue = {
   dismiss: () => void;
   /** "Rate Vedansh": hand off to the store listing and stop asking. */
   rate: () => void;
+  /**
+   * A good moment just happened — ask if the gate allows. Safe to call freely:
+   * every refusal (not eligible, already asked this session, another surface on
+   * screen, state still loading) is silent, and the moment simply passes.
+   */
+  requestAsk: (trigger: RatingAskTrigger) => void;
 };
 
 const RatingPromptContext = createContext<RatingPromptContextValue | null>(null);
 
 /**
- * Delay between "eligible" and the sheet appearing. Long enough that Home has
- * settled and the user is looking at content rather than a launch animation —
- * a prompt that lands on the first frame reads as an ad.
+ * Delay between a moment being requested and the sheet appearing. Long enough
+ * that the moment's own feedback (a success haptic, the last petals, the share
+ * sheet closing) has finished and the screen has settled — a card that lands on
+ * the same frame as the thing it is thanking the user for reads as an ad.
  */
-export const RATING_PROMPT_DELAY_MS = 2500;
+export const RATING_PROMPT_DELAY_MS = 1200;
 
 export function RatingPromptProvider({ children }: { children: React.ReactNode }) {
   const { meta, isLoading: notifLoading, shouldShowOptIn } = useNotificationPreferences();
@@ -114,41 +128,59 @@ export function RatingPromptProvider({ children }: { children: React.ReactNode }
   const { activeDays, totalReads } = lifetimeTotals();
 
   /**
-   * Engagement counters are read through a ref, NOT the dependency array. They
-   * tick while the user reads, and every tick would otherwise re-run the effect,
-   * clear the pending timer, and start a new one — a user paging through a
-   * reader faster than the delay could defer the prompt forever. The gate is
-   * evaluated once per hydration/blocking change against whatever the counters
-   * say at that moment; a session that crosses a threshold mid-way simply gets
-   * asked on the next launch.
+   * Everything the gate reads goes through refs, not the dependency array of an
+   * effect: `requestAsk` is called from other surfaces' callbacks (an animation's
+   * onDone, a screen unmount, a resolved share), so it must see the latest
+   * counters and flags without being re-created on every render — a re-created
+   * callback would churn every consumer's effects while the user reads.
    */
   const engagementRef = useRef({ appOpens: 0, activeDays: 0, totalReads: 0 });
   engagementRef.current = { appOpens: meta.appOpenCount, activeDays, totalReads };
 
   const blockedBySurface =
     shouldShowOptIn || shouldShowFirstLaunchTour || shouldShowOnboardingSetup || shouldShowWhatsNew;
+  const blockedRef = useRef(blockedBySurface);
+  blockedRef.current = blockedBySurface;
 
-  // Auto-open gate. The session ref keeps it to a single open per launch, and
-  // the timer is cleared if a blocking surface appears before it fires.
-  useEffect(() => {
-    if (askedThisSessionRef.current) return undefined;
-    if (!hydrated || notifLoading || activityLoading || tourLoading) return undefined;
+  const readyRef = useRef(false);
+  readyRef.current = hydrated && !notifLoading && !activityLoading && !tourLoading;
 
-    const eligible = isEligibleForRatingPrompt({
-      state: stateRef.current,
-      ...engagementRef.current,
-      now: Date.now(),
-      blockedBySurface,
-    });
-    if (!eligible) return undefined;
+  /** The one pending open, so two moments in quick succession queue one card, not two. */
+  const pendingRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(
+    () => () => {
+      if (pendingRef.current) clearTimeout(pendingRef.current);
+    },
+    []
+  );
 
-    const timer = setTimeout(() => {
-      askedThisSessionRef.current = true;
-      persist(afterAsked(stateRef.current, Date.now()));
-      setVisible(true);
-    }, RATING_PROMPT_DELAY_MS);
-    return () => clearTimeout(timer);
-  }, [hydrated, notifLoading, activityLoading, tourLoading, blockedBySurface, persist]);
+  const requestAsk = useCallback(
+    (trigger: RatingAskTrigger) => {
+      if (askedThisSessionRef.current || pendingRef.current) return;
+      // Still loading: the moment passes rather than being queued. Asking a few
+      // seconds after the moment, once storage catches up, is the launch-frame
+      // ambush this design exists to avoid.
+      if (!readyRef.current) return;
+
+      const eligible = isEligibleForRatingPrompt({
+        state: stateRef.current,
+        ...engagementRef.current,
+        now: Date.now(),
+        blockedBySurface: blockedRef.current,
+      });
+      if (!eligible) return;
+
+      pendingRef.current = setTimeout(() => {
+        pendingRef.current = null;
+        // A first-run surface may have claimed the screen during the delay.
+        if (blockedRef.current || askedThisSessionRef.current) return;
+        askedThisSessionRef.current = true;
+        persist(afterAsked(stateRef.current, Date.now(), trigger));
+        setVisible(true);
+      }, RATING_PROMPT_DELAY_MS);
+    },
+    [persist]
+  );
 
   const open = useCallback(() => setVisible(true), []);
 
@@ -167,11 +199,17 @@ export function RatingPromptProvider({ children }: { children: React.ReactNode }
   }, [persist]);
 
   const value = useMemo<RatingPromptContextValue>(
-    () => ({ visible, state, open, dismiss, rate }),
-    [visible, state, open, dismiss, rate]
+    () => ({ visible, state, open, dismiss, rate, requestAsk }),
+    [visible, state, open, dismiss, rate, requestAsk]
   );
 
-  return <RatingPromptContext.Provider value={value}>{children}</RatingPromptContext.Provider>;
+  return (
+    <RatingPromptContext.Provider value={value}>
+      {/* The light "report a moment" context (contexts/ratingAsk.ts) — the
+          surfaces that call it must not import this file. */}
+      <RatingAskContext.Provider value={requestAsk}>{children}</RatingAskContext.Provider>
+    </RatingPromptContext.Provider>
+  );
 }
 
 export function useRatingPrompt(): RatingPromptContextValue {

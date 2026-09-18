@@ -7,6 +7,7 @@ import {
   indiaDateKey,
 } from './kundali';
 import type { KundaliChart } from './kundali';
+import { basisLabelEn } from './kundaliBasis';
 import { NAKSHATRA_NAMES_EN, NAKSHATRA_NAMES_HI } from './names';
 import type { KundaliReportModel } from './kundaliReportModel';
 
@@ -59,7 +60,7 @@ export function buildKundaliHandoffText(
   lines.push('# Janma Kundali — full reading export (Vedansh)');
   lines.push('');
   lines.push(
-    'Context for any reader (human or AI assistant): this is a complete Vedic astrology (Jyotish) chart export — sidereal Lahiri/Chitrapaksha ayanamsa, whole-sign houses, Vimshottari dasha. The interpretation sections are structural, tradition-framed guidance, not predictions.'
+    'Context for any reader (human or AI assistant): this is a complete Vedic astrology (Jyotish) chart export — sidereal Lahiri/Chitrapaksha ayanamsa, whole-sign houses, Vimshottari dasha. The interpretation sections are tradition-framed readings that each name the chart facts they were derived from (the Basis lines); they are guidance, not predictions.'
   );
   lines.push('');
   lines.push('## Birth details');
@@ -67,7 +68,8 @@ export function buildKundaliHandoffText(
   lines.push(`- Birth date: ${model.birthDateLabelEn} (${model.birthDateLabelHi})`);
   if (model.birthTimeLabel) lines.push(`- Birth time: ${model.birthTimeLabel} IST`);
   lines.push(`- Birth place: ${model.cityNameEn} (${model.cityNameHi}), India`);
-  lines.push(`- Generated for India civil date: ${model.generatedDateKey}`);
+  lines.push(`- Generated for India civil date: ${model.generatedDateKey} (as of ${model.asOfLabelEn}; transit statements are dated to this day)`);
+  lines.push(`- Age as of this date: ${model.ageLabelEn} (${model.ageBand} register)`);
   lines.push('');
   lines.push('## Chart data (sidereal, Lahiri ayanamsa, whole-sign houses)');
   lines.push(`- Ayanamsa: ${chart.ayanamsa.toFixed(4)}°`);
@@ -87,6 +89,12 @@ export function buildKundaliHandoffText(
     if (section.facts.length > 0) lines.push('');
     for (const paragraph of section.bodyEn) {
       lines.push(paragraph);
+      lines.push('');
+    }
+    // The आधार chain — every chart fact the section's reading was derived
+    // from (RULEBOOK §14.3.1), so a reader can audit the sentence above it.
+    if (section.basis && section.basis.length > 0) {
+      lines.push(`Basis: ${section.basis.map(basisLabelEn).join(' → ')}`);
       lines.push('');
     }
   }

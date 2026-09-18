@@ -17,6 +17,9 @@
  * There is deliberately no पंचांग tile: the Today strip two rows above already
  * opens that tab, and so does the tab bar (TRD-42 §13.1). A third door to the
  * same screen is not a tool, it is clutter.
+ *
+ * Nine tiles, so the 4-across row ends on a single left-aligned tile rather than
+ * a stretched one — see `ToolsRow`'s fixed cell width.
  */
 import type { CategoryIconKey } from '@/components/CategoryIcon';
 
@@ -28,7 +31,8 @@ export type HomeToolId =
   | 'vidhi'
   | 'japam'
   | 'vastu'
-  | 'theerth';
+  | 'theerth'
+  | 'daan';
 
 export type HomeTool = {
   id: HomeToolId;
@@ -56,4 +60,13 @@ export const HOME_TOOLS: readonly HomeTool[] = [
    * must persist while the ledger is empty.
    */
   { id: 'pitru', nameHi: 'पितृ स्मरण', nameEn: 'Pitru Smaran', shortNameEn: 'Pitru', iconKey: 'calendar' },
+  /**
+   * दान-पुण्य (PRD-26) shipped on main while this redesign was in flight, with
+   * BOTH of its Home doors on surfaces this change deletes — a grid tile and a
+   * DISCOVER card. Its PRD calls the grid tile "the giving layer's standing
+   * Home door", and standing is the operative word: नया clears on open, so it
+   * belongs here for the same reason पितृ स्मरण does. The More row and the
+   * launch-awareness नया card are additive, not substitutes.
+   */
+  { id: 'daan', nameHi: 'दान-पुण्य', nameEn: 'Daan Punya', shortNameEn: 'Daan', iconKey: 'daan' },
 ];

@@ -1175,15 +1175,14 @@ function KundaliResult({
                   'The nine Antardashas within this Mahadasha'
                 )}
               </Text>
-              <View
-                accessibilityLabel="Antardasha timeline"
-                style={styles.antarChips}
-              >
+              <View style={styles.antarChips}>
                 {currentDasha.maha.antardashas.map((antar) => {
                   const selected = antar === currentDasha.antar;
                   return (
                     <View
                       key={`${antar.lord}-${antar.start.toISOString()}`}
+                      accessible
+                      accessibilityLabel={`${GRAHA_NAMES_EN[antar.lord]}${selected ? ', Now' : ''}`}
                       style={[
                         styles.antarChip,
                         {
@@ -1436,6 +1435,10 @@ function CityPicker({
   const { colors, typography, spacing, radii } = useTheme();
   const [query, setQuery] = useState('');
   const filtered = useMemo(() => CITIES.filter((city) => cityMatchesQuery(city, query)), [query]);
+
+  useEffect(() => {
+    if (visible) setQuery('');
+  }, [visible]);
 
   return (
     <Modal

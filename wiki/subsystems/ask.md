@@ -31,7 +31,7 @@ Spec: `design.md` §71 · contract: `RULEBOOK.md` §25 · PRD: `docs/roadmap/prd
   (आज/कल/परसों; "rahu kal" is a Kaal), `scoreIntents` (trigger + 10/required slot + 3/optional;
   **missing required slot = ineligible**; `blockers`), the **stance guard**
   (`DECLINE_LEXEMES` → `kind: 'declined'`), did-you-mean suggestions, `looksLikeQuestion`.
-- **`intents/index.ts`** — 13 intents: `panchang.day`, `muhurat.now`, `observance.next`,
+- **`intents/index.ts`** — 14 intents (PRD-43 added `prashna.purpose` — family `jyotish`, slot `purpose`; the registration is thin and its body lives in **`intents/prashnaResolve.ts`** behind a `require()` thunk, because this module is on Home's static launch graph and the composer + chart engine + basis labels are ~150 KB the budget test refused. It computes the chart from the birth INPUT in `ctx.kundali` (the UI never hands it a chart — `useAsk` reads `birthProfileStore` directly, not `useKundali`, for the same budget reason), answers with the transit scan off, deep-links to `Prashna`; the ONE intent the stance guard yields to, and only with a saved chart. `lexicon.ts` likewise `require()`s `PRASHNA_PURPOSES` inside `build()` — the registry's own type imports were a 15 KB chain the walker counts): `panchang.day`, `muhurat.now`, `observance.next`,
   `vrat.how`, `vrat.food`, `katha.find`, `vidhi.how`, `bhog.offer`, `bhog.avoid`, `muhurat.event`,
   `vastu.direction`, `japam.mantra`, `sadhana.progress`. Each calls an existing pure engine
   (`cachedDayInputs` from the shared day store, `getNextOccurrence`, `computeMuhuratDay`,

@@ -21,7 +21,7 @@ import { whatsNew } from '@/data/tour/whatsNew';
 
 /** Where a नया card sends the user. Resolved by the section, not here. */
 export type FeatureTarget =
-  | { tab: 'home'; screen: 'TodayVidhan' | 'VidhiCatalog' | 'SadhanaPrograms' | 'Library' | 'TheerthMap' }
+  | { tab: 'home'; screen: 'TodayVidhan' | 'VidhiCatalog' | 'SadhanaPrograms' | 'Library' | 'TheerthMap' | 'DaanPunya' }
   | { tab: 'more'; screen: 'WidgetGallery' | 'PitruSmaranList' | 'VastuDisha' | 'KulParampara' }
   | { tab: 'panchang'; screen: 'MuhuratFinder' | 'GunaMilan' | 'Namkaran' };
 
@@ -44,6 +44,22 @@ export type FeatureFeedEntry = {
  * removed from the app — never to "make room", since the cap already does that.
  */
 export const FEATURE_FEED: readonly FeatureFeedEntry[] = [
+  {
+    /**
+     * दान-पुण्य shipped with a hardcoded `hasNew: true` on both a grid tile and
+     * a DISCOVER card — a badge that could never clear, the exact pattern नया
+     * exists to replace. The standing door is the उपकरण tile; this card is the
+     * announcement, and it goes away the moment the user opens it.
+     */
+    id: 'daan-punya',
+    version: '1.4.9',
+    titleHi: 'दान-पुण्य',
+    titleEn: 'Daan Punya',
+    descHi: 'जप · व्रत · दान — पहले महत्व, फिर देना। कभी भी।',
+    descEn: 'Japa, vrat, daan — understand first, then give. Any day.',
+    thumb: 'दा',
+    target: { tab: 'home', screen: 'DaanPunya' },
+  },
   {
     id: 'vastu-disha',
     version: '1.4.8',

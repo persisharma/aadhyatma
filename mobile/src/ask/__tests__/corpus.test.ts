@@ -12,6 +12,24 @@ import { CORPUS } from './corpus';
 warmAsk();
 const ctx = testContext({
   sadhana: [{ programId: 'hanuman-41', titleHi: 'हनुमान चालीसा', titleEn: 'Hanuman Chalisa', dayIndex: 7, total: 41, doneToday: false }],
+  // The saved ADULT chart prashna.purpose answers from (PRD-43). Without it the
+  // purpose-shaped questions stay declined, exactly as they did before.
+  kundali: {
+    input: { date: new Date('1995-03-15T04:30:00Z'), latitude: 23.1793, longitude: 75.7849, timezone: 'Asia/Kolkata' },
+    name: 'Aarav',
+  },
+  // The saved living home vastu.myhome answers from (PRD-24 Phase 2 §C5).
+  vastuHome: {
+    homeId: 'home-test',
+    label: 'हमारा घर',
+    facing: 'east',
+    rooms: [
+      { roomId: 'main-door', ordinal: 1, zone: 'east' },
+      { roomId: 'kitchen', ordinal: 1, zone: 'southeast' },
+      { roomId: 'toilet', ordinal: 1, zone: 'northeast' },
+      { roomId: 'puja-room', ordinal: 1, zone: null },
+    ],
+  },
 });
 
 const positives = CORPUS.filter((c): c is Extract<typeof c, { intent: string }> => 'intent' in c);

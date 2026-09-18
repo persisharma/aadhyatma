@@ -38,6 +38,32 @@ maestro test .maestro/
 maestro test --debug-output ./maestro-debug .maestro/sanskar-smoke.yaml
 ```
 
+## Token-cheap verification (for agents)
+
+A green `maestro test` exit code is the verdict — do not read screenshots to re-confirm a pass.
+To inspect the current screen or debug a selector, use `mobile/scripts/e2e-screen-text.sh [UDID]`
+(text dump of the same a11y tree Maestro matches, ~10× cheaper than reading an image). Full
+policy: `wiki/runbooks/e2e-verification.md` § "Token-cheap verification".
+
+### Visual regression (cached goldens — zero tokens when unchanged)
+
+Flows capture visual checkpoints with `takeScreenshot: e2e-shots/<name>` (relative to `mobile/`,
+where maestro runs; captures are gitignored). After a **green** run — never seed or compare
+goldens from a failed run (its captures show mid-flow states; `rm e2e-shots/*.png` after a red):
+
+```bash
+./scripts/e2e-visual-check.sh
+```
+
+Each capture is normalized (440×956) and pixel-diffed against the committed golden in
+`.maestro/goldens/<name>.png`. Verdicts are text: `SEEDED` (first run becomes the golden),
+`PASS <diff%>`, or `FAIL <diff%> bbox=…` (exit 1). Only on FAIL does anyone look at an image —
+and then the small `e2e-shots/<name>.diff.png` (changed pixels in red), not the raw captures.
+When a UI change is intentional, delete the golden, re-run to reseed, and commit the new golden.
+Tuning via env: `E2E_VISUAL_THRESH` (default 0.10 %), `E2E_DIFF_TOL` (default 10/255),
+`E2E_DIFF_MASK_TOP` (default 0.05 — masks the status-bar clock). Animation-heavy checkpoints
+(e.g. the pushpa-varsha celebration) may need a slightly higher threshold.
+
 ## Flow conventions
 
 - **Filename**: `{feature}-{intent}.yaml` (e.g., `sanskar-smoke.yaml`, `search-navigation.yaml`)
@@ -96,7 +122,7 @@ maestro test --debug-output ./maestro-debug .maestro/sanskar-smoke.yaml
 | `kul-parampara-smoke.yaml` | **कुल परम्परा + जन्म तिथि** (PRD-29). More → asserts both new साधना rows (`Janma Tithi, none saved` / `Kul Parampara, new`) → जन्म तिथि list empty state with its Kundali door → कुल परम्परा empty state → create → picks माँ दुर्गा from the registry glyph grid + types a gotra → Save → record view shows the choice, the privacy line and the **Hand it on** export door → export summary (the OS share sheet itself is never opened, same rule as the share flows). Tithi solves, the Home chip, the reminder planner and the export envelope are calendar-/OS-dependent and pinned by unit tests instead (`janmaTithi.test.ts`, `kulParampara.test.ts`, `janmaTithiReminderPure.test.ts`, the two screen suites). |
 | `parv-arc-smoke.yaml` | **पर्व-अर्क · Festival arcs** (PRD-28, design.md §65.2). Panchang tab → Vrat & Parv → search → Ganesh Chaturthi detail: asserts the arc strip (`Festival arc Ganesh Utsav`) and the duration chooser offering 1½/3/5/7/10 with **nothing pre-selected** plus `Decide later`; taps `5 days` → `Your visarjan` appears (the sthapana → visarjan solver), `Decide later` clears it. Then Bhai Dooj detail: the Diwali five-day arc (`Dhanteras, day 1` … `Bhai Dooj, day 5`, incl. the un-ruled `Naraka Chaturdashi, day 2`), no chooser, and a slot tap pushes Dhanteras's own detail. The strip renders for every arc member on any date, so the flow is date-independent; "today" markers, the Kanya-Pujan hand-off and the visarjan-vidhi door are date-dependent and pinned by `arcs.test.ts` + `ArcStrip.test.tsx`. Authored 2026-09-03; device run owed. |
 | `resume-reading-smoke.yaml` | **Resume reading** (PR #97). Reads into Bhagavad Gītā Ch.1 v2, leaves, re-opens the entry → asserts the `ResumeReadingSheet` pops with the saved location ("Chapter 1 · Verse 2") → taps **Resume** → confirms it lands back mid-chapter (the JumpToStart pill is showing). |
-| `home-today-smoke.yaml` | **Home today-first redesign** (design.md §18/§48). Flips to English (Devanagari is unreadable to Maestro's iOS tree), asserts the "आज · Today" strip renders on Home, then scrolls to the **व्रत (Vrat & Parv)** tile — the first of the eight उपकरण launchers since the grid left Home — and opens it into the Panchang stack's ObservanceList, backing out onto PanchangHome (guards the `panchangTabTarget`/`initial: false` lazy-mount route bug). (The Continue-reading card leg was dropped when the card was retired, July 2026 — resume is covered by `resume-reading-smoke.yaml`.) |
+| `home-today-smoke.yaml` | **Home today-first redesign** (design.md §18/§48). Flips to English (Devanagari is unreadable to Maestro's iOS tree), asserts the "आज · Today" strip renders on Home, then scrolls to the **व्रत (Vrat & Parv)** tile — the first of the nine उपकरण launchers since the grid left Home — and opens it into the Panchang stack's ObservanceList, backing out onto PanchangHome (guards the `panchangTabTarget`/`initial: false` lazy-mount route bug). (The Continue-reading card leg was dropped when the card was retired, July 2026 — resume is covered by `resume-reading-smoke.yaml`.) |
 | `library-smoke.yaml` | **पाठ library** (TRD-42 §5.3) — the guard on Home trading its 16-tile grid for one door. Home → पाठ → asserts all three browse axes on one screen (देवता rail, उद्देश्य chips, the form grid), opens the "All N deities" overflow into the deity index (what the Home **By Deity** tile used to reach), a उद्देश्य chip straight into its purpose list (one screen fewer than the old purpose index), and a form tile into CategoryList — then backs out Library → Home, proving the push landed on the Home stack and not the More tab. |
 | `feature-tour-e2e.yaml` | **First-launch feature tour** (in-context **spotlight** walkthrough — measured saffron ring on each step's element/tab, compact card, design.md §47). Driven via the replay affordance (More → "Show App Tour") for determinism against a persisted simulator: waits for the tour control, walks every step forward asserting each card's English title, exercises **Back**, and finishes with **Done**, asserting the overlay is gone. The Home leg follows `data/tour/steps.ts`: the five tabs → Daily Practice → **Tools** → **Library** → the Japa and Theerth inside views. (The `Categories`, `Japa` and `Pilgrimage` tile steps retired with Home's grid — TRD-42 §10.) Controls expose only their a11y label and Maestro full-string-matches, so the flow selects `Skip tour` / `Next step` / `Previous step` / `Done` (not `Skip`). The auto-show-on-first-launch path is the same overlay; `_launch.yaml` dismisses it (`Skip tour`) for every other flow. ✅ verified on iOS sim. |
 | `language-smoke.yaml` | **Gujarati & Kannada reading languages.** More → select **Gujarati** → asserts the More chrome re-scripts (`પંચાંગ`) → opens Hanuman Chalisa and asserts the title in Gujarati script (`હનુમાન ચાલીસા`) → switches to **Kannada** via the in-reader 4-way toggle (`ಹನುಮಾನ ಚಾಲೀಸಾ`) → restores **Hindi** (`हनुमान चालीसा`). gu/kn script is derived at runtime by transliterating the bundled Devanagari (`utils/transliterate.ts`); the exact asserted strings are pinned by `src/utils/__tests__/transliterate.test.ts`. ✅ verified on iOS sim. |

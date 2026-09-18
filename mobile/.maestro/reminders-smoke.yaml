@@ -63,6 +63,12 @@ appId: com.prashantsharma.vedansh
 # ── Step 3: Open Reminders from the More screen ──
 # The More card's a11y label is composed ("Reminders, daily verse on at 07:00"),
 # and Maestro matches the full string — so anchor with .* not the bare word.
+- scrollUntilVisible:
+    element:
+      text: "Reminders.*"
+    direction: UP
+    centerElement: true
+    timeout: 15000
 - tapOn: "Reminders.*"
 - waitForAnimationToEnd
 - extendedWaitUntil:

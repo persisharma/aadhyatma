@@ -8,10 +8,11 @@
  * pattern) so the griha-pravesh door pushes in place.
  */
 import React, { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import DishaChakra from '@/components/DishaChakra';
+import ListCard, { CardThumb } from '@/components/ListCard';
 import ReaderHeader from '@/components/ReaderHeader';
 import { useGitaLanguage } from '@/data/gita/language';
 import { getMandirGuidance } from '@/data/vastu/mandirGuidance';
@@ -19,12 +20,20 @@ import { getVastuRoomEntries } from '@/data/vastu/roomGuidance';
 import type { MandirGuidanceEntry, VastuRoomEntry } from '@/data/vastu/types';
 import { DISHA_LABELS, DISHA_ORDER, type DishaDirection } from '@/panchang/eventMuhurat';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang, pick } from '@/utils/localize';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { dikForHeading } from '@/vastu/compass';
 import { useCompassHeading } from '@/vastu/useCompassHeading';
+import { useDikFeedback } from '@/vastu/useDikFeedback';
+import { useHomeRoster } from '@/vastu/homeRecordStore';
 
-export default function VastuDishaScreen({ navigation }: { navigation: { goBack: () => void } }) {
+type Navigation = {
+  goBack: () => void;
+  navigate: (route: string, params?: object) => void;
+};
+
+export default function VastuDishaScreen({ navigation }: { navigation: Navigation }) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
@@ -33,11 +42,22 @@ export default function VastuDishaScreen({ navigation }: { navigation: { goBack:
   // A chosen chip pauses the sensor (subscription removed); tapping the active
   // chip returns to live — unless the device has no magnetometer to return to.
   const [manualDik, setManualDik] = useState<DishaDirection | null>(null);
-  const sensor = useCompassHeading(manualDik == null);
+  // Hold (§A4/US-03): freezes the reading by REMOVING the subscription — the
+  // hook keeps its last state, so the dial shows exactly what was held.
+  const [held, setHeld] = useState(false);
+  const live = manualDik == null && !held;
+  const sensor = useCompassHeading(manualDik == null && !held);
+  const { roster } = useHomeRoster();
+  const { width: windowWidth } = useWindowDimensions();
 
   const liveDik = sensor.heading != null ? dikForHeading(sensor.heading) : null;
   const facingDik = manualDik ?? liveDik;
   const heading = manualDik == null ? sensor.heading : null;
+
+  // Felt & announced sector change (§A4/US-04) — silent in manual mode / Hold.
+  useDikFeedback(facingDik, live && sensor.status !== 'unavailable', lang);
+
+  const holdDisabled = manualDik != null || sensor.status === 'unavailable';
 
   const roomEntries = getVastuRoomEntries();
   const mandirEntries = getMandirGuidance();
@@ -76,6 +96,15 @@ export default function VastuDishaScreen({ navigation }: { navigation: { goBack:
           gu: 'રીડિંગ અસ્થિર છે — ફોન સપાટ રાખો, ધાતુથી દૂર, અને ∞ આકારમાં ફેરવો.',
           kn: 'ಓದು ಅಸ್ಥಿರವಾಗಿದೆ — ಫೋನನ್ನು ಸಮತಟ್ಟಾಗಿ, ಲೋಹದಿಂದ ದೂರ ಹಿಡಿದು ∞ ಆಕಾರದಲ್ಲಿ ತಿರುಗಿಸಿ.',
         });
+      case 'tilted':
+        // §A2/US-02: the flat-pose assumption has left the building; the dial
+        // keeps moving, the line says why it may be wrong.
+        return pick(lang, {
+          hi: 'फ़ोन समतल रखें — झुका हुआ फ़ोन दिशा बदल देता है।',
+          en: 'Hold the phone flat — a tilted phone shifts the direction.',
+          gu: 'ફોન સપાટ રાખો — નમેલો ફોન દિશા બદલી નાખે છે.',
+          kn: 'ಫೋನನ್ನು ಸಮತಟ್ಟಾಗಿ ಹಿಡಿಯಿರಿ — ವಾಲಿದ ಫೋನ್ ದಿಕ್ಕನ್ನು ಬದಲಿಸುತ್ತದೆ.',
+        });
       case 'starting':
         return pick(lang, {
           hi: 'दिक्सूचक प्रारंभ हो रहा है…',
@@ -84,12 +113,20 @@ export default function VastuDishaScreen({ navigation }: { navigation: { goBack:
           kn: 'ದಿಕ್ಸೂಚಕ ಪ್ರಾರಂಭವಾಗುತ್ತಿದೆ…',
         });
       default:
-        return pick(lang, {
-          hi: 'फ़ोन को समतल रखें — ऊपरी किनारा जिस ओर है, वही दिशा।',
-          en: 'Hold the phone flat — the top edge points the direction you face.',
-          gu: 'ફોન સપાટ રાખો — ઉપરની ધાર જે તરફ છે, તે જ દિશા.',
-          kn: 'ಫೋನನ್ನು ಸಮತಟ್ಟಾಗಿ ಹಿಡಿಯಿರಿ — ಮೇಲ್ತುದಿ ತೋರುವ ದಿಕ್ಕೇ ನಿಮ್ಮ ದಿಕ್ಕು.',
-        });
+        // §A1/US-01: name the source — trust comes from saying which compass this is.
+        return sensor.source === 'fused'
+          ? pick(lang, {
+              hi: 'फ़ोन का अपना दिक्सूचक — सबसे सटीक पाठ।',
+              en: "The phone's own compass — the most accurate reading.",
+              gu: 'ફોનનું પોતાનું દિક્સૂચક — સૌથી સચોટ પાઠ.',
+              kn: 'ಫೋನಿನ ಸ್ವಂತ ದಿಕ್ಸೂಚಕ — ಅತ್ಯಂತ ನಿಖರ ಓದು.',
+            })
+          : pick(lang, {
+              hi: 'फ़ोन को समतल रखें — ऊपरी किनारा जिस ओर है, वही दिशा।',
+              en: 'Hold the phone flat — the top edge points the direction you face.',
+              gu: 'ફોન સપાટ રાખો — ઉપરની ધાર જે તરફ છે, તે જ દિશા.',
+              kn: 'ಫೋನನ್ನು ಸಮತಟ್ಟಾಗಿ ಹಿಡಿಯಿರಿ — ಮೇಲ್ತುದಿ ತೋರುವ ದಿಕ್ಕೇ ನಿಮ್ಮ ದಿಕ್ಕು.',
+            });
     }
   })();
 
@@ -104,6 +141,9 @@ export default function VastuDishaScreen({ navigation }: { navigation: { goBack:
   };
 
   const onChip = (dik: DishaDirection) => {
+    // A chip tap supersedes Hold either way — manual IS a freeze, and "go
+    // live" must actually go live rather than un-freeze into a held dial.
+    setHeld(false);
     setManualDik((current) => {
       if (current !== dik) return dik;
       // Tapping the active chip goes live — unless there is no sensor to go to.
@@ -119,8 +159,12 @@ export default function VastuDishaScreen({ navigation }: { navigation: { goBack:
         onBack={() => navigation.goBack()}
       />
       <ScrollView contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingBottom: spacing.xxl }}>
-        <View style={{ marginTop: spacing.md }}>
-          <DishaChakra heading={heading} facingDik={facingDik} />
+        <View style={{ marginTop: spacing.md, alignItems: 'center' }}>
+          <DishaChakra
+            heading={heading}
+            facingDik={facingDik}
+            size={Math.min(300, windowWidth - 2 * spacing.readingGutter)}
+          />
         </View>
         <Text
           testID="vastu-compass-status"
@@ -128,13 +172,58 @@ export default function VastuDishaScreen({ navigation }: { navigation: { goBack:
             fontFamily: bodyFont,
             fontSize: 12.5,
             lineHeight: 19,
-            color: sensor.status === 'unreliable' && manualDik == null ? colors.saffronDeep : colors.inkMuted,
+            color:
+              (sensor.status === 'unreliable' || sensor.status === 'tilted') && manualDik == null
+                ? colors.saffronDeep
+                : colors.inkMuted,
             textAlign: 'center',
             marginTop: spacing.sm,
           }}
         >
           {statusLine}
         </Text>
+        {/* §A1: on the magnetometer rung the OS's better compass exists but is
+            unreachable without the Panchang location permission — copy only,
+            never a prompt. */}
+        {manualDik == null && sensor.source === 'magnetometer' ? (
+          <Text
+            testID="vastu-fused-hint"
+            style={{ fontFamily: bodyFont, fontSize: 11, lineHeight: 16, color: colors.inkMuted, textAlign: 'center', marginTop: 2 }}
+          >
+            {pick(lang, {
+              hi: 'सटीक उत्तर के लिए पंचांग स्थान चालू करें।',
+              en: 'For a truer north, enable the Panchang location.',
+              gu: 'સચોટ ઉત્તર માટે પંચાંગ સ્થાન ચાલુ કરો.',
+              kn: 'ನಿಖರ ಉತ್ತರಕ್ಕಾಗಿ ಪಂಚಾಂಗ ಸ್ಥಳವನ್ನು ಚಾಲನೆಗೊಳಿಸಿ.',
+            })}
+          </Text>
+        ) : null}
+        {/* Hold (§A4/US-03): freeze the reading to note it down; disabled when
+            manual (already frozen) or sensorless (nothing to hold). */}
+        <Pressable
+          testID="vastu-hold"
+          accessibilityRole="button"
+          accessibilityState={{ selected: held, disabled: holdDisabled }}
+          accessibilityLabel={held ? 'Resume the live compass' : 'Hold the direction'}
+          disabled={holdDisabled}
+          onPress={() => setHeld((current) => !current)}
+          style={[
+            styles.holdPill,
+            {
+              alignSelf: 'center',
+              borderColor: held ? colors.cardActiveBorder : colors.border,
+              backgroundColor: held ? colors.goldChipBg : colors.surface,
+              borderRadius: radii.pill,
+              opacity: holdDisabled ? 0.4 : 1,
+            },
+          ]}
+        >
+          <Text style={{ fontFamily: titleFont, fontSize: 12, lineHeight: 19, color: held ? colors.saffronDeep : colors.inkSoft }}>
+            {held
+              ? pick(lang, { hi: 'दिशा चालू करें', en: 'Resume', gu: 'દિશા ચાલુ કરો', kn: 'ದಿಕ್ಕು ಮುಂದುವರಿಸಿ' })
+              : pick(lang, { hi: 'दिशा रोकें', en: 'Hold', gu: 'દિશા રોકો', kn: 'ದಿಕ್ಕು ಹಿಡಿದಿಡಿ' })}
+          </Text>
+        </Pressable>
 
         {/* The 8-dik chip row — the muhurat finder's दिशा chip idiom. Always
             rendered: the manual override is part of the feature, not a fallback. */}
@@ -164,6 +253,53 @@ export default function VastuDishaScreen({ navigation }: { navigation: { goBack:
               </Pressable>
             );
           })}
+        </View>
+
+        {/* मेरा घर door (PRD-24 Phase 2 §C4): NEW until the roster holds a home;
+            then the card states what it holds. Routes: empty → setup, one home →
+            that home's reading, several → the roster. */}
+        <View style={{ marginTop: spacing.lg }}>
+          <ListCard
+            testID="vastu-mere-ghar-door"
+            variant="flat"
+            leading={
+              <CardThumb>
+                <Text style={{ color: colors.saffronDeep, fontFamily: typography.readerTitle.fontFamily, fontSize: 18 }}>घ</Text>
+              </CardThumb>
+            }
+            right={
+              roster.homes.length === 0 ? (
+                <Text style={{ color: colors.saffronDeep, fontFamily: fontFamilies.interSemiBold, fontSize: 10.5, letterSpacing: 0.4 }}>
+                  NEW
+                </Text>
+              ) : undefined
+            }
+            onPress={() => {
+              // Empty → setup; otherwise ALWAYS the roster (PRD §C4 offers
+              // "roster or straight to the one home" — straight-to-home would
+              // strand a one-home user with no way to add a second, since the
+              // roster owns the + नया घर button).
+              if (roster.homes.length === 0) navigation.navigate('GharVastuSetup');
+              else navigation.navigate('GharVastuRoster');
+            }}
+            accessibilityLabel="My homes — place the rooms on the mandala and read the convention"
+          >
+            <Text style={{ color: colors.ink, fontFamily: titleFont, fontSize: 15 }}>
+              {pick(lang, { hi: 'मेरे घर', en: 'My homes', gu: 'મારાં ઘર', kn: 'ನನ್ನ ಮನೆಗಳು' })}
+            </Text>
+            <Text style={{ color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily, fontSize: 11.5, lineHeight: 17 }}>
+              {roster.homes.length === 0
+                ? pick(lang, {
+                    hi: 'कक्षों को मंडल पर रखें — विधान का पाठ पढ़ें',
+                    en: 'Place the rooms on the mandala — read the convention',
+                    gu: 'ઓરડાઓને મંડલ પર મૂકો — વિધાનનો પાઠ વાંચો',
+                    kn: 'ಕೋಣೆಗಳನ್ನು ಮಂಡಲದ ಮೇಲೆ ಇರಿಸಿ — ವಿಧಾನದ ಪಾಠ ಓದಿ',
+                  })
+                : roster.homes.length === 1
+                  ? roster.homes[0]!.label
+                  : `${roster.homes.length} ${pick(lang, { hi: 'घर सहेजे गए', en: 'homes saved', gu: 'ઘર સાચવ્યાં', kn: 'ಮನೆಗಳು ಉಳಿಸಲಾಗಿದೆ' })}`}
+            </Text>
+          </ListCard>
         </View>
 
         {facedEntries.length > 0 && (
@@ -292,6 +428,7 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   dishaRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 7, justifyContent: 'center', marginTop: 12 },
   dishaChip: { borderWidth: 1, paddingHorizontal: 11, paddingVertical: 5 },
+  holdPill: { borderWidth: 1, paddingHorizontal: 14, paddingVertical: 6, marginTop: 8 },
   card: { borderWidth: 1, paddingHorizontal: 14, paddingTop: 13, paddingBottom: 12, marginBottom: 10 },
   cardHeader: { flexDirection: 'row', alignItems: 'flex-start', gap: 8 },
   bulletRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 7 },

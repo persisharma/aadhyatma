@@ -24,6 +24,38 @@ test('native consumers include recovery and freshness validation', () => {
   }
 });
 
+// The Sept 2026 regression: both readers drew the day's SUNRISE tithi until
+// midnight, so the card disagreed with the app's own glance from the handover
+// onwards — and neither platform had a wake-up on that handover to draw with.
+// Guard both halves of the fix in both native readers.
+test('both native readers select the running tithi and refresh on its handover', () => {
+  const root = process.cwd();
+  const swift = ['ios/WidgetPayloadContract.swift', 'ios/VedanshWidgets.swift']
+    .map((file) => fs.readFileSync(path.join(root, 'plugins/home-widgets', file), 'utf8')).join('\n');
+  const kotlin = ['android/WidgetPayloadContract.kt', 'android/VedanshWidgetProvider.kt']
+    .map((file) => fs.readFileSync(path.join(root, 'plugins/home-widgets', file), 'utf8')).join('\n');
+
+  for (const source of [swift, kotlin]) {
+    assert.match(source, /tithiSegments/);
+    assert.match(source, /runningTithi/);
+    // The chain is validated before it is trusted (ordering is what makes the
+    // single forward scan correct), and the till line is actually drawn.
+    assert.match(source, /[Vv]alidTithiSegments/);
+    assert.match(source, /till/);
+  }
+  // iOS refreshes by putting a timeline entry ON each solved handover…
+  assert.match(swift, /for segment in day\.tithiSegments \?\? \[\][\s\S]{0,240}dates\.insert/);
+  assert.doesNotMatch(swift, /Text\(p\.tithi\.value\(lang\)\)/);
+  // …Android by an AlarmManager wake-up, because updatePeriodMillis is floored
+  // at 30 minutes and does not wake a dozing device.
+  assert.match(kotlin, /nextBoundaryMs/);
+  assert.match(kotlin, /setAndAllowWhileIdle\(AlarmManager\.RTC_WAKEUP/);
+  assert.match(kotlin, /override fun onDisabled[\s\S]{0,200}cancel\(/);
+  // Exact alarms would need a user-granted SCHEDULE_EXACT_ALARM; a tithi
+  // handover is a minute-level fact and must not introduce that prompt.
+  assert.doesNotMatch(kotlin, /\.setExact\w*\(|setAlarmClock\(|canScheduleExactAlarms\(/);
+});
+
 test('iOS emits offline dated entries, one kind per content type, and registers copied fonts', () => {
   const source = fs.readFileSync(path.join(process.cwd(), 'plugins/home-widgets/ios/VedanshWidgets.swift'), 'utf8');
   const plist = fs.readFileSync(path.join(process.cwd(), 'plugins/home-widgets/ios/Info.plist'), 'utf8');

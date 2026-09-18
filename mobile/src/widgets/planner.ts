@@ -1,4 +1,4 @@
-import { WIDGET_SCHEMA_VERSION, WIDGET_TIME_ZONE, isValidIanaTimeZone, widgetDateKey, type PanchangWidgetDay, type VerseWidgetDay, type WidgetLocalizedText, type WidgetPayloadV1 } from './contract';
+import { WIDGET_SCHEMA_VERSION, WIDGET_TIME_ZONE, isValidIanaTimeZone, widgetDateKey, type PanchangWidgetDay, type PanchangWidgetTithi, type VerseWidgetDay, type WidgetLocalizedText, type WidgetPayloadV1 } from './contract';
 import type { Lang } from '@/data/gita/language';
 import type { CalendarSystem, PanchangLocation } from '@/panchang/types';
 import type { DailyEntry } from '@/contexts/UserActivityContext';
@@ -120,4 +120,23 @@ export function twoLineExcerpt(lines: readonly string[], maxCharacters = 88): st
   const boundary = cut.lastIndexOf(' ');
   const sliced = cut.slice(0, boundary > maxCharacters / 2 ? boundary : cut.length);
   return `${sliced.replace(DANGLING_CLUSTER_TAIL, '').trimEnd()}…`;
+}
+
+/**
+ * The tithi running at `at`, from a dated payload entry — the same forward scan
+ * the Swift and Kotlin readers perform, so the in-app gallery facsimile shows
+ * what the placed widget shows.
+ *
+ * `till` is undefined when the running link has no solved end (the successor,
+ * whose end belongs to tomorrow's solve) — the caller then draws the headline
+ * alone, exactly as the Home glance omits its तक line in that case. Falls back
+ * to the day's sunrise tithi for a payload written before `tithiSegments`
+ * existed.
+ */
+export function runningTithi(day: PanchangWidgetDay, at: Date): { name: WidgetLocalizedText; till?: WidgetLocalizedText } {
+  const segments = day.tithiSegments;
+  if (!segments || segments.length === 0) return { name: day.tithi };
+  const running: PanchangWidgetTithi = segments.find((segment) => segment.endsAt === undefined || at.getTime() <= Date.parse(segment.endsAt))
+    ?? segments[segments.length - 1];
+  return { name: running.name, ...(running.till ? { till: running.till } : {}) };
 }

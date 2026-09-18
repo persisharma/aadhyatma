@@ -6,7 +6,6 @@ import {
 } from '@react-navigation/native-stack';
 import HomeScreen from '@/screens/HomeScreen';
 import SearchScreen from '@/screens/SearchScreen';
-import LibraryScreen from '@/screens/LibraryScreen';
 import WishlistScreen from '@/screens/WishlistScreen';
 import CategoryListScreen from '@/screens/CategoryListScreen';
 import DeityListScreen from '@/screens/DeityListScreen';
@@ -21,6 +20,15 @@ import KavachamReaderScreen from '@/screens/KavachamReaderScreen';
 import StutiReaderScreen from '@/screens/StutiReaderScreen';
 import GitaChaptersIndexScreen from '@/screens/GitaChaptersIndexScreen';
 import GitaReaderScreen from '@/screens/GitaReaderScreen';
+// दान-पुण्य (PRD-26) — registered here too so the §5.1 purpose door (विद्या /
+// आरोग्य on PurposeList) pushes in place and Back retraces the journey.
+import DaanPunyaScreen from '@/screens/DaanPunyaScreen';
+import DaanJourneyScreen from '@/screens/DaanJourneyScreen';
+import DaanLedgerScreen from '@/screens/DaanLedgerScreen';
+import DaanEntryScreen from '@/screens/DaanEntryScreen';
+import DaanDirectoryScreen from '@/screens/DaanDirectoryScreen';
+import DaanDirectoryDetailScreen from '@/screens/DaanDirectoryDetailScreen';
+import DaanKathaScreen from '@/screens/DaanKathaScreen';
 import SundarkandChaptersScreen from '@/screens/SundarkandChaptersScreen';
 import SundarkandReaderScreen from '@/screens/SundarkandReaderScreen';
 import ShivaStrotamChaptersScreen from '@/screens/ShivaStrotamChaptersScreen';
@@ -99,7 +107,12 @@ export default function HomeStackNavigator() {
       />
       {/* पाठ — the library index (TRD-42). Wishlist rides this stack too so
           Library → संग्रह → Back returns to Library. */}
-      <Stack.Screen name="Library" component={LibraryScreen} />
+      {/* पाठ is pushed, never the initial route, so it loads through a
+          require() thunk — the same launch-graph treatment GharVastu and
+          Prashna take (launchGraph.test.ts). It pulls the deity, purpose and
+          category registries plus DeityIcon, none of which Home itself needs
+          any more now that the grid lives here. */}
+      <Stack.Screen name="Library" getComponent={() => require('@/screens/LibraryScreen').default} />
       <Stack.Screen name="Wishlist" component={WishlistScreen} />
       <Stack.Screen name="CategoryList" component={CategoryListScreen} />
       <Stack.Screen name="DeityList" component={DeityListScreen} />
@@ -107,6 +120,14 @@ export default function HomeStackNavigator() {
       <Stack.Screen name="DeityDetail" component={DeityDetailScreen} />
       <Stack.Screen name="BrowseByPurpose" component={BrowseByPurposeScreen} />
       <Stack.Screen name="PurposeList" component={PurposeListScreen} />
+      {/* दान-पुण्य (PRD-26) — the purpose door's flow. */}
+      <Stack.Screen name="DaanPunya" component={DaanPunyaScreen} />
+      <Stack.Screen name="DaanJourney" component={DaanJourneyScreen} />
+      <Stack.Screen name="DaanLedger" component={DaanLedgerScreen} />
+      <Stack.Screen name="DaanEntry" component={DaanEntryScreen} />
+      <Stack.Screen name="DaanDirectory" component={DaanDirectoryScreen} />
+      <Stack.Screen name="DaanDirectoryDetail" component={DaanDirectoryDetailScreen} />
+      <Stack.Screen name="DaanKatha" component={DaanKathaScreen} />
       <Stack.Screen
         name="ChalisaReader"
         component={ChalisaReaderScreen}

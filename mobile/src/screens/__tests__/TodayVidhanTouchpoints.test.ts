@@ -25,7 +25,7 @@ describe('आज का विधान discovery', () => {
 
   test('the ⌕ button that reaches it is still on Home', () => {
     // The door is only two taps deep if the first tap exists. Home keeps the
-    // FAB deliberately: pushing the library one screen away (§72) makes search
+    // FAB deliberately: pushing the library one screen away (§74) makes search
     // more important, not less.
     const home = src('screens', 'HomeScreen.tsx');
     expect(home).toMatch(/<SearchFloatingButton onPress={\(\) => navigation\.navigate\('Search'\)} \/>/);

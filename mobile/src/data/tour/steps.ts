@@ -152,8 +152,8 @@ export const tourSteps: readonly TourStep[] = [
     pointer: 'none',
     titleHi: 'उपकरण',
     titleEn: 'Tools',
-    bodyHi: 'व्रत-पर्व, मुहूर्त, कुंडली, पूजा विधि, जप, वास्तु, तीर्थ और पितृ स्मरण — आठ उपकरण, हर बार इसी जगह।',
-    bodyEn: 'Vrat, muhurat, kundali, puja vidhi, japa, vastu, pilgrimage and pitru smaran — eight tools, in the same place every visit.',
+    bodyHi: 'व्रत-पर्व, मुहूर्त, कुंडली, पूजा विधि, जप, वास्तु, तीर्थ, पितृ स्मरण और दान-पुण्य — नौ उपकरण, हर बार इसी जगह।',
+    bodyEn: 'Vrat, muhurat, kundali, puja vidhi, japa, vastu, pilgrimage, pitru smaran and daan — nine tools, in the same place every visit.',
   },
   {
     id: 'library',

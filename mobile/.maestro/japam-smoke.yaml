@@ -23,7 +23,7 @@ appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 
 # Open Japam from the उपकरण row
-# जप is one of the eight उपकरण tiles on Home (TRD-42 §5.2). The row sits below
+# जप is one of the nine उपकरण tiles on Home (TRD-42 §5.2). The row sits below
 # the Today strip, the FOR TODAY cards and साधना, so scroll to it rather than
 # asserting it above the fold.
 - scrollUntilVisible:

@@ -196,5 +196,5 @@ appId: com.prashantsharma.vedansh
     visible: "Special auspicious days"
     timeout: 20000
 - extendedWaitUntil:
-    visible: ".*no muhurat needed.*|.*Abujh.*"
+    visible: ".*no panchang shuddhi is required.*"
     timeout: 20000

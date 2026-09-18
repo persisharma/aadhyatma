@@ -42,7 +42,21 @@ export type VidhiStackParamList = {
 
 export type GitaReaderParams = { chapter: number; initialIndex?: number };
 
-export type HomeStackParamList = VidhiStackParamList & {
+/**
+ * मेरा घर journey (PRD-24 Phase 2). Doors on More (VastuDisha's मेरे घर card)
+ * and Panchang (the griha-pravesh muhurat result, Ask actions) — registered on
+ * both stacks so every door pushes in place and Back retraces the journey
+ * (the PRD-19 multi-stack pattern; this shared type is the single source of
+ * truth for the params).
+ */
+export type GharVastuStackParamList = {
+  GharVastuRoster: undefined;
+  GharVastuSetup: { homeId?: string; role?: 'living' | 'considering' } | undefined;
+  GharVastu: { homeId: string };
+  GharVastuCompare: { homeIds: readonly string[] };
+};
+
+export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & {
   Home: undefined;
   /**
    * पाठ — the library index Home's पाठ row pushes (TRD-42). Holds what used to
@@ -119,7 +133,29 @@ export type HomeStackParamList = VidhiStackParamList & {
   TodayVidhan: undefined;
 };
 
-export type MoreStackParamList = VidhiStackParamList & {
+/**
+ * दान-पुण्य (PRD-26). Registered on the More, Panchang AND Home stacks (the
+ * PRD-19 multi-stack pattern): the More hub row, the Observance-Detail daan
+ * door and the Home launcher tile all push in place, so Back retraces the
+ * journey. IA contract (§2.7, RELAXED in the v3 redesign): educate is the
+ * DEFAULT, not a gate — the daan home carries a standing दान करें door and a
+ * quiet दान-द्वार link, and DaanDirectory is reachable from a journey's
+ * terminal step, the journey's skip, or that direct link. The app still never
+ * transacts; the hand-off is always the org's own site behind the interstitial.
+ */
+export type DaanStackParamList = {
+  DaanPunya: undefined;
+  /** `occasionId` omitted ⇒ the daily (vaar-driven) journey — covers all 365 days. */
+  DaanJourney: { occasionId?: string } | undefined;
+  DaanLedger: undefined;
+  DaanEntry: { occasionId?: string } | undefined;
+  /** `causes` pre-filters the द्वार to an occasion's प्रयोजन (PRD-26 §5.1). */
+  DaanDirectory: { causes?: string[] } | undefined;
+  DaanDirectoryDetail: { orgId: string };
+  DaanKatha: { kathaId: string };
+};
+
+export type MoreStackParamList = VidhiStackParamList & DaanStackParamList & GharVastuStackParamList & {
   MoreHome: undefined;
   Wishlist: undefined;
   Profile: undefined;
@@ -147,7 +183,7 @@ export type PanchangHomeMode = 'calendar' | 'catalog' | 'jyotish';
 
 // Panchang tab stack — the date-first calendar, the "Vrat & Parv" catalog
 // (PRD-09), and the Jyotish tools landing (PRD-C).
-export type PanchangStackParamList = VidhiStackParamList & {
+export type PanchangStackParamList = VidhiStackParamList & DaanStackParamList & GharVastuStackParamList & {
   PanchangHome:
     | {
         initialTab?: PanchangHomeMode;
@@ -175,6 +211,9 @@ export type PanchangStackParamList = VidhiStackParamList & {
   Gochar: undefined;
   // Compiled full-chart reading — PRD-20 Phase 6
   KundaliReport: undefined;
+  // प्रश्न — purpose-driven reading for the active person (PRD-43 Wave D).
+  // `purposeId` preselects a purpose (the Ask intent deep-links here).
+  Prashna: { purposeId?: string } | undefined;
   GunaMilan: undefined;
   Namkaran: undefined;
   /** वास्तु दिशा (PRD-24) — the griha-pravesh result's door pushes it in place

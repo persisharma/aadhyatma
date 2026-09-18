@@ -1,5 +1,6 @@
 package __APP_PACKAGE__.widgets
 
+import android.app.AlarmManager
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
@@ -24,9 +25,29 @@ abstract class VedanshWidgetProvider(private val surface: Surface) : AppWidgetPr
     override fun onUpdate(context: Context, manager: AppWidgetManager, ids: IntArray) = ids.forEach { render(context, manager, it, surface) }
     override fun onAppWidgetOptionsChanged(context: Context, manager: AppWidgetManager, id: Int, options: Bundle) = render(context, manager, id, surface)
 
+    /**
+     * Our own boundary wake-up (see [scheduleNextRender]). Explicit-component
+     * PendingIntents reach an unexported receiver without an intent-filter, and
+     * a private action keeps this off the APPWIDGET_UPDATE path — that one
+     * carries EXTRA_APPWIDGET_IDS, which a stored alarm cannot keep fresh.
+     */
+    override fun onReceive(context: Context, intent: Intent) {
+        if (intent.action != ACTION_BOUNDARY) return super.onReceive(context, intent)
+        val manager = AppWidgetManager.getInstance(context)
+        manager.getAppWidgetIds(ComponentName(context, providerFor(surface))).forEach { render(context, manager, it, surface) }
+    }
+
+    /** The last widget of this kind is gone: stop waking the device for it. */
+    override fun onDisabled(context: Context) {
+        (context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager)?.cancel(boundaryIntent(context, surface))
+    }
+
     companion object {
         const val PREFS = "vedansh_widgets"
         const val PAYLOAD_KEY = "vedansh_widget_payload_v1"
+        private const val ACTION_BOUNDARY = "__APP_PACKAGE__.widgets.BOUNDARY"
+        /** Above the per-widget-id request codes, which are `id * surfaces + ordinal`. */
+        private const val BOUNDARY_REQUEST_BASE = 1_000_000
 
         fun providerFor(surface: Surface): Class<out VedanshWidgetProvider> = when (surface) {
             Surface.PANCHANG -> VedanshPanchangWidgetProvider::class.java
@@ -65,10 +86,40 @@ abstract class VedanshWidgetProvider(private val surface: Surface) : AppWidgetPr
             // that a previous (tall) render stretched to 8 lines keeps that state
             // unless this card sets it back.
             views.setInt(__APP_PACKAGE__.R.id.widget_title, "setMaxLines", 3)
+            // The till row exists on the Panchang layout only.
+            if (surface == Surface.PANCHANG) views.setViewVisibility(__APP_PACKAGE__.R.id.widget_till, View.GONE)
             views.setViewVisibility(__APP_PACKAGE__.R.id.widget_meta, View.GONE)
             val today = WidgetPayloadContract.currentDateKey("Asia/Kolkata")
             views.setOnClickPendingIntent(__APP_PACKAGE__.R.id.widget_root, link(context, "vedansh://widget/panchang?date=$today", requestCode(id, surface)))
             manager.updateAppWidget(id, views)
+        }
+
+        private fun boundaryIntent(context: Context, surface: Surface): PendingIntent {
+            val intent = Intent(context, providerFor(surface)).setAction(ACTION_BOUNDARY)
+            return PendingIntent.getBroadcast(context, BOUNDARY_REQUEST_BASE + surface.ordinal, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+        }
+
+        /**
+         * Re-render ON the next instant this card stops being true — the next
+         * tithi handover or the next civil-day rollover, whichever lands first.
+         *
+         * `updatePeriodMillis` is floored at 30 minutes and does not wake a
+         * dozing device, so it can neither turn the day over at midnight nor
+         * follow a tithi that ends at 10:48. `setAndAllowWhileIdle` fires
+         * through Doze and — unlike an exact alarm — needs no user-granted
+         * SCHEDULE_EXACT_ALARM (JapamAlarmModule's own fallback). A handover is
+         * a minute-level fact, not an alarm clock, so its slack is acceptable
+         * and the 30-minute period stays as the backstop if the alarm is lost.
+         */
+        private fun scheduleNextRender(context: Context, surface: Surface, atMs: Long) {
+            val alarms = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager ?: return
+            try {
+                alarms.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, atMs, boundaryIntent(context, surface))
+            } catch (_: Exception) {
+                // A denied or throttled alarm must never cost the render that
+                // already succeeded; the update period still backstops it.
+            }
         }
 
         private fun render(context: Context, manager: AppWidgetManager, id: Int, surface: Surface) {
@@ -87,6 +138,9 @@ abstract class VedanshWidgetProvider(private val surface: Surface) : AppWidgetPr
                     Surface.VERSE -> renderVerse(context, views, root, locale, id, width, height)
                 } ?: return recovery(context, manager, id, surface, true)
                 manager.updateAppWidget(id, views)
+                val slice = root.getJSONObject(if (surface == Surface.PANCHANG) "panchang" else "verses")
+                scheduleNextRender(context, surface, WidgetPayloadContract.nextBoundaryMs(
+                    slice, slice.getString("timeZone"), surface == Surface.PANCHANG, System.currentTimeMillis()))
             } catch (_: Exception) { recovery(context, manager, id, surface, false) }
         }
 
@@ -100,7 +154,16 @@ abstract class VedanshWidgetProvider(private val surface: Surface) : AppWidgetPr
             val represented = pd.getJSONObject("representedDate").getString(locale)
             val city = panchang.getJSONObject("cityLabel").getString(locale)
             views.setTextViewText(__APP_PACKAGE__.R.id.widget_kicker, if (compact) represented else "$represented · $city")
-            views.setTextViewText(__APP_PACKAGE__.R.id.widget_title, pd.getJSONObject("tithi").getString(locale))
+            // The tithi running NOW, not the day's sunrise tithi: a tithi hands
+            // over mid-day, and drawing the sunrise one till midnight is what
+            // made this card disagree with the app's own Panchang glance.
+            val (tithi, till) = WidgetPayloadContract.runningTithi(pd, System.currentTimeMillis())
+            views.setTextViewText(__APP_PACKAGE__.R.id.widget_title, tithi.getString(locale))
+            // "तक 10:48 AM" — absent only when this day's solve does not know the
+            // end (the successor's belongs to tomorrow's), as in the app.
+            val tillText = till?.getString(locale)
+            views.setTextViewText(__APP_PACKAGE__.R.id.widget_till, tillText ?: "")
+            views.setViewVisibility(__APP_PACKAGE__.R.id.widget_till, if (tillText == null) View.GONE else View.VISIBLE)
             val vrat = pd.optJSONObject("vrat")?.getString(locale)
             views.setTextViewText(__APP_PACKAGE__.R.id.widget_subtitle, vrat ?: "")
             views.setViewVisibility(__APP_PACKAGE__.R.id.widget_subtitle, if (vrat == null) View.GONE else View.VISIBLE)

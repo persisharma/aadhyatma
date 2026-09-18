@@ -220,3 +220,212 @@ test('Bhadwa Chauth (Chauth Mata vrat) rides the same moonrise day as Bahula Cha
     );
   }
 });
+
+// ─── Regional wave 1: Rajasthani, Bihari/Maithil and Jain observances ─────────
+// Sept 2026 report: "a lot of important dates like Goga Navami missing from the
+// calendar". Five Rajasthani rules already shipped as catalog-only entries with a
+// katha but NO tithi (Gangaur, Sakat Chauth, Shitala Saptami, Bachh Baras, Asha
+// Dashami), so they could never resolve to a day; the rest are new. Every date
+// below is a PUBLISHED civil date (Ujjain/IST), never engine output — see the
+// per-rule source comments in festivals.ts.
+const REGIONAL_PUBLISHED: Record<string, string> = {
+  // Rajasthan
+  'sakat-chauth:2025': '2025-01-17',      'sakat-chauth:2026': '2026-01-06',
+  'shitala-saptami:2026': '2026-03-10',
+  'shitala-ashtami:2026': '2026-03-11',
+  'dasha-mata-vrat:2026': '2026-03-13',
+  'gangaur:2025': '2025-03-31',           'gangaur:2026': '2026-03-21',
+  'goga-navami:2025': '2025-08-17',       'goga-navami:2026': '2026-09-05',
+  'teja-dashami:2025': '2025-09-02',      'teja-dashami:2026': '2026-09-21',
+  'bachh-baras:2025': '2025-08-20',
+  'asha-dashami:2026': '2026-07-24',
+  // Bihar / Mithila
+  'chaiti-chhath:2026': '2026-03-24',
+  'madhushravani:2026': '2026-08-15',
+  'chitragupta-puja:2026': '2026-11-11',
+  'kartik-purnima:2025': '2025-11-05',    'kartik-purnima:2026': '2026-11-24',
+  // Pan-Hindu gaps found by the same audit
+  'chaitra-navratri-start:2025': '2025-03-30', 'chaitra-navratri-start:2026': '2026-03-19',
+  'mahavir-jayanti:2025': '2025-04-10',   'mahavir-jayanti:2026': '2026-03-31',
+};
+
+test('regional wave-1 observances match their published dates exactly', () => {
+  for (const [key, expected] of Object.entries(REGIONAL_PUBLISHED)) {
+    const [id, yearStr] = key.split(':');
+    assert.equal(engineDate(id, Number(yearStr)), expected, `${key} moved`);
+  }
+});
+
+// All seventeen, including the three whose published date is contested or
+// unstated (`ramdev-jayanti`, `sama-chakeva`, `bachh-baras`) and therefore absent
+// from REGIONAL_PUBLISHED — they still must resolve, and resolve once.
+const WAVE_1_IDS = [
+  'sakat-chauth', 'shitala-saptami', 'shitala-ashtami', 'dasha-mata-vrat',
+  'chaitra-navratri-start', 'gangaur', 'chaiti-chhath', 'mahavir-jayanti',
+  'asha-dashami', 'madhushravani', 'goga-navami', 'bachh-baras',
+  'ramdev-jayanti', 'teja-dashami', 'chitragupta-puja', 'sama-chakeva',
+  'kartik-purnima',
+];
+
+test('every regional wave-1 rule resolves exactly once a year, 2024-2031', () => {
+  assert.equal(WAVE_1_IDS.length, 17);
+  for (const key of Object.keys(REGIONAL_PUBLISHED)) {
+    assert.ok(WAVE_1_IDS.includes(key.split(':')[0]), `${key} is not a wave-1 id`);
+  }
+  for (const id of WAVE_1_IDS) {
+    for (let year = 2024; year <= 2031; year += 1) {
+      const dates = engineDates(id, year);
+      assert.equal(dates.length, 1, `${id} ${year}: expected one occurrence, got ${dates.join(' ') || 'none'}`);
+    }
+  }
+});
+
+// Sibling-day invariants (RULEBOOK §23.4): rules that name the SAME tithi as an
+// already-shipped rule must land on the same civil day, or the calendar shows one
+// household observance on two nights.
+test('regional rules ride the shipped rule that shares their tithi', () => {
+  for (const year of [2024, 2025, 2026, 2027, 2028]) {
+    // Sakat Chauth IS Magha's Sankashti Chaturthi — hence the shared chandrodaya dayRule.
+    const [sakat] = engineDates('sakat-chauth', year);
+    assert.ok(
+      engineDates('sankashti-chaturthi-vrat', year).includes(sakat),
+      `${year}: Sakat Chauth ${sakat} is not a Sankashti Chaturthi day`
+    );
+    // Chitragupta Puja is Yama Dwitiya — the Bhai Dooj day.
+    assert.equal(engineDate('chitragupta-puja', year), engineDate('bhai-dooj', year), `${year}: Chitragupta ≠ Bhai Dooj`);
+    // Kartik Purnima is a Purnima, so the monthly purnima vrat must cover it.
+    const [kartikPurnima] = engineDates('kartik-purnima', year);
+    assert.ok(
+      engineDates('purnima-vrat', year).includes(kartikPurnima),
+      `${year}: Kartik Purnima ${kartikPurnima} missing from the monthly Purnima series`
+    );
+    // Madhushravani closes on Shravana Shukla Tritiya — the Hariyali Teej day.
+    assert.equal(engineDate('madhushravani', year), engineDate('hariyali-teej', year), `${year}: Madhushravani ≠ Hariyali Teej`);
+    // Basoda: Shitala Ashtami is the day after Shitala Saptami whenever neither
+    // tithi is kshaya/vriddhi; allow the 2-day gap a vriddhi Saptami produces.
+    const gap = dayDiff(engineDate('shitala-saptami', year)!, engineDate('shitala-ashtami', year)!);
+    assert.ok(gap >= 1 && gap <= 2, `${year}: Shitala Saptami→Ashtami gap is ${gap} days`);
+    // Sama Chakeva opens on Kartika Shukla Saptami — the day after Chhath's Shashthi.
+    const chhathToSama = (new Date(engineDate('sama-chakeva', year)!).getTime()
+      - new Date(engineDate('chhath-puja', year)!).getTime()) / 86400000;
+    assert.ok(chhathToSama >= 1 && chhathToSama <= 2, `${year}: Chhath → Sama Chakeva gap is ${chhathToSama} days`);
+    // Sama Chakeva is immersed on Kartik Purnima, so it must open before it.
+    assert.ok(
+      new Date(engineDate('sama-chakeva', year)!) < new Date(engineDate('kartik-purnima', year)!),
+      `${year}: Sama Chakeva does not open before its Kartik Purnima immersion`
+    );
+    // The Ramdevra fair runs Bhadrapada Shukla Dwitiya → Ekadashi, so Ramdev
+    // Jayanti opens roughly eight days before Teja Dashami (Shukla Dashami).
+    const ramdevToTeja = (new Date(engineDate('teja-dashami', year)!).getTime()
+      - new Date(engineDate('ramdev-jayanti', year)!).getTime()) / 86400000;
+    assert.ok(ramdevToTeja >= 7 && ramdevToTeja <= 9, `${year}: Ramdev Jayanti → Teja Dashami span is ${ramdevToTeja} days`);
+    // Chaitra Navratri opens the nine days that close on Ram Navami.
+    const navratri = engineDate('chaitra-navratri-start', year)!;
+    const ramNavami = engineDate('ram-navami', year)!;
+    const span = (new Date(ramNavami).getTime() - new Date(navratri).getTime()) / 86400000;
+    assert.ok(span >= 7 && span <= 10, `${year}: Chaitra Navratri → Ram Navami span is ${span} days`);
+  }
+});
+
+// Chaiti Chhath is the SPRING Chhath — the same rite six lunar months from the
+// Kartik one. Both must resolve, and they must never collapse onto one season.
+test('both Chhaths resolve, roughly half a year apart', () => {
+  for (const year of [2025, 2026, 2027]) {
+    const chaiti = engineDate('chaiti-chhath', year)!;
+    const kartik = engineDate('chhath-puja', year)!;
+    assert.ok(chaiti && kartik, `${year}: both Chhaths must resolve`);
+    const gap = dayDiff(chaiti, kartik);
+    assert.ok(gap > 180 && gap < 250, `${year}: Chhath gap is ${gap} days (${chaiti} → ${kartik})`);
+  }
+});
+
+// KNOWN, DOCUMENTED SHIFT (VERIFICATION.md Class B). Bachh Baras is worshipped in
+// the evening godhuli/pradosh hour, and Drik publishes it pradosh-vyapini — 7 Sep
+// 2026, where the udaya matcher this app uses says 8 Sep. Popular Hindi almanacs
+// reasoned from sunrise for 2025 and agreed with the engine (20 Aug). Pradosh is
+// not modelled (RULEBOOK §23.7), so the rule ships on udaya and this test pins the
+// variance so it cannot drift silently. Delete it when a `pradosh` dayRule lands.
+test('Bachh Baras stays on the udaya day, and the pradosh variance is recorded', () => {
+  assert.equal(engineDate('bachh-baras', 2025), '2025-08-20', 'published (sunrise-reasoned) 2025 date');
+  assert.equal(engineDate('bachh-baras', 2026), '2026-09-08', 'udaya day; Drik publishes 2026-09-07 (pradosh)');
+});
+
+// ─── दर्श अमावस्या (aparahna) ──────────────────────────────────────────────────
+// The same amavasya as `amavasya-vrat`, read by the other published convention.
+// पितृ तर्पण is an afternoon rite, so Drik fixes दर्श अमावस्या by the tithi over
+// aparahna and the plain snan-daan अमावस्या by the tithi at sunrise; when the
+// amavasya opens between the two, the rows land on different days. Reported from
+// the app: 10 Sep 2026 shows amavasya from 10:33 AM for the rest of the day and
+// carried no amavasya observance at all, because only the udaya rule shipped.
+// Published civil dates, NOT engine output — drikpanchang.com/vrats/amavasyadates.html
+// (2026 list, read 2026-09-10), which prints the two rows under different names: the
+// aparahna row is "Darsha Amavasya" every month, the udaya row carries the lunar month.
+test('Darsha Amavasya matches its published aparahna dates', () => {
+  const darsha = engineDates('darsha-amavasya', 2026);
+  const udaya = engineDates('amavasya-vrat', 2026);
+  // Bhadrapada: amavasya 10 Sep 10:33 AM → 11 Sep 8:56 AM. Drik: Sep 10 "Darsha
+  // Amavasya", Sep 11 "Bhadrapada Amavasya". The reported case.
+  assert.ok(darsha.includes('2026-09-10'), 'Darsha 10 Sep');
+  assert.ok(udaya.includes('2026-09-11'), 'udaya row 11 Sep');
+  // Kartika: Drik puts Darsha on Nov 8, the udaya row on Nov 9.
+  assert.ok(darsha.includes('2026-11-08'), 'Darsha 8 Nov');
+  assert.ok(udaya.includes('2026-11-09'), 'udaya row 9 Nov');
+  // Chaitra: amavasya 18 Mar 8:25 AM → 19 Mar 6:52 AM (India TV, retrieved 2026-09-10).
+  assert.ok(darsha.includes('2026-03-18'), 'Darsha 18 Mar');
+  assert.ok(udaya.includes('2026-03-19'), 'udaya row 19 Mar');
+});
+
+test('Darsha Amavasya and the udaya row coincide when the amavasya covers both instants', () => {
+  // The other half of the contract, and a different path — BOTH rules fire on one
+  // day, which is what Drik prints there too. Ashwina 2026: amavasya 9 Oct 9:35 PM →
+  // 10 Oct 9:19 PM, so it covers 10 Oct's sunrise AND its aparahna, and Drik's 10 Oct
+  // row reads "Darsha Amavasya / Ashwina Amavasya". A regression that made the two
+  // rules always differ would pass every one-sided assertion above.
+  assert.ok(engineDates('darsha-amavasya', 2026).includes('2026-10-10'), 'Darsha 10 Oct');
+  assert.ok(engineDates('amavasya-vrat', 2026).includes('2026-10-10'), 'udaya row 10 Oct');
+});
+
+test('Darsha Amavasya and the udaya Amavasya Vrat stay one day apart at most', () => {
+  // They are one tithi under two conventions, so §23.4's shared-dayRule rule does
+  // NOT apply — but they may never drift further than the convention itself can
+  // move them. A larger gap means one of the two matched the wrong lunation.
+  for (const year of [2024, 2025, 2026, 2027, 2028]) {
+    const darsha = engineDates('darsha-amavasya', year);
+    const udaya = engineDates('amavasya-vrat', year);
+    assert.equal(darsha.length, udaya.length, `${year}: ${darsha.length} Darsha vs ${udaya.length} Amavasya Vrat`);
+    assert.equal(new Set(darsha).size, darsha.length, `${year}: duplicate Darsha Amavasya dates`);
+    for (let i = 0; i < darsha.length; i += 1) {
+      const gap = (new Date(udaya[i]).getTime() - new Date(darsha[i]).getTime()) / 86400000;
+      assert.ok(gap === 0 || gap === 1, `${year}: Darsha ${darsha[i]} vs Amavasya Vrat ${udaya[i]}`);
+    }
+  }
+});
+
+test('every lunation keeps exactly one Darsha Amavasya', () => {
+  // Guards both aparahna edges through the shared instant matcher: the "first of
+  // two" dedupe must not emit twice, and the udaya fallback when NO day's
+  // aparahna carries the amavasya must not drop one. Ashadha 2026 is the pinned
+  // fallback case — the amavasya ends 14 Jul 3:13:30 PM, twenty seconds before
+  // that day's aparahna midpoint, so case (c) recovers the sunrise day.
+  for (const year of [2024, 2025, 2026, 2027, 2028]) {
+    const dates = engineDates('darsha-amavasya', year);
+    assert.ok(dates.length >= 12 && dates.length <= 13, `${year}: got ${dates.length} Darsha Amavasyas`);
+    for (let i = 1; i < dates.length; i += 1) {
+      const gap = dayDiff(dates[i - 1], dates[i]);
+      assert.ok(gap >= 28 && gap <= 31, `${year}: ${dates[i - 1]} → ${dates[i]} is ${gap} days apart`);
+    }
+  }
+  assert.ok(engineDates('darsha-amavasya', 2026).includes('2026-07-14'), 'Ashadha 2026 udaya fallback');
+});
+
+test('the live aparahna matcher agrees with the shipped table (RULEBOOK §23.9)', () => {
+  // Pins the MATCHER, not the baked table: a regression is caught even without
+  // regenerating, and a stale table is caught once it is.
+  const darsha = getRuleById('darsha-amavasya');
+  const udaya = getRuleById('amavasya-vrat');
+  assert.ok(darsha && udaya, 'both amavasya rules must exist');
+  assert.equal(matchesLunarTithiRuleOnDate(darsha!, new Date(2026, 8, 10, 12), 'purnimant'), true);
+  assert.equal(matchesLunarTithiRuleOnDate(darsha!, new Date(2026, 8, 11, 12), 'purnimant'), false);
+  assert.equal(matchesLunarTithiRuleOnDate(udaya!, new Date(2026, 8, 11, 12), 'purnimant'), true);
+  assert.equal(matchesLunarTithiRuleOnDate(udaya!, new Date(2026, 8, 10, 12), 'purnimant'), false);
+});
