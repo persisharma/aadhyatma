@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, InteractionManager, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import type { GestureResponderEvent } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -11,6 +11,10 @@ import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { library } from '@/data/texts';
 import { buildEntryStartTarget, moreTabTarget } from '@/navigation/entryRoutes';
 import LocationPickerModal from '@/components/LocationPickerModal';
+// Lazy: a sheet that only exists after a tap has no business on the launch
+// graph (`launchGraph.test.ts`), and `React.lazy` is the same treatment
+// `TabNavigator` gives the Panchang stack.
+const LensPickerSheet = React.lazy(() => import('@/components/LensPickerSheet'));
 import MuhuratGlanceCard from '@/components/MuhuratGlanceCard';
 import MuhuratFinderDoor from '@/components/MuhuratFinderDoor';
 import ShubhYogaCard from '@/components/ShubhYogaCard';
@@ -37,6 +41,9 @@ import { useShubhYoga } from '@/panchang/useShubhYoga';
 import type { CalendarSystem, PanchangElement, ResolvedObservance } from '@/panchang/types';
 import { getKathaContent } from '@/panchang/kathaContent';
 import { getUpcomingObservances, searchObservances } from '@/panchang/festivalEngine';
+import { LENS_COUNT, getLensDefinition, serializeLenses, type ObservanceLens } from '@/panchang/lenses';
+import { useLenses } from '@/panchang/useLenses';
+import { seedFromLocationOnce } from '@/panchang/lensStore';
 import { successorTithiToday } from '@/panchang/prevailingTithi';
 import { observanceDayNote, type ObservanceDaySolve } from '@/panchang/observanceDayNote';
 import { sankashtiOccurrenceName } from '@/panchang/sankashtiNames';
@@ -167,6 +174,33 @@ export default function PanchangScreen({ route }: Props) {
     selectPerson: selectKundaliPerson,
   } = useKundali();
   const { panchang: p, observances, upcoming } = usePanchangForSelection(selectedDate, calendarSystem);
+  const [lensSheetVisible, setLensSheetVisible] = useState(false);
+  const { lenses } = useLenses();
+  // The one line PRD-42 §4.2 allows about seeding, named per city and dismissible.
+  const [seededLenses, setSeededLenses] = useState<readonly ObservanceLens[]>([]);
+
+  // SEEDING — silent, post-launch, once per install, and only when the user has
+  // never chosen for themselves. It runs here rather than in the launch prefetch
+  // because it is a WRITE, and the launch path may not grow one; `InteractionManager`
+  // keeps it off the first paint of the tab it is mounted on. The three deliberate
+  // holes (Ujjain, Delhi, Chandigarh) and both tradition lenses return nothing,
+  // so for most users this effect is a single read that changes no pixel.
+  useEffect(() => {
+    let cancelled = false;
+    const handle = InteractionManager.runAfterInteractions(() => {
+      void seedFromLocationOnce({
+        cityId: location.cityId,
+        isTehsil: getCityById(location.cityId)?.districtEn != null,
+        labelEn: location.labelEn,
+      }).then((seeded) => {
+        if (!cancelled && seeded.length > 0) setSeededLenses(seeded);
+      });
+    });
+    return () => {
+      cancelled = true;
+      handle.cancel();
+    };
+  }, [location.cityId, location.labelEn]);
   // The day's one-line identity (vara · masa paksha · Vikram Samvat), shared by
   // the date card's visible subtitle and the date button's a11y label — the
   // explicit label would otherwise hide the subtitle from screen readers.
@@ -667,6 +701,56 @@ export default function PanchangScreen({ route }: Props) {
             </View>
           )}
 
+          {/* A city seeded its calendar — say so once, where the new dates appear,
+              never as a modal and never as a question about the person. The copy
+              names the CITY's calendar, not the user. Dismissing is local state:
+              the seeding itself already recorded that it ran. */}
+          {seededLenses.length > 0 && (
+            <Pressable
+              onPress={() => setLensSheetVisible(true)}
+              accessibilityRole="button"
+              accessibilityLabel={`${seededLenses
+                .map((id) => getLensDefinition(id)?.nameEn ?? id)
+                .join(', ')} calendar added for ${location.labelEn}. Opens regional calendars.`}
+              style={({ pressed }) => [
+                {
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: 8,
+                  marginTop: 12,
+                  paddingVertical: 10,
+                  paddingHorizontal: 12,
+                  backgroundColor: colors.goldTint,
+                  borderWidth: 1,
+                  borderColor: colors.divider,
+                  borderRadius: radii.md,
+                },
+                pressed && { opacity: 0.8 },
+              ]}
+            >
+              <Text style={{ fontSize: 14, color: colors.gold }}>❖</Text>
+              <Text style={{ flex: 1, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11.5, lineHeight: 17, color: colors.inkSoft }}>
+                {contentByLang(
+                  lang,
+                  `${contentByLang(lang, location.labelHi, location.labelEn)} का ${seededLenses
+                    .map((id) => getLensDefinition(id)?.nameHi ?? id)
+                    .join(' · ')} पंचांग जोड़ा गया — बदलें`,
+                  `Added the ${seededLenses
+                    .map((id) => getLensDefinition(id)?.nameEn ?? id)
+                    .join(' · ')} calendar for ${location.labelEn} — change`
+                )}
+              </Text>
+              <Pressable
+                onPress={() => setSeededLenses([])}
+                accessibilityRole="button"
+                accessibilityLabel="Dismiss"
+                hitSlop={12}
+              >
+                <Text style={{ fontSize: 14, color: colors.inkMuted }}>✕</Text>
+              </Pressable>
+            </Pressable>
+          )}
+
           <View style={styles.observanceSection}>
             <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginBottom: 10 }}>
               {contentByLang(lang, 'व्रत और पर्व', 'Vrat & Observances')}
@@ -688,9 +772,24 @@ export default function PanchangScreen({ route }: Props) {
                 />
               ))
             ) : (
-              <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
-                {meaningByLang(lang, 'इस तिथि पर कोई व्रत या पर्व नहीं है।', 'No vrat or festival falls on this date.')}
-              </Text>
+              <>
+                <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
+                  {meaningByLang(lang, 'इस तिथि पर कोई व्रत या पर्व नहीं है।', 'No vrat or festival falls on this date.')}
+                </Text>
+                {/* The quiet-day doorway. The क्षेत्र row's HOME is the व्रत-पर्व
+                    ledger, but that is the other segment — and this is the one the
+                    tab opens on and the one a lens actually changes, so a user who
+                    never taps व्रत-पर्व would never learn the feature exists. It
+                    appears ONLY on a day with nothing on it: on a day that has
+                    something to say, this card is exactly what shipped before. */}
+                <LensDiscoveryRow
+                  lang={lang}
+                  colors={colors}
+                  typography={typography}
+                  radii={radii}
+                  onPress={() => setLensSheetVisible(true)}
+                />
+              </>
             )}
             {/* PRD-17: the private ॥ स्मरण chip — renders only on a saved
                 observance date, muted gold register, device-only. */}
@@ -733,6 +832,8 @@ export default function PanchangScreen({ route }: Props) {
               onOpenVidhiCatalog={openVidhiCatalog}
               onOpenMyVrat={openMyVrat}
               onOpenPitruSmaran={openPitruSmaran}
+              onOpenLenses={() => setLensSheetVisible(true)}
+              lenses={lenses}
               followCount={followCount}
               reminderCount={reminderCount}
             />
@@ -764,6 +865,11 @@ export default function PanchangScreen({ route }: Props) {
         </ScrollView>
       </SafeAreaView>
       <LocationPickerModal visible={locationPickerVisible} onClose={() => setLocationPickerVisible(false)} />
+      {lensSheetVisible && (
+        <React.Suspense fallback={null}>
+          <LensPickerSheet visible onClose={() => setLensSheetVisible(false)} />
+        </React.Suspense>
+      )}
     </View>
   );
 }
@@ -1656,6 +1762,69 @@ function ObservanceCard({ item, daySolve, lang, colors, typography, radii, eleva
   );
 }
 
+/**
+ * The quiet-day doorway to the lens sheet (PRD-42 entry study, pattern B).
+ *
+ * Rendered ONLY where the day card would otherwise say "nothing falls on this
+ * date", which is both where the space is free and the moment a user is most
+ * likely to want more dates. Deliberately NOT dismissible: the dismissible seed
+ * line was the original bridge and it disappears forever on one tap, leaving the
+ * feature invisible from the segment that its own result lives on. Muted gold
+ * register, no badge and no count, so it reads as part of the almanac rather than
+ * as something being sold.
+ */
+function LensDiscoveryRow({
+  lang,
+  colors,
+  typography,
+  radii,
+  onPress,
+}: {
+  lang: Lang;
+  colors: any;
+  typography: any;
+  radii: any;
+  onPress: () => void;
+}) {
+  return (
+    <Pressable
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={`Add a regional calendar. ${LENS_COUNT} available`}
+      style={({ pressed }) => [
+        {
+          flexDirection: 'row',
+          alignItems: 'center',
+          minHeight: 48,
+          marginTop: 12,
+          paddingVertical: 10,
+          paddingHorizontal: 12,
+          backgroundColor: colors.goldTint,
+          borderWidth: 1,
+          borderColor: colors.divider,
+          borderRadius: radii.md,
+        },
+        pressed && { opacity: 0.8 },
+      ]}
+    >
+      <Text style={{ fontSize: 15, color: colors.gold, marginRight: 10 }}>❖</Text>
+      <View style={{ flex: 1 }}>
+        <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 13, color: colors.ink }}>
+          {contentByLang(lang, 'क्षेत्रीय पंचांग जोड़ें', 'Add a regional calendar')}
+        </Text>
+        <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkMuted, marginTop: 2 }}>
+          {contentByLang(
+            lang,
+            `अपने क्षेत्र या परंपरा की तिथियाँ · ${LENS_COUNT} उपलब्ध`,
+            `Your region’s or tradition’s days · ${LENS_COUNT} available`
+          )}
+        </Text>
+      </View>
+      <Text style={{ fontSize: 18, color: colors.inkMuted }}>›</Text>
+    </Pressable>
+  );
+}
+
 function PitruSmaranCatalogRow({
   lang, colors, typography, radii, elevation, onPress,
 }: {
@@ -1723,7 +1892,7 @@ function CatalogLanding({
   lang, today, calendarSystem, query, onChangeQuery,
   colors, typography, radii, elevation,
   onOpenDetail, onOpenCategory, onOpenKathaLibrary, onOpenVidhiCatalog, onOpenMyVrat, followCount, reminderCount,
-  onOpenPitruSmaran,
+  onOpenPitruSmaran, onOpenLenses, lenses,
 }: {
   lang: Lang;
   today: Date;
@@ -1740,12 +1909,33 @@ function CatalogLanding({
   onOpenVidhiCatalog: () => void;
   onOpenMyVrat: () => void;
   onOpenPitruSmaran: () => void;
+  onOpenLenses: () => void;
+  lenses: ReadonlySet<ObservanceLens>;
   followCount: number;
   reminderCount: number;
 }) {
   const trimmed = query.trim();
+  // Search stays lens-blind on purpose — see `searchObservances`.
   const results = useMemo(() => (trimmed ? searchObservances(trimmed) : []), [trimmed]);
-  const upcoming = useMemo(() => getUpcomingObservances(today, 6, calendarSystem, 150), [today, calendarSystem]);
+  const lensKey = serializeLenses(lenses);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const upcoming = useMemo(() => getUpcomingObservances(today, 6, calendarSystem, 150, undefined, lenses), [today, calendarSystem, lensKey]);
+  const activeLensCount = lenses.size;
+  const lensSubtitle = (() => {
+    if (activeLensCount === 0) {
+      return contentByLang(lang, `कोई क्षेत्रीय पंचांग नहीं · ${LENS_COUNT} उपलब्ध`, `No regional calendar · ${LENS_COUNT} available`);
+    }
+    // Name the calendars rather than counting them: "तेलुगु सक्रिय" tells a user
+    // where their extra dates came from; "1 सक्रिय" tells them nothing.
+    const names = [...lenses]
+      .map((id) => getLensDefinition(id))
+      .filter((def): def is NonNullable<typeof def> => def != null)
+      .map((def) => contentByLang(lang, def.nameHi, def.nameEn));
+    const head = names.slice(0, 2).join(' · ');
+    const more = names.length > 2 ? contentByLang(lang, ` +${names.length - 2}`, ` +${names.length - 2}`) : '';
+    const rest = LENS_COUNT - activeLensCount;
+    return contentByLang(lang, `${head}${more} सक्रिय · और ${rest} उपलब्ध`, `${head}${more} on · ${rest} more available`);
+  })();
   const counts = useMemo(() => getCategoryCounts(), []);
   const kathaCount = getKathaCount();
 
@@ -1835,6 +2025,34 @@ function CatalogLanding({
             elevation={elevation}
             onPress={onOpenPitruSmaran}
           />
+          {/* क्षेत्र — third in the ledger, a peer of मेरा व्रत and पितृ स्मरण.
+              Same card anatomy (icon · title · one line of state · chevron),
+              because a lens preference IS that kind of object: persistent,
+              personal calendar state the user created. The subtitle names the
+              active calendars, so the row documents its own seeding. It renders
+              even with nothing on — for a user whose city seeded nothing (Ujjain,
+              Delhi) this row is the only path to the sheet. */}
+          <Pressable
+            onPress={onOpenLenses}
+            accessibilityRole="button"
+            accessibilityLabel={
+              activeLensCount > 0
+                ? `Regional calendars, ${activeLensCount} on`
+                : 'Regional calendars, none selected'
+            }
+            style={({ pressed }) => [styles.myVratRow, { backgroundColor: colors.goldTint, borderColor: colors.gold, borderRadius: radii.lg }, elevation.card, pressed && { opacity: 0.8 }]}
+          >
+            <Text style={{ fontSize: 18, color: colors.gold, marginRight: 10 }}>❖</Text>
+            <View style={{ flex: 1 }}>
+              <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
+                {contentByLang(lang, 'क्षेत्र', 'Regional calendars')}
+              </Text>
+              <Text style={{ ...captionFont(lensSubtitle), fontSize: 12, color: colors.inkMuted, marginTop: 2 }}>
+                {lensSubtitle}
+              </Text>
+            </View>
+            <Text style={{ fontSize: 20, color: colors.inkMuted }}>›</Text>
+          </Pressable>
           {upcoming.length > 0 && (
             <View style={{ marginTop: 14 }}>
               <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginBottom: 8 }}>

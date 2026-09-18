@@ -1,6 +1,7 @@
 /**
- * The two AsyncStorage-backed panchang preferences — the chosen city and the
- * purnimant/amanta calendar system — behind ONE read, issued once per process.
+ * The three AsyncStorage-backed panchang preferences — the chosen city, the
+ * purnimant/amanta calendar system, and the क्षेत्रीय पंचांग lens set — behind ONE
+ * read, issued once per process.
  *
  * WHY THIS EXISTS. Together these two values are the *scope key* every panchang
  * cache is keyed by, so nothing panchang-shaped can be read from disk until both
@@ -41,6 +42,7 @@
  */
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { LENS_STORAGE_KEY, seedLensSnapshot, type ObservanceLens } from './lenses';
 import { DEFAULT_LOCATION, getCityById, toPanchangLocation } from './locations';
 import { isPincodeCityId } from './pincodes';
 import { launchMark } from '@/utils/launchTrace';
@@ -174,6 +176,8 @@ export function setCalendarSystemGlobal(next: CalendarSystem): void {
 export type PanchangPrefs = {
   location: PanchangLocation;
   calendarSystem: CalendarSystem;
+  /** The क्षेत्रीय पंचांग set — empty means today's app, byte for byte. */
+  lenses: Set<ObservanceLens>;
 };
 
 /** The settled result, readable synchronously; null until the read lands. */
@@ -213,15 +217,22 @@ async function runLoad(): Promise<PanchangPrefs> {
   launchMark('prefs-read-start');
   let storedLocation: string | null = null;
   let storedSystem: string | null = null;
+  let storedLenses: string | null = null;
   let failed = false;
   try {
+    // The lens set JOINS this batch rather than adding a round trip — the whole
+    // reason this module exists (see the header). It is read on the launch path
+    // for the same reason the other two are: it scopes what the first painted day
+    // shows, so reading it later would flash the unlensed day first.
     const pairs = await AsyncStorage.multiGet([
       LOCATION_STORAGE_KEY,
       CALENDAR_SYSTEM_STORAGE_KEY,
+      LENS_STORAGE_KEY,
     ]);
     pairs.forEach(([key, value]) => {
       if (key === LOCATION_STORAGE_KEY) storedLocation = value;
       if (key === CALENDAR_SYSTEM_STORAGE_KEY) storedSystem = value;
+      if (key === LENS_STORAGE_KEY) storedLenses = value;
     });
   } catch {
     // Best-effort: fall through to the defaults, the status quo before the read,
@@ -235,6 +246,7 @@ async function runLoad(): Promise<PanchangPrefs> {
   const result: PanchangPrefs = {
     location: parseStoredLocation(storedLocation) ?? DEFAULT_LOCATION,
     calendarSystem: parseCalendarSystem(storedSystem),
+    lenses: seedLensSnapshot(failed ? null : storedLenses),
   };
   // Seed synchronously, before anyone can await this promise, so a consumer that
   // peeks in the same tick sees the settled values. A FAILED read seeds nothing:

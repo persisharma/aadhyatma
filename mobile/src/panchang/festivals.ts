@@ -1,4 +1,5 @@
 import type { KathaCatalogEntry, ObservanceRule, Paksha } from './types';
+import { ruleVisibleForLenses, type ObservanceLens } from './lenses';
 
 const VratListUrl = 'https://www.drikpanchang.com/vrats/hindu-vrat-list.html';
 const HinduCalendarUrl = 'https://www.drikpanchang.com/calendars/hindu/hinducalendar.html';
@@ -61,6 +62,7 @@ function createRule(seed: ObservanceSeed): ObservanceRule {
     nameEn: seed.nameEn,
     category,
     visibility: seed.visibility ?? 'default',
+    lens: seed.lens,
     ruleType: seed.ruleType ?? (seed.type === 'solar' ? 'solar-sankranti' : 'lunar-tithi'),
     recurrence: seed.recurrence ?? 'annual',
     type: seed.type,
@@ -506,9 +508,9 @@ export const MONTHLY_VRAT_RULES: ObservanceRule[] = [
 
 export const ADVANCED_OBSERVANCE_RULES: ObservanceRule[] = [
   hidden({ id: 'mahadwadashi', nameHi: 'महाद्वादशी', nameEn: 'Mahadwadashi', searchTerms: ['dwadashi', 'advanced ekadashi'], bhogId: 'ekadashi-food' }),
-  createRule({ id: 'karthigai-vrat', nameHi: 'कार्तिगई व्रत', nameEn: 'Karthigai Vrat', category: 'regional', visibility: 'regional', recurrence: 'catalog', ruleType: 'nakshatra', marker: 'dot', sourceUrl: VratListUrl, nakshatra: 3, deityHi: 'भगवान कार्तिकेय', deityEn: 'Lord Kartikeya' }),
+  createRule({ id: 'karthigai-vrat', nameHi: 'कार्तिगई व्रत', nameEn: 'Karthigai Vrat', category: 'regional', visibility: 'default', lens: ['tamil'], recurrence: 'catalog', ruleType: 'nakshatra', marker: 'dot', sourceUrl: VratListUrl, nakshatra: 3, deityHi: 'भगवान कार्तिकेय', deityEn: 'Lord Kartikeya' }),
   hidden({ id: 'shraddha-dates', nameHi: 'श्राद्ध तिथियां', nameEn: 'Shraddha Dates', category: 'festival', bhogId: 'pitru-offering' }),
-  createRule({ id: 'rohini-vrat', nameHi: 'रोहिणी व्रत', nameEn: 'Rohini Vrat', category: 'regional', visibility: 'regional', recurrence: 'catalog', ruleType: 'nakshatra', marker: 'dot', sourceUrl: VratListUrl, nakshatra: 4, deityHi: 'जैन व्रत परंपरा', deityEn: 'Jain vrat tradition' }),
+  createRule({ id: 'rohini-vrat', nameHi: 'रोहिणी व्रत', nameEn: 'Rohini Vrat', category: 'regional', visibility: 'default', lens: ['jain'], recurrence: 'catalog', ruleType: 'nakshatra', marker: 'dot', sourceUrl: VratListUrl, nakshatra: 4, deityHi: 'जैन व्रत परंपरा', deityEn: 'Jain vrat tradition' }),
   hidden({ id: 'chandra-darshan', nameHi: 'चंद्र दर्शन', nameEn: 'Chandra Darshan', category: 'festival', ruleType: 'relative-to-lunar' }),
   hidden({ id: 'ishti-anvadhan', nameHi: 'इष्टि और अन्वाधान', nameEn: 'Ishti and Anvadhan', category: 'festival' }),
   hidden({ id: 'iskcon-ekadashi', nameHi: 'इस्कॉन एकादशी', nameEn: 'ISKCON Ekadashi', bhogId: 'ekadashi-food' }),
@@ -528,8 +530,26 @@ export const OBSERVANCE_RULES: ObservanceRule[] = [
   ...ADVANCED_OBSERVANCE_RULES,
 ];
 
-export function getObservanceCatalog(options: { includeHidden?: boolean } = {}): ObservanceRule[] {
-  return options.includeHidden
+/**
+ * The browsable catalog.
+ *
+ * `lenses` is the user's क्षेत्रीय पंचांग set; omitting it means the EMPTY set, so
+ * every existing caller keeps today's list byte for byte and a lensed rule stays
+ * out of the catalog until its calendar is turned on. `includeHidden` is the
+ * separate "advanced" axis and does not bypass the lens gate — an advanced rule
+ * that belongs to a calendar the user has not chosen is still not theirs.
+ *
+ * SEARCH IS DELIBERATELY NOT FILTERED (see `searchObservances`): a user who types
+ * पर्युषण by name has asked for it, lens or no lens.
+ */
+export function getObservanceCatalog(
+  options: { includeHidden?: boolean; lenses?: ReadonlySet<ObservanceLens> } = {}
+): ObservanceRule[] {
+  const lenses = options.lenses ?? EMPTY_LENSES;
+  const base = options.includeHidden
     ? OBSERVANCE_RULES
     : OBSERVANCE_RULES.filter((rule) => rule.visibility === 'default');
+  return base.filter((rule) => ruleVisibleForLenses(rule.lens, lenses));
 }
+
+const EMPTY_LENSES: ReadonlySet<ObservanceLens> = new Set();

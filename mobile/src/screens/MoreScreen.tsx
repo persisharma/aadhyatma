@@ -27,6 +27,12 @@ import { isEmptyKulRecord, kuldevDisplayName } from '@/panchang/kulParampara';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import { useFontScale } from '@/contexts/FontScaleContext';
 import LanguagePickerSheet from '@/components/LanguagePickerSheet';
+// Lazy: a sheet that only exists after a tap has no business on the launch
+// graph (`launchGraph.test.ts`), and `React.lazy` is the same treatment
+// `TabNavigator` gives the Panchang stack.
+const LensPickerSheet = React.lazy(() => import('@/components/LensPickerSheet'));
+import { getLensDefinition, LENS_COUNT } from '@/panchang/lenses';
+import { useLenses } from '@/panchang/useLenses';
 import ReadingSizePickerSheet, { readingSizeLabel } from '@/components/ReadingSizePickerSheet';
 import ReadAloudSettingsSheet, { readAloudRowLabel } from '@/components/ReadAloudSettingsSheet';
 import { READ_ALOUD_GLYPH } from '@/components/readAloud/ReadAloudButton';
@@ -157,6 +163,23 @@ export default function MoreScreen({ navigation }: Props) {
       clearTimeout(handle);
     };
   }, [smaranEntries]);
+  // क्षेत्रीय पंचांग row state — the ACTIVE calendars by name, not a bare count,
+  // for the same reason as the ledger row: a count says nothing about where the
+  // user's extra dates came from.
+  const [lensSheetVisible, setLensSheetVisible] = useState(false);
+  const { lenses } = useLenses();
+  const activeLensCount = lenses.size;
+  const lensState =
+    activeLensCount === 0
+      ? pick(lang, { hi: `${LENS_COUNT} उपलब्ध`, en: `${LENS_COUNT} available`, gu: `${LENS_COUNT} ઉપલબ્ધ`, kn: `${LENS_COUNT} ಲಭ್ಯ` })
+      : [...lenses]
+          .map((id) => {
+            const def = getLensDefinition(id);
+            if (!def) return id;
+            return lang === 'en' ? def.nameEn : def.nameHi;
+          })
+          .slice(0, 2)
+          .join(' · ') + (activeLensCount > 2 ? ` +${activeLensCount - 2}` : '');
   const smaranState =
     smaranEntries.length === 0
       ? 'NEW'
@@ -398,6 +421,28 @@ export default function MoreScreen({ navigation }: Props) {
                   }
                   testID="more-pitru-smaran"
                 />
+                {/* क्षेत्र (PRD-42 W2) — the lens set's second permanent home,
+                    grouped with the other personal-calendar objects. The ledger
+                    row on व्रत-पर्व is where it is discovered; this is where a
+                    user goes LOOKING once they half-remember the setting. Opens
+                    the same sheet. */}
+                <SettingsRow
+                  icon="❖"
+                  iconBg={colors.gold}
+                  iconFontFamily={typography.readerTitle.fontFamily}
+                  iconFontSize={15}
+                  label={pick(lang, { hi: 'क्षेत्रीय पंचांग', en: 'Regional calendars', gu: 'પ્રાદેશિક પંચાંગ', kn: 'ಪ್ರಾದೇಶಿಕ ಪಂಚಾಂಗ' })}
+                  labelFontFamily={labelFont}
+                  state={lensState}
+                  stateFontFamily={activeLensCount === 0 ? fontFamilies.interSemiBold : fontFamilies.inter}
+                  onPress={() => setLensSheetVisible(true)}
+                  accessibilityLabel={
+                    activeLensCount > 0
+                      ? `Regional calendars, ${activeLensCount} on`
+                      : 'Regional calendars, none selected'
+                  }
+                  testID="more-regional-calendars"
+                />
                 {/* जन्म तिथि (PRD-29 Part A) — the living side of the tithi
                     ledger: count + the soonest Hindu birthday. */}
                 <SettingsRow
@@ -589,6 +634,11 @@ export default function MoreScreen({ navigation }: Props) {
       <LanguagePickerSheet visible={langSheet} onClose={() => setLangSheet(false)} />
       <ReadingSizePickerSheet visible={sizeSheet} onClose={() => setSizeSheet(false)} />
       <ReadAloudSettingsSheet visible={readAloudSheet} onClose={() => setReadAloudSheet(false)} />
+      {lensSheetVisible && (
+        <React.Suspense fallback={null}>
+          <LensPickerSheet visible onClose={() => setLensSheetVisible(false)} />
+        </React.Suspense>
+      )}
 
       {/* Disclaimer Modal */}
       <Modal

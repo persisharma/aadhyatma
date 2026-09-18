@@ -32,7 +32,14 @@ test('source catalog captures default and advanced Drik Vrat list entries', () =
   assert.ok(defaultRules.every((rule) => rule.visibility === 'default'));
 
   assert.ok(allRules.some((rule) => rule.id === 'mahadwadashi' && rule.visibility === 'advanced'));
-  assert.ok(allRules.some((rule) => rule.id === 'karthigai-vrat' && rule.visibility === 'regional'));
+  // `karthigai-vrat` was the second occupant of the retired `visibility: 'regional'`
+  // (PRD-42 W2). It is now `default` + `lens: ['tamil']`, so it reaches the catalog
+  // only once the तमिऴ calendar is on — see `lens.test.ts` for the full contract.
+  assert.ok(allRules.every((rule) => rule.visibility !== 'regional'));
+  assert.ok(
+    getObservanceCatalog({ includeHidden: true, lenses: new Set(['tamil']) })
+      .some((rule) => rule.id === 'karthigai-vrat' && rule.visibility === 'default')
+  );
   assert.ok(allRules.some((rule) => rule.id === 'iskcon-ekadashi' && rule.visibility === 'advanced'));
   assert.ok(allRules.length > defaultRules.length);
 });
