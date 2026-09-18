@@ -15,7 +15,7 @@ Remembrance guide — 106 steps and 12 transcribed mantras total. The seventh gu
 it does not present itself as a complete Shraddha or invent fixed gotra/name/mantra formulas. The feature deliberately
 reuses the app's established interaction language: Today's Practice for preparation and the Daily
 Bhakti/readers card + horizontal pager for conduct. Phase 2B shipped every deferred surface:
-search rows, the Observance Detail "How to observe" card, the Home DISCOVER spotlight,
+search rows, the Observance Detail "How to observe" card, the Home door (a DISCOVER spotlight until Sept 2026, now the पूजा विधि उपकरण tile — see [[home]]),
 keep-awake in conduct mode, and Add-to-Routine for recurring vidhis.
 
 ## Details
@@ -44,7 +44,7 @@ reviewer). Flipping the status lights up every surface with zero code change. Th
 **Stacks.** The three vidhi routes are registered on the **Home, Panchang and More stacks**,
 declared once in the shared `VidhiStackParamList` that each stack's param list intersects
 (`navigation/types.ts`), with the screens typed against that shared list. Every door pushes in place:
-Home's DISCOVER card, search rows and routine items on the Home stack; the day-panel pill, the
+Home's उपकरण tile, search rows and routine items on the Home stack; the day-panel pill, the
 Vrat & Parv tile and Observance Detail on the Panchang stack; the personal Pitru doors on the More
 stack. Before Aug 2026 the Home-side doors
 did a cross-tab `navigate('PanchangTab', panchangTabTarget(…))`, so back from the catalog popped to
@@ -58,8 +58,8 @@ Navratri Begins, Karwa Chauth, and Maha Shivaratri. Phase 2B doors: each vidhi c
 **search section row** (`searchIndex.buildSectionEntries` appends them; sourceId = vidhi id; no
 verse rows; `SearchScreen.openSection` opens `VidhiDetail` on the Home stack); the
 **Observance Detail** screen renders a "पूजा विधि · How to observe" card for rules whose
-`vidhiId` resolves (carrying the next occurrence's `dateMs`); and Home's DISCOVER carousel
-carries a पूजा विधि spotlight opening the catalog.
+`vidhiId` resolves (carrying the next occurrence's `dateMs`); and Home carries a पूजा विधि door into
+the catalog — the fourth **उपकरण** tile since TRD-42, a shuffling DISCOVER spotlight before that.
 
 The seventh entry contributes a `स्मरण विधि` search row rather than claiming to be a festival puja.
 It is linked from the applicable person's next annual or Pitru-Paksha occurrence, the Pitru-Paksha

@@ -94,11 +94,18 @@ describe('cross-tab navigation targets', () => {
     expect(entryRoutes.match(/initial: false \};/g)).toHaveLength(2);
   });
 
-  test('the Home widgets spotlight routes through moreTabTarget', () => {
+  test('the Home widgets door routes through moreTabTarget', () => {
     // The regression that motivated this file: a cold tap on the DISCOVER
     // widgets card made WidgetGallery the More stack's initial route, stranding
     // the user with a dead back button and no route to the hub.
-    const home = fs.readFileSync(path.join(SRC, 'screens', 'HomeScreen.tsx'), 'utf8');
-    expect(home).toContain("rootNav.navigate('MoreTab', moreTabTarget('WidgetGallery'))");
+    //
+    // That card is now a नया feed entry (TRD-42), so the guard follows it: the
+    // feed still names WidgetGallery, and the section that opens a feed entry
+    // still routes every More-bound target through the helper.
+    const feed = fs.readFileSync(path.join(SRC, 'data', 'home', 'featureFeed.ts'), 'utf8');
+    expect(feed).toContain("screen: 'WidgetGallery'");
+
+    const section = fs.readFileSync(path.join(SRC, 'components', 'NewFeaturesSection.tsx'), 'utf8');
+    expect(section).toContain("rootNav.navigate('MoreTab', moreTabTarget(target.screen))");
   });
 });

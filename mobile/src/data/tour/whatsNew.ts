@@ -26,13 +26,42 @@ export type WhatsNewEntry = {
  * Current app version. Must match `expo.version` in `mobile/app.json`. This is
  * the key against which the user's "last seen what's new" is compared.
  */
-export const APP_TOUR_VERSION = '1.4.8';
+export const APP_TOUR_VERSION = '1.4.9';
 
 /**
  * Per-version what's-new content. The latest entry is shown when the user
  * first opens this version of the app after updating.
  */
 export const whatsNew: Readonly<Record<string, WhatsNewEntry>> = {
+  '1.4.9': {
+    version: '1.4.9',
+    items: [
+      {
+        titleHi: 'नया मुख पृष्ठ',
+        titleEn: 'A new Home',
+        bodyHi:
+          'मुख पृष्ठ अब आज से शुरू होता है — पंचांग, साधना, और नौ उपकरण एक ही पंक्ति में: व्रत-पर्व, मुहूर्त, कुंडली, पूजा विधि, जप, वास्तु, तीर्थ, पितृ स्मरण एवं दान-पुण्य। हर उपकरण हर बार उसी जगह मिलेगा।',
+        bodyEn:
+          'Home now opens on today — the Panchang, your sadhana, and nine tools in one fixed row: vrat & parv, muhurat, kundali, puja vidhi, japa, vastu, pilgrimage, pitru smaran and daan-punya. Each one sits in the same square on every visit.',
+      },
+      {
+        titleHi: 'दान-पुण्य',
+        titleEn: 'Daan Punya',
+        bodyHi:
+          'जप · व्रत · दान — पहले महत्व समझें, फिर दें। पर्व के दिन, या किसी भी दिन। निजी दान-लेखा उपकरण पंक्ति में।',
+        bodyEn:
+          'Japa, vrat, daan — understand the why first, then give, on a parv day or any day. Your private register lives behind the दान-पुण्य tool.',
+      },
+      {
+        titleHi: 'पाठ — सारे ग्रन्थ एक जगह',
+        titleEn: 'One door to the whole library',
+        bodyHi:
+          'सोलह टाइलों की जाली अब पाठ में है। वहाँ देवता, उद्देश्य और पाठ के प्रकार — तीनों से खोजें, हर श्रेणी की गिनती सहित। मुख पृष्ठ से एक स्पर्श दूर।',
+        bodyEn:
+          'The sixteen-tile grid moved into the पाठ library. Browse by deity, by purpose or by form — all three on one screen, each category with its real count. One tap from Home.',
+      },
+    ],
+  },
   '1.4.8': {
     version: '1.4.8',
     items: [

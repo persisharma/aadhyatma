@@ -1,14 +1,22 @@
-# NEW Content Badge — Home category-tile coverage
+# NEW Content Badge — पाठ library category-tile coverage
 #
-# Complements new-content-badge-smoke.yaml (which covers the stotram CategoryList
-# path). This flow exercises the Home-screen CategoryCard badges (hasNewInCategory):
+# Was `new-content-badge-home-smoke.yaml`. The badges it asserts used to sit on
+# Home's 16-tile grid; the grid moved to the Library screen behind Home's पाठ
+# door (TRD-42 §5.3), so the flow follows it. The contract itself did not change
+# — a category tile lights up iff it holds debut-new content, and clears when
+# every such entry has been opened.
+#
+# Note the split this flow now straddles: नया on Home tracks *features* and
+# clears per card; this badge tracks *texts* and clears per category. Two
+# registries, two lifecycles, deliberately not merged.
 #
 #   1. SCOPING — after the dev "upgrade" seed, the per-category badge lights up
 #      for exactly the categories that hold debut-new content: stotram (Krishna
 #      Stotram, Bajrang Baan, Ram Stuti — addedInVersion 1.3.0), aarti
 #      (saraswati-aarti — 1.3.1), sanskar (its 7 sections — 1.3.1, added in #88),
 #      AND chalisa (Gayatri Chalisa — 1.4.4). The categories with no debut-new
-#      content (granth, japam) + By Deity must render WITHOUT the badge.
+#      AND granth (newly tagged content). Only japam and the देवता rail must
+#      render WITHOUT the badge.
 #   2. CLEAR — marking all three stotram debut-new entries seen flips
 #      hasNewInCategory('stotram') to false: the tile loses its badge, persisted.
 #      (Sanskar's badge persists — only stotram's clear is asserted here.)
@@ -19,12 +27,12 @@
 # pattern cannot match the ". New." variant).
 #
 # Dev controls (dev-seed-new-content / dev-reset-new-content) are __DEV__-only
-# Home pills, identical to new-content-badge-smoke.yaml. Tapping a library card
-# fires markSeen(id) BEFORE navigating, so a tap + "Back" is enough to mark seen.
+# pills and stay on **Home**, below the नया section — so the seed happens before
+# the library hop, and the cleanup needs one Back first.
 
 appId: com.prashantsharma.vedansh
 ---
-# ── Setup: force a clean slate, then simulate an update ──
+# ── Setup: force a clean slate, then simulate an update (both on Home) ──
 - runFlow: _launch.yaml
 - scrollUntilVisible:
     element:
@@ -45,25 +53,15 @@ appId: com.prashantsharma.vedansh
     id: "dev-seed-new-content"
 - waitForAnimationToEnd
 
-# ── 1. SCOPING: stotram tile NEW; every other tile renders without NEW ──
-- scrollUntilVisible:
-    element:
-      text: "Hymns & Praise. New. Tap to open."   # stotram → HAS badge
-    direction: UP
-    timeout: 10000
-- scrollUntilVisible:
-    element:
-      text: "Sacred Books. New. Tap to open."     # granth → HAS badge (newly tagged granth content)
-    direction: UP
-    timeout: 10000
+# ── 1. SCOPING: walk the grid in registry order (chalisa, aarti, stotram |
+#    granth, japam, sanskar | theerth, kavacham, ashtakam | suktam) ──
+- runFlow: _open-library.yaml
+# The देवता rail leads the screen and is never badge-tracked — its labels have
+# no ". New." form at all.
+- assertVisible: "Shri Rama\\. Tap to open\\."
 - scrollUntilVisible:
     element:
       text: "Chalisa. New. Tap to open."          # chalisa → HAS badge (Gayatri Chalisa, 1.4.4)
-    direction: DOWN
-    timeout: 10000
-- scrollUntilVisible:
-    element:
-      text: "Japa & Mantras. Tap to open."        # japam → plain
     direction: DOWN
     timeout: 10000
 - scrollUntilVisible:
@@ -73,16 +71,26 @@ appId: com.prashantsharma.vedansh
     timeout: 10000
 - scrollUntilVisible:
     element:
-      text: "Good Habits. New. Tap to open."      # sanskar → HAS badge (7 debut-new sections, 1.3.1)
+      text: "Hymns & Praise. New. Tap to open."   # stotram → HAS badge
     direction: DOWN
     timeout: 10000
 - scrollUntilVisible:
     element:
-      text: "By Deity. Tap to open."              # deity tile → never tracked
+      text: "Sacred Books. New. Tap to open."     # granth → HAS badge (newly tagged granth content)
+    direction: DOWN
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Japa & Mantras. Tap to open."        # japam → plain
+    direction: DOWN
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Good Habits. New. Tap to open."      # sanskar → HAS badge (7 debut-new sections, 1.3.1)
     direction: DOWN
     timeout: 10000
 
-# ── 2. CLEAR: mark all three stotram debut-new entries seen ──
+# ── 2. CLEAR: mark all four stotram debut-new entries seen ──
 - scrollUntilVisible:
     element:
       text: "Hymns & Praise. New. Tap to open."
@@ -93,9 +101,9 @@ appId: com.prashantsharma.vedansh
 
 # Saraswati Stotram (addedInVersion 1.3.1) — a 4th debut-new stotram entry added
 # after this flow was first written. It sits at the top of the list; it must be
-# opened too, else the category keeps one unseen NEW entry and its Home tile
-# badge never clears (hasNewInCategory stays true), failing the plain-form
-# assertion below.
+# opened too, else the category keeps one unseen NEW entry and its tile badge
+# never clears (hasNewInCategory stays true), failing the plain-form assertion
+# below.
 - scrollUntilVisible:
     element:
       text: "Saraswati Stotram\\..*Tap to open\\."
@@ -159,7 +167,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Back"
 - waitForAnimationToEnd
 
-# Back to Home — stotram tile must now render WITHOUT the badge.
+# Back to the Library — the stotram tile must now render WITHOUT the badge.
 - tapOn: "Back"
 - waitForAnimationToEnd
 - scrollUntilVisible:
@@ -168,7 +176,9 @@ appId: com.prashantsharma.vedansh
     direction: UP
     timeout: 10000
 
-# ── Cleanup: reset NEW state so later flows start clean ──
+# ── Cleanup: back to Home, reset NEW state so later flows start clean ──
+- tapOn: "Back"
+- waitForAnimationToEnd
 - scrollUntilVisible:
     element:
       id: "dev-reset-new-content"

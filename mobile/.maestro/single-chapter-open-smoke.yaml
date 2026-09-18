@@ -41,12 +41,16 @@ appId: com.prashantsharma.vedansh
 - tapOn: "English"
 - waitForAnimationToEnd
 
-# ── Home → Hymns & Praise (stotram) category ──
+# ── Home → पाठ → Hymns & Praise (stotram) category ──
 - tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
-- extendedWaitUntil:
-    visible: "Hymns & Praise\\..*Tap to open\\."
-    timeout: 15000
+# The 16-tile grid left Home for the पाठ library (TRD-42 §5.3).
+- runFlow: _open-library.yaml
+- scrollUntilVisible:
+    element:
+      text: "Hymns & Praise\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 10000
 - tapOn: "Hymns & Praise\\..*Tap to open\\."
 - waitForAnimationToEnd
 

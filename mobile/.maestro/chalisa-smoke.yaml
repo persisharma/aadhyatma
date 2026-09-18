@@ -13,11 +13,17 @@
 appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
+# The 16-tile grid left Home for the पाठ library (TRD-42 §5.3).
+- runFlow: _open-library.yaml
 
 # Open Chalisa category. The `.*` absorbs an optional " New." — the Chalisa
 # tile now flags NEW in upgrader state because Gayatri Chalisa is debut-new
 # (addedInVersion 1.4.4). Mirrors the stotram-smoke category-tile selector.
-- assertVisible: "Chalisa\\..*Tap to open\\."
+- scrollUntilVisible:
+    element:
+      text: "Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 10000
 - tapOn: "Chalisa\\..*Tap to open\\."
 - waitForAnimationToEnd
 

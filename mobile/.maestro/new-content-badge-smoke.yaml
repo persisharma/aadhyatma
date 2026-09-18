@@ -44,11 +44,14 @@ appId: com.prashantsharma.vedansh
     id: "dev-seed-new-content"
 - waitForAnimationToEnd
 
-# ── Step 3: Scroll back up — "Hymns & Praise" (stotram) tile is now flagged NEW ──
+# ── Step 3: Open the पाठ library — "Hymns & Praise" (stotram) is flagged NEW ──
+# The dev seed/reset pills stay on Home, but the badged category tiles moved to
+# the Library with the grid (TRD-42 §5.3).
+- runFlow: _open-library.yaml
 - scrollUntilVisible:
     element:
       text: "Hymns & Praise. New. Tap to open."
-    direction: UP
+    direction: DOWN
     timeout: 10000
 # Sanskar ("Good Habits") was also newly-added → its tile is flagged NEW too.
 - assertVisible: "Good Habits\\..*New\\..*Tap to open\\."
@@ -99,10 +102,11 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
     timeout: 60000
+- runFlow: _open-library.yaml
 - scrollUntilVisible:
     element:
       text: "Hymns & Praise. New. Tap to open."
-    direction: UP
+    direction: DOWN
     centerElement: true
     timeout: 15000
 - tapOn: "Hymns & Praise. New. Tap to open."

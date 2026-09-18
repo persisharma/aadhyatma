@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vedansh Today-First Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  /* Tokens copied verbatim from mobile/src/theme/colors.ts (source of truth).
+     Board chrome (the dark page around the phones) follows the house prototype
+     convention: docs/jijnasa-ask-prototype.html, docs/panchang-today-variants-prototype.html. */
+  :root{
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-deep:#E9D9B1;
+    --parchment-hi:#F6ECD0; --gradient-end:#F1E3BF;
+    --ink:#1A0E03; --ink-soft:#5A3A1E; --ink-muted:#6E5230;
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --gold:#A67C34; --gold-soft:#C9B896;
+    --divider:rgba(138,62,11,0.18); --saffron-tint:rgba(184,98,27,0.12); --gold-tint:rgba(166,124,52,0.14);
+    --gold-chip:rgba(166,124,52,0.22); --avoid:#9E4A2E; --avoid-chip:rgba(158,74,46,0.20); --avoid-deep:#7A3722;
+    --new-bg:rgba(184,98,27,0.16); --new-fg:#8A3E0B;
+    --card-from:#FFF5E0; --card-to:#F5DEAC; --card-border:rgba(184,98,27,0.4); --on-primary:#fff;
+    --thumb-from:#F8D291; --thumb-to:#E0A255;
+    --shadow-subtle:0 1px 4px rgba(60,30,10,.06); --shadow-card:0 2px 6px rgba(60,30,10,.10);
+    --shadow-raised:0 4px 10px rgba(60,30,10,.14);
+    --board:#1a140c; --board-ink:#e9d9b1; --board-muted:#b7a377; --board-rule:rgba(233,217,177,.14);
+    --sans:'Inter',system-ui,sans-serif; --serif:'Cormorant Garamond',Georgia,serif; --deva:'Noto Serif Devanagari','Noto Serif',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  [hidden]{display:none!important}
+  html,body{background:var(--board)}
+  body{font-family:var(--sans);color:var(--board-ink);padding:28px 24px 64px;line-height:1.5}
+  h1{font-family:var(--serif);font-weight:600;font-size:30px;color:#fff5e0;margin-bottom:2px;text-wrap:balance}
+  .sub{font-family:var(--serif);font-style:italic;color:var(--gold-soft);font-size:16px;margin-bottom:8px;max-width:72ch}
+  .legend{font-size:12.5px;color:var(--board-muted);max-width:78ch;margin-bottom:6px}
+  .legend b{color:var(--board-ink)}
+  .legend code{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:#d9c79a}
+  h2{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.6px;text-transform:uppercase;color:var(--saffron);
+     background:var(--saffron-tint);display:inline-block;padding:4px 12px;border-radius:20px;margin:34px 0 6px}
+  .rowlede{font-size:13px;color:var(--board-muted);max-width:78ch;margin-bottom:16px}
+  .wrap{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap}
+  .col{display:flex;flex-direction:column;width:340px;flex:none}
+  .cap{font-size:12px;color:var(--board-muted);margin-top:12px;line-height:1.55}
+  .cap b{color:var(--board-ink)}
+  .cap .mv{color:#d9b27a}
+
+  .phaseseg{display:flex;gap:4px;padding:3px;border:1px solid var(--board-rule);border-radius:999px;background:rgba(255,245,224,.04);margin-bottom:12px;align-self:flex-start}
+  .phaseseg button{font:600 11.5px/1 var(--sans);letter-spacing:.3px;color:var(--board-muted);background:transparent;border:0;border-radius:999px;padding:8px 12px;cursor:pointer}
+  .phaseseg button.on{background:var(--saffron);color:var(--on-primary)}
+  .hint{font-size:11.5px;color:var(--board-muted);margin:-4px 0 10px}
+
+  /* ---------- phone frame ---------- */
+  .phone{width:340px;height:720px;background:var(--parchment);border-radius:38px;border:10px solid #0d0804;
+    box-shadow:0 24px 60px rgba(0,0,0,.55);position:relative;overflow:hidden;flex:none}
+  .statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);
+    background:linear-gradient(var(--parchment-hi),var(--parchment))}
+  .statusbar .sig{font-size:10px;letter-spacing:1px}
+  .screen{position:absolute;top:32px;left:0;right:0;bottom:60px;overflow-y:auto;background:linear-gradient(var(--parchment-hi),var(--gradient-end));scrollbar-width:none}
+  .screen::-webkit-scrollbar{width:0}
+  .pad{padding:8px 16px 28px}
+  .deva{font-family:var(--deva)}
+  .lat{font-family:var(--serif)}
+  .num{font-variant-numeric:tabular-nums}
+
+  /* tab bar (design.md §17) */
+  .tabbar{position:absolute;left:0;right:0;bottom:0;height:60px;background:var(--parchment-soft);border-top:1px solid var(--divider);display:flex;padding-top:6px}
+  .tabbar button{flex:1;background:transparent;border:0;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--ink-muted);cursor:pointer;padding:0}
+  .tabbar button .lbl{font-family:var(--deva);font-weight:700;font-size:10px;line-height:1.2}
+  .tabbar button.on{color:var(--saffron)}
+  .tabbar button svg{width:22px;height:22px;display:block}
+  .tabbar button:focus-visible{outline:2px solid var(--saffron);outline-offset:-2px;border-radius:8px}
+
+  /* wordmark (§5) */
+  .wordmark{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px}
+  .wordmark .rule{width:26px;height:1px;background:var(--saffron)}
+  .wordmark .om{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--saffron);display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:15px;color:var(--saffron-deep)}
+  .wordmark .name{font-family:var(--deva);font-weight:700;font-size:26px;color:var(--ink);line-height:1.1}
+  .tagline{font-family:var(--serif);font-style:italic;text-align:center;font-size:13px;letter-spacing:.6px;color:var(--ink-muted);margin:2px 0 12px}
+
+  .slabel{font-family:var(--deva);font-weight:600;font-size:12px;color:var(--ink-muted);margin:16px 0 8px;display:flex;justify-content:space-between;align-items:baseline}
+  .slabel .more{font-size:11.5px;color:var(--saffron-deep)}
+  .slabel.latin{font-family:var(--sans);font-weight:600;font-size:10.5px;letter-spacing:2.2px;text-transform:uppercase}
+
+  /* cards */
+  .card{border-radius:18px;border:1px solid var(--card-border);background:linear-gradient(var(--card-from),var(--card-to));box-shadow:var(--shadow-raised);padding:14px}
+  .soft{border-radius:18px;border:1px solid var(--divider);background:var(--parchment-soft);box-shadow:var(--shadow-card);padding:14px}
+  .eyebrow{font-family:var(--deva);font-weight:700;font-size:11px;color:var(--saffron-deep)}
+  .chev{color:var(--saffron-deep);font-size:15px;line-height:1}
+  .pill{display:inline-block;font-family:var(--deva);font-size:10.5px;padding:3px 8px;border-radius:999px;white-space:nowrap}
+  .pill .tm{font-family:var(--serif);font-weight:600;font-size:11px}
+  .pill.obs{background:var(--saffron-tint);color:var(--saffron-deep)}
+  .pill.gold{background:var(--gold-chip);color:var(--saffron-deep)}
+  .pill.avoid{background:var(--avoid-chip);color:var(--avoid-deep)}
+  .pill.new{font-family:var(--sans);font-weight:600;font-size:8.5px;letter-spacing:1.4px;background:var(--new-bg);color:var(--new-fg);padding:3px 7px}
+  .btn{display:inline-flex;align-items:center;gap:4px;font-family:var(--deva);font-size:11.5px;color:var(--saffron-deep);background:var(--saffron-tint);border:1px solid var(--card-border);border-radius:999px;padding:5px 10px;white-space:nowrap}
+  .btn.fill{background:var(--saffron);color:var(--on-primary);border-color:var(--saffron)}
+  .tap{cursor:pointer}
+  .tap:focus-visible{outline:2px solid var(--saffron);outline-offset:2px}
+
+  /* chip row on the Today strip (§48) */
+  .chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:10px -14px 0;padding:0 14px}
+  .chips::-webkit-scrollbar{height:0}
+
+  /* ════════════════════════════════════════════════════════════════════
+     CategoryIcon port — every number below is copied from the StyleSheet in
+     mobile/src/components/CategoryIcon.tsx. Those icons are View compositions
+     (absolute boxes, borders, rotations), not SVG, so they map 1:1 to CSS:
+     the page is box-sizing:border-box exactly like React Native's box model,
+     and RN's 0×0 + transparent-side border triangle is the same CSS trick.
+     `color` = saffron-deep, `accent` = gold, as CategoryIcon's paint prop sets.
+     The frame is scaled 0.88 because this 340px phone stands in for 390pt.
+     ════════════════════════════════════════════════════════════════════ */
+  .ci{position:relative;display:block;flex:none;transform:scale(.88);transform-origin:center center}
+  .ci i{position:absolute;display:block}
+  .ci.sm{transform:scale(.74)}
+
+  /* शिखर · तीर्थ (ShikharaIcon) */
+  .ci-shikhara{width:34px;height:32px}
+  .ci-shikhara .pole{top:0;left:16.25px;width:1.5px;height:6px;border-radius:1px;background:var(--saffron-deep)}
+  .ci-shikhara .flag{top:0;left:18px;width:0;height:0;border-top:2px solid transparent;border-bottom:2px solid transparent;border-left:5px solid var(--gold)}
+  .ci-shikhara .peak{top:5px;left:4px;width:0;height:0;border-left:13px solid transparent;border-right:13px solid transparent;border-bottom:20px solid var(--saffron-deep);transform:rotate(180deg)}
+  .ci-shikhara .peak2{top:11px;left:10px;width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:11px solid var(--gold);transform:rotate(180deg);opacity:.7}
+  .ci-shikhara .base{bottom:4px;left:3px;width:28px;height:3px;border-radius:1.5px;background:var(--saffron-deep)}
+  .ci-shikhara .step{bottom:0;left:6px;width:22px;height:2.5px;border-radius:1px;background:var(--gold);opacity:.85}
+
+  /* मन्दिर · देवता (TempleIcon) */
+  .ci-temple{width:34px;height:32px}
+  .ci-temple .pole{left:17px;top:1px;width:1.6px;height:7px;border-radius:1px;background:var(--saffron-deep)}
+  .ci-temple .flag{left:18.5px;top:1px;width:0;height:0;border-top:2.4px solid transparent;border-bottom:2.4px solid transparent;border-left:6px solid var(--gold)}
+  .ci-temple .roof{top:8px;left:2px;width:0;height:0;border-left:15px solid transparent;border-right:15px solid transparent;border-bottom:9px solid var(--saffron-deep)}
+  .ci-temple .cap{top:6px;left:13.5px;width:7px;height:3px;border-radius:2px;background:var(--saffron-deep)}
+  .ci-temple .prow{top:17px;left:5.5px;width:23px;height:8px;display:flex;justify-content:space-between}
+  .ci-temple .prow i{position:static;width:4.5px;height:8px;border-radius:2px;background:var(--saffron-deep)}
+  .ci-temple .base{bottom:5px;left:2.5px;width:29px;height:3.4px;border-radius:2px;background:var(--saffron-deep)}
+  .ci-temple .step{bottom:1px;left:5px;width:24px;height:2.4px;border-radius:1px;background:var(--gold);opacity:.85}
+
+  /* ताड़पत्र · ग्रन्थ (PalmLeafManuscriptIcon) */
+  .ci-granth{width:36px;height:28px}
+  .ci-granth .leaf{left:2px;width:32px;height:9px;border:1.8px solid var(--saffron-deep);border-radius:5px}
+  .ci-granth .leafA{top:3px}
+  .ci-granth .leafB{top:14px}
+  .ci-granth .line{left:9px;width:18px;height:1.5px;border-radius:1px;background:var(--gold)}
+  .ci-granth .lineA{top:7px}
+  .ci-granth .lineB{top:18px}
+  .ci-granth .thread{left:16.5px;top:1px;width:2.4px;height:26px;border-radius:1px;background:var(--saffron-deep)}
+  .ci-granth .dot{left:13.8px;top:10.5px;width:8px;height:8px;border-radius:4px;background:var(--saffron-deep)}
+
+  /* ॐ · स्तोत्रम् (OmGlyphIcon) */
+  .ci-om{width:32px;height:32px}
+  .ci-om .body{bottom:6px;left:7px;width:18px;height:14px;border:2px solid var(--saffron-deep);border-right-width:.5px;border-radius:9px}
+  .ci-om .tail{top:4px;right:5px;width:10px;height:10px;border:2px solid var(--saffron-deep);border-bottom:0;border-left:0;border-radius:5px}
+  .ci-om .cres{top:2px;right:7px;width:8px;height:5px;border:1.8px solid var(--saffron-deep);border-top:0;border-radius:4px}
+  .ci-om .dot{top:1px;right:9px;width:4px;height:4px;border-radius:2px;background:var(--saffron-deep)}
+  .ci-om .rule{bottom:2px;left:8px;width:16px;height:1.6px;border-radius:1px;background:var(--gold);opacity:.75}
+
+  /* माला · चालीसा (MalaIcon) */
+  .ci-mala{width:36px;height:32px}
+  .ci-mala .bd{width:7px;height:7px;border-radius:4px;border:1.7px solid var(--saffron-deep)}
+  .ci-mala .b1{left:5px;top:4px}
+  .ci-mala .b2{left:2px;top:12px}
+  .ci-mala .b3{left:5px;top:20px}
+  .ci-mala .b4{left:14.5px;top:23px}
+  .ci-mala .b5{right:5px;top:20px}
+  .ci-mala .b6{right:2px;top:12px}
+  .ci-mala .b7{right:5px;top:4px}
+  .ci-mala .b8{left:14.5px;top:1px}
+  .ci-mala .thread{left:17px;top:7px;width:1.6px;height:17px;border-radius:1px;background:var(--gold);opacity:.65}
+  .ci-mala .knot{left:15.5px;top:15px;width:5px;height:5px;border-radius:3px;background:var(--saffron-deep)}
+  .ci-mala .cord{left:17.2px;top:19px;width:1.6px;height:9px;border-radius:1px;background:var(--saffron-deep)}
+  .ci-mala .end{left:14px;bottom:0;width:8px;height:3px;border-radius:2px;background:var(--saffron-deep)}
+
+  /* जप (JapamBeadIcon) */
+  .ci-japam{width:34px;height:32px}
+  .ci-japam .cA{top:0;left:9px;width:3px;height:3px;border-radius:1.5px;background:var(--gold);opacity:.8}
+  .ci-japam .cB{top:0;left:15.5px;width:3px;height:3px;border-radius:1.5px;background:var(--gold);opacity:.9}
+  .ci-japam .cC{top:0;right:9px;width:3px;height:3px;border-radius:1.5px;background:var(--gold);opacity:.8}
+  .ci-japam .ctr{top:6px;left:5.5px;width:23px;height:20px;border-radius:10px;border:1.7px solid var(--saffron-deep);display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .ci-japam .win{position:static;width:11px;height:3px;border-radius:2px;margin-bottom:3px;background:var(--gold);opacity:.8}
+  .ci-japam .brow{position:static;display:flex;gap:2px}
+  .ci-japam .brow i{position:static;width:4px;height:4px;border-radius:2px;border:1.3px solid var(--saffron-deep)}
+  .ci-japam .cord{bottom:3px;left:16.2px;width:1.6px;height:4px;border-radius:1px;background:var(--saffron-deep)}
+  .ci-japam .tas{bottom:0;left:14px;width:6px;height:3px;border-radius:2px;background:var(--saffron-deep)}
+
+  /* कलश · व्रत (KalashIcon) */
+  .ci-kalash{width:34px;height:32px}
+  .ci-kalash .coco{top:0;left:12px;width:10px;height:10px;border:1.8px solid var(--saffron-deep);border-radius:5px;display:flex;align-items:center;justify-content:center}
+  .ci-kalash .coco i{position:static;width:4.5px;height:2.2px;border-radius:2px;background:var(--saffron-deep);opacity:.85}
+  .ci-kalash .lf{top:7px;width:12px;height:6px;border-top:2px solid var(--gold);border-radius:6px}
+  .ci-kalash .lfL{left:3px;transform:rotate(28deg)}
+  .ci-kalash .lfR{right:3px;transform:rotate(-28deg)}
+  .ci-kalash .neck{top:11px;left:10px;width:14px;height:2.6px;border-radius:1.5px;background:var(--saffron-deep)}
+  .ci-kalash .pot{top:14px;left:3.5px;width:27px;height:18px;border:1.9px solid var(--saffron-deep);border-radius:5px 5px 13px 13px}
+  .ci-kalash .band{top:22px;left:8.5px;width:17px;height:1.8px;border-radius:1px;background:var(--gold);opacity:.85}
+
+  /* दीया · आरती (DiyaIcon) */
+  .ci-diya{width:34px;height:32px}
+  .ci-diya .fo{top:3px;left:11.5px;width:11px;height:11px;border-radius:5.5px 0 5.5px 5.5px;background:var(--gold);transform:rotate(-45deg)}
+  .ci-diya .fi{top:7px;left:14.5px;width:5px;height:5px;border-radius:2.5px 0 2.5px 2.5px;background:var(--saffron-deep);transform:rotate(-45deg)}
+  .ci-diya .bowl{bottom:3px;left:1.5px;width:31px;height:13px;border:1.8px solid var(--saffron-deep);border-top:0;border-radius:0 0 16px 16px}
+  .ci-diya .lip{bottom:15px;left:1px;width:32px;height:2.4px;border-radius:1px;background:var(--saffron-deep)}
+
+  /* ── OPEN variants (proposed, rev 4) ──────────────────────────────────────
+     Both keep the shipped grammar: View boxes, borders, radii, and the LotusMark
+     wrapper-rotation trick (rotate a full-frame wrapper about its own centre
+     rather than setting transformOrigin, which composites inconsistently on
+     Android — see the comment in LotusMark.tsx). Only the leaves/pages splay. */
+
+  /* खुली पोथी · ग्रन्थ — the palm-leaf pothi, opened. Wider and flatter than the
+     codex below, and rounded only on the outer edge, so the two book categories
+     stay distinguishable at tile size: leaf on the left, page on the right. */
+  .ci-granth-open{width:36px;height:28px}
+  .ci-granth-open .w{left:0;top:0;width:36px;height:28px}
+  .ci-granth-open .wL{transform:rotate(-7deg)}
+  .ci-granth-open .wR{transform:rotate(7deg)}
+  .ci-granth-open .lf{top:7px;width:16px;height:15px;border:1.8px solid var(--saffron-deep)}
+  .ci-granth-open .wL .lf{left:1.5px;border-radius:7px 2px 2px 7px}
+  .ci-granth-open .wR .lf{right:1.5px;border-radius:2px 7px 7px 2px}
+  .ci-granth-open .rl{height:1.5px;border-radius:1px;background:var(--gold)}
+  .ci-granth-open .wL .r1{left:5px;top:12px;width:9px}
+  .ci-granth-open .wL .r2{left:5px;top:16px;width:6px}
+  .ci-granth-open .wR .r1{right:5px;top:12px;width:9px}
+  .ci-granth-open .wR .r2{right:5px;top:16px;width:6px}
+  .ci-granth-open .spine{left:17.2px;top:5px;width:1.6px;height:19px;border-radius:1px;background:var(--saffron-deep)}
+
+  /* खुली पुस्तक · संस्कार — the bound book, opened */
+  .ci-veda-open{width:34px;height:30px}
+  .ci-veda-open .w{left:0;top:0;width:34px;height:30px}
+  .ci-veda-open .wL{transform:rotate(-7deg)}
+  .ci-veda-open .wR{transform:rotate(7deg)}
+  .ci-veda-open .pg{top:6px;width:14px;height:19px;border:1.7px solid var(--saffron-deep);border-radius:3px}
+  .ci-veda-open .wL .pg{left:2px}
+  .ci-veda-open .wR .pg{right:2px}
+  .ci-veda-open .rl{height:1.5px;border-radius:1px;background:var(--gold)}
+  .ci-veda-open .wL .r1{left:5px;top:11px;width:8px}
+  .ci-veda-open .wL .r2{left:5px;top:15.5px;width:6px}
+  .ci-veda-open .wR .r1{right:5px;top:11px;width:8px}
+  .ci-veda-open .wR .r2{right:5px;top:15.5px;width:6px}
+  .ci-veda-open .spine{left:16.2px;top:4px;width:1.8px;height:23px;border-radius:1px;background:var(--saffron-deep)}
+
+  /* वेद पुस्तक · संस्कार (VedaManuscriptIcon) */
+  .ci-veda{width:34px;height:30px}
+  .ci-veda .pg{width:25px;height:22px;border:1.7px solid var(--saffron-deep);border-radius:3px}
+  .ci-veda .pgBack{left:6px;top:3px;border-color:var(--gold);opacity:.55}
+  .ci-veda .pgFront{left:3px;top:6px}
+  .ci-veda .spine{left:8px;top:7px;width:2.4px;height:20px;border-radius:1px;background:var(--saffron-deep)}
+  .ci-veda .r1{left:14px;top:13px;width:13px;height:1.5px;border-radius:1px;background:var(--gold)}
+  .ci-veda .r2{left:14px;top:19px;width:10px;height:1.5px;border-radius:1px;background:var(--gold)}
+  .ci-veda .seal{right:5px;bottom:4px;width:7px;height:7px;border-radius:4px;border:1.5px solid var(--saffron-deep)}
+
+  /* कवच (KavachIcon) */
+  .ci-kavach{width:32px;height:32px}
+  .ci-kavach .sh{top:2px;left:4px;width:24px;height:28px;border:2px solid var(--saffron-deep);border-radius:9px 9px 13px 13px}
+  .ci-kavach .spine{top:8px;left:14.9px;width:2.2px;height:18px;border-radius:1px;background:var(--gold);opacity:.9}
+  .ci-kavach .bar{top:15px;left:9.5px;width:13px;height:2px;border-radius:1px;background:var(--gold)}
+  .ci-kavach .arc{top:20px;left:9.5px;width:13px;height:7px;border-bottom:2px solid var(--saffron-deep);border-radius:7px}
+  .ci-kavach .bindu{top:10px;left:14px;width:4px;height:4px;border-radius:2px;background:var(--saffron-deep)}
+
+  /* अष्टकम् (AshtakamIcon) */
+  .ci-ashtakam{width:28px;height:28px}
+  .ci-ashtakam .sq{top:4px;left:4px;width:20px;height:20px;border:2px solid var(--saffron-deep)}
+  .ci-ashtakam .sqR{top:4px;left:4px;width:20px;height:20px;border:2px solid var(--gold);transform:rotate(45deg)}
+
+  /* सूक्तम् (SuktamIcon) */
+  .ci-suktam{width:34px;height:32px}
+  .ci-suktam .bindu{top:0;left:15px;width:4px;height:4px;border-radius:2px;background:var(--saffron-deep)}
+  .ci-suktam .lf{left:2px;width:30px;height:8px;border:1.8px solid var(--saffron-deep);border-radius:5px}
+  .ci-suktam .lfA{top:7px}
+  .ci-suktam .lfB{top:18px}
+  .ci-suktam .rl{left:9px;width:16px;height:1.6px;border-radius:1px;background:var(--gold)}
+  .ci-suktam .rlA{top:10.2px}
+  .ci-suktam .rlB{top:21.2px}
+  .ci-suktam .knot{left:15px;bottom:0;width:4px;height:4px;border-radius:1px;background:var(--gold);transform:rotate(45deg)}
+
+  /* उद्देश्य (PurposeIcon) */
+  .ci-purpose{width:32px;height:32px}
+  .ci-purpose .ring{top:4px;left:4px;width:24px;height:24px;border:2px solid var(--saffron-deep);border-radius:12px}
+  .ci-purpose .arrow{top:5px;left:11px;width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-bottom:12px solid var(--gold);transform:rotate(42deg)}
+  .ci-purpose .stem{top:9.5px;left:15px;width:2px;height:13px;border-radius:1px;background:var(--saffron-deep);transform:rotate(42deg)}
+  .ci-purpose .bindu{top:13.5px;left:13.5px;width:5px;height:5px;border-radius:2.5px;background:var(--saffron-deep)}
+
+  /* अन्तर्दृष्टि · कुंडली (InsightIcon) */
+  .ci-insight{width:32px;height:32px}
+  .ci-insight .eye{top:8.5px;left:2.5px;width:27px;height:15px;border:2px solid var(--saffron-deep);border-radius:14px;transform:scaleY(.78)}
+  .ci-insight .pupil{top:12.5px;left:12.5px;width:7px;height:7px;border-radius:3.5px;background:var(--gold)}
+  .ci-insight .ray{top:0;left:15px;width:2px;height:7px;border-radius:1px;background:var(--saffron-deep)}
+  .ci-insight .rayL{top:3px;left:8px;width:2px;height:6px;border-radius:1px;background:var(--saffron-deep);transform:rotate(-34deg)}
+  .ci-insight .rayR{top:3px;right:8px;width:2px;height:6px;border-radius:1px;background:var(--saffron-deep);transform:rotate(34deg)}
+
+  /* मुहूर्त (MuhuratIcon) */
+  .ci-muhurat{width:34px;height:34px}
+  .ci-muhurat .dial{top:5px;left:5px;width:24px;height:24px;border:2px solid var(--saffron-deep);border-radius:12px}
+  .ci-muhurat .hand{top:8px;left:18px;width:2px;height:9px;border-radius:1px;background:var(--saffron-deep);transform:rotate(35deg)}
+  .ci-muhurat .mark{top:6px;right:8px;width:4px;height:4px;border-radius:2px;background:var(--gold)}
+  .ci-muhurat .base{bottom:2px;left:9px;width:16px;height:2px;border-radius:1px;background:var(--gold)}
+
+  /* कमल · नित्य साधना (LotusMark, size 30: petal 5×13, hub 9) */
+  .ci-lotus{width:30px;height:30px}
+  .ci-lotus i{left:0;top:0;width:30px;height:30px}
+  .ci-lotus i::before{content:"";position:absolute;left:12.5px;top:2px;width:5px;height:13px;border-radius:5px;
+    background:linear-gradient(var(--thumb-from),var(--thumb-to));border:.5px solid var(--saffron-deep)}
+  .ci-lotus .hub{left:10.5px;top:10.5px;width:9px;height:9px;border-radius:9px;background:var(--saffron-deep)}
+  .ci-lotus .hub::before{display:none}
+
+  /* ॥ glyph tools (पूजा विधि) — the app draws these as a Devanagari danda, not a vector */
+  .ci-danda{width:34px;height:32px;display:flex;align-items:center;justify-content:center;
+    font-family:var(--deva);font-size:22px;color:var(--saffron-deep);transform:scale(1)}
+  /* पंचांग tool — the §17 tab-bar calendar glyph at icon size */
+  .ci-cal{width:32px;height:32px}
+  .ci-cal svg{width:32px;height:32px;display:block;color:var(--saffron-deep)}
+  /* वास्तु — NEW glyph, drawn in the same idiom (dik-chakra: ring, 4 ticks, north arrow) */
+  .ci-vastu{width:32px;height:32px}
+  .ci-vastu .ring{top:4px;left:4px;width:24px;height:24px;border:2px solid var(--saffron-deep);border-radius:12px}
+  .ci-vastu .tN{top:0;left:15px;width:2px;height:5px;border-radius:1px;background:var(--gold)}
+  .ci-vastu .tS{bottom:0;left:15px;width:2px;height:5px;border-radius:1px;background:var(--gold)}
+  .ci-vastu .tW{left:0;top:15px;width:5px;height:2px;border-radius:1px;background:var(--gold)}
+  .ci-vastu .tE{right:0;top:15px;width:5px;height:2px;border-radius:1px;background:var(--gold)}
+  .ci-vastu .ndl{top:9px;left:15px;width:2px;height:14px;border-radius:1px;background:var(--saffron-deep);transform:rotate(38deg)}
+  .ci-vastu .bindu{top:13.5px;left:13.5px;width:5px;height:5px;border-radius:2.5px;background:var(--saffron-deep)}
+
+  /* ---------- launcher tile (CategoryCard variant="launcher", design.md §19) ---------- */
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+  .tile{position:relative}
+  .tile .box{height:62px;border-radius:16px;border:1px solid var(--card-border);background:linear-gradient(var(--card-from),var(--card-to));
+    box-shadow:var(--shadow-card);display:flex;align-items:center;justify-content:center}
+  .tile .lbl{font-family:var(--deva);font-size:11.5px;color:var(--ink);text-align:center;margin-top:5px;white-space:nowrap}
+  .tile .pill.new{position:absolute;top:5px;right:5px}
+  .tile.wide{grid-column:1 / -1}
+
+  /* tools row — same launcher tile, 4 across */
+  .tools{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .tools .tile .box{height:56px}
+  .tools .tile .lbl{font-size:10.5px;margin-top:4px}
+
+  /* ---------- rows, strips, cards ---------- */
+  .strips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:4px 16px 6px}
+  .strips::-webkit-scrollbar{height:0}
+  .strip{flex:none;width:170px;height:50px;border-radius:14px;border:1px solid var(--card-border);background:linear-gradient(var(--card-from),var(--card-to));box-shadow:var(--shadow-card);display:flex;align-items:center;gap:8px;padding:0 10px 0 8px}
+  .thumb{width:32px;height:32px;border-radius:50%;background:linear-gradient(var(--thumb-from),var(--thumb-to));display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-weight:600;font-size:14px;color:var(--saffron-deep);flex:none}
+  .thumb.sm{width:26px;height:26px;font-size:12px}
+  .strip .nm{flex:1;font-family:var(--deva);font-weight:600;font-size:13px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+  .sadhana{display:flex;padding:10px 12px;gap:8px;align-items:stretch}
+  .sadhana .cell{flex:1;min-width:0}
+  .sadhana .cell+.cell{border-left:1px solid var(--divider);padding-left:10px}
+  .sadhana .k{font-family:var(--deva);font-size:10.5px;color:var(--ink-muted)}
+  .sadhana .v{font-family:var(--deva);font-weight:700;font-size:15px;color:var(--ink);margin-top:1px;line-height:1.2}
+  .sadhana .v .lat{font-family:var(--serif);font-weight:600;font-size:16px}
+  .sadhana .s{font-family:var(--deva);font-size:10.5px;color:var(--ink-soft);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .sadhana .bar{height:4px;border-radius:2px;background:var(--divider);margin-top:6px;overflow:hidden}
+  .sadhana .bar i{display:block;height:100%;background:var(--saffron)}
+
+  .list{border-radius:18px;border:1px solid var(--divider);background:var(--parchment-soft);box-shadow:var(--shadow-subtle);overflow:hidden}
+  .row{display:flex;align-items:center;gap:10px;padding:11px 12px;border-top:1px solid var(--divider)}
+  .row:first-child{border-top:0}
+  .row .it{width:30px;height:30px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--on-primary);font-family:var(--deva);font-size:14px;flex:none}
+  .row .lb{flex:1;font-family:var(--deva);font-weight:600;font-size:14px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .row .st{font-family:var(--deva);font-size:11.5px;color:var(--ink-muted);white-space:nowrap}
+  .row .st.lat{font-family:var(--serif);font-weight:600;font-size:12.5px}
+  .row .chev{color:var(--gold);font-size:17px}
+  .grp{font-family:var(--deva);font-weight:600;font-size:12px;color:var(--saffron-deep);margin:14px 0 6px 4px}
+
+  .newcard{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;border:1px solid var(--card-border);background:linear-gradient(var(--card-from),var(--card-to));box-shadow:var(--shadow-card);margin-top:8px}
+  .newcard .tt{flex:1;min-width:0}
+  .newcard .n{font-family:var(--deva);font-weight:600;font-size:13px;color:var(--ink)}
+  .newcard .d{font-family:var(--deva);font-size:11px;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+  .footer{font-family:var(--deva);text-align:center;font-size:14px;color:var(--ink-muted);opacity:.6;margin-top:22px}
+
+  /* shipped-frame extras */
+  .oldstrip .top{display:flex;justify-content:space-between;align-items:baseline}
+  .oldstrip .head{font-family:var(--deva);font-weight:700;font-size:18px;color:var(--ink);margin-top:2px}
+  .banner{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:18px;background:var(--parchment-soft);box-shadow:var(--shadow-card);margin-top:14px}
+  .banner .ring{width:38px;height:38px;border-radius:50%;background:var(--gold-tint);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:600;font-size:13px;color:var(--saffron-deep)}
+  .banner .t{flex:1;font-family:var(--deva);font-weight:600;font-size:14px;color:var(--ink)}
+  .banner .bar{height:4px;border-radius:2px;background:var(--divider);margin-top:6px}
+  .disc{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:6px 16px}
+  .disc::-webkit-scrollbar{height:0}
+  .dcard{flex:none;width:250px;border-radius:18px;border:1px solid var(--card-border);background:linear-gradient(var(--card-from),var(--card-to));box-shadow:var(--shadow-card);padding:12px}
+  .dcard .h{display:flex;align-items:center;gap:8px}
+  .dcard .n{font-family:var(--deva);font-weight:700;font-size:16px;color:var(--ink);flex:1}
+  .dcard .d{font-family:var(--deva);font-size:11.5px;color:var(--ink-soft);margin-top:6px;line-height:1.5}
+  .fab{position:absolute;right:14px;bottom:70px;width:46px;height:46px;border-radius:50%;background:var(--parchment-soft);border:1px solid var(--divider);box-shadow:var(--shadow-raised);display:flex;align-items:center;justify-content:center;color:var(--saffron-deep);font-size:18px}
+
+  /* library */
+  .rhead{display:flex;align-items:center;gap:10px;margin-top:6px}
+  .back{width:38px;height:38px;border-radius:50%;border:1px solid var(--divider);background:var(--parchment-soft);display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:16px;flex:none}
+  .rtitle{font-family:var(--deva);font-weight:700;font-size:20px;color:var(--ink);flex:1}
+  .search{display:flex;align-items:center;gap:8px;height:42px;margin-top:10px;padding:0 12px;border-radius:14px;background:var(--parchment-soft);border:1px solid var(--card-border);box-shadow:var(--shadow-subtle)}
+  .search .ph{font-family:var(--deva);font-size:13px;color:var(--ink-muted);flex:1}
+  .resume{display:flex;align-items:center;gap:10px;padding:10px 12px;margin-top:14px}
+  .resume .t{flex:1;min-width:0}
+  .resume .n{font-family:var(--deva);font-weight:600;font-size:14px;color:var(--ink)}
+  .resume .s{font-family:var(--deva);font-size:11px;color:var(--ink-soft);margin-top:1px}
+  .resume .bar{height:4px;border-radius:2px;background:var(--divider);margin-top:6px;overflow:hidden}
+  .resume .bar i{display:block;height:100%;width:20%;background:var(--saffron)}
+  .deities{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:2px 16px 4px}
+  .deities::-webkit-scrollbar{height:0}
+  .deity{flex:none;display:flex;flex-direction:column;align-items:center;gap:4px;width:52px}
+  .deity .c{width:46px;height:46px;border-radius:50%;background:linear-gradient(var(--thumb-from),var(--thumb-to));display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-weight:600;font-size:17px;color:var(--parchment-soft);box-shadow:var(--shadow-card)}
+  .deity .c.all{background:var(--parchment-soft);color:var(--saffron-deep);border:1px solid var(--card-border)}
+  .deity .l{font-family:var(--deva);font-size:10px;color:var(--ink-soft);white-space:nowrap}
+  .purposes{display:flex;gap:6px;flex-wrap:wrap}
+  .purpose{font-family:var(--deva);font-size:11.5px;color:var(--saffron-deep);background:var(--saffron-tint);border:1px solid var(--card-border);border-radius:999px;padding:5px 10px}
+  .cat .box{height:64px;border-radius:14px;border:1px solid var(--card-border);background:linear-gradient(var(--card-from),var(--card-to));box-shadow:var(--shadow-card);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
+  .cat .box .ci{transform:scale(.62)}
+  .cat .n{font-family:var(--deva);font-weight:600;font-size:11.5px;color:var(--ink);white-space:nowrap}
+  .cat .c{font-family:var(--sans);font-weight:600;font-size:9.5px;color:var(--saffron-deep)}
+
+  /* panchang */
+  .seg{display:flex;padding:3px;border:1px solid var(--divider);border-radius:999px;background:var(--parchment-soft);margin-top:8px}
+  .seg span{flex:1;text-align:center;font-family:var(--deva);font-size:12.5px;color:var(--ink-muted);padding:8px 0;border-radius:999px}
+  .seg span.on{background:var(--saffron-tint);color:var(--saffron-deep);font-weight:600}
+  .syshead{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:10px}
+  .locchip{display:flex;align-items:center;gap:6px;height:32px;padding:0 10px;border-radius:999px;border:1px solid var(--divider);background:var(--parchment-soft);font-family:var(--deva);font-size:11.5px;color:var(--ink-soft)}
+  .pin{width:10px;height:10px;background:var(--saffron);border-radius:6px 6px 6px 0;transform:rotate(-45deg);position:relative}
+  .pin::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--parchment-soft)}
+  .caltoggle{display:flex;border:1px solid var(--divider);border-radius:999px;background:var(--parchment-soft);padding:2px}
+  .caltoggle span{font-family:var(--deva);font-size:11px;padding:5px 9px;border-radius:999px;color:var(--ink-muted)}
+  .caltoggle span.on{background:var(--saffron-tint);color:var(--saffron-deep)}
+  .star{width:32px;height:32px;border-radius:50%;border:1px solid var(--divider);background:var(--parchment-soft);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:15px;position:relative}
+  .star i{position:absolute;top:-3px;right:-3px;width:15px;height:15px;border-radius:50%;background:var(--saffron);color:var(--parchment);font:600 9px/15px var(--sans);text-align:center;font-style:normal}
+  .myvrat{display:flex;align-items:center;gap:10px;padding:12px;border-radius:18px;background:var(--gold-tint);border:1.5px solid var(--gold);box-shadow:var(--shadow-card);margin-top:12px}
+  .myvrat .n{font-family:var(--deva);font-weight:600;font-size:14px;color:var(--ink)}
+  .myvrat .s{font-family:var(--deva);font-size:11px;color:var(--ink-muted);margin-top:1px}
+  .family .fh{display:flex;align-items:center;gap:8px;margin:16px 0 6px}
+  .family .fh .tt{font-family:var(--deva);font-weight:600;font-size:14px;color:var(--ink)}
+  .rail{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:2px 16px 6px}
+  .rail::-webkit-scrollbar{height:0}
+  .up{flex:none;width:126px;height:68px;border-radius:14px;border:1px solid var(--divider);background:var(--parchment-soft);box-shadow:var(--shadow-card);padding:9px 10px}
+  .up .t{display:flex;justify-content:space-between;align-items:center}
+  .up .g{font-family:var(--deva);font-size:13px;color:var(--saffron)}
+  .up .d{font-family:var(--sans);font-weight:600;font-size:9.5px;letter-spacing:.5px;color:var(--saffron-deep)}
+  .up .n{font-family:var(--deva);font-weight:600;font-size:12.5px;color:var(--ink);margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .half{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .ht{display:flex;align-items:center;gap:8px;height:56px;padding:0 10px;border-radius:14px;border:1px solid var(--divider);background:var(--parchment-soft);box-shadow:var(--shadow-card)}
+  .ht .g{width:30px;height:30px;border-radius:50%;background:var(--saffron-tint);display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:15px;color:var(--saffron)}
+  .ht .n{font-family:var(--deva);font-weight:600;font-size:13px;color:var(--ink)}
+  .ht .c{font-family:var(--sans);font-weight:600;font-size:10px;color:var(--saffron-deep);margin-top:1px}
+  .ht.wide{grid-column:1 / -1}
+
+  /* bhajan / bhakti / more */
+  .track{display:flex;align-items:center;gap:10px;padding:12px;border-radius:18px;border:1px solid var(--card-border);background:linear-gradient(var(--card-from),var(--card-to));box-shadow:var(--shadow-card);margin-top:8px}
+  .track .n{font-family:var(--deva);font-weight:600;font-size:15px;color:var(--ink)}
+  .track .m{font-family:var(--deva);font-size:11px;color:var(--ink-muted);margin-top:1px}
+  .track .play{width:34px;height:34px;border-radius:50%;background:var(--saffron-tint);display:flex;align-items:center;justify-content:center;color:var(--saffron-deep);font-size:12px;margin-left:auto}
+  .track .play.on{background:var(--saffron);color:var(--on-primary)}
+  .verse{position:relative;overflow:hidden}
+  .verse .plate{position:absolute;right:-18px;top:-10px;font-family:var(--deva);font-size:120px;color:var(--saffron);opacity:.06;line-height:1;pointer-events:none}
+  .verse .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .verse .src{font-family:var(--sans);font-weight:600;font-size:9px;letter-spacing:1.6px;text-transform:uppercase;color:var(--saffron-deep);background:var(--saffron-tint);border-radius:999px;padding:3px 8px;white-space:nowrap}
+  .verse .src .dv{font-family:var(--deva);letter-spacing:0;text-transform:none;font-size:10px}
+  .verse .lines{font-family:var(--deva);font-size:14.5px;line-height:1.7;color:var(--ink);margin-top:10px}
+  .verse .orn{text-align:center;font-family:var(--deva);color:var(--gold);font-size:12px;margin:8px 0 6px;letter-spacing:6px}
+  .verse .mlabel{font-family:var(--deva);font-size:10.5px;color:var(--ink-muted)}
+  .verse .meaning{font-family:var(--deva);font-size:12px;line-height:1.6;color:var(--ink-soft);margin-top:2px}
+  .verse .foot{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+  .verse .foot .from{font-family:var(--deva);font-size:11px;color:var(--ink-muted)}
+  .verse .acts{display:flex;gap:10px;align-items:center}
+  .verse .acts span{font-family:var(--deva);font-size:11.5px;color:var(--saffron)}
+  .verse .acts .ic{width:26px;height:26px;border-radius:50%;border:1px solid var(--divider);display:inline-flex;align-items:center;justify-content:center;font-size:12px;color:var(--saffron-deep);background:rgba(255,250,235,.6)}
+  .prof{display:flex;align-items:center;gap:10px;padding:12px;background:linear-gradient(var(--card-from),var(--card-to))}
+  .prof .om{width:42px;height:42px;border-radius:50%;background:var(--saffron);color:var(--on-primary);display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:20px}
+  .prof .n{font-family:var(--deva);font-weight:600;font-size:15px;color:var(--ink)}
+  .prof .s{font-family:var(--deva);font-size:11.5px;color:var(--ink-muted);margin-top:2px}
+  .prof .s b{color:var(--saffron);font-family:var(--serif);font-weight:600;font-size:13px}
+  /* A note ABOUT the prototype, not copy IN the app. Deliberately painted in the
+     dark board palette so it can never be mistaken for product UI: everything
+     inside a phone that sits on parchment is copy the app would really show. */
+  .note{font-family:var(--sans);font-size:10.5px;line-height:1.5;letter-spacing:.2px;color:var(--board-ink);
+    background:rgba(26,20,12,.93);border:1px dashed rgba(233,217,177,.4);border-radius:10px;padding:8px 10px;margin-top:12px}
+  .note b{color:#fff5e0;font-weight:600}
+  /* Real product copy: the one-release "where it went" notice after a reorg. */
+  .migrate{font-family:var(--deva);font-size:11px;line-height:1.55;color:var(--ink-soft);background:var(--gold-tint);border:1px solid var(--card-border);border-radius:12px;padding:8px 10px;margin-top:10px}
+  .lede{font-family:var(--deva);font-size:12px;line-height:1.55;color:var(--ink-muted);margin-top:10px}
+  .answer{border-radius:18px;padding:12px;background:linear-gradient(var(--card-from),var(--card-to));border:1px solid var(--card-border);box-shadow:var(--shadow-card)}
+  .answer .tg{display:inline-block;font-family:var(--deva);font-size:10px;color:var(--saffron-deep);background:var(--gold-chip);border-radius:10px;padding:2px 8px}
+  .answer h3{font-family:var(--deva);font-weight:600;font-size:15px;color:var(--ink);line-height:1.45;margin-top:6px}
+  .answer .r{display:flex;gap:8px;margin-top:6px}
+  .answer .r .k{width:56px;flex:none;font-family:var(--deva);font-size:10px;color:var(--ink-muted);padding-top:2px}
+  .answer .r .v{flex:1;font-family:var(--deva);font-size:12px;line-height:1.5;color:var(--ink)}
+  .answer .r.neg .v{color:var(--avoid-deep)}
+  .answer .w{margin-top:8px;padding-top:7px;border-top:1px solid var(--divider);font-family:var(--deva);font-size:10.5px;color:var(--saffron)}
+  .answer .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+  .askmore{display:flex;align-items:center;gap:8px;padding:11px 12px;border-radius:18px;border:1px solid var(--divider);background:var(--parchment-soft);margin-top:18px}
+  .askmore .t{flex:1;font-family:var(--deva);font-size:12px;color:var(--ink-soft)}
+
+  /* icon key board */
+  .iconkey{display:flex;flex-wrap:wrap;gap:10px;max-width:1100px;margin-top:14px}
+  .ikcell{width:104px;background:rgba(255,245,224,.04);border:1px solid var(--board-rule);border-radius:12px;padding:10px 6px;text-align:center}
+  .ikcell .box{height:50px;display:flex;align-items:center;justify-content:center;background:linear-gradient(var(--card-from),var(--card-to));border:1px solid var(--card-border);border-radius:12px}
+  .ikcell .nm{font-family:var(--deva);font-size:11px;color:var(--board-ink);margin-top:6px}
+  .ikcell .src{font-family:ui-monospace,Menlo,monospace;font-size:9px;color:var(--board-muted);margin-top:2px;line-height:1.3}
+  .ikcell.new{border-color:rgba(184,98,27,.5)}
+  .ikcell.new .src{color:#d9b27a}
+
+  /* ledger */
+  .tablewrap{overflow-x:auto;margin-top:14px;max-width:1100px}
+  table{border-collapse:collapse;width:100%;min-width:720px;font-size:12.5px}
+  th{text-align:left;font-family:var(--sans);font-weight:600;font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--board-muted);padding:8px 10px;border-bottom:1px solid var(--board-rule)}
+  td{padding:9px 10px;border-bottom:1px solid var(--board-rule);vertical-align:top;color:var(--board-ink);line-height:1.5}
+  td:first-child{color:#fff5e0;font-weight:500}
+  td.now{color:var(--board-muted)}
+  .notes{max-width:78ch;font-size:12.5px;color:var(--board-muted);margin-top:14px;line-height:1.6}
+  .notes li{margin-top:5px}
+  .notes b{color:var(--board-ink)}
+  @media (prefers-reduced-motion: reduce){*{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<h1>वेदांश़ <span class="lat">Today-First Home</span> <span class="lat" style="font-size:17px;color:var(--gold-soft)">· rev 4</span></h1>
+<div class="sub">The proposed होम and पाठ surfaces rebuilt in the app's parchment system, token-exact from <code>colors.ts</code>, on Saturday 5 September 2026 in Ujjain, the day and city of the reference screenshots.</div>
+<div class="legend"><b>New in rev 4 — the books open.</b> The app is a reading app, yet its two book categories shipped as closed objects: ग्रन्थ as a pothi bound shut with its thread, संस्कार as a shut codex. Both are now drawn open, splayed from a centre spine with ruled lines on each side, in the same View-composition grammar. The comparison sits in the icon key below. The shipped frame on the left keeps the closed glyphs, because that is what is on the store today.</div>
+<div class="legend"><b>From rev 3 — the real icons.</b> Earlier passes stood the launcher glyphs in as Devanagari letters. Every tile below now draws the app's actual glyph, ported line by line from the StyleSheet in <code>CategoryIcon.tsx</code>: the mala, the diya, the ॐ, the palm-leaf manuscript, the japa counter, the kalash, the shikhara, the temple, the eight-point ashtakam star, the seeing-eye, the ghatika dial. Those icons are React Native <code>View</code> compositions — absolutely positioned boxes with borders, radii and rotations, no SVG — which is why they port to CSS exactly rather than approximately.</div>
+<div class="legend"><b>Two layout changes still stand from rev 2:</b> the आज का पंचांग strip is kept exactly as shipped and still opens the Panchang tab, and the दैनिक श्लोक card is gone from Home — the daily verse stays on the untouched भक्ति tab. The floating search button stays with it.</div>
+<div class="legend"><b>One rule for reading these screens:</b> everything on parchment is copy the app would really show. Anything on the dark board, inside a phone or out, is a note about the prototype. An earlier pass broke that rule by captioning the नया header with its own lifecycle rule, which is a spec line, not something a user should ever be told on screen.</div>
+<div class="legend"><b>Real vs illustrative:</b> every glyph, the panchang headline, the अभिजीत/राहु काल windows, Ganesh Chaturthi on Mon 14 Sep, and every category count come from shipped code. Streak, follow counts and the "जारी रखें" position are <b>illustrative placeholders</b>; the deity rail uses letter discs where the app draws its 21 hand-made <code>DeityIcon</code> glyphs.</div>
+
+<h2>Row 1 · अभी vs प्रस्तावित</h2>
+<div class="rowlede">Left: Home as shipped in 1.4.8. Right: the proposed Home, interactive — tap the आज का पंचांग strip (still opens Panchang), the पाठ row (pushes the library), and the tab bar; भक्ति is untouched.</div>
+
+<div class="wrap">
+
+  <div class="col">
+    <div class="phaseseg" aria-hidden="true"><button class="on" tabindex="-1">अभी · 1.4.8</button></div>
+    <div class="hint">&nbsp;</div>
+    <div class="phone">
+      <div class="statusbar"><span>10:52</span><span class="sig">▪▪▪ ⌒ 12</span></div>
+      <div class="screen"><div class="pad">
+        <div class="wordmark"><span class="rule"></span><span class="om">ॐ</span><span class="name">वेदांश़</span><span class="om">ॐ</span><span class="rule"></span></div>
+        <div class="tagline">Sacred Texts · Daily Reading</div>
+
+        <div class="card oldstrip">
+          <div class="top"><span class="eyebrow">आज का पंचांग</span><span class="chev">›</span></div>
+          <div class="head">शनिवार · कृष्ण नवमी</div>
+          <div class="chips">
+            <span class="pill gold">अभिजीत <span class="tm num">11:53 AM – 12:42 PM</span></span>
+            <span class="pill avoid">राहु काल <span class="tm num">9:13 – 10:45 AM</span></span>
+          </div>
+        </div>
+
+        <div class="slabel">आज के लिए</div>
+        <div class="strips">
+          <div class="strip"><span class="thumb">ह</span><span class="nm">हनुमान चालीसा</span><span class="chev">›</span></div>
+          <div class="strip"><span class="thumb">सु</span><span class="nm">सुंदरकाण्ड</span><span class="chev">›</span></div>
+          <div class="strip"><span class="thumb">ब</span><span class="nm">बजरंग बाण</span><span class="chev">›</span></div>
+        </div>
+
+        <div class="banner"><span class="ring num">0/4</span><div style="flex:1"><div class="t">नित्य साधना · आज</div><div class="bar"></div></div><span class="chev">›</span></div>
+
+        <div class="slabel latin">Categories</div>
+        <div class="grid3">
+          <div class="tile"><div class="box"><span data-icon="mala"></span></div><span class="pill new">NEW</span><div class="lbl">चालीसा</div></div>
+          <div class="tile"><div class="box"><span data-icon="diya"></span></div><span class="pill new">NEW</span><div class="lbl">आरती</div></div>
+          <div class="tile"><div class="box"><span data-icon="om"></span></div><div class="lbl">स्तोत्रम्</div></div>
+          <div class="tile"><div class="box"><span data-icon="granth"></span></div><div class="lbl">ग्रन्थ</div></div>
+          <div class="tile"><div class="box"><span data-icon="japam"></span></div><div class="lbl">जप</div></div>
+          <div class="tile"><div class="box"><span data-icon="kalash"></span></div><div class="lbl">व्रत</div></div>
+          <div class="tile"><div class="box"><span data-icon="insight"></span></div><span class="pill new">NEW</span><div class="lbl">कुंडली</div></div>
+          <div class="tile"><div class="box"><span data-icon="muhurat"></span></div><span class="pill new">NEW</span><div class="lbl">मुहूर्त</div></div>
+          <div class="tile"><div class="box"><span data-icon="veda"></span></div><div class="lbl">संस्कार</div></div>
+          <div class="tile"><div class="box"><span data-icon="shikhara"></span></div><span class="pill new">NEW</span><div class="lbl">तीर्थ</div></div>
+          <div class="tile"><div class="box"><span data-icon="temple"></span></div><div class="lbl">देवता</div></div>
+          <div class="tile"><div class="box"><span data-icon="purpose"></span></div><div class="lbl">उद्देश्य</div></div>
+          <div class="tile"><div class="box"><span data-icon="kavach"></span></div><span class="pill new">NEW</span><div class="lbl">कवच</div></div>
+          <div class="tile"><div class="box"><span data-icon="ashtakam"></span></div><span class="pill new">NEW</span><div class="lbl">अष्टकम्</div></div>
+          <div class="tile"><div class="box"><span data-icon="suktam"></span></div><span class="pill new">NEW</span><div class="lbl">सूक्तम्</div></div>
+          <div class="tile wide"><div class="box"><span data-icon="lotus"></span></div><div class="lbl">नित्य साधना</div></div>
+        </div>
+
+        <div class="slabel latin">Discover</div>
+        <div class="disc">
+          <div class="dcard"><div class="h"><span data-icon="lotus"></span><span class="n">नित्य साधना</span></div><div class="d">अपनी दैनिक साधना चुनें और निरंतरता बनाए रखें।</div><div style="margin-top:8px"><span class="btn">शुरू करें ›</span></div></div>
+          <div class="dcard"><div class="h"><span data-icon="om"></span><span class="n">दैनिक भक्ति</span></div><div class="d">हर दिन एक नया श्लोक चिंतन और भक्ति के लिए।</div><div style="margin-top:8px"><span class="btn">पढ़ें ›</span></div></div>
+          <div class="dcard"><div class="h"><span class="thumb sm">?</span><span class="n">जिज्ञासा</span><span class="pill new">NEW</span></div><div class="d">आज की तिथि, व्रत, भोग, मुहूर्त—एक प्रश्न में उत्तर।</div><div style="margin-top:8px"><span class="btn">पूछें ›</span></div></div>
+        </div>
+
+        <div class="footer">॥ श्रीरामचन्द्र चरणौ शरणं प्रपद्ये ॥</div>
+      </div></div>
+      <div class="fab">⌕</div>
+      <nav class="tabbar" data-active="home" aria-label="tab bar, current"></nav>
+    </div>
+    <div class="cap"><b>As shipped.</b> Two thin strips and a banner, then 16 launcher tiles, then a carousel that reshuffles every open. Eight tiles wear NEW, two of them permanently. The same feature has three doors (नित्य साधना), and the daily verse owns a whole tab.</div>
+  </div>
+
+  <div class="col">
+    <div class="phaseseg" aria-hidden="true"><button class="on" tabindex="-1">प्रस्तावित · rev 4</button></div>
+    <div class="hint">Interactive: tap the strip, the पाठ row, and the tab bar.</div>
+    <div class="phone" id="proto">
+      <div class="statusbar"><span>10:52</span><span class="sig">▪▪▪ ⌒ 12</span></div>
+      <div class="screen"></div>
+      <div class="fab" id="protoFab">⌕</div>
+      <nav class="tabbar" aria-label="tab bar, proposed"></nav>
+    </div>
+    <div class="cap"><b>Proposed Home.</b> The आज का पंचांग strip is untouched, and there is no verse card. Below it: आज के लिए (unchanged), one साधना row (routine + sankalp + japam), a fixed उपकरण row of eight tools, the पाठ door, and नया — features this user has not opened yet. Every tool tile reuses its shipped glyph; only वास्तु needs a new one.</div>
+  </div>
+
+</div>
+
+<h2>Row 2 · the other surfaces</h2>
+<div class="rowlede">Static frames. पाठ is a screen pushed from Home's new row, not a tab — भक्ति keeps the daily verse exactly as shipped. पंचांग and अन्य show a separate, later idea (a परिवार block, a settings-only अन्य) that today's feedback didn't touch either way.</div>
+
+<div class="wrap">
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>10:52</span><span class="sig">▪▪▪ ⌒ 12</span></div>
+      <div class="screen" data-static="library"></div>
+      <nav class="tabbar" data-active="home"></nav>
+    </div>
+    <div class="cap"><b>पाठ</b> — pushed from Home's पाठ row, back returns to Home. The twelve tiles are the same launcher cards that leave Home, glyphs and all; संग्रह and भजन join them so everything readable or listenable has one index.</div>
+  </div>
+
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>10:52</span><span class="sig">▪▪▪ ⌒ 12</span></div>
+      <div class="screen" data-static="vidhan"></div>
+      <nav class="tabbar" data-active="home"></nav>
+    </div>
+    <div class="cap"><b>आज का विधान</b> — unchanged from shipped. It's the PRD-41 briefing, reached the same way it is today, a नया/Discover card, not by tapping the Today strip.</div>
+  </div>
+
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>10:52</span><span class="sig">▪▪▪ ⌒ 12</span></div>
+      <div class="screen" data-static="panchang"></div>
+      <nav class="tabbar" data-active="panchang"></nav>
+    </div>
+    <div class="cap"><b>पंचांग › व्रत-पर्व</b> with a <span class="mv">परिवार</span> block: पितृ स्मरण already lives here; जन्म तिथि and कुल परम्परा would join it from the More hub. A separate idea — not part of today's Home change.</div>
+  </div>
+
+  <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>10:52</span><span class="sig">▪▪▪ ⌒ 12</span></div>
+      <div class="screen" data-static="more"></div>
+      <nav class="tabbar" data-active="more"></nav>
+    </div>
+    <div class="cap"><b>अन्य · settings only</b> — the same separate idea: household records move to पंचांग › परिवार, वास्तु to Home's उपकरण row, संग्रह to पाठ.</div>
+  </div>
+</div>
+
+<h2>Icon key · what each glyph is, and where it comes from</h2>
+<div class="rowlede">Fifteen of the sixteen glyphs already exist in <code>CategoryIcon.tsx</code> and move unchanged. Only वास्तु needs drawing, and only पूजा विधि keeps the danda the app already uses for it.</div>
+<div class="iconkey" id="iconkey"></div>
+
+<div class="rowlede" style="margin:22px 0 0">बंद बनाम खुला · <b style="color:var(--board-ink)">closed vs open</b> — the one glyph change this revision proposes. The app is a reading app, but its two book categories are drawn as things you store rather than things you read: ग्रन्थ is a pothi bound shut with its thread, संस्कार a closed codex. Opened, both say "read me" at a glance and keep their own silhouettes, one leaf-shaped and one rectangular, so the grid stays scannable. चालीसा keeps the mala and सूक्तम् keeps its paired leaves, because three open books in one grid would read as one blur.</div>
+<div class="iconkey" id="openkey"></div>
+
+<h2>क्या कहाँ गया · what moved where</h2>
+<div class="tablewrap">
+<table>
+  <thead><tr><th>Surface</th><th>Now (1.4.8)</th><th>Proposed</th></tr></thead>
+  <tbody>
+    <tr><td>Today's panchang and muhurat</td><td class="now">Today strip with two chips; detail on the Panchang tab</td><td>Unchanged — same strip, same tap-through to Panchang</td></tr>
+    <tr><td>Daily verse</td><td class="now">भक्ति tab, a random verse on every open</td><td>Unchanged — stays on भक्ति; not shown on Home</td></tr>
+    <tr><td>Nitya sadhana, sankalp, japam streak</td><td class="now">Inline banner, full-width closing tile, two Discover cards</td><td>One साधना row</td></tr>
+    <tr><td>Text library, 10 forms</td><td class="now">10 of the 16 Home tiles</td><td>One पाठ row on Home, pushes a Library screen — the tiles move with their glyphs</td></tr>
+    <tr><td>Browse by deity, by purpose</td><td class="now">2 of the 16 Home tiles</td><td>The top of the Library screen</td></tr>
+    <tr><td>Saved verses · संग्रह</td><td class="now">अन्य</td><td>Library screen grid</td></tr>
+    <tr><td>Tools: व्रत-पर्व, मुहूर्त, कुंडली, विधि, जप, वास्तु</td><td class="now">3 Home tiles, Discover cards, doors inside Panchang segments, an अन्य row</td><td>Fixed उपकरण row on Home, same place every visit</td></tr>
+    <tr><td>जिज्ञासा · Ask</td><td class="now">Search FAB plus a shuffled Discover card</td><td>Unchanged — a नया/Discover card; the strip does not open it</td></tr>
+    <tr><td>Discover carousel</td><td class="now">8 cards, reshuffled per open, 4 with a permanent NEW</td><td>नया: only features added since the user's last version and not yet opened, at most 3, cleared on open</td></tr>
+    <tr><td>NEW badges on tiles</td><td class="now">8 of 16, two hardcoded and never clearing</td><td>Lifecycle-driven only</td></tr>
+    <tr><td>Search FAB · भजन</td><td class="now">Home bottom right · its own tab</td><td>Both unchanged</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>Constraints the prototype honours</h2>
+<ul class="notes">
+  <li><b>No new icon grammar.</b> Fifteen glyphs are the shipped <code>CategoryIcon</code> drawings, reused at their existing sizes. वास्तु is the one new drawing and follows the same rules — View strokes, saffron-deep on gold accent, no SVG and no emoji (design.md §5/§42).</li>
+  <li><b>First frame is the final frame (§64).</b> The Today strip is untouched, so this was already true; the साधना row and उपकरण row must reserve their height the same way.</li>
+  <li><b>Festival first.</b> The toran, the leading आज के लिए card, the strip's chips and the morning notification all read the same catalog, so they keep naming the same day.</li>
+  <li><b>भक्ति stays untouched.</b> The daily-verse pool selector, the widget deep link, the reminder and design.md §23 are exactly as shipped.</li>
+</ul>
+
+<!-- ======================= TEMPLATES ======================= -->
+
+<template id="tpl-home">
+<div class="pad">
+  <div class="wordmark"><span class="rule"></span><span class="om">ॐ</span><span class="name">वेदांश़</span><span class="om">ॐ</span><span class="rule"></span></div>
+  <div class="tagline">Sacred Texts · Daily Reading</div>
+
+  <div class="card oldstrip tap" data-go="panchang" role="button" tabindex="0" aria-label="Today's Panchang. Saturday, Krishna Navami. Tap to open.">
+    <div class="top"><span class="eyebrow">आज का पंचांग</span><span class="chev">›</span></div>
+    <div class="head">शनिवार · कृष्ण नवमी</div>
+    <div class="chips">
+      <span class="pill gold">अभिजीत <span class="tm num">11:53 AM – 12:42 PM</span></span>
+      <span class="pill avoid">राहु काल <span class="tm num">9:13 – 10:45 AM</span></span>
+    </div>
+  </div>
+
+  <div class="slabel">आज के लिए</div>
+  <div class="strips">
+    <div class="strip"><span class="thumb">ह</span><span class="nm">हनुमान चालीसा</span><span class="chev">›</span></div>
+    <div class="strip"><span class="thumb">सु</span><span class="nm">सुंदरकाण्ड</span><span class="chev">›</span></div>
+    <div class="strip"><span class="thumb">ब</span><span class="nm">बजरंग बाण</span><span class="chev">›</span></div>
+    <div class="strip"><span class="thumb">ह</span><span class="nm">हनुमान अष्टक</span><span class="chev">›</span></div>
+  </div>
+
+  <div class="soft sadhana" style="margin-top:12px">
+    <div class="cell"><div class="k">नित्य साधना</div><div class="v"><span class="lat num">0/4</span></div><div class="bar"><i style="width:0"></i></div></div>
+    <div class="cell"><div class="k">संकल्प</div><div class="v">दिन <span class="lat num">12/41</span></div><div class="s">हनुमान चालीसा</div></div>
+    <div class="cell"><div class="k">जप</div><div class="v"><span class="lat num">3</span> दिन</div><div class="s">श्रृंखला · आज बाकी</div></div>
+  </div>
+
+  <div class="slabel">उपकरण</div>
+  <div class="tools">
+    <div class="tile"><div class="box"><span data-icon="cal"></span></div><div class="lbl">पंचांग</div></div>
+    <div class="tile"><div class="box"><span data-icon="kalash"></span></div><div class="lbl">व्रत-पर्व</div></div>
+    <div class="tile"><div class="box"><span data-icon="muhurat"></span></div><div class="lbl">मुहूर्त</div></div>
+    <div class="tile"><div class="box"><span data-icon="insight"></span></div><div class="lbl">कुंडली</div></div>
+    <div class="tile"><div class="box"><span data-icon="danda"></span></div><div class="lbl">पूजा विधि</div></div>
+    <div class="tile"><div class="box"><span data-icon="japam"></span></div><div class="lbl">जप</div></div>
+    <div class="tile"><div class="box"><span data-icon="vastu"></span></div><div class="lbl">वास्तु</div></div>
+    <div class="tile"><div class="box"><span data-icon="shikhara"></span></div><div class="lbl">तीर्थ</div></div>
+  </div>
+
+  <div class="list tap" data-go="library" role="button" tabindex="0" style="margin-top:14px">
+    <div class="row"><span class="it" style="background:var(--saffron)">पा</span><div class="lb">पाठ · ग्रन्थालय<div class="st" style="font-weight:400;margin-top:1px">69 पाठ · 21 देवता · 14 उद्देश्य · भजन</div></div><span class="chev">›</span></div>
+  </div>
+
+  <div class="slabel">नया</div>
+  <div class="newcard"><span class="thumb sm">?</span><div class="tt"><div class="n">जिज्ञासा · पूछें</div><div class="d">तिथि, व्रत, भोग, मुहूर्त — एक प्रश्न में उत्तर</div></div><span class="pill new">NEW</span><span class="chev">›</span></div>
+  <div class="newcard"><span class="thumb sm">वि</span><div class="tt"><div class="n">होम-स्क्रीन विजेट</div><div class="d">आज का श्लोक, पंचांग और जप — होम स्क्रीन पर</div></div><span class="pill new">NEW</span><span class="chev">›</span></div>
+
+  <div class="footer">॥ श्रीरामचन्द्र चरणौ शरणं प्रपद्ये ॥</div>
+</div>
+</template>
+
+<template id="tpl-library">
+<div class="pad">
+  <div class="rhead"><span class="back tap" data-go="home" role="button" tabindex="0" aria-label="वापस">‹</span><span class="rtitle">पाठ</span></div>
+  <div class="search"><span style="color:var(--saffron)">⌕</span><span class="ph">खोजें — हनुमान, गीता 2.47, शांति…</span></div>
+
+  <div class="soft resume"><span class="thumb">सु</span><div class="t"><div class="n">जारी रखें · सुंदरकाण्ड</div><div class="s">दोहा 12 / 60 · कल पढ़ा</div><div class="bar"><i></i></div></div><span class="btn fill">पढ़ें</span></div>
+
+  <div class="slabel">देवता<span class="more">सभी 21 ›</span></div>
+  <div class="deities">
+    <div class="deity"><span class="c">ह</span><span class="l">हनुमान</span></div>
+    <div class="deity"><span class="c">रा</span><span class="l">श्री राम</span></div>
+    <div class="deity"><span class="c">कृ</span><span class="l">कृष्ण</span></div>
+    <div class="deity"><span class="c">शि</span><span class="l">शिव</span></div>
+    <div class="deity"><span class="c">दु</span><span class="l">दुर्गा</span></div>
+    <div class="deity"><span class="c">ग</span><span class="l">गणेश</span></div>
+    <div class="deity"><span class="c">ल</span><span class="l">लक्ष्मी</span></div>
+    <div class="deity"><span class="c all">+14</span><span class="l">और</span></div>
+  </div>
+
+  <div class="slabel">उद्देश्य</div>
+  <div class="purposes">
+    <span class="purpose">सुरक्षा</span><span class="purpose">विघ्न निवारण</span><span class="purpose">शांति</span><span class="purpose">विद्या</span><span class="purpose">समृद्धि</span><span class="purpose">आरोग्य</span><span class="purpose">शुभारम्भ</span><span class="purpose">प्रभात साधना</span>
+  </div>
+
+  <div class="slabel">पाठ के प्रकार</div>
+  <div class="grid3">
+    <div class="cat"><div class="box"><span data-icon="mala"></span><span class="n">चालीसा</span><span class="c">9</span></div></div>
+    <div class="cat"><div class="box"><span data-icon="diya"></span><span class="n">आरती</span><span class="c">9</span></div></div>
+    <div class="cat"><div class="box"><span data-icon="om"></span><span class="n">स्तोत्रम्</span><span class="c">12</span></div></div>
+    <div class="cat"><div class="box"><span data-icon="granth-open"></span><span class="n">ग्रन्थ</span><span class="c">4</span></div></div>
+    <div class="cat"><div class="box"><span data-icon="japam"></span><span class="n">जप</span><span class="c">माला</span></div></div>
+    <div class="cat"><div class="box"><span data-icon="veda-open"></span><span class="n">संस्कार</span><span class="c">8</span></div></div>
+    <div class="cat"><div class="box"><span data-icon="kavach"></span><span class="n">कवच</span><span class="c">4</span></div></div>
+    <div class="cat"><div class="box"><span data-icon="ashtakam"></span><span class="n">अष्टकम्</span><span class="c">15</span></div></div>
+    <div class="cat"><div class="box"><span data-icon="suktam"></span><span class="n">सूक्तम्</span><span class="c">3</span></div></div>
+    <div class="cat"><div class="box"><span data-icon="shikhara"></span><span class="n">तीर्थ</span><span class="c">73</span></div></div>
+    <div class="cat"><div class="box"><span data-icon="temple"></span><span class="n">संग्रह</span><span class="c">14</span></div></div>
+    <div class="cat"><div class="box"><span data-icon="purpose"></span><span class="n">भजन</span><span class="c">10</span></div></div>
+  </div>
+  <div class="footer">॥ श्रीरामचन्द्र चरणौ शरणं प्रपद्ये ॥</div>
+</div>
+</template>
+
+<template id="tpl-vidhan">
+<div class="pad">
+  <div class="rhead"><span class="back tap" data-go="home" role="button" tabindex="0" aria-label="वापस">‹</span><span class="rtitle">आज का विधान</span></div>
+  <div class="lede">आज के प्रश्न, आपकी ओर से पूछे गए — हर उत्तर अपनी गणना दिखाता है।</div>
+
+  <div class="eyebrow" style="margin:16px 0 6px;color:var(--ink-muted)">आज</div>
+  <div class="answer">
+    <span class="tg">पंचांग</span>
+    <h3>शनिवार · भाद्रपद कृष्ण नवमी · विक्रम संवत् २०८३</h3>
+    <div class="r"><span class="k">सूर्योदय</span><span class="v num">6:09 AM · सूर्यास्त 6:25 PM</span></div>
+    <div class="r"><span class="k">नवमी</span><span class="v">तक <span class="num">4:12 PM</span>, फिर दशमी — शेष दिन</span></div>
+    <div class="w">▸ गणना देखें</div>
+    <div class="acts"><span class="btn fill">पूरा पंचांग</span><span class="btn">माह देखें</span></div>
+  </div>
+
+  <div class="eyebrow" style="margin:16px 0 6px;color:var(--ink-muted)">आगे आ रहा है</div>
+  <div class="answer">
+    <span class="tg">पर्व</span>
+    <h3>गणेश चतुर्थी · सोमवार, 14 सितम्बर · 9 दिन में</h3>
+    <div class="r"><span class="k">स्थापना</span><span class="v">मध्याह्न मुहूर्त · <span class="num">11:07 AM – 1:38 PM</span></span></div>
+    <div class="r"><span class="k">भोग</span><span class="v">मोदक · दूर्वा · लड्डू</span></div>
+    <div class="r neg"><span class="k">निषेध</span><span class="v">तुलसी अर्पित नहीं</span></div>
+    <div class="w">▸ गणना देखें</div>
+    <div class="acts"><span class="btn fill">॥ पूजा विधि</span><span class="btn">कथा</span><span class="btn">भोग सूची</span></div>
+  </div>
+
+  <div class="eyebrow" style="margin:16px 0 6px;color:var(--ink-muted)">शुभ-अशुभ समय</div>
+  <div class="answer">
+    <span class="tg">मुहूर्त</span>
+    <h3>अभी उद्वेग · त्याज्य — अगला शुभ चर, <span class="num">12:17 PM</span> से</h3>
+    <div class="r neg"><span class="k">राहु काल</span><span class="v num">9:13 – 10:45 AM · बीत गया</span></div>
+    <div class="r"><span class="k">अभिजीत</span><span class="v num">11:53 AM – 12:42 PM</span></div>
+    <div class="acts"><span class="btn fill">सभी चौघड़िया</span></div>
+  </div>
+
+  <div class="askmore"><span style="color:var(--saffron)">⌕</span><span class="t">कुछ और पूछें — भोग, विधि, दिशा, मुहूर्त…</span><span class="chev">›</span></div>
+</div>
+</template>
+
+<template id="tpl-panchang">
+<div class="pad">
+  <div class="seg"><span>पंचांग</span><span class="on">व्रत-पर्व</span><span>ज्योतिष</span></div>
+  <div class="syshead"><span class="locchip"><span class="pin"></span>उज्जैन</span><span class="caltoggle"><span class="on">पूर्णिमांत</span><span>अमान्त</span></span><span class="star">★<i>2</i></span></div>
+  <div class="search" style="height:40px"><span style="color:var(--saffron)">⌕</span><span class="ph">व्रत, पर्व, उपवास, कथा खोजें…</span></div>
+
+  <div class="myvrat"><span style="color:var(--gold);font-size:17px">★</span><div style="flex:1"><div class="n">मेरा व्रत</div><div class="s">2 फ़ॉलो किए · 2 अनुस्मारक</div></div><span class="chev" style="color:var(--ink-muted)">›</span></div>
+
+  <div class="family">
+    <div class="fh"><span class="tt">परिवार</span></div>
+    <div class="list">
+      <div class="row"><span class="it" style="background:var(--gold)">॥</span><span class="lb">पितृ स्मरण</span><span class="st">2 · 28 सित</span><span class="chev">›</span></div>
+      <div class="row"><span class="it" style="background:var(--saffron-deep)">✦</span><span class="lb">जन्म तिथि</span><span class="st">3 · 12 सित</span><span class="chev">›</span></div>
+      <div class="row"><span class="it" style="background:var(--saffron)">॥</span><span class="lb">कुल परम्परा</span><span class="st">कुलदेवी</span><span class="chev">›</span></div>
+    </div>
+  </div>
+
+  <div class="slabel" style="color:var(--ink)">आगामी</div>
+  <div class="rail">
+    <div class="up"><div class="t"><span class="g">✺</span><span class="d">14 SEP</span></div><div class="n">गणेश चतुर्थी</div></div>
+    <div class="up"><div class="t"><span class="g">ॐ</span><span class="d">16 SEP</span></div><div class="n">ऋषि पंचमी</div></div>
+    <div class="up"><div class="t"><span class="g">ॐ</span><span class="d">25 SEP</span></div><div class="n">अनंत चतुर्दशी</div></div>
+  </div>
+
+  <div class="slabel" style="color:var(--ink)">श्रेणी से देखें</div>
+  <div class="half">
+    <div class="ht"><span class="g">ॐ</span><div><div class="n">व्रत</div><div class="c">71 व्रत-पर्व</div></div></div>
+    <div class="ht"><span class="g">✺</span><div><div class="n">पर्व</div><div class="c">63 व्रत-पर्व</div></div></div>
+    <div class="ht"><span class="g">☾</span><div><div class="n">उपवास</div><div class="c">28 व्रत-पर्व</div></div></div>
+    <div class="ht"><span class="g">॥</span><div><div class="n">कथा</div><div class="c">34 कथाएँ</div></div></div>
+    <div class="ht wide"><span class="g">॥</span><div><div class="n">पूजा विधि</div><div class="c">8 विधियाँ</div></div></div>
+  </div>
+</div>
+</template>
+
+<template id="tpl-bhajan">
+<div class="pad">
+  <div class="rtitle" style="text-align:center;font-size:22px;margin-top:6px">भजन</div>
+  <div class="deities" style="margin-top:10px">
+    <div class="deity"><span class="c all">ॐ</span><span class="l">सभी</span></div>
+    <div class="deity"><span class="c">रा</span><span class="l">राम</span></div>
+    <div class="deity"><span class="c">कृ</span><span class="l">कृष्ण</span></div>
+    <div class="deity"><span class="c">शि</span><span class="l">शिव</span></div>
+    <div class="deity"><span class="c">ग</span><span class="l">गणेश</span></div>
+    <div class="deity"><span class="c">गा</span><span class="l">गायत्री</span></div>
+  </div>
+  <div class="slabel" style="color:var(--ink)">पाठ · Recitations</div>
+  <div class="track"><span class="thumb">गा</span><div><div class="n">गायत्री मन्त्र</div><div class="m">पाठ · 3:12</div></div><span class="play on">❚❚</span></div>
+  <div class="track"><span class="thumb">शि</span><div><div class="n">महामृत्युंजय मन्त्र</div><div class="m">पाठ · 4:05</div></div><span class="play">▶</span></div>
+  <div class="slabel" style="color:var(--ink)">भजन व आरती</div>
+  <div class="track"><span class="thumb">कृ</span><div><div class="n">गोविन्द बोलो</div><div class="m">भजन · 4:48</div></div><span class="play">▶</span></div>
+  <div class="track"><span class="thumb">ग</span><div><div class="n">ॐ गं गणपतये नमः</div><div class="m">भजन · 6:02</div></div><span class="play">▶</span></div>
+  <div class="note"><b>Prototype note</b> · this tab is unchanged; nothing in the proposal touches it.</div>
+</div>
+</template>
+
+<template id="tpl-bhakti">
+<div class="pad">
+  <div class="rtitle" style="text-align:center;font-size:22px;margin-top:6px">दैनिक भक्ति</div>
+  <div class="tagline">Daily Verse</div>
+  <div class="soft verse" style="margin-top:6px">
+    <div class="plate">॥</div>
+    <div class="top"><span class="src"><span class="dv">भगवद् गीता</span> · 2.47</span><span class="acts"><span class="ic">♥</span><span class="ic">↗</span></span></div>
+    <div class="lines">कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।<br>मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि॥</div>
+    <div class="orn">॥ ॥</div>
+    <div class="mlabel">भावार्थ</div>
+    <div class="meaning">कर्तव्य-कर्म करनेमें ही तेरा अधिकार है, फलोंमें कभी नहीं। अतः तू कर्मफलका हेतु भी मत बन और तेरी अकर्मण्यतामें भी आसक्ति न हो।</div>
+    <div class="foot"><span class="from">भगवद् गीता</span><span class="acts"><span>↻ next</span></span></div>
+  </div>
+  <div class="note"><b>Prototype note</b> · unchanged. The daily verse lives here and is no longer shown on Home.</div>
+</div>
+</template>
+
+<template id="tpl-more">
+<div class="pad">
+  <div class="rtitle" style="font-size:28px;margin-top:6px">अन्य</div>
+  <div class="migrate">कुल परम्परा, पितृ स्मरण और जन्म तिथि अब पंचांग › परिवार में · वास्तु दिशा होम › उपकरण में · संग्रह पाठ में</div>
+
+  <div class="grp">साधक</div>
+  <div class="list">
+    <div class="row prof"><span class="om">ॐ</span><div style="flex:1"><div class="n">साधक प्रोफ़ाइल</div><div class="s"><b>1,240</b> श्लोक &nbsp;·&nbsp; <b>6</b> श्रृंखला</div></div><span class="chev">›</span></div>
+    <div class="row"><span class="it" style="background:var(--gold)">ॐ</span><span class="lb">स्मरण</span><span class="st lat num">07:00</span><span class="chev">›</span></div>
+    <div class="row"><span class="it" style="background:var(--saffron-deep);font-size:11px">⏰</span><span class="lb">जप अलार्म</span><span class="st lat">1</span><span class="chev">›</span></div>
+  </div>
+
+  <div class="grp">ऐप</div>
+  <div class="list">
+    <div class="row"><span class="it" style="background:var(--gold)">अ</span><span class="lb">भाषा</span><span class="st">हिन्दी</span><span class="chev">›</span></div>
+    <div class="row"><span class="it" style="background:var(--saffron);font-family:var(--sans);font-size:12px">Aa</span><span class="lb">पाठ का आकार</span><span class="st">मानक</span><span class="chev">›</span></div>
+    <div class="row"><span class="it" style="background:var(--saffron-deep)">♪</span><span class="lb">पाठ सुनें</span><span class="st">हिन्दी · 1×</span><span class="chev">›</span></div>
+    <div class="row"><span class="it" style="background:var(--saffron-deep)">वि</span><span class="lb">होम-स्क्रीन विजेट</span><span class="chev">›</span></div>
+    <div class="row"><span class="it" style="background:var(--saffron)">↗</span><span class="lb">ऐप साझा करें</span><span class="chev">›</span></div>
+    <div class="row"><span class="it" style="background:var(--gold)">★</span><span class="lb">ऐप को रेटिंग दें</span><span class="chev">›</span></div>
+  </div>
+
+  <div class="grp">जानकारी</div>
+  <div class="list">
+    <div class="row"><span class="it" style="background:var(--ink-muted)">ⓘ</span><span class="lb">परिचय व अस्वीकरण</span><span class="chev">›</span></div>
+    <div class="row"><span class="it" style="background:var(--ink-muted)">⚑</span><span class="lb">त्रुटि सूचित करें</span><span class="chev">›</span></div>
+    <div class="row"><span class="it" style="background:var(--gold)">↻</span><span class="lb">ऐप भ्रमण फिर देखें</span><span class="chev">›</span></div>
+  </div>
+</div>
+</template>
+
+<script>
+(function(){
+  // ── Icon layer ────────────────────────────────────────────────────────────
+  // Each entry is the child markup for one CategoryIcon; the CSS above carries
+  // the geometry, copied from that component's StyleSheet. Painted into any
+  // <span data-icon="key"> after render, so the shipped frame and the proposed
+  // frame draw from one source and can never drift apart.
+  var CAL_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'
+    + '<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/>'
+    + '<circle cx="12" cy="15" r="1.4" fill="currentColor" stroke="none"/></svg>';
+
+  var LOTUS = (function(){
+    var out = '';
+    for (var i = 0; i < 12; i++) out += '<i style="transform:rotate(' + (i * 30) + 'deg)"></i>';
+    return out + '<i class="hub"></i>';
+  })();
+
+  var ICONS = {
+    shikhara: '<i class="pole"></i><i class="flag"></i><i class="peak"></i><i class="peak2"></i><i class="base"></i><i class="step"></i>',
+    temple:   '<i class="pole"></i><i class="flag"></i><i class="roof"></i><i class="cap"></i><i class="prow"><i></i><i></i><i></i></i><i class="base"></i><i class="step"></i>',
+    granth:   '<i class="leaf leafA"></i><i class="leaf leafB"></i><i class="line lineA"></i><i class="line lineB"></i><i class="thread"></i><i class="dot"></i>',
+    om:       '<i class="body"></i><i class="tail"></i><i class="cres"></i><i class="dot"></i><i class="rule"></i>',
+    mala:     '<i class="thread"></i><i class="bd b1"></i><i class="bd b2"></i><i class="bd b3"></i><i class="bd b4"></i><i class="bd b5"></i><i class="bd b6"></i><i class="bd b7"></i><i class="bd b8"></i><i class="knot"></i><i class="cord"></i><i class="end"></i>',
+    japam:    '<i class="cA"></i><i class="cB"></i><i class="cC"></i><i class="ctr"><i class="win"></i><i class="brow"><i></i><i></i><i></i></i></i><i class="cord"></i><i class="tas"></i>',
+    kalash:   '<i class="coco"><i></i></i><i class="lf lfL"></i><i class="lf lfR"></i><i class="neck"></i><i class="pot"></i><i class="band"></i>',
+    diya:     '<i class="fo"></i><i class="fi"></i><i class="bowl"></i><i class="lip"></i>',
+    veda:     '<i class="pg pgBack"></i><i class="pg pgFront"></i><i class="spine"></i><i class="r1"></i><i class="r2"></i><i class="seal"></i>',
+    kavach:   '<i class="sh"></i><i class="spine"></i><i class="bar"></i><i class="arc"></i><i class="bindu"></i>',
+    ashtakam: '<i class="sq"></i><i class="sqR"></i>',
+    suktam:   '<i class="bindu"></i><i class="lf lfA"></i><i class="lf lfB"></i><i class="rl rlA"></i><i class="rl rlB"></i><i class="knot"></i>',
+    purpose:  '<i class="ring"></i><i class="arrow"></i><i class="stem"></i><i class="bindu"></i>',
+    insight:  '<i class="eye"></i><i class="pupil"></i><i class="ray"></i><i class="rayL"></i><i class="rayR"></i>',
+    muhurat:  '<i class="dial"></i><i class="hand"></i><i class="mark"></i><i class="base"></i>',
+    lotus:    LOTUS,
+    'granth-open': '<i class="w wL"><i class="lf"></i><i class="rl r1"></i><i class="rl r2"></i></i><i class="w wR"><i class="lf"></i><i class="rl r1"></i><i class="rl r2"></i></i><i class="spine"></i>',
+    'veda-open':   '<i class="w wL"><i class="pg"></i><i class="rl r1"></i><i class="rl r2"></i></i><i class="w wR"><i class="pg"></i><i class="rl r1"></i><i class="rl r2"></i></i><i class="spine"></i>',
+    vastu:    '<i class="ring"></i><i class="tN"></i><i class="tS"></i><i class="tW"></i><i class="tE"></i><i class="ndl"></i><i class="bindu"></i>',
+    danda:    '॥',
+    cal:      CAL_SVG
+  };
+
+  function paintIcons(root){
+    root.querySelectorAll('[data-icon]').forEach(function(host){
+      var key = host.dataset.icon;
+      if (!ICONS[key] || host.dataset.painted) return;
+      host.className = ('ci ci-' + key + ' ' + (host.className || '')).trim();
+      host.innerHTML = ICONS[key];
+      host.dataset.painted = '1';
+    });
+  }
+
+  // ── Tab bar (design.md §17) ───────────────────────────────────────────────
+  var S = 'fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"';
+  var TABS = [
+    {key:'home',     label:'होम',    icon:'<svg viewBox="0 0 24 24" '+S+'><path d="M4 11 12 4l8 7"/><path d="M6 10v9h12v-9"/><path d="M10 19v-5h4v5"/></svg>'},
+    {key:'second',   label:'भक्ति',  icon:'<svg viewBox="0 0 24 24" '+S+'><path d="M12 3c2 3 3 5 3 7a3 3 0 0 1-6 0c0-2 1-4 3-7z"/><path d="M6 18c2-1.5 10-1.5 12 0"/><path d="M7 21h10"/></svg>'},
+    {key:'panchang', label:'पंचांग', icon:CAL_SVG},
+    {key:'bhajan',   label:'भजन',    icon:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg>'},
+    {key:'more',     label:'अन्य',   icon:'<svg viewBox="0 0 24 24" '+S+'><circle cx="12" cy="12" r="8.5"/><circle cx="8.3" cy="12" r=".9" fill="currentColor"/><circle cx="12" cy="12" r=".9" fill="currentColor"/><circle cx="15.7" cy="12" r=".9" fill="currentColor"/></svg>'}
+  ];
+  function buildTabbar(nav, active, interactive){
+    nav.innerHTML = TABS.map(function(t){
+      return '<button type="button" data-tab="'+t.key+'" class="'+(t.key===active?'on':'')+'"'
+        + (interactive?'':' tabindex="-1" aria-hidden="true"') + '>'+t.icon+'<span class="lbl">'+t.label+'</span></button>';
+    }).join('');
+  }
+  function tpl(name){ return document.getElementById('tpl-'+name).content.cloneNode(true); }
+
+  // ── Static frames ─────────────────────────────────────────────────────────
+  document.querySelectorAll('.tabbar[data-active]').forEach(function(nav){
+    buildTabbar(nav, nav.dataset.active, false);
+  });
+  document.querySelectorAll('[data-static]').forEach(function(el){
+    el.appendChild(tpl(el.dataset.static));
+    el.querySelectorAll('.tap').forEach(function(t){ t.classList.remove('tap'); t.removeAttribute('tabindex'); t.removeAttribute('role'); });
+  });
+
+  // ── Icon key board ────────────────────────────────────────────────────────
+  var KEY = [
+    ['mala','चालीसा','MalaIcon'], ['diya','आरती','DiyaIcon'], ['om','स्तोत्रम्','OmGlyphIcon'],
+    ['granth','ग्रन्थ','PalmLeafManuscriptIcon'], ['japam','जप','JapamBeadIcon'], ['veda','संस्कार','VedaManuscriptIcon'],
+    ['kavach','कवच','KavachIcon'], ['ashtakam','अष्टकम्','AshtakamIcon'], ['suktam','सूक्तम्','SuktamIcon'],
+    ['shikhara','तीर्थ','ShikharaIcon'], ['temple','देवता','TempleIcon'], ['purpose','उद्देश्य','PurposeIcon'],
+    ['kalash','व्रत-पर्व','KalashIcon'], ['insight','कुंडली','InsightIcon'], ['muhurat','मुहूर्त','MuhuratIcon'],
+    ['lotus','नित्य साधना','LotusMark'], ['danda','पूजा विधि','॥ danda, as today'], ['cal','पंचांग','tab-bar glyph'],
+    ['vastu','वास्तु','NEW — to draw']
+  ];
+  function keyBoard(id, rows){
+    document.getElementById(id).innerHTML = rows.map(function(k){
+      var isNew = k[2].indexOf('NEW') === 0 || k[2].indexOf('प्रस्तावित') === 0;
+      return '<div class="ikcell'+(isNew?' new':'')+'"><div class="box"><span data-icon="'+k[0]+'"></span></div>'
+        + '<div class="nm">'+k[1]+'</div><div class="src">'+k[2]+'</div></div>';
+    }).join('');
+  }
+  keyBoard('iconkey', KEY);
+  keyBoard('openkey', [
+    ['granth','ग्रन्थ','आज · closed'],
+    ['granth-open','ग्रन्थ','प्रस्तावित · open'],
+    ['veda','संस्कार','आज · closed'],
+    ['veda-open','संस्कार','प्रस्तावित · open']
+  ]);
+
+  // ── Interactive frame ─────────────────────────────────────────────────────
+  // पाठ has no tab of its own — it highlights Home, like any screen the Home
+  // stack pushes (VidhiDetail, TodayVidhan).
+  var proto = document.getElementById('proto');
+  var screen = proto.querySelector('.screen');
+  var nav = proto.querySelector('.tabbar');
+  var fab = document.getElementById('protoFab');
+  var TAB_FOR = {home:'home', library:'home', vidhan:'home', bhakti:'second', panchang:'panchang', bhajan:'bhajan', more:'more'};
+
+  function render(name){
+    screen.innerHTML = '';
+    screen.appendChild(tpl(name));
+    paintIcons(screen);
+    buildTabbar(nav, TAB_FOR[name], true);
+    fab.hidden = (name !== 'home');
+    screen.scrollTop = 0;
+  }
+  nav.addEventListener('click', function(e){
+    var b = e.target.closest('button[data-tab]'); if(!b) return;
+    render(b.dataset.tab === 'second' ? 'bhakti' : b.dataset.tab);
+  });
+  screen.addEventListener('click', function(e){
+    var t = e.target.closest('[data-go]'); if(!t) return;
+    render(t.dataset.go);
+  });
+  screen.addEventListener('keydown', function(e){
+    if (e.key!=='Enter' && e.key!==' ') return;
+    var t = e.target.closest('[data-go]'); if(!t) return;
+    e.preventDefault(); render(t.dataset.go);
+  });
+
+  paintIcons(document);
+  render('home');
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+# Shared "open the पाठ library" subflow (TRD-42 §5.3).
+#
+# Why a separate file: the 16-tile CATEGORIES grid used to sit on Home, so every
+# category smoke test could tap its tile straight after `_launch.yaml`. The grid
+# now lives on the Library screen behind Home's पाठ door, which adds the same
+# two steps — scroll to the door, tap it — to roughly twenty flows. Keeping them
+# here means the door's label or position can change in one place.
+#
+# Caller contract:
+#   - Enter on Home (i.e. straight after `_launch.yaml`, or after tapping
+#     `tab-home`). This flow does not navigate to Home itself.
+#   - Exits with the Library index rendered and scrolled to the top.
+#   - The door's a11y label is English by contract regardless of reading
+#     language, like every other launcher label in the app.
+#   - Category tiles sit below Library's own fold from the third row down
+#     (the देवता rail and उद्देश्य chips lead), so callers should reach their
+#     tile with `scrollUntilVisible` rather than a bare `assertVisible`.
+#     It is a no-op when the tile is already on screen.
+appId: com.prashantsharma.vedansh
+---
+- scrollUntilVisible:
+    element:
+      text: "Library\\. Texts, deities and purposes\\. Tap to open\\."
+    direction: DOWN
+    centerElement: true
+    timeout: 10000
+- tapOn: "Library\\. Texts, deities and purposes\\. Tap to open\\."
+- waitForAnimationToEnd
+# The search row leads the Library scroll, so its presence is the canary that
+# the push landed and the screen is at the top.
+- extendedWaitUntil:
+    visible: "Search the library"
+    timeout: 15000

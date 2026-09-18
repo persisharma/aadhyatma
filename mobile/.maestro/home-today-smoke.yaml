@@ -4,7 +4,8 @@
 # retired in July 2026 — resume lives in the ResumeReadingSheet, covered by
 # resume-reading-smoke.yaml):
 #   1. The "आज · Today" strip renders on Home (a11y label "Today's Panchang. …").
-#   2. The व्रत (Vrat & Parv) launcher tile opens the Panchang stack's
+#   2. The व्रत (Vrat & Parv) tile — now the first of the उपकरण row's eight,
+#      since the 16-tile grid left Home (TRD-42 §5.2) — opens the Panchang stack's
 #      ObservanceList — and, because the tile navigates via panchangTabTarget
 #      (initial: false), backing out lands on PanchangHome (the calendar),
 #      proving the vrat door did not hijack the lazily-mounted stack's
@@ -57,7 +58,14 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Today's Panchang\\..*Tap to open\\."
 
 # ── 2. व्रत tile → Vrat catalog → back lands on the Panchang calendar ──
-- assertVisible: "Vrat & Parv\\..*Tap to open\\."
+# The उपकरण row sits below the Today strip, the FOR TODAY row and साधना, so it
+# can fall past the first viewport on shorter devices — scroll before tapping.
+- scrollUntilVisible:
+    element:
+      text: "Vrat & Parv\\..*Tap to open\\."
+    direction: DOWN
+    centerElement: true
+    timeout: 10000
 - tapOn: "Vrat & Parv\\..*Tap to open\\."
 - waitForAnimationToEnd
 - extendedWaitUntil:

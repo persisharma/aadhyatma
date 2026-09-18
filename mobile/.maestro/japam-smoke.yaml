@@ -22,8 +22,16 @@ appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
 
-# Open Japam category
-- assertVisible: "Japa & Mantras. Tap to open."
+# Open Japam from the उपकरण row
+# जप is one of the nine उपकरण tiles on Home (TRD-42 §5.2). The row sits below
+# the Today strip, the FOR TODAY cards and साधना, so scroll to it rather than
+# asserting it above the fold.
+- scrollUntilVisible:
+    element:
+      text: "Japa & Mantras\\. Tap to open\\."
+    direction: DOWN
+    centerElement: true
+    timeout: 10000
 - tapOn: "Japa & Mantras. Tap to open."
 - waitForAnimationToEnd
 

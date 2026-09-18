@@ -19,10 +19,13 @@ import type { ScrollView, View } from 'react-native';
 
 export type TourTargetId =
   | 'routineCard'
-  | 'categoriesGrid'
-  | 'japaTile'
+  // TRD-42: Home's 16-tile grid became the उपकरण row plus the पाठ door, so
+  // `categoriesGrid` / `japaTile` / `theerthTile` retired with it. The Japa and
+  // Theerth *inside* steps still stand — they ring the destination screens,
+  // which did not move.
+  | 'toolsRow'
+  | 'libraryDoor'
   | 'japamInside'
-  | 'theerthTile'
   | 'theerthInside'
   | 'dailyVerse'
   | 'shareButton'

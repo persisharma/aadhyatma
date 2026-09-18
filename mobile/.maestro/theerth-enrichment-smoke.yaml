@@ -44,8 +44,11 @@ appId: com.prashantsharma.vedansh
     text: "Got it"
     optional: true
 
-- extendedWaitUntil:
-    visible: ".*Pilgrimage.*Tap to open.*"
+- scrollUntilVisible:
+    element:
+      text: ".*Pilgrimage.*Tap to open.*"
+    direction: DOWN
+    centerElement: true
     timeout: 120000
 - scrollUntilVisible:
     element:

@@ -46,7 +46,11 @@ Spec: `design.md` §71 · contract: `RULEBOOK.md` §25 · PRD: `docs/roadmap/prd
   standing questions (day · observance/upcoming · muhurat · sadhana) through `askQuestion`.
 - **UI** — `AskAnswerCard` / `AskAbstainCard`; `SearchScreen` (header of the results list,
   rotating placeholder, `seed`/`initialQuery` route params); `TodayVidhanScreen` (Home stack
-  `TodayVidhan`, Home DISCOVER card `jijnasa`); `ObservanceDetailScreen` ask-from-context row.
+  `TodayVidhan`, reached from the **Search empty state's** `Open Today's Vidhan` row — it had a
+  Home DISCOVER card `jijnasa` until the carousel was retired, Sept 2026, and that removal went
+  unnoticed because nothing tested it; now pinned by
+  `screens/__tests__/TodayVidhanTouchpoints.test.ts`, see [[home]]);
+  `ObservanceDetailScreen` ask-from-context row.
 
 ## Working rules
 

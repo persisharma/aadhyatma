@@ -1,8 +1,13 @@
 # Intent Discovery Smoke Test
 #
-# PRD-B path: Home → By Purpose → Protection → Rama Raksha Stotra → reader.
-# Verifies the purpose grid, cross-deity purpose list, route dispatch, and the
+# PRD-B path: Home → पाठ → Protection → Rama Raksha Stotra → reader.
+# Verifies the उद्देश्य chips, cross-deity purpose list, route dispatch, and the
 # first-page-only "When to Recite" panel.
+#
+# The Home "By Purpose" tile retired with the 16-tile grid (TRD-42 §5.3). Its
+# destination was an index of these same chips, so the chips on the Library
+# ARE that index and open the purpose list directly — one screen fewer, not a
+# lost one.
 
 appId: com.prashantsharma.vedansh
 ---
@@ -35,22 +40,15 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 
 - extendedWaitUntil:
-    # Canary: the above-the-fold Panchang card — the Good Habits tile sits below
-    # the first viewport since Home gained the daily recommendation cards.
+    # Canary: the above-the-fold Panchang card. The पाठ door sits well below the
+    # first viewport, so _open-library.yaml scrolls to it.
     visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
     timeout: 60000
 
-# ── Home → Browse by Purpose ──
-- scrollUntilVisible:
-    element:
-      text: "By Purpose. Tap to open."
-    direction: DOWN
-    timeout: 10000
-    centerElement: true
-- tapOn: "By Purpose. Tap to open."
-- waitForAnimationToEnd
+# ── Home → पाठ library ──
+- runFlow: _open-library.yaml
 
-# ── Purpose grid renders bilingual intent tiles ──
+# ── The उद्देश्य row renders every intent chip ──
 - extendedWaitUntil:
     visible: "Protection. Tap to open."
     timeout: 15000

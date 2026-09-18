@@ -14,6 +14,8 @@ appId: com.prashantsharma.vedansh
 ---
 # ── Step 1: Boot Vedansh in Expo Go ──
 - runFlow: _launch.yaml
+# The 16-tile grid left Home for the पाठ library (TRD-42 §5.3).
+- runFlow: _open-library.yaml
 
 # ── Step 2: Find + open the Kavacham category tile (scroll if needed) ──
 - scrollUntilVisible:

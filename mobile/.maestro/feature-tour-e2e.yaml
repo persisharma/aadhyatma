@@ -74,26 +74,24 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - assertVisible: "More"
 
-# Home: routine card, categories, Japa (+ mantra list), Theerth (+ map)
+# Home: routine card, the उपकरण row, the पाठ door, then the mantra list and
+# the Theerth map from inside. The old "Japa" and "Pilgrimage" tile steps went
+# with the 16-tile grid (TRD-42 §10) — their inside steps stayed.
 - tapOn: "Next step"
 - waitForAnimationToEnd
 - assertVisible: "Daily Practice"
 
 - tapOn: "Next step"
 - waitForAnimationToEnd
-- assertVisible: "Categories"
+- assertVisible: "Tools"
 
 - tapOn: "Next step"
 - waitForAnimationToEnd
-- assertVisible: "Japa"
+- assertVisible: "Library"
 
 - tapOn: "Next step"
 - waitForAnimationToEnd
 - assertVisible: "Japa . Mantras"   # step titleEn is "Japa — Mantras" (— matched by .)
-
-- tapOn: "Next step"
-- waitForAnimationToEnd
-- assertVisible: "Pilgrimage"
 
 - tapOn: "Next step"
 - waitForAnimationToEnd

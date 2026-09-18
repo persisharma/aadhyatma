@@ -2,11 +2,22 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 
 describe('Pitru Smaran standing discovery', () => {
-  test('Home always registers a zero-state DISCOVER card that opens the ledger', () => {
-    const source = fs.readFileSync(path.resolve(__dirname, '..', 'HomeScreen.tsx'), 'utf8');
-    expect(source).toMatch(/key: 'pitru-smaran'/);
-    expect(source).toMatch(/moreTabTarget\('PitruSmaranList'\)/);
-    expect(source).toMatch(/Save a tithi once and know its shraddha date every year/);
+  test('Home always carries a standing door into the ledger', () => {
+    // Was a DISCOVER card; became a उपकरण tile when the carousel was retired
+    // (TRD-42). The guarantee is unchanged and is why it is a TOOL rather than a
+    // नया card: नया clears on open, and this door has to persist for a user who
+    // has never saved a tithi.
+    const tools = fs.readFileSync(
+      path.resolve(__dirname, '..', '..', 'data', 'home', 'tools.ts'),
+      'utf8'
+    );
+    expect(tools).toMatch(/id: 'pitru'/);
+
+    const row = fs.readFileSync(
+      path.resolve(__dirname, '..', '..', 'components', 'ToolsRow.tsx'),
+      'utf8'
+    );
+    expect(row).toMatch(/moreTabTarget\('PitruSmaranList'\)/);
   });
 
   test('the Panchang ledger invitation cannot be dismissed while empty', () => {

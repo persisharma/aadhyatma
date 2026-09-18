@@ -95,11 +95,11 @@ appId: com.prashantsharma.vedansh
 # Permanent Home launcher — this must not depend on the shuffled Discover row.
 - scrollUntilVisible:
     element:
-      text: "Kundali. New. Tap to open."
+      text: "Kundali\\..*Tap to open\\."
     direction: DOWN
     timeout: 15000
     centerElement: true
-- tapOn: "Kundali. New. Tap to open."
+- tapOn: "Kundali\\..*Tap to open\\."
 - waitForAnimationToEnd
 
 # Panchang peer-mode landing.

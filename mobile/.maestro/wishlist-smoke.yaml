@@ -56,10 +56,16 @@ appId: com.prashantsharma.vedansh
 - tapOn: "English"
 - waitForAnimationToEnd
 
-# ── Step 3: Open the Sundarkand reader (Home → Sacred Books → Sundarkand) ──
+# ── Step 3: Open the Sundarkand reader (Home → पाठ → Sacred Books → Sundarkand) ──
 - tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
-- assertVisible: "Sacred Books. Tap to open."
+# The 16-tile grid left Home for the पाठ library (TRD-42 §5.3).
+- runFlow: _open-library.yaml
+- scrollUntilVisible:
+    element:
+      text: "Sacred Books\\. Tap to open\\."
+    direction: DOWN
+    timeout: 10000
 - tapOn: "Sacred Books. Tap to open."
 - waitForAnimationToEnd
 - extendedWaitUntil:

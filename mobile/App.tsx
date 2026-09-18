@@ -40,6 +40,7 @@ import { SadhanaProvider } from '@/contexts/SadhanaContext';
 import { RoutineSheetProvider } from '@/contexts/RoutineSheetProvider';
 import { UserActivityProvider } from '@/contexts/UserActivityContext';
 import { NewContentProvider } from '@/contexts/NewContentContext';
+import { FeatureSeenProvider } from '@/contexts/FeatureSeenContext';
 import {
   NotificationPreferencesProvider,
   configureForegroundNotificationHandler,
@@ -308,6 +309,9 @@ export default function App() {
               <DaanLedgerProvider>
               <UserActivityProvider>
                 <NewContentProvider>
+                  {/* नया's seen-map (TRD-42). Inside NewContentProvider because it
+                      uses the same fresh-install-vs-upgrade signal. */}
+                  <FeatureSeenProvider>
                   <ReadingProgressProvider>
                     <JapamCounterProvider>
                       <RoutineProvider>
@@ -405,6 +409,7 @@ export default function App() {
                       </RoutineProvider>
                     </JapamCounterProvider>
                   </ReadingProgressProvider>
+                  </FeatureSeenProvider>
                 </NewContentProvider>
               </UserActivityProvider>
               </DaanLedgerProvider>

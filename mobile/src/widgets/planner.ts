@@ -3,6 +3,12 @@ import type { Lang } from '@/data/gita/language';
 import type { CalendarSystem, PanchangLocation } from '@/panchang/types';
 import type { DailyEntry } from '@/contexts/UserActivityContext';
 import { transliterateDevanagari } from '@/utils/transliterate';
+// The japa-streak helpers live in `@/data/japaStreak` so the Home साधना row can
+// share them without pulling the widget schema into its import graph (TRD-42 §7).
+import { japaDayIsActive, computeJapaStreak, shiftDateKey } from '@/data/japaStreak';
+
+// Re-exported because planPayload.ts and the planner tests import them from here.
+export { japaDayIsActive, computeJapaStreak, shiftDateKey };
 
 export type WidgetPlannerInput = {
   generatedAt: Date;
@@ -21,27 +27,6 @@ function localizedCity(location: PanchangLocation): WidgetLocalizedText {
   return { hi: location.labelHi, en: location.labelEn, gu: transliterateDevanagari(location.labelHi, 'gu'), kn: transliterateDevanagari(location.labelHi, 'kn') };
 }
 
-export function japaDayIsActive(day?: DailyEntry): boolean {
-  return !!day && Object.values(day.japa).some(({ beads, rounds }) => beads > 0 || rounds > 0);
-}
-
-export function computeJapaStreak(activity: Record<string, DailyEntry>, dateKey: string): number {
-  let cursor = dateKey;
-  if (!japaDayIsActive(activity[cursor])) cursor = shiftDateKey(cursor, -1);
-  let streak = 0;
-  while (true) {
-    if (!japaDayIsActive(activity[cursor])) break;
-    streak += 1;
-    cursor = shiftDateKey(cursor, -1);
-  }
-  return streak;
-}
-
-export function shiftDateKey(key: string, days: number): string {
-  const [year, month, day] = key.split('-').map(Number);
-  const shifted = new Date(Date.UTC(year, month - 1, day + days));
-  return `${shifted.getUTCFullYear()}-${String(shifted.getUTCMonth() + 1).padStart(2, '0')}-${String(shifted.getUTCDate()).padStart(2, '0')}`;
-}
 
 /** Convert an IANA-zone civil time to an instant without using process TZ. */
 function zonedInstant(key: string, timeZone: string, hour: number, minute: number, second: number): Date {

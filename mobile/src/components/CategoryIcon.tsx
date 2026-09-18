@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import type { ContentCategory } from '@/data/texts';
 import { useTheme } from '@/theme/ThemeContext';
 import LotusMark from '@/components/LotusMark';
@@ -22,7 +22,21 @@ export type PurposeIconKey =
 
 type PurposeIconKind = PurposeIconKey extends `purpose-${infer Kind}` ? Kind : never;
 
-export type CategoryIconKey = ContentCategory | 'deity' | 'vrat' | 'purpose' | 'insight' | 'routine' | 'muhurat' | 'daan' | PurposeIconKey;
+export type CategoryIconKey =
+  | ContentCategory
+  | 'deity'
+  | 'vrat'
+  | 'purpose'
+  | 'insight'
+  | 'routine'
+  | 'muhurat'
+  | 'daan'
+  // TRD-42 उपकरण row: the calendar and the ॥ danda are marks the app already
+  // draws elsewhere (the §17 tab bar, every vidhi door); वास्तु is the one new glyph.
+  | 'calendar'
+  | 'vidhi'
+  | 'vastu'
+  | PurposeIconKey;
 
 type Props = {
   iconKey: CategoryIconKey;
@@ -40,7 +54,7 @@ export default function CategoryIcon({ iconKey }: Props) {
 
   return (
     <View style={styles.frame} accessible={false}>
-      {iconKey === 'granth' && <PalmLeafManuscriptIcon {...paint} />}
+      {iconKey === 'granth' && <OpenPothiIcon {...paint} />}
       {iconKey === 'stotram' && <OmGlyphIcon {...paint} />}
       {iconKey === 'chalisa' && <MalaIcon {...paint} />}
       {iconKey === 'japam' && (
@@ -49,7 +63,7 @@ export default function CategoryIcon({ iconKey }: Props) {
       {iconKey === 'deity' && <TempleIcon {...paint} />}
       {iconKey === 'aarti' && <DiyaIcon {...paint} />}
       {iconKey === 'theerth' && <ShikharaIcon {...paint} />}
-      {iconKey === 'sanskar' && <VedaManuscriptIcon {...paint} />}
+      {iconKey === 'sanskar' && <OpenBookIcon {...paint} />}
       {iconKey === 'kavacham' && <KavachIcon {...paint} />}
       {iconKey === 'ashtakam' && <AshtakamIcon {...paint} />}
       {iconKey === 'suktam' && <SuktamIcon {...paint} />}
@@ -58,6 +72,11 @@ export default function CategoryIcon({ iconKey }: Props) {
       {iconKey === 'insight' && <InsightIcon {...paint} />}
       {iconKey === 'muhurat' && <MuhuratIcon {...paint} />}
       {iconKey === 'daan' && <DaanIcon {...paint} />}
+      {iconKey === 'calendar' && <CalendarIcon {...paint} />}
+      {iconKey === 'vidhi' && (
+        <VidhiIcon {...paint} fontFamily={typography.readerTitle.fontFamily} />
+      )}
+      {iconKey === 'vastu' && <VastuIcon {...paint} />}
       {/* नित्य साधना launcher tile — reuse the routine's completed-bloom mark. */}
       {iconKey === 'routine' && <LotusMark size={30} />}
       {purposeKind && <PurposeTileIcon kind={purposeKind} {...paint} />}
@@ -80,6 +99,102 @@ function ShikharaIcon({ color, accent }: IconPaint) {
       <View style={[styles.shikharaPeakInner, { borderBottomColor: accent }]} />
       <View style={[styles.shikharaBase, { backgroundColor: color }]} />
       <View style={[styles.shikharaStep, { backgroundColor: accent }]} />
+    </View>
+  );
+}
+
+// ── TRD-42 ───────────────────────────────────────────────────────────────────
+// This is a reading app, but both of its book categories shipped as objects you
+// STORE rather than things you READ: ग्रन्थ as a pothi bound shut with its
+// thread, संस्कार as a closed codex. Opened, each says "read me" at tile size.
+//
+// The splay uses the LotusMark technique — rotate a full-size wrapper about its
+// own centre — rather than `transformOrigin`, which composites inconsistently on
+// Android (see the comment in LotusMark.tsx). The two keep different silhouettes
+// on purpose: the pothi is wide, short and rounded only on its outer edges; the
+// codex is squarer and taller. Three near-identical open books in one grid would
+// read as one blur, which is also why चालीसा keeps its mala and सूक्तम् its
+// paired closed leaves.
+
+function OpenPothiIcon({ color, accent }: IconPaint) {
+  return (
+    <View style={styles.openPothiWrap}>
+      <View style={[styles.openLeafWrap, styles.openWrapLeft]}>
+        <View testID="category-icon-granth-leaf-left" style={[styles.openLeaf, styles.openLeafLeft, { borderColor: color }]} />
+        <View style={[styles.openPothiRule, styles.openPothiRuleLeftTop, { backgroundColor: accent }]} />
+        <View style={[styles.openPothiRule, styles.openPothiRuleLeftBottom, { backgroundColor: accent }]} />
+      </View>
+      <View style={[styles.openLeafWrap, styles.openWrapRight]}>
+        <View testID="category-icon-granth-leaf-right" style={[styles.openLeaf, styles.openLeafRight, { borderColor: color }]} />
+        <View style={[styles.openPothiRule, styles.openPothiRuleRightTop, { backgroundColor: accent }]} />
+        <View style={[styles.openPothiRule, styles.openPothiRuleRightBottom, { backgroundColor: accent }]} />
+      </View>
+      <View testID="category-icon-granth-spine" style={[styles.openPothiSpine, { backgroundColor: color }]} />
+    </View>
+  );
+}
+
+function OpenBookIcon({ color, accent }: IconPaint) {
+  return (
+    <View style={styles.openBookWrap}>
+      <View style={[styles.openBookPageWrap, styles.openBookWrapLeft]}>
+        <View testID="category-icon-sanskar-page-left" style={[styles.openBookPage, styles.openBookPageLeft, { borderColor: color }]} />
+        <View style={[styles.openBookRule, styles.openBookRuleLeftTop, { backgroundColor: accent }]} />
+        <View style={[styles.openBookRule, styles.openBookRuleLeftBottom, { backgroundColor: accent }]} />
+      </View>
+      <View style={[styles.openBookPageWrap, styles.openBookWrapRight]}>
+        <View testID="category-icon-sanskar-page-right" style={[styles.openBookPage, styles.openBookPageRight, { borderColor: color }]} />
+        <View style={[styles.openBookRule, styles.openBookRuleRightTop, { backgroundColor: accent }]} />
+        <View style={[styles.openBookRule, styles.openBookRuleRightBottom, { backgroundColor: accent }]} />
+      </View>
+      <View testID="category-icon-sanskar-spine" style={[styles.openBookSpine, { backgroundColor: color }]} />
+    </View>
+  );
+}
+
+/** A calendar — the §17 tab-bar mark redrawn at launcher-glyph size. Used by
+ *  पितृ स्मरण, whose whole job is knowing which tithi falls when. */
+function CalendarIcon({ color, accent }: IconPaint) {
+  return (
+    <View style={styles.panchangWrap}>
+      <View style={[styles.panchangBody, { borderColor: color }]} />
+      <View style={[styles.panchangHeadRule, { backgroundColor: color }]} />
+      <View style={[styles.panchangRingLeft, { backgroundColor: color }]} />
+      <View style={[styles.panchangRingRight, { backgroundColor: color }]} />
+      <View style={[styles.panchangTithiDot, { backgroundColor: accent }]} />
+    </View>
+  );
+}
+
+/**
+ * पूजा विधि — the ॥ danda the Vidhi catalog, the day-panel pill and the vrat
+ * browse tile ALREADY use for this feature. A drawn glyph here would make the
+ * same door look like two different features.
+ */
+function VidhiIcon({ color, fontFamily }: IconPaint & { fontFamily: string }) {
+  return (
+    <View style={styles.vidhiWrap}>
+      <Text style={{ fontFamily, fontSize: 24, color, includeFontPadding: false }}>॥</Text>
+    </View>
+  );
+}
+
+/**
+ * वास्तु — the one genuinely new glyph (TRD-42 §5.4). A dik-chakra: the ring,
+ * four cardinal ticks, and a needle swung to ईशान, the corner the puja room
+ * belongs in. Not a compass rose with N/E/S/W letters — the app never renders
+ * Latin chrome inside a Devanagari surface (§3).
+ */
+function VastuIcon({ color, accent }: IconPaint) {
+  return (
+    <View style={styles.vastuWrap}>
+      <View testID="category-icon-vastu-ring" style={[styles.vastuRing, { borderColor: color }]} />
+      <View style={[styles.vastuTick, styles.vastuTickNorth, { backgroundColor: accent }]} />
+      <View style={[styles.vastuTick, styles.vastuTickSouth, { backgroundColor: accent }]} />
+      <View style={[styles.vastuTick, styles.vastuTickWest, { backgroundColor: accent }]} />
+      <View style={[styles.vastuTick, styles.vastuTickEast, { backgroundColor: accent }]} />
+      <View testID="category-icon-vastu-needle" style={[styles.vastuNeedle, { backgroundColor: color }]} />
+      <View style={[styles.vastuBindu, { backgroundColor: color }]} />
     </View>
   );
 }
@@ -1708,4 +1823,57 @@ const styles = StyleSheet.create({
     borderRadius: 1,
     opacity: 0.85,
   },
+  // ── TRD-42 glyphs ──────────────────────────────────────────────────────────
+  // Open pothi (ग्रन्थ). Wide and short, rounded only on the outer edge, so it
+  // stays distinct from the squarer open codex below at 36 dp.
+  openPothiWrap: { width: 36, height: 28, position: 'relative' },
+  openLeafWrap: { position: 'absolute', left: 0, top: 0, width: 36, height: 28 },
+  openWrapLeft: { transform: [{ rotate: '-7deg' }] },
+  openWrapRight: { transform: [{ rotate: '7deg' }] },
+  openLeaf: { position: 'absolute', top: 7, width: 16, height: 15, borderWidth: 1.8 },
+  openLeafLeft: { left: 1.5, borderTopLeftRadius: 7, borderBottomLeftRadius: 7, borderTopRightRadius: 2, borderBottomRightRadius: 2 },
+  openLeafRight: { right: 1.5, borderTopRightRadius: 7, borderBottomRightRadius: 7, borderTopLeftRadius: 2, borderBottomLeftRadius: 2 },
+  openPothiRule: { position: 'absolute', height: 1.5, borderRadius: 1 },
+  openPothiRuleLeftTop: { left: 5, top: 12, width: 9 },
+  openPothiRuleLeftBottom: { left: 5, top: 16, width: 6 },
+  openPothiRuleRightTop: { right: 5, top: 12, width: 9 },
+  openPothiRuleRightBottom: { right: 5, top: 16, width: 6 },
+  openPothiSpine: { position: 'absolute', left: 17.2, top: 5, width: 1.6, height: 19, borderRadius: 1 },
+
+  // Open codex (संस्कार). Taller, squarer pages, two rules a side.
+  openBookWrap: { width: 34, height: 30, position: 'relative' },
+  openBookPageWrap: { position: 'absolute', left: 0, top: 0, width: 34, height: 30 },
+  openBookWrapLeft: { transform: [{ rotate: '-7deg' }] },
+  openBookWrapRight: { transform: [{ rotate: '7deg' }] },
+  openBookPage: { position: 'absolute', top: 6, width: 14, height: 19, borderWidth: 1.7, borderRadius: 3 },
+  openBookPageLeft: { left: 2 },
+  openBookPageRight: { right: 2 },
+  openBookRule: { position: 'absolute', height: 1.5, borderRadius: 1 },
+  openBookRuleLeftTop: { left: 5, top: 11, width: 8 },
+  openBookRuleLeftBottom: { left: 5, top: 15.5, width: 6 },
+  openBookRuleRightTop: { right: 5, top: 11, width: 8 },
+  openBookRuleRightBottom: { right: 5, top: 15.5, width: 6 },
+  openBookSpine: { position: 'absolute', left: 16.2, top: 4, width: 1.8, height: 23, borderRadius: 1 },
+
+  // पंचांग — the tab-bar calendar at glyph size.
+  panchangWrap: { width: 32, height: 32, alignItems: 'center', justifyContent: 'center' },
+  panchangBody: { position: 'absolute', top: 6, width: 26, height: 22, borderWidth: 2, borderRadius: 4 },
+  panchangHeadRule: { position: 'absolute', top: 13, width: 26, height: 2 },
+  panchangRingLeft: { position: 'absolute', top: 2, left: 9, width: 2, height: 6, borderRadius: 1 },
+  panchangRingRight: { position: 'absolute', top: 2, right: 9, width: 2, height: 6, borderRadius: 1 },
+  panchangTithiDot: { position: 'absolute', top: 19, width: 5, height: 5, borderRadius: 2.5 },
+
+  // पूजा विधि — the ॥ danda, matching every other vidhi door.
+  vidhiWrap: { width: 32, height: 32, alignItems: 'center', justifyContent: 'center' },
+
+  // वास्तु — dik-chakra with the needle swung to ईशान.
+  vastuWrap: { width: 32, height: 32, alignItems: 'center', justifyContent: 'center', position: 'relative' },
+  vastuRing: { width: 24, height: 24, borderWidth: 2, borderRadius: 12 },
+  vastuTick: { position: 'absolute', borderRadius: 1 },
+  vastuTickNorth: { top: 0, width: 2, height: 5 },
+  vastuTickSouth: { bottom: 0, width: 2, height: 5 },
+  vastuTickWest: { left: 0, width: 5, height: 2 },
+  vastuTickEast: { right: 0, width: 5, height: 2 },
+  vastuNeedle: { position: 'absolute', width: 2, height: 14, borderRadius: 1, transform: [{ rotate: '38deg' }] },
+  vastuBindu: { position: 'absolute', width: 5, height: 5, borderRadius: 2.5 },
 });
