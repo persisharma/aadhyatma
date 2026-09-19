@@ -26,6 +26,7 @@ marketing/reels/
 ├── reels/            # one <slug>.reel.mjs per feature (the storytelling scripts)
 ├── __tests__/        # node:test unit tests for the pure modules
 ├── flows/  voice/  out/  music/   # GENERATED / cached / drop-folder — all git-ignored
+├── plans/            # campaign plans (slate, scripts, ship dates) — e.g. plans/pitru-paksha-2026.md
 └── README.md
 ```
 
