@@ -156,6 +156,9 @@ export type MoreStackParamList = VidhiStackParamList & DaanStackParamList & Ghar
   PitruSmaranEdit: { entryId?: string } | undefined;
   PitruSmaranDetail: { entryId: string };
   PitruPakshaOverview: undefined;
+  // पितृ पक्ष परिचय (PRD-44) — the education layer beside the reminder and the vidhi.
+  PitruPakshaShiksha: undefined;
+  PitruKatha: { kathaId: string };
   /** वास्तु दिशा (PRD-24) — compass + room guidance; also on the Panchang stack. */
   VastuDisha: undefined;
   // कुल परम्परा (PRD-29) — janma tithis of the living + the family record.

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PRD-44 · पितृ पक्ष परिचय — Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* Mirrors mobile/src/theme/colors.ts (Sep 2026). */
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-hi:#F6ECD0; --gradient-end:#F1E3BF;
+    --gold:#A67C34; --gold-soft:#C9B896; --gold-tint:rgba(166,124,52,0.14); --gold-chip:rgba(166,124,52,0.22);
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --saffron-tint:rgba(184,98,27,0.12);
+    --ink:#1A0E03; --ink-soft:#5A3A1E; --ink-muted:#6E5230; --divider:rgba(138,62,11,0.18);
+    --shadow-card:0 2px 6px rgba(60,30,10,0.10);
+    --sans:'Inter',system-ui,sans-serif; --serif:'Cormorant Garamond',serif; --deva:'Noto Serif Devanagari',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:#1a140c;color:#e9d9b1;padding:24px;line-height:1.5}
+  h1{font-family:var(--serif);font-weight:600;font-size:28px;color:#fff5e0;margin-bottom:2px}
+  .sub{font-style:italic;color:var(--gold-soft);font-size:14px;margin-bottom:6px;max-width:960px}
+  .legend{font-size:12.5px;color:#b7a377;margin-bottom:20px;max-width:960px}
+  .legend b{color:#e9d9b1}
+  .phaselabel{font-weight:600;font-size:12px;letter-spacing:.6px;text-transform:uppercase;color:var(--saffron);background:var(--saffron-tint);display:inline-block;padding:4px 12px;border-radius:20px;margin:26px 0 4px}
+  .phasedesc{font-size:12.5px;color:#b7a377;margin-bottom:14px;max-width:960px}
+  .wrap{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap}
+  .col{display:flex;flex-direction:column;align-items:center}
+  .cap{width:340px;font-size:12px;color:#b7a377;margin-top:10px;line-height:1.55}
+  .cap b{color:#e9d9b1}
+  .cap .n{display:inline-flex;width:16px;height:16px;border-radius:50%;background:var(--gold);color:#1a140c;font-weight:600;font-size:10.5px;align-items:center;justify-content:center;margin-right:5px;vertical-align:1px}
+  .now{color:#7fc48a;font-weight:600} .later{color:#d9a24a;font-weight:600}
+
+  .phone{width:340px;height:720px;background:var(--parchment);border-radius:38px;border:10px solid #0d0804;box-shadow:0 24px 60px rgba(0,0,0,.55);position:relative;overflow:hidden;flex:none}
+  .phone .statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);background:linear-gradient(var(--parchment-hi),var(--parchment))}
+  .screen{position:absolute;top:32px;left:0;right:0;bottom:0;overflow-y:auto;background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
+  .screen::-webkit-scrollbar{width:0}
+  .pad{padding:8px 22px 30px}
+  .topbar{display:flex;align-items:center;gap:12px;padding:6px 2px 12px}
+  .back{width:44px;height:44px;border-radius:50%;border:1px solid var(--divider);background:var(--parchment-soft);display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:18px}
+  .toptitle{font-family:var(--deva);font-size:20px;color:var(--ink);flex:1}
+  .deva{font-family:var(--deva)}
+  .dot{position:absolute;width:20px;height:20px;border-radius:50%;background:var(--gold);color:#1a140c;font-weight:700;font-size:11px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.35);z-index:5}
+
+  .hero{text-align:center;margin:2px 0 14px}
+  .hero .d{font-family:var(--deva);font-size:18px;color:var(--ink)}
+  .hero .s{font-family:var(--deva);font-size:13px;color:var(--ink-soft);margin-top:3px}
+  .om{font-family:var(--deva);color:var(--gold);letter-spacing:6px;text-align:center;font-size:15px}
+  .lede{font-family:var(--deva);font-size:13px;line-height:20px;color:var(--ink-soft);text-align:center;margin-top:6px}
+  .seclabel{font-family:var(--sans);font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:var(--ink-muted);margin:22px 0 8px;font-weight:600}
+  .card{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:12px;padding:13px 14px;margin-bottom:10px}
+  .card .t{font-family:var(--deva);font-size:15px;line-height:22px;color:var(--ink)}
+  .card .b{font-family:var(--deva);font-size:13.5px;line-height:22px;color:var(--ink-soft);margin-top:6px}
+  .card .more{font-family:var(--deva);font-size:13px;color:var(--saffron-deep);margin-top:8px;display:inline-block}
+  .door{display:flex;align-items:center;gap:12px;border:1px solid var(--gold);background:var(--gold-tint);border-radius:12px;padding:12px 14px;margin-bottom:10px;min-height:52px}
+  .door.quiet{background:var(--parchment-soft);border-color:var(--divider)}
+  .door .g{font-family:var(--deva);color:var(--gold);letter-spacing:4px;font-size:15px}
+  .door .m{flex:1;min-width:0}
+  .door .t{font-family:var(--deva);font-size:15px;color:var(--ink)}
+  .door .s{font-family:var(--deva);font-size:12px;line-height:18px;color:var(--ink-muted);margin-top:2px}
+  .door .chev{color:var(--ink-soft);font-size:17px}
+  .row{display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-bottom:1px solid var(--divider)}
+  .row .mk{width:8px;height:8px;border-radius:4px;background:var(--gold);margin-top:7px;flex:none}
+  .row .mk.fam{background:var(--saffron)}
+  .row .date{font-family:var(--serif);font-size:13px;color:var(--ink-soft);width:56px;flex:none;padding-top:1px}
+  .row .t{font-family:var(--deva);font-size:14.5px;color:var(--ink)}
+  .row .s{font-family:var(--deva);font-size:13px;line-height:20px;color:var(--ink-soft);margin-top:4px}
+  .row .fam-name{font-family:var(--deva);font-size:12.5px;color:var(--saffron-deep);margin-top:2px}
+  .verse{font-family:var(--deva);font-size:14.5px;line-height:24px;color:var(--saffron-deep);text-align:center;margin-top:10px}
+  .cite{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--gold);text-align:center;margin-top:6px}
+  .pill{display:inline-block;border:1px solid var(--gold);border-radius:999px;padding:7px 14px;font-family:var(--deva);font-size:12.5px;color:var(--saffron-deep);margin:10px auto 0;text-align:center}
+  .center{text-align:center}
+  .foot{font-family:var(--serif);font-style:italic;font-size:12px;line-height:19px;color:var(--ink-muted);text-align:center;margin-top:18px}
+  .teaching{background:var(--gold-tint);border:1px solid var(--gold);border-radius:16px;padding:13px 14px;margin-top:6px}
+  .teaching .l{font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:6px}
+  .teaching .t{font-family:var(--deva);font-size:14px;line-height:23px;color:var(--saffron-deep)}
+  .para{font-family:var(--deva);font-size:14px;line-height:25px;color:var(--ink-soft);margin-bottom:12px}
+  .src{font-family:var(--deva);font-size:11.5px;line-height:17px;color:var(--ink-muted);text-align:center;margin-top:12px}
+  .draft{opacity:.45;position:relative}
+  .draft::after{content:'DRAFT — hidden in app until verified';position:absolute;right:8px;top:6px;font-size:9px;letter-spacing:.5px;color:var(--saffron-deep);background:var(--saffron-tint);padding:2px 6px;border-radius:999px;font-family:var(--sans)}
+
+  /* Home season card + notification */
+  .home .wordmark{font-family:var(--deva);text-align:center;color:var(--saffron-deep);font-size:20px;padding:10px 0 4px}
+  .discover{background:linear-gradient(#FFF5E0,#F5DEAC);border:1px solid rgba(184,98,27,.4);border-radius:16px;padding:14px;box-shadow:var(--shadow-card);margin-top:8px}
+  .discover .g{font-family:var(--deva);color:var(--gold);font-size:18px}
+  .discover .t{font-family:var(--deva);font-size:15.5px;color:var(--ink);margin-top:6px}
+  .discover .s{font-family:var(--deva);font-size:12.5px;line-height:19px;color:var(--ink-soft);margin-top:4px}
+  .discover .cta{display:inline-block;margin-top:10px;font-family:var(--deva);font-size:13px;color:var(--saffron-deep);font-weight:600}
+  .notif{background:rgba(255,250,235,.96);border-radius:18px;padding:12px 14px;margin:14px 6px 0;box-shadow:0 6px 20px rgba(0,0,0,.18)}
+  .notif .h{display:flex;justify-content:space-between;font-size:11px;color:var(--ink-muted);font-weight:600}
+  .notif .t{font-family:var(--deva);font-size:14px;color:var(--ink);margin-top:4px;font-weight:600}
+  .notif .b{font-family:var(--deva);font-size:13px;line-height:19px;color:var(--ink-soft);margin-top:2px}
+  .arrow{font-size:11px;color:#b7a377;text-align:center;margin:10px 0 0}
+
+  /* IA diagram */
+  .ia{max-width:960px;background:#241b10;border:1px solid #3a2c18;border-radius:12px;padding:16px 18px;margin:10px 0 6px;font-size:12.5px;color:#e9d9b1}
+  .ia table{border-collapse:collapse;width:100%}
+  .ia td,.ia th{border:1px solid #3a2c18;padding:7px 9px;vertical-align:top;text-align:left}
+  .ia th{color:#fff5e0;background:#2e2314;font-weight:600}
+  .ia code{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:#f0d9a8}
+</style>
+</head>
+<body>
+<h1>PRD-44 · पितृ पक्ष परिचय — Pitru Paksha as an education layer</h1>
+<p class="sub">Today the fortnight is a reminder, a calendar and a door. This prototype adds the missing layer — <b>जानें</b> — and puts it first, with the shipped reminder and vidhi unchanged beneath it. Same tokens, same components, Pitru Smaran's muted register.</p>
+<p class="legend"><b>Legend:</b> numbered dots are annotated in the caption under each phone. <span class="now">Green</span> = built on this branch (Phase 1). <span class="later">Amber</span> = Phase 2/3, not built. Faded blocks marked DRAFT are authored but <b>hidden in the app</b> until a reviewer opens the sources and flips <code style="color:#f0d9a8">status</code> — the app renders verified rows only.</p>
+
+<div class="ia">
+  <table>
+    <tr><th style="width:26%">Layer</th><th>Today (shipped)</th><th>With PRD-44</th></tr>
+    <tr><td><b>स्मरण · reminder</b></td><td>Two public 18:00 season notices → overview. Per-person day-before/day-of notices → person detail.</td><td><b>Unchanged.</b> The tap now lands on an overview whose first card is the परिचय door. <span class="later">Phase 3 option:</span> opt-in daily 07:30 lesson (≤16 slots, arms last under the iOS budget).</td></tr>
+    <tr><td><b>तिथियाँ · calendar</b></td><td>Sixteen §33.6 rows; family names on saffron dots.</td><td><b>Unchanged</b>, plus the परिचय door above it (<span class="now">built</span>). <span class="later">Phase 2:</span> Observance Detail card on the fortnight's rules.</td></tr>
+    <tr><td><b>विधि · guide</b></td><td>Tila-tarpana door under the rows; person-detail door; Sarvapitri chip.</td><td><b>Unchanged.</b> Also reachable from परिचय's closing doors — after the reader knows what it is.</td></tr>
+    <tr><td><b>जानें · education</b> <span class="now">NEW</span></td><td>—</td><td><code>PitruPakshaShiksha</code> + <code>PitruKatha</code> on the More stack; registry <code>data/pitru/</code> (lessons · tithis · glossary · verse spine · kathas · प्रश्नोत्तर), verified-only accessors, <code>hasPitruShiksha()</code> gates every door. <span class="later">Phase 2:</span> season DISCOVER caption, search rows, जिज्ञासा intents.</td></tr>
+  </table>
+</div>
+
+<!-- ───────────────────────── PHASE 1 ───────────────────────── -->
+<div class="phaselabel">1 · Where it enters — the overview becomes the fortnight's home</div>
+<p class="phasedesc">Reached from the Pitru Smaran season banner, the Home/Panchang season chip, and the public reminder tap. Nothing moved; one quiet card was added between the hero and the rows.</p>
+<div class="wrap">
+  <div class="col">
+    <div class="phone"><div class="statusbar"><span>9:41</span><span>●●● ▲ ▮</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">पितृ पक्ष 2026</div></div>
+        <div class="hero"><div class="d">27 Sep – 12 Oct</div><div class="s">भाद्रपद कृष्ण पक्ष · आपके परिवार की श्राद्ध-तिथियाँ</div></div>
+        <div class="door quiet" style="position:relative"><div class="dot" style="left:-8px;top:-8px">1</div>
+          <span class="g">॥</span><div class="m"><div class="t">पितृ पक्ष क्या है, क्यों है</div><div class="s">परिचय · तिथियाँ · शास्त्र-वचन · कथाएँ</div></div><span class="chev">›</span></div>
+        <div class="row"><div class="mk"></div><div class="date">27 Sep</div><div><div class="t">पूर्णिमा श्राद्ध</div></div></div>
+        <div class="row"><div class="mk"></div><div class="date">28 Sep</div><div><div class="t">प्रतिपदा श्राद्ध</div></div></div>
+        <div class="row"><div class="mk"></div><div class="date">29 Sep</div><div><div class="t">द्वितीया श्राद्ध</div></div></div>
+        <div class="row"><div class="mk fam"></div><div class="date">4 Oct</div><div><div class="t">अष्टमी श्राद्ध</div><div class="fam-name">॥ पिताजी</div></div></div>
+        <div class="row"><div class="mk"></div><div class="date">5 Oct</div><div><div class="t">नवमी श्राद्ध</div></div></div>
+        <div class="row"><div class="mk"></div><div class="date">…</div><div><div class="t">…</div></div></div>
+        <div class="row" style="border-bottom:0"><div class="mk fam"></div><div class="date">12 Oct</div><div><div class="t">सर्वपितृ अमावस्या — अज्ञात तिथियों हेतु</div><div class="fam-name">॥ नानाजी</div></div></div>
+        <div class="door" style="margin-top:18px;position:relative"><div class="dot" style="left:-8px;top:-8px">2</div>
+          <div class="m"><div class="t">॥ पितृ तिल-तर्पण स्मरण</div><div class="s">4 Oct · सीमित गृहस्थ मार्गदर्शिका</div></div><span class="chev">›</span></div>
+        <div class="foot">मिलान इसी फ़ोन पर पंचांग इंजन से — सूर्योदय-तिथि पद्धति</div>
+      </div></div></div>
+    <div class="cap"><span class="n">1</span><b>The परिचय door</b> <span class="now">built</span> — <code>parchmentSoft</code> on <code>divider</code>, ॥ in gold, title + section summary. Renders only when <code>hasPitruShiksha()</code> is true; an all-draft registry shows <b>no</b> door, never a teaser. → <code>PitruPakshaShiksha</code>, pushed in place so Back returns here.<br><span class="n">2</span><b>The vidhi door</b> — unchanged (PRD-19 P3). Education sits <i>above</i> the calendar; the rite stays <i>below</i> it: learn → see the dates → act.</div>
+  </div>
+
+  <div class="col">
+    <div class="phone home"><div class="statusbar"><span>18:00</span><span>●●● ▲ ▮</span></div>
+      <div class="screen"><div class="pad">
+        <div class="wordmark">ॐ वेदांश ॐ</div>
+        <div class="notif" style="position:relative"><div class="dot" style="left:-8px;top:-8px">3</div>
+          <div class="h"><span>VEDANSH</span><span>now</span></div>
+          <div class="t">पितृ पक्ष</div>
+          <div class="b">कल से पितृ पक्ष — अपने पितरों का स्मरण करें · गीता पाठ</div></div>
+        <div class="arrow">tap → PitruPakshaOverview (unchanged deep link) — which now opens education-first</div>
+        <div class="seclabel" style="margin-top:26px">Discover</div>
+        <div class="discover" style="position:relative"><div class="dot" style="left:-8px;top:-8px">4</div>
+          <div class="g">॥</div>
+          <div class="t">पितृ स्मरण</div>
+          <div class="s">पितृ पक्ष क्या है, क्यों है — जानें · फिर अपने पितरों की तिथियाँ सहेजें</div>
+          <span class="cta">जानें ›</span></div>
+        <div class="seclabel" style="margin-top:22px">Panchang · 12 Oct</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;position:relative"><div class="dot" style="left:-8px;top:-8px">5</div>
+          <span style="font-family:var(--deva);font-size:12.5px;padding:7px 12px;border-radius:999px;background:var(--saffron-tint);color:var(--saffron-deep)">पितृ पक्ष — सर्वपितृ अमावस्या</span>
+          <span style="font-family:var(--deva);font-size:12.5px;padding:7px 12px;border-radius:999px;background:var(--gold-tint);color:var(--ink)">॥ तिल-तर्पण विधि</span></div>
+      </div></div></div>
+    <div class="cap"><span class="n">3</span><b>Reminder — unchanged.</b> Same two public fires, same copy, same payload, same target. The only change the user feels is what the tap lands on.<br><span class="n">4</span><b>Season DISCOVER caption</b> <span class="later">Phase 2</span> — the existing Pitru Smaran spotlight's caption becomes the परिचय invitation for the 30 days before and during the fortnight; no second card.<br><span class="n">5</span><b>Day chips — unchanged.</b> The season chip already opens the overview; Sarvapitri keeps its vidhi chip. No third chip.</div>
+  </div>
+</div>
+
+<!-- ───────────────────────── PHASE 2 ───────────────────────── -->
+<div class="phaselabel">2 · परिचय — one reverent scroll, in reading order</div>
+<p class="phasedesc">What → why → whose day → what the texts say → the stories → the questions → the words → and only then the three doors. Everything below renders from verified-only accessors; faded blocks are authored drafts the app hides.</p>
+<div class="wrap">
+  <div class="col">
+    <div class="phone"><div class="statusbar"><span>9:41</span><span>●●● ▲ ▮</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">पितृ पक्ष — परिचय</div></div>
+        <div class="om">॥ ॐ ॥</div>
+        <div class="lede">क्या है, क्यों है, किस दिन किसका — फिर स्मरण, फिर विधि</div>
+        <div class="seclabel" style="position:relative"><div class="dot" style="left:-30px;top:-4px">1</div>परिचय</div>
+        <div class="card"><div class="t">पितृ पक्ष क्या है</div><div class="b">भाद्रपद पूर्णिमा से आश्विन अमावस्या तक का पखवाड़ा पितृ पक्ष कहलाता है — इसे महालय पक्ष भी कहते हैं। पूर्णिमान्त गणना में यह आश्विन कृष्ण पक्ष है; अमान्त गणना में भाद्रपद कृष्ण पक्ष। दोनों नाम एक ही सोलह दिनों के हैं।</div><span class="more">और पढ़ें ›</span></div>
+        <div class="card"><div class="t">श्राद्ध और तर्पण — दो शब्द, दो कर्म</div><div class="b">तर्पण जल का अर्पण है — प्रायः तिल मिले जल का — जो पितरों की तृप्ति के भाव से किया जाता है। यह श्राद्ध का एक अंग है, या विशेष परिस्थितियों में उसका अनुकल्प — पर स्वयं पूर्ण श्राद्ध नहीं।</div><span class="more">और पढ़ें ›</span></div>
+        <div class="card"><div class="t">दिन का कौन-सा समय</div><div class="b">श्राद्ध का समय दिन का उत्तरार्ध माना गया है — कुतप काल, रौहिण और उसके बाद का अपराह्न। यह सूर्योदय का कर्म नहीं है।</div><span class="more">और पढ़ें ›</span></div>
+        <div class="card"><div class="t">किस दिन किसका श्राद्ध — तिथि कैसे मिलती है</div><div class="b">देहान्त की तिथि इस पक्ष की उसी संख्या की कृष्ण-पक्ष तिथि पर उतारी जाती है। माघ कृष्ण अष्टमी को गए पितर का महालय श्राद्ध पितृ पक्ष की अष्टमी को होता है।</div><span class="more">और पढ़ें ›</span></div>
+        <div class="card"><div class="t">हर परिवार की अपनी रीति</div><div class="b">दिशा, यज्ञोपवीत की स्थिति, किन पितरों को किस क्रम में स्मरण किया जाए — यह सब शाखा, प्रदेश और कुल-परम्परा से बदलता है।</div><span class="more">और पढ़ें ›</span></div>
+        <div class="card draft"><div class="t">पितृ-ऋण और पञ्च महायज्ञ — स्मरण क्यों</div><div class="b">वैदिक परम्परा मनुष्य पर तीन ऋण बताती है — देव, ऋषि और पितृ-ऋण…</div></div>
+        <div class="card draft"><div class="t">महालय — नाम का अर्थ</div><div class="b">महालय का अर्थ पितरों का महान आलय भी लिया जाता है…</div></div>
+        <div class="seclabel" style="position:relative"><div class="dot" style="left:-30px;top:-4px">2</div>पक्ष की तिथियाँ</div>
+        <div class="row"><div class="mk"></div><div><div class="t">पूर्णिमा श्राद्ध</div><div class="s">पक्ष का पहला दिन — भाद्रपद पूर्णिमा। जिन पितरों का देहान्त किसी पूर्णिमा को हुआ, उनका महालय श्राद्ध इसी दिन।</div></div></div>
+        <div class="row draft"><div class="mk"></div><div><div class="t">चतुर्थी–पञ्चमी · भरणी श्राद्ध</div><div class="s">जिस दिन पक्ष में भरणी नक्षत्र पड़े…</div></div></div>
+        <div class="row draft"><div class="mk"></div><div><div class="t">नवमी · मातृ नवमी</div><div class="s">माता और कुल की दिवंगत स्त्रियों का स्मरण…</div></div></div>
+        <div class="row draft"><div class="mk"></div><div><div class="t">चतुर्दशी · घात चतुर्दशी</div><div class="s">अस्त्र, दुर्घटना या अकाल मृत्यु…</div></div></div>
+        <div class="row" style="border-bottom:0"><div class="mk"></div><div><div class="t">सर्वपितृ अमावस्या</div><div class="s">पक्ष का अन्तिम दिन। अमावस्या को दिवंगत पितरों का दिन — और उन सभी का जिनकी तिथि ज्ञात नहीं।</div></div></div>
+        <div class="foot" style="text-align:left;margin-top:10px">शेष तिथियों के परम्परागत विवरण स्रोत-समीक्षा के बाद जोड़े जाएँगे।</div>
+      </div></div></div>
+    <div class="cap"><span class="n">1</span><b>Concept lessons</b> <span class="now">built</span> — cards open on paragraph 1; <b>और पढ़ें ›</b> unfolds the rest in place (a परिचय is read, not navigated). Five verified today; the two faded ones are authored drafts awaiting Taittiriya Samhita / Manusmriti and a Mahalaya source.<br><span class="n">2</span><b>The sixteen days</b> <span class="now">built</span> — §33.6 row idiom, gold marker. Only पूर्णिमा and सर्वपितृ are verified (they are the engine's own rules); Bharani / Matri Navami / Sannyasi Dwadashi / Ghata Chaturdashi are drafts, and the italic line says so honestly instead of showing nothing.</div>
+  </div>
+
+  <div class="col">
+    <div class="phone"><div class="statusbar"><span>9:41</span><span>●●● ▲ ▮</span></div>
+      <div class="screen"><div class="pad">
+        <div class="seclabel" style="position:relative;margin-top:6px"><div class="dot" style="left:-30px;top:-4px">3</div>शास्त्र-वचन</div>
+        <div class="card"><div class="t">पिण्ड-उदक क्रिया का लोप — अर्जुन की चिन्ता</div>
+          <div class="verse">पतन्ति पितरो ह्येषां लुप्तपिण्डोदकक्रियाः ॥</div><div class="cite">श्रीमद्भगवद्गीता १.४२</div>
+          <div class="b">युद्ध के आरम्भ में अर्जुन कुल-नाश के परिणाम गिनते हुए कहते हैं कि जिस कुल में पिण्ड और जल की क्रिया लुप्त हो जाती है, उसके पितर अपने स्थान से गिर जाते हैं। यह परम्परा का अपना वाक्य है कि पितृ-कर्म क्यों बचाए रखा जाता है।</div>
+          <div class="center"><span class="pill">गीता में पढ़ें ›</span></div></div>
+        <div class="card"><div class="t">पितृव्रता पितरों को पाते हैं</div>
+          <div class="verse">यान्ति देवव्रता देवान् पितृन् यान्ति पितृव्रताः ।</div><div class="cite">श्रीमद्भगवद्गीता ९.२५</div>
+          <div class="b">देवताओं के उपासक देवताओं को, पितरों के उपासक पितरों को प्राप्त होते हैं — और जो उन्हें भजते हैं, वे उन्हें।</div>
+          <div class="center"><span class="pill">गीता में पढ़ें ›</span></div></div>
+        <div class="card"><div class="t">श्रीराम की जलाञ्जलि — मन्दाकिनी तट पर</div>
+          <div class="verse">एतत्ते राजशार्दूल विमलं तोयमक्षयम् ।<br>पितृलोकगतस्याद्य मद्दत्तमुपतिष्ठतु ॥</div><div class="cite">वाल्मीकि रामायण · अयोध्याकाण्ड २.१०२.२७</div>
+          <div class="b">दक्षिण दिशा की ओर मुख कर जल की अञ्जलि लेते हैं और कहते हैं — पितृलोक में गए हुए आपको मेरा दिया यह निर्मल, अक्षय जल आज प्राप्त हो।</div>
+          <div class="center"><span class="pill">रामायण में पढ़ें ›</span></div></div>
+        <div class="card draft"><div class="t">पञ्च महायज्ञ — पितृ-यज्ञ नित्य कर्म है</div><div class="cite">मनुस्मृति ३.७०</div><div class="b">(not in a bundled reader ⇒ never quoted; meaning only, once verified)</div></div>
+        <div class="seclabel" style="position:relative"><div class="dot" style="left:-30px;top:-4px">4</div>कथाएँ</div>
+        <div class="door quiet"><div class="m"><div class="t">॥ चित्रकूट में श्रीराम का पितृ-कर्म</div><div class="s">अयोध्याकाण्ड — मन्दाकिनी तट पर जलाञ्जलि और पिण्ड</div></div><span class="chev">›</span></div>
+        <div class="door quiet draft"><div class="m"><div class="t">॥ कर्ण और पितृ पक्ष के सोलह दिन</div><div class="s">लोक-कथा — पक्ष के आरम्भ की प्रचलित कथा</div></div><span class="chev">›</span></div>
+        <div class="seclabel" style="position:relative"><div class="dot" style="left:-30px;top:-4px">5</div>प्रश्नोत्तर</div>
+        <div class="card"><div class="t">हमें अपने पितरों की तिथि नहीं मालूम — क्या करें?</div><div class="b">परम्परा ने इसके लिए ही सर्वपितृ अमावस्या रखी है — पक्ष का अन्तिम दिन, जब अज्ञात तिथि वाले और छूटे हुए सब पितरों का स्मरण किया जाता है।</div></div>
+        <div class="card"><div class="t">छपे पंचांग में श्राद्ध की तारीख़ एक दिन अलग क्यों?</div><div class="b">श्राद्ध अपराह्न का कर्म है; अधिकांश तालिकाएँ सूर्योदय की तिथि से दिन नाम देती हैं…</div></div>
+        <div class="card"><div class="t">क्या घर पर किया तिल-तर्पण पूरा श्राद्ध है?</div><div class="b">नहीं। धर्मसिन्धु तिल-तर्पण को श्राद्ध का अंग या अनुकल्प मानता है…</div></div>
+      </div></div></div>
+    <div class="cap"><span class="n">3</span><b>Verse spine</b> <span class="now">built</span> — short quoted line (Devanagari; IAST in English), gold cite, meaning that adds nothing, and a hand-off pill. <b>Rule:</b> a row is quoted only if its <code>ref</code> resolves to the exact bundled verse (test-pinned against the JSON); Manu 3.70 has no bundled reader, so it is meaning-only and draft. Gita → the More stack's local <code>GitaReader</code> (Back returns here); Valmiki → <code>HomeTab/ValmikiRamayanReader</code>.<br><span class="n">4</span><b>Kathas</b> — the Ramayana katha is verified against the bundled 2.102.20–35; the Karna story is a <b>folk katha</b> and its canon line will say so.<br><span class="n">5</span><b>प्रश्नोत्तर</b> — four honest answers; the "inauspicious fortnight / no purchases" question is <b>deliberately absent</b> (§51 — the opened sources make no such verdict).</div>
+  </div>
+
+  <div class="col">
+    <div class="phone"><div class="statusbar"><span>9:41</span><span>●●● ▲ ▮</span></div>
+      <div class="screen"><div class="pad">
+        <div class="seclabel" style="position:relative;margin-top:6px"><div class="dot" style="left:-30px;top:-4px">6</div>शब्द</div>
+        <div class="card">
+          <div class="t" style="font-size:14px">पितर</div><div class="b" style="margin-top:2px;font-size:13px;line-height:20px">दिवंगत पूर्वज — जिनका स्मरण श्राद्ध और तर्पण में किया जाता है।</div>
+          <div class="t" style="font-size:14px;margin-top:10px">तर्पण</div><div class="b" style="margin-top:2px;font-size:13px;line-height:20px">तृप्त करने का भाव — जल (प्रायः तिल-युक्त) का अर्पण। श्राद्ध का अंग या अनुकल्प।</div>
+          <div class="t" style="font-size:14px;margin-top:10px">पिण्ड</div><div class="b" style="margin-top:2px;font-size:13px;line-height:20px">पितरों को अर्पित अन्न का गोला। पिण्डदान पार्वण श्राद्ध का अंग है।</div>
+          <div class="t" style="font-size:14px;margin-top:10px">कुतप काल</div><div class="b" style="margin-top:2px;font-size:13px;line-height:20px">मध्याह्न के आसपास का मुहूर्त, श्राद्ध के लिए विशेष।</div>
+          <div class="t" style="font-size:14px;margin-top:10px">अनुकल्प</div><div class="b" style="margin-top:2px;font-size:13px;line-height:20px">मुख्य विधान सम्भव न हो तो शास्त्र द्वारा बताया गया सरल विकल्प।</div>
+        </div>
+        <div class="seclabel" style="position:relative"><div class="dot" style="left:-30px;top:-4px">7</div>अब</div>
+        <div class="door"><div class="m"><div class="t">इस वर्ष की तिथियाँ</div><div class="s">पखवाड़े की तालिका · आपके परिवार के दिन</div></div><span class="chev">›</span></div>
+        <div class="door"><div class="m"><div class="t">॥ पितृ तिल-तर्पण स्मरण</div><div class="s">सीमित गृहस्थ मार्गदर्शिका</div></div><span class="chev">›</span></div>
+        <div class="door"><div class="m"><div class="t">॥ पितृ स्मरण</div><div class="s">अपने पितरों की तिथियाँ सहेजें</div></div><span class="chev">›</span></div>
+        <div class="foot">यह परिचय है, विधान नहीं — परिवार की परम्परा सर्वोपरि है।</div>
+      </div></div></div>
+    <div class="cap"><span class="n">6</span><b>Glossary</b> <span class="now">built</span> — one card, term + one line. गोत्र is a draft row.<br><span class="n">7</span><b>The three doors, last</b> <span class="now">built</span> — <code>goldTint</code> on <code>gold</code>, the §63 door idiom. Overview (dates) · vidhi (undated <code>{vidhiId}</code>, gated on the entry resolving) · ledger. Order is the thesis of the PRD: understand → see the day → act → remember. The footer is the stance in one line.</div>
+  </div>
+</div>
+
+<!-- ───────────────────────── PHASE 3 ───────────────────────── -->
+<div class="phaselabel">3 · The katha reader, and what stays private</div>
+<div class="wrap">
+  <div class="col">
+    <div class="phone"><div class="statusbar"><span>9:41</span><span>●●● ▲ ▮</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">चित्रकूट में श्रीराम का पितृ-कर्म</div></div>
+        <div class="src" style="margin-top:0">अयोध्याकाण्ड — मन्दाकिनी तट पर जलाञ्जलि और पिण्ड</div>
+        <div style="height:14px"></div>
+        <p class="para">भरत चित्रकूट पहुँचे और श्रीराम को महाराज दशरथ के देहान्त का समाचार दिया। शोक से व्याकुल राम ने सबसे पहले वही किया जो पुत्र का धर्म था — उन्होंने लक्ष्मण से कहा: इंगुदी का पिण्याक और उत्तरीय वस्त्र ले आओ; मैं महात्मा पिता की जलक्रिया के लिए नदी तट पर जाऊँगा।</p>
+        <p class="para">फिर राम ने अञ्जलि में जल भरा, दक्षिण दिशा — पितरों की दिशा — की ओर मुख किया और रोते हुए कहा: हे राजशार्दूल! पितृलोक में गए हुए आपको मेरा दिया यह निर्मल, अक्षय जल आज प्राप्त हो।</p>
+        <p class="para">तट से बाहर आकर तेजस्वी राघव ने भाइयों के साथ पिता के लिए निवाप — पिण्डदान — किया। वन में उनके पास जो था, वही अर्पित किया… क्योंकि मनुष्य जैसा अन्न स्वयं खाता है, उसके पितर भी वही पाते हैं।</p>
+        <div class="teaching" style="position:relative"><div class="dot" style="left:-8px;top:-8px">1</div><div class="l">शिक्षा</div><div class="t">श्राद्ध का मूल भाव सामग्री में नहीं, श्रद्धा में है — राम ने राजसी पदार्थ नहीं, वन का इंगुदी-पिण्याक अर्पित किया, और वही पर्याप्त था।</div></div>
+        <div class="src">स्रोत: वाल्मीकि रामायण · अयोध्याकाण्ड, सर्ग १०२–१०३</div>
+        <div class="center" style="position:relative"><div class="dot" style="left:60px;top:2px">2</div><span class="pill">मूल श्लोक रामायण में पढ़ें ›</span></div>
+        <div class="om" style="margin-top:18px;opacity:.7">॥ ॐ ॥</div>
+      </div></div></div>
+    <div class="cap"><span class="n">1</span><b>शिक्षा panel</b> <span class="now">built</span> — the <code>DaanKathaScreen</code> pattern in Pitru's register: <code>goldTint</code> / <code>gold</code> border, one bhaav, <code>saffronDeep</code>.<br><span class="n">2</span><b>Hand-off to the source</b> — opens the bundled Valmiki reader at 2.102.20 so the retelling can be checked against the shloka. A draft katha id renders the header only — no body, no teaching, no pill.</div>
+  </div>
+  <div class="col" style="max-width:640px;align-items:flex-start">
+    <div class="ia" style="margin-top:0">
+      <b style="color:#fff5e0">Privacy — nothing new enters the layer.</b>
+      <ul style="margin:8px 0 0 18px;line-height:1.7">
+        <li>Routes carry <code>{kathaId}</code> only; the vidhi door passes an undated <code>{vidhiId}</code>. No entry id, relation or name — ever.</li>
+        <li>The education screens read nothing from <code>PitruSmaranContext</code>; they cannot know who the device remembers.</li>
+        <li>Reminder payloads are byte-identical to today. The only Phase 3 addition (daily lesson) is opt-in, public, and names no person.</li>
+      </ul>
+      <b style="color:#fff5e0;display:block;margin-top:14px">Content gate — how a faded block turns on.</b>
+      <ol style="margin:8px 0 0 18px;line-height:1.7">
+        <li>Open the two sources the row's <code>verificationNote</code> names; record the date and what agreed.</li>
+        <li>Change <code>status: 'draft'</code> → <code>'verified'</code>. Nothing else — every surface, test and door follows the accessor.</li>
+        <li><code>pitruShikshaContent.test.ts</code> enforces ≥2 refs (≥1 https), a dated note, bilingual parity, well-formed Devanagari, the stance guard, and — for scripture — that <code>ref</code> resolves to the verse the cite line names.</li>
+      </ol>
+      <b style="color:#fff5e0;display:block;margin-top:14px">Not in this PRD (checkable).</b>
+      <ul style="margin:8px 0 0 18px;line-height:1.7">
+        <li>No mantra, sankalpa or gotra formula — the vidhi's boundary (PRD-19 P3) is unchanged.</li>
+        <li>No "auspicious / inauspicious fortnight" verdicts, no pitru-dosha, no remedy, no pandit or samagri commerce.</li>
+        <li>No new notification family by default; no share cards; no streaks or completion.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<p class="legend" style="margin-top:26px">Files (Phase 1): <code>mobile/src/data/pitru/{types,lessons,principles,kathas,prashna,index}.ts</code> · <code>screens/PitruPakshaShikshaScreen.tsx</code> · <code>screens/PitruKathaScreen.tsx</code> · door in <code>screens/PitruPakshaOverviewScreen.tsx</code> · routes in <code>navigation/types.ts</code> + <code>MoreStackNavigator.tsx</code> · tests <code>data/pitru/__tests__/pitruShikshaContent.test.ts</code>, <code>screens/__tests__/PitruPakshaShikshaScreen.test.tsx</code>, <code>PitruSmaranScreens.test.tsx</code>. PRD: <code>docs/roadmap/prds/44-pitru-paksha-shiksha.md</code>.</p>
+</body>
+</html>
