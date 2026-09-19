@@ -58,6 +58,10 @@ node make-reel.mjs sanskar --lang hi                 # Hindi VO + captions
 node make-reel.mjs sanskar --lang en --tts openai    # premium narration (needs OPENAI_API_KEY)
 node make-reel.mjs sanskar --lang en --music music/soft-bansuri.mp3
 node make-reel.mjs sanskar --lang en --reuse-capture # skip the sim, reuse last raw.mov (fast re-assembly)
+
+# Content reels (no sim, no Maestro — the devotional content IS the video):
+node make-content.mjs pitru-paksha-kya --lang hi                 # edge-TTS Hindi VO (default)
+node make-content.mjs pitru-paksha-kya --lang hi --tts silence   # no voice, real pacing (see below)
 ```
 Run the unit tests: `node --test`.
 
@@ -95,6 +99,11 @@ Action vocabulary: `{ tap: '<regex>' }`, `{ swipe: 'LEFT|RIGHT|UP|DOWN' }`, `{ w
   Override the trim with `REEL_LEAD_TRIM_MS`; tune pacing via the `TIMING` constants in `timeline.mjs`.
 - **Screenshot only settled screens** — for verification, wait for a screen's anchor (or use a beat's
   dwell) before capturing; screenshotting mid-transition/hydration shows stale frames.
+- **`--tts silence` is a pacing render, not an asset.** On a host that can reach no TTS (Microsoft's
+  edge endpoint 403s datacenter/proxied egress; `say` is macOS-only), this cuts the reel with a silent
+  clip per line as long as that line takes to speak — the visuals, timing and length are final, only
+  the voice is missing. Re-run the same slug with the real engine before publishing; the scene
+  durations shift only by the gap between the estimate and the actual clip.
 - **Music** ships silent by default; drop a track in `music/` and pass `--music`. Nothing copyrighted
   is committed.
 - CTA smart link: `https://persisharma.github.io/get-vedansh/` (iPhone + Android).

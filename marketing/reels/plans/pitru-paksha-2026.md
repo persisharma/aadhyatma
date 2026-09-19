@@ -55,7 +55,7 @@ Educate reels carry a **send-CTA** (`send:` field), not a download card: "जि
 
 | # | slug | ship | fmt | hook (spoken + big on frame 0) | grounding |
 |---|---|---|---|---|---|
-| 1 | `pitru-paksha-kya` | 20 Sep | C | पितृ पक्ष है क्या — और 26 सितम्बर से क्यों? | `pitruSmaran.ts` window |
+| 1 | `pitru-paksha-kya` | 20 Sep | C | पितृ पक्ष है क्या — और 26 सितम्बर से क्यों? | `pitruSmaran.ts` window · **built** ✅ |
 | 2 | `pitru-rin` | 21 Sep | C | तीन ऋण लेकर जन्मे हैं — एक पितृ-ऋण है। | dossier (Dharma Sindhu ch. 26) |
 | 3 | `shraddha-shabd` | 22 Sep | C | 'श्राद्ध' का अर्थ 'मृत्यु' नहीं — 'श्रद्धा' है। | `data/daan/principles.ts` (`shraddhaya-deyam`) |
 | 4 | `tithi-kyon` | 23 Sep | C | तारीख़ याद है, फिर भी श्राद्ध तिथि से क्यों? | `pitruSmaran.ts` TithiRule model |
@@ -161,6 +161,12 @@ export default {
   send: { hi: 'परिवार के समूह में —\nभेज दीजिए', en: 'Send it to the family group' },
 };
 ```
+
+**Built:** `content/pitru-paksha-kya.content.mjs` → `out/vedansh-content-pitru-paksha-kya-hi.mp4`
+(1080×1920, 30 fps, **15.5 s**). Rendered here with `--tts silence` because this build host cannot
+reach any TTS engine — the cut, the cards and the length are final; **re-run
+`node make-content.mjs pitru-paksha-kya --lang hi` on a machine with edge-TTS reach to lay the Hindi
+voice into the same timing before publishing.**
 
 Remaining 13 scripts follow the same shape; hooks are fixed in §2 so they can be written straight into the files.
 

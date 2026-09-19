@@ -172,7 +172,11 @@ async function main() {
   const slug = process.argv[2];
   const lang = (process.argv.includes('--lang') ? process.argv[process.argv.indexOf('--lang') + 1] : 'hi');
   const music = process.argv.includes('--music') ? process.argv[process.argv.indexOf('--music') + 1] : undefined;
-  if (!slug) { console.error('usage: node make-content.mjs <slug> [--lang hi] [--music <file>]'); process.exit(1); }
+  // --tts picks the narration engine (default edge). `silence` cuts the reel with no voice but real
+  // per-line pacing — the only way to render on a host no TTS is reachable from; re-run with the
+  // real engine before publishing (see narrate.mjs).
+  const tts = process.argv.includes('--tts') ? process.argv[process.argv.indexOf('--tts') + 1] : undefined;
+  if (!slug) { console.error('usage: node make-content.mjs <slug> [--lang hi] [--tts edge|elevenlabs|xtts|openai|say|silence] [--music <file>]'); process.exit(1); }
 
   const defPath = path.join(HERE, 'content', `${slug}.content.mjs`);
   if (!fs.existsSync(defPath)) { console.error('no content def: ' + defPath); process.exit(1); }
@@ -184,8 +188,8 @@ async function main() {
   fs.mkdirSync(workDir, { recursive: true });
   const outFile = path.join(HERE, 'out', `vedansh-content-${reel.slug}-${lang}.mp4`);
 
-  console.log('① narrate (edge)');
-  const nar = await narrateReel(reel, lang, { outDir: voiceDir }); // {files:{hook,cta,beats[]},durations}
+  const nar = await narrateReel(reel, lang, { outDir: voiceDir, engine: tts }); // {files:{hook,cta,beats[]},durations}
+  console.log(`① narrate (${nar.engine})${nar.engine === 'silence' ? ' — NO VOICE, pacing only' : ''}`);
   const sendText = (reel.send && reel.send[lang]) || reel.cta[lang];
 
   console.log('② render scenes');
