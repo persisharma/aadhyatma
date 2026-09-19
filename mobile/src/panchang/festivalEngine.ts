@@ -243,6 +243,36 @@ export function getObservancesForDate(
   );
 }
 
+// Render-path-safe day observances, or `null` when only the multi-second live scan
+// could answer. `getObservancesForDate` will happily fall into `resolveObservancesForYearLive`
+// for an Ujjain year absent from the precomputed table — fine on a deferred path,
+// fatal on the render path. This variant reads ONLY what is already synchronous and
+// cheap: the memoised year cache, the baked precomputed table, a stored city scan,
+// or the Ujjain-fallback table for a city whose scan has not landed. Everything else
+// returns null so the caller keeps deferring exactly as before. It lets the Home
+// Today strip seed its vrat chips on the FIRST frame instead of after the launch
+// interaction queue drains (which read as a blocked screen + a chip jerk).
+export function getCachedObservancesForDate(
+  date: Date,
+  calendarSystem: CalendarSystem = 'purnimant',
+  location?: ObservanceLocation
+): ResolvedObservance[] | null {
+  const year = date.getFullYear();
+  const cached = cache.get(cacheKey(year, calendarSystem, location));
+  if (cached) return cached.filter((item) => isSameLocalDate(item.date, date));
+
+  const precomputed = PRECOMPUTED_OBSERVANCES[`${calendarSystem}:${year}`];
+  if (locationKey(location) === UJJAIN_CITY_ID) {
+    // Ujjain answers from the table or not at all — never a live scan here.
+    if (!precomputed) return null;
+    return reconstructPrecomputed(precomputed).filter((item) => isSameLocalDate(item.date, date));
+  }
+  // Any other city: its stored scan if present, else the Ujjain fallback table.
+  const entries = getStoredObservanceYear(locationKey(location), calendarSystem, year) ?? precomputed;
+  if (!entries) return null;
+  return reconstructPrecomputed(entries).filter((item) => isSameLocalDate(item.date, date));
+}
+
 // Date-key variant for persisted/background surfaces. Unlike Date#getFullYear
 // matching, this remains stable if the JS process time zone changes after the
 // resolved-year cache was populated.

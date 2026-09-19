@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { InteractionManager } from 'react-native';
 import {
+  getCachedObservancesForDate,
   getObservancesForDate,
   getObservancesForMonth,
   getUpcomingObservances,
@@ -160,14 +161,25 @@ export function useObservancesForDate(
   const { lenses } = useLenses();
   const lensKey = serializeLenses(lenses);
 
-  const [observances, setObservances] = useState<ResolvedObservance[]>([]);
+  const selectionKey = `${dateMs}|${calendarSystem}|${cityId}`;
+  // Seed the FIRST frame from the synchronous cache/precomputed table so the
+  // always-mounted Home strip's vrat chips paint immediately instead of after the
+  // launch interaction queue drains (the "blocked screen, then a chip jerk"). A
+  // null seed means only the live scan can answer — start empty and let the effect
+  // defer it, exactly as before. Mirrors the cache-only seed in `useMuhurat`.
+  const seededKey = useRef<string | null>(null);
+  const [observances, setObservances] = useState<ResolvedObservance[]>(() => {
+    const seed = getCachedObservancesForDate(new Date(dateMs), calendarSystem, location);
+    if (seed !== null) seededKey.current = selectionKey;
+    return seed ?? [];
+  });
   // The reset-to-empty applies only when the *selection* changes (stale data
   // would be wrong for another day/city/system). A pure storeVersion bump —
   // a background city scan landing mid-session — keeps the previous list on
   // screen until the re-resolve lands, so the always-mounted Home strip's
-  // chips don't blink out for a frame on every upgrade.
-  const selectionKey = `${dateMs}|${calendarSystem}|${cityId}`;
-  const lastSelectionKey = useRef<string | null>(null);
+  // chips don't blink out for a frame on every upgrade. Primed from the seed so a
+  // successful first-frame seed is not blanked on mount before the effect re-reads it.
+  const lastSelectionKey = useRef<string | null>(seededKey.current);
   useEffect(() => {
     let cancelled = false;
     const selected = new Date(dateMs);
