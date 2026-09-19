@@ -66,6 +66,16 @@ describe('registry shape', () => {
     expect(new Set(days).size).toBe(days.length);
   });
 
+  test('the fortnight is covered end to end — purnima, 1..14 and amavasya all have a row', () => {
+    // The paksha is sixteen days; a परिचय that skips one leaves the reader to
+    // guess whether the day has no tradition or the app merely forgot it.
+    const present = new Set(
+      PITRU_LESSON_ENTRIES.filter((l) => l.kind === 'tithi').map((l) => String(l.fortnightDay))
+    );
+    const expected = ['purnima', ...Array.from({ length: 14 }, (_, i) => String(i + 1)), 'amavasya'];
+    expect(expected.filter((d) => !present.has(d))).toEqual([]);
+  });
+
   test('principles: bilingual parity; verse lines travel with IAST and a reader ref', () => {
     for (const entry of PITRU_PRINCIPLE_ENTRIES) {
       nonEmpty(entry.titleHi); nonEmpty(entry.titleEn);
@@ -93,6 +103,16 @@ describe('registry shape', () => {
         expect(s.paragraphsHi.length).toBeGreaterThan(0);
         expect(s.paragraphsHi.length).toBe(s.paragraphsEn.length);
       }
+    }
+  });
+
+  test('a VERIFIED katha is always anchored in a bundled reader', () => {
+    // A retelling the reviewer cannot check against a shipped verse is not
+    // verifiable in this repo (RULEBOOK §28.2/§28.4) — it stays draft.
+    for (const katha of PITRU_KATHA_ENTRIES) {
+      if (katha.status !== 'verified') continue;
+      expect(katha.ref).toBeDefined();
+      expect(katha.source.referenceUrls.some((u) => u.startsWith('repo:'))).toBe(true);
     }
   });
 

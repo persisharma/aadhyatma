@@ -1,14 +1,19 @@
 /**
  * पितृ पक्ष परिचय — the concept, per-tithi and glossary lessons (PRD-44 §5).
  *
- * VERIFIED rows are limited to what the two sources already opened and pinned
- * for the tila-tarpana guide support (docs/roadmap/conventions/
- * shraddha-tarpan-source-dossier.md — Dharma Sindhu ch. 26 and DrikPanchang's
- * shraddha pages, opened 2026-08-19) plus what the shipped engine itself
- * computes (`panchang/pitruSmaran.ts`). Everything that needs a source this
- * repo has not opened — the per-tithi assignments, the three-debts teaching,
- * the Mahalaya legend — is DRAFT and invisible until a reviewer opens the
- * source and flips the status. ⚠ `source` blocks are review-only provenance.
+ * THE VERIFICATION LADDER (RULEBOOK §28.4), in the order it is preferred:
+ *   1. **Bundled corpus** — a statement the shipped Gita / Valmiki JSON itself
+ *      carries. Strongest: the reviewer can open the file. Counts as one
+ *      reference; the corpus's own published `source` line is the second.
+ *   2. **The shipped engine** — what `panchang/pitruSmaran.ts` actually solves.
+ *   3. **The dossier** — facts recorded as opened on 2026-08-19 in
+ *      docs/roadmap/conventions/shraddha-tarpan-source-dossier.md.
+ * Anything outside those three is DRAFT and invisible until a reviewer opens
+ * the sources its note names. The 2026-09-19 session could not open any
+ * external page (egress policy 403 on every source domain), so the per-tithi
+ * assignments below are authored in full but stay draft — a reviewer flips
+ * `status` and the surfaces light up with zero code change.
+ * ⚠ `source` blocks are review-only provenance — never rendered.
  */
 import type { PitruLessonEntry } from './types';
 
@@ -20,12 +25,33 @@ const DRIK_SHRADDHA_DAYS =
   'https://www.drikpanchang.com/shraddha/info/shraddha-days.html';
 const IN_REPO_ENGINE = 'repo:mobile/src/panchang/pitruSmaran.ts';
 const IN_REPO_DOSSIER = 'repo:docs/roadmap/conventions/shraddha-tarpan-source-dossier.md';
+const VALMIKI_CORPUS = 'repo:mobile/src/data/valmiki-ramayan/chapter-01.json';
+const VALMIKI_ARANYA = 'repo:mobile/src/data/valmiki-ramayan/chapter-03.json';
+const VALMIKI_NET = 'https://www.valmikiramayan.net/utf8/baala/sarga41/bala_41_frame.htm';
+const VALMIKI_NET_ARANYA = 'https://www.valmikiramayan.net/utf8/aranya/sarga68/aranya_68_frame.htm';
+const GITA_CORPUS_09 = 'repo:mobile/src/data/gita/chapter-09.json';
+const GITA_CORPUS_10 = 'repo:mobile/src/data/gita/chapter-10.json';
+const GITA_HOLY_09 = 'https://www.holy-bhagavad-gita.org/chapter/9';
+const GITA_HOLY_10 = 'https://www.holy-bhagavad-gita.org/chapter/10';
 
 const DOSSIER_NOTE =
-  '2026-09-19: statement limited to the "concordant source facts safe to use" recorded in the shraddha-tarpan source dossier (Dharma Sindhu ch. 26 + DrikPanchang shraddha pages, opened 2026-08-19). No source was re-opened this session (no outbound network).';
+  '2026-09-19: statement limited to the "concordant source facts safe to use" recorded in the shraddha-tarpan source dossier (Dharma Sindhu ch. 26 + DrikPanchang shraddha pages, opened 2026-08-19). No source was re-opened this session — the egress proxy returned 403 for every external domain.';
+
+const CORPUS_NOTE =
+  '2026-09-19: statement checked against the BUNDLED corpus JSON named in referenceUrls (the reviewer can open the file and the cited verse); the corpus carries its own published source line as the second reference. Nothing is asserted beyond what those verses say.';
+
+/**
+ * Every per-tithi row below is authored but DRAFT. The 2026-09-19 session
+ * could not open an external page; a web search did surface concordant
+ * candidate pages (drikpanchang.com/shraddha/tithi/*.html and the Holy Voyages
+ * / Muhurat Choghadiya shraddha-day listings), but a search summary is not an
+ * opened source and this repo does not certify from one.
+ */
+const TITHI_DRAFT_NOTE =
+  '2026-09-19: DRAFT — NOT VERIFIED. The tithi-to-who assignment is widely published household tradition, but no page was opened this session (egress proxy 403 on every domain). To flip: open DrikPanchang\'s per-tithi shraddha pages (drikpanchang.com/shraddha/tithi/<tithi>-shraddha-date-time.html) AND one independent published almanac (Nirnaya Sindhu or Dharma Sindhu ch. 26\'s own tithi table), record the date and where they agree, and keep any regional divergence stated rather than flattened.';
 
 const DRAFT_NOTE =
-  '2026-09-19: DRAFT — NOT VERIFIED. Widely published tradition, but no source was opened this session (no outbound network). Needs two concordant references (Dharma Sindhu ch. 26 / Nirnaya Sindhu / DrikPanchang shraddha pages) opened and recorded before the status flips.';
+  '2026-09-19: DRAFT — NOT VERIFIED. Widely published tradition, but no source was opened this session (egress proxy 403 on every domain). Needs two concordant references opened and recorded before the status flips.';
 
 export const PITRU_LESSON_ENTRIES: readonly PitruLessonEntry[] = [
   // ── परिचय — the concept lessons ─────────────────────────────────────────
@@ -69,6 +95,48 @@ export const PITRU_LESSON_ENTRIES: readonly PitruLessonEntry[] = [
     source: {
       referenceUrls: [DHARMA_SINDHU_SHRADDHA, DRIK_SHRADDHA_DATES, IN_REPO_DOSSIER],
       verificationNote: `${DOSSIER_NOTE} Tila-tarpana vs parvana distinction and the agnaukarana / pinda / bhojana enumeration are the dossier's recorded Dharma Sindhu facts.`,
+    },
+  },
+  {
+    id: 'jal-kyon',
+    kind: 'parichay',
+    titleHi: 'जल ही क्यों — तर्पण का सबसे पुराना रूप',
+    titleEn: 'Why water — the oldest form of the offering',
+    bodyHi: [
+      'रामायण में पितृ-कर्म बार-बार एक ही रूप में मिलता है: अञ्जलि भर जल, दक्षिण दिशा की ओर मुख, और यह भाव कि यह जल उन तक पहुँचे। श्रीराम ने पिता दशरथ के लिए मन्दाकिनी में यही किया, और जटायु के लिए गोदावरी में।',
+      'बालकाण्ड में गरुड़ अंशुमान् से कहते हैं कि सगर के पुत्रों के लिए लौकिक जल की अञ्जलि पर्याप्त नहीं — उनके लिए गंगा का जल चाहिए। तीन पीढ़ियाँ इसी एक प्रश्न में बीत गईं, और भगीरथ ने गंगा को उतारकर उसे पूरा किया।',
+      'इसलिए तर्पण में जल कोई औपचारिकता नहीं है; परम्परा में वही पितरों तक पहुँचने वाला माध्यम है। तिल, दर्भ और दिशा उसी अर्पण के अंग हैं।',
+    ],
+    bodyEn: [
+      'In the Ramayana the rite for the ancestors appears again and again in one form: cupped hands full of water, the face turned south, and the wish that this water reach them. Rama did exactly this for his father Dasharatha in the Mandakini, and for Jatayu in the Godavari.',
+      'In the Bala Kanda, Garuda tells Amshuman that ordinary water will not serve for Sagara’s sons — for them the water of the Ganga is needed. Three generations passed on that single question, and Bhagiratha answered it by bringing the Ganga down.',
+      'So the water in tarpana is not a formality; in the tradition it is the medium that reaches the pitrs. The sesame, the darbha and the direction are limbs of that same offering.',
+    ],
+    status: 'verified',
+    source: {
+      referenceUrls: [VALMIKI_CORPUS, VALMIKI_ARANYA, VALMIKI_NET],
+      verificationNote: `${CORPUS_NOTE} Bundled Bala Kanda 1.41.15 (no water found for the jalakriya), 1.41.18 ("laukikam salilam" will not do), 1.41.19 (use the Ganga), 1.42.6 (Dilipa's lifelong question), 1.42.18–19 (Bhagiratha's boon); Aranya 3.68.35–36 (jalanjali for Jatayu at the Godavari); Ayodhya 2.102.26–27 (facing south for Dasharatha).`,
+    },
+  },
+  {
+    id: 'kiske-liye',
+    kind: 'parichay',
+    titleHi: 'किसके लिए — स्मरण रक्त का बन्धन नहीं माँगता',
+    titleEn: 'For whom — remembrance does not ask for blood',
+    bodyHi: [
+      'अरण्यकाण्ड में श्रीराम जटायु का दाह-संस्कार स्वयं करते हैं। जटायु न उनके कुल के थे, न मनुष्य — वे पिता के मित्र एक पक्षी थे। राम ने लकड़ी इकट्ठी की, चिता सजाई, दर्भ बिछाकर वन के कन्द से पिण्ड बनाया, और गोदावरी जाकर जलाञ्जलि दी।',
+      'उन्होंने जो वचन कहा वह किसी वंश की बात नहीं करता: "यज्ञ करने वालों, अग्निहोत्रियों, युद्ध में पीठ न दिखाने वालों और भूमिदान करने वालों को जो गति मिलती है, तुम भी उन्हीं लोकों में जाओ।"',
+      'परम्पराएँ यह तय करती हैं कि परिवार में कौन क्या करे — और वह परिवार का विषय है। पर स्मरण का द्वार इस प्रसंग में किसी सूची से नहीं, भाव से खुलता है।',
+    ],
+    bodyEn: [
+      'In the Aranya Kanda, Rama performs Jatayu’s last rites himself. Jatayu was not of his line, and not even human — he was a bird, his father’s friend. Rama gathered the wood, raised the pyre, spread darbha and made a pinda from forest roots, then went to the Godavari and offered the jalanjali.',
+      'The words he spoke name no lineage at all: “May you go to those same highest worlds attained by those who perform yajna, who keep the sacred fire, who never turned their back in battle, and who gave away land.”',
+      'Traditions decide who in a family does what, and that belongs to the family. But in this episode the door of remembrance is opened by the bond, not by a list.',
+    ],
+    status: 'verified',
+    source: {
+      referenceUrls: [VALMIKI_ARANYA, VALMIKI_NET_ARANYA, VALMIKI_CORPUS],
+      verificationNote: `${CORPUS_NOTE} Bundled Aranya Kanda 3.67.27 (Jatayu named as his father's friend), 3.68.27–28 (gathering wood, the pyre), 3.68.29–30 (the gati verse, quoted in paraphrase), 3.68.32–33 (kusha spread, pinda of forest roots), 3.68.34 (the pitru mantras), 3.68.35–37. The closing paragraph deliberately asserts NO rule about who may officiate — that is branch-specific and out of scope (RULEBOOK §28.5).`,
     },
   },
   {
@@ -148,7 +216,7 @@ export const PITRU_LESSON_ENTRIES: readonly PitruLessonEntry[] = [
     status: 'draft',
     source: {
       referenceUrls: ['https://www.wisdomlib.org/hinduism/book/manusmriti-with-the-commentary-of-medhatithi'],
-      verificationNote: `${DRAFT_NOTE} Candidates: Taittiriya Samhita 6.3.10.5 (three debts) and Manusmriti 3.70 (pancha-mahayajna) — both need the exact text opened and a second concordant reference recorded.`,
+      verificationNote: `${DRAFT_NOTE} Candidates: Taittiriya Samhita 6.3.10.5 (three debts) and Manusmriti 3.70 (pancha-mahayajna) — both need the exact text opened at a named edition and a second concordant reference recorded.`,
     },
   },
   {
@@ -170,6 +238,9 @@ export const PITRU_LESSON_ENTRIES: readonly PitruLessonEntry[] = [
   },
 
   // ── षोडश तिथियाँ — one row per day of the fortnight ─────────────────────
+  // Authored in full (PRD-44 §5 bucket C). Only the two the engine itself
+  // decides are verified; the fourteen tithi-to-who assignments are draft
+  // until a reviewer opens their sources — see TITHI_DRAFT_NOTE.
   {
     id: 'tithi-purnima',
     kind: 'tithi',
@@ -194,54 +265,157 @@ export const PITRU_LESSON_ENTRIES: readonly PitruLessonEntry[] = [
     fortnightDay: 1,
     titleHi: 'प्रतिपदा श्राद्ध',
     titleEn: 'Pratipada Shraddha',
-    bodyHi: ['कृष्ण प्रतिपदा को दिवंगत पितरों का दिन। कुछ परम्पराओं में नाना-नानी पक्ष के पितरों का श्राद्ध भी इसी दिन किया जाता है।'],
-    bodyEn: ['The day for ancestors who passed on a krishna pratipada. Some traditions also remember maternal grandparents on this day.'],
+    bodyHi: ['कृष्ण प्रतिपदा को दिवंगत पितरों का दिन। कुछ परम्पराओं में नाना-नानी पक्ष के पितरों का स्मरण भी इसी दिन किया जाता है।'],
+    bodyEn: ['The day for ancestors who passed on a krishna pratipada. Some traditions also remember the maternal grandparents’ side on this day.'],
     status: 'draft',
-    source: { referenceUrls: [DRIK_SHRADDHA_DAYS], verificationNote: DRAFT_NOTE },
+    source: { referenceUrls: [DRIK_SHRADDHA_DAYS], verificationNote: TITHI_DRAFT_NOTE },
   },
   {
-    id: 'tithi-4-5-bharani',
+    id: 'tithi-2',
+    kind: 'tithi',
+    fortnightDay: 2,
+    titleHi: 'द्वितीया श्राद्ध',
+    titleEn: 'Dwitiya Shraddha',
+    bodyHi: ['द्वितीया तिथि को दिवंगत पितरों का दिन — शुक्ल या कृष्ण, दोनों पक्षों की द्वितीया इसी दिन पर आती है।'],
+    bodyEn: ['The day for those who passed on a dwitiya — a dwitiya of either paksha maps onto this one day.'],
+    status: 'draft',
+    source: { referenceUrls: [DRIK_SHRADDHA_DAYS], verificationNote: TITHI_DRAFT_NOTE },
+  },
+  {
+    id: 'tithi-3',
+    kind: 'tithi',
+    fortnightDay: 3,
+    titleHi: 'तृतीया श्राद्ध',
+    titleEn: 'Tritiya Shraddha',
+    bodyHi: ['तृतीया तिथि को दिवंगत पितरों का दिन।'],
+    bodyEn: ['The day for those who passed on a tritiya.'],
+    status: 'draft',
+    source: { referenceUrls: [DRIK_SHRADDHA_DAYS], verificationNote: TITHI_DRAFT_NOTE },
+  },
+  {
+    id: 'tithi-4',
     kind: 'tithi',
     fortnightDay: 4,
-    titleHi: 'चतुर्थी–पञ्चमी · भरणी श्राद्ध',
-    titleEn: 'Chaturthi–Panchami · Bharani Shraddha',
-    bodyHi: ['जिस दिन पक्ष में भरणी नक्षत्र पड़े — प्रायः चतुर्थी या पञ्चमी — वह भरणी श्राद्ध कहलाता है; इसे देहान्त के प्रथम वर्ष के श्राद्ध से जोड़ा जाता है।'],
-    bodyEn: ['The day in the paksha carrying the Bharani nakshatra — usually chaturthi or panchami — is the Bharani Shraddha, associated with the first-year remembrance after a passing.'],
+    titleHi: 'चतुर्थी श्राद्ध · भरणी श्राद्ध',
+    titleEn: 'Chaturthi Shraddha · Bharani Shraddha',
+    bodyHi: [
+      'चतुर्थी तिथि को दिवंगत पितरों का दिन। पक्ष में जिस दिन भरणी नक्षत्र पड़े — प्रायः चतुर्थी या पञ्चमी — वह महा भरणी श्राद्ध कहलाता है, और वह नक्षत्र से तय होता है, तिथि से नहीं; इसलिए उसकी तारीख़ अपने पंचांग में देखें।',
+    ],
+    bodyEn: [
+      'The day for those who passed on a chaturthi. Whichever day of the paksha carries the Bharani nakshatra — usually chaturthi or panchami — is the Maha Bharani Shraddha; it is fixed by the nakshatra rather than the tithi, so look its date up in your own panchang.',
+    ],
     status: 'draft',
-    source: { referenceUrls: [DRIK_SHRADDHA_DAYS], verificationNote: DRAFT_NOTE },
+    source: { referenceUrls: [DRIK_SHRADDHA_DAYS], verificationNote: TITHI_DRAFT_NOTE },
   },
   {
-    id: 'tithi-9-matri-navami',
+    id: 'tithi-5',
+    kind: 'tithi',
+    fortnightDay: 5,
+    titleHi: 'पञ्चमी श्राद्ध · कुँवारा पञ्चमी',
+    titleEn: 'Panchami Shraddha · Kunwara Panchami',
+    bodyHi: ['पञ्चमी तिथि को दिवंगत पितरों का दिन। कई परम्पराओं में यह उन युवकों के लिए रखा जाता है जिनका विवाह से पूर्व देहान्त हुआ — इसीलिए इसे कुँवारा पञ्चमी भी कहा जाता है।'],
+    bodyEn: ['The day for those who passed on a panchami. In many traditions it is kept for those who died unmarried, which is why it is also called Kunwara Panchami.'],
+    status: 'draft',
+    source: { referenceUrls: [DRIK_SHRADDHA_DAYS], verificationNote: TITHI_DRAFT_NOTE },
+  },
+  {
+    id: 'tithi-6',
+    kind: 'tithi',
+    fortnightDay: 6,
+    titleHi: 'षष्ठी श्राद्ध',
+    titleEn: 'Shashthi Shraddha',
+    bodyHi: ['षष्ठी तिथि को दिवंगत पितरों का दिन।'],
+    bodyEn: ['The day for those who passed on a shashthi.'],
+    status: 'draft',
+    source: { referenceUrls: [DRIK_SHRADDHA_DAYS], verificationNote: TITHI_DRAFT_NOTE },
+  },
+  {
+    id: 'tithi-7',
+    kind: 'tithi',
+    fortnightDay: 7,
+    titleHi: 'सप्तमी श्राद्ध',
+    titleEn: 'Saptami Shraddha',
+    bodyHi: ['सप्तमी तिथि को दिवंगत पितरों का दिन।'],
+    bodyEn: ['The day for those who passed on a saptami.'],
+    status: 'draft',
+    source: { referenceUrls: [DRIK_SHRADDHA_DAYS], verificationNote: TITHI_DRAFT_NOTE },
+  },
+  {
+    id: 'tithi-8',
+    kind: 'tithi',
+    fortnightDay: 8,
+    titleHi: 'अष्टमी श्राद्ध',
+    titleEn: 'Ashtami Shraddha',
+    bodyHi: ['अष्टमी तिथि को दिवंगत पितरों का दिन — पक्ष की सबसे अधिक स्मरण की जाने वाली तिथियों में एक।'],
+    bodyEn: ['The day for those who passed on an ashtami — one of the most widely observed tithis of the paksha.'],
+    status: 'draft',
+    source: { referenceUrls: [DRIK_SHRADDHA_DAYS], verificationNote: TITHI_DRAFT_NOTE },
+  },
+  {
+    id: 'tithi-9',
     kind: 'tithi',
     fortnightDay: 9,
     titleHi: 'नवमी · मातृ नवमी',
     titleEn: 'Navami · Matri Navami',
-    bodyHi: ['नवमी को माता और कुल की दिवंगत स्त्रियों का स्मरण किया जाता है; इसे अविधवा नवमी भी कहते हैं — पति के जीवनकाल में दिवंगत स्त्रियों के लिए।'],
+    bodyHi: ['नवमी को माता और कुल की दिवंगत स्त्रियों का स्मरण किया जाता है; इसे अविधवा नवमी भी कहते हैं — उन स्त्रियों के लिए जिनका देहान्त पति के जीवनकाल में हुआ।'],
     bodyEn: ['Navami is kept for mothers and the departed women of the family; it is also called Avidhava Navami — for women who passed in their husband’s lifetime.'],
     status: 'draft',
-    source: { referenceUrls: [DRIK_SHRADDHA_DAYS], verificationNote: DRAFT_NOTE },
+    source: { referenceUrls: [DRIK_SHRADDHA_DAYS], verificationNote: TITHI_DRAFT_NOTE },
   },
   {
-    id: 'tithi-12-sannyasi',
+    id: 'tithi-10',
+    kind: 'tithi',
+    fortnightDay: 10,
+    titleHi: 'दशमी श्राद्ध',
+    titleEn: 'Dashami Shraddha',
+    bodyHi: ['दशमी तिथि को दिवंगत पितरों का दिन।'],
+    bodyEn: ['The day for those who passed on a dashami.'],
+    status: 'draft',
+    source: { referenceUrls: [DRIK_SHRADDHA_DAYS], verificationNote: TITHI_DRAFT_NOTE },
+  },
+  {
+    id: 'tithi-11',
+    kind: 'tithi',
+    fortnightDay: 11,
+    titleHi: 'एकादशी श्राद्ध',
+    titleEn: 'Ekadashi Shraddha',
+    bodyHi: ['एकादशी तिथि को दिवंगत पितरों का दिन। पक्ष की यह एकादशी इन्दिरा एकादशी भी कहलाती है।'],
+    bodyEn: ['The day for those who passed on an ekadashi. The paksha’s ekadashi is also known as Indira Ekadashi.'],
+    status: 'draft',
+    source: { referenceUrls: [DRIK_SHRADDHA_DAYS], verificationNote: TITHI_DRAFT_NOTE },
+  },
+  {
+    id: 'tithi-12',
     kind: 'tithi',
     fortnightDay: 12,
     titleHi: 'द्वादशी · सन्यासी श्राद्ध',
     titleEn: 'Dwadashi · Sannyasi Shraddha',
-    bodyHi: ['द्वादशी को कुल के उन पितरों का स्मरण किया जाता है जिन्होंने सन्यास लिया था।'],
-    bodyEn: ['Dwadashi is kept for those of the family who had taken sannyasa.'],
+    bodyHi: ['द्वादशी तिथि को दिवंगत पितरों का दिन; कई परम्पराओं में कुल के उन पितरों का स्मरण भी इसी दिन होता है जिन्होंने सन्यास लिया था।'],
+    bodyEn: ['The day for those who passed on a dwadashi; in many traditions it also holds the remembrance of those of the family who had taken sannyasa.'],
     status: 'draft',
-    source: { referenceUrls: [DRIK_SHRADDHA_DAYS], verificationNote: DRAFT_NOTE },
+    source: { referenceUrls: [DRIK_SHRADDHA_DAYS], verificationNote: TITHI_DRAFT_NOTE },
   },
   {
-    id: 'tithi-14-ghata',
+    id: 'tithi-13',
+    kind: 'tithi',
+    fortnightDay: 13,
+    titleHi: 'त्रयोदशी श्राद्ध',
+    titleEn: 'Trayodashi Shraddha',
+    bodyHi: ['त्रयोदशी तिथि को दिवंगत पितरों का दिन। कुछ परम्पराओं में इस दिन कुल के दिवंगत बालकों का स्मरण भी किया जाता है।'],
+    bodyEn: ['The day for those who passed on a trayodashi. Some traditions also remember the family’s departed children on this day.'],
+    status: 'draft',
+    source: { referenceUrls: [DRIK_SHRADDHA_DAYS], verificationNote: TITHI_DRAFT_NOTE },
+  },
+  {
+    id: 'tithi-14',
     kind: 'tithi',
     fortnightDay: 14,
     titleHi: 'चतुर्दशी · घात चतुर्दशी',
     titleEn: 'Chaturdashi · Ghata Chaturdashi',
-    bodyHi: ['चतुर्दशी उन पितरों के लिए है जिनका देहान्त अस्त्र, दुर्घटना या अकाल मृत्यु से हुआ — तिथि चाहे कोई हो। सामान्य चतुर्दशी-तिथि के पितरों का श्राद्ध कुछ परम्पराएँ अमावस्या को करती हैं।'],
-    bodyEn: ['Chaturdashi is kept for ancestors who died by weapon, accident or untimely death — whatever their tithi. For an ordinary chaturdashi passing, some traditions move the remembrance to the amavasya.'],
+    bodyHi: ['कई परम्पराओं में चतुर्दशी उन पितरों के लिए रखी जाती है जिनका देहान्त शस्त्र, दुर्घटना या अकाल मृत्यु से हुआ — तिथि चाहे कोई रही हो। सामान्य चतुर्दशी-तिथि के पितरों का स्मरण कुछ परम्पराएँ अमावस्या को करती हैं।'],
+    bodyEn: ['In many traditions chaturdashi is kept for ancestors who died by weapon, accident or an untimely death — whatever their tithi. For an ordinary chaturdashi passing, some traditions move the remembrance to the amavasya.'],
     status: 'draft',
-    source: { referenceUrls: [DRIK_SHRADDHA_DAYS], verificationNote: DRAFT_NOTE },
+    source: { referenceUrls: [DRIK_SHRADDHA_DAYS], verificationNote: TITHI_DRAFT_NOTE },
   },
   {
     id: 'tithi-amavasya',
@@ -268,7 +442,7 @@ export const PITRU_LESSON_ENTRIES: readonly PitruLessonEntry[] = [
     kind: 'shabd',
     titleHi: 'पितर',
     titleEn: 'Pitr',
-    bodyHi: ['दिवंगत पूर्वज — जिनका स्मरण श्राद्ध और तर्पण में किया जाता है। बहुवचन: पितर; संस्कृत मूल पितृ।'],
+    bodyHi: ['दिवंगत पूर्वज — जिनका स्मरण श्राद्ध और तर्पण में किया जाता है। संस्कृत मूल पितृ; बहुवचन पितरः।'],
     bodyEn: ['A departed forebear — the ones remembered in shraddha and tarpana. Sanskrit pitṛ; plural pitaraḥ.'],
     status: 'verified',
     source: {
@@ -290,16 +464,81 @@ export const PITRU_LESSON_ENTRIES: readonly PitruLessonEntry[] = [
     },
   },
   {
+    id: 'shabd-jalanjali',
+    kind: 'shabd',
+    titleHi: 'जलाञ्जलि',
+    titleEn: 'Jalanjali',
+    bodyHi: ['अञ्जलि — दोनों हथेलियों का दोना — भर जल, जो पितरों के लिए छोड़ा जाता है। रामायण में दशरथ, जटायु और सगरपुत्रों के प्रसंग इसी शब्द से चलते हैं।'],
+    bodyEn: ['Water held in the anjali — the two cupped palms — and let fall for the ancestors. The Ramayana’s episodes for Dasharatha, Jatayu and Sagara’s sons all turn on this word.'],
+    status: 'verified',
+    source: {
+      referenceUrls: [VALMIKI_CORPUS, VALMIKI_ARANYA, VALMIKI_NET],
+      verificationNote: `${CORPUS_NOTE} Bundled 1.41.15, 3.68.35–36 and 2.102.26 use jalakriyā / jalāñjali for exactly this act.`,
+    },
+  },
+  {
     id: 'shabd-pinda',
     kind: 'shabd',
     titleHi: 'पिण्ड',
     titleEn: 'Pinda',
-    bodyHi: ['पितरों को अर्पित अन्न का गोला — प्रायः चावल, तिल आदि से बना। पिण्डदान पार्वण श्राद्ध का अंग है; इसकी सामग्री और विधि कुल-परम्परा से तय होती है।'],
-    bodyEn: ['A ball of food offered to the pitrs — typically of rice with sesame and other grains. Pinda-dana is part of the parvana shraddha; its materials and manner are set by family tradition.'],
+    bodyHi: ['पितरों को अर्पित अन्न का गोला। पिण्डदान पार्वण श्राद्ध का अंग है; इसकी सामग्री और विधि कुल-परम्परा से तय होती है — वन में श्रीराम ने वहीं उपलब्ध कन्द से पिण्ड बनाया था।'],
+    bodyEn: ['A ball of food offered to the pitrs. Pinda-dana is part of the parvana shraddha; its materials and manner are set by family tradition — in the forest Rama made the pinda from what the forest itself gave.'],
+    status: 'verified',
+    source: {
+      referenceUrls: [DHARMA_SINDHU_SHRADDHA, VALMIKI_ARANYA, DRIK_SHRADDHA_DATES],
+      verificationNote: `${DOSSIER_NOTE} The forest-materials clause is bundled Aranya 3.68.32–33 and Ayodhya 2.102.29. DrikPanchang's pinda material list is deliberately NOT imposed on a tarpana-only checklist (dossier rule).`,
+    },
+  },
+  {
+    id: 'shabd-til',
+    kind: 'shabd',
+    titleHi: 'तिल',
+    titleEn: 'Tila',
+    bodyHi: ['काला तिल — तर्पण के जल में मिलाया जाने वाला वह द्रव्य जो खोले गए स्रोतों में सर्वत्र आता है। इसी से इस क्रिया को तिल-तर्पण कहते हैं।'],
+    bodyEn: ['Black sesame — the one material attested across every opened source for the water of tarpana. It is what gives tila-tarpana its name.'],
     status: 'verified',
     source: {
       referenceUrls: [DHARMA_SINDHU_SHRADDHA, DRIK_SHRADDHA_DATES, IN_REPO_DOSSIER],
-      verificationNote: `${DOSSIER_NOTE} Materials list kept to what DrikPanchang describes and the dossier records must not be imposed on a tarpana-only checklist.`,
+      verificationNote: `${DOSSIER_NOTE} "Clean water and vessel, darbha/kusha, black sesame" is the dossier's recorded core-materials fact.`,
+    },
+  },
+  {
+    id: 'shabd-darbha',
+    kind: 'shabd',
+    titleHi: 'दर्भ · कुश',
+    titleEn: 'Darbha · Kusha',
+    bodyHi: ['पवित्र घास, जिसका आसन बिछाकर अर्पण किया जाता है। श्रीराम ने पिता के लिए पिण्ड दर्भ के इसी आसन पर रखा था। इसका प्रयोग परिवार की रीति जानने पर ही करें।'],
+    bodyEn: ['The sacred grass spread as a seat for the offering. Rama set his father’s pinda on exactly such a bed of darbha. Use it only where your family practice knows its proper use.'],
+    status: 'verified',
+    source: {
+      referenceUrls: [VALMIKI_CORPUS, DHARMA_SINDHU_SHRADDHA, IN_REPO_DOSSIER],
+      verificationNote: `${CORPUS_NOTE} Bundled Ayodhya 2.102.29 ("darbha-saṁstare") and Aranya 3.68.32; darbha/kusha is also the dossier's recorded core material.`,
+    },
+  },
+  {
+    id: 'shabd-aryama',
+    kind: 'shabd',
+    titleHi: 'अर्यमा',
+    titleEn: 'Aryaman',
+    bodyHi: ['पितरों के अधिपति माने गए आदित्य। गीता में श्रीकृष्ण कहते हैं — "पितरों में मैं अर्यमा हूँ" (१०.२९)। तर्पण के सम्बोधनों में यह नाम इसी कारण आता है।'],
+    bodyEn: ['The Aditya held to be lord of the pitrs. In the Gita, Krishna says “among the pitrs I am Aryaman” (10.29) — which is why the name appears among tarpana’s addressees.'],
+    status: 'verified',
+    source: {
+      referenceUrls: [GITA_CORPUS_10, GITA_HOLY_10, IN_REPO_DOSSIER],
+      verificationNote: `${CORPUS_NOTE} bg-10-29 is verses[28] of chapter-10.json. The tarpana-addressee clause is kept general — the ordered addressee list is branch-specific (RULEBOOK §28.5) and is not supplied.`,
+    },
+  },
+  {
+    id: 'shabd-svadha',
+    kind: 'shabd',
+    titleHi: 'स्वधा',
+    titleEn: 'Svadha',
+    bodyHi: ['पितरों को दिए जाने वाले अर्पण का वह वचन, जो देवताओं के "स्वाहा" के समानान्तर है। गीता ९.१६ में श्रीकृष्ण स्वयं को स्वधा कहते हैं।'],
+    bodyEn: ['The word that carries an offering to the ancestors, the counterpart of svāhā for the devas. In Gita 9.16 Krishna names himself svadhā.'],
+    status: 'verified',
+    source: {
+      referenceUrls: [GITA_CORPUS_09, GITA_HOLY_09, IN_REPO_DOSSIER],
+      verificationNote: `${CORPUS_NOTE} bg-9-16 is verses[15] of chapter-09.json; the bundled English renders svadhā as "the offering to the manes".`,
     },
   },
   {
@@ -309,6 +548,19 @@ export const PITRU_LESSON_ENTRIES: readonly PitruLessonEntry[] = [
     titleEn: 'Kutapa kaal',
     bodyHi: ['मध्याह्न के आसपास का वह मुहूर्त जिसे श्राद्ध के लिए विशेष माना गया है; इसके बाद रौहिण और अपराह्न आते हैं।'],
     bodyEn: ['The muhurta around midday held especially fit for shraddha; Rohina and the aparahna follow it.'],
+    status: 'verified',
+    source: {
+      referenceUrls: [DRIK_SHRADDHA_DATES, DHARMA_SINDHU_SHRADDHA, IN_REPO_DOSSIER],
+      verificationNote: DOSSIER_NOTE,
+    },
+  },
+  {
+    id: 'shabd-aparahna',
+    kind: 'shabd',
+    titleHi: 'अपराह्न',
+    titleEn: 'Aparahna',
+    bodyHi: ['दिन का उत्तरार्ध — वह काल जिसमें श्राद्ध का विधान बताया गया है। इसीलिए तिथि का चुनाव सूर्योदय से नहीं, इसी काल की व्याप्ति से होता है।'],
+    bodyEn: ['The later part of the day — the span in which shraddha is enjoined. That is why the day is chosen by which tithi covers this span, not by the tithi at sunrise.'],
     status: 'verified',
     source: {
       referenceUrls: [DRIK_SHRADDHA_DATES, DHARMA_SINDHU_SHRADDHA, IN_REPO_DOSSIER],

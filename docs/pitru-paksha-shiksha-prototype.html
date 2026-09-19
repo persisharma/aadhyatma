@@ -112,7 +112,7 @@
     <tr><td><b>स्मरण · reminder</b></td><td>Two public 18:00 season notices → overview. Per-person day-before/day-of notices → person detail.</td><td><b>Unchanged.</b> The tap now lands on an overview whose first card is the परिचय door. <span class="later">Phase 3 option:</span> opt-in daily 07:30 lesson (≤16 slots, arms last under the iOS budget).</td></tr>
     <tr><td><b>तिथियाँ · calendar</b></td><td>Sixteen §33.6 rows; family names on saffron dots.</td><td><b>Unchanged</b>, plus the परिचय door above it (<span class="now">built</span>). <span class="later">Phase 2:</span> Observance Detail card on the fortnight's rules.</td></tr>
     <tr><td><b>विधि · guide</b></td><td>Tila-tarpana door under the rows; person-detail door; Sarvapitri chip.</td><td><b>Unchanged.</b> Also reachable from परिचय's closing doors — after the reader knows what it is.</td></tr>
-    <tr><td><b>जानें · education</b> <span class="now">NEW</span></td><td>—</td><td><code>PitruPakshaShiksha</code> + <code>PitruKatha</code> on the More stack; registry <code>data/pitru/</code> (lessons · tithis · glossary · verse spine · kathas · प्रश्नोत्तर), verified-only accessors, <code>hasPitruShiksha()</code> gates every door. <span class="later">Phase 2:</span> season DISCOVER caption, search rows, जिज्ञासा intents.</td></tr>
+    <tr><td><b>जानें · education</b> <span class="now">NEW</span></td><td>—</td><td><code>PitruPakshaShiksha</code> + <code>PitruKatha</code> on the More stack; registry <code>data/pitru/</code> — <b>58 rows authored, 38 verified</b> (9 concept lessons · all 16 fortnight tithis · 12 glossary terms · 8 verses · 4 kathas · 9 प्रश्नोत्तर), verified-only accessors, <code>hasPitruShiksha()</code> gates every door. <span class="later">Phase 2:</span> season DISCOVER caption, search rows, जिज्ञासा intents.</td></tr>
   </table>
 </div>
 
@@ -181,12 +181,18 @@
         <div class="card"><div class="t">दिन का कौन-सा समय</div><div class="b">श्राद्ध का समय दिन का उत्तरार्ध माना गया है — कुतप काल, रौहिण और उसके बाद का अपराह्न। यह सूर्योदय का कर्म नहीं है।</div><span class="more">और पढ़ें ›</span></div>
         <div class="card"><div class="t">किस दिन किसका श्राद्ध — तिथि कैसे मिलती है</div><div class="b">देहान्त की तिथि इस पक्ष की उसी संख्या की कृष्ण-पक्ष तिथि पर उतारी जाती है। माघ कृष्ण अष्टमी को गए पितर का महालय श्राद्ध पितृ पक्ष की अष्टमी को होता है।</div><span class="more">और पढ़ें ›</span></div>
         <div class="card"><div class="t">हर परिवार की अपनी रीति</div><div class="b">दिशा, यज्ञोपवीत की स्थिति, किन पितरों को किस क्रम में स्मरण किया जाए — यह सब शाखा, प्रदेश और कुल-परम्परा से बदलता है।</div><span class="more">और पढ़ें ›</span></div>
+        <div class="card"><div class="t">जल ही क्यों — तर्पण का सबसे पुराना रूप</div><div class="b">रामायण में पितृ-कर्म बार-बार एक ही रूप में मिलता है: अञ्जलि भर जल, दक्षिण दिशा की ओर मुख, और यह भाव कि यह जल उन तक पहुँचे। श्रीराम ने पिता दशरथ के लिए मन्दाकिनी में यही किया, और जटायु के लिए गोदावरी में।</div><span class="more">और पढ़ें ›</span></div>
+        <div class="card"><div class="t">किसके लिए — स्मरण रक्त का बन्धन नहीं माँगता</div><div class="b">अरण्यकाण्ड में श्रीराम जटायु का दाह-संस्कार स्वयं करते हैं। जटायु न उनके कुल के थे, न मनुष्य — वे पिता के मित्र एक पक्षी थे।</div><span class="more">और पढ़ें ›</span></div>
         <div class="card draft"><div class="t">पितृ-ऋण और पञ्च महायज्ञ — स्मरण क्यों</div><div class="b">वैदिक परम्परा मनुष्य पर तीन ऋण बताती है — देव, ऋषि और पितृ-ऋण…</div></div>
         <div class="card draft"><div class="t">महालय — नाम का अर्थ</div><div class="b">महालय का अर्थ पितरों का महान आलय भी लिया जाता है…</div></div>
         <div class="seclabel" style="position:relative"><div class="dot" style="left:-30px;top:-4px">2</div>पक्ष की तिथियाँ</div>
         <div class="row"><div class="mk"></div><div><div class="t">पूर्णिमा श्राद्ध</div><div class="s">पक्ष का पहला दिन — भाद्रपद पूर्णिमा। जिन पितरों का देहान्त किसी पूर्णिमा को हुआ, उनका महालय श्राद्ध इसी दिन।</div></div></div>
         <div class="row draft"><div class="mk"></div><div><div class="t">चतुर्थी–पञ्चमी · भरणी श्राद्ध</div><div class="s">जिस दिन पक्ष में भरणी नक्षत्र पड़े…</div></div></div>
         <div class="row draft"><div class="mk"></div><div><div class="t">नवमी · मातृ नवमी</div><div class="s">माता और कुल की दिवंगत स्त्रियों का स्मरण…</div></div></div>
+        <div class="row draft"><div class="mk"></div><div><div class="t">पञ्चमी · कुँवारा पञ्चमी</div><div class="s">विवाह से पूर्व दिवंगत हुए युवकों के लिए…</div></div></div>
+        <div class="row draft"><div class="mk"></div><div><div class="t">षष्ठी · सप्तमी · अष्टमी · दशमी श्राद्ध</div><div class="s">उन तिथियों को दिवंगत पितरों के दिन — सभी सोलह दिन लिखे गए हैं</div></div></div>
+        <div class="row draft"><div class="mk"></div><div><div class="t">एकादशी श्राद्ध</div><div class="s">पक्ष की यह एकादशी इन्दिरा एकादशी भी कहलाती है…</div></div></div>
+        <div class="row draft"><div class="mk"></div><div><div class="t">द्वादशी · सन्यासी श्राद्ध</div><div class="s">कुल के उन पितरों के लिए जिन्होंने सन्यास लिया…</div></div></div>
         <div class="row draft"><div class="mk"></div><div><div class="t">चतुर्दशी · घात चतुर्दशी</div><div class="s">अस्त्र, दुर्घटना या अकाल मृत्यु…</div></div></div>
         <div class="row" style="border-bottom:0"><div class="mk"></div><div><div class="t">सर्वपितृ अमावस्या</div><div class="s">पक्ष का अन्तिम दिन। अमावस्या को दिवंगत पितरों का दिन — और उन सभी का जिनकी तिथि ज्ञात नहीं।</div></div></div>
         <div class="foot" style="text-align:left;margin-top:10px">शेष तिथियों के परम्परागत विवरण स्रोत-समीक्षा के बाद जोड़े जाएँगे।</div>
@@ -210,14 +216,30 @@
           <div class="verse">एतत्ते राजशार्दूल विमलं तोयमक्षयम् ।<br>पितृलोकगतस्याद्य मद्दत्तमुपतिष्ठतु ॥</div><div class="cite">वाल्मीकि रामायण · अयोध्याकाण्ड २.१०२.२७</div>
           <div class="b">दक्षिण दिशा की ओर मुख कर जल की अञ्जलि लेते हैं और कहते हैं — पितृलोक में गए हुए आपको मेरा दिया यह निर्मल, अक्षय जल आज प्राप्त हो।</div>
           <div class="center"><span class="pill">रामायण में पढ़ें ›</span></div></div>
+        <div class="card"><div class="t">स्वधा मैं हूँ — अर्पण किसे पहुँचता है</div>
+          <div class="verse">अहं क्रतुरहं यज्ञः स्वधाऽहमहमौषधम् ।</div><div class="cite">श्रीमद्भगवद्गीता ९.१६</div>
+          <div class="b">क्रतु मैं हूँ, यज्ञ मैं हूँ, पितरों को दिया जाने वाला अर्पण (स्वधा) मैं हूँ… पितृ-अर्पण यहाँ किसी अलग कोटि का कर्म नहीं रह जाता।</div>
+          <div class="center"><span class="pill">गीता में पढ़ें ›</span></div></div>
+        <div class="card"><div class="t">पितरों में मैं अर्यमा हूँ</div>
+          <div class="verse">पितॄणामर्यमा चास्मि यमः संयमतामहम् ।</div><div class="cite">श्रीमद्भगवद्गीता १०.२९</div>
+          <div class="b">विभूति-योग में श्रीकृष्ण प्रत्येक श्रेणी का श्रेष्ठ अपने को बताते हैं — पितरों में अर्यमा। तर्पण में यह नाम इसी अधिपतित्व से आता है।</div>
+          <div class="center"><span class="pill">गीता में पढ़ें ›</span></div></div>
+        <div class="card"><div class="t">गरुड़ का वचन — इनके लिए लौकिक जल नहीं</div>
+          <div class="verse">गङ्गा हिमवतो ज्येष्ठा दुहिता पुरुषर्षभ ।<br>तस्यां कुरु महाबाहो पितॄणां तु जलक्रियाम् ॥</div><div class="cite">वाल्मीकि रामायण · बालकाण्ड १.४१.१९</div>
+          <div class="b">भस्म हो चुके सगरपुत्रों के लिए अंशुमान् को कहीं जल नहीं मिलता। गरुड़ कहते हैं — इनके लिए लौकिक जल उचित नहीं; गंगा के जल से तर्पण करो।</div>
+          <div class="center"><span class="pill">रामायण में पढ़ें ›</span></div></div>
         <div class="card draft"><div class="t">पञ्च महायज्ञ — पितृ-यज्ञ नित्य कर्म है</div><div class="cite">मनुस्मृति ३.७०</div><div class="b">(not in a bundled reader ⇒ never quoted; meaning only, once verified)</div></div>
         <div class="seclabel" style="position:relative"><div class="dot" style="left:-30px;top:-4px">4</div>कथाएँ</div>
         <div class="door quiet"><div class="m"><div class="t">॥ चित्रकूट में श्रीराम का पितृ-कर्म</div><div class="s">अयोध्याकाण्ड — मन्दाकिनी तट पर जलाञ्जलि और पिण्ड</div></div><span class="chev">›</span></div>
+        <div class="door quiet"><div class="m"><div class="t">॥ भगीरथ और साठ हजार — जल की प्रतीक्षा</div><div class="s">बालकाण्ड — तीन पीढ़ियाँ एक ही प्रश्न पर</div></div><span class="chev">›</span></div>
+        <div class="door quiet"><div class="m"><div class="t">॥ जटायु का अन्तिम संस्कार — श्रीराम के हाथों</div><div class="s">अरण्यकाण्ड — जो कुल का नहीं था, उसके लिए पितृ-कर्म</div></div><span class="chev">›</span></div>
         <div class="door quiet draft"><div class="m"><div class="t">॥ कर्ण और पितृ पक्ष के सोलह दिन</div><div class="s">लोक-कथा — पक्ष के आरम्भ की प्रचलित कथा</div></div><span class="chev">›</span></div>
         <div class="seclabel" style="position:relative"><div class="dot" style="left:-30px;top:-4px">5</div>प्रश्नोत्तर</div>
         <div class="card"><div class="t">हमें अपने पितरों की तिथि नहीं मालूम — क्या करें?</div><div class="b">परम्परा ने इसके लिए ही सर्वपितृ अमावस्या रखी है — पक्ष का अन्तिम दिन, जब अज्ञात तिथि वाले और छूटे हुए सब पितरों का स्मरण किया जाता है।</div></div>
         <div class="card"><div class="t">छपे पंचांग में श्राद्ध की तारीख़ एक दिन अलग क्यों?</div><div class="b">श्राद्ध अपराह्न का कर्म है; अधिकांश तालिकाएँ सूर्योदय की तिथि से दिन नाम देती हैं…</div></div>
         <div class="card"><div class="t">क्या घर पर किया तिल-तर्पण पूरा श्राद्ध है?</div><div class="b">नहीं। धर्मसिन्धु तिल-तर्पण को श्राद्ध का अंग या अनुकल्प मानता है…</div></div>
+        <div class="card"><div class="t">हमारे पास वह सब सामग्री नहीं है — क्या तब भी स्मरण होगा?</div><div class="b">वन में श्रीराम के पास राजसी पदार्थ नहीं थे; उन्होंने इंगुदी के गूदे में बेर मिलाकर पिण्ड बनाया और कहा — जो हम खाते हैं, वही आपको अर्पित है।</div></div>
+        <div class="card"><div class="t">क्या इन दिनों में नया काम या ख़रीदारी की जा सकती है?</div><div class="b">परिवार और प्रदेश की रीतियाँ अलग हैं, और यह ऐप किसी दिन पर कोई निर्णय नहीं सुनाता। जो स्रोत खोले गए वे पक्ष का विधान बताते हैं, कोई निषेध-सूची नहीं।</div></div>
       </div></div></div>
     <div class="cap"><span class="n">3</span><b>Verse spine</b> <span class="now">built</span> — short quoted line (Devanagari; IAST in English), gold cite, meaning that adds nothing, and a hand-off pill. <b>Rule:</b> a row is quoted only if its <code>ref</code> resolves to the exact bundled verse (test-pinned against the JSON); Manu 3.70 has no bundled reader, so it is meaning-only and draft. Gita → the More stack's local <code>GitaReader</code> (Back returns here); Valmiki → <code>HomeTab/ValmikiRamayanReader</code>.<br><span class="n">4</span><b>Kathas</b> — the Ramayana katha is verified against the bundled 2.102.20–35; the Karna story is a <b>folk katha</b> and its canon line will say so.<br><span class="n">5</span><b>प्रश्नोत्तर</b> — four honest answers; the "inauspicious fortnight / no purchases" question is <b>deliberately absent</b> (§51 — the opened sources make no such verdict).</div>
   </div>
@@ -231,6 +253,9 @@
           <div class="t" style="font-size:14px;margin-top:10px">तर्पण</div><div class="b" style="margin-top:2px;font-size:13px;line-height:20px">तृप्त करने का भाव — जल (प्रायः तिल-युक्त) का अर्पण। श्राद्ध का अंग या अनुकल्प।</div>
           <div class="t" style="font-size:14px;margin-top:10px">पिण्ड</div><div class="b" style="margin-top:2px;font-size:13px;line-height:20px">पितरों को अर्पित अन्न का गोला। पिण्डदान पार्वण श्राद्ध का अंग है।</div>
           <div class="t" style="font-size:14px;margin-top:10px">कुतप काल</div><div class="b" style="margin-top:2px;font-size:13px;line-height:20px">मध्याह्न के आसपास का मुहूर्त, श्राद्ध के लिए विशेष।</div>
+          <div class="t" style="font-size:14px;margin-top:10px">जलाञ्जलि</div><div class="b" style="margin-top:2px;font-size:13px;line-height:20px">दोनों हथेलियों के दोने भर जल, जो पितरों के लिए छोड़ा जाता है।</div>
+          <div class="t" style="font-size:14px;margin-top:10px">अर्यमा</div><div class="b" style="margin-top:2px;font-size:13px;line-height:20px">पितरों के अधिपति आदित्य — गीता १०.२९।</div>
+          <div class="t" style="font-size:14px;margin-top:10px">स्वधा</div><div class="b" style="margin-top:2px;font-size:13px;line-height:20px">पितरों के अर्पण का वचन, देवताओं के "स्वाहा" का समानान्तर — गीता ९.१६।</div>
           <div class="t" style="font-size:14px;margin-top:10px">अनुकल्प</div><div class="b" style="margin-top:2px;font-size:13px;line-height:20px">मुख्य विधान सम्भव न हो तो शास्त्र द्वारा बताया गया सरल विकल्प।</div>
         </div>
         <div class="seclabel" style="position:relative"><div class="dot" style="left:-30px;top:-4px">7</div>अब</div>
@@ -271,6 +296,7 @@
         <li>Reminder payloads are byte-identical to today. The only Phase 3 addition (daily lesson) is opt-in, public, and names no person.</li>
       </ul>
       <b style="color:#fff5e0;display:block;margin-top:14px">Content gate — how a faded block turns on.</b>
+      <p style="margin:6px 0 0">Outbound access was retested on 2026-09-19: the egress policy returns <code>403</code> for every source domain, so nothing external could be opened. What <i>could</i> be opened is the 27 MB of Valmiki Ramayana and 6.5 MB of Gita already in the bundle — which is where this round’s three kathas and four new verses came from, each anchored to a verse the reviewer can open.</p>
       <ol style="margin:8px 0 0 18px;line-height:1.7">
         <li>Open the two sources the row's <code>verificationNote</code> names; record the date and what agreed.</li>
         <li>Change <code>status: 'draft'</code> → <code>'verified'</code>. Nothing else — every surface, test and door follows the accessor.</li>
