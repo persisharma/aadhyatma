@@ -54,6 +54,11 @@ jest.mock('@/contexts/PitruSmaranContext', () => ({
     getEntry: (id: string) => mockEntries.find((e) => e.id === id) ?? null,
   }),
 }));
+// PRD-44: the overview's परिचय door gates on verified education content.
+let mockHasShiksha = true;
+jest.mock('@/data/pitru', () => ({
+  hasPitruShiksha: () => mockHasShiksha,
+}));
 let mockPermissionStatus: 'undetermined' | 'granted' | 'denied' = 'granted';
 const mockRequestPermission = jest.fn(() => Promise.resolve<'undetermined' | 'granted' | 'denied'>('granted'));
 jest.mock('@/contexts/NotificationPreferencesContext', () => ({
@@ -157,6 +162,7 @@ afterEach(() => {
   jest.clearAllMocks();
   mockEntries = [];
   mockPermissionStatus = 'granted';
+  mockHasShiksha = true;
   // The solve cache is module state that outlives a test. Without this, the
   // window mocked by one case is served to the next from memory and the mock is
   // never consulted — the same trap `__resetPanchangPrefsForTests` exists for.
@@ -512,5 +518,34 @@ describe('PitruPakshaOverviewScreen', () => {
       vidhiId: 'shraddha-tarpan-vidhi',
       dateMs: matched.getTime(),
     });
+  });
+
+  test('the परिचय door sits above the fortnight and opens the education screen (PRD-44)', async () => {
+    mockedWindow.mockReturnValue({ purnima: daysFromNow(9), start: daysFromNow(10), end: daysFromNow(24) });
+    const nav = makeNav();
+    const tree = await render(
+      <PitruPakshaOverviewScreen
+        navigation={nav as never}
+        route={{ key: 'p', name: 'PitruPakshaOverview' } as never}
+      />
+    );
+    await flush();
+    act(() => byLabel(tree, 'Open Pitru Paksha introduction').props.onPress());
+    expect(nav.navigate).toHaveBeenCalledWith('PitruPakshaShiksha');
+  });
+
+  test('no verified education content ⇒ no door, no teaser', async () => {
+    mockHasShiksha = false;
+    mockedWindow.mockReturnValue({ purnima: daysFromNow(9), start: daysFromNow(10), end: daysFromNow(24) });
+    const nav = makeNav();
+    const tree = await render(
+      <PitruPakshaOverviewScreen
+        navigation={nav as never}
+        route={{ key: 'p', name: 'PitruPakshaOverview' } as never}
+      />
+    );
+    await flush();
+    expect(byLabel(tree, 'Open Pitru Paksha introduction')).toBeUndefined();
+    expect(allText(tree)).not.toContain('क्यों है');
   });
 });

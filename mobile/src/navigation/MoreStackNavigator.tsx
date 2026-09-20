@@ -10,6 +10,8 @@ import PitruSmaranListScreen from '@/screens/PitruSmaranListScreen';
 import PitruSmaranEditScreen from '@/screens/PitruSmaranEditScreen';
 import PitruSmaranDetailScreen from '@/screens/PitruSmaranDetailScreen';
 import PitruPakshaOverviewScreen from '@/screens/PitruPakshaOverviewScreen';
+import PitruPakshaShikshaScreen from '@/screens/PitruPakshaShikshaScreen';
+import PitruKathaScreen from '@/screens/PitruKathaScreen';
 import VastuDishaScreen from '@/screens/VastuDishaScreen';
 import DaanPunyaScreen from '@/screens/DaanPunyaScreen';
 import DaanJourneyScreen from '@/screens/DaanJourneyScreen';
@@ -50,6 +52,9 @@ export default function MoreStackNavigator() {
       <Stack.Screen name="PitruSmaranEdit" component={PitruSmaranEditScreen} />
       <Stack.Screen name="PitruSmaranDetail" component={PitruSmaranDetailScreen} />
       <Stack.Screen name="PitruPakshaOverview" component={PitruPakshaOverviewScreen} />
+      {/* पितृ पक्ष परिचय (PRD-44) — pushes from the overview so Back retraces. */}
+      <Stack.Screen name="PitruPakshaShiksha" component={PitruPakshaShikshaScreen} />
+      <Stack.Screen name="PitruKatha" component={PitruKathaScreen} />
       {/* वास्तु दिशा (PRD-24) — compass + room guidance. */}
       <Stack.Screen name="VastuDisha" component={VastuDishaScreen} />
       {/* दान-पुण्य (PRD-26) — educate home, journey, ledger, directory. */}

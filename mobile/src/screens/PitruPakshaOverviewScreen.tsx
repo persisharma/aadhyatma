@@ -8,6 +8,7 @@ import ReaderHeader from '@/components/ReaderHeader';
 import PanchangTimelineRow from '@/components/PanchangTimelineRow';
 import { useGitaLanguage } from '@/data/gita/language';
 import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
+import { hasPitruShiksha } from '@/data/pitru';
 import { getVidhiById } from '@/data/vidhi';
 import { addDays } from '@/panchang/calendarGrid';
 import { computeTithiAndMonth } from '@/panchang/engine';
@@ -42,6 +43,10 @@ function rowKey(d: Date): string {
  * 8 px marker dot (saffron for family-matched days, gold default), short date,
  * tithi-shraddha name, and the matched person's name beneath in saffron-deep.
  * Unknown-tithi entries collect on सर्वपितृ अमावस्या.
+ *
+ * PRD-44: one quiet परिचय door sits between the date hero and the fortnight —
+ * the education layer beside the reminder and the vidhi. It renders only when
+ * the registry holds verified content (`hasPitruShiksha`), never as a teaser.
  */
 export default function PitruPakshaOverviewScreen({ navigation }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
@@ -122,6 +127,7 @@ export default function PitruPakshaOverviewScreen({ navigation }: Props) {
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
   const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
   const shraddhaVidhi = getVidhiById('shraddha-tarpan-vidhi');
+  const showShiksha = hasPitruShiksha();
   const vidhiOccurrence = state?.rows.find((row) => row.family.length > 0)?.date ?? state?.start ?? null;
 
   return (
@@ -157,6 +163,31 @@ export default function PitruPakshaOverviewScreen({ navigation }: Props) {
                 )}
               </Text>
             </View>
+
+            {showShiksha && (
+              <Pressable
+                onPress={() => navigation.navigate('PitruPakshaShiksha')}
+                testID="pitru-paksha-shiksha-door"
+                accessibilityRole="button"
+                accessibilityLabel="Open Pitru Paksha introduction"
+                style={({ pressed }) => [
+                  styles.shikshaDoor,
+                  { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md },
+                  pressed && { opacity: 0.75 },
+                ]}
+              >
+                <Text style={{ fontFamily: titleFont, fontSize: 15, color: colors.gold, letterSpacing: 4, marginRight: 12 }}>॥</Text>
+                <View style={styles.vidhiDoorMain}>
+                  <Text style={{ fontFamily: titleFont, fontSize: 15, color: colors.ink }}>
+                    {contentByLang(lang, 'पितृ पक्ष क्या है, क्यों है', 'What Pitru Paksha is, and why')}
+                  </Text>
+                  <Text style={{ fontFamily: bodyFont, fontSize: 12, lineHeight: 18, color: colors.inkMuted, marginTop: 2 }}>
+                    {contentByLang(lang, 'परिचय · तिथियाँ · शास्त्र-वचन · कथाएँ', 'Introduction · tithis · from the texts · kathas')}
+                  </Text>
+                </View>
+                <Text style={{ color: colors.inkSoft, fontSize: 17 }}>›</Text>
+              </Pressable>
+            )}
 
             {state.rows.map((row, i) => (
               <PanchangTimelineRow
@@ -228,4 +259,13 @@ const styles = StyleSheet.create({
     minHeight: 52,
   },
   vidhiDoorMain: { flex: 1, minWidth: 0 },
+  shikshaDoor: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    marginBottom: 14,
+    minHeight: 52,
+  },
 });
