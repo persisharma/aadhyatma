@@ -97,6 +97,10 @@ export const ANNUAL: AnnualFestival[] = [
   { id: 'hanuman-jayanti-kartik', month: 8, paksha: 'krishna', tithi: 14, muhurta: 'udaya' },
   { id: 'gopashtami', month: 8, paksha: 'shukla', tithi: 8, muhurta: 'udaya' },
   { id: 'champa-shashthi', month: 9, paksha: 'shukla', tithi: 6, muhurta: 'udaya' },
+
+  // Vamana Jayanti (Sept 2026) — Drik fixes the puja to madhyahna under Shravana
+  // nakshatra, and the rule carries `dayRule: 'madhyahna'` to match.
+  { id: 'vamana-jayanti', month: 6, paksha: 'shukla', tithi: 12, muhurta: 'madhyahna' },
 ];
 
 // Known-good anchors (drikpanchang/established, Ujjain/IST) — authoritative truth. When an
@@ -115,6 +119,7 @@ export const ANCHORS: Record<string, string> = {
   'gangaur:2025': '2025-03-31', 'gangaur:2026': '2026-03-21',
   'goga-navami:2025': '2025-08-17', 'goga-navami:2026': '2026-09-05',
   'teja-dashami:2025': '2025-09-02', 'teja-dashami:2026': '2026-09-21',
+  'vamana-jayanti:2025': '2025-09-04', 'vamana-jayanti:2026': '2026-09-23',
   'shitala-ashtami:2026': '2026-03-11', 'shitala-saptami:2026': '2026-03-10',
   'dasha-mata-vrat:2026': '2026-03-13', 'asha-dashami:2026': '2026-07-24',
   'chaiti-chhath:2026': '2026-03-24', 'madhushravani:2026': '2026-08-15',

@@ -26,6 +26,7 @@ const ANCHORS: Record<string, string> = {
   'ganesh-chaturthi:2025': '2025-08-27', 'ganesh-chaturthi:2026': '2026-09-14',
   'diwali:2025': '2025-10-20', 'ram-navami:2025': '2025-04-06', 'narada-jayanti:2025': '2025-05-13',
   'holi:2025': '2025-03-14', 'dussehra:2025': '2025-10-02', 'navratri-start:2025': '2025-09-22',
+  'vamana-jayanti:2025': '2025-09-04', 'vamana-jayanti:2026': '2026-09-23',
 };
 
 test('no anchored festival drifts a whole lunar month (Janmashtami-class regression guard)', () => {
