@@ -91,13 +91,16 @@ export default function PitruPakshaShikshaScreen({ navigation }: Props) {
     const shown = open ? paragraphs : paragraphs.slice(0, 1);
     return (
       <View key={lesson.id} style={card} testID={`pitru-lesson-${lesson.id}`}>
-        <Text style={{ fontFamily: titleFont, fontSize: 15, lineHeight: 22, color: colors.ink }}>
+        <Text style={{ fontFamily: titleFont, fontSize: 16, lineHeight: 23, color: colors.ink }}>
           {contentByLang(lang, lesson.titleHi, lesson.titleEn)}
         </Text>
+        {/* Body stays in `inkSoft` — the app's Hindi meaning/commentary register (verse pages,
+            the katha screens this card links to) — but at reading scale: at 13.5/22 the clipped
+            excerpt read as a dull caption; 15/25 carries the contrast the way the readers do. */}
         {shown.map((paragraph, idx) => (
           <Text
             key={`${lesson.id}-${idx}`}
-            style={{ fontFamily: bodyFont, fontSize: 13.5, lineHeight: 22, color: colors.inkSoft, marginTop: idx === 0 ? 6 : 8 }}
+            style={{ fontFamily: bodyFont, fontSize: 15, lineHeight: 25, color: colors.inkSoft, marginTop: idx === 0 ? 8 : 10 }}
           >
             {paragraph}
           </Text>
@@ -108,9 +111,9 @@ export default function PitruPakshaShikshaScreen({ navigation }: Props) {
             accessibilityRole="button"
             accessibilityLabel={`${open ? 'Collapse' : 'Expand'} lesson ${lesson.id}`}
             hitSlop={8}
-            style={{ alignSelf: 'flex-start', marginTop: 8, minHeight: 28, justifyContent: 'center' }}
+            style={{ alignSelf: 'flex-start', marginTop: 10, minHeight: 32, justifyContent: 'center' }}
           >
-            <Text style={{ fontFamily: titleFont, fontSize: 13, color: colors.saffronDeep }}>
+            <Text style={{ fontFamily: titleFont, fontSize: 14.5, lineHeight: 21, color: colors.saffronDeep }}>
               {open ? contentByLang(lang, 'कम दिखाएँ', 'Show less') : contentByLang(lang, 'और पढ़ें ›', 'Read more ›')}
             </Text>
           </Pressable>
