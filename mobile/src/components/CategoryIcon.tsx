@@ -319,24 +319,29 @@ function MuhuratIcon({ color, accent }: IconPaint) {
   );
 }
 
-// दान-पुण्य — two open cupped hands holding a small offering (a diya-flame /
-// round sweet) above them, reading as "giving with open hands". Same drawn
-// View-composition grammar as the other launcher glyphs (design.md §30, no
-// SVG, no emoji).
+// दान-पुण्य — a daan-patra receiving three small offerings. At launcher size
+// this stable silhouette stays clearer than overlapping hands, while the seed-
+// shaped offerings avoid turning the category into a payment/coin mark. Same
+// drawn View-composition grammar as the kalash and diya glyphs (design.md §30,
+// no SVG, no emoji).
 function DaanIcon({ color, accent }: IconPaint) {
   return (
     <View style={styles.daanWrap}>
-      <View testID="category-icon-daan-offering" style={[styles.daanOffering, { backgroundColor: accent }]}>
-        <View style={[styles.daanOfferingDot, { backgroundColor: color }]} />
-      </View>
       <View
-        testID="category-icon-daan-hands-left"
-        style={[styles.daanHand, styles.daanHandLeft, { borderColor: color }]}
+        testID="category-icon-daan-offering-left"
+        style={[styles.daanOffering, styles.daanOfferingLeft, { backgroundColor: accent }]}
       />
       <View
-        testID="category-icon-daan-hands-right"
-        style={[styles.daanHand, styles.daanHandRight, { borderColor: color }]}
+        testID="category-icon-daan-offering-centre"
+        style={[styles.daanOffering, styles.daanOfferingCentre, { backgroundColor: accent }]}
       />
+      <View
+        testID="category-icon-daan-offering-right"
+        style={[styles.daanOffering, styles.daanOfferingRight, { backgroundColor: accent }]}
+      />
+      <View testID="category-icon-daan-patra-rim" style={[styles.daanPatraRim, { backgroundColor: color }]} />
+      <View testID="category-icon-daan-patra" style={[styles.daanPatra, { borderColor: color }]} />
+      <View style={[styles.daanPatraBase, { backgroundColor: accent }]} />
     </View>
   );
 }
@@ -893,36 +898,48 @@ const styles = StyleSheet.create({
   },
   daanOffering: {
     position: 'absolute',
-    top: 3,
-    width: 11,
-    height: 11,
-    borderRadius: 5.5,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  daanOfferingDot: {
     width: 4,
-    height: 4,
-    borderRadius: 2,
-    opacity: 0.85,
+    height: 7,
+    borderRadius: 2.5,
   },
-  daanHand: {
+  daanOfferingLeft: {
+    top: 7,
+    left: 8,
+    transform: [{ rotate: '-32deg' }],
+  },
+  daanOfferingCentre: {
+    top: 2,
+    left: 15,
+  },
+  daanOfferingRight: {
+    top: 7,
+    right: 8,
+    transform: [{ rotate: '32deg' }],
+  },
+  daanPatraRim: {
     position: 'absolute',
-    bottom: 4,
-    width: 16,
-    height: 12,
-    borderWidth: 1.8,
+    top: 14,
+    width: 29,
+    height: 2.4,
+    borderRadius: 1.2,
+  },
+  daanPatra: {
+    position: 'absolute',
+    bottom: 3,
+    width: 27,
+    height: 15,
+    borderWidth: 1.9,
     borderTopWidth: 0,
-    borderBottomLeftRadius: 12,
-    borderBottomRightRadius: 12,
+    borderBottomLeftRadius: 14,
+    borderBottomRightRadius: 14,
   },
-  daanHandLeft: {
-    left: 2,
-    transform: [{ rotate: '12deg' }],
-  },
-  daanHandRight: {
-    right: 2,
-    transform: [{ rotate: '-12deg' }],
+  daanPatraBase: {
+    position: 'absolute',
+    bottom: 1,
+    width: 12,
+    height: 2,
+    borderRadius: 1,
+    opacity: 0.85,
   },
   insightWrap: {
     width: 32,
