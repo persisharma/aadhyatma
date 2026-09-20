@@ -74,17 +74,18 @@ import e71 from './entries/sheetala-saptami-vrat-katha';
 import e72 from './entries/shravana-mahatmya';
 import e73 from './entries/sita-navami-vrat-katha';
 import e74 from './entries/skanda-sashti-katha';
-import e75 from './entries/utpanna-ekadashi-katha';
-import e76 from './entries/varalakshmi-vrat-katha';
-import e77 from './entries/varuthini-ekadashi-katha';
-import e78 from './entries/vasant-panchami-katha';
-import e79 from './entries/vat-savitri-vrat-katha';
-import e80 from './entries/vijaya-ekadashi-katha';
-import e81 from './entries/vivah-panchami-katha';
-import e82 from './entries/weekday-vrat-katha';
-import e83 from './entries/yogini-ekadashi-katha';
+import e75 from './entries/teja-dashami-katha';
+import e76 from './entries/utpanna-ekadashi-katha';
+import e77 from './entries/varalakshmi-vrat-katha';
+import e78 from './entries/varuthini-ekadashi-katha';
+import e79 from './entries/vasant-panchami-katha';
+import e80 from './entries/vat-savitri-vrat-katha';
+import e81 from './entries/vijaya-ekadashi-katha';
+import e82 from './entries/vivah-panchami-katha';
+import e83 from './entries/weekday-vrat-katha';
+import e84 from './entries/yogini-ekadashi-katha';
 
-export const KATHA_CONTENT: readonly KathaContentEntry[] = [
+export const KATHA_CONTENT: KathaContentEntry[] = [
   e0,
   e1,
   e2,
@@ -169,4 +170,5 @@ export const KATHA_CONTENT: readonly KathaContentEntry[] = [
   e81,
   e82,
   e83,
+  e84,
 ];

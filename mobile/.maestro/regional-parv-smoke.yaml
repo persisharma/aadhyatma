@@ -12,6 +12,8 @@
 #      it never had.
 #   2. Goga Navami — the observance the Sept 2026 report named — is reachable from
 #      catalog search and likewise resolves to a next occurrence.
+#   3. Teja Dashami — a dated folk-deity rule that shipped with no story behind it —
+#      now reaches a katha from the same detail page.
 #
 # Ordering note: the landing's browse-by-type tiles are replaced by results once
 # the landing search field has text, so the tile leg runs BEFORE the search leg
@@ -98,6 +100,34 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - assertVisible: "Next · .*"
 - assertVisible: "Follow"
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# ── A dated folk-deity rule that now carries its katha ──
+- extendedWaitUntil:
+    visible: "Browse by type"
+    timeout: 15000
+- tapOn: "Search vrat, festival, upvas, katha…"
+- inputText: "Teja"
+- hideKeyboard
+- extendedWaitUntil:
+    visible: "Teja Dashami"
+    timeout: 15000
+- tapOn: "Teja Dashami"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "About"
+    timeout: 15000
+- assertVisible: "Next · .*"
+- assertVisible: "Read katha.*"
+- tapOn: "Read katha.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Veer Tejaji Katha"
+    timeout: 15000
+- assertVisible: "Part · 1/6"
+- tapOn: "Back"
+- waitForAnimationToEnd
 - tapOn: "Back"
 - waitForAnimationToEnd
 
