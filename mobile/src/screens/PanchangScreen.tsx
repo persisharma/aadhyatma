@@ -149,7 +149,7 @@ export default function PanchangScreen({ route }: Props) {
   const muhuratCardRef = useTourTarget('muhuratCard');
   const panchangSegmentRef = useTourTarget('panchangSegment');
   const rootNav = useNavigation<any>();
-  const { followCount, reminderCount } = useVratFollows();
+  const { followCount } = useVratFollows();
   const todayKey = new Date().toDateString();
   const today = useMemo(() => startOfLocalDay(new Date(todayKey)), [todayKey]);
   const [selectedDate, setSelectedDate] = useState(() => startOfLocalDay(route.params?.dateMs ? new Date(route.params.dateMs) : new Date()));
@@ -835,7 +835,6 @@ export default function PanchangScreen({ route }: Props) {
               onOpenLenses={() => setLensSheetVisible(true)}
               lenses={lenses}
               followCount={followCount}
-              reminderCount={reminderCount}
             />
           ) : (
             <JyotishLanding
@@ -1825,15 +1824,69 @@ function LensDiscoveryRow({
   );
 }
 
-function PitruSmaranCatalogRow({
-  lang, colors, typography, radii, elevation, onPress,
+/** One column of the ledger bar: glyph over label over one short line of state.
+    Its own button, so each ledger keeps a full-height 48 dp target. */
+function CatalogLedgerCell({
+  lang, colors, typography, glyph, label, state, accessibilityLabel, onPress, divided,
+}: {
+  lang: Lang;
+  colors: any;
+  typography: any;
+  glyph: string;
+  label: string;
+  state: string;
+  accessibilityLabel: string;
+  onPress: () => void;
+  divided: boolean;
+}) {
+  return (
+    <Pressable
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel}
+      style={({ pressed }) => [
+        styles.ledgerCell,
+        divided && { borderLeftWidth: 1, borderLeftColor: colors.divider },
+        pressed && { opacity: 0.6 },
+      ]}
+    >
+      <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 17, color: colors.gold }}>{glyph}</Text>
+      <Text
+        numberOfLines={1}
+        style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginTop: 3 }}
+      >
+        {label}
+      </Text>
+      <Text numberOfLines={1} style={{ ...captionFont(state), fontSize: 11, color: colors.saffronDeep, marginTop: 2 }}>
+        {state}
+      </Text>
+    </Pressable>
+  );
+}
+
+/** मेरा व्रत · पितृ स्मरण · क्षेत्र as ONE summary bar.
+    These were three stacked full-width cards (~190 dp — roughly a third of the
+    first fold), which pushed आगामी low and the श्रेणी grid off-screen entirely.
+    Same three destinations and the same live state in ~72 dp: one card, three
+    hairline-divided columns, each its own button. The state lines are compressed
+    to what a ~106 dp column holds — a count, the soonest smaran date, and for
+    क्षेत्र the FIRST calendar's name plus +N rather than a bare count, because a
+    count still does not tell a user where their extra dates came from (§42).
+    The accessibility labels stay full sentences: the compression is visual. */
+function CatalogLedgerBar({
+  lang, colors, typography, radii, elevation, followCount, lenses,
+  onOpenMyVrat, onOpenPitruSmaran, onOpenLenses,
 }: {
   lang: Lang;
   colors: any;
   typography: any;
   radii: any;
   elevation: any;
-  onPress: () => void;
+  followCount: number;
+  lenses: ReadonlySet<ObservanceLens>;
+  onOpenMyVrat: () => void;
+  onOpenPitruSmaran: () => void;
+  onOpenLenses: () => void;
 }) {
   const { entries } = usePitruSmaran();
   const [soonest, setSoonest] = useState<Date | null>(null);
@@ -1853,45 +1906,79 @@ function PitruSmaranCatalogRow({
     return () => { cancelled = true; clearTimeout(handle); };
   }, [entries]);
 
-  const subtitle = entries.length > 0
-    ? contentByLang(
-        lang,
-        `${entries.length} स्मरण${soonest ? ` · अगला: ${shortSmaranDate(soonest, lang)}` : ''}`,
-        `${entries.length} remembrance${entries.length === 1 ? '' : 's'}${soonest ? ` · Next: ${shortSmaranDate(soonest, lang)}` : ''}`
-      )
-    : contentByLang(lang, 'अपने पितरों की तिथियाँ जोड़ें', 'Add your ancestors’ tithis');
+  const vratState = followCount > 0
+    ? contentByLang(lang, `${followCount} फ़ॉलो`, `${followCount} following`)
+    : contentByLang(lang, 'जोड़ें', 'Add');
+
+  const smaranState = entries.length === 0
+    ? contentByLang(lang, 'जोड़ें', 'Add')
+    : soonest
+      ? contentByLang(lang, `अगला ${shortSmaranDate(soonest, lang)}`, `Next ${shortSmaranDate(soonest, lang)}`)
+      : contentByLang(lang, `${entries.length} स्मरण`, `${entries.length} saved`);
+
+  const lensNames = [...lenses]
+    .map((id) => getLensDefinition(id))
+    .filter((def): def is NonNullable<typeof def> => def != null)
+    .map((def) => contentByLang(lang, def.nameHi, def.nameEn));
+  const lensState = lensNames.length === 0
+    ? contentByLang(lang, `${LENS_COUNT} उपलब्ध`, `${LENS_COUNT} available`)
+    : lensNames.length === 1
+      ? lensNames[0]
+      : `${lensNames[0]} +${lensNames.length - 1}`;
 
   return (
-    <Pressable
-      onPress={onPress}
-      accessibilityRole="button"
-      accessibilityLabel={`Pitru Smaran. ${entries.length > 0 ? `${entries.length} entries` : 'Add remembrance dates'}`}
-      style={({ pressed }) => [
-        styles.myVratRow,
-        styles.pitruLedgerRow,
+    <View
+      style={[
+        styles.ledgerBar,
         { backgroundColor: colors.goldTint, borderColor: colors.gold, borderRadius: radii.lg },
         elevation.card,
-        pressed && { opacity: 0.8 },
       ]}
     >
-      <Text style={{ fontSize: 18, color: colors.gold, marginRight: 10 }}>॥</Text>
-      <View style={{ flex: 1 }}>
-        <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
-          {contentByLang(lang, 'पितृ स्मरण', 'Pitru Smaran')}
-        </Text>
-        <Text style={{ ...captionFont(subtitle), fontSize: 12, color: colors.inkMuted, marginTop: 2 }}>
-          {subtitle}
-        </Text>
-      </View>
-      <Text style={{ fontSize: 20, color: colors.inkMuted }}>›</Text>
-    </Pressable>
+      <CatalogLedgerCell
+        lang={lang}
+        colors={colors}
+        typography={typography}
+        glyph="★"
+        label={contentByLang(lang, 'मेरा व्रत', 'My Vrat')}
+        state={vratState}
+        accessibilityLabel={followCount > 0 ? `My Vrat, ${followCount} following` : 'My Vrat'}
+        onPress={onOpenMyVrat}
+        divided={false}
+      />
+      <CatalogLedgerCell
+        lang={lang}
+        colors={colors}
+        typography={typography}
+        glyph="॥"
+        label={contentByLang(lang, 'पितृ स्मरण', 'Pitru Smaran')}
+        state={smaranState}
+        accessibilityLabel={`Pitru Smaran. ${entries.length > 0 ? `${entries.length} entries` : 'Add remembrance dates'}`}
+        onPress={onOpenPitruSmaran}
+        divided
+      />
+      <CatalogLedgerCell
+        lang={lang}
+        colors={colors}
+        typography={typography}
+        glyph="❖"
+        label={contentByLang(lang, 'क्षेत्र', 'Regional')}
+        state={lensState}
+        accessibilityLabel={
+          lensNames.length > 0
+            ? `Regional calendars, ${lensNames.length} on`
+            : 'Regional calendars, none selected'
+        }
+        onPress={onOpenLenses}
+        divided
+      />
+    </View>
   );
 }
 
 function CatalogLanding({
   lang, today, calendarSystem, query, onChangeQuery,
   colors, typography, radii, elevation,
-  onOpenDetail, onOpenCategory, onOpenKathaLibrary, onOpenVidhiCatalog, onOpenMyVrat, followCount, reminderCount,
+  onOpenDetail, onOpenCategory, onOpenKathaLibrary, onOpenVidhiCatalog, onOpenMyVrat, followCount,
   onOpenPitruSmaran, onOpenLenses, lenses,
 }: {
   lang: Lang;
@@ -1912,7 +1999,6 @@ function CatalogLanding({
   onOpenLenses: () => void;
   lenses: ReadonlySet<ObservanceLens>;
   followCount: number;
-  reminderCount: number;
 }) {
   const trimmed = query.trim();
   // Search stays lens-blind on purpose — see `searchObservances`.
@@ -1920,22 +2006,6 @@ function CatalogLanding({
   const lensKey = serializeLenses(lenses);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const upcoming = useMemo(() => getUpcomingObservances(today, 6, calendarSystem, 150, undefined, lenses), [today, calendarSystem, lensKey]);
-  const activeLensCount = lenses.size;
-  const lensSubtitle = (() => {
-    if (activeLensCount === 0) {
-      return contentByLang(lang, `कोई क्षेत्रीय पंचांग नहीं · ${LENS_COUNT} उपलब्ध`, `No regional calendar · ${LENS_COUNT} available`);
-    }
-    // Name the calendars rather than counting them: "तेलुगु सक्रिय" tells a user
-    // where their extra dates came from; "1 सक्रिय" tells them nothing.
-    const names = [...lenses]
-      .map((id) => getLensDefinition(id))
-      .filter((def): def is NonNullable<typeof def> => def != null)
-      .map((def) => contentByLang(lang, def.nameHi, def.nameEn));
-    const head = names.slice(0, 2).join(' · ');
-    const more = names.length > 2 ? contentByLang(lang, ` +${names.length - 2}`, ` +${names.length - 2}`) : '';
-    const rest = LENS_COUNT - activeLensCount;
-    return contentByLang(lang, `${head}${more} सक्रिय · और ${rest} उपलब्ध`, `${head}${more} on · ${rest} more available`);
-  })();
   const counts = useMemo(() => getCategoryCounts(), []);
   const kathaCount = getKathaCount();
 
@@ -1987,72 +2057,19 @@ function CatalogLanding({
         )
       ) : (
         <>
-          {/* My Vrat — pinned at the top of the catalog as the personal entry point. */}
-          <Pressable
-            onPress={onOpenMyVrat}
-            accessibilityRole="button"
-            accessibilityLabel={followCount > 0 ? `My Vrat, ${followCount} following` : 'My Vrat'}
-            style={({ pressed }) => [styles.myVratRow, { backgroundColor: colors.goldTint, borderColor: colors.gold, borderRadius: radii.lg }, elevation.card, pressed && { opacity: 0.8 }]}
-          >
-            <Text style={{ fontSize: 18, color: colors.gold, marginRight: 10 }}>★</Text>
-            <View style={{ flex: 1 }}>
-              <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
-                {contentByLang(lang, 'मेरा व्रत', 'My Vrat')}
-              </Text>
-              {(() => {
-                const subtitle =
-                  followCount > 0
-                    ? contentByLang(
-                        lang,
-                        `${followCount} फ़ॉलो किए · ${reminderCount} अनुस्मारक`,
-                        `${followCount} following · ${reminderCount} reminders on`
-                      )
-                    : contentByLang(lang, 'अपने व्रत यहाँ रखें', 'Keep your vrats here');
-                return (
-                  <Text style={{ ...captionFont(subtitle), fontSize: 12, color: colors.inkMuted, marginTop: 2 }}>
-                    {subtitle}
-                  </Text>
-                );
-              })()}
-            </View>
-            <Text style={{ fontSize: 20, color: colors.inkMuted }}>›</Text>
-          </Pressable>
-          <PitruSmaranCatalogRow
+          {/* The personal ledgers — one bar, three columns. See CatalogLedgerBar. */}
+          <CatalogLedgerBar
             lang={lang}
             colors={colors}
             typography={typography}
             radii={radii}
             elevation={elevation}
-            onPress={onOpenPitruSmaran}
+            followCount={followCount}
+            lenses={lenses}
+            onOpenMyVrat={onOpenMyVrat}
+            onOpenPitruSmaran={onOpenPitruSmaran}
+            onOpenLenses={onOpenLenses}
           />
-          {/* क्षेत्र — third in the ledger, a peer of मेरा व्रत and पितृ स्मरण.
-              Same card anatomy (icon · title · one line of state · chevron),
-              because a lens preference IS that kind of object: persistent,
-              personal calendar state the user created. The subtitle names the
-              active calendars, so the row documents its own seeding. It renders
-              even with nothing on — for a user whose city seeded nothing (Ujjain,
-              Delhi) this row is the only path to the sheet. */}
-          <Pressable
-            onPress={onOpenLenses}
-            accessibilityRole="button"
-            accessibilityLabel={
-              activeLensCount > 0
-                ? `Regional calendars, ${activeLensCount} on`
-                : 'Regional calendars, none selected'
-            }
-            style={({ pressed }) => [styles.myVratRow, { backgroundColor: colors.goldTint, borderColor: colors.gold, borderRadius: radii.lg }, elevation.card, pressed && { opacity: 0.8 }]}
-          >
-            <Text style={{ fontSize: 18, color: colors.gold, marginRight: 10 }}>❖</Text>
-            <View style={{ flex: 1 }}>
-              <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
-                {contentByLang(lang, 'क्षेत्र', 'Regional calendars')}
-              </Text>
-              <Text style={{ ...captionFont(lensSubtitle), fontSize: 12, color: colors.inkMuted, marginTop: 2 }}>
-                {lensSubtitle}
-              </Text>
-            </View>
-            <Text style={{ fontSize: 20, color: colors.inkMuted }}>›</Text>
-          </Pressable>
           {upcoming.length > 0 && (
             <View style={{ marginTop: 14 }}>
               <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginBottom: 8 }}>
@@ -2199,8 +2216,8 @@ const styles = StyleSheet.create({
   myVratButton: { width: 34, height: 34, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   starBadge: { position: 'absolute', top: -2, right: -3, minWidth: 16, height: 16, borderRadius: 8, borderWidth: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 3 },
   starBadgeText: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, lineHeight: 13 },
-  myVratRow: { flexDirection: 'row', alignItems: 'center', borderWidth: 1.5, padding: 14, marginTop: 12 },
-  pitruLedgerRow: { marginTop: 10 },
+  ledgerBar: { flexDirection: 'row', alignItems: 'stretch', borderWidth: 1.5, paddingVertical: 12, paddingHorizontal: 4, marginTop: 12 },
+  ledgerCell: { flex: 1, minHeight: 48, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 4 },
   segmented: { flexDirection: 'row', padding: 3, borderWidth: 1, marginTop: 10 },
   segmentOption: { flex: 1, minHeight: 38, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 14 },
   jyotishHero: { borderWidth: 1, padding: 16, marginTop: 12, flexDirection: 'row', alignItems: 'center', gap: 13 },
