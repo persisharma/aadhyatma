@@ -236,6 +236,19 @@ test('Teja Dashami carries the folk-deity katha its rule links to', () => {
   for (const needle of ['Kharnal', 'Lilan', 'Lachha', 'Sursura', 'tanti', 'Parbatsar']) {
     assert.ok(en.includes(needle), `English retelling should name ${needle}`);
   }
+  // The lokdevta is named with the honorific तेजाजी / Tejaji throughout, never the
+  // bare "तेजा" / "Teja" — only the fixed day-name "तेजा दशमी" / "Teja Dashami" keeps
+  // the short form. Guard against a regression to disrespectful bare address.
+  assert.ok(hi.includes('तेजाजी'), 'Hindi retelling should address the deity as तेजाजी');
+  assert.ok(en.includes('Tejaji'), 'English retelling should address the deity as Tejaji');
+  assert.ok(
+    !hi.replace(/तेजा दशमी/g, '').includes('तेजा '),
+    'Hindi retelling should not address the deity as bare तेजा'
+  );
+  assert.ok(
+    !en.replace(/Teja Dashami/g, '').match(/\bTeja\b/),
+    'English retelling should not address the deity as bare Teja'
+  );
 });
 
 test('source-backed seasonal family kathas are full narratives, not compact summaries', () => {
