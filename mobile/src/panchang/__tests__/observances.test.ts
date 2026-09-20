@@ -65,6 +65,14 @@ const ALLOWED_SOURCE_HOSTS = [
   'https://www.bihartourism.gov.in/',
 ];
 
+// Katha catalog sources narrow to the same §11.1 set: Drik for the pan-Hindu vrat
+// and festival kathas, and a state tourism portal for a folk deity Drik carries no
+// katha page for (Tejaji). Keep this list closed — a new host is a review decision.
+const ALLOWED_KATHA_SOURCE_HOSTS = [
+  'https://www.drikpanchang.com/',
+  'https://www.tourism.rajasthan.gov.in/',
+];
+
 test('all surfaced observance rules have source metadata and stable rule types', () => {
   for (const rule of OBSERVANCE_RULES) {
     assert.ok(
@@ -101,7 +109,10 @@ test('Vrat Katha metadata has no dangling IDs', () => {
   assert.equal(contentIds.size, KATHA_CONTENT.length, 'duplicate katha content ids');
 
   for (const item of KATHA_CATALOG) {
-    assert.ok(item.sourceUrl.startsWith('https://www.drikpanchang.com/'), `${item.id} sourceUrl`);
+    assert.ok(
+      ALLOWED_KATHA_SOURCE_HOSTS.some((host) => item.sourceUrl.startsWith(host)),
+      `${item.id} sourceUrl is missing or off the §11.1 allowlist: ${item.sourceUrl}`
+    );
     assert.ok(item.sourceAttribution.length > 0, `${item.id} source attribution`);
     assert.ok(item.summaryHi.length > 0, `${item.id} Hindi summary`);
     assert.ok(item.summaryEn.length > 0, `${item.id} English summary`);
@@ -195,6 +206,36 @@ test('source-backed Satyanarayana content follows the full five-adhyay story str
   assert.ok(paragraphCountEn >= 20, 'Satyanarayana English story should read as a full katha, not a summary');
   assert.ok(totalHiLength >= 4200, 'Satyanarayana Hindi retelling is too short for five adhyays');
   assert.ok(totalEnLength >= 5200, 'Satyanarayana English retelling is too short for five adhyays');
+});
+
+test('Teja Dashami carries the folk-deity katha its rule links to', () => {
+  const rule = OBSERVANCE_RULES.find((item) => item.id === 'teja-dashami');
+  assert.ok(rule, 'teja-dashami rule should exist');
+  assert.equal(rule.kathaId, 'teja-dashami-katha');
+
+  const entry = KATHA_CATALOG.find((item) => item.id === 'teja-dashami-katha');
+  assert.ok(entry, 'Tejaji katha catalog entry should exist');
+  // Tejaji is a lokdevta with no Drik katha page — the §11.1 state-portal carve-out.
+  assert.equal(entry.sourceUrl.startsWith('https://www.tourism.rajasthan.gov.in/'), true);
+  assert.equal(entry.kind, 'festival-legend');
+
+  const item = getKathaContent('teja-dashami-katha');
+  assert.ok(item, 'Tejaji katha content should exist');
+  // The legend hangs on four beats: the promise to the serpent, the rescue of the
+  // cows, the wounded return, and the tanti the day is kept with.
+  assert.deepEqual(
+    item.sections.map((section) => section.id),
+    ['kharnal-ka-balak', 'paner-ki-rah', 'jalti-jhadi-ka-nag', 'lachha-ki-gayein', 'vachan-ka-palan', 'tanti-aur-mela']
+  );
+
+  const hi = item.sections.flatMap((section) => section.bodyHi).join(' ');
+  const en = item.sections.flatMap((section) => section.bodyEn).join(' ');
+  for (const needle of ['खरनाल', 'लीलण', 'लाछा', 'सुरसुरा', 'तांती', 'परबतसर']) {
+    assert.ok(hi.includes(needle), `Hindi retelling should name ${needle}`);
+  }
+  for (const needle of ['Kharnal', 'Lilan', 'Lachha', 'Sursura', 'tanti', 'Parbatsar']) {
+    assert.ok(en.includes(needle), `English retelling should name ${needle}`);
+  }
 });
 
 test('source-backed seasonal family kathas are full narratives, not compact summaries', () => {
