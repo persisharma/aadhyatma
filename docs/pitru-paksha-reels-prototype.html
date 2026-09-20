@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>पितृ पक्ष 2026 — reels prototype (frame by frame)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&amp;family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* content-kit render palette — marketing/reels/make-content.mjs */
+    --c-top:#1a0e03; --c-mid:#3d1a00; --c-bot:#8A3E0B;
+    --c-saffron:#E08A3C; --c-gold:#E8C887; --c-cream:#F3E7C9;
+    /* app palette — mobile/src/theme/colors.ts */
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-hi:#F6ECD0; --gradient-end:#F1E3BF;
+    --gold:#A67C34; --gold-tint:rgba(166,124,52,0.14);
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --saffron-tint:rgba(184,98,27,0.12);
+    --ink:#1A0E03; --ink-soft:#5A3A1E; --ink-muted:#6E5230; --divider:rgba(138,62,11,0.18);
+    --sans:'Inter',system-ui,sans-serif; --serif:'Cormorant Garamond',serif; --deva:'Noto Serif Devanagari',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:#14100a;color:#e9d9b1;padding:26px 24px 60px;line-height:1.5}
+  h1{font-family:var(--serif);font-weight:600;font-size:30px;color:#fff5e0}
+  .sub{font-style:italic;color:#c9b896;font-size:14px;margin:4px 0 8px;max-width:1040px}
+  .legend{font-size:12.5px;color:#b7a377;max-width:1040px;margin-bottom:6px}
+  .legend b{color:#e9d9b1}
+  .legend code{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:#d9a24a}
+  .keyrow{display:flex;gap:18px;flex-wrap:wrap;margin:14px 0 4px;font-size:11.5px;color:#b7a377}
+  .keyrow span{display:flex;align-items:center;gap:6px}
+  .sw{width:26px;height:16px;border-radius:3px;flex:none}
+  .sw.content{background:linear-gradient(160deg,#1a0e03,#8A3E0B)}
+  .sw.app{background:linear-gradient(160deg,#F6ECD0,#F1E3BF)}
+  .sw.slide{background:linear-gradient(160deg,#2b1405,#b8621b)}
+
+  .reel{border-top:1px solid rgba(232,200,135,.16);padding:26px 0 6px;margin-top:10px}
+  .rhead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .rid{font-family:var(--serif);font-size:22px;color:#fff5e0;font-weight:600}
+  .rtitle{font-family:var(--deva);font-size:19px;color:#f0dfb4}
+  .pill{font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:3px 9px;border-radius:20px}
+  .pill.p0{background:rgba(224,138,60,.2);color:#E08A3C;border:1px solid rgba(224,138,60,.45)}
+  .pill.p1{background:rgba(232,200,135,.12);color:#c9b896;border:1px solid rgba(232,200,135,.3)}
+  .pill.kit{background:rgba(255,255,255,.06);color:#b7a377;border:1px solid rgba(255,255,255,.12)}
+  .meta{font-size:12.5px;color:#9d8a63;margin-top:5px}
+  .meta b{color:#c9b896;font-weight:600}
+  .focus{font-size:13px;color:#d6c39a;margin:9px 0 4px;max-width:1040px;border-left:2px solid var(--c-saffron);padding-left:11px}
+  .focus b{color:#fff5e0}
+  .src{font-size:11.5px;color:#8a7856;margin-bottom:16px;font-family:ui-monospace,Menlo,monospace}
+
+  .strip{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
+  .fr{width:196px;flex:none}
+  .frame{width:196px;height:348px;border-radius:14px;overflow:hidden;position:relative;box-shadow:0 14px 34px rgba(0,0,0,.5)}
+
+  /* ── content-kit scene (what make-content.mjs actually renders) ── */
+  .cscene{width:100%;height:100%;position:relative;
+    background:radial-gradient(120% 80% at 50% -10%, rgba(224,138,60,0.28), rgba(0,0,0,0) 60%),
+               linear-gradient(168deg,var(--c-top) 0%,var(--c-mid) 46%,var(--c-bot) 100%);
+    color:var(--c-cream);font-family:var(--deva);display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:0 17px;text-align:center}
+  .cscene.bgimg::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,5,2,.66),rgba(8,5,2,.82));z-index:0}
+  .cscene .gframe{position:absolute;inset:5px;border:1px solid rgba(232,200,135,.22);border-radius:11px;pointer-events:none}
+  .cscene .mark{position:absolute;left:0;right:0;bottom:12px;text-align:center;font-size:8px;letter-spacing:1.6px;color:rgba(232,200,135,.72)}
+  .cscene .kick{font-family:var(--sans);font-weight:600;font-size:8px;letter-spacing:2.2px;color:var(--c-saffron);text-transform:uppercase;margin-bottom:10px}
+  .cscene .big{font-weight:700;font-size:20px;line-height:1.2;z-index:1}
+  .cscene .mid{font-weight:600;font-size:16px;line-height:1.32;z-index:1}
+  .cscene .verse{font-weight:600;font-size:14.5px;line-height:1.5;color:#fff0d2;z-index:1}
+  .cscene .sub{font-family:var(--sans);font-weight:600;font-size:9.5px;line-height:1.45;color:var(--c-gold);margin-top:11px;font-style:normal;z-index:1}
+  .cscene .rule{width:44px;height:2px;background:var(--c-gold);opacity:.6;margin-top:14px;border-radius:2px}
+  .cscene .namaste{font-size:24px;margin-bottom:6px}
+  .cscene .cpill{font-family:var(--sans);font-weight:600;font-size:8.5px;color:var(--c-saffron);margin-top:16px;padding:6px 13px;border:1px solid var(--c-saffron);border-radius:30px}
+  .bgnote{position:absolute;top:8px;left:8px;font-family:var(--sans);font-size:8px;letter-spacing:.4px;color:rgba(232,200,135,.5);border:1px solid rgba(232,200,135,.22);border-radius:4px;padding:2px 6px;z-index:2}
+
+  /* ── app capture frame (feature reels) ── */
+  .ascreen{width:100%;height:100%;background:linear-gradient(var(--parchment-hi),var(--gradient-end));position:relative;font-family:var(--deva);color:var(--ink);padding:10px 12px}
+  .ascreen .sbar{display:flex;justify-content:space-between;font-family:var(--sans);font-size:7.5px;font-weight:600;color:var(--ink-soft);margin-bottom:7px}
+  .ascreen .hd{display:flex;align-items:center;gap:7px;margin-bottom:9px}
+  .ascreen .bk{width:19px;height:19px;border-radius:50%;border:1px solid var(--divider);background:var(--parchment-soft);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--ink-soft)}
+  .ascreen .ht{font-size:12.5px;flex:1}
+  .ascreen .om{color:var(--gold);letter-spacing:4px;text-align:center;font-size:9px;margin-bottom:4px}
+  .ascreen .h2{font-size:13.5px;text-align:center;margin-bottom:2px}
+  .ascreen .cap2{font-size:9px;color:var(--ink-soft);text-align:center;margin-bottom:9px}
+  .ascreen .card{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:8px;padding:7px 8px;margin-bottom:6px}
+  .ascreen .card .t{font-size:10px;line-height:1.35}
+  .ascreen .card .s{font-size:8.5px;color:var(--ink-muted);margin-top:2px;line-height:1.35}
+  .ascreen .door{display:flex;gap:7px;align-items:center;border:1px solid var(--gold);background:var(--gold-tint);border-radius:8px;padding:7px 8px;margin-bottom:6px}
+  .ascreen .door .g{color:var(--gold);letter-spacing:3px;font-size:9px}
+  .ascreen .door .t{font-size:10px;flex:1}
+  .ascreen .row{display:flex;gap:7px;align-items:flex-start;padding:5.5px 0;border-bottom:1px solid var(--divider)}
+  .ascreen .row .mk{width:5px;height:5px;border-radius:3px;background:var(--gold);margin-top:5px;flex:none}
+  .ascreen .row .mk.fam{background:var(--saffron)}
+  .ascreen .row .dt{font-family:var(--serif);font-size:8.5px;color:var(--ink-soft);width:34px;flex:none;padding-top:1px}
+  .ascreen .row .t{font-size:9.5px;flex:1}
+  .ascreen .chips{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:7px}
+  .ascreen .chip{font-size:8.5px;border:1px solid var(--divider);background:var(--parchment-soft);border-radius:20px;padding:3.5px 8px;color:var(--ink-soft)}
+  .ascreen .chip.on{background:var(--saffron-tint);border-color:var(--saffron);color:var(--saffron-deep);font-weight:600}
+  .ascreen .chip.gold{background:var(--gold-tint);border-color:var(--gold);color:var(--saffron-deep)}
+  .ascreen .btn{border:1.2px solid var(--gold);border-radius:7px;text-align:center;font-size:9.5px;color:var(--saffron-deep);padding:7px;margin-top:4px}
+  .ascreen .pillbig{background:var(--saffron-tint);border-radius:20px;text-align:center;font-size:9.5px;color:var(--saffron-deep);padding:5px 8px;margin:4px 0 8px}
+  .ascreen .switch{display:flex;align-items:center;justify-content:space-between;background:var(--parchment-soft);border:1px solid var(--divider);border-radius:8px;padding:7px 8px;margin-bottom:6px}
+  .ascreen .switch .t{font-size:9.5px}
+  .ascreen .tog{width:24px;height:14px;border-radius:9px;background:var(--saffron);position:relative;flex:none}
+  .ascreen .tog::after{content:'';position:absolute;right:2px;top:2px;width:10px;height:10px;border-radius:50%;background:#fff}
+  .ascreen .stepn{font-family:var(--sans);font-size:7.5px;font-weight:700;letter-spacing:.6px;color:var(--saffron-deep);text-transform:uppercase}
+  .ccap{position:absolute;left:10px;right:10px;bottom:30px;background:rgba(10,6,2,.82);border-radius:7px;padding:6px 9px;text-align:center;font-family:var(--deva);font-size:10.5px;color:#F3E7C9;line-height:1.35;z-index:3}
+  .amark{position:absolute;left:0;right:0;bottom:10px;text-align:center;font-family:var(--deva);font-size:8px;letter-spacing:1.6px;color:rgba(138,62,11,.55);z-index:3}
+
+  /* ── instagram date-reel slide ── */
+  .sslide{width:100%;height:100%;background:linear-gradient(168deg,#2b1405,#5c2a06 55%,#b8621b);color:#F3E7C9;font-family:var(--deva);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 16px;text-align:center;position:relative}
+  .sslide .kick{font-family:var(--sans);font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#E8C887;margin-bottom:9px}
+  .sslide .big{font-size:19px;font-weight:700;line-height:1.22}
+  .sslide .mid{font-size:15px;font-weight:600;line-height:1.35}
+  .sslide .sub{font-family:var(--sans);font-size:9px;color:#E8C887;margin-top:10px;line-height:1.4}
+  .sslide .mark{position:absolute;left:0;right:0;bottom:11px;text-align:center;font-size:8px;letter-spacing:1.6px;color:rgba(232,200,135,.6)}
+
+  .fmeta{width:196px;margin-top:9px;font-size:11px;line-height:1.5;color:#a4906a}
+  .fmeta .tt{font-family:ui-monospace,Menlo,monospace;font-size:10px;color:#E08A3C;font-weight:600}
+  .fmeta .vo{color:#d6c39a;font-family:var(--deva);font-size:11px;display:block;margin:3px 0}
+  .fmeta .vo::before{content:'🎙 ';font-family:var(--sans)}
+  .fmeta .nt{display:block;margin-top:4px}
+  .fmeta .act{color:#8fb9d9;display:block;margin-top:3px}
+  .fmeta .act::before{content:'▸ ';color:#8fb9d9}
+  .foot{margin-top:34px;border-top:1px solid rgba(232,200,135,.16);padding-top:16px;font-size:12px;color:#8a7856;max-width:1040px}
+  .foot b{color:#c9b896}
+</style>
+</head>
+<body>
+<h1>पितृ पक्ष 2026 — reels prototype</h1>
+<p class="sub">Frame by frame: what each of the twelve reels puts on screen, what it says, and what it is asking the viewer to feel. Companion to <code>marketing/reels/plans/pitru-paksha-2026.md</code>.</p>
+<p class="legend">
+  Content frames are drawn with the <b>real render palette</b> of <code>marketing/reels/make-content.mjs</code> (same gradient, gold inner frame, ॐ वेदांश़ watermark, type scale) — so this page previews the actual output, not a mood board.
+  App frames show the <b>screen the simulator captures</b> under its burned-in caption strip; the blue line is the Maestro action driving that beat.
+  Every line of copy traces to a <b>verified</b> row in <code>mobile/src/data/pitru/</code> — named under each reel. Draft rows are excluded by design.
+</p>
+<div class="keyrow">
+  <span><i class="sw content"></i> content reel · <code>make-content.mjs</code> · ≤17s</span>
+  <span><i class="sw app"></i> feature reel · <code>make-reel.mjs</code> · ≤12s, live sim capture</span>
+  <span><i class="sw slide"></i> date reel · <code>marketing/instagram/make-reel.js</code></span>
+</div>
+
+<div id="out"></div>
+
+<div class="foot">
+  <b>Reading the timings.</b> Content-kit scenes hold for their narration plus 260 ms (<code>PAD_MS</code>), the send scene plus 650 ms; the voice-over starts 90 ms after the cut. Totals below are therefore close to the rendered runtime, not estimates.
+  <b>Frame 0 is never black</b> — no fade-in, because Instagram grabs frame 0 as the cover.
+  <b>Feature-reel beats</b> are captured per beat and time-scaled to their caption window; navigation that earns no screen time happens in the unrecorded <code>preroll</code>.
+</div>
+
+<script>
+const R = [
+// ───────────────────────────────────────────── R1
+{id:'R1', slug:'pitru-kya-hai', kit:'content', pri:'P0', post:'Thu 24 Sep (eve)', len:'~14s',
+ title:'पितृ पक्ष सोलह दिन क्यों?',
+ focus:'<b>Orientation.</b> The one reel that has to work for someone who has never asked the question. It lands the single reframe everything else rests on — <b>the fortnight is a calendar of tithis, not of dates</b> — and closes the escape hatch before anyone feels excluded.',
+ src:'lessons kya-hai · tithi-amavasya (verified) · engine pitruPakshaWindow',
+ frames:[
+  {t:'0.0–1.7s', type:'hook', kick:'रुकिए', big:'पितृ पक्ष<br>सोलह दिन क्यों?', vo:'पितृ पक्ष — सोलह दिन क्यों?', note:'Scroll-stopper. A question, not a title. 5 words, bright at frame 0.'},
+  {t:'1.7–5.6s', type:'content', mid:'भाद्रपद पूर्णिमा से<br>आश्विन अमावस्या तक', sub:'२६ सितम्बर – १० अक्टूबर २०२६', vo:'भाद्रपद पूर्णिमा से आश्विन अमावस्या तक का यह पखवाड़ा पितृ पक्ष है।', note:'Answers "when" with this year\'s dates on screen — the searchable fact people screenshot.'},
+  {t:'5.6–10.1s', type:'content', mid:'यह तिथियों का कैलेण्डर है —<br>तारीख़ों का नहीं', vo:'जिस तिथि को किसी का देहान्त हुआ, इस पक्ष की उसी तिथि पर उनका स्मरण — इसलिए हर दिन किसी न किसी का है।', note:'The reframe. Everything the app does differently follows from this one line.'},
+  {t:'10.1–13.6s', type:'content', mid:'तिथि न मालूम हो?<br>सर्वपितृ अमावस्या', sub:'पक्ष का अन्तिम दिन — शनिवार, १० अक्टूबर', vo:'और जिनकी तिथि परिवार को ज्ञात नहीं — उनके लिए अन्तिम दिन, सर्वपितृ अमावस्या।', note:'Nobody is left out. This beat is why the reel gets forwarded rather than just watched.'},
+  {t:'13.6–16.3s', type:'send', send:'जो अपने पितरों का<br>स्मरण करते हैं —<br>उन्हें भेजिए', vo:'जो अपने पितरों का स्मरण करते हैं, उन्हें भेजिए।', note:'Send-CTA, no download ask. App present only as the watermark.'},
+ ]},
+// ───────────────────────────────────────────── R2
+{id:'R2', slug:'pitru-rama-pinda', kit:'content', pri:'P0', post:'Fri 25 Sep (eve)', len:'~16s',
+ title:'राम ने पिता को क्या अर्पित किया?',
+ focus:'<b>Removes the shame of not having enough.</b> The strongest emotional beat in the set: Rama, a king\'s son, offered forest pulp on grass. Told entirely from the bundled corpus, so every image is citable.',
+ src:'katha rama-jalanjali (verified, corpus 2.102.20–35) · prashna kya-arpan-karein',
+ frames:[
+  {t:'0.0–1.8s', type:'hook', bg:'rama', kick:'रुकिए', big:'राम ने पिता को<br>क्या अर्पित किया?', vo:'राम ने अपने पिता को क्या अर्पित किया?', note:'Everyone knows the character; nobody knows the answer. That gap is the hook.'},
+  {t:'1.8–6.6s', type:'content', bg:'rama', mid:'चित्रकूट · मन्दाकिनी तट<br>दक्षिण दिशा, अञ्जलि भर जल', vo:'दशरथ के देहान्त का समाचार मिला, तो राम मन्दाकिनी तट पर गए — दक्षिण की ओर मुख, अञ्जलि में जल।', note:'Sets the scene and, in passing, teaches the form: water, facing south.'},
+  {t:'6.6–11.4s', type:'content', bg:'rama', mid:'राजसी पदार्थ नहीं —<br>वन का इंगुदी-पिण्याक और बेर', vo:'पिण्ड के लिए राजसी सामग्री नहीं थी। वन में जो था — इंगुदी का गूदा और बेर — वही दर्भ पर रखा।', note:'The turn. Concrete, unexpected, and straight out of the verse.'},
+  {t:'11.4–15.4s', type:'content', bg:'rama', verse:'“जो हम खाते हैं,<br>वही आपको अर्पित है”', sub:'वाल्मीकि रामायण · अयोध्याकाण्ड १०२', vo:'और कहा — जो हम खाते हैं, वही आपको अर्पित है। श्राद्ध का मूल सामग्री में नहीं, श्रद्धा में है।', note:'Quoted line + gold cite. The payoff carries the teaching without ever instructing.'},
+  {t:'15.4–18.1s', type:'send', send:'जिनके पास सब सामग्री<br>नहीं — उन्हें भेजिए', vo:'जिनके पास सब सामग्री नहीं, उन्हें भेजिए।', note:'Names the person to forward it to. Most specific send prompt in the set.'},
+ ]},
+// ───────────────────────────────────────────── R3
+{id:'R3', slug:'ig-tithi-pitru-start', kit:'slide', pri:'P0', post:'Fri 25 Sep (eve)', len:'~13s',
+ title:'पितृ पक्ष कब से? · २६ सितम्बर',
+ focus:'<b>Pure timeliness — the highest-reach format.</b> No story, no teaching: the dates, held long enough to screenshot, with the app\'s own caveat printed so the comments do not turn into a date argument.',
+ src:'engine pitruPakshaWindow (2026 pinned in pitruSmaran.test.ts) · lesson kis-din-kiska (the caveat)',
+ frames:[
+  {t:'0.0–2.0s', type:'slide', kick:'पंचांग', big:'पितृ पक्ष<br>कब से?', note:'Slide 0 must be the hook (checklist §2.1). Cover frame for the grid.'},
+  {t:'2.0–4.4s', type:'slide', kick:'पूर्णिमा श्राद्ध', mid:'शनिवार<br>२६ सितम्बर', sub:'पक्ष का पहला दिन', note:'One date per slide — the format budget is 42 chars of Devanagari.'},
+  {t:'4.4–6.8s', type:'slide', kick:'अष्टमी श्राद्ध', mid:'शनिवार<br>३ अक्टूबर', sub:'पक्ष की सर्वाधिक स्मरण की जाने वाली तिथियों में', note:'Only engine-pinned days are named. The 14 per-tithi rows are still draft.'},
+  {t:'6.8–9.2s', type:'slide', kick:'सर्वपितृ अमावस्या', mid:'शनिवार<br>१० अक्टूबर', sub:'अन्तिम दिन — जिनकी तिथि ज्ञात नहीं, उन सबका', note:'The day the season peaks. Repeated standalone in R12.'},
+  {t:'9.2–11.6s', type:'app-shot', note:'Screenshot slide: the app\'s own पितृ पक्ष २०२६ table, all sixteen rows. Proof the dates come from somewhere, not a graphic.', cap:'पूरी तालिका — पितृ पक्ष २०२६'},
+  {t:'11.6–14.0s', type:'slide', kick:'', big:'पितृ पक्ष<br>कब से?', sub:'तिथि सूर्योदय के अनुसार — अपराह्न-आधारित परम्परा हो तो उसे प्राथमिकता दें', note:'CTA repeats the hook verbatim so the loop seam is invisible. Caveat is the app\'s own wording.'},
+ ]},
+// ───────────────────────────────────────────── R4
+{id:'R4', slug:'pitru-tarpan-vs-shraddha', kit:'content', pri:'P1', post:'Sun 27 Sep (eve)', len:'~15s',
+ title:'तर्पण और श्राद्ध — एक ही बात?',
+ focus:'<b>The honesty reel.</b> It tells people the app\'s own guide is not a shraddha. Nobody else in this category says that, which is exactly why it earns trust — and it inoculates R8 against the "so your app replaces a pandit?" reading.',
+ src:'lessons shraddha-aur-tarpan · prashna ghar-par-tarpan (verified)',
+ frames:[
+  {t:'0.0–1.8s', type:'hook', kick:'रुकिए', big:'तर्पण और श्राद्ध —<br>एक ही बात?', vo:'तर्पण और श्राद्ध — क्या एक ही बात है?', note:'A question most people have never separated. Curiosity, not fear.'},
+  {t:'1.8–6.0s', type:'content', mid:'तर्पण = तिल मिले<br>जल का अर्पण', vo:'तर्पण जल का अर्पण है — प्रायः तिल मिले जल का — पितरों की तृप्ति के भाव से।', note:'Defines the smaller thing first.'},
+  {t:'6.0–11.0s', type:'content', mid:'श्राद्ध उससे बड़ा है —<br>पिण्डदान · अग्नौकरण · भोजन', vo:'पूर्ण श्राद्ध में इससे बहुत अधिक है — पिण्डदान, अग्नौकरण, ब्राह्मण-भोजन; और इनका क्रम शाखा और पुरोहित से बदलता है।', note:'Names the limbs without teaching any of them. The boundary is the content.'},
+  {t:'11.0–15.0s', type:'content', mid:'घर का तिल-तर्पण<br>सीमित स्मरण है —<br>श्राद्ध नहीं', vo:'इसलिए घर पर किया तिल-तर्पण एक सीमित स्मरण है — वह श्राद्ध की जगह नहीं लेता।', note:'The app disclaiming itself, out loud, in public. This is the differentiator.'},
+  {t:'15.0–17.7s', type:'send', send:'जो अपने पितरों का<br>स्मरण करते हैं —<br>उन्हें भेजिए', vo:'जो अपने पितरों का स्मरण करते हैं, उन्हें भेजिए।', note:'Season send line.'},
+ ]},
+// ───────────────────────────────────────────── R5
+{id:'R5', slug:'pitru-smaran', kit:'feature', pri:'P0', post:'Mon 28 Sep (eve)', len:'~11s',
+ title:'दादाजी की तिथि याद है?',
+ focus:'<b>The one conversion reel.</b> Shows the actual job the app does that a calendar cannot: store a tithi once, get the civil date every year, reminded a day ahead. Captured with the name field left empty — the privacy stance is part of the demo.',
+ src:'PRD-17 Pitru Smaran ledger · engine solveNextOccurrence · PitruSmaranReminderScheduler',
+ frames:[
+  {t:'preroll (unrecorded)', type:'note', big:'tab-more →<br>more-pitru-smaran →<br>+ स्मरण जोड़ें', note:'All navigation happens before the camera rolls. The reel opens on the form already up — no screen time spent on menus.'},
+  {t:'0.0–2.2s', type:'app', cap:'तिथि एक बार लिखिए', vo:'दादाजी की तिथि तो याद है — पर इस साल की तारीख़?', screen:'edit', note:'Hook plays over the open form. Relation chips visible; the name field stays empty on purpose.'},
+  {t:'2.2–6.0s', type:'app', cap:'माघ कृष्ण अष्टमी · सहेजें', vo:'एक बार तिथि लिखिए — माघ कृष्ण अष्टमी —', screen:'edit2', note:'Motion beat: pick relation → month/paksha/tithi chips → save. Continuous taps keep the recorder fed.'},
+  {t:'6.0–10.4s', type:'app', cap:'हर साल की तारीख़ · याद अपने आप', vo:'और हर वर्ष की तारीख़, पितृ पक्ष का दिन, और एक दिन पहले याद — अपने आप।', screen:'detail', note:'The payoff screen: solved date pill, the Pitru Paksha mapping row, the reminder switch turning on.'},
+  {t:'10.4–12.2s', type:'cta-card', send:'स्मरण की ज़िम्मेदारी वेदांश की —<br>पितरों का भाव आपका।', vo:'स्मरण की ज़िम्मेदारी वेदांश की — पितरों का भाव आपका।', note:'Feature reels carry the brand CTA card; content reels never do.'},
+ ]},
+// ───────────────────────────────────────────── R6
+{id:'R6', slug:'pitru-jal-kyon', kit:'content', pri:'P1', post:'Wed 30 Sep (eve)', len:'~16s',
+ title:'तर्पण में जल ही क्यों?',
+ focus:'<b>Turns a ritual detail into a story.</b> Why water — answered by Garuda\'s refusal and three generations of Sagara\'s line waiting for the Ganga. Makes a familiar gesture feel consequential.',
+ src:'lesson jal-kyon · verse valmiki-1-41-19 · katha bhagirath-sagar (verified)',
+ frames:[
+  {t:'0.0–1.7s', type:'hook', bg:'rama', kick:'रुकिए', big:'तर्पण में<br>जल ही क्यों?', vo:'तर्पण में जल ही क्यों?', note:'Everyone has poured it; almost nobody has been told why.'},
+  {t:'1.7–6.3s', type:'content', bg:'rama', mid:'अञ्जलि भर जल,<br>दक्षिण की ओर मुख', sub:'रामायण में बार-बार, एक ही रूप में', vo:'रामायण में पितृ-कर्म बार-बार एक ही रूप में मिलता है — अञ्जलि भर जल, दक्षिण दिशा की ओर मुख।', note:'Establishes the form as ancient and repeated, not invented.'},
+  {t:'6.3–11.6s', type:'content', bg:'rama', verse:'“इनके लिए लौकिक जल नहीं —<br>गंगा का जल चाहिए”', sub:'गरुड़ का वचन · बालकाण्ड १.४१.१९', vo:'सगर के साठ हज़ार पुत्रों के लिए गरुड़ ने अंशुमान् से कहा — लौकिक जल पर्याप्त नहीं, इनके लिए गंगा चाहिए।', note:'Quoted from the bundled verse row, normalised — never copied raw from the corpus JSON.'},
+  {t:'11.6–16.0s', type:'content', bg:'rama', mid:'तीन पीढ़ियाँ · एक प्रश्न<br>भगीरथ ने गंगा उतारी', vo:'तीन पीढ़ियाँ उसी एक प्रश्न में बीत गईं — और भगीरथ ने गंगा उतारकर उसे पूरा किया। जल औपचारिकता नहीं है।', note:'Scale beat: what one family was willing to spend to get the water right.'},
+  {t:'16.0–18.7s', type:'send', send:'जो अपने पितरों का<br>स्मरण करते हैं —<br>उन्हें भेजिए', vo:'जो अपने पितरों का स्मरण करते हैं, उन्हें भेजिए।', note:'Season send line.'},
+ ]},
+// ───────────────────────────────────────────── R7
+{id:'R7', slug:'pitru-aparahna', kit:'content', pri:'P1', post:'Thu 1 Oct (eve)', len:'~15s',
+ title:'श्राद्ध की तारीख़ अलग क्यों दिखती है?',
+ focus:'<b>Settles the season\'s most common argument.</b> Two calendars disagreeing is not an error — shraddha belongs to the afternoon, so the day is chosen by which afternoon the tithi covers. Ends by handing authority back to the family.',
+ src:'lesson samay · prashna calendar-antar · lesson kis-din-kiska (verified)',
+ frames:[
+  {t:'0.0–1.8s', type:'hook', kick:'रुकिए', big:'श्राद्ध की तारीख़<br>अलग क्यों दिखती है?', vo:'छपे पंचांग में श्राद्ध की तारीख़ अलग क्यों दिखती है?', note:'A real, annoying, searchable problem. Utility hook.'},
+  {t:'1.8–6.3s', type:'content', mid:'श्राद्ध सूर्योदय का<br>कर्म नहीं — अपराह्न का है', sub:'कुतप काल · रौहिण · अपराह्न', vo:'श्राद्ध दिन के उत्तरार्ध का कर्म है — कुतप काल और अपराह्न। सूर्योदय का नहीं।', note:'The mechanism, in one line. Glossary terms shown, not explained — the app has them.'},
+  {t:'6.3–11.3s', type:'content', mid:'तिथि जिस दिन के<br>अपराह्न में हो —<br>वही दिन', vo:'इसलिए किसी तिथि का श्राद्ध उस दिन पड़ता है जिसके अपराह्न में वह तिथि व्याप्त हो — और वह कभी एक दिन आगे-पीछे दिखता है।', note:'Resolves the contradiction without calling either calendar wrong.'},
+  {t:'11.3–14.9s', type:'content', mid:'परिवार की रीति<br>सर्वोपरि', vo:'दोनों पद्धतियाँ हैं। जो आपके परिवार की रीति कहे — वही सही है।', note:'The stance, stated as the payoff. No verdict issued.'},
+  {t:'14.9–17.6s', type:'send', send:'जो अपने पितरों का<br>स्मरण करते हैं —<br>उन्हें भेजिए', vo:'जो अपने पितरों का स्मरण करते हैं, उन्हें भेजिए।', note:'Season send line.'},
+ ]},
+// ───────────────────────────────────────────── R8
+{id:'R8', slug:'pitru-tarpan-vidhi', kit:'feature', pri:'P0', post:'Fri 2 Oct (eve of Ashtami)', len:'~12s',
+ title:'घर पर तिल-तर्पण — कैसे?',
+ focus:'<b>The utility reel, posted the evening before the fortnight\'s busiest day.</b> Shows the ten mantra-free steps a household can actually do — and makes the limitation the closing line rather than fine print.',
+ src:'data/vidhi/shraddha-tarpan-vidhi.ts (10 steps, verified) · daan occasion pitru-paksha (caption)',
+ frames:[
+  {t:'preroll (unrecorded)', type:'note', big:'tab-more → पितृ स्मरण →<br>पितृ पक्ष banner →<br>PitruPakshaOverview', note:'Opens on the fortnight overview with the vidhi door already in frame.'},
+  {t:'0.0–2.4s', type:'app', cap:'पंडित नहीं मिले तो?', vo:'पंडित नहीं मिले — तो घर पर क्या करें?', screen:'overview', note:'Hook over the overview. The gold ॥ door is visible before it is tapped.'},
+  {t:'2.4–7.0s', type:'app', cap:'सीमित स्मरण · १० चरण', vo:'एक सीमित गृहस्थ स्मरण है — मन्त्र-रहित, दस चरण, बीस मिनट।', screen:'vidhi1', note:'Tap the door → the scope step, which says what this is NOT. Shown first, as in the app.'},
+  {t:'7.0–11.4s', type:'app', cap:'तिल-जल · मौन · गीता १५', vo:'स्वच्छ स्थान, तिल मिला जल, मौन स्मरण — और चाहें तो गीता का पन्द्रहवाँ अध्याय।', screen:'vidhi2', note:'Swipe through the main steps. Motion-rich single beat keeps the reel inside the cap.'},
+  {t:'11.4–13.2s', type:'cta-card', send:'यह श्राद्ध का स्थान नहीं लेता —<br>पर स्मरण का द्वार खुला रखता है।', vo:'यह श्राद्ध का स्थान नहीं लेता — पर स्मरण का द्वार खुला रखता है।', note:'The honesty line as payoff, not disclaimer.'},
+ ]},
+// ───────────────────────────────────────────── R9
+{id:'R9', slug:'pitru-jatayu', kit:'content', pri:'P1', post:'Sun 4 Oct (eve)', len:'~15s',
+ title:'जो न कुल का था, न मनुष्य',
+ focus:'<b>Widens who counts.</b> Rama performed the full rite for a bird who was his father\'s friend. Speaks to everyone who lost someone outside the bloodline — and deliberately stops short of the "who may perform" question, whose answer is still draft.',
+ src:'lesson kiske-liye · katha jatayu-antim-sanskar (verified, Aranya 67–68)',
+ frames:[
+  {t:'0.0–1.8s', type:'hook', bg:'rama', kick:'रुकिए', big:'जो न कुल का था,<br>न मनुष्य —', vo:'जो न कुल का था, न मनुष्य —', note:'Unfinished sentence as the hook. The viewer stays to complete it.'},
+  {t:'1.8–5.8s', type:'content', bg:'rama', mid:'जटायु — पिता के मित्र,<br>एक पक्षी', vo:'जटायु राम के कुल के नहीं थे, मनुष्य भी नहीं — पिता के मित्र, एक पक्षी।', note:'Completes the hook and sets the stakes.'},
+  {t:'5.8–11.0s', type:'content', bg:'rama', mid:'राम ने स्वयं चिता सजाई,<br>दर्भ पर पिण्ड,<br>गोदावरी में जलाञ्जलि', sub:'अरण्यकाण्ड ६७–६८', vo:'राम ने स्वयं लकड़ी इकट्ठी की, चिता सजाई, दर्भ पर पिण्ड रखा और गोदावरी में जलाञ्जलि दी।', note:'The full rite, performed by hand, for someone with no claim on it.'},
+  {t:'11.0–15.2s', type:'content', bg:'rama', mid:'स्मरण का द्वार<br>सूची से नहीं —<br>भाव से खुलता है', vo:'परिवार में कौन क्या करे, वह परिवार का विषय है। पर इस प्रसंग में स्मरण का द्वार सूची से नहीं — भाव से खुला।', note:'Deliberately a description of the episode, not a ruling on adhikara.'},
+  {t:'15.2–17.9s', type:'send', send:'जो अपने पितरों का<br>स्मरण करते हैं —<br>उन्हें भेजिए', vo:'जो अपने पितरों का स्मरण करते हैं, उन्हें भेजिए।', note:'Season send line.'},
+ ]},
+// ───────────────────────────────────────────── R10
+{id:'R10', slug:'pitru-gita', kit:'content', pri:'P1', post:'Tue 6 Oct (eve)', len:'~16s',
+ title:'गीता पितरों के बारे में क्या कहती है?',
+ focus:'<b>Authority reel.</b> Three verses, each shown in Devanagari with its cite — the tradition speaking for itself. Also the reel most likely to be saved rather than sent.',
+ src:'principles gita-9-16 · gita-9-25 · gita-10-29 (verified, lines taken from principles.ts)',
+ frames:[
+  {t:'0.0–1.9s', type:'hook', bg:'gita', kick:'रुकिए', big:'गीता पितरों के बारे में<br>क्या कहती है?', vo:'गीता पितरों के बारे में क्या कहती है?', note:'Biggest brand asset in the app, pointed at the season.'},
+  {t:'1.9–7.2s', type:'content', bg:'gita', verse:'अहं क्रतुरहं यज्ञः<br>स्वधाऽहमहमौषधम् ।', sub:'भगवद्गीता ९.१६ — स्वधा (पितरों का अर्पण) भी मैं ही हूँ', vo:'स्वधा मैं हूँ — पितरों को जो अर्पण जाता है, वह भी मुझ तक पहुँचता है।', note:'Verse holds longest (checklist §5.1). Cite in gold beneath, never inside the shloka.'},
+  {t:'7.2–11.6s', type:'content', bg:'gita', verse:'यान्ति देवव्रता देवान्<br>पितृन् यान्ति पितृव्रताः ।', sub:'भगवद्गीता ९.२५', vo:'जो पितरों के व्रती हैं, वे पितरों को पाते हैं।', note:'Shortest line, cleanest read. Line breaks follow the shloka\'s own break.'},
+  {t:'11.6–15.8s', type:'content', bg:'gita', mid:'पितॄणामर्यमा च अस्मि<br>— पितरों में मैं अर्यमा हूँ', sub:'भगवद्गीता १०.२९ · विभूति-योग', vo:'और विभूति-योग में — पितरों में मैं अर्यमा हूँ।', note:'Closes on identity, not instruction. अर्यमा also sits in the app glossary.'},
+  {t:'15.8–18.5s', type:'send', send:'जो गीता पढ़ते हैं —<br>उन्हें भेजिए', vo:'जो गीता पढ़ते हैं, उन्हें भेजिए।', note:'Audience-specific send line for this one reel.'},
+ ]},
+// ───────────────────────────────────────────── R11
+{id:'R11', slug:'pitru-tithi-agyat', kit:'content', pri:'P0', post:'Thu 8 Oct (eve)', len:'~14s',
+ title:'पितरों की तिथि नहीं मालूम?',
+ focus:'<b>Most forwardable reel in the set.</b> It removes a guilt nobody else addresses: not knowing the tithi is normal, and the tradition already built the door for it. Posted two days before Sarvapitri, when that question peaks.',
+ src:'prashna tithi-agyat · lesson tithi-amavasya (verified)',
+ frames:[
+  {t:'0.0–1.7s', type:'hook', kick:'रुकिए', big:'पितरों की तिथि<br>नहीं मालूम?', vo:'पितरों की तिथि नहीं मालूम?', note:'Names a private worry out loud. No deity visual behind this one — it would read as judgement.'},
+  {t:'1.7–6.4s', type:'content', mid:'बहुत परिवारों को<br>नहीं मालूम —<br>यह सामान्य है', vo:'बहुत परिवारों को नहीं मालूम — दो पीढ़ी पीछे की तिथि कौन लिखता है। यह सामान्य है।', note:'Permission beat. Must land before the solution, or the solution reads as a rebuke.'},
+  {t:'6.4–11.4s', type:'content', mid:'इसीलिए पक्ष का अन्तिम दिन —<br>सर्वपितृ अमावस्या', sub:'शनिवार · १० अक्टूबर', vo:'इसीलिए पक्ष का अन्तिम दिन रखा गया — सर्वपितृ अमावस्या — सब पितरों की, जिनकी तिथि ज्ञात नहीं या जिनका दिन छूट गया।', note:'The tradition itself anticipated this. Date on screen: two days out.'},
+  {t:'11.4–14.0s', type:'content', mid:'द्वार खुला है', vo:'कोई न छूटे — द्वार खुला है।', note:'Four words, held. The whole reel exists for this frame.'},
+  {t:'14.0–16.7s', type:'send', send:'जिन्हें अपने पितरों की<br>तिथि नहीं मालूम —<br>उन्हें भेजिए', vo:'जिन्हें अपने पितरों की तिथि नहीं मालूम, उन्हें भेजिए।', note:'Send line names the exact recipient.'},
+ ]},
+// ───────────────────────────────────────────── R12
+{id:'R12', slug:'pitru-sarvapitri', kit:'slide', pri:'P0', post:'Fri 9 Oct (eve)', len:'~12s',
+ title:'सर्वपितृ अमावस्या कब? · १० अक्टूबर',
+ focus:'<b>The season\'s last and highest-intent post.</b> Date, meaning, and the one day the app surfaces a तिल-तर्पण विधि chip directly on the day panel. Ends by handing the audience to Navratri, which starts the next morning.',
+ src:'engine nextSarvapitriAmavasya · lesson tithi-amavasya · PitruPakshaDayChip (vidhi chip, this day only)',
+ frames:[
+  {t:'0.0–2.0s', type:'slide', kick:'पंचांग', big:'सर्वपितृ<br>अमावस्या कब?', note:'Hook slide, cover frame.'},
+  {t:'2.0–4.6s', type:'slide', kick:'तिथि', mid:'शनिवार<br>१० अक्टूबर २०२६', sub:'पितृ पक्ष का अन्तिम दिन', note:'The fact, held long enough to screenshot.'},
+  {t:'4.6–7.4s', type:'slide', kick:'किसके लिए', mid:'जिनकी तिथि ज्ञात नहीं —<br>उन सबका दिन', sub:'और जिनका दिन इस पक्ष में छूट गया', note:'Callback to R11 for anyone who saw it two days earlier.'},
+  {t:'7.4–10.2s', type:'app', cap:'आज · तिल-तर्पण विधि', vo:'', screen:'daychip', note:'Optional feature beat: the Panchang day panel for 10 Oct, where the muted-gold ॥ तिल-तर्पण विधि chip appears on this one day of the year.'},
+  {t:'10.2–12.6s', type:'slide', kick:'', big:'सर्वपितृ<br>अमावस्या कब?', sub:'कल से शारदीय नवरात्रि — स्मरण से उत्सव तक', note:'Loop seam repeats the hook; the sub-line bridges to the next season\'s content.'},
+ ]},
+];
+
+const SCREENS = {
+ edit:`<div class="sbar"><span>9:41</span><span>▮▮▮</span></div>
+   <div class="hd"><div class="bk">‹</div><div class="ht">स्मरण जोड़ें</div></div>
+   <div class="stepn">सम्बन्ध</div>
+   <div class="chips" style="margin-top:5px"><span class="chip">पिताजी</span><span class="chip">माताजी</span><span class="chip on">दादाजी</span><span class="chip">दादीजी</span><span class="chip">नानाजी</span></div>
+   <div class="card"><div class="t" style="color:#6E5230">नाम (वैकल्पिक)</div><div class="s">केवल आपके लिए — कहीं और नहीं दिखेगा</div></div>
+   <div class="chips"><span class="chip on">तिथि ज्ञात है</span><span class="chip">केवल तारीख़ ज्ञात है</span></div>
+   <div class="stepn">मास</div><div class="chips" style="margin-top:5px"><span class="chip on">माघ</span><span class="chip">फाल्गुन</span><span class="chip">चैत्र</span></div>`,
+ edit2:`<div class="sbar"><span>9:41</span><span>▮▮▮</span></div>
+   <div class="hd"><div class="bk">‹</div><div class="ht">स्मरण जोड़ें</div></div>
+   <div class="stepn">पक्ष</div><div class="chips" style="margin-top:5px"><span class="chip on">कृष्ण</span><span class="chip">शुक्ल</span></div>
+   <div class="stepn">तिथि</div>
+   <div class="chips" style="margin-top:5px"><span class="chip">षष्ठी</span><span class="chip">सप्तमी</span><span class="chip on">अष्टमी</span><span class="chip">नवमी</span><span class="chip">दशमी</span></div>
+   <div class="card"><div class="t">तिथि अज्ञात — सर्वपितृ अमावस्या</div></div>
+   <div class="btn">सहेजें</div>
+   <div class="s" style="font-size:8px;color:#6E5230;font-style:italic;margin-top:8px;text-align:center">यह सूची केवल इसी फ़ोन पर रहती है</div>`,
+ detail:`<div class="sbar"><span>9:41</span><span>▮▮▮</span></div>
+   <div class="hd"><div class="bk">‹</div><div class="ht"></div></div>
+   <div class="om">॥ ॐ ॥</div>
+   <div class="h2">दादाजी</div>
+   <div class="cap2">श्राद्ध तिथि: माघ कृष्ण अष्टमी</div>
+   <div class="pillbig">अगला · ५ फ़र॰ २०२७ · १३८ दिन में</div>
+   <div class="card"><div class="t">अगले वर्ष</div><div class="s">२५ जन॰ २०२८</div></div>
+   <div class="card"><div class="t">पितृ पक्ष में इनका दिन</div><div class="s">अष्टमी श्राद्ध · शनि ३ अक्टूबर २०२६</div></div>
+   <div class="switch"><div class="t">इनका अनुस्मारक</div><div class="tog"></div></div>
+   <div class="door"><div class="g">॥</div><div class="t">पितृ तिल-तर्पण स्मरण</div></div>`,
+ overview:`<div class="sbar"><span>9:41</span><span>▮▮▮</span></div>
+   <div class="hd"><div class="bk">‹</div><div class="ht">पितृ पक्ष २०२६</div></div>
+   <div class="cap2">२६ सितम्बर – १० अक्टूबर</div>
+   <div class="door"><div class="g">॥</div><div class="t">पितृ पक्ष क्या है, क्यों है<div class="s">परिचय · तिथियाँ · शास्त्र-वचन · कथाएँ</div></div></div>
+   <div class="row"><div class="mk"></div><div class="dt">२६ सित</div><div class="t">पूर्णिमा श्राद्ध</div></div>
+   <div class="row"><div class="mk"></div><div class="dt">२७ सित</div><div class="t">प्रतिपदा श्राद्ध</div></div>
+   <div class="row"><div class="mk fam"></div><div class="dt">३ अक्तू</div><div class="t">अष्टमी श्राद्ध</div></div>
+   <div class="row"><div class="mk"></div><div class="dt">१० अक्तू</div><div class="t">सर्वपितृ अमावस्या</div></div>
+   <div class="door" style="margin-top:8px"><div class="g">॥</div><div class="t">पितृ तिल-तर्पण स्मरण</div></div>`,
+ vidhi1:`<div class="sbar"><span>9:41</span><span>▮▮▮</span></div>
+   <div class="hd"><div class="bk">‹</div><div class="ht">पितृ तिल-तर्पण स्मरण</div></div>
+   <div class="cap2">गृहस्थ तिल-तर्पण की सीमित, मन्त्र-रहित स्मरण मार्गदर्शिका · २० मिनट</div>
+   <div class="chips"><span class="chip on">चरण</span><span class="chip">सामग्री</span></div>
+   <div class="stepn">चरण १ · तैयारी</div>
+   <div class="card" style="margin-top:5px"><div class="t">इस मार्गदर्शिका की सीमा</div><div class="s">यह घर पर किया जाने वाला सीमित तिल-तर्पण स्मरण है, सम्पूर्ण श्राद्ध नहीं। पिण्डदान, होम, भोजन और शाखा-विशेष विधान के लिए अपनी पारिवारिक परम्परा देखें।</div></div>
+   <div class="card"><div class="t">तिथि और पारिवारिक रीति देखें</div></div>`,
+ vidhi2:`<div class="sbar"><span>9:41</span><span>▮▮▮</span></div>
+   <div class="hd"><div class="bk">‹</div><div class="ht">पितृ तिल-तर्पण स्मरण</div></div>
+   <div class="stepn">चरण ५ · मुख्य</div>
+   <div class="card" style="margin-top:5px"><div class="t">तिल-जल तैयार करें</div><div class="s">स्वच्छ जल में थोड़ा काला तिल रखें।</div></div>
+   <div class="card"><div class="t">तिल-जल अर्पित करें</div><div class="s">संख्या, दिशा और क्रम अपनी परम्परा के अनुसार।</div></div>
+   <div class="card"><div class="t">मौन स्मरण</div></div>
+   <div class="door"><div class="g">॥</div><div class="t">वैकल्पिक गीता पाठ — अध्याय १५</div></div>`,
+ daychip:`<div class="sbar"><span>9:41</span><span>▮▮▮</span></div>
+   <div class="hd"><div class="ht">पंचांग</div></div>
+   <div class="h2">शनिवार, १० अक्टूबर</div>
+   <div class="cap2">आश्विन कृष्ण अमावस्या</div>
+   <div class="chips" style="margin-top:8px"><span class="chip on">॥ सर्वपितृ अमावस्या</span></div>
+   <div class="chips"><span class="chip gold">॥ तिल-तर्पण विधि</span></div>
+   <div class="card"><div class="t">सर्वपितृ अमावस्या</div><div class="s">पक्ष का अन्तिम दिन — और उन सभी पितरों का भी जिनकी तिथि ज्ञात नहीं।</div></div>`,
+};
+
+const esc = s => s;
+function frameHtml(f){
+  if(f.type==='hook') return `<div class="cscene ${f.bg?'bgimg':''}">${f.bg?`<div class="bgnote">bg · ${f.bg}</div>`:''}<div class="gframe"></div><div class="kick">${f.kick||''}</div><div class="big">${f.big}</div><div class="rule"></div><div class="mark">ॐ वेदांश़</div></div>`;
+  if(f.type==='content') return `<div class="cscene ${f.bg?'bgimg':''}">${f.bg?`<div class="bgnote">bg · ${f.bg}</div>`:''}<div class="gframe"></div>${f.verse?`<div class="verse">${f.verse}</div>`:`<div class="mid">${f.mid}</div>`}${f.sub?`<div class="sub">${f.sub}</div>`:''}<div class="mark">ॐ वेदांश़</div></div>`;
+  if(f.type==='send') return `<div class="cscene"><div class="gframe"></div><div class="namaste">🙏</div><div class="mid" style="font-weight:700">${f.send}</div><div class="cpill">वेदांश़ · लिंक बायो में</div><div class="mark">ॐ वेदांश़</div></div>`;
+  if(f.type==='cta-card') return `<div class="cscene"><div class="gframe"></div><div class="kick">वेदांश़</div><div class="mid">${f.send}</div><div class="cpill">iPhone · Android</div><div class="mark">ॐ वेदांश़</div></div>`;
+  if(f.type==='slide') return `<div class="sslide">${f.kick?`<div class="kick">${f.kick}</div>`:''}${f.big?`<div class="big">${f.big}</div>`:`<div class="mid">${f.mid}</div>`}${f.sub?`<div class="sub">${f.sub}</div>`:''}<div class="mark">ॐ वेदांश़</div></div>`;
+  if(f.type==='app') return `<div class="ascreen">${SCREENS[f.screen]||''}<div class="ccap">${f.cap}</div><div class="amark">ॐ वेदांश़</div></div>`;
+  if(f.type==='app-shot') return `<div class="ascreen">${SCREENS.overview}<div class="ccap">${f.cap}</div><div class="amark">ॐ वेदांश़</div></div>`;
+  if(f.type==='note') return `<div class="cscene" style="background:#1a140c;border:1px dashed rgba(232,200,135,.3)"><div class="kick">preroll · unrecorded</div><div class="mid" style="font-family:ui-monospace,Menlo,monospace;font-size:11px;line-height:1.7;color:#8fb9d9">${f.big}</div></div>`;
+  return '';
+}
+document.getElementById('out').innerHTML = R.map(r=>`
+ <div class="reel">
+  <div class="rhead">
+    <span class="rid">${r.id}</span>
+    <span class="rtitle">${r.title}</span>
+    <span class="pill ${r.pri==='P0'?'p0':'p1'}">${r.pri}</span>
+    <span class="pill kit">${r.kit}</span>
+  </div>
+  <div class="meta"><b>${r.post}</b> · ${r.len} · <code>${r.slug}</code></div>
+  <div class="focus">${r.focus}</div>
+  <div class="src">source rows — ${r.src}</div>
+  <div class="strip">
+   ${r.frames.map(f=>`<div class="fr">
+     <div class="frame">${frameHtml(f)}</div>
+     <div class="fmeta"><span class="tt">${f.t}</span>${f.vo?`<span class="vo">${f.vo}</span>`:''}<span class="nt">${f.note}</span>${f.type==='app'?`<span class="act">Maestro drives this beat live on the simulator</span>`:''}</div>
+   </div>`).join('')}
+  </div>
+ </div>`).join('');
+</script>
+</body>
+</html>
