@@ -1,8 +1,8 @@
 ---
 title: Daan Punya
 type: subsystem
-sources: [mobile/src/data/daan/, mobile/src/contexts/DaanLedgerContext.tsx, mobile/src/screens/DaanPunyaScreen.tsx, mobile/src/screens/DaanJourneyScreen.tsx, mobile/src/screens/DaanLedgerScreen.tsx, mobile/src/screens/DaanEntryScreen.tsx, mobile/src/screens/DaanDirectoryScreen.tsx, mobile/src/screens/DaanDirectoryDetailScreen.tsx, mobile/src/screens/DaanKathaScreen.tsx, mobile/src/screens/ObservanceDetailScreen.tsx, mobile/src/navigation/types.ts, docs/roadmap/prds/26-daan-punya.md, RULEBOOK.md, design.md]
-last_verified_date: 2026-09-05
+sources: [mobile/src/data/daan/, mobile/src/contexts/DaanLedgerContext.tsx, mobile/src/components/CategoryIcon.tsx, mobile/src/screens/HomeScreen.tsx, mobile/src/screens/DaanPunyaScreen.tsx, mobile/src/screens/DaanJourneyScreen.tsx, mobile/src/screens/DaanLedgerScreen.tsx, mobile/src/screens/DaanEntryScreen.tsx, mobile/src/screens/DaanDirectoryScreen.tsx, mobile/src/screens/DaanDirectoryDetailScreen.tsx, mobile/src/screens/DaanKathaScreen.tsx, mobile/src/screens/ObservanceDetailScreen.tsx, mobile/src/navigation/types.ts, docs/roadmap/prds/26-daan-punya.md, RULEBOOK.md, design.md]
+last_verified_date: 2026-09-21
 confidence: high
 status: current
 ---
@@ -13,7 +13,9 @@ status: current
 RV 10.117.6 / TU 1.11.3 / Gita 17.20 / Anuśāsana-parva + five teaching-kathas),
 a **private on-device ledger** (tithi-stamped, gupt-daan first-class, no totals
 ever), and a **verified giving directory** whose external hand-off is the
-*terminal* act of a guided journey — never a button on the home. Design spec:
+organization's own site. Education remains the default entry, but is not a
+hard gate: the giving home has standing journey and direct-directory doors,
+and the app itself never transacts. Design spec:
 design.md §73; content contract: RULEBOOK §27; product doc:
 `docs/roadmap/prds/26-daan-punya.md` (+ `docs/daan-punya-prototype.html` for the design/content review, and
 `docs/daan-punya-shipping.html` — an operable walkthrough of the shipped scope whose
@@ -33,19 +35,25 @@ content is generated from the registries, so it cannot drift from the code).
   `getDaanOccasionForRule`).
 - **State** — `DaanLedgerContext` (AsyncStorage `@vedansh/daan-ledger:v1`,
   versioned payload, PitruSmaran hydration pattern).
-- **Screens** — DaanPunya (educate home, More-only), DaanJourney (5-step
-  stepper), DaanLedger + DaanEntry, DaanDirectory + DaanDirectoryDetail
+- **Screens** — DaanPunya (educate home, Home + More stacks), DaanJourney
+  (one skippable scroll with always-present terminal actions), DaanLedger +
+  DaanEntry, DaanDirectory + DaanDirectoryDetail
   (interstitial → `Linking.openURL`), DaanKatha. All but DaanPunya registered
-  on More AND Panchang stacks (`DaanStackParamList` in navigation/types.ts).
-- **Doors** — More hub साधना row (`more-daan-punya`); Observance Detail's
-  **last** section (`observance-daan-door`, renders only when
-  `getDaanOccasionForRule(ruleId)` matches).
+  on Home, More AND Panchang stacks (`DaanStackParamList` in navigation/types.ts).
+- **Doors** — More hub साधना row (`more-daan-punya`); Home's full-width closing
+  category card (a native View-composition daan-patra glyph; no duplicate
+  Sadhana category card), DISCOVER spotlight and covered-day FOR TODAY card;
+  Purpose's विद्या/आरोग्य bridge; Observance Detail's **last** section
+  (`observance-daan-door`, renders only when `getDaanOccasionForRule(ruleId)`
+  matches).
 
 ## Working Rules
 
-- **§2.7 IA contract is load-bearing**: the home has zero give affordances;
-  the directory is reachable ONLY from the journey's last step; record always
-  precedes the hand-off. `DaanScreens.test.tsx` pins it — do not add doors.
+- **§2.7 IA contract is load-bearing**: education is the default, not a gate.
+  `DaanPunyaScreen` always shows `daan-home-donate` → journey and the quieter
+  `daan-home-dwaar` → directory; the journey is one skippable scroll whose
+  record and directory actions are always present at the end. The app still
+  never handles money. `DaanScreens.test.tsx` pins these doors and boundaries.
 - **Exact rule ids beat suffix families** in occasion matching
   (`shattila-ekadashi` > `-ekadashi`; `makar-sankranti` > `-sankranti`).
   Uncovered days render nothing — never a placeholder.
