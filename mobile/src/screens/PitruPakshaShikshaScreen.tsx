@@ -94,13 +94,13 @@ export default function PitruPakshaShikshaScreen({ navigation }: Props) {
         <Text style={{ fontFamily: titleFont, fontSize: 16, lineHeight: 23, color: colors.ink }}>
           {contentByLang(lang, lesson.titleHi, lesson.titleEn)}
         </Text>
-        {/* The lesson body IS the reading content of this screen (a परिचय is read), so it
-            takes the primary `ink` at reading scale — `inkSoft` at 13.5 read as a demoted
-            caption on the parchment card and the clipped excerpt looked dull/half-visible. */}
+        {/* Body stays in `inkSoft` — the app's Hindi meaning/commentary register (verse pages,
+            the katha screens this card links to) — but at reading scale: at 13.5/22 the clipped
+            excerpt read as a dull caption; 15/25 carries the contrast the way the readers do. */}
         {shown.map((paragraph, idx) => (
           <Text
             key={`${lesson.id}-${idx}`}
-            style={{ fontFamily: bodyFont, fontSize: 15, lineHeight: 25, color: colors.ink, marginTop: idx === 0 ? 8 : 10 }}
+            style={{ fontFamily: bodyFont, fontSize: 15, lineHeight: 25, color: colors.inkSoft, marginTop: idx === 0 ? 8 : 10 }}
           >
             {paragraph}
           </Text>
