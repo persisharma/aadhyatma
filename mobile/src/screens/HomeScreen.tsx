@@ -143,17 +143,10 @@ export default function HomeScreen({ navigation }: Props) {
       icon: iconFor('purpose'),
       onPress: () => navigation.navigate('BrowseByPurpose'),
     };
-    const nityaSadhnaTile: TileItem = {
-      key: 'routine',
-      nameHi: 'नित्य साधना',
-      nameEn: 'Daily Practice',
-      shortNameEn: 'Sadhana',
-      status: 'active',
-      icon: iconFor('routine'),
-      onPress: () => navigation.navigate('RoutineToday'),
-    };
-    // दान-पुण्य (PRD-26) — the giving layer's standing Home door. A non-content
-    // launcher (like व्रत/कुंडली), placed just before the नित्य साधना closer.
+    // दान-पुण्य (PRD-26) — the giving layer's standing Home door, and the grid's
+    // full-width closing row. नित्य साधना no longer takes a tile here: it already
+    // owns the inline RoutineBanner (§30) directly above the grid and the lead
+    // DISCOVER spotlight, so a third Home door for it was pure repetition.
     const daanTile: TileItem = {
       key: 'daan',
       nameHi: 'दान-पुण्य',
@@ -182,10 +175,9 @@ export default function HomeScreen({ navigation }: Props) {
       if (c.id === 'japam') result.push(vratTile, kundaliTile, muhuratTile);
       if (c.id === 'theerth') result.push(deityTile, purposeTile);
     }
-    // दान-पुण्य sits at the tail of the 3-col grid; नित्य साधना then closes it
-    // full-width below (PRD-16/PRD-26; design.md §18) so the grid ends clean.
+    // दान-पुण्य closes the grid full-width below the 3-col flow
+    // (PRD-26; design.md §18) so the grid ends clean.
     result.push(daanTile);
-    result.push(nityaSadhnaTile);
     return result;
   }, [hasNewInCategory, navigation, rootNav]);
 
@@ -432,9 +424,9 @@ export default function HomeScreen({ navigation }: Props) {
             {tiles.map((tile) => (
               <View
                 key={tile.key}
-                // नित्य साधना is the grid's full-width closing row (design.md §18);
+                // दान-पुण्य is the grid's full-width closing row (design.md §18);
                 // every other tile keeps the 3-column width.
-                style={{ width: tile.key === 'routine' ? tileWidth * 3 + 2 * gridGap : tileWidth }}
+                style={{ width: tile.key === 'daan' ? tileWidth * 3 + 2 * gridGap : tileWidth }}
                 ref={
                   tile.key === 'japam'
                     ? japaTileRef
