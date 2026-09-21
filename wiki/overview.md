@@ -53,7 +53,8 @@ visible Home frame stable instead of moving the launcher grid immediately after 
    hydrates persisted next-date answers and cooperatively derives/solves missing ones only
    while the hub is focused. Blur, unmount and record changes cancel pending work. The
    hub must not call `useJanmaTithiPeople` (birth math during render) or wrap synchronous
-   annual solvers in a timer. Closed settings sheets are not mounted.
+   annual solvers in a timer. Closed settings sheets are not mounted. More stack destinations use literal `getComponent`
+   loaders, keeping unvisited tools out of the eager launch graph.
 
 Deep links and notification taps route through `navigationRef`, exported from
 `mobile/src/notifications/deepLink.ts`; route mapping lives in `mobile/src/navigation/entryRoutes.ts`.

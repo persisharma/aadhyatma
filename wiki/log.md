@@ -189,3 +189,11 @@ and derives/solves cooperatively with focus-scoped cancellation. Closed language
 reading-size and read-aloud sheets mount on demand. Updated overview and design
 §37; added lifecycle/caching regression tests and a preserved-state More restart
 path to the Pitru Maestro flow. Device execution remains pending in this environment.
+
+## [2026-09-21] ingest | More CI launch-budget repair
+
+Merged current main into the More responsiveness branch without conflicts. CI's
+merged tree exceeded the unchanged 7.3 MB startup graph budget after new temple
+content landed. More destination screens now use on-demand route loaders, with
+regression coverage for deferred evaluation and unchanged route registration.
+The launch budget passes without increasing its ceiling.

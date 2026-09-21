@@ -134,7 +134,7 @@ for (const t of temples) {
 }
 
 // ─── 6a′. RULEBOOK §12.6 — every NEW temple ships the full extended reading ─
-// The 70 rows that predate the rule are pinned here. A new id that lacks
+// The 60 rows that predate the rule are pinned here (70 at the rule's birth; the Rajasthan wave enriched 6, Khandoba Jejuri 1, Mahasu Devta Hanol 1, Sabarimala 1, Vetrimalai Murugan 1). A new id that lacks
 // `sections` fails; extending this allowlist needs a recorded product decision.
 const LEGACY_WITHOUT_SECTIONS = new Set([
   'somnath', 'mallikarjuna', 'mahakaleshwar', 'omkareshwar', 'kedarnath', 'bhimashankar',
@@ -145,13 +145,12 @@ const LEGACY_WITHOUT_SECTIONS = new Set([
   'banke-bihari', 'srinathji', 'udupi-krishna', 'vishnupad-gaya', 'bhadrachalam',
   'danteshwari', 'mangueshi', 'lakshmi-narayan', 'durgiana', 'mansa-devi', 'govindajee-imphal',
   'tripura-sundari', 'manakula-vinayagar', 'parashuram-kund', 'nartiang-durga', 'kirateshwar',
-  'vetrimalai-murugan', 'iskcon-chandigarh', 'dimapur-kalibari', 'khatu-shyam', 'karni-mata',
-  'jeen-mata', 'khandoba-jejuri', 'gogaji-gogamedi', 'sabarimala', 'mahasu-devta-hanol',
-  'tejaji-kharnal', 'ramdevra', 'kamakshi', 'shrinkhala', 'chamundeshwari', 'jogulamba',
+  'iskcon-chandigarh', 'dimapur-kalibari',
+  'kamakshi', 'shrinkhala', 'chamundeshwari', 'jogulamba',
   'bhramaramba', 'mahalakshmi-kolhapur', 'ekaveerika-mahur', 'harsiddhi-ujjain', 'puruhutika',
   'biraja', 'manikyamba', 'madhaveswari', 'mangala-gauri', 'vishalakshi',
 ]);
-assert.equal(LEGACY_WITHOUT_SECTIONS.size, 70, 'legacy no-sections allowlist is pinned at 70');
+assert.equal(LEGACY_WITHOUT_SECTIONS.size, 60, 'legacy no-sections allowlist is pinned at 60');
 for (const t of temples) {
   if (LEGACY_WITHOUT_SECTIONS.has(t.id)) continue;
   const ids = (t.sections ?? []).map((s) => s.id);
@@ -173,6 +172,36 @@ assert.deepEqual(
 assert.match(salasar.sections![0].bodyHi, /1811/, 'sthapana katha carries the Samvat 1811 consecration');
 assert.match(salasar.sections![0].bodyEn, /Mohandas/, 'sthapana katha names Mohandas Ji');
 assert.match(salasar.sections![0].bodyEn, /Asota/, 'sthapana katha names Asota');
+
+// Rajasthan wave: the six Rajasthan lokdevta/kuldevi shrines carry the same five-section reading;
+// the Deccan wave (Khandoba Jejuri), the Himalayan wave (Mahasu Devta Hanol), Sabarimala and Vetrimalai Murugan follow the same pin shape.
+const RAJASTHAN_WAVE: Record<string, { hi: RegExp; en: RegExp; fact: string }> = {
+  'khatu-shyam': { hi: /रूपसिंह चौहान/, en: /1027 CE/, fact: 'Roop Singh Chauhan founded the shrine in 1027 CE' },
+  'karni-mata': { hi: /1476/, en: /Ganga Singh/, fact: 'Deshnoke founded in Samvat 1476; Ganga Singh built the marble temple' },
+  'jeen-mata': { hi: /संवत् 1029/, en: /972 CE/, fact: 'oldest inscription Samvat 1029 (c. 972 CE), not 1029 CE' },
+  'gogaji-gogamedi': { hi: /फ़िरोज़शाह तुग़लक़/, en: /1911 CE/, fact: 'the Tughlaq medi restored by Ganga Singh in 1911' },
+  'tejaji-kharnal': { hi: /1130/, en: /28 August 1103/, fact: 'born Samvat 1130, sacrifice at Sursura on 28 August 1103' },
+  ramdevra: { hi: /1459/, en: /1459 CE/, fact: 'samadhi placed in 1459 CE by historical accounts; Ganga Singh built the temple in 1931' },
+  'khandoba-jejuri': { hi: /राघो मंबाजी/, en: /1637 CE/, fact: 'Gadkot temple c. 1608 CE; Ragho Mambaji completed the mandap in 1637 CE; no recorded consecration tithi' },
+  'mahasu-devta-hanol': { hi: /हूण भाट/, en: /ninth–tenth century CE/, fact: 'ASI dates the stone mulaprasada to the 9th–10th century CE; the Huna Bhat katha is tradition; no recorded consecration tithi' },
+  sabarimala: { hi: /18 मई 1951/, en: /Kandararu Sankararu/, fact: 'present panchaloha image reconsecrated 18 May 1951 (Kollam Era 1126, Edavam 4) by tantri Kandararu Sankararu after the 1950 fire; the Rajasekhara/Parashurama katha is tradition' },
+  'vetrimalai-murugan': { hi: /रॉस द्वीप/, en: /1932 CE/, fact: 'founded 1926 CE on Ross Island for the Tamil administrative staff, completed 1932 CE, moved to Port Blair after Independence (1966 by some accounts); no recorded consecration tithi' },
+};
+for (const [id, pin] of Object.entries(RAJASTHAN_WAVE)) {
+  const temple = getTempleById(id);
+  assert.ok(temple, `${id} must exist`);
+  assert.deepEqual(
+    (temple.sections ?? []).map((s) => s.id),
+    ['sthapana', 'svarup', 'parampara', 'mela', 'yatra'],
+    `${id} extended sections in reading order`,
+  );
+  assert.match(temple.sections![0].bodyHi, pin.hi, `${id}: ${pin.fact} (hi)`);
+  assert.match(temple.sections![0].bodyEn, pin.en, `${id}: ${pin.fact} (en)`);
+  for (const s of temple.sections!) {
+    assert.ok(s.bodyHi.length >= 80 && s.bodyEn.length >= 80, `${id}/${s.id}: each body is a real prose block`);
+    assert.ok(/[\u0900-\u097F]/.test(s.bodyHi) && !/[\u0900-\u097F]/.test(s.bodyEn), `${id}/${s.id}: hi is Devanagari, en is not`);
+  }
+}
 
 // ─── 6b. Shakti Peeth membership = every recognised peeth plotted on this map ─
 // The pre-existing 7 peeths plus the 14 India-located Ashtadasha additions (= 21).

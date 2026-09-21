@@ -522,7 +522,7 @@ type TempleDetail = {
   originStoryHi: string;          // Sthala Purāṇa narrative — single prose block
   originStoryEn: string;
   sources: readonly { label: string; url: string }[];  // ≥ 2 per §11.1
-  sections?: readonly TempleSection[];  // rendered after Origin Story in data order — MANDATORY on every new temple (§12.6); optional only on the 70 legacy rows
+  sections?: readonly TempleSection[];  // rendered after Origin Story in data order — MANDATORY on every new temple (§12.6); optional only on the legacy rows still pinned in `theerth.test.ts` (64 after the Rajasthan wave)
 };
 
 type TempleEntry = BaseTempleEntry & TempleDetail & { addedInVersion: string };
@@ -580,7 +580,7 @@ All of §11 applies. The high-risk ones for theerth:
 
 ### 12.6 Full reading is mandatory for every new temple
 
-Two prose lines and a pin are the *minimum* a legacy row carries; they are **not** the bar for anything added from September 2026 on. Salasar Balaji (`salasar-balaji`) is the reference implementation — match its depth, not the 70 legacy rows. Adding a temple with only `significance` + `originStory` is a §3 hard reject.
+Two prose lines and a pin are the *minimum* a legacy row carries; they are **not** the bar for anything added from September 2026 on. Salasar Balaji (`salasar-balaji`) is the reference implementation — match its depth, not the legacy rows. The Rajasthan wave (Khatu Shyam, Karni Mata, Jeen Mata, Gogaji, Tejaji, Ramdevra) follows the same shape. Adding a temple with only `significance` + `originStory` is a §3 hard reject.
 
 **Gather ALL of the following before writing a single line of data**, and ship every one that the sources support (say "not recorded" in the PR, not silently omitted):
 
