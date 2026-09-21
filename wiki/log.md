@@ -197,3 +197,5 @@ merged tree exceeded the unchanged 7.3 MB startup graph budget after new temple
 content landed. More destination screens now use on-demand route loaders, with
 regression coverage for deferred evaluation and unchanged route registration.
 The launch budget passes without increasing its ceiling.
+
+## [2026-09-21] ingest | Pitru Paksha परिचय content: `bharat-dwadashah` katha (Ayodhya 77, verified against the bundled Valmiki corpus 2.77.1–26 — the eleventh/twelfth-day shraddha, the gifts, the thirteenth-day asthi-sanchaya, Vasishtha lifting Bharata) and the पञ्चबलि lesson + glossary row authored as DRAFT (five recipients concordant across search summaries; every primary domain EGRESS_BLOCKED, so nothing flips). New `docs/roadmap/conventions/panchabali-source-dossier.md` holds the gathered material, the copy the stance guard forbids, the officiant-only mantra text, and a table of every other pending gap in the layer (14 tithi rows, pitru-rin, Karna, gotra/sapindikarana, "who may perform"). Registry now 61 rows / 39 verified; design.md §74, PRD-44 §4–§5 and [[pitru-shiksha]] mirrored.
