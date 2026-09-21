@@ -26,7 +26,7 @@ import {
   lensesForStoredLabel,
   STATE_LENS,
 } from '../lensRegistry';
-import { getLensAdditions, getRulesForLens } from '../vratCatalog';
+import { getLensAdditions, getLensesWithContent, getRulesForLens, withContentOnly } from '../vratCatalog';
 
 const NONE: ReadonlySet<ObservanceLens> = new Set();
 const JAIN: ReadonlySet<ObservanceLens> = new Set<ObservanceLens>(['jain']);
@@ -206,16 +206,34 @@ test('getRulesForLens never lists a hidden/advanced rule or a universal one', ()
   }
 });
 
-test('getLensAdditions groups the ACTIVE set in registry order, keeping empty calendars', () => {
+test('only calendars that add something are OFFERED — today that is tamil and jain, in registry order', () => {
+  // The user-facing set. The registry stays at 22 so a calendar joins the moment
+  // its first rule ships, but a switch that changes nothing is never shown.
+  assert.deepEqual([...getLensesWithContent()], ['tamil', 'jain']);
+  for (const lens of getLensesWithContent()) assert.ok(getRulesForLens(lens).length > 0, lens);
+  for (const lens of LENS_IDS) {
+    if (!getLensesWithContent().includes(lens)) assert.equal(getRulesForLens(lens).length, 0, `${lens} is hidden only because it is empty`);
+  }
+});
+
+test('the display set drops stored ids for empty calendars but keeps offered ones', () => {
+  // A Mumbai seed from before content shipped, plus a deliberate जैन tap.
+  const shown = withContentOnly(new Set<ObservanceLens>(['maharashtra', 'jain']));
+  assert.deepEqual([...shown], ['jain']);
+  assert.deepEqual([...withContentOnly(ALL_LENSES)], [...getLensesWithContent()]);
+  assert.deepEqual([...withContentOnly(NONE)], []);
+});
+
+test('getLensAdditions groups the ACTIVE offered set in registry order and skips empty calendars', () => {
   assert.deepEqual(getLensAdditions(NONE), []);
   const groups = getLensAdditions(new Set<ObservanceLens>(['sindhi', 'jain', 'tamil']));
-  assert.deepEqual(groups.map((g) => g.lens), ['tamil', 'jain', 'sindhi']);
-  assert.deepEqual(groups.map((g) => g.rules.map((r) => r.id)), [['karthigai-vrat'], ['rohini-vrat'], []]);
+  assert.deepEqual(groups.map((g) => g.lens), ['tamil', 'jain']);
+  assert.deepEqual(groups.map((g) => g.rules.map((r) => r.id)), [['karthigai-vrat'], ['rohini-vrat']]);
 });
 
 test('with every lens on, the additions are exactly the lensed default rules, each once per lens', () => {
   const groups = getLensAdditions(ALL_LENSES);
-  assert.equal(groups.length, LENS_COUNT);
+  assert.equal(groups.length, getLensesWithContent().length);
   const listed = new Set(groups.flatMap((g) => g.rules.map((r) => r.id)));
   const expected = new Set(
     OBSERVANCE_RULES.filter((r) => r.visibility === 'default' && r.lens && r.lens.length > 0).map((r) => r.id)
@@ -223,10 +241,9 @@ test('with every lens on, the additions are exactly the lensed default rules, ea
   assert.deepEqual([...listed].sort(), [...expected].sort());
 });
 
-test('select-all is an ordinary stored set equal to every id — it round-trips like any other', () => {
-  const all = new Set<ObservanceLens>(LENS_IDS);
-  assert.equal(all.size, LENS_COUNT);
-  assert.deepEqual([...parseStoredLenses(serializeLenses(all))].sort(), [...LENS_IDS].sort());
+test('select-all is an ordinary stored set of the offered ids — it round-trips like any other', () => {
+  const all = new Set<ObservanceLens>(getLensesWithContent());
+  assert.deepEqual([...parseStoredLenses(serializeLenses(all))].sort(), [...getLensesWithContent()].sort());
 });
 
 // ── the retired `regional` visibility ──────────────────────────────────────

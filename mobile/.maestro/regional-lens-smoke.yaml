@@ -1,17 +1,18 @@
-# Regional Lens Smoke Test (PRD-42 W2 — sheet bulk controls + "what did it add")
+# Regional Lens Smoke Test (PRD-42 W2 — offered calendars only, bulk controls, "what did it add")
 #
 # The defect this guards, from the Sept 2026 report: turning जैन on changed the
-# calendar by a day nobody could point to ("it still shows everything"), and
-# seeing every calendar took twenty-two taps. Two surfaces answer it:
-#   1. The lens sheet's header carries Select all / Clear all, each hidden when
-#      it would be a no-op, and every row's third line names what it adds.
+# calendar by a day nobody could point to ("it still shows everything"), and the
+# sheet offered twenty-two switches of which twenty changed nothing. Now:
+#   1. The sheet lists ONLY calendars that add an observance in this build
+#      (today: Tamil, Jain), carries Select all / Clear all in its header (each
+#      hidden when a no-op), and every row's third line names what it adds.
 #   2. The Vrat & Parv landing grows a "From your calendars" card listing the
 #      lensed rules by calendar, each opening its detail.
 #
 # Specific DATES are date-dependent and belong to the unit suites (lens.test.ts);
-# what a device can assert is that the Jain row toggles on, Rohini Vrat appears
-# under the card, opens a detail page, and that Select all → Clear all round-trips
-# the header count.
+# what a device can assert is that an empty calendar is absent, the Jain row
+# toggles on, Rohini Vrat appears under the card and opens a detail page, and
+# that Select all → Clear all round-trips the header count.
 #
 # Language note (same as vrat-catalog-smoke): the screen reads the global reading
 # language; default Hindi is Devanagari which Maestro's iOS tree can't read, so we
@@ -19,11 +20,13 @@
 #
 # Selector notes:
 #   - The ledger's third column is a button labelled "Regional calendars, none
-#     selected" / ", n on" / ", all 22 on".
+#     selected" / ", n on" / ", all n on".
 #   - Lens rows are checkboxes labelled "<Name> calendar. <examples>. Adds …".
 #   - Bulk controls carry testIDs lens-select-all / lens-clear-all.
 #   - The additions card carries testID lens-additions; its rows are buttons
 #     labelled "<NameEn>, next <date>" → match "Rohini Vrat.*".
+#   - The offered count (2) is the number of calendars with content; when the
+#     next content wave ships, update the two count assertions below.
 
 appId: com.prashantsharma.vedansh
 ---
@@ -63,30 +66,32 @@ appId: com.prashantsharma.vedansh
     visible: "Regional calendars"
     timeout: 15000
 
+# ── Only calendars with content are offered ──
+- assertVisible: "None selected · 2 available"
+- assertVisible: "Tamil calendar.*Adds 1: Karthigai Vrat"
+- assertVisible: "Jain calendar.*Adds 1: Rohini Vrat"
+- assertNotVisible: "Sindhi calendar.*"
+- assertNotVisible: "Bengal calendar.*"
+
 # ── Select all: header count flips, Clear all appears, Select all hides ──
 - assertVisible: { id: "lens-select-all" }
 - tapOn: { id: "lens-select-all" }
 - waitForAnimationToEnd
-- assertVisible: "All 22 on"
+- assertVisible: "All 2 on"
 - assertVisible: { id: "lens-clear-all" }
 - assertNotVisible: { id: "lens-select-all" }
 
 # ── Clear all: back to none, Select all returns ──
 - tapOn: { id: "lens-clear-all" }
 - waitForAnimationToEnd
-- assertVisible: "None selected · 22 available"
+- assertVisible: "None selected · 2 available"
 - assertVisible: { id: "lens-select-all" }
 - assertNotVisible: { id: "lens-clear-all" }
 
-# ── One deliberate tap: Jain. Its row already says what it adds. ──
-- scrollUntilVisible:
-    element:
-      text: "Jain calendar.*"
-    centerElement: true
-- assertVisible: "Jain calendar.*Adds 1: Rohini Vrat"
+# ── One deliberate tap: Jain ──
 - tapOn: "Jain calendar.*"
 - waitForAnimationToEnd
-- assertVisible: "1 on · 21 more available"
+- assertVisible: "1 on · 1 more available"
 # Dismiss the sheet by tapping the backdrop (top of the screen).
 - tapOn:
     point: "50%,8%"
@@ -118,7 +123,7 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - tapOn: { id: "lens-clear-all" }
 - waitForAnimationToEnd
-- assertVisible: "None selected · 22 available"
+- assertVisible: "None selected · 2 available"
 - tapOn:
     point: "50%,8%"
 - waitForAnimationToEnd

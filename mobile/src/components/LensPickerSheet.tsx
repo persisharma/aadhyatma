@@ -11,7 +11,7 @@ import {
   type LensDefinition,
 } from '@/panchang/lensRegistry';
 import { useLenses } from '@/panchang/useLenses';
-import { getRulesForLens } from '@/panchang/vratCatalog';
+import { getLensesWithContent, getRulesForLens } from '@/panchang/vratCatalog';
 import { useTheme } from '@/theme/ThemeContext';
 import { cardFontByLang, scriptBodyFont } from '@/utils/langType';
 import { contentByLang, meaningByLang } from '@/utils/localize';
@@ -39,25 +39,29 @@ import { contentByLang, meaningByLang } from '@/utils/localize';
  * Two things the first version left out, both from the same Sept 2026 report
  * ("I turned जैन on and it still shows everything; what did I actually get?"):
  *
- *   3. **Every row names what it adds.** The additive contract is the right one,
- *      but it makes the answer invisible on the calendar — a lensed day sits among
- *      the universal ones unmarked. So the row's third line lists the observances
- *      this calendar adds in THIS build (`getRulesForLens`), or says honestly that
- *      it adds none yet. The व्रत-पर्व landing then lists the same rules, tappable,
- *      under "आपके पंचांग से".
- *   4. **सभी चुनें / सभी हटाएँ** at the head of the list. Twenty-two taps to see
- *      everything was the other half of the report. Each control hides when it
- *      would be a no-op, so the header never offers a dead button.
+ *   3. **Only calendars that add something are offered, and every row names what
+ *      it adds.** The registry has 22 calendars but the content waves have not
+ *      shipped, so a switch for an empty calendar changes nothing — which is what
+ *      "I selected Jain and it still shows everything" was really about. The
+ *      sheet lists `getLensesWithContent()` only (groups with no offered lens
+ *      vanish), and each row's third line names the observances it adds. A
+ *      calendar appears here the day its first rule lands. The व्रत-पर्व landing
+ *      then lists the same rules, tappable, under "आपके पंचांग से".
+ *   4. **सभी चुनें / सभी हटाएँ** at the head of the list. Each control hides when
+ *      it would be a no-op, so the header never offers a dead button.
  */
 export default function LensPickerSheet({ visible, onClose }: { visible: boolean; onClose: () => void }) {
   const { colors, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
   const { lenses, activeCount, availableCount, allSelected, toggle, selectAll, clearAll } = useLenses();
 
-  const groups = useMemo(
-    () => LENS_GROUP_ORDER.map((group) => ({ group, items: lensesInGroup(group) })),
-    []
-  );
+  const groups = useMemo(() => {
+    const offered = new Set(getLensesWithContent());
+    return LENS_GROUP_ORDER.map((group) => ({
+      group,
+      items: lensesInGroup(group).filter((lens) => offered.has(lens.id)),
+    })).filter(({ items }) => items.length > 0);
+  }, []);
 
   const titleFont = cardFontByLang(lang);
 
@@ -206,22 +210,14 @@ function BulkButton({
   );
 }
 
-/** The third line of a row: what this calendar adds in this build, or that it adds nothing yet. */
-function additionsLine(lens: LensDefinition, lang: Lang): { text: string; en: string; empty: boolean } {
+/** The third line of a row: what this calendar adds. Only offered (non-empty) lenses reach here. */
+function additionsLine(lens: LensDefinition, lang: Lang): { text: string; en: string } {
   const rules = getRulesForLens(lens.id);
-  if (rules.length === 0) {
-    return {
-      text: contentByLang(lang, 'अभी कोई विशेष तिथि नहीं — आगामी अद्यतन में', 'No dates of its own yet — coming in a later update'),
-      en: 'Adds no dates yet',
-      empty: true,
-    };
-  }
   const names = rules.map((rule) => contentByLang(lang, rule.nameHi, rule.nameEn)).join(' · ');
   const namesEn = rules.map((rule) => rule.nameEn).join(', ');
   return {
     text: contentByLang(lang, `जोड़ता है: ${names}`, `Adds: ${names}`),
     en: `Adds ${rules.length}: ${namesEn}`,
-    empty: false,
   };
 }
 
@@ -269,15 +265,14 @@ function LensRow({
         >
           {contentByLang(lang, lens.exampleHi, lens.exampleEn)}
         </Text>
-        {/* Promise 3: what THIS build adds. Saffron-deep when it adds something
-            (the same register as the ledger's live state), muted when it does
-            not — the honest empty reads as information, not as a fault. */}
+        {/* Promise 3: what this calendar adds — saffron-deep, the same register
+            as the ledger's live state. */}
         <Text
           numberOfLines={2}
           style={{
             fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
             fontSize: 11,
-            color: additions.empty ? colors.inkMuted : colors.saffronDeep,
+            color: colors.saffronDeep,
             marginTop: 2,
           }}
         >

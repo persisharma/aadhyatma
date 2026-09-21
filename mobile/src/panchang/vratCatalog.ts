@@ -73,14 +73,38 @@ export function getRulesForLens(lens: ObservanceLens): ObservanceRule[] {
 
 export type LensAddition = { lens: ObservanceLens; rules: ObservanceRule[] };
 
+let lensesWithContent: ObservanceLens[] | null = null;
+
+/**
+ * The lenses that add at least one observance in THIS build, in registry order.
+ *
+ * This — not `LENS_IDS` — is what every user-facing surface offers (the sheet's
+ * rows, "n available", सभी चुनें, the seed). The registry names 22 calendars but
+ * the content waves (PRD-42 W3–W8) have not shipped, so offering a switch that
+ * changes nothing was the Sept 2026 report in a nutshell: "I selected Jain and
+ * it still shows everything". A calendar joins this list the moment its first
+ * `default` + `lens` rule lands, with no registration step; if the list is ever
+ * empty, the filter surfaces hide themselves entirely.
+ */
+export function getLensesWithContent(): readonly ObservanceLens[] {
+  if (!lensesWithContent) lensesWithContent = LENS_IDS.filter((lens) => getRulesForLens(lens).length > 0);
+  return lensesWithContent;
+}
+
+/** `lenses` narrowed to the calendars this build actually offers — the DISPLAY set. */
+export function withContentOnly(lenses: ReadonlySet<ObservanceLens>): Set<ObservanceLens> {
+  return new Set(getLensesWithContent().filter((lens) => lenses.has(lens)));
+}
+
 /**
  * What the ACTIVE set adds, grouped by lens in registry order — the व्रत-पर्व
- * landing's "आपके पंचांग से" section. A lens that adds nothing in this build is
- * still returned with an empty list: the honest thing to show a user who turned
- * on सिंधी is "nothing yet", not silence that reads as "you did nothing".
+ * landing's "आपके पंचांग से" section. Only calendars with content appear, because
+ * only those can be turned on from the sheet.
  */
 export function getLensAdditions(lenses: ReadonlySet<ObservanceLens>): LensAddition[] {
-  return LENS_IDS.filter((lens) => lenses.has(lens)).map((lens) => ({ lens, rules: getRulesForLens(lens) }));
+  return getLensesWithContent()
+    .filter((lens) => lenses.has(lens))
+    .map((lens) => ({ lens, rules: getRulesForLens(lens) }));
 }
 
 /** The bundled bilingual katha library (the "Katha" tile target). */
