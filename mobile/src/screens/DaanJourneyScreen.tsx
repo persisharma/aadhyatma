@@ -285,13 +285,6 @@ export default function DaanJourneyScreen({ navigation, route }: Props) {
               </Text>
             </Pressable>
           </View>
-          <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 18, color: colors.inkMuted, textAlign: 'center', marginTop: 10 }}>
-            {meaningByLang(
-              lang,
-              'यहाँ रुक जाना भी पूर्ण है। दान-द्वार बाहरी सेवा-स्थलों तक ले जाता है।',
-              'Stopping here is also complete. The daan-dwaar leads out to external seva places.'
-            )}
-          </Text>
         </View>
       </ScrollView>
     </SafeAreaView>

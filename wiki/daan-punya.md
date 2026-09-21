@@ -70,6 +70,15 @@ content is generated from the registries, so it cannot drift from the code).
   note/amount/occasion; read-side `isDaanLedgerEntry` rejects unsanitized
   gupt rows. The CSV export keeps gupt rows bare.
 - **No totalling helper may be added** to `ledger.ts` (RULEBOOK §27.3).
+- **A UI line must carry a fact, not the stance** (Sept 2026, design.md §73
+  "Copy rule"): the muted stance captions that used to close each screen
+  ("रुक जाना भी पूर्ण है", "मात्रा नहीं, भाव मापदण्ड है…", "यह सूची जान-बूझकर छोटी
+  रखी गई है", a screen narrating its own section order) are removed and must
+  not come back. Keep only lines the user acts on — privacy of the register,
+  what else may be recorded, the website hand-off, the no-transaction and
+  no-representation facts (once per screen). The stance lives in the data and
+  the copy-guard test; the teaching lives in the content (verse meanings,
+  cause mahatva, katha शिक्षा), which stays untouched.
 - **Two axes**: ledger `DaanCategory` = the dravya given; `DaanCause` = whom it
   serves, and the द्वार's only grouping. Cause chips derive from the rows
   present (never an empty shelf); occasions carry `causes` and the journey's

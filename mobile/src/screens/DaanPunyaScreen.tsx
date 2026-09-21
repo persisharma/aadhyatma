@@ -342,14 +342,7 @@ export default function DaanPunyaScreen({ navigation }: Props) {
           ))}
         </ScrollView>
 
-        <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 18, color: colors.inkMuted, marginTop: spacing.xl, textAlign: 'center', paddingHorizontal: spacing.readingGutter }}>
-          {meaningByLang(
-            lang,
-            'यह परम्परा का परिचय है — मात्रा नहीं, भाव मापदण्ड है। यहाँ कोई अंक, कोई लक्ष्य, कोई तुलना नहीं।',
-            'This introduces the tradition — bhaav, not amount, is the measure. There is no score here, no target, no comparison.'
-          )}
-        </Text>
-        <Text style={{ fontFamily: bodyFont, fontSize: 11, lineHeight: 16, color: colors.inkMuted, marginTop: spacing.xs, textAlign: 'center', paddingHorizontal: spacing.readingGutter }}>
+        <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 17, color: colors.inkMuted, marginTop: spacing.xl, textAlign: 'center', paddingHorizontal: spacing.readingGutter }}>
           {pick(lang, {
             hi: 'खाता निजी है — केवल इस डिवाइस पर।',
             en: 'The register is private — on this device only.',
