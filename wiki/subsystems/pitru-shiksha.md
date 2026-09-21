@@ -58,6 +58,10 @@ design.md §74 (+ §63.5); contract: RULEBOOK §28; PRD + annotated HTML prototy
   engine**, then the **dossier**. A web-search summary never flips a status — record its URLs in
   the draft note as leads. A **verified katha** must carry a `ref` into a bundled reader and a
   `repo:` reference, pinned by test.
+- **Panchabali is gathered, not yet authored.** `docs/roadmap/conventions/panchabali-source-dossier.md`
+  (2026-09-21) holds the five-recipient scheme, the copy that the stance guard forbids, the
+  mantra text (officiant appendix only — never in-app), the primary sources still unopened, and
+  the proposed draft rows; it also tabulates every other pending gap in this layer.
 - **The fortnight is covered end to end.** All sixteen days carry a `tithi` row, verified or
   draft, pinned by a coverage test: a missing day leaves the reader unable to tell "no tradition
   here" from "the app forgot".
