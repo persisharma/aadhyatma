@@ -215,6 +215,16 @@ export const CORPUS: readonly CorpusCase[] = [
   { q: 'kitchen kis disha me hona chahiye', intent: 'vastu.direction', slot: ['room', 'kitchen'] },
   { q: 'rasoi kaun si disha me', intent: 'vastu.direction', slot: ['room', 'kitchen'] },
   { q: 'सोते समय सिर किस दिशा में', intent: 'vastu.direction', slot: ['room', 'sleeping'] },
+
+  /* ---------------- vastu.myhome (PRD-24 Phase 2 §C5) ---------------- */
+  { q: 'मेरी रसोई किस दिशा में है', intent: 'vastu.myhome', slot: ['room', 'kitchen'] },
+  { q: 'meri rasoi kis disha me hai', intent: 'vastu.myhome', slot: ['room', 'kitchen'] },
+  { q: 'mera kitchen kis taraf hai', intent: 'vastu.myhome', slot: ['room', 'kitchen'] },
+  { q: 'मेरे घर का मुख किस दिशा में है', intent: 'vastu.myhome', slot: ['room', 'main-door'] },
+  { q: 'mere ghar ka mukh kis disha me hai', intent: 'vastu.myhome', slot: ['room', 'main-door'] },
+  { q: 'hamare ghar me toilet kis disha me hai', intent: 'vastu.myhome', slot: ['room', 'toilet'] },
+  { q: 'मेरे घर में शौचालय किस दिशा में है', intent: 'vastu.myhome', slot: ['room', 'toilet'] },
+  { q: 'mera mandir kis disha me hai', intent: 'vastu.myhome', slot: ['room', 'puja-room'] },
   { q: 'sone ki disha konsi honi chahiye', intent: 'vastu.direction', slot: ['room', 'sleeping'] },
   { q: 'sote samay sir kis taraf', intent: 'vastu.direction', slot: ['room', 'sleeping'] },
   { q: 'which direction to sleep', intent: 'vastu.direction', slot: ['room', 'sleeping'] },
@@ -252,14 +262,28 @@ export const CORPUS: readonly CorpusCase[] = [
   { q: 'sundarkand', expect: 'none' },
 
   /* ---------------- negatives: stance guard → declined ---------------- */
-  { q: 'kya mujhe naukri milegi', expect: 'declined' },
-  { q: 'meri shadi kab hogi', expect: 'declined' },
+  { q: 'kya mujhe naukri milegi', intent: 'prashna.purpose', slot: ['purpose', 'naukri'] },
+  { q: 'meri shadi kab hogi', intent: 'prashna.purpose', slot: ['purpose', 'vivah'] },
+
+  /* ---------------- prashna.purpose (PRD-43; corpus ctx carries a saved adult chart) ---- */
+  { q: 'पढ़ाई कैसी रहेगी', intent: 'prashna.purpose', slot: ['purpose', 'vidya'] },
+  { q: 'padhai kaisi rahegi', intent: 'prashna.purpose', slot: ['purpose', 'vidya'] },
+  { q: 'क्या मुझे व्यापार शुरू करना चाहिए', intent: 'prashna.purpose', slot: ['purpose', 'vyapar'] },
+  { q: 'kya mujhe business shuru karna chahiye', intent: 'prashna.purpose', slot: ['purpose', 'vyapar'] },
+  { q: 'should i start a business', intent: 'prashna.purpose', slot: ['purpose', 'vyapar'] },
+  { q: 'naukri badalni chahiye kya', intent: 'prashna.purpose', slot: ['purpose', 'naukri'] },
+  { q: 'meri kundali me dhan kaisa hai', intent: 'prashna.purpose', slot: ['purpose', 'dhan'] },
+  { q: 'how is my health in my chart', intent: 'prashna.purpose', slot: ['purpose', 'swasthya'] },
+  { q: 'videsh yatra kab', intent: 'prashna.purpose', slot: ['purpose', 'yatra'] },
+  { q: 'मन शांत कैसे रहे', intent: 'prashna.purpose', slot: ['purpose', 'man'] },
+  /* Still declined: predictive framing with NO purpose the app can read. */
   { q: 'mera bhavishya kya hai', expect: 'declined' },
-  { q: 'will i get the job', expect: 'declined' },
+  { q: 'will i get the job', intent: 'prashna.purpose', slot: ['purpose', 'naukri'] },
   { q: 'kya mere kundali me dosh hai kya', expect: 'declined' },
-  { q: 'will my business grow', expect: 'declined' },
+  { q: 'mere ghar me dosh hai kya', expect: 'declined' },
+  { q: 'will my business grow', intent: 'prashna.purpose', slot: ['purpose', 'vyapar'] },
   { q: 'meri kismat kaisi hai', expect: 'declined' },
-  { q: 'exam me pass hounga kya', expect: 'declined' },
-  { q: 'promotion milega kya', expect: 'declined' },
+  { q: 'exam me pass hounga kya', intent: 'prashna.purpose', slot: ['purpose', 'vidya'] },
+  { q: 'promotion milega kya', intent: 'prashna.purpose', slot: ['purpose', 'naukri'] },
   { q: 'kal lottery lagegi kya', expect: 'declined' },
 ];

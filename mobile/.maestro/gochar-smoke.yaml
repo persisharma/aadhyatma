@@ -156,19 +156,21 @@ appId: com.prashantsharma.vedansh
     visible: "Kundali result"
     timeout: 20000
 
-# Saved Jyotish landing now carries the Gochar tool card after the trio.
+# Saved Jyotish landing: since design.md §51c the Gochar door is the second tile
+# of the 2x2 grid, and a running Sade Sati makes it the one LIVE tile — the
+# teaser row that used to sit inside the chart-glance card is now this tile's
+# own reading, printed in words (§12) rather than signalled by the fill alone.
 - tapOn: "Back"
 - waitForAnimationToEnd
 - extendedWaitUntil:
-    visible: "Your Jyotish today"
+    visible: "From your full chart"
     timeout: 15000
-- assertVisible: "From your full chart"
 - scrollUntilVisible:
     element:
       text: "Open Gochar"
     direction: DOWN
     timeout: 15000
-- assertVisible: "Sade Sati is running. Open Gochar"
+- assertVisible: ".*Sade Sati.*"
 - tapOn: "Open Gochar"
 - waitForAnimationToEnd
 

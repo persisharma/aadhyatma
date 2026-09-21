@@ -27,6 +27,10 @@ Goal: make the saved chart feel personally read, at AstroTalk-level breadth, wit
 | 6 | Compiled Kundali report | `KundaliReportModel` (versioned serializable JSON) + `KundaliReportScreen`: chart summary, Lagna/Moon/nakshatra readings, six life-area sections, classical observations, full Vimshottari narrative, disclaimers; per-section share with the Kundali birth-details warning |
 | 7 (gated) | Practice map | Per-graha practice routing over existing library ids — blocked on explicit product/content review |
 
+### Daily reading expansion (September 2026)
+
+Phase 2 now includes the approved detailed Rashifal surface within the existing route. The landing summary is preserved; the detail screen adds yesterday/today/tomorrow, a transit-based introduction and six expandable life areas with authored guidance, an action and transparent transit/Lagna/dasha context. See design.md §51 and RULEBOOK §14.6 for the exact integration, privacy, day-anchor and verification contract. This is an offline deterministic extension, not the future AI phase. Weekly remains in Gochar; monthly/yearly and lucky-number/colour features are outside this change.
+
 ## 3. Conventions (engine)
 
 - **Day anchor**: every daily quantity is evaluated at 06:00 IST via the shared `indiaDayAnchor` — identical convention to `computeRashifal`, one answer per civil day.

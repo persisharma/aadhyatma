@@ -28,6 +28,7 @@ import { BookmarksProvider } from '@/contexts/BookmarksContext';
 import { VratFollowProvider } from '@/contexts/VratFollowContext';
 import { MuhuratFollowProvider } from '@/contexts/MuhuratFollowContext';
 import { PitruSmaranProvider } from '@/contexts/PitruSmaranContext';
+import { DaanLedgerProvider } from '@/contexts/DaanLedgerContext';
 import { JapamCounterProvider } from '@/contexts/JapamCounterContext';
 import { JapamAlarmsProvider } from '@/contexts/JapamAlarmsContext';
 import { registerNativeAlarmForegroundHandler } from '@/notifications/japamAlarmNative';
@@ -67,6 +68,7 @@ import SadhanaCompletionOverlay from '@/components/SadhanaCompletionOverlay';
 import VratReminderScheduler from '@/components/VratReminderScheduler';
 import MuhuratReminderScheduler from '@/components/MuhuratReminderScheduler';
 import FestiveReminderScheduler from '@/components/FestiveReminderScheduler';
+import ReturnReminderScheduler from '@/components/ReturnReminderScheduler';
 import PitruSmaranReminderScheduler from '@/components/PitruSmaranReminderScheduler';
 import JanmaTithiReminderScheduler from '@/components/JanmaTithiReminderScheduler';
 import SadhanaReminderScheduler from '@/components/SadhanaReminderScheduler';
@@ -303,6 +305,8 @@ export default function App() {
               <MuhuratFollowProvider>
               {/* पितृ स्मरण entries (PRD-17) — device-only AsyncStorage, no sync. */}
               <PitruSmaranProvider>
+              {/* दान-पुण्य खाता (PRD-26) — device-only AsyncStorage, no totals. */}
+              <DaanLedgerProvider>
               <UserActivityProvider>
                 <NewContentProvider>
                   <ReadingProgressProvider>
@@ -354,6 +358,11 @@ export default function App() {
                                 location (festival dates come from the bundled
                                 precomputed table). */}
                             <FestiveReminderScheduler />
+                            {/* वापसी स्मरण — default-on, no setting: a ladder
+                                of weekday-deity nudges re-armed from every app
+                                open, so one fires only after 3+ days away.
+                                Needs only the shared permission grant + lang. */}
+                            <ReturnReminderScheduler />
                             <PitruSmaranReminderScheduler />
                             {/* जन्म तिथि (PRD-29) — per-person OPT-IN only; the
                                 planner's worst case is 8 pending (roster cap). */}
@@ -405,6 +414,7 @@ export default function App() {
                   </ReadingProgressProvider>
                 </NewContentProvider>
               </UserActivityProvider>
+              </DaanLedgerProvider>
               </PitruSmaranProvider>
               </MuhuratFollowProvider>
               </VratFollowProvider>

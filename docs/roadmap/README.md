@@ -13,18 +13,30 @@ This folder holds the product roadmap and PRDs for upcoming releases.
   half of the product (panchang, muhurat, vrat, bhog, vidhi, vastu, kundali, theerth) becomes
   askable in one line — and every future feature is discoverable on the day it ships. Companion
   build for the quarter: PRD-20 सङ्कल्प.
+- [**PRD-42 — क्षेत्रीय पर्व · Regional, Sampradaya & Jain calendar**](./prds/42-regional-parv.md) — **Wave 1 shipped 2026-09-06** (17 observances: Rajasthan, Bihar/Mithila, and three pan-Hindu gaps the same audit surfaced). Waves 2–8 proposed: a per-region / per-sampradaya **lens** — a calendar the user turns on, seeded silently from the city they already chose, never a question about who they are — and behind it **22 lenses covering every state** plus the Jain and Sindhi calendars. Appendix A registers **141 candidate observances**, Appendix C **8 universal gaps** that belong to no region and are simply missing (Radhashtami, Gopashtami, Ratha Saptami…). Wave 2 is the gate and ships as a deliberate no-op; realistically a three-to-four-quarter content programme behind a one-sprint code gate. Owns RULEBOOK §23a, written by wave 1.
+- [**PRD-24 · Phase 2 — गृह वास्तु**](./prds/24-vastu-disha-phase2.md) — plan (2026-09-04) to take the
+  shipped Vastu Disha compass to a whole-home vastu companion: OS-fused, tilt-honest heading with a
+  coordinate declination grid; the complete household registry with each rule's weight (निषेध · विधान ·
+  श्रेयस्), the nine mandala zones and the 32 door padas (content-gated); the private मेरा घर roster with a
+  five-class, no-score assessment; a buyer/renter site-visit mode (1–5 BHK, villa, plot templates +
+  compare); floor-plan mark-up (store release); and an AI pre-read/pointers layer designed for the 2027
+  Stage-2 backend. Parts A–E ship OTA — **built 2026-09-07** (R1+R2: source-ladder compass, declination
+  grid, tilt/Hold, the गृह वास्तु journey, compare, text handoff, `vastu.myhome`; door padas ship draft).
+  F1 (image mark-up) waits on the next store release; F2's vision pre-read is an explicit exception to
+  the no-backend constraint below and stays gated on PRD-32.
 - [**Q4 2026 Candidates**](./2026-Q4-candidates.md) — household-practice gap analysis and the next five
   proposed features (PRD-20 … PRD-24, numbers reserved). PRD-23 and PRD-24 shipped in Aug 2026;
   PRD-41 §10 records where 20/21/22 sit against the flagship. Read this for what is *missing*; the
   table below is the Q3 slate only and has not tracked PRDs 07–19.
-- [**Q4 2026 Candidates, Round 2**](./2026-Q4-candidates-round-2.md) — a second slate (PRD-26 … PRD-29,
+- [**Q4 2026 Candidates, Round 2**](./2026-Q4-candidates-round-2.md) — a second slate (PRD-27 … PRD-29 + PRD-42,
   numbers reserved) filtered so that nothing shipped, PRD-owned, or already rejected can appear:
   memorization/recall, the muhurat engine's missing auspicious yogas, festival arcs
   (sthapana → visarjan), and the family lineage record with living janma tithis. Each has a
   prototype. **PRD-30** (household roster) was proposed and dropped by product decision — round 2 §3.4;
   its number is retired. **PRD-25 stays reserved** for सन्ध्या वन्दन per round 1 §3.
 - [**Round 2 session prompts**](./round-2-session-prompts.md) — a self-contained build prompt per
-  candidate (PRD-26 … PRD-29), one branch each, for running the four as independent sessions.
+  candidate, one branch each, for running the four as independent sessions. PRD-27 and PRD-29
+  shipped in Sep 2026; कण्ठस्थ renumbered PRD-26 → PRD-42 on 2026-09-03 (26 is the built दान-पुण्य).
 - [**2027 Feature Bets**](./2027-feature-bets.md) — the strategic slate after Q4 2026: ten bets
   (PRD-41 … PRD-40, numbers reserved) that compound on the bilingual per-verse corpus, with a
   staged backend introduction. Originally drafted as PRD-10 … PRD-19; renumbered to avoid

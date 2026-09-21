@@ -20,7 +20,20 @@ import type { CalendarSystem, ResolvedObservance } from './types';
 // v3: chandrodaya (moonrise) day rule for Sankashti/Karwa Chauth + the Hariyali
 //     and Kajari Teej rules — covers both matcher and catalog changes, so
 //     already-scanned cities re-scan instead of hydrating the old dates.
-const CACHE_VERSION = 3;
+// v4: regional wave 1 — seventeen catalog additions (Rajasthani, Bihari/Maithil
+//     and Jain observances; five of them promoted from catalog-only entries that
+//     had a katha but no tithi). No matcher change and no shipped date moved, but
+//     a city that already scanned would otherwise never see the new rules.
+// v5: aparahna (afternoon) day rule + the दर्श अमावस्या rule that carries it. The
+//     matcher gained a branch and the catalog gained a rule; no shipped date moved.
+// v6: universal gaps + the Tamil/Kerala wave — sixteen catalog additions, a real
+//     `nakshatra` matcher (nakshatra-in-solar-month), and the `solarMonth` /
+//     `weekday` narrowing constraints on lunar-tithi rules. UNLIKE every version
+//     above, this one DOES move shipped dates: all twelve sankrantis shift one day
+//     earlier, onto the civil day that actually contains the ingress instant
+//     (Makar Sankranti 2026 was resolving to 15 Jan against a published 14 Jan).
+//     A city that already scanned must re-scan or it keeps the old, wrong dates.
+const CACHE_VERSION = 7;
 const KEY_ROOT = '@vedansh:observances:';
 const KEY_PREFIX = `${KEY_ROOT}v${CACHE_VERSION}:`;
 
@@ -29,10 +42,10 @@ function storageKey(cityId: string, calendarSystem: CalendarSystem, year: number
 }
 
 function serialize(results: ResolvedObservance[]): StoredObservanceEntry[] {
-  return results.map(({ rule, date }) => ({
-    id: rule.id,
-    date: `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`,
-  }));
+  return results.map(({ rule, date }) => [
+    rule.id,
+    `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`,
+  ]);
 }
 
 function parseEntries(raw: string | null): StoredObservanceEntry[] | null {
@@ -42,7 +55,8 @@ function parseEntries(raw: string | null): StoredObservanceEntry[] | null {
     if (!Array.isArray(parsed)) return null;
     return parsed.filter(
       (item): item is StoredObservanceEntry =>
-        typeof item?.id === 'string' && typeof item?.date === 'string'
+        Array.isArray(item) && item.length === 2
+        && typeof item[0] === 'string' && typeof item[1] === 'string'
     );
   } catch {
     return null;

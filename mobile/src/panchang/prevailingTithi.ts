@@ -1,9 +1,10 @@
-import type { PanchangData } from './types';
+import type { PanchangData, PanchangElement, Paksha } from './types';
 import { TITHI_NAMES_HI, TITHI_NAMES_EN } from './names';
 
 export type PrevailingTithi = {
   nameHi: string;
   nameEn: string;
+  paksha: PanchangData['tithi']['paksha'];
   // Null when the running tithi's end is not solvable from this day's data —
   // the successor case below, whose end lands after the next sunrise and so
   // belongs to tomorrow's solve.
@@ -30,17 +31,41 @@ export type PrevailingTithi = {
  * almost always the one already running pre-dawn (it began the previous day),
  * and the rare pre-dawn end would need yesterday's solve to name — the sunrise
  * answer is the almanac's own for that day.
+ *
+ * `tithiChain` is that walk as DATA — the ordered links, link 0 always the
+ * sunrise tithi — and `prevailingTithi` is the point query over it. Surfaces
+ * that must render the handover rather than ask about one instant (the
+ * home-screen widget, which precomputes its own refresh instants because
+ * WidgetKit/AppWidget draw off a timeline, not a live clock) read the chain, so
+ * they can never name a successor the live query would not.
  */
-export function prevailingTithi(p: PanchangData, at: Date): PrevailingTithi {
+export function tithiChain(p: PanchangData): PrevailingTithi[] {
   const { tithi, kshayaTithi } = p;
-  if (!tithi.endTime || at.getTime() <= tithi.endTime.getTime()) {
-    return { nameHi: tithi.nameHi, nameEn: tithi.nameEn, endTime: tithi.endTime };
-  }
-  if (kshayaTithi && (!kshayaTithi.endTime || at.getTime() <= kshayaTithi.endTime.getTime())) {
-    return { nameHi: kshayaTithi.nameHi, nameEn: kshayaTithi.nameEn, endTime: kshayaTithi.endTime };
+  const link = (element: PanchangElement & { paksha: Paksha }): PrevailingTithi => ({
+    nameHi: element.nameHi,
+    nameEn: element.nameEn,
+    paksha: element.paksha,
+    endTime: element.endTime,
+  });
+  const chain: PrevailingTithi[] = [link(tithi)];
+  if (!tithi.endTime) return chain;
+  if (kshayaTithi) {
+    chain.push(link(kshayaTithi));
+    if (!kshayaTithi.endTime) return chain;
   }
   const successor = ((kshayaTithi ?? tithi).index + 1) % 30;
-  return { nameHi: TITHI_NAMES_HI[successor], nameEn: TITHI_NAMES_EN[successor], endTime: null };
+  chain.push({
+    nameHi: TITHI_NAMES_HI[successor],
+    nameEn: TITHI_NAMES_EN[successor],
+    paksha: successor < 15 ? 'shukla' : 'krishna',
+    endTime: null,
+  });
+  return chain;
+}
+
+export function prevailingTithi(p: PanchangData, at: Date): PrevailingTithi {
+  const chain = tithiChain(p);
+  return chain.find((link) => !link.endTime || at.getTime() <= link.endTime.getTime()) ?? chain[chain.length - 1];
 }
 
 /**

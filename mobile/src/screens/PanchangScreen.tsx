@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, InteractionManager, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import type { GestureResponderEvent } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -11,6 +11,10 @@ import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { library } from '@/data/texts';
 import { buildEntryStartTarget, moreTabTarget } from '@/navigation/entryRoutes';
 import LocationPickerModal from '@/components/LocationPickerModal';
+// Lazy: a sheet that only exists after a tap has no business on the launch
+// graph (`launchGraph.test.ts`), and `React.lazy` is the same treatment
+// `TabNavigator` gives the Panchang stack.
+const LensPickerSheet = React.lazy(() => import('@/components/LensPickerSheet'));
 import MuhuratGlanceCard from '@/components/MuhuratGlanceCard';
 import MuhuratFinderDoor from '@/components/MuhuratFinderDoor';
 import ShubhYogaCard from '@/components/ShubhYogaCard';
@@ -37,9 +41,13 @@ import { useShubhYoga } from '@/panchang/useShubhYoga';
 import type { CalendarSystem, PanchangElement, ResolvedObservance } from '@/panchang/types';
 import { getKathaContent } from '@/panchang/kathaContent';
 import { getUpcomingObservances, searchObservances } from '@/panchang/festivalEngine';
+import { getLensDefinition, serializeLenses, type ObservanceLens } from '@/panchang/lenses';
+import { useLenses } from '@/panchang/useLenses';
+import { seedFromLocationOnce } from '@/panchang/lensStore';
 import { successorTithiToday } from '@/panchang/prevailingTithi';
+import { observanceDayNote, type ObservanceDaySolve } from '@/panchang/observanceDayNote';
 import { sankashtiOccurrenceName } from '@/panchang/sankashtiNames';
-import { getCategoryCounts, getKathaCount, type BrowseCategory } from '@/panchang/vratCatalog';
+import { getCategoryCounts, getKathaCount, getLensAdditions, getNextOccurrence, type BrowseCategory } from '@/panchang/vratCatalog';
 import { VIDHI_ENTRIES, getVidhiById } from '@/data/vidhi';
 import { useVratFollows } from '@/contexts/VratFollowContext';
 import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
@@ -57,11 +65,9 @@ import JyotishPracticeCard from '@/components/JyotishPracticeCard';
 import JyotishShareCard from '@/components/JyotishShareCard';
 import JyotishShareSheet from '@/components/JyotishShareSheet';
 import JyotishStateCard from '@/components/JyotishStateCard';
-import { computePersonalGuidance } from '@/panchang/gochar';
+import JyotishToolTile from '@/components/JyotishToolTile';
+import { computePersonalGuidance, SADE_SATI_PHASE_SHORT } from '@/panchang/gochar';
 import {
-  getCurrentDasha,
-  GRAHA_NAMES_EN,
-  GRAHA_NAMES_HI,
   RASHI_NAMES_EN,
   RASHI_NAMES_HI,
   RASHI_NAMES_WESTERN,
@@ -143,7 +149,7 @@ export default function PanchangScreen({ route }: Props) {
   const muhuratCardRef = useTourTarget('muhuratCard');
   const panchangSegmentRef = useTourTarget('panchangSegment');
   const rootNav = useNavigation<any>();
-  const { followCount, reminderCount } = useVratFollows();
+  const { followCount } = useVratFollows();
   const todayKey = new Date().toDateString();
   const today = useMemo(() => startOfLocalDay(new Date(todayKey)), [todayKey]);
   const [selectedDate, setSelectedDate] = useState(() => startOfLocalDay(route.params?.dateMs ? new Date(route.params.dateMs) : new Date()));
@@ -168,6 +174,33 @@ export default function PanchangScreen({ route }: Props) {
     selectPerson: selectKundaliPerson,
   } = useKundali();
   const { panchang: p, observances, upcoming } = usePanchangForSelection(selectedDate, calendarSystem);
+  const [lensSheetVisible, setLensSheetVisible] = useState(false);
+  const { lenses, availableCount: lensAvailableCount } = useLenses();
+  // The one line PRD-42 §4.2 allows about seeding, named per city and dismissible.
+  const [seededLenses, setSeededLenses] = useState<readonly ObservanceLens[]>([]);
+
+  // SEEDING — silent, post-launch, once per install, and only when the user has
+  // never chosen for themselves. It runs here rather than in the launch prefetch
+  // because it is a WRITE, and the launch path may not grow one; `InteractionManager`
+  // keeps it off the first paint of the tab it is mounted on. The three deliberate
+  // holes (Ujjain, Delhi, Chandigarh) and both tradition lenses return nothing,
+  // so for most users this effect is a single read that changes no pixel.
+  useEffect(() => {
+    let cancelled = false;
+    const handle = InteractionManager.runAfterInteractions(() => {
+      void seedFromLocationOnce({
+        cityId: location.cityId,
+        isTehsil: getCityById(location.cityId)?.districtEn != null,
+        labelEn: location.labelEn,
+      }).then((seeded) => {
+        if (!cancelled && seeded.length > 0) setSeededLenses(seeded);
+      });
+    });
+    return () => {
+      cancelled = true;
+      handle.cancel();
+    };
+  }, [location.cityId, location.labelEn]);
   // The day's one-line identity (vara · masa paksha · Vikram Samvat), shared by
   // the date card's visible subtitle and the date button's a11y label — the
   // explicit label would otherwise hide the subtitle from screen readers.
@@ -300,12 +333,11 @@ export default function PanchangScreen({ route }: Props) {
   const openKathaLibrary = () => rootNav.navigate('KathaLibrary');
   const openMyVrat = () => rootNav.navigate('MyVrat');
   const openPitruSmaran = () => rootNav.navigate('MoreTab', moreTabTarget('PitruSmaranList'));
-  const openKundali = (editing = false) =>
-    rootNav.navigate('Kundali', editing ? { editing: true } : undefined);
+  const openKundali = () => rootNav.navigate('Kundali');
   const openAddPerson = () => rootNav.navigate('Kundali', { newPerson: true });
   const openRashifal = () => rootNav.navigate('Rashifal');
   const openGochar = () => rootNav.navigate('Gochar');
-  const openKundaliReport = () => rootNav.navigate('KundaliReport');
+  const openPrashna = () => rootNav.navigate('Prashna');
   const openGunaMilan = () => rootNav.navigate('GunaMilan');
   const openNamkaran = () => rootNav.navigate('Namkaran');
 
@@ -669,6 +701,56 @@ export default function PanchangScreen({ route }: Props) {
             </View>
           )}
 
+          {/* A city seeded its calendar — say so once, where the new dates appear,
+              never as a modal and never as a question about the person. The copy
+              names the CITY's calendar, not the user. Dismissing is local state:
+              the seeding itself already recorded that it ran. */}
+          {seededLenses.length > 0 && (
+            <Pressable
+              onPress={() => setLensSheetVisible(true)}
+              accessibilityRole="button"
+              accessibilityLabel={`${seededLenses
+                .map((id) => getLensDefinition(id)?.nameEn ?? id)
+                .join(', ')} calendar added for ${location.labelEn}. Opens regional calendars.`}
+              style={({ pressed }) => [
+                {
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: 8,
+                  marginTop: 12,
+                  paddingVertical: 10,
+                  paddingHorizontal: 12,
+                  backgroundColor: colors.goldTint,
+                  borderWidth: 1,
+                  borderColor: colors.divider,
+                  borderRadius: radii.md,
+                },
+                pressed && { opacity: 0.8 },
+              ]}
+            >
+              <Text style={{ fontSize: 14, color: colors.gold }}>❖</Text>
+              <Text style={{ flex: 1, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11.5, lineHeight: 17, color: colors.inkSoft }}>
+                {contentByLang(
+                  lang,
+                  `${contentByLang(lang, location.labelHi, location.labelEn)} का ${seededLenses
+                    .map((id) => getLensDefinition(id)?.nameHi ?? id)
+                    .join(' · ')} पंचांग जोड़ा गया — बदलें`,
+                  `Added the ${seededLenses
+                    .map((id) => getLensDefinition(id)?.nameEn ?? id)
+                    .join(' · ')} calendar for ${location.labelEn} — change`
+                )}
+              </Text>
+              <Pressable
+                onPress={() => setSeededLenses([])}
+                accessibilityRole="button"
+                accessibilityLabel="Dismiss"
+                hitSlop={12}
+              >
+                <Text style={{ fontSize: 14, color: colors.inkMuted }}>✕</Text>
+              </Pressable>
+            </Pressable>
+          )}
+
           <View style={styles.observanceSection}>
             <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginBottom: 10 }}>
               {contentByLang(lang, 'व्रत और पर्व', 'Vrat & Observances')}
@@ -678,7 +760,7 @@ export default function PanchangScreen({ route }: Props) {
                 <ObservanceCard
                   key={`${item.rule.id}-${i}`}
                   item={item}
-                  moonrise={p?.moonrise ?? null}
+                  daySolve={p ? { sunrise: p.sunrise, sunset: p.sunset, moonrise: p.moonrise, tithiIndex: p.tithi.index, tithiEnd: p.tithi.endTime } : null}
                   lang={lang}
                   colors={colors}
                   typography={typography}
@@ -690,9 +772,28 @@ export default function PanchangScreen({ route }: Props) {
                 />
               ))
             ) : (
-              <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
-                {meaningByLang(lang, 'इस तिथि पर कोई व्रत या पर्व नहीं है।', 'No vrat or festival falls on this date.')}
-              </Text>
+              <>
+                <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
+                  {meaningByLang(lang, 'इस तिथि पर कोई व्रत या पर्व नहीं है।', 'No vrat or festival falls on this date.')}
+                </Text>
+                {/* The quiet-day doorway. The क्षेत्र row's HOME is the व्रत-पर्व
+                    ledger, but that is the other segment — and this is the one the
+                    tab opens on and the one a lens actually changes, so a user who
+                    never taps व्रत-पर्व would never learn the feature exists. It
+                    appears ONLY on a day with nothing on it: on a day that has
+                    something to say, this card is exactly what shipped before.
+                    Hidden entirely when no calendar has content to offer. */}
+                {lensAvailableCount > 0 && (
+                  <LensDiscoveryRow
+                    lang={lang}
+                    colors={colors}
+                    typography={typography}
+                    radii={radii}
+                    availableCount={lensAvailableCount}
+                    onPress={() => setLensSheetVisible(true)}
+                  />
+                )}
+              </>
             )}
             {/* PRD-17: the private ॥ स्मरण chip — renders only on a saved
                 observance date, muted gold register, device-only. */}
@@ -735,8 +836,10 @@ export default function PanchangScreen({ route }: Props) {
               onOpenVidhiCatalog={openVidhiCatalog}
               onOpenMyVrat={openMyVrat}
               onOpenPitruSmaran={openPitruSmaran}
+              onOpenLenses={() => setLensSheetVisible(true)}
+              lenses={lenses}
+              lensAvailableCount={lensAvailableCount}
               followCount={followCount}
-              reminderCount={reminderCount}
             />
           ) : (
             <JyotishLanding
@@ -754,11 +857,10 @@ export default function PanchangScreen({ route }: Props) {
               canAddPerson={canAddKundaliPerson}
               onSelectPerson={(id) => { void selectKundaliPerson(id); }}
               onAddPerson={openAddPerson}
-              onOpenKundali={() => openKundali(false)}
-              onEditKundali={() => openKundali(true)}
+              onOpenKundali={openKundali}
               onOpenRashifal={openRashifal}
               onOpenGochar={openGochar}
-              onOpenReport={openKundaliReport}
+              onOpenPrashna={openPrashna}
               onOpenGunaMilan={openGunaMilan}
               onOpenNamkaran={openNamkaran}
               onOpenNavagraha={() => openLinkedSection('navagraha-stotram')}
@@ -767,6 +869,11 @@ export default function PanchangScreen({ route }: Props) {
         </ScrollView>
       </SafeAreaView>
       <LocationPickerModal visible={locationPickerVisible} onClose={() => setLocationPickerVisible(false)} />
+      {lensSheetVisible && (
+        <React.Suspense fallback={null}>
+          <LensPickerSheet visible onClose={() => setLensSheetVisible(false)} />
+        </React.Suspense>
+      )}
     </View>
   );
 }
@@ -787,10 +894,9 @@ function JyotishLanding({
   onSelectPerson,
   onAddPerson,
   onOpenKundali,
-  onEditKundali,
   onOpenRashifal,
   onOpenGochar,
-  onOpenReport,
+  onOpenPrashna,
   onOpenGunaMilan,
   onOpenNamkaran,
   onOpenNavagraha,
@@ -810,10 +916,9 @@ function JyotishLanding({
   onSelectPerson: (id: string) => void;
   onAddPerson: () => void;
   onOpenKundali: () => void;
-  onEditKundali: () => void;
   onOpenRashifal: () => void;
   onOpenGochar: () => void;
-  onOpenReport: () => void;
+  onOpenPrashna: () => void;
   onOpenGunaMilan: () => void;
   onOpenNamkaran: () => void;
   onOpenNavagraha: () => void;
@@ -824,7 +929,6 @@ function JyotishLanding({
     () => (chart ? computePersonalGuidance(chart, today) : null),
     [chart, today]
   );
-  const currentDasha = chart ? getCurrentDasha(chart, today) : null;
   const city = profile ? getCityById(profile.cityId) : null;
 
   const sectionLabel = (hi: string, en: string) => (
@@ -939,50 +1043,40 @@ function JyotishLanding({
           onAction={onOpenKundali}
         />
         {sectionLabel('अभी उपलब्ध', 'Available now')}
-        <JyotishToolCard
-          titleHi="चन्द्र राशि स्वयं चुनें"
-          titleEn="Choose a Moon sign manually"
-          bodyHi="कुंडली उपलब्ध न होने पर भी दैनिक मार्गदर्शन पढ़ें।"
-          bodyEn="Daily guidance still works while your chart is unavailable."
-          glyph="रा"
-          onPress={onOpenRashifal}
-          accessibilityLabel="Open Daily Rashifal"
-          lang={lang}
-          colors={colors}
-          typography={typography}
-          radii={radii}
-          elevation={elevation}
-        />
-        <JyotishToolCard
-          titleHi="अष्टकूट मिलान"
-          titleEn="Guna Milan"
-          bodyHi="वर-वधू के ३६ गुण—हर कूट का स्पष्ट और निजी हिसाब।"
-          bodyEn="A private 36-point match with every koota explained."
-          badge="NEW"
-          glyph="मि"
-          onPress={onOpenGunaMilan}
-          accessibilityLabel="Open Guna Milan"
-          lang={lang}
-          colors={colors}
-          typography={typography}
-          radii={radii}
-          elevation={elevation}
-        />
-        <JyotishToolCard
-          titleHi="नामकरण"
-          titleEn="Namkaran"
-          bodyHi="नवजात के जन्म-चन्द्र से नामाक्षर पाएँ, या नक्षत्र से बिना जन्म विवरण के देखें।"
-          bodyEn="Find a newborn's namakshar from the birth Moon, or browse by nakshatra without birth details."
-          badge="NEW"
-          glyph="ना"
-          onPress={onOpenNamkaran}
-          accessibilityLabel="Open Namkaran"
-          lang={lang}
-          colors={colors}
-          typography={typography}
-          radii={radii}
-          elevation={elevation}
-        />
+        <View style={styles.jyotishTileGrid}>
+          <JyotishToolTile
+            titleHi="चन्द्र राशि स्वयं चुनें"
+            titleEn="Choose a Moon sign"
+            bodyHi="कुंडली उपलब्ध न होने पर भी दैनिक मार्गदर्शन पढ़ें।"
+            bodyEn="Daily guidance still works while your chart is unavailable."
+            glyph="रा"
+            onPress={onOpenRashifal}
+            accessibilityLabel="Open Daily Rashifal"
+            lang={lang}
+          />
+          <JyotishToolTile
+            titleHi="अष्टकूट मिलान"
+            titleEn="Guna Milan"
+            bodyHi="वर-वधू के ३६ गुण—हर कूट का निजी हिसाब।"
+            bodyEn="A private 36-point match with every koota explained."
+            badge="NEW"
+            glyph="मि"
+            onPress={onOpenGunaMilan}
+            accessibilityLabel="Open Guna Milan"
+            lang={lang}
+          />
+          <JyotishToolTile
+            titleHi="नामकरण"
+            titleEn="Namkaran"
+            bodyHi="नवजात के नामाक्षर, जन्म-चन्द्र या नक्षत्र से।"
+            bodyEn="A newborn's namakshar, from the birth Moon or a nakshatra."
+            badge="NEW"
+            glyph="ना"
+            onPress={onOpenNamkaran}
+            accessibilityLabel="Open Namkaran"
+            lang={lang}
+          />
+        </View>
       </View>
     );
   }
@@ -993,10 +1087,6 @@ function JyotishLanding({
       RASHI_NAMES_HI[chart.lagnaRashiIndex],
       RASHI_NAMES_EN[chart.lagnaRashiIndex]
     );
-    const lagnaSecondary =
-      lang === 'en'
-        ? `${RASHI_NAMES_WESTERN[chart.lagnaRashiIndex]} rising`
-        : RASHI_NAMES_EN[chart.lagnaRashiIndex];
     const moonPrimary = contentByLang(
       lang,
       RASHI_NAMES_HI[moon.rashiIndex],
@@ -1004,48 +1094,21 @@ function JyotishLanding({
     );
     const moonSecondary =
       lang === 'en' ? RASHI_NAMES_WESTERN[moon.rashiIndex] : RASHI_NAMES_EN[moon.rashiIndex];
+    // Read off the phase the guidance already solved — never a second
+    // `computeSadeSati`, whose default 1,200-day ingress scan has no business
+    // running for a tile subtitle.
+    const sadeSatiValue =
+      guidance.sadeSatiPhase === 'none'
+        ? null
+        : SADE_SATI_PHASE_SHORT[guidance.sadeSatiPhase];
 
     return (
       <View accessibilityLabel="Jyotish tools landing, saved profile">
-        <View style={styles.jyotishIntro}>
-          <Text
-            style={[
-              pillTextStyle(lang, typography.sectionLabel),
-              { color: colors.saffronDeep, fontSize: 10 },
-            ]}
-          >
-            {formatFullDate(today, lang)}
-          </Text>
-          <Text
-            style={{
-              color: colors.ink,
-              fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
-              fontSize: 26,
-              marginTop: 4,
-            }}
-          >
-            {contentByLang(lang, 'आज आपका ज्योतिष', 'Your Jyotish today')}
-          </Text>
-          <Text
-            style={{
-              color: colors.inkMuted,
-              fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-              fontSize: 12,
-              lineHeight: 18,
-              marginTop: 3,
-            }}
-          >
-            {meaningByLang(
-              lang,
-              'आज का मार्गदर्शन आपकी पूरी कुंडली से; चार्ट स्वयं एक स्पर्श दूर।',
-              'Today’s guidance reads your full chart; the chart itself stays one tap away.'
-            )}
-          </Text>
-        </View>
-
-        {/* Whose day this is, above the guidance it changes. Everything below —
-            Rashifal, the chart glance, the share card — follows this selection,
-            and so does the muhurat finder's आपके लिए strip (design.md §51a). */}
+        {/* Whose day this is, ABOVE everything it changes. The chips no longer
+            govern only the guidance card: every tile in the grid below reads out
+            of this same active person, so a switch has to re-answer the whole
+            screen on one render (design.md §51c). `birthProfileStore` keeps the
+            single active selection that makes that true. */}
         <PersonChips
           people={people}
           activeId={activeId}
@@ -1061,7 +1124,10 @@ function JyotishLanding({
           fullMessageEn={`Up to ${MAX_PEOPLE} people can be saved.`}
         />
 
-        {sectionLabel('आज का राशिफल', 'Today’s Rashifal')}
+        {/* The day's reading, and the only thing on this screen that leads.
+            No page title and no date: the landing only ever shows today, the
+            card's own eyebrow says whose chart it came from, and the date was
+            being printed three times inside 300 dp (design.md §51c). */}
         <View
           style={[
             styles.jyotishGuidanceBlock,
@@ -1108,7 +1174,7 @@ function JyotishLanding({
                 style={{
                   color: colors.ink,
                   fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
-                  fontSize: 21,
+                  fontSize: 25,
                   marginTop: 3,
                 }}
               >
@@ -1116,9 +1182,6 @@ function JyotishLanding({
                 <Text style={[styles.jyotishTranslation, { color: colors.inkMuted }]}>
                   {' '}· {moonSecondary}
                 </Text>
-              </Text>
-              <Text style={[styles.jyotishGuidanceDate, { color: colors.inkMuted }]}>
-                {formatFullDate(today, lang)}
               </Text>
             </View>
             <Pressable
@@ -1140,7 +1203,9 @@ function JyotishLanding({
               </Text>
             </Pressable>
           </View>
-          <JyotishGuidanceRows guidance={guidance} lang={lang} showContext />
+          {/* One आधार line, not a chip per row — Favour and Reflect share a
+              graha often enough that two of the three chips were identical. */}
+          <JyotishGuidanceRows guidance={guidance} lang={lang} showContext="summary" />
           <View
             style={[
               styles.jyotishGuidanceFooter,
@@ -1159,257 +1224,129 @@ function JyotishLanding({
           </View>
         </View>
 
-        {sectionLabel('आपकी कुंडली', 'Your Kundali')}
-        <View
-          style={[
-            styles.jyotishPersonalCard,
+        {/* The four doors as ONE object, each answering for this person. This is
+            what replaces the deleted chart-glance card: लग्न and नक्षत्र moved
+            onto the कुंडली tile, and the साढ़े साती teaser onto the गोचर tile,
+            instead of a 2×2 fact grid restating numbers the doors needed anyway.
+            Open Kundali, Edit details and the full reading all live on
+            KundaliScreen, which is one tap away and already offers all three. */}
+        {sectionLabel(
+          profile.name ? `${profile.name} के लिए` : 'आपके लिए',
+          profile.name ? `For ${profile.name}` : 'For you'
+        )}
+        {/* प्रश्न leads the doors as a full-width card, not a fifth tile: the
+            grid answers "what does my chart say", this answers "what should I
+            do about X" — the question people actually bring (design.md §72). */}
+        <Pressable
+          onPress={onOpenPrashna}
+          accessibilityRole="button"
+          accessibilityLabel="Open Prashna"
+          testID="jyotish-prashna-door"
+          style={({ pressed }) => [
+            styles.prashnaDoor,
             {
-              borderColor: colors.divider,
-              backgroundColor: colors.parchmentSoft,
+              borderColor: colors.cardActiveBorder,
+              backgroundColor: colors.cardActiveFrom,
               borderRadius: radii.lg,
             },
             elevation.card,
+            pressed && { opacity: 0.8 },
           ]}
         >
-          <View style={styles.jyotishPersonalHead}>
-            <View>
-              <Text
-                style={[
-                  pillTextStyle(lang, typography.sectionLabel),
-                  { color: colors.saffronDeep, fontSize: 10 },
-                ]}
-              >
-                {contentByLang(lang, 'कुंडली की एक झलक', 'Chart at a glance')}
-              </Text>
-              <Text
-                style={{
-                  color: colors.ink,
-                  fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
-                  fontSize: 17,
-                  marginTop: 3,
-                }}
-              >
-                {profile.name || contentByLang(lang, 'आपकी जन्म कुंडली', 'Your birth chart')}
-              </Text>
-            </View>
-            <View
-              style={[
-                styles.jyotishSavedPill,
-                {
-                  borderColor: colors.divider,
-                  backgroundColor: colors.cardSurface,
-                  borderRadius: radii.pill,
-                },
-              ]}
+          <View style={{ flex: 1 }}>
+            <Text
+              style={{
+                color: colors.ink,
+                fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
+                fontSize: 15,
+              }}
             >
-              <Text style={[styles.jyotishSavedText, { color: colors.inkMuted }]}>
-                {contentByLang(lang, 'विवरण सहेजे गए', 'Details saved')}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.jyotishFactGrid}>
-            {[
-              {
-                labelHi: 'लग्न',
-                labelEn: 'Lagna',
-                value: lagnaPrimary,
-                detail: lagnaSecondary,
-              },
-              {
-                labelHi: 'चन्द्र राशि',
-                labelEn: 'Moon sign',
-                value: moonPrimary,
-                detail: moonSecondary,
-              },
-              {
-                labelHi: 'नक्षत्र',
-                labelEn: 'Nakshatra',
-                value: contentByLang(
-                  lang,
-                  NAKSHATRA_NAMES_HI[moon.nakshatraIndex],
-                  NAKSHATRA_NAMES_EN[moon.nakshatraIndex]
-                ),
-                detail: contentByLang(lang, `पद ${moon.pada}`, `Pada ${moon.pada}`),
-              },
-              {
-                labelHi: 'वर्तमान दशा',
-                labelEn: 'Current period',
-                value: currentDasha
-                  ? contentByLang(
-                    lang,
-                    GRAHA_NAMES_HI[currentDasha.maha.lord],
-                    GRAHA_NAMES_EN[currentDasha.maha.lord]
-                  )
-                  : '—',
-                detail: contentByLang(lang, 'महादशा', 'Mahadasha'),
-              },
-            ].map((fact) => (
-              <View
-                key={fact.labelEn}
-                style={[
-                  styles.jyotishFact,
-                  {
-                    borderColor: colors.divider,
-                    backgroundColor: colors.cardSurface,
-                    borderRadius: radii.md,
-                  },
-                ]}
-              >
-                <Text
-                  style={[
-                    pillTextStyle(lang, typography.sectionLabel),
-                    styles.jyotishFactLabel,
-                    { color: colors.inkMuted },
-                  ]}
-                >
-                  {contentByLang(lang, fact.labelHi, fact.labelEn)}
-                </Text>
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    color: colors.ink,
-                    fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
-                    fontSize: 14,
-                    marginTop: 3,
-                  }}
-                >
-                  {fact.value}
-                </Text>
-                <Text style={[styles.jyotishFactDetail, { color: colors.inkMuted }]}>
-                  {fact.detail}
-                </Text>
-              </View>
-            ))}
-          </View>
-          {guidance.sadeSatiPhase !== 'none' && (
-            <Pressable
-              onPress={onOpenGochar}
-              accessibilityRole="button"
-              accessibilityLabel="Sade Sati is running. Open Gochar"
-              style={({ pressed }) => [
-                styles.jyotishTeaser,
-                {
-                  borderColor: colors.divider,
-                  backgroundColor: colors.goldTint,
-                  borderRadius: radii.md,
-                },
-                pressed && { opacity: 0.72 },
-              ]}
-            >
-              <Text
-                style={{
-                  flex: 1,
-                  color: colors.inkSoft,
-                  fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-                  fontSize: 11,
-                  lineHeight: 16,
-                }}
-              >
-                {meaningByLang(
-                  lang,
-                  'साढ़े साती का पारम्परिक काल चल रहा है — गोचर में देखें।',
-                  'A traditional Sade Sati period is running — see it in Gochar.'
-                )}
-              </Text>
-              <Text style={{ color: colors.saffronDeep, fontSize: 16 }}>›</Text>
-            </Pressable>
-          )}
-          <View style={styles.jyotishActions}>
-            <Pressable
-              onPress={onOpenKundali}
-              accessibilityRole="button"
-              accessibilityLabel="Open Kundali"
-              style={({ pressed }) => [
-                styles.jyotishPrimary,
-                { backgroundColor: colors.saffronDeep, borderRadius: radii.pill },
-                pressed && { opacity: 0.72 },
-              ]}
-            >
-              <Text style={[styles.jyotishPrimaryText, { color: colors.onPrimary }]}>
-                {contentByLang(lang, 'कुंडली खोलें', 'Open Kundali')}
-              </Text>
-            </Pressable>
-            <Pressable
-              onPress={onEditKundali}
-              accessibilityRole="button"
-              accessibilityLabel="Edit birth details"
-              style={({ pressed }) => [
-                styles.jyotishSecondary,
-                {
-                  borderColor: colors.divider,
-                  backgroundColor: colors.parchmentSoft,
-                  borderRadius: radii.pill,
-                },
-                pressed && { opacity: 0.72 },
-              ]}
-            >
-              <Text style={[styles.jyotishSecondaryText, { color: colors.saffronDeep }]}>
-                {contentByLang(lang, 'विवरण बदलें', 'Edit details')}
-              </Text>
-            </Pressable>
-          </View>
-          <Pressable
-            onPress={onOpenReport}
-            accessibilityRole="button"
-            accessibilityLabel="Open full Kundali reading"
-            style={({ pressed }) => [
-              styles.jyotishReportLink,
-              pressed && { opacity: 0.65 },
-            ]}
-          >
-            <Text style={[styles.jyotishInlineLink, { color: colors.saffronDeep }]}>
-              {contentByLang(lang, 'पूर्ण कुंडली विवेचन खोलें', 'Open the full chart reading')} ›
+              {contentByLang(lang, 'प्रश्न · अपनी कुंडली से पूछें', 'Prashna · ask your chart')}
+              <Text style={[styles.prashnaNew, { color: colors.newBadgeText }]}>  NEW</Text>
             </Text>
-          </Pressable>
+            <Text
+              style={{
+                color: colors.inkMuted,
+                fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+                fontSize: 11,
+                lineHeight: 16,
+                marginTop: 3,
+              }}
+            >
+              {meaningByLang(
+                lang,
+                'विद्या · व्यापार · नौकरी · धन · स्वास्थ्य — नौ विषय, हर उत्तर अपने आधार के साथ',
+                'Study · business · work · money · constitution — nine purposes, every answer with its basis'
+              )}
+            </Text>
+          </View>
+          <Text style={{ color: colors.saffronDeep, fontSize: 18 }}>›</Text>
+        </Pressable>
+        <View style={styles.jyotishTileGrid}>
+          <JyotishToolTile
+            titleHi="कुंडली"
+            titleEn="Kundali"
+            bodyHi="लग्न, ग्रह, भाव और दशा।"
+            bodyEn="Lagna, grahas, houses and Dasha."
+            value={{
+              hi: `${lagnaPrimary} लग्न · ${NAKSHATRA_NAMES_HI[moon.nakshatraIndex]} ${moon.pada}`,
+              en: `${lagnaPrimary} Lagna · ${NAKSHATRA_NAMES_EN[moon.nakshatraIndex]} ${moon.pada}`,
+            }}
+            glyph="कु"
+            onPress={onOpenKundali}
+            accessibilityLabel="Open Kundali"
+            lang={lang}
+          />
+          <JyotishToolTile
+            titleHi="गोचर"
+            titleEn="Gochar"
+            bodyHi="आज के नौ ग्रह आपकी कुंडली में।"
+            bodyEn="Today’s nine grahas in your chart."
+            // The one tile that can be LIVE: a running Sade Sati is a fact about
+            // this person today, and it used to sit 700 dp down the page as a
+            // teaser inside the chart card.
+            value={sadeSatiValue}
+            live={guidance.sadeSatiPhase !== 'none'}
+            badge="NEW"
+            glyph="गो"
+            onPress={onOpenGochar}
+            accessibilityLabel="Open Gochar"
+            lang={lang}
+          />
+          <JyotishToolTile
+            titleHi="अष्टकूट मिलान"
+            titleEn="Guna Milan"
+            bodyHi="वर-वधू के ३६ गुण।"
+            bodyEn="A private 36-point match."
+            // The saved person's own Moon sign and nakshatra ARE one side of a
+            // match, so naming them is a true reading, not a decoration.
+            value={{
+              hi: `${moonPrimary} · ${NAKSHATRA_NAMES_HI[moon.nakshatraIndex]} से`,
+              en: `From ${moonPrimary} · ${NAKSHATRA_NAMES_EN[moon.nakshatraIndex]}`,
+            }}
+            badge="NEW"
+            glyph="मि"
+            onPress={onOpenGunaMilan}
+            accessibilityLabel="Open Guna Milan"
+            lang={lang}
+          />
+          <JyotishToolTile
+            titleHi="नामकरण"
+            titleEn="Namkaran"
+            // Deliberately DESCRIPTIVE where the other three read out a value:
+            // Namkaran answers for a newborn, not for the selected person, so a
+            // personalised line here would be a category error. Today's namakshar
+            // is also gated content (NAMAKSHAR_SOURCE.verified is false), and the
+            // landing is not where an unverified syllable gets promoted.
+            bodyHi="नवजात के नामाक्षर, जन्म-चन्द्र या नक्षत्र से।"
+            bodyEn="A newborn’s namakshar, from the birth Moon or a nakshatra."
+            badge="NEW"
+            glyph="ना"
+            onPress={onOpenNamkaran}
+            accessibilityLabel="Open Namkaran"
+            lang={lang}
+          />
         </View>
-
-        {sectionLabel('गोचर', 'Transits')}
-        <JyotishToolCard
-          titleHi="गोचर"
-          titleEn="Gochar"
-          bodyHi="आज के नौ ग्रह आपकी कुंडली में—साढ़े साती और आगामी राशि-प्रवेश सहित।"
-          bodyEn="Today's nine grahas in your chart—with Sade Sati and upcoming sign changes."
-          badge="NEW"
-          glyph="गो"
-          onPress={onOpenGochar}
-          accessibilityLabel="Open Gochar"
-          lang={lang}
-          colors={colors}
-          typography={typography}
-          radii={radii}
-          elevation={elevation}
-        />
-        {sectionLabel('मिलान', 'Compatibility')}
-        <JyotishToolCard
-          titleHi="अष्टकूट मिलान"
-          titleEn="Guna Milan"
-          bodyHi="वर-वधू के ३६ गुण—हर कूट का स्पष्ट और निजी हिसाब।"
-          bodyEn="A private 36-point match with every koota explained."
-          badge="NEW"
-          glyph="मि"
-          onPress={onOpenGunaMilan}
-          accessibilityLabel="Open Guna Milan"
-          lang={lang}
-          colors={colors}
-          typography={typography}
-          radii={radii}
-          elevation={elevation}
-        />
-        <JyotishToolCard
-          titleHi="नामकरण"
-          titleEn="Namkaran"
-          bodyHi="नवजात के जन्म-चन्द्र से नामाक्षर पाएँ, या नक्षत्र से बिना जन्म विवरण के देखें।"
-          bodyEn="Find a newborn's namakshar from the birth Moon, or browse by nakshatra without birth details."
-          badge="NEW"
-          glyph="ना"
-          onPress={onOpenNamkaran}
-          accessibilityLabel="Open Namkaran"
-          lang={lang}
-          colors={colors}
-          typography={typography}
-          radii={radii}
-          elevation={elevation}
-        />
         {sectionLabel('साधना', 'Practice')}
         <JyotishPracticeCard
           subtitleHi="आज के चन्द्र-राशि मार्गदर्शन के साथ"
@@ -1485,66 +1422,55 @@ function JyotishLanding({
         </View>
       </View>
 
+      {/* The same grid as the saved landing (design.md §51c), with every tile
+          on its descriptive fallback — a guest has no chart, so no tile has a
+          reading. One geometry for both states, not a guest-only layout. */}
       {sectionLabel('अपने लिए', 'For you')}
-      <JyotishToolCard
-        titleHi="जन्म कुंडली"
-        titleEn="Create Kundali"
-        bodyHi="लग्न, ग्रह, भाव और दशा—पहले सरल सार, फिर पूरा चार्ट।"
-        bodyEn="Lagna, grahas, houses, and Dasha—with beginner insights before the full chart."
-        badge="NEW"
-        glyph="कु"
-        onPress={onOpenKundali}
-        accessibilityLabel="Create Kundali"
-        lang={lang}
-        colors={colors}
-        typography={typography}
-        radii={radii}
-        elevation={elevation}
-      />
-      <JyotishToolCard
-        titleHi="आज का राशिफल"
-        titleEn="Daily Rashifal"
-        bodyHi="चन्द्र राशि और आज के गोचर से पारम्परिक चिंतन-संकेत।"
-        bodyEn="Traditional reflection prompts from your Moon sign and today's transits."
-        glyph="रा"
-        onPress={onOpenRashifal}
-        accessibilityLabel="Open Daily Rashifal"
-        lang={lang}
-        colors={colors}
-        typography={typography}
-        radii={radii}
-        elevation={elevation}
-      />
-      <JyotishToolCard
-        titleHi="अष्टकूट मिलान"
-        titleEn="Guna Milan"
-        bodyHi="वर-वधू के ३६ गुण—हर कूट का स्पष्ट और निजी हिसाब।"
-        bodyEn="A private 36-point match with every koota explained."
-        badge="NEW"
-        glyph="मि"
-        onPress={onOpenGunaMilan}
-        accessibilityLabel="Open Guna Milan"
-        lang={lang}
-        colors={colors}
-        typography={typography}
-        radii={radii}
-        elevation={elevation}
-      />
-      <JyotishToolCard
-        titleHi="नामकरण"
-        titleEn="Namkaran"
-        bodyHi="नवजात के जन्म-चन्द्र से नामाक्षर पाएँ, या नक्षत्र से बिना जन्म विवरण के देखें।"
-        bodyEn="Find a newborn's namakshar from the birth Moon, or browse by nakshatra without birth details."
-        badge="NEW"
-        glyph="ना"
-        onPress={onOpenNamkaran}
-        accessibilityLabel="Open Namkaran"
-        lang={lang}
-        colors={colors}
-        typography={typography}
-        radii={radii}
-        elevation={elevation}
-      />
+      <View style={styles.jyotishTileGrid}>
+        <JyotishToolTile
+          titleHi="जन्म कुंडली"
+          titleEn="Create Kundali"
+          bodyHi="लग्न, ग्रह, भाव और दशा—सरल सार के साथ।"
+          bodyEn="Lagna, grahas, houses and Dasha—with plain-language insights."
+          badge="NEW"
+          glyph="कु"
+          onPress={onOpenKundali}
+          accessibilityLabel="Create Kundali"
+          lang={lang}
+        />
+        <JyotishToolTile
+          titleHi="आज का राशिफल"
+          titleEn="Daily Rashifal"
+          bodyHi="चन्द्र राशि और आज के गोचर से चिंतन-संकेत।"
+          bodyEn="Reflection prompts from your Moon sign and today's transits."
+          glyph="रा"
+          onPress={onOpenRashifal}
+          accessibilityLabel="Open Daily Rashifal"
+          lang={lang}
+        />
+        <JyotishToolTile
+          titleHi="अष्टकूट मिलान"
+          titleEn="Guna Milan"
+          bodyHi="वर-वधू के ३६ गुण—हर कूट का निजी हिसाब।"
+          bodyEn="A private 36-point match with every koota explained."
+          badge="NEW"
+          glyph="मि"
+          onPress={onOpenGunaMilan}
+          accessibilityLabel="Open Guna Milan"
+          lang={lang}
+        />
+        <JyotishToolTile
+          titleHi="नामकरण"
+          titleEn="Namkaran"
+          bodyHi="नवजात के नामाक्षर, जन्म-चन्द्र या नक्षत्र से।"
+          bodyEn="A newborn's namakshar, from the birth Moon or a nakshatra."
+          badge="NEW"
+          glyph="ना"
+          onPress={onOpenNamkaran}
+          accessibilityLabel="Open Namkaran"
+          lang={lang}
+        />
+      </View>
 
       <View style={styles.jyotishMicroNote}>
         <View
@@ -1574,90 +1500,6 @@ function JyotishLanding({
       {sectionLabel('साधना', 'Practice')}
       <JyotishPracticeCard onPress={onOpenNavagraha} />
     </View>
-  );
-}
-
-function JyotishToolCard({
-  titleHi,
-  titleEn,
-  bodyHi,
-  bodyEn,
-  badge,
-  glyph,
-  onPress,
-  accessibilityLabel,
-  lang,
-  colors,
-  typography,
-  radii,
-  elevation,
-}: {
-  titleHi: string;
-  titleEn: string;
-  bodyHi: string;
-  bodyEn: string;
-  badge?: string;
-  glyph: string;
-  onPress: () => void;
-  accessibilityLabel: string;
-  lang: Lang;
-  colors: any;
-  typography: any;
-  radii: any;
-  elevation: any;
-}) {
-  return (
-    <Pressable
-      onPress={onPress}
-      accessibilityRole="button"
-      accessibilityLabel={accessibilityLabel}
-      style={({ pressed }) => [
-        styles.jyotishToolCard,
-        {
-          borderColor: colors.cardActiveBorder,
-          backgroundColor: colors.parchmentSoft,
-          borderRadius: radii.lg,
-        },
-        elevation.card,
-        pressed && { opacity: 0.72 },
-      ]}
-    >
-      <View style={[styles.jyotishToolGlyph, { backgroundColor: colors.saffronTint, borderRadius: radii.md }]}>
-        <Text style={{ color: colors.saffronDeep, fontFamily: fontFamilies.devanagariBold, fontSize: 18 }}>
-          {glyph}
-        </Text>
-      </View>
-      <View style={{ flex: 1 }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 7 }}>
-          <Text
-            style={{
-              color: colors.ink,
-              fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
-              fontSize: 17,
-            }}
-          >
-            {contentByLang(lang, titleHi, titleEn)}
-          </Text>
-          {badge && (
-            <View style={[styles.jyotishBadge, { backgroundColor: colors.newBadgeBg, borderRadius: radii.pill }]}>
-              <Text style={[styles.jyotishBadgeText, { color: colors.newBadgeText }]}>{badge}</Text>
-            </View>
-          )}
-        </View>
-        <Text
-          style={{
-            color: colors.inkMuted,
-            fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-            fontSize: 12,
-            lineHeight: 18,
-            marginTop: 4,
-          }}
-        >
-          {meaningByLang(lang, bodyHi, bodyEn)}
-        </Text>
-      </View>
-      <Text style={{ color: colors.saffronDeep, fontSize: 20 }}>›</Text>
-    </Pressable>
   );
 }
 
@@ -1808,11 +1650,12 @@ function TimeCell({ icon, label, value, lang, colors }: { icon: string; label: s
   );
 }
 
-function ObservanceCard({ item, moonrise, lang, colors, typography, radii, elevation, onOpenLink, onOpenKatha, onOpenVidhi }: {
+function ObservanceCard({ item, daySolve, lang, colors, typography, radii, elevation, onOpenLink, onOpenKatha, onOpenVidhi }: {
   item: ResolvedObservance;
-  // This date's moonrise, when the day is solved. Only read for a chandrodaya
-  // rule, whose observance day IS the day whose moonrise its tithi covers.
-  moonrise: Date | null;
+  // This date's solved panchang, narrowed to what a day note can read (null
+  // until the day's solve lands). Which rules read which field is
+  // `observanceDayNote`'s business, not the card's.
+  daySolve: ObservanceDaySolve | null;
   lang: Lang;
   colors: any;
   typography: any;
@@ -1829,11 +1672,11 @@ function ObservanceCard({ item, moonrise, lang, colors, typography, radii, eleva
   // PRD-19: the vidhi pill renders only when the rule's vidhiId resolves to a
   // published vidhi — the identical hook mechanism as kathaId.
   const vidhi = item.rule.vidhiId ? getVidhiById(item.rule.vidhiId) : null;
-  // A moonrise vrat is kept through a night, not a calendar box: its tithi
-  // usually ends the next morning, so the card states the instant the fast is
-  // actually broken rather than leaving the reader to reconcile "व्रत" with a
-  // तिथि line that ends before noon.
-  const chandrodaya = item.rule.dayRule === 'chandrodaya' ? moonrise : null;
+  // A vrat is not a calendar box, so the card states what THIS day is for: the
+  // moonrise that breaks a chandrodaya fast, the aparahna दर्श अमावस्या is fixed
+  // by, the snan-daan morning of the udaya अमावस्या row. Pure helper, so the copy
+  // and the day logic are test-pinned away from the render path.
+  const dayNote = observanceDayNote(item.rule, daySolve, formatTime12);
   // The one generic monthly rule whose occurrences carry PUBLISHED names: the
   // Bhadrapada Sankashti is the Heramba day, an adhik lunation is Vibhuvana, a
   // Tuesday is अंगारकी — the rule name alone hid all of that. Occurrence-titled
@@ -1871,13 +1714,9 @@ function ObservanceCard({ item, moonrise, lang, colors, typography, radii, eleva
       <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted, marginTop: 4 }}>
         {meaningByLang(lang, item.rule.shortDescriptionHi, item.rule.shortDescriptionEn)}
       </Text>
-      {chandrodaya && (
+      {dayNote && (
         <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.saffronDeep, marginTop: 6 }}>
-          {contentByLang(
-            lang,
-            `व्रत इसी रात्रि — चंद्रोदय ${formatTime12(chandrodaya)}, दर्शन व अर्घ्य के बाद पारण`,
-            `Kept this night — moonrise ${formatTime12(chandrodaya)}, parana after darshan and arghya`
-          )}
+          {contentByLang(lang, dayNote.hi, dayNote.en)}
         </Text>
       )}
       <View style={styles.linkRow}>
@@ -1927,15 +1766,136 @@ function ObservanceCard({ item, moonrise, lang, colors, typography, radii, eleva
   );
 }
 
-function PitruSmaranCatalogRow({
-  lang, colors, typography, radii, elevation, onPress,
+/**
+ * The quiet-day doorway to the lens sheet (PRD-42 entry study, pattern B).
+ *
+ * Rendered ONLY where the day card would otherwise say "nothing falls on this
+ * date", which is both where the space is free and the moment a user is most
+ * likely to want more dates. Deliberately NOT dismissible: the dismissible seed
+ * line was the original bridge and it disappears forever on one tap, leaving the
+ * feature invisible from the segment that its own result lives on. Muted gold
+ * register, no badge and no count, so it reads as part of the almanac rather than
+ * as something being sold.
+ */
+function LensDiscoveryRow({
+  lang,
+  colors,
+  typography,
+  radii,
+  availableCount,
+  onPress,
+}: {
+  lang: Lang;
+  colors: any;
+  typography: any;
+  radii: any;
+  availableCount: number;
+  onPress: () => void;
+}) {
+  return (
+    <Pressable
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={`Add a regional calendar. ${availableCount} available`}
+      style={({ pressed }) => [
+        {
+          flexDirection: 'row',
+          alignItems: 'center',
+          minHeight: 48,
+          marginTop: 12,
+          paddingVertical: 10,
+          paddingHorizontal: 12,
+          backgroundColor: colors.goldTint,
+          borderWidth: 1,
+          borderColor: colors.divider,
+          borderRadius: radii.md,
+        },
+        pressed && { opacity: 0.8 },
+      ]}
+    >
+      <Text style={{ fontSize: 15, color: colors.gold, marginRight: 10 }}>❖</Text>
+      <View style={{ flex: 1 }}>
+        <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 13, color: colors.ink }}>
+          {contentByLang(lang, 'क्षेत्रीय पंचांग जोड़ें', 'Add a regional calendar')}
+        </Text>
+        <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkMuted, marginTop: 2 }}>
+          {contentByLang(
+            lang,
+            `अपने क्षेत्र या परंपरा की तिथियाँ · ${availableCount} उपलब्ध`,
+            `Your region’s or tradition’s days · ${availableCount} available`
+          )}
+        </Text>
+      </View>
+      <Text style={{ fontSize: 18, color: colors.inkMuted }}>›</Text>
+    </Pressable>
+  );
+}
+
+/** One column of the ledger bar: glyph over label over one short line of state.
+    Its own button, so each ledger keeps a full-height 48 dp target. */
+function CatalogLedgerCell({
+  lang, colors, typography, glyph, label, state, accessibilityLabel, onPress, divided,
+}: {
+  lang: Lang;
+  colors: any;
+  typography: any;
+  glyph: string;
+  label: string;
+  state: string;
+  accessibilityLabel: string;
+  onPress: () => void;
+  divided: boolean;
+}) {
+  return (
+    <Pressable
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel}
+      style={({ pressed }) => [
+        styles.ledgerCell,
+        divided && { borderLeftWidth: 1, borderLeftColor: colors.divider },
+        pressed && { opacity: 0.6 },
+      ]}
+    >
+      <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 17, color: colors.gold }}>{glyph}</Text>
+      <Text
+        numberOfLines={1}
+        style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginTop: 3 }}
+      >
+        {label}
+      </Text>
+      <Text numberOfLines={1} style={{ ...captionFont(state), fontSize: 11, color: colors.saffronDeep, marginTop: 2 }}>
+        {state}
+      </Text>
+    </Pressable>
+  );
+}
+
+/** मेरा व्रत · पितृ स्मरण · क्षेत्र as ONE summary bar.
+    These were three stacked full-width cards (~190 dp — roughly a third of the
+    first fold), which pushed आगामी low and the श्रेणी grid off-screen entirely.
+    Same three destinations and the same live state in ~72 dp: one card, three
+    hairline-divided columns, each its own button. The state lines are compressed
+    to what a ~106 dp column holds — a count, the soonest smaran date, and for
+    क्षेत्र the FIRST calendar's name plus +N rather than a bare count, because a
+    count still does not tell a user where their extra dates came from (§42).
+    The accessibility labels stay full sentences: the compression is visual. */
+function CatalogLedgerBar({
+  lang, colors, typography, radii, elevation, followCount, lenses, lensAvailableCount,
+  onOpenMyVrat, onOpenPitruSmaran, onOpenLenses,
 }: {
   lang: Lang;
   colors: any;
   typography: any;
   radii: any;
   elevation: any;
-  onPress: () => void;
+  followCount: number;
+  lenses: ReadonlySet<ObservanceLens>;
+  /** Calendars this build offers; 0 collapses the bar to two columns. */
+  lensAvailableCount: number;
+  onOpenMyVrat: () => void;
+  onOpenPitruSmaran: () => void;
+  onOpenLenses: () => void;
 }) {
   const { entries } = usePitruSmaran();
   const [soonest, setSoonest] = useState<Date | null>(null);
@@ -1955,46 +1915,219 @@ function PitruSmaranCatalogRow({
     return () => { cancelled = true; clearTimeout(handle); };
   }, [entries]);
 
-  const subtitle = entries.length > 0
-    ? contentByLang(
-        lang,
-        `${entries.length} स्मरण${soonest ? ` · अगला: ${shortSmaranDate(soonest, lang)}` : ''}`,
-        `${entries.length} remembrance${entries.length === 1 ? '' : 's'}${soonest ? ` · Next: ${shortSmaranDate(soonest, lang)}` : ''}`
-      )
-    : contentByLang(lang, 'अपने पितरों की तिथियाँ जोड़ें', 'Add your ancestors’ tithis');
+  const vratState = followCount > 0
+    ? contentByLang(lang, `${followCount} फ़ॉलो`, `${followCount} following`)
+    : contentByLang(lang, 'जोड़ें', 'Add');
+
+  const smaranState = entries.length === 0
+    ? contentByLang(lang, 'जोड़ें', 'Add')
+    : soonest
+      ? contentByLang(lang, `अगला ${shortSmaranDate(soonest, lang)}`, `Next ${shortSmaranDate(soonest, lang)}`)
+      : contentByLang(lang, `${entries.length} स्मरण`, `${entries.length} saved`);
+
+  const lensNames = [...lenses]
+    .map((id) => getLensDefinition(id))
+    .filter((def): def is NonNullable<typeof def> => def != null)
+    .map((def) => contentByLang(lang, def.nameHi, def.nameEn));
+  // `सभी n` once every offered calendar is on — `जैन +1` would name one calendar
+  // as if it were the choice, when the choice was "everything".
+  const lensState = lensNames.length === 0
+    ? contentByLang(lang, `${lensAvailableCount} उपलब्ध`, `${lensAvailableCount} available`)
+    : lensNames.length === lensAvailableCount
+      ? contentByLang(lang, `सभी ${lensAvailableCount}`, `All ${lensAvailableCount}`)
+      : lensNames.length === 1
+        ? lensNames[0]
+        : `${lensNames[0]} +${lensNames.length - 1}`;
 
   return (
-    <Pressable
-      onPress={onPress}
-      accessibilityRole="button"
-      accessibilityLabel={`Pitru Smaran. ${entries.length > 0 ? `${entries.length} entries` : 'Add remembrance dates'}`}
-      style={({ pressed }) => [
-        styles.myVratRow,
-        styles.pitruLedgerRow,
+    <View
+      style={[
+        styles.ledgerBar,
         { backgroundColor: colors.goldTint, borderColor: colors.gold, borderRadius: radii.lg },
         elevation.card,
-        pressed && { opacity: 0.8 },
       ]}
     >
-      <Text style={{ fontSize: 18, color: colors.gold, marginRight: 10 }}>॥</Text>
-      <View style={{ flex: 1 }}>
-        <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
-          {contentByLang(lang, 'पितृ स्मरण', 'Pitru Smaran')}
-        </Text>
-        <Text style={{ ...captionFont(subtitle), fontSize: 12, color: colors.inkMuted, marginTop: 2 }}>
-          {subtitle}
-        </Text>
+      <CatalogLedgerCell
+        lang={lang}
+        colors={colors}
+        typography={typography}
+        glyph="★"
+        label={contentByLang(lang, 'मेरा व्रत', 'My Vrat')}
+        state={vratState}
+        accessibilityLabel={followCount > 0 ? `My Vrat, ${followCount} following` : 'My Vrat'}
+        onPress={onOpenMyVrat}
+        divided={false}
+      />
+      <CatalogLedgerCell
+        lang={lang}
+        colors={colors}
+        typography={typography}
+        glyph="॥"
+        label={contentByLang(lang, 'पितृ स्मरण', 'Pitru Smaran')}
+        state={smaranState}
+        accessibilityLabel={`Pitru Smaran. ${entries.length > 0 ? `${entries.length} entries` : 'Add remembrance dates'}`}
+        onPress={onOpenPitruSmaran}
+        divided
+      />
+      {/* No calendar with content ⇒ no column: a filter that can choose nothing
+          is not a filter. Comes back by itself when the first lensed rule ships. */}
+      {lensAvailableCount > 0 && (
+        <CatalogLedgerCell
+          lang={lang}
+          colors={colors}
+          typography={typography}
+          glyph="❖"
+          label={contentByLang(lang, 'क्षेत्र', 'Regional')}
+          state={lensState}
+          accessibilityLabel={
+            lensNames.length === lensAvailableCount
+              ? `Regional calendars, all ${lensAvailableCount} on`
+              : lensNames.length > 0
+                ? `Regional calendars, ${lensNames.length} on`
+                : 'Regional calendars, none selected'
+          }
+          onPress={onOpenLenses}
+          divided
+        />
+      )}
+    </View>
+  );
+}
+
+/**
+ * आपके पंचांग से — what the active क्षेत्रीय पंचांग actually added (PRD-42 §4.1,
+ * design.md §73).
+ *
+ * The additive contract puts a lensed day among the universal ones with nothing
+ * marking it, so a user who turned जैन on and looked at the calendar saw "the same
+ * list as before, plus a day they could not point to". This section is the
+ * pointer: one group per active calendar, in registry order, each rule a row that
+ * opens its detail with its next date beside it. A calendar that adds nothing in
+ * this build says so in one muted line rather than vanishing — silence here would
+ * read as "your tap did nothing", which is the report in the first place.
+ *
+ * Rendered only with at least one lens on: with none, the ledger column already
+ * says `22 उपलब्ध` and there is nothing to list.
+ */
+function LensAdditionsSection({
+  lang, today, calendarSystem, lenses, colors, typography, radii, elevation, onOpenDetail, onOpenLenses,
+}: {
+  lang: Lang;
+  today: Date;
+  calendarSystem: CalendarSystem;
+  lenses: ReadonlySet<ObservanceLens>;
+  colors: any;
+  typography: any;
+  radii: any;
+  elevation: any;
+  onOpenDetail: (ruleId: string) => void;
+  onOpenLenses: () => void;
+}) {
+  const lensKey = serializeLenses(lenses);
+  const groups = useMemo(
+    () =>
+      getLensAdditions(lenses).map((group) => ({
+        ...group,
+        def: getLensDefinition(group.lens),
+        rules: group.rules.map((rule) => ({ rule, next: getNextOccurrence(rule.id, today, calendarSystem) })),
+      })),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [lensKey, today, calendarSystem]
+  );
+  if (groups.length === 0) return null;
+  const addedCount = groups.reduce((sum, group) => sum + group.rules.length, 0);
+
+  return (
+    <View
+      testID="lens-additions"
+      style={[
+        styles.additionsCard,
+        { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md },
+        elevation.card,
+      ]}
+    >
+      <View style={styles.additionsHead}>
+        <View style={{ flex: 1 }}>
+          <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink }}>
+            {contentByLang(lang, 'आपके पंचांग से', 'From your calendars')}
+          </Text>
+          <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkMuted, marginTop: 2 }}>
+            {addedCount === 0
+              ? contentByLang(lang, 'चुने हुए पंचांग अभी कोई विशेष तिथि नहीं जोड़ते', 'Your chosen calendars add no dates of their own yet')
+              : contentByLang(
+                  lang,
+                  `${addedCount} ${addedCount === 1 ? 'तिथि' : 'तिथियाँ'} जो केवल इन पंचांगों से आती ${addedCount === 1 ? 'है' : 'हैं'}`,
+                  `${addedCount} ${addedCount === 1 ? 'observance' : 'observances'} that only these calendars bring`
+                )}
+          </Text>
+        </View>
+        <Pressable
+          onPress={onOpenLenses}
+          accessibilityRole="button"
+          accessibilityLabel="Change regional calendars"
+          hitSlop={8}
+          style={({ pressed }) => [pressed && { opacity: 0.6 }]}
+        >
+          <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 12, color: colors.saffronDeep }}>
+            {contentByLang(lang, 'बदलें', 'Change')}
+          </Text>
+        </Pressable>
       </View>
-      <Text style={{ fontSize: 20, color: colors.inkMuted }}>›</Text>
-    </Pressable>
+      {groups.map(({ lens, def, rules }) => (
+        <View key={lens} style={{ marginTop: 8 }}>
+          <Text
+            style={{
+              fontFamily: typography.subtitle.fontFamily,
+              fontSize: 10,
+              letterSpacing: 1,
+              textTransform: 'uppercase',
+              color: colors.inkMuted,
+              marginBottom: 2,
+            }}
+          >
+            {def ? contentByLang(lang, def.nameHi, def.nameEn) : lens}
+          </Text>
+          {rules.length === 0 ? (
+            <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkMuted, paddingVertical: 6 }}>
+              {contentByLang(lang, 'अभी कोई विशेष तिथि नहीं — आगामी अद्यतन में', 'No dates of its own yet — coming in a later update')}
+            </Text>
+          ) : (
+            rules.map(({ rule, next }) => (
+              <Pressable
+                key={rule.id}
+                onPress={() => onOpenDetail(rule.id)}
+                accessibilityRole="button"
+                accessibilityLabel={`${rule.nameEn}${next ? `, next ${formatShortDate(next.date, 'en')}` : ''}`}
+                style={({ pressed }) => [styles.resultRow, { borderBottomColor: colors.divider }, pressed && { opacity: 0.6 }]}
+              >
+                <View style={{ flex: 1, paddingRight: 10 }}>
+                  <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
+                    {contentByLang(lang, rule.nameHi, rule.nameEn)}
+                  </Text>
+                  <Text style={{ ...captionFont(lang === 'en' ? rule.nameHi : rule.nameEn), fontSize: 13, color: colors.inkMuted, marginTop: 2 }}>
+                    {lang === 'en' ? rule.nameHi : rule.nameEn}
+                  </Text>
+                </View>
+                {next && (
+                  <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 11, color: colors.saffronDeep, letterSpacing: 0.4, marginRight: 8 }}>
+                    {formatShortDate(next.date, lang).toUpperCase()}
+                  </Text>
+                )}
+                <Text style={{ fontSize: 18, color: colors.inkMuted }}>›</Text>
+              </Pressable>
+            ))
+          )}
+        </View>
+      ))}
+    </View>
   );
 }
 
 function CatalogLanding({
   lang, today, calendarSystem, query, onChangeQuery,
   colors, typography, radii, elevation,
-  onOpenDetail, onOpenCategory, onOpenKathaLibrary, onOpenVidhiCatalog, onOpenMyVrat, followCount, reminderCount,
-  onOpenPitruSmaran,
+  onOpenDetail, onOpenCategory, onOpenKathaLibrary, onOpenVidhiCatalog, onOpenMyVrat, followCount,
+  onOpenPitruSmaran, onOpenLenses, lenses, lensAvailableCount,
 }: {
   lang: Lang;
   today: Date;
@@ -2011,12 +2144,17 @@ function CatalogLanding({
   onOpenVidhiCatalog: () => void;
   onOpenMyVrat: () => void;
   onOpenPitruSmaran: () => void;
+  onOpenLenses: () => void;
+  lenses: ReadonlySet<ObservanceLens>;
+  lensAvailableCount: number;
   followCount: number;
-  reminderCount: number;
 }) {
   const trimmed = query.trim();
+  // Search stays lens-blind on purpose — see `searchObservances`.
   const results = useMemo(() => (trimmed ? searchObservances(trimmed) : []), [trimmed]);
-  const upcoming = useMemo(() => getUpcomingObservances(today, 6, calendarSystem, 150), [today, calendarSystem]);
+  const lensKey = serializeLenses(lenses);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const upcoming = useMemo(() => getUpcomingObservances(today, 6, calendarSystem, 150, undefined, lenses), [today, calendarSystem, lensKey]);
   const counts = useMemo(() => getCategoryCounts(), []);
   const kathaCount = getKathaCount();
 
@@ -2068,43 +2206,33 @@ function CatalogLanding({
         )
       ) : (
         <>
-          {/* My Vrat — pinned at the top of the catalog as the personal entry point. */}
-          <Pressable
-            onPress={onOpenMyVrat}
-            accessibilityRole="button"
-            accessibilityLabel={followCount > 0 ? `My Vrat, ${followCount} following` : 'My Vrat'}
-            style={({ pressed }) => [styles.myVratRow, { backgroundColor: colors.goldTint, borderColor: colors.gold, borderRadius: radii.lg }, elevation.card, pressed && { opacity: 0.8 }]}
-          >
-            <Text style={{ fontSize: 18, color: colors.gold, marginRight: 10 }}>★</Text>
-            <View style={{ flex: 1 }}>
-              <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
-                {contentByLang(lang, 'मेरा व्रत', 'My Vrat')}
-              </Text>
-              {(() => {
-                const subtitle =
-                  followCount > 0
-                    ? contentByLang(
-                        lang,
-                        `${followCount} फ़ॉलो किए · ${reminderCount} अनुस्मारक`,
-                        `${followCount} following · ${reminderCount} reminders on`
-                      )
-                    : contentByLang(lang, 'अपने व्रत यहाँ रखें', 'Keep your vrats here');
-                return (
-                  <Text style={{ ...captionFont(subtitle), fontSize: 12, color: colors.inkMuted, marginTop: 2 }}>
-                    {subtitle}
-                  </Text>
-                );
-              })()}
-            </View>
-            <Text style={{ fontSize: 20, color: colors.inkMuted }}>›</Text>
-          </Pressable>
-          <PitruSmaranCatalogRow
+          {/* The personal ledgers — one bar, three columns. See CatalogLedgerBar. */}
+          <CatalogLedgerBar
             lang={lang}
             colors={colors}
             typography={typography}
             radii={radii}
             elevation={elevation}
-            onPress={onOpenPitruSmaran}
+            followCount={followCount}
+            lenses={lenses}
+            lensAvailableCount={lensAvailableCount}
+            onOpenMyVrat={onOpenMyVrat}
+            onOpenPitruSmaran={onOpenPitruSmaran}
+            onOpenLenses={onOpenLenses}
+          />
+          {/* What the active calendars added — the answer the ledger column's
+              `जैन` alone cannot give. Nothing rendered with no lens on. */}
+          <LensAdditionsSection
+            lang={lang}
+            today={today}
+            calendarSystem={calendarSystem}
+            lenses={lenses}
+            colors={colors}
+            typography={typography}
+            radii={radii}
+            elevation={elevation}
+            onOpenDetail={onOpenDetail}
+            onOpenLenses={onOpenLenses}
           />
           {upcoming.length > 0 && (
             <View style={{ marginTop: 14 }}>
@@ -2252,18 +2380,14 @@ const styles = StyleSheet.create({
   myVratButton: { width: 34, height: 34, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   starBadge: { position: 'absolute', top: -2, right: -3, minWidth: 16, height: 16, borderRadius: 8, borderWidth: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 3 },
   starBadgeText: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, lineHeight: 13 },
-  myVratRow: { flexDirection: 'row', alignItems: 'center', borderWidth: 1.5, padding: 14, marginTop: 12 },
-  pitruLedgerRow: { marginTop: 10 },
+  ledgerBar: { flexDirection: 'row', alignItems: 'stretch', borderWidth: 1.5, paddingVertical: 12, paddingHorizontal: 4, marginTop: 12 },
+  ledgerCell: { flex: 1, minHeight: 48, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 4 },
   segmented: { flexDirection: 'row', padding: 3, borderWidth: 1, marginTop: 10 },
   segmentOption: { flex: 1, minHeight: 38, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 14 },
   jyotishHero: { borderWidth: 1, padding: 16, marginTop: 12, flexDirection: 'row', alignItems: 'center', gap: 13 },
   jyotishHeroIcon: { width: 58, height: 58, alignItems: 'center', justifyContent: 'center' },
   jyotishIntro: { paddingHorizontal: 1, paddingTop: 12, paddingBottom: 5 },
   jyotishSectionLabel: { fontSize: 10, marginTop: 18, marginBottom: 8 },
-  jyotishToolCard: { minHeight: 98, borderWidth: 1, padding: 14, marginBottom: 10, flexDirection: 'row', alignItems: 'center', gap: 12 },
-  jyotishToolGlyph: { width: 46, height: 46, alignItems: 'center', justifyContent: 'center' },
-  jyotishBadge: { paddingHorizontal: 7, paddingVertical: 3 },
-  jyotishBadgeText: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, letterSpacing: 1.1 },
   jyotishPractice: { minHeight: 72, borderWidth: 1, paddingHorizontal: 14, flexDirection: 'row', alignItems: 'center', gap: 12 },
   jyotishPracticeGlyph: { fontFamily: fontFamilies.devanagariBold, fontSize: 24 },
   jyotishMicroNote: { marginHorizontal: 4, marginTop: 12, flexDirection: 'row', alignItems: 'flex-start', gap: 9 },
@@ -2272,41 +2396,20 @@ const styles = StyleSheet.create({
   jyotishGuidanceBlock: { borderWidth: 1, overflow: 'hidden' },
   jyotishGuidanceHead: { paddingHorizontal: 14, paddingVertical: 12, borderBottomWidth: StyleSheet.hairlineWidth, flexDirection: 'row', alignItems: 'center', gap: 10 },
   jyotishTranslation: { fontFamily: fontFamilies.inter, fontSize: 10 },
-  jyotishGuidanceDate: { fontFamily: fontFamilies.inter, fontSize: 10, marginTop: 2 },
   jyotishSharePill: { minHeight: 38, paddingHorizontal: 11, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   jyotishShareText: { fontFamily: fontFamilies.interSemiBold, fontSize: 10 },
   jyotishGuidanceFooter: { paddingHorizontal: 13, paddingVertical: 11, alignItems: 'flex-end' },
   jyotishInlineLink: { fontFamily: fontFamilies.interSemiBold, fontSize: 10 },
-  jyotishPersonalCard: { borderWidth: 1, padding: 14 },
-  jyotishPersonalHead: { flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', gap: 9 },
-  jyotishSavedPill: { paddingHorizontal: 8, paddingVertical: 5, borderWidth: 1 },
-  jyotishSavedText: { fontFamily: fontFamilies.interSemiBold, fontSize: 10 },
-  jyotishFactGrid: { marginTop: 10, flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  jyotishFact: { width: '48.7%', minHeight: 62, paddingHorizontal: 10, paddingVertical: 9, borderWidth: 1 },
-  jyotishFactLabel: { fontSize: 10 },
-  jyotishFactDetail: { fontFamily: fontFamilies.inter, fontSize: 10, marginTop: 1 },
-  jyotishActions: { marginTop: 12, flexDirection: 'row', gap: 8 },
-  jyotishReportLink: {
-    minHeight: 44,
-    marginTop: 2,
-    justifyContent: 'center',
-    alignSelf: 'flex-start',
-  },
-  jyotishTeaser: {
-    marginTop: 10,
-    minHeight: 44,
-    paddingHorizontal: 11,
-    paddingVertical: 8,
-    borderWidth: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  jyotishPrimary: { minHeight: 42, flex: 1, paddingHorizontal: 15, alignItems: 'center', justifyContent: 'center' },
-  jyotishPrimaryText: { fontFamily: fontFamilies.interSemiBold, fontSize: 11 },
-  jyotishSecondary: { minHeight: 42, flex: 1, paddingHorizontal: 15, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
-  jyotishSecondaryText: { fontFamily: fontFamilies.interSemiBold, fontSize: 11 },
+  // The 2x2 door grid (design.md 51c) — it replaced the stacked tool cards AND
+  // the chart-glance fact grid. Wrapping keeps the 3-tile state (the error
+  // branch) honest as 2 + 1 rather than forcing a fixed 2x2.
+  jyotishTileGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+  prashnaDoor: { flexDirection: 'row', alignItems: 'center', gap: 10, padding: 13, borderWidth: 1, marginBottom: 8, minHeight: 64 },
+  prashnaNew: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, letterSpacing: 0.8 },
   resultRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 13, borderBottomWidth: StyleSheet.hairlineWidth },
+  // आपके पंचांग से — same card register as the upcoming cards and the tiles.
+  additionsCard: { marginTop: 12, borderWidth: 1, paddingHorizontal: 14, paddingTop: 12, paddingBottom: 6 },
+  additionsHead: { flexDirection: 'row', alignItems: 'flex-start', gap: 12 },
   // Compact upcoming card (design.md § catalog view): date + glyph top row and a
   // one-line name — the category caption is dropped, the ॐ/☾/✺ glyph carries it.
   upCard: { width: 136, height: 72, borderWidth: 1, paddingVertical: 10, paddingHorizontal: 12 },

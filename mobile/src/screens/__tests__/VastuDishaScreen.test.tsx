@@ -8,15 +8,28 @@ import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { View as mockView } from 'react-native';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { GitaLanguageProvider } from '@/data/gita/language';
 import VastuDishaScreen from '@/screens/VastuDishaScreen';
 import { getMandirGuidance } from '@/data/vastu/mandirGuidance';
 import { getVastuRoomEntries } from '@/data/vastu/roomGuidance';
+import { VASTU_HOMES_STORAGE_KEY, type HomeRecord, type HomeRoster } from '@/vastu/homeRecord';
+import { __resetHomeRosterStoreForTests } from '@/vastu/homeRecordStore';
 
 jest.mock('react-native-safe-area-context', () => ({
   SafeAreaView: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) =>
     mockReact.createElement(mockView, props, children),
 }));
+
+// ListCard (the मेरे घर door) renders a gradient thumb.
+jest.mock('expo-linear-gradient', () => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const r = require('react');
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { View } = require('react-native');
+  return { LinearGradient: ({ children, ...p }: Record<string, unknown>) => r.createElement(View, p, children) };
+});
 
 jest.mock('react-native-svg', () => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -65,7 +78,7 @@ jest.mock('expo-sensors', () => ({
   },
 }));
 
-const navigation = { goBack: jest.fn() };
+const navigation = { goBack: jest.fn(), navigate: jest.fn() };
 
 async function renderScreen() {
   let renderer!: TestRenderer.ReactTestRenderer;
@@ -100,6 +113,78 @@ test('sensor unavailable → manual mode with every guidance surface rendered', 
   for (const dik of ['east', 'southeast', 'south', 'southwest', 'west', 'northwest', 'north', 'northeast']) {
     r.root.findByProps({ testID: `vastu-disha-${dik}` });
   }
+  act(() => r.unmount());
+});
+
+// ——— Hold (PRD-24 Phase 2 §A4/US-03) ———
+
+test('the Hold pill is disabled when the sensor is unavailable — nothing to hold', async () => {
+  const r = await renderScreen();
+  const hold = r.root.findByProps({ testID: 'vastu-hold' });
+  expect(hold.props.accessibilityState).toEqual({ selected: false, disabled: true });
+  act(() => r.unmount());
+});
+
+test('the Hold pill is disabled in manual mode — a chip already froze the dial', async () => {
+  const r = await renderScreen();
+  await act(async () => {
+    r.root.findByProps({ testID: 'vastu-disha-east' }).props.onPress();
+  });
+  const hold = r.root.findByProps({ testID: 'vastu-hold' });
+  expect(hold.props.accessibilityState.disabled).toBe(true);
+  act(() => r.unmount());
+});
+
+// ——— मेरे घर door (PRD-24 Phase 2 §C4) ———
+
+const gharHome = (over: Partial<HomeRecord> = {}): HomeRecord => ({
+  id: 'h1',
+  version: 1,
+  label: 'हमारा घर',
+  kind: 'flat',
+  template: 'flat-3bhk',
+  role: 'considering',
+  facing: 'east',
+  doorPada: null,
+  rooms: [],
+  createdAt: '2026-09-06T10:00:00.000Z',
+  updatedAt: '2026-09-06T10:00:00.000Z',
+  ...over,
+});
+
+async function seedRoster(homes: HomeRecord[]) {
+  __resetHomeRosterStoreForTests();
+  const roster: HomeRoster = { version: 1, homes, livingId: null };
+  await AsyncStorage.setItem(VASTU_HOMES_STORAGE_KEY, JSON.stringify(roster));
+}
+
+test('मेरे घर door: NEW badge on an empty roster, tap opens setup', async () => {
+  await seedRoster([]);
+  const r = await renderScreen();
+  const door = r.root.findByProps({ testID: 'vastu-mere-ghar-door' });
+  expect(JSON.stringify(r.toJSON())).toContain('NEW');
+  await act(async () => door.props.onPress());
+  expect(navigation.navigate).toHaveBeenCalledWith('GharVastuSetup');
+  act(() => r.unmount());
+});
+
+test('मेरे घर door: a saved home opens the roster (which owns + नया घर), no NEW badge', async () => {
+  await seedRoster([gharHome()]);
+  const r = await renderScreen();
+  const door = r.root.findByProps({ testID: 'vastu-mere-ghar-door' });
+  await act(async () => door.props.onPress());
+  // Never straight to the one home: the roster is the only surface with the
+  // add button, so straight-to-home would strand a one-home user forever.
+  expect(navigation.navigate).toHaveBeenCalledWith('GharVastuRoster');
+  expect(JSON.stringify(r.toJSON())).not.toContain('NEW');
+  act(() => r.unmount());
+});
+
+test('मेरे घर door: several homes open the roster', async () => {
+  await seedRoster([gharHome(), gharHome({ id: 'h2' }), gharHome({ id: 'h3' })]);
+  const r = await renderScreen();
+  await act(async () => r.root.findByProps({ testID: 'vastu-mere-ghar-door' }).props.onPress());
+  expect(navigation.navigate).toHaveBeenCalledWith('GharVastuRoster');
   act(() => r.unmount());
 });
 

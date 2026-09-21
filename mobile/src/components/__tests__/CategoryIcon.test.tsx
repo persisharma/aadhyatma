@@ -73,6 +73,16 @@ describe('CategoryIcon', () => {
     ]);
   });
 
+  it('renders Daan as a clean offering-patra rather than a payment mark', () => {
+    expectParts('daan', [
+      'category-icon-daan-offering-left',
+      'category-icon-daan-offering-centre',
+      'category-icon-daan-offering-right',
+      'category-icon-daan-patra-rim',
+      'category-icon-daan-patra',
+    ]);
+  });
+
   it('renders the नित्य साधना tile as the lotus mark (twelve gradient petals)', () => {
     const root = renderIcon('routine');
     // Each petal is a LinearGradient (mocked to a View forwarding its colors

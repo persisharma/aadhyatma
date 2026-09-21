@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { ImageBackground, Text } from 'react-native';
+import { Image, ImageBackground, Text } from 'react-native';
 import { backgroundImages } from '@assets/backgrounds';
 import { getDeityBackground, getTheerthBackground } from '@/data/backgrounds';
 
@@ -70,6 +70,67 @@ test('renders sourced statewise temple detail content in English', () => {
   assert.match(text, /Govardhan|Pushtimarg/);
   assert.match(text, /Sources/);
   assert.doesNotMatch(text, /RULEBOOK §11\.3/);
+});
+
+test('renders Salasar Balaji extended sections after the origin story (Hindi)', () => {
+  const text = render('salasar-balaji', 'hi');
+  assert.match(text, /सालासर बालाजी/, 'temple name');
+  assert.match(text, /हनुमान/, 'deity badge');
+  assert.match(text, /मंदिर स्थापना कथा/, 'sthapana section label');
+  assert.match(text, /मोहनदास/, 'sthapana katha body');
+  assert.match(text, /सवामणी/, 'traditions section');
+  assert.match(text, /मेले और उत्सव/, 'melas section label');
+  assert.match(text, /अंजनी माता/, 'journey section body');
+  assert.ok(text.indexOf('उद्भव कथा') < text.indexOf('मंदिर स्थापना कथा'), 'sections follow the origin story');
+  assert.ok(text.indexOf('अंजनी माता') < text.indexOf('स्रोत'), 'sources footer stays last');
+});
+
+test('renders Salasar Balaji extended sections in English', () => {
+  const text = render('salasar-balaji', 'en');
+  assert.match(text, /Sthapana Katha/);
+  assert.match(text, /1754 CE/);
+  assert.match(text, /Savamani/);
+  assert.match(text, /Chaitra Purnima/);
+  assert.match(text, /Anjani Mata/);
+  assert.match(text, /Sources/);
+});
+
+test('Salasar Balaji shows its commissioned sketch as an in-content illustration', () => {
+  const route = { key: 'd', name: 'TheerthDetail', params: { templeId: 'salasar-balaji' } } as Props['route'];
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="hi">
+        <TheerthDetailScreen navigation={navigation} route={route} />
+      </GitaLanguageProvider>,
+    );
+  });
+  const frames = tree.root.findAll((n) => typeof n.type === 'string' && n.props.testID === 'theerth-illustration');
+  assert.equal(frames.length, 1, 'one illustration frame');
+  assert.equal(frames[0].props.accessibilityLabel, 'सालासर बालाजी');
+  const img = frames[0].findByType(Image);
+  assert.equal(img.props.source, backgroundImages.theerth_salasar_balaji, 'frame shows the Salasar plate');
+  assert.equal(tree.root.findAllByType(ImageBackground).length, 1, 'faded background layer still renders');
+});
+
+test('temples on a generic deity plate get no in-content illustration', () => {
+  const route = { key: 'd', name: 'TheerthDetail', params: { templeId: 'somnath' } } as Props['route'];
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <TheerthDetailScreen navigation={navigation} route={route} />
+      </GitaLanguageProvider>,
+    );
+  });
+  assert.equal(tree.root.findAll((n) => typeof n.type === 'string' && n.props.testID === 'theerth-illustration').length, 0);
+});
+
+test('temples without extended sections render only the two core sections', () => {
+  const text = render('somnath', 'en');
+  assert.doesNotMatch(text, /Sthapana Katha/);
+  assert.equal((text.match(/Significance/g) ?? []).length, 1);
+  assert.equal((text.match(/Origin Story/g) ?? []).length, 1);
 });
 
 test('shows a not-found message for an unknown temple id', () => {

@@ -1,0 +1,164 @@
+# मेरा घर Compare Smoke Test (PRD-24 Phase 2 §6/§E3, design.md §66.6)
+#
+# Two considering homes captured by hand, then the side-by-side reading:
+#   1. Home 1: door (empty roster) → setup → East facing → one room placed →
+#      assessment → back.
+#   2. Home 2: door (non-empty roster) → roster → + New home → North facing →
+#      one room placed → assessment → back to the roster.
+#   3. Compare: selection mode → both cards → "See side by side" → two columns,
+#      the main-door row, and the closing line that hands the decision back.
+#
+# Language + state notes as in ghar-vastu-setup-smoke.
+
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+
+# ── Global reading language → English ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── Home 1: empty roster → setup ──
+- tapOn: { id: "more-vastu-disha" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: "vastu-mere-ghar-door"
+    direction: DOWN
+    timeout: 30000
+    centerElement: true
+- tapOn: { id: "vastu-mere-ghar-door" }
+- waitForAnimationToEnd
+- assertVisible: "New home"
+- scrollUntilVisible:
+    element:
+      id: "ghar-setup-next-type"
+    direction: DOWN
+    timeout: 30000
+    centerElement: true
+- tapOn: { id: "ghar-setup-next-type" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: "ghar-facing-east"
+    direction: DOWN
+    timeout: 30000
+    centerElement: true
+- tapOn: { id: "ghar-facing-east" }
+- tapOn: { id: "ghar-setup-next-facing" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: "mandala-cell-southeast"
+    direction: DOWN
+    timeout: 30000
+    centerElement: true
+- tapOn: { id: "mandala-cell-southeast" }
+- scrollUntilVisible:
+    element:
+      id: "ghar-setup-finish"
+    direction: DOWN
+    timeout: 30000
+    centerElement: true
+- tapOn: { id: "ghar-setup-finish" }
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible:
+      id: "ghar-vastu-screen"
+    timeout: 15000
+- tapOn: "Back"
+- waitForAnimationToEnd
+- assertVisible: "Vastu Disha"
+
+# ── Home 2: non-empty roster → the roster owns + New home ──
+- scrollUntilVisible:
+    element:
+      id: "vastu-mere-ghar-door"
+    direction: DOWN
+    timeout: 30000
+    centerElement: true
+- tapOn: { id: "vastu-mere-ghar-door" }
+- waitForAnimationToEnd
+- assertVisible: "My homes"
+- tapOn: { id: "ghar-roster-new" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: "ghar-setup-next-type"
+    direction: DOWN
+    timeout: 30000
+    centerElement: true
+- tapOn: { id: "ghar-setup-next-type" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: "ghar-facing-north"
+    direction: DOWN
+    timeout: 30000
+    centerElement: true
+- tapOn: { id: "ghar-facing-north" }
+- tapOn: { id: "ghar-setup-next-facing" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: "mandala-cell-northeast"
+    direction: DOWN
+    timeout: 30000
+    centerElement: true
+- tapOn: { id: "mandala-cell-northeast" }
+- scrollUntilVisible:
+    element:
+      id: "ghar-setup-finish"
+    direction: DOWN
+    timeout: 30000
+    centerElement: true
+- tapOn: { id: "ghar-setup-finish" }
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible:
+      id: "ghar-vastu-screen"
+    timeout: 15000
+- tapOn: "Back"
+- waitForAnimationToEnd
+- assertVisible: "My homes"
+
+# ── Compare: select both considering homes → side by side ──
+- tapOn: { id: "ghar-roster-compare" }
+- waitForAnimationToEnd
+- tapOn:
+    id: "ghar-roster-home-.*"
+    index: 0
+- tapOn:
+    id: "ghar-roster-home-.*"
+    index: 1
+- tapOn: { id: "ghar-roster-compare-go" }
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible:
+      id: "ghar-vastu-compare-screen"
+    timeout: 15000
+- assertVisible: "Main door"
+# The stance line — a reading, never a verdict (US-13).
+- scrollUntilVisible:
+    element:
+      id: "compare-closing"
+    direction: DOWN
+    timeout: 30000
+    centerElement: true
+- assertVisible: ".*decision is yours.*"
+
+# ── Back out cleanly ──
+- tapOn: "Back"
+- waitForAnimationToEnd
+- assertVisible: "My homes"

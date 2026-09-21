@@ -199,6 +199,23 @@ test('MuhuratResultsScreen: the वास्तु दिशा door renders for
   act(() => griha.unmount());
 });
 
+test('MuhuratResultsScreen: the मेरा घर door sits beside the दिशा door and routes to setup with role living (PRD-24 Phase 2 §C4/US-16)', () => {
+  const griha = renderWithLang(
+    <MuhuratResultsScreen
+      navigation={nav}
+      route={{ key: 'k', name: 'MuhuratResults', params: { occasionId: 'griha-pravesh' } } as never}
+    />
+  );
+  // The Phase-1 दिशा door is untouched (additive rule, PRD §1)…
+  griha.root.findByProps({ testID: 'muhurat-vastu-door' });
+  // …and with no saved living home, the new door opens setup for the home being entered.
+  act(() => {
+    griha.root.findByProps({ testID: 'muhurat-ghar-door' }).props.onPress();
+  });
+  expect(mockNavigation.navigate).toHaveBeenCalledWith('GharVastuSetup', { role: 'living' });
+  act(() => griha.unmount());
+});
+
 test('MuhuratDayDetailScreen renders answer-first with provenance and the doshas list', async () => {
   const r = renderWithLang(
     <MuhuratDayDetailScreen

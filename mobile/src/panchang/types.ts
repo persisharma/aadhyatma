@@ -1,3 +1,5 @@
+import type { ObservanceLens } from './lenses';
+
 export type Paksha = 'shukla' | 'krishna';
 
 export type CalendarSystem = 'purnimant' | 'amanta';
@@ -67,6 +69,18 @@ export type FestivalMarker = 'star' | 'dot' | 'halfmoon';
 
 export type ObservanceCategory = 'festival' | 'vrat' | 'upavas' | 'katha' | 'regional';
 
+/**
+ * How a rule reaches the catalog.
+ *
+ * - `default` — in the catalog and on the calendar.
+ * - `advanced` — catalog-only, behind "show advanced" (`hidden()` rules).
+ * - `regional` — RETIRED by PRD-42 W2 and deliberately left in the union with no
+ *   occupants. Its two rules (`karthigai-vrat`, `rohini-vrat`) were a stand-in for
+ *   "shown to everyone but really somebody's" and are now `default` + a `lens`,
+ *   which is the real mechanism. Keeping the value here is how the union grows a
+ *   third occupant next year instead of someone re-inventing the stand-in;
+ *   `lens.test.ts` fails the build if any rule ever carries it again.
+ */
 export type ObservanceVisibility = 'default' | 'advanced' | 'regional';
 
 export type ObservanceRuleType =
@@ -98,11 +112,18 @@ export type ObservanceRelativeRule = 'friday-before-purnima';
  *   (sthapana), Ram Navami (janma), monthly Vinayaka Chaturthi. When the tithi
  *   opens shortly after sunrise, the sunrise answer names the day AFTER the
  *   midday actually worshipped (Ganesh Chaturthi 2026: 15 Sep instead of 14).
+ * - `aparahna` — the tithi running in the AFTERNOON (the midpoint of the fourth
+ *   of the day's five equal parts). The convention for पितृ तर्पण and shraddha,
+ *   which are afternoon rites: `darsha-amavasya`. An amavasya that opens between
+ *   sunrise and aparahna covers this day's afternoon and tomorrow's sunrise, so
+ *   the two answers name different days (Bhadrapada 2026: 10 Sep for दर्श
+ *   अमावस्या, 11 Sep for the udaya snan-daan अमावस्या). Both are published, which
+ *   is why the two are separate rules rather than one retagged rule.
  *
  * The remaining non-sunrise conventions (pradosh, nishita) are not modelled
  * yet — see `VERIFICATION.md` "±1-day muhurta shift".
  */
-export type ObservanceDayRule = 'udaya' | 'chandrodaya' | 'madhyahna';
+export type ObservanceDayRule = 'udaya' | 'chandrodaya' | 'madhyahna' | 'aparahna';
 
 /**
  * Where a rule sits inside a multi-day festival arc (PRD-28, पर्व-अर्क).
@@ -126,6 +147,21 @@ export type ObservanceRule = {
   nameEn: string;
   category: ObservanceCategory;
   visibility: ObservanceVisibility;
+  /**
+   * The क्षेत्रीय पंचांग this rule belongs to (PRD-42 §4.1).
+   *
+   * ABSENT ⇒ UNIVERSAL: shown to everyone, exactly as today. This field is
+   * additive metadata on rules that would otherwise not ship at all — it is never
+   * a retagging of something already universal. Gangaur, Chhath and Goga Navami
+   * stay universal: they are kept by tens of millions, their descriptions already
+   * name the region, and demoting them behind a switch would take away exactly
+   * what the September 2026 report asked for.
+   *
+   * An ARRAY, because a shared observance is one rule and never two: Rath Yatra is
+   * `['odisha','bengal']`, Vasubaras `['maharashtra','gujarat']`. One matching
+   * lens is enough to show it.
+   */
+  lens?: readonly ObservanceLens[];
   ruleType: ObservanceRuleType;
   recurrence: ObservanceRecurrence;
   type?: 'lunar' | 'solar';
@@ -134,7 +170,20 @@ export type ObservanceRule = {
   paksha?: Paksha;
   tithi?: number;
   weekday?: number;
+  /**
+   * Nakshatra index, 0 = Ashwini … 26 = Revati — the SAME indexing
+   * `PanchangData.nakshatra.index` and `nakshatraAtSunrise` use. Required by
+   * `ruleType: 'nakshatra'`; ignored otherwise.
+   */
   nakshatra?: number;
+  /**
+   * Sidereal solar month the day must fall in, 0 = Mesha … 11 = Meena. An extra
+   * CONSTRAINT, never a rule type of its own: it narrows a `nakshatra` rule to
+   * its one annual occurrence (Krittika in Vrischika = Karthigai Deepam) and a
+   * `lunar-tithi` rule to the solar month a regional calendar names it by
+   * (Amavasya in Karka = Karkidaka Vavu). Absent means unconstrained.
+   */
+  solarMonth?: number;
   solarLongitude?: number;
   solarIngress?: number;
   relativeRule?: ObservanceRelativeRule;

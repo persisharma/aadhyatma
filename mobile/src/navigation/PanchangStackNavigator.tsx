@@ -19,6 +19,12 @@ import NamkaranScreen from '@/screens/NamkaranScreen';
 import NamkaranResultScreen from '@/screens/NamkaranResultScreen';
 import NamkaranRashiScreen from '@/screens/NamkaranRashiScreen';
 import VastuDishaScreen from '@/screens/VastuDishaScreen';
+import DaanJourneyScreen from '@/screens/DaanJourneyScreen';
+import DaanLedgerScreen from '@/screens/DaanLedgerScreen';
+import DaanEntryScreen from '@/screens/DaanEntryScreen';
+import DaanDirectoryScreen from '@/screens/DaanDirectoryScreen';
+import DaanDirectoryDetailScreen from '@/screens/DaanDirectoryDetailScreen';
+import DaanKathaScreen from '@/screens/DaanKathaScreen';
 import VidhiCatalogScreen from '@/screens/VidhiCatalogScreen';
 import VidhiDetailScreen from '@/screens/VidhiDetailScreen';
 import VidhiConductScreen from '@/screens/VidhiConductScreen';
@@ -79,6 +85,40 @@ export default function PanchangStackNavigator() {
         component={VastuDishaScreen}
         options={{ animation: 'slide_from_right' }}
       />
+      {/* दान-पुण्य (PRD-26) — the Observance-Detail daan door pushes the
+          journey in place; entry/directory/katha are its terminal pushes.
+          DaanPunya itself stays More-only (the educate home has one door). */}
+      <Stack.Screen name="DaanJourney" component={DaanJourneyScreen} options={{ animation: 'slide_from_right' }} />
+      <Stack.Screen name="DaanLedger" component={DaanLedgerScreen} options={{ animation: 'slide_from_right' }} />
+      <Stack.Screen name="DaanEntry" component={DaanEntryScreen} options={{ animation: 'slide_from_right' }} />
+      <Stack.Screen name="DaanDirectory" component={DaanDirectoryScreen} options={{ animation: 'slide_from_right' }} />
+      <Stack.Screen name="DaanDirectoryDetail" component={DaanDirectoryDetailScreen} options={{ animation: 'slide_from_right' }} />
+      <Stack.Screen name="DaanKatha" component={DaanKathaScreen} options={{ animation: 'slide_from_right' }} />
+      {/* मेरा घर (PRD-24 Phase 2) — the griha-pravesh result's door pushes the
+       * journey in place here so Back returns to the muhurat result. require()
+       * thunks keep the journey off the static launch graph (launchGraph budget). */}
+      {/* eslint-disable @typescript-eslint/no-require-imports */}
+      <Stack.Screen
+        name="GharVastuRoster"
+        getComponent={() => require('@/screens/GharVastuRosterScreen').default}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="GharVastuSetup"
+        getComponent={() => require('@/screens/GharVastuSetupScreen').default}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="GharVastu"
+        getComponent={() => require('@/screens/GharVastuScreen').default}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="GharVastuCompare"
+        getComponent={() => require('@/screens/GharVastuCompareScreen').default}
+        options={{ animation: 'slide_from_right' }}
+      />
+      {/* eslint-enable @typescript-eslint/no-require-imports */}
       <Stack.Screen
         name="AbujhDays"
         component={AbujhDaysScreen}
@@ -102,6 +142,13 @@ export default function PanchangStackNavigator() {
       <Stack.Screen
         name="KundaliReport"
         component={KundaliReportScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      {/* प्रश्न (PRD-43) — a require() thunk keeps the composer off the launch graph. */}
+      {/* eslint-disable-next-line @typescript-eslint/no-require-imports */}
+      <Stack.Screen
+        name="Prashna"
+        getComponent={() => require('@/screens/PrashnaScreen').default}
         options={{ animation: 'slide_from_right' }}
       />
       <Stack.Screen

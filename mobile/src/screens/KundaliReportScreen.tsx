@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
+import BasisChain from '@/components/BasisChain';
 import JyotishShareCard from '@/components/JyotishShareCard';
 import JyotishShareSheet from '@/components/JyotishShareSheet';
 import JyotishStateCard from '@/components/JyotishStateCard';
@@ -259,7 +260,22 @@ export default function KundaliReportScreen({ navigation }: Props) {
 
           {report && chart && (
             <>
-              {disclaimer}
+              <Text
+                accessibilityLabel={`As of ${report.asOfLabelEn}`}
+                style={[
+                  styles.asOf,
+                  {
+                    color: colors.inkMuted,
+                    fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+                  },
+                ]}
+              >
+                {meaningByLang(
+                  lang,
+                  `${report.asOfLabelHi} की स्थिति · पारम्परिक मार्गदर्शन, निश्चित भविष्यवाणी नहीं · हर खंड अपना आधार दिखाता है`,
+                  `As of ${report.asOfLabelEn} · traditional guidance, not a certain prediction · every section shows its basis`
+                )}
+              </Text>
               <View
                 style={[
                   styles.chartCard,
@@ -421,6 +437,9 @@ function ReportSectionCard({
           {meaningByLang(lang, paragraphHi, section.bodyEn[index])}
         </Text>
       ))}
+      {section.basis && section.basis.length > 0 && (
+        <BasisChain basis={section.basis} lang={lang} testID={`basis-${section.id}`} />
+      )}
       {practice && (
         <Pressable
           onPress={() => onPractice(practice.id)}
@@ -483,6 +502,12 @@ const styles = StyleSheet.create({
   disclaimer: {
     padding: 11,
     borderWidth: 1,
+    marginTop: 4,
+    marginBottom: 10,
+  },
+  asOf: {
+    fontSize: 11,
+    lineHeight: 17,
     marginTop: 4,
     marginBottom: 10,
   },

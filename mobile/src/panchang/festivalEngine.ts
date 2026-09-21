@@ -1,16 +1,36 @@
 import { addDays } from './calendarGrid';
-import { computeTithiAndMonth, getSiderealSunLng, locationKey, tithiAtMadhyahna, tithiAtMoonrise, UJJAIN_CITY_ID } from './engine';
+import { computeTithiAndMonth, getSiderealSunLng, locationKey, nakshatraAtSunrise, solarMonthAtSunrise, tithiAtAparahna, tithiAtMadhyahna, tithiAtMoonrise, UJJAIN_CITY_ID } from './engine';
 import { getObservanceCatalog, OBSERVANCE_RULES } from './festivals';
 import { getStoredObservanceYear } from './observanceStore';
-import { PRECOMPUTED_OBSERVANCES } from './precomputedObservances';
+import { PRECOMPUTED_OBSERVANCES, type PackedObservance } from './precomputedObservances';
+import { ALL_LENSES, ruleVisibleForLenses, type ObservanceLens } from './lenses';
 import type { CalendarSystem, GeoLocation, ObservanceRule, ResolvedObservance, ResolvedFestival } from './types';
+
+/**
+ * The user's क्षेत्रीय पंचांग set, as every query below takes it.
+ *
+ * Omitting it means the EMPTY set, and that default is load-bearing: every caller
+ * that has not opted in — the notification schedulers above all (a lensed rule
+ * must never title a notification) — keeps today's behaviour byte for byte.
+ */
+export type LensSet = ReadonlySet<ObservanceLens>;
+
+const NO_LENSES: LensSet = new Set();
+
+function withLenses(items: ResolvedObservance[], lenses: LensSet): ResolvedObservance[] {
+  // Fast path: nothing lensed is on, and the overwhelming majority of rules are
+  // universal, so skip the allocation entirely when no rule can be filtered out.
+  return items.filter((item) => ruleVisibleForLenses(item.rule.lens, lenses));
+}
 
 // Coordinates + the stable city id used for cache keys; omitted ⇒ Ujjain.
 export type ObservanceLocation = GeoLocation & { cityId?: string };
 
 const cache = new Map<string, ResolvedObservance[]>();
 const ruleById = new Map(OBSERVANCE_RULES.map((rule) => [rule.id, rule] as const));
-const defaultRules = getObservanceCatalog();
+// Resolved for EVERY lens, so the per-year cache never depends on the user's set;
+// each query below narrows it. See `ALL_LENSES`.
+const defaultRules = getObservanceCatalog({ lenses: ALL_LENSES });
 
 function cacheKey(year: number, calendarSystem: CalendarSystem, location?: ObservanceLocation): string {
   return `${calendarSystem}:${locationKey(location)}:${year}`;
@@ -72,9 +92,12 @@ export function isObservanceDataReady(
     || getStoredObservanceYear(cityId, calendarSystem, year) !== null;
 }
 
-function reconstructPrecomputed(entries: { id: string; date: string }[]): ResolvedObservance[] {
+// Both baked and device-scanned years arrive as [ruleId, date] pairs — the baked
+// table because the pair encoding keeps it inside the launch-graph byte budget
+// (see its header), the store because it mirrors the same shape on disk.
+function reconstructPrecomputed(entries: readonly PackedObservance[]): ResolvedObservance[] {
   const results: ResolvedObservance[] = [];
-  for (const { id, date } of entries) {
+  for (const [id, date] of entries) {
     const rule = ruleById.get(id);
     if (!rule) continue;
     const [y, m, d] = date.split('-').map(Number);
@@ -166,8 +189,16 @@ export async function resolveObservancesForYearLiveChunked(
   return results;
 }
 
-export function resolveFestivalsForYear(year: number): ResolvedFestival[] {
-  return resolveObservancesForYear(year, 'purnimant');
+/**
+ * A whole year, as a user actually sees it.
+ *
+ * Takes the same lens set as every other QUERY, defaulting to empty — so this
+ * returns the unlensed year unless a caller opts in. The lens-blind superset is
+ * `resolveObservancesForYear`, which exists so the per-year cache does not depend
+ * on which calendars happen to be on; that one is the engine's, not a surface's.
+ */
+export function resolveFestivalsForYear(year: number, lenses: LensSet = NO_LENSES): ResolvedFestival[] {
+  return withLenses(resolveObservancesForYear(year, 'purnimant'), lenses);
 }
 
 export function getUpcomingObservances(
@@ -175,7 +206,8 @@ export function getUpcomingObservances(
   count: number,
   calendarSystem: CalendarSystem = 'purnimant',
   withinDays?: number,
-  location?: ObservanceLocation
+  location?: ObservanceLocation,
+  lenses: LensSet = NO_LENSES
 ): ResolvedObservance[] {
   const year = fromDate.getFullYear();
   const all = [
@@ -187,7 +219,9 @@ export function getUpcomingObservances(
   const end = withinDays === undefined
     ? null
     : new Date(start.getFullYear(), start.getMonth(), start.getDate() + withinDays);
-  return all
+  // Lens BEFORE slice: filtering after would let hidden rules eat the count and
+  // return fewer than `count` visible ones.
+  return withLenses(all, lenses)
     .filter((f) => f.date.getTime() >= start.getTime() && (end === null || f.date.getTime() <= end.getTime()))
     .slice(0, count);
 }
@@ -199,10 +233,44 @@ export function getUpcomingFestivals(fromDate: Date, count: number): ResolvedFes
 export function getObservancesForDate(
   date: Date,
   calendarSystem: CalendarSystem = 'purnimant',
-  location?: ObservanceLocation
+  location?: ObservanceLocation,
+  lenses: LensSet = NO_LENSES
 ): ResolvedObservance[] {
-  return resolveObservancesForYear(date.getFullYear(), calendarSystem, location)
-    .filter((item) => isSameLocalDate(item.date, date));
+  return withLenses(
+    resolveObservancesForYear(date.getFullYear(), calendarSystem, location)
+      .filter((item) => isSameLocalDate(item.date, date)),
+    lenses
+  );
+}
+
+// Render-path-safe day observances, or `null` when only the multi-second live scan
+// could answer. `getObservancesForDate` will happily fall into `resolveObservancesForYearLive`
+// for an Ujjain year absent from the precomputed table — fine on a deferred path,
+// fatal on the render path. This variant reads ONLY what is already synchronous and
+// cheap: the memoised year cache, the baked precomputed table, a stored city scan,
+// or the Ujjain-fallback table for a city whose scan has not landed. Everything else
+// returns null so the caller keeps deferring exactly as before. It lets the Home
+// Today strip seed its vrat chips on the FIRST frame instead of after the launch
+// interaction queue drains (which read as a blocked screen + a chip jerk).
+export function getCachedObservancesForDate(
+  date: Date,
+  calendarSystem: CalendarSystem = 'purnimant',
+  location?: ObservanceLocation
+): ResolvedObservance[] | null {
+  const year = date.getFullYear();
+  const cached = cache.get(cacheKey(year, calendarSystem, location));
+  if (cached) return cached.filter((item) => isSameLocalDate(item.date, date));
+
+  const precomputed = PRECOMPUTED_OBSERVANCES[`${calendarSystem}:${year}`];
+  if (locationKey(location) === UJJAIN_CITY_ID) {
+    // Ujjain answers from the table or not at all — never a live scan here.
+    if (!precomputed) return null;
+    return reconstructPrecomputed(precomputed).filter((item) => isSameLocalDate(item.date, date));
+  }
+  // Any other city: its stored scan if present, else the Ujjain fallback table.
+  const entries = getStoredObservanceYear(locationKey(location), calendarSystem, year) ?? precomputed;
+  if (!entries) return null;
+  return reconstructPrecomputed(entries).filter((item) => isSameLocalDate(item.date, date));
 }
 
 // Date-key variant for persisted/background surfaces. Unlike Date#getFullYear
@@ -211,7 +279,8 @@ export function getObservancesForDate(
 export function getObservancesForDateKey(
   dateKey: string,
   calendarSystem: CalendarSystem = 'purnimant',
-  location?: ObservanceLocation
+  location?: ObservanceLocation,
+  lenses: LensSet = NO_LENSES
 ): ResolvedObservance[] {
   const year = Number(dateKey.slice(0, 4));
   const cityId = locationKey(location);
@@ -219,31 +288,44 @@ export function getObservancesForDateKey(
     ? PRECOMPUTED_OBSERVANCES[`${calendarSystem}:${year}`]
     : getStoredObservanceYear(cityId, calendarSystem, year);
   const entries = exact ?? PRECOMPUTED_OBSERVANCES[`${calendarSystem}:${year}`];
-  if (entries) return reconstructPrecomputed(entries.filter((item) => item.date === dateKey));
-  return getObservancesForDate(new Date(`${dateKey}T12:00:00`), calendarSystem, location);
+  if (entries) return withLenses(reconstructPrecomputed(entries.filter(([, date]) => date === dateKey)), lenses);
+  return getObservancesForDate(new Date(`${dateKey}T12:00:00`), calendarSystem, location, lenses);
 }
 
 export function getObservancesForMonth(
   year: number,
   month: number,
   calendarSystem: CalendarSystem = 'purnimant',
-  location?: ObservanceLocation
+  location?: ObservanceLocation,
+  lenses: LensSet = NO_LENSES
 ): ResolvedObservance[] {
-  return resolveObservancesForYear(year, calendarSystem, location)
-    .filter((f) => f.date.getFullYear() === year && f.date.getMonth() === month);
+  return withLenses(
+    resolveObservancesForYear(year, calendarSystem, location)
+      .filter((f) => f.date.getFullYear() === year && f.date.getMonth() === month),
+    lenses
+  );
 }
 
 export function getFestivalsForMonth(year: number, month: number): ResolvedFestival[] {
   return getObservancesForMonth(year, month, 'purnimant');
 }
 
+/**
+ * Search is DELIBERATELY lens-blind.
+ *
+ * A user who types पर्युषण, बतुकम्मा or "jain calendar" by name has asked for that
+ * observance; answering "no results" because they have not turned on a calendar
+ * they may not know exists would be the worst version of this feature. The lens
+ * decides what appears UNASKED — on a day, in a month, in the browsable catalog —
+ * never what can be found. `getObservanceCatalog` is where the gate lives.
+ */
 export function searchObservances(
   query: string,
   options: { includeHidden?: boolean } = {}
 ): ObservanceRule[] {
   const normalized = normalizeSearch(query);
   if (!normalized) return [];
-  return getObservanceCatalog(options)
+  return getObservanceCatalog({ ...options, lenses: ALL_LENSES })
     .filter((rule) => searchableText(rule).includes(normalized));
 }
 
@@ -256,17 +338,23 @@ function findSolarFestivalDate(rule: ObservanceRule, year: number): ResolvedObse
   if (cached !== undefined) return cached;
   const target = rule.solarLongitude;
   let result: ResolvedObservance | null = null;
-  const previousYearDate = new Date(year, 0, 0);
-  let previousLongitude = getSiderealSunLng(previousYearDate, previousYearDate.getFullYear());
+  // The sankranti day is the civil day whose OWN span contains the ingress
+  // instant, so each step compares this day's midnight with the NEXT day's and
+  // returns `date` — the day the crossing happened during. Comparing against the
+  // PREVIOUS midnight instead (as this loop used to) names the day after: Makar
+  // Sankranti 2026 ingresses 14 Jan 3:13 PM IST and was reported as 15 Jan, and
+  // all twelve sankrantis carried the same +1 shift against every published
+  // almanac. `vishwakarma-puja` rides Kanya Sankranti and made it visible.
+  let startLongitude = getSiderealSunLng(new Date(year, 0, 1), year);
   for (let d = 1; d <= 366; d++) {
     const date = new Date(year, 0, d);
     if (date.getFullYear() !== year) break;
-    const longitude = getSiderealSunLng(date, year);
-    if (crossedSolarLongitude(previousLongitude, longitude, target)) {
+    const endLongitude = getSiderealSunLng(new Date(year, 0, d + 1), year);
+    if (crossedSolarLongitude(startLongitude, endLongitude, target)) {
       result = { date, rule };
       break;
     }
-    previousLongitude = longitude;
+    startLongitude = endLongitude;
   }
   solarDateCache.set(key, result);
   return result;
@@ -321,7 +409,61 @@ function matchesRuleOnDate(
     const { lunarMonth } = computeTithiAndMonth(date, { calendarSystem, location });
     return lunarMonth === monthForRuleInSystem(rule, calendarSystem);
   }
-  return matchesLunarTithiRuleOnDate(rule, date, calendarSystem, location);
+  if (rule.ruleType === 'nakshatra') {
+    return matchesNakshatraRuleOnDate(rule, date, location);
+  }
+  // The two optional narrowing constraints a lunar-tithi rule may carry. Both are
+  // pure filters on a day the tithi rule already matched, so they can never move a
+  // rule off its tithi — only decide which of that tithi's occurrences counts.
+  // `weekday` is free (no astronomy), so it gates before the tithi solve;
+  // `solarMonth` costs a sunrise + sun longitude, so it runs only on the days the
+  // tithi already claimed (~12 a year rather than 365).
+  if (rule.weekday !== undefined && date.getDay() !== rule.weekday) return false;
+  if (!matchesLunarTithiRuleOnDate(rule, date, calendarSystem, location)) return false;
+  return rule.solarMonth === undefined || solarMonthAtSunrise(date, { location }) === rule.solarMonth;
+}
+
+/**
+ * Nakshatra day selection — the day whose SUNRISE the target nakshatra covers,
+ * optionally narrowed to one sidereal solar month (`rule.solarMonth`).
+ *
+ * This is the Tamil/Malayalam calendar's own shape: the observance is a
+ * nakshatra, and the solar month says which of its ~12 yearly returns is THE
+ * one (Krittika every month is masik Karthigai; Krittika in Vrischika is
+ * Karthigai Deepam). Without the solar-month narrowing the same rule serves the
+ * monthly series, which is why one matcher covers both.
+ *
+ * The two edge cases are exactly the tithi matcher's, for the same reason — a
+ * nakshatra, like a tithi, is an arc the moon crosses at its own pace, so it can
+ * span two sunrises or fall between them:
+ *  1. Two sunrises (the nakshatra ran long) → the FIRST day owns it, the same
+ *     "first of two" convention `matchesUdayaTithiRuleOnDate` applies to a
+ *     vriddhi tithi.
+ *  2. No sunrise at all (it opened after one and closed before the next) → the
+ *     day it actually runs owns it, detected by the sunrise index jumping from
+ *     target-1 today to target+1 tomorrow. Without this the observance would
+ *     silently vanish for that month.
+ */
+function matchesNakshatraRuleOnDate(
+  rule: ObservanceRule,
+  date: Date,
+  location?: ObservanceLocation
+): boolean {
+  if (rule.nakshatra === undefined) return false;
+  const opts = { location };
+  const target = rule.nakshatra;
+  const inSolarMonth = rule.solarMonth === undefined
+    || solarMonthAtSunrise(date, opts) === rule.solarMonth;
+  if (!inSolarMonth) return false;
+
+  const today = nakshatraAtSunrise(date, opts);
+  if (today === target) {
+    return nakshatraAtSunrise(addDays(date, -1), opts) !== target;
+  }
+  if (today === (target + 26) % 27) {
+    return nakshatraAtSunrise(addDays(date, 1), opts) === (target + 1) % 27;
+  }
+  return false;
 }
 
 // Exported for pitruSmaran.ts (PRD-17): personal shraddha tithis must resolve with
@@ -341,18 +483,31 @@ export function matchesLunarTithiRuleOnDate(
   if (rule.dayRule === 'madhyahna') {
     return matchesInstantVyapiniRuleOnDate(rule, date, calendarSystem, location, tithiAtMadhyahna);
   }
+  if (rule.dayRule === 'aparahna') {
+    return matchesInstantVyapiniRuleOnDate(rule, date, calendarSystem, location, tithiAtAparahna);
+  }
   return matchesUdayaTithiRuleOnDate(rule, date, calendarSystem, location);
 }
 
 /**
  * Instant-vyapini day selection — the day whose GIVEN instant the tithi covers.
- * Two instants are wired: moonrise (chandrodaya — Sankashti Chaturthi, Karwa
- * Chauth, Bahula Chaturthi, whose fast ends with the night's moon) and midday
+ * Three instants are wired: moonrise (chandrodaya — Sankashti Chaturthi, Karwa
+ * Chauth, Bahula Chaturthi, whose fast ends with the night's moon), midday
  * (madhyahna — Ganesh Chaturthi's sthapana, Ram Navami's janma, the monthly
- * Vinayaka Chaturthi). The moonrise case is described below; madhyahna is the
+ * Vinayaka Chaturthi) and afternoon (aparahna — दर्श अमावस्या, whose पितृ तर्पण is
+ * an afternoon rite). The moonrise case is described below; madhyahna is the
  * identical selection at the sunrise–sunset midpoint (Ganesh Chaturthi 2026:
  * Chaturthi runs 14 Sep 7:06 AM → 15 Sep 7:44 AM, so udaya said 15 Sep while
- * every published almanac says 14 Sep, whose midday the tithi covers).
+ * every published almanac says 14 Sep, whose midday the tithi covers), and
+ * aparahna the identical selection at sunrise + 0.7 × daylength (Bhadrapada
+ * 2026: amavasya runs 10 Sep 10:33 AM → 11 Sep 8:56 AM, so दर्श अमावस्या is
+ * 10 Sep while the udaya अमावस्या व्रत stays on 11 Sep — Drik publishes both).
+ *
+ * Case (c) is load-bearing for aparahna: an amavasya can close just before a
+ * day's aparahna and so cover no day's afternoon at all (Ashadha 2026 — it runs
+ * 13 Jul 6:49 PM → 14 Jul 3:13:30 PM, and 14 Jul's aparahna midpoint is
+ * 3:13:50 PM, twenty seconds late). The udaya fallback is what keeps that
+ * lunation from vanishing; it recovers 14 Jul, the sunrise day.
  *
  * Krishna Chaturthi usually begins mid-morning and ends before the next
  * mid-morning, so the sunrise (udaya) answer names the day AFTER the night the
@@ -518,11 +673,17 @@ function findRelativeRuleDates(
   if (rule.relativeRule !== 'friday-before-purnima') return [];
   if (rule.weekday === undefined || !rule.paksha || rule.tithi === undefined) return [];
 
+  // `weekday` means something DIFFERENT on a relative rule — it is the day to walk
+  // back to, not a day the anchor tithi must fall on — so it is stripped before the
+  // anchor is solved as a plain lunar-tithi rule. Without this, the lunar-tithi
+  // weekday constraint added for सोमवती अमावस्या would also demand that Shravana
+  // Purnima itself be a Friday, and Varalakshmi Vrat would resolve nowhere.
   const anchorRule: ObservanceRule = {
     ...rule,
     ruleType: 'lunar-tithi',
     recurrence: 'annual',
     relativeRule: undefined,
+    weekday: undefined,
   };
   const anchors = findObservanceDates(anchorRule, start, end, calendarSystem, location);
   return anchors.map((anchor) => {

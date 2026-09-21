@@ -17,7 +17,19 @@ import { pillTextStyle, scriptBodyFont } from '@/utils/langType';
 type Props = {
   guidance: RashifalGuidance | PersonalGuidance;
   lang: Lang;
-  showContext?: boolean;
+  /**
+   * How much provenance to print.
+   *   false      — none (the compact treatments).
+   *   true       — a chip under EVERY row: the full reading, for the Rashifal screen.
+   *   'summary'  — ONE आधार line under the last row, for the Jyotish landing.
+   *
+   * 'summary' exists because the per-row chips repeat themselves: Favour and
+   * Reflect routinely share a graha, so two of the three chips are character-for-
+   * character identical, and 96 dp of the landing went to printing the same
+   * evidence twice ahead of the reading it supports. The summary dedupes by
+   * graha+house and keeps the full chips one tap away on the Rashifal screen.
+   */
+  showContext?: boolean | 'summary';
 };
 
 function isPersonal(
@@ -52,6 +64,42 @@ function contextLabel(
     lang,
     `${GRAHA_NAMES_HI[graha]} · चन्द्र से ${house} भाव · लग्न से ${lagnaHouse} भाव`,
     `${GRAHA_NAMES_EN[graha]} · ${ordinal(house)} bhava from Moon · ${ordinal(lagnaHouse)} from Lagna`
+  );
+}
+
+/**
+ * The distinct graha/house pairs behind the three rows, in row order, deduped.
+ * Keyed on the RENDERED string so two rows that differ only in house number stay
+ * separate while two genuinely identical readings collapse to one.
+ */
+function summaryLabel(
+  lang: Lang,
+  rows: readonly { graha: Graha; house: number; lagnaHouse: number | null }[]
+): string {
+  const seen = new Set<string>();
+  const parts: string[] = [];
+  for (const row of rows) {
+    const key = `${row.graha}:${row.house}:${row.lagnaHouse ?? ''}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    parts.push(
+      row.lagnaHouse === null
+        ? contentByLang(
+          lang,
+          `${GRAHA_NAMES_HI[row.graha]} ${row.house}`,
+          `${GRAHA_NAMES_EN[row.graha]} ${row.house}`
+        )
+        : contentByLang(
+          lang,
+          `${GRAHA_NAMES_HI[row.graha]} ${row.house}/${row.lagnaHouse}`,
+          `${GRAHA_NAMES_EN[row.graha]} ${row.house}/${row.lagnaHouse}`
+        )
+    );
+  }
+  return contentByLang(
+    lang,
+    `आधार · ${parts.join(' · ')}`,
+    `Basis · ${parts.join(' · ')}`
   );
 }
 
@@ -151,7 +199,7 @@ export default function JyotishGuidanceRows({
             >
               {meaningByLang(lang, row.bodyHi, row.bodyEn)}
             </Text>
-            {showContext && (
+            {showContext === true && (
               <View
                 style={[
                   styles.context,
@@ -170,6 +218,32 @@ export default function JyotishGuidanceRows({
           </View>
         </View>
       ))}
+      {showContext === 'summary' && (
+        <View
+          // The houses are evidence, not a reading, so the summary is a quiet
+          // strip rather than a fourth row — and it carries the full wording in
+          // its a11y label, since the abbreviation is a sighted-reader economy.
+          accessibilityLabel={summaryLabel('en', rows)}
+          style={[
+            styles.summary,
+            {
+              backgroundColor: colors.cardSurface,
+              borderTopColor: colors.divider,
+            },
+          ]}
+        >
+          <Text
+            numberOfLines={2}
+            style={[
+              pillTextStyle(lang, typography.sectionLabel),
+              styles.summaryText,
+              { color: colors.inkMuted },
+            ]}
+          >
+            {summaryLabel(lang, rows)}
+          </Text>
+        </View>
+      )}
       {personal?.dashaNoteHi && personal.dashaNoteEn && (
         <View
           accessibilityLabel={`Dasha note. ${personal.dashaNoteEn}`}
@@ -248,5 +322,15 @@ const styles = StyleSheet.create({
   contextText: {
     fontFamily: fontFamilies.interSemiBold,
     fontSize: 12,
+  },
+  summary: {
+    paddingVertical: 8,
+    paddingHorizontal: 13,
+    borderTopWidth: StyleSheet.hairlineWidth,
+  },
+  summaryText: {
+    fontSize: 11,
+    // 11 pt Devanagari needs >= 1.4x leading (design.md 3.0).
+    lineHeight: 16,
   },
 });

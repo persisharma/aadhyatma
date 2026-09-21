@@ -80,6 +80,7 @@ export default function HomeScreen({ navigation }: Props) {
     icon?: React.ReactNode;
     onPress: () => void;
     hasNew?: boolean;
+    fullWidth?: boolean;
   };
 
   // Launcher grid: the registry content categories (categories.ts, ranked by
@@ -143,14 +144,19 @@ export default function HomeScreen({ navigation }: Props) {
       icon: iconFor('purpose'),
       onPress: () => navigation.navigate('BrowseByPurpose'),
     };
-    const nityaSadhnaTile: TileItem = {
-      key: 'routine',
-      nameHi: 'नित्य साधना',
-      nameEn: 'Daily Practice',
-      shortNameEn: 'Sadhana',
+    // दान-पुण्य (PRD-26) — the giving layer's standing Home door. A non-content
+    // launcher (like व्रत/कुंडली) and the grid's full-width closing row. Daily
+    // Practice already has the dedicated RoutineBanner above this grid.
+    const daanTile: TileItem = {
+      key: 'daan',
+      nameHi: 'दान-पुण्य',
+      nameEn: 'Daan Punya',
+      shortNameEn: 'Giving',
       status: 'active',
-      icon: iconFor('routine'),
-      onPress: () => navigation.navigate('RoutineToday'),
+      icon: iconFor('daan'),
+      hasNew: true,
+      fullWidth: true,
+      onPress: () => navigation.navigate('DaanPunya'),
     };
     const result: TileItem[] = [];
     for (const c of categories) {
@@ -170,10 +176,9 @@ export default function HomeScreen({ navigation }: Props) {
       if (c.id === 'japam') result.push(vratTile, kundaliTile, muhuratTile);
       if (c.id === 'theerth') result.push(deityTile, purposeTile);
     }
-    // नित्य साधना closes the grid. With मुहूर्त the count is 16 = 5 full rows
-    // + this closer, which renders full-width below (PRD-16; design.md §18) so
-    // the grid still ends clean rather than on an orphan pair.
-    result.push(nityaSadhnaTile);
+    // Fifteen launchers fill five 3-col rows; दान-पुण्य closes the grid as one
+    // full-width row (PRD-26; design.md §18).
+    result.push(daanTile);
     return result;
   }, [hasNewInCategory, navigation, rootNav]);
 
@@ -208,6 +213,17 @@ export default function HomeScreen({ navigation }: Props) {
       ctaHi: 'पढ़ें', ctaEn: 'Read',
       icon: <CategoryIcon iconKey="stotram" />,
       onPress: () => rootNav.navigate('DailyBhaktiTab'),
+    },
+    {
+      // दान-पुण्य (PRD-26) launch-awareness card — the educate-first giving layer.
+      key: 'daan-punya',
+      titleHi: 'दान-पुण्य', titleEn: 'Daan Punya',
+      descHi: 'जप · व्रत · दान — पहले महत्व, फिर देना। कभी भी।',
+      descEn: 'Japa · vrat · daan — understand first, then give. Any day.',
+      ctaHi: 'खोलें', ctaEn: 'Open',
+      hasNew: true,
+      icon: <CategoryIcon iconKey="daan" />,
+      onPress: () => navigation.navigate('DaanPunya'),
     },
     // NOTE: no Panchang spotlight here — the Today strip (§48) owns that
     // surface now; a second card produced two "Today's Panchang." buttons for
@@ -409,9 +425,9 @@ export default function HomeScreen({ navigation }: Props) {
             {tiles.map((tile) => (
               <View
                 key={tile.key}
-                // नित्य साधना is the grid's full-width closing row (design.md §18);
+                // दान-पुण्य is the grid's full-width closing row (design.md §18);
                 // every other tile keeps the 3-column width.
-                style={{ width: tile.key === 'routine' ? tileWidth * 3 + 2 * gridGap : tileWidth }}
+                style={{ width: tile.fullWidth ? tileWidth * 3 + 2 * gridGap : tileWidth }}
                 ref={
                   tile.key === 'japam'
                     ? japaTileRef

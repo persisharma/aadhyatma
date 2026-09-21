@@ -22,7 +22,7 @@ export type PurposeIconKey =
 
 type PurposeIconKind = PurposeIconKey extends `purpose-${infer Kind}` ? Kind : never;
 
-export type CategoryIconKey = ContentCategory | 'deity' | 'vrat' | 'purpose' | 'insight' | 'routine' | 'muhurat' | PurposeIconKey;
+export type CategoryIconKey = ContentCategory | 'deity' | 'vrat' | 'purpose' | 'insight' | 'routine' | 'muhurat' | 'daan' | PurposeIconKey;
 
 type Props = {
   iconKey: CategoryIconKey;
@@ -57,6 +57,7 @@ export default function CategoryIcon({ iconKey }: Props) {
       {iconKey === 'purpose' && <PurposeIcon {...paint} />}
       {iconKey === 'insight' && <InsightIcon {...paint} />}
       {iconKey === 'muhurat' && <MuhuratIcon {...paint} />}
+      {iconKey === 'daan' && <DaanIcon {...paint} />}
       {/* नित्य साधना launcher tile — reuse the routine's completed-bloom mark. */}
       {iconKey === 'routine' && <LotusMark size={30} />}
       {purposeKind && <PurposeTileIcon kind={purposeKind} {...paint} />}
@@ -314,6 +315,33 @@ function MuhuratIcon({ color, accent }: IconPaint) {
       <View testID="category-icon-muhurat-hand" style={[styles.muhuratHand, { backgroundColor: color }]} />
       <View testID="category-icon-muhurat-mark" style={[styles.muhuratMark, { backgroundColor: accent }]} />
       <View style={[styles.muhuratBase, { backgroundColor: accent }]} />
+    </View>
+  );
+}
+
+// दान-पुण्य — a daan-patra receiving three small offerings. At launcher size
+// this stable silhouette stays clearer than overlapping hands, while the seed-
+// shaped offerings avoid turning the category into a payment/coin mark. Same
+// drawn View-composition grammar as the kalash and diya glyphs (design.md §30,
+// no SVG, no emoji).
+function DaanIcon({ color, accent }: IconPaint) {
+  return (
+    <View style={styles.daanWrap}>
+      <View
+        testID="category-icon-daan-offering-left"
+        style={[styles.daanOffering, styles.daanOfferingLeft, { backgroundColor: accent }]}
+      />
+      <View
+        testID="category-icon-daan-offering-centre"
+        style={[styles.daanOffering, styles.daanOfferingCentre, { backgroundColor: accent }]}
+      />
+      <View
+        testID="category-icon-daan-offering-right"
+        style={[styles.daanOffering, styles.daanOfferingRight, { backgroundColor: accent }]}
+      />
+      <View testID="category-icon-daan-patra-rim" style={[styles.daanPatraRim, { backgroundColor: color }]} />
+      <View testID="category-icon-daan-patra" style={[styles.daanPatra, { borderColor: color }]} />
+      <View style={[styles.daanPatraBase, { backgroundColor: accent }]} />
     </View>
   );
 }
@@ -861,6 +889,58 @@ const styles = StyleSheet.create({
   },
   muhuratMark: { position: 'absolute', width: 4, height: 4, borderRadius: 2, top: 6, right: 8 },
   muhuratBase: { position: 'absolute', bottom: 2, width: 16, height: 2, borderRadius: 1 },
+  daanWrap: {
+    width: 34,
+    height: 32,
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  daanOffering: {
+    position: 'absolute',
+    width: 4,
+    height: 7,
+    borderRadius: 2.5,
+  },
+  daanOfferingLeft: {
+    top: 7,
+    left: 8,
+    transform: [{ rotate: '-32deg' }],
+  },
+  daanOfferingCentre: {
+    top: 2,
+    left: 15,
+  },
+  daanOfferingRight: {
+    top: 7,
+    right: 8,
+    transform: [{ rotate: '32deg' }],
+  },
+  daanPatraRim: {
+    position: 'absolute',
+    top: 14,
+    width: 29,
+    height: 2.4,
+    borderRadius: 1.2,
+  },
+  daanPatra: {
+    position: 'absolute',
+    bottom: 3,
+    width: 27,
+    height: 15,
+    borderWidth: 1.9,
+    borderTopWidth: 0,
+    borderBottomLeftRadius: 14,
+    borderBottomRightRadius: 14,
+  },
+  daanPatraBase: {
+    position: 'absolute',
+    bottom: 1,
+    width: 12,
+    height: 2,
+    borderRadius: 1,
+    opacity: 0.85,
+  },
   insightWrap: {
     width: 32,
     height: 32,

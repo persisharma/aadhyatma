@@ -57,10 +57,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
  *   `WidgetCoordinator` re-plans the payload from scratch on every pass and
  *   compares keys — so a fixed engine that changes the payload changes the key
  *   and rewrites anyway, and an unchanged payload had nothing to fix.
- * - `@vedansh:panchang-location`, `@vedansh:panchang-calendar-system` — the
- *   user's chosen city and purnimant/amanta setting. They look panchang-shaped
- *   and are the easiest mistake here: clearing them silently moves the user back
- *   to Ujjain (a `City.id` is a persisted key, not a display string).
+ * - `@vedansh:panchang-location`, `@vedansh:panchang-calendar-system`,
+ *   `@vedansh:panchang-lenses`, `@vedansh:panchang-lenses-seeded` — the user's
+ *   chosen city, purnimant/amanta setting and क्षेत्रीय पंचांग set. They look
+ *   panchang-shaped and are the easiest mistake here: clearing the first silently
+ *   moves the user back to Ujjain (a `City.id` is a persisted key, not a display
+ *   string), and clearing the lens pair is worse than it looks — the set alone
+ *   would be re-seeded from the city on the next entry, handing back a calendar
+ *   the user may have deliberately turned off, so the two must be swept together
+ *   or, as here, not at all.
  * - `@vedansh/notif-meta`, `notif-prefs`, `notif-permission-asked` — bookkeeping
  *   that MIRRORS what is actually scheduled with the OS. Dropping it desyncs the
  *   schedulers from reality, which duplicates or orphans real notifications.

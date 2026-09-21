@@ -18,6 +18,20 @@ import type {
 export type Localized = { hi: string; en: string };
 
 /**
+ * Structurally identical to `panchang/kundali.ts`'s `KundaliInput`, declared
+ * here on purpose: the launch-graph walker counts `import type` lines, so
+ * even a type-only import of `kundali.ts` from this (launch-path) file would
+ * put astronomy-engine on Home's first frame.
+ */
+export type AskBirthInput = {
+  date: Date;
+  latitude: number;
+  longitude: number;
+  elevation?: number;
+  timezone: 'Asia/Kolkata';
+};
+
+/**
  * The closed entity vocabularies the resolver can tag. Every one is derived
  * from a registry that already ships (see `lexicon.ts`), never hand-listed.
  */
@@ -28,7 +42,9 @@ export type EntityType =
   | 'disha'
   | 'room'
   | 'mantra'
-  | 'vidhi';
+  | 'vidhi'
+  /** A प्रश्न purpose (PRD-43) — derived from `PRASHNA_PURPOSES`. */
+  | 'purpose';
 
 export type LexEntry = {
   type: EntityType;
@@ -55,7 +71,8 @@ export type AskFamily =
   | 'katha'
   | 'japam'
   | 'vastu'
-  | 'sadhana';
+  | 'sadhana'
+  | 'jyotish';
 
 export type AskTarget =
   | { tab: 'home'; screen: keyof HomeStackParamList; params?: object }
@@ -93,6 +110,19 @@ export type SadhanaSummary = {
   doneToday: boolean;
 };
 
+/**
+ * The LIVING home only (PRD-24 Phase 2 §C5/US-15, privacy US-18): supplied by
+ * the UI from the roster store — intents stay AsyncStorage-free so the tsx
+ * corpus run and determinism survive (the `sadhana` precedent above). Zones
+ * are `VastuZone` strings; kept structural so this file stays types-only.
+ */
+export type VastuHomeSummary = {
+  homeId: string;
+  label: string;
+  facing: string | null;
+  rooms: readonly { roomId: string; ordinal: number; zone: string | null }[];
+};
+
 export type AskContext = {
   now: Date;
   location: ScanLocation;
@@ -100,6 +130,17 @@ export type AskContext = {
   lang: Lang;
   /** Active enrolments, supplied by the UI from SadhanaContext (Phase 2/3). */
   sadhana?: readonly SadhanaSummary[];
+  /** The saved LIVING home, if any — `vastu.myhome` answers from it (US-15). */
+  vastuHome?: VastuHomeSummary | null;
+  /**
+   * The ACTIVE person's birth INPUT, if any — `prashna.purpose` computes the
+   * chart from it inside the lazily-loaded intent (PRD-43). Deliberately not
+   * the chart: carrying `KundaliChart` would put `useKundali` → `kundali.ts`
+   * → astronomy-engine on Home's launch path through `useAsk` (the launch
+   * graph budget test caught exactly that). With no input the intent
+   * abstains and the stance guard's decline stands.
+   */
+  kundali?: { input: AskBirthInput; name: string | null } | null;
   /**
    * Ask-from-context (Phase 3): the surface the question was asked from can
    * seed an entity so "iska bhog kya hai" resolves against it.

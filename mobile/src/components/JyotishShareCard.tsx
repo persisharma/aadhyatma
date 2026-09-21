@@ -229,7 +229,7 @@ function RashifalShareCard(props: RashifalProps) {
         lang={props.lang}
         right={(
           <CardMeta lang={props.lang}>
-            {contentByLang(props.lang, 'आज का राशिफल', 'Daily Rashifal')}
+            {contentByLang(props.lang, 'दैनिक राशिफल', 'Daily Rashifal')}
             {'\n'}
             {formatDate(props.date)}
           </CardMeta>

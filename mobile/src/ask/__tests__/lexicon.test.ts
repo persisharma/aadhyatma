@@ -12,6 +12,7 @@ import { OBSERVANCE_RULES } from '@/panchang/festivals';
 import { VASTU_ROOM_ENTRIES } from '@/data/vastu/roomGuidance';
 import { japamMantras } from '@/data/japam';
 import { VIDHI_ENTRIES } from '@/data/vidhi';
+import { PRASHNA_PURPOSES } from '@/panchang/prashnaPurposes';
 import { ALIASES } from '../aliases';
 import { getAskLexicon } from '../lexicon';
 
@@ -26,6 +27,7 @@ test('every registry entry has lexicon coverage', () => {
   for (const r of VASTU_ROOM_ENTRIES) assert.ok(has('room', r.id), `room ${r.id}`);
   for (const m of japamMantras) assert.ok(has('mantra', m.id), `mantra ${m.id}`);
   for (const v of VIDHI_ENTRIES) assert.ok(has('vidhi', v.id), `vidhi ${v.id}`);
+  for (const p of PRASHNA_PURPOSES) assert.ok(has('purpose', p.id), `purpose ${p.id}`);
 });
 
 test('every alias points at an id that exists in its registry', () => {
@@ -37,6 +39,7 @@ test('every alias points at an id that exists in its registry', () => {
     room: new Set(VASTU_ROOM_ENTRIES.map((r) => r.id)),
     mantra: new Set(japamMantras.map((m) => m.id)),
     vidhi: new Set(VIDHI_ENTRIES.map((v) => v.id)),
+    purpose: new Set(PRASHNA_PURPOSES.map((p) => p.id)),
   };
   for (const [form, type, id] of ALIASES) {
     assert.ok(ids[type].has(id), `alias "${form}" → ${type}:${id} does not exist`);

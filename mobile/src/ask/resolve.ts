@@ -193,7 +193,11 @@ export function resolveAsk(
   const scored = scoreIntents(key, entities, intents);
   const trace: AskTrace = { key, entities, scored };
 
-  if (isDeclined(key)) return { kind: 'declined', trace };
+  // The stance guard still refuses predictive framing — EXCEPT where the app
+  // now has a non-predictive answer for it: a tagged प्रश्न purpose and a saved
+  // chart route "naukri milegi kya?" to dated supportive windows instead of a
+  // refusal (PRD-43; RULEBOOK §25.7). No chart, no purpose → declined as before.
+  if (isDeclined(key) && !(entities.purpose && ctx.kundali)) return { kind: 'declined', trace };
   if (key.length < 3) return { kind: 'none', trace, suggestions: [] };
 
   for (const s of scored) {

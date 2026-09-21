@@ -233,6 +233,25 @@ describe('handleNotificationResponse', () => {
     });
   });
 
+  test('a return-reminder tap lands on the Home screen, gated on type alone', () => {
+    readySpy.mockReturnValue(true);
+
+    // The weekday copy's texts are Home's FOR TODAY tier-4 lead on an ordinary
+    // day, so — like the festive tap — landing on Home honours the invitation
+    // without opening a reader. Every other field is a record, not a route key.
+    for (const data of [
+      { type: 'return-reminder', dateKey: '2026-09-07', weekday: 1, absentDays: 3 },
+      { type: 'return-reminder' },
+    ]) {
+      dispatchSpy.mockClear();
+      expect(handleNotificationResponse(responseWithData(data))).toBe(true);
+      expect(dispatchSpy).toHaveBeenCalledTimes(1);
+      expect(dispatchSpy.mock.calls[0][0]).toMatchObject({
+        payload: { name: 'HomeTab', params: { screen: 'Home' } },
+      });
+    }
+  });
+
   test('ignores a festive-reminder payload missing ruleId', () => {
     readySpy.mockReturnValue(true);
 
@@ -325,6 +344,7 @@ describe('startTargetFromNotification', () => {
       [{ type: 'vrat-reminder', ruleId: 'nirjala-ekadashi' }, { tab: 'PanchangTab', screen: 'ObservanceDetail', params: { ruleId: 'nirjala-ekadashi' } }],
       [{ type: 'muhurat-reminder', occasionId: 'vahan', dateMs }, { tab: 'PanchangTab', screen: 'MuhuratDayDetail', params: { occasionId: 'vahan', dateMs } }],
       [{ type: 'festive-reminder', ruleId: 'diwali' }, { tab: 'HomeTab', screen: 'Home' }],
+      [{ type: 'return-reminder', dateKey: '2026-09-07', weekday: 1, absentDays: 3 }, { tab: 'HomeTab', screen: 'Home' }],
       [{ type: 'sadhana-reminder', programId: 'p1' }, { tab: 'HomeTab', screen: 'RoutineToday' }],
       [{ type: 'routine-reminder', routineId: 'gone', dateKey: '2026-09-03' }, { tab: 'HomeTab', screen: 'RoutineToday' }],
       [{ type: 'pitru-smaran-reminder', entryId: 'e1' }, { tab: 'MoreTab', screen: 'PitruSmaranDetail', params: { entryId: 'e1' } }],
@@ -343,6 +363,7 @@ describe('startTargetFromNotification', () => {
       dailyVerse,
       { type: 'vrat-reminder', ruleId: 'nirjala-ekadashi' },
       { type: 'festive-reminder', ruleId: 'diwali' },
+      { type: 'return-reminder', absentDays: 3 },
       { type: 'routine-reminder' },
       { type: 'pitru-smaran-reminder', entryId: 'e1' },
       { type: 'japam-alarm', alarmId: 'a1', mantraId: 'om-namah-shivaya' },
@@ -386,6 +407,7 @@ describe('cold-start navigation state', () => {
     { type: 'vrat-reminder', ruleId: 'nirjala-ekadashi' },
     { type: 'muhurat-reminder', occasionId: 'vahan', dateMs: Date.now() },
     { type: 'festive-reminder', ruleId: 'diwali' },
+    { type: 'return-reminder', dateKey: '2026-09-07', weekday: 1, absentDays: 3 },
     { type: 'sadhana-reminder', programId: 'p1' },
     { type: 'routine-reminder' },
     { type: 'pitru-smaran-reminder', entryId: 'e1' },

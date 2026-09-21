@@ -229,20 +229,73 @@ test('Kundali: at the cap the add chip is replaced by a sentence, not a failing 
  * the landing's switcher position is pinned structurally: the chips must sit
  * ABOVE the Rashifal block they change, not below it.
  */
-test('Jyotish landing: the switcher renders above the guidance it changes', () => {
+/**
+ * The SAVED branch of `JyotishLanding` alone. Scoping matters: since §51c the
+ * guest and error branches render the same tile grid, so an unscoped
+ * `indexOf('jyotishTileGrid')` finds the guest branch — which sits earlier in
+ * the file than the saved branch's switcher and inverts the assertion.
+ */
+function savedLandingSource(): string {
   const fs = require('node:fs') as typeof import('node:fs');
   const path = require('node:path') as typeof import('node:path');
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'PanchangScreen.tsx'), 'utf8');
+  const start = source.indexOf("if (loadState === 'saved'");
+  const end = source.indexOf('<JyotishShareSheet');
+  expect(start).toBeGreaterThan(-1);
+  expect(end).toBeGreaterThan(start);
+  return source.slice(start, end);
+}
+
+test('Jyotish landing: the switcher renders above everything it changes', () => {
+  const source = savedLandingSource();
 
   const switcher = source.indexOf('labelEn="Whose Jyotish"');
-  const rashifalBlock = source.indexOf("sectionLabel('आज का राशिफल', 'Today’s Rashifal')");
-  const glanceCard = source.indexOf("sectionLabel('आपकी कुंडली', 'Your Kundali')");
+  const guidanceRows = source.indexOf('showContext="summary"');
+  const tileGrid = source.indexOf('styles.jyotishTileGrid');
 
   expect(switcher).toBeGreaterThan(-1);
-  expect(rashifalBlock).toBeGreaterThan(switcher);
-  expect(glanceCard).toBeGreaterThan(switcher);
-  // The landing's + जोड़ें chip opens the blank add form, never the edit form.
+  // Since §51c the chips govern the tile readings too, not just the card — so
+  // they must precede BOTH, or a switch leaves stale readings on screen.
+  expect(guidanceRows).toBeGreaterThan(switcher);
+  expect(tileGrid).toBeGreaterThan(switcher);
+});
+
+test('Jyotish landing: + जोड़ें opens the blank add form, never the edit form', () => {
+  const fs = require('node:fs') as typeof import('node:fs');
+  const path = require('node:path') as typeof import('node:path');
+  const source = fs.readFileSync(path.resolve(__dirname, '..', 'PanchangScreen.tsx'), 'utf8');
   expect(source).toContain("rootNav.navigate('Kundali', { newPerson: true })");
+});
+
+/**
+ * §51c deleted the page header, the per-item section labels and the chart-glance
+ * card. Each one was removed for a stated reason (a duplicated date, a label
+ * introducing one item, four competing CTAs), so a re-introduction should fail
+ * here rather than quietly re-grow the 1,645 dp scroll.
+ */
+test('Jyotish landing: the §51c chrome stays deleted', () => {
+  const landing = savedLandingSource();
+
+  // No page title and no date: the landing only ever shows today, and the card
+  // eyebrow already says whose chart the reading came from.
+  expect(landing).not.toContain('आज आपका ज्योतिष');
+  expect(landing).not.toContain('formatFullDate');
+  // No label introducing a single item. Matched as sectionLabel CALLS, not bare
+  // strings — "आपकी कुंडली" also occurs inside the गोचर tile's fallback copy,
+  // which is body text and must survive.
+  for (const label of [
+    "sectionLabel('आज का राशिफल'",
+    "sectionLabel('आपकी कुंडली'",
+    "sectionLabel('गोचर'",
+    "sectionLabel('मिलान'",
+  ]) {
+    expect(landing).not.toContain(label);
+  }
+  // The chart glance and its competing CTAs are gone; Edit and the full reading
+  // live on KundaliScreen, which already offers both.
+  expect(landing).not.toContain('jyotishFactGrid');
+  expect(landing).not.toContain('onEditKundali');
+  expect(landing).not.toContain('onOpenReport');
 });
 
 test('Rashifal: with a single person the switcher is absent and the wording stays "your Kundali"', async () => {

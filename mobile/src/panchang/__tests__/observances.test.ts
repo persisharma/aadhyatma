@@ -32,7 +32,14 @@ test('source catalog captures default and advanced Drik Vrat list entries', () =
   assert.ok(defaultRules.every((rule) => rule.visibility === 'default'));
 
   assert.ok(allRules.some((rule) => rule.id === 'mahadwadashi' && rule.visibility === 'advanced'));
-  assert.ok(allRules.some((rule) => rule.id === 'karthigai-vrat' && rule.visibility === 'regional'));
+  // `karthigai-vrat` was the second occupant of the retired `visibility: 'regional'`
+  // (PRD-42 W2). It is now `default` + `lens: ['tamil']`, so it reaches the catalog
+  // only once the तमिऴ calendar is on — see `lens.test.ts` for the full contract.
+  assert.ok(allRules.every((rule) => rule.visibility !== 'regional'));
+  assert.ok(
+    getObservanceCatalog({ includeHidden: true, lenses: new Set(['tamil']) })
+      .some((rule) => rule.id === 'karthigai-vrat' && rule.visibility === 'default')
+  );
   assert.ok(allRules.some((rule) => rule.id === 'iskcon-ekadashi' && rule.visibility === 'advanced'));
   assert.ok(allRules.length > defaultRules.length);
 });
@@ -46,9 +53,32 @@ test('monthly shukla Chaturthi is labelled distinctly from the Ganesh Chaturthi 
   assert.equal(shuklaChaturthi.nameHi, 'शुक्ल चतुर्थी व्रत');
 });
 
+// RULEBOOK §11.1's authoritative-source set, narrowed to the hosts observance rules
+// actually cite. Drik indexes the pan-Hindu calendar but carries no page for a folk
+// deity's mela day (Gogaji, Tejaji, Ramdevji, Sama Chakeva, Madhushravani), so those
+// rules cite a state tourism/culture portal instead. Every rule carries a SECOND,
+// independent published source in the comment above it — this field holds one URL,
+// §11.1 wants two readings. Keep this list closed: a new host is a review decision.
+const ALLOWED_SOURCE_HOSTS = [
+  'https://www.drikpanchang.com/',
+  'https://www.tourism.rajasthan.gov.in/',
+  'https://www.bihartourism.gov.in/',
+];
+
+// Katha catalog sources narrow to the same §11.1 set: Drik for the pan-Hindu vrat
+// and festival kathas, and a state tourism portal for a folk deity Drik carries no
+// katha page for (Tejaji). Keep this list closed — a new host is a review decision.
+const ALLOWED_KATHA_SOURCE_HOSTS = [
+  'https://www.drikpanchang.com/',
+  'https://www.tourism.rajasthan.gov.in/',
+];
+
 test('all surfaced observance rules have source metadata and stable rule types', () => {
   for (const rule of OBSERVANCE_RULES) {
-    assert.ok(rule.sourceUrl?.startsWith('https://www.drikpanchang.com/'), `${rule.id} missing sourceUrl`);
+    assert.ok(
+      ALLOWED_SOURCE_HOSTS.some((host) => rule.sourceUrl?.startsWith(host)),
+      `${rule.id} sourceUrl is missing or off the §11.1 allowlist: ${rule.sourceUrl}`
+    );
     assert.ok(rule.ruleType, `${rule.id} missing ruleType`);
     assert.ok(['festival', 'vrat', 'upavas', 'katha', 'regional'].includes(rule.category), `${rule.id} category`);
     assert.ok(['default', 'advanced', 'regional'].includes(rule.visibility), `${rule.id} visibility`);
@@ -79,7 +109,10 @@ test('Vrat Katha metadata has no dangling IDs', () => {
   assert.equal(contentIds.size, KATHA_CONTENT.length, 'duplicate katha content ids');
 
   for (const item of KATHA_CATALOG) {
-    assert.ok(item.sourceUrl.startsWith('https://www.drikpanchang.com/'), `${item.id} sourceUrl`);
+    assert.ok(
+      ALLOWED_KATHA_SOURCE_HOSTS.some((host) => item.sourceUrl.startsWith(host)),
+      `${item.id} sourceUrl is missing or off the §11.1 allowlist: ${item.sourceUrl}`
+    );
     assert.ok(item.sourceAttribution.length > 0, `${item.id} source attribution`);
     assert.ok(item.summaryHi.length > 0, `${item.id} Hindi summary`);
     assert.ok(item.summaryEn.length > 0, `${item.id} English summary`);
@@ -173,6 +206,49 @@ test('source-backed Satyanarayana content follows the full five-adhyay story str
   assert.ok(paragraphCountEn >= 20, 'Satyanarayana English story should read as a full katha, not a summary');
   assert.ok(totalHiLength >= 4200, 'Satyanarayana Hindi retelling is too short for five adhyays');
   assert.ok(totalEnLength >= 5200, 'Satyanarayana English retelling is too short for five adhyays');
+});
+
+test('Teja Dashami carries the folk-deity katha its rule links to', () => {
+  const rule = OBSERVANCE_RULES.find((item) => item.id === 'teja-dashami');
+  assert.ok(rule, 'teja-dashami rule should exist');
+  assert.equal(rule.kathaId, 'teja-dashami-katha');
+
+  const entry = KATHA_CATALOG.find((item) => item.id === 'teja-dashami-katha');
+  assert.ok(entry, 'Tejaji katha catalog entry should exist');
+  // Tejaji is a lokdevta with no Drik katha page — the §11.1 state-portal carve-out.
+  assert.equal(entry.sourceUrl.startsWith('https://www.tourism.rajasthan.gov.in/'), true);
+  assert.equal(entry.kind, 'festival-legend');
+
+  const item = getKathaContent('teja-dashami-katha');
+  assert.ok(item, 'Tejaji katha content should exist');
+  // The legend hangs on four beats: the promise to the serpent, the rescue of the
+  // cows, the wounded return, and the tanti the day is kept with.
+  assert.deepEqual(
+    item.sections.map((section) => section.id),
+    ['kharnal-ka-balak', 'paner-ki-rah', 'jalti-jhadi-ka-nag', 'lachha-ki-gayein', 'vachan-ka-palan', 'tanti-aur-mela']
+  );
+
+  const hi = item.sections.flatMap((section) => section.bodyHi).join(' ');
+  const en = item.sections.flatMap((section) => section.bodyEn).join(' ');
+  for (const needle of ['खरनाल', 'लीलण', 'लाछा', 'सुरसुरा', 'तांती', 'परबतसर']) {
+    assert.ok(hi.includes(needle), `Hindi retelling should name ${needle}`);
+  }
+  for (const needle of ['Kharnal', 'Lilan', 'Lachha', 'Sursura', 'tanti', 'Parbatsar']) {
+    assert.ok(en.includes(needle), `English retelling should name ${needle}`);
+  }
+  // The lokdevta is named with the honorific तेजाजी / Tejaji throughout, never the
+  // bare "तेजा" / "Teja" — only the fixed day-name "तेजा दशमी" / "Teja Dashami" keeps
+  // the short form. Guard against a regression to disrespectful bare address.
+  assert.ok(hi.includes('तेजाजी'), 'Hindi retelling should address the deity as तेजाजी');
+  assert.ok(en.includes('Tejaji'), 'English retelling should address the deity as Tejaji');
+  assert.ok(
+    !hi.replace(/तेजा दशमी/g, '').includes('तेजा '),
+    'Hindi retelling should not address the deity as bare तेजा'
+  );
+  assert.ok(
+    !en.replace(/Teja Dashami/g, '').match(/\bTeja\b/),
+    'English retelling should not address the deity as bare Teja'
+  );
 });
 
 test('source-backed seasonal family kathas are full narratives, not compact summaries', () => {
@@ -318,9 +394,14 @@ test('annual lunar festivals fall in the nija month, skipping the adhik maas', (
 });
 
 test('non-January Sankranti dates are generated from solar ingress rules', () => {
-  const ids = idsFor(new Date(2026, 1, 14));
+  // 14 Feb → 13 Feb: the sankranti day is the civil day CONTAINING the ingress,
+  // not the day after it. This pin carried the old +1 shift that
+  // `findSolarFestivalDate` applied to all twelve sankrantis (see
+  // observanceDates.test.ts "sankrantis land on the civil day that contains the
+  // ingress", which pins the corrected dates against published almanacs).
+  const ids = idsFor(new Date(2026, 1, 13));
 
-  assert.ok(ids.includes('kumbha-sankranti'), `expected Kumbha Sankranti on 2026-02-14, got ${ids.join(', ')}`);
+  assert.ok(ids.includes('kumbha-sankranti'), `expected Kumbha Sankranti on 2026-02-13, got ${ids.join(', ')}`);
 });
 
 test('weekday-in-lunar-month vrats are generated without annual crawling', () => {

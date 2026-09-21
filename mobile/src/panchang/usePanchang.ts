@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { InteractionManager } from 'react-native';
 import {
+  getCachedObservancesForDate,
   getObservancesForDate,
   getObservancesForMonth,
   getUpcomingObservances,
@@ -16,6 +17,8 @@ import {
   __resetPanchangPrefsForTests,
 } from './panchangPrefs';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
+import { serializeLenses } from './lenses';
+import { useLenses } from './useLenses';
 import type {
   CalendarSystem,
   PanchangComputationOptions,
@@ -105,6 +108,11 @@ export function useTodayPanchang(calendarSystem: CalendarSystem = 'purnimant'): 
   const todayKey = new Date().toDateString();
   const { location } = usePanchangLocation();
   const storeVersion = useObservanceStoreVersion();
+  // The lens SET is a fresh object on every publish, so the memo key is its
+  // canonical serialisation — otherwise every unrelated store notification would
+  // re-run a two-year festival scan.
+  const { lenses } = useLenses();
+  const lensKey = serializeLenses(lenses);
 
   // Today's panchang is cheap (~4ms — a handful of astronomy solves), so it is
   // safe to compute on the render path. Read through the shared store, so it is
@@ -124,14 +132,15 @@ export function useTodayPanchang(calendarSystem: CalendarSystem = 'purnimant'): 
   useEffect(() => {
     let cancelled = false;
     const handle = setTimeout(() => {
-      const result = getUpcomingObservances(new Date(), UPCOMING_MAX, calendarSystem, UPCOMING_WINDOW_DAYS, location);
+      const result = getUpcomingObservances(new Date(), UPCOMING_MAX, calendarSystem, UPCOMING_WINDOW_DAYS, location, lenses);
       if (!cancelled) setUpcoming(result);
     }, 0);
     return () => {
       cancelled = true;
       clearTimeout(handle);
     };
-  }, [todayKey, calendarSystem, location, storeVersion]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [todayKey, calendarSystem, location, storeVersion, lensKey]);
 
   return { today, upcoming };
 }
@@ -149,15 +158,28 @@ export function useObservancesForDate(
   const { location } = usePanchangLocation();
   const cityId = location.cityId;
   const storeVersion = useObservanceStoreVersion();
+  const { lenses } = useLenses();
+  const lensKey = serializeLenses(lenses);
 
-  const [observances, setObservances] = useState<ResolvedObservance[]>([]);
+  const selectionKey = `${dateMs}|${calendarSystem}|${cityId}`;
+  // Seed the FIRST frame from the synchronous cache/precomputed table so the
+  // always-mounted Home strip's vrat chips paint immediately instead of after the
+  // launch interaction queue drains (the "blocked screen, then a chip jerk"). A
+  // null seed means only the live scan can answer — start empty and let the effect
+  // defer it, exactly as before. Mirrors the cache-only seed in `useMuhurat`.
+  const seededKey = useRef<string | null>(null);
+  const [observances, setObservances] = useState<ResolvedObservance[]>(() => {
+    const seed = getCachedObservancesForDate(new Date(dateMs), calendarSystem, location);
+    if (seed !== null) seededKey.current = selectionKey;
+    return seed ?? [];
+  });
   // The reset-to-empty applies only when the *selection* changes (stale data
   // would be wrong for another day/city/system). A pure storeVersion bump —
   // a background city scan landing mid-session — keeps the previous list on
   // screen until the re-resolve lands, so the always-mounted Home strip's
-  // chips don't blink out for a frame on every upgrade.
-  const selectionKey = `${dateMs}|${calendarSystem}|${cityId}`;
-  const lastSelectionKey = useRef<string | null>(null);
+  // chips don't blink out for a frame on every upgrade. Primed from the seed so a
+  // successful first-frame seed is not blanked on mount before the effect re-reads it.
+  const lastSelectionKey = useRef<string | null>(seededKey.current);
   useEffect(() => {
     let cancelled = false;
     const selected = new Date(dateMs);
@@ -168,7 +190,7 @@ export function useObservancesForDate(
     let handle: ReturnType<typeof setTimeout> | undefined;
     const interaction = InteractionManager.runAfterInteractions(() => {
       handle = setTimeout(() => {
-        const result = getObservancesForDate(selected, calendarSystem, location);
+        const result = getObservancesForDate(selected, calendarSystem, location, lenses);
         if (!cancelled) setObservances(result);
       }, 0);
     });
@@ -178,7 +200,7 @@ export function useObservancesForDate(
       if (handle !== undefined) clearTimeout(handle);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectionKey, storeVersion]);
+  }, [selectionKey, storeVersion, lensKey]);
 
   return observances;
 }
@@ -192,6 +214,8 @@ export function usePanchangForSelection(
   const { location } = usePanchangLocation();
   const cityId = location.cityId;
   const storeVersion = useObservanceStoreVersion();
+  const { lenses } = useLenses();
+  const lensKey = serializeLenses(lenses);
 
   // Compute the day's panchang OFF the render path. The astronomy solves are quick on a
   // laptop but enough to stutter the tab on a real device, so we never run them
@@ -234,7 +258,7 @@ export function usePanchangForSelection(
     const selected = new Date(dateMs);
     setUpcoming([]);
     const handle = setTimeout(() => {
-      const result = getUpcomingObservances(selected, UPCOMING_MAX, calendarSystem, UPCOMING_WINDOW_DAYS, location);
+      const result = getUpcomingObservances(selected, UPCOMING_MAX, calendarSystem, UPCOMING_WINDOW_DAYS, location, lenses);
       if (!cancelled) setUpcoming(result);
     }, 0);
     return () => {
@@ -242,7 +266,7 @@ export function usePanchangForSelection(
       clearTimeout(handle);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dateMs, dateKey, calendarSystem, cityId, storeVersion]);
+  }, [dateMs, dateKey, calendarSystem, cityId, storeVersion, lensKey]);
 
   // While a non-Ujjain location's background scan is still running, observances stand
   // in on the India-wide (Ujjain/IST) dates, which are correct for the bundled cities
@@ -260,7 +284,9 @@ export function usePanchangMonthObservances(
   const { location } = usePanchangLocation();
   const cityId = location.cityId;
   const storeVersion = useObservanceStoreVersion();
-  const monthKey = `${visibleMonth.getFullYear()}-${visibleMonth.getMonth()}-${calendarSystem}-${cityId}`;
+  const { lenses } = useLenses();
+  const lensKey = serializeLenses(lenses);
+  const monthKey = `${visibleMonth.getFullYear()}-${visibleMonth.getMonth()}-${calendarSystem}-${cityId}-${lensKey}`;
   const [observances, setObservances] = useState<ResolvedObservance[]>([]);
 
   useEffect(() => {
@@ -269,7 +295,7 @@ export function usePanchangMonthObservances(
     const year = visibleMonth.getFullYear();
     const month = visibleMonth.getMonth();
     const handle = setTimeout(() => {
-      const result = getObservancesForMonth(year, month, calendarSystem, location);
+      const result = getObservancesForMonth(year, month, calendarSystem, location, lenses);
       if (!cancelled) setObservances(result);
     }, 0);
     return () => {

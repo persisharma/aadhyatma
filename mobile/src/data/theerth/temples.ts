@@ -41,12 +41,29 @@ export type TheerthSource = {
   url: string;
 };
 
+/**
+ * One optional extended-detail section on a temple (सालासर बालाजी shipped the
+ * first set). Each is a single prose block per language — the same contract as
+ * significance/origin — under its own bilingual heading. Sections render after
+ * the Origin Story in the order given, so author them as a reading sequence:
+ * founding story → form of the deity → traditions → festivals → journey.
+ */
+export type TempleSection = {
+  id: string;
+  titleHi: string;
+  titleEn: string;
+  bodyHi: string;
+  bodyEn: string;
+};
+
 export type TempleDetail = {
   significanceHi: string;
   significanceEn: string;
   originStoryHi: string;
   originStoryEn: string;
   sources: readonly TheerthSource[];
+  /** Deeper per-temple reading (sthapana katha, traditions, melas, yatra). Omit when unauthored. */
+  sections?: readonly TempleSection[];
 };
 
 export type BaseTempleEntry = {
@@ -522,13 +539,51 @@ const templeDetails: Record<TempleId, TempleDetail> = {
     sources: [source('Rajasthan Devasthan - Khatushyamji', 'https://devasthan.rajasthan.gov.in/images/Sikar/khatushyamji.htm')],
   },
   'salasar-balaji': {
-    significanceHi: 'चूरू ज़िले के सालासर धाम में बालाजी को हनुमान-भक्ति के सिद्धपीठ रूप में पूजा जाता है; यहाँ दाढ़ी-मूँछ वाले बालाजी की विशिष्ट प्रतिमा भक्तों को आकर्षित करती है।',
-    significanceEn: 'At Salasar Dham in Churu district, Balaji is worshipped as a powerful Hanuman shrine; its distinctive bearded and moustached form of Balaji draws devotees through the year.',
-    originStoryHi: 'लोककथा में आसोटा गाँव के खेत में हल चलाते समय बालाजी की प्रतिमा प्रकट हुई; बालाजी ने स्वप्न में उसे सालासर ले जाने का आदेश दिया और वहाँ मंदिर प्रतिष्ठित हुआ।',
-    originStoryEn: 'The local legend says a Balaji idol emerged while a farmer was ploughing at Asota; Balaji then appeared in dreams directing that the idol be brought to Salasar and enshrined there.',
+    significanceHi: 'चूरू ज़िले का सालासर धाम हनुमान-भक्ति का सिद्धपीठ माना जाता है। श्रावण शुक्ल नवमी, विक्रम संवत् 1811 (सन् 1754) को स्थापित यह मंदिर दाढ़ी-मूँछ वाले बालाजी की विश्व में एकमात्र ऐसी प्रतिमा के लिए प्रसिद्ध है; संत मोहनदास जी की अखंड धूणी, सवामणी और नारियल-मनौती की परम्पराएँ इसे राजस्थान के सबसे व्यस्त तीर्थों में रखती हैं।',
+    significanceEn: 'Salasar Dham in Churu district is revered as a siddha-peeth of Hanuman devotion. Consecrated on Shravan Shukla Navami, Vikram Samvat 1811 (1754 CE), the temple is famed for the only Balaji murti worshipped with a beard and moustache; Sant Mohandas Ji’s unbroken dhuni, the Savamani offering and the coconut vow keep it among Rajasthan’s busiest pilgrimages.',
+    originStoryHi: 'लोककथा में आसोटा गाँव (नागौर) के खेत में हल चलाते समय बालाजी की प्रतिमा प्रकट हुई; बालाजी ने आसोटा के ठाकुर और सालासर के संत मोहनदास जी दोनों को स्वप्न में आदेश दिया कि प्रतिमा सालासर लाकर प्रतिष्ठित की जाए। बैलगाड़ी जहाँ स्वयं रुकी, वहीं आज का मंदिर है।',
+    originStoryEn: 'Local tradition says the Balaji murti surfaced while a farmer ploughed his field at Asota village (Nagaur). Balaji then appeared in dreams to both the Thakur of Asota and Sant Mohandas Ji of Salasar, directing that the image be brought to Salasar and enshrined; the temple stands where the bullock cart carrying it halted on its own.',
     sources: [
       source('Shree Salasar Balaji Mandir', 'https://shreesalasarbalajimandir.com/'),
       source('Rajasthan Tourism - Salasar Balaji Temple', 'https://www.tourism.rajasthan.gov.in/salasar-balaji-temple.html'),
+      source('Salasar Balaji - Reference', 'https://en.wikipedia.org/wiki/Salasar_Balaji'),
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi: 'संत मोहनदास जी दाधीच ब्राह्मण कुल में जन्मे बालब्रह्मचारी थे और अपनी बहन कान्ही बाई तथा भांजे उदयराम के साथ सालासर में रहते थे। कहते हैं कि हनुमान जी ने उन्हें एक दाढ़ी-मूँछ वाले साधु के रूप में दर्शन दिए और वचन दिया कि वे मूर्ति-रूप में सालासर आएँगे। उसी काल में आसोटा के एक जाट किसान के हल से खेत में एक प्रतिमा निकली; उसकी पत्नी ने उसे साड़ी के पल्लू से पोंछा तो दाढ़ी-मूँछ वाले बालाजी का स्वरूप प्रकट हुआ। आसोटा के ठाकुर को उसी रात स्वप्न में आदेश हुआ कि प्रतिमा सालासर भेजी जाए, और मोहनदास जी को स्वप्न में सूचना मिली कि बालाजी पधार रहे हैं। बैलगाड़ी सालासर पहुँचकर एक स्थान पर स्वयं रुक गई; उसी भूमि पर श्रावण शुक्ल नवमी, शनिवार, विक्रम संवत् 1811 (सन् 1754) को प्रतिमा प्रतिष्ठित हुई। मंदिर का प्रारम्भिक निर्माण फतेहपुर के मुसलमान कारीगर नूरा और दाऊ ने किया — यह साझी भक्ति की कथा आज भी सुनाई जाती है। मोहनदास जी ने बालाजी की सेवा में जीवन समर्पित किया; उनके देह-त्याग के बाद उनकी समाधि मंदिर परिसर में ही बनी, और कान्ही बाई के पुत्र उदयराम के वंशज आज तक पुजारी रूप में सेवा करते हैं।',
+        bodyEn: 'Sant Mohandas Ji, a celibate ascetic born into a Dadhich Brahmin family, lived at Salasar with his sister Kanhi Bai and her son Udayram. Hanuman is said to have appeared to him as a sadhu with a beard and moustache and promised to come to Salasar in the form of a murti. Around that time, at Asota, a Jat farmer’s plough struck an image in his field; when his wife wiped it clean with the edge of her sari, the bearded, moustached form of Balaji emerged. That night the Thakur of Asota was told in a dream to send the murti to Salasar, while Mohandas Ji was told in his own dream that Balaji was on his way. At Salasar the bullock cart stopped of its own accord, and on that ground the murti was consecrated on Shravan Shukla Navami, a Saturday, in Vikram Samvat 1811 (1754 CE). The first shrine was built by Noora and Dau, Muslim masons from Fatehpur, a story of shared devotion still told at the Dham. Mohandas Ji gave the rest of his life to Balaji’s service; his samadhi stands within the temple complex, and the descendants of Kanhi Bai’s son Udayram serve as the temple’s pujaris to this day.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'बालाजी का स्वरूप',
+        titleEn: 'The Form of Balaji',
+        bodyHi: 'सालासर के बालाजी विश्व में हनुमान जी की एकमात्र दाढ़ी-मूँछ वाली प्रतिमा माने जाते हैं — वही साधु-रूप जिसमें उन्होंने मोहनदास जी को दर्शन दिए थे। प्रतिमा गर्भगृह में सोने-चाँदी के सिंहासन पर विराजित है और उसके ऊपर स्वर्ण-छत्र है; मुख्य द्वार और गर्भगृह की दीवारें चाँदी की नक़्क़ाशी और रंगीन दर्पण-कला से सजी हैं। गर्भगृह के पास ही मोहनदास जी की अखंड धूणी है, जो उनके समय से निरन्तर प्रज्वलित बताई जाती है; भक्त इसकी भभूत प्रसाद-रूप में ले जाते हैं।',
+        bodyEn: 'Salasar’s Balaji is held to be the only Hanuman murti in the world with a beard and moustache — the sadhu form in which he appeared to Mohandas Ji. The image sits on a gold-and-silver throne in the sanctum under a golden canopy; the main gate and sanctum walls carry silver repoussé work and coloured mirror inlay. Beside the sanctum burns Mohandas Ji’s akhand dhuni, a sacred fire said to have been kept alight since his time; devotees carry its ash home as prasad.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'सवामणी और मनौती',
+        titleEn: 'Savamani and Vows',
+        bodyHi: 'सालासर की सबसे प्रसिद्ध परम्परा सवामणी है — मनोकामना पूर्ण होने पर सवा मन (लगभग 50 किलो) भोग का अर्पण, जो प्रायः चूरमा, लड्डू, पूड़ी-सब्ज़ी या हलवे के रूप में चढ़ाकर भक्तों में बाँटा जाता है। चूरमा — गेहूँ, घी और गुड़ का देशी प्रसाद — बालाजी का प्रिय भोग माना जाता है। मनौती के लिए भक्त मंदिर परिसर में मौली बाँधकर नारियल अर्पित करते हैं और कामना पूरी होने पर उसे खोलने आते हैं; इसी कारण परिसर में हज़ारों नारियल बँधे दिखते हैं। मंगला आरती से शयन आरती तक दिन भर दर्शन चलते हैं, और मंगलवार व शनिवार को विशेष भीड़ रहती है।',
+        bodyEn: 'Salasar’s best-known tradition is the Savamani — an offering of a sawa man (about 50 kg) of food made when a wish is fulfilled, usually churma, laddoo, puri-sabzi or halwa, offered to Balaji and then shared among devotees. Churma, the desi prasad of wheat, ghee and jaggery, is regarded as Balaji’s favourite bhog. For a vow, devotees tie a coconut with mauli thread within the temple precinct and return to untie it once the wish is granted, which is why thousands of coconuts hang there. Darshan runs through the day from the Mangala aarti to the Shayan aarti, with the largest crowds on Tuesdays and Saturdays.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi: 'वर्ष के दो बड़े मेले चैत्र पूर्णिमा (हनुमान जयंती) और आश्विन पूर्णिमा (शरद पूर्णिमा) पर लगते हैं, जब लाखों श्रद्धालु सालासर पहुँचते हैं; अनेक पदयात्री संघ जयपुर, सीकर और दूर-दूर से पैदल आते हैं। श्रावण शुक्ल नवमी को स्थापना-दिवस मनाया जाता है और इस मास में विशेष श्रृंगार व भजन-संध्याएँ होती हैं। हर पूर्णिमा को भी भारी भीड़ रहती है, और भक्त बालाजी के भजन-कीर्तन व रात्रि-जागरण के लिए धर्मशालाओं में ठहरते हैं।',
+        bodyEn: 'Two great fairs fill the year — Chaitra Purnima (Hanuman Jayanti) and Ashwin Purnima (Sharad Purnima), when lakhs of devotees converge on Salasar and many padyatri groups walk in from Jaipur, Sikar and far beyond. Shravan Shukla Navami is kept as the sthapana day, with special shringar and evening bhajan gatherings through the month. Every Purnima draws heavy crowds, and pilgrims stay in the dharamshalas for kirtan and night-long jagrans in Balaji’s honour.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi: 'सालासर जयपुर–बीकानेर मार्ग पर चूरू ज़िले में स्थित है — सुजानगढ़ से लगभग 25 किमी, सीकर से लगभग 57 किमी और जयपुर से लगभग 170 किमी। निकटतम रेलवे स्टेशन सुजानगढ़, रतनगढ़ और सीकर हैं; निकटतम हवाई अड्डा जयपुर है। अधिकांश तीर्थयात्री सालासर को खाटूश्यामजी (लगभग 100 किमी) के साथ एक ही यात्रा में जोड़ते हैं। धाम से लगभग 2 किमी दूर हनुमान जी की माता का अंजनी माता मंदिर है — कहा जाता है कि बालाजी के दर्शन के बाद अंजनी माता के दर्शन से यात्रा पूर्ण होती है। परिसर में मोहनदास जी और कान्ही बाई की समाधियाँ भी दर्शनीय हैं।',
+        bodyEn: 'Salasar lies in Churu district on the Jaipur–Bikaner road — roughly 25 km from Sujangarh, 57 km from Sikar and 170 km from Jaipur. The nearest railheads are Sujangarh, Ratangarh and Sikar; the nearest airport is Jaipur. Most pilgrims pair Salasar with Khatushyamji (about 100 km) in a single yatra. About 2 km from the Dham stands the Anjani Mata temple, dedicated to Hanuman’s mother — the yatra is said to be complete only when her darshan follows Balaji’s. Within the complex, the samadhis of Mohandas Ji and Kanhi Bai are also visited.',
+      },
     ],
   },
   'karni-mata': {
