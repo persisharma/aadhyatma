@@ -9,8 +9,8 @@
  * The story never dead-ends (design.md §73): after ॥ ॐ ॥ come the "अगली कथा"
  * row (position dots, the next teaching-katha in registry order, wrapping)
  * and the "इस भाव से" doors — दान करें (→ the daily journey) leading, खाते में
- * दर्ज करें (→ the ledger form) quiet — closed by the journey's own "रुक जाना
- * भी पूर्ण है" line. §2.7 holds: no give/pay control, the app never transacts.
+ * दर्ज करें (→ the ledger form) quiet. No closing stance line: the doors speak
+ * for themselves. §2.7 holds: no give/pay control, the app never transacts.
  */
 import React from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
@@ -172,9 +172,6 @@ export default function DaanKathaScreen({ navigation, route }: Props) {
               {contentByLang(lang, 'खाते में दर्ज करें', 'Record in my register')}
             </Text>
           </Pressable>
-          <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 17, color: colors.inkMuted, textAlign: 'center' }}>
-            {meaningByLang(lang, 'यहाँ रुक जाना भी पूर्ण है।', 'Stopping here is also complete.')}
-          </Text>
         </View>
       </ScrollView>
     </SafeAreaView>
