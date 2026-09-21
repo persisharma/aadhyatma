@@ -33,6 +33,8 @@ const GITA_CORPUS_09 = 'repo:mobile/src/data/gita/chapter-09.json';
 const GITA_CORPUS_10 = 'repo:mobile/src/data/gita/chapter-10.json';
 const GITA_HOLY_09 = 'https://www.holy-bhagavad-gita.org/chapter/9';
 const GITA_HOLY_10 = 'https://www.holy-bhagavad-gita.org/chapter/10';
+const NITYA_KARMA_SCAN = 'https://archive.org/details/NityaKarmaPujaPrakashGitaPressGorakhpur';
+const IN_REPO_PANCHABALI_DOSSIER = 'repo:docs/roadmap/conventions/panchabali-source-dossier.md';
 
 const DOSSIER_NOTE =
   '2026-09-19: statement limited to the "concordant source facts safe to use" recorded in the shraddha-tarpan source dossier (Dharma Sindhu ch. 26 + DrikPanchang shraddha pages, opened 2026-08-19). No source was re-opened this session — the egress proxy returned 403 for every external domain.';
@@ -52,6 +54,18 @@ const TITHI_DRAFT_NOTE =
 
 const DRAFT_NOTE =
   '2026-09-19: DRAFT — NOT VERIFIED. Widely published tradition, but no source was opened this session (egress proxy 403 on every domain). Needs two concordant references opened and recorded before the status flips.';
+
+/**
+ * Panchabali rows. Gathered 2026-09-21 in
+ * docs/roadmap/conventions/panchabali-source-dossier.md from web-search
+ * summaries only — every primary domain (archive.org scan of Gita Press
+ * Nitya Karma Puja Prakash, kamakoti.org Dharma Sindhu ch. 26, wisdomlib)
+ * returned EGRESS_BLOCKED. The five recipients and their order are concordant
+ * across eight summaries; nothing else is asserted. No mantra, placement,
+ * direction or thread position enters the copy (RULEBOOK §28.5).
+ */
+const PANCHABALI_DRAFT_NOTE =
+  '2026-09-21: DRAFT — NOT VERIFIED. Five recipients and their order are concordant across the search summaries recorded in the panchabali dossier, but no page was opened (EGRESS_BLOCKED on archive.org, kamakoti.org, wisdomlib.org). To flip: open the Gita Press Nitya Karma Puja Prakash scan at its पञ्चबलि section and record the page range, then re-open Dharma Sindhu ch. 26 specifically for bali; keep the copy free of placement, direction, thread position and mantra.';
 
 export const PITRU_LESSON_ENTRIES: readonly PitruLessonEntry[] = [
   // ── परिचय — the concept lessons ─────────────────────────────────────────
@@ -217,6 +231,27 @@ export const PITRU_LESSON_ENTRIES: readonly PitruLessonEntry[] = [
     source: {
       referenceUrls: ['https://www.wisdomlib.org/hinduism/book/manusmriti-with-the-commentary-of-medhatithi'],
       verificationNote: `${DRAFT_NOTE} Candidates: Taittiriya Samhita 6.3.10.5 (three debts) and Manusmriti 3.70 (pancha-mahayajna) — both need the exact text opened at a named edition and a second concordant reference recorded.`,
+    },
+  },
+  {
+    id: 'panchabali',
+    kind: 'parichay',
+    titleHi: 'पञ्चबलि — पाँच ग्रास किनके लिए',
+    titleEn: 'Panchabali — five portions, and for whom',
+    bodyHi: [
+      'श्राद्ध के भोजन में, ब्राह्मण-भोजन से पहले, गृहस्थ-परम्परा अन्न के पाँच भाग अलग रखती है — इन्हें पञ्चबलि या पञ्चग्रास कहते हैं। पाँच भाग पाँच वर्गों के प्राणियों के लिए हैं: गौ, श्वान, काक, देव आदि, और पिपीलिका आदि — यानी चींटी और छोटे जीव।',
+      'इस क्रम में एक ही भाव बार-बार मिलता है: पितरों के दिन घर का अन्न केवल घर के लोगों का नहीं होता। जो प्राणी न धन्यवाद दे सकते हैं, न प्रत्युपकार, उनका भाग भी रखा जाता है। गृहस्थ के पाँच नित्य महायज्ञों में इसी को भूत-यज्ञ कहा गया है।',
+      'किस भाग को कहाँ और किस वाक्य के साथ रखा जाए, यह शाखा और कुल-परम्परा तय करती है; यह परिचय उसे नहीं बताता। कई परिवार इस पक्ष में छत पर दाना और आँगन में जल-पात्र भी रखते हैं — वह इसी भाव का घरेलू रूप है।',
+    ],
+    bodyEn: [
+      'Before the brahmana-bhojana of a shraddha meal, householder tradition sets aside five portions of the cooked food — the panchabali, or panchagrasa. The five are for five classes of beings: the cow, the dog, the crow, the devas and others, and the ants and small creatures.',
+      'One idea repeats through the sequence: on the ancestors’ day the food of the house is not for the household alone. A share is kept for those who can neither thank nor repay. Among the householder’s five daily great yajnas this is what is called the bhuta-yajna.',
+      'Which portion is placed where, and with what words, is settled by branch and family lineage; this introduction does not supply it. Many families also keep grain on the roof and a bowl of water in the courtyard through the fortnight — the same idea in its everyday household form.',
+    ],
+    status: 'draft',
+    source: {
+      referenceUrls: [NITYA_KARMA_SCAN, DHARMA_SINDHU_SHRADDHA, IN_REPO_PANCHABALI_DOSSIER],
+      verificationNote: `${PANCHABALI_DRAFT_NOTE} The bhuta-yajna clause depends on the draft manu-3-70 principle and inherits its status. The roof-grain / courtyard-water sentence mirrors the shipped Daan pashu-paksh cause copy (data/daan/causes.ts) and is the one household observation in the row.`,
     },
   },
   {
@@ -589,6 +624,19 @@ export const PITRU_LESSON_ENTRIES: readonly PitruLessonEntry[] = [
     bodyEn: ['The lineage name traced to a rishi, by which a family is identified; it is spoken in sankalpa and tarpana formulas according to the family’s own practice.'],
     status: 'draft',
     source: { referenceUrls: [DHARMA_SINDHU_SHRADDHA], verificationNote: DRAFT_NOTE },
+  },
+  {
+    id: 'shabd-panchabali',
+    kind: 'shabd',
+    titleHi: 'पञ्चबलि',
+    titleEn: 'Panchabali',
+    bodyHi: ['श्राद्ध-भोजन के पाँच ग्रास, जो ब्राह्मण-भोजन से पहले गौ, श्वान, काक, देव आदि और पिपीलिका आदि के लिए अलग रखे जाते हैं। भूत-यज्ञ का ही एक रूप; इसका विधान कुल-परम्परा से चलता है।'],
+    bodyEn: ['The five portions of the shraddha meal set aside before the brahmana-bhojana — for the cow, the dog, the crow, the devas and others, and the ants and small creatures. A form of bhuta-yajna; its manner follows family tradition.'],
+    status: 'draft',
+    source: {
+      referenceUrls: [NITYA_KARMA_SCAN, IN_REPO_PANCHABALI_DOSSIER],
+      verificationNote: PANCHABALI_DRAFT_NOTE,
+    },
   },
 ];
 

@@ -81,18 +81,23 @@ Secondary (context only; can supply the second `https://` ref once a primary is 
 - The Loktantra — `https://theloktantra.com/spiritual/pitru-paksha-panchbali-shraddha-importance-vidhi/`
 - Hindu American Foundation, Pitru Paksha — `https://www.hinduamerican.org/pitru-paksha` (English; names the five as cow, dog, crow, fire/devas, ant)
 
-## Proposed registry rows (draft)
+## Authored registry rows (draft, 2026-09-21)
 
 - `lessons.ts` · `kind: 'shabd'` · `id: 'shabd-panchabali'` — one-paragraph gloss: five
-  portions, five recipients, bhuta-yajna link. `status: 'draft'`, note begins
-  `DRAFT — NOT VERIFIED`, `referenceUrls` = archive.org scan + kamakoti ch. 26.
-- `lessons.ts` · `kind: 'parichay'` · `id: 'panchabali'` — "पाँच ग्रास किसके लिए" — explains the
-  five recipients and why householders set food out for beings who can give nothing back
-  (mirrors the Daan `pashu-paksh` cause copy, `mobile/src/data/daan/causes.ts`). No placement
-  directions, no thread positions, no mantra. `status: 'draft'`.
-- Cross-link the existing draft principle `manu-3-70` (भूतयज्ञ = बलि) in the lesson body once
-  that principle is verified; until then the lesson stands alone.
-- Update PRD-44 §5 row G from "candidate" to "authored draft" in the same PR that adds the rows.
+  portions, five recipients, bhuta-yajna link. `status: 'draft'`; `referenceUrls` = archive.org
+  scan + this dossier.
+- `lessons.ts` · `kind: 'parichay'` · `id: 'panchabali'` — "पाँच ग्रास किनके लिए" — the five
+  recipients, why householders set food out for beings who can give nothing back (mirrors the
+  Daan `pashu-paksh` cause copy, `mobile/src/data/daan/causes.ts`), and that placement and words
+  belong to the family. No directions, no thread positions, no mantra. `status: 'draft'`;
+  `referenceUrls` = archive.org scan + kamakoti ch. 26 + this dossier.
+- The bhuta-yajna clause leans on the draft principle `manu-3-70`; flip that first, or in the
+  same review.
+- PRD-44 §4/§5 rows updated in the same commit.
+
+**To flip both rows:** open the Gita Press scan at its पञ्चबलि section and record the page range;
+re-open Dharma Sindhu ch. 26 for bali; replace `PANCHABALI_DRAFT_NOTE` in `lessons.ts` with a
+dated note naming what was read.
 
 ## Also pending in the Pitru Paksha layer (from PRD-44 §4–§5, 2026-09-19 build)
 
@@ -101,8 +106,8 @@ Secondary (context only; can supply the second `https://` ref once a primary is 
 | 14 of 16 tithi rows are draft ("whose shraddha falls on which tithi") | `lessons.ts` `tithi-*` | second source: Nirnaya Sindhu or Dharma Sindhu tithi table, beside Drik per-tithi pages (PRD-44 open q. 1) |
 | Pitru-rin / three debts + pancha-mahayajna | `lessons.ts` `pitru-rin`, `principles.ts` `manu-3-70` | open TS 6.3.10.5 and Manu 3.70 at a named edition + one concordant ref |
 | Karna Mahalaya folk katha | `kathas.ts` `karna-mahalaya` | provenance line + two refs; ship labelled लोक-परम्परा (PRD-44 open q. 2) |
-| Bharata's twelfth-day shraddha (Ayodhya 77.1) | katha candidate | **verifiable offline** — bundled Valmiki corpus; no egress needed |
-| Glossary: गोत्र (draft), sapindikarana, panchabali (candidates) | `lessons.ts` `shabd-*` | this dossier covers panchabali; the other two need the same treatment |
+| Bharata's twelfth-day shraddha (Ayodhya 77) | `kathas.ts` `bharat-dwadashah` | **done 2026-09-21** — verified against the bundled Valmiki corpus (2.77.1–26), no egress needed |
+| Glossary: गोत्र (draft), panchabali (draft, this dossier), sapindikarana (candidate) | `lessons.ts` `shabd-*` | sapindikarana needs the same treatment; Ayodhya 2.77.1's Gita Press Hindi names it, which gives the bundled corpus as a first reference |
 | FAQ "who may perform" | `prashna.ts` | Dharma Sindhu ch. 26 on adhikara + one ref; stays a deferral, never a rule |
 | Phase 2 surfaces | Observance Detail card, search rows, Ask intents, DISCOVER caption, Maestro e2e | code work, not content |
 | अन्त्येष्टि / 13-day rites | `docs/roadmap/2026-Q4-candidates.md` | deferred on tone; depends on PRD-19 P3 landing |

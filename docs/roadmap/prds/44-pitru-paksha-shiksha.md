@@ -63,9 +63,9 @@ The `DaanKathaScreen` pattern: subtitle, paragraphs 14/25, the **शिक्ष
 | File | Shape |
 |---|---|
 | `types.ts` | `PitruLessonEntry {kind: 'parichay'∣'tithi'∣'shabd', fortnightDay?, titleHi/En, bodyHi/En[], status, source}` · `PitruPrincipleEntry {verseLines?, iastLines?, cite, meaning, ref?: {kind:'gita'∣'valmiki', chapter, verseIndex}}` · `PitruKathaEntry {sections, teaching, canon, ref?}` · `PitruPrashnaEntry {question, answer}` · `PitruSource {referenceUrls (https:// or repo:), verificationNote (dated)}` |
-| `lessons.ts` | 9 concept (7 verified) · **16 tithi — the whole fortnight** (2 verified) · 12 glossary (11 verified) |
+| `lessons.ts` | 10 concept (7 verified; `panchabali` draft) · **16 tithi — the whole fortnight** (2 verified) · 13 glossary (11 verified; `shabd-panchabali` draft) |
 | `principles.ts` | Gita 1.42 · 9.16 · 9.25 · 10.29 · 2.20 · Valmiki 2.102.27 · 1.41.19 (all verified, each `ref` resolving to the exact bundled verse) · Manu 3.70 (draft, unquoted) |
-| `kathas.ts` | `rama-jalanjali` (Ayodhya 102) · `bhagirath-sagar` (Bala 38–44) · `jatayu-antim-sanskar` (Aranya 67–68) — all verified against the bundled corpus · `karna-mahalaya` (draft folk katha) |
+| `kathas.ts` | `rama-jalanjali` (Ayodhya 102) · `bhagirath-sagar` (Bala 38–44) · `jatayu-antim-sanskar` (Aranya 67–68) · `bharat-dwadashah` (Ayodhya 77) — all verified against the bundled corpus · `karna-mahalaya` (draft folk katha) |
 | `prashna.ts` | 9 authored, 8 verified |
 | `index.ts` | verified-only accessors behind `require()` thunks (launch-graph rule) · `hasPitruShiksha()` — the one door predicate |
 
@@ -80,8 +80,8 @@ The `DaanKathaScreen` pattern: subtitle, paragraphs 14/25, the **शिक्ष
 | **C. Whose day** | the mapping rule; purnima rule; kshaya two-name row; **all 16 per-tithi rows authored** (incl. Bharani by nakshatra, Kunwara Panchami, Matri/Avidhava Navami, Indira Ekadashi, Sannyasi Dwadashi, Ghata Chaturdashi, Pratipada for the maternal side) | engine ✅; the 14 assignments ⏳ Drik per-tithi pages + Nirnaya/Dharma Sindhu | 1 (rule + authoring) · 2 (flip) |
 | **D. When in the day** | Kutapa · Rohina · Aparahna; why calendars differ | dossier ✅ | ✅ 1 |
 | **E. What the rite is** | tarpana ≠ shraddha; anukalpa; agnaukarana/pinda/bhojana are integral; branch variation | dossier ✅ | ✅ 1 |
-| **F. Kathas** | Rama at Mandakini (2.102) ✅; **Bhagiratha and the sixty thousand (Bala 38–44) ✅**; **Jatayu's rites (Aranya 67–68) ✅**; Bharata's 12th-day shraddha (2.77.1) — candidate; Karna folk katha ⏳ (label as लोक-परम्परा); Ravana's rites — **dropped**, corpus defect at 6.114.100 | bundled ✅; Karna ⏳ | 1 · 2 |
-| **G. Glossary** | पितर · तर्पण · जलाञ्जलि · पिण्ड · तिल · दर्भ/कुश · अर्यमा · स्वधा · कुतप · अपराह्न · अनुकल्प ✅; गोत्र ⏳; sapindikarana, panchabali — candidates | dossier + bundled corpus ✅ | 1 · 2 |
+| **F. Kathas** | Rama at Mandakini (2.102) ✅; **Bhagiratha and the sixty thousand (Bala 38–44) ✅**; **Jatayu's rites (Aranya 67–68) ✅**; **Bharata's twelfth-day shraddha (Ayodhya 77) ✅**; Karna folk katha ⏳ (label as लोक-परम्परा); Ravana's rites — **dropped**, corpus defect at 6.114.100 | bundled ✅; Karna ⏳ | 1 · 2 |
+| **G. Glossary** | पितर · तर्पण · जलाञ्जलि · पिण्ड · तिल · दर्भ/कुश · अर्यमा · स्वधा · कुतप · अपराह्न · अनुकल्प ✅; गोत्र ⏳; panchabali ⏳ (lesson + glossary authored as draft, `docs/roadmap/conventions/panchabali-source-dossier.md`); sapindikarana — candidate | dossier + bundled corpus ✅ | 1 · 2 |
 | **H. FAQ** | 8 verified ✅ (materials-we-lack, why-water, where-the-guide-is added). The "can new work be undertaken" question is now **answered as an explicit non-verdict** rather than omitted — people ask it, and silence cedes the ground to fear copy; the row states only that the opened sources are procedural and defers to family practice. "Who may perform" stays draft by choice | dossier + corpus ✅ | 1 |
 
 **Stance (locked).** The layer explains; it never prescribes ("आपको करना चाहिए" is banned copy), never asserts obligation, never names a dosha or a remedy, and never claims the app's guide is complete shraddha. Where the family's practice and the text differ, the copy says the family is right.

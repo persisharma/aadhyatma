@@ -19,13 +19,13 @@ design.md §74 (+ §63.5); contract: RULEBOOK §28; PRD + annotated HTML prototy
 
 ## Shape
 
-- **Data** — `mobile/src/data/pitru/`, **58 rows authored / 38 verified**: `lessons.ts`
-  (`kind: 'parichay' | 'tithi' | 'shabd'` — 9 concept, **all 16 fortnight tithis**, 12 glossary;
+- **Data** — `mobile/src/data/pitru/`, **61 rows authored / 39 verified**: `lessons.ts`
+  (`kind: 'parichay' | 'tithi' | 'shabd'` — 10 concept, **all 16 fortnight tithis**, 13 glossary;
   tithi rows carry `fortnightDay`), `principles.ts` (verse spine — Gita 1.42 / 9.16 / 9.25 /
   10.29 / 2.20, Valmiki 2.102.27 / 1.41.19 — each with a `ref: {kind, chapter, verseIndex}` into
-  a bundled reader), `kathas.ts` (three verified, each retold verse-by-verse from the bundled
+  a bundled reader), `kathas.ts` (four verified, each retold verse-by-verse from the bundled
   corpus: `rama-jalanjali` Ayodhya 102, `bhagirath-sagar` Bala 38–44, `jatayu-antim-sanskar`
-  Aranya 67–68; plus the draft `karna-mahalaya` folk katha), `prashna.ts` (9 Q/A),
+  Aranya 67–68, `bharat-dwadashah` Ayodhya 77; plus the draft `karna-mahalaya` folk katha), `prashna.ts` (9 Q/A),
   `index.ts` (verified-only accessors behind `require()` thunks + `hasPitruShiksha()`).
 - **Screens** — `PitruPakshaShikshaScreen` (परिचय → तिथियाँ → शास्त्र-वचन → कथाएँ → प्रश्नोत्तर →
   शब्द → three doors LAST: overview · vidhi · ledger) and `PitruKathaScreen` (the DaanKatha pattern
@@ -58,10 +58,11 @@ design.md §74 (+ §63.5); contract: RULEBOOK §28; PRD + annotated HTML prototy
   engine**, then the **dossier**. A web-search summary never flips a status — record its URLs in
   the draft note as leads. A **verified katha** must carry a `ref` into a bundled reader and a
   `repo:` reference, pinned by test.
-- **Panchabali is gathered, not yet authored.** `docs/roadmap/conventions/panchabali-source-dossier.md`
-  (2026-09-21) holds the five-recipient scheme, the copy that the stance guard forbids, the
-  mantra text (officiant appendix only — never in-app), the primary sources still unopened, and
-  the proposed draft rows; it also tabulates every other pending gap in this layer.
+- **Panchabali is authored as DRAFT** (`panchabali` parichay lesson + `shabd-panchabali`
+  glossary row, 2026-09-21, dark until a reviewer opens the sources). Its dossier,
+  `docs/roadmap/conventions/panchabali-source-dossier.md`, holds the five-recipient scheme, the
+  copy the stance guard forbids, the mantra text (officiant appendix only — never in-app), the
+  primary sources still unopened, and a table of every other pending gap in this layer.
 - **The fortnight is covered end to end.** All sixteen days carry a `tithi` row, verified or
   draft, pinned by a coverage test: a missing day leaves the reader unable to tell "no tradition
   here" from "the app forgot".
