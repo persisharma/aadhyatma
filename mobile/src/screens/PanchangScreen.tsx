@@ -41,13 +41,13 @@ import { useShubhYoga } from '@/panchang/useShubhYoga';
 import type { CalendarSystem, PanchangElement, ResolvedObservance } from '@/panchang/types';
 import { getKathaContent } from '@/panchang/kathaContent';
 import { getUpcomingObservances, searchObservances } from '@/panchang/festivalEngine';
-import { LENS_COUNT, getLensDefinition, serializeLenses, type ObservanceLens } from '@/panchang/lenses';
+import { getLensDefinition, serializeLenses, type ObservanceLens } from '@/panchang/lenses';
 import { useLenses } from '@/panchang/useLenses';
 import { seedFromLocationOnce } from '@/panchang/lensStore';
 import { successorTithiToday } from '@/panchang/prevailingTithi';
 import { observanceDayNote, type ObservanceDaySolve } from '@/panchang/observanceDayNote';
 import { sankashtiOccurrenceName } from '@/panchang/sankashtiNames';
-import { getCategoryCounts, getKathaCount, type BrowseCategory } from '@/panchang/vratCatalog';
+import { activeCalendarsOf, getCategoryCounts, getKathaCount, getLensAdditions, getNextOccurrence, type BrowseCategory } from '@/panchang/vratCatalog';
 import { VIDHI_ENTRIES, getVidhiById } from '@/data/vidhi';
 import { useVratFollows } from '@/contexts/VratFollowContext';
 import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
@@ -175,7 +175,7 @@ export default function PanchangScreen({ route }: Props) {
   } = useKundali();
   const { panchang: p, observances, upcoming } = usePanchangForSelection(selectedDate, calendarSystem);
   const [lensSheetVisible, setLensSheetVisible] = useState(false);
-  const { lenses } = useLenses();
+  const { lenses, availableCount: lensAvailableCount } = useLenses();
   // The one line PRD-42 §4.2 allows about seeding, named per city and dismissible.
   const [seededLenses, setSeededLenses] = useState<readonly ObservanceLens[]>([]);
 
@@ -330,6 +330,7 @@ export default function PanchangScreen({ route }: Props) {
 
   const openObservanceDetail = (ruleId: string) => rootNav.navigate('ObservanceDetail', { ruleId });
   const openCategory = (category: BrowseCategory) => rootNav.navigate('ObservanceList', { category });
+  const openRegionList = (region: ObservanceLens) => rootNav.navigate('ObservanceList', { region });
   const openKathaLibrary = () => rootNav.navigate('KathaLibrary');
   const openMyVrat = () => rootNav.navigate('MyVrat');
   const openPitruSmaran = () => rootNav.navigate('MoreTab', moreTabTarget('PitruSmaranList'));
@@ -760,6 +761,7 @@ export default function PanchangScreen({ route }: Props) {
                 <ObservanceCard
                   key={`${item.rule.id}-${i}`}
                   item={item}
+                  lenses={lenses}
                   daySolve={p ? { sunrise: p.sunrise, sunset: p.sunset, moonrise: p.moonrise, tithiIndex: p.tithi.index, tithiEnd: p.tithi.endTime } : null}
                   lang={lang}
                   colors={colors}
@@ -781,14 +783,18 @@ export default function PanchangScreen({ route }: Props) {
                     tab opens on and the one a lens actually changes, so a user who
                     never taps व्रत-पर्व would never learn the feature exists. It
                     appears ONLY on a day with nothing on it: on a day that has
-                    something to say, this card is exactly what shipped before. */}
-                <LensDiscoveryRow
-                  lang={lang}
-                  colors={colors}
-                  typography={typography}
-                  radii={radii}
-                  onPress={() => setLensSheetVisible(true)}
-                />
+                    something to say, this card is exactly what shipped before.
+                    Hidden entirely when no calendar has anything to bring. */}
+                {lensAvailableCount > 0 && (
+                  <LensDiscoveryRow
+                    lang={lang}
+                    colors={colors}
+                    typography={typography}
+                    radii={radii}
+                    availableCount={lensAvailableCount}
+                    onPress={() => setLensSheetVisible(true)}
+                  />
+                )}
               </>
             )}
             {/* PRD-17: the private ॥ स्मरण chip — renders only on a saved
@@ -828,12 +834,14 @@ export default function PanchangScreen({ route }: Props) {
               elevation={elevation}
               onOpenDetail={openObservanceDetail}
               onOpenCategory={openCategory}
+              onOpenRegionList={openRegionList}
               onOpenKathaLibrary={openKathaLibrary}
               onOpenVidhiCatalog={openVidhiCatalog}
               onOpenMyVrat={openMyVrat}
               onOpenPitruSmaran={openPitruSmaran}
               onOpenLenses={() => setLensSheetVisible(true)}
               lenses={lenses}
+              lensAvailableCount={lensAvailableCount}
               followCount={followCount}
             />
           ) : (
@@ -1645,8 +1653,10 @@ function TimeCell({ icon, label, value, lang, colors }: { icon: string; label: s
   );
 }
 
-function ObservanceCard({ item, daySolve, lang, colors, typography, radii, elevation, onOpenLink, onOpenKatha, onOpenVidhi }: {
+function ObservanceCard({ item, lenses, daySolve, lang, colors, typography, radii, elevation, onOpenLink, onOpenKatha, onOpenVidhi }: {
   item: ResolvedObservance;
+  /** The user's active क्षेत्रीय पंचांग — a rule they keep gets a ❖ calendar chip. */
+  lenses: ReadonlySet<ObservanceLens>;
   // This date's solved panchang, narrowed to what a day note can read (null
   // until the day's solve lands). Which rules read which field is
   // `observanceDayNote`'s business, not the card's.
@@ -1690,14 +1700,32 @@ function ObservanceCard({ item, daySolve, lang, colors, typography, radii, eleva
   const titleEn = sankashtiName
     ? `${sankashtiName.nameEn}${sankashtiName.isAngarki ? ' (Angarki)' : ''} Vrat`
     : item.rule.nameEn;
+  // The user's own calendars this rule belongs to — the "this one is yours" mark
+  // that the additive lens contract otherwise leaves invisible. Names the first
+  // calendar and counts the rest; empty (no chip) for a plain universal day or a
+  // user with no lens on, so the card is byte-identical to what shipped for them.
+  const mine = activeCalendarsOf(item.rule, lenses);
+  const mineDef = mine.length > 0 ? getLensDefinition(mine[0]) : undefined;
 
   return (
     <View style={[styles.observanceCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card]}>
       <View style={styles.observanceTop}>
-        <View style={[styles.categoryPill, { backgroundColor: item.rule.category === 'vrat' ? colors.goldTint : colors.saffronTint, borderRadius: radii.pill }]}>
-          <Text style={{ fontFamily: lang === 'en' ? fontFamilies.interSemiBold : scriptBodyFont(lang, typography.cardHindi.fontFamily), fontSize: 10, color: colors.saffronDeep }}>
-            {item.rule.category === 'vrat' ? contentByLang(lang, 'व्रत', 'Vrat') : contentByLang(lang, 'पर्व', 'Festival')}
-          </Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, flexShrink: 1 }}>
+          <View style={[styles.categoryPill, { backgroundColor: item.rule.category === 'vrat' ? colors.goldTint : colors.saffronTint, borderRadius: radii.pill }]}>
+            <Text style={{ fontFamily: lang === 'en' ? fontFamilies.interSemiBold : scriptBodyFont(lang, typography.cardHindi.fontFamily), fontSize: 10, color: colors.saffronDeep }}>
+              {item.rule.category === 'vrat' ? contentByLang(lang, 'व्रत', 'Vrat') : contentByLang(lang, 'पर्व', 'Festival')}
+            </Text>
+          </View>
+          {mineDef && (
+            <View
+              style={[styles.categoryPill, { backgroundColor: colors.goldTint, borderRadius: radii.pill }]}
+              accessibilityLabel={`${mineDef.nameEn} calendar${mine.length > 1 ? ` and ${mine.length - 1} more` : ''}`}
+            >
+              <Text numberOfLines={1} style={{ fontFamily: lang === 'en' ? fontFamilies.interSemiBold : scriptBodyFont(lang, typography.cardHindi.fontFamily), fontSize: 10, color: colors.saffronDeep }}>
+                ❖ {contentByLang(lang, mineDef.nameHi, mineDef.nameEn)}{mine.length > 1 ? ` +${mine.length - 1}` : ''}
+              </Text>
+            </View>
+          )}
         </View>
         <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latin : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkMuted }}>
           {contentByLang(lang, item.rule.deityHi, item.rule.deityEn)}
@@ -1777,19 +1805,21 @@ function LensDiscoveryRow({
   colors,
   typography,
   radii,
+  availableCount,
   onPress,
 }: {
   lang: Lang;
   colors: any;
   typography: any;
   radii: any;
+  availableCount: number;
   onPress: () => void;
 }) {
   return (
     <Pressable
       onPress={onPress}
       accessibilityRole="button"
-      accessibilityLabel={`Add a regional calendar. ${LENS_COUNT} available`}
+      accessibilityLabel={`Add a regional calendar. ${availableCount} available`}
       style={({ pressed }) => [
         {
           flexDirection: 'row',
@@ -1814,8 +1844,8 @@ function LensDiscoveryRow({
         <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkMuted, marginTop: 2 }}>
           {contentByLang(
             lang,
-            `अपने क्षेत्र या परंपरा की तिथियाँ · ${LENS_COUNT} उपलब्ध`,
-            `Your region’s or tradition’s days · ${LENS_COUNT} available`
+            `अपने क्षेत्र या परंपरा की तिथियाँ · ${availableCount} उपलब्ध`,
+            `Your region’s or tradition’s days · ${availableCount} available`
           )}
         </Text>
       </View>
@@ -1874,7 +1904,7 @@ function CatalogLedgerCell({
     count still does not tell a user where their extra dates came from (§42).
     The accessibility labels stay full sentences: the compression is visual. */
 function CatalogLedgerBar({
-  lang, colors, typography, radii, elevation, followCount, lenses,
+  lang, colors, typography, radii, elevation, followCount, lenses, lensAvailableCount,
   onOpenMyVrat, onOpenPitruSmaran, onOpenLenses,
 }: {
   lang: Lang;
@@ -1884,6 +1914,8 @@ function CatalogLedgerBar({
   elevation: any;
   followCount: number;
   lenses: ReadonlySet<ObservanceLens>;
+  /** Calendars this build offers; 0 collapses the bar to two columns. */
+  lensAvailableCount: number;
   onOpenMyVrat: () => void;
   onOpenPitruSmaran: () => void;
   onOpenLenses: () => void;
@@ -1920,11 +1952,15 @@ function CatalogLedgerBar({
     .map((id) => getLensDefinition(id))
     .filter((def): def is NonNullable<typeof def> => def != null)
     .map((def) => contentByLang(lang, def.nameHi, def.nameEn));
+  // `सभी n` once every offered calendar is on — `राजस्थान +21` would name one
+  // calendar as if it were the choice, when the choice was "everything".
   const lensState = lensNames.length === 0
-    ? contentByLang(lang, `${LENS_COUNT} उपलब्ध`, `${LENS_COUNT} available`)
-    : lensNames.length === 1
-      ? lensNames[0]
-      : `${lensNames[0]} +${lensNames.length - 1}`;
+    ? contentByLang(lang, `${lensAvailableCount} उपलब्ध`, `${lensAvailableCount} available`)
+    : lensNames.length === lensAvailableCount
+      ? contentByLang(lang, `सभी ${lensAvailableCount}`, `All ${lensAvailableCount}`)
+      : lensNames.length === 1
+        ? lensNames[0]
+        : `${lensNames[0]} +${lensNames.length - 1}`;
 
   return (
     <View
@@ -1956,21 +1992,167 @@ function CatalogLedgerBar({
         onPress={onOpenPitruSmaran}
         divided
       />
-      <CatalogLedgerCell
-        lang={lang}
-        colors={colors}
-        typography={typography}
-        glyph="❖"
-        label={contentByLang(lang, 'क्षेत्र', 'Regional')}
-        state={lensState}
-        accessibilityLabel={
-          lensNames.length > 0
-            ? `Regional calendars, ${lensNames.length} on`
-            : 'Regional calendars, none selected'
-        }
-        onPress={onOpenLenses}
-        divided
-      />
+      {/* No calendar with anything to bring ⇒ no column: a filter that can choose
+          nothing is not a filter. Comes back by itself when a rule is tagged. */}
+      {lensAvailableCount > 0 && (
+        <CatalogLedgerCell
+          lang={lang}
+          colors={colors}
+          typography={typography}
+          glyph="❖"
+          label={contentByLang(lang, 'क्षेत्र', 'Regional')}
+          state={lensState}
+          accessibilityLabel={
+            lensNames.length === lensAvailableCount
+              ? `Regional calendars, all ${lensAvailableCount} on`
+              : lensNames.length > 0
+                ? `Regional calendars, ${lensNames.length} on`
+                : 'Regional calendars, none selected'
+          }
+          onPress={onOpenLenses}
+          divided
+        />
+      )}
+    </View>
+  );
+}
+
+/** How many rows an आपके पंचांग से group shows before it defers to "सभी देखें". */
+const ADDITIONS_PREVIEW = 4;
+
+/**
+ * आपके पंचांग से — what the active क्षेत्रीय पंचांग actually bring (PRD-42 §4.1
+ * follow-up, design.md §73).
+ *
+ * The additive contract puts a regional day among the universal ones with nothing
+ * marking it, so a user who turned राजस्थान on and looked at the calendar saw "the
+ * same list as before, plus days they could not point to". This card is the
+ * pointer: one group per active calendar, in registry order, its soonest few
+ * observances as rows that open the detail with the next date beside them, and
+ * "सभी n देखें" into the full per-calendar list when there are more. A calendar
+ * brings both the rules it ADDS (`lens`) and the universal rules tagged as its
+ * own (`regions`) — Gangaur is listed under राजस्थान without being hidden from
+ * anyone else.
+ *
+ * Rendered only with at least one lens on: with none, the ledger column already
+ * says `n उपलब्ध` and there is nothing to list.
+ */
+function LensAdditionsSection({
+  lang, today, calendarSystem, lenses, colors, typography, radii, elevation, onOpenDetail, onOpenRegionList, onOpenLenses,
+}: {
+  lang: Lang;
+  today: Date;
+  calendarSystem: CalendarSystem;
+  lenses: ReadonlySet<ObservanceLens>;
+  colors: any;
+  typography: any;
+  radii: any;
+  elevation: any;
+  onOpenDetail: (ruleId: string) => void;
+  onOpenRegionList: (region: ObservanceLens) => void;
+  onOpenLenses: () => void;
+}) {
+  const lensKey = serializeLenses(lenses);
+  const groups = useMemo(
+    () =>
+      getLensAdditions(lenses).map((group) => {
+        const dated = group.rules.map((rule) => ({ rule, next: getNextOccurrence(rule.id, today, calendarSystem) }));
+        // Soonest first, like the per-type list; undated rules sink.
+        dated.sort((a, b) => (a.next?.date.getTime() ?? Number.MAX_SAFE_INTEGER) - (b.next?.date.getTime() ?? Number.MAX_SAFE_INTEGER));
+        return { lens: group.lens, def: getLensDefinition(group.lens), total: dated.length, rows: dated.slice(0, ADDITIONS_PREVIEW) };
+      }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [lensKey, today, calendarSystem]
+  );
+  if (groups.length === 0) return null;
+  const total = groups.reduce((sum, group) => sum + group.total, 0);
+
+  return (
+    <View
+      testID="lens-additions"
+      style={[
+        styles.additionsCard,
+        { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md },
+        elevation.card,
+      ]}
+    >
+      <View style={styles.additionsHead}>
+        <View style={{ flex: 1 }}>
+          <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink }}>
+            {contentByLang(lang, 'आपके पंचांग से', 'From your calendars')}
+          </Text>
+          <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkMuted, marginTop: 2 }}>
+            {contentByLang(
+              lang,
+              `${total} ${total === 1 ? 'पर्व' : 'पर्व'} जो आपके क्षेत्र या परंपरा के हैं`,
+              `${total} ${total === 1 ? 'observance' : 'observances'} your region or tradition keeps`
+            )}
+          </Text>
+        </View>
+        <Pressable
+          onPress={onOpenLenses}
+          accessibilityRole="button"
+          accessibilityLabel="Change regional calendars"
+          hitSlop={8}
+          style={({ pressed }) => [pressed && { opacity: 0.6 }]}
+        >
+          <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 12, color: colors.saffronDeep }}>
+            {contentByLang(lang, 'बदलें', 'Change')}
+          </Text>
+        </Pressable>
+      </View>
+      {groups.map(({ lens, def, total: groupTotal, rows }) => (
+        <View key={lens} style={{ marginTop: 8 }}>
+          <Text
+            style={{
+              fontFamily: typography.subtitle.fontFamily,
+              fontSize: 10,
+              letterSpacing: 1,
+              textTransform: 'uppercase',
+              color: colors.inkMuted,
+              marginBottom: 2,
+            }}
+          >
+            {def ? contentByLang(lang, def.nameHi, def.nameEn) : lens} · {groupTotal}
+          </Text>
+          {rows.map(({ rule, next }) => (
+            <Pressable
+              key={rule.id}
+              onPress={() => onOpenDetail(rule.id)}
+              accessibilityRole="button"
+              accessibilityLabel={`${rule.nameEn}${next ? `, next ${formatShortDate(next.date, 'en')}` : ''}`}
+              style={({ pressed }) => [styles.resultRow, { borderBottomColor: colors.divider }, pressed && { opacity: 0.6 }]}
+            >
+              <View style={{ flex: 1, paddingRight: 10 }}>
+                <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
+                  {contentByLang(lang, rule.nameHi, rule.nameEn)}
+                </Text>
+                <Text style={{ ...captionFont(lang === 'en' ? rule.nameHi : rule.nameEn), fontSize: 13, color: colors.inkMuted, marginTop: 2 }}>
+                  {lang === 'en' ? rule.nameHi : rule.nameEn}
+                </Text>
+              </View>
+              {next && (
+                <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 11, color: colors.saffronDeep, letterSpacing: 0.4, marginRight: 8 }}>
+                  {formatShortDate(next.date, lang).toUpperCase()}
+                </Text>
+              )}
+              <Text style={{ fontSize: 18, color: colors.inkMuted }}>›</Text>
+            </Pressable>
+          ))}
+          {groupTotal > rows.length && (
+            <Pressable
+              onPress={() => onOpenRegionList(lens)}
+              accessibilityRole="button"
+              accessibilityLabel={`See all ${groupTotal} ${def?.nameEn ?? lens} observances`}
+              style={({ pressed }) => [styles.seeAllRow, pressed && { opacity: 0.6 }]}
+            >
+              <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 12, color: colors.saffronDeep }}>
+                {contentByLang(lang, `सभी ${groupTotal} देखें ›`, `See all ${groupTotal} ›`)}
+              </Text>
+            </Pressable>
+          )}
+        </View>
+      ))}
     </View>
   );
 }
@@ -1978,8 +2160,8 @@ function CatalogLedgerBar({
 function CatalogLanding({
   lang, today, calendarSystem, query, onChangeQuery,
   colors, typography, radii, elevation,
-  onOpenDetail, onOpenCategory, onOpenKathaLibrary, onOpenVidhiCatalog, onOpenMyVrat, followCount,
-  onOpenPitruSmaran, onOpenLenses, lenses,
+  onOpenDetail, onOpenCategory, onOpenRegionList, onOpenKathaLibrary, onOpenVidhiCatalog, onOpenMyVrat, followCount,
+  onOpenPitruSmaran, onOpenLenses, lenses, lensAvailableCount,
 }: {
   lang: Lang;
   today: Date;
@@ -1992,12 +2174,14 @@ function CatalogLanding({
   elevation: any;
   onOpenDetail: (ruleId: string) => void;
   onOpenCategory: (category: BrowseCategory) => void;
+  onOpenRegionList: (region: ObservanceLens) => void;
   onOpenKathaLibrary: () => void;
   onOpenVidhiCatalog: () => void;
   onOpenMyVrat: () => void;
   onOpenPitruSmaran: () => void;
   onOpenLenses: () => void;
   lenses: ReadonlySet<ObservanceLens>;
+  lensAvailableCount: number;
   followCount: number;
 }) {
   const trimmed = query.trim();
@@ -2066,8 +2250,24 @@ function CatalogLanding({
             elevation={elevation}
             followCount={followCount}
             lenses={lenses}
+            lensAvailableCount={lensAvailableCount}
             onOpenMyVrat={onOpenMyVrat}
             onOpenPitruSmaran={onOpenPitruSmaran}
+            onOpenLenses={onOpenLenses}
+          />
+          {/* What the active calendars bring — the answer the ledger column's
+              `राजस्थान` alone cannot give. Nothing rendered with no lens on. */}
+          <LensAdditionsSection
+            lang={lang}
+            today={today}
+            calendarSystem={calendarSystem}
+            lenses={lenses}
+            colors={colors}
+            typography={typography}
+            radii={radii}
+            elevation={elevation}
+            onOpenDetail={onOpenDetail}
+            onOpenRegionList={onOpenRegionList}
             onOpenLenses={onOpenLenses}
           />
           {upcoming.length > 0 && (
@@ -2088,6 +2288,11 @@ function CatalogLanding({
                       <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 14, color: colors.saffron }}>
                         {categoryGlyph(item.rule.category)}
                       </Text>
+                      {/* ❖ marks a day one of the user's own calendars keeps. */}
+                      {activeCalendarsOf(item.rule, lenses).length > 0 && (
+                        <Text style={{ fontSize: 11, color: colors.gold, marginLeft: 4 }} accessibilityLabel="From your regional calendar">❖</Text>
+                      )}
+                      <View style={{ flex: 1 }} />
                       <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 10, color: colors.saffronDeep, letterSpacing: 0.4 }}>
                         {formatShortDate(item.date, lang).toUpperCase()}
                       </Text>
@@ -2243,6 +2448,10 @@ const styles = StyleSheet.create({
   prashnaDoor: { flexDirection: 'row', alignItems: 'center', gap: 10, padding: 13, borderWidth: 1, marginBottom: 8, minHeight: 64 },
   prashnaNew: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, letterSpacing: 0.8 },
   resultRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 13, borderBottomWidth: StyleSheet.hairlineWidth },
+  // आपके पंचांग से — same card register as the upcoming cards and the tiles.
+  additionsCard: { marginTop: 12, borderWidth: 1, paddingHorizontal: 14, paddingTop: 12, paddingBottom: 6 },
+  additionsHead: { flexDirection: 'row', alignItems: 'flex-start', gap: 12 },
+  seeAllRow: { minHeight: 40, justifyContent: 'center', alignItems: 'flex-end', paddingVertical: 6 },
   // Compact upcoming card (design.md § catalog view): date + glyph top row and a
   // one-line name — the category caption is dropped, the ॐ/☾/✺ glyph carries it.
   upCard: { width: 136, height: 72, borderWidth: 1, paddingVertical: 10, paddingHorizontal: 12 },

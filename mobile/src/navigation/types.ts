@@ -1,4 +1,5 @@
 import type { OccasionId } from '@/panchang/eventMuhurat';
+import type { ObservanceLens } from '@/panchang/lenses';
 import type { NavigatorScreenParams } from '@react-navigation/native';
 import type { ContentCategory, Deity } from '@/data/texts';
 import type { PurposeId } from '@/data/purposes';
@@ -184,7 +185,11 @@ export type PanchangStackParamList = VidhiStackParamList & DaanStackParamList & 
         muhuratOverlay?: { occasionId: OccasionId; days: number[] };
       }
     | undefined;
-  ObservanceList: { category: 'vrat' | 'festival' | 'upavas' };
+  /**
+   * One browse list: by type (the landing tiles) OR by क्षेत्रीय पंचांग (the
+   * "सभी देखें" of an आपके पंचांग से group — every observance that calendar brings).
+   */
+  ObservanceList: { category: 'vrat' | 'festival' | 'upavas'; region?: undefined } | { region: ObservanceLens; category?: undefined };
   ObservanceDetail: { ruleId: string };
   KathaLibrary: undefined;
   MyVrat: undefined;

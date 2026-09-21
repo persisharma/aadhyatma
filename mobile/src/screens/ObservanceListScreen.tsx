@@ -9,7 +9,8 @@ import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
-import { getNextOccurrence, getRulesForCategory, type BrowseCategory } from '@/panchang/vratCatalog';
+import { getLensDefinition } from '@/panchang/lenses';
+import { getNextOccurrence, getRulesForCategory, getRulesForLens, type BrowseCategory } from '@/panchang/vratCatalog';
 import { useVratFollows } from '@/contexts/VratFollowContext';
 import type { ObservanceRule } from '@/panchang/types';
 import type { PanchangStackParamList } from '@/navigation/types';
@@ -57,12 +58,17 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
   const [query, setQuery] = useState('');
   const { isFollowing, follow, unfollow } = useVratFollows();
 
+  // Two doors into one list: a type tile (`category`) or an आपके पंचांग से group's
+  // "सभी देखें" (`region` — every observance that क्षेत्रीय पंचांग brings, lensed
+  // and tagged alike). Same rows, same search, same follow star.
   const category = route.params.category;
+  const region = route.params.region;
   const today = useMemo(() => startOfLocalDay(new Date()), []);
 
   const rows = useMemo(() => {
-    // getRulesForCategory dedupes by id, so keys here are unique.
-    const withDates = getRulesForCategory(category).map((rule) => ({
+    // Both helpers dedupe by id, so keys here are unique.
+    const rules = region ? getRulesForLens(region) : getRulesForCategory(category ?? 'vrat');
+    const withDates = rules.map((rule) => ({
       rule,
       next: getNextOccurrence(rule.id, today, calendarSystem),
     }));
@@ -73,7 +79,7 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
       return at - bt;
     });
     return withDates;
-  }, [category, today, calendarSystem]);
+  }, [category, region, today, calendarSystem]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -83,7 +89,10 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
     );
   }, [rows, query]);
 
-  const title = TITLES[category];
+  const regionDef = region ? getLensDefinition(region) : undefined;
+  const title = regionDef
+    ? { hi: `${regionDef.nameHi} पंचांग`, en: `${regionDef.nameEn} calendar` }
+    : TITLES[category ?? 'vrat'];
 
   return (
     <View style={styles.root}>

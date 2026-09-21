@@ -17,7 +17,8 @@ import { getBhogContent } from '@/panchang/bhogContent';
 import { getDaanOccasionForRule } from '@/data/daan';
 import { useUpvasParana } from '@/panchang/useUpvasParana';
 import { formatClock, formatRangeCompact, formatEndInstant, isSameLocalDay } from '@/panchang/muhuratFormat';
-import { getNextOccurrence, getRuleById } from '@/panchang/vratCatalog';
+import { getNextOccurrence, getRuleById, ruleCalendars } from '@/panchang/vratCatalog';
+import { getLensDefinition } from '@/panchang/lenses';
 import { getVidhiForFestival } from '@/data/vidhi';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { useVratFollows } from '@/contexts/VratFollowContext';
@@ -171,6 +172,20 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                   <Text style={{ fontFamily: fontFamilies.latin, fontSize: 13, color: colors.inkMuted }}>
                     {contentByLang(lang, rule.deityHi, rule.deityEn)}
                   </Text>
+                  {/* The calendars this observance belongs to (lens + regions) —
+                      every one of them, not only the user's, because the detail
+                      is where "whose day is this?" gets answered. */}
+                  {ruleCalendars(rule).map((lens) => {
+                    const def = getLensDefinition(lens);
+                    if (!def) return null;
+                    return (
+                      <View key={lens} style={[styles.pill, { backgroundColor: colors.goldTint, borderRadius: radii.pill }]} accessibilityLabel={`${def.nameEn} calendar`}>
+                        <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 11, color: colors.saffronDeep }}>
+                          ❖ {contentByLang(lang, def.nameHi, def.nameEn)}
+                        </Text>
+                      </View>
+                    );
+                  })}
                 </View>
               )}
               title={contentByLang(lang, rule.nameHi, rule.nameEn)}
@@ -544,7 +559,7 @@ const styles = StyleSheet.create({
   backButton: { width: 36, height: 36, borderWidth: 1, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
   centered: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 },
   scroll: { paddingTop: 8, paddingBottom: 32 },
-  heroTags: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  heroTags: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', gap: 8 },
   pill: { paddingHorizontal: 10, paddingVertical: 4 },
   actionRow: { flexDirection: 'row', gap: 8, marginTop: 4, marginBottom: 4 },
   askRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 8, marginBottom: 4, paddingHorizontal: 14, minHeight: 40, borderWidth: 1 },

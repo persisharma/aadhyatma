@@ -26,6 +26,16 @@ import {
   lensesForStoredLabel,
   STATE_LENS,
 } from '../lensRegistry';
+import { REGION_TAGS } from '../regionTags';
+import {
+  activeCalendarsOf,
+  getLensAdditions,
+  getLensesWithContent,
+  getRulesForLens,
+  regionsOf,
+  ruleCalendars,
+  withContentOnly,
+} from '../vratCatalog';
 
 const NONE: ReadonlySet<ObservanceLens> = new Set();
 const JAIN: ReadonlySet<ObservanceLens> = new Set<ObservanceLens>(['jain']);
@@ -171,6 +181,118 @@ test('search is lens-blind — a name typed by hand always resolves', () => {
   assert.ok(byName.includes('rohini-vrat'), 'रोहिणी व्रत is findable with no lens on');
   const karthigai = searchObservances('karthigai').map((r) => r.id);
   assert.ok(karthigai.includes('karthigai-vrat'));
+});
+
+// ── region tags — the highlight (whose day is this?) ───────────────────────
+
+test('every region tag names a real DEFAULT rule and real lenses, once each, and is never empty', () => {
+  // The table is keyed by rule id in a separate file (launch-graph budget), so a
+  // typo would otherwise silently drop a calendar's row. Pin the join.
+  const byId = new Map(OBSERVANCE_RULES.map((r) => [r.id, r] as const));
+  for (const [ruleId, regions] of Object.entries(REGION_TAGS)) {
+    const rule = byId.get(ruleId);
+    assert.ok(rule, `REGION_TAGS names an unknown rule: ${ruleId}`);
+    assert.equal(rule!.visibility, 'default', `${ruleId} is tagged but not default-visible`);
+    assert.ok(!rule!.lens, `${ruleId} carries a lens — the lens already names its calendar, drop the tag`);
+    assert.ok(regions.length > 0, `${ruleId} carries an empty tag — remove the entry instead`);
+    assert.equal(new Set(regions).size, regions.length, `${ruleId} repeats a region`);
+    for (const lens of regions) assert.ok(isObservanceLens(lens), `${ruleId} → ${lens}`);
+  }
+});
+
+test('a region tag never gates visibility — every tagged universal rule is in the unlensed catalog', () => {
+  // `lens` decides who sees a rule; the tag only says whose it is. Gangaur must
+  // stay on everyone's calendar after being tagged राजस्थान.
+  const unlensed = new Set(getObservanceCatalog().map((r) => r.id));
+  const tagged = Object.keys(REGION_TAGS);
+  assert.ok(tagged.length >= 40, `expected a real tagging pass, found ${tagged.length} tagged rules`);
+  for (const id of tagged) assert.ok(unlensed.has(id), `${id} vanished from the universal catalog after tagging`);
+  assert.ok(unlensed.has('gangaur'));
+  assert.ok(unlensed.has('chhath-puja'));
+  // And the day/month engine is tag-blind: same ids with every lens off.
+  const byId = new Map(OBSERVANCE_RULES.map((r) => [r.id, r] as const));
+  assert.deepEqual([...regionsOf(byId.get('gangaur')!)], ['rajasthan', 'bundelkhand-malwa']);
+  assert.deepEqual([...regionsOf(byId.get('nirjala-ekadashi')!)], []);
+});
+
+test('ruleCalendars unites lens and regions in registry order; a plain universal rule has none', () => {
+  const byId = new Map(OBSERVANCE_RULES.map((r) => [r.id, r] as const));
+  assert.deepEqual(ruleCalendars(byId.get('rohini-vrat')!), ['jain']);
+  assert.deepEqual(ruleCalendars(byId.get('gangaur')!), ['rajasthan', 'bundelkhand-malwa']);
+  assert.deepEqual(ruleCalendars(byId.get('nirjala-ekadashi')!), []);
+  // Registry order, whatever order the tag was written in.
+  assert.deepEqual(ruleCalendars(byId.get('kojagara-puja')!), ['bihar-mithila', 'bengal', 'maharashtra']);
+});
+
+test('activeCalendarsOf narrows to the user’s own set — the day-view chip', () => {
+  const byId = new Map(OBSERVANCE_RULES.map((r) => [r.id, r] as const));
+  const gangaur = byId.get('gangaur')!;
+  assert.deepEqual(activeCalendarsOf(gangaur, NONE), []);
+  assert.deepEqual(activeCalendarsOf(gangaur, JAIN), []);
+  assert.deepEqual(activeCalendarsOf(gangaur, new Set<ObservanceLens>(['rajasthan', 'jain'])), ['rajasthan']);
+  assert.deepEqual(activeCalendarsOf(gangaur, ALL_LENSES), ['rajasthan', 'bundelkhand-malwa']);
+});
+
+// ── "what does this calendar bring?" — the sheet's third line + आपके पंचांग से ──
+
+test('getRulesForLens brings the lensed rules AND the tagged universal ones', () => {
+  const jain = getRulesForLens('jain').map((r) => r.id);
+  assert.ok(jain.includes('rohini-vrat'), 'the lensed rule');
+  assert.ok(jain.includes('mahavir-jayanti'), 'the tagged universal rule');
+  assert.ok(jain.includes('mokshada-ekadashi'), 'मौन एकादशी — a tagged generated Ekadashi');
+  const rajasthan = getRulesForLens('rajasthan').map((r) => r.id);
+  for (const id of ['gangaur', 'goga-navami', 'teja-dashami', 'bachh-baras', 'bhadwa-chauth', 'ramdev-jayanti', 'shitala-ashtami']) {
+    assert.ok(rajasthan.includes(id), `rajasthan → ${id}`);
+  }
+  // A multi-calendar rule lists under EACH of its calendars.
+  assert.ok(getRulesForLens('bundelkhand-malwa').map((r) => r.id).includes('gangaur'));
+  assert.ok(getRulesForLens('tamil').map((r) => r.id).includes('karthigai-vrat'));
+});
+
+test('getRulesForLens never lists a hidden/advanced rule, and lists each id once', () => {
+  for (const lens of LENS_IDS) {
+    const rules = getRulesForLens(lens);
+    assert.equal(new Set(rules.map((r) => r.id)).size, rules.length, `${lens} repeats an id`);
+    for (const rule of rules) {
+      assert.equal(rule.visibility, 'default', `${lens} → ${rule.id}`);
+      assert.ok(ruleCalendars(rule).includes(lens), `${lens} → ${rule.id} belongs to the lens`);
+    }
+  }
+});
+
+test('the lensed part of getRulesForLens agrees with the catalog gate, lens by lens', () => {
+  // What the gate GROWS by when only X is on must be exactly X's lensed rules.
+  const off = new Set(getObservanceCatalog().map((r) => r.id));
+  for (const lens of LENS_IDS) {
+    const grown = getObservanceCatalog({ lenses: new Set<ObservanceLens>([lens]) })
+      .map((r) => r.id)
+      .filter((id) => !off.has(id))
+      .sort();
+    const lensed = getRulesForLens(lens).filter((r) => r.lens?.includes(lens)).map((r) => r.id).sort();
+    assert.deepEqual(lensed, grown, lens);
+  }
+});
+
+test('every registered calendar brings at least one observance, so all 22 are offered', () => {
+  // The Sept 2026 report: a switch that changes nothing must not be shown. With
+  // the `regions` tags, no calendar is empty — and this pins that a future rule
+  // edit cannot silently empty one (the sheet would then drop it).
+  assert.deepEqual([...getLensesWithContent()], [...LENS_IDS]);
+  for (const lens of LENS_IDS) assert.ok(getRulesForLens(lens).length > 0, `${lens} brings nothing`);
+});
+
+test('the display set keeps offered ids only, and additions group the active set in registry order', () => {
+  assert.deepEqual([...withContentOnly(new Set<ObservanceLens>(['jain', 'rajasthan']))], ['rajasthan', 'jain']);
+  assert.deepEqual([...withContentOnly(NONE)], []);
+  assert.deepEqual(getLensAdditions(NONE), []);
+  const groups = getLensAdditions(new Set<ObservanceLens>(['sindhi', 'jain', 'tamil']));
+  assert.deepEqual(groups.map((g) => g.lens), ['tamil', 'jain', 'sindhi']);
+  for (const group of groups) assert.deepEqual(group.rules.map((r) => r.id), getRulesForLens(group.lens).map((r) => r.id));
+});
+
+test('select-all is an ordinary stored set of the offered ids — it round-trips like any other', () => {
+  const all = new Set<ObservanceLens>(getLensesWithContent());
+  assert.deepEqual([...parseStoredLenses(serializeLenses(all))].sort(), [...getLensesWithContent()].sort());
 });
 
 // ── the retired `regional` visibility ──────────────────────────────────────
