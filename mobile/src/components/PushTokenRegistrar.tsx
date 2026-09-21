@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { AppState, InteractionManager, type AppStateStatus } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
-import { useGitaLanguage } from '@/data/gita/language';
 import { syncPushToken } from '@/notifications/pushToken';
 
 /**
@@ -21,17 +20,16 @@ import { syncPushToken } from '@/notifications/pushToken';
  * Re-runs on:
  * - the permission becoming `granted` (the grant may arrive after first mount),
  * - every foreground — a token can be replaced while the app is backgrounded,
- * - a reading-language change, which changes the language a server should push
- *   in (`syncPushToken` no-ops when the registration is unchanged, so a spurious
- *   re-run costs no request),
  * - an OS token-rotation event, via `addPushTokenListener`.
+ *
+ * `syncPushToken` no-ops once the current device id is already registered, so a
+ * spurious re-run costs no request.
  *
  * The work runs behind `InteractionManager` so a cold start's first frames are
  * never charged for it — the same courtesy `<FestiveReminderScheduler>` pays.
  */
 export default function PushTokenRegistrar() {
   const { permissionStatus, isLoading } = useNotificationPreferences();
-  const { lang } = useGitaLanguage();
   const [foregroundTick, setForegroundTick] = useState(0);
   const [rotationTick, setRotationTick] = useState(0);
   const appStateRef = useRef<AppStateStatus>(AppState.currentState);
@@ -64,14 +62,14 @@ export default function PushTokenRegistrar() {
     let cancelled = false;
     const task = InteractionManager.runAfterInteractions(() => {
       if (cancelled) return;
-      syncPushToken({ lang }).catch(() => undefined);
+      syncPushToken().catch(() => undefined);
     });
 
     return () => {
       cancelled = true;
       task.cancel();
     };
-  }, [isLoading, permissionStatus, lang, foregroundTick, rotationTick]);
+  }, [isLoading, permissionStatus, foregroundTick, rotationTick]);
 
   return null;
 }

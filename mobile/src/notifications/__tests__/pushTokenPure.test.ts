@@ -9,27 +9,21 @@ import {
   PUSH_SYNC_JITTER_MS,
   PUSH_SYNC_MAX_ATTEMPTS,
   PUSH_SYNC_MAX_DELAY_MS,
-  buildDeviceRegistration,
+  buildDeviceIdsBody,
   classifyUploadResponse,
   isPushRegistryConfigured,
   isUsableInstallId,
   makeInstallId,
-  registrationFingerprint,
+  resolveApiKey,
   resolvePushEndpoint,
   retryDelayMs,
   runUploadWithRetry,
+  shouldRegisterDeviceId,
   shouldRetryUpload,
-  shouldSyncRegistration,
 } from '../pushTokenPure';
 
-const SAMPLE = {
-  installId: 'vd-abc-123456',
-  token: 'ExponentPushToken[aaaaaaaaaaaaaaaaaaaaaa]',
-  platform: 'ios',
-  appVersion: '1.4.8',
-  lang: 'hi',
-  timezone: 'Asia/Kolkata',
-};
+const TOKEN = 'ExponentPushToken[aaaaaaaaaaaaaaaaaaaaaa]';
+const NEXT_TOKEN = 'ExponentPushToken[bbbbbbbbbbbbbbbbbbbbbb]';
 
 test('the project id mirrors app.json — a drift here mints tokens for the wrong project', () => {
   const appJson = JSON.parse(
@@ -38,9 +32,9 @@ test('the project id mirrors app.json — a drift here mints tokens for the wron
   assert.equal(EAS_PROJECT_ID, appJson.expo.extra.eas.projectId);
 });
 
-test('the upload endpoint ships unset, so no build makes a network call by default', () => {
-  assert.equal(PUSH_REGISTRY_ENDPOINT, null);
-  assert.equal(isPushRegistryConfigured(PUSH_REGISTRY_ENDPOINT), false);
+test('the registry endpoint is pinned to the production https url', () => {
+  assert.equal(PUSH_REGISTRY_ENDPOINT, 'https://api.incardible.in/api/mobile/devices');
+  assert.equal(isPushRegistryConfigured(PUSH_REGISTRY_ENDPOINT), true);
 });
 
 test('only a non-empty https endpoint counts as configured', () => {
@@ -52,54 +46,35 @@ test('only a non-empty https endpoint counts as configured', () => {
   assert.equal(isPushRegistryConfigured(null), false);
 });
 
-test('registration fields are trimmed, defaulted and bounded', () => {
-  const reg = buildDeviceRegistration({
-    installId: '  vd-abc-123456  ',
-    token: SAMPLE.token,
-    platform: 'android',
-    appVersion: '   ',
-    lang: null,
-    timezone: undefined,
-  });
-  assert.equal(reg.installId, 'vd-abc-123456');
-  assert.equal(reg.appVersion, 'unknown');
-  assert.equal(reg.lang, 'hi');
-  assert.equal(reg.timezone, 'unknown');
-
-  const long = buildDeviceRegistration({ ...SAMPLE, token: 'x'.repeat(500) });
-  assert.equal(long.token.length, 120);
+test('the api key is trimmed, and a blank value counts as no key', () => {
+  assert.equal(resolveApiKey('  k123  '), 'k123');
+  assert.equal(resolveApiKey(''), null);
+  assert.equal(resolveApiKey('   '), null);
+  assert.equal(resolveApiKey(undefined), null);
+  assert.equal(resolveApiKey(null), null);
 });
 
-test('the fingerprint covers every field a server would target on, not just the token', () => {
-  const base = buildDeviceRegistration(SAMPLE);
-  assert.equal(shouldSyncRegistration(registrationFingerprint(base), base), false);
+test('the body is the device id wrapped in a one-element array', () => {
+  assert.deepEqual(buildDeviceIdsBody(TOKEN), { deviceIds: [TOKEN] });
+  assert.deepEqual(buildDeviceIdsBody('  x  '), { deviceIds: ['x'] });
+});
 
-  for (const changed of [
-    { ...SAMPLE, token: 'ExponentPushToken[bbbbbbbbbbbbbbbbbbbbbb]' },
-    { ...SAMPLE, lang: 'gu' },
-    { ...SAMPLE, timezone: 'America/New_York' },
-    { ...SAMPLE, appVersion: '1.4.9' },
-    { ...SAMPLE, platform: 'android' },
-    { ...SAMPLE, installId: 'vd-def-654321' },
-  ]) {
-    assert.equal(
-      shouldSyncRegistration(registrationFingerprint(base), buildDeviceRegistration(changed)),
-      true,
-      `expected a re-sync for ${JSON.stringify(changed)}`
-    );
-  }
-
-  // A first run has nothing stored, so it must always sync.
-  assert.equal(shouldSyncRegistration(null, base), true);
+test('a device id registers once; a first run and a rotated id both register', () => {
+  // Nothing stored yet ⇒ register.
+  assert.equal(shouldRegisterDeviceId(null, TOKEN), true);
+  // Already registered this exact id ⇒ skip the call.
+  assert.equal(shouldRegisterDeviceId(TOKEN, TOKEN), false);
+  // A rotated token is a different id ⇒ register afresh.
+  assert.equal(shouldRegisterDeviceId(TOKEN, NEXT_TOKEN), true);
 });
 
 test('install ids are deterministic per seed, distinct across seeds and mint times', () => {
   const now = Date.UTC(2026, 8, 7);
-  assert.equal(makeInstallId(SAMPLE.token, now), makeInstallId(SAMPLE.token, now));
-  assert.notEqual(makeInstallId(SAMPLE.token, now), makeInstallId('other-token', now));
-  assert.notEqual(makeInstallId(SAMPLE.token, now), makeInstallId(SAMPLE.token, now + 1));
-  assert.match(makeInstallId(SAMPLE.token, now), /^vd-[0-9a-z]+-[0-9a-z]+$/);
-  assert.equal(isUsableInstallId(makeInstallId(SAMPLE.token, now)), true);
+  assert.equal(makeInstallId(TOKEN, now), makeInstallId(TOKEN, now));
+  assert.notEqual(makeInstallId(TOKEN, now), makeInstallId('other-token', now));
+  assert.notEqual(makeInstallId(TOKEN, now), makeInstallId(TOKEN, now + 1));
+  assert.match(makeInstallId(TOKEN, now), /^vd-[0-9a-z]+-[0-9a-z]+$/);
+  assert.equal(isUsableInstallId(makeInstallId(TOKEN, now)), true);
 });
 
 test('a blank or truncated stored install id is not reused', () => {

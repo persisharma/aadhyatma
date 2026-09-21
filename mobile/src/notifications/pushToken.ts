@@ -2,8 +2,8 @@
  * Remote push-token capture: the glue.
  *
  * One job: when the notification permission is *already* granted, read this
- * install's Expo push token, persist it, and (only if an endpoint is
- * configured) POST it once. That is the whole feature.
+ * install's Expo push token, persist it, and (only if an endpoint **and** an API
+ * key are configured) register it once. That is the whole feature.
  *
  * ## What this module deliberately does NOT do
  *
@@ -20,30 +20,30 @@
  * - **Never throws and never blocks.** Every path is wrapped; the only return
  *   value is a status. Offline is the *normal* case for this app, so a failed
  *   upload is silent and simply retried on a later foreground.
- * - **Makes no network call at all** until an endpoint is configured (env var
- *   or source fallback — see `resolvePushEndpoint`). The token is still
+ * - **Makes no network call at all** until both an endpoint and an API key are
+ *   configured (see `resolvePushEndpoint` / `resolveApiKey`). The token is still
  *   captured locally, so the plumbing is verifiable before any data leaves the
  *   device.
  *
  * ## Server contract
  *
- * `POST <endpoint>`, `content-type: application/json`, body = `DeviceRegistration`:
+ * `POST <endpoint>`, `content-type: application/json`,
+ * `authorization: Bearer <key>`, body = `DeviceIdsBody`:
  *
  * ```json
- * { "installId": "vd-…", "token": "ExponentPushToken[…]", "platform": "ios",
- *   "appVersion": "1.4.8", "lang": "hi", "timezone": "Asia/Kolkata" }
+ * { "deviceIds": ["ExponentPushToken[…]"] }
  * ```
  *
- * Upsert on `installId` — it is the stable key; `token` is the mutable column,
- * and the same device WILL re-POST with a new token after a rotation. Every
- * field is a bounded (≤ 120 char) non-empty string, but nothing here
- * authenticates, so treat the body as untrusted input.
+ * The device id is the Expo push token — the address a server pushes to. Once a
+ * given id registers successfully the client stores it and never re-sends it
+ * (the once-only, local-storage guard); a rotated token is a new id and
+ * registers afresh.
  *
  * **The status code is the whole protocol**, because it decides what the client
  * does next (`classifyUploadResponse`):
  *
- * - **2xx** — accepted. The client stores a fingerprint and stops re-sending an
- *   unchanged registration, so do not return 2xx unless the row is durable.
+ * - **2xx** — accepted. The client records the id as registered and stops
+ *   calling, so do not return 2xx unless the row is durable.
  * - **5xx / 429 / 408 / 425** — the client retries, up to
  *   `PUSH_SYNC_MAX_ATTEMPTS` with a tripling backoff. Use these for "try again".
  * - **any other 4xx** — the client gives up for this attempt without retrying,
@@ -53,7 +53,6 @@
  * Response bodies are ignored entirely.
  */
 
-import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
 import { readNotificationPermissionState } from './permissionState';
@@ -64,13 +63,13 @@ import {
   PUSH_SYNC_TIMEOUT_MS,
   PUSH_TOKEN_KEY,
   PUSH_TOKEN_SYNC_KEY,
-  buildDeviceRegistration,
+  buildDeviceIdsBody,
   isUsableInstallId,
   makeInstallId,
-  registrationFingerprint,
+  resolveApiKey,
   resolvePushEndpoint,
   runUploadWithRetry,
-  shouldSyncRegistration,
+  shouldRegisterDeviceId,
 } from './pushTokenPure';
 
 /**
@@ -130,34 +129,6 @@ async function write(key: string, value: string): Promise<void> {
 }
 
 /**
- * The running bundle's version string.
- *
- * `expo-constants` is required **lazily** on purpose: it ships untranspiled ESM
- * that Jest cannot parse, so it must never enter a static module graph (same
- * rule as `utils/buildFingerprint.ts` and `KulParamparaExportScreen`).
- */
-export function readAppVersion(): string {
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const Constants = require('expo-constants').default;
-    const version = Constants?.expoConfig?.version;
-    return typeof version === 'string' && version !== '' ? version : 'unknown';
-  } catch {
-    return 'unknown';
-  }
-}
-
-/** Best-effort IANA time zone; `'unknown'` where the runtime has no Intl data. */
-function readTimezone(): string {
-  try {
-    const zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    return typeof zone === 'string' && zone !== '' ? zone : 'unknown';
-  } catch {
-    return 'unknown';
-  }
-}
-
-/**
  * Our stable install id, minting it on first use from the supplied seed.
  *
  * Seeded by the first captured token, so this is only ever called once we have
@@ -197,13 +168,20 @@ async function readExpoPushToken(): Promise<string | null> {
  * — and deciding whether another attempt could help — is
  * `classifyUploadResponse`'s job, not this function's.
  */
-async function attemptUpload(endpoint: string, body: string): Promise<number | null> {
+async function attemptUpload(
+  endpoint: string,
+  body: string,
+  apiKey: string
+): Promise<number | null> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), PUSH_SYNC_TIMEOUT_MS);
   try {
     const response = await fetch(endpoint, {
       method: 'POST',
-      headers: { 'content-type': 'application/json' },
+      headers: {
+        'content-type': 'application/json',
+        authorization: `Bearer ${apiKey}`,
+      },
       body,
       signal: controller.signal,
     });
@@ -220,7 +198,7 @@ function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function runSync(lang: string, now: number): Promise<PushTokenSyncResult> {
+async function runSync(now: number): Promise<PushTokenSyncResult> {
   // Cheapest gate first, and the one that makes this safe: we only ever act on
   // a grant somebody else already obtained.
   const { status } = await readNotificationPermissionState();
@@ -234,52 +212,49 @@ async function runSync(lang: string, now: number): Promise<PushTokenSyncResult> 
   // is switched on.
   await write(PUSH_TOKEN_KEY, token);
 
-  // The full literal read is required for babel's build-time inlining of
-  // EXPO_PUBLIC_* vars — see `PUSH_REGISTRY_ENV_VAR`.
+  // The full literal reads are required for babel's build-time inlining of
+  // EXPO_PUBLIC_* vars — see `PUSH_REGISTRY_ENV_VAR` / the API-key env var.
   const endpoint = resolvePushEndpoint(
     process.env.EXPO_PUBLIC_PUSH_REGISTRY_URL,
     PUSH_REGISTRY_ENDPOINT
   );
-  if (endpoint === null) return { status: 'captured', token };
+  const apiKey = resolveApiKey(process.env.EXPO_PUBLIC_DEVICE_REGISTRATION_API_KEY);
+  // No endpoint or no key ⇒ capture-only: the token is stored locally but never
+  // leaves the device (an unauthenticated call would just be rejected anyway).
+  if (endpoint === null || apiKey === null) return { status: 'captured', token };
 
-  const registration = buildDeviceRegistration({
-    installId: await getInstallId(token, now),
-    token,
-    platform: Platform.OS,
-    appVersion: readAppVersion(),
-    lang,
-    timezone: readTimezone(),
-  });
+  // The local-storage once-only guard: skip the API entirely once this exact
+  // device id has already registered successfully.
+  const lastRegistered = await read(PUSH_TOKEN_SYNC_KEY);
+  if (!shouldRegisterDeviceId(lastRegistered, token)) return { status: 'unchanged', token };
 
-  const last = await read(PUSH_TOKEN_SYNC_KEY);
-  if (!shouldSyncRegistration(last, registration)) return { status: 'unchanged', token };
-
-  const body = JSON.stringify(registration);
+  const body = JSON.stringify(buildDeviceIdsBody(token));
   const { outcome } = await runUploadWithRetry({
-    attempt: () => attemptUpload(endpoint, body),
+    attempt: () => attemptUpload(endpoint, body, apiKey),
     sleep,
-    installId: registration.installId,
+    installId: await getInstallId(token, now),
   });
 
   if (outcome === 'rejected') return { status: 'rejected', token };
   if (outcome !== 'accepted') return { status: 'failed', token };
 
-  await write(PUSH_TOKEN_SYNC_KEY, registrationFingerprint(registration));
+  await write(PUSH_TOKEN_SYNC_KEY, token);
   return { status: 'synced', token };
 }
 
 /**
- * Capture this install's push token and sync it if anything changed.
+ * Capture this install's push token and register it if it is not already
+ * registered.
  *
  * Never throws, never prompts, never schedules. Safe to call on every
- * foreground: an unchanged registration costs two AsyncStorage reads and one
- * token read, and no request.
+ * foreground: an already-registered device id costs two AsyncStorage reads and
+ * one token read, and no request.
  */
 export async function syncPushToken(
-  input: { lang: string; now?: number } = { lang: 'hi' }
+  input: { now?: number } = {}
 ): Promise<PushTokenSyncResult> {
   if (inFlight) return inFlight;
-  const attempt = runSync(input.lang, input.now ?? Date.now())
+  const attempt = runSync(input.now ?? Date.now())
     .catch((): PushTokenSyncResult => ({ status: 'failed', token: null }))
     .finally(() => {
       inFlight = null;

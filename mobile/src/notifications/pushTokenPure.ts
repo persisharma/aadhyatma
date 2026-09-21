@@ -11,14 +11,18 @@
  * families use. Keeping the constants here also means the integrity test can
  * import them without dragging `expo-notifications` into `tsx --test`.
  *
- * ## Identity: two different things
+ * ## The device id
  *
- * - The **push token** (`ExponentPushToken[…]`) is what a server sends *to*. It
- *   rotates — reinstall, device restore, an FCM refresh — so it is a bad key.
- * - The **install id** is ours: minted once and persisted. Stable for the life
- *   of the install, with no OS identifier involved (IDFV and ANDROID_ID both
- *   carry privacy-disclosure weight we do not need), so it is the primary key
- *   and the token is a mutable column on it.
+ * The **push token** (`ExponentPushToken[…]`) *is* the device id we register: it
+ * is what a server sends *to*, and — since this app captures no phone number or
+ * account — the only handle it has on a single install. We deliberately avoid an
+ * OS identifier (IDFV / ANDROID_ID both carry privacy-disclosure weight we do
+ * not need). The token can rotate (reinstall, restore, an FCM refresh), so the
+ * once-only registration guard keys on the token value itself: a rotated token
+ * is a new device id and registers afresh.
+ *
+ * The **install id** is ours — minted once, persisted, never sent — and serves
+ * only as the stable per-device seed for the retry backoff jitter.
  */
 
 // Reused rather than re-implemented: this is the repo's stable 32-bit FNV-1a,
@@ -27,15 +31,17 @@
 import { hashDateKey as fnv1a } from './seed';
 
 /**
- * Hardcoded fallback endpoint. `null` ⇒ capture-only: the token is still read
- * and persisted locally (readable via `getCapturedPushToken()`), but the app
- * makes **no network call at all**.
+ * Device-registration endpoint, pinned in source. Registration additionally
+ * requires an API key (`DEVICE_REGISTRATION_API_KEY_ENV_VAR`); with no key
+ * configured the app is capture-only — the token is still read and persisted
+ * locally (readable via `getCapturedPushToken()`), but **no network call is
+ * made**.
  *
- * Prefer the env var over editing this (see `resolvePushEndpoint`); this
- * constant exists so the endpoint *can* be pinned in source if you would
- * rather not manage build-time config.
+ * The env var (`resolvePushEndpoint`) still wins over this constant, so a
+ * staging URL can be pointed at per build profile without a code change.
  */
-export const PUSH_REGISTRY_ENDPOINT: string | null = null;
+export const PUSH_REGISTRY_ENDPOINT: string | null =
+  'https://api.incardible.in/api/mobile/devices';
 
 /**
  * Build-time env var naming the upload endpoint, e.g.
@@ -66,6 +72,28 @@ export function resolvePushEndpoint(
   if (isPushRegistryConfigured(fromEnv ?? null)) return (fromEnv as string).trim();
   if (isPushRegistryConfigured(fallback)) return fallback.trim();
   return null;
+}
+
+/**
+ * Build-time env var holding the `Authorization: Bearer …` key for the device
+ * registry, e.g. `EXPO_PUBLIC_DEVICE_REGISTRATION_API_KEY=…`.
+ *
+ * Like every `EXPO_PUBLIC_`-prefixed var it is **inlined by babel at build time**
+ * — so the read at the call site must be the full literal
+ * `process.env.EXPO_PUBLIC_DEVICE_REGISTRATION_API_KEY`; destructuring or
+ * building the key dynamically defeats the inlining and yields `undefined` in a
+ * release bundle. Set it per profile in `eas.json` (or in `.env` for local
+ * runs), never commit a value.
+ *
+ * ⚠️ Inlining means the key ships **inside the app bundle** and is extractable.
+ * Keep it a low-privilege key scoped to device registration only.
+ */
+export const DEVICE_REGISTRATION_API_KEY_ENV_VAR = 'EXPO_PUBLIC_DEVICE_REGISTRATION_API_KEY';
+
+/** The API key if one is configured (trimmed, non-empty), else `null`. */
+export function resolveApiKey(fromEnv: string | undefined | null): string | null {
+  const trimmed = (fromEnv ?? '').trim();
+  return trimmed === '' ? null : trimmed;
 }
 
 /** Total upload attempts per sync — one try plus two retries. */
@@ -170,7 +198,7 @@ export const INSTALL_ID_KEY = '@vedansh/install-id';
 /** Last captured push token, verbatim. */
 export const PUSH_TOKEN_KEY = '@vedansh/push-token';
 
-/** Fingerprint of the last registration the server accepted. */
+/** The last device id (push token) the registry accepted. */
 export const PUSH_TOKEN_SYNC_KEY = '@vedansh/push-token-sync';
 
 /**
@@ -186,71 +214,31 @@ export const PUSH_TOKEN_SYNC_KEY = '@vedansh/push-token-sync';
  */
 export const PUSH_SYNC_TIMEOUT_MS = 8000;
 
-/** What a server needs to address and segment one install. */
-export type DeviceRegistration = {
-  /** Our stable key. */
-  installId: string;
-  /** `ExponentPushToken[…]` — the address. */
-  token: string;
-  /** `'ios' | 'android'` in practice; kept open for web/unknown. */
-  platform: string;
-  /** `app.json` version of the running bundle, or `'unknown'`. */
-  appVersion: string;
-  /** Reading language (`hi | en | gu | kn`) — push copy should match it. */
-  lang: string;
-  /** IANA zone, so a server can fire at a sane local hour. */
-  timezone: string;
+/** The request body the registry expects: one or more device ids. */
+export type DeviceIdsBody = {
+  deviceIds: string[];
 };
 
-export type DeviceRegistrationInput = {
-  installId: string;
-  token: string;
-  platform: string;
-  appVersion?: string | null;
-  lang?: string | null;
-  timezone?: string | null;
-};
-
-/** Trim, collapse blanks to a fallback, and bound the length. */
-function field(value: string | null | undefined, fallback: string): string {
-  const trimmed = (value ?? '').trim();
-  return (trimmed === '' ? fallback : trimmed).slice(0, 120);
-}
-
 /**
- * Normalise the payload. Every field is bounded and non-empty, so a malformed
- * value can never produce a half-written row on the server side.
- */
-export function buildDeviceRegistration(input: DeviceRegistrationInput): DeviceRegistration {
-  return {
-    installId: field(input.installId, 'unknown'),
-    token: field(input.token, 'unknown'),
-    platform: field(input.platform, 'unknown'),
-    appVersion: field(input.appVersion, 'unknown'),
-    lang: field(input.lang, 'hi'),
-    timezone: field(input.timezone, 'unknown'),
-  };
-}
-
-/**
- * Identity of a registration as one string.
+ * The registration payload for one device id.
  *
- * Compared against the stored fingerprint to decide whether an upload is worth
- * making, so it covers **every** field, not just the token: a language switch or
- * a move across time zones changes how a server should address this install and
- * is exactly as worth re-sending as a rotated token. It is only ever compared
- * for equality — never parsed, ordered, or shown.
+ * The endpoint takes an array (`{ "deviceIds": [...] }`); a single install only
+ * ever has the one token, so we send a one-element array. Trimmed for safety;
+ * the caller has already rejected an empty token upstream (`no-token`).
  */
-export function registrationFingerprint(reg: DeviceRegistration): string {
-  return [reg.installId, reg.token, reg.platform, reg.appVersion, reg.lang, reg.timezone].join('|');
+export function buildDeviceIdsBody(deviceId: string): DeviceIdsBody {
+  return { deviceIds: [deviceId.trim()] };
 }
 
-/** Has anything a server cares about changed since the last accepted upload? */
-export function shouldSyncRegistration(
-  lastFingerprint: string | null,
-  reg: DeviceRegistration
-): boolean {
-  return lastFingerprint !== registrationFingerprint(reg);
+/**
+ * Should we call the registry for this device id?
+ *
+ * `false` once the id has already been registered successfully — the once-only,
+ * local-storage guard. A rotated token is a different value and registers
+ * afresh; a first run has nothing stored and always registers.
+ */
+export function shouldRegisterDeviceId(lastRegistered: string | null, deviceId: string): boolean {
+  return lastRegistered !== deviceId;
 }
 
 /**
