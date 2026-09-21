@@ -102,6 +102,6 @@ you could not verify online.
 
 ## Queue (remaining after the Rajasthan wave)
 
-Plate exists, text pending: `vetrimalai-murugan`.
-Everything else (Srinathji, the 12
-Jyotirlingas, Char Dham, Shakti Peeths, the rest) needs a plate first.
+Plate exists, text pending: none — every plated temple now carries its reading.
+Everything else (Srinathji, the 12 Jyotirlingas, Char Dham, Shakti Peeths, the
+rest) needs a plate first.
