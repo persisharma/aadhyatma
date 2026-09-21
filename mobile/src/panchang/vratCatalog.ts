@@ -5,7 +5,6 @@
 import { getObservanceCatalog, OBSERVANCE_RULES } from './festivals';
 import { resolveObservancesForYear } from './festivalEngine';
 import { KATHA_CONTENT } from './kathaContent';
-import { LENS_IDS, type ObservanceLens } from './lenses';
 import type {
   CalendarSystem,
   KathaContentEntry,
@@ -48,63 +47,6 @@ export function getCategoryCounts(): CategoryCount[] {
     category,
     count: getRulesForCategory(category).length,
   }));
-}
-
-/**
- * The default-visible rules ONE क्षेत्रीय पंचांग adds (PRD-42 §4.1).
- *
- * This is the answer to "what did turning जैन on actually give me?" — a question
- * the additive contract makes hard to answer from the calendar itself, because a
- * lensed day sits among the universal ones with nothing marking it. A rule that
- * carries several lenses is listed under each of them (Rath Yatra is Odisha's
- * AND Bengal's), and the hidden/advanced tier is excluded for the same reason it
- * is excluded from every other browse surface. Deduped by id like the category
- * lists. Registry order, so the sheet and the catalog agree.
- */
-export function getRulesForLens(lens: ObservanceLens): ObservanceRule[] {
-  const seen = new Set<string>();
-  return OBSERVANCE_RULES.filter((rule) => {
-    if (rule.visibility !== 'default' || !rule.lens || !rule.lens.includes(lens)) return false;
-    if (seen.has(rule.id)) return false;
-    seen.add(rule.id);
-    return true;
-  });
-}
-
-export type LensAddition = { lens: ObservanceLens; rules: ObservanceRule[] };
-
-let lensesWithContent: ObservanceLens[] | null = null;
-
-/**
- * The lenses that add at least one observance in THIS build, in registry order.
- *
- * This — not `LENS_IDS` — is what every user-facing surface offers (the sheet's
- * rows, "n available", सभी चुनें, the seed). The registry names 22 calendars but
- * the content waves (PRD-42 W3–W8) have not shipped, so offering a switch that
- * changes nothing was the Sept 2026 report in a nutshell: "I selected Jain and
- * it still shows everything". A calendar joins this list the moment its first
- * `default` + `lens` rule lands, with no registration step; if the list is ever
- * empty, the filter surfaces hide themselves entirely.
- */
-export function getLensesWithContent(): readonly ObservanceLens[] {
-  if (!lensesWithContent) lensesWithContent = LENS_IDS.filter((lens) => getRulesForLens(lens).length > 0);
-  return lensesWithContent;
-}
-
-/** `lenses` narrowed to the calendars this build actually offers — the DISPLAY set. */
-export function withContentOnly(lenses: ReadonlySet<ObservanceLens>): Set<ObservanceLens> {
-  return new Set(getLensesWithContent().filter((lens) => lenses.has(lens)));
-}
-
-/**
- * What the ACTIVE set adds, grouped by lens in registry order — the व्रत-पर्व
- * landing's "आपके पंचांग से" section. Only calendars with content appear, because
- * only those can be turned on from the sheet.
- */
-export function getLensAdditions(lenses: ReadonlySet<ObservanceLens>): LensAddition[] {
-  return getLensesWithContent()
-    .filter((lens) => lenses.has(lens))
-    .map((lens) => ({ lens, rules: getRulesForLens(lens) }));
 }
 
 /** The bundled bilingual katha library (the "Katha" tile target). */

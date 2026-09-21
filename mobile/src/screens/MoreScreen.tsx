@@ -31,7 +31,7 @@ import LanguagePickerSheet from '@/components/LanguagePickerSheet';
 // graph (`launchGraph.test.ts`), and `React.lazy` is the same treatment
 // `TabNavigator` gives the Panchang stack.
 const LensPickerSheet = React.lazy(() => import('@/components/LensPickerSheet'));
-import { getLensDefinition } from '@/panchang/lenses';
+import { getLensDefinition, LENS_COUNT } from '@/panchang/lenses';
 import { useLenses } from '@/panchang/useLenses';
 import ReadingSizePickerSheet, { readingSizeLabel } from '@/components/ReadingSizePickerSheet';
 import ReadAloudSettingsSheet, { readAloudRowLabel } from '@/components/ReadAloudSettingsSheet';
@@ -167,13 +167,11 @@ export default function MoreScreen({ navigation }: Props) {
   // for the same reason as the ledger row: a count says nothing about where the
   // user's extra dates came from.
   const [lensSheetVisible, setLensSheetVisible] = useState(false);
-  const { lenses, availableCount: lensAvailableCount } = useLenses();
+  const { lenses } = useLenses();
   const activeLensCount = lenses.size;
   const lensState =
     activeLensCount === 0
-      ? pick(lang, { hi: `${lensAvailableCount} उपलब्ध`, en: `${lensAvailableCount} available`, gu: `${lensAvailableCount} ઉપલબ્ધ`, kn: `${lensAvailableCount} ಲಭ್ಯ` })
-      : activeLensCount === lensAvailableCount
-      ? pick(lang, { hi: `सभी ${lensAvailableCount}`, en: `All ${lensAvailableCount}`, gu: `બધા ${lensAvailableCount}`, kn: `ಎಲ್ಲಾ ${lensAvailableCount}` })
+      ? pick(lang, { hi: `${LENS_COUNT} उपलब्ध`, en: `${LENS_COUNT} available`, gu: `${LENS_COUNT} ઉપલબ્ધ`, kn: `${LENS_COUNT} ಲಭ್ಯ` })
       : [...lenses]
           .map((id) => {
             const def = getLensDefinition(id);
@@ -428,27 +426,23 @@ export default function MoreScreen({ navigation }: Props) {
                     row on व्रत-पर्व is where it is discovered; this is where a
                     user goes LOOKING once they half-remember the setting. Opens
                     the same sheet. */}
-                {lensAvailableCount > 0 && (
-                  <SettingsRow
-                    icon="❖"
-                    iconBg={colors.gold}
-                    iconFontFamily={typography.readerTitle.fontFamily}
-                    iconFontSize={15}
-                    label={pick(lang, { hi: 'क्षेत्रीय पंचांग', en: 'Regional calendars', gu: 'પ્રાદેશિક પંચાંગ', kn: 'ಪ್ರಾದೇಶಿಕ ಪಂಚಾಂಗ' })}
-                    labelFontFamily={labelFont}
-                    state={lensState}
-                    stateFontFamily={activeLensCount === 0 ? fontFamilies.interSemiBold : fontFamilies.inter}
-                    onPress={() => setLensSheetVisible(true)}
-                    accessibilityLabel={
-                      activeLensCount === lensAvailableCount
-                        ? `Regional calendars, all ${lensAvailableCount} on`
-                        : activeLensCount > 0
-                          ? `Regional calendars, ${activeLensCount} on`
-                          : 'Regional calendars, none selected'
-                    }
-                    testID="more-regional-calendars"
-                  />
-                )}
+                <SettingsRow
+                  icon="❖"
+                  iconBg={colors.gold}
+                  iconFontFamily={typography.readerTitle.fontFamily}
+                  iconFontSize={15}
+                  label={pick(lang, { hi: 'क्षेत्रीय पंचांग', en: 'Regional calendars', gu: 'પ્રાદેશિક પંચાંગ', kn: 'ಪ್ರಾದೇಶಿಕ ಪಂಚಾಂಗ' })}
+                  labelFontFamily={labelFont}
+                  state={lensState}
+                  stateFontFamily={activeLensCount === 0 ? fontFamilies.interSemiBold : fontFamilies.inter}
+                  onPress={() => setLensSheetVisible(true)}
+                  accessibilityLabel={
+                    activeLensCount > 0
+                      ? `Regional calendars, ${activeLensCount} on`
+                      : 'Regional calendars, none selected'
+                  }
+                  testID="more-regional-calendars"
+                />
                 {/* जन्म तिथि (PRD-29 Part A) — the living side of the tithi
                     ledger: count + the soonest Hindu birthday. */}
                 <SettingsRow
