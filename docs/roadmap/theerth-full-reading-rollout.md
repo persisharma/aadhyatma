@@ -139,3 +139,17 @@ record each drop in the PR.
 - `dedicatedTheerthBackgroundIds` lists all 71 ids; design.md §27 item 4 drops the
   per-temple plate list in favour of "every temple".
 - RULEBOOK §12.6 "Gates" paragraph rewritten to drop the legacy allowlist sentence.
+
+## 7. Plate-prompt docs (status 2026-09-21)
+
+Ready-to-paste §11.8 prompts per wave, one branch each, docs-only. Merge, generate the
+images locally, register per §2, then start the text sessions for that wave.
+
+| Wave | Doc | Branch |
+|------|-----|--------|
+| 3 | `docs/theerth-plates/wave-3-jyotirlinga-prompts.md` | `claude/enrich-theerth-temple-ydesir` |
+| 4 | `docs/theerth-plates/wave-4-char-dham-prompts.md` | `claude/theerth-plates-wave-4` |
+| 5 | `docs/theerth-plates/wave-5-north-shakti-prompts.md` | `claude/theerth-plates-wave-5` |
+| 6 | `docs/theerth-plates/wave-6-south-icons-prompts.md` | `claude/theerth-plates-wave-6` |
+| 7 | `docs/theerth-plates/wave-7-shakti-peeth-prompts.md` | `claude/theerth-plates-wave-7` |
+| 8 | `docs/theerth-plates/wave-8-regional-prompts.md` | `claude/theerth-plates-wave-8` |
