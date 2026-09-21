@@ -61,13 +61,15 @@ export function isObservanceLens(value: unknown): value is ObservanceLens {
 }
 
 /**
- * Every lens at once — NOT a user-facing state.
+ * Every lens at once — the RESOLUTION set, not a preference.
  *
  * `festivalEngine` resolves the year with this so the per-year cache is
  * lens-INDEPENDENT: a lens toggle must not invalidate an expensive astronomy
  * solve, and a day's answer must not depend on which calendars happened to be on
  * when the year was first resolved. Narrowing happens at the query layer, where
- * it is a cheap array filter.
+ * it is a cheap array filter. (A user may also reach "every lens on" through the
+ * sheet's सभी चुनें — that is an ordinary stored set that happens to equal this
+ * one, and goes through `lensStore.setAllLenses`, never this constant.)
  */
 export const ALL_LENSES: ReadonlySet<ObservanceLens> = new Set(LENS_IDS);
 
