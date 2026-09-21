@@ -26,7 +26,11 @@ export function useLenses(): {
   hydrated: boolean;
   activeCount: number;
   availableCount: number;
+  /** True when every lens this build ships is on — the ledger/More rows say `सभी`. */
+  allSelected: boolean;
   toggle: (lens: ObservanceLens, enabled: boolean) => void;
+  selectAll: () => void;
+  clearAll: () => void;
 } {
   const [state, setState] = useState<Set<ObservanceLens> | null>(() => getLensSnapshot());
 
@@ -50,13 +54,24 @@ export function useLenses(): {
     void store().setLensEnabled(lens, enabled);
   }, []);
 
+  const selectAll = useCallback(() => {
+    void store().setAllLenses();
+  }, []);
+
+  const clearAll = useCallback(() => {
+    void store().clearLenses();
+  }, []);
+
   const lenses = state ?? EMPTY;
   return {
     lenses,
     hydrated: state != null,
     activeCount: lenses.size,
     availableCount: LENS_COUNT,
+    allSelected: lenses.size === LENS_COUNT,
     toggle,
+    selectAll,
+    clearAll,
   };
 }
 

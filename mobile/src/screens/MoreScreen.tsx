@@ -172,6 +172,8 @@ export default function MoreScreen({ navigation }: Props) {
   const lensState =
     activeLensCount === 0
       ? pick(lang, { hi: `${LENS_COUNT} उपलब्ध`, en: `${LENS_COUNT} available`, gu: `${LENS_COUNT} ઉપલબ્ધ`, kn: `${LENS_COUNT} ಲಭ್ಯ` })
+      : activeLensCount === LENS_COUNT
+      ? pick(lang, { hi: `सभी ${LENS_COUNT}`, en: `All ${LENS_COUNT}`, gu: `બધા ${LENS_COUNT}`, kn: `ಎಲ್ಲಾ ${LENS_COUNT}` })
       : [...lenses]
           .map((id) => {
             const def = getLensDefinition(id);
@@ -437,9 +439,11 @@ export default function MoreScreen({ navigation }: Props) {
                   stateFontFamily={activeLensCount === 0 ? fontFamilies.interSemiBold : fontFamilies.inter}
                   onPress={() => setLensSheetVisible(true)}
                   accessibilityLabel={
-                    activeLensCount > 0
-                      ? `Regional calendars, ${activeLensCount} on`
-                      : 'Regional calendars, none selected'
+                    activeLensCount === LENS_COUNT
+                      ? `Regional calendars, all ${LENS_COUNT} on`
+                      : activeLensCount > 0
+                        ? `Regional calendars, ${activeLensCount} on`
+                        : 'Regional calendars, none selected'
                   }
                   testID="more-regional-calendars"
                 />

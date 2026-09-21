@@ -5,6 +5,7 @@
 import { getObservanceCatalog, OBSERVANCE_RULES } from './festivals';
 import { resolveObservancesForYear } from './festivalEngine';
 import { KATHA_CONTENT } from './kathaContent';
+import { LENS_IDS, type ObservanceLens } from './lenses';
 import type {
   CalendarSystem,
   KathaContentEntry,
@@ -47,6 +48,39 @@ export function getCategoryCounts(): CategoryCount[] {
     category,
     count: getRulesForCategory(category).length,
   }));
+}
+
+/**
+ * The default-visible rules ONE क्षेत्रीय पंचांग adds (PRD-42 §4.1).
+ *
+ * This is the answer to "what did turning जैन on actually give me?" — a question
+ * the additive contract makes hard to answer from the calendar itself, because a
+ * lensed day sits among the universal ones with nothing marking it. A rule that
+ * carries several lenses is listed under each of them (Rath Yatra is Odisha's
+ * AND Bengal's), and the hidden/advanced tier is excluded for the same reason it
+ * is excluded from every other browse surface. Deduped by id like the category
+ * lists. Registry order, so the sheet and the catalog agree.
+ */
+export function getRulesForLens(lens: ObservanceLens): ObservanceRule[] {
+  const seen = new Set<string>();
+  return OBSERVANCE_RULES.filter((rule) => {
+    if (rule.visibility !== 'default' || !rule.lens || !rule.lens.includes(lens)) return false;
+    if (seen.has(rule.id)) return false;
+    seen.add(rule.id);
+    return true;
+  });
+}
+
+export type LensAddition = { lens: ObservanceLens; rules: ObservanceRule[] };
+
+/**
+ * What the ACTIVE set adds, grouped by lens in registry order — the व्रत-पर्व
+ * landing's "आपके पंचांग से" section. A lens that adds nothing in this build is
+ * still returned with an empty list: the honest thing to show a user who turned
+ * on सिंधी is "nothing yet", not silence that reads as "you did nothing".
+ */
+export function getLensAdditions(lenses: ReadonlySet<ObservanceLens>): LensAddition[] {
+  return LENS_IDS.filter((lens) => lenses.has(lens)).map((lens) => ({ lens, rules: getRulesForLens(lens) }));
 }
 
 /** The bundled bilingual katha library (the "Katha" tile target). */

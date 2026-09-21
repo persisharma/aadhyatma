@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
   getLensSnapshot,
+  LENS_IDS,
   LENS_STORAGE_KEY,
   lensesForLocation,
   parseStoredLenses,
@@ -70,6 +71,17 @@ export async function setLensEnabled(lens: ObservanceLens, enabled: boolean): Pr
 /** Every lens off — the explicit "show me the universal calendar only" act. */
 export async function clearLenses(): Promise<void> {
   await write(new Set());
+}
+
+/**
+ * Every lens on — the sheet's "सभी चुनें". A deliberate tap like any other, so
+ * it may include `jain` and `sindhi`: the seeding ban (§23a.12) is on INFERRING
+ * a tradition, never on the user choosing to see everything the app ships.
+ */
+export async function setAllLenses(): Promise<void> {
+  const current = getLensSnapshot() ?? (await loadLenses());
+  if (current.size === LENS_IDS.length) return;
+  await write(new Set(LENS_IDS));
 }
 
 /**
