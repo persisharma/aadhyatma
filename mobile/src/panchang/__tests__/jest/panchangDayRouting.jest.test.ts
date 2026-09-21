@@ -77,7 +77,7 @@ jest.mock('react-native', () => ({
   },
 }));
 
-const solveSpy = jest.spyOn(engine, 'computePanchangForDate');
+const solveSpy = jest.spyOn(engine, 'computePanchangForDateSteps');
 
 /** Render the hook and return the latest value. */
 function renderUseMuhurat(date: Date): { latest: () => UseMuhuratResult | null; unmount: () => void } {
@@ -158,7 +158,7 @@ test('a day already in the shared store costs ZERO engine solves', async () => {
   // Stand in for the Muhurat Finder's sweep having already solved this range.
   [-1, 0, 1].forEach((off) => cachedDayInputs(map, new Date(d.getTime() + off * DAY_MS), OPTS));
 
-  const spy = jest.spyOn(engine, 'computePanchangForDate');
+  const spy = jest.spyOn(engine, 'computePanchangForDateSteps');
   const { latest, unmount } = renderUseMuhurat(d);
   await settle();
 
@@ -193,7 +193,7 @@ test('a day only on disk is hydrated, not re-solved', async () => {
   __resetPanchangDayStore();
   __resetPanchangDayCache();
 
-  const spy = jest.spyOn(engine, 'computePanchangForDate');
+  const spy = jest.spyOn(engine, 'computePanchangForDateSteps');
   const { latest, unmount } = renderUseMuhurat(d);
   await settle();
 
@@ -218,7 +218,7 @@ test('a day on disk paints WITHOUT the interaction queue ever draining', async (
 
   // Nothing queued behind interactions will run for the rest of this test.
   mockInteractions.defer = true;
-  const spy = jest.spyOn(engine, 'computePanchangForDate');
+  const spy = jest.spyOn(engine, 'computePanchangForDateSteps');
   const { latest, unmount } = renderUseMuhurat(d);
   await settle();
 
@@ -239,7 +239,7 @@ test('nothing runs while the location is still a placeholder', async () => {
   mockLocation.isLoading = true;
   const multiGet = jest.spyOn(AsyncStorage, 'multiGet');
   multiGet.mockClear();
-  const spy = jest.spyOn(engine, 'computePanchangForDate');
+  const spy = jest.spyOn(engine, 'computePanchangForDateSteps');
 
   const { latest, unmount } = renderUseMuhurat(d);
   await settle();
@@ -252,9 +252,9 @@ test('nothing runs while the location is still a placeholder', async () => {
 
 test('a cold cache still solves — the fallback is intact', async () => {
   const d = today();
-  const spy = jest.spyOn(engine, 'computePanchangForDate');
+  const spy = jest.spyOn(engine, 'computePanchangForDateSteps');
   const { latest, unmount } = renderUseMuhurat(d);
-  await flush();
+  await settle();
 
   expect(spy).toHaveBeenCalled();
   expect(latest()?.muhurat?.dayChoghadiya).toHaveLength(8);
@@ -308,7 +308,7 @@ test('a midnight rollover costs Home no solve for the days it renders', async ()
   setClock(new Date(dayOneAt.getTime() + DAY_MS));
   const d2 = today();
 
-  const spy = jest.spyOn(engine, 'computePanchangForDate');
+  const spy = jest.spyOn(engine, 'computePanchangForDateSteps');
   const second = renderUseMuhurat(d2);
   await settle();
 

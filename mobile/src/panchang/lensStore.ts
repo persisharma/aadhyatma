@@ -10,6 +10,9 @@ import {
   serializeLenses,
   type ObservanceLens,
 } from './lenses';
+// This module is itself behind a `require()` thunk (see `useLenses`), so pulling
+// the catalog in here costs the launch path nothing.
+import { getLensesWithContent } from './vratCatalog';
 
 /**
  * The AsyncStorage half of the क्षेत्रीय पंचांग preference (PRD-42 §4.2).
@@ -73,6 +76,23 @@ export async function clearLenses(): Promise<void> {
 }
 
 /**
+ * Every OFFERED lens on — the sheet's "सभी चुनें". Offered means "adds something
+ * in this build" (`getLensesWithContent`), never the whole registry: a stored id
+ * for an empty calendar would be a switch that changes nothing. A deliberate tap
+ * like any other, so it may include `jain` and `sindhi`: the seeding ban
+ * (§23a.12) is on INFERRING a tradition, never on the user choosing to see
+ * everything the app ships.
+ */
+export async function setAllLenses(): Promise<void> {
+  const current = getLensSnapshot() ?? (await loadLenses());
+  const offered = getLensesWithContent();
+  if (offered.every((lens) => current.has(lens))) return;
+  const next = new Set(current);
+  offered.forEach((lens) => next.add(lens));
+  await write(next);
+}
+
+/**
  * Seed from the chosen city, exactly once per install, and only when the user has
  * never made a choice of their own.
  *
@@ -94,7 +114,10 @@ export async function seedFromLocationOnce(location: {
     await AsyncStorage.setItem(LENS_SEEDED_KEY, location.cityId);
     // A set already exists from before this key was introduced — respect it.
     if (stored != null) return [];
-    const seedLenses = lensesForLocation(location);
+    // Seed only calendars that add something: a "Maharashtra calendar added" line
+    // over a calendar that changes nothing would be a false promise.
+    const offered = new Set(getLensesWithContent());
+    const seedLenses = lensesForLocation(location).filter((lens) => offered.has(lens));
     if (seedLenses.length === 0) {
       publishLenses(parseStoredLenses(stored));
       return [];

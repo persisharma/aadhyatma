@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Alert, Linking, Modal, Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -19,9 +19,9 @@ import { useTour } from '@/contexts/TourContext';
 import { useRatingPrompt } from '@/contexts/RatingPromptContext';
 import { useJapamAlarms } from '@/contexts/JapamAlarmsContext';
 import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
-import { nextObservanceForEntry, solveNextOccurrence } from '@/panchang/pitruSmaran';
+import { useMoreFamilySummary } from '@/panchang/useMoreFamilySummary';
 import { shortDate } from '@/panchang/pitruSmaranDisplay';
-import { useJanmaTithiPeople } from '@/panchang/useJanmaTithi';
+import { useBirthProfileRoster } from '@/panchang/useKundali';
 import { useKulRecord } from '@/panchang/kulParamparaStore';
 import { isEmptyKulRecord, kuldevDisplayName } from '@/panchang/kulParampara';
 import { transliterateDevanagari } from '@/utils/transliterate';
@@ -31,7 +31,7 @@ import LanguagePickerSheet from '@/components/LanguagePickerSheet';
 // graph (`launchGraph.test.ts`), and `React.lazy` is the same treatment
 // `TabNavigator` gives the Panchang stack.
 const LensPickerSheet = React.lazy(() => import('@/components/LensPickerSheet'));
-import { getLensDefinition, LENS_COUNT } from '@/panchang/lenses';
+import { getLensDefinition } from '@/panchang/lenses';
 import { useLenses } from '@/panchang/useLenses';
 import ReadingSizePickerSheet, { readingSizeLabel } from '@/components/ReadingSizePickerSheet';
 import ReadAloudSettingsSheet, { readAloudRowLabel } from '@/components/ReadAloudSettingsSheet';
@@ -134,44 +134,22 @@ export default function MoreScreen({ navigation }: Props) {
   const { prefs: readAloudPrefs } = useReadAloudPrefs();
   const { availability: readAloudAvailability } = useReadAloud();
   const activeJapamAlarms = japamAlarms.filter((a) => a.enabled);
-  // पितृ स्मरण row state (PRD-17): count + the soonest solved date. The solve is a
-  // few memoised tithi reads per entry, run off the render path; while it is in
-  // flight (or on failure) the row shows the bare count.
+  // Counts paint immediately; optional dates hydrate/solve cooperatively on focus.
   const { entries: smaranEntries } = usePitruSmaran();
-  const [smaranSoonest, setSmaranSoonest] = useState<Date | null>(null);
-  useEffect(() => {
-    if (smaranEntries.length === 0) {
-      setSmaranSoonest(null);
-      return undefined;
-    }
-    let cancelled = false;
-    const handle = setTimeout(() => {
-      const today = new Date();
-      let soonest: Date | null = null;
-      for (const entry of smaranEntries) {
-        try {
-          const next = nextObservanceForEntry(entry, today);
-          if (next && (soonest === null || next.getTime() < soonest.getTime())) soonest = next;
-        } catch {
-          // an unsolvable entry must not break the hub row
-        }
-      }
-      if (!cancelled) setSmaranSoonest(soonest);
-    }, 0);
-    return () => {
-      cancelled = true;
-      clearTimeout(handle);
-    };
-  }, [smaranEntries]);
+  const { roster } = useBirthProfileRoster();
+  const janmaPeople = roster.people;
+  const { smaranSoonest, janmaSoonest } = useMoreFamilySummary(smaranEntries, janmaPeople);
   // क्षेत्रीय पंचांग row state — the ACTIVE calendars by name, not a bare count,
   // for the same reason as the ledger row: a count says nothing about where the
   // user's extra dates came from.
   const [lensSheetVisible, setLensSheetVisible] = useState(false);
-  const { lenses } = useLenses();
+  const { lenses, availableCount: lensAvailableCount } = useLenses();
   const activeLensCount = lenses.size;
   const lensState =
     activeLensCount === 0
-      ? pick(lang, { hi: `${LENS_COUNT} उपलब्ध`, en: `${LENS_COUNT} available`, gu: `${LENS_COUNT} ઉપલબ્ધ`, kn: `${LENS_COUNT} ಲಭ್ಯ` })
+      ? pick(lang, { hi: `${lensAvailableCount} उपलब्ध`, en: `${lensAvailableCount} available`, gu: `${lensAvailableCount} ઉપલબ્ધ`, kn: `${lensAvailableCount} ಲಭ್ಯ` })
+      : activeLensCount === lensAvailableCount
+      ? pick(lang, { hi: `सभी ${lensAvailableCount}`, en: `All ${lensAvailableCount}`, gu: `બધા ${lensAvailableCount}`, kn: `ಎಲ್ಲಾ ${lensAvailableCount}` })
       : [...lenses]
           .map((id) => {
             const def = getLensDefinition(id);
@@ -186,35 +164,6 @@ export default function MoreScreen({ navigation }: Props) {
       : smaranSoonest
         ? `${smaranEntries.length} · ${shortDate(smaranSoonest, lang)}`
         : `${smaranEntries.length}`;
-  // जन्म तिथि row state (PRD-29): count + the soonest Hindu birthday — the
-  // Pitru row's exact deferral (solves are memoised engine-wide; off render).
-  const { people: janmaPeople } = useJanmaTithiPeople();
-  const [janmaSoonest, setJanmaSoonest] = useState<Date | null>(null);
-  useEffect(() => {
-    if (janmaPeople.length === 0) {
-      setJanmaSoonest(null);
-      return undefined;
-    }
-    let cancelled = false;
-    const handle = setTimeout(() => {
-      const today = new Date();
-      let soonest: Date | null = null;
-      for (const { rule } of janmaPeople) {
-        if (!rule) continue;
-        try {
-          const next = solveNextOccurrence(rule, today);
-          if (next && (soonest === null || next.getTime() < soonest.getTime())) soonest = next;
-        } catch {
-          // an unsolvable rule must not break the hub row
-        }
-      }
-      if (!cancelled) setJanmaSoonest(soonest);
-    }, 0);
-    return () => {
-      cancelled = true;
-      clearTimeout(handle);
-    };
-  }, [janmaPeople]);
   const janmaState =
     janmaPeople.length === 0
       ? 'NEW'
@@ -426,23 +375,27 @@ export default function MoreScreen({ navigation }: Props) {
                     row on व्रत-पर्व is where it is discovered; this is where a
                     user goes LOOKING once they half-remember the setting. Opens
                     the same sheet. */}
-                <SettingsRow
-                  icon="❖"
-                  iconBg={colors.gold}
-                  iconFontFamily={typography.readerTitle.fontFamily}
-                  iconFontSize={15}
-                  label={pick(lang, { hi: 'क्षेत्रीय पंचांग', en: 'Regional calendars', gu: 'પ્રાદેશિક પંચાંગ', kn: 'ಪ್ರಾದೇಶಿಕ ಪಂಚಾಂಗ' })}
-                  labelFontFamily={labelFont}
-                  state={lensState}
-                  stateFontFamily={activeLensCount === 0 ? fontFamilies.interSemiBold : fontFamilies.inter}
-                  onPress={() => setLensSheetVisible(true)}
-                  accessibilityLabel={
-                    activeLensCount > 0
-                      ? `Regional calendars, ${activeLensCount} on`
-                      : 'Regional calendars, none selected'
-                  }
-                  testID="more-regional-calendars"
-                />
+                {lensAvailableCount > 0 && (
+                  <SettingsRow
+                    icon="❖"
+                    iconBg={colors.gold}
+                    iconFontFamily={typography.readerTitle.fontFamily}
+                    iconFontSize={15}
+                    label={pick(lang, { hi: 'क्षेत्रीय पंचांग', en: 'Regional calendars', gu: 'પ્રાદેશિક પંચાંગ', kn: 'ಪ್ರಾದೇಶಿಕ ಪಂಚಾಂಗ' })}
+                    labelFontFamily={labelFont}
+                    state={lensState}
+                    stateFontFamily={activeLensCount === 0 ? fontFamilies.interSemiBold : fontFamilies.inter}
+                    onPress={() => setLensSheetVisible(true)}
+                    accessibilityLabel={
+                      activeLensCount === lensAvailableCount
+                        ? `Regional calendars, all ${lensAvailableCount} on`
+                        : activeLensCount > 0
+                          ? `Regional calendars, ${activeLensCount} on`
+                          : 'Regional calendars, none selected'
+                    }
+                    testID="more-regional-calendars"
+                  />
+                )}
                 {/* जन्म तिथि (PRD-29 Part A) — the living side of the tithi
                     ledger: count + the soonest Hindu birthday. */}
                 <SettingsRow
@@ -645,9 +598,9 @@ export default function MoreScreen({ navigation }: Props) {
         </ScrollView>
       </SafeAreaView>
 
-      <LanguagePickerSheet visible={langSheet} onClose={() => setLangSheet(false)} />
-      <ReadingSizePickerSheet visible={sizeSheet} onClose={() => setSizeSheet(false)} />
-      <ReadAloudSettingsSheet visible={readAloudSheet} onClose={() => setReadAloudSheet(false)} />
+      {langSheet && <LanguagePickerSheet visible onClose={() => setLangSheet(false)} />}
+      {sizeSheet && <ReadingSizePickerSheet visible onClose={() => setSizeSheet(false)} />}
+      {readAloudSheet && <ReadAloudSettingsSheet visible onClose={() => setReadAloudSheet(false)} />}
       {lensSheetVisible && (
         <React.Suspense fallback={null}>
           <LensPickerSheet visible onClose={() => setLensSheetVisible(false)} />

@@ -12,7 +12,7 @@ import {
 } from './eventMuhurat';
 import { ABUJH_RULE_IDS, pushyaYogaFor } from './abujhMuhurat';
 import { getUpcomingObservances } from './festivalEngine';
-import { cachedDayInputs, dateKeyFor, dayStoreFor, scopeKeyFor } from './panchangDayStore';
+import { cachedDayInputs, cachedDayInputsAsync, dateKeyFor, dayStoreFor, scopeKeyFor } from './panchangDayStore';
 import { hydratePanchangDays, persistPanchangDays } from './panchangDayCache';
 import {
   abujhFestivalKeys,
@@ -217,7 +217,7 @@ export function useNextFollowedMuhurat(
 
   useEffect(() => {
     let cancelled = false;
-    const id = setTimeout(() => {
+    const id = setTimeout(async () => {
       const today = new Date(todayMs);
       const start = new Date(today.getFullYear(), today.getMonth(), today.getDate());
       const horizon = new Date(start.getFullYear(), start.getMonth(), start.getDate() + FOLLOW_CHIP_HORIZON_DAYS);
@@ -234,7 +234,20 @@ export function useNextFollowedMuhurat(
         } catch {
           continue;
         }
-        const solved = verdictForDate(rule, date, { calendarSystem, location });
+        const opts = { calendarSystem, location };
+        const map = dayStoreFor(scopeKeyFor(location, calendarSystem));
+        // A restored follow can be cold after an update or city change. Fill
+        // its two days cooperatively before the synchronous grading reads them.
+        try {
+          await hydratePanchangDays(location, calendarSystem, dayKeysFrom(date, 2));
+          for (const offset of [0, 1]) {
+            await cachedDayInputsAsync(map, dayAt(date, offset), opts, () => cancelled);
+            if (cancelled) return;
+          }
+        } catch {
+          continue;
+        }
+        const solved = verdictForDate(rule, date, opts);
         // Verdict drift (a location change re-graded the day): stay silent
         // rather than advertise a day the engine now rejects.
         if (!solved || solved.verdict.tier === 'excluded') continue;
@@ -280,7 +293,7 @@ export function useTodayAbujh(today: Date): TodayAbujh | null {
 
   useEffect(() => {
     let cancelled = false;
-    const id = setTimeout(() => {
+    const id = setTimeout(async () => {
       let found: TodayAbujh | null = null;
       try {
         const start = new Date(today.getFullYear(), today.getMonth(), today.getDate());
@@ -295,7 +308,9 @@ export function useTodayAbujh(today: Date): TodayAbujh | null {
           found = { nameHi: hit.rule.nameHi, nameEn: hit.rule.nameEn, source: 'festival' };
         } else if (start.getDay() === 0 || start.getDay() === 4) {
           const map = dayStoreFor(scopeKeyFor(location, calendarSystem));
-          const { inputs } = cachedDayInputs(map, start, { calendarSystem, location });
+          await hydratePanchangDays(location, calendarSystem, [dateKeyFor(start)]);
+          const inputs = await cachedDayInputsAsync(map, start, { calendarSystem, location }, () => cancelled);
+          if (!inputs || cancelled) return;
           const yoga = pushyaYogaFor(inputs.p, start.getDay());
           if (yoga) found = { nameHi: yoga.nameHi, nameEn: yoga.nameEn, source: 'pushya' };
         }

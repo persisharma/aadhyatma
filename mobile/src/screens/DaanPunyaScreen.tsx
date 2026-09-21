@@ -332,10 +332,12 @@ export default function DaanPunyaScreen({ navigation }: Props) {
               ]}
             >
               <Text style={{ fontFamily: titleFont, fontSize: 14, lineHeight: 16, color: colors.gold }}>॥</Text>
-              <Text numberOfLines={2} style={{ fontFamily: titleFont, fontSize: 14.5, lineHeight: 20, color: colors.ink, marginTop: 6 }}>
+              {/* 22 leading, not 20: at 14.5 the semibold Devanagari matras (दानवीर, शिबि) sit
+                  above a 1.45× box and the tile sliced their tops — §2 floor is ≥1.5×. */}
+              <Text numberOfLines={2} style={{ fontFamily: titleFont, fontSize: 14.5, lineHeight: 22, color: colors.ink, marginTop: 6 }}>
                 {contentByLang(lang, katha.titleHi, katha.titleEn)}
               </Text>
-              <Text numberOfLines={2} style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 16, color: colors.inkMuted, marginTop: 4 }}>
+              <Text numberOfLines={2} style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 17, color: colors.inkMuted, marginTop: 4 }}>
                 {contentByLang(lang, katha.subtitleHi, katha.subtitleEn)}
               </Text>
             </Pressable>

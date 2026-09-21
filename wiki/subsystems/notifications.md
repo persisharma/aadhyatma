@@ -85,3 +85,14 @@ Every notification is **local and on-device** (`expo-notifications`, plus the na
 - **A cold landing on the Panchang tab must evaluate its lazy chunk before the navigator mounts.** `PanchangTab` is the only tab behind `React.lazy` (`navigation/lazyPanchangStack.ts`), so landing there cold makes that stack the first screen committed — a path that never ran while Home always mounted first. `App.tsx` awaits `preloadPanchangStack()` in the pre-mount race (one shared promise) and falls back to `HomeTab → Home` if the chunk cannot evaluate; `StackLoadBoundary` wraps the lazy stack so a failure costs one tab instead of the whole tree. Do not reintroduce a bare `lazy(() => import(...))` in `TabNavigator` — `startup.test.ts` fails on it.
 - **A cold-start destination must be the container's `initialState`, never a tab's `initialParams`.** `initialParams` live in `route.params` all session, so React Navigation re-consumes a nested `{ screen, params }` on every return to that tab and pushes the target again (`useNavigationBuilder`'s `!isNestedParamsConsumed` branch). The Panchang widget shipped that way and piled up `PanchangHome` instances — a full engine solve each — on every tab switch until the app froze. `startup.test.ts` fails if `initialParams=` reappears in `TabNavigator`; `deepLink.jest.test.tsx` pins that every cold state holds its target exactly once above its stack root.
 - **Maestro cannot drive a notification tap, nor safely flip a toggle** (enabling raises the native permission dialog). `reminders-smoke.yaml` and `routine-reminder-smoke.yaml` therefore assert the cards' presence only; the toggles, planners, and deep links are covered by unit tests. Same rationale recorded in [[e2e-verification]].
+
+
+### Startup CPU work (2026-09-21)
+
+Festive reminders now hydrate the shared Pitru solve cache and await
+`ensurePakshaWindowAsync` for both annual windows before persisting/scheduling.
+Private Pitru and Janma reminder occurrences use `ensureOccurrencesAsync`, with
+cancellation between numerical units. Muhurat reminders hydrate then cooperatively
+fill any missing day inputs before synchronous grading. These paths do not change
+permission gates, notification families or calendrical conventions; they remove
+raw annual/day solves from Home's deferred startup callbacks.

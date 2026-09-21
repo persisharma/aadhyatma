@@ -1,0 +1,41 @@
+{
+  "verifiedOn": "2026-09-21 Asia/Kolkata",
+  "baseline": "14861226",
+  "branch": "codex/kundali-prashna-guidance",
+  "typecheck": "passed",
+  "engineTests": {
+    "passed": 465,
+    "failed": 0
+  },
+  "askTests": {
+    "passed": 47,
+    "failed": 0
+  },
+  "focusedScreenTests": {
+    "passed": 10,
+    "failed": 0
+  },
+  "iosJsExport": "passed",
+  "nativeSmoke": {
+    "result": "passed",
+    "device": "iPhone 17 / iOS 26.4",
+    "nativeShell": "existing debug 1.4.8 (63)",
+    "javascript": "current checkout",
+    "log": "native-smoke.log"
+  },
+  "dataTestsFromSeptember18": {
+    "passed": 108,
+    "failed": 1,
+    "failure": "inherited static launch byte budget",
+    "baselineBytes": 7131688,
+    "currentBytes": 7131753,
+    "limitBytes": 7000000
+  },
+  "notVerified": [
+    "Android",
+    "physical devices",
+    "full-app regression",
+    "predictive validity"
+  ],
+  "releaseGate": "interpretation source review pending"
+}

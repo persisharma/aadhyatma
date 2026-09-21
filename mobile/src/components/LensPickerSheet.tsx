@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { useGitaLanguage } from '@/data/gita/language';
+import { useGitaLanguage, type Lang } from '@/data/gita/language';
 // The sheet is the one surface that needs the whole registry, and it is opened
 // by a tap — never on the launch path, so it may import it directly.
 import {
@@ -11,6 +11,7 @@ import {
   type LensDefinition,
 } from '@/panchang/lensRegistry';
 import { useLenses } from '@/panchang/useLenses';
+import { getLensesWithContent, getRulesForLens } from '@/panchang/vratCatalog';
 import { useTheme } from '@/theme/ThemeContext';
 import { cardFontByLang, scriptBodyFont } from '@/utils/langType';
 import { contentByLang, meaningByLang } from '@/utils/localize';
@@ -34,16 +35,33 @@ import { contentByLang, meaningByLang } from '@/utils/localize';
  * Bengaluru may want both राजस्थान and कर्नाटक), and a tap applies immediately —
  * there is no confirm step, because every change is instantly reversible and the
  * calendar behind the sheet visibly answers it.
+ *
+ * Two things the first version left out, both from the same Sept 2026 report
+ * ("I turned जैन on and it still shows everything; what did I actually get?"):
+ *
+ *   3. **Only calendars that add something are offered, and every row names what
+ *      it adds.** The registry has 22 calendars but the content waves have not
+ *      shipped, so a switch for an empty calendar changes nothing — which is what
+ *      "I selected Jain and it still shows everything" was really about. The
+ *      sheet lists `getLensesWithContent()` only (groups with no offered lens
+ *      vanish), and each row's third line names the observances it adds. A
+ *      calendar appears here the day its first rule lands. The व्रत-पर्व landing
+ *      then lists the same rules, tappable, under "आपके पंचांग से".
+ *   4. **सभी चुनें / सभी हटाएँ** at the head of the list. Each control hides when
+ *      it would be a no-op, so the header never offers a dead button.
  */
 export default function LensPickerSheet({ visible, onClose }: { visible: boolean; onClose: () => void }) {
   const { colors, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
-  const { lenses, activeCount, availableCount, toggle } = useLenses();
+  const { lenses, activeCount, availableCount, allSelected, toggle, selectAll, clearAll } = useLenses();
 
-  const groups = useMemo(
-    () => LENS_GROUP_ORDER.map((group) => ({ group, items: lensesInGroup(group) })),
-    []
-  );
+  const groups = useMemo(() => {
+    const offered = new Set(getLensesWithContent());
+    return LENS_GROUP_ORDER.map((group) => ({
+      group,
+      items: lensesInGroup(group).filter((lens) => offered.has(lens.id)),
+    })).filter(({ items }) => items.length > 0);
+  }, []);
 
   const titleFont = cardFontByLang(lang);
 
@@ -96,12 +114,33 @@ export default function LensPickerSheet({ visible, onClose }: { visible: boolean
             >
               {activeCount === 0
                 ? meaningByLang(lang, `कोई चयन नहीं · ${availableCount} उपलब्ध`, `None selected · ${availableCount} available`)
-                : meaningByLang(
-                    lang,
-                    `${activeCount} सक्रिय · ${availableCount - activeCount} और उपलब्ध`,
-                    `${activeCount} on · ${availableCount - activeCount} more available`
-                  )}
+                : allSelected
+                  ? meaningByLang(lang, `सभी ${availableCount} सक्रिय`, `All ${availableCount} on`)
+                  : meaningByLang(
+                      lang,
+                      `${activeCount} सक्रिय · ${availableCount - activeCount} और उपलब्ध`,
+                      `${activeCount} on · ${availableCount - activeCount} more available`
+                    )}
             </Text>
+            {/* Promise 4: bulk controls, each hidden when it would do nothing. */}
+            <View style={styles.bulkRow}>
+              {!allSelected && (
+                <BulkButton
+                  label={contentByLang(lang, 'सभी चुनें', 'Select all')}
+                  accessibilityLabel={`Select all ${availableCount} calendars`}
+                  testID="lens-select-all"
+                  onPress={selectAll}
+                />
+              )}
+              {activeCount > 0 && (
+                <BulkButton
+                  label={contentByLang(lang, 'सभी हटाएँ', 'Clear all')}
+                  accessibilityLabel="Clear all calendars"
+                  testID="lens-clear-all"
+                  onPress={clearAll}
+                />
+              )}
+            </View>
           </View>
 
           <ScrollView
@@ -141,6 +180,47 @@ export default function LensPickerSheet({ visible, onClose }: { visible: boolean
   );
 }
 
+function BulkButton({
+  label,
+  accessibilityLabel,
+  testID,
+  onPress,
+}: {
+  label: string;
+  accessibilityLabel: string;
+  testID: string;
+  onPress: () => void;
+}) {
+  const { colors, radii } = useTheme();
+  const { lang } = useGitaLanguage();
+  return (
+    <Pressable
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel}
+      testID={testID}
+      style={({ pressed }) => [
+        styles.bulkButton,
+        { borderColor: colors.saffron, borderRadius: radii.pill },
+        pressed && { opacity: 0.6 },
+      ]}
+    >
+      <Text style={{ fontFamily: cardFontByLang(lang), fontSize: 12.5, color: colors.saffronDeep }}>{label}</Text>
+    </Pressable>
+  );
+}
+
+/** The third line of a row: what this calendar adds. Only offered (non-empty) lenses reach here. */
+function additionsLine(lens: LensDefinition, lang: Lang): { text: string; en: string } {
+  const rules = getRulesForLens(lens.id);
+  const names = rules.map((rule) => contentByLang(lang, rule.nameHi, rule.nameEn)).join(' · ');
+  const namesEn = rules.map((rule) => rule.nameEn).join(', ');
+  return {
+    text: contentByLang(lang, `जोड़ता है: ${names}`, `Adds: ${names}`),
+    en: `Adds ${rules.length}: ${namesEn}`,
+  };
+}
+
 function LensRow({
   lens,
   selected,
@@ -152,6 +232,7 @@ function LensRow({
 }) {
   const { colors, typography, radii } = useTheme();
   const { lang } = useGitaLanguage();
+  const additions = useMemo(() => additionsLine(lens, lang), [lens, lang]);
 
   return (
     <Pressable
@@ -160,8 +241,9 @@ function LensRow({
       accessibilityState={{ checked: selected }}
       // English label even in Hindi UI, matching every other a11y label in the app,
       // and naming the observances so a screen-reader user can tell two regional
-      // calendars apart without hearing only a place name.
-      accessibilityLabel={`${lens.nameEn} calendar. ${lens.exampleEn}`}
+      // calendars apart without hearing only a place name. The additions clause
+      // is the same answer the sighted user reads on the third line.
+      accessibilityLabel={`${lens.nameEn} calendar. ${lens.exampleEn}. ${additions.en}`}
       style={({ pressed }) => [
         styles.row,
         { borderBottomColor: colors.divider },
@@ -182,6 +264,19 @@ function LensRow({
           }}
         >
           {contentByLang(lang, lens.exampleHi, lens.exampleEn)}
+        </Text>
+        {/* Promise 3: what this calendar adds — saffron-deep, the same register
+            as the ledger's live state. */}
+        <Text
+          numberOfLines={2}
+          style={{
+            fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+            fontSize: 11,
+            color: colors.saffronDeep,
+            marginTop: 2,
+          }}
+        >
+          {additions.text}
         </Text>
       </View>
       <View
@@ -207,4 +302,8 @@ const styles = StyleSheet.create({
   // 44 pt floor: these are controls, and the row is the whole tap target.
   row: { flexDirection: 'row', alignItems: 'center', minHeight: 52, paddingVertical: 9, gap: 12, borderBottomWidth: 1 },
   check: { width: 22, height: 22, borderWidth: 1.6, alignItems: 'center', justifyContent: 'center' },
+  bulkRow: { flexDirection: 'row', justifyContent: 'center', gap: 10, marginBottom: 4 },
+  // Pill outlines, 36 pt tall with hitSlop-free padding: they sit in a header,
+  // not a list, and two side by side must not crowd the sheet's centred copy.
+  bulkButton: { minHeight: 36, paddingHorizontal: 14, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
 });

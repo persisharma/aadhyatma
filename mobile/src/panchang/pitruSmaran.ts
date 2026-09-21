@@ -21,7 +21,8 @@
 // src/panchang). AsyncStorage/React live in PitruSmaranContext and the hooks.
 
 import { addDays } from './calendarGrid';
-import { computeTithiAndMonth } from './engine';
+import { runInBackground, runSynchronously } from './backgroundWork';
+import { computeTithiAndMonth, computeTithiAndMonthSteps } from './engine';
 import { matchesLunarTithiRuleOnDate, type ObservanceLocation } from './festivalEngine';
 import {
   LUNAR_MONTH_NAMES_EN,
@@ -155,8 +156,15 @@ function toObservanceRule(rule: Partial<TithiRule> & Pick<TithiRule, 'paksha' | 
  * before anything persists (a silent conversion is never saved).
  */
 export function deriveTithiRuleFromDate(gregorianDate: Date, options: SolveOptions = {}): TithiRule {
+  return runSynchronously(deriveTithiRuleFromDateSteps(gregorianDate, options));
+}
+
+/** Same derivation, yielding within the engine for interactive surfaces. */
+export function* deriveTithiRuleFromDateSteps(
+  gregorianDate: Date, options: SolveOptions = {}
+): Generator<void, TithiRule, void> {
   const day = startOfLocalDay(gregorianDate);
-  const { tithiIndex, lunarMonth, paksha } = computeTithiAndMonth(day, {
+  const { tithiIndex, lunarMonth, paksha } = yield* computeTithiAndMonthSteps(day, {
     calendarSystem: 'purnimant',
     location: options.location,
   });
@@ -173,19 +181,20 @@ const MAX_SCAN_DAYS = 430;
 // then fine-test the last few days through the shared matcher (which owns the
 // kshaya/vriddhi/adhik decisions). ~15 computeTithiAndMonth calls per lunation
 // instead of ~30, and every call is memoised engine-wide.
-function scanForRule(
+function* scanForRuleSteps(
   rule: ObservanceRule,
   fromDate: Date,
   maxDays: number,
   options: SolveOptions
-): Date | null {
+): Generator<void, Date | null, void> {
   const target = rule.paksha === 'shukla' ? (rule.tithi ?? 1) - 1 : (rule.tithi ?? 1) + 14;
   let day = startOfLocalDay(fromDate);
   const limitMs = addDays(day, maxDays).getTime();
   while (day.getTime() <= limitMs) {
+    yield;
     let tithiIndex: number;
     try {
-      tithiIndex = computeTithiAndMonth(day, { calendarSystem: 'purnimant', location: options.location }).tithiIndex;
+      tithiIndex = (yield* computeTithiAndMonthSteps(day, { calendarSystem: 'purnimant', location: options.location })).tithiIndex;
     } catch {
       day = addDays(day, 1);
       continue;
@@ -204,6 +213,10 @@ function scanForRule(
     day = addDays(day, 1);
   }
   return null;
+}
+
+function scanForRule(rule: ObservanceRule, fromDate: Date, maxDays: number, options: SolveOptions): Date | null {
+  return runSynchronously(scanForRuleSteps(rule, fromDate, maxDays, options));
 }
 
 /**
@@ -259,16 +272,17 @@ export function primePitruPakshaWindow(
  * the first amavasya after that purnima (month-free by construction, so an
  * adhik-Ashwin year cannot orphan the closing amavasya).
  */
-export function pitruPakshaWindow(gregorianYear: number, options: SolveOptions = {}): PitruPakshaWindow | null {
+function* pitruPakshaWindowSteps(gregorianYear: number, options: SolveOptions): Generator<void, PitruPakshaWindow | null, void> {
   const cacheKey = windowCacheKey(gregorianYear, options);
   const cached = windowCache.get(cacheKey);
   if (cached !== undefined) return cached;
 
   // Bhadrapada Purnima falls in Sep (early Oct at the latest); scanning from
   // 1 Aug bounds the search without risking a miss.
-  const purnima = solveNextOccurrence(
-    { lunarMonth: 6, paksha: 'shukla', tithi: 15 },
+  const purnima = yield* scanForRuleSteps(
+    toObservanceRule({ lunarMonth: 6, paksha: 'shukla', tithi: 15 }),
     new Date(gregorianYear, 7, 1),
+    MAX_SCAN_DAYS,
     options
   );
   if (!purnima || purnima.getFullYear() !== gregorianYear) {
@@ -276,7 +290,7 @@ export function pitruPakshaWindow(gregorianYear: number, options: SolveOptions =
     return null;
   }
   const start = addDays(purnima, 1);
-  const end = scanForRule(toObservanceRule({ paksha: 'krishna', tithi: 15 }), start, 20, options);
+  const end = yield* scanForRuleSteps(toObservanceRule({ paksha: 'krishna', tithi: 15 }), start, 20, options);
   if (!end) {
     windowCache.set(cacheKey, null);
     return null;
@@ -284,6 +298,19 @@ export function pitruPakshaWindow(gregorianYear: number, options: SolveOptions =
   const window = { purnima, start, end };
   windowCache.set(cacheKey, window);
   return window;
+}
+
+export function pitruPakshaWindow(gregorianYear: number, options: SolveOptions = {}): PitruPakshaWindow | null {
+  return runSynchronously(pitruPakshaWindowSteps(gregorianYear, options));
+}
+
+/** Same engine and cache, yielding within the date scan so Home remains tappable. */
+export function pitruPakshaWindowAsync(
+  year: number,
+  isCancelled: () => boolean = () => false,
+  options: SolveOptions = {}
+): Promise<PitruPakshaWindow | null | undefined> {
+  return runInBackground(pitruPakshaWindowSteps(year, options), isCancelled);
 }
 
 /**
@@ -328,8 +355,22 @@ export function nextObservanceForEntry(
   fromDate: Date,
   options: SolveOptions = {}
 ): Date | null {
-  if (entry.tithiRule === 'sarvapitri') return nextSarvapitriAmavasya(fromDate, options);
-  return solveNextOccurrence(entry.tithiRule, fromDate, options);
+  return runSynchronously(nextObservanceForEntrySteps(entry, fromDate, options));
+}
+
+export function* nextObservanceForEntrySteps(
+  entry: Pick<SmaranEntry, 'tithiRule'>, fromDate: Date, options: SolveOptions = {}
+): Generator<void, Date | null, void> {
+  if (entry.tithiRule !== 'sarvapitri') {
+    if (!isValidTithiRule(entry.tithiRule)) return null;
+    return yield* scanForRuleSteps(toObservanceRule(entry.tithiRule), fromDate, MAX_SCAN_DAYS, options);
+  }
+  const from = startOfLocalDay(fromDate);
+  for (const year of [from.getFullYear(), from.getFullYear() + 1]) {
+    const window = yield* pitruPakshaWindowSteps(year, options);
+    if (window && window.end.getTime() >= from.getTime()) return window.end;
+  }
+  return null;
 }
 
 /** The next सर्वपितृ अमावस्या on/after `fromDate`. */

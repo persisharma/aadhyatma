@@ -19,8 +19,8 @@ type Props = {
 export default function JyotishPracticeCard({
   titleHi = 'नवग्रह स्तोत्रम्',
   titleEn = 'Navagraha Stotram',
-  subtitleHi = 'ऐप में पहले से उपलब्ध पारम्परिक पाठ',
-  subtitleEn = 'An existing traditional practice in your library',
+  subtitleHi = 'नवग्रहों की स्तुति का पाठ',
+  subtitleEn = 'A prayer to the nine grahas',
   accessibilityLabel = 'Open Navagraha Stotram',
   onPress,
 }: Props) {

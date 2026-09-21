@@ -49,14 +49,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
  *   is a computed cache and belongs here, while the user-authored
  *   `@vedansh/pitru-smaran` below does NOT — they differ by one character.
  *
+ * - `@vedansh:widget-plan:` — the public IST Panchang/verse window. Private
+ *   Japam activity is recomposed by the caller and never stored in this cache.
+ *
  * EXCLUDED, and why. This is a computed-days sweep, so the bar is narrow: a key
  * belongs above only if it holds engine-computed calendar output. Everything
  * below lives under the same `@vedansh` namespace and stays:
  * - `@vedansh/widget:last-plan-key-v1` — derived, but not a computed-days cache:
- *   it is the widget writer's write-dedupe key. It also needs no help, because
- *   `WidgetCoordinator` re-plans the payload from scratch on every pass and
- *   compares keys — so a fixed engine that changes the payload changes the key
- *   and rewrites anyway, and an unchanged payload had nothing to fix.
+ *   it is the widget writer's write-dedupe key. The computed window above is
+ *   invalidated on build changes; a rebuilt payload changes this key whenever
+ *   the native content needs rewriting.
  * - `@vedansh:panchang-location`, `@vedansh:panchang-calendar-system`,
  *   `@vedansh:panchang-lenses`, `@vedansh:panchang-lenses-seeded` — the user's
  *   chosen city, purnimant/amanta setting and क्षेत्रीय पंचांग set. They look
@@ -92,6 +94,7 @@ export const DERIVED_CACHE_KEY_PREFIXES = [
   '@vedansh:muhurat-days:',
   '@vedansh:observances:',
   '@vedansh:pitru-solves:',
+  '@vedansh:widget-plan:',
 ] as const;
 
 /**

@@ -1,0 +1,56 @@
+appId: com.prashantsharma.vedansh
+---
+- stopApp
+- launchApp:
+    arguments: { RCT_jsLocation: "127.0.0.1:8084" }
+- waitForAnimationToEnd: { timeout: 30000 }
+- scrollUntilVisible:
+    element: { text: "Kundali. New. Tap to open." }
+    direction: DOWN
+    centerElement: true
+- tapOn: "Kundali. New. Tap to open."
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: { id: "jyotish-prashna-door" }
+    direction: DOWN
+    centerElement: true
+- tapOn: "Open Prashna"
+- extendedWaitUntil: { visible: { id: "purpose-naukri" }, timeout: 15000 }
+- tapOn: { id: "purpose-naukri" }
+- scrollUntilVisible:
+    element: { id: "question-job-switch" }
+    direction: DOWN
+    centerElement: true
+- tapOn: { id: "question-job-switch" }
+- scrollUntilVisible:
+    element: { id: "prashna-phase" }
+    direction: DOWN
+    centerElement: true
+- waitForAnimationToEnd
+- swipe: { start: "50%, 30%", end: "50%, 40%", duration: 500 }
+- takeScreenshot: 01-current-phase
+- scrollUntilVisible:
+    element: { id: "phase-signal-dasha-antar" }
+    direction: DOWN
+    centerElement: true
+- takeScreenshot: 02-why
+- scrollUntilVisible:
+    element: { id: "phase-direction" }
+    direction: DOWN
+    centerElement: true
+- takeScreenshot: 03-guidance
+- scrollUntilVisible:
+    element: { id: "phase-next" }
+    direction: DOWN
+    centerElement: true
+- takeScreenshot: 04-next-change
+- scrollUntilVisible:
+    element: { id: "prashna-basis-toggle" }
+    direction: DOWN
+    centerElement: true
+- tapOn: { id: "prashna-basis-toggle" }
+- scrollUntilVisible:
+    element: { id: "prashna-chain-0" }
+    direction: DOWN
+    centerElement: true
+- takeScreenshot: 05-basis

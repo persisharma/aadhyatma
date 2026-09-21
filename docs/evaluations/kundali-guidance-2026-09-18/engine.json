@@ -1,0 +1,3193 @@
+{
+  "baselineCommit": "14861226",
+  "asOf": "2026-09-18T06:30:00.000Z",
+  "cases": [
+    {
+      "id": "sample-a",
+      "label": "Public AstroSage sample A",
+      "localBirth": "11 Apr 1979, 18:23:24 IST, Agra",
+      "date": "1979-04-11T12:53:24Z",
+      "latitude": 27.15,
+      "longitude": 78,
+      "purposeId": "naukri",
+      "questionId": "general",
+      "source": "https://cdn.astrosage.com/pdf/ca_report_pro_en.pdf",
+      "asOf": "2026-09-18T06:30:00.000Z",
+      "computeMs": 15.423999999999978,
+      "facts": {
+        "convention": "Lahiri sidereal zodiac, whole-sign houses, India timezone. Interpret these supplied calculations; do not recalculate birth data.",
+        "ascendant": {
+          "sign": "Kanya",
+          "longitude": 174.6607553269548
+        },
+        "planets": [
+          {
+            "id": "planet-sun",
+            "graha": "sun",
+            "siderealLongitude": 357.4792332609843,
+            "rashiIndex": 11,
+            "degreeInRashi": 27.4792332609843,
+            "nakshatraIndex": 26,
+            "pada": 4,
+            "house": 7,
+            "retrograde": false,
+            "sign": "Meena"
+          },
+          {
+            "id": "planet-moon",
+            "graha": "moon",
+            "siderealLongitude": 165.75501880484586,
+            "rashiIndex": 5,
+            "degreeInRashi": 15.75501880484586,
+            "nakshatraIndex": 12,
+            "pada": 2,
+            "house": 1,
+            "retrograde": false,
+            "sign": "Kanya"
+          },
+          {
+            "id": "planet-mars",
+            "graha": "mars",
+            "siderealLongitude": 339.92682182451705,
+            "rashiIndex": 11,
+            "degreeInRashi": 9.926821824517049,
+            "nakshatraIndex": 25,
+            "pada": 2,
+            "house": 7,
+            "retrograde": false,
+            "sign": "Meena"
+          },
+          {
+            "id": "planet-mercury",
+            "graha": "mercury",
+            "siderealLongitude": 332.9729032620847,
+            "rashiIndex": 11,
+            "degreeInRashi": 2.972903262084685,
+            "nakshatraIndex": 24,
+            "pada": 4,
+            "house": 7,
+            "retrograde": false,
+            "sign": "Meena"
+          },
+          {
+            "id": "planet-jupiter",
+            "graha": "jupiter",
+            "siderealLongitude": 95.87075033410595,
+            "rashiIndex": 3,
+            "degreeInRashi": 5.870750334105949,
+            "nakshatraIndex": 7,
+            "pada": 1,
+            "house": 11,
+            "retrograde": false,
+            "sign": "Karka"
+          },
+          {
+            "id": "planet-venus",
+            "graha": "venus",
+            "siderealLongitude": 322.45854990681374,
+            "rashiIndex": 10,
+            "degreeInRashi": 22.458549906813744,
+            "nakshatraIndex": 24,
+            "pada": 1,
+            "house": 6,
+            "retrograde": false,
+            "sign": "Kumbha"
+          },
+          {
+            "id": "planet-saturn",
+            "graha": "saturn",
+            "siderealLongitude": 134.18577816024685,
+            "rashiIndex": 4,
+            "degreeInRashi": 14.185778160246855,
+            "nakshatraIndex": 10,
+            "pada": 1,
+            "house": 12,
+            "retrograde": true,
+            "sign": "Simha"
+          },
+          {
+            "id": "planet-rahu",
+            "graha": "rahu",
+            "siderealLongitude": 142.33895991300716,
+            "rashiIndex": 4,
+            "degreeInRashi": 22.33895991300716,
+            "nakshatraIndex": 10,
+            "pada": 3,
+            "house": 12,
+            "retrograde": true,
+            "sign": "Simha"
+          },
+          {
+            "id": "planet-ketu",
+            "graha": "ketu",
+            "siderealLongitude": 322.33895991300716,
+            "rashiIndex": 10,
+            "degreeInRashi": 22.33895991300716,
+            "nakshatraIndex": 24,
+            "pada": 1,
+            "house": 6,
+            "retrograde": true,
+            "sign": "Kumbha"
+          }
+        ],
+        "currentDasha": {
+          "maha": {
+            "lord": "saturn",
+            "start": "2025-12-16T10:06:56.862Z",
+            "end": "2044-12-16T00:41:44.862Z",
+            "antardashas": [
+              {
+                "lord": "saturn",
+                "start": "2025-12-16T10:06:56.862Z",
+                "end": "2028-12-19T04:37:27.462Z"
+              },
+              {
+                "lord": "mercury",
+                "start": "2028-12-19T04:37:27.462Z",
+                "end": "2031-08-29T07:17:23.262Z"
+              },
+              {
+                "lord": "ketu",
+                "start": "2031-08-29T07:17:23.262Z",
+                "end": "2032-10-07T02:44:25.062Z"
+              },
+              {
+                "lord": "venus",
+                "start": "2032-10-07T02:44:25.062Z",
+                "end": "2035-12-07T17:10:13.062Z"
+              },
+              {
+                "lord": "sun",
+                "start": "2035-12-07T17:10:13.062Z",
+                "end": "2036-11-18T16:41:57.462Z"
+              },
+              {
+                "lord": "moon",
+                "start": "2036-11-18T16:41:57.462Z",
+                "end": "2038-06-19T23:54:51.462Z"
+              },
+              {
+                "lord": "mars",
+                "start": "2038-06-19T23:54:51.462Z",
+                "end": "2039-07-29T19:21:53.262Z"
+              },
+              {
+                "lord": "rahu",
+                "start": "2039-07-29T19:21:53.262Z",
+                "end": "2042-06-04T17:57:06.462Z"
+              },
+              {
+                "lord": "jupiter",
+                "start": "2042-06-04T17:57:06.462Z",
+                "end": "2044-12-16T00:41:44.862Z"
+              }
+            ]
+          },
+          "antar": {
+            "lord": "saturn",
+            "start": "2025-12-16T10:06:56.862Z",
+            "end": "2028-12-19T04:37:27.462Z"
+          }
+        },
+        "age": "47 y 5 m"
+      },
+      "before": {
+        "title": "Service is steady and change is slow — take every offer in writing.",
+        "summary": "7 factors in favour, 4 against. The lord of the 10th bhava, Mercury, sits in the 7th bhava (a kendra) — steady support for the matter in tradition. But — The karaka Saturn sits in the 12th bhava (a dusthana) — thin support for the karaka.",
+        "actions": [
+          "Take any offer in writing and sit with it a month.",
+          "Make no final decision on a day of discontent.",
+          "One of this matter’s lords sits in a dusthana — decide slowly, and put every arrangement in writing.",
+          "The running period touches this matter — tradition counts it a supportive window for beginning or expanding; see the dates below."
+        ],
+        "strength": "madhyam"
+      },
+      "reading": {
+        "analysis": {
+          "answerVersion": 1,
+          "purposeId": "naukri",
+          "purposeNameHi": "नौकरी",
+          "purposeNameEn": "Job",
+          "generatedDateKey": "2026-09-18",
+          "asOfLabelHi": "18 सितम्बर 2026",
+          "asOfLabelEn": "18 Sep 2026",
+          "ageBand": "adult",
+          "ageLabelHi": "47 वर्ष 5 माह",
+          "ageLabelEn": "47 y 5 m",
+          "practiceSourceId": "surya-ashtakam",
+          "footerHi": "18 सितम्बर 2026 की स्थिति के अनुसार। यह पारम्परिक ज्योतिष की दृष्टि है — निश्चित भविष्यवाणी नहीं। ज्योतिषीय आधार विस्तार में देख सकते हैं।",
+          "footerEn": "As of 18 Sep 2026. A view from traditional Jyotish — not a certain prediction. Chart interpretations have an expandable basis.",
+          "gated": false,
+          "gateReasonHi": null,
+          "gateReasonEn": null,
+          "strength": "madhyam",
+          "supportGroups": 5,
+          "resistGroups": 4,
+          "saarTitleHi": "नौकरी में स्थिरता है, बदलाव धीमा — हर प्रस्ताव लिखित में लें।",
+          "saarTitleEn": "Service is steady and change is slow — take every offer in writing.",
+          "saarBodyHi": "5 कारक पक्ष में, 4 विपक्ष में। दशम भाव का स्वामी बुध सप्तम भाव (केन्द्र) में है — परम्परा में विषय को स्थिर सहारा। पर — कारक शनि द्वादश भाव (दुःस्थान) में है — कारक को सहारा कम।",
+          "saarBodyEn": "5 factors in favour, 4 against. The lord of the 10th bhava, Mercury, sits in the 7th bhava (a kendra) — steady support for the matter in tradition. But — The karaka Saturn sits in the 12th bhava (a dusthana) — thin support for the karaka.",
+          "aadhaarIntroHi": "मध्यम संकेत — 5 स्वतंत्र कारक एक दिशा में, 4 विपरीत। नीचे हर संकेत का आधार है।",
+          "aadhaarIntroEn": "A moderate indication — 5 independent factors pointing one way, 4 against. Every line below names its basis.",
+          "chains": [
+            {
+              "labelHi": "दशम भाव का स्वामी बुध सप्तम भाव (केन्द्र) में है",
+              "labelEn": "The lord of the 10th bhava, Mercury, sits in the 7th bhava (a kendra)",
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 10,
+                  "rashiIndex": 2
+                },
+                {
+                  "kind": "lord",
+                  "graha": "mercury",
+                  "ofHouse": 10,
+                  "inHouse": 7
+                }
+              ]
+            },
+            {
+              "labelHi": "कारक सूर्य सप्तम भाव (केन्द्र) में है",
+              "labelEn": "The karaka Sun sits in the 7th bhava (a kendra)",
+              "basis": [
+                {
+                  "kind": "graha",
+                  "graha": "sun",
+                  "house": 7,
+                  "dignity": "neutral"
+                }
+              ]
+            },
+            {
+              "labelHi": "एकादश भाव का स्वामी चन्द्र प्रथम भाव (केन्द्र) में है",
+              "labelEn": "The lord of the 11th bhava, Moon, sits in the 1st bhava (a kendra)",
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 11,
+                  "rashiIndex": 3
+                },
+                {
+                  "kind": "lord",
+                  "graha": "moon",
+                  "ofHouse": 11,
+                  "inHouse": 1
+                }
+              ]
+            },
+            {
+              "labelHi": "गुरु एकादश भाव में है",
+              "labelEn": "Jupiter occupies the 11th bhava",
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 11,
+                  "rashiIndex": 3
+                },
+                {
+                  "kind": "graha",
+                  "graha": "jupiter",
+                  "house": 11,
+                  "dignity": "exalted"
+                }
+              ]
+            },
+            {
+              "labelHi": "शुक्र षष्ठ भाव में है",
+              "labelEn": "Venus occupies the 6th bhava",
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 6,
+                  "rashiIndex": 10
+                },
+                {
+                  "kind": "graha",
+                  "graha": "venus",
+                  "house": 6,
+                  "dignity": "neutral"
+                }
+              ]
+            }
+          ],
+          "supports": [
+            {
+              "id": "lord-10-strong",
+              "polarity": "support",
+              "weight": 2,
+              "group": "lord-10",
+              "textHi": "दशम भाव का स्वामी बुध सप्तम भाव (केन्द्र) में है — परम्परा में विषय को स्थिर सहारा।",
+              "textEn": "The lord of the 10th bhava, Mercury, sits in the 7th bhava (a kendra) — steady support for the matter in tradition.",
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 10,
+                  "rashiIndex": 2
+                },
+                {
+                  "kind": "lord",
+                  "graha": "mercury",
+                  "ofHouse": 10,
+                  "inHouse": 7
+                }
+              ]
+            },
+            {
+              "id": "karaka-sun-strong",
+              "polarity": "support",
+              "weight": 1,
+              "group": "karaka-sun",
+              "textHi": "कारक सूर्य सप्तम भाव (केन्द्र) में है — कारक बलवान।",
+              "textEn": "The karaka Sun sits in the 7th bhava (a kendra) — a strong karaka.",
+              "basis": [
+                {
+                  "kind": "graha",
+                  "graha": "sun",
+                  "house": 7,
+                  "dignity": "neutral"
+                }
+              ]
+            },
+            {
+              "id": "lord-11-strong",
+              "polarity": "support",
+              "weight": 1,
+              "group": "lord-11",
+              "textHi": "एकादश भाव का स्वामी चन्द्र प्रथम भाव (केन्द्र) में है — परम्परा में विषय को स्थिर सहारा।",
+              "textEn": "The lord of the 11th bhava, Moon, sits in the 1st bhava (a kendra) — steady support for the matter in tradition.",
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 11,
+                  "rashiIndex": 3
+                },
+                {
+                  "kind": "lord",
+                  "graha": "moon",
+                  "ofHouse": 11,
+                  "inHouse": 1
+                }
+              ]
+            },
+            {
+              "id": "occ-11-jupiter",
+              "polarity": "support",
+              "weight": 1,
+              "group": "occ-11-jupiter",
+              "textHi": "गुरु एकादश भाव में है — परम्परा में एक सौम्य ग्रह भाव को सहज बनाता है।",
+              "textEn": "Jupiter occupies the 11th bhava — a natural benefic eases a house in tradition.",
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 11,
+                  "rashiIndex": 3
+                },
+                {
+                  "kind": "graha",
+                  "graha": "jupiter",
+                  "house": 11,
+                  "dignity": "exalted"
+                }
+              ]
+            },
+            {
+              "id": "occ-6-venus",
+              "polarity": "support",
+              "weight": 1,
+              "group": "occ-6-venus",
+              "textHi": "शुक्र षष्ठ भाव में है — परम्परा में एक सौम्य ग्रह भाव को सहज बनाता है।",
+              "textEn": "Venus occupies the 6th bhava — a natural benefic eases a house in tradition.",
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 6,
+                  "rashiIndex": 10
+                },
+                {
+                  "kind": "graha",
+                  "graha": "venus",
+                  "house": 6,
+                  "dignity": "neutral"
+                }
+              ]
+            }
+          ],
+          "resists": [
+            {
+              "id": "karaka-saturn-dusthana",
+              "polarity": "resist",
+              "weight": 1,
+              "group": "karaka-saturn",
+              "textHi": "कारक शनि द्वादश भाव (दुःस्थान) में है — कारक को सहारा कम।",
+              "textEn": "The karaka Saturn sits in the 12th bhava (a dusthana) — thin support for the karaka.",
+              "basis": [
+                {
+                  "kind": "graha",
+                  "graha": "saturn",
+                  "house": 12,
+                  "dignity": "neutral",
+                  "retrograde": true
+                }
+              ]
+            },
+            {
+              "id": "lord-10-dignity",
+              "polarity": "resist",
+              "weight": 1,
+              "group": "lord-10-dignity",
+              "textHi": "बुध नीच (मीन) है — स्वामी को यहाँ अधिक प्रयास चाहिए।",
+              "textEn": "Mercury is debilitated (Meena) — the lord needs more effort here.",
+              "basis": [
+                {
+                  "kind": "graha",
+                  "graha": "mercury",
+                  "house": 7,
+                  "dignity": "debilitated"
+                }
+              ]
+            },
+            {
+              "id": "lord-6-dusthana",
+              "polarity": "resist",
+              "weight": 1,
+              "group": "lord-6",
+              "textHi": "षष्ठ भाव का स्वामी शनि द्वादश भाव (दुःस्थान) में है — परम्परा में विषय देर से और प्रयास से खुलता है।",
+              "textEn": "The lord of the 6th bhava, Saturn, sits in the 12th bhava (a dusthana) — in tradition the matter opens late and through effort.",
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 6,
+                  "rashiIndex": 10
+                },
+                {
+                  "kind": "lord",
+                  "graha": "saturn",
+                  "ofHouse": 6,
+                  "inHouse": 12
+                }
+              ]
+            },
+            {
+              "id": "occ-6-ketu",
+              "polarity": "resist",
+              "weight": 1,
+              "group": "occ-6-ketu",
+              "textHi": "केतु षष्ठ भाव में है — परम्परा में यह भाव अनुशासन और प्रयास माँगता है, यह क्षमता नहीं, गति की बात है।",
+              "textEn": "Ketu occupies the 6th bhava — tradition reads the house as asking for discipline and effort; a statement about pace, not capacity.",
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 6,
+                  "rashiIndex": 10
+                },
+                {
+                  "kind": "graha",
+                  "graha": "ketu",
+                  "house": 6,
+                  "dignity": "neutral",
+                  "retrograde": true
+                }
+              ]
+            }
+          ],
+          "qualifies": [
+            {
+              "id": "dasha-relevant",
+              "polarity": "qualify",
+              "weight": 1,
+              "group": "dasha",
+              "textHi": "चल रही शनि महादशा इस विषय के भावों को छूती है — यह संबंध है, अनुकूलता का निष्कर्ष नहीं।",
+              "textEn": "The running Saturn Mahadasha touches this matter’s houses — this establishes relevance, not favourability.",
+              "basis": [
+                {
+                  "kind": "dasha",
+                  "level": "maha",
+                  "lord": "saturn",
+                  "startKey": "2025-12-16",
+                  "endKey": "2044-12-16"
+                }
+              ]
+            },
+            {
+              "id": "gochar-jupiter",
+              "polarity": "qualify",
+              "weight": 1,
+              "group": "gochar-jupiter",
+              "textHi": "गुरु इस समय एकादश भाव से गोचर कर रहा है।",
+              "textEn": "Jupiter is transiting the 11th bhava just now.",
+              "basis": [
+                {
+                  "kind": "gochar",
+                  "graha": "jupiter",
+                  "fromMoonHouse": 11,
+                  "asOfKey": "2026-09-18"
+                }
+              ]
+            },
+            {
+              "id": "lord-6-retro",
+              "polarity": "qualify",
+              "weight": 1,
+              "group": "lord-6-retro",
+              "textHi": "शनि वक्री है — परम्परा में विषय की गति असमान, बार-बार लौटकर देखने वाली।",
+              "textEn": "Saturn is retrograde — tradition reads the matter’s pace as uneven, returning to itself.",
+              "basis": [
+                {
+                  "kind": "graha",
+                  "graha": "saturn",
+                  "house": 12,
+                  "dignity": "neutral",
+                  "retrograde": true
+                }
+              ]
+            }
+          ],
+          "kaalIntroHi": "ये अवधियाँ दशा और गोचर से निकली हैं। विषय से संबंध अपने-आप अनुकूलता या परिणाम नहीं बताता।",
+          "kaalIntroEn": "These periods come from the dasha sequence and slow transits. Topic relevance alone does not establish favourability or an outcome.",
+          "windows": [
+            {
+              "id": "maha-saturn-2025-12-16",
+              "startKey": "2025-12-16",
+              "endKey": "2044-12-16",
+              "labelHi": "16 दिसम्बर 2025 → 16 दिसम्बर 2044",
+              "labelEn": "16 Dec 2025 → 16 Dec 2044",
+              "textHi": "शनि महादशा — शनि आपके षष्ठ भाव (दिनचर्या और सेवा) से जुड़ा है; यह अवधि इस विषय से जुड़ी है, पर संबंध अपने-आप अनुकूलता नहीं है।",
+              "textEn": "Saturn Mahadasha — Saturn is tied to your 6th bhava (routine and service); this period is relevant to the topic; relevance alone does not establish a supportive window.",
+              "current": true,
+              "relevant": true,
+              "basis": [
+                {
+                  "kind": "dasha",
+                  "level": "maha",
+                  "lord": "saturn",
+                  "startKey": "2025-12-16",
+                  "endKey": "2044-12-16"
+                },
+                {
+                  "kind": "lord",
+                  "graha": "saturn",
+                  "ofHouse": 6,
+                  "inHouse": 12
+                }
+              ]
+            },
+            {
+              "id": "antar-saturn-2025-12-16",
+              "startKey": "2025-12-16",
+              "endKey": "2028-12-19",
+              "labelHi": "16 दिसम्बर 2025 → 19 दिसम्बर 2028",
+              "labelEn": "16 Dec 2025 → 19 Dec 2028",
+              "textHi": "शनि अन्तर्दशा (शनि महादशा में) — शनि आपके षष्ठ भाव (दिनचर्या और सेवा) से जुड़ा है; यह अवधि इस विषय से जुड़ी है, पर संबंध अपने-आप अनुकूलता नहीं है।",
+              "textEn": "Saturn Antardasha (within the Saturn Mahadasha) — Saturn is tied to your 6th bhava (routine and service); this period is relevant to the topic; relevance alone does not establish a supportive window.",
+              "current": true,
+              "relevant": true,
+              "basis": [
+                {
+                  "kind": "dasha",
+                  "level": "antar",
+                  "lord": "saturn",
+                  "startKey": "2025-12-16",
+                  "endKey": "2028-12-19"
+                },
+                {
+                  "kind": "lord",
+                  "graha": "saturn",
+                  "ofHouse": 6,
+                  "inHouse": 12
+                }
+              ]
+            },
+            {
+              "id": "antar-mercury-2028-12-19",
+              "startKey": "2028-12-19",
+              "endKey": "2031-08-29",
+              "labelHi": "19 दिसम्बर 2028 → 29 अगस्त 2031",
+              "labelEn": "19 Dec 2028 → 29 Aug 2031",
+              "textHi": "बुध अन्तर्दशा (शनि महादशा में) — बुध आपके दशम भाव (कर्तव्य और काम) से जुड़ा है; यह अवधि इस विषय से जुड़ी है, पर संबंध अपने-आप अनुकूलता नहीं है।",
+              "textEn": "Mercury Antardasha (within the Saturn Mahadasha) — Mercury is tied to your 10th bhava (duties and work); this period is relevant to the topic; relevance alone does not establish a supportive window.",
+              "current": false,
+              "relevant": true,
+              "basis": [
+                {
+                  "kind": "dasha",
+                  "level": "antar",
+                  "lord": "mercury",
+                  "startKey": "2028-12-19",
+                  "endKey": "2031-08-29"
+                },
+                {
+                  "kind": "lord",
+                  "graha": "mercury",
+                  "ofHouse": 10,
+                  "inHouse": 7
+                }
+              ]
+            },
+            {
+              "id": "gochar-jupiter-2026-09-18",
+              "startKey": "2026-09-18",
+              "endKey": "2026-10-31",
+              "labelHi": "18 सितम्बर 2026 → 31 अक्टूबर 2026",
+              "labelEn": "18 Sep 2026 → 31 Oct 2026",
+              "textHi": "गुरु का गोचर आपके एकादश भाव (समुदाय और सहयोग) से 31 अक्टूबर 2026 तक — इस विषय से जुड़ा गोचर; अन्य संकेतों के साथ पढ़ें।",
+              "textEn": "Jupiter transits your 11th bhava (community and support) until 31 Oct 2026 — a transit relevant to this topic; read it with the other indications.",
+              "current": true,
+              "relevant": true,
+              "basis": [
+                {
+                  "kind": "gochar",
+                  "graha": "jupiter",
+                  "fromMoonHouse": 11,
+                  "asOfKey": "2026-09-18"
+                }
+              ]
+            }
+          ],
+          "dishaHi": [
+            "प्रस्ताव आएँ तो लिखित रूप में लें और महीने भर सोचें।",
+            "असंतोष के दिन कोई अन्तिम निर्णय न लें।",
+            "इस विषय का एक स्वामी दुःस्थान में है — निर्णय धीमे, और हर व्यवस्था लिखित में।",
+            "चल रही अवधि इस विषय को छूती है — इससे अपने-आप आरम्भ या विस्तार की अनुकूलता नहीं निकलती; काल खंड में तिथियाँ देखें।"
+          ],
+          "dishaEn": [
+            "Take any offer in writing and sit with it a month.",
+            "Make no final decision on a day of discontent.",
+            "One of this matter’s lords sits in a dusthana — decide slowly, and put every arrangement in writing.",
+            "The running period touches this matter — this alone does not establish a supportive window for beginning or expanding; see the timing section."
+          ],
+          "practiceNoteHi": "नौकरी के कारक शनि और सूर्य के स्मरण की पारम्परिक रीति।",
+          "practiceNoteEn": "The traditional way of remembering job’s karakas, Saturn and Sun."
+        },
+        "guidance": {
+          "version": 1,
+          "questionId": "general",
+          "question": {
+            "hi": "सामान्य मार्गदर्शन",
+            "en": "General guidance"
+          },
+          "title": {
+            "hi": "काम और ज़िम्मेदारी: आगे की दिशा परखें। काम की गति और व्यवस्था: यहाँ अधिक ध्यान दें।",
+            "en": "Explore work and responsibility; give workload and structure extra attention."
+          },
+          "summary": {
+            "hi": "काम और ज़िम्मेदारी: सहारा और समायोजन दोनों। काम की गति और व्यवस्था: सहारा और समायोजन दोनों।",
+            "en": "Work and responsibility: support alongside adjustment. Workload and structure: support alongside adjustment."
+          },
+          "insights": [
+            {
+              "id": "work",
+              "title": {
+                "hi": "काम और ज़िम्मेदारी",
+                "en": "Work and responsibility"
+              },
+              "meaning": {
+                "hi": "इस विषय का संबंध साझेदारी और दूसरे लोगों से बनता है। पारम्परिक विवेचन में ज़िम्मेदारी और योगदान को सहारा मिलता है। वास्तविक अवसर में देखें कि आपके काम को पहचान कैसे मिलेगी। साथ ही, काम और पहचान से जुड़े संकेत अतिरिक्त प्रयास की ओर ध्यान दिलाते हैं। भूमिका और अपेक्षाएँ स्पष्ट करें।",
+                "en": "Traditionally, this theme connects with partnership and other people. The traditional reading supports responsibility and contribution. In a real opportunity, check how your work would be recognised. At the same time, work and recognition indications draw attention to extra effort. Clarify the role and expectations."
+              },
+              "tone": "mixed",
+              "factorIds": [
+                "lord-10-strong",
+                "lord-10-dignity"
+              ],
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 10,
+                  "rashiIndex": 2
+                },
+                {
+                  "kind": "lord",
+                  "graha": "mercury",
+                  "ofHouse": 10,
+                  "inHouse": 7
+                },
+                {
+                  "kind": "graha",
+                  "graha": "mercury",
+                  "house": 7,
+                  "dignity": "debilitated"
+                }
+              ],
+              "source": {
+                "verified": false,
+                "referenceUrls": [],
+                "notes": "BPHS bhava karakatva (ch. 11) + Phaladeepika ch. 15. Classical canon; two-source URL review pending. Plain-language grouping is editorial, not a new classical formula."
+              }
+            },
+            {
+              "id": "workload",
+              "title": {
+                "hi": "काम की गति और व्यवस्था",
+                "en": "Workload and structure"
+              },
+              "meaning": {
+                "hi": "इस विषय का संबंध विश्राम, दूरी और ख़र्च से बनता है। नियमित प्रयास और काम की व्यवस्था को सहारा मिलता है। स्पष्ट प्रक्रिया वाले वातावरण को अपने अनुभव से परखें। साथ ही, प्रगति के साथ काम सँभालने में अधिक प्रयास का संकेत है। अतिरिक्त ज़िम्मेदारी के साथ समय और सहायता भी देखें।",
+                "en": "Traditionally, this theme connects with rest, distance and expenses. Regular effort and work structure receive support. Consider how a clearly organised environment fits your experience. At the same time, the reading suggests extra effort in managing work alongside progress. Consider time and support when taking on responsibility."
+              },
+              "tone": "mixed",
+              "factorIds": [
+                "occ-6-venus",
+                "lord-6-dusthana",
+                "occ-6-ketu",
+                "lord-6-retro"
+              ],
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 6,
+                  "rashiIndex": 10
+                },
+                {
+                  "kind": "graha",
+                  "graha": "venus",
+                  "house": 6,
+                  "dignity": "neutral"
+                },
+                {
+                  "kind": "lord",
+                  "graha": "saturn",
+                  "ofHouse": 6,
+                  "inHouse": 12
+                },
+                {
+                  "kind": "graha",
+                  "graha": "ketu",
+                  "house": 6,
+                  "dignity": "neutral",
+                  "retrograde": true
+                },
+                {
+                  "kind": "graha",
+                  "graha": "saturn",
+                  "house": 12,
+                  "dignity": "neutral",
+                  "retrograde": true
+                }
+              ],
+              "source": {
+                "verified": false,
+                "referenceUrls": [],
+                "notes": "BPHS bhava karakatva (ch. 11) + Phaladeepika ch. 15. Classical canon; two-source URL review pending. Plain-language grouping is editorial, not a new classical formula."
+              }
+            }
+          ],
+          "actions": [
+            {
+              "id": "general-0",
+              "text": {
+                "hi": "काम में अपनी मुख्य ज़रूरत लिखें: सीखना, ज़िम्मेदारी या बदलाव।",
+                "en": "Name your main work priority: learning, responsibility or change."
+              },
+              "origin": "editorial",
+              "insightIds": []
+            },
+            {
+              "id": "general-1",
+              "text": {
+                "hi": "अगले अवसर में काम और अपेक्षाएँ स्पष्ट करें।",
+                "en": "Clarify the work and expectations in the next opportunity."
+              },
+              "origin": "editorial",
+              "insightIds": []
+            },
+            {
+              "id": "theme-workload",
+              "text": {
+                "hi": "समय, काम के बोझ और सहायता की अपेक्षाएँ पहले पूछें।",
+                "en": "Ask about hours, workload and support before committing."
+              },
+              "origin": "editorial",
+              "insightIds": [
+                "workload"
+              ]
+            }
+          ],
+          "caution": {
+            "hi": "यह विवेचन आपकी नौकरी की वर्तमान स्थिति नहीं जानता। नीचे अपना प्रश्न चुनें।",
+            "en": "This reading does not know your employment situation. Choose your specific question."
+          },
+          "timing": {
+            "status": "relevant",
+            "text": {
+              "hi": "ये अवधियाँ इस विषय से जुड़ी हैं। संबंध अपने-आप अनुकूलता नहीं है; इससे परिणाम या सबसे अच्छी तारीख तय नहीं होती।",
+              "en": "These periods connect with this topic. Relevance does not establish favourability, an outcome or the best date."
+            },
+            "windowIds": [
+              "antar-saturn-2025-12-16",
+              "maha-saturn-2025-12-16"
+            ]
+          },
+          "parentNote": null
+        }
+      },
+      "matrix": [
+        {
+          "purposeId": "vidya",
+          "gated": false,
+          "title": "Give preparation and support more attention around guidance and exploration.",
+          "tones": [
+            "careful",
+            "careful"
+          ]
+        },
+        {
+          "purposeId": "vyapar",
+          "gated": false,
+          "title": "Explore work and responsibility; give partnership and communication extra attention.",
+          "tones": [
+            "mixed",
+            "mixed"
+          ]
+        },
+        {
+          "purposeId": "naukri",
+          "gated": false,
+          "title": "Explore work and responsibility; give workload and structure extra attention.",
+          "tones": [
+            "mixed",
+            "mixed"
+          ]
+        },
+        {
+          "purposeId": "dhan",
+          "gated": false,
+          "title": "Explore support and opportunities; give resources and priorities extra attention.",
+          "tones": [
+            "careful",
+            "supportive"
+          ]
+        },
+        {
+          "purposeId": "vivah",
+          "gated": false,
+          "title": "Explore partnership and communication; give home and stability extra attention.",
+          "tones": [
+            "mixed",
+            "careful"
+          ]
+        },
+        {
+          "purposeId": "santan",
+          "gated": false,
+          "title": "Start with your actual experience and needs.",
+          "tones": [
+            "careful",
+            "careful"
+          ]
+        },
+        {
+          "purposeId": "swasthya",
+          "gated": false,
+          "title": "Start with your actual experience and needs.",
+          "tones": [
+            "mixed"
+          ]
+        },
+        {
+          "purposeId": "yatra",
+          "gated": false,
+          "title": "Travel and change has support, with adjustments to consider.",
+          "tones": [
+            "mixed",
+            "supportive"
+          ]
+        },
+        {
+          "purposeId": "man",
+          "gated": false,
+          "title": "Start with your actual experience and needs.",
+          "tones": [
+            "mixed"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sample-b",
+      "label": "Public AstroSage sample B",
+      "localBirth": "7 Sep 1982, 07:14:25 IST, Firozpur",
+      "date": "1982-09-07T01:44:25Z",
+      "latitude": 30.916666666666668,
+      "longitude": 74.58333333333333,
+      "purposeId": "naukri",
+      "questionId": "general",
+      "source": "https://www.astrosage.com/pdf/as-career-report-en.pdf",
+      "asOf": "2026-09-18T06:30:00.000Z",
+      "computeMs": 1.6066250000000082,
+      "facts": {
+        "convention": "Lahiri sidereal zodiac, whole-sign houses, India timezone. Interpret these supplied calculations; do not recalculate birth data.",
+        "ascendant": {
+          "sign": "Kanya",
+          "longitude": 153.36307342386357
+        },
+        "planets": [
+          {
+            "id": "planet-sun",
+            "graha": "sun",
+            "siderealLongitude": 140.5078741964147,
+            "rashiIndex": 4,
+            "degreeInRashi": 20.50787419641469,
+            "nakshatraIndex": 10,
+            "pada": 3,
+            "house": 12,
+            "retrograde": false,
+            "sign": "Simha"
+          },
+          {
+            "id": "planet-moon",
+            "graha": "moon",
+            "siderealLongitude": 3.7379166368475154,
+            "rashiIndex": 0,
+            "degreeInRashi": 3.7379166368475154,
+            "nakshatraIndex": 0,
+            "pada": 2,
+            "house": 8,
+            "retrograde": false,
+            "sign": "Mesha"
+          },
+          {
+            "id": "planet-mars",
+            "graha": "mars",
+            "siderealLongitude": 207.69333241677634,
+            "rashiIndex": 6,
+            "degreeInRashi": 27.693332416776343,
+            "nakshatraIndex": 15,
+            "pada": 3,
+            "house": 2,
+            "retrograde": false,
+            "sign": "Tula"
+          },
+          {
+            "id": "planet-mercury",
+            "graha": "mercury",
+            "siderealLongitude": 167.44058619252814,
+            "rashiIndex": 5,
+            "degreeInRashi": 17.440586192528144,
+            "nakshatraIndex": 12,
+            "pada": 3,
+            "house": 1,
+            "retrograde": false,
+            "sign": "Kanya"
+          },
+          {
+            "id": "planet-jupiter",
+            "graha": "jupiter",
+            "siderealLongitude": 193.52431474480917,
+            "rashiIndex": 6,
+            "degreeInRashi": 13.524314744809175,
+            "nakshatraIndex": 14,
+            "pada": 3,
+            "house": 2,
+            "retrograde": false,
+            "sign": "Tula"
+          },
+          {
+            "id": "planet-venus",
+            "graha": "venus",
+            "siderealLongitude": 125.36500880418207,
+            "rashiIndex": 4,
+            "degreeInRashi": 5.365008804182068,
+            "nakshatraIndex": 9,
+            "pada": 2,
+            "house": 12,
+            "retrograde": false,
+            "sign": "Simha"
+          },
+          {
+            "id": "planet-saturn",
+            "graha": "saturn",
+            "siderealLongitude": 176.69047589785677,
+            "rashiIndex": 5,
+            "degreeInRashi": 26.69047589785677,
+            "nakshatraIndex": 13,
+            "pada": 2,
+            "house": 1,
+            "retrograde": false,
+            "sign": "Kanya"
+          },
+          {
+            "id": "planet-rahu",
+            "graha": "rahu",
+            "siderealLongitude": 76.38853569693286,
+            "rashiIndex": 2,
+            "degreeInRashi": 16.388535696932863,
+            "nakshatraIndex": 5,
+            "pada": 3,
+            "house": 10,
+            "retrograde": true,
+            "sign": "Mithuna"
+          },
+          {
+            "id": "planet-ketu",
+            "graha": "ketu",
+            "siderealLongitude": 256.3885356969329,
+            "rashiIndex": 8,
+            "degreeInRashi": 16.388535696932877,
+            "nakshatraIndex": 19,
+            "pada": 1,
+            "house": 4,
+            "retrograde": true,
+            "sign": "Dhanu"
+          }
+        ],
+        "currentDasha": {
+          "maha": {
+            "lord": "mars",
+            "start": "2023-09-20T17:54:01.658Z",
+            "end": "2030-09-20T10:38:25.658Z",
+            "antardashas": [
+              {
+                "lord": "mars",
+                "start": "2023-09-20T17:54:01.658Z",
+                "end": "2024-02-16T21:16:37.058Z"
+              },
+              {
+                "lord": "rahu",
+                "start": "2024-02-16T21:16:37.058Z",
+                "end": "2025-03-06T09:23:16.658Z"
+              },
+              {
+                "lord": "jupiter",
+                "start": "2025-03-06T09:23:16.658Z",
+                "end": "2026-02-10T06:49:11.858Z"
+              },
+              {
+                "lord": "saturn",
+                "start": "2026-02-10T06:49:11.858Z",
+                "end": "2027-03-22T02:16:13.658Z"
+              },
+              {
+                "lord": "mercury",
+                "start": "2027-03-22T02:16:13.658Z",
+                "end": "2028-03-18T07:02:31.058Z"
+              },
+              {
+                "lord": "ketu",
+                "start": "2028-03-18T07:02:31.058Z",
+                "end": "2028-08-14T10:25:06.458Z"
+              },
+              {
+                "lord": "venus",
+                "start": "2028-08-14T10:25:06.458Z",
+                "end": "2029-10-14T13:12:30.458Z"
+              },
+              {
+                "lord": "sun",
+                "start": "2029-10-14T13:12:30.458Z",
+                "end": "2030-02-19T09:14:43.658Z"
+              },
+              {
+                "lord": "moon",
+                "start": "2030-02-19T09:14:43.658Z",
+                "end": "2030-09-20T10:38:25.658Z"
+              }
+            ]
+          },
+          "antar": {
+            "lord": "saturn",
+            "start": "2026-02-10T06:49:11.858Z",
+            "end": "2027-03-22T02:16:13.658Z"
+          }
+        },
+        "age": "44 y"
+      },
+      "before": {
+        "title": "A time of standing and recognition — ask for growth where you are.",
+        "summary": "7 factors in favour, 3 against. The lord of the 10th bhava, Mercury, sits in the 1st bhava (a kendra) — steady support for the matter in tradition. But — The karaka Sun sits in the 12th bhava (a dusthana) — thin support for the karaka.",
+        "actions": [
+          "Ask for growth and a new role where you are — tradition reads this as a supportive time for it.",
+          "Work on standing: visible work, written record.",
+          "One of this matter’s lords sits in a dusthana — decide slowly, and put every arrangement in writing.",
+          "The running period touches this matter — tradition counts it a supportive window for beginning or expanding; see the dates below."
+        ],
+        "strength": "prabal"
+      },
+      "reading": {
+        "analysis": {
+          "answerVersion": 1,
+          "purposeId": "naukri",
+          "purposeNameHi": "नौकरी",
+          "purposeNameEn": "Job",
+          "generatedDateKey": "2026-09-18",
+          "asOfLabelHi": "18 सितम्बर 2026",
+          "asOfLabelEn": "18 Sep 2026",
+          "ageBand": "adult",
+          "ageLabelHi": "44 वर्ष",
+          "ageLabelEn": "44 y",
+          "practiceSourceId": "surya-ashtakam",
+          "footerHi": "18 सितम्बर 2026 की स्थिति के अनुसार। यह पारम्परिक ज्योतिष की दृष्टि है — निश्चित भविष्यवाणी नहीं। ज्योतिषीय आधार विस्तार में देख सकते हैं।",
+          "footerEn": "As of 18 Sep 2026. A view from traditional Jyotish — not a certain prediction. Chart interpretations have an expandable basis.",
+          "gated": false,
+          "gateReasonHi": null,
+          "gateReasonEn": null,
+          "strength": "madhyam",
+          "supportGroups": 5,
+          "resistGroups": 3,
+          "saarTitleHi": "नौकरी में स्थिरता है, बदलाव धीमा — हर प्रस्ताव लिखित में लें।",
+          "saarTitleEn": "Service is steady and change is slow — take every offer in writing.",
+          "saarBodyHi": "5 कारक पक्ष में, 3 विपक्ष में। दशम भाव का स्वामी बुध प्रथम भाव (केन्द्र) में है — परम्परा में विषय को स्थिर सहारा। पर — कारक सूर्य द्वादश भाव (दुःस्थान) में है — कारक को सहारा कम।",
+          "saarBodyEn": "5 factors in favour, 3 against. The lord of the 10th bhava, Mercury, sits in the 1st bhava (a kendra) — steady support for the matter in tradition. But — The karaka Sun sits in the 12th bhava (a dusthana) — thin support for the karaka.",
+          "aadhaarIntroHi": "मध्यम संकेत — 5 स्वतंत्र कारक एक दिशा में, 3 विपरीत। नीचे हर संकेत का आधार है।",
+          "aadhaarIntroEn": "A moderate indication — 5 independent factors pointing one way, 3 against. Every line below names its basis.",
+          "chains": [
+            {
+              "labelHi": "दशम भाव का स्वामी बुध प्रथम भाव (केन्द्र) में है",
+              "labelEn": "The lord of the 10th bhava, Mercury, sits in the 1st bhava (a kendra)",
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 10,
+                  "rashiIndex": 2
+                },
+                {
+                  "kind": "lord",
+                  "graha": "mercury",
+                  "ofHouse": 10,
+                  "inHouse": 1
+                }
+              ]
+            },
+            {
+              "labelHi": "कारक शनि प्रथम भाव (केन्द्र) में है",
+              "labelEn": "The karaka Saturn sits in the 1st bhava (a kendra)",
+              "basis": [
+                {
+                  "kind": "graha",
+                  "graha": "saturn",
+                  "house": 1,
+                  "dignity": "neutral"
+                }
+              ]
+            },
+            {
+              "labelHi": "कारक सूर्य स्वराशि है",
+              "labelEn": "The karaka Sun is own sign",
+              "basis": [
+                {
+                  "kind": "graha",
+                  "graha": "sun",
+                  "house": 12,
+                  "dignity": "own"
+                }
+              ]
+            },
+            {
+              "labelHi": "बुध उच्च (कन्या) है",
+              "labelEn": "Mercury is exalted (Kanya)",
+              "basis": [
+                {
+                  "kind": "graha",
+                  "graha": "mercury",
+                  "house": 1,
+                  "dignity": "exalted"
+                }
+              ]
+            },
+            {
+              "labelHi": "षष्ठ भाव का स्वामी शनि प्रथम भाव (केन्द्र) में है",
+              "labelEn": "The lord of the 6th bhava, Saturn, sits in the 1st bhava (a kendra)",
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 6,
+                  "rashiIndex": 10
+                },
+                {
+                  "kind": "lord",
+                  "graha": "saturn",
+                  "ofHouse": 6,
+                  "inHouse": 1
+                }
+              ]
+            }
+          ],
+          "supports": [
+            {
+              "id": "lord-10-strong",
+              "polarity": "support",
+              "weight": 2,
+              "group": "lord-10",
+              "textHi": "दशम भाव का स्वामी बुध प्रथम भाव (केन्द्र) में है — परम्परा में विषय को स्थिर सहारा।",
+              "textEn": "The lord of the 10th bhava, Mercury, sits in the 1st bhava (a kendra) — steady support for the matter in tradition.",
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 10,
+                  "rashiIndex": 2
+                },
+                {
+                  "kind": "lord",
+                  "graha": "mercury",
+                  "ofHouse": 10,
+                  "inHouse": 1
+                }
+              ]
+            },
+            {
+              "id": "karaka-saturn-strong",
+              "polarity": "support",
+              "weight": 1,
+              "group": "karaka-saturn",
+              "textHi": "कारक शनि प्रथम भाव (केन्द्र) में है — कारक बलवान।",
+              "textEn": "The karaka Saturn sits in the 1st bhava (a kendra) — a strong karaka.",
+              "basis": [
+                {
+                  "kind": "graha",
+                  "graha": "saturn",
+                  "house": 1,
+                  "dignity": "neutral"
+                }
+              ]
+            },
+            {
+              "id": "karaka-sun-dignity",
+              "polarity": "support",
+              "weight": 1,
+              "group": "karaka-sun-dignity",
+              "textHi": "कारक सूर्य स्वराशि है — कारक का अपना बल।",
+              "textEn": "The karaka Sun is own sign — the karaka’s own strength.",
+              "basis": [
+                {
+                  "kind": "graha",
+                  "graha": "sun",
+                  "house": 12,
+                  "dignity": "own"
+                }
+              ]
+            },
+            {
+              "id": "lord-10-dignity",
+              "polarity": "support",
+              "weight": 1,
+              "group": "lord-10-dignity",
+              "textHi": "बुध उच्च (कन्या) है — स्वामी का बल विषय को मिलता है।",
+              "textEn": "Mercury is exalted (Kanya) — the lord’s strength reaches the matter.",
+              "basis": [
+                {
+                  "kind": "graha",
+                  "graha": "mercury",
+                  "house": 1,
+                  "dignity": "exalted"
+                }
+              ]
+            },
+            {
+              "id": "lord-6-strong",
+              "polarity": "support",
+              "weight": 1,
+              "group": "lord-6",
+              "textHi": "षष्ठ भाव का स्वामी शनि प्रथम भाव (केन्द्र) में है — परम्परा में विषय को स्थिर सहारा।",
+              "textEn": "The lord of the 6th bhava, Saturn, sits in the 1st bhava (a kendra) — steady support for the matter in tradition.",
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 6,
+                  "rashiIndex": 10
+                },
+                {
+                  "kind": "lord",
+                  "graha": "saturn",
+                  "ofHouse": 6,
+                  "inHouse": 1
+                }
+              ]
+            }
+          ],
+          "resists": [
+            {
+              "id": "karaka-sun-dusthana",
+              "polarity": "resist",
+              "weight": 1,
+              "group": "karaka-sun",
+              "textHi": "कारक सूर्य द्वादश भाव (दुःस्थान) में है — कारक को सहारा कम।",
+              "textEn": "The karaka Sun sits in the 12th bhava (a dusthana) — thin support for the karaka.",
+              "basis": [
+                {
+                  "kind": "graha",
+                  "graha": "sun",
+                  "house": 12,
+                  "dignity": "own"
+                }
+              ]
+            },
+            {
+              "id": "lord-11-dusthana",
+              "polarity": "resist",
+              "weight": 1,
+              "group": "lord-11",
+              "textHi": "एकादश भाव का स्वामी चन्द्र अष्टम भाव (दुःस्थान) में है — परम्परा में विषय देर से और प्रयास से खुलता है।",
+              "textEn": "The lord of the 11th bhava, Moon, sits in the 8th bhava (a dusthana) — in tradition the matter opens late and through effort.",
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 11,
+                  "rashiIndex": 3
+                },
+                {
+                  "kind": "lord",
+                  "graha": "moon",
+                  "ofHouse": 11,
+                  "inHouse": 8
+                }
+              ]
+            },
+            {
+              "id": "occ-10-rahu",
+              "polarity": "resist",
+              "weight": 1,
+              "group": "occ-10-rahu",
+              "textHi": "राहु दशम भाव में है — परम्परा में यह भाव अनुशासन और प्रयास माँगता है, यह क्षमता नहीं, गति की बात है।",
+              "textEn": "Rahu occupies the 10th bhava — tradition reads the house as asking for discipline and effort; a statement about pace, not capacity.",
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 10,
+                  "rashiIndex": 2
+                },
+                {
+                  "kind": "graha",
+                  "graha": "rahu",
+                  "house": 10,
+                  "dignity": "neutral",
+                  "retrograde": true
+                }
+              ]
+            }
+          ],
+          "qualifies": [
+            {
+              "id": "dasha-relevant",
+              "polarity": "qualify",
+              "weight": 1,
+              "group": "dasha",
+              "textHi": "चल रही शनि अन्तर्दशा इस विषय के भावों को छूती है — यह संबंध है, अनुकूलता का निष्कर्ष नहीं।",
+              "textEn": "The running Saturn Antardasha touches this matter’s houses — this establishes relevance, not favourability.",
+              "basis": [
+                {
+                  "kind": "dasha",
+                  "level": "antar",
+                  "lord": "saturn",
+                  "startKey": "2026-02-10",
+                  "endKey": "2027-03-22"
+                }
+              ]
+            },
+            {
+              "id": "gochar-jupiter",
+              "polarity": "qualify",
+              "weight": 1,
+              "group": "gochar-jupiter",
+              "textHi": "गुरु इस समय एकादश भाव से गोचर कर रहा है।",
+              "textEn": "Jupiter is transiting the 11th bhava just now.",
+              "basis": [
+                {
+                  "kind": "gochar",
+                  "graha": "jupiter",
+                  "fromMoonHouse": 4,
+                  "asOfKey": "2026-09-18"
+                }
+              ]
+            }
+          ],
+          "kaalIntroHi": "ये अवधियाँ दशा और गोचर से निकली हैं। विषय से संबंध अपने-आप अनुकूलता या परिणाम नहीं बताता।",
+          "kaalIntroEn": "These periods come from the dasha sequence and slow transits. Topic relevance alone does not establish favourability or an outcome.",
+          "windows": [
+            {
+              "id": "maha-mars-2023-09-20",
+              "startKey": "2023-09-20",
+              "endKey": "2030-09-20",
+              "labelHi": "20 सितम्बर 2023 → 20 सितम्बर 2030",
+              "labelEn": "20 Sep 2023 → 20 Sep 2030",
+              "textHi": "मंगल महादशा — इन भावों से सीधे जुड़ी नहीं; पृष्ठभूमि का स्वर ऊर्जा, साहस, परिश्रम का है — इस विषय के समय पर निष्कर्ष सीमित है।",
+              "textEn": "Mars Mahadasha — not tied to these houses; the background tone is energy, courage, effort — there is limited basis for judging timing for this topic.",
+              "current": true,
+              "relevant": false,
+              "basis": [
+                {
+                  "kind": "dasha",
+                  "level": "maha",
+                  "lord": "mars",
+                  "startKey": "2023-09-20",
+                  "endKey": "2030-09-20"
+                }
+              ]
+            },
+            {
+              "id": "antar-saturn-2026-02-10",
+              "startKey": "2026-02-10",
+              "endKey": "2027-03-22",
+              "labelHi": "10 फ़रवरी 2026 → 22 मार्च 2027",
+              "labelEn": "10 Feb 2026 → 22 Mar 2027",
+              "textHi": "शनि अन्तर्दशा (मंगल महादशा में) — शनि आपके षष्ठ भाव (दिनचर्या और सेवा) से जुड़ा है; यह अवधि इस विषय से जुड़ी है, पर संबंध अपने-आप अनुकूलता नहीं है।",
+              "textEn": "Saturn Antardasha (within the Mars Mahadasha) — Saturn is tied to your 6th bhava (routine and service); this period is relevant to the topic; relevance alone does not establish a supportive window.",
+              "current": true,
+              "relevant": true,
+              "basis": [
+                {
+                  "kind": "dasha",
+                  "level": "antar",
+                  "lord": "saturn",
+                  "startKey": "2026-02-10",
+                  "endKey": "2027-03-22"
+                },
+                {
+                  "kind": "lord",
+                  "graha": "saturn",
+                  "ofHouse": 6,
+                  "inHouse": 1
+                }
+              ]
+            },
+            {
+              "id": "antar-mercury-2027-03-22",
+              "startKey": "2027-03-22",
+              "endKey": "2028-03-18",
+              "labelHi": "22 मार्च 2027 → 18 मार्च 2028",
+              "labelEn": "22 Mar 2027 → 18 Mar 2028",
+              "textHi": "बुध अन्तर्दशा (मंगल महादशा में) — बुध आपके दशम भाव (कर्तव्य और काम) से जुड़ा है; यह अवधि इस विषय से जुड़ी है, पर संबंध अपने-आप अनुकूलता नहीं है।",
+              "textEn": "Mercury Antardasha (within the Mars Mahadasha) — Mercury is tied to your 10th bhava (duties and work); this period is relevant to the topic; relevance alone does not establish a supportive window.",
+              "current": false,
+              "relevant": true,
+              "basis": [
+                {
+                  "kind": "dasha",
+                  "level": "antar",
+                  "lord": "mercury",
+                  "startKey": "2027-03-22",
+                  "endKey": "2028-03-18"
+                },
+                {
+                  "kind": "lord",
+                  "graha": "mercury",
+                  "ofHouse": 10,
+                  "inHouse": 1
+                }
+              ]
+            },
+            {
+              "id": "gochar-jupiter-2026-09-18",
+              "startKey": "2026-09-18",
+              "endKey": "2026-10-31",
+              "labelHi": "18 सितम्बर 2026 → 31 अक्टूबर 2026",
+              "labelEn": "18 Sep 2026 → 31 Oct 2026",
+              "textHi": "गुरु का गोचर आपके एकादश भाव (समुदाय और सहयोग) से 31 अक्टूबर 2026 तक — इस विषय से जुड़ा गोचर; अन्य संकेतों के साथ पढ़ें।",
+              "textEn": "Jupiter transits your 11th bhava (community and support) until 31 Oct 2026 — a transit relevant to this topic; read it with the other indications.",
+              "current": true,
+              "relevant": true,
+              "basis": [
+                {
+                  "kind": "gochar",
+                  "graha": "jupiter",
+                  "fromMoonHouse": 4,
+                  "asOfKey": "2026-09-18"
+                }
+              ]
+            }
+          ],
+          "dishaHi": [
+            "प्रस्ताव आएँ तो लिखित रूप में लें और महीने भर सोचें।",
+            "असंतोष के दिन कोई अन्तिम निर्णय न लें।",
+            "इस विषय का एक स्वामी दुःस्थान में है — निर्णय धीमे, और हर व्यवस्था लिखित में।",
+            "चल रही अवधि इस विषय को छूती है — इससे अपने-आप आरम्भ या विस्तार की अनुकूलता नहीं निकलती; काल खंड में तिथियाँ देखें।"
+          ],
+          "dishaEn": [
+            "Take any offer in writing and sit with it a month.",
+            "Make no final decision on a day of discontent.",
+            "One of this matter’s lords sits in a dusthana — decide slowly, and put every arrangement in writing.",
+            "The running period touches this matter — this alone does not establish a supportive window for beginning or expanding; see the timing section."
+          ],
+          "practiceNoteHi": "नौकरी के कारक शनि और सूर्य के स्मरण की पारम्परिक रीति।",
+          "practiceNoteEn": "The traditional way of remembering job’s karakas, Saturn and Sun."
+        },
+        "guidance": {
+          "version": 1,
+          "questionId": "general",
+          "question": {
+            "hi": "सामान्य मार्गदर्शन",
+            "en": "General guidance"
+          },
+          "title": {
+            "hi": "काम और ज़िम्मेदारी: आगे की दिशा परखें। सहयोग और अवसर: यहाँ अधिक ध्यान दें।",
+            "en": "Explore work and responsibility; give support and opportunities extra attention."
+          },
+          "summary": {
+            "hi": "काम और ज़िम्मेदारी: सहारा और समायोजन दोनों। सहयोग और अवसर: अधिक प्रयास का संकेत।",
+            "en": "Work and responsibility: support alongside adjustment. Support and opportunities: extra effort indicated."
+          },
+          "insights": [
+            {
+              "id": "work",
+              "title": {
+                "hi": "काम और ज़िम्मेदारी",
+                "en": "Work and responsibility"
+              },
+              "meaning": {
+                "hi": "इस विषय का संबंध अपनी पहल और दिशा से बनता है। पारम्परिक विवेचन में ज़िम्मेदारी और योगदान को सहारा मिलता है। वास्तविक अवसर में देखें कि आपके काम को पहचान कैसे मिलेगी। साथ ही, काम और पहचान से जुड़े संकेत अतिरिक्त प्रयास की ओर ध्यान दिलाते हैं। भूमिका और अपेक्षाएँ स्पष्ट करें।",
+                "en": "Traditionally, this theme connects with personal initiative and direction. The traditional reading supports responsibility and contribution. In a real opportunity, check how your work would be recognised. At the same time, work and recognition indications draw attention to extra effort. Clarify the role and expectations."
+              },
+              "tone": "mixed",
+              "factorIds": [
+                "lord-10-strong",
+                "lord-10-dignity",
+                "occ-10-rahu"
+              ],
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 10,
+                  "rashiIndex": 2
+                },
+                {
+                  "kind": "lord",
+                  "graha": "mercury",
+                  "ofHouse": 10,
+                  "inHouse": 1
+                },
+                {
+                  "kind": "graha",
+                  "graha": "mercury",
+                  "house": 1,
+                  "dignity": "exalted"
+                },
+                {
+                  "kind": "graha",
+                  "graha": "rahu",
+                  "house": 10,
+                  "dignity": "neutral",
+                  "retrograde": true
+                }
+              ],
+              "source": {
+                "verified": false,
+                "referenceUrls": [],
+                "notes": "BPHS bhava karakatva (ch. 11) + Phaladeepika ch. 15. Classical canon; two-source URL review pending. Plain-language grouping is editorial, not a new classical formula."
+              }
+            },
+            {
+              "id": "network",
+              "title": {
+                "hi": "सहयोग और अवसर",
+                "en": "Support and opportunities"
+              },
+              "meaning": {
+                "hi": "इस विषय का संबंध बदलाव और अनिश्चितता सँभालने से बनता है। सहयोग से लाभ के संकेत सीमित या मिश्रित हैं। वादे और वास्तविक सहयोग को अलग देखें।",
+                "en": "Traditionally, this theme connects with handling change and uncertainty. Indications of benefit through support are limited or mixed. Distinguish promises from actual help."
+              },
+              "tone": "careful",
+              "factorIds": [
+                "lord-11-dusthana"
+              ],
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 11,
+                  "rashiIndex": 3
+                },
+                {
+                  "kind": "lord",
+                  "graha": "moon",
+                  "ofHouse": 11,
+                  "inHouse": 8
+                }
+              ],
+              "source": {
+                "verified": false,
+                "referenceUrls": [],
+                "notes": "BPHS bhava karakatva (ch. 11) + Phaladeepika ch. 15. Classical canon; two-source URL review pending. Plain-language grouping is editorial, not a new classical formula."
+              }
+            }
+          ],
+          "actions": [
+            {
+              "id": "general-0",
+              "text": {
+                "hi": "काम में अपनी मुख्य ज़रूरत लिखें: सीखना, ज़िम्मेदारी या बदलाव।",
+                "en": "Name your main work priority: learning, responsibility or change."
+              },
+              "origin": "editorial",
+              "insightIds": []
+            },
+            {
+              "id": "general-1",
+              "text": {
+                "hi": "अगले अवसर में काम और अपेक्षाएँ स्पष्ट करें।",
+                "en": "Clarify the work and expectations in the next opportunity."
+              },
+              "origin": "editorial",
+              "insightIds": []
+            },
+            {
+              "id": "theme-network",
+              "text": {
+                "hi": "अनुभवी व्यक्ति से एक ठोस प्रश्न पर प्रतिक्रिया लें।",
+                "en": "Ask someone experienced for feedback on one concrete question."
+              },
+              "origin": "editorial",
+              "insightIds": [
+                "network"
+              ]
+            }
+          ],
+          "caution": {
+            "hi": "यह विवेचन आपकी नौकरी की वर्तमान स्थिति नहीं जानता। नीचे अपना प्रश्न चुनें।",
+            "en": "This reading does not know your employment situation. Choose your specific question."
+          },
+          "timing": {
+            "status": "relevant",
+            "text": {
+              "hi": "ये अवधियाँ इस विषय से जुड़ी हैं। संबंध अपने-आप अनुकूलता नहीं है; इससे परिणाम या सबसे अच्छी तारीख तय नहीं होती।",
+              "en": "These periods connect with this topic. Relevance does not establish favourability, an outcome or the best date."
+            },
+            "windowIds": [
+              "antar-saturn-2026-02-10",
+              "gochar-jupiter-2026-09-18"
+            ]
+          },
+          "parentNote": null
+        }
+      },
+      "matrix": [
+        {
+          "purposeId": "vidya",
+          "gated": false,
+          "title": "Explore understanding and learning; give a foundation for learning extra attention.",
+          "tones": [
+            "supportive",
+            "careful"
+          ]
+        },
+        {
+          "purposeId": "vyapar",
+          "gated": false,
+          "title": "Explore work and responsibility; give support and opportunities extra attention.",
+          "tones": [
+            "mixed",
+            "careful"
+          ]
+        },
+        {
+          "purposeId": "naukri",
+          "gated": false,
+          "title": "Explore work and responsibility; give support and opportunities extra attention.",
+          "tones": [
+            "mixed",
+            "careful"
+          ]
+        },
+        {
+          "purposeId": "dhan",
+          "gated": false,
+          "title": "Explore resources and priorities; give support and opportunities extra attention.",
+          "tones": [
+            "mixed",
+            "careful"
+          ]
+        },
+        {
+          "purposeId": "vivah",
+          "gated": false,
+          "title": "Home and stability has support, with adjustments to consider.",
+          "tones": [
+            "limited",
+            "mixed"
+          ]
+        },
+        {
+          "purposeId": "santan",
+          "gated": false,
+          "title": "Start with your actual experience and needs.",
+          "tones": [
+            "supportive",
+            "careful"
+          ]
+        },
+        {
+          "purposeId": "swasthya",
+          "gated": false,
+          "title": "Start with your actual experience and needs.",
+          "tones": [
+            "mixed"
+          ]
+        },
+        {
+          "purposeId": "yatra",
+          "gated": false,
+          "title": "Travel and change has support, with adjustments to consider.",
+          "tones": [
+            "mixed",
+            "limited"
+          ]
+        },
+        {
+          "purposeId": "man",
+          "gated": false,
+          "title": "Start with your actual experience and needs.",
+          "tones": [
+            "mixed"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "synthetic-adult",
+      "label": "Synthetic adult",
+      "localBirth": "14 Aug 1992, 05:42 IST, Ujjain",
+      "date": "1992-08-14T00:12:00Z",
+      "latitude": 23.183333333333334,
+      "longitude": 75.78333333333333,
+      "purposeId": "naukri",
+      "questionId": "job-switch",
+      "source": null,
+      "asOf": "2026-09-18T06:30:00.000Z",
+      "computeMs": 0.30641599999995606,
+      "facts": {
+        "convention": "Lahiri sidereal zodiac, whole-sign houses, India timezone. Interpret these supplied calculations; do not recalculate birth data.",
+        "ascendant": {
+          "sign": "Karka",
+          "longitude": 112.31420278795063
+        },
+        "planets": [
+          {
+            "id": "planet-sun",
+            "graha": "sun",
+            "siderealLongitude": 117.71396613546604,
+            "rashiIndex": 3,
+            "degreeInRashi": 27.713966135466038,
+            "nakshatraIndex": 8,
+            "pada": 4,
+            "house": 1,
+            "retrograde": false,
+            "sign": "Karka"
+          },
+          {
+            "id": "planet-moon",
+            "graha": "moon",
+            "siderealLongitude": 303.9529190036133,
+            "rashiIndex": 10,
+            "degreeInRashi": 3.9529190036133173,
+            "nakshatraIndex": 22,
+            "pada": 4,
+            "house": 8,
+            "retrograde": false,
+            "sign": "Kumbha"
+          },
+          {
+            "id": "planet-mars",
+            "graha": "mars",
+            "siderealLongitude": 48.36124501988881,
+            "rashiIndex": 1,
+            "degreeInRashi": 18.361245019888813,
+            "nakshatraIndex": 3,
+            "pada": 3,
+            "house": 11,
+            "retrograde": false,
+            "sign": "Vrishabha"
+          },
+          {
+            "id": "planet-mercury",
+            "graha": "mercury",
+            "siderealLongitude": 102.2638893305089,
+            "rashiIndex": 3,
+            "degreeInRashi": 12.263889330508903,
+            "nakshatraIndex": 7,
+            "pada": 3,
+            "house": 1,
+            "retrograde": false,
+            "sign": "Karka"
+          },
+          {
+            "id": "planet-jupiter",
+            "graha": "jupiter",
+            "siderealLongitude": 143.97537361531042,
+            "rashiIndex": 4,
+            "degreeInRashi": 23.975373615310417,
+            "nakshatraIndex": 10,
+            "pada": 4,
+            "house": 2,
+            "retrograde": false,
+            "sign": "Simha"
+          },
+          {
+            "id": "planet-venus",
+            "graha": "venus",
+            "siderealLongitude": 134.54004398886624,
+            "rashiIndex": 4,
+            "degreeInRashi": 14.540043988866245,
+            "nakshatraIndex": 10,
+            "pada": 1,
+            "house": 2,
+            "retrograde": false,
+            "sign": "Simha"
+          },
+          {
+            "id": "planet-saturn",
+            "graha": "saturn",
+            "siderealLongitude": 290.89502010435854,
+            "rashiIndex": 9,
+            "degreeInRashi": 20.895020104358537,
+            "nakshatraIndex": 21,
+            "pada": 4,
+            "house": 7,
+            "retrograde": true,
+            "sign": "Makara"
+          },
+          {
+            "id": "planet-rahu",
+            "graha": "rahu",
+            "siderealLongitude": 244.08397648423278,
+            "rashiIndex": 8,
+            "degreeInRashi": 4.083976484232778,
+            "nakshatraIndex": 18,
+            "pada": 2,
+            "house": 6,
+            "retrograde": true,
+            "sign": "Dhanu"
+          },
+          {
+            "id": "planet-ketu",
+            "graha": "ketu",
+            "siderealLongitude": 64.08397648423278,
+            "rashiIndex": 2,
+            "degreeInRashi": 4.083976484232778,
+            "nakshatraIndex": 4,
+            "pada": 4,
+            "house": 12,
+            "retrograde": true,
+            "sign": "Mithuna"
+          }
+        ],
+        "currentDasha": {
+          "maha": {
+            "lord": "jupiter",
+            "start": "2012-01-16T17:46:38.490Z",
+            "end": "2028-01-16T14:53:50.490Z",
+            "antardashas": [
+              {
+                "lord": "jupiter",
+                "start": "2012-01-16T17:46:38.490Z",
+                "end": "2014-03-05T22:11:36.090Z"
+              },
+              {
+                "lord": "saturn",
+                "start": "2014-03-05T22:11:36.090Z",
+                "end": "2016-09-16T04:56:14.490Z"
+              },
+              {
+                "lord": "mercury",
+                "start": "2016-09-16T04:56:14.490Z",
+                "end": "2018-12-23T02:07:45.690Z"
+              },
+              {
+                "lord": "ketu",
+                "start": "2018-12-23T02:07:45.690Z",
+                "end": "2019-11-28T23:33:40.890Z"
+              },
+              {
+                "lord": "venus",
+                "start": "2019-11-28T23:33:40.890Z",
+                "end": "2022-07-29T23:04:52.890Z"
+              },
+              {
+                "lord": "sun",
+                "start": "2022-07-29T23:04:52.890Z",
+                "end": "2023-05-18T03:44:14.490Z"
+              },
+              {
+                "lord": "moon",
+                "start": "2023-05-18T03:44:14.490Z",
+                "end": "2024-09-16T03:29:50.490Z"
+              },
+              {
+                "lord": "mars",
+                "start": "2024-09-16T03:29:50.490Z",
+                "end": "2025-08-23T00:55:45.690Z"
+              },
+              {
+                "lord": "rahu",
+                "start": "2025-08-23T00:55:45.690Z",
+                "end": "2028-01-16T14:53:50.490Z"
+              }
+            ]
+          },
+          "antar": {
+            "lord": "rahu",
+            "start": "2025-08-23T00:55:45.690Z",
+            "end": "2028-01-16T14:53:50.490Z"
+          }
+        },
+        "age": "34 y 1 m"
+      },
+      "before": {
+        "title": "A time of standing and recognition — ask for growth where you are.",
+        "summary": "5 factors in favour, 2 against. The running Jupiter Mahadasha touches this matter’s houses — time and chart point the same way. But — Mars occupies the 11th bhava — tradition reads the house as asking for discipline and effort; a statement about pace, not capacity.",
+        "actions": [
+          "Ask for growth and a new role where you are — tradition reads this as a supportive time for it.",
+          "Work on standing: visible work, written record.",
+          "The running period touches this matter — tradition counts it a supportive window for beginning or expanding; see the dates below."
+        ],
+        "strength": "prabal"
+      },
+      "reading": {
+        "analysis": {
+          "answerVersion": 1,
+          "purposeId": "naukri",
+          "purposeNameHi": "नौकरी",
+          "purposeNameEn": "Job",
+          "generatedDateKey": "2026-09-18",
+          "asOfLabelHi": "18 सितम्बर 2026",
+          "asOfLabelEn": "18 Sep 2026",
+          "ageBand": "adult",
+          "ageLabelHi": "34 वर्ष 1 माह",
+          "ageLabelEn": "34 y 1 m",
+          "practiceSourceId": "surya-ashtakam",
+          "footerHi": "18 सितम्बर 2026 की स्थिति के अनुसार। यह पारम्परिक ज्योतिष की दृष्टि है — निश्चित भविष्यवाणी नहीं। ज्योतिषीय आधार विस्तार में देख सकते हैं।",
+          "footerEn": "As of 18 Sep 2026. A view from traditional Jyotish — not a certain prediction. Chart interpretations have an expandable basis.",
+          "gated": false,
+          "gateReasonHi": null,
+          "gateReasonEn": null,
+          "strength": "madhyam",
+          "supportGroups": 4,
+          "resistGroups": 2,
+          "saarTitleHi": "नौकरी में स्थिरता है, बदलाव धीमा — हर प्रस्ताव लिखित में लें।",
+          "saarTitleEn": "Service is steady and change is slow — take every offer in writing.",
+          "saarBodyHi": "4 कारक पक्ष में, 2 विपक्ष में। कारक शनि स्वराशि है — कारक का अपना बल। पर — मंगल एकादश भाव में है — परम्परा में यह भाव अनुशासन और प्रयास माँगता है, यह क्षमता नहीं, गति की बात है।",
+          "saarBodyEn": "4 factors in favour, 2 against. The karaka Saturn is own sign — the karaka’s own strength. But — Mars occupies the 11th bhava — tradition reads the house as asking for discipline and effort; a statement about pace, not capacity.",
+          "aadhaarIntroHi": "मध्यम संकेत — 4 स्वतंत्र कारक एक दिशा में, 2 विपरीत। नीचे हर संकेत का आधार है।",
+          "aadhaarIntroEn": "A moderate indication — 4 independent factors pointing one way, 2 against. Every line below names its basis.",
+          "chains": [
+            {
+              "labelHi": "कारक शनि स्वराशि है",
+              "labelEn": "The karaka Saturn is own sign",
+              "basis": [
+                {
+                  "kind": "graha",
+                  "graha": "saturn",
+                  "house": 7,
+                  "dignity": "own",
+                  "retrograde": true
+                }
+              ]
+            },
+            {
+              "labelHi": "कारक शनि सप्तम भाव (केन्द्र) में है",
+              "labelEn": "The karaka Saturn sits in the 7th bhava (a kendra)",
+              "basis": [
+                {
+                  "kind": "graha",
+                  "graha": "saturn",
+                  "house": 7,
+                  "dignity": "own",
+                  "retrograde": true
+                }
+              ]
+            },
+            {
+              "labelHi": "कारक सूर्य प्रथम भाव (केन्द्र) में है",
+              "labelEn": "The karaka Sun sits in the 1st bhava (a kendra)",
+              "basis": [
+                {
+                  "kind": "graha",
+                  "graha": "sun",
+                  "house": 1,
+                  "dignity": "neutral"
+                }
+              ]
+            },
+            {
+              "labelHi": "दशम भाव का स्वामी मंगल एकादश (लाभ) भाव में है",
+              "labelEn": "The lord of the 10th bhava, Mars, sits in the 11th (gains)",
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 10,
+                  "rashiIndex": 0
+                },
+                {
+                  "kind": "lord",
+                  "graha": "mars",
+                  "ofHouse": 10,
+                  "inHouse": 11
+                }
+              ]
+            },
+            {
+              "labelHi": "मंगल एकादश भाव में है",
+              "labelEn": "Mars occupies the 11th bhava",
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 11,
+                  "rashiIndex": 1
+                },
+                {
+                  "kind": "graha",
+                  "graha": "mars",
+                  "house": 11,
+                  "dignity": "neutral"
+                }
+              ]
+            }
+          ],
+          "supports": [
+            {
+              "id": "karaka-saturn-dignity",
+              "polarity": "support",
+              "weight": 1,
+              "group": "karaka-saturn-dignity",
+              "textHi": "कारक शनि स्वराशि है — कारक का अपना बल।",
+              "textEn": "The karaka Saturn is own sign — the karaka’s own strength.",
+              "basis": [
+                {
+                  "kind": "graha",
+                  "graha": "saturn",
+                  "house": 7,
+                  "dignity": "own",
+                  "retrograde": true
+                }
+              ]
+            },
+            {
+              "id": "karaka-saturn-strong",
+              "polarity": "support",
+              "weight": 1,
+              "group": "karaka-saturn",
+              "textHi": "कारक शनि सप्तम भाव (केन्द्र) में है — कारक बलवान।",
+              "textEn": "The karaka Saturn sits in the 7th bhava (a kendra) — a strong karaka.",
+              "basis": [
+                {
+                  "kind": "graha",
+                  "graha": "saturn",
+                  "house": 7,
+                  "dignity": "own",
+                  "retrograde": true
+                }
+              ]
+            },
+            {
+              "id": "karaka-sun-strong",
+              "polarity": "support",
+              "weight": 1,
+              "group": "karaka-sun",
+              "textHi": "कारक सूर्य प्रथम भाव (केन्द्र) में है — कारक बलवान।",
+              "textEn": "The karaka Sun sits in the 1st bhava (a kendra) — a strong karaka.",
+              "basis": [
+                {
+                  "kind": "graha",
+                  "graha": "sun",
+                  "house": 1,
+                  "dignity": "neutral"
+                }
+              ]
+            },
+            {
+              "id": "lord-10-labha",
+              "polarity": "support",
+              "weight": 1,
+              "group": "lord-10",
+              "textHi": "दशम भाव का स्वामी मंगल एकादश (लाभ) भाव में है — परम्परा में विषय से लाभ का संकेत।",
+              "textEn": "The lord of the 10th bhava, Mars, sits in the 11th (gains) — tradition reads gain from the matter.",
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 10,
+                  "rashiIndex": 0
+                },
+                {
+                  "kind": "lord",
+                  "graha": "mars",
+                  "ofHouse": 10,
+                  "inHouse": 11
+                }
+              ]
+            }
+          ],
+          "resists": [
+            {
+              "id": "occ-11-mars",
+              "polarity": "resist",
+              "weight": 1,
+              "group": "occ-11-mars",
+              "textHi": "मंगल एकादश भाव में है — परम्परा में यह भाव अनुशासन और प्रयास माँगता है, यह क्षमता नहीं, गति की बात है।",
+              "textEn": "Mars occupies the 11th bhava — tradition reads the house as asking for discipline and effort; a statement about pace, not capacity.",
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 11,
+                  "rashiIndex": 1
+                },
+                {
+                  "kind": "graha",
+                  "graha": "mars",
+                  "house": 11,
+                  "dignity": "neutral"
+                }
+              ]
+            },
+            {
+              "id": "occ-6-rahu",
+              "polarity": "resist",
+              "weight": 1,
+              "group": "occ-6-rahu",
+              "textHi": "राहु षष्ठ भाव में है — परम्परा में यह भाव अनुशासन और प्रयास माँगता है, यह क्षमता नहीं, गति की बात है।",
+              "textEn": "Rahu occupies the 6th bhava — tradition reads the house as asking for discipline and effort; a statement about pace, not capacity.",
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 6,
+                  "rashiIndex": 8
+                },
+                {
+                  "kind": "graha",
+                  "graha": "rahu",
+                  "house": 6,
+                  "dignity": "neutral",
+                  "retrograde": true
+                }
+              ]
+            }
+          ],
+          "qualifies": [
+            {
+              "id": "dasha-relevant",
+              "polarity": "qualify",
+              "weight": 1,
+              "group": "dasha",
+              "textHi": "चल रही गुरु महादशा इस विषय के भावों को छूती है — यह संबंध है, अनुकूलता का निष्कर्ष नहीं।",
+              "textEn": "The running Jupiter Mahadasha touches this matter’s houses — this establishes relevance, not favourability.",
+              "basis": [
+                {
+                  "kind": "dasha",
+                  "level": "maha",
+                  "lord": "jupiter",
+                  "startKey": "2012-01-16",
+                  "endKey": "2028-01-16"
+                }
+              ]
+            },
+            {
+              "id": "lord-11-neutral",
+              "polarity": "qualify",
+              "weight": 1,
+              "group": "lord-11",
+              "textHi": "एकादश भाव का स्वामी शुक्र द्वितीय भाव में है — विषय संसाधन और वाणी से जुड़कर चलता है।",
+              "textEn": "The lord of the 11th bhava, Venus, sits in the 2nd bhava — the matter runs tied to resources and speech.",
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 11,
+                  "rashiIndex": 1
+                },
+                {
+                  "kind": "lord",
+                  "graha": "venus",
+                  "ofHouse": 11,
+                  "inHouse": 2
+                }
+              ]
+            },
+            {
+              "id": "lord-6-neutral",
+              "polarity": "qualify",
+              "weight": 1,
+              "group": "lord-6",
+              "textHi": "षष्ठ भाव का स्वामी गुरु द्वितीय भाव में है — विषय संसाधन और वाणी से जुड़कर चलता है।",
+              "textEn": "The lord of the 6th bhava, Jupiter, sits in the 2nd bhava — the matter runs tied to resources and speech.",
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 6,
+                  "rashiIndex": 8
+                },
+                {
+                  "kind": "lord",
+                  "graha": "jupiter",
+                  "ofHouse": 6,
+                  "inHouse": 2
+                }
+              ]
+            }
+          ],
+          "kaalIntroHi": "ये अवधियाँ दशा और गोचर से निकली हैं। विषय से संबंध अपने-आप अनुकूलता या परिणाम नहीं बताता।",
+          "kaalIntroEn": "These periods come from the dasha sequence and slow transits. Topic relevance alone does not establish favourability or an outcome.",
+          "windows": [
+            {
+              "id": "maha-jupiter-2012-01-16",
+              "startKey": "2012-01-16",
+              "endKey": "2028-01-16",
+              "labelHi": "16 जनवरी 2012 → 16 जनवरी 2028",
+              "labelEn": "16 Jan 2012 → 16 Jan 2028",
+              "textHi": "गुरु महादशा — गुरु आपके षष्ठ भाव (दिनचर्या और सेवा) से जुड़ा है; यह अवधि इस विषय से जुड़ी है, पर संबंध अपने-आप अनुकूलता नहीं है।",
+              "textEn": "Jupiter Mahadasha — Jupiter is tied to your 6th bhava (routine and service); this period is relevant to the topic; relevance alone does not establish a supportive window.",
+              "current": true,
+              "relevant": true,
+              "basis": [
+                {
+                  "kind": "dasha",
+                  "level": "maha",
+                  "lord": "jupiter",
+                  "startKey": "2012-01-16",
+                  "endKey": "2028-01-16"
+                },
+                {
+                  "kind": "lord",
+                  "graha": "jupiter",
+                  "ofHouse": 6,
+                  "inHouse": 2
+                }
+              ]
+            },
+            {
+              "id": "antar-rahu-2025-08-23",
+              "startKey": "2025-08-23",
+              "endKey": "2028-01-16",
+              "labelHi": "23 अगस्त 2025 → 16 जनवरी 2028",
+              "labelEn": "23 Aug 2025 → 16 Jan 2028",
+              "textHi": "राहु अन्तर्दशा (गुरु महादशा में) — राहु आपके षष्ठ भाव (दिनचर्या और सेवा) से जुड़ा है; यह अवधि इस विषय से जुड़ी है, पर संबंध अपने-आप अनुकूलता नहीं है।",
+              "textEn": "Rahu Antardasha (within the Jupiter Mahadasha) — Rahu is tied to your 6th bhava (routine and service); this period is relevant to the topic; relevance alone does not establish a supportive window.",
+              "current": true,
+              "relevant": true,
+              "basis": [
+                {
+                  "kind": "dasha",
+                  "level": "antar",
+                  "lord": "rahu",
+                  "startKey": "2025-08-23",
+                  "endKey": "2028-01-16"
+                },
+                {
+                  "kind": "lord",
+                  "graha": "rahu",
+                  "ofHouse": 6,
+                  "inHouse": 6
+                }
+              ]
+            }
+          ],
+          "dishaHi": [
+            "प्रस्ताव आएँ तो लिखित रूप में लें और महीने भर सोचें।",
+            "असंतोष के दिन कोई अन्तिम निर्णय न लें।",
+            "चल रही अवधि इस विषय को छूती है — इससे अपने-आप आरम्भ या विस्तार की अनुकूलता नहीं निकलती; काल खंड में तिथियाँ देखें।"
+          ],
+          "dishaEn": [
+            "Take any offer in writing and sit with it a month.",
+            "Make no final decision on a day of discontent.",
+            "The running period touches this matter — this alone does not establish a supportive window for beginning or expanding; see the timing section."
+          ],
+          "practiceNoteHi": "नौकरी के कारक शनि और सूर्य के स्मरण की पारम्परिक रीति।",
+          "practiceNoteEn": "The traditional way of remembering job’s karakas, Saturn and Sun."
+        },
+        "guidance": {
+          "version": 1,
+          "questionId": "job-switch",
+          "question": {
+            "hi": "नौकरी बदलने पर विचार है",
+            "en": "Considering a job switch"
+          },
+          "title": {
+            "hi": "काम और ज़िम्मेदारी: आगे की दिशा परखें। काम की गति और व्यवस्था: यहाँ अधिक ध्यान दें।",
+            "en": "Explore work and responsibility; give workload and structure extra attention."
+          },
+          "summary": {
+            "hi": "काम और ज़िम्मेदारी: सहायक संकेत। काम की गति और व्यवस्था: अधिक प्रयास का संकेत।",
+            "en": "Work and responsibility: supportive indications. Workload and structure: extra effort indicated."
+          },
+          "insights": [
+            {
+              "id": "work",
+              "title": {
+                "hi": "काम और ज़िम्मेदारी",
+                "en": "Work and responsibility"
+              },
+              "meaning": {
+                "hi": "इस विषय का संबंध संपर्क और साझा लक्ष्यों से बनता है। पारम्परिक विवेचन में ज़िम्मेदारी और योगदान को सहारा मिलता है। वास्तविक अवसर में देखें कि आपके काम को पहचान कैसे मिलेगी।",
+                "en": "Traditionally, this theme connects with contacts and shared goals. The traditional reading supports responsibility and contribution. In a real opportunity, check how your work would be recognised."
+              },
+              "tone": "supportive",
+              "factorIds": [
+                "lord-10-labha"
+              ],
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 10,
+                  "rashiIndex": 0
+                },
+                {
+                  "kind": "lord",
+                  "graha": "mars",
+                  "ofHouse": 10,
+                  "inHouse": 11
+                }
+              ],
+              "source": {
+                "verified": false,
+                "referenceUrls": [],
+                "notes": "BPHS bhava karakatva (ch. 11) + Phaladeepika ch. 15. Classical canon; two-source URL review pending. Plain-language grouping is editorial, not a new classical formula."
+              }
+            },
+            {
+              "id": "workload",
+              "title": {
+                "hi": "काम की गति और व्यवस्था",
+                "en": "Workload and structure"
+              },
+              "meaning": {
+                "hi": "इस विषय का संबंध संसाधन और संवाद से बनता है। प्रगति के साथ काम सँभालने में अधिक प्रयास का संकेत है। अतिरिक्त ज़िम्मेदारी के साथ समय और सहायता भी देखें।",
+                "en": "Traditionally, this theme connects with resources and communication. The reading suggests extra effort in managing work alongside progress. Consider time and support when taking on responsibility."
+              },
+              "tone": "careful",
+              "factorIds": [
+                "occ-6-rahu",
+                "lord-6-neutral"
+              ],
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 6,
+                  "rashiIndex": 8
+                },
+                {
+                  "kind": "graha",
+                  "graha": "rahu",
+                  "house": 6,
+                  "dignity": "neutral",
+                  "retrograde": true
+                },
+                {
+                  "kind": "lord",
+                  "graha": "jupiter",
+                  "ofHouse": 6,
+                  "inHouse": 2
+                }
+              ],
+              "source": {
+                "verified": false,
+                "referenceUrls": [],
+                "notes": "BPHS bhava karakatva (ch. 11) + Phaladeepika ch. 15. Classical canon; two-source URL review pending. Plain-language grouping is editorial, not a new classical formula."
+              }
+            }
+          ],
+          "actions": [
+            {
+              "id": "job-switch-0",
+              "text": {
+                "hi": "नौकरी बदलने के दो मुख्य कारण लिखें।",
+                "en": "Write down your two main reasons for changing jobs."
+              },
+              "origin": "editorial",
+              "insightIds": []
+            },
+            {
+              "id": "job-switch-1",
+              "text": {
+                "hi": "टीम, काम के बोझ और पहले 90 दिनों की अपेक्षाएँ पूछें।",
+                "en": "Ask about the team, workload and expectations for the first 90 days."
+              },
+              "origin": "editorial",
+              "insightIds": []
+            },
+            {
+              "id": "job-switch-2",
+              "text": {
+                "hi": "लिखित भूमिका को अपनी ज़रूरतों से मिलाकर देखें।",
+                "en": "Compare the written role with what you want to change."
+              },
+              "origin": "editorial",
+              "insightIds": []
+            }
+          ],
+          "caution": {
+            "hi": "केवल पद का नाम नहीं, काम की वास्तविकता और अपना निर्णय-समय भी देखें।",
+            "en": "Consider the actual work and your decision deadline, as well as the title."
+          },
+          "timing": {
+            "status": "relevant",
+            "text": {
+              "hi": "ये अवधियाँ इस विषय से जुड़ी हैं। संबंध अपने-आप अनुकूलता नहीं है; इससे परिणाम या सबसे अच्छी तारीख तय नहीं होती।",
+              "en": "These periods connect with this topic. Relevance does not establish favourability, an outcome or the best date."
+            },
+            "windowIds": [
+              "antar-rahu-2025-08-23",
+              "maha-jupiter-2012-01-16"
+            ]
+          },
+          "parentNote": null
+        }
+      },
+      "matrix": [
+        {
+          "purposeId": "vidya",
+          "gated": false,
+          "title": "Test the support for understanding and learning against your experience.",
+          "tones": [
+            "supportive",
+            "limited"
+          ]
+        },
+        {
+          "purposeId": "vyapar",
+          "gated": false,
+          "title": "Explore work and responsibility; give partnership and communication extra attention.",
+          "tones": [
+            "supportive",
+            "mixed"
+          ]
+        },
+        {
+          "purposeId": "naukri",
+          "gated": false,
+          "title": "Explore work and responsibility; give workload and structure extra attention.",
+          "tones": [
+            "supportive",
+            "careful"
+          ]
+        },
+        {
+          "purposeId": "dhan",
+          "gated": false,
+          "title": "Test the support for resources and priorities against your experience.",
+          "tones": [
+            "supportive",
+            "supportive"
+          ]
+        },
+        {
+          "purposeId": "vivah",
+          "gated": false,
+          "title": "Explore partnership and communication; give support and opportunities extra attention.",
+          "tones": [
+            "mixed",
+            "careful"
+          ]
+        },
+        {
+          "purposeId": "santan",
+          "gated": false,
+          "title": "Start with your actual experience and needs.",
+          "tones": [
+            "supportive",
+            "limited"
+          ]
+        },
+        {
+          "purposeId": "swasthya",
+          "gated": false,
+          "title": "Start with your actual experience and needs.",
+          "tones": [
+            "mixed"
+          ]
+        },
+        {
+          "purposeId": "yatra",
+          "gated": false,
+          "title": "Travel and change has support, with adjustments to consider.",
+          "tones": [
+            "mixed",
+            "supportive"
+          ]
+        },
+        {
+          "purposeId": "man",
+          "gated": false,
+          "title": "Start with your actual experience and needs.",
+          "tones": [
+            "mixed"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "synthetic-minor",
+      "label": "Synthetic adolescent",
+      "localBirth": "10 Aug 2013, 10:30 IST, Ujjain",
+      "date": "2013-08-10T05:00:00Z",
+      "latitude": 23.183333333333334,
+      "longitude": 75.78333333333333,
+      "purposeId": "vidya",
+      "questionId": "study-exam",
+      "source": null,
+      "asOf": "2026-09-18T06:30:00.000Z",
+      "computeMs": 0.34533299999998235,
+      "facts": {
+        "convention": "Lahiri sidereal zodiac, whole-sign houses, India timezone. Interpret these supplied calculations; do not recalculate birth data.",
+        "ascendant": {
+          "sign": "Kanya",
+          "longitude": 173.94507571933255
+        },
+        "planets": [
+          {
+            "id": "planet-sun",
+            "graha": "sun",
+            "siderealLongitude": 113.70099934973021,
+            "rashiIndex": 3,
+            "degreeInRashi": 23.70099934973021,
+            "nakshatraIndex": 8,
+            "pada": 3,
+            "house": 11,
+            "retrograde": false,
+            "sign": "Karka"
+          },
+          {
+            "id": "planet-moon",
+            "graha": "moon",
+            "siderealLongitude": 151.62968747864755,
+            "rashiIndex": 5,
+            "degreeInRashi": 1.6296874786475541,
+            "nakshatraIndex": 11,
+            "pada": 2,
+            "house": 1,
+            "retrograde": false,
+            "sign": "Kanya"
+          },
+          {
+            "id": "planet-mars",
+            "graha": "mars",
+            "siderealLongitude": 84.37602695333698,
+            "rashiIndex": 2,
+            "degreeInRashi": 24.376026953336975,
+            "nakshatraIndex": 6,
+            "pada": 2,
+            "house": 10,
+            "retrograde": false,
+            "sign": "Mithuna"
+          },
+          {
+            "id": "planet-mercury",
+            "graha": "mercury",
+            "siderealLongitude": 98.9112632331637,
+            "rashiIndex": 3,
+            "degreeInRashi": 8.911263233163695,
+            "nakshatraIndex": 7,
+            "pada": 2,
+            "house": 11,
+            "retrograde": false,
+            "sign": "Karka"
+          },
+          {
+            "id": "planet-jupiter",
+            "graha": "jupiter",
+            "siderealLongitude": 75.84486789416394,
+            "rashiIndex": 2,
+            "degreeInRashi": 15.84486789416394,
+            "nakshatraIndex": 5,
+            "pada": 3,
+            "house": 10,
+            "retrograde": false,
+            "sign": "Mithuna"
+          },
+          {
+            "id": "planet-venus",
+            "graha": "venus",
+            "siderealLongitude": 148.30765397764605,
+            "rashiIndex": 4,
+            "degreeInRashi": 28.307653977646055,
+            "nakshatraIndex": 11,
+            "pada": 1,
+            "house": 12,
+            "retrograde": false,
+            "sign": "Simha"
+          },
+          {
+            "id": "planet-saturn",
+            "graha": "saturn",
+            "siderealLongitude": 191.65154602072306,
+            "rashiIndex": 6,
+            "degreeInRashi": 11.65154602072306,
+            "nakshatraIndex": 14,
+            "pada": 2,
+            "house": 2,
+            "retrograde": false,
+            "sign": "Tula"
+          },
+          {
+            "id": "planet-rahu",
+            "graha": "rahu",
+            "siderealLongitude": 197.836851445005,
+            "rashiIndex": 6,
+            "degreeInRashi": 17.83685144500501,
+            "nakshatraIndex": 14,
+            "pada": 4,
+            "house": 2,
+            "retrograde": true,
+            "sign": "Tula"
+          },
+          {
+            "id": "planet-ketu",
+            "graha": "ketu",
+            "siderealLongitude": 17.83685144500498,
+            "rashiIndex": 0,
+            "degreeInRashi": 17.83685144500498,
+            "nakshatraIndex": 1,
+            "pada": 2,
+            "house": 8,
+            "retrograde": true,
+            "sign": "Mesha"
+          }
+        ],
+        "currentDasha": {
+          "maha": {
+            "lord": "moon",
+            "start": "2017-05-16T22:41:37.707Z",
+            "end": "2027-05-17T08:53:37.707Z",
+            "antardashas": [
+              {
+                "lord": "moon",
+                "start": "2017-05-16T22:41:37.707Z",
+                "end": "2018-03-17T07:32:37.707Z"
+              },
+              {
+                "lord": "mars",
+                "start": "2018-03-17T07:32:37.707Z",
+                "end": "2018-10-16T08:56:19.707Z"
+              },
+              {
+                "lord": "rahu",
+                "start": "2018-10-16T08:56:19.707Z",
+                "end": "2020-04-16T05:40:07.707Z"
+              },
+              {
+                "lord": "jupiter",
+                "start": "2020-04-16T05:40:07.707Z",
+                "end": "2021-08-16T05:25:43.707Z"
+              },
+              {
+                "lord": "saturn",
+                "start": "2021-08-16T05:25:43.707Z",
+                "end": "2023-03-17T12:38:37.707Z"
+              },
+              {
+                "lord": "mercury",
+                "start": "2023-03-17T12:38:37.707Z",
+                "end": "2024-08-15T22:53:19.707Z"
+              },
+              {
+                "lord": "ketu",
+                "start": "2024-08-15T22:53:19.707Z",
+                "end": "2025-03-17T00:17:01.707Z"
+              },
+              {
+                "lord": "venus",
+                "start": "2025-03-17T00:17:01.707Z",
+                "end": "2026-11-15T17:59:01.707Z"
+              },
+              {
+                "lord": "sun",
+                "start": "2026-11-15T17:59:01.707Z",
+                "end": "2027-05-17T08:53:37.707Z"
+              }
+            ]
+          },
+          "antar": {
+            "lord": "venus",
+            "start": "2025-03-17T00:17:01.707Z",
+            "end": "2026-11-15T17:59:01.707Z"
+          }
+        },
+        "age": "13 y 1 m"
+      },
+      "before": {
+        "title": "The foundation for study is strong — at its own pace, but with a firm grip.",
+        "summary": "4 factors in favour, 1 against. The running Venus Antardasha touches this matter’s houses — time and chart point the same way. But — The lord of the 9th bhava, Venus, sits in the 12th bhava (a dusthana) — in tradition the matter opens late and through effort.",
+        "actions": [
+          "For a parent: encouragement where ease lies, time where patience is asked — decisions with the teenager, not for them.",
+          "Fix one regular study time — sitting at the same hour daily does more than adding hours.",
+          "Go deep on the subject of interest; regularity is enough in the rest.",
+          "One of this matter’s lords sits in a dusthana — decide slowly, and put every arrangement in writing.",
+          "The running period touches this matter — tradition counts it a supportive window for beginning or expanding; see the dates below."
+        ],
+        "strength": "prabal"
+      },
+      "reading": {
+        "analysis": {
+          "answerVersion": 1,
+          "purposeId": "vidya",
+          "purposeNameHi": "विद्या",
+          "purposeNameEn": "Study",
+          "generatedDateKey": "2026-09-18",
+          "asOfLabelHi": "18 सितम्बर 2026",
+          "asOfLabelEn": "18 Sep 2026",
+          "ageBand": "adolescent",
+          "ageLabelHi": "13 वर्ष 1 माह",
+          "ageLabelEn": "13 y 1 m",
+          "practiceSourceId": "navagraha-stotram",
+          "footerHi": "18 सितम्बर 2026 की स्थिति के अनुसार। यह पारम्परिक ज्योतिष की दृष्टि है — निश्चित भविष्यवाणी नहीं। ज्योतिषीय आधार विस्तार में देख सकते हैं।",
+          "footerEn": "As of 18 Sep 2026. A view from traditional Jyotish — not a certain prediction. Chart interpretations have an expandable basis.",
+          "gated": false,
+          "gateReasonHi": null,
+          "gateReasonEn": null,
+          "strength": "prabal",
+          "supportGroups": 3,
+          "resistGroups": 1,
+          "saarTitleHi": "पढ़ाई की नींव मज़बूत है — गति अपनी, पर पकड़ पक्की।",
+          "saarTitleEn": "The foundation for study is strong — at its own pace, but with a firm grip.",
+          "saarBodyHi": "3 कारक पक्ष में, 1 विपक्ष में। कारक गुरु दशम भाव (केन्द्र) में है — कारक बलवान। पर — नवम भाव का स्वामी शुक्र द्वादश भाव (दुःस्थान) में है — परम्परा में विषय देर से और प्रयास से खुलता है।",
+          "saarBodyEn": "3 factors in favour, 1 against. The karaka Jupiter sits in the 10th bhava (a kendra) — a strong karaka. But — The lord of the 9th bhava, Venus, sits in the 12th bhava (a dusthana) — in tradition the matter opens late and through effort.",
+          "aadhaarIntroHi": "प्रबल संकेत — 3 स्वतंत्र कारक एक दिशा में, 1 विपरीत। नीचे हर संकेत का आधार है।",
+          "aadhaarIntroEn": "A strong indication — 3 independent factors pointing one way, 1 against. Every line below names its basis.",
+          "chains": [
+            {
+              "labelHi": "कारक गुरु दशम भाव (केन्द्र) में है",
+              "labelEn": "The karaka Jupiter sits in the 10th bhava (a kendra)",
+              "basis": [
+                {
+                  "kind": "graha",
+                  "graha": "jupiter",
+                  "house": 10,
+                  "dignity": "neutral"
+                }
+              ]
+            },
+            {
+              "labelHi": "चतुर्थ भाव का स्वामी गुरु दशम भाव (केन्द्र) में है",
+              "labelEn": "The lord of the 4th bhava, Jupiter, sits in the 10th bhava (a kendra)",
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 4,
+                  "rashiIndex": 8
+                },
+                {
+                  "kind": "lord",
+                  "graha": "jupiter",
+                  "ofHouse": 4,
+                  "inHouse": 10
+                }
+              ]
+            },
+            {
+              "labelHi": "शनि उच्च (तुला) है",
+              "labelEn": "Saturn is exalted (Tula)",
+              "basis": [
+                {
+                  "kind": "graha",
+                  "graha": "saturn",
+                  "house": 2,
+                  "dignity": "exalted"
+                }
+              ]
+            },
+            {
+              "labelHi": "नवम भाव का स्वामी शुक्र द्वादश भाव (दुःस्थान) में है",
+              "labelEn": "The lord of the 9th bhava, Venus, sits in the 12th bhava (a dusthana)",
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 9,
+                  "rashiIndex": 1
+                },
+                {
+                  "kind": "lord",
+                  "graha": "venus",
+                  "ofHouse": 9,
+                  "inHouse": 12
+                }
+              ]
+            },
+            {
+              "labelHi": "चल रही शुक्र अन्तर्दशा इस विषय के भावों को छूती है",
+              "labelEn": "The running Venus Antardasha touches this matter’s houses",
+              "basis": [
+                {
+                  "kind": "dasha",
+                  "level": "antar",
+                  "lord": "venus",
+                  "startKey": "2025-03-17",
+                  "endKey": "2026-11-15"
+                }
+              ]
+            }
+          ],
+          "supports": [
+            {
+              "id": "karaka-jupiter-strong",
+              "polarity": "support",
+              "weight": 1,
+              "group": "karaka-jupiter",
+              "textHi": "कारक गुरु दशम भाव (केन्द्र) में है — कारक बलवान।",
+              "textEn": "The karaka Jupiter sits in the 10th bhava (a kendra) — a strong karaka.",
+              "basis": [
+                {
+                  "kind": "graha",
+                  "graha": "jupiter",
+                  "house": 10,
+                  "dignity": "neutral"
+                }
+              ]
+            },
+            {
+              "id": "lord-4-strong",
+              "polarity": "support",
+              "weight": 1,
+              "group": "lord-4",
+              "textHi": "चतुर्थ भाव का स्वामी गुरु दशम भाव (केन्द्र) में है — परम्परा में विषय को स्थिर सहारा।",
+              "textEn": "The lord of the 4th bhava, Jupiter, sits in the 10th bhava (a kendra) — steady support for the matter in tradition.",
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 4,
+                  "rashiIndex": 8
+                },
+                {
+                  "kind": "lord",
+                  "graha": "jupiter",
+                  "ofHouse": 4,
+                  "inHouse": 10
+                }
+              ]
+            },
+            {
+              "id": "lord-5-dignity",
+              "polarity": "support",
+              "weight": 1,
+              "group": "lord-5-dignity",
+              "textHi": "शनि उच्च (तुला) है — स्वामी का बल विषय को मिलता है।",
+              "textEn": "Saturn is exalted (Tula) — the lord’s strength reaches the matter.",
+              "basis": [
+                {
+                  "kind": "graha",
+                  "graha": "saturn",
+                  "house": 2,
+                  "dignity": "exalted"
+                }
+              ]
+            }
+          ],
+          "resists": [
+            {
+              "id": "lord-9-dusthana",
+              "polarity": "resist",
+              "weight": 1,
+              "group": "lord-9",
+              "textHi": "नवम भाव का स्वामी शुक्र द्वादश भाव (दुःस्थान) में है — परम्परा में विषय देर से और प्रयास से खुलता है।",
+              "textEn": "The lord of the 9th bhava, Venus, sits in the 12th bhava (a dusthana) — in tradition the matter opens late and through effort.",
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 9,
+                  "rashiIndex": 1
+                },
+                {
+                  "kind": "lord",
+                  "graha": "venus",
+                  "ofHouse": 9,
+                  "inHouse": 12
+                }
+              ]
+            }
+          ],
+          "qualifies": [
+            {
+              "id": "dasha-relevant",
+              "polarity": "qualify",
+              "weight": 1,
+              "group": "dasha",
+              "textHi": "चल रही शुक्र अन्तर्दशा इस विषय के भावों को छूती है — यह संबंध है, अनुकूलता का निष्कर्ष नहीं।",
+              "textEn": "The running Venus Antardasha touches this matter’s houses — this establishes relevance, not favourability.",
+              "basis": [
+                {
+                  "kind": "dasha",
+                  "level": "antar",
+                  "lord": "venus",
+                  "startKey": "2025-03-17",
+                  "endKey": "2026-11-15"
+                }
+              ]
+            },
+            {
+              "id": "lord-5-neutral",
+              "polarity": "qualify",
+              "weight": 1,
+              "group": "lord-5",
+              "textHi": "पंचम भाव का स्वामी शनि द्वितीय भाव में है — विषय संसाधन और वाणी से जुड़कर चलता है।",
+              "textEn": "The lord of the 5th bhava, Saturn, sits in the 2nd bhava — the matter runs tied to resources and speech.",
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 5,
+                  "rashiIndex": 9
+                },
+                {
+                  "kind": "lord",
+                  "graha": "saturn",
+                  "ofHouse": 5,
+                  "inHouse": 2
+                }
+              ]
+            }
+          ],
+          "kaalIntroHi": "ये अवधियाँ दशा और गोचर से निकली हैं। विषय से संबंध अपने-आप अनुकूलता या परिणाम नहीं बताता।",
+          "kaalIntroEn": "These periods come from the dasha sequence and slow transits. Topic relevance alone does not establish favourability or an outcome.",
+          "windows": [
+            {
+              "id": "maha-moon-2017-05-17",
+              "startKey": "2017-05-17",
+              "endKey": "2027-05-17",
+              "labelHi": "17 मई 2017 → 17 मई 2027",
+              "labelEn": "17 May 2017 → 17 May 2027",
+              "textHi": "चन्द्र महादशा — इन भावों से सीधे जुड़ी नहीं; पृष्ठभूमि का स्वर मन, पोषण, भावनात्मक लय का है — इस विषय के समय पर निष्कर्ष सीमित है।",
+              "textEn": "Moon Mahadasha — not tied to these houses; the background tone is mind, nurture, emotional rhythm — there is limited basis for judging timing for this topic.",
+              "current": true,
+              "relevant": false,
+              "basis": [
+                {
+                  "kind": "dasha",
+                  "level": "maha",
+                  "lord": "moon",
+                  "startKey": "2017-05-17",
+                  "endKey": "2027-05-17"
+                }
+              ]
+            },
+            {
+              "id": "antar-venus-2025-03-17",
+              "startKey": "2025-03-17",
+              "endKey": "2026-11-15",
+              "labelHi": "17 मार्च 2025 → 15 नवम्बर 2026",
+              "labelEn": "17 Mar 2025 → 15 Nov 2026",
+              "textHi": "शुक्र अन्तर्दशा (चन्द्र महादशा में) — शुक्र आपके नवम भाव (सीख और दृष्टि) से जुड़ा है; यह अवधि इस विषय से जुड़ी है, पर संबंध अपने-आप अनुकूलता नहीं है।",
+              "textEn": "Venus Antardasha (within the Moon Mahadasha) — Venus is tied to your 9th bhava (learning and perspective); this period is relevant to the topic; relevance alone does not establish a supportive window.",
+              "current": true,
+              "relevant": true,
+              "basis": [
+                {
+                  "kind": "dasha",
+                  "level": "antar",
+                  "lord": "venus",
+                  "startKey": "2025-03-17",
+                  "endKey": "2026-11-15"
+                },
+                {
+                  "kind": "lord",
+                  "graha": "venus",
+                  "ofHouse": 9,
+                  "inHouse": 12
+                }
+              ]
+            }
+          ],
+          "dishaHi": [
+            "माता-पिता के लिए: जहाँ सहज बल है वहाँ प्रोत्साहन, जहाँ धैर्य चाहिए वहाँ समय — निर्णय किशोर के साथ, उसके लिए नहीं।",
+            "पढ़ने का एक निश्चित समय बनाएँ — घंटे बढ़ाने से कम, रोज़ उसी समय बैठने से अधिक लाभ।",
+            "रुचि वाले विषय को गहराई दें; बाकी में नियमितता पर्याप्त है।",
+            "इस विषय का एक स्वामी दुःस्थान में है — निर्णय धीमे, और हर व्यवस्था लिखित में।",
+            "चल रही अवधि इस विषय को छूती है — इससे अपने-आप आरम्भ या विस्तार की अनुकूलता नहीं निकलती; काल खंड में तिथियाँ देखें।"
+          ],
+          "dishaEn": [
+            "For a parent: encouragement where ease lies, time where patience is asked — decisions with the teenager, not for them.",
+            "Fix one regular study time — sitting at the same hour daily does more than adding hours.",
+            "Go deep on the subject of interest; regularity is enough in the rest.",
+            "One of this matter’s lords sits in a dusthana — decide slowly, and put every arrangement in writing.",
+            "The running period touches this matter — this alone does not establish a supportive window for beginning or expanding; see the timing section."
+          ],
+          "practiceNoteHi": "विद्या के कारक गुरु और बुध के स्मरण की पारम्परिक रीति।",
+          "practiceNoteEn": "The traditional way of remembering study’s karakas, Jupiter and Mercury."
+        },
+        "guidance": {
+          "version": 1,
+          "questionId": "study-exam",
+          "question": {
+            "hi": "परीक्षा की तैयारी",
+            "en": "Preparing for an exam"
+          },
+          "title": {
+            "hi": "समझ और सीखना: आगे की दिशा परखें। मार्गदर्शन और विस्तार: यहाँ अधिक ध्यान दें।",
+            "en": "Explore understanding and learning; give guidance and exploration extra attention."
+          },
+          "summary": {
+            "hi": "समझ और सीखना: सहायक संकेत। मार्गदर्शन और विस्तार: अधिक प्रयास का संकेत।",
+            "en": "Understanding and learning: supportive indications. Guidance and exploration: extra effort indicated."
+          },
+          "insights": [
+            {
+              "id": "learning",
+              "title": {
+                "hi": "समझ और सीखना",
+                "en": "Understanding and learning"
+              },
+              "meaning": {
+                "hi": "इस विषय का संबंध संसाधन और संवाद से बनता है। पढ़ाई और विचारों को समझने के संकेत सहायक हैं। यह अंकों का अनुमान नहीं; देखें कि कौन-सा अभ्यास समझ बढ़ाता है।",
+                "en": "Traditionally, this theme connects with resources and communication. The reading contains support for study and understanding ideas. This does not predict marks; notice which exercises help you understand."
+              },
+              "tone": "supportive",
+              "factorIds": [
+                "lord-5-dignity",
+                "lord-5-neutral"
+              ],
+              "basis": [
+                {
+                  "kind": "graha",
+                  "graha": "saturn",
+                  "house": 2,
+                  "dignity": "exalted"
+                },
+                {
+                  "kind": "bhava",
+                  "house": 5,
+                  "rashiIndex": 9
+                },
+                {
+                  "kind": "lord",
+                  "graha": "saturn",
+                  "ofHouse": 5,
+                  "inHouse": 2
+                }
+              ],
+              "source": {
+                "verified": false,
+                "referenceUrls": [],
+                "notes": "BPHS bhava karakatva (ch. 11) + Phaladeepika ch. 15. Classical canon; two-source URL review pending. Plain-language grouping is editorial, not a new classical formula."
+              }
+            },
+            {
+              "id": "mentor",
+              "title": {
+                "hi": "मार्गदर्शन और विस्तार",
+                "en": "Guidance and exploration"
+              },
+              "meaning": {
+                "hi": "इस विषय का संबंध विश्राम, दूरी और ख़र्च से बनता है। मार्गदर्शन के संकेत सीधा निष्कर्ष नहीं देते। किसी एक राय पर निर्भर होने से पहले अपने अनुभव से तुलना करें।",
+                "en": "Traditionally, this theme connects with rest, distance and expenses. Guidance indications do not give a simple conclusion. Compare advice with your own experience."
+              },
+              "tone": "careful",
+              "factorIds": [
+                "lord-9-dusthana"
+              ],
+              "basis": [
+                {
+                  "kind": "bhava",
+                  "house": 9,
+                  "rashiIndex": 1
+                },
+                {
+                  "kind": "lord",
+                  "graha": "venus",
+                  "ofHouse": 9,
+                  "inHouse": 12
+                }
+              ],
+              "source": {
+                "verified": false,
+                "referenceUrls": [],
+                "notes": "BPHS bhava karakatva (ch. 11) + Phaladeepika ch. 15. Classical canon; two-source URL review pending. Plain-language grouping is editorial, not a new classical formula."
+              }
+            }
+          ],
+          "actions": [
+            {
+              "id": "parent-exercise",
+              "text": {
+                "hi": "बच्चे के साथ एक छोटा अभ्यास चुनें और देखें कहाँ मदद चाहिए।",
+                "en": "Choose a short exercise with the child and notice where help is needed."
+              },
+              "origin": "editorial",
+              "insightIds": []
+            },
+            {
+              "id": "parent-mistakes",
+              "text": {
+                "hi": "गलतियों पर बिना तुलना किए बात करें: समझ, याद रखना या समय।",
+                "en": "Discuss mistakes without comparison: understanding, recall or time."
+              },
+              "origin": "editorial",
+              "insightIds": []
+            },
+            {
+              "id": "parent-practice",
+              "text": {
+                "hi": "बच्चे के साथ आसान अभ्यास-योजना बनाएँ और फिर अनुभव पूछें।",
+                "en": "Agree on a manageable practice plan with the child, then ask how it felt."
+              },
+              "origin": "editorial",
+              "insightIds": []
+            }
+          ],
+          "caution": {
+            "hi": "यह क्षमता या परीक्षा के अंकों का माप नहीं है।",
+            "en": "This is not a measure of ability or exam marks."
+          },
+          "timing": {
+            "status": "relevant",
+            "text": {
+              "hi": "ये अवधियाँ इस विषय से जुड़ी हैं। संबंध अपने-आप अनुकूलता नहीं है; इससे परिणाम या सबसे अच्छी तारीख तय नहीं होती।",
+              "en": "These periods connect with this topic. Relevance does not establish favourability, an outcome or the best date."
+            },
+            "windowIds": [
+              "antar-venus-2025-03-17"
+            ]
+          },
+          "parentNote": {
+            "hi": "अभिभावक के लिए: बच्चे की रुचि और अनुभव समझें; क्षमता या भविष्य का निर्णय न करें।",
+            "en": "For a parent: understand the child’s interests and experience without judging ability or future outcomes."
+          }
+        }
+      },
+      "matrix": [
+        {
+          "purposeId": "vidya",
+          "gated": false,
+          "title": "Explore understanding and learning; give guidance and exploration extra attention.",
+          "tones": [
+            "supportive",
+            "careful"
+          ]
+        },
+        {
+          "purposeId": "vyapar",
+          "gated": true,
+          "title": null,
+          "tones": []
+        },
+        {
+          "purposeId": "naukri",
+          "gated": true,
+          "title": null,
+          "tones": []
+        },
+        {
+          "purposeId": "dhan",
+          "gated": true,
+          "title": null,
+          "tones": []
+        },
+        {
+          "purposeId": "vivah",
+          "gated": true,
+          "title": null,
+          "tones": []
+        },
+        {
+          "purposeId": "santan",
+          "gated": true,
+          "title": null,
+          "tones": []
+        },
+        {
+          "purposeId": "swasthya",
+          "gated": false,
+          "title": "Start with your actual experience and needs.",
+          "tones": [
+            "mixed"
+          ]
+        },
+        {
+          "purposeId": "yatra",
+          "gated": false,
+          "title": "Travel and change has support, with adjustments to consider.",
+          "tones": [
+            "mixed",
+            "supportive"
+          ]
+        },
+        {
+          "purposeId": "man",
+          "gated": false,
+          "title": "Start with your actual experience and needs.",
+          "tones": [
+            "supportive"
+          ]
+        }
+      ]
+    }
+  ]
+}

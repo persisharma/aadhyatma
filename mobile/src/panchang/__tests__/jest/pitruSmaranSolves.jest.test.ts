@@ -21,6 +21,7 @@ import * as engine from '../../pitruSmaran';
 import type { PitruPakshaWindow, TithiRule } from '../../pitruSmaran';
 import {
   ensureOccurrences,
+  ensureOccurrencesAsync,
   KEPT_OCCURRENCES,
   ensurePakshaWindow,
   hydrateSmaranSolves,
@@ -50,6 +51,33 @@ const WINDOW: PitruPakshaWindow = {
   start: day(2026, 9, 27),
   end: day(2026, 10, 10),
 };
+
+test('cooperative reminder occurrences persist and a later launch does not scan again', async () => {
+  const scan = jest.spyOn(engine, 'nextObservanceForEntrySteps').mockImplementation(function* (_entry, from) {
+    yield;
+    return OCCURRENCES.find(date => date >= from) ?? null;
+  });
+  expect(await ensureOccurrencesAsync(RULE, TODAY, 2)).toEqual(OCCURRENCES.slice(0, 2));
+  expect(scan).toHaveBeenCalledTimes(2);
+  expect(solveSpy).not.toHaveBeenCalled();
+  await persistSmaranSolves();
+  __resetSmaranSolvesForTests();
+  scan.mockClear();
+  await hydrateSmaranSolves([RULE], TODAY);
+  expect(await ensureOccurrencesAsync(RULE, TODAY, 2)).toEqual(OCCURRENCES.slice(0, 2));
+  expect(scan).not.toHaveBeenCalled();
+});
+
+test('cancelling a reminder scan leaves no partial occurrence record', async () => {
+  let cancelled = false;
+  jest.spyOn(engine, 'nextObservanceForEntrySteps').mockImplementation(function* () {
+    cancelled = true;
+    yield;
+    return OCCURRENCES[0];
+  });
+  expect(await ensureOccurrencesAsync(RULE, TODAY, 2, () => cancelled)).toEqual([]);
+  expect(knownOccurrences(RULE, TODAY, 1)).toBeNull();
+});
 
 let solveSpy: jest.SpyInstance;
 

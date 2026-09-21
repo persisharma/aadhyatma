@@ -753,8 +753,8 @@ function pushTheerth(out: SearchVerseEntry[], entry: LibraryEntry) {
         labelEn: t.nameEn,
         linesHi: [t.nameHi, `${t.cityHi}, ${t.stateHi}`],
         linesEn: [t.nameEn, `${t.cityEn}, ${t.stateEn}`],
-        meaningHi: `${t.significanceHi}\n${t.originStoryHi}`,
-        meaningEn: `${t.significanceEn}\n${t.originStoryEn}`,
+        meaningHi: [t.significanceHi, t.originStoryHi, ...(t.sections ?? []).map((s) => s.bodyHi)].join('\n'),
+        meaningEn: [t.significanceEn, t.originStoryEn, ...(t.sections ?? []).map((s) => s.bodyEn)].join('\n'),
       })
     );
   });

@@ -1,0 +1,39 @@
+✔ no on-demand corpus payload is statically reachable from the app entry (3.709041ms)
+✖ the static launch graph stays inside its byte budget (19.328583ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 320.848209
+
+✖ failing tests:
+
+test at src/data/__tests__/launchGraph.test.ts:4:174
+✖ the static launch graph stays inside its byte budget (19.328583ms)
+  AssertionError [ERR_ASSERTION]: Static launch graph is 7,131,753 bytes across 644 modules, over the 7,000,000 budget.
+      Largest members:
+           165104  src/panchang/precomputedObservances.ts
+           111081  src/data/theerth/temples.ts
+            89246  src/panchang/festivals.ts
+            77975  src/data/sundarkand/chapter-12.json
+            71170  src/panchang/bhogContentExtended.ts
+            66590  src/panchang/rajasthanTehsils.ts
+            58907  src/data/shiv-chalisa/shiv-chalisa.json
+            58877  src/data/hanuman-chalisa/hanuman-chalisa.json
+      at TestContext.<anonymous> (/Users/prashant/.codex/worktrees/dc71/Aadhyatma/mobile/src/data/__tests__/launchGraph.test.ts:129:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

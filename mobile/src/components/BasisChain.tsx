@@ -20,7 +20,7 @@ import { basisLabelEn, basisLabelHi, type BasisNode } from '@/panchang/kundaliBa
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang } from '@/utils/localize';
-import { pillTextStyle } from '@/utils/langType';
+import { pillTextStyle, scriptBodyFont } from '@/utils/langType';
 
 export default function BasisChain({
   basis,
@@ -42,7 +42,7 @@ export default function BasisChain({
     <View
       testID={testID}
       accessible
-      accessibilityLabel={`${labelEn}: ${basis.map(basisLabelEn).join(', then ')}`}
+      accessibilityLabel={`${contentByLang(lang, labelHi, labelEn)}: ${labels.join(contentByLang(lang, ', फिर ', ', then '))}`}
       style={[
         styles.root,
         {
@@ -56,7 +56,7 @@ export default function BasisChain({
         style={[
           pillTextStyle(lang, typography.sectionLabel),
           styles.label,
-          { color: colors.saffronDeep },
+          { color: colors.saffronDeep, fontSize: lang === 'en' ? 10 : 12, lineHeight: 20 },
         ]}
       >
         {contentByLang(lang, labelHi, labelEn)}
@@ -79,7 +79,7 @@ export default function BasisChain({
                 },
               ]}
             >
-              <Text maxFontSizeMultiplier={1.25} style={[styles.chipText, { color: colors.ink }]}>
+              <Text maxFontSizeMultiplier={1.25} style={[styles.chipText, { color: colors.ink, fontFamily: lang === 'en' ? fontFamilies.inter : scriptBodyFont(lang, fontFamilies.devanagari), lineHeight: lang === 'en' ? 16 : 21 }]}>
                 {label}
               </Text>
             </View>
@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
   row: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 4 },
   arrow: { fontSize: 11, lineHeight: 14 },
   chip: {
+    maxWidth: '100%',
     borderWidth: 1,
     paddingHorizontal: 7,
     paddingVertical: 3,

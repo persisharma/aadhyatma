@@ -18,7 +18,8 @@
 
 import { getSiderealPlanetLongitude, NAKSHATRA_SPAN } from './kundali';
 import { NAKSHATRA_NAMES_EN, NAKSHATRA_NAMES_HI } from './names';
-import { deriveTithiRuleFromDate, type TithiRule } from './pitruSmaran';
+import { deriveTithiRuleFromDateSteps, type TithiRule } from './pitruSmaran';
+import { runSynchronously } from './backgroundWork';
 import type { BirthProfile } from './birthProfiles';
 
 const DATE_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/;
@@ -32,6 +33,11 @@ const IST_OFFSET_MINUTES = 330;
  * screen down.
  */
 export function janmaTithiRuleFromBirthDate(birthDate: string): TithiRule | null {
+  return runSynchronously(janmaTithiRuleFromBirthDateSteps(birthDate));
+}
+
+/** More needs the count immediately, with birth-date math off the render path. */
+export function* janmaTithiRuleFromBirthDateSteps(birthDate: string): Generator<void, TithiRule | null, void> {
   const match = DATE_PATTERN.exec(birthDate);
   if (!match) return null;
   const [, year, month, day] = match;
@@ -44,7 +50,7 @@ export function janmaTithiRuleFromBirthDate(birthDate: string): TithiRule | null
     return null;
   }
   try {
-    return deriveTithiRuleFromDate(civil);
+    return yield* deriveTithiRuleFromDateSteps(civil);
   } catch {
     return null;
   }

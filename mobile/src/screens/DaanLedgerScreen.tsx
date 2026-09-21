@@ -77,9 +77,6 @@ export default function DaanLedgerScreen({ navigation }: Props) {
         onBack={() => navigation.goBack()}
       />
       <ScrollView contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingBottom: spacing.xxl }}>
-        <Text style={{ fontFamily: bodyFont, fontSize: 12.5, lineHeight: 19, color: colors.inkMuted, textAlign: 'center', marginTop: spacing.sm }}>
-          {contentByLang(lang, 'निजी — केवल इस डिवाइस पर', 'Private — on this device only')}
-        </Text>
 
         <Pressable
           testID="daan-ledger-add"

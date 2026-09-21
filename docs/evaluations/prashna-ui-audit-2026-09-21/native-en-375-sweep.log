@@ -1,0 +1,27 @@
+WARNING: Final field parent in class maestro.cli.command.TestCommand has been mutated reflectively by class picocli.CommandLine$Model$FieldBinding in unnamed module @41e68d87 (file:/Users/prashant/.maestro/lib/picocli-4.6.3.jar)
+WARNING: Use --enable-final-field-mutation=ALL-UNNAMED to avoid a warning
+WARNING: Mutating final fields will be blocked in a future release unless final field mutation is enabled
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/Users/prashant/.maestro/lib/jansi-2.4.1.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+Running on Vedansh-Prashna-Compact - iOS 26.4 - CEE0C72B-37F2-4ED9-94BB-40BF70C14757
+ > Flow prashna-small-sweep
+Repeat 4 times...
+  Swipe from (50%, 30%) to (50%, 82%) in 800 ms... COMPLETED
+Repeat 4 times... COMPLETED
+Wait for animation to end... COMPLETED
+Tap on point (50%, 60%)... COMPLETED
+Wait for animation to end... COMPLETED
+Take screenshot 01-question... COMPLETED
+Swipe from (50%, 82%) to (50%, 40%) in 800 ms... COMPLETED
+Take screenshot 02-reading... COMPLETED
+Swipe from (50%, 82%) to (50%, 40%) in 800 ms... COMPLETED
+Take screenshot 03-meaning... COMPLETED
+Swipe from (50%, 82%) to (50%, 40%) in 800 ms... COMPLETED
+Take screenshot 04-plan... COMPLETED
+Swipe from (50%, 82%) to (50%, 40%) in 800 ms... COMPLETED
+Take screenshot 05-timing... COMPLETED
+Swipe from (50%, 82%) to (50%, 40%) in 800 ms... COMPLETED
+Take screenshot 06-practice... COMPLETED

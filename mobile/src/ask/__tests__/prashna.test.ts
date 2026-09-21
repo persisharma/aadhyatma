@@ -29,11 +29,12 @@ test('with a saved adult chart a purpose-shaped predictive question becomes a da
   if (r.kind !== 'answer') return;
   assert.equal(r.answer.intentId, 'prashna.purpose');
   assert.equal(r.answer.family, 'jyotish');
-  assert.ok(r.answer.sub!.en.includes('indication'));
+  assert.ok(r.answer.lines.some(line => line.label.en === 'Direction now'));
+  assert.ok(!r.answer.lines.some(line => line.label.en === 'Supports'));
   assert.doesNotMatch(r.answer.headline.en, /will (get|become)/i);
-  const window = r.answer.lines.find((line) => line.label.en === 'Window');
+  const window = r.answer.lines.find((line) => line.label.en === 'Running period');
   assert.ok(window, 'a dated window line is present');
-  assert.match(window!.value.en, /^\d{1,2} [A-Z][a-z]{2} \d{4} → \d{1,2} [A-Z][a-z]{2} \d{4}/);
+  assert.match(window!.value.en, /Mahadasha.*Antardasha.*until \d{1,2} [A-Z][a-z]{2} \d{4}/);
   assert.ok(r.answer.working.length >= 2 && r.answer.working[1].includes('→'), 'working carries the basis chain');
   assert.deepEqual(r.answer.actions[0].target, { tab: 'panchang', screen: 'Prashna', params: { purposeId: 'naukri' } });
 });
@@ -51,7 +52,7 @@ test("a minor's chart returns the gate reason and no reading for a closed purpos
   if (r.kind !== 'answer') return;
   assert.ok(r.answer.headline.en.includes('read only from age 21'));
   assert.equal(r.answer.lines.length, 0);
-  assert.ok(r.answer.working[0].includes('gated'));
+  assert.deepEqual(r.answer.working, [], 'the age explanation needs no internal gate trace');
   // An open purpose answers normally for the same chart.
   const study = askQuestion('padhai kaisi rahegi', testContext({ kundali: { input: child, name: 'Aaradhya' } }));
   assert.equal(study.kind, 'answer');

@@ -173,3 +173,48 @@ Ops: `ingest`, `query`, `lint`, `gap`, `prune`.
 ## [2026-09-19] ingest | PRD-44 content round 2 — gathered the full परिचय corpus: 58 rows authored / 38 verified (was 24/17). Outbound egress is policy-blocked (403 on every source domain; WebFetch EGRESS_BLOCKED; search works but a search summary cannot verify), so the expansion came from the BUNDLED corpora — a Valmiki/Gita sweep for पितृ·श्राद्ध·तर्पण·पिण्ड·जलाञ्जलि yielded two new verified kathas (Bhagiratha and the sixty thousand, Bala 38–44; Jatayu's last rites, Aranya 67–68), three new verses (Gita 9.16 स्वधा, 10.29 अर्यमा, Valmiki 1.41.19 Garuda), two concept lessons (जल ही क्यों, किसके लिए), six glossary terms and four प्रश्नोत्तर. All 16 fortnight tithis are now authored with a coverage test. Dropped the Ravana maraṇāntāni verse — corpus defect at 6.114.100. RULEBOOK §28.4 gained the verification ladder and §28.8 the coverage rule.
 
 ## [2026-09-21] ingest | Clarified the Home category close: replaced the unclear overlapping-hand Daan glyph with a clean native daan-patra + three gold offerings, made Daan-Punya the full-width closing card, and removed the duplicate Nitya Sadhana category card because the dedicated RoutineBanner already owns that Home entry point. Added icon/grid regression coverage and refreshed [[daan-punya]]'s previously stale educate-home, journey, stack and door contracts.
+
+## [2026-09-21] ingest | Home Panchang cold work now yields within computation: shared cooperative queue, phased day solves, asynchronous Pitru Paksha scan, and Home follow/Pushya integration. Complete records only, shared in-flight day solves, cancellation, and unchanged synchronous engine results. See [[panchang]].
+
+## [2026-09-21] ingest | Lens filter now offers only calendars with content, answers "what did जैन add?", and gains bulk controls — after the report that selecting Jain "still shows everything" with no select-all. Root cause: 20 of the 22 registered calendars carry no rule (W3–W8 unshipped), so most switches changed nothing and nothing marked what the two real ones changed. `vratCatalog.getLensesWithContent()` (today `tamil`, `jain`) is what every surface offers; `withContentOnly` narrows the stored set for display in `useLenses` (via a `require()` thunk — More is on the launch graph); `availableCount` 0 hides the ledger column, quiet-day row and More row entirely; seeding and सभी चुनें use offered ids only. `getRulesForLens`/`getLensAdditions` print each calendar's additions on the sheet row and in the new व्रत-पर्व `आपके पंचांग से` card (tappable, next date). `lensStore.setAllLenses` + सभी चुनें / सभी हटाएँ pills that hide when a no-op; ledger/More say `सभी n`. design.md §73 (new "Offered ≠ registered" block), RULEBOOK §23a.5, [[panchang]] lens block + retired-`regional` gotcha corrected; `lens.test.ts` +8 (pinned offered list — shipping a calendar's first rule must update it); `.maestro/regional-lens-smoke.yaml` authored, device run owed.
+
+## [2026-09-21] ingest | Home first-tap follow-up: persisted widget windows, 14 cooperative solves, numerical search yields, and cached cooperative reminder scans. Updated Home/widgets design and startup integration invariant. Device latency still requires Hermes verification.
+
+## [2026-09-21] ingest | More tab first-interaction follow-up
+
+MoreHome still ran synchronous annual Pitru/Janma scans in zero-delay timers after
+#358, bypassing the persisted occurrence cache; its birthday hook also derived
+rules during render. More now reads raw counts, hydrates the tithi-only cache,
+and derives/solves cooperatively with focus-scoped cancellation. Closed language,
+reading-size and read-aloud sheets mount on demand. Updated overview and design
+§37; added lifecycle/caching regression tests and a preserved-state More restart
+path to the Pitru Maestro flow. Device execution remains pending in this environment.
+
+## [2026-09-21] ingest | More CI launch-budget repair
+
+Merged current main into the More responsiveness branch without conflicts. CI's
+merged tree exceeded the unchanged 7.3 MB startup graph budget after new temple
+content landed. More destination screens now use on-demand route loaders, with
+regression coverage for deferred evaluation and unchanged route registration.
+The launch budget passes without increasing its ceiling.
+
+## [2026-09-21] ingest | Pitru Paksha परिचय content: `bharat-dwadashah` katha (Ayodhya 77, verified against the bundled Valmiki corpus 2.77.1–26 — the eleventh/twelfth-day shraddha, the gifts, the thirteenth-day asthi-sanchaya, Vasishtha lifting Bharata) and the पञ्चबलि lesson + glossary row authored as DRAFT (five recipients concordant across search summaries; every primary domain EGRESS_BLOCKED, so nothing flips). New `docs/roadmap/conventions/panchabali-source-dossier.md` holds the gathered material, the copy the stance guard forbids, the officiant-only mantra text, and a table of every other pending gap in the layer (14 tithi rows, pitru-rin, Karna, gotra/sapindikarana, "who may perform"). Registry now 61 rows / 39 verified; design.md §74, PRD-44 §4–§5 and [[pitru-shiksha]] mirrored.
+
+## [2026-09-18] ingest | Prashna guidance: explicit question choices, plain-language chart themes, editorial checklist and collapsed technical evidence; timing relevance no longer increases favourable strength. Full-text handoff carries selected question with provenance. Added four-profile baseline/GPT/public AstroSage comparison and 36-profile-purpose matrix; source-review and native verification limits are recorded in the evaluation artifact. Synced design.md §72, RULEBOOK §14.3 and [[panchang]].
+
+## [2026-09-21] ingest | Prashna follow-up verification: fresh typecheck, 465 engine tests, 47 Ask tests and 10 focused screen tests passed; iOS JS export and full clean-state iOS simulator smoke passed. Comparison artifact now includes native screenshots and execution log. The pre-existing static launch-byte-budget failure and source-review release gate remain documented.
+
+## [2026-09-21] ingest | Prashna bilingual native UI audit and user correction: improved typography, selection, targets and evidence wrapping; 465 engine and 10 focused screen tests passed. User rejected generic checklists: the required next layer is natal graha plus running dasha plus current gochar synthesized into current-phase guidance. Current purpose-level insights and question-selected editorial actions do not meet that scope. See the new UI audit and [[panchang]].
+
+
+## [2026-09-21] ingest | Career/business current-phase pilot
+
+Updated [[panchang]] from `prashnaPhase.ts`, the screen/Ask/export integrations and dated refresh hook. Recorded the combined natal–dasha–gochar contract, node interpretation limit, retained legacy topics, exact-edge refresh, source gate and actual comparison evidence. Design §72, RULEBOOK §14.3 and PRD-43 follow-up now describe the pilot rather than calling the generic checklist the accepted endpoint.
+
+## [2026-09-21] ingest | Customer copy describes the reading and action
+
+Updated the Panchang copy boundary from Prashna/Ask and the shared implementation-copy guard. Removed customer-facing device/engine reassurance and development-status prose, including the older Pitru/Vastu exceptions; retained chart evidence, accurate source metadata, sharing-content notices and deletion consequences. Copy-only edits do not change the interpretation engine or complete its outstanding release review.
+
+## [2026-09-22] ingest | Prashna PR reconciliation and customer-copy check
+
+Preserved current-main regional/Pitru education and Daan typography changes while integrating the phase pilot and copy removals. Removed the newly introduced Pitru teaching source-review-progress footer too. Current-main launch-budget checks now pass; older evaluation logs retain their dated failures. The inherited cooperative-engine interruption test now controls elapsed time instead of assuming the machine needs more than one 4 ms slice; runtime scheduling is unchanged. Submission verification is recorded in `docs/evaluations/prashna-phase-2026-09-21/pr-submission-2026-09-22.md`.

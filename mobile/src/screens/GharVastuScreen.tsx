@@ -109,7 +109,7 @@ export default function GharVastuScreen({ navigation, route }: { navigation: Nav
   const confirmDelete = () => {
     Alert.alert(
       contentByLang(lang, 'घर हटाएँ?', 'Delete this home?'),
-      contentByLang(lang, 'यह रिकॉर्ड केवल इसी फ़ोन पर है — हटाने के बाद वापस नहीं आता।', 'This record lives only on this phone — deleting it cannot be undone.'),
+      contentByLang(lang, 'हटाने के बाद यह रिकॉर्ड वापस नहीं आएगा।', 'Deleting this record cannot be undone.'),
       [
         { text: contentByLang(lang, 'रहने दें', 'Keep'), style: 'cancel' },
         {
@@ -213,15 +213,6 @@ export default function GharVastuScreen({ navigation, route }: { navigation: Nav
             'This is a reading of the classical convention, with its weight — a statement about placement, never a verdict on the home. Where something cannot change, tradition itself states the practical form.'
           )}
         </Text>
-        <View style={[styles.privacy, { borderLeftColor: colors.goldChipBg }]}>
-          <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 17, color: colors.inkMuted, fontStyle: 'italic' }}>
-            {meaningByLang(
-              lang,
-              'यह मानचित्र केवल इस फ़ोन पर है — कहीं भेजा नहीं जाता।',
-              'This map lives only on this phone — it is sent nowhere.'
-            )}
-          </Text>
-        </View>
 
         <View style={{ flexDirection: 'row', gap: 8, marginTop: spacing.lg, flexWrap: 'wrap' }}>
           <Pressable
@@ -341,6 +332,5 @@ const styles = StyleSheet.create({
   strip: { flexDirection: 'row', flexWrap: 'wrap', gap: 5, marginTop: 10 },
   pill: { borderWidth: 1, paddingHorizontal: 8, paddingVertical: 3 },
   findingRow: { borderBottomWidth: 1, paddingVertical: 9 },
-  privacy: { borderLeftWidth: 2, paddingLeft: 10, paddingVertical: 4, marginTop: 12 },
   action: { borderWidth: 1, paddingHorizontal: 14, paddingVertical: 8 },
 });

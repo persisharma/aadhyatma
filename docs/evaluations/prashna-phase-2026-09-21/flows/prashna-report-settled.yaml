@@ -1,0 +1,6 @@
+appId: com.prashantsharma.vedansh
+---
+- tapOn: "Cancel sharing"
+- waitForAnimationToEnd
+- assertVisible: "Full Kundali reading"
+- takeScreenshot: 05-report-settled

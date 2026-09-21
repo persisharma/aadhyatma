@@ -41,13 +41,13 @@ import { useShubhYoga } from '@/panchang/useShubhYoga';
 import type { CalendarSystem, PanchangElement, ResolvedObservance } from '@/panchang/types';
 import { getKathaContent } from '@/panchang/kathaContent';
 import { getUpcomingObservances, searchObservances } from '@/panchang/festivalEngine';
-import { LENS_COUNT, getLensDefinition, serializeLenses, type ObservanceLens } from '@/panchang/lenses';
+import { getLensDefinition, serializeLenses, type ObservanceLens } from '@/panchang/lenses';
 import { useLenses } from '@/panchang/useLenses';
 import { seedFromLocationOnce } from '@/panchang/lensStore';
 import { successorTithiToday } from '@/panchang/prevailingTithi';
 import { observanceDayNote, type ObservanceDaySolve } from '@/panchang/observanceDayNote';
 import { sankashtiOccurrenceName } from '@/panchang/sankashtiNames';
-import { getCategoryCounts, getKathaCount, type BrowseCategory } from '@/panchang/vratCatalog';
+import { getCategoryCounts, getKathaCount, getLensAdditions, getNextOccurrence, type BrowseCategory } from '@/panchang/vratCatalog';
 import { VIDHI_ENTRIES, getVidhiById } from '@/data/vidhi';
 import { useVratFollows } from '@/contexts/VratFollowContext';
 import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
@@ -175,7 +175,7 @@ export default function PanchangScreen({ route }: Props) {
   } = useKundali();
   const { panchang: p, observances, upcoming } = usePanchangForSelection(selectedDate, calendarSystem);
   const [lensSheetVisible, setLensSheetVisible] = useState(false);
-  const { lenses } = useLenses();
+  const { lenses, availableCount: lensAvailableCount } = useLenses();
   // The one line PRD-42 §4.2 allows about seeding, named per city and dismissible.
   const [seededLenses, setSeededLenses] = useState<readonly ObservanceLens[]>([]);
 
@@ -781,14 +781,18 @@ export default function PanchangScreen({ route }: Props) {
                     tab opens on and the one a lens actually changes, so a user who
                     never taps व्रत-पर्व would never learn the feature exists. It
                     appears ONLY on a day with nothing on it: on a day that has
-                    something to say, this card is exactly what shipped before. */}
-                <LensDiscoveryRow
-                  lang={lang}
-                  colors={colors}
-                  typography={typography}
-                  radii={radii}
-                  onPress={() => setLensSheetVisible(true)}
-                />
+                    something to say, this card is exactly what shipped before.
+                    Hidden entirely when no calendar has content to offer. */}
+                {lensAvailableCount > 0 && (
+                  <LensDiscoveryRow
+                    lang={lang}
+                    colors={colors}
+                    typography={typography}
+                    radii={radii}
+                    availableCount={lensAvailableCount}
+                    onPress={() => setLensSheetVisible(true)}
+                  />
+                )}
               </>
             )}
             {/* PRD-17: the private ॥ स्मरण chip — renders only on a saved
@@ -834,6 +838,7 @@ export default function PanchangScreen({ route }: Props) {
               onOpenPitruSmaran={openPitruSmaran}
               onOpenLenses={() => setLensSheetVisible(true)}
               lenses={lenses}
+              lensAvailableCount={lensAvailableCount}
               followCount={followCount}
             />
           ) : (
@@ -1777,19 +1782,21 @@ function LensDiscoveryRow({
   colors,
   typography,
   radii,
+  availableCount,
   onPress,
 }: {
   lang: Lang;
   colors: any;
   typography: any;
   radii: any;
+  availableCount: number;
   onPress: () => void;
 }) {
   return (
     <Pressable
       onPress={onPress}
       accessibilityRole="button"
-      accessibilityLabel={`Add a regional calendar. ${LENS_COUNT} available`}
+      accessibilityLabel={`Add a regional calendar. ${availableCount} available`}
       style={({ pressed }) => [
         {
           flexDirection: 'row',
@@ -1814,8 +1821,8 @@ function LensDiscoveryRow({
         <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkMuted, marginTop: 2 }}>
           {contentByLang(
             lang,
-            `अपने क्षेत्र या परंपरा की तिथियाँ · ${LENS_COUNT} उपलब्ध`,
-            `Your region’s or tradition’s days · ${LENS_COUNT} available`
+            `अपने क्षेत्र या परंपरा की तिथियाँ · ${availableCount} उपलब्ध`,
+            `Your region’s or tradition’s days · ${availableCount} available`
           )}
         </Text>
       </View>
@@ -1874,7 +1881,7 @@ function CatalogLedgerCell({
     count still does not tell a user where their extra dates came from (§42).
     The accessibility labels stay full sentences: the compression is visual. */
 function CatalogLedgerBar({
-  lang, colors, typography, radii, elevation, followCount, lenses,
+  lang, colors, typography, radii, elevation, followCount, lenses, lensAvailableCount,
   onOpenMyVrat, onOpenPitruSmaran, onOpenLenses,
 }: {
   lang: Lang;
@@ -1884,6 +1891,8 @@ function CatalogLedgerBar({
   elevation: any;
   followCount: number;
   lenses: ReadonlySet<ObservanceLens>;
+  /** Calendars this build offers; 0 collapses the bar to two columns. */
+  lensAvailableCount: number;
   onOpenMyVrat: () => void;
   onOpenPitruSmaran: () => void;
   onOpenLenses: () => void;
@@ -1920,11 +1929,15 @@ function CatalogLedgerBar({
     .map((id) => getLensDefinition(id))
     .filter((def): def is NonNullable<typeof def> => def != null)
     .map((def) => contentByLang(lang, def.nameHi, def.nameEn));
+  // `सभी n` once every offered calendar is on — `जैन +1` would name one calendar
+  // as if it were the choice, when the choice was "everything".
   const lensState = lensNames.length === 0
-    ? contentByLang(lang, `${LENS_COUNT} उपलब्ध`, `${LENS_COUNT} available`)
-    : lensNames.length === 1
-      ? lensNames[0]
-      : `${lensNames[0]} +${lensNames.length - 1}`;
+    ? contentByLang(lang, `${lensAvailableCount} उपलब्ध`, `${lensAvailableCount} available`)
+    : lensNames.length === lensAvailableCount
+      ? contentByLang(lang, `सभी ${lensAvailableCount}`, `All ${lensAvailableCount}`)
+      : lensNames.length === 1
+        ? lensNames[0]
+        : `${lensNames[0]} +${lensNames.length - 1}`;
 
   return (
     <View
@@ -1956,21 +1969,156 @@ function CatalogLedgerBar({
         onPress={onOpenPitruSmaran}
         divided
       />
-      <CatalogLedgerCell
-        lang={lang}
-        colors={colors}
-        typography={typography}
-        glyph="❖"
-        label={contentByLang(lang, 'क्षेत्र', 'Regional')}
-        state={lensState}
-        accessibilityLabel={
-          lensNames.length > 0
-            ? `Regional calendars, ${lensNames.length} on`
-            : 'Regional calendars, none selected'
-        }
-        onPress={onOpenLenses}
-        divided
-      />
+      {/* No calendar with content ⇒ no column: a filter that can choose nothing
+          is not a filter. Comes back by itself when the first lensed rule ships. */}
+      {lensAvailableCount > 0 && (
+        <CatalogLedgerCell
+          lang={lang}
+          colors={colors}
+          typography={typography}
+          glyph="❖"
+          label={contentByLang(lang, 'क्षेत्र', 'Regional')}
+          state={lensState}
+          accessibilityLabel={
+            lensNames.length === lensAvailableCount
+              ? `Regional calendars, all ${lensAvailableCount} on`
+              : lensNames.length > 0
+                ? `Regional calendars, ${lensNames.length} on`
+                : 'Regional calendars, none selected'
+          }
+          onPress={onOpenLenses}
+          divided
+        />
+      )}
+    </View>
+  );
+}
+
+/**
+ * आपके पंचांग से — what the active क्षेत्रीय पंचांग actually added (PRD-42 §4.1,
+ * design.md §73).
+ *
+ * The additive contract puts a lensed day among the universal ones with nothing
+ * marking it, so a user who turned जैन on and looked at the calendar saw "the same
+ * list as before, plus a day they could not point to". This section is the
+ * pointer: one group per active calendar, in registry order, each rule a row that
+ * opens its detail with its next date beside it. A calendar that adds nothing in
+ * this build says so in one muted line rather than vanishing — silence here would
+ * read as "your tap did nothing", which is the report in the first place.
+ *
+ * Rendered only with at least one lens on: with none, the ledger column already
+ * says `22 उपलब्ध` and there is nothing to list.
+ */
+function LensAdditionsSection({
+  lang, today, calendarSystem, lenses, colors, typography, radii, elevation, onOpenDetail, onOpenLenses,
+}: {
+  lang: Lang;
+  today: Date;
+  calendarSystem: CalendarSystem;
+  lenses: ReadonlySet<ObservanceLens>;
+  colors: any;
+  typography: any;
+  radii: any;
+  elevation: any;
+  onOpenDetail: (ruleId: string) => void;
+  onOpenLenses: () => void;
+}) {
+  const lensKey = serializeLenses(lenses);
+  const groups = useMemo(
+    () =>
+      getLensAdditions(lenses).map((group) => ({
+        ...group,
+        def: getLensDefinition(group.lens),
+        rules: group.rules.map((rule) => ({ rule, next: getNextOccurrence(rule.id, today, calendarSystem) })),
+      })),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [lensKey, today, calendarSystem]
+  );
+  if (groups.length === 0) return null;
+  const addedCount = groups.reduce((sum, group) => sum + group.rules.length, 0);
+
+  return (
+    <View
+      testID="lens-additions"
+      style={[
+        styles.additionsCard,
+        { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md },
+        elevation.card,
+      ]}
+    >
+      <View style={styles.additionsHead}>
+        <View style={{ flex: 1 }}>
+          <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink }}>
+            {contentByLang(lang, 'आपके पंचांग से', 'From your calendars')}
+          </Text>
+          <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkMuted, marginTop: 2 }}>
+            {addedCount === 0
+              ? contentByLang(lang, 'चुने हुए पंचांग अभी कोई विशेष तिथि नहीं जोड़ते', 'Your chosen calendars add no dates of their own yet')
+              : contentByLang(
+                  lang,
+                  `${addedCount} ${addedCount === 1 ? 'तिथि' : 'तिथियाँ'} जो केवल इन पंचांगों से आती ${addedCount === 1 ? 'है' : 'हैं'}`,
+                  `${addedCount} ${addedCount === 1 ? 'observance' : 'observances'} that only these calendars bring`
+                )}
+          </Text>
+        </View>
+        <Pressable
+          onPress={onOpenLenses}
+          accessibilityRole="button"
+          accessibilityLabel="Change regional calendars"
+          hitSlop={8}
+          style={({ pressed }) => [pressed && { opacity: 0.6 }]}
+        >
+          <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 12, color: colors.saffronDeep }}>
+            {contentByLang(lang, 'बदलें', 'Change')}
+          </Text>
+        </Pressable>
+      </View>
+      {groups.map(({ lens, def, rules }) => (
+        <View key={lens} style={{ marginTop: 8 }}>
+          <Text
+            style={{
+              fontFamily: typography.subtitle.fontFamily,
+              fontSize: 10,
+              letterSpacing: 1,
+              textTransform: 'uppercase',
+              color: colors.inkMuted,
+              marginBottom: 2,
+            }}
+          >
+            {def ? contentByLang(lang, def.nameHi, def.nameEn) : lens}
+          </Text>
+          {rules.length === 0 ? (
+            <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkMuted, paddingVertical: 6 }}>
+              {contentByLang(lang, 'अभी कोई विशेष तिथि नहीं — आगामी अद्यतन में', 'No dates of its own yet — coming in a later update')}
+            </Text>
+          ) : (
+            rules.map(({ rule, next }) => (
+              <Pressable
+                key={rule.id}
+                onPress={() => onOpenDetail(rule.id)}
+                accessibilityRole="button"
+                accessibilityLabel={`${rule.nameEn}${next ? `, next ${formatShortDate(next.date, 'en')}` : ''}`}
+                style={({ pressed }) => [styles.resultRow, { borderBottomColor: colors.divider }, pressed && { opacity: 0.6 }]}
+              >
+                <View style={{ flex: 1, paddingRight: 10 }}>
+                  <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
+                    {contentByLang(lang, rule.nameHi, rule.nameEn)}
+                  </Text>
+                  <Text style={{ ...captionFont(lang === 'en' ? rule.nameHi : rule.nameEn), fontSize: 13, color: colors.inkMuted, marginTop: 2 }}>
+                    {lang === 'en' ? rule.nameHi : rule.nameEn}
+                  </Text>
+                </View>
+                {next && (
+                  <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 11, color: colors.saffronDeep, letterSpacing: 0.4, marginRight: 8 }}>
+                    {formatShortDate(next.date, lang).toUpperCase()}
+                  </Text>
+                )}
+                <Text style={{ fontSize: 18, color: colors.inkMuted }}>›</Text>
+              </Pressable>
+            ))
+          )}
+        </View>
+      ))}
     </View>
   );
 }
@@ -1979,7 +2127,7 @@ function CatalogLanding({
   lang, today, calendarSystem, query, onChangeQuery,
   colors, typography, radii, elevation,
   onOpenDetail, onOpenCategory, onOpenKathaLibrary, onOpenVidhiCatalog, onOpenMyVrat, followCount,
-  onOpenPitruSmaran, onOpenLenses, lenses,
+  onOpenPitruSmaran, onOpenLenses, lenses, lensAvailableCount,
 }: {
   lang: Lang;
   today: Date;
@@ -1998,6 +2146,7 @@ function CatalogLanding({
   onOpenPitruSmaran: () => void;
   onOpenLenses: () => void;
   lenses: ReadonlySet<ObservanceLens>;
+  lensAvailableCount: number;
   followCount: number;
 }) {
   const trimmed = query.trim();
@@ -2066,8 +2215,23 @@ function CatalogLanding({
             elevation={elevation}
             followCount={followCount}
             lenses={lenses}
+            lensAvailableCount={lensAvailableCount}
             onOpenMyVrat={onOpenMyVrat}
             onOpenPitruSmaran={onOpenPitruSmaran}
+            onOpenLenses={onOpenLenses}
+          />
+          {/* What the active calendars added — the answer the ledger column's
+              `जैन` alone cannot give. Nothing rendered with no lens on. */}
+          <LensAdditionsSection
+            lang={lang}
+            today={today}
+            calendarSystem={calendarSystem}
+            lenses={lenses}
+            colors={colors}
+            typography={typography}
+            radii={radii}
+            elevation={elevation}
+            onOpenDetail={onOpenDetail}
             onOpenLenses={onOpenLenses}
           />
           {upcoming.length > 0 && (
@@ -2243,6 +2407,9 @@ const styles = StyleSheet.create({
   prashnaDoor: { flexDirection: 'row', alignItems: 'center', gap: 10, padding: 13, borderWidth: 1, marginBottom: 8, minHeight: 64 },
   prashnaNew: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, letterSpacing: 0.8 },
   resultRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 13, borderBottomWidth: StyleSheet.hairlineWidth },
+  // आपके पंचांग से — same card register as the upcoming cards and the tiles.
+  additionsCard: { marginTop: 12, borderWidth: 1, paddingHorizontal: 14, paddingTop: 12, paddingBottom: 6 },
+  additionsHead: { flexDirection: 'row', alignItems: 'flex-start', gap: 12 },
   // Compact upcoming card (design.md § catalog view): date + glyph top row and a
   // one-line name — the category caption is dropped, the ॐ/☾/✺ glyph carries it.
   upCard: { width: 136, height: 72, borderWidth: 1, paddingVertical: 10, paddingHorizontal: 12 },

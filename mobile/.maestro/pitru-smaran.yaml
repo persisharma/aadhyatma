@@ -89,6 +89,28 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - assertVisible: ".*पिताजी.*"
 
+# ── Cold restart with saved family data: More accepts one immediate row tap ──
+# Preserve AsyncStorage. No retry or wait for the optional date subtitle; this
+# catches broken navigation, while cooperative/cancellation tests pin JS work.
+- stopApp
+- launchApp:
+    appId: com.prashantsharma.vedansh
+    clearState: false
+    arguments:
+      RCT_jsLocation: "127.0.0.1:8084"
+- extendedWaitUntil:
+    visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
+    timeout: 30000
+- tapOn: { id: "tab-more" }
+- tapOn: "Open Sadhak profile"
+- assertVisible: "‹"
+- tapOn: "‹"
+- tapOn: { id: "tab-home" }
+- tapOn: { id: "tab-more" }
+- tapOn: "Open Sadhak profile"
+- assertVisible: "‹"
+- tapOn: "‹"
+
 # ── Same ledger is pinned under My Vrat in the Vrat & Parv catalog ──
 - tapOn: { id: "tab-panchang" }
 - waitForAnimationToEnd

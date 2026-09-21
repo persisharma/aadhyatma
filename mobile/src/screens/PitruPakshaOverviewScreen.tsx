@@ -229,13 +229,6 @@ export default function PitruPakshaOverviewScreen({ navigation }: Props) {
               </Pressable>
             )}
 
-            <Text style={{ fontFamily: fontFamilies.latinItalic, fontSize: 12, lineHeight: 19, color: colors.inkMuted, textAlign: 'center', marginTop: 16 }}>
-              {contentByLang(
-                lang,
-                'मिलान इसी फ़ोन पर पंचांग इंजन से — सूर्योदय-तिथि पद्धति',
-                'Matched on-device by the panchang engine — sunrise-tithi convention'
-              )}
-            </Text>
           </ScrollView>
         )}
       </SafeAreaView>
