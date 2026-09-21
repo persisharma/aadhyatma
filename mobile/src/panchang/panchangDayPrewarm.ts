@@ -26,13 +26,12 @@
  * module framework-free is what lets the engine suite import it.
  */
 import {
-  cachedDayInputs,
+  cachedDayInputsAsync,
   dayAt,
   dayKeysFrom,
   dayStoreFor,
   scopeKeyFor,
   startOfToday,
-  yieldToUi,
   type ScanLocation,
   type ScanOptions,
 } from './panchangDayStore';
@@ -51,12 +50,6 @@ import type { CalendarSystem } from './types';
  * because that module is RN-bound and this one must stay framework-free.
  */
 export const PREWARM_DAYS = 7;
-
-/**
- * Cede the thread after this many days that actually needed solving. Cache hits
- * are free, so a warm window walks in a single tick; only real astronomy pays.
- */
-const YIELD_AFTER_SOLVES = 2;
 
 /**
  * Scopes with a warm in flight. Two "today" surfaces can be mounted at once
@@ -103,19 +96,13 @@ export async function prewarmPanchangDays(
     if (isCancelled()) return;
 
     const map = dayStoreFor(scope);
-    let sinceYield = 0;
     for (let i = 0; i <= days; i += 1) {
       if (isCancelled()) return;
       try {
-        // Cache hits cost nothing and never trigger a yield.
-        if (!cachedDayInputs(map, dayAt(start, i), opts).miss) continue;
+        // Cache hits are immediate; misses share Home's cooperative CPU budget.
+        await cachedDayInputsAsync(map, dayAt(start, i), opts, isCancelled);
       } catch {
         continue; // an unsolvable day simply stays out of the window
-      }
-      sinceYield += 1;
-      if (sinceYield >= YIELD_AFTER_SOLVES) {
-        sinceYield = 0;
-        await yieldToUi();
       }
     }
     if (isCancelled()) return;

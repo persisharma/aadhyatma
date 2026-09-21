@@ -146,18 +146,12 @@ test('overlapping runs do not double-solve the same scope', async () => {
 });
 
 test('cancellation stops the walk mid-window', async () => {
-  // `isCancelled` is checked once after the hydrate and then before every day,
-  // so flipping on the third call lets exactly the first day through — proving
-  // the walk STARTED and was cut short, not that it never began.
-  let checks = 0;
-  const isCancelled = () => {
-    checks += 1;
-    return checks > 2;
-  };
-
+  // Cancel after a complete day is published, independent of how many phase
+  // boundaries the cooperative solver checks along the way.
+  const map = dayStoreFor(SCOPE);
+  const isCancelled = () => map.size >= 1;
   await prewarmPanchangDays(UJJAIN, SYSTEM, { start: START, days: PREWARM_DAYS, isCancelled });
 
-  const map = dayStoreFor(SCOPE);
   expect(map.size).toBe(1);
   expect(map.has(dateKey(0))).toBe(true);
   // A cancelled run must not persist a partial window as if it were complete —

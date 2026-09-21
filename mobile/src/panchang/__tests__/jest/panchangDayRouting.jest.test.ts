@@ -254,7 +254,7 @@ test('a cold cache still solves — the fallback is intact', async () => {
   const d = today();
   const spy = jest.spyOn(engine, 'computePanchangForDate');
   const { latest, unmount } = renderUseMuhurat(d);
-  await flush();
+  await settle();
 
   expect(spy).toHaveBeenCalled();
   expect(latest()?.muhurat?.dayChoghadiya).toHaveLength(8);

@@ -49,6 +49,7 @@ import { PANCHANG_DAY_CACHE_VERSION } from './panchangDaySerde';
 import {
   nextObservanceForEntry,
   pitruPakshaWindow,
+  pitruPakshaWindowAsync,
   primePitruPakshaWindow,
   type PitruPakshaWindow,
   type TithiRule,
@@ -215,6 +216,21 @@ export function ensurePakshaWindow(year: number): PitruPakshaWindow | null {
     window = null;
   }
   if (!window) return null;
+  windows.set(year, window);
+  dirtyYears.add(year);
+  return window;
+}
+
+/** Home's cold path must yield inside the scan, not just before it. */
+export async function ensurePakshaWindowAsync(
+  year: number,
+  isCancelled: () => boolean = () => false
+): Promise<PitruPakshaWindow | null> {
+  if (isCancelled()) return null;
+  const cached = windows.get(year);
+  if (cached) return cached;
+  const window = await pitruPakshaWindowAsync(year, isCancelled).catch(() => null);
+  if (!window || isCancelled()) return null;
   windows.set(year, window);
   dirtyYears.add(year);
   return window;

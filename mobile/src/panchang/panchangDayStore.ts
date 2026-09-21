@@ -17,6 +17,7 @@
 import { computePanchangForDate, locationKey, sunriseForDate } from './engine';
 import { computeAstaFlags } from './eventMuhurat';
 import { lagnaSpansForDay } from './lagnaSweep';
+import { runInBackground, runSynchronously } from './backgroundWork';
 import type { CalendarSystem, GeoLocation } from './types';
 import type { DayInputs } from './panchangDaySerde';
 
@@ -139,17 +140,78 @@ export function dayStoreFor(scope: string): Map<string, DayInputs> {
 }
 
 export function computeDayInputs(date: Date, opts: ScanOptions): DayInputs {
+  return runSynchronously(computeDayInputsSteps(date, opts));
+}
+
+function* computeDayInputsSteps(date: Date, opts: ScanOptions): Generator<void, DayInputs, void> {
   const noon = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12);
   const p = computePanchangForDate(date, opts);
+  yield;
   // Tomorrow's sunrise closes the lagna tiling. It comes from the engine's
   // shared sunrise memo, which computePanchangForDate above just filled for
   // its kshaya detection — a lookup, never a second root-find.
   const nextSunrise = sunriseForDate(dayAt(date, 1), opts);
+  const asta = computeAstaFlags(noon);
+  yield;
   return {
     p,
-    asta: computeAstaFlags(noon),
+    asta,
     lagnas: lagnaSpansForDay(p.sunrise, nextSunrise, opts.location.latitude, opts.location.longitude),
   };
+}
+
+type PendingDay = {
+  consumers: Set<() => boolean>;
+  promise: Promise<DayInputs | undefined>;
+};
+const pendingDays = new WeakMap<Map<string, DayInputs>, Map<string, PendingDay>>();
+
+/** Cold Home solves share the background budget, including the phases within
+ * a day. Only complete records enter the persisted store; cancellation can
+ * never make an incomplete day look like a cache hit to the Muhurat Finder.
+ */
+export async function cachedDayInputsAsync(
+  map: Map<string, DayInputs>,
+  date: Date,
+  opts: ScanOptions,
+  isCancelled: () => boolean = () => false
+): Promise<DayInputs | undefined> {
+  if (isCancelled()) return undefined;
+  const key = dateKeyFor(date);
+  const hit = map.get(key);
+  if (hit) return hit;
+  let pending = pendingDays.get(map);
+  if (!pending) {
+    pending = new Map();
+    pendingDays.set(map, pending);
+  }
+  let job = pending.get(key);
+  // A separate registration per consumer, even when they use the same callback.
+  const cancelled = () => isCancelled();
+  if (!job) {
+    const consumers = new Set([cancelled]);
+    const allCancelled = () => [...consumers].every((check) => check());
+    const promise = runInBackground(computeDayInputsSteps(date, opts), allCancelled)
+      .then((inputs) => {
+        if (!inputs || allCancelled()) return undefined;
+        // A synchronous consumer may have filled this day while the job yielded.
+        const existing = map.get(key);
+        if (existing) return existing;
+        map.set(key, inputs);
+        return inputs;
+      })
+      .finally(() => pending!.delete(key));
+    job = { consumers, promise };
+    pending.set(key, job);
+  } else {
+    job.consumers.add(cancelled);
+  }
+  try {
+    const inputs = await job.promise;
+    return isCancelled() ? undefined : inputs;
+  } finally {
+    job.consumers.delete(cancelled);
+  }
 }
 
 /** Read a scope's day-map by absolute date; compute + store on a miss. */

@@ -28,7 +28,7 @@ import {
   type PitruPakshaWindow,
 } from '@/panchang/pitruSmaran';
 import {
-  ensurePakshaWindow,
+  ensurePakshaWindowAsync,
   hydrateSmaranSolves,
   knownPakshaWindow,
   persistSmaranSolves,
@@ -134,10 +134,12 @@ export default function TodayStrip() {
     // an idle UI, then persists whatever it had to solve.
     const solveWhenIdle = () => {
       interaction = InteractionManager.runAfterInteractions(() => {
-        handle = setTimeout(() => {
+        handle = setTimeout(async () => {
           if (cancelled) return;
           const cold = knownPakshaWindow(year) === null;
-          const value = ensurePakshaWindow(year) ? readPitruPaksha(today) : null;
+          const window = await ensurePakshaWindowAsync(year, () => cancelled);
+          if (cancelled) return;
+          const value = window ? readPitruPaksha(today) : null;
           if (cancelled) return;
           setPitruPakshaToday(value);
           if (cold) void persistSmaranSolves();
