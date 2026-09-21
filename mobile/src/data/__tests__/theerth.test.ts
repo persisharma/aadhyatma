@@ -134,7 +134,7 @@ for (const t of temples) {
 }
 
 // ─── 6a′. RULEBOOK §12.6 — every NEW temple ships the full extended reading ─
-// The 62 rows that predate the rule are pinned here (70 at the rule's birth; the Rajasthan wave enriched 6, Khandoba Jejuri 1, Mahasu Devta Hanol 1). A new id that lacks
+// The 61 rows that predate the rule are pinned here (70 at the rule's birth; the Rajasthan wave enriched 6, Khandoba Jejuri 1, Mahasu Devta Hanol 1, Sabarimala 1). A new id that lacks
 // `sections` fails; extending this allowlist needs a recorded product decision.
 const LEGACY_WITHOUT_SECTIONS = new Set([
   'somnath', 'mallikarjuna', 'mahakaleshwar', 'omkareshwar', 'kedarnath', 'bhimashankar',
@@ -145,12 +145,12 @@ const LEGACY_WITHOUT_SECTIONS = new Set([
   'banke-bihari', 'srinathji', 'udupi-krishna', 'vishnupad-gaya', 'bhadrachalam',
   'danteshwari', 'mangueshi', 'lakshmi-narayan', 'durgiana', 'mansa-devi', 'govindajee-imphal',
   'tripura-sundari', 'manakula-vinayagar', 'parashuram-kund', 'nartiang-durga', 'kirateshwar',
-  'vetrimalai-murugan', 'iskcon-chandigarh', 'dimapur-kalibari', 'sabarimala',
+  'vetrimalai-murugan', 'iskcon-chandigarh', 'dimapur-kalibari',
   'kamakshi', 'shrinkhala', 'chamundeshwari', 'jogulamba',
   'bhramaramba', 'mahalakshmi-kolhapur', 'ekaveerika-mahur', 'harsiddhi-ujjain', 'puruhutika',
   'biraja', 'manikyamba', 'madhaveswari', 'mangala-gauri', 'vishalakshi',
 ]);
-assert.equal(LEGACY_WITHOUT_SECTIONS.size, 62, 'legacy no-sections allowlist is pinned at 62');
+assert.equal(LEGACY_WITHOUT_SECTIONS.size, 61, 'legacy no-sections allowlist is pinned at 61');
 for (const t of temples) {
   if (LEGACY_WITHOUT_SECTIONS.has(t.id)) continue;
   const ids = (t.sections ?? []).map((s) => s.id);
@@ -174,7 +174,7 @@ assert.match(salasar.sections![0].bodyEn, /Mohandas/, 'sthapana katha names Moha
 assert.match(salasar.sections![0].bodyEn, /Asota/, 'sthapana katha names Asota');
 
 // Rajasthan wave: the six Rajasthan lokdevta/kuldevi shrines carry the same five-section reading;
-// the Deccan wave (Khandoba Jejuri) and the Himalayan wave (Mahasu Devta Hanol) follow the same pin shape.
+// the Deccan wave (Khandoba Jejuri), the Himalayan wave (Mahasu Devta Hanol) and Sabarimala follow the same pin shape.
 const RAJASTHAN_WAVE: Record<string, { hi: RegExp; en: RegExp; fact: string }> = {
   'khatu-shyam': { hi: /रूपसिंह चौहान/, en: /1027 CE/, fact: 'Roop Singh Chauhan founded the shrine in 1027 CE' },
   'karni-mata': { hi: /1476/, en: /Ganga Singh/, fact: 'Deshnoke founded in Samvat 1476; Ganga Singh built the marble temple' },
@@ -184,6 +184,7 @@ const RAJASTHAN_WAVE: Record<string, { hi: RegExp; en: RegExp; fact: string }> =
   ramdevra: { hi: /1459/, en: /1459 CE/, fact: 'samadhi placed in 1459 CE by historical accounts; Ganga Singh built the temple in 1931' },
   'khandoba-jejuri': { hi: /राघो मंबाजी/, en: /1637 CE/, fact: 'Gadkot temple c. 1608 CE; Ragho Mambaji completed the mandap in 1637 CE; no recorded consecration tithi' },
   'mahasu-devta-hanol': { hi: /हूण भाट/, en: /ninth–tenth century CE/, fact: 'ASI dates the stone mulaprasada to the 9th–10th century CE; the Huna Bhat katha is tradition; no recorded consecration tithi' },
+  sabarimala: { hi: /18 मई 1951/, en: /Kandararu Sankararu/, fact: 'present panchaloha image reconsecrated 18 May 1951 (Kollam Era 1126, Edavam 4) by tantri Kandararu Sankararu after the 1950 fire; the Rajasekhara/Parashurama katha is tradition' },
 };
 for (const [id, pin] of Object.entries(RAJASTHAN_WAVE)) {
   const temple = getTempleById(id);
