@@ -226,7 +226,9 @@ export default function DaanPunyaScreen({ navigation }: Props) {
             style={[styles.rowCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}
           >
             <View style={{ flex: 1 }}>
-              <Text style={{ fontFamily: titleFont, fontSize: 14.5, lineHeight: 21, color: colors.ink }}>
+              {/* 22 leading, not 21: at 14.5 the semibold Devanagari matras (दानवीर, शिबि) sit
+                  above a 1.45× box and the row card sliced their tops — §2 floor is ≥1.5×. */}
+              <Text style={{ fontFamily: titleFont, fontSize: 14.5, lineHeight: 22, color: colors.ink }}>
                 {contentByLang(lang, katha.titleHi, katha.titleEn)}
               </Text>
               <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 17, color: colors.inkMuted, marginTop: 2 }}>
@@ -246,7 +248,7 @@ export default function DaanPunyaScreen({ navigation }: Props) {
           style={[styles.rowCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.cardActiveBorder, borderRadius: radii.lg }, elevation.card]}
         >
           <View style={{ flex: 1 }}>
-            <Text style={{ fontFamily: titleFont, fontSize: 14.5, lineHeight: 21, color: colors.ink }}>
+            <Text style={{ fontFamily: titleFont, fontSize: 14.5, lineHeight: 22, color: colors.ink }}>
               {contentByLang(lang, 'मेरा दान-पुण्य खाता', 'My daan-punya register')}
             </Text>
             <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 17, color: colors.inkMuted, marginTop: 2 }}>
