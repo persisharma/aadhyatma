@@ -102,6 +102,6 @@ you could not verify online.
 
 ## Queue (remaining after the Rajasthan wave)
 
-Plate exists, text pending: `mahasu-devta-hanol`, `sabarimala`,
-`vetrimalai-murugan`. Everything else (Srinathji, the 12
+Plate exists, text pending: `sabarimala`, `vetrimalai-murugan`.
+Everything else (Srinathji, the 12
 Jyotirlingas, Char Dham, Shakti Peeths, the rest) needs a plate first.
