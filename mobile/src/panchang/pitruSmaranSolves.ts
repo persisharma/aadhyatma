@@ -42,12 +42,14 @@
  * `panchangDayCache`'s — otherwise one city's answers would be served for another.
  */
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { runInBackground } from './backgroundWork';
 
 import { awaitDerivedCacheReset } from '@/utils/derivedCacheReset';
 import { addDays } from './calendarGrid';
 import { PANCHANG_DAY_CACHE_VERSION } from './panchangDaySerde';
 import {
   nextObservanceForEntry,
+  nextObservanceForEntrySteps,
   pitruPakshaWindow,
   pitruPakshaWindowAsync,
   primePitruPakshaWindow,
@@ -197,6 +199,32 @@ export function ensureOccurrences(rule: SmaranRule, today: Date, count: number):
 
   if (solved.length > known.length) {
     occurrences.set(ruleKey, solved.slice(0, KEPT_OCCURRENCES).map(dateKey));
+    dirtyRules.add(ruleKey);
+  }
+  return solved.slice(0, count);
+}
+
+/** Reminder cold misses yield within each annual scan and reuse persisted answers. */
+export async function ensureOccurrencesAsync(
+  rule: SmaranRule, today: Date, count: number, isCancelled: () => boolean = () => false
+): Promise<Date[]> {
+  if (isCancelled()) return [];
+  const ruleKey = smaranRuleKey(rule);
+  const known = futureOccurrences(ruleKey, today);
+  if (known.length >= count) return known.slice(0, count);
+  const solved = [...known];
+  let cursor = solved.length ? addDays(solved[solved.length - 1], 1) : startOfLocalDay(today);
+  while (solved.length < count) {
+    const found = await runInBackground(nextObservanceForEntrySteps({ tithiRule: rule }, cursor), isCancelled).catch(() => null);
+    if (isCancelled()) return [];
+    if (!found) break;
+    solved.push(found);
+    cursor = addDays(found, 1);
+  }
+  if (solved.length > known.length) {
+    // Another consumer may have filled more future dates while this job yielded.
+    const merged = [...new Set([...futureOccurrences(ruleKey, today), ...solved].map(dateKey))].sort();
+    occurrences.set(ruleKey, merged.slice(0, KEPT_OCCURRENCES));
     dirtyRules.add(ruleKey);
   }
   return solved.slice(0, count);

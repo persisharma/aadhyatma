@@ -52,11 +52,18 @@ export default function WidgetCoordinator() {
           try {
             // Dynamic boundary preserves Home first-frame independence.
             launchMarkOnce('widget-plan-start');
-            const { planWidgetPayload } = await import('./planPayload');
-            const payload = await planWidgetPayload({ generatedAt: new Date(), locale: lang, location, calendarSystem, deviceTimeZone, activity, lastUsedMantraId });
-            launchMarkOnce('widget-plan-done (28 uncached solves)');
-            // Dependency changes are allowed to finish their CPU work, but may
-            // never overwrite a newer location/language/calendar/activity plan.
+            const { cachedWidgetPlan } = await import('./planCache');
+            const payload = await cachedWidgetPlan(
+              { generatedAt: new Date(), locale: lang, location, calendarSystem, deviceTimeZone, activity, lastUsedMantraId },
+              async (input, isCancelled) => {
+                const { planWidgetPayload } = await import('./planPayload');
+                return planWidgetPayload(input, isCancelled);
+              },
+              () => cancelled || generation !== generationRef.current
+            );
+            launchMarkOnce('widget-plan-done');
+            // Superseded work stops between calculation units and may never
+            // overwrite a newer location/language/calendar/activity plan.
             if (cancelled || generation !== generationRef.current) return;
             const key = stableWidgetPayloadKey(payload);
             const previous = await AsyncStorage.getItem(LAST_PLAN_KEY).catch((error) => {
@@ -73,6 +80,7 @@ export default function WidgetCoordinator() {
               if (result === 'native' && !cancelled && generation === generationRef.current) await AsyncStorage.setItem(LAST_PLAN_KEY, key);
             }
           } catch (error) {
+            if (cancelled || generation !== generationRef.current) return;
             // Fail-closed for the user — the prior atomic payload stays intact and
             // native readers expose its freshness/recovery — but never fail-silent
             // for us: an unlogged plan/write failure lets widgets age into recovery

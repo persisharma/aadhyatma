@@ -11,7 +11,7 @@ import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { getEventRule } from '@/panchang/eventMuhurat';
 import { verdictForDate } from '@/panchang/muhuratFinderScan';
 import { hydratePanchangDays } from '@/panchang/panchangDayCache';
-import { dateKeyFor } from '@/panchang/panchangDayStore';
+import { dateKeyFor, dayAt, dayStoreFor, scopeKeyFor, cachedDayInputsAsync } from '@/panchang/panchangDayStore';
 import { scheduleMuhuratReminders, cancelAllMuhuratReminders } from '@/notifications/muhuratScheduler';
 import type { MuhuratReminderInput } from '@/notifications/muhuratReminderPure';
 
@@ -91,6 +91,15 @@ export default function MuhuratReminderScheduler() {
           continue; // occasion retired from EVENT_RULES — drop it silently
         }
         const date = dateFromFollowKey(f.dateKey);
+        // A persisted miss must not turn the following verdict into a blocking
+        // day solve on Home. Fill both days through the shared cooperative queue.
+        const map = dayStoreFor(scopeKeyFor(location, calendarSystem));
+        try {
+          const day = await cachedDayInputsAsync(map, date, opts, () => cancelled);
+          const next = await cachedDayInputsAsync(map, dayAt(date, 1), opts, () => cancelled);
+          if (cancelled) return;
+          if (!day || !next) continue;
+        } catch { continue; }
         // verdictForDate returns null rather than throwing, so one bad solve
         // cannot take down the whole re-arm.
         const solved = verdictForDate(rule, date, opts);

@@ -4,7 +4,9 @@ import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { entryDisplayName, startOfLocalDay } from '@/panchang/pitruSmaranDisplay';
-import { nextObservanceForEntry, tithiRuleLabel } from '@/panchang/pitruSmaran';
+import { tithiRuleLabel } from '@/panchang/pitruSmaran';
+import { ensureOccurrencesAsync, hydrateSmaranSolves, persistSmaranSolves } from '@/panchang/pitruSmaranSolves';
+import type { PitruSmaranReminderInput } from '@/notifications/pitruSmaranReminderPure';
 import {
   cancelAllPitruSmaranReminders,
   schedulePitruSmaranReminders,
@@ -39,15 +41,25 @@ export default function PitruSmaranReminderScheduler() {
       if (cancelled) return;
       const now = new Date();
       const today = startOfLocalDay(now);
-      const inputs = optedIn.map((entry) => ({
-        entryId: entry.id,
-        displayNameHi: entryDisplayName(entry, 'hi'),
-        displayNameEn: entryDisplayName(entry, 'en'),
-        tithiHi: tithiRuleLabel(entry.tithiRule, 'hi'),
-        tithiEn: tithiRuleLabel(entry.tithiRule, 'en'),
-        nextDate: nextObservanceForEntry(entry, today),
-      }));
-      if (!cancelled) schedulePitruSmaranReminders(inputs, now, lang).catch(() => undefined);
+      void (async () => {
+        await hydrateSmaranSolves(optedIn.map(entry => entry.tithiRule), today);
+        const inputs: PitruSmaranReminderInput[] = [];
+        for (const entry of optedIn) {
+          if (cancelled) return;
+          const nextDate = (await ensureOccurrencesAsync(entry.tithiRule, today, 1, () => cancelled))[0] ?? null;
+          inputs.push({
+            entryId: entry.id,
+            displayNameHi: entryDisplayName(entry, 'hi'),
+            displayNameEn: entryDisplayName(entry, 'en'),
+            tithiHi: tithiRuleLabel(entry.tithiRule, 'hi'),
+            tithiEn: tithiRuleLabel(entry.tithiRule, 'en'),
+            nextDate,
+          });
+        }
+        if (cancelled) return;
+        await persistSmaranSolves();
+        if (!cancelled) await schedulePitruSmaranReminders(inputs, now, lang);
+      })().catch(() => undefined);
     });
     return () => { cancelled = true; task.cancel(); };
   }, [entries, entriesLoading, prefsLoading, permissionStatus, lang, foregroundTick]);

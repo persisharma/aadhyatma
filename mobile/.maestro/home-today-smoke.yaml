@@ -71,3 +71,19 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Vrat & Parv"
 - tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
+
+# Returning-user first press: restart without clearing storage, then tap Home's
+# always-visible Today card as soon as it appears. This checks one-tap navigation,
+# not millisecond latency (measure that with launchTrace in a release build).
+- stopApp
+- launchApp:
+    clearState: false
+    arguments:
+      RCT_jsLocation: "127.0.0.1:8084"
+- extendedWaitUntil:
+    visible: "Today's Panchang\\..*Tap to open\\."
+    timeout: 30000
+- tapOn: "Today's Panchang\\..*Tap to open\\."
+- extendedWaitUntil:
+    visible: "Next month"
+    timeout: 15000

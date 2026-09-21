@@ -784,6 +784,8 @@ The engine suites extend to: a `basis`-completeness assertion over every emitted
 
 ## 17. Event Muhurat Finder (PRD-16) — rule-table contract
 
+**Startup integration invariant.** Callers mounted with Home must hydrate before calculating and use cooperative day/annual-scan APIs on a miss. An outer Promise, timer or `InteractionManager` callback is not a CPU yield inside a calculation. Numerical changes retain synchronous/cooperative parity tests, including timezone and end-time boundaries. Widget cached windows remain IST-scoped outside `panchangDayStore`; their key must invalidate on OTA/build, date, location, calendar and observance upgrades, and must not persist private activity. Validate with `scripts/profile-home-startup.mts` plus release-device tap tracing; a desktop timing is not an on-device latency result.
+
 The finder (`mobile/src/panchang/eventMuhurat.ts`, `abujhMuhurat.ts`, screens in the Panchang stack; design.md §60) grades civil days for an occasion from the shipped panchang/muhurat primitives. Its **rule tables are religious content** and carry the same obligations as any text in the app.
 
 1. **§10 applies to every `EVENT_RULES` entry.** Each occasion's nakshatra/tithi/vara lists must be verified against **≥2 independent authoritative concordant sources** (its `source.referenceUrls`), with recension/regional variance recorded in `source.notes`. Until an entry passes, its `source.verified` stays `false` — and **`verified: false` tables are a release blocker for any store build that exposes the finder**. The engine test pins that no entry claims verification prematurely.
