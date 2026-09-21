@@ -2,7 +2,7 @@
 title: Overview
 type: overview
 sources: [README.md, mobile/package.json, mobile/app.json, mobile/jest.config.js, mobile/App.tsx, mobile/src/navigation/, mobile/src/data/texts.ts, mobile/src/data/backgrounds.ts, mobile/src/data/routine/, mobile/src/panchang/, mobile/src/notifications/japamAlarms.ts, mobile/assets/backgrounds/, RULEBOOK.md, design.md, scripts/, push.sh, mobile/eslint.config.js, mobile/src/theme/, mobile/src/components/ReaderHeader.tsx, mobile/src/components/TextField.tsx]
-last_verified_date: 2026-08-30
+last_verified_date: 2026-09-21
 confidence: medium
 status: current
 ---
@@ -48,7 +48,12 @@ visible Home frame stable instead of moving the launcher grid immediately after 
    vrat, Kundali, Rashifal). Its modules are evaluated only when the tab/launcher first opens,
    keeping Home startup independent of the heavier calendar/Jyotish graph.
 4. **Audio ("Bhajan")** → `AudioStackNavigator` (audio library, Now Playing).
-5. **More** → `MoreStackNavigator` (MoreHome, Wishlist, Profile, Reminders).
+5. **More** → `MoreStackNavigator` (MoreHome, Wishlist, Profile, Reminders and family tools).
+   `MoreScreen` reads raw family counts immediately; `panchang/useMoreFamilySummary.ts`
+   hydrates persisted next-date answers and cooperatively derives/solves missing ones only
+   while the hub is focused. Blur, unmount and record changes cancel pending work. The
+   hub must not call `useJanmaTithiPeople` (birth math during render) or wrap synchronous
+   annual solvers in a timer. Closed settings sheets are not mounted.
 
 Deep links and notification taps route through `navigationRef`, exported from
 `mobile/src/notifications/deepLink.ts`; route mapping lives in `mobile/src/navigation/entryRoutes.ts`.

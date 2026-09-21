@@ -156,8 +156,15 @@ function toObservanceRule(rule: Partial<TithiRule> & Pick<TithiRule, 'paksha' | 
  * before anything persists (a silent conversion is never saved).
  */
 export function deriveTithiRuleFromDate(gregorianDate: Date, options: SolveOptions = {}): TithiRule {
+  return runSynchronously(deriveTithiRuleFromDateSteps(gregorianDate, options));
+}
+
+/** Same derivation, yielding within the engine for interactive surfaces. */
+export function* deriveTithiRuleFromDateSteps(
+  gregorianDate: Date, options: SolveOptions = {}
+): Generator<void, TithiRule, void> {
   const day = startOfLocalDay(gregorianDate);
-  const { tithiIndex, lunarMonth, paksha } = computeTithiAndMonth(day, {
+  const { tithiIndex, lunarMonth, paksha } = yield* computeTithiAndMonthSteps(day, {
     calendarSystem: 'purnimant',
     location: options.location,
   });

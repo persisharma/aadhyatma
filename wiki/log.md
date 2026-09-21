@@ -179,3 +179,13 @@ Ops: `ingest`, `query`, `lint`, `gap`, `prune`.
 ## [2026-09-21] ingest | Lens filter now offers only calendars with content, answers "what did जैन add?", and gains bulk controls — after the report that selecting Jain "still shows everything" with no select-all. Root cause: 20 of the 22 registered calendars carry no rule (W3–W8 unshipped), so most switches changed nothing and nothing marked what the two real ones changed. `vratCatalog.getLensesWithContent()` (today `tamil`, `jain`) is what every surface offers; `withContentOnly` narrows the stored set for display in `useLenses` (via a `require()` thunk — More is on the launch graph); `availableCount` 0 hides the ledger column, quiet-day row and More row entirely; seeding and सभी चुनें use offered ids only. `getRulesForLens`/`getLensAdditions` print each calendar's additions on the sheet row and in the new व्रत-पर्व `आपके पंचांग से` card (tappable, next date). `lensStore.setAllLenses` + सभी चुनें / सभी हटाएँ pills that hide when a no-op; ledger/More say `सभी n`. design.md §73 (new "Offered ≠ registered" block), RULEBOOK §23a.5, [[panchang]] lens block + retired-`regional` gotcha corrected; `lens.test.ts` +8 (pinned offered list — shipping a calendar's first rule must update it); `.maestro/regional-lens-smoke.yaml` authored, device run owed.
 
 ## [2026-09-21] ingest | Home first-tap follow-up: persisted widget windows, 14 cooperative solves, numerical search yields, and cached cooperative reminder scans. Updated Home/widgets design and startup integration invariant. Device latency still requires Hermes verification.
+
+## [2026-09-21] ingest | More tab first-interaction follow-up
+
+MoreHome still ran synchronous annual Pitru/Janma scans in zero-delay timers after
+#358, bypassing the persisted occurrence cache; its birthday hook also derived
+rules during render. More now reads raw counts, hydrates the tithi-only cache,
+and derives/solves cooperatively with focus-scoped cancellation. Closed language,
+reading-size and read-aloud sheets mount on demand. Updated overview and design
+§37; added lifecycle/caching regression tests and a preserved-state More restart
+path to the Pitru Maestro flow. Device execution remains pending in this environment.

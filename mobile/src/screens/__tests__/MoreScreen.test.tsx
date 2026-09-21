@@ -6,6 +6,13 @@ import { readAloudRowLabel } from '@/components/ReadAloudSettingsSheet';
 import { DEFAULT_READ_ALOUD_PREFS } from '@/readAloud/prefs';
 import { ThemeProvider } from '@/theme/ThemeContext';
 import { FontScaleProvider } from '@/contexts/FontScaleContext';
+import LanguagePickerSheet from '@/components/LanguagePickerSheet';
+import ReadingSizePickerSheet from '@/components/ReadingSizePickerSheet';
+import ReadAloudSettingsSheet from '@/components/ReadAloudSettingsSheet';
+
+jest.mock('@react-navigation/native', () => ({
+  useFocusEffect: (effect: () => void | (() => void)) => require('react').useEffect(effect, [effect]),
+}));
 
 /**
  * MoreScreen redesign (V4 grouped-list): three inset lists — साधना / ऐप / जानकारी.
@@ -153,6 +160,18 @@ describe('MoreScreen (redesign)', () => {
     expect(openModals(tree)).toBe(0);
     act(() => byLabel(tree, 'Language, Hindi').props.onPress());
     expect(openModals(tree)).toBe(1);
+  });
+
+  test('closed settings sheets do no mount work when More opens', async () => {
+    const tree = await renderMore(makeNav());
+    expect(tree.root.findAllByType(LanguagePickerSheet)).toHaveLength(0);
+    expect(tree.root.findAllByType(ReadingSizePickerSheet)).toHaveLength(0);
+    expect(tree.root.findAllByType(ReadAloudSettingsSheet)).toHaveLength(0);
+    act(() => byLabel(tree, 'Language, Hindi').props.onPress());
+    expect(tree.root.findAllByType(LanguagePickerSheet)).toHaveLength(1);
+    act(() => tree.root.findByType(LanguagePickerSheet).props.onClose());
+    expect(tree.root.findAllByType(LanguagePickerSheet)).toHaveLength(0);
+    act(() => tree.unmount());
   });
 
   test('tapping Reading size opens a picker sheet', async () => {
