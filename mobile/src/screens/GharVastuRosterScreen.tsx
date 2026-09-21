@@ -204,8 +204,8 @@ export default function GharVastuRosterScreen({ navigation }: { navigation: Navi
           <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 17, color: colors.inkMuted, marginTop: 6 }}>
             {meaningByLang(
               lang,
-              'देखे जा रहे 2–3 घर चुनें — पाठ साथ-साथ दिखेगा, निर्णय आपका।',
-              'Pick 2–3 homes you are viewing — the readings sit side by side; the decision stays yours.'
+              'देखे जा रहे 2–3 घर चुनें — पाठ साथ-साथ दिखेगा।',
+              'Pick 2–3 homes you are viewing — the readings sit side by side.'
             )}
           </Text>
         ) : null}

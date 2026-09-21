@@ -63,8 +63,8 @@ export default function RashifalLifeAreas({ reading, lang }: { reading: Detailed
                   {showBasis && (
                     <View style={{ gap: spacing.md }}>
                       <Text style={{ ...bodyStyle, color: colors.inkSoft }}>{meaningByLang(lang,
-                        'भाव के विषय और ग्रह के पारम्परिक संबंध से संकेत चुने गए हैं। सहज और धैर्य के संकेत साथ हों तो संतुलित ध्यान सुझाया जाता है; यह कोई अंक नहीं है।',
-                        'Signals are grouped by house themes and traditional planetary associations. When support and patience cues occur together, the reading suggests balanced attention; this is not a score.')}</Text>
+                        'भाव के विषय और ग्रह के पारम्परिक संबंध से संकेत चुने गए हैं। सहज और धैर्य के संकेत साथ हों तो संतुलित ध्यान सुझाया जाता है।',
+                        'Signals are grouped by house themes and traditional planetary associations. When support and patience cues occur together, the reading suggests balanced attention.')}</Text>
                       {area.evidence.map((item) => <Text key={item.graha} style={bodyStyle}>{prose(item.description)}</Text>)}
                     </View>
                   )}

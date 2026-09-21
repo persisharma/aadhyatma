@@ -186,12 +186,13 @@ export default function GharVastuCompareScreen({ navigation, route }: { navigati
           </View>
         ))}
 
-        {/* the closing line — the stance, verbatim (US-13) */}
+        {/* US-13's closing line — why the screen names no winner. Trimmed to the
+            fact (Sept 2026 copy pass): the "निर्णय आपका है" half was a platitude. */}
         <Text testID="compare-closing" style={{ fontFamily: bodyFont, fontSize: 12, lineHeight: 19, color: colors.inkSoft, marginTop: spacing.xl }}>
           {meaningByLang(
             lang,
-            'कौन-सा घर — यह निर्णय आपका है; यहाँ केवल विधान का पाठ है।',
-            'Which home — that decision is yours; this is only a reading of the convention.'
+            'यहाँ केवल विधान का पाठ है — हर घर पर वही मापदंड लगाया गया है।',
+            'This is only a reading of the convention — the same measure is applied to every home.'
           )}
         </Text>
         <View style={[styles.privacy, { borderLeftColor: colors.goldChipBg }]}>
