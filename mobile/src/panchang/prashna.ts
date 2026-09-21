@@ -115,6 +115,7 @@ export type PrashnaAnswer = {
   chains: readonly PrashnaChain[];
   supports: readonly PrashnaFactor[];
   resists: readonly PrashnaFactor[];
+  qualifies: readonly PrashnaFactor[];
   kaalIntroHi: string;
   kaalIntroEn: string;
   windows: readonly PrashnaWindow[];
@@ -128,7 +129,7 @@ export type PrashnaAnswer = {
 };
 
 export type PrashnaOptions = {
-  /** Days scanned for the next slow-graha ingress; 0 skips every transit pass. */
+  /** Days scanned for future ingress; 0 still includes the current snapshot. */
   gocharScanDays?: number;
 };
 
@@ -455,14 +456,14 @@ function dashaWindow(
   let textHi: string;
   let textEn: string;
   if (touched !== null) {
-    textHi = `${lHi} ${levelHi}${inHi} — ${lHi} आपके ${bhavaLabelHi(touched)} (${theme(touched).hi}) से जुड़ा है; परम्परा इस अवधि को इस विषय के लिए अनुकूल काल मानती है।`;
-    textEn = `${lEn} ${levelEn}${inEn} — ${lEn} is tied to your ${bhavaLabelEn(touched)} (${theme(touched).en}); tradition counts this period as a supportive window for the matter.`;
+    textHi = `${lHi} ${levelHi}${inHi} — ${lHi} आपके ${bhavaLabelHi(touched)} (${theme(touched).hi}) से जुड़ा है; यह अवधि इस विषय से जुड़ी है, पर संबंध अपने-आप अनुकूलता नहीं है।`;
+    textEn = `${lEn} ${levelEn}${inEn} — ${lEn} is tied to your ${bhavaLabelEn(touched)} (${theme(touched).en}); this period is relevant to the topic; relevance alone does not establish a supportive window.`;
   } else if (isKaraka) {
-    textHi = `${lHi} ${levelHi}${inHi} — इस विषय का कारक अपनी अवधि में; परम्परा इसे अनुकूल काल मानती है।`;
-    textEn = `${lEn} ${levelEn}${inEn} — this matter’s karaka in its own period; tradition counts it as a supportive window.`;
+    textHi = `${lHi} ${levelHi}${inHi} — इस विषय का कारक अपनी अवधि में; इससे अपने-आप अनुकूलता नहीं निकलती।`;
+    textEn = `${lEn} ${levelEn}${inEn} — this matter’s karaka in its own period; this makes it relevant, not necessarily a supportive window.`;
   } else {
-    textHi = `${lHi} ${levelHi}${inHi} — इन भावों से सीधे जुड़ी नहीं; पृष्ठभूमि का स्वर ${DASHA_LORD_KEYWORDS_HI[lord]} का है — तैयारी का काल, बड़े आरम्भ का नहीं।`;
-    textEn = `${lEn} ${levelEn}${inEn} — not tied to these houses; the background tone is ${DASHA_LORD_KEYWORDS_EN[lord]} — a time for preparation rather than a large beginning.`;
+    textHi = `${lHi} ${levelHi}${inHi} — इन भावों से सीधे जुड़ी नहीं; पृष्ठभूमि का स्वर ${DASHA_LORD_KEYWORDS_HI[lord]} का है — इस विषय के समय पर निष्कर्ष सीमित है।`;
+    textEn = `${lEn} ${levelEn}${inEn} — not tied to these houses; the background tone is ${DASHA_LORD_KEYWORDS_EN[lord]} — there is limited basis for judging timing for this topic.`;
   }
   return {
     id: `${level}-${lord}-${indiaDateKey(start)}`,
@@ -476,7 +477,9 @@ function dashaWindow(
     relevant,
     basis: [
       { kind: 'dasha', level, lord, startKey: indiaDateKey(start), endKey: indiaDateKey(end) },
-      ...(touched !== null ? [{ kind: 'lord', graha: lord, ofHouse: touched, inHouse: pos(chart, lord).house } as BasisNode] : []),
+      ...(touched !== null ? [lordOf(chart, touched) === lord
+        ? { kind: 'lord', graha: lord, ofHouse: touched, inHouse: pos(chart, lord).house } as BasisNode
+        : grahaNode(pos(chart, lord))] : []),
     ],
   };
 }
@@ -490,29 +493,30 @@ function timeWindows(chart: KundaliChart, purpose: PrashnaPurpose, now: Date, sc
     if (current.antar) {
       windows.push(dashaWindow(chart, purpose, 'antar', current.antar.lord, current.antar.start, current.antar.end, true, current.maha.lord));
       // The next sub-period that touches these houses.
-      const later = current.maha.antardashas.filter((antar) => antar.start.getTime() >= current.antar!.end.getTime());
+      const later = chart.vimshottari.flatMap(maha => maha.antardashas.map(antar => ({ ...antar, mahaLord: maha.lord })))
+        .filter(antar => antar.start.getTime() >= current.antar!.end.getTime());
       const nextRelevant = later.find((antar) => lordTouches(chart, purpose, antar.lord) !== null || purpose.karakas.includes(antar.lord));
       if (nextRelevant) {
-        windows.push(dashaWindow(chart, purpose, 'antar', nextRelevant.lord, nextRelevant.start, nextRelevant.end, false, current.maha.lord));
+        windows.push(dashaWindow(chart, purpose, 'antar', nextRelevant.lord, nextRelevant.start, nextRelevant.end, false, nextRelevant.mahaLord));
       }
     }
     const mahaTouch = lordTouches(chart, purpose, current.maha.lord) !== null || purpose.karakas.includes(current.maha.lord);
     const antarTouch = current.antar ? (lordTouches(chart, purpose, current.antar.lord) !== null || purpose.karakas.includes(current.antar.lord)) : false;
     if (mahaTouch || antarTouch) {
       const lord = mahaTouch ? current.maha.lord : current.antar!.lord;
-      factors.push(factor('dasha-relevant', 'support', 1, 'dasha',
-        P(`चल रही ${GRAHA_NAMES_HI[lord]} ${mahaTouch ? 'महादशा' : 'अन्तर्दशा'} इस विषय के भावों को छूती है — समय और कुंडली एक ओर।`,
-          `The running ${GRAHA_NAMES_EN[lord]} ${mahaTouch ? 'Mahadasha' : 'Antardasha'} touches this matter’s houses — time and chart point the same way.`),
+      factors.push(factor('dasha-relevant', 'qualify', 1, 'dasha',
+        P(`चल रही ${GRAHA_NAMES_HI[lord]} ${mahaTouch ? 'महादशा' : 'अन्तर्दशा'} इस विषय के भावों को छूती है — यह संबंध है, अनुकूलता का निष्कर्ष नहीं।`,
+          `The running ${GRAHA_NAMES_EN[lord]} ${mahaTouch ? 'Mahadasha' : 'Antardasha'} touches this matter’s houses — this establishes relevance, not favourability.`),
         [{ kind: 'dasha', level: mahaTouch ? 'maha' : 'antar', lord, startKey: indiaDateKey(mahaTouch ? current.maha.start : current.antar!.start), endKey: indiaDateKey(mahaTouch ? current.maha.end : current.antar!.end) }]));
     }
   }
 
-  if (scanDays > 0) {
+  {
     const snapshot = computeGocharSnapshot(chart, now);
     for (const graha of ['jupiter', 'saturn'] as const) {
       const transit = snapshot.transits.find((entry) => entry.graha === graha);
       if (!transit || !purpose.bhavas.includes(transit.houseFromLagna)) continue;
-      const ingress = findNextIngress(graha, now, scanDays);
+      const ingress = scanDays > 0 ? findNextIngress(graha, now, scanDays) : null;
       const endKey = ingress ? indiaDateKey(ingress.at) : null;
       const gHi = GRAHA_NAMES_HI[graha];
       const gEn = GRAHA_NAMES_EN[graha];
@@ -526,18 +530,18 @@ function timeWindows(chart: KundaliChart, purpose: PrashnaPurpose, now: Date, sc
         labelHi: `${formatIstDateHi(now)}${until.hi ? ` →${until.hi.replace(' तक', '')}` : ' से'}`,
         labelEn: `${formatIstDateEn(now)}${until.en ? ` →${until.en.replace(' until', '')}` : ' onward'}`,
         textHi: isJupiter
-          ? `गुरु का गोचर आपके ${bhavaLabelHi(h)} (${theme(h).hi}) से${until.hi} — परम्परा का इस विषय के लिए सबसे प्रचलित अनुकूल काल।`
+          ? `गुरु का गोचर आपके ${bhavaLabelHi(h)} (${theme(h).hi}) से${until.hi} — इस विषय से जुड़ा गोचर; अन्य संकेतों के साथ पढ़ें।`
           : `शनि का गोचर आपके ${bhavaLabelHi(h)} (${theme(h).hi}) से${until.hi} — परम्परा इसे धीमा, ढाँचे वाला और धैर्य माँगने वाला काल कहती है।`,
         textEn: isJupiter
-          ? `Jupiter transits your ${bhavaLabelEn(h)} (${theme(h).en})${until.en} — tradition’s most-cited supportive window for this matter.`
+          ? `Jupiter transits your ${bhavaLabelEn(h)} (${theme(h).en})${until.en} — a transit relevant to this topic; read it with the other indications.`
           : `Saturn transits your ${bhavaLabelEn(h)} (${theme(h).en})${until.en} — a window tradition reads as slow, structured and demanding of patience.`,
         current: true,
         relevant: true,
-        basis: [{ kind: 'gochar', graha, fromMoonHouse: transit.houseFromMoon, asOfKey: snapshot.dateKey }],
+        basis: [{ kind: 'gochar', graha, fromMoonHouse: transit.houseFromMoon, fromLagnaHouse: h, asOfKey: snapshot.dateKey }],
       });
-      factors.push(factor(`gochar-${graha}`, isJupiter ? 'support' : 'qualify', 1, `gochar-${graha}`,
+      factors.push(factor(`gochar-${graha}`, 'qualify', 1, `gochar-${graha}`,
         P(`${gHi} इस समय ${bhavaLabelHi(h)} से गोचर कर रहा है।`, `${gEn} is transiting the ${bhavaLabelEn(h)} just now.`),
-        [{ kind: 'gochar', graha, fromMoonHouse: transit.houseFromMoon, asOfKey: snapshot.dateKey }]));
+        [{ kind: 'gochar', graha, fromMoonHouse: transit.houseFromMoon, fromLagnaHouse: h, asOfKey: snapshot.dateKey }]));
     }
   }
 
@@ -590,8 +594,8 @@ export function buildPrashnaAnswer(
     ageLabelHi: ageLabelHi(age),
     ageLabelEn: ageLabelEn(age),
     practiceSourceId: purpose.practiceSourceId,
-    footerHi: `${asOfHi} की स्थिति के अनुसार। यह पारम्परिक ज्योतिष की दृष्टि है — निश्चित भविष्यवाणी नहीं। हर वाक्य अपना आधार ऊपर दिखाता है।`,
-    footerEn: `As of ${asOfEn}. A view from traditional Jyotish — not a certain prediction. Every sentence shows its basis above.`,
+    footerHi: `${asOfHi} की स्थिति के अनुसार। यह पारम्परिक ज्योतिष की दृष्टि है — निश्चित भविष्यवाणी नहीं। ज्योतिषीय आधार विस्तार में देख सकते हैं।`,
+    footerEn: `As of ${asOfEn}. A view from traditional Jyotish — not a certain prediction. Chart interpretations have an expandable basis.`,
   };
 
   // §14.3.5 — a closed purpose renders NO reading.
@@ -613,6 +617,7 @@ export function buildPrashnaAnswer(
       chains: [],
       supports: [],
       resists: [],
+      qualifies: [],
       kaalIntroHi: '',
       kaalIntroEn: '',
       windows: [],
@@ -666,17 +671,17 @@ export function buildPrashnaAnswer(
   const relevantNow = timed.windows.some((w) => w.current && w.relevant);
   if (timed.windows.length > 0) {
     if (relevantNow) {
-      dishaHi.push('चल रही अवधि इस विषय को छूती है — परम्परा इसे आरम्भ या विस्तार के लिए अनुकूल काल मानती है; नीचे की तिथियाँ देखें।');
-      dishaEn.push('The running period touches this matter — tradition counts it a supportive window for beginning or expanding; see the dates below.');
+      dishaHi.push('चल रही अवधि इस विषय को छूती है — इससे अपने-आप आरम्भ या विस्तार की अनुकूलता नहीं निकलती; काल खंड में तिथियाँ देखें।');
+      dishaEn.push('The running period touches this matter — this alone does not establish a supportive window for beginning or expanding; see the timing section.');
     } else {
-      dishaHi.push('चल रही अवधि इस विषय से दूर है — यह तैयारी का काल है; अगली अनुकूल अवधि की तिथि नीचे है।');
-      dishaEn.push('The running period sits away from this matter — a time for preparation; the next supportive window is dated below.');
+      dishaHi.push('चल रही अवधि इस विषय से दूर है — इस विषय के लिए समय पर निष्कर्ष सीमित है।');
+      dishaEn.push('The running period sits away from this matter — there is limited basis for judging timing for this topic.');
     }
   }
 
   const kaal = P(
-    'ये अवधियाँ दशा और गोचर से निकली हैं — इनमें कुछ "होगा" नहीं; इनमें प्रयास को सहारा मिलता है।',
-    'These windows come from the dasha sequence and slow transits — nothing "happens" in them; effort finds support in them.'
+    'ये अवधियाँ दशा और गोचर से निकली हैं। विषय से संबंध अपने-आप अनुकूलता या परिणाम नहीं बताता।',
+    'These periods come from the dasha sequence and slow transits. Topic relevance alone does not establish favourability or an outcome.'
   );
 
   return {
@@ -696,6 +701,7 @@ export function buildPrashnaAnswer(
     chains,
     supports,
     resists,
+    qualifies,
     kaalIntroHi: kaal.hi,
     kaalIntroEn: kaal.en,
     windows: timed.windows,

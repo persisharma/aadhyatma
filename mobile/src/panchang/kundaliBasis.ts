@@ -32,7 +32,7 @@ export type BasisNode =
   | { kind: 'graha'; graha: Graha; house: number; dignity: Dignity; retrograde?: boolean }
   | { kind: 'yoga'; yogaId: string }
   | { kind: 'dasha'; level: 'maha' | 'antar'; lord: Graha; startKey: string; endKey: string }
-  | { kind: 'gochar'; graha: Graha; fromMoonHouse: number; asOfKey: string }
+  | { kind: 'gochar'; graha: Graha; fromMoonHouse: number; fromLagnaHouse?: number; aspectsFromLagna?: readonly number[]; asOfKey: string }
   | { kind: 'relation'; from: Graha; to: Graha; relation: Maitri };
 
 export type Maitri = 'friend' | 'neutral' | 'enemy';
@@ -173,7 +173,7 @@ export function basisLabelHi(node: BasisNode): string {
     case 'dasha':
       return `${GRAHA_NAMES_HI[node.lord]} ${node.level === 'maha' ? 'महादशा' : 'अन्तर्दशा'} · ${formatIstDateHi(new Date(node.startKey))} → ${formatIstDateHi(new Date(node.endKey))}`;
     case 'gochar':
-      return `गोचर ${GRAHA_NAMES_HI[node.graha]} · चन्द्र से ${bhavaLabelHi(node.fromMoonHouse)} · ${formatIstDateHi(new Date(node.asOfKey))}`;
+      return `गोचर ${GRAHA_NAMES_HI[node.graha]} · चन्द्र से ${bhavaLabelHi(node.fromMoonHouse)}${node.fromLagnaHouse ? ` · लग्न से ${bhavaLabelHi(node.fromLagnaHouse)}` : ''}${node.aspectsFromLagna?.length ? ` · लग्न से दृष्टि: ${node.aspectsFromLagna.join(', ')}` : ''} · ${formatIstDateHi(new Date(node.asOfKey))}`;
     case 'relation':
       return `${GRAHA_NAMES_HI[node.from]} के लिए ${GRAHA_NAMES_HI[node.to]} ${MAITRI_LABEL_HI[node.relation]}`;
   }
@@ -192,7 +192,7 @@ export function basisLabelEn(node: BasisNode): string {
     case 'dasha':
       return `${GRAHA_NAMES_EN[node.lord]} ${node.level === 'maha' ? 'Mahadasha' : 'Antardasha'} · ${formatIstDateEn(new Date(node.startKey))} → ${formatIstDateEn(new Date(node.endKey))}`;
     case 'gochar':
-      return `transit ${GRAHA_NAMES_EN[node.graha]} · ${bhavaLabelEn(node.fromMoonHouse)} from Moon · ${formatIstDateEn(new Date(node.asOfKey))}`;
+      return `transit ${GRAHA_NAMES_EN[node.graha]} · ${bhavaLabelEn(node.fromMoonHouse)} from Moon${node.fromLagnaHouse ? ` · ${bhavaLabelEn(node.fromLagnaHouse)} from Lagna` : ''}${node.aspectsFromLagna?.length ? ` · aspects houses ${node.aspectsFromLagna.join(', ')} from Lagna` : ''} · ${formatIstDateEn(new Date(node.asOfKey))}`;
     case 'relation':
       return `${GRAHA_NAMES_EN[node.to]} is a ${MAITRI_LABEL_EN[node.relation]} to ${GRAHA_NAMES_EN[node.from]}`;
   }

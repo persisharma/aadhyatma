@@ -265,3 +265,16 @@ Wave A is the one that changes the reviewer's "wording 7/10" and most of the "ma
 4. Does the **child-subject** case need its own consent framing, given a parent now reads purpose-driven indications about a minor? §14.3.5 closes the five adult purposes and fixes the register, but does not ask for consent.
 5. `swasthya` is the one purpose where the removed rule did real safety work. Ship it in Wave D, or hold it to a later wave with its own content review?
 6. The §10 two-source gate applies to the nine purpose records (bhava/karaka sets). Who signs those off, and does Wave D ship `verified:false` behind a flag as `EVENT_RULES` does?
+
+## 11. Insight-first follow-up (18 September 2026)
+
+User review found that technical completeness had crowded out useful guidance. The implemented follow-up adds explicit question choices, everyday theme interpretation, an editorial action checklist and expandable technical evidence; selected context is preserved in full-text export. Dasha/transit relevance no longer increases favourable strength. See design.md §72 for the current flow and `docs/evaluations/kundali-guidance-2026-09-18/README.md` for the four-profile engine/GPT/public-platform comparison and verification limits. The original six-block display above is superseded by that flow; the existing source-review release gate and offline runtime boundary remain.
+
+
+## 12. Current-phase pilot (21 September 2026)
+
+The user rejected the generic action checklist as the answer to their question. The approved replacement combines natal graha, current Mahadasha/Antardasha and current gochar, explains the present phase, derives a direction and shows the next calculated period change. Career/business are the first review milestone before extending to the other seven purposes.
+
+Implemented: shared `PrashnaPhase` v1 in screen/Ask/export, typed factual basis, actual lord-versus-occupant distinction, separate Lagna/Moon transit references, Jupiter/Saturn aspects and vedha, dated refresh, and bilingual current-phase cards. Question context and the report JSON tail remain intact. There is no runtime model call. The evaluation records 60 engine readings (six people × five instants × two questions) and six actual GPT responses comparing two instants each. External outputs are review material, not truth labels; recorded factual disagreements and public-platform comparability limits are in `docs/evaluations/prashna-phase-2026-09-21/README.md`.
+
+Still pending: source sign-off, broader natal associations/dispositors and functional relationships, divisional/strength methods, richer direction wording where the narrow model abstains, and rollout to seven remaining purposes. Ask currently understands purpose but does not resolve question subtypes. This is a reviewable pilot, not release certification. See design.md §72 and `docs/roadmap/conventions/prashna-phase-v1.md` for the actual contract and exclusions.

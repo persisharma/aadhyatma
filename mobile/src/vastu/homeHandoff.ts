@@ -2,8 +2,8 @@
  * मेरा घर full-text handoff — PRD-24 Phase 2 §F0/US-14.
  *
  * One plain-text document — the mandala as a text grid, ideal-vs-yours for
- * every room with the rule's weight, every finding with its accommodation, a
- * privacy line, and the serialisable `HomeAssessmentModel` as the
+ * every room with the rule's weight, every finding with its accommodation,
+ * and the serialisable `HomeAssessmentModel` as the
  * machine-readable tail (the designed AI grounding object). Pure and offline:
  * the app never contacts a service — the user hands the text over themselves
  * through the OS share sheet (the `kundaliHandoff` pattern, RULEBOOK §22
@@ -133,10 +133,6 @@ export function buildHomeHandoffText(record: HomeRecord, model: HomeAssessmentMo
     '(groups in the fixed order forbidden → differs → preferred-unmet → alternate → in-keeping → unmeasured; registry order within)',
     '',
     groupsText,
-    '',
-    '## Privacy',
-    'यह मानचित्र केवल उस फ़ोन पर रहता है — यह पाठ उपयोगकर्ता ने स्वयं साझा किया है। /',
-    'This map lives only on that phone; this text left it only because the user shared it.',
     '',
     '## Machine-readable model (JSON)',
     '```json',

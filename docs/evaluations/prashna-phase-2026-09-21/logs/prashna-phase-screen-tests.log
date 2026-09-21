@@ -1,0 +1,13 @@
+
+> vedansh@0.1.0 test:readers
+> jest --config jest.config.js --runInBand --runTestsByPath src/screens/__tests__/PrashnaExperience.test.tsx src/screens/__tests__/KundaliReportExperience.test.tsx src/panchang/__tests__/jest/useJyotishNow.jest.test.tsx
+
+PASS src/panchang/__tests__/jest/useJyotishNow.jest.test.tsx
+PASS src/screens/__tests__/KundaliReportExperience.test.tsx
+PASS src/screens/__tests__/PrashnaExperience.test.tsx
+
+Test Suites: 3 passed, 3 total
+Tests:       12 passed, 12 total
+Snapshots:   0 total
+Time:        2.308 s, estimated 3 s
+Ran all test suites within paths "src/screens/__tests__/PrashnaExperience.test.tsx", "src/screens/__tests__/KundaliReportExperience.test.tsx", "src/panchang/__tests__/jest/useJyotishNow.jest.test.tsx".

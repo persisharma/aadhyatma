@@ -188,13 +188,6 @@ export default function PitruSmaranListScreen({ navigation }: Props) {
             </Text>
           </Pressable>
 
-          <Text style={{ fontFamily: fontFamilies.latinItalic, fontSize: 12, lineHeight: 19, color: colors.inkMuted, textAlign: 'center', marginTop: 14 }}>
-            {contentByLang(
-              lang,
-              'यह सूची केवल इसी फ़ोन पर रहती है — तिथियाँ इसी फ़ोन पर पंचांग इंजन से निकाली जाती हैं',
-              'This list lives only on this phone — solved on-device by the same engine as the festivals'
-            )}
-          </Text>
         </ScrollView>
       </SafeAreaView>
     </View>

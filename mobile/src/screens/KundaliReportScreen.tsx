@@ -15,10 +15,13 @@ import { library } from '@/data/texts';
 import { buildEntryStartTarget } from '@/navigation/entryRoutes';
 import type { PanchangStackParamList } from '@/navigation/types';
 import { buildKundaliHandoffText } from '@/panchang/kundaliHandoff';
+import { buildPrashnaReading } from '@/panchang/prashnaGuidance';
+import { isPurposeId } from '@/panchang/prashnaPurposes';
 import { buildKundaliReport } from '@/panchang/kundaliReport';
 import type { KundaliReportSection } from '@/panchang/kundaliReportModel';
 import { getCityById } from '@/panchang/locations';
 import { useKundali } from '@/panchang/useKundali';
+import { useJyotishNow } from '@/panchang/useJyotishNow';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang } from '@/utils/localize';
@@ -55,13 +58,13 @@ function birthTimeLabel(time: string | undefined): string | null {
   return `${clockHour}:${String(minute).padStart(2, '0')} ${meridiem}`;
 }
 
-export default function KundaliReportScreen({ navigation }: Props) {
+export default function KundaliReportScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
   const rootNav = useNavigation<any>();
   const { chart, profile, loadState } = useKundali();
   const [shareVisible, setShareVisible] = useState(false);
-  const now = useMemo(() => new Date(), []);
+  const now = useJyotishNow(chart);
   const city = profile ? getCityById(profile.cityId) : null;
 
   const report = useMemo(() => {
@@ -80,6 +83,11 @@ export default function KundaliReportScreen({ navigation }: Props) {
     );
   }, [chart, city, now, profile]);
 
+  const questionContext = route?.params?.prashnaContext;
+  const questionReading = useMemo(() => chart && questionContext && isPurposeId(questionContext.purposeId)
+    ? buildPrashnaReading(chart, questionContext.purposeId, now, { questionId: questionContext.questionId }) : undefined,
+  [chart, now, questionContext]);
+
   const openPractice = (sourceId: string) => {
     const entry = library.find((candidate) => candidate.id === sourceId);
     const target = entry ? buildEntryStartTarget(entry) : null;
@@ -92,7 +100,7 @@ export default function KundaliReportScreen({ navigation }: Props) {
   // birth details both actions carry; the app itself never contacts a service.
   const shareFullText = () => {
     if (!chart || !report) return;
-    void Share.share({ message: buildKundaliHandoffText(chart, report) });
+    void Share.share({ message: buildKundaliHandoffText(chart, report, questionReading) });
   };
 
   const disclaimer = report && (
@@ -312,8 +320,8 @@ export default function KundaliReportScreen({ navigation }: Props) {
           lang={lang}
           titleHi="कुंडली सार साझा करें"
           titleEn="Share the chart summary"
-          privacyHi="कार्ड और पूर्ण पाठ — दोनों में नाम, जन्म तिथि, समय और नगर शामिल हैं। साझा करने से पहले जाँच लें।"
-          privacyEn="Both the card and the full text include the chart name, birth date, time, and city. Review before sharing."
+          privacyHi="कार्ड और पूर्ण पाठ में नाम, जन्म तिथि, समय और नगर हैं। पूर्ण पाठ में चुना हुआ प्रश्न और मार्गदर्शन भी होगा। साझा करने से पहले जाँच लें।"
+          privacyEn="Both the card and the full text include the chart name, birth date, time, and city. The full text also includes any selected question and guidance. Review before sharing."
           detailTitleHi="पूर्ण पाठ साझा करें"
           detailTitleEn="Share full text"
           detailSubtitleHi="पूरा विवेचन, ग्रह-सारणी व दशा-क्रम पाठ रूप में — नोट्स या AI सहायक के लिए।"

@@ -269,13 +269,6 @@ export default function KulParamparaScreen({ navigation }: Props) {
               </Text>
             </Pressable>
 
-            <Text style={[styles.lock, { borderLeftColor: colors.goldTint, color: colors.inkMuted }]}>
-              {contentByLang(
-                lang,
-                'यह अभिलेख इसी उपकरण पर रहता है। कहीं भेजा नहीं जाता, किसी सूची में नहीं जुड़ता।',
-                'This record lives on this device. It is sent nowhere and joins no list.'
-              )}
-            </Text>
           </ScrollView>
         )}
       </SafeAreaView>
@@ -314,5 +307,4 @@ const styles = StyleSheet.create({
     marginTop: 6,
   },
   exportBtn: { borderWidth: 1.5, minHeight: 50, alignItems: 'center', justifyContent: 'center', marginTop: 8 },
-  lock: { fontFamily: fontFamilies.latinItalic, fontSize: 11.5, lineHeight: 18, borderLeftWidth: 2, paddingLeft: 10, marginTop: 14 },
 });

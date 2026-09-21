@@ -1,0 +1,734 @@
+[
+  {
+    "id": "sample-a",
+    "asOf": "2026-09-18T06:30:00.000Z",
+    "question": "General guidance",
+    "purpose": "naukri",
+    "facts": {
+      "convention": "Lahiri sidereal zodiac, whole-sign houses, India timezone. Interpret these supplied calculations; do not recalculate birth data.",
+      "ascendant": {
+        "sign": "Kanya",
+        "longitude": 174.6607553269548
+      },
+      "planets": [
+        {
+          "id": "planet-sun",
+          "graha": "sun",
+          "siderealLongitude": 357.4792332609843,
+          "rashiIndex": 11,
+          "degreeInRashi": 27.4792332609843,
+          "nakshatraIndex": 26,
+          "pada": 4,
+          "house": 7,
+          "retrograde": false,
+          "sign": "Meena"
+        },
+        {
+          "id": "planet-moon",
+          "graha": "moon",
+          "siderealLongitude": 165.75501880484586,
+          "rashiIndex": 5,
+          "degreeInRashi": 15.75501880484586,
+          "nakshatraIndex": 12,
+          "pada": 2,
+          "house": 1,
+          "retrograde": false,
+          "sign": "Kanya"
+        },
+        {
+          "id": "planet-mars",
+          "graha": "mars",
+          "siderealLongitude": 339.92682182451705,
+          "rashiIndex": 11,
+          "degreeInRashi": 9.926821824517049,
+          "nakshatraIndex": 25,
+          "pada": 2,
+          "house": 7,
+          "retrograde": false,
+          "sign": "Meena"
+        },
+        {
+          "id": "planet-mercury",
+          "graha": "mercury",
+          "siderealLongitude": 332.9729032620847,
+          "rashiIndex": 11,
+          "degreeInRashi": 2.972903262084685,
+          "nakshatraIndex": 24,
+          "pada": 4,
+          "house": 7,
+          "retrograde": false,
+          "sign": "Meena"
+        },
+        {
+          "id": "planet-jupiter",
+          "graha": "jupiter",
+          "siderealLongitude": 95.87075033410595,
+          "rashiIndex": 3,
+          "degreeInRashi": 5.870750334105949,
+          "nakshatraIndex": 7,
+          "pada": 1,
+          "house": 11,
+          "retrograde": false,
+          "sign": "Karka"
+        },
+        {
+          "id": "planet-venus",
+          "graha": "venus",
+          "siderealLongitude": 322.45854990681374,
+          "rashiIndex": 10,
+          "degreeInRashi": 22.458549906813744,
+          "nakshatraIndex": 24,
+          "pada": 1,
+          "house": 6,
+          "retrograde": false,
+          "sign": "Kumbha"
+        },
+        {
+          "id": "planet-saturn",
+          "graha": "saturn",
+          "siderealLongitude": 134.18577816024685,
+          "rashiIndex": 4,
+          "degreeInRashi": 14.185778160246855,
+          "nakshatraIndex": 10,
+          "pada": 1,
+          "house": 12,
+          "retrograde": true,
+          "sign": "Simha"
+        },
+        {
+          "id": "planet-rahu",
+          "graha": "rahu",
+          "siderealLongitude": 142.33895991300716,
+          "rashiIndex": 4,
+          "degreeInRashi": 22.33895991300716,
+          "nakshatraIndex": 10,
+          "pada": 3,
+          "house": 12,
+          "retrograde": true,
+          "sign": "Simha"
+        },
+        {
+          "id": "planet-ketu",
+          "graha": "ketu",
+          "siderealLongitude": 322.33895991300716,
+          "rashiIndex": 10,
+          "degreeInRashi": 22.33895991300716,
+          "nakshatraIndex": 24,
+          "pada": 1,
+          "house": 6,
+          "retrograde": true,
+          "sign": "Kumbha"
+        }
+      ],
+      "currentDasha": {
+        "maha": {
+          "lord": "saturn",
+          "start": "2025-12-16T10:06:56.862Z",
+          "end": "2044-12-16T00:41:44.862Z",
+          "antardashas": [
+            {
+              "lord": "saturn",
+              "start": "2025-12-16T10:06:56.862Z",
+              "end": "2028-12-19T04:37:27.462Z"
+            },
+            {
+              "lord": "mercury",
+              "start": "2028-12-19T04:37:27.462Z",
+              "end": "2031-08-29T07:17:23.262Z"
+            },
+            {
+              "lord": "ketu",
+              "start": "2031-08-29T07:17:23.262Z",
+              "end": "2032-10-07T02:44:25.062Z"
+            },
+            {
+              "lord": "venus",
+              "start": "2032-10-07T02:44:25.062Z",
+              "end": "2035-12-07T17:10:13.062Z"
+            },
+            {
+              "lord": "sun",
+              "start": "2035-12-07T17:10:13.062Z",
+              "end": "2036-11-18T16:41:57.462Z"
+            },
+            {
+              "lord": "moon",
+              "start": "2036-11-18T16:41:57.462Z",
+              "end": "2038-06-19T23:54:51.462Z"
+            },
+            {
+              "lord": "mars",
+              "start": "2038-06-19T23:54:51.462Z",
+              "end": "2039-07-29T19:21:53.262Z"
+            },
+            {
+              "lord": "rahu",
+              "start": "2039-07-29T19:21:53.262Z",
+              "end": "2042-06-04T17:57:06.462Z"
+            },
+            {
+              "lord": "jupiter",
+              "start": "2042-06-04T17:57:06.462Z",
+              "end": "2044-12-16T00:41:44.862Z"
+            }
+          ]
+        },
+        "antar": {
+          "lord": "saturn",
+          "start": "2025-12-16T10:06:56.862Z",
+          "end": "2028-12-19T04:37:27.462Z"
+        }
+      },
+      "age": "47 y 5 m"
+    }
+  },
+  {
+    "id": "sample-b",
+    "asOf": "2026-09-18T06:30:00.000Z",
+    "question": "General guidance",
+    "purpose": "naukri",
+    "facts": {
+      "convention": "Lahiri sidereal zodiac, whole-sign houses, India timezone. Interpret these supplied calculations; do not recalculate birth data.",
+      "ascendant": {
+        "sign": "Kanya",
+        "longitude": 153.36307342386357
+      },
+      "planets": [
+        {
+          "id": "planet-sun",
+          "graha": "sun",
+          "siderealLongitude": 140.5078741964147,
+          "rashiIndex": 4,
+          "degreeInRashi": 20.50787419641469,
+          "nakshatraIndex": 10,
+          "pada": 3,
+          "house": 12,
+          "retrograde": false,
+          "sign": "Simha"
+        },
+        {
+          "id": "planet-moon",
+          "graha": "moon",
+          "siderealLongitude": 3.7379166368475154,
+          "rashiIndex": 0,
+          "degreeInRashi": 3.7379166368475154,
+          "nakshatraIndex": 0,
+          "pada": 2,
+          "house": 8,
+          "retrograde": false,
+          "sign": "Mesha"
+        },
+        {
+          "id": "planet-mars",
+          "graha": "mars",
+          "siderealLongitude": 207.69333241677634,
+          "rashiIndex": 6,
+          "degreeInRashi": 27.693332416776343,
+          "nakshatraIndex": 15,
+          "pada": 3,
+          "house": 2,
+          "retrograde": false,
+          "sign": "Tula"
+        },
+        {
+          "id": "planet-mercury",
+          "graha": "mercury",
+          "siderealLongitude": 167.44058619252814,
+          "rashiIndex": 5,
+          "degreeInRashi": 17.440586192528144,
+          "nakshatraIndex": 12,
+          "pada": 3,
+          "house": 1,
+          "retrograde": false,
+          "sign": "Kanya"
+        },
+        {
+          "id": "planet-jupiter",
+          "graha": "jupiter",
+          "siderealLongitude": 193.52431474480917,
+          "rashiIndex": 6,
+          "degreeInRashi": 13.524314744809175,
+          "nakshatraIndex": 14,
+          "pada": 3,
+          "house": 2,
+          "retrograde": false,
+          "sign": "Tula"
+        },
+        {
+          "id": "planet-venus",
+          "graha": "venus",
+          "siderealLongitude": 125.36500880418207,
+          "rashiIndex": 4,
+          "degreeInRashi": 5.365008804182068,
+          "nakshatraIndex": 9,
+          "pada": 2,
+          "house": 12,
+          "retrograde": false,
+          "sign": "Simha"
+        },
+        {
+          "id": "planet-saturn",
+          "graha": "saturn",
+          "siderealLongitude": 176.69047589785677,
+          "rashiIndex": 5,
+          "degreeInRashi": 26.69047589785677,
+          "nakshatraIndex": 13,
+          "pada": 2,
+          "house": 1,
+          "retrograde": false,
+          "sign": "Kanya"
+        },
+        {
+          "id": "planet-rahu",
+          "graha": "rahu",
+          "siderealLongitude": 76.38853569693286,
+          "rashiIndex": 2,
+          "degreeInRashi": 16.388535696932863,
+          "nakshatraIndex": 5,
+          "pada": 3,
+          "house": 10,
+          "retrograde": true,
+          "sign": "Mithuna"
+        },
+        {
+          "id": "planet-ketu",
+          "graha": "ketu",
+          "siderealLongitude": 256.3885356969329,
+          "rashiIndex": 8,
+          "degreeInRashi": 16.388535696932877,
+          "nakshatraIndex": 19,
+          "pada": 1,
+          "house": 4,
+          "retrograde": true,
+          "sign": "Dhanu"
+        }
+      ],
+      "currentDasha": {
+        "maha": {
+          "lord": "mars",
+          "start": "2023-09-20T17:54:01.658Z",
+          "end": "2030-09-20T10:38:25.658Z",
+          "antardashas": [
+            {
+              "lord": "mars",
+              "start": "2023-09-20T17:54:01.658Z",
+              "end": "2024-02-16T21:16:37.058Z"
+            },
+            {
+              "lord": "rahu",
+              "start": "2024-02-16T21:16:37.058Z",
+              "end": "2025-03-06T09:23:16.658Z"
+            },
+            {
+              "lord": "jupiter",
+              "start": "2025-03-06T09:23:16.658Z",
+              "end": "2026-02-10T06:49:11.858Z"
+            },
+            {
+              "lord": "saturn",
+              "start": "2026-02-10T06:49:11.858Z",
+              "end": "2027-03-22T02:16:13.658Z"
+            },
+            {
+              "lord": "mercury",
+              "start": "2027-03-22T02:16:13.658Z",
+              "end": "2028-03-18T07:02:31.058Z"
+            },
+            {
+              "lord": "ketu",
+              "start": "2028-03-18T07:02:31.058Z",
+              "end": "2028-08-14T10:25:06.458Z"
+            },
+            {
+              "lord": "venus",
+              "start": "2028-08-14T10:25:06.458Z",
+              "end": "2029-10-14T13:12:30.458Z"
+            },
+            {
+              "lord": "sun",
+              "start": "2029-10-14T13:12:30.458Z",
+              "end": "2030-02-19T09:14:43.658Z"
+            },
+            {
+              "lord": "moon",
+              "start": "2030-02-19T09:14:43.658Z",
+              "end": "2030-09-20T10:38:25.658Z"
+            }
+          ]
+        },
+        "antar": {
+          "lord": "saturn",
+          "start": "2026-02-10T06:49:11.858Z",
+          "end": "2027-03-22T02:16:13.658Z"
+        }
+      },
+      "age": "44 y"
+    }
+  },
+  {
+    "id": "synthetic-adult",
+    "asOf": "2026-09-18T06:30:00.000Z",
+    "question": "Considering a job switch",
+    "purpose": "naukri",
+    "facts": {
+      "convention": "Lahiri sidereal zodiac, whole-sign houses, India timezone. Interpret these supplied calculations; do not recalculate birth data.",
+      "ascendant": {
+        "sign": "Karka",
+        "longitude": 112.31420278795063
+      },
+      "planets": [
+        {
+          "id": "planet-sun",
+          "graha": "sun",
+          "siderealLongitude": 117.71396613546604,
+          "rashiIndex": 3,
+          "degreeInRashi": 27.713966135466038,
+          "nakshatraIndex": 8,
+          "pada": 4,
+          "house": 1,
+          "retrograde": false,
+          "sign": "Karka"
+        },
+        {
+          "id": "planet-moon",
+          "graha": "moon",
+          "siderealLongitude": 303.9529190036133,
+          "rashiIndex": 10,
+          "degreeInRashi": 3.9529190036133173,
+          "nakshatraIndex": 22,
+          "pada": 4,
+          "house": 8,
+          "retrograde": false,
+          "sign": "Kumbha"
+        },
+        {
+          "id": "planet-mars",
+          "graha": "mars",
+          "siderealLongitude": 48.36124501988881,
+          "rashiIndex": 1,
+          "degreeInRashi": 18.361245019888813,
+          "nakshatraIndex": 3,
+          "pada": 3,
+          "house": 11,
+          "retrograde": false,
+          "sign": "Vrishabha"
+        },
+        {
+          "id": "planet-mercury",
+          "graha": "mercury",
+          "siderealLongitude": 102.2638893305089,
+          "rashiIndex": 3,
+          "degreeInRashi": 12.263889330508903,
+          "nakshatraIndex": 7,
+          "pada": 3,
+          "house": 1,
+          "retrograde": false,
+          "sign": "Karka"
+        },
+        {
+          "id": "planet-jupiter",
+          "graha": "jupiter",
+          "siderealLongitude": 143.97537361531042,
+          "rashiIndex": 4,
+          "degreeInRashi": 23.975373615310417,
+          "nakshatraIndex": 10,
+          "pada": 4,
+          "house": 2,
+          "retrograde": false,
+          "sign": "Simha"
+        },
+        {
+          "id": "planet-venus",
+          "graha": "venus",
+          "siderealLongitude": 134.54004398886624,
+          "rashiIndex": 4,
+          "degreeInRashi": 14.540043988866245,
+          "nakshatraIndex": 10,
+          "pada": 1,
+          "house": 2,
+          "retrograde": false,
+          "sign": "Simha"
+        },
+        {
+          "id": "planet-saturn",
+          "graha": "saturn",
+          "siderealLongitude": 290.89502010435854,
+          "rashiIndex": 9,
+          "degreeInRashi": 20.895020104358537,
+          "nakshatraIndex": 21,
+          "pada": 4,
+          "house": 7,
+          "retrograde": true,
+          "sign": "Makara"
+        },
+        {
+          "id": "planet-rahu",
+          "graha": "rahu",
+          "siderealLongitude": 244.08397648423278,
+          "rashiIndex": 8,
+          "degreeInRashi": 4.083976484232778,
+          "nakshatraIndex": 18,
+          "pada": 2,
+          "house": 6,
+          "retrograde": true,
+          "sign": "Dhanu"
+        },
+        {
+          "id": "planet-ketu",
+          "graha": "ketu",
+          "siderealLongitude": 64.08397648423278,
+          "rashiIndex": 2,
+          "degreeInRashi": 4.083976484232778,
+          "nakshatraIndex": 4,
+          "pada": 4,
+          "house": 12,
+          "retrograde": true,
+          "sign": "Mithuna"
+        }
+      ],
+      "currentDasha": {
+        "maha": {
+          "lord": "jupiter",
+          "start": "2012-01-16T17:46:38.490Z",
+          "end": "2028-01-16T14:53:50.490Z",
+          "antardashas": [
+            {
+              "lord": "jupiter",
+              "start": "2012-01-16T17:46:38.490Z",
+              "end": "2014-03-05T22:11:36.090Z"
+            },
+            {
+              "lord": "saturn",
+              "start": "2014-03-05T22:11:36.090Z",
+              "end": "2016-09-16T04:56:14.490Z"
+            },
+            {
+              "lord": "mercury",
+              "start": "2016-09-16T04:56:14.490Z",
+              "end": "2018-12-23T02:07:45.690Z"
+            },
+            {
+              "lord": "ketu",
+              "start": "2018-12-23T02:07:45.690Z",
+              "end": "2019-11-28T23:33:40.890Z"
+            },
+            {
+              "lord": "venus",
+              "start": "2019-11-28T23:33:40.890Z",
+              "end": "2022-07-29T23:04:52.890Z"
+            },
+            {
+              "lord": "sun",
+              "start": "2022-07-29T23:04:52.890Z",
+              "end": "2023-05-18T03:44:14.490Z"
+            },
+            {
+              "lord": "moon",
+              "start": "2023-05-18T03:44:14.490Z",
+              "end": "2024-09-16T03:29:50.490Z"
+            },
+            {
+              "lord": "mars",
+              "start": "2024-09-16T03:29:50.490Z",
+              "end": "2025-08-23T00:55:45.690Z"
+            },
+            {
+              "lord": "rahu",
+              "start": "2025-08-23T00:55:45.690Z",
+              "end": "2028-01-16T14:53:50.490Z"
+            }
+          ]
+        },
+        "antar": {
+          "lord": "rahu",
+          "start": "2025-08-23T00:55:45.690Z",
+          "end": "2028-01-16T14:53:50.490Z"
+        }
+      },
+      "age": "34 y 1 m"
+    }
+  },
+  {
+    "id": "synthetic-minor",
+    "asOf": "2026-09-18T06:30:00.000Z",
+    "question": "Preparing for an exam",
+    "purpose": "vidya",
+    "facts": {
+      "convention": "Lahiri sidereal zodiac, whole-sign houses, India timezone. Interpret these supplied calculations; do not recalculate birth data.",
+      "ascendant": {
+        "sign": "Kanya",
+        "longitude": 173.94507571933255
+      },
+      "planets": [
+        {
+          "id": "planet-sun",
+          "graha": "sun",
+          "siderealLongitude": 113.70099934973021,
+          "rashiIndex": 3,
+          "degreeInRashi": 23.70099934973021,
+          "nakshatraIndex": 8,
+          "pada": 3,
+          "house": 11,
+          "retrograde": false,
+          "sign": "Karka"
+        },
+        {
+          "id": "planet-moon",
+          "graha": "moon",
+          "siderealLongitude": 151.62968747864755,
+          "rashiIndex": 5,
+          "degreeInRashi": 1.6296874786475541,
+          "nakshatraIndex": 11,
+          "pada": 2,
+          "house": 1,
+          "retrograde": false,
+          "sign": "Kanya"
+        },
+        {
+          "id": "planet-mars",
+          "graha": "mars",
+          "siderealLongitude": 84.37602695333698,
+          "rashiIndex": 2,
+          "degreeInRashi": 24.376026953336975,
+          "nakshatraIndex": 6,
+          "pada": 2,
+          "house": 10,
+          "retrograde": false,
+          "sign": "Mithuna"
+        },
+        {
+          "id": "planet-mercury",
+          "graha": "mercury",
+          "siderealLongitude": 98.9112632331637,
+          "rashiIndex": 3,
+          "degreeInRashi": 8.911263233163695,
+          "nakshatraIndex": 7,
+          "pada": 2,
+          "house": 11,
+          "retrograde": false,
+          "sign": "Karka"
+        },
+        {
+          "id": "planet-jupiter",
+          "graha": "jupiter",
+          "siderealLongitude": 75.84486789416394,
+          "rashiIndex": 2,
+          "degreeInRashi": 15.84486789416394,
+          "nakshatraIndex": 5,
+          "pada": 3,
+          "house": 10,
+          "retrograde": false,
+          "sign": "Mithuna"
+        },
+        {
+          "id": "planet-venus",
+          "graha": "venus",
+          "siderealLongitude": 148.30765397764605,
+          "rashiIndex": 4,
+          "degreeInRashi": 28.307653977646055,
+          "nakshatraIndex": 11,
+          "pada": 1,
+          "house": 12,
+          "retrograde": false,
+          "sign": "Simha"
+        },
+        {
+          "id": "planet-saturn",
+          "graha": "saturn",
+          "siderealLongitude": 191.65154602072306,
+          "rashiIndex": 6,
+          "degreeInRashi": 11.65154602072306,
+          "nakshatraIndex": 14,
+          "pada": 2,
+          "house": 2,
+          "retrograde": false,
+          "sign": "Tula"
+        },
+        {
+          "id": "planet-rahu",
+          "graha": "rahu",
+          "siderealLongitude": 197.836851445005,
+          "rashiIndex": 6,
+          "degreeInRashi": 17.83685144500501,
+          "nakshatraIndex": 14,
+          "pada": 4,
+          "house": 2,
+          "retrograde": true,
+          "sign": "Tula"
+        },
+        {
+          "id": "planet-ketu",
+          "graha": "ketu",
+          "siderealLongitude": 17.83685144500498,
+          "rashiIndex": 0,
+          "degreeInRashi": 17.83685144500498,
+          "nakshatraIndex": 1,
+          "pada": 2,
+          "house": 8,
+          "retrograde": true,
+          "sign": "Mesha"
+        }
+      ],
+      "currentDasha": {
+        "maha": {
+          "lord": "moon",
+          "start": "2017-05-16T22:41:37.707Z",
+          "end": "2027-05-17T08:53:37.707Z",
+          "antardashas": [
+            {
+              "lord": "moon",
+              "start": "2017-05-16T22:41:37.707Z",
+              "end": "2018-03-17T07:32:37.707Z"
+            },
+            {
+              "lord": "mars",
+              "start": "2018-03-17T07:32:37.707Z",
+              "end": "2018-10-16T08:56:19.707Z"
+            },
+            {
+              "lord": "rahu",
+              "start": "2018-10-16T08:56:19.707Z",
+              "end": "2020-04-16T05:40:07.707Z"
+            },
+            {
+              "lord": "jupiter",
+              "start": "2020-04-16T05:40:07.707Z",
+              "end": "2021-08-16T05:25:43.707Z"
+            },
+            {
+              "lord": "saturn",
+              "start": "2021-08-16T05:25:43.707Z",
+              "end": "2023-03-17T12:38:37.707Z"
+            },
+            {
+              "lord": "mercury",
+              "start": "2023-03-17T12:38:37.707Z",
+              "end": "2024-08-15T22:53:19.707Z"
+            },
+            {
+              "lord": "ketu",
+              "start": "2024-08-15T22:53:19.707Z",
+              "end": "2025-03-17T00:17:01.707Z"
+            },
+            {
+              "lord": "venus",
+              "start": "2025-03-17T00:17:01.707Z",
+              "end": "2026-11-15T17:59:01.707Z"
+            },
+            {
+              "lord": "sun",
+              "start": "2026-11-15T17:59:01.707Z",
+              "end": "2027-05-17T08:53:37.707Z"
+            }
+          ]
+        },
+        "antar": {
+          "lord": "venus",
+          "start": "2025-03-17T00:17:01.707Z",
+          "end": "2026-11-15T17:59:01.707Z"
+        }
+      },
+      "age": "13 y 1 m"
+    }
+  }
+]

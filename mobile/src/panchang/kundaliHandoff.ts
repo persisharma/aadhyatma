@@ -9,6 +9,7 @@ import {
 import type { KundaliChart } from './kundali';
 import { basisLabelEn } from './kundaliBasis';
 import { NAKSHATRA_NAMES_EN, NAKSHATRA_NAMES_HI } from './names';
+import type { PrashnaReading } from './prashnaGuidance';
 import type { KundaliReportModel } from './kundaliReportModel';
 
 /**
@@ -54,7 +55,8 @@ function vimshottariTable(chart: KundaliChart): string {
  */
 export function buildKundaliHandoffText(
   chart: KundaliChart,
-  model: KundaliReportModel
+  model: KundaliReportModel,
+  questionReading?: PrashnaReading
 ): string {
   const lines: string[] = [];
   lines.push('# Janma Kundali — full reading export (Vedansh)');
@@ -102,6 +104,36 @@ export function buildKundaliHandoffText(
   lines.push(model.disclaimerEn);
   lines.push(model.disclaimerHi);
   lines.push('');
+  if (questionReading?.guidance) {
+    const { analysis, guidance, phase } = questionReading;
+    if (analysis.generatedDateKey !== model.generatedDateKey) throw new Error('Question and report dates must match');
+    lines.push('## Selected question and guidance');
+    lines.push(`Question: ${guidance.question.en}`);
+    if (phase) {
+      lines.push(phase.title.en, phase.summary.en);
+      if (phase.currentPeriod) lines.push(`${phase.currentPeriod.label.en}: ${phase.currentPeriod.start} → ${phase.currentPeriod.end}`);
+      for (const signal of phase.signals) {
+        lines.push(`${signal.title.en}: ${signal.meaning.en}`, signal.text.en);
+        lines.push(`Basis: ${signal.basis.map(basisLabelEn).join(' → ')}`);
+      }
+      lines.push('Phase-derived direction (editorial interpretation of the listed signals):');
+      phase.directions.forEach(d => lines.push(`- ${d.text.en} [${d.signalIds.join(', ')}]`));
+      if (phase.next) lines.push(`Next period change: ${phase.next.date.en} — ${phase.next.title.en}`, phase.next.text.en);
+      lines.push(phase.limitation.en);
+    } else {
+    lines.push(guidance.title.en, guidance.summary.en);
+    for (const insight of guidance.insights) {
+      lines.push(`${insight.title.en}: ${insight.meaning.en}`);
+      lines.push(`Basis: ${insight.basis.map(basisLabelEn).join(' → ')}`);
+    }
+    lines.push('Practical suggestions (editorial, not chart-derived facts):');
+    guidance.actions.forEach(action => lines.push(`- ${action.text.en}`));
+    lines.push(`Caution: ${guidance.caution.en}`, `Timing: ${guidance.timing.text.en}`);
+    }
+    lines.push('## Machine-readable question context (JSON)', '```json');
+    lines.push(JSON.stringify({ version: 1, generatedDateKey: analysis.generatedDateKey, purposeId: analysis.purposeId, ...(phase ? { phase } : { guidance }), factors: [...analysis.supports, ...analysis.resists, ...analysis.qualifies], windows: analysis.windows }));
+    lines.push('```', '');
+  }
   lines.push('## Machine-readable report model (JSON)');
   lines.push('```json');
   lines.push(JSON.stringify(model));
