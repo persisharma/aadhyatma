@@ -133,6 +133,7 @@ const RAJASTHAN_WAVE: Array<{ id: string; hi: RegExp[]; en: RegExp[] }> = [
   { id: 'gogaji-gogamedi', hi: [/गोगाजी/, /मंदिर स्थापना कथा/, /ददरेवा/, /छड़ी/, /गोरख टीला/], en: [/Sthapana Katha/, /1911 CE/, /Chhadi/, /Goga Navami/, /Gorakh Tila/] },
   { id: 'tejaji-kharnal', hi: [/तेजाजी/, /मंदिर स्थापना कथा/, /खरनाल/, /तांती/, /सुरसुरा/], en: [/Sthapana Katha/, /1074/, /Tanti/, /Teja Dashami/, /Sursura/] },
   { id: 'ramdevra', hi: [/रामदेव/, /मंदिर स्थापना कथा/, /उंडू-काश्मीर/, /कपड़े का घोड़ा/, /राम सरोवर/], en: [/Sthapana Katha/, /1352 CE/, /Cloth Horse/, /Bhadwa/, /Ram Sarovar/] },
+  { id: 'khandoba-jejuri', hi: [/खंडोबा/, /मंदिर स्थापना कथा/, /राघो मंबाजी/, /भंडारा और येळकोट/, /कडेपठार/], en: [/Sthapana Katha/, /1637 CE/, /Bhandara and Yelkot/, /Champa Shashthi/, /Kadepathar/] },
 ];
 
 for (const temple of RAJASTHAN_WAVE) {
