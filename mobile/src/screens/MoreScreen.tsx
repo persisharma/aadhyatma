@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Alert, Linking, Modal, Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -19,9 +19,9 @@ import { useTour } from '@/contexts/TourContext';
 import { useRatingPrompt } from '@/contexts/RatingPromptContext';
 import { useJapamAlarms } from '@/contexts/JapamAlarmsContext';
 import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
-import { nextObservanceForEntry, solveNextOccurrence } from '@/panchang/pitruSmaran';
+import { useMoreFamilySummary } from '@/panchang/useMoreFamilySummary';
 import { shortDate } from '@/panchang/pitruSmaranDisplay';
-import { useJanmaTithiPeople } from '@/panchang/useJanmaTithi';
+import { useBirthProfileRoster } from '@/panchang/useKundali';
 import { useKulRecord } from '@/panchang/kulParamparaStore';
 import { isEmptyKulRecord, kuldevDisplayName } from '@/panchang/kulParampara';
 import { transliterateDevanagari } from '@/utils/transliterate';
@@ -134,35 +134,11 @@ export default function MoreScreen({ navigation }: Props) {
   const { prefs: readAloudPrefs } = useReadAloudPrefs();
   const { availability: readAloudAvailability } = useReadAloud();
   const activeJapamAlarms = japamAlarms.filter((a) => a.enabled);
-  // पितृ स्मरण row state (PRD-17): count + the soonest solved date. The solve is a
-  // few memoised tithi reads per entry, run off the render path; while it is in
-  // flight (or on failure) the row shows the bare count.
+  // Counts paint immediately; optional dates hydrate/solve cooperatively on focus.
   const { entries: smaranEntries } = usePitruSmaran();
-  const [smaranSoonest, setSmaranSoonest] = useState<Date | null>(null);
-  useEffect(() => {
-    if (smaranEntries.length === 0) {
-      setSmaranSoonest(null);
-      return undefined;
-    }
-    let cancelled = false;
-    const handle = setTimeout(() => {
-      const today = new Date();
-      let soonest: Date | null = null;
-      for (const entry of smaranEntries) {
-        try {
-          const next = nextObservanceForEntry(entry, today);
-          if (next && (soonest === null || next.getTime() < soonest.getTime())) soonest = next;
-        } catch {
-          // an unsolvable entry must not break the hub row
-        }
-      }
-      if (!cancelled) setSmaranSoonest(soonest);
-    }, 0);
-    return () => {
-      cancelled = true;
-      clearTimeout(handle);
-    };
-  }, [smaranEntries]);
+  const { roster } = useBirthProfileRoster();
+  const janmaPeople = roster.people;
+  const { smaranSoonest, janmaSoonest } = useMoreFamilySummary(smaranEntries, janmaPeople);
   // क्षेत्रीय पंचांग row state — the ACTIVE calendars by name, not a bare count,
   // for the same reason as the ledger row: a count says nothing about where the
   // user's extra dates came from.
@@ -188,35 +164,6 @@ export default function MoreScreen({ navigation }: Props) {
       : smaranSoonest
         ? `${smaranEntries.length} · ${shortDate(smaranSoonest, lang)}`
         : `${smaranEntries.length}`;
-  // जन्म तिथि row state (PRD-29): count + the soonest Hindu birthday — the
-  // Pitru row's exact deferral (solves are memoised engine-wide; off render).
-  const { people: janmaPeople } = useJanmaTithiPeople();
-  const [janmaSoonest, setJanmaSoonest] = useState<Date | null>(null);
-  useEffect(() => {
-    if (janmaPeople.length === 0) {
-      setJanmaSoonest(null);
-      return undefined;
-    }
-    let cancelled = false;
-    const handle = setTimeout(() => {
-      const today = new Date();
-      let soonest: Date | null = null;
-      for (const { rule } of janmaPeople) {
-        if (!rule) continue;
-        try {
-          const next = solveNextOccurrence(rule, today);
-          if (next && (soonest === null || next.getTime() < soonest.getTime())) soonest = next;
-        } catch {
-          // an unsolvable rule must not break the hub row
-        }
-      }
-      if (!cancelled) setJanmaSoonest(soonest);
-    }, 0);
-    return () => {
-      cancelled = true;
-      clearTimeout(handle);
-    };
-  }, [janmaPeople]);
   const janmaState =
     janmaPeople.length === 0
       ? 'NEW'
@@ -651,9 +598,9 @@ export default function MoreScreen({ navigation }: Props) {
         </ScrollView>
       </SafeAreaView>
 
-      <LanguagePickerSheet visible={langSheet} onClose={() => setLangSheet(false)} />
-      <ReadingSizePickerSheet visible={sizeSheet} onClose={() => setSizeSheet(false)} />
-      <ReadAloudSettingsSheet visible={readAloudSheet} onClose={() => setReadAloudSheet(false)} />
+      {langSheet && <LanguagePickerSheet visible onClose={() => setLangSheet(false)} />}
+      {sizeSheet && <ReadingSizePickerSheet visible onClose={() => setSizeSheet(false)} />}
+      {readAloudSheet && <ReadAloudSettingsSheet visible onClose={() => setReadAloudSheet(false)} />}
       {lensSheetVisible && (
         <React.Suspense fallback={null}>
           <LensPickerSheet visible onClose={() => setLensSheetVisible(false)} />

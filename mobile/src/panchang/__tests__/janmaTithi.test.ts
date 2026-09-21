@@ -6,6 +6,7 @@ import test from 'node:test';
 import {
   janmaNakshatraIndex,
   janmaTithiRuleFromBirthDate,
+  janmaTithiRuleFromBirthDateSteps,
   nakshatraName,
 } from '../janmaTithi';
 import {
@@ -77,4 +78,14 @@ test('janmaNakshatraIndex rejects malformed inputs', () => {
   assert.equal(janmaNakshatraIndex({ date: 'bad', time: '06:40' }), null);
   assert.equal(janmaNakshatraIndex({ date: '1988-11-12', time: '24:00' }), null);
   assert.equal(janmaNakshatraIndex({ date: '1988-11-12', time: '' }), null);
+});
+
+
+test('cooperative birth-date derivation yields and preserves the existing convention', async () => {
+  const { runInBackground } = await import('../backgroundWork');
+  for (const date of ['1991-04-17', '2013-08-23', '2000-02-29', '2026-02-31', 'bad']) {
+    const steps = janmaTithiRuleFromBirthDateSteps(date);
+    if (date === '1991-04-17') assert.equal(steps.next().done, false);
+    assert.deepEqual(await runInBackground(steps), janmaTithiRuleFromBirthDate(date));
+  }
 });
