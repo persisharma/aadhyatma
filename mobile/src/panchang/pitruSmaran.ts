@@ -22,7 +22,7 @@
 
 import { addDays } from './calendarGrid';
 import { runInBackground, runSynchronously } from './backgroundWork';
-import { computeTithiAndMonth } from './engine';
+import { computeTithiAndMonth, computeTithiAndMonthSteps } from './engine';
 import { matchesLunarTithiRuleOnDate, type ObservanceLocation } from './festivalEngine';
 import {
   LUNAR_MONTH_NAMES_EN,
@@ -187,7 +187,7 @@ function* scanForRuleSteps(
     yield;
     let tithiIndex: number;
     try {
-      tithiIndex = computeTithiAndMonth(day, { calendarSystem: 'purnimant', location: options.location }).tithiIndex;
+      tithiIndex = (yield* computeTithiAndMonthSteps(day, { calendarSystem: 'purnimant', location: options.location })).tithiIndex;
     } catch {
       day = addDays(day, 1);
       continue;
@@ -348,8 +348,22 @@ export function nextObservanceForEntry(
   fromDate: Date,
   options: SolveOptions = {}
 ): Date | null {
-  if (entry.tithiRule === 'sarvapitri') return nextSarvapitriAmavasya(fromDate, options);
-  return solveNextOccurrence(entry.tithiRule, fromDate, options);
+  return runSynchronously(nextObservanceForEntrySteps(entry, fromDate, options));
+}
+
+export function* nextObservanceForEntrySteps(
+  entry: Pick<SmaranEntry, 'tithiRule'>, fromDate: Date, options: SolveOptions = {}
+): Generator<void, Date | null, void> {
+  if (entry.tithiRule !== 'sarvapitri') {
+    if (!isValidTithiRule(entry.tithiRule)) return null;
+    return yield* scanForRuleSteps(toObservanceRule(entry.tithiRule), fromDate, MAX_SCAN_DAYS, options);
+  }
+  const from = startOfLocalDay(fromDate);
+  for (const year of [from.getFullYear(), from.getFullYear() + 1]) {
+    const window = yield* pitruPakshaWindowSteps(year, options);
+    if (window && window.end.getTime() >= from.getTime()) return window.end;
+  }
+  return null;
 }
 
 /** The next सर्वपितृ अमावस्या on/after `fromDate`. */

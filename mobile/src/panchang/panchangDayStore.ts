@@ -14,7 +14,7 @@
  * fires eviction listeners so the persistence layer can drop that city's disk
  * data too. Choosing a new city never evicts the others until the cap forces it.
  */
-import { computePanchangForDate, locationKey, sunriseForDate } from './engine';
+import { computePanchangForDateSteps, locationKey, sunriseForDate } from './engine';
 import { computeAstaFlags } from './eventMuhurat';
 import { lagnaSpansForDay } from './lagnaSweep';
 import { runInBackground, runSynchronously } from './backgroundWork';
@@ -145,7 +145,7 @@ export function computeDayInputs(date: Date, opts: ScanOptions): DayInputs {
 
 function* computeDayInputsSteps(date: Date, opts: ScanOptions): Generator<void, DayInputs, void> {
   const noon = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12);
-  const p = computePanchangForDate(date, opts);
+  const p = yield* computePanchangForDateSteps(date, opts);
   yield;
   // Tomorrow's sunrise closes the lagna tiling. It comes from the engine's
   // shared sunrise memo, which computePanchangForDate above just filled for

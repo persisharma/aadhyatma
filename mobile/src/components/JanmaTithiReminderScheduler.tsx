@@ -5,7 +5,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { personLabel } from '@/components/PersonChips';
 import { useJanmaPrefs, useJanmaTithiPeople } from '@/panchang/useJanmaTithi';
 import { tithiRuleLabel } from '@/panchang/pitruSmaran';
-import { ensureOccurrences, hydrateSmaranSolves, persistSmaranSolves } from '@/panchang/pitruSmaranSolves';
+import { ensureOccurrencesAsync, hydrateSmaranSolves, persistSmaranSolves } from '@/panchang/pitruSmaranSolves';
 import { startOfLocalDay } from '@/panchang/pitruSmaranDisplay';
 import {
   cancelAllJanmaTithiReminders,
@@ -50,24 +50,27 @@ export default function JanmaTithiReminderScheduler() {
       if (cancelled) return;
       const now = new Date();
       const today = startOfLocalDay(now);
-      void hydrateSmaranSolves(optedIn.map(({ rule }) => rule!), today).then(() => {
+      void hydrateSmaranSolves(optedIn.map(({ rule }) => rule!), today).then(async () => {
         if (cancelled) return;
-        const inputs: JanmaTithiReminderInput[] = optedIn.map(({ person, rule }) => {
+        const inputs: JanmaTithiReminderInput[] = [];
+        for (const { person, rule } of optedIn) {
+          if (cancelled) return;
           let nextDate: Date | null = null;
           try {
-            nextDate = ensureOccurrences(rule!, today, 1)[0] ?? null;
+            nextDate = (await ensureOccurrencesAsync(rule!, today, 1, () => cancelled))[0] ?? null;
           } catch {
             nextDate = null; // an unsolvable rule schedules nothing, never crashes
           }
-          return {
+          inputs.push({
             personId: person.id,
             displayNameHi: personLabel(person),
             displayNameEn: personLabel(person),
             tithiHi: tithiRuleLabel(rule!, 'hi'),
             tithiEn: tithiRuleLabel(rule!, 'en'),
             nextDate,
-          };
-        });
+          });
+        }
+        if (cancelled) return;
         void persistSmaranSolves();
         if (!cancelled) scheduleJanmaTithiReminders(inputs, now, lang).catch(() => undefined);
       });

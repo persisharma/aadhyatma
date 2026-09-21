@@ -4,13 +4,14 @@ import { useNotificationPreferences } from '@/contexts/NotificationPreferencesCo
 import { useGitaLanguage } from '@/data/gita/language';
 import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { getNextOccurrences, getRuleById } from '@/panchang/vratCatalog';
+import { FESTIVE_REMINDERS } from '@/notifications/festiveReminders';
+import type { FestiveReminderInput } from '@/notifications/festiveReminderPure';
+import type { PitruPakshaWindow } from '@/panchang/pitruSmaran';
+import { ensurePakshaWindowAsync, hydrateSmaranSolves, persistSmaranSolves } from '@/panchang/pitruSmaranSolves';
 import {
   scheduleFestiveReminders,
   cancelAllFestiveReminders,
 } from '@/notifications/festiveScheduler';
-import { FESTIVE_REMINDERS } from '@/notifications/festiveReminders';
-import type { FestiveReminderInput } from '@/notifications/festiveReminderPure';
-import { pitruPakshaWindow } from '@/panchang/pitruSmaran';
 import {
   cancelAllPitruPakshaReminders,
   schedulePitruPakshaReminders,
@@ -100,10 +101,20 @@ export default function FestiveReminderScheduler() {
 
       if (cancelled) return;
       scheduleFestiveReminders(inputs, now, lang).catch(() => undefined);
-      const windows = [today.getFullYear(), today.getFullYear() + 1]
-        .map((year) => ({ year, window: pitruPakshaWindow(year) }))
-        .filter((item): item is { year: number; window: NonNullable<typeof item.window> } => item.window !== null);
-      schedulePitruPakshaReminders(windows, now, lang).catch(() => undefined);
+      // The Home chip uses this persisted, cooperative path too. A bare
+      // pitruPakshaWindow() here used to block taps for two annual scans.
+      void (async () => {
+        await hydrateSmaranSolves([], today);
+        const windows: { year: number; window: PitruPakshaWindow }[] = [];
+        for (const year of [today.getFullYear(), today.getFullYear() + 1]) {
+          if (cancelled) return;
+          const window = await ensurePakshaWindowAsync(year, () => cancelled);
+          if (window) windows.push({ year, window });
+        }
+        if (cancelled) return;
+        await persistSmaranSolves();
+        if (!cancelled) await schedulePitruPakshaReminders(windows, now, lang);
+      })().catch(() => undefined);
     });
 
     return () => {

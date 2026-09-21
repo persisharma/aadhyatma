@@ -1,3 +1,4 @@
+import { runSynchronously } from './backgroundWork';
 import {
   Body,
   EclipticGeoMoon,
@@ -60,18 +61,22 @@ export function getSiderealMoonLng(date: Date, year: number): number {
   return (tropical - getAyanamsa(year) + 360) % 360;
 }
 
+const civilFormatters = new Map<string, Intl.DateTimeFormat>();
+
 type CivilParts = { year: number; month: number; day: number };
 
 function civilParts(date: Date, timeZone?: string): CivilParts {
   if (!timeZone) return { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() };
-  const parts = new Intl.DateTimeFormat('en-US', {
-    timeZone,
-    calendar: 'gregory',
-    numberingSystem: 'latn',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  }).formatToParts(date);
+  let formatter = civilFormatters.get(timeZone);
+  if (!formatter) {
+    formatter = new Intl.DateTimeFormat('en-US', {
+      timeZone, calendar: 'gregory', numberingSystem: 'latn',
+      year: 'numeric', month: '2-digit', day: '2-digit',
+    });
+    if (civilFormatters.size >= 8) civilFormatters.clear();
+    civilFormatters.set(timeZone, formatter);
+  }
+  const parts = formatter.formatToParts(date);
   const value = (type: Intl.DateTimeFormatPartTypes) => Number(parts.find((part) => part.type === type)?.value);
   return { year: value('year'), month: value('month'), day: value('day') };
 }
@@ -194,13 +199,14 @@ function computeKaranaIndex(tithiIndex: number, sunLng: number, moonLng: number)
  * where tithi boundaries sit every 12°, so a karana is half a tithi
  * (~10–13.4 h) and the 30 h bracket is generous.
  */
-function bisectKaranaEnd(sunrise: Date, karanaAbsolute: number, civilTimeZone?: string): Date | null {
+function* bisectKaranaEnd(sunrise: Date, karanaAbsolute: number, civilTimeZone?: string): Generator<void, Date | null, void> {
   let lo = sunrise;
   let hi = new Date(lo.getTime() + 30 * 60 * 60 * 1000);
   const year = instantYear(sunrise, civilTimeZone);
   const targetBoundary = (((karanaAbsolute + 1) % 60) * 6) % 360;
 
   for (let i = 0; i < 20; i++) {
+    if (i % 4 === 0) yield;
     const mid = new Date((lo.getTime() + hi.getTime()) / 2);
     const sunLng = getSiderealSunLng(mid, year);
     const moonLng = getSiderealMoonLng(mid, year);
@@ -216,13 +222,14 @@ function bisectKaranaEnd(sunrise: Date, karanaAbsolute: number, civilTimeZone?: 
   return new Date((lo.getTime() + hi.getTime()) / 2);
 }
 
-function bisectTithiEnd(sunrise: Date, currentTithiIndex: number, civilTimeZone?: string): Date | null {
+function* bisectTithiEnd(sunrise: Date, currentTithiIndex: number, civilTimeZone?: string): Generator<void, Date | null, void> {
   let lo = sunrise;
   let hi = new Date(lo.getTime() + 30 * 60 * 60 * 1000);
   const year = instantYear(sunrise, civilTimeZone);
   const targetBoundary = ((currentTithiIndex + 1) % 30) * 12;
 
   for (let i = 0; i < 20; i++) {
+    if (i % 4 === 0) yield;
     const mid = new Date((lo.getTime() + hi.getTime()) / 2);
     const sunLng = getSiderealSunLng(mid, year);
     const moonLng = getSiderealMoonLng(mid, year);
@@ -238,13 +245,14 @@ function bisectTithiEnd(sunrise: Date, currentTithiIndex: number, civilTimeZone?
   return new Date((lo.getTime() + hi.getTime()) / 2);
 }
 
-function bisectNakshatraEnd(sunrise: Date, currentNakIndex: number, civilTimeZone?: string): Date | null {
+function* bisectNakshatraEnd(sunrise: Date, currentNakIndex: number, civilTimeZone?: string): Generator<void, Date | null, void> {
   let lo = sunrise;
   let hi = new Date(lo.getTime() + 30 * 60 * 60 * 1000);
   const year = instantYear(sunrise, civilTimeZone);
   const targetBoundary = ((currentNakIndex + 1) % 27) * (360 / 27);
 
   for (let i = 0; i < 20; i++) {
+    if (i % 4 === 0) yield;
     const mid = new Date((lo.getTime() + hi.getTime()) / 2);
     const moonLng = getSiderealMoonLng(mid, year);
 
@@ -315,7 +323,7 @@ function solarRashi(date: Date, civilTimeZone?: string): number {
 
 // Refine to the instant near `estimate` where elongation crosses `target` (0 = new moon,
 // 180 = full moon), ascending. Brackets ±2 days, expands a few days if needed, then bisects.
-function refineConjunction(estimate: Date, target: number, civilTimeZone?: string): Date {
+function* refineConjunction(estimate: Date, target: number, civilTimeZone?: string): Generator<void, Date, void> {
   const signed = (d: Date) => {
     const e = moonElongation(d, civilTimeZone) - target;
     return ((e + 540) % 360) - 180; // wrap into (-180, 180], ascending through 0 at target
@@ -325,51 +333,52 @@ function refineConjunction(estimate: Date, target: number, civilTimeZone?: strin
   for (let g = 0; signed(lo) > 0 && g < 8; g++) lo = new Date(lo.getTime() - DAY_MS);
   for (let g = 0; signed(hi) < 0 && g < 8; g++) hi = new Date(hi.getTime() + DAY_MS);
   for (let i = 0; i < 40; i++) {
+    if (i % 4 === 0) yield;
     const mid = new Date((lo.getTime() + hi.getTime()) / 2);
     if (signed(mid) < 0) lo = mid; else hi = mid;
   }
   return new Date((lo.getTime() + hi.getTime()) / 2);
 }
 
-function newMoonBounds(t: Date, civilTimeZone?: string): { prevNM: Date; nextNM: Date } {
+function* newMoonBounds(t: Date, civilTimeZone?: string): Generator<void, { prevNM: Date; nextNM: Date }, void> {
   const p = moonElongation(t, civilTimeZone);
   const prevEst = new Date(t.getTime() - (p / 360) * SYNODIC_DAYS * DAY_MS);
   const nextEst = new Date(t.getTime() + ((360 - p) / 360) * SYNODIC_DAYS * DAY_MS);
-  return { prevNM: refineConjunction(prevEst, 0, civilTimeZone), nextNM: refineConjunction(nextEst, 0, civilTimeZone) };
+  return { prevNM: yield* refineConjunction(prevEst, 0, civilTimeZone), nextNM: yield* refineConjunction(nextEst, 0, civilTimeZone) };
 }
 
-function nextFullMoon(t: Date, civilTimeZone?: string): Date {
+function* nextFullMoon(t: Date, civilTimeZone?: string): Generator<void, Date, void> {
   const p = moonElongation(t, civilTimeZone);
   const ahead = (((180 - p) % 360 + 360) % 360) / 360 * SYNODIC_DAYS;
-  return refineConjunction(new Date(t.getTime() + ahead * DAY_MS), 180, civilTimeZone);
+  return yield* refineConjunction(new Date(t.getTime() + ahead * DAY_MS), 180, civilTimeZone);
 }
 
 // Amanta lunar month for the lunation containing instant `t`.
-function amantaMonthAt(t: Date, civilTimeZone?: string): { index: number; isAdhik: boolean } {
-  const { prevNM, nextNM } = newMoonBounds(t, civilTimeZone);
+function* amantaMonthAt(t: Date, civilTimeZone?: string): Generator<void, { index: number; isAdhik: boolean }, void> {
+  const { prevNM, nextNM } = yield* newMoonBounds(t, civilTimeZone);
   const rashiStart = solarRashi(prevNM, civilTimeZone);
   return { index: (rashiStart + 1) % 12, isAdhik: rashiStart === solarRashi(nextNM, civilTimeZone) };
 }
 
 // Display month + Adhik flag for the chosen calendar system.
-function lunarMonthForSystem(sunrise: Date, system: CalendarSystem, civilTimeZone?: string): { index: number; isAdhik: boolean } {
-  const dayMonth = amantaMonthAt(sunrise, civilTimeZone);
+function* lunarMonthForSystem(sunrise: Date, system: CalendarSystem, civilTimeZone?: string): Generator<void, { index: number; isAdhik: boolean }, void> {
+  const dayMonth = yield* amantaMonthAt(sunrise, civilTimeZone);
   if (system === 'amanta') return dayMonth;
   // Purnimanta month = the month of the lunation containing the ending purnima (next full moon).
   // The Adhik flag is a property of the day's lunation and is shown in both systems.
-  return { index: amantaMonthAt(nextFullMoon(sunrise, civilTimeZone), civilTimeZone).index, isAdhik: dayMonth.isAdhik };
+  return { index: (yield* amantaMonthAt(yield* nextFullMoon(sunrise, civilTimeZone), civilTimeZone)).index, isAdhik: dayMonth.isAdhik };
 }
 
 const chaitraNewMoonCache = new Map<string, Date>();
-function chaitraNewMoon(gregYear: number, civilTimeZone?: string): Date {
+function* chaitraNewMoon(gregYear: number, civilTimeZone?: string): Generator<void, Date, void> {
   const cacheKey = `${civilTimeZone ?? 'local'}:${gregYear}`;
   const cached = chaitraNewMoonCache.get(cacheKey);
   if (cached) return cached;
   // amanta Chaitra begins at the new moon while the Sun is in Meena (rashi 11), ~Mar–Apr.
   const anchor = (month: number, day: number) => civilStart(new Date(gregYear, month, day, 12), civilTimeZone);
-  let result = newMoonBounds(anchor(2, 27), civilTimeZone).prevNM;
+  let result = (yield* newMoonBounds(anchor(2, 27), civilTimeZone)).prevNM;
   for (const date of [anchor(2, 12), anchor(2, 27), anchor(3, 11), anchor(3, 26)]) {
-    const b = newMoonBounds(date, civilTimeZone);
+    const b = yield* newMoonBounds(date, civilTimeZone);
     if (solarRashi(b.prevNM, civilTimeZone) === 11) { result = b.prevNM; break; }
     if (solarRashi(b.nextNM, civilTimeZone) === 11) { result = b.nextNM; break; }
   }
@@ -385,9 +394,9 @@ function localKey(d: Date, civilTimeZone?: string): number {
 // Vikram Samvat (Chaitradi): the year number increments with Chaitra — on the day of the
 // Chaitra new moon (the amavasya that ends Phalguna), matching drikpanchang. This is the
 // correct boundary even when Chaitra Shukla Pratipada is kshaya (skipped at sunrise).
-function vikramSamvatFor(sunrise: Date, civilTimeZone?: string): number {
+function* vikramSamvatFor(sunrise: Date, civilTimeZone?: string): Generator<void, number, void> {
   const gregYear = instantYear(sunrise, civilTimeZone);
-  const nmC = chaitraNewMoon(gregYear, civilTimeZone);
+  const nmC = yield* chaitraNewMoon(gregYear, civilTimeZone);
   return localKey(sunrise, civilTimeZone) >= localKey(nmC, civilTimeZone) ? gregYear + 57 : gregYear + 56;
 }
 
@@ -430,6 +439,12 @@ export function computeTithiAndMonth(
   localDate: Date,
   options: PanchangComputationOptions = {}
 ): { tithiIndex: number; lunarMonth: number; paksha: Paksha; isAdhik: boolean } {
+  return runSynchronously(computeTithiAndMonthSteps(localDate, options));
+}
+
+export function* computeTithiAndMonthSteps(
+  localDate: Date, options: PanchangComputationOptions = {}
+): Generator<void, { tithiIndex: number; lunarMonth: number; paksha: Paksha; isAdhik: boolean }, void> {
   const calendarSystem = options.calendarSystem ?? 'purnimant';
   const cacheKey = `${calendarSystem}:${locationKey(options.location)}:${options.civilTimeZone ?? 'local'}:${getLocalDateKey(localDate)}`;
   const cached = tithiMonthCache.get(cacheKey);
@@ -437,11 +452,12 @@ export function computeTithiAndMonth(
 
   const year = localDate.getFullYear();
   const sunrise = sunriseFor(localDate, options.location, options.civilTimeZone);
+  yield;
   const sunLng = getSiderealSunLng(sunrise, year);
   const moonLng = getSiderealMoonLng(sunrise, year);
   const tithiIndex = computeTithiIndex(sunLng, moonLng);
   const paksha: Paksha = tithiIndex < 15 ? 'shukla' : 'krishna';
-  const { index: lunarMonthIndex, isAdhik } = lunarMonthForSystem(sunrise, calendarSystem, options.civilTimeZone);
+  const { index: lunarMonthIndex, isAdhik } = yield* lunarMonthForSystem(sunrise, calendarSystem, options.civilTimeZone);
   const result = { tithiIndex, lunarMonth: lunarMonthIndex + 1, paksha, isAdhik };
   tithiMonthCache.set(cacheKey, result);
   return result;
@@ -613,10 +629,16 @@ export function solarMonthAtSunrise(localDate: Date, options: PanchangComputatio
 }
 
 export function computePanchangForDate(localDate: Date, options: PanchangComputationOptions = {}): PanchangData {
+  return runSynchronously(computePanchangForDateSteps(localDate, options));
+}
+
+/** Same solve, with cancellation/yield points inside the numerical searches. */
+export function* computePanchangForDateSteps(localDate: Date, options: PanchangComputationOptions = {}): Generator<void, PanchangData, void> {
   const calendarSystem = options.calendarSystem ?? 'purnimant';
   const observer = observerFor(options.location ?? UJJAIN_GEO);
   const year = localDate.getFullYear();
   const sunrise = sunriseFor(localDate, options.location, options.civilTimeZone);
+  yield;
 
   const sunLng = getSiderealSunLng(sunrise, year);
   const moonLng = getSiderealMoonLng(sunrise, year);
@@ -629,14 +651,14 @@ export function computePanchangForDate(localDate: Date, options: PanchangComputa
 
   const paksha: Paksha = tithiIndex < 15 ? 'shukla' : 'krishna';
 
-  const tithiEndTime = bisectTithiEnd(sunrise, tithiIndex, options.civilTimeZone);
-  const nakshatraEndTime = bisectNakshatraEnd(sunrise, nakshatraIndex, options.civilTimeZone);
+  const tithiEndTime = yield* bisectTithiEnd(sunrise, tithiIndex, options.civilTimeZone);
+  const nakshatraEndTime = yield* bisectNakshatraEnd(sunrise, nakshatraIndex, options.civilTimeZone);
   // Phase 2 (TRD-16/P2 §4.2): the karana's end, solved like the tithi's. This
   // is what lets Bhadra be an interval instead of a whole-day flag, and it
   // surfaces on the Panchang tab / Muhurat card automatically (elementLine
   // prints endTime whenever it is non-null — TRD §1.2 blast radius).
   const karanaAbsolute = karanaAbsoluteAt(sunLng, moonLng);
-  const karanaEndTime = bisectKaranaEnd(sunrise, karanaAbsolute, options.civilTimeZone);
+  const karanaEndTime = yield* bisectKaranaEnd(sunrise, karanaAbsolute, options.civilTimeZone);
 
   // Late-onset Vishti (PRD-16/P3 §0.3): a Bhadra whose karana BEGINS during
   // the day was invisible while only the sunrise karana was read — a finder
@@ -646,7 +668,7 @@ export function computePanchangForDate(localDate: Date, options: PanchangComputa
   // finder offers. One extra bisection on ~13% of days.
   let lateVishti: PanchangData['lateVishti'] = null;
   if (karanaIndex !== 6 && karanaNameIndexFor((karanaAbsolute + 1) % 60) === 6 && karanaEndTime) {
-    const lateEnd = bisectKaranaEnd(karanaEndTime, (karanaAbsolute + 1) % 60, options.civilTimeZone);
+    const lateEnd = yield* bisectKaranaEnd(karanaEndTime, (karanaAbsolute + 1) % 60, options.civilTimeZone);
     if (lateEnd) lateVishti = { start: karanaEndTime, end: lateEnd };
   }
 
@@ -674,7 +696,7 @@ export function computePanchangForDate(localDate: Date, options: PanchangComputa
       paksha: kshayaIndex < 15 ? 'shukla' : 'krishna',
       nameHi: TITHI_NAMES_HI[kshayaIndex],
       nameEn: TITHI_NAMES_EN[kshayaIndex],
-      endTime: bisectTithiEnd(tithiEndTime, kshayaIndex, options.civilTimeZone),
+      endTime: yield* bisectTithiEnd(tithiEndTime, kshayaIndex, options.civilTimeZone),
     };
   }
 
@@ -685,18 +707,21 @@ export function computePanchangForDate(localDate: Date, options: PanchangComputa
       index: kshayaIndex,
       nameHi: NAKSHATRA_NAMES_HI[kshayaIndex],
       nameEn: NAKSHATRA_NAMES_EN[kshayaIndex],
-      endTime: bisectNakshatraEnd(nakshatraEndTime, kshayaIndex, options.civilTimeZone),
+      endTime: yield* bisectNakshatraEnd(nakshatraEndTime, kshayaIndex, options.civilTimeZone),
     };
   }
 
+  yield;
   const sunset = sunsetFor(localDate, options.location, options.civilTimeZone);
+  yield;
   const moonrise = moonriseFor(localDate, options.location, options.civilTimeZone);
 
+  yield;
   const brahmaMuhurtaEnd = new Date(sunrise.getTime() - 48 * 60 * 1000);
   const brahmaMuhurtaStart = new Date(sunrise.getTime() - 96 * 60 * 1000);
 
-  const { index: lunarMonthIndex, isAdhik } = lunarMonthForSystem(sunrise, calendarSystem, options.civilTimeZone);
-  const vikramSamvat = vikramSamvatFor(sunrise, options.civilTimeZone);
+  const { index: lunarMonthIndex, isAdhik } = yield* lunarMonthForSystem(sunrise, calendarSystem, options.civilTimeZone);
+  const vikramSamvat = yield* vikramSamvatFor(sunrise, options.civilTimeZone);
 
   return {
     date: localDate,
