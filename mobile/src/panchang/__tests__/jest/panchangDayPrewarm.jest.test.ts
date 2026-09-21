@@ -102,7 +102,7 @@ test('a second run over a warm window solves nothing and writes nothing', async 
   await prewarmPanchangDays(UJJAIN, SYSTEM, { start: START, days: DAYS });
   __resetPanchangDayPrewarm();
 
-  const solve = jest.spyOn(engine, 'computePanchangForDate');
+  const solve = jest.spyOn(engine, 'computePanchangForDateSteps');
   const multiSet = jest.spyOn(AsyncStorage, 'multiSet');
   multiSet.mockClear(); // the official mock's methods are shared jest.fn()s
   const multiGet = jest.spyOn(AsyncStorage, 'multiGet');
@@ -124,7 +124,7 @@ test('hydrates from disk rather than re-solving after a cold start', async () =>
   __resetPanchangDayCache();
   __resetPanchangDayPrewarm();
 
-  const solve = jest.spyOn(engine, 'computePanchangForDate');
+  const solve = jest.spyOn(engine, 'computePanchangForDateSteps');
   await prewarmPanchangDays(UJJAIN, SYSTEM, { start: START, days: DAYS });
 
   expect(solve).not.toHaveBeenCalled();
@@ -134,7 +134,7 @@ test('hydrates from disk rather than re-solving after a cold start', async () =>
 test('overlapping runs do not double-solve the same scope', async () => {
   // Both today surfaces (the strip and the daily Muhurat card) call this on
   // mount; without the in-flight guard they race through the same cold days.
-  const solve = jest.spyOn(engine, 'computePanchangForDate');
+  const solve = jest.spyOn(engine, 'computePanchangForDateSteps');
 
   await Promise.all([
     prewarmPanchangDays(UJJAIN, SYSTEM, { start: START, days: DAYS }),
@@ -160,13 +160,13 @@ test('cancellation stops the walk mid-window', async () => {
 });
 
 test('an unsolvable day is skipped, not fatal', async () => {
-  const real = engine.computePanchangForDate;
+  const real = engine.computePanchangForDateSteps;
   let seen = 0;
-  jest.spyOn(engine, 'computePanchangForDate').mockImplementation(((date: Date, opts: never) => {
+  jest.spyOn(engine, 'computePanchangForDateSteps').mockImplementation(((date: Date, opts: never) => {
     seen += 1;
     if (seen === 2) throw new Error('bad day');
     return real(date, opts);
-  }) as typeof engine.computePanchangForDate);
+  }) as typeof engine.computePanchangForDateSteps);
 
   await expect(
     prewarmPanchangDays(UJJAIN, SYSTEM, { start: START, days: DAYS })

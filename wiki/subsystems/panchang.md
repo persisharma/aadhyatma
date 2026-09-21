@@ -260,3 +260,21 @@ separate thread or a hard 4 ms bound on an individual astronomy primitive.
 Cache hydration still starts immediately, and warm results retain first-render
 seeding. Release-device tap latency requires Hermes verification; timer
 interleaving and date/cache parity are covered by automated tests.
+
+
+### Numerical search units and reminder callers (2026-09-21)
+
+The cooperative day generator now delegates into the engine's tithi, nakshatra,
+karana and lunar-conjunction searches (yielding every four bisection iterations),
+instead of treating the entire Panchang solve as one step. Synchronous APIs drive
+the same generators. Explicit-zone civil formatters are reused, avoiding repeated
+Intl construction during widget lunar scans. The queue cannot pre-empt an
+individual astronomy-library call; a 4 ms budget is not a hard latency guarantee.
+`PANCHANG_DAY_CACHE_VERSION` is 4; the serialized shape and calendrical results
+are unchanged.
+
+Festive reminders hydrate/ensure/persist annual windows, Pitru and Janma reminders
+use `ensureOccurrencesAsync`, and Muhurat reminders fill missing days through
+`cachedDayInputsAsync` before calling the synchronous verdict. A caller using the
+raw synchronous annual solver can still block Home even if the Home chip is fixed.
+The widget's separately persisted IST window is described in [[home-widgets]].

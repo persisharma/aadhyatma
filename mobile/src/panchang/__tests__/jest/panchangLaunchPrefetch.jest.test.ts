@@ -199,7 +199,7 @@ test('THE FIX: after the prefetch, the strip composes on its FIRST render', asyn
   // it races the splash gate rather than following it.
   await prefetchTodayPanchang();
 
-  const solveSpy = jest.spyOn(engine, 'computePanchangForDate');
+  const solveSpy = jest.spyOn(engine, 'computePanchangForDateSteps');
   const { values, unmount } = renderUseMuhurat(today());
 
   // No flush, no effect, no round trip: the very first render already has it.
@@ -233,7 +233,7 @@ test('the prefetch hydrates but never SOLVES — astronomy stays off the launch 
   // launch, which is exactly why `useMuhurat` keeps its solves behind
   // `InteractionManager`. Moving I/O earlier must not move CPU earlier with it.
   await AsyncStorage.setItem(LOCATION_STORAGE_KEY, JSON.stringify({ cityId: 'bengaluru', source: 'city' }));
-  const solveSpy = jest.spyOn(engine, 'computePanchangForDate');
+  const solveSpy = jest.spyOn(engine, 'computePanchangForDateSteps');
 
   await prefetchTodayPanchang();
 

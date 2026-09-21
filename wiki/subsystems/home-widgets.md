@@ -2,7 +2,7 @@
 title: Home Widgets
 type: subsystem
 sources: [mobile/src/widgets, mobile/src/data/versePool.ts, mobile/src/screens/WidgetGalleryScreen.tsx, mobile/plugins/withHomeWidgets.js, mobile/plugins/withHomeWidgetsIos.js, mobile/plugins/home-widgets, mobile/modules/home-widgets-ios, mobile/App.tsx]
-last_verified_date: 2026-09-03
+last_verified_date: 2026-09-21
 confidence: high
 status: current
 ---
@@ -13,7 +13,9 @@ Vedansh publishes a single versioned JSON snapshot for native Home/Lock Screen w
 
 ## Details
 
-`WidgetCoordinator` waits for interaction completion plus language, Panchang-location, Panchang-calendar, and Japam hydration. It then dynamically imports `planPayload`, builds a 14-day IST window, deduplicates/throttles writes, and sends one atomic document through `widgets/native.ts`. Verse selection uses the manifest-derived range index in `data/versePool.ts`: each date resolves to a global pool index first, then loads only the selected verse's chapter. It never constructs the complete 1,362-record pool, and the planner yields between days so Home presses can run while the offline window is prepared.
+`WidgetCoordinator` waits for interaction completion and preference/activity hydration, then dynamically reads `planCache.ts`. A valid persisted 14-day public window avoids all day solves on same-day launches and activity updates. The key covers OTA/build, engine cache version, both civil dates, coordinates/elevation, calendar, device zone and current observance labels. Language and private Japam totals are recomposed from current inputs, never stored in the derived cache. Misses dynamically load `planPayload`, which runs 14 cooperative day solves and reuses each next sunrise; the previous implementation performed 28 full solves. The numerical generators yield inside boundary searches through the shared queue. Cancelled generations abandon work before further calculation/publication. Native writes retain content deduplication, throttling and atomic transport.
+
+`@vedansh:widget-plan:` is a derived-cache-reset prefix. The window stays separate from the device-local day store because its days are IST-anchored. Verse selection still uses `getVerseAtPoolIndex`, loading only selected chapters. `scripts/profile-home-startup.mts` measures desktop event-loop gaps; release-device Hermes latency requires device verification.
 
 The schema is `WidgetPayloadV1` in `widgets/contract.ts`:
 

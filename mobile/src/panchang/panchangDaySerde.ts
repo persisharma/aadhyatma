@@ -21,7 +21,7 @@ export type DayInputs = {
 };
 
 /** Bump when the panchang engine changes so persisted days from an older engine are purged. */
-export const PANCHANG_DAY_CACHE_VERSION = 3; // v3: DayInputs.lagnas + lateVishti solved (PRD-16 Phase 3)
+export const PANCHANG_DAY_CACHE_VERSION = 4; // v4: cooperative numerical searches; serialized shape and results unchanged
 
 const DATE_TAG = '__d';
 type TaggedDate = { [DATE_TAG]: number };

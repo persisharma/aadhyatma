@@ -4,7 +4,6 @@ import { useNotificationPreferences } from '@/contexts/NotificationPreferencesCo
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { locationKey } from '@/panchang/engine';
-import { resolveDayAngas } from '@/notifications/dayAngaResolver';
 import { toDateKey } from '@/notifications/seed';
 
 /**
@@ -51,10 +50,12 @@ export default function DailyVerseAngaBridge() {
     // produces a new one and slides the window forward.
     const key = `${locationKey(location)}:${calendarSystem}:${toDateKey(now)}`;
 
-    resolveDayAngas(
-      { from: now, location, calendarSystem },
-      () => cancelled
-    )
+    // The notification-title solver is needed only for opted-in reminders,
+    // after hydration. Keep its module evaluation off Home's initial graph.
+    import('@/notifications/dayAngaResolver').then(({ resolveDayAngas }) => {
+      if (cancelled) return {};
+      return resolveDayAngas({ from: now, location, calendarSystem }, () => cancelled);
+    })
       .then((map) => {
         if (cancelled) return;
         publishDayAngas(key, map);

@@ -90,7 +90,7 @@ test('cancelling a day between phases never leaves a partial cache record', asyn
 test('two Home consumers share a cold solve and cancelling one does not cancel the other', async () => {
   let elapsed = 0;
   jest.spyOn(performance, 'now').mockImplementation(() => elapsed += 5);
-  const solve = jest.spyOn(engine, 'computePanchangForDate');
+  const solve = jest.spyOn(engine, 'computePanchangForDateSteps');
   const map = new Map<string, DayInputs>();
   const date = new Date(2026, 8, 22);
   const opts = { calendarSystem: 'purnimant' as const, location: UJJAIN_GEO };

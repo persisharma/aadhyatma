@@ -1,7 +1,8 @@
 import appConfig from '../../app.json';
 import { getVerseAtPoolIndex, getVersePoolSize } from '@/data/versePool';
 import { verseIndexForDateKey } from '@/notifications/seed';
-import { computePanchangForDate } from '@/panchang/engine';
+import { computePanchangForDateSteps, sunriseForDate } from '@/panchang/engine';
+import { runInBackground } from '@/panchang/backgroundWork';
 import { getObservancesForDateKey } from '@/panchang/festivalEngine';
 import { computeMuhuratDay } from '@/panchang/muhurat';
 import { tithiChain } from '@/panchang/prevailingTithi';
@@ -94,7 +95,9 @@ function sourceLabel(sourceHi: string, sourceEn: string, labelHi?: string, label
   return localizedFromHindi([sourceHi, labelHi].filter(Boolean).join(' · '), [sourceEn, labelEn].filter(Boolean).join(' · '));
 }
 
-export async function planWidgetPayload(input: Omit<WidgetPlannerInput, 'panchangDays' | 'verseDays' | 'writerAppVersion'>): Promise<WidgetPayloadV1> {
+export type WidgetPlanInput = Omit<WidgetPlannerInput, 'panchangDays' | 'verseDays' | 'writerAppVersion'>;
+
+export async function planWidgetPayload(input: WidgetPlanInput, isCancelled: () => boolean = () => false): Promise<WidgetPayloadV1> {
   const poolSize = getVersePoolSize();
   const panchangDays: PanchangWidgetDay[] = [];
   const verseDays: VerseWidgetDay[] = [];
@@ -102,13 +105,18 @@ export async function planWidgetPayload(input: Omit<WidgetPlannerInput, 'panchan
   const verseStartKey = widgetDateKey(input.generatedAt, input.deviceTimeZone);
 
   for (let offset = 0; offset < DAYS; offset += 1) {
+    if (isCancelled()) throw new Error('Widget plan cancelled');
     const key = shiftDateKey(panchangStartKey, offset);
     const nextKey = shiftDateKey(panchangStartKey, offset + 1);
     const day = engineDateForCivilKey(key);
     const nextDay = engineDateForCivilKey(nextKey);
-    const panchang = computePanchangForDate(day, { calendarSystem: input.calendarSystem, location: input.location, civilTimeZone: WIDGET_TIME_ZONE });
-    const nextPanchang = computePanchangForDate(nextDay, { calendarSystem: input.calendarSystem, location: input.location, civilTimeZone: WIDGET_TIME_ZONE });
-    const muhurat = computeMuhuratDay(panchang.sunrise, panchang.sunset, nextPanchang.sunrise, day.getDay());
+    const options = { calendarSystem: input.calendarSystem, location: input.location, civilTimeZone: WIDGET_TIME_ZONE };
+    const panchang = await runInBackground(computePanchangForDateSteps(day, options), isCancelled);
+    if (!panchang || isCancelled()) throw new Error('Widget plan cancelled');
+    // The day solve already warmed tomorrow's sunrise for kshaya detection.
+    // Computing tomorrow's entire Panchang here used to double the CPU work.
+    const nextSunrise = sunriseForDate(nextDay, options);
+    const muhurat = computeMuhuratDay(panchang.sunrise, panchang.sunset, nextSunrise, day.getDay());
     const observance = getObservancesForDateKey(key, input.calendarSystem, input.location)[0]?.rule;
     panchangDays.push({
       dateKey: key,
