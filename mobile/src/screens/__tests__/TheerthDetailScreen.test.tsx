@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { ImageBackground, Text } from 'react-native';
+import { Image, ImageBackground, Text } from 'react-native';
 import { backgroundImages } from '@assets/backgrounds';
 import { getDeityBackground, getTheerthBackground } from '@/data/backgrounds';
 
@@ -93,6 +93,37 @@ test('renders Salasar Balaji extended sections in English', () => {
   assert.match(text, /Chaitra Purnima/);
   assert.match(text, /Anjani Mata/);
   assert.match(text, /Sources/);
+});
+
+test('Salasar Balaji shows its commissioned sketch as an in-content illustration', () => {
+  const route = { key: 'd', name: 'TheerthDetail', params: { templeId: 'salasar-balaji' } } as Props['route'];
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="hi">
+        <TheerthDetailScreen navigation={navigation} route={route} />
+      </GitaLanguageProvider>,
+    );
+  });
+  const frames = tree.root.findAll((n) => typeof n.type === 'string' && n.props.testID === 'theerth-illustration');
+  assert.equal(frames.length, 1, 'one illustration frame');
+  assert.equal(frames[0].props.accessibilityLabel, 'सालासर बालाजी');
+  const img = frames[0].findByType(Image);
+  assert.equal(img.props.source, backgroundImages.theerth_salasar_balaji, 'frame shows the Salasar plate');
+  assert.equal(tree.root.findAllByType(ImageBackground).length, 1, 'faded background layer still renders');
+});
+
+test('temples on a generic deity plate get no in-content illustration', () => {
+  const route = { key: 'd', name: 'TheerthDetail', params: { templeId: 'somnath' } } as Props['route'];
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <TheerthDetailScreen navigation={navigation} route={route} />
+      </GitaLanguageProvider>,
+    );
+  });
+  assert.equal(tree.root.findAll((n) => typeof n.type === 'string' && n.props.testID === 'theerth-illustration').length, 0);
 });
 
 test('temples without extended sections render only the two core sections', () => {

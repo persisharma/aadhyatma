@@ -1,12 +1,12 @@
 import React from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
 import { meaningToken, pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
-import { getTheerthBackground } from '@/data/backgrounds';
+import { getTheerthBackground, getTheerthIllustration } from '@/data/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import { getTempleById } from '@/data/theerth/temples';
@@ -46,7 +46,7 @@ function deityLabel(deity: Deity, lang: Lang): string {
 
 export default function TheerthDetailScreen({ route, navigation }: Props) {
   const { templeId } = route.params;
-  const { colors, typography, spacing } = useTheme();
+  const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
 
   const temple = getTempleById(templeId);
@@ -65,6 +65,7 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
 
   const name = contentByLang(lang, temple.nameHi, temple.nameEn);
   const cityState = `${contentByLang(lang, temple.cityHi, temple.cityEn)}, ${contentByLang(lang, temple.stateHi, temple.stateEn)}`;
+  const illustration = getTheerthIllustration(temple.id);
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
@@ -141,6 +142,34 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
             </View>
           </View>
 
+          {/* In-content illustration (design.md §27 item 4): the temple's own
+              commissioned sketch at full strength, framed like a parchment
+              plate. The same asset also sits faded in the BackgroundLayer, so
+              this shows only for temples with a dedicated plate — never a
+              generic deity image that would repeat across temples. */}
+          {illustration ? (
+            <View
+              testID="theerth-illustration"
+              accessible
+              accessibilityRole="image"
+              accessibilityLabel={name}
+              style={[
+                styles.illustrationFrame,
+                {
+                  borderRadius: radii.lg,
+                  borderColor: colors.divider,
+                  backgroundColor: colors.parchmentSoft,
+                  marginHorizontal: spacing.sm,
+                },
+              ]}
+            >
+              {/* The plates are square with the artwork in the upper part; a
+                  5:4 window anchored to the top keeps the murti and mandap in
+                  view without a centred crop lopping off the canopy. */}
+              <Image source={illustration} style={styles.illustrationImage} resizeMode="cover" />
+            </View>
+          ) : null}
+
           <Ornament colors={colors} />
 
           <SectionBlock
@@ -173,7 +202,7 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
             typography={typography}
           />
 
-          {/* Extended reading (design.md §27 item 8) — optional per temple; each
+          {/* Extended reading (design.md §27 item 9) — optional per temple; each
               section keeps the Significance/Origin label + single-prose contract. */}
           {(temple.sections ?? []).map((section) => (
             <View key={section.id}>
@@ -317,6 +346,21 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     borderRadius: 999,
     borderWidth: 1,
+  },
+  illustrationFrame: {
+    width: 'auto',
+    aspectRatio: 5 / 4,
+    borderWidth: 1,
+    overflow: 'hidden',
+    marginTop: 4,
+  },
+  illustrationImage: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    width: '100%',
+    aspectRatio: 1,
   },
   ornamentRow: {
     flexDirection: 'row',

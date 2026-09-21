@@ -170,6 +170,16 @@ export function getTheerthBackground(templeId: string, deityId: Deity): Backgrou
   return theerthBackgroundOverrides[templeId] ?? getDeityBackground(deityId);
 }
 
+/**
+ * The temple's own commissioned sketch, when one exists — used by the detail
+ * screen as an in-content illustration (design.md §27 item 4). Generic deity
+ * plates are deliberately excluded: they repeat across dozens of temples and
+ * belong only in the faded background layer.
+ */
+export function getTheerthIllustration(templeId: string): BackgroundImage | undefined {
+  return theerthBackgroundOverrides[templeId];
+}
+
 const deityBackgroundList: BackgroundImage[] = Object.values(deityBackgrounds);
 
 /**
