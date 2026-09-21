@@ -508,12 +508,21 @@ type BaseTempleEntry = {
   addedInVersion?: string;        // NEW-badge tracking, mirrors LibraryEntry
 };
 
+type TempleSection = {           // optional extended reading (sthapana katha, traditions, melas, yatra)
+  id: string;                     // unique within the temple, e.g. "sthapana"
+  titleHi: string;                // bilingual stacked label, same as the core sections
+  titleEn: string;
+  bodyHi: string;                 // single prose block, ≥ 80 chars — same sourcing rules as originStory
+  bodyEn: string;
+};
+
 type TempleDetail = {
   significanceHi: string;         // single prose block (NOT a paragraph array)
   significanceEn: string;
   originStoryHi: string;          // Sthala Purāṇa narrative — single prose block
   originStoryEn: string;
   sources: readonly { label: string; url: string }[];  // ≥ 2 per §11.1
+  sections?: readonly TempleSection[];  // rendered after Origin Story in data order — MANDATORY on every new temple (§12.6); optional only on the 70 legacy rows
 };
 
 type TempleEntry = BaseTempleEntry & TempleDetail & { addedInVersion: string };
@@ -553,7 +562,7 @@ All of §11 applies. The high-risk ones for theerth:
 - **§11.3 No AI-generated liturgical text.** Origin-story prose (Sthala Purāṇa narratives) must come verbatim from published authoritative sources — Shiva Purāṇa (Gita Press), temple trust publications, ASI listings. Never paraphrase or "reconstruct" via LLM.
 - **§11.1 Internet verification.** Each temple's origin story must cite ≥ 2 independent authoritative sources in its `sources[]` array.
 - **§11.4 Deity accuracy.** Each temple's `deity` field must match the invocation in the source narrative — do not guess from the temple name.
-- **§11.8 Background per temple.** The detail screen renders the temple's presiding **deity** background (every deity ships a verified, thematically-correct sketch per §11.8) via `BackgroundLayer` — this is the shipped default. A bespoke per-temple sketch may be added later to override it, but never fall back to an *unrelated* deity's image.
+- **§11.8 Background per temple.** The detail screen renders the temple's presiding **deity** background (every deity ships a verified, thematically-correct sketch per §11.8) via `BackgroundLayer` — this is the shipped default for legacy rows. A bespoke per-temple sketch (`theerthBackgroundOverrides` in `backgrounds.ts`) both replaces that backdrop **and** appears as the in-content illustration plate on the detail screen (design.md §27 item 4). Every new temple ships its own plate (§12.6). Never fall back to an *unrelated* deity's image.
 - **Coordinate sanity.** Coordinates outside India's bounding box (lat 6–38, lng 68–98) fail the `index.ts` invariant. This catches lat/lng swaps (common copy-paste error from sources that write `lng, lat`).
 
 ### 12.5 Verification for theerth (replaces §4 steps 4–8)
@@ -564,9 +573,36 @@ All of §11 applies. The high-risk ones for theerth:
 4. Multi-group temples (Rameshwaram, Kedarnath, Badrinath) appear under every category they belong to in the By-Category view.
 5. Language toggle swaps title, view-toggle labels, group/state labels, pin tooltips, and the tap-a-pin hint. No Devanagari leaks in English mode; no English leaks in Hindi mode.
 6. Tapping a pin lands on `TheerthDetailScreen` for that temple; same for tapping a list row.
-7. Detail screen shows, over the temple's presiding-deity background (§12.4): hero (temple name + city + state + deity badge), `महिमा · Significance` block, `उद्भव कथा · Origin Story` block, sources footer. Both languages populated (verified in §11).
+7. Detail screen shows, over the temple's background (§12.4): hero (temple name + city + state + deity badge), the illustration plate (temples with a dedicated sketch — every new temple), `महिमा · Significance` block, `उद्भव कथा · Origin Story` block, the five §12.6 extended sections in reading order, sources footer. Both languages populated (verified in §11).
+10. `npm run test:data` passes — `theerth.test.ts` fails a new temple that lacks the §12.6 sections (the legacy allowlist is pinned), and `backgrounds.coverage.jest.test.ts` fails a temple with sections but no dedicated plate.
 8. Back from detail returns to the browse/drill-in screen preserving its view-mode state.
 9. Per-temple device check on iOS AND Android — Devanagari rendering in pin tooltips can differ between platforms.
+
+### 12.6 Full reading is mandatory for every new temple
+
+Two prose lines and a pin are the *minimum* a legacy row carries; they are **not** the bar for anything added from September 2026 on. Salasar Balaji (`salasar-balaji`) is the reference implementation — match its depth, not the 70 legacy rows. Adding a temple with only `significance` + `originStory` is a §3 hard reject.
+
+**Gather ALL of the following before writing a single line of data**, and ship every one that the sources support (say "not recorded" in the PR, not silently omitted):
+
+| # | Detail to gather | Lands in |
+|---|---|---|
+| 1 | **Sthapana** — consecration date in Vikram Samvat *and* CE, tithi + weekday if recorded; who consecrated it | `sections[]` → `sthapana` |
+| 2 | **Founding katha** — the discovery / dream / vow legend in full: people (saint, farmer, ruler), places (village, district), how the murti travelled, why the temple stands *here* | `sthapana` |
+| 3 | **Builders and lineage** — who built the first shrine, later rebuilds, which family/trust serves today and how they descend from the founder | `sthapana` |
+| 4 | **Form of the deity** — what makes this murti distinct (posture, attributes, face, material), throne/canopy, sanctum treatment, any perpetual fire / jyot / kund | `sections[]` → `svarup` |
+| 5 | **Traditions and offerings** — signature bhog/prasad, vow customs (what is tied, offered, untied), darshan rhythm (first to last aarti), peak weekdays | `sections[]` → `parampara` |
+| 6 | **Melas and festivals** — the year's major fairs by tithi, the sthapana anniversary, padyatra traditions, night jagran | `sections[]` → `mela` |
+| 7 | **Journey and around** — district, highway/road, distances (approx., say so) to the nearest towns, nearest railheads and airport, shrines commonly paired in one yatra, satellite shrines (parent-deity temple, samadhis, kunds) | `sections[]` → `yatra` |
+| 8 | **Core prose** — `significance` (why devotees come, with the sthapana date) and `originStory` (the legend in three sentences) | `significanceHi/En`, `originStoryHi/En` |
+| 9 | **Sources** — ≥ 2 independent authorities, preferring the temple trust's own site + the state tourism / district portal; a general reference may be the third, never the only one | `sources[]` |
+| 10 | **Illustration plate** — a commissioned 1024×1024 parchment sketch of *this* temple's murti / sanctum (prompt template §11.8, subject = the temple's distinctive form), registered in `mobile/assets/backgrounds/index.ts` and `theerthBackgroundOverrides` | `backgrounds.ts` |
+| 11 | **Search** — nothing extra to write: `pushTheerth` indexes section bodies automatically; confirm a distinctive term from the katha (a saint's name, a village) resolves in Search | — |
+
+**Section contract.** Five sections, ids fixed and in this order — `sthapana`, `svarup`, `parampara`, `mela`, `yatra` — with the bilingual titles `मंदिर स्थापना कथा · Sthapana Katha`, `बालाजी का स्वरूप`-style form title (`<deity> का स्वरूप · The Form of <deity>`), `<signature tradition> · <English>`, `मेले और उत्सव · Melas and Festivals`, `यात्रा और आसपास · Journey and Around`. Each body is one prose block per language, ≥ 80 characters, written independently in Hindi and English (not a transliteration), with dates in both calendars and distances marked approximate. Drop a section only when the sources genuinely have nothing for it, and say so in the PR.
+
+**Content integrity.** All of §11 and §12.4 apply to every section: paraphrase from cited sources, never invent a date, a name or a distance; where sources disagree, prefer the temple trust and note the variance in the PR; no AI-generated liturgical text.
+
+**Gates.** `theerth.test.ts` pins the legacy allowlist of temples without sections — a new id outside that list must carry `sections`, and the allowlist is never extended without a product decision recorded in the PR. `backgrounds.coverage.jest.test.ts` requires a dedicated plate for every temple that has sections.
 
 ---
 

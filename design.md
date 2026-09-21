@@ -984,15 +984,17 @@ The legacy Deity List is the plain filtered-list fallback: same as Section 21, b
    - Temple name in large title type: screen-title face at 28, `ink`, centred.
    - Subtitle line: `<city>, <state>` (lang-swapped), 14, `ink-muted`, centred (Cormorant italic for en; script serif for Indic).
    - Deity badge: a small pill (`saffron-tint` fill, `divider` border, `pill` radius, `saffron-deep` text) reading the presiding deity's name, typed via `pillTextStyle(lang, versePill)` — Inter 10 600 wide-tracked uppercase for English; script serif bold with **no** tracking for Indic (tracking split "शिव" into "शि व").
-4. Ornament divider (`॥`, §5).
-5. **Significance section:**
+4. **Illustration plate** (only for temples with a dedicated commissioned sketch — `getTheerthIllustration(temple.id)`, i.e. the per-temple overrides in `backgrounds.ts`: Salasar Balaji, Khatu Shyam, Karni Mata, Jeen Mata, Ramdevra, Gogaji, Tejaji, Khandoba, Mahasu Devta, Sabarimala, Vetrimalai Murugan): the same sketch that sits faded in the background layer, shown at full strength inside the content column. Frame: 5:4 window, `parchmentSoft` fill, 1 px `divider` border, `radii.lg`, `spacing.sm` side inset, `overflow: hidden`; the square plate is anchored to the **top** of the window (artwork lives in the upper part of every plate) so the murti and mandap stay in view. Accessible as one image labelled with the temple name (`testID="theerth-illustration"`). Temples on a generic deity plate render nothing here — a deity image repeating across dozens of temples belongs only in the background.
+5. Ornament divider (`॥`, §5).
+6. **Significance section:**
    - Label: `महिमा · Significance` (`Significance · महिमा` when lang = en) — reading-language form leads, the other supports. Rendered in the **script serif bold** at the `meaningLabel` size (13), `saffron-deep`, uppercase, **no tracking** — the label is always mixed-script, so a Latin face would clip the Devanagari half and tracking would split the shirorekha.
    - Body: **a single prose string** — `significanceHi` / `significanceEn` (not a paragraph array). Typography follows the meaning token for the reading language (Hindi 20/34 Noto Serif `ink-soft`; English 20/33 Cormorant 500 italic here, `ink-soft`), centred.
-6. Ornament divider.
-7. **Origin Story section:**
+7. Ornament divider.
+8. **Origin Story section:**
    - Label: `उद्भव कथा · Origin Story` (`Origin Story · उद्भव कथा` when lang = en). Same style as Significance label.
    - Body: a single prose string — `originStoryHi` / `originStoryEn`, same typography rules.
-8. **Sources footer**:
+9. **Extended sections** (optional, per temple — `TempleEntry.sections`): zero or more further blocks, each rendered exactly like Significance/Origin — ornament divider → bilingual stacked label (`titleHi · titleEn`, lang-swapped) → single prose body (`bodyHi` / `bodyEn`). Rendered in data order, after Origin Story and before Sources; a temple without `sections` shows nothing extra. First shipped on सालासर बालाजी (`salasar-balaji`): `मंदिर स्थापना कथा · Sthapana Katha` → `बालाजी का स्वरूप · The Form of Balaji` → `सवामणी और मनौती · Savamani and Vows` → `मेले और उत्सव · Melas and Festivals` → `यात्रा और आसपास · Journey and Around`. Extended sections are indexed by Search alongside the two core prose blocks (`searchIndex.ts` → `pushTheerth`).
+10. **Sources footer**:
    - One-line attribution: `स्रोत — <label 1>, <label 2>` (`Sources — …` in en) — 12 italic, `ink-muted`, centred, 70% opacity.
    - URLs are NOT links in v1 (rendered as plain text). v2 may make them tappable.
 

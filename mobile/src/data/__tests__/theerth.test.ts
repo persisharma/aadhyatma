@@ -114,6 +114,66 @@ for (const t of temples) {
   }
 }
 
+// ─── 6a. Optional extended sections follow the same sourced-prose contract ────
+for (const t of temples) {
+  const sections = t.sections ?? [];
+  const sectionIds = sections.map((s) => s.id);
+  assert.equal(new Set(sectionIds).size, sectionIds.length, `${t.id}: section ids must be unique`);
+  for (const s of sections) {
+    for (const [key, value] of Object.entries({ titleHi: s.titleHi, titleEn: s.titleEn })) {
+      assert.ok(value.trim().length > 0, `${t.id}/${s.id}: missing ${key}`);
+    }
+    for (const [key, value] of Object.entries({ bodyHi: s.bodyHi, bodyEn: s.bodyEn })) {
+      assert.ok(value.trim().length >= 80, `${t.id}/${s.id}: ${key} too short for an extended section`);
+      assert.ok(!/RULEBOOK|placeholder|pending/i.test(value), `${t.id}/${s.id}: ${key} is still placeholder prose`);
+    }
+  }
+  if (sections.length > 0) {
+    assert.ok(t.sources.length >= 2, `${t.id}: extended sections need ≥2 sources (RULEBOOK §12.4)`);
+  }
+}
+
+// ─── 6a′. RULEBOOK §12.6 — every NEW temple ships the full extended reading ─
+// The 70 rows that predate the rule are pinned here. A new id that lacks
+// `sections` fails; extending this allowlist needs a recorded product decision.
+const LEGACY_WITHOUT_SECTIONS = new Set([
+  'somnath', 'mallikarjuna', 'mahakaleshwar', 'omkareshwar', 'kedarnath', 'bhimashankar',
+  'kashi-vishwanath', 'trimbakeshwar', 'vaidyanath', 'nageshwar', 'rameshwaram',
+  'grishneshwar', 'badrinath', 'dwarkadhish', 'jagannath-puri', 'yamunotri', 'gangotri',
+  'kamakhya', 'vaishno-devi', 'kalighat', 'naina-devi', 'jwala-devi', 'chamunda-devi',
+  'tirupati-balaji', 'meenakshi', 'konark-sun', 'brihadeeswarar', 'padmanabhaswamy',
+  'banke-bihari', 'srinathji', 'udupi-krishna', 'vishnupad-gaya', 'bhadrachalam',
+  'danteshwari', 'mangueshi', 'lakshmi-narayan', 'durgiana', 'mansa-devi', 'govindajee-imphal',
+  'tripura-sundari', 'manakula-vinayagar', 'parashuram-kund', 'nartiang-durga', 'kirateshwar',
+  'vetrimalai-murugan', 'iskcon-chandigarh', 'dimapur-kalibari', 'khatu-shyam', 'karni-mata',
+  'jeen-mata', 'khandoba-jejuri', 'gogaji-gogamedi', 'sabarimala', 'mahasu-devta-hanol',
+  'tejaji-kharnal', 'ramdevra', 'kamakshi', 'shrinkhala', 'chamundeshwari', 'jogulamba',
+  'bhramaramba', 'mahalakshmi-kolhapur', 'ekaveerika-mahur', 'harsiddhi-ujjain', 'puruhutika',
+  'biraja', 'manikyamba', 'madhaveswari', 'mangala-gauri', 'vishalakshi',
+]);
+assert.equal(LEGACY_WITHOUT_SECTIONS.size, 70, 'legacy no-sections allowlist is pinned at 70');
+for (const t of temples) {
+  if (LEGACY_WITHOUT_SECTIONS.has(t.id)) continue;
+  const ids = (t.sections ?? []).map((s) => s.id);
+  assert.deepEqual(
+    ids,
+    ['sthapana', 'svarup', 'parampara', 'mela', 'yatra'],
+    `${t.id}: new temples must ship the five RULEBOOK §12.6 sections in order (got [${ids.join(', ')}])`,
+  );
+}
+
+// Salasar Balaji ships the first full extended reading: sthapana → form → traditions → melas → yatra.
+const salasar = getTempleById('salasar-balaji');
+assert.ok(salasar, 'salasar-balaji must exist');
+assert.deepEqual(
+  (salasar.sections ?? []).map((s) => s.id),
+  ['sthapana', 'svarup', 'parampara', 'mela', 'yatra'],
+  'salasar-balaji extended sections in reading order',
+);
+assert.match(salasar.sections![0].bodyHi, /1811/, 'sthapana katha carries the Samvat 1811 consecration');
+assert.match(salasar.sections![0].bodyEn, /Mohandas/, 'sthapana katha names Mohandas Ji');
+assert.match(salasar.sections![0].bodyEn, /Asota/, 'sthapana katha names Asota');
+
 // ─── 6b. Shakti Peeth membership = every recognised peeth plotted on this map ─
 // The pre-existing 7 peeths plus the 14 India-located Ashtadasha additions (= 21).
 assert.deepEqual(
