@@ -114,6 +114,37 @@ for (const t of temples) {
   }
 }
 
+// ─── 6a. Optional extended sections follow the same sourced-prose contract ────
+for (const t of temples) {
+  const sections = t.sections ?? [];
+  const sectionIds = sections.map((s) => s.id);
+  assert.equal(new Set(sectionIds).size, sectionIds.length, `${t.id}: section ids must be unique`);
+  for (const s of sections) {
+    for (const [key, value] of Object.entries({ titleHi: s.titleHi, titleEn: s.titleEn })) {
+      assert.ok(value.trim().length > 0, `${t.id}/${s.id}: missing ${key}`);
+    }
+    for (const [key, value] of Object.entries({ bodyHi: s.bodyHi, bodyEn: s.bodyEn })) {
+      assert.ok(value.trim().length >= 80, `${t.id}/${s.id}: ${key} too short for an extended section`);
+      assert.ok(!/RULEBOOK|placeholder|pending/i.test(value), `${t.id}/${s.id}: ${key} is still placeholder prose`);
+    }
+  }
+  if (sections.length > 0) {
+    assert.ok(t.sources.length >= 2, `${t.id}: extended sections need ≥2 sources (RULEBOOK §12.4)`);
+  }
+}
+
+// Salasar Balaji ships the first full extended reading: sthapana → form → traditions → melas → yatra.
+const salasar = getTempleById('salasar-balaji');
+assert.ok(salasar, 'salasar-balaji must exist');
+assert.deepEqual(
+  (salasar.sections ?? []).map((s) => s.id),
+  ['sthapana', 'svarup', 'parampara', 'mela', 'yatra'],
+  'salasar-balaji extended sections in reading order',
+);
+assert.match(salasar.sections![0].bodyHi, /1811/, 'sthapana katha carries the Samvat 1811 consecration');
+assert.match(salasar.sections![0].bodyEn, /Mohandas/, 'sthapana katha names Mohandas Ji');
+assert.match(salasar.sections![0].bodyEn, /Asota/, 'sthapana katha names Asota');
+
 // ─── 6b. Shakti Peeth membership = every recognised peeth plotted on this map ─
 // The pre-existing 7 peeths plus the 14 India-located Ashtadasha additions (= 21).
 assert.deepEqual(

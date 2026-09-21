@@ -72,6 +72,36 @@ test('renders sourced statewise temple detail content in English', () => {
   assert.doesNotMatch(text, /RULEBOOK §11\.3/);
 });
 
+test('renders Salasar Balaji extended sections after the origin story (Hindi)', () => {
+  const text = render('salasar-balaji', 'hi');
+  assert.match(text, /सालासर बालाजी/, 'temple name');
+  assert.match(text, /हनुमान/, 'deity badge');
+  assert.match(text, /मंदिर स्थापना कथा/, 'sthapana section label');
+  assert.match(text, /मोहनदास/, 'sthapana katha body');
+  assert.match(text, /सवामणी/, 'traditions section');
+  assert.match(text, /मेले और उत्सव/, 'melas section label');
+  assert.match(text, /अंजनी माता/, 'journey section body');
+  assert.ok(text.indexOf('उद्भव कथा') < text.indexOf('मंदिर स्थापना कथा'), 'sections follow the origin story');
+  assert.ok(text.indexOf('अंजनी माता') < text.indexOf('स्रोत'), 'sources footer stays last');
+});
+
+test('renders Salasar Balaji extended sections in English', () => {
+  const text = render('salasar-balaji', 'en');
+  assert.match(text, /Sthapana Katha/);
+  assert.match(text, /1754 CE/);
+  assert.match(text, /Savamani/);
+  assert.match(text, /Chaitra Purnima/);
+  assert.match(text, /Anjani Mata/);
+  assert.match(text, /Sources/);
+});
+
+test('temples without extended sections render only the two core sections', () => {
+  const text = render('somnath', 'en');
+  assert.doesNotMatch(text, /Sthapana Katha/);
+  assert.equal((text.match(/Significance/g) ?? []).length, 1);
+  assert.equal((text.match(/Origin Story/g) ?? []).length, 1);
+});
+
 test('shows a not-found message for an unknown temple id', () => {
   const text = render('does-not-exist', 'en');
   assert.match(text, /not found/i);

@@ -508,12 +508,21 @@ type BaseTempleEntry = {
   addedInVersion?: string;        // NEW-badge tracking, mirrors LibraryEntry
 };
 
+type TempleSection = {           // optional extended reading (sthapana katha, traditions, melas, yatra)
+  id: string;                     // unique within the temple, e.g. "sthapana"
+  titleHi: string;                // bilingual stacked label, same as the core sections
+  titleEn: string;
+  bodyHi: string;                 // single prose block, ≥ 80 chars — same sourcing rules as originStory
+  bodyEn: string;
+};
+
 type TempleDetail = {
   significanceHi: string;         // single prose block (NOT a paragraph array)
   significanceEn: string;
   originStoryHi: string;          // Sthala Purāṇa narrative — single prose block
   originStoryEn: string;
   sources: readonly { label: string; url: string }[];  // ≥ 2 per §11.1
+  sections?: readonly TempleSection[];  // rendered after Origin Story in data order; omit when unauthored
 };
 
 type TempleEntry = BaseTempleEntry & TempleDetail & { addedInVersion: string };

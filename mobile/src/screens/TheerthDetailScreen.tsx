@@ -173,6 +173,27 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
             typography={typography}
           />
 
+          {/* Extended reading (design.md §27 item 8) — optional per temple; each
+              section keeps the Significance/Origin label + single-prose contract. */}
+          {(temple.sections ?? []).map((section) => (
+            <View key={section.id}>
+              <Ornament colors={colors} />
+              <SectionBlock
+                labelHi={section.titleHi}
+                labelEn={section.titleEn}
+                lang={lang}
+                colors={colors}
+                typography={typography}
+              />
+              <DetailProse
+                text={contentByLang(lang, section.bodyHi, section.bodyEn)}
+                lang={lang}
+                colors={colors}
+                typography={typography}
+              />
+            </View>
+          ))}
+
           <Text
             style={{
               textAlign: 'center',

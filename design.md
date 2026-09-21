@@ -992,7 +992,8 @@ The legacy Deity List is the plain filtered-list fallback: same as Section 21, b
 7. **Origin Story section:**
    - Label: `उद्भव कथा · Origin Story` (`Origin Story · उद्भव कथा` when lang = en). Same style as Significance label.
    - Body: a single prose string — `originStoryHi` / `originStoryEn`, same typography rules.
-8. **Sources footer**:
+8. **Extended sections** (optional, per temple — `TempleEntry.sections`): zero or more further blocks, each rendered exactly like Significance/Origin — ornament divider → bilingual stacked label (`titleHi · titleEn`, lang-swapped) → single prose body (`bodyHi` / `bodyEn`). Rendered in data order, after Origin Story and before Sources; a temple without `sections` shows nothing extra. First shipped on सालासर बालाजी (`salasar-balaji`): `मंदिर स्थापना कथा · Sthapana Katha` → `बालाजी का स्वरूप · The Form of Balaji` → `सवामणी और मनौती · Savamani and Vows` → `मेले और उत्सव · Melas and Festivals` → `यात्रा और आसपास · Journey and Around`. Extended sections are indexed by Search alongside the two core prose blocks (`searchIndex.ts` → `pushTheerth`).
+9. **Sources footer**:
    - One-line attribution: `स्रोत — <label 1>, <label 2>` (`Sources — …` in en) — 12 italic, `ink-muted`, centred, 70% opacity.
    - URLs are NOT links in v1 (rendered as plain text). v2 may make them tappable.
 
