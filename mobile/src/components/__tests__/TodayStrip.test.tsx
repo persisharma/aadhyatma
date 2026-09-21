@@ -47,7 +47,7 @@ const mockObservanceForDate = jest.fn(() => null as unknown);
 jest.mock('@/panchang/pitruSmaranSolves', () => ({
   knownPakshaWindow: () => mockKnownWindow,
   hydrateSmaranSolves: (...args: unknown[]) => mockHydrateSolves(...(args as [])),
-  ensurePakshaWindow: (...args: unknown[]) => mockEnsureWindow(...(args as [])),
+  ensurePakshaWindowAsync: (...args: unknown[]) => mockEnsureWindow(...(args as [])),
   persistSmaranSolves: (...args: unknown[]) => mockPersistSolves(...(args as [])),
 }));
 jest.mock('@/panchang/pitruSmaran', () => ({
@@ -323,6 +323,17 @@ describe('TodayStrip', () => {
     const button = tree.root.findAll(
       (n) => n.props?.accessibilityRole === 'button' && typeof n.props?.onPress === 'function'
     )[0];
+    act(() => button.props.onPress());
+    expect(mockNavigate).toHaveBeenCalledWith('PanchangTab');
+  });
+
+  it('accepts a tap while all Panchang content is unresolved', () => {
+    const tree = render();
+    const button = tree.root.findAll(
+      (n) => n.props?.accessibilityRole === 'button' && typeof n.props?.onPress === 'function'
+    )[0];
+    expect(mockMuhurat.panchang).toBeNull();
+    expect(mockKnownWindow).toBeNull();
     act(() => button.props.onPress());
     expect(mockNavigate).toHaveBeenCalledWith('PanchangTab');
   });

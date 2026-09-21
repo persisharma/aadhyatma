@@ -238,3 +238,20 @@ test('tithiRuleLabel renders sarvapitri and edge tithi names', () => {
   assert.equal(tithiRuleLabel({ lunarMonth: 6, paksha: 'shukla', tithi: 15 }, 'hi'), 'भाद्रपद शुक्ल पूर्णिमा');
   assert.equal(tithiRuleLabel({ lunarMonth: 7, paksha: 'krishna', tithi: 15 }, 'en'), 'Ashwin Krishna Amavasya');
 });
+
+// The Home path must retain the same festival matcher while yielding INSIDE the
+// scan. Cancellation must not memoise an incomplete result as a missing window.
+test('asynchronous Pitru Paksha agrees with the synchronous engine across years and locations', async () => {
+  const { pitruPakshaWindowAsync } = await import('../pitruSmaran');
+  for (const year of [2025, 2026, 2027]) {
+    for (const options of [{}, { location: { latitude: 28.6139, longitude: 77.209, elevation: 216, cityId: 'delhi' } }]) {
+      __resetPitruPakshaWindowCacheForTests();
+      const asyncWindow = await pitruPakshaWindowAsync(year, () => false, options);
+      __resetPitruPakshaWindowCacheForTests();
+      assert.deepEqual(asyncWindow, pitruPakshaWindow(year, options));
+    }
+  }
+  __resetPitruPakshaWindowCacheForTests();
+  assert.equal(await pitruPakshaWindowAsync(2026, () => true), undefined);
+  assert.ok(await pitruPakshaWindowAsync(2026));
+});

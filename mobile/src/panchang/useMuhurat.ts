@@ -30,7 +30,7 @@ import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { usePanchangCalendarHydrated } from '@/panchang/usePanchang';
 import { useMinuteTick } from '@/utils/useMinuteTick';
 import {
-  cachedDayInputs,
+  cachedDayInputsAsync,
   dateKeyFor,
   dayStoreFor,
   scopeKeyFor,
@@ -102,21 +102,18 @@ function neededDateKeys(dateMs: number, isToday: boolean): string[] {
 }
 
 /**
- * Compose the day's windows from the store. `allowSolve: false` reads cache-only
- * and returns null on any miss — that is what lets a re-mount paint instantly
- * without a solve, and what keeps the astronomy off the render path.
+ * Compose the day's windows from cache only. Cold days are filled independently
+ * by the cooperative solver before composition; this never invokes astronomy.
  */
 function composeSolved(
   dateMs: number,
   isToday: boolean,
-  opts: ScanOptions,
-  allowSolve: boolean
+  opts: ScanOptions
 ): Solved | null {
   const map = dayStoreFor(scopeKeyFor(opts.location, opts.calendarSystem));
   const read = (at: number): PanchangData | null => {
     const d = new Date(at);
-    if (!allowSolve) return map.get(dateKeyFor(d))?.p ?? null;
-    return cachedDayInputs(map, d, opts).inputs.p;
+    return map.get(dateKeyFor(d))?.p ?? null;
   };
 
   const d = new Date(dateMs);
@@ -177,12 +174,12 @@ export function useMuhurat(
   // null flash / skeleton) on re-mount, re-navigation, or after another surface
   // solved it. Cache-only — never a solve on the render path.
   const [solved, setSolved] = useState<Solved | null>(() =>
-    composeSolved(dateMs, isToday, { calendarSystem, location }, false)
+    composeSolved(dateMs, isToday, { calendarSystem, location })
   );
 
   useEffect(() => {
     const opts: ScanOptions = { calendarSystem, location };
-    const warm = composeSolved(dateMs, isToday, opts, false);
+    const warm = composeSolved(dateMs, isToday, opts);
     // Synchronous set (no deferral) when every day it needs is already solved.
     setSolved(warm);
     // Warm AND not a today surface: nothing to solve and no window to roll —
@@ -233,7 +230,7 @@ export function useMuhurat(
           if (cancelled) return;
           // Cache-only: if disk had all three days we are done, with zero
           // engine calls and no wait for interactions.
-          value = composeSolved(dateMs, isToday, opts, false);
+          value = composeSolved(dateMs, isToday, opts);
           if (value) setSolved(value);
         }
 
@@ -241,7 +238,14 @@ export function useMuhurat(
           // ── Anything disk did not have has to be solved, and that is CPU.
           await yieldToInteractions();
           if (cancelled) return;
-          value = composeSolved(dateMs, isToday, opts, true);
+          const map = dayStoreFor(scope);
+          // Independent timer slices between days AND within each day's solve.
+          // A Promise around composeSolved alone would still block every tap.
+          for (const offset of isToday ? [0, 1, -1] : [0, 1]) {
+            await cachedDayInputsAsync(map, new Date(dateMs + offset * DAY_MS), opts, () => cancelled);
+            if (cancelled) return;
+          }
+          value = composeSolved(dateMs, isToday, opts);
           if (value) setSolved(value);
         }
 
