@@ -100,8 +100,9 @@ One commit per temple: `feat(theerth): full <Name> reading — sthapana katha,
 form, traditions, melas, yatra`. Reply with a short summary only, listing facts
 you could not verify online.
 
-## Queue (remaining after the Rajasthan wave)
+## Queue (remaining after wave 2)
 
 Plate exists, text pending: none — every plated temple now carries its reading.
 Everything else (Srinathji, the 12 Jyotirlingas, Char Dham, Shakti Peeths, the
-rest) needs a plate first.
+rest) needs a plate first. Wave order, per-wave ids and the plate-first cadence
+live in `docs/roadmap/theerth-full-reading-rollout.md`.
