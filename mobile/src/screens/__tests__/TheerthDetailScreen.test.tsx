@@ -129,8 +129,8 @@ test('temples on a generic deity plate get no in-content illustration', () => {
 const RAJASTHAN_WAVE: Array<{ id: string; hi: RegExp[]; en: RegExp[] }> = [
   { id: 'khatu-shyam', hi: [/खाटू श्याम/, /मंदिर स्थापना कथा/, /रूपसिंह चौहान/, /निशान यात्रा/, /रींगस/], en: [/Sthapana Katha/, /1027 CE/, /Nishan Yatra/, /Phalgun Mela/, /Ringas/] },
   { id: 'karni-mata', hi: [/करणी माता/, /मंदिर स्थापना कथा/, /सुवाप/, /काबा और कुलदेवी/, /देशनोक/], en: [/Sthapana Katha/, /1387/, /Kabas/, /Chaitra/, /Deshnoke/] },
-  { id: 'jeen-mata', hi: [/जीण माता/, /मंदिर स्थापना कथा/, /काजल शिखर/, /धोक और जात/, /हर्ष पर्वत/], en: [/Sthapana Katha/, /1029 CE/, /Jaat/, /Navami/, /Harsh hill/] },
-  { id: 'gogaji-gogamedi', hi: [/गोगाजी/, /मंदिर स्थापना कथा/, /ददरेवा/, /छड़ी/, /गोरख टीला/], en: [/Sthapana Katha/, /1003 CE/, /Chhadi/, /Goga Navami/, /Gorakh Tila/] },
+  { id: 'jeen-mata', hi: [/जीण माता/, /मंदिर स्थापना कथा/, /काजल शिखर/, /धोक और झडूला/, /हर्ष पर्वत/], en: [/Sthapana Katha/, /972 CE/, /Jadula/, /Navami/, /Harsh hill/] },
+  { id: 'gogaji-gogamedi', hi: [/गोगाजी/, /मंदिर स्थापना कथा/, /ददरेवा/, /छड़ी/, /गोरख टीला/], en: [/Sthapana Katha/, /1911 CE/, /Chhadi/, /Goga Navami/, /Gorakh Tila/] },
   { id: 'tejaji-kharnal', hi: [/तेजाजी/, /मंदिर स्थापना कथा/, /खरनाल/, /तांती/, /सुरसुरा/], en: [/Sthapana Katha/, /1074/, /Tanti/, /Teja Dashami/, /Sursura/] },
   { id: 'ramdevra', hi: [/रामदेव/, /मंदिर स्थापना कथा/, /उंडू-काश्मीर/, /कपड़े का घोड़ा/, /राम सरोवर/], en: [/Sthapana Katha/, /1352 CE/, /Cloth Horse/, /Bhadwa/, /Ram Sarovar/] },
 ];

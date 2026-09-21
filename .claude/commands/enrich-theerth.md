@@ -44,6 +44,24 @@ works and returns summaries of those pages. Run several targeted searches per
 item; cite the canonical portal URLs in `sources[]`; list every fact you could
 not confirm in the final summary. Never invent a date, name or distance.
 
+## 1b. Fact framing (learned from the Rajasthan-wave review)
+
+- **State directly:** architecture, inscriptions, geography, officially recorded
+  dates (consecration by a named ruler, a Census/ASI/tourism-portal date).
+- **Frame as tradition** — `परम्परा/लोक-मान्यता के अनुसार` / "by tradition",
+  "local tradition holds": miracle narratives, deity biographies (birth years of
+  folk deities), medieval encounters (an emperor's raid, a sultan building a
+  shrine), "still burns since" claims, sadhana sites, favourite bhog.
+- **Inscription dates:** an inscription reads in Vikram Samvat. Never paste the
+  VS number as CE — convert (VS − 57) and print both.
+- **Contested dates:** give the better-attested one as primary and name the
+  variant in the same sentence; never silently pick one.
+- **Do not hard-code** highway numbers, trust names or "new temple announced"
+  claims without a current official source. Say "on the X–Y road" instead.
+- **Skip** religious-boundary details (inscriptions on gates, etc.) that add
+  nothing devotional and invite dispute.
+- **Distances** only when two sources agree; otherwise a range ("about 25–30 km").
+
 ## 2. Implement
 
 - Expand `significanceHi/En` (include the sthapana date) and `originStoryHi/En`

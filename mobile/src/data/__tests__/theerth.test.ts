@@ -177,10 +177,10 @@ assert.match(salasar.sections![0].bodyEn, /Asota/, 'sthapana katha names Asota')
 const RAJASTHAN_WAVE: Record<string, { hi: RegExp; en: RegExp; fact: string }> = {
   'khatu-shyam': { hi: /रूपसिंह चौहान/, en: /1027 CE/, fact: 'Roop Singh Chauhan founded the shrine in 1027 CE' },
   'karni-mata': { hi: /1476/, en: /Ganga Singh/, fact: 'Deshnoke founded in Samvat 1476; Ganga Singh built the marble temple' },
-  'jeen-mata': { hi: /1029/, en: /Aurangzeb/, fact: 'oldest inscription 1029 CE; the Aurangzeb akhand jyot' },
+  'jeen-mata': { hi: /संवत् 1029/, en: /972 CE/, fact: 'oldest inscription Samvat 1029 (c. 972 CE), not 1029 CE' },
   'gogaji-gogamedi': { hi: /फ़िरोज़शाह तुग़लक़/, en: /1911 CE/, fact: 'the Tughlaq medi restored by Ganga Singh in 1911' },
   'tejaji-kharnal': { hi: /1130/, en: /28 August 1103/, fact: 'born Samvat 1130, sacrifice at Sursura on 28 August 1103' },
-  ramdevra: { hi: /1442/, en: /1931 CE/, fact: 'samadhi in Samvat 1442; Ganga Singh built the temple in 1931' },
+  ramdevra: { hi: /1459/, en: /1459 CE/, fact: 'samadhi placed in 1459 CE by historical accounts; Ganga Singh built the temple in 1931' },
 };
 for (const [id, pin] of Object.entries(RAJASTHAN_WAVE)) {
   const temple = getTempleById(id);
