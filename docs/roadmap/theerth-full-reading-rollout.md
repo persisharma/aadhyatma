@@ -147,7 +147,7 @@ images locally, register per §2, then start the text sessions for that wave.
 
 | Wave | Doc | Branch |
 |------|-----|--------|
-| 3 | `docs/theerth-plates/wave-3-jyotirlinga-prompts.md` | `claude/enrich-theerth-temple-ydesir` |
+| 3 | `docs/theerth-plates/wave-3-jyotirlinga-prompts.md` | `claude/theerth-plates-wave-3` |
 | 4 | `docs/theerth-plates/wave-4-char-dham-prompts.md` | `claude/theerth-plates-wave-4` |
 | 5 | `docs/theerth-plates/wave-5-north-shakti-prompts.md` | `claude/theerth-plates-wave-5` |
 | 6 | `docs/theerth-plates/wave-6-south-icons-prompts.md` | `claude/theerth-plates-wave-6` |
