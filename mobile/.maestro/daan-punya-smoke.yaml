@@ -4,9 +4,10 @@
 # ledger's 10-second entry path:
 #   1. More → "Daan Punya, new" row opens the educate home.
 #   2. The home renders the mahatva sections and NO give affordance —
-#      the ledger door is the only quiet door at the end (§2.7; the
-#      absence half is pinned in DaanScreens.test.tsx, which this flow
-#      complements with the presence half on device).
+#      the two standing doors sit in the sticky action bar and the
+#      ledger door in the header (§2.7; the absence half is pinned in
+#      DaanScreens.test.tsx, which this flow complements with the
+#      presence half on device).
 #   3. Ledger → entry form → category chip → save → entry visible.
 #
 # Language note (per home-today-smoke): default Hindi renders Devanagari,
@@ -38,7 +39,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - assertVisible: "Daan Punya"
 
-# ── 2. The educate home: shastra + kathas render; ledger door last ──
+# ── 2. The educate home: shastra + kathas render; ledger door in the header ──
 - extendedWaitUntil:
     visible: "What the shastra says"
     timeout: 15000
