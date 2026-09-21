@@ -11,6 +11,7 @@ import {
   indiaDateKey,
 } from '../kundali';
 import type { KundaliReportModel } from '../kundaliReportModel';
+import { buildPrashnaReading } from '../prashnaGuidance';
 
 const META: KundaliReportMeta = {
   name: 'Aarav',
@@ -98,4 +99,20 @@ test('the machine-readable tail parses back to the exact report model', () => {
   assert.ok(match, 'JSON block present');
   const parsed = JSON.parse(match![1]) as KundaliReportModel;
   assert.deepEqual(parsed, model, 'round-trips to the serializable model');
+});
+
+test('selected question export carries auditable context and preserves the original report tail', () => {
+  const reading = buildPrashnaReading(chart, 'naukri', NOW, { questionId: 'job-switch', gocharScanDays: 0 });
+  const text = buildKundaliHandoffText(chart, model, reading);
+  assert.ok(text.includes('Considering a job switch'));
+  assert.ok(text.includes('editorial interpretation of the listed signals'));
+  const blocks = [...text.matchAll(/```json\n([\s\S]*?)\n```/g)].map(m => JSON.parse(m[1]));
+  assert.equal(blocks.length, 2);
+  assert.deepEqual(blocks[0].phase, reading.phase);
+  assert.equal(blocks[0].guidance, undefined);
+  assert.deepEqual(blocks[0].factors, [...reading.analysis.supports, ...reading.analysis.resists, ...reading.analysis.qualifies]);
+  assert.deepEqual(blocks[1], model);
+  const otherDay = buildPrashnaReading(chart, 'naukri', new Date('2026-08-20T09:00:00Z'), { gocharScanDays: 0 });
+  assert.throws(() => buildKundaliHandoffText(chart, model, otherDay), /dates must match/);
+  assert.equal(buildKundaliHandoffText(chart, model, { ...reading, guidance: null }), buildKundaliHandoffText(chart, model));
 });

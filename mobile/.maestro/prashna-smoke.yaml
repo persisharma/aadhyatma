@@ -3,13 +3,14 @@
 # Verifies the purpose-driven reading end to end: birth input (golden fixture
 # Aarav/Ujjain, an adult) → saved Jyotish landing carries the full-width प्रश्न
 # lead card above the door grid → purpose picker shows all nine, all open for an
-# adult → the विद्या answer renders every one of the six blocks with a
-# non-empty आधार chain, a strength pill, dated windows, and the practice link →
+# adult → current phase, direction and next period precede expandable evidence →
 # switching to व्यापार recomposes and offers the Muhurat finder hand-off.
 #
 # Prerequisite: install the native debug app on the target simulator with
 # `npx expo run:ios --device <UDID> --port 8084`. Authored with the shared
-# onboarding preamble of kundali-report-smoke.yaml; device run pending.
+# onboarding preamble of kundali-report-smoke.yaml. September 2026 iOS evidence
+# is recorded in docs/evaluations/prashna-phase-2026-09-21; the earlier clean-state
+# guidance smoke is in docs/evaluations/kundali-guidance-2026-09-18.
 
 appId: com.prashantsharma.vedansh
 ---
@@ -129,67 +130,66 @@ appId: com.prashantsharma.vedansh
 
 # Saved landing: the प्रश्न lead card sits above the door grid.
 - extendedWaitUntil:
-    visible: "Jyotish tools landing, saved profile"
+    visible: { id: "jyotish-prashna-door" }
     timeout: 30000
 - scrollUntilVisible:
     element: { id: "jyotish-prashna-door" }
     direction: DOWN
     timeout: 15000
-- assertVisible: ".*Prashna · ask your chart.*"
 - tapOn: "Open Prashna"
 - waitForAnimationToEnd
 
-# Purpose picker: nine purposes, all open for an adult.
+# Guidance appears first; Jyotish working opens only on request.
 - extendedWaitUntil: { visible: "Prashna", timeout: 15000 }
 - assertVisible: "Whose chart"
 - assertVisible: ".*Aarav.*"
 - assertVisible: { id: "purpose-vidya" }
-- assertVisible: { id: "purpose-vyapar" }
-- assertVisible: { id: "purpose-swasthya" }
-- assertNotVisible: "From age 18"
-
-# विद्या answer: six blocks, strength pill, आधार chain, dated window, practice.
-- assertVisible: { id: "prashna-saar" }
-- assertVisible: { id: "prashna-strength" }
+- assertNotVisible: { id: "prashna-strength" }
+- tapOn: { id: "question-study-exam" }
+- scrollUntilVisible:
+    element: { id: "prashna-saar" }
+    direction: DOWN
+    timeout: 15000
+- takeScreenshot: prashna-guidance
+- scrollUntilVisible:
+    element: { id: "action-study-exam-0" }
+    direction: DOWN
+    timeout: 15000
+- tapOn: { id: "action-study-exam-0" }
+- takeScreenshot: prashna-actions
+- scrollUntilVisible:
+    element: { id: "prashna-basis-toggle" }
+    direction: DOWN
+    timeout: 15000
+- tapOn: { id: "prashna-basis-toggle" }
 - scrollUntilVisible:
     element: { id: "prashna-chain-0" }
     direction: DOWN
     timeout: 15000
-- scrollUntilVisible:
-    element: { text: "Supports and resists" }
-    direction: DOWN
-    timeout: 15000
-- scrollUntilVisible:
-    element: { text: "Supportive windows" }
-    direction: DOWN
-    timeout: 15000
-- assertVisible: ".* → .* · now"
-- scrollUntilVisible:
-    element: { text: "Direction" }
-    direction: DOWN
-    timeout: 15000
-- scrollUntilVisible:
-    element: { text: "Practice" }
-    direction: DOWN
-    timeout: 15000
-- assertVisible: "Open Navagraha Stotram practice"
-- scrollUntilVisible:
-    element: { text: "As of .*not a certain prediction.*" }
-    direction: DOWN
-    timeout: 15000
-
-# Switch purpose: व्यापार recomposes and offers the Muhurat hand-off.
+- takeScreenshot: prashna-evidence
 - scrollUntilVisible:
     element: { id: "purpose-vyapar" }
     direction: UP
     timeout: 15000
 - tapOn: { id: "purpose-vyapar" }
-- waitForAnimationToEnd
+- assertVisible: { id: "question-business-start" }
+- assertNotVisible: { id: "prashna-strength" }
+- tapOn: { id: "question-business-start" }
+- scrollUntilVisible:
+    element: { id: "prashna-phase" }
+    direction: DOWN
+    timeout: 15000
 - assertVisible: { id: "prashna-saar" }
+- assertNotVisible: { id: "action-business-start-0" }
+- takeScreenshot: prashna-business-phase
+- scrollUntilVisible:
+    element: { id: "phase-direction" }
+    direction: DOWN
+    timeout: 15000
+- takeScreenshot: prashna-business-direction
 - scrollUntilVisible:
     element: { text: "Open Muhurat finder" }
     direction: DOWN
     timeout: 20000
-
 - stopApp:
     appId: com.prashantsharma.vedansh

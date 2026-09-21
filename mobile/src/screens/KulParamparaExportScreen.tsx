@@ -14,7 +14,6 @@ import { kulParamparaExportFilename, shareKulParamparaFile } from '@/panchang/ku
 import { relationLabels } from '@/panchang/pitruSmaran';
 import { getTempleById } from '@/data/theerth/temples';
 import { useTheme } from '@/theme/ThemeContext';
-import { fontFamilies } from '@/theme/typography';
 import { contentByLang } from '@/utils/localize';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
@@ -139,13 +138,6 @@ export default function KulParamparaExportScreen({ navigation }: Props) {
             <Text style={{ fontFamily: titleFont, fontSize: 15.5, color: colors.ink }}>
               {contentByLang(lang, 'कुल परम्परा · निर्यात', 'Kul Parampara · Export')}
             </Text>
-            <Text style={{ fontFamily: fontFamilies.latinItalic, fontSize: 12, lineHeight: 18, color: colors.inkMuted, marginTop: 5 }}>
-              {contentByLang(
-                lang,
-                'जो अभिलेख उपकरण से बाहर न जा सके, वह अपना एकमात्र काम नहीं कर पाता।',
-                'A record that cannot leave the device fails at the one job it has.'
-              )}
-            </Text>
             <View style={[styles.divider, { backgroundColor: colors.divider }]} />
             {rows.map(({ k, v }) => (
               <View key={k} style={styles.kv}>
@@ -185,13 +177,6 @@ export default function KulParamparaExportScreen({ navigation }: Props) {
             </Pressable>
           </View>
 
-          <Text style={[styles.lock, { borderLeftColor: colors.goldTint, color: colors.inkMuted }]}>
-            {contentByLang(
-              lang,
-              'फ़ाइल OS के साझा-पत्रक से जाती है — कोई क्लाउड नहीं, कोई सर्वर नहीं। साझा करना आपका निर्णय है, ऐप का नहीं।',
-              'The file goes through the OS share sheet — no cloud, no server. Sharing is your decision, never the app’s.'
-            )}
-          </Text>
         </ScrollView>
       </SafeAreaView>
     </View>
@@ -206,5 +191,4 @@ const styles = StyleSheet.create({
   divider: { height: 1, marginVertical: 12 },
   kv: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', gap: 12, paddingVertical: 7 },
   primaryBtn: { minHeight: 50, alignItems: 'center', justifyContent: 'center', marginTop: 16 },
-  lock: { fontFamily: fontFamilies.latinItalic, fontSize: 11.5, lineHeight: 18, borderLeftWidth: 2, paddingLeft: 10, marginTop: 14 },
 });

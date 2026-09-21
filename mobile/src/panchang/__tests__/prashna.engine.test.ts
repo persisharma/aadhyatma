@@ -26,7 +26,7 @@ function answer(chart: KundaliChart, purposeId: PurposeId, at = NOW) {
 }
 
 test('prashna engine and registry stay pure', () => {
-  for (const file of ['src/panchang/prashna.ts', 'src/panchang/prashnaPurposes.ts']) {
+  for (const file of ['src/panchang/prashna.ts', 'src/panchang/prashnaPurposes.ts', 'src/panchang/prashnaPhase.ts']) {
     const source = readFileSync(file, 'utf8');
     assert.doesNotMatch(source, /react|AsyncStorage|Date\.now\s*\(|new Date\s*\(\s*\)|Math\.random|fetch\s*\(/, file);
   }
@@ -143,9 +143,9 @@ test('timing is a dated window: current maha + antar always, a next relevant ant
   const a = answer(adult, 'vyapar');
   const current = a.windows.filter((w) => w.current);
   assert.ok(current.length >= 2, 'maha and antar windows run now');
-  for (const w of a.windows) {
+  for (const w of a.windows.filter(w => !w.id.startsWith('gochar-'))) {
     assert.match(w.labelEn, /^\d{1,2} [A-Z][a-z]{2} \d{4} → \d{1,2} [A-Z][a-z]{2} \d{4}$/, w.id);
-    assert.ok(/supportive window|preparation/.test(w.textEn), w.textEn);
+    assert.ok(/supportive window|limited basis/.test(w.textEn), w.textEn);
     assert.doesNotMatch(w.textEn, /will/i);
   }
   const relevant = a.windows.some((w) => w.relevant);

@@ -1,0 +1,146 @@
+WARNING: Final field parent in class maestro.cli.command.TestCommand has been mutated reflectively by class picocli.CommandLine$Model$FieldBinding in unnamed module @41e68d87 (file:/Users/prashant/.maestro/lib/picocli-4.6.3.jar)
+WARNING: Use --enable-final-field-mutation=ALL-UNNAMED to avoid a warning
+WARNING: Mutating final fields will be blocked in a future release unless final field mutation is enabled
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/Users/prashant/.maestro/lib/jansi-2.4.1.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+Running on Vedansh-Prashna-QA - iOS 26.4 - 913FA15C-3750-4E34-97BA-A39A33410600
+ > Flow prashna-smoke
+Launch app "com.prashantsharma.vedansh" with clear state (launch arguments: {RCT_jsLocation=127.0.0.1:8084})... COMPLETED
+Wait for animation to end within 30000 ms... COMPLETED
+Tap on (Optional) "Allow"... COMPLETED
+Tap on (Optional) "Don't Allow"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Don't Allow
+Tap on (Optional) "Skip tour"... COMPLETED
+Wait for animation to end within 5000 ms... COMPLETED
+Tap on (Optional) "Skip tour"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Skip tour
+Tap on (Optional) "Begin"... COMPLETED
+Tap on (Optional) "English"... WARNED
+
+
+ Warning: Element not found: Text matching regex: English
+Tap on (Optional) "Begin|आरंभ करें"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Begin|आरंभ करें
+Tap on (Optional) "Close"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Close
+Tap on (Optional) "Got it"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Got it
+Tap on (Optional) "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ
+Tap on (Optional) "Allow"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Allow
+Tap on (Optional) "Don.t Allow"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Don.t Allow
+Wait for animation to end... COMPLETED
+Tap on (Optional) "SKIP|Skip|Skip tour"... WARNED
+
+
+ Warning: Element not found: Text matching regex: SKIP|Skip|Skip tour
+Tap on (Optional) "Begin"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Begin
+Assert that ".*Today.s Panchang.*|.*आज का पंचांग.*" is visible... COMPLETED
+Tap on id: tab-more... COMPLETED
+Wait for animation to end... COMPLETED
+Scrolling DOWN until "Language,.*" is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering enabled... COMPLETED
+Tap on "Language,.*"... COMPLETED
+Wait for animation to end... COMPLETED
+Assert that "English" is visible... COMPLETED
+Tap on "English"... COMPLETED
+Wait for animation to end... COMPLETED
+Tap on id: tab-home... COMPLETED
+Wait for animation to end... COMPLETED
+Scrolling DOWN until "Kundali. New. Tap to open." is visible with speed 40, visibility percentage 100%, timeout 15000 ms, with centering enabled... COMPLETED
+Tap on "Kundali. New. Tap to open."... COMPLETED
+Wait for animation to end... COMPLETED
+Assert that "Understand Jyotish" is visible... COMPLETED
+Tap on "Create Kundali"... COMPLETED
+Wait for animation to end... COMPLETED
+Tap on (Optional) "Edit birth details"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Edit birth details
+Tap on id: kundali-name-input... COMPLETED
+Input text Aarav... COMPLETED
+Tap on id: kundali-date-input... COMPLETED
+Wait for animation to end... COMPLETED
+Tap on ".*tap to change year"... COMPLETED
+Tap on "Month August"... COMPLETED
+Run flow when Platform is IOS...
+  Repeat 4 times...
+    Swipe from (50%, 70%) to (50%, 50%) in 250 ms... COMPLETED
+  Repeat 4 times... COMPLETED
+  Wait for animation to end... COMPLETED
+  Tap on "Year 1992"... COMPLETED
+Run flow when Platform is IOS... COMPLETED
+Run flow when Platform is ANDROID...
+Run flow when Platform is ANDROID... SKIPPED
+Tap on "14 August 1992"... COMPLETED
+Tap on "Confirm date"... COMPLETED
+Wait for animation to end... COMPLETED
+Tap on id: kundali-time-input... COMPLETED
+Wait for animation to end... COMPLETED
+Repeat 18 times...
+  Tap on "Decrease Minute"... COMPLETED
+Repeat 18 times... COMPLETED
+Tap on id: kundali-time-input... COMPLETED
+Wait for animation to end... COMPLETED
+Scrolling DOWN until id: kundali-city-button is visible with speed 40, visibility percentage 100%, timeout 10000 ms, with centering disabled... COMPLETED
+Tap on id: kundali-city-button... COMPLETED
+Wait for animation to end... COMPLETED
+Tap on id: kundali-city-search... COMPLETED
+Input text Ujjain... COMPLETED
+Tap on "Select Ujjain birth city"... COMPLETED
+Wait for animation to end... COMPLETED
+Scrolling DOWN until id: kundali-generate-button is visible with speed 40, visibility percentage 100%, timeout 10000 ms, with centering disabled... COMPLETED
+Tap on id: kundali-generate-button... COMPLETED
+Wait for animation to end... COMPLETED
+Assert that "Kundali result" is visible... COMPLETED
+Tap on "Back"... COMPLETED
+Wait for animation to end... COMPLETED
+Assert that id: jyotish-prashna-door is visible... COMPLETED
+Scrolling DOWN until id: jyotish-prashna-door is visible with speed 40, visibility percentage 100%, timeout 15000 ms, with centering disabled... COMPLETED
+Tap on "Open Prashna"... COMPLETED
+Wait for animation to end... COMPLETED
+Assert that "Prashna" is visible... COMPLETED
+Assert that "Whose chart" is visible... COMPLETED
+Assert that ".*Aarav.*" is visible... COMPLETED
+Assert that id: purpose-vidya is visible... COMPLETED
+Assert that id: prashna-strength is not visible... COMPLETED
+Tap on id: question-study-exam... COMPLETED
+Scrolling DOWN until id: prashna-saar is visible with speed 40, visibility percentage 100%, timeout 15000 ms, with centering disabled... COMPLETED
+Take screenshot prashna-guidance... COMPLETED
+Scrolling DOWN until id: action-study-exam-0 is visible with speed 40, visibility percentage 100%, timeout 15000 ms, with centering disabled... COMPLETED
+Tap on id: action-study-exam-0... COMPLETED
+Take screenshot prashna-actions... COMPLETED
+Scrolling DOWN until id: prashna-basis-toggle is visible with speed 40, visibility percentage 100%, timeout 15000 ms, with centering disabled... COMPLETED
+Tap on id: prashna-basis-toggle... COMPLETED
+Scrolling DOWN until id: prashna-chain-0 is visible with speed 40, visibility percentage 100%, timeout 15000 ms, with centering disabled... COMPLETED
+Take screenshot prashna-evidence... COMPLETED
+Scrolling UP until id: purpose-vyapar is visible with speed 40, visibility percentage 100%, timeout 15000 ms, with centering disabled... COMPLETED
+Tap on id: purpose-vyapar... COMPLETED
+Assert that id: question-business-start is visible... COMPLETED
+Assert that id: prashna-strength is not visible... COMPLETED
+Tap on id: question-business-start... COMPLETED
+Scrolling DOWN until "Open Muhurat finder" is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Stop com.prashantsharma.vedansh... COMPLETED

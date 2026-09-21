@@ -25,7 +25,7 @@ import {
 import { usePanchangCalendarSystem, useObservancesForDate } from '@/panchang/usePanchang';
 import type { DaanStackParamList } from '@/navigation/types';
 import { useTheme } from '@/theme/ThemeContext';
-import { contentByLang, meaningByLang, pick, verseLinesByLang } from '@/utils/localize';
+import { contentByLang, meaningByLang, verseLinesByLang } from '@/utils/localize';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 
 type Props = NativeStackScreenProps<DaanStackParamList, 'DaanPunya'>;
@@ -250,14 +250,6 @@ export default function DaanPunyaScreen({ navigation }: Props) {
           <View style={{ flex: 1 }}>
             <Text style={{ fontFamily: titleFont, fontSize: 14.5, lineHeight: 22, color: colors.ink }}>
               {contentByLang(lang, 'मेरा दान-पुण्य खाता', 'My daan-punya register')}
-            </Text>
-            <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 17, color: colors.inkMuted, marginTop: 2 }}>
-              {pick(lang, {
-                hi: 'निजी — केवल इस डिवाइस पर',
-                en: 'Private — on this device only',
-                gu: 'ખાનગી — માત્ર આ ડિવાઇસ પર',
-                kn: 'ಖಾಸಗಿ — ಈ ಸಾಧನದಲ್ಲಿ ಮಾತ್ರ',
-              })}
             </Text>
           </View>
           <Text style={{ fontSize: 18, color: colors.inkMuted }}>›</Text>

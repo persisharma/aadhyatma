@@ -166,13 +166,6 @@ export default function PitruPakshaShikshaScreen({ navigation }: Props) {
                   </View>
                 </View>
               ))}
-              <Text style={{ fontFamily: fontFamilies.latinItalic, fontSize: 12, lineHeight: 18, color: colors.inkMuted, marginTop: 10 }}>
-                {contentByLang(
-                  lang,
-                  'शेष तिथियों के परम्परागत विवरण स्रोत-समीक्षा के बाद जोड़े जाएँगे।',
-                  'The traditional notes for the remaining tithis follow their source review.'
-                )}
-              </Text>
             </>
           )}
 

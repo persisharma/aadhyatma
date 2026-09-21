@@ -123,7 +123,7 @@ describe('KulParamparaScreen', () => {
     expect(nav.navigate).toHaveBeenCalledWith('KulParamparaEdit');
   });
 
-  test('a saved record renders kuldev, gotra and the export door; the privacy line stands', async () => {
+  test('a saved record renders kuldev, gotra and the export door', async () => {
     await saveKulRecord({
       kuldev: { kind: 'kuldevi', deityId: 'durga' },
       gotra: 'भारद्वाज',
@@ -137,7 +137,6 @@ describe('KulParamparaScreen', () => {
     expect(text).toContain('माँ दुर्गा');
     expect(text).toContain('भारद्वाज');
     expect(text).toContain('श्री ज्वाला जी');
-    expect(text).toContain('कहीं भेजा नहीं जाता');
     act(() => byLabel(tree, 'Hand the record on').props.onPress());
     expect(nav.navigate).toHaveBeenCalledWith('KulParamparaExport');
   });

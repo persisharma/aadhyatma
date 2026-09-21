@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -6,16 +6,19 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import BasisChain from '@/components/BasisChain';
+import PrashnaPhaseContent from '@/components/PrashnaPhaseContent';
 import JyotishStateCard from '@/components/JyotishStateCard';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { library } from '@/data/texts';
 import { buildEntryStartTarget } from '@/navigation/entryRoutes';
 import type { PanchangStackParamList } from '@/navigation/types';
-import { RASHI_NAMES_EN, RASHI_NAMES_HI } from '@/panchang/kundali';
-import { buildPrashnaAnswer, STRENGTH_LABEL_EN, STRENGTH_LABEL_HI, type PrashnaStrength } from '@/panchang/prashna';
+import { STRENGTH_LABEL_EN, STRENGTH_LABEL_HI, type PrashnaStrength } from '@/panchang/prashna';
+import { buildPrashnaReading } from '@/panchang/prashnaGuidance';
+import { questionsForPurpose } from '@/panchang/prashnaQuestions';
 import { PRASHNA_PURPOSES, isPurposeId, type PurposeId } from '@/panchang/prashnaPurposes';
 import { ageYears } from '@/panchang/reportFormat';
 import { useKundali } from '@/panchang/useKundali';
+import { useJyotishNow } from '@/panchang/useJyotishNow';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang } from '@/utils/localize';
@@ -27,10 +30,9 @@ type Props = NativeStackScreenProps<PanchangStackParamList, 'Prashna'>;
  * प्रश्न — ask the saved chart a purpose (PRD-43 Wave D; design.md §72).
  *
  * A picker of nine purposes (gated by the subject's derived age, the closed
- * ones dimmed WITH their reason), then the answer in six fixed blocks:
- * सार · आधार · बल/बाधा · काल · दिशा · उपाय. The engine is pure; this screen
- * supplies "now", the active person's chart and the reading language, and
- * renders the आधार chains that make every sentence auditable (§14.3.1).
+ * ones dimmed WITH their reason), a question, then plain-language meaning,
+ * editorial actions and relevant periods. Technical evidence expands on demand.
+ * The engine is pure; this screen supplies the date, active chart and language.
  */
 
 /** Purposes whose दिशा hands off to the Muhurat finder for "when to begin". */
@@ -41,18 +43,33 @@ export default function PrashnaScreen({ navigation, route }: Props) {
   const { lang } = useGitaLanguage();
   const rootNav = useNavigation<any>();
   const { chart, profile, loadState } = useKundali();
-  const now = useMemo(() => new Date(), []);
+  const readingType = { fontFamily: scriptBodyFont(lang, lang === 'en' ? fontFamilies.latin : typography.meaning.fontFamily), fontSize: lang === 'en' ? 18 : 15, lineHeight: 25 };
+  const headingType = { fontFamily: scriptTitleFont(lang, lang === 'en' ? fontFamilies.latinSemiBold : typography.readerTitle.fontFamily), fontSize: lang === 'en' ? 20 : 17, lineHeight: 27 };
+  const now = useJyotishNow(chart);
   const initial = route.params?.purposeId;
   const [purposeId, setPurposeId] = useState<PurposeId>(
     initial && isPurposeId(initial) ? initial : 'vidya'
   );
 
+  const [questionId, setQuestionId] = useState('general');
+  const [basisOpen, setBasisOpen] = useState(false);
+  const [completed, setCompleted] = useState<readonly string[]>([]);
+  const purposeScroll = useRef<ScrollView>(null);
+  const purposeOffsets = useRef<Record<string, number>>({});
+  useEffect(() => {
+    const x = purposeOffsets.current[purposeId];
+    if (x !== undefined) purposeScroll.current?.scrollTo({ x: Math.max(0, x - 12), animated: false });
+  }, [purposeId]);
+  useEffect(() => { setQuestionId('general'); }, [chart]);
+  useEffect(() => { setBasisOpen(false); setCompleted([]); }, [chart, purposeId, questionId]);
   const age = chart ? ageYears(chart.input.date, now) : null;
-  const answer = useMemo(
-    () => (chart ? buildPrashnaAnswer(chart, purposeId, now) : null),
-    [chart, purposeId, now]
+  const reading = useMemo(
+    () => (chart ? buildPrashnaReading(chart, purposeId, now, { questionId, ...(['naukri', 'vyapar'].includes(purposeId) ? { gocharScanDays: 0 } : {}) }) : null),
+    [chart, purposeId, now, questionId]
   );
-  const moon = chart?.grahas.find((position) => position.graha === 'moon');
+  const answer = reading?.analysis;
+  const guidance = reading?.guidance;
+  const phase = reading?.phase;
 
   const openPractice = (sourceId: string) => {
     const entry = library.find((candidate) => candidate.id === sourceId);
@@ -61,7 +78,7 @@ export default function PrashnaScreen({ navigation, route }: Props) {
   };
 
   const eyebrow = (hi: string, en: string) => (
-    <Text style={[pillTextStyle(lang, typography.sectionLabel), { color: colors.saffronDeep, fontSize: 10 }]}>
+    <Text style={[pillTextStyle(lang, typography.sectionLabel), { color: colors.saffronDeep, fontSize: lang === 'en' ? 10 : 12, lineHeight: 20 }]}>
       {contentByLang(lang, hi, en)}
     </Text>
   );
@@ -70,9 +87,7 @@ export default function PrashnaScreen({ navigation, route }: Props) {
       key={key}
       style={{
         color: muted ? colors.inkMuted : colors.inkSoft,
-        fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-        fontSize: 12,
-        lineHeight: 19,
+        ...readingType,
         marginTop: 6,
       }}
     >
@@ -82,7 +97,7 @@ export default function PrashnaScreen({ navigation, route }: Props) {
   const card = (children: React.ReactNode, active = false, key?: string, label?: string) => (
     <View
       key={key}
-      accessible={Boolean(label)}
+      accessible={false}
       accessibilityLabel={label}
       style={[
         styles.card,
@@ -118,11 +133,11 @@ export default function PrashnaScreen({ navigation, route }: Props) {
           <View style={{ flex: 1 }}>
             <Text
               accessibilityLabel="Prashna"
-              style={{ color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 18 }}
+              style={{ ...headingType, color: colors.ink, fontSize: lang === 'en' ? 24 : 20 }}
             >
               {contentByLang(lang, 'प्रश्न', 'Prashna')}
             </Text>
-            <Text style={[styles.caption, { color: colors.inkMuted }]}>
+            <Text style={[styles.caption, { color: colors.inkMuted, fontFamily: lang === 'en' ? fontFamilies.inter : scriptBodyFont(lang, fontFamilies.devanagari), lineHeight: 21 }]}>
               {contentByLang(lang, 'अपनी कुंडली से पूछें', 'Ask your chart')}
             </Text>
           </View>
@@ -178,29 +193,20 @@ export default function PrashnaScreen({ navigation, route }: Props) {
                   pressed && { opacity: 0.72 },
                 ]}
               >
-                <Text style={[styles.practiceLinkText, { color: colors.saffronDeep }]}>
+                <Text style={[styles.practiceLinkText, { color: colors.saffronDeep, fontFamily: lang === 'en' ? fontFamilies.interSemiBold : scriptTitleFont(lang, fontFamilies.devanagariBold) }]}>
                   {contentByLang(lang, 'जन्म कुंडली बनाएँ', 'Create Kundali')}
                 </Text>
               </Pressable>
             </>
           )}
 
-          {chart && profile && answer && moon && (
+          {chart && profile && answer && (
             <>
               {card(
                 <>
                   {eyebrow('किसके लिए', 'For whom')}
-                  <Text style={[styles.title, { color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily) }]}>
-                    {profile.name
-                      ? contentByLang(lang, `${profile.name} · ${RASHI_NAMES_HI[chart.lagnaRashiIndex]} लग्न`, `${profile.name} · ${RASHI_NAMES_EN[chart.lagnaRashiIndex]} Lagna`)
-                      : contentByLang(lang, `${RASHI_NAMES_HI[chart.lagnaRashiIndex]} लग्न`, `${RASHI_NAMES_EN[chart.lagnaRashiIndex]} Lagna`)}
-                  </Text>
-                  {bodyText(
-                    `${RASHI_NAMES_HI[moon.rashiIndex]} चन्द्र · आयु ${answer.ageLabelHi} (${answer.asOfLabelHi} को)`,
-                    `${RASHI_NAMES_EN[moon.rashiIndex]} Moon · age ${answer.ageLabelEn} (as of ${answer.asOfLabelEn})`,
-                    undefined,
-                    true
-                  )}
+                  <Text style={[styles.title, headingType, { color: colors.ink }]}>{profile.name || contentByLang(lang, 'आपकी कुंडली', 'Your chart')}</Text>
+                  {bodyText(`आयु ${answer.ageLabelHi} · ${answer.asOfLabelHi}`, `Age ${answer.ageLabelEn} · ${answer.asOfLabelEn}`, undefined, true)}
                 </>,
                 false,
                 'who',
@@ -211,16 +217,21 @@ export default function PrashnaScreen({ navigation, route }: Props) {
               <Text style={[pillTextStyle(lang, typography.sectionLabel), styles.sectionLabel, { color: colors.inkMuted }]}>
                 {contentByLang(lang, 'विषय चुनें', 'Choose a purpose')}
               </Text>
-              <View style={styles.grid} accessibilityLabel="Purpose picker">
+              <ScrollView ref={purposeScroll} horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.grid} accessibilityLabel="Purpose picker">
                 {PRASHNA_PURPOSES.map((purpose) => {
                   const open = age !== null && age >= purpose.minAge;
                   const selected = purpose.id === purposeId;
                   return (
                     <Pressable
                       key={purpose.id}
+                      onLayout={event => {
+                        const x = event.nativeEvent.layout.x;
+                        purposeOffsets.current[purpose.id] = x;
+                        if (selected) purposeScroll.current?.scrollTo({ x: Math.max(0, x - 12), animated: false });
+                      }}
                       testID={`purpose-${purpose.id}`}
                       disabled={!open}
-                      onPress={() => setPurposeId(purpose.id)}
+                      onPress={() => { setPurposeId(purpose.id); setQuestionId('general'); }}
                       accessibilityRole="button"
                       accessibilityState={{ selected, disabled: !open }}
                       accessibilityLabel={`Purpose ${purpose.nameEn}${open ? '' : `, closed until age ${purpose.minAge}`}`}
@@ -234,18 +245,16 @@ export default function PrashnaScreen({ navigation, route }: Props) {
                         },
                       ]}
                     >
-                      <Text style={{ color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14 }}>
+                      <Text style={{ ...headingType, color: colors.ink }}>
                         {contentByLang(lang, purpose.nameHi, purpose.nameEn)}
                       </Text>
-                      <Text style={[styles.purposeSub, { color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily) }]}>
-                        {open
-                          ? meaningByLang(lang, purpose.askHi, purpose.askEn)
-                          : meaningByLang(lang, `${purpose.minAge} वर्ष के बाद`, `From age ${purpose.minAge}`)}
-                      </Text>
+                      {!open && <Text style={[styles.purposeSub, { color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily) }]}>
+                        {meaningByLang(lang, `${purpose.minAge} वर्ष के बाद`, `From age ${purpose.minAge}`)}
+                      </Text>}
                     </Pressable>
                   );
                 })}
-              </View>
+              </ScrollView>
 
               {answer.gated ? (
                 card(
@@ -259,130 +268,94 @@ export default function PrashnaScreen({ navigation, route }: Props) {
                 )
               ) : (
                 <>
-                  {/* सार */}
-                  {card(
+                  {guidance && (
                     <>
-                      <View style={styles.saarHead}>
-                        {eyebrow('सार · संक्षिप्त उत्तर', 'The short answer')}
+                      {questionsForPurpose(purposeId).length > 1 && (
+                        <View style={styles.questionList} accessibilityLabel="Your question">
+                          {eyebrow('आपका प्रश्न', 'Your question')}
+                          {questionsForPurpose(purposeId).map(question => (
+                            <Pressable key={question.id} testID={`question-${question.id}`} accessibilityRole="button"
+                              accessibilityState={{ selected: guidance.questionId === question.id }}
+                              accessibilityLabel={meaningByLang(lang, question.label.hi, question.label.en)}
+                              onPress={() => setQuestionId(question.id)}
+                              style={[styles.question, styles.questionOption, { borderColor: guidance.questionId === question.id ? colors.saffronDeep : colors.divider, backgroundColor: guidance.questionId === question.id ? colors.cardActiveFrom : colors.parchmentSoft, borderRadius: radii.md }]}>
+                              <View accessible={false} style={[styles.radio, { borderColor: guidance.questionId === question.id ? colors.saffronDeep : colors.inkMuted }]}>{guidance.questionId === question.id && <View style={[styles.radioDot, { backgroundColor: colors.saffronDeep }]} />}</View>
+                              <Text style={{ ...readingType, flex: 1, color: colors.ink }}>
+                                {meaningByLang(lang, question.label.hi, question.label.en)}
+                              </Text>
+                            </Pressable>
+                          ))}
+                        </View>
+                      )}
+                      {phase ? <PrashnaPhaseContent key={`${chart.input.date.toISOString()}-${chart.input.latitude}-${chart.input.longitude}-${purposeId}-${questionId}`} phase={phase} lang={lang}>
+                        <View style={styles.actions}>
+                          {purposeId === 'vyapar' && <ActionPill lang={lang} hi="मुहूर्त खोजें" en="Find a muhurat" a11y="Open Muhurat finder" onPress={() => rootNav.navigate('MuhuratFinder')} />}
+                          <ActionPill lang={lang} hi="विस्तृत विवेचन और साझा करें" en="Full reading and share" a11y="Open full Kundali reading" onPress={() => rootNav.navigate('KundaliReport', { prashnaContext: { purposeId, questionId: phase.questionId } })} />
+                        </View>
+                      </PrashnaPhaseContent> : <>
+                      {card(<>
+                        {eyebrow('आपके प्रश्न का उत्तर', 'Your reading')}
+                        <Text testID="prashna-saar" style={[styles.title, headingType, { color: colors.ink }]}>
+                          {meaningByLang(lang, guidance.title.hi, guidance.title.en)}
+                        </Text>
+                        {bodyText(guidance.summary.hi, guidance.summary.en)}
+                        {guidance.parentNote && bodyText(guidance.parentNote.hi, guidance.parentNote.en)}
+                      </>, true, 'saar', 'Your reading')}
+                      {card(<>
+                        {eyebrow('आपके लिए इसका अर्थ', 'What this means for you')}
+                        {guidance.insights.map(insight => <View key={insight.id} testID={`insight-${insight.id}`} style={styles.insight}>
+                          <Text style={[styles.title, headingType, { color: colors.ink }]}>{meaningByLang(lang, insight.title.hi, insight.title.en)}</Text>
+                          {bodyText(insight.meaning.hi, insight.meaning.en)}
+                        </View>)}
+                      </>, false, 'meaning', 'What this means for you')}
+                      {card(<>
+                        {eyebrow('आप क्या कर सकते हैं', 'A practical plan')}
+                        {bodyText('अपने अनुसार कदम चुनें और पूरा होने पर निशान लगाएँ। ये व्यावहारिक सुझाव हैं।', 'Choose what fits and tick it off when done. These are practical suggestions.', undefined, true)}
+                        {guidance.actions.map(action => <Pressable key={action.id} testID={`action-${action.id}`} accessibilityRole="checkbox"
+                          accessibilityLabel={meaningByLang(lang, action.text.hi, action.text.en)} accessibilityState={{ checked: completed.includes(action.id) }}
+                          onPress={() => setCompleted(old => old.includes(action.id) ? old.filter(id => id !== action.id) : [...old, action.id])}
+                          style={styles.actionRow}>
+                          <Text style={{ color: colors.saffronDeep, fontSize: 18 }}>{completed.includes(action.id) ? '✓' : '○'}</Text>
+                          <Text style={{ ...readingType, flex: 1, color: completed.includes(action.id) ? colors.inkMuted : colors.inkSoft }}>
+                            {meaningByLang(lang, action.text.hi, action.text.en)}
+                          </Text>
+                        </Pressable>)}
+                        {eyebrow('ध्यान रखें', 'Keep in mind')}
+                        {bodyText(guidance.caution.hi, guidance.caution.en)}
+                        <View style={styles.actions}>
+                          {MUHURAT_PURPOSES.includes(purposeId) && <ActionPill lang={lang} hi="मुहूर्त खोजें" en="Find a muhurat" a11y="Open Muhurat finder" onPress={() => rootNav.navigate('MuhuratFinder')} />}
+                          {purposeId === 'vivah' && <ActionPill lang={lang} hi="गुण मिलान" en="Guna Milan" a11y="Open Guna Milan" onPress={() => rootNav.navigate('GunaMilan')} />}
+                          <ActionPill lang={lang} hi="विस्तृत विवेचन और साझा करें" en="Full reading and share" a11y="Open full Kundali reading" onPress={() => rootNav.navigate('KundaliReport', { prashnaContext: { purposeId, questionId: guidance.questionId } })} />
+                        </View>
+                      </>, false, 'actions', 'Practical plan')}
+                      {card(<>
+                        {eyebrow('समय का संकेत', 'Timing')}
+                        {bodyText(guidance.timing.text.hi, guidance.timing.text.en)}
+                        {guidance.timing.windowIds.map(id => answer.windows.find(w => w.id === id)!).map(w => <View key={w.id} testID={`prashna-window-${w.id}`} style={[styles.window, { borderLeftColor: colors.gold }]}>
+                          <Text style={[styles.windowDate, { color: colors.ink, fontFamily: lang === 'en' ? fontFamilies.interSemiBold : scriptBodyFont(lang, fontFamilies.devanagari) }]}>{contentByLang(lang, w.labelHi, w.labelEn)}{w.current ? contentByLang(lang, ' · अभी', ' · now') : ''}</Text>
+                          {bodyText(w.current ? 'इस विषय से जुड़ी चल रही अवधि; अनुकूलता की पुष्टि नहीं।' : 'इस विषय से जुड़ी आगामी अवधि; परिणाम की तारीख नहीं।', w.current ? 'A current period connected with this topic; favourability is not established.' : 'An upcoming period connected with this topic; not an outcome date.')}
+                        </View>)}
+                      </>, false, 'timing', 'Timing')}
+                      <Pressable testID="prashna-basis-toggle" accessibilityRole="button" accessibilityState={{ expanded: basisOpen }}
+                        accessibilityLabel={contentByLang(lang, basisOpen ? 'ज्योतिषीय आधार छिपाएँ' : 'ज्योतिषीय आधार देखें', basisOpen ? 'Hide Jyotish basis' : 'See Jyotish basis')} onPress={() => setBasisOpen(!basisOpen)}
+                        style={[styles.question, { borderColor: colors.divider, borderRadius: radii.md }]}>
+                        <Text style={{ ...readingType, color: colors.saffronDeep }}>{contentByLang(lang, basisOpen ? 'ज्योतिषीय आधार छिपाएँ' : 'ज्योतिषीय आधार देखें', basisOpen ? 'Hide Jyotish basis' : 'See Jyotish basis')}</Text>
+                      </Pressable>
+                      {basisOpen && card(<>
+                        {eyebrow('ज्योतिषीय आधार', 'Jyotish basis')}
                         <StrengthPill strength={answer.strength!} lang={lang} />
-                      </View>
-                      <Text
-                        testID="prashna-saar"
-                        style={[styles.title, { color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily) }]}
-                      >
-                        {meaningByLang(lang, answer.saarTitleHi, answer.saarTitleEn)}
-                      </Text>
-                      {bodyText(answer.saarBodyHi, answer.saarBodyEn)}
-                    </>,
-                    true,
-                    'saar',
-                    `Short answer: ${answer.saarTitleEn}`
-                  )}
-
-                  {/* आधार */}
-                  {card(
-                    <>
-                      {eyebrow('आधार · यह क्यों', 'Basis · why this reading')}
-                      {bodyText(answer.aadhaarIntroHi, answer.aadhaarIntroEn)}
-                      {answer.chains.map((chain, index) => (
-                        <BasisChain
-                          key={`chain-${index}`}
-                          basis={chain.basis}
-                          lang={lang}
-                          labelHi={chain.labelHi}
-                          labelEn={chain.labelEn}
-                          testID={`prashna-chain-${index}`}
-                        />
-                      ))}
-                    </>,
-                    false,
-                    'aadhaar',
-                    'Basis for the reading'
-                  )}
-
-                  {/* बल / बाधा */}
-                  {card(
-                    <>
-                      {eyebrow('बल और बाधा', 'What supports, what resists')}
-                      <View style={styles.split}>
-                        <View style={[styles.col, { backgroundColor: colors.goldTint, borderRadius: radii.md }]}>
-                          <Text style={[pillTextStyle(lang, typography.sectionLabel), { color: colors.saffronDeep, fontSize: 10 }]}>
-                            {contentByLang(lang, 'जो साथ देता है', 'Supports')}
-                          </Text>
-                          {answer.supports.length === 0
-                            ? bodyText('— कोई स्पष्ट बल नहीं', '— no clear support', 'sup-none', true)
-                            : answer.supports.map((f) => bodyText(f.textHi, f.textEn, f.id))}
-                        </View>
-                        <View style={[styles.col, { backgroundColor: colors.avoidTint, borderRadius: radii.md }]}>
-                          <Text style={[pillTextStyle(lang, typography.sectionLabel), { color: colors.avoidDeep, fontSize: 10 }]}>
-                            {contentByLang(lang, 'जो रोकता है', 'Resists')}
-                          </Text>
-                          {answer.resists.length === 0
-                            ? bodyText('— कोई स्पष्ट बाधा नहीं', '— no clear resistance', 'res-none', true)
-                            : answer.resists.map((f) => bodyText(f.textHi, f.textEn, f.id))}
-                        </View>
-                      </View>
-                    </>,
-                    false,
-                    'balbadha',
-                    'Supports and resists'
-                  )}
-
-                  {/* काल */}
-                  {card(
-                    <>
-                      {eyebrow('काल · अनुकूल अवधियाँ', 'Windows · supportive periods')}
-                      {bodyText(answer.kaalIntroHi, answer.kaalIntroEn, undefined, true)}
-                      {answer.windows.map((w) => (
-                        <View
-                          key={w.id}
-                          testID={`prashna-window-${w.id}`}
-                          style={[
-                            styles.window,
-                            {
-                              backgroundColor: colors.cardSurface,
-                              borderLeftColor: w.relevant ? colors.gold : colors.divider,
-                              borderRadius: radii.md,
-                              opacity: w.relevant ? 1 : 0.82,
-                            },
-                          ]}
-                        >
-                          <Text style={[styles.windowDate, { color: colors.ink }]}>
-                            {contentByLang(lang, w.labelHi, w.labelEn)}
-                            {w.current ? contentByLang(lang, ' · अभी', ' · now') : ''}
-                          </Text>
-                          {bodyText(w.textHi, w.textEn)}
-                        </View>
-                      ))}
-                    </>,
-                    false,
-                    'kaal',
-                    'Supportive windows'
-                  )}
-
-                  {/* दिशा */}
-                  {card(
-                    <>
-                      {eyebrow('दिशा · क्या करें', 'Direction · what to do')}
-                      {answer.dishaHi.map((hi, index) => (
-                        <View key={`disha-${index}`} style={styles.dishaRow}>
-                          <Text style={{ color: colors.saffron, fontSize: 12, lineHeight: 19, marginTop: 6 }}>—</Text>
-                          <View style={{ flex: 1 }}>{bodyText(hi, answer.dishaEn[index])}</View>
-                        </View>
-                      ))}
-                      <View style={styles.actions}>
-                        {MUHURAT_PURPOSES.includes(purposeId) && (
-                          <ActionPill lang={lang} hi="मुहूर्त खोजें" en="Find a muhurat" a11y="Open Muhurat finder" onPress={() => rootNav.navigate('MuhuratFinder')} />
-                        )}
-                        {purposeId === 'vivah' && (
-                          <ActionPill lang={lang} hi="गुण मिलान" en="Guna Milan" a11y="Open Guna Milan" onPress={() => rootNav.navigate('GunaMilan')} />
-                        )}
-                        <ActionPill lang={lang} hi="पूर्ण विवेचन" en="Full reading" a11y="Open full Kundali reading" onPress={() => rootNav.navigate('KundaliReport')} />
-                      </View>
-                    </>,
-                    false,
-                    'disha',
-                    'Direction'
+                        {bodyText(answer.aadhaarIntroHi, answer.aadhaarIntroEn)}
+                        {guidance.insights.map((insight, index) => <BasisChain key={insight.id} basis={insight.basis} lang={lang} labelHi={insight.title.hi} labelEn={insight.title.en} testID={`prashna-chain-${index}`} />)}
+                        {answer.supports.length > 0 && <View style={{ marginTop: 12 }}>{eyebrow('सहायक संकेत', 'Supporting indications')}</View>}
+                        {answer.supports.map(f => bodyText(f.textHi, f.textEn, f.id))}
+                        {answer.resists.length > 0 && <View style={{ marginTop: 12 }}>{eyebrow('विरोधी संकेत', 'Opposing indications')}</View>}
+                        {answer.resists.map(f => bodyText(f.textHi, f.textEn, f.id))}
+                        {answer.qualifies.length > 0 && <View style={{ marginTop: 12 }}>{eyebrow('अन्य संदर्भ', 'Other context')}</View>}
+                        {answer.qualifies.map(f => bodyText(f.textHi, f.textEn, f.id))}
+                        {answer.windows.map(w => bodyText(`${w.labelHi} · ${w.textHi}`, `${w.labelEn} · ${w.textEn}`, w.id))}
+                      </>, false, 'basis', 'Jyotish basis')}
+                      </>}
+                    </>
                   )}
 
                   {/* उपाय */}
@@ -392,7 +365,7 @@ export default function PrashnaScreen({ navigation, route }: Props) {
                     return card(
                       <>
                         {eyebrow('उपाय · साधना', 'Practice')}
-                        <Text style={[styles.title, { color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15 }]}>
+                        <Text style={[styles.title, headingType, { color: colors.ink }]}>
                           {contentByLang(lang, practice.nameHi, practice.nameEn)}
                         </Text>
                         {bodyText(answer.practiceNoteHi, answer.practiceNoteEn, undefined, true)}
@@ -406,7 +379,7 @@ export default function PrashnaScreen({ navigation, route }: Props) {
                             pressed && { opacity: 0.7 },
                           ]}
                         >
-                          <Text style={[styles.practiceLinkText, { color: colors.saffronDeep }]}>
+                          <Text style={[styles.practiceLinkText, { color: colors.saffronDeep, fontFamily: lang === 'en' ? fontFamilies.interSemiBold : scriptTitleFont(lang, fontFamilies.devanagariBold) }]}>
                             {contentByLang(lang, `${practice.nameHi} पढ़ें`, `Read ${practice.nameEn}`)} ›
                           </Text>
                         </Pressable>
@@ -446,7 +419,7 @@ function StrengthPill({ strength, lang }: { strength: PrashnaStrength; lang: Lan
       accessibilityLabel={`Strength ${STRENGTH_LABEL_EN[strength]}`}
       style={[styles.pill, { backgroundColor: tint, borderColor: colors.divider, borderRadius: radii.pill }]}
     >
-      <Text style={[styles.pillText, { color: ink }]}>
+      <Text style={[pillTextStyle(lang, styles.pillText), { color: ink, flexShrink: 1, lineHeight: 20 }]}>
         {contentByLang(lang, STRENGTH_LABEL_HI[strength], STRENGTH_LABEL_EN[strength]).toUpperCase()}
       </Text>
       <View style={styles.bars}>
@@ -471,7 +444,7 @@ function ActionPill({ lang, hi, en, a11y, onPress }: { lang: Lang; hi: string; e
         pressed && { opacity: 0.7 },
       ]}
     >
-      <Text style={[styles.practiceLinkText, { color: colors.saffronDeep }]}>{contentByLang(lang, hi, en)} ›</Text>
+      <Text style={[styles.practiceLinkText, { color: colors.saffronDeep, fontFamily: lang === 'en' ? fontFamilies.interSemiBold : scriptTitleFont(lang, fontFamilies.devanagariBold) }]}>{contentByLang(lang, hi, en)} ›</Text>
     </Pressable>
   );
 }
@@ -487,21 +460,24 @@ const styles = StyleSheet.create({
   empty: { padding: 18, borderWidth: 1, borderStyle: 'dashed' },
   createButton: { minHeight: 44, marginTop: 12, paddingHorizontal: 16, borderWidth: 1, alignSelf: 'center', alignItems: 'center', justifyContent: 'center' },
   title: { fontSize: 16, marginTop: 4, lineHeight: 22 },
-  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 12 },
-  purpose: { width: '48%', minHeight: 72, padding: 11, borderWidth: 1 },
+  grid: { gap: 8, paddingBottom: 12 },
+  questionList: { gap: 6, marginBottom: 14 },
+  question: { minHeight: 48, padding: 12, borderWidth: 1, marginBottom: 8 },
+  questionOption: { flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 0 },
+  radio: { width: 18, height: 18, borderRadius: 9, borderWidth: 1.5, alignItems: 'center', justifyContent: 'center' },
+  radioDot: { width: 8, height: 8, borderRadius: 4 },
+  insight: { marginTop: 8, marginBottom: 8 },
+  actionRow: { minHeight: 44, flexDirection: 'row', gap: 12, alignItems: 'flex-start', paddingVertical: 10 },
+  purpose: { minWidth: 105, minHeight: 48, padding: 11, borderWidth: 1, justifyContent: 'center' },
   purposeSub: { fontSize: 10.5, lineHeight: 15, marginTop: 3 },
-  saarHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8 },
-  pill: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 9, paddingVertical: 4, borderWidth: 1 },
+  pill: { alignSelf: 'flex-start', maxWidth: '100%', marginTop: 6, flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 9, paddingVertical: 4, borderWidth: 1 },
   pillText: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, letterSpacing: 0.9 },
   bars: { flexDirection: 'row', gap: 2 },
   bar: { width: 3, height: 9, borderRadius: 1 },
-  split: { flexDirection: 'row', gap: 8, marginTop: 8 },
-  col: { flex: 1, padding: 10 },
   window: { padding: 10, borderLeftWidth: 2, marginTop: 8 },
-  windowDate: { fontFamily: fontFamilies.interSemiBold, fontSize: 11, fontVariant: ['tabular-nums'] },
-  dishaRow: { flexDirection: 'row', gap: 8 },
+  windowDate: { fontFamily: fontFamilies.interSemiBold, fontSize: 12, lineHeight: 21, fontVariant: ['tabular-nums'] },
   actions: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 12 },
-  practiceLink: { minHeight: 38, marginTop: 10, paddingHorizontal: 13, borderWidth: 1, alignSelf: 'flex-start', alignItems: 'center', justifyContent: 'center' },
-  practiceLinkText: { fontFamily: fontFamilies.interSemiBold, fontSize: 10 },
+  practiceLink: { minHeight: 44, maxWidth: '100%', paddingVertical: 9, marginTop: 10, paddingHorizontal: 13, borderWidth: 1, alignSelf: 'flex-start', alignItems: 'center', justifyContent: 'center' },
+  practiceLinkText: { fontFamily: fontFamilies.interSemiBold, fontSize: 12, lineHeight: 21, flexShrink: 1, textAlign: 'center' },
   footer: { fontSize: 10.5, lineHeight: 16, marginTop: 8, paddingTop: 10, borderTopWidth: StyleSheet.hairlineWidth },
 });

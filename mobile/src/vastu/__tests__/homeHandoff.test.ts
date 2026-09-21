@@ -89,6 +89,6 @@ test('stance guard on the whole text: no score/percent/rating/remedy register', 
   expect(prose).not.toMatch(/खरीद(ें|िए)/);
 });
 
-test('privacy line states the map never left the phone by itself', () => {
-  expect(text).toContain('This map lives only on that phone');
+test('handoff omits device-status prose', () => {
+  expect(text).not.toMatch(/lives only on|on-device|sent nowhere/i);
 });

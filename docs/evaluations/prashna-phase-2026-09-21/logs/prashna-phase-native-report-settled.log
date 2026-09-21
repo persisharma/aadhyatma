@@ -1,0 +1,14 @@
+WARNING: Final field parent in class maestro.cli.command.TestCommand has been mutated reflectively by class picocli.CommandLine$Model$FieldBinding in unnamed module @41e68d87 (file:/Users/prashant/.maestro/lib/picocli-4.6.3.jar)
+WARNING: Use --enable-final-field-mutation=ALL-UNNAMED to avoid a warning
+WARNING: Mutating final fields will be blocked in a future release unless final field mutation is enabled
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/Users/prashant/.maestro/lib/jansi-2.4.1.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+Running on Vedansh-Prashna-QA - iOS 26.4 - 913FA15C-3750-4E34-97BA-A39A33410600
+ > Flow prashna-report-settled
+Tap on "Cancel sharing"... COMPLETED
+Wait for animation to end... COMPLETED
+Assert that "Full Kundali reading" is visible... COMPLETED
+Take screenshot 05-report-settled... COMPLETED

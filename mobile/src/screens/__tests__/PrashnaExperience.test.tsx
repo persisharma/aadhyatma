@@ -31,6 +31,7 @@ let mockKundaliState: {
 } = { profile: null, chart: null, hydrated: true, loadState: 'guest' };
 
 jest.mock('@react-navigation/native', () => ({
+  useFocusEffect: (callback: () => void) => mockReact.useEffect(callback, [callback]),
   useNavigation: () => ({ navigate: mockRootNavigate }),
 }));
 jest.mock('expo-linear-gradient', () => ({
@@ -81,7 +82,7 @@ test('guest state explains the requirement and offers Create Kundali', () => {
   act(() => tree.unmount());
 });
 
-test('an adult chart opens all nine purposes and renders the six answer blocks with basis chains', () => {
+test('an adult chart leads with guidance and expands technical evidence on request', () => {
   mockKundaliState = {
     profile: { name: 'Aarav', date: '1992-08-14', time: '05:42', cityId: 'ujjain' },
     chart: adultChart,
@@ -97,13 +98,13 @@ test('an adult chart opens all nine purposes and renders the six answer blocks w
     assert.equal(tile.props.accessibilityState.disabled, false, `${id} open for an adult`);
   }
   assert.ok(!text.includes('From age 18'));
-  // Six blocks.
-  for (const label of ['The short answer', 'Basis · why this reading', 'What supports, what resists', 'Windows · supportive periods', 'Direction · what to do', 'Practice']) {
-    assert.ok(text.includes(label), `block: ${label}`);
-  }
+  for (const label of ['Your reading', 'What this means for you', 'A practical plan', 'Timing', 'Practice']) assert.ok(text.includes(label));
   assert.ok(byTestId(tree, 'prashna-saar').length > 0);
+  assert.equal(byTestId(tree, 'prashna-strength').length, 0);
+  assert.equal(byTestId(tree, 'prashna-chain-0').length, 0);
+  act(() => byTestId(tree, 'prashna-basis-toggle')[0].props.onPress());
   assert.ok(byTestId(tree, 'prashna-strength').length > 0);
-  assert.ok(byTestId(tree, 'prashna-chain-0').length > 0, 'at least one आधार chain');
+  assert.ok(byTestId(tree, 'prashna-chain-0').length > 0);
   assert.ok(text.includes('· now'), 'a running window is marked');
   assert.match(text, /\d{1,2} [A-Z][a-z]{2} \d{4} → \d{1,2} [A-Z][a-z]{2} \d{4}/, 'dated window');
   assert.ok(tree.root.findByProps({ accessibilityLabel: 'Open Navagraha Stotram practice' }));
@@ -164,5 +165,43 @@ test("a 13-year-old's chart dims the five adult purposes with their reason and s
   const study = textOf(tree);
   assert.ok(byTestId(tree, 'prashna-saar').length > 0);
   assert.ok(study.includes('For a parent:'));
+  act(() => tree.unmount());
+});
+
+
+test('career question changes phase guidance, clears basis and keeps report context', () => {
+  mockKundaliState = { profile: { name: 'Aarav' }, chart: adultChart, hydrated: true, loadState: 'saved' };
+  const tree = render({ purposeId: 'naukri' });
+  act(() => byTestId(tree, 'question-job-first')[0].props.onPress());
+  const first = textOf(tree);
+  assert.ok(first.includes('Your current phase'));
+  assert.ok(first.includes('Why this reading'));
+  assert.ok(!first.includes('A practical plan'));
+  act(() => byTestId(tree, 'prashna-basis-toggle')[0].props.onPress());
+  assert.ok(byTestId(tree, 'prashna-chain-0').length);
+  act(() => byTestId(tree, 'question-job-switch')[0].props.onPress());
+  assert.notEqual(textOf(tree), first);
+  assert.equal(byTestId(tree, 'prashna-chain-0').length, 0);
+  const link = tree.root.findAll(n => n.props.accessibilityLabel === 'Open full Kundali reading' && typeof n.props.onPress === 'function')[0];
+  act(() => link.props.onPress());
+  assert.ok(mockRootNavigate.mock.calls.some(c => c[0] === 'KundaliReport' && c[1]?.prashnaContext?.questionId === 'job-switch'));
+  act(() => byTestId(tree, 'purpose-vidya')[0].props.onPress());
+  assert.equal(byTestId(tree, 'question-general')[0].props.accessibilityState.selected, true);
+  act(() => tree.unmount());
+});
+
+test('changing the active person clears the previous question, checklist and expanded evidence', () => {
+  mockKundaliState = { profile: { name: 'Aarav' }, chart: adultChart, hydrated: true, loadState: 'saved' };
+  const tree = render({ purposeId: 'vidya' });
+  act(() => byTestId(tree, 'question-study-exam')[0].props.onPress());
+  act(() => byTestId(tree, 'action-study-exam-0')[0].props.onPress());
+  act(() => byTestId(tree, 'prashna-basis-toggle')[0].props.onPress());
+  mockKundaliState = { profile: { name: 'Aaradhya' }, chart: childChart, hydrated: true, loadState: 'saved' };
+  act(() => tree.update(<GitaLanguageProvider initialLang="en"><PrashnaScreen navigation={mockNavigation as any}
+    route={{ key: 'Prashna-test', name: 'Prashna', params: { purposeId: 'vidya' } } as any} /></GitaLanguageProvider>));
+  assert.equal(byTestId(tree, 'question-general')[0].props.accessibilityState.selected, true);
+  assert.equal(byTestId(tree, 'prashna-chain-0').length, 0);
+  assert.equal(byTestId(tree, 'action-parent-listen')[0].props.accessibilityState.checked, false);
+  assert.ok(textOf(tree).includes('Aaradhya') && textOf(tree).includes('For a parent:'));
   act(() => tree.unmount());
 });
