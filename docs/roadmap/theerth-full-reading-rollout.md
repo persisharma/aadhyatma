@@ -86,7 +86,7 @@ Notes: TTD for Tirupati (Brahmotsavam in `mela`, laddu in `parampara`); Udupi Pa
 (biennial, Makara Sankranti) in `parampara`; Bhadrachalam Sita Rama Kalyanam (Chaitra
 Navami); Brihadeeswarar `sthapana` = Rajaraja I, 1010 CE (inscriptional).
 
-### Wave 7 — Remaining 51-Shakti-Peeth rows (12)
+### Wave 7 — Remaining 51-Shakti-Peeth rows (14)
 `danteshwari`, `nartiang-durga`, `shrinkhala`, `jogulamba`, `bhramaramba`,
 `mahalakshmi-kolhapur`, `ekaveerika-mahur`, `harsiddhi-ujjain`, `puruhutika`, `biraja`,
 `manikyamba`, `madhaveswari`, `mangala-gauri`, `vishalakshi`.
@@ -95,7 +95,7 @@ Notes: `sthapana` here is the Sati-anga narrative plus documented rebuilds; seve
 "not recorded" on tithi/weekday and say so per §12.6. Sources: Devi Bhagavata /
 Tantra Chudamani listings via Gita Press, state tourism, ASI where listed.
 
-### Wave 8 — Regional / one-per-state rows (11)
+### Wave 8 — Regional / one-per-state rows (9)
 `konark-sun`, `vishnupad-gaya`, `lakshmi-narayan`, `durgiana`, `govindajee-imphal`,
 `parashuram-kund`, `kirateshwar`, `iskcon-chandigarh`, `dimapur-kalibari`.
 Notes: Konark is an ASI monument, not a living shrine — `parampara`/`mela` will lean on
