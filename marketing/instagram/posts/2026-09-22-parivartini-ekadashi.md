@@ -30,8 +30,8 @@ A night for letting go and starting again.
 "ॐ नमो भगवते वासुदेवाय" का जप, वामन अवतार की कथा, रात्रि जागरण।
 Chant "Om Namo Bhagavate Vasudevaya", read the Vamana-Bali katha, keep jagran.
 
-कथा, विधि और पारण का समय — सब एक जगह।
-Katha, vidhi and paran time — all in one place.
+कथा, विधि और पारण का समय — जानिए Vedansh app के साथ 📱
+Katha, vidhi and paran time — all in the Vedansh app. Link in bio 🔗
 
 जिसे आज एक नई शुरुआत की ज़रूरत है, उसे यह भेज दीजिए 🙏
 Save this & send it to someone who needs a reset today.
