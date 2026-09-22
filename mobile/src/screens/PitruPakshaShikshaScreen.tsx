@@ -326,13 +326,6 @@ export default function PitruPakshaShikshaScreen({ navigation }: Props) {
             <Text style={{ color: colors.inkSoft, fontSize: 17 }}>›</Text>
           </Pressable>
 
-          <Text style={{ fontFamily: fontFamilies.latinItalic, fontSize: 12, lineHeight: 19, color: colors.inkMuted, textAlign: 'center', marginTop: 18 }}>
-            {contentByLang(
-              lang,
-              'यह परिचय है, विधान नहीं — परिवार की परम्परा सर्वोपरि है।',
-              'This is an introduction, not a prescription — the family’s tradition comes first.'
-            )}
-          </Text>
         </ScrollView>
       </SafeAreaView>
     </View>

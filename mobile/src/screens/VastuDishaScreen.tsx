@@ -326,8 +326,8 @@ export default function VastuDishaScreen({ navigation }: { navigation: Navigatio
         <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 18, color: colors.inkMuted, marginTop: spacing.lg }}>
           {meaningByLang(
             lang,
-            'यह शास्त्रीय परंपरा का परिचय है, घर का दोष-निर्णय नहीं — जो बदला नहीं जा सकता, उसके लिए परंपरा में ही व्यावहारिक रूप बताए गए हैं।',
-            'This introduces the classical convention — it is not a verdict on a home. Where something cannot change, tradition itself states the practical form.'
+            'जो बदला नहीं जा सकता, उसके लिए परंपरा में ही व्यावहारिक रूप बताए गए हैं।',
+            'Where something cannot change, tradition itself states the practical form.'
           )}
         </Text>
       </ScrollView>

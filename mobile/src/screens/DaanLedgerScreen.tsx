@@ -95,8 +95,8 @@ export default function DaanLedgerScreen({ navigation }: Props) {
             <Text style={{ fontFamily: bodyFont, fontSize: 13, lineHeight: 21, color: colors.inkSoft, textAlign: 'center' }}>
               {contentByLang(
                 lang,
-                'सुदामा की मुट्ठी भर पोहा भी पूर्ण दान था — यहाँ मात्रा नहीं, स्मरण दर्ज होता है। पहला दान दर्ज करें, या पहले उसकी कथा पढ़ें।',
-                'Sudama’s fistful of poha was a complete gift — this register keeps remembrance, not amounts. Record your first daan, or read his story first.'
+                'अभी कोई दान दर्ज नहीं है। ऊपर से पहला दान दर्ज करें, या सुदामा की कथा पढ़ें।',
+                'No daan recorded yet. Record your first one above, or read Sudama’s story.'
               )}
             </Text>
             <Pressable

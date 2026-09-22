@@ -203,8 +203,8 @@ export default function DaanEntryScreen({ navigation, route }: Props) {
         <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 18, color: colors.inkMuted, textAlign: 'center', marginTop: spacing.md }}>
           {contentByLang(
             lang,
-            'गेट पर, हुंडी में, पड़ोस में दिया दान भी उतना ही दर्ज होने योग्य है — यही प्राथमिक मार्ग है।',
-            'Daan given at the gate, in the hundi, to a neighbour is just as recordable — this is the primary path.'
+            'गेट पर, हुंडी में, पड़ोस में दिया दान भी यहाँ दर्ज किया जा सकता है।',
+            'Daan given at the gate, in the hundi, or to a neighbour can be recorded here too.'
           )}
         </Text>
       </ScrollView>

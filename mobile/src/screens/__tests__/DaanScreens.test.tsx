@@ -19,6 +19,7 @@ import { GitaLanguageProvider } from '@/data/gita/language';
 const mockNavigation = {
   goBack: jest.fn(),
   navigate: jest.fn(),
+  replace: jest.fn(),
 };
 
 jest.mock('@react-navigation/native', () => ({
@@ -43,7 +44,8 @@ import DaanPunyaScreen from '../DaanPunyaScreen';
 import DaanJourneyScreen from '../DaanJourneyScreen';
 import DaanDirectoryScreen from '../DaanDirectoryScreen';
 import DaanDirectoryDetailScreen from '../DaanDirectoryDetailScreen';
-import { getDaanOrg } from '@/data/daan';
+import DaanKathaScreen from '../DaanKathaScreen';
+import { getDaanKathas, getDaanOrg } from '@/data/daan';
 
 const has = (tree: TestRenderer.ReactTestRenderer, testID: string) =>
   tree.root.findAllByProps({ testID }).length > 0;
@@ -99,8 +101,62 @@ describe('DaanPunyaScreen — the educate-first home', () => {
     // The ledger door stays, ungated. And there is still NO in-app give/pay
     // control anywhere on this screen — the hand-off lives on the detail only.
     expect(has(tree, 'daan-ledger-door')).toBe(true);
+    await press(tree, 'daan-ledger-door');
+    expect(mockNavigation.navigate).toHaveBeenCalledWith('DaanLedger');
     expect(has(tree, 'daan-org-give')).toBe(false);
     expect(has(tree, 'daan-org-open')).toBe(false);
+    await act(async () => tree.unmount());
+  });
+
+  test('both standing doors live in the sticky action bar; the verse spine is a carousel', async () => {
+    const navigation = { ...mockNavigation } as never;
+    const tree = await renderScreen(<DaanPunyaScreen navigation={navigation} route={{ key: 'k', name: 'DaanPunya' } as never} />);
+    const bar = tree.root.findAllByProps({ testID: 'daan-home-actions' })[0];
+    expect(bar.findAllByProps({ testID: 'daan-home-dwaar' }).length).toBeGreaterThan(0);
+    expect(bar.findAllByProps({ testID: 'daan-home-donate' }).length).toBeGreaterThan(0);
+    // Every verified principle rides the carousel; the meaning unfolds in place.
+    const carousel = tree.root.findAllByProps({ testID: 'daan-principle-carousel' })[0];
+    expect(carousel.findAllByProps({ testID: 'daan-principle-dana-sukta' }).length).toBeGreaterThan(0);
+    expect(has(tree, 'daan-principle-meaning-dana-sukta')).toBe(true);
+    // The kathas are a horizontal shelf.
+    const shelf = tree.root.findAllByProps({ testID: 'daan-katha-shelf' })[0];
+    expect(shelf.findAllByProps({ testID: 'daan-katha-karna' }).length).toBeGreaterThan(0);
+    await act(async () => tree.unmount());
+  });
+});
+
+describe('DaanKathaScreen — the story never dead-ends', () => {
+  const renderKatha = (kathaId: string) =>
+    renderScreen(
+      <DaanKathaScreen
+        navigation={{ ...mockNavigation } as never}
+        route={{ key: 'k', name: 'DaanKatha', params: { kathaId } } as never}
+      />
+    );
+
+  test('teaching, next-story row and the two quiet doors render after the story', async () => {
+    const kathas = getDaanKathas();
+    const tree = await renderKatha(kathas[0].id);
+    expect(has(tree, 'daan-katha-teaching')).toBe(true);
+    expect(has(tree, 'daan-katha-next')).toBe(true);
+    expect(has(tree, 'daan-katha-donate')).toBe(true);
+    expect(has(tree, 'daan-katha-record')).toBe(true);
+    // Still no in-app give/pay control (§2.7).
+    expect(has(tree, 'daan-org-give')).toBe(false);
+    expect(has(tree, 'daan-org-open')).toBe(false);
+    await act(async () => tree.unmount());
+  });
+
+  test('next → the following katha in registry order (wrapping); donate → daily journey; record → DaanEntry{}', async () => {
+    const kathas = getDaanKathas();
+    const last = kathas[kathas.length - 1];
+    const tree = await renderKatha(last.id);
+    await press(tree, 'daan-katha-next');
+    expect(mockNavigation.replace).toHaveBeenCalledWith('DaanKatha', { kathaId: kathas[0].id });
+    await press(tree, 'daan-katha-donate');
+    expect(mockNavigation.navigate).toHaveBeenCalledWith('DaanJourney', {});
+    await press(tree, 'daan-katha-record');
+    expect(mockNavigation.navigate).toHaveBeenCalledWith('DaanEntry', {});
     await act(async () => tree.unmount());
   });
 });

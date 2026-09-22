@@ -35,10 +35,15 @@ content is generated from the registries, so it cannot drift from the code).
   `getDaanOccasionForRule`).
 - **State** — `DaanLedgerContext` (AsyncStorage `@vedansh/daan-ledger:v1`,
   versioned payload, PitruSmaran hydration pattern).
-- **Screens** — DaanPunya (educate home, Home + More stacks), DaanJourney
-  (one skippable scroll with always-present terminal actions), DaanLedger +
-  DaanEntry, DaanDirectory + DaanDirectoryDetail
-  (interstitial → `Linking.openURL`), DaanKatha. All but DaanPunya registered
+- **Screens** — DaanPunya (educate home, Home + More stacks: header खाता
+  door, vaar chips with readable short names, the verse spine as a horizontal
+  carousel with fold-out meanings, kathas as a horizontal shelf, and BOTH
+  standing doors in a sticky action bar above the tab bar — Sept 2026 UX
+  review), DaanJourney (one skippable scroll with always-present terminal
+  actions), DaanLedger + DaanEntry, DaanDirectory + DaanDirectoryDetail
+  (interstitial → `Linking.openURL`), DaanKatha (story → शिक्षा → source →
+  ॥ ॐ ॥ → `अगली कथा` row with position dots + `दान करें` / `खाते में दर्ज करें`
+  doors, so the story never dead-ends). All but DaanPunya registered
   on Home, More AND Panchang stacks (`DaanStackParamList` in navigation/types.ts).
 - **Doors** — More hub साधना row (`more-daan-punya`); Home's full-width closing
   category card (a native View-composition daan-patra glyph; no duplicate
@@ -50,10 +55,14 @@ content is generated from the registries, so it cannot drift from the code).
 ## Working Rules
 
 - **§2.7 IA contract is load-bearing**: education is the default, not a gate.
-  `DaanPunyaScreen` always shows `daan-home-donate` → journey and the quieter
-  `daan-home-dwaar` → directory; the journey is one skippable scroll whose
-  record and directory actions are always present at the end. The app still
-  never handles money. `DaanScreens.test.tsx` pins these doors and boundaries.
+  `DaanPunyaScreen` always shows `daan-home-donate` → journey and
+  `daan-home-dwaar` → directory, both inside the sticky `daan-home-actions`
+  bar (keep them there — the Sept 2026 review found the earlier text-link
+  door had a ~26pt tap height and read as a caption); the journey is one
+  skippable scroll whose record and directory actions are always present at
+  the end; `DaanKathaScreen` ends on `daan-katha-next` / `-donate` / `-record`.
+  The app still never handles money. `DaanScreens.test.tsx` pins these doors
+  and boundaries.
 - **Exact rule ids beat suffix families** in occasion matching
   (`shattila-ekadashi` > `-ekadashi`; `makar-sankranti` > `-sankranti`).
   Uncovered days render nothing — never a placeholder.
@@ -61,6 +70,18 @@ content is generated from the registries, so it cannot drift from the code).
   note/amount/occasion; read-side `isDaanLedgerEntry` rejects unsanitized
   gupt rows. The CSV export keeps gupt rows bare.
 - **No totalling helper may be added** to `ledger.ts` (RULEBOOK §27.3).
+- **A UI line must carry a fact, not the stance** (Sept 2026, design.md §73
+  "Copy rule"): the muted stance captions that used to close each screen
+  ("रुक जाना भी पूर्ण है", "मात्रा नहीं, भाव मापदण्ड है…", "यह सूची जान-बूझकर छोटी
+  रखी गई है", a screen narrating its own section order) are removed and must
+  not come back. Keep only lines the user acts on — what else may be recorded,
+  the website hand-off, the no-transaction and no-representation facts (once
+  per screen). **Never** a line about where data is stored:
+  `userFacingImplementationCopy.test.ts` bans `on this device` / `इस उपकरण पर`
+  and friends from every screen and component, and it is what turned CI red
+  when a privacy caption was added to the daan home (Sept 2026). The stance
+  lives in the data and the copy-guard tests; the teaching lives in the
+  content (verse meanings, cause mahatva, katha शिक्षा), which stays untouched.
 - **Two axes**: ledger `DaanCategory` = the dravya given; `DaanCause` = whom it
   serves, and the द्वार's only grouping. Cause chips derive from the rows
   present (never an empty shelf); occasions carry `causes` and the journey's

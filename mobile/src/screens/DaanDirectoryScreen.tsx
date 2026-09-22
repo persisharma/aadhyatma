@@ -169,8 +169,8 @@ export default function DaanDirectoryScreen({ navigation, route }: Props) {
         <Text style={{ fontFamily: bodyFont, fontSize: 12, lineHeight: 18, color: colors.inkMuted, textAlign: 'center', marginTop: 4 }}>
           {meaningByLang(
             lang,
-            'पहले प्रयोजन का महत्त्व, फिर वे स्थान जो यह सेवा करते हैं। दान उनकी अपनी वेबसाइट पर होगा — ऐप किसी लेन-देन का हिस्सा नहीं है।',
-            'First why each cause matters, then the places doing that seva. The giving happens on their own website — the app is never part of any transaction.'
+            'दान संस्था की अपनी वेबसाइट पर होगा — ऐप किसी लेन-देन का हिस्सा नहीं है।',
+            'The giving happens on the organization’s own website — the app is never part of any transaction.'
           )}
         </Text>
 
@@ -230,8 +230,8 @@ export default function DaanDirectoryScreen({ navigation, route }: Props) {
         <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 18, color: colors.inkMuted, textAlign: 'center', marginTop: spacing.lg }}>
           {meaningByLang(
             lang,
-            'यह सूची जान-बूझकर छोटी रखी गई है। ऐप इनका प्रतिनिधि नहीं — केवल आधिकारिक वेबसाइट तक पहुँचाता है; पात्र का चयन आपका अपना है।',
-            'This list is kept deliberately short. The app does not represent these places — it only points to their official website; choosing the patra is your own.'
+            'ऐप इन संस्थाओं का प्रतिनिधि नहीं है — केवल उनकी आधिकारिक वेबसाइट तक पहुँचाता है।',
+            'The app does not represent these organizations — it only points to their official website.'
           )}
         </Text>
       </ScrollView>

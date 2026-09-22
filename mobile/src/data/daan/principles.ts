@@ -85,7 +85,7 @@ export const DAAN_PRINCIPLE_ENTRIES: readonly DaanPrincipleEntry[] = [
     citeHi: 'श्रीमद्भगवद्गीता १७.२०',
     citeEn: 'Bhagavad Gītā 17.20',
     meaningHi:
-      '"देना कर्तव्य है" — इस भाव से, प्रत्युपकार की आशा के बिना, उचित देश, काल और पात्र को दिया गया दान सात्त्विक कहा गया है। आगे के दो श्लोक राजसिक और तामसिक दान बताते हैं — reader में पूरा प्रसंग है।',
+      '"देना कर्तव्य है" — इस भाव से, प्रत्युपकार की आशा के बिना, उचित देश, काल और पात्र को दिया गया दान सात्त्विक कहा गया है। आगे के दो श्लोक राजसिक और तामसिक दान बताते हैं — पूरा प्रसंग गीता-पाठ में है।',
     meaningEn:
       'The gift given as a duty, to one who can make no return, at the right place and time and to a worthy patra — that daan is called sattvik. The next two verses name the rajasik and tamasik gifts; the full passage is in the reader.',
     gitaRef: { chapter: 17, verseIndex: 19 },
