@@ -8,33 +8,42 @@ purnimant and amanta). Paran falls on Dwadashi, 23 Sep, after sunrise — city-s
 
 ---
 
-## Caption (bilingual — primary)
+## Caption (Hindi block, then English block — primary)
 
 ```
 परिवर्तिनी एकादशी कब है? आज, 22 सितंबर 🌌
-Parivartini Ekadashi is TONIGHT — 22 Sep
 
 आज रात योगनिद्रा में शयन कर रहे भगवान विष्णु करवट बदलते हैं —
 इसीलिए इसे परिवर्तिनी (वामन / पद्मा) एकादशी कहते हैं।
-Lord Vishnu, asleep through Chaturmas, turns to His other side tonight.
-That's why it's called Parivartini — "the Turning One".
-
 परिवर्तन की रात — पुराने को छोड़ने और नई शुरुआत की।
-A night for letting go and starting again.
 
-व्रत · Vrat — 22 सितंबर, मंगलवार · Tue 22 Sep
-पारण · Paran — 23 सितंबर, सूर्योदय के बाद (द्वादशी में) · Wed 23 Sep, after sunrise
-(अपने शहर का समय ज़रूर देखें · check your city's time)
+व्रत · 22 सितंबर, मंगलवार
+पारण · 23 सितंबर, सूर्योदय के बाद (द्वादशी में)
+(अपने शहर का समय ज़रूर देखें।)
 
-आज क्या करें · Tonight:
-"ॐ नमो भगवते वासुदेवाय" का जप, वामन अवतार की कथा, रात्रि जागरण।
-Chant "Om Namo Bhagavate Vasudevaya", read the Vamana-Bali katha, keep jagran.
+आज क्या करें — "ॐ नमो भगवते वासुदेवाय" का जप, वामन अवतार की कथा, रात्रि जागरण।
 
 कथा, विधि और पारण का समय — जानिए Vedansh app के साथ 📱
-Katha, vidhi and paran time — all in the Vedansh app. Link in bio 🔗
 
 जिसे आज एक नई शुरुआत की ज़रूरत है, उसे यह भेज दीजिए 🙏
-Save this & send it to someone who needs a reset today.
+
+—
+
+Parivartini Ekadashi is TONIGHT — 22 Sep 🌌
+
+Lord Vishnu, asleep through Chaturmas, turns to His other side tonight.
+That's why it's called Parivartini — "the Turning One" (also Vamana / Padma Ekadashi).
+A night for letting go and starting again.
+
+Vrat · Tue 22 Sep
+Paran · Wed 23 Sep, after sunrise (in Dwadashi)
+(Check your city's time.)
+
+Tonight — chant "Om Namo Bhagavate Vasudevaya", read the Vamana-Bali katha, keep jagran.
+
+Katha, vidhi and paran time — all in the Vedansh app. Link in bio 🔗
+
+Save this & send it to someone who needs a reset today 🙏
 
 #परिवर्तिनीएकादशी #ParivartiniEkadashi #एकादशी #VishnuBhakti #Bhakti
 ```
