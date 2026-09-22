@@ -74,11 +74,14 @@ content is generated from the registries, so it cannot drift from the code).
   "Copy rule"): the muted stance captions that used to close each screen
   ("रुक जाना भी पूर्ण है", "मात्रा नहीं, भाव मापदण्ड है…", "यह सूची जान-बूझकर छोटी
   रखी गई है", a screen narrating its own section order) are removed and must
-  not come back. Keep only lines the user acts on — privacy of the register,
-  what else may be recorded, the website hand-off, the no-transaction and
-  no-representation facts (once per screen). The stance lives in the data and
-  the copy-guard test; the teaching lives in the content (verse meanings,
-  cause mahatva, katha शिक्षा), which stays untouched.
+  not come back. Keep only lines the user acts on — what else may be recorded,
+  the website hand-off, the no-transaction and no-representation facts (once
+  per screen). **Never** a line about where data is stored:
+  `userFacingImplementationCopy.test.ts` bans `on this device` / `इस उपकरण पर`
+  and friends from every screen and component, and it is what turned CI red
+  when a privacy caption was added to the daan home (Sept 2026). The stance
+  lives in the data and the copy-guard tests; the teaching lives in the
+  content (verse meanings, cause mahatva, katha शिक्षा), which stays untouched.
 - **Two axes**: ledger `DaanCategory` = the dravya given; `DaanCause` = whom it
   serves, and the द्वार's only grouping. Cause chips derive from the rows
   present (never an empty shelf); occasions carry `causes` and the journey's

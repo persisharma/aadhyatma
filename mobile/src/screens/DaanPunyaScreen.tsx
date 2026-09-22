@@ -9,6 +9,12 @@
  * the content above them stays first. The app still never transacts — the
  * hand-off is the org's own site behind the interstitial — and the खाता
  * (ledger) is never gated.
+ *
+ * The scroll ends on the katha shelf. It carries NO closing caption: the stance
+ * lines went in the Sept 2026 copy pass (design.md §1), and a line about where
+ * the register is stored is banned outright by the customer-copy guard
+ * (`userFacingImplementationCopy.test.ts` — the app does not narrate its own
+ * storage). The ledger's privacy is a property of the feature, not a caption.
  */
 import React, { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
@@ -28,7 +34,7 @@ import {
 import { usePanchangCalendarSystem, useObservancesForDate } from '@/panchang/usePanchang';
 import type { DaanStackParamList } from '@/navigation/types';
 import { useTheme } from '@/theme/ThemeContext';
-import { contentByLang, meaningByLang, pick, verseLinesByLang } from '@/utils/localize';
+import { contentByLang, meaningByLang, verseLinesByLang } from '@/utils/localize';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 
 type Props = NativeStackScreenProps<DaanStackParamList, 'DaanPunya'>;
@@ -343,15 +349,6 @@ export default function DaanPunyaScreen({ navigation }: Props) {
             </Pressable>
           ))}
         </ScrollView>
-
-        <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 17, color: colors.inkMuted, marginTop: spacing.xl, textAlign: 'center', paddingHorizontal: spacing.readingGutter }}>
-          {pick(lang, {
-            hi: 'खाता निजी है — केवल इस डिवाइस पर।',
-            en: 'The register is private — on this device only.',
-            gu: 'ખાતું ખાનગી છે — માત્ર આ ડિવાઇસ પર.',
-            kn: 'ಖಾತೆ ಖಾಸಗಿ — ಈ ಸಾಧನದಲ್ಲಿ ಮಾತ್ರ.',
-          })}
-        </Text>
       </ScrollView>
 
       {/* The sticky action bar — both standing doors, one tap from any scroll position. */}
