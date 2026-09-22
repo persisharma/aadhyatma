@@ -1,10 +1,11 @@
 /**
  * पितृ-कथाएँ — the teaching stories of पितृ पक्ष परिचय (PRD-44 §5.4).
  *
- * The three verified kathas are each retold verse-by-verse from the BUNDLED
+ * The four verified kathas are each retold verse-by-verse from the BUNDLED
  * Valmiki Ramayana and hand off into that reader — nothing in them is
  * invented: Rama's rite for Dasharatha (Ayodhya 102), Bhagiratha and the sixty
- * thousand (Bala 38–44), and Jatayu's last rites (Aranya 67–68). Sarga numbers
+ * thousand (Bala 38–44), Jatayu's last rites (Aranya 67–68), and Bharata's
+ * twelfth-day shraddha for Dasharatha (Ayodhya 77). Sarga numbers
  * follow the shipped Southern-recension text. The
  * Karna legend that popular tellings attach to the paksha's origin is DRAFT:
  * it is not in the Mahabharata's critical text, and its provenance must be
@@ -19,6 +20,7 @@ const VALMIKI_BALA = 'repo:mobile/src/data/valmiki-ramayan/chapter-01.json';
 const VALMIKI_NET_BALA = 'https://www.valmikiramayan.net/utf8/baala/sarga41/bala_41_frame.htm';
 const VALMIKI_ARANYA = 'repo:mobile/src/data/valmiki-ramayan/chapter-03.json';
 const VALMIKI_NET_ARANYA = 'https://www.valmikiramayan.net/utf8/aranya/sarga68/aranya_68_frame.htm';
+const VALMIKI_NET_AYODHYA_77 = 'https://www.valmikiramayan.net/utf8/ayodhya/sarga77/ayodhya_77_frame.htm';
 
 export const PITRU_KATHA_ENTRIES: readonly PitruKathaEntry[] = [
   {
@@ -138,6 +140,45 @@ export const PITRU_KATHA_ENTRIES: readonly PitruKathaEntry[] = [
       referenceUrls: [VALMIKI_ARANYA, VALMIKI_NET_ARANYA],
       verificationNote:
         '2026-09-19: retelling drawn verse-by-verse from the bundled corpus — 3.67.9–10 (found bloodied on the ground), 3.67.14 (he speaks), 3.67.21–22 (Rama embraces him), 3.67.27 ("my father\u2019s friend"), 3.68.27–28 (bring wood, churn fire, the pyre), 3.68.29–30 (the gati verse, quoted), 3.68.31 (cremated as a kinsman), 3.68.32–33 (forest roots, darbha spread, the pinda), 3.68.34 (the pitru mantras), 3.68.35–36 (Godavari, jalanjali by the shastric method), 3.68.37 (the pure gati). No episode added.',
+    },
+  },
+  {
+    id: 'bharat-dwadashah',
+    titleHi: 'भरत का द्वादशाह — शोक के बीच श्राद्ध',
+    titleEn: 'Bharata’s twelfth day — shraddha in the midst of grief',
+    subtitleHi: 'अयोध्याकाण्ड — दशरथ के लिए ग्यारहवाँ, बारहवाँ और तेरहवाँ दिन',
+    subtitleEn: 'Ayodhya Kanda — the eleventh, twelfth and thirteenth days for Dasharatha',
+    sections: [
+      {
+        id: 'katha',
+        paragraphsHi: [
+          'महाराज दशरथ के दाह-संस्कार के बाद दस दिन का शोक-काल बीता। ग्यारहवें दिन राजकुमार भरत ने शुद्धि के लिए स्नान किया और एकादशाह श्राद्ध किया; बारहवाँ दिन आने पर उन्होंने शेष श्राद्ध-कर्म कराए।',
+          'उस श्राद्ध में भरत ने ब्राह्मणों को धन, रत्न, प्रचुर अन्न, बहुमूल्य वस्त्र, बकरे, चाँदी और बहुत-सी गौएँ दीं — और राजा के पारलौकिक हित के लिए दास-दासियाँ, सवारियाँ और बड़े-बड़े घर भी।',
+          'तेरहवें दिन प्रातः वे अस्थि-संचय के लिए पिता के चिता-स्थान पर आए। भस्म से भरा, दाह से लाल वह मण्डल और उसमें बिखरी जली हड्डियाँ देखकर उनका गला भर आया — "तात! जिन बड़े भाई के हाथ आपने मुझे सौंपा था, वे वन में हैं; अनाथ हुई माता कौसल्या को छोड़कर आप कहाँ चले गए?" — और वे इन्द्र के गिरे हुए ध्वज की तरह पृथ्वी पर गिर पड़े। मन्त्री दौड़कर उनके पास आए। शत्रुघ्न भी पिता का स्मरण करते हुए अचेत हो गए, और विलाप करते रहे — "जो हमें अपनी रुचि का भोजन, वस्त्र और आभूषण चुनने को कहते थे, अब वह कौन करेगा?"',
+          'तब कुलपुरोहित वसिष्ठ ने भरत को उठाया और कहा — दाह का यह तेरहवाँ दिन है; अस्थि-संचय का जो कार्य शेष है, उसमें विलम्ब क्यों? भूख-प्यास, शोक-मोह और जरा-मृत्यु — ये तीन जोड़े सभी प्राणियों में समान हैं और इन्हें रोका नहीं जा सकता। सुमन्त्र ने शत्रुघ्न को उठाया और जन्म-मरण की अनिवार्यता समझाई।',
+          'दोनों भाई उठे — वर्षा और धूप से मलिन हुए दो इन्द्रध्वजों के समान — आँसू पोंछते हुए। और मन्त्रियों ने उन्हें शेष क्रियाएँ शीघ्र पूरी करने को प्रेरित किया।',
+        ],
+        paragraphsEn: [
+          'After King Dasharatha’s cremation the ten days of mourning passed. On the eleventh day prince Bharata bathed for purification and performed the ekadashaha shraddha; when the twelfth day came he had the remaining shraddha rites performed.',
+          'In that shraddha Bharata gave the brahmanas wealth, gems, grain in abundance, costly garments, goats, silver and many cows — and, for the king’s good in the world beyond, servants, conveyances and spacious houses as well.',
+          'On the morning of the thirteenth day he came to his father’s pyre to gather the bones. Seeing the circle of ash, reddened by the burning, with the charred bones scattered in it, his voice broke — “Father, the elder brother into whose hands you gave me is in the forest; where have you gone, leaving mother Kausalya without a protector?” — and he fell to the earth like a flagstaff of Indra toppling as it is raised. The ministers ran to him. Shatrughna too fell senseless remembering their father, and lamented — “He who would bid us choose the food, the clothes and the ornaments we liked — who will do that now?”',
+          'Then Vasishtha, the family priest, raised Bharata and said: this is the thirteenth day since the cremation; the gathering of the bones remains — why the delay? Hunger and thirst, grief and delusion, old age and death — these three pairs come to every being alike and cannot be held back. Sumantra raised Shatrughna and spoke to him of the inevitability of birth and death.',
+          'The two brothers rose — like two banners of Indra faded by rain and sun — wiping their tears. And the ministers urged them on to complete the rites that remained.',
+        ],
+      },
+    ],
+    teachingHi:
+      'श्राद्ध का क्रम शोक को रोकता नहीं — भरत चिता-स्थान पर गिर पड़े। पर उसी क्रम ने, और वसिष्ठ जैसे बड़ों ने, उन्हें उठाया और आगे का कार्य दिखाया। परम्परा में ग्यारहवें, बारहवें, तेरहवें दिन के कर्म शोक के बीच चलने का सहारा हैं।',
+    teachingEn:
+      'The sequence of shraddha does not stop grief — Bharata collapsed at the pyre. But that same sequence, and elders like Vasishtha, lifted him and showed him the next thing to do. In the tradition the rites of the eleventh, twelfth and thirteenth days are what carries a mourner through.',
+    canonHi: 'वाल्मीकि रामायण · अयोध्याकाण्ड, सर्ग ७७',
+    canonEn: 'Valmiki Ramayana · Ayodhya Kanda, sarga 77',
+    ref: { kind: 'valmiki', chapter: 2, verseIndex: 2958 },
+    status: 'verified',
+    source: {
+      referenceUrls: [VALMIKI_CORPUS, VALMIKI_NET_AYODHYA_77],
+      verificationNote:
+        '2026-09-21: retelling drawn verse-by-verse from the bundled corpus — 2.77.1 (verses[2958] of chapter-02.json: ten days, purification on the eleventh, shraddha rites on the twelfth; the Gita Press Hindi names the ekadashaha, masika and sapindikarana), 2.77.2–3 (the gifts to brahmanas, "for the king’s other-worldly good"), 2.77.4–9 (the thirteenth dawn, asthi-sanchaya, the ash circle and burnt bones, the lament to the father and for Kausalya, the fall like Indra’s flagstaff), 2.77.10–12 (ministers; Shatrughna falls), 2.77.15 (who will bid us choose food, clothes, ornaments), 2.77.21–23 (Vasishtha raises him: thirteenth day, the remaining rite, the three pairs), 2.77.24 (Sumantra), 2.77.25–26 (they rise like faded banners; the ministers hasten the remaining rites). Shatrughna’s Manthara/Kaikeyi outburst and his fire/tapovan vow (13, 17–18) are deliberately left out — grief speech, not the rite. Bundled Hindi 2.77.5–6 carries one Gita Press prose block for both verses (corpus note). The external URL follows the bundled Southern-recension sarga number and could not be opened this session (egress policy) — the reviewer opens it and confirms the numbering, as the sarga-102/103 note above records for that katha.',
     },
   },
   {

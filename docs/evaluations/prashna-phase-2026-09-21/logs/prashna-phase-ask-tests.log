@@ -1,0 +1,63 @@
+
+> vedansh@0.1.0 test:ask
+> TZ=Asia/Kolkata tsx --test src/ask/__tests__/*.test.ts
+
+✔ leads with today, then observance or upcoming, then windows (207.666416ms)
+✔ the sankalp card appears only when an enrolment is active (1.337584ms)
+✔ is deterministic for a fixed context (1.890125ms)
+
+223 positives · 223 hit · 0 miss · 0 wrong · top-1 100.0%
+
+
+✔ golden corpus: ≥ 85% top-1 and zero wrong answers (498.160167ms)
+✔ negatives never answer (3.756792ms)
+✔ inherent vowel: a bare consonant carries "a" (0.91825ms)
+✔ word-final schwa is deleted (Hindi), written ā is kept (0.131292ms)
+✔ Devanagari, IAST and Hinglish land on one key (0.131209ms)
+✔ Hinglish spelling noise collapses (0.081042ms)
+✔ fold is idempotent and strips punctuation (0.13625ms)
+✔ stem strips honorific tails so ganeshji ≡ ganesha ≡ ganesh (0.109ms)
+✔ generic tokens include the ones that produced false entity tags (0.076833ms)
+✔ no ask-engine module is on the static launch graph (588.274583ms)
+✔ every registry entry has lexicon coverage (2.836667ms)
+✔ every alias points at an id that exists in its registry (0.34775ms)
+✔ observance classes exist and pick up their members from the registry (0.157375ms)
+✔ every key is folded, non-trivial, and unique per (type,id) (0.89325ms)
+✔ lexicon stays inside the bundle budget (§13.7) (0.214875ms)
+✔ an in-keeping room answers with परंपरा + आपके घर में + the class (2.636583ms)
+✔ a forbidden placement carries tone avoid; multiple ordinals each get a line (0.681125ms)
+✔ an unmeasured room answers honestly, never inventing a zone (37.824167ms)
+✔ the action opens the saved home (18.3935ms)
+✔ no saved living home → none, with the generic vastu example as did-you-mean (0.753958ms)
+✔ a room this home never listed abstains rather than answering from nothing (0.466542ms)
+✔ the non-possessive question still gets the generic convention answer (0.431375ms)
+✔ the declined register is untouched — a dosh framing never reaches the record (0.323125ms)
+✔ no score, percent or remedy in any line of a myhome answer (0.592542ms)
+✔ without a saved chart the stance guard declines exactly as before (230.280708ms)
+✔ with a saved adult chart a purpose-shaped predictive question becomes a dated-window answer (40.979583ms)
+✔ predictive framing with no readable purpose stays declined even with a chart (5.429625ms)
+✔ a minor's chart returns the gate reason and no reading for a closed purpose (2.68425ms)
+✔ the muhurat hand-off rides business, travel and marriage answers only (31.841ms)
+✔ §13.3 class vs instance: bare "ekadashi" is the class, a qualifier picks the instance (4.085208ms)
+✔ §13.3 specificity floor: generic tokens never establish an entity (1.140583ms)
+✔ deity stem matching: श्री गणेश ≡ ganesha ≡ ganesh ≡ ganeshji ≡ ganpati (2.016209ms)
+✔ relative day: कल is tomorrow, but "rahu kal" is a Kaal (0.961959ms)
+✔ §3.2 answer-or-abstain: an intent with a missing required slot is ineligible, not low-confidence (1.02075ms)
+✔ §3.4 stance guard: predictive and personal framing is declined, not answered (1.705833ms)
+✔ philosophy is a content search, not an answer (0.624625ms)
+✔ answers carry working, actions and the verified-only provenance where content-backed (1.054875ms)
+✔ bhog.avoid beats bhog.offer on "kya nahi chadhaye" (0.826417ms)
+✔ the class resolves to the NEXT occurrence, and "kal X hai kya" answers yes/no about that day (38.172667ms)
+✔ did-you-mean suggestions follow the entities that WERE found (0.498ms)
+✔ looksLikeQuestion keeps plain library queries out of the abstain state (§3.6) (0.174541ms)
+✔ determinism: the same question resolves identically twice (38.323625ms)
+✔ ask-from-context seed fills a missing slot (0.631959ms)
+✔ §13.3 the bare word अमावस्या means the calendar amavasya, not दर्श अमावस्या (45.52ms)
+ℹ tests 47
+ℹ suites 0
+ℹ pass 47
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2406.329042

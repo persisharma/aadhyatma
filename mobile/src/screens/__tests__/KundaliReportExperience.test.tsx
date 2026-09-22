@@ -32,6 +32,7 @@ let mockKundaliState: {
 };
 
 jest.mock('@react-navigation/native', () => ({
+  useFocusEffect: (callback: () => void) => mockReact.useEffect(callback, [callback]),
   useNavigation: () => mockNavigation,
 }));
 
@@ -167,7 +168,7 @@ test('one Share button offers both the card and the warned full-text export', ()
   const tree = render(
     <KundaliReportScreen
       navigation={mockNavigation as any}
-      route={{ key: 'KundaliReport-test', name: 'KundaliReport' } as any}
+      route={{ key: 'KundaliReport-test', name: 'KundaliReport', params: { prashnaContext: { purposeId: 'naukri', questionId: 'job-switch' } } } as any}
     />
   );
   // The single header Share opens the sheet; nothing text-share related
@@ -206,6 +207,9 @@ test('one Share button offers both the card and the warned full-text export', ()
   assert.ok(message.includes('Basis: '));
   assert.ok(message.includes('```json'));
   assert.ok(message.includes('"reportVersion":2'));
+  assert.ok(message.includes('Considering a job switch'));
+  assert.ok(message.includes('Machine-readable question context'));
+  assert.ok(text.includes('selected question and guidance'));
 
   shareSpy.mockRestore();
   act(() => tree.unmount());

@@ -202,7 +202,7 @@ export type PanchangStackParamList = VidhiStackParamList & DaanStackParamList & 
   // Gochar (transits vs the saved chart) — PRD-20
   Gochar: undefined;
   // Compiled full-chart reading — PRD-20 Phase 6
-  KundaliReport: undefined;
+  KundaliReport: { prashnaContext?: { purposeId: string; questionId: string } } | undefined;
   // प्रश्न — purpose-driven reading for the active person (PRD-43 Wave D).
   // `purposeId` preselects a purpose (the Ask intent deep-links here).
   Prashna: { purposeId?: string } | undefined;

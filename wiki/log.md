@@ -197,3 +197,24 @@ merged tree exceeded the unchanged 7.3 MB startup graph budget after new temple
 content landed. More destination screens now use on-demand route loaders, with
 regression coverage for deferred evaluation and unchanged route registration.
 The launch budget passes without increasing its ceiling.
+
+## [2026-09-21] ingest | Pitru Paksha परिचय content: `bharat-dwadashah` katha (Ayodhya 77, verified against the bundled Valmiki corpus 2.77.1–26 — the eleventh/twelfth-day shraddha, the gifts, the thirteenth-day asthi-sanchaya, Vasishtha lifting Bharata) and the पञ्चबलि lesson + glossary row authored as DRAFT (five recipients concordant across search summaries; every primary domain EGRESS_BLOCKED, so nothing flips). New `docs/roadmap/conventions/panchabali-source-dossier.md` holds the gathered material, the copy the stance guard forbids, the officiant-only mantra text, and a table of every other pending gap in the layer (14 tithi rows, pitru-rin, Karna, gotra/sapindikarana, "who may perform"). Registry now 61 rows / 39 verified; design.md §74, PRD-44 §4–§5 and [[pitru-shiksha]] mirrored.
+
+## [2026-09-18] ingest | Prashna guidance: explicit question choices, plain-language chart themes, editorial checklist and collapsed technical evidence; timing relevance no longer increases favourable strength. Full-text handoff carries selected question with provenance. Added four-profile baseline/GPT/public AstroSage comparison and 36-profile-purpose matrix; source-review and native verification limits are recorded in the evaluation artifact. Synced design.md §72, RULEBOOK §14.3 and [[panchang]].
+
+## [2026-09-21] ingest | Prashna follow-up verification: fresh typecheck, 465 engine tests, 47 Ask tests and 10 focused screen tests passed; iOS JS export and full clean-state iOS simulator smoke passed. Comparison artifact now includes native screenshots and execution log. The pre-existing static launch-byte-budget failure and source-review release gate remain documented.
+
+## [2026-09-21] ingest | Prashna bilingual native UI audit and user correction: improved typography, selection, targets and evidence wrapping; 465 engine and 10 focused screen tests passed. User rejected generic checklists: the required next layer is natal graha plus running dasha plus current gochar synthesized into current-phase guidance. Current purpose-level insights and question-selected editorial actions do not meet that scope. See the new UI audit and [[panchang]].
+
+
+## [2026-09-21] ingest | Career/business current-phase pilot
+
+Updated [[panchang]] from `prashnaPhase.ts`, the screen/Ask/export integrations and dated refresh hook. Recorded the combined natal–dasha–gochar contract, node interpretation limit, retained legacy topics, exact-edge refresh, source gate and actual comparison evidence. Design §72, RULEBOOK §14.3 and PRD-43 follow-up now describe the pilot rather than calling the generic checklist the accepted endpoint.
+
+## [2026-09-21] ingest | Customer copy describes the reading and action
+
+Updated the Panchang copy boundary from Prashna/Ask and the shared implementation-copy guard. Removed customer-facing device/engine reassurance and development-status prose, including the older Pitru/Vastu exceptions; retained chart evidence, accurate source metadata, sharing-content notices and deletion consequences. Copy-only edits do not change the interpretation engine or complete its outstanding release review.
+
+## [2026-09-22] ingest | Prashna PR reconciliation and customer-copy check
+
+Preserved current-main regional/Pitru education and Daan typography changes while integrating the phase pilot and copy removals. Removed the newly introduced Pitru teaching source-review-progress footer too. Current-main launch-budget checks now pass; older evaluation logs retain their dated failures. The inherited cooperative-engine interruption test now controls elapsed time instead of assuming the machine needs more than one 4 ms slice; runtime scheduling is unchanged. Submission verification is recorded in `docs/evaluations/prashna-phase-2026-09-21/pr-submission-2026-09-22.md`.

@@ -242,15 +242,6 @@ export default function GharVastuRosterScreen({ navigation }: { navigation: Navi
           </Text>
         )}
 
-        <View style={[styles.privacy, { borderLeftColor: colors.goldChipBg }]}>
-          <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 17, color: colors.inkMuted, fontStyle: 'italic' }}>
-            {meaningByLang(
-              lang,
-              'ये मानचित्र केवल इस फ़ोन पर हैं — कहीं भेजे नहीं जाते।',
-              'These maps live only on this phone — they are sent nowhere.'
-            )}
-          </Text>
-        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -263,5 +254,4 @@ const styles = StyleSheet.create({
   pill: { borderWidth: 1, paddingHorizontal: 7, paddingVertical: 2 },
   comparePill: { borderWidth: 1, paddingHorizontal: 12, paddingVertical: 5 },
   newButton: { alignSelf: 'center', paddingHorizontal: 20, paddingVertical: 10, marginTop: 22 },
-  privacy: { borderLeftWidth: 2, paddingLeft: 10, paddingVertical: 4, marginTop: 18 },
 });

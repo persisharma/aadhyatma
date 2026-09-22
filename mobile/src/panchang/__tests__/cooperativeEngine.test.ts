@@ -17,7 +17,11 @@ test('cooperative calculations preserve exact dates and end times for both calen
   }
 });
 
-test('a queued callback interrupts a cold numerical search before the day is complete', async () => {
+test('a queued callback interrupts a numerical search spanning multiple time slices', async (t) => {
+  // A fast machine may finish the real search within one legitimate 4 ms slice.
+  // Advance the clock per check so this exercises interruption, not CPU speed.
+  let elapsed = 0;
+  t.mock.method(performance, 'now', () => (elapsed += 5));
   let completed = false;
   let cancelled = false;
   const work = computePanchangForDateSteps(new Date(2031, 7, 1));

@@ -1,0 +1,62 @@
+WARNING: Final field parent in class maestro.cli.command.TestCommand has been mutated reflectively by class picocli.CommandLine$Model$FieldBinding in unnamed module @41e68d87 (file:/Users/prashant/.maestro/lib/picocli-4.6.3.jar)
+WARNING: Use --enable-final-field-mutation=ALL-UNNAMED to avoid a warning
+WARNING: Mutating final fields will be blocked in a future release unless final field mutation is enabled
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/Users/prashant/.maestro/lib/jansi-2.4.1.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+Running on Vedansh-Prashna-QA - iOS 26.4 - 913FA15C-3750-4E34-97BA-A39A33410600
+ > Flow prashna-after-body
+Stop com.prashantsharma.vedansh... COMPLETED
+Launch app "com.prashantsharma.vedansh" (launch arguments: {RCT_jsLocation=127.0.0.1:8084})... COMPLETED
+Tap on (Optional) "Don.t Allow"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Don.t Allow
+Wait for animation to end within 30000 ms... COMPLETED
+Scrolling DOWN until "Kundali. New. Tap to open." is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering enabled... COMPLETED
+Tap on "Kundali. New. Tap to open."... COMPLETED
+Wait for animation to end... COMPLETED
+Scrolling DOWN until id: jyotish-prashna-door is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering enabled... COMPLETED
+Take screenshot landing... COMPLETED
+Tap on "Open Prashna"... COMPLETED
+Assert that id: question-study-exam is visible... COMPLETED
+Tap on id: question-study-exam... COMPLETED
+Take screenshot study-entry... COMPLETED
+Scrolling DOWN until id: prashna-saar is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Take screenshot study-reading... COMPLETED
+Scrolling DOWN until id: action-study-exam-0 is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Take screenshot study-plan... COMPLETED
+Tap on id: action-study-exam-0... COMPLETED
+Take screenshot study-checked... COMPLETED
+Scrolling DOWN until id: prashna-basis-toggle is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Take screenshot study-timing... COMPLETED
+Tap on id: prashna-basis-toggle... COMPLETED
+Scrolling DOWN until id: prashna-chain-0 is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Take screenshot study-basis... COMPLETED
+Scrolling DOWN until "Open Navagraha Stotram practice" is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Take screenshot study-practice... COMPLETED
+Scrolling UP until id: purpose-naukri is visible with speed 40, visibility percentage 100%, timeout 40000 ms, with centering disabled... COMPLETED
+Tap on id: purpose-naukri... COMPLETED
+Tap on id: question-job-switch... COMPLETED
+Assert that id: prashna-strength is not visible... COMPLETED
+Take screenshot job-entry... COMPLETED
+Scrolling DOWN until id: action-job-switch-0 is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Take screenshot job-plan... COMPLETED
+Scrolling DOWN until "Open full Kundali reading" is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Tap on "Open full Kundali reading"... COMPLETED
+Assert that "Full Kundali reading" is visible... FAILED
+
+Assertion is false: "Full Kundali reading" is visible
+
+Assertion '"Full Kundali reading" is visible' failed. Check the UI hierarchy in debug artifacts to verify the element state and properties.
+
+Possible causes:
+- Element selector may be incorrect - check if there are similar elements with slightly different names/properties.
+- Element may be temporarily unavailable due to loading state
+- This could be a real regression that needs to be addressed
+
+==== Debug output (logs & screenshots) ====
+
+/Users/prashant/.codex/worktrees/dc71/Aadhyatma/docs/evaluations/prashna-ui-audit-2026-09-21/after/hi-402/2026-09-21_122202

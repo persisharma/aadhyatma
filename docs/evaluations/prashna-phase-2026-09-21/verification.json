@@ -1,0 +1,20 @@
+{
+  "checkedReadings": 60,
+  "profiles": 6,
+  "checks": [
+    "as-of match",
+    "direction signal references",
+    "lordship matches natal chart",
+    "occupancy matches natal chart",
+    "source status remains pending",
+    "each profile changes period across its exact boundary",
+    "each profile changes Jupiter transit houses across the ingress"
+  ],
+  "tones": {
+    "mixed": 40,
+    "limited": 15,
+    "effort": 4,
+    "supportive": 1
+  },
+  "distinctMainDirectionTexts": 4
+}

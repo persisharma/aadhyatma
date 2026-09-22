@@ -1,0 +1,154 @@
+[
+  {
+    "caseId": "sample-a",
+    "source": "https://cdn.astrosage.com/pdf/ca_report_pro_en.pdf",
+    "rows": [
+      {
+        "body": "asc",
+        "referenceLongitude": 174.65305555555557,
+        "engineLongitude": 174.6607553269548,
+        "deltaArcminutes": 0.4619862839547295,
+        "signAgrees": true
+      },
+      {
+        "body": "sun",
+        "referenceLongitude": 357.4852777777778,
+        "engineLongitude": 357.4792332609843,
+        "deltaArcminutes": 0.3626710076105155,
+        "signAgrees": true
+      },
+      {
+        "body": "moon",
+        "referenceLongitude": 165.7513888888889,
+        "engineLongitude": 165.75501880484586,
+        "deltaArcminutes": 0.21779495741782284,
+        "signAgrees": true
+      },
+      {
+        "body": "mars",
+        "referenceLongitude": 339.9247222222222,
+        "engineLongitude": 339.92682182451705,
+        "deltaArcminutes": 0.12597613769003146,
+        "signAgrees": true
+      },
+      {
+        "body": "mercury",
+        "referenceLongitude": 332.97805555555556,
+        "engineLongitude": 332.9729032620847,
+        "deltaArcminutes": 0.30913760825228564,
+        "signAgrees": true
+      },
+      {
+        "body": "jupiter",
+        "referenceLongitude": 95.82333333333332,
+        "engineLongitude": 95.87075033410595,
+        "deltaArcminutes": 2.8450200463566944,
+        "signAgrees": true
+      },
+      {
+        "body": "venus",
+        "referenceLongitude": 322.4675,
+        "engineLongitude": 322.45854990681374,
+        "deltaArcminutes": 0.5370055911737381,
+        "signAgrees": true
+      },
+      {
+        "body": "saturn",
+        "referenceLongitude": 134.19944444444445,
+        "engineLongitude": 134.18577816024685,
+        "deltaArcminutes": 0.819977051855858,
+        "signAgrees": true
+      },
+      {
+        "body": "rahu",
+        "referenceLongitude": 142.33194444444445,
+        "engineLongitude": 142.33895991300716,
+        "deltaArcminutes": 0.42092811376278405,
+        "signAgrees": true
+      },
+      {
+        "body": "ketu",
+        "referenceLongitude": 322.33194444444445,
+        "engineLongitude": 322.33895991300716,
+        "deltaArcminutes": 0.42092811376278405,
+        "signAgrees": true
+      }
+    ]
+  },
+  {
+    "caseId": "sample-b",
+    "source": "https://www.astrosage.com/pdf/as-career-report-en.pdf",
+    "rows": [
+      {
+        "body": "asc",
+        "referenceLongitude": 153.35805555555555,
+        "engineLongitude": 153.36307342386357,
+        "deltaArcminutes": 0.30107209848097227,
+        "signAgrees": true
+      },
+      {
+        "body": "sun",
+        "referenceLongitude": 140.51916666666668,
+        "engineLongitude": 140.5078741964147,
+        "deltaArcminutes": 0.6775482151192591,
+        "signAgrees": true
+      },
+      {
+        "body": "moon",
+        "referenceLongitude": 3.731666666666667,
+        "engineLongitude": 3.7379166368475154,
+        "deltaArcminutes": 0.37499821085077656,
+        "signAgrees": true
+      },
+      {
+        "body": "mars",
+        "referenceLongitude": 207.71166666666664,
+        "engineLongitude": 207.69333241677634,
+        "deltaArcminutes": 1.100054993418098,
+        "signAgrees": true
+      },
+      {
+        "body": "mercury",
+        "referenceLongitude": 167.45027777777776,
+        "engineLongitude": 167.44058619252814,
+        "deltaArcminutes": 0.5814951149767467,
+        "signAgrees": true
+      },
+      {
+        "body": "jupiter",
+        "referenceLongitude": 193.53944444444446,
+        "engineLongitude": 193.52431474480917,
+        "deltaArcminutes": 0.9077819781168728,
+        "signAgrees": true
+      },
+      {
+        "body": "venus",
+        "referenceLongitude": 125.37833333333333,
+        "engineLongitude": 125.36500880418207,
+        "deltaArcminutes": 0.7994717490748826,
+        "signAgrees": true
+      },
+      {
+        "body": "saturn",
+        "referenceLongitude": 176.7036111111111,
+        "engineLongitude": 176.69047589785677,
+        "deltaArcminutes": 0.7881127952589395,
+        "signAgrees": true
+      },
+      {
+        "body": "rahu",
+        "referenceLongitude": 76.38138888888888,
+        "engineLongitude": 76.38853569693286,
+        "deltaArcminutes": 0.4288084826390559,
+        "signAgrees": true
+      },
+      {
+        "body": "ketu",
+        "referenceLongitude": 256.3813888888889,
+        "engineLongitude": 256.3885356969329,
+        "deltaArcminutes": 0.4288084826373506,
+        "signAgrees": true
+      }
+    ]
+  }
+]
