@@ -2,7 +2,7 @@
 title: Pitru Paksha Shiksha (परिचय)
 type: subsystem
 sources: [mobile/src/data/pitru/types.ts, mobile/src/data/pitru/lessons.ts, mobile/src/data/pitru/principles.ts, mobile/src/data/pitru/kathas.ts, mobile/src/data/pitru/prashna.ts, mobile/src/data/pitru/index.ts, mobile/src/screens/PitruPakshaShikshaScreen.tsx, mobile/src/screens/PitruKathaScreen.tsx, mobile/src/screens/PitruPakshaOverviewScreen.tsx, mobile/src/navigation/types.ts, mobile/src/navigation/MoreStackNavigator.tsx, mobile/src/data/pitru/__tests__/pitruShikshaContent.test.ts, mobile/src/screens/__tests__/PitruPakshaShikshaScreen.test.tsx, docs/roadmap/prds/44-pitru-paksha-shiksha.md, docs/pitru-paksha-shiksha-prototype.html, design.md, RULEBOOK.md]
-last_verified_date: 2026-09-19
+last_verified_date: 2026-09-22
 confidence: high
 status: current
 ---
@@ -27,12 +27,19 @@ design.md §74 (+ §63.5); contract: RULEBOOK §28; PRD + annotated HTML prototy
   corpus: `rama-jalanjali` Ayodhya 102, `bhagirath-sagar` Bala 38–44, `jatayu-antim-sanskar`
   Aranya 67–68, `bharat-dwadashah` Ayodhya 77; plus the draft `karna-mahalaya` folk katha), `prashna.ts` (9 Q/A),
   `index.ts` (verified-only accessors behind `require()` thunks + `hasPitruShiksha()`).
-- **Screens** — `PitruPakshaShikshaScreen` (परिचय → तिथियाँ → शास्त्र-वचन → कथाएँ → प्रश्नोत्तर →
-  शब्द → three doors LAST: overview · vidhi · ledger) and `PitruKathaScreen` (the DaanKatha pattern
-  in Pitru's muted register). Both on the **More stack only**, after `PitruPakshaOverview`.
-- **Door** — one `parchmentSoft` card between the overview's date hero and the fortnight rows,
-  rendered only when `hasPitruShiksha()` is true. The public `pitru-paksha-reminder` tap is
-  unchanged and now lands education-first.
+- **Screens** — `PitruPakshaShikshaScreen` (sticky section rail → परिचय → तिथियाँ → शास्त्र-वचन →
+  कथाएँ → प्रश्नोत्तर → शब्द → three doors LAST: overview · vidhi · ledger) and `PitruKathaScreen`
+  (the DaanKatha pattern in Pitru's muted register). Both on the **More stack only**, after
+  `PitruPakshaOverview`.
+- **Door** — `pitru-paksha-shiksha-door`, the outlined half of the overview's sticky action bar,
+  rendered only when `hasPitruShiksha()` is true; `pitru-paksha-today-shiksha` on the overview's
+  today card is the second way in. The public `pitru-paksha-reminder` tap is unchanged and still
+  lands education-first.
+- **Overview (Sept 2026 UX review)** — `PitruPakshaOverviewScreen` gained a standing hero
+  (today's tithi + `दिन N / M` during the paksha, a countdown before it, an explicit `अगले वर्ष`
+  once `year += 1` rolls), a family-days strip that doubles as the empty-ledger door to
+  `PitruSmaranList`, a today card that opens in place, and the sticky bar holding both standing
+  doors. design.md §63.5 item 5 carries the full spec.
 - **Hand-offs** — Gita rows push the More stack's local `GitaReader {chapter, initialIndex}`
   (Back returns); the Valmiki row/katha cross to `HomeTab/ValmikiRamayanReader` (not mounted on
   More — PRD-44 open question 3).
@@ -68,7 +75,22 @@ design.md §74 (+ §63.5); contract: RULEBOOK §28; PRD + annotated HTML prototy
   here" from "the app forgot".
 - **The vidhi boundary is unchanged.** No mantra/formula/sequence enters the layer; it describes
   that these exist and vary, and repeats "limited household guide" wording verbatim.
-- **Reading order is the IA** — do not add a door above the lessons.
+- **Reading order is the IA** — do not add a door above the lessons. The Sept 2026 section rail
+  (`pitru-shiksha-rail`) is the one thing allowed above them, and only because it is **not a
+  door**: its chips scroll to sections the reader is already in and open nothing the scroll does
+  not hold. It exists because the scroll is ~39 blocks with no way back.
+- **All sixteen tithis render, names from the ENGINE** (Sept 2026). `पक्ष की तिथियाँ` used to show
+  only the verified rows — which is purnima and amavasya, so a section headed "Days of the
+  fortnight" listed the first day and the last and read as broken. It now renders every day:
+  a verified one carries its lesson behind a filled gold marker, the other fourteen carry
+  `TITHI_NAMES_HI/EN` (krishna tithis at index `14 + day`) behind a hollow marker, testID
+  `pitru-tithi-day-<day>`. **Never source those names from the draft rows** — the verified-only
+  boundary and its non-vacuous absence test are load-bearing, and a tithi's name is the engine's
+  fact, not the registry's editorial content. Verifying a row upgrades it in place, no UI change.
+- **A UI line must carry a fact, not the stance** (design.md §1). The screen's old lede,
+  *क्या है, क्यों है, किस दिन किसका — फिर स्मरण, फिर विधि*, narrated its own section order and went
+  in the Sept 2026 pass; a test pins that it does not come back. The teaching stays where it
+  belongs — in the lessons, the verse meanings, the katha शिक्षा and the प्रश्नोत्तर answers.
 
 ## Gotchas
 

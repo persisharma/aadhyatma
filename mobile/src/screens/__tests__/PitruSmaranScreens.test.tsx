@@ -548,4 +548,109 @@ describe('PitruPakshaOverviewScreen', () => {
     expect(byLabel(tree, 'Open Pitru Paksha introduction')).toBeUndefined();
     expect(allText(tree)).not.toContain('क्यों है');
   });
+
+  // ── Sept 2026 UX review ────────────────────────────────────────────────
+  // The screen answers "where am I in this fortnight" before it answers
+  // "what are the dates", and both standing doors live in the sticky bar.
+
+  test('mid-paksha: the hero carries today’s tithi and दिन N / M, and today’s row opens in place', async () => {
+    const purnima = daysFromNow(-6);
+    mockedWindow.mockReturnValue({ purnima, start: daysFromNow(-5), end: daysFromNow(8) });
+    const nav = makeNav();
+    const tree = await render(
+      <PitruPakshaOverviewScreen
+        navigation={nav as never}
+        route={{ key: 'p', name: 'PitruPakshaOverview' } as never}
+      />
+    );
+    await flush();
+
+    // 15 civil rows (purnima..amavasya), today is the seventh.
+    expect(allText(tree)).toContain('दिन 7 / 15 · आज');
+    expect(tree.root.findAll((n) => n.props.testID === 'pitru-paksha-today').length).toBeGreaterThan(0);
+
+    // The card's guide action is dated to TODAY, not to the fortnight's start.
+    act(() => byLabel(tree, 'Open today’s Tila-Tarpana remembrance guide').props.onPress());
+    expect(nav.navigate).toHaveBeenCalledWith('VidhiDetail', {
+      vidhiId: 'shraddha-tarpan-vidhi',
+      dateMs: daysFromNow(0).getTime(),
+    });
+  });
+
+  test('before the paksha: a countdown, and no today card', async () => {
+    mockedWindow.mockReturnValue({ purnima: daysFromNow(4), start: daysFromNow(5), end: daysFromNow(19) });
+    const tree = await render(
+      <PitruPakshaOverviewScreen
+        navigation={makeNav() as never}
+        route={{ key: 'p', name: 'PitruPakshaOverview' } as never}
+      />
+    );
+    await flush();
+    expect(allText(tree)).toContain('पितृ पक्ष आरम्भ');
+    expect(allText(tree)).toContain('4 दिन शेष');
+    expect(tree.root.findAll((n) => n.props.testID === 'pitru-paksha-today')).toHaveLength(0);
+  });
+
+  test('the rolled year is never silent — the hero says अगले वर्ष and names the paksha that ended', async () => {
+    const endedOn = daysFromNow(-5);
+    mockedWindow
+      .mockReturnValueOnce({ purnima: daysFromNow(-20), start: daysFromNow(-19), end: endedOn })
+      .mockReturnValue({ purnima: daysFromNow(340), start: daysFromNow(341), end: daysFromNow(355) });
+    const tree = await render(
+      <PitruPakshaOverviewScreen
+        navigation={makeNav() as never}
+        route={{ key: 'p', name: 'PitruPakshaOverview' } as never}
+      />
+    );
+    await flush();
+    const text = allText(tree);
+    expect(text).toContain('अगले वर्ष');
+    expect(text).toContain('इस वर्ष का पक्ष');
+    expect(text).not.toContain('दिन शेष');
+  });
+
+  test('family days are summarised at the top; an empty ledger offers पितृ स्मरण instead', async () => {
+    mockedWindow.mockReturnValue({ purnima: daysFromNow(9), start: daysFromNow(10), end: daysFromNow(24) });
+
+    mockEntries = [];
+    const empty = await render(
+      <PitruPakshaOverviewScreen
+        navigation={makeNav() as never}
+        route={{ key: 'p', name: 'PitruPakshaOverview' } as never}
+      />
+    );
+    await flush();
+    expect(byLabel(empty, 'Open Pitru Smaran list')).toBeDefined();
+    expect(empty.root.findAll((n) => n.props.testID === 'pitru-paksha-family-strip')).toHaveLength(0);
+
+    mockEntries = [FATHER];
+    mockedPakshaDay.mockReturnValue(daysFromNow(12));
+    const filled = await render(
+      <PitruPakshaOverviewScreen
+        navigation={makeNav() as never}
+        route={{ key: 'p', name: 'PitruPakshaOverview' } as never}
+      />
+    );
+    await flush();
+    expect(filled.root.findAll((n) => n.props.testID === 'pitru-paksha-family-strip').length).toBeGreaterThan(0);
+    expect(allText(filled)).toContain('आपके परिवार के 1 दिन');
+    expect(byLabel(filled, 'Open Pitru Smaran list')).toBeUndefined();
+  });
+
+  test('both standing doors live in the sticky action bar, not at the ends of the scroll', async () => {
+    mockedWindow.mockReturnValue({ purnima: daysFromNow(9), start: daysFromNow(10), end: daysFromNow(24) });
+    const tree = await render(
+      <PitruPakshaOverviewScreen
+        navigation={makeNav() as never}
+        route={{ key: 'p', name: 'PitruPakshaOverview' } as never}
+      />
+    );
+    await flush();
+    const bar = tree.root.findAll((n) => n.props.testID === 'pitru-paksha-actions')[0];
+    expect(bar).toBeDefined();
+    const inBar = (id: string) => bar.findAll((n) => n.props.testID === id).length;
+    expect(inBar('pitru-paksha-shiksha-door')).toBeGreaterThan(0);
+    expect(inBar('pitru-paksha-vidhi-door')).toBeGreaterThan(0);
+    expect(StyleSheet.flatten(bar.props.style).position).toBe('absolute');
+  });
 });

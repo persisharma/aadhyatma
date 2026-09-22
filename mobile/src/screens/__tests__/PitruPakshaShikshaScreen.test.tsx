@@ -162,6 +162,51 @@ describe('PitruPakshaShikshaScreen', () => {
     expect(nav.navigate).toHaveBeenCalledWith('PitruSmaranList');
   });
 
+  // ── Sept 2026 UX review ────────────────────────────────────────────────
+
+  test('पक्ष की तिथियाँ names all sixteen days — verified ones taught, the rest named only', async () => {
+    const nav = makeNav();
+    const tree = await render(
+      <PitruPakshaShikshaScreen navigation={nav as never} route={{ key: 's', name: 'PitruPakshaShiksha' } as never} />
+    );
+    const text = allText(tree);
+
+    // purnima + 1–14 + amavasya, whatever the registry can currently teach.
+    const days = ['purnima', ...Array.from({ length: 14 }, (_, i) => String(i + 1)), 'amavasya'];
+    const rendered = days.filter(
+      (day) =>
+        byTestId(tree, `pitru-tithi-day-${day}`) !== undefined ||
+        byTestId(tree, `pitru-tithi-tithi-${day}`) !== undefined
+    );
+    expect(rendered).toHaveLength(16);
+
+    // A day with no verified lesson carries the ENGINE's name for it and no body.
+    expect(text).toContain('षष्ठी श्राद्ध');
+    expect(text).toContain('चतुर्दशी श्राद्ध');
+    // ...while the two verified days keep their teaching.
+    expect(text).toContain('पक्ष का पहला दिन');
+    expect(text).toContain('जिनकी तिथि ज्ञात नहीं');
+  });
+
+  test('the section rail lists only sections the scroll actually holds', async () => {
+    const nav = makeNav();
+    const tree = await render(
+      <PitruPakshaShikshaScreen navigation={nav as never} route={{ key: 's', name: 'PitruPakshaShiksha' } as never} />
+    );
+    expect(byTestId(tree, 'pitru-shiksha-rail')).toBeDefined();
+    for (const key of ['parichay', 'tithi', 'vachan', 'katha', 'prashna', 'shabd']) {
+      expect(byTestId(tree, `pitru-shiksha-rail-${key}`)).toBeDefined();
+    }
+  });
+
+  test('the screen does not narrate its own section order (design.md §1 copy rule)', async () => {
+    const nav = makeNav();
+    const tree = await render(
+      <PitruPakshaShikshaScreen navigation={nav as never} route={{ key: 's', name: 'PitruPakshaShiksha' } as never} />
+    );
+    expect(allText(tree)).not.toContain('फिर स्मरण, फिर विधि');
+  });
+
   test('English reading language renders the English copy and IAST verse lines', async () => {
     const nav = makeNav();
     const tree = await render(

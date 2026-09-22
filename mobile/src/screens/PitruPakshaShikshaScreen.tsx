@@ -8,8 +8,16 @@
  * verified-only accessors; a section with no verified rows is absent, never a
  * placeholder. Tone is Pitru Smaran's (§63): muted gold-and-ink, no saffron
  * celebration, no streaks, no "must".
+ *
+ * Sept 2026 UX review: reading order is unchanged and no door moved above the
+ * lessons — but a sticky chip rail now gets the reader BACK through a
+ * thirty-nine-block scroll, and पक्ष की तिथियाँ names all sixteen days of the
+ * fortnight instead of the two it can currently teach. The names come from the
+ * engine (`TITHI_NAMES_*`), never from the draft registry rows: a day the app
+ * cannot yet explain carries its name and a hollow marker, which is true, where
+ * a section listing only the first and last day of a fortnight read as broken.
  */
-import React, { useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -23,17 +31,37 @@ import {
   getPitruLessons,
   getPitruPrashna,
   getPitruPrinciples,
+  type PitruFortnightDay,
   type PitruLessonEntry,
   type PitruReaderRef,
 } from '@/data/pitru';
 import { getVidhiById } from '@/data/vidhi';
 import type { MoreStackParamList } from '@/navigation/types';
+import { TITHI_NAMES_EN, TITHI_NAMES_HI } from '@/panchang/names';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { commentaryByLang, contentByLang, meaningByLang, verseLinesByLang } from '@/utils/localize';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'PitruPakshaShiksha'>;
+
+/** The rail's sections, in reading order. A section absent from the scroll drops its chip. */
+type SectionKey = 'parichay' | 'tithi' | 'vachan' | 'katha' | 'prashna' | 'shabd';
+
+/** purnima · krishna 1–14 · amavasya — the fortnight, in the order it is kept. */
+const FORTNIGHT_DAYS: readonly PitruFortnightDay[] = [
+  'purnima', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 'amavasya',
+];
+
+/**
+ * The engine's own name for a day of the fortnight. Krishna-paksha tithis live
+ * at indices 15–29 of the tithi tables, so day n is `14 + n`.
+ */
+function fortnightDayName(day: PitruFortnightDay): { hi: string; en: string } {
+  if (day === 'purnima') return { hi: 'पूर्णिमा श्राद्ध', en: 'Purnima Shraddha' };
+  if (day === 'amavasya') return { hi: 'सर्वपितृ अमावस्या', en: 'Sarvapitri Amavasya' };
+  return { hi: `${TITHI_NAMES_HI[14 + day]} श्राद्ध`, en: `${TITHI_NAMES_EN[14 + day]} Shraddha` };
+}
 
 /** Reader hand-off caption — the category-aware rule: पाठ for scripture, never आरती. */
 function refCaption(ref: PitruReaderRef, lang: Lang): string {
@@ -61,6 +89,36 @@ export default function PitruPakshaShikshaScreen({ navigation }: Props) {
   // (one scroll, no per-lesson screen — a परिचय is read, not navigated).
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const toggle = (id: string) => setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
+
+  // The rail: one offset per rendered section, and the chip the scroll is in.
+  const scrollRef = useRef<ScrollView | null>(null);
+  const offsets = useRef<Partial<Record<SectionKey, number>>>({});
+  const [activeSection, setActiveSection] = useState<SectionKey | null>(null);
+
+  const sections = useMemo(() => {
+    const rows: { key: SectionKey; labelHi: string; labelEn: string }[] = [];
+    if (parichay.length > 0) rows.push({ key: 'parichay', labelHi: 'परिचय', labelEn: 'Intro' });
+    rows.push({ key: 'tithi', labelHi: 'तिथियाँ', labelEn: 'Days' });
+    if (principles.length > 0) rows.push({ key: 'vachan', labelHi: 'वचन', labelEn: 'Texts' });
+    if (kathas.length > 0) rows.push({ key: 'katha', labelHi: 'कथाएँ', labelEn: 'Kathas' });
+    if (prashna.length > 0) rows.push({ key: 'prashna', labelHi: 'प्रश्न', labelEn: 'Questions' });
+    if (shabd.length > 0) rows.push({ key: 'shabd', labelHi: 'शब्द', labelEn: 'Glossary' });
+    return rows;
+  }, [parichay.length, principles.length, kathas.length, prashna.length, shabd.length]);
+
+  /** Verified tithi teachings, keyed by the day they describe. */
+  const tithiLessons = useMemo(() => {
+    const byDay = new Map<PitruFortnightDay, PitruLessonEntry>();
+    for (const lesson of tithis) {
+      if (lesson.fortnightDay !== undefined) byDay.set(lesson.fortnightDay, lesson);
+    }
+    return byDay;
+  }, [tithis]);
+
+  const markSection = (key: SectionKey) => (e: { nativeEvent: { layout: { y: number } } }) => {
+    offsets.current[key] = e.nativeEvent.layout.y;
+    if (activeSection === null && key === sections[0]?.key) setActiveSection(key);
+  };
 
   const openRef = (ref: PitruReaderRef) => {
     if (ref.kind === 'gita') {
@@ -131,46 +189,113 @@ export default function PitruPakshaShikshaScreen({ navigation }: Props) {
           title={contentByLang(lang, 'पितृ पक्ष — परिचय', 'Pitru Paksha — an introduction')}
           onBack={() => navigation.goBack()}
         />
-        <ScrollView contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl }]} showsVerticalScrollIndicator={false}>
+
+        {/* A way BACK through the scroll, not a new IA: reading order is
+            unchanged and the chips open nothing the scroll does not already hold. */}
+        <View testID="pitru-shiksha-rail" style={[styles.rail, { borderBottomColor: colors.divider }]}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ paddingHorizontal: spacing.xxl, gap: 7 }}
+          >
+            {sections.map((section) => {
+              const active = activeSection === section.key;
+              return (
+                <Pressable
+                  key={section.key}
+                  testID={`pitru-shiksha-rail-${section.key}`}
+                  accessibilityRole="button"
+                  accessibilityLabel={`Go to section ${section.key}`}
+                  onPress={() => {
+                    const y = offsets.current[section.key];
+                    if (y !== undefined) {
+                      setActiveSection(section.key);
+                      scrollRef.current?.scrollTo({ y: Math.max(0, y - 8), animated: true });
+                    }
+                  }}
+                  style={({ pressed }) => [
+                    styles.chip,
+                    {
+                      borderColor: active ? colors.saffronDeep : colors.divider,
+                      backgroundColor: active ? colors.saffronTint : colors.parchmentSoft,
+                      borderRadius: radii.pill,
+                    },
+                    pressed && { opacity: 0.75 },
+                  ]}
+                >
+                  <Text style={{ fontFamily: bodyFont, fontSize: 12, color: active ? colors.saffronDeep : colors.inkMuted }}>
+                    {contentByLang(lang, section.labelHi, section.labelEn)}
+                  </Text>
+                </Pressable>
+              );
+            })}
+          </ScrollView>
+        </View>
+
+        <ScrollView
+          ref={scrollRef}
+          contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl }]}
+          showsVerticalScrollIndicator={false}
+          scrollEventThrottle={64}
+          onScroll={(e) => {
+            const y = e.nativeEvent.contentOffset.y + 40;
+            let current: SectionKey | null = null;
+            for (const section of sections) {
+              const offset = offsets.current[section.key];
+              if (offset !== undefined && offset <= y) current = section.key;
+            }
+            if (current !== null && current !== activeSection) setActiveSection(current);
+          }}
+        >
           <Text style={{ fontFamily: titleFont, fontSize: 15, color: colors.gold, textAlign: 'center', letterSpacing: 6 }}>॥ ॐ ॥</Text>
-          <Text style={{ fontFamily: bodyFont, fontSize: 13, lineHeight: 20, color: colors.inkSoft, textAlign: 'center', marginTop: 6 }}>
-            {contentByLang(
-              lang,
-              'क्या है, क्यों है, किस दिन किसका — फिर स्मरण, फिर विधि',
-              'What it is, why it is kept, whose day is which — then remembrance, then the rite'
-            )}
-          </Text>
 
           {parichay.length > 0 && (
-            <>
+            <View onLayout={markSection('parichay')}>
               <Text style={sectionLabelStyle}>{contentByLang(lang, 'परिचय', 'Introduction')}</Text>
               {parichay.map(renderLesson)}
-            </>
+            </View>
           )}
 
-          {tithis.length > 0 && (
-            <>
-              <Text style={sectionLabelStyle}>{contentByLang(lang, 'पक्ष की तिथियाँ', 'Days of the fortnight')}</Text>
-              {tithis.map((lesson) => (
-                <View key={lesson.id} style={[styles.tithiRow, { borderBottomColor: colors.divider }]} testID={`pitru-tithi-${lesson.id}`}>
-                  <View style={[styles.marker, { backgroundColor: colors.gold }]} />
+          {/* All sixteen days. A day the registry can teach carries its lesson
+              and a gold marker; one it cannot carries the engine's name for it
+              and a hollow marker — named, not yet explained. */}
+          <View onLayout={markSection('tithi')}>
+            <Text style={sectionLabelStyle}>{contentByLang(lang, 'पक्ष की तिथियाँ', 'Days of the fortnight')}</Text>
+            {FORTNIGHT_DAYS.map((day, idx) => {
+              const lesson = tithiLessons.get(day);
+              const name = fortnightDayName(day);
+              const paragraphs = lesson ? commentaryByLang(lang, lesson.bodyHi, lesson.bodyEn) : [];
+              return (
+                <View
+                  key={String(day)}
+                  style={[styles.tithiRow, { borderBottomColor: colors.divider, borderBottomWidth: idx === FORTNIGHT_DAYS.length - 1 ? 0 : 1 }]}
+                  testID={lesson ? `pitru-tithi-${lesson.id}` : `pitru-tithi-day-${String(day)}`}
+                >
+                  <View
+                    style={[
+                      styles.marker,
+                      lesson
+                        ? { backgroundColor: colors.gold }
+                        : { backgroundColor: 'transparent', borderWidth: 1, borderColor: colors.divider },
+                    ]}
+                  />
                   <View style={{ flex: 1, minWidth: 0 }}>
-                    <Text style={{ fontFamily: titleFont, fontSize: 14.5, color: colors.ink }}>
-                      {contentByLang(lang, lesson.titleHi, lesson.titleEn)}
+                    <Text style={{ fontFamily: titleFont, fontSize: 14.5, lineHeight: 22, color: lesson ? colors.ink : colors.inkMuted }}>
+                      {lesson ? contentByLang(lang, lesson.titleHi, lesson.titleEn) : contentByLang(lang, name.hi, name.en)}
                     </Text>
-                    {commentaryByLang(lang, lesson.bodyHi, lesson.bodyEn).map((paragraph, idx) => (
-                      <Text key={idx} style={{ fontFamily: bodyFont, fontSize: 13, lineHeight: 20, color: colors.inkSoft, marginTop: 4 }}>
+                    {paragraphs.map((paragraph, i) => (
+                      <Text key={i} style={{ fontFamily: bodyFont, fontSize: 13, lineHeight: 20, color: colors.inkSoft, marginTop: 4 }}>
                         {paragraph}
                       </Text>
                     ))}
                   </View>
                 </View>
-              ))}
-            </>
-          )}
+              );
+            })}
+          </View>
 
           {principles.length > 0 && (
-            <>
+            <View onLayout={markSection('vachan')}>
               <Text style={sectionLabelStyle}>{contentByLang(lang, 'शास्त्र-वचन', 'From the texts')}</Text>
               {principles.map((entry) => (
                 <View key={entry.id} style={card} testID={`pitru-principle-${entry.id}`}>
@@ -206,11 +331,11 @@ export default function PitruPakshaShikshaScreen({ navigation }: Props) {
                   )}
                 </View>
               ))}
-            </>
+            </View>
           )}
 
           {kathas.length > 0 && (
-            <>
+            <View onLayout={markSection('katha')}>
               <Text style={sectionLabelStyle}>{contentByLang(lang, 'कथाएँ', 'Kathas')}</Text>
               {kathas.map((katha) => (
                 <Pressable
@@ -232,11 +357,11 @@ export default function PitruPakshaShikshaScreen({ navigation }: Props) {
                   <Text style={{ color: colors.inkSoft, fontSize: 17 }}>›</Text>
                 </Pressable>
               ))}
-            </>
+            </View>
           )}
 
           {prashna.length > 0 && (
-            <>
+            <View onLayout={markSection('prashna')}>
               <Text style={sectionLabelStyle}>{contentByLang(lang, 'प्रश्नोत्तर', 'Questions people ask')}</Text>
               {prashna.map((entry) => (
                 <View key={entry.id} style={card} testID={`pitru-prashna-${entry.id}`}>
@@ -248,16 +373,25 @@ export default function PitruPakshaShikshaScreen({ navigation }: Props) {
                   </Text>
                 </View>
               ))}
-            </>
+            </View>
           )}
 
           {shabd.length > 0 && (
-            <>
+            <View onLayout={markSection('shabd')}>
               <Text style={sectionLabelStyle}>{contentByLang(lang, 'शब्द', 'Glossary')}</Text>
-              <View style={card}>
+              {/* One card, but ruled: eleven terms stacked on 10 px of margin read
+                  as a single paragraph — this is the section people scan. */}
+              <View style={[styles.card, styles.glossary, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }]}>
                 {shabd.map((term, idx) => (
-                  <View key={term.id} style={{ marginTop: idx === 0 ? 0 : 10 }} testID={`pitru-shabd-${term.id}`}>
-                    <Text style={{ fontFamily: titleFont, fontSize: 14, color: colors.ink }}>
+                  <View
+                    key={term.id}
+                    testID={`pitru-shabd-${term.id}`}
+                    style={[
+                      styles.glossaryRow,
+                      { borderBottomColor: colors.divider, borderBottomWidth: idx === shabd.length - 1 ? 0 : 1 },
+                    ]}
+                  >
+                    <Text style={{ fontFamily: titleFont, fontSize: 14, lineHeight: 21, color: colors.ink }}>
                       {contentByLang(lang, term.titleHi, term.titleEn)}
                     </Text>
                     <Text style={{ fontFamily: bodyFont, fontSize: 13, lineHeight: 20, color: colors.inkSoft, marginTop: 2 }}>
@@ -266,7 +400,7 @@ export default function PitruPakshaShikshaScreen({ navigation }: Props) {
                   </View>
                 ))}
               </View>
-            </>
+            </View>
           )}
 
           {/* The three doors the fortnight already has — reached LAST, once the
@@ -335,9 +469,13 @@ export default function PitruPakshaShikshaScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
-  scroll: { paddingTop: 6, paddingBottom: 40 },
+  scroll: { paddingTop: 10, paddingBottom: 40 },
+  rail: { paddingVertical: 9, borderBottomWidth: 1 },
+  chip: { borderWidth: 1, paddingHorizontal: 11, paddingVertical: 5, minHeight: 30, justifyContent: 'center' },
   card: { borderWidth: 1, paddingHorizontal: 14, paddingVertical: 13, marginBottom: 10 },
-  tithiRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 12, paddingVertical: 11, borderBottomWidth: 1 },
+  glossary: { paddingVertical: 0 },
+  glossaryRow: { paddingVertical: 11 },
+  tithiRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 12, paddingVertical: 11 },
   marker: { width: 8, height: 8, borderRadius: 4, marginTop: 7 },
   refPill: { alignSelf: 'center', borderWidth: 1, paddingHorizontal: 14, paddingVertical: 7, marginTop: 10, minHeight: 32, justifyContent: 'center' },
   doorRow: { flexDirection: 'row', alignItems: 'center', borderWidth: 1, paddingHorizontal: 14, paddingVertical: 13, marginBottom: 10, minHeight: 52 },
