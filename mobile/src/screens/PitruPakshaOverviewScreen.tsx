@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -8,7 +8,12 @@ import ReaderHeader from '@/components/ReaderHeader';
 import PanchangTimelineRow from '@/components/PanchangTimelineRow';
 import { useGitaLanguage } from '@/data/gita/language';
 import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
-import { hasPitruShiksha } from '@/data/pitru';
+import {
+  getPitruLessons,
+  hasPitruShiksha,
+  type PitruFortnightDay,
+  type PitruLessonEntry,
+} from '@/data/pitru';
 import { getVidhiById } from '@/data/vidhi';
 import { addDays } from '@/panchang/calendarGrid';
 import { computeTithiAndMonth } from '@/panchang/engine';
@@ -16,7 +21,7 @@ import { TITHI_NAMES_EN, TITHI_NAMES_HI } from '@/panchang/names';
 import { pakshaShraddhaDay, pitruPakshaWindow } from '@/panchang/pitruSmaran';
 import { entryDisplayName, shortDate, startOfLocalDay } from '@/panchang/pitruSmaranDisplay';
 import { useTheme } from '@/theme/ThemeContext';
-import { contentByLang } from '@/utils/localize';
+import { commentaryByLang, contentByLang } from '@/utils/localize';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import type { MoreStackParamList } from '@/navigation/types';
 
@@ -32,6 +37,11 @@ type FortnightRow = {
   heroEn: string;
   /** Display names of family entries whose shraddha day this is. */
   family: string[];
+  /**
+   * Which day of the fortnight this civil date is, so the row can carry the
+   * §74 tithi teaching for it. A kshaya row takes its sunrise tithi's day.
+   */
+  fortnightDay: PitruFortnightDay | null;
 };
 
 /**
@@ -129,14 +139,17 @@ export default function PitruPakshaOverviewScreen({ navigation }: Props) {
           let labelEn: string;
           let heroHi: string;
           let heroEn: string;
+          let fortnightDay: PitruFortnightDay | null;
           if (d.getTime() === window.purnima.getTime()) {
             labelHi = heroHi = 'पूर्णिमा श्राद्ध';
             labelEn = heroEn = 'Purnima Shraddha';
+            fortnightDay = 'purnima';
           } else if (isLast) {
             heroHi = 'सर्वपितृ अमावस्या';
             heroEn = 'Sarvapitri Amavasya';
             labelHi = 'सर्वपितृ अमावस्या — अज्ञात तिथियों हेतु';
             labelEn = 'Sarvapitri Amavasya — for unknown tithis';
+            fortnightDay = 'amavasya';
           } else {
             const { tithiIndex } = computeTithiAndMonth(d, { calendarSystem: 'purnimant' });
             const nextIndex = computeTithiAndMonth(addDays(d, 1), { calendarSystem: 'purnimant' }).tithiIndex;
@@ -147,8 +160,19 @@ export default function PitruPakshaOverviewScreen({ navigation }: Props) {
             labelEn = heroEn = kshayaIndex !== null
               ? `${TITHI_NAMES_EN[tithiIndex]} & ${TITHI_NAMES_EN[kshayaIndex]} Shraddha`
               : `${TITHI_NAMES_EN[tithiIndex]} Shraddha`;
+            // Krishna tithis sit at 15–29; day 1 is प्रतिपदा at index 15.
+            fortnightDay = tithiIndex >= 15 && tithiIndex <= 28 ? ((tithiIndex - 14) as PitruFortnightDay) : null;
           }
-          rows.push({ key, date: new Date(d), labelHi, labelEn, heroHi, heroEn, family: familyByDay.get(key) ?? [] });
+          rows.push({
+            key,
+            date: new Date(d),
+            labelHi,
+            labelEn,
+            heroHi,
+            heroEn,
+            fortnightDay,
+            family: familyByDay.get(key) ?? [],
+          });
         }
 
         const todayIndex = rows.findIndex((row) => row.date.getTime() === todayMs);
@@ -175,6 +199,25 @@ export default function PitruPakshaOverviewScreen({ navigation }: Props) {
   const showShiksha = hasPitruShiksha();
   const familyRows = state?.rows.filter((row) => row.family.length > 0) ?? [];
   const todayRow = state && state.todayIndex >= 0 ? state.rows[state.todayIndex] : null;
+
+  /**
+   * §74's verified tithi teachings, keyed by the day they describe. The fortnight
+   * is ONE list and it is this one: the teaching meets the dated day it belongs
+   * to instead of living in a parallel sixteen-row list on the परिचय screen.
+   */
+  const tithiLessons = useMemo(() => {
+    const byDay = new Map<PitruFortnightDay, PitruLessonEntry>();
+    if (!showShiksha) return byDay;
+    for (const lesson of getPitruLessons('tithi')) {
+      if (lesson.fortnightDay !== undefined) byDay.set(lesson.fortnightDay, lesson);
+    }
+    return byDay;
+  }, [showShiksha]);
+
+  // Today opens by default; any other day that HAS something opens on tap, and
+  // tapping the open one closes it. `undefined` means "nobody has chosen yet".
+  const [chosenKey, setChosenKey] = useState<string | null | undefined>(undefined);
+  const openKey = chosenKey === undefined ? todayRow?.key ?? null : chosenKey;
   // The guide opens on the day it is most likely wanted for: today while the
   // paksha runs, else the first family-matched day, else the fortnight's start.
   const vidhiOccurrence = todayRow?.date ?? familyRows[0]?.date ?? state?.start ?? null;
@@ -330,30 +373,42 @@ export default function PitruPakshaOverviewScreen({ navigation }: Props) {
 
               {state.rows.map((row, i) => {
                 const isFamily = row.family.length > 0;
+                const isToday = i === state.todayIndex;
+                const lesson = row.fortnightDay !== null ? tithiLessons.get(row.fortnightDay) : undefined;
+                // A day is worth opening when it holds something: a teaching the
+                // registry can give, or someone this family remembers on it.
+                // Today is always open — it is the day the screen is about, and
+                // the card still carries its dated guide when it holds neither.
+                const openable = lesson !== undefined || isFamily || isToday;
+                const open = openable && openKey === row.key;
                 const anchor = isFamily && row === familyRows[0]
                   ? (e: { nativeEvent: { layout: { y: number } } }) => {
                       familyOffset.current = e.nativeEvent.layout.y;
                     }
                   : undefined;
 
-                // Today's row opens where it sits: the tithi, whoever is yours
-                // on it, and the two things a family might do with the day.
-                if (i === state.todayIndex) {
+                if (open) {
+                  const paragraphs = lesson ? commentaryByLang(lang, lesson.bodyHi, lesson.bodyEn) : [];
                   return (
                     <View
                       key={row.key}
                       onLayout={anchor}
-                      testID="pitru-paksha-today"
-                      style={[styles.todayCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.saffron, borderRadius: radii.md }]}
+                      testID={isToday ? 'pitru-paksha-today' : `pitru-paksha-day-${row.key}`}
+                      style={[styles.dayCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.saffron, borderRadius: radii.md }]}
                     >
-                      <View style={styles.todayHead}>
+                      <Pressable
+                        accessibilityRole="button"
+                        accessibilityLabel={`Close day ${shortDate(row.date, 'en')}`}
+                        onPress={() => setChosenKey(null)}
+                        style={styles.dayHead}
+                      >
                         <Text style={{ fontFamily: titleFont, fontSize: 15.5, lineHeight: 23, color: colors.ink, flex: 1 }}>
                           {contentByLang(lang, row.heroHi, row.heroEn)}
                         </Text>
                         <Text style={{ fontFamily: bodyFont, fontSize: 11, color: colors.saffronDeep }}>
-                          {contentByLang(lang, 'आज', 'today')} · {shortDate(row.date, lang)}
+                          {isToday ? `${contentByLang(lang, 'आज', 'today')} · ` : ''}{shortDate(row.date, lang)}
                         </Text>
-                      </View>
+                      </Pressable>
                       {row.family.map((who) => (
                         <Text
                           key={who}
@@ -362,18 +417,26 @@ export default function PitruPakshaOverviewScreen({ navigation }: Props) {
                           ॥ {who}
                         </Text>
                       ))}
-                      <View style={styles.todayActions}>
+                      {paragraphs.map((paragraph, idx) => (
+                        <Text
+                          key={idx}
+                          style={{ fontFamily: bodyFont, fontSize: 13, lineHeight: 21, color: colors.inkSoft, marginTop: idx === 0 ? 8 : 6 }}
+                        >
+                          {paragraph}
+                        </Text>
+                      ))}
+                      <View style={styles.dayActions}>
                         {shraddhaVidhi && (
                           <Pressable
-                            testID="pitru-paksha-today-vidhi"
+                            testID="pitru-paksha-day-vidhi"
                             accessibilityRole="button"
-                            accessibilityLabel="Open today’s Tila-Tarpana remembrance guide"
+                            accessibilityLabel={`Open the Tila-Tarpana remembrance guide for ${shortDate(row.date, 'en')}`}
                             onPress={() => navigation.navigate('VidhiDetail', {
                               vidhiId: shraddhaVidhi.id,
                               dateMs: row.date.getTime(),
                             })}
                             style={({ pressed }) => [
-                              styles.todayAction,
+                              styles.dayAction,
                               { borderColor: colors.gold, backgroundColor: colors.goldTint, borderRadius: radii.sm },
                               pressed && { opacity: 0.75 },
                             ]}
@@ -383,20 +446,22 @@ export default function PitruPakshaOverviewScreen({ navigation }: Props) {
                             </Text>
                           </Pressable>
                         )}
+                        {/* The question a dated day raises — answered by the lesson
+                            that explains the mapping, opened ON that lesson. */}
                         {showShiksha && (
                           <Pressable
-                            testID="pitru-paksha-today-shiksha"
+                            testID="pitru-paksha-day-shiksha"
                             accessibilityRole="button"
-                            accessibilityLabel="Open this tithi’s introduction"
-                            onPress={() => navigation.navigate('PitruPakshaShiksha')}
+                            accessibilityLabel="Open the lesson on how a tithi is matched"
+                            onPress={() => navigation.navigate('PitruPakshaShiksha', { lessonId: 'kis-din-kiska' })}
                             style={({ pressed }) => [
-                              styles.todayAction,
+                              styles.dayAction,
                               { borderColor: colors.gold, backgroundColor: colors.goldTint, borderRadius: radii.sm },
                               pressed && { opacity: 0.75 },
                             ]}
                           >
                             <Text style={{ fontFamily: titleFont, fontSize: 12.5, color: colors.saffronDeep }}>
-                              {contentByLang(lang, 'इस तिथि का परिचय ›', 'About this tithi ›')}
+                              {contentByLang(lang, 'किस दिन किसका ›', 'Whose day is which ›')}
                             </Text>
                           </Pressable>
                         )}
@@ -405,17 +470,37 @@ export default function PitruPakshaOverviewScreen({ navigation }: Props) {
                   );
                 }
 
+                const rowNode = (
+                  <PanchangTimelineRow
+                    markerColor={isFamily ? colors.saffron : colors.gold}
+                    dateLabel={shortDate(row.date, lang)}
+                    title={contentByLang(lang, row.labelHi, row.labelEn)}
+                    secondary={row.family.map((who) => `॥ ${who}`)}
+                    density="comfortable"
+                    showDivider={i < state.rows.length - 1}
+                    accessibilityLabel={
+                      openable
+                        ? undefined
+                        : `${shortDate(row.date, 'en')}, ${row.labelEn}${isFamily ? `, ${row.family.join(', ')}` : ''}`
+                    }
+                  />
+                );
+
                 return (
                   <View key={row.key} onLayout={anchor}>
-                    <PanchangTimelineRow
-                      markerColor={isFamily ? colors.saffron : colors.gold}
-                      dateLabel={shortDate(row.date, lang)}
-                      title={contentByLang(lang, row.labelHi, row.labelEn)}
-                      secondary={row.family.map((who) => `॥ ${who}`)}
-                      density="comfortable"
-                      showDivider={i < state.rows.length - 1}
-                      accessibilityLabel={`${shortDate(row.date, 'en')}, ${row.labelEn}${isFamily ? `, ${row.family.join(', ')}` : ''}`}
-                    />
+                    {openable ? (
+                      <Pressable
+                        testID={`pitru-paksha-row-${row.key}`}
+                        accessibilityRole="button"
+                        accessibilityLabel={`Open day ${shortDate(row.date, 'en')}`}
+                        onPress={() => setChosenKey(row.key)}
+                        style={({ pressed }) => (pressed ? { opacity: 0.7 } : undefined)}
+                      >
+                        {rowNode}
+                      </Pressable>
+                    ) : (
+                      rowNode
+                    )}
                   </View>
                 );
               })}
@@ -495,10 +580,10 @@ const styles = StyleSheet.create({
   },
   stripDot: { width: 8, height: 8, borderRadius: 4 },
   stripMain: { flex: 1, minWidth: 0 },
-  todayCard: { borderWidth: 1, paddingHorizontal: 12, paddingVertical: 12, marginVertical: 8 },
-  todayHead: { flexDirection: 'row', alignItems: 'baseline', gap: 8 },
-  todayActions: { flexDirection: 'row', gap: 8, marginTop: 12 },
-  todayAction: { flex: 1, borderWidth: 1, minHeight: 44, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 4 },
+  dayCard: { borderWidth: 1, paddingHorizontal: 12, paddingVertical: 12, marginVertical: 8 },
+  dayHead: { flexDirection: 'row', alignItems: 'baseline', gap: 8 },
+  dayActions: { flexDirection: 'row', gap: 8, marginTop: 12 },
+  dayAction: { flex: 1, borderWidth: 1, minHeight: 44, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 4 },
   actionBar: {
     position: 'absolute',
     left: 0,

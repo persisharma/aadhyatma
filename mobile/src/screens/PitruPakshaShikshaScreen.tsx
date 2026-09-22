@@ -9,13 +9,14 @@
  * placeholder. Tone is Pitru Smaran's (§63): muted gold-and-ink, no saffron
  * celebration, no streaks, no "must".
  *
- * Sept 2026 UX review: reading order is unchanged and no door moved above the
- * lessons — but a sticky chip rail now gets the reader BACK through a
- * thirty-nine-block scroll, and पक्ष की तिथियाँ names all sixteen days of the
- * fortnight instead of the two it can currently teach. The names come from the
- * engine (`TITHI_NAMES_*`), never from the draft registry rows: a day the app
- * cannot yet explain carries its name and a hollow marker, which is true, where
- * a section listing only the first and last day of a fortnight read as broken.
+ * Sept 2026 UX review — this screen owns the CONCEPTS, not the calendar. Its
+ * पक्ष की तिथियाँ list is gone: the fortnight was being rendered twice, once
+ * here undated and once on the overview dated, and neither list knew about the
+ * other. The tithi teachings now ride the dated rows of `PitruPakshaOverview`,
+ * which is the app's single fortnight surface; this screen reaches it through
+ * the अब door like any other. A sticky chip rail gets the reader back through
+ * the scroll, and `route.params.lessonId` opens one lesson expanded and
+ * scrolled to, so a day in the fortnight can hand off to what explains it.
  */
 import React, { useMemo, useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
@@ -31,13 +32,11 @@ import {
   getPitruLessons,
   getPitruPrashna,
   getPitruPrinciples,
-  type PitruFortnightDay,
   type PitruLessonEntry,
   type PitruReaderRef,
 } from '@/data/pitru';
 import { getVidhiById } from '@/data/vidhi';
 import type { MoreStackParamList } from '@/navigation/types';
-import { TITHI_NAMES_EN, TITHI_NAMES_HI } from '@/panchang/names';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { commentaryByLang, contentByLang, meaningByLang, verseLinesByLang } from '@/utils/localize';
@@ -46,22 +45,7 @@ import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 type Props = NativeStackScreenProps<MoreStackParamList, 'PitruPakshaShiksha'>;
 
 /** The rail's sections, in reading order. A section absent from the scroll drops its chip. */
-type SectionKey = 'parichay' | 'tithi' | 'vachan' | 'katha' | 'prashna' | 'shabd';
-
-/** purnima · krishna 1–14 · amavasya — the fortnight, in the order it is kept. */
-const FORTNIGHT_DAYS: readonly PitruFortnightDay[] = [
-  'purnima', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 'amavasya',
-];
-
-/**
- * The engine's own name for a day of the fortnight. Krishna-paksha tithis live
- * at indices 15–29 of the tithi tables, so day n is `14 + n`.
- */
-function fortnightDayName(day: PitruFortnightDay): { hi: string; en: string } {
-  if (day === 'purnima') return { hi: 'पूर्णिमा श्राद्ध', en: 'Purnima Shraddha' };
-  if (day === 'amavasya') return { hi: 'सर्वपितृ अमावस्या', en: 'Sarvapitri Amavasya' };
-  return { hi: `${TITHI_NAMES_HI[14 + day]} श्राद्ध`, en: `${TITHI_NAMES_EN[14 + day]} Shraddha` };
-}
+type SectionKey = 'parichay' | 'vachan' | 'katha' | 'prashna' | 'shabd';
 
 /** Reader hand-off caption — the category-aware rule: पाठ for scripture, never आरती. */
 function refCaption(ref: PitruReaderRef, lang: Lang): string {
@@ -70,7 +54,8 @@ function refCaption(ref: PitruReaderRef, lang: Lang): string {
     : contentByLang(lang, 'रामायण में पढ़ें ›', 'Read in the Ramayana ›');
 }
 
-export default function PitruPakshaShikshaScreen({ navigation }: Props) {
+export default function PitruPakshaShikshaScreen({ navigation, route }: Props) {
+  const deepLinkedLesson = route.params?.lessonId ?? null;
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const rootNav = useNavigation<any>();
@@ -78,7 +63,6 @@ export default function PitruPakshaShikshaScreen({ navigation }: Props) {
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
 
   const parichay = getPitruLessons('parichay');
-  const tithis = getPitruLessons('tithi');
   const shabd = getPitruLessons('shabd');
   const principles = getPitruPrinciples();
   const kathas = getPitruKathas();
@@ -87,8 +71,13 @@ export default function PitruPakshaShikshaScreen({ navigation }: Props) {
 
   // Concept lessons open on their first paragraph; the rest unfolds in place
   // (one scroll, no per-lesson screen — a परिचय is read, not navigated).
-  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  // A lesson arrived at from a dated day opens already unfolded.
+  const [expanded, setExpanded] = useState<Record<string, boolean>>(
+    deepLinkedLesson !== null ? { [deepLinkedLesson]: true } : {}
+  );
   const toggle = (id: string) => setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
+  // ...and is scrolled to once, when it first reports where it sits.
+  const lessonScrolled = useRef(false);
 
   // The rail: one offset per rendered section, and the chip the scroll is in.
   const scrollRef = useRef<ScrollView | null>(null);
@@ -98,22 +87,12 @@ export default function PitruPakshaShikshaScreen({ navigation }: Props) {
   const sections = useMemo(() => {
     const rows: { key: SectionKey; labelHi: string; labelEn: string }[] = [];
     if (parichay.length > 0) rows.push({ key: 'parichay', labelHi: 'परिचय', labelEn: 'Intro' });
-    rows.push({ key: 'tithi', labelHi: 'तिथियाँ', labelEn: 'Days' });
     if (principles.length > 0) rows.push({ key: 'vachan', labelHi: 'वचन', labelEn: 'Texts' });
     if (kathas.length > 0) rows.push({ key: 'katha', labelHi: 'कथाएँ', labelEn: 'Kathas' });
     if (prashna.length > 0) rows.push({ key: 'prashna', labelHi: 'प्रश्न', labelEn: 'Questions' });
     if (shabd.length > 0) rows.push({ key: 'shabd', labelHi: 'शब्द', labelEn: 'Glossary' });
     return rows;
   }, [parichay.length, principles.length, kathas.length, prashna.length, shabd.length]);
-
-  /** Verified tithi teachings, keyed by the day they describe. */
-  const tithiLessons = useMemo(() => {
-    const byDay = new Map<PitruFortnightDay, PitruLessonEntry>();
-    for (const lesson of tithis) {
-      if (lesson.fortnightDay !== undefined) byDay.set(lesson.fortnightDay, lesson);
-    }
-    return byDay;
-  }, [tithis]);
 
   const markSection = (key: SectionKey) => (e: { nativeEvent: { layout: { y: number } } }) => {
     offsets.current[key] = e.nativeEvent.layout.y;
@@ -147,8 +126,21 @@ export default function PitruPakshaShikshaScreen({ navigation }: Props) {
     const paragraphs = commentaryByLang(lang, lesson.bodyHi, lesson.bodyEn);
     const open = expanded[lesson.id] === true || paragraphs.length === 1;
     const shown = open ? paragraphs : paragraphs.slice(0, 1);
+    const targeted = lesson.id === deepLinkedLesson;
     return (
-      <View key={lesson.id} style={card} testID={`pitru-lesson-${lesson.id}`}>
+      <View
+        key={lesson.id}
+        style={[...card, targeted && { borderColor: colors.gold }]}
+        testID={`pitru-lesson-${lesson.id}`}
+        onLayout={(e) => {
+          if (!targeted || lessonScrolled.current) return;
+          lessonScrolled.current = true;
+          // The card's y is relative to the परिचय section that wraps it, so the
+          // section's own offset in the scroll has to be added back.
+          const y = (offsets.current.parichay ?? 0) + e.nativeEvent.layout.y;
+          scrollRef.current?.scrollTo({ y: Math.max(0, y - 8), animated: false });
+        }}
+      >
         <Text style={{ fontFamily: titleFont, fontSize: 16, lineHeight: 23, color: colors.ink }}>
           {contentByLang(lang, lesson.titleHi, lesson.titleEn)}
         </Text>
@@ -255,44 +247,6 @@ export default function PitruPakshaShikshaScreen({ navigation }: Props) {
               {parichay.map(renderLesson)}
             </View>
           )}
-
-          {/* All sixteen days. A day the registry can teach carries its lesson
-              and a gold marker; one it cannot carries the engine's name for it
-              and a hollow marker — named, not yet explained. */}
-          <View onLayout={markSection('tithi')}>
-            <Text style={sectionLabelStyle}>{contentByLang(lang, 'पक्ष की तिथियाँ', 'Days of the fortnight')}</Text>
-            {FORTNIGHT_DAYS.map((day, idx) => {
-              const lesson = tithiLessons.get(day);
-              const name = fortnightDayName(day);
-              const paragraphs = lesson ? commentaryByLang(lang, lesson.bodyHi, lesson.bodyEn) : [];
-              return (
-                <View
-                  key={String(day)}
-                  style={[styles.tithiRow, { borderBottomColor: colors.divider, borderBottomWidth: idx === FORTNIGHT_DAYS.length - 1 ? 0 : 1 }]}
-                  testID={lesson ? `pitru-tithi-${lesson.id}` : `pitru-tithi-day-${String(day)}`}
-                >
-                  <View
-                    style={[
-                      styles.marker,
-                      lesson
-                        ? { backgroundColor: colors.gold }
-                        : { backgroundColor: 'transparent', borderWidth: 1, borderColor: colors.divider },
-                    ]}
-                  />
-                  <View style={{ flex: 1, minWidth: 0 }}>
-                    <Text style={{ fontFamily: titleFont, fontSize: 14.5, lineHeight: 22, color: lesson ? colors.ink : colors.inkMuted }}>
-                      {lesson ? contentByLang(lang, lesson.titleHi, lesson.titleEn) : contentByLang(lang, name.hi, name.en)}
-                    </Text>
-                    {paragraphs.map((paragraph, i) => (
-                      <Text key={i} style={{ fontFamily: bodyFont, fontSize: 13, lineHeight: 20, color: colors.inkSoft, marginTop: 4 }}>
-                        {paragraph}
-                      </Text>
-                    ))}
-                  </View>
-                </View>
-              );
-            })}
-          </View>
 
           {principles.length > 0 && (
             <View onLayout={markSection('vachan')}>
@@ -415,10 +369,14 @@ export default function PitruPakshaShikshaScreen({ navigation }: Props) {
           >
             <View style={{ flex: 1, minWidth: 0 }}>
               <Text style={{ fontFamily: titleFont, fontSize: 15, color: colors.ink }}>
-                {contentByLang(lang, 'इस वर्ष की तिथियाँ', 'This year’s dates')}
+                {contentByLang(lang, 'पक्ष की सोलह तिथियाँ', 'The fortnight’s sixteen tithis')}
               </Text>
               <Text style={{ fontFamily: bodyFont, fontSize: 12, lineHeight: 18, color: colors.inkMuted, marginTop: 2 }}>
-                {contentByLang(lang, 'पखवाड़े की तालिका · आपके परिवार के दिन', 'The fortnight table · your family’s days')}
+                {contentByLang(
+                  lang,
+                  'इस वर्ष की तारीख़ें · किस दिन किसका · आपके परिवार के दिन',
+                  'This year’s dates · whose day is which · your family’s days'
+                )}
               </Text>
             </View>
             <Text style={{ color: colors.inkSoft, fontSize: 17 }}>›</Text>
@@ -475,8 +433,6 @@ const styles = StyleSheet.create({
   card: { borderWidth: 1, paddingHorizontal: 14, paddingVertical: 13, marginBottom: 10 },
   glossary: { paddingVertical: 0 },
   glossaryRow: { paddingVertical: 11 },
-  tithiRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 12, paddingVertical: 11 },
-  marker: { width: 8, height: 8, borderRadius: 4, marginTop: 7 },
   refPill: { alignSelf: 'center', borderWidth: 1, paddingHorizontal: 14, paddingVertical: 7, marginTop: 10, minHeight: 32, justifyContent: 'center' },
   doorRow: { flexDirection: 'row', alignItems: 'center', borderWidth: 1, paddingHorizontal: 14, paddingVertical: 13, marginBottom: 10, minHeight: 52 },
 });

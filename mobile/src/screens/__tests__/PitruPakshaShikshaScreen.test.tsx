@@ -83,20 +83,22 @@ function pressByLabel(tree: TestRenderer.ReactTestRenderer, label: string) {
 }
 
 describe('PitruPakshaShikshaScreen', () => {
-  test('renders verified lessons, tithis, verses, kathas, prashna and glossary — drafts absent', async () => {
+  test('renders verified lessons, verses, kathas, prashna and glossary — drafts absent', async () => {
     const nav = makeNav();
     const tree = await render(
       <PitruPakshaShikshaScreen navigation={nav as never} route={{ key: 's', name: 'PitruPakshaShiksha' } as never} />
     );
     const text = allText(tree);
 
-    // Verified concept lesson + tithi rows + glossary are present.
+    // Verified concept lessons + glossary are present.
     expect(byTestId(tree, 'pitru-lesson-kya-hai')).toBeDefined();
-    expect(byTestId(tree, 'pitru-tithi-tithi-purnima')).toBeDefined();
-    expect(byTestId(tree, 'pitru-tithi-tithi-amavasya')).toBeDefined();
     expect(byTestId(tree, 'pitru-shabd-shabd-tarpan')).toBeDefined();
     expect(text).toContain('पितृ पक्ष क्या है');
-    expect(text).toContain('सर्वपितृ अमावस्या');
+
+    // The fortnight itself is NOT rendered here — it is the dated overview's,
+    // and rendering it twice is what made the two screens feel unrelated.
+    expect(byTestId(tree, 'pitru-tithi-tithi-purnima')).toBeUndefined();
+    expect(text).not.toContain('पक्ष का पहला दिन');
 
     // Verified verse rows and the Valmiki katha.
     expect(byTestId(tree, 'pitru-principle-gita-1-42')).toBeDefined();
@@ -164,28 +166,38 @@ describe('PitruPakshaShikshaScreen', () => {
 
   // ── Sept 2026 UX review ────────────────────────────────────────────────
 
-  test('पक्ष की तिथियाँ names all sixteen days — verified ones taught, the rest named only', async () => {
+  test('the fortnight lives on the dated overview, reached by the अब door', async () => {
     const nav = makeNav();
     const tree = await render(
       <PitruPakshaShikshaScreen navigation={nav as never} route={{ key: 's', name: 'PitruPakshaShiksha' } as never} />
     );
-    const text = allText(tree);
-
-    // purnima + 1–14 + amavasya, whatever the registry can currently teach.
+    // No parallel tithi list of any shape.
     const days = ['purnima', ...Array.from({ length: 14 }, (_, i) => String(i + 1)), 'amavasya'];
-    const rendered = days.filter(
-      (day) =>
-        byTestId(tree, `pitru-tithi-day-${day}`) !== undefined ||
-        byTestId(tree, `pitru-tithi-tithi-${day}`) !== undefined
-    );
-    expect(rendered).toHaveLength(16);
+    for (const day of days) {
+      expect(byTestId(tree, `pitru-tithi-day-${day}`)).toBeUndefined();
+      expect(byTestId(tree, `pitru-tithi-tithi-${day}`)).toBeUndefined();
+    }
+    expect(allText(tree)).toContain('पक्ष की सोलह तिथियाँ');
+    act(() => byTestId(tree, 'pitru-shiksha-overview-door').props.onPress());
+    expect(nav.navigate).toHaveBeenCalledWith('PitruPakshaOverview');
+  });
 
-    // A day with no verified lesson carries the ENGINE's name for it and no body.
-    expect(text).toContain('षष्ठी श्राद्ध');
-    expect(text).toContain('चतुर्दशी श्राद्ध');
-    // ...while the two verified days keep their teaching.
-    expect(text).toContain('पक्ष का पहला दिन');
-    expect(text).toContain('जिनकी तिथि ज्ञात नहीं');
+  test('a lessonId param opens that lesson already unfolded', async () => {
+    const nav = makeNav();
+    const tree = await render(
+      <PitruPakshaShikshaScreen
+        navigation={nav as never}
+        route={{ key: 's', name: 'PitruPakshaShiksha', params: { lessonId: 'kis-din-kiska' } } as never}
+      />
+    );
+    const target = PITRU_LESSON_ENTRIES.find((l) => l.id === 'kis-din-kiska')!;
+    expect(target.bodyHi.length).toBeGreaterThan(1);
+    // Every paragraph, not just the first — the day that linked here asked the
+    // whole question.
+    expect(allText(tree)).toContain(target.bodyHi[target.bodyHi.length - 1]);
+    // ...while an unlinked multi-paragraph lesson stays clipped.
+    const other = PITRU_LESSON_ENTRIES.find((l) => l.id === 'kya-hai')!;
+    expect(allText(tree)).not.toContain(other.bodyHi[other.bodyHi.length - 1]);
   });
 
   test('the section rail lists only sections the scroll actually holds', async () => {
@@ -194,9 +206,11 @@ describe('PitruPakshaShikshaScreen', () => {
       <PitruPakshaShikshaScreen navigation={nav as never} route={{ key: 's', name: 'PitruPakshaShiksha' } as never} />
     );
     expect(byTestId(tree, 'pitru-shiksha-rail')).toBeDefined();
-    for (const key of ['parichay', 'tithi', 'vachan', 'katha', 'prashna', 'shabd']) {
+    for (const key of ['parichay', 'vachan', 'katha', 'prashna', 'shabd']) {
       expect(byTestId(tree, `pitru-shiksha-rail-${key}`)).toBeDefined();
     }
+    // The fortnight is not a section of this screen any more.
+    expect(byTestId(tree, 'pitru-shiksha-rail-tithi')).toBeUndefined();
   });
 
   test('the screen does not narrate its own section order (design.md §1 copy rule)', async () => {

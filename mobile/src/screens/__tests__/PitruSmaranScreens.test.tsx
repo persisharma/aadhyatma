@@ -54,11 +54,21 @@ jest.mock('@/contexts/PitruSmaranContext', () => ({
     getEntry: (id: string) => mockEntries.find((e) => e.id === id) ?? null,
   }),
 }));
-// PRD-44: the overview's परिचय door gates on verified education content.
+// PRD-44: the overview's परिचय door gates on verified education content, and
+// (Sept 2026) its dated rows carry the verified tithi teachings — the fortnight
+// is one list, and it is this one. Lessons come from the real registry so the
+// day card is pinned against the content that actually ships.
 let mockHasShiksha = true;
-jest.mock('@/data/pitru', () => ({
-  hasPitruShiksha: () => mockHasShiksha,
-}));
+jest.mock('@/data/pitru', () => {
+  const { PITRU_LESSON_ENTRIES } = jest.requireActual('@/data/pitru/lessons');
+  return {
+    hasPitruShiksha: () => mockHasShiksha,
+    getPitruLessons: (kind?: string) =>
+      PITRU_LESSON_ENTRIES.filter(
+        (l: { kind: string; status: string }) => l.status === 'verified' && (kind === undefined || l.kind === kind)
+      ),
+  };
+});
 let mockPermissionStatus: 'undetermined' | 'granted' | 'denied' = 'granted';
 const mockRequestPermission = jest.fn(() => Promise.resolve<'undetermined' | 'granted' | 'denied'>('granted'));
 jest.mock('@/contexts/NotificationPreferencesContext', () => ({
@@ -98,6 +108,12 @@ const mockedNextObservance = jest.mocked(nextObservanceForEntry);
 const mockedWindow = jest.mocked(pitruPakshaWindow);
 const mockedPakshaDay = jest.mocked(pakshaShraddhaDay);
 const mockedDerive = jest.mocked(deriveTithiRuleFromDate);
+
+/** Mirrors `shortDate(date, 'en')` — the form the day rows' a11y labels use. */
+const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+function shortDateEn(d: Date): string {
+  return `${d.getDate()} ${MONTHS_EN[d.getMonth()]}`;
+}
 
 function daysFromNow(n: number): Date {
   const t = new Date();
@@ -570,11 +586,46 @@ describe('PitruPakshaOverviewScreen', () => {
     expect(tree.root.findAll((n) => n.props.testID === 'pitru-paksha-today').length).toBeGreaterThan(0);
 
     // The card's guide action is dated to TODAY, not to the fortnight's start.
-    act(() => byLabel(tree, 'Open today’s Tila-Tarpana remembrance guide').props.onPress());
+    const vidhiAction = tree.root.findAll(
+      (n) =>
+        typeof n.props.accessibilityLabel === 'string' &&
+        n.props.accessibilityLabel.startsWith('Open the Tila-Tarpana remembrance guide for') &&
+        typeof n.props.onPress === 'function'
+    )[0];
+    act(() => vidhiAction.props.onPress());
     expect(nav.navigate).toHaveBeenCalledWith('VidhiDetail', {
       vidhiId: 'shraddha-tarpan-vidhi',
       dateMs: daysFromNow(0).getTime(),
     });
+  });
+
+  test('a day with a verified teaching opens on tap and carries it; a bare day stays an inert row', async () => {
+    // Today is well before the paksha, so no row is open by default.
+    const purnima = daysFromNow(4);
+    mockedWindow.mockReturnValue({ purnima, start: daysFromNow(5), end: daysFromNow(18) });
+    const nav = makeNav();
+    const tree = await render(
+      <PitruPakshaOverviewScreen
+        navigation={nav as never}
+        route={{ key: 'p', name: 'PitruPakshaOverview' } as never}
+      />
+    );
+    await flush();
+
+    // पूर्णिमा is one of the two verified tithi teachings, so its row opens.
+    const purnimaKey = `${purnima.getFullYear()}-${purnima.getMonth()}-${purnima.getDate()}`;
+    expect(allText(tree)).not.toContain('पक्ष का पहला दिन');
+    act(() => byLabel(tree, `Open day ${shortDateEn(purnima)}`).props.onPress());
+    expect(allText(tree)).toContain('पक्ष का पहला दिन');
+    expect(tree.root.findAll((n) => n.props.testID === `pitru-paksha-day-${purnimaKey}`).length).toBeGreaterThan(0);
+
+    // From that day, the hand-off lands ON the lesson that explains the mapping.
+    act(() => byLabel(tree, 'Open the lesson on how a tithi is matched').props.onPress());
+    expect(nav.navigate).toHaveBeenCalledWith('PitruPakshaShiksha', { lessonId: 'kis-din-kiska' });
+
+    // A day with neither a teaching nor a family name is not a button at all.
+    const bare = daysFromNow(9);
+    expect(byLabel(tree, `Open day ${shortDateEn(bare)}`)).toBeUndefined();
   });
 
   test('before the paksha: a countdown, and no today card', async () => {
