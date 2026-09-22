@@ -8,48 +8,35 @@ purnimant and amanta). Paran falls on Dwadashi, 23 Sep, after sunrise — city-s
 
 ---
 
-## Caption (Hindi-first — primary)
+## Caption (bilingual — primary)
 
 ```
 परिवर्तिनी एकादशी कब है? आज, 22 सितंबर 🌌
+Parivartini Ekadashi is TONIGHT — 22 Sep
 
 आज रात योगनिद्रा में शयन कर रहे भगवान विष्णु करवट बदलते हैं —
-इसीलिए इसे परिवर्तिनी (और वामन / पद्मा) एकादशी कहते हैं।
+इसीलिए इसे परिवर्तिनी (वामन / पद्मा) एकादशी कहते हैं।
+Lord Vishnu, asleep through Chaturmas, turns to His other side tonight.
+That's why it's called Parivartini — "the Turning One".
+
 परिवर्तन की रात — पुराने को छोड़ने और नई शुरुआत की।
-
-व्रत · 22 सितंबर, मंगलवार
-पारण · 23 सितंबर, सूर्योदय के बाद (द्वादशी में)
-(तिथि सूर्योदय के अनुसार बदलती है — अपने शहर का समय ज़रूर देखें।)
-
-आज क्या करें — विष्णु सहस्रनाम या "ॐ नमो भगवते वासुदेवाय" का जप,
-वामन अवतार की कथा, और रात्रि जागरण।
-
-व्रत कथा, विधि और पारण का समय — सब एक जगह।
-
-जिसे आज एक नई शुरुआत की ज़रूरत है, उसे यह भेज दीजिए 🙏
-
-#परिवर्तिनीएकादशी #ParivartiniEkadashi #एकादशी #VishnuBhakti #Bhakti
-```
-
-## Caption (English-first — if the reel's English VO is the lead)
-
-```
-Parivartini Ekadashi is TONIGHT — 22 Sep 🌌
-
-Lord Vishnu, in yogic sleep through Chaturmas, turns to His other side tonight.
-That's why it's called Parivartini — "the Turning One" (also Vamana / Padma Ekadashi).
 A night for letting go and starting again.
 
-Vrat · Tue 22 Sep
-Paran · Wed 23 Sep, after sunrise (in Dwadashi) — check your city's time
+व्रत · Vrat — 22 सितंबर, मंगलवार · Tue 22 Sep
+पारण · Paran — 23 सितंबर, सूर्योदय के बाद (द्वादशी में) · Wed 23 Sep, after sunrise
+(अपने शहर का समय ज़रूर देखें · check your city's time)
 
-Tonight: chant "Om Namo Bhagavate Vasudevaya", read the Vamana-Bali katha, stay up in jagran.
+आज क्या करें · Tonight:
+"ॐ नमो भगवते वासुदेवाय" का जप, वामन अवतार की कथा, रात्रि जागरण।
+Chant "Om Namo Bhagavate Vasudevaya", read the Vamana-Bali katha, keep jagran.
 
+कथा, विधि और पारण का समय — सब एक जगह।
 Katha, vidhi and paran time — all in one place.
 
-Save this, and send it to someone who needs a reset today 🙏
+जिसे आज एक नई शुरुआत की ज़रूरत है, उसे यह भेज दीजिए 🙏
+Save this & send it to someone who needs a reset today.
 
-#ParivartiniEkadashi #परिवर्तिनीएकादशी #Ekadashi #VishnuBhakti #Bhakti
+#परिवर्तिनीएकादशी #ParivartiniEkadashi #एकादशी #VishnuBhakti #Bhakti
 ```
 
 ---
