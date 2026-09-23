@@ -774,7 +774,14 @@ export default function PanchangScreen({ route }: Props) {
             ) : (
               <>
                 <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
-                  {meaningByLang(lang, 'इस तिथि पर कोई व्रत या पर्व नहीं है।', 'No vrat or festival falls on this date.')}
+                  {/* Name the day: once the date header scrolls off, "this date" was
+                      read as today, so a quiet selected day looked like it contradicted
+                      the व्रत-पर्व ledger's आगामी (which always runs from today). */}
+                  {meaningByLang(
+                    lang,
+                    `${formatShortDate(selectedDate, 'hi')} को कोई व्रत या पर्व नहीं है।`,
+                    `No vrat or festival falls on ${formatShortDate(selectedDate, 'en')}.`
+                  )}
                 </Text>
                 {/* The quiet-day doorway. The क्षेत्र row's HOME is the व्रत-पर्व
                     ledger, but that is the other segment — and this is the one the
