@@ -33,8 +33,10 @@ design.md §74 (+ §63.5); contract: RULEBOOK §28; PRD + annotated HTML prototy
   the **More stack only**, after `PitruPakshaOverview`. Route:
   `PitruPakshaShiksha: { lessonId?: string } | undefined`.
 - **Door** — `pitru-paksha-shiksha-door`, the outlined half of the overview's sticky action bar,
-  rendered only when `hasPitruShiksha()` is true; `pitru-paksha-today-shiksha` on the overview's
-  today card is the second way in. The public `pitru-paksha-reminder` tap is unchanged and still
+  rendered only when `hasPitruShiksha()` is true; `pitru-paksha-day-shiksha` on an open day's card
+  is the second way in (it deep-links `{lessonId:'kis-din-kiska'}`). An open day's card carries
+  no guide button — the bar's `pitru-paksha-vidhi-door` is the one guide door and follows the
+  open day, so the same door is never on screen twice. The public `pitru-paksha-reminder` tap is unchanged and still
   lands education-first.
 - **Overview (Sept 2026 UX review)** — `PitruPakshaOverviewScreen` gained a standing hero
   (today's tithi + `दिन N / M` during the paksha, a countdown before it, an explicit `अगले वर्ष`

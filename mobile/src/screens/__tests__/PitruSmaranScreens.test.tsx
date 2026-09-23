@@ -585,14 +585,16 @@ describe('PitruPakshaOverviewScreen', () => {
     expect(allText(tree)).toContain('दिन 7 / 15 · आज');
     expect(tree.root.findAll((n) => n.props.testID === 'pitru-paksha-today').length).toBeGreaterThan(0);
 
-    // The card's guide action is dated to TODAY, not to the fortnight's start.
-    const vidhiAction = tree.root.findAll(
-      (n) =>
-        typeof n.props.accessibilityLabel === 'string' &&
-        n.props.accessibilityLabel.startsWith('Open the Tila-Tarpana remembrance guide for') &&
-        typeof n.props.onPress === 'function'
-    )[0];
-    act(() => vidhiAction.props.onPress());
+    // ONE guide door — the bar's — and with today open it is dated to TODAY,
+    // not to the fortnight's start. The card carries no second copy.
+    expect(
+      tree.root.findAll(
+        (n) => typeof n.props.accessibilityLabel === 'string' && n.props.accessibilityLabel.startsWith('Open the Tila-Tarpana remembrance guide for')
+      )
+    ).toHaveLength(0);
+    // allText joins Text children with spaces, so match loosely around the separator.
+    expect(allText(tree)).toMatch(new RegExp(`तिल-तर्पण\\s+·\\s+${daysFromNow(0).getDate()} `));
+    act(() => byLabel(tree, 'Open Tila-Tarpana remembrance guide').props.onPress());
     expect(nav.navigate).toHaveBeenCalledWith('VidhiDetail', {
       vidhiId: 'shraddha-tarpan-vidhi',
       dateMs: daysFromNow(0).getTime(),
@@ -618,6 +620,10 @@ describe('PitruPakshaOverviewScreen', () => {
     act(() => byLabel(tree, `Open day ${shortDateEn(purnima)}`).props.onPress());
     expect(allText(tree)).toContain('पक्ष का पहला दिन');
     expect(tree.root.findAll((n) => n.props.testID === `pitru-paksha-day-${purnimaKey}`).length).toBeGreaterThan(0);
+
+    // The bar's guide door now follows the open day.
+    act(() => byLabel(tree, 'Open Tila-Tarpana remembrance guide').props.onPress());
+    expect(nav.navigate).toHaveBeenCalledWith('VidhiDetail', { vidhiId: 'shraddha-tarpan-vidhi', dateMs: purnima.getTime() });
 
     // From that day, the hand-off lands ON the lesson that explains the mapping.
     act(() => byLabel(tree, 'Open the lesson on how a tithi is matched').props.onPress());

@@ -218,9 +218,12 @@ export default function PitruPakshaOverviewScreen({ navigation }: Props) {
   // tapping the open one closes it. `undefined` means "nobody has chosen yet".
   const [chosenKey, setChosenKey] = useState<string | null | undefined>(undefined);
   const openKey = chosenKey === undefined ? todayRow?.key ?? null : chosenKey;
-  // The guide opens on the day it is most likely wanted for: today while the
-  // paksha runs, else the first family-matched day, else the fortnight's start.
-  const vidhiOccurrence = todayRow?.date ?? familyRows[0]?.date ?? state?.start ?? null;
+  const openRow = state?.rows.find((row) => row.key === openKey) ?? null;
+  // ONE guide door, in the bar, and it follows the day in view: the open day,
+  // else today while the paksha runs, else the first family-matched day, else
+  // the fortnight's start. The open day's card used to carry its own dated
+  // copy — the same door twice whenever today was open.
+  const vidhiOccurrence = openRow?.date ?? todayRow?.date ?? familyRows[0]?.date ?? state?.start ?? null;
 
   const heroTitle = (() => {
     if (!state) return '';
@@ -426,28 +429,10 @@ export default function PitruPakshaOverviewScreen({ navigation }: Props) {
                         </Text>
                       ))}
                       <View style={styles.dayActions}>
-                        {shraddhaVidhi && (
-                          <Pressable
-                            testID="pitru-paksha-day-vidhi"
-                            accessibilityRole="button"
-                            accessibilityLabel={`Open the Tila-Tarpana remembrance guide for ${shortDate(row.date, 'en')}`}
-                            onPress={() => navigation.navigate('VidhiDetail', {
-                              vidhiId: shraddhaVidhi.id,
-                              dateMs: row.date.getTime(),
-                            })}
-                            style={({ pressed }) => [
-                              styles.dayAction,
-                              { borderColor: colors.gold, backgroundColor: colors.goldTint, borderRadius: radii.sm },
-                              pressed && { opacity: 0.75 },
-                            ]}
-                          >
-                            <Text style={{ fontFamily: titleFont, fontSize: 12.5, color: colors.saffronDeep }}>
-                              ॥ {contentByLang(lang, 'तिल-तर्पण', 'Tila-tarpana')}
-                            </Text>
-                          </Pressable>
-                        )}
-                        {/* The question a dated day raises — answered by the lesson
-                            that explains the mapping, opened ON that lesson. */}
+                        {/* The guide for this day is the bar's filled door, which
+                            follows the open day. The card carries only the question
+                            a dated day raises — answered by the lesson that explains
+                            the mapping, opened ON that lesson. */}
                         {showShiksha && (
                           <Pressable
                             testID="pitru-paksha-day-shiksha"
@@ -550,6 +535,7 @@ export default function PitruPakshaOverviewScreen({ navigation }: Props) {
                 >
                   <Text style={{ fontFamily: titleFont, fontSize: 15, color: colors.onPrimary }}>
                     ॥ {contentByLang(lang, 'तिल-तर्पण', 'Tila-tarpana')}
+                    {openRow ? ` · ${shortDate(openRow.date, lang)}` : ''}
                   </Text>
                 </Pressable>
               )}
