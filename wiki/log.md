@@ -218,3 +218,8 @@ Updated the Panchang copy boundary from Prashna/Ask and the shared implementatio
 ## [2026-09-22] ingest | Prashna PR reconciliation and customer-copy check
 
 Preserved current-main regional/Pitru education and Daan typography changes while integrating the phase pilot and copy removals. Removed the newly introduced Pitru teaching source-review-progress footer too. Current-main launch-budget checks now pass; older evaluation logs retain their dated failures. The inherited cooperative-engine interruption test now controls elapsed time instead of assuming the machine needs more than one 4 ms slice; runtime scheduling is unchanged. Submission verification is recorded in `docs/evaluations/prashna-phase-2026-09-21/pr-submission-2026-09-22.md`.
+
+## [2026-09-23] ingest | Pitru Paksha hub, परिचय reader, one-tap overview
+
+The परिचय screen became a hub shaped by use (intro card → questions accordion → verse carousel → katha shelf → glossary door → doors); the lessons moved into `PitruParichayReaderScreen` on the Vrat Katha shell with a closing card that `popTo`s the fortnight. The overview's strip opens the family day, names are doors into `PitruSmaranDetail`, and openable rows carry chevrons. Updated [[pitru-shiksha]] and [[readers]]; new season-gated e2e flow `pitru-paksha-smoke.yaml`, authored without a simulator and not yet run.
+

@@ -27,6 +27,14 @@ import type { MoreStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'PitruPakshaOverview'>;
 
+type FamilyMember = {
+  id: string;
+  /** Display name in the reading language. */
+  name: string;
+  /** English display name — the a11y label is an English constant (Maestro-stable). */
+  nameEn: string;
+};
+
 type FortnightRow = {
   key: string;
   date: Date;
@@ -35,8 +43,8 @@ type FortnightRow = {
   /** The row title without its qualifier clause — the hero can only carry this much. */
   heroHi: string;
   heroEn: string;
-  /** Display names of family entries whose shraddha day this is. */
-  family: string[];
+  /** Family entries whose shraddha day this is — id kept so a name can open its person. */
+  family: FamilyMember[];
   /**
    * Which day of the fortnight this civil date is, so the row can carry the
    * §74 tithi teaching for it. A kshaya row takes its sunrise tithi's day.
@@ -84,6 +92,11 @@ function rowKey(d: Date): string {
  * empty ledger, opens पितृ स्मरण); today's row opens in place as a card; and
  * both standing doors — परिचय (PRD-44) and the tila-tarpana guide — sit in a
  * sticky bar rather than at the two far ends of a fifteen-row scroll.
+ *
+ * Every tap is one step: the family strip OPENS the first family day; a name
+ * on an open day opens that person's own page; `किस दिन किसका ›` opens the
+ * paged परिचय reader on the lesson that answers it; openable rows carry a
+ * chevron and rows holding nothing read quieter and carry none.
  */
 export default function PitruPakshaOverviewScreen({ navigation }: Props) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
@@ -118,14 +131,14 @@ export default function PitruPakshaOverviewScreen({ navigation }: Props) {
         }
 
         // Family mapping: each entry's tithi projected onto its shraddha day.
-        const familyByDay = new Map<string, string[]>();
+        const familyByDay = new Map<string, FamilyMember[]>();
         for (const entry of entries) {
           const day = pakshaShraddhaDay(entry.tithiRule, year);
           if (!day) continue;
           const key = rowKey(day);
-          const names = familyByDay.get(key) ?? [];
-          names.push(entryDisplayName(entry, lang));
-          familyByDay.set(key, names);
+          const members = familyByDay.get(key) ?? [];
+          members.push({ id: entry.id, name: entryDisplayName(entry, lang), nameEn: entryDisplayName(entry, 'en') });
+          familyByDay.set(key, members);
         }
 
         // One row per civil day, purnima through amavasya, named by its sunrise
@@ -322,8 +335,9 @@ export default function PitruPakshaOverviewScreen({ navigation }: Props) {
                 <Pressable
                   testID="pitru-paksha-family-strip"
                   accessibilityRole="button"
-                  accessibilityLabel="Go to the first family shraddha day"
+                  accessibilityLabel="Open the first family shraddha day"
                   onPress={() => {
+                    setChosenKey(familyRows[0].key);
                     if (familyOffset.current !== null) {
                       scrollRef.current?.scrollTo({ y: Math.max(0, familyOffset.current - 24), animated: true });
                     }
@@ -412,13 +426,24 @@ export default function PitruPakshaOverviewScreen({ navigation }: Props) {
                           {isToday ? `${contentByLang(lang, 'आज', 'today')} · ` : ''}{shortDate(row.date, lang)}
                         </Text>
                       </Pressable>
-                      {row.family.map((who) => (
-                        <Text
-                          key={who}
-                          style={{ fontFamily: bodyFont, fontSize: 13, lineHeight: 20, color: colors.saffronDeep, marginTop: 6 }}
+                      {row.family.map((member) => (
+                        <Pressable
+                          key={member.id}
+                          testID={`pitru-paksha-person-${member.id}`}
+                          accessibilityRole="button"
+                          accessibilityLabel={`Open smaran ${member.nameEn}`}
+                          onPress={() => navigation.navigate('PitruSmaranDetail', { entryId: member.id })}
+                          style={({ pressed }) => [
+                            styles.person,
+                            { borderColor: colors.divider, backgroundColor: colors.parchmentHighlight, borderRadius: radii.sm },
+                            pressed && { opacity: 0.75 },
+                          ]}
                         >
-                          ॥ {who}
-                        </Text>
+                          <Text style={{ flex: 1, fontFamily: bodyFont, fontSize: 13.5, lineHeight: 21, color: colors.saffronDeep }}>
+                            ॥ {member.name}
+                          </Text>
+                          <Text style={{ color: colors.inkSoft, fontSize: 16 }}>›</Text>
+                        </Pressable>
                       ))}
                       {paragraphs.map((paragraph, idx) => (
                         <Text
@@ -438,7 +463,7 @@ export default function PitruPakshaOverviewScreen({ navigation }: Props) {
                             testID="pitru-paksha-day-shiksha"
                             accessibilityRole="button"
                             accessibilityLabel="Open the lesson on how a tithi is matched"
-                            onPress={() => navigation.navigate('PitruPakshaShiksha', { lessonId: 'kis-din-kiska' })}
+                            onPress={() => navigation.navigate('PitruParichayReader', { lessonId: 'kis-din-kiska' })}
                             style={({ pressed }) => [
                               styles.dayAction,
                               { borderColor: colors.gold, backgroundColor: colors.goldTint, borderRadius: radii.sm },
@@ -460,13 +485,15 @@ export default function PitruPakshaOverviewScreen({ navigation }: Props) {
                     markerColor={isFamily ? colors.saffron : colors.gold}
                     dateLabel={shortDate(row.date, lang)}
                     title={contentByLang(lang, row.labelHi, row.labelEn)}
-                    secondary={row.family.map((who) => `॥ ${who}`)}
+                    secondary={row.family.map((member) => `॥ ${member.name}`)}
                     density="comfortable"
                     showDivider={i < state.rows.length - 1}
+                    muted={!openable}
+                    trailing={openable ? <Text style={{ color: colors.inkSoft, fontSize: 17 }}>›</Text> : undefined}
                     accessibilityLabel={
                       openable
                         ? undefined
-                        : `${shortDate(row.date, 'en')}, ${row.labelEn}${isFamily ? `, ${row.family.join(', ')}` : ''}`
+                        : `${shortDate(row.date, 'en')}, ${row.labelEn}${isFamily ? `, ${row.family.map((m) => m.nameEn).join(', ')}` : ''}`
                     }
                   />
                 );
@@ -569,6 +596,7 @@ const styles = StyleSheet.create({
   dayCard: { borderWidth: 1, paddingHorizontal: 12, paddingVertical: 12, marginVertical: 8 },
   dayHead: { flexDirection: 'row', alignItems: 'baseline', gap: 8 },
   dayActions: { flexDirection: 'row', gap: 8, marginTop: 12 },
+  person: { flexDirection: 'row', alignItems: 'center', gap: 8, borderWidth: 1, marginTop: 8, paddingHorizontal: 10, minHeight: 44 },
   dayAction: { flex: 1, borderWidth: 1, minHeight: 44, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 4 },
   actionBar: {
     position: 'absolute',

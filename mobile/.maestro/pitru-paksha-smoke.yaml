@@ -1,0 +1,232 @@
+# पितृ पक्ष Smoke Test (design.md §63.5 item 5 + §74, Sept 2026 UX review)
+#
+# Covers the fortnight journey end to end — the two screens and the reader
+# that were rebuilt so every intent is one tap:
+#   1. A saved ancestor (माघ कृष्ण अष्टमी · Father) so the table is personal.
+#   2. Overview: the standing hero, the family strip that OPENS the family
+#      day, a name on that day that opens the person's own page, and the
+#      hand-off from the day into the परिचय reader ON "Whose day is which".
+#   3. Reader (the Vrat Katha shell): lands on lesson 6 / 7, swipes to the
+#      closing card, and the 400 ms hand-off returns to the SAME overview
+#      (popTo — no second copy stacked).
+#   4. Hub: the introduction door, a question opening in the accordion, a
+#      verse meaning folding out in the carousel, a katha tile, the glossary
+#      door, then the reader again from page 1.
+#   5. Delete the ancestor — net zero, so back-to-back runs stay clean.
+#
+# SEASON GATE — read before trusting a green run. The overview is reachable
+# from the UI only near the fortnight: the Pitru Smaran list's banner
+# ("Open Pitru Paksha overview") renders from 30 days before purnima to
+# amavasya, and the Home Today strip / Panchang day chip only during it
+# (notification taps are the other door, not drivable here). Blocks 2–4 run
+# inside `runFlow: when: visible: "Open Pitru Paksha overview"`; OUT of season
+# they are skipped and a green run proves only blocks 1 and 5. The behaviour
+# itself is pinned date-independently in PitruSmaranScreens.test.tsx and
+# PitruPakshaShikshaScreen.test.tsx (mocked windows, fake timers).
+#
+# Which day opens first depends on the run date: before the paksha nothing is
+# open until the strip opens the family day; during it today is open and the
+# strip moves the open card to the family day. Both paths end with the Father
+# row visible, so the flow does not branch.
+#
+# Selector notes (verified against the screens):
+#   - Language → English first (per daan-punya-smoke): the reader's lesson
+#     titles are asserted as visible text, which Maestro can't read in
+#     Devanagari on iOS. Controls carry English a11y labels either way.
+#   - "Open the first family shraddha day", "Open smaran Father",
+#     "Open the lesson on how a tithi is matched", "Open Pitru Paksha
+#     introduction", "Read the introduction", "Question tithi-agyat",
+#     "Open katha rama-jalanjali", "Glossary" are constant English labels.
+#   - The reader counter is plain Latin text ("6 / 7").
+#
+# Authored 2026-09-23 in a container with no simulator — parsed, NOT yet run.
+# Verify per wiki/runbooks/e2e-verification.md before relying on it.
+
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+
+# ── Global reading language → English (More → Language picker sheet) ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── 1. Save one ancestor: Father, माघ कृष्ण अष्टमी ──
+- scrollUntilVisible:
+    element:
+      text: "Pitru Smaran.*"
+    centerElement: true
+- tapOn: "Pitru Smaran.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Add smaran"
+    timeout: 15000
+- tapOn: "Add smaran"
+- waitForAnimationToEnd
+- tapOn: "Relation Father"
+- scrollUntilVisible:
+    element:
+      text: "Month Magha"
+    centerElement: true
+- tapOn: "Month Magha"
+- scrollUntilVisible:
+    element:
+      text: "Paksha Krishna"
+    centerElement: true
+- tapOn: "Paksha Krishna"
+- scrollUntilVisible:
+    element:
+      text: "Tithi Ashtami"
+    centerElement: true
+- tapOn: "Tithi Ashtami"
+- scrollUntilVisible:
+    element:
+      text: "Save smaran"
+    centerElement: true
+- tapOn: "Save smaran"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "^Smaran Father,.*$"
+    timeout: 15000
+
+# ── 2–4. The fortnight journey — in season only (see SEASON GATE) ──
+- runFlow:
+    when:
+      visible: "Open Pitru Paksha overview"
+    commands:
+      # ── 2. Overview ──
+      - tapOn: "Open Pitru Paksha overview"
+      - waitForAnimationToEnd
+      - extendedWaitUntil:
+          visible: { id: "pitru-paksha-standing" }
+          timeout: 20000
+      - assertVisible: { id: "pitru-paksha-actions" }
+      # The strip OPENS the family day — one tap, no scroll-then-tap.
+      - tapOn: "Open the first family shraddha day"
+      - waitForAnimationToEnd
+      - scrollUntilVisible:
+          element:
+            text: "Open smaran Father"
+          centerElement: true
+          timeout: 15000
+      # A name on the day is a door into that person's page.
+      - tapOn: "Open smaran Father"
+      - waitForAnimationToEnd
+      - scrollUntilVisible:
+          element:
+            text: "Open Gita — Adhyaya 15"
+          centerElement: true
+          timeout: 15000
+      - tapOn: "Back"
+      - waitForAnimationToEnd
+      # The day hands off into the reader ON the lesson that answers it.
+      - scrollUntilVisible:
+          element:
+            text: "Open the lesson on how a tithi is matched"
+          centerElement: true
+          timeout: 15000
+      - tapOn: "Open the lesson on how a tithi is matched"
+      - waitForAnimationToEnd
+
+      # ── 3. Reader: lesson 6 of 7, then the closing card hands back ──
+      - extendedWaitUntil:
+          visible: { id: "pitru-parichay-reader" }
+          timeout: 15000
+      - assertVisible: "6 / 7"
+      - assertVisible: "Whose day is which — how a tithi is matched"
+      - swipe:
+          direction: LEFT
+      - waitForAnimationToEnd
+      - assertVisible: "7 / 7"
+      - assertVisible: "Every family has its own way"
+      - swipe:
+          direction: LEFT
+      - waitForAnimationToEnd
+      # Settling on the card → 400 ms → popTo: back on the SAME overview.
+      - extendedWaitUntil:
+          visible: { id: "pitru-paksha-standing" }
+          timeout: 10000
+
+      # ── 4. Hub ──
+      - tapOn: "Open Pitru Paksha introduction"
+      - waitForAnimationToEnd
+      - extendedWaitUntil:
+          visible: "Read the introduction"
+          timeout: 15000
+      # Questions: tap one, its answer opens beneath it.
+      - scrollUntilVisible:
+          element:
+            text: "Question tithi-agyat"
+          centerElement: true
+      - tapOn: "Question tithi-agyat"
+      - assertVisible: { id: "pitru-prashna-answer-tithi-agyat" }
+      # Verses: the carousel's meaning folds out in place.
+      - scrollUntilVisible:
+          element:
+            id: "pitru-principle-carousel"
+          centerElement: true
+      - tapOn: { id: "pitru-principle-meaning-gita-1-42" }
+      - assertVisible: "Collapse meaning"
+      # Stories: a tile opens the katha reader.
+      - scrollUntilVisible:
+          element:
+            id: "pitru-katha-shelf"
+          centerElement: true
+      - tapOn: "Open katha rama-jalanjali"
+      - waitForAnimationToEnd
+      - assertVisible: { id: "pitru-katha-screen" }
+      - tapOn: "Back"
+      - waitForAnimationToEnd
+      # Glossary: looked up behind its door.
+      - scrollUntilVisible:
+          element:
+            text: "Glossary"
+          centerElement: true
+      - tapOn: "Glossary"
+      - assertVisible: { id: "pitru-shabd-list" }
+      # The introduction from the top: page 1 of 7.
+      - scrollUntilVisible:
+          element:
+            text: "Read the introduction"
+          direction: UP
+          centerElement: true
+      - tapOn: "Read the introduction"
+      - waitForAnimationToEnd
+      - assertVisible: "1 / 7"
+      - assertVisible: "What Pitru Paksha is"
+      - tapOn: "Back"
+      - waitForAnimationToEnd
+      - tapOn: "Back"
+      - waitForAnimationToEnd
+      - tapOn: "Back"
+      - waitForAnimationToEnd
+
+# ── 5. Delete the ancestor — back to the empty state ──
+- extendedWaitUntil:
+    visible: "^Smaran Father,.*$"
+    timeout: 15000
+- tapOn: "^Smaran Father,.*$"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Delete smaran entry"
+    centerElement: true
+- tapOn: "Delete smaran entry"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Confirm delete"
+    timeout: 10000
+- tapOn: "Confirm delete"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Add smaran"
+    timeout: 15000
+
+- stopApp:
+    appId: com.prashantsharma.vedansh

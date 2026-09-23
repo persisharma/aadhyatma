@@ -627,7 +627,7 @@ describe('PitruPakshaOverviewScreen', () => {
 
     // From that day, the hand-off lands ON the lesson that explains the mapping.
     act(() => byLabel(tree, 'Open the lesson on how a tithi is matched').props.onPress());
-    expect(nav.navigate).toHaveBeenCalledWith('PitruPakshaShiksha', { lessonId: 'kis-din-kiska' });
+    expect(nav.navigate).toHaveBeenCalledWith('PitruParichayReader', { lessonId: 'kis-din-kiska' });
 
     // A day with neither a teaching nor a family name is not a button at all.
     const bare = daysFromNow(9);
@@ -692,6 +692,46 @@ describe('PitruPakshaOverviewScreen', () => {
     expect(filled.root.findAll((n) => n.props.testID === 'pitru-paksha-family-strip').length).toBeGreaterThan(0);
     expect(allText(filled)).toContain('आपके परिवार के 1 दिन');
     expect(byLabel(filled, 'Open Pitru Smaran list')).toBeUndefined();
+  });
+
+  test('one tap per intent: the strip OPENS the family day, and a name on it opens that person', async () => {
+    mockEntries = [FATHER];
+    const matched = daysFromNow(12);
+    mockedWindow.mockReturnValue({ purnima: daysFromNow(9), start: daysFromNow(10), end: daysFromNow(24) });
+    mockedPakshaDay.mockReturnValue(matched);
+    const nav = makeNav();
+    const tree = await render(
+      <PitruPakshaOverviewScreen navigation={nav as never} route={{ key: 'p', name: 'PitruPakshaOverview' } as never} />
+    );
+    await flush();
+
+    // Before the paksha nothing is open, so the person is not yet a door.
+    expect(tree.root.findAll((n) => n.props.testID === 'pitru-paksha-person-smaran-father')).toHaveLength(0);
+    act(() => byLabel(tree, 'Open the first family shraddha day').props.onPress());
+    expect(tree.root.findAll((n) => n.props.testID === 'pitru-paksha-person-smaran-father').length).toBeGreaterThan(0);
+
+    act(() => byLabel(tree, 'Open smaran Father').props.onPress());
+    expect(nav.navigate).toHaveBeenCalledWith('PitruSmaranDetail', { entryId: 'smaran-father' });
+
+    // And the guide in the bar now follows that opened day.
+    act(() => byLabel(tree, 'Open Tila-Tarpana remembrance guide').props.onPress());
+    expect(nav.navigate).toHaveBeenCalledWith('VidhiDetail', { vidhiId: 'shraddha-tarpan-vidhi', dateMs: matched.getTime() });
+  });
+
+  test('openable rows carry a chevron; a row holding nothing reads muted and carries none', async () => {
+    mockedWindow.mockReturnValue({ purnima: daysFromNow(4), start: daysFromNow(5), end: daysFromNow(18) });
+    const tree = await render(
+      <PitruPakshaOverviewScreen navigation={makeNav() as never} route={{ key: 'p', name: 'PitruPakshaOverview' } as never} />
+    );
+    await flush();
+    const rows = tree.root.findAll((n) => typeof n.props.markerColor === 'string');
+    const openable = rows.filter((r) => r.props.trailing !== undefined);
+    const inert = rows.filter((r) => r.props.trailing === undefined);
+    // Purnima and amavasya carry verified teachings; the rest (no family, not today) are bare.
+    expect(openable).toHaveLength(2);
+    expect(openable.every((r) => r.props.muted === false)).toBe(true);
+    expect(inert.length).toBeGreaterThan(0);
+    expect(inert.every((r) => r.props.muted === true)).toBe(true);
   });
 
   test('both standing doors live in the sticky action bar, not at the ends of the scroll', async () => {
