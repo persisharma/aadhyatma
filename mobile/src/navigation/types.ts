@@ -158,6 +158,10 @@ export type MoreStackParamList = VidhiStackParamList & DaanStackParamList & Ghar
   PitruPakshaOverview: undefined;
   // पितृ पक्ष परिचय (PRD-44) — the education layer beside the reminder and the vidhi.
   PitruPakshaShiksha: undefined;
+  // The परिचय lessons as a paged reader on the Vrat Katha shell (Sept 2026).
+  // `lessonId` opens on that lesson, so a dated day can hand off to the lesson
+  // that explains it.
+  PitruParichayReader: { lessonId?: string } | undefined;
   PitruKatha: { kathaId: string };
   /** वास्तु दिशा (PRD-24) — compass + room guidance; also on the Panchang stack. */
   VastuDisha: undefined;
