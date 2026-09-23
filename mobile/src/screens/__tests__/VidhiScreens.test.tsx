@@ -11,6 +11,7 @@
  * gotchas).
  */
 import React, * as mockReact from 'react';
+import { ShareProvider } from '@/utils/shareVerse';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Share, View as mockView } from 'react-native';
 
@@ -71,7 +72,7 @@ const renderers: TestRenderer.ReactTestRenderer[] = [];
 function render(el: React.ReactElement): TestRenderer.ReactTestRenderer {
   let renderer!: TestRenderer.ReactTestRenderer;
   act(() => {
-    renderer = TestRenderer.create(<GitaLanguageProvider>{el}</GitaLanguageProvider>);
+    renderer = TestRenderer.create(<GitaLanguageProvider><ShareProvider>{el}</ShareProvider></GitaLanguageProvider>);
   });
   renderers.push(renderer);
   return renderer;

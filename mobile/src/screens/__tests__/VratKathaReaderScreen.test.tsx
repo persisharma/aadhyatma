@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { ShareProvider } from '@/utils/shareVerse';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Text, View as mockView } from 'react-native';
@@ -44,9 +45,9 @@ function renderKatha(kathaId: string, lang: 'hi' | 'en') {
   let tree: TestRenderer.ReactTestRenderer | undefined;
   act(() => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang={lang}>
+      <GitaLanguageProvider initialLang={lang}><ShareProvider>
         <VratKathaReaderScreen navigation={navigation} route={route} />
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
   });
   return tree!

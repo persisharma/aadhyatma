@@ -1,0 +1,90 @@
+# Share Katha Smoke Test — prose share + multi-page (series) sheet
+#
+# Covers design.md §39.4–§39.6 (PRD-45): a vrat katha reader carries the same ↗
+# share circle as every verse reader ("Share katha"), and a katha section too long
+# for one card opens the target sheet with a pages strip ("Page 1", "Page 2" …), the
+# two all-pages rows ("Share all pages", "Share as Instagram carousel") and a scope
+# segment ("Scope: This part…" / "Scope: Whole katha…"). Preview opens in place and
+# returns to the targets.
+#
+# Like share-target-smoke, the flow stops at our sheet and cancels: everything past it
+# is a native share sheet Maestro cannot drive. On a binary without the multi-image
+# module the two all-pages rows still render (disabled) — asserting presence, not
+# enabled state, keeps this flow valid for OTA-on-old-binary runs too. Capture counts,
+# captions and the one-share-call contract are pinned by shareSeries.test.tsx.
+#
+# English mode: Maestro's iOS tree cannot read the Devanagari row titles, and every
+# selector here is a stable English accessibility label.
+
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+- tapOn: { id: "tab-panchang" }
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Vrat & Parv"
+    timeout: 30000
+- tapOn: "Vrat & Parv"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Katha library,.*"
+    timeout: 15000
+- tapOn: "Katha library,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Read katha.*"
+    timeout: 15000
+- tapOn:
+    text: "Read katha.*"
+    index: 0
+- waitForAnimationToEnd:
+    timeout: 15000
+
+# The share circle sits on the toggle row, left of the language toggle.
+- extendedWaitUntil:
+    visible: "Share katha"
+    timeout: 15000
+- tapOn: "Share katha"
+- waitForAnimationToEnd
+
+# The first library katha's opening section runs to more than one card in English,
+# so the series UI is present; shareContent.test.ts pins exactly that assumption.
+- assertVisible: "Page 1"
+- assertVisible: "Page 2"
+- assertVisible: "Share all pages"
+- assertVisible: "Share as Instagram carousel"
+- assertVisible: "Share to other apps"
+- assertVisible: "Share on Instagram"
+- assertVisible: "Share as Instagram story or reel"
+- assertVisible: ".*Hashtags: .*#.*"
+
+# Preview renders in place of the rows and returns.
+- tapOn: "Preview page"
+- waitForAnimationToEnd
+- assertVisible: "Back to share options"
+- assertVisible: "Next page"
+- tapOn: "Back to share options"
+- waitForAnimationToEnd
+- assertVisible: "Share all pages"
+
+- tapOn: "Cancel"
+- waitForAnimationToEnd
+- assertVisible: "Share katha"
+
+- stopApp:
+    appId: com.prashantsharma.vedansh

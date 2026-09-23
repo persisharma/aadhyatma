@@ -21,6 +21,9 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import ReaderHeader from '@/components/ReaderHeader';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
+import { daanPrincipleShareable } from '@/utils/shareContent';
 import { useGitaLanguage } from '@/data/gita/language';
 import {
   DAAN_VAAR_ENTRIES,
@@ -42,6 +45,7 @@ type Props = NativeStackScreenProps<DaanStackParamList, 'DaanJourney'>;
 export default function DaanJourneyScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
+  const { share, busy: shareBusy } = useShare();
   const rootNav = useNavigation<any>();
   const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
@@ -140,8 +144,16 @@ export default function DaanJourneyScreen({ navigation, route }: Props) {
           <>
             <Text style={sectionLabelStyle}>{contentByLang(lang, 'शास्त्र', 'Shastra')}</Text>
             <View style={[styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}>
+              <View style={styles.cardShare}>
+                <ShareButton
+                  onPress={() => void share(daanPrincipleShareable(shastra), lang)}
+                  busy={shareBusy}
+                  accessibilityLabel="Share verse"
+                  accessibilityHint="Opens share options for this verse and its meaning"
+                />
+              </View>
               {shastra.verseLines ? (
-                <Text style={{ fontFamily: titleFont, fontSize: 15, lineHeight: 26, color: colors.ink, textAlign: 'center' }}>
+                <Text style={{ fontFamily: titleFont, fontSize: 15, lineHeight: 26, color: colors.ink, textAlign: 'center', paddingHorizontal: 36 }}>
                   {verseLinesByLang(lang, shastra.verseLines, shastra.iastLines ?? shastra.verseLines).join('\n')}
                 </Text>
               ) : null}
@@ -319,6 +331,8 @@ export default function DaanJourneyScreen({ navigation, route }: Props) {
 }
 
 const styles = StyleSheet.create({
+  // Top-right share circle on the शास्त्र card (design.md §39.4); the verse lines pad 36 each side to clear it.
+  cardShare: { position: 'absolute', top: 10, right: 10, zIndex: 1 },
   root: { flex: 1 },
   skip: { alignSelf: 'flex-end', paddingTop: 12, paddingBottom: 4, paddingHorizontal: 2 },
   card: { borderWidth: 1, paddingHorizontal: 14, paddingTop: 13, paddingBottom: 13, marginBottom: 10 },

@@ -24,6 +24,9 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Svg, { Path } from 'react-native-svg';
 
 import ReaderHeader from '@/components/ReaderHeader';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
+import { daanPrincipleShareable } from '@/utils/shareContent';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import {
   DAAN_VAAR_ENTRIES,
@@ -54,6 +57,7 @@ function vaarShortName(lang: Lang, vaarHi: string, vaarEn: string): string {
 export default function DaanPunyaScreen({ navigation }: Props) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
+  const { share, busy: shareBusy } = useShare();
   const rootNav = useNavigation<any>();
   const { width } = useWindowDimensions();
   const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
@@ -294,6 +298,14 @@ export default function DaanPunyaScreen({ navigation }: Props) {
                       </Text>
                     </Pressable>
                   ) : null}
+                  <View style={styles.shareEnd}>
+                    <ShareButton
+                      onPress={() => void share(daanPrincipleShareable(entry), lang)}
+                      busy={shareBusy}
+                      accessibilityLabel="Share verse"
+                      accessibilityHint="Opens share options for this verse and its meaning"
+                    />
+                  </View>
                 </View>
               </View>
             );
@@ -407,6 +419,7 @@ const styles = StyleSheet.create({
   verseCard: { justifyContent: 'space-between' },
   cardActions: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 6, gap: 8 },
   inlineLink: { minHeight: 32, justifyContent: 'center' },
+  shareEnd: { marginLeft: 'auto' },
   chip: { borderWidth: 1.5, paddingHorizontal: 12, paddingVertical: 5 },
   journeyBtn: { borderWidth: 1.5, paddingHorizontal: 14, paddingVertical: 7, marginTop: 11, alignSelf: 'flex-start' },
   labelRow: { flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 8 },

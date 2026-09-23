@@ -11,6 +11,7 @@
  *     to an org's own site lives only on the detail, behind the interstitial.
  */
 import React, * as mockReact from 'react';
+import { ShareProvider } from '@/utils/shareVerse';
 import TestRenderer, { act } from 'react-test-renderer';
 import { View as mockView } from 'react-native';
 
@@ -57,7 +58,7 @@ const press = async (tree: TestRenderer.ReactTestRenderer, testID: string) => {
 async function renderScreen(element: React.ReactElement) {
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
-    tree = TestRenderer.create(<GitaLanguageProvider>{element}</GitaLanguageProvider>);
+    tree = TestRenderer.create(<GitaLanguageProvider><ShareProvider>{element}</ShareProvider></GitaLanguageProvider>);
   });
   return tree;
 }

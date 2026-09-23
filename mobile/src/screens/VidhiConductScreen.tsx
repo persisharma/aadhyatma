@@ -33,6 +33,9 @@ import { gitaChaptersManifest } from '@/data/gita';
 import { getKathaContent } from '@/panchang/kathaContent';
 import { buildEntryStartTarget, navigateToHomeStackTarget } from '@/navigation/entryRoutes';
 import ReaderHeader from '@/components/ReaderHeader';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
+import { vidhiMantraShareable } from '@/utils/shareContent';
 import Ornament from '@/components/Ornament';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
 import { useReaderReadAloud } from '@/screens/_useReaderReadAloud';
@@ -265,7 +268,7 @@ export default function VidhiConductScreen({ navigation, route }: Props) {
                   isPersonalTithi={isPersonalTithi}
                 />
               ) : (
-                <StepPage width={width} page={item} isPersonalTithi={isPersonalTithi} />
+                <StepPage width={width} page={item} isPersonalTithi={isPersonalTithi} vidhi={vidhi} />
               )
             }
           />
@@ -303,13 +306,16 @@ function StepPage({
   width,
   page,
   isPersonalTithi,
+  vidhi,
 }: {
   width: number;
   page: Extract<ConductPage, { kind: 'step' }>;
   isPersonalTithi: boolean;
+  vidhi: { id: string; titleHi: string; titleEn: string };
 }) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
+  const { share, busy: shareBusy } = useShare();
   const { step } = page;
   const bodyFont = scriptBodyFont(lang, fontFamilies.devanagari);
   const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
@@ -372,14 +378,32 @@ function StepPage({
 
           {step.mantra && (
             <View style={styles.mantraSection}>
-              <Text
-                style={[
-                  styles.sectionLabel,
-                  { color: colors.saffronDeep, fontFamily: titleFont },
-                ]}
-              >
-                {contentByLang(lang, 'मन्त्र · Mantra', 'Mantra · मन्त्र')}
-              </Text>
+              <View style={styles.mantraLabelRow}>
+                <Text
+                  style={[
+                    styles.sectionLabel,
+                    { color: colors.saffronDeep, fontFamily: titleFont },
+                  ]}
+                >
+                  {contentByLang(lang, 'मन्त्र · Mantra', 'Mantra · मन्त्र')}
+                </Text>
+                {/* The unit shared is the mantra, not the step (design.md §39.4).
+                    Never on the personal-tithi (tila-tarpana) vidhi: that guide keeps
+                    Pitru Smaran's no-share register (§63). */}
+                {!isPersonalTithi && (
+                  <View style={styles.mantraShare}>
+                    <ShareButton
+                      onPress={() => {
+                        const mantra = step.mantra;
+                        if (mantra) void share(vidhiMantraShareable(vidhi, { ...step, mantra }), lang);
+                      }}
+                      busy={shareBusy}
+                      accessibilityLabel="Share mantra"
+                      accessibilityHint="Opens share options for this mantra"
+                    />
+                  </View>
+                )}
+              </View>
               <Text
                 style={{
                   fontFamily: fontFamilies.devanagari,
@@ -582,6 +606,9 @@ const styles = StyleSheet.create({
   phase: { fontSize: 11, textTransform: 'uppercase' },
   stepTitle: { fontSize: 21, marginTop: 14, marginBottom: 6 },
   mantraSection: { alignItems: 'center' },
+  // Label centred; the share circle pinned right so it never shifts the label.
+  mantraLabelRow: { alignSelf: 'stretch', alignItems: 'center', justifyContent: 'center', minHeight: 34 },
+  mantraShare: { position: 'absolute', right: 0, top: 0, bottom: 0, justifyContent: 'center' },
   sectionLabel: { fontSize: 11, textAlign: 'center', textTransform: 'uppercase' },
   readAloudSlot: { marginTop: 12, alignItems: 'center' },
   handoffCard: { borderWidth: 1.4, padding: 15, marginTop: 14 },

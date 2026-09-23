@@ -2,11 +2,11 @@
 
 | | |
 |---|---|
-| **Status** | Proposed — plan + interactive prototype only; nothing built. |
+| **Status** | **Built on `claude/multi-page-card-sharing-nk3nn1`** — Phases 0–3 as amended in §9. Phase 2 needs a store build (native module + Info.plist key); everything else ships OTA and degrades cleanly on an older binary. |
 | **T-shirt size** | Phase 0: S · Phase 1: M · Phase 2: M (store build) · Phase 3: S each. |
 | **Parent** | PRD-05 share-verse (design.md §39). Extends `ShareProvider` / `useShare()`; does not replace the Jyotish (§51/§58/§61) or Muhurat (§60) capture paths. |
-| **Prototype** | [`docs/share-carousel-prototype.html`](../../share-carousel-prototype.html) — reader → sheet → pages strip → preview → single-page OS share / carousel save-to-Photos → saved state. The paginator in it is the algorithm proposed in §5, running live on the bundled Chhath katha. |
-| **Feasibility** | Phase 0–1 and 3: pure JS/TS on the existing `react-native-view-shot` + `expo-sharing` stack — **OTA-shippable**. Phase 2 needs `expo-media-library` (not installed) and a Photos add-only permission string — **store build**. |
+| **Prototype** | [`docs/share-carousel-prototype.html`](../../share-carousel-prototype.html) — reader → sheet → pages strip → preview → single-page OS share / carousel save-to-Photos → saved state. The paginator in it is the algorithm proposed in §5, running live on the bundled Chhath katha. The prototype predates §9: its Photos-permission and saved screens were replaced by the hand-off view before the OS sheet. |
+| **Feasibility** | Phase 0–1 and 3: pure JS/TS on the existing `react-native-view-shot` + `expo-sharing` stack — **OTA-shippable**. Phase 2 needs `react-native-share` (multi-file share sheet) and the add-only `NSPhotoLibraryAddUsageDescription` — **store build**. (`expo-media-library` was planned and dropped — §9.) |
 
 > **Design intent.** Two complaints, one root cause. (1) The ↗ share button exists on the 20 verse readers, Daily Bhakti and Japam, and on nothing else — kathas, Theerth, Daan/Pitru teaching, Vidhi mantras and Ask answers cannot leave the app as a card. (2) When the text is longer than one card, there is no way to make a series. Both come from `ShareableVerse` being verse-shaped: a fixed 540×675 card with a verse block and an optional meaning. This PRD generalises the *content* (`ShareableContent`), keeps the *card chrome* (§39 header · ornament · branding footer), and adds a paginator so long prose becomes N cards with a page index — then gives Instagram what it can actually take.
 
@@ -136,3 +136,17 @@ Tests: `utils/__tests__/shareCardPages.test.ts` (budget math, sentence split inc
 - **Photos permission denial** — inline recovery path (Settings) and the single-page fallback; never a dead end.
 - **Instagram behaviour change** — if Instagram ever accepts multi-image intents, the saved-state screen becomes optional; the paginator and Photos save stay useful (WhatsApp albums).
 - **Scope creep into the Jyotish/Muhurat capture paths** — out of scope; they keep their own sheets.
+
+## 9. As built (Sept 2026) — what changed from the plan above
+
+The code is canonical; design.md §39.4–§39.6 and RULEBOOK §3 carry the spec. Deviations from §§3–6, and why:
+
+1. **No `expo-media-library`; the OS share sheet saves instead.** On Android 13+ its save path requires the `READ_MEDIA_IMAGES` grant, which Google Play has required a core-use justification for since May 2025 — a review risk for a devotional reader. `react-native-share`'s `open({ urls })` hands every page to one OS sheet: WhatsApp receives an album (the question raised in review), iOS offers its built-in "Save N Images" (add-only permission), and Instagram appears if it accepts multiple images. The carousel row therefore pauses on a **hand-off view** with the Select-multiple steps *before* the OS sheet, not after a Photos save. `utils/multiShare.ts` probes `TurboModuleRegistry.get('RNShare')` and lazily requires the package, so an OTA on an older binary shows both all-pages rows disabled ("Needs the latest app update").
+2. **Latent iOS crash fixed on the way.** `app.json` had no `NSPhotoLibraryAddUsageDescription`, yet the single-card share already exposed "Save Image" in the iOS sheet. The key is now present; it ships with the Phase 2 store build.
+3. **Pitru surfaces excluded.** design.md §74 locks "no share surface" for the पितृ पक्ष परिचय layer (and §63 for Pitru Smaran); §1's table listed them — they stay unshared, as does the personal-tithi Vidhi. **Deity essays** are one-line browse copy, not worth a card; skipped.
+4. **Paginator constants are measured, not estimated.** 500 bundled katha paragraphs per language were laid out in Chromium at 484 dp with the app's TTFs; the per-language glyph advance is the smallest that never under-counts a paragraph, + 0.02 (hi 0.41 · gu 0.43 · kn 0.56 · en 0.44). The §5 table's 44/54 chars-per-line guesses over-counted by ~38 %.
+5. **Over-cap scopes are not refused.** A scope longer than 10 pages still opens; the first 10 are pre-selected with a note, and the all-pages rows disable only if the reader selects more than 10.
+6. **Phase 3 without new card kinds.** The festival day (Observance detail) and the Ask answer reuse the prose card — every line is verified content the screen already renders; no authored greeting copy. A Bhog-only card was not built: the offerings ride inside the festival-day card.
+7. **Where the buttons are:** Vrat Katha reader (toggle row, left) · Theerth detail (top bar right) · Daan katha (header right) · Daan principle cards + journey शास्त्र card · Vidhi conduct mantra label row · Observance detail (top bar right) · Search's Ask answer card.
+
+**Not verified in this environment (needs a device before the store release):** capture of a 10-page series on a low-memory Android; `react-native-share` multi-file on both platforms (it autolinks; no config plugin is used); whether Instagram's share target accepts the multi-image set on current Instagram builds; the Maestro flow `share-katha-smoke.yaml` (no simulator here).

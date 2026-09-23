@@ -41,6 +41,8 @@ import { useAsk } from '@/ask/useAsk';
 import { navigateAskTarget } from '@/ask/actions';
 import type { AskTarget } from '@/ask/types';
 import AskAnswerCard, { AskAbstainCard } from '@/components/AskAnswerCard';
+import { useShare } from '@/utils/shareVerse';
+import { askAnswerShareable } from '@/utils/shareContent';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Search'>;
 
@@ -57,6 +59,7 @@ const POPULAR_FALLBACK_IDS = [
 export default function SearchScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
+  const { share, busy: shareBusy } = useShare();
   const { markSeen } = useNewContent();
   const inputRef = useRef<TextInput>(null);
   const [query, setQuery] = useState(route.params?.initialQuery ?? '');
@@ -239,7 +242,13 @@ export default function SearchScreen({ navigation, route }: Props) {
     hasQuery && resolution ? (
       resolution.kind === 'answer' ? (
         <View style={{ marginTop: spacing.sm, marginBottom: spacing.md }}>
-          <AskAnswerCard answer={resolution.answer} lang={lang} onAction={onAskAction} />
+          <AskAnswerCard
+            answer={resolution.answer}
+            lang={lang}
+            onAction={onAskAction}
+            onShare={() => void share(askAnswerShareable(resolution.answer), lang)}
+            shareBusy={shareBusy}
+          />
         </View>
       ) : isQuestion || resolution.kind === 'declined' ? (
         // A decline is an explicit engine stance (§3.4) — DECLINE_LEXEMES only
