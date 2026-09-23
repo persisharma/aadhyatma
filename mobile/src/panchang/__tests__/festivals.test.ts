@@ -11,7 +11,7 @@ import {
 test('resolveFestivalsForYear returns festivals for 2026', () => {
   const festivals = resolveFestivalsForYear(2026);
   assert.ok(festivals.length >= 120, `expected major festivals plus monthly vrats, got ${festivals.length}`);
-  // 308 before the Sept 2026 section-A sweep added 29 once-a-year jayantis and
+  // 308 before the Sept 2026 section-A sweep added 27 once-a-year jayantis and
   // named days (Varaha, Vamana, Narak Chaturdashi…) — ~0.08 more a day, stated
   // in design.md §33. The cap still catches a monthly series leaking in.
   assert.ok(festivals.length <= 350, `expected bounded default observances, got ${festivals.length}`);

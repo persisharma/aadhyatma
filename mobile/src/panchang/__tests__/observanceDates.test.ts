@@ -554,7 +554,6 @@ const SECTION_A_PUBLISHED: Record<string, string> = {
   // Vishnu's avatars — Varaha and Hayagriva pin the aparahna day rule: both are
   // the day BEFORE their sunrise tithi in 2026.
   'matsya-jayanti:2026': '2026-03-21',
-  'kurma-jayanti:2025': '2025-05-12',       'kurma-jayanti:2026': '2026-05-01',
   'varaha-jayanti:2026': '2026-09-13',
   'vamana-jayanti:2026': '2026-09-23',
   'kalki-jayanti:2026': '2026-08-18',
@@ -569,7 +568,6 @@ const SECTION_A_PUBLISHED: Record<string, string> = {
   'kabir-jayanti:2026': '2026-06-29',
   // Devi jayantis and sampradaya days
   'baglamukhi-jayanti:2026': '2026-04-24',
-  'chhinnamasta-jayanti:2026': '2026-04-30',
   'dhumavati-jayanti:2026': '2026-06-22',
   'mahesh-navami:2026': '2026-06-23',
   'annapurna-jayanti:2025': '2025-12-04',   'annapurna-jayanti:2026': '2026-12-23',
@@ -587,11 +585,36 @@ const SECTION_A_PUBLISHED: Record<string, string> = {
   'magha-gupt-navratri:2026': '2026-01-19',
 };
 
+// Forward years (read 2026-09-23). Only rows with Drik's own date or two
+// agreeing sources; summary-only and location-ambiguous rows are left out.
+const SECTION_A_FORWARD: Record<string, string> = {
+  'matsya-jayanti:2027': '2027-04-09',
+  'kalki-jayanti:2027': '2027-08-07',
+  'surdas-jayanti:2027': '2027-05-10',       'shankaracharya-jayanti:2027': '2027-05-10',
+  'vallabhacharya-jayanti:2027': '2027-05-02',
+  'kabir-jayanti:2027': '2027-06-18',
+  'baglamukhi-jayanti:2027': '2027-05-13',
+  'valmiki-jayanti:2027': '2027-10-15',     'valmiki-jayanti:2028': '2028-10-03',
+  'phulera-dooj:2027': '2027-03-10',        'phulera-dooj:2028': '2028-02-27',
+  'narmada-jayanti:2027': '2027-02-13',
+  'narak-chaturdashi:2027': '2027-10-28',
+  'kaal-bhairav-jayanti:2027': '2027-11-21',
+  'mauni-amavasya:2027': '2027-02-06',
+  'magha-gupt-navratri:2027': '2027-02-07',
+};
+
+test('section-A observances match their published forward-year dates', () => {
+  for (const [key, expected] of Object.entries(SECTION_A_FORWARD)) {
+    const [id, yearStr] = key.split(':');
+    assert.equal(engineDate(id, Number(yearStr)), expected, `${key} moved`);
+  }
+});
+
 const SECTION_A_IDS = [
-  'matsya-jayanti', 'kurma-jayanti', 'varaha-jayanti', 'vamana-jayanti', 'kalki-jayanti',
+  'matsya-jayanti', 'varaha-jayanti', 'vamana-jayanti', 'kalki-jayanti',
   'hayagriva-jayanti', 'hal-shashthi', 'surdas-jayanti', 'shankaracharya-jayanti',
   'tulsidas-jayanti', 'valmiki-jayanti', 'vallabhacharya-jayanti', 'kabir-jayanti',
-  'baglamukhi-jayanti', 'chhinnamasta-jayanti', 'dhumavati-jayanti', 'mahesh-navami',
+  'baglamukhi-jayanti', 'dhumavati-jayanti', 'mahesh-navami',
   'annapurna-jayanti', 'narmada-jayanti', 'janaki-jayanti', 'phulera-dooj',
   'narak-chaturdashi', 'kaal-bhairav-jayanti', 'mauni-amavasya', 'ganesh-jayanti',
   'bhishma-ashtami', 'magha-purnima', 'ashadha-gupt-navratri', 'magha-gupt-navratri',
@@ -605,7 +628,7 @@ test('section-A observances match their published dates exactly', () => {
 });
 
 test('every section-A rule resolves exactly once a year, 2024-2031, and is pinned', () => {
-  assert.equal(SECTION_A_IDS.length, 29);
+  assert.equal(SECTION_A_IDS.length, 27);
   const pinned = new Set(Object.keys(SECTION_A_PUBLISHED).map((key) => key.split(':')[0]));
   for (const id of SECTION_A_IDS) {
     assert.ok(pinned.has(id), `${id} has no published date pinned`);
@@ -619,10 +642,8 @@ test('every section-A rule resolves exactly once a year, 2024-2031, and is pinne
 // RULEBOOK §23a.4 — every section-A rule that names a shipped rule's tithi under
 // the SAME day rule must land on that rule's day.
 const SECTION_A_SIBLINGS: [string, string][] = [
-  ['kurma-jayanti', 'buddha-purnima'],
   ['vallabhacharya-jayanti', 'varuthini-ekadashi'],
   ['shankaracharya-jayanti', 'surdas-jayanti'],
-  ['chhinnamasta-jayanti', 'narasimha-jayanti'],
   ['valmiki-jayanti', 'sharad-purnima'],
   ['annapurna-jayanti', 'dattatreya-jayanti'],
   ['narmada-jayanti', 'ratha-saptami'],

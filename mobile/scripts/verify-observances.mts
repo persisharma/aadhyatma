@@ -26,7 +26,7 @@ const require = createRequire(import.meta.url);
 const { SunPosition, EclipticGeoMoon, MakeTime } =
   require('astronomy-engine') as typeof import('astronomy-engine');
 
-type Muhurta = 'udaya' | 'madhyahna' | 'nishita' | 'pradosh';
+type Muhurta = 'udaya' | 'madhyahna' | 'aparahna' | 'nishita' | 'pradosh';
 export interface AnnualFestival {
   id: string;
   month: number; // purnimant lunar month, 1-based (Chaitra=1 … Phalguna=12)
@@ -97,12 +97,13 @@ export const ANNUAL: AnnualFestival[] = [
   { id: 'hanuman-jayanti-kartik', month: 8, paksha: 'krishna', tithi: 14, muhurta: 'udaya' },
   { id: 'gopashtami', month: 8, paksha: 'shukla', tithi: 8, muhurta: 'udaya' },
   { id: 'champa-shashthi', month: 9, paksha: 'shukla', tithi: 6, muhurta: 'udaya' },
-  // Section A — pan-India jayantis and named days (Sept 2026). The four aparahna
-  // rules (`matsya-`, `varaha-`, `kalki-`, `hayagriva-jayanti`) have no row: this
-  // script has no aparahna muhurta, and re-deriving them at sunrise would flag the
-  // very shift the rule exists to encode (Varaha 13 vs 14 Sep 2026). They are
-  // pinned to published dates by observanceDates.test.ts instead.
-  { id: 'kurma-jayanti', month: 2, paksha: 'shukla', tithi: 15, muhurta: 'udaya' },
+  // Section A — pan-India jayantis and named days (Sept 2026). The four Vishnu-avatar
+  // jayantis Drik fixes by an afternoon window are re-derived at aparahna — the
+  // shift that matters (Varaha 13 vs sunrise 14 Sep 2026) is exactly what they encode.
+  { id: 'matsya-jayanti', month: 1, paksha: 'shukla', tithi: 3, muhurta: 'aparahna' },
+  { id: 'varaha-jayanti', month: 6, paksha: 'shukla', tithi: 3, muhurta: 'aparahna' },
+  { id: 'kalki-jayanti', month: 5, paksha: 'shukla', tithi: 6, muhurta: 'aparahna' },
+  { id: 'hayagriva-jayanti', month: 5, paksha: 'shukla', tithi: 15, muhurta: 'aparahna' },
   { id: 'vamana-jayanti', month: 6, paksha: 'shukla', tithi: 12, muhurta: 'udaya' },
   { id: 'hal-shashthi', month: 6, paksha: 'krishna', tithi: 6, muhurta: 'udaya' },
   { id: 'surdas-jayanti', month: 2, paksha: 'shukla', tithi: 5, muhurta: 'udaya' },
@@ -112,7 +113,6 @@ export const ANNUAL: AnnualFestival[] = [
   { id: 'vallabhacharya-jayanti', month: 2, paksha: 'krishna', tithi: 11, muhurta: 'udaya' },
   { id: 'kabir-jayanti', month: 3, paksha: 'shukla', tithi: 15, muhurta: 'udaya' },
   { id: 'baglamukhi-jayanti', month: 2, paksha: 'shukla', tithi: 8, muhurta: 'udaya' },
-  { id: 'chhinnamasta-jayanti', month: 2, paksha: 'shukla', tithi: 14, muhurta: 'udaya' },
   { id: 'dhumavati-jayanti', month: 3, paksha: 'shukla', tithi: 8, muhurta: 'udaya' },
   { id: 'mahesh-navami', month: 3, paksha: 'shukla', tithi: 9, muhurta: 'udaya' },
   { id: 'annapurna-jayanti', month: 9, paksha: 'shukla', tithi: 15, muhurta: 'udaya' },
@@ -153,7 +153,6 @@ export const ANCHORS: Record<string, string> = {
   'chaitra-navratri-start:2025': '2025-03-30', 'chaitra-navratri-start:2026': '2026-03-19',
   'mahavir-jayanti:2025': '2025-04-10', 'mahavir-jayanti:2026': '2026-03-31',
   // Section A (Sept 2026) — published dates, see festivals.ts per-rule comments.
-  'kurma-jayanti:2025': '2025-05-12', 'kurma-jayanti:2026': '2026-05-01',
   'surdas-jayanti:2025': '2025-05-02', 'shankaracharya-jayanti:2025': '2025-05-02',
   'annapurna-jayanti:2025': '2025-12-04', 'kaal-bhairav-jayanti:2025': '2025-11-12',
   'kaal-bhairav-jayanti:2026': '2026-12-01', 'narak-chaturdashi:2026': '2026-11-08',
@@ -185,9 +184,15 @@ export function expectedDate(f: AnnualFestival, year: number): string | null {
     let pan;
     try { pan = computePanchangForDate(day, { calendarSystem: 'purnimant' }); } catch { continue; }
     if (pan.lunarMonth.index !== f.month) continue;
+    // Festivals are kept in the NIJA month; an adhik (leap) month repeats the name
+    // and must be skipped, exactly as the engine does (2026 Jyeshtha, 2029 Chaitra,
+    // 2031 Bhadrapada all carry one).
+    if (pan.lunarMonth.isAdhik) continue;
     let instant: Date;
     if (f.muhurta === 'udaya') instant = pan.sunrise;
     else if (f.muhurta === 'madhyahna') instant = mid(pan.sunrise, pan.sunset);
+    // Aparahna — the midpoint of the fourth of the day's five parts (sunrise + 0.7 × daylength).
+    else if (f.muhurta === 'aparahna') instant = new Date(pan.sunrise.getTime() + 0.7 * (pan.sunset.getTime() - pan.sunrise.getTime()));
     else if (f.muhurta === 'pradosh') instant = new Date(pan.sunset.getTime() + 48 * 60 * 1000);
     else { // nishita — midnight between this sunset and next sunrise
       const next = computePanchangForDate(new Date(year, d.getMonth(), d.getDate() + 1), { calendarSystem: 'purnimant' });
@@ -220,7 +225,11 @@ export function expectedFor(f: AnnualFestival, year: number): { date: string | n
 
 // ---- run as a script ----
 if (process.argv[1] && process.argv[1].endsWith('verify-observances.mts')) {
-  const YEARS = [2025, 2026, 2027];
+  // VERIFY_YEARS=2025-2031 widens the sweep; the default stays the three anchored years.
+  const range = /^(\d{4})-(\d{4})$/.exec(process.env.VERIFY_YEARS ?? '');
+  const YEARS = range
+    ? Array.from({ length: Number(range[2]) - Number(range[1]) + 1 }, (_, i) => Number(range[1]) + i)
+    : [2025, 2026, 2027];
   const monthErrors: string[] = []; // SEVERE — the bug class just fixed
   const dayShifts: string[] = [];   // Class B — sunrise vs muhurta (pre-existing, documented)
   const kshayaMissing: string[] = []; // pre-existing kshaya-tithi drops

@@ -469,6 +469,12 @@ export const FESTIVAL_RULES: ObservanceRule[] = [
   //     below; sources give three dates across three traditions.
   //   • Gayatri Jayanti, Ramanuja Jayanti — the tithi itself is contested
   //     (Jyeshtha S11 vs Shravana S15; a nakshatra reckoning).
+  //   • Kurma Jayanti — Drik fixes it by a SAYAHNA (evening) window: 2027's
+  //     Purnima opens 4:04 PM 19 May and Drik publishes the 19th, while no day
+  //     rule the engine has lands there (udaya and aparahna both name the 20th).
+  //   • Chhinnamasta Jayanti — the Narasimha Jayanti day, and like it kept in the
+  //     evening: 2027's Chaturdashi opens 4:05 PM 18 May and the published day is
+  //     the 18th. Ships with the sayahna/pradosh day rule (PRD-42 E-1), not before.
   //   • Sarva Pitru / Mahalaya Amavasya — already surfaced by Pitru Paksha
   //     (`pitruSmaran.ts`); a rule would put the day on the calendar twice.
 
@@ -478,11 +484,6 @@ export const FESTIVAL_RULES: ObservanceRule[] = [
   // sunrise, so the two are NOT siblings (they split by a day in 2028–2031).
   // Published: 21 Mar 2026 (Drik "Matsya Jayanti", BhaktiBharat; puja 1:29–3:54 PM).
   festival({ id: 'matsya-jayanti', nameHi: 'मत्स्य जयंती', nameEn: 'Matsya Jayanti', lunarMonth: 1, paksha: 'shukla', tithi: 3, dayRule: 'aparahna', marker: 'dot', deityHi: 'भगवान मत्स्य', deityEn: 'Lord Matsya', shortDescriptionHi: 'चैत्र शुक्ल तृतीया को भगवान विष्णु के प्रथम अवतार, मत्स्य भगवान की जयंती — जिन्होंने प्रलय के जल से मनु, सप्तर्षियों और वेदों की रक्षा की। अपराह्न में विष्णु पूजन और मत्स्य पुराण का पाठ होता है।', shortDescriptionEn: 'The jayanti of Lord Matsya, Vishnu’s first avatar, on Chaitra Shukla Tritiya — who carried Manu, the Saptarishis and the Vedas through the waters of the deluge. Vishnu puja in the afternoon and a reading from the Matsya Purana mark it.', searchTerms: ['matsya jayanti', 'matsya avatar', 'dashavatar', 'vishnu avatar', 'fish avatar'] }),
-  // Vaishakha Purnima — the Buddha Purnima day (sibling, asserted). Published:
-  // 1 May 2026 (Drik "Kurma Jayanti", tirthayatra.org) and 12 May 2025 (Drik;
-  // Purnima 08:01 PM 11 May → 10:25 PM 12 May). Drik's window is sayahna, which
-  // the sunrise Purnima has matched in both years, so it stays udaya.
-  festival({ id: 'kurma-jayanti', nameHi: 'कूर्म जयंती', nameEn: 'Kurma Jayanti', lunarMonth: 2, paksha: 'shukla', tithi: 15, marker: 'dot', deityHi: 'भगवान कूर्म', deityEn: 'Lord Kurma', shortDescriptionHi: 'वैशाख पूर्णिमा को भगवान विष्णु के द्वितीय अवतार, कूर्म भगवान की जयंती — समुद्र मंथन में मंदराचल पर्वत को अपनी पीठ पर धारण करने वाले। संध्या में विष्णु पूजन होता है; आंध्र प्रदेश का श्रीकूर्मम् मंदिर इसका प्रमुख धाम है।', shortDescriptionEn: 'The jayanti of Lord Kurma, Vishnu’s second avatar, on Vaishakha Purnima — the tortoise who bore Mount Mandara on his back at the churning of the ocean. Vishnu puja is offered at dusk; the Srikurmam temple in Andhra Pradesh is his great shrine.', searchTerms: ['kurma jayanti', 'koorma jayanti', 'kurma avatar', 'dashavatar', 'srikurmam', 'tortoise avatar'] }),
   // Bhadrapada Shukla Tritiya — the Hartalika Teej tithi. `aparahna` is
   // load-bearing: Tritiya runs 07:08 AM 13 Sep → 07:06 AM 14 Sep 2026, so the
   // sunrise rule names the 14th and Drik's afternoon window names the 13th.
@@ -541,10 +542,6 @@ export const FESTIVAL_RULES: ObservanceRule[] = [
   // Vaishakha Shukla Ashtami. Published: 24 Apr 2026 (Drik "Bagalamukhi
   // Jayanti", BhaktiBharat; Ashtami prevailing at sunrise on the 24th).
   festival({ id: 'baglamukhi-jayanti', nameHi: 'बगलामुखी जयंती', nameEn: 'Baglamukhi Jayanti', lunarMonth: 2, paksha: 'shukla', tithi: 8, marker: 'dot', deityHi: 'मां बगलामुखी', deityEn: 'Maa Baglamukhi', shortDescriptionHi: 'वैशाख शुक्ल अष्टमी को दस महाविद्याओं में आठवीं, पीताम्बरा मां बगलामुखी की जयंती — पीले वस्त्र, पीले पुष्प और हल्दी की माला से पूजन होता है। दतिया का पीताम्बरा पीठ और नलखेड़ा (मध्य प्रदेश) इसके प्रमुख धाम हैं।', shortDescriptionEn: 'The jayanti of Pitambara Maa Baglamukhi, the eighth of the ten Mahavidyas, on Vaishakha Shukla Ashtami — worshipped in yellow, with yellow flowers and a turmeric mala. The Pitambara Peeth at Datia and Nalkheda in Madhya Pradesh are her great shrines.', searchTerms: ['baglamukhi jayanti', 'bagalamukhi jayanti', 'pitambara', 'mahavidya', 'datia', 'nalkheda'] }),
-  // Vaishakha Shukla Chaturdashi — the Narasimha Jayanti day (sibling,
-  // asserted). Published: 30 Apr 2026 (Drik "Chhinnamasta Jayanti",
-  // Rudraksha-Ratna; Chaturdashi 07:51 PM 29 Apr → 09:12 PM 30 Apr).
-  festival({ id: 'chhinnamasta-jayanti', nameHi: 'छिन्नमस्ता जयंती', nameEn: 'Chhinnamasta Jayanti', lunarMonth: 2, paksha: 'shukla', tithi: 14, marker: 'dot', deityHi: 'मां छिन्नमस्ता', deityEn: 'Maa Chhinnamasta', shortDescriptionHi: 'वैशाख शुक्ल चतुर्दशी को दस महाविद्याओं में छठी, मां छिन्नमस्ता की जयंती — नरसिंह जयंती का ही दिन। झारखंड के रजरप्पा का छिन्नमस्तिका मंदिर इसका प्रमुख शक्तिपीठ है।', shortDescriptionEn: 'The jayanti of Maa Chhinnamasta, the sixth of the ten Mahavidyas, on Vaishakha Shukla Chaturdashi — the Narasimha Jayanti day. The Chhinnamastika temple at Rajrappa in Jharkhand is her great shrine.', searchTerms: ['chhinnamasta jayanti', 'chinnamasta jayanti', 'chhinnamastika', 'rajrappa', 'mahavidya'] }),
   // Jyeshtha Shukla Ashtami. Published: 22 Jun 2026 (Drik "Dhumavati
   // Jayanti", BhaktiBharat; Ashtami 03:20 PM 21 Jun → 03:39 PM 22 Jun, and both
   // name the sunrise Ashtami as the rule).

@@ -40,7 +40,6 @@ export const OBSERVANCE_AREAS: Readonly<Record<string, readonly ObservanceLens[]
   'sama-chakeva': ['bihar-mithila'],
   'hal-shashthi': ['braj-awadh-kashi', 'bihar-mithila', 'bundelkhand-malwa'],
   'vishwakarma-puja': ['bengal', 'odisha', 'bihar-mithila', 'jharkhand'],
-  'chhinnamasta-jayanti': ['jharkhand'],
   // Braj · Awadh · Kashi · Prayag
   'radha-ashtami': ['braj-awadh-kashi'],
   gopashtami: ['braj-awadh-kashi'],
@@ -67,7 +66,6 @@ export const OBSERVANCE_AREAS: Readonly<Record<string, readonly ObservanceLens[]
   'ratha-saptami': ['tamil', 'karnataka', 'telugu'],
   'hanuman-jayanti-kartik': ['telugu', 'karnataka', 'tamil'],
   'hayagriva-jayanti': ['tamil', 'karnataka', 'telugu'],
-  'kurma-jayanti': ['telugu'],
   'vamana-jayanti': ['kerala'],
   'shankaracharya-jayanti': ['kerala', 'karnataka'],
   'avani-avittam': ['tamil', 'kerala', 'telugu'],

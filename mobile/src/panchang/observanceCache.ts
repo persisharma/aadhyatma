@@ -33,7 +33,7 @@ import type { CalendarSystem, ResolvedObservance } from './types';
 //     earlier, onto the civil day that actually contains the ingress instant
 //     (Makar Sankranti 2026 was resolving to 15 Jan against a published 14 Jan).
 //     A city that already scanned must re-scan or it keeps the old, wrong dates.
-// v8: section A — 29 pan-India jayantis and named days (Varaha, Vamana, Narak
+// v8: section A — 27 pan-India jayantis and named days (Varaha, Vamana, Narak
 //     Chaturdashi, Mauni Amavasya…). Catalog additions only; no matcher change
 //     and no shipped date moved.
 const CACHE_VERSION = 8;

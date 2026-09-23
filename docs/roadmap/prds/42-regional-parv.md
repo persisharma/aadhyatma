@@ -765,7 +765,7 @@ Found while gathering the states. These belong to **everyone**, need no mechanis
 > `catalog-only` recurrence) but deliberately left `regional`: twelve rows a year each is the
 > universal-day load metric 2 exists to protect.
 
-> **Beyond this register — Section A, shipped 2026-09-23 (29 rules).** A later sweep found that the register missed the pan-India jayantis entirely, and Varaha Jayanti was the report that surfaced it. It added the Vishnu-avatar jayantis (four of them `aparahna`), the saint and Devi jayantis, नरक चतुर्दशी, काल भैरव जयंती, मौनी अमावस्या, गणेश जयंती, भीष्म अष्टमी, माघ पूर्णिमा and both गुप्त नवरात्रि openings. All are universal, with no lens. The full list, and what was held back, is in design.md §33.
+> **Beyond this register — Section A, shipped 2026-09-23 (27 rules).** A later sweep found that the register missed the pan-India jayantis entirely, and Varaha Jayanti was the report that surfaced it. It added the Vishnu-avatar jayantis (four of them `aparahna`), the saint and Devi jayantis, नरक चतुर्दशी, काल भैरव जयंती, मौनी अमावस्या, गणेश जयंती, भीष्म अष्टमी, माघ पूर्णिमा and both गुप्त नवरात्रि openings. All are universal, with no lens. The full list, and what was held back, is in design.md §33.
 
 | Observance | Tithi | Note |
 |---|---|---|
