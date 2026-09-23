@@ -56,15 +56,29 @@ const CARDS = [
     plateOpacity: 0.9, platePos: '50% 30%', plateFilter: 'sepia(.45) saturate(.8) contrast(1.1)',
     kicker: 'पितृ पक्ष परिचय',
     titleHi: 'पितृ पक्ष क्या है',
-    subHi: 'सोलह दिनों का पखवाड़ा',
+    subHi: 'पूर्वजों को याद करने के सोलह दिन',
     body: [
-      'भाद्रपद पूर्णिमा से आश्विन अमावस्या तक का पखवाड़ा **पितृ पक्ष** कहलाता है — इसे **महालय पक्ष** भी कहते हैं।',
-      'जिस तिथि को किसी का देहान्त हुआ, इस पक्ष की **उसी तिथि** पर उनका श्राद्ध किया जाता है। यह पक्ष **तिथियों का कैलेण्डर** है, तारीख़ों का नहीं।',
-      'जिनकी तिथि परिवार को ज्ञात नहीं, उनके लिए पक्ष का अन्तिम दिन — **सर्वपितृ अमावस्या** — रखा गया है।',
+      '**पितृ** यानी हमारे **पूर्वज** — माता-पिता, दादा-दादी, नाना-नानी और उनसे पहले की पीढ़ियाँ, जो अब हमारे बीच नहीं हैं।',
+      'साल में एक बार सोलह दिन उनके नाम रखे जाते हैं — यही **पितृ पक्ष** है, जिसे **महालय पक्ष** भी कहते हैं।',
+      'जिस **तिथि** को किसी का देहान्त हुआ था, इन्हीं सोलह दिनों में उसी तिथि पर उन्हें याद किया जाता है। यह तारीख़ों का नहीं, **तिथियों का कैलेण्डर** है।',
+      'और जिनकी तिथि घर में किसी को याद नहीं — उन सबके लिए आख़िरी दिन रखा गया है: **सर्वपितृ अमावस्या**।',
     ],
   },
   {
-    slug: '2-shraddha-tarpan',
+    slug: '2-kyon',
+    lessonId: 'kya-hai · principles gita-1-42 / gita-9-25 · prashna kya-arpan-karein',
+    plate: 'source-vishnu-narayana.webp',
+    kicker: 'ये दिन क्यों',
+    titleHi: 'यह पक्ष क्यों रखा जाता है',
+    subHi: 'माँगने के लिए नहीं — याद रखने के लिए',
+    body: [
+      'इन दिनों पितरों से कुछ माँगा नहीं जाता। जो हमसे पहले थे, उन्हें **याद** किया जाता है, और उनके नाम पर जल, अन्न या दान अर्पित किया जाता है।',
+      'गीता में अर्जुन कहते हैं कि जिस कुल में **पिण्ड और जल** की यह क्रिया लुप्त हो जाती है, वहाँ पितर अपने स्थान से गिर जाते हैं — परम्परा का अपना उत्तर, कि यह कर्म क्यों बचाए रखा गया। **(गीता १.४२)**',
+      'और श्रीकृष्ण कहते हैं — **पितरों के उपासक पितरों को प्राप्त होते हैं। (गीता ९.२५)**',
+    ],
+  },
+  {
+    slug: '3-shraddha-tarpan',
     lessonId: 'shraddha-aur-tarpan',
     plate: 'category-aarti-diya.webp',
     kicker: 'दो शब्द, दो कर्म',
@@ -77,7 +91,7 @@ const CARDS = [
     ],
   },
   {
-    slug: '3-jal-kyon',
+    slug: '4-jal-kyon',
     lessonId: 'jal-kyon',
     plate: 'deity-ganga.webp',
     kicker: 'तर्पण का सबसे पुराना रूप',
@@ -90,29 +104,16 @@ const CARDS = [
     ],
   },
   {
-    slug: '4-kiske-liye',
-    lessonId: 'kiske-liye',
+    slug: '5-kiske-liye',
+    lessonId: 'kiske-liye · prashna kya-arpan-karein',
     plate: 'deity-rama-darbar.webp',
     kicker: 'जटायु का प्रसंग',
-    titleHi: 'किसके लिए',
-    subHi: 'स्मरण रक्त का बन्धन नहीं माँगता',
+    titleHi: 'किसके लिए, और किससे',
+    subHi: 'सामग्री नहीं, भाव देखा जाता है',
     body: [
       'अरण्यकाण्ड में श्रीराम **जटायु** का दाह-संस्कार स्वयं करते हैं। जटायु न उनके कुल के थे, न मनुष्य — वे पिता के मित्र एक पक्षी थे।',
-      'राम ने लकड़ी इकट्ठी की, चिता सजाई, दर्भ बिछाकर वन के कन्द से पिण्ड बनाया, और गोदावरी जाकर **जलाञ्जलि** दी।',
-      'उन्होंने जो वचन कहा, वह किसी **वंश** की बात नहीं करता — वहाँ स्मरण का द्वार सूची से नहीं, **भाव** से खुलता है।',
-    ],
-  },
-  {
-    slug: '5-samay',
-    lessonId: 'samay',
-    plate: 'deity-surya.webp',
-    kicker: 'दिन का कौन-सा समय',
-    titleHi: 'श्राद्ध का काल',
-    subHi: 'यह सूर्योदय का कर्म नहीं है',
-    body: [
-      'श्राद्ध का समय दिन का **उत्तरार्ध** माना गया है — **कुतप काल** (मध्याह्न के आसपास), रौहिण, और उसके बाद का **अपराह्न**।',
-      'इसी कारण किसी तिथि का श्राद्ध उस नागरिक दिन पर पड़ता है जिसके **अपराह्न** में वह तिथि व्याप्त हो — कभी वह सूर्योदय पर छपी तिथि से एक दिन आगे-पीछे दिखता है।',
-      'ये खिड़कियाँ स्थान और दिनांक के अनुसार बदलती हैं; निश्चित समय के लिए अपने स्थान का पंचांग या पुरोहित देखें।',
+      'वन में राम के पास राजसी पदार्थ नहीं थे। उन्होंने वहीं मिले **इंगुदी के गूदे** से पिता के लिए पिण्ड बनाया और कहा — **जो हम खाते हैं, वही आपको अर्पित है।**',
+      'स्मरण का द्वार किसी सूची से नहीं, **भाव** से खुलता है।',
     ],
   },
 ];
@@ -156,6 +157,8 @@ function cardHtml(card, index, total) {
   // "size it in JS" — a fixed leading must never ride platform auto-fit).
   const chars = card.body.join(' ').length;
   const bodySize = chars > 430 ? 34 : chars > 360 ? 36 : 38;
+  // Same idea for the hero line: a long Devanagari title must not crowd the gutters.
+  const titleSize = card.titleHi.length > 20 ? 62 : card.titleHi.length > 15 ? 70 : 78;
   const paras = card.body
     .map((p) => `<p style="margin:0 0 ${Math.round(bodySize * 0.72)}px">${emph(p)}</p>`)
     .join('');
@@ -179,7 +182,7 @@ function cardHtml(card, index, total) {
           color:${C.saffronDeep};text-transform:uppercase}
   .count{position:absolute;top:70px;right:82px;font-family:'Inter',sans-serif;font-weight:600;font-size:24px;
          color:${C.saffronDeep};opacity:.62;letter-spacing:1px}
-  .title{font-weight:700;font-size:78px;line-height:1.24;color:${C.ink};margin-top:26px}
+  .title{font-weight:700;font-size:${titleSize}px;line-height:1.24;color:${C.ink};margin-top:26px}
   .sub{font-weight:600;font-size:38px;line-height:1.4;color:${C.gold};margin-top:12px}
   .rule{width:150px;height:2px;background:${C.gold};opacity:.55;margin:34px 0 38px;border-radius:2px}
   .body{font-weight:400;font-size:${bodySize}px;line-height:1.6;color:${C.inkSoft}}

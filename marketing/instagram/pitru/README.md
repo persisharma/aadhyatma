@@ -8,32 +8,39 @@ Every card condenses a **verified** row of `mobile/src/data/pitru/lessons.ts` (P
 prescribe. No "must", no dosha, no fear copy. Re-run the script after editing a lesson so the
 cards and the app stay in step.
 
-| # | File | Lesson id | Background plate |
-|---|------|-----------|------------------|
+| # | File | Source rows | Background plate |
+|---|------|-------------|------------------|
 | 1 | `pitru-1-kya-hai.png` | `kya-hai` | `deity-navagraha-icons` |
-| 2 | `pitru-2-shraddha-tarpan.png` | `shraddha-aur-tarpan` | `category-aarti-diya` |
-| 3 | `pitru-3-jal-kyon.png` | `jal-kyon` | `deity-ganga` |
-| 4 | `pitru-4-kiske-liye.png` | `kiske-liye` | `deity-rama-darbar` |
-| 5 | `pitru-5-samay.png` | `samay` | `deity-surya` |
+| 2 | `pitru-2-kyon.png` | `kya-hai` + `gita-1-42` / `gita-9-25` (principles) | `source-vishnu-narayana` |
+| 3 | `pitru-3-shraddha-tarpan.png` | `shraddha-aur-tarpan` | `category-aarti-diya` |
+| 4 | `pitru-4-jal-kyon.png` | `jal-kyon` | `deity-ganga` |
+| 5 | `pitru-5-kiske-liye.png` | `kiske-liye` + `kya-arpan-karein` (prashna) | `deity-rama-darbar` |
 
-Post in that order — 1 is the hook, 5 closes on "consult your own panchang", which is the line
+Post in that order. 1 defines the fortnight in the plainest words available (पितृ = पूर्वज, and
+what the sixteen days are); 2 answers "why keep it at all" before any procedure is described; 5
+closes on Rama offering forest roots — "जो हम खाते हैं, वही आपको अर्पित है" — which is the line
 that earns a save rather than a scroll.
+
+**`samay` (श्राद्ध का काल — Kutapa / Rohina / aparahna) is deliberately not a card.** It is
+correct and it is in the app, but it needs three unfamiliar terms before it pays off, and a feed
+card has no room to teach them. It belongs in the reading screen, not the carousel.
 
 ## Caption
 
-> पितृ पक्ष: सोलह दिन, और वे पाँच बातें जो प्रायः पूछी जाती हैं।
+> पितृ पक्ष — यानी क्या, और क्यों।
 >
-> यह पक्ष तारीख़ों का नहीं, तिथियों का कैलेण्डर है। तर्पण श्राद्ध का एक अंग है, पूरा श्राद्ध नहीं।
-> रामायण में पितृ-कर्म बार-बार एक ही रूप में मिलता है — अञ्जलि भर जल। और जटायु के प्रसंग में
-> स्मरण का द्वार किसी वंश-सूची से नहीं, भाव से खुलता है।
+> पितृ यानी हमारे पूर्वज। साल में एक बार सोलह दिन उनके नाम रखे जाते हैं। जिस तिथि को किसी का
+> देहान्त हुआ था, इन्हीं दिनों में उसी तिथि पर उन्हें याद किया जाता है — यह तारीख़ों का नहीं,
+> तिथियों का कैलेण्डर है।
+>
+> इन दिनों कुछ माँगा नहीं जाता; याद किया जाता है। और सामग्री न हो तो भी बात रुकती नहीं — वन में
+> श्रीराम ने इंगुदी के गूदे से पिता के लिए पिण्ड बनाया और कहा: जो हम खाते हैं, वही आपको अर्पित है।
 >
 > पूरा परिचय — सोलहों तिथियाँ, शास्त्र-वचन और कथाएँ — वेदांश़ ऐप में।
 >
-> निश्चित समय के लिए अपने स्थान का पंचांग या पुरोहित देखें।
->
 > Follow @vedansh.app
 >
-> #पितृपक्ष #PitruPaksha #श्राद्ध #Shraddha #तर्पण #Mahalaya #सनातनधर्म #रामायण #Vedansh
+> #पितृपक्ष #PitruPaksha #श्राद्ध #Shraddha #तर्पण #पूर्वज #Mahalaya #सनातनधर्म #रामायण #Vedansh
 
 The blank line before the tags is deliberate — Instagram collapses a caption after ~3 lines, so
 the preview shows the content and not the tag block (same rule as `data/shareHashtags.ts`,
