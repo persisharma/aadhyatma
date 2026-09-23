@@ -58,6 +58,7 @@ export function resolvePrashna(intentId: string, ctx: AskContext, slots: Resolve
     working: phase.signals.map(s => ctx.lang === 'hi'
       ? `${s.title.hi}: ${s.basis.map(basisLabelHi).join(' → ')}`
       : `${s.title.en}: ${s.basis.map(basisLabelEn).join(' → ')}`),
+    basis: phase.signals.map(s => L(`${s.title.hi}: ${s.basis.map(basisLabelHi).join(' → ')}`, `${s.title.en}: ${s.basis.map(basisLabelEn).join(' → ')}`)),
     actions: [open, ...(id === 'vyapar' ? [{ label: L('मुहूर्त', 'Muhurat'), target: { tab: 'panchang', screen: 'MuhuratFinder' } } as AskAction] : [])], confidence: 'exact',
   };
   const first = answer.windows.find((w) => w.id === guidance!.timing.windowIds[0]);
@@ -76,6 +77,7 @@ export function resolvePrashna(intentId: string, ctx: AskContext, slots: Resolve
     working: answer.chains.slice(0, 2).map(chain => ctx.lang === 'hi'
       ? `${chain.labelHi}: ${chain.basis.map(basisLabelHi).join(' → ')}`
       : `${chain.labelEn}: ${chain.basis.map(basisLabelEn).join(' → ')}`),
+    basis: answer.chains.slice(0, 2).map(chain => L(`${chain.labelHi}: ${chain.basis.map(basisLabelHi).join(' → ')}`, `${chain.labelEn}: ${chain.basis.map(basisLabelEn).join(' → ')}`)),
     actions: [
       open,
       ...(['vyapar', 'yatra', 'vivah'].includes(id) ? [{ label: L('मुहूर्त', 'Muhurat'), target: { tab: 'panchang', screen: 'MuhuratFinder' } } as AskAction] : []),

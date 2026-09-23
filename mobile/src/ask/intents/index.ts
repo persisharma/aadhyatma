@@ -143,6 +143,9 @@ const panchangDay: AskIntent = {
         `computePanchangForDate(${date.toDateString()}, ${ctx.location.cityId ?? `${ctx.location.latitude.toFixed(2)},${ctx.location.longitude.toFixed(2)}`}, ${ctx.calendarSystem})`,
         `sunrise ${formatClock(p.sunrise)} · tithi at sunrise · astronomy-engine`,
       ],
+      basis: [
+        L(`${ctx.location.cityId ? 'आपके शहर' : 'आपके स्थान'} के सूर्योदय (${formatClock(p.sunrise)}) के समय की तिथि`, `Tithi prevailing at local sunrise (${formatClock(p.sunrise)})`),
+      ],
       actions: [
         { label: L('पंचांग खोलें', 'Open Panchang'), target: { tab: 'panchang', screen: 'PanchangHome', params: { dateMs: date.getTime() } } },
         ...obs.slice(0, 1).map((o) => observanceAction(o.rule.id, L(o.rule.nameHi, o.rule.nameEn))),
@@ -203,6 +206,10 @@ const muhuratNow: AskIntent = {
       working: [
         `computeMuhuratDay(sunrise ${formatClock(p.sunrise)}, sunset ${formatClock(p.sunset)}, weekday ${p.vara.index})`,
         'Choghadiya · Rahu Kaal · Abhijit — pure, DrikPanchang wheel',
+      ],
+      basis: [
+        L(`सूर्योदय ${formatClock(p.sunrise)} · सूर्यास्त ${formatClock(p.sunset)} · ${p.vara.nameHi}`, `Sunrise ${formatClock(p.sunrise)} · sunset ${formatClock(p.sunset)} · ${p.vara.nameEn}`),
+        L('दिन को आठ भागों में बाँटकर वार के क्रम से चौघड़िया, राहु काल और अभिजित निकाले गए', 'Day split into eight parts; choghadiya, Rahu Kaal and Abhijit follow the weekday order'),
       ],
       actions: [{ label: L('आज का मुहूर्त', 'Daily Muhurat'), target: { tab: 'panchang', screen: 'MuhuratDetail', params: { dateMs: date.getTime() } } }],
       confidence: 'exact',
@@ -276,6 +283,9 @@ const observanceNext: AskIntent = {
       working: [
         entry.isClass ? `class ${entry.id}: min over ${observanceIdsFor(entry).length} rules` : `rule ${entry.id}`,
         `getNextOccurrence(from ${dayAt(ctx, 0).toDateString()}, ${ctx.calendarSystem}) → ${nxt.date.toDateString()}`,
+      ],
+      basis: [
+        L(`आज से आगे पंचांग में ${nxt.rule.nameHi} की अगली तिथि खोजी गई (${ctx.calendarSystem === 'amanta' ? 'अमांत' : 'पूर्णिमांत'} पद्धति)`, `Searched the panchang forward from today for the next ${nxt.rule.nameEn} (${ctx.calendarSystem === 'amanta' ? 'amanta' : 'purnimanta'} calendar)`),
       ],
       actions: [
         observanceAction(nxt.rule.id, L('व्रत विवरण', 'Details')),
