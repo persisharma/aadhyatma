@@ -226,3 +226,7 @@ The परिचय screen became a hub shaped by use (intro card → questions 
 ## [2026-09-23] ingest | Section A — 29 pan-India jayantis and named days
 
 A sweep against the standard pan-Hindu list (the Varaha Jayanti report) added 29 universal lunar-tithi rules: the Vishnu-avatar jayantis, saint jayantis, Devi jayantis, Narak Chaturdashi, Kaal Bhairav Jayanti, Mauni Amavasya, Ganesh Jayanti, Bhishma Ashtami, Magha Purnima and the two Gupt Navratris. Four avatar jayantis use `aparahna`. The catalog now has 176 rules, 164 of them default-visible; `CACHE_VERSION` is 8. The regenerated table only added rows (464, no date moved). Lalita Panchami, Sharad Durga Ashtami / Maha Navami, Vaikuntha Chaturdashi, Balarama / Gayatri / Ramanuja Jayanti and Sarva Pitru Amavasya were held back; the reasons are in `festivals.ts` and design.md §33. Added two gotchas to [[panchang]].
+
+## [2026-09-23] ingest | क्षेत्र area tag + list filter
+
+Added `panchang/observanceAreas.ts` (53 rules tagged with the regions their descriptions name; lensed rules use their lens) and `components/AreaFilterChips.tsx`, a सभी · सर्वत्र · per-area chip row on `ObservanceListScreen`. Tagged rows get an area line and the detail hero an area pill. The tag is display-only and never hides a rule. RULEBOOK §23a.14, design.md §33 and a gotcha in [[panchang]] document it; `observanceAreas.test.ts` pins it.
