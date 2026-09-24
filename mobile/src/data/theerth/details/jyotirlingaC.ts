@@ -12,7 +12,7 @@ const source = (label: string, url: string) => ({ label, url });
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
  *
- * Temples still to author in this chunk: nageshwar rameshwaram grishneshwar
+ * Temples still to author in this chunk: rameshwaram grishneshwar
  */
 export const details: Record<string, TempleDetail> = {
   vaidyanath: {
@@ -76,6 +76,69 @@ export const details: Record<string, TempleDetail> = {
           'देवघर झारखंड के संथाल परगना प्रमंडल में है। निकटतम बड़ा रेलवे स्टेशन जसीडीह जंक्शन है, जो मंदिर से लगभग 7 किमी दूर है; बैद्यनाथधाम स्टेशन मंदिर के और पास पड़ता है। देवघर हवाई अड्डा नगर से लगभग 10 किमी दूर है, और रांची तथा गया के हवाई अड्डे क्रमशः लगभग 250 किमी और 220 किमी दूर पड़ते हैं। कांवड़ यात्रा का आरम्भ-स्थल सुल्तानगंज (बिहार) यहाँ से लगभग 105 किमी है। अधिकांश तीर्थयात्री वैद्यनाथ धाम के साथ दुमका ज़िले के बासुकीनाथ को जोड़ते हैं, जो देवघर–दुमका मार्ग पर लगभग 45 किमी दूर है — लोक-मान्यता है कि बासुकीनाथ के दर्शन बिना यात्रा पूर्ण नहीं होती। समीप ही त्रिकूट पर्वत, नौलखा मंदिर, तपोवन और शिवगंगा सरोवर भी दर्शनीय हैं, और परिसर के भीतर पार्वती मंदिर सहित इक्कीस देवालय परिक्रमा में आते हैं।',
         bodyEn:
           'Deoghar lies in the Santhal Pargana division of Jharkhand. The main railhead is Jasidih Junction, roughly 7 km from the temple, with Baidyanathdham station closer to the shrine itself. Deoghar airport is about 10 km from the town, while the airports at Ranchi and Gaya lie approximately 250 km and 220 km away. Sultanganj in Bihar, where the Kanwar walk begins, is about 105 km distant. Most pilgrims pair Vaidyanath Dham with Basukinath in Dumka district, about 45 km along the Deoghar–Dumka road, since tradition holds that the yatra is incomplete without that darshan. Trikut hill, the Naulakha temple, Tapovan and the Shivganga tank are the usual nearby visits, and within the walled complex the Parvati shrine and the twenty-one subsidiary temples are taken in on the circumambulation.',
+      },
+    ],
+  },
+  nageshwar: {
+    significanceHi:
+      'देवभूमि द्वारका ज़िले का नागेश्वर ज्योतिर्लिङ्ग शिव को भक्तों के रक्षक — नागों के ईश्वर — रूप में स्मरण कराता है। शिवपुराण की रुद्रसंहिता इसे “दारुकावन नागेश्वरम्” कहती है और परम्परा मानती है कि यहाँ का स्मरण विष और भय दोनों से रक्षा करता है। मंदिर की मूल प्रतिष्ठा की कोई तिथि अभिलिखित नहीं है; स्वयम्भू लिङ्ग सदियों तक बालू में दबा रहा और वर्तमान भव्य मंदिर तथा लगभग अस्सी फुट ऊँची ध्यानस्थ शिव-प्रतिमा बीसवीं सदी के उत्तरार्ध में संगीत-निर्माता गुलशन कुमार के सहयोग से बनी। द्वारका यात्रा करने वाले अधिकांश तीर्थयात्री द्वारकाधीश के दर्शन के बाद यहीं आते हैं।',
+    significanceEn:
+      'Nageshwar in Devbhumi Dwarka district remembers Shiva as the protector of his devotees, the lord of the nagas. The Rudra Samhita of the Shiva Purana names the shrine "Darukavana Nageshwaram", and tradition holds that remembrance here guards against poison and against fear alike. No date of first consecration is recorded; the swayambhu linga lay buried in the sand for centuries, and the present spacious temple with its roughly eighty-foot seated Shiva in meditation was raised in the later twentieth century with the support of the music producer Gulshan Kumar. Most pilgrims on the Dwarka circuit come here after the darshan of Dwarkadhish.',
+    originStoryHi:
+      'शिवपुराण की कथा में दारुका नामक राक्षसी और उसके पति दारुक ने दारुकावन में आतंक फैलाया और शिव-भक्त सुप्रिय को अन्य यात्रियों सहित बंदी बना लिया। बंदीगृह में भी सुप्रिय ने सबको “ॐ नमः शिवाय” का जप कराया, जिससे क्रुद्ध दारुक ने उनके वध का आदेश दिया। कथा कहती है कि उसी क्षण शिव ज्योतिर्लिङ्ग रूप में प्रकट हुए, बंदियों की रक्षा की और नागेश्वर नाम से वहीं विराजमान हो गए।',
+    originStoryEn:
+      'The Shiva Purana tells of the demoness Daruka and her husband Daruka who terrorised the forest of Darukavana and seized the Shiva devotee Supriya along with fellow travellers. Even in the prison Supriya led the captives in the chant of Om Namah Shivaya, and the enraged demon ordered them killed. At that moment, the story says, Shiva appeared as a column of light, defended the captives and remained at the spot under the name Nageshwar, the lord of serpents.',
+    sources: [
+      source('Gujarat Tourism — Nageshwar Jyotirlinga', 'https://gujarattourism.com/saurashtra/devbhoomi-dwarka/nageshwar-jyotirlinga.html'),
+      source('District Devbhumi Dwarka, Government of Gujarat — Nageshwar Temple', 'https://devbhumidwarka.nic.in/tourist-place/nageshwar-temple/'),
+      source('Incredible India — Nageshwar Jyotirlinga', 'https://www.incredibleindia.gov.in/en/gujarat/dwarka/nageshwar-jyotirlinga'),
+      source('Nageshwar Jyotirlinga — Reference', 'https://en.wikipedia.org/wiki/Nageshvara_Jyotirlinga'),
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'नागेश्वर की स्थापना-कथा पुराण-परम्परा की है, किसी शिलालेख की नहीं — इसलिए यहाँ प्रतिष्ठा-तिथि, तिथि-वार अथवा प्रतिष्ठाकर्ता का कोई अभिलेख उपलब्ध नहीं है। शिवपुराण की रुद्रसंहिता में यह क्षेत्र दारुकावन कहलाता है, और सुप्रिय की रक्षा के लिए शिव के प्रकट होने की कथा ही इस स्थान की आधारशिला मानी जाती है। द्वारका अंचल के पुरातात्त्विक उत्खनन इस तट पर एक के नीचे एक बसी कई प्राचीन बस्तियों की ओर संकेत करते हैं, जिससे यहाँ की बसावट की प्राचीनता प्रमाणित होती है। परम्परा कहती है कि मध्यकाल की उथल-पुथल और समुद्री कटाव के बीच स्वयम्भू लिङ्ग लम्बे समय तक बालू में ढँका रहा और बाद में पुनः प्रकट हुआ। वर्तमान विशाल मंदिर, परिसर और लगभग अस्सी फुट ऊँची ध्यानस्थ शिव-प्रतिमा का निर्माण बीसवीं सदी के उत्तरार्ध में संगीत-निर्माता गुलशन कुमार के सहयोग से हुआ, और सेवा-पूजा की व्यवस्था मंदिर न्यास देखता है। नागेश्वर की पहचान को लेकर महाराष्ट्र का औंढा नागनाथ और उत्तराखंड का जागेश्वर भी दावा करते हैं; लोक-प्रचलित गणना द्वारका के इसी मंदिर को द्वादश ज्योतिर्लिङ्ग में रखती है, जिसे यह ऐप अंकित करता है।',
+        bodyEn:
+          'Nageshwar’s founding account is Puranic rather than epigraphic, so no consecration date, tithi, weekday or consecrating acharya survives for this shrine. The Rudra Samhita of the Shiva Purana calls the tract Darukavana, and the appearance of Shiva to save Supriya is taken as the shrine’s beginning. Archaeological work along the Dwarka coast has shown successive ancient settlements layered at this site, which attests to how long the place has been inhabited. Tradition holds that through medieval upheaval and coastal erosion the swayambhu linga lay buried in sand for a long period before being recovered. The wide temple, precinct and the roughly eighty-foot seated figure of Shiva in meditation that dominate the site today were built in the later twentieth century with the support of the music producer Gulshan Kumar, and the temple trust now runs the worship. The identity of Nageshwar is also claimed by Aundha Nagnath in Maharashtra and Jageshwar in Uttarakhand; popular reckoning counts this Dwarka shrine among the twelve, and that is the pin this app follows.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'नागेश्वर महादेव का स्वरूप',
+        titleEn: 'The Form of Nageshwar Mahadev',
+        bodyHi:
+          'नागेश्वर का गर्भगृह भूमि-तल से कुछ नीचे बना है, इसलिए दर्शनार्थी सीढ़ियाँ उतरकर लिङ्ग तक पहुँचते हैं — यही इस धाम की सबसे विशिष्ट रचना है। लिङ्ग दक्षिणाभिमुख है, जो ज्योतिर्लिङ्गों में असाधारण माना जाता है, और उसका पत्थर द्वारका-शिला कहलाता है, जिस पर छोटे-छोटे चक्र-चिह्न उभरे रहते हैं। परम्परा उसके आकार की तुलना त्रिमुखी रुद्राक्ष से करती है, और भक्त उसे नागों के स्वामी के रूप में पूजते हैं। गर्भगृह के भीतर सीमित संख्या में ही श्रद्धालु एक साथ जा पाते हैं, जिससे दर्शन शान्त और निकट का अनुभव देता है। परिसर के बाहर खुले प्रांगण में ध्यानमग्न शिव की विशाल प्रतिमा दूर से ही दिखाई देती है और अरब सागर की ओर खुलता यह तट मंदिर की पहचान बन गया है।',
+        bodyEn:
+          'The sanctum at Nageshwar sits a little below ground level, so worshippers step down to reach the linga — the most distinctive feature of the shrine. The linga faces south, which is unusual among the Jyotirlingas, and is cut from the stone called Dwarka Shila, whose surface carries small raised chakra markings. Tradition likens its shape to a three-faced rudraksha, and devotees revere it as the lord of the serpents. Only a limited number of people can stand in the sanctum at once, which keeps the darshan quiet and close. Outside, in the open forecourt, the vast seated figure of Shiva in meditation is visible from far off, and this stretch of coast facing the Arabian Sea has become the temple’s public face.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'रुद्राभिषेक और नाग-रक्षा',
+        titleEn: 'Rudrabhishek and the Serpent’s Protection',
+        bodyHi:
+          'नागेश्वर की मुख्य परम्परा रुद्राभिषेक है — जल, दूध, दही, घी, मधु और शर्करा के पंचामृत से लिङ्ग का अभिषेक, जिसके लिए मंदिर प्रातःकाल का अलग समय निर्धारित करता है और श्रद्धालु पहले से बुकिंग कराते हैं। बेलपत्र, धतूरा और सफेद पुष्प यहाँ का सामान्य अर्पण हैं। लोक-मान्यता है कि नागेश्वर का स्मरण सर्प-विष, भय और कालसर्प-दोष से रक्षा करता है, इसलिए अनेक भक्त यहाँ नाग-सम्बन्धी संकल्प और पाठ कराते हैं। मंदिर प्रातः लगभग पाँच बजे खुलता है और रात्रि तक दर्शन चलते हैं, बीच में दोपहर का विराम प्रायः नहीं होता; सोमवार और श्रावण के सोमवार सबसे व्यस्त रहते हैं, जब अभिषेक की कतार लम्बी हो जाती है।',
+        bodyEn:
+          'The central practice at Nageshwar is the Rudrabhishek, the bathing of the linga with the panchamrit of water, milk, curd, ghee, honey and sugar, for which the temple sets aside an early-morning slot that devotees usually reserve in advance. Bel leaves, dhatura and white flowers are the ordinary offerings. Popular belief holds that remembering Nageshwar protects against snake venom, against fear and against the kaal-sarp affliction, so many devotees have serpent-related sankalpas and recitations performed here. The temple opens around five in the morning and darshan continues into the night, generally without a midday closure; Mondays and the Mondays of Shravan are the busiest, when the queue for abhishek runs long.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'वर्ष का सबसे बड़ा पर्व महाशिवरात्रि (फाल्गुन कृष्ण चतुर्दशी) है, जब रातभर चार प्रहर की पूजा, निरन्तर अभिषेक और जागरण होता है और सौराष्ट्र-भर से श्रद्धालु उमड़ते हैं। श्रावण मास पूरा उत्सव-काल रहता है — विशेषकर सोमवार, जब विशेष शृंगार और सामूहिक रुद्राभिषेक होते हैं। नागपंचमी (श्रावण शुक्ल पंचमी) का यहाँ अलग महत्त्व है, क्योंकि नागेश्वर नागों के अधिपति माने जाते हैं। कार्तिक पूर्णिमा और प्रदोष तिथियों पर भी विशेष आरती होती है, और द्वारका की जन्माष्टमी भीड़ का प्रभाव इस मंदिर तक पहुँचता है।',
+        bodyEn:
+          'The great observance of the year is Mahashivaratri on Phalgun Krishna Chaturdashi, kept with the four watches of night worship, continuous abhishek and a vigil, drawing devotees from across Saurashtra. The whole month of Shravan is festive, the Mondays especially, with elaborate shringar and collective Rudrabhishek. Nag Panchami on Shravan Shukla Panchami carries particular weight here, since Nageshwar is held to be the lord of serpents. Kartik Purnima and the Pradosh days also bring special aartis, and the Janmashtami crowds at Dwarka spill over to this shrine as well.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'नागेश्वर गुजरात के देवभूमि द्वारका ज़िले में, द्वारका से बेट द्वारका जाने वाले तटीय मार्ग पर है — द्वारका नगर से लगभग 17–18 किमी। निकटतम रेलवे स्टेशन द्वारका है, जो लगभग इतनी ही दूरी पर पड़ता है; निकटतम हवाई अड्डे पोरबंदर (लगभग 107 किमी) और जामनगर (लगभग 126 किमी) हैं। लगभग सभी तीर्थयात्री नागेश्वर को द्वारकाधीश मंदिर, बेट द्वारका और रुक्मिणी देवी मंदिर के साथ एक ही परिक्रमा में जोड़ते हैं, और अनेक इसे सोमनाथ–द्वारका ज्योतिर्लिङ्ग यात्रा की कड़ी बनाते हैं। मंदिर के पास ही गोपी तालाब तीर्थ है, जिसे गोपियों की स्मृति से जोड़ा जाता है; तट पर शिवराजपुर समुद्र-तट भी निकट पड़ता है।',
+        bodyEn:
+          'Nageshwar stands in Devbhumi Dwarka district of Gujarat on the coastal road that runs from Dwarka towards Bet Dwarka, roughly 17–18 km from Dwarka town. Dwarka is the nearest railhead at about the same distance; the closest airports are Porbandar, some 107 km away, and Jamnagar, about 126 km. Nearly every pilgrim takes Nageshwar together with the Dwarkadhish temple, Bet Dwarka and the Rukmini Devi shrine in one circuit, and many fold it into the Somnath–Dwarka Jyotirlinga journey. Close by lies Gopi Talav, a tank associated in tradition with the gopis, and the Shivrajpur beach is a short distance along the same coast.',
       },
     ],
   },
