@@ -45,7 +45,7 @@ import DaanJourneyScreen from '../DaanJourneyScreen';
 import DaanDirectoryScreen from '../DaanDirectoryScreen';
 import DaanDirectoryDetailScreen from '../DaanDirectoryDetailScreen';
 import DaanKathaScreen from '../DaanKathaScreen';
-import { getDaanKathas, getDaanOrg } from '@/data/daan';
+import { getDaanKathas, getDaanOrg, getDaanOrgs, getDaanVaarEntry } from '@/data/daan';
 
 const has = (tree: TestRenderer.ReactTestRenderer, testID: string) =>
   tree.root.findAllByProps({ testID }).length > 0;
@@ -206,12 +206,61 @@ describe('DaanJourneyScreen — single-scroll, terminal actions always present (
     expect(has(tree, 'daan-journey-skip')).toBe(true);
     expect(has(tree, 'daan-journey-record')).toBe(true);
     expect(has(tree, 'daan-journey-directory')).toBe(true);
-    // Daily mode has no occasion causes → no causes line, and the doors carry {}.
-    expect(has(tree, 'daan-journey-causes')).toBe(false);
+    // The doors carry {} — the outlined द्वार door is always the full listing.
     await press(tree, 'daan-journey-record');
     expect(mockNavigation.navigate).toHaveBeenCalledWith('DaanEntry', {});
     await press(tree, 'daan-journey-directory');
     expect(mockNavigation.navigate).toHaveBeenCalledWith('DaanDirectory', {});
+    await act(async () => tree.unmount());
+  });
+
+  test("daily mode: the recommended chip row names today's vaar causes and each chip lands on ONE filtered cause", async () => {
+    const navigation = { ...mockNavigation } as never;
+    const tree = await renderScreen(
+      <DaanJourneyScreen navigation={navigation} route={{ key: 'k', name: 'DaanJourney', params: undefined } as never} />
+    );
+    const vaar = getDaanVaarEntry(new Date().getDay());
+    const orgs = getDaanOrgs();
+    const live = (vaar.causes ?? []).filter((c) => orgs.some((org) => org.causes.includes(c)));
+    expect(live.length).toBeGreaterThan(0);
+    expect(has(tree, 'daan-journey-causes')).toBe(true);
+    for (const cause of live) {
+      mockNavigation.navigate.mockClear();
+      await press(tree, `daan-journey-recommended-${cause}`);
+      // A single cause → the द्वार skips the grid and opens that shelf (§5.1).
+      expect(mockNavigation.navigate).toHaveBeenCalledWith('DaanDirectory', { causes: [cause] });
+    }
+    await act(async () => tree.unmount());
+  });
+
+  test('Wednesday recommends गौ-सेवा: gau-gras → the gau shelf directly', async () => {
+    const wednesday = getDaanVaarEntry(3);
+    expect(wednesday.causes).toEqual(['gau']);
+    const spy = jest.spyOn(Date.prototype, 'getDay').mockReturnValue(3);
+    try {
+      const navigation = { ...mockNavigation } as never;
+      const tree = await renderScreen(
+        <DaanJourneyScreen navigation={navigation} route={{ key: 'k', name: 'DaanJourney', params: undefined } as never} />
+      );
+      expect(has(tree, 'daan-journey-recommended-gau')).toBe(true);
+      expect(has(tree, 'daan-journey-recommended-anna')).toBe(false);
+      mockNavigation.navigate.mockClear();
+      await press(tree, 'daan-journey-recommended-gau');
+      expect(mockNavigation.navigate).toHaveBeenCalledWith('DaanDirectory', { causes: ['gau'] });
+      await act(async () => tree.unmount());
+    } finally {
+      spy.mockRestore();
+    }
+  });
+
+  test('occasion mode: one recommended chip per live occasion cause, the door itself keeps all of them', async () => {
+    const tree = await renderJourney();
+    for (const cause of ['anna', 'vastra', 'gau']) {
+      expect(has(tree, `daan-journey-recommended-${cause}`)).toBe(true);
+    }
+    mockNavigation.navigate.mockClear();
+    await press(tree, 'daan-journey-recommended-gau');
+    expect(mockNavigation.navigate).toHaveBeenCalledWith('DaanDirectory', { causes: ['gau'] });
     await act(async () => tree.unmount());
   });
 });

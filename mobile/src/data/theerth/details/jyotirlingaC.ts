@@ -1,6 +1,4 @@
-import type { TempleDetail } from '../temples';
-
-const source = (label: string, url: string) => ({ label, url });
+import type { TempleDetail, TheerthSource } from '../temples';
 
 /**
  * Extended §12.6 readings — Jyotirlingas C.
@@ -14,6 +12,8 @@ const source = (label: string, url: string) => ({ label, url });
  *
  * All four temples of this chunk now carry the full §12.6 reading.
  */
+const source = (label: string, url: string): TheerthSource => ({ label, url });
+
 export const details: Record<string, TempleDetail> = {
   vaidyanath: {
     significanceHi:

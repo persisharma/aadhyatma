@@ -2,7 +2,7 @@
 title: Daan Punya
 type: subsystem
 sources: [mobile/src/data/daan/, mobile/src/contexts/DaanLedgerContext.tsx, mobile/src/components/CategoryIcon.tsx, mobile/src/screens/HomeScreen.tsx, mobile/src/screens/DaanPunyaScreen.tsx, mobile/src/screens/DaanJourneyScreen.tsx, mobile/src/screens/DaanLedgerScreen.tsx, mobile/src/screens/DaanEntryScreen.tsx, mobile/src/screens/DaanDirectoryScreen.tsx, mobile/src/screens/DaanDirectoryDetailScreen.tsx, mobile/src/screens/DaanKathaScreen.tsx, mobile/src/screens/ObservanceDetailScreen.tsx, mobile/src/navigation/types.ts, docs/roadmap/prds/26-daan-punya.md, RULEBOOK.md, design.md]
-last_verified_date: 2026-09-21
+last_verified_date: 2026-09-23
 confidence: high
 status: current
 ---
@@ -27,7 +27,8 @@ content is generated from the registries, so it cannot drift from the code).
   each carrying its **mahatva** + optional paired citation/source, plus the
   honest text-intent purpose bridge), `principles.ts` (verse/teaching rows),
   `occasions.ts` (~17 day rows keyed to real solver rule ids), `vaar.ts`
-  (7-row weekly table, shared with PRD-21), `kathas.ts` (Karna, Rantideva,
+  (7-row weekly table, shared with PRD-21; each row carries `causes`, the
+  प्रयोजन its items serve — Wed gau-gras → `gau`, Thu books → `vidya`), `kathas.ts` (Karna, Rantideva,
   Shibi, Bali–Vamana, Sudama — full bilingual retellings), `directory.ts`
   (9 verified orgs: Akshaya Patra, Annamrita, TTD Annaprasadam, Goonj,
   Belur Math, e-RaktKosh, HelpAge India, CRY, Blue Cross of India), `ledger.ts` (pure core: validation, gupt
@@ -86,6 +87,14 @@ content is generated from the registries, so it cannot drift from the code).
   serves, and the द्वार's only grouping. Cause chips derive from the rows
   present (never an empty shelf); occasions carry `causes` and the journey's
   terminal door pre-filters the द्वार to them.
+- **Recommendation vs listing are two doors** (Sept 2026): the journey's
+  terminal block renders a **recommended-daan chip row** (`daan-journey-causes`
+  → `daan-journey-recommended-<cause>`) from the day's causes (occasion's, else
+  the vaar row's) ∩ live causes; each chip opens `DaanDirectory {causes:[one]}`
+  so the द्वार lands on that shelf directly. The outlined `दान-द्वार` door stays
+  the full listing (`{}` in daily mode; occasion causes ring the grid in
+  occasion mode). `daanContent.test.ts` pins every vaar cause to a live org;
+  `DaanScreens.test.tsx` pins Wednesday → `gau` alone.
 - **Purpose bridge is विद्या→knowledge and आरोग्य→health ONLY** — never
   wealth/prosperity (fruit-promise). The `PurposeList` door opens the educate
   home, never the directory; a source-shape test pins it.
