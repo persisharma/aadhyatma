@@ -10,9 +10,78 @@ import type { TempleDetail } from '../temples';
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
  *
- * Temples still to author in this chunk: chamundeshwari jogulamba
+ * Temples still to author in this chunk: jogulamba
  */
 export const details: Record<string, TempleDetail> = {
+  chamundeshwari: {
+    significanceHi:
+      'मैसूरु की चामुंडी पहाड़ी पर विराजित चामुंडेश्वरी अष्टादश महाशक्ति पीठों में चौथे स्थान पर गिनी जाती हैं और मैसूर राजवंश की कुलदेवी हैं। यह पीठ "क्रौंच पीठ" कहलाता है, क्योंकि इस क्षेत्र का प्राचीन नाम क्रौंचपुरी था। मंदिर का मूल गर्भगृह बारहवीं शताब्दी का माना जाता है; सन् 1659 (विक्रम संवत् 1716) में डोड्ड देवराज वाडियार ने पहाड़ी पर सोपान-मार्ग बनवाया और सन् 1827 (विक्रम संवत् 1884) में कृष्णराज वाडियार तृतीय ने मंदिर का जीर्णोद्धार कराकर वर्तमान गोपुर खड़ा किया। महिषासुर-मर्दिनी रूप में पूजित देवी के नाम पर ही मैसूरु (महिषूरु) नगर का नाम पड़ा माना जाता है।',
+    significanceEn:
+      'Chamundeshwari, enthroned on Chamundi Hill above Mysuru, stands fourth in the list of the eighteen Maha Shakti Peethas and is the kuladevata of the Mysore royal house. The seat is called Krauncha Pitha, after Kraunchapuri, the region’s ancient name. The core shrine is held to go back to the twelfth century; in 1659 CE (Vikram Samvat 1716) Dodda Devaraja Wodeyar cut the great stone stairway up the hill, and in 1827 CE (Vikram Samvat 1884) Krishnaraja Wodeyar III restored the temple and raised the gopura that stands today. Worshipped as Mahishasuramardini, the slayer of the buffalo demon, she gives the city its own name — Mahishuru, Mysuru.',
+    originStoryHi:
+      'पुराण-कथा के अनुसार महिषासुर नामक असुर ने इस क्षेत्र पर अधिकार कर लिया था और देवताओं की प्रार्थना पर देवी ने चामुंडा रूप धारण कर पहाड़ी की चोटी पर उसका संहार किया; उसी विजय से वे चामुंडेश्वरी कहलाईं और पहाड़ी चामुंडी। परम्परा के अनुसार शक्ति-पीठ गणना में सती के केश इसी भूमि पर गिरे, जिससे यह स्थान महापीठ बना। पहाड़ी की तलहटी और शिखर आज भी उसी कथा को दोहराते हैं — शिखर के पास खड्ग और सर्प लिए महिषासुर की विशाल प्रतिमा खड़ी है।',
+    originStoryEn:
+      'The Puranic account tells that the asura Mahishasura held this country until the gods appealed to the Devi, who took her Chamunda form and destroyed him on the hilltop; from that victory she is Chamundeshwari and the hill is Chamundi. By the Shakti Peeth tradition, the hair of Sati fell on this ground, which is what makes the site a Maha Peetha. The hill still retells the story: near the summit stands a great painted figure of Mahishasura, a sword in one hand and a cobra in the other.',
+    sources: [
+      { label: 'Sri Chamundeshwari Temple, Mysuru (temple administration)', url: 'https://chamundeshwaritemple.in/' },
+      {
+        label: 'Karnataka Tourism — Chamundeshwari Temple, Mysore',
+        url: 'https://karnatakatourism.org/en/attractions/chamundeshwari-temple',
+      },
+      {
+        label: 'Mysuru District Administration, Government of Karnataka — Chamundi Hill',
+        url: 'https://mysore.nic.in/en/tourist-place/chamunid-hill/',
+      },
+      { label: 'Chamundeshwari Temple — Reference', url: 'https://en.wikipedia.org/wiki/Chamundeshwari_Temple' },
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'चामुंडी पहाड़ी लगभग 1,063 मीटर (3,489 फुट) ऊँची है और मैसूरु नगर से लगभग 13 किमी दूर पड़ती है; यहाँ देवी का गर्भगृह बारहवीं शताब्दी का माना जाता है, जिसमें विजयनगर काल में और फिर मैसूर के वाडियार शासकों के समय विस्तार हुआ। मूल प्रतिष्ठा की तिथि, वार अथवा प्रतिष्ठाकर्ता का नाम किसी अभिलेख में दर्ज नहीं है — जो दर्ज है वह राजाश्रय की क्रमबद्ध कथा है। डोड्ड देवराज वाडियार (शासन 1659–1673) ने सन् 1659 (विक्रम संवत् 1716) में पहाड़ी पर लगभग एक हज़ार सीढ़ियों का पाषाण-मार्ग बनवाया और सन् 1664 (विक्रम संवत् 1721) में मार्ग के लगभग बीच में एकाश्म काले ग्रेनाइट का विशाल नंदी स्थापित कराया। सन् 1827 (विक्रम संवत् 1884) में कृष्णराज वाडियार तृतीय ने मंदिर का जीर्णोद्धार कराया, प्रवेश पर वर्तमान ऊँचा गोपुर बनवाया और संस्कृत श्लोकों से अंकित "नक्षत्रमालिका" आभूषण देवी को अर्पित किया; उन्होंने ही उत्सव-मूर्ति की प्रतिष्ठा की, जिसकी वर्षगाँठ आज भी अम्मनवर वर्धंती के रूप में मनाई जाती है। चामुंडेश्वरी मैसूर राजवंश की कुलदेवी हैं और मंदिर की व्यवस्था आज राज्य-अधीन मंदिर प्रशासन देखता है।',
+        bodyEn:
+          'Chamundi Hill rises about 1,063 metres (3,489 feet) and stands roughly 13 km from Mysuru city; the goddess’s sanctum here is held to date from the twelfth century, with additions through the Vijayanagara period and again under the Wodeyar rulers of Mysore. No inscription gives a tithi, a weekday or a named consecrator for the first installation — what the record holds is an orderly history of royal patronage. Dodda Devaraja Wodeyar (r. 1659–1673) cut the stone stairway of about a thousand steps up the hill in 1659 CE (Vikram Samvat 1716), and in 1664 CE (Vikram Samvat 1721) set the great monolithic black-granite Nandi about halfway along it. In 1827 CE (Vikram Samvat 1884) Krishnaraja Wodeyar III restored the temple, raised the tall gateway tower that now fronts it, and presented the Nakshatramalika jewel inscribed with Sanskrit verses; it was he who installed the processional utsava murti, whose anniversary is still kept as the Ammanavara Vardhanti. Chamundeshwari is kuladevata to the Mysore royal house, and the shrine is run today by a state-supervised temple administration.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'चामुंडेश्वरी का स्वरूप',
+        titleEn: 'The Form of Chamundeshwari',
+        bodyHi:
+          'गर्भगृह में देवी महिषासुर-मर्दिनी रूप में विराजमान हैं — बैठी हुई, अष्टभुजा, हाथों में शंख, चक्र, त्रिशूल, खड्ग और अन्य आयुध; उनका वाहन सिंह है। विग्रह स्वर्ण-आभूषणों से मंडित रहता है, और राजपरिवार द्वारा अर्पित स्वर्ण-नथ उनके सबसे प्रसिद्ध अलंकारों में गिनी जाती है; गर्भगृह का द्वार रजत-मंडित है और प्रवेश-गोपुर बहुमंज़िला दक्षिण शैली का है। सोपान-मार्ग के बीचोंबीच एक ही काले ग्रेनाइट शिलाखंड से गढ़ा नंदी लगभग 4.9 मीटर ऊँचा और 7.6 मीटर लम्बा है — भारत की सबसे बड़ी नंदी-प्रतिमाओं में गिना जाता है। उसी पहाड़ी पर देवी के मंदिर से कुछ दूर प्राचीन महाबलेश्वर शिव-मंदिर है, जो चामुंडी की सबसे पुरानी संरचना माना जाता है, और शिखर के निकट महिषासुर की रंगी हुई विशाल प्रतिमा खड़ी है।',
+        bodyEn:
+          'In the sanctum the goddess is enshrined as Mahishasuramardini — seated, eight-armed, holding conch, discus, trident, sword and her other weapons, with the lion as her mount. The image is kept dressed in gold ornaments, among which the gold nose ring given by the royal family is the most famous; the sanctum doorway is clad in silver and the entrance is fronted by a many-tiered gopura in the southern manner. Halfway up the stairway, carved from a single block of black granite, the Nandi stands about 4.9 metres tall and 7.6 metres long — reckoned among the largest Nandi images in India. On the same hill, a little apart from the goddess, is the old Mahabaleshwara Shiva temple, held to be the oldest structure on Chamundi, and near the summit rises the large painted figure of Mahishasura.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'सोपान-चढ़ाई और आषाढ़ शुक्रवार',
+        titleEn: 'The Thousand Steps and the Fridays of Ashada',
+        bodyHi:
+          'यहाँ की सबसे जानी-पहचानी रीत पैदल सोपान-चढ़ाई है: भक्त पहाड़ी के लगभग एक हज़ार सीढ़ियों वाले पाषाण-मार्ग से चढ़ते हैं, मार्ग के बीच नंदी को प्रणाम करते हैं और कई लोग सीढ़ियों पर हल्दी-कुंकुम अर्पित करते चलते हैं — यह मनौती और तपस्या दोनों का रूप माना जाता है। आषाढ़ मास के शुक्रवार (आषाढ़ शुक्रवार) देवी के सबसे प्रिय दिन माने जाते हैं, जब लाखों श्रद्धालु पहाड़ी चढ़ते हैं और विशेष अलंकार-दर्शन होते हैं; मंगलवार और शुक्रवार वर्षभर के व्यस्त दिन रहते हैं। कुंकुमार्चना, चंडिका-होम और अलंकार-सेवा यहाँ की प्रमुख सेवाएँ हैं, और अर्चना का कुंकुम प्रसाद-रूप में मिलता है। मंदिर प्रातः के अभिषेक-दर्शन से खुलकर, दोपहर विश्राम के बाद सायं पुनः खुलता है और रात्रि आरती से दिन पूरा होता है।',
+        bodyEn:
+          'The custom that marks this shrine is the climb: devotees go up the hill on the stone stairway of about a thousand steps, bow to the Nandi partway along, and many press turmeric and kumkum onto the steps as they rise — read as both a vow and a penance. The Fridays of the month of Ashada, the Ashada Shukravaras, are held to be the goddess’s own days, when lakhs make the ascent and she is shown in special alankara; Tuesdays and Fridays stay busy through the rest of the year. Kumkumarchana, the Chandika homa and alankara seva are the principal offerings, and the kumkum of the archana is returned as prasad. The temple opens early for the abhishekam darshan, closes through the middle of the day, reopens in the afternoon and ends with the night aarti.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'वर्ष का सबसे बड़ा पर्व शारदीय नवरात्रि है, जिसे मैसूरु दशहरा या नाडहब्बा कहा जाता है — वाडियार शासकों ने सन् 1610 (विक्रम संवत् 1667) में इसे राजकीय उत्सव का रूप दिया। आश्विन शुक्ल प्रतिपदा से दस दिन पहाड़ी और नगर दोनों सजते हैं, और विजयादशमी को जंबू सवारी निकलती है, जिसमें देवी की प्रतिमा स्वर्ण-अम्बारी में सजे हाथी पर नगर-भ्रमण करती है। देवी की वर्धंती (अम्मनवर वर्धंती) आषाढ़ कृष्ण पक्ष की रेवती नक्षत्र तिथि को मनाई जाती है — यह वस्तुतः कृष्णराज वाडियार तृतीय द्वारा उत्सव-मूर्ति की प्रतिष्ठा का स्मरण-दिवस है — और इसी अवसर पर रथोत्सव तथा पालकी-उत्सव होते हैं। आषाढ़ मास के शुक्रवारों की भीड़ नवरात्रि के बाद सबसे बड़ी होती है, और चैत्र नवरात्रि तथा वसन्तोत्सव भी मंदिर में मनाए जाते हैं।',
+        bodyEn:
+          'The year’s great festival is Sharad Navaratri, kept here as Mysuru Dasara, the Nada Habba — the Wodeyars gave it the shape of a royal festival in 1610 CE (Vikram Samvat 1667). From Ashwin Shukla Pratipada the hill and the city are lit for ten days, and on Vijayadashami the Jamboo Savari carries the goddess’s image through Mysuru in a golden howdah on a caparisoned elephant. Her Vardhanti, the Ammanavara Vardhanti, falls on the Revati nakshatra day in the Krishna Paksha of Ashada — in fact a remembrance of the day Krishnaraja Wodeyar III installed the processional image — and brings with it the chariot festival and the palanquin procession round the temple. The Fridays of Ashada draw the largest crowds after Navaratri, and Chaitra Navaratri and the spring Vasantotsava are kept here as well.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'मंदिर मैसूरु ज़िले में चामुंडी पहाड़ी के शिखर पर है — नगर से सड़क-मार्ग द्वारा लगभग 13 किमी, और पैदल-यात्री सोपान-मार्ग से चढ़ते हैं। निकटतम रेलवे स्टेशन मैसूरु जंक्शन है, जो पहाड़ी की तलहटी से लगभग 10–13 किमी पड़ता है; निकटतम हवाई अड्डा मैसूरु (मंडकल्ली) है और बड़ा अंतरराष्ट्रीय हवाई अड्डा बेंगलूरु, जो लगभग 150–170 किमी दूर है। सभी दूरियाँ अनुमानित हैं। दर्शन के साथ प्रायः मैसूरु महल, नंजनगूड का श्रीकंठेश्वर मंदिर और श्रीरंगपट्टण का रंगनाथस्वामी मंदिर जोड़े जाते हैं; सोमनाथपुर का केशव मंदिर भी इसी परिक्रमा में आता है। पहाड़ी पर ही महाबलेश्वर शिव-मंदिर, नंदी-प्रतिमा और महिषासुर-प्रतिमा दर्शनीय हैं, और शक्ति-यात्री कर्नाटक के इस पीठ को आलमपुर की जोगुलांबा तथा श्रीशैलम की भ्रमरांबा के साथ एक ही दक्षिण-यात्रा में बाँधते हैं।',
+        bodyEn:
+          'The temple crowns Chamundi Hill in Mysuru district — about 13 km from the city by road, while those who walk take the stairway. The nearest railhead is Mysuru Junction, roughly 10–13 km from the foot of the hill; the nearest airport is Mysuru (Mandakalli), with the larger international airport at Bengaluru some 150–170 km away. All distances are approximate. Darshan here is commonly joined with the Mysore Palace, the Srikanteshwara temple at Nanjangud and the Ranganathaswamy temple at Srirangapatna, with the Keshava temple at Somnathpur on the same round. The hill itself holds the Mahabaleshwara Shiva temple, the Nandi and the Mahishasura figure, and Shakta pilgrims string this Karnataka peeth together with Jogulamba at Alampur and Bhramaramba at Srisailam in a single southern yatra.',
+      },
+    ],
+  },
   shrinkhala: {
     significanceHi:
       'हुगली ज़िले के पांडुआ की श्रृंखला देवी अष्टादश महाशक्ति पीठों में गिनी जाती है — आदि शंकराचार्य को परम्परा द्वारा आरोपित अष्टादश शक्तिपीठ स्तोत्र में उन्हें "प्रद्युम्ने श्रृंखला देवी" कहकर स्मरण किया गया है। हुगली ज़िला प्रशासन का पर्यटन विवरण भी पांडुआ की श्रृंखला देवी को अठारह पीठों में गिनता है। यहाँ का मूल मंदिर मध्यकाल में नष्ट हो गया और आज स्थल पर भारतीय पुरातत्व सर्वेक्षण द्वारा सन् 1927 (विक्रम संवत् 1984) से संरक्षित मीनार और बाईस दरवाज़ा मस्जिद के खंडहर खड़े हैं; देवी की प्रतिष्ठा-तिथि, वार अथवा प्रतिष्ठाकर्ता का कोई अभिलेख उपलब्ध नहीं है। श्रृंखला — बंधन की कड़ी — के नाम से देवी बंधन काटने वाली माता के रूप में स्मरण की जाती हैं।',
