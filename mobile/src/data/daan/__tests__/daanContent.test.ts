@@ -95,6 +95,20 @@ describe('registry shape', () => {
     }
     checkSource(DAAN_VAAR_SOURCE);
     expect(getDaanVaarEntry(7).weekday).toBe(0);
+    // Recommended causes: valid प्रयोजन ids, no duplicates, each served by a
+    // verified org (a chip must land on a shelf, never an empty grid).
+    const causeIds = new Set(DAAN_CAUSES.map((c) => c.id));
+    const orgs = getDaanOrgs();
+    for (const entry of DAAN_VAAR_ENTRIES) {
+      const causes = entry.causes ?? [];
+      expect(new Set(causes).size).toBe(causes.length);
+      for (const cause of causes) {
+        expect(causeIds.has(cause)).toBe(true);
+        expect(orgs.some((org) => org.causes.includes(cause))).toBe(true);
+      }
+    }
+    // The gau-gras vaar recommends गौ alone — the chip opens that shelf directly.
+    expect(getDaanVaarEntry(3).causes).toEqual(['gau']);
     expect(getDaanVaarEntry(-1).weekday).toBe(6);
   });
 });

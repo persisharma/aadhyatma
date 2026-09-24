@@ -6,6 +6,13 @@
  * jumps straight to those terminal actions for the already-informed. The screen
  * has two modes: occasion mode (a specific daan-significant day) and daily mode
  * (today's vaar-daan, when no occasion is routed).
+ *
+ * RECOMMENDED DAAN: the outlined दान-द्वार door always opens the full listing;
+ * the chip row above it (`daan-journey-recommended-*`) names the प्रयोजन the
+ * day's items serve (occasion causes, else the vaar row's) and lands on the
+ * द्वार filtered to that ONE cause — Wednesday's gau-gras opens गौ-सेवा
+ * directly. Chips derive from live causes only (a cause with no verified row
+ * never renders a chip).
  */
 import React, { useMemo, useRef } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
@@ -20,6 +27,7 @@ import {
   getDaanCause,
   getDaanKatha,
   getDaanOccasion,
+  getDaanOrgs,
   getDaanPrinciples,
 } from '@/data/daan';
 import type { DaanCause } from '@/data/daan';
@@ -60,8 +68,18 @@ export default function DaanJourneyScreen({ navigation, route }: Props) {
     ? contentByLang(lang, occasion.titleHi, occasion.titleEn)
     : contentByLang(lang, 'दान-यात्रा', 'Daan journey');
 
-  // The प्रयोजन the day's daan serves — occasion causes, else (daily) none.
-  const causes: DaanCause[] = occasion?.causes ? [...occasion.causes] : [];
+  // The प्रयोजन the day's daan serves — occasion causes, else the vaar row's.
+  const sourceCauses = occasion ? occasion.causes : vaar.causes;
+  const causes = useMemo<DaanCause[]>(() => (sourceCauses ? [...sourceCauses] : []), [sourceCauses]);
+
+  // Recommended chips: only causes a verified org actually serves — a chip
+  // must land on a shelf, never on an empty grid.
+  const recommended = useMemo(() => {
+    const orgs = getDaanOrgs();
+    return causes
+      .filter((id) => orgs.some((org) => org.causes.includes(id)))
+      .map((id) => ({ id, meta: getDaanCause(id) }));
+  }, [causes]);
 
   const mahatva = occasion
     ? meaningByLang(lang, occasion.whyHi, occasion.whyEn)
@@ -78,16 +96,6 @@ export default function DaanJourneyScreen({ navigation, route }: Props) {
   const terminalY = useRef(0);
   const scrollToTerminal = () =>
     scrollRef.current?.scrollTo({ y: terminalY.current, animated: true });
-
-  const causesLine = useMemo(() => {
-    if (causes.length === 0) return null;
-    return causes
-      .map((id) => {
-        const meta = getDaanCause(id);
-        return meta ? contentByLang(lang, meta.nameHi, meta.nameEn) : id;
-      })
-      .join(' · ');
-  }, [causes, lang]);
 
   const sectionLabelStyle = {
     fontFamily: typography.sectionLabel.fontFamily,
@@ -252,14 +260,29 @@ export default function DaanJourneyScreen({ navigation, route }: Props) {
             terminalY.current = e.nativeEvent.layout.y;
           }}
         >
-          {causesLine ? (
-            <Text
-              testID="daan-journey-causes"
-              style={{ fontFamily: bodyFont, fontSize: 12.5, lineHeight: 19, color: colors.saffronDeep, textAlign: 'center', marginBottom: 10 }}
-            >
-              {contentByLang(lang, 'इस दिन की सेवा — ', 'This day serves — ')}
-              {causesLine}
-            </Text>
+          {/* Recommended daan — the day's प्रयोजन as chips, each landing on
+              the द्वार filtered to that one cause (the outlined door below
+              keeps the full listing). */}
+          {recommended.length > 0 ? (
+            <View testID="daan-journey-causes" style={styles.recommendedRow}>
+              <Text style={{ fontFamily: bodyFont, fontSize: 12.5, lineHeight: 19, color: colors.saffronDeep }}>
+                {contentByLang(lang, occasion ? 'इस दिन का दान —' : 'आज का दान —', occasion ? "This day's daan —" : "Today's daan —")}
+              </Text>
+              {recommended.map(({ id, meta }) => (
+                <Pressable
+                  key={id}
+                  testID={`daan-journey-recommended-${id}`}
+                  accessibilityRole="button"
+                  accessibilityLabel={`Recommended daan ${meta?.nameEn ?? id}, opens the directory`}
+                  onPress={() => navigation.navigate('DaanDirectory', { causes: [id] })}
+                  style={[styles.recommendedChip, { backgroundColor: colors.goldChipBg, borderColor: colors.gold, borderRadius: radii.pill }]}
+                >
+                  <Text style={{ fontFamily: titleFont, fontSize: 13, color: colors.saffronDeep }}>
+                    {meta ? contentByLang(lang, meta.nameHi, meta.nameEn) : id} ›
+                  </Text>
+                </Pressable>
+              ))}
+            </View>
           ) : null}
           <View style={styles.actionRow}>
             <Pressable
@@ -277,7 +300,11 @@ export default function DaanJourneyScreen({ navigation, route }: Props) {
               testID="daan-journey-directory"
               accessibilityRole="button"
               accessibilityLabel="Open the giving directory, external"
-              onPress={() => navigation.navigate('DaanDirectory', causes.length ? { causes } : {})}
+              onPress={() =>
+                // The door keeps its pre-change contract: an occasion's causes ring
+                // the grid; daily mode opens the full listing (the chips recommend).
+                navigation.navigate('DaanDirectory', occasion?.causes?.length ? { causes: [...occasion.causes] } : {})
+              }
               style={[styles.actionBtn, { borderColor: colors.saffron, borderRadius: radii.pill }]}
             >
               <Text style={{ fontFamily: titleFont, fontSize: 13, color: colors.saffronDeep }}>
@@ -298,6 +325,8 @@ const styles = StyleSheet.create({
   rowCard: { borderWidth: 1, paddingHorizontal: 14, paddingVertical: 12, marginBottom: 9, flexDirection: 'row', alignItems: 'center', gap: 10 },
   chipBtn: { borderWidth: 1.5, paddingHorizontal: 14, paddingVertical: 7, marginTop: 11 },
   terminal: { borderTopWidth: 1, marginTop: 6, paddingTop: 14 },
+  recommendedRow: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 8, marginBottom: 12 },
+  recommendedChip: { borderWidth: 1, minHeight: 36, paddingHorizontal: 14, alignItems: 'center', justifyContent: 'center' },
   actionRow: { flexDirection: 'row', gap: 8 },
   actionBtn: { flex: 1, borderWidth: 1.5, minHeight: 42, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 8 },
 });

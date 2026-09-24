@@ -1,4 +1,4 @@
-import type { TempleDetail } from '../temples';
+import type { TempleDetail, TheerthSource } from '../temples';
 
 /**
  * Extended §12.6 readings — Maha Shakti Peethas D.
@@ -12,6 +12,8 @@ import type { TempleDetail } from '../temples';
  *
  * All four temples in this chunk carry their full reading.
  */
+const source = (label: string, url: string): TheerthSource => ({ label, url });
+
 export const details: Record<string, TempleDetail> = {
   'tripura-sundari': {
     significanceHi:
@@ -23,10 +25,10 @@ export const details: Record<string, TempleDetail> = {
     originStoryEn:
       'By tradition the right foot of Sati — the Dakshin Charan, with its great toe — fell at this place after Daksha’s sacrifice, so the goddess is worshipped here as Tripurasundari with Tripuresh as her Bhairava. A second story belongs to the royal line: Maharaja Dhanya Manikya, ruling at the close of the fifteenth century, was told in a dream to begin her worship on a hill near Udaipur, then his capital. On that tortoise-shaped mound the king raised the temple in 1501 CE and installed the image.',
     sources: [
-      { label: 'Tripura Sundari Temple (Government of Tripura)', url: 'https://tripurasundari.tripura.gov.in/' },
-      { label: 'Tripura Tourism - Tripura Sundari Temple', url: 'https://tripuratourism.gov.in/single-tour.php?id=2' },
-      { label: 'Incredible India - Tripura Sundari Temple', url: 'https://www.incredibleindia.gov.in/en/tripura/agartala/tripura-sundari-temple' },
-      { label: 'Tripura Sundari Temple - Reference', url: 'https://en.wikipedia.org/wiki/Tripura_Sundari_Temple' },
+      source('Tripura Sundari Temple (Government of Tripura)', 'https://tripurasundari.tripura.gov.in/'),
+      source('Tripura Tourism - Tripura Sundari Temple', 'https://tripuratourism.gov.in/single-tour.php?id=2'),
+      source('Incredible India - Tripura Sundari Temple', 'https://www.incredibleindia.gov.in/en/tripura/agartala/tripura-sundari-temple'),
+      source('Tripura Sundari Temple - Reference', 'https://en.wikipedia.org/wiki/Tripura_Sundari_Temple'),
     ],
     sections: [
       {
@@ -86,10 +88,10 @@ export const details: Record<string, TempleDetail> = {
     originStoryEn:
       'By tradition the tooth — danta — of Sati fell at this place after Daksha’s sacrifice, which gave the goddess her name Danteshwari and the Bastar town its name Dantewada. A second story belongs to the royal line: as the Kakatiya prince Annamadeva pressed into the Dandakaranya forest the goddess walked behind him, on the promise that she would halt wherever he turned to look. At the confluence of the Shankhini and Dankini he looked back, she stayed where she stood, and the temple was raised on that ground.',
     sources: [
-      { label: 'Incredible India - Danteshwari Temple', url: 'https://www.incredibleindia.gov.in/en/chhattisgarh/jagdalpur/danteshwari-temple' },
-      { label: 'District Dantewada, Government of Chhattisgarh - Tourist Places', url: 'https://dantewada.nic.in/en/tourist-place/dantewada/' },
-      { label: 'Utsav, Ministry of Tourism - Phagun Madai', url: 'https://utsav.gov.in/view-event/phagun-madai' },
-      { label: 'Danteshwari Temple - Reference', url: 'https://en.wikipedia.org/wiki/Danteshwari_Temple' },
+      source('Incredible India - Danteshwari Temple', 'https://www.incredibleindia.gov.in/en/chhattisgarh/jagdalpur/danteshwari-temple'),
+      source('District Dantewada, Government of Chhattisgarh - Tourist Places', 'https://dantewada.nic.in/en/tourist-place/dantewada/'),
+      source('Utsav, Ministry of Tourism - Phagun Madai', 'https://utsav.gov.in/view-event/phagun-madai'),
+      source('Danteshwari Temple - Reference', 'https://en.wikipedia.org/wiki/Danteshwari_Temple'),
     ],
     sections: [
       {
@@ -149,10 +151,10 @@ export const details: Record<string, TempleDetail> = {
     originStoryEn:
       'By tradition, Shakti Peethas arose wherever a limb or an ornament of Sati fell after Daksha’s sacrifice; at Kashi it is the ornament of her ear that is held to have fallen — some accounts call it an earring, others the jewel of her right ear. The goddess is therefore worshipped here in Parvati’s Vishalakshi form, and the spot is named Vishal Teerth. The Kashi Khand of the Skanda Purana counts Vishalakshi among the nine Gauris of Kashi, so the peeth belongs to the city’s own Gauri tradition as well.',
     sources: [
-      { label: 'Incredible India - Vishalakshi Temple, Varanasi', url: 'https://www.incredibleindia.gov.in/en/uttar-pradesh/varanasi/vishalakshi-temple' },
-      { label: 'Kashi Official Web Portal - Vishalakshi Devi Temple', url: 'https://kashi.gov.in/listing-details/vishalakshi-devi-temple' },
-      { label: 'Kashi Official Web Portal - Nav Gauri Yatra', url: 'https://kashi.gov.in/varanasi-yatra/nav-gauri-yatra' },
-      { label: 'Vishalakshi Temple - Reference', url: 'https://en.wikipedia.org/wiki/Vishalakshi_Temple' },
+      source('Incredible India - Vishalakshi Temple, Varanasi', 'https://www.incredibleindia.gov.in/en/uttar-pradesh/varanasi/vishalakshi-temple'),
+      source('Kashi Official Web Portal - Vishalakshi Devi Temple', 'https://kashi.gov.in/listing-details/vishalakshi-devi-temple'),
+      source('Kashi Official Web Portal - Nav Gauri Yatra', 'https://kashi.gov.in/varanasi-yatra/nav-gauri-yatra'),
+      source('Vishalakshi Temple - Reference', 'https://en.wikipedia.org/wiki/Vishalakshi_Temple'),
     ],
     sections: [
       {
@@ -212,9 +214,9 @@ export const details: Record<string, TempleDetail> = {
     originStoryEn:
       'By tradition, after Daksha’s sacrifice Shiva wandered bearing Sati’s body, and wherever a severed limb fell a Shakti Peeth arose. On this hill at Gaya the breast of Sati is held to have fallen, and so the goddess here is Mangala Gauri, the Shakti of milk and nourishment. The east-facing shrine stands on the crest of that hill, called Bhasmakoot, where the goddess is worshipped in pindi form rather than as a carved image.',
     sources: [
-      { label: 'Bihar Tourism - Mangala Gauri, Gaya', url: 'https://tourism.bihar.gov.in/en/destinations/gaya/mangala-gauri' },
-      { label: 'Incredible India - Mangla Gauri Temple, Gaya', url: 'https://www.incredibleindia.gov.in/en/bihar/gaya/mangla-gauri-temple' },
-      { label: 'Mangla Gauri Temple - Reference', url: 'https://en.wikipedia.org/wiki/Mangla_Gauri_Temple' },
+      source('Bihar Tourism - Mangala Gauri, Gaya', 'https://tourism.bihar.gov.in/en/destinations/gaya/mangala-gauri'),
+      source('Incredible India - Mangla Gauri Temple, Gaya', 'https://www.incredibleindia.gov.in/en/bihar/gaya/mangla-gauri-temple'),
+      source('Mangla Gauri Temple - Reference', 'https://en.wikipedia.org/wiki/Mangla_Gauri_Temple'),
     ],
     sections: [
       {
