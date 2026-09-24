@@ -151,13 +151,25 @@ const LEGACY_WITHOUT_SECTIONS = new Set([
   'biraja', 'manikyamba', 'madhaveswari', 'mangala-gauri', 'vishalakshi',
 ]);
 assert.equal(LEGACY_WITHOUT_SECTIONS.size, 60, 'legacy no-sections allowlist is pinned at 60');
+// The allowlist is a historical record of the 60 rows that predate the rule, not
+// a worklist: it never grows, and enriching one of them does not shorten it.
+// What shrinks is the number of temples that actually lack sections. So read it
+// both ways — a temple that HAS sections must carry the five §12.6 ids in order
+// (enriched legacy rows included, which the old `continue` skipped), and a
+// temple that LACKS them must be one of the 60.
 for (const t of temples) {
-  if (LEGACY_WITHOUT_SECTIONS.has(t.id)) continue;
   const ids = (t.sections ?? []).map((s) => s.id);
+  if (ids.length === 0) {
+    assert.ok(
+      LEGACY_WITHOUT_SECTIONS.has(t.id),
+      `${t.id}: new temples must ship the five RULEBOOK §12.6 sections`,
+    );
+    continue;
+  }
   assert.deepEqual(
     ids,
     ['sthapana', 'svarup', 'parampara', 'mela', 'yatra'],
-    `${t.id}: new temples must ship the five RULEBOOK §12.6 sections in order (got [${ids.join(', ')}])`,
+    `${t.id}: temples with an extended reading must carry the five RULEBOOK §12.6 sections in order (got [${ids.join(', ')}])`,
   );
 }
 
