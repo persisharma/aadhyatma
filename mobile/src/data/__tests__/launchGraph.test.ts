@@ -117,41 +117,45 @@ test('no on-demand corpus payload is statically reachable from the app entry', (
  * shrink the graph; never raise it to make a red test green.
  */
 /**
- * LOWERED 7,300,000 → 6,950,000, because the theerth prose left the graph.
+ * LOWERED 7,300,000 → 6,950,000 → 5,850,000, in two steps.
  *
- * The previous note (kept below) raised this to 7,300,000 and warned that the
- * ~85 KB of headroom it left would saturate. It did: the §12.6 temple readings
- * grow by ~70-100 KB per authored chunk and there are 15 chunks, so the rollout
- * was on course to blow the budget by ~1 MB.
+ * STEP 1 — the theerth prose. `templeRows.ts` split the 71 rows out so
+ * `NewContentContext` could seed NEW badges from a manifest; the legacy detail
+ * map moved to `details/legacy.ts`; `temples.ts` now reaches both through a
+ * `require()` thunk, and `temples` is rows-only so only `getTempleDetailById()`
+ * and `templesWithDetails()` can pay for the readings. 7,274,340 → 6,852,097.
  *
- * The fix was structural, not a bigger number. Nothing on the launch path ever
- * needed a temple's prose:
+ * STEP 2 — the screens. The navigators imported all 65 screens statically, so
+ * every cold start evaluated ~1.4 MB of surfaces most users never open. They
+ * are behind `lazyScreen` (Home stack, Panchang stack) and react-navigation's
+ * own `getComponent` (More stack) now, and `screenPrefetch` warms them in the
+ * background breadth-first from Home once the first frame is up — so the launch
+ * stops paying for them WITHOUT the user paying on the tap instead.
+ * 6,852,097 → 5,741,711.
  *
- *   - `templeRows.ts` now holds the 71 rows alone, so `NewContentContext` can
- *     seed its NEW badges from a manifest instead of importing `temples.ts`;
- *   - the legacy detail map moved to `details/legacy.ts`, and `temples.ts`
- *     pulls it and the authored chunks through a `require()` thunk in
- *     `loadDetails()` — the `pincodes.ts` pattern;
- *   - `temples` is typed `TempleListEntry` (rows only). The prose is reachable
- *     only through `getTempleDetailById()`, which the detail screen calls, and
- *     `templesWithDetails()`, which the on-demand search index and the data
- *     tests call.
+ * Together: 7,274,340 → 5,741,711, a ~1.5 MB cut to what Hermes evaluates
+ * before the first frame.
  *
- * That took the graph from 7,274,340 bytes on main to 6,852,097 — ~420 KB off
- * every cold start — and, more importantly, decoupled it from the rollout:
- * authoring the remaining 56 temples now adds nothing here at all.
+ * WHAT THIS NUMBER NOW PROTECTS. With the screens lazy, the way to blow this
+ * budget is to import one of them — or a data module behind one — from
+ * something the launch path reaches: a context, a scheduler mounted in
+ * `App.tsx`, or a navigator. The failure prints the import chain; fix the
+ * importer, do not raise the number. The remaining bulk is named below and is
+ * the next candidate list, in order: `precomputedObservances` (201 KB, pulled
+ * by `PitruSmaranContext`), `festivals` (165 KB, by `VratReminderScheduler`),
+ * the Sundarkand and Chalisa corpora (~700 KB, dragged in by `data/texts.ts`
+ * for what is only a library manifest — the same bug `templeRows.ts` fixed),
+ * and `rajasthanTehsils` (67 KB, by `PanchangLocationContext`).
  *
- * The new number leaves ~98 KB of headroom. If it saturates, do the same
- * exercise: find the importer that wants a manifest and give it one.
+ * ~108 KB of headroom, deliberately tight: the list above is the work, not slack.
  */
 /**
- * PREVIOUS NOTE — RAISED 7,000,000 → 7,300,000 (PRD-42 W2, #345), superseded by
- * the reduction above but kept because its reasoning still governs: the rule
- * that must not be weakened is "no CORPUS on the launch path", every lazy
- * option is taken FIRST, and the budget is never raised merely to make a red
- * test green.
+ * ORIGINAL NOTE — RAISED 7,000,000 → 7,300,000 (PRD-42 W2, #345). Superseded
+ * twice over, but its reasoning still governs: the rule that must not be
+ * weakened is "no CORPUS on the launch path", every lazy option is taken FIRST,
+ * and the budget is never raised merely to make a red test green.
  */
-const LAUNCH_GRAPH_BUDGET_BYTES = 6_950_000;
+const LAUNCH_GRAPH_BUDGET_BYTES = 5_850_000;
 
 test('the static launch graph stays inside its byte budget', () => {
   const sized = [...graph.keys()].map((file) => [fs.statSync(file).size, file] as const);

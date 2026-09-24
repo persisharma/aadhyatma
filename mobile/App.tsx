@@ -55,6 +55,7 @@ import {
 } from '@/notifications/deepLink';
 import { buildInitialNavigationState, type StartTarget } from '@/navigation/startTarget';
 import { preloadPanchangStack } from '@/navigation/lazyPanchangStack';
+import { startScreenPrefetch } from '@/navigation/screenPrefetch';
 import ReminderOptInModal from '@/components/ReminderOptInModal';
 import UpdateReadyModal from '@/components/UpdateReadyModal';
 import FeatureTour from '@/components/FeatureTour';
@@ -337,6 +338,11 @@ export default function App() {
                               initialState={
                                 initialTarget ? buildInitialNavigationState(initialTarget) : undefined
                               }
+                              /* The first screen is committed — start warming the
+                                 rest breadth-first from Home. Everything it touches
+                                 waits on InteractionManager, so this can only use
+                                 time the UI is not using (navigation/screenPrefetch). */
+                              onReady={startScreenPrefetch}
                             >
                               <StatusBar style="dark" />
                               <RootNavigator />
