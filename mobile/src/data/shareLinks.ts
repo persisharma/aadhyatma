@@ -70,6 +70,13 @@ export type InstagramCaptionParams = ShareCaptionParams & {
   sourceId: string;
   /** Festival / vrat / vaar inputs for the share date; absent → a date-free block. */
   timely?: TimelyContext;
+  /**
+   * The work the hashtags name, when it differs from the caption header. Prose cards
+   * (design.md §39.4) head the caption `व्रत कथा · छठ पूजा कथा …` but tag the katha
+   * itself (`#ChhathPujaKatha`), not the shelf it sits on.
+   */
+  tagNameHi?: string;
+  tagNameEn?: string;
 };
 
 /**
@@ -83,8 +90,8 @@ export function buildInstagramCaption(p: InstagramCaptionParams): string {
   const hashtags = formatHashtags(
     buildVerseHashtags({
       sourceId: p.sourceId,
-      sectionNameHi: p.sectionNameHi,
-      sectionNameEn: p.sectionNameEn,
+      sectionNameHi: p.tagNameHi ?? p.sectionNameHi,
+      sectionNameEn: p.tagNameEn ?? p.sectionNameEn,
       verseLabelEn: p.verseLabelEn,
       lang: p.lang,
       timely: p.timely,

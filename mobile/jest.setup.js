@@ -79,3 +79,23 @@ jest.mock('expo-speech', () => ({
   getAvailableVoicesAsync: jest.fn(() => Promise.resolve([])),
   maxSpeechInputLength: 4000,
 }));
+
+// The share provider (utils/shareVerse.tsx) is now mounted by every content screen
+// that carries a share button — readers, kathas, Theerth, Daan, Vidhi (PRD-45).
+// react-native-view-shot and expo-sharing are native; inert stubs let those screen
+// suites render the provider without each re-declaring them. Suites that assert on
+// capture/share (shareVerseTarget, shareSeries) override these with their own mocks.
+jest.mock('react-native-view-shot', () => ({ captureRef: jest.fn(() => Promise.resolve(null)) }));
+jest.mock('expo-sharing', () => ({
+  isAvailableAsync: jest.fn(() => Promise.resolve(false)),
+  shareAsync: jest.fn(() => Promise.resolve()),
+}));
+
+// expo-linear-gradient is untranspiled ESM (same class as expo-speech above), so no
+// suite can load the real module. The share provider now reaches it through the
+// prose card's BackgroundLayer (PRD-45), so screens that mount the provider but never
+// stubbed it would fail to parse. Inert View stub; file-level mocks still win.
+jest.mock('expo-linear-gradient', () => {
+  const { View } = require('react-native');
+  return { LinearGradient: View };
+});

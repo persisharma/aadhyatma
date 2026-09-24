@@ -28,6 +28,8 @@ jest.mock('react-native-view-shot', () => ({
 // canvas is stubbed the same way — its geometry is pinned by shareStoryLayout.test.ts.
 jest.mock('@/components/ShareCard', () => 'ShareCard');
 jest.mock('@/components/ShareStoryCanvas', () => 'ShareStoryCanvas');
+jest.mock('@/components/ProseShareCard', () => 'ProseShareCard');
+jest.mock('@/components/ShareStoryFrame', () => 'ShareStoryFrame');
 
 // Pinned date so the timely tags are deterministic: Wednesday is Ganesha's vaar,
 // which the Hanuman-tagged fixture does not match, so the default block stays

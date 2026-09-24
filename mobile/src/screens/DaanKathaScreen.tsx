@@ -18,6 +18,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import ReaderHeader from '@/components/ReaderHeader';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
+import { daanKathaShareable } from '@/utils/shareContent';
 import { useGitaLanguage } from '@/data/gita/language';
 import { getDaanKatha, getDaanKathas } from '@/data/daan';
 import type { DaanStackParamList } from '@/navigation/types';
@@ -30,6 +33,7 @@ type Props = NativeStackScreenProps<DaanStackParamList, 'DaanKatha'>;
 export default function DaanKathaScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
+  const { share, busy: shareBusy } = useShare();
   const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
 
@@ -61,6 +65,15 @@ export default function DaanKathaScreen({ navigation, route }: Props) {
         title={contentByLang(lang, katha.titleHi, katha.titleEn)}
         variant="index"
         onBack={() => navigation.goBack()}
+        right={
+          <ShareButton
+            onPress={() => void share(daanKathaShareable(katha), lang)}
+            busy={shareBusy}
+            accessibilityLabel="Share katha"
+            accessibilityHint="Opens share options for this katha and its teaching"
+          />
+        }
+        sideWidth={44}
       />
       <ScrollView contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingBottom: spacing.xxl }}>
         <Text style={{ fontFamily: bodyFont, fontSize: 12.5, lineHeight: 19, color: colors.inkMuted, textAlign: 'center', marginTop: spacing.sm }}>

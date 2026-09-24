@@ -27,6 +27,9 @@ import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont, pillTextStyle } from '@/utils/langType';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import type { UpvasFastType } from '@/panchang/types';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
+import { observanceShareable } from '@/utils/shareContent';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'ObservanceDetail'>;
 
@@ -74,6 +77,7 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
   const rootNav = useNavigation<any>();
+  const { share, busy: shareBusy } = useShare();
   const [calendarSystem] = usePanchangCalendarSystem();
 
   const rule = getRuleById(route.params.ruleId);
@@ -146,7 +150,27 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
           <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
             {contentByLang(lang, 'व्रत विवरण', 'Observance')}
           </Text>
-          <View style={{ width: 36 }} />
+          {rule ? (
+            <ShareButton
+              onPress={() =>
+                void share(
+                  observanceShareable({
+                    rule,
+                    date: next ? { hi: formatDate(next.date, 'hi'), en: formatDate(next.date, 'en') } : null,
+                    katha,
+                    upvas,
+                    bhog,
+                  }),
+                  lang
+                )
+              }
+              busy={shareBusy}
+              accessibilityLabel="Share this day"
+              accessibilityHint="Opens share options for this festival or vrat"
+            />
+          ) : (
+            <View style={{ width: 36 }} />
+          )}
         </View>
 
         {!rule ? (
