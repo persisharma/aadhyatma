@@ -130,10 +130,10 @@ export default function DaanKathaScreen({ navigation, route }: Props) {
                   <Text style={{ fontFamily: titleFont, fontSize: 16, color: colors.gold }}>॥</Text>
                 </View>
                 <View style={{ flex: 1 }}>
-                  <Text style={{ fontFamily: titleFont, fontSize: 15.5, lineHeight: 22, color: colors.ink }}>
+                  <Text style={{ fontFamily: titleFont, fontSize: 15.5, lineHeight: 24, color: colors.ink }}>
                     {contentByLang(lang, next.titleHi, next.titleEn)}
                   </Text>
-                  <Text style={{ fontFamily: bodyFont, fontSize: 12, lineHeight: 17, color: colors.inkMuted }}>
+                  <Text style={{ fontFamily: bodyFont, fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
                     {contentByLang(lang, next.subtitleHi, next.subtitleEn)}
                   </Text>
                 </View>

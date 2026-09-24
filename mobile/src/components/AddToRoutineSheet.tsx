@@ -210,7 +210,7 @@ export default function AddToRoutineSheet({ sourceId, initialChapter, onClose }:
                       ? typography.verseLatin.fontFamily
                       : scriptTitleFont(lang, typography.cardHindi.fontFamily),
                   fontSize: 15,
-                  lineHeight: 19,
+                  lineHeight: 23,
                   color: colors.saffron,
                 }}
               >

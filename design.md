@@ -93,11 +93,16 @@ below the system's stated minimum.
 A July 2026 audit found 50 chrome sites at 7–9 pt across Panchang, Kundali, Rashifal,
 Theerth, Muhurat and the catalog cards. All were raised to 10, and the two fixed-size chips
 that would then have clipped were grown rather than trimmed: the calendar `dateTag`
-(24×12 → 28×16 — its label can be Devanagari, whose matras clip below ~1.4× leading) and
+(24×12 → 28×16 — its label can be Devanagari, whose matras clip below ~1.45× leading; label now 10/15) and
 the Panchang `starBadge` (15 → 16).
 
-**Leading is part of the floor.** A 10 pt line needs **≥ 1.4× leading** (14) whenever it can
-carry Indic text; `lineHeight === fontSize` sits the first baseline so high that the top of
+**Leading is part of the floor.** Any line that can carry Indic text needs **≥ 1.5× leading**
+(10 → 15, 12 → 18, 16 → 24; 1.45× is the hard minimum) — the earlier 1.4× floor still clipped:
+Search's verse line shipped at 17/24 (1.41×) and sliced the top of ि/ी, and a September 2026
+sweep raised 28 more Indic-capable sites below 1.45× (Arc strip, Ask card, Vastu mandala grid
+and compare/roster chips, Daan katha, Namkaran tags/share card, Prashna, Pitru Paksha hero,
+Widget gallery, Jyotish/Guna Milan share micro lines, the Panchang `dateTag`). Glyph-only lines
+(›, ＋, ॥) and Inter numerals are exempt; `lineHeight === fontSize` sits the first baseline so high that the top of
 the line is sliced off, which reads as trimmed text rather than tight text. And a chrome line
 that can render Indic must *name* a face that has the script — Inter does not, and the OS
 fallback's metrics are taller than any fixed leading can predict, so route it through

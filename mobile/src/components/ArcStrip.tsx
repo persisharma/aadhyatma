@@ -225,7 +225,7 @@ export default function ArcStrip({ rule, calendarSystem, today: todayProp, onOpe
               <Text
                 numberOfLines={2}
                 maxFontSizeMultiplier={1.15}
-                style={{ fontFamily: bodyFont, fontSize: 10, lineHeight: 13, color: isNow ? colors.saffronDeep : colors.inkMuted, textAlign: 'center', marginTop: 4, minHeight: 24 }}
+                style={{ fontFamily: bodyFont, fontSize: 10, lineHeight: 15, color: isNow ? colors.saffronDeep : colors.inkMuted, textAlign: 'center', marginTop: 4, minHeight: 24 }}
               >
                 {isNow && !label ? contentByLang(lang, 'आज', 'Today') : label ?? ''}
               </Text>
@@ -252,7 +252,7 @@ export default function ArcStrip({ rule, calendarSystem, today: todayProp, onOpe
       </View>
 
       {statusLine && (
-        <Text testID="arc-status" style={{ fontFamily: bodyFont, fontSize: 12.5, lineHeight: 18, color: colors.inkSoft, textAlign: 'center', marginTop: 6 }}>
+        <Text testID="arc-status" style={{ fontFamily: bodyFont, fontSize: 12.5, lineHeight: 19, color: colors.inkSoft, textAlign: 'center', marginTop: 6 }}>
           {statusLine}
         </Text>
       )}
@@ -353,7 +353,7 @@ export default function ArcStrip({ rule, calendarSystem, today: todayProp, onOpe
             <Text style={{ fontFamily: titleFont, fontSize: 14, color: colors.ink }}>
               {contentByLang(lang, arc.prepare.labelHi, arc.prepare.labelEn)}
             </Text>
-            <Text style={{ fontFamily: bodyFont, fontSize: 12, lineHeight: 17, color: colors.inkSoft, marginTop: 2 }}>
+            <Text style={{ fontFamily: bodyFont, fontSize: 12, lineHeight: 18, color: colors.inkSoft, marginTop: 2 }}>
               {meaningByLang(lang, arc.prepare.noteHi, arc.prepare.noteEn)}
             </Text>
           </View>
