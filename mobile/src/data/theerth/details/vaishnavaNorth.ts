@@ -10,7 +10,7 @@ import type { TempleDetail } from '../temples';
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
  *
- * Temples still to author in this chunk: srinathji vishnupad-gaya lakshmi-narayan
+ * Temples still to author in this chunk: vishnupad-gaya lakshmi-narayan
  */
 export const details: Record<string, TempleDetail> = {
   'banke-bihari': {
@@ -81,6 +81,77 @@ export const details: Record<string, TempleDetail> = {
           'मंदिर उत्तर प्रदेश के मथुरा ज़िले में वृंदावन की सँकरी गलियों के बीच है, जहाँ अंतिम दूरी प्रायः पैदल ही तय होती है। निकटतम रेलवे स्टेशन मथुरा जंक्शन है, जो लगभग 12–14 किमी दूर है; वृंदावन का अपना छोटा स्टेशन भी है। निकटतम हवाई अड्डे आगरा (लगभग 70 किमी) और दिल्ली (लगभग 150 किमी) हैं, और दिल्ली–आगरा राजमार्ग से मथुरा होते हुए वृंदावन पहुँचा जाता है। पास ही राधा रमण मंदिर लगभग 300 मीटर और निधिवन कुछ ही क़दम आगे है — बिहारीजी के प्राकट्य-स्थल के कारण अधिकांश यात्री दोनों को एक ही दर्शन-क्रम में जोड़ते हैं। राधावल्लभ, गोविंद देव और राधा दामोदर मंदिर भी इसी परिक्रमा में आते हैं, और व्यापक ब्रज चौरासी कोस यात्रा में वृंदावन एक प्रमुख पड़ाव है।',
         bodyEn:
           'The temple sits deep in the lanes of Vrindavan, in Mathura district of Uttar Pradesh, and the last stretch is usually covered on foot. Mathura Junction, roughly 12–14 km away, is the main railhead, with a smaller station at Vrindavan itself. The nearest airports are Agra, about 70 km off, and Delhi, about 150 km, with the approach running from the Delhi–Agra highway through Mathura. Radha Raman temple stands about 300 m away and Nidhivan a short walk beyond it, and because Nidhivan is where Bihariji is said to have appeared, most pilgrims take the two in one sequence. Radha Vallabh, Govind Dev and Radha Damodar fall on the same round, and Vrindavan is a principal halt on the wider Braj Chaurasi Kos yatra.',
+      },
+    ],
+  },
+  srinathji: {
+    significanceHi:
+      'नाथद्वारा का श्रीनाथजी पुष्टिमार्ग का प्रधान पीठ है, जहाँ ठाकुरजी की सेवा मंदिर की नहीं, हवेली की रीति से — एक घर के बालक की भाँति — होती है। गिरिराज गोवर्धन उठाए सात वर्ष के कृष्ण का यह स्वरूप विक्रम संवत् 1728 (सन् 1672) में सिंहाड़ गाँव में प्रतिष्ठित हुआ और वही बस्ती आगे नाथद्वारा कहलाई। दिन की आठ झाँकियाँ, ऋतु के अनुसार बदलता श्रृंगार और पीछवाई-चित्रण इस धाम की पहचान हैं।',
+    significanceEn:
+      'Srinathji at Nathdwara is the principal seat of the Pushtimarg, where the Thakur is served not as a temple deity but in the manner of a haveli — as the child of a household. This form of Krishna at seven, holding up Govardhan, was installed in Vikram Samvat 1728 (1672 CE) at the village of Sinhad, and the settlement around it became Nathdwara. Eight darshan windows through the day, a shringar that changes with the season, and the pichhwai paintings behind the image are what mark this shrine.',
+    originStoryHi:
+      'परम्परा के अनुसार श्रीनाथजी का स्वरूप ब्रज में गोवर्धन पर्वत से स्वयं प्रकट हुआ और वल्लभाचार्य के पुत्र श्री विट्ठलनाथ जी ने उसे श्रीनाथजी नाम देकर सेवा-पद्धति स्थापित की। सत्रहवीं शताब्दी में संकट की आशंका से गोस्वामी परिवार विग्रह को ब्रज से निकालकर आगरा, किशनगढ़ और मारवाड़ होते हुए मेवाड़ लाया, जहाँ महाराणा राजसिंह ने आश्रय दिया। बनास तट के सिंहाड़ गाँव के पास रथ आगे न बढ़ा; इसे संकेत मानकर वहीं सेवा स्थापित हुई और वह स्थान नाथद्वारा — "नाथ का द्वार" — हो गया।',
+    originStoryEn:
+      'By tradition the swarup of Srinathji revealed itself from Govardhan Hill in Braj, and Shri Vitthalnath Ji, son of Vallabhacharya, gave it the name Srinathji and settled the pattern of its service. In the seventeenth century, fearing for its safety, the Goswami family carried the image out of Braj through Agra, Kishangarh and Marwar into Mewar, where Maharana Raj Singh offered protection. Near the village of Sinhad on the Banas the cart would go no further; taking that as the deity’s own choice, the household settled there, and the place became Nathdwara, the gateway of the Nath.',
+    sources: [
+      {
+        label: 'Shrinathji Temple, Nathdwara — Official',
+        url: 'https://www.nathdwaratemple.org/',
+      },
+      {
+        label: 'Rajasthan Tourism — Rajsamand',
+        url: 'https://www.tourism.rajasthan.gov.in/rajsamand.html',
+      },
+      {
+        label: 'Shrinathji Temple — Reference',
+        url: 'https://en.wikipedia.org/wiki/Shrinathji_Temple',
+      },
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'पुष्टिमार्ग की स्थापना श्री वल्लभाचार्य ने की और उनके पुत्र श्री विट्ठलनाथ जी ने गोवर्धन के इस स्वरूप को श्रीनाथजी नाम देकर जतीपुरा में सेवा-क्रम बाँधा। सत्रहवीं शताब्दी के उत्तरार्ध में गोस्वामी परिवार ने विग्रह को ब्रज से हटाने का निर्णय लिया; यात्रा लगभग सन् 1669 में आरम्भ हुई, आगरा में कई महीने विश्राम हुआ, और फिर किशनगढ़-मारवाड़ होते हुए रथ मेवाड़ पहुँचा। मेवाड़ के महाराणा राजसिंह ने रक्षा का वचन दिया, इसी आश्वासन पर विग्रह मेवाड़ की सीमा में लाया गया। बनास नदी के निकट सिंहाड़ गाँव में रथ के पहिये धँस गए और आगे न बढ़े; परम्परा इसे ठाकुरजी की इच्छा मानती है। वहीं विक्रम संवत् 1728 (सन् 1672) में सेवा स्थापित हुई — तिथि और वार का कोई प्रामाणिक अभिलेख नहीं मिलता, यद्यपि कुछ वृत्तांत मार्च 1672 का उल्लेख करते हैं। मंदिर गोस्वामी दामोदरदास जी ने बनवाया, जिन्हें दाऊजी महाराज कहा जाता है; उनके सहयोगी श्री हरिरायजी थे। आज भी सेवा-अधिकार वल्लभाचार्य के वंशजों के पास है, जिनके मुख्य प्रतिनिधि तिलकायत कहलाते हैं।',
+        bodyEn:
+          'The Pushtimarg was founded by Shri Vallabhacharya, and it was his son Shri Vitthalnath Ji who named the Govardhan swarup Srinathji and fixed the order of its service at Jatipura. In the later seventeenth century the Goswami household decided to move the image out of Braj; the journey began around 1669 CE, paused for several months at Agra, and then went on through Kishangarh and Marwar into Mewar. Maharana Raj Singh of Mewar pledged protection, and on that pledge the image crossed into his territory. At the village of Sinhad near the Banas the cart wheels sank and would not move, which tradition reads as the Thakur choosing his own ground. Service was established there in Vikram Samvat 1728 (1672 CE); no consecration tithi or weekday survives in an authoritative record, though some accounts place the installation in March 1672. The building was raised by Goswami Damodardas, known as Dauji Maharaj, assisted by Shri Hariraiji. The right of service still rests with the descendants of Vallabhacharya, whose senior representative carries the title Tilkayat.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'श्रीनाथजी का स्वरूप',
+        titleEn: 'The Form of Srinathji',
+        bodyHi:
+          'श्रीनाथजी की प्रतिमा काले पाषाण के एक ही खंड से उभरी हुई है — बाईं भुजा ऊपर उठी हुई, मानो गोवर्धन थामे हों, और दाहिना हाथ मुट्ठी बाँधे कमर पर टिका है। अधर के नीचे एक बड़ा हीरा जड़ा है, और शिला पर गाय, सिंह, सर्प, मोर और शुक के अंकन तथा समीप तीन ऋषि-आकृतियाँ उकेरी हैं। भाव सात वर्ष के बालक का है, इसलिए पूरा विधान बालक-सेवा का है। यह भवन शिखरबद्ध मंदिर नहीं, हवेली है — रसोई, भंडार, गौशाला और आँगन सहित एक गृहस्थ-व्यवस्था, जिसमें ठाकुरजी गृह-स्वामी हैं। विग्रह के पीछे लगी पीछवाई ऋतु और उत्सव के साथ बदलती है; नाथद्वारा की यही चित्र-परम्परा देश भर में प्रसिद्ध हुई।',
+        bodyEn:
+          'The image is worked in relief out of a single block of dark stone: the left arm lifted as if bearing Govardhan, the right hand closed in a fist at the waist. A large diamond is set below the lip, and the slab carries carved cows, a lion, a serpent, peacocks and a parrot, with three sage figures placed near it. The mood is that of a boy of seven, and the whole order of worship follows from that. The building is not a spired temple but a haveli — a household with kitchen, stores, cow-byre and courtyards, in which the Thakur is the master of the house. Behind the image hangs a pichhwai cloth that is changed with the season and the festival; this is the painting tradition for which Nathdwara became known across India.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'अष्ट झाँकी और ऋतु-श्रृंगार',
+        titleEn: 'The Eight Jhankis and Seasonal Shringar',
+        bodyHi:
+          'दिन भर में आठ झाँकियाँ होती हैं — मंगला, श्रृंगार, ग्वाल, राजभोग, उत्थापन, भोग, संध्या आरती और शयन। हर झाँकी थोड़ी देर की रहती है, क्योंकि मान्यता है कि बालक-स्वरूप ठाकुरजी को देर तक खड़ा रहना थका देता है; पट खुलते और बंद होते रहते हैं। मंगला में शंख-ध्वनि से जगाया जाता है, श्रृंगार में वस्त्र-आभूषण धारण होते हैं, ग्वाल में दूध, खीर और रबड़ी का भोग लगता है, और राजभोग दिन का सबसे विस्तृत दर्शन है। समय ऋतु के साथ बदलता है — ग्रीष्म में ठाकुरजी देर से जगाए जाते हैं, शीत में जल्दी शयन कराकर भोर में उठाया जाता है और अंगीठी तथा रजाई का प्रबंध होता है। श्रृंगार, भोग और पीछवाई — तीनों ऋतु और उत्सव के अनुसार बदलते हैं, यही पुष्टिमार्गीय सेवा का मर्म है।',
+        bodyEn:
+          'The day is divided into eight jhankis — Mangala, Shringar, Gwal, Rajbhog, Utthapan, Bhog, Sandhya Aarti and Shayan. Each is short, because a child is not made to stand for long; the doors open and close again through the day. At Mangala he is woken with conch sound, at Shringar dressed and ornamented, at Gwal offered milk, kheer and rabdi, and Rajbhog is the fullest darshan of the day. The hours shift with the season: in summer he is woken later, in winter put to bed early and roused at first light, with a brazier and quilt arranged against the cold. Garments, food and the pichhwai behind him all change with the season and the festival — that correspondence is the heart of Pushtimarg seva.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'वर्ष का सबसे बड़ा उत्सव अन्नकूट है, जो कार्तिक शुक्ल प्रतिपदा को दीपावली के अगले दिन गोवर्धन पूजा के रूप में मनाया जाता है; इस दिन ठाकुरजी को छप्पन भोग सहित अन्न का पर्वत अर्पित किया जाता है और नाथद्वारा में लाखों दर्शनार्थी आते हैं। भाद्रपद कृष्ण अष्टमी की जन्माष्टमी और उसके अगले दिन नंदमहोत्सव हवेली की सबसे उल्लासपूर्ण रात्रि होते हैं। फाल्गुन में डोल-होली का लम्बा उत्सव चलता है, जिसमें गुलाल और रंग-सज्जा के साथ विशेष श्रृंगार होते हैं, और दीपावली पर हवेली दीपों से सजती है। शरद पूर्णिमा, वसंत पंचमी और झूलन जैसे ऋतु-पर्व भी अपनी-अपनी झाँकियों के साथ मनाए जाते हैं।',
+        bodyEn:
+          'The greatest observance of the year is Annakut, kept on Kartik Shukla Pratipada, the day after Diwali, as Govardhan Puja: a mountain of grain with the chhappan bhog of fifty-six items is raised before the Thakur, and Nathdwara fills with lakhs of pilgrims. Janmashtami on Bhadrapada Krishna Ashtami and the Nandmahotsav that follows it are the most exuberant nights in the haveli. Phalguna brings a long season of Dol and Holi, with gulal and special shringar for each day, and at Diwali the haveli is lit end to end. Seasonal festivals such as Sharad Purnima, Vasant Panchami and the Jhulan swings are each marked with their own jhankis.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'नाथद्वारा राजस्थान के राजसमंद ज़िले में अरावली की पहाड़ियों के बीच बनास नदी के किनारे बसा है, उदयपुर से लगभग 48 किमी उत्तर-पूर्व। निकटतम बड़े रेलवे स्टेशन मावली जंक्शन (लगभग 30 किमी) और उदयपुर सिटी (लगभग 50 किमी) हैं; निकटतम हवाई अड्डा उदयपुर का महाराणा प्रताप हवाई अड्डा है। सड़क मार्ग से उदयपुर–अजमेर मार्ग पर यह नगर पड़ता है, इसलिए अधिकांश यात्री इसे उदयपुर-यात्रा के साथ जोड़ते हैं। पास ही एकलिंगजी का शिव मंदिर लगभग 27 किमी दूर है, और राजसमंद झील के किनारे कांकरोली का द्वारकाधीश मंदिर — जो पुष्टिमार्ग की ही एक अन्य पीठ है — प्रायः इसी यात्रा में जोड़ा जाता है। हल्दीघाटी का ऐतिहासिक स्थल भी निकट पड़ता है।',
+        bodyEn:
+          'Nathdwara stands in Rajsamand district of Rajasthan, among the Aravalli hills on the bank of the Banas, roughly 48 km north-east of Udaipur. The main railheads are Mavli Junction, about 30 km off, and Udaipur City, about 50 km; the nearest airport is Maharana Pratap Airport at Udaipur. The town lies on the Udaipur–Ajmer road, so most visitors take it together with Udaipur. The Shiva temple of Eklingji is about 27 km away, and the Dwarkadhish temple at Kankroli on the shore of Rajsamand lake — another seat of the same Pushtimarg tradition — is commonly paired with this darshan. The historic field of Haldighati also lies within easy reach.',
       },
     ],
   },
