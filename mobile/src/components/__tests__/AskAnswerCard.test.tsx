@@ -114,3 +114,28 @@ test('abstain: a stance-guard decline carries its own copy and no chips', () => 
   expect(all).toContain('Vedansh does not answer those');
   expect(all).not.toContain('Perhaps you meant');
 });
+
+test('गणना देखें shows the plain-language basis, never the engine-call trail', () => {
+  const withBasis: AskAnswer = { ...answer, basis: [{ hi: 'सूर्योदय 6:08 AM · सूर्यास्त 6:14 PM', en: 'Sunrise 6:08 AM · sunset 6:14 PM' }] };
+  act(() => {
+    tree = create(<AskAnswerCard answer={withBasis} lang="hi" onAction={jest.fn()} />);
+  });
+  act(() => tree!.root.findByProps({ accessibilityLabel: 'गणना देखें' }).props.onPress());
+  const all = flat(tree!);
+  expect(all).toContain('सूर्योदय 6:08 AM');
+  expect(all).not.toContain('bhogId');
+});
+
+test('release builds hide the disclosure when an answer has no basis', () => {
+  const g = global as unknown as { __DEV__: boolean };
+  const prev = g.__DEV__;
+  g.__DEV__ = false;
+  try {
+    act(() => {
+      tree = create(<AskAnswerCard answer={answer} lang="en" onAction={jest.fn()} />);
+    });
+    expect(tree!.root.findAllByProps({ accessibilityLabel: 'Show the working' })).toHaveLength(0);
+  } finally {
+    g.__DEV__ = prev;
+  }
+});
