@@ -10,7 +10,7 @@ import type { TempleDetail } from '../temples';
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
  *
- * Temples still to author in this chunk: nartiang-durga kirateshwar
+ * Temples still to author in this chunk: kirateshwar
  */
 export const details: Record<string, TempleDetail> = {
   'govindajee-imphal': {
@@ -160,6 +160,81 @@ export const details: Record<string, TempleDetail> = {
           'कुंड लोहित ज़िले में मिश्मी पठार की तलहटी पर है। ज़िला मुख्यालय तेजू से सड़क मार्ग की दूरी तोहांगम और वाक्रो होते हुए लगभग 48 किमी बताई जाती है, जबकि कुछ विवरण तेजू से उत्तर लगभग 21 किमी की सीधी दूरी देते हैं — यात्रा-योजना के लिए तेजू से लगभग आधे दिन का मार्ग मानना उचित है। निकटतम हवाई अड्डा तेजू है, जो लगभग 50 किमी दूर है पर जहाँ सीमित उड़ानें आती हैं; अधिकांश यात्री असम के डिब्रूगढ़ हवाई अड्डे (सड़क मार्ग से लगभग 200 किमी, पाँच–छह घंटे) से आते हैं। निकटतम बड़ा रेलहेड तिनसुकिया है, जहाँ से सड़क मार्ग लगभग 150 किमी और चार घंटे का है, और मार्ग तिनसुकिया–नामसाई–वाक्रो–तेजू होकर जाता है। मार्ग में लोहित घाटी के दृश्य और तट के मेला-मैदान दर्शनीय हैं; अधिकांश तीर्थयात्री असम से आते हुए यह यात्रा जोड़ते हैं।',
         bodyEn:
           'The kund lies in Lohit district at the foot of the Mishmi plateau. The road distance from the district headquarters at Tezu is generally given as about 48 km by way of Tohangam and Wakro, though some accounts give roughly 21 km as the straight-line distance north of Tezu — for planning, treat it as a half-day run from Tezu. The nearest airport is Tezu, about 50 km away, but flights there are few; most pilgrims fly instead into Dibrugarh in Assam and drive roughly 200 km, five to six hours. The nearest major railhead is Tinsukia, approximately 150 km and four hours by road, the route running Tinsukia–Namsai–Wakro–Tezu. The drive gives long views of the Lohit valley, and the mela grounds along the bank are worth walking; most pilgrims fold the journey into a trip through upper Assam.',
+      },
+    ],
+  },
+  'nartiang-durga': {
+    significanceHi:
+      'मेघालय के पश्चिम जयन्तिया पहाड़ ज़िले में नारतियांग का दुर्गा मंदिर 51 शक्ति पीठों में गिना जाता है, जहाँ देवी जयन्ती या जयन्तेश्वरी (मा जयन्ती) और भैरव कामदीश्वर रूप में पूजित हैं। मंदिर की आयु लगभग 600 वर्ष मानी जाती है — कुछ विवरण इसे पाँच सौ वर्ष से अधिक बताते हैं — और इसकी प्रतिष्ठा की कोई तिथि अभिलेखों में दर्ज नहीं; परम्परा इसे जयन्तिया नरेश जसो मानिक से जोड़ती है, जिन्होंने नारतियांग को अपनी ग्रीष्मकालीन राजधानी बनाया। शक्ति-साधना की यह पीठ खासी-जयन्तिया समाज की अपनी पुरोहित-परम्परा के साथ चलती है, जो इसे उत्तर भारत के शाक्त मंदिरों से अलग पहचान देती है।',
+    significanceEn:
+      'In West Jaintia Hills district of Meghalaya, the Durga temple at Nartiang is counted among the 51 Shakta pithas, where the Devi is worshipped as Jayanti or Jainteswari — Ma Jainti — with Kamadishwar as her Bhairava. The shrine is commonly held to be about 600 years old, though some accounts say over five hundred, and no date of consecration survives in record; tradition ties its founding to the Jaintia king Jaso Manik, who made Nartiang his summer capital. This seat of Shakta worship runs on a priestly line of its own, drawn from the Khasi-Jaintia country, which sets it apart from the Shakta temples of the north Indian plains.',
+    originStoryHi:
+      'शक्ति-पीठ कथा के अनुसार सती के देह-खण्डों में उनकी बाईं जंघा नारतियांग में गिरी, और तभी से यह स्थान देवी की पीठ माना गया। स्थानीय परम्परा कहती है कि जयन्तिया नरेश मानिक को एक रात स्वप्न में देवी ने दर्शन देकर इस भूमि का महत्त्व बताया और यहाँ अपना मंदिर बनाने का आदेश दिया। राजा ने नारतियांग को ग्रीष्मकालीन राजधानी बनाकर मंदिर स्थापित किया और सेवा के लिए जयन्तियापुर से पुरोहित बुलाए, जिनके वंशज आज भी पूजा करते हैं।',
+    originStoryEn:
+      'In the Shakti Peetha account, the left thigh of Sati is said to have fallen at Nartiang, and the place has been held a seat of the Devi ever since. Local tradition holds that the goddess appeared one night in a dream to the Jaintia king Manik, told him what the site was, and asked that a temple be raised for her there. The king made Nartiang his summer capital, built the shrine, and brought priests from Jaintiapur to serve it — their descendants perform the worship to this day.',
+    sources: [
+      {
+        label: 'Incredible India (Ministry of Tourism) — The monoliths and old tales of Nartiang',
+        url: 'https://www.incredibleindia.gov.in/en/meghalaya/shillong/the-monoliths-and-old-tales-of',
+      },
+      {
+        label: 'Meghalaya Tourism — Nartiang Monoliths, Jaintia Hills',
+        url: 'https://www.meghalayatourism.in/destinations/nartiang-monoliths/',
+      },
+      {
+        label: 'West Jaintia Hills District, Government of Meghalaya — Nartiang',
+        url: 'https://westjaintiahills.gov.in/tourist-place/nartiang-monoliths/',
+      },
+      {
+        label: 'Nartiang Durga Temple — Reference',
+        url: 'https://en.wikipedia.org/wiki/Nartiang_Durga_Temple',
+      },
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'नारतियांग दुर्गा मंदिर की प्राण-प्रतिष्ठा की तिथि, तिथि-वार या प्रतिष्ठाकर्ता का नाम किसी अभिलेख में सुरक्षित नहीं है; जो स्मृति बची है वह जयन्तिया राजवंश की है। लगभग छह सौ वर्ष पूर्व नरेश मानिक ने नारतियांग को जयन्तिया राज्य की ग्रीष्मकालीन राजधानी बनाया, और परम्परा कहती है कि देवी ने उन्हें स्वप्न में इस स्थान का महत्त्व बताकर मंदिर बनाने को कहा। पूजा के लिए राजा ने जयन्तियापुर से पुरोहित बुलाए; लोककथा के अनुसार जब कोई ब्राह्मण यहाँ की बलि-परम्परा के कारण पुरोहिताई को तैयार नहीं हुआ, तब राजा जसो मानिक एक मराठा क्षत्रिय को ले आए — इसी कारण नारतियांग के पुजारी ब्राह्मण नहीं हैं, और वे स्वयं को उन्हीं मूल पुरोहितों का सीधा वंशज मानते हैं। मंदिर की मूल रचना खासी घर जैसी थी — बीच में एक लकड़ी का खम्भा और ऊपर फूस की छत; बाद में फूस के स्थान पर टीन की चादर लगी। सन् 1987 (विक्रम संवत् 2044) में चेरापूँजी के रामकृष्ण मिशन ने स्थानीय परम्परा और आस्था की रक्षा के उद्देश्य से मंदिर का जीर्णोद्धार और पुनर्निर्माण कराया, जिससे वर्तमान ढाँचा बना। पास में ही जयन्तिया राजाओं के खड़े और सपाट महापाषाण (मोनोलिथ) हैं, जो सन् 1500 से 1835 (विक्रम संवत् 1557 से 1892) के बीच स्थापित माने जाते हैं और उसी राजधानी की गवाही देते हैं।',
+        bodyEn:
+          'No record preserves a consecration date, tithi or consecrator for the Nartiang Durga temple; what survives is the memory of the Jaintia royal house. About six hundred years ago King Manik made Nartiang the summer capital of the Jaintia kingdom, and tradition says the Devi told him in a dream what the place was and asked for a temple. For the worship the king sent to Jaintiapur for priests; the local account holds that when no Brahmin would take up a priesthood bound to blood offering, King Jaso Manik brought a Maratha Kshatriya instead — which is why the priests of Nartiang are not Brahmins, and why they hold themselves the direct descendants of that first line. The original building was shaped like a Khasi house, a thatched roof over a single central wooden post; the thatch was later replaced with corrugated tin sheet. In 1987 (Vikram Samvat 2044) the Ramakrishna Mission of Cherrapunjee repaired and rebuilt the temple to preserve the tradition and faith of the local people, and that work gave the shrine its present form. Near it stand the Jaintia kings’ menhirs and dolmens, raised between 1500 and 1835 CE (Vikram Samvat 1557 to 1892), the surviving witness to the old capital.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'जयन्ती दुर्गा का स्वरूप',
+        titleEn: 'The Form of Jayanti Durga',
+        bodyHi:
+          'यहाँ देवी का नाम ही स्थान से बना है — जयन्ती, जयन्तेश्वरी या मा जयन्ती — और उनके भैरव कामदीश्वर कहलाते हैं; शक्ति-पीठ सूची में यही युग्म नारतियांग की पहचान है। मंदिर का रूप उत्तर भारत के शिखर-युक्त शाक्त मंदिरों जैसा नहीं, बल्कि पहाड़ी घर जैसा साधारण है — भीतर केन्द्रीय काष्ठ-स्तम्भ के चारों ओर गर्भगृह, ऊपर ढलवाँ छत। गर्भगृह से लगा हुआ बलि-गर्भ है, वह पीठिका जहाँ बलि दी जाती थी, और उससे एक ढालू सुरंग नीचे बहती म्यन्तदु नदी तक जाती थी; यह सुरंग आज भी मंदिर की सबसे चर्चित रचना है। थोड़ी ही दूर पैदल-मार्ग पर शिव मंदिर है, जिसके भीतर जयन्तिया काल की पुरानी तोपों के अवशेष रखे दिखते हैं।',
+        bodyEn:
+          'Here the goddess takes her name from the place itself — Jayanti, Jainteswari, Ma Jainti — and her Bhairava is Kamadishwar; it is this pair that names Nartiang in the Shakti Peetha lists. The building looks nothing like the spired Shakta temples of the plains: it is as plain as a hill house, the sanctum set round a central wooden post under a pitched roof. Adjoining the sanctum is the Boli Garbha, the pier at which offerings were made, and from it a steep tunnel ran down to the Myntdu river below — still the feature visitors most often come to see. A short walk away stands the Shiva temple, where the remains of old Jaintia-period cannon are kept inside.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'जयन्तिया पुरोहित-परम्परा',
+        titleEn: 'The Jaintia Priestly Lineage',
+        bodyHi:
+          'नारतियांग की सबसे विशिष्ट बात उसकी पुरोहित-परम्परा है: पूजा करने वाले परिवार जयन्तियापुर से आए मूल पुरोहितों के वंशज हैं और ब्राह्मण नहीं — पीढ़ी-दर-पीढ़ी यही परिवार देवी की सेवा सँभालते आए हैं, और स्थानीय खासी-जयन्तिया रीति तथा शाक्त विधि यहाँ साथ-साथ चलती है। ऐतिहासिक रूप से इस पीठ पर नरबलि की प्रथा रही, जिसे बीसवीं सदी के आरम्भ में ब्रिटिश प्रशासन ने प्रतिबन्धित कर दिया; वह प्रथा अब नहीं है। वर्तमान में पूजा में बकरे और बत्तख की बलि दी जाती है, और दुर्गा पूजा के दिनों में देवी का पूजन एक सजाए हुए केले के पौधे के रूप में होता है — यही विग्रह चार दिन की पूजा के अन्त में म्यन्तदु नदी में विसर्जित किया जाता है। यह मिश्रित विधि — प्रतीक-पूजन, स्थानीय पुरोहित और पहाड़ी भूगोल — इस पीठ की अपनी पहचान है।',
+        bodyEn:
+          'What most marks Nartiang is who serves it: the officiating families descend from the priests first brought from Jaintiapur and are not Brahmins, and the same households have kept the Devi’s worship through the generations, with Khasi-Jaintia usage and Shakta rite running side by side. Historically the peeth received human sacrifice, a practice the British administration banned in the early twentieth century; it is not performed any more. The offerings made today are goats and ducks, and through the Durga Puja days the goddess is worshipped in the form of a dressed banana plant — the same figure that is taken to the Myntdu river and immersed at the close of the fourth day. That blend of symbolic worship, a local priesthood and hill geography is the peeth’s own signature.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'वर्ष का प्रमुख उत्सव आश्विन शुक्ल पक्ष में मनाई जाने वाली दुर्गा पूजा है, जब चार दिन तक नारतियांग में विशेष विधान चलता है और जयन्तिया पहाड़ों के साथ-साथ शिलांग, जोवाई और असम से भी श्रद्धालु पहुँचते हैं। इन्हीं दिनों सजे हुए केले के पौधे को देवी-स्वरूप मानकर पूजा जाता है और चौथे दिन के अन्त में उसका म्यन्तदु नदी में विसर्जन होता है — यही यहाँ की दशमी है। नवरात्र के शेष दिनों में भी दर्शन और पाठ चलते हैं, और बलि-अर्पण दुर्गा पूजा के विधान का भाग रहता है। वर्ष के अन्य दिनों में मंदिर शान्त रहता है; स्थानीय परिवार संकट-निवारण और मनोकामना के लिए किसी भी समय देवी के दर्शन को आते हैं।',
+        bodyEn:
+          'The temple’s great observance is Durga Puja in the bright fortnight of Ashwin, when four days of rite are kept at Nartiang and devotees come in from across the Jaintia Hills and from Shillong, Jowai and Assam. In those days the dressed banana plant is worshipped as the goddess herself, and at the close of the fourth day it is carried down for immersion in the Myntdu — that is Dashami here. Darshan and recitation continue through the remaining nights of Navaratri, and the offering of animals belongs to the Durga Puja rite. For the rest of the year the shrine is quiet; local families come whenever they wish, to ask the Devi for relief or for a wish granted.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'नारतियांग पश्चिम जयन्तिया पहाड़ ज़िले में है — जोवाई से लगभग 24 किमी (लगभग चालीस मिनट), शिलांग से लगभग 65 किमी और गुवाहाटी से लगभग 160 किमी सड़क मार्ग पर। निकटतम बड़ा रेलवे स्टेशन गुवाहाटी है, लगभग 160 किमी दूर, और अधिकांश यात्री वहीं से टैक्सी या मेघालय परिवहन की बस लेकर आते हैं; नज़दीकी हवाई अड्डा शिलांग का है, पर उड़ानों की अधिक सुविधा गुवाहाटी से मिलती है। मंदिर से लगभग तीन किमी पर नारतियांग का महापाषाण-उद्यान है, जहाँ जयन्तिया राजाओं के खड़े मेनहिर और सपाट डॉल्मेन एक साथ खड़े हैं — यही यात्रा का दूसरा पड़ाव माना जाता है। पास ही पैदल दूरी पर शिव मंदिर है, और नीचे म्यन्तदु नदी बहती है, जिससे मंदिर की सुरंग और विसर्जन-परम्परा जुड़ी है।',
+        bodyEn:
+          'Nartiang lies in West Jaintia Hills district — roughly 24 km from Jowai, about forty minutes by road, some 65 km from Shillong and about 160 km from Guwahati. The nearest major railhead is Guwahati, approximately 160 km away, and most visitors come on from there by taxi or by Meghalaya Transport bus; the nearest airport is at Shillong, though flight connections are far better at Guwahati. About three kilometres from the temple is the Nartiang monolith park, where the Jaintia kings’ upright menhirs and flat dolmens stand together — usually the second halt of the same trip. The Shiva temple is a short walk away, and below runs the Myntdu, the river to which both the temple’s tunnel and its immersion rite belong.',
       },
     ],
   },
