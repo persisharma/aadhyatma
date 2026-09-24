@@ -10,9 +10,72 @@ import type { TempleDetail } from '../temples';
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
  *
- * Temples still to author in this chunk: tripura-sundari
+ * All four temples in this chunk carry their full reading.
  */
 export const details: Record<string, TempleDetail> = {
+  'tripura-sundari': {
+    significanceHi:
+      'उदयपुर की त्रिपुर सुंदरी, जिन्हें त्रिपुरा में सब माताबाड़ी कहते हैं, 51 शक्ति पीठों में गिनी जाती हैं और राज्य की देवी-परम्परा का केन्द्र हैं। माणिक्य वंश के महाराजा धन्य माणिक्य ने सन् 1501 (विक्रम संवत् 1558) में यह मंदिर बनवाया, और जिस टीले पर यह खड़ा है उसका आकार कूर्म यानी कछुए जैसा होने से इसे कूर्म पीठ कहा जाता है। कार्तिक अमावस्या के आसपास लगने वाला दीपावली मेला पूर्वोत्तर के सबसे बड़े धार्मिक जमावड़ों में गिना जाता है।',
+    significanceEn:
+      'Tripura Sundari of Udaipur, known across Tripura simply as Matabari, is counted among the 51 Shakti Peethas and anchors the state’s Devi tradition. Maharaja Dhanya Manikya of the Manikya dynasty built the temple in 1501 CE (Vikram Samvat 1558), and because the mound it stands on has the shape of a kurma, a tortoise, the site is called Kurma Pitha. The Diwali mela held around the Kartik new moon is among the largest religious gatherings in the northeast.',
+    originStoryHi:
+      'परम्परा के अनुसार दक्ष-यज्ञ के बाद सती का दक्षिण चरण — अँगूठे सहित — इसी स्थान पर गिरा, इसलिए यहाँ देवी त्रिपुरसुंदरी और भैरव त्रिपुरेश के रूप में उपासना होती है। दूसरी कथा राज-परम्परा की है: पन्द्रहवीं शताब्दी के अंत में शासन कर रहे महाराजा धन्य माणिक्य को स्वप्न में देवी ने उदयपुर के निकट की एक पहाड़ी पर अपनी उपासना आरम्भ कराने का आदेश दिया। राजा ने उसी कूर्म-आकृति टीले पर सन् 1501 में मंदिर बनवाया और प्रतिमा प्रतिष्ठित की।',
+    originStoryEn:
+      'By tradition the right foot of Sati — the Dakshin Charan, with its great toe — fell at this place after Daksha’s sacrifice, so the goddess is worshipped here as Tripurasundari with Tripuresh as her Bhairava. A second story belongs to the royal line: Maharaja Dhanya Manikya, ruling at the close of the fifteenth century, was told in a dream to begin her worship on a hill near Udaipur, then his capital. On that tortoise-shaped mound the king raised the temple in 1501 CE and installed the image.',
+    sources: [
+      { label: 'Tripura Sundari Temple (Government of Tripura)', url: 'https://tripurasundari.tripura.gov.in/' },
+      { label: 'Tripura Tourism - Tripura Sundari Temple', url: 'https://tripuratourism.gov.in/single-tour.php?id=2' },
+      { label: 'Incredible India - Tripura Sundari Temple', url: 'https://www.incredibleindia.gov.in/en/tripura/agartala/tripura-sundari-temple' },
+      { label: 'Tripura Sundari Temple - Reference', url: 'https://en.wikipedia.org/wiki/Tripura_Sundari_Temple' },
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'शक्ति-पीठ परम्परा इस स्थान को सती के दक्षिण चरण से जोड़ती है, इसलिए यहाँ देवी-उपासना मंदिर से पुरानी मानी जाती है। जो मंदिर आज खड़ा है उसका इतिहास स्पष्ट है: माणिक्य वंश के महाराजा धन्य माणिक्य ने, जो पन्द्रहवीं शताब्दी के अंत और सोलहवीं के आरम्भ में त्रिपुरा के शासक थे, सन् 1501 (विक्रम संवत् 1558) में तत्कालीन राजधानी उदयपुर के निकट की एक पहाड़ी पर इसे बनवाया। परम्परा के अनुसार निर्माण का आदेश उन्हें स्वप्न में देवी से मिला था, और उन्होंने वही टीला चुना जिसकी आकृति कछुए जैसी है — शाक्त परम्परा में कूर्म-आकृति भूमि को देवी-मंदिर के लिए सबसे उपयुक्त माना गया है, इसी से स्थान कूर्म पीठ कहलाया। प्रतिष्ठा की तिथि, वार और प्रतिष्ठा कराने वाले आचार्य का नाम उपलब्ध विवरणों में दर्ज नहीं है। सत्रहवीं शताब्दी के मध्य में महाराजा कल्याण माणिक्य ने मंदिर के सामने बड़ा सरोवर खुदवाया, जो उन्हीं के नाम पर कल्याण सागर कहलाता है। माणिक्य राजवंश पीढ़ियों तक इसका संरक्षक रहा और आज मंदिर की व्यवस्था त्रिपुरा शासन तथा परम्परागत पुजारी-परिवार देखते हैं।',
+        bodyEn:
+          'The Shakti Peeth tradition ties this ground to the right foot of Sati, so worship of the goddess here is held to be older than any building. The temple now standing has a clear history: Maharaja Dhanya Manikya of the Manikya dynasty, ruler of Tripura at the turn of the sixteenth century, raised it in 1501 CE (Vikram Samvat 1558) on a hill near Udaipur, then his capital. Tradition holds that the instruction came to him in a dream, and he chose the mound whose outline resembles a tortoise — in Shakta usage a kurma-shaped site is counted the most fitting ground for a Devi temple, and from this the place took the name Kurma Pitha. No available account preserves the consecration tithi, the weekday, or the acharya who performed it. In the middle of the seventeenth century Maharaja Kalyan Manikya had the great tank dug in front of the temple that carries his name, Kalyan Sagar. The Manikya house remained its patron for generations; the shrine is administered today by the Tripura government with hereditary priestly families in attendance.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'त्रिपुर सुंदरी का स्वरूप',
+        titleEn: 'The Form of Tripura Sundari',
+        bodyHi:
+          'गर्भगृह में दो प्रतिमाएँ हैं। मुख्य प्रतिमा त्रिपुर सुंदरी की है — कष्टी पाषाण की, लगभग पाँच फुट ऊँची, और उसे भक्त बड़ी मा या सोरोमा कहते हैं। उसी के साथ लगभग दो फुट ऊँची चण्डी की प्रतिमा है, जो सिंह पर विराजित है और स्थानीय भाषा में छोटी मा कहलाती है; परम्परा में मानी जाती है कि राजा युद्ध-यात्राओं में छोटी मा को साथ ले जाते थे। मंदिर बंगाल की एक-रत्न शैली में बना है — वर्गाकार गर्भगृह, उस पर चार ढलानों वाली कुटीर-सी छत और ऊपर शंक्वाकार शिखर तथा कलश; भवन छोटा है पर टीले पर खड़ा होने से दूर से दिखता है। मंदिर के सामने कल्याण सागर फैला है, जिसमें बड़े कछुए और मछलियाँ रहती हैं; भक्त उन्हें चारा खिलाते हैं और कूर्म-पीठ की जीवित पहचान मानते हैं।',
+        bodyEn:
+          'Two images stand in the sanctum. The principal one is Tripura Sundari, carved of kasti stone and about five feet high, called Bari Ma or Soroma by devotees. Beside her is a figure of Chandi roughly two feet high, seated on a lion and known locally as Chhotima, the smaller mother; tradition holds that the kings carried Chhotima with them on campaign. The building follows the Bengali ek-ratna manner — a square sanctum under a hut-like sloping roof, crowned by a conical dome and finial; it is a small structure, but its mound makes it visible from far off. Before it spreads Kalyan Sagar, whose large turtles and fish are fed by pilgrims and taken as the living sign of the Kurma Pitha.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'माताबाड़ी का पेड़ा और कल्याण सागर की सेवा',
+        titleEn: 'The Matabari Peda and the Service of Kalyan Sagar',
+        bodyHi:
+          'माताबाड़ी की सबसे पहचानी भेंट यहाँ का पेड़ा है — दूध और चीनी से बना यह प्रसाद देवी को अर्पित होकर भक्तों में बँटता है और त्रिपुरा से लौटने वाला यात्री प्रायः इसी को साथ ले जाता है। पेड़े के साथ देवी को शृंगार की वस्तुएँ चढ़ाई जाती हैं — शंख-पोला और चूड़ियाँ, बिंदी, साड़ी और पुष्प — विशेषकर सौभाग्य और सन्तान की कामना से। दूसरी परम्परा सरोवर की है: दर्शन से पहले या बाद में कल्याण सागर के कछुओं और मछलियों को चारा खिलाना यहाँ की अनिवार्य सेवा मानी जाती है, और इन जीवों को हानि पहुँचाना वर्जित है। शाक्त परम्परा के अनुसार यहाँ बलि-प्रथा भी चली आ रही है, विशेषकर पर्व-दिनों पर। दर्शन प्रातः की पूजा से आरम्भ होकर संध्या आरती तक चलते हैं, और मंगलवार, शनिवार तथा अमावस्या के दिन सबसे व्यस्त रहते हैं।',
+        bodyEn:
+          'Matabari’s best-known offering is its peda — a sweet of milk and sugar, offered to the goddess and then shared among devotees, and the thing most travellers carry home from Tripura. With the peda go the articles of shringar: conch bangles and glass ones, bindi, a sari and flowers, brought most often with a prayer for saubhagya or for a child. A second custom belongs to the tank: feeding the turtles and fish of Kalyan Sagar before or after darshan is treated here as a service owed, and harming them is forbidden. Following Shakta usage, animal sacrifice has also continued at this shrine, particularly on festival days. Worship opens with the morning puja and closes with the evening aarti; Tuesdays, Saturdays and the new-moon days draw the heaviest crowds.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'वर्ष का सबसे बड़ा आयोजन दीपावली मेला है, जो कार्तिक अमावस्या के आसपास तीन दिन चलता है; मंदिर और सरोवर दीपों से भर जाते हैं, मंच बनाकर गीत, नृत्य और नाट्य-प्रस्तुतियाँ होती हैं, और राज्य भर से लाखों लोग पहुँचते हैं — हाल के वर्षों में यह संख्या दस लाख से ऊपर बताई गई है, इसीलिए इसे पूर्वोत्तर का कुम्भ भी कहा जाता है। शारदीय नवरात्र और दुर्गा पूजा के दिनों में विशेष पूजा और भारी भीड़ रहती है, और चैत्र नवरात्र में भी नौ दिन अनुष्ठान चलते हैं। प्रत्येक अमावस्या को विशेष पूजा होती है और उस दिन आसपास के ज़िलों से श्रद्धालु आते हैं। मेले के दिनों में उदयपुर नगर और मंदिर-मार्ग पर अस्थायी बाज़ार लग जाता है, जिसमें माताबाड़ी का पेड़ा सबसे अधिक बिकता है।',
+        bodyEn:
+          'The year’s largest gathering is the Diwali mela, held over three days around the Kartik new moon; the temple and its tank fill with lamps, stages go up for song, dance and drama, and people arrive in lakhs from across the state — recent years have been reported at above ten lakh visitors, which is why it is called the Kumbh of the northeast. Sharad Navratri and the Durga Puja days bring special worship and dense crowds, and the nine days of Chaitra Navratri carry their own rites. Every amavasya has a special puja that draws devotees from the surrounding districts. Through the mela days a temporary bazaar lines Udaipur town and the temple road, where the Matabari peda outsells everything else.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'मंदिर त्रिपुरा के गोमती ज़िले में उदयपुर नगर के पास एक टीले पर है और राजधानी अगरतला से सड़क मार्ग से लगभग 55 किमी दूर है; अगरतला–सबरूम मार्ग पर बस और टैक्सी नियमित चलती हैं। उदयपुर का अपना रेलवे स्टेशन इसी लाइन पर है, इसलिए रेल से भी पहुँचा जा सकता है; निकटतम हवाई अड्डा अगरतला का महाराजा बीर बिक्रम है, जहाँ से यात्रा सड़क मार्ग से पूरी होती है। मंदिर के ठीक सामने कल्याण सागर है और उसके तट पर बैठकर कछुओं को चारा खिलाना यात्रा का अंग माना जाता है। उदयपुर माणिक्य वंश की पुरानी राजधानी है, इसलिए आसपास भुवनेश्वरी मंदिर, गुणवती मंदिर समूह और पुराने सरोवर देखने योग्य हैं; अनेक यात्री अगरतला के उज्जयंत महल और नीरमहल को भी इसी प्रवास में जोड़ते हैं। सभी दूरियाँ अनुमानित हैं।',
+        bodyEn:
+          'The temple stands on its mound near Udaipur town in Gomati district of Tripura, about 55 km by road from the state capital Agartala, with regular buses and taxis on the Agartala–Sabroom route. Udaipur has its own railway station on that line, so the shrine can be reached by train as well; the nearest airport is Maharaja Bir Bikram at Agartala, from where the rest of the journey is by road. Kalyan Sagar lies directly in front of the temple, and sitting on its bank to feed the turtles counts as part of the visit. Udaipur was the old Manikya capital, so the Bhuvaneshwari temple, the Gunavati temple group and the town’s old tanks are close by; many travellers add the Ujjayanta Palace at Agartala and Neermahal to the same trip. All distances are approximate.',
+      },
+    ],
+  },
   danteshwari: {
     significanceHi:
       'शंखिनी और डंकिनी नदियों के संगम पर खड़ी दंतेवाड़ा की दंतेश्वरी 52 शक्ति पीठों में गिनी जाती हैं और बस्तर की कुलदेवी हैं। सन् 1324 (विक्रम संवत् 1381) के आसपास वारंगल से आए काकतीय राजकुमार अन्नमदेव अपनी कुलदेवी को साथ लाए और यहाँ प्रतिष्ठित किया; उन्हीं के वंशजों ने बस्तर राज्य चलाया और देवी राज्य की अधिष्ठात्री बनीं। विश्व के सबसे लम्बे उत्सवों में गिना जाने वाला पचहत्तर दिन का बस्तर दशहरा इन्हीं देवी को समर्पित है।',
