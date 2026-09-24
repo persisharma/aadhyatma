@@ -12,7 +12,7 @@ const source = (label: string, url: string) => ({ label, url });
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
  *
- * Temples still to author in this chunk: rameshwaram grishneshwar
+ * Temples still to author in this chunk: grishneshwar
  */
 export const details: Record<string, TempleDetail> = {
   vaidyanath: {
@@ -139,6 +139,70 @@ export const details: Record<string, TempleDetail> = {
           'नागेश्वर गुजरात के देवभूमि द्वारका ज़िले में, द्वारका से बेट द्वारका जाने वाले तटीय मार्ग पर है — द्वारका नगर से लगभग 17–18 किमी। निकटतम रेलवे स्टेशन द्वारका है, जो लगभग इतनी ही दूरी पर पड़ता है; निकटतम हवाई अड्डे पोरबंदर (लगभग 107 किमी) और जामनगर (लगभग 126 किमी) हैं। लगभग सभी तीर्थयात्री नागेश्वर को द्वारकाधीश मंदिर, बेट द्वारका और रुक्मिणी देवी मंदिर के साथ एक ही परिक्रमा में जोड़ते हैं, और अनेक इसे सोमनाथ–द्वारका ज्योतिर्लिङ्ग यात्रा की कड़ी बनाते हैं। मंदिर के पास ही गोपी तालाब तीर्थ है, जिसे गोपियों की स्मृति से जोड़ा जाता है; तट पर शिवराजपुर समुद्र-तट भी निकट पड़ता है।',
         bodyEn:
           'Nageshwar stands in Devbhumi Dwarka district of Gujarat on the coastal road that runs from Dwarka towards Bet Dwarka, roughly 17–18 km from Dwarka town. Dwarka is the nearest railhead at about the same distance; the closest airports are Porbandar, some 107 km away, and Jamnagar, about 126 km. Nearly every pilgrim takes Nageshwar together with the Dwarkadhish temple, Bet Dwarka and the Rukmini Devi shrine in one circuit, and many fold it into the Somnath–Dwarka Jyotirlinga journey. Close by lies Gopi Talav, a tank associated in tradition with the gopis, and the Shivrajpur beach is a short distance along the same coast.',
+      },
+    ],
+  },
+  rameshwaram: {
+    significanceHi:
+      'रामेश्वरम् भारत के उन विरले तीर्थों में है जो द्वादश ज्योतिर्लिङ्ग और चार धाम — दोनों सूचियों में आता है, इसलिए यहाँ राम-कथा, शिव-पूजा और समुद्र-तीर्थ एक साथ मिलते हैं। परम्परा कहती है कि लंका-विजय के बाद श्रीराम ने यहीं शिव की आराधना की, और काशी की यात्रा तब तक अधूरी मानी जाती है जब तक रामेश्वरम् का जल-अर्पण न हो। मंदिर की मूल प्रतिष्ठा की कोई तिथि अभिलिखित नहीं है; वर्तमान गर्भगृह का बड़ा भाग बारहवीं शताब्दी में पोलोन्नरुवा के पराक्रमबाहु प्रथम से जुड़ा बताया जाता है और सत्रहवीं शताब्दी में रामनाड के सेतुपति शासकों ने इसे आज का विराट रूप दिया। एशिया का सबसे लम्बा स्तम्भ-गलियारा और परिसर के बाईस तीर्थ-कूप इसकी विश्वप्रसिद्ध पहचान हैं।',
+    significanceEn:
+      'Rameshwaram is one of the few places in India counted both among the twelve Jyotirlingas and among the Char Dham, so the story of Rama, the worship of Shiva and the sanctity of the sea meet here at once. Tradition holds that Rama worshipped Shiva on this shore after the war in Lanka, and a pilgrimage to Kashi is held incomplete until its Ganga water has been poured over the linga here. No date of first consecration survives; much of the present sanctum is associated with Parakramabahu I of Polonnaruwa in the twelfth century, and the Sethupathi rulers of Ramnad gave the temple its vast present form in the seventeenth. Its pillared corridor, the longest in Asia, and the twenty-two theerthams within the walls are what the shrine is known for worldwide.',
+    originStoryHi:
+      'रामायण-परम्परा के अनुसार लंका-विजय के बाद श्रीराम ने ब्रह्महत्या के दोष-निवारण हेतु इस तट पर शिव-पूजा का संकल्प लिया और हनुमान जी को कैलास से लिङ्ग लाने भेजा। हनुमान के लौटने में विलम्ब हुआ तो पूजा का मुहूर्त निकलता देख सीता ने बालू से लिङ्ग बनाया, जो रामलिङ्ग कहलाया और उसी की प्रतिष्ठा हुई। हनुमान द्वारा लाया गया विश्वलिङ्ग भी उसी गर्भगृह में स्थापित हुआ, और राम के आदेश से आज भी पूजा में उसे पहले स्थान दिया जाता है।',
+    originStoryEn:
+      'By the Ramayana tradition, Rama resolved after the war in Lanka to worship Shiva on this shore in expiation, and sent Hanuman to Kailash to fetch a linga. When Hanuman was delayed and the auspicious hour drew close, Sita shaped a linga from the sand of the beach; this is the Ramalingam that was consecrated. The linga Hanuman brought, the Vishwalingam, was installed in the same sanctum, and at Rama’s own instruction it is still honoured first in the daily worship.',
+    sources: [
+      source('Tamil Nadu Tourism — Rameswaram Temple', 'https://www.tamilnadutourism.tn.gov.in/destinations/rameswaram-temple'),
+      source('Ramanathapuram District, Government of Tamil Nadu — Ramanathaswamy Temple', 'https://ramanathapuram.nic.in/tourist-place/ramanathaswamy-temple/'),
+      source('Rameswaram Municipality, Government of Tamil Nadu — Events and Festivals', 'https://www.tnurbantree.tn.gov.in/rameswaram/events-and-festivals/'),
+      source('Incredible India — Pamban Bridge, Rameswaram', 'https://www.incredibleindia.gov.in/en/tamil-nadu/rameswaram/pamban-bridge'),
+      source('Ramanathaswamy Temple — Reference', 'https://en.wikipedia.org/wiki/Ramanathaswamy_Temple'),
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'रामेश्वरम् की स्थापना-कथा रामायण-परम्परा की है — श्रीराम द्वारा सेतु-निर्माण और लंका-विजय के बाद इसी तट पर शिव-लिङ्ग की प्रतिष्ठा — इसलिए यहाँ प्रतिष्ठा की कोई तिथि, तिथि-वार या प्रतिष्ठाकर्ता आचार्य अभिलिखित नहीं है। ऐतिहासिक दृष्टि से मंदिर का विकास कई शताब्दियों और कई राजवंशों में हुआ। गर्भगृह के चारों ओर का बारहवीं शताब्दी का निर्माण पोलोन्नरुवा (श्रीलंका) के राजा पराक्रमबाहु प्रथम से जोड़ा जाता है, और आगे पांड्य तथा विजयनगर काल में विस्तार होता रहा। मंदिर के वर्तमान स्वरूप का अधिकांश श्रेय रामनाड और शिवगंगा पर शासन करने वाले सेतुपति वंश को जाता है, जिन्होंने सत्रहवीं शताब्दी में गोपुर, प्राकार और विशेषकर तीसरा गलियारा बनवाया — यही एशिया का सबसे लम्बा स्तम्भ-गलियारा माना जाता है। सेतुपति शासक परम्परा में सेतु के रक्षक कहलाते थे और उन्होंने तीर्थयात्रियों की व्यवस्था को राज-कर्तव्य माना। आज मंदिर की देखरेख तमिलनाडु का हिन्दू धार्मिक एवं धर्मादाय बंदोबस्ती विभाग करता है, और वंशानुगत अर्चक परिवार नित्य पूजा सम्पन्न कराते हैं।',
+        bodyEn:
+          'Rameshwaram’s founding account belongs to the Ramayana — the bridge to Lanka, the war, and the linga set up on this shore afterwards — so no consecration date, tithi, weekday or consecrating acharya is recorded for the shrine. Historically the temple grew over many centuries and several dynasties. The twelfth-century work around the sanctum is associated with Parakramabahu I of Polonnaruwa in Sri Lanka, and further building followed under Pandya and Vijayanagara patronage. Most of what a visitor sees today is owed to the Sethupathi line that ruled Ramnad and Sivaganga, who in the seventeenth century raised the gopurams, the enclosures and above all the third corridor, held to be the longest pillared corridor in Asia. The Sethupathis were by title the guardians of the Setu, and they treated provision for pilgrims as a duty of rule. The temple is administered today by the Tamil Nadu Hindu Religious and Charitable Endowments Department, with hereditary archaka families performing the daily worship.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'रामनाथस्वामी का स्वरूप',
+        titleEn: 'The Form of Ramanathaswamy',
+        bodyHi:
+          'गर्भगृह में दो लिङ्ग एक साथ विराजते हैं — बालू से बना रामलिङ्ग, जिसे परम्परा सीता की रचना कहती है, और हनुमान द्वारा कैलास से लाया गया विश्वलिङ्ग, जिसे काशी विश्वनाथ के रूप में पूजा जाता है; राम के वचन के कारण पूजा में विश्वलिङ्ग को पहले स्थान मिलता है। प्रातःकाल की पहली आराधना स्फटिक लिङ्ग की होती है, जो केवल भोर के थोड़े समय दर्शन के लिए रखा जाता है। मंदिर की सबसे बड़ी स्थापत्य विशेषता इसके गलियारे हैं — तीसरे प्राकार का स्तम्भ-गलियारा पूर्व-पश्चिम लगभग 197 मीटर और उत्तर-दक्षिण लगभग 133 मीटर फैला है, और परिसर में बारह सौ से अधिक स्तम्भ हैं, जिनमें से हर एक अलग तराशा गया है। देवी पार्वतवर्धिनी का पृथक् सन्निधान है, और ऊँचे गोपुर दूर समुद्र से ही दिखाई देते हैं।',
+        bodyEn:
+          'Two lingas stand together in the sanctum — the Ramalingam of sand, which tradition credits to Sita, and the Vishwalingam that Hanuman carried from Kailash, worshipped as Kashi Vishwanatha; by Rama’s own word the Vishwalingam receives the first honours in the ritual order. The day opens with worship of a crystal sphatika linga, shown to devotees only for a short spell at dawn. The temple’s great architectural signature is its corridors: the pillared corridor of the third enclosure runs roughly 197 metres east to west and about 133 metres north to south, and more than twelve hundred pillars stand in the complex, each carved differently. The goddess Parvatavardhini has her own shrine within the walls, and the tall gopurams are visible from far out at sea.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'बाईस तीर्थ स्नान',
+        titleEn: 'The Bath of the Twenty-Two Theerthams',
+        bodyHi:
+          'रामेश्वरम् की सबसे विशिष्ट परम्परा तीर्थ-स्नान है। यात्रा पहले अग्नि तीर्थ से आरम्भ होती है — मंदिर के पूर्वी द्वार से लगभग डेढ़ सौ मीटर दूर बंगाल की खाड़ी का तट, जहाँ समुद्र-स्नान किया जाता है। उसके बाद परिसर के भीतर बाईस कूपों में क्रम से स्नान होता है, जो महालक्ष्मी तीर्थ से आरम्भ होकर कोटि तीर्थ पर पूर्ण होता है; मंदिर के सेवक बाल्टी से जल उँड़ेलते हैं, भक्त स्वयं कूप से जल नहीं निकालते। परम्परा इन बाईस कूपों को राम के तूणीर के बाईस बाणों से जोड़ती है और मान्यता है कि इनका स्नान भारत की समस्त पवित्र नदियों के स्नान के समान है। दूसरी प्रसिद्ध परम्परा काशी से लाए गंगाजल का अर्पण है — काशी-यात्रा का संकल्प रामेश्वरम् में जल चढ़ाकर और यहाँ की रेत काशी ले जाकर पूरा माना जाता है। स्नान का समय प्रातः और अपराह्न के निर्धारित घंटों में रहता है और इसके लिए अलग शुल्क-टिकट लिया जाता है।',
+        bodyEn:
+          'The practice that defines Rameshwaram is the round of sacred baths. It begins outside the walls at the Agni Theertham, the shore of the Bay of Bengal some hundred and fifty metres from the eastern gate, where pilgrims bathe in the sea. Inside the temple they then bathe in order at the twenty-two wells, beginning at the Mahalakshmi Theertham and finishing at the Kodi Theertham; temple attendants draw and pour the water, as devotees may not lift it from the wells themselves. Tradition links the twenty-two wells to the twenty-two arrows in Rama’s quiver, and holds that the round equals a bath in all the sacred rivers of India. The other well-known custom is the offering of Ganga water carried from Kashi — a Kashi vow is held complete only when that water is poured here and sand from this shore is carried back. The bathing is permitted in fixed morning and afternoon hours and is taken with a separate ticket.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'महाशिवरात्रि (फाल्गुन कृष्ण चतुर्दशी) यहाँ दस दिन तक मनाई जाती है, जिसमें नित्य विशेष अभिषेक और रथ-यात्रा होती है और यह वर्ष का सबसे बड़ा उत्सव है। तिरुकल्याणम् — रामनाथस्वामी और देवी पार्वतवर्धिनी के विवाह का उत्सव — मंदिर का सबसे लम्बा पर्व है और प्रायः आषाढ़–श्रावण (जुलाई–अगस्त) में सत्रह दिन चलता है। वैशाख–ज्येष्ठ (मई–जून) में रामलिङ्ग प्रतिष्ठा का तीन-दिवसीय उत्सव होता है, जो लिङ्ग-स्थापना की स्मृति है। नवरात्रि और मार्गशीर्ष की आरुद्रा दर्शनम् भी बड़े पर्व हैं, और रामनवमी पर राम-कथा के प्रसंग से यहाँ विशेष भीड़ रहती है।',
+        bodyEn:
+          'Mahashivaratri, on Phalgun Krishna Chaturdashi, is kept here over ten days with daily special abhishekas and temple-car processions, and is the largest festival of the year. Thirukalyanam, the marriage of Ramanathaswamy and the goddess Parvatavardhini, is the temple’s longest observance, running about seventeen days and usually falling in July and August. A three-day Ramalinga Prathishtai festival in May and June commemorates the installation of the linga itself. Navaratri and Arudra Darshanam in the month of Margazhi are also major occasions, and Rama Navami brings its own crowds because of the shrine’s place in the Rama story.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'रामेश्वरम् तमिलनाडु के रामनाथपुरम ज़िले में पाम्बन द्वीप पर है, जो पाम्बन जलडमरूमध्य पर बने रेल और सड़क पुलों से मुख्य भूमि के मंडपम से जुड़ा है। रामेश्वरम् रेलवे स्टेशन मंदिर से लगभग 1–2 किमी दूर है; निकटतम हवाई अड्डा मदुरै है, जो लगभग 170 किमी पड़ता है, और मदुरै से सड़क मार्ग की यही दूरी है। अधिकांश तीर्थयात्री रामेश्वरम् को मदुरै के मीनाक्षी मंदिर के साथ जोड़ते हैं, और चार धाम यात्रा में इसे दक्षिण का धाम मानकर द्वारका, पुरी तथा बद्रीनाथ के साथ गिनते हैं; ज्योतिर्लिङ्ग यात्रा में यह दक्षिण का अन्तिम पड़ाव बनता है। द्वीप पर ही धनुषकोडि लगभग 19 किमी दूर है, जहाँ परम्परा सेतु के आरम्भ-स्थल की स्मृति रखती है, और मंदिर से लगभग 2 किमी पर गंधमादन पर्वतम् है, जहाँ राम के चरण-चिह्न की पूजा होती है। कोदण्डरामस्वामी मंदिर और पाम्बन पुल भी सामान्य दर्शन-स्थल हैं।',
+        bodyEn:
+          'Rameshwaram lies on Pamban island in Ramanathapuram district of Tamil Nadu, joined to Mandapam on the mainland by the rail and road bridges across the Pamban channel. Rameswaram railway station is roughly 1–2 km from the temple; the nearest airport is Madurai, about 170 km away, which is also the road distance from Madurai city. Most pilgrims pair Rameshwaram with the Meenakshi temple at Madurai, and in the Char Dham reckoning it is the southern dham beside Dwarka, Puri and Badrinath, while on a Jyotirlinga circuit it is the southern terminus. On the island itself Dhanushkodi lies about 19 km away, where tradition remembers the setting out of the bridge, and Gandhamadhana Parvatham, where Rama’s footprint is venerated, is about 2 km from the temple. The Kothandaramaswamy temple and the Pamban bridge are the other usual stops.',
       },
     ],
   },
