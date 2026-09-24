@@ -1,5 +1,7 @@
 import type { TempleDetail } from '../temples';
 
+const source = (label: string, url: string) => ({ label, url });
+
 /**
  * Extended §12.6 readings — Jyotirlingas C.
  *
@@ -10,6 +12,71 @@ import type { TempleDetail } from '../temples';
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
  *
- * Temples still to author in this chunk: vaidyanath nageshwar rameshwaram grishneshwar
+ * Temples still to author in this chunk: nageshwar rameshwaram grishneshwar
  */
-export const details: Record<string, TempleDetail> = {};
+export const details: Record<string, TempleDetail> = {
+  vaidyanath: {
+    significanceHi:
+      'देवघर का बाबा वैद्यनाथ धाम भारत का एकमात्र ऐसा तीर्थ माना जाता है जहाँ द्वादश ज्योतिर्लिङ्गों में से एक और शक्तिपीठ — दोनों एक ही परिसर में विराजते हैं। यहाँ का लिङ्ग “कामना लिङ्ग” कहलाता है, क्योंकि लोक-मान्यता है कि यहाँ की गई प्रार्थना अधूरी नहीं रहती। मंदिर के अग्रभाग का निर्माण गिद्धौर के पूरनमल ने सन् 1596 (विक्रम संवत् 1653) में कराया बताया जाता है — कुछ वृत्तान्त इसे सन् 1562 भी बताते हैं — और श्रावण मास की कांवड़ परम्परा इसे पूर्वी भारत का सबसे जीवंत शिव-तीर्थ बनाती है। परम्परागत सूची में वैद्यनाथ का स्थान देवघर और महाराष्ट्र के परली वैजनाथ के बीच विवादित है; यह ऐप देवघर को अंकित करता है।',
+    significanceEn:
+      'Baba Vaidyanath Dham at Deoghar is held to be the one shrine in India where a Jyotirlinga and a Shakti Peeth stand within the same precinct. Its linga is called the Kamana Linga, the wish-fulfilling linga, because tradition holds that no prayer offered here goes unanswered. The front portion of the present temple is credited to Puran Mal of the Gidhaur line in 1596 CE (Vikram Samvat 1653), though some accounts give 1562 CE, and the Shravan month Kanwar pilgrimage makes it the most crowded Shiva shrine of eastern India. In the traditional list, the identity of Vaidyanath is contested between Deoghar in Jharkhand and Parli Vaijnath in Maharashtra; this app pins Deoghar.',
+    originStoryHi:
+      'पुराण-परम्परा के अनुसार रावण ने कठोर तप से शिव को प्रसन्न कर ज्योतिर्लिङ्ग लंका ले जाने का वर पाया, इस शर्त के साथ कि मार्ग में उसे भूमि पर न रखा जाए। कथा कहती है कि देवताओं की युक्ति से विष्णु ब्राह्मण-वेश में प्रकट हुए और रावण ने उन्हें लिङ्ग थमा दिया; ब्राह्मण ने उसे भूमि पर रख दिया और लिङ्ग वहीं अचल हो गया। जिस स्थान पर वह स्थिर हुआ, वही आज का देवघर — देवताओं का घर — कहलाता है।',
+    originStoryEn:
+      'By Puranic tradition Ravana won the Jyotirlinga from Shiva through severe penance, on the condition that he must not set it on the ground anywhere along the way to Lanka. The story tells that the gods contrived a delay and Vishnu appeared as a Brahmin, to whom Ravana handed the linga; the Brahmin set it down and it took root in the earth and could not be lifted again. The place where it stayed became Deoghar, the house of the gods, and the linga there is worshipped as Baba Vaidyanath.',
+    sources: [
+      source('Jharkhand Tourism — Baidyanath Dham', 'https://tourism.jharkhand.gov.in/how-to-reach/53/1'),
+      source('District Deoghar, Government of Jharkhand — History', 'https://deoghar.nic.in/history/'),
+      source('District Deoghar, Government of Jharkhand — Shrawani Mela', 'https://deoghar.nic.in/shrawani-mela/'),
+      source('Incredible India — Baba Baidyanath Dham', 'https://www.incredibleindia.gov.in/en/jharkhand/deoghar/baba-baidyanath-dham'),
+      source('Baidyanath Temple — Reference', 'https://en.wikipedia.org/wiki/Baidyanath_Temple'),
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'देवघर के तीर्थ की आरम्भिक तिथि किसी अभिलेख में दर्ज नहीं है; संस्कृत ग्रन्थों में यह क्षेत्र हारीतकीवन और केतकीवन नामों से आता है, और सातवीं शताब्दी में आए चीनी यात्री ह्वेनसांग ने इस अंचल के एक बड़े शिव-स्थान का उल्लेख किया है। परम्परा में रावण द्वारा लाए गए ज्योतिर्लिङ्ग की कथा ही स्थापना-कथा है, इसलिए यहाँ प्रतिष्ठा की कोई तिथि, तिथि-वार या प्रतिष्ठाकर्ता आचार्य अभिलिखित नहीं मिलता। वर्तमान मंदिर के अग्रभाग का निर्माण गिद्धौर राजवंश के पूर्वज पूरनमल ने कराया; मंदिर का एक संस्कृत शिलालेख उन्हें “नृपति” कहता है और बताता है कि यह निर्माण पुरोहित रघुनाथ ओझा के आग्रह पर हुआ। देवघर ज़िला प्रशासन इस निर्माण को सन् 1596 (विक्रम संवत् 1653) में रखता है, जबकि कुछ लोकप्रिय वृत्तान्त सन् 1562 (विक्रम संवत् 1619) बताते हैं — बेहतर प्रमाणित तिथि 1596 है। मंदिर की पूजा-व्यवस्था परम्परा से तीर्थपुरोहित पंडा परिवारों के हाथ में है, और प्रशासनिक देखरेख राज्य द्वारा गठित मंदिर प्रबंध समिति करती है।',
+        bodyEn:
+          'No inscription records when worship began at Deoghar. Sanskrit texts know the tract as Haritakivan and Ketakivan, and the seventh-century Chinese traveller Hiuen Tsang noted a major Shiva shrine in this region, so the site is plainly old. Because the founding narrative here is the Ravana katha rather than a dated consecration, no tithi, weekday or consecrating acharya is on record. The front portion of the temple standing today was built by Puran Mal, an ancestor of the Gidhaur chieftains; a Sanskrit inscription at the temple calls him nripati, lord of men, and states that he raised it at the request of the priest Raghunath Ojha. The Deoghar district administration dates that work to 1596 CE (Vikram Samvat 1653), while some popular accounts give 1562 CE (Vikram Samvat 1619); 1596 is the better attested of the two. Worship has long been carried out by the hereditary tirtha-purohit pandas of Deoghar, with the temple managed today through a state-constituted management committee.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'बाबा वैद्यनाथ का स्वरूप',
+        titleEn: 'The Form of Baba Vaidyanath',
+        bodyHi:
+          'गर्भगृह में लिङ्ग एक विस्तृत चबूतरे के बीच स्थापित है और ऊपरी भाग कुछ घिसा हुआ है — भक्त इसे रावण के बल से दबाए जाने की कथा से जोड़ते हैं। मंदिर पूर्वाभिमुख है, लगभग 72 फुट ऊँचा, और नागर शैली के शिखर पर पंचशूल विराजता है; पुरोहित-परम्परा इसे काम, क्रोध, लोभ, मोह और मद — इन पाँच विकारों के नाश का प्रतीक मानती है, और भारत के अन्य शिव-मंदिरों में यह पंचशूल दुर्लभ है। मुख्य मंदिर के साथ परिसर में इक्कीस अन्य देवालय हैं, जिनमें पार्वती मंदिर सबसे महत्वपूर्ण है, और यहीं सती के हृदय-पात की मान्यता से शक्तिपीठ का भाव जुड़ा है। लिङ्ग पर जल, बेलपत्र, भाँग, धतूरा और दूध अर्पित होता है; भक्त स्वयं गर्भगृह तक पहुँचकर जलार्पण कर सकते हैं, जो इस धाम की अलग पहचान है।',
+        bodyEn:
+          'In the sanctum the linga rises from the centre of a broad stone platform, its top worn smooth — devotees connect this with the story of Ravana pressing down on it. The east-facing temple stands about 72 feet high in the Nagara manner, and its shikhara is crowned by a panchshool, a five-pointed trident that temple priests read as the destruction of the five failings of lust, anger, greed, attachment and pride; the panchshool is rare among Shiva temples elsewhere in India. Twenty-one further shrines fill the walled complex around the main temple, the Parvati shrine chief among them, and it is through the belief that Sati fell here that the Shakti Peeth character of the site is held. Water, bel leaves, bhang, dhatura and milk are offered on the linga, and pilgrims are able to reach the sanctum and pour the water themselves — an intimacy unusual among the great Jyotirlingas.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'कांवड़ और गठबंधन',
+        titleEn: 'The Kanwar and the Gathbandhan',
+        bodyHi:
+          'देवघर की सबसे प्रसिद्ध परम्परा कांवड़ है — भक्त बिहार के सुल्तानगंज स्थित अजगैबीनाथ घाट से गंगाजल भरकर बाँस की कांवड़ में लगभग 105 किमी पैदल चलकर बाबा वैद्यनाथ पर जलार्पण करते हैं। यात्रा भर कांवड़ भूमि पर नहीं रखी जाती और यात्री केसरिया वस्त्र धारण कर “बोल बम” का उद्घोष करते चलते हैं; डाक बम कहलाने वाले व्रती यह दूरी बिना रुके एक ही बार में पूरी करते हैं। दूसरी विशिष्ट परम्परा गठबंधन है — मुख्य मंदिर और पार्वती मंदिर के शिखरों को लाल पवित्र धागों से बाँधा जाता है, जिसे शिव-शक्ति के मिलन का प्रतीक मानकर विवाहित दम्पती विशेष रूप से अर्पित करते हैं। भक्त मंदिर के शिखर पर चढ़ने वाले सेवकों के हाथ यह धागा भेजते हैं, और दर्शन प्रातःकालीन सरकारी पूजा से रात्रि शृंगार-आरती तक चलते हैं।',
+        bodyEn:
+          'Deoghar’s signature practice is the Kanwar. Pilgrims fill their pots with Ganga water at the Ajgaibinath ghat in Sultanganj, Bihar, sling them from a decorated bamboo pole and walk roughly 105 km on foot to pour the water over Baba Vaidyanath. The kanwar may not be set on the ground at any point of the walk; the walkers wear saffron and call out "Bol Bam", and those known as dak bams cover the whole distance in a single unbroken run. The second custom peculiar to this shrine is the gathbandhan, in which the shikharas of the main temple and the Parvati temple are joined by long red sacred threads that devotees — married couples above all — offer to be tied, reading in it the union of Shiva and Shakti. The threads are carried up by temple servitors who climb the spires, and darshan runs from the morning sarkari puja through to the night shringar aarti.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'वर्ष का सबसे बड़ा आयोजन श्रावणी मेला है, जो श्रावण मास भर — प्रायः जुलाई से अगस्त तक — चलता है और इसे विश्व का सबसे लम्बा धार्मिक मेला कहा जाता है; इस अवधि में लाखों कांवड़िये सुल्तानगंज से देवघर पहुँचते हैं और जल चढ़ाने की कतार कई किलोमीटर लम्बी हो जाती है। महाशिवरात्रि (फाल्गुन कृष्ण चतुर्दशी) दूसरा बड़ा पर्व है, जब शिव-पार्वती विवाह के भाव से विशेष शृंगार और रात्रि-जागरण होता है। भादों मास में भी जलार्पण की परम्परा है, और बसंत पंचमी से मंदिर में विवाह-उत्सव की तैयारियाँ आरम्भ मानी जाती हैं। झारखंड और बिहार सरकारें श्रावणी मेले के लिए मार्ग भर टेंट-नगरी, जलसेवा और चिकित्सा शिविर लगाती हैं।',
+        bodyEn:
+          'The year turns on the Shrawani Mela, which fills the whole month of Shravan, usually spanning July and August, and is often described as the longest religious fair in the world; lakhs of kanwariyas arrive from Sultanganj in that month and the queue for jalarpan stretches for kilometres. Mahashivaratri, on Phalgun Krishna Chaturdashi, is the second great observance, kept here as the wedding of Shiva and Parvati with special shringar and a night-long vigil. Offering water in the month of Bhadon is also customary, and Basant Panchami is taken as the opening of the temple’s marriage-season observances. For the Shrawani Mela the Jharkhand and Bihar governments raise tent settlements, water points and medical camps along the entire walking route.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'देवघर झारखंड के संथाल परगना प्रमंडल में है। निकटतम बड़ा रेलवे स्टेशन जसीडीह जंक्शन है, जो मंदिर से लगभग 7 किमी दूर है; बैद्यनाथधाम स्टेशन मंदिर के और पास पड़ता है। देवघर हवाई अड्डा नगर से लगभग 10 किमी दूर है, और रांची तथा गया के हवाई अड्डे क्रमशः लगभग 250 किमी और 220 किमी दूर पड़ते हैं। कांवड़ यात्रा का आरम्भ-स्थल सुल्तानगंज (बिहार) यहाँ से लगभग 105 किमी है। अधिकांश तीर्थयात्री वैद्यनाथ धाम के साथ दुमका ज़िले के बासुकीनाथ को जोड़ते हैं, जो देवघर–दुमका मार्ग पर लगभग 45 किमी दूर है — लोक-मान्यता है कि बासुकीनाथ के दर्शन बिना यात्रा पूर्ण नहीं होती। समीप ही त्रिकूट पर्वत, नौलखा मंदिर, तपोवन और शिवगंगा सरोवर भी दर्शनीय हैं, और परिसर के भीतर पार्वती मंदिर सहित इक्कीस देवालय परिक्रमा में आते हैं।',
+        bodyEn:
+          'Deoghar lies in the Santhal Pargana division of Jharkhand. The main railhead is Jasidih Junction, roughly 7 km from the temple, with Baidyanathdham station closer to the shrine itself. Deoghar airport is about 10 km from the town, while the airports at Ranchi and Gaya lie approximately 250 km and 220 km away. Sultanganj in Bihar, where the Kanwar walk begins, is about 105 km distant. Most pilgrims pair Vaidyanath Dham with Basukinath in Dumka district, about 45 km along the Deoghar–Dumka road, since tradition holds that the yatra is incomplete without that darshan. Trikut hill, the Naulakha temple, Tapovan and the Shivganga tank are the usual nearby visits, and within the walled complex the Parvati shrine and the twenty-one subsidiary temples are taken in on the circumambulation.',
+      },
+    ],
+  },
+};
