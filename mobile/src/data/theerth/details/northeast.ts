@@ -10,7 +10,7 @@ import type { TempleDetail } from '../temples';
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
  *
- * Temples still to author in this chunk: parashuram-kund nartiang-durga kirateshwar
+ * Temples still to author in this chunk: nartiang-durga kirateshwar
  */
 export const details: Record<string, TempleDetail> = {
   'govindajee-imphal': {
@@ -85,6 +85,81 @@ export const details: Record<string, TempleDetail> = {
           'मंदिर इम्फाल पूर्वी ज़िले में नगर के मध्य, पुराने राजमहल (सना कोनुङ) परिसर से सटा है, इसलिए इम्फाल के किसी भी भाग से सड़क मार्ग से कुछ ही मिनटों में पहुँचा जा सकता है। निकटतम हवाई अड्डा बीर टिकेन्द्रजीत अन्तर्राष्ट्रीय हवाई अड्डा है, जो नगर-केन्द्र से लगभग 8 किमी दूर है; निकटतम रेलवे स्टेशन मणिपुर में जिरीबाम है, जबकि अधिकांश यात्री नागालैण्ड के दीमापुर रेलहेड (लगभग 215 किमी) से सड़क मार्ग से आते हैं। दर्शन के साथ प्रायः कंगला दुर्ग देखा जाता है, जो मंदिर के ठीक सामने है। विग्रह की उत्पत्ति-स्थली काइना पहाड़ी इम्फाल से लगभग 20–30 किमी दूर है — स्रोतों में दूरी भिन्न मिलती है — और वहाँ का पवित्र कटहल-स्थल गोविंदजी यात्रा को पूर्ण करने वाला माना जाता है।',
         bodyEn:
           'The temple sits in the middle of Imphal in Imphal East district, sharing a wall with the old royal palace compound (Sana Konung), so it is a short drive from anywhere in the city. The nearest airport is Bir Tikendrajit International Airport, roughly 8 km from the city centre; the nearest railway station within Manipur is Jiribam, though most pilgrims still come by road from the railhead at Dimapur in Nagaland, approximately 215 km away. Kangla Fort, directly opposite, is usually seen in the same visit. Kaina hill, where the image is said to have originated, lies about 20–30 km from Imphal — sources differ on the distance — and its sacred jackfruit site is counted as the completion of a Govindajee yatra.',
+      },
+    ],
+  },
+  'parashuram-kund': {
+    significanceHi:
+      'अरुणाचल प्रदेश के लोहित ज़िले में लोहित नदी के तट पर स्थित परशुराम कुंड उत्तर-पूर्व भारत का सबसे बड़ा स्नान-तीर्थ है, जहाँ विष्णु के छठे अवतार परशुराम की स्मृति में पुण्य-स्नान किया जाता है। कालिका पुराण इस कुंड में स्नान को मुक्तिदायक कहता है, और मकर संक्रांति (14–15 जनवरी) पर यहाँ लगने वाला मेला, जो सन् 1972 (विक्रम संवत् 2029) से नियमित रूप से आयोजित होता आ रहा है, देश-विदेश से हज़ारों तीर्थयात्रियों को खींचता है। यहाँ कोई प्राचीन प्रतिष्ठित मंदिर नहीं, बल्कि नदी में बना प्राकृतिक कुंड ही तीर्थ है — इसीलिए इसे उत्तर-पूर्व का कुम्भ कहा जाता है।',
+    significanceEn:
+      'On the bank of the Lohit river in Lohit district of Arunachal Pradesh, Parashuram Kund is the greatest bathing tirtha of north-east India, where pilgrims take the ritual dip in memory of Parashurama, the sixth avatara of Vishnu. The Kalika Purana holds that a bath in this kund brings release, and the mela on Makar Sankranti (14–15 January), held regularly since 1972 (Vikram Samvat 2029), draws thousands of pilgrims from across India and from Nepal. There is no ancient consecrated temple here — the tirtha is the natural pool in the river itself, which is why it is called the Kumbh of the North-East.',
+    originStoryHi:
+      'परम्परा के अनुसार परशुराम ने अपने पिता जमदग्नि की आज्ञा पर माता रेणुका का वध किया, और उस मातृहत्या के चिह्न-स्वरूप फरसा उनके हाथ से चिपक गया। शास्त्र-कथा कहती है कि प्रायश्चित की खोज में वे लोहित नदी के ब्रह्मकुंड पहुँचे और वहाँ स्नान करते ही फरसा हाथ से छूट गया। कृतज्ञ होकर उन्होंने उसी फरसे से तट काटकर जल के लिए मार्ग बनाया, जिससे बना कुंड आगे की पीढ़ियों के लिए परशुराम कुंड कहलाया।',
+    originStoryEn:
+      'By tradition Parashurama killed his mother Renuka at the command of his father, the sage Jamadagni, and the axe he used clung to his hand as the mark of that matricide. The Puranic account says that, seeking expiation, he reached the Brahmakund on the Lohit, and the axe fell away the moment he bathed there. In gratitude he cut the bank open with that same axe to make a passage for the water, and the pool it formed has been known ever since as Parashuram Kund.',
+    sources: [
+      {
+        label: 'Parshuram Kund — Government of Arunachal Pradesh (official site)',
+        url: 'https://parshuramkund.arunachal.gov.in/website/parshuram-kund-mela/',
+      },
+      {
+        label: 'District Lohit, Government of Arunachal Pradesh — Parshuram Kund',
+        url: 'https://lohit.nic.in/tourist-place/parshuram-kund/',
+      },
+      {
+        label: 'Arunachal Tourism — Parasuram Kund',
+        url: 'https://arunachaltourism.com/parasuram-kund/',
+      },
+      {
+        label: 'Parshuram Kund — Reference',
+        url: 'https://en.wikipedia.org/wiki/Parshuram_Kund',
+      },
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'परशुराम कुंड की कोई प्राण-प्रतिष्ठा तिथि दर्ज नहीं है — यह मानव-प्रतिष्ठित मंदिर नहीं, नदी में बना स्वयंभू तीर्थ है, जिसका उल्लेख कालिका पुराण, श्रीमद्भागवत और महाभारत की ब्रह्मकुंड-कथाओं से जोड़ा जाता है। परम्परा कहती है कि अठारहवीं शताब्दी में एक सन्यासी ने चौखम की ओर से आकर इस विस्मृत स्थल को फिर से खोजा और यात्रियों के लिए पुनः प्रतिष्ठित किया; लोककथा में गाँववालों ने पहले उन्हें ठग समझकर निकाल दिया था, और बाद में क्षमा माँगकर फल-फूल अर्पित किए। उस सन्यासी द्वारा चिह्नित कुंड 15 अगस्त 1950 (विक्रम संवत् 2007) के असम भूकम्प तक बना रहा; उस प्रलयंकारी भूकम्प ने नदी की धारा बदल दी और मूल कुंड जल में समा गया। इसके बाद नदी-तल में विशाल शिलाएँ एक वृत्ताकार रचना में जम गईं और पुराने कुंड के स्थान पर एक नया कुंड बन गया — आज का स्नान-स्थल यही है, और स्थानीय मान्यता इसे परशुराम की कृपा मानती है। मूल कुंड के ऊपर से अब तेज़ धारा बहती है। सन् 1972 (विक्रम संवत् 2029) से मकर संक्रांति का मेला नियमित रूप से आयोजित होने लगा, और तब से अरुणाचल प्रदेश सरकार, ज़िला प्रशासन तथा सेवा-समितियाँ मिलकर तीर्थ की व्यवस्था सँभालती हैं; हाल के वर्षों में केन्द्रीय तीर्थ-विकास योजना के अन्तर्गत घाट तक पक्की सीढ़ियाँ, स्वागत-कक्ष, यात्री-निवास और साधुओं के लिए आवास बनाए गए हैं।',
+        bodyEn:
+          'Parashuram Kund records no date of consecration — it is not a shrine that anyone installed, but a self-made tirtha in the river, linked by tradition to the Brahmakund passages of the Kalika Purana, the Srimad Bhagavata and the Mahabharata. Tradition holds that in the eighteenth century a sadhu who came by way of Chowkham rediscovered the forgotten site and re-established it for pilgrims; the local story tells that the villagers first drove him out as a fraud and later returned with fruit and flowers to ask his pardon. The kund he marked survived until the Assam earthquake of 15 August 1950 (Vikram Samvat 2007), which shifted the river and buried the old pool under the current. Afterwards great boulders settled into a ring in the riverbed and formed a fresh kund in place of the old — this is the pool pilgrims bathe in today, and local belief reads its appearance as Parashurama’s own grace. A strong current now runs over the original site. The Makar Sankranti mela has been held regularly since 1972 (Vikram Samvat 2029), managed since then by the Government of Arunachal Pradesh, the district administration and the seva samitis together; in recent years a central pilgrimage-development scheme has added concrete steps down to the ghat, a reception hall, and lodging for pilgrims and for sadhus.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'परशुराम का स्वरूप',
+        titleEn: 'The Form of Parashurama',
+        bodyHi:
+          'यहाँ का मुख्य दर्शन कोई गर्भगृह-प्रतिष्ठित विग्रह नहीं, बल्कि कुंड स्वयं है — लोहित की धारा के बीच विशाल शिलाओं से बना वृत्ताकार जल-कुंड, जिसके चारों ओर मिश्मी पहाड़ियों की ढलानें उतरती हैं। तट पर एक छोटा मंदिर है जिसमें विष्णु और उनके अवतार परशुराम की प्रतिमाएँ स्थापित हैं; परशुराम यहाँ अपने चिरपरिचित रूप में — फरसा धारण किए तपस्वी ब्राह्मण-योद्धा — पूजे जाते हैं। मंदिर परिसर के पीछे रेणुका-वध और फरसे के छूटने की कथा को दर्शाती मूर्तियाँ लगी हैं, जिनसे यात्री कथा का क्रम समझते हैं। घाट तक उतरने के लिए पक्की सीढ़ियाँ बनी हैं, क्योंकि नदी का प्रवाह तेज़ रहता है और स्नान प्रायः रस्सियों और सुरक्षा-व्यवस्था के बीच होता है।',
+        bodyEn:
+          'What pilgrims come to see here is not an image in a sanctum but the kund itself — a ring of water held by huge boulders in the middle of the Lohit, with the Mishmi slopes falling to the river on every side. On the bank stands a small temple housing images of Vishnu and of his avatara Parashurama, who is worshipped in his familiar form: the ascetic brahmana-warrior with the axe. Behind the temple precinct a set of sculpted figures narrates the killing of Renuka and the loosening of the axe, so that visitors can follow the story in sequence. Concrete steps carry devotees down to the ghat, since the river runs fast and the bathing is done within ropes and a posted watch.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'पुण्य-स्नान और सेवा',
+        titleEn: 'The Sacred Bath and Seva',
+        bodyHi:
+          'परशुराम कुंड की एकमात्र और सबसे बड़ी परम्परा स्नान है। कालिका पुराण के अनुसार इस कुंड में एक डुबकी ही पाप-क्षालन और मुक्ति के लिए पर्याप्त मानी गई है, इसलिए यात्री यहाँ पूजा-अर्चना से पहले जल में उतरते हैं; शीत ऋतु में लोहित का जल अत्यन्त ठंडा रहता है, और यही कठिनाई स्नान को तप का रूप देती है। स्नान के बाद तट के मंदिर में विष्णु और परशुराम के दर्शन कर यात्री दीप और पुष्प अर्पित करते हैं। मेले के दिनों की दूसरी बड़ी परम्परा सेवा है — असम के तिनसुकिया तथा आसपास की परशुराम सेवा समिति, मानव उत्थान सेवा समिति और अन्य स्वयंसेवी संस्थाएँ यात्रियों के लिए निःशुल्क भोजन और ठहरने की व्यवस्था करती हैं, और साधु-सन्तों के लिए अलग शिविर लगते हैं। भीड़ का चरम मकर संक्रांति के दो दिन रहता है, शेष जनवरी भर यात्रा चलती रहती है।',
+        bodyEn:
+          'The one great practice at Parashuram Kund is the bath. The Kalika Purana holds that a single dip here suffices to wash away sin and win release, so pilgrims enter the water before they do anything else; in winter the Lohit runs bitterly cold, and that hardship is itself understood as the austerity of the tirtha. Coming out, they take darshan of Vishnu and Parashurama in the riverside temple and offer lamps and flowers. The other tradition of the mela days is seva — the Parshuram Sewa Samity, the Manav Utthan Seva Samity of Tinsukia in neighbouring Assam and other voluntary bodies run free kitchens and shelter for the pilgrims, with separate camps for the sadhus. The crush peaks over the two days of Makar Sankranti, while the pilgrimage itself continues through January.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'वर्ष का एकमात्र किन्तु विशाल आयोजन परशुराम कुंड मेला है, जो मकर संक्रांति — पौष मास में सूर्य के मकर राशि में प्रवेश, प्रायः 14–15 जनवरी — पर चरम पर पहुँचता है। मेला जनवरी के प्रथम सप्ताह से 31 जनवरी तक तैलुंग/तेलू शाती क्षेत्र में लगता है और सन् 1972 (विक्रम संवत् 2029) से नियमित रूप से आयोजित होता आ रहा है। इन दिनों भारत के विभिन्न राज्यों तथा नेपाल से तीर्थयात्री, साधु और नागा सन्यासी पहुँचते हैं; असम और अरुणाचल प्रदेश के परिवहन विभाग तिनसुकिया, नामसाई, वाक्रो और तेजू से विशेष बसें चलाते हैं। मेला-स्थल पर भजन-कीर्तन, प्रवचन और निःशुल्क अन्नक्षेत्र चलते हैं, तथा प्रशासन स्वास्थ्य शिविर और नदी-सुरक्षा दल तैनात करता है। वर्ष के शेष महीनों में कुंड शान्त रहता है और इक्के-दुक्के यात्री ही पहुँचते हैं।',
+        bodyEn:
+          'The year holds one observance, and it is vast: the Parshuram Kund Mela, which peaks on Makar Sankranti — the sun’s entry into Capricorn in the month of Pausha, usually 14–15 January. The fair runs at the Tailung / Telu Shati grounds from the first week of January to the 31st, and has been held regularly since 1972 (Vikram Samvat 2029). Pilgrims, sadhus and naga ascetics arrive from across India and from Nepal, and the transport departments of both Assam and Arunachal Pradesh put on extra buses from Tinsukia, Namsai, Wakro and Tezu. Bhajan and discourse fill the mela grounds alongside the free kitchens, while the administration posts medical camps and a river-safety watch. For the rest of the year the kund is quiet, visited only in ones and twos.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'कुंड लोहित ज़िले में मिश्मी पठार की तलहटी पर है। ज़िला मुख्यालय तेजू से सड़क मार्ग की दूरी तोहांगम और वाक्रो होते हुए लगभग 48 किमी बताई जाती है, जबकि कुछ विवरण तेजू से उत्तर लगभग 21 किमी की सीधी दूरी देते हैं — यात्रा-योजना के लिए तेजू से लगभग आधे दिन का मार्ग मानना उचित है। निकटतम हवाई अड्डा तेजू है, जो लगभग 50 किमी दूर है पर जहाँ सीमित उड़ानें आती हैं; अधिकांश यात्री असम के डिब्रूगढ़ हवाई अड्डे (सड़क मार्ग से लगभग 200 किमी, पाँच–छह घंटे) से आते हैं। निकटतम बड़ा रेलहेड तिनसुकिया है, जहाँ से सड़क मार्ग लगभग 150 किमी और चार घंटे का है, और मार्ग तिनसुकिया–नामसाई–वाक्रो–तेजू होकर जाता है। मार्ग में लोहित घाटी के दृश्य और तट के मेला-मैदान दर्शनीय हैं; अधिकांश तीर्थयात्री असम से आते हुए यह यात्रा जोड़ते हैं।',
+        bodyEn:
+          'The kund lies in Lohit district at the foot of the Mishmi plateau. The road distance from the district headquarters at Tezu is generally given as about 48 km by way of Tohangam and Wakro, though some accounts give roughly 21 km as the straight-line distance north of Tezu — for planning, treat it as a half-day run from Tezu. The nearest airport is Tezu, about 50 km away, but flights there are few; most pilgrims fly instead into Dibrugarh in Assam and drive roughly 200 km, five to six hours. The nearest major railhead is Tinsukia, approximately 150 km and four hours by road, the route running Tinsukia–Namsai–Wakro–Tezu. The drive gives long views of the Lohit valley, and the mela grounds along the bank are worth walking; most pilgrims fold the journey into a trip through upper Assam.',
       },
     ],
   },
