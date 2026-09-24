@@ -1,6 +1,6 @@
 # Vedansh — WhatsApp family group message (Hindi)
 
-Send `banner.png` first, then paste the message below as a separate message (WhatsApp shows the link as a tappable preview only when it is in its own text message).
+Send `banner.png` (Hindi + English) first, then paste the message below as a separate message (WhatsApp shows the link as a tappable preview only when it is in its own text message).
 Formatting uses WhatsApp syntax: `*bold*`.
 Wording is gender-neutral on purpose, so it works whoever sends it.
 
