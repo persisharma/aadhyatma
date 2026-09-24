@@ -29,15 +29,53 @@ The 60 remaining ids sit in `LEGACY_WITHOUT_SECTIONS` in
 `mobile/src/data/__tests__/theerth.test.ts` (pinned at 60) and render on their generic
 deity plate with only `significance` + `originStory`.
 
-## 2. The one hard blocker: plates
+## 2. Plates: decoupled from the text (revised 2026-09-24)
 
-`backgrounds.coverage.jest.test.ts` fails any temple that has `sections` but no entry in
-`theerthBackgroundOverrides`. Every one of the 60 remaining temples lacks a plate. All
-eleven shipped plates were generated **outside** the enrichment sessions and landed
-together in PR #311 (2026-09-02); the text waves then consumed that stock. The remote
-Claude session cannot generate images, so **text work cannot start on any temple until
-its plate exists.** Plate production is therefore the critical path and must run ahead
-of the text waves, in batches.
+`backgrounds.coverage.jest.test.ts` **used to** fail any temple that had `sections` but
+no entry in `theerthBackgroundOverrides`. Every one of the 60 remaining temples lacks a
+plate. All eleven shipped plates arrived together on 2026-09-02 in the repo's founding
+merge (#311) — they were made outside any session, which is why the eleven enrichment
+passes never met this gate. The remote session cannot generate images, so the gate
+stalled 60 writable readings behind 60 images nothing in the loop could produce.
+
+**Product decision (2026-09-24): the check is removed; the reading ships first, the
+plate follows.** An unplated temple falls back to its deity background, a finished
+on-theme surface, and the detail screen already renders no illustration block for it
+(design.md §27 item 4), so the reading looks complete rather than broken. Recorded in
+RULEBOOK §12.6 under "Plate decoupling".
+
+Plates remain wanted, and the per-wave prompts in §7 are already written — they are now
+a parallel track that can land any time, not a gate. Text waves run immediately.
+
+### Where authored readings live
+
+Not in `temples.ts`. Each authoring session writes the complete `TempleDetail` for its
+temples into **one chunk module** under `mobile/src/data/theerth/details/`, merged by
+`details/index.ts` and spread over the inline `templeDetails` map. One chunk file is
+owned by exactly one session, so waves running in parallel never touch the same module.
+A chunk entry replaces that temple's legacy two-line detail wholesale.
+
+| Chunk module | Temples |
+|---|---|
+| `jyotirlingaA.ts` | somnath, mallikarjuna, mahakaleshwar, omkareshwar |
+| `jyotirlingaB.ts` | kedarnath, bhimashankar, kashi-vishwanath, trimbakeshwar |
+| `jyotirlingaC.ts` | vaidyanath, nageshwar, rameshwaram, grishneshwar |
+| `charDham.ts` | badrinath, dwarkadhish, jagannath-puri, yamunotri, gangotri |
+| `northShaktiA.ts` | kamakhya, vaishno-devi, kalighat, naina-devi |
+| `northShaktiB.ts` | jwala-devi, chamunda-devi, mansa-devi, durgiana |
+| `southIconsA.ts` | tirupati-balaji, meenakshi, konark-sun, brihadeeswarar |
+| `southIconsB.ts` | padmanabhaswamy, udupi-krishna, bhadrachalam, manakula-vinayagar |
+| `vaishnavaNorth.ts` | banke-bihari, srinathji, vishnupad-gaya, lakshmi-narayan |
+| `shaktiPeethA.ts` | kamakshi, shrinkhala, chamundeshwari, jogulamba |
+| `shaktiPeethB.ts` | bhramaramba, mahalakshmi-kolhapur, ekaveerika-mahur, harsiddhi-ujjain |
+| `shaktiPeethC.ts` | puruhutika, biraja, manikyamba, madhaveswari |
+| `shaktiPeethD.ts` | mangala-gauri, vishalakshi, danteshwari, tripura-sundari |
+| `northeast.ts` | govindajee-imphal, parashuram-kund, nartiang-durga, kirateshwar |
+| `regional.ts` | mangueshi, iskcon-chandigarh, dimapur-kalibari |
+
+The test files need no per-temple edits any more: `theerth.test.ts` validates section
+order for whatever carries sections, and `TheerthDetailScreen.test.tsx` renders every
+enriched temple from the data and checks all five headings in both languages.
 
 Plate spec (unchanged): 1024×1024 parchment sketch of *this temple's* murti / sanctum
 using the RULEBOOK §11.8 prompt with the temple's distinctive form as subject; saved as
@@ -104,14 +142,17 @@ Chandigarh have precise 20th-century `sthapana` dates and named consecrators (Ga
 1939; ISKCON trust). Expect the most "sources genuinely have nothing" drops here;
 record each drop in the PR.
 
-## 4. Per-temple checklist (unchanged from `/enrich-theerth`)
+## 4. Per-temple checklist (supersedes step 1 and step 4 of `/enrich-theerth`)
 
-1. Plate present in `theerthBackgroundOverrides` (gate; else stop).
+1. **No plate gate.** Write the reading whether or not a plate exists. The command file
+   still says "stop if the plate is missing" — that instruction is dead as of
+   2026-09-24; see §2.
 2. Research ≥2 independent sources, trust site first; §1b fact-framing rules.
 3. `significanceHi/En` (+ sthapana date), `originStoryHi/En` (~3 sentences), five
-   `sections` in fixed order, `sources[]` https-only.
-4. `theerth.test.ts`: remove id from `LEGACY_WITHOUT_SECTIONS`, decrement the pin, add
-   to the wave pin map. `TheerthDetailScreen.test.tsx`: add a hi/en render row.
+   `sections` in fixed order, `sources[]` https-only — written into this temple's chunk
+   module under `mobile/src/data/theerth/details/`, **not** `temples.ts`.
+4. **No test edits.** `LEGACY_WITHOUT_SECTIONS` stays pinned at 60 (historical record)
+   and `TheerthDetailScreen.test.tsx` picks enriched temples up from the data.
 5. design.md §27 item 9 title list (signature-tradition title). Item 4 is updated by the
    plate PR.
 6. `npm run typecheck`, `npm run lint`, `npx tsx --test theerth.test.ts searchIndex.test.ts`,
