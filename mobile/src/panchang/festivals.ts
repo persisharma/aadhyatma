@@ -441,6 +441,171 @@ export const FESTIVAL_RULES: ObservanceRule[] = [
   festival({ id: 'gita-jayanti', nameHi: 'गीता जयंती', nameEn: 'Gita Jayanti', lunarMonth: 9, paksha: 'shukla', tithi: 11, marker: 'dot', deityHi: 'श्री कृष्ण', deityEn: 'Shri Krishna', linkSectionId: 'bhagavad-gita', kathaId: 'gita-jayanti-katha' }),
   festival({ id: 'dattatreya-jayanti', nameHi: 'दत्तात्रेय जयंती', nameEn: 'Dattatreya Jayanti', lunarMonth: 9, paksha: 'shukla', tithi: 15, marker: 'dot', deityHi: 'भगवान दत्तात्रेय', deityEn: 'Lord Dattatreya', kathaId: 'dattatreya-jayanti-katha' }),
 
+  // ── Pan-India jayantis and named days (Sept 2026 gap sweep) ──────────────
+  //
+  // A sweep of the standard pan-Hindu festival list (Drik, the Sri Mandir
+  // calendar) against this catalog found these absent for EVERYONE — not a
+  // regional gap, so no lens (RULEBOOK §23a.5). Every one is a plain lunar-tithi
+  // rule; none needed engine work. Each is pinned to its published civil date in
+  // observanceDates.test.ts (SECTION_A_PUBLISHED) and, where it shares a tithi
+  // with a shipped rule, asserted against it (§23a.4).
+  //
+  // Four Vishnu-avatar jayantis carry `dayRule: 'aparahna'`: Drik publishes an
+  // AFTERNOON puja window for Varaha, Matsya, Kalki and Hayagriva Jayanti and
+  // fixes the day by that window, not by the sunrise tithi. It is load-bearing for
+  // two of them — Varaha 2026 (Tritiya 07:08 AM 13 Sep → 07:06 AM 14 Sep) and
+  // Hayagriva 2026 (Purnima 09:08 AM 27 Aug → 09:48 AM 28 Aug) are both the day
+  // BEFORE their sunrise tithi — and a no-op for the other two in 2025–2027.
+  //
+  // Held back, and why (§23a.11 — a rule whose engine date disagrees with its
+  // published date does not ship):
+  //   • Lalita Panchami — published 26 Sep 2025 (Drik) vs the sunrise Panchami
+  //     of 27 Sep; 2026 agrees. One matching year is not a convention.
+  //   • Durga Ashtami / Maha Navami (Sharad) — published sources split 18 vs 19
+  //     Oct 2026 (Ashtami) and 19 vs 20 Oct (Navami); Drik's own date unread.
+  //   • Vaikuntha Chaturdashi — nishita-vyapini, which the engine does not model,
+  //     and a single source for 2026.
+  //   • Balarama Jayanti (Bhadrapada S6, Drik) — distinct from Hal Shashthi
+  //     below; sources give three dates across three traditions.
+  //   • Gayatri Jayanti, Ramanuja Jayanti — the tithi itself is contested
+  //     (Jyeshtha S11 vs Shravana S15; a nakshatra reckoning).
+  //   • Kurma Jayanti — Drik fixes it by a SAYAHNA (evening) window: 2027's
+  //     Purnima opens 4:04 PM 19 May and Drik publishes the 19th, while no day
+  //     rule the engine has lands there (udaya and aparahna both name the 20th).
+  //   • Chhinnamasta Jayanti — the Narasimha Jayanti day, and like it kept in the
+  //     evening: 2027's Chaturdashi opens 4:05 PM 18 May and the published day is
+  //     the 18th. Ships with the sayahna/pradosh day rule (PRD-42 E-1), not before.
+  //   • Sarva Pitru / Mahalaya Amavasya — already surfaced by Pitru Paksha
+  //     (`pitruSmaran.ts`); a rule would put the day on the calendar twice.
+
+  // ▸ Vishnu's avatars
+
+  // Chaitra Shukla Tritiya — Gangaur's tithi, but read at aparahna rather than
+  // sunrise, so the two are NOT siblings (they split by a day in 2028–2031).
+  // Published: 21 Mar 2026 (Drik "Matsya Jayanti", BhaktiBharat; puja 1:29–3:54 PM).
+  festival({ id: 'matsya-jayanti', nameHi: 'मत्स्य जयंती', nameEn: 'Matsya Jayanti', lunarMonth: 1, paksha: 'shukla', tithi: 3, dayRule: 'aparahna', marker: 'dot', deityHi: 'भगवान मत्स्य', deityEn: 'Lord Matsya', shortDescriptionHi: 'चैत्र शुक्ल तृतीया को भगवान विष्णु के प्रथम अवतार, मत्स्य भगवान की जयंती — जिन्होंने प्रलय के जल से मनु, सप्तर्षियों और वेदों की रक्षा की। अपराह्न में विष्णु पूजन और मत्स्य पुराण का पाठ होता है।', shortDescriptionEn: 'The jayanti of Lord Matsya, Vishnu’s first avatar, on Chaitra Shukla Tritiya — who carried Manu, the Saptarishis and the Vedas through the waters of the deluge. Vishnu puja in the afternoon and a reading from the Matsya Purana mark it.', searchTerms: ['matsya jayanti', 'matsya avatar', 'dashavatar', 'vishnu avatar', 'fish avatar'] }),
+  // Bhadrapada Shukla Tritiya — the Hartalika Teej tithi. `aparahna` is
+  // load-bearing: Tritiya runs 07:08 AM 13 Sep → 07:06 AM 14 Sep 2026, so the
+  // sunrise rule names the 14th and Drik's afternoon window names the 13th.
+  // Published: 13 Sep 2026 (Drik "Varaha Jayanti", Boldsky).
+  festival({ id: 'varaha-jayanti', nameHi: 'वराह जयंती', nameEn: 'Varaha Jayanti', lunarMonth: 6, paksha: 'shukla', tithi: 3, dayRule: 'aparahna', marker: 'dot', deityHi: 'भगवान वराह', deityEn: 'Lord Varaha', shortDescriptionHi: 'भाद्रपद शुक्ल तृतीया को भगवान विष्णु के तृतीय अवतार, वराह भगवान की जयंती — जिन्होंने हिरण्याक्ष का वध कर पृथ्वी को रसातल से अपने दांतों पर उठाया। अपराह्न में वराह-विष्णु पूजन होता है; मथुरा का आदि वराह और तिरुमला का भू-वराह मंदिर इसके प्रमुख धाम हैं।', shortDescriptionEn: 'The jayanti of Lord Varaha, Vishnu’s third avatar, on Bhadrapada Shukla Tritiya — the boar who slew Hiranyaksha and raised the Earth from the depths on his tusks. Varaha–Vishnu puja is offered in the afternoon; the Adi Varaha temple in Mathura and Tirumala’s Bhu Varaha shrine keep it.', searchTerms: ['varaha jayanti', 'varah jayanti', 'varaha avatar', 'dashavatar', 'bhu varaha', 'boar avatar'] }),
+  // Bhadrapada Shukla Dwadashi — the day after Parivartini Ekadashi. Published:
+  // 23 Sep 2026 (Drik "Vamana Jayanti", hindutone.com; Dwadashi 09:43 PM 22 Sep
+  // → 10:50 PM 23 Sep, prevailing at sunrise).
+  festival({ id: 'vamana-jayanti', nameHi: 'वामन जयंती', nameEn: 'Vamana Jayanti', lunarMonth: 6, paksha: 'shukla', tithi: 12, marker: 'dot', deityHi: 'भगवान वामन', deityEn: 'Lord Vamana', shortDescriptionHi: 'भाद्रपद शुक्ल द्वादशी को भगवान विष्णु के पांचवें अवतार, वामन भगवान की जयंती — जिन्होंने राजा बलि से तीन पग भूमि मांगकर तीनों लोक नाप लिए। श्रवण नक्षत्र के साथ पड़ने पर इसका विशेष महत्त्व है; केरल में यही कथा ओणम की है।', shortDescriptionEn: 'The jayanti of Lord Vamana, Vishnu’s fifth avatar, on Bhadrapada Shukla Dwadashi — who asked King Bali for three paces of land and measured the three worlds. It is held especially sacred when it falls with Shravana nakshatra; in Kerala the same story is Onam’s.', searchTerms: ['vamana jayanti', 'vaman jayanti', 'vamana dwadashi', 'vamana avatar', 'dashavatar', 'raja bali', 'trivikrama'] }),
+  // Shravana Shukla Shashthi. Published: 18 Aug 2026 (Drik "Kalki Jayanti",
+  // BhaktiBharat; Shashthi 5:00 PM 17 Aug → 5:50 PM 18 Aug; Drik's afternoon
+  // window 04:21–05:50 PM, clipped by the tithi's end).
+  festival({ id: 'kalki-jayanti', nameHi: 'कल्कि जयंती', nameEn: 'Kalki Jayanti', lunarMonth: 5, paksha: 'shukla', tithi: 6, dayRule: 'aparahna', marker: 'dot', deityHi: 'भगवान कल्कि', deityEn: 'Lord Kalki', shortDescriptionHi: 'श्रावण शुक्ल षष्ठी को भगवान विष्णु के भावी दसवें अवतार, कल्कि भगवान की जयंती — जो कलियुग के अंत में धर्म की पुनः स्थापना के लिए प्रकट होंगे। अपराह्न में विष्णु पूजन होता है।', shortDescriptionEn: 'The jayanti of Lord Kalki, the tenth avatar of Vishnu still to come, on Shravana Shukla Shashthi — who will appear at the end of the Kali Yuga to restore dharma. Vishnu puja is offered in the afternoon.', searchTerms: ['kalki jayanti', 'kalki avatar', 'dashavatar', 'kalki dwadashi'] }),
+  // Shravana Purnima. `aparahna` is load-bearing: Purnima runs 09:08 AM 27 Aug →
+  // 09:48 AM 28 Aug 2026, and Drik's afternoon window (04:14–06:48 PM, New
+  // Delhi) names the 27th. It therefore does NOT ride Raksha Bandhan / Avani
+  // Avittam, which are sunrise-Purnima rules (28 Aug) — two conventions, two
+  // days, exactly as Drik publishes them. Published: 27 Aug 2026 (Drik
+  // "Hayagriva Jayanti", DKScore; daivakshetra.com gives the sunrise 28th).
+  festival({ id: 'hayagriva-jayanti', nameHi: 'हयग्रीव जयंती', nameEn: 'Hayagriva Jayanti', lunarMonth: 5, paksha: 'shukla', tithi: 15, dayRule: 'aparahna', marker: 'dot', deityHi: 'भगवान हयग्रीव', deityEn: 'Lord Hayagriva', shortDescriptionHi: 'श्रावण पूर्णिमा को भगवान हयग्रीव की जयंती — ज्ञान और विद्या के अधिदेवता, विष्णु का अश्वमुख रूप, जिन्होंने मधु-कैटभ से वेदों को वापस लाया। दक्षिण भारत की वैष्णव परंपरा में विद्यार्थी इस दिन विशेष पूजन करते हैं।', shortDescriptionEn: 'The jayanti of Lord Hayagriva on Shravana Purnima — the horse-headed form of Vishnu, lord of knowledge and learning, who recovered the Vedas from Madhu and Kaitabha. In the South Indian Vaishnava tradition students keep it with a special puja.', searchTerms: ['hayagriva jayanti', 'hayagreeva jayanti', 'hayagriva', 'vidya', 'vishnu avatar'] }),
+  // Bhadrapada Krishna Shashthi (purnimant; Shravana Krishna in amanta).
+  // Published: 2 Sep 2026 (Drik "Hala Shashthi", Boldsky; Shashthi 6:12 AM 2 Sep
+  // → 4:25 AM 3 Sep). Drik keeps Balarama Jayanti as a SEPARATE observance on
+  // Bhadrapada Shukla Shashthi, so this rule does not carry that name.
+  festival({ id: 'hal-shashthi', nameHi: 'हलषष्ठी · ललही छठ', nameEn: 'Hal Shashthi', lunarMonth: 6, paksha: 'krishna', tithi: 6, marker: 'dot', deityHi: 'भगवान बलराम', deityEn: 'Lord Balarama', shortDescriptionHi: 'भाद्रपद कृष्ण षष्ठी को हलषष्ठी — हलधर बलराम जी का पर्व, जिसे पूर्वी उत्तर प्रदेश, बिहार और मध्य प्रदेश में ललही छठ या हरछठ कहते हैं। माताएं संतान की दीर्घायु के लिए व्रत रखती हैं और हल से जुती भूमि का अन्न नहीं खातीं — पसही के चावल और भैंस का दूध-दही ही लेती हैं।', shortDescriptionEn: 'Hal Shashthi on Bhadrapada Krishna Shashthi — the festival of Balarama, bearer of the plough, kept in eastern Uttar Pradesh, Bihar and Madhya Pradesh as Lalahi Chhath or Harchhath. Mothers fast for their children’s long life and eat nothing grown on ploughed land — only pasahi rice and buffalo milk and curd.', searchTerms: ['hal shashthi', 'hal shashti', 'halshashthi', 'lalahi chhath', 'lalhi chhath', 'harchhath', 'har chhath', 'balram', 'haldhar'] }),
+
+  // ▸ Saints and acharyas
+
+  // Vaishakha Shukla Panchami. Published: 21 Apr 2026 (Drik "Kavi Surdas
+  // Jayanti", newspress.co.in) and 2 May 2025 (Free Press Journal).
+  festival({ id: 'surdas-jayanti', nameHi: 'सूरदास जयंती', nameEn: 'Surdas Jayanti', lunarMonth: 2, paksha: 'shukla', tithi: 5, marker: 'dot', deityHi: 'संत सूरदास', deityEn: 'Sant Surdas', shortDescriptionHi: 'वैशाख शुक्ल पंचमी को भक्त कवि सूरदास की जयंती — सूरसागर के रचयिता और अष्टछाप के प्रमुख कवि, जिनके पदों में बालकृष्ण की लीलाएं गाई जाती हैं। ब्रज और पुष्टिमार्गीय मंदिरों में सूर के पदों का कीर्तन होता है।', shortDescriptionEn: 'The jayanti of the poet-saint Surdas on Vaishakha Shukla Panchami — author of the Sursagar and foremost of the Ashtachhap poets, whose padas sing the child Krishna’s lilas. Braj and the Pushtimarg temples keep it with kirtan of his verses.', searchTerms: ['surdas jayanti', 'soordas jayanti', 'surdas', 'sursagar', 'ashtachhap'] }),
+  // Vaishakha Shukla Panchami — the Surdas Jayanti day (sibling, asserted).
+  // Published: 21 Apr 2026 (Drik "Adi Shankaracharya Jayanti", Belur Math) and
+  // 2 May 2025 (Drik).
+  festival({ id: 'shankaracharya-jayanti', nameHi: 'आदि शंकराचार्य जयंती', nameEn: 'Adi Shankaracharya Jayanti', lunarMonth: 2, paksha: 'shukla', tithi: 5, marker: 'dot', deityHi: 'आदि शंकराचार्य', deityEn: 'Adi Shankaracharya', shortDescriptionHi: 'वैशाख शुक्ल पंचमी को आदि शंकराचार्य की जयंती — अद्वैत वेदांत के आचार्य, जिन्होंने चारों दिशाओं में मठ स्थापित किए। कालड़ी (केरल), शृंगेरी, द्वारका, पुरी और ज्योतिर्मठ में विशेष पूजन और भाष्य-पाठ होता है।', shortDescriptionEn: 'The jayanti of Adi Shankaracharya on Vaishakha Shukla Panchami — the teacher of Advaita Vedanta who founded the mathas of the four directions. Kalady in Kerala, Sringeri, Dwarka, Puri and Jyotirmath keep it with puja and readings from his bhashyas.', searchTerms: ['shankaracharya jayanti', 'adi shankaracharya jayanti', 'shankara jayanti', 'adi shankara', 'advaita', 'kalady', 'sringeri'] }),
+  // Shravana Shukla Saptami. Published: 19 Aug 2026 (Drik "Goswami Tulsidas
+  // Jayanti", Dainik Jagran; Saptami 5:50 PM 18 Aug → 7:19 PM 19 Aug).
+  festival({ id: 'tulsidas-jayanti', nameHi: 'तुलसीदास जयंती', nameEn: 'Tulsidas Jayanti', lunarMonth: 5, paksha: 'shukla', tithi: 7, marker: 'dot', deityHi: 'गोस्वामी तुलसीदास', deityEn: 'Goswami Tulsidas', linkSectionId: 'ramcharitmanas', shortDescriptionHi: 'श्रावण शुक्ल सप्तमी को गोस्वामी तुलसीदास की जयंती — श्रीरामचरितमानस और हनुमान चालीसा के रचयिता। रामचरितमानस का पाठ, राम कथा और मानस के दोहा-चौपाई का गायन इस दिन के मुख्य कर्म हैं; काशी और चित्रकूट में विशेष आयोजन होते हैं।', shortDescriptionEn: 'The jayanti of Goswami Tulsidas on Shravana Shukla Saptami — author of the Shri Ramcharitmanas and the Hanuman Chalisa. Recitation of the Manas, Rama katha and the singing of its dohas and chaupais mark the day, with special gatherings in Kashi and Chitrakoot.', searchTerms: ['tulsidas jayanti', 'tulsi das jayanti', 'goswami tulsidas', 'ramcharitmanas', 'manas'] }),
+  // Ashvina Purnima. Published: 26 Oct 2026 (Drik "Maharishi Valmiki Jayanti",
+  // BhaktiBharat, NationalToday; Purnima 11:55 AM 25 Oct → 09:41 AM 26 Oct).
+  // It is the sunrise Purnima, the same reading as the shipped `sharad-purnima`
+  // (sibling, asserted).
+  festival({ id: 'valmiki-jayanti', nameHi: 'वाल्मीकि जयंती', nameEn: 'Valmiki Jayanti', lunarMonth: 7, paksha: 'shukla', tithi: 15, marker: 'dot', deityHi: 'महर्षि वाल्मीकि', deityEn: 'Maharishi Valmiki', linkSectionId: 'valmiki-ramayan', shortDescriptionHi: 'आश्विन पूर्णिमा को आदिकवि महर्षि वाल्मीकि की जयंती (प्रगट दिवस) — श्रीमद् वाल्मीकि रामायण के रचयिता। शोभायात्रा, रामायण पाठ और वाल्मीकि मंदिरों में विशेष पूजन होता है; पंजाब, हरियाणा और उत्तर भारत में यह बड़े उत्सव के रूप में मनाई जाती है।', shortDescriptionEn: 'The jayanti (Pragat Divas) of Maharishi Valmiki, the Adi Kavi and author of the Valmiki Ramayana, on Ashvina Purnima. Processions, Ramayana readings and puja at Valmiki temples mark it, and Punjab, Haryana and North India keep it as a major utsav.', searchTerms: ['valmiki jayanti', 'valmiki pragat divas', 'maharishi valmiki', 'adi kavi', 'ramayana'] }),
+
+  // ▸ Devi jayantis and sampradaya days
+
+  // Vaishakha Krishna Ekadashi (purnimant) — the Varuthini Ekadashi day, so it
+  // must ride `varuthini-ekadashi` (sibling, asserted). Published: 13 Apr 2026
+  // (Drik "Shri Vallabhacharya Jayanti", Oneindia; Ekadashi 01:16 AM 13 Apr →
+  // 01:08 AM 14 Apr, prevailing at sunrise).
+  festival({ id: 'vallabhacharya-jayanti', nameHi: 'वल्लभाचार्य जयंती', nameEn: 'Vallabhacharya Jayanti', lunarMonth: 2, paksha: 'krishna', tithi: 11, marker: 'dot', deityHi: 'श्री वल्लभाचार्य', deityEn: 'Shri Vallabhacharya', shortDescriptionHi: 'वैशाख कृष्ण एकादशी को पुष्टिमार्ग के प्रवर्तक श्री वल्लभाचार्य का प्राकट्य दिवस — वरूथिनी एकादशी का ही दिन। नाथद्वारा, गोकुल और पुष्टिमार्गीय हवेलियों में श्रीनाथजी का विशेष श्रृंगार और उत्सव होता है।', shortDescriptionEn: 'The appearance day of Shri Vallabhacharya, founder of the Pushtimarg, on Vaishakha Krishna Ekadashi — the Varuthini Ekadashi day. Nathdwara, Gokul and the Pushtimarg havelis keep it with Shrinathji’s special shringar and utsav.', searchTerms: ['vallabhacharya jayanti', 'vallabh jayanti', 'vallabhacharya', 'pushtimarg', 'shrinathji', 'nathdwara', 'mahaprabhuji'] }),
+  // Jyeshtha Purnima. Published: 29 Jun 2026 (Drik "Sant Kabir Jayanti",
+  // NationalToday; Purnima 03:06 AM 29 Jun → 05:26 AM 30 Jun). Rides the
+  // Jyeshtha `purnima-vrat` day (asserted).
+  festival({ id: 'kabir-jayanti', nameHi: 'कबीर जयंती', nameEn: 'Kabir Jayanti', lunarMonth: 3, paksha: 'shukla', tithi: 15, marker: 'dot', deityHi: 'संत कबीर', deityEn: 'Sant Kabir', shortDescriptionHi: 'ज्येष्ठ पूर्णिमा को संत कबीरदास का प्राकट्य दिवस — काशी के लहरतारा और कबीर चौरा में सत्संग, और देश भर के कबीरपंथी समाज में उनकी साखियों व भजनों का गायन होता है।', shortDescriptionEn: 'The appearance day of Sant Kabirdas on Jyeshtha Purnima — marked with satsang at Lahartara and Kabir Chaura in Kashi, and the singing of his sakhis and bhajans across the Kabirpanthi community.', searchTerms: ['kabir jayanti', 'kabirdas jayanti', 'sant kabir', 'kabir das', 'kabirpanth', 'jyeshtha purnima'] }),
+  // Vaishakha Shukla Ashtami. Published: 24 Apr 2026 (Drik "Bagalamukhi
+  // Jayanti", BhaktiBharat; Ashtami prevailing at sunrise on the 24th).
+  festival({ id: 'baglamukhi-jayanti', nameHi: 'बगलामुखी जयंती', nameEn: 'Baglamukhi Jayanti', lunarMonth: 2, paksha: 'shukla', tithi: 8, marker: 'dot', deityHi: 'मां बगलामुखी', deityEn: 'Maa Baglamukhi', shortDescriptionHi: 'वैशाख शुक्ल अष्टमी को दस महाविद्याओं में आठवीं, पीताम्बरा मां बगलामुखी की जयंती — पीले वस्त्र, पीले पुष्प और हल्दी की माला से पूजन होता है। दतिया का पीताम्बरा पीठ और नलखेड़ा (मध्य प्रदेश) इसके प्रमुख धाम हैं।', shortDescriptionEn: 'The jayanti of Pitambara Maa Baglamukhi, the eighth of the ten Mahavidyas, on Vaishakha Shukla Ashtami — worshipped in yellow, with yellow flowers and a turmeric mala. The Pitambara Peeth at Datia and Nalkheda in Madhya Pradesh are her great shrines.', searchTerms: ['baglamukhi jayanti', 'bagalamukhi jayanti', 'pitambara', 'mahavidya', 'datia', 'nalkheda'] }),
+  // Jyeshtha Shukla Ashtami. Published: 22 Jun 2026 (Drik "Dhumavati
+  // Jayanti", BhaktiBharat; Ashtami 03:20 PM 21 Jun → 03:39 PM 22 Jun, and both
+  // name the sunrise Ashtami as the rule).
+  festival({ id: 'dhumavati-jayanti', nameHi: 'धूमावती जयंती', nameEn: 'Dhumavati Jayanti', lunarMonth: 3, paksha: 'shukla', tithi: 8, marker: 'dot', deityHi: 'मां धूमावती', deityEn: 'Maa Dhumavati', shortDescriptionHi: 'ज्येष्ठ शुक्ल अष्टमी को दस महाविद्याओं में सातवीं, मां धूमावती की जयंती — दरिद्रता, रोग और शत्रु-बाधा के निवारण के लिए उनकी उपासना की जाती है; दतिया के पीताम्बरा पीठ में उनका प्रसिद्ध मंदिर है।', shortDescriptionEn: 'The jayanti of Maa Dhumavati, the seventh of the ten Mahavidyas, on Jyeshtha Shukla Ashtami — worshipped for release from poverty, illness and adversity; her best-known shrine stands in the Pitambara Peeth at Datia.', searchTerms: ['dhumavati jayanti', 'dhoomavati jayanti', 'dhumavati', 'mahavidya', 'datia'] }),
+  // Jyeshtha Shukla Navami. Published: 23 Jun 2026 (Drik "Mahesh Navami",
+  // BhaktiBharat; Navami 03:39 PM 22 Jun → 04:39 PM 23 Jun).
+  festival({ id: 'mahesh-navami', nameHi: 'महेश नवमी', nameEn: 'Mahesh Navami', lunarMonth: 3, paksha: 'shukla', tithi: 9, marker: 'dot', deityHi: 'भगवान महेश', deityEn: 'Bhagwan Mahesh', shortDescriptionHi: 'ज्येष्ठ शुक्ल नवमी को महेश नवमी — माहेश्वरी समाज का उत्पत्ति दिवस, जब भगवान शिव के वरदान से उनके पूर्वजों को नया जीवन मिला। शिव-पार्वती का पूजन, शोभायात्रा और सामाजिक आयोजन होते हैं।', shortDescriptionEn: 'Mahesh Navami on Jyeshtha Shukla Navami — the founding day of the Maheshwari community, whose ancestors were restored to life by Shiva’s boon. Shiva–Parvati puja, processions and community gatherings mark it.', searchTerms: ['mahesh navami', 'maheshwari', 'maheshwari samaj', 'shiv parvati'] }),
+  // Margashirsha Purnima — the Dattatreya Jayanti day (sibling, asserted).
+  // Published: 23 Dec 2026 and 4 Dec 2025 (Drik "Annapurna Jayanti",
+  // BhaktiBharat; panchang.org for 2025).
+  festival({ id: 'annapurna-jayanti', nameHi: 'अन्नपूर्णा जयंती', nameEn: 'Annapurna Jayanti', lunarMonth: 9, paksha: 'shukla', tithi: 15, marker: 'dot', deityHi: 'मां अन्नपूर्णा', deityEn: 'Maa Annapurna', shortDescriptionHi: 'मार्गशीर्ष पूर्णिमा को मां अन्नपूर्णा की जयंती — अन्न और पोषण की देवी, जिन्होंने काशी में स्वयं शिव को भिक्षा दी। रसोई की स्वच्छता, चूल्हे का पूजन और अन्नदान इस दिन के कर्म हैं; काशी के अन्नपूर्णा मंदिर में विशेष उत्सव होता है।', shortDescriptionEn: 'The jayanti of Maa Annapurna on Margashirsha Purnima — the goddess of food and nourishment, who gave alms to Shiva himself in Kashi. The kitchen is cleaned, the hearth worshipped and food given away; Kashi’s Annapurna temple keeps a great utsav.', searchTerms: ['annapurna jayanti', 'annapoorna jayanti', 'annapurna', 'margashirsha purnima', 'kashi annapurna'] }),
+  // Magha Shukla Saptami — the Ratha Saptami day (sibling, asserted).
+  // Published: 25 Jan 2026 (Drik "Narmada Jayanti", DKScore; Saptami 12:39 AM
+  // → 11:10 PM on the 25th).
+  festival({ id: 'narmada-jayanti', nameHi: 'नर्मदा जयंती', nameEn: 'Narmada Jayanti', lunarMonth: 11, paksha: 'shukla', tithi: 7, marker: 'dot', deityHi: 'मां नर्मदा', deityEn: 'Maa Narmada', shortDescriptionHi: 'माघ शुक्ल सप्तमी को मां नर्मदा का प्राकट्य दिवस — रथ सप्तमी का ही दिन। अमरकंटक, ओंकारेश्वर, जबलपुर के ग्वारीघाट और होशंगाबाद में स्नान, दीपदान और नर्मदा आरती होती है।', shortDescriptionEn: 'The appearance day of Maa Narmada on Magha Shukla Saptami — the Ratha Saptami day. Amarkantak, Omkareshwar, Jabalpur’s Gwarighat and Narmadapuram keep it with the holy bath, the lamp offering and the Narmada aarti.', searchTerms: ['narmada jayanti', 'narmada', 'rewa', 'amarkantak', 'omkareshwar', 'gwarighat'] }),
+  // Phalguna Krishna Ashtami (purnimant; Magha Krishna in amanta) — a Kalashtami
+  // day in the monthly series (asserted). Published: 9 Feb 2026 (Drik "Janaki
+  // Jayanti", India TV; Ashtami from 05:01 AM on the 9th). Distinct from
+  // Vaishakha's `sita-navami`: two traditions, two days (§23.9).
+  festival({ id: 'janaki-jayanti', nameHi: 'जानकी जयंती', nameEn: 'Janaki Jayanti', lunarMonth: 12, paksha: 'krishna', tithi: 8, marker: 'dot', deityHi: 'माता सीता', deityEn: 'Mata Sita', shortDescriptionHi: 'फाल्गुन कृष्ण अष्टमी को जानकी जयंती (सीता अष्टमी) — माता सीता का प्राकट्य दिवस इस परंपरा में; सुहागिन स्त्रियां व्रत रखकर सीता-राम का पूजन करती हैं। वैशाख शुक्ल नवमी की सीता नवमी दूसरी परंपरा का दिन है, और दोनों अपने-अपने क्षेत्र में मान्य हैं।', shortDescriptionEn: 'Janaki Jayanti (Sita Ashtami) on Phalguna Krishna Ashtami — Mata Sita’s appearance day in this reckoning, kept by married women with a fast and Sita–Rama puja. Vaishakha Shukla Navami’s Sita Navami is the other tradition’s day, and both are correct where they are kept.', searchTerms: ['janaki jayanti', 'sita ashtami', 'sita jayanti', 'janaki', 'mata sita'] }),
+  // Phalguna Shukla Dwitiya. Published: 19 Feb 2026 (Drik "Phulera Dooj", Free
+  // Press Journal; Dwitiya 04:57 PM 18 Feb → 03:58 PM 19 Feb).
+  festival({ id: 'phulera-dooj', nameHi: 'फुलेरा दूज', nameEn: 'Phulera Dooj', lunarMonth: 12, paksha: 'shukla', tithi: 2, marker: 'dot', deityHi: 'श्री राधा-कृष्ण', deityEn: 'Shri Radha-Krishna', shortDescriptionHi: 'फाल्गुन शुक्ल द्वितीया को फुलेरा दूज — ब्रज में फूलों की होली का दिन, जब ठाकुर जी को फूलों से श्रृंगारित कर होली के उत्सव का आरंभ होता है। अबूझ मुहूर्त माना जाने के कारण उत्तर भारत में विवाह के लिए भी प्रसिद्ध है।', shortDescriptionEn: 'Phulera Dooj on Phalguna Shukla Dwitiya — Braj’s day of the flower Holi, when Thakurji is adorned with flowers and the Holi season opens. Held to be an abujh (self-auspicious) day, it is also a favoured wedding date across North India.', searchTerms: ['phulera dooj', 'phulera duj', 'phoolon ki holi', 'braj holi', 'abujh muhurat'] }),
+
+  // ▸ Named days of the calendar
+
+  // Kartika Krishna Chaturdashi (purnimant) — the abhyanga-snan morning before
+  // Lakshmi Puja. The same tithi as `hanuman-jayanti-kartik` (sibling, asserted),
+  // whose published day has tracked the udaya Chaturdashi in every year checked.
+  // Published: 8 Nov 2026 (Drik "Abhyang Snan on Narak Chaturdashi", snan 05:41–
+  // 06:38 AM; muhuratchoghadiya.com). A rule rather than only the `deepavali`
+  // arc's gap label, so the day carries its own card, search and follow.
+  festival({ id: 'narak-chaturdashi', nameHi: 'नरक चतुर्दशी', nameEn: 'Narak Chaturdashi', lunarMonth: 8, paksha: 'krishna', tithi: 14, marker: 'dot', deityHi: 'श्री कृष्ण व यमराज', deityEn: 'Shri Krishna and Yamaraja', shortDescriptionHi: 'कार्तिक कृष्ण चतुर्दशी को नरक चतुर्दशी — छोटी दीवाली, रूप चौदस। श्री कृष्ण द्वारा नरकासुर वध का स्मरण; सूर्योदय से पहले तिल-तेल से अभ्यंग स्नान, और संध्या में यमराज के लिए दीपदान किया जाता है।', shortDescriptionEn: 'Narak Chaturdashi on Kartika Krishna Chaturdashi — Choti Diwali, Roop Chaudas — remembering Shri Krishna’s slaying of Narakasura. The abhyanga bath with sesame oil before sunrise, and the evening lamp offered to Yamaraja, are the day’s rites.', searchTerms: ['narak chaturdashi', 'naraka chaturdashi', 'choti diwali', 'chhoti diwali', 'roop chaudas', 'roop chaturdashi', 'kali chaudas', 'abhyang snan', 'yam deepam', 'narakasura'] }),
+  // Margashirsha Krishna Ashtami (purnimant; Kartika Krishna in amanta) — a
+  // `masik-kalashtami` day (asserted). Published: 12 Nov 2025 (Drik; Ashtami
+  // 11:08 PM 11 Nov → 10:58 PM 12 Nov) and 1 Dec 2026 (BhaktiBharat, 99Pandit;
+  // Ashtami 12:11 AM → 11:13 PM on the 1st).
+  festival({ id: 'kaal-bhairav-jayanti', nameHi: 'काल भैरव जयंती', nameEn: 'Kaal Bhairav Jayanti', lunarMonth: 9, paksha: 'krishna', tithi: 8, marker: 'dot', deityHi: 'काल भैरव', deityEn: 'Kala Bhairava', shortDescriptionHi: 'मार्गशीर्ष कृष्ण अष्टमी को काल भैरव जयंती (कालभैरव अष्टमी) — भगवान शिव के उग्र रूप काल भैरव का प्राकट्य दिवस, जो काशी के कोतवाल हैं। रात्रि जागरण, भैरव अष्टक का पाठ और काले श्वान को भोजन कराना इस दिन के कर्म हैं; काशी और उज्जैन के भैरव मंदिरों में विशेष उत्सव होता है।', shortDescriptionEn: 'Kaal Bhairav Jayanti (Kalabhairav Ashtami) on Margashirsha Krishna Ashtami — the appearance day of Kala Bhairava, Shiva’s fierce form and the kotwal of Kashi. A night vigil, the Bhairava Ashtakam and feeding a black dog mark it, with great utsavs at the Bhairava temples of Kashi and Ujjain.', searchTerms: ['kaal bhairav jayanti', 'kalabhairav jayanti', 'kal bhairav ashtami', 'bhairav ashtami', 'kalashtami', 'bhairava'] }),
+  // Magha Amavasya (purnimant Magha Krishna 15) — an
+  // `amavasya-vrat` day (asserted). Published: 18 Jan 2026 (Drik "Mauni
+  // Amavasya", narayanseva.org; Amavasya 12:03 AM 18 Jan → 01:21 AM 19 Jan).
+  festival({ id: 'mauni-amavasya', nameHi: 'मौनी अमावस्या', nameEn: 'Mauni Amavasya', lunarMonth: 11, paksha: 'krishna', tithi: 15, marker: 'dot', deityHi: 'पवित्र स्नान', deityEn: 'Sacred snan', shortDescriptionHi: 'माघ अमावस्या को मौनी अमावस्या — माघ मास का सबसे पवित्र स्नान दिवस। मौन रहकर गंगा या संगम में स्नान, दान और पितृ तर्पण किया जाता है; प्रयागराज के माघ मेले और कुंभ में यही प्रमुख स्नान पर्व है।', shortDescriptionEn: 'Mauni Amavasya on Magha Amavasya — the holiest bathing day of Magha. The bath in the Ganga or at the Sangam is taken in silence, with daan and pitru tarpan; it is the principal snan of Prayagraj’s Magh Mela and of the Kumbh.', searchTerms: ['mauni amavasya', 'mauni amavas', 'magha amavasya', 'maghi amavasya', 'magh mela', 'sangam snan', 'kumbh snan'] }),
+  // Magha Shukla Chaturthi, `madhyahna` — Drik's Ganesha puja is madhyahna,
+  // the convention the shipped `ganesh-chaturthi` and monthly
+  // `vinayaka-chaturthi-vrat` already carry, so this rides the latter
+  // (asserted). Published: 22 Jan 2026 (Drik "Ganesha Jayanti", Prokerala;
+  // Chaturthi 2:47 AM 22 Jan → 2:28 AM 23 Jan).
+  festival({ id: 'ganesh-jayanti', nameHi: 'गणेश जयंती', nameEn: 'Ganesh Jayanti', lunarMonth: 11, paksha: 'shukla', tithi: 4, dayRule: 'madhyahna', marker: 'dot', deityHi: 'श्री गणेश', deityEn: 'Shri Ganesh', linkSectionId: 'ganesh-chalisa', shortDescriptionHi: 'माघ शुक्ल चतुर्थी को गणेश जयंती — तिलकुंद या माघी गणेश चतुर्थी, इस परंपरा में श्री गणेश का जन्म दिवस। मध्याह्न में गणेश पूजन, तिल के लड्डू का भोग और व्रत किया जाता है; महाराष्ट्र और कोंकण में यह बड़े उत्सव के रूप में मनाई जाती है।', shortDescriptionEn: 'Ganesh Jayanti on Magha Shukla Chaturthi — Tilkund or Maghi Ganesh Chaturthi, Shri Ganesh’s birth day in this reckoning. Ganesha puja at midday, an offering of sesame laddoos and a fast mark it; Maharashtra and the Konkan keep it as a major utsav.', searchTerms: ['ganesh jayanti', 'ganesha jayanti', 'maghi ganesh', 'magha ganesh chaturthi', 'tilkund chaturthi', 'tilkunda chaturthi', 'varad chaturthi'] }),
+  // Magha Shukla Ashtami, `madhyahna` — Drik fixes the tarpan day by the
+  // madhyahna window (11:44 AM – 01:58 PM). Published: 26 Jan 2026 (Drik
+  // "Bhishma Ashtami", Prokerala; Ashtami 11:10 PM 25 Jan → 09:17 PM 26 Jan).
+  festival({ id: 'bhishma-ashtami', nameHi: 'भीष्म अष्टमी', nameEn: 'Bhishma Ashtami', lunarMonth: 11, paksha: 'shukla', tithi: 8, dayRule: 'madhyahna', marker: 'dot', deityHi: 'पितामह भीष्म', deityEn: 'Pitamah Bhishma', shortDescriptionHi: 'माघ शुक्ल अष्टमी को भीष्म अष्टमी — पितामह भीष्म का निर्वाण दिवस, जिन्होंने उत्तरायण की प्रतीक्षा में शरशय्या पर प्राण त्यागे। मध्याह्न में भीष्म के निमित्त तिल-जल से तर्पण किया जाता है।', shortDescriptionEn: 'Bhishma Ashtami on Magha Shukla Ashtami — the nirvana day of Pitamah Bhishma, who gave up his life on the bed of arrows after waiting for Uttarayana. Tarpan with sesame and water is offered in his name at midday.', searchTerms: ['bhishma ashtami', 'bheeshma ashtami', 'bhishma tarpan', 'bhishma nirvana'] }),
+  // Magha Purnima — the Magha `purnima-vrat` day (asserted). Published: 1 Feb
+  // 2026 (Drik "Magha Purnima", daanyam.in; Purnima 05:52 AM 1 Feb → 03:38 AM
+  // 2 Feb).
+  festival({ id: 'magha-purnima', nameHi: 'माघ पूर्णिमा', nameEn: 'Magha Purnima', lunarMonth: 11, paksha: 'shukla', tithi: 15, marker: 'dot', deityHi: 'पवित्र स्नान', deityEn: 'Sacred snan', shortDescriptionHi: 'माघ पूर्णिमा — माघ स्नान और प्रयागराज के कल्पवास का समापन दिवस। संगम व पवित्र नदियों में स्नान, दान और सत्यनारायण पूजन किया जाता है; संत रविदास जयंती भी इसी दिन मनाई जाती है।', shortDescriptionEn: 'Magha Purnima — the closing day of the Magha snan and of the Kalpavas at Prayagraj. The bath at the Sangam and the sacred rivers, daan and the Satyanarayan puja mark it, and Sant Ravidas Jayanti is kept on the same day.', searchTerms: ['magha purnima', 'maghi purnima', 'magh purnima', 'kalpavas', 'ravidas jayanti', 'guru ravidas'] }),
+  // Ashadha Shukla Pratipada. Published: 15 Jul 2026 (Prokerala "Ashadha Gupta
+  // Navratri", ending 23 Jul; Drik lists the ghatasthapana on its Ashadha page).
+  festival({ id: 'ashadha-gupt-navratri', nameHi: 'आषाढ़ गुप्त नवरात्रि प्रारंभ', nameEn: 'Ashadha Gupt Navratri Begins', lunarMonth: 4, paksha: 'shukla', tithi: 1, marker: 'dot', deityHi: 'दस महाविद्या', deityEn: 'The ten Mahavidyas', shortDescriptionHi: 'आषाढ़ शुक्ल प्रतिपदा से गुप्त नवरात्रि — वर्ष की चार नवरात्रियों में से एक, जिसमें घटस्थापना कर नौ दिन दस महाविद्याओं की गुप्त साधना की जाती है। यह तांत्रिक और शाक्त साधकों की नवरात्रि है।', shortDescriptionEn: 'Gupt Navratri from Ashadha Shukla Pratipada — one of the year’s four Navratris, opened with ghatasthapana and given to nine days of quiet sadhana of the ten Mahavidyas. It is the Navratri of the Shakta and tantric practitioner.', searchTerms: ['gupt navratri', 'gupta navratri', 'ashadha navratri', 'ashadha gupt navratri', 'mahavidya', 'ghatasthapana'] }),
+  // Magha Shukla Pratipada. Published: 19 Jan 2026 (India TV, AstroSage;
+  // Pratipada 01:21 AM 19 Jan → 02:14 AM 20 Jan).
+  festival({ id: 'magha-gupt-navratri', nameHi: 'माघ गुप्त नवरात्रि प्रारंभ', nameEn: 'Magha Gupt Navratri Begins', lunarMonth: 11, paksha: 'shukla', tithi: 1, marker: 'dot', deityHi: 'दस महाविद्या', deityEn: 'The ten Mahavidyas', shortDescriptionHi: 'माघ शुक्ल प्रतिपदा से गुप्त नवरात्रि — घटस्थापना के साथ नौ दिन दस महाविद्याओं की गुप्त साधना; इसी नवरात्रि की पंचमी वसंत पंचमी है।', shortDescriptionEn: 'Gupt Navratri from Magha Shukla Pratipada — nine days of quiet sadhana of the ten Mahavidyas, opened with ghatasthapana; its Panchami is Vasant Panchami.', searchTerms: ['gupt navratri', 'gupta navratri', 'magha navratri', 'magh gupt navratri', 'mahavidya', 'ghatasthapana'] }),
+
+
   // ── Tamil & Malayalam observances — nakshatra in a sidereal solar month ──
   //
   // These are grouped rather than filed by lunar month because they HAVE no lunar
