@@ -53,3 +53,25 @@ design.md §39.2).
 - Backgrounds are the app's own sketch plates under the parchment overlay stack (design.md §6),
   so the carousel reads as the same object as the app — no stock photography, no AI render.
 - `**…**` in a card body marks a `saffron-deep` emphasis run; it is the only accent the cards use.
+
+## Reel companion
+
+```bash
+node marketing/instagram/make-reel.js pitru          # → marketing/instagram/vedansh-ig-pitru.mp4
+node marketing/instagram/make-reel.js pitru --safe   # preview with IG's chrome zones burned in
+```
+
+20 s, 7 hard-cut beats, 1080×1920: hook `पितृ पक्ष क्या है?` → one beat per carousel card → CTA
+that repeats the hook so the loop seam is invisible. Same verified content, same sketch plates,
+rendered in the manifest's `theme: 'parchment'` (a `make-reel.js` option: parchment base, the
+slide's `plate` full-bleed, wash heaviest behind the live box).
+
+**The reel is not the five PNGs played in sequence**, on purpose. The cards carry ~60 words each
+(~12 s of reading per card), and IG's own chrome covers the bottom 540 px and the right 250 px of
+a reel — exactly where each card's footer and right-hand text sit. So the reel cuts each card
+down to one line that fits the safe box and passes the `reel-checklist.md` lint; the carousel
+carries the full text. Post both: the reel for reach, the carousel for saves.
+
+The MP4 is gitignored (`marketing/instagram/*.mp4`) — regenerate it. It needs an ffmpeg with
+libx264 (`FFMPEG_BIN`); Playwright's bundled ffmpeg is VP8-only and will not do. Add audio in the
+Instagram composer — the file is silent by design (README §5).

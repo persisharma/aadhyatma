@@ -51,6 +51,37 @@ const SMART_LINK = 'persisharma.github.io/get-vedansh';
 const HANDLE = '@vedansh.app';
 
 /*
+ * ── Parchment theme ─────────────────────────────────────────────────────────
+ * The default reel look is the dark saffron gradient above. A manifest with
+ * `theme: 'parchment'` instead renders the app's own reading surface: parchment
+ * base, the slide's `plate` (a sketch from mobile/assets/backgrounds) full-bleed,
+ * and a parchment wash heaviest where the live box sits (design.md §2/§6). Used
+ * when a reel is the companion of a feed carousel, so the two read as one set.
+ * Tokens mirror mobile/src/theme/colors.ts (lightColors).
+ */
+const PLATES = path.join(CTX, '..', '..', 'mobile', 'assets', 'backgrounds');
+const PARCHMENT = {
+  parchment: '#F3E7C9', ink: '#1A0E03', inkSoft: '#5A3A1E', inkMuted: '#6E5230',
+  saffron: '#B8621B', saffronDeep: '#8A3E0B', gold: '#A67C34',
+};
+function pal(opts = {}) {
+  return opts.theme === 'parchment'
+    ? { hero: PARCHMENT.ink, support: PARCHMENT.inkSoft, faint: PARCHMENT.inkMuted, accent: PARCHMENT.saffronDeep }
+    : { hero: C.creamSoft, support: 'rgba(243,231,201,0.80)', faint: 'rgba(243,231,201,0.55)', accent: C.saffron };
+}
+function plateLayer(file) {
+  const p = path.join(PLATES, file);
+  if (!fs.existsSync(p)) throw new Error('missing background plate: ' + p);
+  const uri = 'data:image/webp;base64,' + fs.readFileSync(p).toString('base64');
+  return `
+    <div style="position:absolute; inset:0; background:url('${uri}') center 30% / cover no-repeat;
+                opacity:0.85; filter:sepia(.45) saturate(.8) contrast(1.08);"></div>
+    <div style="position:absolute; inset:0; background:linear-gradient(180deg,
+                rgba(243,231,201,0.50) 0%, rgba(243,231,201,0.80) 26%, rgba(243,231,201,0.86) 60%,
+                rgba(233,217,177,0.62) 100%);"></div>`;
+}
+
+/*
  * ── Output modes ────────────────────────────────────────────────────────────
  * Width is 1080 in both modes, so type sizes are shared; only the vertical live
  * box changes. `safe` is the region IG's own UI covers — measured generously on a
@@ -84,6 +115,24 @@ const MODES = {
  * needs longer because the eye has to find the content inside the frame).
  */
 const REELS = {
+  // 0) Pitru Paksha — the reel companion of the 5-card carousel (pitru/README.md).
+  //    Same verified lesson rows, same sketch plates, cut to one beat per card.
+  //    Post the carousel for the full text; the reel is the reach format.
+  pitru: {
+    out: 'vedansh-ig-pitru.mp4',
+    transition: 'cut',
+    theme: 'parchment',
+    slides: [
+      { hook: true, hi: 'पितृ पक्ष क्या है?', en: 'Sixteen days for the ones who came before us', plate: 'deity-navagraha-icons.webp', dur: 2.2 },
+      { text: true, kicker: 'पितृ = पूर्वज', hi: 'माता-पिता, दादा-दादी\nजो अब साथ नहीं हैं', en: 'Once a year, sixteen days are kept in their name.', plate: 'deity-navagraha-icons.webp', dur: 3.0 },
+      { text: true, kicker: 'क्यों', hi: 'माँगने के लिए नहीं —\nयाद रखने के लिए', en: '“Those devoted to the pitrs reach the pitrs.” — Gita 9.25', plate: 'source-vishnu-narayana.webp', dur: 3.0 },
+      { text: true, kicker: 'तर्पण', hi: 'तिल मिला जल —\nश्राद्ध का एक अंग', en: 'Tarpana is one limb of shraddha, not the whole of it.', plate: 'category-aarti-diya.webp', dur: 3.0 },
+      { text: true, kicker: 'जल ही क्यों', hi: 'अञ्जलि भर जल,\nदक्षिण की ओर मुख', en: 'Rama offered exactly this — for Dasharatha, and for Jatayu.', plate: 'deity-ganga.webp', dur: 3.0 },
+      { text: true, kicker: 'भाव', hi: 'जो हम खाते हैं,\nवही आपको अर्पित है', en: 'Rama in the forest, with only ingudi pulp to offer his father.', plate: 'deity-rama-darbar.webp', dur: 3.2 },
+      { cta: true, hi: 'पितृ पक्ष क्या है?', en: 'All 16 tithis, the verses and the kathas — in Vedansh', plate: 'deity-navagraha-icons.webp', handle: HANDLE, dur: 2.6 },
+    ],
+  },
+
   // 1) The timeliness reel — the format with the highest reach ceiling, and the one
   //    only we can make, because the Panchang engine is ours. Re-shoot per occasion:
   //    edit the strings, re-run, post the day BEFORE the vrat.
@@ -163,8 +212,15 @@ function pngSize(p) {
  * frame minus IG's chrome. Every slide function lays out inside it with flexbox so
  * the same manifest renders correctly at both 1920 and 1350 tall.
  */
-function pageShell(M, inner, { safeOverlay = false, bleedLayer = '' } = {}) {
+function pageShell(M, inner, { safeOverlay = false, bleedLayer = '', theme, plate } = {}) {
   const s = M.safe;
+  const parchment = theme === 'parchment';
+  if (plate) bleedLayer = plateLayer(plate) + bleedLayer;
+  const themeCss = parchment ? `
+  body { background:${PARCHMENT.parchment}; color:${PARCHMENT.ink}; }
+  .kicker { color:${PARCHMENT.saffronDeep}; }
+  .rule, .om { color:${PARCHMENT.gold}; }
+  .rule { background:${PARCHMENT.gold}; }` : '';
   const overlay = safeOverlay ? `
     <div style="position:absolute; inset:0; pointer-events:none; z-index:99;">
       <div style="position:absolute; top:0; left:0; right:0; height:${s.top}px; background:rgba(255,0,0,0.22);"></div>
@@ -199,26 +255,28 @@ function pageShell(M, inner, { safeOverlay = false, bleedLayer = '' } = {}) {
   /* Devanagari must not be letter-spaced — it pulls conjuncts and matras apart. */
   .kicker.dev { font-family:'Noto Serif Devanagari', serif; font-size:34px; letter-spacing:0; text-transform:none; }
   .rule { width:110px; height:3px; background:${C.gold}; opacity:0.55; border-radius:2px; }
-  .om { font-family:'Noto Serif Devanagari', serif; color:${C.gold}; letter-spacing:4px; opacity:0.9; }
+  .om { font-family:'Noto Serif Devanagari', serif; color:${C.gold}; letter-spacing:4px; opacity:0.9; }${themeCss}
 </style></head><body>${bleedLayer}<div class="live">${inner}</div>${overlay}</body></html>`;
 }
 
 // Frame 0. No ornament, no warm-up — the headline is the whole frame.
 function hookSlide(M, s, opts) {
+  const P = pal(opts);
   const inner = `
     <div class="om" style="font-size:46px; margin-bottom:44px;">ॐ</div>
-    <div class="dev" style="font-weight:700; font-size:112px; line-height:1.12; color:${C.creamSoft};">${nl(s.hi)}</div>
+    <div class="dev" style="font-weight:700; font-size:112px; line-height:1.12; color:${P.hero};">${nl(s.hi)}</div>
     <div class="rule" style="margin:52px 0;"></div>
-    <div style="font-weight:500; font-size:46px; line-height:1.28; color:rgba(243,231,201,0.82);">${nl(s.en)}</div>`;
+    <div style="font-weight:500; font-size:46px; line-height:1.28; color:${P.support};">${nl(s.en)}</div>`;
   return pageShell(M, inner, opts);
 }
 
 // One beat. The Hindi line is the payload; the English line is the subtitle.
 function textSlide(M, s, opts) {
+  const P = pal(opts);
   const inner = `
     ${s.kicker ? `<div class="kicker dev" style="margin-bottom:30px;">${esc(s.kicker)}</div>` : ''}
-    <div class="dev" style="font-weight:600; font-size:88px; line-height:1.18; color:${C.creamSoft};">${nl(s.hi)}</div>
-    ${s.en ? `<div style="font-weight:500; font-size:42px; line-height:1.32; color:rgba(243,231,201,0.78); margin-top:36px; padding:0 20px;">${nl(s.en)}</div>` : ''}`;
+    <div class="dev" style="font-weight:600; font-size:88px; line-height:1.18; color:${P.hero};">${nl(s.hi)}</div>
+    ${s.en ? `<div style="font-weight:500; font-size:42px; line-height:1.32; color:${P.support}; margin-top:36px; padding:0 20px;">${nl(s.en)}</div>` : ''}`;
   return pageShell(M, inner, opts);
 }
 
@@ -265,12 +323,13 @@ function shotSlide(M, s, imgUri, shotPx, opts) {
 
 // Closing card. Repeats the hook line verbatim so the loop point is invisible.
 function ctaSlide(M, s, opts) {
+  const P = pal(opts);
   const inner = `
-    <div class="dev" style="font-weight:700; font-size:88px; line-height:1.16; color:${C.creamSoft};">${nl(s.hi)}</div>
-    <div style="font-weight:500; font-size:38px; line-height:1.3; color:rgba(243,231,201,0.80); margin-top:30px;">${nl(s.en)}</div>
-    <div class="ui" style="margin-top:56px; padding:20px 44px; border:2px solid ${C.saffron}; border-radius:60px;
-                           font-weight:700; font-size:36px; color:${C.saffron}; letter-spacing:1px;">${esc(s.handle || HANDLE)}</div>
-    <div class="ui" style="font-weight:500; font-size:26px; color:rgba(243,231,201,0.55); margin-top:26px; letter-spacing:1px;">${esc(SMART_LINK)}</div>`;
+    <div class="dev" style="font-weight:700; font-size:88px; line-height:1.16; color:${P.hero};">${nl(s.hi)}</div>
+    <div style="font-weight:500; font-size:38px; line-height:1.3; color:${P.support}; margin-top:30px;">${nl(s.en)}</div>
+    <div class="ui" style="margin-top:56px; padding:20px 44px; border:2px solid ${P.accent}; border-radius:60px;
+                           font-weight:700; font-size:36px; color:${P.accent}; letter-spacing:1px;">${esc(s.handle || HANDLE)}</div>
+    <div class="ui" style="font-weight:500; font-size:26px; color:${P.faint}; margin-top:26px; letter-spacing:1px;">${esc(SMART_LINK)}</div>`;
   return pageShell(M, inner, opts);
 }
 
@@ -394,6 +453,7 @@ function renderFrame(M, html, outPng) {
 }
 
 function slideHtml(M, s, shotsDir, opts) {
+  if (s.plate) opts = { ...opts, plate: s.plate };
   if (s.hook) return { html: hookSlide(M, s, opts), dur: s.dur || 2.0 };
   if (s.cta) return { html: ctaSlide(M, s, opts), dur: s.dur || 2.4 };
   if (s.verse) return { html: verseSlide(M, s, opts), dur: s.dur || 3.2 };
@@ -561,7 +621,7 @@ function main() {
   const frames = [];
   let idx = 0;
   for (const s of cfg.slides) {
-    const built = slideHtml(M, s, shotsDir, { safeOverlay });
+    const built = slideHtml(M, s, shotsDir, { safeOverlay, theme: cfg.theme });
     if (!built) { console.warn('  ⚠ missing screenshot, skipping:', s.shot, `(looked in ${shotsDir})`); idx++; continue; }
     const name = carousel ? `${reel}-${idx + 1}.png` : `${reel}-${String(idx).padStart(2, '0')}.png`;
     const out = path.join(outDir, name);
