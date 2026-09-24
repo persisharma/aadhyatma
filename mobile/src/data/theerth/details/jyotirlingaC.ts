@@ -12,7 +12,7 @@ const source = (label: string, url: string) => ({ label, url });
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
  *
- * Temples still to author in this chunk: grishneshwar
+ * All four temples of this chunk now carry the full §12.6 reading.
  */
 export const details: Record<string, TempleDetail> = {
   vaidyanath: {
@@ -203,6 +203,69 @@ export const details: Record<string, TempleDetail> = {
           'रामेश्वरम् तमिलनाडु के रामनाथपुरम ज़िले में पाम्बन द्वीप पर है, जो पाम्बन जलडमरूमध्य पर बने रेल और सड़क पुलों से मुख्य भूमि के मंडपम से जुड़ा है। रामेश्वरम् रेलवे स्टेशन मंदिर से लगभग 1–2 किमी दूर है; निकटतम हवाई अड्डा मदुरै है, जो लगभग 170 किमी पड़ता है, और मदुरै से सड़क मार्ग की यही दूरी है। अधिकांश तीर्थयात्री रामेश्वरम् को मदुरै के मीनाक्षी मंदिर के साथ जोड़ते हैं, और चार धाम यात्रा में इसे दक्षिण का धाम मानकर द्वारका, पुरी तथा बद्रीनाथ के साथ गिनते हैं; ज्योतिर्लिङ्ग यात्रा में यह दक्षिण का अन्तिम पड़ाव बनता है। द्वीप पर ही धनुषकोडि लगभग 19 किमी दूर है, जहाँ परम्परा सेतु के आरम्भ-स्थल की स्मृति रखती है, और मंदिर से लगभग 2 किमी पर गंधमादन पर्वतम् है, जहाँ राम के चरण-चिह्न की पूजा होती है। कोदण्डरामस्वामी मंदिर और पाम्बन पुल भी सामान्य दर्शन-स्थल हैं।',
         bodyEn:
           'Rameshwaram lies on Pamban island in Ramanathapuram district of Tamil Nadu, joined to Mandapam on the mainland by the rail and road bridges across the Pamban channel. Rameswaram railway station is roughly 1–2 km from the temple; the nearest airport is Madurai, about 170 km away, which is also the road distance from Madurai city. Most pilgrims pair Rameshwaram with the Meenakshi temple at Madurai, and in the Char Dham reckoning it is the southern dham beside Dwarka, Puri and Badrinath, while on a Jyotirlinga circuit it is the southern terminus. On the island itself Dhanushkodi lies about 19 km away, where tradition remembers the setting out of the bridge, and Gandhamadhana Parvatham, where Rama’s footprint is venerated, is about 2 km from the temple. The Kothandaramaswamy temple and the Pamban bridge are the other usual stops.',
+      },
+    ],
+  },
+  grishneshwar: {
+    significanceHi:
+      'एलोरा की गुफाओं से सटे वेरूल गाँव का घृष्णेश्वर द्वादश ज्योतिर्लिङ्गों में अन्तिम गिना जाता है, इसलिए परम्परा में ज्योतिर्लिङ्ग-यात्रा की पूर्णता का तीर्थ माना जाता है। शिवपुराण में वर्णित घुश्मा की कथा — पुत्र-वियोग में भी अटूट श्रद्धा और शिव की कृपा — इसी स्थान से जुड़ी है, और मंदिर का नाम भी उसी भक्त-नाम से चला। मूल प्रतिष्ठा की कोई तिथि अभिलिखित नहीं है; लाल ज्वालामुखी-शिला का वर्तमान मंदिर सन् 1729 (विक्रम संवत् 1786) में इंदौर की गौतमाबाई होलकर के सहयोग से बना और आगे अहिल्याबाई होलकर ने इसका जीर्णोद्धार कराया। यह भारतीय पुरातत्त्व सर्वेक्षण द्वारा संरक्षित स्मारक भी है।',
+    significanceEn:
+      'Grishneshwar at Verul, beside the Ellora caves, is counted the last of the twelve Jyotirlingas and is therefore kept as the shrine that completes a Jyotirlinga pilgrimage. The story of Ghushma told in the Shiva Purana — devotion that held firm through the loss of a son, and the grace that answered it — belongs to this place, and the temple carries that devotee’s name. No date of first consecration is recorded; the present temple of red volcanic rock was built in 1729 CE (Vikram Samvat 1786) with the patronage of Gautamabai Holkar of Indore, and was further restored by Ahilyabai Holkar. It is also a protected monument of the Archaeological Survey of India.',
+    originStoryHi:
+      'कथा में सुधर्मा नामक ब्राह्मण की पत्नी सुदेहा निःसन्तान थीं और उन्होंने अपनी बहन घुश्मा का विवाह पति से कराया; घुश्मा प्रतिदिन एक सौ एक पार्थिव शिवलिङ्ग बनाकर पूजती और उन्हें निकट के सरोवर में विसर्जित करती थीं। घुश्मा को पुत्र हुआ तो ईर्ष्या में सुदेहा ने उस पुत्र का वध कर शव उसी सरोवर में डाल दिया। परम्परा कहती है कि यह जानकर भी घुश्मा ने पूजा नहीं छोड़ी, और जब वे विसर्जन के लिए सरोवर पहुँचीं तो पुत्र जीवित लौट आया तथा शिव प्रकट होकर वहीं घृष्णेश्वर रूप में विराजमान हो गए।',
+    originStoryEn:
+      'The legend tells of a Brahmin, Sudharma, whose wife Sudeha was childless and who gave him her sister Ghushma in marriage; Ghushma made a hundred and one clay lingas each day, worshipped them and immersed them in a nearby tank. When a son was born to her, Sudeha in jealousy killed the boy and threw his body into that same tank. Tradition holds that Ghushma, on learning of it, did not break off her worship, and when she came to the tank for the day’s immersion her son returned alive and Shiva appeared, remaining there as Grishneshwar.',
+    sources: [
+      source('Department of Tourism, Government of Maharashtra — Ghrishneshwar', 'https://maharashtratourism.gov.in/temple/ghrishneshwar/'),
+      source('Maharashtra Tourism Development Corporation — Grishneshwar Temple', 'https://www.mtdc.co.in/religiousplaces/grishneshwar-temple/'),
+      source('Shri Grishneshwar Jyotirling Temple', 'https://grishneshwarjyotirling.org/'),
+      source('Ghrishneshwar Temple — Reference', 'https://en.wikipedia.org/wiki/Ghrishneshwar_Temple'),
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'घृष्णेश्वर की स्थापना-कथा पुराण-परम्परा की है — घुश्मा की भक्ति से प्रसन्न होकर शिव का वेरूल में प्रकट होना — इसलिए यहाँ प्रतिष्ठा की तिथि, तिथि-वार अथवा प्रतिष्ठाकर्ता आचार्य का कोई अभिलेख नहीं मिलता। स्थान का उल्लेख शिवपुराण और स्कन्दपुराण की परम्परा में आता है, और सटे हुए एलोरा के शैलगृह बताते हैं कि यह अंचल सदियों से उपासना का केन्द्र रहा है। तेरहवीं–चौदहवीं शताब्दी के दिल्ली सल्तनत-कालीन अभियानों में मंदिर को क्षति पहुँची और आगे कई बार पुनर्निर्माण हुआ। सोलहवीं शताब्दी में छत्रपति शिवाजी महाराज के पितामह मालोजी भोसले ने इसका जीर्णोद्धार कराया। वर्तमान मंदिर सन् 1729 (विक्रम संवत् 1786) में इंदौर की होलकर राजपरिवार की गौतमाबाई होलकर के सहयोग से बना — कुछ वृत्तान्त इसे सन् 1730 भी बताते हैं — और बाद में अहिल्याबाई होलकर ने इसका जीर्णोद्धार कराते हुए सन् 1791 (विक्रम संवत् 1848) में परिसर के निकट शिवालय तीर्थ नामक सरोवर बनवाया। मंदिर आज भारतीय पुरातत्त्व सर्वेक्षण की संरक्षित सूची में है और सेवा-पूजा मंदिर न्यास के अधीन चलती है।',
+        bodyEn:
+          'The founding account at Grishneshwar is Puranic — Shiva appearing at Verul in answer to Ghushma’s devotion — so no consecration date, tithi, weekday or consecrating acharya is on record. The site is named in the Shiva Purana and Skanda Purana traditions, and the rock-cut halls of Ellora next door show how long this tract has been a centre of worship. The temple was damaged during the Delhi Sultanate campaigns of the thirteenth and fourteenth centuries and was rebuilt more than once thereafter. In the sixteenth century Maloji Bhosale, grandfather of Chhatrapati Shivaji Maharaj, had it restored. The building standing today was raised in 1729 CE (Vikram Samvat 1786) under the patronage of Gautamabai Holkar of the Indore ruling house, with some accounts giving 1730 CE, and Ahilyabai Holkar later carried out further restoration, adding in 1791 CE (Vikram Samvat 1848) the tank known as Shivalaya Tirtha beside the precinct. The temple is a protected monument of the Archaeological Survey of India, and its worship is run by the temple trust.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'घृष्णेश्वर का स्वरूप',
+        titleEn: 'The Form of Grishneshwar',
+        bodyHi:
+          'मंदिर लाल ज्वालामुखी-शिला से बना है और लगभग 240 गुणा 185 फुट के परिसर में फैला है — द्वादश ज्योतिर्लिङ्गों में यह सबसे छोटा माना जाता है, पर नक़्क़ाशी में सबसे समृद्ध में गिना जाता है। पाँच-खंड का शिखर देव-प्रतिमाओं और पुराण-प्रसंगों की मूर्तियों से भरा है, और सभामंडप चौबीस स्तम्भों पर टिका है, जिन पर शिव-कथाओं के दृश्य उकेरे हैं। गर्भगृह पूर्वाभिमुख है और उसमें शिवलिङ्ग पूर्व की ओर मुख किए विराजता है; मार्ग में नन्दी की प्रतिमा स्थापित है। स्थापत्य में हेमाडपंती परम्परा के साथ दक्षिण-भारतीय और मराठा शैली का मेल दिखता है, जो महाराष्ट्र के मंदिरों में असामान्य है। लाल पत्थर पर पड़ती दोपहर की धूप में शिखर की मूर्तियाँ स्पष्ट उभरकर दिखती हैं।',
+        bodyEn:
+          'The temple is built of red volcanic rock and covers roughly 240 by 185 feet — the smallest of the twelve Jyotirlingas, yet among the most densely carved. Its five-tiered shikhara is crowded with figures of deities and scenes from the Puranas, and the assembly hall rests on twenty-four pillars whose carvings retell the stories of Shiva. The sanctum faces east and the linga within is set facing east as well, with a Nandi placed in the passage before it. The architecture joins the Hemadpanti manner with south Indian and Maratha elements, a combination uncommon among Maharashtra’s temples. In the afternoon light the sculpture on the red stone of the spire stands out sharply from the courtyard below.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'जलाभिषेक और शिवालय तीर्थ',
+        titleEn: 'Jalabhishek and the Shivalaya Tank',
+        bodyHi:
+          'घृष्णेश्वर की मुख्य परम्परा जलाभिषेक है — भक्त गर्भगृह में पहुँचकर स्वयं जल, दूध, दही, मधु और बेलपत्र लिङ्ग पर अर्पित करते हैं, जो बड़े ज्योतिर्लिङ्गों में दुर्लभ निकटता है। यहाँ की एक कड़ी परम्परा यह है कि गर्भगृह में प्रवेश से पहले पुरुष ऊपरी वस्त्र उतारकर जाते हैं; यह नियम मंदिर में आज भी पालित होता है। घुश्मा की कथा से जुड़ा शिवालय तीर्थ सरोवर परिसर के निकट है, जहाँ भक्त पार्थिव-लिङ्ग विसर्जन और स्नान की परम्परा का स्मरण करते हैं। मंदिर प्रातः लगभग साढ़े पाँच बजे खुलता है और रात्रि तक दर्शन चलते हैं; श्रावण मास और विशेषकर श्रावण के सोमवार सबसे व्यस्त रहते हैं, जब दर्शन का समय बढ़ाकर भोर से देर रात तक कर दिया जाता है।',
+        bodyEn:
+          'The central practice at Grishneshwar is jalabhishek: devotees reach the sanctum and themselves pour water, milk, curd and honey over the linga and lay bel leaves on it, a closeness rare among the larger Jyotirlinga shrines. One strict custom survives here — men remove their upper garments before entering the sanctum, and the rule is still enforced. The Shivalaya tank beside the precinct, tied to the Ghushma story, is where pilgrims recall the daily immersion of clay lingas and take their own dip. The temple opens around half past five in the morning and darshan continues into the night; the month of Shravan, and its Mondays above all, are the busiest, when the hours are extended from before dawn until late.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'महाशिवरात्रि (फाल्गुन कृष्ण चतुर्दशी) वर्ष का सबसे बड़ा पर्व है, जब रातभर चार प्रहर की पूजा और निरन्तर अभिषेक चलता है और वेरूल में मेला लगता है। श्रावण मास भर उत्सव-काल रहता है और सोमवारों को महाराष्ट्र-भर से कांवड़ और पदयात्री संघ पहुँचते हैं; इस अवधि में मंदिर भोर तीन बजे से रात ग्यारह बजे तक खुला रहता है। कार्तिक मास के सोमवार, प्रदोष तिथियाँ और त्रिपुरारी पूर्णिमा पर भी विशेष दीपोत्सव और आरती होती है। गणेश उत्सव और दिवाली के दिनों में परिसर की सज्जा और दीपमालाएँ वेरूल की अलग पहचान हैं।',
+        bodyEn:
+          'Mahashivaratri on Phalgun Krishna Chaturdashi is the largest observance of the year, kept with the four watches of night worship, continuous abhishek and a fair at Verul. The whole of Shravan is festive, and on its Mondays kanwar and padyatri groups arrive from across Maharashtra; through that period the temple stays open from three in the morning until eleven at night. The Mondays of Kartik, the Pradosh days and Tripurari Purnima bring their own lamp offerings and special aartis. During Ganesh Utsav and Diwali the lamp-lit decoration of the precinct is a sight particular to Verul.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'घृष्णेश्वर महाराष्ट्र के छत्रपति संभाजीनगर (औरंगाबाद) ज़िले के वेरूल गाँव में है — नगर से लगभग 30 किमी उत्तर-पश्चिम। लगभग सभी तीर्थयात्री इसे एलोरा की गुफाओं के साथ एक ही दिन में जोड़ते हैं, जो मंदिर से केवल लगभग 1–2 किमी दूर यूनेस्को विश्व धरोहर स्थल हैं। दौलताबाद का किला लगभग 11 किमी और खुल्दाबाद का भद्रा मारुति मंदिर लगभग 4–5 किमी दूर पड़ता है, और दोनों प्रायः इसी मार्ग में सम्मिलित रहते हैं। निकटतम रेलवे स्टेशन और हवाई अड्डा छत्रपति संभाजीनगर में हैं; हवाई अड्डा मंदिर से लगभग 35–40 किमी है। महाराष्ट्र की ज्योतिर्लिङ्ग यात्रा में भक्त प्रायः घृष्णेश्वर को त्र्यम्बकेश्वर, भीमाशंकर और औंढा नागनाथ के साथ जोड़ते हैं, और अजन्ता की गुफाएँ लगभग सौ किलोमीटर आगे पड़ती हैं। परिसर के निकट शिवालय तीर्थ सरोवर भी दर्शनीय है।',
+        bodyEn:
+          'Grishneshwar stands at Verul in Chhatrapati Sambhajinagar (Aurangabad) district of Maharashtra, roughly 30 km north-west of the city. Almost every pilgrim takes it together with the Ellora caves, the UNESCO World Heritage site only about 1–2 km away. Daulatabad fort lies some 11 km off and the Bhadra Maruti temple at Khuldabad about 4–5 km, and both usually fall on the same route. The nearest railway station and airport are at Chhatrapati Sambhajinagar, the airport roughly 35–40 km from the temple. On a Maharashtra Jyotirlinga circuit devotees commonly join Grishneshwar to Trimbakeshwar, Bhimashankar and Aundha Nagnath, with the Ajanta caves about a hundred kilometres further on. The Shivalaya Tirtha tank beside the precinct is also visited.',
       },
     ],
   },
