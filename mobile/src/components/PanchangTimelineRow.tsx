@@ -15,6 +15,8 @@ export default function PanchangTimelineRow({
   showDivider = true,
   accessibilityLabel,
   density = 'compact',
+  trailing,
+  muted = false,
 }: {
   markerColor: string;
   dateLabel: string;
@@ -23,6 +25,10 @@ export default function PanchangTimelineRow({
   showDivider?: boolean;
   accessibilityLabel?: string;
   density?: 'compact' | 'comfortable';
+  /** Right-edge content — a disclosure chevron when the row opens something. */
+  trailing?: React.ReactNode;
+  /** Title in `inkMuted` — a row that holds nothing to open reads quieter than one that does. */
+  muted?: boolean;
 }) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
@@ -52,7 +58,7 @@ export default function PanchangTimelineRow({
         {dateLabel}
       </Text>
       <View style={styles.main}>
-        <Text style={{ fontFamily: bodyFont, fontSize: comfortable ? 14 : 13, color: colors.ink }}>{title}</Text>
+        <Text style={{ fontFamily: bodyFont, fontSize: comfortable ? 14 : 13, color: muted ? colors.inkMuted : colors.ink }}>{title}</Text>
         {secondaryLines.map((line, index) => (
           <Text
             key={`${line}-${index}`}
@@ -62,6 +68,7 @@ export default function PanchangTimelineRow({
           </Text>
         ))}
       </View>
+      {trailing}
     </View>
   );
 }
