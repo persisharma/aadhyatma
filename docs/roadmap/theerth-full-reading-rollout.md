@@ -180,6 +180,37 @@ record each drop in the PR.
 - `dedicatedTheerthBackgroundIds` lists all 71 ids; design.md §27 item 4 drops the
   per-temple plate list in favour of "every temple".
 - RULEBOOK §12.6 "Gates" paragraph rewritten to drop the legacy allowlist sentence.
+- **The plate check is restored** — see below.
+
+### Restoring the plate check once coverage is complete
+
+The check removed on 2026-09-24 was not wrong in principle, only wrong in placement:
+it was a ratchet against *regression* that had been armed before the thing it guards
+was ever built, so the only work it could ever block was the work still being done.
+Once all 71 temples have a plate it has nothing left to block and starts earning its
+keep — it then only fires when someone deletes a plate or adds a temple without one,
+which is exactly what a ratchet is for.
+
+So the final plate PR — the one that brings `dedicatedTheerthBackgroundIds` to 71 —
+restores this to `backgrounds.coverage.jest.test.ts` in the same commit:
+
+```ts
+test('every temple with an extended reading has its own illustration plate (RULEBOOK §12.6)', () => {
+  for (const temple of temples) {
+    if (!temple.sections?.length) continue;
+    expect(getTheerthIllustration(temple.id)).toBeTruthy();
+    expect(getTheerthIllustration(temple.id)).not.toBe(getDeityBackground(temple.deity));
+  }
+});
+```
+
+Re-add `getTheerthIllustration` to the `@/data/backgrounds` import and `temples` to the
+`@/data/theerth/temples` import; both were dropped when the test went. Then update
+RULEBOOK §12.6 "Plate decoupling" to say the decoupling was temporary and has ended.
+
+**Do not restore it earlier.** Re-arming while any temple still lacks a plate puts the
+rollout straight back into the deadlock this document was written to break: the text
+cannot land without art, and the art does not come from the sessions writing the text.
 
 ## 7. Plate-prompt docs (status 2026-09-21)
 
