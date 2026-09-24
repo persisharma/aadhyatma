@@ -29,6 +29,23 @@ The 60 remaining ids sit in `LEGACY_WITHOUT_SECTIONS` in
 `mobile/src/data/__tests__/theerth.test.ts` (pinned at 60) and render on their generic
 deity plate with only `significance` + `originStory`.
 
+### Progress (2026-09-24)
+
+**64 of 71 temples now carry the full reading.** Fifty-three of the sixty legacy rows
+were authored in one parallel wave of thirteen sessions, one chunk module each under
+`mobile/src/data/theerth/details/` — zero merge conflicts, which is what the chunk
+layout was for. `LEGACY_WITHOUT_SECTIONS` stays pinned at 60: it is a historical record
+of the rows that predate the rule, not a worklist, so enriching one does not shorten it.
+
+Seven temples still render bare, in two chunk modules that were never authored:
+
+| Chunk module | Temples still bare |
+|---|---|
+| `jyotirlingaB.ts` | `kedarnath`, `bhimashankar`, `kashi-vishwanath`, `trimbakeshwar` |
+| `regional.ts` | `mangueshi`, `iskcon-chandigarh`, `dimapur-kalibari` |
+
+Plates are a separate axis and still stand at 11 of 71 — see §2.
+
 ## 2. Plates: decoupled from the text (revised 2026-09-24)
 
 `backgrounds.coverage.jest.test.ts` **used to** fail any temple that had `sections` but
