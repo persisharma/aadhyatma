@@ -1,4 +1,4 @@
-import type { TempleDetail } from '../temples';
+import type { TempleDetail, TheerthSource } from '../temples';
 
 /**
  * Extended §12.6 readings — Jyotirlingas A.
@@ -12,6 +12,8 @@ import type { TempleDetail } from '../temples';
  *
  * All four temples in this chunk carry the full §12.6 reading.
  */
+const source = (label: string, url: string): TheerthSource => ({ label, url });
+
 export const details: Record<string, TempleDetail> = {
   somnath: {
     significanceHi: 'गिर सोमनाथ ज़िले के प्रभास पाटन में अरब सागर के तट पर खड़ा सोमनाथ द्वादश ज्योतिर्लिङ्गों में आदि ज्योतिर्लिङ्ग माना जाता है। वर्तमान मंदिर की प्राण-प्रतिष्ठा वैशाख शुक्ल पंचमी, विक्रम संवत् 2008 (11 मई 1951) को भारत के प्रथम राष्ट्रपति डॉ. राजेन्द्र प्रसाद के हाथों हुई थी। बार-बार ध्वस्त होकर बार-बार उठ खड़े होने की इसकी कथा ही इसे शिव-भक्ति और पुनर्निर्माण-संकल्प का सबसे बड़ा प्रतीक बनाती है।',
@@ -19,9 +21,9 @@ export const details: Record<string, TempleDetail> = {
     originStoryHi: 'शिव पुराण की कथा के अनुसार चन्द्रमा ने दक्ष प्रजापति की सत्ताईस कन्याओं से विवाह किया पर स्नेह केवल रोहिणी पर रखा, जिससे रुष्ट होकर दक्ष ने उन्हें क्षीण होते जाने का श्राप दिया। परम्परा कहती है कि सोमराज चन्द्र प्रभास क्षेत्र आए, सरस्वती में स्नान कर शिव की आराधना की और शिव ने प्रसन्न होकर उनका तेज लौटाया — इसी से चन्द्रमा घटते-बढ़ते रहते हैं। कृतज्ञ सोम ने यहीं शिव का मंदिर बनवाया और वह लिङ्ग सोमनाथ कहलाया।',
     originStoryEn: 'The Shiva Purana relates that Chandra — Somraj, the moon — married the twenty-seven daughters of Daksha Prajapati but loved only Rohini, and Daksha cursed him to wane away. By tradition Chandra came to Prabhas Kshetra, bathed in the Saraswati and worshipped Shiva, who restored his light on the condition that he would wax and wane by turns — which is why the moon does so still. In gratitude Soma raised a shrine to Shiva on that shore, and the linga there has been called Somnath ever since.',
     sources: [
-      { label: 'Shree Somnath Trust', url: 'https://somnath.org/' },
-      { label: 'Gujarat Tourism - Somnath Temple', url: 'https://gujarattourism.com/saurashtra/gir-somnath/somnath-temple.html' },
-      { label: 'District Gir Somnath - History', url: 'https://girsomnath.nic.in/about-district/history/' },
+      source('Shree Somnath Trust', 'https://somnath.org/'),
+      source('Gujarat Tourism - Somnath Temple', 'https://gujarattourism.com/saurashtra/gir-somnath/somnath-temple.html'),
+      source('District Gir Somnath - History', 'https://girsomnath.nic.in/about-district/history/'),
     ],
     sections: [
       {
@@ -67,9 +69,9 @@ export const details: Record<string, TempleDetail> = {
     originStoryHi: 'शिव पुराण की कथा के अनुसार कार्तिकेय रूठकर कैलास छोड़ क्रौंच पर्वत पर जा बसे, और पुत्र-वियोग में व्याकुल शिव-पार्वती उन्हें मनाने वहीं पहुँचे। परम्परा कहती है कि शिव ने अर्जुन और पार्वती ने मल्लिका का रूप लिया, और दोनों उसी पर्वत पर मल्लिकार्जुन नाम से भक्तों के लिए ठहर गए। एक अन्य लोककथा में चन्द्रावती नामक राजकुमारी ने यहाँ मल्लिका-पुष्पों से शिव की अर्चना की, और जिस स्थान पर कपिला गाय का दूध स्वयं बहता था वहाँ खोदने पर स्वयम्भू लिङ्ग प्रकट हुआ।',
     originStoryEn: 'The Shiva Purana tells that Kartikeya left Kailash in anger and settled on Mount Krauncha, and that Shiva and Parvati, grieving for their son, followed him there. By tradition Shiva took the form of Arjuna and Parvati that of Mallika, the jasmine, and the two remained on the hill for devotees as Mallikarjuna. A second local tradition tells of the princess Chandravati, who worshipped Shiva here with jasmine garlands and, digging where a Kapila cow let her milk flow of its own accord, uncovered a self-manifest linga.',
     sources: [
-      { label: 'Srisaila Devasthanam', url: 'https://www.srisailadevasthanam.org/' },
-      { label: 'Sri Bhramaramba Mallikarjuna Swamy Vari Devasthanam - History', url: 'https://tms.ap.gov.in/SSLBMS/cnt/History' },
-      { label: 'Mallikarjuna Temple, Srisailam - Reference', url: 'https://en.wikipedia.org/wiki/Mallikarjuna_Temple,_Srisailam' },
+      source('Srisaila Devasthanam', 'https://www.srisailadevasthanam.org/'),
+      source('Sri Bhramaramba Mallikarjuna Swamy Vari Devasthanam - History', 'https://tms.ap.gov.in/SSLBMS/cnt/History'),
+      source('Mallikarjuna Temple, Srisailam - Reference', 'https://en.wikipedia.org/wiki/Mallikarjuna_Temple,_Srisailam'),
     ],
     sections: [
       {
@@ -115,9 +117,9 @@ export const details: Record<string, TempleDetail> = {
     originStoryHi: 'शिव पुराण और स्कन्द पुराण की कथा के अनुसार अवन्ती नगरी को दूषण नामक असुर ने त्रस्त कर रखा था और वैदिक अनुष्ठानों को नष्ट कर दिया था। परम्परा कहती है कि नगर के शिवभक्तों की पुकार पर शिव महाकाल के रूप में भूमि फाड़कर प्रकट हुए और असुर का संहार किया। भक्तों की प्रार्थना पर वे वहीं ज्योतिर्लिङ्ग-रूप में स्थिर हो गए, और तभी से अवन्तिका की रक्षा महाकाल के हाथ मानी जाती है।',
     originStoryEn: 'The Shiva Purana and the Skanda Purana tell that the city of Avanti was tormented by an asura named Dushana, who broke up its Vedic rites. By tradition, at the cry of the city’s Shiva devotees, Shiva burst out of the earth in his Mahakal form and destroyed the demon. At their prayer he stayed on there as a Jyotirlinga, and Avantika has been held to rest under Mahakal’s protection ever since.',
     sources: [
-      { label: 'Shri Mahakaleshwar Temple, Ujjain - Official', url: 'https://shrimahakaleshwar.com/' },
-      { label: 'Madhya Pradesh Tourism - Mahakaleshwar Jyotirlinga', url: 'https://www.mptourism.com/mahakaleshwar-jyotirlinga-temple-ujjain-mp.html' },
-      { label: 'District Ujjain - Shree Mahakaleshwar Savari', url: 'https://ujjain.nic.in/en/festival/shree-mahakaleshwar-savari/' },
+      source('Shri Mahakaleshwar Temple, Ujjain - Official', 'https://shrimahakaleshwar.com/'),
+      source('Madhya Pradesh Tourism - Mahakaleshwar Jyotirlinga', 'https://www.mptourism.com/mahakaleshwar-jyotirlinga-temple-ujjain-mp.html'),
+      source('District Ujjain - Shree Mahakaleshwar Savari', 'https://ujjain.nic.in/en/festival/shree-mahakaleshwar-savari/'),
     ],
     sections: [
       {
@@ -163,9 +165,9 @@ export const details: Record<string, TempleDetail> = {
     originStoryHi: 'शिव पुराण की एक कथा के अनुसार विन्ध्य पर्वत ने मेरु से बड़ा होने की कामना से पार्थिव लिङ्ग बनाकर शिव की कठोर तपस्या की; शिव प्रसन्न हुए और देवताओं तथा ऋषियों की प्रार्थना पर लिङ्ग के दो रूप हुए — ओंकारेश्वर और ममलेश्वर। एक दूसरी कथा इक्ष्वाकु-वंशी राजा मांधाता की है, जिन्होंने इसी द्वीप पर दीर्घ तप किया और जिनके नाम पर द्वीप मांधाता कहलाया। परम्परा कहती है कि उनके तप से प्रसन्न होकर शिव यहीं स्वयम्भू ज्योतिर्लिङ्ग-रूप में प्रकट हुए।',
     originStoryEn: 'One account in the Shiva Purana tells that the Vindhya mountain, wishing to outgrow Meru, shaped a parthiva linga and kept a severe penance to Shiva; Shiva was pleased, and at the plea of the gods and sages the linga took two forms — Omkareshwar and Mamleshwar. A second tradition belongs to Mandhata, the king of the Ikshvaku line, who performed a long tapasya on this island, which has carried his name ever since. By tradition it was at his penance that Shiva appeared here as the self-manifest Jyotirlinga.',
     sources: [
-      { label: 'Shri Omkareshwar Jyotirlinga - Official', url: 'https://shriomkareshwar.org/' },
-      { label: 'Madhya Pradesh Tourism - Omkareshwar', url: 'https://www.mptourism.com/destination-omkareshwar.php' },
-      { label: 'District Khandwa - Omkareshwar Mandhata', url: 'https://khandwa.nic.in/en/tourist-place/omkareshwar/' },
+      source('Shri Omkareshwar Jyotirlinga - Official', 'https://shriomkareshwar.org/'),
+      source('Madhya Pradesh Tourism - Omkareshwar', 'https://www.mptourism.com/destination-omkareshwar.php'),
+      source('District Khandwa - Omkareshwar Mandhata', 'https://khandwa.nic.in/en/tourist-place/omkareshwar/'),
     ],
     sections: [
       {

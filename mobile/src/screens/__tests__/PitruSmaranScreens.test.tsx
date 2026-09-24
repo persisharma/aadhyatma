@@ -54,11 +54,21 @@ jest.mock('@/contexts/PitruSmaranContext', () => ({
     getEntry: (id: string) => mockEntries.find((e) => e.id === id) ?? null,
   }),
 }));
-// PRD-44: the overview's परिचय door gates on verified education content.
+// PRD-44: the overview's परिचय door gates on verified education content, and
+// (Sept 2026) its dated rows carry the verified tithi teachings — the fortnight
+// is one list, and it is this one. Lessons come from the real registry so the
+// day card is pinned against the content that actually ships.
 let mockHasShiksha = true;
-jest.mock('@/data/pitru', () => ({
-  hasPitruShiksha: () => mockHasShiksha,
-}));
+jest.mock('@/data/pitru', () => {
+  const { PITRU_LESSON_ENTRIES } = jest.requireActual('@/data/pitru/lessons');
+  return {
+    hasPitruShiksha: () => mockHasShiksha,
+    getPitruLessons: (kind?: string) =>
+      PITRU_LESSON_ENTRIES.filter(
+        (l: { kind: string; status: string }) => l.status === 'verified' && (kind === undefined || l.kind === kind)
+      ),
+  };
+});
 let mockPermissionStatus: 'undetermined' | 'granted' | 'denied' = 'granted';
 const mockRequestPermission = jest.fn(() => Promise.resolve<'undetermined' | 'granted' | 'denied'>('granted'));
 jest.mock('@/contexts/NotificationPreferencesContext', () => ({
@@ -98,6 +108,12 @@ const mockedNextObservance = jest.mocked(nextObservanceForEntry);
 const mockedWindow = jest.mocked(pitruPakshaWindow);
 const mockedPakshaDay = jest.mocked(pakshaShraddhaDay);
 const mockedDerive = jest.mocked(deriveTithiRuleFromDate);
+
+/** Mirrors `shortDate(date, 'en')` — the form the day rows' a11y labels use. */
+const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+function shortDateEn(d: Date): string {
+  return `${d.getDate()} ${MONTHS_EN[d.getMonth()]}`;
+}
 
 function daysFromNow(n: number): Date {
   const t = new Date();
@@ -547,5 +563,191 @@ describe('PitruPakshaOverviewScreen', () => {
     await flush();
     expect(byLabel(tree, 'Open Pitru Paksha introduction')).toBeUndefined();
     expect(allText(tree)).not.toContain('क्यों है');
+  });
+
+  // ── Sept 2026 UX review ────────────────────────────────────────────────
+  // The screen answers "where am I in this fortnight" before it answers
+  // "what are the dates", and both standing doors live in the sticky bar.
+
+  test('mid-paksha: the hero carries today’s tithi and दिन N / M, and today’s row opens in place', async () => {
+    const purnima = daysFromNow(-6);
+    mockedWindow.mockReturnValue({ purnima, start: daysFromNow(-5), end: daysFromNow(8) });
+    const nav = makeNav();
+    const tree = await render(
+      <PitruPakshaOverviewScreen
+        navigation={nav as never}
+        route={{ key: 'p', name: 'PitruPakshaOverview' } as never}
+      />
+    );
+    await flush();
+
+    // 15 civil rows (purnima..amavasya), today is the seventh.
+    expect(allText(tree)).toContain('दिन 7 / 15 · आज');
+    expect(tree.root.findAll((n) => n.props.testID === 'pitru-paksha-today').length).toBeGreaterThan(0);
+
+    // ONE guide door — the bar's — and with today open it is dated to TODAY,
+    // not to the fortnight's start. The card carries no second copy.
+    expect(
+      tree.root.findAll(
+        (n) => typeof n.props.accessibilityLabel === 'string' && n.props.accessibilityLabel.startsWith('Open the Tila-Tarpana remembrance guide for')
+      )
+    ).toHaveLength(0);
+    // allText joins Text children with spaces, so match loosely around the separator.
+    expect(allText(tree)).toMatch(new RegExp(`तिल-तर्पण\\s+·\\s+${daysFromNow(0).getDate()} `));
+    act(() => byLabel(tree, 'Open Tila-Tarpana remembrance guide').props.onPress());
+    expect(nav.navigate).toHaveBeenCalledWith('VidhiDetail', {
+      vidhiId: 'shraddha-tarpan-vidhi',
+      dateMs: daysFromNow(0).getTime(),
+    });
+  });
+
+  test('a day with a verified teaching opens on tap and carries it; a bare day stays an inert row', async () => {
+    // Today is well before the paksha, so no row is open by default.
+    const purnima = daysFromNow(4);
+    mockedWindow.mockReturnValue({ purnima, start: daysFromNow(5), end: daysFromNow(18) });
+    const nav = makeNav();
+    const tree = await render(
+      <PitruPakshaOverviewScreen
+        navigation={nav as never}
+        route={{ key: 'p', name: 'PitruPakshaOverview' } as never}
+      />
+    );
+    await flush();
+
+    // पूर्णिमा is one of the two verified tithi teachings, so its row opens.
+    const purnimaKey = `${purnima.getFullYear()}-${purnima.getMonth()}-${purnima.getDate()}`;
+    expect(allText(tree)).not.toContain('पक्ष का पहला दिन');
+    act(() => byLabel(tree, `Open day ${shortDateEn(purnima)}`).props.onPress());
+    expect(allText(tree)).toContain('पक्ष का पहला दिन');
+    expect(tree.root.findAll((n) => n.props.testID === `pitru-paksha-day-${purnimaKey}`).length).toBeGreaterThan(0);
+
+    // The bar's guide door now follows the open day.
+    act(() => byLabel(tree, 'Open Tila-Tarpana remembrance guide').props.onPress());
+    expect(nav.navigate).toHaveBeenCalledWith('VidhiDetail', { vidhiId: 'shraddha-tarpan-vidhi', dateMs: purnima.getTime() });
+
+    // From that day, the hand-off lands ON the lesson that explains the mapping.
+    act(() => byLabel(tree, 'Open the lesson on how a tithi is matched').props.onPress());
+    expect(nav.navigate).toHaveBeenCalledWith('PitruParichayReader', { lessonId: 'kis-din-kiska' });
+
+    // A day with neither a teaching nor a family name is not a button at all.
+    const bare = daysFromNow(9);
+    expect(byLabel(tree, `Open day ${shortDateEn(bare)}`)).toBeUndefined();
+  });
+
+  test('before the paksha: a countdown, and no today card', async () => {
+    mockedWindow.mockReturnValue({ purnima: daysFromNow(4), start: daysFromNow(5), end: daysFromNow(19) });
+    const tree = await render(
+      <PitruPakshaOverviewScreen
+        navigation={makeNav() as never}
+        route={{ key: 'p', name: 'PitruPakshaOverview' } as never}
+      />
+    );
+    await flush();
+    expect(allText(tree)).toContain('पितृ पक्ष आरम्भ');
+    expect(allText(tree)).toContain('4 दिन शेष');
+    expect(tree.root.findAll((n) => n.props.testID === 'pitru-paksha-today')).toHaveLength(0);
+  });
+
+  test('the rolled year is never silent — the hero says अगले वर्ष and names the paksha that ended', async () => {
+    const endedOn = daysFromNow(-5);
+    mockedWindow
+      .mockReturnValueOnce({ purnima: daysFromNow(-20), start: daysFromNow(-19), end: endedOn })
+      .mockReturnValue({ purnima: daysFromNow(340), start: daysFromNow(341), end: daysFromNow(355) });
+    const tree = await render(
+      <PitruPakshaOverviewScreen
+        navigation={makeNav() as never}
+        route={{ key: 'p', name: 'PitruPakshaOverview' } as never}
+      />
+    );
+    await flush();
+    const text = allText(tree);
+    expect(text).toContain('अगले वर्ष');
+    expect(text).toContain('इस वर्ष का पक्ष');
+    expect(text).not.toContain('दिन शेष');
+  });
+
+  test('family days are summarised at the top; an empty ledger offers पितृ स्मरण instead', async () => {
+    mockedWindow.mockReturnValue({ purnima: daysFromNow(9), start: daysFromNow(10), end: daysFromNow(24) });
+
+    mockEntries = [];
+    const empty = await render(
+      <PitruPakshaOverviewScreen
+        navigation={makeNav() as never}
+        route={{ key: 'p', name: 'PitruPakshaOverview' } as never}
+      />
+    );
+    await flush();
+    expect(byLabel(empty, 'Open Pitru Smaran list')).toBeDefined();
+    expect(empty.root.findAll((n) => n.props.testID === 'pitru-paksha-family-strip')).toHaveLength(0);
+
+    mockEntries = [FATHER];
+    mockedPakshaDay.mockReturnValue(daysFromNow(12));
+    const filled = await render(
+      <PitruPakshaOverviewScreen
+        navigation={makeNav() as never}
+        route={{ key: 'p', name: 'PitruPakshaOverview' } as never}
+      />
+    );
+    await flush();
+    expect(filled.root.findAll((n) => n.props.testID === 'pitru-paksha-family-strip').length).toBeGreaterThan(0);
+    expect(allText(filled)).toContain('आपके परिवार के 1 दिन');
+    expect(byLabel(filled, 'Open Pitru Smaran list')).toBeUndefined();
+  });
+
+  test('one tap per intent: the strip OPENS the family day, and a name on it opens that person', async () => {
+    mockEntries = [FATHER];
+    const matched = daysFromNow(12);
+    mockedWindow.mockReturnValue({ purnima: daysFromNow(9), start: daysFromNow(10), end: daysFromNow(24) });
+    mockedPakshaDay.mockReturnValue(matched);
+    const nav = makeNav();
+    const tree = await render(
+      <PitruPakshaOverviewScreen navigation={nav as never} route={{ key: 'p', name: 'PitruPakshaOverview' } as never} />
+    );
+    await flush();
+
+    // Before the paksha nothing is open, so the person is not yet a door.
+    expect(tree.root.findAll((n) => n.props.testID === 'pitru-paksha-person-smaran-father')).toHaveLength(0);
+    act(() => byLabel(tree, 'Open the first family shraddha day').props.onPress());
+    expect(tree.root.findAll((n) => n.props.testID === 'pitru-paksha-person-smaran-father').length).toBeGreaterThan(0);
+
+    act(() => byLabel(tree, 'Open smaran Father').props.onPress());
+    expect(nav.navigate).toHaveBeenCalledWith('PitruSmaranDetail', { entryId: 'smaran-father' });
+
+    // And the guide in the bar now follows that opened day.
+    act(() => byLabel(tree, 'Open Tila-Tarpana remembrance guide').props.onPress());
+    expect(nav.navigate).toHaveBeenCalledWith('VidhiDetail', { vidhiId: 'shraddha-tarpan-vidhi', dateMs: matched.getTime() });
+  });
+
+  test('openable rows carry a chevron; a row holding nothing reads muted and carries none', async () => {
+    mockedWindow.mockReturnValue({ purnima: daysFromNow(4), start: daysFromNow(5), end: daysFromNow(18) });
+    const tree = await render(
+      <PitruPakshaOverviewScreen navigation={makeNav() as never} route={{ key: 'p', name: 'PitruPakshaOverview' } as never} />
+    );
+    await flush();
+    const rows = tree.root.findAll((n) => typeof n.props.markerColor === 'string');
+    const openable = rows.filter((r) => r.props.trailing !== undefined);
+    const inert = rows.filter((r) => r.props.trailing === undefined);
+    // Purnima and amavasya carry verified teachings; the rest (no family, not today) are bare.
+    expect(openable).toHaveLength(2);
+    expect(openable.every((r) => r.props.muted === false)).toBe(true);
+    expect(inert.length).toBeGreaterThan(0);
+    expect(inert.every((r) => r.props.muted === true)).toBe(true);
+  });
+
+  test('both standing doors live in the sticky action bar, not at the ends of the scroll', async () => {
+    mockedWindow.mockReturnValue({ purnima: daysFromNow(9), start: daysFromNow(10), end: daysFromNow(24) });
+    const tree = await render(
+      <PitruPakshaOverviewScreen
+        navigation={makeNav() as never}
+        route={{ key: 'p', name: 'PitruPakshaOverview' } as never}
+      />
+    );
+    await flush();
+    const bar = tree.root.findAll((n) => n.props.testID === 'pitru-paksha-actions')[0];
+    expect(bar).toBeDefined();
+    const inBar = (id: string) => bar.findAll((n) => n.props.testID === id).length;
+    expect(inBar('pitru-paksha-shiksha-door')).toBeGreaterThan(0);
+    expect(inBar('pitru-paksha-vidhi-door')).toBeGreaterThan(0);
+    expect(StyleSheet.flatten(bar.props.style).position).toBe('absolute');
   });
 });

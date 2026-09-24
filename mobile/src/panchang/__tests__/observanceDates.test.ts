@@ -542,3 +542,138 @@ test('sankrantis land on the civil day that contains the ingress', () => {
     assert.deepEqual(dates, sorted, `${year}: sankrantis are out of order — ${dates.join(' ')}`);
   }
 });
+
+// ── Section A — pan-India jayantis and named days (Sept 2026 gap sweep) ──────
+//
+// Absent for everyone before this change (the Varaha Jayanti report). Published
+// civil dates, each named in the comment above its rule in festivals.ts — NOT
+// engine output. Exact, like wave 2: a rule whose engine date disagreed with its
+// published date was held back (Lalita Panchami, Durga Ashtami, Maha Navami,
+// Vaikuntha Chaturdashi) rather than tuned to agree.
+const SECTION_A_PUBLISHED: Record<string, string> = {
+  // Vishnu's avatars — Varaha and Hayagriva pin the aparahna day rule: both are
+  // the day BEFORE their sunrise tithi in 2026.
+  'matsya-jayanti:2026': '2026-03-21',
+  'varaha-jayanti:2026': '2026-09-13',
+  'vamana-jayanti:2026': '2026-09-23',
+  'kalki-jayanti:2026': '2026-08-18',
+  'hayagriva-jayanti:2026': '2026-08-27',
+  'hal-shashthi:2026': '2026-09-02',
+  // Saints and acharyas
+  'surdas-jayanti:2025': '2025-05-02',      'surdas-jayanti:2026': '2026-04-21',
+  'shankaracharya-jayanti:2025': '2025-05-02', 'shankaracharya-jayanti:2026': '2026-04-21',
+  'tulsidas-jayanti:2026': '2026-08-19',
+  'valmiki-jayanti:2026': '2026-10-26',
+  'vallabhacharya-jayanti:2026': '2026-04-13',
+  'kabir-jayanti:2026': '2026-06-29',
+  // Devi jayantis and sampradaya days
+  'baglamukhi-jayanti:2026': '2026-04-24',
+  'dhumavati-jayanti:2026': '2026-06-22',
+  'mahesh-navami:2026': '2026-06-23',
+  'annapurna-jayanti:2025': '2025-12-04',   'annapurna-jayanti:2026': '2026-12-23',
+  'narmada-jayanti:2026': '2026-01-25',
+  'janaki-jayanti:2026': '2026-02-09',
+  'phulera-dooj:2026': '2026-02-19',
+  // Named days of the calendar
+  'narak-chaturdashi:2026': '2026-11-08',
+  'kaal-bhairav-jayanti:2025': '2025-11-12', 'kaal-bhairav-jayanti:2026': '2026-12-01',
+  'mauni-amavasya:2026': '2026-01-18',
+  'ganesh-jayanti:2026': '2026-01-22',
+  'bhishma-ashtami:2026': '2026-01-26',
+  'magha-purnima:2026': '2026-02-01',
+  'ashadha-gupt-navratri:2026': '2026-07-15',
+  'magha-gupt-navratri:2026': '2026-01-19',
+};
+
+// Forward years (read 2026-09-23). Only rows with Drik's own date or two
+// agreeing sources; summary-only and location-ambiguous rows are left out.
+const SECTION_A_FORWARD: Record<string, string> = {
+  'matsya-jayanti:2027': '2027-04-09',
+  'kalki-jayanti:2027': '2027-08-07',
+  'surdas-jayanti:2027': '2027-05-10',       'shankaracharya-jayanti:2027': '2027-05-10',
+  'vallabhacharya-jayanti:2027': '2027-05-02',
+  'kabir-jayanti:2027': '2027-06-18',
+  'baglamukhi-jayanti:2027': '2027-05-13',
+  'valmiki-jayanti:2027': '2027-10-15',     'valmiki-jayanti:2028': '2028-10-03',
+  'phulera-dooj:2027': '2027-03-10',        'phulera-dooj:2028': '2028-02-27',
+  'narmada-jayanti:2027': '2027-02-13',
+  'narak-chaturdashi:2027': '2027-10-28',
+  'kaal-bhairav-jayanti:2027': '2027-11-21',
+  'mauni-amavasya:2027': '2027-02-06',
+  'magha-gupt-navratri:2027': '2027-02-07',
+};
+
+test('section-A observances match their published forward-year dates', () => {
+  for (const [key, expected] of Object.entries(SECTION_A_FORWARD)) {
+    const [id, yearStr] = key.split(':');
+    assert.equal(engineDate(id, Number(yearStr)), expected, `${key} moved`);
+  }
+});
+
+const SECTION_A_IDS = [
+  'matsya-jayanti', 'varaha-jayanti', 'vamana-jayanti', 'kalki-jayanti',
+  'hayagriva-jayanti', 'hal-shashthi', 'surdas-jayanti', 'shankaracharya-jayanti',
+  'tulsidas-jayanti', 'valmiki-jayanti', 'vallabhacharya-jayanti', 'kabir-jayanti',
+  'baglamukhi-jayanti', 'dhumavati-jayanti', 'mahesh-navami',
+  'annapurna-jayanti', 'narmada-jayanti', 'janaki-jayanti', 'phulera-dooj',
+  'narak-chaturdashi', 'kaal-bhairav-jayanti', 'mauni-amavasya', 'ganesh-jayanti',
+  'bhishma-ashtami', 'magha-purnima', 'ashadha-gupt-navratri', 'magha-gupt-navratri',
+];
+
+test('section-A observances match their published dates exactly', () => {
+  for (const [key, expected] of Object.entries(SECTION_A_PUBLISHED)) {
+    const [id, yearStr] = key.split(':');
+    assert.equal(engineDate(id, Number(yearStr)), expected, `${key} moved`);
+  }
+});
+
+test('every section-A rule resolves exactly once a year, 2024-2031, and is pinned', () => {
+  assert.equal(SECTION_A_IDS.length, 27);
+  const pinned = new Set(Object.keys(SECTION_A_PUBLISHED).map((key) => key.split(':')[0]));
+  for (const id of SECTION_A_IDS) {
+    assert.ok(pinned.has(id), `${id} has no published date pinned`);
+    for (let year = 2024; year <= 2031; year += 1) {
+      const dates = engineDates(id, year);
+      assert.equal(dates.length, 1, `${id} ${year}: expected one occurrence, got ${dates.join(' ') || 'none'}`);
+    }
+  }
+});
+
+// RULEBOOK §23a.4 — every section-A rule that names a shipped rule's tithi under
+// the SAME day rule must land on that rule's day.
+const SECTION_A_SIBLINGS: [string, string][] = [
+  ['vallabhacharya-jayanti', 'varuthini-ekadashi'],
+  ['shankaracharya-jayanti', 'surdas-jayanti'],
+  ['valmiki-jayanti', 'sharad-purnima'],
+  ['annapurna-jayanti', 'dattatreya-jayanti'],
+  ['narmada-jayanti', 'ratha-saptami'],
+  ['narak-chaturdashi', 'hanuman-jayanti-kartik'],
+];
+// …and every one that is a named member of a monthly series must be one of its days.
+const SECTION_A_SERIES: [string, string][] = [
+  ['kabir-jayanti', 'purnima-vrat'],
+  ['magha-purnima', 'purnima-vrat'],
+  ['mauni-amavasya', 'amavasya-vrat'],
+  ['janaki-jayanti', 'masik-kalashtami'],
+  ['kaal-bhairav-jayanti', 'masik-kalashtami'],
+  ['ganesh-jayanti', 'vinayaka-chaturthi-vrat'],
+];
+
+test('section-A rules ride the shipped rule that shares their tithi', () => {
+  for (const year of [2024, 2025, 2026, 2027, 2028]) {
+    for (const [id, sibling] of SECTION_A_SIBLINGS) {
+      assert.equal(engineDate(id, year), engineDate(sibling, year), `${year}: ${id} ≠ ${sibling}`);
+    }
+    for (const [id, series] of SECTION_A_SERIES) {
+      const [day] = engineDates(id, year);
+      assert.ok(engineDates(series, year).includes(day), `${year}: ${id} ${day} is not a ${series} day`);
+    }
+  }
+});
+
+test('Hayagriva Jayanti keeps its own (aparahna) day apart from Raksha Bandhan', () => {
+  // Same Shravana Purnima, two published conventions. If these ever coincide in
+  // 2026 the aparahna rule has stopped being applied.
+  assert.equal(engineDate('hayagriva-jayanti', 2026), '2026-08-27');
+  assert.equal(engineDate('raksha-bandhan', 2026), '2026-08-28');
+});
