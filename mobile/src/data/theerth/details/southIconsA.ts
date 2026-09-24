@@ -10,9 +10,72 @@ import type { TempleDetail } from '../temples';
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
  *
- * Temples still to author in this chunk: brihadeeswarar
+ * All four temples in this chunk carry the full §12.6 reading.
  */
 export const details: Record<string, TempleDetail> = {
+  brihadeeswarar: {
+    significanceHi:
+      'तंजावुर का बृहदीश्वर मंदिर — शिलालेखों में राजराजेश्वरम् — चोल स्थापत्य की चरम कृति है और यूनेस्को की “ग्रेट लिविंग चोल टेम्पल्स” विश्व धरोहर का मुख्य अंग। इसके शिलालेख स्वयं प्रतिष्ठा-वर्ष दर्ज करते हैं: चोल सम्राट राजराज प्रथम ने इसे सन् 1003 से 1010 (विक्रम संवत् 1060–1067) के बीच बनवाया और सन् 1010 में विमान के शिखर पर स्वर्ण-कलश अर्पित किया। एक सहस्राब्दी बाद भी यहाँ नित्य शिव-पूजा चलती है, इसीलिए इसे “जीवित” चोल मंदिर कहा जाता है।',
+    significanceEn:
+      'The Brihadisvara temple at Thanjavur — Rajarajeswaram in its own inscriptions — is the summit of Chola architecture and the principal member of the UNESCO World Heritage site known as the Great Living Chola Temples. Its inscriptions themselves record the year of consecration: the Chola emperor Rajaraja I raised it between 1003 and 1010 CE (Vikram Samvat 1060–1067) and in 1010 presented the gold finial set at the top of the vimana. Daily Shaiva worship has continued here for a thousand years since, which is what makes it a living Chola temple rather than a ruin.',
+    originStoryHi:
+      'यह मंदिर किसी स्वप्न या प्रकट-कथा से नहीं, एक सम्राट के संकल्प से खड़ा हुआ: राजराज प्रथम ने अपने साम्राज्य की राजधानी तंजावुर में शिव को वह मंदिर अर्पित किया जो उस काल में भारत का सबसे ऊँचा था। मंदिर का नाम राजराजेश्वरम् रखा गया और उसकी दीवारों पर स्वयं राजा के आदेश से दान, सेवाएँ और व्यवस्थाएँ विस्तार से उत्कीर्ण कराई गईं। परम्परा में चोल गुरु करुवूर देवर को राजा का मार्गदर्शक बताया जाता है, और गर्भगृह के परिक्रमा-पथ के भित्ति-चित्रों में राजा उन्हीं के साथ अंकित हैं।',
+    originStoryEn:
+      'This temple began not in a dream or a discovered image but in a sovereign resolve: Rajaraja I gave Shiva, in his imperial capital of Thanjavur, what was then the tallest temple in India. He named it Rajarajeswaram and had its walls engraved, at his own command, with a detailed record of its endowments, its services and its establishment. Tradition names the Chola preceptor Karuvur Devar as the king’s guide, and the frescoes in the passage around the sanctum show the two of them together.',
+    sources: [
+      { label: 'Archaeological Survey of India — Great Living Chola Temples', url: 'https://asi.nic.in/pages/WorldHeritageCholaTemples' },
+      { label: 'Tamil Nadu Tourism — Brihadeeswara Temple, Thanjavur', url: 'https://www.tamilnadutourism.tn.gov.in/destinations/brihadeeswara-temple' },
+      { label: 'UNESCO World Heritage Centre — Great Living Chola Temples', url: 'https://whc.unesco.org/en/list/250/' },
+      { label: 'Utsav (Ministry of Tourism) — Sadhaya Vizha, Brihadeeswarar Temple', url: 'https://utsav.gov.in/view-event/sadhaya-vizha-brihadeeswarar-temple-1' },
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'दक्षिण भारत के अधिकांश प्राचीन मंदिरों के विपरीत तंजावुर के इस मंदिर की स्थापना अनुमान का विषय नहीं है — उसकी तिथि मंदिर की अपनी दीवारों पर लिखी है। चोल सम्राट राजराज प्रथम ने इसका निर्माण लगभग सन् 1003 से 1010 (विक्रम संवत् 1060–1067) के बीच कराया, और शिलालेख सन् 1010 (विक्रम संवत् 1067) में प्रतिष्ठा दर्ज करते हैं, जब राजा ने विमान के शीर्ष पर स्थापित होने वाला स्वर्ण-कलश भेंट किया; प्रतिष्ठा की तिथि-वार या प्रतिष्ठाकर्ता आचार्य का नाम अभिलेखों में नहीं मिलता। मंदिर का मूल नाम राजराजेश्वरम् था, अर्थात् “राजराज के ईश्वर का धाम”। राजा ने अपने आदेश से — अभिलेखों के अनुसार महल के पूर्व की ओर स्थित राजकीय स्नान-गृह में बैठकर — दान, भूमि, सेवाएँ और मंदिर की समस्त व्यवस्था विस्तार से उत्कीर्ण कराई, जिससे यह ग्यारहवीं शताब्दी के चोल प्रशासन का सबसे विस्तृत अभिलेखीय स्रोत बन गया। यह मंदिर गंगैकोण्ड चोलपुरम् के बृहदीश्वर और दारासुरम् के ऐरावतेश्वर मंदिरों के साथ यूनेस्को की “ग्रेट लिविंग चोल टेम्पल्स” विश्व धरोहर में सम्मिलित है और भारतीय पुरातत्त्व सर्वेक्षण द्वारा संरक्षित है, यद्यपि यहाँ पूजा अखंड चलती रही है।',
+        bodyEn:
+          'Unlike most ancient shrines of the south, the founding of the Thanjavur temple is not a matter of inference — its date is written on its own walls. The Chola emperor Rajaraja I had it built between about 1003 and 1010 CE (Vikram Samvat 1060–1067), and the inscriptions record the consecration in 1010 CE (Vikram Samvat 1067), when the king presented the gold finial to be set at the summit of the vimana; no tithi, weekday or consecrating acharya is named in the record. Its original name was Rajarajeswaram, the abode of Rajaraja’s Lord. At the king’s own command — the inscriptions say he dictated them seated in the royal bathing hall east of his palace — the gifts, lands, services and whole establishment of the temple were engraved in detail, which has made these walls the fullest epigraphic source for eleventh-century Chola administration. Together with the Brihadisvara temple at Gangaikonda Cholapuram and the Airavatesvara temple at Darasuram, it forms the UNESCO World Heritage site of the Great Living Chola Temples, and it is protected by the Archaeological Survey of India while worship has continued here without a break.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'बृहदीश्वर का स्वरूप',
+        titleEn: 'The Form of Brihadeeswarar',
+        bodyHi:
+          'गर्भगृह में शिव बृहत् लिंग के रूप में विराजित हैं — लगभग 3.7 मीटर (बारह फुट) ऊँचा लिंग, जिसके आकार से ही मंदिर को “बृहदीश्वर” और लोक-भाषा में “पेरिय कोविल”, अर्थात् बड़ा मंदिर, कहा जाता है। उसके ऊपर लगभग 66 मीटर (216 फुट) ऊँचा विमान उठता है, जो तेरह क्रमशः छोटी होती मंज़िलों में शिखर तक जाता है; शीर्ष का कुम्भ एक ही पाषाण से गढ़ा है और उसका भार लगभग अस्सी टन आँका जाता है। पूरा ढाँचा ग्रेनाइट के सहस्रों टन पत्थरों से बना है, जिन्हें बिना गारे के जोड़ा गया है। गर्भगृह के सामने एकाश्म नंदी बैठे हैं — एक ही चट्टान से गढ़े, लगभग पच्चीस टन भारी; उनके माप के विवरण स्रोतों में थोड़े भिन्न हैं, प्रायः लगभग 3.7 मीटर ऊँचा और लगभग 6 मीटर लम्बा बताया जाता है। गर्भगृह के चारों ओर के सँकरे परिक्रमा-पथ में लगभग एक हज़ार वर्ष पुराने चोल भित्ति-चित्र सुरक्षित हैं, जिनमें त्रिपुरान्तक रूप में शिव, गुरु करुवूर देवर के साथ राजराज प्रथम, और नृत्यरत अप्सराएँ अंकित हैं।',
+        bodyEn:
+          'In the sanctum Shiva stands as a great linga, some 3.7 metres — about twelve feet — high, and it is from that scale that the temple takes the name Brihadeeswarar and, in everyday Tamil, Periya Koil, the big temple. Over it rises the vimana, about 66 metres or 216 feet tall, climbing in thirteen diminishing storeys; the cupola at its summit is carved from a single stone and is reckoned to weigh around eighty tonnes. The whole structure is built of thousands of tonnes of granite, the blocks set without mortar. Facing the sanctum sits a monolithic Nandi, cut from one rock and weighing some twenty-five tonnes; sources differ a little on its measurements, most giving it as roughly 3.7 metres high and about 6 metres long. In the narrow circumambulatory passage around the sanctum survive Chola frescoes close to a thousand years old, showing Shiva as Tripurantaka, Rajaraja I beside his guru Karuvur Devar, and dancers of the heavens.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'बृहत् लिंग की नित्य पूजा',
+        titleEn: 'The Daily Worship of the Great Linga',
+        bodyHi:
+          'तंजावुर का मंदिर संग्रहालय नहीं है — एक सहस्राब्दी बाद भी यहाँ शैव विधि से नित्य पूजा होती है, और इसी कारण यूनेस्को की सूची में इसे “जीवित” चोल मंदिर कहा गया है। प्रतिदिन बृहत् लिंग का अभिषेक होता है और उसके विशाल आकार के कारण अभिषेक तथा अलंकार की व्यवस्था गर्भगृह के ऊपरी तल से भी की जाती है; भक्त नंदी के पीछे से, उसी सीध में, दर्शन करते हैं जिस सीध में नंदी सहस्र वर्षों से शिव की ओर देख रहे हैं। परिक्रमा-पथ में चलते हुए भक्त उन्हीं भित्ति-चित्रों के बीच से निकलते हैं जो राजराज के काल में चित्रित हुए थे, और बाहरी प्राकार की दीवारों पर उत्कीर्ण दान-लेख आज भी पढ़े जा सकते हैं। महाशिवरात्रि यहाँ का सबसे बड़ा व्रत-पर्व है, जब रात्रि-जागरण और प्रहर-वार अभिषेक होते हैं; सोमवार और प्रदोष-काल में भी विशेष भीड़ रहती है। स्मारक-संरक्षण और नित्य पूजा साथ-साथ चलते हैं — यही इस मंदिर की अपनी परम्परा है।',
+        bodyEn:
+          'Thanjavur is not a museum: a thousand years on, Shaiva worship is still offered here daily, and it is precisely this that earns it the word living in the UNESCO listing. The great linga is bathed each day, and because of its size the abhisheka and adornment are managed in part from the level above the sanctum floor; devotees take darshan from behind the Nandi, along the same line down which the bull has looked toward Shiva for a millennium. Walking the circumambulatory passage, they pass between the very frescoes painted in Rajaraja’s reign, and the endowment records cut into the outer walls can still be read where they were engraved. Maha Shivaratri is the greatest observance of the year, kept with a night-long vigil and abhisheka at each watch of the night; Mondays and the Pradosha hours also draw larger crowds. Conservation of the monument and daily worship run side by side — that balance is itself the temple’s tradition.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'मंदिर का विशिष्ट वार्षिक उत्सव सदय विऴा है, जो चोल सम्राट राजराज प्रथम की जयंती के रूप में तमिल मास ऐप्पसि (लगभग अक्टूबर के मध्य से नवम्बर के मध्य तक) में सदयम् नक्षत्र पर मनाया जाता है। उस दिन मंदिर के बाहर स्थित राजराज चोल की प्रतिमा को रेशमी वस्त्र पहनाए जाते हैं, और भीतर पेरुन्दीप वऴिपाडु — दीप-आरती — तथा स्वामी पुरप्पाडु, अर्थात् उत्सव-मूर्ति की शोभायात्रा, होती है; यह संभवतः भारत का एकमात्र मंदिर-उत्सव है जो अपने निर्माता की स्मृति में मनाया जाता है। शैव पंचांग का सबसे बड़ा पर्व महाशिवरात्रि है, जब रात भर जागरण और चार प्रहरों के अभिषेक होते हैं। सन् 2010 में मंदिर की प्रतिष्ठा के एक सहस्र वर्ष पूर्ण होने पर विशेष समारोह हुए थे, क्योंकि प्रतिष्ठा-वर्ष 1010 अभिलेखों में दर्ज है — ऐसी सहस्राब्दी-गणना बहुत कम मंदिरों के लिए सम्भव है।',
+        bodyEn:
+          'The temple’s own distinctive festival is the Sadaya Vizha, kept as the birth anniversary of Rajaraja Chola I in the Tamil month of Aippasi (roughly mid-October to mid-November) under the star Sadayam. On that day the statue of Rajaraja outside the temple is robed in silk, and within there is the perun-theepa vazhipaadu, the waving of great lamps, followed by the swami purappadu, the procession of the festival image; it is likely the only temple festival in India kept in memory of the king who built it. In the Shaiva calendar the greatest observance is Maha Shivaratri, with a vigil through the night and an abhisheka at each of the four watches. In 2010 the temple marked a thousand years since its consecration with special celebrations, which was possible precisely because the year 1010 is fixed in its own inscriptions — a millennium very few shrines can count with certainty.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'मंदिर तमिलनाडु के तंजावुर ज़िले में, कावेरी डेल्टा के बीच बसे तंजावुर नगर के भीतर ही है। तंजावुर जंक्शन रेलवे स्टेशन लगभग 2 किमी दूर है और निकटतम हवाई अड्डा तिरुचिरापल्ली अन्तर्राष्ट्रीय हवाई अड्डा है, जो लगभग 60 किमी दूर पड़ता है; चेन्नई, मदुरै और तिरुचिरापल्ली से सीधी सड़क-सेवा है। यात्रा में प्रायः शेष दो “ग्रेट लिविंग चोल” मंदिर जोड़े जाते हैं — कुम्भकोणम् के निकट दारासुरम् का ऐरावतेश्वर मंदिर और जयनकोण्डम् के पास गंगैकोण्ड चोलपुरम् का बृहदीश्वर मंदिर, जिसे राजराज के पुत्र राजेन्द्र प्रथम ने बनवाया था। नगर में ही तंजावुर महल, सरस्वती महल पुस्तकालय और राजराज चोल संग्रहालय हैं, और कुम्भकोणम् तथा कावेरी-तट के अनेक शिव-स्थल इसी परिक्रमा में आते हैं।',
+        bodyEn:
+          'The temple stands within the town of Thanjavur itself, in Thanjavur district of Tamil Nadu, in the heart of the Kaveri delta. Thanjavur Junction railway station is about 2 km away, and the nearest airport is Tiruchirappalli International, roughly 60 km off, with direct road connections from Chennai, Madurai and Tiruchirappalli. Most pilgrims add the other two Great Living Chola temples — the Airavatesvara temple at Darasuram near Kumbakonam, and the Brihadisvara temple at Gangaikonda Cholapuram near Jayankondam, built by Rajaraja’s son Rajendra I. In the town itself are the Thanjavur palace, the Saraswathi Mahal Library and the Rajaraja Chola museum, and the Shiva shrines of Kumbakonam and the Kaveri bank fall naturally into the same circuit.',
+      },
+    ],
+  },
   'konark-sun': {
     significanceHi:
       'पुरी ज़िले के समुद्र-तट के निकट बना कोणार्क का सूर्य मंदिर सूर्यदेव के विशाल पाषाण-रथ के रूप में रचा गया है और भारतीय स्थापत्य की सर्वोच्च कृतियों में गिना जाता है। पूर्वी गंग वंश के नरसिंहदेव प्रथम (शासनकाल सन् 1238–1264) ने इसे लगभग सन् 1250 (विक्रम संवत् 1307) में बनवाया; सन् 1984 से यह यूनेस्को विश्व धरोहर स्थल है और भारतीय पुरातत्त्व सर्वेक्षण द्वारा संरक्षित है। यहाँ अब नित्य पूजा नहीं होती — यह जीवित मंदिर नहीं, संरक्षित स्मारक है — किन्तु माघ सप्तमी का चन्द्रभागा स्नान आज भी लाखों श्रद्धालुओं को खींचता है।',
