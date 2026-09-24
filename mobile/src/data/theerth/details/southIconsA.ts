@@ -10,9 +10,72 @@ import type { TempleDetail } from '../temples';
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
  *
- * Temples still to author in this chunk: konark-sun brihadeeswarar
+ * Temples still to author in this chunk: brihadeeswarar
  */
 export const details: Record<string, TempleDetail> = {
+  'konark-sun': {
+    significanceHi:
+      'पुरी ज़िले के समुद्र-तट के निकट बना कोणार्क का सूर्य मंदिर सूर्यदेव के विशाल पाषाण-रथ के रूप में रचा गया है और भारतीय स्थापत्य की सर्वोच्च कृतियों में गिना जाता है। पूर्वी गंग वंश के नरसिंहदेव प्रथम (शासनकाल सन् 1238–1264) ने इसे लगभग सन् 1250 (विक्रम संवत् 1307) में बनवाया; सन् 1984 से यह यूनेस्को विश्व धरोहर स्थल है और भारतीय पुरातत्त्व सर्वेक्षण द्वारा संरक्षित है। यहाँ अब नित्य पूजा नहीं होती — यह जीवित मंदिर नहीं, संरक्षित स्मारक है — किन्तु माघ सप्तमी का चन्द्रभागा स्नान आज भी लाखों श्रद्धालुओं को खींचता है।',
+    significanceEn:
+      'The Sun Temple at Konark, near the coast in Puri district, was conceived as a colossal stone chariot for Surya and counts among the highest achievements of Indian architecture. Narasimhadeva I of the Eastern Ganga dynasty (r. 1238–1264 CE) raised it around 1250 CE (Vikram Samvat 1307); since 1984 it has been a UNESCO World Heritage Site, maintained by the Archaeological Survey of India. Regular worship no longer continues here — it is a protected monument rather than a living shrine — yet the Magha Saptami bath at Chandrabhaga still draws pilgrims in their lakhs.',
+    originStoryHi:
+      'कथा के अनुसार नरसिंहदेव प्रथम ने अपनी विजयों के उपरान्त सूर्यदेव को वह रथ भेंट करने का संकल्प लिया जिस पर वे आकाश में चलते हैं, और कोणार्क की बालू-भूमि पर बारह जोड़ी पहियों वाला पाषाण-रथ खड़ा किया गया। लोक-मान्यता में इस कार्य में बारह सौ से अधिक शिल्पी बारह वर्षों तक लगे रहे। समुद्र से लौटते नाविकों को इसका काला शिखर दूर से दिखता था, इसीलिए वे इसे “ब्लैक पगोडा” कहते थे।',
+    originStoryEn:
+      'Accounts say that Narasimhadeva I, after his victories, vowed to give Surya the chariot on which he crosses the sky, and on the sandy ground at Konark a stone chariot on twelve pairs of wheels was raised. Tradition holds that more than twelve hundred artisans worked on it for some twelve years. Sailors returning from the sea could see its dark tower from far out, and it is from them that the monument took its old European name, the Black Pagoda.',
+    sources: [
+      { label: 'Archaeological Survey of India — Sun Temple, Konarak (1984), Odisha', url: 'https://asi.nic.in/pages/WorldHeritageKonarak' },
+      { label: 'Odisha Tourism — Konark Dance Festival', url: 'https://odishatourism.gov.in/content/tourism/en/discover/about-odisha/events-of-odisha/Konark-Dance-Festival.html' },
+      { label: 'UNESCO World Heritage Centre — Sun Temple, Konârak', url: 'https://whc.unesco.org/en/list/246/' },
+      { label: 'Konark Sun Temple — Reference', url: 'https://en.wikipedia.org/wiki/Konark_Sun_Temple' },
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'कोणार्क का सूर्य मंदिर पूर्वी गंग वंश के राजा नरसिंहदेव प्रथम (शासनकाल सन् 1238–1264, विक्रम संवत् 1295–1321) ने लगभग सन् 1250 (विक्रम संवत् 1307) में बनवाया; किसी प्रतिष्ठा-तिथि, तिथि-वार या प्रतिष्ठाकर्ता आचार्य का अभिलेख उपलब्ध नहीं है। परम्परागत वृत्तान्तों में बारह सौ से अधिक शिल्पी लगभग बारह वर्ष तक इस पर लगे रहे। मुख्य देउल का विशाल शिखर काल के साथ गिर गया — अठारहवीं शताब्दी तक वह ढह चुका था — और आज केवल जगमोहन, नट-मन्दिर तथा रथ की पीठिका खड़ी है। सन् 1627 (विक्रम संवत् 1684) में खुर्दा के राजा गर्भगृह की सूर्य-प्रतिमा कोणार्क से हटाकर पुरी के जगन्नाथ मंदिर ले गए, और उसी के साथ यहाँ की नित्य पूजा समाप्त हो गई। सन् 1903 (विक्रम संवत् 1960) में बंगाल के उपराज्यपाल जे. ए. बोर्डिलन के आदेश पर जगमोहन की दीवारें भीतर की ओर झुकने से रोकने के लिए पूरा कक्ष बालू से भर दिया गया और द्वार पत्थरों से चुन दिए गए; तब से वह कक्ष बंद है। सन् 1984 (विक्रम संवत् 2041) में यह यूनेस्को विश्व धरोहर सूची में आया और भारतीय पुरातत्त्व सर्वेक्षण इसका संरक्षण करता है।',
+        bodyEn:
+          'The Sun Temple at Konark was built around 1250 CE (Vikram Samvat 1307) by Narasimhadeva I of the Eastern Ganga dynasty (r. 1238–1264 CE, Vikram Samvat 1295–1321); no consecration date, tithi or consecrating acharya is on record. Traditional accounts hold that upwards of twelve hundred artisans laboured on it for about twelve years. The great tower over the main deul fell in time — it was already down by the eighteenth century — and what stands today is the jagamohana, the Nata Mandira and the plinth of the chariot. In 1627 CE (Vikram Samvat 1684) the Raja of Khurda removed the Sun image from the sanctum to the Jagannath temple at Puri, and with it the daily worship at Konark came to an end. In 1903 CE (Vikram Samvat 1960), on the orders of J. A. Bourdillon, Lieutenant-Governor of Bengal, the jagamohana was packed solid with sand to stop its walls buckling inward and its doorways were sealed with stone; the hall has stayed closed since. The monument entered the UNESCO World Heritage list in 1984 CE (Vikram Samvat 2041) and is maintained by the Archaeological Survey of India.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'सूर्य का स्वरूप',
+        titleEn: 'The Form of Surya',
+        bodyHi:
+          'पूरा मंदिर सूर्य के रथ के रूप में गढ़ा गया है: पीठिका पर चौबीस विशाल पहिए — बारह जोड़ियाँ — उकेरे हैं, और आगे पाषाण के अश्व रथ खींचते दिखते हैं; उनकी संख्या को लेकर वृत्तान्त भिन्न हैं, अधिकांश सात बताते हैं जबकि कुछ छह। पहियों की तीलियों की छाया से समय पढ़ा जा सकता था — वे धूप-घड़ी की तरह रचे गए हैं। देउल के दक्षिण, पश्चिम और उत्तर के निकले हुए आलों में हरे क्लोराइट पाषाण की तीन सूर्य-प्रतिमाएँ हैं, जो उदय, मध्याह्न और अस्त के सूर्य को दर्शाती हैं: उगते सूर्य का मुख प्रसन्न, मध्याह्न का गम्भीर और अस्त होते सूर्य का मुरझाया हुआ। जगमोहन का प्रवेश-द्वार भी हरे क्लोराइट का है और उसमें आठ द्वार-पट्टियाँ हैं, हर एक पर अलग अलंकरण। लगभग सौ फुट ऊँचा जगमोहन तीन क्रमशः घटती छतों में उठता है, जिनकी छज्जों पर वाद्य बजाते संगीतकारों की मूर्तियाँ बैठी हैं; पूर्व में नट-मन्दिर, अर्थात् नृत्य-मण्डप, अलग खड़ा है। गर्भगृह अब रिक्त है — वहाँ कोई विग्रह नहीं है।',
+        bodyEn:
+          'The whole temple is cut as Surya’s chariot: twenty-four great wheels, twelve pairs, are carved along the plinth, and stone horses in front draw it forward; accounts differ on their number, most giving seven and some six. The spokes were laid out so that their shadows read the hour — the wheels work as sundials. In the projecting niches on the south, west and north faces of the deul stand three Surya images in green chlorite, showing the rising, midday and setting sun: the rising face smiling, the midday one grave, the setting one spent. The jagamohana’s doorway is also of green chlorite, built of eight architraves each with its own motif. About a hundred feet high, the hall rises in three receding tiers whose terraces carry figures of musicians with their instruments; to the east the Nata Mandira, the dance hall, stands apart. The sanctum itself is empty today — no image remains in it.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'चन्द्रभागा स्नान और मौन गर्भगृह',
+        titleEn: 'The Chandrabhaga Bath and the Silent Sanctum',
+        bodyHi:
+          'कोणार्क की परम्परा दूसरे तीर्थों से भिन्न है, क्योंकि यहाँ नित्य पूजा, आरती-क्रम या भोग-प्रसाद की व्यवस्था नहीं है — सन् 1627 में सूर्य-प्रतिमा पुरी ले जाए जाने के बाद यह जीवित मंदिर नहीं रहा, और आज यह भारतीय पुरातत्त्व सर्वेक्षण का संरक्षित स्मारक है जहाँ दर्शनार्थी टिकट लेकर प्रवेश करते हैं। जो परम्परा जीवित रही, वह मंदिर के भीतर नहीं, उसके पास के चन्द्रभागा तट पर है: माघ शुक्ल सप्तमी को भक्त सूर्योदय से पूर्व चन्द्रभागा में स्नान करते हैं और उगते सूर्य को अर्घ्य देते हैं — ओडिशा में इसे माघ सप्तमी कहा जाता है और यह रोग-निवारण तथा नेत्र-ज्योति की कामना से जुड़ी है। दूसरी जीवित परम्परा नृत्य की है: जिन संगीतकारों और नर्तकियों को यहाँ पाषाण में उकेरा गया, उन्हीं की स्मृति में हर वर्ष मंदिर के सामने शास्त्रीय नृत्य का महोत्सव होता है।',
+        bodyEn:
+          'Konark’s traditions are unlike those of other tirthas, because no daily puja, aarti cycle or bhog is offered here — after the Sun image was taken to Puri in 1627 it ceased to be a living temple, and it is today a protected monument of the Archaeological Survey of India that visitors enter on a ticket. What survived is a tradition kept not inside the temple but on the Chandrabhaga shore beside it: on Magha Shukla Saptami devotees bathe in the Chandrabhaga before sunrise and offer arghya to the rising sun — the day Odisha calls Magha Saptami, kept with prayers for healing and for clear sight. The second living tradition is dance: in memory of the musicians and dancers carved into this stone, a festival of classical dance is held each year before the temple.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'वर्ष का सबसे बड़ा जमावड़ा चन्द्रभागा मेला है, जो माघ शुक्ल सप्तमी को — प्रायः फरवरी में — कोणार्क के निकट चन्द्रभागा तट पर लगता है; इसे माघ सप्तमी मेला भी कहते हैं और ओडिशा में रथ यात्रा के बाद इसे सबसे बड़ा मेला माना जाता है। श्रद्धालु रात्रि से ही पहुँचते हैं, ब्रह्म-मुहूर्त में स्नान करते हैं और सूर्योदय पर अर्घ्य देकर मंदिर-परिसर की परिक्रमा करते हैं। दिसम्बर में — प्रायः पहली से पाँचवीं तारीख तक — मंदिर की पृष्ठभूमि में कोणार्क नृत्य महोत्सव होता है, जिसे सन् 1986 से ओडिशा पर्यटन और ओडिसी शोध केन्द्र मिलकर आयोजित करते हैं; उन्हीं दिनों चन्द्रभागा तट पर अन्तर्राष्ट्रीय रेत-कला महोत्सव भी चलता है। मंदिर की कोई स्थापना-वर्षगाँठ नहीं मनाई जाती, क्योंकि प्रतिष्ठा-तिथि अभिलिखित नहीं है।',
+        bodyEn:
+          'The year’s great gathering is the Chandrabhaga Mela, held on Magha Shukla Saptami — usually in February — on the Chandrabhaga shore beside Konark; also called the Magha Saptami Mela, it is reckoned the largest fair in Odisha after the Rath Yatra. Pilgrims arrive through the night, bathe in the small hours and offer arghya at sunrise before walking round the temple precinct. In December, commonly from the first to the fifth, the Konark Dance Festival is staged against the monument, organised since 1986 by Odisha Tourism together with the Odissi Research Centre; the International Sand Art Festival runs on Chandrabhaga beach over the same days. No founding anniversary is observed, since no consecration date was ever recorded.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'कोणार्क ओडिशा के पुरी ज़िले में, बंगाल की खाड़ी के तट से थोड़ा भीतर बसा है। पुरी लगभग 35 किमी दूर है और दोनों के बीच का समुद्र-किनारे वाला मरीन ड्राइव मार्ग स्वयं यात्रा का आकर्षण है; भुवनेश्वर लगभग 65 किमी दूर है। निकटतम बड़ा रेलवे स्टेशन पुरी है और निकटतम हवाई अड्डा भुवनेश्वर का बीजू पटनायक अन्तर्राष्ट्रीय हवाई अड्डा। अधिकांश यात्री भुवनेश्वर, कोणार्क और पुरी को एक ही यात्रा में जोड़ते हैं — इसे ओडिशा का “स्वर्ण त्रिकोण” कहा जाता है — और जगन्नाथ पुरी के दर्शन के साथ ही कोणार्क देखते हैं। मंदिर से थोड़ी दूर चन्द्रभागा तट है, जहाँ माघ सप्तमी का स्नान होता है, और परिसर के पास पुरातत्त्व सर्वेक्षण का संग्रहालय है, जिसमें मंदिर से मिली मूर्तियाँ रखी हैं।',
+        bodyEn:
+          'Konark lies in Puri district of Odisha, a little inland from the Bay of Bengal. Puri is about 35 km away along the coastal Marine Drive, a road that is itself part of the pleasure of the journey, and Bhubaneswar is roughly 65 km off. The nearest major railhead is Puri and the nearest airport is Biju Patnaik International Airport at Bhubaneswar. Most travellers take Bhubaneswar, Konark and Puri together — Odisha’s so-called Golden Triangle — and see Konark in the same journey as the darshan of Jagannath at Puri. A short way from the temple is the Chandrabhaga shore where the Magha Saptami bath is kept, and beside the precinct stands the Archaeological Survey’s museum, which holds sculptures recovered from the monument.',
+      },
+    ],
+  },
   meenakshi: {
     significanceHi:
       'वैगै नदी के तट पर बसे मदुरै का मीनाक्षी सुन्दरेश्वर मंदिर उन थोड़े से धामों में है जहाँ देवी स्वयं नगर की अधिष्ठात्री रानी मानी जाती हैं और उनका शिव-स्वरूप सुन्दरेश्वर उनके साथ पूजित होते हैं। सातवीं शताब्दी के तेवारम् भजनों में इस मंदिर का उल्लेख मिलता है, किन्तु किसी प्रतिष्ठा-तिथि का अभिलेख नहीं है; सन् 1310 (विक्रम संवत् 1367) की लूट के बाद वर्तमान विशाल परिसर मदुरै के प्रथम नायक शासक विश्वनाथ नायक (सन् 1559–1600) ने पुनः खड़ा किया और तिरुमलै नायक (सन् 1623–1655) ने उसका विस्तार किया।',
