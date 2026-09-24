@@ -10,7 +10,7 @@ import type { TempleDetail } from '../temples';
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
  *
- * Temples still to author in this chunk: bhadrachalam manakula-vinayagar
+ * Temples still to author in this chunk: manakula-vinayagar
  */
 export const details: Record<string, TempleDetail> = {
   padmanabhaswamy: {
@@ -144,6 +144,74 @@ export const details: Record<string, TempleDetail> = {
           'मठ कर्नाटक के उडुपी ज़िले में नगर के मध्य रथबीदी (कार स्ट्रीट) पर है, जो कोंकण तट के राष्ट्रीय राजमार्ग से जुड़ा है। उडुपी रेलवे स्टेशन लगभग 3–4 किमी दूर है और मंगलूरु अंतरराष्ट्रीय हवाई अड्डा लगभग 59 किमी — दोनों दूरियाँ अनुमानित हैं। परम्परा है कि कृष्ण-दर्शन से पहले निकट के अनन्तेश्वर और चन्द्रमौलीश्वर मंदिरों में शीश नवाया जाए; ये दोनों प्राचीन शिव-मंदिर मठ से कुछ ही क़दम पर हैं। रथबीदी की परिक्रमा, मध्व सरोवर और भोजनशाला यात्रा का स्वाभाविक क्रम बनाते हैं, और अष्ट मठों के अपने-अपने भवन भी इसी गली में हैं। तटवर्ती यात्री प्रायः उडुपी को मंगलूरु और कोल्लूर की ओर के मंदिरों के साथ एक ही मार्ग में जोड़ते हैं।',
         bodyEn:
           'The matha stands at the centre of Udupi town in Karnataka, on the Rathabeedhi or Car Street, off the coastal national highway. Udupi railway station is roughly 3–4 km away and Mangaluru International Airport roughly 59 km — both distances approximate. Custom asks pilgrims to bow first at the neighbouring Anantheshwara and Chandramouleshwara temples, two ancient Shiva shrines only steps from the matha, before going to Krishna. A circuit of the Rathabeedhi, the Madhva Sarovara and the dining hall makes the natural order of a visit, and the eight mathas keep their own houses along the same street. Coastal pilgrims commonly join Udupi with the shrines towards Mangaluru and Kollur in one journey.',
+      },
+    ],
+  },
+  bhadrachalam: {
+    significanceHi:
+      'गोदावरी के तट पर बसा भद्राचलम दक्षिण की अयोध्या कहलाता है, जहाँ श्री सीता रामचन्द्र स्वामी चतुर्भुज वैकुंठ राम के रूप में विराजते हैं — ऊपरी हाथों में शंख-चक्र और निचले हाथों में धनुष-बाण, बाईं गोद में सीता और पास खड़े लक्ष्मण। वर्तमान मंदिर सत्रहवीं शताब्दी ईस्वी (विक्रम संवत् की सत्रहवीं–अठारहवीं शताब्दी) में गोलकोंडा के अंतिम क़ुतुबशाही शासक अबुल हसन क़ुतुब शाह के काल में भद्राचलम के तहसीलदार कंचर्ल गोपन्ना ने बनवाया, जो भक्त रामदासु के नाम से अमर हुए। चैत्र शुक्ल नवमी का सीता राम कल्याणम् यहाँ का सबसे बड़ा उत्सव है।',
+    significanceEn:
+      'Bhadrachalam on the bank of the Godavari is called the Ayodhya of the South, where Sita Ramachandra Swamy is worshipped in the four-armed Vaikuntha Rama form — conch and discus in the upper hands, bow and arrow in the lower, Sita seated on his left lap and Lakshmana standing guard beside them. The present temple was raised in the seventeenth century CE (the seventeenth–eighteenth century of the Vikram era) by Kancherla Gopanna, tahsildar of Bhadrachalam under Abul Hasan Qutb Shah, the last Qutb Shahi ruler of Golconda, whom devotion remembers as Bhakta Ramadasu. Its greatest festival is the Sita Rama Kalyanam on Chaitra Shukla Navami.',
+    originStoryHi:
+      'पुराण-परम्परा कहती है कि भद्र महर्षि ने इसी पर्वत पर घोर तप किया और राम ने प्रसन्न होकर उन्हें दर्शन तथा मोक्ष का वचन दिया — इसी से स्थान भद्रगिरि या भद्राचलम कहलाया। बहुत बाद में पोकला दम्मक्का नाम की एक वनवासी भक्त को स्वप्न में संकेत मिला कि पर्वत पर विग्रह दबे हैं; उन्होंने उन्हें खोजकर सेवा आरम्भ की। सत्रहवीं सदी में तहसीलदार कंचर्ल गोपन्ना ने उसी स्थान पर भव्य मंदिर खड़ा किया।',
+    originStoryEn:
+      'Puranic tradition tells of the sage Bhadra, whose long penance on this hill drew Rama to appear before him with the promise of moksha — from which the place is called Bhadragiri or Bhadrachalam. Centuries later a forest-dwelling devotee named Pokala Dammakka was told in a dream that the images lay buried on the hill; she found them and began their worship. In the seventeenth century the tahsildar Kancherla Gopanna raised the great temple on that same ground.',
+    sources: [
+      {
+        label: 'Sri Sita Ramachandra Swamy Devasthanam, Bhadrachalam (Telangana)',
+        url: 'https://bhadradritemple.telangana.gov.in/',
+      },
+      { label: 'Sreerama Navami - Utsav (Ministry of Tourism)', url: 'https://utsav.gov.in/public/view-event/sreerama-navami' },
+      {
+        label: 'Sita Ramachandraswamy Temple, Bhadrachalam - Reference',
+        url: 'https://en.wikipedia.org/wiki/Sita_Ramachandraswamy_Temple,_Bhadrachalam',
+      },
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'परम्परा के अनुसार मेरु-पुत्र भद्र ने गोदावरी तट के इस पर्वत पर राम-तारक मंत्र का जप करते हुए तप किया; राम ने उन्हें दर्शन देकर वचन दिया कि वे सदा इसी शिखर पर निवास करेंगे, और पर्वत भद्रगिरि कहलाया। लोक-कथा आगे कहती है कि सत्रहवीं शताब्दी में पोकला दम्मक्का नाम की वनवासी भक्त को स्वप्न में सूचना मिली कि पर्वत पर राम, सीता और लक्ष्मण के विग्रह छिपे हैं; उन्होंने उन्हें ढूँढ़ निकाला और एक साधारण कुटिया में सेवा आरम्भ की। उसी काल में भद्राचलम के तहसीलदार कंचर्ल गोपन्ना ने भव्य मंदिर बनवाने का संकल्प लिया। कथा कहती है कि निर्माण में उन्होंने सरकारी राजस्व लगा दिया, जिस पर गोलकोंडा के अंतिम क़ुतुबशाही शासक अबुल हसन क़ुतुब शाह — जिन्हें तानाशाह कहा जाता है — ने उन्हें बंदी बना लिया; परम्परा मानती है कि स्वयं राम-लक्ष्मण ने वह धनराशि चुकाकर उन्हें मुक्त कराया। बंदीगृह में रचे उनके पद ही रामदासु कीर्तन कहलाए और गोपन्ना भक्त रामदासु के नाम से अमर हुए। प्रतिष्ठा की सटीक तिथि, वार और प्रतिष्ठाकर्ता आचार्य का नाम किसी उपलब्ध अभिलेख में दर्ज नहीं मिलता; आज मंदिर की व्यवस्था तेलंगाना का देवस्थानम् प्रबंधन देखता है।',
+        bodyEn:
+          'By tradition the sage Bhadra, son of Meru, performed his penance on this hill above the Godavari, repeating the Rama mantra until Rama appeared and promised to dwell on that summit for ever — and so it became Bhadragiri. The local account continues that in the seventeenth century Pokala Dammakka, a devotee of the forest people, was told in a dream that the images of Rama, Sita and Lakshmana lay hidden on the hill; she recovered them and began their worship in a simple hut. In the same years Kancherla Gopanna, tahsildar of Bhadrachalam, set out to build a proper temple on the spot. The story holds that he spent the revenue he had collected on the work, and that Abul Hasan Qutb Shah, the last Qutb Shahi ruler of Golconda, had him imprisoned for it — until, tradition says, Rama and Lakshmana themselves paid the sum and secured his release. The songs he composed in that prison became the Ramadasu kirtanas, and Gopanna is remembered simply as Bhakta Ramadasu. No surviving record gives the exact date, weekday or officiating acharya of the consecration; the shrine is administered today by the Telangana devasthanam.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'श्री सीता रामचन्द्र स्वामी का स्वरूप',
+        titleEn: 'The Form of Sita Ramachandra Swamy',
+        bodyHi:
+          'भद्राचलम का स्वरूप शेष राम-मंदिरों से भिन्न है। यहाँ राम अपने चतुर्भुज वैकुंठ रूप में हैं — ऊपरी दो हाथों में शंख और चक्र, निचले दो में धनुष और बाण; अर्थात् धनुर्धर राम और वैकुंठ-नाथ विष्णु एक ही विग्रह में। वे योग-मुद्रा में आसीन हैं और सीतादेवी उनकी बाईं गोद में विराजमान हैं, जबकि लक्ष्मण धनुष-बाण लिए पास खड़े रक्षा-भाव में हैं — तीनों एक ही मूल विग्रह का अंग हैं, अलग-अलग प्रतिमाएँ नहीं। यही कारण है कि भक्त इसे आत्म-प्रकट स्वयंभू स्वरूप मानते हैं, जिसे पोकला दम्मक्का ने पर्वत पर पाया था। मंदिर गोदावरी की ओर मुख किए पर्वत-शिखर पर है, और उत्तर दिशा में वह वैकुंठ द्वार है जो वर्ष में केवल एक दिन खुलता है।',
+        bodyEn:
+          'The image here is unlike that of other Rama shrines. Rama stands in his four-armed Vaikuntha form — conch and discus in the upper hands, bow and arrow in the lower — so that the archer prince and Vishnu of Vaikuntha are held in one figure. He is seated in a yogic posture with Sitadevi on his left lap, while Lakshmana, bow in hand, stands beside them in an attitude of guarding; all three belong to a single sculpted icon rather than being separate images. That is why devotees hold it self-manifested, the very form Pokala Dammakka is said to have found on the hill. The temple faces the Godavari from the crest of Bhadragiri, and on its northern side is the Vaikuntha Dwaram, opened on just one day of the year.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'रामदासु कीर्तन और गोदावरी स्नान',
+        titleEn: 'Ramadasu Kirtanas and the Godavari Bath',
+        bodyHi:
+          'भद्राचलम की भक्ति गान से चलती है। भक्त रामदासु के तेलुगु कीर्तन — जो परम्परा के अनुसार उन्होंने बंदीगृह में रचे — आज भी मंदिर और घरों में गाए जाते हैं और कर्नाटक संगीत की एक पूरी धारा उन्हीं से निकली मानी जाती है; कल्याणम् और उत्सवों में इन्हीं पदों का गायन होता है। दूसरी परम्परा गोदावरी स्नान की है: अधिकांश यात्री मंदिर से लगभग आधा किलोमीटर दूर गोदावरी घाट पर डुबकी लगाकर ही राम के दर्शन को चढ़ते हैं। तीसरी परम्परा मुत्याल तलम्ब्राल की है — मोती, अक्षत और हल्दी का वह मिश्रण जो विवाह-संस्कार में वर-वधू पर डाला जाता है; क़ुतुबशाही शासक ने इसे भेजना आरम्भ किया था और स्वतंत्रता के बाद राज्य सरकार ने वही परम्परा जारी रखी, जिसमें कल्याणम् के लिए मुत्याल तलम्ब्राल और पट्टु वस्त्र मंदिर को भेंट किए जाते हैं।',
+        bodyEn:
+          'Devotion at Bhadrachalam moves through song. The Telugu kirtanas of Bhakta Ramadasu — composed, tradition says, in his prison cell — are still sung in the temple and in homes, and a whole current of Carnatic music is traced to them; they carry the Kalyanam and the festival days. A second custom is the river: most pilgrims bathe at the Godavari Ghat, roughly half a kilometre below the temple, before climbing for darshan. A third is the Muthyala Talambralu — pearls mixed with rice and turmeric, the grains showered over bride and groom in a wedding rite. The Qutb Shahi ruler began sending them to Bhadrachalam, and after independence the state government continued the practice, presenting the Talambralu and silk vastralu to the temple for the Kalyanam.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'वर्ष का सबसे बड़ा उत्सव श्री सीता राम कल्याणम् है, जो चैत्र शुक्ल नवमी — श्रीराम नवमी — को राम के जन्म-नक्षत्र पुनर्वसु के योग में मध्याह्न मुहूर्त में सम्पन्न होता है; लाखों श्रद्धालु भद्राचलम पहुँचते हैं और विवाह-विधि का सीधा प्रसारण दूर-दूर तक देखा-सुना जाता है। कल्याणम् के बाद पट्टाभिषेकम् होता है। दूसरा बड़ा पर्व मुक्कोटि यानी वैकुंठ एकादशी है, मार्गशीर्ष शुक्ल एकादशी को, जब तड़के उत्तर का वैकुंठ द्वार खोला जाता है — वर्ष में यही एक दिन — और लाख से अधिक भक्त उससे होकर निकलते हैं; उससे पिछले दिन, दशमी को, गोदावरी में तेप्पोत्सवम् यानी नौका-उत्सव होता है। हनुमान जयंती तेलंगाना की रीति से चैत्र पूर्णिमा से आरम्भ होकर इकतालीस दिन चलती है, और भक्त रामदासु की जयंती भी मंदिर के पंचांग में मनाई जाती है।',
+        bodyEn:
+          'The year turns on the Sri Sita Rama Kalyanam, celebrated on Chaitra Shukla Navami — Sri Rama Navami — in the midday muhurta under Punarvasu, Rama’s birth star; lakhs of pilgrims reach Bhadrachalam and the marriage rite is broadcast live far beyond the town. The Pattabhishekam follows the wedding. The second great day is Mukkoti or Vaikuntha Ekadashi, on Margashirsha Shukla Ekadashi, when the northern Vaikuntha Dwaram is opened in the early hours — the only day it opens — and more than a lakh of devotees pass through it; the day before, on Dashami, the Teppotsavam or boat festival is held on the Godavari. Hanuman Jayanti runs in the Telangana manner for forty-one days from Chaitra Purnima, and the birth anniversary of Bhakta Ramadasu keeps its own place in the temple calendar.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'भद्राचलम तेलंगाना के भद्राद्रि कोठागुडेम ज़िले में गोदावरी के बाएँ तट पर है और हैदराबाद से लगभग 325 किमी पूर्व पड़ता है; ये दूरियाँ अनुमानित हैं। निकटतम रेलवे स्टेशन भद्राचलम रोड (कोठागुडेम) है, जो लगभग 40 किमी दूर है, और वहाँ से बस या टैक्सी से लगभग एक घंटे में मंदिर पहुँचा जाता है; निकटतम बड़े हवाई अड्डे हैदराबाद और विशाखापत्तनम हैं। मंदिर से लगभग आधा किमी नीचे गोदावरी घाट है, जहाँ दर्शन से पहले स्नान की परम्परा है। लगभग 32 किमी दूर दुम्मुगुडेम मंडल का पर्णशाला है, जिसे वनवास-काल का वह स्थल माना जाता है जहाँ से सीता का हरण हुआ — अधिकांश यात्री भद्राचलम और पर्णशाला को एक ही यात्रा में जोड़ते हैं। नगर में भक्त रामदासु का ध्यान मंदिर भी दर्शनीय है।',
+        bodyEn:
+          'Bhadrachalam stands on the left bank of the Godavari in Bhadradri Kothagudem district of Telangana, roughly 325 km east of Hyderabad; the distances here are approximate. The nearest railhead is Bhadrachalam Road, also called Kothagudem, about 40 km away, from where buses and taxis cover the last stretch in around an hour; the nearest major airports are Hyderabad and Visakhapatnam. Half a kilometre below the temple lies the Godavari Ghat, where pilgrims bathe before darshan. About 32 km off, in Dummugudem mandal, is Parnasala, held to be the exile-forest site from which Sita was carried away — most visitors join Bhadrachalam and Parnasala in one journey. In the town itself, the Dhyana Mandiram of Bhakta Ramadasu is also visited.',
       },
     ],
   },
