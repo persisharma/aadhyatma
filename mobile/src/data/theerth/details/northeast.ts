@@ -10,7 +10,7 @@ import type { TempleDetail } from '../temples';
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
  *
- * Temples still to author in this chunk: kirateshwar
+ * Temples still to author in this chunk: none — all four carry the full §12.6 reading.
  */
 export const details: Record<string, TempleDetail> = {
   'govindajee-imphal': {
@@ -235,6 +235,81 @@ export const details: Record<string, TempleDetail> = {
           'नारतियांग पश्चिम जयन्तिया पहाड़ ज़िले में है — जोवाई से लगभग 24 किमी (लगभग चालीस मिनट), शिलांग से लगभग 65 किमी और गुवाहाटी से लगभग 160 किमी सड़क मार्ग पर। निकटतम बड़ा रेलवे स्टेशन गुवाहाटी है, लगभग 160 किमी दूर, और अधिकांश यात्री वहीं से टैक्सी या मेघालय परिवहन की बस लेकर आते हैं; नज़दीकी हवाई अड्डा शिलांग का है, पर उड़ानों की अधिक सुविधा गुवाहाटी से मिलती है। मंदिर से लगभग तीन किमी पर नारतियांग का महापाषाण-उद्यान है, जहाँ जयन्तिया राजाओं के खड़े मेनहिर और सपाट डॉल्मेन एक साथ खड़े हैं — यही यात्रा का दूसरा पड़ाव माना जाता है। पास ही पैदल दूरी पर शिव मंदिर है, और नीचे म्यन्तदु नदी बहती है, जिससे मंदिर की सुरंग और विसर्जन-परम्परा जुड़ी है।',
         bodyEn:
           'Nartiang lies in West Jaintia Hills district — roughly 24 km from Jowai, about forty minutes by road, some 65 km from Shillong and about 160 km from Guwahati. The nearest major railhead is Guwahati, approximately 160 km away, and most visitors come on from there by taxi or by Meghalaya Transport bus; the nearest airport is at Shillong, though flight connections are far better at Guwahati. About three kilometres from the temple is the Nartiang monolith park, where the Jaintia kings’ upright menhirs and flat dolmens stand together — usually the second halt of the same trip. The Shiva temple is a short walk away, and below runs the Myntdu, the river to which both the temple’s tunnel and its immersion rite belong.',
+      },
+    ],
+  },
+  kirateshwar: {
+    significanceHi:
+      'पश्चिम सिक्किम के ग्यालशिंग ज़िले में लेगशिप के पास रंगीत नदी के तट पर स्थित किरातेश्वर महादेव सिक्किम का सबसे प्राचीन शिव मंदिर माना जाता है। नाम का अर्थ है “किरातों के ईश्वर” — यह महाभारत के उस प्रसंग से जुड़ा है जिसमें शिव किरात अर्थात् पर्वतीय शिकारी के रूप में अर्जुन के सामने प्रकट हुए। मंदिर की स्थापना-तिथि और प्रतिष्ठाकर्ता का नाम अभिलेखों में सुरक्षित नहीं; परम्परा इसे सिक्किम के लिम्बू (किरात) शासकों से जोड़ती है। नवम्बर–दिसम्बर की बाला चतुर्दशी और फाल्गुन कृष्ण चतुर्दशी की महाशिवरात्रि पर यहाँ सिक्किम, दार्जिलिंग और नेपाल से श्रद्धालु उमड़ते हैं।',
+    significanceEn:
+      'On the bank of the Rangeet river near Legship, in Gyalshing district of West Sikkim, Kirateshwar Mahadev is held to be the oldest Shiva temple in the state. The name means “Lord of the Kiratas”, and binds the shrine to the Mahabharata episode in which Shiva came before Arjuna as a Kirata — a hunter of the hills. Neither the date of its founding nor the name of its founder survives in record; tradition attributes it to the Limboo (Kirat) rulers of Sikkim. At Bala Chaturdashi in November–December, and at Maha Shivaratri on the dark-fortnight Chaturdashi of Phalguna, devotees gather here from across Sikkim, Darjeeling and Nepal.',
+    originStoryHi:
+      'महाभारत की कथा के अनुसार अर्जुन ने दिव्यास्त्र की प्राप्ति के लिए घोर तपस्या की, और उनकी परीक्षा लेने शिव किरात वेश में — पर्वतीय शिकारी के रूप में — प्रकट हुए। एक ही वराह पर दोनों के बाण चलने से विवाद हुआ और अर्जुन ने किरात से युद्ध किया; अन्त में शिव ने प्रसन्न होकर अपना वास्तविक रूप दिखाया और अर्जुन को विजय का वरदान दिया। लोक-मान्यता है कि यह प्रसंग रंगीत तट के इसी स्थान पर घटा, और कालान्तर में यहाँ प्रकट हुए एक शिलारूप शिवलिंग की पूजा आरम्भ हुई।',
+    originStoryEn:
+      'The Mahabharata tells that Arjuna undertook a severe penance to win a divine weapon, and that Shiva came to test him in the guise of a Kirata, a hunter of the mountains. Both loosed an arrow at the same boar, a quarrel followed, and Arjuna fought the hunter; at the end Shiva revealed his true form and granted him victory. Local belief places that encounter at this spot on the bank of the Rangeet, where in time a stone that had appeared bearing the form of a Shiva linga became the object of worship.',
+    sources: [
+      {
+        label: 'District West Sikkim (Gyalshing), Government of Sikkim — Kirateshwar Mahadev Mandir',
+        url: 'https://gyalshing.nic.in/tourist-place/kirateshwar-mahadev-mandir/',
+      },
+      {
+        label: 'Government of Sikkim, Tourism & Civil Aviation Department — Pilgrimage Tourism',
+        url: 'https://www.sikkim.gov.in/department/departmentmenudetails?url=Menu%3Dtourism-civil-aviation-department%2Fpilgrimage-tourism',
+      },
+      {
+        label: 'Rural Tourism, Ministry of Tourism — Kirateshwar Mahadev Temple, Gyalshing',
+        url: 'https://www.rural.tourism.gov.in/Kirateshwar-Mahadev-Temple-attraction.html',
+      },
+      {
+        label: 'Kirateshwar Mahadev Temple — Reference',
+        url: 'https://en.wikipedia.org/wiki/Kirateshwar_Mahadev_Temple',
+      },
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'किरातेश्वर महादेव की प्रतिष्ठा किस संवत् में, किस तिथि-वार को और किसके हाथों हुई — यह किसी अभिलेख में दर्ज नहीं है, और यही इस तीर्थ की सबसे ईमानदार बात है। जो स्मृति चली आती है वह यह कि यह स्थान मंदिर से पहले से पवित्र माना जाता रहा: महाभारत के किरातार्जुन प्रसंग की भूमि, जहाँ शिव ने शिकारी-रूप में अर्जुन की परीक्षा ली। कथा कहती है कि बहुत पहले यहाँ लोगों को एक शिला मिली जिसमें शिवलिंग का रूप स्वयं प्रकट था; वही आज का मुख्य विग्रह है, और उसी के चारों ओर मंदिर खड़ा हुआ। निर्माण का श्रेय परम्परा सिक्किम के लिम्बू अर्थात् किरात शासकों को देती है, जिनके काल-निर्धारण पर स्रोत एकमत नहीं; किरात समुदाय इसे आज भी “किरातेश्वर महादेव थान” कहकर अपने पूर्वजों के स्थान के रूप में देखता है। सिक्किम सरकार इसे राज्य के प्राचीनतम शिव-स्थल के रूप में अपनी तीर्थ-सूची में रखती है। समय के साथ परिसर बढ़ा — मुख्य शिवालय के साथ दुर्गा और राम के मंदिर बने, नदी पार करने के लिए पैदल झूला पुल बना, और घाट तथा यात्री-सुविधाएँ जुड़ीं। सेवा-व्यवस्था स्थानीय मंदिर समिति सँभालती है, जिसमें लिम्बू, नेपाली और अन्य पहाड़ी समुदायों के परिवार मिलकर भाग लेते हैं।',
+        bodyEn:
+          'In what samvat, on what tithi and by whose hand Kirateshwar Mahadev was consecrated is nowhere recorded, and that absence is the honest beginning of this tirtha’s history. What has come down is that the place was held sacred before any temple stood on it: the ground of the Kiratarjuniya episode, where Shiva tested Arjuna in a hunter’s form. The account says that long ago people found here a stone bearing the form of a Shiva linga of itself, and that stone is the principal image today, with the temple built around it. Tradition credits the building to the Limboo — that is, Kirat — rulers of Sikkim, though sources do not agree on when they reigned; the Kirat community still calls the shrine Kirateshwar Mahadev Thaan and holds it a place of their ancestors. The Government of Sikkim lists it as the state’s oldest Shaiva site on its pilgrimage roll. The complex grew over time: shrines to Durga and to Rama joined the main Shivalaya, a foot suspension bridge was thrown across the river, and ghats and pilgrim facilities were added. A local temple committee, drawing on Limboo, Nepali and other hill families together, runs the worship.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'किरातेश्वर महादेव का स्वरूप',
+        titleEn: 'The Form of Kirateshwar Mahadev',
+        bodyHi:
+          'यहाँ शिव किसी गढ़ी हुई मूर्ति में नहीं, स्वयं प्रकट शिलालिंग के रूप में पूजित हैं — लोक-मान्यता है कि यह शिला यहाँ किसी शिल्पी ने नहीं गढ़ी, वह ऐसी ही मिली थी। शिव का यहाँ का भाव भी विशिष्ट है: वे किरातेश्वर हैं, अर्थात् किरातों के ईश्वर — धनुष-धारी पर्वतीय शिकारी का वही रूप जिसमें उन्होंने अर्जुन की परीक्षा ली थी, न कि कैलासवासी तपस्वी का सामान्य रूप। मुख्य शिवालय के साथ परिसर में देवी दुर्गा और श्रीराम के मंदिर भी हैं, इसलिए दर्शन एक क्रम में पूरा होता है। मंदिर की सबसे बड़ी विशेषता उसका स्थान है — एक ओर रंगीत नदी का पाट और दूसरी ओर घने वन-ढँके ढलान; दर्शनार्थी नदी पर बने पैदल झूला पुल से होकर परिसर तक पहुँचते हैं, और जल की ध्वनि ही यहाँ की निरन्तर आरती है।',
+        bodyEn:
+          'Shiva here is worshipped not in a carved image but as a self-revealed stone linga — local belief is firm that no sculptor shaped it, that it was found as it is. His mood at this shrine is particular too: he is Kirateshwar, lord of the Kiratas, in the very form of the bow-carrying hill hunter in which he tested Arjuna, rather than the familiar ascetic of Kailasa. Shrines to Devi Durga and to Shri Rama stand in the same precinct, so darshan here is made in sequence. The temple’s greatest distinction is its setting — the broad bed of the Rangeet on one side, forested slopes rising on the other; devotees reach the precinct across a foot suspension bridge over the river, and the sound of the water is the shrine’s unbroken aarti.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'किरात-परम्परा और नदी-तट की पूजा',
+        titleEn: 'The Kirat Tradition and Worship by the River',
+        bodyHi:
+          'किरातेश्वर की परम्परा सिक्किम के मिले-जुले समाज की परम्परा है: लिम्बू (किरात), नेपाली और अन्य पहाड़ी समुदाय इसे समान रूप से अपना मानते हैं, और किरात इसे “थान” अर्थात् पूर्वजों का पवित्र स्थान कहते हैं। दर्शन का क्रम प्रायः रंगीत के पैदल झूला पुल से आरम्भ होता है — नदी पार करना ही यहाँ यात्रा का पहला चरण माना जाता है — फिर शिवलिंग पर जल, बेलपत्र, दूध और पुष्प अर्पित किए जाते हैं, और उसके बाद परिसर के दुर्गा तथा राम मंदिरों में दर्शन होते हैं। सोमवार और प्रत्येक मास की शिवरात्रि पर स्थानीय भक्तों की उपस्थिति बढ़ती है, और नदी-तट पर बैठकर पाठ तथा ध्यान करने की परिपाटी है। मंदिर वर्ष भर सुलभ रहता है, पर वर्षा-ऋतु में रंगीत का प्रवाह बढ़ने पर घाट तक उतरना सीमित हो जाता है।',
+        bodyEn:
+          'The usage at Kirateshwar is the usage of Sikkim’s mixed society: Limboo (Kirat), Nepali and other hill communities hold it equally their own, and the Kirat call it a thaan, an ancestral sacred place. A visit ordinarily begins at the Rangeet’s foot suspension bridge — crossing the river counts as the first stage of the pilgrimage — and then water, bel leaves, milk and flowers are offered on the linga, after which devotees take darshan at the Durga and Rama shrines in the same precinct. Mondays and the monthly Shivaratri bring the largest local turnout, and it is customary to sit by the river afterwards for recitation and quiet. The temple is open through the year, though in the monsoon, when the Rangeet runs high, access down to the ghat is restricted.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'वर्ष के दो बड़े अवसर हैं। पहला बाला चतुर्दशी है, जो कृष्ण पक्ष की चतुर्दशी पर नवम्बर–दिसम्बर में पड़ती है; इस दिन सिक्किम, दार्जिलिंग और नेपाल से श्रद्धालु रंगीत के पुल को पार कर मंदिर पहुँचते हैं और तट पर रातभर पूजा-पाठ चलता है — यही किरातेश्वर का सबसे बड़ा मेला है। दूसरा अवसर महाशिवरात्रि है, फाल्गुन कृष्ण चतुर्दशी (फरवरी–मार्च), जब रात्रि-जागरण, अभिषेक और बेलपत्र-अर्पण के लिए भारी भीड़ जुटती है और मंदिर परिसर दीपों से भर जाता है। इन दोनों अवसरों पर अस्थायी दुकानें, भण्डारे और सांस्कृतिक कार्यक्रम लगते हैं, तथा प्रशासन नदी-तट पर सुरक्षा-व्यवस्था करता है। श्रावण मास के सोमवार भी स्थानीय भक्तों के लिए विशेष माने जाते हैं।',
+        bodyEn:
+          'Two occasions fill the year. The first is Bala Chaturdashi, the dark-fortnight Chaturdashi falling in November–December, when devotees from Sikkim, Darjeeling and Nepal cross the Rangeet bridge to the temple and worship continues by the riverside through the night — this is Kirateshwar’s great mela. The second is Maha Shivaratri on Phalguna Krishna Chaturdashi (February–March), when the night vigil, the abhisheka and the offering of bel leaves draw heavy crowds and the precinct fills with lamps. On both days temporary stalls, community kitchens and cultural programmes appear, and the administration posts a watch along the riverbank. The Mondays of Shravan are also kept as special by local devotees.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'मंदिर लेगशिप कस्बे से लगभग आधा किलोमीटर दूर, ग्यालशिंग (पश्चिम सिक्किम) ज़िले में रंगीत के तट पर है। लेगशिप पश्चिम सिक्किम का मार्ग-संगम है — यहीं से पेलिंग, ग्यालशिंग, युकसोम, ताशीदिंग, रावंगला और जोरथांग की सड़कें निकलती हैं। पेलिंग लगभग 20–26 किमी दूर है (स्रोतों में दूरी भिन्न मिलती है), ग्यालशिंग लगभग 19 किमी और गंगटोक लगभग 110 किमी। निकटतम रेलवे स्टेशन न्यू जलपाईगुड़ी है, लगभग 115 किमी; निकटतम हवाई अड्डा सिक्किम का पाक्योंग लगभग 90 किमी दूर है, पर उड़ानों की अधिक सुविधा पश्चिम बंगाल के बागडोगरा (लगभग 120 किमी) से मिलती है। मंदिर से लगभग 4 किमी पर रेशी का फुर-छा-छु गर्म जल स्रोत है, जिसे औषधीय माना जाता है; अधिकांश यात्री किरातेश्वर के दर्शन को पेलिंग, ताशीदिंग और युकसोम की पश्चिम-सिक्किम यात्रा के साथ जोड़ते हैं।',
+        bodyEn:
+          'The temple stands about half a kilometre from Legship town, on the Rangeet in Gyalshing district of West Sikkim. Legship is the road junction of the western hills — the routes to Pelling, Gyalshing, Yuksom, Tashiding, Ravangla and Jorethang all branch from here. Pelling is roughly 20–26 km away (sources differ on the distance), Gyalshing about 19 km and Gangtok about 110 km. The nearest railway station is New Jalpaiguri, approximately 115 km off; the nearest airport is Pakyong in Sikkim, about 90 km, though flight connections are far better at Bagdogra in West Bengal, roughly 120 km away. About 4 km from the temple lies the Phur-Cha-Chu hot spring at Reshi, valued for its medicinal waters, and most travellers fold Kirateshwar into the wider West Sikkim circuit of Pelling, Tashiding and Yuksom.',
       },
     ],
   },
