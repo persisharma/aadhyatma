@@ -10,9 +10,75 @@ import type { TempleDetail } from '../temples';
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
  *
- * Temples still to author in this chunk: shrinkhala chamundeshwari jogulamba
+ * Temples still to author in this chunk: chamundeshwari jogulamba
  */
 export const details: Record<string, TempleDetail> = {
+  shrinkhala: {
+    significanceHi:
+      'हुगली ज़िले के पांडुआ की श्रृंखला देवी अष्टादश महाशक्ति पीठों में गिनी जाती है — आदि शंकराचार्य को परम्परा द्वारा आरोपित अष्टादश शक्तिपीठ स्तोत्र में उन्हें "प्रद्युम्ने श्रृंखला देवी" कहकर स्मरण किया गया है। हुगली ज़िला प्रशासन का पर्यटन विवरण भी पांडुआ की श्रृंखला देवी को अठारह पीठों में गिनता है। यहाँ का मूल मंदिर मध्यकाल में नष्ट हो गया और आज स्थल पर भारतीय पुरातत्व सर्वेक्षण द्वारा सन् 1927 (विक्रम संवत् 1984) से संरक्षित मीनार और बाईस दरवाज़ा मस्जिद के खंडहर खड़े हैं; देवी की प्रतिष्ठा-तिथि, वार अथवा प्रतिष्ठाकर्ता का कोई अभिलेख उपलब्ध नहीं है। श्रृंखला — बंधन की कड़ी — के नाम से देवी बंधन काटने वाली माता के रूप में स्मरण की जाती हैं।',
+    significanceEn:
+      'Shrinkhala Devi of Pandua in Hooghly district is counted among the eighteen Maha Shakti Peethas — the Ashtadasha Shakti Peetha Stotram, traditionally ascribed to Adi Shankaracharya, invokes her as “Pradyumne Shrinkhala Devi”. The Hooghly district administration’s own tourism listing likewise names the Shrinkala Devi shrine at Pandua among the eighteen peethas. The original temple did not survive the medieval centuries; what stands on the site today is the minar and the ruined Bais Darwaza Masjid, both protected by the Archaeological Survey of India since 1927 (Vikram Samvat 1984). No tithi, weekday or consecrator is recorded for the goddess’s installation, and her name — shrinkhala, the chain — is read as the bond she both holds and breaks.',
+    originStoryHi:
+      'शक्ति-पीठ परम्परा के अनुसार सती के देह-त्याग के बाद जब शिव उनका शरीर लिए घूमते रहे और विष्णु ने सुदर्शन से उसे खंडित किया, तब सती के उदर (श्रृंखला-भाग) का अंश इसी भूमि पर गिरा। इसी से यह स्थान प्रद्युम्न क्षेत्र कहलाया और देवी यहाँ श्रृंखला रूप में पूजित हुईं। लोक-परम्परा मंदिर की स्थापना का श्रेय ऋष्यशृंग ऋषि को देती है, जिन्हें देवी का परम उपासक बताया जाता है; इस कथा की पुष्टि किसी अभिलेख से नहीं होती।',
+    originStoryEn:
+      'The Shakti Peeth tradition holds that after Sati gave up her body and Shiva wandered with it, Vishnu’s Sudarshana divided her form, and the part of her stomach — her shrinkhala, her girdle — fell on this ground. The place came to be called Pradyumna kshetra, and the goddess was worshipped here in her Shrinkhala form. Local tradition credits the first shrine to the sage Rishyasringa, described as her great devotee; no inscription confirms that account.',
+    sources: [
+      {
+        label: 'Hooghly District Administration, Government of West Bengal — Places of Interest',
+        url: 'https://hooghly.nic.in/places-of-interest/',
+      },
+      { label: 'Archaeological Survey of India, Kolkata Circle — Monuments', url: 'https://www.asikolkata.in/monuments.aspx' },
+      { label: 'Shakta Pithas — Reference', url: 'https://en.wikipedia.org/wiki/Shakta_pithas' },
+      { label: 'Pandua, Hooghly — Reference', url: 'https://en.wikipedia.org/wiki/Pandua,_Hooghly' },
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'पांडुआ के इस पीठ की स्थापना का कोई तिथि-वार, प्रतिष्ठाकर्ता अथवा निर्माण-अभिलेख उपलब्ध नहीं है — यह उन गिने-चुने महापीठों में है जिनकी कथा स्तोत्र-परम्परा में तो सुरक्षित रही, पर जिनका मूल मंदिर शेष नहीं बचा। परम्परा पहला शिवालय-सदृश मंदिर ऋषि ऋष्यशृंग से जोड़ती है, जिन्हें देवी का उपासक कहा गया है, किन्तु इसे कोई शिलालेख प्रमाणित नहीं करता। जो प्रमाणित है वह स्थल का मध्यकालीन इतिहास है: यहाँ बाईस दरवाज़ा (बड़ी) मस्जिद के खंडहर हैं, जिन्हें लगभग सन् 1300 (विक्रम संवत् लगभग 1357) का माना जाता है, और उसके साथ पाँच मंज़िला मीनार, जिसे सन् 1340 (विक्रम संवत् लगभग 1397) में बनवाया गया बताया जाता है। मीनार मूलतः लगभग 40 मीटर ऊँची थी और सन् 1886 (विक्रम संवत् 1943) के भूकंप के बाद घटकर लगभग 38 मीटर रह गई; ढहे हिस्से का जीर्णोद्धार पुरातत्व सर्वेक्षण ने किया। मस्जिद की तिहरी दालान-पंक्ति की छत के तिरसठ छोटे गुंबद पुराने पाषाण-स्तम्भों पर टिके हैं, जो पूर्ववर्ती मंदिर-स्थापत्य के माने जाते हैं — स्थल पर देवी के काल का यही दृश्य अवशेष बचा है। मीनार और मस्जिद दोनों सन् 1927 (विक्रम संवत् 1984) से केन्द्रीय संरक्षित स्मारक हैं।',
+        bodyEn:
+          'Nothing survives that would give this peeth a founding date, a weekday, a consecrator or a building record — it is among the few Maha Shakti Peethas whose story is preserved in the stotra tradition while the shrine itself is gone. Tradition assigns the first temple to the sage Rishyasringa, called her devotee, but no inscription supports it. What is documented is the site’s medieval history: the ruins of the Bais Darwaza or Bari Masjid, dated to about 1300 CE (Vikram Samvat 1357), and beside them a five-storeyed minar said to have been raised in 1340 CE (Vikram Samvat 1397). The minar stood roughly 40 metres tall and was reduced to about 38 metres by the earthquake of 1886 (Vikram Samvat 1943), after which the Archaeological Survey restored the fallen portion. The mosque’s three aisles carry sixty-three small domes on older stone pillars of temple workmanship — the one visible remnant on site of the goddess’s own era. Both minar and mosque have been centrally protected monuments since 1927 (Vikram Samvat 1984).',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'श्रृंखला देवी का स्वरूप',
+        titleEn: 'The Form of Shrinkhala Devi',
+        bodyHi:
+          'पांडुआ में देवी की कोई प्राचीन प्रतिमा, गर्भगृह अथवा सिंहासन आज शेष नहीं है, इसलिए यहाँ का स्वरूप-वर्णन मूर्ति का नहीं, नाम और स्तोत्र का है — और इसे वैसा ही रखना ईमानदारी है, गढ़ना नहीं। "श्रृंखला" का अर्थ है कड़ी, साँकल अथवा कटिबंध; उपासक देवी को उस शक्ति के रूप में स्मरण करते हैं जो जीव को बाँधने वाली श्रृंखला भी है और उसे काटकर मुक्त करने वाली भी। अष्टादश शक्तिपीठ स्तोत्र में उनका स्मरण "प्रद्युम्ने श्रृंखला देवी" पद से होता है, और शाक्त गणना में यह पीठ सती के उदर-भाग से जोड़ा जाता है। स्थल पर पूजा का कोई स्थायी विग्रह न होने से भक्त प्रायः निराकार भाव से, स्तोत्र-पाठ और संकल्प द्वारा ही देवी का आवाहन करते हैं; हाल के वर्षों में कुछ भक्त-मंडलियों ने श्रृंखला माता के नए विग्रह पर पूजा आरम्भ की है।',
+        bodyEn:
+          'No ancient image, sanctum or throne of the goddess survives at Pandua, so what can honestly be described here is her name and the verse that carries it, not a murti. Shrinkhala means a chain, a link, a girdle: worshippers hold her to be at once the chain that binds a soul to the world and the power that strikes it off. The Ashtadasha Shakti Peetha Stotram names her in the line “Pradyumne Shrinkhala Devi”, and in the Shakta reckoning this peeth is tied to the stomach-part of Sati. With no fixed image on the site, devotees invoke her largely without form — by recitation and sankalpa rather than before a sanctum — though in recent years devotee groups have begun regular puja to a newly made image of Shrinkhala Mata.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'स्तोत्र-पाठ और पीठ-स्मरण',
+        titleEn: 'Recitation and the Remembrance of the Peeth',
+        bodyHi:
+          'जहाँ अन्य पीठों की परम्परा भोग, अर्चना और आरती के क्रम से बनती है, वहाँ पांडुआ की परम्परा वाणी से बनी है: अष्टादश शक्तिपीठ स्तोत्र का पाठ ही यहाँ की मुख्य उपासना है, और अठारह पीठों की यात्रा करने वाले साधक मीनार-परिसर की भूमि पर प्रणाम कर, संकल्प और स्तोत्र-पाठ से अपना पीठ-दर्शन पूरा मानते हैं। यहाँ न कोई मंदिर-न्यास है, न नियत आरती-समय, न निर्धारित भोग — इसलिए किसी प्रसाद या मनौती-रीत को इस स्थल की अधिकृत परम्परा कहकर गिनाना उचित नहीं होगा। बंगाल की सामान्य शाक्त रीत के अनुसार भक्त लाल पुष्प, जपा (अड़हुल), सिंदूर और नारियल अर्पित करने का भाव रखते हैं, और अमावस्या तथा नवरात्रि की रात्रि को स्मरण का विशेष समय मानते हैं। हाल के वर्षों में भक्त-मंडलियों द्वारा आरम्भ की गई नियमित पूजा इसी लुप्त परम्परा को पुनः जोड़ने का प्रयास है।',
+        bodyEn:
+          'Where other peethas build their custom around bhog, archana and a fixed round of aartis, the usage at Pandua is carried in speech: recitation of the Ashtadasha Shakti Peetha Stotram is the main worship here, and pilgrims walking the eighteen-peeth circuit count their darshan complete by bowing on the ground of the minar precinct and making their sankalpa and recitation there. There is no temple trust, no appointed aarti hour and no prescribed bhog, so it would be wrong to set down any prasad or vow-custom as this site’s authorised tradition. Following the general Shakta usage of Bengal, devotees bring red flowers, hibiscus, sindoor and a coconut in spirit, and keep new-moon nights and the nights of Navaratri as the times of remembrance. The regular puja begun by devotee groups in recent years is an attempt to knot that broken thread back together.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'इस पीठ का कोई प्रकाशित उत्सव-पंचांग नहीं है, क्योंकि यहाँ कोई सेवारत मंदिर-न्यास नहीं — यह उन बातों में है जिन पर स्रोत मौन हैं, और उसे मौन ही कहना चाहिए। बंगाल की शाक्त परम्परा के भीतर श्रृंखला देवी का स्मरण शारदीय नवरात्रि और दुर्गा पूजा (आश्विन शुक्ल प्रतिपदा से दशमी) तथा माघ-फाल्गुन की अमावस्या-रात्रियों में किया जाता है, जब पीठ-यात्री यहाँ पहुँचते हैं। तीर्थ-विवरणों में माघ मास के आसपास मीनार-परिसर की भूमि पर लगने वाले एक लम्बे स्थानीय मेले का उल्लेख मिलता है, जिसमें आसपास के गाँवों की बड़ी भीड़ जुटती है; इसकी तिथियाँ किसी शासकीय पंचांग में दर्ज नहीं हैं, इसलिए इसे विवरण-आधारित ही मानें। कौमुदी-पूर्णिमा और कालीपूजा की रात्रि को भी कुछ मंडलियाँ यहाँ स्तोत्र-पाठ रखती हैं।',
+        bodyEn:
+          'This peeth publishes no festival calendar, because no trust serves it — one of the places where the sources are silent, and the silence is worth stating plainly. Within the Shakta year of Bengal, Shrinkhala Devi is remembered at Sharad Navaratri and Durga Puja (Ashwin Shukla Pratipada to Dashami) and on the new-moon nights of Magha and Phalguna, when peeth pilgrims come through. Pilgrimage accounts describe a long local fair held around the month of Magha on the ground beside the minar, drawing crowds from the villages around; its dates appear in no government calendar, so treat it as an account rather than a fixture. Some groups also keep recitation here on Kaumudi Purnima and on the night of Kali Puja.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'पांडुआ पश्चिम बंगाल के हुगली ज़िले की चुँचुड़ा (चिनसुराह) उपसंभाग में पड़ता है और हावड़ा–बर्धमान मुख्य रेल-मार्ग पर अपना स्टेशन (पुंडूआ) रखता है — हावड़ा से लगभग 61 किमी। स्थल स्टेशन से थोड़ी दूरी पर है और मीनार दूर से ही दिख जाती है, इसलिए कोलकाता से एक दिन में आना-जाना सहज है; निकटतम हवाई अड्डा कोलकाता है, जो सड़क-मार्ग से लगभग 60–70 किमी पड़ता है। सभी दूरियाँ अनुमानित हैं। पीठ-यात्री प्रायः इसे उसी ज़िले के तारकेश्वर (शिव) और बाँसबेड़िया के हंसेश्वरी मंदिर के साथ जोड़ते हैं, और कोलकाता की ओर लौटते हुए कालीघाट तथा दक्षिणेश्वर के दर्शन करते हैं। बंगाल के दूसरे महापीठ — तारापीठ और कालीघाट — इसी यात्रा-क्रम में बँधते हैं, और त्रिवेणी का संगम-स्थल भी पास ही मार्ग में पड़ता है।',
+        bodyEn:
+          'Pandua lies in the Chinsurah subdivision of Hooghly district, West Bengal, and has its own station, Pundooah, on the Howrah–Bardhaman main line, roughly 61 km from Howrah. The site sits a short way from the station with the minar visible from a distance, which makes it an easy day trip from Kolkata; the nearest airport is Kolkata, about 60–70 km away by road. All distances are approximate. Peeth pilgrims usually pair it with Tarakeswar (Shiva) and the Hanseswari temple at Bansberia in the same district, and take in Kalighat and Dakshineswar on the way back towards Kolkata. Bengal’s other great goddess seats — Tarapith and Kalighat — fall naturally into the same circuit, and the river confluence at Tribeni lies close to the road.',
+      },
+    ],
+  },
   kamakshi: {
     significanceHi:
       'कांचीपुरम की कामाक्षी अम्मन अष्टादश महाशक्ति पीठों में गिनी जाती है और दक्षिण भारत में श्रीविद्या-उपासना का प्रमुख केन्द्र है। मंदिर की नींव छठी–आठवीं शताब्दी ईस्वी के पल्लव काल की मानी जाती है, जिस पर चोल और विजयनगर शासकों ने आगे की शताब्दियों में मंडप, प्राकार और गोपुर जोड़े; नवीनतम जीर्णोद्धार-महाकुम्भाभिषेक 9 फ़रवरी 2017 (विक्रम संवत् 2073) को सम्पन्न हुआ। परम्परा के अनुसार आदि शंकराचार्य ने गर्भगृह में श्रीचक्र प्रतिष्ठित किया, और आज भी हर अर्चना पहले श्रीचक्र को अर्पित होकर फिर देवी तक पहुँचती है — यही इस पीठ की सबसे विशिष्ट पहचान है।',
