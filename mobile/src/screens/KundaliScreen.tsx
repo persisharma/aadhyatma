@@ -1546,7 +1546,7 @@ const styles = StyleSheet.create({
   pickerField: { minHeight: 48, borderWidth: 1, paddingHorizontal: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   timePickerHost: { marginTop: 10, alignItems: 'flex-start' },
   error: { fontFamily: fontFamilies.inter, fontSize: 12, marginTop: 4 },
-  saveError: { fontFamily: fontFamilies.inter, fontSize: 12, lineHeight: 17, marginTop: 8, textAlign: 'center' },
+  saveError: { fontFamily: fontFamilies.inter, fontSize: 12, lineHeight: 18, marginTop: 8, textAlign: 'center' },
   cityButton: { minHeight: 56, borderWidth: 1, paddingHorizontal: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   note: { flexDirection: 'row', gap: 10, borderWidth: 1, padding: 12, marginTop: 16 },
   noteMark: { fontFamily: fontFamilies.latinSemiBold, fontSize: 19 },

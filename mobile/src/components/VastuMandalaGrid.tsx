@@ -139,10 +139,10 @@ export default function VastuMandalaGrid({
                     overflow: 'hidden',
                   }}
                 >
-                  <Text style={{ fontFamily: titleFont, fontSize: 10.5, lineHeight: 14, color: colors.inkSoft }}>
+                  <Text style={{ fontFamily: titleFont, fontSize: 10.5, lineHeight: 16, color: colors.inkSoft }}>
                     {zoneLabel(zone, lang === 'en' ? 'en' : 'hi')}
                   </Text>
-                  <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 10, lineHeight: 13, color: colors.inkMuted }}>
+                  <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 10, lineHeight: 15, color: colors.inkMuted }}>
                     {contentByLang(lang, DIKPALA_LABELS[zone].hi, DIKPALA_LABELS[zone].en)}
                   </Text>
                   {/* Sketch-positioned chips rest where they were dropped. */}
@@ -170,7 +170,7 @@ export default function VastuMandalaGrid({
                             maxWidth: '96%',
                           }}
                         >
-                          <Text numberOfLines={1} style={{ fontFamily: titleFont, fontSize: 10, lineHeight: 14, color: tone.text }}>
+                          <Text numberOfLines={1} style={{ fontFamily: titleFont, fontSize: 10, lineHeight: 15, color: tone.text }}>
                             {chip.label}
                           </Text>
                         </View>
@@ -198,7 +198,7 @@ export default function VastuMandalaGrid({
                                 paddingVertical: 1,
                               }}
                             >
-                              <Text numberOfLines={1} style={{ fontFamily: titleFont, fontSize: 10, lineHeight: 14, color: tone.text }}>
+                              <Text numberOfLines={1} style={{ fontFamily: titleFont, fontSize: 10, lineHeight: 15, color: tone.text }}>
                                 {chip.label}
                               </Text>
                             </View>

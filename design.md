@@ -93,11 +93,16 @@ below the system's stated minimum.
 A July 2026 audit found 50 chrome sites at 7–9 pt across Panchang, Kundali, Rashifal,
 Theerth, Muhurat and the catalog cards. All were raised to 10, and the two fixed-size chips
 that would then have clipped were grown rather than trimmed: the calendar `dateTag`
-(24×12 → 28×16 — its label can be Devanagari, whose matras clip below ~1.4× leading) and
+(24×12 → 28×16 — its label can be Devanagari, whose matras clip below ~1.45× leading; label now 10/15) and
 the Panchang `starBadge` (15 → 16).
 
-**Leading is part of the floor.** A 10 pt line needs **≥ 1.4× leading** (14) whenever it can
-carry Indic text; `lineHeight === fontSize` sits the first baseline so high that the top of
+**Leading is part of the floor.** Any line that can carry Indic text needs **≥ 1.5× leading**
+(10 → 15, 12 → 18, 16 → 24; 1.45× is the hard minimum) — the earlier 1.4× floor still clipped:
+Search's verse line shipped at 17/24 (1.41×) and sliced the top of ि/ी, and a September 2026
+sweep raised 28 more Indic-capable sites below 1.45× (Arc strip, Ask card, Vastu mandala grid
+and compare/roster chips, Daan katha, Namkaran tags/share card, Prashna, Pitru Paksha hero,
+Widget gallery, Jyotish/Guna Milan share micro lines, the Panchang `dateTag`). Glyph-only lines
+(›, ＋, ॥) and Inter numerals are exempt; `lineHeight === fontSize` sits the first baseline so high that the top of
 the line is sliced off, which reads as trimmed text rather than tight text. And a chrome line
 that can render Indic must *name* a face that has the script — Inter does not, and the OS
 fallback's metrics are taller than any fixed leading can predict, so route it through
@@ -1333,7 +1338,7 @@ The list is **two browsable tiers**, rendered as one `FlatList` under two group 
 3. **Results** — grouped rows under `sectionLabel`-style headers with counts (`पाठ · Sections`, `देवता · Deities`, `श्लोक · Verses`):
    - *Section row*: Devanagari thumb glyph (`saffron-deep`), name in the active language, Hindi subtitle, `saffron` ›. Tap → the section's start via `navigateToEntryStart` (§38) — chalisa readers, chapters indexes, aarti/sanskar readers, the japam counter, or the Theerth map as appropriate. **Vidhi rows** (PRD-19 Phase 2B) ride this group too — one row per published vidhi (॥ thumb, `पूजा विधि · N चरण` subtitle); their sourceId is the vidhi id and tap opens `VidhiDetail` (§62) instead of a reader — pushed on the Home stack, which registers the vidhi flow alongside the Panchang one, so back returns to the search results.
    - *Deity row*: `gold` ॐ thumb; tap → `DeityList` filtered by that deity.
-   - *Verse row*: the matched verse's first line in the verse face at 17, source · label meta in Cormorant italic; tap → **that verse in its reader** via `buildProgressTarget` (chapter + verse index), falling back to the section start.
+   - *Verse row*: the matched verse's first line in the verse face at 17/28, source · label meta in Cormorant italic at 13/20; section/deity row names are 16/26 over a 12/18 subtitle — every single-line row that can carry Devanagari keeps ≥ 1.5× leading so above-shirorekha matras (ि ी) are not sliced off (§3.0; the verse line shipped at 17/24 and clipped, September 2026); tap → **that verse in its reader** via `buildProgressTarget` (chapter + verse index), falling back to the section start.
    - Verse hits are capped at `VERSE_RESULT_CAP = 50`, with an italic "More results — type a more specific query" note when clipped.
 4. **Zero state**: dimmed `॥`, "कोई परिणाम नहीं / No matches found", and a hint to try a Devanagari word or section name.
 
