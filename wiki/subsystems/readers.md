@@ -62,6 +62,13 @@ Valmiki Ramayan (7 kāṇḍas). Single-chapter texts (Hanuman Ashtak, Krishna S
 Ramcharitmanas — 1 chapter file each today) render verses only; they need no transition because
 there is no next subsection yet.
 
+**Prose readers on the katha shell.** `VratKathaReaderScreen` + `KathaSectionPage` is the house
+shape for long prose; `PitruParichayReaderScreen` (Sept 2026) reuses it component for component
+for the पितृ पक्ष परिचय lessons — `KathaSectionPage` gained `pillHi`/`pillEn` so its pill can read
+`परिचय · n/m` instead of `प्रसंग`. Its closing `NextChapterCard` leaves for another screen
+(`popTo('PitruPakshaOverview')`), so it is in the read-aloud table but not the auto-advance one.
+See [[pitru-shiksha]].
+
 **Multi-instance readers** (`ChalisaReaderScreen`, `AartiReaderScreen`, `AshtakamReaderScreen`,
 `SanskarReaderScreen`) dispatch on a `route.params` discriminator through a registry — they do
 not import one section's data at the top of the file (RULEBOOK §3). For Ashtakam, the total
