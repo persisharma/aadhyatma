@@ -50,3 +50,14 @@ https://persisharma.github.io/get-vedansh/
 
 - Android (Google Play): https://play.google.com/store/apps/details?id=com.prashantsharma.vedansh
 - iPhone (App Store): https://apps.apple.com/app/id6766086529
+
+---
+
+## Deity-background banners (portrait 1080×1350, Hindi + English)
+
+- `banner-ram-darbar.png` — ॥ जय श्री राम ॥
+- `banner-salasar-balaji.png` — ॥ जय श्री सालासर बालाजी ॥
+- `banner-khatu-shyam.png` — ॥ जय श्री श्याम ॥
+
+Backgrounds are the app's own sketches from `mobile/assets/backgrounds/`.
+To change copy, edit `build-deity-banners.py`, run it, then render each generated HTML with Playwright at 1080×1350 (deviceScaleFactor 2).
