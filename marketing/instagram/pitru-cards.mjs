@@ -26,6 +26,10 @@ const OUT_DIR = process.argv[2] ? path.resolve(process.argv[2]) : path.join(HERE
 const W = 1080, H = 1350; // 4:5 — the tallest aspect a feed post shows whole (design.md §39.3)
 const SMART_LINK = 'persisharma.github.io/get-vedansh';
 const HANDLE = '@vedansh.app';
+// The App Store listing title (mobile/store.config.json → apple.info.*.title), so the name on
+// the card is the name a viewer types into the store search.
+const STORE_NAME = 'Vedansh: Gita, Astrology, Vrat';
+const DOWNLOAD = { hi: 'iOS और Android पर डाउनलोड करें', en: 'Download on iOS & Android' };
 
 // ── theme tokens (mobile/src/theme/colors.ts · lightColors) ───────────────────
 const C = {
@@ -256,6 +260,8 @@ function cardHtml(card, index, total, lang = 'hi') {
   .mark{font-family:'Cormorant Garamond',Georgia,serif;font-size:44px}` : ''}
   .tagline{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:500;font-size:26px;
            color:${C.saffronDeep};margin-top:4px}
+  .dl{font-family:${en ? "'Inter',sans-serif" : "'Noto Serif Devanagari',serif"};font-weight:600;
+       font-size:${en ? 22 : 24}px;letter-spacing:${en ? '0.4px' : '0'};color:${C.saffronDeep};margin-bottom:2px}
   .meta{font-family:'Inter',sans-serif;font-weight:500;font-size:20px;letter-spacing:1.6px;
         color:${C.inkMuted};text-align:right;line-height:1.7}
 </style></head><body>
@@ -273,9 +279,9 @@ function cardHtml(card, index, total, lang = 'hi') {
     <div class="foot">
       <div>
         <div class="mark">${en ? 'Vedansh' : 'वेदांश़'}</div>
-        <div class="tagline">Vedansh — Sacred Texts, Daily Reading</div>
+        <div class="tagline">${esc(STORE_NAME)}</div>
       </div>
-      <div class="meta">${esc(HANDLE)}<br>${esc(SMART_LINK)}</div>
+      <div class="meta"><div class="dl">${esc(DOWNLOAD[lang])}</div>${esc(SMART_LINK)}<br>${esc(HANDLE)}</div>
     </div>
   </div>
 </body></html>`;
