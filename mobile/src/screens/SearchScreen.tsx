@@ -988,22 +988,27 @@ const styles = StyleSheet.create({
   resultBody: {
     flex: 1,
   },
+  // Devanagari needs ≥1.5× leading or the above-shirorekha matras
+  // (ि ी ें) are sliced off a single-line box (design.md §3.0).
   resultPrimary: {
     fontSize: 16,
+    lineHeight: 26,
     includeFontPadding: false,
   },
   resultSecondary: {
     fontSize: 12,
+    lineHeight: 18,
     marginTop: 2,
     includeFontPadding: false,
   },
   verseLine: {
     fontSize: 17,
-    lineHeight: 24,
+    lineHeight: 28,
     includeFontPadding: false,
   },
   verseMeta: {
     fontSize: 13,
+    lineHeight: 20,
     marginTop: 3,
     includeFontPadding: false,
   },
