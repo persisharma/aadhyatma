@@ -3,7 +3,8 @@
  *
  * The answer card is the whole feature's face: an eyebrow tag, the answer as a
  * headline, label·value rows (निषेध rows in the warm `avoid` tone), a collapsed
- * "गणना देखें" working trail (§51's no-opaque-verdict rule generalised), the
+ * "गणना देखें" plain-language basis (§51's no-opaque-verdict rule generalised;
+ * the raw engine-call `working` trail shows only in dev builds), the
  * registry's own tradition note and provenance line, and ≤ 3 actions of which
  * the first is primary. The abstain card is deliberately as designed as the
  * answer: below the threshold the app says so plainly and offers did-you-mean
@@ -36,6 +37,8 @@ export default function AskAnswerCard({ answer, lang, onAction, compact }: Answe
   const [showWorking, setShowWorking] = useState(false);
   const titleFont = scriptTitleFont(lang, fontFamilies.devanagariBold);
   const bodyFont = scriptBodyFont(lang, fontFamilies.devanagari);
+  // Users see the plain-language basis; the engine-call trail is a dev aid only.
+  const workingLines = answer.basis?.length ? answer.basis.map((b) => loc(lang, b)) : __DEV__ ? answer.working : [];
 
   return (
     <LinearGradient
@@ -83,7 +86,7 @@ export default function AskAnswerCard({ answer, lang, onAction, compact }: Answe
         })}
       </View>
 
-      {answer.working.length > 0 ? (
+      {workingLines.length > 0 ? (
         <View style={[styles.working, { borderTopColor: colors.divider, marginTop: spacing.md, paddingTop: spacing.sm }]}>
           <Pressable
             onPress={() => setShowWorking((v) => !v)}
@@ -97,8 +100,8 @@ export default function AskAnswerCard({ answer, lang, onAction, compact }: Answe
             </Text>
           </Pressable>
           {showWorking
-            ? answer.working.map((w, i) => (
-                <Text key={i} style={[styles.workingLine, { color: colors.inkMuted }]}>
+            ? workingLines.map((w, i) => (
+                <Text key={i} style={[styles.workingLine, { color: colors.inkMuted, fontFamily: bodyFont }]}>
                   {w}
                 </Text>
               ))
