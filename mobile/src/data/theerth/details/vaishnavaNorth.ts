@@ -10,7 +10,7 @@ import type { TempleDetail } from '../temples';
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
  *
- * Temples still to author in this chunk: vishnupad-gaya lakshmi-narayan
+ * Temples still to author in this chunk: lakshmi-narayan
  */
 export const details: Record<string, TempleDetail> = {
   'banke-bihari': {
@@ -152,6 +152,77 @@ export const details: Record<string, TempleDetail> = {
           'नाथद्वारा राजस्थान के राजसमंद ज़िले में अरावली की पहाड़ियों के बीच बनास नदी के किनारे बसा है, उदयपुर से लगभग 48 किमी उत्तर-पूर्व। निकटतम बड़े रेलवे स्टेशन मावली जंक्शन (लगभग 30 किमी) और उदयपुर सिटी (लगभग 50 किमी) हैं; निकटतम हवाई अड्डा उदयपुर का महाराणा प्रताप हवाई अड्डा है। सड़क मार्ग से उदयपुर–अजमेर मार्ग पर यह नगर पड़ता है, इसलिए अधिकांश यात्री इसे उदयपुर-यात्रा के साथ जोड़ते हैं। पास ही एकलिंगजी का शिव मंदिर लगभग 27 किमी दूर है, और राजसमंद झील के किनारे कांकरोली का द्वारकाधीश मंदिर — जो पुष्टिमार्ग की ही एक अन्य पीठ है — प्रायः इसी यात्रा में जोड़ा जाता है। हल्दीघाटी का ऐतिहासिक स्थल भी निकट पड़ता है।',
         bodyEn:
           'Nathdwara stands in Rajsamand district of Rajasthan, among the Aravalli hills on the bank of the Banas, roughly 48 km north-east of Udaipur. The main railheads are Mavli Junction, about 30 km off, and Udaipur City, about 50 km; the nearest airport is Maharana Pratap Airport at Udaipur. The town lies on the Udaipur–Ajmer road, so most visitors take it together with Udaipur. The Shiva temple of Eklingji is about 27 km away, and the Dwarkadhish temple at Kankroli on the shore of Rajsamand lake — another seat of the same Pushtimarg tradition — is commonly paired with this darshan. The historic field of Haldighati also lies within easy reach.',
+      },
+    ],
+  },
+  'vishnupad-gaya': {
+    significanceHi:
+      'फल्गु नदी के तट पर बसा गया का विष्णुपद मंदिर उस शिला पर खड़ा है जिस पर भगवान विष्णु का चरणचिह्न अंकित माना जाता है, और इसी कारण यह पितरों के श्राद्ध-तर्पण का सबसे बड़ा तीर्थ है। वर्तमान भवन इंदौर की महारानी देवी अहिल्याबाई होल्कर ने सन् 1787 (विक्रम संवत् 1844) में बनवाया था। आश्विन कृष्ण पक्ष के पितृपक्ष में यहाँ देश-विदेश से लाखों लोग पिंडदान के लिए आते हैं।',
+    significanceEn:
+      'The Vishnupad temple at Gaya stands on the Falgu river over the rock said to carry the footprint of Vishnu, and that footprint makes it the foremost place in India for rites offered to the ancestors. The present building was raised in 1787 CE (Vikram Samvat 1844) by Devi Ahilyabai Holkar, the ruler of Indore. During Pitru Paksha, the dark fortnight of Ashwin, lakhs of people come from across India and abroad to perform pind daan here.',
+    originStoryHi:
+      'परम्परा के अनुसार गयासुर नामक असुर ने ऐसा तप किया कि उसके दर्शन-मात्र से पाप कट जाते थे, जिससे सृष्टि का विधान डगमगाने लगा। देवताओं की प्रार्थना पर विष्णु ने उससे यज्ञ-भूमि के लिए स्थान माँगा और फिर अपना चरण उसके ऊपर रखकर उसे पृथ्वी में स्थिर कर दिया। गयासुर ने वरदान माँगा कि यह भूमि उसके नाम से जानी जाए और यहाँ किया गया श्राद्ध पितरों को तृप्त करे — इसी वरदान से गया पितृ-तीर्थ कहलाया।',
+    originStoryEn:
+      'Tradition tells of the asura Gayasura, whose austerity grew so powerful that the mere sight of him wiped away sin, unsettling the order of the world. At the gods’ request Vishnu asked him for ground on which to perform a sacrifice, and then set his foot upon him, pinning him fast into the earth. Gayasura asked in return that the place carry his name and that rites performed here satisfy the ancestors — and it is from that boon that Gaya is known as the tirtha of the pitrs.',
+    sources: [
+      {
+        label: 'Bihar Tourism — Vishnupad Temple, Gaya',
+        url: 'https://tourism.bihar.gov.in/en/destinations/gaya/vishnupad-temple',
+      },
+      {
+        label: 'District Gaya Ji, Government of Bihar — Places of Interest',
+        url: 'https://gaya.nic.in/places-of-interest/',
+      },
+      {
+        label: 'Vishnupad Temple, Gaya — Reference',
+        url: 'https://en.wikipedia.org/wiki/Vishnupad_Temple',
+      },
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'विष्णुपद की मान्यता पुराण-काल से चली आती है — गयासुर की कथा और उस पर रखे विष्णु-चरण की स्मृति; परम्परा यह भी कहती है कि वनवास-काल में राम और सीता ने यहाँ पितरों का श्राद्ध किया था। मूल मंदिर कब बना, इसका कोई निश्चित अभिलेख उपलब्ध नहीं है; जो भवन आज खड़ा है वह सन् 1787 (विक्रम संवत् 1844) में इंदौर की महारानी देवी अहिल्याबाई होल्कर द्वारा फल्गु के तट पर बनवाया गया पुनर्निर्माण है। वृत्तांतों के अनुसार उनके अधिकारियों ने निर्माण के लिए उपयुक्त पत्थर की खोज पूरे क्षेत्र में की और अंततः गया ज़िले में ही बाथानी के पास की पहाड़ी से भूरा-काला ग्रेनाइट चुना, क्योंकि दूर से पत्थर ढोना कठिन था। प्रतिष्ठा की तिथि या वार किसी आधिकारिक अभिलेख में दर्ज नहीं मिलता। मंदिर की श्राद्ध-पद्धति परम्परागत रूप से गयावाल पंडा परिवारों के हाथ में रही है, जो पीढ़ी-दर-पीढ़ी तीर्थयात्रियों के पितृ-कर्म कराते आए हैं; प्रबंधन आज विष्णुपद प्रबंध समिति के अधीन है।',
+        bodyEn:
+          'The sanctity of Vishnupad reaches back to Puranic tradition — the story of Gayasura and the foot set upon him — and tradition also holds that Rama and Sita performed ancestral rites here during their years in the forest. No record fixes when the first shrine was raised. The building that stands today is the reconstruction carried out on the bank of the Falgu in 1787 CE (Vikram Samvat 1844) by Devi Ahilyabai Holkar, the ruler of Indore. Accounts of the work say her officers searched the region for suitable stone and, finding long-distance haulage impractical, quarried a grey-black granite from hills near Bathani within Gaya district itself. No consecration tithi or weekday survives in an official record. The ancestral rites at the shrine have traditionally been conducted by the Gayawal panda families, who have guided pilgrims through the pitr karma for generations; administration today rests with the Vishnupad management committee.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'विष्णु-चरण का स्वरूप',
+        titleEn: 'The Form of Vishnu’s Feet',
+        bodyHi:
+          'यहाँ गर्भगृह में कोई मानव-आकृति वाली प्रतिमा नहीं, बल्कि बेसाल्ट शिला पर अंकित लगभग 40 सेंटीमीटर लम्बा चरणचिह्न है, जिसे धर्मशिला कहा जाता है; उसके चारों ओर चाँदी से मढ़ा हुआ अष्टकोणीय कुंड बना है और भक्त उसी में जल, तुलसी तथा पुष्प अर्पित करते हैं। मंदिर पूर्वाभिमुख है, गर्भगृह अष्टकोणीय है, और उसके ऊपर पिरामिडनुमा शिखर लगभग 30 मीटर (सौ फुट) ऊँचा उठता है। भवन बड़े-बड़े भूरे ग्रेनाइट खंडों से बना है, जिन्हें लोहे की पट्टियों से जोड़ा गया है, और मंडप को नक़्क़ाशीदार स्तंभों की पंक्तियाँ सँभालती हैं। परिसर में अक्षयवट — अमर वट-वृक्ष — भी है, जहाँ पिंडदान का अंतिम चरण सम्पन्न होता है।',
+        bodyEn:
+          'There is no human-formed image in the sanctum here. What is worshipped is a footprint about 40 cm long, incised into a block of basalt and known as the Dharmashila, set within a silver-plated octagonal basin into which pilgrims pour water and lay tulsi and flowers. The temple faces east, the shrine itself is octagonal, and above it a pyramidal tower rises roughly 30 m — about a hundred feet. The walls are built of large grey granite blocks clamped together with iron, and rows of carved pillars carry the pavilion in front. Within the precinct stands the Akshayavat, the undying banyan, where the last stage of the pind daan is completed.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'पिंडदान और गया श्राद्ध',
+        titleEn: 'Pind Daan and the Gaya Shraddha',
+        bodyHi:
+          'गया की मुख्य परम्परा दर्शन नहीं, कर्म है — पितरों के लिए पिंडदान और तर्पण। मान्यता है कि गया में किया गया श्राद्ध पितरों को स्थायी तृप्ति देता है, इसलिए यहाँ आने वाले अधिकांश यात्री पहले फल्गु तट पर तर्पण करते हैं, फिर विष्णुपद में पिंड अर्पित करते हैं और अंत में अक्षयवट के नीचे संकल्प पूरा करते हैं — यही तीन-स्थलीय क्रम सबसे प्रचलित है। कहा जाता है कि प्राचीन काल में गया में सैकड़ों पिंड-वेदियाँ थीं; आज गिनी जाने वाली वेदियों की संख्या लगभग चौवन रह गई है, जिनमें कुछ तर्पण-स्थल हैं। विस्तृत कर्म एक, तीन, सात या सत्रह दिन तक चलता है, और उसे परम्परागत गयावाल पंडा कराते हैं। चढ़ावे में जौ के आटे, तिल, कुश और जल का प्रयोग होता है — पिंड मिष्ठान्न नहीं, अन्न का सादा अर्पण है।',
+        bodyEn:
+          'What brings most people to Gaya is not darshan but an act: pind daan and tarpan for the dead. Rites performed here are held to bring the ancestors lasting peace, so the usual sequence is tarpan on the bank of the Falgu, then the offering of pindas at Vishnupad, and finally the closing resolve beneath the Akshayavat — the three-place round that most pilgrims follow. Tradition remembers hundreds of pind vedis across the old city; the count kept today has come down to about fifty-four sites, several of them places of tarpan rather than of offering. The fuller rite runs over one, three, seven or seventeen days and is conducted by the hereditary Gayawal pandas. The offerings are barley flour, sesame, kusha grass and water — a plain grain oblation rather than a sweet bhog.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'वर्ष का सबसे बड़ा आयोजन पितृपक्ष मेला है, जो आश्विन कृष्ण प्रतिपदा से अमावस्या तक — लगभग पंद्रह दिन — चलता है और बिहार के सबसे बड़े धार्मिक समागमों में गिना जाता है। इस अवधि में विष्णुपद, फल्गु के घाट, अक्षयवट और नगर की अन्य वेदियाँ दिन-रात यात्रियों से भरी रहती हैं, और ज़िला प्रशासन विशेष व्यवस्था करता है। कई परिवार पूर्णिमा से ही आकर सोलह दिन का पूरा क्रम करते हैं। पितृपक्ष के अतिरिक्त अमावस्या, सोमवती अमावस्या और संक्रांति के दिन भी तर्पण के लिए भीड़ रहती है, और वैष्णव पर्वों में एकादशी तथा कार्तिक मास का विशेष महत्व माना जाता है।',
+        bodyEn:
+          'The great event of the year is the Pitru Paksha Mela, which runs from Ashwin Krishna Pratipada to the new moon — about a fortnight — and ranks among the largest religious gatherings in Bihar. Through those days Vishnupad, the ghats of the Falgu, the Akshayavat and the other vedis of the city stay crowded day and night, and the district administration mounts a special arrangement for the crowds. Many families arrive from the preceding full moon and keep the whole sixteen-day sequence. Outside that fortnight, new-moon days, Somvati Amavasya and the solar sankranti draw their own gatherings for tarpan, while among Vaishnava observances Ekadashi and the month of Kartik are especially kept.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'मंदिर बिहार के गया ज़िले में फल्गु नदी के पश्चिमी तट पर, पुराने नगर के भीतर स्थित है; अंतिम दूरी सँकरी गलियों से होकर पैदल तय होती है। निकटतम रेलवे स्टेशन गया जंक्शन है, जो नगर के भीतर ही कुछ किलोमीटर दूर है और दिल्ली–हावड़ा मार्ग पर प्रमुख ठहराव है। गया हवाई अड्डा नगर से लगभग 12 किमी दक्षिण-पश्चिम में है। बोधगया लगभग 15–16 किमी दूर पड़ता है, इसलिए अनेक यात्री दोनों को एक ही प्रवास में देखते हैं। गया में ही मंगला गौरी शक्तिपीठ और ब्रह्मयोनि पहाड़ी है, और नगर के भीतर फल्गु के घाट, अक्षयवट तथा अन्य पिंड-वेदियाँ पितृ-कर्म की परिक्रमा पूरी करती हैं।',
+        bodyEn:
+          'The temple stands inside the old town of Gaya in Bihar, on the western bank of the Falgu, and the last stretch is walked through narrow lanes. Gaya Junction, a principal halt on the Delhi–Howrah route, is only a few kilometres away within the city. Gaya airport lies about 12 km to the south-west. Bodh Gaya is roughly 15–16 km off, so many travellers take both on a single stay. Gaya itself also holds the Mangla Gauri Shakti Peeth and the hill of Brahmayoni, while the ghats of the Falgu, the Akshayavat and the other pind vedis within the town complete the round of the ancestral rites.',
       },
     ],
   },
