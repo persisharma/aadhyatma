@@ -10,7 +10,7 @@ import type { TempleDetail } from '../temples';
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
  *
- * Temples still to author in this chunk: udupi-krishna bhadrachalam manakula-vinayagar
+ * Temples still to author in this chunk: bhadrachalam manakula-vinayagar
  */
 export const details: Record<string, TempleDetail> = {
   padmanabhaswamy: {
@@ -79,6 +79,71 @@ export const details: Record<string, TempleDetail> = {
           'मंदिर तिरुवनंतपुरम के पूर्वी क़िले (ईस्ट फ़ोर्ट) में नगर के बीचोंबीच है। तिरुवनंतपुरम सेंट्रल (थम्पानूर) रेलवे स्टेशन लगभग 1 किमी दूर है और तिरुवनंतपुरम अंतरराष्ट्रीय हवाई अड्डा लगभग 6 किमी — दोनों दूरियाँ अनुमानित हैं। पास ही पद्म तीर्थम सरोवर, पुत्तन मालिका (कुथिरा मालिका) राजमहल और पुराने क़िले की गलियाँ हैं। लगभग 2 किमी की दूरी पर आट्टुकाल भगवती मंदिर है, जिसका पोंगाल पर्व स्त्रियों के विशाल समागम के लिए प्रसिद्ध है; अधिकतर यात्री इन दोनों को एक ही दिन में जोड़ लेते हैं। कन्याकुमारी, शुचीन्द्रम और पद्मनाभपुरम महल दक्षिण की ओर एक ही यात्रा-मार्ग में आते हैं।',
         bodyEn:
           'The temple sits in the middle of Thiruvananthapuram, inside the old East Fort. Thiruvananthapuram Central, also called Thampanoor, is roughly 1 km away and Trivandrum International Airport roughly 6 km — both distances approximate. Around it lie the Padma Theertham tank, the Puthen Malika (Kuthira Malika) palace and the lanes of the fort. About 2 km off stands the Attukal Bhagavathy temple, famous for the Pongala at which women gather in enormous numbers; most visitors pair the two in a single day. Further south, Kanyakumari, Suchindram and the Padmanabhapuram palace fall along one continuous pilgrim road.',
+      },
+    ],
+  },
+  'udupi-krishna': {
+    significanceHi:
+      'उडुपी का श्रीकृष्ण मठ द्वैत वेदान्त के प्रवर्तक श्री मध्वाचार्य द्वारा तेरहवीं शताब्दी में स्थापित वैष्णव परम्परा का केन्द्र है, जहाँ बालकृष्ण मंथन-दंड और रस्सी लिए मुद्दु कृष्ण रूप में पूजे जाते हैं। यहाँ की सबसे अनोखी परम्परा यह है कि मुख्य दर्शन गर्भगृह के सामने से नहीं, बल्कि चाँदी जड़ी नौ छिद्रों वाली कनकन-किंडी खिड़की से होता है। सन् 1522 (विक्रम संवत् 1579) में सोदे मठ के श्री वादिराज तीर्थ ने पर्याय की अवधि दो मास से बढ़ाकर दो वर्ष की, और तभी से अष्ट मठों के स्वामी बारी-बारी से कृष्ण की सेवा सँभालते हैं।',
+    significanceEn:
+      'The Sri Krishna Matha at Udupi is the heart of the Dvaita Vaishnava tradition founded by Sri Madhvacharya in the thirteenth century, where Bala Krishna is worshipped as Muddu Krishna holding a churning rod and a rope. Its most distinctive practice is that the principal darshan is taken not from the sanctum front but through the Kanakana Kindi, a silver-plated window of nine openings. In 1522 CE (Vikram Samvat 1579) Sri Vadiraja Teertha of the Sode Matha lengthened the Paryaya term from two months to two full years, and since then the seers of the Ashta Mathas have taken the Lord’s service in turn.',
+    originStoryHi:
+      'परम्परा कहती है कि द्वारका से लौटते एक जहाज़ में गोपीचन्दन मिट्टी का बड़ा पिंड केवल भार-संतुलन के लिए रखा था; मध्वाचार्य के कहने पर वह किनारे उतारा गया और टूटने पर उसमें से बालकृष्ण का विग्रह प्रकट हुआ। तीस शिष्य मिलकर भी उसे उठा न सके, पर आचार्य ने उसे शिशु की भाँति गोद में उठा लिया और उडुपी में प्रतिष्ठित किया। बाद में भक्त कनकदास की अनन्य भक्ति से प्रसन्न होकर कृष्ण पश्चिमाभिमुख हो गए — यही कनकन-किंडी की कथा है।',
+    originStoryEn:
+      'Tradition holds that a ship returning from Dwaraka carried a great lump of gopichandana clay as mere ballast; at Madhvacharya’s asking it was set down on the shore, and when it cracked open the image of Bala Krishna stood revealed inside. Thirty disciples together could not lift it, yet the Acharya raised it like a child in his arms and enshrined it at Udupi. Later, moved by the single-minded devotion of Kanakadasa, Krishna is said to have turned to face west — and that is the story the Kanakana Kindi keeps.',
+    sources: [
+      {
+        label: 'Karnataka Tourism - Udupi Sri Krishna Temple',
+        url: 'https://karnatakatourism.org/tour-item/udupi-sri-krishna-temple/',
+      },
+      { label: 'Karnataka Tourism - Udupi Paryaya Festival', url: 'https://karnatakatourism.org/en/events/udupi-paryaya-festival' },
+      { label: 'Udupi Sri Krishna Matha - Reference', url: 'https://en.wikipedia.org/wiki/Udupi_Sri_Krishna_Matha' },
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'श्री मध्वाचार्य (तेरहवीं शताब्दी) द्वैत वेदान्त के प्रवर्तक थे और उडुपी के निकट ही जन्मे। परम्परा के अनुसार समुद्र-तट पर उन्होंने संकट में घिरे एक जहाज़ की रक्षा की; कृतज्ञ नाविक से उन्होंने पुरस्कार में केवल वह गोपीचन्दन का पिंड माँगा जो जहाज़ में भार-संतुलन के लिए रखा था। किनारे उतारते ही वह फटा और भीतर से बालकृष्ण का विग्रह निकला — कहा जाता है कि तीस शिष्य मिलकर भी उसे हिला न सके, पर आचार्य ने उसे गोद में उठा लिया और उडुपी लाकर स्थापित किया। मूल प्रतिष्ठा की तिथि और वार किसी अभिलेख में दर्ज नहीं मिलते; परम्परा उसे तेरहवीं सदी में ही रखती है। आचार्य ने कृष्ण की नित्य सेवा के लिए आठ शिष्यों को दीक्षित किया, जिनसे पलिमारु, अदमारु, कृष्णापुर, पुत्तिगे, शिरूर, सोदे, कणियूरु और पेजावर — अष्ट मठों की परम्परा चली। आरम्भ में सेवा का क्रम दो-दो मास का था; सन् 1522 (विक्रम संवत् 1579) में सोदे मठ के श्री वादिराज तीर्थ ने उसे दो वर्ष का कर दिया, ताकि स्वामी पूजा, मठ-व्यवस्था और देशाटन तीनों को समय दे सकें। यही व्यवस्था आज भी अटूट चली आ रही है।',
+        bodyEn:
+          'Sri Madhvacharya, founder of the Dvaita school of Vedanta, was born near Udupi in the thirteenth century. By tradition he saved a ship in distress off that coast and asked its grateful captain for nothing but the lump of gopichandana clay the vessel carried as ballast. Set down on the shore, the lump split and the image of Bala Krishna emerged from within — thirty disciples, the story goes, could not shift it, yet the Acharya lifted it in his arms and carried it to Udupi to enshrine. No record preserves the tithi or weekday of that first consecration; tradition simply places it in the thirteenth century. The Acharya initiated eight disciples for Krishna’s daily service, and from them descend the Ashta Mathas — Palimaru, Adamaru, Krishnapura, Puttige, Shirur, Sode, Kaniyuru and Pejavara. At first each seer served two months at a time; in 1522 CE (Vikram Samvat 1579) Sri Vadiraja Teertha of the Sode Matha extended the turn to two full years so that a seer would have time for worship, for the running of his matha, and for travel to teach. That arrangement has held unbroken since.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'श्रीकृष्ण का स्वरूप',
+        titleEn: 'The Form of Sri Krishna',
+        bodyHi:
+          'उडुपी के कृष्ण बालरूप में हैं — दाहिने हाथ में मंथन-दंड और बाएँ में मथनी की रस्सी; भक्त उन्हें मुद्दु कृष्ण अर्थात् प्यारा कृष्ण कहते हैं। मंथन-दंड का भाव यह बताया जाता है कि भगवान जीव को मथकर उसमें से भक्ति रूपी नवनीत निकालते हैं। विग्रह शालग्राम शिला का है और, परम्परा के अनुसार, कनकदास की भक्ति के बाद से पश्चिम की ओर मुख किए हुए है — जबकि मध्वाचार्य ने उसे मूलतः पूर्वाभिमुख स्थापित किया था। दर्शन गर्भगृह के सामने से नहीं, उस चाँदी जड़ी खिड़की से होता है जिसमें नौ छिद्र हैं; इसे कनकन-किंडी और नवग्रह-किंडी दोनों नामों से जाना जाता है। कथा कहती है कि भूकम्प से दीवार में पड़ी दरार से कनकदास को दर्शन हुए, और वादिराज स्वामी ने उसे बंद करने के बजाय चौड़ा कर खिड़की बना दिया। मठ-परिसर में मध्व सरोवर, भोजनशाला और गोशाला भी हैं।',
+        bodyEn:
+          'Udupi’s Krishna is the child Krishna: a churning rod in his right hand, the churning rope in his left, worshipped as Muddu Krishna, the endearing one. The rod is read as the Lord churning the soul until the butter of bhakti rises from it. The image is of saligrama stone and, by tradition, has faced west ever since Kanakadasa’s devotion moved it, though Madhvacharya first installed it facing east. Darshan is taken not from before the sanctum but through a silver-plated window pierced with nine openings, known both as the Kanakana Kindi and the Navagraha Kindi. The story says an earthquake cracked the wall and let Kanakadasa see the Lord, and that Vadiraja Swami, rather than sealing the crack, widened it into a window. Within the precinct stand the Madhva Sarovara tank, the dining hall and the goshala.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'कनकन-किंडी और पर्याय परम्परा',
+        titleEn: 'Kanakana Kindi and the Paryaya',
+        bodyHi:
+          'उडुपी की दो परम्पराएँ इसे शेष वैष्णव धामों से अलग करती हैं। पहली कनकन-किंडी है — हर भक्त, चाहे वह किसी भी पृष्ठभूमि का हो, उसी नौ-छिद्र वाली खिड़की से कृष्ण को देखता है; यह कथा ही समानता का पाठ मानी जाती है। दूसरी पर्याय है: प्रत्येक सम वर्ष में मकर संक्रांति के चौथे दिन, 18 जनवरी को, अष्ट मठों में से अगले स्वामी को कृष्ण की सेवा सौंपी जाती है और वे दो वर्ष तक नित्य पूजा, अन्नदान और मठ-व्यवस्था सँभालते हैं। पर्याय-स्वामी प्रातः मध्व सरोवर में स्नान कर पूजा आरम्भ करते हैं। दोपहर का प्रसाद यहाँ अन्न-ब्रह्म कहलाता है और परिसर की भोजनशाला में प्रतिदिन सहस्रों भक्तों को निःशुल्क परोसा जाता है — उडुपी के भोजन की ख्याति इसी सेवा से निकली है। दर्शन प्रातः लगभग पाँच बजे से पूर्वाह्न तक और फिर सायं से रात तक खुला रहता है।',
+        bodyEn:
+          'Two customs set Udupi apart. The first is the Kanakana Kindi: every devotee, whatever their background, sees Krishna through that same nine-holed window, and the story behind it is told as a lesson in equality. The second is the Paryaya. On the fourth day after Makara Sankranti — 18 January — in every even year, the service of Krishna passes to the next of the Ashta Matha seers, who then carries the daily worship, the feeding of pilgrims and the management of the shrine for two years. The Paryaya seer begins by bathing in the Madhva Sarovara before the morning worship. The midday prasadam is called Anna Brahma and is served free in the temple’s dining hall to thousands each day; the fame of Udupi cooking grew out of this kitchen. Darshan runs from about five in the morning through the forenoon, and again from evening into the night.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'वर्ष का सबसे बड़ा आयोजन प्रत्येक सम वर्ष का पर्याय महोत्सव है, जब 18 जनवरी को नगर शोभायात्रा, वेद-घोष और भारी जनसमूह से भर जाता है। श्रावण कृष्ण अष्टमी को श्रीकृष्ण जन्माष्टमी मनाई जाती है, जिसके लिए मठ में लाखों लड्डू और चकली तैयार होते हैं; अगले दिन विट्ठल पिंडी होती है — कृष्ण की बाल-लीलाओं का उत्सव और रथोत्सव, जिसमें रथ रथबीदी में खींचा जाता है। माघ शुक्ल नवमी को मध्व नवमी मनाई जाती है, जिस दिन परम्परा के अनुसार मध्वाचार्य अंतर्धान हुए थे। इनके अतिरिक्त मकर संक्रांति, रथ सप्तमी, नवरात्रि महोत्सव, विजयादशमी, दीपावली और गीता जयंती मठ के वार्षिक पंचांग में प्रमुख हैं।',
+        bodyEn:
+          'The year’s greatest event is the Paryaya Mahotsava of each even year, when 18 January fills the town with processions, Vedic chanting and enormous crowds. Krishna Janmashtami falls on Shravana Krishna Ashtami, for which the matha prepares laddus and chaklis by the lakh; the next day brings Vittala Pindi, a celebration of Krishna’s childhood pranks together with the Rathotsava, when the chariot is drawn along the Rathabeedhi. Madhva Navami, on Magha Shukla Navami, marks the day tradition holds the Acharya withdrew from the world. Makara Sankranti, Ratha Saptami, the Navaratri Mahotsava, Vijayadashami, Deepavali and Gita Jayanti round out the matha’s calendar.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'मठ कर्नाटक के उडुपी ज़िले में नगर के मध्य रथबीदी (कार स्ट्रीट) पर है, जो कोंकण तट के राष्ट्रीय राजमार्ग से जुड़ा है। उडुपी रेलवे स्टेशन लगभग 3–4 किमी दूर है और मंगलूरु अंतरराष्ट्रीय हवाई अड्डा लगभग 59 किमी — दोनों दूरियाँ अनुमानित हैं। परम्परा है कि कृष्ण-दर्शन से पहले निकट के अनन्तेश्वर और चन्द्रमौलीश्वर मंदिरों में शीश नवाया जाए; ये दोनों प्राचीन शिव-मंदिर मठ से कुछ ही क़दम पर हैं। रथबीदी की परिक्रमा, मध्व सरोवर और भोजनशाला यात्रा का स्वाभाविक क्रम बनाते हैं, और अष्ट मठों के अपने-अपने भवन भी इसी गली में हैं। तटवर्ती यात्री प्रायः उडुपी को मंगलूरु और कोल्लूर की ओर के मंदिरों के साथ एक ही मार्ग में जोड़ते हैं।',
+        bodyEn:
+          'The matha stands at the centre of Udupi town in Karnataka, on the Rathabeedhi or Car Street, off the coastal national highway. Udupi railway station is roughly 3–4 km away and Mangaluru International Airport roughly 59 km — both distances approximate. Custom asks pilgrims to bow first at the neighbouring Anantheshwara and Chandramouleshwara temples, two ancient Shiva shrines only steps from the matha, before going to Krishna. A circuit of the Rathabeedhi, the Madhva Sarovara and the dining hall makes the natural order of a visit, and the eight mathas keep their own houses along the same street. Coastal pilgrims commonly join Udupi with the shrines towards Mangaluru and Kollur in one journey.',
       },
     ],
   },
