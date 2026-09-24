@@ -10,9 +10,78 @@ import type { TempleDetail } from '../temples';
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
  *
- * Temples still to author in this chunk: jogulamba
+ * All four temples in this chunk carry the full §12.6 reading.
  */
 export const details: Record<string, TempleDetail> = {
+  jogulamba: {
+    significanceHi:
+      'तुंगभद्रा के तट पर बसे आलमपुर की जोगुलांबा अष्टादश महाशक्ति पीठों में गिनी जाती हैं और शक्ति के उग्र योगिनी स्वरूप की उपासना का केन्द्र हैं — नाम ही "योगियों की माता" कहता है। यह क्षेत्र नवब्रह्म मंदिर-समूह के लिए प्रसिद्ध है, जिसे बादामी चालुक्यों ने सातवीं–आठवीं शताब्दी ईस्वी में बनवाया, और इसे दक्षिण काशी तथा श्रीशैलम का पश्चिमी द्वार कहा जाता है। देवी का मूल मंदिर चौदहवीं शताब्दी में नष्ट हो गया था और उनकी प्राचीन प्रतिमा सदियों तक बालब्रह्मेश्वर मंदिर में सुरक्षित रही; नया मंदिर उसी स्थान पर बना और 13 फ़रवरी 2005 (विक्रम संवत् 2061) को सभी विग्रह उसमें प्रतिष्ठित किए गए।',
+    significanceEn:
+      'Jogulamba of Alampur, on the bank of the Tungabhadra, is counted among the eighteen Maha Shakti Peethas and is the seat of Shakti in her fierce Yogini aspect — her name itself means the mother of yogis. The place is known for the Navabrahma group of temples, raised by the Badami Chalukyas in the seventh and eighth centuries CE, and is called Dakshina Kashi and the western gateway of Srisailam. The goddess’s original shrine was destroyed in the fourteenth century and her ancient image was kept safe for centuries inside the Bala Brahmeswara temple; a new temple was built on the old site and all the images were installed in it on 13 February 2005 (Vikram Samvat 2061).',
+    originStoryHi:
+      'परम्परा के अनुसार सती के देह-विखंडन के समय उनके दाँतों की पंक्ति इसी भूमि पर गिरी, और यह स्थान अष्टादश महापीठों में गिना गया। देवी यहाँ सौम्य नहीं, उग्र योगिनी रूप में प्रकट मानी जाती हैं — शव पर आसीन, जटाओं में छिपकली, बिच्छू, चमगादड़ और कपाल लिए — जो जीवन के भय और क्षय पर देवी के आधिपत्य के प्रतीक बताए जाते हैं। उनके दोनों ओर चंडी और मुंडी नाम की दो शक्तियाँ विराजित हैं, और उपासक मानते हैं कि इसी उग्र रूप से वे साधकों को सिद्धि देती हैं।',
+    originStoryEn:
+      'By tradition the row of Sati’s teeth fell on this ground when her body was divided, and the place took its seat among the eighteen Maha Peethas. The goddess is held to appear here not in her gentle aspect but as a fierce Yogini — seated on a corpse, with a lizard, a scorpion, a bat and a skull in her matted hair — read as her mastery over the fear and decay of life. Two shaktis named Chandi and Mundi flank her, and worshippers hold that it is in this fierce form that she grants siddhi to those who practise.',
+    sources: [
+      {
+        label: 'Telangana Tourism — Alampur Jogulamba Temple',
+        url: 'https://telanganatourism.gov.in/partials/destinations/divine-destinations/jogulamba-gadwal/alampur-jogulamba-temple.html',
+      },
+      {
+        label: 'Telangana Tourism — Alampur (Heritage Spots)',
+        url: 'https://telanganatourism.gov.in/partials/destinations/heritage-spots/jogulamba-gadwal/alampur.html',
+      },
+      { label: 'Ministry of Tourism, Rural Tourism — Alampur', url: 'https://www.rural.tourism.gov.in/Alampur-destination.html' },
+      { label: 'Jogulamba Temple, Alampur — Reference', url: 'https://en.wikipedia.org/wiki/Jogulamba_Temple,_Alampur' },
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'आलमपुर का मंदिर-समूह तुंगभद्रा और कृष्णा के संगम के निकट बसा है; यहाँ के नवब्रह्म मंदिर बादामी चालुक्य शासकों ने सातवीं–आठवीं शताब्दी ईस्वी में उत्तर भारतीय (नागर) शैली में बनवाए, और उन्हीं के बीच जोगुलांबा का पीठ है। देवी की मूल प्रतिष्ठा की तिथि, वार अथवा प्रतिष्ठाकर्ता कहीं अभिलिखित नहीं है — जो अभिलिखित है वह विनाश और पुनर्निर्माण का क्रम है। चौदहवीं शताब्दी के अंत में मूल जोगुलांबा मंदिर ध्वस्त हो गया; देवी की प्राचीन प्रतिमा तथा चंडी और मुंडी के विग्रह उठाकर पास के बालब्रह्मेश्वर मंदिर में रख दिए गए और छह सौ से अधिक वर्ष वहीं पूजित रहे। बीसवीं सदी के उत्तरार्ध में श्रीशैलम जलाशय के कारण क्षेत्र का भूगोल बदला — संगमेश्वर मंदिर का मूल स्थल जलमग्न होने पर उसे शिला-शिला खोलकर आलमपुर में पुनः खड़ा किया गया, यह कार्य जनवरी 1990 (विक्रम संवत् 2046) तक पूरा हुआ। इसके बाद जोगुलांबा का नया मंदिर उनके पुराने स्थान पर ही बनाया गया और 13 फ़रवरी 2005 (विक्रम संवत् 2061) को प्राचीन विग्रह सहित सभी मूर्तियाँ उसमें प्रतिष्ठित हुईं; चंडी और मुंडी के मूल विग्रह बालब्रह्मेश्वर में ही रहने दिए गए और नए मंदिर के लिए नई प्रतिमाएँ बनीं। सन् 2019 में यह क्षेत्र भारत सरकार की प्रसाद योजना में सम्मिलित किया गया।',
+        bodyEn:
+          'The Alampur group stands close to where the Tungabhadra meets the Krishna; its Navabrahma temples were built by the Badami Chalukya rulers in the seventh and eighth centuries CE in the northern, nagara manner, and the seat of Jogulamba lies among them. No tithi, weekday or consecrator is recorded for the goddess’s first installation — what is recorded is a sequence of loss and rebuilding. At the close of the fourteenth century the original Jogulamba temple was destroyed; her ancient image, with those of Chandi and Mundi, was carried into the nearby Bala Brahmeswara temple, where it was worshipped for more than six hundred years. In the later twentieth century the Srisailam reservoir reshaped the country around Alampur — the Sangameswara temple, whose own site went under water, was dismantled stone by stone and re-erected here, work completed by January 1990 (Vikram Samvat 2046). A new temple for Jogulamba was then raised on her old ground, and on 13 February 2005 (Vikram Samvat 2061) the images, the ancient one among them, were installed in it; the original Chandi and Mundi remained at Bala Brahmeswara and fresh images were made for the new shrine. In 2019 the site was brought under the Government of India’s PRASAD scheme.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'जोगुलांबा का स्वरूप',
+        titleEn: 'The Form of Jogulamba',
+        bodyHi:
+          'जोगुलांबा का विग्रह दक्षिण के शक्ति-मंदिरों में सबसे असामान्य माना जाता है: देवी शव पर बैठी हैं, जिह्वा बाहर, और उनकी विशाल जटाओं में छिपकली, बिच्छू, चमगादड़ तथा कपाल गुँथे हैं। शाक्त व्याख्या में ये चारों गृह-क्षय और भय के चिह्न हैं, जिन्हें देवी अपने ही केशों में धारण कर उन पर अपना आधिपत्य दर्शाती हैं — इसीलिए उन्हें उग्र रूप में भी अभय देने वाली माना जाता है। गर्भगृह में उनके दोनों ओर चंडी और मुंडी विराजित हैं; मूल चंडी-मुंडी विग्रह आज भी बालब्रह्मेश्वर मंदिर में हैं, और नए मंदिर में उनकी नई प्रतिमाएँ स्थापित हैं। मंदिर स्वयं नवब्रह्म समूह की चालुक्य-कालीन नागर शैली के बीच खड़ा है, जिसके शिखर और कक्ष-भित्तियाँ उत्तरी रेखा-शिखर परम्परा की हैं — दक्षिण भारत में यह शैली-संयोग ही आलमपुर की पहचान है।',
+        bodyEn:
+          'Jogulamba’s image is reckoned among the most unusual in any southern goddess shrine: she is seated upon a corpse with her tongue out, and her great mass of matted hair holds a lizard, a scorpion, a bat and a human skull. In the Shakta reading these four are the signs of a house’s ruin and of dread, worn in her own hair to show her mastery over them — which is why even this fierce form is held to give refuge. Chandi and Mundi are enshrined at her either side in the sanctum; the original images of the two remain in the Bala Brahmeswara temple, and new ones were made for the rebuilt shrine. The temple itself stands amid the Chalukya-period Navabrahma group, whose curved spires and wall treatment belong to the northern tradition — that meeting of a northern style on southern ground is what marks Alampur out.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'योगिनी उपासना और नवब्रह्म परिक्रमा',
+        titleEn: 'Yogini Worship and the Navabrahma Round',
+        bodyHi:
+          'आलमपुर की परम्परा शिव और शक्ति को अलग नहीं करती: यात्री पहले बालब्रह्मेश्वर के दर्शन करते हैं और फिर जोगुलांबा के — मान्यता है कि यह क्रम उलटा नहीं होना चाहिए, और इसी युग्म-दर्शन से पीठ की यात्रा पूर्ण मानी जाती है। देवी के उग्र योगिनी रूप के कारण यहाँ की उपासना श्रीविद्या और शाक्त-साधना की ओर झुकी है; कुंकुमार्चना, चंडी-होम और सहस्रनाम अर्चना प्रमुख सेवाएँ हैं, और अर्चना का कुंकुम प्रसाद-रूप में लौटाया जाता है। शुक्रवार और अमावस्या-पूर्णिमा की रात्रियाँ देवी की विशेष रातें मानी जाती हैं, जब साधक दीप और लाल पुष्प अर्पित करते हैं। नवब्रह्म समूह के नौ शिव-मंदिरों की परिक्रमा और तुंगभद्रा-स्नान भी यात्रा का अंग है; दर्शन प्रातः से मध्याह्न तक और फिर सायं से रात्रि आरती तक खुलते हैं।',
+        bodyEn:
+          'Alampur does not separate Shiva from Shakti: pilgrims take darshan of Bala Brahmeswara first and of Jogulamba afterwards — the order is held not to be reversed, and it is this paired darshan that completes the visit to the peeth. Because the goddess is worshipped in her Yogini aspect, the usage here leans towards Srividya and Shakta practice; kumkumarchana, the Chandi homa and sahasranama archana are the principal sevas, and the kumkum of the archana is returned as prasad. Fridays and the nights of the new and full moon are kept as her own, when practitioners offer lamps and red flowers. Walking the round of the nine Shiva shrines of the Navabrahma group and bathing in the Tungabhadra belong to the same visit; darshan runs from the morning to midday and again from late afternoon to the night aarti.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'वर्ष का सबसे बड़ा उत्सव शारदीय नवरात्रि (आश्विन शुक्ल प्रतिपदा से विजयादशमी) है, जब जोगुलांबा नौ दिन नौ भिन्न अलंकारों में दर्शन देती हैं और आलमपुर में सबसे बड़ी भीड़ जुटती है। इन्हीं दिनों बालब्रह्मेश्वर स्वामी और देवी का कल्याणोत्सव, रथोत्सव, तुंगभद्रा तट पर नदी-हारती तथा तेप्पोत्सव (नौका-उत्सव) होते हैं। महाशिवरात्रि (फाल्गुन कृष्ण चतुर्दशी) पर बालब्रह्मेश्वर और जोगुलांबा दोनों मंदिरों में विशेष पूजा होती है, और उगादि (चैत्र शुक्ल प्रतिपदा) से तेलुगु नववर्ष का आरम्भ यहाँ उत्सव-रूप में मनाया जाता है। नवीन मंदिर की प्रतिष्ठा-तिथि 13 फ़रवरी 2005 (विक्रम संवत् 2061) भी वार्षिक स्मरण-दिवस के रूप में मंदिर में मानी जाती है; तुंगभद्रा पुष्करम के वर्षों में संगम-स्नान के लिए विशेष भीड़ उमड़ती है।',
+        bodyEn:
+          'The year’s greatest festival is Sharad Navaratri (Ashwin Shukla Pratipada to Vijayadashami), when Jogulamba is shown in nine different alankaras across nine days and Alampur sees its largest crowds. Those same days bring the Kalyanotsavam of Bala Brahmeswara Swamy and the goddess, the chariot festival, the river harati on the Tungabhadra bank and the teppotsavam, the float ritual. Maha Shivaratri (Phalguna Krishna Chaturdashi) brings special worship in both the Bala Brahmeswara and Jogulamba temples, and Ugadi (Chaitra Shukla Pratipada), the Telugu new year, is kept here as a festival. The temple also marks the anniversary of its own re-installation on 13 February 2005 (Vikram Samvat 2061); in Tungabhadra Pushkaram years the confluence draws great crowds for the ritual bath.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'आलमपुर तेलंगाना के जोगुलांबा गडवाल ज़िले में है और हैदराबाद–बेंगलूरु राजमार्ग से थोड़ा भीतर पड़ता है; मंदिर आलमपुर बस स्टैंड से लगभग आधा किलोमीटर पर है। निकटतम रेलवे स्टेशन आलमपुर रोड लगभग 10 किमी दूर है, पर वहाँ कम गाड़ियाँ रुकती हैं, इसलिए अधिकांश यात्री कर्नूल (लगभग 28 किमी) उतरकर सड़क-मार्ग से आते हैं; निकटतम हवाई अड्डा कर्नूल लगभग 58 किमी और हैदराबाद लगभग 200–215 किमी पड़ता है। सभी दूरियाँ अनुमानित हैं। आलमपुर को श्रीशैलम का पश्चिमी द्वार कहा जाता है, इसलिए यात्री प्रायः इसे मल्लिकार्जुन ज्योतिर्लिंग और भ्रमरांबा शक्तिपीठ के साथ एक ही यात्रा में जोड़ते हैं। स्थल पर ही नवब्रह्म मंदिर-समूह, बालब्रह्मेश्वर मंदिर, पुनःस्थापित संगमेश्वर मंदिर, पापनासी मंदिर-समूह और तुंगभद्रा-संगम दर्शनीय हैं।',
+        bodyEn:
+          'Alampur lies in Jogulamba Gadwal district of Telangana, a short way off the Hyderabad–Bengaluru highway; the temple stands about half a kilometre from the Alampur bus stand. The nearest railway station, Alampur Road, is roughly 10 km away but few trains halt there, so most pilgrims get down at Kurnool, about 28 km off, and come in by road; the nearest airport is Kurnool at some 58 km, with Hyderabad about 200–215 km away. All distances are approximate. Alampur is called the western gateway of Srisailam, and pilgrims commonly join it in one journey with the Mallikarjuna Jyotirlinga and the Bhramaramba Shakti Peeth there. On the site itself are the Navabrahma group, the Bala Brahmeswara temple, the re-erected Sangameswara temple, the Papanasi group of shrines and the Tungabhadra confluence.',
+      },
+    ],
+  },
   chamundeshwari: {
     significanceHi:
       'मैसूरु की चामुंडी पहाड़ी पर विराजित चामुंडेश्वरी अष्टादश महाशक्ति पीठों में चौथे स्थान पर गिनी जाती हैं और मैसूर राजवंश की कुलदेवी हैं। यह पीठ "क्रौंच पीठ" कहलाता है, क्योंकि इस क्षेत्र का प्राचीन नाम क्रौंचपुरी था। मंदिर का मूल गर्भगृह बारहवीं शताब्दी का माना जाता है; सन् 1659 (विक्रम संवत् 1716) में डोड्ड देवराज वाडियार ने पहाड़ी पर सोपान-मार्ग बनवाया और सन् 1827 (विक्रम संवत् 1884) में कृष्णराज वाडियार तृतीय ने मंदिर का जीर्णोद्धार कराकर वर्तमान गोपुर खड़ा किया। महिषासुर-मर्दिनी रूप में पूजित देवी के नाम पर ही मैसूरु (महिषूरु) नगर का नाम पड़ा माना जाता है।',
