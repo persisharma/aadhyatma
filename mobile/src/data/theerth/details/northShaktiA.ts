@@ -10,7 +10,7 @@ import type { TempleDetail } from '../temples';
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
  *
- * Temples still to author in this chunk: kalighat naina-devi
+ * Temples still to author in this chunk: naina-devi
  */
 export const details: Record<string, TempleDetail> = {
   kamakhya: {
@@ -134,6 +134,68 @@ export const details: Record<string, TempleDetail> = {
           'यात्रा का आधार-नगर कटरा है, जो रियासी ज़िले में पड़ता है; भवन तक की चढ़ाई कटरा से लगभग 12–13 किमी है (दूरी अनुमानित)। कटरा से लगभग 2–3 किमी पर बाणगंगा, उससे लगभग डेढ़ किमी आगे लगभग 3,380 फुट पर चरण-पादुका, और कटरा से लगभग 6 किमी पर अर्धक्वाँरी पड़ता है; आगे साँझीछत होते हुए भवन आता है और भैरोंनाथ का मंदिर भवन से और ऊपर है, जहाँ पैदल मार्ग के साथ रोपवे की सुविधा भी है। चढ़ाई के लिए पैदल मार्ग, घोड़ा-पालकी और हेलिकॉप्टर सेवा तीनों उपलब्ध हैं। निकटतम रेलवे स्टेशन श्री माता वैष्णो देवी कटरा है, जो नगर में ही है; निकटतम हवाई अड्डा जम्मू है, कटरा से लगभग 45–50 किमी (अनुमानित)। अनेक तीर्थयात्री इसी यात्रा में जम्मू के रघुनाथ मंदिर के दर्शन भी जोड़ते हैं।',
         bodyEn:
           'The base town is Katra, in Reasi district, and the climb to the Bhawan is roughly 12–13 km from there (distance approximate). Banganga lies about 2–3 km above Katra, Charan Paduka some 1.5 km further at about 3,380 feet, and Ardhkuwari around 6 km from Katra; beyond it the track runs by Sanjichhat to the Bhawan, with the Bhairon Nath shrine higher still, reached on foot or by the ropeway. Pilgrims go up on foot, by pony and palanquin, or by the helicopter service. The nearest railhead is Shri Mata Vaishno Devi Katra station in the town itself; the nearest airport is Jammu, roughly 45–50 km away (approximate). Many pilgrims add darshan at the Raghunath temple in Jammu to the same journey.',
+      },
+    ],
+  },
+  kalighat: {
+    significanceHi:
+      'कोलकाता का कालीघाट काली-उपासना का सबसे प्रसिद्ध केन्द्र और 51 शक्ति पीठों में गिना जाने वाला तीर्थ है; नगर का नाम ही इसी कालीक्षेत्र से जुड़ा माना जाता है। यहाँ देवी दक्षिणा काली के रूप में कसौटी पत्थर की उस प्रतिमा में पूजित हैं जिसकी भुजाएँ चाँदी की और जिह्वा स्वर्ण की है। वर्तमान मंदिर का निर्माण सन् 1798 (विक्रम संवत् 1855) में आरम्भ होकर लगभग ग्यारह वर्ष में सन् 1809 (विक्रम संवत् 1866) में पूर्ण हुआ।',
+    significanceEn:
+      'Kalighat in Kolkata is the best-known seat of Kali worship in Bengal and is counted among the 51 Shakti Peethas; the city’s own name is traced to this Kalikshetra. The goddess is worshipped here as Dakshina Kali in a touchstone image whose arms are of silver and whose tongue is of gold. The temple standing today was begun in 1798 CE (Vikram Samvat 1855) and completed some eleven years later in 1809 CE (Vikram Samvat 1866).',
+    originStoryHi:
+      'शक्ति-पीठ कथा के अनुसार दक्ष-यज्ञ के बाद शिव सती का शरीर लिए तांडव करते रहे और विष्णु के चक्र से कटे अंग भारत भर में गिरे; परम्परा कहती है कि आदि गंगा के इस तट पर सती के दाहिने पैर की अँगुलियाँ गिरीं और यह भूमि कालीक्षेत्र कहलाई। लोक-मान्यता है कि नदी-तट पर मिले एक तेजोमय शिला-खंड की पूजा से यहाँ उपासना आरम्भ हुई और आरम्भिक मंदिर केवल एक छोटी कुटिया था। पन्द्रहवीं–सोलहवीं शताब्दी के बंगला ग्रंथों — मनसार भासान और कविकंकण चंडी — में इस स्थान का उल्लेख मिलता है, जो बताता है कि यह तीर्थ नगर कोलकाता से बहुत पुराना है।',
+    originStoryEn:
+      'By the Shakti Peeth tradition, Shiva bore Sati’s body in his tandava after the Daksha yajna and her severed limbs fell across the land; the toes of her right foot are held to have fallen on this bank of the Adi Ganga, making the ground Kalikshetra. Local tradition tells that worship began with a luminous stone found at the river’s edge, and that the first shrine here was no more than a small hut. Fifteenth- and sixteenth-century Bengali works — the Manasar Bhasan and the Kavikankan Chandi — already name the place, which shows the tirtha to be far older than the city of Kolkata around it.',
+    sources: [
+      { label: 'Kalighat Kali Temple (temple authority)', url: 'https://www.kalighatkalitemple.com/article/id/228/kalighat-kali-temple' },
+      { label: 'Incredible India (Ministry of Tourism) - Kalighat Temple', url: 'https://www.incredibleindia.gov.in/en/west-bengal/kolkata/kalighat-temple' },
+      { label: 'Kalighat Temple - Reference', url: 'https://en.wikipedia.org/wiki/Kalighat_Temple' },
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'कालीघाट की उपासना नगर कोलकाता से पुरानी है — पन्द्रहवीं–सोलहवीं शताब्दी के बंगला काव्य मनसार भासान और कविकंकण चंडी में इस तीर्थ का नाम आता है, जब यहाँ आदि गंगा के तट पर केवल एक छोटी कुटिया थी। परम्परा के अनुसार वर्तमान दक्षिणा काली की कसौटी-प्रतिमा सन् 1570 (विक्रम संवत् 1627) में दो संतों, ब्रह्मानन्द गिरि और आत्माराम गिरि, ने प्रतिष्ठित की। आज जो भव्य मंदिर खड़ा है, उसका निर्माण सन् 1798 (विक्रम संवत् 1855) में सन्तोष राय चौधुरी ने आरम्भ कराया और लगभग ग्यारह वर्ष के श्रम के बाद यह सन् 1809 (विक्रम संवत् 1866) में पूर्ण हुआ; बड़िशा के सबर्ण राय चौधुरी परिवार को इसका आश्रयदाता माना जाता है, जिन्होंने सेवा-पूजा निर्बाध चलती रहे इसके लिए मंदिर को सैकड़ों बीघा भूमि भी अर्पित की — यद्यपि इस पारम्परिक आश्रय के विस्तार पर विद्वानों में मतभेद है। मंदिर बंगाल की आट-चाला शैली में बना है, और आज इसका प्रबन्ध एक सेवायत-समिति के हाथ में है।',
+        bodyEn:
+          'Worship at Kalighat is older than Kolkata itself: the Bengali poems Manasar Bhasan and Kavikankan Chandi, of the fifteenth and sixteenth centuries, already name the tirtha, when the shrine on the Adi Ganga bank was still a small hut. Tradition holds that the present touchstone image of Dakshina Kali was consecrated in 1570 CE (Vikram Samvat 1627) by two ascetics, Brahmananda Giri and Atmaram Giri. The grand temple standing today was begun in 1798 CE (Vikram Samvat 1855) by Santosh Roy Chowdhury and finished after some eleven years of work in 1809 CE (Vikram Samvat 1866); the Sabarna Roy Choudhury family of Barisha are held to be its patrons, and are said to have endowed the shrine with hundreds of bighas of land so that worship could continue unbroken — though the extent of that traditional patronage is debated by historians. The building follows the Bengal aat-chala form, and the shrine is administered today by a committee of its sevayats.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'दक्षिणा काली का स्वरूप',
+        titleEn: 'The Form of Dakshina Kali',
+        bodyHi:
+          'कालीघाट की देवी दक्षिणा काली कहलाती हैं और उनका स्वरूप किसी अन्य काली-प्रतिमा जैसा नहीं है। गर्भगृह में कसौटी (काले स्पर्श-पत्थर) का एक बड़ा खंड है, जिस पर मुख के आकार की सरल तराश है; उस पर तीन नेत्र चटक लाल-नारंगी रंग से उकेरे गए हैं, जो अँधेरे गर्भगृह में दूर से ही दिखाई देते हैं। शिला से जुड़ी चार भुजाएँ चाँदी की हैं, और देवी की प्रसिद्ध लम्बी जिह्वा यहाँ स्वर्ण की गढ़ी हुई है, जिसे ऊपर की सोने की दन्त-पंक्ति थामे रहती है। प्रतिमा को लाल वस्त्र, स्वर्णाभूषण और जपा (गुड़हल) के लाल पुष्पों की मालाओं से सजाया जाता है — लाल जपा यहाँ देवी का प्रधान पुष्प है। परिसर में भैरव के रूप में नकुलेश्वर महादेव का मंदिर है, और पास ही आदि गंगा की धारा बहती है जिसमें यात्री स्नान-आचमन करते हैं।',
+        bodyEn:
+          'The goddess of Kalighat is called Dakshina Kali, and her form resembles no other Kali image. The sanctum holds a large block of touchstone cut only roughly into the suggestion of a face; on it three eyes are painted in bright orange-red, visible from well down the dim sanctum. Four arms of silver are fixed to the stone, and the goddess’s famous long tongue is here beaten out of gold, held in place by an upper row of golden teeth. She is dressed in red cloth and gold ornament and garlanded with red japa — hibiscus — which is her ruling flower here. Within the precinct stands the shrine of Nakuleshwar Mahadev, the Bhairava of this peeth, and close by runs the channel of the Adi Ganga, where pilgrims take water before darshan.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'जपा-पुष्प और नित्य सेवा',
+        titleEn: 'Hibiscus Offerings and the Daily Service',
+        bodyHi:
+          'कालीघाट की सेवा-परम्परा भोर से आरम्भ होती है। लगभग चार बजे देवी को जगाया जाता है, स्नान कराकर लाल जपा-पुष्पों की मालाओं और वस्त्रों से शृंगार होता है, और फिर कपाट भक्तों के लिए खुलते हैं; दोपहर में लगभग दो बजे द्वार बन्द कर पुजारी एकान्त में देवी को भोग अर्पित करते हैं, और सायं पुनः दर्शन तथा आरती होती है। भक्त लाल जपा-पुष्प, लाल वस्त्र, सिन्दूर, मिष्टान्न, खिचुड़ी और फल अर्पित करते हैं, और अन्नभोग का प्रसाद पाकर लौटते हैं। बंगाल में मनौती की परम्परा यहाँ गहरी है — कामना पूर्ण होने पर भक्त पुनः आकर पूजा चढ़ाते हैं, और बच्चों के मुण्डन तथा अन्नप्राशन जैसे संस्कार भी मंदिर परिसर में कराए जाते हैं। मंगलवार और शनिवार विशेष माने जाते हैं, और अमावस्या की रात्रि को काली-उपासना का सबसे प्रशस्त समय माना जाता है।',
+        bodyEn:
+          'The day’s service at Kalighat begins before dawn. The goddess is woken around four in the morning, bathed, and dressed with fresh cloth and garlands of red hibiscus; the doors then open to devotees. Around two in the afternoon they close again so that the pujaris may offer her food in private, and the shrine reopens in the evening for darshan and aarti. Devotees bring red hibiscus, red cloth, sindoor, sweets, khichuri and fruit, and carry home the cooked bhog as prasad. The Bengali habit of the vow runs deep here: those whose wishes are granted return to offer puja, and family rites such as a child’s first tonsure and first rice are performed within the precinct. Tuesdays and Saturdays are held especially auspicious, and the night of the new moon is counted the most potent time for Kali’s worship.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'वर्ष का सबसे बड़ा उत्सव काली पूजा है, जो कार्तिक कृष्ण अमावस्या की रात्रि — दीपावली की ही रात — को मनाई जाती है; उस रात कालीघाट दीपों से भर जाता है और दर्शनार्थियों की पंक्ति रातभर चलती रहती है। परम्परा यह है कि काली पूजा के दिन यहाँ देवी का लक्ष्मी-रूप में भी पूजन होता है। आश्विन की दुर्गा पूजा में, विशेषकर अष्टमी से दशमी तक, मंदिर और आसपास की गलियाँ श्रद्धालुओं से भर जाती हैं, और नवरात्र के नौ दिन विशेष पूजा-अर्चना होती है। पोइला बोइशाख (बंगला नववर्ष) पर व्यापारी अपने नए बही-खाते लेकर देवी के सम्मुख हालखाता की पूजा कराने आते हैं — यह कोलकाता की विशिष्ट परम्परा है। स्नान-यात्रा और अमावस्या की रात्रियाँ भी विशेष मानी जाती हैं, और हर अमावस्या पर भीड़ उल्लेखनीय रहती है।',
+        bodyEn:
+          'The year’s greatest observance is Kali Puja, kept on the new-moon night of Kartik — the same night as Deepavali — when Kalighat fills with lamps and the queue for darshan runs through the night. By custom the goddess is worshipped on that day in her Lakshmi aspect as well. During the Durga Puja of Ashwin, and above all from Ashtami to Dashami, the temple and the lanes around it are packed, and the nine nights of Navratri carry special worship. On Poila Boishakh, the Bengali new year, traders bring their new account books before the goddess for the Halkhata puja — a custom particular to Kolkata. Snan Yatra and the new-moon nights through the year are also kept, and every amavasya draws a notable crowd.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'कालीघाट दक्षिण कोलकाता में आदि गंगा के तट पर, रासबिहारी एवेन्यू के पास स्थित है। सबसे सुगम मार्ग कोलकाता मेट्रो की ब्लू लाइन है, जिसका कालीघाट स्टेशन मंदिर के निकट ही पड़ता है; ट्राम, बस और टैक्सी भी सीधे यहाँ पहुँचाती हैं। निकटतम बड़े रेलवे स्टेशन सियालदह और हावड़ा हैं, और नेताजी सुभाष चन्द्र बोस अन्तर्राष्ट्रीय हवाई अड्डा नगर के उत्तर-पूर्व में है। अधिकांश तीर्थयात्री कालीघाट के साथ हुगली-तट के दक्षिणेश्वर काली मंदिर के दर्शन एक ही यात्रा में जोड़ते हैं, जो सड़क-मार्ग से लगभग 17–20 किमी दूर है (दूरी अनुमानित) और मेट्रो की उसी ब्लू लाइन के दूसरे छोर पर पड़ता है। परिसर में ही नकुलेश्वर महादेव का मंदिर है, और पास में मदर टेरेसा का निर्मल हृदय आश्रम तथा लेक मार्केट की गलियाँ पड़ती हैं, जहाँ पूजा-सामग्री और लाल जपा-पुष्प मिलते हैं।',
+        bodyEn:
+          'Kalighat stands in south Kolkata on the bank of the Adi Ganga, just off Rashbehari Avenue. The easiest approach is the Blue Line of the Kolkata Metro, whose Kalighat station lies close to the temple; trams, buses and taxis also reach it directly. The main railheads are Sealdah and Howrah, and Netaji Subhas Chandra Bose International Airport lies to the city’s north-east. Most pilgrims pair Kalighat with the Dakshineswar Kali temple on the Hooghly, roughly 17–20 km away by road (distance approximate) and at the far end of the same Blue Line. The Nakuleshwar Mahadev shrine is within the precinct itself, and close by are Mother Teresa’s Nirmal Hriday home and the lanes of Lake Market, where puja materials and red hibiscus are sold.',
       },
     ],
   },
