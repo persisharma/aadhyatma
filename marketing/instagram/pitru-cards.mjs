@@ -8,7 +8,7 @@
 // Background: the app's own faded sketch plates (mobile/assets/backgrounds/*.webp) under the
 // parchment overlay stack — design.md §6 + §39 (share card).
 //
-// Usage: node marketing/instagram/pitru-cards.mjs [outDir]
+// Usage: node marketing/instagram/pitru-cards.mjs [set]   (sets: see SETS; default renders all)
 // Needs headless Chromium (CHROME_BIN, or the usual Linux/macOS locations) and the three
 // brand faces; missing faces are fetched into ~/.fonts on first run.
 
@@ -21,7 +21,6 @@ import { fileURLToPath } from 'node:url';
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(HERE, '..', '..');
 const PLATES = path.join(REPO_ROOT, 'mobile', 'assets', 'backgrounds');
-const OUT_DIR = process.argv[2] ? path.resolve(process.argv[2]) : path.join(HERE, 'pitru');
 
 const W = 1080, H = 1350; // 4:5 — the tallest aspect a feed post shows whole (design.md §39.3)
 const SMART_LINK = 'persisharma.github.io/get-vedansh';
@@ -173,6 +172,94 @@ const CARDS = [
   },
 ];
 
+// ── Set 2: the first shraddha of the fortnight (Purnima Shraddha) ────────────
+// Dates are the shipped engine's own pinned solve (mobile/src/panchang/__tests__/pitruSmaran.test.ts:
+// "pitruPakshaWindow 2026: purnima 26 Sep, Pratipada Shraddha 27 Sep, Sarvapitri Amavasya 10 Oct").
+// Re-check that test before re-using this set in another year — the dates are year-specific.
+const PURNIMA_CARDS = [
+  {
+    slug: '1-purnima-shraddha',
+    lessonId: 'tithi-purnima · engine pakshaShraddhaDay',
+    plate: 'deity-navagraha-icons.webp',
+    plateOpacity: 0.9, platePos: '50% 30%', plateFilter: 'sepia(.45) saturate(.8) contrast(1.1)',
+    kicker: 'पितृ पक्ष का पहला दिन',
+    titleHi: 'पूर्णिमा श्राद्ध',
+    subHi: 'शनिवार, 26 सितम्बर 2026',
+    body: [
+      'पितृ पक्ष का **पहला दिन** — भाद्रपद पूर्णिमा। इसे प्रोष्ठपदी पूर्णिमा भी कहते हैं।',
+      'जिन पूर्वजों का देहान्त **किसी भी पूर्णिमा** को हुआ था — किसी भी महीने की — उनका श्राद्ध इसी दिन किया जाता है।',
+      'अगले दिन, **27 सितम्बर** से कृष्ण पक्ष की तिथियाँ शुरू होती हैं, और हर पूर्वज को **अपनी तिथि** वाले दिन याद किया जाता है।',
+      'तारीख़ स्थान के अनुसार एक दिन आगे-पीछे हो सकती है — अपने स्थान का पंचांग देख लें।',
+    ],
+    en: {
+      kicker: 'Day one of Pitru Paksha',
+      title: 'Purnima Shraddha',
+      sub: 'Saturday, 26 September 2026',
+      body: [
+        'The **first day** of Pitru Paksha is Bhadrapada Purnima, the full moon. It is also called Proshthapadi Purnima.',
+        'Ancestors who passed away on **any full moon** — in any month of the year — are remembered on this day.',
+        'From the next day, **27 September**, the waning-moon tithis begin, and each ancestor is remembered on **their own tithi**.',
+        'The date can shift by a day depending on where you live, so check your local panchang.',
+      ],
+    },
+  },
+  {
+    slug: '2-solah-din',
+    lessonId: 'tithi-purnima · tithi-amavasya · prashna tithi-agyat / do-log-ek-tithi',
+    plate: 'deity-ganga.webp',
+    kicker: 'एक नज़र में',
+    titleHi: 'पितृ पक्ष 2026',
+    subHi: '26 सितम्बर से 10 अक्टूबर',
+    body: [
+      '**26 सितम्बर · पूर्णिमा श्राद्ध** — जिनका देहान्त पूर्णिमा को हुआ।',
+      '**27 सितम्बर से** · प्रतिपदा, द्वितीया, तृतीया… — हर पूर्वज अपनी देहान्त-तिथि वाले दिन।',
+      '**10 अक्टूबर · सर्वपितृ अमावस्या** — जिनकी तिथि याद नहीं, या जिनका दिन छूट गया, उन सबके लिए।',
+      'दो पूर्वजों की तिथि एक हो, तो दोनों का स्मरण **उसी एक दिन** होता है।',
+    ],
+    en: {
+      kicker: 'At a glance',
+      title: 'Pitru Paksha 2026',
+      sub: '26 September to 10 October',
+      body: [
+        '**26 Sep · Purnima Shraddha** — for those who passed away on a full moon.',
+        '**From 27 Sep** · Pratipada, Dwitiya, Tritiya… — each ancestor on the tithi they passed away.',
+        '**10 Oct · Sarvapitri Amavasya** — for everyone whose tithi isn’t known, or whose day was missed.',
+        'If two ancestors share a tithi, both are remembered on **that same day**.',
+      ],
+    },
+  },
+  {
+    slug: '3-tithi-sahejein',
+    lessonId: 'app: Pitru Smaran ledger + reminders (wiki notifications/panchang) · prashna tithi-agyat',
+    plate: 'category-aarti-diya.webp',
+    kicker: 'वेदांश़ में पितृ स्मरण',
+    titleHi: 'पूर्वजों की तिथि सहेजें',
+    subHi: 'हर साल उनका दिन ऐप याद रखेगा',
+    body: [
+      'वेदांश़ के **पितृ स्मरण** में अपने पूर्वज की देहान्त-तिथि सहेजें।',
+      'ऐप हर साल बताएगा कि पितृ पक्ष में **उनका दिन कब है** — और उससे **एक शाम पहले** और **उसी सुबह** याद दिला देगा।',
+      'तिथि मालूम न हो, तब भी सहेजें — उनका दिन **सर्वपितृ अमावस्या** रहेगा।',
+      'साथ में पितृ पक्ष परिचय — सोलहों तिथियाँ, गीता-रामायण के वचन और कथाएँ।',
+    ],
+    en: {
+      kicker: 'Pitru Smaran in Vedansh',
+      title: 'Save their tithi once',
+      sub: 'The app remembers their day every year',
+      body: [
+        'In Vedansh, open **Pitru Smaran** and save the tithi on which your ancestor passed away.',
+        'Every year the app works out **their day** in Pitru Paksha, and reminds you **the evening before** and **that morning**.',
+        'Don’t know the tithi? Save them anyway — their day will be **Sarvapitri Amavasya**.',
+        'Plus a full guide to Pitru Paksha: all sixteen tithis, verses from the Gita and Ramayana, and the stories.',
+      ],
+    },
+  },
+];
+
+const SETS = {
+  paksha: { dir: 'pitru', prefix: 'pitru', cards: CARDS },
+  'purnima-shraddha': { dir: path.join('pitru', 'purnima-shraddha'), prefix: 'purnima', cards: PURNIMA_CARDS },
+};
+
 // ── fonts ────────────────────────────────────────────────────────────────────
 const FONT_CSS =
   'https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700' +
@@ -313,23 +400,28 @@ function chromeBin() {
 function main() {
   ensureFonts();
   const chrome = chromeBin();
-  fs.mkdirSync(OUT_DIR, { recursive: true });
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'pitru-cards-'));
+  const pick = process.argv[2];
+  if (pick && !SETS[pick]) throw new Error(`unknown set "${pick}" — one of: ${Object.keys(SETS).join(', ')}`);
 
-  for (const lang of ['hi', 'en']) CARDS.forEach((card, i) => {
-    const html = cardHtml(card, i + 1, CARDS.length, lang);
-    const htmlPath = path.join(tmp, `${lang}-${card.slug}.html`);
-    const outPng = path.join(OUT_DIR, `pitru-${lang === 'en' ? 'en-' : ''}${card.slug}.png`);
-    fs.writeFileSync(htmlPath, html);
-    execFileSync(chrome, [
-      '--headless=new', '--disable-gpu', '--no-sandbox', '--hide-scrollbars',
-      '--force-device-scale-factor=1', `--window-size=${W},${H}`,
-      '--virtual-time-budget=8000', `--screenshot=${outPng}`, 'file://' + htmlPath,
-    ], { stdio: 'ignore' });
-    console.log(`  ✓ ${path.relative(REPO_ROOT, outPng)}  (lesson: ${card.lessonId})`);
-  });
-
-  console.log(`\n${CARDS.length * 2} cards (hi + en) → ${path.relative(REPO_ROOT, OUT_DIR)}`);
+  for (const [name, set] of Object.entries(SETS)) {
+    if (pick && name !== pick) continue;
+    const outDir = path.join(HERE, set.dir);
+    fs.mkdirSync(outDir, { recursive: true });
+    for (const lang of ['hi', 'en']) set.cards.forEach((card, i) => {
+      const html = cardHtml(card, i + 1, set.cards.length, lang);
+      const htmlPath = path.join(tmp, `${name}-${lang}-${card.slug}.html`);
+      const outPng = path.join(outDir, `${set.prefix}-${lang === 'en' ? 'en-' : ''}${card.slug}.png`);
+      fs.writeFileSync(htmlPath, html);
+      execFileSync(chrome, [
+        '--headless=new', '--disable-gpu', '--no-sandbox', '--hide-scrollbars',
+        '--force-device-scale-factor=1', `--window-size=${W},${H}`,
+        '--virtual-time-budget=8000', `--screenshot=${outPng}`, 'file://' + htmlPath,
+      ], { stdio: 'ignore' });
+      console.log(`  ✓ ${path.relative(REPO_ROOT, outPng)}  (source: ${card.lessonId})`);
+    });
+    console.log(`${name}: ${set.cards.length * 2} cards (hi + en) → ${path.relative(REPO_ROOT, outDir)}\n`);
+  }
 }
 
 main();
