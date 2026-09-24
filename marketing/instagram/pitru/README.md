@@ -16,6 +16,11 @@ cards and the app stay in step.
 | 4 | `pitru-4-jal-kyon.png` | `jal-kyon` | `deity-ganga` |
 | 5 | `pitru-5-kiske-liye.png` | `kiske-liye` + `kya-arpan-karein` (prashna) | `deity-rama-darbar` |
 
+**English set** — `pitru-en-<same slug>.png`, rendered by the same run. The English is written
+for a reader who has never heard the terms, not translated line by line: Sanskrit words are kept
+and glossed in passing (*tithi — the lunar day*, *pind daan — rice balls offered to the
+ancestors*), and every claim stays inside the same verified rows as the Hindi card beside it.
+
 Post in that order. 1 defines the fortnight in the plainest words available (पितृ = पूर्वज, and
 what the sixteen days are); 2 answers "why keep it at all" before any procedure is described; 5
 closes on Rama offering forest roots — "जो हम खाते हैं, वही आपको अर्पित है" — which is the line
