@@ -29,6 +29,7 @@ export default function MoreStackNavigator() {
       <Stack.Screen name="PitruPakshaOverview" getComponent={() => require('@/screens/PitruPakshaOverviewScreen').default} />
       {/* पितृ पक्ष परिचय (PRD-44) — pushes from the overview so Back retraces. */}
       <Stack.Screen name="PitruPakshaShiksha" getComponent={() => require('@/screens/PitruPakshaShikshaScreen').default} />
+      <Stack.Screen name="PitruParichayReader" getComponent={() => require('@/screens/PitruParichayReaderScreen').default} />
       <Stack.Screen name="PitruKatha" getComponent={() => require('@/screens/PitruKathaScreen').default} />
       {/* वास्तु दिशा (PRD-24) — compass + room guidance. */}
       <Stack.Screen name="VastuDisha" getComponent={() => require('@/screens/VastuDishaScreen').default} />

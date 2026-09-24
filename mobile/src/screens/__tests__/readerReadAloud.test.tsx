@@ -66,6 +66,7 @@ import { getStuti } from '@/data/stuti';
 import { getSuktam } from '@/data/suktam';
 import { getSanskar } from '@/data/sanskar';
 import { getKathaContent } from '@/panchang/kathaContent';
+import { getPitruLessons } from '@/data/pitru';
 import { getBajrangBaanChapter } from '@/data/bajrang-baan';
 import { getHanumanAshtakChapter } from '@/data/hanuman-ashtak';
 import { getKrishnaStotramChapter } from '@/data/krishna-stotram';
@@ -87,6 +88,7 @@ import StutiReaderScreen from '../StutiReaderScreen';
 import SuktamReaderScreen from '../SuktamReaderScreen';
 import SanskarReaderScreen from '../SanskarReaderScreen';
 import VratKathaReaderScreen from '../VratKathaReaderScreen';
+import PitruParichayReaderScreen from '../PitruParichayReaderScreen';
 import BajrangBaanReaderScreen from '../BajrangBaanReaderScreen';
 import HanumanAshtakReaderScreen from '../HanumanAshtakReaderScreen';
 import KrishnaStotramReaderScreen from '../KrishnaStotramReaderScreen';
@@ -223,6 +225,12 @@ const READERS: readonly ReaderEntry[] = [
     name: 'VratKathaReaderScreen (nirjala-ekadashi-katha)',
     ...screen(VratKathaReaderScreen, 'VratKathaReader', { kathaId: 'nirjala-ekadashi-katha' }),
     firstSpokenLine: firstLine(katha.sections.map((s) => s.bodyHi)),
+  },
+  {
+    // Prose, same branch as the katha: a परिचय lesson's body IS the text.
+    name: 'PitruParichayReaderScreen (first lesson)',
+    ...screen(PitruParichayReaderScreen, 'PitruParichayReader', {}),
+    firstSpokenLine: firstLine(getPitruLessons('parichay').map((l) => l.bodyHi)),
   },
   {
     name: 'BajrangBaanReaderScreen (chapter 1)',
