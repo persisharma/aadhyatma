@@ -10,7 +10,7 @@ import type { TempleDetail } from '../temples';
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
  *
- * Temples still to author in this chunk: manikyamba madhaveswari
+ * Temples still to author in this chunk: madhaveswari
  */
 export const details: Record<string, TempleDetail> = {
   puruhutika: {
@@ -152,6 +152,77 @@ export const details: Record<string, TempleDetail> = {
           'मंदिर ओडिशा के जाजपुर ज़िले के जाजपुर नगर में वैतरणी नदी के तट पर है — भुवनेश्वर से लगभग 125 किमी उत्तर और कटक से लगभग 75 किमी। निकटतम रेलवे स्टेशन जाजपुर–क्योंझर रोड है, जो मंदिर से लगभग 32 किमी दूर पड़ता है और वहाँ से सड़क-मार्ग में लगभग एक घंटे से अधिक लगता है; कटक और भुवनेश्वर से नियमित बस-सेवा है, और निकटतम हवाई अड्डा भुवनेश्वर का बीजू पटनायक हवाई अड्डा है। नगर में ही वैतरणी के दक्षिण तट पर सप्तमातृका मंदिर और उससे लगा दशाश्वमेध घाट है, तथा पास ही बुढ़ा गणेश का मंदिर — तीर्थयात्री प्रायः स्नान, पिंडदान और देवी-दर्शन को एक ही दिन में जोड़ लेते हैं। यात्रा के लिए नवम्बर से फरवरी तक का समय सबसे अनुकूल माना जाता है, जब ओडिशा का मौसम ठंडा रहता है।',
         bodyEn:
           'The temple stands in Jajpur town, in Jajpur district of Odisha, on the bank of the Vaitarani — roughly 125 km north of Bhubaneswar and about 75 km from Cuttack. The nearest railhead is Jajpur–Keonjhar Road, approximately 32 km away, from where the road into town takes upwards of an hour; buses run regularly from Cuttack and Bhubaneswar, and the nearest airport is Biju Patnaik at Bhubaneswar. In the town itself, the Saptamatruka shrine sits on the south bank of the Vaitarani with the Dashaswamedha Ghat beside it and the Budha Ganesha temple close by, so pilgrims commonly fold the river bath, the pinda offering and darshan of the goddess into one day. November to February is reckoned the best season for the journey, when Odisha is at its coolest.',
+      },
+    ],
+  },
+  manikyamba: {
+    significanceHi:
+      'द्राक्षारामम की माणिक्यांबा देवी अष्टादश महाशक्ति पीठों में गिनी जाती हैं और भीमेश्वर स्वामी मंदिर के भीतरी प्राकार में विराजित हैं। जिस मंदिर-परिसर में वे बैठी हैं वह पूर्वी चालुक्य नरेश भीम द्वारा नवीं–दसवीं शताब्दी ईस्वी (लगभग विक्रम संवत् 913–1113) में बनवाया माना जाता है; देवी की प्रतिष्ठा की अपनी कोई तिथि या वार दर्ज नहीं है। यहाँ शिव और शक्ति को समान मान दिया जाता है — एक ही प्राकार में पंचारामों में से एक भीमेश्वर का लिङ्ग और अष्टादश पीठों में से एक देवी का गर्भगृह, दोनों के दर्शन एक साथ होते हैं।',
+    significanceEn:
+      'Manikyamba of Draksharama is counted among the eighteen Maha Shakti Peethas and is enshrined inside the inner prakara of the Bhimeswara Swamy temple. The complex she sits in is held to have been raised by the Eastern Chalukya king Bhima in the ninth and tenth centuries CE (roughly Vikram Samvat 913–1113); no separate date or weekday is recorded for her own consecration. Shiva and Shakti are given equal standing here — one enclosure holds both a Pancharama linga and a Peetha sanctum, and a pilgrim takes darshan of the two in a single visit.',
+    originStoryHi:
+      'शक्ति-पीठ परम्परा के अनुसार दक्ष-यज्ञ के पश्चात सती का वाम कपोल यहाँ गिरा और देवी माणिक्यांबा के नाम से पूजित हुईं। स्थान की दूसरी कथा आत्मलिङ्ग से जुड़ी है — मान्यता है कि यहाँ गिरे आत्मलिङ्ग के अंश को पवित्र करने के लिए सप्तर्षियों ने गोदावरी से यहाँ आने की प्रार्थना की। कहा जाता है कि सप्तर्षियों ने गोदावरी को सात धाराओं में बाँटा, जिनमें से भारद्वाज, विश्वामित्र और जमदग्नि की धाराएँ अन्तर्वाहिनी होकर भूमि के नीचे बहीं और आगे चलकर पुनः मिल गईं।',
+    originStoryEn:
+      'The Shakti Peeth tradition holds that Sati’s left cheek fell at this place after the Daksha yagna, and that the goddess has been worshipped here as Manikyamba ever since. A second account ties the site to the atma-linga: by tradition the Saptarishis asked the Godavari to come to Draksharama so that the fragment of the linga fallen here could be purified. The sages are said to have parted the river into seven streams, of which those of Bharadwaja, Vishwamitra and Jamadagni ran underground as antarvahinis before joining the others again.',
+    sources: [
+      {
+        label: 'East Godavari District Administration - Lord Bhimeswara Swami Temple, Draksharama',
+        url: 'https://eastgodavari.ap.gov.in/temples/lord-bhimeswara-swami-temple-draksharama/',
+      },
+      {
+        label: 'APSRTC, Government of Andhra Pradesh - Famous Places: Draksharamam',
+        url: 'https://www.apsrtc.ap.gov.in/fp_draksharamam.php',
+      },
+      {
+        label: 'Daksharamam - Reference',
+        url: 'https://en.wikipedia.org/wiki/Daksharamam',
+      },
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'माणिक्यांबा देवी की प्रतिष्ठा का संवत्, तिथि अथवा वार किसी उपलब्ध अभिलेख में दर्ज नहीं मिलता; अष्टादश पीठों में उनका स्थान देवी भागवत और तंत्र-चूड़ामणि जैसी परम्परागत सूचियों से आता है। जिस भीमेश्वर मंदिर के भीतर वे विराजी हैं, उसका निर्माण पूर्वी चालुक्य नरेश भीम ने नवीं–दसवीं शताब्दी ईस्वी (लगभग विक्रम संवत् 913–1113) में कराया माना जाता है, और सन् 982 (विक्रम संवत् 1039) के एक शिलालेख में मंदिर का उल्लेख मिलता है — अर्थात् दसवीं शती के अंत तक यह स्थापित हो चुका था। परिसर में लगभग 381 शिलालेख हैं, जो भिन्न-भिन्न राजवंशों और दानदाताओं के हैं, और यह मंदिर भारतीय पुरातत्व सर्वेक्षण द्वारा संरक्षित स्मारक है। पत्थर से बना यह मंदिर चालुक्य और चोल शैली के मेल में खड़ा है; देवी का गर्भगृह इसी के भीतरी प्राकार में बना है, अलग मंदिर के रूप में नहीं।',
+        bodyEn:
+          'No available inscription or record gives the samvat, tithi or weekday on which Manikyamba was consecrated; her place among the eighteen Peethas descends from listing traditions such as the Devi Bhagavata and the Tantra Chudamani. The Bhimeswara temple that holds her is attributed to the Eastern Chalukya king Bhima in the ninth and tenth centuries CE (roughly Vikram Samvat 913–1113), and an inscription of 982 CE (Vikram Samvat 1039) already names the temple, so it stood before the tenth century closed. About 381 inscriptions survive in the complex, left by successive dynasties and donors, and the temple is a monument protected by the Archaeological Survey of India. Built in stone, it joins Chalukya and Chola manners of building; the goddess has her sanctum within its inner prakara rather than a shrine of her own outside it.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'माणिक्यांबा देवी का स्वरूप',
+        titleEn: 'The Form of Manikyamba Devi',
+        bodyHi:
+          'देवी माणिक्यांबा आसन-मुद्रा में विराजित हैं और उनके हाथ में आत्मलिङ्ग है — खड़ी महिषमर्दिनी प्रतिमाओं से भिन्न यह बैठा हुआ, शान्त स्वरूप इस पीठ की पहचान है। उनकी दृष्टि सदा बाईं ओर रहती है, जिसे उपासक वाम-मार्ग की उपासना का चिह्न मानते हैं, और प्रतिमा के नीचे श्रीचक्र स्थापित है। परिसर के मुख्य देव भीमेश्वर स्वामी का लिङ्ग स्फटिक का बताया जाता है और लगभग 2.6 मीटर (लगभग नौ फुट) ऊँचा है; मंदिर दो मंज़िला है, इसलिए लिङ्ग के दर्शन दो तलों में फैले रहते हैं और ऊपरी तल तक दो सीढ़ी-मार्ग जाते हैं। भीतरी प्राकार का मंडप 108 स्तम्भों पर टिका है और प्रत्येक स्तम्भ पर सिंह-मुख उकेरा गया है, जबकि बाहरी प्राकार के चारों प्रवेश-द्वारों पर गोपुरम बने हैं।',
+        bodyEn:
+          'Manikyamba is seated, holding the atma-linga in her hand — a still, seated form rather than the standing buffalo-slayer of most Peethas, and it is the mark of this shrine. Her gaze is set always to the left, which worshippers read as the sign of Vama-marga observance, and a Srichakra is fixed below her image. The presiding Bhimeswara linga in the same enclosure is described as crystal, standing about 2.6 metres, close to nine feet; because the temple is built in two storeys, the darshan of the linga is spread across both floors, with two flights of stairs climbing to the upper level. The mandapa of the inner prakara rests on 108 pillars, each carved with a lion’s face, and the outer prakara opens through four gateways, every one of them crowned with a gopuram.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'श्रीचक्र अर्चना और आत्मलिङ्ग उपासना',
+        titleEn: 'Srichakra Archana and the Atma-linga',
+        bodyHi:
+          'माणिक्यांबा की उपासना का केन्द्र उनके आसन के नीचे स्थापित श्रीचक्र है — कुंकुम-अर्चना और ललिता-नाम के पाठ इसी श्रीचक्र के समक्ष होते हैं, और देवी की वाम-दृष्टि को उपासक वाम-मार्ग की परम्परा से जोड़ते हैं। यहाँ की दूसरी विशेषता यह है कि शिव और शक्ति को समान आदर मिलता है: यात्री पहले भीमेश्वर स्वामी का अभिषेक-दर्शन करते हैं और फिर उसी भीतरी प्राकार में देवी के समक्ष अर्चना कराते हैं, दोनों एक ही प्रदक्षिणा में। मंदिर के पास सप्त गोदावरी कुंड है, जहाँ परम्परा के अनुसार सप्तर्षियों द्वारा बाँटी गई धाराएँ पुनः मिलती हैं, और यात्री दर्शन से पूर्व वहाँ स्नान करते हैं। किसी एक वार को यहाँ विशेष भीड़-दिवस के रूप में उपलब्ध स्रोतों में अलग से दर्ज नहीं किया गया; सबसे बड़ी भीड़ नवरात्र और शिवरात्रि पर रहती है।',
+        bodyEn:
+          'The heart of Manikyamba’s worship is the Srichakra set beneath her seat — kumkuma archana and the recitation of the goddess’s names are made before that yantra, and her leftward gaze is taken by worshippers as a mark of the Vama-marga tradition. The other thing that shapes practice here is the parity of Shiva and Shakti: pilgrims first attend the abhisheka of Bhimeswara Swamy and then have archana performed before the goddess in the same inner prakara, both within one circumambulation. Near the temple lies the Sapta Godavari Kundam, where by tradition the seven streams parted by the sages come together again, and pilgrims bathe there before taking darshan. The available sources name no particular weekday as the busiest — the crowds gather for Navaratri and for Shivaratri instead.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'वर्ष का सबसे बड़ा उत्सव शारदीय नवरात्र है, जो आश्वयुज (आश्विन) शुक्ल प्रतिपदा से दशमी तक दस दिन चलता है और प्रत्येक दिन देवी को भिन्न अलंकार में सजाया जाता है। माघ मास की महाशिवरात्रि भीमेश्वर स्वामी का बड़ा पर्व है, जब पंचारामों की यात्रा करने वाले श्रद्धालु द्राक्षारामम में भी रुकते हैं और रात्रि-जागरण तथा अभिषेक होता है। दोनों अवसरों पर परिसर के दोनों गर्भगृह — शिव का और देवी का — एक साथ सजते हैं, जो यहाँ की समान-मान्यता की परम्परा का प्रत्यक्ष रूप है। प्रतिष्ठा-तिथि दर्ज न होने के कारण कोई वार्षिक स्थापना-दिवस नहीं मनाया जाता, और देवी तक किसी नियमित पदयात्रा-परम्परा का उल्लेख भी उपलब्ध स्रोतों में नहीं मिलता।',
+        bodyEn:
+          'The largest festival of the year is Sharada Navaratri, kept for ten days from Ashwayuja Shukla Pratipada to Dashami, with the goddess dressed in a different alankara on each day. Mahashivaratri in the month of Magha is the great night of Bhimeswara Swamy, when pilgrims making the round of the Pancharamas break their journey here for abhisheka and jagarana. On both occasions the two sanctums of the enclosure, Shiva’s and the goddess’s, are decorated together, which is the plainest expression of the parity this place is known for. Because no consecration date is recorded, the temple keeps no annual sthapana day, and the available sources describe no established padyatra to the goddess.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'द्राक्षारामम आंध्र प्रदेश के काकिनाडा ज़िले में है — काकिनाडा से लगभग 28 किमी, अमलापुरम से लगभग 25 किमी और राजमहेंद्रवरम से लगभग 50 किमी। द्राक्षारामम रेलवे स्टेशन मंदिर से लगभग 2 किमी दूर है; काकिनाडा और राजमहेंद्रवरम से नियमित बस तथा टैक्सी चलती हैं, और निकटतम हवाई अड्डा राजमहेंद्रवरम लगभग 53 किमी दूर है। यह मंदिर पंचाराम क्षेत्रों में से एक है, इसलिए यात्री इसे शेष चार — अमरावती का अमरेश्वर (अमराराम), भीमवरम का सोमेश्वर (सोमाराम), पालकोल्लु का क्षीर रामलिंगेश्वर (क्षीराराम) और सामरलकोट का कुमार भीमेश्वर (कुमाराराम) — के साथ एक ही यात्रा में जोड़ते हैं। परिसर के पास सप्त गोदावरी कुंड स्नान के लिए है, और लगभग 45–50 किमी दूर पिठापुरम की पुरुहूतिका देवी भी अष्टादश पीठों में हैं, जिन्हें कई यात्री इसी मार्ग में सम्मिलित कर लेते हैं।',
+        bodyEn:
+          'Draksharama lies in Kakinada district of Andhra Pradesh, about 28 km from Kakinada, roughly 25 km from Amalapuram and around 50 km from Rajahmundry. Draksharamam railway station is approximately 2 km from the temple; buses and taxis run regularly from Kakinada and Rajahmundry, and the nearest airport is Rajahmundry, some 53 km away. Because this is one of the Pancharama Kshetras, pilgrims commonly take it with the other four — Amareswara at Amaravati (Amararama), Someswara at Bhimavaram (Somarama), Ksheera Ramalingeswara at Palakollu (Ksheerarama) and Kumara Bhimeswara at Samalkot (Kumararama). The Sapta Godavari Kundam beside the temple serves for the bath, and Puruhutika Devi at Pithapuram, another of the eighteen Peethas, stands about 45–50 km off, which many travellers fold into the same route.',
       },
     ],
   },
