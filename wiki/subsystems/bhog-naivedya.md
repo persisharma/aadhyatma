@@ -11,8 +11,8 @@ status: current
 
 PRD-23 adds verified, offline household guidance for deity/festival offerings, food during a fast,
 food abstained during a fast, prohibited offerings, and parana meals. All three product phases now
-publish 43 profiles (the Hariyali/Kajari Teej, Bahula Chaturthi and Bhadwa Chauth additions of 2026-08-30
-included). Every genuine `vrat`/`upavas` rule is covered (72/72), while ritual-calendar rows are no longer misrepresented as
+publish 44 profiles (the Hariyali/Kajari Teej, Bahula Chaturthi and Bhadwa Chauth additions of 2026-08-30
+included, plus `ganesh-jayanti-bhog` of 2026-09-24: a festival-category profile of its own so the Maghi til-gud offering never reaches Bhadrapada's Ganesh Chaturthi through the shared `ganesha-bhog`). Every genuine `vrat`/`upavas` rule is covered (72/72), while ritual-calendar rows are no longer misrepresented as
 fasts. Every profile
 carries two or more independent published sources, a dated verification note, bilingual content,
 and an explicit tradition/variant note.

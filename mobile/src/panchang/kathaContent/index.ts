@@ -84,6 +84,7 @@ import e81 from './entries/vijaya-ekadashi-katha';
 import e82 from './entries/vivah-panchami-katha';
 import e83 from './entries/weekday-vrat-katha';
 import e84 from './entries/yogini-ekadashi-katha';
+import e85 from './entries/ganesh-jayanti-katha';
 
 export const KATHA_CONTENT: KathaContentEntry[] = [
   e0,
@@ -171,4 +172,5 @@ export const KATHA_CONTENT: KathaContentEntry[] = [
   e82,
   e83,
   e84,
+  e85,
 ];

@@ -718,6 +718,36 @@ const bachhBarasBhog = profile({
   },
 });
 
+// गणेश जयंती (माघ शुक्ल चतुर्थी) — its own profile rather than `ganesha-bhog`,
+// because the til offering is this day's and must not leak onto Bhadrapada's
+// Ganesh Chaturthi or the monthly Vinayaka Chaturthi.
+const ganeshJayantiBhog = profile({
+  id: 'ganesh-jayanti-bhog',
+  titleHi: 'गणेश जयंती (तिलकुंद चतुर्थी) का नैवेद्य',
+  titleEn: 'Ganesh Jayanti (Tilkund Chaturthi) naivedya',
+  observanceIds: ['ganesh-jayanti'],
+  offerings: [
+    item('til-laddoo', 'तिल-गुड़ के लड्डू या तिल-गुड़ का नैवेद्य — इस दिन का विशेष भोग।', 'Laddoos of sesame and jaggery, or a til-gud naivedya — the day’s own offering.'),
+    item('modak', 'परिवार की रीति हो तो मोदक भी अर्पित करें।', 'Modak as well, where the family custom includes it.'),
+    item('durva-flowers', 'दूर्वा, लाल पुष्प और कुंद के पुष्प।', 'Durva, red flowers and kunda (jasmine) flowers.'),
+  ],
+  permittedDuringFast: [item('phalahar', 'व्रत रखें तो पूजन तक फल, दूध या फलाहार; कठोरता परिवार की रीति से।', 'If fasting, fruit, milk or fruit fare until the puja; strictness follows family custom.')],
+  doNotOffer: [item('tulsi', 'श्री गणेश को तुलसी न चढ़ाएँ।', 'Do not offer Tulsi to Shri Ganesh.')],
+  paranaMealHi: 'मध्याह्न पूजन के बाद तिल-गुड़ का प्रसाद लेकर व्रत खोलें और तिल का दान करें।',
+  paranaMealEn: 'After the midday puja, break the fast with the til-gud prasad, and give sesame in daan.',
+  traditionNoteHi: 'यह महाराष्ट्र और कोंकण की माघी गणेश जयंती की रीति है। माघ कृष्ण की सकट चौथ (चंद्रोदय पर अर्घ्य) और भाद्रपद की गणेश चतुर्थी की अपनी अलग विधि है।',
+  traditionNoteEn: 'This is the Maghi Ganesh Jayanti custom of Maharashtra and the Konkan. Magha Krishna’s Sakat Chauth (arghya at moonrise) and Bhadrapada’s Ganesh Chaturthi each keep their own procedure.',
+  source: {
+    referenceUrls: [
+      'https://www.lokmat.com/bhakti/tilakund-chaturthi-2026-january-22-maghi-ganesh-jayanti-and-tilakund-chaturthi-know-the-importance-and-worship-rituals-a-a679/',
+      'https://hindi.webdunia.com/other-festivals/ganesh-jayanti-124021200023_1.html',
+      `${DP}/hindu-gods/ganesha/ganesha-jayanti/ganesha-jayanti-date-time.html`,
+    ],
+    verificationNote: 'Verified 2026-09-24: Lokmat and Webdunia both attest the til-gud / til laddoo naivedya, durva, red and kunda flowers for Maghi Ganesh Jayanti; DrikPanchang independently names the day Tilkund Chaturthi and places it in Maharashtra and the Konkan.',
+    variantNote: 'Modak is shown as optional family custom; the ordinary Tulsi restriction is reused from the verified Ganesha profile.',
+  },
+});
+
 export const EXTENDED_BHOG_CONTENT: readonly BhogContentEntry[] = [
   hartalikaTeejBhog,
   hariyaliTeejBhog,
@@ -752,4 +782,5 @@ export const EXTENDED_BHOG_CONTENT: readonly BhogContentEntry[] = [
   jayaparvatiBhog,
   shitalaBhog,
   bachhBarasBhog,
+  ganeshJayantiBhog,
 ];
