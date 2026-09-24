@@ -9,8 +9,6 @@ import type { TempleDetail } from '../temples';
  * detail carried inline in `temples.ts` — supply the whole `TempleDetail`
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
- *
- * Temples still to author in this chunk: manakula-vinayagar
  */
 export const details: Record<string, TempleDetail> = {
   padmanabhaswamy: {
@@ -212,6 +210,71 @@ export const details: Record<string, TempleDetail> = {
           'भद्राचलम तेलंगाना के भद्राद्रि कोठागुडेम ज़िले में गोदावरी के बाएँ तट पर है और हैदराबाद से लगभग 325 किमी पूर्व पड़ता है; ये दूरियाँ अनुमानित हैं। निकटतम रेलवे स्टेशन भद्राचलम रोड (कोठागुडेम) है, जो लगभग 40 किमी दूर है, और वहाँ से बस या टैक्सी से लगभग एक घंटे में मंदिर पहुँचा जाता है; निकटतम बड़े हवाई अड्डे हैदराबाद और विशाखापत्तनम हैं। मंदिर से लगभग आधा किमी नीचे गोदावरी घाट है, जहाँ दर्शन से पहले स्नान की परम्परा है। लगभग 32 किमी दूर दुम्मुगुडेम मंडल का पर्णशाला है, जिसे वनवास-काल का वह स्थल माना जाता है जहाँ से सीता का हरण हुआ — अधिकांश यात्री भद्राचलम और पर्णशाला को एक ही यात्रा में जोड़ते हैं। नगर में भक्त रामदासु का ध्यान मंदिर भी दर्शनीय है।',
         bodyEn:
           'Bhadrachalam stands on the left bank of the Godavari in Bhadradri Kothagudem district of Telangana, roughly 325 km east of Hyderabad; the distances here are approximate. The nearest railhead is Bhadrachalam Road, also called Kothagudem, about 40 km away, from where buses and taxis cover the last stretch in around an hour; the nearest major airports are Hyderabad and Visakhapatnam. Half a kilometre below the temple lies the Godavari Ghat, where pilgrims bathe before darshan. About 32 km off, in Dummugudem mandal, is Parnasala, held to be the exile-forest site from which Sita was carried away — most visitors join Bhadrachalam and Parnasala in one journey. In the town itself, the Dhyana Mandiram of Bhakta Ramadasu is also visited.',
+      },
+    ],
+  },
+  'manakula-vinayagar': {
+    significanceHi:
+      'पुडुचेरी के व्हाइट टाउन में बंगाल की खाड़ी से लगभग 400 मीटर दूर खड़ा अरुल्मिगु मनाकुला विनायगर मंदिर तमिल गणेश-भक्ति का प्रमुख धाम है और नगर की सबसे पुरानी जीवित परम्पराओं में गिना जाता है। मंदिर की आयु पाँच सौ वर्ष से अधिक बताई जाती है — अर्थात् सोलहवीं शताब्दी या उससे पहले — यद्यपि कुछ विवरण इसे सत्रहवीं शताब्दी का मानते हैं; प्रतिष्ठा की कोई तिथि, तिथि-वार या प्रतिष्ठाकर्ता अभिलेख में दर्ज नहीं है। सन् 1688 (विक्रम संवत् 1745) में फ़्रांसीसियों ने मंदिर के पास ही दुर्ग बनाया, और तब से यह शहर के बदलते इतिहास का साक्षी रहा है।',
+    significanceEn:
+      'Arulmigu Manakula Vinayagar Temple, standing in White Town about 400 metres from the Bay of Bengal, is Puducherry’s foremost shrine of Tamil Ganesha devotion and among the oldest living traditions of the town. The temple is described as more than five hundred years old — that is, sixteenth century or earlier — though some accounts place it in the seventeenth century; no record preserves a consecration date, tithi or officiating priest. In 1688 CE (Vikram Samvat 1745) the French raised a fort beside it, and the shrine has watched the town change hands ever since.',
+    originStoryHi:
+      'नाम की व्युत्पत्ति तमिल के “मणल” यानी रेत और “कुलम” यानी सरोवर से जोड़ी जाती है — कहा जाता है कि कभी समुद्र के पास रेत में घिरा एक सरोवर मंदिर के निकट था, और उसी से विनायगर मनाकुला कहलाए। लोक-परम्परा कहती है कि औपनिवेशिक काल में विग्रह को समुद्र में प्रवाहित करने का प्रयास हुआ, पर वह बार-बार अपने स्थान पर लौट आया। इस घटना के बाद विरोध शांत हो गया और पूजा अबाध चलती रही।',
+    originStoryEn:
+      'The name is traced to the Tamil words manal, sand, and kulam, pond — a pond ringed with sand near the sea is said to have stood beside the shrine, and from it Vinayagar took the name Manakula. Local tradition holds that in colonial times attempts were made to cast the image into the sea, and that each time it returned to its place. After that, the story goes, the opposition fell away and worship continued unbroken.',
+    sources: [
+      { label: 'Arulmigu Manakula Vinayagar Temple, Puducherry', url: 'https://manakulavinayagartemple.com/' },
+      {
+        label: 'Incredible India (Ministry of Tourism) - Arulmigu Manakula Vinayagar',
+        url: 'https://www.incredibleindia.gov.in/en/puducherry/puducherry/arulmigu-manakula-vinayagar',
+      },
+      { label: 'Manakula Vinayagar Temple - Reference', url: 'https://en.wikipedia.org/wiki/Manakula_Vinayagar_Temple' },
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'मनाकुला विनायगर की स्थापना का कोई शिलालेख या प्रतिष्ठा-तिथि उपलब्ध नहीं है; मंदिर स्वयं और पर्यटन विवरण इसे पाँच सौ वर्ष से अधिक प्राचीन बताते हैं, अर्थात् सोलहवीं शताब्दी या उससे पहले का, जबकि कुछ विवरण इसे सत्रहवीं शताब्दी में रखते हैं। नाम की कथा भूगोल से जुड़ी है — तमिल में “मणल” अर्थात् रेत और “कुलम” अर्थात् सरोवर; समुद्र के पास रेत से घिरा एक सरोवर यहाँ था और उसी के किनारे विनायगर विराजे। सन् 1688 (विक्रम संवत् 1745) में फ़्रांसीसियों ने इसी के पास दुर्ग बनाया, जिससे मंदिर दुर्ग के ठीक पीछे पड़ गया और चारों ओर रेत तथा तट फैला था। लोक-परम्परा कहती है कि उस काल में विग्रह को समुद्र में डालने का प्रयास हुआ, किन्तु वह हर बार अपने स्थान पर लौट आया; इस घटना के बाद विरोध शांत हुआ और पूजा निर्बाध चलती रही। यह कथा परम्परा के रूप में सुनाई जाती है, किसी दस्तावेज़ से प्रमाणित नहीं है। मंदिर आज अरुल्मिगु मनाकुला विनायगर देवस्थानम् के अधीन है और पुडुचेरी की सबसे व्यस्त दैनिक पूजा-स्थलियों में है।',
+        bodyEn:
+          'No inscription or consecration date survives for Manakula Vinayagar; the temple’s own account and tourism material call it more than five hundred years old — sixteenth century or earlier — while some descriptions place it in the seventeenth. Its name comes from the ground itself: manal, sand, and kulam, pond, for a sandy pond that once lay near the sea beside which Vinayagar settled. In 1688 CE (Vikram Samvat 1745) the French built their fort here, leaving the temple directly behind it with sand and shore all around. Tradition tells that in those years the image was taken to be thrown into the sea and returned to its place each time, after which the opposition ceased and worship went on uninterrupted — a story carried by memory rather than by any document. The shrine is administered today by the Arulmigu Manakula Vinayagar Devasthanam and keeps one of the busiest daily worship rounds in Puducherry.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'विनायगर का स्वरूप',
+        titleEn: 'The Form of Vinayagar',
+        bodyHi:
+          'गर्भगृह में विनायगर अपने परम्परागत बैठे हुए स्वरूप में हैं, सूँड बाईं ओर मुड़ी, और नित्य चंदन, कुमकुम तथा पुष्पों से शृंगारित रहते हैं; उत्सव के दिनों में उन्हें स्वर्ण-कवच पहनाया जाता है। मंदिर की सबसे दर्शनीय विशेषता उसका चित्रित मंडप है — भीतरी दीवारों और छत पर गणेश की कथाओं के रंगीन भित्ति-चित्र बने हैं, और परिसर में गणपति के लगभग चालीस भिन्न स्वरूप उकेरे या चित्रित मिलते हैं, जिन्हें भक्त एक-एक कर देखते चलते हैं। विमान स्वर्ण-मंडित है और उसके नीचे की नक़्क़ाशी दक्षिण भारतीय शैली की है। मंदिर पश्चिम-मुखी गली में है, किन्तु समुद्र इतना पास है कि तट की हवा परिसर तक आती है — यही इसकी अलग पहचान है।',
+        bodyEn:
+          'In the sanctum Vinayagar sits in the familiar seated form, trunk curved to the left, dressed daily in sandal paste, kumkum and flowers, and covered with a golden kavacha on festival days. The temple’s most striking feature is its painted mandapam: the inner walls and ceiling carry colourful murals of Ganesha’s stories, and around forty distinct forms of Ganapati are shown in carving and painting through the precinct, which devotees walk past one by one. The vimana above the sanctum is gold-plated, and the work beneath it is in the South Indian idiom. The shrine opens onto a lane rather than the shore, yet the sea is close enough for its air to reach the courtyard — the thing that sets this Ganesha apart.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'मंदिर-हाथी और स्वर्ण रथ',
+        titleEn: 'The Temple Elephant and the Golden Chariot',
+        bodyHi:
+          'लम्बे समय तक मनाकुला विनायगर की सबसे प्रिय परम्परा मंदिर-हाथी की रही। लक्ष्मी नाम की हथिनी द्वार के पास खड़ी रहती और भक्त के केले या घास अर्पित करने पर सूँड सिर पर रखकर आशीर्वाद देती थी; सन् 2022 में उसके देहावसान तक यह पुडुचेरी आने वाले हर यात्री की स्मृति का हिस्सा था। दूसरी परम्परा स्वर्ण रथ की है — भक्तों के दान से बना वह रथ, जिसमें लगभग साढ़े सात किलो स्वर्ण लगा है; वर्ष में एक बार, दशहरे के दिनों में, वह मंदिर के चारों ओर की माडा वीधि में खींचा जाता है और यही उसका एकमात्र मार्ग है। दैनिक क्रम में मंदिर प्रातः लगभग पौने छह बजे खुलता है, दोपहर में पट बंद होते हैं और सायं चार बजे से रात साढ़े नौ बजे तक फिर दर्शन चलते हैं। चतुर्थी तिथि और मंगलवार यहाँ विशेष रूप से भीड़ भरे रहते हैं।',
+        bodyEn:
+          'For many years the best-loved custom here was the temple elephant. Lakshmi stood near the entrance and, given a banana or a handful of grass, would lay her trunk on a devotee’s head in blessing; until her death in 2022 she was part of what every visitor to Puducherry remembered of the shrine. The second custom is the golden chariot, built entirely from devotees’ donations and carrying roughly seven and a half kilograms of gold. Once a year, in the Dussehra days, it is drawn around the Maada Veedhi, the four streets that ring the temple, and that is the only route it takes. The daily round opens at about a quarter to six in the morning, closes over midday, and runs again from four in the afternoon until half past nine at night. Chaturthi days and Tuesdays draw the heaviest crowds.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'मंदिर का प्रमुख वार्षिक उत्सव ब्रह्मोत्सवम् है, जो अगस्त–सितम्बर में चौबीस दिन तक चलता है और पूरे पुडुचेरी को उत्सव-मय कर देता है; इन दिनों नित्य विशेष अभिषेक, वाहन-सेवाएँ और शोभायात्राएँ होती हैं। भाद्रपद शुक्ल चतुर्थी का विनायक चतुर्थी सबसे बड़ा दिन है, जब विशेष पूजाएँ और रथ-यात्रा होती है और मोदक तथा कोझुकट्टै का नैवेद्य चढ़ता है। दशहरे के दिनों में स्वर्ण रथ की परिक्रमा होती है, जो वर्ष में एक ही बार निकलती है। प्रत्येक मास की संकष्टी और विनायक चतुर्थी पर भी भक्तों की अच्छी भीड़ रहती है, और तमिल नववर्ष तथा दीपावली पर विशेष अलंकार किया जाता है।',
+        bodyEn:
+          'The temple’s principal annual festival is the Brahmotsavam, kept for twenty-four days in August–September, when abhishekams, vahana services and processions fill each day and the celebration spills through Puducherry. Vinayaka Chaturthi, on Bhadrapada Shukla Chaturthi, is the greatest day of all, with special poojas, a chariot procession and offerings of modak and kozhukattai. In the Dussehra days the golden chariot makes its one circuit of the year. Sankashti and Vinayaka Chaturthi each month bring their own gatherings, and the Tamil new year and Deepavali are marked with special decoration of the deity.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'मंदिर पुडुचेरी के व्हाइट टाउन में है, बंगाल की खाड़ी से लगभग 400 मीटर और नगर के बस स्टैंड से लगभग 3 किमी — दूरियाँ अनुमानित हैं। निकटतम बड़ा रेलवे जंक्शन विल्लुपुरम है, जो लगभग 35 किमी दूर है, और निकटतम अंतरराष्ट्रीय हवाई अड्डा चेन्नई का है, लगभग 135 किमी; चेन्नई नगर स्वयं लगभग 165 किमी उत्तर पड़ता है। मंदिर से कुछ ही मिनट की पैदल दूरी पर प्रोमेनेड बीच और श्री अरविंद आश्रम हैं, और व्हाइट टाउन की औपनिवेशिक गलियाँ चारों ओर फैली हैं — अधिकांश यात्री इन्हें एक ही सुबह में जोड़ लेते हैं। आगे की यात्रा में ऑरोविल तथा तमिलनाडु के तट के मंदिर सहज मार्ग पर आते हैं।',
+        bodyEn:
+          'The temple stands in White Town, Puducherry, about 400 metres from the Bay of Bengal and roughly 3 km from the town bus stand — distances approximate. The nearest major railway junction is Villupuram, about 35 km away, and the nearest international airport is Chennai, roughly 135 km; the city of Chennai itself lies about 165 km to the north. A few minutes on foot bring you to the Promenade beach and the Sri Aurobindo Ashram, with the colonial lanes of White Town spread all around — most visitors take them in one morning together. Further out, Auroville and the coastal temples of Tamil Nadu fall on the same easy road.',
       },
     ],
   },
