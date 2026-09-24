@@ -10,7 +10,7 @@ import type { TempleDetail } from '../temples';
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
  *
- * Temples still to author in this chunk: omkareshwar
+ * All four temples in this chunk carry the full §12.6 reading.
  */
 export const details: Record<string, TempleDetail> = {
   somnath: {
@@ -154,6 +154,54 @@ export const details: Record<string, TempleDetail> = {
         titleEn: 'Journey and Around',
         bodyHi: 'मंदिर मध्य प्रदेश के उज्जैन नगर के पुराने भाग में शिप्रा के निकट है; उज्जैन जंक्शन रेलवे स्टेशन नगर के भीतर ही है और वहाँ से मंदिर कुछ ही किलोमीटर दूर पड़ता है। निकटतम हवाई अड्डा इन्दौर का देवी अहिल्याबाई होल्कर विमानतल है, लगभग 55–60 किमी, जहाँ से सड़क-मार्ग से लगभग सवा घंटे में उज्जैन पहुँचा जा सकता है। पुराना नगर पैदल घूमने योग्य है — महाकाल से हरसिद्धि शक्ति पीठ लगभग 800 मीटर की छायादार गली से जुड़ा है, और कालभैरव मंदिर तथा शिप्रा का रामघाट भी निकट ही हैं, जहाँ स्नान और संध्या-आरती का क्रम चलता है। अधिकांश यात्री उज्जैन के साथ मध्य प्रदेश के दूसरे ज्योतिर्लिङ्ग ओंकारेश्वर को जोड़ते हैं, जो यहाँ से लगभग 140 किमी दक्षिण में है।',
         bodyEn: 'The temple stands in the old quarter of Ujjain in Madhya Pradesh, close to the Shipra; Ujjain Junction lies within the city, only a few kilometres away. The nearest airport is Devi Ahilyabai Holkar airport at Indore, approximately 55–60 km out, about an hour and a quarter by road. The old city is walkable — Mahakal to the Harsiddhi Shakti Peetha is a shaded lane of roughly 800 metres, and the Kal Bhairav temple and the Ram Ghat on the Shipra, where bathing and the evening aarti go on, are close by. Most pilgrims pair Ujjain with Madhya Pradesh’s other Jyotirlinga, Omkareshwar, about 140 km to the south.',
+      },
+    ],
+  },
+  omkareshwar: {
+    significanceHi: 'नर्मदा के मांधाता द्वीप पर बसे ओंकारेश्वर को द्वादश ज्योतिर्लिङ्गों में गिना जाता है; द्वीप की आकृति देवनागरी ॐ जैसी मानी जाती है, इसलिए यहाँ नाम, भूगोल और साधना एक साथ जुड़ जाते हैं। नदी के उस पार दक्षिण तट पर ममलेश्वर — जिन्हें अमरेश्वर भी कहा जाता है — विराजते हैं, और परम्परा दोनों के दर्शन से ही यात्रा पूर्ण मानती है। वर्तमान शिखर-मंदिर को इतिहासकार ग्यारहवीं शताब्दी का परमार-कालीन निर्माण मानते हैं; इसकी प्रतिष्ठा की कोई तिथि विक्रम संवत् या ईस्वी में अभिलिखित नहीं मिलती।',
+    significanceEn: 'Omkareshwar, on the island of Mandhata in the Narmada, is counted among the twelve Jyotirlingas; the island’s outline is traditionally read as the Devanagari syllable Om, so that name, landscape and sadhana meet in one place. Across the river on the southern bank stands Mamleshwar, also called Amareshwar, and tradition holds the yatra complete only when both are visited. Historians date the present spired temple to Paramara patronage in the eleventh century; no consecration date for it is recorded in either Vikram Samvat or the Common Era.',
+    originStoryHi: 'शिव पुराण की एक कथा के अनुसार विन्ध्य पर्वत ने मेरु से बड़ा होने की कामना से पार्थिव लिङ्ग बनाकर शिव की कठोर तपस्या की; शिव प्रसन्न हुए और देवताओं तथा ऋषियों की प्रार्थना पर लिङ्ग के दो रूप हुए — ओंकारेश्वर और ममलेश्वर। एक दूसरी कथा इक्ष्वाकु-वंशी राजा मांधाता की है, जिन्होंने इसी द्वीप पर दीर्घ तप किया और जिनके नाम पर द्वीप मांधाता कहलाया। परम्परा कहती है कि उनके तप से प्रसन्न होकर शिव यहीं स्वयम्भू ज्योतिर्लिङ्ग-रूप में प्रकट हुए।',
+    originStoryEn: 'One account in the Shiva Purana tells that the Vindhya mountain, wishing to outgrow Meru, shaped a parthiva linga and kept a severe penance to Shiva; Shiva was pleased, and at the plea of the gods and sages the linga took two forms — Omkareshwar and Mamleshwar. A second tradition belongs to Mandhata, the king of the Ikshvaku line, who performed a long tapasya on this island, which has carried his name ever since. By tradition it was at his penance that Shiva appeared here as the self-manifest Jyotirlinga.',
+    sources: [
+      { label: 'Shri Omkareshwar Jyotirlinga - Official', url: 'https://shriomkareshwar.org/' },
+      { label: 'Madhya Pradesh Tourism - Omkareshwar', url: 'https://www.mptourism.com/destination-omkareshwar.php' },
+      { label: 'District Khandwa - Omkareshwar Mandhata', url: 'https://khandwa.nic.in/en/tourist-place/omkareshwar/' },
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi: 'परम्परा के अनुसार विन्ध्य की तपस्या और राजा मांधाता के तप — दोनों कथाएँ इसी द्वीप से जुड़ती हैं, और शिव के यहाँ स्वयम्भू प्रकट होने के बाद द्वीप मांधाता तथा लिङ्ग ओंकारेश्वर कहलाया। वर्तमान पाषाण-मंदिर का निर्माण-काल इतिहासकार ग्यारहवीं शताब्दी मानते हैं, जब यह क्षेत्र परमार नरेशों के अधीन था; इसकी प्राण-प्रतिष्ठा की कोई तिथि विक्रम संवत् या ईस्वी में अभिलिखित नहीं मिलती, इसलिए यहाँ तिथि, वार और प्रतिष्ठाकर्ता तीनों अनुपलब्ध हैं। आगे के शतकों में मांधाता के स्थानीय शासकों और मराठा काल में होलकर घराने ने मंदिर तथा घाटों की मरम्मत और सेवा-व्यवस्था सँभाली। परम्परा यह भी कहती है कि आदि शंकराचार्य को उनके गुरु गोविन्द भगवत्पाद यहीं मिले थे; मंदिर के नीचे नर्मदा-तट की वह गुफा आज भी दिखाई जाती है, जहाँ शंकराचार्य की प्रतिमा स्थापित है। इसी स्मृति में मंदिर से लगभग 4 किमी दूर एकात्म धाम में आचार्य शंकर की 108 फुट ऊँची "स्टैच्यू ऑफ वननेस" विक्रम संवत् 2080 (21 सितम्बर 2023) को अनावृत हुई।',
+        bodyEn: 'By tradition both the penance of the Vindhya and the tapasya of King Mandhata belong to this island, and after Shiva manifested here of his own accord the island took Mandhata’s name and the linga that of Omkareshwar. Historians place the building of the present stone temple in the eleventh century, when the region lay under the Paramara kings; no pran-pratishtha date survives for it in Vikram Samvat or the Common Era, so the tithi, the weekday and the name of the consecrator are all unrecorded here. In later centuries the local rulers of Mandhata and, in the Maratha period, the Holkar house maintained the shrine and its ghats. Tradition also holds that Adi Shankara met his guru Govinda Bhagavatpada at this spot; the cave on the Narmada bank below the temple is still shown, with an image of Shankara installed in it. In that memory, about 4 km from the shrine at Ekatma Dham, a 108-foot Statue of Oneness of Acharya Shankara was unveiled in Vikram Samvat 2080 (21 September 2023).',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'ओंकारेश्वर का स्वरूप',
+        titleEn: 'The Form of Omkareshwar',
+        bodyHi: 'ज्योतिर्लिङ्ग मंदिर के भूतल पर छोटे और मंद-प्रकाशित गर्भगृह में स्वयम्भू रूप में है; विशेषता यह है कि यह गर्भगृह के ठीक मध्य में नहीं, एक ओर स्थित है और सदा जल में आंशिक रूप से डूबा रहता है, क्योंकि नर्मदा का जल इसके चारों ओर बना रहता है। मंदिर नागर शैली का पाँच-तल्ला शिखर-मंदिर है और प्रत्येक तल पर अलग विग्रह प्रतिष्ठित है — नीचे से ऊपर की ओर ओंकारेश्वर, महाकालेश्वर, सिद्धनाथ, गुप्तेश्वर और ध्वजधारी शिखर। जिस मुलायम पत्थर से मंदिर बना है उस पर आश्चर्यजनक रूप से बारीक काम हुआ है — ऊपरी भाग में मूर्ति-पट्टिकाएँ और उत्कीर्ण पाषाण-छत। नर्मदा के दक्षिण तट पर ममलेश्वर का स्वतंत्र मंदिर है, जिसे भी इसी ज्योतिर्लिङ्ग का अंग माना जाता है।',
+        bodyEn: 'The Jyotirlinga stands swayambhu in a small, dimly lit sanctum on the ground floor; what marks it out is that it does not sit at the centre of the sanctum but to one side, and it remains partly under water, the Narmada’s water standing around it. The temple is a five-storeyed Nagara-style spire with a separate shrine on each level — from the bottom upward Omkareshwar, Mahakaleshwar, Siddhanath, Gupteshwar and the Dhwajdhari shikhar. The soft stone it is cut from carries a surprising fineness of work, with figure friezes on the upper courses and a carved stone roof. On the southern bank of the Narmada stands the separate temple of Mamleshwar, held to belong to the same Jyotirlinga.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'शयन आरती और चौसर',
+        titleEn: 'The Shayan Aarti and the Chausar Board',
+        bodyHi: 'ओंकारेश्वर की सबसे विशिष्ट परम्परा रात्रि की शयन आरती है — आरती के बाद ज्योतिर्लिङ्ग के सम्मुख झूला सजाया जाता है और चौसर की बिसात बिछाई जाती है; लोक-मान्यता है कि रात्रि में शिव और पार्वती यहाँ चौसर खेलते हैं, और प्रातः पासे बिखरे मिलते हैं। बिसात के दर्शन कुछ समय के लिए भक्तों को भी कराए जाते हैं। दिनचर्या प्रातः मंगल आरती से आरम्भ होती है, दिन भर जल, दूध, बिल्वपत्र और नर्मदा-जल से अभिषेक चलता है, सायं संध्या आरती होती है और रात्रि शयन आरती के साथ पट बंद होते हैं। बहुत से यात्री यहाँ नर्मदा-स्नान के बाद ही दर्शन करते हैं, और नर्मदा परिक्रमा करने वाले साधु-गृहस्थ ओंकारेश्वर को परिक्रमा का प्रमुख पड़ाव मानते हैं। सोमवार और श्रावण मास में भीड़ सबसे अधिक रहती है।',
+        bodyEn: 'Omkareshwar’s most distinctive custom belongs to the night. After the shayan aarti a swing is dressed before the Jyotirlinga and a chausar board is laid out; local belief holds that Shiva and Parvati play at dice here through the night, and that the pieces are found scattered by morning. The board is kept open for devotees to see for a short while after the aarti. The day begins with the mangal aarti, runs through abhishek with water, milk, bel leaves and Narmada water, and closes with the evening sandhya aarti and then the shayan aarti. Many pilgrims take darshan only after bathing in the Narmada, and those walking the Narmada Parikrama treat Omkareshwar as one of its principal halts. Mondays and the month of Shravan bring the densest crowds.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi: 'महाशिवरात्रि यहाँ का सबसे बड़ा पर्व है, जब रात भर विशेष पूजा, अभिषेक और भजन चलते हैं और घाटों पर भारी भीड़ उमड़ती है। माघ शुक्ल सप्तमी को नर्मदा जयंती मनाई जाती है — माँ नर्मदा के अवतरण-दिवस पर ओंकारेश्वर के घाटों पर पूजन और अभिषेक होते हैं और दीप प्रवाहित किए जाते हैं। कार्तिक मास में प्रबोधिनी एकादशी से पूर्णिमा तक कार्तिक मेला लगता है; इसी अवधि में पंचक्रोशी यात्रा निकलती है, जो एकादशी को गोमुख घाट से आरम्भ होकर पूर्णिमा को ओंकारेश्वर मंदिर पर पूर्ण होती है, और देश भर से हज़ारों श्रद्धालु इसमें सम्मिलित होते हैं। श्रावण मास के सोमवार भी विशेष उत्सव-दिवस रहते हैं।',
+        bodyEn: 'Mahashivratri is the year’s greatest observance here, with night-long puja, abhishek and bhajan, and the ghats packed through the night. Magh Shukla Saptami is kept as Narmada Jayanti, the descent-day of Ma Narmada, when the Omkareshwar ghats hold her puja and abhishek and lamps are floated on the river. In Kartik, the Kartik Mela runs from Prabodhini Ekadashi to Purnima; within it goes the Panchkroshi yatra, which sets out from Gomukh Ghat on Ekadashi and closes at the Omkareshwar temple on Purnima, drawing thousands of pilgrims from across the country. The Mondays of Shravan are festival days in their own right.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi: 'ओंकारेश्वर मध्य प्रदेश के खंडवा ज़िले में नर्मदा के मांधाता द्वीप पर है; द्वीप तक पुल से पहुँचा जाता है और कई यात्री नौका से भी पार करते हैं। निकटतम रेलहेड ओंकारेश्वर रोड (मोरटक्का) है, जो पास ही पड़ता है, जबकि बड़ी लाइन का निकटतम स्टेशन खंडवा जंक्शन लगभग 70–77 किमी दूर है। निकटतम हवाई अड्डा इन्दौर है, लगभग 80 किमी; इन्दौर से सड़क-मार्ग लगभग 77 किमी का है। नर्मदा के दक्षिण तट पर ममलेश्वर का मंदिर है, जिसके दर्शन के बिना यात्रा अपूर्ण मानी जाती है; मंदिर के नीचे शंकराचार्य गुफा और लगभग 4 किमी दूर एकात्म धाम की आचार्य शंकर प्रतिमा भी दर्शनीय हैं। घाटों पर स्नान और द्वीप की परिक्रमा यात्रा का सामान्य क्रम है। अधिकांश तीर्थयात्री ओंकारेश्वर को उज्जैन के महाकालेश्वर के साथ जोड़ते हैं, जो यहाँ से लगभग 140 किमी उत्तर में है।',
+        bodyEn: 'Omkareshwar lies on the island of Mandhata in the Narmada, in Khandwa district of Madhya Pradesh; the island is reached by bridge, and many pilgrims still cross by boat. The nearest railhead is Omkareshwar Road (Mortakka) close by, while the nearest broad-gauge station is Khandwa Junction, roughly 70–77 km away. The nearest airport is Indore, approximately 80 km out, with about 77 km of road between the city and the island. On the southern bank stands the temple of Mamleshwar, without whose darshan the yatra is held incomplete; below the main shrine is the Shankaracharya cave, and about 4 km away the Acharya Shankara statue at Ekatma Dham. Bathing at the ghats and walking the island parikrama are the usual order of a visit. Most pilgrims pair Omkareshwar with Mahakaleshwar at Ujjain, about 140 km to the north.',
       },
     ],
   },
