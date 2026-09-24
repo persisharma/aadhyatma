@@ -606,7 +606,18 @@ Two prose lines and a pin are the *minimum* a legacy row carries; they are **not
 
 **Plate decoupling (product decision, September 2026).** `backgrounds.coverage.jest.test.ts` used to fail any temple that had `sections` without a commissioned plate. That chained the whole text rollout to an image pipeline the authoring sessions cannot run — 60 readings stalled behind 60 images. **The check is removed. The reading ships first, the plate follows.** An unplated temple falls back to its deity background, which is a finished, on-theme surface, and the detail screen renders no illustration block (design.md §27 item 4). The plate backlog and its per-wave prompts live in `docs/roadmap/theerth-full-reading-rollout.md` and `docs/theerth-plates/`; item 10 above is still wanted work, just not a gate. What did *not* change: §11 and §12.4 content integrity, the ≥ 2 sources rule, and the five-section contract — a reading that skips those is still a §3 hard reject.
 
-**Where the readings live.** Authored §12.6 readings go in one chunk module per authoring session under `mobile/src/data/theerth/details/`, merged by `details/index.ts` and spread over the inline `templeDetails` map in `temples.ts`. One chunk file is owned by exactly one pass, so concurrent waves never edit the same module. A chunk entry replaces that temple's legacy two-line detail wholesale, so supply the complete `TempleDetail`.
+**Where the readings live.** Authored §12.6 readings go in one chunk module per authoring session under `mobile/src/data/theerth/details/`, merged by `details/index.ts`. One chunk file is owned by exactly one pass, so concurrent waves never edit the same module. A chunk entry replaces that temple's legacy two-line detail wholesale (the legacy map is `details/legacy.ts`), so supply the complete `TempleDetail`.
+
+**The readings are lazy — keep them that way (September 2026).** None of this prose is on the app's static launch graph, and nothing you add may put it back. The split:
+
+| Module | Holds | Launch path? |
+|---|---|---|
+| `theerth/templeRows.ts` | the 71 rows: id, names, city/state, coordinates, deity, groups | **yes** — this is all the launch path may read |
+| `theerth/temples.ts` | types, row accessors, and `loadDetails()` | yes, but it is ~5 KB and imports no prose |
+| `theerth/details/legacy.ts` | the original two-line detail for all 71 | no — `require()`d on demand |
+| `theerth/details/*.ts` | the authored §12.6 readings | no — `require()`d on demand |
+
+Read it through the right accessor: `temples`, `getTempleById()`, `templesInGroup()` and `otherFamous()` return `TempleListEntry` (rows, no prose) and are safe anywhere; `getTempleDetailById()` returns one temple's full `TempleEntry` and is what a detail screen calls; `templesWithDetails()` returns all 71 with prose and belongs only in the on-demand search index and the data tests. Never add a top-level `import` of `details/` or `details/legacy` to a module the navigator or a context can reach — `src/data/__tests__/launchGraph.test.ts` fails the build if the graph grows past its budget, and that budget now assumes the readings stay out of it.
 
 ---
 

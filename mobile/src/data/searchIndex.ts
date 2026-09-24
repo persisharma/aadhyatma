@@ -26,8 +26,7 @@ import {
 } from './aarti';
 import { japamMantras, type JapamMantra } from './japam';
 import {
-  temples,
-  templesInGroup,
+  templesWithDetails,
   type TempleEntry,
   type TheerthGroup,
 } from './theerth/temples';
@@ -740,8 +739,11 @@ const THEERTH_ENTRY_TO_GROUP: Record<string, TheerthGroup | 'all'> = {
 function pushTheerth(out: SearchVerseEntry[], entry: LibraryEntry) {
   const filter = THEERTH_ENTRY_TO_GROUP[entry.id];
   if (!filter) return;
+  // Search is built on demand, so this is a legitimate place to pay for the
+  // readings; the browse screens must keep using the row-only `temples`.
+  const withDetails = templesWithDetails();
   const list: readonly TempleEntry[] =
-    filter === 'all' ? temples : templesInGroup(filter);
+    filter === 'all' ? withDetails : withDetails.filter((t) => t.groups.includes(filter));
   list.forEach((t, idx) => {
     out.push(
       makeVerseEntry({

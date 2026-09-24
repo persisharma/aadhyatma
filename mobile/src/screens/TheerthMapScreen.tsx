@@ -26,7 +26,7 @@ import {
   otherFamous,
   groupMeta,
   groupOrder,
-  type TempleEntry,
+  type TempleListEntry,
   type TheerthGroup,
 } from '@/data/theerth/temples';
 import type { HomeStackParamList } from '@/navigation/types';
@@ -38,7 +38,7 @@ type CategoryKey = TheerthGroup | 'other';
 
 const CATEGORY_KEYS: readonly CategoryKey[] = [...groupOrder, 'other'];
 
-function categoryTemples(key: CategoryKey): TempleEntry[] {
+function categoryTemples(key: CategoryKey): TempleListEntry[] {
   return key === 'other' ? otherFamous() : templesInGroup(key);
 }
 
@@ -54,9 +54,9 @@ function categoryLabel(key: CategoryKey, lang: Lang): string {
   return contentByLang(lang, m.nameHi, m.nameEn);
 }
 
-const stateName = (t: TempleEntry, lang: Lang) => contentByLang(lang, t.stateHi, t.stateEn);
-const templeName = (t: TempleEntry, lang: Lang) => contentByLang(lang, t.nameHi, t.nameEn);
-const templeCity = (t: TempleEntry, lang: Lang) =>
+const stateName = (t: TempleListEntry, lang: Lang) => contentByLang(lang, t.stateHi, t.stateEn);
+const templeName = (t: TempleListEntry, lang: Lang) => contentByLang(lang, t.nameHi, t.nameEn);
+const templeCity = (t: TempleListEntry, lang: Lang) =>
   `${contentByLang(lang, t.cityHi, t.cityEn)}, ${contentByLang(lang, t.stateHi, t.stateEn)}`;
 
 export default function TheerthMapScreen({ navigation, route }: Props) {
@@ -218,7 +218,7 @@ function Listing({
   );
 
   const stateCards = useMemo(() => {
-    const map = new Map<string, TempleEntry[]>();
+    const map = new Map<string, TempleListEntry[]>();
     temples.forEach((t) => {
       if (!map.has(t.stateEn)) map.set(t.stateEn, []);
       map.get(t.stateEn)!.push(t);
@@ -285,7 +285,7 @@ function DrillIn({
   isTempleNew: (id: string) => boolean;
   onTemplePress: (id: string) => void;
 } & ThemeBits) {
-  const list = useMemo<TempleEntry[]>(() => {
+  const list = useMemo<TempleListEntry[]>(() => {
     const base = group ? categoryTemples(group) : temples.filter((t) => t.stateEn === stateEn);
     return [...base].sort((a, b) => templeName(a, lang).localeCompare(templeName(b, lang)));
   }, [group, stateEn, lang]);

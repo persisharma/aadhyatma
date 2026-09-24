@@ -117,41 +117,41 @@ test('no on-demand corpus payload is statically reachable from the app entry', (
  * shrink the graph; never raise it to make a red test green.
  */
 /**
- * RAISED 7,000,000 → 7,300,000, and the reasoning matters more than the number,
- * because the header above says not to do this.
+ * LOWERED 7,300,000 → 6,950,000, because the theerth prose left the graph.
  *
- * The rule that must not be weakened is "no CORPUS on the launch path". It is
- * intact: nothing admitted below is data, and the largest-members list is
- * unchanged in shape.
+ * The previous note (kept below) raised this to 7,300,000 and warned that the
+ * ~85 KB of headroom it left would saturate. It did: the §12.6 temple readings
+ * grow by ~70-100 KB per authored chunk and there are 15 chunks, so the rollout
+ * was on course to blow the budget by ~1 MB.
  *
- * Two separate things had eaten the old number:
+ * The fix was structural, not a bigger number. Nothing on the launch path ever
+ * needed a temple's prose:
  *
- *   1. **The budget was already blown before this change.** `origin/main` at
- *      24e93fd measures **7,181,313 bytes** — 181 KB over the 7,000,000 it
- *      declares — because #344 added ~16 observance rules and the regenerated
- *      `precomputedObservances.ts` grew with them. Raising the budget is the
- *      correction for that, not for anything this feature did.
- *   2. **PRD-42 W2 adds ~33 KB on top of main.** ~21 KB of lens code, and ~12 KB
- *      of precomputed rows, because `karthigai-vrat` and `rohini-vrat` finally
- *      resolve (#344 fixed their `recurrence` and 0-indexed nakshatra; W2 gave
- *      them the lens that makes them visible) and so enter the table.
+ *   - `templeRows.ts` now holds the 71 rows alone, so `NewContentContext` can
+ *     seed its NEW badges from a manifest instead of importing `temples.ts`;
+ *   - the legacy detail map moved to `details/legacy.ts`, and `temples.ts`
+ *     pulls it and the authored chunks through a `require()` thunk in
+ *     `loadDetails()` — the `pincodes.ts` pattern;
+ *   - `temples` is typed `TempleListEntry` (rows only). The prose is reachable
+ *     only through `getTempleDetailById()`, which the detail screen calls, and
+ *     `templesWithDetails()`, which the on-demand search index and the data
+ *     tests call.
  *
- * Every lazy option was taken FIRST, and they are the real fix:
- *   - `lensRegistry.ts` (bilingual names, examples, the two seeding tables) is
- *     behind a `require()` thunk in `lenses.ts` — the `pincodes.ts` pattern;
- *   - `lensStore.ts` (the AsyncStorage half) is behind a thunk in `useLenses`;
- *   - `LensPickerSheet` is `React.lazy` in both screens that open it.
- * Those three took the code delta from 41,753 bytes to 20,411.
+ * That took the graph from 7,274,340 bytes on main to 6,852,097 — ~420 KB off
+ * every cold start — and, more importantly, decoupled it from the rollout:
+ * authoring the remaining 56 temples now adds nothing here at all.
  *
- * What remains is irreducibly on the launch path: the lens type, the id list and
- * the I/O-free in-memory set, because `panchangPrefs` reads the stored value in
- * the launch `multiGet` so the first painted day is already correct rather than
- * flashing the unlensed day and correcting itself.
- *
- * The new number leaves ~85 KB of headroom on purpose. If it saturates again,
- * raise it only after re-doing the exercise above — and never to admit a corpus.
+ * The new number leaves ~98 KB of headroom. If it saturates, do the same
+ * exercise: find the importer that wants a manifest and give it one.
  */
-const LAUNCH_GRAPH_BUDGET_BYTES = 7_300_000;
+/**
+ * PREVIOUS NOTE — RAISED 7,000,000 → 7,300,000 (PRD-42 W2, #345), superseded by
+ * the reduction above but kept because its reasoning still governs: the rule
+ * that must not be weakened is "no CORPUS on the launch path", every lazy
+ * option is taken FIRST, and the budget is never raised merely to make a red
+ * test green.
+ */
+const LAUNCH_GRAPH_BUDGET_BYTES = 6_950_000;
 
 test('the static launch graph stays inside its byte budget', () => {
   const sized = [...graph.keys()].map((file) => [fs.statSync(file).size, file] as const);
