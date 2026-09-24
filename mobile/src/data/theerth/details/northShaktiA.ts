@@ -9,8 +9,6 @@ import type { TempleDetail } from '../temples';
  * detail carried inline in `temples.ts` — supply the whole `TempleDetail`
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
- *
- * Temples still to author in this chunk: naina-devi
  */
 export const details: Record<string, TempleDetail> = {
   kamakhya: {
@@ -196,6 +194,68 @@ export const details: Record<string, TempleDetail> = {
           'कालीघाट दक्षिण कोलकाता में आदि गंगा के तट पर, रासबिहारी एवेन्यू के पास स्थित है। सबसे सुगम मार्ग कोलकाता मेट्रो की ब्लू लाइन है, जिसका कालीघाट स्टेशन मंदिर के निकट ही पड़ता है; ट्राम, बस और टैक्सी भी सीधे यहाँ पहुँचाती हैं। निकटतम बड़े रेलवे स्टेशन सियालदह और हावड़ा हैं, और नेताजी सुभाष चन्द्र बोस अन्तर्राष्ट्रीय हवाई अड्डा नगर के उत्तर-पूर्व में है। अधिकांश तीर्थयात्री कालीघाट के साथ हुगली-तट के दक्षिणेश्वर काली मंदिर के दर्शन एक ही यात्रा में जोड़ते हैं, जो सड़क-मार्ग से लगभग 17–20 किमी दूर है (दूरी अनुमानित) और मेट्रो की उसी ब्लू लाइन के दूसरे छोर पर पड़ता है। परिसर में ही नकुलेश्वर महादेव का मंदिर है, और पास में मदर टेरेसा का निर्मल हृदय आश्रम तथा लेक मार्केट की गलियाँ पड़ती हैं, जहाँ पूजा-सामग्री और लाल जपा-पुष्प मिलते हैं।',
         bodyEn:
           'Kalighat stands in south Kolkata on the bank of the Adi Ganga, just off Rashbehari Avenue. The easiest approach is the Blue Line of the Kolkata Metro, whose Kalighat station lies close to the temple; trams, buses and taxis also reach it directly. The main railheads are Sealdah and Howrah, and Netaji Subhas Chandra Bose International Airport lies to the city’s north-east. Most pilgrims pair Kalighat with the Dakshineswar Kali temple on the Hooghly, roughly 17–20 km away by road (distance approximate) and at the far end of the same Blue Line. The Nakuleshwar Mahadev shrine is within the precinct itself, and close by are Mother Teresa’s Nirmal Hriday home and the lanes of Lake Market, where puja materials and red hibiscus are sold.',
+      },
+    ],
+  },
+  'naina-devi': {
+    significanceHi:
+      'बिलासपुर ज़िले की एक पहाड़ी पर लगभग 1,219 मीटर की ऊँचाई पर बना श्री नैना देवी जी मंदिर हिमाचल के प्रमुख शक्ति पीठों में है, जहाँ देवी को नेत्रों के रूप में स्मरण किया जाता है। गर्भगृह में देवी के साथ बाईं ओर काली और दाईं ओर गणेश विराजते हैं, और आँगन में पीपल के नीचे वह पिण्डी है जिससे उपासना आरम्भ मानी जाती है। परम्परा और ज़िले का विवरण मंदिर की स्थापना का श्रेय कहलूर वंश के राजा बीर चन्द को देते हैं, जिसे अधिकांश स्रोत आठवीं शताब्दी में रखते हैं।',
+    significanceEn:
+      'Shri Naina Devi Ji, on a hilltop in Bilaspur district at about 1,219 metres, is among Himachal’s foremost Shakti shrines, where the goddess is remembered in the form of eyes. The sanctum holds Kali on the left, Naina Devi at the centre and Ganesha on the right, and in the courtyard, beneath a peepal tree, stands the pindi from which worship here is said to have begun. Tradition and the district record credit the founding to Raja Bir Chand of the Kahlur line, placed by most accounts in the eighth century CE.',
+    originStoryHi:
+      'शक्ति-पीठ कथा के अनुसार दक्ष-यज्ञ के बाद सती के अंग पृथ्वी पर गिरे और इस पहाड़ी पर उनके नेत्र गिरे — इसी से देवी नैना देवी कहलाईं। लोक-कथा एक दूसरा सूत्र जोड़ती है: नैना नाम का एक गुज्जर बालक यहाँ पशु चराता था और उसने कई दिनों तक एक श्वेत गाय को एक शिला पर स्वयं दूध बहाते देखा; उसने यह बात कहलूर के राजा बीर चन्द को बताई। कहते हैं कि राजा को उसी रात स्वप्न में देवी ने बताया कि वह शिला उनकी पिण्डी है, और राजा ने वहीं मंदिर बनवाकर उसका नाम उसी बालक नैना के नाम पर रखा। एक तीसरी परम्परा इसे महिषपीठ कहती है, जहाँ देवी ने महिषासुर के नेत्र निकाले और देवताओं ने “जय नैना” का जयघोष किया।',
+    originStoryEn:
+      'By the Shakti Peeth tradition, Sati’s limbs fell across the earth after the Daksha yajna and her eyes fell on this hill — from which the goddess takes the name Naina Devi. Local legend adds a second thread: a Gujjar boy named Naina grazed his herd here and for several days watched a white cow let her milk fall of itself upon a stone, and he carried word of it to Raja Bir Chand of Kahlur. The king, it is said, was told in a dream that same night that the stone was the goddess’s pindi, and he raised a temple on the spot and named it for the boy. A third tradition calls the place Mahishapeeth, where the goddess took the eyes of Mahishasura and the gods acclaimed her with the cry “Jai Naina”.',
+    sources: [
+      { label: 'Shri Naina Devi Ji - Official Temple Website', url: 'https://srinainadevi.com/mythology-legends/' },
+      { label: 'District Bilaspur, Government of Himachal Pradesh - Sri Naina Devi Ji', url: 'https://hpbilaspur.nic.in/tourist-place/sri-naina-devi-ji/' },
+      { label: 'Shri Naina Devi Ji Temple, Bilaspur - Utsav (Ministry of Tourism)', url: 'https://utsav.gov.in/view-darshan/shri-naina-devi-ji-temple-bilaspur-1' },
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'नैना देवी की स्थापना-कथा एक चरवाहे से आरम्भ होती है। परम्परा कहती है कि नैना नाम का गुज्जर बालक इस पहाड़ी पर पशु चराता था और उसने देखा कि एक श्वेत गाय प्रतिदिन एक विशेष शिला पर आकर स्वयं दूध बहा देती है; यह क्रम कई दिन चला तो उसने कहलूर (बिलासपुर) के राजा बीर चन्द को सूचना दी। कथा के अनुसार उसी रात राजा को स्वप्न में देवी के दर्शन हुए और बताया गया कि वह शिला उनकी पिण्डी है; राजा ने उसी स्थान पर मंदिर बनवाया और उसे उसी बालक के नाम पर नैना देवी कहा। अधिकांश स्रोत इस स्थापना को आठवीं शताब्दी में रखते हैं, यद्यपि सभी विवरण तिथि पर एकमत नहीं हैं, इसलिए कोई एक निश्चित संवत् यहाँ अभिलिखित नहीं मिलता। आगे की शताब्दियों में कहलूर के राजाओं ने मंदिर की सेवा-व्यवस्था और मार्ग सँभाले। परम्परा यह भी कहती है कि गुरु गोबिन्द सिंह जी ने युद्ध-अभियान से पूर्व यहाँ हवन कराया था; उस अवसर पर नैना देवी के एक ब्राह्मण भड़िया को उनके द्वारा दिया गया ताम्रपत्र सिख ताम्रपत्र-अभिलेखों में गिना जाता है। मंदिर का वर्तमान प्रबन्ध राज्य के मंदिर-न्यास के अन्तर्गत चलता है।',
+        bodyEn:
+          'Naina Devi’s founding story begins with a herdsboy. Tradition tells that a Gujjar boy named Naina grazed cattle on this hill and saw a white cow come each day to one particular stone and let her milk fall upon it of its own accord; when this went on for days he carried word to Raja Bir Chand of Kahlur, the state later known as Bilaspur. That same night, the story goes, the goddess appeared to the king in a dream and told him the stone was her pindi; he built a temple on the spot and named it for the boy. Most accounts place this founding in the eighth century CE, though not every source agrees on the dating, and no single recorded samvat survives for it. Through the centuries that followed, the rajas of Kahlur maintained the shrine’s service and its approach road. Tradition also holds that Guru Gobind Singh had a hawan performed here before setting out on campaign; the copper plate he is recorded to have given on that occasion to a Naina Devi Brahmin named Bhadia is counted among the Sikh copper-plate inscriptions. The temple today is administered under the state’s temple trust.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'नैना देवी का स्वरूप',
+        titleEn: 'The Form of Naina Devi',
+        bodyHi:
+          'नैना देवी का दर्शन नेत्र-रूप का दर्शन है। गर्भगृह में तीन स्वरूप एक साथ विराजते हैं — बाईं ओर काली, मध्य में नैना देवी और दाईं ओर गणेश — और देवी को यहाँ किसी विस्तृत मानव-आकृति में नहीं, नेत्रों के प्रतीक-रूप में पूजा जाता है, जो इस पीठ की सबसे विशिष्ट पहचान है। प्रतिमाओं को लाल चुनरी, स्वर्णाभूषण और पुष्पों से सजाया जाता है और दीपों की आभा में दर्शन होता है। मंदिर के आँगन में एक पुराना पीपल का वृक्ष है और उसके नीचे वही पिण्डी-शिला है जिससे परम्परा उपासना का आरम्भ जोड़ती है; भक्त परिक्रमा कर वहाँ भी शीश नवाते हैं। पहाड़ी की चोटी पर बने इस परिसर से भाखड़ा बाँध, गोबिन्द सागर झील और आनन्दपुर साहिब की ओर का विस्तृत दृश्य दिखाई देता है, जो दर्शन-यात्रा का अपना अंग बन गया है।',
+        bodyEn:
+          'Darshan at Naina Devi is darshan of the eyes. Three forms stand together in the sanctum — Kali to the left, Naina Devi at the centre and Ganesha to the right — and the goddess herself is honoured not as a full sculpted figure but in the symbolic form of eyes, the mark that sets this peeth apart. The images are dressed in red chunri, gold ornament and flowers, and are seen by lamplight. In the courtyard an old peepal tree shades the pindi stone from which tradition traces the first worship here, and pilgrims bow there as they complete their round. From the hilltop compound the eye travels over the Bhakra dam, the waters of Gobind Sagar and the country towards Anandpur Sahib — a view that has become part of the pilgrimage itself.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'नैन-स्वरूप की उपासना और जत्था-परम्परा',
+        titleEn: 'Worship of the Eye-Form and the Pilgrim Jathas',
+        bodyHi:
+          'नैना देवी की उपासना में मनौती की परम्परा सबसे प्रबल है — भक्त देवी को लाल चुनरी, नारियल, सिन्दूर, पुष्प और मिष्टान्न अर्पित करते हैं, और कामना पूर्ण होने पर पुनः आकर चुनरी चढ़ाते और मुण्डन जैसे संस्कार कराते हैं। दर्शन प्रातः मंगल-आरती से आरम्भ होकर सायं आरती तक चलता है, और आरती के समय पहाड़ी पर घंटे-घड़ियालों की ध्वनि दूर तक सुनाई देती है। यहाँ की सबसे जीवंत परम्परा जत्थों की है: पंजाब, हरियाणा, दिल्ली और उत्तर प्रदेश से श्रद्धालुओं के समूह बसों में और पैदल ‘जय माता दी’ के जयकारों के साथ चढ़ाई करते हैं, और मेले के दिनों में यह धारा रात-दिन बहती रहती है। बहुत से परिवार नैना देवी को अपनी कुलदेवी मानते हैं और विवाह या सन्तान-जन्म के बाद पहली यात्रा यहीं करते हैं। पहाड़ी तक चढ़ने के दो मार्ग परम्परा में हैं — लगभग सवा किलोमीटर की सीढ़ियाँ और अब रोपवे, जिसे वृद्ध और बालक प्रायः चुनते हैं।',
+        bodyEn:
+          'The vow is the strongest thread in Naina Devi’s worship. Devotees offer red chunri, coconut, sindoor, flowers and sweets, and those whose wishes are fulfilled return to drape a chunri and to have family rites such as a child’s first tonsure performed here. Darshan runs from the morning aarti to the evening one, and when the aarti is called the bells carry far across the hillside. The most living custom is that of the jathas: groups of pilgrims from Punjab, Haryana, Delhi and Uttar Pradesh come up by bus and on foot calling “Jai Mata Di”, and in the fair season that stream runs day and night. Many families keep Naina Devi as their kuldevi and make their first journey here after a marriage or the birth of a child. Two ways go up the hill by custom — the stairway of about one and a quarter kilometres, and now the ropeway, which the old and the very young usually take.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'वर्ष में तीन बड़े मेले लगते हैं — चैत्र नवरात्र, श्रावण अष्टमी और आश्विन (शारदीय) नवरात्र — और इनमें श्रावण अष्टमी का मेला सबसे बड़ा माना जाता है, जब पंजाब, हरियाणा, दिल्ली और उत्तर प्रदेश से लाखों श्रद्धालु पहुँचते हैं। दोनों नवरात्रों में नौ दिन विशेष पूजा, हवन और शृंगार होते हैं, और अष्टमी तथा नवमी को दर्शन की पंक्ति पहाड़ी की तलहटी तक पहुँच जाती है। मेले के दिनों में ज़िला प्रशासन और मंदिर-न्यास मार्ग, ठहराव, चिकित्सा और लंगर की विशेष व्यवस्था करते हैं, और पहाड़ी के नीचे मेले का बाज़ार सजता है जहाँ चुनरी, नारियल और प्रसाद मिलते हैं। रात्रि-जागरण और भजन-मंडलियाँ इन दिनों की पहचान हैं; शेष वर्ष भी प्रत्येक नवरात्रि-सप्तमी से नवमी तक और पूर्णिमा पर भीड़ बढ़ जाती है।',
+        bodyEn:
+          'Three great fairs fill the year — the Navratras of Chaitra, Shravan Ashtami, and the Navratras of Ashwin — and of these the Shravan Ashtami mela is counted the largest, drawing lakhs of pilgrims from Punjab, Haryana, Delhi and Uttar Pradesh. Through both Navratras there are nine days of special puja, hawan and shringar, and on Ashtami and Navami the darshan queue reaches down to the foot of the hill. In fair season the district administration and the temple trust arrange the track, shelter, medical posts and langar, and a fair bazaar of chunris, coconuts and prasad fills the slope below. Night-long jagrans and bhajan parties are the mark of these days; through the rest of the year too, the Saptami-to-Navami days of each lunar fortnight’s Navratri and the full-moon days bring heavier crowds.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'श्री नैना देवी जी मंदिर हिमाचल प्रदेश के बिलासपुर ज़िले में, पंजाब की सीमा के निकट एक पहाड़ी की चोटी पर है। बिलासपुर नगर से यह लगभग 70 किमी, आनन्दपुर साहिब से लगभग 20 किमी, कीरतपुर साहिब से लगभग 34 किमी, चंडीगढ़ से लगभग 108 किमी और शिमला से लगभग 150 किमी दूर पड़ता है (सभी दूरियाँ अनुमानित)। सड़क पहाड़ी के आधार तक जाती है; वहाँ से लगभग सवा किलोमीटर की सीढ़ियाँ चढ़नी होती हैं, अथवा टोबा से चलने वाले रोपवे से कुछ ही मिनटों में चोटी तक पहुँचा जा सकता है। निकटतम रेलवे स्टेशन आनन्दपुर साहिब और कीरतपुर साहिब हैं, और निकटतम हवाई अड्डा चंडीगढ़ है। अधिकांश यात्री इसी यात्रा में आनन्दपुर साहिब के गुरुद्वारे, भाखड़ा बाँध और गोबिन्द सागर झील को भी जोड़ते हैं, और पंजाब-हिमाचल के देवी-मार्ग पर चलने वाले श्रद्धालु नैना देवी के साथ चिन्तपूर्णी तथा ज्वाला जी के दर्शन का क्रम बनाते हैं।',
+        bodyEn:
+          'Shri Naina Devi Ji stands on a hilltop in Bilaspur district of Himachal Pradesh, close to the Punjab border. It lies roughly 70 km from Bilaspur town, about 20 km from Anandpur Sahib, some 34 km from Kiratpur Sahib, around 108 km from Chandigarh and about 150 km from Shimla (all distances approximate). The road climbs to the foot of the hill; from there a stairway of about one and a quarter kilometres goes up, or the ropeway from Toba carries pilgrims to the summit in a few minutes. The nearest railheads are Anandpur Sahib and Kiratpur Sahib, and the nearest airport is Chandigarh. Most travellers add the gurdwaras of Anandpur Sahib, the Bhakra dam and Gobind Sagar lake to the same journey, and pilgrims following the Devi circuit of Punjab and Himachal string Naina Devi together with Chintpurni and Jwala Ji.',
       },
     ],
   },
