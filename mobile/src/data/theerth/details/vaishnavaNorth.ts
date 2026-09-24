@@ -9,8 +9,6 @@ import type { TempleDetail } from '../temples';
  * detail carried inline in `temples.ts` — supply the whole `TempleDetail`
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
- *
- * Temples still to author in this chunk: lakshmi-narayan
  */
 export const details: Record<string, TempleDetail> = {
   'banke-bihari': {
@@ -223,6 +221,73 @@ export const details: Record<string, TempleDetail> = {
           'मंदिर बिहार के गया ज़िले में फल्गु नदी के पश्चिमी तट पर, पुराने नगर के भीतर स्थित है; अंतिम दूरी सँकरी गलियों से होकर पैदल तय होती है। निकटतम रेलवे स्टेशन गया जंक्शन है, जो नगर के भीतर ही कुछ किलोमीटर दूर है और दिल्ली–हावड़ा मार्ग पर प्रमुख ठहराव है। गया हवाई अड्डा नगर से लगभग 12 किमी दक्षिण-पश्चिम में है। बोधगया लगभग 15–16 किमी दूर पड़ता है, इसलिए अनेक यात्री दोनों को एक ही प्रवास में देखते हैं। गया में ही मंगला गौरी शक्तिपीठ और ब्रह्मयोनि पहाड़ी है, और नगर के भीतर फल्गु के घाट, अक्षयवट तथा अन्य पिंड-वेदियाँ पितृ-कर्म की परिक्रमा पूरी करती हैं।',
         bodyEn:
           'The temple stands inside the old town of Gaya in Bihar, on the western bank of the Falgu, and the last stretch is walked through narrow lanes. Gaya Junction, a principal halt on the Delhi–Howrah route, is only a few kilometres away within the city. Gaya airport lies about 12 km to the south-west. Bodh Gaya is roughly 15–16 km off, so many travellers take both on a single stay. Gaya itself also holds the Mangla Gauri Shakti Peeth and the hill of Brahmayoni, while the ghats of the Falgu, the Akshayavat and the other pind vedis within the town complete the round of the ancestral rites.',
+      },
+    ],
+  },
+  'lakshmi-narayan': {
+    significanceHi:
+      'नई दिल्ली के मंदिर मार्ग पर स्थित लक्ष्मीनारायण मंदिर — जिसे बिरला मंदिर भी कहा जाता है — राजधानी का पहला बड़ा हिन्दू मंदिर है और आधुनिक भारत के मंदिर-निर्माण का उल्लेखनीय उदाहरण। इसका निर्माण बिरला परिवार ने सन् 1933 से 1939 (विक्रम संवत् 1990–1996) के बीच कराया और सन् 1939 में महात्मा गांधी ने इसका उद्घाटन इस शर्त पर किया कि इसमें सभी जातियों के लोग प्रवेश कर सकेंगे। गर्भगृह में लक्ष्मी सहित नारायण विराजमान हैं।',
+    significanceEn:
+      'The Lakshmi Narayan temple on Mandir Marg in New Delhi — widely known as the Birla Mandir — was the first large Hindu temple built in the capital and stands as a notable example of twentieth-century temple building in India. The Birla family raised it between 1933 and 1939 (Vikram Samvat 1990–1996), and Mahatma Gandhi inaugurated it in 1939 on the condition that people of every caste would be admitted. In the sanctum Narayan is enshrined together with Lakshmi.',
+    originStoryHi:
+      'उद्योगपति बलदेव दास बिरला और उनके पुत्र जुगल किशोर बिरला ने नई राजधानी में एक बड़े वैष्णव मंदिर की योजना बनाई और उसका शिलान्यास धौलपुर के महाराज उदयभानु सिंह ने किया। स्थापत्य का कार्य आधुनिक भारतीय स्थापत्य-आंदोलन से जुड़े वास्तुकार श्रीश चन्द्र चटर्जी ने सँभाला और छह वर्ष में नागर शैली का यह त्रिस्तरीय मंदिर तैयार हुआ। सन् 1939 में महात्मा गांधी ने इसे इस स्पष्ट शर्त के साथ खोला कि मंदिर किसी जाति के लिए बंद नहीं रहेगा — यही शर्त आज भी इस मंदिर की पहचान है।',
+    originStoryEn:
+      'The industrialist Baldeo Das Birla and his son Jugal Kishore Birla planned a major Vaishnava temple for the new capital, and the foundation stone was laid by Maharaja Udaybhanu Singh of Dholpur. The design was entrusted to Sris Chandra Chatterjee, an architect associated with the Modern Indian Architecture movement, and the three-storeyed Nagara-style shrine took six years to complete. In 1939 Mahatma Gandhi opened it on the explicit condition that the temple would never be closed to any caste — a condition that remains the shrine’s defining mark.',
+    sources: [
+      {
+        label: 'Delhi Tourism, Government of NCT of Delhi — Birla Mandir',
+        url: 'https://delhitourism.gov.in/tourist_place/birla_mandir.html',
+      },
+      {
+        label: 'Laxminarayan Temple — Reference',
+        url: 'https://en.wikipedia.org/wiki/Laxminarayan_Temple',
+      },
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'बीसवीं शताब्दी के तीसरे दशक में जब नई दिल्ली बस रही थी, तब तक राजधानी में कोई बड़ा हिन्दू मंदिर नहीं था। उद्योगपति बलदेव दास बिरला और उनके पुत्र जुगल किशोर बिरला ने यह अभाव पूरा करने का संकल्प लिया; शिलान्यास धौलपुर के महाराज उदयभानु सिंह के हाथों हुआ और निर्माण सन् 1933 (विक्रम संवत् 1990) में आरम्भ होकर सन् 1939 (विक्रम संवत् 1996) में पूरा हुआ। वास्तुकार श्रीश चन्द्र चटर्जी थे, जो आधुनिक भारतीय स्थापत्य-आंदोलन के प्रमुख प्रवर्तकों में गिने जाते हैं। प्रतिमाओं और अलंकरण का कार्य काशी से आए सौ से अधिक शिल्पियों ने आचार्य विश्वनाथ शास्त्री के निर्देशन में किया, और निर्माण में मकराना, आगरा, कोटा तथा जैसलमेर का पत्थर लगा। उद्घाटन महात्मा गांधी ने सन् 1939 में किया — कुछ वृत्तांत इसे 1938 बताते हैं — और उनकी शर्त थी कि मंदिर में सभी जातियों का प्रवेश खुला रहेगा। प्रतिष्ठा की तिथि और वार आधिकारिक रूप से दर्ज नहीं मिलते; मंदिर का प्रबंध आज भी बिरला परिवार के न्यास के अधीन है।',
+        bodyEn:
+          'When New Delhi was being laid out in the 1930s the new capital still had no large Hindu temple. The industrialist Baldeo Das Birla and his son Jugal Kishore Birla set out to remedy that: the foundation stone was laid by Maharaja Udaybhanu Singh of Dholpur, and building ran from 1933 (Vikram Samvat 1990) to 1939 (Vikram Samvat 1996). The architect was Sris Chandra Chatterjee, among the leading figures of the Modern Indian Architecture movement. More than a hundred carvers from Benares worked the images and ornament under Acharya Vishvanath Shastri, and stone was drawn from Makrana, Agra, Kota and Jaisalmer. Mahatma Gandhi inaugurated the temple in 1939 — a few accounts give 1938 — with the stipulation that entry stay open to every caste. No consecration tithi or weekday is officially recorded. The temple is still administered by the Birla family trust.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'लक्ष्मीनारायण का स्वरूप',
+        titleEn: 'The Form of Lakshmi Narayan',
+        bodyHi:
+          'गर्भगृह में नारायण अपनी शक्ति लक्ष्मी के साथ विराजमान हैं — यही युग्म-स्वरूप मंदिर का नाम देता है; प्रतिमाएँ जयपुर से लाए गए संगमरमर की हैं। मंदिर पूर्वाभिमुख है और ऊँचे अधिष्ठान पर तीन तलों में उठता है; इसका मुख्य शिखर लगभग 160–165 फुट ऊँचा है और उससे लगा दूसरा शिखर लगभग 116 फुट। शैली उत्तर भारत की नागर परम्परा की है, पर अलंकरण और विशाल खुले मंडप बीसवीं सदी की रचना हैं। परिसर लगभग साढ़े सात एकड़ में फैला है, जिसमें शिव, गणेश, हनुमान, कृष्ण और बुद्ध के अलग मंदिर, फव्वारे और बाग़ हैं; उत्तर दिशा में कृष्ण को समर्पित गीता भवन है, जहाँ प्रवचन होते हैं। भीतरी दीवारों पर पुराण-प्रसंगों के भित्ति-चित्र और गीता तथा उपनिषदों के वचन उत्कीर्ण हैं।',
+        bodyEn:
+          'In the sanctum Narayan is enshrined with Lakshmi, the paired form that gives the temple its name; the images are of marble brought from Jaipur. The building faces east and rises in three storeys on a raised platform, its principal shikhara standing about 160 to 165 feet, with an attached second tower of roughly 116 feet. The idiom is the Nagara tradition of northern India, though the ornament and the wide open halls belong to the twentieth century. The precinct covers some seven and a half acres and holds separate shrines to Shiva, Ganesha, Hanuman, Krishna and Buddha, along with fountains and gardens; to the north is the Geeta Bhawan, dedicated to Krishna and used for discourses. The inner walls carry painted scenes from the Puranas and inscribed passages from the Gita and the Upanishads.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'सर्वजन-प्रवेश और गीता भवन',
+        titleEn: 'Open Entry and the Geeta Bhawan',
+        bodyHi:
+          'इस मंदिर की सबसे विशिष्ट परम्परा उसकी उद्घाटन-शर्त से जन्मी है — यहाँ प्रवेश किसी जाति के आधार पर वर्जित नहीं, और तीसरे दशक के भारत में यह एक सामाजिक वक्तव्य था। दूसरी पहचान गीता भवन की है, जहाँ प्रवचन, पाठ और धार्मिक सभाएँ होती रहती हैं; मंदिर इसी कारण केवल दर्शन का नहीं, अध्ययन और सत्संग का भी स्थान माना जाता है। दर्शन प्रातः लगभग साढ़े चार बजे से दोपहर डेढ़ बजे तक और फिर ढाई बजे से रात नौ बजे तक खुले रहते हैं, और प्रवेश निःशुल्क है। भोग में तुलसी-युक्त पंचामृत, फल और मिष्ठान्न अर्पित होते हैं, तथा वैष्णव रीति से एकादशी पर विशेष पूजन होता है; गुरुवार और शुक्रवार को — लक्ष्मी-नारायण दोनों के वार — भीड़ अपेक्षाकृत अधिक रहती है।',
+        bodyEn:
+          'The temple’s most distinctive custom grew out of the condition on which it was opened: no one is barred by caste, which in the India of the 1930s was a deliberate social statement. Its second mark is the Geeta Bhawan, where discourses, recitations and religious gatherings are held, so that the place is as much for study and satsang as for darshan. Doors open around half past four in the morning and stay open until half past one, then again from half past two until nine at night, and there is no entrance fee. Offerings follow Vaishnava practice — panchamrit with tulsi, fruit and sweets — with special worship on Ekadashi; Thursdays and Fridays, the days associated with Narayan and Lakshmi, draw the heavier crowds.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'वर्ष के दो सबसे बड़े अवसर भाद्रपद कृष्ण अष्टमी की जन्माष्टमी और कार्तिक अमावस्या की दीपावली हैं, जब मंदिर में हज़ारों श्रद्धालु आते हैं और परिसर दीपों तथा सज्जा से भर जाता है। दीपावली पर लक्ष्मी-पूजन यहाँ का प्रमुख आकर्षण है, क्योंकि मंदिर स्वयं लक्ष्मी-नारायण को समर्पित है। फाल्गुन की होली, चैत्र और आश्विन के नवरात्र, तथा राम नवमी भी परिसर के विभिन्न मंदिरों में मनाए जाते हैं। प्रत्येक एकादशी को विशेष पूजन और भजन-कीर्तन होता है, और गीता जयंती के अवसर पर गीता भवन में पाठ तथा प्रवचन की विशेष शृंखला चलती है।',
+        bodyEn:
+          'The two largest occasions of the year are Janmashtami on Bhadrapada Krishna Ashtami and Diwali on the new moon of Kartik, when thousands come and the precinct is filled with lamps and decoration. The Lakshmi puja of Diwali is the principal draw, fittingly for a shrine dedicated to Lakshmi Narayan. Holi in Phalguna, the Navratris of Chaitra and Ashwin, and Rama Navami are also kept across the complex’s several shrines. Every Ekadashi brings special worship with bhajan and kirtan, and around Gita Jayanti the Geeta Bhawan hosts a dedicated run of recitation and discourse.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'मंदिर नई दिल्ली के मंदिर मार्ग पर है, कनॉट प्लेस से लगभग डेढ़ किलोमीटर पश्चिम — राजधानी के मध्य में होने के कारण यह सबसे सुगम तीर्थों में है। निकटतम बड़ा रेलवे स्टेशन नई दिल्ली है, और मेट्रो से रामकृष्ण आश्रम मार्ग स्टेशन सबसे पास पड़ता है, जहाँ से थोड़ी दूरी ऑटो या पैदल तय होती है; नगर का हवाई अड्डा इंदिरा गांधी अंतर्राष्ट्रीय है। परिसर में ही शिव, गणेश, हनुमान, कृष्ण और बुद्ध के मंदिर, गीता भवन और बाग़ हैं, इसलिए दर्शन में समय लगता है। दिल्ली-दर्शन में यात्री प्रायः इसे कनॉट प्लेस के प्राचीन हनुमान मंदिर और झंडेवालान देवी मंदिर के साथ जोड़ते हैं, जो दोनों निकट ही हैं।',
+        bodyEn:
+          'The temple stands on Mandir Marg in New Delhi, about a kilometre and a half west of Connaught Place, and its position at the centre of the capital makes it one of the most easily reached shrines in this collection. New Delhi is the nearest major railway station; on the Metro, Ramakrishna Ashram Marg is the closest stop, a short auto ride or walk away, and the city’s airport is Indira Gandhi International. Because the precinct itself holds shrines to Shiva, Ganesha, Hanuman, Krishna and Buddha along with the Geeta Bhawan and its gardens, a visit takes time. On a round of Delhi’s temples, pilgrims usually pair it with the old Hanuman Mandir at Connaught Place and the Jhandewalan Devi temple, both close by.',
       },
     ],
   },
