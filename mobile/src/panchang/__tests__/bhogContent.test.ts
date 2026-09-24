@@ -21,7 +21,7 @@ test('the registry preserves v1 and publishes all phase 2/3 profiles', () => {
     'satyanarayan-bhog',
     'hanuman-jayanti-bhog',
   ]);
-  assert.equal(BHOG_CONTENT.length, 44);
+  assert.equal(BHOG_CONTENT.length, 47);
   assert.deepEqual(BHOG_CONTENT.slice(10).map((entry) => entry.id), [
     'hartalika-teej-bhog',
     'hariyali-teej-bhog',
@@ -57,6 +57,9 @@ test('the registry preserves v1 and publishes all phase 2/3 profiles', () => {
     'shitala-bhog',
     'bachh-baras-bhog',
     'ganesh-jayanti-bhog',
+    'narak-chaturdashi-bhog',
+    'varaha-jayanti-bhog',
+    'vamana-jayanti-bhog',
   ]);
 });
 
