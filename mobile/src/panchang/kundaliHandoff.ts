@@ -110,6 +110,14 @@ export function buildKundaliHandoffText(
     lines.push('## Selected question and guidance');
     lines.push(`Question: ${guidance.question.en}`);
     if (phase) {
+      if (phase.decision) {
+        lines.push(`Job-change answer: ${phase.decision.headline.en} [${phase.decision.signalIds.join(', ')}]`);
+        lines.push('In favour:');
+        phase.decision.inFavour.forEach(r => lines.push(`- ${r.title.en}: ${r.text.en} ${r.reference.en} [${r.signalId}]`));
+        lines.push('Reasons to pause:');
+        phase.decision.against.forEach(r => lines.push(`- ${r.title.en}: ${r.text.en} ${r.reference.en} [${r.signalId}]`));
+        lines.push(`Next step: ${phase.decision.nextStep.en}`);
+      }
       lines.push(phase.title.en, phase.summary.en);
       if (phase.currentPeriod) lines.push(`${phase.currentPeriod.label.en}: ${phase.currentPeriod.start} → ${phase.currentPeriod.end}`);
       for (const signal of phase.signals) {

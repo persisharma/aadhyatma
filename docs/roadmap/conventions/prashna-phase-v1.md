@@ -31,6 +31,7 @@ These are references for traditional rules, not evidence of predictive accuracy.
 4. No numeric score, weighted average, probability, event date or guaranteed result. In particular a favourable Moon transit alone does not establish a career opportunity. Absence of a favourable transit rule is rendered as limited ease, not a predicted mishap.
 5. Directions are bilingual phrase-table interpretations keyed by question and phase, with explicit signal IDs. They are not ordinary checklists and are not observed personal circumstances.
 6. The next card names the actual next Antardasha, crossing Mahadasha boundaries when needed. Its natal topic meaning is a preview; it does not carry today's transit judgement forward. The UI says **Next period change**, not next improvement or next overall change.
+7. For an explicit job-switch question, the same phase tone becomes a short decision: pursue interviews (supportive), search without resigning (mixed), prepare before an immediate move (effort), or say that the checked timing is insufficient (active/limited). The screen shows up to two signals in favour and two reasons to pause, each linked to its exact phase signal and birth/period/transit reference. A neutral or absent dasha link is labelled uncertainty, not an adverse graha. Practical steps require an actual offer and role details before a final decision. This is an editorial decision aid, not a classical yes/no prediction.
 
 ## Deliberate limits and the next review
 
@@ -38,7 +39,7 @@ These are references for traditional rules, not evidence of predictive accuracy.
 - Rahu/Ketu contribute only topic activation. The comparison exposed disagreement around Rahu in the sixth; the generic difficult-house polarity was removed for nodes instead of selecting GPT's favourable interpretation without the missing checks.
 - Only slow Jupiter/Saturn transits determine the phase. Vedha uses all current grahas, so a daily blocker can change independently of a slow ingress. The current interpretation is stamped for today, never for the full multi-year period.
 - Next slow-transit change prediction is still outside the phase card. Legacy scans remain available for the other topics. Do not say the next dasha card enumerates every upcoming change.
-- Ask still resolves the broad purpose; explicit question choices live on Prashna. Its general-purpose phase equals the screen's general-purpose phase at the same instant. It must not pretend to have parsed “first job” versus “switch”.
+- Ask resolves an explicit job-switch phrase in English, Hindi or Hinglish to `job-switch` and opens that selected question on Prashna. All other job phrases still use the general-purpose phase; Ask does not infer first-job or growth subtypes. Its general-purpose phase equals the screen's general-purpose phase at the same instant.
 - The remaining seven topics retain the previous model. Health, mind, children and minor restrictions are unchanged.
 
 Review the six-profile comparison before widening scope. It must show what changed, what did not, which GPT assertions disagree with supplied facts, and which comparisons cannot be made against the public platform reports.

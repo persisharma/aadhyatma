@@ -9,6 +9,7 @@ import { computeKundali, type KundaliChart, type KundaliInput } from '@/panchang
 import { buildPrashnaReading } from '@/panchang/prashnaGuidance';
 import { getPurpose, isPurposeId } from '@/panchang/prashnaPurposes';
 import { formatIstDateEn, formatIstDateHi } from '@/panchang/reportFormat';
+import { fold } from '../fold';
 import type { AskAction, AskAnswer, AskContext, Localized, ResolvedSlots } from '../types';
 
 const L = (hi: string, en: string): Localized => ({ hi, en });
@@ -22,7 +23,15 @@ function chartFor(input: KundaliInput): KundaliChart {
   return chartMemo.chart;
 }
 
-export function resolvePrashna(intentId: string, ctx: AskContext, slots: ResolvedSlots): AskAnswer | null {
+function questionChoice(purposeId: string, question?: string): string | undefined {
+  if (purposeId !== 'naukri' || !question) return undefined;
+  const key = fold(question);
+  const work = /(?:\bnaukri\b|\bnaukari\b|\bjob\b)/.test(key);
+  const change = /(?:badal|badlu|badle|switch|chang|resign|quit|chhod|chod|बदल|छोड़)/.test(key);
+  return work && change ? 'job-switch' : undefined;
+}
+
+export function resolvePrashna(intentId: string, ctx: AskContext, slots: ResolvedSlots, question?: string): AskAnswer | null {
   const id = slots.purpose!.id;
   if (!isPurposeId(id)) return null;
   // Abstain without a saved chart (§25.4) — the did-you-mean path then offers
@@ -31,8 +40,9 @@ export function resolvePrashna(intentId: string, ctx: AskContext, slots: Resolve
   if (!saved) return null;
   const purpose = getPurpose(id);
   // Skip future ingress scanning; retain today's transits for screen parity.
-  const { analysis: answer, guidance, phase } = buildPrashnaReading(chartFor(saved.input), id, ctx.now, { gocharScanDays: 0 });
-  const open: AskAction = { label: L('पूरा उत्तर', 'Full answer'), target: { tab: 'panchang', screen: 'Prashna', params: { purposeId: id } } };
+  const questionId = questionChoice(id, question);
+  const { analysis: answer, guidance, phase } = buildPrashnaReading(chartFor(saved.input), id, ctx.now, { gocharScanDays: 0, questionId });
+  const open: AskAction = { label: L('पूरा उत्तर', 'Full answer'), target: { tab: 'panchang', screen: 'Prashna', params: { purposeId: id, ...(questionId ? { questionId } : {}) } } };
   const who = saved.name ? L(`${saved.name} की कुंडली से`, `From ${saved.name}’s chart`) : L('आपकी कुंडली से', 'From your chart');
   if (answer.gated) {
     return {
@@ -49,8 +59,17 @@ export function resolvePrashna(intentId: string, ctx: AskContext, slots: Resolve
   }
   if (phase) return {
     intentId, family: 'jyotish', tag: L(`प्रश्न · ${purpose.nameHi}`, `Prashna · ${purpose.nameEn}`),
-    headline: phase.title, sub: who,
-    lines: [
+    headline: phase.decision?.headline ?? phase.title, sub: who,
+    lines: phase.decision ? [
+      { label: L('बदलाव के पक्ष में', 'In favour'), value: phase.decision.inFavour[0]
+        ? L(`${phase.decision.inFavour[0].text.hi} ${phase.decision.inFavour[0].reference.hi}`, `${phase.decision.inFavour[0].text.en} ${phase.decision.inFavour[0].reference.en}`)
+        : L('जाँचे गए संकेतों में स्पष्ट सहारा नहीं।', 'No clear support in the checked factors.') },
+      { label: L('सावधानी का कारण', 'Reasons to pause'), value: phase.decision.against[0]
+        ? L(`${phase.decision.against[0].text.hi} ${phase.decision.against[0].reference.hi}`, `${phase.decision.against[0].text.en} ${phase.decision.against[0].reference.en}`)
+        : L('जाँचे गए संकेतों में अलग से विरोधी संकेत नहीं।', 'No separate opposing signal in the checked factors.') },
+      { label: L('अब क्या करें', 'What to do now'), value: phase.decision.nextStep },
+      ...(phase.currentPeriod ? [{ label: L('चल रही अवधि', 'Running period'), value: L(`${phase.currentPeriod.label.hi} · ${formatIstDateHi(new Date(phase.currentPeriod.end))} तक`, `${phase.currentPeriod.label.en} · until ${formatIstDateEn(new Date(phase.currentPeriod.end))}`) }] : []),
+    ] : [
       { label: L('अभी का समय', 'Current phase'), value: phase.summary },
       { label: L('इस समय दिशा', 'Direction now'), value: phase.directions[0].text },
       ...(phase.currentPeriod ? [{ label: L('चल रही अवधि', 'Running period'), value: L(`${phase.currentPeriod.label.hi} · ${formatIstDateHi(new Date(phase.currentPeriod.end))} तक`, `${phase.currentPeriod.label.en} · until ${formatIstDateEn(new Date(phase.currentPeriod.end))}`) }] : []),

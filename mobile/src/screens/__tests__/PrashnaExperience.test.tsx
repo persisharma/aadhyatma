@@ -45,11 +45,11 @@ jest.mock('@/panchang/useKundali', () => ({
 
 const PrashnaScreen = jest.requireActual<typeof import('../PrashnaScreen')>('../PrashnaScreen').default;
 
-function render(params?: { purposeId?: string }) {
+function render(params?: { purposeId?: string; questionId?: string }, lang: 'hi' | 'en' = 'en') {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">
+      <GitaLanguageProvider initialLang={lang}>
         <PrashnaScreen
           navigation={mockNavigation as any}
           route={{ key: 'Prashna-test', name: 'Prashna', params } as any}
@@ -181,12 +181,37 @@ test('career question changes phase guidance, clears basis and keeps report cont
   assert.ok(byTestId(tree, 'prashna-chain-0').length);
   act(() => byTestId(tree, 'question-job-switch')[0].props.onPress());
   assert.notEqual(textOf(tree), first);
+  assert.ok(textOf(tree).includes('Should I change jobs?'));
+  assert.ok(textOf(tree).includes('In favour of a change'));
+  assert.ok(textOf(tree).includes('Reasons to pause'));
+  assert.ok(byTestId(tree, 'phase-for-natal-10').length || byTestId(tree, 'phase-for-dasha-maha').length || byTestId(tree, 'phase-for-dasha-antar').length);
   assert.equal(byTestId(tree, 'prashna-chain-0').length, 0);
   const link = tree.root.findAll(n => n.props.accessibilityLabel === 'Open full Kundali reading' && typeof n.props.onPress === 'function')[0];
   act(() => link.props.onPress());
   assert.ok(mockRootNavigate.mock.calls.some(c => c[0] === 'KundaliReport' && c[1]?.prashnaContext?.questionId === 'job-switch'));
   act(() => byTestId(tree, 'purpose-vidya')[0].props.onPress());
   assert.equal(byTestId(tree, 'question-general')[0].props.accessibilityState.selected, true);
+  act(() => tree.unmount());
+});
+
+test('Hindi job-switch answer leads with a decision and explains both sides', () => {
+  mockKundaliState = { profile: { name: 'Aarav' }, chart: adultChart, hydrated: true, loadState: 'saved' };
+  const tree = render({ purposeId: 'naukri' }, 'hi');
+  act(() => byTestId(tree, 'question-job-switch')[0].props.onPress());
+  const text = textOf(tree);
+  assert.ok(text.includes('नौकरी बदलूँ?'));
+  assert.ok(text.includes('बदलाव के पक्ष में'));
+  assert.ok(text.includes('सावधानी का कारण'));
+  assert.ok(text.includes('अब क्या करें'));
+  assert.match(text, /जन्मकुंडली:|आज का गोचर:|चल रही महादशा:/);
+  act(() => tree.unmount());
+});
+
+test('Ask hand-off opens the selected job-switch answer directly', () => {
+  mockKundaliState = { profile: { name: 'Aarav' }, chart: adultChart, hydrated: true, loadState: 'saved' };
+  const tree = render({ purposeId: 'naukri', questionId: 'job-switch' });
+  assert.equal(byTestId(tree, 'question-job-switch')[0].props.accessibilityState.selected, true);
+  assert.ok(textOf(tree).includes('Should I change jobs?'));
   act(() => tree.unmount());
 });
 

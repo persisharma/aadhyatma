@@ -39,6 +39,19 @@ test('with a saved adult chart a purpose-shaped predictive question becomes a da
   assert.deepEqual(r.answer.actions[0].target, { tab: 'panchang', screen: 'Prashna', params: { purposeId: 'naukri' } });
 });
 
+test('Ask sends an explicit job-change question to the same decision and selected screen question', () => {
+  const ctx = testContext({ kundali: { input: adult, name: 'Aarav' } });
+  for (const q of ['naukri badalni chahiye kya', 'नौकरी बदलनी चाहिए क्या', 'should I change my job?']) {
+    const r = askQuestion(q, ctx);
+    assert.equal(r.kind, 'answer', q);
+    if (r.kind !== 'answer') continue;
+    assert.ok(r.answer.lines.some(line => line.label.en === 'In favour'));
+    assert.ok(r.answer.lines.some(line => line.label.en === 'Reasons to pause'));
+    assert.ok(r.answer.lines.some(line => line.label.en === 'What to do now'));
+    assert.deepEqual(r.answer.actions[0].target, { tab: 'panchang', screen: 'Prashna', params: { purposeId: 'naukri', questionId: 'job-switch' } });
+  }
+});
+
 test('predictive framing with no readable purpose stays declined even with a chart', () => {
   const ctx = testContext({ kundali: { input: adult, name: null } });
   for (const q of ['mera bhavishya kya hai', 'meri kismat kaisi hai', 'kal lottery lagegi kya', 'kya mere kundali me dosh hai kya']) {

@@ -19,6 +19,41 @@ test('same chart changes its reading across Jupiter-Rahu and Saturn-Saturn', () 
   assert.notDeepEqual(a.signals.filter(s => s.layer === 'gochar'), b.signals.filter(s => s.layer === 'gochar'));
 });
 
+test('a job-switch answer states a decision and traces both sides to this chart and date', () => {
+  const current = buildPrashnaPhase(chart, 'naukri', now, 'job-switch')!;
+  const later = buildPrashnaPhase(chart, 'naukri', new Date('2028-01-17T06:30:00Z'), 'job-switch')!;
+  assert.equal(current.tone, 'mixed');
+  assert.match(current.decision!.headline.en, /Search now/);
+  assert.ok(current.decision!.inFavour.length && current.decision!.against.length);
+  assert.deepEqual(current.decision!.signalIds, [...new Set([...current.decision!.inFavour, ...current.decision!.against].map(reason => reason.signalId))]);
+  for (const side of [current.decision!.inFavour, current.decision!.against, later.decision!.inFavour, later.decision!.against]) {
+    for (const reason of side) {
+      const signal = (side === current.decision!.inFavour || side === current.decision!.against ? current : later).signals.find(s => s.id === reason.signalId);
+      assert.ok(signal, reason.signalId);
+      assert.ok(reason.text.en && reason.text.hi && reason.reference.en && reason.reference.hi);
+      if (reason.signalId.startsWith('transit-')) assert.match(reason.reference.en, /from your Moon/);
+    }
+  }
+  assert.equal(later.tone, 'limited');
+  assert.match(later.decision!.headline.en, /No clear timing answer/);
+  assert.equal(later.decision!.against[0].signalId, 'dasha-maha');
+  assert.match(later.decision!.against[0].reference.en, /no direct link/);
+  assert.notEqual(current.decision!.headline.en, later.decision!.headline.en);
+  assert.equal(buildPrashnaPhase(chart, 'naukri', now, 'job-growth')!.decision, null);
+});
+
+test('a supportive job-switch answer names independent period and transit support', () => {
+  const isha = computeKundali({ date: new Date('1995-06-25T04:00:00Z'), latitude: 12.9716, longitude: 77.5946, timezone: 'Asia/Kolkata' });
+  const blocked = buildPrashnaPhase(isha, 'naukri', now, 'job-switch')!;
+  assert.match(blocked.decision!.against.find(reason => reason.signalId === 'transit-saturn')!.text.en, /obstruction by Mercury/);
+  const r = buildPrashnaPhase(isha, 'naukri', new Date('2026-10-30T05:45:00Z'), 'job-switch')!;
+  assert.equal(r.tone, 'supportive');
+  assert.match(r.decision!.headline.en, /^Yes,/);
+  assert.deepEqual(r.decision!.inFavour.map(reason => reason.signalId), ['dasha-antar', 'transit-saturn']);
+  assert.equal(r.decision!.against.length, 0);
+  assert.match(r.decision!.nextStep.en, /in writing/);
+});
+
 test('node occupancy establishes relevance without inheriting difficult-house polarity', () => {
   const r = buildPrashnaPhase(chart, 'naukri', now)!;
   const rahu = r.signals.find(s => s.id === 'dasha-antar')!;
