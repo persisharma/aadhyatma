@@ -10,9 +10,72 @@ import type { TempleDetail } from '../temples';
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
  *
- * Temples still to author in this chunk: vishalakshi danteshwari tripura-sundari
+ * Temples still to author in this chunk: danteshwari tripura-sundari
  */
 export const details: Record<string, TempleDetail> = {
+  vishalakshi: {
+    significanceHi:
+      'काशी की विशालाक्षी गंगा तट की प्रमुख शक्ति हैं और 51 शक्ति पीठों में गिनी जाती हैं; नाम का अर्थ है “विशाल नेत्रों वाली”। काञ्ची की कामाक्षी और मदुरै की मीनाक्षी के साथ मिलकर वे देवी के नेत्र-नामों की उस त्रयी में आती हैं जिसे उत्तर और दक्षिण दोनों परम्पराएँ मानती हैं। मीर घाट पर खड़ा वर्तमान मंदिर तमिलनाडु के नाट्टुकोट्टै नागरत्तार व्यापारी समुदाय ने सन् 1893 (विक्रम संवत् 1950) में बनवाया और सन् 1971 (विक्रम संवत् 2028) में उसका जीर्णोद्धार कराया।',
+    significanceEn:
+      'Vishalakshi of Kashi is a principal Shakti of the Ganga ghats and is counted among the 51 Shakti Peethas; her name means “she of the wide eyes”. With Kamakshi of Kanchi and Meenakshi of Madurai she completes the triad of eye-named goddesses honoured by northern and southern traditions alike. The temple that stands at Mir Ghat today was built by the Nattukottai Nagarathar merchant community of Tamil Nadu in 1893 CE (Vikram Samvat 1950) and renovated by them again in 1971 CE (Vikram Samvat 2028).',
+    originStoryHi:
+      'परम्परा के अनुसार दक्ष-यज्ञ के बाद सती के देह-अंग और आभूषण जहाँ-जहाँ गिरे वहाँ शक्ति पीठ बने; काशी में सती का कर्ण-आभूषण गिरा माना जाता है — कुछ विवरण इसे कुण्डल कहते हैं तो कुछ दाहिने कान की मणि। इसीलिए देवी यहाँ पार्वती के विशालाक्षी स्वरूप में पूजित हैं और स्थान को विशाल तीर्थ कहा गया। स्कन्द पुराण का काशी खण्ड विशालाक्षी को काशी की नव गौरियों में गिनता है, इसलिए यह पीठ नगर की गौरी-परम्परा का भी अंग है।',
+    originStoryEn:
+      'By tradition, Shakti Peethas arose wherever a limb or an ornament of Sati fell after Daksha’s sacrifice; at Kashi it is the ornament of her ear that is held to have fallen — some accounts call it an earring, others the jewel of her right ear. The goddess is therefore worshipped here in Parvati’s Vishalakshi form, and the spot is named Vishal Teerth. The Kashi Khand of the Skanda Purana counts Vishalakshi among the nine Gauris of Kashi, so the peeth belongs to the city’s own Gauri tradition as well.',
+    sources: [
+      { label: 'Incredible India - Vishalakshi Temple, Varanasi', url: 'https://www.incredibleindia.gov.in/en/uttar-pradesh/varanasi/vishalakshi-temple' },
+      { label: 'Kashi Official Web Portal - Vishalakshi Devi Temple', url: 'https://kashi.gov.in/listing-details/vishalakshi-devi-temple' },
+      { label: 'Kashi Official Web Portal - Nav Gauri Yatra', url: 'https://kashi.gov.in/varanasi-yatra/nav-gauri-yatra' },
+      { label: 'Vishalakshi Temple - Reference', url: 'https://en.wikipedia.org/wiki/Vishalakshi_Temple' },
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'विशालाक्षी की उपासना काशी में उतनी ही पुरानी है जितनी नगर की शक्ति-परम्परा — स्कन्द पुराण के काशी खण्ड में देवी को विशाल तीर्थ की अधिष्ठात्री और नगर की नव गौरियों में गिना गया है। परम्परा के अनुसार दक्ष-यज्ञ के बाद सती का कर्ण-आभूषण इसी स्थान पर गिरा, और तभी से यह पीठ बना। जो इमारत आज मीर घाट पर खड़ी है वह अपेक्षाकृत नई है: तमिलनाडु के चेट्टिनाड क्षेत्र का नाट्टुकोट्टै नागरत्तार व्यापारी समुदाय, जो काशी-यात्रा को अपनी कुल-परम्परा मानता है, उन्नीसवीं शताब्दी से इस मंदिर की सेवा करता आया है और उसी ने सन् 1893 (विक्रम संवत् 1950) में वर्तमान मंदिर बनवाया। सन् 1971 (विक्रम संवत् 2028) में उसी समुदाय के सहयोग से जीर्णोद्धार हुआ और उसी समय काले पाषाण की नई प्रतिमा उत्कीर्ण कर स्थापित की गई; प्रतिष्ठा की तिथि और वार किसी उपलब्ध अभिलेख में दर्ज नहीं हैं। मंदिर की सेवा-व्यवस्था आज भी उसी नागरत्तार न्यास के हाथ में है, इसलिए गंगा तट के इस पीठ में दक्षिण भारत की आगम-पद्धति और उत्तर की घाट-परम्परा साथ-साथ चलती हैं।',
+        bodyEn:
+          'Worship of Vishalakshi is as old in Kashi as the city’s Shakta tradition itself — the Kashi Khand of the Skanda Purana names her as the presiding goddess of Vishal Teerth and one of the city’s nine Gauris. By tradition the ear ornament of Sati fell at this spot after Daksha’s sacrifice, and the peeth dates from then. The building now standing at Mir Ghat is comparatively recent: the Nattukottai Nagarathar merchant community of the Chettinad country in Tamil Nadu, for whom the Kashi pilgrimage is a family tradition, has served this shrine since the nineteenth century and raised the present temple in 1893 CE (Vikram Samvat 1950). A renovation followed in 1971 CE (Vikram Samvat 2028) under the same community’s patronage, and a new black stone image was carved and installed at that time; no available record preserves the tithi or weekday of either consecration. The shrine’s administration remains with that Nagarathar trust, so on this Ganga-ghat peeth the agamic usage of the south runs alongside the ghat custom of the north.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'विशालाक्षी का स्वरूप',
+        titleEn: 'The Form of Vishalakshi',
+        bodyHi:
+          'गर्भगृह में देवी की दो प्रतिमाएँ हैं। पीछे बाईं ओर काले पाषाण की छोटी और प्राचीन प्रतिमा है, जिसे आदि विशालाक्षी कहा जाता है; सामने काले पाषाण की बड़ी प्रतिमा है, जो बाद में स्थापित हुई और जिसे प्रतिदिन वस्त्र, स्वर्णाभूषण और पुष्प-मालाओं से सजाया जाता है। दोनों में देवी के विशाल, चौड़े नेत्र ही सबसे पहले दृष्टि खींचते हैं — यही नाम का आधार है। मंदिर बाहर से काशी की हवेली-शैली का उत्तर भारतीय भवन दिखता है, पर भीतर दक्षिण भारतीय मंदिर-विन्यास है और प्रवेश पर छोटा द्रविड़ शैली का गोपुर बना है — नागरत्तार निर्माण की पहचान। गंगा की ओर उतरता मीर घाट कुछ ही क़दम दूर है, इसलिए स्नान के बाद सीधे दर्शन की परम्परा बनी रही।',
+        bodyEn:
+          'The sanctum holds two images. Set back on the left is a small, older figure of black stone known as Adi Vishalakshi, the original; in front of it stands a larger black stone image installed later, dressed daily in cloth, gold ornament and flower garlands. In both, it is the goddess’s wide, far-set eyes that the gaze meets first — the feature her name records. From the lane the temple reads as a North Indian haveli of the Kashi kind, but its interior follows a South Indian plan and a modest Dravidian gopura marks the entrance, the signature of its Nagarathar builders. Mir Ghat drops to the Ganga only a few steps away, which is why the custom of bathing first and taking darshan straight after has held.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'नव गौरी यात्रा और नागरत्तार सेवा',
+        titleEn: 'The Nav Gauri Yatra and the Nagarathar Service',
+        bodyHi:
+          'काशी की नव गौरी यात्रा — स्कन्द पुराण के काशी खण्ड में वर्णित नौ गौरी-स्थानों की परिक्रमा — वासन्तिक यानी चैत्र नवरात्र में की जाती है, और उसमें पाँचवें दिन विशालाक्षी गौरी के दर्शन का विधान है; अनेक यात्री इस क्रम को शुक्ल तृतीया पर भी दोहराते हैं। दूसरी जीवित परम्परा नागरत्तार समुदाय की है: चेट्टिनाड से आने वाले परिवार काशी-यात्रा में यहाँ अभिषेक और अर्चना कराते हैं, और मंदिर में तमिल पद्धति के अनुसार कुंकुम-अर्चना होती है, जिसका कुंकुम प्रसाद-रूप में दिया जाता है। देवी को लाल चुनरी, सिन्दूर, चूड़ियाँ और सोलह शृंगार की वस्तुएँ चढ़ाने का चलन है, विशेषकर सौभाग्य की कामना से। दर्शन प्रातः मंगला आरती से आरम्भ होकर मध्याह्न विश्राम के बाद संध्या आरती तक चलते हैं; शुक्रवार और नवरात्र के दिन सबसे व्यस्त रहते हैं।',
+        bodyEn:
+          'Kashi’s Nav Gauri Yatra — the round of nine Gauri shrines set out in the Kashi Khand of the Skanda Purana — is walked during Vasantik, that is Chaitra, Navratri, and its fifth day is given to the darshan of Vishalakshi Gauri; many pilgrims repeat the round on a Shukla Tritiya as well. The second living tradition is the Nagarathars’ own: families travelling up from Chettinad have abhishekam and archana performed here on their Kashi yatra, and the shrine keeps the Tamil usage of kumkum archana, whose kumkum is given back as prasad. Devotees offer the goddess a red chunari, sindoor, bangles and the sixteen articles of shringar, most often with a prayer for saubhagya. Darshan opens with the morning aarti, pauses at midday and runs to the evening aarti; Fridays and the Navratri days are busiest.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'मंदिर का वार्षिक उत्सव कजली तीज है, जो भाद्रपद कृष्ण तृतीया को मनाया जाता है; इस दिन मीर घाट की गली भक्तों से भर जाती है और स्त्रियाँ वर्षा-ऋतु के कजली गीत गाती हुई देवी के दर्शन करती हैं। चैत्र और आश्विन दोनों नवरात्रों में नौ दिन विशेष श्रृंगार और अर्चना होती है, और चैत्र नवरात्र की पंचमी को नव गौरी यात्रा का जत्था यहीं पहुँचता है। आश्विन की दुर्गा पूजा में भी काशी के शक्ति-उपासक इस पीठ के दर्शन को अनिवार्य मानते हैं। इनके अतिरिक्त वर्ष भर की हर शुक्ल तृतीया गौरी-तिथि मानी जाती है और उस दिन विशेष अर्चना होती है।',
+        bodyEn:
+          'The temple’s annual festival is Kajali Teej, kept on the third tithi of the dark fortnight of Bhadrapada; on that day the lane at Mir Ghat fills with pilgrims and women come for darshan singing the Kajali songs of the rains. Both Navratris, Chaitra and Ashwin, bring nine days of special shringar and archana, and the Nav Gauri party arrives here on the fifth day of Chaitra Navratri. During the Durga Puja of Ashwin, Kashi’s Shakta households likewise count a darshan at this peeth as owed. Beyond these, every Shukla Tritiya through the year is kept as a Gauri tithi with its own archana.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'मंदिर वाराणसी की घाट-गलियों में मीर घाट पर है और वहाँ पैदल ही पहुँचा जा सकता है — काशी विश्वनाथ मंदिर से लगभग 250 मीटर और अन्नपूर्णा मंदिर से लगभग 200 मीटर की दूरी पर; दशाश्वमेध घाट लगभग 600 मीटर दूर है। मणिकर्णिका घाट और मणिकर्णिका कुंड पास ही उत्तर की ओर हैं, इसलिए अधिकांश यात्री विश्वनाथ, अन्नपूर्णा और विशालाक्षी के दर्शन एक ही परिक्रमा में कर लेते हैं। निकटतम रेलवे स्टेशन वाराणसी जंक्शन लगभग 5 किमी और लाल बहादुर शास्त्री अंतर्राष्ट्रीय हवाई अड्डा लगभग 25 किमी दूर है; गलियों में वाहन नहीं जाते, इसलिए गोदौलिया तक आकर आगे पैदल चलना पड़ता है। सारनाथ लगभग 10 किमी दूर है और कई यात्री उसे भी इसी प्रवास में जोड़ते हैं। सभी दूरियाँ अनुमानित हैं।',
+        bodyEn:
+          'The temple stands at Mir Ghat in the lanes above the Varanasi waterfront and is reached on foot — roughly 250 m from the Kashi Vishwanath temple and about 200 m from the Annapurna temple, with Dashashwamedh Ghat some 600 m away. Manikarnika Ghat and its kund lie a short way north, so most pilgrims take Vishwanath, Annapurna and Vishalakshi in a single round. Varanasi Junction, the nearest railhead, is about 5 km off and Lal Bahadur Shastri International Airport about 25 km; vehicles cannot enter the lanes, so visitors come as far as Godowlia and walk. Sarnath is roughly 10 km away and is commonly added to the same visit. All distances are approximate.',
+      },
+    ],
+  },
   'mangala-gauri': {
     significanceHi:
       'गया की मंगला गौरी अष्टादश महाशक्ति पीठों में गिनी जाती हैं और देवी को यहाँ पोषण देने वाली “सर्वमंगला” शक्ति के रूप में पूजा जाता है। पहाड़ी पर खड़ा वर्तमान मंदिर पंद्रहवीं शताब्दी का माना जाता है — एक विवरण इसे विक्रम संवत् 1516 (सन् 1459) में बना बताता है। पद्म, वायु, अग्नि और देवी भागवत पुराणों में इस स्थान का स्मरण है, और पिंडदान के लिए गया आने वाले परिवार विष्णुपद के बाद यहाँ चढ़कर देवी के दर्शन करते हैं।',
