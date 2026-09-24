@@ -4,6 +4,10 @@
  * state the traditional items with the graha they honour; the register is
  * नित्य-परम्परा, never remediation-for-fear (no dosha language — pinned by the
  * copy-guard test). Weekday indices are JS getDay(): 0 = Sunday.
+ *
+ * `causes` names the प्रयोजन the row's items serve (grain/milk/rice → अन्न,
+ * cloth → वस्त्र, gau-gras → गौ, books → विद्या) so the journey can recommend
+ * ONE द्वार shelf for the day — a reading of the items, not a new tradition.
  */
 import type { DaanSource, DaanVaarEntry } from './types';
 
@@ -25,6 +29,7 @@ export const DAAN_VAAR_ENTRIES: readonly DaanVaarEntry[] = [
     grahaHi: 'सूर्य', grahaEn: 'Surya',
     itemsHi: 'गेहूँ, गुड़, ताँबे के पात्र में जल',
     itemsEn: 'wheat, jaggery, water in a copper vessel',
+    causes: ['anna'],
   },
   {
     weekday: 1,
@@ -32,6 +37,7 @@ export const DAAN_VAAR_ENTRIES: readonly DaanVaarEntry[] = [
     grahaHi: 'चन्द्र', grahaEn: 'Chandra',
     itemsHi: 'दूध, चावल, मिश्री — श्वेत वस्तु',
     itemsEn: 'milk, rice, mishri — white things',
+    causes: ['anna'],
   },
   {
     weekday: 2,
@@ -39,6 +45,7 @@ export const DAAN_VAAR_ENTRIES: readonly DaanVaarEntry[] = [
     grahaHi: 'मंगल', grahaEn: 'Mangal',
     itemsHi: 'मसूर, गुड़, लाल वस्त्र — और श्रम-सेवा का संकल्प',
     itemsEn: 'masoor, jaggery, red cloth — and a vow of seva',
+    causes: ['anna', 'vastra'],
   },
   {
     weekday: 3,
@@ -46,6 +53,7 @@ export const DAAN_VAAR_ENTRIES: readonly DaanVaarEntry[] = [
     grahaHi: 'बुध', grahaEn: 'Budha',
     itemsHi: 'मूँग, हरा चारा (गौ-ग्रास)',
     itemsEn: 'moong, green fodder (gau-gras)',
+    causes: ['gau'],
   },
   {
     weekday: 4,
@@ -53,6 +61,7 @@ export const DAAN_VAAR_ENTRIES: readonly DaanVaarEntry[] = [
     grahaHi: 'बृहस्पति', grahaEn: 'Brihaspati',
     itemsHi: 'चना दाल, हल्दी, केला, पुस्तकें — विद्या-दान का वार',
     itemsEn: 'chana dal, haldi, banana, books — the vaar of vidya-daan',
+    causes: ['vidya', 'anna'],
   },
   {
     weekday: 5,
@@ -60,6 +69,7 @@ export const DAAN_VAAR_ENTRIES: readonly DaanVaarEntry[] = [
     grahaHi: 'शुक्र', grahaEn: 'Shukra',
     itemsHi: 'चावल, घी, श्वेत वस्त्र — अन्नपूर्णा-भाव से',
     itemsEn: 'rice, ghee, white cloth — in the Annapurna bhaav',
+    causes: ['anna', 'vastra'],
   },
   {
     weekday: 6,
@@ -67,6 +77,7 @@ export const DAAN_VAAR_ENTRIES: readonly DaanVaarEntry[] = [
     grahaHi: 'शनि', grahaEn: 'Shani',
     itemsHi: 'तिल, तेल, काला वस्त्र, लोहा',
     itemsEn: 'til, oil, black cloth, iron',
+    causes: ['anna', 'vastra'],
   },
 ];
 

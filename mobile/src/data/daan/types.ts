@@ -86,6 +86,13 @@ export type DaanVaarEntry = {
   grahaEn: string;
   itemsHi: string;
   itemsEn: string;
+  /**
+   * The प्रयोजन this vaar's items traditionally serve — the daily counterpart
+   * of `DaanOccasionEntry.causes`. The journey's recommended-daan chip lands on
+   * the दान-द्वार filtered to ONE of these; omit where no cause honestly fits
+   * (the chip then does not render — never an invented recommendation).
+   */
+  causes?: readonly DaanCause[];
 };
 
 export type DaanKathaSection = {

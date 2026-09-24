@@ -137,6 +137,18 @@ data point, the rule ships on `udaya` and the variance is pinned two ways: a nam
 `observanceDates.test.ts` and a `pradosh` row in `verify-observances.mts`'s `ANNUAL`, so every
 run reports `bachh-baras` in the Class B list until a real `pradosh` dayRule lands.
 
+**Narasimha Jayanti joins Class B, found Sept 2026 (forward-year sweep).** The Vaishakha
+Shukla Chaturdashi is worshipped at sayankal (dusk). In 2027 the Chaturdashi opens at 4:05 PM
+on 18 May, so the published day is the 18th, but the engine matches at sunrise and resolves
+19 May. It is not fixed here because it needs the same `pradosh`/sayahna day rule as Bachh
+Baras. For the same reason, the two section-A rules that share this convention (Kurma and
+Chhinnamasta Jayanti) were held back instead of shipping with the shift.
+
+**Forward sweep.** `VERIFY_YEARS=2025-2031 npm run verify:observances` re-derives every
+`ANNUAL` row through 2031 and reports 0 wrong-month results. This depends on the script
+skipping adhik months: it used to match 2029's Chaitra and 2031's Bhadrapada rules into the
+leap month, 14 false alarms in total.
+
 Closing the rest of Class B is the same three-part job the chandrodaya case took: a `dayRule`
 value, its case in the matcher, and published-date tests across several years.
 

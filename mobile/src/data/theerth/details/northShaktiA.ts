@@ -1,4 +1,4 @@
-import type { TempleDetail } from '../temples';
+import type { TempleDetail, TheerthSource } from '../temples';
 
 /**
  * Extended §12.6 readings — Northern Shakti shrines A.
@@ -10,6 +10,8 @@ import type { TempleDetail } from '../temples';
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
  */
+const source = (label: string, url: string): TheerthSource => ({ label, url });
+
 export const details: Record<string, TempleDetail> = {
   kamakhya: {
     significanceHi:
@@ -21,9 +23,9 @@ export const details: Record<string, TempleDetail> = {
     originStoryEn:
       'By the Shakti Peeth tradition, Shiva wandered with Sati’s body after the Daksha yajna and her severed limbs fell across the earth; her yoni is said to have fallen on Nilachal, and the land came to be called Kamarupa-Kamakhya. Tradition also tells of Narakasura, who sought the goddess in marriage and was set the condition that he raise a stairway from the foot of the hill to the shrine in a single night. A cock was made to crow to feign daybreak, and he abandoned the work half-built — the unfinished flight still traced on the hillside.',
     sources: [
-      { label: 'Maa Kamakhya Devalaya (temple authority)', url: 'https://www.maakamakhya.org/' },
-      { label: 'Assam Tourism - Kamakhya Temple', url: 'https://assamtourism.gov.in/Kamakhya-Temple1.php' },
-      { label: 'Kamakhya Temple - Reference', url: 'https://en.wikipedia.org/wiki/Kamakhya_Temple' },
+      source('Maa Kamakhya Devalaya (temple authority)', 'https://www.maakamakhya.org/'),
+      source('Assam Tourism - Kamakhya Temple', 'https://assamtourism.gov.in/Kamakhya-Temple1.php'),
+      source('Kamakhya Temple - Reference', 'https://en.wikipedia.org/wiki/Kamakhya_Temple'),
     ],
     sections: [
       {
@@ -83,9 +85,9 @@ export const details: Record<string, TempleDetail> = {
     originStoryEn:
       'By tradition the goddess appeared as a young girl before Pandit Shridhar, a poor but devout Brahmin of Hansali village near Katra, and asked him to hold a bhandara for the whole village; though his grain was little, everyone who came ate their fill. To that feast came Bhairon Nath, a tantric disciple of Guru Gorakshanath, demanding meat and liquor; when the girl refused he pursued her, and she withdrew into the Trikuta hills. The story tells that after nine months of meditation in the womb-like cave at Ardhkuwari she met him at the mouth of the holy cave and struck him down, then granted him pardon and liberation with the promise that no yatra would count as complete until his shrine too had been visited.',
     sources: [
-      { label: 'Shri Mata Vaishno Devi Shrine Board', url: 'https://www.maavaishnodevi.org/' },
-      { label: 'Shri Mata Vaishno Devi Shrine Board - Discovery of the Holy Cave', url: 'https://www.maavaishnodevi.org/blog/discovery' },
-      { label: 'Shri Mata Vaishno Devi Shrine Board - Reference', url: 'https://en.wikipedia.org/wiki/Shri_Mata_Vaishno_Devi_Shrine_Board' },
+      source('Shri Mata Vaishno Devi Shrine Board', 'https://www.maavaishnodevi.org/'),
+      source('Shri Mata Vaishno Devi Shrine Board - Discovery of the Holy Cave', 'https://www.maavaishnodevi.org/blog/discovery'),
+      source('Shri Mata Vaishno Devi Shrine Board - Reference', 'https://en.wikipedia.org/wiki/Shri_Mata_Vaishno_Devi_Shrine_Board'),
     ],
     sections: [
       {
@@ -145,9 +147,9 @@ export const details: Record<string, TempleDetail> = {
     originStoryEn:
       'By the Shakti Peeth tradition, Shiva bore Sati’s body in his tandava after the Daksha yajna and her severed limbs fell across the land; the toes of her right foot are held to have fallen on this bank of the Adi Ganga, making the ground Kalikshetra. Local tradition tells that worship began with a luminous stone found at the river’s edge, and that the first shrine here was no more than a small hut. Fifteenth- and sixteenth-century Bengali works — the Manasar Bhasan and the Kavikankan Chandi — already name the place, which shows the tirtha to be far older than the city of Kolkata around it.',
     sources: [
-      { label: 'Kalighat Kali Temple (temple authority)', url: 'https://www.kalighatkalitemple.com/article/id/228/kalighat-kali-temple' },
-      { label: 'Incredible India (Ministry of Tourism) - Kalighat Temple', url: 'https://www.incredibleindia.gov.in/en/west-bengal/kolkata/kalighat-temple' },
-      { label: 'Kalighat Temple - Reference', url: 'https://en.wikipedia.org/wiki/Kalighat_Temple' },
+      source('Kalighat Kali Temple (temple authority)', 'https://www.kalighatkalitemple.com/article/id/228/kalighat-kali-temple'),
+      source('Incredible India (Ministry of Tourism) - Kalighat Temple', 'https://www.incredibleindia.gov.in/en/west-bengal/kolkata/kalighat-temple'),
+      source('Kalighat Temple - Reference', 'https://en.wikipedia.org/wiki/Kalighat_Temple'),
     ],
     sections: [
       {
@@ -207,9 +209,9 @@ export const details: Record<string, TempleDetail> = {
     originStoryEn:
       'By the Shakti Peeth tradition, Sati’s limbs fell across the earth after the Daksha yajna and her eyes fell on this hill — from which the goddess takes the name Naina Devi. Local legend adds a second thread: a Gujjar boy named Naina grazed his herd here and for several days watched a white cow let her milk fall of itself upon a stone, and he carried word of it to Raja Bir Chand of Kahlur. The king, it is said, was told in a dream that same night that the stone was the goddess’s pindi, and he raised a temple on the spot and named it for the boy. A third tradition calls the place Mahishapeeth, where the goddess took the eyes of Mahishasura and the gods acclaimed her with the cry “Jai Naina”.',
     sources: [
-      { label: 'Shri Naina Devi Ji - Official Temple Website', url: 'https://srinainadevi.com/mythology-legends/' },
-      { label: 'District Bilaspur, Government of Himachal Pradesh - Sri Naina Devi Ji', url: 'https://hpbilaspur.nic.in/tourist-place/sri-naina-devi-ji/' },
-      { label: 'Shri Naina Devi Ji Temple, Bilaspur - Utsav (Ministry of Tourism)', url: 'https://utsav.gov.in/view-darshan/shri-naina-devi-ji-temple-bilaspur-1' },
+      source('Shri Naina Devi Ji - Official Temple Website', 'https://srinainadevi.com/mythology-legends/'),
+      source('District Bilaspur, Government of Himachal Pradesh - Sri Naina Devi Ji', 'https://hpbilaspur.nic.in/tourist-place/sri-naina-devi-ji/'),
+      source('Shri Naina Devi Ji Temple, Bilaspur - Utsav (Ministry of Tourism)', 'https://utsav.gov.in/view-darshan/shri-naina-devi-ji-temple-bilaspur-1'),
     ],
     sections: [
       {

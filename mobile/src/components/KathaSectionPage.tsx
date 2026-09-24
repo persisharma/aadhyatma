@@ -12,19 +12,26 @@ type Props = {
   index: number;
   total: number;
   width: number;
+  /**
+   * The pill's leading word. Defaults to the katha's `प्रसंग` / `Part`; the
+   * पितृ पक्ष परिचय reader passes `परिचय` / `Introduction` so the same page
+   * anatomy serves a lesson without calling it a story part.
+   */
+  pillHi?: string;
+  pillEn?: string;
 };
 
 // One katha section as a swipeable reader card (pill, heading, ornament, body).
 // Body text stays at its normal reading size; the card scrolls vertically when a
 // section is longer than the screen, and you swipe right to the next section.
 // Top chrome is kept tight so content sits high and most sections fit without scrolling.
-export default function KathaSectionPage({ section, index, total, width }: Props) {
+export default function KathaSectionPage({ section, index, total, width, pillHi = 'प्रसंग', pillEn = 'Part' }: Props) {
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
 
   const title = contentByLang(lang, section.titleHi, section.titleEn);
   const body = commentaryByLang(lang, section.bodyHi, section.bodyEn);
-  const pillText = contentByLang(lang, `प्रसंग · ${index + 1}/${total}`, `Part · ${index + 1}/${total}`);
+  const pillText = contentByLang(lang, `${pillHi} · ${index + 1}/${total}`, `${pillEn} · ${index + 1}/${total}`);
 
   const meaning = meaningToken(lang, typography);
   const bodyStyle = {
