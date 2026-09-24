@@ -10,9 +10,72 @@ import type { TempleDetail } from '../temples';
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
  *
- * Temples still to author in this chunk: danteshwari tripura-sundari
+ * Temples still to author in this chunk: tripura-sundari
  */
 export const details: Record<string, TempleDetail> = {
+  danteshwari: {
+    significanceHi:
+      'शंखिनी और डंकिनी नदियों के संगम पर खड़ी दंतेवाड़ा की दंतेश्वरी 52 शक्ति पीठों में गिनी जाती हैं और बस्तर की कुलदेवी हैं। सन् 1324 (विक्रम संवत् 1381) के आसपास वारंगल से आए काकतीय राजकुमार अन्नमदेव अपनी कुलदेवी को साथ लाए और यहाँ प्रतिष्ठित किया; उन्हीं के वंशजों ने बस्तर राज्य चलाया और देवी राज्य की अधिष्ठात्री बनीं। विश्व के सबसे लम्बे उत्सवों में गिना जाने वाला पचहत्तर दिन का बस्तर दशहरा इन्हीं देवी को समर्पित है।',
+    significanceEn:
+      'Danteshwari of Dantewada, at the confluence of the Shankhini and Dankini rivers, is counted among the 52 Shakti Peethas and is the kuldevi of Bastar. Around 1324 CE (Vikram Samvat 1381) the Kakatiya prince Annamadeva came from Warangal bringing his family goddess with him and enshrined her here; his descendants ruled the Bastar kingdom and the goddess became its presiding deity. Bastar Dussehra, a seventy-five-day observance counted among the longest festivals in the world, is kept in her name.',
+    originStoryHi:
+      'परम्परा के अनुसार दक्ष-यज्ञ के बाद सती का दाँत इस स्थान पर गिरा, इसलिए देवी दंतेश्वरी कहलाईं और बस्तर का यह नगर दंतेवाड़ा। दूसरी कथा राज-परम्परा की है: काकतीय राजकुमार अन्नमदेव दण्डकारण्य की ओर बढ़ रहे थे और देवी उनके पीछे-पीछे चलीं, इस वचन के साथ कि जहाँ वे मुड़कर देखेंगे वहीं रुक जाएँगी। शंखिनी-डंकिनी के संगम पर उन्होंने पीछे देखा, देवी वहीं ठहर गईं, और उसी भूमि पर मंदिर बना।',
+    originStoryEn:
+      'By tradition the tooth — danta — of Sati fell at this place after Daksha’s sacrifice, which gave the goddess her name Danteshwari and the Bastar town its name Dantewada. A second story belongs to the royal line: as the Kakatiya prince Annamadeva pressed into the Dandakaranya forest the goddess walked behind him, on the promise that she would halt wherever he turned to look. At the confluence of the Shankhini and Dankini he looked back, she stayed where she stood, and the temple was raised on that ground.',
+    sources: [
+      { label: 'Incredible India - Danteshwari Temple', url: 'https://www.incredibleindia.gov.in/en/chhattisgarh/jagdalpur/danteshwari-temple' },
+      { label: 'District Dantewada, Government of Chhattisgarh - Tourist Places', url: 'https://dantewada.nic.in/en/tourist-place/dantewada/' },
+      { label: 'Utsav, Ministry of Tourism - Phagun Madai', url: 'https://utsav.gov.in/view-event/phagun-madai' },
+      { label: 'Danteshwari Temple - Reference', url: 'https://en.wikipedia.org/wiki/Danteshwari_Temple' },
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'वारंगल के काकतीय वंश का अंत होने पर अंतिम राजा प्रतापरुद्र द्वितीय के भाई अन्नमदेव ने सिंहासन भतीजे को सौंपकर दक्षिण-पूर्व के घने दण्डकारण्य वन की ओर प्रस्थान किया; वे अपनी कुलदेवी को साथ ले गए। यह यात्रा सामान्यतः सन् 1324 (विक्रम संवत् 1381) के आसपास मानी जाती है, यद्यपि विवरण तिथि में थोड़ा अंतर रखते हैं। परम्परा कहती है कि देवी उनके पीछे चलती रहीं और शंखिनी-डंकिनी के संगम पर, जहाँ राजकुमार ने मुड़कर देखा, वहीं ठहर गईं — उसी भूमि पर मंदिर बना और स्थान दंतेवाड़ा कहलाया। शक्ति-पीठ परम्परा इसी स्थान को सती के दाँत के गिरने से जोड़ती है, इसलिए दोनों कथाएँ यहाँ एक हो जाती हैं। अन्नमदेव ने आगे चलकर बस्तर राज्य की स्थापना की, जिस पर उनके वंशज सन् 1947 तक शासन करते रहे, और दंतेश्वरी राजपरिवार तथा समूचे बस्तर की कुलदेवी बनी रहीं। वर्तमान मंदिर चौदहवीं शताब्दी का माना जाता है और बाद की शताब्दियों में उसका विस्तार होता रहा; प्रतिष्ठा की तिथि, वार और प्रतिष्ठा कराने वाले आचार्य का नाम उपलब्ध अभिलेखों में दर्ज नहीं है। मंदिर की सेवा आज छत्तीसगढ़ शासन के अधीन माँ दंतेश्वरी मंदिर समिति तथा परम्परागत पुजारी-परिवार करते हैं।',
+        bodyEn:
+          'When the Kakatiya line at Warangal fell, Annamadeva, brother of the last king Prataprudra II, left the throne to his nephew and set out southeast into the deep Dandakaranya forest, carrying his family goddess with him. That journey is generally placed around 1324 CE (Vikram Samvat 1381), though accounts differ a little on the year. Tradition holds that the goddess walked behind him and halted at the meeting of the Shankhini and Dankini where the prince turned to look — the temple was built on that ground and the place became Dantewada. The Shakti Peeth tradition ties the same spot to the falling of Sati’s tooth, so the two stories meet here. Annamadeva went on to found the kingdom of Bastar, which his descendants ruled until 1947, and Danteshwari remained kuldevi both to the royal house and to Bastar at large. The present temple is held to be of the fourteenth century, enlarged over later centuries; no available record preserves the consecration tithi, the weekday, or the name of the acharya who performed it. The shrine is administered today by the Maa Danteshwari temple committee under the Chhattisgarh government, with hereditary priestly families in attendance.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'दंतेश्वरी का स्वरूप',
+        titleEn: 'The Form of Danteshwari',
+        bodyHi:
+          'गर्भगृह में देवी की प्रतिमा काले पाषाण की है और उसे प्रतिदिन रंग-बिरंगे पुष्पों, आभूषणों तथा बस्तर की परम्परागत वेशभूषा से सजाया जाता है; भक्त देवी के मुख और नेत्रों के ही दर्शन करते हैं, शेष शृंगार में ढँका रहता है। मंदिर परकोटे से घिरा है और भीतर सज्जित आँगन के आगे तीन तलों में उठता गर्भगृह है; भवन गर्भगृह, महामंडप, मुख्य मंडप और सभा मंडप — इन चार भागों में बँटा है। मुख्य प्रवेश पर खड़ा गरुड़ स्तम्भ मंदिर की सबसे विशिष्ट पहचान है, और उसी के आगे शंखिनी तथा डंकिनी का संगम है, जहाँ यात्री दर्शन से पहले स्नान करते हैं। परिसर की पत्थर-गढ़न और मूर्तियाँ बस्तर की देवगुड़ी-परम्परा और मैदानी मंदिर-शैली दोनों का मेल दिखाती हैं।',
+        bodyEn:
+          'The image in the sanctum is carved of black stone and is dressed each day in flowers of many colours, in ornaments and in the traditional attire of Bastar; what devotees see is the face and the eyes, the rest covered by the shringar. The temple stands within a walled precinct, an ornamented courtyard opening onto a sanctum that rises in three tiers, and the building divides into four parts — garbha griha, maha mandap, mukhya mandap and sabha mandap. The Garuda pillar at the main entrance is its most distinctive feature, and just beyond it lies the confluence of the Shankhini and Dankini, where pilgrims bathe before darshan. The stonework and images around the precinct show the meeting of Bastar’s own devgudi tradition with the temple idiom of the plains.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'ज्योति कलश और छत्र-डोली परम्परा',
+        titleEn: 'Jyoti Kalash and the Chhatra-Doli Tradition',
+        bodyHi:
+          'दंतेवाड़ा की सबसे पहचानी परम्परा ज्योति कलश है — नवरात्र आरम्भ होने पर भक्त अपनी मनोकामना के साथ मंदिर परिसर में मिट्टी के कलश में दीप प्रज्वलित कराते हैं, जो नौ दिन अखंड जलते हैं; कलश की संख्या हज़ारों में पहुँचती है और उन्हें एक साथ जलते देखना यहाँ का सबसे स्मरणीय दृश्य है। दूसरी परम्परा छत्र और डोली की है: देवी मंदिर में स्थिर नहीं रहतीं, उनका छत्र डोली में बिठाकर आसपास के गाँवों और उत्सवों तक ले जाया जाता है, और बस्तर की सैकड़ों ग्राम-देवियाँ इसी छत्र के साथ जुड़ती हैं — यही बस्तर की “देवी-मिलन” परम्परा का आधार है। अर्पण में नारियल, चुनरी, सिन्दूर और स्थानीय पुष्प चढ़ते हैं। दर्शन प्रातः की आरती से आरम्भ होकर मध्याह्न के विश्राम के बाद संध्या आरती तक चलते हैं, और मंगलवार, शुक्रवार तथा नवरात्र के दिन सबसे व्यस्त रहते हैं।',
+        bodyEn:
+          'Dantewada’s most recognisable custom is the jyoti kalash — at the start of Navratri devotees have an earthen lamp-pot lit in the precinct with a wish attached to it, and it burns unbroken through the nine nights; the pots run into thousands, and the sight of them alight together is the image visitors carry away. The second custom is that of the chhatra and the doli: the goddess does not stay fixed in her sanctum but travels as her umbrella, carried in a palanquin to surrounding villages and gatherings, and hundreds of Bastar’s village goddesses attach themselves to that umbrella — this is the ground of the region’s tradition of deities meeting one another. Offerings are coconut, a chunari, sindoor and local flowers. Darshan opens with the morning aarti, pauses at midday and runs to the evening aarti, with Tuesdays, Fridays and the Navratri days busiest.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'दंतेवाड़ा का अपना बड़ा उत्सव फागुन मड़ई है: इसका औपचारिक आरम्भ माघ शुक्ल पंचमी यानी बसंत पंचमी को मंदिर के आँगन में त्रिशूल-स्तम्भ गाड़कर और देवी के छत्र पर आम्र-मंजरी अर्पित कर होता है, और फिर फाल्गुन मास के अंतिम दस दिनों में समूचे बस्तर से आए समुदाय यहाँ लोकनृत्य, मड़ई और देवी-अनुष्ठान के साथ जुटते हैं। दूसरा बड़ा पर्व बस्तर दशहरा है, जो लगभग पचहत्तर दिन चलता है और जिसमें रावण-वध नहीं, देवी और बस्तर के ग्राम-देवताओं का सम्मिलन मनाया जाता है; इसकी शुरुआत पन्द्रहवीं शताब्दी में — विवरण सन् 1408 (विक्रम संवत् 1465) बताते हैं — काकतीय राजा पुरुषोत्तम देव से जोड़ी जाती है। दशहरे से पहले जगदलपुर से आया निमंत्रण दंतेवाड़ा पहुँचता है और देवी माँवली का डोला जगदलपुर ले जाया जाता है, जहाँ चार सौ से अधिक हाथों से खींचा जाने वाला विशाल रथ चलता है। चैत्र और शारदीय दोनों नवरात्रों में ज्योति कलश और विशेष पूजा होती है।',
+        bodyEn:
+          'Dantewada’s own great gathering is the Phagun Madai. It opens formally on Basant Panchami, the fifth tithi of the bright fortnight of Magh, when a trident pillar is set in the temple courtyard and mango blossom is offered on the goddess’s umbrella; then, through the last ten days of the month of Phalgun, communities from across Bastar gather here for folk dance, the madai fair and the goddess’s rites. The second is Bastar Dussehra, which runs some seventy-five days and marks not the killing of Ravana but the coming together of the goddess with Bastar’s village deities; its founding is credited to the Kakatiya ruler Purushottam Dev in the fifteenth century, with accounts giving 1408 CE (Vikram Samvat 1465). Before Dussehra an invitation travels from Jagdalpur to Dantewada and the doli of the goddess Mavli is carried there, where a great chariot is drawn by more than four hundred pairs of hands. Both Navratris, Chaitra and Sharad, bring the jyoti kalash and special puja.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'मंदिर छत्तीसगढ़ के दंतेवाड़ा ज़िले में शंखिनी और डंकिनी नदियों के संगम पर है और सड़क मार्ग से जुड़ा है। जगदलपुर लगभग 80–85 किमी दूर है और वहीं से बस तथा टैक्सी नियमित चलती हैं; रायपुर सड़क से लगभग 350 किमी है। दंतेवाड़ा का अपना रेलवे स्टेशन है पर गाड़ियाँ सीमित हैं, इसलिए अधिकांश यात्री जगदलपुर स्टेशन का उपयोग करते हैं, जो विशाखापत्तनम, राउरकेला और हावड़ा से जुड़ा है। निकटतम हवाई अड्डा जगदलपुर है, लगभग 85–90 किमी; बड़ी उड़ानों के लिए रायपुर और विशाखापत्तनम लगभग समान दूरी पर, सड़क से लगभग 400 किमी, पड़ते हैं। अधिकांश यात्री दंतेवाड़ा के साथ जगदलपुर की दंतेश्वरी और बस्तर राजमहल, तथा चित्रकोट व तीरथगढ़ जलप्रपात एक ही यात्रा में जोड़ते हैं। सभी दूरियाँ अनुमानित हैं।',
+        bodyEn:
+          'The temple lies in Dantewada district of Chhattisgarh at the confluence of the Shankhini and Dankini, and is reached by road. Jagdalpur is about 80–85 km away with regular buses and taxis; Raipur is roughly 350 km by road. Dantewada has its own railway station but few services, so most pilgrims use Jagdalpur station, which is connected to Visakhapatnam, Rourkela and Howrah. The nearest airport is Jagdalpur, about 85–90 km off; for wider connections Raipur and Visakhapatnam lie at a comparable distance, roughly 400 km by road. Most visitors pair Dantewada with the Danteshwari shrine and old palace at Jagdalpur, and with the Chitrakote and Tirathgarh falls, in a single journey. All distances are approximate.',
+      },
+    ],
+  },
   vishalakshi: {
     significanceHi:
       'काशी की विशालाक्षी गंगा तट की प्रमुख शक्ति हैं और 51 शक्ति पीठों में गिनी जाती हैं; नाम का अर्थ है “विशाल नेत्रों वाली”। काञ्ची की कामाक्षी और मदुरै की मीनाक्षी के साथ मिलकर वे देवी के नेत्र-नामों की उस त्रयी में आती हैं जिसे उत्तर और दक्षिण दोनों परम्पराएँ मानती हैं। मीर घाट पर खड़ा वर्तमान मंदिर तमिलनाडु के नाट्टुकोट्टै नागरत्तार व्यापारी समुदाय ने सन् 1893 (विक्रम संवत् 1950) में बनवाया और सन् 1971 (विक्रम संवत् 2028) में उसका जीर्णोद्धार कराया।',
