@@ -10,7 +10,7 @@ import type { TempleDetail } from '../temples';
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
  *
- * Temples still to author in this chunk: madhaveswari
+ * All four temples in this chunk are authored.
  */
 export const details: Record<string, TempleDetail> = {
   puruhutika: {
@@ -223,6 +223,77 @@ export const details: Record<string, TempleDetail> = {
           'द्राक्षारामम आंध्र प्रदेश के काकिनाडा ज़िले में है — काकिनाडा से लगभग 28 किमी, अमलापुरम से लगभग 25 किमी और राजमहेंद्रवरम से लगभग 50 किमी। द्राक्षारामम रेलवे स्टेशन मंदिर से लगभग 2 किमी दूर है; काकिनाडा और राजमहेंद्रवरम से नियमित बस तथा टैक्सी चलती हैं, और निकटतम हवाई अड्डा राजमहेंद्रवरम लगभग 53 किमी दूर है। यह मंदिर पंचाराम क्षेत्रों में से एक है, इसलिए यात्री इसे शेष चार — अमरावती का अमरेश्वर (अमराराम), भीमवरम का सोमेश्वर (सोमाराम), पालकोल्लु का क्षीर रामलिंगेश्वर (क्षीराराम) और सामरलकोट का कुमार भीमेश्वर (कुमाराराम) — के साथ एक ही यात्रा में जोड़ते हैं। परिसर के पास सप्त गोदावरी कुंड स्नान के लिए है, और लगभग 45–50 किमी दूर पिठापुरम की पुरुहूतिका देवी भी अष्टादश पीठों में हैं, जिन्हें कई यात्री इसी मार्ग में सम्मिलित कर लेते हैं।',
         bodyEn:
           'Draksharama lies in Kakinada district of Andhra Pradesh, about 28 km from Kakinada, roughly 25 km from Amalapuram and around 50 km from Rajahmundry. Draksharamam railway station is approximately 2 km from the temple; buses and taxis run regularly from Kakinada and Rajahmundry, and the nearest airport is Rajahmundry, some 53 km away. Because this is one of the Pancharama Kshetras, pilgrims commonly take it with the other four — Amareswara at Amaravati (Amararama), Someswara at Bhimavaram (Somarama), Ksheera Ramalingeswara at Palakollu (Ksheerarama) and Kumara Bhimeswara at Samalkot (Kumararama). The Sapta Godavari Kundam beside the temple serves for the bath, and Puruhutika Devi at Pithapuram, another of the eighteen Peethas, stands about 45–50 km off, which many travellers fold into the same route.',
+      },
+    ],
+  },
+  madhaveswari: {
+    significanceHi:
+      'प्रयागराज के अलोपीबाग़ में स्थित माधवेश्वरी — लोक में अलोपी देवी — त्रिवेणी संगम के निकट का वह शक्ति-तीर्थ है जहाँ किसी प्रतिमा की नहीं, एक काष्ठ-डोली की उपासना होती है। मंदिर की प्रतिष्ठा की तिथि, वार अथवा संवत् किसी उपलब्ध अभिलेख में दर्ज नहीं है; देवी की गणना अष्टादश महाशक्ति पीठों में “प्रयाग की माधवेश्वरी” के रूप में होती है, और कई सूचियाँ इन्हें इक्यावन शक्ति पीठों में भी गिनती हैं। संगम-स्नान के बाद प्रयाग-यात्रा का समापन परम्परागत रूप से इसी देवी के दर्शन से माना जाता है।',
+    significanceEn:
+      'Madhaveswari — known locally as Alopi Devi — stands in the Alopibagh quarter of Prayagraj, near the Triveni Sangam, and is the rare Shakti shrine where no image is worshipped but a wooden doli instead. No available record gives the samvat, tithi or weekday of its consecration; the goddess is counted in the eighteen Maha Shakti Peethas as the Madhaveswari of Prayaga, and several listings place her among the fifty-one Peethas as well. By the older sequence of the Prayag pilgrimage, a bath at the Sangam is completed by darshan of this goddess, so hers is the shrine the journey ends at.',
+    originStoryHi:
+      'परम्परा के अनुसार दक्ष-यज्ञ के पश्चात सती के देह का अंतिम अंश यहाँ आकर अलोप हो गया — दिखाई देना बंद हो गया — और इसी से देवी “अलोपी” कहलाईं। चूँकि यहाँ कोई अंग शेष नहीं रहा, इसलिए गर्भगृह में कोई प्रतिमा या चिह्न स्थापित नहीं किया गया; उसके स्थान पर एक कुंड के ऊपर लटकी काष्ठ-डोली ही देवी की उपस्थिति मानी गई। लोक-विश्वास कहता है कि जो अदृश्य है वही यहाँ पूज्य है, और भक्त उसी डोली की परिक्रमा कर अपनी प्रार्थना रखते हैं।',
+    originStoryEn:
+      'By tradition the last remaining part of Sati came to this spot after the Daksha yagna and simply vanished — alop — from which the goddess takes the name Alopi. Because nothing was left behind, no image and no carved mark were ever set in the sanctum; in their place a wooden doli hung above a small kund is taken to be the goddess’s presence. The faith of the place is that what cannot be seen is exactly what is worshipped here, and devotees circle that swing to lay their prayers before it.',
+    sources: [
+      {
+        label: 'Uttar Pradesh Tourism - Alopi Devi, Prayagraj',
+        url: 'https://uptourism.gov.in/en/article/alopi-devi-prayagraj',
+      },
+      {
+        label: 'District Prayagraj, Government of Uttar Pradesh - Places of Interest',
+        url: 'https://prayagraj.nic.in/places-of-interest/',
+      },
+      {
+        label: 'Alopi Devi Mandir - Reference',
+        url: 'https://en.wikipedia.org/wiki/Alopi_Devi_Mandir',
+      },
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'अलोपी देवी मंदिर की प्रतिष्ठा किस संवत्, तिथि या वार में हुई और किसने कराई — यह किसी उपलब्ध अभिलेख, शिलालेख या मंदिर-दस्तावेज़ में दर्ज नहीं मिलता; उत्तर प्रदेश पर्यटन और प्रयागराज ज़िला प्रशासन दोनों इसे प्राचीन बताते हैं, पर कोई तिथि नहीं देते। इसका कारण स्वयं कथा में है: जहाँ अन्य पीठों की स्थापना सती के किसी अंग के गिरने से जुड़ी है, वहाँ यहाँ की मान्यता अंग के अलोप हो जाने की है, इसलिए न कोई अंग-चिह्न प्रतिष्ठित हुआ और न प्राण-प्रतिष्ठा का कोई दिन स्मरण में रहा। देवी का नाम माधवेश्वरी प्रयाग की माधव-परम्परा से जुड़ता है, जिसमें द्वादश माधव और वेणी माधव नगर के प्रमुख विष्णु-स्थान माने जाते हैं। किसी संस्थापक परिवार अथवा सेवा करती आ रही वंश-परम्परा का नाम भी उपलब्ध स्रोतों में दर्ज नहीं है।',
+        bodyEn:
+          'No available inscription, record or temple document names the samvat, tithi or weekday of the shrine’s consecration, nor who performed it; Uttar Pradesh Tourism and the Prayagraj district administration both call the temple ancient without fixing a date. The reason lies in the legend itself: where other Peethas are founded on a part of Sati having fallen, this one rests on a part having vanished, so no relic was ever installed and no day of pran-pratishtha stayed in memory. The name Madhaveswari ties the goddess to the Madhava tradition of Prayag, in which the twelve Madhavas and Veni Madhav are reckoned the city’s principal Vishnu seats. Neither a founding patron nor a serving family line is recorded for the shrine in the sources available.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'माधवेश्वरी देवी का स्वरूप',
+        titleEn: 'The Form of Madhaveswari Devi',
+        bodyHi:
+          'गर्भगृह में न कोई मूर्ति है, न कोई तराशा हुआ चिह्न — केन्द्र में एक छोटा कुंड है और उसके ऊपर लकड़ी की डोली, अर्थात् पालकी, वस्त्र से ढकी और फूलों से सजी हुई लटकी रहती है। भक्त उसी डोली की परिक्रमा करते हैं और कुंड के जल को देवी के स्पर्श का स्थान मानते हैं; यही अभाव इस पीठ का स्वरूप है। भारत के शेष शक्ति पीठों में कहीं न कहीं देवी का रूप, अंग-चिह्न अथवा यंत्र प्रतिष्ठित मिलता है, जबकि यहाँ उपासना निराकार के निकट जाकर ठहरती है। डोली पर चढ़ाई गई चुनरी, चूड़ियाँ और सिन्दूर ही वह दृश्य सज्जा हैं जिनसे देवी का शृंगार होता है।',
+        bodyEn:
+          'The sanctum holds no murti and no carved mark. At its centre is a small stepped kund, and above the water hangs a wooden doli — a palanquin or cradle — draped in cloth and dressed with flowers. Devotees circumambulate that swing and treat the water of the kund as the place the goddess touched; the absence is itself the form here. Every other Shakti Peetha enshrines something — an image, a relic mark, a yantra — while at Alopibagh the worship stops just short of form altogether. What ornament the goddess has is what is offered onto the doli: chunri cloth, bangles and sindoor laid over the swing.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'काष्ठ-डोली की उपासना',
+        titleEn: 'Worship of the Wooden Doli',
+        bodyHi:
+          'यहाँ की सबसे विशिष्ट परम्परा डोली की परिक्रमा और उस पर चुनरी चढ़ाना है — स्त्री-भक्त प्रायः चूड़ियाँ, सिन्दूर और चुनरी अर्पित करती हैं, और मनोकामना पूर्ण होने पर पुनः आकर नई चुनरी चढ़ाती हैं। नारियल, फूल-माला और प्रसाद अलोपीबाग़ की गलियों की दुकानों से लेकर चढ़ाए जाते हैं, जो मेले के दिनों में देर रात तक खुली रहती हैं। मंदिर सामान्यतः प्रातः लगभग पाँच बजे से रात नौ बजे तक खुला रहता है, और नवरात्र तथा माघ मेला-कुम्भ के दिनों में यह समय बढ़ा दिया जाता है। प्रयाग-यात्रा का शास्त्रीय क्रम संगम-स्नान, फिर वेणी माधव, फिर अक्षयवट और अंत में अलोपी देवी का बताया गया है, इसलिए बहुत से यात्री स्नान के बाद ही यहाँ पहुँचते हैं।',
+        bodyEn:
+          'The observance that defines this temple is the circling of the doli and the offering of a chunri onto it — women devotees commonly bring bangles, sindoor and the cloth, and return with a fresh chunri when a wish has been granted. Coconuts, garlands and prasad are bought from the lanes of Alopibagh, whose stalls stay open late through the mela weeks. The shrine is generally open from about five in the morning until nine at night, with those hours extended through Navratri and the Magh Mela and Kumbh season. The classical order of the Prayag pilgrimage runs from the bath at the Sangam to Veni Madhav, then the Akshayavat, and last to Alopi Devi, so a great many pilgrims arrive here still wet from the confluence.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'वर्ष का सबसे बड़ा उत्सव शारदीय नवरात्र है, जब नौ दिन तक अलोपीबाग़ की गलियाँ श्रद्धालुओं से भरी रहती हैं; नवमी के दिन विशेष हवन और कुमारी पूजा होती है, जिसमें कन्याओं को देवी-स्वरूप मानकर भोजन कराया जाता है — नगर के घर-घर में यही कंजक-परम्परा निभाई जाती है। दूसरा बड़ा काल माघ मेला है, जो प्रतिवर्ष माघ मास में संगम-तट पर लगता है, और उसके साथ अर्ध कुम्भ तथा कुम्भ के वर्ष, जब प्रयागराज में स्नानार्थियों की भीड़ उमड़ती है और यह मंदिर उनके परिक्रमा-मार्ग का नियमित पड़ाव बन जाता है। चैत्र नवरात्र में भी दर्शन-क्रम चलता है, यद्यपि भीड़ शारदीय नवरात्र जितनी नहीं होती। मंदिर की स्थापना-तिथि दर्ज न होने से यहाँ कोई वार्षिक प्रतिष्ठा-दिवस नहीं मनाया जाता।',
+        bodyEn:
+          'The great festival of the year is Sharada Navratri, when the lanes of Alopibagh stay crowded for nine days; on Navami a special havan is held with kumari puja, in which young girls are honoured as the goddess and fed — the Kanjak custom kept in households across the city on the same day. The other season is the Magh Mela, held each year on the Sangam bank through the month of Magha, and with it the Ardh Kumbh and Kumbh years, when Prayagraj fills with bathers and this shrine becomes a fixed halt on their round of temples. Chaitra Navratri is observed too, though without the crowds of the autumn nine nights. Since no consecration date is recorded, the temple keeps no annual sthapana day.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'मंदिर प्रयागराज ज़िले के अलोपीबाग़ मोहल्ले में है — प्रयागराज जंक्शन रेलवे स्टेशन से लगभग 6 किमी और त्रिवेणी संगम से लगभग 5 किमी। स्टेशन तथा सिविल लाइंस से ऑटो-रिक्शा और नगर-बसें मिलती हैं, और संगम क्षेत्र से यहाँ तक ऑटो से लगभग 15–20 मिनट लगते हैं; नगर का अपना हवाई अड्डा भी है। एक ही यात्रा में यहाँ के साथ दारागंज का वेणी माधव मंदिर, किले के भीतर पातालपुरी परिसर का अक्षयवट, संगम के निकट लेटे हनुमान (बड़े हनुमान) और दारागंज का ही नागवासुकि मंदिर जोड़े जाते हैं। दक्षिण के शक्ति-तीर्थों से भिन्न यहाँ कोई पर्वत-चढ़ाई या पदयात्रा-परम्परा नहीं है — संगम तक पहुँचना ही यात्रा है, और देवी का दर्शन उस स्नान का समापन। माघ और कुम्भ के दिनों में अलोपीबाग़ की गलियाँ पूरी रात खुली रहती हैं।',
+        bodyEn:
+          'The temple stands in the Alopibagh locality of Prayagraj district, roughly 6 km from Prayagraj Junction railway station and about 5 km from the Triveni Sangam. Auto-rickshaws and city buses run from the station and from Civil Lines, and the ride from the Sangam area takes some fifteen to twenty minutes; the city has its own airport as well. Pilgrims commonly take this shrine together with the Veni Madhav temple at Daraganj, the Akshayavat within the Patalpuri complex inside the fort, the reclining Lete Hanuman near the Sangam, and the Nagvasuki temple, also at Daraganj. Unlike the hill shrines of the south there is no climb and no padyatra tradition here — reaching the confluence is the journey, and darshan of the goddess is how that bath is closed. Through Magh and the Kumbh the lanes of Alopibagh stay awake all night.',
       },
     ],
   },
