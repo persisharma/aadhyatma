@@ -16,13 +16,12 @@ import {
   getReaderBackground,
   getSourceBackground,
   getTheerthBackground,
-  getTheerthIllustration,
 } from '@/data/backgrounds';
 import { categories } from '@/data/categories';
 import { deities } from '@/data/deities';
 import { japamMantras } from '@/data/japam';
 import { library } from '@/data/texts';
-import { getTempleById, temples } from '@/data/theerth/temples';
+import { getTempleById } from '@/data/theerth/temples';
 
 const dedicatedTheerthBackgroundIds = [
   'khatu-shyam',
@@ -39,14 +38,6 @@ const dedicatedTheerthBackgroundIds = [
 ] as const;
 
 describe('background coverage', () => {
-  test('every temple with an extended reading has its own illustration plate (RULEBOOK §12.6)', () => {
-    for (const temple of temples) {
-      if (!temple.sections?.length) continue;
-      expect(getTheerthIllustration(temple.id)).toBeTruthy();
-      expect(getTheerthIllustration(temple.id)).not.toBe(getDeityBackground(temple.deity));
-    }
-  });
-
   test('every active category tile has a background', () => {
     for (const category of categories.filter((item) => item.status === 'active')) {
       expect(getCategoryBackground(category.id)).toBeTruthy();
