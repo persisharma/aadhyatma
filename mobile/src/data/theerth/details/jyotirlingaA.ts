@@ -10,7 +10,7 @@ import type { TempleDetail } from '../temples';
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
  *
- * Temples still to author in this chunk: mahakaleshwar omkareshwar
+ * Temples still to author in this chunk: omkareshwar
  */
 export const details: Record<string, TempleDetail> = {
   somnath: {
@@ -106,6 +106,54 @@ export const details: Record<string, TempleDetail> = {
         titleEn: 'Journey and Around',
         bodyHi: 'श्रीशैलम आंध्र प्रदेश के नंद्याल ज़िले में नल्लमला वन के भीतर पहाड़ी पर है — कुरनूल से लगभग 180 किमी, नंद्याल से लगभग 160 किमी, मार्कापुर से लगभग 80 किमी और हैदराबाद से लगभग 230 किमी। यहाँ अपना रेलवे स्टेशन नहीं है; निकटतम रेलहेड मार्कापुर रोड लगभग 85 किमी दूर है और कुरनूल तथा नंद्याल भी प्रयोग होते हैं। निकटतम बड़ा हवाई अड्डा हैदराबाद है, लगभग 200–220 किमी। मार्ग नल्लमला के संरक्षित वन से होकर जाता है, इसलिए रात्रि में आवागमन प्रायः बंद रहता है — यात्रा दिन में ही नियोजित करें। परिसर के पास साक्षी गणपति मंदिर है, जहाँ की मान्यता है कि गणपति प्रत्येक यात्री के दर्शन की साक्षी रखते हैं; नीचे कृष्णा-तट पर पाताल गंगा स्नान-घाट, और आसपास हटकेश्वरम्, शिखरेश्वरम् तथा अक्कमहादेवी गुफाएँ दर्शनीय हैं। शैव-शाक्त दोनों परम्पराओं के यात्री इसे भ्रमराम्बा शक्ति पीठ के साथ एक ही यात्रा में पूर्ण करते हैं।',
         bodyEn: 'Srisailam sits on a hill inside the Nallamala forest in Nandyal district of Andhra Pradesh — roughly 180 km from Kurnool, about 160 km from Nandyal, some 80 km from Markapur and around 230 km from Hyderabad. The town has no railway station of its own; the nearest railhead is Markapur Road, approximately 85 km away, with Kurnool and Nandyal also used. The nearest major airport is Hyderabad, approximately 200–220 km out. The approach runs through protected Nallamala forest, where night movement is generally closed, so the journey is best planned by daylight. Close to the temple stands the Sakshi Ganapati shrine, where Ganapati is believed to keep the record of every pilgrim’s visit; below, on the Krishna, lies the Patala Ganga bathing ghat, and Hatakeswaram, Shikareswaram and the Akka Mahadevi caves lie within a short drive. Pilgrims of both the Shaiva and Shakta traditions complete the visit by pairing the Jyotirlinga with the Bhramaramba Shakti Peetha in one yatra.',
+      },
+    ],
+  },
+  mahakaleshwar: {
+    significanceHi: 'शिप्रा के तट पर बसी प्राचीन अवन्तिका — आज का उज्जैन — सप्त मोक्षपुरियों में गिनी जाती है, और उसके अधिष्ठाता महाकालेश्वर द्वादश ज्योतिर्लिङ्गों में एकमात्र दक्षिणमुखी लिङ्ग माने जाते हैं। महाकाल काल, मृत्यु और भय के पार ले जाने वाले शिव-रूप में पूजित हैं, और नगर की लोक-मान्यता उन्हें ही उज्जैन का राजा मानती है। वर्तमान मंदिर-संरचना मराठा सेनानायक राणोजी शिंदे ने विक्रम संवत् 1791 (सन् 1734) में बनवाई; यहाँ प्रतिदिन प्रातः होने वाली भस्म आरती समस्त ज्योतिर्लिङ्गों में अनन्य है।',
+    significanceEn: 'Ancient Avantika on the Shipra — today’s Ujjain — is counted among the seven moksha-puris, and its presiding Mahakaleshwar is the one Jyotirlinga of the twelve that faces south. Mahakal is worshipped as the Shiva who carries devotees past time, death and fear, and the city’s own tradition holds him to be Ujjain’s king. The present structure was raised by the Maratha commander Ranoji Shinde in Vikram Samvat 1791 (1734 CE), and the Bhasma Aarti offered here each dawn is performed at no other Jyotirlinga.',
+    originStoryHi: 'शिव पुराण और स्कन्द पुराण की कथा के अनुसार अवन्ती नगरी को दूषण नामक असुर ने त्रस्त कर रखा था और वैदिक अनुष्ठानों को नष्ट कर दिया था। परम्परा कहती है कि नगर के शिवभक्तों की पुकार पर शिव महाकाल के रूप में भूमि फाड़कर प्रकट हुए और असुर का संहार किया। भक्तों की प्रार्थना पर वे वहीं ज्योतिर्लिङ्ग-रूप में स्थिर हो गए, और तभी से अवन्तिका की रक्षा महाकाल के हाथ मानी जाती है।',
+    originStoryEn: 'The Shiva Purana and the Skanda Purana tell that the city of Avanti was tormented by an asura named Dushana, who broke up its Vedic rites. By tradition, at the cry of the city’s Shiva devotees, Shiva burst out of the earth in his Mahakal form and destroyed the demon. At their prayer he stayed on there as a Jyotirlinga, and Avantika has been held to rest under Mahakal’s protection ever since.',
+    sources: [
+      { label: 'Shri Mahakaleshwar Temple, Ujjain - Official', url: 'https://shrimahakaleshwar.com/' },
+      { label: 'Madhya Pradesh Tourism - Mahakaleshwar Jyotirlinga', url: 'https://www.mptourism.com/mahakaleshwar-jyotirlinga-temple-ujjain-mp.html' },
+      { label: 'District Ujjain - Shree Mahakaleshwar Savari', url: 'https://ujjain.nic.in/en/festival/shree-mahakaleshwar-savari/' },
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi: 'परम्परा के अनुसार दूषण के वध के बाद शिव अवन्तिका में महाकाल-रूप में स्थिर हुए, और तभी से यह भूमि ज्योतिर्लिङ्ग-क्षेत्र मानी जाती है; प्राचीन कथाएँ अवन्ती के नरेश चन्द्रप्रद्योत के काल तक मंदिर की सेवा-व्यवस्था का स्मरण कराती हैं। ऐतिहासिक काल में बारहवीं शताब्दी में परमार नरेश उदयादित्य और नरवर्मन के समय मंदिर का पुनर्निर्माण हुआ। तेरहवीं शताब्दी में मंदिर ध्वस्त कर दिया गया, पर शिप्रा-तट पर पूजा कभी पूरी तरह नहीं रुकी। वर्तमान भव्य संरचना अठारहवीं शताब्दी में मराठा काल की देन है — पेशवा बाजीराव के सेनानायक राणोजी शिंदे ने विक्रम संवत् 1791 (सन् 1734) में इसे पुनः खड़ा कराया, और आगे चलकर शिंदे-होलकर काल में परिसर का विस्तार हुआ। आज मंदिर श्री महाकालेश्वर मंदिर प्रबंध समिति के अधीन है; हाल के वर्षों में मंदिर के चारों ओर महाकाल लोक गलियारे का विकास हुआ है, जिससे दर्शन-मार्ग और परिक्रमा-पथ विस्तृत हुए हैं।',
+        bodyEn: 'By tradition Shiva settled at Avantika in his Mahakal form after destroying Dushana, and the ground has been held a Jyotirlinga kshetra ever since; older accounts recall the shrine’s service being organised as far back as the reign of Chanda Pradyota of Avanti. In historical time the temple was rebuilt in the twelfth century under the Paramara kings Udayaditya and Naravarman. It was demolished in the thirteenth century, yet worship on the Shipra bank was never wholly broken. The great structure standing today belongs to the Maratha century: Ranoji Shinde, a commander under Peshwa Bajirao, raised it afresh in Vikram Samvat 1791 (1734 CE), and the precinct was extended under Shinde and Holkar patronage that followed. The shrine is administered today by the Shri Mahakaleshwar Temple Management Committee, and in recent years the Mahakal Lok corridor built around it has widened the approach and the parikrama path.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'महाकाल का स्वरूप',
+        titleEn: 'The Form of Mahakal',
+        bodyHi: 'महाकालेश्वर का विशाल लिङ्ग भूमि-तल से नीचे बने गर्भगृह में स्वयम्भू रूप में विराजता है और दक्षिण दिशा की ओर मुख किए हुए है — द्वादश ज्योतिर्लिङ्गों में यही एकमात्र दक्षिणमुखी विग्रह है, इसलिए इसे तांत्रिक परम्परा में विशेष माना जाता है। मंदिर तीन तलों में बँटा है: नीचे महाकाल, उनके ऊपर के गर्भगृह में ओंकारेश्वर लिङ्ग, और सबसे ऊपर नागचन्द्रेश्वर, जिनके पट वर्ष में केवल नागपंचमी को खुलते हैं। भस्म आरती के समय लिङ्ग पर रजत मुकुट, नाग-आभूषण और भस्म का श्रृंगार किया जाता है। विस्तृत प्रांगण ऊँची प्राचीरों से घिरा है और उसी में सर्वतोभद्र शैली का कोटितीर्थ कुण्ड है, जिसके विषय में मान्यता है कि उसमें समस्त तीर्थों का जल समाहित है।',
+        bodyEn: 'The great linga of Mahakaleshwar stands swayambhu in a sanctum sunk below ground level and faces south — the only south-facing image among the twelve Jyotirlingas, which is why the tantric tradition holds it especially potent. The temple is arranged over three levels: Mahakal below, the Omkareshwar linga in the sanctum directly above him, and Nagchandreshwar at the top, whose doors open only on Nag Panchami each year. At the Bhasma Aarti the linga is dressed with a silver crown, serpent ornaments and sacred ash. The broad courtyard is enclosed by high walls and holds the Koti Tirtha, a tank built in the sarvatobhadra style, whose water is believed to carry that of all the holy tirthas.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'भस्म आरती',
+        titleEn: 'The Bhasma Aarti',
+        bodyHi: 'महाकाल की सबसे प्रसिद्ध परम्परा भस्म आरती है — प्रातः लगभग चार बजे होने वाली वह आरती जिसमें महाकाल को जगाया जाता है और लिङ्ग पर भस्म का श्रृंगार चढ़ता है; परम्परा के अनुसार यह भस्म शिप्रा-तट से लाई जाती है। यह आरती केवल यहीं होती है और इसके लिए मंदिर समिति के माध्यम से पूर्व-अनुमति लेनी पड़ती है, जिसमें पुरुषों के लिए धोती और महिलाओं के लिए साड़ी का पारम्परिक वेश अपेक्षित रहता है। दिन भर पंचामृत अभिषेक, जल-दूध अर्पण और बिल्वपत्र-अर्चना चलती है और सायंकाल संध्या आरती के बाद शयन आरती के साथ पट बंद होते हैं। श्रावण मास और सोमवार यहाँ सबसे व्यस्त रहते हैं, जब भक्त शिप्रा का जल लेकर अभिषेक के लिए पंक्तिबद्ध होते हैं।',
+        bodyEn: 'Mahakal’s best-known custom is the Bhasma Aarti — the rite at about four in the morning that wakes Mahakal and dresses the linga in sacred ash, which by tradition is brought from the Shipra ghats. It is performed nowhere else among the Jyotirlingas and requires prior permission through the temple committee, with traditional dress expected: a dhoti for men and a sari for women. Through the day the linga receives the panchamruta abhishek, offerings of water and milk and archana with bel leaves, and after the evening sandhya aarti the doors close with the shayan aarti. Shravan and Mondays are the busiest, when devotees queue with Shipra water for the abhishek.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi: 'महाशिवरात्रि यहाँ का सबसे बड़ा पर्व है, जब रात भर चार प्रहर की पूजा और विशेष श्रृंगार होते हैं। श्रावण और भाद्रपद मास में प्रत्येक सोमवार महाकाल की सवारी निकलती है — पालकी में विराजित महाकाल नगर-भ्रमण करते हुए शिप्रा के घाट पहुँचते हैं, जहाँ पूजन होता है; भाद्रपद की अंतिम सवारी शाही सवारी कहलाती है और उसमें सबसे अधिक भीड़ उमड़ती है। नागपंचमी को वर्ष में एक ही दिन नागचन्द्रेश्वर के पट खुलते हैं और रात भर दर्शन चलते हैं। कार्तिक मास में हरिहर मिलन का उत्सव होता है, जिसमें महाकाल और भगवान विष्णु के मिलन की परम्परा निभाई जाती है। बारह वर्ष में एक बार शिप्रा-तट पर सिंहस्थ कुम्भ लगता है, जो उज्जैन का सबसे विराट मेला है।',
+        bodyEn: 'Mahashivratri is the greatest observance here, kept with the four watches of the night and special shringar. Through Shravan and Bhadrapada a Sawari goes out every Monday — Mahakal riding in a palanquin through the old city to the Shipra ghat, where he is worshipped; the last ride of Bhadrapada is the Shahi Sawari and draws the largest crowds of all. On Nag Panchami the doors of Nagchandreshwar open for the single day of the year and darshan runs through the night. Kartik brings the Harihar Milan, which enacts the meeting of Mahakal and Vishnu. Once in twelve years the Simhastha Kumbh gathers on the banks of the Shipra, the vastest of Ujjain’s fairs.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi: 'मंदिर मध्य प्रदेश के उज्जैन नगर के पुराने भाग में शिप्रा के निकट है; उज्जैन जंक्शन रेलवे स्टेशन नगर के भीतर ही है और वहाँ से मंदिर कुछ ही किलोमीटर दूर पड़ता है। निकटतम हवाई अड्डा इन्दौर का देवी अहिल्याबाई होल्कर विमानतल है, लगभग 55–60 किमी, जहाँ से सड़क-मार्ग से लगभग सवा घंटे में उज्जैन पहुँचा जा सकता है। पुराना नगर पैदल घूमने योग्य है — महाकाल से हरसिद्धि शक्ति पीठ लगभग 800 मीटर की छायादार गली से जुड़ा है, और कालभैरव मंदिर तथा शिप्रा का रामघाट भी निकट ही हैं, जहाँ स्नान और संध्या-आरती का क्रम चलता है। अधिकांश यात्री उज्जैन के साथ मध्य प्रदेश के दूसरे ज्योतिर्लिङ्ग ओंकारेश्वर को जोड़ते हैं, जो यहाँ से लगभग 140 किमी दक्षिण में है।',
+        bodyEn: 'The temple stands in the old quarter of Ujjain in Madhya Pradesh, close to the Shipra; Ujjain Junction lies within the city, only a few kilometres away. The nearest airport is Devi Ahilyabai Holkar airport at Indore, approximately 55–60 km out, about an hour and a quarter by road. The old city is walkable — Mahakal to the Harsiddhi Shakti Peetha is a shaded lane of roughly 800 metres, and the Kal Bhairav temple and the Ram Ghat on the Shipra, where bathing and the evening aarti go on, are close by. Most pilgrims pair Ujjain with Madhya Pradesh’s other Jyotirlinga, Omkareshwar, about 140 km to the south.',
       },
     ],
   },
