@@ -1,5 +1,7 @@
 import type { Deity } from '@/data/texts';
 
+import { extendedDetails } from './details';
+
 /**
  * Theerth (तीर्थ) — curated list of famous Hindu pilgrimage temples across India.
  *
@@ -1172,6 +1174,9 @@ export const temples: readonly TempleEntry[] = baseTemples.map((temple) => ({
   addedInVersion: THEERTH_LAUNCH_VERSION,
   ...temple,
   ...templeDetails[temple.id],
+  // A chunk entry under `details/` replaces the inline legacy detail wholesale
+  // once that temple's full RULEBOOK §12.6 reading has been authored.
+  ...extendedDetails[temple.id],
 }));
 
 export function getTempleById(id: string): TempleEntry | undefined {

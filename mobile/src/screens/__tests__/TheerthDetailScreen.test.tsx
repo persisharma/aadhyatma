@@ -4,6 +4,7 @@ import TestRenderer, { act } from 'react-test-renderer';
 import { Image, ImageBackground, Text } from 'react-native';
 import { backgroundImages } from '@assets/backgrounds';
 import { getDeityBackground, getTheerthBackground } from '@/data/backgrounds';
+import { getTempleById, temples } from '@/data/theerth/temples';
 
 jest.mock('@react-native-async-storage/async-storage', () => ({
   getItem: jest.fn(() => Promise.resolve(null)),
@@ -155,11 +156,48 @@ for (const temple of RAJASTHAN_WAVE) {
   });
 }
 
-test('temples without extended sections render only the two core sections', () => {
-  const text = render('somnath', 'en');
-  assert.doesNotMatch(text, /Sthapana Katha/);
-  assert.equal((text.match(/Significance/g) ?? []).length, 1);
-  assert.equal((text.match(/Origin Story/g) ?? []).length, 1);
+// Picked from the data rather than hard-coded: the §12.6 rollout keeps
+// converting bare rows into full readings, so naming one here would break the
+// moment that temple is enriched.
+const bareTemple = temples.find((t) => !t.sections?.length);
+
+(bareTemple ? test : test.skip)(
+  'temples without extended sections render only the two core sections',
+  () => {
+    const text = render(bareTemple!.id, 'en');
+    assert.doesNotMatch(text, /Sthapana Katha/);
+    assert.equal((text.match(/Significance/g) ?? []).length, 1);
+    assert.equal((text.match(/Origin Story/g) ?? []).length, 1);
+  },
+);
+
+// Blanket cover for the rollout: every temple that carries the five §12.6
+// sections must actually render all five headings in both languages. This is
+// what lets an enrichment wave add temples without touching this file.
+describe('every enriched temple renders its full reading', () => {
+  const enriched = temples.filter((t) => t.sections?.length);
+
+  test.each(enriched.map((t) => [t.id] as const))('%s renders five sections in Hindi', (id) => {
+    const text = render(id, 'hi');
+    for (const section of getTempleById(id)!.sections!) {
+      assert.ok(
+        text.includes(section.titleHi),
+        `${id}: Hindi heading "${section.titleHi}" is missing from the detail screen`,
+      );
+    }
+    assert.match(text, /स्रोत/);
+  });
+
+  test.each(enriched.map((t) => [t.id] as const))('%s renders five sections in English', (id) => {
+    const text = render(id, 'en');
+    for (const section of getTempleById(id)!.sections!) {
+      assert.ok(
+        text.includes(section.titleEn),
+        `${id}: English heading "${section.titleEn}" is missing from the detail screen`,
+      );
+    }
+    assert.match(text, /Sources/);
+  });
 });
 
 test('shows a not-found message for an unknown temple id', () => {
