@@ -352,21 +352,22 @@ const pitruOffering = profile({
   // narrowing of `amavasya-vrat` to its Monday returns, the second Kerala's own
   // name for the Karka amavasya — so they share this profile rather than claiming
   // a separate cuisine the app has not sourced (RULEBOOK §23a.7).
-  observanceIds: ['amavasya-vrat', 'darsha-amavasya', 'shraddha-dates', 'somvati-amavasya', 'karkidaka-vavu'],
+  observanceIds: ['amavasya-vrat', 'darsha-amavasya', 'shraddha-dates', 'somvati-amavasya', 'karkidaka-vavu', 'mauni-amavasya'],
   offerings: [
     item('til-water', 'तर्पण में जल और काले तिल अर्पित किए जाते हैं।', 'Tarpana uses water and black sesame.'),
     item('pinda-food', 'पूर्ण श्राद्ध में पिण्ड और परिवार-परम्परा का भोजन अर्पण अलग विधि से होता है।', 'A full Shraddha separately offers pinda and the food prescribed by family tradition.'),
   ],
   permittedDuringFast: [item('amavasya-fast', 'अमावस्या का उपवास और श्राद्धकर्ता का भोजन-विधान कुलाचार के अनुसार रखें।', 'Keep the Amavasya fast and the performer’s Shraddha meal discipline according to family tradition.')],
-  traditionNoteHi: 'तर्पण, पिण्डदान, ब्राह्मण-भोजन और स्वयं व्रती का भोजन चार अलग विषय हैं; ऐप इन्हें एक सूची नहीं बनाता। सोमवती अमावस्या और केरल के कर्किडक वावु में भी यही अन्न-अर्पण विधि रहती है; कर्किडक वावु का बलि तर्पण प्रायः तट पर होता है और उसका कुल-विशेष भोजन-विधान परिवार की परंपरा से चलता है।',
-  traditionNoteEn: 'Tarpana, pinda, feeding others, and the observer’s own meal are four distinct matters; the app does not merge them. Somvati Amavasya and Kerala’s Karkidaka Vavu keep this same offering discipline; the Karkidaka Vavu bali tarpanam is usually performed on a river or sea bank, and its household meal follows family tradition.',
+  traditionNoteHi: 'तर्पण, पिण्डदान, ब्राह्मण-भोजन और स्वयं व्रती का भोजन चार अलग विषय हैं; ऐप इन्हें एक सूची नहीं बनाता। सोमवती अमावस्या और केरल के कर्किडक वावु में भी यही अन्न-अर्पण विधि रहती है; कर्किडक वावु का बलि तर्पण प्रायः तट पर होता है और उसका कुल-विशेष भोजन-विधान परिवार की परंपरा से चलता है। मौनी अमावस्या पर भी यही तर्पण होता है, और माघ की ठंड में तिल, गुड़, कंबल और अन्न का दान विशेष है।',
+  traditionNoteEn: 'Tarpana, pinda, feeding others, and the observer’s own meal are four distinct matters; the app does not merge them. Somvati Amavasya and Kerala’s Karkidaka Vavu keep this same offering discipline; the Karkidaka Vavu bali tarpanam is usually performed on a river or sea bank, and its household meal follows family tradition. Mauni Amavasya keeps the same tarpana, with daan of sesame, jaggery, blankets and grain in Magha’s cold.',
   source: {
     referenceUrls: [
       'https://bstdc.bihar.gov.in/pitripakshamela/about.php',
       'https://nchm.gov.in/sites/default/files/2022-11/Indian_Food_Heritage.pdf',
       'https://kamakoti.org/kamakoti/varaha/bookview.php?chapnum=22',
+      `${DP}/amavasya/maghi/mauni-amavasya-date-time.html`,
     ],
-    verificationNote: 'Verified 2026-08-26 against Bihar Tourism, Government of India NCHMCT, and Kanchi Kamakoti Peetham: water/til tarpan, pinda/food offerings, Amavasya fasting, and family-lineage variance are directly attested.',
+    verificationNote: 'Verified 2026-08-26 against Bihar Tourism, Government of India NCHMCT, and Kanchi Kamakoti Peetham: water/til tarpan, pinda/food offerings, Amavasya fasting, and family-lineage variance are directly attested. Mauni Amavasya joined 2026-09-24 on DrikPanchang’s Maghi Amavasya page (tarpan, snan, daan).',
     variantNote: 'No universal Shraddha menu is shipped because published regional food forms differ sharply.',
   },
 });
@@ -415,7 +416,7 @@ const kalashtamiBhog = profile({
   id: 'kalashtami-bhog',
   titleHi: 'कालाष्टमी का भैरव अर्पण',
   titleEn: 'Kalashtami Bhairava offering',
-  observanceIds: ['masik-kalashtami'],
+  observanceIds: ['masik-kalashtami', 'kaal-bhairav-jayanti'],
   offerings: [item('fruit-sesame', 'काल भैरव को फल और काले तिल अर्पित करें; दीपक का तेल भोजन नहीं है।', 'Offer fruit and black sesame to Kala Bhairava; lamp oil is not food.')],
   permittedDuringFast: [item('partial-full', 'प्रकाशित परम्पराओं में पूर्ण या आंशिक दिन-व्रत दोनों मिलते हैं।', 'Published traditions attest both complete and partial daytime fasts.')],
   traditionNoteHi: 'भैरव मन्दिरों के नैवेद्य क्षेत्र और सम्प्रदाय से बदलते हैं; तेल-दीप को खाने योग्य अर्पण न मानें।',
@@ -718,6 +719,116 @@ const bachhBarasBhog = profile({
   },
 });
 
+// गणेश जयंती (माघ शुक्ल चतुर्थी) — its own profile rather than `ganesha-bhog`,
+// because the til offering is this day's and must not leak onto Bhadrapada's
+// Ganesh Chaturthi or the monthly Vinayaka Chaturthi.
+const ganeshJayantiBhog = profile({
+  id: 'ganesh-jayanti-bhog',
+  titleHi: 'गणेश जयंती (तिलकुंद चतुर्थी) का नैवेद्य',
+  titleEn: 'Ganesh Jayanti (Tilkund Chaturthi) naivedya',
+  observanceIds: ['ganesh-jayanti'],
+  offerings: [
+    item('til-laddoo', 'तिल-गुड़ के लड्डू या तिल-गुड़ का नैवेद्य — इस दिन का विशेष भोग।', 'Laddoos of sesame and jaggery, or a til-gud naivedya — the day’s own offering.'),
+    item('modak', 'परिवार की रीति हो तो मोदक भी अर्पित करें।', 'Modak as well, where the family custom includes it.'),
+    item('durva-flowers', 'दूर्वा, लाल पुष्प और कुंद के पुष्प।', 'Durva, red flowers and kunda (jasmine) flowers.'),
+  ],
+  permittedDuringFast: [item('phalahar', 'व्रत रखें तो पूजन तक फल, दूध या फलाहार; कठोरता परिवार की रीति से।', 'If fasting, fruit, milk or fruit fare until the puja; strictness follows family custom.')],
+  doNotOffer: [item('tulsi', 'श्री गणेश को तुलसी न चढ़ाएँ।', 'Do not offer Tulsi to Shri Ganesh.')],
+  paranaMealHi: 'मध्याह्न पूजन के बाद तिल-गुड़ का प्रसाद लेकर व्रत खोलें और तिल का दान करें।',
+  paranaMealEn: 'After the midday puja, break the fast with the til-gud prasad, and give sesame in daan.',
+  traditionNoteHi: 'यह महाराष्ट्र और कोंकण की माघी गणेश जयंती की रीति है। माघ कृष्ण की सकट चौथ (चंद्रोदय पर अर्घ्य) और भाद्रपद की गणेश चतुर्थी की अपनी अलग विधि है।',
+  traditionNoteEn: 'This is the Maghi Ganesh Jayanti custom of Maharashtra and the Konkan. Magha Krishna’s Sakat Chauth (arghya at moonrise) and Bhadrapada’s Ganesh Chaturthi each keep their own procedure.',
+  source: {
+    referenceUrls: [
+      'https://www.lokmat.com/bhakti/tilakund-chaturthi-2026-january-22-maghi-ganesh-jayanti-and-tilakund-chaturthi-know-the-importance-and-worship-rituals-a-a679/',
+      'https://hindi.webdunia.com/other-festivals/ganesh-jayanti-124021200023_1.html',
+      `${DP}/hindu-gods/ganesha/ganesha-jayanti/ganesha-jayanti-date-time.html`,
+    ],
+    verificationNote: 'Verified 2026-09-24: Lokmat and Webdunia both attest the til-gud / til laddoo naivedya, durva, red and kunda flowers for Maghi Ganesh Jayanti; DrikPanchang independently names the day Tilkund Chaturthi and places it in Maharashtra and the Konkan.',
+    variantNote: 'Modak is shown as optional family custom; the ordinary Tulsi restriction is reused from the verified Ganesha profile.',
+  },
+});
+
+// नरक चतुर्दशी — the day's rites are a bath and a lamp, not a set naivedya, so
+// the profile says so plainly and names Bengal's choddo shaak as regional
+// rather than inventing a pan-Indian menu.
+const narakChaturdashiBhog = profile({
+  id: 'narak-chaturdashi-bhog',
+  titleHi: 'नरक चतुर्दशी का अर्पण',
+  titleEn: 'Narak Chaturdashi offering',
+  observanceIds: ['narak-chaturdashi'],
+  offerings: [
+    item('krishna-sattvik', 'भोर के अभ्यंग स्नान के बाद श्री कृष्ण को घर का सात्त्विक भोग या मिठाई अर्पित करें।', 'After the dawn abhyanga bath, offer Shri Krishna the household’s sattvik bhog or sweets.'),
+    item('choddo-shaak', 'बंगाल (भूत चतुर्दशी) में दोपहर के भोजन में चौदह प्रकार के साग बनाए जाते हैं।', 'In Bengal (Bhoot Chaturdashi) fourteen kinds of leafy greens are cooked for the midday meal.'),
+  ],
+  permittedDuringFast: [item('household', 'इस दिन का मुख्य कर्म स्नान और दीपदान है; व्रत रखें तो उसका रूप परिवार की रीति से तय करें।', 'The day’s main rites are the bath and the lamp; if fasting, the form follows family custom.')],
+  traditionNoteHi: 'तिल का तेल और उबटन स्नान की सामग्री हैं, और यम का चौमुखा दीप अर्पण है, भोजन नहीं। बंगाल के चौदह साग और चौदह दीप क्षेत्रीय रीति हैं।',
+  traditionNoteEn: 'Sesame oil and ubtan are bathing materials, and Yama’s four-wicked lamp is an offering, not food. Bengal’s fourteen greens and fourteen lamps are a regional custom.',
+  source: {
+    referenceUrls: [
+      `${DP}/festivals/abhyangsnan/festivals-abhyangsnan-timings.html`,
+      'https://www.iskconbangalore.org/blog/naraka-chaturdashi/',
+      'https://www.slurrp.com/article/bhoot-chaturdashi-in-bengal-celebrating-traditions-of-choddo-shaak-or-14-greens-dish-1730012182051',
+    ],
+    verificationNote: 'Verified 2026-09-24: DrikPanchang and ISKCON Bangalore independently attest the pre-dawn abhyanga bath and the Krishna–Narakasura observance; Slurrp attests Bengal’s choddo shaak and fourteen lamps for Bhoot Chaturdashi.',
+    variantNote: 'No pan-Indian Narak Chaturdashi menu is shipped; Maharashtra’s faral and Bengal’s greens stay regional.',
+  },
+});
+
+// वराह जयंती — the kalash-with-coconut and the murti given in daan are the
+// day's distinctive acts; the fast is fruit only.
+const varahaJayantiBhog = profile({
+  id: 'varaha-jayanti-bhog',
+  titleHi: 'वराह जयंती का नैवेद्य और दान',
+  titleEn: 'Varaha Jayanti naivedya and daan',
+  observanceIds: ['varaha-jayanti'],
+  offerings: [
+    item('fruit-tulsi', 'वराह भगवान को फल, पुष्प और तुलसी अर्पित करें।', 'Offer fruit, flowers and tulsi to Lord Varaha.'),
+    item('kalash-coconut', 'जल से भरे कलश में आम के पत्ते और नारियल रखकर उसमें वराह प्रतिमा स्थापित की जाती है; पूजन के बाद कलश ब्राह्मण को दान होता है।', 'A water-filled kalash with mango leaves and a coconut holds the Varaha murti; after the puja the kalash is given to a Brahmin.'),
+  ],
+  permittedDuringFast: [item('phalahar', 'व्रत में फल और हल्का फलाहार।', 'Fruit and light fruit fare during the fast.')],
+  paranaMealHi: 'पूजन और दान के बाद फलाहार या सात्त्विक भोजन से व्रत खोलें; ज़रूरतमंदों को वस्त्र या अन्न दें।',
+  paranaMealEn: 'After the puja and daan, break the fast with fruit fare or a sattvik meal; give clothes or grain to those in need.',
+  traditionNoteHi: 'कलश-दान की रीति सब घरों में नहीं है; जहाँ नहीं, वहाँ सामान्य विष्णु-पूजन और फलाहार पर्याप्त है।',
+  traditionNoteEn: 'The kalash daan is not kept in every home; where it is not, ordinary Vishnu puja and a fruit fast suffice.',
+  source: {
+    referenceUrls: [
+      'https://www.boldsky.com/yoga-spirituality/festivals/varaha-jayanti-2022-date-time-puja-rituals-mantra-vrat-katha-and-benefits-141907.html',
+      'https://www.prokerala.com/festivals/varaha-jayanti.html',
+      'https://99pandit.com/blog/varaha-jayanti-date-time-rituals-significance/',
+    ],
+    verificationNote: 'Verified 2026-09-24: Boldsky and Prokerala independently attest the kalash with mango leaves and coconut holding the Varaha murti, given to a Brahmin; 99Pandit attests the fruit fast and daan of clothes or money.',
+    variantNote: 'The kalash daan is presented as a common custom, not a requirement.',
+  },
+});
+
+// वामन जयंती — the 52 pedas and the curd-rice daan that completes the vrat are
+// both attested by Hindi news desks; the rest is ordinary Vishnu puja.
+const vamanaJayantiBhog = profile({
+  id: 'vamana-jayanti-bhog',
+  titleHi: 'वामन जयंती का भोग और दान',
+  titleEn: 'Vamana Jayanti bhog and daan',
+  observanceIds: ['vamana-jayanti'],
+  offerings: [
+    item('fruit-tulsi', 'भगवान वामन को फल, पुष्प और तुलसी का सात्त्विक भोग।', 'A sattvik offering of fruit, flowers and tulsi to Lord Vamana.'),
+    item('bavan-pede', 'कई परिवारों में बावन पेड़े और बावन दक्षिणा अर्पित की जाती हैं।', 'In many families fifty-two pedas and fifty-two dakshinas are offered.'),
+  ],
+  permittedDuringFast: [item('phalahar', 'व्रत में फल और फलाहार; द्वादशी होने से एकादशी का व्रत रखने वाले इसी दिन पारण भी करते हैं।', 'Fruit and fruit fare during the fast; since it is Dwadashi, those who kept the Ekadashi fast also break it on this day.')],
+  paranaMealHi: 'भोग के बाद मिट्टी के पात्रों में दही, चावल, शक्कर और शरबत दक्षिणा सहित ब्राह्मण को दान करें; इसी से व्रत पूरा होता है।',
+  paranaMealEn: 'After the bhog, give curd, rice, sugar and sherbet in earthen bowls, with dakshina, to a Brahmin; this completes the vrat.',
+  traditionNoteHi: 'बावन पेड़े और दही-चावल का दान उत्तर भारत की प्रचलित रीति है; परिवार की परंपरा अलग हो तो वही मानें।',
+  traditionNoteEn: 'The fifty-two pedas and the curd-rice daan are a common North Indian custom; follow family tradition where it differs.',
+  source: {
+    referenceUrls: [
+      'https://www.timesnowhindi.com/spirituality/vamana-jayanti-2026-date-shubh-puja-muhurat-vrat-vidhi-katha-article-156205112',
+      'https://zeenews.india.com/hindi/religion/lord-vishnu-measured-three-worlds-in-three-steps-sent-bali-to-patal-taking-vaman-incarnation/1881648',
+      `${DP}/dashavatara/vamana/vamana-jayanti-date-time.html`,
+    ],
+    verificationNote: 'Verified 2026-09-24: Times Now Navbharat attests the 52 pedas and 52 dakshinas; Zee News independently attests the curd, rice, sugar and sherbet daan in earthen bowls that completes the vrat; DrikPanchang confirms the Bhadrapada Shukla Dwadashi observance.',
+    variantNote: 'Both customs are shown as family practice, not as universal requirements.',
+  },
+});
+
 export const EXTENDED_BHOG_CONTENT: readonly BhogContentEntry[] = [
   hartalikaTeejBhog,
   hariyaliTeejBhog,
@@ -752,4 +863,8 @@ export const EXTENDED_BHOG_CONTENT: readonly BhogContentEntry[] = [
   jayaparvatiBhog,
   shitalaBhog,
   bachhBarasBhog,
+  ganeshJayantiBhog,
+  narakChaturdashiBhog,
+  varahaJayantiBhog,
+  vamanaJayantiBhog,
 ];

@@ -1,4 +1,4 @@
-import type { TempleDetail } from '../temples';
+import type { TempleDetail, TheerthSource } from '../temples';
 
 /**
  * Extended §12.6 readings — Maha Shakti Peethas D.
@@ -10,6 +10,260 @@ import type { TempleDetail } from '../temples';
  * (expanded significance + origin story, `sources` ≥ 2, and the five fixed
  * sections in order: sthapana, svarup, parampara, mela, yatra).
  *
- * Temples still to author in this chunk: mangala-gauri vishalakshi danteshwari tripura-sundari
+ * All four temples in this chunk carry their full reading.
  */
-export const details: Record<string, TempleDetail> = {};
+const source = (label: string, url: string): TheerthSource => ({ label, url });
+
+export const details: Record<string, TempleDetail> = {
+  'tripura-sundari': {
+    significanceHi:
+      'उदयपुर की त्रिपुर सुंदरी, जिन्हें त्रिपुरा में सब माताबाड़ी कहते हैं, 51 शक्ति पीठों में गिनी जाती हैं और राज्य की देवी-परम्परा का केन्द्र हैं। माणिक्य वंश के महाराजा धन्य माणिक्य ने सन् 1501 (विक्रम संवत् 1558) में यह मंदिर बनवाया, और जिस टीले पर यह खड़ा है उसका आकार कूर्म यानी कछुए जैसा होने से इसे कूर्म पीठ कहा जाता है। कार्तिक अमावस्या के आसपास लगने वाला दीपावली मेला पूर्वोत्तर के सबसे बड़े धार्मिक जमावड़ों में गिना जाता है।',
+    significanceEn:
+      'Tripura Sundari of Udaipur, known across Tripura simply as Matabari, is counted among the 51 Shakti Peethas and anchors the state’s Devi tradition. Maharaja Dhanya Manikya of the Manikya dynasty built the temple in 1501 CE (Vikram Samvat 1558), and because the mound it stands on has the shape of a kurma, a tortoise, the site is called Kurma Pitha. The Diwali mela held around the Kartik new moon is among the largest religious gatherings in the northeast.',
+    originStoryHi:
+      'परम्परा के अनुसार दक्ष-यज्ञ के बाद सती का दक्षिण चरण — अँगूठे सहित — इसी स्थान पर गिरा, इसलिए यहाँ देवी त्रिपुरसुंदरी और भैरव त्रिपुरेश के रूप में उपासना होती है। दूसरी कथा राज-परम्परा की है: पन्द्रहवीं शताब्दी के अंत में शासन कर रहे महाराजा धन्य माणिक्य को स्वप्न में देवी ने उदयपुर के निकट की एक पहाड़ी पर अपनी उपासना आरम्भ कराने का आदेश दिया। राजा ने उसी कूर्म-आकृति टीले पर सन् 1501 में मंदिर बनवाया और प्रतिमा प्रतिष्ठित की।',
+    originStoryEn:
+      'By tradition the right foot of Sati — the Dakshin Charan, with its great toe — fell at this place after Daksha’s sacrifice, so the goddess is worshipped here as Tripurasundari with Tripuresh as her Bhairava. A second story belongs to the royal line: Maharaja Dhanya Manikya, ruling at the close of the fifteenth century, was told in a dream to begin her worship on a hill near Udaipur, then his capital. On that tortoise-shaped mound the king raised the temple in 1501 CE and installed the image.',
+    sources: [
+      source('Tripura Sundari Temple (Government of Tripura)', 'https://tripurasundari.tripura.gov.in/'),
+      source('Tripura Tourism - Tripura Sundari Temple', 'https://tripuratourism.gov.in/single-tour.php?id=2'),
+      source('Incredible India - Tripura Sundari Temple', 'https://www.incredibleindia.gov.in/en/tripura/agartala/tripura-sundari-temple'),
+      source('Tripura Sundari Temple - Reference', 'https://en.wikipedia.org/wiki/Tripura_Sundari_Temple'),
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'शक्ति-पीठ परम्परा इस स्थान को सती के दक्षिण चरण से जोड़ती है, इसलिए यहाँ देवी-उपासना मंदिर से पुरानी मानी जाती है। जो मंदिर आज खड़ा है उसका इतिहास स्पष्ट है: माणिक्य वंश के महाराजा धन्य माणिक्य ने, जो पन्द्रहवीं शताब्दी के अंत और सोलहवीं के आरम्भ में त्रिपुरा के शासक थे, सन् 1501 (विक्रम संवत् 1558) में तत्कालीन राजधानी उदयपुर के निकट की एक पहाड़ी पर इसे बनवाया। परम्परा के अनुसार निर्माण का आदेश उन्हें स्वप्न में देवी से मिला था, और उन्होंने वही टीला चुना जिसकी आकृति कछुए जैसी है — शाक्त परम्परा में कूर्म-आकृति भूमि को देवी-मंदिर के लिए सबसे उपयुक्त माना गया है, इसी से स्थान कूर्म पीठ कहलाया। प्रतिष्ठा की तिथि, वार और प्रतिष्ठा कराने वाले आचार्य का नाम उपलब्ध विवरणों में दर्ज नहीं है। सत्रहवीं शताब्दी के मध्य में महाराजा कल्याण माणिक्य ने मंदिर के सामने बड़ा सरोवर खुदवाया, जो उन्हीं के नाम पर कल्याण सागर कहलाता है। माणिक्य राजवंश पीढ़ियों तक इसका संरक्षक रहा और आज मंदिर की व्यवस्था त्रिपुरा शासन तथा परम्परागत पुजारी-परिवार देखते हैं।',
+        bodyEn:
+          'The Shakti Peeth tradition ties this ground to the right foot of Sati, so worship of the goddess here is held to be older than any building. The temple now standing has a clear history: Maharaja Dhanya Manikya of the Manikya dynasty, ruler of Tripura at the turn of the sixteenth century, raised it in 1501 CE (Vikram Samvat 1558) on a hill near Udaipur, then his capital. Tradition holds that the instruction came to him in a dream, and he chose the mound whose outline resembles a tortoise — in Shakta usage a kurma-shaped site is counted the most fitting ground for a Devi temple, and from this the place took the name Kurma Pitha. No available account preserves the consecration tithi, the weekday, or the acharya who performed it. In the middle of the seventeenth century Maharaja Kalyan Manikya had the great tank dug in front of the temple that carries his name, Kalyan Sagar. The Manikya house remained its patron for generations; the shrine is administered today by the Tripura government with hereditary priestly families in attendance.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'त्रिपुर सुंदरी का स्वरूप',
+        titleEn: 'The Form of Tripura Sundari',
+        bodyHi:
+          'गर्भगृह में दो प्रतिमाएँ हैं। मुख्य प्रतिमा त्रिपुर सुंदरी की है — कष्टी पाषाण की, लगभग पाँच फुट ऊँची, और उसे भक्त बड़ी मा या सोरोमा कहते हैं। उसी के साथ लगभग दो फुट ऊँची चण्डी की प्रतिमा है, जो सिंह पर विराजित है और स्थानीय भाषा में छोटी मा कहलाती है; परम्परा में मानी जाती है कि राजा युद्ध-यात्राओं में छोटी मा को साथ ले जाते थे। मंदिर बंगाल की एक-रत्न शैली में बना है — वर्गाकार गर्भगृह, उस पर चार ढलानों वाली कुटीर-सी छत और ऊपर शंक्वाकार शिखर तथा कलश; भवन छोटा है पर टीले पर खड़ा होने से दूर से दिखता है। मंदिर के सामने कल्याण सागर फैला है, जिसमें बड़े कछुए और मछलियाँ रहती हैं; भक्त उन्हें चारा खिलाते हैं और कूर्म-पीठ की जीवित पहचान मानते हैं।',
+        bodyEn:
+          'Two images stand in the sanctum. The principal one is Tripura Sundari, carved of kasti stone and about five feet high, called Bari Ma or Soroma by devotees. Beside her is a figure of Chandi roughly two feet high, seated on a lion and known locally as Chhotima, the smaller mother; tradition holds that the kings carried Chhotima with them on campaign. The building follows the Bengali ek-ratna manner — a square sanctum under a hut-like sloping roof, crowned by a conical dome and finial; it is a small structure, but its mound makes it visible from far off. Before it spreads Kalyan Sagar, whose large turtles and fish are fed by pilgrims and taken as the living sign of the Kurma Pitha.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'माताबाड़ी का पेड़ा और कल्याण सागर की सेवा',
+        titleEn: 'The Matabari Peda and the Service of Kalyan Sagar',
+        bodyHi:
+          'माताबाड़ी की सबसे पहचानी भेंट यहाँ का पेड़ा है — दूध और चीनी से बना यह प्रसाद देवी को अर्पित होकर भक्तों में बँटता है और त्रिपुरा से लौटने वाला यात्री प्रायः इसी को साथ ले जाता है। पेड़े के साथ देवी को शृंगार की वस्तुएँ चढ़ाई जाती हैं — शंख-पोला और चूड़ियाँ, बिंदी, साड़ी और पुष्प — विशेषकर सौभाग्य और सन्तान की कामना से। दूसरी परम्परा सरोवर की है: दर्शन से पहले या बाद में कल्याण सागर के कछुओं और मछलियों को चारा खिलाना यहाँ की अनिवार्य सेवा मानी जाती है, और इन जीवों को हानि पहुँचाना वर्जित है। शाक्त परम्परा के अनुसार यहाँ बलि-प्रथा भी चली आ रही है, विशेषकर पर्व-दिनों पर। दर्शन प्रातः की पूजा से आरम्भ होकर संध्या आरती तक चलते हैं, और मंगलवार, शनिवार तथा अमावस्या के दिन सबसे व्यस्त रहते हैं।',
+        bodyEn:
+          'Matabari’s best-known offering is its peda — a sweet of milk and sugar, offered to the goddess and then shared among devotees, and the thing most travellers carry home from Tripura. With the peda go the articles of shringar: conch bangles and glass ones, bindi, a sari and flowers, brought most often with a prayer for saubhagya or for a child. A second custom belongs to the tank: feeding the turtles and fish of Kalyan Sagar before or after darshan is treated here as a service owed, and harming them is forbidden. Following Shakta usage, animal sacrifice has also continued at this shrine, particularly on festival days. Worship opens with the morning puja and closes with the evening aarti; Tuesdays, Saturdays and the new-moon days draw the heaviest crowds.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'वर्ष का सबसे बड़ा आयोजन दीपावली मेला है, जो कार्तिक अमावस्या के आसपास तीन दिन चलता है; मंदिर और सरोवर दीपों से भर जाते हैं, मंच बनाकर गीत, नृत्य और नाट्य-प्रस्तुतियाँ होती हैं, और राज्य भर से लाखों लोग पहुँचते हैं — हाल के वर्षों में यह संख्या दस लाख से ऊपर बताई गई है, इसीलिए इसे पूर्वोत्तर का कुम्भ भी कहा जाता है। शारदीय नवरात्र और दुर्गा पूजा के दिनों में विशेष पूजा और भारी भीड़ रहती है, और चैत्र नवरात्र में भी नौ दिन अनुष्ठान चलते हैं। प्रत्येक अमावस्या को विशेष पूजा होती है और उस दिन आसपास के ज़िलों से श्रद्धालु आते हैं। मेले के दिनों में उदयपुर नगर और मंदिर-मार्ग पर अस्थायी बाज़ार लग जाता है, जिसमें माताबाड़ी का पेड़ा सबसे अधिक बिकता है।',
+        bodyEn:
+          'The year’s largest gathering is the Diwali mela, held over three days around the Kartik new moon; the temple and its tank fill with lamps, stages go up for song, dance and drama, and people arrive in lakhs from across the state — recent years have been reported at above ten lakh visitors, which is why it is called the Kumbh of the northeast. Sharad Navratri and the Durga Puja days bring special worship and dense crowds, and the nine days of Chaitra Navratri carry their own rites. Every amavasya has a special puja that draws devotees from the surrounding districts. Through the mela days a temporary bazaar lines Udaipur town and the temple road, where the Matabari peda outsells everything else.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'मंदिर त्रिपुरा के गोमती ज़िले में उदयपुर नगर के पास एक टीले पर है और राजधानी अगरतला से सड़क मार्ग से लगभग 55 किमी दूर है; अगरतला–सबरूम मार्ग पर बस और टैक्सी नियमित चलती हैं। उदयपुर का अपना रेलवे स्टेशन इसी लाइन पर है, इसलिए रेल से भी पहुँचा जा सकता है; निकटतम हवाई अड्डा अगरतला का महाराजा बीर बिक्रम है, जहाँ से यात्रा सड़क मार्ग से पूरी होती है। मंदिर के ठीक सामने कल्याण सागर है और उसके तट पर बैठकर कछुओं को चारा खिलाना यात्रा का अंग माना जाता है। उदयपुर माणिक्य वंश की पुरानी राजधानी है, इसलिए आसपास भुवनेश्वरी मंदिर, गुणवती मंदिर समूह और पुराने सरोवर देखने योग्य हैं; अनेक यात्री अगरतला के उज्जयंत महल और नीरमहल को भी इसी प्रवास में जोड़ते हैं। सभी दूरियाँ अनुमानित हैं।',
+        bodyEn:
+          'The temple stands on its mound near Udaipur town in Gomati district of Tripura, about 55 km by road from the state capital Agartala, with regular buses and taxis on the Agartala–Sabroom route. Udaipur has its own railway station on that line, so the shrine can be reached by train as well; the nearest airport is Maharaja Bir Bikram at Agartala, from where the rest of the journey is by road. Kalyan Sagar lies directly in front of the temple, and sitting on its bank to feed the turtles counts as part of the visit. Udaipur was the old Manikya capital, so the Bhuvaneshwari temple, the Gunavati temple group and the town’s old tanks are close by; many travellers add the Ujjayanta Palace at Agartala and Neermahal to the same trip. All distances are approximate.',
+      },
+    ],
+  },
+  danteshwari: {
+    significanceHi:
+      'शंखिनी और डंकिनी नदियों के संगम पर खड़ी दंतेवाड़ा की दंतेश्वरी 52 शक्ति पीठों में गिनी जाती हैं और बस्तर की कुलदेवी हैं। सन् 1324 (विक्रम संवत् 1381) के आसपास वारंगल से आए काकतीय राजकुमार अन्नमदेव अपनी कुलदेवी को साथ लाए और यहाँ प्रतिष्ठित किया; उन्हीं के वंशजों ने बस्तर राज्य चलाया और देवी राज्य की अधिष्ठात्री बनीं। विश्व के सबसे लम्बे उत्सवों में गिना जाने वाला पचहत्तर दिन का बस्तर दशहरा इन्हीं देवी को समर्पित है।',
+    significanceEn:
+      'Danteshwari of Dantewada, at the confluence of the Shankhini and Dankini rivers, is counted among the 52 Shakti Peethas and is the kuldevi of Bastar. Around 1324 CE (Vikram Samvat 1381) the Kakatiya prince Annamadeva came from Warangal bringing his family goddess with him and enshrined her here; his descendants ruled the Bastar kingdom and the goddess became its presiding deity. Bastar Dussehra, a seventy-five-day observance counted among the longest festivals in the world, is kept in her name.',
+    originStoryHi:
+      'परम्परा के अनुसार दक्ष-यज्ञ के बाद सती का दाँत इस स्थान पर गिरा, इसलिए देवी दंतेश्वरी कहलाईं और बस्तर का यह नगर दंतेवाड़ा। दूसरी कथा राज-परम्परा की है: काकतीय राजकुमार अन्नमदेव दण्डकारण्य की ओर बढ़ रहे थे और देवी उनके पीछे-पीछे चलीं, इस वचन के साथ कि जहाँ वे मुड़कर देखेंगे वहीं रुक जाएँगी। शंखिनी-डंकिनी के संगम पर उन्होंने पीछे देखा, देवी वहीं ठहर गईं, और उसी भूमि पर मंदिर बना।',
+    originStoryEn:
+      'By tradition the tooth — danta — of Sati fell at this place after Daksha’s sacrifice, which gave the goddess her name Danteshwari and the Bastar town its name Dantewada. A second story belongs to the royal line: as the Kakatiya prince Annamadeva pressed into the Dandakaranya forest the goddess walked behind him, on the promise that she would halt wherever he turned to look. At the confluence of the Shankhini and Dankini he looked back, she stayed where she stood, and the temple was raised on that ground.',
+    sources: [
+      source('Incredible India - Danteshwari Temple', 'https://www.incredibleindia.gov.in/en/chhattisgarh/jagdalpur/danteshwari-temple'),
+      source('District Dantewada, Government of Chhattisgarh - Tourist Places', 'https://dantewada.nic.in/en/tourist-place/dantewada/'),
+      source('Utsav, Ministry of Tourism - Phagun Madai', 'https://utsav.gov.in/view-event/phagun-madai'),
+      source('Danteshwari Temple - Reference', 'https://en.wikipedia.org/wiki/Danteshwari_Temple'),
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'वारंगल के काकतीय वंश का अंत होने पर अंतिम राजा प्रतापरुद्र द्वितीय के भाई अन्नमदेव ने सिंहासन भतीजे को सौंपकर दक्षिण-पूर्व के घने दण्डकारण्य वन की ओर प्रस्थान किया; वे अपनी कुलदेवी को साथ ले गए। यह यात्रा सामान्यतः सन् 1324 (विक्रम संवत् 1381) के आसपास मानी जाती है, यद्यपि विवरण तिथि में थोड़ा अंतर रखते हैं। परम्परा कहती है कि देवी उनके पीछे चलती रहीं और शंखिनी-डंकिनी के संगम पर, जहाँ राजकुमार ने मुड़कर देखा, वहीं ठहर गईं — उसी भूमि पर मंदिर बना और स्थान दंतेवाड़ा कहलाया। शक्ति-पीठ परम्परा इसी स्थान को सती के दाँत के गिरने से जोड़ती है, इसलिए दोनों कथाएँ यहाँ एक हो जाती हैं। अन्नमदेव ने आगे चलकर बस्तर राज्य की स्थापना की, जिस पर उनके वंशज सन् 1947 तक शासन करते रहे, और दंतेश्वरी राजपरिवार तथा समूचे बस्तर की कुलदेवी बनी रहीं। वर्तमान मंदिर चौदहवीं शताब्दी का माना जाता है और बाद की शताब्दियों में उसका विस्तार होता रहा; प्रतिष्ठा की तिथि, वार और प्रतिष्ठा कराने वाले आचार्य का नाम उपलब्ध अभिलेखों में दर्ज नहीं है। मंदिर की सेवा आज छत्तीसगढ़ शासन के अधीन माँ दंतेश्वरी मंदिर समिति तथा परम्परागत पुजारी-परिवार करते हैं।',
+        bodyEn:
+          'When the Kakatiya line at Warangal fell, Annamadeva, brother of the last king Prataprudra II, left the throne to his nephew and set out southeast into the deep Dandakaranya forest, carrying his family goddess with him. That journey is generally placed around 1324 CE (Vikram Samvat 1381), though accounts differ a little on the year. Tradition holds that the goddess walked behind him and halted at the meeting of the Shankhini and Dankini where the prince turned to look — the temple was built on that ground and the place became Dantewada. The Shakti Peeth tradition ties the same spot to the falling of Sati’s tooth, so the two stories meet here. Annamadeva went on to found the kingdom of Bastar, which his descendants ruled until 1947, and Danteshwari remained kuldevi both to the royal house and to Bastar at large. The present temple is held to be of the fourteenth century, enlarged over later centuries; no available record preserves the consecration tithi, the weekday, or the name of the acharya who performed it. The shrine is administered today by the Maa Danteshwari temple committee under the Chhattisgarh government, with hereditary priestly families in attendance.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'दंतेश्वरी का स्वरूप',
+        titleEn: 'The Form of Danteshwari',
+        bodyHi:
+          'गर्भगृह में देवी की प्रतिमा काले पाषाण की है और उसे प्रतिदिन रंग-बिरंगे पुष्पों, आभूषणों तथा बस्तर की परम्परागत वेशभूषा से सजाया जाता है; भक्त देवी के मुख और नेत्रों के ही दर्शन करते हैं, शेष शृंगार में ढँका रहता है। मंदिर परकोटे से घिरा है और भीतर सज्जित आँगन के आगे तीन तलों में उठता गर्भगृह है; भवन गर्भगृह, महामंडप, मुख्य मंडप और सभा मंडप — इन चार भागों में बँटा है। मुख्य प्रवेश पर खड़ा गरुड़ स्तम्भ मंदिर की सबसे विशिष्ट पहचान है, और उसी के आगे शंखिनी तथा डंकिनी का संगम है, जहाँ यात्री दर्शन से पहले स्नान करते हैं। परिसर की पत्थर-गढ़न और मूर्तियाँ बस्तर की देवगुड़ी-परम्परा और मैदानी मंदिर-शैली दोनों का मेल दिखाती हैं।',
+        bodyEn:
+          'The image in the sanctum is carved of black stone and is dressed each day in flowers of many colours, in ornaments and in the traditional attire of Bastar; what devotees see is the face and the eyes, the rest covered by the shringar. The temple stands within a walled precinct, an ornamented courtyard opening onto a sanctum that rises in three tiers, and the building divides into four parts — garbha griha, maha mandap, mukhya mandap and sabha mandap. The Garuda pillar at the main entrance is its most distinctive feature, and just beyond it lies the confluence of the Shankhini and Dankini, where pilgrims bathe before darshan. The stonework and images around the precinct show the meeting of Bastar’s own devgudi tradition with the temple idiom of the plains.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'ज्योति कलश और छत्र-डोली परम्परा',
+        titleEn: 'Jyoti Kalash and the Chhatra-Doli Tradition',
+        bodyHi:
+          'दंतेवाड़ा की सबसे पहचानी परम्परा ज्योति कलश है — नवरात्र आरम्भ होने पर भक्त अपनी मनोकामना के साथ मंदिर परिसर में मिट्टी के कलश में दीप प्रज्वलित कराते हैं, जो नौ दिन अखंड जलते हैं; कलश की संख्या हज़ारों में पहुँचती है और उन्हें एक साथ जलते देखना यहाँ का सबसे स्मरणीय दृश्य है। दूसरी परम्परा छत्र और डोली की है: देवी मंदिर में स्थिर नहीं रहतीं, उनका छत्र डोली में बिठाकर आसपास के गाँवों और उत्सवों तक ले जाया जाता है, और बस्तर की सैकड़ों ग्राम-देवियाँ इसी छत्र के साथ जुड़ती हैं — यही बस्तर की “देवी-मिलन” परम्परा का आधार है। अर्पण में नारियल, चुनरी, सिन्दूर और स्थानीय पुष्प चढ़ते हैं। दर्शन प्रातः की आरती से आरम्भ होकर मध्याह्न के विश्राम के बाद संध्या आरती तक चलते हैं, और मंगलवार, शुक्रवार तथा नवरात्र के दिन सबसे व्यस्त रहते हैं।',
+        bodyEn:
+          'Dantewada’s most recognisable custom is the jyoti kalash — at the start of Navratri devotees have an earthen lamp-pot lit in the precinct with a wish attached to it, and it burns unbroken through the nine nights; the pots run into thousands, and the sight of them alight together is the image visitors carry away. The second custom is that of the chhatra and the doli: the goddess does not stay fixed in her sanctum but travels as her umbrella, carried in a palanquin to surrounding villages and gatherings, and hundreds of Bastar’s village goddesses attach themselves to that umbrella — this is the ground of the region’s tradition of deities meeting one another. Offerings are coconut, a chunari, sindoor and local flowers. Darshan opens with the morning aarti, pauses at midday and runs to the evening aarti, with Tuesdays, Fridays and the Navratri days busiest.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'दंतेवाड़ा का अपना बड़ा उत्सव फागुन मड़ई है: इसका औपचारिक आरम्भ माघ शुक्ल पंचमी यानी बसंत पंचमी को मंदिर के आँगन में त्रिशूल-स्तम्भ गाड़कर और देवी के छत्र पर आम्र-मंजरी अर्पित कर होता है, और फिर फाल्गुन मास के अंतिम दस दिनों में समूचे बस्तर से आए समुदाय यहाँ लोकनृत्य, मड़ई और देवी-अनुष्ठान के साथ जुटते हैं। दूसरा बड़ा पर्व बस्तर दशहरा है, जो लगभग पचहत्तर दिन चलता है और जिसमें रावण-वध नहीं, देवी और बस्तर के ग्राम-देवताओं का सम्मिलन मनाया जाता है; इसकी शुरुआत पन्द्रहवीं शताब्दी में — विवरण सन् 1408 (विक्रम संवत् 1465) बताते हैं — काकतीय राजा पुरुषोत्तम देव से जोड़ी जाती है। दशहरे से पहले जगदलपुर से आया निमंत्रण दंतेवाड़ा पहुँचता है और देवी माँवली का डोला जगदलपुर ले जाया जाता है, जहाँ चार सौ से अधिक हाथों से खींचा जाने वाला विशाल रथ चलता है। चैत्र और शारदीय दोनों नवरात्रों में ज्योति कलश और विशेष पूजा होती है।',
+        bodyEn:
+          'Dantewada’s own great gathering is the Phagun Madai. It opens formally on Basant Panchami, the fifth tithi of the bright fortnight of Magh, when a trident pillar is set in the temple courtyard and mango blossom is offered on the goddess’s umbrella; then, through the last ten days of the month of Phalgun, communities from across Bastar gather here for folk dance, the madai fair and the goddess’s rites. The second is Bastar Dussehra, which runs some seventy-five days and marks not the killing of Ravana but the coming together of the goddess with Bastar’s village deities; its founding is credited to the Kakatiya ruler Purushottam Dev in the fifteenth century, with accounts giving 1408 CE (Vikram Samvat 1465). Before Dussehra an invitation travels from Jagdalpur to Dantewada and the doli of the goddess Mavli is carried there, where a great chariot is drawn by more than four hundred pairs of hands. Both Navratris, Chaitra and Sharad, bring the jyoti kalash and special puja.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'मंदिर छत्तीसगढ़ के दंतेवाड़ा ज़िले में शंखिनी और डंकिनी नदियों के संगम पर है और सड़क मार्ग से जुड़ा है। जगदलपुर लगभग 80–85 किमी दूर है और वहीं से बस तथा टैक्सी नियमित चलती हैं; रायपुर सड़क से लगभग 350 किमी है। दंतेवाड़ा का अपना रेलवे स्टेशन है पर गाड़ियाँ सीमित हैं, इसलिए अधिकांश यात्री जगदलपुर स्टेशन का उपयोग करते हैं, जो विशाखापत्तनम, राउरकेला और हावड़ा से जुड़ा है। निकटतम हवाई अड्डा जगदलपुर है, लगभग 85–90 किमी; बड़ी उड़ानों के लिए रायपुर और विशाखापत्तनम लगभग समान दूरी पर, सड़क से लगभग 400 किमी, पड़ते हैं। अधिकांश यात्री दंतेवाड़ा के साथ जगदलपुर की दंतेश्वरी और बस्तर राजमहल, तथा चित्रकोट व तीरथगढ़ जलप्रपात एक ही यात्रा में जोड़ते हैं। सभी दूरियाँ अनुमानित हैं।',
+        bodyEn:
+          'The temple lies in Dantewada district of Chhattisgarh at the confluence of the Shankhini and Dankini, and is reached by road. Jagdalpur is about 80–85 km away with regular buses and taxis; Raipur is roughly 350 km by road. Dantewada has its own railway station but few services, so most pilgrims use Jagdalpur station, which is connected to Visakhapatnam, Rourkela and Howrah. The nearest airport is Jagdalpur, about 85–90 km off; for wider connections Raipur and Visakhapatnam lie at a comparable distance, roughly 400 km by road. Most visitors pair Dantewada with the Danteshwari shrine and old palace at Jagdalpur, and with the Chitrakote and Tirathgarh falls, in a single journey. All distances are approximate.',
+      },
+    ],
+  },
+  vishalakshi: {
+    significanceHi:
+      'काशी की विशालाक्षी गंगा तट की प्रमुख शक्ति हैं और 51 शक्ति पीठों में गिनी जाती हैं; नाम का अर्थ है “विशाल नेत्रों वाली”। काञ्ची की कामाक्षी और मदुरै की मीनाक्षी के साथ मिलकर वे देवी के नेत्र-नामों की उस त्रयी में आती हैं जिसे उत्तर और दक्षिण दोनों परम्पराएँ मानती हैं। मीर घाट पर खड़ा वर्तमान मंदिर तमिलनाडु के नाट्टुकोट्टै नागरत्तार व्यापारी समुदाय ने सन् 1893 (विक्रम संवत् 1950) में बनवाया और सन् 1971 (विक्रम संवत् 2028) में उसका जीर्णोद्धार कराया।',
+    significanceEn:
+      'Vishalakshi of Kashi is a principal Shakti of the Ganga ghats and is counted among the 51 Shakti Peethas; her name means “she of the wide eyes”. With Kamakshi of Kanchi and Meenakshi of Madurai she completes the triad of eye-named goddesses honoured by northern and southern traditions alike. The temple that stands at Mir Ghat today was built by the Nattukottai Nagarathar merchant community of Tamil Nadu in 1893 CE (Vikram Samvat 1950) and renovated by them again in 1971 CE (Vikram Samvat 2028).',
+    originStoryHi:
+      'परम्परा के अनुसार दक्ष-यज्ञ के बाद सती के देह-अंग और आभूषण जहाँ-जहाँ गिरे वहाँ शक्ति पीठ बने; काशी में सती का कर्ण-आभूषण गिरा माना जाता है — कुछ विवरण इसे कुण्डल कहते हैं तो कुछ दाहिने कान की मणि। इसीलिए देवी यहाँ पार्वती के विशालाक्षी स्वरूप में पूजित हैं और स्थान को विशाल तीर्थ कहा गया। स्कन्द पुराण का काशी खण्ड विशालाक्षी को काशी की नव गौरियों में गिनता है, इसलिए यह पीठ नगर की गौरी-परम्परा का भी अंग है।',
+    originStoryEn:
+      'By tradition, Shakti Peethas arose wherever a limb or an ornament of Sati fell after Daksha’s sacrifice; at Kashi it is the ornament of her ear that is held to have fallen — some accounts call it an earring, others the jewel of her right ear. The goddess is therefore worshipped here in Parvati’s Vishalakshi form, and the spot is named Vishal Teerth. The Kashi Khand of the Skanda Purana counts Vishalakshi among the nine Gauris of Kashi, so the peeth belongs to the city’s own Gauri tradition as well.',
+    sources: [
+      source('Incredible India - Vishalakshi Temple, Varanasi', 'https://www.incredibleindia.gov.in/en/uttar-pradesh/varanasi/vishalakshi-temple'),
+      source('Kashi Official Web Portal - Vishalakshi Devi Temple', 'https://kashi.gov.in/listing-details/vishalakshi-devi-temple'),
+      source('Kashi Official Web Portal - Nav Gauri Yatra', 'https://kashi.gov.in/varanasi-yatra/nav-gauri-yatra'),
+      source('Vishalakshi Temple - Reference', 'https://en.wikipedia.org/wiki/Vishalakshi_Temple'),
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'विशालाक्षी की उपासना काशी में उतनी ही पुरानी है जितनी नगर की शक्ति-परम्परा — स्कन्द पुराण के काशी खण्ड में देवी को विशाल तीर्थ की अधिष्ठात्री और नगर की नव गौरियों में गिना गया है। परम्परा के अनुसार दक्ष-यज्ञ के बाद सती का कर्ण-आभूषण इसी स्थान पर गिरा, और तभी से यह पीठ बना। जो इमारत आज मीर घाट पर खड़ी है वह अपेक्षाकृत नई है: तमिलनाडु के चेट्टिनाड क्षेत्र का नाट्टुकोट्टै नागरत्तार व्यापारी समुदाय, जो काशी-यात्रा को अपनी कुल-परम्परा मानता है, उन्नीसवीं शताब्दी से इस मंदिर की सेवा करता आया है और उसी ने सन् 1893 (विक्रम संवत् 1950) में वर्तमान मंदिर बनवाया। सन् 1971 (विक्रम संवत् 2028) में उसी समुदाय के सहयोग से जीर्णोद्धार हुआ और उसी समय काले पाषाण की नई प्रतिमा उत्कीर्ण कर स्थापित की गई; प्रतिष्ठा की तिथि और वार किसी उपलब्ध अभिलेख में दर्ज नहीं हैं। मंदिर की सेवा-व्यवस्था आज भी उसी नागरत्तार न्यास के हाथ में है, इसलिए गंगा तट के इस पीठ में दक्षिण भारत की आगम-पद्धति और उत्तर की घाट-परम्परा साथ-साथ चलती हैं।',
+        bodyEn:
+          'Worship of Vishalakshi is as old in Kashi as the city’s Shakta tradition itself — the Kashi Khand of the Skanda Purana names her as the presiding goddess of Vishal Teerth and one of the city’s nine Gauris. By tradition the ear ornament of Sati fell at this spot after Daksha’s sacrifice, and the peeth dates from then. The building now standing at Mir Ghat is comparatively recent: the Nattukottai Nagarathar merchant community of the Chettinad country in Tamil Nadu, for whom the Kashi pilgrimage is a family tradition, has served this shrine since the nineteenth century and raised the present temple in 1893 CE (Vikram Samvat 1950). A renovation followed in 1971 CE (Vikram Samvat 2028) under the same community’s patronage, and a new black stone image was carved and installed at that time; no available record preserves the tithi or weekday of either consecration. The shrine’s administration remains with that Nagarathar trust, so on this Ganga-ghat peeth the agamic usage of the south runs alongside the ghat custom of the north.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'विशालाक्षी का स्वरूप',
+        titleEn: 'The Form of Vishalakshi',
+        bodyHi:
+          'गर्भगृह में देवी की दो प्रतिमाएँ हैं। पीछे बाईं ओर काले पाषाण की छोटी और प्राचीन प्रतिमा है, जिसे आदि विशालाक्षी कहा जाता है; सामने काले पाषाण की बड़ी प्रतिमा है, जो बाद में स्थापित हुई और जिसे प्रतिदिन वस्त्र, स्वर्णाभूषण और पुष्प-मालाओं से सजाया जाता है। दोनों में देवी के विशाल, चौड़े नेत्र ही सबसे पहले दृष्टि खींचते हैं — यही नाम का आधार है। मंदिर बाहर से काशी की हवेली-शैली का उत्तर भारतीय भवन दिखता है, पर भीतर दक्षिण भारतीय मंदिर-विन्यास है और प्रवेश पर छोटा द्रविड़ शैली का गोपुर बना है — नागरत्तार निर्माण की पहचान। गंगा की ओर उतरता मीर घाट कुछ ही क़दम दूर है, इसलिए स्नान के बाद सीधे दर्शन की परम्परा बनी रही।',
+        bodyEn:
+          'The sanctum holds two images. Set back on the left is a small, older figure of black stone known as Adi Vishalakshi, the original; in front of it stands a larger black stone image installed later, dressed daily in cloth, gold ornament and flower garlands. In both, it is the goddess’s wide, far-set eyes that the gaze meets first — the feature her name records. From the lane the temple reads as a North Indian haveli of the Kashi kind, but its interior follows a South Indian plan and a modest Dravidian gopura marks the entrance, the signature of its Nagarathar builders. Mir Ghat drops to the Ganga only a few steps away, which is why the custom of bathing first and taking darshan straight after has held.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'नव गौरी यात्रा और नागरत्तार सेवा',
+        titleEn: 'The Nav Gauri Yatra and the Nagarathar Service',
+        bodyHi:
+          'काशी की नव गौरी यात्रा — स्कन्द पुराण के काशी खण्ड में वर्णित नौ गौरी-स्थानों की परिक्रमा — वासन्तिक यानी चैत्र नवरात्र में की जाती है, और उसमें पाँचवें दिन विशालाक्षी गौरी के दर्शन का विधान है; अनेक यात्री इस क्रम को शुक्ल तृतीया पर भी दोहराते हैं। दूसरी जीवित परम्परा नागरत्तार समुदाय की है: चेट्टिनाड से आने वाले परिवार काशी-यात्रा में यहाँ अभिषेक और अर्चना कराते हैं, और मंदिर में तमिल पद्धति के अनुसार कुंकुम-अर्चना होती है, जिसका कुंकुम प्रसाद-रूप में दिया जाता है। देवी को लाल चुनरी, सिन्दूर, चूड़ियाँ और सोलह शृंगार की वस्तुएँ चढ़ाने का चलन है, विशेषकर सौभाग्य की कामना से। दर्शन प्रातः मंगला आरती से आरम्भ होकर मध्याह्न विश्राम के बाद संध्या आरती तक चलते हैं; शुक्रवार और नवरात्र के दिन सबसे व्यस्त रहते हैं।',
+        bodyEn:
+          'Kashi’s Nav Gauri Yatra — the round of nine Gauri shrines set out in the Kashi Khand of the Skanda Purana — is walked during Vasantik, that is Chaitra, Navratri, and its fifth day is given to the darshan of Vishalakshi Gauri; many pilgrims repeat the round on a Shukla Tritiya as well. The second living tradition is the Nagarathars’ own: families travelling up from Chettinad have abhishekam and archana performed here on their Kashi yatra, and the shrine keeps the Tamil usage of kumkum archana, whose kumkum is given back as prasad. Devotees offer the goddess a red chunari, sindoor, bangles and the sixteen articles of shringar, most often with a prayer for saubhagya. Darshan opens with the morning aarti, pauses at midday and runs to the evening aarti; Fridays and the Navratri days are busiest.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'मंदिर का वार्षिक उत्सव कजली तीज है, जो भाद्रपद कृष्ण तृतीया को मनाया जाता है; इस दिन मीर घाट की गली भक्तों से भर जाती है और स्त्रियाँ वर्षा-ऋतु के कजली गीत गाती हुई देवी के दर्शन करती हैं। चैत्र और आश्विन दोनों नवरात्रों में नौ दिन विशेष श्रृंगार और अर्चना होती है, और चैत्र नवरात्र की पंचमी को नव गौरी यात्रा का जत्था यहीं पहुँचता है। आश्विन की दुर्गा पूजा में भी काशी के शक्ति-उपासक इस पीठ के दर्शन को अनिवार्य मानते हैं। इनके अतिरिक्त वर्ष भर की हर शुक्ल तृतीया गौरी-तिथि मानी जाती है और उस दिन विशेष अर्चना होती है।',
+        bodyEn:
+          'The temple’s annual festival is Kajali Teej, kept on the third tithi of the dark fortnight of Bhadrapada; on that day the lane at Mir Ghat fills with pilgrims and women come for darshan singing the Kajali songs of the rains. Both Navratris, Chaitra and Ashwin, bring nine days of special shringar and archana, and the Nav Gauri party arrives here on the fifth day of Chaitra Navratri. During the Durga Puja of Ashwin, Kashi’s Shakta households likewise count a darshan at this peeth as owed. Beyond these, every Shukla Tritiya through the year is kept as a Gauri tithi with its own archana.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'मंदिर वाराणसी की घाट-गलियों में मीर घाट पर है और वहाँ पैदल ही पहुँचा जा सकता है — काशी विश्वनाथ मंदिर से लगभग 250 मीटर और अन्नपूर्णा मंदिर से लगभग 200 मीटर की दूरी पर; दशाश्वमेध घाट लगभग 600 मीटर दूर है। मणिकर्णिका घाट और मणिकर्णिका कुंड पास ही उत्तर की ओर हैं, इसलिए अधिकांश यात्री विश्वनाथ, अन्नपूर्णा और विशालाक्षी के दर्शन एक ही परिक्रमा में कर लेते हैं। निकटतम रेलवे स्टेशन वाराणसी जंक्शन लगभग 5 किमी और लाल बहादुर शास्त्री अंतर्राष्ट्रीय हवाई अड्डा लगभग 25 किमी दूर है; गलियों में वाहन नहीं जाते, इसलिए गोदौलिया तक आकर आगे पैदल चलना पड़ता है। सारनाथ लगभग 10 किमी दूर है और कई यात्री उसे भी इसी प्रवास में जोड़ते हैं। सभी दूरियाँ अनुमानित हैं।',
+        bodyEn:
+          'The temple stands at Mir Ghat in the lanes above the Varanasi waterfront and is reached on foot — roughly 250 m from the Kashi Vishwanath temple and about 200 m from the Annapurna temple, with Dashashwamedh Ghat some 600 m away. Manikarnika Ghat and its kund lie a short way north, so most pilgrims take Vishwanath, Annapurna and Vishalakshi in a single round. Varanasi Junction, the nearest railhead, is about 5 km off and Lal Bahadur Shastri International Airport about 25 km; vehicles cannot enter the lanes, so visitors come as far as Godowlia and walk. Sarnath is roughly 10 km away and is commonly added to the same visit. All distances are approximate.',
+      },
+    ],
+  },
+  'mangala-gauri': {
+    significanceHi:
+      'गया की मंगला गौरी अष्टादश महाशक्ति पीठों में गिनी जाती हैं और देवी को यहाँ पोषण देने वाली “सर्वमंगला” शक्ति के रूप में पूजा जाता है। पहाड़ी पर खड़ा वर्तमान मंदिर पंद्रहवीं शताब्दी का माना जाता है — एक विवरण इसे विक्रम संवत् 1516 (सन् 1459) में बना बताता है। पद्म, वायु, अग्नि और देवी भागवत पुराणों में इस स्थान का स्मरण है, और पिंडदान के लिए गया आने वाले परिवार विष्णुपद के बाद यहाँ चढ़कर देवी के दर्शन करते हैं।',
+    significanceEn:
+      'Mangala Gauri of Gaya is counted among the eighteen Maha Shakti Peethas, and the goddess is worshipped here as Sarvamangala, the Shakti who nourishes. The present hill temple is held to be a fifteenth-century structure — one account dates it to Vikram Samvat 1516 (1459 CE). The site is remembered in the Padma, Vayu, Agni and Devi Bhagavata Puranas, and families who come to Gaya for pind-daan climb here for the goddess’s darshan after Vishnupad.',
+    originStoryHi:
+      'परम्परा के अनुसार दक्ष-यज्ञ के बाद शिव सती के शरीर को लेकर भटकते रहे और विष्णु के चक्र से कटे अंग जहाँ-जहाँ गिरे वहाँ शक्ति पीठ बने। गया की इस पहाड़ी पर सती के वक्ष का अंश गिरा माना जाता है, इसीलिए देवी यहाँ स्तन्य और पोषण की शक्ति मंगला गौरी कहलाईं। भस्मकूट कही जाने वाली इसी पहाड़ी की चोटी पर पूर्वाभिमुख मंदिर खड़ा है, जहाँ देवी पिंडी रूप में विराजती हैं।',
+    originStoryEn:
+      'By tradition, after Daksha’s sacrifice Shiva wandered bearing Sati’s body, and wherever a severed limb fell a Shakti Peeth arose. On this hill at Gaya the breast of Sati is held to have fallen, and so the goddess here is Mangala Gauri, the Shakti of milk and nourishment. The east-facing shrine stands on the crest of that hill, called Bhasmakoot, where the goddess is worshipped in pindi form rather than as a carved image.',
+    sources: [
+      source('Bihar Tourism - Mangala Gauri, Gaya', 'https://tourism.bihar.gov.in/en/destinations/gaya/mangala-gauri'),
+      source('Incredible India - Mangla Gauri Temple, Gaya', 'https://www.incredibleindia.gov.in/en/bihar/gaya/mangla-gauri-temple'),
+      source('Mangla Gauri Temple - Reference', 'https://en.wikipedia.org/wiki/Mangla_Gauri_Temple'),
+    ],
+    sections: [
+      {
+        id: 'sthapana',
+        titleHi: 'मंदिर स्थापना कथा',
+        titleEn: 'Sthapana Katha',
+        bodyHi:
+          'मंगला गौरी का स्थान गया के सबसे पुराने तीर्थों में गिना जाता है — पद्म, वायु, अग्नि और देवी भागवत पुराणों में इसका उल्लेख मिलता है, इसलिए यहाँ देवी-उपासना मंदिर की वर्तमान इमारत से कहीं पुरानी है। परम्परा के अनुसार दक्ष-यज्ञ के विध्वंस के बाद सती के वक्ष का अंश इसी भस्मकूट पहाड़ी पर गिरा, और तभी से यह स्थान अष्टादश महाशक्ति पीठों में गिना जाने लगा। जो पूर्वाभिमुख मंदिर आज खड़ा है उसे विवरण सामान्यतः पंद्रहवीं शताब्दी का बताते हैं, और एक विवरण इसे विक्रम संवत् 1516 (सन् 1459) का कहता है; स्थापना की तिथि, वार और प्रतिष्ठा करने वाले आचार्य का नाम किसी उपलब्ध अभिलेख में दर्ज नहीं है। गया की विशेषता यह है कि यह मुख्यतः वैष्णव पिंडदान-क्षेत्र है, फिर भी नगर के शिखरों पर देवी और शिव के प्राचीन स्थान बने रहे — मंगला गौरी उनमें सबसे ऊँचा और सबसे व्यस्त है। मंदिर की देखरेख आज स्थानीय पुजारी-परिवार और न्यास करते हैं, और बिहार सरकार का पर्यटन विभाग इसे गया के प्रमुख धार्मिक स्थलों में सूचीबद्ध करता है।',
+        bodyEn:
+          'Mangala Gauri is among the oldest sacred sites of Gaya — the Padma, Vayu, Agni and Devi Bhagavata Puranas all name it, so worship of the goddess here long predates the building that now stands. By tradition, after the destruction of Daksha’s sacrifice the breast of Sati fell on this hill, called Bhasmakoot, and from then the place was counted among the eighteen Maha Shakti Peethas. The east-facing temple visible today is generally described as a fifteenth-century structure, with one account giving Vikram Samvat 1516 (1459 CE); no available record preserves the consecration tithi, the weekday, or the name of the acharya who performed it. What marks Gaya out is that it is above all a Vaishnava pind-daan kshetra, yet ancient Devi and Shiva seats survive on its hilltops — and Mangala Gauri is the highest and busiest of them. The shrine is looked after today by local priestly families and its trust, and the Bihar government’s tourism department lists it among Gaya’s principal religious sites.',
+      },
+      {
+        id: 'svarup',
+        titleHi: 'मंगला गौरी का स्वरूप',
+        titleEn: 'The Form of Mangala Gauri',
+        bodyHi:
+          'गर्भगृह में देवी की कोई मानव-आकृति प्रतिमा नहीं है — दो गोल उभरे पाषाण-रूप पूजे जाते हैं, जो सती के वक्ष के प्रतीक माने जाते हैं; इसी पिंडी पर देवी का मुख अंकित है और उसे ही श्रृंगार, चुनरी और पुष्प अर्पित होते हैं। पोषण का यह स्वरूप ही मंगला गौरी को अन्य पीठों से अलग करता है। मंदिर पत्थर का बना छोटा, सघन और पूर्वाभिमुख है, और गर्भगृह के आसपास प्राचीन उत्कीर्ण शिलाफलक लगे हैं। परिसर में परमेश्वर शिव के दो छोटे मंदिर तथा महिषासुरमर्दिनी, दुर्गा और दक्षिण काली की मूर्तियाँ हैं; गणेश और हनुमान के स्थान भी यहीं हैं, इसलिए एक ही चोटी पर देवी, शिव और उनके परिवार के दर्शन पूरे हो जाते हैं।',
+        bodyEn:
+          'The sanctum holds no human-formed image of the goddess — worship is offered to two rounded stone swellings understood as the breasts of Sati, and it is on this pindi that the Devi’s face is marked and her shringar, chunari and flowers are laid. That form, the form of nourishment, is what sets Mangala Gauri apart from the other peethas. The shrine itself is small, compact, stone-built and faces east, with old carved relief panels set around the sanctum. Within the precinct stand two smaller shrines of Parmeshwar Shiva and images of Mahishasura Mardini, Durga and Dakshina Kali; Ganesha and Hanuman have their places here as well, so a single hilltop completes the darshan of the goddess, of Shiva, and of their household.',
+      },
+      {
+        id: 'parampara',
+        titleHi: 'मंगला गौरी व्रत और पिंडदान-दर्शन',
+        titleEn: 'The Mangala Gauri Vrat and the Pind-daan Darshan',
+        bodyHi:
+          'यहाँ की सबसे पहचानी परम्परा मंगला गौरी व्रत है — श्रावण मास के प्रत्येक मंगलवार को स्त्रियाँ पति और परिवार के कल्याण की कामना से यह व्रत रखती हैं, देवी को सोलह शृंगार की वस्तुएँ, लाल चुनरी, सिंदूर और पुष्प अर्पित करती हैं; इसीलिए श्रावण के मंगलवार वर्ष के सबसे व्यस्त दिन होते हैं। दूसरी परम्परा गया की अपनी है: जो परिवार पितरों के लिए विष्णुपद या फल्गु के घाटों पर पिंडदान करते हैं, वे कर्म पूरा कर पहाड़ी चढ़कर मंगला गौरी के दर्शन से यात्रा का समापन करते हैं। पहाड़ी तक लगभग दो सौ सीढ़ियाँ चढ़नी पड़ती हैं, और दर्शन प्रातः की आरती से आरम्भ होकर संध्या आरती तक चलते हैं। मंगलवार के अतिरिक्त शुक्रवार और नवरात्र के दिनों में भी विशेष भीड़ रहती है।',
+        bodyEn:
+          'The custom most closely tied to this hill is the Mangala Gauri Vrat — on every Tuesday of the month of Shravan women keep the fast for the wellbeing of husband and household, offering the goddess the sixteen articles of shringar, a red chunari, sindoor and flowers; those Tuesdays are the busiest days of the temple’s year. A second custom belongs to Gaya itself: families who have performed pind-daan for their ancestors at Vishnupad or on the Phalgu ghats climb the hill afterwards and close the rite with Mangala Gauri’s darshan. The ascent is roughly two hundred steps, and darshan runs from the morning aarti through to the evening aarti. Beyond Tuesdays, Fridays and the Navratri days also draw dense crowds.',
+      },
+      {
+        id: 'mela',
+        titleHi: 'मेले और उत्सव',
+        titleEn: 'Melas and Festivals',
+        bodyHi:
+          'वर्ष के दो बड़े अवसर चैत्र नवरात्र (चैत्र शुक्ल प्रतिपदा से नवमी) और शारदीय नवरात्र (आश्विन शुक्ल प्रतिपदा से नवमी) हैं, जब पहाड़ी पर दिन-रात दर्शनार्थियों की कतार रहती है और अष्टमी-नवमी को हवन तथा कन्या-पूजन होते हैं। श्रावण मास के मंगलवार व्रत-दिवस की तरह मनाए जाते हैं और उन दिनों मंदिर के नीचे छोटा बाज़ार लग जाता है। आश्विन कृष्ण पक्ष यानी पितृ पक्ष के पंद्रह दिन गया का सबसे बड़ा तीर्थ-काल है; देश भर से आए परिवार पिंडदान के बाद यहाँ चढ़ते हैं, इसलिए यह शक्ति-पीठ होते हुए भी पितृ पक्ष में सबसे अधिक भरा रहता है। नवरात्रों में रात्रि-जागरण और भजन-संध्याएँ भी होती हैं।',
+        bodyEn:
+          'Two seasons dominate the year: Chaitra Navratri (Chaitra Shukla Pratipada to Navami) and Sharad Navratri (Ashwin Shukla Pratipada to Navami), when the queue up the hill runs day and night and the Ashtami and Navami days bring havan and kanya-pujan. The Tuesdays of Shravan are kept as vrat days, and a small bazaar sets up below the temple for them. The fifteen days of Pitru Paksha, the dark fortnight of Ashwin, are Gaya’s greatest pilgrim season; families arriving from across the country climb here once their pind-daan is done, so this Shakti Peeth is at its fullest during a fortnight given to the ancestors. Night-long jagrans and bhajan evenings fill the Navratri weeks as well.',
+      },
+      {
+        id: 'yatra',
+        titleHi: 'यात्रा और आसपास',
+        titleEn: 'Journey and Around',
+        bodyHi:
+          'मंदिर गया ज़िले में नगर के दक्षिणी छोर की मंगलागौरी पहाड़ी पर है; ऊपर तक सड़क जाती है और सीढ़ियों का मार्ग भी है। गया जंक्शन लगभग 4–5 किमी दूर निकटतम रेलवे स्टेशन है और गया हवाई अड्डा लगभग 8–9 किमी; पटना सड़क मार्ग से लगभग 100 किमी है। नगर के भीतर ही विष्णुपद मंदिर और फल्गु के घाट हैं, जिनके साथ अधिकांश यात्री इसी दिन दर्शन जोड़ते हैं। गया की पहाड़ियों पर बने तीर्थ — ब्रह्मयोनि, रामशिला और शृंग-स्थान — मिलकर नगर का शिखर-परिक्रमा पथ बनाते हैं, और बौद्ध गया की महाबोधि पास ही है, इसलिए कई यात्री एक ही प्रवास में दोनों परम्पराओं के स्थान देख लेते हैं। सभी दूरियाँ अनुमानित हैं।',
+        bodyEn:
+          'The temple sits on Mangalagauri hill at the southern edge of Gaya city, in Gaya district, reached either by a motorable road to the top or by the flight of steps. Gaya Junction, the nearest railhead, is about 4–5 km away and Gaya airport about 8–9 km; Patna is roughly 100 km by road. Vishnupad temple and the Phalgu ghats lie within the same city, and most pilgrims pair them with this darshan on the same day. Gaya’s other hilltop shrines — Brahmayoni, Rama Shila and Shringa Sthan — together form the city’s circuit of peaks, and the Mahabodhi complex at Bodh Gaya is close enough that many visitors take in both traditions on one trip. All distances are approximate.',
+      },
+    ],
+  },
+};
