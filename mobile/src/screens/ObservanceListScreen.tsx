@@ -5,6 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ObservanceListRow from '@/components/ObservanceListRow';
 import TextField from '@/components/TextField';
+import AreaFilterChips, { areaName } from '@/components/AreaFilterChips';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
@@ -12,6 +13,7 @@ import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { getNextOccurrence, getRulesForCategory, type BrowseCategory } from '@/panchang/vratCatalog';
 import { useVratFollows } from '@/contexts/VratFollowContext';
 import type { ObservanceRule } from '@/panchang/types';
+import { areasPresent, getObservanceAreas, matchesAreaFilter, type AreaFilter } from '@/panchang/observanceAreas';
 import type { PanchangStackParamList } from '@/navigation/types';
 import { captionFont } from '@/utils/scriptFont';
 import { contentByLang } from '@/utils/localize';
@@ -55,6 +57,7 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
   const vratFollowRef = useTourTarget('vratFollow');
   const [calendarSystem] = usePanchangCalendarSystem();
   const [query, setQuery] = useState('');
+  const [area, setArea] = useState<AreaFilter>('all');
   const { isFollowing, follow, unfollow } = useVratFollows();
 
   const category = route.params.category;
@@ -75,13 +78,17 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
     return withDates;
   }, [category, today, calendarSystem]);
 
+  const areas = useMemo(() => areasPresent(rows.map(({ rule }) => rule)), [rows]);
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return rows;
-    return rows.filter(({ rule }) =>
-      `${rule.nameHi} ${rule.nameEn} ${rule.deityEn}`.toLowerCase().includes(q)
-    );
-  }, [rows, query]);
+    return rows.filter(({ rule }) => {
+      if (!matchesAreaFilter(rule, area)) return false;
+      if (!q) return true;
+      const areaText = getObservanceAreas(rule).map((id) => `${areaName(id, 'hi')} ${areaName(id, 'en')}`).join(' ');
+      return `${rule.nameHi} ${rule.nameEn} ${rule.deityEn} ${areaText}`.toLowerCase().includes(q);
+    });
+  }, [rows, query, area]);
 
   const title = TITLES[category];
 
@@ -124,6 +131,7 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
             placeholder={contentByLang(lang, 'इस सूची में खोजें…', 'Search within this list…')}
             style={styles.search}
           />
+          <AreaFilterChips areas={areas} value={area} lang={lang} onChange={setArea} />
 
           {filtered.map(({ rule, next }, i) => {
             const following = isFollowing(rule.id);
@@ -202,6 +210,7 @@ function ObservanceRow({ rule, nextDate, today, lang, colors, typography, follow
           <Text style={{ ...captionFont(lang === 'en' ? rule.nameHi : rule.nameEn), fontSize: 13, color: colors.inkMuted, marginTop: 2 }}>
             {lang === 'en' ? rule.nameHi : rule.nameEn}
           </Text>
+          <AreaTag rule={rule} lang={lang} colors={colors} />
         </View>
       )}
       trailing={nextDate ? (
@@ -217,6 +226,22 @@ function ObservanceRow({ rule, nextDate, today, lang, colors, typography, follow
       onPress={onPress}
       accessibilityLabel={contentByLang(lang, rule.nameHi, rule.nameEn)}
     />
+  );
+}
+
+/** The row's क्षेत्र line — pan-India rules carry none, so the tag always means something. */
+function AreaTag({ rule, lang, colors }: { rule: ObservanceRule; lang: Lang; colors: any }) {
+  const areas = getObservanceAreas(rule);
+  if (areas.length === 0) return null;
+  const label = areas.map((id) => areaName(id, lang)).join(' · ');
+  return (
+    <Text
+      numberOfLines={1}
+      accessibilityLabel={`Area: ${areas.map((id) => areaName(id, 'en')).join(', ')}`}
+      style={{ fontFamily: captionFont(label).fontFamily, fontSize: 12, color: colors.saffronDeep, marginTop: 2 }}
+    >
+      {label}
+    </Text>
   );
 }
 

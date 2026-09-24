@@ -91,8 +91,10 @@ export type AskAnswer = {
   headline: Localized;
   sub?: Localized;
   lines: AskLine[];
-  /** The computation trail, shown collapsed under "गणना देखें". */
+  /** Engine-call trail for tests/debugging — never rendered in release builds. */
   working: string[];
+  /** Plain-language basis of the answer, shown collapsed under "गणना देखें". */
+  basis?: Localized[];
   /** Content-backed answers only: what was verified, when. Never a URL. */
   provenance?: Localized;
   /** Family-variance / tradition note carried verbatim from the registry. */
