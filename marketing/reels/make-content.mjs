@@ -42,6 +42,8 @@ const BG = {
   gita: 'mobile/assets/gita/krishna_arjuna_vishvarupa.webp',
   hanuman: 'mobile/assets/chalisa/Hanuman_sea.webp',
   shiva: 'images/shiva.jpeg',
+  ganga: 'mobile/assets/backgrounds/deity-ganga.webp',
+  surya: 'mobile/assets/backgrounds/deity-surya.webp',
 };
 function bgUrl(key) {
   if (!key) return null;
