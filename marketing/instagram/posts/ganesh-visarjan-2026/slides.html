@@ -2,116 +2,277 @@
 <html lang="hi"><head><meta charset="utf-8"><title>Ganesh Visarjan Carousel</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,600;1,500;1,600&display=swap" rel="stylesheet">
 <style>
-:root{--parchment:#F3E7C9;--soft:#F8EFD6;--deep:#E9D9B1;--hi:#F6ECD0;--ink:#1A0E03;--ink-soft:#5A3A1E;--muted:#6E5230;--saffron:#B8621B;--sdeep:#8A3E0B;--gold:#A67C34;--divider:rgba(138,62,11,.18)}
+:root{--parchment:#F3E7C9;--soft:#F8EFD6;--hi:#F6ECD0;--ink:#1A0E03;--ink-soft:#5A3A1E;--muted:#6E5230;--saffron:#B8621B;--sdeep:#8A3E0B;--gold:#A67C34;--divider:rgba(138,62,11,.18)}
 *{box-sizing:border-box;margin:0}
 html,body{width:1080px;height:1350px;overflow:hidden;background:var(--parchment)}
-.slide{position:relative;width:1080px;height:1350px;overflow:hidden;background:linear-gradient(#F6ECD0,#F1E3BF)}
-.art{position:absolute;-webkit-mask-image:radial-gradient(closest-side,#000 78%,transparent 100%);mask-image:radial-gradient(closest-side,#000 78%,transparent 100%)}
-.veil{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,rgba(243,231,201,0) 45%,rgba(233,217,177,.55) 80%,rgba(214,190,140,.8) 100%)}
-.brand{position:absolute;top:52px;left:56px;display:flex;align-items:center;gap:18px}
-.brand img{width:76px;height:76px;border-radius:50%;border:2px solid var(--gold);box-shadow:0 2px 8px rgba(90,58,30,.25)}
-.brand b{font:700 40px 'Noto Serif Devanagari';color:var(--ink)}
-.count{position:absolute;top:62px;right:56px;padding:8px 24px;border-radius:999px;background:rgba(248,239,214,.85);border:1.5px solid var(--divider);font:600 italic 34px 'Cormorant Garamond';color:var(--sdeep)}
-.eyebrow{position:absolute;left:0;right:0;text-align:center;font:600 30px 'Noto Serif Devanagari';color:var(--sdeep);letter-spacing:1px}
-.eyebrow i{font:600 italic 30px 'Cormorant Garamond';color:var(--gold);letter-spacing:2px}
-.bubble{position:absolute;padding:30px 48px 36px;border-radius:48px;background:linear-gradient(160deg,#A34E12,var(--sdeep));color:var(--hi);font:700 54px/1.45 'Noto Serif Devanagari';text-align:center;box-shadow:0 10px 28px rgba(90,40,10,.28),inset 0 0 0 3px rgba(246,236,208,.25)}
-.bubble:after{content:"";position:absolute;bottom:-34px;width:0;height:0;border:22px solid transparent;border-top:36px solid var(--sdeep)}
-.tail-l:after{left:90px}.tail-r:after{right:90px}.tail-c:after{left:50%;margin-left:-22px}
-.orn{position:absolute;left:0;right:0;text-align:center;font:700 44px 'Noto Serif Devanagari';color:var(--gold)}
-svg.fx{position:absolute;inset:0}
-.foot{position:absolute;left:56px;right:56px;bottom:44px;padding-top:22px;border-top:1.5px solid var(--divider);text-align:center}
-.foot .l1{font:600 32px/1.5 'Noto Serif Devanagari';color:var(--ink-soft)}
-.foot .l2{margin-top:6px;font:600 italic 28px 'Cormorant Garamond';color:var(--sdeep);letter-spacing:1px}
+.slide{position:relative;width:1080px;height:1350px;overflow:hidden}
+.slide svg.scene{position:absolute;inset:0}
+.brand{position:absolute;top:48px;left:52px;display:flex;align-items:center;gap:16px;padding:8px 26px 8px 8px;border-radius:999px;background:rgba(248,239,214,.82);border:1.5px solid var(--divider)}
+.brand img{width:68px;height:68px;border-radius:50%;border:2px solid var(--gold)}
+.brand b{font:700 36px 'Noto Serif Devanagari';color:var(--ink)}
+.count{position:absolute;top:62px;right:52px;padding:8px 24px;border-radius:999px;background:rgba(248,239,214,.85);border:1.5px solid var(--divider);font:600 italic 34px 'Cormorant Garamond';color:var(--sdeep)}
+.bubble{position:absolute;padding:28px 46px 34px;border-radius:46px;background:linear-gradient(160deg,#A34E12,var(--sdeep));color:var(--hi);font:700 52px/1.45 'Noto Serif Devanagari';text-align:center;box-shadow:0 10px 28px rgba(60,30,8,.3),inset 0 0 0 3px rgba(246,236,208,.25);white-space:nowrap}
+.bubble:after{content:"";position:absolute;bottom:-34px;border:22px solid transparent;border-top:36px solid var(--sdeep)}
+.tail-l:after{left:80px}.tail-r:after{right:80px}.tail-c:after{left:50%;margin-left:-22px}
+.foot{position:absolute;padding:18px 26px;border-radius:24px;background:rgba(248,239,214,.92);border:1.5px solid var(--divider);text-align:center}
+.foot .l1{font:600 28px/1.5 'Noto Serif Devanagari';color:var(--ink-soft)}
+.foot .l2{margin-top:4px;white-space:nowrap;font:600 italic 21px 'Cormorant Garamond';color:var(--sdeep);letter-spacing:.5px}
 .slide:not(.on){display:none}
 </style></head><body>
 
-<!-- 1 · Hook: the whole murti, ten days gone -->
-<section class="slide" id="s1">
-  <img class="art" src="../../../../mobile/assets/backgrounds/deity-ganesha-modak.webp" alt="" style="width:1180px;left:-50px;top:330px">
-  <div class="veil"></div>
-  <div class="brand"><img src="../../../../mobile/assets/icon.png" alt=""><b>वेदांश़</b></div>
-  <div class="count">1/4</div>
-  <div class="eyebrow" style="top:150px">अनंत चतुर्दशी · गणेश विसर्जन <i>· 25 Sept</i></div>
-  <div class="bubble tail-c" style="top:215px;left:110px;right:110px">दस दिन… जैसे कल ही आए थे,<br>बप्पा।</div>
+<svg width="0" height="0" style="position:absolute">
+ <defs>
+  <filter id="paper" x="0" y="0" width="100%" height="100%">
+   <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="3" seed="7"/>
+   <feColorMatrix values="0 0 0 0 .35  0 0 0 0 .22  0 0 0 0 .08  0 0 0 .22 0"/>
+  </filter>
+  <radialGradient id="vig" cx=".5" cy=".5" r=".75"><stop offset=".6" stop-color="#5A3A1E" stop-opacity="0"/><stop offset="1" stop-color="#5A3A1E" stop-opacity=".35"/></radialGradient>
+  <radialGradient id="flameGlow"><stop offset="0" stop-color="#FFD37A" stop-opacity=".9"/><stop offset=".4" stop-color="#F0A23A" stop-opacity=".35"/><stop offset="1" stop-color="#F0A23A" stop-opacity="0"/></radialGradient>
+  <linearGradient id="flame" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#B8621B"/><stop offset=".55" stop-color="#F0A23A"/><stop offset="1" stop-color="#FFE6A6"/></linearGradient>
+  <radialGradient id="halo"><stop offset="0" stop-color="#FFE3A3" stop-opacity=".9"/><stop offset="1" stop-color="#FFE3A3" stop-opacity="0"/></radialGradient>
+ </defs>
+</svg>
+
+<section class="slide" id="s1"><svg class="scene" viewBox="0 0 1080 1350" id="g1"></svg>
+  <div class="brand"><img src="../../../../mobile/assets/icon.png" alt=""><b>वेदांश़</b></div><div class="count">1/4</div>
+  <div class="bubble tail-l" style="top:190px;left:200px">दस दिन… जैसे कल ही<br>आए थे, बप्पा।</div>
+</section>
+<section class="slide" id="s2"><svg class="scene" viewBox="0 0 1080 1350" id="g2"></svg>
+  <div class="brand"><img src="../../../../mobile/assets/icon.png" alt=""><b>वेदांश़</b></div><div class="count">2/4</div>
+  <div class="bubble tail-l" style="top:190px;left:70px">सुबह की आरती अब<br>किसे सुनाएँगे, बप्पा?</div>
+</section>
+<section class="slide" id="s3"><svg class="scene" viewBox="0 0 1080 1350" id="g3"></svg>
+  <div class="brand"><img src="../../../../mobile/assets/icon.png" alt=""><b>वेदांश़</b></div><div class="count">3/4</div>
+  <div class="bubble tail-l" style="top:200px;left:190px">रास्ते के लिए…<br>एक मोदक और।</div>
+</section>
+<section class="slide" id="s4"><svg class="scene" viewBox="0 0 1080 1350" id="g4"></svg>
+  <div class="brand"><img src="../../../../mobile/assets/icon.png" alt=""><b>वेदांश़</b></div><div class="count">4/4</div>
+  <div class="bubble tail-c" style="top:180px;left:50%;transform:translateX(-50%)">गणपति बप्पा मोरया,<br>पुढच्या वर्षी लवकर या।</div>
+  <div class="foot" style="right:40px;bottom:44px;width:400px"><div class="l1">अगले बरस तक — गणेश चालीसा,<br>स्तोत्र और जप, रोज़ साथ।</div><div class="l2">Vedansh · Sacred Texts, Daily Reading</div></div>
 </section>
 
-<!-- 2 · The morning aarti, closer in, with a lit diya -->
-<section class="slide" id="s2">
-  <img class="art" src="../../../../mobile/assets/backgrounds/deity-ganesha-modak.webp" alt="" style="width:1900px;left:-410px;top:-120px">
-  <div class="veil"></div>
-  <svg class="fx" viewBox="0 0 1080 1350">
-    <defs><radialGradient id="glow"><stop offset="0" stop-color="#FFD37A" stop-opacity=".85"/><stop offset=".35" stop-color="#E9A445" stop-opacity=".35"/><stop offset="1" stop-color="#E9A445" stop-opacity="0"/></radialGradient>
-    <linearGradient id="flame" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#B8621B"/><stop offset=".55" stop-color="#F0A23A"/><stop offset="1" stop-color="#FFE6A6"/></linearGradient></defs>
-    <circle cx="540" cy="1085" r="330" fill="url(#glow)"/>
-    <!-- aarti thali -->
-    <ellipse cx="540" cy="1215" rx="300" ry="54" fill="#E0C27E" stroke="#8A3E0B" stroke-width="3"/>
-    <ellipse cx="540" cy="1206" rx="252" ry="38" fill="none" stroke="#A67C34" stroke-width="2" stroke-dasharray="6 8"/>
-    <!-- petals on thali -->
-    <g fill="#C8553A" opacity=".85"><ellipse cx="360" cy="1208" rx="16" ry="8" transform="rotate(-20 360 1208)"/><ellipse cx="392" cy="1225" rx="14" ry="7" transform="rotate(25 392 1225)"/><ellipse cx="700" cy="1212" rx="16" ry="8" transform="rotate(15 700 1212)"/><ellipse cx="668" cy="1228" rx="13" ry="7" transform="rotate(-30 668 1228)"/></g>
-    <g fill="#E8A93A"><circle cx="420" cy="1196" r="11"/><circle cx="646" cy="1194" r="11"/></g>
-    <!-- clay diya -->
-    <path d="M440 1160 Q540 1240 640 1160 Q628 1128 540 1130 Q452 1128 440 1160 Z" fill="#A5582A" stroke="#5A3A1E" stroke-width="3"/>
-    <path d="M458 1152 Q540 1170 622 1152" fill="none" stroke="#E9C58A" stroke-width="3" opacity=".7"/>
-    <path d="M540 1132 C515 1095 522 1060 540 1010 C558 1060 565 1095 540 1132 Z" fill="url(#flame)"/>
-    <path d="M540 1128 C531 1110 533 1092 540 1070 C547 1092 549 1110 540 1128 Z" fill="#FFF3CF"/>
-  </svg>
-  <div class="brand"><img src="../../../../mobile/assets/icon.png" alt=""><b>वेदांश़</b></div>
-  <div class="count">2/4</div>
-  <div class="bubble tail-r" style="top:196px;left:90px;right:150px">सुबह की आरती अब<br>किसे सुनाएँगे, बप्पा?</div>
-</section>
+<script>
+const INK='#4A2E14', SKIN='#C98E5E', SKIN2='#A9713F', GSKIN='#F3D6B5', HAIR='#22150A';
+const limb=(d,c,w=22)=>`<path d="${d}" fill="none" stroke="${INK}" stroke-width="${w+6}" stroke-linecap="round" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
+const S=`stroke="${INK}" stroke-width="3.5" stroke-linejoin="round"`;
+function dotsOnQuad(p0,p1,p2,n,r,cols){let o='';for(let i=0;i<=n;i++){const t=i/n,x=(1-t)**2*p0[0]+2*(1-t)*t*p1[0]+t*t*p2[0],y=(1-t)**2*p0[1]+2*(1-t)*t*p1[1]+t*t*p2[1];o+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}" fill="${cols[i%cols.length]}" stroke="${INK}" stroke-width="1.5"/>`}return o}
+const MARI=['#E8A93A','#D9772B','#F2C14E'];
 
-<!-- 3 · One more modak for the road — close on the modak bowl -->
-<section class="slide" id="s3">
-  <img class="art" src="../../../../mobile/assets/backgrounds/deity-ganesha-modak.webp" alt="" style="width:2500px;left:-1180px;top:-620px">
-  <div class="veil"></div>
-  <svg class="fx" viewBox="0 0 1080 1350">
-    <!-- banana-leaf plate with three modaks -->
-    <path d="M150 1250 Q540 1120 930 1250 Q540 1330 150 1250 Z" fill="#C9B77A" stroke="#6E5230" stroke-width="3"/>
-    <path d="M190 1250 Q540 1190 890 1250" fill="none" stroke="#6E5230" stroke-width="2" opacity=".6"/>
-    <g>
-      <g id="m" stroke="#6E5230" stroke-width="3" fill="#F8EFD6"><path d="M0 0 C-70 0 -78 -70 -38 -115 C-18 -140 -6 -160 0 -190 C6 -160 18 -140 38 -115 C78 -70 70 0 0 0 Z"/>
-      <path d="M-40 -20 C-44 -70 -20 -130 0 -185 M-15 -8 C-18 -70 -8 -130 0 -185 M15 -8 C18 -70 8 -130 0 -185 M40 -20 C44 -70 20 -130 0 -185" fill="none" stroke-width="2" opacity=".75"/></g>
-    </g>
-    <use href="#m" transform="translate(400 1262) scale(.9)"/>
-    <use href="#m" transform="translate(540 1244) scale(1.05)" />
-    <use href="#m" transform="translate(680 1262) scale(.9)"/>
-    
-  </svg>
-  <div class="brand"><img src="../../../../mobile/assets/icon.png" alt=""><b>वेदांश़</b></div>
-  <div class="count">3/4</div>
-  <div class="bubble tail-l" style="top:200px;left:110px">रास्ते के लिए…<br>एक मोदक और।</div>
-</section>
+/* Ganesha murti: origin = centre of base bottom; ~395 tall at scale 1 */
+function ganesha(x,y,s,opts={}){
+ const halo=opts.halo!==false?`<circle cx="0" cy="-265" r="95" fill="url(#halo)"/>`:'';
+ return `<g transform="translate(${x} ${y}) scale(${s})">${halo}
+  <rect x="-130" y="-34" width="260" height="34" rx="4" fill="#9C6A30" ${S}/>
+  <rect x="-130" y="-34" width="260" height="10" fill="#D4A548" ${S}/>
+  ${[...Array(9)].map((_,i)=>`<circle cx="${-104+i*26}" cy="-12" r="4" fill="#E9C77A"/>`).join('')}
+  ${[...Array(11)].map((_,i)=>`<ellipse cx="${-110+i*22}" cy="-44" rx="16" ry="12" fill="${i%2?'#D46A4A':'#C8553A'}" ${S}/>`).join('')}
+  <path d="M-118 -46 C-124 -95 -84 -118 -32 -114 L32 -114 C84 -118 124 -95 118 -46 Z" fill="#E3A935" ${S}/>
+  <path d="M-90 -60 C-60 -85 -20 -90 0 -80 M90 -60 C60 -85 20 -90 0 -80 M-60 -100 C-40 -80 -10 -70 0 -80" fill="none" stroke="#B37A1C" stroke-width="3"/>
+  <ellipse cx="-42" cy="-58" rx="22" ry="12" fill="${GSKIN}" ${S}/><ellipse cx="46" cy="-62" rx="22" ry="12" fill="${GSKIN}" ${S}/>
+  ${limb('M-66 -205 Q-110 -215 -120 -262',GSKIN,20)}${limb('M66 -205 Q110 -215 120 -262',GSKIN,20)}
+  <path d="M-120 -262 L-134 -340" stroke="#B8862E" stroke-width="7" stroke-linecap="round"/>
+  <path d="M-134 -340 C-160 -345 -165 -318 -150 -305 L-130 -318 Z" fill="#D9A441" ${S}/>
+  <g transform="translate(128 -300)">${[-40,-15,15,40].map(a=>`<ellipse cx="0" cy="-16" rx="9" ry="20" transform="rotate(${a})" fill="#E9A094" ${S}/>`).join('')}<ellipse cx="0" cy="-18" rx="8" ry="20" fill="#F2B8AA" ${S}/></g>
+  <circle cx="-120" cy="-262" r="13" fill="${GSKIN}" ${S}/><circle cx="120" cy="-262" r="13" fill="${GSKIN}" ${S}/>
+  <ellipse cx="0" cy="-162" rx="74" ry="72" fill="${GSKIN}" ${S}/>
+  <path d="M-72 -200 C-40 -150 20 -122 74 -132 L74 -112 C20 -102 -52 -128 -82 -182 Z" fill="#9E2F22" ${S}/>
+  ${dotsOnQuad([-54,-218],[0,-70],[54,-218],14,8,MARI)}
+  ${limb('M-70 -190 Q-112 -160 -92 -140',GSKIN,20)}
+  <path d="M-104 -150 C-110 -180 -100 -190 -92 -186 C-86 -196 -76 -192 -76 -182 C-70 -186 -64 -180 -68 -170 C-70 -155 -80 -140 -92 -140 Z" fill="${GSKIN}" ${S}/>
+  ${limb('M70 -190 Q112 -160 90 -122',GSKIN,20)}
+  <path d="M58 -128 Q90 -92 122 -128 Z" fill="#D9A441" ${S}/>
+  ${[66,86,106].map(cx=>`<path d="M${cx} -128 C${cx-9} -128 ${cx-9} -140 ${cx} -154 C${cx+9} -140 ${cx+9} -128 ${cx} -128 Z" fill="#FBF3E2" ${S}/>`).join('')}
+  <path d="M-40 -268 C-112 -306 -128 -226 -96 -194 C-76 -178 -52 -198 -40 -214 Z" fill="${GSKIN}" ${S}/>
+  <path d="M-48 -258 C-96 -284 -108 -234 -90 -210 C-76 -200 -60 -212 -52 -222 Z" fill="#EBAA93"/>
+  <path d="M40 -268 C112 -306 128 -226 96 -194 C76 -178 52 -198 40 -214 Z" fill="${GSKIN}" ${S}/>
+  <path d="M48 -258 C96 -284 108 -234 90 -210 C76 -200 60 -212 52 -222 Z" fill="#EBAA93"/>
+  <circle cx="0" cy="-255" r="47" fill="${GSKIN}" ${S}/>
+  ${limb('M0 -240 C-6 -205 -14 -180 4 -160 C20 -142 44 -150 42 -170 C40 -182 28 -182 28 -172',GSKIN,22)}
+  <path d="M-9 -222 h16 M-10 -205 h14 M-8 -188 h14" stroke="#C9A07A" stroke-width="2.5"/>
+  <path d="M-26 -232 q-8 12 -2 22" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
+  <path d="M-29 -262 q9 -8 18 0 q-9 6 -18 0 Z" fill="${INK}"/><path d="M11 -262 q9 -8 18 0 q-9 6 -18 0 Z" fill="${INK}"/>
+  <path d="M-8 -296 q8 22 16 0" fill="none" stroke="#B0302A" stroke-width="4"/><circle cx="0" cy="-280" r="4" fill="#B0302A"/>
+  <path d="M-46 -292 L46 -292 L38 -322 L26 -348 L12 -372 L0 -396 L-12 -372 L-26 -348 L-38 -322 Z" fill="#D9A441" ${S}/>
+  <path d="M-38 -322 H38 M-26 -348 H26" stroke="${INK}" stroke-width="2.5"/>
+  <circle cx="0" cy="-308" r="7" fill="#B0302A" ${S}/><circle cx="0" cy="-400" r="7" fill="#D9A441" ${S}/>
+ </g>`}
 
-<!-- 4 · Visarjan at the ghat, golden hour -->
-<section class="slide" id="s4">
-  <img class="art" src="../../../../mobile/assets/backgrounds/deity-ganesha-modak.webp" alt="" style="width:1120px;left:-20px;top:350px">
-  <div class="veil"></div>
-  <svg class="fx" viewBox="0 0 1080 1350">
-    <defs>
-      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F0B25A" stop-opacity=".35"/><stop offset=".5" stop-color="#F6ECD0" stop-opacity="0"/></linearGradient>
-      <linearGradient id="water" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C99A55" stop-opacity=".55"/><stop offset="1" stop-color="#8A5A2A" stop-opacity=".85"/></linearGradient>
-      <radialGradient id="sheen" cx=".5" cy="0"><stop offset="0" stop-color="#FFE3A3" stop-opacity=".9"/><stop offset="1" stop-color="#FFE3A3" stop-opacity="0"/></radialGradient>
-    </defs>
-    <rect width="1080" height="1350" fill="url(#sky)"/>
-    <path d="M0 925 Q135 900 270 925 T540 925 T810 925 T1080 925 V1350 H0 Z" fill="url(#water)"/>
-    <ellipse cx="540" cy="930" rx="420" ry="120" fill="url(#sheen)"/>
-    <g fill="none" stroke="#F8EFD6" stroke-width="3" opacity=".7" stroke-linecap="round">
-      <path d="M250 975 q40 -12 80 0 t80 0"/><path d="M660 985 q40 -12 80 0 t80 0"/>
-      <path d="M430 1030 q55 -14 110 0 t110 0"/><path d="M120 1060 q35 -10 70 0 t70 0"/>
-      <path d="M800 1070 q35 -10 70 0 t70 0"/><path d="M360 1110 q45 -12 90 0 t90 0"/>
-    </g>
-    <!-- floating marigolds & petals -->
-    <g><circle cx="300" cy="1010" r="14" fill="#E8A93A"/><circle cx="780" cy="1032" r="13" fill="#E8A93A"/><circle cx="560" cy="1092" r="12" fill="#D9892B"/>
-    <g fill="#C8553A" opacity=".85"><ellipse cx="200" cy="1120" rx="15" ry="7" transform="rotate(20 200 1120)"/><ellipse cx="690" cy="1140" rx="15" ry="7" transform="rotate(-25 690 1140)"/><ellipse cx="880" cy="990" rx="13" ry="6"/></g></g>
-      </svg>
-  <div class="brand"><img src="../../../../mobile/assets/icon.png" alt=""><b>वेदांश़</b></div>
-  <div class="count">4/4</div>
-  <div class="bubble tail-c" style="top:188px;left:150px;right:150px">गणपति बप्पा मोरया,<br>पुढच्या वर्षी लवकर या।</div>
-  <div class="foot" style="left:150px;background:rgba(248,239,214,.9);border:1.5px solid var(--divider);border-radius:24px;padding:18px 22px;bottom:48px;right:150px">
-    <div class="l1">अगले बरस तक — गणेश चालीसा,<br>स्तोत्र और जप, रोज़ साथ।</div>
-    <div class="l2">Vedansh · Sacred Texts, Daily Reading</div>
-  </div>
-</section>
+const paper=`<rect width="1080" height="1350" filter="url(#paper)"/><rect width="1080" height="1350" fill="url(#vig)"/>`;
 
-<script>const n=new URLSearchParams(location.search).get('s')||'1';document.getElementById('s'+n).classList.add('on')</script>
+/* ---------- 1 · Home: girl hugging the murti before it leaves ---------- */
+document.getElementById('g1').innerHTML=`
+ <defs><linearGradient id="wall1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4E6C4"/><stop offset="1" stop-color="#E7D0A0"/></linearGradient></defs>
+ <rect width="1080" height="1350" fill="url(#wall1)"/>
+ <rect x="790" y="420" width="240" height="330" fill="#F9EBC4" stroke="#7A4E26" stroke-width="12"/>
+ <path d="M910 420 V750 M790 585 H1030" stroke="#7A4E26" stroke-width="8"/>
+ <path d="M830 750 L620 1180 L1080 1180 L1080 900 Z" fill="#FFF3D0" opacity=".45"/>
+ <rect y="1180" width="1080" height="170" fill="#B98A55"/><path d="M0 1240 H1080 M0 1300 H1080" stroke="#9C6F3E" stroke-width="3"/>
+ <rect x="500" y="1150" width="420" height="40" fill="#9E2F22" ${S}/><path d="M500 1166 H920" stroke="#D9A441" stroke-width="5"/>
+ <rect x="520" y="1190" width="26" height="70" fill="#7A4E26" ${S}/><rect x="874" y="1190" width="26" height="70" fill="#7A4E26" ${S}/>
+ <!-- girl: body behind the murti -->
+ <path d="M240 1200 C250 1110 300 1050 350 1030 L420 1020 C470 1040 520 1100 560 1200 Z" fill="#A8423A" ${S}/>
+ <path d="M250 1190 H560" stroke="#D9A441" stroke-width="8"/>
+ <path d="M345 890 C330 950 335 1000 350 1040 L440 1040 C465 990 470 930 455 885 Z" fill="#A8423A" ${S}/>
+ <path d="M348 1010 H452" stroke="#D9A441" stroke-width="5"/>
+ <path d="M370 860 C360 930 330 980 300 1070 L330 1080 C360 1000 400 930 430 870 Z" fill="#E6B24A" opacity=".85" ${S}/>
+ ${[0,1,2,3,4,5].map(i=>`<ellipse cx="${372-i*9}" cy="${880+i*34}" rx="15" ry="20" fill="${HAIR}"/>`).join('')}
+ <path d="M320 1082 l-10 18 l14 0 Z" fill="#B0302A"/>
+ ${ganesha(700,1150,1.5)}
+ <path d="M425 850 L470 862 L458 905 L412 892 Z" fill="${SKIN}" ${S}/>
+ <!-- girl head resting on the murti -->
+ <g transform="rotate(12 470 810)">
+  <circle cx="440" cy="792" r="64" fill="${HAIR}"/>
+  <ellipse cx="478" cy="820" rx="54" ry="60" fill="${SKIN}" ${S}/>
+  <path d="M424 790 C430 740 500 740 530 790 C505 770 470 768 440 800 Z" fill="${HAIR}"/>
+  <path d="M478 818 q12 8 24 0" fill="none" stroke="${INK}" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M488 852 q12 8 22 -2" fill="none" stroke="${INK}" stroke-width="3.5" stroke-linecap="round"/>
+  <circle cx="500" cy="792" r="5" fill="#B0302A"/>
+  <ellipse cx="505" cy="838" rx="10" ry="6" fill="#E08A6A" opacity=".55"/>
+  <circle cx="436" cy="842" r="6" fill="#D9A441" ${S}/>
+ </g>
+ <!-- girl's arm wrapped around the murti -->
+ ${limb('M440 910 C500 960 580 975 640 950',SKIN,26)}
+ <path d="M600 958 l8 -26 M612 956 l8 -26" stroke="#D9A441" stroke-width="6" stroke-linecap="round"/>
+ <ellipse cx="648" cy="948" rx="20" ry="16" fill="${SKIN}" ${S}/>
+ <!-- floor details -->
+ <path d="M970 1260 C940 1230 1010 1230 990 1260 Z" fill="#A5582A" ${S}/><path d="M980 1232 C972 1216 978 1200 980 1188 C986 1204 990 1216 980 1232 Z" fill="url(#flame)"/>
+ <circle cx="980" cy="1215" r="60" fill="url(#flameGlow)"/>
+ ${[[150,1280,'#C8553A'],[210,1320,'#E8A93A'],[620,1300,'#C8553A'],[800,1320,'#E8A93A'],[880,1285,'#C8553A']].map(([x,y,c])=>`<ellipse cx="${x}" cy="${y}" rx="14" ry="7" fill="${c}"/>`).join('')}
+ ${paper}`;
+
+/* ---------- 2 · Morning aarti: mother and son, seen from behind ---------- */
+document.getElementById('g2').innerHTML=`
+ <defs><linearGradient id="wall2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EBD3A0"/><stop offset="1" stop-color="#D9B77A"/></linearGradient></defs>
+ <rect width="1080" height="1350" fill="url(#wall2)"/>
+ <path d="M540 1200 V620 C540 480 640 430 760 430 C880 430 980 480 980 620 V1200 Z" fill="#F1DCAA" stroke="#A67C34" stroke-width="10"/>
+ <path d="M565 1200 V630 C565 505 650 458 760 458 C870 458 955 505 955 630 V1200" fill="none" stroke="#C9973F" stroke-width="4" stroke-dasharray="4 10"/>
+ ${[560,600,920,960].map(x=>[...Array(15)].map((_,i)=>`<circle cx="${x}" cy="${560+i*38}" r="12" fill="${MARI[(i+x)%3]}" stroke="${INK}" stroke-width="1.5"/>`).join('')).join('')}
+ <rect y="1200" width="1080" height="150" fill="#A97A45"/>
+ <rect x="600" y="1110" width="320" height="90" fill="#9E2F22" ${S}/><path d="M600 1130 H920" stroke="#D9A441" stroke-width="5"/>
+ ${ganesha(760,1110,1.35)}
+ <circle cx="600" cy="850" r="230" fill="url(#flameGlow)"/>
+ <!-- mother, back view, saree -->
+ <path d="M150 1350 C160 1150 190 900 250 760 C280 700 400 700 430 760 C470 860 480 1100 470 1350 Z" fill="#C0651F" ${S}/>
+ <path d="M250 760 C320 900 380 1100 420 1350" fill="none" stroke="#D9A441" stroke-width="16"/>
+ <path d="M250 760 C320 900 380 1100 420 1350" fill="none" stroke="#8A3E0B" stroke-width="4" stroke-dasharray="2 12"/>
+ ${limb('M420 760 C470 800 520 840 560 858',SKIN,26)}
+ <path d="M500 822 l10 -22 M512 830 l10 -22" stroke="#D9A441" stroke-width="6" stroke-linecap="round"/>
+ <circle cx="330" cy="660" r="62" fill="${HAIR}" ${S}/>
+ <circle cx="328" cy="690" r="34" fill="${HAIR}" ${S}/>
+ ${[0,1,2,3,4,5,6,7].map(i=>`<circle cx="${328+34*Math.cos(Math.PI*(0.1+i/8.5))}" cy="${690+34*Math.sin(Math.PI*(0.1+i/8.5))}" r="8" fill="#FBF3E2" stroke="${INK}" stroke-width="1.5"/>`).join('')}
+ <path d="M270 640 C260 600 300 580 330 598" fill="none" stroke="#C0651F" stroke-width="14" opacity=".0"/>
+ <!-- aarti thali with diya -->
+ <ellipse cx="590" cy="872" rx="80" ry="18" fill="#D9A441" ${S}/>
+ <ellipse cx="590" cy="866" rx="62" ry="11" fill="none" stroke="#9C6A30" stroke-width="2" stroke-dasharray="4 6"/>
+ <path d="M555 860 Q590 890 625 860 Q615 845 590 846 Q565 845 555 860 Z" fill="#A5582A" ${S}/>
+ <path d="M590 848 C574 822 578 800 590 770 C602 800 606 822 590 848 Z" fill="url(#flame)"/><path d="M590 845 C584 832 585 818 590 804 C595 818 596 832 590 845 Z" fill="#FFF3CF"/>
+ ${[[540,868,'#C8553A'],[640,870,'#E8A93A'],[620,880,'#C8553A']].map(([x,y,c])=>`<circle cx="${x}" cy="${y}" r="8" fill="${c}"/>`).join('')}
+ <!-- son, back view, ringing a small bell -->
+ <path d="M40 1350 C45 1200 70 1080 110 1040 C140 1015 220 1015 245 1040 C285 1085 300 1200 300 1350 Z" fill="#E3A935" ${S}/>
+ <path d="M172 1030 V1350" stroke="#B37A1C" stroke-width="4" stroke-dasharray="3 14"/>
+ ${limb('M245 1060 C280 1030 300 990 300 950',SKIN,22)}
+ <path d="M288 950 L312 950 L318 912 C318 895 282 895 282 912 Z" fill="#D9A441" ${S}/><path d="M300 895 V870" stroke="#9C6A30" stroke-width="7" stroke-linecap="round"/>
+ <path d="M330 900 q14 -4 20 -16 M334 924 q16 0 26 -8" fill="none" stroke="#9C6A30" stroke-width="3" stroke-linecap="round"/>
+ <circle cx="175" cy="975" r="54" fill="${HAIR}" ${S}/>
+ ${[[140,945],[165,930],[195,932],[215,952],[130,975],[222,980]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="16" fill="${HAIR}"/>`).join('')}
+ <ellipse cx="123" cy="990" rx="9" ry="14" fill="${SKIN}" ${S}/><ellipse cx="228" cy="992" rx="9" ry="14" fill="${SKIN}" ${S}/>
+ ${paper}`;
+
+/* ---------- 3 · Doorway: son offers one more modak as father carries Bappa out ---------- */
+document.getElementById('g3').innerHTML=`
+ <defs><linearGradient id="sky3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F7E6BE"/><stop offset="1" stop-color="#EBD29C"/></linearGradient></defs>
+ <rect width="1080" height="1350" fill="url(#sky3)"/>
+ <circle cx="180" cy="420" r="120" fill="#FFF1C8" opacity=".7"/>
+ <path d="M90 560 H1080 V1180 H90 Z" fill="#E6CFA0"/>
+ <path d="M500 1180 V760 C500 680 560 640 620 640 C680 640 740 680 740 760 V1180" fill="#D8BC86" stroke="#B89A62" stroke-width="5"/>
+ <path d="M90 560 H1080" stroke="#C7A96F" stroke-width="6"/>
+ ${[[150,560],[330,560],[880,560],[1040,560]].map(([x,y])=>[[0,-40,58],[46,-66,44],[-44,-60,40],[20,-100,36],[-10,-80,40]].map(([dx,dy,r])=>`<circle cx="${x+dx}" cy="${y+dy}" r="${r}" fill="#A7955A" opacity=".28"/>`).join('')).join('')}
+ <rect y="1180" width="1080" height="170" fill="#C9AE7C"/><path d="M0 1250 H1080" stroke="#B0945F" stroke-width="3"/>
+ <path d="M860 1180 L900 1080 H1000 L1040 1180 Z" fill="#B0602F" ${S}/>
+ ${[[930,1060],[960,1030],[985,1062],[950,1000],[975,995]].map(([x,y])=>`<ellipse cx="${x}" cy="${y}" rx="14" ry="26" fill="#7A7A3A" ${S}/>`).join('')}
+ <!-- carved door frame on the left edge -->
+ <rect x="0" y="0" width="96" height="1350" fill="#6E4420" ${S}/>
+ ${[...Array(12)].map((_,i)=>`<circle cx="48" cy="${70+i*110}" r="18" fill="none" stroke="#C9973F" stroke-width="3"/><path d="M20 ${125+i*110} H76" stroke="#8C5A2C" stroke-width="3"/>`).join('')}
+ <!-- father: cropped at right, cream kurta, carrying the murti on a plank -->
+ <path d="M880 440 C930 420 1030 420 1080 440 V1350 H860 C850 1100 850 800 880 440 Z" fill="#F4E8CF" ${S}/>
+ <path d="M900 1350 V1150" stroke="#C9973F" stroke-width="10"/>
+ <path d="M940 440 V720" stroke="#D8C4A0" stroke-width="3"/>
+ ${limb('M905 700 C890 820 900 930 945 1010',"#F4E8CF",44)}
+ ${limb('M880 1090 C800 1075 700 1060 612 1040',"#F4E8CF",38)}
+ <rect x="560" y="990" width="400" height="34" rx="6" fill="#8A5A2C" ${S}/>
+ <path d="M580 1000 H940" stroke="#B07A40" stroke-width="3"/>
+ ${ganesha(760,990,1.2)}
+ <path d="M920 1010 h50 v40 h-50 Z" fill="${SKIN2}" ${S}/>${[926,938,950,962].map(x=>`<rect x="${x}" y="982" width="11" height="16" rx="5" fill="${SKIN2}" ${S}/>`).join('')}
+ <path d="M560 1024 C560 1060 610 1066 628 1040 L628 1024 Z" fill="${SKIN2}" ${S}/>${[566,578,590,602].map(x=>`<rect x="${x}" y="982" width="11" height="16" rx="5" fill="${SKIN2}" ${S}/>`).join('')}
+ 
+ <!-- boy, profile facing right, holding a steel tiffin of modaks -->
+ <path d="M220 1350 V1210 H420 V1350 Z" fill="#F4E8CF" ${S}/>
+ <path d="M210 1230 C200 1060 220 900 260 860 C290 830 390 830 420 860 C450 900 460 1060 440 1230 Z" fill="#7A7C45" ${S}/>
+ ${[[260,940],[330,1000],[400,940],[290,1100],[380,1120],[330,1180]].map(([x,y])=>`<path d="M${x} ${y} l6 -10 l6 10 l-6 10 Z" fill="#C9B26A"/>`).join('')}
+ <path d="M330 850 V980" stroke="#C9B26A" stroke-width="4"/>
+ ${limb('M410 900 C450 960 460 1000 470 1020',SKIN,24)}
+ ${limb('M280 900 C300 980 360 1020 420 1030',SKIN,24)}
+ <path d="M410 1000 L410 1080 C410 1100 540 1100 540 1080 L540 1000 Z" fill="#BFC3C6" ${S}/>
+ <ellipse cx="475" cy="1000" rx="65" ry="16" fill="#D8DBDD" ${S}/>
+ ${[445,475,505].map(cx=>`<path d="M${cx} 1004 C${cx-14} 1004 ${cx-14} 986 ${cx} 966 C${cx+14} 986 ${cx+14} 1004 ${cx} 1004 Z" fill="#FBF3E2" ${S}/>`).join('')}
+ <path d="M410 1040 H540" stroke="#9EA3A6" stroke-width="3"/>
+ <path d="M300 850 L300 812 L352 812 L352 850 Z" fill="${SKIN}" ${S}/>
+ <ellipse cx="330" cy="740" rx="62" ry="68" fill="${SKIN}" ${S}/>
+ <path d="M388 730 q18 8 6 24 q-6 6 -14 4" fill="${SKIN}" ${S}/>
+ ${[[290,690],[320,672],[352,676],[378,694],[272,720],[268,752],[285,778],[300,700]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="24" fill="${HAIR}"/>`).join('')}
+ <ellipse cx="300" cy="752" rx="11" ry="16" fill="${SKIN2}" ${S}/>
+ <path d="M352 714 q12 -8 22 -2" fill="none" stroke="${INK}" stroke-width="4" stroke-linecap="round"/>
+ <ellipse cx="364" cy="726" rx="6" ry="7" fill="${INK}"/><circle cx="366" cy="723" r="2" fill="#fff"/>
+ <path d="M362 772 q14 8 26 -4" fill="none" stroke="${INK}" stroke-width="3.5" stroke-linecap="round"/>
+ <path d="M384 690 v18" stroke="#B0302A" stroke-width="5" stroke-linecap="round"/>
+ <ellipse cx="372" cy="756" rx="10" ry="6" fill="#E08A6A" opacity=".5"/>
+ ${paper}`;
+
+/* ---------- 4 · The ghat at golden hour: family waves Bappa off ---------- */
+document.getElementById('g4').innerHTML=`
+ <defs>
+  <linearGradient id="sky4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EDB768"/><stop offset=".55" stop-color="#F7DCA6"/><stop offset="1" stop-color="#F9E6BC"/></linearGradient>
+  <linearGradient id="water4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D9A865"/><stop offset="1" stop-color="#8A5A2A"/></linearGradient>
+ </defs>
+ <rect width="1080" height="1350" fill="url(#sky4)"/>
+ <circle cx="820" cy="640" r="64" fill="#FFF0C4"/><circle cx="820" cy="640" r="140" fill="url(#halo)"/>
+ <path d="M300 520 q10 -8 20 0 q10 -8 20 0 M380 470 q8 -6 16 0 q8 -6 16 0 M690 450 q9 -7 18 0 q9 -7 18 0" fill="none" stroke="${INK}" stroke-width="3" stroke-linecap="round"/>
+ <path d="M0 700 C80 660 140 670 200 690 L200 700 Z" fill="#A98352" opacity=".6"/>
+ <path d="M0 705 Q120 670 240 690 T520 685 T820 690 T1080 680 V712 H0 Z" fill="#A98352" opacity=".7"/>
+ <path d="M190 700 V600 L215 560 L230 520 L245 560 L270 600 V700 Z" fill="#9C7040" ${S}/><path d="M230 520 V490" stroke="#9E2F22" stroke-width="4"/><path d="M230 490 l24 8 l-24 8 Z" fill="#C0651F"/>
+ <path d="M150 700 V640 H190 V700 M270 700 V650 H310 V700" fill="#9C7040" ${S}/>
+ <rect y="705" width="1080" height="645" fill="url(#water4)"/>
+ <path d="M770 712 L870 712 L960 1000 L700 1000 Z" fill="#FFE8B0" opacity=".25"/>
+ ${[[120,780,160],[520,760,200],[860,800,140],[300,860,180],[700,900,120],[150,960,150]].map(([x,y,w])=>`<path d="M${x} ${y} q${w/4} -10 ${w/2} 0 t${w/2} 0" fill="none" stroke="#FBEFD0" stroke-width="3" opacity=".7" stroke-linecap="round"/>`).join('')}
+ <!-- murti on a flower raft, with reflection -->
+ <ellipse cx="820" cy="925" rx="150" ry="26" fill="#7A7A3A" ${S}/>
+ ${dotsOnQuad([680,925],[820,970],[960,925],12,11,MARI)}
+ ${ganesha(820,915,.7,{halo:true})}
+ <g opacity=".14" transform="translate(0 1395) scale(1 -.5)">${ganesha(820,935,.7,{halo:false})}</g>
+ <!-- ghat steps -->
+ <path d="M0 1100 H640 L600 1160 H0 Z" fill="#D8C08E" ${S}/>
+ <path d="M0 1160 H600 L560 1230 H0 Z" fill="#CCB27C" ${S}/>
+ <path d="M0 1230 H560 L520 1350 H0 Z" fill="#BFA46E" ${S}/>
+ <g transform="translate(-40 0)"><!-- father (back view) -->
+ <path d="M80 1350 C85 1150 100 950 140 900 C170 870 260 870 290 900 C320 950 330 1150 330 1350 Z" fill="#F4E8CF" ${S}/>
+ <path d="M205 890 V1080" stroke="#D8C4A0" stroke-width="3"/>
+ <circle cx="215" cy="830" r="54" fill="${HAIR}" ${S}/>
+ <ellipse cx="160" cy="838" rx="9" ry="15" fill="${SKIN2}" ${S}/><ellipse cx="270" cy="838" rx="9" ry="15" fill="${SKIN2}" ${S}/>
+ <!-- mother (back view) -->
+ <path d="M300 1350 C305 1170 320 990 350 950 C380 915 460 915 485 950 C510 1000 520 1170 515 1350 Z" fill="#8E2B1F" ${S}/>
+ <path d="M350 950 C400 1060 440 1200 470 1350" fill="none" stroke="#D9A441" stroke-width="14"/>
+ <circle cx="418" cy="880" r="50" fill="${HAIR}" ${S}/><circle cx="418" cy="906" r="26" fill="${HAIR}" ${S}/>
+ ${[0,1,2,3,4,5].map(i=>`<circle cx="${418+26*Math.cos(Math.PI*(0.15+i/7))}" cy="${906+26*Math.sin(Math.PI*(0.15+i/7))}" r="6" fill="#FBF3E2" stroke="${INK}" stroke-width="1.2"/>`).join('')}
+ ${limb('M480 975 C510 1000 530 1010 548 1020',SKIN,20)}
+ <!-- child (back view), waving -->
+ <path d="M500 1350 C505 1200 515 1080 540 1050 C560 1030 620 1030 640 1050 C660 1080 668 1200 665 1350 Z" fill="#E3A935" ${S}/>
+ ${limb('M632 1060 C665 1020 680 980 690 940',SKIN,18)}
+ <path d="M676 944 C668 918 676 900 684 912 L688 896 C692 884 700 888 700 900 L704 890 C708 880 716 884 714 896 L716 912 C722 904 730 910 724 924 C718 942 706 950 690 950 Z" fill="${SKIN}" ${S}/>
+ <circle cx="588" cy="1000" r="42" fill="${HAIR}" ${S}/>
+ ${[[560,975],[585,962],[612,970],[552,1000],[622,996]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="13" fill="${HAIR}"/>`).join('')}
+ </g>
+ ${paper}`;
+
+const n=new URLSearchParams(location.search).get('s')||'1';document.getElementById('s'+n).classList.add('on');
+</script>
 </body></html>

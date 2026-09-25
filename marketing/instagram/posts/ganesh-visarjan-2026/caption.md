@@ -1,15 +1,15 @@
 # Ganesh Visarjan carousel — Anant Chaturdashi, 25 Sept 2026
 
-Four 1080×1350 (4:5) slides in the app's parchment theme, built on the shipped
-Ganesha sketch plate (`mobile/assets/backgrounds/deity-ganesha-modak.webp`).
+Four 1080×1350 (4:5) slides, each a separate hand-drawn scene in the app's warm
+parchment palette (design.md §2), with the app's fonts and logo.
 Format follows caption template **C. Carousel** in `caption-templates.md`.
 
-| Slide | Speech bubble | Visual |
+| Slide | Speech bubble | Scene |
 |---|---|---|
-| `slide-1.png` | दस दिन… जैसे कल ही आए थे, बप्पा। | Full murti, date eyebrow |
-| `slide-2.png` | सुबह की आरती अब किसे सुनाएँगे, बप्पा? | Closer in, lit diya on aarti thali |
-| `slide-3.png` | रास्ते के लिए… एक मोदक और। | Close on the modak bowl, three modaks on a leaf |
-| `slide-4.png` | गणपति बप्पा मोरया, पुढच्या वर्षी लवकर या। | Golden-hour water rising over the murti, brand footer |
+| `slide-1.png` | दस दिन… जैसे कल ही आए थे, बप्पा। | At home: a girl hugs the murti on its chowki, window light, diya |
+| `slide-2.png` | सुबह की आरती अब किसे सुनाएँगे, बप्पा? | Morning aarti: mother with the diya thali, son ringing the bell, marigold mandap |
+| `slide-3.png` | रास्ते के लिए… एक मोदक और। | Doorway: a boy offers a tiffin of modaks as his father carries Bappa out |
+| `slide-4.png` | गणपति बप्पा मोरया, पुढच्या वर्षी लवकर या। | Golden-hour ghat: the family waves as the murti floats away, Vedansh footer |
 
 Re-render: open `slides.html?s=1` … `?s=4` at a 1080×1350 viewport and screenshot.
 
@@ -33,10 +33,10 @@ Re-render: open `slides.html?s=1` … `?s=4` at a 1080×1350 viewport and screen
 
 ## Alt text (add to each slide)
 
-1. Pencil-sketch Lord Ganesha seated between carved pillars on parchment, with a speech bubble: "दस दिन… जैसे कल ही आए थे, बप्पा।"
-2. Close view of the Ganesha sketch with a lit clay diya on an aarti thali, and the bubble "सुबह की आरती अब किसे सुनाएँगे, बप्पा?"
-3. Ganesha's hand holding a bowl of sweets, three modaks on a leaf plate below, and the bubble "रास्ते के लिए… एक मोदक और।"
-4. Golden-hour water rising over the Ganesha sketch with floating marigolds, the bubble "गणपति बप्पा मोरया, पुढच्या वर्षी लवकर या।", and a Vedansh footer.
+1. Illustration of a girl in a red lehenga hugging a Ganesha murti on a wooden chowki at home, with the bubble "दस दिन… जैसे कल ही आए थे, बप्पा।"
+2. A mother in a saffron saree offers aarti with a diya thali while her son rings a bell before a Ganesha murti in a marigold mandap, with the bubble "सुबह की आरती अब किसे सुनाएँगे, बप्पा?"
+3. At the doorway a boy holds a steel tiffin of modaks up to a Ganesha murti his father is carrying out, with the bubble "रास्ते के लिए… एक मोदक और।"
+4. A family seen from behind on river ghat steps at sunset, the child waving as the Ganesha murti floats away on a marigold raft, with the bubble "गणपति बप्पा मोरया, पुढच्या वर्षी लवकर या।" and a Vedansh footer.
 
 ## Notes
 
