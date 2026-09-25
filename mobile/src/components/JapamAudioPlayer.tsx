@@ -25,6 +25,9 @@ type Props = {
    *  deep-link flow so a tap on the notification drops the user into
    *  chanting without a second press. */
   autoPlay?: boolean;
+  /** Told whenever the auto-chant starts or stops, so the counter can show a
+   *  listening state (marker pulse, hint copy). Called with `false` on unmount. */
+  onPlayingChange?: (playing: boolean) => void;
 };
 
 const MIN_RATE = 0.5;
@@ -43,6 +46,7 @@ export default function JapamAudioPlayer({
   lang,
   onIteration,
   autoPlay,
+  onPlayingChange,
 }: Props) {
   const { colors, typography, radii } = useTheme();
   const source = useMemo(() => getJapamAudioSource(mantraId), [mantraId]);
@@ -58,6 +62,7 @@ export default function JapamAudioPlayer({
       lang={lang}
       onIteration={onIteration}
       autoPlay={autoPlay}
+      onPlayingChange={onPlayingChange}
       colors={colors}
       typography={typography}
       radii={radii}
@@ -78,6 +83,7 @@ function ActiveAudioPlayer({
   lang,
   onIteration,
   autoPlay,
+  onPlayingChange,
   colors,
   typography,
   radii,
@@ -214,6 +220,15 @@ function ActiveAudioPlayer({
   );
 
   const isPlaying = status.playing;
+
+  const onPlayingChangeRef = useRef(onPlayingChange);
+  useEffect(() => {
+    onPlayingChangeRef.current = onPlayingChange;
+  }, [onPlayingChange]);
+  useEffect(() => {
+    onPlayingChangeRef.current?.(!!isPlaying);
+  }, [isPlaying]);
+  useEffect(() => () => onPlayingChangeRef.current?.(false), []);
 
   const togglePlay = useCallback(() => {
     // A deliberate tap means the user is chanting, not just hearing the alarm

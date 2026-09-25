@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Modal,
   Pressable,
@@ -15,7 +15,7 @@ import { spacing } from '@/theme/spacing';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { fontFamilies } from '@/theme/typography';
-import { contentByLang, pick, verseLinesByLang } from '@/utils/localize';
+import { pick, verseLinesByLang } from '@/utils/localize';
 import { isLatinLang } from '@/utils/langType';
 import { getSourceBackground } from '@/data/backgrounds';
 import {
@@ -26,8 +26,10 @@ import {
 import { useJapamCounter } from '@/contexts/JapamCounterContext';
 import { useJapamAlarms } from '@/contexts/JapamAlarmsContext';
 import { useFontScale } from '@/contexts/FontScaleContext';
+import { toDateKey, useUserActivity } from '@/contexts/UserActivityContext';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import JapamAudioPlayer from '@/components/JapamAudioPlayer';
+import JapamMala, { JapamMalaTray } from '@/components/JapamMala';
 import LanguageToggle from '@/components/LanguageToggle';
 import Ornament from '@/components/Ornament';
 import ShareButton from '@/components/ShareButton';
@@ -44,7 +46,8 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const { addAlarm, updateAlarm, removeAlarm } = useJapamAlarms();
   const { share, busy: shareBusy } = useShare();
   const { factor } = useFontScale();
-  const { height: windowHeight } = useWindowDimensions();
+  const { activity } = useUserActivity();
+  const { width: windowWidth, height: windowHeight } = useWindowDimensions();
   const isShortScreen = windowHeight < 720;
   const isVeryShortScreen = windowHeight < 640;
 
@@ -57,8 +60,12 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const verseLineHeight = typography.verse.lineHeight;
   const verseFontSizeEn = Math.round(20 * factor);
   const verseLineHeightEn = Math.round(34 * factor);
-  const countFontSize = isVeryShortScreen ? 64 : isShortScreen ? 76 : 88;
-  const countLineHeight = isVeryShortScreen ? 70 : isShortScreen ? 82 : 94;
+  // The turning mala (§35) replaces the big numeral; it shrinks on short
+  // screens so the tray, hint and audio row still fit without scrolling.
+  const malaSize = Math.min(
+    windowWidth - 2 * spacing.xxl,
+    isVeryShortScreen ? 230 : isShortScreen ? 260 : 300
+  );
 
   const mantra: JapamMantra | null = useMemo(
     () => findJapamMantra(route.params.mantraId),
@@ -77,6 +84,16 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const [confirmKind, setConfirmKind] = useState<'beads' | 'all' | null>(null);
   const [alarmEditorOpen, setAlarmEditorOpen] = useState(false);
   const lastRoundRef = useRef(entry.rounds);
+  const [audioPlaying, setAudioPlaying] = useState(false);
+  // Brief "turn the mala" notice when a round completes at the Sumeru.
+  const [sumeruNotice, setSumeruNotice] = useState(false);
+  const noticeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(
+    () => () => {
+      if (noticeTimerRef.current) clearTimeout(noticeTimerRef.current);
+    },
+    []
+  );
 
   const registerBead = useCallback(
     (beads: number = 1) => {
@@ -84,6 +101,9 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
       const next = increment(mantra.id, beads);
       if (next.rounds > lastRoundRef.current) {
         lastRoundRef.current = next.rounds;
+        setSumeruNotice(true);
+        if (noticeTimerRef.current) clearTimeout(noticeTimerRef.current);
+        noticeTimerRef.current = setTimeout(() => setSumeruNotice(false), 2200);
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(
           () => undefined
         );
@@ -102,13 +122,38 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
     return <View style={[styles.root, { backgroundColor: colors.parchment }]} />;
   }
 
-  const titleHi = mantra.nameHi;
   const titleEn = mantra.nameEn;
+  // The mantra itself is shown once, in the tap surface; the top bar names the screen.
+  const screenTitle = pick(lang, { hi: 'जप', en: 'Japam', gu: 'જપ', kn: 'ಜಪ' });
 
-  const beadProgress = entry.count / JAPAM_BEADS_PER_ROUND;
-  const beadsLabel = pick(lang, { hi: 'बीज', en: 'Beads', gu: 'મણકા', kn: 'ಮಣಿ' });
-  const roundsLabel = pick(lang, { hi: 'आवृत्ति', en: 'Rounds', gu: 'આવૃત્તિ', kn: 'ಆವೃತ್ತಿ' });
-  const tapHint = pick(lang, { hi: 'जप के लिए स्पर्श करें', en: 'Tap to chant', gu: 'જપ માટે સ્પર્શ કરો', kn: 'ಜಪಕ್ಕಾಗಿ ಸ್ಪರ್ಶಿಸಿ' });
+  const todayBeads = activity[toDateKey(new Date())]?.japa[mantra.id]?.beads ?? 0;
+  const todayLabel = pick(lang, {
+    hi: `आज ${todayBeads} जप`,
+    en: `${todayBeads} japa today`,
+    gu: `આજે ${todayBeads} જપ`,
+    kn: `ಇಂದು ${todayBeads} ಜಪ`,
+  });
+  const malasDoneLabel = pick(lang, { hi: 'माला पूर्ण', en: 'Malas done', gu: 'માળા પૂર્ણ', kn: 'ಮಾಲೆ ಪೂರ್ಣ' });
+  const firstMalaLabel = pick(lang, {
+    hi: 'पहली माला आरम्भ',
+    en: 'First mala on its way',
+    gu: 'પહેલી માળા શરૂ',
+    kn: 'ಮೊದಲ ಮಾಲೆ ಆರಂಭ',
+  });
+  const sumeruLabel = pick(lang, {
+    hi: 'सुमेरु · माला पलटें',
+    en: 'Sumeru · turn the mala',
+    gu: 'સુમેરુ · માળા ફેરવો',
+    kn: 'ಸುಮೇರು · ಮಾಲೆ ತಿರುಗಿಸಿ',
+  });
+  const tapHint = audioPlaying
+    ? pick(lang, {
+        hi: 'सुनें · मंत्र के साथ मनके आगे बढ़ते हैं',
+        en: 'Listening · beads advance with the chant',
+        gu: 'સાંભળો · મંત્ર સાથે મણકા આગળ વધે છે',
+        kn: 'ಆಲಿಸಿ · ಮಂತ್ರದೊಂದಿಗೆ ಮಣಿಗಳು ಮುಂದುವರಿಯುತ್ತವೆ',
+      })
+    : pick(lang, { hi: 'जप के लिए स्पर्श करें', en: 'Tap to chant', gu: 'જપ માટે સ્પર્શ કરો', kn: 'ಜಪಕ್ಕಾಗಿ ಸ್ಪರ್ಶಿಸಿ' });
   const resetBeadsLabel = pick(lang, { hi: 'बीज पुनः ०', en: 'Reset Beads', gu: 'મણકા ફરી ૦', kn: 'ಮಣಿ ಮರು ೦' });
   const clearAllLabel = pick(lang, { hi: 'सब साफ़', en: 'Clear All', gu: 'બધું સાફ', kn: 'ಎಲ್ಲ ತೆರವು' });
   // Script serif for gu/kn (constrained surface keeps its own sizes); null for hi/en.
@@ -156,7 +201,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
               ]}
               numberOfLines={1}
             >
-              {contentByLang(lang, titleHi, titleEn)}
+              {screenTitle}
             </Text>
           </View>
 
@@ -215,7 +260,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           <Pressable
             onPress={handleTap}
             accessibilityRole="button"
-            accessibilityLabel={`${titleEn}. Tap to count one bead. ${entry.count} of ${JAPAM_BEADS_PER_ROUND} on this round, ${entry.rounds} rounds completed.`}
+            accessibilityLabel={`${titleEn}. Tap to count one bead. ${entry.count} of ${JAPAM_BEADS_PER_ROUND} on this mala, ${entry.rounds} malas completed.`}
             style={({ pressed }) => [
               styles.tapContent,
               { paddingHorizontal: spacing.xxl },
@@ -250,58 +295,31 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
 
             <Ornament />
 
-            <View style={styles.countBlock}>
+            <View style={styles.malaBlock}>
+              <JapamMala
+                count={entry.count}
+                rounds={entry.rounds}
+                size={malaSize}
+                playing={audioPlaying}
+                notice={sumeruNotice ? sumeruLabel : null}
+              />
+              <JapamMalaTray
+                rounds={entry.rounds}
+                label={malasDoneLabel}
+                emptyLabel={firstMalaLabel}
+              />
               <Text
                 style={[
-                  styles.countNumber,
+                  styles.todayLabel,
                   {
                     color: colors.saffronDeep,
-                    fontSize: countFontSize,
-                    lineHeight: countLineHeight,
+                    fontFamily: isLatinLang(lang)
+                      ? typography.cardLatin.fontFamily
+                      : scriptSerifBold ?? typography.readerTitle.fontFamily,
                   },
                 ]}
               >
-                {entry.count}
-              </Text>
-              <Text
-                style={[
-                  styles.countDenominator,
-                  {
-                    color: colors.inkMuted,
-                    fontFamily: typography.pageCounter.fontFamily,
-                  },
-                ]}
-              >
-                / {JAPAM_BEADS_PER_ROUND} {beadsLabel}
-              </Text>
-
-              <View
-                style={[
-                  styles.progressTrack,
-                  { backgroundColor: colors.dotRest },
-                ]}
-              >
-                <View
-                  style={[
-                    styles.progressFill,
-                    {
-                      width: `${Math.min(100, beadProgress * 100)}%`,
-                      backgroundColor: colors.saffron,
-                    },
-                  ]}
-                />
-              </View>
-
-              <Text
-                style={[
-                  styles.roundsLabel,
-                  {
-                    color: colors.ink,
-                    fontFamily: typography.readerTitle.fontFamily,
-                  },
-                ]}
-              >
-                {entry.rounds} {roundsLabel}
+                {todayLabel}
               </Text>
             </View>
 
@@ -330,6 +348,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             mantraId={mantra.id}
             lang={lang}
             onIteration={registerBead}
+            onPlayingChange={setAudioPlaying}
             autoPlay={route.params.autoPlay === true}
           />
         </View>
@@ -633,37 +652,14 @@ const styles = StyleSheet.create({
     includeFontPadding: false,
     marginTop: 6,
   },
-  countBlock: {
+  malaBlock: {
     alignItems: 'center',
     width: '100%',
-  },
-  countNumber: {
-    fontSize: 88,
-    lineHeight: 94,
-    includeFontPadding: false,
-    fontWeight: '600',
-  },
-  countDenominator: {
-    fontSize: 14,
-    fontStyle: 'italic',
     marginTop: 4,
-    includeFontPadding: false,
   },
-  progressTrack: {
-    width: '78%',
-    height: 6,
-    borderRadius: 3,
-    marginTop: 14,
-    overflow: 'hidden',
-  },
-  progressFill: {
-    height: 6,
-    borderRadius: 3,
-  },
-  roundsLabel: {
-    marginTop: 12,
-    fontSize: 16,
-    includeFontPadding: false,
+  todayLabel: {
+    marginTop: 8,
+    fontSize: 15,
   },
   tapHint: {
     marginTop: 14,
