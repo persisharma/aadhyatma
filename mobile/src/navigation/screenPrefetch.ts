@@ -59,9 +59,14 @@ export function prefetchOrder(): PrefetchEntry[] {
  * seconds of launch. */
 const GAP_MS = 60;
 
-/** Resolve once the UI has nothing better to do. Injectable so the test does
- * not wait on real timers or a real InteractionManager. */
-function idle(): Promise<void> {
+/**
+ * Resolve once the UI has nothing better to do. Injectable so the test does not
+ * wait on real timers or a real InteractionManager.
+ *
+ * Exported because warm-ups that are not whole modules need the same pacing —
+ * the search index builds itself one library entry per tick of this.
+ */
+export function idleTick(): Promise<void> {
   return new Promise((resolve) => {
     InteractionManager.runAfterInteractions(() => {
       setTimeout(resolve, GAP_MS);
@@ -82,7 +87,7 @@ export function startScreenPrefetch(
   options: { yieldToUI?: () => Promise<void> } = {},
 ): Promise<void> {
   if (walking) return walking;
-  const yieldToUI = options.yieldToUI ?? idle;
+  const yieldToUI = options.yieldToUI ?? idleTick;
   walking = (async () => {
     for (const entry of prefetchOrder()) {
       await yieldToUI();

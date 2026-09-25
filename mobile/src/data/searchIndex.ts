@@ -204,6 +204,7 @@ export function getSearchIndex(): SearchIndex {
  */
 export function _resetSearchIndexForTest(): void {
   cached = null;
+  warming = null;
 }
 
 function build(): SearchIndex {
@@ -212,6 +213,53 @@ function build(): SearchIndex {
     deities: buildDeityEntries(),
     verses: buildVerseEntries(),
   };
+}
+
+let warming: Promise<SearchIndex> | null = null;
+
+/**
+ * Build the index AHEAD of the user asking for it, one library entry per idle
+ * slice.
+ *
+ * WHY THIS EXISTS. `getSearchIndex()` is synchronous and takes roughly 0.7 s of
+ * pure CPU — it reads every indexed corpus and normalises ~2,200 verses. As the
+ * first thing that happens when the Search screen mounts, that is 0.7 s of dead
+ * screen; and now that the corpora load on demand rather than at launch (see
+ * `sundarkand/index.ts` and friends), it also has to pay for reading them.
+ *
+ * So the work moves to where there is time for it: `screenPrefetch` calls this
+ * while the user is still looking at Home. Awaiting `yieldToUI` between entries
+ * is what makes it safe to run then — the ~0.7 s is spent as ~70 slices of a
+ * few ms rather than one blocked frame, and a touch always gets the thread back
+ * between slices.
+ *
+ * Idempotent, and cheap to call twice: concurrent callers share one build, and
+ * if a tap beats the warm-up to it `getSearchIndex()` fills the cache
+ * synchronously and the walk below notices and stops.
+ */
+export async function warmSearchIndex(
+  yieldToUI: () => Promise<void> = () => Promise.resolve()
+): Promise<SearchIndex> {
+  if (cached) return cached;
+  if (warming) return warming;
+  warming = (async () => {
+    const verses: SearchVerseEntry[] = [];
+    for (const entry of indexableEntries()) {
+      await yieldToUI();
+      // A tap raced us and built it synchronously — drop this partial work.
+      if (cached) return cached;
+      pushEntryVerses(verses, entry);
+    }
+    await yieldToUI();
+    if (cached) return cached;
+    cached = { sections: buildSectionEntries(), deities: buildDeityEntries(), verses };
+    return cached;
+  })();
+  try {
+    return await warming;
+  } finally {
+    warming = null;
+  }
 }
 
 function buildSectionEntries(): readonly SearchSectionEntry[] {
@@ -288,169 +336,176 @@ function buildDeityEntries(): readonly SearchDeityEntry[] {
   });
 }
 
-function buildVerseEntries(): readonly SearchVerseEntry[] {
-  const verses: SearchVerseEntry[] = [];
-
-  for (const entry of library) {
-    if (entry.hidden) continue;
-    if (entry.status !== 'active') continue;
-
-    if (CHALISA_IDS.includes(entry.id as ChalisaId)) {
-      pushChalisaVerses(verses, entry);
-      continue;
-    }
-
-    if (ASHTAKAM_IDS.includes(entry.id as AshtakamId)) {
-      pushAshtakamVerses(verses, entry);
-      continue;
-    }
-
-    if (SUKTAM_IDS.includes(entry.id as SuktamId)) {
-      pushSuktamVerses(verses, entry);
-      continue;
-    }
-
-    if (KAVACHAM_IDS.includes(entry.id as KavachamId)) {
-      pushKavachamVerses(verses, entry);
-      continue;
-    }
-
-    if (STUTI_IDS.includes(entry.id as StutiId)) {
-      pushStutiVerses(verses, entry);
-      continue;
-    }
-
-    if (entry.id === 'bhagavad-gita') {
-      pushChapteredGita(verses, entry);
-      continue;
-    }
-
-    if (entry.id === 'sundarkand') {
-      pushChapteredSundarkand(verses, entry);
-      continue;
-    }
-
-    if (entry.id === 'shiva-strotam') {
-      pushChapteredShivaStrotamShape(
-        verses,
-        entry,
-        shivaStrotamChaptersManifest,
-        getShivaStrotamChapter
-      );
-      continue;
-    }
-
-    if (entry.id === 'durga-stotram') {
-      pushChapteredShivaStrotamShape(
-        verses,
-        entry,
-        durgaStotramChaptersManifest,
-        getDurgaStotramChapter
-      );
-      continue;
-    }
-
-    if (entry.id === 'saraswati-stotram') {
-      pushChapteredShivaStrotamShape(
-        verses,
-        entry,
-        saraswatiStotramChaptersManifest,
-        getSaraswatiStotramChapter
-      );
-      continue;
-    }
-
-    if (entry.id === 'ganesh-stotram') {
-      pushChapteredShivaStrotamShape(
-        verses,
-        entry,
-        ganeshStotramChaptersManifest,
-        getGaneshStotramChapter
-      );
-      continue;
-    }
-
-    if (entry.id === 'vishnu-sahasranama') {
-      pushChapteredShivaStrotamShape(
-        verses,
-        entry,
-        vishnuSahasranamaChaptersManifest,
-        getVishnuSahasranamaChapter
-      );
-      continue;
-    }
-
-    if (entry.id === 'hanuman-ashtak') {
-      pushChapteredShivaStrotamShape(
-        verses,
-        entry,
-        hanumanAshtakChaptersManifest,
-        getHanumanAshtakChapter
-      );
-      continue;
-    }
-
-    if (entry.id === 'bajrang-baan') {
-      pushChapteredBajrangBaan(verses, entry);
-      continue;
-    }
-
-    if (entry.id === 'ram-stuti' || entry.id === 'ram-aarti') {
-      // 'ram-aarti' is the Aarti-list alias for the Ram Stuti content, so it
-      // indexes the same verses under its own sourceId (see texts.ts / entryRoutes.ts).
-      pushChapteredShivaStrotamShape(
-        verses,
-        entry,
-        ramStutiChaptersManifest,
-        getRamStutiChapter
-      );
-      continue;
-    }
-
-    if (entry.id === 'krishna-stotram') {
-      pushChapteredShivaStrotamShape(
-        verses,
-        entry,
-        krishnaStotramChaptersManifest,
-        getKrishnaStotramChapter
-      );
-      continue;
-    }
-
-    if (entry.id === 'ramcharitmanas') {
-      pushChapteredRamcharitmanas(verses, entry);
-      continue;
-    }
-
-    if (entry.id === 'valmiki-ramayan') {
-      pushChapteredValmikiRamayan(verses, entry);
-      continue;
-    }
-
-    if (entry.category === 'aarti') {
-      pushAarti(verses, entry);
-      continue;
-    }
-
-    if (entry.category === 'sanskar') {
-      pushSanskar(verses, entry);
-      continue;
-    }
-
-    if (entry.category === 'japam') {
-      pushJapam(verses, entry);
-      continue;
-    }
-
-    if (entry.category === 'theerth') {
-      pushTheerth(verses, entry);
-      continue;
-    }
-
-    // Unknown section shape — silently skip rather than crash. Caught by the
-    // section-coverage test in __tests__/searchIndex.test.ts.
+/**
+ * Index ONE library entry. Split out of the build loop so the index can be
+ * assembled a slice at a time — see `warmSearchIndex`, which walks the library
+ * across idle callbacks so the ~0.7 s build never lands as one blocked frame.
+ */
+function pushEntryVerses(verses: SearchVerseEntry[], entry: LibraryEntry): void {
+  if (CHALISA_IDS.includes(entry.id as ChalisaId)) {
+    pushChalisaVerses(verses, entry);
+    return;
   }
 
+  if (ASHTAKAM_IDS.includes(entry.id as AshtakamId)) {
+    pushAshtakamVerses(verses, entry);
+    return;
+  }
+
+  if (SUKTAM_IDS.includes(entry.id as SuktamId)) {
+    pushSuktamVerses(verses, entry);
+    return;
+  }
+
+  if (KAVACHAM_IDS.includes(entry.id as KavachamId)) {
+    pushKavachamVerses(verses, entry);
+    return;
+  }
+
+  if (STUTI_IDS.includes(entry.id as StutiId)) {
+    pushStutiVerses(verses, entry);
+    return;
+  }
+
+  if (entry.id === 'bhagavad-gita') {
+    pushChapteredGita(verses, entry);
+    return;
+  }
+
+  if (entry.id === 'sundarkand') {
+    pushChapteredSundarkand(verses, entry);
+    return;
+  }
+
+  if (entry.id === 'shiva-strotam') {
+    pushChapteredShivaStrotamShape(
+      verses,
+      entry,
+      shivaStrotamChaptersManifest,
+      getShivaStrotamChapter
+    );
+    return;
+  }
+
+  if (entry.id === 'durga-stotram') {
+    pushChapteredShivaStrotamShape(
+      verses,
+      entry,
+      durgaStotramChaptersManifest,
+      getDurgaStotramChapter
+    );
+    return;
+  }
+
+  if (entry.id === 'saraswati-stotram') {
+    pushChapteredShivaStrotamShape(
+      verses,
+      entry,
+      saraswatiStotramChaptersManifest,
+      getSaraswatiStotramChapter
+    );
+    return;
+  }
+
+  if (entry.id === 'ganesh-stotram') {
+    pushChapteredShivaStrotamShape(
+      verses,
+      entry,
+      ganeshStotramChaptersManifest,
+      getGaneshStotramChapter
+    );
+    return;
+  }
+
+  if (entry.id === 'vishnu-sahasranama') {
+    pushChapteredShivaStrotamShape(
+      verses,
+      entry,
+      vishnuSahasranamaChaptersManifest,
+      getVishnuSahasranamaChapter
+    );
+    return;
+  }
+
+  if (entry.id === 'hanuman-ashtak') {
+    pushChapteredShivaStrotamShape(
+      verses,
+      entry,
+      hanumanAshtakChaptersManifest,
+      getHanumanAshtakChapter
+    );
+    return;
+  }
+
+  if (entry.id === 'bajrang-baan') {
+    pushChapteredBajrangBaan(verses, entry);
+    return;
+  }
+
+  if (entry.id === 'ram-stuti' || entry.id === 'ram-aarti') {
+    // 'ram-aarti' is the Aarti-list alias for the Ram Stuti content, so it
+    // indexes the same verses under its own sourceId (see texts.ts / entryRoutes.ts).
+    pushChapteredShivaStrotamShape(
+      verses,
+      entry,
+      ramStutiChaptersManifest,
+      getRamStutiChapter
+    );
+    return;
+  }
+
+  if (entry.id === 'krishna-stotram') {
+    pushChapteredShivaStrotamShape(
+      verses,
+      entry,
+      krishnaStotramChaptersManifest,
+      getKrishnaStotramChapter
+    );
+    return;
+  }
+
+  if (entry.id === 'ramcharitmanas') {
+    pushChapteredRamcharitmanas(verses, entry);
+    return;
+  }
+
+  if (entry.id === 'valmiki-ramayan') {
+    pushChapteredValmikiRamayan(verses, entry);
+    return;
+  }
+
+  if (entry.category === 'aarti') {
+    pushAarti(verses, entry);
+    return;
+  }
+
+  if (entry.category === 'sanskar') {
+    pushSanskar(verses, entry);
+    return;
+  }
+
+  if (entry.category === 'japam') {
+    pushJapam(verses, entry);
+    return;
+  }
+
+  if (entry.category === 'theerth') {
+    pushTheerth(verses, entry);
+    return;
+  }
+
+  // Unknown section shape — silently skip rather than crash. Caught by the
+  // section-coverage test in __tests__/searchIndex.test.ts.
+}
+
+/** Entries that contribute verses: active and not hidden. */
+function indexableEntries(): readonly LibraryEntry[] {
+  return library.filter((entry) => !entry.hidden && entry.status === 'active');
+}
+
+function buildVerseEntries(): readonly SearchVerseEntry[] {
+  const verses: SearchVerseEntry[] = [];
+  for (const entry of indexableEntries()) pushEntryVerses(verses, entry);
   return verses;
 }
 

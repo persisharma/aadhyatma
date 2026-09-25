@@ -1,5 +1,4 @@
 import manifest from './chapters-manifest.json';
-import ch01 from './chapter-01.json';
 
 export type RamStutiVerse = {
   id: string;
@@ -34,42 +33,31 @@ export const ramStutiTitleEn = 'Ram Stuti';
 export const ramStutiChaptersManifest: readonly RamStutiChapterSummary[] =
   manifest as RamStutiChapterSummary[];
 
-export const ramStutiChapters: readonly RamStutiChapter[] = [
-  ch01 as RamStutiChapter,
+/**
+ * Chapter payloads behind `require()` thunks — the launch path must be able
+ * to read this corpus's MANIFEST (title, verse count) without evaluating its
+ * verses. `routine/chapters.ts` and `texts.ts` do exactly that, and importing
+ * the payloads here put the whole corpus on every cold start.
+ *
+ * Same shape as `gita/index.ts`. Metro caches each module, so repeat reads of
+ * a chapter are free; the first read of each pays once.
+ */
+/* eslint-disable @typescript-eslint/no-require-imports */
+const ramStutiChaptersLoaders: readonly (() => RamStutiChapter)[] = [
+  () => require('./chapter-01.json') as RamStutiChapter,
 ];
+/* eslint-enable @typescript-eslint/no-require-imports */
 
-export const ramStutiTotal = ramStutiChapters.reduce(
+export const ramStutiTotal = ramStutiChaptersManifest.reduce(
   (sum, ch) => sum + ch.verseCount,
   0
 );
 
 export function getRamStutiChapter(chapter: number): RamStutiChapter {
   const idx = chapter - 1;
-  if (idx < 0 || idx >= ramStutiChapters.length) {
-    throw new Error(`ram-stuti: chapter ${chapter} out of range (1-${ramStutiChapters.length})`);
+  if (idx < 0 || idx >= ramStutiChaptersLoaders.length) {
+    throw new Error(`ram-stuti: chapter ${chapter} out of range (1-${ramStutiChaptersLoaders.length})`);
   }
-  return ramStutiChapters[idx];
+  return ramStutiChaptersLoaders[idx]();
 }
 
-(function assertRamStutiInvariants() {
-  if (ramStutiChapters.length !== 1) {
-    throw new Error(`ram-stuti: expected 1 chapter, got ${ramStutiChapters.length}`);
-  }
-  const seenIds = new Set<string>();
-  let totalVerses = 0;
-  for (const c of ramStutiChapters) {
-    if (c.verses.length !== c.verseCount) {
-      throw new Error(`ram-stuti: chapter ${c.chapter} declares ${c.verseCount} verses but has ${c.verses.length}`);
-    }
-    for (const v of c.verses) {
-      if (seenIds.has(v.id)) throw new Error(`ram-stuti: duplicate verse id '${v.id}'`);
-      seenIds.add(v.id);
-      if (v.sanskrit.length < 1) throw new Error(`ram-stuti: ${v.id} has no Sanskrit lines`);
-      if (!v.meaningHi.trim() || !v.meaningEn.trim()) throw new Error(`ram-stuti: ${v.id} has empty meaning`);
-    }
-    totalVerses += c.verses.length;
-  }
-  if (totalVerses !== 9) {
-    throw new Error(`ram-stuti: expected 9 total verses, got ${totalVerses}`);
-  }
-})();

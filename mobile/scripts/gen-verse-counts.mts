@@ -1,0 +1,105 @@
+import fs from 'node:fs';
+import path from 'node:path';
+
+import { achyutashtakamTotal, bhavaniAshtakamTotal, dattaAshtakamTotal, gangashtakamTotal, kalikaAshtakamTotal, lingashtakamTotal, madhurashtakamTotal, mahalakshmiAshtakamTotal, narasimhaAshtakamTotal, radhashtakamTotal, rudrashtakamTotal, shaniAshtakamTotal, subrahmanyaAshtakamTotal, suryaAshtakamTotal } from '../src/data/ashtakam';
+import { bajrangBaanTotal } from '../src/data/bajrang-baan';
+import { durgaChalisaCounts } from '../src/data/durga-chalisa';
+import { durgaStotramTotal } from '../src/data/durga-stotram';
+import { ganeshChalisaCounts } from '../src/data/ganesh-chalisa';
+import { ganeshStotramTotal } from '../src/data/ganesh-stotram';
+import { gayatriChalisaCounts } from '../src/data/gayatri-chalisa';
+import { hanumanAshtakTotal } from '../src/data/hanuman-ashtak';
+import { hanumanChalisaTotal } from '../src/data/hanuman-chalisa';
+import { durgaKavachTotal, ganeshaKavachamTotal, ramaRakshaStotraTotal, shivaKavachamTotal } from '../src/data/kavacham';
+import { krishnaChalisaCounts } from '../src/data/krishna-chalisa';
+import { krishnaStotramTotal } from '../src/data/krishna-stotram';
+import { ramChalisaCounts } from '../src/data/ram-chalisa';
+import { ramStutiTotal } from '../src/data/ram-stuti';
+import { ramcharitmanasTotal } from '../src/data/ramcharitmanas';
+import { saraswatiChalisaCounts } from '../src/data/saraswati-chalisa';
+import { saraswatiStotramTotal } from '../src/data/saraswati-stotram';
+import { shivChalisaCounts } from '../src/data/shiv-chalisa';
+import { shivaStrotamTotal } from '../src/data/shiva-strotam';
+import { durgaStutiArjunaTotal, krishnaStutiTotal, kuberaStotramTotal, navagrahaStotramTotal } from '../src/data/stuti';
+import { deviSuktamTotal, narayanaSuktamTotal, purushaSuktamTotal } from '../src/data/suktam';
+import { sundarkandTotal } from '../src/data/sundarkand';
+import { valmikiRamayanTotal } from '../src/data/valmiki-ramayan';
+import { vishnuChalisaCounts } from '../src/data/vishnu-chalisa';
+import { vishnuSahasranamaTotal } from '../src/data/vishnu-sahasranama';
+
+/**
+ * Regenerate `src/data/verseCounts.ts` from the corpora themselves.
+ *
+ * `texts.ts` needs 46 verse counts to render the library rows, and it used to
+ * get them by importing 25 corpus modules — which dragged ~2 MB of scripture
+ * onto the launch path to learn 46 integers. This script reads those integers
+ * once, at build time, and writes them out as literals; `verseCountsIntegrity`
+ * in the data tests re-reads the corpora and fails if any literal drifts.
+ *
+ * Run: npx tsx scripts/gen-verse-counts.mts
+ */
+const VALUES: readonly (readonly [string, number | Record<string, number>])[] = [
+  ['achyutashtakamTotal', achyutashtakamTotal],
+  ['bajrangBaanTotal', bajrangBaanTotal],
+  ['bhavaniAshtakamTotal', bhavaniAshtakamTotal],
+  ['dattaAshtakamTotal', dattaAshtakamTotal],
+  ['deviSuktamTotal', deviSuktamTotal],
+  ['durgaChalisaCounts', durgaChalisaCounts],
+  ['durgaKavachTotal', durgaKavachTotal],
+  ['durgaStotramTotal', durgaStotramTotal],
+  ['durgaStutiArjunaTotal', durgaStutiArjunaTotal],
+  ['ganeshChalisaCounts', ganeshChalisaCounts],
+  ['ganeshStotramTotal', ganeshStotramTotal],
+  ['ganeshaKavachamTotal', ganeshaKavachamTotal],
+  ['gangashtakamTotal', gangashtakamTotal],
+  ['gayatriChalisaCounts', gayatriChalisaCounts],
+  ['hanumanAshtakTotal', hanumanAshtakTotal],
+  ['hanumanChalisaTotal', hanumanChalisaTotal],
+  ['kalikaAshtakamTotal', kalikaAshtakamTotal],
+  ['krishnaChalisaCounts', krishnaChalisaCounts],
+  ['krishnaStotramTotal', krishnaStotramTotal],
+  ['krishnaStutiTotal', krishnaStutiTotal],
+  ['kuberaStotramTotal', kuberaStotramTotal],
+  ['lingashtakamTotal', lingashtakamTotal],
+  ['madhurashtakamTotal', madhurashtakamTotal],
+  ['mahalakshmiAshtakamTotal', mahalakshmiAshtakamTotal],
+  ['narasimhaAshtakamTotal', narasimhaAshtakamTotal],
+  ['narayanaSuktamTotal', narayanaSuktamTotal],
+  ['navagrahaStotramTotal', navagrahaStotramTotal],
+  ['purushaSuktamTotal', purushaSuktamTotal],
+  ['radhashtakamTotal', radhashtakamTotal],
+  ['ramChalisaCounts', ramChalisaCounts],
+  ['ramStutiTotal', ramStutiTotal],
+  ['ramaRakshaStotraTotal', ramaRakshaStotraTotal],
+  ['ramcharitmanasTotal', ramcharitmanasTotal],
+  ['rudrashtakamTotal', rudrashtakamTotal],
+  ['saraswatiChalisaCounts', saraswatiChalisaCounts],
+  ['saraswatiStotramTotal', saraswatiStotramTotal],
+  ['shaniAshtakamTotal', shaniAshtakamTotal],
+  ['shivChalisaCounts', shivChalisaCounts],
+  ['shivaKavachamTotal', shivaKavachamTotal],
+  ['shivaStrotamTotal', shivaStrotamTotal],
+  ['subrahmanyaAshtakamTotal', subrahmanyaAshtakamTotal],
+  ['sundarkandTotal', sundarkandTotal],
+  ['suryaAshtakamTotal', suryaAshtakamTotal],
+  ['valmikiRamayanTotal', valmikiRamayanTotal],
+  ['vishnuChalisaCounts', vishnuChalisaCounts],
+  ['vishnuSahasranamaTotal', vishnuSahasranamaTotal],
+];
+
+const header = `// GENERATED by scripts/gen-verse-counts.mts — do not edit by hand.
+//
+// Verse counts for the library rows in \`texts.ts\`, lifted out of the corpora so
+// that reading a row's subtitle does not evaluate the corpus behind it. The
+// numbers are checked against the real payloads by
+// \`src/data/__tests__/verseCounts.test.ts\`, so a corpus edit that changes a
+// count fails the build until this file is regenerated.
+`;
+
+const body = VALUES.map(([name, value]) =>
+  `export const ${name} = ${JSON.stringify(value)} as const;`
+).join('\n');
+
+const out = path.resolve(import.meta.dirname, '../src/data/verseCounts.ts');
+fs.writeFileSync(out, `${header}\n${body}\n`, 'utf8');
+console.log(`wrote ${VALUES.length} counts to ${path.relative(process.cwd(), out)}`);

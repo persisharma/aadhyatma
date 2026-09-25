@@ -56,6 +56,9 @@ import {
 import { buildInitialNavigationState, type StartTarget } from '@/navigation/startTarget';
 import { preloadPanchangStack } from '@/navigation/lazyPanchangStack';
 import { startScreenPrefetch } from '@/navigation/screenPrefetch';
+// Side-effect import: enrols the non-screen warm-ups (search index) with the
+// walk. Must be imported before `startScreenPrefetch` runs.
+import '@/navigation/dataWarmups';
 import ReminderOptInModal from '@/components/ReminderOptInModal';
 import UpdateReadyModal from '@/components/UpdateReadyModal';
 import FeatureTour from '@/components/FeatureTour';

@@ -54,8 +54,19 @@ function resolveSpec(spec: string, fromFile: string): string | null {
  * STATIC imports only. A `require()` inside a function body (the corpus-loader
  * pattern) and a dynamic `await import()` (the widget planner) are both
  * deliberately excluded — being lazy is exactly what this test rewards.
+ *
+ * TYPE-ONLY imports are excluded too, and that is not a loophole: `import type`
+ * and `export type` are erased by the compiler, so they put nothing in the
+ * bundle and cost the launch nothing. Counting them overstated the graph and,
+ * worse, sent people hunting for a payload that was never really there —
+ * `notifications/pure.ts` "pulling in" the whole Daily Bhakti verse pool was
+ * exactly that, a `import type { UniformVerse }` and nothing more.
+ *
+ * Only a statement whose `import`/`export` keyword is followed directly by
+ * `type` is erased. An inline `import { type Foo, bar }` still imports `bar` at
+ * runtime, so it is deliberately NOT matched here.
  */
-const STATIC_IMPORT = /(?:^|\n)\s*(?:import|export)[^;\n]*?from\s+['"]([^'"]+)['"]/g;
+const STATIC_IMPORT = /(?:^|\n)\s*(?:import|export)(?!\s+type\s)[^;\n]*?from\s+['"]([^'"]+)['"]/g;
 
 function walkLaunchGraph(): Map<string, string | null> {
   const parents = new Map<string, string | null>();
@@ -117,45 +128,55 @@ test('no on-demand corpus payload is statically reachable from the app entry', (
  * shrink the graph; never raise it to make a red test green.
  */
 /**
- * LOWERED 7,300,000 → 6,950,000 → 5,850,000, in two steps.
+ * LOWERED 7,300,000 -> 6,950,000 -> 5,850,000 -> 4,200,000, in three steps.
+ * Every one of them moved work off the first frame; none raised the ceiling.
  *
- * STEP 1 — the theerth prose. `templeRows.ts` split the 71 rows out so
- * `NewContentContext` could seed NEW badges from a manifest; the legacy detail
- * map moved to `details/legacy.ts`; `temples.ts` now reaches both through a
- * `require()` thunk, and `temples` is rows-only so only `getTempleDetailById()`
- * and `templesWithDetails()` can pay for the readings. 7,274,340 → 6,852,097.
+ * STEP 1 — the theerth prose. Rows split into `templeRows.ts`, the legacy
+ * detail map into `details/legacy.ts`, both reached through a `require()`
+ * thunk. 7,274,340 -> 6,852,097.
  *
- * STEP 2 — the screens. The navigators imported all 65 screens statically, so
- * every cold start evaluated ~1.4 MB of surfaces most users never open. They
- * are behind `lazyScreen` (Home stack, Panchang stack) and react-navigation's
- * own `getComponent` (More stack) now, and `screenPrefetch` warms them in the
- * background breadth-first from Home once the first frame is up — so the launch
- * stops paying for them WITHOUT the user paying on the tap instead.
- * 6,852,097 → 5,741,711.
+ * STEP 2 — the screens. The navigators imported all 65 statically. They sit
+ * behind `lazyScreen` / `getComponent` now, warmed breadth-first from Home by
+ * `screenPrefetch`. 6,852,097 -> 5,741,711.
  *
- * Together: 7,274,340 → 5,741,711, a ~1.5 MB cut to what Hermes evaluates
- * before the first frame.
+ * STEP 3 — the scripture. Two separate mistakes, both "a tiny fact, a huge
+ * payload":
+ *   - `texts.ts` imported 25 corpus modules to read 46 verse counts. Those
+ *     counts are generated into `verseCounts.ts` (3 KB) and pinned against the
+ *     real corpora by `verseCounts.test.ts`. It also carried a dead
+ *     `aartiCollection` import worth 164 KB.
+ *   - eleven corpora imported every chapter payload just to expose a manifest,
+ *     which is what `routine/chapters.ts` actually wanted. They follow the
+ *     `gita/index.ts` shape now: manifest eager, chapters behind thunks, and
+ *     the launch-time invariant IIFEs moved into
+ *     `chapteredCorpusInvariants.test.ts` where loading everything is free.
+ *   5,741,711 -> 4,110,438.
  *
- * WHAT THIS NUMBER NOW PROTECTS. With the screens lazy, the way to blow this
- * budget is to import one of them — or a data module behind one — from
- * something the launch path reaches: a context, a scheduler mounted in
+ * Together: 7,274,340 -> ~4,110,000. Roughly 3.1 MB, 43% of what Hermes used to
+ * evaluate before the first frame, and the app is byte-for-byte the same.
+ *
+ * ALSO FIXED HERE: the walker counted `import type`, which is erased by the
+ * compiler and costs nothing. That overstated the graph and sent people hunting
+ * for payloads that were never there. See STATIC_IMPORT above.
+ *
+ * WHAT THIS NUMBER PROTECTS NOW. With screens and scripture both lazy, the way
+ * to blow this budget is to import one of them — or a data module behind one —
+ * from something the launch path reaches: a context, a scheduler mounted in
  * `App.tsx`, or a navigator. The failure prints the import chain; fix the
- * importer, do not raise the number. The remaining bulk is named below and is
- * the next candidate list, in order: `precomputedObservances` (201 KB, pulled
- * by `PitruSmaranContext`), `festivals` (165 KB, by `VratReminderScheduler`),
- * the Sundarkand and Chalisa corpora (~700 KB, dragged in by `data/texts.ts`
- * for what is only a library manifest — the same bug `templeRows.ts` fixed),
- * and `rajasthanTehsils` (67 KB, by `PanchangLocationContext`).
+ * importer. The remaining bulk is `precomputedObservances` (201 KB, via
+ * `PitruSmaranContext`), `festivals` (165 KB, via `VratReminderScheduler`) and
+ * `rajasthanTehsils` (67 KB, via `PanchangLocationContext`) — the next three
+ * candidates, all the same shape as what came before.
  *
- * ~108 KB of headroom, deliberately tight: the list above is the work, not slack.
+ * ~90 KB of headroom, deliberately tight: that list is the work, not slack.
  */
 /**
- * ORIGINAL NOTE — RAISED 7,000,000 → 7,300,000 (PRD-42 W2, #345). Superseded
- * twice over, but its reasoning still governs: the rule that must not be
+ * ORIGINAL NOTE — RAISED 7,000,000 -> 7,300,000 (PRD-42 W2, #345). Superseded
+ * three times over, but its reasoning still governs: the rule that must not be
  * weakened is "no CORPUS on the launch path", every lazy option is taken FIRST,
  * and the budget is never raised merely to make a red test green.
  */
-const LAUNCH_GRAPH_BUDGET_BYTES = 5_850_000;
+const LAUNCH_GRAPH_BUDGET_BYTES = 4_200_000;
 
 test('the static launch graph stays inside its byte budget', () => {
   const sized = [...graph.keys()].map((file) => [fs.statSync(file).size, file] as const);
