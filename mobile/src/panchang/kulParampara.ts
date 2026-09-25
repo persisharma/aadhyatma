@@ -13,7 +13,6 @@
 // pure over already-loaded state.
 
 import { deities, getDeityMeta } from '@/data/deities';
-import { getTempleById } from '@/data/theerth/temples';
 import type { Deity } from '@/data/texts';
 import { tithiRuleLabel, type SmaranEntry } from './pitruSmaran';
 import { janmaTithiRuleFromBirthDate } from './janmaTithi';
@@ -41,6 +40,14 @@ export type KulRecord = {
 export const EMPTY_KUL_RECORD: KulRecord = {};
 
 const DEITY_IDS = new Set<string>(deities.map((d) => d.id));
+
+function getTempleById(id: string) {
+  // Temple validation/export is requested only with a family record; the full
+  // temple detail corpus does not belong on Home's static launch path.
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const registry = require('@/data/theerth/temples') as typeof import('@/data/theerth/temples');
+  return registry.getTempleById(id);
+}
 
 function cleanText(value: unknown, maxLength: number): string | undefined {
   if (typeof value !== 'string') return undefined;
