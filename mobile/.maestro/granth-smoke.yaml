@@ -1,11 +1,13 @@
 # Granth Category Smoke Test
 #
-# Verifies the Granth category and its 4 active sections render correctly.
-# Sections: Bhagavad Gītā, Sundarkand, Ramcharitmanas Mangalacharan, Valmiki Ramayan.
+# Verifies the Granth category and its 5 active sections render correctly.
+# Sections: Bhagavad Gītā, Sundarkand, Ramcharitmanas Mangalacharan, Valmiki
+# Ramayan, Upanishads.
 #
-# Bhagavad Gītā and Valmiki Ramayan have a chapter index (kāṇḍa list); the other
-# two go straight to a reader. This flow opens Valmiki Ramayan and its final
-# kāṇḍa so the complete-corpus manifest and a large payload are exercised.
+# Bhagavad Gītā, Valmiki Ramayan and the Upanishads have a chapter index; the
+# other two go straight to a reader. This flow opens Valmiki Ramayan and its
+# final kāṇḍa so the complete-corpus manifest and a large payload are exercised,
+# then the Upanishads index and the Kena reader.
 
 appId: com.prashantsharma.vedansh
 ---
@@ -21,6 +23,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Sundarkand\\..*Tap to open\\."
 - assertVisible: "Ramcharitmanas Mangalacharan\\..*Tap to open\\."
 - assertVisible: "Valmiki Ramayan\\..*Tap to open\\."
+- assertVisible: "Upanishads\\..*Tap to open\\."
 
 # Open Valmiki Ramayan chapter index
 - tapOn: "Valmiki Ramayan\\..*Tap to open\\."
@@ -56,6 +59,42 @@ appId: com.prashantsharma.vedansh
     timeout: 30000
 
 # Reader language toggle test
+- tapOn: "Hindi"
+- waitForAnimationToEnd
+
+# Back out to the Granth list and open the Upanishads index.
+- tapOn: "Back to chapters"
+- waitForAnimationToEnd
+- tapOn: "Back"
+- waitForAnimationToEnd
+- tapOn: "Upanishads\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- waitForAnimationToEnd
+- tapOn: "English"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Upanishad 1\\. Isha Upanishad\\. 18 mantras\\. Tap to open\\."
+    timeout: 15000
+- assertVisible: "Upanishad 2\\. Kena Upanishad\\. 35 mantras\\. Tap to open\\."
+- assertVisible: "Upanishad 3\\. Mandukya Upanishad\\. 12 mantras\\. Tap to open\\."
+
+# Open the Kena reader: page 1 is its śānti-pāṭha, then the khaṇḍa.mantra pills.
+- tapOn: "Upanishad 2\\. Kena Upanishad\\. 35 mantras\\. Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+- extendedWaitUntil:
+    visible: "Shanti Mantra.*"
+    timeout: 15000
+- swipe:
+    direction: LEFT
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Mantra · 1\\.1.*"
+    timeout: 15000
 - tapOn: "Hindi"
 - waitForAnimationToEnd
 

@@ -101,6 +101,8 @@ export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & {
   RamcharitmanasReader: { chapter: number; initialIndex?: number };
   ValmikiRamayanChapters: undefined;
   ValmikiRamayanReader: { chapter: number; initialIndex?: number };
+  UpanishadChapters: undefined;
+  UpanishadReader: { chapter: number; initialIndex?: number };
   AartiReader: { aartiIndex: number; initialIndex?: number };
   SanskarReader: { sanskarId: string; initialIndex?: number };
   JapamCounter: { mantraId: string; autoPlay?: boolean };

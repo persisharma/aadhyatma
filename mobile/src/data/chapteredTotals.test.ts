@@ -70,6 +70,18 @@ const cases = [
     },
   },
   {
+    id: 'upanishad',
+    // 3 śānti-pāṭha pages + 18 (Īśa) + 35 (Kena) + 12 (Māṇḍūkya) mantras.
+    expectedTotal: 68,
+    load: async () => {
+      const mod = await import('./upanishad');
+      return {
+        manifest: mod.upanishadChaptersManifest,
+        total: mod.upanishadTotal,
+      };
+    },
+  },
+  {
     id: 'shiva-strotam',
     expectedTotal: 23,
     load: async () => {

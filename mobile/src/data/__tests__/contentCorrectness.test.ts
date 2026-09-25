@@ -715,6 +715,62 @@ for (const v of aartiKunjBihari.verses) {
   }
 }
 
+// Upanishads (granth): three complete short Upanishads, each opened by its
+// śānti-pāṭha. The catalog counts mantras (not pages), every page pairs its
+// romanization line-for-line, and the section is wired into the routine chapter
+// picker so a single Upanishad can be added to a नित्य साधना.
+{
+  const entry = libraryById.get('upanishad');
+  assert.ok(entry, 'upanishad must exist in the library');
+  assert.equal(entry.category, 'granth');
+  assert.match(entry.sub, /^3 उपनिषद् · 65 मन्त्र/, 'Hindi sub counts mantras, not pages');
+  assert.match(entry.subEn || '', /^3 Upanishads · 65 mantras/, 'English sub counts mantras, not pages');
+  assert.equal(entry.addedInVersion, '1.4.8', 'upanishad must set addedInVersion so it debuts as NEW for upgraders');
+
+  const manifest = readJson('upanishad/chapters-manifest.json') as {
+    chapter: number;
+    titleHi: string;
+    titleEn: string;
+    mantraCount: number;
+    verseCount: number;
+  }[];
+  assert.deepEqual(
+    manifest.map((m) => [m.titleEn, m.mantraCount]),
+    [
+      ['Isha Upanishad', 18],
+      ['Kena Upanishad', 35],
+      ['Mandukya Upanishad', 12],
+    ],
+    'the three Upanishads and their traditional mantra counts'
+  );
+  for (const summary of manifest) {
+    const ch = readJson(`upanishad/chapter-0${summary.chapter}.json`);
+    assert.equal(ch.verses.length, summary.verseCount);
+    assert.equal(ch.verses[0].section, 'shanti', `Upanishad ${summary.chapter} opens with its śānti-pāṭha`);
+    assert.equal(ch.verses[0].labelHi, 'शान्ति मन्त्र');
+    assert.equal(ch.verses[0].labelEn, 'Shanti Mantra');
+    for (const v of ch.verses.slice(1)) {
+      assert.equal(v.section, 'mantra');
+      assert.match(v.labelHi, /^मन्त्र · [०-९.]+$/, `${v.id} Hindi pill uses Devanagari numerals`);
+      assert.match(v.labelEn, /^Mantra · [0-9.]+$/, `${v.id} English pill uses Arabic numerals`);
+      assert.equal(v.lines.length, v.linesEn.length, `${v.id} linesEn pairs line-for-line`);
+    }
+  }
+  // Kena is cited khaṇḍa.mantra (9 · 5 · 12 · 9); Īśa and Māṇḍūkya by mantra alone.
+  const kena = readJson('upanishad/chapter-02.json');
+  const perKhanda = new Map<string, number>();
+  for (const v of kena.verses.slice(1)) {
+    const k = String(v.reference).split('.')[0];
+    perKhanda.set(k, (perKhanda.get(k) ?? 0) + 1);
+  }
+  assert.deepEqual([...perKhanda.values()], [9, 5, 12, 9]);
+  assert.equal(readJson('upanishad/chapter-01.json').verses[1].reference, '1');
+  assert.equal(readJson('upanishad/chapter-03.json').verses[12].reference, '12');
+
+  assert.ok(isChapteredSource('upanishad'), 'upanishad must be registered in routine/chapters.ts');
+  assert.equal(chaptersForSource('upanishad').length, 3);
+}
+
 // ─── 12. Gita speaker prefixes are not glued to verse text ──────────────────
 
 for (let ch = 1; ch <= 18; ch++) {

@@ -37,6 +37,14 @@ export const whatsNew: Readonly<Record<string, WhatsNewEntry>> = {
     version: '1.4.8',
     items: [
       {
+        titleHi: 'उपनिषद्',
+        titleEn: 'Upanishads',
+        bodyHi:
+          'ग्रन्थ में ईशावास्य, केन और माण्डूक्य उपनिषद् — शान्ति मन्त्र के साथ, हर मन्त्र का हिन्दी-अंग्रेज़ी भावार्थ।',
+        bodyEn:
+          'The Isha, Kena and Mandukya Upanishads in Sacred Books — each opened by its shanti mantra, every mantra with Hindi and English meaning.',
+      },
+      {
         titleHi: 'वास्तु दिशा',
         titleEn: 'Vastu Disha',
         bodyHi:

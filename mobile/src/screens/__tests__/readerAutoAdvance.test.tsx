@@ -50,6 +50,7 @@ const vishnu = jest.requireActual<typeof import('@/data/vishnu-sahasranama')>(
 const valmiki = jest.requireActual<typeof import('@/data/valmiki-ramayan')>(
   '@/data/valmiki-ramayan'
 );
+const upanishad = jest.requireActual<typeof import('@/data/upanishad')>('@/data/upanishad');
 
 const DurgaScreen = jest.requireActual<typeof import('../DurgaStotramReaderScreen')>(
   '../DurgaStotramReaderScreen'
@@ -65,6 +66,9 @@ const VishnuScreen = jest.requireActual<typeof import('../VishnuSahasranamaReade
 ).default;
 const ValmikiScreen = jest.requireActual<typeof import('../ValmikiRamayanReaderScreen')>(
   '../ValmikiRamayanReaderScreen'
+).default;
+const UpanishadScreen = jest.requireActual<typeof import('../UpanishadReaderScreen')>(
+  '../UpanishadReaderScreen'
 ).default;
 
 type AnyScreen = (props: { navigation: any; route: any }) => React.ReactElement | null;
@@ -108,6 +112,12 @@ const READERS: ReaderCase[] = [
     routeName: 'ValmikiRamayanReader',
     Screen: ValmikiScreen,
     chapterCount: valmiki.valmikiRamayanChaptersManifest.length,
+  },
+  {
+    name: 'Upanishads',
+    routeName: 'UpanishadReader',
+    Screen: UpanishadScreen,
+    chapterCount: upanishad.upanishadChaptersManifest.length,
   },
 ];
 

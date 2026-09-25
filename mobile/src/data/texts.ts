@@ -19,6 +19,7 @@ import { ramStutiTotal } from './ram-stuti';
 import { krishnaStotramTotal } from './krishna-stotram';
 import { ramcharitmanasTotal } from './ramcharitmanas';
 import { valmikiRamayanTotal } from './valmiki-ramayan';
+import { upanishadChaptersManifest, upanishadMantraTotal, upanishadTotal } from './upanishad';
 import { aartiCollection } from './aarti';
 import { japamMantras } from './japam';
 import {
@@ -193,6 +194,22 @@ export const library: readonly LibraryEntry[] = [
     deities: ['rama', 'hanuman'],
     verseCount: valmikiRamayanTotal,
     addedInVersion: '1.4.5',
+  },
+  {
+    id: 'upanishad',
+    nameHi: 'उपनिषद्',
+    nameEn: 'Upanishads',
+    sub: `${upanishadChaptersManifest.length} उपनिषद् · ${upanishadMantraTotal} मन्त्र · अर्थ सहित`,
+    subEn: `${upanishadChaptersManifest.length} Upanishads · ${upanishadMantraTotal} mantras · with meaning`,
+    thumb: 'उ',
+    status: 'active',
+    category: 'granth',
+    // The Upanishads teach the one Brahman rather than a deity; the Īśa opens
+    // with ईशा वास्यमिदं सर्वम् — the Lord who pervades all — so, like the
+    // Puruṣa and Nārāyaṇa Sūktas, it is filed under Vishnu.
+    deities: ['vishnu'],
+    verseCount: upanishadTotal,
+    addedInVersion: '1.4.8',
   },
   {
     id: 'durga-stotram',

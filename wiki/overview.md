@@ -2,7 +2,7 @@
 title: Overview
 type: overview
 sources: [README.md, mobile/package.json, mobile/app.json, mobile/jest.config.js, mobile/App.tsx, mobile/src/navigation/, mobile/src/data/texts.ts, mobile/src/data/backgrounds.ts, mobile/src/data/routine/, mobile/src/panchang/, mobile/src/notifications/japamAlarms.ts, mobile/assets/backgrounds/, RULEBOOK.md, design.md, scripts/, push.sh, mobile/eslint.config.js, mobile/src/theme/, mobile/src/components/ReaderHeader.tsx, mobile/src/components/TextField.tsx]
-last_verified_date: 2026-09-21
+last_verified_date: 2026-09-25
 confidence: medium
 status: current
 ---
@@ -67,7 +67,7 @@ Deep links and notification taps route through `navigationRef`, exported from
 | `mobile/src/components/` | Reusable UI | `GitaVersePage`, `LibraryCard`, `UpdateReadyModal`, `ReminderOptInModal`, `LanguageToggle`, `RoutineBanner`, `AddToRoutineButton`, `HomeWordmark`, `MuhuratGlanceCard`, `MuhuratCardBody` |
 | `mobile/src/navigation/` | Nav graph + types | `RootNavigator`, `TabNavigator`, `HomeStackNavigator`, `MoreStackNavigator`, `PanchangStackNavigator`, `types.ts`, `entryRoutes.ts` |
 | `mobile/src/contexts/` | App state | `BookmarksContext`, `JapamCounterContext`, `JapamAlarmsContext`, `ReadingProgressContext`, `UserActivityContext`, `NewContentContext`, `NotificationPreferencesContext`, `RoutineContext`, `RoutineSheetProvider` |
-| `mobile/src/data/` | Bundled content + registries | `texts.ts` (library index), `searchIndex.ts`, `deities.ts`, `categories.ts`, `gita/chapter-01..18.json`, `chalisa/`, `sundarkand/`, stotram dirs, `sourceIdMigration.ts`, `routine/` (types, units, vaar, useRoutineToday — see [[routine]]) |
+| `mobile/src/data/` | Bundled content + registries | `texts.ts` (library index), `searchIndex.ts`, `deities.ts`, `categories.ts`, `gita/chapter-01..18.json`, `chalisa/`, `sundarkand/`, `valmiki-ramayan/`, `upanishad/` (Īśa · Kena · Māṇḍūkya), stotram dirs, `sourceIdMigration.ts`, `routine/` (types, units, vaar, useRoutineToday — see [[routine]]) |
 | `mobile/src/panchang/` | Hindu-calendar engine | `festivals.ts` + astronomy-engine; `muhurat.ts` (Choghadiya/Kaal/Abhijit engine — pure), `muhuratFormat.ts`, `useMuhurat.ts` (see [[panchang]]) |
 | `mobile/src/theme/` | Design tokens (light-only) | `ThemeContext.tsx`, `colors.ts`, `typography.ts`, `spacing.ts` (spacing + radii), `elevation.ts`, `fontScale.ts` |
 | `mobile/src/readAloud/` | Pure read-aloud layer (no React) | `verseAdapter.ts`, `verseScript.ts`, `voices.ts`, `pronounce.ts`, `prefs.ts` — see [[audio]] |
@@ -96,7 +96,8 @@ asset identity so a future placeholder reuse fails explicitly.
 1. **Canonical markdown** at repo root: `BhagwadGita/` (18 chapter files), `HanumanChalisa/`,
    `Sundarkand/`, and the master `bhagavad-gita-complete-hi-en.md`.
 2. **`scripts/*.mjs`** (Node ESM, run manually — **not** a build step): `parse-gita`,
-   `split-sundarkand`, `transliterate-shloka`, and `fix-*` repair tools → write JSON into `mobile/src/data/`.
+   `split-sundarkand`, `transliterate-shloka`, `build-upanishad` (content authored inline in the
+   script), and `fix-*` repair tools → write JSON into `mobile/src/data/`.
 3. The app reads only the JSON. `RULEBOOK.md` is the integration contract for adding a new
    section; `design.md` is the visual-system spec; `push.sh` wraps `eas update` for OTA publishing.
 

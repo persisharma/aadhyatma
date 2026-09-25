@@ -71,6 +71,9 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'om-namo-bhagavate-vasudevaya': backgroundImages.source_vishnu_narayana,
   ramcharitmanas: backgroundImages.deity_rama_darbar,
   'valmiki-ramayan': backgroundImages.deity_rama_darbar,
+  // The Upanishads teach the deity-less Brahman, so the neutral open-scripture
+  // plate (the Granth category's own) rather than a deity sketch.
+  upanishad: backgroundImages.category_granth_open_scripture,
   'durga-stotram': backgroundImages.deity_durga_lion,
   'ganesh-stotram': backgroundImages.deity_ganesha_modak,
   'vishnu-sahasranama': backgroundImages.source_vishnu_narayana,

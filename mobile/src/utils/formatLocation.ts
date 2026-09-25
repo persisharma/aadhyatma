@@ -38,6 +38,11 @@ export function formatLocation(progress: ReadingProgress): { hi: string; en: str
         hi: `काण्ड ${progress.chapter} · श्लोक ${verseNum}`,
         en: `Kanda ${progress.chapter} · Shloka ${verseNum}`,
       };
+    case 'upanishad':
+      return {
+        hi: `उपनिषद् ${progress.chapter} · मन्त्र ${verseNum}`,
+        en: `Upanishad ${progress.chapter} · Mantra ${verseNum}`,
+      };
     case 'om-jai-jagdish':
     case 'hanuman-aarti':
     case 'sankat-mochan':

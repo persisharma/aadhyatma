@@ -1,0 +1,29 @@
+[
+  {
+    "chapter": 1,
+    "titleHi": "ईशावास्योपनिषद्",
+    "titleEn": "Isha Upanishad",
+    "vedaHi": "शुक्ल यजुर्वेद",
+    "vedaEn": "Shukla Yajurveda",
+    "mantraCount": 18,
+    "verseCount": 19
+  },
+  {
+    "chapter": 2,
+    "titleHi": "केनोपनिषद्",
+    "titleEn": "Kena Upanishad",
+    "vedaHi": "सामवेद",
+    "vedaEn": "Samaveda",
+    "mantraCount": 35,
+    "verseCount": 36
+  },
+  {
+    "chapter": 3,
+    "titleHi": "माण्डूक्योपनिषद्",
+    "titleEn": "Mandukya Upanishad",
+    "vedaHi": "अथर्ववेद",
+    "vedaEn": "Atharvaveda",
+    "mantraCount": 12,
+    "verseCount": 13
+  }
+]

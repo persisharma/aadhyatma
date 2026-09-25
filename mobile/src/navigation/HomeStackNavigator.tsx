@@ -53,6 +53,8 @@ import RamcharitmanasChaptersScreen from '@/screens/RamcharitmanasChaptersScreen
 import RamcharitmanasReaderScreen from '@/screens/RamcharitmanasReaderScreen';
 import ValmikiRamayanChaptersScreen from '@/screens/ValmikiRamayanChaptersScreen';
 import ValmikiRamayanReaderScreen from '@/screens/ValmikiRamayanReaderScreen';
+import UpanishadChaptersScreen from '@/screens/UpanishadChaptersScreen';
+import UpanishadReaderScreen from '@/screens/UpanishadReaderScreen';
 import AartiReaderScreen from '@/screens/AartiReaderScreen';
 import TheerthMapScreen from '@/screens/TheerthMapScreen';
 import TheerthDetailScreen from '@/screens/TheerthDetailScreen';
@@ -219,6 +221,12 @@ export default function HomeStackNavigator() {
       <Stack.Screen
         name="ValmikiRamayanReader"
         component={ValmikiRamayanReaderScreen}
+        options={{ gestureEnabled: false, animation: 'fade' }}
+      />
+      <Stack.Screen name="UpanishadChapters" component={UpanishadChaptersScreen} />
+      <Stack.Screen
+        name="UpanishadReader"
+        component={UpanishadReaderScreen}
         options={{ gestureEnabled: false, animation: 'fade' }}
       />
       <Stack.Screen

@@ -93,6 +93,7 @@ function chainTo(file: string): string {
 const FORBIDDEN = [
   /^src\/data\/gita\/chapter-\d+\.json$/,
   /^src\/data\/valmiki-ramayan\/chapter-\d+\.json$/,
+  /^src\/data\/upanishad\/chapter-\d+\.json$/,
   /^src\/panchang\/pincodeData\.json$/,
 ];
 

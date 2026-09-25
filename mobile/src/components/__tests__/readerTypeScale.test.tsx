@@ -69,6 +69,12 @@ const ValmikiRamayanVersePage = jest.requireActual<typeof import('../ValmikiRama
 const { getValmikiRamayanChapter } = jest.requireActual<typeof import('@/data/valmiki-ramayan')>(
   '@/data/valmiki-ramayan'
 );
+const UpanishadVersePage = jest.requireActual<typeof import('../UpanishadVersePage')>(
+  '../UpanishadVersePage'
+).default;
+const { getUpanishadChapter } = jest.requireActual<typeof import('@/data/upanishad')>(
+  '@/data/upanishad'
+);
 
 const MEANING_EN = typography.meaningEnglish.fontSize;
 const MEANING_HI = typography.meaning.fontSize;
@@ -168,6 +174,14 @@ describe('reader type scale — rendered per component', () => {
     const el = (
       <ValmikiRamayanVersePage verse={verse} sourceId="valmiki-ramayan" width={375} />
     );
+    expect(fontSizeOf(el, 'en', verse.linesEn[0])).toBe(VERSE_LATIN);
+    expect(fontSizeOf(el, 'en', verse.meaningEn)).toBe(MEANING_EN);
+    expect(fontSizeOf(el, 'hi', verse.meaningHi)).toBe(MEANING_HI);
+  });
+
+  test('UpanishadVersePage (Sundarkand re-export): verse 24 > meaning 20; Hindi meaning 20', () => {
+    const verse = getUpanishadChapter(1).verses[1];
+    const el = <UpanishadVersePage verse={verse} sourceId="upanishad" width={375} />;
     expect(fontSizeOf(el, 'en', verse.linesEn[0])).toBe(VERSE_LATIN);
     expect(fontSizeOf(el, 'en', verse.meaningEn)).toBe(MEANING_EN);
     expect(fontSizeOf(el, 'hi', verse.meaningHi)).toBe(MEANING_HI);

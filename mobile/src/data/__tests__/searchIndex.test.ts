@@ -248,3 +248,31 @@ const index = getSearchIndex();
   const section = runSearch('Valmiki Ramayan', index);
   assert.equal(section.sections[0]?.entry.sourceId, 'valmiki-ramayan');
 }
+
+// Upanishads: all three texts are indexed in full (68 pages), each verse carries
+// its Upanishad as `chapter`, and the Īśa's first mantra is reachable from both
+// scripts.
+{
+  const upanishadVerses = index.verses.filter((v) => v.sourceId === 'upanishad');
+  assert.equal(upanishadVerses.length, 68, 'expected every Upanishad page in the index');
+  for (const v of upanishadVerses) {
+    assert.ok(v.chapter != null && v.chapter >= 1 && v.chapter <= 3, 'upanishad verse must carry its Upanishad as chapter');
+  }
+  const hindi = runSearch('ईशा वास्यमिदं', index);
+  assert.ok(
+    hindi.verses.some((h) => h.entry.sourceId === 'upanishad' && h.entry.chapter === 1),
+    'Devanagari query should reach the Īśa Upanishad'
+  );
+  const latin = runSearch('tena tyaktena', index);
+  assert.ok(
+    latin.verses.some((h) => h.entry.sourceId === 'upanishad'),
+    'IAST-folded query should reach the Īśa Upanishad'
+  );
+  const kena = runSearch('केनेषितं', index);
+  assert.ok(
+    kena.verses.some((h) => h.entry.sourceId === 'upanishad' && h.entry.chapter === 2),
+    'Kena opening should resolve to Upanishad 2'
+  );
+  const section = runSearch('Upanishads', index);
+  assert.equal(section.sections[0]?.entry.sourceId, 'upanishad');
+}
