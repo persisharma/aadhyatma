@@ -151,34 +151,7 @@ test('no on-demand corpus payload is statically reachable from the app entry', (
  * The new number leaves ~85 KB of headroom on purpose. If it saturates again,
  * raise it only after re-doing the exercise above — and never to admit a corpus.
  */
-/**
- * RAISED 7,300,000 → 7,500,000 as a STOPGAP, and this one does admit a corpus.
- * That is a deliberate product call, not the rule being forgotten — read this
- * before treating it as precedent.
- *
- * The RULEBOOK §12.6 rollout writes one authored reading per session into a
- * chunk module under `data/theerth/details/`, and every finished chunk is
- * 70–100 KB of bilingual prose (`northShaktiB.ts` 97,692 bytes;
- * `vaishnavaNorth.ts` 68,293). They reach the launch graph through exactly one
- * edge:
- *
- *     index.ts -> App.tsx -> contexts/NewContentContext.tsx
- *              -> data/theerth/temples.ts -> data/theerth/details/index.ts
- *
- * `main` at 95075b7 measured 7,275,049 bytes — 24,951 of headroom — so the next
- * chunk to land broke this gate whichever one it was, and the 13 chunks still
- * unwritten were all blocked behind it. 7,500,000 buys the next two or three.
- *
- * THE REAL FIX, left undone here only because it touches a launch-critical
- * context the authoring sessions are scoped out of: `NewContentContext` is the
- * ONLY launch-path importer of `temples.ts` (`searchIndex.ts` is not on the
- * graph), and it reads two fields per temple — `id` and `addedInVersion`. A
- * small `theerth/manifest.ts` carrying just those, with a data-test assertion
- * that its ids match `baseTemples` so it cannot drift, takes `temples.ts`
- * (319 KB) AND every details chunk off the launch graph — ~484 KB freed today,
- * and room for the whole rollout. Do that before raising this number again.
- */
-const LAUNCH_GRAPH_BUDGET_BYTES = 7_500_000;
+const LAUNCH_GRAPH_BUDGET_BYTES = 7_300_000;
 
 test('the static launch graph stays inside its byte budget', () => {
   const sized = [...graph.keys()].map((file) => [fs.statSync(file).size, file] as const);

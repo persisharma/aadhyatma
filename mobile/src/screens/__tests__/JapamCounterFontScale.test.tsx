@@ -14,6 +14,13 @@ import { typography as baseType } from '@/theme/typography';
  */
 
 const mockGetItem = jest.fn((_key: string) => Promise.resolve<string | null>(null));
+// The screen uses useFocusEffect (§54 mala-complete exit trigger). Mock the ESM
+// package (the RN preset doesn't transform it) so requireActual of the screen
+// parses; the effect runs on mount, which is all this suite needs.
+jest.mock('@react-navigation/native', () => ({
+  useFocusEffect: (effect: () => void | (() => void)) => require('react').useEffect(effect, [effect]),
+}));
+
 jest.mock('@react-native-async-storage/async-storage', () => ({
   getItem: (key: string) => mockGetItem(key),
   setItem: jest.fn(() => Promise.resolve()),

@@ -14,7 +14,7 @@ import { buildEntryStartTarget } from '@/navigation/entryRoutes';
 import type { PanchangStackParamList } from '@/navigation/types';
 import { STRENGTH_LABEL_EN, STRENGTH_LABEL_HI, type PrashnaStrength } from '@/panchang/prashna';
 import { buildPrashnaReading } from '@/panchang/prashnaGuidance';
-import { questionsForPurpose } from '@/panchang/prashnaQuestions';
+import { questionForPurpose, questionsForPurpose } from '@/panchang/prashnaQuestions';
 import { PRASHNA_PURPOSES, isPurposeId, type PurposeId } from '@/panchang/prashnaPurposes';
 import { ageYears } from '@/panchang/reportFormat';
 import { useKundali } from '@/panchang/useKundali';
@@ -51,7 +51,7 @@ export default function PrashnaScreen({ navigation, route }: Props) {
     initial && isPurposeId(initial) ? initial : 'vidya'
   );
 
-  const [questionId, setQuestionId] = useState('general');
+  const [questionId, setQuestionId] = useState(() => questionForPurpose(purposeId, route.params?.questionId).id);
   const [basisOpen, setBasisOpen] = useState(false);
   const [completed, setCompleted] = useState<readonly string[]>([]);
   const purposeScroll = useRef<ScrollView>(null);
@@ -60,7 +60,15 @@ export default function PrashnaScreen({ navigation, route }: Props) {
     const x = purposeOffsets.current[purposeId];
     if (x !== undefined) purposeScroll.current?.scrollTo({ x: Math.max(0, x - 12), animated: false });
   }, [purposeId]);
-  useEffect(() => { setQuestionId('general'); }, [chart]);
+  const previousChart = useRef<typeof chart>(null);
+  useEffect(() => {
+    if (!chart) return;
+    if (previousChart.current && previousChart.current !== chart) setQuestionId('general');
+    previousChart.current = chart;
+  }, [chart]);
+  useEffect(() => {
+    if (route.params?.questionId) setQuestionId(questionForPurpose(purposeId, route.params.questionId).id);
+  }, [route.params?.questionId, purposeId]);
   useEffect(() => { setBasisOpen(false); setCompleted([]); }, [chart, purposeId, questionId]);
   const age = chart ? ageYears(chart.input.date, now) : null;
   const reading = useMemo(
@@ -289,7 +297,8 @@ export default function PrashnaScreen({ navigation, route }: Props) {
                       )}
                       {phase ? <PrashnaPhaseContent key={`${chart.input.date.toISOString()}-${chart.input.latitude}-${chart.input.longitude}-${purposeId}-${questionId}`} phase={phase} lang={lang}>
                         <View style={styles.actions}>
-                          {purposeId === 'vyapar' && <ActionPill lang={lang} hi="मुहूर्त खोजें" en="Find a muhurat" a11y="Open Muhurat finder" onPress={() => rootNav.navigate('MuhuratFinder')} />}
+                          {MUHURAT_PURPOSES.includes(purposeId) && <ActionPill lang={lang} hi="मुहूर्त खोजें" en="Find a muhurat" a11y="Open Muhurat finder" onPress={() => rootNav.navigate('MuhuratFinder')} />}
+                          {purposeId === 'vivah' && <ActionPill lang={lang} hi="गुण मिलान" en="Guna Milan" a11y="Open Guna Milan" onPress={() => rootNav.navigate('GunaMilan')} />}
                           <ActionPill lang={lang} hi="विस्तृत विवेचन और साझा करें" en="Full reading and share" a11y="Open full Kundali reading" onPress={() => rootNav.navigate('KundaliReport', { prashnaContext: { purposeId, questionId: phase.questionId } })} />
                         </View>
                       </PrashnaPhaseContent> : <>

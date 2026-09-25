@@ -171,7 +171,7 @@ export type AskIntent = {
   blockers?: readonly string[];
   /** Example questions, in Devanagari, for chips and the rotating placeholder. */
   examples: readonly Localized[];
-  resolve: (ctx: AskContext, slots: ResolvedSlots) => AskAnswer | null;
+  resolve: (ctx: AskContext, slots: ResolvedSlots, question?: string) => AskAnswer | null;
 };
 
 export type ScoredIntent = { intentId: string; score: number; trigger: string };
