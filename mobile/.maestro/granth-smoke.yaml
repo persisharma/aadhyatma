@@ -7,7 +7,7 @@
 # Bhagavad Gītā, Valmiki Ramayan and the Upanishads have a chapter index; the
 # other two go straight to a reader. This flow opens Valmiki Ramayan and its
 # final kāṇḍa so the complete-corpus manifest and a large payload are exercised,
-# then the Upanishads index and the Kena reader.
+# then the 108-row Upanishads index (group filter) and the Kena reader.
 
 appId: com.prashantsharma.vedansh
 ---
@@ -80,7 +80,18 @@ appId: com.prashantsharma.vedansh
     visible: "Upanishad 1\\. Isha Upanishad\\. 18 mantras\\. Tap to open\\."
     timeout: 15000
 - assertVisible: "Upanishad 2\\. Kena Upanishad\\. 35 mantras\\. Tap to open\\."
-- assertVisible: "Upanishad 3\\. Mandukya Upanishad\\. 12 mantras\\. Tap to open\\."
+- assertVisible: "Upanishad 3\\. Katha Upanishad\\. 119 mantras\\. Tap to open\\."
+# An unshipped text is listed from the 108-row catalogue, dimmed, not tappable.
+- assertVisible: "Upanishad 4\\. Prashna Upanishad\\. Atharvaveda\\. Coming soon\\."
+
+# Group filter narrows the catalogue: the Yoga group has no readable text yet.
+- tapOn: "Group: Yoga"
+- waitForAnimationToEnd
+- assertVisible: "Upanishad 15\\. Hamsa Upanishad\\. Shukla Yajurveda\\. Coming soon\\."
+- assertNotVisible: "Upanishad 1\\. Isha Upanishad\\. 18 mantras\\. Tap to open\\."
+- tapOn: "Group: Principal"
+- waitForAnimationToEnd
+- assertVisible: "Upanishad 6\\. Mandukya Upanishad\\. 12 mantras\\. Tap to open\\."
 
 # Open the Kena reader: page 1 is its śānti-pāṭha, then the khaṇḍa.mantra pills.
 - tapOn: "Upanishad 2\\. Kena Upanishad\\. 35 mantras\\. Tap to open\\."

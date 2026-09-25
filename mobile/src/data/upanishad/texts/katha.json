@@ -1,0 +1,2433 @@
+{
+  "chapter": 3,
+  "slug": "katha",
+  "titleHi": "कठ उपनिषद्",
+  "titleEn": "Katha Upanishad",
+  "vedaHi": "कृष्ण यजुर्वेद",
+  "vedaEn": "Krishna Yajurveda",
+  "mantraCount": 119,
+  "verseCount": 120,
+  "source": {
+    "baseText": "Kṛṣṇa Yajurveda (Kāṭhaka) recension with Śāṅkara-bhāṣya, as printed in Gita Press \"ईशादि नौ उपनिषद्\"; Devanagari written out from the printed text and checked against the Advaita Ashrama edition.",
+    "canonicalEdition": "Gita Press Gorakhpur, ईशादि नौ उपनिषद् (शांकरभाष्यार्थ सहित), code 66",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_upanishhat/katha.html",
+      "https://www.wisdomlib.org/hinduism/book/katha-upanishad-shankara-bhashya",
+      "https://archive.org/details/IshadiNauUpanishadGitaPress"
+    ],
+    "notes": "119 mantras plus the Yajurvedic śānti-pāṭha (सह नाववतु) as page 1. 1.1.25 keeps its traditional three lines; refrains (एतद्वै तत्) stay on the mantra they close. Vedic anunāsika ligatures are written with the standard anusvāra. Devanagari was authored from memory of the printed text with no network source available at build time — a line-by-line check against the Gita Press scan is still owed.",
+    "retrievedOn": "2026-09-25"
+  },
+  "verses": [
+    {
+      "id": "katha-shanti",
+      "upanishad": 3,
+      "section": "shanti",
+      "stanza": 3,
+      "numInSection": 1,
+      "reference": "shanti",
+      "labelHi": "शान्ति मन्त्र",
+      "labelEn": "Shanti Mantra",
+      "lines": [
+        "ॐ सह नाववतु सह नौ भुनक्तु सह वीर्यं करवावहै।",
+        "तेजस्वि नावधीतमस्तु मा विद्विषावहै॥",
+        "ॐ शान्तिः शान्तिः शान्तिः॥"
+      ],
+      "linesEn": [
+        "om saha nāvavatu saha nau bhunaktu saha vīryaṁ karavāvahai",
+        "tejasvi nāvadhītamastu mā vidviṣhāvahai",
+        "om śhāntiḥ śhāntiḥ śhāntiḥ"
+      ],
+      "meaningHi": "वह (ब्रह्म) हम दोनों (गुरु-शिष्य) की साथ-साथ रक्षा करे, हम दोनों का साथ-साथ पालन करे; हम दोनों साथ-साथ सामर्थ्य प्राप्त करें। हमारा पढ़ा हुआ तेजस्वी हो; हम परस्पर द्वेष न करें। ॐ शान्तिः शान्तिः शान्तिः।",
+      "meaningEn": "May That protect us both together; may That nourish us both together; may we work together with vigour. May what we study be luminous; may we never hate one another. Om, peace, peace, peace."
+    },
+    {
+      "id": "katha-1-1-1",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 2,
+      "reference": "1.1.1",
+      "labelHi": "मन्त्र · १.१.१",
+      "labelEn": "Mantra · 1.1.1",
+      "lines": [
+        "ॐ उशन्ह वै वाजश्रवसः सर्ववेदसं ददौ।",
+        "तस्य ह नचिकेता नाम पुत्र आस॥"
+      ],
+      "linesEn": [
+        "om uśhanha vai vājaśravasaḥ sarvavedasaṁ dadau",
+        "tasya ha nachiketā nāma putra āsa"
+      ],
+      "meaningHi": "(फल की) इच्छा से वाजश्रवा के पुत्र (वाजश्रवस) ने अपना सर्वस्व दान कर दिया। उनका नचिकेता नाम का पुत्र था।",
+      "meaningEn": "Desiring the fruit, Vājaśravasa gave away all that he had. He had a son named Naciketā."
+    },
+    {
+      "id": "katha-1-1-2",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 3,
+      "reference": "1.1.2",
+      "labelHi": "मन्त्र · १.१.२",
+      "labelEn": "Mantra · 1.1.2",
+      "lines": [
+        "तं ह कुमारं सन्तं दक्षिणासु नीयमानासु श्रद्धाविवेश सोऽमन्यत॥"
+      ],
+      "linesEn": [
+        "taṁ ha kumāraṁ santaṁ dakṣhiṇāsu nīyamānāsu śraddhāviveśha so'manyata"
+      ],
+      "meaningHi": "जब दक्षिणा (की गौएँ) ले जाई जा रही थीं, तब उस कुमार (बालक) में श्रद्धा ने प्रवेश किया और उसने सोचा —",
+      "meaningEn": "As the gifts were being led away, faith entered him, boy though he was, and he thought:"
+    },
+    {
+      "id": "katha-1-1-3",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 4,
+      "reference": "1.1.3",
+      "labelHi": "मन्त्र · १.१.३",
+      "labelEn": "Mantra · 1.1.3",
+      "lines": [
+        "पीतोदका जग्धतृणा दुग्धदोहा निरिन्द्रियाः।",
+        "अनन्दा नाम ते लोकास्तान्स गच्छति ता ददत्॥"
+      ],
+      "linesEn": [
+        "pītodakā jagdhatṛiṇā dugdhadohā nirindriyāḥ",
+        "anandā nāma te lokāstānsa gachchhati tā dadat"
+      ],
+      "meaningHi": "\"जो गौएँ पानी पी चुकीं, घास खा चुकीं, दूध दे चुकीं और अब बाँझ हैं — इन्हें दान करने वाला उन लोकों में जाता है जो 'आनन्दरहित' कहलाते हैं।\"",
+      "meaningEn": "\"They have drunk their water, eaten their grass, given their milk, and are barren. Joyless are the worlds to which one goes who gives such cows.\""
+    },
+    {
+      "id": "katha-1-1-4",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 5,
+      "reference": "1.1.4",
+      "labelHi": "मन्त्र · १.१.४",
+      "labelEn": "Mantra · 1.1.4",
+      "lines": [
+        "स होवाच पितरं तत कस्मै मां दास्यसीति।",
+        "द्वितीयं तृतीयं तं होवाच मृत्यवे त्वा ददामीति॥"
+      ],
+      "linesEn": [
+        "sa hovācha pitaraṁ tata kasmai māṁ dāsyasīti",
+        "dvitīyaṁ tṛitīyaṁ taṁ hovācha mṛityave tvā dadāmīti"
+      ],
+      "meaningHi": "उसने पिता से कहा — \"तात! मुझे किसे दोगे?\" दूसरी बार, तीसरी बार (पूछा)। तब पिता ने उससे कहा — \"तुझे मृत्यु को देता हूँ।\"",
+      "meaningEn": "He said to his father: \"Father, to whom will you give me?\" A second time, a third time he asked. The father said to him: \"To Death I give you.\""
+    },
+    {
+      "id": "katha-1-1-5",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 6,
+      "reference": "1.1.5",
+      "labelHi": "मन्त्र · १.१.५",
+      "labelEn": "Mantra · 1.1.5",
+      "lines": [
+        "बहूनामेमि प्रथमो बहूनामेमि मध्यमः।",
+        "किं स्विद्यमस्य कर्तव्यं यन्मयाऽद्य करिष्यति॥"
+      ],
+      "linesEn": [
+        "bahūnāmemi prathamo bahūnāmemi madhyamaḥ",
+        "kiṁ svidyamasya kartavyaṁ yanmayā'dya kariṣyati"
+      ],
+      "meaningHi": "(नचिकेता ने सोचा —) \"बहुतों में मैं प्रथम (श्रेष्ठ) चलता हूँ, बहुतों में मध्यम। यम का ऐसा क्या कार्य होगा जो वह आज मुझसे करेगा?\"",
+      "meaningEn": "(Naciketā thought:) \"Among many I go as the first; among many I go as the middling. What can Death have to do that he would accomplish through me today?\""
+    },
+    {
+      "id": "katha-1-1-6",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 7,
+      "reference": "1.1.6",
+      "labelHi": "मन्त्र · १.१.६",
+      "labelEn": "Mantra · 1.1.6",
+      "lines": [
+        "अनुपश्य यथा पूर्वे प्रतिपश्य तथाऽपरे।",
+        "सस्यमिव मर्त्यः पच्यते सस्यमिवाजायते पुनः॥"
+      ],
+      "linesEn": [
+        "anupaśya yathā pūrve pratipaśya tathā'pare",
+        "sasyamiva martyaḥ pachyate sasyamivājāyate punaḥ"
+      ],
+      "meaningHi": "\"देखो, पूर्वज कैसे (सत्य पर चले); देखो, दूसरे भी वैसे ही चलते हैं। मनुष्य अन्न की तरह पकता (मरता) है और अन्न की तरह फिर जन्म लेता है।\" (सत्य का पालन करो, मुझे मृत्यु के पास जाने दो।)",
+      "meaningEn": "\"Look back at how those before us acted; look at how others act now. Like grain the mortal ripens and falls; like grain he is born again.\" (Keep your word; let me go to Death.)"
+    },
+    {
+      "id": "katha-1-1-7",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 8,
+      "reference": "1.1.7",
+      "labelHi": "मन्त्र · १.१.७",
+      "labelEn": "Mantra · 1.1.7",
+      "lines": [
+        "वैश्वानरः प्रविशत्यतिथिर्ब्राह्मणो गृहान्।",
+        "तस्यैतां शान्तिं कुर्वन्ति हर वैवस्वतोदकम्॥"
+      ],
+      "linesEn": [
+        "vaiśvānaraḥ praviśhatyatithirbrāhmaṇo gṛihān",
+        "tasyaitāṁ śhāntiṁ kurvanti hara vaivasvatodakam"
+      ],
+      "meaningHi": "(यम के घर के लोगों ने कहा —) \"ब्राह्मण अतिथि अग्नि के समान घरों में प्रवेश करता है; सज्जन उसे (पाद्य-जल आदि से) शान्त करते हैं। हे वैवस्वत (यम)! जल लाओ।\"",
+      "meaningEn": "(Yama's household said:) \"Like fire a Brāhmaṇa guest enters a house; the good appease him with water. O son of Vivasvat, bring water.\""
+    },
+    {
+      "id": "katha-1-1-8",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 9,
+      "reference": "1.1.8",
+      "labelHi": "मन्त्र · १.१.८",
+      "labelEn": "Mantra · 1.1.8",
+      "lines": [
+        "आशाप्रतीक्षे संगतं सूनृतां चेष्टापूर्ते पुत्रपशूंश्च सर्वान्।",
+        "एतद्वृङ्क्ते पुरुषस्याल्पमेधसो यस्यानश्नन्वसति ब्राह्मणो गृहे॥"
+      ],
+      "linesEn": [
+        "āśhāpratīkṣhe saṁgataṁ sūnṛitāṁ cheṣṭāpūrte putrapaśhūṁścha sarvān",
+        "etadvṛiṅkte puruṣhasyālpamedhaso yasyānaśnanvasati brāhmaṇo gṛihe"
+      ],
+      "meaningHi": "\"जिस अल्पबुद्धि पुरुष के घर में ब्राह्मण बिना खाए रहता है, उसकी आशा, प्रतीक्षा, सत्संग, मधुर वाणी, यज्ञ-परोपकार का फल, पुत्र और पशु — यह सब नष्ट हो जाता है।\"",
+      "meaningEn": "\"Hope and expectation, the fruit of fellowship and kind speech, of sacrifice and charity, sons and cattle — all this is destroyed for the man of little wisdom in whose house a Brāhmaṇa stays without food.\""
+    },
+    {
+      "id": "katha-1-1-9",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 10,
+      "reference": "1.1.9",
+      "labelHi": "मन्त्र · १.१.९",
+      "labelEn": "Mantra · 1.1.9",
+      "lines": [
+        "तिस्रो रात्रीर्यदवात्सीर्गृहे मेऽनश्नन्ब्रह्मन्नतिथिर्नमस्यः।",
+        "नमस्तेऽस्तु ब्रह्मन्स्वस्ति मेऽस्तु तस्मात्प्रति त्रीन्वरान्वृणीष्व॥"
+      ],
+      "linesEn": [
+        "tisro rātrīryadavātsīrgṛihe me'naśnanbrahmannatithirnamasyaḥ",
+        "namaste'stu brahmansvasti me'stu tasmātprati trīnvarānvṛiṇīṣva"
+      ],
+      "meaningHi": "(यम ने कहा —) \"हे ब्राह्मण! नमस्कार-योग्य अतिथि होकर तुम मेरे घर में तीन रात बिना खाए रहे। हे ब्राह्मण! तुम्हें नमस्कार हो, मेरा कल्याण हो। इसके बदले तीन वर माँगो।\"",
+      "meaningEn": "(Yama said:) \"Since you, a venerable guest, have stayed three nights in my house without food, O Brāhmaṇa, salutation to you, and may it go well with me. Choose, in return, three boons.\""
+    },
+    {
+      "id": "katha-1-1-10",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 11,
+      "reference": "1.1.10",
+      "labelHi": "मन्त्र · १.१.१०",
+      "labelEn": "Mantra · 1.1.10",
+      "lines": [
+        "शान्तसंकल्पः सुमना यथा स्याद्वीतमन्युर्गौतमो माऽभि मृत्यो।",
+        "त्वत्प्रसृष्टं माऽभिवदेत्प्रतीत एतत्त्रयाणां प्रथमं वरं वृणे॥"
+      ],
+      "linesEn": [
+        "śhāntasaṁkalpaḥ sumanā yathā syādvītamanyurgautamo mā'bhi mṛityo",
+        "tvatprasṛiṣṭaṁ mā'bhivadetpratīta etattrayāṇāṁ prathamaṁ varaṁ vṛiṇe"
+      ],
+      "meaningHi": "\"हे मृत्यु! मेरे पिता गौतम मेरे प्रति शान्त-संकल्प, प्रसन्न-मन और क्रोधरहित हो जाएँ, और तुम्हारे द्वारा छोड़े गए मुझे पहचानकर प्रेम से बोलें — तीनों में यह पहला वर मैं माँगता हूँ।\"",
+      "meaningEn": "\"That my father Gautama may be calm in mind, well disposed and free from anger towards me, O Death; that he may greet me with recognition when you have released me — this I choose as the first of the three boons.\""
+    },
+    {
+      "id": "katha-1-1-11",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 12,
+      "reference": "1.1.11",
+      "labelHi": "मन्त्र · १.१.११",
+      "labelEn": "Mantra · 1.1.11",
+      "lines": [
+        "यथा पुरस्ताद्भविता प्रतीत औद्दालकिरारुणिर्मत्प्रसृष्टः।",
+        "सुखं रात्रीः शयिता वीतमन्युस्त्वां ददृशिवान्मृत्युमुखात्प्रमुक्तम्॥"
+      ],
+      "linesEn": [
+        "yathā purastādbhavitā pratīta auddālakirāruṇirmatprasṛiṣṭaḥ",
+        "sukhaṁ rātrīḥ śhayitā vītamanyustvāṁ dadṛiśhivānmṛityumukhātpramuktam"
+      ],
+      "meaningHi": "(यम —) \"मेरे द्वारा छोड़े गए तुझे पहचानकर औद्दालकि आरुणि (तेरा पिता) पहले जैसा ही (स्नेही) हो जाएगा। मृत्यु के मुख से मुक्त तुझे देखकर वह क्रोधरहित होकर रातों को सुख से सोएगा।\"",
+      "meaningEn": "(Yama:) \"Auddālaki, son of Aruṇa, will recognise you and be as before, once I release you. Seeing you freed from the jaws of death, he will sleep peacefully through the nights, his anger gone.\""
+    },
+    {
+      "id": "katha-1-1-12",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 13,
+      "reference": "1.1.12",
+      "labelHi": "मन्त्र · १.१.१२",
+      "labelEn": "Mantra · 1.1.12",
+      "lines": [
+        "स्वर्गे लोके न भयं किंचनास्ति न तत्र त्वं न जरया बिभेति।",
+        "उभे तीर्त्वाऽशनायापिपासे शोकातिगो मोदते स्वर्गलोके॥"
+      ],
+      "linesEn": [
+        "svarge loke na bhayaṁ kiṁchanāsti na tatra tvaṁ na jarayā bibheti",
+        "ubhe tīrtvā'śhanāyāpipāse śhokātigo modate svargaloke"
+      ],
+      "meaningHi": "(नचिकेता —) \"स्वर्गलोक में कोई भय नहीं है; वहाँ न तुम (मृत्यु) हो, न कोई वृद्धावस्था से डरता है। भूख-प्यास दोनों को पार कर, शोक से परे होकर मनुष्य स्वर्गलोक में आनन्द करता है।\"",
+      "meaningEn": "(Naciketā:) \"In the heavenly world there is no fear at all; you, Death, are not there, and no one fears old age. Crossing beyond hunger and thirst, beyond sorrow, one rejoices in heaven.\""
+    },
+    {
+      "id": "katha-1-1-13",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 14,
+      "reference": "1.1.13",
+      "labelHi": "मन्त्र · १.१.१३",
+      "labelEn": "Mantra · 1.1.13",
+      "lines": [
+        "स त्वमग्निं स्वर्ग्यमध्येषि मृत्यो प्रब्रूहि त्वं श्रद्दधानाय मह्यम्।",
+        "स्वर्गलोका अमृतत्वं भजन्त एतद्द्वितीयेन वृणे वरेण॥"
+      ],
+      "linesEn": [
+        "sa tvamagniṁ svargyamadhyeṣhi mṛityo prabrūhi tvaṁ śraddadhānāya mahyam",
+        "svargalokā amṛitatvaṁ bhajanta etaddvitīyena vṛiṇe vareṇa"
+      ],
+      "meaningHi": "\"हे मृत्यु! तुम स्वर्ग-साधक अग्नि को जानते हो; श्रद्धावान् मुझे उसे बताओ। स्वर्गलोक के निवासी अमरत्व को भोगते हैं — यह मैं दूसरे वर से माँगता हूँ।\"",
+      "meaningEn": "\"You know, O Death, the fire that leads to heaven; teach it to me, who have faith. The dwellers in heaven partake of immortality — this I choose as my second boon.\""
+    },
+    {
+      "id": "katha-1-1-14",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 15,
+      "reference": "1.1.14",
+      "labelHi": "मन्त्र · १.१.१४",
+      "labelEn": "Mantra · 1.1.14",
+      "lines": [
+        "प्र ते ब्रवीमि तदु मे निबोध स्वर्ग्यमग्निं नचिकेतः प्रजानन्।",
+        "अनन्तलोकाप्तिमथो प्रतिष्ठां विद्धि त्वमेतं निहितं गुहायाम्॥"
+      ],
+      "linesEn": [
+        "pra te bravīmi tadu me nibodha svargyamagniṁ nachiketaḥ prajānan",
+        "anantalokāptimatho pratiṣṭhāṁ viddhi tvametaṁ nihitaṁ guhāyām"
+      ],
+      "meaningHi": "(यम —) \"हे नचिकेता! स्वर्ग-साधक अग्नि को भली-भाँति जानता हुआ मैं तुझे बताता हूँ; मुझसे समझ। इसे अनन्त लोक की प्राप्ति का साधन और (जगत् की) प्रतिष्ठा जान, जो बुद्धि-गुहा में स्थित है।\"",
+      "meaningEn": "(Yama:) \"I will tell you; listen well to me, Naciketā, for I know the fire that leads to heaven. Know it as the means to the endless world, the support of all, hidden in the cave of the heart.\""
+    },
+    {
+      "id": "katha-1-1-15",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 16,
+      "reference": "1.1.15",
+      "labelHi": "मन्त्र · १.१.१५",
+      "labelEn": "Mantra · 1.1.15",
+      "lines": [
+        "लोकादिमग्निं तमुवाच तस्मै या इष्टका यावतीर्वा यथा वा।",
+        "स चापि तत्प्रत्यवदद्यथोक्तमथास्य मृत्युः पुनरेवाह तुष्टः॥"
+      ],
+      "linesEn": [
+        "lokādimagniṁ tamuvācha tasmai yā iṣṭakā yāvatīrvā yathā vā",
+        "sa chāpi tatpratyavadadyathoktamathāsya mṛityuḥ punarevāha tuṣṭaḥ"
+      ],
+      "meaningHi": "यम ने उसे लोकों के आदि-कारण उस अग्नि को बताया — जो ईंटें, जितनी और जैसे (चयन की जाएँ)। उसने भी जैसा कहा गया था, वैसा ही दोहरा दिया। तब प्रसन्न होकर मृत्यु ने फिर कहा —",
+      "meaningEn": "He taught him that fire, the source of the worlds — which bricks, how many, and how they are to be laid. And he repeated it back exactly as told. Then Death, pleased, spoke again:"
+    },
+    {
+      "id": "katha-1-1-16",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 17,
+      "reference": "1.1.16",
+      "labelHi": "मन्त्र · १.१.१६",
+      "labelEn": "Mantra · 1.1.16",
+      "lines": [
+        "तमब्रवीत्प्रीयमाणो महात्मा वरं तवेहाद्य ददामि भूयः।",
+        "तवैव नाम्ना भवितायमग्निः सृङ्कां चेमामनेकरूपां गृहाण॥"
+      ],
+      "linesEn": [
+        "tamabravītprīyamāṇo mahātmā varaṁ tavehādya dadāmi bhūyaḥ",
+        "tavaiva nāmnā bhavitāyamagniḥ sṛiṅkāṁ chemāmanekarūpāṁ gṛihāṇa"
+      ],
+      "meaningHi": "प्रसन्न होते हुए महात्मा (यम) ने कहा — \"आज यहाँ मैं तुझे एक और वर देता हूँ: यह अग्नि तेरे ही नाम से प्रसिद्ध होगी। और यह अनेक रूपों वाली (रत्न-)माला भी ग्रहण कर।\"",
+      "meaningEn": "Well pleased, the great-souled one said to him: \"Here and now I grant you a further boon: this fire shall be known by your name. And take this many-coloured chain as well.\""
+    },
+    {
+      "id": "katha-1-1-17",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 18,
+      "reference": "1.1.17",
+      "labelHi": "मन्त्र · १.१.१७",
+      "labelEn": "Mantra · 1.1.17",
+      "lines": [
+        "त्रिणाचिकेतस्त्रिभिरेत्य सन्धिं त्रिकर्मकृत्तरति जन्ममृत्यू।",
+        "ब्रह्मजज्ञं देवमीड्यं विदित्वा निचाय्येमां शान्तिमत्यन्तमेति॥"
+      ],
+      "linesEn": [
+        "triṇāchiketastribhiretya sandhiṁ trikarmakṛittarati janmamṛityū",
+        "brahmajajñaṁ devamīḍyaṁ viditvā nichāyyemāṁ śhāntimatyantameti"
+      ],
+      "meaningHi": "\"तीन बार नाचिकेत अग्नि का चयन करने वाला, तीनों (माता, पिता, आचार्य) से सम्बन्ध जोड़ने वाला, तीन कर्म (यज्ञ, अध्ययन, दान) करने वाला जन्म-मृत्यु को पार कर जाता है। ब्रह्मा से उत्पन्न, ज्ञानी, स्तुत्य देव (अग्नि) को जानकर और साक्षात् करके वह इस परम शान्ति को प्राप्त करता है।\"",
+      "meaningEn": "\"One who has thrice kindled the Nāciketa fire, joined with the three, and performed the three works, crosses beyond birth and death. Knowing and realising that adorable god born of Brahmā, the knower, he attains this utter peace.\""
+    },
+    {
+      "id": "katha-1-1-18",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 19,
+      "reference": "1.1.18",
+      "labelHi": "मन्त्र · १.१.१८",
+      "labelEn": "Mantra · 1.1.18",
+      "lines": [
+        "त्रिणाचिकेतस्त्रयमेतद्विदित्वा य एवं विद्वांश्चिनुते नाचिकेतम्।",
+        "स मृत्युपाशान्पुरतः प्रणोद्य शोकातिगो मोदते स्वर्गलोके॥"
+      ],
+      "linesEn": [
+        "triṇāchiketastrayametadviditvā ya evaṁ vidvāṁśchinute nāchiketam",
+        "sa mṛityupāśhānpurataḥ praṇodya śhokātigo modate svargaloke"
+      ],
+      "meaningHi": "\"जो इन तीनों को जानकर, इस प्रकार जानता हुआ नाचिकेत अग्नि का चयन करता है, वह मृत्यु के पाशों को पहले ही हटाकर शोक से परे होकर स्वर्गलोक में आनन्द करता है।\"",
+      "meaningEn": "\"One who, knowing these three, thus kindles the Nāciketa fire with understanding, casts off the snares of death beforehand, passes beyond sorrow, and rejoices in the world of heaven.\""
+    },
+    {
+      "id": "katha-1-1-19",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 20,
+      "reference": "1.1.19",
+      "labelHi": "मन्त्र · १.१.१९",
+      "labelEn": "Mantra · 1.1.19",
+      "lines": [
+        "एष तेऽग्निर्नचिकेतः स्वर्ग्यो यमवृणीथा द्वितीयेन वरेण।",
+        "एतमग्निं तवैव प्रवक्ष्यन्ति जनासस्तृतीयं वरं नचिकेतो वृणीष्व॥"
+      ],
+      "linesEn": [
+        "eṣha te'gnirnachiketaḥ svargyo yamavṛiṇīthā dvitīyena vareṇa",
+        "etamagniṁ tavaiva pravakṣyanti janāsastṛitīyaṁ varaṁ nachiketo vṛiṇīṣva"
+      ],
+      "meaningHi": "\"हे नचिकेता! यह तेरी स्वर्ग-साधक अग्नि है जिसे तूने दूसरे वर से माँगा था। लोग इस अग्नि को तेरे ही (नाम से) कहेंगे। अब, नचिकेता, तीसरा वर माँग।\"",
+      "meaningEn": "\"This, Naciketā, is your fire that leads to heaven, which you chose as your second boon. People shall call this fire by your name. Now, Naciketā, choose your third boon.\""
+    },
+    {
+      "id": "katha-1-1-20",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 21,
+      "reference": "1.1.20",
+      "labelHi": "मन्त्र · १.१.२०",
+      "labelEn": "Mantra · 1.1.20",
+      "lines": [
+        "येयं प्रेते विचिकित्सा मनुष्येऽस्तीत्येके नायमस्तीति चैके।",
+        "एतद्विद्यामनुशिष्टस्त्वयाऽहं वराणामेष वरस्तृतीयः॥"
+      ],
+      "linesEn": [
+        "yeyaṁ prete vichikitsā manuṣye'stītyeke nāyamastīti chaike",
+        "etadvidyāmanuśhiṣṭastvayā'haṁ varāṇāmeṣha varastṛitīyaḥ"
+      ],
+      "meaningHi": "(नचिकेता —) \"मरे हुए मनुष्य के विषय में जो यह संशय है — कोई कहते हैं 'वह (आत्मा) रहता है', कोई कहते हैं 'नहीं रहता' — तुम्हारे द्वारा उपदिष्ट होकर मैं इसे जानूँ। वरों में यह तीसरा वर है।\"",
+      "meaningEn": "(Naciketā:) \"There is this doubt about a person who has died: some say 'he exists', others 'he does not'. Taught by you, I would know this. Of the boons, this is the third.\""
+    },
+    {
+      "id": "katha-1-1-21",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 22,
+      "reference": "1.1.21",
+      "labelHi": "मन्त्र · १.१.२१",
+      "labelEn": "Mantra · 1.1.21",
+      "lines": [
+        "देवैरत्रापि विचिकित्सितं पुरा न हि सुविज्ञेयमणुरेष धर्मः।",
+        "अन्यं वरं नचिकेतो वृणीष्व मा मोपरोत्सीरति मा सृजैनम्॥"
+      ],
+      "linesEn": [
+        "devairatrāpi vichikitsitaṁ purā na hi suvijñeyamaṇureṣha dharmaḥ",
+        "anyaṁ varaṁ nachiketo vṛiṇīṣva mā moparotsīrati mā sṛijainam"
+      ],
+      "meaningHi": "(यम —) \"इस विषय में पहले देवताओं ने भी संशय किया था; यह धर्म (तत्त्व) सूक्ष्म है, सुगमता से जानने योग्य नहीं। हे नचिकेता! दूसरा वर माँग; मुझे विवश मत कर; इस (वर) को मुझ पर छोड़ दे।\"",
+      "meaningEn": "(Yama:) \"Even the gods of old had doubts about this; it is not easy to understand — subtle is this truth. Choose another boon, Naciketā; do not press me; release me from this one.\""
+    },
+    {
+      "id": "katha-1-1-22",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 23,
+      "reference": "1.1.22",
+      "labelHi": "मन्त्र · १.१.२२",
+      "labelEn": "Mantra · 1.1.22",
+      "lines": [
+        "देवैरत्रापि विचिकित्सितं किल त्वं च मृत्यो यन्न सुविज्ञेयमात्थ।",
+        "वक्ता चास्य त्वादृगन्यो न लभ्यो नान्यो वरस्तुल्य एतस्य कश्चित्॥"
+      ],
+      "linesEn": [
+        "devairatrāpi vichikitsitaṁ kila tvaṁ cha mṛityo yanna suvijñeyamāttha",
+        "vaktā chāsya tvādṛiganyo na labhyo nānyo varastulya etasya kaśchit"
+      ],
+      "meaningHi": "(नचिकेता —) \"हे मृत्यु! इस विषय में देवताओं ने भी संशय किया और तुम भी कहते हो कि यह सुगमता से जानने योग्य नहीं। इसका तुम्हारे जैसा दूसरा वक्ता नहीं मिल सकता, और इसके तुल्य दूसरा कोई वर नहीं है।\"",
+      "meaningEn": "(Naciketā:) \"Even the gods, you say, had doubts about this, and you, O Death, say it is not easy to know. No other teacher like you can be found, and no other boon is equal to this.\""
+    },
+    {
+      "id": "katha-1-1-23",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 24,
+      "reference": "1.1.23",
+      "labelHi": "मन्त्र · १.१.२३",
+      "labelEn": "Mantra · 1.1.23",
+      "lines": [
+        "शतायुषः पुत्रपौत्रान्वृणीष्व बहून्पशून्हस्तिहिरण्यमश्वान्।",
+        "भूमेर्महदायतनं वृणीष्व स्वयं च जीव शरदो यावदिच्छसि॥"
+      ],
+      "linesEn": [
+        "śhatāyuṣhaḥ putrapautrānvṛiṇīṣva bahūnpaśhūnhastihiraṇyamaśvān",
+        "bhūmermahadāyatanaṁ vṛiṇīṣva svayaṁ cha jīva śharado yāvadichchhasi"
+      ],
+      "meaningHi": "(यम —) \"सौ वर्ष की आयु वाले पुत्र-पौत्र माँग; बहुत से पशु, हाथी, सोना, घोड़े माँग; पृथ्वी का विशाल राज्य माँग; और स्वयं जितने वर्ष चाहो, जीवित रहो।\"",
+      "meaningEn": "(Yama:) \"Choose sons and grandsons who will live a hundred years; choose many cattle, elephants, gold and horses; choose a vast domain on earth; and live yourself as many autumns as you wish.\""
+    },
+    {
+      "id": "katha-1-1-24",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 25,
+      "reference": "1.1.24",
+      "labelHi": "मन्त्र · १.१.२४",
+      "labelEn": "Mantra · 1.1.24",
+      "lines": [
+        "एतत्तुल्यं यदि मन्यसे वरं वृणीष्व वित्तं चिरजीविकां च।",
+        "महाभूमौ नचिकेतस्त्वमेधि कामानां त्वा कामभाजं करोमि॥"
+      ],
+      "linesEn": [
+        "etattulyaṁ yadi manyase varaṁ vṛiṇīṣva vittaṁ chirajīvikāṁ cha",
+        "mahābhūmau nachiketastvamedhi kāmānāṁ tvā kāmabhājaṁ karomi"
+      ],
+      "meaningHi": "\"यदि इसके तुल्य कोई और वर मानो तो माँगो — धन और दीर्घ जीवन। हे नचिकेता! विशाल पृथ्वी पर (राजा) हो; मैं तुझे सब कामनाओं का भोक्ता बना देता हूँ।\"",
+      "meaningEn": "\"If you think any boon equal to this, choose it — wealth and long life. Be a king over the wide earth, Naciketā; I will make you the enjoyer of all desires.\""
+    },
+    {
+      "id": "katha-1-1-25",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 26,
+      "reference": "1.1.25",
+      "labelHi": "मन्त्र · १.१.२५",
+      "labelEn": "Mantra · 1.1.25",
+      "lines": [
+        "ये ये कामा दुर्लभा मर्त्यलोके सर्वान्कामांश्छन्दतः प्रार्थयस्व।",
+        "इमा रामाः सरथाः सतूर्या न हीदृशा लम्भनीया मनुष्यैः।",
+        "आभिर्मत्प्रत्ताभिः परिचारयस्व नचिकेतो मरणं माऽनुप्राक्षीः॥"
+      ],
+      "linesEn": [
+        "ye ye kāmā durlabhā martyaloke sarvānkāmāṁśchhandataḥ prārthayasva",
+        "imā rāmāḥ sarathāḥ satūryā na hīdṛiśhā lambhanīyā manuṣyaiḥ",
+        "ābhirmatprattābhiḥ parichārayasva nachiketo maraṇaṁ mā'nuprākṣhīḥ"
+      ],
+      "meaningHi": "\"मर्त्यलोक में जो-जो कामनाएँ दुर्लभ हैं, वे सब इच्छानुसार माँग ले। ये रथों और वाद्यों वाली सुन्दरियाँ — ऐसी मनुष्यों को नहीं मिलतीं — मेरे द्वारा दी गई इनसे सेवा करा। परन्तु नचिकेता! मरण के विषय में मत पूछ।\"",
+      "meaningEn": "\"Whatever desires are hard to win in the world of mortals, ask for them all as you please. These lovely women with chariots and music — such are not to be had by men — let them attend you, my gift. But, Naciketā, do not ask about death.\""
+    },
+    {
+      "id": "katha-1-1-26",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 27,
+      "reference": "1.1.26",
+      "labelHi": "मन्त्र · १.१.२६",
+      "labelEn": "Mantra · 1.1.26",
+      "lines": [
+        "श्वोभावा मर्त्यस्य यदन्तकैतत्सर्वेन्द्रियाणां जरयन्ति तेजः।",
+        "अपि सर्वं जीवितमल्पमेव तवैव वाहास्तव नृत्यगीते॥"
+      ],
+      "linesEn": [
+        "śvobhāvā martyasya yadantakaitatsarvendriyāṇāṁ jarayanti tejaḥ",
+        "api sarvaṁ jīvitamalpameva tavaiva vāhāstava nṛityagīte"
+      ],
+      "meaningHi": "(नचिकेता —) \"हे अन्तक! ये (भोग) कल तक रहने वाले हैं और मनुष्य की समस्त इन्द्रियों के तेज को क्षीण कर देते हैं। सारा जीवन भी थोड़ा ही है। तुम्हारे वाहन तुम्हारे ही रहें, तुम्हारे नृत्य-गीत भी।\"",
+      "meaningEn": "(Naciketā:) \"Ephemeral are these, O Ender; they wear away the vigour of all a mortal's senses. Even a whole lifetime is short. Keep your chariots; keep your dance and song.\""
+    },
+    {
+      "id": "katha-1-1-27",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 28,
+      "reference": "1.1.27",
+      "labelHi": "मन्त्र · १.१.२७",
+      "labelEn": "Mantra · 1.1.27",
+      "lines": [
+        "न वित्तेन तर्पणीयो मनुष्यो लप्स्यामहे वित्तमद्राक्ष्म चेत्त्वा।",
+        "जीविष्यामो यावदीशिष्यसि त्वं वरस्तु मे वरणीयः स एव॥"
+      ],
+      "linesEn": [
+        "na vittena tarpaṇīyo manuṣyo lapsyāmahe vittamadrākṣma chettvā",
+        "jīviṣyāmo yāvadīśhiṣyasi tvaṁ varastu me varaṇīyaḥ sa eva"
+      ],
+      "meaningHi": "\"मनुष्य धन से तृप्त नहीं हो सकता। जब तुम्हें देख लिया, तो धन तो हम पा ही लेंगे; और जब तक तुम शासन करोगे, तब तक जीवित भी रहेंगे। मेरे लिए माँगने योग्य वर तो वही (आत्मज्ञान) है।\"",
+      "meaningEn": "\"Man is not to be satisfied with wealth. Having seen you, we shall have wealth; and we shall live as long as you rule. The boon I must choose is that one alone.\""
+    },
+    {
+      "id": "katha-1-1-28",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 29,
+      "reference": "1.1.28",
+      "labelHi": "मन्त्र · १.१.२८",
+      "labelEn": "Mantra · 1.1.28",
+      "lines": [
+        "अजीर्यताममृतानामुपेत्य जीर्यन्मर्त्यः क्वधःस्थः प्रजानन्।",
+        "अभिध्यायन्वर्णरतिप्रमोदानतिदीर्घे जीविते को रमेत॥"
+      ],
+      "linesEn": [
+        "ajīryatāmamṛitānāmupetya jīryanmartyaḥ kvadhaḥsthaḥ prajānan",
+        "abhidhyāyanvarṇaratipramodānatidīrghe jīvite ko rameta"
+      ],
+      "meaningHi": "\"अजर-अमर (देवों) के समीप पहुँचकर, नीचे पृथ्वी पर रहने वाला जीर्ण होने वाला मनुष्य (उस अमरत्व को) जानता हुआ, रूप, रति और प्रमोद की समीक्षा करके अति दीर्घ जीवन में कौन रमेगा?\"",
+      "meaningEn": "\"Having come to the undecaying immortals, what decaying mortal here below, who knows better, would delight in a long life after weighing the pleasures of beauty and love?\""
+    },
+    {
+      "id": "katha-1-1-29",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 30,
+      "reference": "1.1.29",
+      "labelHi": "मन्त्र · १.१.२९",
+      "labelEn": "Mantra · 1.1.29",
+      "lines": [
+        "यस्मिन्निदं विचिकित्सन्ति मृत्यो यत्साम्पराये महति ब्रूहि नस्तत्।",
+        "योऽयं वरो गूढमनुप्रविष्टो नान्यं तस्मान्नचिकेता वृणीते॥"
+      ],
+      "linesEn": [
+        "yasminnidaṁ vichikitsanti mṛityo yatsāmparāye mahati brūhi nastat",
+        "yo'yaṁ varo gūḍhamanupraviṣṭo nānyaṁ tasmānnachiketā vṛiṇīte"
+      ],
+      "meaningHi": "\"हे मृत्यु! जिसके विषय में लोग संशय करते हैं, महान् परलोक-सम्बन्धी वह (तत्त्व) हमें बताओ। जो यह वर गूढ़ रहस्य में प्रविष्ट है, उसके सिवा नचिकेता दूसरा कोई वर नहीं माँगता।\"",
+      "meaningEn": "\"Tell us, O Death, that about which people doubt, that great matter of the hereafter. This boon that penetrates the hidden — no other than this does Naciketā choose.\""
+    },
+    {
+      "id": "katha-1-2-1",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 31,
+      "reference": "1.2.1",
+      "labelHi": "मन्त्र · १.२.१",
+      "labelEn": "Mantra · 1.2.1",
+      "lines": [
+        "अन्यच्छ्रेयोऽन्यदुतैव प्रेयस्ते उभे नानार्थे पुरुषं सिनीतः।",
+        "तयोः श्रेय आददानस्य साधु भवति हीयतेऽर्थाद्य उ प्रेयो वृणीते॥"
+      ],
+      "linesEn": [
+        "anyachchhreyo'nyadutaiva preyaste ubhe nānārthe puruṣhaṁ sinītaḥ",
+        "tayoḥ śreya ādadānasya sādhu bhavati hīyate'rthādya u preyo vṛiṇīte"
+      ],
+      "meaningHi": "(यम —) \"श्रेय (कल्याण) एक है और प्रेय (प्रिय) दूसरा; भिन्न-भिन्न प्रयोजन वाले ये दोनों पुरुष को बाँधते हैं। जो श्रेय को ग्रहण करता है, उसका कल्याण होता है; जो प्रेय को चुनता है, वह अपने लक्ष्य से गिर जाता है।\"",
+      "meaningEn": "(Yama:) \"The good is one thing, the pleasant another; both, with different aims, bind a person. Well it is for him who takes the good; he who chooses the pleasant misses the goal.\""
+    },
+    {
+      "id": "katha-1-2-2",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 32,
+      "reference": "1.2.2",
+      "labelHi": "मन्त्र · १.२.२",
+      "labelEn": "Mantra · 1.2.2",
+      "lines": [
+        "श्रेयश्च प्रेयश्च मनुष्यमेतस्तौ सम्परीत्य विविनक्ति धीरः।",
+        "श्रेयो हि धीरोऽभि प्रेयसो वृणीते प्रेयो मन्दो योगक्षेमाद्वृणीते॥"
+      ],
+      "linesEn": [
+        "śreyaścha preyaścha manuṣyametastau samparītya vivinakti dhīraḥ",
+        "śreyo hi dhīro'bhi preyaso vṛiṇīte preyo mando yogakṣhemādvṛiṇīte"
+      ],
+      "meaningHi": "\"श्रेय और प्रेय दोनों मनुष्य के सामने आते हैं; धीर पुरुष उन पर भली-भाँति विचार करके उन्हें अलग-अलग करता है। धीर प्रेय की अपेक्षा श्रेय को चुनता है; मन्दबुद्धि शरीर के योग-क्षेम (पालन-पोषण) के लिए प्रेय को चुनता है।\"",
+      "meaningEn": "\"Both the good and the pleasant come before a person; the wise one, considering them, distinguishes the two. The wise prefer the good to the pleasant; the dull choose the pleasant for the sake of getting and keeping.\""
+    },
+    {
+      "id": "katha-1-2-3",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 33,
+      "reference": "1.2.3",
+      "labelHi": "मन्त्र · १.२.३",
+      "labelEn": "Mantra · 1.2.3",
+      "lines": [
+        "स त्वं प्रियान्प्रियरूपांश्च कामानभिध्यायन्नचिकेतोऽत्यस्राक्षीः।",
+        "नैतां सृङ्कां वित्तमयीमवाप्तो यस्यां मज्जन्ति बहवो मनुष्याः॥"
+      ],
+      "linesEn": [
+        "sa tvaṁ priyānpriyarūpāṁścha kāmānabhidhyāyannachiketo'tyasrākṣhīḥ",
+        "naitāṁ sṛiṅkāṁ vittamayīmavāpto yasyāṁ majjanti bahavo manuṣyāḥ"
+      ],
+      "meaningHi": "\"हे नचिकेता! तूने प्रिय और प्रिय-रूप वाली कामनाओं पर विचार करके उन्हें त्याग दिया। तू धन की इस माला (मार्ग) में नहीं फँसा, जिसमें बहुत से मनुष्य डूब जाते हैं।\"",
+      "meaningEn": "\"You, Naciketā, having considered the desires that are dear and of dear form, have let them go. You have not taken this chain of wealth in which many men sink.\""
+    },
+    {
+      "id": "katha-1-2-4",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 34,
+      "reference": "1.2.4",
+      "labelHi": "मन्त्र · १.२.४",
+      "labelEn": "Mantra · 1.2.4",
+      "lines": [
+        "दूरमेते विपरीते विषूची अविद्या या च विद्येति ज्ञाता।",
+        "विद्याभीप्सिनं नचिकेतसं मन्ये न त्वा कामा बहवोऽलोलुपन्त॥"
+      ],
+      "linesEn": [
+        "dūramete viparīte viṣhūchī avidyā yā cha vidyeti jñātā",
+        "vidyābhīpsinaṁ nachiketasaṁ manye na tvā kāmā bahavo'lolupanta"
+      ],
+      "meaningHi": "\"जो अविद्या और विद्या कहलाती हैं, ये दोनों परस्पर विपरीत और भिन्न फल वाली, एक-दूसरे से दूर हैं। मैं नचिकेता को विद्या का अभिलाषी मानता हूँ; बहुत सी कामनाएँ तुझे विचलित न कर सकीं।\"",
+      "meaningEn": "\"Far apart and opposed, leading to different ends, are what are known as ignorance and knowledge. I take Naciketā to be one who longs for knowledge; the many desires did not shake you.\""
+    },
+    {
+      "id": "katha-1-2-5",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 35,
+      "reference": "1.2.5",
+      "labelHi": "मन्त्र · १.२.५",
+      "labelEn": "Mantra · 1.2.5",
+      "lines": [
+        "अविद्यायामन्तरे वर्तमानाः स्वयं धीराः पण्डितंमन्यमानाः।",
+        "दन्द्रम्यमाणाः परियन्ति मूढा अन्धेनैव नीयमाना यथान्धाः॥"
+      ],
+      "linesEn": [
+        "avidyāyāmantare vartamānāḥ svayaṁ dhīrāḥ paṇḍitaṁmanyamānāḥ",
+        "dandramyamāṇāḥ pariyanti mūḍhā andhenaiva nīyamānā yathāndhāḥ"
+      ],
+      "meaningHi": "\"अविद्या के भीतर रहते हुए भी अपने को धीर और पण्डित मानने वाले मूढ़ लोग बार-बार ठोकर खाते हुए भटकते हैं — जैसे अन्धे के द्वारा ले जाए जाते हुए अन्धे।\"",
+      "meaningEn": "\"Dwelling in the midst of ignorance, thinking themselves wise and learned, the deluded wander about, stumbling again and again, like the blind led by the blind.\""
+    },
+    {
+      "id": "katha-1-2-6",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 36,
+      "reference": "1.2.6",
+      "labelHi": "मन्त्र · १.२.६",
+      "labelEn": "Mantra · 1.2.6",
+      "lines": [
+        "न साम्परायः प्रतिभाति बालं प्रमाद्यन्तं वित्तमोहेन मूढम्।",
+        "अयं लोको नास्ति पर इति मानी पुनः पुनर्वशमापद्यते मे॥"
+      ],
+      "linesEn": [
+        "na sāmparāyaḥ pratibhāti bālaṁ pramādyantaṁ vittamohena mūḍham",
+        "ayaṁ loko nāsti para iti mānī punaḥ punarvaśhamāpadyate me"
+      ],
+      "meaningHi": "\"धन के मोह से मूढ़ और प्रमादी अज्ञानी को परलोक (का साधन) नहीं सूझता। 'यही लोक है, परलोक नहीं' — ऐसा मानने वाला बार-बार मेरे वश में आता है।\"",
+      "meaningEn": "\"The way beyond does not dawn on the childish one, careless and deluded by the glamour of wealth. 'This world alone is; there is no other' — thinking thus, he falls again and again into my power.\""
+    },
+    {
+      "id": "katha-1-2-7",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 37,
+      "reference": "1.2.7",
+      "labelHi": "मन्त्र · १.२.७",
+      "labelEn": "Mantra · 1.2.7",
+      "lines": [
+        "श्रवणायापि बहुभिर्यो न लभ्यः शृण्वन्तोऽपि बहवो यं न विद्युः।",
+        "आश्चर्यो वक्ता कुशलोऽस्य लब्धाऽऽश्चर्यो ज्ञाता कुशलानुशिष्टः॥"
+      ],
+      "linesEn": [
+        "śravaṇāyāpi bahubhiryo na labhyaḥ śhṛiṇvanto'pi bahavo yaṁ na vidyuḥ",
+        "āścharyo vaktā kuśhalo'sya labdhā''ścharyo jñātā kuśhalānuśhiṣṭaḥ"
+      ],
+      "meaningHi": "\"जो (आत्मा) बहुतों को सुनने के लिए भी नहीं मिलता, जिसे सुनकर भी बहुत लोग नहीं जानते — उसका वक्ता आश्चर्यरूप है, उसे पाने वाला कुशल है, और कुशल (गुरु) से उपदिष्ट होकर उसे जानने वाला आश्चर्यरूप है।\"",
+      "meaningEn": "\"That which many cannot even hear of, which many, though hearing, do not know — wonderful is the one who teaches it, skilled the one who attains it, wonderful the one who knows it when taught by a skilled teacher.\""
+    },
+    {
+      "id": "katha-1-2-8",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 38,
+      "reference": "1.2.8",
+      "labelHi": "मन्त्र · १.२.८",
+      "labelEn": "Mantra · 1.2.8",
+      "lines": [
+        "न नरेणावरेण प्रोक्त एष सुविज्ञेयो बहुधा चिन्त्यमानः।",
+        "अनन्यप्रोक्ते गतिरत्र नास्त्यणीयान्ह्यतर्क्यमणुप्रमाणात्॥"
+      ],
+      "linesEn": [
+        "na nareṇāvareṇa prokta eṣha suvijñeyo bahudhā chintyamānaḥ",
+        "ananyaprokte gatiratra nāstyaṇīyānhyatarkyamaṇupramāṇāt"
+      ],
+      "meaningHi": "\"निम्न (अज्ञानी) पुरुष के द्वारा कहा गया यह (आत्मा) बहुत प्रकार से चिन्तन किए जाने पर भी सुगमता से जानने योग्य नहीं। अनन्य (ब्रह्मरूप गुरु) के द्वारा कहे जाने पर ही इसमें गति है; यह सूक्ष्म से भी सूक्ष्म है, तर्क से परे है।\"",
+      "meaningEn": "\"Taught by an inferior man, this Self is not easily known, though much pondered. Unless taught by one who is not other than It, there is no way to It; for It is subtler than the subtle, beyond argument.\""
+    },
+    {
+      "id": "katha-1-2-9",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 39,
+      "reference": "1.2.9",
+      "labelHi": "मन्त्र · १.२.९",
+      "labelEn": "Mantra · 1.2.9",
+      "lines": [
+        "नैषा तर्केण मतिरापनेया प्रोक्ताऽन्येनैव सुज्ञानाय प्रेष्ठ।",
+        "यां त्वमापः सत्यधृतिर्बतासि त्वादृङ्नो भूयान्नचिकेतः प्रष्टा॥"
+      ],
+      "linesEn": [
+        "naiṣhā tarkeṇa matirāpaneyā proktā'nyenaiva sujñānāya preṣṭha",
+        "yāṁ tvamāpaḥ satyadhṛitirbatāsi tvādṛiṅno bhūyānnachiketaḥ praṣṭā"
+      ],
+      "meaningHi": "\"हे प्रियतम! यह बुद्धि (आत्मज्ञान) तर्क से प्राप्त होने वाली नहीं है; दूसरे (श्रोत्रिय गुरु) के द्वारा कहे जाने पर ही यह सुगमता से जानी जाती है — जिसे तूने प्राप्त कर लिया। तू सचमुच सत्य-धैर्य वाला है। हे नचिकेता! तुझ जैसा प्रश्नकर्ता हमें मिलता रहे।\"",
+      "meaningEn": "\"This understanding is not to be reached by reasoning, dearest; taught by another it is truly known — as you have grasped it. You are indeed steadfast in truth. May we always have a questioner like you, Naciketā.\""
+    },
+    {
+      "id": "katha-1-2-10",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 40,
+      "reference": "1.2.10",
+      "labelHi": "मन्त्र · १.२.१०",
+      "labelEn": "Mantra · 1.2.10",
+      "lines": [
+        "जानाम्यहं शेवधिरित्यनित्यं न ह्यध्रुवैः प्राप्यते हि ध्रुवं तत्।",
+        "ततो मया नाचिकेतश्चितोऽग्निरनित्यैर्द्रव्यैः प्राप्तवानस्मि नित्यम्॥"
+      ],
+      "linesEn": [
+        "jānāmyahaṁ śhevadhirityanityaṁ na hyadhruvaiḥ prāpyate hi dhruvaṁ tat",
+        "tato mayā nāchiketaśchito'gniranityairdravyaiḥ prāptavānasmi nityam"
+      ],
+      "meaningHi": "\"मैं जानता हूँ कि (कर्मफलरूप) निधि अनित्य है; क्योंकि अनित्य साधनों से वह नित्य (तत्त्व) नहीं मिलता। फिर भी मैंने नाचिकेत अग्नि का चयन किया और अनित्य द्रव्यों से नित्य (यम-पद) प्राप्त किया।\"",
+      "meaningEn": "\"I know that the treasure won by works is impermanent, for the eternal is not gained by things that pass. Yet I laid the Nāciketa fire and, by impermanent means, attained this lasting station.\""
+    },
+    {
+      "id": "katha-1-2-11",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 41,
+      "reference": "1.2.11",
+      "labelHi": "मन्त्र · १.२.११",
+      "labelEn": "Mantra · 1.2.11",
+      "lines": [
+        "कामस्याप्तिं जगतः प्रतिष्ठां क्रतोरानन्त्यमभयस्य पारम्।",
+        "स्तोममहदुरुगायं प्रतिष्ठां दृष्ट्वा धृत्या धीरो नचिकेतोऽत्यस्राक्षीः॥"
+      ],
+      "linesEn": [
+        "kāmasyāptiṁ jagataḥ pratiṣṭhāṁ kratorānantyamabhayasya pāram",
+        "stomamahadurugāyaṁ pratiṣṭhāṁ dṛiṣṭvā dhṛityā dhīro nachiketo'tyasrākṣhīḥ"
+      ],
+      "meaningHi": "\"कामनाओं की पूर्ति, जगत् की प्रतिष्ठा, यज्ञ का अनन्त फल, अभय का पार, स्तुत्य महान् उरुगाय (ब्रह्मलोक), और (अपनी) प्रतिष्ठा — इन्हें देखकर भी तूने, हे धीर नचिकेता! धैर्यपूर्वक इन्हें त्याग दिया।\"",
+      "meaningEn": "\"The fulfilment of desire, the foundation of the world, the endless fruit of rites, the far shore of fearlessness, the great and widely praised abode, your own high station — all these you saw and, wise Naciketā, with firmness let them go.\""
+    },
+    {
+      "id": "katha-1-2-12",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 42,
+      "reference": "1.2.12",
+      "labelHi": "मन्त्र · १.२.१२",
+      "labelEn": "Mantra · 1.2.12",
+      "lines": [
+        "तं दुर्दर्शं गूढमनुप्रविष्टं गुहाहितं गह्वरेष्ठं पुराणम्।",
+        "अध्यात्मयोगाधिगमेन देवं मत्वा धीरो हर्षशोकौ जहाति॥"
+      ],
+      "linesEn": [
+        "taṁ durdarśhaṁ gūḍhamanupraviṣṭaṁ guhāhitaṁ gahvareṣṭhaṁ purāṇam",
+        "adhyātmayogādhigamena devaṁ matvā dhīro harṣhaśhokau jahāti"
+      ],
+      "meaningHi": "\"उस दुर्दर्श, गूढ़ में प्रविष्ट, हृदय-गुहा में स्थित, गहन में रहने वाले, पुराण देव (आत्मा) को अध्यात्म-योग की प्राप्ति से जानकर धीर पुरुष हर्ष और शोक को त्याग देता है।\"",
+      "meaningEn": "\"Knowing, through the yoga of the inner self, that God — hard to see, deep-hidden, dwelling in the cave of the heart, abiding in the depths, ancient — the wise one leaves joy and sorrow behind.\""
+    },
+    {
+      "id": "katha-1-2-13",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 43,
+      "reference": "1.2.13",
+      "labelHi": "मन्त्र · १.२.१३",
+      "labelEn": "Mantra · 1.2.13",
+      "lines": [
+        "एतच्छ्रुत्वा सम्परिगृह्य मर्त्यः प्रवृह्य धर्म्यमणुमेतमाप्य।",
+        "स मोदते मोदनीयं हि लब्ध्वा विवृतं सद्म नचिकेतसं मन्ये॥"
+      ],
+      "linesEn": [
+        "etachchhrutvā samparigṛihya martyaḥ pravṛihya dharmyamaṇumetamāpya",
+        "sa modate modanīyaṁ hi labdhvā vivṛitaṁ sadma nachiketasaṁ manye"
+      ],
+      "meaningHi": "\"इसे सुनकर, भली-भाँति ग्रहण कर, (देह से) पृथक् करके इस धर्ममय सूक्ष्म आत्मा को प्राप्त कर मनुष्य आनन्दित होता है, क्योंकि वह आनन्दनीय को पा लेता है। मैं मानता हूँ कि नचिकेता के लिए (ब्रह्म का) द्वार खुला है।\"",
+      "meaningEn": "\"Hearing this and grasping it well, separating out this subtle Self that is righteousness itself and attaining it, a mortal rejoices, for he has found what is worthy of joy. I think the house lies open for Naciketā.\""
+    },
+    {
+      "id": "katha-1-2-14",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 44,
+      "reference": "1.2.14",
+      "labelHi": "मन्त्र · १.२.१४",
+      "labelEn": "Mantra · 1.2.14",
+      "lines": [
+        "अन्यत्र धर्मादन्यत्राधर्मादन्यत्रास्मात्कृताकृतात्।",
+        "अन्यत्र भूताच्च भव्याच्च यत्तत्पश्यसि तद्वद॥"
+      ],
+      "linesEn": [
+        "anyatra dharmādanyatrādharmādanyatrāsmātkṛitākṛitāt",
+        "anyatra bhūtāchcha bhavyāchcha yattatpaśyasi tadvada"
+      ],
+      "meaningHi": "(नचिकेता —) \"जो धर्म से भिन्न है, अधर्म से भिन्न है, इस कृत-अकृत (कार्य-कारण) से भिन्न है, भूत और भविष्य से भिन्न है — जो तुम उसे देखते हो, वह मुझे कहो।\"",
+      "meaningEn": "(Naciketā:) \"That which you see as other than right and other than wrong, other than this cause and effect, other than what has been and what shall be — tell me that.\""
+    },
+    {
+      "id": "katha-1-2-15",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 45,
+      "reference": "1.2.15",
+      "labelHi": "मन्त्र · १.२.१५",
+      "labelEn": "Mantra · 1.2.15",
+      "lines": [
+        "सर्वे वेदा यत्पदमामनन्ति तपांसि सर्वाणि च यद्वदन्ति।",
+        "यदिच्छन्तो ब्रह्मचर्यं चरन्ति तत्ते पदं संग्रहेण ब्रवीम्योमित्येतत्॥"
+      ],
+      "linesEn": [
+        "sarve vedā yatpadamāmananti tapāṁsi sarvāṇi cha yadvadanti",
+        "yadichchhanto brahmacharyaṁ charanti tatte padaṁ saṁgraheṇa bravīmyomityetat"
+      ],
+      "meaningHi": "(यम —) \"जिस पद को समस्त वेद बताते हैं, समस्त तप जिसे कहते हैं, जिसकी इच्छा से लोग ब्रह्मचर्य का पालन करते हैं — वह पद तुझे संक्षेप में कहता हूँ: वह 'ॐ' है।\"",
+      "meaningEn": "(Yama:) \"The goal that all the Vedas proclaim, that all austerities declare, desiring which people live the life of a student — that goal I tell you in brief: it is Om.\""
+    },
+    {
+      "id": "katha-1-2-16",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 46,
+      "reference": "1.2.16",
+      "labelHi": "मन्त्र · १.२.१६",
+      "labelEn": "Mantra · 1.2.16",
+      "lines": [
+        "एतद्ध्येवाक्षरं ब्रह्म एतद्ध्येवाक्षरं परम्।",
+        "एतद्ध्येवाक्षरं ज्ञात्वा यो यदिच्छति तस्य तत्॥"
+      ],
+      "linesEn": [
+        "etaddhyevākṣharaṁ brahma etaddhyevākṣharaṁ param",
+        "etaddhyevākṣharaṁ jñātvā yo yadichchhati tasya tat"
+      ],
+      "meaningHi": "\"यह अक्षर ही (अपर) ब्रह्म है, यह अक्षर ही परम (ब्रह्म) है। इस अक्षर को जानकर जो जिसकी इच्छा करता है, उसे वह मिलता है।\"",
+      "meaningEn": "\"This syllable indeed is Brahman; this syllable indeed is the highest. Knowing this syllable, whatever one desires, that one obtains.\""
+    },
+    {
+      "id": "katha-1-2-17",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 47,
+      "reference": "1.2.17",
+      "labelHi": "मन्त्र · १.२.१७",
+      "labelEn": "Mantra · 1.2.17",
+      "lines": [
+        "एतदालम्बनं श्रेष्ठमेतदालम्बनं परम्।",
+        "एतदालम्बनं ज्ञात्वा ब्रह्मलोके महीयते॥"
+      ],
+      "linesEn": [
+        "etadālambanaṁ śreṣṭhametadālambanaṁ param",
+        "etadālambanaṁ jñātvā brahmaloke mahīyate"
+      ],
+      "meaningHi": "\"यह (ॐ) श्रेष्ठ आलम्बन है, यह परम आलम्बन है। इस आलम्बन को जानकर मनुष्य ब्रह्मलोक में महिमान्वित होता है।\"",
+      "meaningEn": "\"This is the best support; this is the supreme support. Knowing this support, one is exalted in the world of Brahman.\""
+    },
+    {
+      "id": "katha-1-2-18",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 48,
+      "reference": "1.2.18",
+      "labelHi": "मन्त्र · १.२.१८",
+      "labelEn": "Mantra · 1.2.18",
+      "lines": [
+        "न जायते म्रियते वा विपश्चिन्नायं कुतश्चिन्न बभूव कश्चित्।",
+        "अजो नित्यः शाश्वतोऽयं पुराणो न हन्यते हन्यमाने शरीरे॥"
+      ],
+      "linesEn": [
+        "na jāyate mriyate vā vipaśchinnāyaṁ kutaśchinna babhūva kaśchit",
+        "ajo nityaḥ śhāśvato'yaṁ purāṇo na hanyate hanyamāne śharīre"
+      ],
+      "meaningHi": "\"यह ज्ञानस्वरूप आत्मा न जन्मता है, न मरता है; यह न किसी से हुआ है, न कोई इससे हुआ है। यह अजन्मा, नित्य, शाश्वत और पुराण है; शरीर के मारे जाने पर भी यह नहीं मारा जाता।\"",
+      "meaningEn": "\"The knowing Self is not born, nor does it die; it came from nothing, and nothing came from it. Unborn, eternal, everlasting, ancient — it is not slain when the body is slain.\""
+    },
+    {
+      "id": "katha-1-2-19",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 49,
+      "reference": "1.2.19",
+      "labelHi": "मन्त्र · १.२.१९",
+      "labelEn": "Mantra · 1.2.19",
+      "lines": [
+        "हन्ता चेन्मन्यते हन्तुं हतश्चेन्मन्यते हतम्।",
+        "उभौ तौ न विजानीतो नायं हन्ति न हन्यते॥"
+      ],
+      "linesEn": [
+        "hantā chenmanyate hantuṁ hataśchenmanyate hatam",
+        "ubhau tau na vijānīto nāyaṁ hanti na hanyate"
+      ],
+      "meaningHi": "\"यदि मारने वाला (इसे) मारने का विचार करता है, और यदि मारा गया (इसे) मारा हुआ मानता है — तो वे दोनों नहीं जानते; यह न मारता है, न मारा जाता है।\"",
+      "meaningEn": "\"If the slayer thinks he slays, if the slain thinks he is slain — neither of them understands. This one neither slays nor is slain.\""
+    },
+    {
+      "id": "katha-1-2-20",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 50,
+      "reference": "1.2.20",
+      "labelHi": "मन्त्र · १.२.२०",
+      "labelEn": "Mantra · 1.2.20",
+      "lines": [
+        "अणोरणीयान्महतो महीयानात्माऽस्य जन्तोर्निहितो गुहायाम्।",
+        "तमक्रतुः पश्यति वीतशोको धातुप्रसादान्महिमानमात्मनः॥"
+      ],
+      "linesEn": [
+        "aṇoraṇīyānmahato mahīyānātmā'sya jantornihito guhāyām",
+        "tamakratuḥ paśyati vītaśhoko dhātuprasādānmahimānamātmanaḥ"
+      ],
+      "meaningHi": "\"सूक्ष्म से भी सूक्ष्म और महान् से भी महान् यह आत्मा इस प्राणी की हृदय-गुहा में स्थित है। संकल्परहित पुरुष इन्द्रियों (और मन) की प्रसन्नता से आत्मा की उस महिमा को देखकर शोकरहित हो जाता है।\"",
+      "meaningEn": "\"Subtler than the subtle, greater than the great, the Self is set in the heart of this creature. One free from craving sees it, and is freed from sorrow — the glory of the Self, through the serenity of the senses.\""
+    },
+    {
+      "id": "katha-1-2-21",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 51,
+      "reference": "1.2.21",
+      "labelHi": "मन्त्र · १.२.२१",
+      "labelEn": "Mantra · 1.2.21",
+      "lines": [
+        "आसीनो दूरं व्रजति शयानो याति सर्वतः।",
+        "कस्तं मदामदं देवं मदन्यो ज्ञातुमर्हति॥"
+      ],
+      "linesEn": [
+        "āsīno dūraṁ vrajati śhayāno yāti sarvataḥ",
+        "kastaṁ madāmadaṁ devaṁ madanyo jñātumarhati"
+      ],
+      "meaningHi": "\"बैठा हुआ वह दूर जाता है, लेटा हुआ सर्वत्र पहुँचता है। उस मदयुक्त और मदरहित (आनन्दमय और विरक्त) देव को मेरे सिवा कौन जान सकता है?\"",
+      "meaningEn": "\"Sitting, he travels far; lying down, he goes everywhere. Who but I is fit to know that God who rejoices and rejoices not?\""
+    },
+    {
+      "id": "katha-1-2-22",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 52,
+      "reference": "1.2.22",
+      "labelHi": "मन्त्र · १.२.२२",
+      "labelEn": "Mantra · 1.2.22",
+      "lines": [
+        "अशरीरं शरीरेष्वनवस्थेष्ववस्थितम्।",
+        "महान्तं विभुमात्मानं मत्वा धीरो न शोचति॥"
+      ],
+      "linesEn": [
+        "aśharīraṁ śharīreṣvanavastheṣvavasthitam",
+        "mahāntaṁ vibhumātmānaṁ matvā dhīro na śhochati"
+      ],
+      "meaningHi": "\"शरीरों में शरीररहित, अस्थिर (देहों) में स्थिर, महान् और विभु आत्मा को जानकर धीर पुरुष शोक नहीं करता।\"",
+      "meaningEn": "\"Knowing the Self — bodiless among bodies, steady among the unsteady, great and all-pervading — the wise one does not grieve.\""
+    },
+    {
+      "id": "katha-1-2-23",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 53,
+      "reference": "1.2.23",
+      "labelHi": "मन्त्र · १.२.२३",
+      "labelEn": "Mantra · 1.2.23",
+      "lines": [
+        "नायमात्मा प्रवचनेन लभ्यो न मेधया न बहुना श्रुतेन।",
+        "यमेवैष वृणुते तेन लभ्यस्तस्यैष आत्मा विवृणुते तनूं स्वाम्॥"
+      ],
+      "linesEn": [
+        "nāyamātmā pravachanena labhyo na medhayā na bahunā śrutena",
+        "yamevaiṣha vṛiṇute tena labhyastasyaiṣha ātmā vivṛiṇute tanūṁ svām"
+      ],
+      "meaningHi": "\"यह आत्मा न प्रवचन से प्राप्त होता है, न बुद्धि से, न बहुत सुनने से। जिसे यह स्वयं वरण करता है, उसी से यह प्राप्त होता है; उसके लिए यह आत्मा अपना स्वरूप प्रकट कर देता है।\"",
+      "meaningEn": "\"This Self is not gained by discourse, nor by intellect, nor by much learning. It is gained by the one whom It chooses; to him this Self reveals Its own form.\""
+    },
+    {
+      "id": "katha-1-2-24",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 54,
+      "reference": "1.2.24",
+      "labelHi": "मन्त्र · १.२.२४",
+      "labelEn": "Mantra · 1.2.24",
+      "lines": [
+        "नाविरतो दुश्चरितान्नाशान्तो नासमाहितः।",
+        "नाशान्तमानसो वाऽपि प्रज्ञानेनैनमाप्नुयात्॥"
+      ],
+      "linesEn": [
+        "nāvirato duścharitānnāśhānto nāsamāhitaḥ",
+        "nāśhāntamānaso vā'pi prajñānenainamāpnuyāt"
+      ],
+      "meaningHi": "\"जो दुराचार से विरत नहीं हुआ, जो शान्त नहीं है, जो समाहित नहीं है, जिसका मन शान्त नहीं है — वह (केवल) बुद्धि से इसे नहीं पा सकता।\"",
+      "meaningEn": "\"Not one who has not turned from evil ways, nor one who is not tranquil, nor one who is not collected, nor one whose mind is not at peace, can reach this Self through mere knowledge.\""
+    },
+    {
+      "id": "katha-1-2-25",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 55,
+      "reference": "1.2.25",
+      "labelHi": "मन्त्र · १.२.२५",
+      "labelEn": "Mantra · 1.2.25",
+      "lines": [
+        "यस्य ब्रह्म च क्षत्रं च उभे भवत ओदनः।",
+        "मृत्युर्यस्योपसेचनं क इत्था वेद यत्र सः॥"
+      ],
+      "linesEn": [
+        "yasya brahma cha kṣhatraṁ cha ubhe bhavata odanaḥ",
+        "mṛityuryasyopasechanaṁ ka itthā veda yatra saḥ"
+      ],
+      "meaningHi": "\"जिसके लिए ब्राह्मण और क्षत्रिय दोनों भात (भोजन) हैं और मृत्यु जिसके लिए (भात पर डाला जाने वाला) व्यंजन है — वह कहाँ है, इसे इस प्रकार कौन जानता है?\"",
+      "meaningEn": "\"He for whom both the priestly and the warrior orders are food, for whom death is the sauce — who truly knows where He is?\""
+    },
+    {
+      "id": "katha-1-3-1",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 56,
+      "reference": "1.3.1",
+      "labelHi": "मन्त्र · १.३.१",
+      "labelEn": "Mantra · 1.3.1",
+      "lines": [
+        "ऋतं पिबन्तौ सुकृतस्य लोके गुहां प्रविष्टौ परमे परार्धे।",
+        "छायातपौ ब्रह्मविदो वदन्ति पञ्चाग्नयो ये च त्रिणाचिकेताः॥"
+      ],
+      "linesEn": [
+        "ṛitaṁ pibantau sukṛitasya loke guhāṁ praviṣṭau parame parārdhe",
+        "chhāyātapau brahmavido vadanti pañchāgnayo ye cha triṇāchiketāḥ"
+      ],
+      "meaningHi": "\"कर्मफल को भोगते हुए, सुकृत के लोक (शरीर) में, परम परार्ध (हृदय-आकाश) की गुहा में प्रविष्ट दो (जीवात्मा और परमात्मा) को ब्रह्मवेत्ता तथा पञ्चाग्नि और त्रिणाचिकेत वाले छाया और आतप (के समान) कहते हैं।\"",
+      "meaningEn": "\"Two there are who drink of the fruit of deeds in the world of good works, entered into the cave, in the highest, supreme region. Shadow and light, say the knowers of Brahman, and those who keep the five fires and the thrice-laid Nāciketa fire.\""
+    },
+    {
+      "id": "katha-1-3-2",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 57,
+      "reference": "1.3.2",
+      "labelHi": "मन्त्र · १.३.२",
+      "labelEn": "Mantra · 1.3.2",
+      "lines": [
+        "यः सेतुरीजानानामक्षरं ब्रह्म यत्परम्।",
+        "अभयं तितीर्षतां पारं नाचिकेतं शकेमहि॥"
+      ],
+      "linesEn": [
+        "yaḥ seturījānānāmakṣharaṁ brahma yatparam",
+        "abhayaṁ titīrṣhatāṁ pāraṁ nāchiketaṁ śhakemahi"
+      ],
+      "meaningHi": "\"जो यज्ञ करने वालों का सेतु है, जो परम अक्षर ब्रह्म है, जो (संसार को) पार करने की इच्छा वालों का अभय पार है — उस नाचिकेत (अग्नि) को हम जान (चयन कर) सकें।\"",
+      "meaningEn": "\"May we master the Nāciketa fire — the bridge for those who sacrifice, and the highest imperishable Brahman, the fearless far shore for those who seek to cross.\""
+    },
+    {
+      "id": "katha-1-3-3",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 58,
+      "reference": "1.3.3",
+      "labelHi": "मन्त्र · १.३.३",
+      "labelEn": "Mantra · 1.3.3",
+      "lines": [
+        "आत्मानं रथिनं विद्धि शरीरं रथमेव तु।",
+        "बुद्धिं तु सारथिं विद्धि मनः प्रग्रहमेव च॥"
+      ],
+      "linesEn": [
+        "ātmānaṁ rathinaṁ viddhi śharīraṁ rathameva tu",
+        "buddhiṁ tu sārathiṁ viddhi manaḥ pragrahameva cha"
+      ],
+      "meaningHi": "\"आत्मा को रथी (रथ का स्वामी) जान, शरीर को रथ; बुद्धि को सारथी जान और मन को लगाम।\"",
+      "meaningEn": "\"Know the Self as the lord of the chariot, the body as the chariot; know the intellect as the charioteer and the mind as the reins.\""
+    },
+    {
+      "id": "katha-1-3-4",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 59,
+      "reference": "1.3.4",
+      "labelHi": "मन्त्र · १.३.४",
+      "labelEn": "Mantra · 1.3.4",
+      "lines": [
+        "इन्द्रियाणि हयानाहुर्विषयांस्तेषु गोचरान्।",
+        "आत्मेन्द्रियमनोयुक्तं भोक्तेत्याहुर्मनीषिणः॥"
+      ],
+      "linesEn": [
+        "indriyāṇi hayānāhurviṣhayāṁsteṣhu gocharān",
+        "ātmendriyamanoyuktaṁ bhoktetyāhurmanīṣhiṇaḥ"
+      ],
+      "meaningHi": "\"इन्द्रियों को घोड़े कहते हैं और विषयों को उनके मार्ग। शरीर, इन्द्रिय और मन से युक्त आत्मा को मनीषी 'भोक्ता' कहते हैं।\"",
+      "meaningEn": "\"The senses, they say, are the horses; the objects of sense, their roads. The Self joined to body, senses and mind — the wise call this the enjoyer.\""
+    },
+    {
+      "id": "katha-1-3-5",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 60,
+      "reference": "1.3.5",
+      "labelHi": "मन्त्र · १.३.५",
+      "labelEn": "Mantra · 1.3.5",
+      "lines": [
+        "यस्त्वविज्ञानवान्भवत्ययुक्तेन मनसा सदा।",
+        "तस्येन्द्रियाण्यवश्यानि दुष्टाश्वा इव सारथेः॥"
+      ],
+      "linesEn": [
+        "yastvavijñānavānbhavatyayuktena manasā sadā",
+        "tasyendriyāṇyavaśyāni duṣṭāśvā iva sāratheḥ"
+      ],
+      "meaningHi": "\"जो अविवेकी है और जिसका मन सदा असंयत रहता है, उसकी इन्द्रियाँ वश में नहीं रहतीं — जैसे सारथी के दुष्ट घोड़े।\"",
+      "meaningEn": "\"For one who lacks discernment, whose mind is always unrestrained, the senses are unmanageable, like the vicious horses of a charioteer.\""
+    },
+    {
+      "id": "katha-1-3-6",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 61,
+      "reference": "1.3.6",
+      "labelHi": "मन्त्र · १.३.६",
+      "labelEn": "Mantra · 1.3.6",
+      "lines": [
+        "यस्तु विज्ञानवान्भवति युक्तेन मनसा सदा।",
+        "तस्येन्द्रियाणि वश्यानि सदश्वा इव सारथेः॥"
+      ],
+      "linesEn": [
+        "yastu vijñānavānbhavati yuktena manasā sadā",
+        "tasyendriyāṇi vaśyāni sadaśvā iva sāratheḥ"
+      ],
+      "meaningHi": "\"परन्तु जो विवेकी है और जिसका मन सदा संयत रहता है, उसकी इन्द्रियाँ वश में रहती हैं — जैसे सारथी के अच्छे घोड़े।\"",
+      "meaningEn": "\"But for one who has discernment, whose mind is always restrained, the senses are manageable, like the good horses of a charioteer.\""
+    },
+    {
+      "id": "katha-1-3-7",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 62,
+      "reference": "1.3.7",
+      "labelHi": "मन्त्र · १.३.७",
+      "labelEn": "Mantra · 1.3.7",
+      "lines": [
+        "यस्त्वविज्ञानवान्भवत्यमनस्कः सदाऽशुचिः।",
+        "न स तत्पदमाप्नोति संसारं चाधिगच्छति॥"
+      ],
+      "linesEn": [
+        "yastvavijñānavānbhavatyamanaskaḥ sadā'śhuchiḥ",
+        "na sa tatpadamāpnoti saṁsāraṁ chādhigachchhati"
+      ],
+      "meaningHi": "\"जो अविवेकी, असंयत-मन और सदा अशुद्ध रहता है, वह उस पद को नहीं पाता और संसार (जन्म-मरण) में पड़ता है।\"",
+      "meaningEn": "\"One who lacks discernment, who is unmindful and ever impure, does not reach that goal but goes on into the round of birth and death.\""
+    },
+    {
+      "id": "katha-1-3-8",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 63,
+      "reference": "1.3.8",
+      "labelHi": "मन्त्र · १.३.८",
+      "labelEn": "Mantra · 1.3.8",
+      "lines": [
+        "यस्तु विज्ञानवान्भवति समनस्कः सदा शुचिः।",
+        "स तु तत्पदमाप्नोति यस्माद्भूयो न जायते॥"
+      ],
+      "linesEn": [
+        "yastu vijñānavānbhavati samanaskaḥ sadā śhuchiḥ",
+        "sa tu tatpadamāpnoti yasmādbhūyo na jāyate"
+      ],
+      "meaningHi": "\"परन्तु जो विवेकी, संयत-मन और सदा शुद्ध रहता है, वह उस पद को पा लेता है जहाँ से फिर जन्म नहीं होता।\"",
+      "meaningEn": "\"But one who has discernment, who is mindful and ever pure, reaches that goal from which he is not born again.\""
+    },
+    {
+      "id": "katha-1-3-9",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 64,
+      "reference": "1.3.9",
+      "labelHi": "मन्त्र · १.३.९",
+      "labelEn": "Mantra · 1.3.9",
+      "lines": [
+        "विज्ञानसारथिर्यस्तु मनःप्रग्रहवान्नरः।",
+        "सोऽध्वनः पारमाप्नोति तद्विष्णोः परमं पदम्॥"
+      ],
+      "linesEn": [
+        "vijñānasārathiryastu manaḥpragrahavānnaraḥ",
+        "so'dhvanaḥ pāramāpnoti tadviṣṇoḥ paramaṁ padam"
+      ],
+      "meaningHi": "\"जिस मनुष्य का सारथी विवेक (बुद्धि) है और जो मन की लगाम को थामे हुए है, वह (संसार-)मार्ग का पार — विष्णु का वह परम पद — प्राप्त कर लेता है।\"",
+      "meaningEn": "\"The man whose charioteer is discernment, who holds the reins of the mind, reaches the end of the road — that supreme abode of Viṣṇu.\""
+    },
+    {
+      "id": "katha-1-3-10",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 65,
+      "reference": "1.3.10",
+      "labelHi": "मन्त्र · १.३.१०",
+      "labelEn": "Mantra · 1.3.10",
+      "lines": [
+        "इन्द्रियेभ्यः परा ह्यर्था अर्थेभ्यश्च परं मनः।",
+        "मनसस्तु परा बुद्धिर्बुद्धेरात्मा महान्परः॥"
+      ],
+      "linesEn": [
+        "indriyebhyaḥ parā hyarthā arthebhyaścha paraṁ manaḥ",
+        "manasastu parā buddhirbuddherātmā mahānparaḥ"
+      ],
+      "meaningHi": "\"इन्द्रियों से विषय परे (सूक्ष्म) हैं, विषयों से मन परे है; मन से बुद्धि परे है और बुद्धि से महान् आत्मा (महत्तत्त्व) परे है।\"",
+      "meaningEn": "\"Beyond the senses are their objects; beyond the objects is the mind; beyond the mind is the intellect; beyond the intellect is the great Self.\""
+    },
+    {
+      "id": "katha-1-3-11",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 66,
+      "reference": "1.3.11",
+      "labelHi": "मन्त्र · १.३.११",
+      "labelEn": "Mantra · 1.3.11",
+      "lines": [
+        "महतः परमव्यक्तमव्यक्तात्पुरुषः परः।",
+        "पुरुषान्न परं किंचित्सा काष्ठा सा परा गतिः॥"
+      ],
+      "linesEn": [
+        "mahataḥ paramavyaktamavyaktātpuruṣhaḥ paraḥ",
+        "puruṣhānna paraṁ kiṁchitsā kāṣṭhā sā parā gatiḥ"
+      ],
+      "meaningHi": "\"महत् से अव्यक्त परे है और अव्यक्त से पुरुष परे है। पुरुष से परे कुछ भी नहीं है — वही चरम सीमा है, वही परम गति है।\"",
+      "meaningEn": "\"Beyond the great is the unmanifest; beyond the unmanifest is the Person. Beyond the Person there is nothing — that is the limit, that the highest goal.\""
+    },
+    {
+      "id": "katha-1-3-12",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 67,
+      "reference": "1.3.12",
+      "labelHi": "मन्त्र · १.३.१२",
+      "labelEn": "Mantra · 1.3.12",
+      "lines": [
+        "एष सर्वेषु भूतेषु गूढोऽऽत्मा न प्रकाशते।",
+        "दृश्यते त्वग्र्यया बुद्ध्या सूक्ष्मया सूक्ष्मदर्शिभिः॥"
+      ],
+      "linesEn": [
+        "eṣha sarveṣhu bhūteṣhu gūḍho''tmā na prakāśhate",
+        "dṛiśyate tvagryayā buddhyā sūkṣmayā sūkṣmadarśhibhiḥ"
+      ],
+      "meaningHi": "\"यह आत्मा समस्त प्राणियों में छिपा हुआ है, प्रकाशित नहीं होता। परन्तु सूक्ष्मदर्शी पुरुष इसे एकाग्र और सूक्ष्म बुद्धि से देखते हैं।\"",
+      "meaningEn": "\"This Self, hidden in all beings, does not shine forth. But it is seen by the seers of the subtle with a keen and subtle intellect.\""
+    },
+    {
+      "id": "katha-1-3-13",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 68,
+      "reference": "1.3.13",
+      "labelHi": "मन्त्र · १.३.१३",
+      "labelEn": "Mantra · 1.3.13",
+      "lines": [
+        "यच्छेद्वाङ्मनसी प्राज्ञस्तद्यच्छेज्ज्ञान आत्मनि।",
+        "ज्ञानमात्मनि महति नियच्छेत्तद्यच्छेच्छान्त आत्मनि॥"
+      ],
+      "linesEn": [
+        "yachchhedvāṅmanasī prājñastadyachchhejjñāna ātmani",
+        "jñānamātmani mahati niyachchhettadyachchhechchhānta ātmani"
+      ],
+      "meaningHi": "\"बुद्धिमान् पुरुष वाणी को मन में रोके, उस मन को ज्ञानरूप (बुद्धि) आत्मा में रोके, ज्ञान को महान् आत्मा में लगाए और उस (महत्) को शान्त आत्मा में स्थिर करे।\"",
+      "meaningEn": "\"Let the wise one restrain speech in the mind, the mind in the knowing self, knowledge in the great Self, and that in the peaceful Self.\""
+    },
+    {
+      "id": "katha-1-3-14",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 69,
+      "reference": "1.3.14",
+      "labelHi": "मन्त्र · १.३.१४",
+      "labelEn": "Mantra · 1.3.14",
+      "lines": [
+        "उत्तिष्ठत जाग्रत प्राप्य वरान्निबोधत।",
+        "क्षुरस्य धारा निशिता दुरत्यया दुर्गं पथस्तत्कवयो वदन्ति॥"
+      ],
+      "linesEn": [
+        "uttiṣṭhata jāgrata prāpya varānnibodhata",
+        "kṣhurasya dhārā niśhitā duratyayā durgaṁ pathastatkavayo vadanti"
+      ],
+      "meaningHi": "\"उठो, जागो, श्रेष्ठ (गुरुओं) के पास जाकर (आत्मा को) जानो। ज्ञानी कहते हैं कि वह मार्ग छुरे की तीखी धार के समान दुर्गम और कठिन है।\"",
+      "meaningEn": "\"Arise! Awake! Having approached the great teachers, learn. Sharp as a razor's edge, hard to cross, difficult to tread is that path — so the wise declare.\""
+    },
+    {
+      "id": "katha-1-3-15",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 70,
+      "reference": "1.3.15",
+      "labelHi": "मन्त्र · १.३.१५",
+      "labelEn": "Mantra · 1.3.15",
+      "lines": [
+        "अशब्दमस्पर्शमरूपमव्ययं तथाऽरसं नित्यमगन्धवच्च यत्।",
+        "अनाद्यनन्तं महतः परं ध्रुवं निचाय्य तन्मृत्युमुखात्प्रमुच्यते॥"
+      ],
+      "linesEn": [
+        "aśhabdamasparśhamarūpamavyayaṁ tathā'rasaṁ nityamagandhavachcha yat",
+        "anādyanantaṁ mahataḥ paraṁ dhruvaṁ nichāyya tanmṛityumukhātpramuchyate"
+      ],
+      "meaningHi": "\"जो शब्द, स्पर्श, रूप, रस और गन्ध से रहित है, अव्यय और नित्य है, अनादि-अनन्त है, महत् से परे और ध्रुव है — उसे साक्षात् करके मनुष्य मृत्यु के मुख से मुक्त हो जाता है।\"",
+      "meaningEn": "\"That which is soundless, touchless, formless, undecaying; tasteless, eternal, odourless; without beginning or end, beyond the great, unchanging — realising That, one is freed from the jaws of death.\""
+    },
+    {
+      "id": "katha-1-3-16",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 71,
+      "reference": "1.3.16",
+      "labelHi": "मन्त्र · १.३.१६",
+      "labelEn": "Mantra · 1.3.16",
+      "lines": [
+        "नाचिकेतमुपाख्यानं मृत्युप्रोक्तं सनातनम्।",
+        "उक्त्वा श्रुत्वा च मेधावी ब्रह्मलोके महीयते॥"
+      ],
+      "linesEn": [
+        "nāchiketamupākhyānaṁ mṛityuproktaṁ sanātanam",
+        "uktvā śrutvā cha medhāvī brahmaloke mahīyate"
+      ],
+      "meaningHi": "मृत्यु के द्वारा कहे गए इस सनातन नाचिकेत उपाख्यान को कहकर और सुनकर मेधावी पुरुष ब्रह्मलोक में महिमान्वित होता है।",
+      "meaningEn": "The wise one who recites and hears this ancient story of Naciketā, told by Death, is exalted in the world of Brahman."
+    },
+    {
+      "id": "katha-1-3-17",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 72,
+      "reference": "1.3.17",
+      "labelHi": "मन्त्र · १.३.१७",
+      "labelEn": "Mantra · 1.3.17",
+      "lines": [
+        "य इमं परमं गुह्यं श्रावयेद्ब्रह्मसंसदि।",
+        "प्रयतः श्राद्धकाले वा तदानन्त्याय कल्पते।",
+        "तदानन्त्याय कल्पत इति॥"
+      ],
+      "linesEn": [
+        "ya imaṁ paramaṁ guhyaṁ śrāvayedbrahmasaṁsadi",
+        "prayataḥ śrāddhakāle vā tadānantyāya kalpate",
+        "tadānantyāya kalpata iti"
+      ],
+      "meaningHi": "जो पवित्र होकर इस परम गुह्य (उपनिषद्) को ब्राह्मणों की सभा में या श्राद्ध के समय सुनाता है, वह अनन्त फल के योग्य होता है — वह अनन्त फल के योग्य होता है।",
+      "meaningEn": "Whoever, purified, recites this supreme secret in an assembly of Brāhmaṇas or at the time of the śrāddha rite — that leads him to the infinite; that leads him to the infinite."
+    },
+    {
+      "id": "katha-2-1-1",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 73,
+      "reference": "2.1.1",
+      "labelHi": "मन्त्र · २.१.१",
+      "labelEn": "Mantra · 2.1.1",
+      "lines": [
+        "पराञ्चि खानि व्यतृणत्स्वयम्भूस्तस्मात्पराङ्पश्यति नान्तरात्मन्।",
+        "कश्चिद्धीरः प्रत्यगात्मानमैक्षदावृत्तचक्षुरमृतत्वमिच्छन्॥"
+      ],
+      "linesEn": [
+        "parāñchi khāni vyatṛiṇatsvayambhūstasmātparāṅpaśyati nāntarātman",
+        "kaśchiddhīraḥ pratyagātmānamaikṣhadāvṛittachakṣhuramṛitatvamichchhan"
+      ],
+      "meaningHi": "\"स्वयम्भू ने इन्द्रियों को बाहर की ओर खोला है, इसलिए (जीव) बाहर देखता है, अन्तरात्मा को नहीं। कोई (विरला) धीर पुरुष अमरत्व की इच्छा से नेत्रों को (भीतर) मोड़कर प्रत्यगात्मा को देखता है।\"",
+      "meaningEn": "\"The Self-existent pierced the openings of the senses outward; therefore one looks outward, not at the inner Self. Some rare wise one, desiring immortality, turned his eyes inward and saw the Self within.\""
+    },
+    {
+      "id": "katha-2-1-2",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 74,
+      "reference": "2.1.2",
+      "labelHi": "मन्त्र · २.१.२",
+      "labelEn": "Mantra · 2.1.2",
+      "lines": [
+        "पराचः कामाननुयन्ति बालास्ते मृत्योर्यन्ति विततस्य पाशम्।",
+        "अथ धीरा अमृतत्वं विदित्वा ध्रुवमध्रुवेष्विह न प्रार्थयन्ते॥"
+      ],
+      "linesEn": [
+        "parāchaḥ kāmānanuyanti bālāste mṛityoryanti vitatasya pāśham",
+        "atha dhīrā amṛitatvaṁ viditvā dhruvamadhruveṣviha na prārthayante"
+      ],
+      "meaningHi": "\"अज्ञानी लोग बाहर की कामनाओं के पीछे जाते हैं और (सर्वत्र) फैले हुए मृत्यु के पाश में पड़ते हैं। परन्तु धीर पुरुष ध्रुव अमरत्व को जानकर इस अध्रुव संसार में (किसी वस्तु की) इच्छा नहीं करते।\"",
+      "meaningEn": "\"The childish pursue outward desires and walk into the wide-spread snare of death. But the wise, knowing the sure immortality, do not seek the permanent among the impermanent things here.\""
+    },
+    {
+      "id": "katha-2-1-3",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 75,
+      "reference": "2.1.3",
+      "labelHi": "मन्त्र · २.१.३",
+      "labelEn": "Mantra · 2.1.3",
+      "lines": [
+        "येन रूपं रसं गन्धं शब्दान्स्पर्शांश्च मैथुनान्।",
+        "एतेनैव विजानाति किमत्र परिशिष्यते। एतद्वै तत्॥"
+      ],
+      "linesEn": [
+        "yena rūpaṁ rasaṁ gandhaṁ śhabdānsparśhāṁścha maithunān",
+        "etenaiva vijānāti kimatra pariśhiṣyate etadvai tat"
+      ],
+      "meaningHi": "\"जिसके द्वारा (जीव) रूप, रस, गन्ध, शब्द, स्पर्श और मैथुन-सुख को जानता है — उसी (आत्मा) से यह सब जानता है। यहाँ (उसके लिए) क्या अज्ञात रह जाता है? यही वह (ब्रह्म) है।\"",
+      "meaningEn": "\"That by which one knows form, taste, smell, sounds, touches and the joys of union — by that very Self one knows all this. What remains here unknown to it? This indeed is That.\""
+    },
+    {
+      "id": "katha-2-1-4",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 76,
+      "reference": "2.1.4",
+      "labelHi": "मन्त्र · २.१.४",
+      "labelEn": "Mantra · 2.1.4",
+      "lines": [
+        "स्वप्नान्तं जागरितान्तं चोभौ येनानुपश्यति।",
+        "महान्तं विभुमात्मानं मत्वा धीरो न शोचति॥"
+      ],
+      "linesEn": [
+        "svapnāntaṁ jāgaritāntaṁ chobhau yenānupaśyati",
+        "mahāntaṁ vibhumātmānaṁ matvā dhīro na śhochati"
+      ],
+      "meaningHi": "\"जिसके द्वारा (जीव) स्वप्न और जागृत दोनों अवस्थाओं को देखता है — उस महान्, विभु आत्मा को जानकर धीर पुरुष शोक नहीं करता।\"",
+      "meaningEn": "\"That by which one perceives both the dream state and the waking state — knowing that great, all-pervading Self, the wise one does not grieve.\""
+    },
+    {
+      "id": "katha-2-1-5",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 77,
+      "reference": "2.1.5",
+      "labelHi": "मन्त्र · २.१.५",
+      "labelEn": "Mantra · 2.1.5",
+      "lines": [
+        "य इमं मध्वदं वेद आत्मानं जीवमन्तिकात्।",
+        "ईशानं भूतभव्यस्य न ततो विजुगुप्सते। एतद्वै तत्॥"
+      ],
+      "linesEn": [
+        "ya imaṁ madhvadaṁ veda ātmānaṁ jīvamantikāt",
+        "īśhānaṁ bhūtabhavyasya na tato vijugupsate etadvai tat"
+      ],
+      "meaningHi": "\"जो कर्मफल-भोक्ता, प्राणधारी, भूत-भविष्य के ईश्वर इस आत्मा को अत्यन्त निकट से (अपने रूप में) जानता है, वह फिर (किसी से) घृणा नहीं करता। यही वह है।\"",
+      "meaningEn": "\"One who knows this Self — the honey-eater, the living one, close at hand, the Lord of what has been and what shall be — no longer shrinks from anything. This indeed is That.\""
+    },
+    {
+      "id": "katha-2-1-6",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 78,
+      "reference": "2.1.6",
+      "labelHi": "मन्त्र · २.१.६",
+      "labelEn": "Mantra · 2.1.6",
+      "lines": [
+        "यः पूर्वं तपसो जातमद्भ्यः पूर्वमजायत।",
+        "गुहां प्रविश्य तिष्ठन्तं यो भूतेभिर्व्यपश्यत। एतद्वै तत्॥"
+      ],
+      "linesEn": [
+        "yaḥ pūrvaṁ tapaso jātamadbhyaḥ pūrvamajāyata",
+        "guhāṁ praviśya tiṣṭhantaṁ yo bhūtebhirvyapaśyata etadvai tat"
+      ],
+      "meaningHi": "\"जो (हिरण्यगर्भ) तप (ब्रह्म) से पहले उत्पन्न हुआ, जलों से पहले जन्मा, जो हृदय-गुहा में प्रविष्ट होकर प्राणियों के साथ स्थित है — उसे जो देखता है (वह ब्रह्म को देखता है)। यही वह है।\"",
+      "meaningEn": "\"He who was born of old from austerity, born before the waters, who, having entered the cave, abides there with the elements — whoever sees Him sees That. This indeed is That.\""
+    },
+    {
+      "id": "katha-2-1-7",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 79,
+      "reference": "2.1.7",
+      "labelHi": "मन्त्र · २.१.७",
+      "labelEn": "Mantra · 2.1.7",
+      "lines": [
+        "या प्राणेन सम्भवत्यदितिर्देवतामयी।",
+        "गुहां प्रविश्य तिष्ठन्तीं या भूतेभिर्व्यजायत। एतद्वै तत्॥"
+      ],
+      "linesEn": [
+        "yā prāṇena sambhavatyaditirdevatāmayī",
+        "guhāṁ praviśya tiṣṭhantīṁ yā bhūtebhirvyajāyata etadvai tat"
+      ],
+      "meaningHi": "\"जो देवतामयी अदिति प्राण (ब्रह्म) से उत्पन्न होती है, जो हृदय-गुहा में प्रविष्ट होकर स्थित है, जो प्राणियों के साथ उत्पन्न हुई — (उसे जो देखता है, वह ब्रह्म को देखता है)। यही वह है।\"",
+      "meaningEn": "\"Aditi, who is made of all the deities and comes into being with the life-breath, who, having entered the cave, abides there, who was born together with the elements — she is That. This indeed is That.\""
+    },
+    {
+      "id": "katha-2-1-8",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 80,
+      "reference": "2.1.8",
+      "labelHi": "मन्त्र · २.१.८",
+      "labelEn": "Mantra · 2.1.8",
+      "lines": [
+        "अरण्योर्निहितो जातवेदा गर्भ इव सुभृतो गर्भिणीभिः।",
+        "दिवे दिव ईड्यो जागृवद्भिर्हविष्मद्भिर्मनुष्येभिरग्निः। एतद्वै तत्॥"
+      ],
+      "linesEn": [
+        "araṇyornihito jātavedā garbha iva subhṛito garbhiṇībhiḥ",
+        "dive diva īḍyo jāgṛivadbhirhaviṣmadbhirmanuṣyebhiragniḥ etadvai tat"
+      ],
+      "meaningHi": "\"दो अरणियों में स्थित जातवेदा अग्नि, गर्भिणियों द्वारा भली-भाँति धारण किए गए गर्भ की तरह (सुरक्षित) है; जागरूक और हविष्य वाले मनुष्यों द्वारा प्रतिदिन स्तुत्य है। यही वह है।\"",
+      "meaningEn": "\"The all-knowing fire hidden in the two fire-sticks, like a child well borne by women with child — day after day worshipped by wakeful men bearing oblations. This indeed is That.\""
+    },
+    {
+      "id": "katha-2-1-9",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 81,
+      "reference": "2.1.9",
+      "labelHi": "मन्त्र · २.१.९",
+      "labelEn": "Mantra · 2.1.9",
+      "lines": [
+        "यतश्चोदेति सूर्योऽस्तं यत्र च गच्छति।",
+        "तं देवाः सर्वे अर्पितास्तदु नात्येति कश्चन। एतद्वै तत्॥"
+      ],
+      "linesEn": [
+        "yataśchodeti sūryo'staṁ yatra cha gachchhati",
+        "taṁ devāḥ sarve arpitāstadu nātyeti kaśchana etadvai tat"
+      ],
+      "meaningHi": "\"जिससे सूर्य उदय होता है और जिसमें अस्त होता है, उसमें समस्त देव अर्पित हैं; उसे कोई भी नहीं लाँघता। यही वह है।\"",
+      "meaningEn": "\"That from which the sun rises and into which it sets — on that all the gods are fixed; none whatsoever goes beyond it. This indeed is That.\""
+    },
+    {
+      "id": "katha-2-1-10",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 82,
+      "reference": "2.1.10",
+      "labelHi": "मन्त्र · २.१.१०",
+      "labelEn": "Mantra · 2.1.10",
+      "lines": [
+        "यदेवेह तदमुत्र यदमुत्र तदन्विह।",
+        "मृत्योः स मृत्युमाप्नोति य इह नानेव पश्यति॥"
+      ],
+      "linesEn": [
+        "yadeveha tadamutra yadamutra tadanviha",
+        "mṛityoḥ sa mṛityumāpnoti ya iha nāneva paśyati"
+      ],
+      "meaningHi": "\"जो यहाँ है, वही वहाँ है; जो वहाँ है, वही यहाँ है। जो यहाँ (ब्रह्म में) भेद-सा देखता है, वह मृत्यु से मृत्यु को प्राप्त होता है।\"",
+      "meaningEn": "\"What is here, that is there; what is there, that too is here. Whoever sees here anything like difference goes from death to death.\""
+    },
+    {
+      "id": "katha-2-1-11",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 83,
+      "reference": "2.1.11",
+      "labelHi": "मन्त्र · २.१.११",
+      "labelEn": "Mantra · 2.1.11",
+      "lines": [
+        "मनसैवेदमाप्तव्यं नेह नानाऽस्ति किंचन।",
+        "मृत्योः स मृत्युं गच्छति य इह नानेव पश्यति॥"
+      ],
+      "linesEn": [
+        "manasaivedamāptavyaṁ neha nānā'sti kiṁchana",
+        "mṛityoḥ sa mṛityuṁ gachchhati ya iha nāneva paśyati"
+      ],
+      "meaningHi": "\"(शुद्ध) मन से ही इसे प्राप्त करना चाहिए (कि) यहाँ कुछ भी भेद नहीं है। जो यहाँ भेद-सा देखता है, वह मृत्यु से मृत्यु को जाता है।\"",
+      "meaningEn": "\"By the mind alone is this to be attained: there is no difference here whatsoever. Whoever sees here anything like difference goes from death to death.\""
+    },
+    {
+      "id": "katha-2-1-12",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 84,
+      "reference": "2.1.12",
+      "labelHi": "मन्त्र · २.१.१२",
+      "labelEn": "Mantra · 2.1.12",
+      "lines": [
+        "अङ्गुष्ठमात्रः पुरुषो मध्य आत्मनि तिष्ठति।",
+        "ईशानो भूतभव्यस्य न ततो विजुगुप्सते। एतद्वै तत्॥"
+      ],
+      "linesEn": [
+        "aṅguṣṭhamātraḥ puruṣho madhya ātmani tiṣṭhati",
+        "īśhāno bhūtabhavyasya na tato vijugupsate etadvai tat"
+      ],
+      "meaningHi": "\"अँगूठे के बराबर (परिमाण वाला) पुरुष शरीर के मध्य (हृदय) में स्थित है। वह भूत और भविष्य का ईश्वर है; (उसे जानकर) मनुष्य फिर घृणा नहीं करता। यही वह है।\"",
+      "meaningEn": "\"The Person of the size of a thumb dwells in the middle of the body, the Lord of what has been and what shall be; knowing Him one no longer shrinks from anything. This indeed is That.\""
+    },
+    {
+      "id": "katha-2-1-13",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 85,
+      "reference": "2.1.13",
+      "labelHi": "मन्त्र · २.१.१३",
+      "labelEn": "Mantra · 2.1.13",
+      "lines": [
+        "अङ्गुष्ठमात्रः पुरुषो ज्योतिरिवाधूमकः।",
+        "ईशानो भूतभव्यस्य स एवाद्य स उ श्वः। एतद्वै तत्॥"
+      ],
+      "linesEn": [
+        "aṅguṣṭhamātraḥ puruṣho jyotirivādhūmakaḥ",
+        "īśhāno bhūtabhavyasya sa evādya sa u śvaḥ etadvai tat"
+      ],
+      "meaningHi": "\"अँगूठे के बराबर पुरुष धूमरहित ज्योति के समान है। वह भूत और भविष्य का ईश्वर है; वही आज है और वही कल भी (रहेगा)। यही वह है।\"",
+      "meaningEn": "\"The Person of the size of a thumb is like a flame without smoke, the Lord of what has been and what shall be; He alone is today and He tomorrow. This indeed is That.\""
+    },
+    {
+      "id": "katha-2-1-14",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 86,
+      "reference": "2.1.14",
+      "labelHi": "मन्त्र · २.१.१४",
+      "labelEn": "Mantra · 2.1.14",
+      "lines": [
+        "यथोदकं दुर्गे वृष्टं पर्वतेषु विधावति।",
+        "एवं धर्मान्पृथक्पश्यंस्तानेवानुविधावति॥"
+      ],
+      "linesEn": [
+        "yathodakaṁ durge vṛiṣṭaṁ parvateṣhu vidhāvati",
+        "evaṁ dharmānpṛithakpaśyaṁstānevānuvidhāvati"
+      ],
+      "meaningHi": "\"जैसे ऊँचे स्थान पर बरसा हुआ जल पर्वतों में (नीचे की ओर) बह जाता है, वैसे ही (आत्मा के) धर्मों (गुणों) को पृथक्-पृथक् देखने वाला उन्हीं के पीछे भागता है।\"",
+      "meaningEn": "\"As rain that falls on a high ridge runs down the mountain slopes on every side, so one who sees the selves as separate runs after them alone.\""
+    },
+    {
+      "id": "katha-2-1-15",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 87,
+      "reference": "2.1.15",
+      "labelHi": "मन्त्र · २.१.१५",
+      "labelEn": "Mantra · 2.1.15",
+      "lines": [
+        "यथोदकं शुद्धे शुद्धमासिक्तं तादृगेव भवति।",
+        "एवं मुनेर्विजानत आत्मा भवति गौतम॥"
+      ],
+      "linesEn": [
+        "yathodakaṁ śhuddhe śhuddhamāsiktaṁ tādṛigeva bhavati",
+        "evaṁ munervijānata ātmā bhavati gautama"
+      ],
+      "meaningHi": "\"हे गौतम! जैसे शुद्ध जल में डाला हुआ शुद्ध जल वैसा ही (एक) हो जाता है, वैसे ही (तत्त्व को) जानने वाले मुनि का आत्मा (परमात्मा के साथ एक) हो जाता है।\"",
+      "meaningEn": "\"As pure water poured into pure water becomes the same, so, O Gautama, becomes the self of the sage who knows.\""
+    },
+    {
+      "id": "katha-2-2-1",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 88,
+      "reference": "2.2.1",
+      "labelHi": "मन्त्र · २.२.१",
+      "labelEn": "Mantra · 2.2.1",
+      "lines": [
+        "पुरमेकादशद्वारमजस्यावक्रचेतसः।",
+        "अनुष्ठाय न शोचति विमुक्तश्च विमुच्यते। एतद्वै तत्॥"
+      ],
+      "linesEn": [
+        "puramekādaśhadvāramajasyāvakrachetasaḥ",
+        "anuṣṭhāya na śhochati vimuktaścha vimuchyate etadvai tat"
+      ],
+      "meaningHi": "\"अजन्मा, सरल (अकुटिल) चेतना वाले (आत्मा) का ग्यारह द्वारों वाला यह नगर (शरीर) है। इसका (स्वामी के रूप में) ध्यान करने से मनुष्य शोक नहीं करता और (बन्धन से) मुक्त होकर मुक्त हो जाता है। यही वह है।\"",
+      "meaningEn": "\"There is a city of eleven gates belonging to the unborn One of undistorted awareness. Meditating on Him, one grieves no more and, released, is set free. This indeed is That.\""
+    },
+    {
+      "id": "katha-2-2-2",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 89,
+      "reference": "2.2.2",
+      "labelHi": "मन्त्र · २.२.२",
+      "labelEn": "Mantra · 2.2.2",
+      "lines": [
+        "हंसः शुचिषद्वसुरन्तरिक्षसद्धोता वेदिषदतिथिर्दुरोणसत्।",
+        "नृषद्वरसदृतसद्व्योमसदब्जा गोजा ऋतजा अद्रिजा ऋतं बृहत्॥"
+      ],
+      "linesEn": [
+        "haṁsaḥ śhuchiṣhadvasurantarikṣhasaddhotā vediṣhadatithirduroṇasat",
+        "nṛiṣhadvarasadṛitasadvyomasadabjā gojā ṛitajā adrijā ṛitaṁ bṛihat"
+      ],
+      "meaningHi": "\"वह सूर्य रूप से शुद्ध (द्युलोक) में रहने वाला हंस है, अन्तरिक्ष में रहने वाला वसु (वायु) है, वेदी में रहने वाला होता (अग्नि) है, घर में रहने वाला अतिथि है; वह मनुष्यों में, देवों में, यज्ञ में और आकाश में रहता है; जल में, पृथ्वी में, यज्ञ में और पर्वतों में उत्पन्न होता है — वही महान् सत्य है।\"",
+      "meaningEn": "\"He is the swan dwelling in the bright heaven, the pervader in the mid-region, the priest at the altar, the guest in the house; He dwells in men, in the gods, in the sacrifice, in the sky; born in water, born on earth, born in the rite, born on the mountains — He is the great Truth.\""
+    },
+    {
+      "id": "katha-2-2-3",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 90,
+      "reference": "2.2.3",
+      "labelHi": "मन्त्र · २.२.३",
+      "labelEn": "Mantra · 2.2.3",
+      "lines": [
+        "ऊर्ध्वं प्राणमुन्नयत्यपानं प्रत्यगस्यति।",
+        "मध्ये वामनमासीनं विश्वे देवा उपासते॥"
+      ],
+      "linesEn": [
+        "ūrdhvaṁ prāṇamunnayatyapānaṁ pratyagasyati",
+        "madhye vāmanamāsīnaṁ viśve devā upāsate"
+      ],
+      "meaningHi": "\"वह प्राण को ऊपर ले जाता है और अपान को नीचे फेंकता है। (हृदय के) मध्य में बैठे हुए उस वामन (पूजनीय) की समस्त देव (इन्द्रियाँ) उपासना करते हैं।\"",
+      "meaningEn": "\"He leads the out-breath upward and casts the in-breath downward. All the gods worship the adorable One seated in the middle.\""
+    },
+    {
+      "id": "katha-2-2-4",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 91,
+      "reference": "2.2.4",
+      "labelHi": "मन्त्र · २.२.४",
+      "labelEn": "Mantra · 2.2.4",
+      "lines": [
+        "अस्य विस्रंसमानस्य शरीरस्थस्य देहिनः।",
+        "देहाद्विमुच्यमानस्य किमत्र परिशिष्यते। एतद्वै तत्॥"
+      ],
+      "linesEn": [
+        "asya visraṁsamānasya śharīrasthasya dehinaḥ",
+        "dehādvimuchyamānasya kimatra pariśhiṣyate etadvai tat"
+      ],
+      "meaningHi": "\"शरीर में स्थित इस देही (आत्मा) के (शरीर से) छूटने पर और देह से मुक्त हो जाने पर यहाँ क्या शेष रहता है? यही वह है।\"",
+      "meaningEn": "\"When this embodied one dwelling in the body slips away and is released from the body, what remains here? This indeed is That.\""
+    },
+    {
+      "id": "katha-2-2-5",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 92,
+      "reference": "2.2.5",
+      "labelHi": "मन्त्र · २.२.५",
+      "labelEn": "Mantra · 2.2.5",
+      "lines": [
+        "न प्राणेन नापानेन मर्त्यो जीवति कश्चन।",
+        "इतरेण तु जीवन्ति यस्मिन्नेतावुपाश्रितौ॥"
+      ],
+      "linesEn": [
+        "na prāṇena nāpānena martyo jīvati kaśchana",
+        "itareṇa tu jīvanti yasminnetāvupāśritau"
+      ],
+      "meaningHi": "\"कोई भी मनुष्य न प्राण से जीता है, न अपान से; बल्कि वे उस दूसरे (आत्मा) से जीते हैं जिस पर ये दोनों आश्रित हैं।\"",
+      "meaningEn": "\"No mortal lives by the out-breath or the in-breath. They live by something else, on which these two depend.\""
+    },
+    {
+      "id": "katha-2-2-6",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 93,
+      "reference": "2.2.6",
+      "labelHi": "मन्त्र · २.२.६",
+      "labelEn": "Mantra · 2.2.6",
+      "lines": [
+        "हन्त त इदं प्रवक्ष्यामि गुह्यं ब्रह्म सनातनम्।",
+        "यथा च मरणं प्राप्य आत्मा भवति गौतम॥"
+      ],
+      "linesEn": [
+        "hanta ta idaṁ pravakṣyāmi guhyaṁ brahma sanātanam",
+        "yathā cha maraṇaṁ prāpya ātmā bhavati gautama"
+      ],
+      "meaningHi": "\"हे गौतम! अच्छा, मैं तुझे यह गुह्य सनातन ब्रह्म बताता हूँ, और यह भी कि मरने के बाद (अज्ञानी) आत्मा की क्या गति होती है।\"",
+      "meaningEn": "\"Come, I will tell you this secret, eternal Brahman, and also what becomes of the self, O Gautama, when it meets death.\""
+    },
+    {
+      "id": "katha-2-2-7",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 94,
+      "reference": "2.2.7",
+      "labelHi": "मन्त्र · २.२.७",
+      "labelEn": "Mantra · 2.2.7",
+      "lines": [
+        "योनिमन्ये प्रपद्यन्ते शरीरत्वाय देहिनः।",
+        "स्थाणुमन्येऽनुसंयन्ति यथाकर्म यथाश्रुतम्॥"
+      ],
+      "linesEn": [
+        "yonimanye prapadyante śharīratvāya dehinaḥ",
+        "sthāṇumanye'nusaṁyanti yathākarma yathāśrutam"
+      ],
+      "meaningHi": "\"कुछ देही (जीव) शरीर धारण करने के लिए (माता के) गर्भ में प्रवेश करते हैं; कुछ स्थावर (वृक्ष आदि) योनि में जाते हैं — अपने कर्म और अपने ज्ञान के अनुसार।\"",
+      "meaningEn": "\"Some embodied souls enter a womb to take a body; others pass into the immovable — according to their deeds, according to their knowledge.\""
+    },
+    {
+      "id": "katha-2-2-8",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 95,
+      "reference": "2.2.8",
+      "labelHi": "मन्त्र · २.२.८",
+      "labelEn": "Mantra · 2.2.8",
+      "lines": [
+        "य एष सुप्तेषु जागर्ति कामं कामं पुरुषो निर्मिमाणः।",
+        "तदेव शुक्रं तद्ब्रह्म तदेवामृतमुच्यते।",
+        "तस्मिँल्लोकाः श्रिताः सर्वे तदु नात्येति कश्चन। एतद्वै तत्॥"
+      ],
+      "linesEn": [
+        "ya eṣha supteṣhu jāgarti kāmaṁ kāmaṁ puruṣho nirmimāṇaḥ",
+        "tadeva śhukraṁ tadbrahma tadevāmṛitamuchyate",
+        "tasmiṁllokāḥ śritāḥ sarve tadu nātyeti kaśchana etadvai tat"
+      ],
+      "meaningHi": "\"जो यह पुरुष सोए हुओं में जागता रहता है और (स्वप्न में) एक-एक कामना को रचता है — वही शुद्ध है, वही ब्रह्म है, वही अमृत कहलाता है। उसी में सब लोक आश्रित हैं; उसे कोई नहीं लाँघता। यही वह है।\"",
+      "meaningEn": "\"That Person who stays awake in those who sleep, shaping desire after desire — that alone is the pure, that is Brahman, that alone is called the immortal. On it all the worlds rest; none goes beyond it. This indeed is That.\""
+    },
+    {
+      "id": "katha-2-2-9",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 96,
+      "reference": "2.2.9",
+      "labelHi": "मन्त्र · २.२.९",
+      "labelEn": "Mantra · 2.2.9",
+      "lines": [
+        "अग्निर्यथैको भुवनं प्रविष्टो रूपं रूपं प्रतिरूपो बभूव।",
+        "एकस्तथा सर्वभूतान्तरात्मा रूपं रूपं प्रतिरूपो बहिश्च॥"
+      ],
+      "linesEn": [
+        "agniryathaiko bhuvanaṁ praviṣṭo rūpaṁ rūpaṁ pratirūpo babhūva",
+        "ekastathā sarvabhūtāntarātmā rūpaṁ rūpaṁ pratirūpo bahiścha"
+      ],
+      "meaningHi": "\"जैसे एक ही अग्नि संसार में प्रविष्ट होकर रूप-रूप के अनुरूप हो गई है, वैसे ही एक ही सर्वभूतान्तरात्मा रूप-रूप के अनुरूप (प्रतीत) होता है और (उनसे) बाहर भी है।\"",
+      "meaningEn": "\"As the one fire, having entered the world, takes the form of every form, so the one inner Self of all beings takes the form of every form, and yet is outside them.\""
+    },
+    {
+      "id": "katha-2-2-10",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 97,
+      "reference": "2.2.10",
+      "labelHi": "मन्त्र · २.२.१०",
+      "labelEn": "Mantra · 2.2.10",
+      "lines": [
+        "वायुर्यथैको भुवनं प्रविष्टो रूपं रूपं प्रतिरूपो बभूव।",
+        "एकस्तथा सर्वभूतान्तरात्मा रूपं रूपं प्रतिरूपो बहिश्च॥"
+      ],
+      "linesEn": [
+        "vāyuryathaiko bhuvanaṁ praviṣṭo rūpaṁ rūpaṁ pratirūpo babhūva",
+        "ekastathā sarvabhūtāntarātmā rūpaṁ rūpaṁ pratirūpo bahiścha"
+      ],
+      "meaningHi": "\"जैसे एक ही वायु संसार में प्रविष्ट होकर रूप-रूप के अनुरूप हो गई है, वैसे ही एक ही सर्वभूतान्तरात्मा रूप-रूप के अनुरूप (प्रतीत) होता है और (उनसे) बाहर भी है।\"",
+      "meaningEn": "\"As the one air, having entered the world, takes the form of every form, so the one inner Self of all beings takes the form of every form, and yet is outside them.\""
+    },
+    {
+      "id": "katha-2-2-11",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 98,
+      "reference": "2.2.11",
+      "labelHi": "मन्त्र · २.२.११",
+      "labelEn": "Mantra · 2.2.11",
+      "lines": [
+        "सूर्यो यथा सर्वलोकस्य चक्षुर्न लिप्यते चाक्षुषैर्बाह्यदोषैः।",
+        "एकस्तथा सर्वभूतान्तरात्मा न लिप्यते लोकदुःखेन बाह्यः॥"
+      ],
+      "linesEn": [
+        "sūryo yathā sarvalokasya chakṣhurna lipyate chākṣhuṣhairbāhyadoṣhaiḥ",
+        "ekastathā sarvabhūtāntarātmā na lipyate lokaduḥkhena bāhyaḥ"
+      ],
+      "meaningHi": "\"जैसे समस्त लोक का नेत्र सूर्य नेत्र-सम्बन्धी बाह्य दोषों से लिप्त नहीं होता, वैसे ही एक सर्वभूतान्तरात्मा, (सबसे) बाहर होने से, लोक के दुःख से लिप्त नहीं होता।\"",
+      "meaningEn": "\"As the sun, the eye of the whole world, is not tainted by the outward blemishes seen by the eye, so the one inner Self of all beings is not tainted by the sorrow of the world, being outside it.\""
+    },
+    {
+      "id": "katha-2-2-12",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 99,
+      "reference": "2.2.12",
+      "labelHi": "मन्त्र · २.२.१२",
+      "labelEn": "Mantra · 2.2.12",
+      "lines": [
+        "एको वशी सर्वभूतान्तरात्मा एकं रूपं बहुधा यः करोति।",
+        "तमात्मस्थं येऽनुपश्यन्ति धीरास्तेषां सुखं शाश्वतं नेतरेषाम्॥"
+      ],
+      "linesEn": [
+        "eko vaśhī sarvabhūtāntarātmā ekaṁ rūpaṁ bahudhā yaḥ karoti",
+        "tamātmasthaṁ ye'nupaśyanti dhīrāsteṣhāṁ sukhaṁ śhāśvataṁ netareṣhām"
+      ],
+      "meaningHi": "\"वह एक ही सबको वश में रखने वाला सर्वभूतान्तरात्मा अपने एक रूप को अनेक प्रकार का बनाता है। जो धीर उसे अपने आत्मा में स्थित देखते हैं, उन्हीं को शाश्वत सुख मिलता है, दूसरों को नहीं।\"",
+      "meaningEn": "\"The one ruler, the inner Self of all beings, who makes His one form manifold — the wise who see Him abiding in their own self, theirs is eternal happiness, and no one else's.\""
+    },
+    {
+      "id": "katha-2-2-13",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 100,
+      "reference": "2.2.13",
+      "labelHi": "मन्त्र · २.२.१३",
+      "labelEn": "Mantra · 2.2.13",
+      "lines": [
+        "नित्योऽनित्यानां चेतनश्चेतनानामेको बहूनां यो विदधाति कामान्।",
+        "तमात्मस्थं येऽनुपश्यन्ति धीरास्तेषां शान्तिः शाश्वती नेतरेषाम्॥"
+      ],
+      "linesEn": [
+        "nityo'nityānāṁ chetanaśchetanānāmeko bahūnāṁ yo vidadhāti kāmān",
+        "tamātmasthaṁ ye'nupaśyanti dhīrāsteṣhāṁ śhāntiḥ śhāśvatī netareṣhām"
+      ],
+      "meaningHi": "\"जो अनित्यों में नित्य है, चेतनों का चेतन है, जो एक होकर बहुतों की कामनाएँ पूर्ण करता है — जो धीर उसे अपने आत्मा में स्थित देखते हैं, उन्हीं को शाश्वत शान्ति मिलती है, दूसरों को नहीं।\"",
+      "meaningEn": "\"The eternal among the transient, the consciousness of the conscious, the one who grants the desires of many — the wise who see Him abiding in their own self, theirs is eternal peace, and no one else's.\""
+    },
+    {
+      "id": "katha-2-2-14",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 101,
+      "reference": "2.2.14",
+      "labelHi": "मन्त्र · २.२.१४",
+      "labelEn": "Mantra · 2.2.14",
+      "lines": [
+        "तदेतदिति मन्यन्तेऽनिर्देश्यं परमं सुखम्।",
+        "कथं नु तद्विजानीयां किमु भाति विभाति वा॥"
+      ],
+      "linesEn": [
+        "tadetaditi manyante'nirdeśyaṁ paramaṁ sukham",
+        "kathaṁ nu tadvijānīyāṁ kimu bhāti vibhāti vā"
+      ],
+      "meaningHi": "(नचिकेता —) \"जिसे ज्ञानी 'यह वही है' मानते हैं, वह अनिर्देश्य परम सुख — मैं उसे कैसे जानूँ? क्या वह (स्वयं) प्रकाशित होता है, या (किसी अन्य के प्रकाश से) चमकता है?\"",
+      "meaningEn": "(Naciketā:) \"That indescribable supreme bliss which they say is 'This' — how may I come to know it? Does it shine of itself, or does it shine by reflection?\""
+    },
+    {
+      "id": "katha-2-2-15",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 102,
+      "reference": "2.2.15",
+      "labelHi": "मन्त्र · २.२.१५",
+      "labelEn": "Mantra · 2.2.15",
+      "lines": [
+        "न तत्र सूर्यो भाति न चन्द्रतारकं नेमा विद्युतो भान्ति कुतोऽयमग्निः।",
+        "तमेव भान्तमनुभाति सर्वं तस्य भासा सर्वमिदं विभाति॥"
+      ],
+      "linesEn": [
+        "na tatra sūryo bhāti na chandratārakaṁ nemā vidyuto bhānti kuto'yamagniḥ",
+        "tameva bhāntamanubhāti sarvaṁ tasya bhāsā sarvamidaṁ vibhāti"
+      ],
+      "meaningHi": "(यम —) \"वहाँ न सूर्य प्रकाशता है, न चन्द्र-तारे, न ये बिजलियाँ चमकती हैं — फिर यह अग्नि कैसे? उसके प्रकाशित होने पर ही सब प्रकाशित होता है; उसकी भा से यह सब कुछ प्रकाशमान है।\"",
+      "meaningEn": "(Yama:) \"There the sun does not shine, nor the moon and stars, nor do these lightnings shine — how then this fire? All this shines only after Him who shines; by His light all this is lit.\""
+    },
+    {
+      "id": "katha-2-3-1",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 103,
+      "reference": "2.3.1",
+      "labelHi": "मन्त्र · २.३.१",
+      "labelEn": "Mantra · 2.3.1",
+      "lines": [
+        "ऊर्ध्वमूलोऽवाक्शाख एषोऽश्वत्थः सनातनः।",
+        "तदेव शुक्रं तद्ब्रह्म तदेवामृतमुच्यते।",
+        "तस्मिँल्लोकाः श्रिताः सर्वे तदु नात्येति कश्चन। एतद्वै तत्॥"
+      ],
+      "linesEn": [
+        "ūrdhvamūlo'vākśhākha eṣho'śvatthaḥ sanātanaḥ",
+        "tadeva śhukraṁ tadbrahma tadevāmṛitamuchyate",
+        "tasmiṁllokāḥ śritāḥ sarve tadu nātyeti kaśchana etadvai tat"
+      ],
+      "meaningHi": "\"ऊपर मूल और नीचे शाखाओं वाला यह सनातन अश्वत्थ (संसार-वृक्ष) है। (उसका मूल) वही शुद्ध है, वही ब्रह्म है, वही अमृत कहलाता है। उसी में सब लोक आश्रित हैं; उसे कोई नहीं लाँघता। यही वह है।\"",
+      "meaningEn": "\"Root above, branches below, stands this eternal fig-tree of the world. Its root alone is the pure, is Brahman, is called the immortal. On it all the worlds rest; none goes beyond it. This indeed is That.\""
+    },
+    {
+      "id": "katha-2-3-2",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 104,
+      "reference": "2.3.2",
+      "labelHi": "मन्त्र · २.३.२",
+      "labelEn": "Mantra · 2.3.2",
+      "lines": [
+        "यदिदं किं च जगत्सर्वं प्राण एजति निःसृतम्।",
+        "महद्भयं वज्रमुद्यतं य एतद्विदुरमृतास्ते भवन्ति॥"
+      ],
+      "linesEn": [
+        "yadidaṁ kiṁ cha jagatsarvaṁ prāṇa ejati niḥsṛitam",
+        "mahadbhayaṁ vajramudyataṁ ya etadviduramṛitāste bhavanti"
+      ],
+      "meaningHi": "\"यह जो कुछ भी सारा जगत् है, वह प्राण (ब्रह्म) से निकला हुआ उसी में स्पन्दित होता है। वह उठे हुए वज्र के समान महान् भय (शासक) है। जो इसे जानते हैं, वे अमर हो जाते हैं।\"",
+      "meaningEn": "\"Whatever this whole world is, it has come forth from Life and moves in it. He is the great terror, the upraised thunderbolt. Those who know this become immortal.\""
+    },
+    {
+      "id": "katha-2-3-3",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 105,
+      "reference": "2.3.3",
+      "labelHi": "मन्त्र · २.३.३",
+      "labelEn": "Mantra · 2.3.3",
+      "lines": [
+        "भयादस्याग्निस्तपति भयात्तपति सूर्यः।",
+        "भयादिन्द्रश्च वायुश्च मृत्युर्धावति पञ्चमः॥"
+      ],
+      "linesEn": [
+        "bhayādasyāgnistapati bhayāttapati sūryaḥ",
+        "bhayādindraścha vāyuścha mṛityurdhāvati pañchamaḥ"
+      ],
+      "meaningHi": "\"इसके भय से अग्नि तपती है, भय से सूर्य तपता है; भय से इन्द्र, वायु और पाँचवाँ मृत्यु (अपने-अपने कार्य में) दौड़ते हैं।\"",
+      "meaningEn": "\"From fear of Him fire burns; from fear the sun gives heat; from fear Indra and Vāyu, and Death the fifth, run their courses.\""
+    },
+    {
+      "id": "katha-2-3-4",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 106,
+      "reference": "2.3.4",
+      "labelHi": "मन्त्र · २.३.४",
+      "labelEn": "Mantra · 2.3.4",
+      "lines": [
+        "इह चेदशकद्बोद्धुं प्राक्शरीरस्य विस्रसः।",
+        "ततः सर्गेषु लोकेषु शरीरत्वाय कल्पते॥"
+      ],
+      "linesEn": [
+        "iha chedaśhakadboddhuṁ prākśharīrasya visrasaḥ",
+        "tataḥ sargeṣhu lokeṣhu śharīratvāya kalpate"
+      ],
+      "meaningHi": "\"यदि शरीर के गिरने से पहले यहाँ (इसे) जान सका, (तो मुक्त हो जाता है); अन्यथा सृष्टि के लोकों में (फिर) शरीर धारण करने को बाध्य होता है।\"",
+      "meaningEn": "\"If one is able to realise Him here, before the body falls away — then one is free; if not, one is fitted for embodiment again in the created worlds.\""
+    },
+    {
+      "id": "katha-2-3-5",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 107,
+      "reference": "2.3.5",
+      "labelHi": "मन्त्र · २.३.५",
+      "labelEn": "Mantra · 2.3.5",
+      "lines": [
+        "यथाऽऽदर्शे तथाऽऽत्मनि यथा स्वप्ने तथा पितृलोके।",
+        "यथाऽप्सु परीव ददृशे तथा गन्धर्वलोके छायातपयोरिव ब्रह्मलोके॥"
+      ],
+      "linesEn": [
+        "yathā''darśhe tathā''tmani yathā svapne tathā pitṛiloke",
+        "yathā'psu parīva dadṛiśhe tathā gandharvaloke chhāyātapayoriva brahmaloke"
+      ],
+      "meaningHi": "\"जैसे दर्पण में (स्पष्ट दिखता है), वैसे (शुद्ध) बुद्धि में; जैसे स्वप्न में (अस्पष्ट), वैसे पितृलोक में; जैसे जल में धुँधला-सा दिखता है, वैसे गन्धर्वलोक में; और छाया-आतप की तरह (स्पष्ट भेद से) ब्रह्मलोक में (आत्मा दिखता है)।\"",
+      "meaningEn": "\"As in a mirror, so in the purified intellect; as in a dream, so in the world of the fathers; as seen dimly in water, so in the world of the gandharvas; as light and shadow, so clearly in the world of Brahmā.\""
+    },
+    {
+      "id": "katha-2-3-6",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 108,
+      "reference": "2.3.6",
+      "labelHi": "मन्त्र · २.३.६",
+      "labelEn": "Mantra · 2.3.6",
+      "lines": [
+        "इन्द्रियाणां पृथग्भावमुदयास्तमयौ च यत्।",
+        "पृथगुत्पद्यमानानां मत्वा धीरो न शोचति॥"
+      ],
+      "linesEn": [
+        "indriyāṇāṁ pṛithagbhāvamudayāstamayau cha yat",
+        "pṛithagutpadyamānānāṁ matvā dhīro na śhochati"
+      ],
+      "meaningHi": "\"(आत्मा से) पृथक् उत्पन्न होने वाली इन्द्रियों के पृथक् भाव (स्वभाव) को और उनके उदय-अस्त को जानकर धीर पुरुष शोक नहीं करता।\"",
+      "meaningEn": "\"Knowing that the senses, which arise separately, are separate from the Self, and knowing their rising and their setting, the wise one does not grieve.\""
+    },
+    {
+      "id": "katha-2-3-7",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 109,
+      "reference": "2.3.7",
+      "labelHi": "मन्त्र · २.३.७",
+      "labelEn": "Mantra · 2.3.7",
+      "lines": [
+        "इन्द्रियेभ्यः परं मनो मनसः सत्त्वमुत्तमम्।",
+        "सत्त्वादधि महानात्मा महतोऽव्यक्तमुत्तमम्॥"
+      ],
+      "linesEn": [
+        "indriyebhyaḥ paraṁ mano manasaḥ sattvamuttamam",
+        "sattvādadhi mahānātmā mahato'vyaktamuttamam"
+      ],
+      "meaningHi": "\"इन्द्रियों से मन परे है, मन से बुद्धि उत्तम है; बुद्धि से महान् आत्मा (महत्) ऊपर है और महत् से अव्यक्त उत्तम है।\"",
+      "meaningEn": "\"Beyond the senses is the mind; beyond the mind is the intellect; above the intellect is the great Self; beyond the great is the unmanifest.\""
+    },
+    {
+      "id": "katha-2-3-8",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 110,
+      "reference": "2.3.8",
+      "labelHi": "मन्त्र · २.३.८",
+      "labelEn": "Mantra · 2.3.8",
+      "lines": [
+        "अव्यक्तात्तु परः पुरुषो व्यापकोऽलिङ्ग एव च।",
+        "यं ज्ञात्वा मुच्यते जन्तुरमृतत्वं च गच्छति॥"
+      ],
+      "linesEn": [
+        "avyaktāttu paraḥ puruṣho vyāpako'liṅga eva cha",
+        "yaṁ jñātvā muchyate janturamṛitatvaṁ cha gachchhati"
+      ],
+      "meaningHi": "\"अव्यक्त से परे व्यापक और लिङ्गरहित (लक्षणरहित) पुरुष है, जिसे जानकर प्राणी मुक्त हो जाता है और अमरत्व को प्राप्त करता है।\"",
+      "meaningEn": "\"Beyond the unmanifest is the Person, all-pervading and without any mark, knowing whom a creature is freed and attains immortality.\""
+    },
+    {
+      "id": "katha-2-3-9",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 111,
+      "reference": "2.3.9",
+      "labelHi": "मन्त्र · २.३.९",
+      "labelEn": "Mantra · 2.3.9",
+      "lines": [
+        "न संदृशे तिष्ठति रूपमस्य न चक्षुषा पश्यति कश्चनैनम्।",
+        "हृदा मनीषा मनसाऽभिक्लृप्तो य एतद्विदुरमृतास्ते भवन्ति॥"
+      ],
+      "linesEn": [
+        "na saṁdṛiśhe tiṣṭhati rūpamasya na chakṣhuṣhā paśyati kaśchanainam",
+        "hṛidā manīṣhā manasā'bhiklṛipto ya etadviduramṛitāste bhavanti"
+      ],
+      "meaningHi": "\"इसका रूप दृष्टि के सामने नहीं आता; कोई इसे नेत्र से नहीं देखता। हृदय में स्थित, मनन-शील (शुद्ध) मन से यह प्रकट होता है। जो इसे जानते हैं, वे अमर हो जाते हैं।\"",
+      "meaningEn": "\"His form does not stand within sight; no one sees Him with the eye. He is revealed by the heart, by thought, by the mind. Those who know this become immortal.\""
+    },
+    {
+      "id": "katha-2-3-10",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 112,
+      "reference": "2.3.10",
+      "labelHi": "मन्त्र · २.३.१०",
+      "labelEn": "Mantra · 2.3.10",
+      "lines": [
+        "यदा पञ्चावतिष्ठन्ते ज्ञानानि मनसा सह।",
+        "बुद्धिश्च न विचेष्टति तामाहुः परमां गतिम्॥"
+      ],
+      "linesEn": [
+        "yadā pañchāvatiṣṭhante jñānāni manasā saha",
+        "buddhiścha na vicheṣṭati tāmāhuḥ paramāṁ gatim"
+      ],
+      "meaningHi": "\"जब पाँच ज्ञानेन्द्रियाँ मन के साथ (आत्मा में) स्थिर हो जाती हैं और बुद्धि भी चेष्टा नहीं करती — उसे परम गति कहते हैं।\"",
+      "meaningEn": "\"When the five senses of knowledge come to rest together with the mind, and the intellect stirs not — that they call the highest state.\""
+    },
+    {
+      "id": "katha-2-3-11",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 113,
+      "reference": "2.3.11",
+      "labelHi": "मन्त्र · २.३.११",
+      "labelEn": "Mantra · 2.3.11",
+      "lines": [
+        "तां योगमिति मन्यन्ते स्थिरामिन्द्रियधारणाम्।",
+        "अप्रमत्तस्तदा भवति योगो हि प्रभवाप्ययौ॥"
+      ],
+      "linesEn": [
+        "tāṁ yogamiti manyante sthirāmindriyadhāraṇām",
+        "apramattastadā bhavati yogo hi prabhavāpyayau"
+      ],
+      "meaningHi": "\"इन्द्रियों की उस स्थिर धारणा को 'योग' मानते हैं। तब (साधक) अप्रमत्त (सावधान) होता है, क्योंकि योग उत्पन्न भी होता है और नष्ट भी।\"",
+      "meaningEn": "\"That steady holding of the senses they regard as yoga. Then one becomes vigilant, for yoga comes and goes.\""
+    },
+    {
+      "id": "katha-2-3-12",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 114,
+      "reference": "2.3.12",
+      "labelHi": "मन्त्र · २.३.१२",
+      "labelEn": "Mantra · 2.3.12",
+      "lines": [
+        "नैव वाचा न मनसा प्राप्तुं शक्यो न चक्षुषा।",
+        "अस्तीति ब्रुवतोऽन्यत्र कथं तदुपलभ्यते॥"
+      ],
+      "linesEn": [
+        "naiva vāchā na manasā prāptuṁ śhakyo na chakṣhuṣhā",
+        "astīti bruvato'nyatra kathaṁ tadupalabhyate"
+      ],
+      "meaningHi": "\"वह न वाणी से, न मन से, न नेत्र से प्राप्त किया जा सकता है। 'वह है' — ऐसा कहने वाले के सिवा अन्यत्र वह कैसे जाना जाए?\"",
+      "meaningEn": "\"He cannot be reached by speech, nor by the mind, nor by the eye. How can He be known except from one who says 'He is'?\""
+    },
+    {
+      "id": "katha-2-3-13",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 115,
+      "reference": "2.3.13",
+      "labelHi": "मन्त्र · २.३.१३",
+      "labelEn": "Mantra · 2.3.13",
+      "lines": [
+        "अस्तीत्येवोपलब्धव्यस्तत्त्वभावेन चोभयोः।",
+        "अस्तीत्येवोपलब्धस्य तत्त्वभावः प्रसीदति॥"
+      ],
+      "linesEn": [
+        "astītyevopalabdhavyastattvabhāvena chobhayoḥ",
+        "astītyevopalabdhasya tattvabhāvaḥ prasīdati"
+      ],
+      "meaningHi": "\"दोनों (सोपाधिक और निरुपाधिक रूपों) में उसे 'है' — इस रूप में ही जानना चाहिए, और (फिर) तत्त्व-भाव से। 'है' — इस रूप में जान लेने पर उसका तत्त्व-भाव प्रसन्न (प्रकट) हो जाता है।\"",
+      "meaningEn": "\"He is to be known first as 'He is', and then in His true nature — in both ways. For one who has known Him as 'He is', His true nature becomes clear.\""
+    },
+    {
+      "id": "katha-2-3-14",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 116,
+      "reference": "2.3.14",
+      "labelHi": "मन्त्र · २.३.१४",
+      "labelEn": "Mantra · 2.3.14",
+      "lines": [
+        "यदा सर्वे प्रमुच्यन्ते कामा येऽस्य हृदि श्रिताः।",
+        "अथ मर्त्योऽमृतो भवत्यत्र ब्रह्म समश्नुते॥"
+      ],
+      "linesEn": [
+        "yadā sarve pramuchyante kāmā ye'sya hṛidi śritāḥ",
+        "atha martyo'mṛito bhavatyatra brahma samaśnute"
+      ],
+      "meaningHi": "\"जब इसके हृदय में स्थित समस्त कामनाएँ छूट जाती हैं, तब मनुष्य अमर हो जाता है और यहीं ब्रह्म को प्राप्त कर लेता है।\"",
+      "meaningEn": "\"When all the desires that dwell in the heart are let go, then the mortal becomes immortal and attains Brahman here itself.\""
+    },
+    {
+      "id": "katha-2-3-15",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 117,
+      "reference": "2.3.15",
+      "labelHi": "मन्त्र · २.३.१५",
+      "labelEn": "Mantra · 2.3.15",
+      "lines": [
+        "यदा सर्वे प्रभिद्यन्ते हृदयस्येह ग्रन्थयः।",
+        "अथ मर्त्योऽमृतो भवत्येतावद्ध्यनुशासनम्॥"
+      ],
+      "linesEn": [
+        "yadā sarve prabhidyante hṛidayasyeha granthayaḥ",
+        "atha martyo'mṛito bhavatyetāvaddhyanuśhāsanam"
+      ],
+      "meaningHi": "\"जब यहाँ हृदय की समस्त गाँठें खुल जाती हैं, तब मनुष्य अमर हो जाता है। बस इतना ही (समस्त उपनिषदों का) उपदेश है।\"",
+      "meaningEn": "\"When all the knots of the heart are cut here, then the mortal becomes immortal. This much is the teaching.\""
+    },
+    {
+      "id": "katha-2-3-16",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 118,
+      "reference": "2.3.16",
+      "labelHi": "मन्त्र · २.३.१६",
+      "labelEn": "Mantra · 2.3.16",
+      "lines": [
+        "शतं चैका च हृदयस्य नाड्यस्तासां मूर्धानमभिनिःसृतैका।",
+        "तयोर्ध्वमायन्नमृतत्वमेति विष्वङ्ङन्या उत्क्रमणे भवन्ति॥"
+      ],
+      "linesEn": [
+        "śhataṁ chaikā cha hṛidayasya nāḍyastāsāṁ mūrdhānamabhiniḥsṛitaikā",
+        "tayordhvamāyannamṛitatvameti viṣvaṅṅanyā utkramaṇe bhavanti"
+      ],
+      "meaningHi": "\"हृदय की एक सौ एक नाड़ियाँ हैं; उनमें से एक (सुषुम्ना) मूर्धा (ब्रह्मरन्ध्र) की ओर निकली है। उससे ऊपर जाता हुआ (उपासक) अमरत्व को प्राप्त करता है; अन्य नाड़ियाँ (देह से) निकलने पर विविध दिशाओं में ले जाती हैं।\"",
+      "meaningEn": "\"A hundred and one are the channels of the heart; of them one rises up to the crown of the head. Going up by it one reaches immortality; the others lead in all directions at the time of departing.\""
+    },
+    {
+      "id": "katha-2-3-17",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 119,
+      "reference": "2.3.17",
+      "labelHi": "मन्त्र · २.३.१७",
+      "labelEn": "Mantra · 2.3.17",
+      "lines": [
+        "अङ्गुष्ठमात्रः पुरुषोऽन्तरात्मा सदा जनानां हृदये सन्निविष्टः।",
+        "तं स्वाच्छरीरात्प्रवृहेन्मुञ्जादिवेषीकां धैर्येण।",
+        "तं विद्याच्छुक्रममृतं तं विद्याच्छुक्रममृतमिति॥"
+      ],
+      "linesEn": [
+        "aṅguṣṭhamātraḥ puruṣho'ntarātmā sadā janānāṁ hṛidaye sanniviṣṭaḥ",
+        "taṁ svāchchharīrātpravṛihenmuñjādiveṣhīkāṁ dhairyeṇa",
+        "taṁ vidyāchchhukramamṛitaṁ taṁ vidyāchchhukramamṛitamiti"
+      ],
+      "meaningHi": "\"अँगूठे के बराबर पुरुष, अन्तरात्मा, सदा मनुष्यों के हृदय में स्थित है। उसे अपने शरीर से धैर्यपूर्वक इस प्रकार पृथक् करे जैसे मूँज से सींक को। उसे शुद्ध, अमृत जाने; उसे शुद्ध, अमृत जाने।\"",
+      "meaningEn": "\"The Person of the size of a thumb, the inner Self, ever dwells in the heart of all. With steadiness one should draw Him out from one's own body, as a stalk from the muñja grass. Know Him as the pure, the immortal; know Him as the pure, the immortal.\""
+    },
+    {
+      "id": "katha-2-3-18",
+      "upanishad": 3,
+      "section": "mantra",
+      "stanza": 3,
+      "numInSection": 120,
+      "reference": "2.3.18",
+      "labelHi": "मन्त्र · २.३.१८",
+      "labelEn": "Mantra · 2.3.18",
+      "lines": [
+        "मृत्युप्रोक्तां नचिकेतोऽथ लब्ध्वा विद्यामेतां योगविधिं च कृत्स्नम्।",
+        "ब्रह्मप्राप्तो विरजोऽभूद्विमृत्युरन्योऽप्येवं यो विदध्यात्ममेव॥"
+      ],
+      "linesEn": [
+        "mṛityuproktāṁ nachiketo'tha labdhvā vidyāmetāṁ yogavidhiṁ cha kṛitsnam",
+        "brahmaprāpto virajo'bhūdvimṛityuranyo'pyevaṁ yo vidadhyātmameva"
+      ],
+      "meaningHi": "मृत्यु के द्वारा कही गई इस विद्या और सम्पूर्ण योग-विधि को प्राप्त करके नचिकेता निर्मल और मृत्युरहित होकर ब्रह्म को प्राप्त हो गया। दूसरा भी जो इस प्रकार अध्यात्म (आत्मतत्त्व) को जानता है, (वह वैसा ही हो जाता है)।",
+      "meaningEn": "Having received this knowledge taught by Death, and the whole method of yoga, Naciketā attained Brahman, freed from stain and from death. So too does anyone else who thus knows the inner Self."
+    }
+  ]
+}

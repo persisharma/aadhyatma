@@ -1,0 +1,280 @@
+/**
+ * Authored content for one Upanishad — consumed by scripts/build-upanishad.mjs.
+ * `muktika` is the text's fixed number in the Muktika canon (1–108) and is the
+ * reader's `chapter` id forever; `slug` must match `registry.ts`.
+ */
+export default {
+  slug: 'kena',
+  muktika: 2,
+  vedaHi: 'सामवेद',
+  vedaEn: 'Samaveda',
+  source: {
+    baseText:
+      'Sāmaveda (Talavakāra / Jaiminīya Upaniṣad-Brāhmaṇa) recension with Śāṅkara-bhāṣya, as printed in Gita Press "ईशादि नौ उपनिषद्"; Devanagari cross-checked against sanskritdocuments.org.',
+    canonicalEdition: 'Gita Press Gorakhpur, ईशादि नौ उपनिषद् (शांकरभाष्यार्थ सहित), code 66',
+    referenceUrls: [
+      'https://sanskritdocuments.org/doc_upanishhat/kena.html',
+      'https://www.wisdomlib.org/hinduism/book/kena-upanishad-shankara-bhashya',
+      'https://archive.org/details/IshadiNauUpanishadGitaPress',
+      'https://sanskritdocuments.org/doc_upanishhat/',
+    ],
+    notes:
+      'Four khaṇḍas of 9 · 5 · 12 · 9 mantras (Śaṅkara\'s numbering; khaṇḍas 3–4 are prose) plus the Sāmavedic śānti-pāṭha (आप्यायन्तु ममाङ्गानि) as page 1. Citations are khaṇḍa.mantra. The Vedic pluta marks (३) of 4.4 are omitted so the line renders cleanly.',
+    retrievedOn: '2026-09-25',
+  },
+  shanti: {
+    lines: [
+      'ॐ आप्यायन्तु ममाङ्गानि वाक्प्राणश्चक्षुः श्रोत्रमथो बलमिन्द्रियाणि च सर्वाणि।',
+      'सर्वं ब्रह्मौपनिषदं माहं ब्रह्म निराकुर्यां मा मा ब्रह्म निराकरोदनिराकरणमस्त्वनिराकरणं मेऽस्तु।',
+      'तदात्मनि निरते य उपनिषत्सु धर्मास्ते मयि सन्तु ते मयि सन्तु॥',
+      'ॐ शान्तिः शान्तिः शान्तिः॥',
+    ],
+    meaningHi:
+      'मेरे अंग, वाणी, प्राण, नेत्र, श्रोत्र, बल और समस्त इन्द्रियाँ पुष्ट हों। यह सब उपनिषद्-प्रतिपादित ब्रह्म ही है। मैं ब्रह्म का निराकरण न करूँ, न ब्रह्म मेरा निराकरण करे। निराकरण न हो; मेरा निराकरण न हो। आत्मा में निरत मुझमें उपनिषदों में कहे हुए धर्म स्थित हों, वे मुझमें स्थित हों। ॐ शान्तिः शान्तिः शान्तिः।',
+    meaningEn:
+      'May my limbs, speech, breath, eye, ear, strength and all my senses grow strong. All this is the Brahman of the Upaniṣads. May I never deny Brahman, nor Brahman deny me. Let there be no denial — no denial of me. May the virtues the Upaniṣads speak of abide in me, devoted to the Self; may they abide in me. Om, peace, peace, peace.',
+  },
+  khandas: [
+    [
+      {
+        lines: ['ॐ केनेषितं पतति प्रेषितं मनः केन प्राणः प्रथमः प्रैति युक्तः।', 'केनेषितां वाचमिमां वदन्ति चक्षुः श्रोत्रं क उ देवो युनक्ति॥'],
+        meaningHi:
+          '(शिष्य ने पूछा —) किसकी इच्छा से प्रेरित होकर मन अपने विषयों पर जाता है? किससे नियुक्त होकर प्रथम प्राण चलता है? किसकी प्रेरणा से लोग यह वाणी बोलते हैं? कौन देव नेत्र और श्रोत्र को उनके कार्य में लगाता है?',
+        meaningEn:
+          '(The disciple asks:) Willed by whom does the mind fly to its objects? Directed by whom does the first breath move? Willed by whom do people utter this speech? Which god yokes the eye and the ear to their work?',
+      },
+      {
+        lines: ['श्रोत्रस्य श्रोत्रं मनसो मनो यद्वाचो ह वाचं स उ प्राणस्य प्राणः।', 'चक्षुषश्चक्षुरतिमुच्य धीराः प्रेत्यास्माल्लोकादमृता भवन्ति॥'],
+        meaningHi:
+          '(गुरु ने कहा —) वह श्रोत्र का श्रोत्र, मन का मन, वाणी की वाणी, प्राण का प्राण और नेत्र का नेत्र है। धीर पुरुष (इन्द्रियों में आत्मबुद्धि को) त्यागकर इस लोक से जाकर अमर हो जाते हैं।',
+        meaningEn:
+          '(The teacher replies:) It is the ear of the ear, the mind of the mind, the speech of speech, the breath of the breath, the eye of the eye. The wise, letting go of identification with the senses, depart this world and become immortal.',
+      },
+      {
+        lines: ['न तत्र चक्षुर्गच्छति न वाग्गच्छति नो मनः।', 'न विद्मो न विजानीमो यथैतदनुशिष्यात्॥'],
+        meaningHi:
+          'वहाँ नेत्र नहीं पहुँचता, वाणी नहीं पहुँचती, मन भी नहीं। हम नहीं जानते, नहीं समझ पाते कि उसका उपदेश कैसे किया जाए।',
+        meaningEn:
+          'There the eye does not go, nor speech, nor the mind. We do not know, we do not understand, how one could teach it.',
+      },
+      {
+        lines: ['अन्यदेव तद्विदितादथो अविदितादधि।', 'इति शुश्रुम पूर्वेषां ये नस्तद्व्याचचक्षिरे॥'],
+        meaningHi:
+          'वह ज्ञात से भिन्न है और अज्ञात से भी परे है — ऐसा हमने उन पूर्वाचार्यों से सुना है जिन्होंने हमें उसकी व्याख्या की।',
+        meaningEn:
+          'It is other than the known, and beyond the unknown as well. Thus have we heard from the ancients who explained it to us.',
+      },
+      {
+        lines: ['यद्वाचानभ्युदितं येन वागभ्युद्यते।', 'तदेव ब्रह्म त्वं विद्धि नेदं यदिदमुपासते॥'],
+        meaningHi:
+          'जो वाणी से प्रकाशित नहीं होता, बल्कि जिससे वाणी प्रकाशित होती है — उसे ही तुम ब्रह्म जानो; यह नहीं जिसकी लोग (सीमित रूप में) उपासना करते हैं।',
+        meaningEn:
+          'That which speech cannot express, but by which speech is expressed — know that alone to be Brahman, not this which people worship here.',
+      },
+      {
+        lines: ['यन्मनसा न मनुते येनाहुर्मनो मतम्।', 'तदेव ब्रह्म त्वं विद्धि नेदं यदिदमुपासते॥'],
+        meaningHi:
+          'जिसे मन से नहीं सोचा जा सकता, बल्कि जिससे — ऐसा ज्ञानी कहते हैं — मन स्वयं जाना जाता है, उसे ही तुम ब्रह्म जानो; यह नहीं जिसकी लोग उपासना करते हैं।',
+        meaningEn:
+          'That which the mind cannot think, but by which, the wise say, the mind itself is known — know that alone to be Brahman, not this which people worship here.',
+      },
+      {
+        lines: ['यच्चक्षुषा न पश्यति येन चक्षूंषि पश्यति।', 'तदेव ब्रह्म त्वं विद्धि नेदं यदिदमुपासते॥'],
+        meaningHi:
+          'जिसे नेत्र से नहीं देखा जा सकता, बल्कि जिससे नेत्रों (की वृत्तियों) को देखा जाता है — उसे ही तुम ब्रह्म जानो; यह नहीं जिसकी लोग उपासना करते हैं।',
+        meaningEn:
+          'That which the eye cannot see, but by which the eyes themselves are seen — know that alone to be Brahman, not this which people worship here.',
+      },
+      {
+        lines: ['यच्छ्रोत्रेण न शृणोति येन श्रोत्रमिदं श्रुतम्।', 'तदेव ब्रह्म त्वं विद्धि नेदं यदिदमुपासते॥'],
+        meaningHi:
+          'जिसे श्रोत्र से नहीं सुना जा सकता, बल्कि जिससे यह श्रोत्र सुना (जाना) जाता है — उसे ही तुम ब्रह्म जानो; यह नहीं जिसकी लोग उपासना करते हैं।',
+        meaningEn:
+          'That which the ear cannot hear, but by which this ear is heard (known) — know that alone to be Brahman, not this which people worship here.',
+      },
+      {
+        lines: ['यत्प्राणेन न प्राणिति येन प्राणः प्रणीयते।', 'तदेव ब्रह्म त्वं विद्धि नेदं यदिदमुपासते॥'],
+        meaningHi:
+          'जो प्राण से जीवित नहीं होता, बल्कि जिससे प्राण संचालित होता है — उसे ही तुम ब्रह्म जानो; यह नहीं जिसकी लोग उपासना करते हैं।',
+        meaningEn:
+          'That which does not breathe by the breath, but by which the breath is led — know that alone to be Brahman, not this which people worship here.',
+      },
+    ],
+    [
+      {
+        lines: ['यदि मन्यसे सुवेदेति दभ्रमेवापि नूनं त्वं वेत्थ ब्रह्मणो रूपम्।', 'यदस्य त्वं यदस्य देवेष्वथ नु मीमांस्यमेव ते मन्ये विदितम्॥'],
+        meaningHi:
+          '(गुरु —) यदि तुम मानते हो कि "मैं ब्रह्म को भली-भाँति जानता हूँ", तो निश्चय ही तुम ब्रह्म के स्वरूप को बहुत थोड़ा जानते हो — उसका जो रूप तुममें है और जो देवताओं में है। इसलिए (मैं समझता हूँ) तुम्हें अभी और विचार करना है। (शिष्य —) मैं समझता हूँ कि मैंने जान लिया।',
+        meaningEn:
+          '(Teacher:) If you think "I know Brahman well", you surely know only a little of its form — what is in you and what is among the gods. So it still calls for your inquiry. (Disciple:) I think I do know it.',
+      },
+      {
+        lines: ['नाहं मन्ये सुवेदेति नो न वेदेति वेद च।', 'यो नस्तद्वेद तद्वेद नो न वेदेति वेद च॥'],
+        meaningHi:
+          'न तो मैं मानता हूँ कि "मैं भली-भाँति जानता हूँ", और न यह कि "मैं नहीं जानता" — मैं जानता भी हूँ। हममें से जो इस वचन को — "न यह कि नहीं जानता, जानता भी हूँ" — समझता है, वही उसे जानता है।',
+        meaningEn:
+          'I do not think "I know it well", nor do I think "I do not know it" — and yet I know. Whoever among us understands the saying "not that I do not know; I know and I know not" — he knows it.',
+      },
+      {
+        lines: ['यस्यामतं तस्य मतं मतं यस्य न वेद सः।', 'अविज्ञातं विजानतां विज्ञातमविजानताम्॥'],
+        meaningHi:
+          'जिसके लिए वह (ब्रह्म) "जाना हुआ नहीं" है, उसके लिए वह जाना हुआ है; जो उसे "जाना हुआ" मानता है, वह उसे नहीं जानता। जानने वालों के लिए वह अविज्ञात है, न जानने वालों के लिए विज्ञात।',
+        meaningEn:
+          'It is known to one for whom it is not known; one who thinks it known does not know it. It is unknown to those who know, and known to those who do not know.',
+      },
+      {
+        lines: ['प्रतिबोधविदितं मतममृतत्वं हि विन्दते।', 'आत्मना विन्दते वीर्यं विद्यया विन्दतेऽमृतम्॥'],
+        meaningHi:
+          'जब वह प्रत्येक बोध (वृत्ति) के साक्षी रूप में जाना जाता है, तब वह ठीक जाना गया माना जाता है; ऐसा जानने वाला अमृतत्व पाता है। आत्मा से (आत्मज्ञान से) बल मिलता है और विद्या से अमृतत्व।',
+        meaningEn:
+          'When it is known as the witness in every state of awareness, then it is truly known, and one attains immortality. Through the Self one gains strength; through knowledge, immortality.',
+      },
+      {
+        lines: ['इह चेदवेदीदथ सत्यमस्ति न चेदिहावेदीन्महती विनष्टिः।', 'भूतेषु भूतेषु विचित्य धीराः प्रेत्यास्माल्लोकादमृता भवन्ति॥'],
+        meaningHi:
+          'यदि यहाँ (इसी जीवन में) उसे जान लिया, तो जीवन सफल है; यदि यहाँ न जाना, तो महान विनाश है। धीर पुरुष प्राणी-प्राणी में उस एक आत्मा को पहचानकर इस लोक से जाकर अमर हो जाते हैं।',
+        meaningEn:
+          'If one knows it here, there is truth (fulfilment); if one does not know it here, great is the loss. The wise, discerning the one Self in every being, depart this world and become immortal.',
+      },
+    ],
+    [
+      {
+        lines: ['ब्रह्म ह देवेभ्यो विजिग्ये तस्य ह ब्रह्मणो विजये देवा अमहीयन्त।', 'त ऐक्षन्तास्माकमेवायं विजयोऽस्माकमेवायं महिमेति॥'],
+        meaningHi:
+          'ब्रह्म ने देवताओं के लिए (असुरों पर) विजय पाई। उस ब्रह्म की विजय से देवता गौरवान्वित हुए और सोचने लगे — "यह विजय हमारी ही है, यह महिमा हमारी ही है।"',
+        meaningEn:
+          'Brahman won a victory for the gods. In that victory of Brahman the gods grew proud and thought: "This victory is ours alone; this glory is ours alone."',
+      },
+      {
+        lines: ['तद्धैषां विजज्ञौ तेभ्यो ह प्रादुर्बभूव।', 'तन्न व्यजानत किमिदं यक्षमिति॥'],
+        meaningHi:
+          'ब्रह्म ने उनके इस अभिमान को जान लिया और उनके सामने (यक्ष रूप में) प्रकट हुआ। वे उसे न समझ सके — "यह यक्ष (पूज्य महान सत्ता) क्या है?"',
+        meaningEn:
+          'Brahman knew their conceit and appeared before them. They did not recognise it: "What is this great Spirit (yakṣa)?"',
+      },
+      {
+        lines: ['तेऽग्निमब्रुवन् जातवेद एतद्विजानीहि किमेतद्यक्षमिति तथेति॥'],
+        meaningHi: 'उन्होंने अग्नि से कहा — "हे जातवेदा! जानो, यह यक्ष क्या है।" अग्नि ने कहा — "ठीक है।"',
+        meaningEn: 'They said to Agni: "O Jātavedas, find out what this Spirit is." "So be it," he said.',
+      },
+      {
+        lines: ['तदभ्यद्रवत्तमभ्यवदत्कोऽसीति।', 'अग्निर्वा अहमस्मीत्यब्रवीज्जातवेदा वा अहमस्मीति॥'],
+        meaningHi: 'अग्नि उसकी ओर दौड़ा। उस (यक्ष) ने पूछा — "तू कौन है?" अग्नि ने कहा — "मैं अग्नि हूँ, मैं जातवेदा हूँ।"',
+        meaningEn: 'Agni rushed towards it. It asked him: "Who are you?" He said: "I am Agni; I am Jātavedas."',
+      },
+      {
+        lines: ['तस्मिंस्त्वयि किं वीर्यमिति।', 'अपीदं सर्वं दहेयं यदिदं पृथिव्यामिति॥'],
+        meaningHi: '"ऐसे तुझमें क्या सामर्थ्य है?" "इस पृथ्वी पर जो कुछ है, वह सब मैं जला सकता हूँ।"',
+        meaningEn: '"What power is there in such as you?" "I can burn all this, whatever there is on the earth."',
+      },
+      {
+        lines: ['तस्मै तृणं निदधावेतद्दहेति।', 'तदुपप्रेयाय सर्वजवेन तन्न शशाक दग्धुम्।', 'स तत एव निववृते नैतदशकं विज्ञातुं यदेतद्यक्षमिति॥'],
+        meaningHi:
+          'उस (यक्ष) ने उसके सामने एक तिनका रखकर कहा — "इसे जला।" अग्नि पूरे वेग से उस पर झपटा, पर उसे जला न सका। वह वहाँ से लौट आया — "मैं यह न जान सका कि यह यक्ष क्या है।"',
+        meaningEn:
+          'It placed a blade of grass before him: "Burn this." He rushed at it with all his might but could not burn it. He turned back from there: "I could not find out what this Spirit is."',
+      },
+      {
+        lines: ['अथ वायुमब्रुवन् वायवेतद्विजानीहि किमेतद्यक्षमिति तथेति॥'],
+        meaningHi: 'तब उन्होंने वायु से कहा — "हे वायु! जानो, यह यक्ष क्या है।" वायु ने कहा — "ठीक है।"',
+        meaningEn: 'Then they said to Vāyu: "O Vāyu, find out what this Spirit is." "So be it," he said.',
+      },
+      {
+        lines: ['तदभ्यद्रवत्तमभ्यवदत्कोऽसीति।', 'वायुर्वा अहमस्मीत्यब्रवीन्मातरिश्वा वा अहमस्मीति॥'],
+        meaningHi: 'वायु उसकी ओर दौड़ा। उस (यक्ष) ने पूछा — "तू कौन है?" वायु ने कहा — "मैं वायु हूँ, मैं मातरिश्वा हूँ।"',
+        meaningEn: 'Vāyu rushed towards it. It asked him: "Who are you?" He said: "I am Vāyu; I am Mātariśvā."',
+      },
+      {
+        lines: ['तस्मिंस्त्वयि किं वीर्यमिति।', 'अपीदं सर्वमाददीय यदिदं पृथिव्यामिति॥'],
+        meaningHi: '"ऐसे तुझमें क्या सामर्थ्य है?" "इस पृथ्वी पर जो कुछ है, वह सब मैं उड़ा (उठा) सकता हूँ।"',
+        meaningEn: '"What power is there in such as you?" "I can carry off all this, whatever there is on the earth."',
+      },
+      {
+        lines: ['तस्मै तृणं निदधावेतदादत्स्वेति।', 'तदुपप्रेयाय सर्वजवेन तन्न शशाकादातुम्।', 'स तत एव निववृते नैतदशकं विज्ञातुं यदेतद्यक्षमिति॥'],
+        meaningHi:
+          'उस (यक्ष) ने उसके सामने एक तिनका रखकर कहा — "इसे उठा।" वायु पूरे वेग से उस पर झपटा, पर उसे उठा न सका। वह वहाँ से लौट आया — "मैं यह न जान सका कि यह यक्ष क्या है।"',
+        meaningEn:
+          'It placed a blade of grass before him: "Take this up." He rushed at it with all his might but could not lift it. He turned back from there: "I could not find out what this Spirit is."',
+      },
+      {
+        lines: ['अथेन्द्रमब्रुवन्मघवन्नेतद्विजानीहि किमेतद्यक्षमिति तथेति।', 'तदभ्यद्रवत्तस्मात्तिरोदधे॥'],
+        meaningHi:
+          'तब उन्होंने इन्द्र से कहा — "हे मघवन्! जानो, यह यक्ष क्या है।" इन्द्र ने कहा — "ठीक है।" वह उसकी ओर दौड़ा, पर वह (यक्ष) उससे अन्तर्धान हो गया।',
+        meaningEn:
+          'Then they said to Indra: "O Maghavan, find out what this Spirit is." "So be it," he said. He rushed towards it, but it vanished from before him.',
+      },
+      {
+        lines: ['स तस्मिन्नेवाकाशे स्त्रियमाजगाम बहुशोभमानामुमां हैमवतीम्।', 'ताँहोवाच किमेतद्यक्षमिति॥'],
+        meaningHi:
+          'उसी आकाश में इन्द्र एक अत्यन्त शोभामयी स्त्री — हिमवान की पुत्री उमा — के पास पहुँचा और उनसे पूछा — "यह यक्ष क्या है?"',
+        meaningEn:
+          'In that same space he came upon a woman of great beauty — Umā, daughter of Himavat — and asked her: "What is this Spirit?"',
+      },
+    ],
+    [
+      {
+        lines: ['सा ब्रह्मेति होवाच ब्रह्मणो वा एतद्विजये महीयध्वमिति।', 'ततो हैव विदाञ्चकार ब्रह्मेति॥'],
+        meaningHi:
+          'उन्होंने कहा — "यह ब्रह्म है। ब्रह्म की ही इस विजय में तुम गौरव मान रहे हो।" तभी इन्द्र ने जाना कि वह ब्रह्म है।',
+        meaningEn:
+          'She said: "It is Brahman. In Brahman\'s victory you are glorying." From that alone Indra knew that it was Brahman.',
+      },
+      {
+        lines: ['तस्माद्वा एते देवा अतितरामिवान्यान्देवान्यदग्निर्वायुरिन्द्रः।', 'ते ह्येनन्नेदिष्ठं पस्पर्शुस्ते ह्येनत्प्रथमो विदाञ्चकार ब्रह्मेति॥'],
+        meaningHi:
+          'इसलिए ये देवता — अग्नि, वायु और इन्द्र — अन्य देवताओं से श्रेष्ठ हैं, क्योंकि उन्होंने उस (ब्रह्म) का सबसे निकट से स्पर्श किया और उन्होंने ही सबसे पहले जाना कि वह ब्रह्म है।',
+        meaningEn:
+          'Therefore these gods — Agni, Vāyu and Indra — surpass the other gods, for they touched it most closely and were the first to know it as Brahman.',
+      },
+      {
+        lines: ['तस्माद्वा इन्द्रोऽतितरामिवान्यान्देवान्।', 'स ह्येनन्नेदिष्ठं पस्पर्श स ह्येनत्प्रथमो विदाञ्चकार ब्रह्मेति॥'],
+        meaningHi:
+          'और इसलिए इन्द्र अन्य देवताओं से (और भी) श्रेष्ठ है, क्योंकि उसने उसका सबसे निकट से स्पर्श किया और उसने ही सबसे पहले जाना कि वह ब्रह्म है।',
+        meaningEn:
+          'And therefore Indra surpasses the other gods, for he touched it most closely and was the first to know it as Brahman.',
+      },
+      {
+        lines: ['तस्यैष आदेशो यदेतद्विद्युतो व्यद्युतदा इतीन् न्यमीमिषदा इत्यधिदैवतम्॥'],
+        meaningHi:
+          'उस (ब्रह्म) का यह उपदेश (दृष्टान्त) है — जैसे बिजली क्षण भर में चमक जाती है, जैसे आँख का पलक झपक जाता है — यह अधिदैवत (देव-सम्बन्धी) उपदेश है।',
+        meaningEn:
+          'This is its illustration: it is like the flash of lightning, like the blink of an eye — this is the teaching with reference to the gods (adhidaivata).',
+      },
+      {
+        lines: ['अथाध्यात्मं यदेतद्गच्छतीव च मनोऽनेन चैतदुपस्मरत्यभीक्ष्णं सङ्कल्पः॥'],
+        meaningHi:
+          'अब अध्यात्म (आत्म-सम्बन्धी) उपदेश — मन जैसे उस ब्रह्म की ओर जाता-सा है; इसी (मन) से साधक उसका बार-बार स्मरण करता है, और यह संकल्प (उसमें निरन्तर लगा रहता) है।',
+        meaningEn:
+          'Now the teaching with reference to the self (adhyātma): the mind seems to move towards it; by the mind one remembers it constantly, and this is the mind\'s resolve.',
+      },
+      {
+        lines: ['तद्ध तद्वनं नाम तद्वनमित्युपासितव्यम्।', 'स य एतदेवं वेदाभि हैनं सर्वाणि भूतानि संवाञ्छन्ति॥'],
+        meaningHi:
+          'वह ब्रह्म "तद्वन" (सबका वन्दनीय, सबका प्रिय) नाम से जाना जाता है; "तद्वन" रूप में ही उसकी उपासना करनी चाहिए। जो इसे इस प्रकार जानता है, उसे समस्त प्राणी चाहते हैं।',
+        meaningEn:
+          'It is called Tadvana — "the adorable, the beloved of all" — and as Tadvana it should be meditated upon. All beings long for one who knows it thus.',
+      },
+      {
+        lines: ['उपनिषदं भो ब्रूहीत्युक्ता त उपनिषद्।', 'ब्राह्मीं वाव त उपनिषदमब्रूमेति॥'],
+        meaningHi:
+          '(शिष्य —) "भगवन्! मुझे उपनिषद् (रहस्य विद्या) कहिए।" (गुरु —) "तुम्हें उपनिषद् कह दी गई; हमने तुम्हें ब्रह्म-सम्बन्धी उपनिषद् ही कही है।"',
+        meaningEn:
+          '(Disciple:) "Sir, teach me the Upaniṣad (the secret knowledge)." (Teacher:) "The Upaniṣad has been told to you; we have told you the Upaniṣad concerning Brahman."',
+      },
+      {
+        lines: ['तस्यै तपो दमः कर्मेति प्रतिष्ठा वेदाः सर्वाङ्गानि सत्यमायतनम्॥'],
+        meaningHi:
+          'उस (उपनिषद्-विद्या) की प्रतिष्ठा (आधार) तप, दम (इन्द्रिय-संयम) और कर्म हैं; वेद उसके सर्व अंग हैं; और सत्य उसका आश्रय है।',
+        meaningEn:
+          'Austerity, self-restraint and (ritual) work are its foundation; the Vedas are all its limbs; truth is its abode.',
+      },
+      {
+        lines: ['यो वा एतामेवं वेदापहत्य पाप्मानम्।', 'अनन्ते स्वर्गे लोके ज्येये प्रतितिष्ठति प्रतितिष्ठति॥'],
+        meaningHi:
+          'जो इस (विद्या) को इस प्रकार जानता है, वह पाप को नष्ट कर अनन्त, सर्वश्रेष्ठ स्वर्गलोक (ब्रह्म) में प्रतिष्ठित हो जाता है — प्रतिष्ठित हो जाता है।',
+        meaningEn:
+          'Whoever knows this thus, having shaken off evil, is firmly established in the infinite, supreme heavenly world — established indeed.',
+      },
+    ],
+  ],
+};

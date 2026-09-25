@@ -1,11 +1,22 @@
-/* JSON chapters are produced by scripts/build-upanishad.mjs from the authored
-   content in that script. Do not hand-edit the .json files. */
+/* Per-text JSON under ./texts/ and the manifest are produced by
+   scripts/build-upanishad.mjs from scripts/upanishad-content/<slug>.mjs.
+   Do not hand-edit the .json files. The 108-text catalogue is ./registry.ts. */
 
 import manifest from './chapters-manifest.json';
+import { upanishadTextLoaders } from './textLoaders';
+import {
+  getUpanishadMeta,
+  upanishadRegistry,
+  upanishadTitleEnOf,
+  upanishadTitleHiOf,
+  type UpanishadMeta,
+} from './registry';
+
+export * from './registry';
 
 export type UpanishadVerse = {
   id: string;
-  /** 1-based Upanishad number, mirrors the owning chapter. */
+  /** Muktikā number of the owning Upanishad — mirrors the chapter id. */
   upanishad: number;
   /** `shanti` is the opening śānti-pāṭha page; every other page is a `mantra`. */
   section: 'shanti' | 'mantra';
@@ -15,7 +26,7 @@ export type UpanishadVerse = {
    */
   stanza: number;
   numInSection: number;
-  /** Canonical citation — `mantra` (Īśa, Māṇḍūkya) or `khaṇḍa.mantra` (Kena); `shanti` for the opening. */
+  /** Canonical citation — `mantra`, `khaṇḍa.mantra` or `adhyāya.vallī.mantra`; `shanti` for the opening. */
   reference: string;
   labelHi: string;
   labelEn: string;
@@ -28,10 +39,12 @@ export type UpanishadVerse = {
 };
 
 export type UpanishadChapterSummary = {
+  /** The Muktikā number (1–108) — fixed forever, so progress survives new texts. */
   chapter: number;
+  slug: string;
   titleHi: string;
   titleEn: string;
-  /** The Veda this Upanishad belongs to (shown on the chapter card). */
+  /** The Veda this Upanishad belongs to. */
   vedaHi: string;
   vedaEn: string;
   /** Mantras proper — excludes the śānti-pāṭha page. */
@@ -47,6 +60,11 @@ export type UpanishadChapter = UpanishadChapterSummary & {
 export const upanishadTitleHi = 'उपनिषद्';
 export const upanishadTitleEn = 'Upanishads';
 
+/**
+ * The READABLE Upanishads, in Muktikā order. `chapter` values are sparse (1, 2,
+ * 6, …): readers must step between them with `nextUpanishadChapter` /
+ * `prevUpanishadChapter`, never `chapter ± 1`.
+ */
 export const upanishadChaptersManifest: readonly UpanishadChapterSummary[] =
   manifest as UpanishadChapterSummary[];
 
@@ -57,25 +75,52 @@ export const upanishadMantraTotal = upanishadChaptersManifest.reduce(
   0
 );
 
-// Payloads sit behind require() thunks so only the manifest is on the launch
-// path (RULEBOOK §2 row 2 — `texts.ts` needs the totals, never the verses).
-const chapterLoaders: readonly (() => UpanishadChapter)[] = [
-  () => require('./chapter-01.json') as UpanishadChapter,
-  () => require('./chapter-02.json') as UpanishadChapter,
-  () => require('./chapter-03.json') as UpanishadChapter,
-];
+const summaryByChapter: ReadonlyMap<number, UpanishadChapterSummary> = new Map(
+  upanishadChaptersManifest.map((c) => [c.chapter, c])
+);
+
+export function isUpanishadAvailable(chapter: number): boolean {
+  return summaryByChapter.has(chapter);
+}
+
+export function getUpanishadSummary(chapter: number): UpanishadChapterSummary | undefined {
+  return summaryByChapter.get(chapter);
+}
+
+/** The next readable Upanishad after `chapter` in Muktikā order, or null at the end. */
+export function nextUpanishadChapter(chapter: number): UpanishadChapterSummary | null {
+  return upanishadChaptersManifest.find((c) => c.chapter > chapter) ?? null;
+}
+
+/** The previous readable Upanishad before `chapter` in Muktikā order, or null at the start. */
+export function prevUpanishadChapter(chapter: number): UpanishadChapterSummary | null {
+  for (let i = upanishadChaptersManifest.length - 1; i >= 0; i--) {
+    if (upanishadChaptersManifest[i].chapter < chapter) return upanishadChaptersManifest[i];
+  }
+  return null;
+}
+
+/** Every catalogue row, with its readable summary attached when the text has shipped. */
+export type UpanishadCatalogueRow = UpanishadMeta & { summary: UpanishadChapterSummary | null };
+
+export function upanishadCatalogue(): UpanishadCatalogueRow[] {
+  return upanishadRegistry.map((meta) => ({ meta, summary: summaryByChapter.get(meta.muktika) ?? null }))
+    .map(({ meta, summary }) => ({ ...meta, summary }));
+}
 
 const chapterCache = new Map<number, UpanishadChapter>();
 
 export function getUpanishadChapter(chapter: number): UpanishadChapter {
-  const idx = chapter - 1;
-  if (idx < 0 || idx >= chapterLoaders.length) {
-    throw new Error(`upanishad: chapter ${chapter} out of range (1-${chapterLoaders.length})`);
+  const summary = summaryByChapter.get(chapter);
+  if (!summary) {
+    throw new Error(`upanishad: chapter ${chapter} is not a readable Upanishad yet`);
   }
   const cached = chapterCache.get(chapter);
   if (cached) return cached;
-  const loaded = chapterLoaders[idx]();
-  assertChapterInvariants(loaded, upanishadChaptersManifest[idx]);
+  const loader = upanishadTextLoaders[summary.slug];
+  if (!loader) throw new Error(`upanishad: no loader for '${summary.slug}'`);
+  const loaded = loader();
+  assertChapterInvariants(loaded, summary);
   chapterCache.set(chapter, loaded);
   return loaded;
 }
@@ -83,17 +128,26 @@ export function getUpanishadChapter(chapter: number): UpanishadChapter {
 const DEVANAGARI = /[ऀ-ॿ]/;
 
 (function assertUpanishadManifestInvariants() {
-  if (chapterLoaders.length !== upanishadChaptersManifest.length) {
-    throw new Error('upanishad: chapter count mismatch with manifest');
+  const loaderSlugs = Object.keys(upanishadTextLoaders).sort();
+  const manifestSlugs = upanishadChaptersManifest.map((c) => c.slug).sort();
+  if (loaderSlugs.join(',') !== manifestSlugs.join(',')) {
+    throw new Error('upanishad: textLoaders.ts drifts from chapters-manifest.json — rerun the builder');
   }
-  for (let i = 0; i < upanishadChaptersManifest.length; i++) {
-    const summary = upanishadChaptersManifest[i];
+  let last = 0;
+  for (const summary of upanishadChaptersManifest) {
+    const meta = getUpanishadMeta(summary.chapter);
+    if (!meta || meta.slug !== summary.slug) {
+      throw new Error(`upanishad: manifest chapter ${summary.chapter} is not registry '${summary.slug}'`);
+    }
+    if (summary.chapter <= last) throw new Error('upanishad: manifest must be in ascending Muktikā order');
+    last = summary.chapter;
     if (
-      summary.chapter !== i + 1 ||
+      summary.titleHi !== upanishadTitleHiOf(meta) ||
+      summary.titleEn !== upanishadTitleEnOf(meta) ||
       summary.mantraCount < 1 ||
       summary.verseCount !== summary.mantraCount + 1
     ) {
-      throw new Error(`upanishad: invalid manifest entry ${i + 1}`);
+      throw new Error(`upanishad: invalid manifest entry ${summary.chapter}`);
     }
   }
 })();
@@ -106,6 +160,7 @@ function assertChapterInvariants(c: UpanishadChapter, manifestEntry: UpanishadCh
   }
   if (
     manifestEntry.chapter !== c.chapter ||
+    manifestEntry.slug !== c.slug ||
     manifestEntry.mantraCount !== c.mantraCount ||
     manifestEntry.verseCount !== c.verseCount ||
     manifestEntry.titleHi !== c.titleHi ||

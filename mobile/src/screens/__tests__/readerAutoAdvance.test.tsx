@@ -117,7 +117,10 @@ const READERS: ReaderCase[] = [
     name: 'Upanishads',
     routeName: 'UpanishadReader',
     Screen: UpanishadScreen,
-    chapterCount: upanishad.upanishadChaptersManifest.length,
+    // Chapter ids are Muktikā numbers (sparse), so "the final chapter" is the
+    // last READABLE one, not the manifest length.
+    chapterCount:
+      upanishad.upanishadChaptersManifest[upanishad.upanishadChaptersManifest.length - 1].chapter,
   },
 ];
 

@@ -3296,72 +3296,123 @@ The **sticky action bar** (`daan-home-actions`) is absolutely positioned at the 
 
 ---
 
-## 75. Section: Upanishads (उपनिषद्) — Īśa · Kena · Māṇḍūkya
+## 75. Section: Upanishads (उपनिषद्) — the 108-text Muktikā catalogue
 
-**Purpose.** A Granth-category reader for the principal Upanishads, shipped as one section with one
-chapter per Upanishad so a reader moves from text to text by swiping (§9 auto-advance) and a
-routine can hold a single Upanishad (§29 chapter picker). Three complete short texts ship first —
-the Īśāvāsya (Śukla Yajurveda), Kena (Sāmaveda) and Māṇḍūkya (Atharvaveda) — with the Śāṅkara
-recension as printed by Gita Press. The catalog counts **mantras, not pages**: `3 उपनिषद् · 65 मन्त्र ·
-अर्थ सहित` / `3 Upanishads · 65 mantras · with meaning`. Longer Upanishads (Kaṭha, Praśna, Muṇḍaka,
-Taittirīya, Aitareya) are added as further chapters of this same section, never as sibling
-library rows.
+**Purpose.** A Granth-category reader for the Upanishads, built as **one section over the whole
+Muktikā canon of 108 texts**: the index lists every one of the 108, grouped by the traditional
+seven categories with a chip filter, and each text that has shipped opens the reader while the
+rest are listed as coming. So the shape of the canon is visible from day one and texts are filled
+in over releases without the index, bookmarks or routines changing shape. Five ship today — the
+Īśāvāsya, Kena, Kaṭha, Muṇḍaka and Māṇḍūkya (Śāṅkara recension as printed by Gita Press). The
+catalog counts **readable texts and mantras, not pages**: `5 उपनिषद् · 248 मन्त्र · अर्थ सहित` /
+`5 of 108 Upanishads · 248 mantras · with meaning`.
+
+**Identity: the Muktikā number is the chapter id, forever.** `chapter` on the reader route, in
+bookmarks, reading progress and routine items is the text's number in the Muktikā Upaniṣad's own
+list (Īśa 1 … Muktikā 108), never a position in the shipped subset. Chapter ids are therefore
+**sparse** (1, 2, 3, 5, 6 today); the reader steps between the previous/next *readable* text via
+`prevUpanishadChapter` / `nextUpanishadChapter` (`data/upanishad/index.ts`), so a swipe off the end
+of the Kaṭha (3) lands on the Muṇḍaka (5) while the Praśna (4) is unshipped, and adding Praśna
+later slots it in without renumbering anything. Never compute a neighbour as `chapter ± 1`.
+
+**Catalogue (`data/upanishad/registry.ts`).** 108 rows `{ muktika, slug, nameHi, nameEn, veda,
+category }` in Muktikā order, with the seven groups and five Vedas as typed enumerations. Grouping
+follows the Adyar Library classification: **Mukhya 10 · Sāmānya-Vedānta 24 · Sannyāsa 17 · Śākta 8 ·
+Vaiṣṇava 14 · Śaiva 15 · Yoga 20** (Śvetāśvatara filed Śaiva, Annapūrṇā Sāmānya — a browsing aid, not
+doctrine); Vedas split 10 Ṛg · 19 Śukla Yajur · 32 Kṛṣṇa Yajur · 16 Sāma · 31 Atharva.
+`contentCorrectness.test.ts` pins all of these. Whether a text is readable comes only from the
+built manifest (`isUpanishadAvailable`), never from the registry.
 
 **Deity filing.** The Upanishads teach the deity-less Brahman. The section carries `deities:
 ['vishnu']` — the Īśa opens with ईशा वास्यमिदं सर्वम्, the Lord who pervades all, and the Puruṣa and
 Nārāyaṇa Sūktas already file the Vedic Brahman under Vishnu — so it appears under exactly one
 deity card rather than none (RULEBOOK §1 row 7 requires ≥ 1).
 
-**Structure.** Standard chaptered-Granth pipeline (§15 chapters index → §9 reader). The chapters
-index passes `chapterLabelHi/En="उपनिषद्"/"Upanishad"` and `unitLabelHi/En="मन्त्र"/"mantras"` (plus
-`unitLabelEnSingular="mantra"`) to `GitaChapterCard`, and hands the card `mantraCount` as its
-`verseCount` so the row reads `18 मन्त्र`, not the 19 pages the reader paginates:
+**Index screen (`UpanishadChaptersScreen`).** §15 chapters-index shell (`ReaderHeader
+variant="index"`, `LanguageToggle`, granth scripture plate) plus, in order:
 
-| # | `titleHi` | `titleEn` | Veda | Mantras | Pages |
-|---|---|---|---|---:|---:|
-| 1 | ईशावास्योपनिषद् | Isha Upanishad | शुक्ल यजुर्वेद | 18 | 19 |
-| 2 | केनोपनिषद् | Kena Upanishad | सामवेद | 35 (9 · 5 · 12 · 9) | 36 |
-| 3 | माण्डूक्योपनिषद् | Mandukya Upanishad | अथर्ववेद | 12 | 13 |
+1. **Group chips** — `UpanishadCategoryChips`: `सभी · All` then one chip per group reading
+   `<name> · <readable>/<total>` (e.g. `मुख्य · 5/10`), so an empty group is visibly empty. Same
+   control class as `AreaFilterChips` (§33): 44 pt floor, 1.25 font-scale cap, `pill` radius,
+   `saffronTint`/`saffronDeep` selected, `parchmentSoft`/`divider` idle; a11y `Group: all` /
+   `Group: <nameEn>` and container label `Upanishad group filter`, English for Maestro.
+2. **Summary line** — `<n> उपनिषद् · <k> पठनीय` / `<n> Upanishads · <k> readable` in `cardMeta`
+   over the group's one-line description (`descHi/En` from the registry; the all-view reads
+   "The 108 of the Muktika canon, in its seven traditional groups").
+3. **Rows**, Muktikā order, filtered by group:
+   - **Readable** → `GitaChapterCard` with `chapterLabelHi/En="उपनिषद्"/"Upanishad"`,
+     `unitLabelHi/En="मन्त्र"/"mantras"` (+ singular `mantra`), the thumb showing the Muktikā
+     number, and `mantraCount` handed in as the card's `verseCount` so the row reads `18 मन्त्र`,
+     not the 19 pages the reader paginates. Tap → `UpanishadReader { chapter: muktika,
+     initialIndex: resume }`.
+   - **Coming** → `ComingRow`: same 46 dp thumb geometry outlined in `divider` on `parchmentSoft`,
+     `radii.lg`, whole row at 0.78 opacity; `UPANISHAD <n>` tag in `inkMuted`, the title in
+     `inkSoft`, the Veda name as the meta line, and a `शीघ्र · Soon` pill (`pill` radius, `divider`
+     border). Not pressable; a11y `Upanishad <n>. <Name> Upanishad. <Veda>. Coming soon.` with
+     `disabled` state — the same "Coming soon." grammar as a `coming` `LibraryCard`.
 
-Source of truth for the table: `mobile/src/data/upanishad/chapters-manifest.json` (`mantraCount`,
-`verseCount`, `vedaHi/En`); the loader's per-chapter invariants fail when a payload drifts from it.
+| # | `titleHi` | `titleEn` | Veda | Mantras | Pages | Citation |
+|---|---|---|---|---:|---:|---|
+| 1 | ईशावास्य उपनिषद् | Isha Upanishad | शुक्ल यजुर्वेद | 18 | 19 | mantra |
+| 2 | केन उपनिषद् | Kena Upanishad | सामवेद | 35 (9 · 5 · 12 · 9) | 36 | khaṇḍa.mantra |
+| 3 | कठ उपनिषद् | Katha Upanishad | कृष्ण यजुर्वेद | 119 (29 · 25 · 17 · 15 · 15 · 18) | 120 | adhyāya.vallī.mantra |
+| 5 | मुण्डक उपनिषद् | Mundaka Upanishad | अथर्ववेद | 64 (9 · 13 · 10 · 11 · 10 · 11) | 65 | muṇḍaka.khaṇḍa.mantra |
+| 6 | माण्डूक्य उपनिषद् | Mandukya Upanishad | अथर्ववेद | 12 | 13 | mantra |
+
+Source of truth for the table: `mobile/src/data/upanishad/chapters-manifest.json` (`chapter`,
+`slug`, `mantraCount`, `verseCount`, `vedaHi/En`); titles are composed from the registry
+(`<nameHi> उपनिषद्` / `<nameEn> Upanishad`) and the loader fails when a payload drifts from either.
 
 **Page 1 is the śānti-pāṭha.** Every Upanishad opens with the peace invocation its Veda recites
-before it — पूर्णमदः (Īśa), आप्यायन्तु ममाङ्गानि (Kena), भद्रं कर्णेभिः (Māṇḍūkya) — as its own page,
-pill `शान्ति मन्त्र` / `Shanti Mantra` (a single-word label, so no `·` — §3 pill vocabulary). It is
-`section: 'shanti'` in the data and is excluded from `mantraCount`.
+before it — पूर्णमदः (Īśa, Śukla YV), सह नाववतु (Kaṭha, Kṛṣṇa YV), आप्यायन्तु ममाङ्गानि (Kena,
+Sāma), भद्रं कर्णेभिः (Muṇḍaka, Māṇḍūkya, Atharva) — as its own page, pill `शान्ति मन्त्र` / `Shanti
+Mantra` (single-word label, so no `·` — §3 pill vocabulary). It is `section: 'shanti'` in the data
+and excluded from `mantraCount`.
 
-**Verse pill.** `मन्त्र · १` / `Mantra · 1` for the Īśa and Māṇḍūkya; the Kena is cited khaṇḍa.mantra —
-`मन्त्र · ३.१२` / `Mantra · 3.12` — the Gita's `श्लोक · १.१` grammar with Devanagari numerals in `labelHi`
-(§3). Kena khaṇḍas 3–4 are prose; each traditional mantra is one page, split into 1–3 lines at
-its sentence breaks. The Vedic pluta marks of Kena 4.4 (`आ३`) are omitted so the line renders
-without a stray digit; anunāsika ligatures (`ꣳ`) are written with the standard anusvāra.
+**Verse pill.** `मन्त्र · <citation>` / `Mantra · <citation>` with Devanagari numerals in `labelHi`
+(§3): `मन्त्र · १` (Īśa, Māṇḍūkya), `मन्त्र · ३.१२` (Kena khaṇḍa.mantra), `मन्त्र · १.३.१४` (Kaṭha
+adhyāya.vallī.mantra, Muṇḍaka muṇḍaka.khaṇḍa.mantra). Prose mantras are one page each, split into
+1–3 lines at their sentence breaks; a closing refrain (एतद्वै तत्) stays on the mantra it closes.
+Vedic pluta marks (`आ३`) are omitted and anunāsika ligatures (`ꣳ`) written with the standard
+anusvāra so every cluster renders on both platforms.
 
 **Background.** The Granth category's own open-scripture plate (`category_granth_open_scripture`)
 on every page — a neutral plate, because no deity sketch fits a text about Brahman. `stanza`
-carries the chapter number so `getReaderBackground` stays deterministic per verse (RULEBOOK §3).
+carries the Muktikā number so `getReaderBackground` stays deterministic per verse (RULEBOOK §3).
 
-**Romanization.** Sanskrit, so IAST + Hunterian digraphs per §3.1, matching the Valmiki corpus
-(`ch`, `chh`, `ś`, `ṣ`, `ṁ`) — never the Awadhi ASCII. `linesEn` pairs line-for-line with `lines`
-(RULEBOOK §11.12); the builder's output is scanned by the §11.12 gate and the §11.14 cluster check.
+**Romanization is generated, never typed.** `linesEn` is derived from the Devanagari by
+`scripts/transliterate-shloka.mjs` (`transliterateLine`) at build time — the §3.1 house style
+(IAST + Hunterian: `śh`, `ṣh`, `ṛi`, `ch`/`chh`), ॐ spelled `om`, dandas dropped, one line per line
+(RULEBOOK §11.12). Authors write only Devanagari `lines` and `meaningHi/En`.
 
-**Loading and cross-feature budget.** `texts.ts` reads only the manifest (`upanishadTotal`,
-`upanishadMantraTotal`); `getUpanishadChapter()` requires and validates a chapter on first open and
-caches it (`launchGraph.test.ts` forbids the payloads on the launch path). At 68 pages the section is
-small enough that global search indexes it in full and Daily Bhakti registers it as a `PADA_SOURCE`
-(`versePool.ts`) — the śānti pages are eligible pool verses like any other.
+**Loading and cross-feature budget.** One JSON per text under `data/upanishad/texts/<slug>.json`;
+`textLoaders.ts` (generated) holds one `require()` thunk per readable slug and `index.ts` resolves
+`getUpanishadChapter(muktika)` through the manifest → slug → thunk, validating and caching on first
+open (`launchGraph.test.ts` forbids `texts/*.json` on the launch path). Only the manifest and the
+108-row registry are eager. At ~250 pages global search still indexes the section in full and Daily
+Bhakti registers it as a `PADA_SOURCE` (`versePool.ts`); revisit both once the long principal texts
+(Chāndogya, Bṛhadāraṇyaka) land — they belong on the Valmiki anchor-selection pattern (§53).
 
-**Files.** `mobile/src/data/upanishad/` (`chapter-01..03.json`, `chapters-manifest.json`,
-`index.ts`) built by `scripts/build-upanishad.mjs` (authored content lives in the script — do not
-hand-edit the JSON), `mobile/src/components/UpanishadVersePage.tsx` (explicit re-export of
-`SundarkandVersePage` — the `lines`/`linesEn` archetype), `mobile/src/screens/
-UpanishadChaptersScreen.tsx`, `mobile/src/screens/UpanishadReaderScreen.tsx`. Registered in
-`texts.ts`, `entryRoutes.ts` (chapters + reader + chapter count), `HomeStackNavigator.tsx`,
-`navigation/types.ts`, `backgrounds.ts`, `searchIndex.ts`, `versePool.ts`, `routine/chapters.ts`,
-`formatLocation.ts`; the 1.4.8 `whatsNew` entry announces it (§47).
-Tests: `src/screens/__tests__/UpanishadReaderScreen.test.tsx` (per-Upanishad first-page render, pill
-grammar), `readerAutoAdvance.test.tsx` (Upanishad-boundary swipe contract), `readerReadAloud.test.tsx`,
-`readerTypeScale.test.tsx`, `chapteredTotals.test.ts` (68), `contentCorrectness.test.ts` (mantra
-counts 18 · 35 · 12, khaṇḍa split 9 · 5 · 12 · 9, śānti page, pill numerals, routine registry),
-`searchIndex.test.ts` (68 indexed pages, Devanagari + IAST reach). E2E: `.maestro/granth-smoke.yaml`
-(index rows → Kena reader → śānti page → `Mantra · 1.1`).
+**Files.** `mobile/src/data/upanishad/` (`registry.ts`, `index.ts`, `chapters-manifest.json`,
+`textLoaders.ts` *(generated)*, `texts/<slug>.json` *(generated)*) built by
+`scripts/build-upanishad.mjs` from `scripts/upanishad-content/<slug>.mjs` (one authored module per
+text — do not hand-edit the JSON), `mobile/src/components/UpanishadVersePage.tsx` (explicit
+re-export of `SundarkandVersePage`), `mobile/src/components/UpanishadCategoryChips.tsx`,
+`mobile/src/screens/UpanishadChaptersScreen.tsx`, `mobile/src/screens/UpanishadReaderScreen.tsx`.
+Registered in `texts.ts`, `entryRoutes.ts` (chapters + reader + chapter count),
+`HomeStackNavigator.tsx`, `navigation/types.ts`, `backgrounds.ts`, `searchIndex.ts`, `versePool.ts`,
+`routine/chapters.ts`, `formatLocation.ts` (`उपनिषद् <muktika> · मन्त्र <n>`); the 1.4.8 `whatsNew`
+entry announces it (§47).
+Tests: `src/screens/__tests__/UpanishadReaderScreen.test.tsx` (per-text first-page render, pill
+grammar, sparse neighbour stepping), `readerAutoAdvance.test.tsx` (text-boundary swipe contract on
+the last readable text), `readerReadAloud.test.tsx`, `readerTypeScale.test.tsx`,
+`chapteredTotals.test.ts` (253), `contentCorrectness.test.ts` (108 rows in Muktikā order, group and
+Veda splits, readable manifest, mantra counts, citation depth, śānti page, pill numerals, routine
+registry), `searchIndex.test.ts` (253 indexed pages, Devanagari + IAST reach, Kaṭha → Muktikā 3).
+E2E: `.maestro/granth-smoke.yaml` (readable rows, a dimmed coming row, `Group: Yoga` / `Group:
+Principal` filter, Kena reader → śānti page → `Mantra · 1.1`).
+
+**Sourcing note.** The five shipped texts were written out from the printed Gita Press text
+without a network source at build time; the §11.12 and §11.14 gates pass, but a line-by-line check
+against the scan is recorded as owed in each text's `source.notes`. Texts are added by authoring a
+content module — the remaining 103 are in the registry already.

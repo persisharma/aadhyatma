@@ -249,14 +249,15 @@ const index = getSearchIndex();
   assert.equal(section.sections[0]?.entry.sourceId, 'valmiki-ramayan');
 }
 
-// Upanishads: all three texts are indexed in full (68 pages), each verse carries
-// its Upanishad as `chapter`, and the Īśa's first mantra is reachable from both
+// Upanishads: every readable text is indexed in full (253 pages), each verse carries
+// its Muktikā number as `chapter`, and the Īśa's first mantra is reachable from both
 // scripts.
 {
   const upanishadVerses = index.verses.filter((v) => v.sourceId === 'upanishad');
-  assert.equal(upanishadVerses.length, 68, 'expected every Upanishad page in the index');
+  assert.equal(upanishadVerses.length, 253, 'expected every readable Upanishad page in the index');
+  const readable = new Set([1, 2, 3, 5, 6]);
   for (const v of upanishadVerses) {
-    assert.ok(v.chapter != null && v.chapter >= 1 && v.chapter <= 3, 'upanishad verse must carry its Upanishad as chapter');
+    assert.ok(v.chapter != null && readable.has(v.chapter), 'upanishad verse must carry its Muktikā number as chapter');
   }
   const hindi = runSearch('ईशा वास्यमिदं', index);
   assert.ok(
@@ -272,6 +273,11 @@ const index = getSearchIndex();
   assert.ok(
     kena.verses.some((h) => h.entry.sourceId === 'upanishad' && h.entry.chapter === 2),
     'Kena opening should resolve to Upanishad 2'
+  );
+  const katha = runSearch('उत्तिष्ठत जाग्रत', index);
+  assert.ok(
+    katha.verses.some((h) => h.entry.sourceId === 'upanishad' && h.entry.chapter === 3),
+    'Kaṭha 1.3.14 should resolve to Muktikā 3'
   );
   const section = runSearch('Upanishads', index);
   assert.equal(section.sections[0]?.entry.sourceId, 'upanishad');

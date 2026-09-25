@@ -199,8 +199,10 @@ export const library: readonly LibraryEntry[] = [
     id: 'upanishad',
     nameHi: 'उपनिषद्',
     nameEn: 'Upanishads',
+    // Readable texts of the 108-text Muktikā catalogue (design.md §75); the
+    // index lists all 108 and marks the rest as coming.
     sub: `${upanishadChaptersManifest.length} उपनिषद् · ${upanishadMantraTotal} मन्त्र · अर्थ सहित`,
-    subEn: `${upanishadChaptersManifest.length} Upanishads · ${upanishadMantraTotal} mantras · with meaning`,
+    subEn: `${upanishadChaptersManifest.length} of 108 Upanishads · ${upanishadMantraTotal} mantras · with meaning`,
     thumb: 'उ',
     status: 'active',
     category: 'granth',

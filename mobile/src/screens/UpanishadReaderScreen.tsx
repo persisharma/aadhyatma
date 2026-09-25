@@ -15,7 +15,8 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import {
   getUpanishadChapter,
-  upanishadChaptersManifest,
+  nextUpanishadChapter,
+  prevUpanishadChapter,
   upanishadTitleEn,
   upanishadTitleHi,
   type UpanishadVerse,
@@ -82,40 +83,36 @@ export default function UpanishadReaderScreen({ navigation, route }: Props) {
   const verses = useMemo(() => (chapter?.verses ?? []) as UpanishadVerse[], [chapter]);
   const verseCount = verses.length;
   const initialIndex = clampIndex(route.params?.initialIndex, verseCount);
-  const isLastChapter =
-    chapter == null ? true : chapter.chapter >= upanishadChaptersManifest.length;
-  const isFirstChapter = chapter == null ? true : chapter.chapter <= 1;
+  // Chapter ids are Muktikā numbers and only the shipped texts are readable, so
+  // the neighbours are the previous/next READABLE Upanishad, never chapter ± 1.
+  const prev = chapter == null ? null : prevUpanishadChapter(chapter.chapter);
+  const next = chapter == null ? null : nextUpanishadChapter(chapter.chapter);
+  const isFirstChapter = prev == null;
   const data: FlatListItem[] = useMemo(() => {
     if (chapter == null) return [];
     const items: FlatListItem[] = [];
-    if (!isFirstChapter) {
-      const prev = upanishadChaptersManifest[chapter.chapter - 2];
-      if (prev) {
-        items.push({
-          __type: 'prev-transition' as const,
-          id: 'transition-prev',
-          prevChapter: chapter.chapter - 1,
-          prevTitleHi: prev.titleHi,
-          prevTitleEn: prev.titleEn,
-          prevVerseCount: prev.verseCount,
-        });
-      }
+    if (prev) {
+      items.push({
+        __type: 'prev-transition' as const,
+        id: 'transition-prev',
+        prevChapter: prev.chapter,
+        prevTitleHi: prev.titleHi,
+        prevTitleEn: prev.titleEn,
+        prevVerseCount: prev.verseCount,
+      });
     }
     items.push(...verses);
-    if (!isLastChapter) {
-      const next = upanishadChaptersManifest[chapter.chapter];
-      if (next) {
-        items.push({
-          __type: 'transition' as const,
-          id: 'transition-next',
-          nextChapter: chapter.chapter + 1,
-          nextTitleHi: next.titleHi,
-          nextTitleEn: next.titleEn,
-        });
-      }
+    if (next) {
+      items.push({
+        __type: 'transition' as const,
+        id: 'transition-next',
+        nextChapter: next.chapter,
+        nextTitleHi: next.titleHi,
+        nextTitleEn: next.titleEn,
+      });
     }
     return items;
-  }, [chapter, verses, isFirstChapter, isLastChapter]);
+  }, [chapter, verses, prev, next]);
 
   const offset = isFirstChapter ? 0 : 1;
   const listRef = useRef<FlatList<FlatListItem>>(null);

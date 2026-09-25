@@ -1,7 +1,8 @@
 [
   {
     "chapter": 1,
-    "titleHi": "ईशावास्योपनिषद्",
+    "slug": "isha",
+    "titleHi": "ईशावास्य उपनिषद्",
     "titleEn": "Isha Upanishad",
     "vedaHi": "शुक्ल यजुर्वेद",
     "vedaEn": "Shukla Yajurveda",
@@ -10,7 +11,8 @@
   },
   {
     "chapter": 2,
-    "titleHi": "केनोपनिषद्",
+    "slug": "kena",
+    "titleHi": "केन उपनिषद्",
     "titleEn": "Kena Upanishad",
     "vedaHi": "सामवेद",
     "vedaEn": "Samaveda",
@@ -19,7 +21,28 @@
   },
   {
     "chapter": 3,
-    "titleHi": "माण्डूक्योपनिषद्",
+    "slug": "katha",
+    "titleHi": "कठ उपनिषद्",
+    "titleEn": "Katha Upanishad",
+    "vedaHi": "कृष्ण यजुर्वेद",
+    "vedaEn": "Krishna Yajurveda",
+    "mantraCount": 119,
+    "verseCount": 120
+  },
+  {
+    "chapter": 5,
+    "slug": "mundaka",
+    "titleHi": "मुण्डक उपनिषद्",
+    "titleEn": "Mundaka Upanishad",
+    "vedaHi": "अथर्ववेद",
+    "vedaEn": "Atharvaveda",
+    "mantraCount": 64,
+    "verseCount": 65
+  },
+  {
+    "chapter": 6,
+    "slug": "mandukya",
+    "titleHi": "माण्डूक्य उपनिषद्",
     "titleEn": "Mandukya Upanishad",
     "vedaHi": "अथर्ववेद",
     "vedaEn": "Atharvaveda",

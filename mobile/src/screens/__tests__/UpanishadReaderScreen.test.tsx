@@ -104,3 +104,14 @@ test('a mantra page renders its Devanagari numeral pill and both meanings', () =
   assert.equal(mantraOne.labelEn, 'Mantra · 1');
   assert.ok(mantraOne.meaningHi.length > 0 && mantraOne.meaningEn.length > 0);
 });
+
+test('the reader steps between READABLE Upanishads, skipping unshipped Muktikā numbers', () => {
+  const { nextUpanishadChapter, prevUpanishadChapter, isUpanishadAvailable } = jest.requireActual<
+    typeof import('@/data/upanishad')
+  >('@/data/upanishad');
+  assert.equal(nextUpanishadChapter(3)?.chapter, 5, 'Kaṭha (3) advances to Muṇḍaka (5): Praśna (4) is not shipped');
+  assert.equal(prevUpanishadChapter(5)?.chapter, 3);
+  assert.equal(nextUpanishadChapter(6), null);
+  assert.equal(prevUpanishadChapter(1), null);
+  assert.equal(isUpanishadAvailable(4), false);
+});

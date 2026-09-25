@@ -715,60 +715,92 @@ for (const v of aartiKunjBihari.verses) {
   }
 }
 
-// Upanishads (granth): three complete short Upanishads, each opened by its
-// śānti-pāṭha. The catalog counts mantras (not pages), every page pairs its
-// romanization line-for-line, and the section is wired into the routine chapter
-// picker so a single Upanishad can be added to a नित्य साधना.
+// Upanishads (granth): the full 108-text Muktikā catalogue with the readable
+// subset shipped as one file per text, each opened by its śānti-pāṭha. The
+// catalog counts mantras (not pages), every page pairs its romanization
+// line-for-line, chapter ids are Muktikā numbers, and the section is wired into
+// the routine chapter picker so a single Upanishad can be added to a नित्य साधना.
 {
   const entry = libraryById.get('upanishad');
   assert.ok(entry, 'upanishad must exist in the library');
   assert.equal(entry.category, 'granth');
-  assert.match(entry.sub, /^3 उपनिषद् · 65 मन्त्र/, 'Hindi sub counts mantras, not pages');
-  assert.match(entry.subEn || '', /^3 Upanishads · 65 mantras/, 'English sub counts mantras, not pages');
+  assert.match(entry.sub, /^5 उपनिषद् · 248 मन्त्र/, 'Hindi sub counts readable texts and mantras, not pages');
+  assert.match(entry.subEn || '', /^5 of 108 Upanishads · 248 mantras/, 'English sub counts readable texts and mantras, not pages');
   assert.equal(entry.addedInVersion, '1.4.8', 'upanishad must set addedInVersion so it debuts as NEW for upgraders');
+
+  const registry = readTs('upanishad/registry.ts');
+  const rows = [...registry.matchAll(/^\s*\[(\d+), '([a-z-]+)', '([^']+)', '([^']+)', (\w+), (\w+)\],$/gm)];
+  assert.equal(rows.length, 108, 'registry lists the 108 Upanishads of the Muktikā canon');
+  rows.forEach((r, i) => assert.equal(Number(r[1]), i + 1, `registry row ${i} is in Muktikā order`));
+  const groups = new Map<string, number>();
+  for (const r of rows) groups.set(r[6], (groups.get(r[6]) ?? 0) + 1);
+  assert.deepEqual(
+    Object.fromEntries([...groups].sort()),
+    { M: 10, SA: 24, SH: 15, SK: 8, SN: 17, V: 14, Y: 20 },
+    'seven-fold grouping: 10 principal · 24 general · 17 sannyāsa · 8 śākta · 14 vaiṣṇava · 15 śaiva · 20 yoga'
+  );
+  const vedas = new Map<string, number>();
+  for (const r of rows) vedas.set(r[5], (vedas.get(r[5]) ?? 0) + 1);
+  assert.deepEqual(
+    Object.fromEntries([...vedas].sort()),
+    { AV: 31, KYV: 32, RV: 10, SV: 16, SYV: 19 },
+    'Veda split of the Muktikā list: 10 Ṛg · 19 Śukla Yajur · 32 Kṛṣṇa Yajur · 16 Sāma · 31 Atharva'
+  );
 
   const manifest = readJson('upanishad/chapters-manifest.json') as {
     chapter: number;
+    slug: string;
     titleHi: string;
     titleEn: string;
     mantraCount: number;
     verseCount: number;
   }[];
   assert.deepEqual(
-    manifest.map((m) => [m.titleEn, m.mantraCount]),
+    manifest.map((m) => [m.chapter, m.titleEn, m.mantraCount]),
     [
-      ['Isha Upanishad', 18],
-      ['Kena Upanishad', 35],
-      ['Mandukya Upanishad', 12],
+      [1, 'Isha Upanishad', 18],
+      [2, 'Kena Upanishad', 35],
+      [3, 'Katha Upanishad', 119],
+      [5, 'Mundaka Upanishad', 64],
+      [6, 'Mandukya Upanishad', 12],
     ],
-    'the three Upanishads and their traditional mantra counts'
+    'the readable Upanishads by Muktikā number with their traditional mantra counts'
   );
+  const slugs = new Set(rows.map((r) => r[2]));
   for (const summary of manifest) {
-    const ch = readJson(`upanishad/chapter-0${summary.chapter}.json`);
+    assert.ok(slugs.has(summary.slug), `${summary.slug} is a registry slug`);
+    const ch = readJson(`upanishad/texts/${summary.slug}.json`);
     assert.equal(ch.verses.length, summary.verseCount);
-    assert.equal(ch.verses[0].section, 'shanti', `Upanishad ${summary.chapter} opens with its śānti-pāṭha`);
+    assert.equal(ch.verses[0].section, 'shanti', `${summary.slug} opens with its śānti-pāṭha`);
     assert.equal(ch.verses[0].labelHi, 'शान्ति मन्त्र');
     assert.equal(ch.verses[0].labelEn, 'Shanti Mantra');
     for (const v of ch.verses.slice(1)) {
       assert.equal(v.section, 'mantra');
+      assert.equal(v.upanishad, summary.chapter, `${v.id} carries its Muktikā number`);
       assert.match(v.labelHi, /^मन्त्र · [०-९.]+$/, `${v.id} Hindi pill uses Devanagari numerals`);
       assert.match(v.labelEn, /^Mantra · [0-9.]+$/, `${v.id} English pill uses Arabic numerals`);
       assert.equal(v.lines.length, v.linesEn.length, `${v.id} linesEn pairs line-for-line`);
     }
   }
-  // Kena is cited khaṇḍa.mantra (9 · 5 · 12 · 9); Īśa and Māṇḍūkya by mantra alone.
-  const kena = readJson('upanishad/chapter-02.json');
-  const perKhanda = new Map<string, number>();
-  for (const v of kena.verses.slice(1)) {
-    const k = String(v.reference).split('.')[0];
-    perKhanda.set(k, (perKhanda.get(k) ?? 0) + 1);
-  }
-  assert.deepEqual([...perKhanda.values()], [9, 5, 12, 9]);
-  assert.equal(readJson('upanishad/chapter-01.json').verses[1].reference, '1');
-  assert.equal(readJson('upanishad/chapter-03.json').verses[12].reference, '12');
+  // Citation depth per text: Kena khaṇḍa.mantra (9 · 5 · 12 · 9); Kaṭha
+  // adhyāya.vallī.mantra (29 · 25 · 17 · 15 · 15 · 18); Muṇḍaka
+  // muṇḍaka.khaṇḍa.mantra (9 · 13 · 10 · 11 · 10 · 11); Īśa and Māṇḍūkya by mantra.
+  const sectionCounts = (slug: string) => {
+    const per = new Map<string, number>();
+    for (const v of readJson(`upanishad/texts/${slug}.json`).verses.slice(1)) {
+      const k = String(v.reference).split('.').slice(0, -1).join('.');
+      per.set(k, (per.get(k) ?? 0) + 1);
+    }
+    return [...per.values()];
+  };
+  assert.deepEqual(sectionCounts('kena'), [9, 5, 12, 9]);
+  assert.deepEqual(sectionCounts('katha'), [29, 25, 17, 15, 15, 18]);
+  assert.deepEqual(sectionCounts('mundaka'), [9, 13, 10, 11, 10, 11]);
+  assert.equal(readJson('upanishad/texts/isha.json').verses[1].reference, '1');
+  assert.equal(readJson('upanishad/texts/mandukya.json').verses[12].reference, '12');
 
   assert.ok(isChapteredSource('upanishad'), 'upanishad must be registered in routine/chapters.ts');
-  assert.equal(chaptersForSource('upanishad').length, 3);
+  assert.equal(chaptersForSource('upanishad').length, manifest.length);
 }
 
 // ─── 12. Gita speaker prefixes are not glued to verse text ──────────────────
@@ -799,6 +831,10 @@ for (let ch = 1; ch <= 16; ch++) {
 }
 
 // ─── 14. Content JSON declares source provenance ────────────────────────────
+
+function readTs(rel: string): string {
+  return readFileSync(join(DATA, rel), 'utf8');
+}
 
 function collectJsonFiles(dirRel = ''): string[] {
   const dir = join(DATA, dirRel);

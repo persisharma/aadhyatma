@@ -1,6 +1,7 @@
 {
   "chapter": 2,
-  "titleHi": "केनोपनिषद्",
+  "slug": "kena",
+  "titleHi": "केन उपनिषद्",
   "titleEn": "Kena Upanishad",
   "vedaHi": "सामवेद",
   "vedaEn": "Samaveda",
@@ -35,10 +36,10 @@
         "ॐ शान्तिः शान्तिः शान्तिः॥"
       ],
       "linesEn": [
-        "oṁ āpyāyantu mamāṅgāni vākprāṇaśchakṣuḥ śrotramatho balamindriyāṇi cha sarvāṇi",
-        "sarvaṁ brahmaupaniṣadaṁ māhaṁ brahma nirākuryāṁ mā mā brahma nirākarodanirākaraṇamastvanirākaraṇaṁ me'stu",
-        "tadātmani nirate ya upaniṣatsu dharmāste mayi santu te mayi santu",
-        "oṁ śāntiḥ śāntiḥ śāntiḥ"
+        "om āpyāyantu mamāṅgāni vākprāṇaśchakṣhuḥ śrotramatho balamindriyāṇi cha sarvāṇi",
+        "sarvaṁ brahmaupaniṣhadaṁ māhaṁ brahma nirākuryāṁ mā mā brahma nirākarodanirākaraṇamastvanirākaraṇaṁ me'stu",
+        "tadātmani nirate ya upaniṣhatsu dharmāste mayi santu te mayi santu",
+        "om śhāntiḥ śhāntiḥ śhāntiḥ"
       ],
       "meaningHi": "मेरे अंग, वाणी, प्राण, नेत्र, श्रोत्र, बल और समस्त इन्द्रियाँ पुष्ट हों। यह सब उपनिषद्-प्रतिपादित ब्रह्म ही है। मैं ब्रह्म का निराकरण न करूँ, न ब्रह्म मेरा निराकरण करे। निराकरण न हो; मेरा निराकरण न हो। आत्मा में निरत मुझमें उपनिषदों में कहे हुए धर्म स्थित हों, वे मुझमें स्थित हों। ॐ शान्तिः शान्तिः शान्तिः।",
       "meaningEn": "May my limbs, speech, breath, eye, ear, strength and all my senses grow strong. All this is the Brahman of the Upaniṣads. May I never deny Brahman, nor Brahman deny me. Let there be no denial — no denial of me. May the virtues the Upaniṣads speak of abide in me, devoted to the Self; may they abide in me. Om, peace, peace, peace."
@@ -57,8 +58,8 @@
         "केनेषितां वाचमिमां वदन्ति चक्षुः श्रोत्रं क उ देवो युनक्ति॥"
       ],
       "linesEn": [
-        "oṁ keneṣitaṁ patati preṣitaṁ manaḥ kena prāṇaḥ prathamaḥ praiti yuktaḥ",
-        "keneṣitāṁ vāchamimāṁ vadanti chakṣuḥ śrotraṁ ka u devo yunakti"
+        "om keneṣhitaṁ patati preṣhitaṁ manaḥ kena prāṇaḥ prathamaḥ praiti yuktaḥ",
+        "keneṣhitāṁ vāchamimāṁ vadanti chakṣhuḥ śrotraṁ ka u devo yunakti"
       ],
       "meaningHi": "(शिष्य ने पूछा —) किसकी इच्छा से प्रेरित होकर मन अपने विषयों पर जाता है? किससे नियुक्त होकर प्रथम प्राण चलता है? किसकी प्रेरणा से लोग यह वाणी बोलते हैं? कौन देव नेत्र और श्रोत्र को उनके कार्य में लगाता है?",
       "meaningEn": "(The disciple asks:) Willed by whom does the mind fly to its objects? Directed by whom does the first breath move? Willed by whom do people utter this speech? Which god yokes the eye and the ear to their work?"
@@ -78,7 +79,7 @@
       ],
       "linesEn": [
         "śrotrasya śrotraṁ manaso mano yadvācho ha vāchaṁ sa u prāṇasya prāṇaḥ",
-        "chakṣuṣaśchakṣuratimuchya dhīrāḥ pretyāsmāllokādamṛtā bhavanti"
+        "chakṣhuṣhaśchakṣhuratimuchya dhīrāḥ pretyāsmāllokādamṛitā bhavanti"
       ],
       "meaningHi": "(गुरु ने कहा —) वह श्रोत्र का श्रोत्र, मन का मन, वाणी की वाणी, प्राण का प्राण और नेत्र का नेत्र है। धीर पुरुष (इन्द्रियों में आत्मबुद्धि को) त्यागकर इस लोक से जाकर अमर हो जाते हैं।",
       "meaningEn": "(The teacher replies:) It is the ear of the ear, the mind of the mind, the speech of speech, the breath of the breath, the eye of the eye. The wise, letting go of identification with the senses, depart this world and become immortal."
@@ -97,8 +98,8 @@
         "न विद्मो न विजानीमो यथैतदनुशिष्यात्॥"
       ],
       "linesEn": [
-        "na tatra chakṣurgachchhati na vāggachchhati no manaḥ",
-        "na vidmo na vijānīmo yathaitadanuśiṣyāt"
+        "na tatra chakṣhurgachchhati na vāggachchhati no manaḥ",
+        "na vidmo na vijānīmo yathaitadanuśhiṣyāt"
       ],
       "meaningHi": "वहाँ नेत्र नहीं पहुँचता, वाणी नहीं पहुँचती, मन भी नहीं। हम नहीं जानते, नहीं समझ पाते कि उसका उपदेश कैसे किया जाए।",
       "meaningEn": "There the eye does not go, nor speech, nor the mind. We do not know, we do not understand, how one could teach it."
@@ -118,7 +119,7 @@
       ],
       "linesEn": [
         "anyadeva tadviditādatho aviditādadhi",
-        "iti śuśruma pūrveṣāṁ ye nastadvyāchachakṣire"
+        "iti śhuśruma pūrveṣhāṁ ye nastadvyāchachakṣhire"
       ],
       "meaningHi": "वह ज्ञात से भिन्न है और अज्ञात से भी परे है — ऐसा हमने उन पूर्वाचार्यों से सुना है जिन्होंने हमें उसकी व्याख्या की।",
       "meaningEn": "It is other than the known, and beyond the unknown as well. Thus have we heard from the ancients who explained it to us."
@@ -177,7 +178,7 @@
         "तदेव ब्रह्म त्वं विद्धि नेदं यदिदमुपासते॥"
       ],
       "linesEn": [
-        "yachchakṣuṣā na paśyati yena chakṣūṁṣi paśyati",
+        "yachchakṣhuṣhā na paśyati yena chakṣhūṁṣhi paśyati",
         "tadeva brahma tvaṁ viddhi nedaṁ yadidamupāsate"
       ],
       "meaningHi": "जिसे नेत्र से नहीं देखा जा सकता, बल्कि जिससे नेत्रों (की वृत्तियों) को देखा जाता है — उसे ही तुम ब्रह्म जानो; यह नहीं जिसकी लोग उपासना करते हैं।",
@@ -197,7 +198,7 @@
         "तदेव ब्रह्म त्वं विद्धि नेदं यदिदमुपासते॥"
       ],
       "linesEn": [
-        "yachchhrotreṇa na śṛṇoti yena śrotramidaṁ śrutam",
+        "yachchhrotreṇa na śhṛiṇoti yena śrotramidaṁ śrutam",
         "tadeva brahma tvaṁ viddhi nedaṁ yadidamupāsate"
       ],
       "meaningHi": "जिसे श्रोत्र से नहीं सुना जा सकता, बल्कि जिससे यह श्रोत्र सुना (जाना) जाता है — उसे ही तुम ब्रह्म जानो; यह नहीं जिसकी लोग उपासना करते हैं।",
@@ -297,8 +298,8 @@
         "आत्मना विन्दते वीर्यं विद्यया विन्दतेऽमृतम्॥"
       ],
       "linesEn": [
-        "pratibodhaviditaṁ matamamṛtatvaṁ hi vindate",
-        "ātmanā vindate vīryaṁ vidyayā vindate'mṛtam"
+        "pratibodhaviditaṁ matamamṛitatvaṁ hi vindate",
+        "ātmanā vindate vīryaṁ vidyayā vindate'mṛitam"
       ],
       "meaningHi": "जब वह प्रत्येक बोध (वृत्ति) के साक्षी रूप में जाना जाता है, तब वह ठीक जाना गया माना जाता है; ऐसा जानने वाला अमृतत्व पाता है। आत्मा से (आत्मज्ञान से) बल मिलता है और विद्या से अमृतत्व।",
       "meaningEn": "When it is known as the witness in every state of awareness, then it is truly known, and one attains immortality. Through the Self one gains strength; through knowledge, immortality."
@@ -318,7 +319,7 @@
       ],
       "linesEn": [
         "iha chedavedīdatha satyamasti na chedihāvedīnmahatī vinaṣṭiḥ",
-        "bhūteṣu bhūteṣu vichitya dhīrāḥ pretyāsmāllokādamṛtā bhavanti"
+        "bhūteṣhu bhūteṣhu vichitya dhīrāḥ pretyāsmāllokādamṛitā bhavanti"
       ],
       "meaningHi": "यदि यहाँ (इसी जीवन में) उसे जान लिया, तो जीवन सफल है; यदि यहाँ न जाना, तो महान विनाश है। धीर पुरुष प्राणी-प्राणी में उस एक आत्मा को पहचानकर इस लोक से जाकर अमर हो जाते हैं।",
       "meaningEn": "If one knows it here, there is truth (fulfilment); if one does not know it here, great is the loss. The wise, discerning the one Self in every being, depart this world and become immortal."
@@ -338,7 +339,7 @@
       ],
       "linesEn": [
         "brahma ha devebhyo vijigye tasya ha brahmaṇo vijaye devā amahīyanta",
-        "ta aikṣantāsmākamevāyaṁ vijayo'smākamevāyaṁ mahimeti"
+        "ta aikṣhantāsmākamevāyaṁ vijayo'smākamevāyaṁ mahimeti"
       ],
       "meaningHi": "ब्रह्म ने देवताओं के लिए (असुरों पर) विजय पाई। उस ब्रह्म की विजय से देवता गौरवान्वित हुए और सोचने लगे — \"यह विजय हमारी ही है, यह महिमा हमारी ही है।\"",
       "meaningEn": "Brahman won a victory for the gods. In that victory of Brahman the gods grew proud and thought: \"This victory is ours alone; this glory is ours alone.\""
@@ -357,8 +358,8 @@
         "तन्न व्यजानत किमिदं यक्षमिति॥"
       ],
       "linesEn": [
-        "taddhaiṣāṁ vijajñau tebhyo ha prādurbabhūva",
-        "tanna vyajānata kimidaṁ yakṣamiti"
+        "taddhaiṣhāṁ vijajñau tebhyo ha prādurbabhūva",
+        "tanna vyajānata kimidaṁ yakṣhamiti"
       ],
       "meaningHi": "ब्रह्म ने उनके इस अभिमान को जान लिया और उनके सामने (यक्ष रूप में) प्रकट हुआ। वे उसे न समझ सके — \"यह यक्ष (पूज्य महान सत्ता) क्या है?\"",
       "meaningEn": "Brahman knew their conceit and appeared before them. They did not recognise it: \"What is this great Spirit (yakṣa)?\""
@@ -376,7 +377,7 @@
         "तेऽग्निमब्रुवन् जातवेद एतद्विजानीहि किमेतद्यक्षमिति तथेति॥"
       ],
       "linesEn": [
-        "te'gnimabruvan jātaveda etadvijānīhi kimetadyakṣamiti tatheti"
+        "te'gnimabruvan jātaveda etadvijānīhi kimetadyakṣhamiti tatheti"
       ],
       "meaningHi": "उन्होंने अग्नि से कहा — \"हे जातवेदा! जानो, यह यक्ष क्या है।\" अग्नि ने कहा — \"ठीक है।\"",
       "meaningEn": "They said to Agni: \"O Jātavedas, find out what this Spirit is.\" \"So be it,\" he said."
@@ -416,7 +417,7 @@
       ],
       "linesEn": [
         "tasmiṁstvayi kiṁ vīryamiti",
-        "apīdaṁ sarvaṁ daheyaṁ yadidaṁ pṛthivyāmiti"
+        "apīdaṁ sarvaṁ daheyaṁ yadidaṁ pṛithivyāmiti"
       ],
       "meaningHi": "\"ऐसे तुझमें क्या सामर्थ्य है?\" \"इस पृथ्वी पर जो कुछ है, वह सब मैं जला सकता हूँ।\"",
       "meaningEn": "\"What power is there in such as you?\" \"I can burn all this, whatever there is on the earth.\""
@@ -436,9 +437,9 @@
         "स तत एव निववृते नैतदशकं विज्ञातुं यदेतद्यक्षमिति॥"
       ],
       "linesEn": [
-        "tasmai tṛṇaṁ nidadhāvetaddaheti",
-        "tadupapreyāya sarvajavena tanna śaśāka dagdhum",
-        "sa tata eva nivavṛte naitadaśakaṁ vijñātuṁ yadetadyakṣamiti"
+        "tasmai tṛiṇaṁ nidadhāvetaddaheti",
+        "tadupapreyāya sarvajavena tanna śhaśhāka dagdhum",
+        "sa tata eva nivavṛite naitadaśhakaṁ vijñātuṁ yadetadyakṣhamiti"
       ],
       "meaningHi": "उस (यक्ष) ने उसके सामने एक तिनका रखकर कहा — \"इसे जला।\" अग्नि पूरे वेग से उस पर झपटा, पर उसे जला न सका। वह वहाँ से लौट आया — \"मैं यह न जान सका कि यह यक्ष क्या है।\"",
       "meaningEn": "It placed a blade of grass before him: \"Burn this.\" He rushed at it with all his might but could not burn it. He turned back from there: \"I could not find out what this Spirit is.\""
@@ -456,7 +457,7 @@
         "अथ वायुमब्रुवन् वायवेतद्विजानीहि किमेतद्यक्षमिति तथेति॥"
       ],
       "linesEn": [
-        "atha vāyumabruvan vāyavetadvijānīhi kimetadyakṣamiti tatheti"
+        "atha vāyumabruvan vāyavetadvijānīhi kimetadyakṣhamiti tatheti"
       ],
       "meaningHi": "तब उन्होंने वायु से कहा — \"हे वायु! जानो, यह यक्ष क्या है।\" वायु ने कहा — \"ठीक है।\"",
       "meaningEn": "Then they said to Vāyu: \"O Vāyu, find out what this Spirit is.\" \"So be it,\" he said."
@@ -496,7 +497,7 @@
       ],
       "linesEn": [
         "tasmiṁstvayi kiṁ vīryamiti",
-        "apīdaṁ sarvamādadīya yadidaṁ pṛthivyāmiti"
+        "apīdaṁ sarvamādadīya yadidaṁ pṛithivyāmiti"
       ],
       "meaningHi": "\"ऐसे तुझमें क्या सामर्थ्य है?\" \"इस पृथ्वी पर जो कुछ है, वह सब मैं उड़ा (उठा) सकता हूँ।\"",
       "meaningEn": "\"What power is there in such as you?\" \"I can carry off all this, whatever there is on the earth.\""
@@ -516,9 +517,9 @@
         "स तत एव निववृते नैतदशकं विज्ञातुं यदेतद्यक्षमिति॥"
       ],
       "linesEn": [
-        "tasmai tṛṇaṁ nidadhāvetadādatsveti",
-        "tadupapreyāya sarvajavena tanna śaśākādātum",
-        "sa tata eva nivavṛte naitadaśakaṁ vijñātuṁ yadetadyakṣamiti"
+        "tasmai tṛiṇaṁ nidadhāvetadādatsveti",
+        "tadupapreyāya sarvajavena tanna śhaśhākādātum",
+        "sa tata eva nivavṛite naitadaśhakaṁ vijñātuṁ yadetadyakṣhamiti"
       ],
       "meaningHi": "उस (यक्ष) ने उसके सामने एक तिनका रखकर कहा — \"इसे उठा।\" वायु पूरे वेग से उस पर झपटा, पर उसे उठा न सका। वह वहाँ से लौट आया — \"मैं यह न जान सका कि यह यक्ष क्या है।\"",
       "meaningEn": "It placed a blade of grass before him: \"Take this up.\" He rushed at it with all his might but could not lift it. He turned back from there: \"I could not find out what this Spirit is.\""
@@ -537,7 +538,7 @@
         "तदभ्यद्रवत्तस्मात्तिरोदधे॥"
       ],
       "linesEn": [
-        "athendramabruvanmaghavannetadvijānīhi kimetadyakṣamiti tatheti",
+        "athendramabruvanmaghavannetadvijānīhi kimetadyakṣhamiti tatheti",
         "tadabhyadravattasmāttirodadhe"
       ],
       "meaningHi": "तब उन्होंने इन्द्र से कहा — \"हे मघवन्! जानो, यह यक्ष क्या है।\" इन्द्र ने कहा — \"ठीक है।\" वह उसकी ओर दौड़ा, पर वह (यक्ष) उससे अन्तर्धान हो गया।",
@@ -557,8 +558,8 @@
         "ताँहोवाच किमेतद्यक्षमिति॥"
       ],
       "linesEn": [
-        "sa tasminnevākāśe striyamājagāma bahuśobhamānāmumāṁ haimavatīm",
-        "tāṁhovācha kimetadyakṣamiti"
+        "sa tasminnevākāśhe striyamājagāma bahuśhobhamānāmumāṁ haimavatīm",
+        "tāṁhovācha kimetadyakṣhamiti"
       ],
       "meaningHi": "उसी आकाश में इन्द्र एक अत्यन्त शोभामयी स्त्री — हिमवान की पुत्री उमा — के पास पहुँचा और उनसे पूछा — \"यह यक्ष क्या है?\"",
       "meaningEn": "In that same space he came upon a woman of great beauty — Umā, daughter of Himavat — and asked her: \"What is this Spirit?\""
@@ -598,7 +599,7 @@
       ],
       "linesEn": [
         "tasmādvā ete devā atitarāmivānyāndevānyadagnirvāyurindraḥ",
-        "te hyenannediṣṭhaṁ pasparśuste hyenatprathamo vidāñchakāra brahmeti"
+        "te hyenannediṣṭhaṁ pasparśhuste hyenatprathamo vidāñchakāra brahmeti"
       ],
       "meaningHi": "इसलिए ये देवता — अग्नि, वायु और इन्द्र — अन्य देवताओं से श्रेष्ठ हैं, क्योंकि उन्होंने उस (ब्रह्म) का सबसे निकट से स्पर्श किया और उन्होंने ही सबसे पहले जाना कि वह ब्रह्म है।",
       "meaningEn": "Therefore these gods — Agni, Vāyu and Indra — surpass the other gods, for they touched it most closely and were the first to know it as Brahman."
@@ -618,7 +619,7 @@
       ],
       "linesEn": [
         "tasmādvā indro'titarāmivānyāndevān",
-        "sa hyenannediṣṭhaṁ pasparśa sa hyenatprathamo vidāñchakāra brahmeti"
+        "sa hyenannediṣṭhaṁ pasparśha sa hyenatprathamo vidāñchakāra brahmeti"
       ],
       "meaningHi": "और इसलिए इन्द्र अन्य देवताओं से (और भी) श्रेष्ठ है, क्योंकि उसने उसका सबसे निकट से स्पर्श किया और उसने ही सबसे पहले जाना कि वह ब्रह्म है।",
       "meaningEn": "And therefore Indra surpasses the other gods, for he touched it most closely and was the first to know it as Brahman."
@@ -636,7 +637,7 @@
         "तस्यैष आदेशो यदेतद्विद्युतो व्यद्युतदा इतीन् न्यमीमिषदा इत्यधिदैवतम्॥"
       ],
       "linesEn": [
-        "tasyaiṣa ādeśo yadetadvidyuto vyadyutadā itīn nyamīmiṣadā ityadhidaivatam"
+        "tasyaiṣha ādeśho yadetadvidyuto vyadyutadā itīn nyamīmiṣhadā ityadhidaivatam"
       ],
       "meaningHi": "उस (ब्रह्म) का यह उपदेश (दृष्टान्त) है — जैसे बिजली क्षण भर में चमक जाती है, जैसे आँख का पलक झपक जाता है — यह अधिदैवत (देव-सम्बन्धी) उपदेश है।",
       "meaningEn": "This is its illustration: it is like the flash of lightning, like the blink of an eye — this is the teaching with reference to the gods (adhidaivata)."
@@ -693,8 +694,8 @@
         "ब्राह्मीं वाव त उपनिषदमब्रूमेति॥"
       ],
       "linesEn": [
-        "upaniṣadaṁ bho brūhītyuktā ta upaniṣad",
-        "brāhmīṁ vāva ta upaniṣadamabrūmeti"
+        "upaniṣhadaṁ bho brūhītyuktā ta upaniṣhad",
+        "brāhmīṁ vāva ta upaniṣhadamabrūmeti"
       ],
       "meaningHi": "(शिष्य —) \"भगवन्! मुझे उपनिषद् (रहस्य विद्या) कहिए।\" (गुरु —) \"तुम्हें उपनिषद् कह दी गई; हमने तुम्हें ब्रह्म-सम्बन्धी उपनिषद् ही कही है।\"",
       "meaningEn": "(Disciple:) \"Sir, teach me the Upaniṣad (the secret knowledge).\" (Teacher:) \"The Upaniṣad has been told to you; we have told you the Upaniṣad concerning Brahman.\""

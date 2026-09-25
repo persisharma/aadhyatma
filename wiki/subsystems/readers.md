@@ -58,8 +58,9 @@ parse the complete epic during startup; the platform bundle still carries every 
 
 **Who has it:** Gita (18), Sundarkand (16), Shiva Strotam (4), Durga (3), Ganesh (3),
 Saraswati (3), Vishnu Sahasranama (4) — the last four added 2026-06-09 — and, as of 2026-07-31,
-Valmiki Ramayan (7 kāṇḍas), and, as of 2026-09-25, the Upanishads (3 chapters — Īśa, Kena,
-Māṇḍūkya — one Upanishad per chapter, each opened by its śānti-pāṭha page). Single-chapter texts (Hanuman Ashtak, Krishna Stotram, Ram Stuti,
+Valmiki Ramayan (7 kāṇḍas), and, as of 2026-09-25, the Upanishads (one Upanishad per chapter,
+each opened by its śānti-pāṭha page; 5 of the 108-text Muktikā catalogue readable — Īśa, Kena,
+Kaṭha, Muṇḍaka, Māṇḍūkya). Single-chapter texts (Hanuman Ashtak, Krishna Stotram, Ram Stuti,
 Ramcharitmanas — 1 chapter file each today) render verses only; they need no transition because
 there is no next subsection yet.
 
@@ -114,12 +115,23 @@ transition page). `gitaAutoAdvance.test.tsx` covers the Gita swipe path Maestro 
   visible and a future shape change breaks at the re-export instead of on first paint (the PR #31
   Balkand crash). The reader also carries `stanza = kāṇḍa`, which is what `getReaderBackground`
   keys the per-kāṇḍa sketch off.
-- **The Upanishad chapters index shows `mantraCount`, not `verseCount`.** Page 1 of every Upanishad
-  is its śānti-pāṭha (`section: 'shanti'`), so `verseCount` (pages) is `mantraCount + 1`; the
+- **Upanishad chapter ids are Muktikā numbers and SPARSE.** `chapter` is the text's number in the
+  108-text canon (`data/upanishad/registry.ts`), fixed forever so progress/bookmarks survive new
+  texts; only shipped texts are in `chapters-manifest.json` (1, 2, 3, 5, 6 today). The reader
+  therefore steps with `prevUpanishadChapter` / `nextUpanishadChapter`, never `chapter ± 1`, and
+  `readerAutoAdvance.test.tsx` passes the LAST READABLE number as `chapterCount`. The index screen
+  lists all 108 from `upanishadCatalogue()` with a group-chip filter; unshipped rows render as a
+  dimmed `ComingRow`.
+- **The Upanishad index shows `mantraCount`, not `verseCount`.** Page 1 of every Upanishad is its
+  śānti-pāṭha (`section: 'shanti'`), so `verseCount` (pages) is `mantraCount + 1`; the
   `GitaChapterCard` is handed `{…, verseCount: mantraCount}` so the row reads `18 मन्त्र`. The
   catalog `sub` counts mantras too (`upanishadMantraTotal`), while `verseCount` on the library
-  entry stays the page total the reader paginates. Content is authored in
-  `scripts/build-upanishad.mjs`; never hand-edit the JSON.
+  entry stays the page total the reader paginates.
+- **Upanishad content lives in `scripts/upanishad-content/<slug>.mjs`, one module per text;
+  `linesEn` is generated.** `npx tsx scripts/build-upanishad.mjs` emits `texts/<slug>.json`, the
+  manifest and `textLoaders.ts` (literal `require()` thunks — Metro needs static paths). Authors
+  write Devanagari + Hi/En meanings only; IAST comes from `transliterate-shloka.mjs`. Never
+  hand-edit the JSON or the loader map.
 - **Latent gap in single-chapter readers** — Ramcharitmanas loads only `chapter-01` today
   (conceptually 7 kāṇḍas); the moment a 2nd chapter file is added it needs the auto-advance
   pattern or it will dead-end. The test auto-covers it once its manifest length exceeds 1.
