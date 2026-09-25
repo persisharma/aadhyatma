@@ -30,12 +30,24 @@ jobs:
           TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         run: |
-          set -euo pipefail
-          curl -sf -X PATCH "https://api.netlify.com/api/v1/sites/$SITE_ID" \
+          set -uo pipefail
+          echo "--- site state ---"
+          curl -s "https://api.netlify.com/api/v1/sites/$SITE_ID" \
+            -H "Authorization: Bearer $TOKEN" \
+            | jq '{name, account_slug, account_type, custom_domain, domain_aliases, password: (.password != null), sso_login, prerender, published_deploy: .published_deploy.state}'
+
+          echo "--- attach domain ---"
+          curl -s -X PATCH "https://api.netlify.com/api/v1/sites/$SITE_ID" \
             -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' \
-            -d '{"custom_domain":"vedansh.app","domain_aliases":["www.vedansh.app"],"force_ssl":true}' \
-            -o /dev/null
-          # Certificate provisioning needs DNS to already point at Netlify; a failure
-          # here is not fatal, the deploy itself has succeeded.
+            -d '{"custom_domain":"vedansh.app","domain_aliases":["www.vedansh.app"]}' \
+            -w '\nHTTP %{http_code}\n' | tail -20
+
+          echo "--- provision certificate ---"
+          # Needs DNS already pointing at Netlify; a failure is not fatal.
           curl -s -X POST "https://api.netlify.com/api/v1/sites/$SITE_ID/ssl" \
-            -H "Authorization: Bearer $TOKEN" -o /dev/null -w 'ssl provisioning: HTTP %{http_code}\n' || true
+            -H "Authorization: Bearer $TOKEN" -w '\nHTTP %{http_code}\n' | tail -5
+
+          echo "--- account state ---"
+          curl -s "https://api.netlify.com/api/v1/accounts" \
+            -H "Authorization: Bearer $TOKEN" \
+            | jq '[.[] | {slug, type_name, state, payment_method_id: (.payment_method_id != null)}]'
