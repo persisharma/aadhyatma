@@ -4,12 +4,13 @@ import { dignityOfPosition, type BasisNode } from './kundaliBasis';
 import { RASHI_LORD_BY_INDEX } from './kundaliYoga';
 import { ageYears, formatIstDateEn, formatIstDateHi } from './reportFormat';
 import { questionForPurpose, readingText as T, type ReadingText } from './prashnaQuestions';
-import type { PurposeId } from './prashnaPurposes';
+import { phaseDecisionCopy } from './prashnaDecisionCopy';
+import { getPurpose, type PurposeId } from './prashnaPurposes';
 
-/** Career/business pilot. This is an explicit, limited D1 convention, not a
+/** Adult decision-support pilot. This is an explicit, limited D1 convention, not a
  * complete Jyotish judgement. Rule/source review is recorded separately from
  * calculation tests; see docs/roadmap/conventions/prashna-phase-v1.md. */
-export type PhasePurpose = 'naukri' | 'vyapar';
+export type PhasePurpose = Exclude<PurposeId, 'santan' | 'swasthya' | 'man'>;
 export type PhaseTone = 'supportive' | 'mixed' | 'effort' | 'active' | 'limited';
 export type PhaseSignal = {
   id: string; layer: 'natal' | 'dasha' | 'gochar'; graha: Graha;
@@ -23,7 +24,7 @@ export type PhaseDirection = {
 };
 export type PhaseDecisionReason = { signalId: string; title: ReadingText; text: ReadingText; reference: ReadingText };
 export type PhaseDecision = {
-  headline: ReadingText; nextStep: ReadingText;
+  prompt: ReadingText; headline: ReadingText; nextStep: ReadingText;
   inFavour: readonly PhaseDecisionReason[]; against: readonly PhaseDecisionReason[];
   signalIds: readonly string[];
 };
@@ -77,7 +78,10 @@ export function phaseHouses(purpose: PhasePurpose, question: string): readonly n
   if (question === 'business-partner') return [7, 10, 11, 3];
   if (question === 'business-start') return [3, 10, 7, 11];
   if (question === 'job-first') return [6, 10, 11];
-  return purpose === 'naukri' ? [10, 11, 6] : [10, 7, 11, 3];
+  if (question === 'study-course') return [9, 5, 4];
+  if (purpose === 'naukri') return [10, 11, 6];
+  if (purpose === 'vyapar') return [10, 7, 11, 3];
+  return getPurpose(purpose).bhavas;
 }
 
 function condition(chart: KundaliChart, graha: Graha) {
@@ -204,15 +208,16 @@ function decisionReason(chart: KundaliChart, signal: PhaseSignal, side: 'support
   const placement = pos(chart, signal.graha);
   const dignity = dignityOfPosition(placement);
   if (signal.layer === 'natal') {
+    const house = signal.houses[0], topic = AREAS[house];
     const text = side === 'support'
       ? dignity === 'own' || dignity === 'exalted'
-        ? T(`${n.hi} अपनी अनुकूल जन्म-राशि में हैं; करियर के प्रश्न में यह सहारा है।`, `${n.en} has a strong birth-sign placement, which supports the career question.`)
-        : T(`करियर के स्वामी ${n.hi} का जन्म-स्थान ${AREAS[placement.house].hi} से जुड़ता है; इस नियम में इसे सहारा माना गया है।`, `The career ruler ${n.en} is placed in ${AREAS[placement.house].en}; this rule treats that placement as support.`)
+        ? T(`${topic.hi} के स्वामी ${n.hi} अपनी अनुकूल जन्म-राशि में हैं; इस विषय में यह सहारा है।`, `${n.en}, ruler of ${topic.en}, has a strong birth-sign placement; this rule treats it as support.`)
+        : T(`${topic.hi} के स्वामी ${n.hi} का जन्म-स्थान ${AREAS[placement.house].hi} से जुड़ता है; इस नियम में इसे सहारा माना गया है।`, `${n.en}, ruler of ${topic.en}, is placed in ${AREAS[placement.house].en}; this rule treats that placement as support.`)
       : dignity === 'debilitated'
-        ? T(`करियर के स्वामी ${n.hi} की जन्म-राशि कमज़ोर मानी जाती है; इससे बदलाव में अतिरिक्त प्रयास का संकेत है।`, `The career ruler ${n.en} is in a traditionally weak birth-sign position, pointing to extra effort around a change.`)
-        : T(`करियर के स्वामी ${n.hi} का जन्म-स्थान ${AREAS[placement.house].hi} में है; इससे बदलाव को सरल मानना उचित नहीं।`, `The career ruler ${n.en} is placed in ${AREAS[placement.house].en}, so this rule does not treat a change as straightforward.`);
+        ? T(`${topic.hi} के स्वामी ${n.hi} की जन्म-राशि कमज़ोर मानी जाती है; इससे अधिक प्रयास का संकेत है।`, `${n.en}, ruler of ${topic.en}, is in a traditionally weak birth-sign position, pointing to extra effort.`)
+        : T(`${topic.hi} के स्वामी ${n.hi} का जन्म-स्थान ${AREAS[placement.house].hi} में है; इससे प्रगति को सरल मानना उचित नहीं।`, `${n.en}, ruler of ${topic.en}, is placed in ${AREAS[placement.house].en}, so this rule does not treat progress as straightforward.`);
     return { signalId: signal.id, title: T(`जन्मकुंडली में ${n.hi}`, `${n.en} in the birth chart`), text,
-      reference: T(`जन्मकुंडली: ${n.hi} 10वें भाव के स्वामी, ${placement.house}वें भाव में।`, `Birth chart: ${n.en} rules the 10th house and sits in house ${placement.house}.`) };
+      reference: T(`जन्मकुंडली: ${n.hi} ${house}वें भाव के स्वामी, ${placement.house}वें भाव में।`, `Birth chart: ${n.en} rules house ${house} and sits in house ${placement.house}.`) };
   }
   if (signal.layer === 'dasha') {
     const level = signal.id === 'dasha-maha' ? T('महादशा', 'Mahadasha') : T('अन्तर्दशा', 'Antardasha');
@@ -227,15 +232,15 @@ function decisionReason(chart: KundaliChart, signal: PhaseSignal, side: 'support
   const blockers = signal.basis.filter((b): b is Extract<BasisNode, { kind: 'gochar' }> => b.kind === 'gochar' && b.graha !== signal.graha);
   const blockerNames = T(blockers.map(b => names(b.graha).hi).join(', '), blockers.map(b => names(b.graha).en).join(', '));
   const transitText = side === 'challenge' && blockers.length
-    ? T(`${n.hi} काम के भावों से जुड़ते हैं, लेकिन ${blockerNames.hi} का वेध उनके सहारे को सीमित करता है।`, `${n.en} touches work-related houses, but obstruction by ${blockerNames.en} limits an otherwise supportive transit placement.`)
+    ? T(`${n.hi} इस प्रश्न के भावों से जुड़ते हैं, लेकिन ${blockerNames.hi} का वेध उनके सहारे को सीमित करता है।`, `${n.en} touches this question's houses, but obstruction by ${blockerNames.en} limits an otherwise supportive transit placement.`)
     : signal.meaning;
   return { signalId: signal.id, title: signal.title, text: transitText,
     reference: gochar && gochar.kind === 'gochar'
-      ? T(`आज का गोचर: जन्म-चन्द्र से ${gochar.fromMoonHouse}वाँ भाव; काम से जुड़े भाव ${signal.houses.join(', ')}।`, `Today's transit: house ${gochar.fromMoonHouse} from your Moon; work-related houses ${signal.houses.join(', ')}.`)
+      ? T(`आज का गोचर: जन्म-चन्द्र से ${gochar.fromMoonHouse}वाँ भाव; इस प्रश्न के भाव ${signal.houses.join(', ')}।`, `Today's transit: house ${gochar.fromMoonHouse} from your Moon; question-related houses ${signal.houses.join(', ')}.`)
       : T('आज का गोचर', "Today's transit") };
 }
 
-function jobSwitchDecision(chart: KundaliChart, tone: PhaseTone, signals: readonly PhaseSignal[]): PhaseDecision {
+function phaseDecision(chart: KundaliChart, purpose: PhasePurpose, question: string, tone: PhaseTone, signals: readonly PhaseSignal[]): PhaseDecision {
   const ordered = [...signals].sort((a, b) => {
     const rank = (s: PhaseSignal) => s.layer === 'dasha' ? 0 : s.layer === 'gochar' ? 1 : 2;
     return rank(a) - rank(b);
@@ -246,20 +251,7 @@ function jobSwitchDecision(chart: KundaliChart, tone: PhaseTone, signals: readon
     .filter((s, i, all) => !all.slice(0, i).some(other => other.graha === s.graha && other.layer !== 'gochar' && s.layer !== 'gochar'))
     .slice(0, 2)
     .map(s => decisionReason(chart, s, side));
-  const headline: Record<PhaseTone, ReadingText> = {
-    supportive: T('हाँ, बदलाव की तलाश आगे बढ़ाएँ', 'Yes, pursue a job change now'),
-    mixed: T('अभी तलाश करें; नौकरी छोड़ने का निर्णय रोकें', 'Search now; hold off on resigning'),
-    effort: T('अभी तुरंत बदलाव के बजाय तैयारी करें', 'Prepare before making an immediate switch'),
-    active: T('अभी बदलाव के पक्ष में स्पष्ट संकेत नहीं', 'No clear case for switching right now'),
-    limited: T('अभी बदलाव के समय पर स्पष्ट उत्तर नहीं', 'No clear timing answer for a switch yet'),
-  };
-  const nextStep: Record<PhaseTone, ReadingText> = {
-    supportive: T('नई भूमिका पर बात आगे बढ़ाएँ। काम, वेतन और शुरू करने की तारीख लिखित रूप में स्पष्ट होने पर ही अंतिम निर्णय लें।', 'Advance interviews. Make the final decision after the role, pay and start date are clear in writing.'),
-    mixed: T('आवेदन और बातचीत जारी रखें। कोई प्रस्ताव मिले तो नई ज़िम्मेदारी और काम का दबाव अपनी मौजूदा भूमिका से मिलाएँ; उसके बाद ही छोड़ने का निर्णय लें।', 'Keep applying and interviewing. Compare an offer’s responsibilities and workload with your current role before deciding to leave.'),
-    effort: T('विकल्प खोजें, कौशल और संपर्क तैयार करें। केवल इस समय-संकेत के आधार पर जल्दबाज़ी में इस्तीफ़ा न दें।', 'Explore openings and prepare your skills and contacts. Avoid a rushed resignation based on this timing indication alone.'),
-    active: T('बदलाव का निर्णय वास्तविक प्रस्ताव और अपनी प्राथमिकताओं के आधार पर लें। इस गणना से बेहतर परिणाम का पक्ष तय नहीं होता।', 'Decide from an actual offer and your priorities. This reading does not establish that a switch would work out better.'),
-    limited: T('इस गणना में चल रही दशा से नौकरी बदलने का सीधा समय-संकेत नहीं मिलता। कोई प्रस्ताव हो तो उसकी शर्तें परखकर निर्णय लें।', 'The running dasha has no direct job-change timing link in this calculation. If you have an offer, judge its actual terms.'),
-  };
+  const copy = phaseDecisionCopy(purpose, question, tone);
   const inFavour = reasons('support');
   const against = reasons('challenge');
   if ((tone === 'mixed' || tone === 'effort') && against.length < 2) {
@@ -284,33 +276,8 @@ function jobSwitchDecision(chart: KundaliChart, tone: PhaseTone, signals: readon
     });
     if (tone === 'limited') against.splice(2);
   }
-  return { headline: headline[tone], nextStep: nextStep[tone], inFavour, against,
+  return { ...copy, inFavour, against,
     signalIds: [...new Set([...inFavour, ...against].map(reason => reason.signalId))] };
-}
-
-function directionText(question: string, tone: PhaseTone, focus: number | null): ReadingText {
-  const advance = tone === 'supportive', caution = tone === 'effort' || tone === 'mixed';
-  switch (question) {
-    case 'job-first': return advance
-      ? T('पहली नौकरी के लिए आवेदन और चयन की प्रक्रिया आगे बढ़ाने का सहारा है।', 'There is support for moving first-job applications and selection conversations forward.')
-      : T('पहली नौकरी की तलाश में लगातार प्रयास का पक्ष उभरता है; जल्दी चयन होने की धारणा पर योजना न टिकाएँ।', 'For a first job, the reading points toward sustained attempts; plan without assuming quick selection.');
-    case 'job-switch': return advance
-      ? T('नौकरी बदलने के विकल्पों पर बातचीत आगे बढ़ाएँ; भूमिका में वास्तविक बढ़त को प्राथमिकता दें।', 'Move conversations about a job change forward, prioritising a real step up in responsibility.')
-      : caution ? T('बदलाव की तलाश जारी रख सकते हैं, पर अभी केवल जल्दी निकलने के लिए भूमिका न चुनें। नई ज़िम्मेदारी और काम का दबाव साथ परखें।', 'You can keep exploring a change, but avoid choosing a role simply to make a quick exit. Weigh the new responsibility alongside its demands.')
-        : T('नौकरी बदलने की संभावना टटोलें; इस अवधि से अकेले बदलाव को बेहतर विकल्प नहीं कहा जा सकता।', 'Explore a possible change; this period alone does not establish that switching is the better option.');
-    case 'job-growth': return advance
-      ? T('अधिक ज़िम्मेदारी या भूमिका में विस्तार की बातचीत आगे बढ़ाने का समय समझें।', 'Read this as a phase for advancing conversations about greater responsibility or a wider role.')
-      : T('मौजूदा भूमिका में पकड़ और काम की पहचान बढ़ाने पर ज़ोर रखें; तत्काल पदोन्नति का समय तय नहीं होता।', 'Emphasise command of your work and recognition in the current role; an immediate promotion is not established.');
-    case 'business-partner': return advance
-      ? T('साझेदारी की बातचीत आगे बढ़ाने का सहारा है; काम बाँटने की दिशा को केंद्र में रखें।', 'There is support for advancing partnership discussions, centred on how the work would be shared.')
-      : T('साझेदारी पर अभी चरणों में आगे बढ़ने की दिशा है; केवल उत्साह के आधार पर स्थायी बँटवारा तय न मानें।', 'The direction is to approach partnership in stages; enthusiasm alone is not a basis for a permanent arrangement.');
-    case 'business-start': return advance
-      ? T('उद्यम की शुरुआत की तैयारी को आगे बढ़ाने का सहारा है; पहल को ठोस काम में बदलें।', 'There is support for advancing preparations for a venture and turning initiative into concrete work.')
-      : T('शुरुआत को चरणों में रखने की दिशा है; तत्काल बड़े विस्तार को इस अवधि का निष्कर्ष न मानें।', 'The direction is a staged beginning; this phase does not establish an immediate large expansion.');
-    default: return focus === 7 ? T('साझेदारी और ग्राहकों के साथ काम करने की दिशा पर ध्यान दें।', 'Give attention to working with partners and clients.')
-      : focus === 6 ? T('इस समय प्रतिस्पर्धा और रोज़ के काम में पकड़ बनाना मुख्य दिशा है।', 'The main direction now is building your footing in competition and daily work.')
-        : T('भूमिका और ज़िम्मेदारी को आगे बढ़ाने के विकल्प देखें, गति को मिले-जुले संकेतों के अनुसार रखें।', 'Explore ways to develop your role and responsibility, with a pace that reflects the combined indications.');
-  }
 }
 
 function nextPeriod(chart: KundaliChart, now: Date, houses: readonly number[], currentMaha: Graha): PrashnaPhase['next'] {
@@ -329,7 +296,7 @@ function nextPeriod(chart: KundaliChart, now: Date, houses: readonly number[], c
 }
 
 export function buildPrashnaPhase(chart: KundaliChart, purpose: PurposeId, now: Date, questionId?: string): PrashnaPhase | null {
-  if (!['naukri', 'vyapar'].includes(purpose) || now.getTime() < chart.input.date.getTime() || ageYears(chart.input.date, now) < 18) return null;
+  if (['santan', 'swasthya', 'man'].includes(purpose) || now.getTime() < chart.input.date.getTime() || ageYears(chart.input.date, now) < Math.max(18, getPurpose(purpose).minAge)) return null;
   const purposeId = purpose as PhasePurpose, q = questionForPurpose(purpose, questionId), houses = phaseHouses(purposeId, q.id);
   const current = getCurrentDasha(chart, now), snapshot = computeGocharSnapshot(chart, now);
   const periods = current ? [periodSignal(chart, houses, current.maha, 'maha'), ...(current.antar ? [periodSignal(chart, houses, current.antar, 'antar')] : [])] : [];
@@ -346,7 +313,8 @@ export function buildPrashnaPhase(chart: KundaliChart, purpose: PurposeId, now: 
     : tone === 'effort' && challenge ? T(`${names(challenge.graha).hi} से जुड़ी चुनौती के कारण तेज़ नतीजे के बजाय प्रयास और तैयारी को अधिक जगह दें।`, `The challenge associated with ${names(challenge.graha).en} points toward allowing for effort and preparation rather than a quick result.`)
       : tone === 'supportive' ? T('चल रही दशा और संबंधित गोचर दोनों से सहारा मिलता है।', 'The active period and a relevant current transit both add support.')
         : T('विषय सक्रिय होना अपने-आप आसान प्रगति का संकेत नहीं है।', 'An active topic does not by itself mean easy progress.');
-  const direction = tone === 'limited' ? T('इस गणना से आगे बढ़ने या रुकने का समय तय नहीं होता। समय पर निष्कर्ष के लिए कुंडली का अधिक विस्तृत विवेचन चाहिए।', 'This calculation does not establish a time to advance or pause. A broader chart interpretation is needed for a timing conclusion.') : directionText(q.id, tone, focus);
+  const decision = phaseDecision(chart, purposeId, q.id, tone, signals);
+  const direction = decision.nextStep;
   const focusPlanets = [...new Set(active.filter(s => s.houses.includes(focus!)).map(s => s.graha))];
   const focusText = focus ? T(`${focusPlanets.map(g => names(g).hi).join(' और ')} की अवधि में ${AREAS[focus].hi} पर ज़ोर है।`, `The ${focusPlanets.map(g => names(g).en).join(' and ')} period puts emphasis on ${AREAS[focus].en}.`) : lead;
   return {
@@ -356,7 +324,7 @@ export function buildPrashnaPhase(chart: KundaliChart, purpose: PurposeId, now: 
     summary: T(`${lead.hi} ${tone === 'limited' ? '' : conclusion.hi}`.trim(), `${lead.en} ${tone === 'limited' ? '' : conclusion.en}`.trim()),
     currentPeriod: current ? { maha: current.maha.lord, antar: current.antar?.lord ?? null, label: periodLabel, start: (current.antar ?? current.maha).start.toISOString(), end: (current.antar ?? current.maha).end.toISOString() } : null,
     signals,
-    decision: q.id === 'job-switch' ? jobSwitchDecision(chart, tone, signals) : null,
+    decision,
     directions: [{ id: 'phase-focus', label: T('इस समय दिशा', 'Direction for this phase'), text: direction, origin: 'phase-interpretation', signalIds: [...new Set([natal.id, ...active.map(s => s.id), ...reasons.map(s => s.id)])] },
       { id: 'phase-reason', label: T('इस दिशा का कारण', 'Why this direction'), text: focusText, origin: 'phase-interpretation', signalIds: signals.filter(s => s.layer !== 'natal' || s.support || s.challenge).map(s => s.id) }],
     next: current ? nextPeriod(chart, now, houses, current.maha.lord) : null,

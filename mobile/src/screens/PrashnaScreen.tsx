@@ -297,7 +297,8 @@ export default function PrashnaScreen({ navigation, route }: Props) {
                       )}
                       {phase ? <PrashnaPhaseContent key={`${chart.input.date.toISOString()}-${chart.input.latitude}-${chart.input.longitude}-${purposeId}-${questionId}`} phase={phase} lang={lang}>
                         <View style={styles.actions}>
-                          {purposeId === 'vyapar' && <ActionPill lang={lang} hi="मुहूर्त खोजें" en="Find a muhurat" a11y="Open Muhurat finder" onPress={() => rootNav.navigate('MuhuratFinder')} />}
+                          {MUHURAT_PURPOSES.includes(purposeId) && <ActionPill lang={lang} hi="मुहूर्त खोजें" en="Find a muhurat" a11y="Open Muhurat finder" onPress={() => rootNav.navigate('MuhuratFinder')} />}
+                          {purposeId === 'vivah' && <ActionPill lang={lang} hi="गुण मिलान" en="Guna Milan" a11y="Open Guna Milan" onPress={() => rootNav.navigate('GunaMilan')} />}
                           <ActionPill lang={lang} hi="विस्तृत विवेचन और साझा करें" en="Full reading and share" a11y="Open full Kundali reading" onPress={() => rootNav.navigate('KundaliReport', { prashnaContext: { purposeId, questionId: phase.questionId } })} />
                         </View>
                       </PrashnaPhaseContent> : <>

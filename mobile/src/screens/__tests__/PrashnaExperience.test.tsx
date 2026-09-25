@@ -98,17 +98,14 @@ test('an adult chart leads with guidance and expands technical evidence on reque
     assert.equal(tile.props.accessibilityState.disabled, false, `${id} open for an adult`);
   }
   assert.ok(!text.includes('From age 18'));
-  for (const label of ['Your reading', 'What this means for you', 'A practical plan', 'Timing', 'Practice']) assert.ok(text.includes(label));
+  for (const label of ['What direction fits study now?', 'Why this answer', 'What to do now', 'Next period change']) assert.ok(text.includes(label));
   assert.ok(byTestId(tree, 'prashna-saar').length > 0);
   assert.equal(byTestId(tree, 'prashna-strength').length, 0);
   assert.equal(byTestId(tree, 'prashna-chain-0').length, 0);
   act(() => byTestId(tree, 'prashna-basis-toggle')[0].props.onPress());
-  assert.ok(byTestId(tree, 'prashna-strength').length > 0);
+  assert.equal(byTestId(tree, 'prashna-strength').length, 0);
   assert.ok(byTestId(tree, 'prashna-chain-0').length > 0);
-  assert.ok(text.includes('· now'), 'a running window is marked');
-  assert.match(text, /\d{1,2} [A-Z][a-z]{2} \d{4} → \d{1,2} [A-Z][a-z]{2} \d{4}/, 'dated window');
-  assert.ok(tree.root.findByProps({ accessibilityLabel: 'Open Navagraha Stotram practice' }));
-  assert.match(text, /As of \d{1,2} [A-Z][a-z]{2} \d{4}\. A view from traditional Jyotish/);
+  assert.match(text, /\d{1,2} [A-Z][a-z]{2} \d{4}\s+→\s+\d{1,2} [A-Z][a-z]{2} \d{4}/, 'dated window');
   assert.doesNotMatch(text, /\b(?:\d*[02-9])?[123]th bhava/);
   act(() => tree.unmount());
 });
@@ -174,15 +171,15 @@ test('career question changes phase guidance, clears basis and keeps report cont
   const tree = render({ purposeId: 'naukri' });
   act(() => byTestId(tree, 'question-job-first')[0].props.onPress());
   const first = textOf(tree);
-  assert.ok(first.includes('Your current phase'));
-  assert.ok(first.includes('Why this reading'));
+  assert.ok(first.includes('How should I approach my first job?'));
+  assert.ok(first.includes('Why this answer'));
   assert.ok(!first.includes('A practical plan'));
   act(() => byTestId(tree, 'prashna-basis-toggle')[0].props.onPress());
   assert.ok(byTestId(tree, 'prashna-chain-0').length);
   act(() => byTestId(tree, 'question-job-switch')[0].props.onPress());
   assert.notEqual(textOf(tree), first);
   assert.ok(textOf(tree).includes('Should I change jobs?'));
-  assert.ok(textOf(tree).includes('In favour of a change'));
+  assert.ok(textOf(tree).includes('In favour'));
   assert.ok(textOf(tree).includes('Reasons to pause'));
   assert.ok(byTestId(tree, 'phase-for-natal-10').length || byTestId(tree, 'phase-for-dasha-maha').length || byTestId(tree, 'phase-for-dasha-antar').length);
   assert.equal(byTestId(tree, 'prashna-chain-0').length, 0);
@@ -200,10 +197,47 @@ test('Hindi job-switch answer leads with a decision and explains both sides', ()
   act(() => byTestId(tree, 'question-job-switch')[0].props.onPress());
   const text = textOf(tree);
   assert.ok(text.includes('नौकरी बदलूँ?'));
-  assert.ok(text.includes('बदलाव के पक्ष में'));
+  assert.ok(text.includes('पक्ष में'));
   assert.ok(text.includes('सावधानी का कारण'));
   assert.ok(text.includes('अब क्या करें'));
   assert.match(text, /जन्मकुंडली:|आज का गोचर:|चल रही महादशा:/);
+  act(() => tree.unmount());
+});
+
+test('study, money, marriage and travel use the same decision layout and keep their hand-offs', () => {
+  mockKundaliState = { profile: { name: 'Aarav' }, chart: adultChart, hydrated: true, loadState: 'saved' };
+  const tree = render({ purposeId: 'vidya' });
+  const prompts = [
+    ['vidya', 'What direction fits study now?'],
+    ['dhan', 'What should I do about money now?'],
+    ['vivah', 'How should I approach marriage now?'],
+    ['yatra', 'How should I approach travel or relocation?'],
+  ] as const;
+  for (const [purpose, prompt] of prompts) {
+    act(() => byTestId(tree, `purpose-${purpose}`)[0].props.onPress());
+    const text = textOf(tree);
+    assert.ok(text.includes(prompt), purpose);
+    assert.ok(text.includes('In favour') && text.includes('Reasons to pause') && text.includes('What to do now'), purpose);
+  }
+  assert.ok(tree.root.findAll(n => n.props.accessibilityLabel === 'Open Muhurat finder' && typeof n.props.onPress === 'function').length);
+  act(() => byTestId(tree, 'purpose-vivah')[0].props.onPress());
+  assert.ok(tree.root.findAll(n => n.props.accessibilityLabel === 'Open Guna Milan' && typeof n.props.onPress === 'function').length);
+  act(() => tree.unmount());
+});
+
+test('health, mind and fertility lead with their boundary and no timed decision', () => {
+  mockKundaliState = { profile: { name: 'Aarav' }, chart: adultChart, hydrated: true, loadState: 'saved' };
+  const tree = render({ purposeId: 'swasthya' });
+  for (const [purpose, headline] of [
+    ['swasthya', 'A chart cannot assess health or symptoms.'],
+    ['man', 'A chart cannot assess mental health.'],
+    ['santan', 'A chart cannot establish fertility or its timing.'],
+  ]) {
+    act(() => byTestId(tree, `purpose-${purpose}`)[0].props.onPress());
+    const text = textOf(tree);
+    assert.ok(text.includes(headline), purpose);
+    assert.ok(!text.includes('Why this answer'), purpose);
+  }
   act(() => tree.unmount());
 });
 
@@ -219,7 +253,6 @@ test('changing the active person clears the previous question, checklist and exp
   mockKundaliState = { profile: { name: 'Aarav' }, chart: adultChart, hydrated: true, loadState: 'saved' };
   const tree = render({ purposeId: 'vidya' });
   act(() => byTestId(tree, 'question-study-exam')[0].props.onPress());
-  act(() => byTestId(tree, 'action-study-exam-0')[0].props.onPress());
   act(() => byTestId(tree, 'prashna-basis-toggle')[0].props.onPress());
   mockKundaliState = { profile: { name: 'Aaradhya' }, chart: childChart, hydrated: true, loadState: 'saved' };
   act(() => tree.update(<GitaLanguageProvider initialLang="en"><PrashnaScreen navigation={mockNavigation as any}

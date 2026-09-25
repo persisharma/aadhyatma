@@ -1,6 +1,6 @@
-# Prashna current-phase pilot — 21 September 2026
+# Prashna current-phase convention — 21 September 2026
 
-Status: implemented for adult career/business **for review**, not approved for release or extension to the remaining topics. `PHASE_SOURCE.verified` stays false. This is a limited D1 interpretation, not a complete astrologer's judgement. The user's approved first checkpoint is actual readings across people and dates before extending the model.
+Status: expanded on 25 September 2026 to adult career, business, study, money, marriage and travel after user review of the job-switch answer. Health, mind, children and minors retain the previous safety-limited guidance. `PHASE_SOURCE.verified` stays false. This is a limited D1 interpretation, not a complete astrologer's judgement or a validated prediction.
 
 ## Computation and source register
 
@@ -25,13 +25,14 @@ These are references for traditional rules, not evidence of predictive accuracy.
 
 ## Composition policy (editorial, not a classical formula)
 
-1. Question priority selects the natal focus: career 10; first job 6; partnership 7; new business 3. All topic-house contacts remain visible. These question mappings are product conventions inherited from the purpose registry, still source-review pending.
+1. Question priority selects the natal focus: career 10; first job 6; partnership 7; new business 3; course choice 9. Other adult questions use the purpose registry's ordered houses: study 5/4/9, money 2/11/4, marriage 7/2/11, travel 9/3/12. All topic-house contacts remain visible. These question mappings are product conventions, still source-review pending.
 2. Determine direct activation by maha/antar. Keep them separate; repeating the same graha does not create extra independent votes.
 3. Combine natal condition, active-period condition and relevant Jupiter/Saturn transit conditions. A supportive phase requires an active period contributing support and a relevant unobstructed transit, without a competing signal. Relevant support plus challenge is mixed; only challenge is effort; activation without enough supporting conditions is active. No direct activation is limited.
 4. No numeric score, weighted average, probability, event date or guaranteed result. In particular a favourable Moon transit alone does not establish a career opportunity. Absence of a favourable transit rule is rendered as limited ease, not a predicted mishap.
 5. Directions are bilingual phrase-table interpretations keyed by question and phase, with explicit signal IDs. They are not ordinary checklists and are not observed personal circumstances.
 6. The next card names the actual next Antardasha, crossing Mahadasha boundaries when needed. Its natal topic meaning is a preview; it does not carry today's transit judgement forward. The UI says **Next period change**, not next improvement or next overall change.
 7. For an explicit job-switch question, the same phase tone becomes a short decision: pursue interviews (supportive), search without resigning (mixed), prepare before an immediate move (effort), or say that the checked timing is insufficient (active/limited). The screen shows up to two signals in favour and two reasons to pause, each linked to its exact phase signal and birth/period/transit reference. A neutral or absent dasha link is labelled uncertainty, not an adverse graha. Practical steps require an actual offer and role details before a final decision. This is an editorial decision aid, not a classical yes/no prediction.
+8. The same decision structure now covers every question in the six adult purposes. Topic-specific bilingual copy gives the recommendation and a practical checkpoint; the reasons still come only from the existing signal set. A neutral dasha or absent direct link is labelled uncertainty under “Reasons to pause,” never a negative planet. Exam marks, profit, partner choice and travel outcomes are not predicted.
 
 ## Deliberate limits and the next review
 
@@ -39,7 +40,7 @@ These are references for traditional rules, not evidence of predictive accuracy.
 - Rahu/Ketu contribute only topic activation. The comparison exposed disagreement around Rahu in the sixth; the generic difficult-house polarity was removed for nodes instead of selecting GPT's favourable interpretation without the missing checks.
 - Only slow Jupiter/Saturn transits determine the phase. Vedha uses all current grahas, so a daily blocker can change independently of a slow ingress. The current interpretation is stamped for today, never for the full multi-year period.
 - Next slow-transit change prediction is still outside the phase card. Legacy scans remain available for the other topics. Do not say the next dasha card enumerates every upcoming change.
-- Ask resolves an explicit job-switch phrase in English, Hindi or Hinglish to `job-switch` and opens that selected question on Prashna. All other job phrases still use the general-purpose phase; Ask does not infer first-job or growth subtypes. Its general-purpose phase equals the screen's general-purpose phase at the same instant.
-- The remaining seven topics retain the previous model. Health, mind, children and minor restrictions are unchanged.
+- Ask resolves explicit switch, first-job, growth, new-business, partner, exam and course wording to the matching question and opens it selected on Prashna. Other phrases keep the general-purpose phase. Its general-purpose phase equals the screen's general-purpose phase at the same instant.
+- Adult study, money, marriage and travel now use the current phase; health, mind, children and minor restrictions are unchanged. A timed verdict for the protected topics is deliberately excluded.
 
-Review the six-profile comparison before widening scope. It must show what changed, what did not, which GPT assertions disagree with supplied facts, and which comparisons cannot be made against the public platform reports.
+The original six-profile comparison remains a reasoning check, not outcome validation. Compare new topic fixtures across people and dates, including missing dasha links and contradictory signals, before claiming predictive accuracy.

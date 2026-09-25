@@ -10,6 +10,8 @@ Ask recognizes explicit switch wording in English, Hindi and Hinglish, uses the 
 
 Dedicated iPhone 17 iOS 26.4 QA simulator `913FA15C-3750-4E34-97BA-A39A33410600`, synthetic Aarav only, Standard **Large** content size. English and Hindi Maestro flows completed. The [English answer](screenshots/en/screenshots/01-answer.png), [English evidence](screenshots/en/screenshots/02-in-favour.png), [Hindi answer](screenshots/hi/screenshots/01-answer.png) and [Hindi evidence](screenshots/hi/screenshots/02-in-favour.png) show wrapped labels, date range and reasons. The [English next step](screenshots/en/screenshots/03-reasons-to-pause.png) and [Hindi next step](screenshots/hi/screenshots/03-reasons-to-pause.png) remain inside their cards. No horizontal clipping was observed. Long evidence cards scroll vertically; viewport screenshots are not full-card images.
 
+The screenshots were refreshed on 25 September after the six-topic expansion. They show that day's current-phase calculation; the synthetic 24 September fixture analysis above is retained as a separate dated example. Both language flows passed again.
+
 The flows are in [`flows/`](flows/). The Hindi run used the dedicated simulator's language preference set to `hi`; it was restored to `en` after capture. No real user profile or other simulator was changed. A React Native development warning tray was dismissed before final captures; it is not part of production UI.
 
 ## Verification and limits

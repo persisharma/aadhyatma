@@ -24,11 +24,22 @@ function chartFor(input: KundaliInput): KundaliChart {
 }
 
 function questionChoice(purposeId: string, question?: string): string | undefined {
-  if (purposeId !== 'naukri' || !question) return undefined;
+  if (!question) return undefined;
   const key = fold(question);
-  const work = /(?:\bnaukri\b|\bnaukari\b|\bjob\b)/.test(key);
-  const change = /(?:badal|badlu|badle|switch|chang|resign|quit|chhod|chod|बदल|छोड़)/.test(key);
-  return work && change ? 'job-switch' : undefined;
+  if (purposeId === 'naukri') {
+    if (/(?:badal|badlu|badle|switch|chang|resign|quit|chhod|chod)/.test(key)) return 'job-switch';
+    if (/(?:phirst|first|pehli|pahli|pehla|pahla)/.test(key)) return 'job-first';
+    if (/(?:promot|padonati|padonnati|grow|growth|taraki|tarki)/.test(key)) return 'job-growth';
+  }
+  if (purposeId === 'vyapar') {
+    if (/(?:partner|sajhedar|sajhidar|partnership)/.test(key)) return 'business-partner';
+    if (/(?:start|begin|launch|shuru|naya|new)/.test(key)) return 'business-start';
+  }
+  if (purposeId === 'vidya') {
+    if (/(?:course|subject|vishay|visay)/.test(key)) return 'study-course';
+    if (/(?:exam|pariksha|test)/.test(key)) return 'study-exam';
+  }
+  return undefined;
 }
 
 export function resolvePrashna(intentId: string, ctx: AskContext, slots: ResolvedSlots, question?: string): AskAnswer | null {
@@ -61,7 +72,7 @@ export function resolvePrashna(intentId: string, ctx: AskContext, slots: Resolve
     intentId, family: 'jyotish', tag: L(`प्रश्न · ${purpose.nameHi}`, `Prashna · ${purpose.nameEn}`),
     headline: phase.decision?.headline ?? phase.title, sub: who,
     lines: phase.decision ? [
-      { label: L('बदलाव के पक्ष में', 'In favour'), value: phase.decision.inFavour[0]
+      { label: L('पक्ष में', 'In favour'), value: phase.decision.inFavour[0]
         ? L(`${phase.decision.inFavour[0].text.hi} ${phase.decision.inFavour[0].reference.hi}`, `${phase.decision.inFavour[0].text.en} ${phase.decision.inFavour[0].reference.en}`)
         : L('जाँचे गए संकेतों में स्पष्ट सहारा नहीं।', 'No clear support in the checked factors.') },
       { label: L('सावधानी का कारण', 'Reasons to pause'), value: phase.decision.against[0]
@@ -78,7 +89,7 @@ export function resolvePrashna(intentId: string, ctx: AskContext, slots: Resolve
       ? `${s.title.hi}: ${s.basis.map(basisLabelHi).join(' → ')}`
       : `${s.title.en}: ${s.basis.map(basisLabelEn).join(' → ')}`),
     basis: phase.signals.map(s => L(`${s.title.hi}: ${s.basis.map(basisLabelHi).join(' → ')}`, `${s.title.en}: ${s.basis.map(basisLabelEn).join(' → ')}`)),
-    actions: [open, ...(id === 'vyapar' ? [{ label: L('मुहूर्त', 'Muhurat'), target: { tab: 'panchang', screen: 'MuhuratFinder' } } as AskAction] : [])], confidence: 'exact',
+    actions: [open, ...(['vyapar', 'yatra', 'vivah'].includes(id) ? [{ label: L('मुहूर्त', 'Muhurat'), target: { tab: 'panchang', screen: 'MuhuratFinder' } } as AskAction] : [])], confidence: 'exact',
   };
   const first = answer.windows.find((w) => w.id === guidance!.timing.windowIds[0]);
   return {

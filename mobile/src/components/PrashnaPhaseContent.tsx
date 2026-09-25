@@ -22,7 +22,7 @@ export default function PrashnaPhaseContent({ phase, lang, children }: { phase: 
   const visible = phase.signals.filter(s => s.layer !== 'gochar' || s.houses.length).filter((s, i, all) => !all.slice(0, i).some(other => other.layer === s.layer && other.graha === s.graha && other.meaning.en === s.meaning.en));
   return <>
     <View testID="prashna-phase" style={[card, { borderColor: colors.cardActiveBorder, backgroundColor: colors.cardActiveFrom }]}>
-      {label(phase.decision ? 'नौकरी बदलूँ?' : 'अभी का समय', phase.decision ? 'Should I change jobs?' : 'Your current phase')}
+      {phase.decision ? label(phase.decision.prompt.hi, phase.decision.prompt.en) : label('अभी का समय', 'Your current phase')}
       <Text testID="prashna-saar" style={heading}>{t(phase.decision?.headline ?? phase.title)}</Text>
       {!phase.decision && <Text style={body}>{t(phase.summary)}</Text>}
       {phase.currentPeriod && <View style={[styles.period, { borderTopColor: colors.divider }]}>
@@ -33,12 +33,12 @@ export default function PrashnaPhaseContent({ phase, lang, children }: { phase: 
     </View>
     {phase.decision ? <View style={card}>
       {label('इस उत्तर का आधार', 'Why this answer')}
-      <Text style={[heading, styles.sideHeading]}>{contentByLang(lang, 'बदलाव के पक्ष में', 'In favour of a change')}</Text>
+      <Text style={[heading, styles.sideHeading]}>{phase.questionId === 'job-switch' ? contentByLang(lang, 'बदलाव के पक्ष में', 'In favour of a change') : contentByLang(lang, 'पक्ष में', 'In favour')}</Text>
       {phase.decision.inFavour.length ? phase.decision.inFavour.map(reason => <View key={`for-${reason.signalId}`} testID={`phase-for-${reason.signalId}`} style={styles.reason}>
         <Text style={[body, { color: colors.ink }]}>{t(reason.title)}</Text>
         <Text style={body}>{t(reason.text)}</Text>
         <Text style={[body, { color: colors.inkMuted, fontSize: lang === 'en' ? 15 : 13, lineHeight: 22 }]}>{t(reason.reference)}</Text>
-      </View>) : <Text style={body}>{contentByLang(lang, 'जाँचे गए संकेतों में बदलाव के पक्ष में स्पष्ट सहारा नहीं मिला।', 'No clear support for a change appears in the factors checked.')}</Text>}
+      </View>) : <Text style={body}>{contentByLang(lang, 'जाँचे गए संकेतों में इस प्रश्न के लिए स्पष्ट सहारा नहीं मिला।', 'No clear support for this question appears in the factors checked.')}</Text>}
       <View style={[styles.divider, { backgroundColor: colors.divider }]} />
       <Text style={[heading, styles.sideHeading]}>{contentByLang(lang, 'सावधानी का कारण', 'Reasons to pause')}</Text>
       {phase.decision.against.length ? phase.decision.against.map(reason => <View key={`against-${reason.signalId}`} testID={`phase-against-${reason.signalId}`} style={styles.reason}>
