@@ -42,7 +42,7 @@ export default function NameDetailSheet({
             <Pressable onPress={onClose} accessibilityRole="button" accessibilityLabel="Close name details" style={[styles.close, { backgroundColor: colors.saffronTint, borderRadius: radii.pill }]}><Text style={{ color: colors.saffronDeep, fontSize: 20 }}>×</Text></Pressable>
           </View>
           <ScrollView contentContainerStyle={styles.content}>
-            <Text accessibilityRole="header" style={{ color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 34, lineHeight: 48 }}>{name.hi}</Text>
+            <Text accessibilityRole="header" style={{ color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 34 }}>{name.hi}</Text>
             <Text style={[styles.latin, { color: colors.inkMuted }]}>{name.latin}</Text>
             <Text style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18 }}>
               {name.hi.slice(0, 1)} · {contentByLang(lang, NAKSHATRA_NAMES_HI[nakshatraIndex], NAKSHATRA_NAMES_EN[nakshatraIndex])} · {contentByLang(lang, `पद ${(charana % 4) + 1}`, `Pada ${(charana % 4) + 1}`)} · {contentByLang(lang, name.gender === 'boy' ? 'बालक' : name.gender === 'girl' ? 'बालिका' : 'सभी', name.gender === 'boy' ? 'Boy' : name.gender === 'girl' ? 'Girl' : 'All')}

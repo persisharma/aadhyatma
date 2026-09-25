@@ -2482,7 +2482,7 @@ const styles = StyleSheet.create({
   // ("व्रत"), whose matras clip below ~1.4× leading, so the box follows the
   // 14pt line box rather than the old 10pt one.
   dateTag: { minWidth: 28, minHeight: 16, borderRadius: 8, paddingHorizontal: 5, alignItems: 'center', justifyContent: 'center', marginTop: 2 },
-  dateTagText: { fontSize: 10, lineHeight: 14 },
+  dateTagText: { fontSize: 10, lineHeight: 15 },
   todayButton: { alignSelf: 'center', marginTop: 8, borderWidth: 1, borderRadius: 999, paddingHorizontal: 16, paddingVertical: 8 },
   compactTodayButton: { marginTop: 0, paddingHorizontal: 14, paddingVertical: 7 },
   angaGrid: { flexDirection: 'row', gap: 8, marginTop: 12 },

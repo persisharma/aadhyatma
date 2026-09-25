@@ -3,7 +3,13 @@ import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 
 import { computeKundali, GRAHA_ORDER, type KundaliChart } from '../kundali';
-import { computeCombinations, YOGA_DEFINITIONS } from '../kundaliYoga';
+import {
+  CLOSE_CONJUNCTION_ORB_DEGREES,
+  computeCombinations,
+  formatSeparation,
+  separationWithinSign,
+  YOGA_DEFINITIONS,
+} from '../kundaliYoga';
 
 const chart = computeKundali({
   date: new Date('1995-03-15T04:30:00Z'),
@@ -117,4 +123,50 @@ test('kendra–trikona and dhana yogas fire on lord association and never double
   assert.ok(ktIds.includes('yoga-dhana'), 'dhana on a single lord seated in a wealth house');
   const kendraTrikona = computeCombinations(kt, { cap: 50 }).find((c) => c.id === 'yoga-kendra-trikona')!;
   assert.ok(!kendraTrikona.grahas.includes('sun'), 'the Lagna lord (Sun) is not counted on the kendra side');
+});
+
+test('same-sign groups always state the degree gap and only call a tight pair a close conjunction', () => {
+  const tula: KundaliChart = { ...chart, lagnaRashiIndex: 6, houses: Array.from({ length: 12 }, (_, i) => (6 + i) % 12) };
+  const seated = seat(tula, { sun: 11, mercury: 11 });
+  const withDegrees = (sunDeg: number, mercuryDeg: number, mercuryRetro = false): KundaliChart => ({
+    ...seated,
+    grahas: seated.grahas.map((position) =>
+      position.graha === 'sun'
+        ? { ...position, degreeInRashi: sunDeg, retrograde: false }
+        : position.graha === 'mercury'
+          ? { ...position, degreeInRashi: mercuryDeg, retrograde: mercuryRetro }
+          : position
+    ),
+  });
+  const wide = computeCombinations(withDegrees(25.033, 14.5, true), { cap: 50 });
+  const wideConj = wide.find((combination) => combination.id === 'conj-sun-mercury-11')!;
+  assert.equal(wideConj.titleEn, 'Sun and Mercury in the same bhava · 11th bhava');
+  assert.equal(wideConj.titleHi, 'सूर्य और बुध एक ही भाव में · एकादश भाव');
+  assert.ok(wideConj.bodyEn.includes('about 10°32′ apart — the whole-sign reading places them in one bhava; this is not a tight conjunction. Mercury is retrograde.'), wideConj.bodyEn);
+  assert.ok(wideConj.bodyHi.includes('10°32′'));
+  const wideYoga = wide.find((combination) => combination.id === 'yoga-budhaditya')!;
+  assert.equal(wideYoga.titleEn, 'Sun–Mercury association · Budhaditya yoga (traditional same-sign rule)');
+  assert.ok(wideYoga.bodyEn.includes('10°32′ apart'));
+  assert.ok(wideYoga.bodyEn.includes('not a yoga of equal strength in every chart'));
+
+  const close = computeCombinations(withDegrees(12, 9.75), { cap: 50 });
+  const closeConj = close.find((combination) => combination.id === 'conj-sun-mercury-11')!;
+  assert.ok(closeConj.bodyEn.includes('within about 2°15′ of each other — a close conjunction by degree as well as by sign.'), closeConj.bodyEn);
+  assert.ok(!closeConj.bodyEn.includes('retrograde'));
+  assert.equal(separationWithinSign(withDegrees(12, 9.75).grahas.filter((p) => p.graha === 'sun' || p.graha === 'mercury')), 2.25);
+  assert.equal(formatSeparation(15), '15°00′');
+  assert.equal(formatSeparation(10.533), '10°32′');
+  assert.equal(CLOSE_CONJUNCTION_ORB_DEGREES, 10);
+
+  // Child band appends the observe framing to conjunctions and yogas only.
+  const child = computeCombinations(withDegrees(25.033, 14.5, true), { cap: 50, band: 'child' });
+  assert.ok(child.find((c) => c.id === 'conj-sun-mercury-11')!.bodyEn.endsWith('not a fixed trait.'));
+  assert.ok(child.find((c) => c.id === 'yoga-budhaditya')!.bodyEn.endsWith('not a settled trait.'));
+  assert.ok(!child[0].bodyEn.includes('not a fixed trait'), 'the Lagna-lord line is untouched');
+  assert.ok(!wideConj.bodyEn.includes('not a fixed trait'), 'adult default unchanged');
+  // The node's permanent retrogression is never remarked on.
+  const nodes = computeCombinations(seat(tula, { moon: 7, rahu: 7 }), { cap: 50 });
+  const nodeConj = nodes.find((c) => c.kind === 'conjunction' && c.grahas.includes('rahu'))!;
+  assert.ok(nodeConj, 'Moon+Rahu share the 7th');
+  assert.ok(!nodeConj.bodyEn.includes('Rahu is retrograde'), nodeConj.bodyEn);
 });

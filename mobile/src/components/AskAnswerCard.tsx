@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
   card: { borderWidth: 1 },
   tag: { alignSelf: 'flex-start', paddingHorizontal: 8, paddingVertical: 3, marginBottom: 8 },
   headline: { fontSize: 19, lineHeight: 28 },
-  sub: { fontSize: 14, lineHeight: 20, marginTop: 2 },
+  sub: { fontSize: 14, lineHeight: 21, marginTop: 2 },
   rows: { gap: 7 },
   row: { flexDirection: 'row', alignItems: 'flex-start', gap: 10 },
   rowLabel: { width: 78, paddingTop: 3 },

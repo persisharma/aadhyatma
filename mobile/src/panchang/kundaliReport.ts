@@ -1,9 +1,20 @@
 import { computeSadeSati } from './gochar';
-import { buildDashaPairReading, DASHA_LORD_THEME_EN, DASHA_LORD_THEME_HI } from './dashaReading';
+import {
+  buildDashaPairReading,
+  DASHA_LORD_CHILD_EN,
+  DASHA_LORD_CHILD_HI,
+  childObserveEn,
+  childObserveHi,
+  DASHA_LORD_KEYWORDS_EN,
+  DASHA_LORD_KEYWORDS_HI,
+  DASHA_LORD_THEME_EN,
+  DASHA_LORD_THEME_HI,
+} from './dashaReading';
 import {
   DASHA_YEARS,
   GRAHA_NAMES_EN,
   GRAHA_NAMES_HI,
+  GRAHA_ORDER,
   HOUSE_THEME_EN,
   HOUSE_THEME_HI,
   RASHI_NAMES_EN,
@@ -13,7 +24,16 @@ import {
   indiaDateKey,
 } from './kundali';
 import type { Graha, KundaliChart } from './kundali';
-import { ageBandAt, dignityOfPosition, type AgeBand, type BasisNode } from './kundaliBasis';
+import {
+  DIGNITY_LABEL_EN,
+  DIGNITY_LABEL_HI,
+  KENDRA_HOUSES,
+  TRIKONA_HOUSES,
+  ageBandAt,
+  dignityOfPosition,
+  type AgeBand,
+  type BasisNode,
+} from './kundaliBasis';
 import { computeCombinations } from './kundaliYoga';
 import { NAKSHATRA_NAMES_EN, NAKSHATRA_NAMES_HI } from './names';
 import {
@@ -261,7 +281,79 @@ const AREA_REGISTER_EN: Readonly<Record<AgeBand, string>> = {
   child: 'For a parent: this part is for noticing and encouraging — a child’s nature is still forming, and this is its first sketch.',
 };
 
-function lifeAreaSection(chart: KundaliChart, area: LifeArea, band: AgeBand): KundaliReportSection {
+/**
+ * Who the reading addresses. An adult reads "your chart"; a minor's report is
+ * read by a parent, so it names the child (or says "the child's chart") —
+ * "your Moon" on a toddler's report was the adult engine showing through.
+ */
+type Subject = {
+  chartHi: string;
+  chartEn: string;
+  moonHi: string;
+  moonEn: string;
+  nameHi: string;
+  nameEn: string;
+};
+
+function subjectFor(band: AgeBand, name: string | null): Subject {
+  if (band === 'adult') {
+    return { chartHi: 'आपकी कुंडली', chartEn: 'your chart', moonHi: 'आपका चन्द्र', moonEn: 'Your Moon', nameHi: 'आप', nameEn: 'you' };
+  }
+  if (name) {
+    return { chartHi: `${name} की कुंडली`, chartEn: `${name}’s chart`, moonHi: `${name} का चन्द्र`, moonEn: `${name}’s Moon`, nameHi: name, nameEn: name };
+  }
+  // nameHi is the oblique form — it always precedes a postposition (की / के).
+  return { chartHi: 'बच्चे की कुंडली', chartEn: 'the child’s chart', moonHi: 'बच्चे का चन्द्र', moonEn: 'The child’s Moon', nameHi: 'बच्चे', nameEn: 'the child' };
+}
+
+/**
+ * The snapshot's factual highlights: grahas in their own or exalted sign, or
+ * seated in a trikona/kendra — up to three, ranked by that order, ties by
+ * `GRAHA_ORDER`. Nodes are skipped (no dignity table). A projection of the
+ * chart, never a reading (the September 2026 review replaced the "key
+ * combination" line with this).
+ */
+export function notablePlacements(chart: KundaliChart): readonly { graha: Graha; house: number; dignity: 'exalted' | 'own' | 'neutral' }[] {
+  const scored = GRAHA_ORDER
+    .filter((graha) => graha !== 'rahu' && graha !== 'ketu')
+    .map((graha, order) => {
+      const position = chart.grahas.find((entry) => entry.graha === graha)!;
+      const dignity = dignityOfPosition(position);
+      const score =
+        (dignity === 'exalted' ? 3 : dignity === 'own' ? 2 : 0) +
+        (TRIKONA_HOUSES.includes(position.house) && position.house !== 1 ? 1.5 : KENDRA_HOUSES.includes(position.house) ? 1 : 0);
+      return { graha, house: position.house, dignity: dignity === 'exalted' || dignity === 'own' ? dignity : ('neutral' as const), score, order };
+    })
+    .filter((entry) => entry.score > 0)
+    .sort((a, b) => b.score - a.score || a.order - b.order)
+    .slice(0, 3);
+  return scored.map(({ graha, house, dignity }) => ({ graha, house, dignity }));
+}
+
+function notablePlacementsLabel(chart: KundaliChart, hi: boolean): string {
+  const entries = notablePlacements(chart);
+  if (entries.length === 0) return hi ? 'कोई विशेष स्थिति नहीं' : 'no standout placement';
+  return entries
+    .map((entry) =>
+      hi
+        ? `${GRAHA_NAMES_HI[entry.graha]}${entry.dignity !== 'neutral' ? ` ${DIGNITY_LABEL_HI[entry.dignity]}` : ''} ${bhavaLabelHi(entry.house)} में`
+        : `${GRAHA_NAMES_EN[entry.graha]}${entry.dignity !== 'neutral' ? ` ${DIGNITY_LABEL_EN[entry.dignity]}` : ''} in the ${bhavaLabelEn(entry.house)}`
+    )
+    .join(' · ');
+}
+
+/** What the child/adolescent reading is about — the snapshot's last row. */
+const MINOR_READING_HI: Readonly<Record<Exclude<AgeBand, 'adult'>, string>> = {
+  child: 'सीख · संवाद · सृजनशीलता · सामाजिक विकास — माता-पिता के देखने के लिए',
+  adolescent: 'सीख · प्रतिभा · मित्रता · दिशा — माता-पिता के लिए',
+};
+
+const MINOR_READING_EN: Readonly<Record<Exclude<AgeBand, 'adult'>, string>> = {
+  child: 'learning · communication · creativity · social development — for a parent to observe',
+  adolescent: 'learning · talents · friendships · direction — read for a parent',
+};
+
+function lifeAreaSection(chart: KundaliChart, area: LifeArea, band: AgeBand, subject: Subject): KundaliReportSection {
   const bodyHi: string[] = [];
   const bodyEn: string[] = [];
   const facts: KundaliReportFact[] = [];
@@ -285,10 +377,10 @@ function lifeAreaSection(chart: KundaliChart, area: LifeArea, band: AgeBand): Ku
         : 'No graha occupies this house — tradition then reads the house through its lord.';
 
     bodyHi.push(
-      `${bhavaLabelHi(house)} (${HOUSE_THEME_HI[house - 1]}) में ${RASHI_NAMES_HI[rashi]} राशि है; परम्परा इस राशि को ${RASHI_QUALITY_HI[rashi]} से जोड़ती है। भाव का स्वामी ${GRAHA_NAMES_HI[lord]} आपकी कुंडली में ${bhavaLabelHi(lordNatal.house)} में स्थित है। ${occupantsHi}`
+      `${bhavaLabelHi(house)} (${HOUSE_THEME_HI[house - 1]}) में ${RASHI_NAMES_HI[rashi]} राशि है; परम्परा इस राशि को ${RASHI_QUALITY_HI[rashi]} से जोड़ती है। भाव का स्वामी ${GRAHA_NAMES_HI[lord]} ${subject.chartHi} में ${bhavaLabelHi(lordNatal.house)} में स्थित है। ${occupantsHi}`
     );
     bodyEn.push(
-      `The ${bhavaLabelEn(house)} (${HOUSE_THEME_EN[house - 1]}) holds ${RASHI_NAMES_EN[rashi]}; tradition links this sign with ${RASHI_QUALITY_EN[rashi]}. Its lord ${GRAHA_NAMES_EN[lord]} sits in the ${bhavaLabelEn(lordNatal.house)} of your chart. ${occupantsEn}`
+      `The ${bhavaLabelEn(house)} (${HOUSE_THEME_EN[house - 1]}) holds ${RASHI_NAMES_EN[rashi]}; tradition links this sign with ${RASHI_QUALITY_EN[rashi]}. Its lord ${GRAHA_NAMES_EN[lord]} sits in the ${bhavaLabelEn(lordNatal.house)} of ${subject.chartEn}. ${occupantsEn}`
     );
     facts.push(
       fact(
@@ -338,6 +430,7 @@ export function buildKundaliReport(
   const lagna = chart.lagnaRashiIndex;
   const birth = chart.input.date;
   const band = ageBandAt(chart, now);
+  const subject = subjectFor(band, meta.name);
   const age = ageBetween(birth, now);
   const asOfHi = formatIstDateHi(now);
   const asOfEn = formatIstDateEn(now);
@@ -351,10 +444,10 @@ export function buildKundaliReport(
     titleHi: 'जन्म विवरण और कुंडली सार',
     titleEn: 'Birth details and chart summary',
     bodyHi: [
-      'यह विवेचन आपकी सहेजी गई जन्म कुंडली से उसी लाहिड़ी (चित्रपक्ष) अयनांश और पूर्ण-राशि भाव पद्धति पर बना है जो ऐप की कुंडली में प्रयुक्त होती है।',
+      `यह विवेचन ${band === 'adult' ? 'आपकी सहेजी गई जन्म कुंडली' : `${subject.chartHi} (सहेजी गई)`} से उसी लाहिड़ी (चित्रपक्ष) अयनांश और पूर्ण-राशि भाव पद्धति पर बना है जो ऐप की कुंडली में प्रयुक्त होती है।`,
     ],
     bodyEn: [
-      'This reading is compiled from your saved birth chart, on the same Lahiri (Chitrapaksha) ayanamsa and whole-sign houses the app’s Kundali uses.',
+      `This reading is compiled from ${band === 'adult' ? 'your saved birth chart' : `${subject.chartEn} as saved`}, on the same Lahiri (Chitrapaksha) ayanamsa and whole-sign houses the app’s Kundali uses.`,
     ],
     facts: [
       ...(meta.name ? [fact('name', 'नाम', 'Name', meta.name, meta.name)] : []),
@@ -379,6 +472,13 @@ export function buildKundaliReport(
         `${NAKSHATRA_NAMES_HI[moon.nakshatraIndex]} · पद ${moon.pada}`,
         `${NAKSHATRA_NAMES_EN[moon.nakshatraIndex]} · pada ${moon.pada}`
       ),
+      fact(
+        'notable-placements',
+        'उल्लेखनीय स्थितियाँ',
+        'Notable placements',
+        notablePlacementsLabel(chart, true),
+        notablePlacementsLabel(chart, false)
+      ),
     ],
   };
 
@@ -393,11 +493,11 @@ export function buildKundaliReport(
     titleEn: `${RASHI_NAMES_EN[lagna]} Lagna`,
     bodyHi: [
       `जन्म के समय पूर्वी क्षितिज पर ${RASHI_NAMES_HI[lagna]} राशि उदित थी — परम्परा इस राशि को ${RASHI_QUALITY_HI[lagna]} से जोड़ती है और इसी से प्रथम भाव आरम्भ होता है।`,
-      `लग्न का स्वामी ${GRAHA_NAMES_HI[lagnaLord]} आपकी कुंडली में ${bhavaLabelHi(lagnaLordNatal.house)} (${HOUSE_THEME_HI[lagnaLordNatal.house - 1]}) में स्थित है — परम्परा में लग्नेश की स्थिति पूरे विवेचन की एक प्रमुख धुरी मानी जाती है, और आगे के संयोग-खंड में इसे विस्तार से पढ़ा गया है।`,
+      `लग्न का स्वामी ${GRAHA_NAMES_HI[lagnaLord]} ${subject.chartHi} में ${bhavaLabelHi(lagnaLordNatal.house)} (${HOUSE_THEME_HI[lagnaLordNatal.house - 1]}) में स्थित है — परम्परा में लग्नेश की स्थिति पूरे विवेचन की एक प्रमुख धुरी मानी जाती है, और आगे के संयोग-खंड में इसे विस्तार से पढ़ा गया है।`,
     ],
     bodyEn: [
       `${RASHI_NAMES_EN[lagna]} was rising on the eastern horizon at birth — tradition links this sign with ${RASHI_QUALITY_EN[lagna]}, and the first house begins here.`,
-      `The Lagna lord ${GRAHA_NAMES_EN[lagnaLord]} sits in the ${bhavaLabelEn(lagnaLordNatal.house)} (${HOUSE_THEME_EN[lagnaLordNatal.house - 1]}) of your chart — tradition treats the Lagna lord’s placement as a main axis of the whole reading, and the combinations section below reads it in full.`,
+      `The Lagna lord ${GRAHA_NAMES_EN[lagnaLord]} sits in the ${bhavaLabelEn(lagnaLordNatal.house)} (${HOUSE_THEME_EN[lagnaLordNatal.house - 1]}) of ${subject.chartEn} — tradition treats the Lagna lord’s placement as a main axis of the whole reading, and the combinations section below reads it in full.`,
     ],
     facts: [
       fact(
@@ -422,19 +522,25 @@ export function buildKundaliReport(
     titleHi: `${RASHI_NAMES_HI[moon.rashiIndex]} चन्द्र · ${NAKSHATRA_NAMES_HI[moon.nakshatraIndex]} नक्षत्र`,
     titleEn: `${RASHI_NAMES_EN[moon.rashiIndex]} Moon · ${NAKSHATRA_NAMES_EN[moon.nakshatraIndex]} nakshatra`,
     bodyHi: [
-      `आपका चन्द्र ${RASHI_NAMES_HI[moon.rashiIndex]} राशि में, ${bhavaLabelHi(moon.house)} (${HOUSE_THEME_HI[moon.house - 1]}) में है — परम्परा मन की लय को इस राशि के गुणों (${RASHI_QUALITY_HI[moon.rashiIndex]}) और इस भाव के विषयों की दृष्टि से पढ़ती है।`,
+      `${subject.moonHi} ${RASHI_NAMES_HI[moon.rashiIndex]} राशि में, ${bhavaLabelHi(moon.house)} (${HOUSE_THEME_HI[moon.house - 1]}) में है — परम्परा मन की लय को इस राशि के गुणों (${RASHI_QUALITY_HI[moon.rashiIndex]}) और इस भाव के विषयों की दृष्टि से पढ़ती है।`,
       `जन्म नक्षत्र ${NAKSHATRA_NAMES_HI[moon.nakshatraIndex]} (पद ${moon.pada}) है, जिसे परम्परा ${NAKSHATRA_QUALITY_HI[moon.nakshatraIndex]} से जोड़ती है। यही नक्षत्र विम्शोत्तरी दशा-क्रम और तारा बल का आधार भी है।`,
+      ...(band === 'child'
+        ? [`इस आयु में इन गुणों को केवल देखने की बात समझें — बच्चे का स्वभाव अभी बन रहा है, यह तय व्यक्तित्व नहीं।`]
+        : []),
     ],
     bodyEn: [
-      `Your Moon is in ${RASHI_NAMES_EN[moon.rashiIndex]}, in the ${bhavaLabelEn(moon.house)} (${HOUSE_THEME_EN[moon.house - 1]}) — tradition reads the mind’s rhythm through this sign’s qualities (${RASHI_QUALITY_EN[moon.rashiIndex]}) and this house’s themes.`,
+      `${subject.moonEn} is in ${RASHI_NAMES_EN[moon.rashiIndex]}, in the ${bhavaLabelEn(moon.house)} (${HOUSE_THEME_EN[moon.house - 1]}) — tradition reads the mind’s rhythm through this sign’s qualities (${RASHI_QUALITY_EN[moon.rashiIndex]}) and this house’s themes.`,
       `The janma nakshatra is ${NAKSHATRA_NAMES_EN[moon.nakshatraIndex]} (pada ${moon.pada}), which tradition links with ${NAKSHATRA_QUALITY_EN[moon.nakshatraIndex]}. This nakshatra also seeds the Vimshottari sequence and tara bala.`,
+      ...(band === 'child'
+        ? [`At this age, treat these qualities only as something to observe — a child’s nature is still forming, and this is not a fixed personality.`]
+        : []),
     ],
     facts: [],
     basis: [{ kind: 'graha', graha: 'moon', house: moon.house, dignity: dignityOfPosition(moon) }],
   };
 
   // — Combinations: what the placements do together.
-  const combinations = computeCombinations(chart);
+  const combinations = computeCombinations(chart, { band });
   const combinationsSection: KundaliReportSection = {
     id: 'combinations',
     eyebrowHi: 'संयोग',
@@ -446,8 +552,8 @@ export function buildKundaliReport(
     facts: combinations.map((combination) =>
       fact(
         combination.id,
-        combination.kind === 'yoga' ? 'योग' : combination.kind === 'conjunction' ? 'युति' : combination.kind === 'dignity' ? 'बल' : 'लग्नेश',
-        combination.kind === 'yoga' ? 'Yoga' : combination.kind === 'conjunction' ? 'Conjunction' : combination.kind === 'dignity' ? 'Dignity' : 'Lagna lord',
+        combination.kind === 'yoga' ? 'योग' : combination.kind === 'conjunction' ? 'एक भाव में' : combination.kind === 'dignity' ? 'बल' : 'लग्नेश',
+        combination.kind === 'yoga' ? 'Yoga' : combination.kind === 'conjunction' ? 'Same bhava' : combination.kind === 'dignity' ? 'Dignity' : 'Lagna lord',
         combination.titleHi,
         combination.titleEn
       )
@@ -456,12 +562,32 @@ export function buildKundaliReport(
   };
 
   // — Life areas, by age band.
-  const areaSections = LIFE_AREAS_BY_BAND[band].map((area) => lifeAreaSection(chart, area, band));
+  const areaSections = LIFE_AREAS_BY_BAND[band].map((area) => lifeAreaSection(chart, area, band, subject));
 
   // — Classical observations, stamped with the report date (PRD-20 §4 triage).
   const sadeSati = computeSadeSati(chart, now, { boundaryScanDays: options?.sadeSatiBoundaryScanDays });
-  const observationBodyHi = [`${asOfHi} की स्थिति: ${sadeSati.bodyHi}`];
-  const observationBodyEn = [`As of ${asOfEn}: ${sadeSati.bodyEn}`];
+  // Under 13 the Sade Sati card is de-emphasised to a recorded transit position:
+  // the classical house from the Moon, no adult reading attached, no phase
+  // headline — a "second phase" card alarms a parent for nothing.
+  const childTransit = band === 'child';
+  const saturnSeatHi =
+    sadeSati.houseFromMoon === 1
+      ? `${subject.nameHi === 'आप' ? 'आपकी' : `${subject.nameHi} की`} चन्द्र राशि पर ही`
+      : `चन्द्र राशि से ${bhavaLabelHi(sadeSati.houseFromMoon)} में`;
+  const saturnSeatEn =
+    sadeSati.houseFromMoon === 1
+      ? `over ${subject.nameEn === 'you' ? 'your' : `${subject.nameEn}’s`} Moon sign`
+      : `in the ${bhavaLabelEn(sadeSati.houseFromMoon)} from the Moon sign`;
+  const observationBodyHi = childTransit
+    ? [
+      `${asOfHi} की स्थिति: पारम्परिक ज्योतिष इस समय शनि को ${saturnSeatHi} रखता है${sadeSati.phase !== 'none' ? ' (वयस्क पाठ में इसे साढ़े साती की अवधि कहा जाता है)' : ''}। बच्चे के लिए इस गोचर से कोई वयस्क पाठ नहीं जोड़ा जाता — विवेचन केवल शास्त्रीय गोचर-स्थिति दर्ज करता है।`,
+    ]
+    : [`${asOfHi} की स्थिति: ${sadeSati.bodyHi}`];
+  const observationBodyEn = childTransit
+    ? [
+      `As of ${asOfEn}: traditional Jyotish places Saturn ${saturnSeatEn} at present${sadeSati.phase !== 'none' ? ' (an adult reading would call this a Sade Sati period)' : ''}. For a child, no adult reading is attached to this transit — the report simply records the classical transit position.`,
+    ]
+    : [`As of ${asOfEn}: ${sadeSati.bodyEn}`];
   if (sadeSati.nextTransitionAt) {
     observationBodyHi.push(
       `शनि का अगला राशि-परिवर्तन ${formatIstDateHi(sadeSati.nextTransitionAt)} को है — उस दिन से यह अवलोकन बदलता है।`
@@ -473,6 +599,8 @@ export function buildKundaliReport(
     observationBodyHi.push('यह अवलोकन ऊपर लिखी तिथि का है — शनि की राशि बदलने पर यह बदलता है; इसे स्थायी न पढ़ें।');
     observationBodyEn.push('This observation is dated as above — it changes when Saturn changes sign; do not read it as permanent.');
   }
+  const transitHeadlineHi = childTransit ? `शनि ${saturnSeatHi}` : sadeSati.headlineHi;
+  const transitHeadlineEn = childTransit ? `Saturn ${saturnSeatEn}` : sadeSati.headlineEn;
   const observationFacts: KundaliReportFact[] = [
     fact(
       'as-of',
@@ -481,13 +609,15 @@ export function buildKundaliReport(
       asOfHi,
       asOfEn
     ),
-    fact(
-      'sade-sati',
-      'साढ़े साती',
-      'Sade Sati',
-      sadeSati.headlineHi.replace('साढ़े साती · ', ''),
-      sadeSati.headlineEn.replace('Sade Sati · ', '')
-    ),
+    childTransit
+      ? fact('saturn-transit', 'शनि गोचर', 'Saturn transit', `शनि ${saturnSeatHi}`, `Saturn ${saturnSeatEn}`)
+      : fact(
+        'sade-sati',
+        'साढ़े साती',
+        'Sade Sati',
+        sadeSati.headlineHi.replace('साढ़े साती · ', ''),
+        sadeSati.headlineEn.replace('Sade Sati · ', '')
+      ),
   ];
   if (options?.includeMangalDosha) {
     const mangal = computeMangalDosha(chart);
@@ -511,20 +641,20 @@ export function buildKundaliReport(
     id: 'observations',
     eyebrowHi: 'पारम्परिक अवलोकन',
     eyebrowEn: 'Traditional observations',
-    titleHi: 'गोचर व योग की वर्तमान स्थिति',
-    titleEn: 'Current classical observations',
+    titleHi: childTransit ? 'वर्तमान शनि गोचर' : 'गोचर व योग की वर्तमान स्थिति',
+    titleEn: childTransit ? 'Current Saturn transit' : 'Current classical observations',
     bodyHi: observationBodyHi,
     bodyEn: observationBodyEn,
     facts: observationFacts,
     basis: [
       { kind: 'gochar', graha: 'saturn', fromMoonHouse: sadeSati.houseFromMoon, asOfKey: isoKey(now) },
     ],
-    ...(sadeSati.phase !== 'none' ? { practiceSourceId: 'shani-ashtakam' as const } : {}),
+    ...(sadeSati.phase !== 'none' && !childTransit ? { practiceSourceId: 'shani-ashtakam' as const } : {}),
   };
 
   // — Vimshottari: dates first, age second, the birth-time balance named.
   const current = getCurrentDasha(chart, now);
-  const pair = buildDashaPairReading(chart, now);
+  const pair = buildDashaPairReading(chart, now, { band, subjectName: meta.name });
   const timelineHi: string[] = [];
   const timelineEn: string[] = [];
   const vimshottariBasis: BasisNode[] = [];
@@ -534,20 +664,34 @@ export function buildKundaliReport(
     const lordHi = GRAHA_NAMES_HI[period.lord];
     const lordEn = GRAHA_NAMES_EN[period.lord];
     const endAge = ageBetween(birth, period.end);
+    // Under 13 the running period reads in the parent's observe register and
+    // the rest carry the three-word classical shade, not the adult theme line.
+    const themeHi =
+      band === 'child'
+        ? currentFlag
+          ? `पारम्परिक पाठ में ${lordHi} ${DASHA_LORD_CHILD_HI[period.lord].highlights} को उभारता है; इस आयु में बस यह देखें कि ${childObserveHi(period.lord, meta.name)}`
+          : `परम्परा: ${DASHA_LORD_KEYWORDS_HI[period.lord]}`
+        : DASHA_LORD_THEME_HI[period.lord];
+    const themeEn =
+      band === 'child'
+        ? currentFlag
+          ? `in the traditional reading, ${lordEn} highlights ${DASHA_LORD_CHILD_EN[period.lord].highlights}; at this age, simply observe ${childObserveEn(period.lord, meta.name)}`
+          : `tradition: ${DASHA_LORD_KEYWORDS_EN[period.lord]}`
+        : DASHA_LORD_THEME_EN[period.lord];
     if (activeAtBirth) {
       const balance = ageBetween(birth, period.end);
       timelineHi.push(
-        `${lordHi} महादशा${currentFlag ? ' (वर्तमान)' : ''} · जन्म के समय चल रही → ${formatIstDateHi(period.end)} (आयु ${ageLabelHi(endAge)} तक) · जन्म पर शेष ${ageLabelHi(balance)}, पूर्ण अवधि ${DASHA_YEARS[period.lord]} वर्ष — ${DASHA_LORD_THEME_HI[period.lord]}`
+        `${lordHi} महादशा${currentFlag ? ' (वर्तमान)' : ''} · जन्म के समय चल रही → ${formatIstDateHi(period.end)} (आयु ${ageLabelHi(endAge)} तक) · जन्म पर शेष ${ageLabelHi(balance)}, पूर्ण अवधि ${DASHA_YEARS[period.lord]} वर्ष — ${themeHi}`
       );
       timelineEn.push(
-        `${lordEn} Mahadasha${currentFlag ? ' (current)' : ''} · active at birth → ${formatIstDateEn(period.end)} (until age ${ageLabelEn(endAge)}) · balance at birth ${ageLabelEn(balance)} of the full ${DASHA_YEARS[period.lord]} y — ${DASHA_LORD_THEME_EN[period.lord]}`
+        `${lordEn} Mahadasha${currentFlag ? ' (current)' : ''} · active at birth → ${formatIstDateEn(period.end)} (until age ${ageLabelEn(endAge)}) · balance at birth ${ageLabelEn(balance)} of the full ${DASHA_YEARS[period.lord]} y — ${themeEn}`
       );
     } else {
       timelineHi.push(
-        `${lordHi} महादशा${currentFlag ? ' (वर्तमान)' : ''} · ${formatIstDateHi(period.start)} → ${formatIstDateHi(period.end)} (आयु ${ageYears(birth, period.start)}–${ageYears(birth, period.end)}) — ${DASHA_LORD_THEME_HI[period.lord]}`
+        `${lordHi} महादशा${currentFlag ? ' (वर्तमान)' : ''} · ${formatIstDateHi(period.start)} → ${formatIstDateHi(period.end)} (आयु ${ageYears(birth, period.start)}–${ageYears(birth, period.end)}) — ${themeHi}`
       );
       timelineEn.push(
-        `${lordEn} Mahadasha${currentFlag ? ' (current)' : ''} · ${formatIstDateEn(period.start)} → ${formatIstDateEn(period.end)} (ages ${ageYears(birth, period.start)}–${ageYears(birth, period.end)}) — ${DASHA_LORD_THEME_EN[period.lord]}`
+        `${lordEn} Mahadasha${currentFlag ? ' (current)' : ''} · ${formatIstDateEn(period.start)} → ${formatIstDateEn(period.end)} (ages ${ageYears(birth, period.start)}–${ageYears(birth, period.end)}) — ${themeEn}`
       );
     }
     if (currentFlag) {
@@ -615,17 +759,19 @@ export function buildKundaliReport(
       `${RASHI_NAMES_HI[moon.rashiIndex]} चन्द्र · ${NAKSHATRA_NAMES_HI[moon.nakshatraIndex]} ${moon.pada} · ${bhavaLabelHi(moon.house)}`,
       `${RASHI_NAMES_EN[moon.rashiIndex]} Moon · ${NAKSHATRA_NAMES_EN[moon.nakshatraIndex]} ${moon.pada} · ${bhavaLabelEn(moon.house)}`
     ),
-    ...(combinations.length > 0
-      ? [fact('combinations', 'प्रमुख संयोग', 'Key combination', combinations[0].titleHi, combinations[0].titleEn)]
-      : []),
+    // Factual highlights, projected from the summary — not the top-ranked
+    // combination, which for many charts is only "Lagna lord in a neutral house".
+    fact('summary', 'उल्लेखनीय स्थितियाँ', 'Notable placements', notablePlacementsLabel(chart, true), notablePlacementsLabel(chart, false)),
+    // The "until" date belongs to the ANTARDASHA when one is running — the
+    // Mahadasha end here read a Rahu sub-period as ending five years late.
     ...(current
       ? [
         fact(
           'vimshottari',
           'चल रही दशा',
           'Running period',
-          `${GRAHA_NAMES_HI[current.maha.lord]} महादशा${current.antar ? ` · ${GRAHA_NAMES_HI[current.antar.lord]} अन्तर्दशा` : ''} · ${formatIstDateHi(current.maha.end)} तक`,
-          `${GRAHA_NAMES_EN[current.maha.lord]} Mahadasha${current.antar ? ` · ${GRAHA_NAMES_EN[current.antar.lord]} Antardasha` : ''} · until ${formatIstDateEn(current.maha.end)}`
+          `${GRAHA_NAMES_HI[current.maha.lord]} महादशा${current.antar ? ` · ${GRAHA_NAMES_HI[current.antar.lord]} अन्तर्दशा` : ''} · ${formatIstDateHi((current.antar ?? current.maha).end)} तक`,
+          `${GRAHA_NAMES_EN[current.maha.lord]} Mahadasha${current.antar ? ` · ${GRAHA_NAMES_EN[current.antar.lord]} Antardasha` : ''} · until ${formatIstDateEn((current.antar ?? current.maha).end)}`
         ),
       ]
       : []),
@@ -633,17 +779,17 @@ export function buildKundaliReport(
       'observations',
       'गोचर',
       'Transit',
-      `${sadeSati.headlineHi} · ${asOfHi}`,
-      `${sadeSati.headlineEn} · as of ${asOfEn}`
+      `${transitHeadlineHi} · ${asOfHi}`,
+      `${transitHeadlineEn} · as of ${asOfEn}`
     ),
     ...(band !== 'adult'
       ? [
         fact(
           'career',
-          'विवेचन का रूप',
-          'Reading register',
-          `आयु ${ageLabelHi(age)} — जीवन-क्षेत्र सीख और मित्रता पर केन्द्रित, माता-पिता के लिए`,
-          `Age ${ageLabelEn(age)} — life areas centre on learning and friendship, addressed to a parent`
+          band === 'child' ? 'बाल-विवेचन' : 'किशोर-विवेचन',
+          band === 'child' ? 'Child reading' : 'Teen reading',
+          `आयु ${ageLabelHi(age)} · ${MINOR_READING_HI[band]}`,
+          `Age ${ageLabelEn(age)} · ${MINOR_READING_EN[band]}`
         ),
       ]
       : []),
@@ -652,8 +798,8 @@ export function buildKundaliReport(
     id: 'snapshot',
     eyebrowHi: 'साठ सेकंड में',
     eyebrowEn: 'In sixty seconds',
-    titleHi: 'आपकी कुंडली, एक नज़र में',
-    titleEn: 'Your Kundali in sixty seconds',
+    titleHi: band === 'adult' ? 'आपकी कुंडली, एक नज़र में' : `${subject.chartHi}, एक नज़र में`,
+    titleEn: band === 'adult' ? 'Your Kundali in sixty seconds' : meta.name ? `${meta.name}’s Kundali in sixty seconds` : 'The child’s Kundali in sixty seconds',
     bodyHi: ['हर पंक्ति नीचे के किसी खंड से ली गई है — विस्तार और आधार वहाँ है।'],
     bodyEn: ['Every line is drawn from a section below — the detail and its basis live there.'],
     facts: snapshotFacts,
