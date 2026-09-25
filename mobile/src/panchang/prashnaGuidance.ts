@@ -91,11 +91,16 @@ export function composePrashnaGuidance(answer: PrashnaAnswer, questionId?: strin
   if (question.id === 'job-switch' && actionInsight?.id === 'workload') actions.push({ id: 'job-switch-2', text: question.actions[2], origin: 'editorial', insightIds: [] });
   else if (actionInsight) actions.push({ id: `theme-${actionInsight.id}`, text: THEMES[actionInsight.id as ThemeId].action, origin: 'editorial', insightIds: [actionInsight.id] });
   const protectedPurpose = ['swasthya', 'santan', 'man'].includes(answer.purposeId);
+  const protectedTitle: Partial<Record<PurposeId, ReadingText>> = {
+    swasthya: T('कुंडली से स्वास्थ्य या लक्षणों का आकलन नहीं होता।', 'A chart cannot assess health or symptoms.'),
+    santan: T('कुंडली से संतान होने की सम्भावना या समय तय नहीं होता।', 'A chart cannot establish fertility or its timing.'),
+    man: T('कुंडली से मानसिक स्वास्थ्य का आकलन नहीं होता।', 'A chart cannot assess mental health.'),
+  };
   const windows = answer.windows.filter(w => w.relevant).sort((a, b) => Number(b.current) - Number(a.current) || Number(b.id.startsWith('antar-')) - Number(a.id.startsWith('antar-')) || a.startKey.localeCompare(b.startKey));
   const parentNote = answer.ageBand !== 'adult' ? T('अभिभावक के लिए: बच्चे की रुचि और अनुभव समझें; क्षमता या भविष्य का निर्णय न करें।', 'For a parent: understand the child’s interests and experience without judging ability or future outcomes.') : null;
   return {
     version: 1, questionId: question.id, question: question.label,
-    title: protectedPurpose ? T('अपने अनुभव और ज़रूरतों से शुरुआत करें।', 'Start with your actual experience and needs.') : title,
+    title: protectedTitle[answer.purposeId] ?? title,
     summary: protectedPurpose ? question.caution : summary, insights,
     actions: parentNote && question.id === 'study-exam' ? [
       { id: 'parent-exercise', text: T('बच्चे के साथ एक छोटा अभ्यास चुनें और देखें कहाँ मदद चाहिए।', 'Choose a short exercise with the child and notice where help is needed.'), origin: 'editorial', insightIds: [] },

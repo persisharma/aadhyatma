@@ -7,7 +7,6 @@ import React, {
 } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { library } from '@/data/texts';
-import { temples } from '@/data/theerth/temples';
 import { compareSemver } from '@/utils/semverCompare';
 
 const STORAGE_KEY = '@vedansh/new-content-state';
@@ -51,29 +50,34 @@ export function templeNewKey(templeId: string): string {
  */
 type Discoverable = { id: string; category: string; addedInVersion?: string };
 
-const discoverableEntries = library.filter((e) => e.status === 'active' && !e.hidden);
-const discoverables: Discoverable[] = [
-  ...discoverableEntries.map((e) => ({
-    id: e.id,
-    category: e.category as string,
-    addedInVersion: e.addedInVersion,
-  })),
-  ...temples.map((t) => ({
-    id: templeNewKey(t.id),
-    category: 'theerth',
-    addedInVersion: t.addedInVersion,
-  })),
-];
-const discoverableIds = discoverables.map((d) => d.id);
-const debutNewIds = discoverables
-  .filter(
-    (d) => d.addedInVersion != null && compareSemver(d.addedInVersion, PRE_FEATURE_BASELINE) > 0
-  )
-  .map((d) => d.id);
+type DiscoverableCatalog = { entries: Discoverable[]; ids: string[]; debutNewIds: string[] };
+let catalog: DiscoverableCatalog | null = null;
+function discoverableCatalog(): DiscoverableCatalog {
+  if (catalog) return catalog;
+  // Hydration calls this only after the first storage await. The temple catalog
+  // includes long detail prose that Home does not need on its static launch path.
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { temples } = require('@/data/theerth/temples') as typeof import('@/data/theerth/temples');
+  const entries: Discoverable[] = [
+    ...library.filter((e) => e.status === 'active' && !e.hidden).map((e) => ({
+      id: e.id, category: e.category as string, addedInVersion: e.addedInVersion,
+    })),
+    ...temples.map((t) => ({
+      id: templeNewKey(t.id), category: 'theerth', addedInVersion: t.addedInVersion,
+    })),
+  ];
+  catalog = {
+    entries,
+    ids: entries.map((d) => d.id),
+    debutNewIds: entries.filter((d) => d.addedInVersion != null && compareSemver(d.addedInVersion, PRE_FEATURE_BASELINE) > 0).map((d) => d.id),
+  };
+  return catalog;
+}
 
 /** Seed for a returning user: everything discoverable is known EXCEPT debut-new. */
 function upgraderSeed(): string[] {
-  return discoverableIds.filter((id) => !debutNewIds.includes(id));
+  const { ids, debutNewIds } = discoverableCatalog();
+  return ids.filter((id) => !debutNewIds.includes(id));
 }
 
 type NewContentContextValue = {
@@ -108,6 +112,7 @@ export function NewContentProvider({ children }: { children: React.ReactNode }) 
     (async () => {
       try {
         const raw = await AsyncStorage.getItem(STORAGE_KEY);
+        const { ids: discoverableIds } = discoverableCatalog();
         if (raw) {
           try {
             const parsed = JSON.parse(raw);
@@ -138,7 +143,7 @@ export function NewContentProvider({ children }: { children: React.ReactNode }) 
         // Storage read failed entirely — treat as "everything already known"
         // so we DON'T flash NEW on every entry (empty knownIds would mark all
         // discoverable entries new, the opposite of the safe fallback).
-        if (!cancelled) setKnownIds(discoverableIds.slice());
+        if (!cancelled) setKnownIds(discoverableCatalog().ids.slice());
       } finally {
         if (!cancelled) setIsLoading(false);
       }
@@ -154,14 +159,14 @@ export function NewContentProvider({ children }: { children: React.ReactNode }) 
   }, []);
 
   const isNew = useCallback(
-    (id: string) => !isLoading && discoverableIds.includes(id) && !knownIds.includes(id),
+    (id: string) => !isLoading && Boolean(catalog?.ids.includes(id)) && !knownIds.includes(id),
     [isLoading, knownIds]
   );
 
   const hasNewInCategory = useCallback(
     (categoryId: string) =>
       !isLoading &&
-      discoverables.some((d) => d.category === categoryId && !knownIds.includes(d.id)),
+      Boolean(catalog?.entries.some((d) => d.category === categoryId && !knownIds.includes(d.id))),
     [isLoading, knownIds]
   );
 
@@ -181,7 +186,7 @@ export function NewContentProvider({ children }: { children: React.ReactNode }) 
 
   const devResetNewState = useCallback(() => {
     if (!__DEV__) return;
-    persist(discoverableIds.slice()); // everything known → nothing new
+    persist(discoverableCatalog().ids.slice()); // everything known → nothing new
   }, [persist]);
 
   return (

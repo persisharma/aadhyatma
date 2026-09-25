@@ -246,3 +246,15 @@ New kathas: `narak-chaturdashi-katha` (Narakasura and Rantideva, plus the abhyan
 ## [2026-09-25] ingest | Kundali report: child-chart review fixes
 
 `kundaliReport.ts` / `kundaliYoga.ts` / `dashaReading.ts` after the September 2026 review of a 1 y 9 m child's export: the snapshot's running-period `until` is now the Antardasha end (was the Mahadasha end, five years late); dasha basis keys are IST `indiaDateKey` everywhere (the pair reading sliced UTC, giving `2016-04-28` beside `29 Apr 2016`); same-sign groups are titled "in the same bhava" and always state their degree gap (10° close-conjunction orb; retrograde planets named, nodes never); Budhaditya / Chandra-Mangal are "association … (traditional same-sign rule)"; under 13 the Moon, combinations, transit card (`Current Saturn transit`, no phase headline, no practice pointer) and the whole Vimshottari section switch to a parent-observe register built around `DASHA_LORD_CHILD_HI/EN`, and the report names the child instead of "your chart". The snapshot's "Key combination" row is replaced by `Notable placements` (own/exalted or trikona/kendra, ≤3). Gotchas added to [[panchang]]; design.md §68 updated.
+
+## [2026-09-24] ingest | Job-switch answer from the current phase
+
+Prashna now leads explicit job-switch questions with a qualified decision and chart-linked reasons for and against. Ask recognizes explicit switch wording across English, Hindi and Hinglish and opens the same selected Prashna question. The export carries the decision alongside technical evidence. Updated [[panchang]] and [[ask]]; bilingual simulator captures and focused checks are recorded in the job-decision evaluation.
+
+## [2026-09-25] ingest | Prashna current-phase answers across adult topics
+
+The job-switch format now covers adult career, business, study, money, marriage and travel with question-specific recommendations, chart-linked reasons and bilingual next steps. Ask selects seven explicit subquestions; health, mind, fertility and minors keep protected guidance without timed verdicts. Updated [[panchang]] and [[ask]]. A 36-case synthetic date/person matrix and English/Hindi iOS captures are in `docs/evaluations/prashna-all-topics-2026-09-25/`; most sampled tones remain mixed, and source verification is still open.
+
+## [2026-09-25] ingest | Defer the temple corpus from Home startup
+
+The static launch graph exceeded its fixed budget on untouched main. `NewContentContext` now loads temple entries after its initial storage await; the Home stack lazy-loads Theerth map/detail routes; `kulParampara` looks up a temple only during record validation or export. The launch-budget test passes without raising its ceiling, and badge, temple-screen and family-record tests retain their behavior. Updated [[overview]].
