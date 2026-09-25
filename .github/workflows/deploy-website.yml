@@ -47,7 +47,17 @@ jobs:
           curl -s -X POST "https://api.netlify.com/api/v1/sites/$SITE_ID/ssl" \
             -H "Authorization: Bearer $TOKEN" -w '\nHTTP %{http_code}\n' | tail -5
 
-          echo "--- account state ---"
-          curl -s "https://api.netlify.com/api/v1/accounts" \
-            -H "Authorization: Bearer $TOKEN" \
-            | jq '[.[] | {slug, type_name, state, payment_method_id: (.payment_method_id != null)}]'
+          # This one site serves public marketing pages, so the visitor-facing SSO
+          # gate Netlify enables on new sites is cleared here. Site scope only —
+          # account-wide SSO is left exactly as it is.
+          echo "--- open this site to visitors ---"
+          curl -s -X PATCH "https://api.netlify.com/api/v1/sites/$SITE_ID" \
+            -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' \
+            -d '{"sso_login":false,"sso_login_context":"none"}' \
+            | jq '{sso_login, sso_login_context, account_sso_login, custom_domain, ssl, ssl_status}'
+
+          echo "--- public reachability from the runner ---"
+          for u in https://vedansh-app.netlify.app/ https://vedansh.app/; do
+            printf '%s -> ' "$u"
+            curl -s -o /dev/null -w '%{http_code}\n' --max-time 20 "$u" || echo "unreachable"
+          done
