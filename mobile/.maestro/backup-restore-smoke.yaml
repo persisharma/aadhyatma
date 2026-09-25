@@ -1,0 +1,70 @@
+# बैकअप व पुनर्स्थापन (PRD-06 Track C) — the More-hub door and the screen.
+#
+# What this covers:
+#   • More hub gains one row in the ऐप group, after Home-Screen Widgets:
+#     "Backup and Restore, new" (NEW until the first export; then the date).
+#   • BackupScreen renders: the "What a backup holds" summary with a count for
+#     each of the four groups (a clean install reads "Nothing yet" in every
+#     group except Preferences, which carries the language the flow set), the
+#     export action and the restore action.
+#   • The OS share sheet and the document picker are NOT opened — Maestro cannot
+#     drive or dismiss either (the same rule as the share flows in
+#     kul-parampara-smoke / muhurat-follow-smoke). The file format, the
+#     registry-completeness gate and the restore path are pinned by
+#     `src/backup/__tests__/backup.test.ts` + `BackupScreen.test.tsx`.
+#
+# Selector notes:
+#   • Rows/controls are matched on their stable English a11y labels (house
+#     rule — iOS Maestro cannot read Devanagari): "Backup and Restore, new",
+#     "Export backup file", "Restore from backup file".
+#   • The reading language is flipped to English first so the group labels
+#     ("Family & Jyotish", …) are assertable as visible text.
+
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+
+# ── More → English ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
+- tapOn: "Language,.*"
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 10000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── The door ──
+- scrollUntilVisible:
+    element:
+      id: "more-backup"
+    centerElement: true
+- assertVisible: "Backup and Restore, new"
+- tapOn: { id: "more-backup" }
+- waitForAnimationToEnd
+
+# ── The screen: summary, both actions present ──
+- extendedWaitUntil:
+    visible: "What a backup holds"
+    timeout: 10000
+- assertVisible: "No backup yet"
+- assertVisible: "Family & Jyotish"
+- assertVisible: "Practice & reading"
+- assertVisible: "Reminders & alarms"
+- assertVisible: "Preferences"
+- assertVisible: "Export backup file"
+- scrollUntilVisible:
+    element:
+      text: "Restore from backup file"
+    centerElement: true
+- assertVisible: "Restore from backup file"
+- assertVisible: "The file is the backup.*"
+
+# ── Back to the hub ──
+- tapOn: "Back"
+- waitForAnimationToEnd
+- assertVisible: "Backup and Restore, new"

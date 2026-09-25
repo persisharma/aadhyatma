@@ -55,6 +55,7 @@ export default function MoreStackNavigator() {
       <Stack.Screen name="KulParampara" getComponent={() => require('@/screens/KulParamparaScreen').default} />
       <Stack.Screen name="KulParamparaEdit" getComponent={() => require('@/screens/KulParamparaEditScreen').default} />
       <Stack.Screen name="KulParamparaExport" getComponent={() => require('@/screens/KulParamparaExportScreen').default} />
+      <Stack.Screen name="Backup" getComponent={() => require('@/screens/BackupScreen').default} />
       {/* Personal-tithi vidhi doors push here so Back returns to Pitru Smaran. */}
       <Stack.Screen name="VidhiCatalog" getComponent={() => require('@/screens/VidhiCatalogScreen').default} />
       <Stack.Screen name="VidhiDetail" getComponent={() => require('@/screens/VidhiDetailScreen').default} />

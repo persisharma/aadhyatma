@@ -26,6 +26,7 @@ import { useKulRecord } from '@/panchang/kulParamparaStore';
 import { isEmptyKulRecord, kuldevDisplayName } from '@/panchang/kulParampara';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import { useFontScale } from '@/contexts/FontScaleContext';
+import { useLastBackupAt } from '@/backup/backupMeta';
 import LanguagePickerSheet from '@/components/LanguagePickerSheet';
 // Lazy: a sheet that only exists after a tap has no business on the launch
 // graph (`launchGraph.test.ts`), and `React.lazy` is the same treatment
@@ -182,6 +183,10 @@ export default function MoreScreen({ navigation }: Props) {
     : kulHasRecord
       ? pick(lang, { hi: 'सहेजा गया', en: 'Saved', gu: 'સાચવ્યું', kn: 'ಉಳಿಸಲಾಗಿದೆ' })
       : 'NEW';
+  // बैकअप row state (PRD-06 Track C): the last export date, or NEW until the
+  // user has made one — the nudge PRD-06 §10.4 asked for.
+  const lastBackupAt = useLastBackupAt();
+  const backupState = lastBackupAt ? shortDate(new Date(lastBackupAt), lang) : 'NEW';
   // Feature-tour spotlight targets (§47) — both rows sit in the "App" group,
   // below the fold on smaller devices, so each declares a reveal that scrolls
   // it on-screen before the tour measures it.
@@ -510,6 +515,22 @@ export default function MoreScreen({ navigation }: Props) {
                   onPress={() => navigation.navigate('WidgetGallery')}
                   accessibilityLabel="Home-Screen Widgets, new"
                   testID="more-home-widgets"
+                />
+                {/* बैकअप व पुनर्स्थापन (PRD-06 Track C, design.md §75): the one
+                    place the user's typed dates and practice leave the phone —
+                    by their own hand, to Files / Gmail / AirDrop. */}
+                <SettingsRow
+                  icon="⇅"
+                  iconBg={colors.saffronDeep}
+                  iconFontFamily={fontFamilies.interSemiBold}
+                  iconFontSize={18}
+                  label={pick(lang, { hi: 'बैकअप व पुनर्स्थापन', en: 'Backup & Restore', gu: 'બૅકઅપ અને પુનઃસ્થાપન', kn: 'ಬ್ಯಾಕಪ್ ಮತ್ತು ಮರುಸ್ಥಾಪನೆ' })}
+                  labelFontFamily={labelFont}
+                  state={backupState}
+                  stateFontFamily={backupState === 'NEW' ? fontFamilies.interSemiBold : chromeFont}
+                  onPress={() => navigation.navigate('Backup')}
+                  accessibilityLabel={lastBackupAt ? 'Backup and Restore' : 'Backup and Restore, new'}
+                  testID="more-backup"
                 />
                 <SettingsRow
                   icon="↗"

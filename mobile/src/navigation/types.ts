@@ -171,6 +171,8 @@ export type MoreStackParamList = VidhiStackParamList & DaanStackParamList & Ghar
   KulParampara: undefined;
   KulParamparaEdit: undefined;
   KulParamparaExport: undefined;
+  /** बैकअप व पुनर्स्थापन — PRD-06 Track C (design.md §75). */
+  Backup: undefined;
   /** Mounted locally so a vidhi hand-off's Back button returns to conduct. */
   GitaReader: GitaReaderParams;
 };

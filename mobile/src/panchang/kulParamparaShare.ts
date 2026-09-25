@@ -1,10 +1,11 @@
 /**
  * The device-controlled hand-off for the कुल परम्परा export (PRD-29 §3.7):
  * write the envelope to a cache file, open the OS share sheet, done. No cloud,
- * no upload target, no prompt — sharing is the user's decision. PRD-06's
- * backup path is still unbuilt (verified 2026-08-31), so this is the record's
- * own minimal path on deps already in the binary; the envelope is designed to
- * become a PRD-06 section verbatim when that lands.
+ * no upload target, no prompt — sharing is the user's decision. The full
+ * PRD-06 backup (`src/backup/`, design.md §75) has since landed and carries
+ * the same record with everything else; this narrower file stays as the
+ * give-it-to-a-relative path, and the restore screen recognises its `format`
+ * so it is named, not rejected as garbage.
  */
 import { File, Paths } from 'expo-file-system';
 import * as Sharing from 'expo-sharing';

@@ -25,6 +25,7 @@
 - [[vastu-disha]] — live 8-dik compass (fused→magnetometer source ladder, true-north grid correction, tilt/Hold honesty) + गृह वास्तु: mandala-grid home capture, five-class weighted readings, private roster + compare, text handoff, Ask `vastu.myhome`; Phase 1 store-gated (expo-sensors), Phase 2 OTA.
 - [[pitru-shiksha]] — पितृ पक्ष परिचय (PRD-44): the education layer beside the Pitru reminder and the tila-tarpana vidhi — verified-only registry (lessons · tithis · glossary · verse spine with reader refs · kathas · प्रश्नोत्तर), the reading-order screen, the gated overview door, the stance guard.
 - [[daan-punya]] — the education-led giving layer: verse spine + five teaching-kathas, occasion/vaar coverage over real solver rule ids, the private no-totals ledger (gupt-daan structural guarantee), and a verified directory available from both the giving home and the journey's terminal actions.
+- [[backup]] — Backup & Restore (PRD-06 Track C): the user-authored key registry + mechanical completeness gate, the `vedansh-backup` JSON envelope (parse failures named, unknown keys dropped), share-sheet export / document-picker restore with confirm + reload, and why OS-mirror bookkeeping never travels.
 
 ## Concepts
 - [[languages]] — reading languages hi/en/gu/kn; gu/kn derived at runtime by transliterating the Devanagari; selection + typography helpers.

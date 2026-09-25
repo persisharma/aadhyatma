@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Proposed |
+| **Status** | In progress — **Track C (backup export/import) shipped 2026-09-25**; Tracks A (reader smoke tests) live; B/D open |
 | **Target release** | Continuous across v1.4 → v1.7 |
 | **Window** | Weeks 27–39 (1 Jul – 30 Sep 2026) |
 | **T-shirt size** | L (~8 dev-weeks, spread across the quarter) |
@@ -82,6 +82,8 @@ By end of Q3 2026:
    - **PM consumption:** weekly review of TestFlight tester diagnostics shares + App Store Connect dashboards. We accept that fleet-wide quantitative measurement is harder than with a SaaS analytics tool; that's the price of bundle-only.
 
 ### Track C — On-device backup export/import (weeks 30–37)
+
+> **Shipped 2026-09-25 (v1).** `mobile/src/backup/{registry,envelope,backupIo,backupMeta}.ts` + `screens/BackupScreen.tsx`, door on More → ऐप group. Design: design.md §75; contract: RULEBOOK §29. Deltas from the plan below: (i) the blob is **key-registry-shaped** (`entries: { '<AsyncStorage key>': { json } | { raw } }`) rather than the five hand-picked fields — the registry covers every user-authored store (birth profiles, janma/pitru tithis, kul record, Guna Milan, Namkaran, Ghar Vastu, daan ledger, bookmarks, progress, activity, japam, routines, sankalp, vidhi checklists, follows, alarms, notification prefs, language/size/read-aloud, panchang city/system/lenses) and a test fails when a new store is not registered; (ii) **restore is replace-per-store, not field-merge** (§C.5 deferred — see design.md §75 for why); (iii) validation is hand-rolled, no zod; (iv) "Last backup" shows on the More row and the screen (§10.4 → yes). Import needed `expo-document-picker` (new native dep → store release).
 
 1. New module `mobile/src/backup/backup.ts` exposing `exportBackup()` and `importBackup(uri)`.
 2. **Export.** Serialize `bookmarks + readingProgress + userActivity + notificationPreferences + readingPreferences` into a single JSON, version-stamped:
