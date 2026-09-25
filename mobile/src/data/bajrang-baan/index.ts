@@ -1,4 +1,5 @@
 import manifest from './chapters-manifest.json';
+import { assertChapterMatchesManifest } from '../chapterInvariants';
 
 export type BajrangBaanVerse = {
   id: string;
@@ -61,6 +62,6 @@ export function getBajrangBaanChapter(chapter: number): BajrangBaanChapter {
   if (idx < 0 || idx >= bajrangBaanChaptersLoaders.length) {
     throw new Error(`bajrang-baan: chapter ${chapter} out of range (1-${bajrangBaanChaptersLoaders.length})`);
   }
-  return bajrangBaanChaptersLoaders[idx]();
+  return assertChapterMatchesManifest('bajrang-baan', bajrangBaanChaptersLoaders[idx](), bajrangBaanChaptersManifest[idx]);
 }
 

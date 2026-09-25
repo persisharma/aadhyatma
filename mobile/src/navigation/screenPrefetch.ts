@@ -42,12 +42,28 @@ const registry: PrefetchEntry[] = [];
 /** Called by `lazyScreen` at module scope, so the registry cannot drift from
  * the routes that actually exist. */
 export function registerPrefetch(entry: PrefetchEntry): void {
-  // Enrolment must happen at module scope, once per route. A duplicate means a
-  // call got sited inside a render body, where it would re-enrol on every
-  // re-render and grow this list without bound.
-  if (registry.some((e) => e.label === entry.label)) return;
+  // Deduplicate by LOADER, not by label. The same route name legitimately
+  // appears on several stacks — the Daan and Vidhi flows, GitaReader and
+  // VastuDisha are each registered on up to three — and every one of those is
+  // its own `lazyScreen` with its own loader to warm. Dropping repeats by label
+  // left all but the first cold: VidhiDetail on the Panchang stack was never
+  // warmed at all.
+  //
+  // What a repeat of the SAME loader means is a call sited inside a render
+  // body, re-enrolling on every re-render. That is ignored here, and flagged in
+  // development because the list would otherwise grow without bound.
+  if (registry.some((e) => e.load === entry.load)) return;
+  if (__DEV__ && registry.filter((e) => e.label === entry.label).length >= MAX_STACKS_PER_ROUTE) {
+    console.warn(
+      `screenPrefetch: '${entry.label}' enrolled more than ${MAX_STACKS_PER_ROUTE} times — ` +
+        'is a lazyScreen/prefetchedRoute call inside a render body? It must be at module scope.'
+    );
+  }
   registry.push(entry);
 }
+
+/** A route is registered once per stack, and the app has four stacks. */
+const MAX_STACKS_PER_ROUTE = 4;
 
 /**
  * Routes bumped to the front because the user is standing next to them.
@@ -122,11 +138,13 @@ export function startScreenPrefetch(
     // screens, stayed cold no matter how long the app idled. Re-reading each
     // time means a nested stack's screens simply join the queue at their own
     // depth and get warmed like any other.
-    const done = new Set<string>();
+    // Keyed by ENTRY: labels repeat across stacks, and each copy is its own
+    // loader that needs warming.
+    const done = new Set<PrefetchEntry>();
     for (;;) {
-      const next = prefetchOrder().find((entry) => !done.has(entry.label));
+      const next = prefetchOrder().find((entry) => !done.has(entry));
       if (!next) break;
-      done.add(next.label);
+      done.add(next);
       await yieldToUI();
       try {
         await next.load();

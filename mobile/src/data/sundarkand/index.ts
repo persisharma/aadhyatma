@@ -1,4 +1,5 @@
 import manifest from './chapters-manifest.json';
+import { assertChapterMatchesManifest } from '../chapterInvariants';
 
 export type SundarkandSection = 'shloka' | 'chaupai' | 'doha' | 'sortha' | 'chhand';
 
@@ -80,6 +81,6 @@ export function getSundarkandChapter(chapter: number): SundarkandChapter {
   if (idx < 0 || idx >= sundarkandChaptersLoaders.length) {
     throw new Error(`sundarkand: chapter ${chapter} out of range (1-${sundarkandChaptersLoaders.length})`);
   }
-  return sundarkandChaptersLoaders[idx]();
+  return assertChapterMatchesManifest('sundarkand', sundarkandChaptersLoaders[idx](), sundarkandChaptersManifest[idx]);
 }
 

@@ -1,4 +1,5 @@
 import manifest from './chapters-manifest.json';
+import { assertChapterMatchesManifest } from '../chapterInvariants';
 
 export type VishnuSahasranamaVerse = {
   id: string;
@@ -61,6 +62,6 @@ export function getVishnuSahasranamaChapter(chapter: number): VishnuSahasranamaC
   if (idx < 0 || idx >= vishnuSahasranamaChaptersLoaders.length) {
     throw new Error(`vishnu-sahasranama: chapter ${chapter} out of range (1-${vishnuSahasranamaChaptersLoaders.length})`);
   }
-  return vishnuSahasranamaChaptersLoaders[idx]();
+  return assertChapterMatchesManifest('vishnu-sahasranama', vishnuSahasranamaChaptersLoaders[idx](), vishnuSahasranamaChaptersManifest[idx]);
 }
 

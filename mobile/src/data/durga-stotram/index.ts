@@ -1,4 +1,5 @@
 import manifest from './chapters-manifest.json';
+import { assertChapterMatchesManifest } from '../chapterInvariants';
 
 export type DurgaStotramVerse = {
   id: string;
@@ -67,6 +68,6 @@ export function getDurgaStotramChapter(chapter: number): DurgaStotramChapter {
   if (idx < 0 || idx >= durgaStotramChaptersLoaders.length) {
     throw new Error(`durga-stotram: chapter ${chapter} out of range (1-${durgaStotramChaptersLoaders.length})`);
   }
-  return durgaStotramChaptersLoaders[idx]();
+  return assertChapterMatchesManifest('durga-stotram', durgaStotramChaptersLoaders[idx](), durgaStotramChaptersManifest[idx]);
 }
 

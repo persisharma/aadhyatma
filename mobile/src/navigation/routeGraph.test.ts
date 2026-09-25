@@ -2,10 +2,10 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import fs from 'node:fs';
 import path from 'node:path';
-import { routeGraph, childRoutes } from '../routeGraph';
+import { routeGraph, childRoutes } from './routeGraph';
 
 const NAVIGATORS = ['HomeStackNavigator', 'MoreStackNavigator', 'PanchangStackNavigator', 'AudioStackNavigator'];
-const ROOT = path.resolve(import.meta.dirname, '../..');
+const ROOT = path.resolve(import.meta.dirname, '..');
 
 function registeredRoutes(): Set<string> {
   const names = new Set<string>();
@@ -15,6 +15,9 @@ function registeredRoutes(): Set<string> {
   }
   return names;
 }
+
+// A node:test file, so it lives beside the module rather than in __tests__/:
+// Jest scans navigation/__tests__/ and fails any file there with no Jest tests.
 
 /**
  * The graph only ORDERS the warm-up, so a missing edge is harmless — that

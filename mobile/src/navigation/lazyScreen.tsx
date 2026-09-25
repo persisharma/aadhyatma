@@ -1,6 +1,8 @@
-import React, { lazy, Suspense, type ComponentType, type FunctionComponent } from 'react';
+import React, { Suspense, use, type ComponentType, type FunctionComponent } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
+import { useGitaLanguage } from '@/data/gita/language';
+import { contentByLang } from '@/utils/localize';
 import { registerPrefetch } from './screenPrefetch';
 
 /**
@@ -23,16 +25,47 @@ export function lazyScreen<P extends object>(
   loader: () => Promise<{ default: ComponentType<P> }>,
 ): FunctionComponent<P> {
   let loading: Promise<{ default: ComponentType<P> }> | null = null;
-  const load = () => (loading ??= loader());
+  // The resolved screen, captured SYNCHRONOUSLY the moment its module arrives.
+  let Resolved: ComponentType<P> | null = null;
+
+  const load = () =>
+    (loading ??= loader().then(
+      (mod) => {
+        Resolved = mod.default;
+        return mod;
+      },
+      (error: unknown) => {
+        // Forget a failed load so the next render (StackLoadBoundary's Retry,
+        // or simply navigating back in) tries again instead of re-throwing a
+        // cached rejection forever.
+        loading = null;
+        throw error;
+      },
+    ));
 
   registerPrefetch({ label, depth, load });
 
-  const Loaded = lazy(load);
+  /**
+   * WHY NOT `React.lazy`. It records that its promise resolved inside a `.then`
+   * callback, i.e. asynchronously — so on its FIRST render it always suspends,
+   * even when the module was warmed seconds ago. Every first tap painted the
+   * spinner for a frame, which silently defeated the whole background warm-up.
+   *
+   * `Body` checks `Resolved` first, so a warmed screen renders synchronously and
+   * the fallback never commits. Only a genuinely cold screen reaches `use()`,
+   * which suspends until the module arrives. Both paths render the same tree —
+   * Suspense > Body > Screen — so a screen that mounted cold is never remounted
+   * (and never loses its state) when it later becomes warm.
+   */
+  function Body(props: P) {
+    const Screen = Resolved ?? use(load()).default;
+    return <Screen {...props} />;
+  }
 
   function LazyRouteScreen(props: P) {
     return (
       <Suspense fallback={<ScreenLoadFallback />}>
-        <Loaded {...props} />
+        <Body {...props} />
       </Suspense>
     );
   }
@@ -47,8 +80,14 @@ export function lazyScreen<P extends object>(
  */
 function ScreenLoadFallback() {
   const { colors } = useTheme();
+  const { lang } = useGitaLanguage();
   return (
     <View
+      // Announced, so a screen-reader user who beats the warm-up hears that the
+      // screen is on its way rather than silence (StackLoadBoundary does the same).
+      accessible
+      accessibilityRole="progressbar"
+      accessibilityLabel={contentByLang(lang, 'खुल रहा है', 'Opening')}
       style={{
         flex: 1,
         alignItems: 'center',

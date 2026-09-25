@@ -1,4 +1,5 @@
 import manifest from './chapters-manifest.json';
+import { assertChapterMatchesManifest } from '../chapterInvariants';
 
 export type RamcharitmanasVerse = {
   id: string;
@@ -62,6 +63,6 @@ export function getRamcharitmanasChapter(chapter: number): RamcharitmanasChapter
   if (idx < 0 || idx >= ramcharitmanasChaptersLoaders.length) {
     throw new Error(`ramcharitmanas: chapter ${chapter} out of range (1-${ramcharitmanasChaptersLoaders.length})`);
   }
-  return ramcharitmanasChaptersLoaders[idx]();
+  return assertChapterMatchesManifest('ramcharitmanas', ramcharitmanasChaptersLoaders[idx](), ramcharitmanasChaptersManifest[idx]);
 }
 

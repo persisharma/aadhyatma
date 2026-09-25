@@ -1,4 +1,5 @@
 import manifest from './chapters-manifest.json';
+import { assertChapterMatchesManifest } from '../chapterInvariants';
 
 export type RamStutiVerse = {
   id: string;
@@ -58,6 +59,6 @@ export function getRamStutiChapter(chapter: number): RamStutiChapter {
   if (idx < 0 || idx >= ramStutiChaptersLoaders.length) {
     throw new Error(`ram-stuti: chapter ${chapter} out of range (1-${ramStutiChaptersLoaders.length})`);
   }
-  return ramStutiChaptersLoaders[idx]();
+  return assertChapterMatchesManifest('ram-stuti', ramStutiChaptersLoaders[idx](), ramStutiChaptersManifest[idx]);
 }
 

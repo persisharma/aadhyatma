@@ -1,4 +1,5 @@
 import manifest from './chapters-manifest.json';
+import { assertChapterMatchesManifest } from '../chapterInvariants';
 
 export type GaneshStotramVerse = {
   id: string;
@@ -60,6 +61,6 @@ export function getGaneshStotramChapter(chapter: number): GaneshStotramChapter {
   if (idx < 0 || idx >= ganeshStotramChaptersLoaders.length) {
     throw new Error(`ganesh-stotram: chapter ${chapter} out of range (1-${ganeshStotramChaptersLoaders.length})`);
   }
-  return ganeshStotramChaptersLoaders[idx]();
+  return assertChapterMatchesManifest('ganesh-stotram', ganeshStotramChaptersLoaders[idx](), ganeshStotramChaptersManifest[idx]);
 }
 

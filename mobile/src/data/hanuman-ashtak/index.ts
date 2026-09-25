@@ -1,4 +1,5 @@
 import manifest from './chapters-manifest.json';
+import { assertChapterMatchesManifest } from '../chapterInvariants';
 
 export type HanumanAshtakVerse = {
   id: string;
@@ -58,6 +59,6 @@ export function getHanumanAshtakChapter(chapter: number): HanumanAshtakChapter {
   if (idx < 0 || idx >= hanumanAshtakChaptersLoaders.length) {
     throw new Error(`hanuman-ashtak: chapter ${chapter} out of range (1-${hanumanAshtakChaptersLoaders.length})`);
   }
-  return hanumanAshtakChaptersLoaders[idx]();
+  return assertChapterMatchesManifest('hanuman-ashtak', hanumanAshtakChaptersLoaders[idx](), hanumanAshtakChaptersManifest[idx]);
 }
 

@@ -152,3 +152,33 @@ test('verseCounts exports exactly what texts.ts needs, and nothing stale', () =>
   ].map(([name]) => name as string).sort();
   assert.deepEqual(exported, expected, 'verseCounts.ts has drifted from its generator');
 });
+
+/**
+ * The regression this file exists to prevent, stated as a rule: `texts.ts` must
+ * not import a corpus module. It is on the launch path (NewContentContext ->
+ * texts), so importing `xTotal` from `./x` to fill in one row's verse count
+ * evaluates whatever `./x` eagerly imports — for a single-file corpus, its whole
+ * payload. The launch-graph budget would only catch that once enough of them
+ * piled up; a lone 40 KB chalisa slips under its headroom. This catches the
+ * first one.
+ *
+ * To add a text: add its count to `scripts/gen-verse-counts.mts`, regenerate,
+ * and import it from `./verseCounts`.
+ */
+test('texts.ts takes its verse counts from verseCounts.ts, never from a corpus', async () => {
+  const fs = await import('node:fs');
+  const path = await import('node:path');
+  const dataDir = path.resolve(import.meta.dirname, '..');
+  const src = fs.readFileSync(path.join(dataDir, 'texts.ts'), 'utf8');
+  // Genuinely-needed, deliberately small, and not a verse payload.
+  const ALLOWED = new Set(['./verseCounts', './japam']);
+  const offenders = [...src.matchAll(/^import\s+(?!type\s)[^;]*?from\s+'(\.\/[\w-]+)';/gm)]
+    .map((m) => m[1])
+    .filter((spec) => !ALLOWED.has(spec) && fs.existsSync(path.join(dataDir, spec.slice(2), 'index.ts')));
+  assert.deepEqual(
+    offenders,
+    [],
+    `texts.ts imports corpus module(s) ${offenders.join(', ')} — that puts the corpus on the launch path. ` +
+      'Add the count to scripts/gen-verse-counts.mts, regenerate, and import it from ./verseCounts.'
+  );
+});

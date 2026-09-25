@@ -1,4 +1,5 @@
 import manifest from './chapters-manifest.json';
+import { assertChapterMatchesManifest } from '../chapterInvariants';
 
 export type ShivaStrotamVerse = {
   id: string;
@@ -61,6 +62,6 @@ export function getShivaStrotamChapter(chapter: number): ShivaStrotamChapter {
   if (idx < 0 || idx >= shivaStrotamChaptersLoaders.length) {
     throw new Error(`shiva-strotam: chapter ${chapter} out of range (1-${shivaStrotamChaptersLoaders.length})`);
   }
-  return shivaStrotamChaptersLoaders[idx]();
+  return assertChapterMatchesManifest('shiva-strotam', shivaStrotamChaptersLoaders[idx](), shivaStrotamChaptersManifest[idx]);
 }
 

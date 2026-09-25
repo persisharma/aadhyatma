@@ -1,4 +1,5 @@
 import manifest from './chapters-manifest.json';
+import { assertChapterMatchesManifest } from '../chapterInvariants';
 
 export type SaraswatiStotramVerse = {
   id: string;
@@ -67,6 +68,6 @@ export function getSaraswatiStotramChapter(chapter: number): SaraswatiStotramCha
   if (idx < 0 || idx >= saraswatiStotramChaptersLoaders.length) {
     throw new Error(`saraswati-stotram: chapter ${chapter} out of range (1-${saraswatiStotramChaptersLoaders.length})`);
   }
-  return saraswatiStotramChaptersLoaders[idx]();
+  return assertChapterMatchesManifest('saraswati-stotram', saraswatiStotramChaptersLoaders[idx](), saraswatiStotramChaptersManifest[idx]);
 }
 
