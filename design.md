@@ -2405,20 +2405,24 @@ All four languages are hand-authored via `pick` (this is UI chrome, not content,
 transliterated), and Indic labels drop Latin tracking/uppercase per §3.
 
 **Trigger — when the card may open** (`contexts/ratingAsk.ts` + the host). The card never
-opens on its own. The one surface where the user has just completed today's practice calls
-`requestAsk('routine-complete')`; the gate below then decides. One moment ships (product decision,
-Sept 2026: "ask when a routine is completed"):
+opens on its own. A surface where the user has just finished something calls
+`requestAsk('<moment>')`; the gate below then decides. Three moments ship — `routine-complete`
+shipped first (Sept 2026: "ask when a routine is completed"); `verse-shared` and `mala-complete`
+were added because that single moment reaches only routine users and ratings were coming in too low,
+so the two moments that had been cut only to keep one are back, reaching readers and japa users who
+never build a routine:
 
 | Trigger | Reported by | Exactly when | Why here |
 |---|---|---|---|
 | `routine-complete` | `components/RoutineCelebrationOverlay.tsx` | The pushpa-varsha's `onDone`, i.e. after the petals and caption have faded — **not** on completion itself | Today's practice is done; the best moment in the app. Riding on `onDone` keeps the card off the shower (§11) |
+| `verse-shared` | `utils/shareVerse.tsx` | After the OS/Instagram share sheet the `run()` dispatched has closed (the `Share`/`Sharing` await resolved) — **not** the Instagram-without-image error path | The user just endorsed the app to someone; a warm moment, and it reaches every reader/Daily-Bhakti screen with a share button, not only routine users |
+| `mala-complete` | `screens/JapamCounterScreen.tsx` | On screen **blur** (`useFocusEffect` cleanup), and only if ≥1 full round was completed during the visit — **never** a card over the beads mid-japa | Leaving the counter after finishing a mala is the settle point; a card during japa would break the count (the reason this was cut before) |
 
-Considered and **not** shipped, so nobody re-proposes them by accident: a completed mala on the
-japam counter (a card over the bead surface breaks the japa; asking on exit was built and then cut
-in favour of the single routine moment), a completed verse share (same cut), chapter completion
+Considered and **not** shipped, so nobody re-proposes them by accident: chapter completion
 (the readers' auto-advance carries the user straight into the next chapter with no pause to ask
 in), and streak milestones (covered in practice by `routine-complete`). `RatingAskTrigger` stays a
 union so adding one back is a one-literal change plus a `requestAsk` call — see RULEBOOK §6.2.
+(The mala and share moments, once on this "not shipped" list, now ship — see the table above.)
 
 `requestAsk` is safe to call freely: every refusal is silent and the moment simply passes. It
 refuses when the state is still hydrating (it does **not** queue — asking a few seconds after the
@@ -2483,9 +2487,11 @@ provider: importing `RatingPromptContext` directly would drag `NotificationPrefe
 
 **Files.** `mobile/src/data/ratingPrompt.ts` (state, triggers, gate, store URLs),
 `mobile/src/contexts/RatingPromptContext.tsx`, `mobile/src/contexts/ratingAsk.ts`,
-`mobile/src/components/RatingPromptSheet.tsx`, host in
-`mobile/src/components/RoutineCelebrationOverlay.tsx`, row in `mobile/src/screens/MoreScreen.tsx`,
-store URLs from `mobile/src/data/shareLinks.ts`.
+`mobile/src/components/RatingPromptSheet.tsx`, hosts in
+`mobile/src/components/RoutineCelebrationOverlay.tsx` (`routine-complete`),
+`mobile/src/utils/shareVerse.tsx` (`verse-shared`) and
+`mobile/src/screens/JapamCounterScreen.tsx` (`mala-complete`), row in
+`mobile/src/screens/MoreScreen.tsx`, store URLs from `mobile/src/data/shareLinks.ts`.
 Tests: `src/data/__tests__/ratingPrompt.jest.test.ts` (every gate clause, cooldown boundary,
 per-trigger credit, defensive parse incl. the pre-trigger blob, URL shapes),
 `src/components/__tests__/RatingPromptSheet.test.tsx` (silent cold start, the moment opens after

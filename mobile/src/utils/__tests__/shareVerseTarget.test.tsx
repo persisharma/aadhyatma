@@ -23,6 +23,11 @@ jest.mock('react-native-view-shot', () => ({
   captureRef: (...args: unknown[]) => mockCaptureRef(...args),
 }));
 
+// The rating ask (§54): a dispatched share is a "good moment". Mock the light
+// context so the provider mounts standalone and we can assert the moment fires.
+const mockRequestAsk = jest.fn();
+jest.mock('@/contexts/ratingAsk', () => ({ useRatingAsk: () => mockRequestAsk }));
+
 // ShareCard pulls in the reader background plates (image assets + gradients); the
 // flow under test only cares that something mounted and was captured. The story
 // canvas is stubbed the same way — its geometry is pinned by shareStoryLayout.test.ts.
@@ -106,6 +111,7 @@ describe('share target flow', () => {
     mockShareAsync.mockClear();
     setString.mockClear();
     rnShare.mockClear();
+    mockRequestAsk.mockClear();
     mockObservances = [];
   });
 
@@ -214,5 +220,23 @@ describe('share target flow', () => {
       message: expect.not.stringContaining('#'),
       url: 'file:///tmp/verse.png',
     });
+  });
+
+  test('a dispatched share reports the verse-shared moment (§54)', async () => {
+    const tree = await openPicker();
+    await act(async () => byLabel(tree, 'Share to other apps').props.onPress());
+    await settle();
+    expect(rnShare).toHaveBeenCalledTimes(1);
+    expect(mockRequestAsk).toHaveBeenCalledWith('verse-shared');
+  });
+
+  test('the Instagram-without-image error path does NOT report the moment', async () => {
+    // No image → the branch that only shows an alert, never a share sheet.
+    mockCaptureRef.mockResolvedValueOnce(null as never);
+    const tree = await openPicker();
+    await act(async () => byLabel(tree, 'Share on Instagram').props.onPress());
+    await settle();
+    expect(mockShareAsync).not.toHaveBeenCalled();
+    expect(mockRequestAsk).not.toHaveBeenCalled();
   });
 });

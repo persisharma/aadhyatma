@@ -117,6 +117,14 @@ describe('state transitions', () => {
     });
   });
 
+  it('credits each moment independently (share and mala count on their own)', () => {
+    let state = afterAsked(RATING_PROMPT_DEFAULTS, NOW, 'verse-shared');
+    state = afterAsked(state, NOW, 'mala-complete');
+    state = afterAsked(state, NOW, 'verse-shared');
+    expect(state.askCount).toBe(3);
+    expect(state.asksByTrigger).toEqual({ 'verse-shared': 2, 'mala-complete': 1 });
+  });
+
   it('afterRated and afterDeclined are both terminal', () => {
     expect(afterRated(RATING_PROMPT_DEFAULTS, NOW).outcome).toBe('rated');
     expect(afterDeclined(RATING_PROMPT_DEFAULTS, NOW).outcome).toBe('declined');
@@ -199,6 +207,22 @@ describe('parseRatingPromptState', () => {
     );
     // Unknown moments (incl. ones from a build that no longer ships them) are dropped.
     expect(parsed.asksByTrigger).toEqual({ 'routine-complete': 2 });
+  });
+
+  it('keeps every shipping moment, including the share and mala moments', () => {
+    const parsed = parseRatingPromptState(
+      JSON.stringify({
+        askCount: 3,
+        lastAskedAt: NOW,
+        outcome: 'pending',
+        asksByTrigger: { 'routine-complete': 1, 'verse-shared': 1, 'mala-complete': 1 },
+      })
+    );
+    expect(parsed.asksByTrigger).toEqual({
+      'routine-complete': 1,
+      'verse-shared': 1,
+      'mala-complete': 1,
+    });
   });
 
   it('drops junk fields rather than trusting them', () => {
