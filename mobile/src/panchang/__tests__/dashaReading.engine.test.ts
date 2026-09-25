@@ -3,7 +3,10 @@ import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 
 import {
+  buildDashaPairReading,
   buildDashaReading,
+  DASHA_LORD_CHILD_EN,
+  DASHA_LORD_CHILD_HI,
   DASHA_LORD_THEME_EN,
   DASHA_LORD_THEME_HI,
 } from '../dashaReading';
@@ -12,6 +15,7 @@ import {
   DASHA_ORDER,
   GRAHA_NAMES_EN,
   GRAHA_NAMES_HI,
+  indiaDateKey,
 } from '../kundali';
 
 const chart = computeKundali({
@@ -90,4 +94,51 @@ test('reading is deterministic and null outside the 120-year table', () => {
     chart.vimshottari[chart.vimshottari.length - 1].end.getTime() + 86_400_000
   );
   assert.equal(buildDashaReading(chart, afterCycle), null);
+});
+
+test('pair-reading basis keys are IST civil dates, identical to indiaDateKey', () => {
+  for (const maha of chart.vimshottari) {
+    for (const antar of maha.antardashas) {
+      const midpoint = new Date((antar.start.getTime() + antar.end.getTime()) / 2);
+      const pair = buildDashaPairReading(chart, midpoint);
+      if (!pair) continue;
+      const mahaNode = pair.basis.find((node) => node.kind === 'dasha' && node.level === 'maha') as { startKey: string; endKey: string };
+      const antarNode = pair.basis.find((node) => node.kind === 'dasha' && node.level === 'antar') as { startKey: string; endKey: string };
+      assert.equal(mahaNode.startKey, indiaDateKey(maha.start));
+      assert.equal(mahaNode.endKey, indiaDateKey(maha.end));
+      assert.equal(antarNode.startKey, indiaDateKey(antar.start));
+      assert.equal(antarNode.endKey, indiaDateKey(antar.end));
+    }
+  }
+  const source = readFileSync('src/panchang/dashaReading.ts', 'utf8');
+  assert.doesNotMatch(source, /toISOString\(\)\.slice/, 'no UTC date slicing in a module whose paragraphs print IST dates');
+});
+
+test('the child register observes, in both languages, for every lord and every pair', () => {
+  for (const lord of DASHA_ORDER) {
+    assert.ok(DASHA_LORD_CHILD_HI[lord].observe.includes('बच्चे'), `${lord} hi observe names the child obliquely`);
+    assert.ok(DASHA_LORD_CHILD_EN[lord].observe.includes('the child'), `${lord} en observe names the child`);
+    assert.doesNotMatch(DASHA_LORD_CHILD_HI[lord].observe, /बच्चा/, `${lord} hi never uses the direct form (verb agreement)`);
+    assert.doesNotMatch(DASHA_LORD_CHILD_EN[lord].observe, /career|marriage|partner|wealth|income/i, `${lord} en observe stays a toddler-scale sentence`);
+  }
+  for (const maha of chart.vimshottari) {
+    for (const antar of maha.antardashas) {
+      const midpoint = new Date((antar.start.getTime() + antar.end.getTime()) / 2);
+      const adult = buildDashaPairReading(chart, midpoint);
+      const child = buildDashaPairReading(chart, midpoint, { band: 'child', subjectName: 'Aarav' });
+      if (!adult || !child) continue;
+      assert.equal(child.bodyEn.length, 3);
+      assert.equal(child.bodyHi.length, 3);
+      assert.ok(child.bodyEn[0].includes('At this age, parents can simply observe'), child.bodyEn[0]);
+      assert.ok(child.bodyEn[0].includes('Aarav'));
+      assert.ok(child.bodyEn[1].endsWith('not a forecast.'));
+      assert.ok(!child.bodyEn[2].includes('colour just now'));
+      assert.ok(child.bodyHi[0].includes('इस आयु में माता-पिता'));
+      // Same dates, same basis — only the register changes.
+      assert.deepEqual(child.basis, adult.basis);
+      assert.notEqual(child.bodyEn[0], adult.bodyEn[0]);
+      // Not a child → unchanged adult copy.
+      assert.deepEqual(buildDashaPairReading(chart, midpoint, { band: 'adolescent' })!.bodyEn, adult.bodyEn);
+    }
+  }
 });
