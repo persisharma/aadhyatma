@@ -55,7 +55,8 @@ import {
 } from '@/notifications/deepLink';
 import { buildInitialNavigationState, type StartTarget } from '@/navigation/startTarget';
 import { preloadPanchangStack } from '@/navigation/lazyPanchangStack';
-import { startScreenPrefetch } from '@/navigation/screenPrefetch';
+import { startScreenPrefetch, prioritise } from '@/navigation/screenPrefetch';
+import { childRoutes } from '@/navigation/routeGraph';
 // Side-effect import: enrols the non-screen warm-ups (search index) with the
 // walk. Must be imported before `startScreenPrefetch` runs.
 import '@/navigation/dataWarmups';
@@ -218,6 +219,18 @@ export default function App() {
   //      pulled via `getLastNotificationResponseAsync()`.
   //  (b) Warm start — app already running; subscribe via
   //      `addNotificationResponseReceivedListener`.
+  /**
+   * Keep the background warm-up one tap ahead of wherever the user now is.
+   *
+   * Cheap by construction: a map lookup and a few Set inserts per navigation.
+   * It changes the ORDER of the queue and nothing else — the walk still yields
+   * to `InteractionManager` and still warms one module at a time, so following
+   * the user cannot cost the screen they are on.
+   */
+  const handleRouteChange = useCallback(() => {
+    prioritise(childRoutes(navigationRef.getCurrentRoute()?.name));
+  }, []);
+
   // The handler is a no-op until `navigationRef.isReady()` so we don't lose
   // taps that arrive before navigation has mounted.
   useEffect(() => {
@@ -346,6 +359,15 @@ export default function App() {
                                  waits on InteractionManager, so this can only use
                                  time the UI is not using (navigation/screenPrefetch). */
                               onReady={startScreenPrefetch}
+                              /* ...and then follow the user. Breadth-first from Home
+                                 is the right guess only until they move; after that,
+                                 what is worth warming is whatever THIS screen opens.
+                                 Pushing the current route's children to the front
+                                 keeps the walk one tap ahead however deep they go,
+                                 instead of finishing a depth they have already left
+                                 behind. Ordering only — it cannot block or drop a
+                                 screen, just reach it sooner. */
+                              onStateChange={handleRouteChange}
                             >
                               <StatusBar style="dark" />
                               <RootNavigator />

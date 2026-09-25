@@ -49,9 +49,35 @@ export function registerPrefetch(entry: PrefetchEntry): void {
   registry.push(entry);
 }
 
+/**
+ * Routes bumped to the front because the user is standing next to them.
+ *
+ * The plain walk is breadth-first FROM HOME, which is the right guess before
+ * anyone has done anything. Once they move it is the wrong one: someone three
+ * taps down one branch is served by warming that branch, not by finishing the
+ * 46 unrelated screens that happen to share a depth. `prioritise` is how the
+ * walk follows them.
+ */
+const urgent = new Set<string>();
+
+/**
+ * Warm these next, before anything still queued by depth.
+ *
+ * Called with the current screen's children on every navigation, so the walk
+ * stays one tap ahead. Naming a label that is already warmed, or one that does
+ * not exist, is a no-op — the caller works off the route graph, which is a
+ * heuristic and allowed to be imperfect.
+ */
+export function prioritise(labels: readonly string[]): void {
+  for (const label of labels) urgent.add(label);
+}
+
 /** Registered entries in the order they will be warmed. Exported for the test. */
 export function prefetchOrder(): PrefetchEntry[] {
-  return [...registry].sort((a, b) => a.depth - b.depth);
+  return [...registry].sort(
+    (a, b) =>
+      Number(urgent.has(b.label)) - Number(urgent.has(a.label)) || a.depth - b.depth
+  );
 }
 
 /** Gap between two evaluations. Long enough that a tap arriving mid-walk is
@@ -118,4 +144,5 @@ export function startScreenPrefetch(
 export function resetScreenPrefetchForTests(): void {
   walking = null;
   registry.length = 0;
+  urgent.clear();
 }

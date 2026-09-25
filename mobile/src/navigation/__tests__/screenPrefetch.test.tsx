@@ -3,6 +3,7 @@ import { act, create } from 'react-test-renderer';
 import {
   registerPrefetch,
   prefetchOrder,
+  prioritise,
   startScreenPrefetch,
   resetScreenPrefetchForTests,
 } from '../screenPrefetch';
@@ -91,6 +92,45 @@ describe('screenPrefetch', () => {
     });
     await startScreenPrefetch({ yieldToUI: async () => {} });
     expect([...counts.entries()].sort()).toEqual([['child', 1], ['root', 1]]);
+  });
+
+
+  it('follows the user: a prioritised screen jumps ahead of shallower ones', async () => {
+    const order: string[] = [];
+    const entry = (label: string, depth: number) =>
+      registerPrefetch({ label, depth, load: async () => void order.push(label) });
+    entry('near-a', 2);
+    entry('near-b', 2);
+    entry('deep-branch', 4);
+
+    // The user has navigated somewhere that opens `deep-branch`.
+    prioritise(['deep-branch']);
+    await startScreenPrefetch({ yieldToUI: async () => {} });
+
+    expect(order[0]).toBe('deep-branch');
+    expect(order).toEqual(['deep-branch', 'near-a', 'near-b']);
+  });
+
+  it('keeps depth order among equally urgent screens', async () => {
+    const order: string[] = [];
+    const entry = (label: string, depth: number) =>
+      registerPrefetch({ label, depth, load: async () => void order.push(label) });
+    entry('urgent-deep', 5);
+    entry('urgent-shallow', 3);
+    entry('calm', 2);
+
+    prioritise(['urgent-deep', 'urgent-shallow']);
+    await startScreenPrefetch({ yieldToUI: async () => {} });
+
+    expect(order).toEqual(['urgent-shallow', 'urgent-deep', 'calm']);
+  });
+
+  it('ignores prioritising a route that is not registered', async () => {
+    const order: string[] = [];
+    registerPrefetch({ label: 'only', depth: 2, load: async () => void order.push('only') });
+    prioritise(['NoSuchRoute', 'AlsoMissing']);
+    await expect(startScreenPrefetch({ yieldToUI: async () => {} })).resolves.toBeUndefined();
+    expect(order).toEqual(['only']);
   });
 
   it('never starts a second competing walk', async () => {
