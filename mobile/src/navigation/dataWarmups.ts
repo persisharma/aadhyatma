@@ -12,19 +12,34 @@ import { preloadPanchangStack } from './lazyPanchangStack';
  */
 
 /**
- * The search index — ~0.7 s of CPU across every indexed corpus.
+ * The search index — seconds of CPU on a phone, across every indexed corpus.
  *
  * Depth 2, because Search opens directly from Home and is one of the likeliest
- * first taps. `warmSearchIndex` yields between library entries, so this spends
- * the idle time in slices rather than one long block; by the time Search is
- * tapped the index is usually already cached and the screen paints immediately.
+ * first taps. Two things keep it off the screen the user is looking at:
+ *
+ *   - The build runs in ~8 ms slices (one chapter or one temple per unit), each
+ *     behind `InteractionManager` plus a one-frame gap, so it never holds the
+ *     thread for a frame.
+ *   - It runs ALONGSIDE the walk rather than inside it: `load` starts the job
+ *     and returns at once. The walk awaits each entry, so awaiting a
+ *     many-second job here would have parked every screen queued after it.
+ *
+ * If the user opens Search before it finishes, the screen takes the same job
+ * over at a foreground pace (`screens/_useSearchIndex.ts`); nothing is built
+ * twice.
  */
+const SEARCH_SLICE_GAP_MS = 16;
+
 registerPrefetch({
   label: 'search-index',
   depth: 2,
   load: async () => {
-    const { warmSearchIndex } = await import('@/data/searchIndex');
-    await warmSearchIndex(idleTick);
+    void import('@/data/searchIndex')
+      .then(({ warmSearchIndex }) => warmSearchIndex(() => idleTick(SEARCH_SLICE_GAP_MS)))
+      // A background warm-up never fails the app. A corpus that cannot be
+      // indexed still fails loudly — on the Search screen, which builds the
+      // same job and throws.
+      .catch(() => undefined);
   },
 });
 

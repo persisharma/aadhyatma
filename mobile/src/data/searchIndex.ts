@@ -9,7 +9,7 @@
  * Adding a new section: see RULEBOOK §7. If the section uses the standard
  * `lines`/`linesEn` or `sanskrit`/`linesEn`/`transliteration` field shape it
  * is picked up automatically once added to `library` in `texts.ts`. A section
- * with a novel verse shape needs a new branch in {@link buildVerseEntries}.
+ * with a novel verse shape needs a new branch in {@link entryUnits}.
  */
 
 import { library, type LibraryEntry } from './texts';
@@ -187,13 +187,94 @@ export type SearchResults = {
 let cached: SearchIndex | null = null;
 
 /**
- * Build the index lazily on first call; subsequent calls reuse the cached
- * instance. The build is synchronous so callers don't have to thread async
- * through the search screen.
+ * The index is built by ONE resumable job, shared by every caller.
+ *
+ * The background warm-up advances it a few milliseconds at a time; a caller
+ * that needs the index right now (`getSearchIndex`) simply runs the same job to
+ * the end. Nothing is ever built twice and no progress is ever thrown away —
+ * a tap that beats the warm-up finishes what the warm-up already started.
+ */
+type PendingBuild = { verses: SearchVerseEntry[]; units: Generator<void, void, void> };
+let pending: PendingBuild | null = null;
+
+function* verseUnits(verses: SearchVerseEntry[]): Generator<void, void, void> {
+  for (const entry of indexableEntries()) {
+    yield* entryUnits(verses, entry);
+    yield;
+  }
+}
+
+/**
+ * Run build units until `budgetMs` has been spent or the index is complete.
+ * Returns true once the index exists.
+ */
+function advance(budgetMs: number): boolean {
+  if (cached) return true;
+  if (!pending) {
+    const verses: SearchVerseEntry[] = [];
+    pending = { verses, units: verseUnits(verses) };
+  }
+  const started = Date.now();
+  try {
+    for (;;) {
+      if (pending.units.next().done) {
+        cached = { sections: buildSectionEntries(), deities: buildDeityEntries(), verses: pending.verses };
+        pending = null;
+        return true;
+      }
+      if (Date.now() - started >= budgetMs) return false;
+    }
+  } catch (error) {
+    // A generator that has thrown reports `done` on every later call. Without
+    // this reset the next caller would "finish" it and cache a half-built index
+    // with no error at all. Starting over means a broken corpus fails loudly
+    // every time, exactly as the old single-pass build did.
+    pending = null;
+    throw error;
+  }
+}
+
+/**
+ * The index, now — building synchronously whatever is left. Prefer
+ * `peekSearchIndex` + `warmSearchIndex` on any path the user is waiting on.
  */
 export function getSearchIndex(): SearchIndex {
-  if (cached) return cached;
-  cached = build();
+  advance(Infinity);
+  return cached!;
+}
+
+/** Searched while the real index is still being built: yields no hits, costs nothing. */
+export const EMPTY_SEARCH_INDEX: SearchIndex = { sections: [], deities: [], verses: [] };
+
+/** The index if it is already built, else null. Never does any work. */
+export function peekSearchIndex(): SearchIndex | null {
+  return cached;
+}
+
+/** Default slice: half a frame, so a slice can never cost the one after it. */
+export const SEARCH_SLICE_BUDGET_MS = 8;
+
+/**
+ * Build the index in the background: `budgetMs` of work, then hand the thread
+ * back through `yieldToUI`, repeat.
+ *
+ * WHY. The build is ~0.7 s of CPU on a desktop — seconds on a phone — and it
+ * runs while the user is looking at Home, so it must never hold the thread for
+ * a frame. A time budget with small units underneath (one chapter, one temple)
+ * keeps every slice short no matter which source it lands in.
+ *
+ * Safe to call more than once, even concurrently — the background walk and the
+ * Search screen both do. Every caller advances the SAME job, so concurrent
+ * callers simply share the work between them and all resolve to one index.
+ */
+export async function warmSearchIndex(
+  yieldToUI: () => Promise<void> = () => Promise.resolve(),
+  budgetMs: number = SEARCH_SLICE_BUDGET_MS
+): Promise<SearchIndex> {
+  while (!cached) {
+    await yieldToUI();
+    advance(budgetMs);
+  }
   return cached;
 }
 
@@ -204,62 +285,7 @@ export function getSearchIndex(): SearchIndex {
  */
 export function _resetSearchIndexForTest(): void {
   cached = null;
-  warming = null;
-}
-
-function build(): SearchIndex {
-  return {
-    sections: buildSectionEntries(),
-    deities: buildDeityEntries(),
-    verses: buildVerseEntries(),
-  };
-}
-
-let warming: Promise<SearchIndex> | null = null;
-
-/**
- * Build the index AHEAD of the user asking for it, one library entry per idle
- * slice.
- *
- * WHY THIS EXISTS. `getSearchIndex()` is synchronous and takes roughly 0.7 s of
- * pure CPU — it reads every indexed corpus and normalises ~2,200 verses. As the
- * first thing that happens when the Search screen mounts, that is 0.7 s of dead
- * screen; and now that the corpora load on demand rather than at launch (see
- * `sundarkand/index.ts` and friends), it also has to pay for reading them.
- *
- * So the work moves to where there is time for it: `screenPrefetch` calls this
- * while the user is still looking at Home. Awaiting `yieldToUI` between entries
- * is what makes it safe to run then — the ~0.7 s is spent as ~70 slices of a
- * few ms rather than one blocked frame, and a touch always gets the thread back
- * between slices.
- *
- * Idempotent, and cheap to call twice: concurrent callers share one build, and
- * if a tap beats the warm-up to it `getSearchIndex()` fills the cache
- * synchronously and the walk below notices and stops.
- */
-export async function warmSearchIndex(
-  yieldToUI: () => Promise<void> = () => Promise.resolve()
-): Promise<SearchIndex> {
-  if (cached) return cached;
-  if (warming) return warming;
-  warming = (async () => {
-    const verses: SearchVerseEntry[] = [];
-    for (const entry of indexableEntries()) {
-      await yieldToUI();
-      // A tap raced us and built it synchronously — drop this partial work.
-      if (cached) return cached;
-      pushEntryVerses(verses, entry);
-    }
-    await yieldToUI();
-    if (cached) return cached;
-    cached = { sections: buildSectionEntries(), deities: buildDeityEntries(), verses };
-    return cached;
-  })();
-  try {
-    return await warming;
-  } finally {
-    warming = null;
-  }
+  pending = null;
 }
 
 function buildSectionEntries(): readonly SearchSectionEntry[] {
@@ -337,11 +363,13 @@ function buildDeityEntries(): readonly SearchDeityEntry[] {
 }
 
 /**
- * Index ONE library entry. Split out of the build loop so the index can be
- * assembled a slice at a time — see `warmSearchIndex`, which walks the library
- * across idle callbacks so the ~0.7 s build never lands as one blocked frame.
+ * Index ONE library entry, as a sequence of small units of work. Each `yield`
+ * is a point where the build may pause and hand the thread back. The heavy
+ * sources yield inside themselves — once per chapter (the Gītā, Sundarkand and
+ * the stotram corpora) or per temple (Theerth) — because an entry-sized unit
+ * was far too coarse: the Gītā alone measured ~225 ms, over a dozen frames.
  */
-function pushEntryVerses(verses: SearchVerseEntry[], entry: LibraryEntry): void {
+function* entryUnits(verses: SearchVerseEntry[], entry: LibraryEntry): Generator<void, void, void> {
   if (CHALISA_IDS.includes(entry.id as ChalisaId)) {
     pushChalisaVerses(verses, entry);
     return;
@@ -368,17 +396,17 @@ function pushEntryVerses(verses: SearchVerseEntry[], entry: LibraryEntry): void 
   }
 
   if (entry.id === 'bhagavad-gita') {
-    pushChapteredGita(verses, entry);
+    yield* pushChapteredGita(verses, entry);
     return;
   }
 
   if (entry.id === 'sundarkand') {
-    pushChapteredSundarkand(verses, entry);
+    yield* pushChapteredSundarkand(verses, entry);
     return;
   }
 
   if (entry.id === 'shiva-strotam') {
-    pushChapteredShivaStrotamShape(
+    yield* pushChapteredShivaStrotamShape(
       verses,
       entry,
       shivaStrotamChaptersManifest,
@@ -388,7 +416,7 @@ function pushEntryVerses(verses: SearchVerseEntry[], entry: LibraryEntry): void 
   }
 
   if (entry.id === 'durga-stotram') {
-    pushChapteredShivaStrotamShape(
+    yield* pushChapteredShivaStrotamShape(
       verses,
       entry,
       durgaStotramChaptersManifest,
@@ -398,7 +426,7 @@ function pushEntryVerses(verses: SearchVerseEntry[], entry: LibraryEntry): void 
   }
 
   if (entry.id === 'saraswati-stotram') {
-    pushChapteredShivaStrotamShape(
+    yield* pushChapteredShivaStrotamShape(
       verses,
       entry,
       saraswatiStotramChaptersManifest,
@@ -408,7 +436,7 @@ function pushEntryVerses(verses: SearchVerseEntry[], entry: LibraryEntry): void 
   }
 
   if (entry.id === 'ganesh-stotram') {
-    pushChapteredShivaStrotamShape(
+    yield* pushChapteredShivaStrotamShape(
       verses,
       entry,
       ganeshStotramChaptersManifest,
@@ -418,7 +446,7 @@ function pushEntryVerses(verses: SearchVerseEntry[], entry: LibraryEntry): void 
   }
 
   if (entry.id === 'vishnu-sahasranama') {
-    pushChapteredShivaStrotamShape(
+    yield* pushChapteredShivaStrotamShape(
       verses,
       entry,
       vishnuSahasranamaChaptersManifest,
@@ -428,7 +456,7 @@ function pushEntryVerses(verses: SearchVerseEntry[], entry: LibraryEntry): void 
   }
 
   if (entry.id === 'hanuman-ashtak') {
-    pushChapteredShivaStrotamShape(
+    yield* pushChapteredShivaStrotamShape(
       verses,
       entry,
       hanumanAshtakChaptersManifest,
@@ -438,14 +466,14 @@ function pushEntryVerses(verses: SearchVerseEntry[], entry: LibraryEntry): void 
   }
 
   if (entry.id === 'bajrang-baan') {
-    pushChapteredBajrangBaan(verses, entry);
+    yield* pushChapteredBajrangBaan(verses, entry);
     return;
   }
 
   if (entry.id === 'ram-stuti' || entry.id === 'ram-aarti') {
     // 'ram-aarti' is the Aarti-list alias for the Ram Stuti content, so it
     // indexes the same verses under its own sourceId (see texts.ts / entryRoutes.ts).
-    pushChapteredShivaStrotamShape(
+    yield* pushChapteredShivaStrotamShape(
       verses,
       entry,
       ramStutiChaptersManifest,
@@ -455,7 +483,7 @@ function pushEntryVerses(verses: SearchVerseEntry[], entry: LibraryEntry): void 
   }
 
   if (entry.id === 'krishna-stotram') {
-    pushChapteredShivaStrotamShape(
+    yield* pushChapteredShivaStrotamShape(
       verses,
       entry,
       krishnaStotramChaptersManifest,
@@ -465,7 +493,7 @@ function pushEntryVerses(verses: SearchVerseEntry[], entry: LibraryEntry): void 
   }
 
   if (entry.id === 'ramcharitmanas') {
-    pushChapteredRamcharitmanas(verses, entry);
+    yield* pushChapteredRamcharitmanas(verses, entry);
     return;
   }
 
@@ -490,7 +518,7 @@ function pushEntryVerses(verses: SearchVerseEntry[], entry: LibraryEntry): void 
   }
 
   if (entry.category === 'theerth') {
-    pushTheerth(verses, entry);
+    yield* pushTheerth(verses, entry);
     return;
   }
 
@@ -503,11 +531,6 @@ function indexableEntries(): readonly LibraryEntry[] {
   return library.filter((entry) => !entry.hidden && entry.status === 'active');
 }
 
-function buildVerseEntries(): readonly SearchVerseEntry[] {
-  const verses: SearchVerseEntry[] = [];
-  for (const entry of indexableEntries()) pushEntryVerses(verses, entry);
-  return verses;
-}
 
 function pushChalisaVerses(out: SearchVerseEntry[], entry: LibraryEntry) {
   const chalisa = getChalisa(entry.id);
@@ -609,7 +632,7 @@ function pushSuktamVerses(out: SearchVerseEntry[], entry: LibraryEntry) {
   });
 }
 
-function pushChapteredGita(out: SearchVerseEntry[], entry: LibraryEntry) {
+function* pushChapteredGita(out: SearchVerseEntry[], entry: LibraryEntry) {
   for (const ch of gitaChaptersManifest) {
     const chapter = getGitaChapter(ch.chapter);
     chapter.verses.forEach((v: GitaVerse, idx) => {
@@ -629,10 +652,12 @@ function pushChapteredGita(out: SearchVerseEntry[], entry: LibraryEntry) {
         })
       );
     });
+    // One chapter per unit: a whole corpus in one go is a dropped frame.
+    yield;
   }
 }
 
-function pushChapteredSundarkand(out: SearchVerseEntry[], entry: LibraryEntry) {
+function* pushChapteredSundarkand(out: SearchVerseEntry[], entry: LibraryEntry) {
   for (const ch of sundarkandChaptersManifest) {
     const chapter = getSundarkandChapter(ch.chapter);
     chapter.verses.forEach((v: SundarkandVerse, idx) => {
@@ -652,6 +677,8 @@ function pushChapteredSundarkand(out: SearchVerseEntry[], entry: LibraryEntry) {
         })
       );
     });
+    // One chapter per unit: a whole corpus in one go is a dropped frame.
+    yield;
   }
 }
 
@@ -660,7 +687,7 @@ type ChapteredShivaStrotamLike = {
   verses: readonly ShivaStrotamVerse[];
 };
 
-function pushChapteredShivaStrotamShape(
+function* pushChapteredShivaStrotamShape(
   out: SearchVerseEntry[],
   entry: LibraryEntry,
   manifest: readonly ChapterSummaryLike[],
@@ -685,10 +712,12 @@ function pushChapteredShivaStrotamShape(
         })
       );
     });
+    // One chapter per unit: a whole corpus in one go is a dropped frame.
+    yield;
   }
 }
 
-function pushChapteredBajrangBaan(out: SearchVerseEntry[], entry: LibraryEntry) {
+function* pushChapteredBajrangBaan(out: SearchVerseEntry[], entry: LibraryEntry) {
   for (const ch of bajrangBaanChaptersManifest) {
     const chapter = getBajrangBaanChapter(ch.chapter);
     chapter.verses.forEach((v: BajrangBaanVerse, idx) => {
@@ -708,10 +737,12 @@ function pushChapteredBajrangBaan(out: SearchVerseEntry[], entry: LibraryEntry) 
         })
       );
     });
+    // One chapter per unit: a whole corpus in one go is a dropped frame.
+    yield;
   }
 }
 
-function pushChapteredRamcharitmanas(
+function* pushChapteredRamcharitmanas(
   out: SearchVerseEntry[],
   entry: LibraryEntry
 ) {
@@ -734,6 +765,8 @@ function pushChapteredRamcharitmanas(
         })
       );
     });
+    // One chapter per unit: a whole corpus in one go is a dropped frame.
+    yield;
   }
 }
 
@@ -791,7 +824,7 @@ const THEERTH_ENTRY_TO_GROUP: Record<string, TheerthGroup | 'all'> = {
   'famous-theerth': 'all',
 };
 
-function pushTheerth(out: SearchVerseEntry[], entry: LibraryEntry) {
+function* pushTheerth(out: SearchVerseEntry[], entry: LibraryEntry) {
   const filter = THEERTH_ENTRY_TO_GROUP[entry.id];
   if (!filter) return;
   // Search is built on demand, so this is a legitimate place to pay for the
@@ -799,7 +832,11 @@ function pushTheerth(out: SearchVerseEntry[], entry: LibraryEntry) {
   const withDetails = templesWithDetails();
   const list: readonly TempleEntry[] =
     filter === 'all' ? withDetails : withDetails.filter((t) => t.groups.includes(filter));
-  list.forEach((t, idx) => {
+  // Loading the readings is its own unit; after that, one temple per unit —
+  // normalising a full bilingual §12.6 reading is ~1.5 ms a temple, and the
+  // full list is 71 of them.
+  yield;
+  for (const [idx, t] of list.entries()) {
     out.push(
       makeVerseEntry({
         sourceId: entry.id,
@@ -814,7 +851,8 @@ function pushTheerth(out: SearchVerseEntry[], entry: LibraryEntry) {
         meaningEn: [t.significanceEn, t.originStoryEn, ...(t.sections ?? []).map((s) => s.bodyEn)].join('\n'),
       })
     );
-  });
+    yield;
+  }
 }
 
 function pushSanskar(out: SearchVerseEntry[], entry: LibraryEntry) {

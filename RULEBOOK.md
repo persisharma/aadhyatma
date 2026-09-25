@@ -261,10 +261,10 @@ Every new section must also be reachable from global search (`SearchScreen`). Th
 | `sanskrit` + `linesEn` | `sanskrit` | `linesEn` | shiva-strotam, durga-stotram, ganesh-stotram, vishnu-sahasranama, hanuman-ashtak, ram-stuti |
 | `sanskrit` + `transliteration` | `sanskrit` | `transliteration` | bhagavad-gita |
 
-If a new section uses one of the above shapes **and** its data accessor follows the established pattern (`get<Section>Chapter(chapter)` returning `{ verses: V[], titleHi, titleEn }`, plus a `<section>ChaptersManifest` array), it is integrated by adding one branch to `buildVerseEntries()` in `searchIndex.ts` that selects the right accessor. No new normalization, no new ranking. The accessor branch is ~10 lines.
+If a new section uses one of the above shapes **and** its data accessor follows the established pattern (`get<Section>Chapter(chapter)` returning `{ verses: V[], titleHi, titleEn }`, plus a `<section>ChaptersManifest` array), it is integrated by adding one branch to `entryUnits()` in `searchIndex.ts` that selects the right accessor. No new normalization, no new ranking. The accessor branch is ~10 lines. **A chaptered source's pusher is a generator that `yield`s once per chapter** (see `pushChapteredGita`), delegated with `yield*` — the index is built in the background in ~8 ms slices, and a source that indexes all its chapters in one unit holds the thread for the whole corpus (the Gītā measured ~225 ms, over a dozen frames). `warmSearchIndex.test.ts` pins that a sliced build is byte-identical to an uninterrupted one.
 
 **Path C — theerth (no verses).** Sections with `category === 'theerth'` have no verses; they have temples. The integration:
-1. Add a branch to `buildSearchEntries()` (rename of `buildVerseEntries()` once theerth lands) that produces one search entry per `TheerthTemple`, with `nameHi/En`, `cityHi/En`, `stateHi/En`, `significanceHi/En`, and `originStoryHi/En` appended to the searchable `fields` array.
+1. Add a branch to `entryUnits()` in `searchIndex.ts` (formerly `buildVerseEntries()`; theerth's is `pushTheerth`, one unit per temple) that produces one search entry per `TheerthTemple`, with `nameHi/En`, `cityHi/En`, `stateHi/En`, `significanceHi/En`, and `originStoryHi/En` appended to the searchable `fields` array.
 2. The search-result row carries `templeId`; tap routes via `entryRoutes.ts` → `navigateToTheerthDetail(templeId)`.
 3. Add a test case in `searchIndex.test.ts` asserting a temple-name query returns the right detail target.
 
@@ -273,7 +273,7 @@ If a new section uses one of the above shapes **and** its data accessor follows 
 2. Update `SearchVerseEntry` if a new field needs to be rendered in the result row.
 3. Add a test case in `mobile/src/data/__tests__/searchIndex.test.ts` that queries against the new field and asserts hits.
 
-**Hard CI gate.** `searchIndex.test.ts` contains a coverage assertion: every active, non-hidden entry in `library` must produce at least one verse entry in the index. A new section that adds `LibraryEntry` to `texts.ts` without wiring `buildVerseEntries()` will fail this test before merge. There is no way to silently ship an un-searchable section.
+**Hard CI gate.** `searchIndex.test.ts` contains a coverage assertion: every active, non-hidden entry in `library` must produce at least one verse entry in the index. A new section that adds `LibraryEntry` to `texts.ts` without wiring `entryUnits()` will fail this test before merge. There is no way to silently ship an un-searchable section.
 
 **Section-name + deity-name fields are free.** `nameHi`, `nameEn`, and `sub` from the `LibraryEntry` itself are indexed for the "Sections" result group with zero extra code. Same for deity tags. Adding a section to `library` and `entryRoutes.ts` is enough to make the section name itself searchable; only verse-level search needs the per-shape branch.
 

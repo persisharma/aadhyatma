@@ -108,10 +108,10 @@ const GAP_MS = 60;
  * Exported because warm-ups that are not whole modules need the same pacing —
  * the search index builds itself one library entry per tick of this.
  */
-export function idleTick(): Promise<void> {
+export function idleTick(gapMs: number = GAP_MS): Promise<void> {
   return new Promise((resolve) => {
     InteractionManager.runAfterInteractions(() => {
-      setTimeout(resolve, GAP_MS);
+      setTimeout(resolve, gapMs);
     });
   });
 }
@@ -129,7 +129,7 @@ export function startScreenPrefetch(
   options: { yieldToUI?: () => Promise<void> } = {},
 ): Promise<void> {
   if (walking) return walking;
-  const yieldToUI = options.yieldToUI ?? idleTick;
+  const yieldToUI = options.yieldToUI ?? (() => idleTick());
   walking = (async () => {
     // DRAIN the registry, do not snapshot it. Warming a lazily-loaded navigator
     // evaluates that module, and evaluating it runs its own `lazyScreen()`
