@@ -1,91 +1,91 @@
-import React, { lazy, Suspense } from 'react';
-import { ActivityIndicator, View } from 'react-native';
-import {
-  createNativeStackNavigator,
-  type NativeStackScreenProps,
-} from '@react-navigation/native-stack';
+import React from 'react';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '@/screens/HomeScreen';
-import SearchScreen from '@/screens/SearchScreen';
-import CategoryListScreen from '@/screens/CategoryListScreen';
-import DeityListScreen from '@/screens/DeityListScreen';
-import DeityIndexScreen from '@/screens/DeityIndexScreen';
-import DeityDetailScreen from '@/screens/DeityDetailScreen';
-import BrowseByPurposeScreen from '@/screens/BrowseByPurposeScreen';
-import PurposeListScreen from '@/screens/PurposeListScreen';
-import ChalisaReaderScreen from '@/screens/ChalisaReaderScreen';
-import AshtakamReaderScreen from '@/screens/AshtakamReaderScreen';
-import SuktamReaderScreen from '@/screens/SuktamReaderScreen';
-import KavachamReaderScreen from '@/screens/KavachamReaderScreen';
-import StutiReaderScreen from '@/screens/StutiReaderScreen';
-import GitaChaptersIndexScreen from '@/screens/GitaChaptersIndexScreen';
-import GitaReaderScreen from '@/screens/GitaReaderScreen';
-// दान-पुण्य (PRD-26) — registered here too so the §5.1 purpose door (विद्या /
-// आरोग्य on PurposeList) pushes in place and Back retraces the journey.
-import DaanPunyaScreen from '@/screens/DaanPunyaScreen';
-import DaanJourneyScreen from '@/screens/DaanJourneyScreen';
-import DaanLedgerScreen from '@/screens/DaanLedgerScreen';
-import DaanEntryScreen from '@/screens/DaanEntryScreen';
-import DaanDirectoryScreen from '@/screens/DaanDirectoryScreen';
-import DaanDirectoryDetailScreen from '@/screens/DaanDirectoryDetailScreen';
-import DaanKathaScreen from '@/screens/DaanKathaScreen';
-import SundarkandChaptersScreen from '@/screens/SundarkandChaptersScreen';
-import SundarkandReaderScreen from '@/screens/SundarkandReaderScreen';
-import ShivaStrotamChaptersScreen from '@/screens/ShivaStrotamChaptersScreen';
-import ShivaStrotamReaderScreen from '@/screens/ShivaStrotamReaderScreen';
-import DurgaStotramChaptersScreen from '@/screens/DurgaStotramChaptersScreen';
-import DurgaStotramReaderScreen from '@/screens/DurgaStotramReaderScreen';
-import SaraswatiStotramChaptersScreen from '@/screens/SaraswatiStotramChaptersScreen';
-import SaraswatiStotramReaderScreen from '@/screens/SaraswatiStotramReaderScreen';
-import GaneshStotramChaptersScreen from '@/screens/GaneshStotramChaptersScreen';
-import GaneshStotramReaderScreen from '@/screens/GaneshStotramReaderScreen';
-import VishnuSahasranamaChaptersScreen from '@/screens/VishnuSahasranamaChaptersScreen';
-import VishnuSahasranamaReaderScreen from '@/screens/VishnuSahasranamaReaderScreen';
-import HanumanAshtakChaptersScreen from '@/screens/HanumanAshtakChaptersScreen';
-import HanumanAshtakReaderScreen from '@/screens/HanumanAshtakReaderScreen';
-import BajrangBaanChaptersScreen from '@/screens/BajrangBaanChaptersScreen';
-import BajrangBaanReaderScreen from '@/screens/BajrangBaanReaderScreen';
-import KrishnaStotramChaptersScreen from '@/screens/KrishnaStotramChaptersScreen';
-import KrishnaStotramReaderScreen from '@/screens/KrishnaStotramReaderScreen';
-import VratKathaReaderScreen from '@/screens/VratKathaReaderScreen';
-import RamStutiChaptersScreen from '@/screens/RamStutiChaptersScreen';
-import RamStutiReaderScreen from '@/screens/RamStutiReaderScreen';
-import RamcharitmanasChaptersScreen from '@/screens/RamcharitmanasChaptersScreen';
-import RamcharitmanasReaderScreen from '@/screens/RamcharitmanasReaderScreen';
-import ValmikiRamayanChaptersScreen from '@/screens/ValmikiRamayanChaptersScreen';
-import ValmikiRamayanReaderScreen from '@/screens/ValmikiRamayanReaderScreen';
-import AartiReaderScreen from '@/screens/AartiReaderScreen';
-import TheerthMapScreen from '@/screens/TheerthMapScreen';
-import TheerthDetailScreen from '@/screens/TheerthDetailScreen';
-import SanskarReaderScreen from '@/screens/SanskarReaderScreen';
-import RoutineTodayScreen from '@/screens/RoutineTodayScreen';
-import RoutineListScreen from '@/screens/RoutineListScreen';
-import CreateRoutineScreen from '@/screens/CreateRoutineScreen';
-import RoutineAddItemsScreen from '@/screens/RoutineAddItemsScreen';
-import RoutineDetailScreen from '@/screens/RoutineDetailScreen';
-import SadhanaProgramListScreen from '@/screens/SadhanaProgramListScreen';
-import SadhanaProgramDetailScreen from '@/screens/SadhanaProgramDetailScreen';
-import TodayVidhanScreen from '@/screens/TodayVidhanScreen';
-import VidhiCatalogScreen from '@/screens/VidhiCatalogScreen';
-import VidhiDetailScreen from '@/screens/VidhiDetailScreen';
-import VidhiConductScreen from '@/screens/VidhiConductScreen';
+import { lazyScreen } from './lazyScreen';
 import type { HomeStackParamList } from './types';
 
-const LazyJapamCounterScreen = lazy(() => import('@/screens/JapamCounterScreen'));
-type JapamCounterScreenProps = NativeStackScreenProps<HomeStackParamList, 'JapamCounter'>;
+/**
+ * Every route but Home loads on demand and is warmed in the background by
+ * `screenPrefetch`, breadth-first from Home. Statically importing them cost the
+ * launch ~1.4 MB of module evaluation across the stacks for screens most users
+ * never open; the `depth` here is the screen's distance from Home and decides
+ * only the order in which the warm-up reaches it.
+ *
+ * Home itself stays eager on purpose — it IS the first frame, so deferring it
+ * would trade a launch cost for a launch spinner.
+ */
 
-function JapamCounterScreen(props: JapamCounterScreenProps) {
-  return (
-    <Suspense
-      fallback={
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <ActivityIndicator />
-        </View>
-      }
-    >
-      <LazyJapamCounterScreen {...props} />
-    </Suspense>
-  );
-}
+// depth 2 — opened directly from Home
+const BrowseByPurposeScreen = lazyScreen('BrowseByPurpose', 2, () => import('@/screens/BrowseByPurposeScreen'));
+const CategoryListScreen = lazyScreen('CategoryList', 2, () => import('@/screens/CategoryListScreen'));
+// दान-पुण्य (PRD-26) — registered here too so the §5.1 purpose door (विद्या /
+// आरोग्य on PurposeList) pushes in place and Back retraces the journey.
+const DaanPunyaScreen = lazyScreen('DaanPunya', 2, () => import('@/screens/DaanPunyaScreen'));
+const DeityIndexScreen = lazyScreen('DeityIndex', 2, () => import('@/screens/DeityIndexScreen'));
+const RoutineTodayScreen = lazyScreen('RoutineToday', 2, () => import('@/screens/RoutineTodayScreen'));
+const SadhanaProgramListScreen = lazyScreen('SadhanaPrograms', 2, () => import('@/screens/SadhanaProgramListScreen'));
+const SearchScreen = lazyScreen('Search', 2, () => import('@/screens/SearchScreen'));
+const TheerthMapScreen = lazyScreen('TheerthMap', 2, () => import('@/screens/TheerthMapScreen'));
+const TodayVidhanScreen = lazyScreen('TodayVidhan', 2, () => import('@/screens/TodayVidhanScreen'));
+const VidhiCatalogScreen = lazyScreen('VidhiCatalog', 2, () => import('@/screens/VidhiCatalogScreen'));
+
+// depth 3 — reached from a depth-2 screen
+const AartiReaderScreen = lazyScreen('AartiReader', 3, () => import('@/screens/AartiReaderScreen'));
+const AshtakamReaderScreen = lazyScreen('AshtakamReader', 3, () => import('@/screens/AshtakamReaderScreen'));
+const BajrangBaanChaptersScreen = lazyScreen('BajrangBaanChapters', 3, () => import('@/screens/BajrangBaanChaptersScreen'));
+const BajrangBaanReaderScreen = lazyScreen('BajrangBaanReader', 3, () => import('@/screens/BajrangBaanReaderScreen'));
+const ChalisaReaderScreen = lazyScreen('ChalisaReader', 3, () => import('@/screens/ChalisaReaderScreen'));
+const DaanDirectoryScreen = lazyScreen('DaanDirectory', 3, () => import('@/screens/DaanDirectoryScreen'));
+const DaanJourneyScreen = lazyScreen('DaanJourney', 3, () => import('@/screens/DaanJourneyScreen'));
+const DaanKathaScreen = lazyScreen('DaanKatha', 3, () => import('@/screens/DaanKathaScreen'));
+const DaanLedgerScreen = lazyScreen('DaanLedger', 3, () => import('@/screens/DaanLedgerScreen'));
+const DeityDetailScreen = lazyScreen('DeityDetail', 3, () => import('@/screens/DeityDetailScreen'));
+const DeityListScreen = lazyScreen('DeityList', 3, () => import('@/screens/DeityListScreen'));
+const DurgaStotramChaptersScreen = lazyScreen('DurgaStotramChapters', 3, () => import('@/screens/DurgaStotramChaptersScreen'));
+const DurgaStotramReaderScreen = lazyScreen('DurgaStotramReader', 3, () => import('@/screens/DurgaStotramReaderScreen'));
+const GaneshStotramChaptersScreen = lazyScreen('GaneshStotramChapters', 3, () => import('@/screens/GaneshStotramChaptersScreen'));
+const GaneshStotramReaderScreen = lazyScreen('GaneshStotramReader', 3, () => import('@/screens/GaneshStotramReaderScreen'));
+const GitaChaptersIndexScreen = lazyScreen('GitaChapters', 3, () => import('@/screens/GitaChaptersIndexScreen'));
+const GitaReaderScreen = lazyScreen('GitaReader', 3, () => import('@/screens/GitaReaderScreen'));
+const HanumanAshtakChaptersScreen = lazyScreen('HanumanAshtakChapters', 3, () => import('@/screens/HanumanAshtakChaptersScreen'));
+const HanumanAshtakReaderScreen = lazyScreen('HanumanAshtakReader', 3, () => import('@/screens/HanumanAshtakReaderScreen'));
+const JapamCounterScreen = lazyScreen('JapamCounter', 3, () => import('@/screens/JapamCounterScreen'));
+const KavachamReaderScreen = lazyScreen('KavachamReader', 3, () => import('@/screens/KavachamReaderScreen'));
+const KrishnaStotramChaptersScreen = lazyScreen('KrishnaStotramChapters', 3, () => import('@/screens/KrishnaStotramChaptersScreen'));
+const KrishnaStotramReaderScreen = lazyScreen('KrishnaStotramReader', 3, () => import('@/screens/KrishnaStotramReaderScreen'));
+const PurposeListScreen = lazyScreen('PurposeList', 3, () => import('@/screens/PurposeListScreen'));
+const RamStutiChaptersScreen = lazyScreen('RamStutiChapters', 3, () => import('@/screens/RamStutiChaptersScreen'));
+const RamStutiReaderScreen = lazyScreen('RamStutiReader', 3, () => import('@/screens/RamStutiReaderScreen'));
+const RamcharitmanasChaptersScreen = lazyScreen('RamcharitmanasChapters', 3, () => import('@/screens/RamcharitmanasChaptersScreen'));
+const RamcharitmanasReaderScreen = lazyScreen('RamcharitmanasReader', 3, () => import('@/screens/RamcharitmanasReaderScreen'));
+const RoutineListScreen = lazyScreen('RoutineList', 3, () => import('@/screens/RoutineListScreen'));
+const SadhanaProgramDetailScreen = lazyScreen('SadhanaProgramDetail', 3, () => import('@/screens/SadhanaProgramDetailScreen'));
+const SanskarReaderScreen = lazyScreen('SanskarReader', 3, () => import('@/screens/SanskarReaderScreen'));
+const SaraswatiStotramChaptersScreen = lazyScreen('SaraswatiStotramChapters', 3, () => import('@/screens/SaraswatiStotramChaptersScreen'));
+const SaraswatiStotramReaderScreen = lazyScreen('SaraswatiStotramReader', 3, () => import('@/screens/SaraswatiStotramReaderScreen'));
+const ShivaStrotamChaptersScreen = lazyScreen('ShivaStrotamChapters', 3, () => import('@/screens/ShivaStrotamChaptersScreen'));
+const ShivaStrotamReaderScreen = lazyScreen('ShivaStrotamReader', 3, () => import('@/screens/ShivaStrotamReaderScreen'));
+const StutiReaderScreen = lazyScreen('StutiReader', 3, () => import('@/screens/StutiReaderScreen'));
+const SuktamReaderScreen = lazyScreen('SuktamReader', 3, () => import('@/screens/SuktamReaderScreen'));
+const SundarkandChaptersScreen = lazyScreen('SundarkandChapters', 3, () => import('@/screens/SundarkandChaptersScreen'));
+const SundarkandReaderScreen = lazyScreen('SundarkandReader', 3, () => import('@/screens/SundarkandReaderScreen'));
+const TheerthDetailScreen = lazyScreen('TheerthDetail', 3, () => import('@/screens/TheerthDetailScreen'));
+const ValmikiRamayanChaptersScreen = lazyScreen('ValmikiRamayanChapters', 3, () => import('@/screens/ValmikiRamayanChaptersScreen'));
+const ValmikiRamayanReaderScreen = lazyScreen('ValmikiRamayanReader', 3, () => import('@/screens/ValmikiRamayanReaderScreen'));
+const VidhiDetailScreen = lazyScreen('VidhiDetail', 3, () => import('@/screens/VidhiDetailScreen'));
+const VishnuSahasranamaChaptersScreen = lazyScreen('VishnuSahasranamaChapters', 3, () => import('@/screens/VishnuSahasranamaChaptersScreen'));
+const VishnuSahasranamaReaderScreen = lazyScreen('VishnuSahasranamaReader', 3, () => import('@/screens/VishnuSahasranamaReaderScreen'));
+const VratKathaReaderScreen = lazyScreen('VratKathaReader', 3, () => import('@/screens/VratKathaReaderScreen'));
+
+// depth 4 — reached from a depth-3 screen
+const CreateRoutineScreen = lazyScreen('RoutineCreate', 4, () => import('@/screens/CreateRoutineScreen'));
+const DaanDirectoryDetailScreen = lazyScreen('DaanDirectoryDetail', 4, () => import('@/screens/DaanDirectoryDetailScreen'));
+const DaanEntryScreen = lazyScreen('DaanEntry', 4, () => import('@/screens/DaanEntryScreen'));
+const RoutineDetailScreen = lazyScreen('RoutineDetail', 4, () => import('@/screens/RoutineDetailScreen'));
+const VidhiConductScreen = lazyScreen('VidhiConduct', 4, () => import('@/screens/VidhiConductScreen'));
+
+// depth 5 — reached from a depth-4 screen
+const RoutineAddItemsScreen = lazyScreen('RoutineAddItems', 5, () => import('@/screens/RoutineAddItemsScreen'));
 
 const Stack = createNativeStackNavigator<HomeStackParamList>();
 

@@ -7,7 +7,11 @@ import React, {
 } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { library } from '@/data/texts';
-import { temples } from '@/data/theerth/temples';
+import {
+  baseTemples,
+  THEERTH_LAUNCH_VERSION,
+  type BaseTempleEntry,
+} from '@/data/theerth/templeRows';
 import { compareSemver } from '@/utils/semverCompare';
 
 const STORAGE_KEY = '@vedansh/new-content-state';
@@ -58,10 +62,13 @@ const discoverables: Discoverable[] = [
     category: e.category as string,
     addedInVersion: e.addedInVersion,
   })),
-  ...temples.map((t) => ({
+  // Rows only, never `temples` — this module runs at App.tsx module scope, and
+  // importing the assembled entries would put every temple's detail prose on
+  // the launch path (see `templeRows.ts` and `launchGraph.test.ts`).
+  ...(baseTemples as readonly BaseTempleEntry[]).map((t) => ({
     id: templeNewKey(t.id),
     category: 'theerth',
-    addedInVersion: t.addedInVersion,
+    addedInVersion: t.addedInVersion ?? THEERTH_LAUNCH_VERSION,
   })),
 ];
 const discoverableIds = discoverables.map((d) => d.id);

@@ -70,7 +70,7 @@ Exact paths, in build order. Each row maps to a Phase-C step in `/add-section`.
 | 5 | `mobile/src/screens/<Pascal>ReaderScreen.tsx` | create | `GitaReaderScreen.tsx` or `SundarkandReaderScreen.tsx` |
 | 6 | `mobile/src/screens/<Pascal>ChaptersScreen.tsx` | create *if subsections* | `GitaChaptersIndexScreen.tsx` |
 | 7 | `mobile/src/navigation/types.ts` | edit | add route param types for the new screen(s) |
-| 8 | `mobile/src/navigation/HomeStackNavigator.tsx` | edit | register the new screen(s) in the Home stack |
+| 8 | `mobile/src/navigation/HomeStackNavigator.tsx` | edit | register the new screen(s) in the Home stack **lazily**: `const XScreen = lazyScreen('X', <depth>, () => import('@/screens/XScreen'));` at module scope, then `component={XScreen}`. `depth` is the screen's tap-distance from Home (a reader opened from a category list is 3). Never `import XScreen from …` — that puts it on the launch path and keeps it out of the background warm-up; `lazyScreenRegistration.test.ts` fails it. |
 | 9 | `mobile/src/data/texts.ts` | edit | append `LibraryEntry` (with `category` and `deities` fields) to the `library` array |
 | 10 | `mobile/src/navigation/entryRoutes.ts` | edit | register the new section's `entryId` in both `navigateToEntryStart` and `navigateToProgress`. Both `CategoryListScreen` and `DeityListScreen` use this single helper, so missing it here means the section's card will appear in the lists but tapping it will be a no-op (silent dead end) on at least one path. **If the section is chaptered**, also register its manifest length in `chapterCountBySourceId` — a single-chapter text must open its reader directly, not a one-row chapters index (two taps to read; design.md §38). |
 | 11 | `mobile/src/screens/HomeScreen.tsx` | no edit needed | categories and deities are rendered dynamically from data |
@@ -152,7 +152,7 @@ These are **non-negotiable** rules. The rulebook exists to keep them honest.
 The slash command runs the first three; the human PR author runs the rest.
 
 1. `cd mobile && npx tsc --noEmit` passes.
-2. `mobile/assets/<id>/` contains ≥ 1 image and `mobile/src/data/<id>/index.ts` invariant checks pass at app boot (no thrown errors).
+2. `mobile/assets/<id>/` contains ≥ 1 image and `mobile/src/data/<id>/index.ts` invariant checks pass — for a chaptered corpus, each chapter's checks run on first load (`chapterInvariants.ts`; the Gītā has its own), and the whole-corpus walk runs in `__tests__/chapteredCorpusInvariants.test.ts`, never at module scope.
 3. `cd mobile && npm run lint` reports **zero errors** — this is now the gate for font-family literals, `shadowColor` hex, and sub-10 `fontSize` (§3). Then also eyeball the diff for hex literals and hardcoded sizes on reading content, which the rule does not cover — search for `#[0-9A-Fa-f]{3,6}`, `fontFamily:`, and `fontSize:` to confirm. Any `fontSize:`/`lineHeight:` literal on verse / transliteration / meaning / commentary text is a hard reject; it must reference a `typography` token (see §3 "One reading type scale") — except the two sanctioned constrained surfaces (`ShareCard`, `JapamCounterScreen`), which may carry layout-tuned sizes but must shrink-to-fit, not truncate.
 4. App boots in Expo dev client; the new card is visible on Home below the existing active sections; tapping navigates to a working reader; every page shows a background image; every verse has `meaningHi` and `meaningEn` populated.
 5. The new section appears correctly under its category tile (tap the tile on Home → item is listed). If deity tags are set, also verify the item shows under those deity chips.
@@ -261,10 +261,10 @@ Every new section must also be reachable from global search (`SearchScreen`). Th
 | `sanskrit` + `linesEn` | `sanskrit` | `linesEn` | shiva-strotam, durga-stotram, ganesh-stotram, vishnu-sahasranama, hanuman-ashtak, ram-stuti |
 | `sanskrit` + `transliteration` | `sanskrit` | `transliteration` | bhagavad-gita |
 
-If a new section uses one of the above shapes **and** its data accessor follows the established pattern (`get<Section>Chapter(chapter)` returning `{ verses: V[], titleHi, titleEn }`, plus a `<section>ChaptersManifest` array), it is integrated by adding one branch to `buildVerseEntries()` in `searchIndex.ts` that selects the right accessor. No new normalization, no new ranking. The accessor branch is ~10 lines.
+If a new section uses one of the above shapes **and** its data accessor follows the established pattern (`get<Section>Chapter(chapter)` returning `{ verses: V[], titleHi, titleEn }`, plus a `<section>ChaptersManifest` array), it is integrated by adding one branch to `entryUnits()` in `searchIndex.ts` that selects the right accessor. No new normalization, no new ranking. The accessor branch is ~10 lines. **A chaptered source's pusher is a generator that `yield`s once per chapter** (see `pushChapteredGita`), delegated with `yield*` — the index is built in the background in ~8 ms slices, and a source that indexes all its chapters in one unit holds the thread for the whole corpus (the Gītā measured ~225 ms, over a dozen frames). `warmSearchIndex.test.ts` pins that a sliced build is byte-identical to an uninterrupted one.
 
 **Path C — theerth (no verses).** Sections with `category === 'theerth'` have no verses; they have temples. The integration:
-1. Add a branch to `buildSearchEntries()` (rename of `buildVerseEntries()` once theerth lands) that produces one search entry per `TheerthTemple`, with `nameHi/En`, `cityHi/En`, `stateHi/En`, `significanceHi/En`, and `originStoryHi/En` appended to the searchable `fields` array.
+1. Add a branch to `entryUnits()` in `searchIndex.ts` (formerly `buildVerseEntries()`; theerth's is `pushTheerth`, one unit per temple) that produces one search entry per `TheerthTemple`, with `nameHi/En`, `cityHi/En`, `stateHi/En`, `significanceHi/En`, and `originStoryHi/En` appended to the searchable `fields` array.
 2. The search-result row carries `templeId`; tap routes via `entryRoutes.ts` → `navigateToTheerthDetail(templeId)`.
 3. Add a test case in `searchIndex.test.ts` asserting a temple-name query returns the right detail target.
 
@@ -273,7 +273,7 @@ If a new section uses one of the above shapes **and** its data accessor follows 
 2. Update `SearchVerseEntry` if a new field needs to be rendered in the result row.
 3. Add a test case in `mobile/src/data/__tests__/searchIndex.test.ts` that queries against the new field and asserts hits.
 
-**Hard CI gate.** `searchIndex.test.ts` contains a coverage assertion: every active, non-hidden entry in `library` must produce at least one verse entry in the index. A new section that adds `LibraryEntry` to `texts.ts` without wiring `buildVerseEntries()` will fail this test before merge. There is no way to silently ship an un-searchable section.
+**Hard CI gate.** `searchIndex.test.ts` contains a coverage assertion: every active, non-hidden entry in `library` must produce at least one verse entry in the index. A new section that adds `LibraryEntry` to `texts.ts` without wiring `entryUnits()` will fail this test before merge. There is no way to silently ship an un-searchable section.
 
 **Section-name + deity-name fields are free.** `nameHi`, `nameEn`, and `sub` from the `LibraryEntry` itself are indexed for the "Sections" result group with zero extra code. Same for deity tags. Adding a section to `library` and `entryRoutes.ts` is enough to make the section name itself searchable; only verse-level search needs the per-shape branch.
 
@@ -377,7 +377,7 @@ Format: 1024 x 1024 PNG.
 Deity `nameHi`/`nameEn` must use the popularly recognized devotional name that users will identify. Use the name devotees actually use in prayer/temple context (e.g., "माँ गायत्री" not "सवितृ देव", "श्री विष्णु" not "नारायण"). When in doubt, use the name that appears on temple signage. Origin: Users couldn't identify "Savitr Deva" as Gayatri.
 
 ### 11.10 Verse count sync is atomic
-`texts.ts` `verseCount` must always equal the JSON `verses.length`. The `sub` field count must match. After any content change that alters verse count, grep for the old count in: (a) `chapters-manifest.json`, (b) `index.ts` invariant assertions, (c) `chapteredTotals.test.ts`. Update all three atomically in the same commit. Origin: Every content fix in this audit caused cascading test failures from stale counts.
+`texts.ts` `verseCount` must always equal the JSON `verses.length`. The `sub` field count must match. `texts.ts` reads every count from the generated `mobile/src/data/verseCounts.ts` — never from a corpus module, because `texts.ts` is on the launch path and importing `xTotal` from `./x` evaluates whatever `./x` eagerly imports. After any content change that alters verse count: (a) update `chapters-manifest.json`, (b) regenerate the counts with `npx tsx scripts/gen-verse-counts.mts`, (c) update `chapteredTotals.test.ts` — atomically, in the same commit. `verseCounts.test.ts` fails if any generated count drifts from its corpus, and if `texts.ts` imports a corpus module directly. Adding a text: add its count symbol to `scripts/gen-verse-counts.mts`, regenerate, and import it from `./verseCounts`. Origin: Every content fix in this audit caused cascading test failures from stale counts; the September 2026 launch-path audit found `texts.ts` pulling ~2 MB of scripture onto every cold start to read 46 integers.
 
 ### 11.11 No duplicate content across sections
 A text must exist in exactly one location/category. Standalone Ashtak/Ashtakam texts (like Sankat Mochan Hanumanashtak) belong in the Ashtakam category — not duplicated in aarti or stotram. Before adding content, grep the repo for the text's first line to confirm it doesn't already exist elsewhere. Origin: Sankat Mochan existed in both aarti/ and hanuman-ashtak/ with different (both wrong) versions.
@@ -606,7 +606,18 @@ Two prose lines and a pin are the *minimum* a legacy row carries; they are **not
 
 **Plate decoupling (product decision, September 2026).** `backgrounds.coverage.jest.test.ts` used to fail any temple that had `sections` without a commissioned plate. That chained the whole text rollout to an image pipeline the authoring sessions cannot run — 60 readings stalled behind 60 images. **The check is removed. The reading ships first, the plate follows.** An unplated temple falls back to its deity background, which is a finished, on-theme surface, and the detail screen renders no illustration block (design.md §27 item 4). The plate backlog and its per-wave prompts live in `docs/roadmap/theerth-full-reading-rollout.md` and `docs/theerth-plates/`; item 10 above is still wanted work, just not a gate. What did *not* change: §11 and §12.4 content integrity, the ≥ 2 sources rule, and the five-section contract — a reading that skips those is still a §3 hard reject.
 
-**Where the readings live.** Authored §12.6 readings go in one chunk module per authoring session under `mobile/src/data/theerth/details/`, merged by `details/index.ts` and spread over the inline `templeDetails` map in `temples.ts`. One chunk file is owned by exactly one pass, so concurrent waves never edit the same module. A chunk entry replaces that temple's legacy two-line detail wholesale, so supply the complete `TempleDetail`.
+**Where the readings live.** Authored §12.6 readings go in one chunk module per authoring session under `mobile/src/data/theerth/details/`, merged by `details/index.ts`. One chunk file is owned by exactly one pass, so concurrent waves never edit the same module. A chunk entry replaces that temple's legacy two-line detail wholesale (the legacy map is `details/legacy.ts`), so supply the complete `TempleDetail`.
+
+**The readings are lazy — keep them that way (September 2026).** None of this prose is on the app's static launch graph, and nothing you add may put it back. The split:
+
+| Module | Holds | Launch path? |
+|---|---|---|
+| `theerth/templeRows.ts` | the 71 rows: id, names, city/state, coordinates, deity, groups | **yes** — this is all the launch path may read |
+| `theerth/temples.ts` | types, row accessors, and `loadDetails()` | yes, but it is ~5 KB and imports no prose |
+| `theerth/details/legacy.ts` | the original two-line detail for all 71 | no — `require()`d on demand |
+| `theerth/details/*.ts` | the authored §12.6 readings | no — `require()`d on demand |
+
+Read it through the right accessor: `temples`, `getTempleById()`, `templesInGroup()` and `otherFamous()` return `TempleListEntry` (rows, no prose) and are safe anywhere; `getTempleDetailById()` returns one temple's full `TempleEntry` and is what a detail screen calls; `templesWithDetails()` returns all 71 with prose and belongs only in the on-demand search index and the data tests. Never add a top-level `import` of `details/` or `details/legacy` to a module the navigator or a context can reach — `src/data/__tests__/launchGraph.test.ts` fails the build if the graph grows past its budget, and that budget now assumes the readings stay out of it.
 
 ---
 

@@ -9,7 +9,7 @@
  * Adding a new section: see RULEBOOK §7. If the section uses the standard
  * `lines`/`linesEn` or `sanskrit`/`linesEn`/`transliteration` field shape it
  * is picked up automatically once added to `library` in `texts.ts`. A section
- * with a novel verse shape needs a new branch in {@link buildVerseEntries}.
+ * with a novel verse shape needs a new branch in {@link entryUnits}.
  */
 
 import { library, type LibraryEntry } from './texts';
@@ -26,8 +26,7 @@ import {
 } from './aarti';
 import { japamMantras, type JapamMantra } from './japam';
 import {
-  temples,
-  templesInGroup,
+  templesWithDetails,
   type TempleEntry,
   type TheerthGroup,
 } from './theerth/temples';
@@ -188,13 +187,94 @@ export type SearchResults = {
 let cached: SearchIndex | null = null;
 
 /**
- * Build the index lazily on first call; subsequent calls reuse the cached
- * instance. The build is synchronous so callers don't have to thread async
- * through the search screen.
+ * The index is built by ONE resumable job, shared by every caller.
+ *
+ * The background warm-up advances it a few milliseconds at a time; a caller
+ * that needs the index right now (`getSearchIndex`) simply runs the same job to
+ * the end. Nothing is ever built twice and no progress is ever thrown away —
+ * a tap that beats the warm-up finishes what the warm-up already started.
+ */
+type PendingBuild = { verses: SearchVerseEntry[]; units: Generator<void, void, void> };
+let pending: PendingBuild | null = null;
+
+function* verseUnits(verses: SearchVerseEntry[]): Generator<void, void, void> {
+  for (const entry of indexableEntries()) {
+    yield* entryUnits(verses, entry);
+    yield;
+  }
+}
+
+/**
+ * Run build units until `budgetMs` has been spent or the index is complete.
+ * Returns true once the index exists.
+ */
+function advance(budgetMs: number): boolean {
+  if (cached) return true;
+  if (!pending) {
+    const verses: SearchVerseEntry[] = [];
+    pending = { verses, units: verseUnits(verses) };
+  }
+  const started = Date.now();
+  try {
+    for (;;) {
+      if (pending.units.next().done) {
+        cached = { sections: buildSectionEntries(), deities: buildDeityEntries(), verses: pending.verses };
+        pending = null;
+        return true;
+      }
+      if (Date.now() - started >= budgetMs) return false;
+    }
+  } catch (error) {
+    // A generator that has thrown reports `done` on every later call. Without
+    // this reset the next caller would "finish" it and cache a half-built index
+    // with no error at all. Starting over means a broken corpus fails loudly
+    // every time, exactly as the old single-pass build did.
+    pending = null;
+    throw error;
+  }
+}
+
+/**
+ * The index, now — building synchronously whatever is left. Prefer
+ * `peekSearchIndex` + `warmSearchIndex` on any path the user is waiting on.
  */
 export function getSearchIndex(): SearchIndex {
-  if (cached) return cached;
-  cached = build();
+  advance(Infinity);
+  return cached!;
+}
+
+/** Searched while the real index is still being built: yields no hits, costs nothing. */
+export const EMPTY_SEARCH_INDEX: SearchIndex = { sections: [], deities: [], verses: [] };
+
+/** The index if it is already built, else null. Never does any work. */
+export function peekSearchIndex(): SearchIndex | null {
+  return cached;
+}
+
+/** Default slice: half a frame, so a slice can never cost the one after it. */
+export const SEARCH_SLICE_BUDGET_MS = 8;
+
+/**
+ * Build the index in the background: `budgetMs` of work, then hand the thread
+ * back through `yieldToUI`, repeat.
+ *
+ * WHY. The build is ~0.7 s of CPU on a desktop — seconds on a phone — and it
+ * runs while the user is looking at Home, so it must never hold the thread for
+ * a frame. A time budget with small units underneath (one chapter, one temple)
+ * keeps every slice short no matter which source it lands in.
+ *
+ * Safe to call more than once, even concurrently — the background walk and the
+ * Search screen both do. Every caller advances the SAME job, so concurrent
+ * callers simply share the work between them and all resolve to one index.
+ */
+export async function warmSearchIndex(
+  yieldToUI: () => Promise<void> = () => Promise.resolve(),
+  budgetMs: number = SEARCH_SLICE_BUDGET_MS
+): Promise<SearchIndex> {
+  while (!cached) {
+    await yieldToUI();
+    advance(budgetMs);
+  }
   return cached;
 }
 
@@ -205,14 +285,7 @@ export function getSearchIndex(): SearchIndex {
  */
 export function _resetSearchIndexForTest(): void {
   cached = null;
-}
-
-function build(): SearchIndex {
-  return {
-    sections: buildSectionEntries(),
-    deities: buildDeityEntries(),
-    verses: buildVerseEntries(),
-  };
+  pending = null;
 }
 
 function buildSectionEntries(): readonly SearchSectionEntry[] {
@@ -289,171 +362,175 @@ function buildDeityEntries(): readonly SearchDeityEntry[] {
   });
 }
 
-function buildVerseEntries(): readonly SearchVerseEntry[] {
-  const verses: SearchVerseEntry[] = [];
-
-  for (const entry of library) {
-    if (entry.hidden) continue;
-    if (entry.status !== 'active') continue;
-
-    if (CHALISA_IDS.includes(entry.id as ChalisaId)) {
-      pushChalisaVerses(verses, entry);
-      continue;
-    }
-
-    if (ASHTAKAM_IDS.includes(entry.id as AshtakamId)) {
-      pushAshtakamVerses(verses, entry);
-      continue;
-    }
-
-    if (SUKTAM_IDS.includes(entry.id as SuktamId)) {
-      pushSuktamVerses(verses, entry);
-      continue;
-    }
-
-    if (KAVACHAM_IDS.includes(entry.id as KavachamId)) {
-      pushKavachamVerses(verses, entry);
-      continue;
-    }
-
-    if (STUTI_IDS.includes(entry.id as StutiId)) {
-      pushStutiVerses(verses, entry);
-      continue;
-    }
-
-    if (entry.id === 'bhagavad-gita') {
-      pushChapteredGita(verses, entry);
-      continue;
-    }
-
-    if (entry.id === 'sundarkand') {
-      pushChapteredSundarkand(verses, entry);
-      continue;
-    }
-
-    if (entry.id === 'shiva-strotam') {
-      pushChapteredShivaStrotamShape(
-        verses,
-        entry,
-        shivaStrotamChaptersManifest,
-        getShivaStrotamChapter
-      );
-      continue;
-    }
-
-    if (entry.id === 'durga-stotram') {
-      pushChapteredShivaStrotamShape(
-        verses,
-        entry,
-        durgaStotramChaptersManifest,
-        getDurgaStotramChapter
-      );
-      continue;
-    }
-
-    if (entry.id === 'saraswati-stotram') {
-      pushChapteredShivaStrotamShape(
-        verses,
-        entry,
-        saraswatiStotramChaptersManifest,
-        getSaraswatiStotramChapter
-      );
-      continue;
-    }
-
-    if (entry.id === 'ganesh-stotram') {
-      pushChapteredShivaStrotamShape(
-        verses,
-        entry,
-        ganeshStotramChaptersManifest,
-        getGaneshStotramChapter
-      );
-      continue;
-    }
-
-    if (entry.id === 'vishnu-sahasranama') {
-      pushChapteredShivaStrotamShape(
-        verses,
-        entry,
-        vishnuSahasranamaChaptersManifest,
-        getVishnuSahasranamaChapter
-      );
-      continue;
-    }
-
-    if (entry.id === 'hanuman-ashtak') {
-      pushChapteredShivaStrotamShape(
-        verses,
-        entry,
-        hanumanAshtakChaptersManifest,
-        getHanumanAshtakChapter
-      );
-      continue;
-    }
-
-    if (entry.id === 'bajrang-baan') {
-      pushChapteredBajrangBaan(verses, entry);
-      continue;
-    }
-
-    if (entry.id === 'ram-stuti' || entry.id === 'ram-aarti') {
-      // 'ram-aarti' is the Aarti-list alias for the Ram Stuti content, so it
-      // indexes the same verses under its own sourceId (see texts.ts / entryRoutes.ts).
-      pushChapteredShivaStrotamShape(
-        verses,
-        entry,
-        ramStutiChaptersManifest,
-        getRamStutiChapter
-      );
-      continue;
-    }
-
-    if (entry.id === 'krishna-stotram') {
-      pushChapteredShivaStrotamShape(
-        verses,
-        entry,
-        krishnaStotramChaptersManifest,
-        getKrishnaStotramChapter
-      );
-      continue;
-    }
-
-    if (entry.id === 'ramcharitmanas') {
-      pushChapteredRamcharitmanas(verses, entry);
-      continue;
-    }
-
-    if (entry.id === 'valmiki-ramayan') {
-      pushChapteredValmikiRamayan(verses, entry);
-      continue;
-    }
-
-    if (entry.category === 'aarti') {
-      pushAarti(verses, entry);
-      continue;
-    }
-
-    if (entry.category === 'sanskar') {
-      pushSanskar(verses, entry);
-      continue;
-    }
-
-    if (entry.category === 'japam') {
-      pushJapam(verses, entry);
-      continue;
-    }
-
-    if (entry.category === 'theerth') {
-      pushTheerth(verses, entry);
-      continue;
-    }
-
-    // Unknown section shape — silently skip rather than crash. Caught by the
-    // section-coverage test in __tests__/searchIndex.test.ts.
+/**
+ * Index ONE library entry, as a sequence of small units of work. Each `yield`
+ * is a point where the build may pause and hand the thread back. The heavy
+ * sources yield inside themselves — once per chapter (the Gītā, Sundarkand and
+ * the stotram corpora) or per temple (Theerth) — because an entry-sized unit
+ * was far too coarse: the Gītā alone measured ~225 ms, over a dozen frames.
+ */
+function* entryUnits(verses: SearchVerseEntry[], entry: LibraryEntry): Generator<void, void, void> {
+  if (CHALISA_IDS.includes(entry.id as ChalisaId)) {
+    pushChalisaVerses(verses, entry);
+    return;
   }
 
-  return verses;
+  if (ASHTAKAM_IDS.includes(entry.id as AshtakamId)) {
+    pushAshtakamVerses(verses, entry);
+    return;
+  }
+
+  if (SUKTAM_IDS.includes(entry.id as SuktamId)) {
+    pushSuktamVerses(verses, entry);
+    return;
+  }
+
+  if (KAVACHAM_IDS.includes(entry.id as KavachamId)) {
+    pushKavachamVerses(verses, entry);
+    return;
+  }
+
+  if (STUTI_IDS.includes(entry.id as StutiId)) {
+    pushStutiVerses(verses, entry);
+    return;
+  }
+
+  if (entry.id === 'bhagavad-gita') {
+    yield* pushChapteredGita(verses, entry);
+    return;
+  }
+
+  if (entry.id === 'sundarkand') {
+    yield* pushChapteredSundarkand(verses, entry);
+    return;
+  }
+
+  if (entry.id === 'shiva-strotam') {
+    yield* pushChapteredShivaStrotamShape(
+      verses,
+      entry,
+      shivaStrotamChaptersManifest,
+      getShivaStrotamChapter
+    );
+    return;
+  }
+
+  if (entry.id === 'durga-stotram') {
+    yield* pushChapteredShivaStrotamShape(
+      verses,
+      entry,
+      durgaStotramChaptersManifest,
+      getDurgaStotramChapter
+    );
+    return;
+  }
+
+  if (entry.id === 'saraswati-stotram') {
+    yield* pushChapteredShivaStrotamShape(
+      verses,
+      entry,
+      saraswatiStotramChaptersManifest,
+      getSaraswatiStotramChapter
+    );
+    return;
+  }
+
+  if (entry.id === 'ganesh-stotram') {
+    yield* pushChapteredShivaStrotamShape(
+      verses,
+      entry,
+      ganeshStotramChaptersManifest,
+      getGaneshStotramChapter
+    );
+    return;
+  }
+
+  if (entry.id === 'vishnu-sahasranama') {
+    yield* pushChapteredShivaStrotamShape(
+      verses,
+      entry,
+      vishnuSahasranamaChaptersManifest,
+      getVishnuSahasranamaChapter
+    );
+    return;
+  }
+
+  if (entry.id === 'hanuman-ashtak') {
+    yield* pushChapteredShivaStrotamShape(
+      verses,
+      entry,
+      hanumanAshtakChaptersManifest,
+      getHanumanAshtakChapter
+    );
+    return;
+  }
+
+  if (entry.id === 'bajrang-baan') {
+    yield* pushChapteredBajrangBaan(verses, entry);
+    return;
+  }
+
+  if (entry.id === 'ram-stuti' || entry.id === 'ram-aarti') {
+    // 'ram-aarti' is the Aarti-list alias for the Ram Stuti content, so it
+    // indexes the same verses under its own sourceId (see texts.ts / entryRoutes.ts).
+    yield* pushChapteredShivaStrotamShape(
+      verses,
+      entry,
+      ramStutiChaptersManifest,
+      getRamStutiChapter
+    );
+    return;
+  }
+
+  if (entry.id === 'krishna-stotram') {
+    yield* pushChapteredShivaStrotamShape(
+      verses,
+      entry,
+      krishnaStotramChaptersManifest,
+      getKrishnaStotramChapter
+    );
+    return;
+  }
+
+  if (entry.id === 'ramcharitmanas') {
+    yield* pushChapteredRamcharitmanas(verses, entry);
+    return;
+  }
+
+  if (entry.id === 'valmiki-ramayan') {
+    pushChapteredValmikiRamayan(verses, entry);
+    return;
+  }
+
+  if (entry.category === 'aarti') {
+    pushAarti(verses, entry);
+    return;
+  }
+
+  if (entry.category === 'sanskar') {
+    pushSanskar(verses, entry);
+    return;
+  }
+
+  if (entry.category === 'japam') {
+    pushJapam(verses, entry);
+    return;
+  }
+
+  if (entry.category === 'theerth') {
+    yield* pushTheerth(verses, entry);
+    return;
+  }
+
+  // Unknown section shape — silently skip rather than crash. Caught by the
+  // section-coverage test in __tests__/searchIndex.test.ts.
 }
+
+/** Entries that contribute verses: active and not hidden. */
+function indexableEntries(): readonly LibraryEntry[] {
+  return library.filter((entry) => !entry.hidden && entry.status === 'active');
+}
+
 
 function pushChalisaVerses(out: SearchVerseEntry[], entry: LibraryEntry) {
   const chalisa = getChalisa(entry.id);
@@ -555,7 +632,7 @@ function pushSuktamVerses(out: SearchVerseEntry[], entry: LibraryEntry) {
   });
 }
 
-function pushChapteredGita(out: SearchVerseEntry[], entry: LibraryEntry) {
+function* pushChapteredGita(out: SearchVerseEntry[], entry: LibraryEntry) {
   for (const ch of gitaChaptersManifest) {
     const chapter = getGitaChapter(ch.chapter);
     chapter.verses.forEach((v: GitaVerse, idx) => {
@@ -575,10 +652,12 @@ function pushChapteredGita(out: SearchVerseEntry[], entry: LibraryEntry) {
         })
       );
     });
+    // One chapter per unit: a whole corpus in one go is a dropped frame.
+    yield;
   }
 }
 
-function pushChapteredSundarkand(out: SearchVerseEntry[], entry: LibraryEntry) {
+function* pushChapteredSundarkand(out: SearchVerseEntry[], entry: LibraryEntry) {
   for (const ch of sundarkandChaptersManifest) {
     const chapter = getSundarkandChapter(ch.chapter);
     chapter.verses.forEach((v: SundarkandVerse, idx) => {
@@ -598,6 +677,8 @@ function pushChapteredSundarkand(out: SearchVerseEntry[], entry: LibraryEntry) {
         })
       );
     });
+    // One chapter per unit: a whole corpus in one go is a dropped frame.
+    yield;
   }
 }
 
@@ -606,7 +687,7 @@ type ChapteredShivaStrotamLike = {
   verses: readonly ShivaStrotamVerse[];
 };
 
-function pushChapteredShivaStrotamShape(
+function* pushChapteredShivaStrotamShape(
   out: SearchVerseEntry[],
   entry: LibraryEntry,
   manifest: readonly ChapterSummaryLike[],
@@ -631,10 +712,12 @@ function pushChapteredShivaStrotamShape(
         })
       );
     });
+    // One chapter per unit: a whole corpus in one go is a dropped frame.
+    yield;
   }
 }
 
-function pushChapteredBajrangBaan(out: SearchVerseEntry[], entry: LibraryEntry) {
+function* pushChapteredBajrangBaan(out: SearchVerseEntry[], entry: LibraryEntry) {
   for (const ch of bajrangBaanChaptersManifest) {
     const chapter = getBajrangBaanChapter(ch.chapter);
     chapter.verses.forEach((v: BajrangBaanVerse, idx) => {
@@ -654,10 +737,12 @@ function pushChapteredBajrangBaan(out: SearchVerseEntry[], entry: LibraryEntry) 
         })
       );
     });
+    // One chapter per unit: a whole corpus in one go is a dropped frame.
+    yield;
   }
 }
 
-function pushChapteredRamcharitmanas(
+function* pushChapteredRamcharitmanas(
   out: SearchVerseEntry[],
   entry: LibraryEntry
 ) {
@@ -680,6 +765,8 @@ function pushChapteredRamcharitmanas(
         })
       );
     });
+    // One chapter per unit: a whole corpus in one go is a dropped frame.
+    yield;
   }
 }
 
@@ -737,12 +824,19 @@ const THEERTH_ENTRY_TO_GROUP: Record<string, TheerthGroup | 'all'> = {
   'famous-theerth': 'all',
 };
 
-function pushTheerth(out: SearchVerseEntry[], entry: LibraryEntry) {
+function* pushTheerth(out: SearchVerseEntry[], entry: LibraryEntry) {
   const filter = THEERTH_ENTRY_TO_GROUP[entry.id];
   if (!filter) return;
+  // Search is built on demand, so this is a legitimate place to pay for the
+  // readings; the browse screens must keep using the row-only `temples`.
+  const withDetails = templesWithDetails();
   const list: readonly TempleEntry[] =
-    filter === 'all' ? temples : templesInGroup(filter);
-  list.forEach((t, idx) => {
+    filter === 'all' ? withDetails : withDetails.filter((t) => t.groups.includes(filter));
+  // Loading the readings is its own unit; after that, one temple per unit —
+  // normalising a full bilingual §12.6 reading is ~1.5 ms a temple, and the
+  // full list is 71 of them.
+  yield;
+  for (const [idx, t] of list.entries()) {
     out.push(
       makeVerseEntry({
         sourceId: entry.id,
@@ -757,7 +851,8 @@ function pushTheerth(out: SearchVerseEntry[], entry: LibraryEntry) {
         meaningEn: [t.significanceEn, t.originStoryEn, ...(t.sections ?? []).map((s) => s.bodyEn)].join('\n'),
       })
     );
-  });
+    yield;
+  }
 }
 
 function pushSanskar(out: SearchVerseEntry[], entry: LibraryEntry) {

@@ -1,5 +1,5 @@
 import manifest from './chapters-manifest.json';
-import ch01 from './chapter-01.json';
+import { assertChapterMatchesManifest } from '../chapterInvariants';
 
 export type RamcharitmanasVerse = {
   id: string;
@@ -38,51 +38,31 @@ export const ramcharitmanasTitleEn = 'Ramcharitmanas Mangalacharan';
 export const ramcharitmanasChaptersManifest: readonly RamcharitmanasChapterSummary[] =
   manifest as RamcharitmanasChapterSummary[];
 
-export const ramcharitmanasChapters: readonly RamcharitmanasChapter[] = [
-  ch01 as RamcharitmanasChapter,
+/**
+ * Chapter payloads behind `require()` thunks — the launch path must be able
+ * to read this corpus's MANIFEST (title, verse count) without evaluating its
+ * verses. `routine/chapters.ts` and `texts.ts` do exactly that, and importing
+ * the payloads here put the whole corpus on every cold start.
+ *
+ * Same shape as `gita/index.ts`. Metro caches each module, so repeat reads of
+ * a chapter are free; the first read of each pays once.
+ */
+/* eslint-disable @typescript-eslint/no-require-imports */
+const ramcharitmanasChaptersLoaders: readonly (() => RamcharitmanasChapter)[] = [
+  () => require('./chapter-01.json') as RamcharitmanasChapter,
 ];
+/* eslint-enable @typescript-eslint/no-require-imports */
 
-export const ramcharitmanasTotal = ramcharitmanasChapters.reduce(
+export const ramcharitmanasTotal = ramcharitmanasChaptersManifest.reduce(
   (sum, ch) => sum + ch.verseCount,
   0
 );
 
 export function getRamcharitmanasChapter(chapter: number): RamcharitmanasChapter {
   const idx = chapter - 1;
-  if (idx < 0 || idx >= ramcharitmanasChapters.length) {
-    throw new Error(`ramcharitmanas: chapter ${chapter} out of range (1-${ramcharitmanasChapters.length})`);
+  if (idx < 0 || idx >= ramcharitmanasChaptersLoaders.length) {
+    throw new Error(`ramcharitmanas: chapter ${chapter} out of range (1-${ramcharitmanasChaptersLoaders.length})`);
   }
-  return ramcharitmanasChapters[idx];
+  return assertChapterMatchesManifest('ramcharitmanas', ramcharitmanasChaptersLoaders[idx](), ramcharitmanasChaptersManifest[idx]);
 }
 
-(function assertRamcharitmanasInvariants() {
-  if (ramcharitmanasChapters.length !== ramcharitmanasChaptersManifest.length) {
-    throw new Error(`ramcharitmanas: chapter count mismatch with manifest`);
-  }
-  const seenIds = new Set<string>();
-  let totalVerses = 0;
-  for (let i = 0; i < ramcharitmanasChapters.length; i++) {
-    const c = ramcharitmanasChapters[i];
-    if (c.chapter !== i + 1) {
-      throw new Error(`ramcharitmanas: chapter at index ${i} has number ${c.chapter}, expected ${i + 1}`);
-    }
-    if (c.verses.length !== c.verseCount) {
-      throw new Error(
-        `ramcharitmanas: chapter ${c.chapter} declares ${c.verseCount} verses but has ${c.verses.length}`
-      );
-    }
-    const manifestEntry = ramcharitmanasChaptersManifest[i];
-    if (manifestEntry.chapter !== c.chapter || manifestEntry.verseCount !== c.verseCount) {
-      throw new Error(`ramcharitmanas: manifest entry ${i + 1} drifts from chapter payload`);
-    }
-    for (const v of c.verses) {
-      if (seenIds.has(v.id)) throw new Error(`ramcharitmanas: duplicate verse id '${v.id}'`);
-      seenIds.add(v.id);
-      if (v.lines.length < 1) throw new Error(`ramcharitmanas: ${v.id} has no lines`);
-      if (!v.meaningHi.trim() || !v.meaningEn.trim()) {
-        throw new Error(`ramcharitmanas: ${v.id} has empty meaning`);
-      }
-    }
-    totalVerses += c.verses.length;
-  }
-})();
