@@ -1,4 +1,5 @@
 import { registerPrefetch, idleTick } from './screenPrefetch';
+import { preloadPanchangStack } from './lazyPanchangStack';
 
 /**
  * Warm-ups that are not screens.
@@ -25,4 +26,24 @@ registerPrefetch({
     const { warmSearchIndex } = await import('@/data/searchIndex');
     await warmSearchIndex(idleTick);
   },
+});
+
+/**
+ * The Panchang stack chunk.
+ *
+ * `App.tsx` preloads this only on a cold start that LANDS on the Panchang tab.
+ * On an ordinary launch onto Home the module was never evaluated, which meant
+ * its 27 `lazyScreen()` calls never ran and the walk could not see a single one
+ * of them — tapping Panchang paid for the chunk, and then every screen inside
+ * it paid again on its own first tap.
+ *
+ * Warming it here closes that. It is depth 2 because the tab bar puts it one
+ * tap from Home, and because evaluating it is what REGISTERS the 27 screens
+ * behind it: the walk drains the registry rather than snapshotting it, so those
+ * screens join the queue the moment this entry completes and are warmed in turn.
+ */
+registerPrefetch({
+  label: 'panchang-stack',
+  depth: 2,
+  load: () => preloadPanchangStack(),
 });

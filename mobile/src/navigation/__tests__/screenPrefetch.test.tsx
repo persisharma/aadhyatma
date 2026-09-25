@@ -56,6 +56,43 @@ describe('screenPrefetch', () => {
     expect(loaded).toEqual(['fine']);
   });
 
+
+  it('warms screens a nested stack registers WHILE the walk is running', async () => {
+    const warmed: string[] = [];
+    // A lazily-loaded navigator: evaluating it is what enrols its own screens,
+    // so these appear in the registry only once the walk has loaded it. This is
+    // exactly the Panchang stack, and iterating a snapshot used to drop it.
+    registerPrefetch({
+      label: 'nested-stack',
+      depth: 2,
+      load: async () => {
+        warmed.push('nested-stack');
+        registerPrefetch({ label: 'nested-child-a', depth: 3, load: async () => void warmed.push('nested-child-a') });
+        registerPrefetch({ label: 'nested-child-b', depth: 3, load: async () => void warmed.push('nested-child-b') });
+      },
+    });
+    registerPrefetch({ label: 'plain-deep', depth: 4, load: async () => void warmed.push('plain-deep') });
+
+    await startScreenPrefetch({ yieldToUI: async () => {} });
+
+    expect(warmed).toEqual(['nested-stack', 'nested-child-a', 'nested-child-b', 'plain-deep']);
+  });
+
+  it('warms each screen once even as the registry grows', async () => {
+    const counts = new Map<string, number>();
+    const bump = (label: string) => counts.set(label, (counts.get(label) ?? 0) + 1);
+    registerPrefetch({
+      label: 'root',
+      depth: 2,
+      load: async () => {
+        bump('root');
+        registerPrefetch({ label: 'child', depth: 3, load: async () => bump('child') });
+      },
+    });
+    await startScreenPrefetch({ yieldToUI: async () => {} });
+    expect([...counts.entries()].sort()).toEqual([['child', 1], ['root', 1]]);
+  });
+
   it('never starts a second competing walk', async () => {
     let calls = 0;
     registerPrefetch({ label: 'once', depth: 2, load: async () => void (calls += 1) });

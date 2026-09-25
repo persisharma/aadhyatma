@@ -89,10 +89,21 @@ export function startScreenPrefetch(
   if (walking) return walking;
   const yieldToUI = options.yieldToUI ?? idleTick;
   walking = (async () => {
-    for (const entry of prefetchOrder()) {
+    // DRAIN the registry, do not snapshot it. Warming a lazily-loaded navigator
+    // evaluates that module, and evaluating it runs its own `lazyScreen()`
+    // calls — so the registry GROWS mid-walk. Iterating a snapshot taken at the
+    // start silently dropped every one of those: the whole Panchang stack, 27
+    // screens, stayed cold no matter how long the app idled. Re-reading each
+    // time means a nested stack's screens simply join the queue at their own
+    // depth and get warmed like any other.
+    const done = new Set<string>();
+    for (;;) {
+      const next = prefetchOrder().find((entry) => !done.has(entry.label));
+      if (!next) break;
+      done.add(next.label);
       await yieldToUI();
       try {
-        await entry.load();
+        await next.load();
       } catch {
         // A warm-up is an optimisation, never a failure path: if the chunk is
         // broken the user still gets `StackLoadBoundary`'s Retry on tap, and
