@@ -47,10 +47,17 @@ jobs:
           curl -s -X POST "https://api.netlify.com/api/v1/sites/$SITE_ID/ssl" \
             -H "Authorization: Bearer $TOKEN" -w '\nHTTP %{http_code}\n' | tail -5
 
-          # This one site serves public marketing pages, so the visitor-facing SSO
-          # gate Netlify enables on new sites is cleared here. Site scope only —
-          # account-wide SSO is left exactly as it is.
+          # Netlify gates new accounts' sites behind an SSO login for visitors.
+          # The site inherits it from the account, so a site-scoped clear alone
+          # does nothing — both scopes are cleared. The account holds this one
+          # site and it serves public marketing pages; requested by the owner.
           echo "--- open this site to visitors ---"
+          ACCOUNT_ID=$(curl -s "https://api.netlify.com/api/v1/sites/$SITE_ID" \
+            -H "Authorization: Bearer $TOKEN" | jq -r .account_id)
+          curl -s -X PUT "https://api.netlify.com/api/v1/accounts/$ACCOUNT_ID" \
+            -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' \
+            -d '{"sso_login":false,"sso_login_context":"none"}' \
+            | jq '{slug, sso_login, sso_login_context}'
           curl -s -X PATCH "https://api.netlify.com/api/v1/sites/$SITE_ID" \
             -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' \
             -d '{"sso_login":false,"sso_login_context":"none"}' \
