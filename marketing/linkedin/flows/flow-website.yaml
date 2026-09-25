@@ -1,0 +1,160 @@
+# Marketing capture — screenshots for the vedansh.app website.
+# Captures (relative to cwd, set by capture.sh): shots/website/01…06.
+#
+# Feeds the four folio spreads and the hero on website/index.html:
+#   01-home      → hero frame
+#   02-reader    → folio I  (the sacred library)
+#   03-panchang  → folio II (Panchang & Muhurat)
+#   04-sankalp   → folio III (daily sadhana)
+#   05-japam     → folio III alternate (bead counter)
+#   06-theerth   → folio IV (pilgrimage)
+# Pick the best of each and copy it to website/images/shots/<name>.png —
+# marketing/linkedin/shots/ is gitignored, the website's copies are committed.
+#
+# Read-only by design: unlike flow-routine.yaml this creates no routine and
+# follows no vrat, so it leaves no demo state behind to clean up.
+#
+# Reading language is switched to English so Maestro can match the iOS
+# accessibility tree (Devanagari is unreadable to it) — and because the site
+# itself is in English, the shots should be too.
+#
+# Run via capture.sh (which starts production Metro and sets the 9:41 status bar):
+#   ./capture.sh website
+appId: host.exp.Exponent
+---
+# ── Boot Vedansh in Expo Go ──
+- launchApp:
+    appId: host.exp.Exponent
+- tapOn: "Vedansh"
+- waitForAnimationToEnd:
+    timeout: 30000
+- extendedWaitUntil:
+    visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
+    timeout: 60000
+# Expo Go can leave its native dev-menu sheet open after the bundle loads; the
+# downward swipe dismisses it and is a harmless no-op on Home.
+- swipe:
+    direction: DOWN
+- waitForAnimationToEnd
+
+# ── English ──
+- tapOn: { id: "tab-more" }
+- waitForAnimationToEnd
+# More opens a Language picker sheet on current builds; older builds show
+# inline pills, so the sheet tap is optional.
+- tapOn:
+    text: "Language,.*"
+    optional: true
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── 01 Home (hero) ──
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Sacred Books\\..*Tap to open\\."
+    timeout: 30000
+- waitForAnimationToEnd
+- takeScreenshot: shots/website/01-home
+
+# ── 02 Gita reader (folio I) ──
+- tapOn: "Sacred Books\\..*Tap to open\\."
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Bhagavad Gītā\\..*Tap to open\\."
+    timeout: 15000
+- tapOn: "Bhagavad Gītā\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+# A saved reading position pops the resume sheet; "Start over" and the
+# no-progress path both land on the chapter index, keeping this deterministic.
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Chapter 2\\..*Tap to open\\."
+    timeout: 15000
+# Chapter 2 (Sankhya Yoga) carries the verses people recognise — 2.47 among them.
+- tapOn: "Chapter 2\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+- extendedWaitUntil:
+    visible: "Verse 2\\.1.*"
+    timeout: 15000
+- waitForAnimationToEnd
+- takeScreenshot: shots/website/02-reader
+
+# ── 03 Panchang + Muhurat (folio II) ──
+- tapOn: "Panchang, tab.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: ".*Ujjain.*"
+    timeout: 30000
+- waitForAnimationToEnd
+- takeScreenshot: shots/website/03-panchang
+
+# ── 04 Sankalp programmes (folio III) ──
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Sadhana Programs"
+    direction: DOWN
+    centerElement: true
+    timeout: 20000
+- tapOn: "Sadhana Programs"
+- waitForAnimationToEnd:
+    timeout: 15000
+- takeScreenshot: shots/website/04-sankalp
+
+# ── 05 Japam bead counter (folio III alternate) ──
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Japa & Mantras. Tap to open."
+    direction: DOWN
+    centerElement: true
+    timeout: 20000
+- tapOn: "Japa & Mantras. Tap to open."
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Gayatri Mantra\\..*Tap to open\\."
+    timeout: 15000
+- tapOn: "Gayatri Mantra\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+# A few beads counted so the shot isn't an empty mala.
+- tapOn: ".*Tap to count one bead.*"
+- tapOn: ".*Tap to count one bead.*"
+- tapOn: ".*Tap to count one bead.*"
+- waitForAnimationToEnd
+- takeScreenshot: shots/website/05-japam
+
+# ── 06 Theerth (folio IV) ──
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: ".*Pilgrimage.*Tap to open.*"
+    direction: DOWN
+    centerElement: true
+    timeout: 20000
+- tapOn: ".*Pilgrimage.*Tap to open.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "By Category"
+    timeout: 20000
+# The drill-in is where the real-geography map appears; the listing has no map.
+- tapOn: "Char Dham"
+- waitForAnimationToEnd:
+    timeout: 20000
+- takeScreenshot: shots/website/06-theerth
+
+- stopApp:
+    appId: host.exp.Exponent

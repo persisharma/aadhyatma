@@ -14,7 +14,8 @@ marketing/linkedin/
 ├── capture.sh          # boots the app in Expo Go + runs the Maestro flows (portable, self-contained)
 ├── flows/
 │   ├── flow-vrat.yaml      # captures the vrat/fasting-companion screens
-│   └── flow-routine.yaml   # captures the daily-routine screens (creates + deletes a demo routine)
+│   ├── flow-routine.yaml   # captures the daily-routine screens (creates + deletes a demo routine)
+│   └── flow-website.yaml   # captures the shots used by website/ (vedansh.app) — read-only
 ├── posts/
 │   ├── post-1-vrat.md      # post copy / template
 │   └── post-2-routine.md
@@ -35,6 +36,17 @@ cd marketing/linkedin
 node make-reel.js vrat       # → vedansh-vrat-reel.mp4
 node make-reel.js routine    # → vedansh-routine-reel.mp4
 ```
+
+### Website screenshots
+```bash
+./capture.sh website         # → shots/website/01…06
+cp shots/website/01-home.png ../../website/images/shots/hero.png
+# …and reader.png, panchang.png, sadhana.png, theerth.png
+```
+`shots/` is git-ignored, so the ones the site uses must be **copied into
+`website/images/shots/`** (which is committed). Until they are, each phone frame
+on the site falls back to a typographic depiction of the screen — the page still
+looks finished, but it isn't showing the real app.
 Then attach each `.mp4` to its post in `posts/` on LinkedIn.
 
 ## Editing the reels

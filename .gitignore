@@ -45,3 +45,6 @@ marketing/reels/refs/
 # Source research artifacts — kept local only; verified content lives as text and
 # sources are cited by public URL (never commit these)
 tmp/
+
+# Netlify CLI link state for the vedansh.app site (holds the site id)
+website/.netlify/

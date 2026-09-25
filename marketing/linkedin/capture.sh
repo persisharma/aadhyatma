@@ -1,9 +1,10 @@
 #!/bin/bash
 # Capture marketing screenshots for the LinkedIn reels on the booted iOS simulator.
 #
-#   ./capture.sh            # both flows (vrat + routine)
+#   ./capture.sh            # the reel flows (vrat + routine)
 #   ./capture.sh vrat       # vrat only
 #   ./capture.sh routine    # routine only
+#   ./capture.sh website    # screenshots for the vedansh.app site (see flow-website.yaml)
 #
 # Self-contained + portable: paths derive from this script's location. Starts Metro in
 # production mode (--no-dev, so no LogBox dev-warning overlay appears in screenshots) if it
@@ -20,7 +21,7 @@ METRO_LOG="$KIT_DIR/.metro.log"
 MODE="${1:-all}"
 
 cd "$KIT_DIR"                          # flows use takeScreenshot paths relative to cwd
-mkdir -p shots/vrat shots/routine
+mkdir -p shots/vrat shots/routine shots/website
 
 echo "=== marketing status bar (9:41, full battery) ==="
 xcrun simctl status_bar booted override --time "9:41" --batteryState charged --batteryLevel 100 \
@@ -50,8 +51,11 @@ run_flow() {
   "$MAESTRO" test --config "$CONFIG" "$KIT_DIR/flows/$1"; echo "exit=$?"
   xcrun simctl terminate booted host.exp.Exponent 2>/dev/null; sleep 3
 }
+# "all" stays the reel pair; the website set is opt-in because it is captured
+# once per release of the site, not once per reel.
 [ "$MODE" = "all" ] || [ "$MODE" = "vrat" ]    && run_flow flow-vrat.yaml
 [ "$MODE" = "all" ] || [ "$MODE" = "routine" ] && run_flow flow-routine.yaml
+[ "$MODE" = "website" ]                        && run_flow flow-website.yaml
 
 xcrun simctl status_bar booted clear 2>/dev/null
 echo "=== done — screenshots in $KIT_DIR/shots/ ==="

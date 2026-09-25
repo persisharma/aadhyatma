@@ -1,0 +1,41 @@
+name: Deploy website
+
+# The marketing site at vedansh.app. Deploys run here rather than from a laptop
+# because Netlify's API hosts are unreachable behind the corporate proxy.
+on:
+  push:
+    branches: [main, feat/vedansh-app-website]
+    paths: ['website/**', '.github/workflows/deploy-website.yml']
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Deploy to Netlify
+        working-directory: website
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: npx --yes netlify-cli@17 deploy --prod --dir . --message "${GITHUB_SHA::7} via Actions"
+
+      - name: Attach custom domain and provision certificate
+        env:
+          TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          set -euo pipefail
+          curl -sf -X PATCH "https://api.netlify.com/api/v1/sites/$SITE_ID" \
+            -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' \
+            -d '{"custom_domain":"vedansh.app","domain_aliases":["www.vedansh.app"],"force_ssl":true}' \
+            -o /dev/null
+          # Certificate provisioning needs DNS to already point at Netlify; a failure
+          # here is not fatal, the deploy itself has succeeded.
+          curl -s -X POST "https://api.netlify.com/api/v1/sites/$SITE_ID/ssl" \
+            -H "Authorization: Bearer $TOKEN" -o /dev/null -w 'ssl provisioning: HTTP %{http_code}\n' || true

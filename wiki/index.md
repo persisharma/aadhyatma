@@ -38,6 +38,7 @@ _(none yet — extract from source as needed)_
 
 ## Runbooks
 - [[e2e-verification]] — Maestro e2e: authoring rules, the isolated-simulator verification recipe (multi-worktree machines), gotchas, and the "every change ships with e2e" policy.
+- [[vedansh-app-website]] — marketing site for `vedansh.app`: current state (GitHub Pages page, parked domain, brand tokens, asset gaps), Netlify + DNS steps, `netlify.toml` template, post-launch store-URL updates, and the decisions still open.
 
 ## Decisions
 _(none yet)_
