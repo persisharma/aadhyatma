@@ -31,7 +31,7 @@ Companion story: `pitru-falgu-2026.md` (Gaya). Post them on different days.
 → स्वाइप कीजिए · सहेज लीजिए (save)
 जो इस पक्ष में अपने पितरों को स्मरण करते हैं, उन्हें यह भेज दीजिए 🙏
 
-पितृ पक्ष परिचय, तिथि से श्राद्ध का दिन, पितृ स्मरण reminder और रामायण की कथाएँ — Vedansh में, मुफ़्त, ऑफ़लाइन। लिंक बायो में।
+चित्रकूट की यही कथा — अयोध्याकाण्ड के मूल श्लोकों तक — साथ में पितृ पक्ष परिचय, तिथि से श्राद्ध का दिन और पितृ स्मरण reminder: Vedansh में, मुफ़्त, ऑफ़लाइन। लिंक बायो में।
 
 #पितृपक्ष #श्राद्ध #तर्पण #चित्रकूट #मन्दाकिनी #रामायण
 ```
@@ -55,7 +55,7 @@ It is the feeling that counts, not the materials.
 
 Save it. Send it to whoever in your family remembers their ancestors this paksha 🙏
 
-Pitru Paksha primer, shraddha day from the tithi, Pitru Smaran reminder, Ramayana kathas — in Vedansh, free, offline. Link in bio.
+This very katha, down to the Ayodhya Kanda verses — with the Pitru Paksha primer, shraddha day from the tithi and the Pitru Smaran reminder: in Vedansh, free, offline. Link in bio.
 
 #PitruPaksha #Shraddha #Tarpan #Chitrakoot #Mandakini #Ramayana
 ```

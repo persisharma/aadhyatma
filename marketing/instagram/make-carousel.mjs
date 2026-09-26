@@ -116,12 +116,12 @@ const CAROUSELS = {
         bg: 'deity-rama-darbar.webp',
         kicker: { hi: 'पितृ पक्ष · 26 सितम्बर – 10 अक्टूबर 2026', en: 'Pitru Paksha · 26 Sep – 10 Oct 2026' },
         title: { hi: 'पितृ पक्ष, वेदांश़ में', en: 'Pitru Paksha in Vedansh' },
-        subtitle: { hi: 'समझिए, फिर करिए', en: 'Understand first, then offer' },
+        subtitle: { hi: 'यही कथा, मूल श्लोकों तक', en: 'This very katha, down to the verses' },
         items: [
+          { glyph: 'क', h: { hi: 'कथा', en: 'Katha' }, d: { hi: 'चित्रकूट में श्रीराम का पितृ-कर्म — अयोध्याकाण्ड के श्लोकों तक', en: 'Rama’s rite at Chitrakoot — down to the Ayodhya Kanda verses' } },
           { glyph: 'पि', h: { hi: 'पितृ पक्ष परिचय', en: 'Pitru Paksha primer' }, d: { hi: 'जल ही क्यों · किसके लिए · किस दिन किसका श्राद्ध', en: 'Why water · for whom · whose shraddha on which day' } },
           { glyph: 'ति', h: { hi: 'तिथि', en: 'Tithi' }, d: { hi: 'आपके शहर का पंचांग — श्राद्ध का दिन तिथि से', en: 'Your city’s Panchang — the shraddha day from the tithi' } },
           { glyph: 'या', h: { hi: 'याद', en: 'Reminder' }, d: { hi: 'पितृ स्मरण reminder — तिथि से एक रात पहले', en: 'Pitru Smaran reminder — the night before the tithi' } },
-          { glyph: 'क', h: { hi: 'कथा', en: 'Katha' }, d: { hi: 'रामायण के प्रसंग — मूल पाठ तक, हिंदी और अंग्रेज़ी', en: 'Ramayana episodes — down to the original text' } },
         ],
         note: { hi: 'मुफ़्त · बिना इंटरनेट के भी चलता है', en: 'Free · Works offline' },
         button: { hi: 'अभी डाउनलोड करें', en: 'Download Now' },
@@ -147,16 +147,17 @@ const CAROUSELS = {
       {
         kind: 'text',
         bg: 'source-vishnu-narayana.webp',
+        dense: true,
         kicker: { hi: 'मान्यता · गया, बिहार', en: 'The belief · Gaya, Bihar' },
         title: { hi: 'फल्गु की बालू', en: 'The sand of\nthe Falgu' },
         subtitle: { hi: 'जो गया मानता है — रामायण में नहीं', en: 'What Gaya believes — not in the Ramayana' },
         body: [
-          { hi: 'कथा है कि श्रीराम और लक्ष्मण पिण्डदान की सामग्री लाने गए, और समय बीतता गया। सीता ने **फल्गु की बालू** का पिण्ड बनाया और **फल्गु, गौ, केतकी और अक्षयवट** को साक्षी बनाकर दशरथ को अर्पित किया।',
-            en: 'The story goes that Rama and Lakshmana went to fetch the materials, and the hour was passing. Sita made a pinda of **Falgu sand** and offered it to Dasharatha, with **the Falgu, a cow, the ketaki and the Akshayavat** as witnesses.' },
-          { hi: 'राम लौटे तो अक्षयवट के सिवा किसी ने साक्षी नहीं दी — इसीलिए, मान्यता है, फल्गु ऊपर सूखी बहती है और अक्षयवट अक्षय है।',
-            en: 'When Rama returned, only the Akshayavat bore witness — which is why, it is believed, the Falgu runs dry on top and the Akshayavat never withers.' },
+          { hi: 'कथा है कि पितृ पक्ष में श्रीराम, सीता और लक्ष्मण दशरथ के पिण्डदान के लिए गया आए। राम और लक्ष्मण सामग्री लाने गए, और **कुतप काल** बीतने लगा। सीता ने **फल्गु की बालू** का पिण्ड बनाया और **फल्गु, गौ, केतकी और अक्षयवट** को साक्षी बनाकर अर्पित किया — दशरथ ने स्वयं हाथ बढ़ाकर उसे स्वीकार किया।',
+            en: 'Rama, Sita and Lakshmana came to Gaya for Dasharatha’s pind-daan, the story goes. The brothers went for the materials; the **kutapa hour** began to pass. Sita made a pinda of **Falgu sand**, with **the Falgu, a cow, the ketaki and the Akshayavat** as witnesses — and Dasharatha himself reached out and took it.' },
+          { hi: 'राम लौटे तो अक्षयवट के सिवा किसी ने साक्षी नहीं दी। इसीलिए, मान्यता है, **फल्गु ऊपर सूखी बहती है** और **अक्षयवट अक्षय** है।',
+            en: 'When Rama returned, only the Akshayavat bore witness. Hence, it is believed, the **Falgu runs dry** on top and the **Akshayavat never withers**.' },
           { hi: 'यह रामायण में नहीं, गया की स्मृति में है। पर भाव वही: **जो पास है, वही अर्पित।**',
-            en: 'This lives in Gaya’s memory, not in the Ramayana. But the bhava is the same: **what is at hand, that is offered.**' },
+            en: 'Gaya’s memory, not the Ramayana. Same bhava: **what is at hand, that is offered.**' },
         ],
         canon: { hi: 'गया की लोक-मान्यता · गया-माहात्म्य', en: 'Gaya tradition · Gaya Mahatmya' },
       },
@@ -182,12 +183,12 @@ const CAROUSELS = {
         bg: 'deity-rama-darbar.webp',
         kicker: { hi: 'पितृ पक्ष · 26 सितम्बर – 10 अक्टूबर 2026', en: 'Pitru Paksha · 26 Sep – 10 Oct 2026' },
         title: { hi: 'पितृ पक्ष, वेदांश़ में', en: 'Pitru Paksha in Vedansh' },
-        subtitle: { hi: 'समझिए, फिर करिए', en: 'Understand first, then offer' },
+        subtitle: { hi: 'कथा यहाँ — समझ और विधि ऐप में', en: 'The story is here — the vidhi is in the app' },
         items: [
           { glyph: 'पि', h: { hi: 'पितृ पक्ष परिचय', en: 'Pitru Paksha primer' }, d: { hi: 'जल ही क्यों · किसके लिए · किस दिन किसका श्राद्ध', en: 'Why water · for whom · whose shraddha on which day' } },
+          { glyph: 'वि', h: { hi: 'विधि', en: 'Vidhi' }, d: { hi: 'घर पर तिल-तर्पण — और जब पूरा विधान सम्भव न हो, अनुकल्प', en: 'Tila-tarpana at home — and the anukalpa when the full rite is not possible' } },
           { glyph: 'ति', h: { hi: 'तिथि', en: 'Tithi' }, d: { hi: 'आपके शहर का पंचांग — श्राद्ध का दिन तिथि से', en: 'Your city’s Panchang — the shraddha day from the tithi' } },
           { glyph: 'या', h: { hi: 'याद', en: 'Reminder' }, d: { hi: 'पितृ स्मरण reminder — तिथि से एक रात पहले', en: 'Pitru Smaran reminder — the night before the tithi' } },
-          { glyph: 'क', h: { hi: 'कथा', en: 'Katha' }, d: { hi: 'रामायण के प्रसंग — मूल पाठ तक, हिंदी और अंग्रेज़ी', en: 'Ramayana episodes — down to the original text' } },
         ],
         note: { hi: 'मुफ़्त · बिना इंटरनेट के भी चलता है', en: 'Free · Works offline' },
         button: { hi: 'अभी डाउनलोड करें', en: 'Download Now' },
@@ -226,7 +227,7 @@ function fontsBlock(fontsCss) {
 }
 
 // ── page shell ───────────────────────────────────────────────────────────────
-function shell({ bgUri, bgPos = '62% 18%', bgOpacity = 0.22, inner, pageNo, total, fontsCss, om = true, lang = 'hi' }) {
+function shell({ bgUri, bgPos = '62% 18%', bgOpacity = 0.22, inner, pageNo, total, fontsCss, om = true, lang = 'hi', dense = false }) {
   return `<!doctype html><html><head><meta charset="utf-8">${fontsBlock(fontsCss)}
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -272,6 +273,12 @@ function shell({ bgUri, bgPos = '62% 18%', bgOpacity = 0.22, inner, pageNo, tota
   body.en .rowK, body.en .rowV { font-family:'Cormorant Garamond', Georgia, serif; }
   body.en .rowK { font-size:32px; }
   body.en .rowV { font-size:32px; line-height:1.3; font-weight:500; }
+  /* dense: a long story card — smaller body, tighter beats */
+  body.dense .title { font-size:88px; }
+  body.dense .para { font-size:36px; line-height:1.5; }
+  body.dense .beat { margin-bottom:26px; }
+  body.en.dense .para { font-size:35px; line-height:1.32; }
+  body.en.dense .beat { margin-bottom:22px; }
   .canon { margin-top:auto; font-size:24px; color:${C.inkMuted}; font-weight:400; }
 
   .om { position:absolute; left:0; right:0; top:1042px; text-align:center; font-size:30px; color:${C.gold}; letter-spacing:6px; }
@@ -284,7 +291,7 @@ function shell({ bgUri, bgPos = '62% 18%', bgOpacity = 0.22, inner, pageNo, tota
   .dl .l1 .lat { font-weight:700; font-size:28px; }
   .dl .l2 { font-family:'Inter',sans-serif; font-weight:600; font-size:26px; color:${C.inkMuted}; letter-spacing:1px; margin-top:16px; }
   .dl .l3 { font-family:'Inter',sans-serif; font-weight:500; font-size:26px; color:${C.inkMuted}; letter-spacing:1px; margin-top:14px; }
-</style></head><body class="${lang}">
+</style></head><body class="${lang}${dense ? ' dense' : ''}">
 <div class="bg"><img src="${bgUri}"></div>
 <div class="frame"></div>
 <div class="head"><div class="kicker">${inner.kicker}</div><div class="pageno">${pageNo}/${total}</div></div>
@@ -438,7 +445,7 @@ function main() {
       else if (s.kind === 'cta') html = ctaHtml(s, lang);
       else html = textHtml(s, lang);
       const page = shell({ bgUri, bgPos: s.bgPos, bgOpacity: s.bgOpacity, inner: { kicker: esc(T(s.kicker, lang)), html },
-                           pageNo: i + 1, total, fontsCss, om: s.kind !== 'cta', lang });
+                           pageNo: i + 1, total, fontsCss, om: s.kind !== 'cta', lang, dense: !!s.dense });
       const out = path.join(outDir, `${name}-${lang}-${i + 1}.png`);
       renderPng(page, out);
       console.log('✓', path.relative(process.cwd(), out));

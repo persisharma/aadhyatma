@@ -6,11 +6,13 @@
 
 Render: `node ../make-carousel.mjs pitru-falgu-2026` (add `--lang hi|en` for one set).
 **Order:** 1 hook (what did Sita make the pinda from?) · 2 the Gaya belief — Sita's sand pinda,
-the witnesses, why the Falgu runs dry (labelled मान्यता / "not in the Ramayana") · 3 Gaya today
+Dasharatha's hand accepting it, the witnesses, why the Falgu runs dry (labelled मान्यता / "not in the Ramayana") · 3 Gaya today
 (Pitru Paksha Mela at Vishnupad: opens Sat 26 Sep Purnima Shraddha · closes Sat 10 Oct Sarva
 Pitru Amavasya) · 4 app CTA.
 **Post window:** any day while the mela is on; strongest 27 Sep – 3 Oct.
 Companion story: `pitru-mandakini-2026.md` (Chitrakoot — the scriptural bank).
+**App honesty:** the Gaya/Sita katha is NOT in the app (kathas.ts is Valmiki-only; Vishnupad has no
+detail page yet), so the CTA sells the primer, tila-tarpana vidhi, tithi and reminder — not this story.
 
 ## Caption — Hindi
 
@@ -32,7 +34,7 @@ Companion story: `pitru-mandakini-2026.md` (Chitrakoot — the scriptural bank).
 → स्वाइप कीजिए · सहेज लीजिए (save)
 जो गया जा रहे हैं, या जिनके घर में पिण्डदान की बात चल रही है — उन्हें भेज दीजिए 🙏
 
-पितृ पक्ष परिचय, तिथि से श्राद्ध का दिन, पितृ स्मरण reminder और रामायण की कथाएँ — Vedansh में, मुफ़्त, ऑफ़लाइन। लिंक बायो में।
+यह कथा यहाँ पढ़ ली — समझ और विधि Vedansh में: पितृ पक्ष परिचय, घर पर तिल-तर्पण की विधि, तिथि से श्राद्ध का दिन, पितृ स्मरण reminder। मुफ़्त, ऑफ़लाइन। लिंक बायो में।
 
 #पितृपक्ष #श्राद्ध #पिण्डदान #गया #फल्गु #विष्णुपद
 ```
@@ -56,7 +58,7 @@ And that mela is on right now — Pitru Paksha Mela, Vishnupad, on the Falgu, Ga
 
 Save it. Send it to whoever is going to Gaya, or talking about pind-daan at home 🙏
 
-Pitru Paksha primer, shraddha day from the tithi, Pitru Smaran reminder, Ramayana kathas — in Vedansh, free, offline. Link in bio.
+The story is here — the understanding and the vidhi are in Vedansh: Pitru Paksha primer, tila-tarpana at home, shraddha day from the tithi, Pitru Smaran reminder. Free, offline. Link in bio.
 
 #PitruPaksha #Shraddha #PindDaan #Gaya #Falgu #Vishnupad
 ```
@@ -66,4 +68,4 @@ Pitru Paksha primer, shraddha day from the tithi, Pitru Smaran reminder, Ramayan
 1. Hook — "पितृ पक्ष 2026। सीता ने पिण्ड किससे बनाया था? बालू से — ऐसा गया मानता है। पीछे विष्णु-नारायण का रेखाचित्र।" / "Pitru Paksha 2026. What did Sita make the pinda from? Sand — so Gaya believes. Faded Vishnu Narayana sketch behind."
 2. फल्गु की बालू — "गया की मान्यता: सीता का फल्गु की बालू का पिण्ड, फल्गु-गौ-केतकी-अक्षयवट साक्षी; रामायण में नहीं।" / "The sand of the Falgu: Gaya's belief of Sita's sand pinda and its witnesses; not in the Ramayana."
 3. गया, आज — "पितृपक्ष मेला 2026, विष्णुपद, गया: 26 सितम्बर पूर्णिमा श्राद्ध से 10 अक्टूबर सर्वपितृ अमावस्या तक।" / "Pitru Paksha Mela 2026, Vishnupad, Gaya: from Purnima Shraddha 26 Sep to Sarva Pitru Amavasya 10 Oct."
-4. CTA — "Vedansh ऐप: पितृ पक्ष परिचय, तिथि, पितृ स्मरण reminder, कथा। मुफ़्त, ऑफ़लाइन। persisharma.github.io/get-vedansh" / "Vedansh app: Pitru Paksha primer, tithi, Pitru Smaran reminder, katha. Free, offline. persisharma.github.io/get-vedansh"
+4. CTA — "Vedansh ऐप: पितृ पक्ष परिचय, तिल-तर्पण विधि, तिथि, पितृ स्मरण reminder। मुफ़्त, ऑफ़लाइन। persisharma.github.io/get-vedansh" / "Vedansh app: Pitru Paksha primer, tila-tarpana vidhi, tithi, Pitru Smaran reminder. Free, offline. persisharma.github.io/get-vedansh"
