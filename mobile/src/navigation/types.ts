@@ -77,6 +77,9 @@ export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & {
   StutiReader: { initialIndex?: number; stutiId?: string } | undefined;
   GitaChapters: undefined;
   GitaReader: GitaReaderParams;
+  // गीता सार (design.md §75): a chapter is a theme, the reader pages its verses.
+  GitaSaarChapters: undefined;
+  GitaSaarReader: { chapter: number; initialIndex?: number };
   SundarkandChapters: undefined;
   SundarkandReader: { chapter: number; initialIndex?: number };
   ShivaStrotamChapters: undefined;

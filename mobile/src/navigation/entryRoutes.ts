@@ -19,6 +19,7 @@ import { ramcharitmanasChaptersManifest } from '@/data/ramcharitmanas';
 import { valmikiRamayanChaptersManifest } from '@/data/valmiki-ramayan';
 import { sundarkandChaptersManifest } from '@/data/sundarkand';
 import { gitaChaptersManifest } from '@/data/gita';
+import { gitaSaarChaptersManifest } from '@/data/gita-saar';
 import { canonicalSourceId } from '@/data/sourceIdMigration';
 import type { HomeRoster } from '@/vastu/homeRecord';
 import type { HomeStackParamList, MoreStackParamList, PanchangStackParamList } from './types';
@@ -171,6 +172,7 @@ const stotramChaptersRouteById: Record<string, keyof HomeStackParamList> = {
   'valmiki-ramayan': 'ValmikiRamayanChapters',
   'sundarkand': 'SundarkandChapters',
   'bhagavad-gita': 'GitaChapters',
+  'gita-saar': 'GitaSaarChapters',
 };
 
 /**
@@ -200,6 +202,7 @@ const chapterCountBySourceId: Record<string, number> = {
   'valmiki-ramayan': valmikiRamayanChaptersManifest.length,
   'sundarkand': sundarkandChaptersManifest.length,
   'bhagavad-gita': gitaChaptersManifest.length,
+  'gita-saar': gitaSaarChaptersManifest.length,
 };
 
 const stotramReaderRouteBySourceId: Record<string, keyof HomeStackParamList> = {
@@ -217,6 +220,7 @@ const stotramReaderRouteBySourceId: Record<string, keyof HomeStackParamList> = {
   'valmiki-ramayan': 'ValmikiRamayanReader',
   'sundarkand': 'SundarkandReader',
   'bhagavad-gita': 'GitaReader',
+  'gita-saar': 'GitaSaarReader',
 };
 
 export function buildEntryStartTarget(entry: LibraryEntry): BookmarkTarget | null {

@@ -19,6 +19,7 @@ import { ramStutiTotal } from './ram-stuti';
 import { krishnaStotramTotal } from './krishna-stotram';
 import { ramcharitmanasTotal } from './ramcharitmanas';
 import { valmikiRamayanTotal } from './valmiki-ramayan';
+import { gitaSaarTotal, gitaSaarChaptersManifest } from './gita-saar';
 import { aartiCollection } from './aarti';
 import { japamMantras } from './japam';
 import {
@@ -133,6 +134,21 @@ export const library: readonly LibraryEntry[] = [
     category: 'granth',
     deities: ['krishna'],
     verseCount: 701,
+  },
+  {
+    // गीता सार — themed readings over the bundled Gita (design.md §75,
+    // RULEBOOK §29). Counts come from the manifest, never hand-typed.
+    id: 'gita-saar',
+    nameHi: 'गीता सार',
+    nameEn: 'Gita Saar',
+    sub: `${gitaSaarChaptersManifest.length} विषय · ${gitaSaarTotal} श्लोक · सरल अर्थ`,
+    subEn: `${gitaSaarChaptersManifest.length} ${gitaSaarChaptersManifest.length === 1 ? 'theme' : 'themes'} · ${gitaSaarTotal} verses · simple meaning`,
+    thumb: 'सा',
+    status: 'active',
+    category: 'granth',
+    deities: ['krishna'],
+    verseCount: gitaSaarTotal,
+    addedInVersion: '1.4.9',
   },
   {
     id: 'sundarkand',

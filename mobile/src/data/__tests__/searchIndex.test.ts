@@ -95,6 +95,24 @@ const index = getSearchIndex();
   );
 }
 
+// गीता सार (RULEBOOK §29): a theme page is reachable by its saar wording and
+// by the corpus shloka, and routes with the theme as `chapter`.
+{
+  const saarRows = index.verses.filter((v) => v.sourceId === 'gita-saar');
+  assert.ok(saarRows.length >= 16, 'gita-saar should index every theme page');
+  const byTheme = runSearch('सच्चा प्रेम', index);
+  assert.ok(
+    byTheme.sections.some((h) => h.entry.sourceId === 'gita-saar') ||
+      byTheme.verses.some((h) => h.entry.sourceId === 'gita-saar'),
+    'theme title query should surface Gita Saar'
+  );
+  const bySaar = runSearch('bhāva over size', index);
+  const hit = bySaar.verses.find((h) => h.entry.sourceId === 'gita-saar');
+  assert.ok(hit, 'a saar phrase should find the Gita Saar page');
+  assert.equal(hit!.entry.chapter, 1);
+  assert.match(hit!.entry.labelEn, /^Verse 9\.26$/);
+}
+
 // Every deity is indexed.
 {
   assert.equal(index.deities.length, deities.length);

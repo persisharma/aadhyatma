@@ -19,6 +19,8 @@ import KavachamReaderScreen from '@/screens/KavachamReaderScreen';
 import StutiReaderScreen from '@/screens/StutiReaderScreen';
 import GitaChaptersIndexScreen from '@/screens/GitaChaptersIndexScreen';
 import GitaReaderScreen from '@/screens/GitaReaderScreen';
+import GitaSaarThemesScreen from '@/screens/GitaSaarThemesScreen';
+import GitaSaarReaderScreen from '@/screens/GitaSaarReaderScreen';
 // दान-पुण्य (PRD-26) — registered here too so the §5.1 purpose door (विद्या /
 // आरोग्य on PurposeList) pushes in place and Back retraces the journey.
 import DaanPunyaScreen from '@/screens/DaanPunyaScreen';
@@ -147,6 +149,12 @@ export default function HomeStackNavigator() {
       <Stack.Screen
         name="GitaReader"
         component={GitaReaderScreen}
+        options={{ gestureEnabled: false, animation: 'fade' }}
+      />
+      <Stack.Screen name="GitaSaarChapters" component={GitaSaarThemesScreen} />
+      <Stack.Screen
+        name="GitaSaarReader"
+        component={GitaSaarReaderScreen}
         options={{ gestureEnabled: false, animation: 'fade' }}
       />
       <Stack.Screen name="SundarkandChapters" component={SundarkandChaptersScreen} />

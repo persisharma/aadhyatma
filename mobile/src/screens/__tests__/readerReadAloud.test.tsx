@@ -59,6 +59,7 @@ import { ReadAloudProvider } from '@/contexts/ReadAloudContext';
 import { prepareForSpeech } from '@/readAloud/pronounce';
 import { getChalisa } from '@/data/chalisaRegistry';
 import { getGitaChapter } from '@/data/gita';
+import { getGitaSaarChapter } from '@/data/gita-saar';
 import { getAarti } from '@/data/aarti';
 import { getAshtakam } from '@/data/ashtakam';
 import { getKavacham } from '@/data/kavacham';
@@ -81,6 +82,7 @@ import { getVishnuSahasranamaChapter } from '@/data/vishnu-sahasranama';
 import { getValmikiRamayanChapter } from '@/data/valmiki-ramayan';
 import ChalisaReaderScreen from '../ChalisaReaderScreen';
 import GitaReaderScreen from '../GitaReaderScreen';
+import GitaSaarReaderScreen from '../GitaSaarReaderScreen';
 import AartiReaderScreen from '../AartiReaderScreen';
 import AshtakamReaderScreen from '../AshtakamReaderScreen';
 import KavachamReaderScreen from '../KavachamReaderScreen';
@@ -180,6 +182,11 @@ const READERS: readonly ReaderEntry[] = [
     name: 'GitaReaderScreen (chapter 1)',
     ...screen(GitaReaderScreen, 'GitaReader', { chapter: 1, initialIndex: 0 }),
     firstSpokenLine: firstLine(getGitaChapter(1).verses.map((v) => v.sanskrit)),
+  },
+  {
+    name: 'GitaSaarReaderScreen (theme 1)',
+    ...screen(GitaSaarReaderScreen, 'GitaSaarReader', { chapter: 1, initialIndex: 0 }),
+    firstSpokenLine: firstLine(getGitaSaarChapter(1).verses.map((v) => v.sanskrit)),
   },
   {
     name: 'AartiReaderScreen (index 0)',

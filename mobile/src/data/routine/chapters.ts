@@ -4,6 +4,7 @@
  * (chalisas, aartis, japam, sanskar) return an empty list — they add whole.
  */
 import { gitaChaptersManifest } from '@/data/gita';
+import { gitaSaarChaptersManifest } from '@/data/gita-saar';
 import { sundarkandChaptersManifest } from '@/data/sundarkand';
 import { shivaStrotamChaptersManifest } from '@/data/shiva-strotam';
 import { durgaStotramChaptersManifest } from '@/data/durga-stotram';
@@ -23,6 +24,7 @@ type Manifest = readonly { chapter: number; titleHi: string; titleEn: string }[]
 
 const REGISTRY: Record<string, Manifest> = {
   'bhagavad-gita': gitaChaptersManifest,
+  'gita-saar': gitaSaarChaptersManifest,
   sundarkand: sundarkandChaptersManifest,
   'shiva-strotam': shivaStrotamChaptersManifest,
   'durga-stotram': durgaStotramChaptersManifest,

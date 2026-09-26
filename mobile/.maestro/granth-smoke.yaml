@@ -1,7 +1,7 @@
 # Granth Category Smoke Test
 #
-# Verifies the Granth category and its 4 active sections render correctly.
-# Sections: Bhagavad Gītā, Sundarkand, Ramcharitmanas Mangalacharan, Valmiki Ramayan.
+# Verifies the Granth category and its 5 active sections render correctly.
+# Sections: Bhagavad Gītā, Gita Saar, Sundarkand, Ramcharitmanas Mangalacharan, Valmiki Ramayan.
 #
 # Bhagavad Gītā and Valmiki Ramayan have a chapter index (kāṇḍa list); the other
 # two go straight to a reader. This flow opens Valmiki Ramayan and its final
@@ -18,6 +18,7 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Bhagavad Gītā\\..*Tap to open\\."
     timeout: 15000
+- assertVisible: "Gita Saar\\..*Tap to open\\."
 - assertVisible: "Sundarkand\\..*Tap to open\\."
 - assertVisible: "Ramcharitmanas Mangalacharan\\..*Tap to open\\."
 - assertVisible: "Valmiki Ramayan\\..*Tap to open\\."
