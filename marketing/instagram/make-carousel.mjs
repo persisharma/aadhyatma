@@ -45,7 +45,7 @@ const CHROME =
     : '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome');
 
 const W = 1080, H = 1350;
-const SMART_LINK = 'persisharma.github.io/get-vedansh';
+const SMART_LINK = 'vedansh.app';
 const HANDLE = '@vedansh.app';
 
 // ── Brand (light theme — mirrors mobile/src/theme parchment tokens) ──
