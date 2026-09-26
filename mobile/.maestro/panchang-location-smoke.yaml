@@ -102,9 +102,8 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
-      text: ".*Delhi.*"
+      text: "Location: Delhi"
     direction: UP
-    centerElement: true
     timeout: 15000
 
 # No explicit location/language restore needed: the next run's _launch

@@ -20,6 +20,8 @@
 # Jest tests (NewContentContext.test.tsx + LibraryCardNewBadge.test.tsx).
 
 appId: com.prashantsharma.vedansh
+tags:
+  - requires-dev
 ---
 # ── Step 1: Boot, then force a clean (nothing-new) start regardless of prior runs ──
 - runFlow: _launch.yaml
@@ -94,6 +96,9 @@ appId: com.prashantsharma.vedansh
     appId: com.prashantsharma.vedansh
 - launchApp:
     appId: com.prashantsharma.vedansh
+    # Debug relaunch must retain this worktree's Metro address too.
+    arguments:
+      RCT_jsLocation: "127.0.0.1:8084"
 - waitForAnimationToEnd:
     timeout: 30000
 - extendedWaitUntil:

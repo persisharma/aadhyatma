@@ -157,7 +157,6 @@ appId: com.prashantsharma.vedansh
     element:
       text: "Preparation"
     direction: UP
-    centerElement: true
     timeout: 15000
 - assertVisible: "Preparation"
 - scrollUntilVisible:
@@ -171,7 +170,6 @@ appId: com.prashantsharma.vedansh
     element:
       text: "Begin puja"
     direction: DOWN
-    centerElement: true
     timeout: 15000
 - tapOn: "Begin puja"
 - waitForAnimationToEnd

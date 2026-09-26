@@ -26,13 +26,22 @@ export type WhatsNewEntry = {
  * Current app version. Must match `expo.version` in `mobile/app.json`. This is
  * the key against which the user's "last seen what's new" is compared.
  */
-export const APP_TOUR_VERSION = '1.4.8';
+export const APP_TOUR_VERSION = '1.4.9';
 
 /**
  * Per-version what's-new content. The latest entry is shown when the user
  * first opens this version of the app after updating.
  */
 export const whatsNew: Readonly<Record<string, WhatsNewEntry>> = {
+  '1.4.9': {
+    version: '1.4.9',
+    items: [{
+      titleHi: 'सम्पूर्ण रामायण में खोजें',
+      titleEn: 'Search the complete Ramayan',
+      bodyHi: 'अब वाल्मीकि रामायण के सातों काण्डों के श्लोक और अर्थ खोजें तथा परिणाम से सीधे पाठ खोलें — बिना इंटरनेट के।',
+      bodyEn: 'Find verses and meanings across all seven kandas of the Valmiki Ramayan and open them directly from search, even offline.',
+    }],
+  },
   '1.4.8': {
     version: '1.4.8',
     items: [

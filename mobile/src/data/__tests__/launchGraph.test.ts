@@ -30,7 +30,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const ROOT = path.resolve(import.meta.dirname, '../../..');
-const EXTS = ['.ts', '.tsx', '.js', '.jsx', '.json'];
+const EXTS = ['.native.ts', '.native.tsx', '.ts', '.tsx', '.js', '.jsx', '.json'];
 
 /** Metro's resolution, narrowed to what this repo actually uses. */
 function resolveSpec(spec: string, fromFile: string): string | null {
@@ -59,7 +59,7 @@ const STATIC_IMPORT = /(?:^|\n)\s*(?:import|export)[^;\n]*?from\s+['"]([^'"]+)['
 
 function walkLaunchGraph(): Map<string, string | null> {
   const parents = new Map<string, string | null>();
-  const queue: [string, string | null][] = [[path.join(ROOT, 'index.ts'), null]];
+  const queue: [string, string | null][] = [[path.join(ROOT, 'index.ts'), null], [path.join(ROOT, 'App.tsx'), null]];
   while (queue.length > 0) {
     const [file, parent] = queue.shift()!;
     if (parents.has(file)) continue;

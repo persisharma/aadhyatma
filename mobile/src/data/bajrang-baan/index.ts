@@ -1,5 +1,6 @@
+import { readContent } from '../../storage/content';
 import manifest from './chapters-manifest.json';
-import ch01 from './bajrang-baan.json';
+const ch01 = readContent<typeof import('./bajrang-baan.json')>('bajrang-baan/bajrang-baan.json');
 
 export type BajrangBaanVerse = {
   id: string;

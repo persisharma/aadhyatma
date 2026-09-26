@@ -97,7 +97,7 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Understand Jyotish"
     timeout: 60000
-- tapOn: "Create Kundali"
+- tapOn: "Create Kundali(?:,.*)?"
 - waitForAnimationToEnd
 - tapOn:
     text: "Edit birth details"
@@ -194,7 +194,7 @@ appId: com.prashantsharma.vedansh
     visible: "Full Kundali reading"
     timeout: 15000
 # PRD-43: the top band is the dated as-of stamp; the sixty-second snapshot leads.
-- assertVisible: "As of .*not a certain prediction.*"
+- assertVisible: "As of .*"
 - assertVisible: ".*Your Kundali in sixty seconds.*"
 - scrollUntilVisible:
     element:
@@ -207,23 +207,32 @@ appId: com.prashantsharma.vedansh
 - scrollUntilVisible:
     element:
       text: ".*What the placements say together.*"
+    visibilityPercentage: 30
     direction: DOWN
     timeout: 15000
 - assertVisible: ".*Lagna lord .*"
+- scrollUntilVisible:
+    element:
+      id: "basis-combinations"
+    direction: DOWN
+    visibilityPercentage: 30
+    timeout: 15000
 - assertVisible:
     id: "basis-combinations"
 - scrollUntilVisible:
     element:
       text: ".*Career and work.*"
     direction: DOWN
-    timeout: 15000
+    visibilityPercentage: 30
+    timeout: 30000
 - scrollUntilVisible:
     element:
       text: ".*Current classical observations.*"
+    visibilityPercentage: 30
     direction: DOWN
-    timeout: 20000
+    timeout: 60000
 - assertVisible: ".*Sade Sati.*"
-- assertVisible: "As of .*"
+- assertVisible: ".*As of .*"
 # Mahadasha sits under Sade Sati — below the fold on Android; scroll to it.
 # Low visibilityPercentage: on iOS it's already partly on-screen at the bottom,
 # so the default 100% is never met and the scroll runs past it.

@@ -47,7 +47,8 @@ appId: com.prashantsharma.vedansh
 # Home → Pilgrimage tile lands directly on the Theerth listing (no intermediate
 # library-entry list anymore). The tile shows a NEW badge → regex.
 - extendedWaitUntil:
-    visible: ".*Pilgrimage.*Tap to open.*"
+    # Home must load before scrolling to its lower Pilgrimage tile.
+    visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
     timeout: 120000
 - scrollUntilVisible:
     element:
@@ -77,9 +78,12 @@ appId: com.prashantsharma.vedansh
     index: 0
 - waitForAnimationToEnd:
     timeout: 15000
-- extendedWaitUntil:
-    visible: ".*Sources.*"
-    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Sources.*"
+    direction: DOWN
+    timeout: 120000
+- assertVisible: "Sources.*"
 
 # Back to the drill-in, back to the listing, then switch to By State.
 - tapOn: "Back"

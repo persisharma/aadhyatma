@@ -49,8 +49,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - tapOn: "English"
 - waitForAnimationToEnd
-- tapOn:
-    point: "50%,95%"
+- tapOn: { id: "tab-panchang" }
 - waitForAnimationToEnd
 - tapOn: "Jyotish"
 - extendedWaitUntil:
@@ -58,7 +57,7 @@ appId: com.prashantsharma.vedansh
     timeout: 20000
 
 # First save a Kundali profile so autofill is real, not a test-only seed.
-- tapOn: "Create Kundali"
+- tapOn: "Create Kundali(?:,.*)?"
 - waitForAnimationToEnd
 - tapOn: { id: "kundali-name-input" }
 - inputText: "Aarav"
@@ -68,11 +67,34 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - tapOn: ".*tap to change year"
 - tapOn: "Month August"
-- repeat:
-    times: 4
+# Platform-specific year-list gestures retain the same golden birth date.
+- runFlow:
+    when:
+      platform: iOS
     commands:
-      - swipe: { start: "50%, 70%", end: "50%, 50%", duration: 250 }
-- tapOn: "Year 1992"
+      - repeat:
+          times: 4
+          commands:
+            - swipe: { start: "50%, 70%", end: "50%, 50%", duration: 250 }
+      - waitForAnimationToEnd
+      - tapOn: "Year 1992"
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - repeat:
+          times: 18
+          commands:
+            - swipe: { start: "50%, 78%", end: "50%, 64%", duration: 1000 }
+            - waitForAnimationToEnd
+      - repeat:
+          times: 15
+          while:
+            notVisible: "14 August 1992"
+          commands:
+            - tapOn: { text: "Year 1992", optional: true }
+            - swipe: { start: "50%, 72%", end: "50%, 86%", duration: 1000 }
+            - waitForAnimationToEnd
 - tapOn: "14 August 1992"
 - tapOn: "Confirm date"
 - waitForAnimationToEnd
@@ -109,11 +131,11 @@ appId: com.prashantsharma.vedansh
 
 # Saved landing keeps Guna Milan below the Kundali/Rashifal tools.
 - scrollUntilVisible:
-    element: "Open Guna Milan"
+    element: "Open Guna Milan(?:,.*)?"
     direction: DOWN
     timeout: 15000
     centerElement: true
-- tapOn: "Open Guna Milan"
+- tapOn: "Open Guna Milan(?:,.*)?"
 - extendedWaitUntil:
     visible: "36 points, with every step visible"
     timeout: 15000
@@ -165,11 +187,33 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - tapOn: ".*tap to change year"
 - tapOn: "Month January"
-- repeat:
-    times: 7
+- runFlow:
+    when:
+      platform: iOS
     commands:
-      - swipe: { start: "50%, 70%", end: "50%, 50%", duration: 250 }
-- tapOn: "Year 1970"
+      - repeat:
+          times: 7
+          commands:
+            - swipe: { start: "50%, 70%", end: "50%, 50%", duration: 250 }
+      - waitForAnimationToEnd
+      - tapOn: "Year 1970"
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - repeat:
+          times: 30
+          commands:
+            - swipe: { start: "50%, 78%", end: "50%, 64%", duration: 1000 }
+            - waitForAnimationToEnd
+      - repeat:
+          times: 15
+          while:
+            notVisible: "15 January 1970"
+          commands:
+            - tapOn: { text: "Year 1970", optional: true }
+            - swipe: { start: "50%, 72%", end: "50%, 86%", duration: 1000 }
+            - waitForAnimationToEnd
 - tapOn: "15 January 1970"
 - tapOn: "Confirm date"
 - waitForAnimationToEnd
@@ -191,6 +235,11 @@ appId: com.prashantsharma.vedansh
 
 - tapOn: "Back to Jyotish"
 - waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Jyotish"
+    direction: UP
+    timeout: 15000
 - assertVisible: "Jyotish"
 - stopApp:
     appId: com.prashantsharma.vedansh

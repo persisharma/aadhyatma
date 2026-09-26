@@ -64,7 +64,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Kundali. New. Tap to open."
 - waitForAnimationToEnd
 - extendedWaitUntil: { visible: "Understand Jyotish", timeout: 60000 }
-- tapOn: "Create Kundali"
+- tapOn: "Create Kundali(?:,.*)?"
 - waitForAnimationToEnd
 - tapOn: { text: "Edit birth details", optional: true }
 - tapOn: { id: "kundali-name-input" }
@@ -151,11 +151,13 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 15000
 - takeScreenshot: prashna-guidance
+# Adult study questions now use the same current-phase reading as business.
+# Check its guidance and expandable evidence rather than the retired checklist.
+- assertNotVisible: { id: "action-study-exam-0" }
 - scrollUntilVisible:
-    element: { id: "action-study-exam-0" }
+    element: { id: "phase-direction" }
     direction: DOWN
     timeout: 15000
-- tapOn: { id: "action-study-exam-0" }
 - takeScreenshot: prashna-actions
 - scrollUntilVisible:
     element: { id: "prashna-basis-toggle" }

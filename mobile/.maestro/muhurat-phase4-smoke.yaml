@@ -120,21 +120,41 @@ appId: com.prashantsharma.vedansh
 # The footer deep-links straight to the form screen, so the landing CTA only
 # appears if the route lands on the Jyotish landing instead.
 - tapOn:
-    text: "Create Kundali"
+    text: "Create Kundali(?:,.*)?"
     optional: true
 - waitForAnimationToEnd
 - tapOn:
     id: "kundali-date-input"
 - tapOn: ".*tap to change year"
 - tapOn: "Month August"
-- repeat:
-    times: 4
+# Platform-specific year-list gestures retain the same golden birth date.
+- runFlow:
+    when:
+      platform: iOS
     commands:
-      - swipe:
-          start: "50%, 70%"
-          end: "50%, 50%"
-          duration: 250
-- tapOn: "Year 1992"
+      - repeat:
+          times: 4
+          commands:
+            - swipe: { start: "50%, 70%", end: "50%, 50%", duration: 250 }
+      - waitForAnimationToEnd
+      - tapOn: "Year 1992"
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - repeat:
+          times: 18
+          commands:
+            - swipe: { start: "50%, 78%", end: "50%, 64%", duration: 1000 }
+            - waitForAnimationToEnd
+      - repeat:
+          times: 15
+          while:
+            notVisible: "14 August 1992"
+          commands:
+            - tapOn: { text: "Year 1992", optional: true }
+            - swipe: { start: "50%, 72%", end: "50%, 86%", duration: 1000 }
+            - waitForAnimationToEnd
 - tapOn:
     id: "calendar-day-1992-08-14"
 - tapOn: "Confirm date"

@@ -1,5 +1,5 @@
 import { library } from './texts';
-import { getGitaChapter, gitaChaptersManifest } from './gita';
+import { getGitaVerse, gitaChaptersManifest } from './gita';
 import { getSundarkandChapter, sundarkandChaptersManifest } from './sundarkand';
 import { getShivaStrotamChapter, shivaStrotamChaptersManifest } from './shiva-strotam';
 import { getDurgaStotramChapter, durgaStotramChaptersManifest } from './durga-stotram';
@@ -109,7 +109,7 @@ const nameHi = (id: string, fallback?: string) => entryById.get(id)?.nameHi ?? f
 const nameEn = (id: string, fallback?: string) => entryById.get(id)?.nameEn ?? fallback ?? id;
 
 function gitaVerse(chapterNumber: number, verseIndex: number): UniformVerse | null {
-  const verse = getGitaChapter(chapterNumber).verses[verseIndex];
+  const verse = getGitaVerse(chapterNumber, verseIndex);
   if (!verse) return null;
   return {
     sourceId: GITA_ID,

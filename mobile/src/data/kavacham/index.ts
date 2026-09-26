@@ -1,12 +1,13 @@
+import { readContent } from '../../storage/content';
 // Kavacham (कवच) — multi-instance form registry, mirroring `ashtakam/index.ts`.
 // One KavachamReaderScreen dispatches on the `kavachamId` route param through
 // this registry (RULEBOOK §3). Each text is source-verified verses (Devanagari
 // `lines` + IAST `linesEn` + bilingual meanings). Rama Raksha Stotra is grouped
 // here as the archetypal protective (raksha = kavach) hymn.
-import ramaRakshaStotra from './rama-raksha-stotra.json';
-import ganeshaKavacham from './ganesha-kavacham.json';
-import shivaKavacham from './shiva-kavacham.json';
-import durgaKavach from './durga-kavach.json';
+const ramaRakshaStotra = readContent<typeof import('./rama-raksha-stotra.json')>('kavacham/rama-raksha-stotra.json');
+const ganeshaKavacham = readContent<typeof import('./ganesha-kavacham.json')>('kavacham/ganesha-kavacham.json');
+const shivaKavacham = readContent<typeof import('./shiva-kavacham.json')>('kavacham/shiva-kavacham.json');
+const durgaKavach = readContent<typeof import('./durga-kavach.json')>('kavacham/durga-kavach.json');
 
 export type KavachamVerse = {
   id: string;

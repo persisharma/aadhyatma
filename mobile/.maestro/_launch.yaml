@@ -53,12 +53,22 @@ appId: com.prashantsharma.vedansh
 # permission on boot for reminders/japam alarms). It's a NATIVE alert that
 # blocks the canary underneath, so dismiss it first. Optional — a no-op once the
 # grant is set at the sim level (`simctl privacy grant notifications`).
-- tapOn:
-    text: "Allow"
-    optional: true
-- tapOn:
-    text: "Don't Allow"
-    optional: true
+- runFlow:
+    when:
+      visible: "Allow"
+    commands:
+      - tapOn:
+          text: "Allow"
+          optional: true
+- runFlow:
+    when:
+      visible: "Don't Allow"
+    commands:
+      - tapOn:
+          text: "Don't Allow"
+          optional: true
+# Guard optional dismissals with visible conditions so absent dialogs do not
+# each consume the tap retry timeout during a full regression run.
 # Dismiss whichever first-launch onboarding surface auto-appeared BEFORE
 # asserting Home — a fresh install can show the feature tour (an OVERLAY), a
 # returning user on a debut release gets the What's New sheet, and notification
@@ -67,43 +77,79 @@ appId: com.prashantsharma.vedansh
 # its a11y label and Maestro matches the whole string, so it must be "Skip tour",
 # not "Skip"; the Daily Verse prompt localizes "Not now", so cover every
 # supported primary language.
-- tapOn:
-    text: "Skip tour"
-    optional: true
+- runFlow:
+    when:
+      visible: "Skip tour"
+    commands:
+      - tapOn:
+          text: "Skip tour"
+          optional: true
 - waitForAnimationToEnd
 # Skipping (or finishing) the tour on a fresh install hands over to the
 # first-run language + reading-size sheet — accept its defaults with "Begin"
 # (constant English a11y label) so flows land on Home in the hi/Standard
 # baseline. Language-specific flows set their own language afterwards.
-- tapOn:
-    text: "Begin"
-    optional: true
-- tapOn:
-    text: "Close"
-    optional: true
-- tapOn:
-    text: "Got it"
-    optional: true
-- tapOn:
-    text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
-    optional: true
+- runFlow:
+    when:
+      visible: "Begin"
+    commands:
+      - tapOn:
+          text: "Begin"
+          optional: true
+- runFlow:
+    when:
+      visible: "Close"
+    commands:
+      - tapOn:
+          text: "Close"
+          optional: true
+- runFlow:
+    when:
+      visible: "Got it"
+    commands:
+      - tapOn:
+          text: "Got it"
+          optional: true
+- runFlow:
+    when:
+      visible: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
+    commands:
+      - tapOn:
+          text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
+          optional: true
 - waitForAnimationToEnd
 # iOS can surface the alarm/timer permission alert a few seconds after the
 # notification alert. It may also survive an app-data reset because the grant
 # belongs to the simulator, not AsyncStorage. Clear it before checking Home.
-- tapOn:
-    text: "Allow"
-    optional: true
-- tapOn:
-    text: "Don.t Allow"
-    optional: true
+- runFlow:
+    when:
+      visible: "Allow"
+    commands:
+      - tapOn:
+          text: "Allow"
+          optional: true
+- runFlow:
+    when:
+      visible: "Don.t Allow"
+    commands:
+      - tapOn:
+          text: "Don.t Allow"
+          optional: true
 - waitForAnimationToEnd
-- tapOn:
-    text: "SKIP|Skip|Skip tour"
-    optional: true
-- tapOn:
-    text: "Begin"
-    optional: true
+- runFlow:
+    when:
+      visible: "SKIP|Skip|Skip tour"
+    commands:
+      - tapOn:
+          text: "SKIP|Skip|Skip tour"
+          optional: true
+- runFlow:
+    when:
+      visible: "Begin"
+    commands:
+      - tapOn:
+          text: "Begin"
+          optional: true
 - waitForAnimationToEnd
 # The Home "Today's Panchang" card is now a tappable launcher (PRD-C), so its
 # text is one merged accessibility label — "Today's Panchang. <weekday>,
@@ -118,12 +164,20 @@ appId: com.prashantsharma.vedansh
 # Belt-and-braces: if the tour (or the follow-on setup sheet) mounted only
 # after the dismissal block above ran — seen on slow Android cold starts —
 # clear it now so it can't swallow the first in-flow tap. No-ops otherwise.
-- tapOn:
-    text: "Skip tour"
-    optional: true
-- tapOn:
-    text: "Begin"
-    optional: true
+- runFlow:
+    when:
+      visible: "Skip tour"
+    commands:
+      - tapOn:
+          text: "Skip tour"
+          optional: true
+- runFlow:
+    when:
+      visible: "Begin"
+    commands:
+      - tapOn:
+          text: "Begin"
+          optional: true
 - swipe:
     direction: DOWN
 - waitForAnimationToEnd

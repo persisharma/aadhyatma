@@ -7,22 +7,26 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal",
-      "channel": "development"
+      "channel": "development",
+      "node": "22.14.0"
     },
     "preview": {
       "distribution": "internal",
-      "channel": "preview"
+      "channel": "preview",
+      "node": "22.14.0"
     },
     "dev-sim": {
       "distribution": "internal",
       "ios": {
         "simulator": true
       },
-      "channel": "dev-sim"
+      "channel": "dev-sim",
+      "node": "22.14.0"
     },
     "production": {
       "autoIncrement": true,
-      "channel": "production"
+      "channel": "production",
+      "node": "22.14.0"
     }
   },
   "submit": {

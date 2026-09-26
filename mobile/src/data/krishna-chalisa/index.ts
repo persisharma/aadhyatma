@@ -1,4 +1,5 @@
-import data from './krishna-chalisa.json';
+import { readContent } from '../../storage/content';
+const data = readContent<typeof import('./krishna-chalisa.json')>('krishna-chalisa/krishna-chalisa.json');
 
 export type KrishnaChalisaVerse = {
   id: string;

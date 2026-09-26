@@ -2,7 +2,7 @@
 title: Overview
 type: overview
 sources: [README.md, mobile/package.json, mobile/app.json, mobile/jest.config.js, mobile/App.tsx, mobile/src/navigation/, mobile/src/data/texts.ts, mobile/src/data/backgrounds.ts, mobile/src/data/routine/, mobile/src/panchang/, mobile/src/notifications/japamAlarms.ts, mobile/assets/backgrounds/, RULEBOOK.md, design.md, scripts/, push.sh, mobile/eslint.config.js, mobile/src/theme/, mobile/src/components/ReaderHeader.tsx, mobile/src/components/TextField.tsx]
-last_verified_date: 2026-09-25
+last_verified_date: 2026-09-26
 confidence: medium
 status: current
 ---
@@ -25,8 +25,8 @@ backend.
 - **Audio:** `expo-audio` (japam + the bhajan library). **Speech:** `expo-speech` ~14.0.8 — on-device TTS read-aloud on the Gita and chalisa readers (see [[audio]]). **Notifications:** `expo-notifications`. **Calendar math:** `astronomy-engine` ~2.1.19.
 - **Fonts:** Noto Serif Devanagari (Devanagari), Cormorant Garamond (Latin), Noto Serif Gujarati + Noto Serif Kannada (the gu/kn reading languages).
 - **Reading languages:** `hi · en · gu · kn` (one shared `useGitaLanguage()` pref). gu/kn carry no authored content — derived at runtime by transliterating the Devanagari. See [[languages]].
-- **App version:** 1.4.6, iOS build 46 (`mobile/app.json`).
-- **Entry Point:** `mobile/index.ts` → `registerRootComponent(App)` → `mobile/App.tsx`.
+- **Working app/runtime version:** 1.4.9 (`mobile/app.json`); publication is a separate step.
+- **Entry Point:** `mobile/index.ts` → native `LibraryBootstrap` → SQLite initialization → `mobile/App.tsx`. Web loads App directly.
 
 ## Request Shape
 
@@ -35,7 +35,7 @@ context providers (Theme, GitaLanguage, Bookmarks, UserActivity, NewContent, Rea
 JapamCounter, Routine, RoutineSheet, NotificationPreferences, Share) around a
 `NavigationContainer` → `RootNavigator` → a **5-tab bottom navigator**:
 
-The native splash stays visible until fonts plus the persisted font-size and reading-language
+The native splash stays visible through database initialization and until fonts plus the persisted font-size and reading-language
 preferences have hydrated. Those preferences alter Home geometry, so this gate makes the first
 visible Home frame stable instead of moving the launcher grid immediately after landing.
 
@@ -78,11 +78,10 @@ The temple registry includes substantial detail prose. `NewContentContext` loads
 
 ## Data Layer
 
-All content is **bundled JSON**, not fetched. The canonical source is markdown at the repo
+All scripture content is **bundled SQLite on native**, not fetched; JSON remains the authoring/web adapter. The canonical source is markdown at the repo
 root; `scripts/*.mjs` (Node ESM) transform it into per-text JSON under `mobile/src/data/`,
-which the reader screens consume. `texts.ts` is the library index (`LibraryEntry`: id, names,
-category, deities, verseCount, `addedInVersion` for the NEW badge). `searchIndex.ts` is the
-full-text search index. `sourceIdMigration.ts` keeps bookmarks/progress stable across content
+which the native SQLite compiler consumes. `texts.ts` is the library index (`LibraryEntry`: id, names,
+category, deities, verseCount, `addedInVersion` for the NEW badge). `searchIndex.ts` builds the authoring search representation; native queries use the generated SQLite index. `sourceIdMigration.ts` keeps bookmarks/progress stable across content
 ID changes. User language preference, routines (`@vedansh/routines`) and daily done-marks
 (`@vedansh/routine-done`) are persisted in AsyncStorage.
 
@@ -99,7 +98,7 @@ asset identity so a future placeholder reuse fails explicitly.
    `Sundarkand/`, and the master `bhagavad-gita-complete-hi-en.md`.
 2. **`scripts/*.mjs`** (Node ESM, run manually — **not** a build step): `parse-gita`,
    `split-sundarkand`, `transliterate-shloka`, and `fix-*` repair tools → write JSON into `mobile/src/data/`.
-3. The app reads only the JSON. `RULEBOOK.md` is the integration contract for adding a new
+3. `mobile/scripts/build-library.mts` compiles verse JSON and the derived search index into the bundled native SQLite asset (see [[scripture-storage]]). `RULEBOOK.md` is the integration contract for adding a new
    section; `design.md` is the visual-system spec; `push.sh` wraps `eas update` for OTA publishing.
 
 ## Testing

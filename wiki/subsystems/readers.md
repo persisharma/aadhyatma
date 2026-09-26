@@ -2,7 +2,7 @@
 title: Readers
 type: subsystem
 sources: [mobile/src/components/ReaderHeader.tsx, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, RULEBOOK.md]
-last_verified_date: 2026-09-04
+last_verified_date: 2026-09-26
 confidence: high
 status: current
 ---
@@ -14,11 +14,10 @@ Each devotional text is read through its own `<Pascal>ReaderScreen.tsx` — a ho
 bookmark/share buttons, and pager dots. The **top bar is shared** — `ReaderHeader.tsx`, since
 July 2026 — but the rest of the shell is not: every reader is still a near-identical copy of the
 same paging pattern, so that behavior is kept consistent by convention + tests, not by a base
-component. Content is bundled JSON loaded per chapter via `get<Section>Chapter()`. Valmiki
-Ramayan is the large-corpus case: its 23,289 verified verse records stay split across seven
-kāṇḍa JSON modules, and the accessor requires/caches only the kāṇḍa the reader opens. The Home,
-Daily Bhakti, and search paths use the 28-row `daily-selection.json` projection so they do not
-parse the complete epic during startup; the platform bundle still carries every kāṇḍa offline.
+component. Native scripture content is bundled in SQLite; JSON/Markdown remain authoring sources.
+Gita and Valmiki Ramayan fetch an async window of at most 72 verses, while short texts keep
+compatible synchronous accessors backed by the same DB. The full Ramayan is now searchable.
+See [[scripture-storage]] for generation, initialization, recovery, and size tradeoffs.
 
 ## Details
 
@@ -26,6 +25,8 @@ parse the complete epic during startup; the platform bundle still carries every 
 - `useSafeChapter(route.params.chapter, getXChapter, navigation, 'XChapters')` resolves the
   chapter; on an out-of-range chapter it returns `null` and redirects to the chapter list
   (`_useSafeChapter.ts`) instead of crashing in the data accessor.
+- Gita and Valmiki resolve chapter metadata with `useSafeChapter` and use `usePagedVerses`
+  for their payloads. Other readers retain their existing chapter/registry accessors.
 - A horizontal `FlatList` renders one `<Section>VersePage` per verse. Several stotram readers
   reuse `ShivaStrotamVersePage` (Durga/Ganesh/Saraswati/Vishnu) — allowed only because their
   verse shapes match (see RULEBOOK §3 *Type safety on verse pages*; PR #31 Balkand crash origin).
@@ -80,8 +81,9 @@ phalashruti, represented as 9 reader pages without creating a new deity or categ
 **Tests:** `readerAutoAdvance.test.tsx` enforces the auto-advance contract for every
 multi-chapter reader (transition injected at chapter 1's tail, prev-transition at chapter 2's
 head, no trailing transition on the final chapter, and `navigation.replace` fires on the
-transition page). `gitaAutoAdvance.test.tsx` covers the Gita swipe path Maestro can't drive
-(velocity-scrolled, ~47 swipes). Each reader also has a chapter-1 smoke test (RULEBOOK §3
+transition page). `gitaAutoAdvance.test.tsx` covers the Gita swipe contract in component tests.
+`sqlite-chapter-boundaries.yaml` uses normal Search to reach every Gita/Ramayan chapter tail
+and exercises forward/back transitions and the final book edges in the native Release app. Each reader also has a chapter-1 smoke test (RULEBOOK §3
 *Reader smoke test*).
 
 ## Dependencies
@@ -93,6 +95,14 @@ transition page). `gitaAutoAdvance.test.tsx` covers the Gita swipe path Maestro 
   `JumpToStartButton.tsx`, `LanguageToggle.tsx`, `BookmarkButton.tsx`, `ShareButton.tsx`.
 
 ## Gotchas
+
+- **Long Kannada commentary can crash iOS TextKit.** Gita 13.9 reproduced a native
+  `_NSGlyphTreeInsertGlyphs` / `glyph index issue 1` crash with an 8,887-character Text.
+  `readingParagraphs.ts` splits long prose at sentence/whitespace boundaries (preferred
+  1,200 characters), preserving every code unit and original paragraph grouping. Exact
+  preservation tests cover all Gita commentary languages; the complete native corpus
+  audit and `gita-kannada-regression.yaml` passed after the fix. Do not recombine the
+  rendered segments into a single Text node. See `docs/testing/sqlite-exhaustive-2026-09-26.md`.
 
 - **The reader *body* still has no shared shell** — each reader's paging logic is copy-pasted, so
   a new feature (like auto-advance) must be hand-applied to every multi-chapter reader. This is

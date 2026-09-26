@@ -1,8 +1,9 @@
+import { readContent } from '../../storage/content';
 import manifest from './chapters-manifest.json';
-import ch01 from './chapter-01.json';
-import ch02 from './chapter-02.json';
-import ch03 from './chapter-03.json';
-import ch04 from './chapter-04.json';
+const ch01 = readContent<typeof import('./chapter-01.json')>('shiva-strotam/chapter-01.json');
+const ch02 = readContent<typeof import('./chapter-02.json')>('shiva-strotam/chapter-02.json');
+const ch03 = readContent<typeof import('./chapter-03.json')>('shiva-strotam/chapter-03.json');
+const ch04 = readContent<typeof import('./chapter-04.json')>('shiva-strotam/chapter-04.json');
 
 export type ShivaStrotamVerse = {
   id: string;

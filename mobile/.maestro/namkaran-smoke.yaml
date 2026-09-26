@@ -29,7 +29,7 @@ appId: com.prashantsharma.vedansh
     timeout: 60000
 
 # Force English for visible assertions, then open the Panchang/Jyotish stack.
-- tapOn: { point: "90%,95%" }
+- tapOn: { id: "tab-more" }
 # The ऐप section (Language/Reading size) sits below the fold on standard-height
 # iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
 # tapping the off-screen row's estimated center hits the tab bar instead. Scroll first.
@@ -39,13 +39,13 @@ appId: com.prashantsharma.vedansh
     centerElement: true
 - tapOn: "Language,.*"
 - tapOn: "English"
-- tapOn: { point: "50%,95%" }
+- tapOn: { id: "tab-panchang" }
 - tapOn: "Jyotish"
 - scrollUntilVisible:
-    element: "Open Namkaran"
+    element: "Open Namkaran(?:,.*)?"
     direction: DOWN
     timeout: 15000
-- tapOn: "Open Namkaran"
+- tapOn: "Open Namkaran(?:,.*)?"
 - extendedWaitUntil:
     visible: "A traditional starting sound"
     timeout: 15000
@@ -125,15 +125,28 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Share Namakshar image preview"
 - assertVisible: ".*Birth details are excluded.*"
 - tapOn: "Close share preview"
+- waitForAnimationToEnd
 - scrollUntilVisible:
     element: "Open Namkaran Muhurat"
     direction: DOWN
+    centerElement: true
     timeout: 10000
+- waitForAnimationToEnd
 - tapOn: "Open Namkaran Muhurat"
+- waitForAnimationToEnd
+# Require the actual results destination; "Namkaran" also appears in the
+# preceding screen's buttons and can falsely satisfy a navigation wait.
 - extendedWaitUntil:
-    visible: ".*Naming Ceremony.*|.*Namkaran.*"
+    visible: "Naming Ceremony"
     timeout: 20000
-- tapOn: "Open Namkaran"
+- extendedWaitUntil:
+    visible: "Best dates|More suitable dates|No auspicious muhurat.*"
+    timeout: 20000
+- tapOn: "Back"
+- waitForAnimationToEnd
+- tapOn: "Back to Namkaran input"
+- waitForAnimationToEnd
+- tapOn: "Back to Namkaran start"
 - waitForAnimationToEnd
 
 # Rashi is a peer browse door, not an output-only label: twelve launcher tiles,

@@ -1,5 +1,8 @@
+import { usePagedVerses, type LoadingVerse } from '@/storage/usePagedVerses';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
+  ActivityIndicator,
+  Pressable,
   FlatList,
   NativeScrollEvent,
   NativeSyntheticEvent,
@@ -13,7 +16,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
-import { getGitaChapter, gitaChaptersManifest, type GitaVerse } from '@/data/gita';
+import { gitaChaptersManifest, type GitaVerse } from '@/data/gita';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
@@ -52,11 +55,16 @@ type PrevTransitionItem = {
   prevVerseCount: number;
 };
 
-type FlatListItem = GitaVerse | NextTransitionItem | PrevTransitionItem;
+type FlatListItem = GitaVerse | LoadingVerse | NextTransitionItem | PrevTransitionItem;
 
 type Props = NativeStackScreenProps<RootStackParamList, 'GitaReader'>;
 
 const DOT_COUNT = 5;
+
+function chapterSummary(chapter: number) {
+  if (!Number.isInteger(chapter) || !gitaChaptersManifest[chapter-1]) throw new Error('Invalid chapter');
+  return gitaChaptersManifest[chapter-1];
+}
 
 export default function GitaReaderScreen({ navigation, route }: Props) {
   const { colors, typography } = useTheme();
@@ -66,9 +74,13 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
   const { share, busy: shareBusy } = useShare();
   const { width } = useWindowDimensions();
 
-  const chapter = useSafeChapter(route.params.chapter, getGitaChapter, navigation, 'GitaChapters');
-  const verseCount = chapter?.verses.length ?? 0;
+  const chapter = useSafeChapter(route.params.chapter, chapterSummary, navigation, 'GitaChapters');
+  const verseCount = chapter?.verseCount ?? 0;
   const initialIndex = clampIndex(route.params.initialIndex, verseCount);
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  const { verses, getVerse, error: pageError, retry: retryPage } = usePagedVerses<GitaVerse>(
+    `gita/chapter-${String(chapter?.chapter ?? 1).padStart(2,'0')}.json`, verseCount, currentIndex
+  );
   const isLastChapter =
     chapter == null ? true : chapter.chapter >= gitaChaptersManifest.length;
   const isFirstChapter = chapter == null ? true : chapter.chapter <= 1;
@@ -88,7 +100,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
         });
       }
     }
-    items.push(...chapter.verses);
+    items.push(...verses);
     if (!isLastChapter) {
       const next = gitaChaptersManifest[chapter.chapter];
       if (next) {
@@ -102,11 +114,10 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
       }
     }
     return items;
-  }, [chapter, isFirstChapter, isLastChapter]);
+  }, [chapter, verses, isFirstChapter, isLastChapter]);
 
   const offset = isFirstChapter ? 0 : 1;
   const listRef = useRef<FlatList<FlatListItem>>(null);
-  const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const hasNavigatedRef = useRef(false);
 
   // Called before the null-chapter early return below, so hook order stays stable;
@@ -118,6 +129,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
     verseCount,
     currentIndex,
     listRef,
+    getItem: getVerse,
   });
 
   useEffect(() => {
@@ -262,7 +274,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
           <FlatList
             ref={listRef}
             data={data}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(_, index) => String(index)}
             renderItem={({ item, index }) => {
               if ('__type' in item && item.__type === 'transition') {
                 return (
@@ -281,6 +293,13 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
                     lang={lang}
                   />
                 );
+              }
+              if ('__type' in item && item.__type === 'loading') {
+                return <View style={{width,flex:1,alignItems:'center',justifyContent:'center'}}>
+                  {pageError ? <Pressable accessibilityRole="button" accessibilityLabel="Retry loading verse" onPress={retryPage}>
+                    <Text style={{color:colors.ink}}>{contentByLang(lang, 'श्लोक लोड नहीं हुआ। फिर प्रयास करने के लिए दबाएँ।', 'Could not load this verse. Tap to retry.')}</Text>
+                  </Pressable> : <ActivityIndicator accessibilityLabel="Loading verse" color={colors.saffronDeep} />}
+                </View>;
               }
               const verseIdx = index - offset;
               const bookmarkId = `bhagavad-gita:${chapter.chapter}:${verseIdx}`;

@@ -1,3 +1,4 @@
+import { readContent, readVerse } from '../../storage/content';
 /* JSON chapters are produced by scripts/parse-gita.mjs from
    BhagwadGita/chapters/chapter-NN-*.md. Do not hand-edit the .json files. */
 
@@ -41,6 +42,7 @@ export const gitaChaptersManifest: readonly GitaChapterSummary[] =
   manifest as GitaChapterSummary[];
 
 /**
+ * Compatibility loader for authoring/web. Native readers page SQLite directly.
  * The full corpus is intentionally loaded one chapter at a time — the same rule
  * `valmiki-ramayan/index.ts` follows, and for the same reason. Importing all 18
  * payloads here put **6.5 MB of JSON on the launch path**: `entryRoutes.ts`
@@ -54,27 +56,33 @@ export const gitaChaptersManifest: readonly GitaChapterSummary[] =
  * where the data they describe actually arrives.
  */
 const chapterLoaders: readonly (() => GitaChapter)[] = [
-  () => require('./chapter-01.json') as GitaChapter,
-  () => require('./chapter-02.json') as GitaChapter,
-  () => require('./chapter-03.json') as GitaChapter,
-  () => require('./chapter-04.json') as GitaChapter,
-  () => require('./chapter-05.json') as GitaChapter,
-  () => require('./chapter-06.json') as GitaChapter,
-  () => require('./chapter-07.json') as GitaChapter,
-  () => require('./chapter-08.json') as GitaChapter,
-  () => require('./chapter-09.json') as GitaChapter,
-  () => require('./chapter-10.json') as GitaChapter,
-  () => require('./chapter-11.json') as GitaChapter,
-  () => require('./chapter-12.json') as GitaChapter,
-  () => require('./chapter-13.json') as GitaChapter,
-  () => require('./chapter-14.json') as GitaChapter,
-  () => require('./chapter-15.json') as GitaChapter,
-  () => require('./chapter-16.json') as GitaChapter,
-  () => require('./chapter-17.json') as GitaChapter,
-  () => require('./chapter-18.json') as GitaChapter,
+  () => readContent('gita/chapter-01.json') as GitaChapter,
+  () => readContent('gita/chapter-02.json') as GitaChapter,
+  () => readContent('gita/chapter-03.json') as GitaChapter,
+  () => readContent('gita/chapter-04.json') as GitaChapter,
+  () => readContent('gita/chapter-05.json') as GitaChapter,
+  () => readContent('gita/chapter-06.json') as GitaChapter,
+  () => readContent('gita/chapter-07.json') as GitaChapter,
+  () => readContent('gita/chapter-08.json') as GitaChapter,
+  () => readContent('gita/chapter-09.json') as GitaChapter,
+  () => readContent('gita/chapter-10.json') as GitaChapter,
+  () => readContent('gita/chapter-11.json') as GitaChapter,
+  () => readContent('gita/chapter-12.json') as GitaChapter,
+  () => readContent('gita/chapter-13.json') as GitaChapter,
+  () => readContent('gita/chapter-14.json') as GitaChapter,
+  () => readContent('gita/chapter-15.json') as GitaChapter,
+  () => readContent('gita/chapter-16.json') as GitaChapter,
+  () => readContent('gita/chapter-17.json') as GitaChapter,
+  () => readContent('gita/chapter-18.json') as GitaChapter,
 ];
 
 const chapterCache = new Map<number, GitaChapter>();
+
+/** Daily Bhakti and notifications need one verse, not an entire chapter. */
+export function getGitaVerse(chapter: number, index: number): GitaVerse | undefined {
+  if (!Number.isInteger(chapter) || !Number.isInteger(index) || index < 0 || index >= (gitaChaptersManifest[chapter-1]?.verseCount ?? 0)) return undefined;
+  return readVerse<GitaVerse>(`gita/chapter-${String(chapter).padStart(2,'0')}.json`,index);
+}
 
 export function getGitaChapter(chapter: number): GitaChapter {
   const idx = chapter - 1;

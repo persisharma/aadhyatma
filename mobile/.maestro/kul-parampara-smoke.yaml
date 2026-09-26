@@ -47,6 +47,11 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Kul Parampara, new"
     timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Kul Parampara, new"
+    direction: UP
+    centerElement: true
 - tapOn: "Kul Parampara, new"
 - waitForAnimationToEnd
 - assertVisible: "Create kul parampara record"

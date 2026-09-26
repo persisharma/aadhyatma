@@ -71,9 +71,19 @@ appId: com.prashantsharma.vedansh
 #      three Backs reach Home, not two.
 - tapOn: "Back"
 - waitForAnimationToEnd
+# The empty Search also contains "Today's Vidhan" as a tile title. Require
+# the briefing's actual content so that title cannot hide an extra Search route.
+- extendedWaitUntil:
+    visible: "Ask something else"
+    timeout: 15000
+- assertVisible: "Answer.*"
+- assertNotVisible: "Search input"
 - assertVisible: "Today's Vidhan"
 - tapOn: "Back"
 - waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Search input"
+    timeout: 15000
 - extendedWaitUntil:
     visible: "Open Today's Vidhan"
     timeout: 15000

@@ -174,9 +174,8 @@ appId: com.prashantsharma.vedansh
 # ── Step 7: Restore Panchang + language defaults (best-effort) ──
 - scrollUntilVisible:
     element:
-      text: ".*Ujjain.*"   # the "Location: Ujjain" chip in the sticky header (full-string match)
+      text: "Location: Ujjain"   # Sticky header cannot be centered by scrolling.
     direction: UP
-    centerElement: true
     timeout: 20000
 - tapOn: "Purnimant calendar system"
 - waitForAnimationToEnd

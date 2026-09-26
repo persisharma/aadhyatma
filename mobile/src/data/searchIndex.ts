@@ -802,7 +802,7 @@ function pushJapam(out: SearchVerseEntry[], entry: LibraryEntry) {
   );
 }
 
-function makeVerseEntry(p: {
+export function makeVerseEntry(p: {
   sourceId: string;
   sectionNameHi: string;
   sectionNameEn: string;

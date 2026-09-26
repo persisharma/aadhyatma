@@ -1,3 +1,4 @@
+import { readContent } from '../../storage/content';
 import manifest from './chapters-manifest.json';
 import dailySelection from './daily-selection.json';
 
@@ -53,23 +54,24 @@ export const valmikiRamayanTotal = valmikiRamayanChaptersManifest.reduce(
 );
 
 /**
+ * Compatibility loader for authoring/web. Native readers page SQLite directly.
  * The full corpus is intentionally loaded one kāṇḍa at a time. Importing all
  * seven 2.5–6 MB payloads here would put the entire epic on the Home startup
  * path through `texts.ts`.
  */
 const chapterLoaders: readonly (() => ValmikiRamayanChapter)[] = [
-  () => require('./chapter-01.json') as ValmikiRamayanChapter,
-  () => require('./chapter-02.json') as ValmikiRamayanChapter,
-  () => require('./chapter-03.json') as ValmikiRamayanChapter,
-  () => require('./chapter-04.json') as ValmikiRamayanChapter,
-  () => require('./chapter-05.json') as ValmikiRamayanChapter,
-  () => require('./chapter-06.json') as ValmikiRamayanChapter,
-  () => require('./chapter-07.json') as ValmikiRamayanChapter,
+  () => readContent('valmiki-ramayan/chapter-01.json') as ValmikiRamayanChapter,
+  () => readContent('valmiki-ramayan/chapter-02.json') as ValmikiRamayanChapter,
+  () => readContent('valmiki-ramayan/chapter-03.json') as ValmikiRamayanChapter,
+  () => readContent('valmiki-ramayan/chapter-04.json') as ValmikiRamayanChapter,
+  () => readContent('valmiki-ramayan/chapter-05.json') as ValmikiRamayanChapter,
+  () => readContent('valmiki-ramayan/chapter-06.json') as ValmikiRamayanChapter,
+  () => readContent('valmiki-ramayan/chapter-07.json') as ValmikiRamayanChapter,
 ];
 
 const chapterCache = new Map<number, ValmikiRamayanChapter>();
 
-/** Lightweight anchors used by Daily Bhakti and on-device search. */
+/** Daily Bhakti anchors; native SQLite search indexes the complete corpus. */
 export const valmikiRamayanDailySelection =
   dailySelection as unknown as readonly ValmikiRamayanVerse[];
 

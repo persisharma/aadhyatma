@@ -65,7 +65,8 @@ appId: com.prashantsharma.vedansh
     visible: "Search within this list…"
     timeout: 15000
 - tapOn: "Search within this list…"
-- inputText: "Gangaur"
+# Partial query prevents tapOn Gangaur from matching the input value.
+- inputText: "Gangau"
 - hideKeyboard
 - extendedWaitUntil:
     visible: "Gangaur"
@@ -104,6 +105,11 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 
 # ── A dated folk-deity rule that now carries its katha ──
+# The landing preserves its prior query on Back; clear it before browsing again.
+- tapOn: "Goga"
+- eraseText: 4
+- hideKeyboard
+- waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Browse by type"
     timeout: 15000
@@ -125,9 +131,17 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Veer Tejaji Katha"
     timeout: 15000
-- assertVisible: "Part · 1/6"
+- assertVisible: "1 / 6"
+- assertVisible: "The boy of Kharnal.*"
 - tapOn: "Back"
 - waitForAnimationToEnd
+# ObservanceDetail opens the reader on HomeTab. Back returns to Home; the
+# observance remains on PanchangTab and can be revisited without losing it.
+- assertVisible: "Search verses, sections, and mantras"
+- tapOn: { id: "tab-panchang" }
+- waitForAnimationToEnd
+- assertVisible: "Teja Dashami"
+- assertVisible: "About"
 - tapOn: "Back"
 - waitForAnimationToEnd
 

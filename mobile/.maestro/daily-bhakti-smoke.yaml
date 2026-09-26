@@ -66,6 +66,11 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Daily Verse"
     timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Meaning.*"
+    direction: DOWN
+    timeout: 15000
 - assertVisible: "Meaning.*"
 
 # ── Step 5: "next" swaps to another verse; the screen stays intact ──
@@ -75,11 +80,22 @@ appId: com.prashantsharma.vedansh
     element:
       text: "Next verse"
     direction: DOWN
-    centerElement: true
+    visibilityPercentage: 60
     timeout: 10000
 - tapOn: "Next verse"
 - waitForAnimationToEnd
+# A long meaning can leave the header above the viewport; return to it.
+- scrollUntilVisible:
+    element:
+      text: "Daily Verse"
+    direction: UP
+    timeout: 15000
 - assertVisible: "Daily Verse"
+- scrollUntilVisible:
+    element:
+      text: "Meaning.*"
+    direction: DOWN
+    timeout: 15000
 - assertVisible: "Meaning.*"
 
 # ── Step 6: Restore Hindi (best-effort) ──

@@ -26,6 +26,10 @@ appId: com.prashantsharma.vedansh
 # ── Global reading language → English (More → Language picker sheet) ──
 - tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
 - tapOn: "Language,.*"
 - waitForAnimationToEnd
 - extendedWaitUntil:
@@ -35,6 +39,11 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 
 # ── 1. More → Daan Punya ──
+- scrollUntilVisible:
+    element:
+      id: "more-daan-punya"
+    direction: UP
+    centerElement: true
 - tapOn: { id: "more-daan-punya" }
 - waitForAnimationToEnd
 - assertVisible: "Daan Punya"

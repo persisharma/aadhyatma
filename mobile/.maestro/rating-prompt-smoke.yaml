@@ -38,9 +38,6 @@ appId: com.prashantsharma.vedansh
 # ── Step 2: Set reading language to English so the sheet copy is assertable ──
 - tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
-- extendedWaitUntil:
-    visible: "Language,.*"
-    timeout: 15000
 # The ऐप section (Language/Reading size) sits below the fold on standard-height
 # iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
 # tapping the off-screen row's estimated center hits the tab bar instead. Scroll first.

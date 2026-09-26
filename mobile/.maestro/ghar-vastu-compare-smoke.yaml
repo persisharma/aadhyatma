@@ -56,6 +56,12 @@ appId: com.prashantsharma.vedansh
     timeout: 30000
     centerElement: true
 - tapOn: { id: "ghar-facing-east" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: "ghar-setup-next-facing"
+    direction: DOWN
+    centerElement: true
 - tapOn: { id: "ghar-setup-next-facing" }
 - waitForAnimationToEnd
 - scrollUntilVisible:
@@ -108,6 +114,12 @@ appId: com.prashantsharma.vedansh
     timeout: 30000
     centerElement: true
 - tapOn: { id: "ghar-facing-north" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: "ghar-setup-next-facing"
+    direction: DOWN
+    centerElement: true
 - tapOn: { id: "ghar-setup-next-facing" }
 - waitForAnimationToEnd
 - scrollUntilVisible:
@@ -156,7 +168,7 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 30000
     centerElement: true
-- assertVisible: ".*decision is yours.*"
+- assertVisible: ".*same measure is applied to every home.*"
 
 # ── Back out cleanly ──
 - tapOn: "Back"

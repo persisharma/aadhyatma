@@ -49,6 +49,10 @@ appId: com.prashantsharma.vedansh
 # ── Global reading language → English (More → Language picker sheet) ──
 - tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
 - tapOn: "Language,.*"
 - waitForAnimationToEnd
 - extendedWaitUntil:
@@ -61,6 +65,7 @@ appId: com.prashantsharma.vedansh
 - scrollUntilVisible:
     element:
       text: "Pitru Smaran.*"
+    direction: UP
     centerElement: true
 - tapOn: "Pitru Smaran.*"
 - waitForAnimationToEnd
@@ -139,18 +144,19 @@ appId: com.prashantsharma.vedansh
           visible: { id: "pitru-parichay-reader" }
           timeout: 15000
       - assertVisible: "6 / 7"
-      - assertVisible: "Whose day is which — how a tithi is matched"
+      - assertVisible: "Whose day is which — how a tithi is matched.*"
       - swipe:
           direction: LEFT
       - waitForAnimationToEnd
       - assertVisible: "7 / 7"
-      - assertVisible: "Every family has its own way"
+      - assertVisible: "Every family has its own way.*"
       - swipe:
           direction: LEFT
       - waitForAnimationToEnd
       # Settling on the card → 400 ms → popTo: back on the SAME overview.
       - extendedWaitUntil:
-          visible: { id: "pitru-paksha-standing" }
+          # The overview retains the opened family day's scroll position.
+          visible: "Pitru Paksha 20.*"
           timeout: 10000
 
       # ── 4. Hub ──
@@ -186,20 +192,18 @@ appId: com.prashantsharma.vedansh
       # Glossary: looked up behind its door.
       - scrollUntilVisible:
           element:
-            text: "Glossary"
-          centerElement: true
-      - tapOn: "Glossary"
+            id: "pitru-shabd-door"
+      - tapOn: { id: "pitru-shabd-door" }
       - assertVisible: { id: "pitru-shabd-list" }
       # The introduction from the top: page 1 of 7.
       - scrollUntilVisible:
           element:
             text: "Read the introduction"
           direction: UP
-          centerElement: true
       - tapOn: "Read the introduction"
       - waitForAnimationToEnd
       - assertVisible: "1 / 7"
-      - assertVisible: "What Pitru Paksha is"
+      - assertVisible: "What Pitru Paksha is.*"
       - tapOn: "Back"
       - waitForAnimationToEnd
       - tapOn: "Back"

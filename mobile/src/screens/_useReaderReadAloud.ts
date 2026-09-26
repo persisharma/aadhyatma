@@ -50,6 +50,7 @@ export function useReaderReadAloud<T>(args: {
   /** FlatList data, sentinels included. */
   data: readonly T[];
   /** List-index offset for a prepended prev-chapter card: the reader's own `offset`. */
+  getItem?: (verseIndex: number) => unknown;
   offset: number;
   /** Number of real verses (list length minus any transition cards). */
   verseCount: number;
@@ -69,6 +70,8 @@ export function useReaderReadAloud<T>(args: {
 
   // Everything the session closure reads is mirrored, so the session object stays
   // stable while the reader re-renders on every page change.
+  const getItemRef = useRef(args.getItem);
+  getItemRef.current = args.getItem;
   const dataRef = useRef(data);
   dataRef.current = data;
   const offsetRef = useRef(offset);
@@ -126,7 +129,8 @@ export function useReaderReadAloud<T>(args: {
       sourceId,
       totalPages: verseCountRef.current,
       chunksFor: (pageIndex: number) => {
-        const item = dataRef.current[pageIndex + offsetRef.current];
+        if (pageIndex < 0 || pageIndex >= verseCountRef.current) return null;
+        const item = getItemRef.current ? getItemRef.current(pageIndex) : dataRef.current[pageIndex + offsetRef.current];
         const readable = toReadableVerse(item);
         // `null` here is the chapter-transition sentinel — the controller stops
         // rather than reading across a chapter boundary.

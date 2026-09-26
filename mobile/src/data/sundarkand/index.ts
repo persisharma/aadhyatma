@@ -1,20 +1,21 @@
+import { readContent } from '../../storage/content';
 import manifest from './chapters-manifest.json';
-import ch01 from './chapter-01.json';
-import ch02 from './chapter-02.json';
-import ch03 from './chapter-03.json';
-import ch04 from './chapter-04.json';
-import ch05 from './chapter-05.json';
-import ch06 from './chapter-06.json';
-import ch07 from './chapter-07.json';
-import ch08 from './chapter-08.json';
-import ch09 from './chapter-09.json';
-import ch10 from './chapter-10.json';
-import ch11 from './chapter-11.json';
-import ch12 from './chapter-12.json';
-import ch13 from './chapter-13.json';
-import ch14 from './chapter-14.json';
-import ch15 from './chapter-15.json';
-import ch16 from './chapter-16.json';
+const ch01 = readContent<typeof import('./chapter-01.json')>('sundarkand/chapter-01.json');
+const ch02 = readContent<typeof import('./chapter-02.json')>('sundarkand/chapter-02.json');
+const ch03 = readContent<typeof import('./chapter-03.json')>('sundarkand/chapter-03.json');
+const ch04 = readContent<typeof import('./chapter-04.json')>('sundarkand/chapter-04.json');
+const ch05 = readContent<typeof import('./chapter-05.json')>('sundarkand/chapter-05.json');
+const ch06 = readContent<typeof import('./chapter-06.json')>('sundarkand/chapter-06.json');
+const ch07 = readContent<typeof import('./chapter-07.json')>('sundarkand/chapter-07.json');
+const ch08 = readContent<typeof import('./chapter-08.json')>('sundarkand/chapter-08.json');
+const ch09 = readContent<typeof import('./chapter-09.json')>('sundarkand/chapter-09.json');
+const ch10 = readContent<typeof import('./chapter-10.json')>('sundarkand/chapter-10.json');
+const ch11 = readContent<typeof import('./chapter-11.json')>('sundarkand/chapter-11.json');
+const ch12 = readContent<typeof import('./chapter-12.json')>('sundarkand/chapter-12.json');
+const ch13 = readContent<typeof import('./chapter-13.json')>('sundarkand/chapter-13.json');
+const ch14 = readContent<typeof import('./chapter-14.json')>('sundarkand/chapter-14.json');
+const ch15 = readContent<typeof import('./chapter-15.json')>('sundarkand/chapter-15.json');
+const ch16 = readContent<typeof import('./chapter-16.json')>('sundarkand/chapter-16.json');
 
 export type SundarkandSection = 'shloka' | 'chaupai' | 'doha' | 'sortha' | 'chhand';
 

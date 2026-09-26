@@ -1,4 +1,5 @@
-import data from './durga-chalisa.json';
+import { readContent } from '../../storage/content';
+const data = readContent<typeof import('./durga-chalisa.json')>('durga-chalisa/durga-chalisa.json');
 
 export type DurgaChalisaVerse = {
   id: string;

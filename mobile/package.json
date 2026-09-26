@@ -9,7 +9,7 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "lint": "expo lint",
-    "test": "npm run typecheck && npm run test:widgets && npm run test:readers && npm run test:engine && npm run test:data && npm run test:ask",
+    "test": "npm run typecheck && npm run test:widgets && npm run test:readers && npm run test:engine && npm run test:data && npm run test:ask && npm run test:library",
     "test:readers": "jest --config jest.config.js --runInBand",
     "test:engine": "TZ=Asia/Kolkata tsx --test src/panchang/__tests__/*.test.ts",
     "test:widgets": "tsx --test src/widgets/__tests__/catalog.test.ts src/widgets/__tests__/contract.test.ts src/widgets/__tests__/planPayload.test.ts src/widgets/__tests__/planner.test.ts src/widgets/__tests__/startup.test.ts",
@@ -21,7 +21,15 @@
     "test:e2e:flow": "maestro test",
     "typecheck": "tsc --noEmit",
     "doctor": "expo-doctor",
-    "test:ask": "TZ=Asia/Kolkata tsx --test src/ask/__tests__/*.test.ts"
+    "test:ask": "TZ=Asia/Kolkata tsx --test src/ask/__tests__/*.test.ts",
+    "build:library": "tsx scripts/build-library.mts",
+    "verify:library": "tsx scripts/build-library.mts --check",
+    "test:library": "tsx --test src/storage/__tests__/*.test.ts",
+    "prestart": "npm run build:library",
+    "preios": "npm run build:library",
+    "preandroid": "npm run build:library",
+    "eas-build-post-install": "npm run build:library",
+    "pretest": "npm run build:library"
   },
   "dependencies": {
     "@expo-google-fonts/cormorant-garamond": "^0.4.1",
@@ -48,6 +56,7 @@
     "expo-sharing": "~14.0.7",
     "expo-speech": "~14.0.8",
     "expo-splash-screen": "~31.0.13",
+    "expo-sqlite": "~16.0.10",
     "expo-status-bar": "~3.0.9",
     "expo-updates": "~29.0.17",
     "react": "19.1.0",
@@ -69,5 +78,8 @@
     "react-test-renderer": "^19.1.0",
     "tsx": "^4.22.3",
     "typescript": "~5.9.2"
+  },
+  "engines": {
+    "node": ">=22.13.0"
   }
 }

@@ -1,11 +1,12 @@
+import { readContent } from '../../storage/content';
 // Stuti (स्तुति) — multi-instance form registry, mirroring `suktam/index.ts`.
 // One StutiReaderScreen dispatches on the `stutiId` route param through this
 // registry (RULEBOOK §3). Each text is source-verified verses (Devanagari
 // `lines` + IAST `linesEn` + bilingual meanings).
-import krishnaStuti from './krishna-stuti.json';
-import durgaStutiArjuna from './durga-stuti-arjuna.json';
-import kuberaStotram from './kubera-stotram.json';
-import navagrahaStotram from './navagraha-stotram.json';
+const krishnaStuti = readContent<typeof import('./krishna-stuti.json')>('stuti/krishna-stuti.json');
+const durgaStutiArjuna = readContent<typeof import('./durga-stuti-arjuna.json')>('stuti/durga-stuti-arjuna.json');
+const kuberaStotram = readContent<typeof import('./kubera-stotram.json')>('stuti/kubera-stotram.json');
+const navagrahaStotram = readContent<typeof import('./navagraha-stotram.json')>('stuti/navagraha-stotram.json');
 
 export type StutiVerse = {
   id: string;

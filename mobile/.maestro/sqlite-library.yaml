@@ -1,0 +1,110 @@
+# Native bundled SQLite: first import, late-epic reading, page boundary,
+# bookmark/share, relaunch persistence, and full-corpus search -> reader.
+# Run against an embedded Release build (no Metro required).
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- tapOn: "Sacred Books\\..*Tap to open\\."
+- tapOn: "Valmiki Ramayan\\..*Tap to open\\."
+- tapOn: "English"
+- scrollUntilVisible:
+    element:
+      text: "Kanda 7\\. Uttara Kanda\\. 3461 shlokas\\. Tap to open\\."
+    direction: DOWN
+    centerElement: true
+- tapOn: "Kanda 7\\. Uttara Kanda\\. 3461 shlokas\\. Tap to open\\."
+- extendedWaitUntil:
+    visible: "Shloka · 7\\.1\\.1.*"
+    timeout: 30000
+- swipe:
+    direction: LEFT
+- extendedWaitUntil:
+    visible: "Shloka · 7\\.1\\.2.*"
+    timeout: 15000
+- tapOn: "Add bookmark"
+- assertVisible: "Remove bookmark"
+- tapOn: "Share verse"
+- assertVisible: "Share on Instagram"
+- tapOn: "Cancel"
+# Restart without clearing data: verify progress and bookmark survive.
+- stopApp
+- launchApp:
+    clearState: false
+- waitForAnimationToEnd:
+    timeout: 30000
+- extendedWaitUntil:
+    visible: ".*Today.s Panchang.*"
+    timeout: 30000
+- tapOn: "Sacred Books\\..*Tap to open\\."
+- tapOn: "Valmiki Ramayan\\..*Tap to open\\."
+- tapOn: "Resume reading"
+- extendedWaitUntil:
+    visible: "Shloka · 7\\.1\\.2.*"
+    timeout: 15000
+- assertVisible: "Remove bookmark"
+- tapOn: "Remove bookmark"
+- tapOn: "Back to chapters"
+- tapOn:
+    text: "Back"
+    optional: true
+- tapOn:
+    text: "Back"
+    optional: true
+- tapOn: "Search verses, sections, and mantras"
+- tapOn: "Search input"
+# This verse is outside the previous 28-row selection.
+- inputText: "7.50.1"
+- extendedWaitUntil:
+    visible: "Open Valmiki Ramayan Shloka · 7\\.50\\.1"
+    timeout: 15000
+- tapOn: "Open Valmiki Ramayan Shloka · 7\\.50\\.1"
+- extendedWaitUntil:
+    visible: "Shloka · 7\\.50\\.1.*"
+    timeout: 15000
+- swipe:
+    direction: LEFT
+- extendedWaitUntil:
+    visible: "Shloka · 7\\.50\\.2.*"
+    timeout: 15000
+- tapOn: "Jump to beginning"
+- extendedWaitUntil:
+    visible: "Shloka · 7\\.1\\.1.*"
+    timeout: 15000
+# Return from the search-launched reader and exercise the Gita and a short text.
+- tapOn: "Back to chapters"
+- tapOn: "Back"
+- tapOn: "Sacred Books\\..*Tap to open\\."
+- tapOn: "Bhagavad Gītā\\..*Tap to open\\."
+- tapOn: "Chapter 1\\..*Tap to open\\."
+- extendedWaitUntil:
+    visible: "Verse 1\\.1.*"
+    timeout: 15000
+- swipe:
+    direction: LEFT
+- extendedWaitUntil:
+    visible: "Verse 1\\.2.*"
+    timeout: 15000
+- tapOn: "Hindi"
+- tapOn: "English"
+- tapOn: "Jump to beginning"
+- extendedWaitUntil:
+    visible: "Verse 1\\.1.*"
+    timeout: 15000
+- assertVisible: "Read aloud|Read aloud unavailable"
+- runFlow:
+    when:
+      visible: "Read aloud"
+    commands:
+      - tapOn: "Read aloud"
+      - assertVisible: "Pause reading aloud"
+      - tapOn: "Pause reading aloud"
+- tapOn: "Back to chapters"
+- tapOn: "Back"
+- tapOn: "Back"
+- tapOn: "Chalisa\\..*Tap to open\\."
+- tapOn: "Hanuman Chalisa\\..*Tap to open\\."
+- assertVisible: "Add bookmark"
+- tapOn: "Add bookmark"
+- assertVisible: "Remove bookmark"
+- tapOn: "Remove bookmark"
+- stopApp

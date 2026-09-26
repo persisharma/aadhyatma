@@ -16,6 +16,7 @@ import type { GitaVerse } from '@/data/gita';
 import { getReaderBackground } from '@/data/backgrounds';
 import BackgroundLayer from './BackgroundLayer';
 import Ornament from './Ornament';
+import { readingParagraphs } from '@/utils/readingParagraphs';
 
 type Props = {
   verse: GitaVerse;
@@ -181,9 +182,11 @@ export default function GitaVersePage({ verse, sourceId, width, topActions }: Pr
             {hasCommentary ? (
               <View style={styles.paragraphs}>
                 {commentary.map((paragraph, idx) => (
-                  <Text key={`c-${idx}`} style={[styles.body, bodyStyle]}>
-                    {paragraph}
-                  </Text>
+                  <View key={`c-${idx}`}>
+                    {readingParagraphs(paragraph).map((chunk, chunkIndex) => (
+                      <Text key={chunkIndex} style={[styles.body, bodyStyle]}>{chunk}</Text>
+                    ))}
+                  </View>
                 ))}
               </View>
             ) : (

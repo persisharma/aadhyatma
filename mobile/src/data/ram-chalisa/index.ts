@@ -1,4 +1,5 @@
-import data from './ram-chalisa.json';
+import { readContent } from '../../storage/content';
+const data = readContent<typeof import('./ram-chalisa.json')>('ram-chalisa/ram-chalisa.json');
 
 export type RamChalisaVerse = {
   id: string;

@@ -96,7 +96,7 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 
 # Create the golden-fixture chart (same steps as kundali-smoke).
-- tapOn: "Create Kundali"
+- tapOn: "Create Kundali(?:,.*)?"
 - waitForAnimationToEnd
 - tapOn:
     text: "Edit birth details"
@@ -110,14 +110,34 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - tapOn: ".*tap to change year"
 - tapOn: "Month August"
-- repeat:
-    times: 4
+# Platform-specific year-list gestures retain the same golden birth date.
+- runFlow:
+    when:
+      platform: iOS
     commands:
-      - swipe:
-          start: "50%, 70%"
-          end: "50%, 50%"
-          duration: 250
-- tapOn: "Year 1992"
+      - repeat:
+          times: 4
+          commands:
+            - swipe: { start: "50%, 70%", end: "50%, 50%", duration: 250 }
+      - waitForAnimationToEnd
+      - tapOn: "Year 1992"
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - repeat:
+          times: 18
+          commands:
+            - swipe: { start: "50%, 78%", end: "50%, 64%", duration: 1000 }
+            - waitForAnimationToEnd
+      - repeat:
+          times: 15
+          while:
+            notVisible: "14 August 1992"
+          commands:
+            - tapOn: { text: "Year 1992", optional: true }
+            - swipe: { start: "50%, 72%", end: "50%, 86%", duration: 1000 }
+            - waitForAnimationToEnd
 - tapOn: "14 August 1992"
 - tapOn: "Confirm date"
 - waitForAnimationToEnd
@@ -167,11 +187,11 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - scrollUntilVisible:
     element:
-      text: "Open Gochar"
+      text: "Open Gochar(?:,.*)?"
     direction: DOWN
     timeout: 15000
 - assertVisible: ".*Sade Sati.*"
-- tapOn: "Open Gochar"
+- tapOn: "Open Gochar(?:,.*)?"
 - waitForAnimationToEnd
 
 # Gochar screen: framing, reference, table, themes, Sade Sati, ingress list.

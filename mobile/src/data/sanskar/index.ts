@@ -1,11 +1,12 @@
-import prabhatiShloka from './prabhati-shloka.json';
-import suryaNamaskar from './surya-namaskar.json';
-import tulsiPuja from './tulsi-puja.json';
-import bhojanMantra from './bhojan-mantra.json';
-import gauSeva from './gau-seva.json';
-import sandhyaDeepam from './sandhya-deepam.json';
-import ratriShloka from './ratri-shloka.json';
-import vidyarambhaPrarthana from './vidyarambha-prarthana.json';
+import { readContent } from '../../storage/content';
+const prabhatiShloka = readContent<typeof import('./prabhati-shloka.json')>('sanskar/prabhati-shloka.json');
+const suryaNamaskar = readContent<typeof import('./surya-namaskar.json')>('sanskar/surya-namaskar.json');
+const tulsiPuja = readContent<typeof import('./tulsi-puja.json')>('sanskar/tulsi-puja.json');
+const bhojanMantra = readContent<typeof import('./bhojan-mantra.json')>('sanskar/bhojan-mantra.json');
+const gauSeva = readContent<typeof import('./gau-seva.json')>('sanskar/gau-seva.json');
+const sandhyaDeepam = readContent<typeof import('./sandhya-deepam.json')>('sanskar/sandhya-deepam.json');
+const ratriShloka = readContent<typeof import('./ratri-shloka.json')>('sanskar/ratri-shloka.json');
+const vidyarambhaPrarthana = readContent<typeof import('./vidyarambha-prarthana.json')>('sanskar/vidyarambha-prarthana.json');
 
 import type { SanskarData } from './types';
 export type { SanskarData, SanskarVerse } from './types';

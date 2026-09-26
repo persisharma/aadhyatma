@@ -1,3 +1,4 @@
+import { readContent } from '../../storage/content';
 // Suktam (सूक्तम्) — multi-instance form registry, mirroring `ashtakam/index.ts`.
 // One SuktamReaderScreen dispatches on the `suktamId` route param through this
 // registry (RULEBOOK §3). Each text is source-verified verses (Devanagari
@@ -6,9 +7,9 @@
 // NOTE: The Vedic Suktams (Purusha Suktam, Narayana Suktam) are recension- and
 // svara-accent-divergent across sources and are NOT yet included — see
 // .context/prd-a-progress.md (items 12–13 BLOCKED pending clean human sourcing).
-import deviSuktam from './devi-suktam.json';
-import purushaSuktam from './purusha-suktam.json';
-import narayanaSuktam from './narayana-suktam.json';
+const deviSuktam = readContent<typeof import('./devi-suktam.json')>('suktam/devi-suktam.json');
+const purushaSuktam = readContent<typeof import('./purusha-suktam.json')>('suktam/purusha-suktam.json');
+const narayanaSuktam = readContent<typeof import('./narayana-suktam.json')>('suktam/narayana-suktam.json');
 
 export type SuktamVerse = {
   id: string;

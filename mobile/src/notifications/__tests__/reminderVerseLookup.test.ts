@@ -11,13 +11,14 @@ import { assignSlotVerseIndices, type ReminderSlot } from '../seed';
   const pool = getVersePool();
   assert.ok(pool.length > 0, 'verse pool should be non-empty in tests');
 
-  const sample = pool[Math.floor(pool.length / 2)];
+  for (const sample of pool) {
   const found = findVerse(sample.sourceId, sample.verseIndex, sample.chapter);
   assert.ok(found, 'findVerse should locate a verse by its identity');
   assert.equal(found.sourceId, sample.sourceId);
   assert.equal(found.verseIndex, sample.verseIndex);
   assert.equal(found.chapter ?? null, sample.chapter ?? null);
-  assert.deepEqual(found.textHi, sample.textHi);
+  assert.deepEqual(found, sample, `${sample.sourceId}:${sample.chapter}:${sample.verseIndex}`);
+  }
 }
 
 // Unknown identity (e.g. a verse removed by an OTA update) resolves to null so

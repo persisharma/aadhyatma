@@ -104,11 +104,11 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Kundali. New. Tap to open."
 - waitForAnimationToEnd
 - extendedWaitUntil:
-    visible: "Create Kundali"
+    visible: "Create Kundali(?:,.*)?"
     timeout: 60000
 # A guest has nobody to switch between, so the switcher must not exist yet.
-- assertNotVisible: "Person switcher"
-- tapOn: "Create Kundali"
+- assertNotVisible: "Show Jyotish for .*"
+- tapOn: "Create Kundali(?:,.*)?"
 - waitForAnimationToEnd
 - tapOn:
     text: "Edit birth details"
@@ -302,11 +302,11 @@ appId: com.prashantsharma.vedansh
 # Daily Rashifal opens for the person the landing is showing.
 - scrollUntilVisible:
     element:
-      text: "Open Daily Rashifal"
+      text: "Open Daily Rashifal(?:,.*)?"
     direction: DOWN
     timeout: 15000
     centerElement: true
-- tapOn: "Open Daily Rashifal"
+- tapOn: "Open Daily Rashifal(?:,.*)?"
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Daily Rashifal"

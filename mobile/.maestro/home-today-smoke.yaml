@@ -85,5 +85,9 @@ appId: com.prashantsharma.vedansh
     timeout: 30000
 - tapOn: "Today's Panchang\\..*Tap to open\\."
 - extendedWaitUntil:
+    visible: "Expand calendar"
+    timeout: 15000
+- tapOn: "Expand calendar"
+- extendedWaitUntil:
     visible: "Next month"
     timeout: 15000

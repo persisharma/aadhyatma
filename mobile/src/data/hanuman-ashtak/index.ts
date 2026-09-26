@@ -1,5 +1,6 @@
+import { readContent } from '../../storage/content';
 import manifest from './chapters-manifest.json';
-import ch01 from './chapter-01.json';
+const ch01 = readContent<typeof import('./chapter-01.json')>('hanuman-ashtak/chapter-01.json');
 
 export type HanumanAshtakVerse = {
   id: string;

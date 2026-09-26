@@ -25,7 +25,8 @@ If `maestro --version` fails with "Unable to locate a Java Runtime", step 1 was 
 
 ## Running flows
 
-The dev server (`npx expo start`) must be running and the app must already be installed in your simulator. Then:
+Install the native app on the selected simulator/emulator. Release uses its
+embedded bundle; Debug requires this worktree's Metro server. Then:
 
 ```bash
 # Run a single flow
@@ -74,6 +75,49 @@ Tuning via env: `E2E_VISUAL_THRESH` (default 0.10 %), `E2E_DIFF_TOL` (default 10
   3. `testID` — only when the above don't apply
   4. **NEVER** use `point: x%, y%` coordinates — these break across device sizes
 - **Wait between actions**: Use `waitForAnimationToEnd` after navigation, not fixed sleeps
+
+### Release and development-only fixtures
+
+Three `new-content-badge*` flows are tagged `requires-dev`: they simulate an
+upgrade using `__DEV__` Home controls. Run them with a Debug app connected to
+this worktree's Metro server on port 8084. They cannot run against Release.
+
+```sh
+# Ordinary Release app
+maestro --device <RELEASE_UDID> test --exclude-tags requires-dev .maestro/
+# Debug app, with Metro on port 8084
+maestro --device <DEBUG_UDID> test --include-tags requires-dev .maestro/
+```
+
+For Android Debug fixtures, compile the same Metro port into the app; iOS's
+`RCT_jsLocation` launch argument does not configure Android:
+
+```sh
+# JDK 17 / Android SDK configured; start Metro separately in this worktree:
+CI=1 npx expo start --port 8084 -c
+# In another terminal:
+(cd android && ./gradlew assembleDebug -PreactNativeDevServerPort=8084 -PreactNativeArchitectures=arm64-v8a)
+adb -s <DEBUG_EMULATOR> install -r android/app/build/outputs/apk/debug/app-debug.apk
+adb -s <DEBUG_EMULATOR> reverse tcp:8084 tcp:8084
+```
+
+Android can expose `accessibilityValue` as `label, value`. Selectors for those
+controls preserve the exact action label and explicitly allow the value suffix;
+feature assertions still verify the resulting screen and content.
+
+## Exhaustive SQLite verification
+
+`sqlite-library.yaml` exercises first launch, distant Ramayan search, paging,
+bookmarks and resume across restart, sharing and read-aloud controls.
+`sqlite-chapter-boundaries.yaml` covers all Gita and Valmiki Ramayan chapter
+edges through normal Search; regenerate it with
+`node scripts/generate-library-boundaries.mjs` when authoring content changes.
+`gita-kannada-regression.yaml` guards the native TextKit crash reproduced with
+Gita 13.9, including language switching and Large reading size.
+
+For every stored verse rendered in all four languages, use the separate
+[native corpus audit](../e2e/library-audit/README.md). It uses a dedicated
+simulator and production components, and complements these navigation flows.
 
 ## Available flows
 

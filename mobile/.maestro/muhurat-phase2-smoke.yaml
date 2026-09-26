@@ -167,12 +167,16 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
-      text: ".*Rahu Kaal.*|.*राहु काल.*"
+      text: "All timings & choghadiya.*"
     direction: DOWN
+    centerElement: true
 - tapOn:
-    text: ".*Rahu Kaal.*|.*राहु काल.*"
+    text: "All timings & choghadiya.*"
 - waitForAnimationToEnd
 # The full card's Karana row now carries "till <time>" like Tithi/Nakshatra.
-- extendedWaitUntil:
-    visible: "Karana"
+- scrollUntilVisible:
+    element: "Karana"
+    direction: DOWN
+    centerElement: true
     timeout: 20000
+- assertVisible: "Karana"

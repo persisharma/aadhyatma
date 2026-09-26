@@ -95,10 +95,17 @@ appId: com.prashantsharma.vedansh
 # ── Step 5: Choose 5 days → the solved visarjan appears; Decide later → gone ──
 - tapOn: "5 days"
 - waitForAnimationToEnd
-- extendedWaitUntil:
-    visible: "Your visarjan"
+- scrollUntilVisible:
+    element: "Your visarjan"
+    direction: DOWN
+    centerElement: true
     timeout: 10000
 - assertVisible: "Sthapana"
+- scrollUntilVisible:
+    element: "Decide later"
+    direction: UP
+    centerElement: true
+    timeout: 10000
 - tapOn: "Decide later"
 - waitForAnimationToEnd
 - assertNotVisible: "Your visarjan"

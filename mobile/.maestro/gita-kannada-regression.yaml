@@ -1,0 +1,51 @@
+# Isolate the all-verse audit's iOS Kannada text-layout crash in the real reader.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- tapOn: { id: "tab-more" }
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
+- tapOn: "Language,.*"
+- tapOn: "Kannada"
+- tapOn: { id: "tab-home" }
+- tapOn: "Search verses, sections, and mantras"
+- tapOn: "Search input"
+- inputText: "Verse 13.9"
+- extendedWaitUntil:
+    visible: "Open Bhagavad Gītā Verse 13\\.9"
+    timeout: 20000
+- tapOn: "Open Bhagavad Gītā Verse 13\\.9"
+- extendedWaitUntil:
+    visible: "Verse 13\\.9\\..*"
+    timeout: 20000
+- swipe: { direction: LEFT }
+- extendedWaitUntil:
+    visible: "Verse 13\\.10\\..*"
+    timeout: 20000
+- swipe: { direction: RIGHT }
+- extendedWaitUntil:
+    visible: "Verse 13\\.9\\..*"
+    timeout: 20000
+- tapOn: "English"
+- assertVisible: "Verse 13\\.9\\..*"
+- tapOn: "Kannada"
+- assertVisible: "Verse 13\\.9\\..*"
+# The larger reading size also shapes the complete long commentary safely.
+- tapOn: { id: "tab-more" }
+- scrollUntilVisible:
+    element:
+      text: "Reading size,.*"
+    direction: DOWN
+    centerElement: true
+- tapOn: "Reading size,.*"
+- tapOn: "Large"
+- tapOn: "ಮುಗಿಯಿತು"
+- tapOn: { id: "tab-home" }
+- assertVisible: "Verse 13\\.9\\..*"
+- swipe: { direction: LEFT }
+- extendedWaitUntil:
+    visible: "Verse 13\\.10\\..*"
+    timeout: 20000
+- stopApp

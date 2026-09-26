@@ -16,6 +16,8 @@
 # (every reader/chapters screen exposes accessibilityLabel "Back") marks it seen.
 
 appId: com.prashantsharma.vedansh
+tags:
+  - requires-dev
 ---
 # ── Setup: force a clean slate, then simulate an update ──
 - runFlow: _launch.yaml

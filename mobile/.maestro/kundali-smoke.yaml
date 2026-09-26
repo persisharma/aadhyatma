@@ -109,8 +109,8 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Panchang"
 - assertVisible: "Vrat & Parv"
 - assertVisible: "Jyotish"
-- assertVisible: "Create Kundali"
-- assertVisible: "Open Daily Rashifal"
+- assertVisible: "Create Kundali(?:,.*)?"
+- assertVisible: "Open Daily Rashifal(?:,.*)?"
 # These two sit below the fold on Android's shorter viewport — scroll to them
 # (no-op when already visible, as on iOS), then scroll back up to the CTA.
 - scrollUntilVisible:
@@ -118,15 +118,14 @@ appId: com.prashantsharma.vedansh
       text: "Open Navagraha Stotram"
     direction: DOWN
     timeout: 10000
-    centerElement: true
 - assertVisible: ".*reflection aid, not a certain prediction.*"
 - scrollUntilVisible:
     element:
-      text: "Create Kundali"
+      text: "Create Kundali(?:,.*)?"
     direction: UP
     timeout: 10000
     centerElement: true
-- tapOn: "Create Kundali"
+- tapOn: "Create Kundali(?:,.*)?"
 - waitForAnimationToEnd
 
 # If a previous manual run left a profile on this simulator, enter edit mode.
@@ -294,7 +293,8 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "From your full chart"
     timeout: 15000
-- assertVisible: "Person switcher"
+- assertVisible: "Show Jyotish for Aarav"
+- assertVisible: "Add another person"
 - assertVisible: "Favour|FAVOUR"
 - assertVisible: "Pause|PAUSE"
 - assertVisible: "Reflect|REFLECT"
@@ -309,29 +309,40 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Close share preview"
 - waitForAnimationToEnd
 # The Moon sign is the card hero, so it is already on screen.
-- assertVisible: "Kumbha"
-- assertVisible: "Aquarius"
+- assertVisible: "Kumbha · Aquarius"
 # §51c dissolved the chart-glance card into the door grid: Lagna and nakshatra
 # are now the Kundali TILE's reading, and the dasha lord lives one tap deeper on
 # the Kundali result. The grid can sit below the fold on Android's shorter
 # viewport, so scroll to it (no-op on iOS).
 - scrollUntilVisible:
     element:
-      text: "For you|Open Kundali"
+      text: "For you|Open Kundali(?:,.*)?"
     direction: DOWN
     timeout: 15000
 - assertVisible: ".*Karka Lagna.*"
 - assertVisible: ".*Dhanishta.*"
 # The doors that used to be four stacked cards under four labels.
-- assertVisible: "Open Gochar"
-- assertVisible: "Open Guna Milan"
-- assertVisible: "Open Namkaran"
+- assertVisible: "Open Gochar(?:,.*)?"
 - scrollUntilVisible:
     element:
-      text: "Open Daily Rashifal"
+      text: "Open Guna Milan(?:,.*)?"
+    direction: DOWN
+    centerElement: true
+    timeout: 15000
+- assertVisible: "Open Guna Milan(?:,.*)?"
+- scrollUntilVisible:
+    element:
+      text: "Open Namkaran(?:,.*)?"
+    direction: DOWN
+    centerElement: true
+    timeout: 15000
+- assertVisible: "Open Namkaran(?:,.*)?"
+- scrollUntilVisible:
+    element:
+      text: "Open Daily Rashifal(?:,.*)?"
     direction: UP
     timeout: 15000
-- tapOn: "Open Daily Rashifal"
+- tapOn: "Open Daily Rashifal(?:,.*)?"
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Daily Rashifal"
@@ -366,14 +377,16 @@ appId: com.prashantsharma.vedansh
     element:
       id: "rashifal-area-work"
     direction: DOWN
-    timeout: 15000
+    timeout: 20000
+    centerElement: true
 - tapOn:
     id: "rashifal-area-work"
 - scrollUntilVisible:
     element:
       id: "rashifal-basis-work"
     direction: DOWN
-    timeout: 15000
+    timeout: 20000
+    centerElement: true
 - tapOn:
     id: "rashifal-basis-work"
 - scrollUntilVisible:
@@ -421,7 +434,6 @@ appId: com.prashantsharma.vedansh
       text: "Change Moon sign"
     direction: UP
     timeout: 10000
-    centerElement: true
 - tapOn: "Change Moon sign"
 - waitForAnimationToEnd
 - assertVisible: "Done choosing Moon sign"

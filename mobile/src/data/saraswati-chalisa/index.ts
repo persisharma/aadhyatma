@@ -1,4 +1,5 @@
-import data from './saraswati-chalisa.json';
+import { readContent } from '../../storage/content';
+const data = readContent<typeof import('./saraswati-chalisa.json')>('saraswati-chalisa/saraswati-chalisa.json');
 
 export type SaraswatiChalisaVerse = {
   id: string;

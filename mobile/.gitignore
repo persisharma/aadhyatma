@@ -52,3 +52,10 @@ coverage/
 
 # Maestro e2e screenshot captures (goldens live in .maestro/goldens, committed)
 e2e-shots/*.png
+
+# Reproducible scripture database (npm run build:library)
+/assets/library/*.db
+
+# Native exhaustive audit fixture; generated only for a separate test entry.
+/e2e/library-audit/oracle.generated.json
+/e2e/library-audit/fonts.generated.js

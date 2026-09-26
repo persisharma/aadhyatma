@@ -1,22 +1,23 @@
+import { readContent } from '../../storage/content';
 // Ashtakam (अष्टकम्) — multi-instance form registry, mirroring `chalisaRegistry.ts`.
 // One AshtakamReaderScreen dispatches on the `ashtakamId` route param through
 // this registry (RULEBOOK §3 multi-instance rule). Each text is a self-contained
 // JSON of source-verified verses (Sanskrit `sanskrit[]` + IAST `linesEn[]` +
 // bilingual meanings), so adding an ashtakam is: drop a JSON + one registry row.
-import lingashtakam from './lingashtakam.json';
-import madhurashtakam from './madhurashtakam.json';
-import achyutashtakam from './achyutashtakam.json';
-import mahalakshmiAshtakam from './mahalakshmi-ashtakam.json';
-import suryaAshtakam from './surya-ashtakam.json';
-import radhashtakam from './radhashtakam.json';
-import subrahmanyaAshtakam from './subrahmanya-ashtakam.json';
-import gangashtakam from './gangashtakam.json';
-import bhavaniAshtakam from './bhavani-ashtakam.json';
-import narasimhaAshtakam from './narasimha-ashtakam.json';
-import dattaAshtakam from './datta-ashtakam.json';
-import shaniAshtakam from './shani-ashtakam.json';
-import kalikaAshtakam from './kalika-ashtakam.json';
-import rudrashtakam from './rudrashtakam.json';
+const lingashtakam = readContent<typeof import('./lingashtakam.json')>('ashtakam/lingashtakam.json');
+const madhurashtakam = readContent<typeof import('./madhurashtakam.json')>('ashtakam/madhurashtakam.json');
+const achyutashtakam = readContent<typeof import('./achyutashtakam.json')>('ashtakam/achyutashtakam.json');
+const mahalakshmiAshtakam = readContent<typeof import('./mahalakshmi-ashtakam.json')>('ashtakam/mahalakshmi-ashtakam.json');
+const suryaAshtakam = readContent<typeof import('./surya-ashtakam.json')>('ashtakam/surya-ashtakam.json');
+const radhashtakam = readContent<typeof import('./radhashtakam.json')>('ashtakam/radhashtakam.json');
+const subrahmanyaAshtakam = readContent<typeof import('./subrahmanya-ashtakam.json')>('ashtakam/subrahmanya-ashtakam.json');
+const gangashtakam = readContent<typeof import('./gangashtakam.json')>('ashtakam/gangashtakam.json');
+const bhavaniAshtakam = readContent<typeof import('./bhavani-ashtakam.json')>('ashtakam/bhavani-ashtakam.json');
+const narasimhaAshtakam = readContent<typeof import('./narasimha-ashtakam.json')>('ashtakam/narasimha-ashtakam.json');
+const dattaAshtakam = readContent<typeof import('./datta-ashtakam.json')>('ashtakam/datta-ashtakam.json');
+const shaniAshtakam = readContent<typeof import('./shani-ashtakam.json')>('ashtakam/shani-ashtakam.json');
+const kalikaAshtakam = readContent<typeof import('./kalika-ashtakam.json')>('ashtakam/kalika-ashtakam.json');
+const rudrashtakam = readContent<typeof import('./rudrashtakam.json')>('ashtakam/rudrashtakam.json');
 
 export type AshtakamVerse = {
   id: string;

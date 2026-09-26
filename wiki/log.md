@@ -258,3 +258,25 @@ The job-switch format now covers adult career, business, study, money, marriage 
 ## [2026-09-25] ingest | Defer the temple corpus from Home startup
 
 The static launch graph exceeded its fixed budget on untouched main. `NewContentContext` now loads temple entries after its initial storage await; the Home stack lazy-loads Theerth map/detail routes; `kulParampara` looks up a temple only during record validation or export. The launch-budget test passes without raising its ceiling, and badge, temple-screen and family-record tests retain their behavior. Updated [[overview]].
+
+## [2026-09-26] ingest | Native scripture storage migration
+Added [[scripture-storage]] and refreshed [[readers]] for generated bundled SQLite,
+content-addressed initialization/recovery, bounded Gita/Ramayan paging, full-corpus search,
+and unchanged user-data IDs. Recorded build commands, measured content size, and test scope.
+
+## [2026-09-26] ingest | Exhaustive SQLite verification and native text crash repair
+
+Recorded the 25,395-verse/four-language native audit, chapter-edge journeys, 2,697 host tests,
+and the Gita 13.9 Kannada TextKit fix in [[scripture-storage]] and [[readers]]. Updated
+[[e2e-verification]] with Release/Debug fixture separation, audit isolation, and native
+accessibility/runner pitfalls. Full per-flow evidence lives in
+`docs/testing/sqlite-exhaustive-2026-09-26.md`.
+
+## [2026-09-26] ingest | Full Android SQLite verification
+
+Recorded 76/76 Android feature journeys, the independent 25,395-verse/four-language
+native audit, normal-entry APK restoration, and Verse/Panchang launcher pin/tap
+checks in [[scripture-storage]] and [[e2e-verification]]. Preserved all attempts and
+separated emulator/system-service failures and runner teardown hangs from app
+failures. Stronger Namkaran, Muhurat Phase 2 and Ask briefing journeys also passed
+again on iOS. Full evidence: `docs/testing/sqlite-android-2026-09-26.md`.

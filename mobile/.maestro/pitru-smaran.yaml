@@ -23,6 +23,7 @@
 #   - Picker chips expose constant English a11y labels ("Month Magha",
 #     "Paksha Krishna", "Tithi Ashtami"); actions are "Add smaran", "Save smaran",
 #     "Smaran Father, …" (list row), "Delete smaran entry", "Confirm delete".
+#   - Android includes accessibilityValue in the default-enabled reminder label (", On").
 #   - The default reading language is Hindi, so visible copy asserted here is
 #     Devanagari; control labels stay English constants (Maestro-stable).
 
@@ -142,9 +143,9 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - scrollUntilVisible:
     element:
-      text: "Smaran reminder"
+      text: "Smaran reminder(?:, On)?"
     centerElement: true
-- assertVisible: "Smaran reminder"
+- assertVisible: "Smaran reminder(?:, On)?"
 - scrollUntilVisible:
     element:
       text: "Open Gita — Adhyaya 15"

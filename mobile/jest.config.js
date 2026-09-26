@@ -8,6 +8,7 @@ module.exports = {
   // requiring RN/expo mocks (e.g. deepLink) use the `*.jest.test.{ts,tsx}`
   // suffix so they opt in here without dragging the tsx scripts along.
   testMatch: [
+    '<rootDir>/src/storage/__tests__/**/*.test.tsx',
     '<rootDir>/src/screens/__tests__/**/*.test.{ts,tsx}',
     '<rootDir>/src/utils/__tests__/**/*.test.{ts,tsx}',
     '<rootDir>/src/contexts/__tests__/**/*.test.{ts,tsx}',
@@ -34,9 +35,12 @@ module.exports = {
     '<rootDir>/src/data/pitru/__tests__/**/*.test.{ts,tsx}',
   ],
   moduleNameMapper: {
+    // Existing component suites use source fixtures; native adapters have dedicated tests.
+    '^(?:\\.\\./)+storage/content$': '<rootDir>/src/storage/content.ts',
+    '^@/storage/usePagedVerses$': '<rootDir>/src/storage/usePagedVerses.ts',
     // Audio assets aren't transformed by the RN preset — stub them so a
     // require('*.mp3') resolves to an asset handle instead of failing to parse.
-    '\\.(mp3|wav|m4a)$': '<rootDir>/jest/audioAssetStub.js',
+    '\\.(mp3|wav|m4a|db)$': '<rootDir>/jest/audioAssetStub.js',
     // babel-preset-expo rewrites `process.env.EXPO_PUBLIC_*` reads into an
     // import of this virtual module, which is untranspiled ESM Jest cannot
     // parse. The real one only re-exports process.env, so the stub is faithful.

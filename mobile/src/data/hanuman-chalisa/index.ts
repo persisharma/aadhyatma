@@ -1,4 +1,5 @@
-import data from './hanuman-chalisa.json';
+import { readContent } from '../../storage/content';
+const data = readContent<typeof import('./hanuman-chalisa.json')>('hanuman-chalisa/hanuman-chalisa.json');
 
 export type HanumanChalisaVerseType = 'doha' | 'chaupai';
 export type HanumanChalisaPlacement = 'opening' | 'body' | 'closing';

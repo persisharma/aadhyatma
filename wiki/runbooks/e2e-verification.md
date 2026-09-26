@@ -2,7 +2,7 @@
 title: E2E (Maestro) — authoring, verification, and the ship-with-e2e policy
 type: runbook
 sources: [mobile/.maestro, mobile/.maestro/README.md, mobile/.maestro/_launch.yaml, mobile/.maestro/vidhi-smoke.yaml, mobile/scripts/e2e-screen-text.sh, mobile/scripts/e2e-visual-check.sh, RULEBOOK.md]
-last_verified_date: 2026-09-03
+last_verified_date: 2026-09-26
 confidence: high
 status: current
 ---
@@ -10,15 +10,18 @@ status: current
 ## Summary
 
 Every user-facing change ships with an e2e flow. UI e2e is [Maestro](https://maestro.mobile.dev)
-flows in `mobile/.maestro/*.yaml`, normally run against **Expo Go** on an iOS simulator; native
-module and app-shell coverage uses an installed development build. This runbook covers the
+flows in `mobile/.maestro/*.yaml`, targeting the installed native app on dedicated iOS and Android simulators.
+Use the embedded Release bundle for normal journeys and Debug for development-only fixtures. This runbook covers the
 **policy**, how to **author** a flow, and how to **verify** one on a live simulator — including
 the isolated-simulator recipe for machines running many Conductor worktrees at once. For the flow
 catalog, setup, and element-selection rules, see `mobile/.maestro/README.md`.
 
-PRD-C's `kundali-smoke.yaml` is the first native-build exception: it launches
-`com.prashantsharma.vedansh` directly so custom native configuration and the real app shell are
-covered rather than Expo Go. Its file header and the native recipe below are authoritative.
+The SQLite verification runs ordinary flows against Release without Metro. Three
+`new-content-badge*` upgrade-fixture flows carry `requires-dev` and require Debug plus
+this worktree's Metro on port 8084. Use `--exclude-tags requires-dev` for Release and
+`--include-tags requires-dev` for Debug. Keep `RCT_jsLocation=127.0.0.1:8084` on warm
+Debug launches too: clearing or omitting that address can produce “No script URL provided”.
+The Expo Go instructions below describe legacy setup; current native flow app IDs take precedence.
 
 ## Policy — every change ships with e2e
 
@@ -111,6 +114,35 @@ Metro or OTA state. PRD-23 used this path on Android 16 / API 36:
 
 The PRD-23 `vidhi-smoke.yaml` run passed separately on iOS 26.4 and this Android path on 2026-08-25.
 
+The 2026-09-26 SQLite follow-up passed the full 76-flow Android inventory and
+114-document / 25,395-verse / four-language native audit. Details, build hashes and
+all attempts: `docs/testing/sqlite-android-2026-09-26.md`.
+
+- Android Debug upgrade fixtures require the compiled Gradle option
+  `-PreactNativeDevServerPort=8084` plus `adb reverse tcp:8084 tcp:8084`; the iOS
+  `RCT_jsLocation` launch argument does not configure Android Metro.
+- Save the normal APK before `e2e/library-audit/build-android.mjs`, which reuses
+  Gradle's Release output path. It restores temporary generated entry/Updates
+  configuration in `finally`. Reinstall the normal APK afterwards and rebuild the
+  normal Gradle output before delivering that path.
+- `e2e/library-audit/run-android.py` needs a dedicated root-capable Google APIs
+  emulator to collect the Release app's private report. The app runs under its
+  normal UID; root is for report collection. Never run a UI flow on its device
+  concurrently with the audit.
+- Android can append `accessibilityValue` as `label, value`. Match an optional
+  comma suffix after the exact action prefix and retain content assertions.
+- Require real destination content after navigation. Search empty tiles can
+  share briefing titles, and a visible Rahu Kaal tile is not the All timings
+  navigation control. Center targets that sit beneath fixed navigation bars.
+- A passing matching JUnit case can coexist with a Maestro CLI teardown hang.
+  Retain exit code and teardown termination separately; terminate only a runner
+  whose flow has finished, then reuse its device. Keep failed attempts and require
+  the exact inventory without missing/skipped cases.
+- Android has Verse and Panchang native widget providers. The gallery's Japam
+  preview/deep link does not establish a native Japam provider. Launcher XML and
+  matching tap destinations provide evidence beyond in-app previews.
+
+
 ## Token-cheap verification (agent policy)
 
 Reading screenshots into an LLM context costs ~1,100–1,600 tokens per full-res image; a whole
@@ -149,6 +181,24 @@ information over the accessibility tree. Rules, in order:
    genuinely visual surfaces (layout, theming, celebration overlays).
 
 ## Gotchas
+
+- **Corpus coverage is separate from navigation coverage.** `mobile/e2e/library-audit/`
+  mounts every SQLite verse through production components in four languages, validates
+  source fingerprints and speech chunks, and requires exact per-document counters. It
+  replaces the app on a dedicated simulator; reinstall normal Release afterwards. Clear
+  the audit app data and disable Expo Updates only in its temporary copied app to avoid
+  reusing an earlier custom entry cached under the same manifest identity.
+- **Visibility is not always tappability.** Native accessibility bounds may extend under
+  the bottom tab bar. Center ordinary tappable rows before tapping. Do not demand
+  centering for fixed headers or top/bottom content that cannot scroll to the midpoint.
+  Large accessibility groups may exceed the viewport; use a suitable visibility percentage
+  and assert the meaningful child/control rather than requiring 100% of the group.
+- **Search input and result can share a label.** Use a partial query or a stable row ID
+  so a result tap does not hit the input instead.
+- **Long Maestro runs can fail during log archiving after reporting verdicts.** This run
+  observed `DebugLogStore.finalizeRun` / `NoSuchFileException` for a missing own log directory.
+  Preserve JUnit and command records, distinguish teardown from app failures, and stop only
+  a runner that has already completed its flows before reusing its device.
 
 - **Expo Go reloads mid-flow** (repeated `iOS Bundled … index.ts (1 module)` in the Metro log)
   reset navigation to Home, so reader-open steps can intermittently "bounce". Re-run once; it's

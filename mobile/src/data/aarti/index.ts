@@ -1,11 +1,12 @@
-import omJaiJagdish from './om-jai-jagdish.json';
-import hanumanAarti from './hanuman-aarti.json';
-import jaiGaneshDeva from './jai-ganesh-deva.json';
-import omJaiShivOmkara from './om-jai-shiv-omkara.json';
-import jaiAmbeGauri from './jai-ambe-gauri.json';
-import aartiKunjBihari from './aarti-kunj-bihari.json';
-import saraswatiAarti from './saraswati-aarti.json';
-import gayatriAarti from './gayatri-aarti.json';
+import { readContent } from '../../storage/content';
+const omJaiJagdish = readContent<typeof import('./om-jai-jagdish.json')>('aarti/om-jai-jagdish.json');
+const hanumanAarti = readContent<typeof import('./hanuman-aarti.json')>('aarti/hanuman-aarti.json');
+const jaiGaneshDeva = readContent<typeof import('./jai-ganesh-deva.json')>('aarti/jai-ganesh-deva.json');
+const omJaiShivOmkara = readContent<typeof import('./om-jai-shiv-omkara.json')>('aarti/om-jai-shiv-omkara.json');
+const jaiAmbeGauri = readContent<typeof import('./jai-ambe-gauri.json')>('aarti/jai-ambe-gauri.json');
+const aartiKunjBihari = readContent<typeof import('./aarti-kunj-bihari.json')>('aarti/aarti-kunj-bihari.json');
+const saraswatiAarti = readContent<typeof import('./saraswati-aarti.json')>('aarti/saraswati-aarti.json');
+const gayatriAarti = readContent<typeof import('./gayatri-aarti.json')>('aarti/gayatri-aarti.json');
 
 export type AartiVerse = {
   id: string;

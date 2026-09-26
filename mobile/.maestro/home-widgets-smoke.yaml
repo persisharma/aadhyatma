@@ -28,7 +28,17 @@ appId: com.prashantsharma.vedansh
 - runFlow:
     when: { platform: Android }
     commands:
+      - scrollUntilVisible:
+          element: "Add Vedansh verse widget"
+          direction: UP
+          centerElement: true
+          timeout: 10000
       - assertVisible: "Add Vedansh verse widget"
+      - scrollUntilVisible:
+          element: "Add Vedansh panchang widget"
+          direction: DOWN
+          centerElement: true
+          timeout: 10000
       - assertVisible: "Add Vedansh panchang widget"
 - tapOn: "Back"
 

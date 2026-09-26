@@ -6,6 +6,7 @@ import React, {
   useState,
 } from 'react';
 import {
+  ActivityIndicator,
   FlatList,
   Keyboard,
   Pressable,
@@ -22,13 +23,12 @@ import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import {
-  getSearchIndex,
-  runSearch,
   type SearchHit,
   type SearchSectionEntry,
   type SearchDeityEntry,
   type SearchVerseEntry,
 } from '@/data/searchIndex';
+import { searchLibrary, type SearchResults } from '@/storage/search';
 import { library } from '@/data/texts';
 import { getVidhiById } from '@/data/vidhi';
 import { useNewContent } from '@/contexts/NewContentContext';
@@ -100,11 +100,20 @@ export default function SearchScreen({ navigation, route }: Props) {
     return () => clearTimeout(t);
   }, []);
 
-  // Build the index lazily on first user interaction (mount = first interaction
-  // from the user's perspective — they tapped search to get here).
-  const index = useMemo(() => getSearchIndex(), []);
-
-  const results = useMemo(() => runSearch(query, index), [query, index]);
+  const [results, setResults] = useState<SearchResults>({query: '', sections: [], deities: [], verses: [], versesCapped: false});
+  const [searchError, setSearchError] = useState(false);
+  const [searching,setSearching] = useState(false);
+  useEffect(() => {
+    let cancelled = false;
+    setSearchError(false);
+    setSearching(true);
+    setResults({query, sections: [], deities: [], verses: [], versesCapped: false});
+    const timer = setTimeout(() => {
+      searchLibrary(query).then((next) => { if (!cancelled) { setResults(next); setSearching(false); } })
+        .catch(() => { if (!cancelled) { setSearchError(true); setSearching(false); } });
+    }, 120);
+    return () => { cancelled = true; clearTimeout(timer); };
+  }, [query]);
 
   const trimmed = query.trim();
   const hasQuery = trimmed.length > 0;
@@ -311,6 +320,7 @@ export default function SearchScreen({ navigation, route }: Props) {
                 },
               ]}
               accessibilityLabel="Search input"
+              maxLength={256}
               autoCorrect={false}
               autoCapitalize="none"
               returnKeyType="search"
@@ -330,6 +340,7 @@ export default function SearchScreen({ navigation, route }: Props) {
           </View>
         </View>
 
+        {searchError && <Text accessibilityRole="alert" style={{color: colors.ink, padding: 16}}>{pick(lang, {hi: 'खोज लोड नहीं हुई। कृपया खोज बदलकर फिर प्रयास करें।', en: 'Search could not load. Please edit your search to try again.', gu: 'શોધ લોડ થઈ નથી. કૃપા કરીને શોધ બદલીને ફરી પ્રયાસ કરો.', kn: 'ಹುಡುಕಾಟ ಲೋಡ್ ಆಗಲಿಲ್ಲ. ಹುಡುಕಾಟ ಬದಲಿಸಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.'})}</Text>}
         {/* Content */}
         {!hasQuery ? (
           <EmptyState
@@ -349,7 +360,9 @@ export default function SearchScreen({ navigation, route }: Props) {
             onTodayVidhan={() => navigation.navigate('TodayVidhan')}
             lang={lang}
           />
-        ) : (
+        ) : searching || results.query !== query ? (
+          <ActivityIndicator accessibilityLabel="Searching library" color={colors.saffronDeep} />
+        ) : searchError ? null : (
           <ResultsList
             results={results}
             colors={colors}
@@ -685,7 +698,7 @@ function ResultsList({
   onDeityPress,
   onVersePress,
 }: {
-  results: ReturnType<typeof runSearch>;
+  results: SearchResults;
   colors: Theme['colors'];
   typography: Theme['typography'];
   spacing: Theme['spacing'];

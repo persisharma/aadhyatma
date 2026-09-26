@@ -102,15 +102,15 @@ appId: com.prashantsharma.vedansh
 # ── Daily Muhurat (full card): relabel + conditional Shubh Yoga row ─────────
 - scrollUntilVisible:
     element:
-      text: ".*Rahu Kaal.*|.*राहु काल.*"
-    direction: DOWN
+      text: "All timings & choghadiya.*"
+    direction: UP
 - tapOn:
-    text: ".*Rahu Kaal.*|.*राहु काल.*"
+    text: "All timings & choghadiya.*"
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Nitya Yoga"
     timeout: 20000
-- back
+- tapOn: "Back"
 - waitForAnimationToEnd
 
 # ── Finder: results annotate, ordering untouched; day detail carries card ───

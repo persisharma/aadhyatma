@@ -127,7 +127,7 @@ appId: com.prashantsharma.vedansh
     element:
       text: "Bajrang Baan\\..*Tap to open\\."
     direction: DOWN
-    visibilityPercentage: 60
+    centerElement: true
     timeout: 15000
 - tapOn: "Bajrang Baan\\..*Tap to open\\."
 - waitForAnimationToEnd:

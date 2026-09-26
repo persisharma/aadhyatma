@@ -4,10 +4,10 @@
 import { launchMark, startLaunchTrace } from './src/utils/launchTrace';
 import { registerRootComponent } from 'expo';
 
-import App from './App';
+import App from './src/storage/LibraryBootstrap';
 
-// Reached only after every static import above — including App's entire graph —
-// has been evaluated, so this mark IS the bundle-evaluation cost.
+// This mark measures the bootstrap imports. The native bootstrap opens SQLite
+// before evaluating App; later first-frame marks include that work.
 launchMark('bundle-evaluated');
 startLaunchTrace();
 
