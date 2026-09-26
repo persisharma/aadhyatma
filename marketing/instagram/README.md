@@ -231,11 +231,13 @@ node make-reel.js app                   # product reel — needs screenshots, se
 deity sketch from `mobile/assets/backgrounds` · brand footer) come from a second builder:
 
 ```bash
-node make-carousel.mjs pitru-paksha-2026          # → carousel/pitru-paksha-2026-1.png … -5.png
+node make-carousel.mjs pitru-paksha-2026          # → carousel/pitru-paksha-2026-hi-1.png … and -en-1.png … (one carousel per language)
+node make-carousel.mjs pitru-paksha-2026 --lang hi   # one language only
 node make-carousel.mjs pitru-paksha-2026 --fonts ./fonts/fonts.css   # offline fonts if Chrome has no network
 ```
 
-Manifests live in the `CAROUSELS` map at the top of `make-carousel.mjs`; each post's caption,
+Manifests live in the `CAROUSELS` map at the top of `make-carousel.mjs` — every string is a
+`{ hi, en }` pair and each card renders in one language only. Each post's caption,
 alt text and a committed copy of its slides sit in `posts/<name>.md` + `posts/<name>/`.
 
 **Prerequisites:** `node`, Google Chrome, and `ffmpeg` on PATH. Override with

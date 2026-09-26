@@ -6,7 +6,8 @@
  * 2–3 short paragraphs with saffron highlights, a faded deity line-drawing behind,
  * and the brand footer (वेदांश़ · smart link · handle) on every slide.
  *
- *   node make-carousel.mjs pitru-paksha-2026                 # → carousel/pitru-paksha-2026-1.png …
+ *   node make-carousel.mjs pitru-paksha-2026                 # → carousel/pitru-paksha-2026-hi-1.png … and -en-1.png …
+ *   node make-carousel.mjs pitru-paksha-2026 --lang hi        # one language only (hi | en)
  *   node make-carousel.mjs pitru-paksha-2026 --out ./posts/pitru-paksha-2026
  *   node make-carousel.mjs pitru-paksha-2026 --fonts ./fonts/fonts.css   # offline fonts (see below)
  *
@@ -23,7 +24,9 @@
  *   text    — kicker, title, subtitle, rule, paragraphs. `**…**` marks a saffron bold.
  *   cta     — closing card: what the app does for this occasion + download button.
  *
- * Highlight syntax inside paragraphs: **bold saffron**. Nothing else is parsed.
+ * Every string in a manifest is a { hi, en } pair; the builder renders one carousel per
+ * language (Hindi cards set in Noto Serif Devanagari, English cards in Cormorant Garamond)
+ * so each card carries a single language. Highlight syntax: **bold saffron**.
  */
 
 import { execFileSync } from 'node:child_process';
@@ -64,86 +67,77 @@ const CAROUSELS = {
       {
         kind: 'hook',
         bg: 'deity-rama-darbar.webp',
-        kicker: 'पितृ पक्ष · 26 सितम्बर – 10 अक्टूबर 2026 · Pitru Paksha',
-        title: 'श्रीराम ने पिता को\nक्या दिया था?',
-        titleEn: 'What did Shri Rama offer his father?',
-        subtitle: 'सोना नहीं। अन्न नहीं। अञ्जलि भर जल।',
-        subtitleEn: 'Not gold. Not grain. A cupped handful of water.',
+        kicker: { hi: 'पितृ पक्ष · 26 सितम्बर – 10 अक्टूबर 2026', en: 'Pitru Paksha · 26 Sep – 10 Oct 2026' },
+        title: { hi: 'श्रीराम ने पिता को\nक्या दिया था?', en: 'What did Rama\noffer his father?' },
+        subtitle: { hi: 'सोना नहीं। अन्न नहीं। अञ्जलि भर जल।', en: 'Not gold. Not grain. A cupped handful of water.' },
         body: [
           { hi: 'आज से पितृ पक्ष आरम्भ। रामायण के दो प्रसंग बताते हैं कि पितरों तक **क्या** पहुँचता है — और बिहार की वह जगह जहाँ इसी पखवाड़े **लाखों लोग वही कर रहे हैं**।',
-            en: 'Pitru Paksha begins today. Two episodes from the Ramayana show what actually reaches the ancestors — and the place in Bihar where lakhs of people are doing exactly that this fortnight.' },
+            en: 'Pitru Paksha begins today. Two episodes from the Ramayana show **what actually reaches** the ancestors — and the place in Bihar where **lakhs of people are doing exactly that** this fortnight.' },
         ],
-        swipe: 'स्वाइप करें · Swipe →',
+        swipe: { hi: 'स्वाइप करें →', en: 'Swipe →' },
       },
       {
         kind: 'text',
         bg: 'deity-ganga.webp',
-        kicker: 'तर्पण का सबसे पुराना रूप · The oldest form of tarpana',
-        title: 'जल ही क्यों',
-        titleEn: 'Why water',
-        subtitle: 'रामायण जो बार-बार दिखाती है',
-        subtitleEn: 'What the Ramayana shows again and again',
+        kicker: { hi: 'तर्पण का सबसे पुराना रूप', en: 'The oldest form of tarpana' },
+        title: { hi: 'जल ही क्यों', en: 'Why water' },
+        subtitle: { hi: 'रामायण जो बार-बार दिखाती है', en: 'What the Ramayana shows again and again' },
         body: [
           { hi: 'रामायण में पितृ-कर्म एक ही रूप में मिलता है: **अञ्जलि भर जल**, **दक्षिण दिशा** की ओर मुख, और यह भाव कि यह जल उन तक पहुँचे।',
-            en: 'In the Ramayana the rite for the ancestors has one form: a handful of water, facing south, wished on to them.' },
+            en: 'In the Ramayana the rite for the ancestors has one form: **a handful of water**, **facing south**, with the wish that it reach them.' },
           { hi: 'श्रीराम ने पिता दशरथ के लिए **मन्दाकिनी** में यही किया, और जटायु के लिए **गोदावरी** में।',
-            en: 'Rama did this for Dasharatha at the Mandakini, and for Jatayu at the Godavari.' },
+            en: 'Rama did this for his father Dasharatha at the **Mandakini**, and for Jatayu at the **Godavari**.' },
           { hi: 'बालकाण्ड में गरुड़ अंशुमान् से कहते हैं — सगर के पुत्रों के लिए लौकिक जल पर्याप्त नहीं; उनके लिए **गंगा** चाहिए। तीन पीढ़ियाँ इसी प्रश्न में बीतीं।',
-            en: 'In the Bala Kanda, Garuda tells Anshuman: ordinary water will not do for Sagara’s sons — they need the Ganga. Three generations passed on that question.' },
+            en: 'In the Bala Kanda, Garuda tells Anshuman: ordinary water will not do for Sagara’s sons — they need the **Ganga**. Three generations passed on that one question.' },
         ],
-        canon: 'वाल्मीकि रामायण · अयोध्याकाण्ड १०३ · अरण्यकाण्ड ६८ · बालकाण्ड ४१',
+        canon: { hi: 'वाल्मीकि रामायण · अयोध्याकाण्ड १०३ · अरण्यकाण्ड ६८ · बालकाण्ड ४१', en: 'Valmiki Ramayana · Ayodhya Kanda 103 · Aranya Kanda 68 · Bala Kanda 41' },
       },
       {
         kind: 'text',
         bg: 'deity-rama-darbar.webp',
-        kicker: 'जटायु का प्रसंग · The Jatayu episode',
-        title: 'किसके लिए, और किससे',
-        titleEn: 'For whom, and with what',
-        subtitle: 'सामग्री नहीं, भाव देखा जाता है',
-        subtitleEn: 'It is the feeling that counts, not the materials',
+        kicker: { hi: 'जटायु का प्रसंग', en: 'The Jatayu episode' },
+        title: { hi: 'किसके लिए, और किससे', en: 'For whom, and with what' },
+        subtitle: { hi: 'सामग्री नहीं, भाव देखा जाता है', en: 'It is the feeling that counts, not the materials' },
         body: [
           { hi: 'अरण्यकाण्ड में श्रीराम **जटायु** का दाह-संस्कार स्वयं करते हैं। जटायु न उनके कुल के थे, न मनुष्य — वे पिता के मित्र एक पक्षी थे।',
-            en: 'In the Aranya Kanda, Rama himself performs Jatayu’s last rites. Jatayu was not of his clan, not even human — a bird, his father’s friend.' },
-          { hi: 'वन में राजसी पदार्थ नहीं थे। राम ने वहीं मिले **इंगुदी के गूदे** से पिता के लिए पिण्ड बनाया — **जो हम खाते हैं, वही आपको अर्पित है।**',
-            en: 'In the forest there was nothing royal. Rama made the pinda for his father from ingudi pulp found right there: “What we eat, that we offer you.”' },
+            en: 'In the Aranya Kanda, Rama himself performs **Jatayu’s** last rites. Jatayu was not of his clan, not even human — a bird, his father’s friend.' },
+          { hi: 'वन में राम के पास राजसी पदार्थ नहीं थे। उन्होंने वहीं मिले **इंगुदी के गूदे** से पिता के लिए पिण्ड बनाया और कहा — **जो हम खाते हैं, वही आपको अर्पित है।**',
+            en: 'In the forest there was nothing royal. Rama made the pinda for his father from **ingudi pulp** found right there, and said — **“What we eat, that we offer you.”**' },
           { hi: 'स्मरण का द्वार किसी सूची से नहीं, **भाव** से खुलता है।',
-            en: 'Remembrance opens not with a checklist, but with bhava.' },
+            en: 'Remembrance opens not with a checklist, but with **bhava**.' },
         ],
-        canon: 'वाल्मीकि रामायण · अरण्यकाण्ड ६७–६८ · अयोध्याकाण्ड १०३',
+        canon: { hi: 'वाल्मीकि रामायण · अरण्यकाण्ड ६७–६८ · अयोध्याकाण्ड १०३', en: 'Valmiki Ramayana · Aranya Kanda 67–68 · Ayodhya Kanda 103' },
       },
       {
         kind: 'text',
         bg: 'source-vishnu-narayana.webp',
-        kicker: 'जहाँ आज यही हो रहा है · गया, बिहार · Gaya, Bihar',
-        title: 'फल्गु का तट',
-        titleEn: 'On the banks of the Falgu',
-        subtitle: 'विष्णुपद · पितृपक्ष मेला · 26 सितम्बर – 10 अक्टूबर',
-        subtitleEn: 'Vishnupad · Pitru Paksha Mela · 26 Sep – 10 Oct',
+        kicker: { hi: 'जहाँ आज यही हो रहा है · गया, बिहार', en: 'Where this is happening right now · Gaya, Bihar' },
+        title: { hi: 'फल्गु का तट', en: 'The banks of the Falgu' },
+        subtitle: { hi: 'विष्णुपद · पितृपक्ष मेला · 26 सितम्बर – 10 अक्टूबर', en: 'Vishnupad · Pitru Paksha Mela · 26 Sep – 10 Oct' },
         body: [
           { hi: 'इन पन्द्रह दिनों में **गया** में पितृपक्ष मेला लगता है। **फल्गु** के तट पर, **विष्णुपद** मन्दिर के आस-पास, देश भर से लोग पिण्डदान के लिए आते हैं।',
-            en: 'For these fifteen days Gaya hosts the Pitru Paksha Mela. On the banks of the Falgu, around the Vishnupad temple, people come from across India for pind-daan.' },
+            en: 'For these fifteen days **Gaya** hosts the Pitru Paksha Mela. On the **Falgu**’s banks, around the **Vishnupad** temple, people come from all over India for pind-daan.' },
           { hi: 'माना जाता है कि श्रीराम, सीता और लक्ष्मण भी दशरथ के लिए यहीं आए थे — और **सीता ने फल्गु की बालू से पिण्ड** बनाया।',
-            en: 'It is believed that Rama, Sita and Lakshmana too came here for Dasharatha — and that Sita made the pinda from the sand of the Falgu.' },
+            en: 'It is believed that Rama, Sita and Lakshmana too came here for Dasharatha — and that **Sita made the pinda from the sand of the Falgu**.' },
           { hi: 'यहाँ भी वही तीन चीज़ें: **जल**, **दक्षिण दिशा**, और **भाव**।',
-            en: 'Here too, the same three things: water, the south, and bhava.' },
+            en: 'Here too, the same three things: **water**, **the south**, and **bhava**.' },
         ],
-        canon: 'गया की लोक-मान्यता · Gaya tradition',
+        canon: { hi: 'गया की लोक-मान्यता', en: 'Gaya tradition' },
       },
       {
         kind: 'cta',
         bg: 'deity-rama-darbar.webp',
-        kicker: 'पितृ पक्ष · 26 सितम्बर – 10 अक्टूबर 2026 · Pitru Paksha',
-        title: 'पितृ पक्ष, वेदांश़ में',
-        titleEn: 'Pitru Paksha, in Vedansh',
-        subtitle: 'समझिए, फिर करिए · Understand first, then offer',
+        kicker: { hi: 'पितृ पक्ष · 26 सितम्बर – 10 अक्टूबर 2026', en: 'Pitru Paksha · 26 Sep – 10 Oct 2026' },
+        title: { hi: 'पितृ पक्ष, वेदांश़ में', en: 'Pitru Paksha in Vedansh' },
+        subtitle: { hi: 'समझिए, फिर करिए', en: 'Understand first, then offer' },
         items: [
-          ['पितृ पक्ष परिचय', 'Pitru Paksha primer', 'जल ही क्यों · किसके लिए · किस दिन किसका श्राद्ध', 'Why water · for whom · whose shraddha on which day', 'पि'],
-          ['तिथि', 'Tithi', 'आपके शहर का पंचांग — श्राद्ध का दिन तिथि से', 'Your city’s Panchang — the shraddha day from the tithi', 'ति'],
-          ['याद', 'Reminder', 'पितृ स्मरण reminder — तिथि से एक रात पहले', 'Pitru Smaran reminder — the night before the tithi', 'या'],
-          ['कथा', 'Katha', 'रामायण के प्रसंग — मूल पाठ तक', 'Ramayana episodes — down to the original text', 'क'],
+          { glyph: 'पि', h: { hi: 'पितृ पक्ष परिचय', en: 'Pitru Paksha primer' }, d: { hi: 'जल ही क्यों · किसके लिए · किस दिन किसका श्राद्ध', en: 'Why water · for whom · whose shraddha on which day' } },
+          { glyph: 'ति', h: { hi: 'तिथि', en: 'Tithi' }, d: { hi: 'आपके शहर का पंचांग — श्राद्ध का दिन तिथि से', en: 'Your city’s Panchang — the shraddha day from the tithi' } },
+          { glyph: 'या', h: { hi: 'याद', en: 'Reminder' }, d: { hi: 'पितृ स्मरण reminder — तिथि से एक रात पहले', en: 'Pitru Smaran reminder — the night before the tithi' } },
+          { glyph: 'क', h: { hi: 'कथा', en: 'Katha' }, d: { hi: 'रामायण के प्रसंग — मूल पाठ तक, हिंदी और अंग्रेज़ी', en: 'Ramayana episodes — down to the original text' } },
         ],
-        note: 'मुफ़्त · बिना इंटरनेट के भी चलता है · Free · Works offline',
-        button: 'अभी डाउनलोड करें · Download Now',
+        note: { hi: 'मुफ़्त · बिना इंटरनेट के भी चलता है', en: 'Free · Works offline' },
+        button: { hi: 'अभी डाउनलोड करें', en: 'Download Now' },
       },
     ],
   },
@@ -179,7 +173,7 @@ function fontsBlock(fontsCss) {
 }
 
 // ── page shell ───────────────────────────────────────────────────────────────
-function shell({ bgUri, bgPos = '62% 18%', bgOpacity = 0.22, inner, pageNo, total, fontsCss, om = true }) {
+function shell({ bgUri, bgPos = '62% 18%', bgOpacity = 0.22, inner, pageNo, total, fontsCss, om = true, lang = 'hi' }) {
   return `<!doctype html><html><head><meta charset="utf-8">${fontsBlock(fontsCss)}
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -203,15 +197,21 @@ function shell({ bgUri, bgPos = '62% 18%', bgOpacity = 0.22, inner, pageNo, tota
   .pageno { font-family:'Inter',sans-serif; font-weight:600; font-size:26px; color:${C.inkMuted}; letter-spacing:1px; }
 
   .content { position:absolute; top:128px; left:90px; right:90px; bottom:330px; display:flex; flex-direction:column; }
-  .title { font-size:84px; line-height:1.14; font-weight:700; color:${C.ink}; margin-top:4px; }
-  .titleEn { font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:500; font-size:36px; line-height:1.2; color:${C.inkMuted}; margin-top:8px; }
-  .subtitle { font-size:34px; line-height:1.3; font-weight:500; color:${C.saffronBright}; margin-top:16px; }
-  .subtitleEn { font-family:'Cormorant Garamond',serif; font-weight:500; font-size:29px; line-height:1.25; color:${C.saffron}; opacity:0.85; margin-top:4px; }
-  .rule { width:150px; height:2px; background:${C.rule}; margin:26px 0 24px; }
-  .para { font-size:33px; line-height:1.5; font-weight:400; color:${C.inkSoft}; }
-  .paraEn { font-family:'Cormorant Garamond',serif; font-weight:500; font-size:27px; line-height:1.3; color:${C.inkMuted}; margin-top:6px; }
-  .beat { margin-bottom:18px; }
-  .canon { margin-top:auto; font-size:22px; color:${C.inkMuted}; font-weight:400; }
+  .title { font-size:96px; line-height:1.14; font-weight:700; color:${C.ink}; margin-top:6px; }
+  .subtitle { font-size:40px; line-height:1.3; font-weight:500; color:${C.saffronBright}; margin-top:18px; }
+  .rule { width:150px; height:2px; background:${C.rule}; margin:40px 0 36px; }
+  .para { font-size:40px; line-height:1.55; font-weight:400; color:${C.inkSoft}; }
+  .beat { margin-bottom:34px; }
+  /* English cards: Cormorant throughout, slightly tighter leading (Latin needs less than Devanagari). */
+  body.en .kicker, body.en .title, body.en .subtitle, body.en .para, body.en .canon, body.en .swipe,
+  body.en .ctaH, body.en .ctaD, body.en .note, body.en .button { font-family:'Cormorant Garamond', Georgia, serif; }
+  body.en .kicker { font-size:28px; font-weight:600; letter-spacing:0.5px; }
+  body.en .title { font-size:92px; line-height:1.04; font-weight:700; }
+  body.en .subtitle { font-size:42px; font-style:italic; font-weight:500; line-height:1.25; }
+  body.en .para { font-size:38px; line-height:1.36; font-weight:500; }
+  body.en .beat { margin-bottom:26px; }
+  body.en .canon { font-size:26px; font-weight:500; }
+  .canon { margin-top:auto; font-size:24px; color:${C.inkMuted}; font-weight:400; }
 
   .om { position:absolute; left:0; right:0; top:1042px; text-align:center; font-size:30px; color:${C.gold}; letter-spacing:6px; }
   .footRule { position:absolute; left:90px; right:90px; top:1110px; height:1px; background:${C.border}; }
@@ -223,7 +223,7 @@ function shell({ bgUri, bgPos = '62% 18%', bgOpacity = 0.22, inner, pageNo, tota
   .dl .l1 .lat { font-weight:700; font-size:28px; }
   .dl .l2 { font-family:'Inter',sans-serif; font-weight:600; font-size:26px; color:${C.inkMuted}; letter-spacing:1px; margin-top:16px; }
   .dl .l3 { font-family:'Inter',sans-serif; font-weight:500; font-size:26px; color:${C.inkMuted}; letter-spacing:1px; margin-top:14px; }
-</style></head><body>
+</style></head><body class="${lang}">
 <div class="bg"><img src="${bgUri}"></div>
 <div class="frame"></div>
 <div class="head"><div class="kicker">${inner.kicker}</div><div class="pageno">${pageNo}/${total}</div></div>
@@ -242,58 +242,56 @@ ${om ? '<div class="om">॥ ॐ ॥</div>' : ''}
 }
 
 // ── slide kinds ──────────────────────────────────────────────────────────────
-function beats(body) {
-  return body.map(p => `<div class="beat"><div class="para">${rich(p.hi)}</div>${p.en ? `<div class="paraEn">${rich(p.en)}</div>` : ''}</div>`).join('');
+const T = (v, lang) => (v && typeof v === 'object') ? (v[lang] ?? v.hi ?? '') : (v ?? '');
+
+function beats(body, lang) {
+  return body.map(p => `<div class="beat"><div class="para">${rich(T(p, lang))}</div></div>`).join('');
 }
-function headBlock(s, titleSize) {
+function headBlock(s, lang, titleSize) {
   return `
-    <div class="title"${titleSize ? ` style="font-size:${titleSize}px;"` : ''}>${rich(s.title)}</div>
-    ${s.titleEn ? `<div class="titleEn">${rich(s.titleEn)}</div>` : ''}
-    <div class="subtitle">${rich(s.subtitle)}</div>
-    ${s.subtitleEn ? `<div class="subtitleEn">${rich(s.subtitleEn)}</div>` : ''}
+    <div class="title"${titleSize ? ` style="font-size:${titleSize}px;"` : ''}>${rich(T(s.title, lang))}</div>
+    <div class="subtitle">${rich(T(s.subtitle, lang))}</div>
     <div class="rule"></div>`;
 }
 
-function hookHtml(s) {
+function hookHtml(s, lang) {
   return `
-    ${headBlock(s, 96)}
-    ${beats(s.body)}
+    ${headBlock(s, lang, lang === 'en' ? 98 : 104)}
+    ${beats(s.body, lang)}
     <div style="margin-top:auto; display:flex; justify-content:flex-end;">
-      <div style="display:inline-block; padding:16px 34px; border:1.5px solid ${C.saffron}; border-radius:40px;
-                  font-size:30px; font-weight:600; color:${C.saffron};">${esc(s.swipe)}</div>
+      <div class="swipe" style="display:inline-block; padding:16px 34px; border:1.5px solid ${C.saffron}; border-radius:40px;
+                  font-size:${lang === 'en' ? 34 : 30}px; font-weight:600; color:${C.saffron};">${esc(T(s.swipe, lang))}</div>
     </div>`;
 }
 
-function textHtml(s) {
+function textHtml(s, lang) {
   return `
-    ${headBlock(s)}
-    ${beats(s.body)}
-    ${s.canon ? `<div class="canon">${esc(s.canon)}</div>` : ''}`;
+    ${headBlock(s, lang)}
+    ${beats(s.body, lang)}
+    ${s.canon ? `<div class="canon">${esc(T(s.canon, lang))}</div>` : ''}`;
 }
 
-function ctaHtml(s) {
-  const items = s.items.map(([h, hEn, d, dEn, g]) => `
-    <div style="display:flex; gap:22px; align-items:flex-start; padding:13px 22px; margin-bottom:10px;
+function ctaHtml(s, lang) {
+  const en = lang === 'en';
+  const items = s.items.map(it => `
+    <div style="display:flex; gap:26px; align-items:flex-start; padding:${en ? 15 : 22}px 26px; margin-bottom:${en ? 12 : 16}px;
                 background:rgba(255,250,236,0.62); border:1px solid ${C.border}; border-radius:18px;">
-      <div style="flex:0 0 auto; min-width:60px; height:60px; padding:0 14px; border-radius:14px; display:flex; align-items:center; justify-content:center;
-                  background:linear-gradient(160deg,#E8B26A,#C9853E); color:#3d1a00; font-weight:700; font-size:28px;">${esc(g)}</div>
+      <div style="flex:0 0 auto; min-width:64px; height:64px; padding:0 14px; border-radius:14px; display:flex; align-items:center; justify-content:center;
+                  background:linear-gradient(160deg,#E8B26A,#C9853E); color:#3d1a00; font-weight:700; font-size:30px;">${esc(it.glyph)}</div>
       <div>
-        <div style="font-size:31px; font-weight:700; color:${C.saffron}; line-height:1.2;">${esc(h)}
-          <span class="lat" style="font-weight:600; font-size:28px; margin-left:6px;">${esc(hEn)}</span></div>
-        <div style="font-size:25px; color:${C.inkSoft}; line-height:1.35; margin-top:4px;">${esc(d)}</div>
-        <div class="lat" style="font-size:24px; color:${C.inkMuted}; line-height:1.3; margin-top:2px;">${esc(dEn)}</div>
+        <div class="ctaH" style="font-size:${en ? 34 : 34}px; font-weight:700; color:${C.saffron}; line-height:1.2;">${esc(T(it.h, lang))}</div>
+        <div class="ctaD" style="font-size:${en ? 28 : 28}px; color:${C.inkSoft}; line-height:1.35; margin-top:4px;">${esc(T(it.d, lang))}</div>
       </div>
     </div>`).join('');
   return `
-    <div class="title" style="font-size:76px;">${rich(s.title)}</div>
-    ${s.titleEn ? `<div class="titleEn">${rich(s.titleEn)}</div>` : ''}
-    <div class="subtitle" style="margin-top:10px;">${rich(s.subtitle)}</div>
-    <div class="rule" style="margin:20px 0 18px;"></div>
+    <div class="title" style="font-size:${en ? 80 : 84}px;">${rich(T(s.title, lang))}</div>
+    <div class="subtitle" style="margin-top:12px;">${rich(T(s.subtitle, lang))}</div>
+    <div class="rule" style="margin:26px 0 22px;"></div>
     ${items}
     <div style="margin-top:auto; text-align:center;">
-      <div style="font-size:26px; color:${C.inkMuted}; margin-bottom:14px;">${esc(s.note)}</div>
-      <div style="display:inline-block; padding:17px 52px; border-radius:22px; background:linear-gradient(180deg,#A8501B,#7A3208);
-                  color:#F8EFD6; font-size:36px; font-weight:700; box-shadow:0 10px 30px rgba(122,50,8,0.28);">${esc(s.button)}</div>
+      <div class="note" style="font-size:${en ? 30 : 28}px; color:${C.inkMuted}; margin-bottom:20px;">${esc(T(s.note, lang))}</div>
+      <div class="button" style="display:inline-block; padding:20px 60px; border-radius:22px; background:linear-gradient(180deg,#A8501B,#7A3208);
+                  color:#F8EFD6; font-size:${en ? 40 : 38}px; font-weight:700; box-shadow:0 10px 30px rgba(122,50,8,0.28);">${esc(T(s.button, lang))}</div>
     </div>`;
 }
 
@@ -356,25 +354,29 @@ function main() {
   const arg = (k) => { const i = argv.indexOf(k); return i >= 0 ? argv[i + 1] : undefined; };
   const set = CAROUSELS[name];
   if (!set) {
-    console.error('usage: node make-carousel.mjs <' + Object.keys(CAROUSELS).join('|') + '> [--out <dir>] [--fonts <css>]');
+    console.error('usage: node make-carousel.mjs <' + Object.keys(CAROUSELS).join('|') + '> [--lang hi|en] [--out <dir>] [--fonts <css>]');
     process.exit(1);
   }
   const outDir = path.resolve(arg('--out') || path.join(HERE, 'carousel'));
   const fontsCss = arg('--fonts');
   fs.mkdirSync(outDir, { recursive: true });
+  const langs = arg('--lang') ? [arg('--lang')] : ['hi', 'en'];
   const total = set.slides.length;
-  set.slides.forEach((s, i) => {
-    const bgUri = dataUri(path.join(BG_DIR, s.bg));
-    let html;
-    if (s.kind === 'hook') html = hookHtml(s);
-    else if (s.kind === 'cta') html = ctaHtml(s);
-    else html = textHtml(s);
-    const page = shell({ bgUri, bgPos: s.bgPos, bgOpacity: s.bgOpacity, inner: { kicker: esc(s.kicker), html }, pageNo: i + 1, total, fontsCss, om: s.kind !== 'cta' });
-    const out = path.join(outDir, `${name}-${i + 1}.png`);
-    renderPng(page, out);
-    console.log('✓', path.relative(process.cwd(), out));
-  });
-  console.log(`✅ ${total} slides. Slide 1 is the hook; post in order. Caption: posts/${name}.md`);
+  for (const lang of langs) {
+    set.slides.forEach((s, i) => {
+      const bgUri = dataUri(path.join(BG_DIR, s.bg));
+      let html;
+      if (s.kind === 'hook') html = hookHtml(s, lang);
+      else if (s.kind === 'cta') html = ctaHtml(s, lang);
+      else html = textHtml(s, lang);
+      const page = shell({ bgUri, bgPos: s.bgPos, bgOpacity: s.bgOpacity, inner: { kicker: esc(T(s.kicker, lang)), html },
+                           pageNo: i + 1, total, fontsCss, om: s.kind !== 'cta', lang });
+      const out = path.join(outDir, `${name}-${lang}-${i + 1}.png`);
+      renderPng(page, out);
+      console.log('✓', path.relative(process.cwd(), out));
+    });
+  }
+  console.log(`✅ ${total} slides × ${langs.join('+')}. Slide 1 is the hook; post each language as its own carousel. Caption: posts/${name}.md`);
 }
 
 main();
