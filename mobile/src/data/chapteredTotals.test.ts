@@ -71,8 +71,9 @@ const cases = [
   },
   {
     id: 'upanishad',
-    // 5 śānti-pāṭha pages + 18 (Īśa) + 35 (Kena) + 119 (Kaṭha) + 64 (Muṇḍaka) + 12 (Māṇḍūkya) mantras.
-    expectedTotal: 253,
+    // 10 śānti-pāṭha pages + 18 (Īśa) + 35 (Kena) + 119 (Kaṭha) + 67 (Praśna) + 64 (Muṇḍaka)
+    // + 12 (Māṇḍūkya) + 31 (Taittirīya) + 33 (Aitareya) + 26 (Kaivalya) + 113 (Śvetāśvatara) mantras.
+    expectedTotal: 528,
     load: async () => {
       const mod = await import('./upanishad');
       return {

@@ -81,8 +81,9 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - assertVisible: "Upanishad 2\\. Kena Upanishad\\. 35 mantras\\. Tap to open\\."
 - assertVisible: "Upanishad 3\\. Katha Upanishad\\. 119 mantras\\. Tap to open\\."
+- assertVisible: "Upanishad 4\\. Prashna Upanishad\\. 67 mantras\\. Tap to open\\."
 # An unshipped text is listed from the 108-row catalogue, dimmed, not tappable.
-- assertVisible: "Upanishad 4\\. Prashna Upanishad\\. Atharvaveda\\. Coming soon\\."
+- assertVisible: "Upanishad 9\\. Chandogya Upanishad\\. Samaveda\\. Coming soon\\."
 
 # Group filter narrows the catalogue: the Yoga group has no readable text yet.
 - tapOn: "Group: Yoga"

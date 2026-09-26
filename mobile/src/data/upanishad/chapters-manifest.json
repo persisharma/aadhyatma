@@ -30,6 +30,16 @@
     "verseCount": 120
   },
   {
+    "chapter": 4,
+    "slug": "prashna",
+    "titleHi": "प्रश्न उपनिषद्",
+    "titleEn": "Prashna Upanishad",
+    "vedaHi": "अथर्ववेद",
+    "vedaEn": "Atharvaveda",
+    "mantraCount": 67,
+    "verseCount": 68
+  },
+  {
     "chapter": 5,
     "slug": "mundaka",
     "titleHi": "मुण्डक उपनिषद्",
@@ -48,5 +58,45 @@
     "vedaEn": "Atharvaveda",
     "mantraCount": 12,
     "verseCount": 13
+  },
+  {
+    "chapter": 7,
+    "slug": "taittiriya",
+    "titleHi": "तैत्तिरीय उपनिषद्",
+    "titleEn": "Taittiriya Upanishad",
+    "vedaHi": "कृष्ण यजुर्वेद",
+    "vedaEn": "Krishna Yajurveda",
+    "mantraCount": 31,
+    "verseCount": 32
+  },
+  {
+    "chapter": 8,
+    "slug": "aitareya",
+    "titleHi": "ऐतरेय उपनिषद्",
+    "titleEn": "Aitareya Upanishad",
+    "vedaHi": "ऋग्वेद",
+    "vedaEn": "Rigveda",
+    "mantraCount": 33,
+    "verseCount": 34
+  },
+  {
+    "chapter": 12,
+    "slug": "kaivalya",
+    "titleHi": "कैवल्य उपनिषद्",
+    "titleEn": "Kaivalya Upanishad",
+    "vedaHi": "कृष्ण यजुर्वेद",
+    "vedaEn": "Krishna Yajurveda",
+    "mantraCount": 26,
+    "verseCount": 27
+  },
+  {
+    "chapter": 14,
+    "slug": "shvetashvatara",
+    "titleHi": "श्वेताश्वतर उपनिषद्",
+    "titleEn": "Shvetashvatara Upanishad",
+    "vedaHi": "कृष्ण यजुर्वेद",
+    "vedaEn": "Krishna Yajurveda",
+    "mantraCount": 113,
+    "verseCount": 114
   }
 ]

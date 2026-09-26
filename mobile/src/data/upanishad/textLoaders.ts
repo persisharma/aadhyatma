@@ -6,6 +6,11 @@ export const upanishadTextLoaders: Readonly<Record<string, () => UpanishadChapte
   isha: () => require('./texts/isha.json') as UpanishadChapter,
   kena: () => require('./texts/kena.json') as UpanishadChapter,
   katha: () => require('./texts/katha.json') as UpanishadChapter,
+  prashna: () => require('./texts/prashna.json') as UpanishadChapter,
   mundaka: () => require('./texts/mundaka.json') as UpanishadChapter,
   mandukya: () => require('./texts/mandukya.json') as UpanishadChapter,
+  taittiriya: () => require('./texts/taittiriya.json') as UpanishadChapter,
+  aitareya: () => require('./texts/aitareya.json') as UpanishadChapter,
+  kaivalya: () => require('./texts/kaivalya.json') as UpanishadChapter,
+  shvetashvatara: () => require('./texts/shvetashvatara.json') as UpanishadChapter,
 };

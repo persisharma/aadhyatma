@@ -1,0 +1,289 @@
+/**
+ * Authored content for one Upanishad — consumed by scripts/build-upanishad.mjs.
+ * `muktika` is the text's fixed number in the Muktika canon (1–108) and is the
+ * reader's `chapter` id forever; `slug` must match `registry.ts`.
+ *
+ * Aitareya — Ṛgveda (Aitareya Āraṇyaka 2.4–2.6). Three adhyāyas; the first has
+ * three khaṇḍas (4 · 5 · 14), the second and third one each (6 · 4) = 33 mantras,
+ * cited adhyāya.khaṇḍa.mantra. Prose text; Śaṅkara's divisions.
+ */
+const M = (lines, meaningHi, meaningEn) => ({ lines, meaningHi, meaningEn });
+
+export default {
+  slug: 'aitareya',
+  muktika: 8,
+  vedaHi: 'ऋग्वेद',
+  vedaEn: 'Rigveda',
+  source: {
+    baseText:
+      'Ṛgveda (Aitareya Āraṇyaka, second āraṇyaka, adhyāyas 4–6) with Śāṅkara-bhāṣya, as printed in Gita Press "ईशादि नौ उपनिषद्"; Devanagari written out from the printed text.',
+    canonicalEdition: 'Gita Press Gorakhpur, ईशादि नौ उपनिषद् (शांकरभाष्यार्थ सहित), code 66',
+    referenceUrls: [
+      'https://sanskritdocuments.org/doc_upanishhat/aitareya.html',
+      'https://www.wisdomlib.org/hinduism/book/aitareya-upanishad-shankara-bhashya',
+      'https://archive.org/details/IshadiNauUpanishadGitaPress',
+    ],
+    notes:
+      '33 mantras in 1.1 (4), 1.2 (5), 1.3 (14), 2.1 (6) and 3.1 (4) plus the Ṛgvedic śānti-pāṭha (वाङ्मे मनसि) as page 1. Long prose mantras are split at sentence boundaries into lines. The pluta mark (३) of 1.3.13 and the Vedic anunāsika of 1.1.2 are written with plain letters so the line renders cleanly. Devanagari was authored from memory of the printed text with no network source available at build time — a line-by-line check against the Gita Press scan is still owed.',
+    retrievedOn: '2026-09-26',
+  },
+  shanti: M(
+    [
+      'ॐ वाङ्मे मनसि प्रतिष्ठिता मनो मे वाचि प्रतिष्ठितमाविरावीर्म एधि।',
+      'वेदस्य म आणीस्थः श्रुतं मे मा प्रहासीरनेनाधीतेनाहोरात्रान्संदधाम्यृतं वदिष्यामि सत्यं वदिष्यामि।',
+      'तन्मामवतु तद्वक्तारमवत्ववतु मामवतु वक्तारमवतु वक्तारम्॥',
+      'ॐ शान्तिः शान्तिः शान्तिः॥',
+    ],
+    'मेरी वाणी मन में प्रतिष्ठित हो; मेरा मन वाणी में प्रतिष्ठित हो। हे प्रकाशस्वरूप! मेरे लिए प्रकट हो। (हे मन और वाणी!) तुम दोनों मेरे लिए वेद (ज्ञान) को लाने वाले हो। मेरा सुना हुआ मुझे न छोड़े। इस अध्ययन से मैं दिन-रात को जोड़ता हूँ। मैं ऋत बोलूँगा, सत्य बोलूँगा। वह मेरी रक्षा करे, वह वक्ता की रक्षा करे; मेरी रक्षा करे, वक्ता की रक्षा करे, वक्ता की रक्षा करे। ॐ शान्तिः शान्तिः शान्तिः।',
+    'May my speech rest in my mind; may my mind rest in my speech. O self-luminous one, reveal yourself to me. You two (mind and speech) are the bearers of the Veda to me. May what I have heard not desert me. With this study I join day and night. I shall speak what is right; I shall speak the truth. May That protect me; may That protect the teacher; protect me, protect the teacher, protect the teacher. Om, peace, peace, peace.'
+  ),
+  khandas: [
+    // ── Adhyāya 1 ──────────────────────────────────────────────────────────
+    [
+      // Khaṇḍa 1.1 — Creation of the worlds and the cosmic Person
+      [
+        M(
+          ['ॐ आत्मा वा इदमेक एवाग्र आसीत्।', 'नान्यत्किञ्चन मिषत्।', 'स ईक्षत लोकान्नु सृजा इति॥'],
+          'सृष्टि से पहले यह (जगत्) केवल एक आत्मा ही था। और कुछ भी हिलने-डुलने वाला (सक्रिय) नहीं था। उसने विचार किया — "मैं लोकों की रचना करूँ।"',
+          'In the beginning all this was the Self alone, one only. Nothing else whatever stirred. He thought, "Let me create the worlds."'
+        ),
+        M(
+          [
+            'स इमांल्लोकानसृजत।',
+            'अम्भो मरीचीर्मरमापोऽदोऽम्भः परेण दिवं द्यौः प्रतिष्ठान्तरिक्षं मरीचयः।',
+            'पृथिवी मरो या अधस्तात्ता आपः॥',
+          ],
+          'उसने इन लोकों को रचा — अम्भस्, मरीचि, मर और आप्। द्युलोक से परे जो है वह अम्भस् है, द्युलोक उसका आधार है; अन्तरिक्ष मरीचि है; पृथ्वी मर है; और जो नीचे हैं, वे आप् (जल-लोक) हैं।',
+          'He created these worlds: Ambhas, Marīci, Mara and Āpaḥ. Ambhas is beyond the heaven, with heaven as its support; the mid-region is Marīci; the earth is Mara; and the worlds below are Āpaḥ, the waters.'
+        ),
+        M(
+          ['स ईक्षतेमे नु लोका लोकपालान्नु सृजा इति।', 'सोऽद्भ्य एव पुरुषं समुद्धृत्यामूर्छयत्॥'],
+          'उसने विचार किया — "ये लोक तो बन गये; अब लोकपालों की रचना करूँ।" उसने जल से ही पुरुष को निकालकर उसे आकार दिया।',
+          'He thought, "Here are the worlds; let me now create their guardians." From the waters he drew forth a Person and gave him shape.'
+        ),
+        M(
+          [
+            'तमभ्यतपत्तस्याभितप्तस्य मुखं निरभिद्यत यथाण्डम्।',
+            'मुखाद्वाग्वाचोऽग्निर्नासिके निरभिद्येतां नासिकाभ्यां प्राणः प्राणाद्वायुरक्षिणी निरभिद्येतामक्षीभ्यां चक्षुश्चक्षुष आदित्यः कर्णौ निरभिद्येतां कर्णाभ्यां श्रोत्रं श्रोत्राद्दिशस्त्वङ्निरभिद्यत त्वचो लोमानि लोमभ्य ओषधिवनस्पतयो हृदयं निरभिद्यत हृदयान्मनो मनसश्चन्द्रमा नाभिर्निरभिद्यत नाभ्या अपानोऽपानान्मृत्युः शिश्नं निरभिद्यत शिश्नाद्रेतो रेतस आपः॥',
+          ],
+          'उसने उस (पुरुष) पर संकल्प-रूप तप किया। तप किये जाने पर उसका मुख फूटा, जैसे अण्डा फूटता है। मुख से वाणी, वाणी से अग्नि; नासिका-छिद्र फूटे, उनसे प्राण, प्राण से वायु; नेत्र फूटे, उनसे चक्षु, चक्षु से सूर्य; कान फूटे, उनसे श्रोत्र, श्रोत्र से दिशाएँ; त्वचा फूटी, उससे रोम, रोमों से ओषधि-वनस्पति; हृदय फूटा, उससे मन, मन से चन्द्रमा; नाभि फूटी, उससे अपान, अपान से मृत्यु; शिश्न फूटा, उससे रेतस्, रेतस् से जल।',
+          'He brooded over him. From him thus brooded upon, a mouth burst forth, as an egg breaks. From the mouth came speech, from speech fire. Nostrils burst forth; from them breath, from breath the wind. Eyes burst forth; from them sight, from sight the sun. Ears burst forth; from them hearing, from hearing the directions. Skin burst forth; from it hair, from hair plants and trees. A heart burst forth; from it the mind, from mind the moon. A navel burst forth; from it the downward breath, from that, death. The organ of generation burst forth; from it seed, from seed the waters.'
+        ),
+      ],
+      // Khaṇḍa 1.2 — The deities enter the human body
+      [
+        M(
+          [
+            'ता एता देवताः सृष्टा अस्मिन्महत्यर्णवे प्रापतन्।',
+            'तमशनापिपासाभ्यामन्ववार्जत्।',
+            'ता एनमब्रुवन्नायतनं नः प्रजानीहि यस्मिन्प्रतिष्ठिता अन्नमदामेति॥',
+          ],
+          'ये रचे गये देवता इस महान् (संसार-) समुद्र में गिर पड़े। उसने उस (पुरुष) को भूख और प्यास से युक्त कर दिया। वे देवता उससे बोले — "हमारे लिए ऐसा आश्रय-स्थान बताओ जिसमें स्थित होकर हम अन्न खा सकें।"',
+          'These deities, once created, fell into this great ocean (of existence). He afflicted the Person with hunger and thirst. They said to him, "Find us a dwelling in which we may settle and eat food."'
+        ),
+        M(
+          ['ताभ्यो गामानयत्ता अब्रुवन्न वै नोऽयमलमिति।', 'ताभ्योऽश्वमानयत्ता अब्रुवन्न वै नोऽयमलमिति॥'],
+          'उसने उनके लिए गाय (का शरीर) लाया। वे बोले — "यह हमारे लिए पर्याप्त नहीं है।" उसने उनके लिए घोड़ा लाया। वे बोले — "यह भी हमारे लिए पर्याप्त नहीं है।"',
+          'He brought them a cow. They said, "This is not enough for us." He brought them a horse. They said, "This too is not enough for us."'
+        ),
+        M(
+          ['ताभ्यः पुरुषमानयत्ता अब्रुवन् सुकृतं बतेति पुरुषो वाव सुकृतम्।', 'ता अब्रवीद्यथायतनं प्रविशतेति॥'],
+          'उसने उनके लिए पुरुष (मनुष्य-शरीर) लाया। वे बोले — "अहो! यह तो सुन्दर रचना है।" पुरुष ही सचमुच सुकृत (उत्तम रचना) है। उसने उनसे कहा — "अपने-अपने स्थान में प्रवेश करो।"',
+          'He brought them a human being. They said, "Ah, this is well made!" The human being is indeed well made. He said to them, "Enter, each into your own abode."'
+        ),
+        M(
+          [
+            'अग्निर्वाग्भूत्वा मुखं प्राविशद्वायुः प्राणो भूत्वा नासिके प्राविशदादित्यश्चक्षुर्भूत्वाक्षिणी प्राविशद्दिशः श्रोत्रं भूत्वा कर्णौ प्राविशन्नोषधिवनस्पतयो लोमानि भूत्वा त्वचं प्राविशंश्चन्द्रमा मनो भूत्वा हृदयं प्राविशन्मृत्युरपानो भूत्वा नाभिं प्राविशदापो रेतो भूत्वा शिश्नं प्राविशन्॥',
+          ],
+          'अग्नि वाणी बनकर मुख में प्रविष्ट हुआ; वायु प्राण बनकर नासिका में; सूर्य चक्षु बनकर नेत्रों में; दिशाएँ श्रोत्र बनकर कानों में; ओषधि-वनस्पति रोम बनकर त्वचा में; चन्द्रमा मन बनकर हृदय में; मृत्यु अपान बनकर नाभि में; और जल रेतस् बनकर शिश्न में प्रविष्ट हुआ।',
+          'Fire became speech and entered the mouth; wind became breath and entered the nostrils; the sun became sight and entered the eyes; the directions became hearing and entered the ears; plants and trees became hair and entered the skin; the moon became mind and entered the heart; death became the downward breath and entered the navel; the waters became seed and entered the organ of generation.'
+        ),
+        M(
+          [
+            'तमशनायापिपासे अब्रूतामावाभ्यामभिप्रजानीहीति ते अब्रवीदेतास्वेव वां देवतास्वाभजाम्येतासु भागिन्यौ करोमीति।',
+            'तस्माद्यस्यै कस्यै च देवतायै हविर्गृह्यते भागिन्यावेवास्यामशनायापिपासे भवतः॥',
+          ],
+          'उससे भूख और प्यास बोलीं — "हम दोनों के लिए भी स्थान बताओ।" उसने उनसे कहा — "मैं तुम दोनों को इन्हीं देवताओं में भाग देता हूँ; इनमें तुम्हें भागी बनाता हूँ।" इसलिए जिस किसी देवता के लिए हवि ली जाती है, उसमें भूख और प्यास भागी होती हैं।',
+          'Hunger and thirst said to him, "Find a place for us two as well." He said to them, "I give you a share among these very deities; I make you partners in them." Therefore, to whatever deity an offering is made, hunger and thirst share in it.'
+        ),
+      ],
+      // Khaṇḍa 1.3 — Food, and the Self's entry through the crown of the head
+      [
+        M(
+          ['स ईक्षतेमे नु लोकाश्च लोकपालाश्चान्नमेभ्यः सृजा इति॥'],
+          'उसने विचार किया — "ये लोक और लोकपाल बन गये; अब इनके लिए अन्न की रचना करूँ।"',
+          'He thought, "Here are the worlds and their guardians; let me create food for them."'
+        ),
+        M(
+          ['सोऽपोऽभ्यतपत्ताभ्योऽभितप्ताभ्यो मूर्तिरजायत।', 'या वै सा मूर्तिरजायतान्नं वै तत्॥'],
+          'उसने जल पर तप (संकल्प) किया। तप किये गये जल से एक मूर्ति (आकार) उत्पन्न हुई। जो वह मूर्ति उत्पन्न हुई, वही अन्न है।',
+          'He brooded over the waters. From the waters thus brooded upon a form arose. The form that arose is food.'
+        ),
+        M(
+          ['तदेनत्सृष्टं पराङत्यजिघांसत्तद्वाचाऽजिघृक्षत्तन्नाशक्नोद्वाचा ग्रहीतुम्।', 'स यद्धैनद्वाचाऽग्रहैष्यदभिव्याहृत्य हैवान्नमत्रप्स्यत्॥'],
+          'रचा गया वह अन्न (पुरुष से) दूर भागने लगा। उसने उसे वाणी से पकड़ना चाहा, पर वाणी से पकड़ नहीं सका। यदि वह उसे वाणी से पकड़ लेता, तो अन्न का नाम लेने मात्र से तृप्त हो जाता।',
+          'That food, once created, sought to flee away. He tried to seize it with speech, but could not grasp it with speech. Had he grasped it with speech, one would be satisfied merely by naming food.'
+        ),
+        M(
+          ['तत्प्राणेनाजिघृक्षत्तन्नाशक्नोत्प्राणेन ग्रहीतुम्।', 'स यद्धैनत्प्राणेनाग्रहैष्यदभिप्राण्य हैवान्नमत्रप्स्यत्॥'],
+          'उसने उसे प्राण (घ्राण) से पकड़ना चाहा, पर प्राण से पकड़ नहीं सका। यदि वह उसे प्राण से पकड़ लेता, तो अन्न को सूँघने मात्र से तृप्त हो जाता।',
+          'He tried to seize it with breath, but could not grasp it with breath. Had he grasped it with breath, one would be satisfied merely by smelling food.'
+        ),
+        M(
+          ['तच्चक्षुषाऽजिघृक्षत्तन्नाशक्नोच्चक्षुषा ग्रहीतुम्।', 'स यद्धैनच्चक्षुषाऽग्रहैष्यद्दृष्ट्वा हैवान्नमत्रप्स्यत्॥'],
+          'उसने उसे नेत्र से पकड़ना चाहा, पर नेत्र से पकड़ नहीं सका। यदि वह उसे नेत्र से पकड़ लेता, तो अन्न को देखने मात्र से तृप्त हो जाता।',
+          'He tried to seize it with the eye, but could not grasp it with the eye. Had he grasped it with the eye, one would be satisfied merely by seeing food.'
+        ),
+        M(
+          ['तच्छ्रोत्रेणाजिघृक्षत्तन्नाशक्नोच्छ्रोत्रेण ग्रहीतुम्।', 'स यद्धैनच्छ्रोत्रेणाग्रहैष्यच्छ्रुत्वा हैवान्नमत्रप्स्यत्॥'],
+          'उसने उसे श्रोत्र से पकड़ना चाहा, पर श्रोत्र से पकड़ नहीं सका। यदि वह उसे श्रोत्र से पकड़ लेता, तो अन्न की चर्चा सुनने मात्र से तृप्त हो जाता।',
+          'He tried to seize it with the ear, but could not grasp it with the ear. Had he grasped it with the ear, one would be satisfied merely by hearing of food.'
+        ),
+        M(
+          ['तत्त्वचाऽजिघृक्षत्तन्नाशक्नोत्त्वचा ग्रहीतुम्।', 'स यद्धैनत्त्वचाऽग्रहैष्यत्स्पृष्ट्वा हैवान्नमत्रप्स्यत्॥'],
+          'उसने उसे त्वचा से पकड़ना चाहा, पर त्वचा से पकड़ नहीं सका। यदि वह उसे त्वचा से पकड़ लेता, तो अन्न को छूने मात्र से तृप्त हो जाता।',
+          'He tried to seize it with the skin, but could not grasp it with the skin. Had he grasped it with the skin, one would be satisfied merely by touching food.'
+        ),
+        M(
+          ['तन्मनसाऽजिघृक्षत्तन्नाशक्नोन्मनसा ग्रहीतुम्।', 'स यद्धैनन्मनसाऽग्रहैष्यद्ध्यात्वा हैवान्नमत्रप्स्यत्॥'],
+          'उसने उसे मन से पकड़ना चाहा, पर मन से पकड़ नहीं सका। यदि वह उसे मन से पकड़ लेता, तो अन्न का चिन्तन करने मात्र से तृप्त हो जाता।',
+          'He tried to seize it with the mind, but could not grasp it with the mind. Had he grasped it with the mind, one would be satisfied merely by thinking of food.'
+        ),
+        M(
+          ['तच्छिश्नेनाजिघृक्षत्तन्नाशक्नोच्छिश्नेन ग्रहीतुम्।', 'स यद्धैनच्छिश्नेनाग्रहैष्यद्विसृज्य हैवान्नमत्रप्स्यत्॥'],
+          'उसने उसे शिश्न से पकड़ना चाहा, पर शिश्न से पकड़ नहीं सका। यदि वह उसे शिश्न से पकड़ लेता, तो अन्न का विसर्जन करने मात्र से तृप्त हो जाता।',
+          'He tried to seize it with the organ of generation, but could not grasp it thus. Had he grasped it thus, one would be satisfied merely by discharging food.'
+        ),
+        M(
+          ['तदपानेनाजिघृक्षत्तदावयत्।', 'सैषोऽन्नस्य ग्रहो यद्वायुरन्नायुर्वा एष यद्वायुः॥'],
+          'उसने उसे अपान (मुख-स्थित वायु) से पकड़ना चाहा, और उसे निगल लिया। यह जो वायु है, वही अन्न को पकड़ने वाला है; यह वायु ही अन्न से जीवित रहने वाला (अन्नायु) है।',
+          'He tried to seize it with the downward breath, and swallowed it. This breath is the seizer of food; this breath lives on food.'
+        ),
+        M(
+          [
+            'स ईक्षत कथं न्विदं मदृते स्यादिति स ईक्षत कतरेण प्रपद्या इति।',
+            'स ईक्षत यदि वाचाऽभिव्याहृतं यदि प्राणेनाभिप्राणितं यदि चक्षुषा दृष्टं यदि श्रोत्रेण श्रुतं यदि त्वचा स्पृष्टं यदि मनसा ध्यातं यद्यपानेनाभ्यपानितं यदि शिश्नेन विसृष्टमथ कोऽहमिति॥',
+          ],
+          'उसने विचार किया — "मेरे बिना यह (शरीर) कैसे रह सकेगा?" फिर विचार किया — "किस मार्ग से इसमें प्रवेश करूँ?" उसने सोचा — "यदि वाणी से बोलना, प्राण से साँस लेना, नेत्र से देखना, श्रोत्र से सुनना, त्वचा से छूना, मन से चिन्तन, अपान से निःश्वास और शिश्न से विसर्जन (इन देवताओं द्वारा ही) हो गया, तो फिर मैं कौन हूँ?"',
+          'He thought, "How could this body exist without me?" He thought, "By which way shall I enter?" He thought, "If speaking is done by speech, breathing by breath, seeing by the eye, hearing by the ear, touching by the skin, thinking by the mind, exhaling by the downward breath, discharging by the organ of generation — then who am I?"'
+        ),
+        M(
+          [
+            'स एतमेव सीमानं विदार्यैतया द्वारा प्रापद्यत।',
+            'सैषा विदृतिर्नाम द्वास्तदेतन्नान्दनम्।',
+            'तस्य त्रय आवसथास्त्रयः स्वप्ना अयमावसथोऽयमावसथोऽयमावसथ इति॥',
+          ],
+          'उसने इस सीमन्त (सिर के मध्य-भाग, ब्रह्मरन्ध्र) को विदीर्ण करके इसी द्वार से (शरीर में) प्रवेश किया। यह द्वार "विदृति" नाम से प्रसिद्ध है; यही आनन्द का स्थान है। उसके तीन निवास-स्थान और तीन स्वप्न (अवस्थाएँ) हैं — यह निवास (नेत्र), यह निवास (कण्ठ/मन), यह निवास (हृदय)।',
+          'Splitting open this parting of the skull, he entered by that door. That door is known as the "cleft"; it is the place of bliss. He has three dwellings and three states of dream: this dwelling (the eye), this dwelling (the mind), this dwelling (the heart).'
+        ),
+        M(
+          [
+            'स जातो भूतान्यभिव्यैख्यत्किमिहान्यं वावदिषदिति।',
+            'स एतमेव पुरुषं ब्रह्म ततममपश्यत्।',
+            'इदमदर्शमिति॥',
+          ],
+          '(शरीर में) जन्म लेकर उसने भूतों (प्राणियों) को देखा — "यहाँ (मुझसे) भिन्न कौन है जिसे बताऊँ?" उसने इसी पुरुष को सर्वव्यापी ब्रह्म के रूप में देखा — "इसे मैंने देख लिया!"',
+          'Having been born, he looked around at beings, thinking, "Whom else here could one speak of as other?" He saw this very Person as Brahman, all-pervading: "This I have seen!"'
+        ),
+        M(
+          [
+            'तस्मादिदन्द्रो नामेदन्द्रो ह वै नाम।',
+            'तमिदन्द्रं सन्तमिन्द्र इत्याचक्षते परोक्षेण।',
+            'परोक्षप्रिया इव हि देवाः परोक्षप्रिया इव हि देवाः॥',
+          ],
+          'इसलिए उसका नाम "इदन्द्र" है; "इदन्द्र" ही उसका नाम है। उस इदन्द्र को परोक्ष रूप से "इन्द्र" कहते हैं; क्योंकि देवता परोक्ष (गूढ़ नाम) के प्रेमी हैं, देवता परोक्ष के प्रेमी हैं।',
+          'Therefore his name is Idandra ("this I have seen"); Idandra indeed is his name. Him who is Idandra they call Indra in a veiled way; for the gods love what is veiled, the gods love what is veiled.'
+        ),
+      ],
+    ],
+    // ── Adhyāya 2 — The three births of the Self ───────────────────────────
+    [
+      [
+        M(
+          [
+            'पुरुषे ह वा अयमादितो गर्भो भवति यदेतद्रेतः।',
+            'तदेतत्सर्वेभ्योऽङ्गेभ्यस्तेजः सम्भूतमात्मन्येवात्मानं बिभर्ति तद्यदा स्त्रियां सिञ्चत्यथैनज्जनयति तदस्य प्रथमं जन्म॥',
+          ],
+          'पुरुष में ही सबसे पहले यह गर्भ रहता है — जो यह रेतस् (वीर्य) है। यह सब अंगों से उत्पन्न तेज है; पुरुष अपने में ही (इस रूप में) अपने को धारण करता है। जब वह स्त्री में इसका सेचन करता है, तब इसे जन्म देता है — यह इस (जीव) का प्रथम जन्म है।',
+          'In a man, first of all, this seed becomes the embryo. This seed is the vigour gathered from all his limbs; he bears the self within himself. When he pours it into a woman, he brings it forth — that is its first birth.'
+        ),
+        M(
+          ['तत्स्त्रिया आत्मभूयं गच्छति यथा स्वमङ्गं तथा।', 'तस्मादेनां न हिनस्ति।', 'सास्यैतमात्मानमत्र गतं भावयति॥'],
+          'वह (गर्भ) स्त्री के साथ ऐसा एक हो जाता है जैसे उसका अपना अंग हो; इसलिए वह उसे पीड़ा नहीं देता। वह (स्त्री) इस पति के आत्मा (गर्भ) का, जो उसमें आया है, पोषण करती है।',
+          'It becomes one with the woman, as if it were her own limb; therefore it does not harm her. She nourishes this self of his that has come into her.'
+        ),
+        M(
+          [
+            'सा भावयित्री भावयितव्या भवति।',
+            'तं स्त्री गर्भं बिभर्ति।',
+            'सोऽग्र एव कुमारं जन्मनोऽग्रेऽधिभावयति।',
+            'स यत्कुमारं जन्मनोऽग्रेऽधिभावयत्यात्मानमेव तद्भावयत्येषां लोकानां सन्तत्या।',
+            'एवं सन्तता हीमे लोकास्तदस्य द्वितीयं जन्म॥',
+          ],
+          'वह पोषण करने वाली (माता) स्वयं पोषण के योग्य होती है (पति उसकी रक्षा करता है)। स्त्री उस गर्भ को धारण करती है। पिता जन्म से पहले और जन्म के बाद भी बालक का पोषण करता है। जन्म से पहले और बाद बालक का जो पोषण करता है, वह इन लोकों की परम्परा (चालू रखने) के लिए अपना ही पोषण करता है; क्योंकि ये लोक इसी प्रकार चलते हैं। यह इसका द्वितीय जन्म है।',
+          'She, the nourisher, is herself to be nourished. The woman bears the embryo. The father cares for the child before and after birth. In caring for the child before and after birth he cares for his own self, for the continuance of these worlds; for thus are these worlds continued. That is its second birth.'
+        ),
+        M(
+          [
+            'सोऽस्यायमात्मा पुण्येभ्यः कर्मभ्यः प्रतिधीयते।',
+            'अथास्यायमितर आत्मा कृतकृत्यो वयोगतः प्रैति।',
+            'स इतः प्रयन्नेव पुनर्जायते तदस्य तृतीयं जन्म॥',
+          ],
+          'वह (पुत्र-रूप) आत्मा पिता के स्थान पर पुण्य-कर्मों के लिए नियुक्त हो जाता है। फिर इसका यह दूसरा (पिता-रूप) आत्मा, कृतकृत्य होकर, आयु पूर्ण कर चला जाता है। वह यहाँ से जाते ही फिर जन्म लेता है — यह इसका तृतीय जन्म है।',
+          'This self of his, the son, is put in his place for the performance of good works. Then this other self of his, having done what was to be done and reached old age, departs. Departing hence he is born again — that is his third birth.'
+        ),
+        M(
+          [
+            'तदुक्तमृषिणा।',
+            'गर्भे नु सन्नन्वेषामवेदमहं देवानां जनिमानि विश्वा।',
+            'शतं मा पुर आयसीररक्षन्नधः श्येनो जवसा निरदीयमिति।',
+            'गर्भ एवैतच्छयानो वामदेव एवमुवाच॥',
+          ],
+          'यही ऋषि ने कहा है — "गर्भ में रहते हुए ही मैंने इन देवताओं के सब जन्मों को जान लिया। सौ लोहे की (शरीर-रूप) पुरियाँ मुझे रोक रही थीं; बाज़ की तरह वेग से मैं नीचे निकल आया।" गर्भ में ही लेटे हुए वामदेव ने ऐसा कहा।',
+          'This was declared by the sage: "While yet in the womb I came to know all the births of these gods. A hundred iron citadels held me down; like a hawk I flew forth with speed." Lying thus in the womb, Vāmadeva spoke this.'
+        ),
+        M(
+          ['स एवं विद्वानस्माच्छरीरभेदादूर्ध्व उत्क्रम्यामुष्मिन्स्वर्गे लोके सर्वान्कामानाप्त्वाऽमृतः समभवत्समभवत्॥'],
+          'वह (वामदेव) इस प्रकार जानकर, इस शरीर के छूटने पर ऊपर उठकर, उस स्वर्ग-लोक (ब्रह्म) में समस्त कामनाओं को पाकर अमर हो गया, अमर हो गया।',
+          'Knowing thus, he rose upward at the falling away of this body and, in that heavenly world, having attained all desires, became immortal — became immortal.'
+        ),
+      ],
+    ],
+    // ── Adhyāya 3 — Consciousness is Brahman ───────────────────────────────
+    [
+      [
+        M(
+          [
+            'कोऽयमात्मेति वयमुपास्महे कतरः स आत्मा।',
+            'येन वा पश्यति येन वा शृणोति येन वा गन्धानाजिघ्रति येन वा वाचं व्याकरोति येन वा स्वादु चास्वादु च विजानाति॥',
+          ],
+          '"यह आत्मा कौन है?" — जिसकी हम उपासना करते हैं, वह आत्मा दोनों (जीवात्मा और परमात्मा) में कौन-सा है? क्या वह जिससे (मनुष्य) देखता है, जिससे सुनता है, जिससे गन्ध सूँघता है, जिससे वाणी बोलता है, जिससे स्वादु और अस्वादु को जानता है?',
+          '"Who is this Self?" — which of the two do we worship as the Self? Is it that by which one sees, by which one hears, by which one smells odours, by which one utters speech, by which one knows the sweet and the unsweet?'
+        ),
+        M(
+          [
+            'यदेतद्धृदयं मनश्चैतत्।',
+            'संज्ञानमाज्ञानं विज्ञानं प्रज्ञानं मेधा दृष्टिर्धृतिर्मतिर्मनीषा जूतिः स्मृतिः सङ्कल्पः क्रतुरसुः कामो वश इति।',
+            'सर्वाण्येवैतानि प्रज्ञानस्य नामधेयानि भवन्ति॥',
+          ],
+          'जो यह हृदय है और जो यह मन है — संज्ञान (चेतना), आज्ञान (आज्ञा), विज्ञान (विवेक), प्रज्ञान (प्रज्ञा), मेधा, दृष्टि, धृति, मति, मनीषा, जूति (वेग), स्मृति, संकल्प, क्रतु (निश्चय), असु (प्राण-क्रिया), काम और वश — ये सब प्रज्ञान (चैतन्य) के ही नाम हैं।',
+          'That which is this heart and this mind — awareness, command, discernment, wisdom, intelligence, insight, steadiness, thought, reflection, impulse, memory, resolve, purpose, vitality, desire, will — all these are names of Consciousness alone.'
+        ),
+        M(
+          [
+            'एष ब्रह्मैष इन्द्र एष प्रजापतिरेते सर्वे देवा इमानि च पञ्च महाभूतानि पृथिवी वायुराकाश आपो ज्योतींषीत्येतानीमानि च क्षुद्रमिश्राणीव।',
+            'बीजानीतराणि चेतराणि चाण्डजानि च जारुजानि च स्वेदजानि चोद्भिज्जानि चाश्वा गावः पुरुषा हस्तिनो यत्किञ्चेदं प्राणि जङ्गमं च पतत्रि च यच्च स्थावरम्।',
+            'सर्वं तत्प्रज्ञानेत्रं प्रज्ञाने प्रतिष्ठितं प्रज्ञानेत्रो लोकः प्रज्ञा प्रतिष्ठा प्रज्ञानं ब्रह्म॥',
+          ],
+          'यह (प्रज्ञान-आत्मा) ब्रह्मा है, यह इन्द्र है, यह प्रजापति है; ये सब देवता, ये पाँच महाभूत — पृथ्वी, वायु, आकाश, जल और तेज — और ये छोटे-छोटे मिले-जुले (जीव); अन्य-अन्य बीज; अण्डज, जरायुज, स्वेदज और उद्भिज्ज (प्राणी); घोड़े, गायें, मनुष्य, हाथी — जो कुछ यह प्राणधारी, चलने वाला, उड़ने वाला और स्थावर है — वह सब प्रज्ञान-नेत्र वाला है, प्रज्ञान में प्रतिष्ठित है। यह लोक प्रज्ञान से चलता है; प्रज्ञा ही आधार है; प्रज्ञान ही ब्रह्म है।',
+          'This is Brahmā, this is Indra, this is Prajāpati; all these gods; these five great elements — earth, air, space, water, light; these tiny mixed creatures; the various seeds; beings born of eggs, of wombs, of sweat and of sprouts; horses, cows, humans, elephants — whatever here breathes, moves, flies or stands still. All that is guided by Consciousness, rests on Consciousness. The world is guided by Consciousness; Consciousness is its foundation. Consciousness is Brahman.'
+        ),
+        M(
+          ['स एतेन प्रज्ञेनात्मनास्माल्लोकादुत्क्रम्यामुष्मिन्स्वर्गे लोके सर्वान्कामानाप्त्वाऽमृतः समभवत्समभवत्॥'],
+          'वह (वामदेव) इस प्रज्ञान-स्वरूप आत्मा द्वारा इस लोक से ऊपर उठकर, उस स्वर्ग-लोक (ब्रह्म) में समस्त कामनाओं को पाकर अमर हो गया, अमर हो गया।',
+          'He, by this Self that is Consciousness, rose from this world and, in that heavenly world, having attained all desires, became immortal — became immortal.'
+        ),
+      ],
+    ],
+  ],
+};

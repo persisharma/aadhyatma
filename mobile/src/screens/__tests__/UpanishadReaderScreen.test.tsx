@@ -109,9 +109,11 @@ test('the reader steps between READABLE Upanishads, skipping unshipped Muktikā 
   const { nextUpanishadChapter, prevUpanishadChapter, isUpanishadAvailable } = jest.requireActual<
     typeof import('@/data/upanishad')
   >('@/data/upanishad');
-  assert.equal(nextUpanishadChapter(3)?.chapter, 5, 'Kaṭha (3) advances to Muṇḍaka (5): Praśna (4) is not shipped');
-  assert.equal(prevUpanishadChapter(5)?.chapter, 3);
-  assert.equal(nextUpanishadChapter(6), null);
+  assert.equal(nextUpanishadChapter(8)?.chapter, 12, 'Aitareya (8) advances to Kaivalya (12): 9–11 are not shipped');
+  assert.equal(prevUpanishadChapter(12)?.chapter, 8);
+  assert.equal(nextUpanishadChapter(3)?.chapter, 4, 'Kaṭha (3) now advances to Praśna (4)');
+  assert.equal(nextUpanishadChapter(14), null);
   assert.equal(prevUpanishadChapter(1), null);
-  assert.equal(isUpanishadAvailable(4), false);
+  assert.equal(isUpanishadAvailable(4), true);
+  assert.equal(isUpanishadAvailable(9), false);
 });

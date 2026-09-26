@@ -1,0 +1,567 @@
+{
+  "chapter": 12,
+  "slug": "kaivalya",
+  "titleHi": "कैवल्य उपनिषद्",
+  "titleEn": "Kaivalya Upanishad",
+  "vedaHi": "कृष्ण यजुर्वेद",
+  "vedaEn": "Krishna Yajurveda",
+  "mantraCount": 26,
+  "verseCount": 27,
+  "source": {
+    "baseText": "Kṛṣṇa Yajurveda recension as printed in the Adyar Library \"Śaiva Upaniṣads\" (with Upaniṣad-brahmayogin's commentary) and the Gita Press one-hundred-eight Upaniṣad collection; Devanagari written out from the printed text.",
+    "canonicalEdition": "Adyar Library, The Śaiva Upaniṣads (ed. A. Mahadeva Sastri, 1925); Gita Press, उपनिषद् अंक",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_upanishhat/kaivalya.html",
+      "https://www.wisdomlib.org/hinduism/book/kaivalya-upanishad",
+      "https://archive.org/details/SaivaUpanishads"
+    ],
+    "notes": "Khaṇḍa 1 has 24 verses (the half-verse समस्तसाक्षिं is kept as its own mantra 24, as in the Adyar text); khaṇḍa 2 has the Śatarudrīya phala-śruti in two mantras. The Yajurvedic śānti-pāṭha (सह नाववतु) is page 1. Devanagari was authored from memory of the printed text with no network source available at build time — a line-by-line check against the printed edition is still owed.",
+    "retrievedOn": "2026-09-26"
+  },
+  "verses": [
+    {
+      "id": "kaivalya-shanti",
+      "upanishad": 12,
+      "section": "shanti",
+      "stanza": 12,
+      "numInSection": 1,
+      "reference": "shanti",
+      "labelHi": "शान्ति मन्त्र",
+      "labelEn": "Shanti Mantra",
+      "lines": [
+        "ॐ सह नाववतु सह नौ भुनक्तु सह वीर्यं करवावहै।",
+        "तेजस्वि नावधीतमस्तु मा विद्विषावहै॥",
+        "ॐ शान्तिः शान्तिः शान्तिः॥"
+      ],
+      "linesEn": [
+        "om saha nāvavatu saha nau bhunaktu saha vīryaṁ karavāvahai",
+        "tejasvi nāvadhītamastu mā vidviṣhāvahai",
+        "om śhāntiḥ śhāntiḥ śhāntiḥ"
+      ],
+      "meaningHi": "वह (ब्रह्म) हम दोनों (गुरु-शिष्य) की साथ-साथ रक्षा करे, हम दोनों का साथ-साथ पालन करे; हम दोनों साथ-साथ सामर्थ्य प्राप्त करें। हमारा पढ़ा हुआ तेजस्वी हो; हम परस्पर द्वेष न करें। ॐ शान्तिः शान्तिः शान्तिः।",
+      "meaningEn": "May That protect us both together; may That nourish us both together; may we work together with vigour. May what we study be luminous; may we never hate one another. Om, peace, peace, peace."
+    },
+    {
+      "id": "kaivalya-1-1",
+      "upanishad": 12,
+      "section": "mantra",
+      "stanza": 12,
+      "numInSection": 2,
+      "reference": "1.1",
+      "labelHi": "मन्त्र · १.१",
+      "labelEn": "Mantra · 1.1",
+      "lines": [
+        "ॐ अथाश्वलायनो भगवन्तं परमेष्ठिनमुपसमेत्योवाच।",
+        "अधीहि भगवन्ब्रह्मविद्यां वरिष्ठां सदा सद्भिः सेव्यमानां निगूढाम्।",
+        "ययाचिरात्सर्वपापं व्यपोह्य परात्परं पुरुषं याति विद्वान्॥"
+      ],
+      "linesEn": [
+        "om athāśvalāyano bhagavantaṁ parameṣṭhinamupasametyovācha",
+        "adhīhi bhagavanbrahmavidyāṁ variṣṭhāṁ sadā sadbhiḥ sevyamānāṁ nigūḍhām",
+        "yayāchirātsarvapāpaṁ vyapohya parātparaṁ puruṣhaṁ yāti vidvān"
+      ],
+      "meaningHi": "फिर आश्वलायन ने भगवान् परमेष्ठी (ब्रह्मा) के पास जाकर कहा — \"भगवन्! मुझे वह श्रेष्ठ ब्रह्मविद्या पढ़ाइये, जो सज्जनों द्वारा सदा सेवित और गुप्त है, जिससे विद्वान् शीघ्र ही सब पापों को दूर करके परात्पर पुरुष को प्राप्त होता है।\"",
+      "meaningEn": "Then Āśvalāyana approached the venerable Parameṣṭhin (Brahmā) and said: \"Teach me, Lord, the highest knowledge of Brahman, ever cherished by the good and kept secret, by which the wise soon cast off all sin and reach the Person higher than the highest.\""
+    },
+    {
+      "id": "kaivalya-1-2",
+      "upanishad": 12,
+      "section": "mantra",
+      "stanza": 12,
+      "numInSection": 3,
+      "reference": "1.2",
+      "labelHi": "मन्त्र · १.२",
+      "labelEn": "Mantra · 1.2",
+      "lines": [
+        "तस्मै स होवाच पितामहश्च श्रद्धाभक्तिध्यानयोगादवैहि॥"
+      ],
+      "linesEn": [
+        "tasmai sa hovācha pitāmahaścha śraddhābhaktidhyānayogādavaihi"
+      ],
+      "meaningHi": "उन्हें पितामह (ब्रह्मा) ने कहा — \"श्रद्धा, भक्ति और ध्यान-योग से (उसे) जानो।\"",
+      "meaningEn": "The Grandsire said to him: \"Know it through faith, devotion and the yoga of meditation.\""
+    },
+    {
+      "id": "kaivalya-1-3",
+      "upanishad": 12,
+      "section": "mantra",
+      "stanza": 12,
+      "numInSection": 4,
+      "reference": "1.3",
+      "labelHi": "मन्त्र · १.३",
+      "labelEn": "Mantra · 1.3",
+      "lines": [
+        "न कर्मणा न प्रजया धनेन त्यागेनैके अमृतत्वमानशुः।",
+        "परेण नाकं निहितं गुहायां विभ्राजते यद्यतयो विशन्ति॥"
+      ],
+      "linesEn": [
+        "na karmaṇā na prajayā dhanena tyāgenaike amṛitatvamānaśhuḥ",
+        "pareṇa nākaṁ nihitaṁ guhāyāṁ vibhrājate yadyatayo viśhanti"
+      ],
+      "meaningHi": "न कर्म से, न सन्तान से, न धन से — केवल त्याग से ही कुछ (विरले) लोगों ने अमरत्व पाया है। स्वर्ग से भी परे, हृदय-गुहा में स्थित जो (ब्रह्म) प्रकाशित होता है, उसमें यति प्रवेश करते हैं।",
+      "meaningEn": "Not by works, not by offspring, not by wealth, but by renunciation alone have some attained immortality. Beyond heaven, hidden in the cave of the heart, shines That into which the ascetics enter."
+    },
+    {
+      "id": "kaivalya-1-4",
+      "upanishad": 12,
+      "section": "mantra",
+      "stanza": 12,
+      "numInSection": 5,
+      "reference": "1.4",
+      "labelHi": "मन्त्र · १.४",
+      "labelEn": "Mantra · 1.4",
+      "lines": [
+        "वेदान्तविज्ञानसुनिश्चितार्थाः संन्यासयोगाद्यतयः शुद्धसत्त्वाः।",
+        "ते ब्रह्मलोके तु परान्तकाले परामृताः परिमुच्यन्ति सर्वे॥"
+      ],
+      "linesEn": [
+        "vedāntavijñānasuniśchitārthāḥ saṁnyāsayogādyatayaḥ śhuddhasattvāḥ",
+        "te brahmaloke tu parāntakāle parāmṛitāḥ parimuchyanti sarve"
+      ],
+      "meaningHi": "वेदान्त-विज्ञान से जिन्होंने अर्थ (तत्त्व) को भली प्रकार निश्चित कर लिया है, जो संन्यास-योग से शुद्ध-अन्तःकरण यति हैं — वे सब अन्तकाल में ब्रह्मलोक में परम अमृत को प्राप्त कर पूर्णतः मुक्त हो जाते हैं।",
+      "meaningEn": "Ascetics of pure mind who have ascertained the truth through the knowledge of Vedānta, and who practise the yoga of renunciation — they all, at the final hour, in the world of Brahman, attain supreme immortality and are wholly freed."
+    },
+    {
+      "id": "kaivalya-1-5",
+      "upanishad": 12,
+      "section": "mantra",
+      "stanza": 12,
+      "numInSection": 6,
+      "reference": "1.5",
+      "labelHi": "मन्त्र · १.५",
+      "labelEn": "Mantra · 1.5",
+      "lines": [
+        "विविक्तदेशे च सुखासनस्थः शुचिः समग्रीवशिरःशरीरः।",
+        "अत्याश्रमस्थः सकलेन्द्रियाणि निरुध्य भक्त्या स्वगुरुं प्रणम्य॥"
+      ],
+      "linesEn": [
+        "viviktadeśhe cha sukhāsanasthaḥ śhuchiḥ samagrīvaśhiraḥśharīraḥ",
+        "atyāśramasthaḥ sakalendriyāṇi nirudhya bhaktyā svaguruṁ praṇamya"
+      ],
+      "meaningHi": "एकान्त स्थान में सुखपूर्वक आसन पर बैठा हुआ, शुद्ध, गर्दन-सिर-शरीर को समान (सीधा) रखे हुए, आश्रमों से परे स्थित (साधक), समस्त इन्द्रियों को रोककर, भक्ति से अपने गुरु को प्रणाम करके —",
+      "meaningEn": "Seated at ease in a solitary place, pure, with neck, head and body held erect, standing beyond the stages of life, restraining all the senses, bowing with devotion to one's own teacher —"
+    },
+    {
+      "id": "kaivalya-1-6",
+      "upanishad": 12,
+      "section": "mantra",
+      "stanza": 12,
+      "numInSection": 7,
+      "reference": "1.6",
+      "labelHi": "मन्त्र · १.६",
+      "labelEn": "Mantra · 1.6",
+      "lines": [
+        "हृत्पुण्डरीकं विरजं विशुद्धं विचिन्त्य मध्ये विशदं विशोकम्।",
+        "अचिन्त्यमव्यक्तमनन्तरूपं शिवं प्रशान्तममृतं ब्रह्मयोनिम्॥"
+      ],
+      "linesEn": [
+        "hṛitpuṇḍarīkaṁ virajaṁ viśhuddhaṁ vichintya madhye viśhadaṁ viśhokam",
+        "achintyamavyaktamanantarūpaṁ śhivaṁ praśhāntamamṛitaṁ brahmayonim"
+      ],
+      "meaningHi": "निर्मल, विशुद्ध हृदय-कमल का चिन्तन करके, उसके मध्य में उस स्वच्छ, शोकरहित, अचिन्त्य, अव्यक्त, अनन्तरूप, शिव (मंगलमय), प्रशान्त, अमृत, ब्रह्मा के भी उद्गम (परमेश्वर) का —",
+      "meaningEn": "Contemplating the lotus of the heart, stainless and pure, and in its centre the bright and griefless One — unthinkable, unmanifest, of endless form, auspicious, serene, immortal, the source of Brahmā —"
+    },
+    {
+      "id": "kaivalya-1-7",
+      "upanishad": 12,
+      "section": "mantra",
+      "stanza": 12,
+      "numInSection": 8,
+      "reference": "1.7",
+      "labelHi": "मन्त्र · १.७",
+      "labelEn": "Mantra · 1.7",
+      "lines": [
+        "तमादिमध्यान्तविहीनमेकं विभुं चिदानन्दमरूपमद्भुतम्।",
+        "उमासहायं परमेश्वरं प्रभुं त्रिलोचनं नीलकण्ठं प्रशान्तम्।",
+        "ध्यात्वा मुनिर्गच्छति भूतयोनिं समस्तसाक्षिं तमसः परस्तात्॥"
+      ],
+      "linesEn": [
+        "tamādimadhyāntavihīnamekaṁ vibhuṁ chidānandamarūpamadbhutam",
+        "umāsahāyaṁ parameśvaraṁ prabhuṁ trilochanaṁ nīlakaṇṭhaṁ praśhāntam",
+        "dhyātvā munirgachchhati bhūtayoniṁ samastasākṣhiṁ tamasaḥ parastāt"
+      ],
+      "meaningHi": "उस आदि-मध्य-अन्त से रहित, एक, विभु, चिदानन्द, अरूप, अद्भुत, उमा-सहित, परमेश्वर, प्रभु, त्रिनेत्र, नीलकण्ठ, प्रशान्त (शिव) का ध्यान करके मुनि उस भूतों के कारण, सबके साक्षी, अन्धकार से परे (तत्त्व) को प्राप्त होता है।",
+      "meaningEn": "Meditating on Him who is without beginning, middle or end, the one, all-pervading, consciousness and bliss, formless, wondrous, the companion of Umā, the supreme Lord, the master, three-eyed, blue-throated, serene — the sage reaches the source of all beings, the witness of all, beyond darkness."
+    },
+    {
+      "id": "kaivalya-1-8",
+      "upanishad": 12,
+      "section": "mantra",
+      "stanza": 12,
+      "numInSection": 9,
+      "reference": "1.8",
+      "labelHi": "मन्त्र · १.८",
+      "labelEn": "Mantra · 1.8",
+      "lines": [
+        "स ब्रह्मा स शिवः सेन्द्रः सोऽक्षरः परमः स्वराट्।",
+        "स एव विष्णुः स प्राणः स कालोऽग्निः स चन्द्रमाः॥"
+      ],
+      "linesEn": [
+        "sa brahmā sa śhivaḥ sendraḥ so'kṣharaḥ paramaḥ svarāṭ",
+        "sa eva viṣṇuḥ sa prāṇaḥ sa kālo'gniḥ sa chandramāḥ"
+      ],
+      "meaningHi": "वही ब्रह्मा है, वही शिव है, वही इन्द्र है, वही अक्षर, परम और स्वयं-प्रकाश (स्वराट्) है। वही विष्णु है, वही प्राण है, वही काल है, अग्नि है, और वही चन्द्रमा है।",
+      "meaningEn": "He is Brahmā, He is Śiva, He is Indra; He is the imperishable, supreme, self-luminous Lord. He alone is Viṣṇu, He is life, He is time, He is fire, He is the moon."
+    },
+    {
+      "id": "kaivalya-1-9",
+      "upanishad": 12,
+      "section": "mantra",
+      "stanza": 12,
+      "numInSection": 10,
+      "reference": "1.9",
+      "labelHi": "मन्त्र · १.९",
+      "labelEn": "Mantra · 1.9",
+      "lines": [
+        "स एव सर्वं यद्भूतं यच्च भव्यं सनातनम्।",
+        "ज्ञात्वा तं मृत्युमत्येति नान्यः पन्था विमुक्तये॥"
+      ],
+      "linesEn": [
+        "sa eva sarvaṁ yadbhūtaṁ yachcha bhavyaṁ sanātanam",
+        "jñātvā taṁ mṛityumatyeti nānyaḥ panthā vimuktaye"
+      ],
+      "meaningHi": "जो कुछ हो चुका और जो होने वाला है — वह सब सनातन वही है। उसे जानकर (मनुष्य) मृत्यु को पार कर जाता है; मुक्ति के लिए दूसरा कोई मार्ग नहीं है।",
+      "meaningEn": "He alone is all that has been and all that shall be, the eternal. Knowing Him one passes beyond death; there is no other path to liberation."
+    },
+    {
+      "id": "kaivalya-1-10",
+      "upanishad": 12,
+      "section": "mantra",
+      "stanza": 12,
+      "numInSection": 11,
+      "reference": "1.10",
+      "labelHi": "मन्त्र · १.१०",
+      "labelEn": "Mantra · 1.10",
+      "lines": [
+        "सर्वभूतस्थमात्मानं सर्वभूतानि चात्मनि।",
+        "सम्पश्यन्ब्रह्म परमं याति नान्येन हेतुना॥"
+      ],
+      "linesEn": [
+        "sarvabhūtasthamātmānaṁ sarvabhūtāni chātmani",
+        "sampaśyanbrahma paramaṁ yāti nānyena hetunā"
+      ],
+      "meaningHi": "सब भूतों में स्थित आत्मा को और आत्मा में सब भूतों को देखता हुआ (साधक) परब्रह्म को प्राप्त होता है — किसी अन्य कारण से नहीं।",
+      "meaningEn": "Seeing the Self in all beings and all beings in the Self, one attains the supreme Brahman — by no other means."
+    },
+    {
+      "id": "kaivalya-1-11",
+      "upanishad": 12,
+      "section": "mantra",
+      "stanza": 12,
+      "numInSection": 12,
+      "reference": "1.11",
+      "labelHi": "मन्त्र · १.११",
+      "labelEn": "Mantra · 1.11",
+      "lines": [
+        "आत्मानमरणिं कृत्वा प्रणवं चोत्तरारणिम्।",
+        "ज्ञाननिर्मथनाभ्यासात्पाशं दहति पण्डितः॥"
+      ],
+      "linesEn": [
+        "ātmānamaraṇiṁ kṛitvā praṇavaṁ chottarāraṇim",
+        "jñānanirmathanābhyāsātpāśhaṁ dahati paṇḍitaḥ"
+      ],
+      "meaningHi": "आत्मा (शरीर-बुद्धि) को नीचे की अरणि और प्रणव (ॐ) को ऊपर की अरणि बनाकर, ज्ञान-रूपी मन्थन के अभ्यास से पण्डित (अज्ञान के) पाश को जला देता है।",
+      "meaningEn": "Making the self the lower fire-stick and Om the upper, by the practice of churning that is knowledge the wise one burns away the bond."
+    },
+    {
+      "id": "kaivalya-1-12",
+      "upanishad": 12,
+      "section": "mantra",
+      "stanza": 12,
+      "numInSection": 13,
+      "reference": "1.12",
+      "labelHi": "मन्त्र · १.१२",
+      "labelEn": "Mantra · 1.12",
+      "lines": [
+        "स एव मायापरिमोहितात्मा शरीरमास्थाय करोति सर्वम्।",
+        "स्त्र्यन्नपानादिविचित्रभोगैः स एव जाग्रत्परितृप्तिमेति॥"
+      ],
+      "linesEn": [
+        "sa eva māyāparimohitātmā śharīramāsthāya karoti sarvam",
+        "stryannapānādivichitrabhogaiḥ sa eva jāgratparitṛiptimeti"
+      ],
+      "meaningHi": "वही (आत्मा) माया से मोहित होकर शरीर का आश्रय लेकर सब कर्म करता है; स्त्री, अन्न, पान आदि विचित्र भोगों से वही जाग्रत् अवस्था में तृप्ति पाता है।",
+      "meaningEn": "That same Self, deluded by māyā, takes on a body and does everything; in the waking state it is He who finds satisfaction in the varied enjoyments of women, food and drink."
+    },
+    {
+      "id": "kaivalya-1-13",
+      "upanishad": 12,
+      "section": "mantra",
+      "stanza": 12,
+      "numInSection": 14,
+      "reference": "1.13",
+      "labelHi": "मन्त्र · १.१३",
+      "labelEn": "Mantra · 1.13",
+      "lines": [
+        "स्वप्ने स जीवः सुखदुःखभोक्ता स्वमायया कल्पितजीवलोके।",
+        "सुषुप्तिकाले सकले विलीने तमोऽभिभूतः सुखरूपमेति॥"
+      ],
+      "linesEn": [
+        "svapne sa jīvaḥ sukhaduḥkhabhoktā svamāyayā kalpitajīvaloke",
+        "suṣhuptikāle sakale vilīne tamo'bhibhūtaḥ sukharūpameti"
+      ],
+      "meaningHi": "स्वप्न में वह जीव अपनी माया से कल्पित जीव-लोक में सुख-दुःख का भोक्ता होता है। सुषुप्ति के समय, जब सब कुछ विलीन हो जाता है, वह तमस् (अज्ञान) से आवृत होकर सुख-रूप को प्राप्त होता है।",
+      "meaningEn": "In dream that soul experiences joy and sorrow in a world of beings conjured by its own māyā. In deep sleep, when all has dissolved, overcome by darkness it attains the state of bliss."
+    },
+    {
+      "id": "kaivalya-1-14",
+      "upanishad": 12,
+      "section": "mantra",
+      "stanza": 12,
+      "numInSection": 15,
+      "reference": "1.14",
+      "labelHi": "मन्त्र · १.१४",
+      "labelEn": "Mantra · 1.14",
+      "lines": [
+        "पुनश्च जन्मान्तरकर्मयोगात्स एव जीवः स्वपिति प्रबुद्धः।",
+        "पुरत्रये क्रीडति यश्च जीवस्ततस्तु जातं सकलं विचित्रम्।",
+        "आधारमानन्दमखण्डबोधं यस्मिन्लयं याति पुरत्रयं च॥"
+      ],
+      "linesEn": [
+        "punaścha janmāntarakarmayogātsa eva jīvaḥ svapiti prabuddhaḥ",
+        "puratraye krīḍati yaścha jīvastatastu jātaṁ sakalaṁ vichitram",
+        "ādhāramānandamakhaṇḍabodhaṁ yasminlayaṁ yāti puratrayaṁ cha"
+      ],
+      "meaningHi": "फिर पूर्व जन्मों के कर्म-योग से वही जीव सोता और जागता है। जो जीव तीनों पुरों (अवस्थाओं) में क्रीड़ा करता है, उससे ही यह सब विचित्र (जगत्) उत्पन्न हुआ है। (वह) आधार, आनन्द और अखण्ड बोध है, जिसमें ये तीनों पुर लय को प्राप्त होते हैं।",
+      "meaningEn": "Again, through the karma of former births, that same soul sleeps and awakens. From the soul that sports in the three cities (states) has this whole varied world arisen; and He is the support, bliss, unbroken awareness, in whom the three cities dissolve."
+    },
+    {
+      "id": "kaivalya-1-15",
+      "upanishad": 12,
+      "section": "mantra",
+      "stanza": 12,
+      "numInSection": 16,
+      "reference": "1.15",
+      "labelHi": "मन्त्र · १.१५",
+      "labelEn": "Mantra · 1.15",
+      "lines": [
+        "एतस्माज्जायते प्राणो मनः सर्वेन्द्रियाणि च।",
+        "खं वायुर्ज्योतिरापः पृथिवी विश्वस्य धारिणी॥"
+      ],
+      "linesEn": [
+        "etasmājjāyate prāṇo manaḥ sarvendriyāṇi cha",
+        "khaṁ vāyurjyotirāpaḥ pṛithivī viśvasya dhāriṇī"
+      ],
+      "meaningHi": "इससे प्राण, मन और समस्त इन्द्रियाँ उत्पन्न होती हैं; आकाश, वायु, तेज, जल और विश्व को धारण करने वाली पृथ्वी भी।",
+      "meaningEn": "From Him are born life, mind and all the senses; space, air, fire, water and the earth that upholds the universe."
+    },
+    {
+      "id": "kaivalya-1-16",
+      "upanishad": 12,
+      "section": "mantra",
+      "stanza": 12,
+      "numInSection": 17,
+      "reference": "1.16",
+      "labelHi": "मन्त्र · १.१६",
+      "labelEn": "Mantra · 1.16",
+      "lines": [
+        "यत्परं ब्रह्म सर्वात्मा विश्वस्यायतनं महत्।",
+        "सूक्ष्मात्सूक्ष्मतरं नित्यं तत्त्वमेव त्वमेव तत्॥"
+      ],
+      "linesEn": [
+        "yatparaṁ brahma sarvātmā viśvasyāyatanaṁ mahat",
+        "sūkṣmātsūkṣmataraṁ nityaṁ tattvameva tvameva tat"
+      ],
+      "meaningHi": "जो परब्रह्म, सर्वात्मा, विश्व का महान् आश्रय, सूक्ष्म से भी सूक्ष्मतर और नित्य है — वह तू ही है; तू ही वह है।",
+      "meaningEn": "That which is the supreme Brahman, the Self of all, the great abode of the universe, subtler than the subtle, eternal — that thou art; thou alone art That."
+    },
+    {
+      "id": "kaivalya-1-17",
+      "upanishad": 12,
+      "section": "mantra",
+      "stanza": 12,
+      "numInSection": 18,
+      "reference": "1.17",
+      "labelHi": "मन्त्र · १.१७",
+      "labelEn": "Mantra · 1.17",
+      "lines": [
+        "जाग्रत्स्वप्नसुषुप्त्यादिप्रपञ्चं यत्प्रकाशते।",
+        "तद्ब्रह्माहमिति ज्ञात्वा सर्वबन्धैः प्रमुच्यते॥"
+      ],
+      "linesEn": [
+        "jāgratsvapnasuṣhuptyādiprapañchaṁ yatprakāśhate",
+        "tadbrahmāhamiti jñātvā sarvabandhaiḥ pramuchyate"
+      ],
+      "meaningHi": "जाग्रत्, स्वप्न, सुषुप्ति आदि प्रपञ्च जिस (चैतन्य) से प्रकाशित होता है — \"वह ब्रह्म मैं हूँ\" ऐसा जानकर (मनुष्य) सब बन्धनों से मुक्त हो जाता है।",
+      "meaningEn": "That by which the whole display of waking, dream and deep sleep is illumined — knowing \"I am that Brahman,\" one is released from all bonds."
+    },
+    {
+      "id": "kaivalya-1-18",
+      "upanishad": 12,
+      "section": "mantra",
+      "stanza": 12,
+      "numInSection": 19,
+      "reference": "1.18",
+      "labelHi": "मन्त्र · १.१८",
+      "labelEn": "Mantra · 1.18",
+      "lines": [
+        "त्रिषु धामसु यद्भोग्यं भोक्ता भोगश्च यद्भवेत्।",
+        "तेभ्यो विलक्षणः साक्षी चिन्मात्रोऽहं सदाशिवः॥"
+      ],
+      "linesEn": [
+        "triṣhu dhāmasu yadbhogyaṁ bhoktā bhogaścha yadbhavet",
+        "tebhyo vilakṣhaṇaḥ sākṣhī chinmātro'haṁ sadāśhivaḥ"
+      ],
+      "meaningHi": "तीनों धामों (अवस्थाओं) में जो भोग्य, भोक्ता और भोग है — उन सबसे भिन्न साक्षी, चिन्मात्र, सदाशिव मैं हूँ।",
+      "meaningEn": "Whatever in the three states is the enjoyed, the enjoyer and the enjoyment — distinct from them all, I am the witness, pure consciousness, the ever-auspicious Śiva."
+    },
+    {
+      "id": "kaivalya-1-19",
+      "upanishad": 12,
+      "section": "mantra",
+      "stanza": 12,
+      "numInSection": 20,
+      "reference": "1.19",
+      "labelHi": "मन्त्र · १.१९",
+      "labelEn": "Mantra · 1.19",
+      "lines": [
+        "मय्येव सकलं जातं मयि सर्वं प्रतिष्ठितम्।",
+        "मयि सर्वं लयं याति तद्ब्रह्माद्वयमस्म्यहम्॥"
+      ],
+      "linesEn": [
+        "mayyeva sakalaṁ jātaṁ mayi sarvaṁ pratiṣṭhitam",
+        "mayi sarvaṁ layaṁ yāti tadbrahmādvayamasmyaham"
+      ],
+      "meaningHi": "मुझमें ही सब कुछ उत्पन्न हुआ है, मुझमें सब प्रतिष्ठित है, मुझमें सब लय को प्राप्त होता है — वह अद्वय ब्रह्म मैं हूँ।",
+      "meaningEn": "In me alone is everything born; in me does everything abide; into me does everything dissolve. I am that non-dual Brahman."
+    },
+    {
+      "id": "kaivalya-1-20",
+      "upanishad": 12,
+      "section": "mantra",
+      "stanza": 12,
+      "numInSection": 21,
+      "reference": "1.20",
+      "labelHi": "मन्त्र · १.२०",
+      "labelEn": "Mantra · 1.20",
+      "lines": [
+        "अणोरणीयानहमेव तद्वन्महानहं विश्वमहं विचित्रम्।",
+        "पुरातनोऽहं पुरुषोऽहमीशो हिरण्मयोऽहं शिवरूपमस्मि॥"
+      ],
+      "linesEn": [
+        "aṇoraṇīyānahameva tadvanmahānahaṁ viśvamahaṁ vichitram",
+        "purātano'haṁ puruṣho'hamīśho hiraṇmayo'haṁ śhivarūpamasmi"
+      ],
+      "meaningHi": "मैं ही अणु से भी अणु हूँ और वैसे ही महान् भी हूँ; मैं ही यह विचित्र विश्व हूँ। मैं पुरातन हूँ, मैं पुरुष हूँ, ईश हूँ, हिरण्मय हूँ; मैं शिव-रूप हूँ।",
+      "meaningEn": "I am smaller than the smallest, and likewise the great; I am this varied universe. I am the ancient one, the Person, the Lord, the golden one; I am of the nature of Śiva."
+    },
+    {
+      "id": "kaivalya-1-21",
+      "upanishad": 12,
+      "section": "mantra",
+      "stanza": 12,
+      "numInSection": 22,
+      "reference": "1.21",
+      "labelHi": "मन्त्र · १.२१",
+      "labelEn": "Mantra · 1.21",
+      "lines": [
+        "अपाणिपादोऽहमचिन्त्यशक्तिः पश्याम्यचक्षुः स शृणोम्यकर्णः।",
+        "अहं विजानामि विविक्तरूपो न चास्ति वेत्ता मम चित्सदाहम्॥"
+      ],
+      "linesEn": [
+        "apāṇipādo'hamachintyaśhaktiḥ paśyāmyachakṣhuḥ sa śhṛiṇomyakarṇaḥ",
+        "ahaṁ vijānāmi viviktarūpo na chāsti vettā mama chitsadāham"
+      ],
+      "meaningHi": "मैं हाथ-पैर से रहित और अचिन्त्य शक्ति वाला हूँ; बिना नेत्र देखता हूँ, बिना कान सुनता हूँ। मैं (सबको) जानता हूँ, (सबसे) पृथक्-रूप हूँ; मेरा कोई जानने वाला नहीं है; मैं सदा चैतन्य हूँ।",
+      "meaningEn": "Without hands or feet, of inconceivable power, I see without eyes and hear without ears. I know all, distinct in form from all; there is none who knows me; I am ever consciousness."
+    },
+    {
+      "id": "kaivalya-1-22",
+      "upanishad": 12,
+      "section": "mantra",
+      "stanza": 12,
+      "numInSection": 23,
+      "reference": "1.22",
+      "labelHi": "मन्त्र · १.२२",
+      "labelEn": "Mantra · 1.22",
+      "lines": [
+        "वेदैरनेकैरहमेव वेद्यो वेदान्तकृद्वेदविदेव चाहम्।",
+        "न पुण्यपापे मम नास्ति नाशो न जन्म देहेन्द्रियबुद्धिरस्ति॥"
+      ],
+      "linesEn": [
+        "vedairanekairahameva vedyo vedāntakṛidvedavideva chāham",
+        "na puṇyapāpe mama nāsti nāśho na janma dehendriyabuddhirasti"
+      ],
+      "meaningHi": "अनेक वेदों द्वारा मैं ही जानने योग्य हूँ; वेदान्त का कर्ता और वेद का ज्ञाता भी मैं ही हूँ। मेरे लिए पुण्य-पाप नहीं, नाश नहीं, जन्म नहीं; न देह, न इन्द्रियाँ, न बुद्धि है।",
+      "meaningEn": "By the many Vedas I alone am to be known; I am the author of Vedānta and the knower of the Veda. For me there is no merit or sin, no destruction, no birth, no body, senses or intellect."
+    },
+    {
+      "id": "kaivalya-1-23",
+      "upanishad": 12,
+      "section": "mantra",
+      "stanza": 12,
+      "numInSection": 24,
+      "reference": "1.23",
+      "labelHi": "मन्त्र · १.२३",
+      "labelEn": "Mantra · 1.23",
+      "lines": [
+        "न भूमिरापो न च वह्निरस्ति न चानिलो मेऽस्ति न चाम्बरं च।",
+        "एवं विदित्वा परमात्मरूपं गुहाशयं निष्कलमद्वितीयम्॥"
+      ],
+      "linesEn": [
+        "na bhūmirāpo na cha vahnirasti na chānilo me'sti na chāmbaraṁ cha",
+        "evaṁ viditvā paramātmarūpaṁ guhāśhayaṁ niṣkalamadvitīyam"
+      ],
+      "meaningHi": "मेरे लिए न पृथ्वी है, न जल, न अग्नि, न वायु, न आकाश। इस प्रकार हृदय-गुहा में स्थित, निष्कल, अद्वितीय परमात्म-स्वरूप को जानकर —",
+      "meaningEn": "For me there is no earth, no water, no fire, no air, no space. Knowing thus the nature of the supreme Self dwelling in the cave of the heart, partless and without a second —"
+    },
+    {
+      "id": "kaivalya-1-24",
+      "upanishad": 12,
+      "section": "mantra",
+      "stanza": 12,
+      "numInSection": 25,
+      "reference": "1.24",
+      "labelHi": "मन्त्र · १.२४",
+      "labelEn": "Mantra · 1.24",
+      "lines": [
+        "समस्तसाक्षिं सदसद्विहीनं प्रयाति शुद्धं परमात्मरूपम्॥"
+      ],
+      "linesEn": [
+        "samastasākṣhiṁ sadasadvihīnaṁ prayāti śhuddhaṁ paramātmarūpam"
+      ],
+      "meaningHi": "— उस सबके साक्षी, सत्-असत् से रहित, शुद्ध परमात्म-स्वरूप को (साधक) प्राप्त होता है।",
+      "meaningEn": "— the witness of all, beyond being and non-being, one attains the pure nature of the supreme Self."
+    },
+    {
+      "id": "kaivalya-2-1",
+      "upanishad": 12,
+      "section": "mantra",
+      "stanza": 12,
+      "numInSection": 26,
+      "reference": "2.1",
+      "labelHi": "मन्त्र · २.१",
+      "labelEn": "Mantra · 2.1",
+      "lines": [
+        "यः शतरुद्रियमधीते सोऽग्निपूतो भवति सुरापानात्पूतो भवति स ब्रह्महत्यायाः पूतो भवति स सुवर्णस्तेयात्पूतो भवति स कृत्याकृत्यात्पूतो भवति।",
+        "तस्मादविमुक्तमाश्रितो भवत्यत्याश्रमी सर्वदा सकृद्वा जपेत्॥"
+      ],
+      "linesEn": [
+        "yaḥ śhatarudriyamadhīte so'gnipūto bhavati surāpānātpūto bhavati sa brahmahatyāyāḥ pūto bhavati sa suvarṇasteyātpūto bhavati sa kṛityākṛityātpūto bhavati",
+        "tasmādavimuktamāśrito bhavatyatyāśramī sarvadā sakṛidvā japet"
+      ],
+      "meaningHi": "जो शतरुद्रिय का अध्ययन करता है, वह अग्नि के समान पवित्र हो जाता है; सुरापान से पवित्र होता है, ब्रह्महत्या से पवित्र होता है, सुवर्ण-चोरी से पवित्र होता है, कृत्य-अकृत्य (के दोष) से पवित्र होता है। इससे वह अविमुक्त (काशी-क्षेत्र / मुक्ति) का आश्रित हो जाता है। आश्रमों से परे स्थित (संन्यासी) इसे सदा या एक बार जपे।",
+      "meaningEn": "Whoever studies the Śatarudrīya becomes pure as fire; he is purified of drinking wine, of the killing of a brāhmaṇa, of the theft of gold, of things done and left undone. Thereby he comes to dwell in Avimukta (the unforsaken abode of Śiva). One beyond the stages of life should repeat it always, or at least once."
+    },
+    {
+      "id": "kaivalya-2-2",
+      "upanishad": 12,
+      "section": "mantra",
+      "stanza": 12,
+      "numInSection": 27,
+      "reference": "2.2",
+      "labelHi": "मन्त्र · २.२",
+      "labelEn": "Mantra · 2.2",
+      "lines": [
+        "अनेन ज्ञानमाप्नोति संसारार्णवनाशनम्।",
+        "तस्मादेवं विदित्वैनं कैवल्यं पदमश्नुते कैवल्यं पदमश्नुत इति॥"
+      ],
+      "linesEn": [
+        "anena jñānamāpnoti saṁsārārṇavanāśhanam",
+        "tasmādevaṁ viditvainaṁ kaivalyaṁ padamaśnute kaivalyaṁ padamaśnuta iti"
+      ],
+      "meaningHi": "इससे (मनुष्य) संसार-सागर का नाश करने वाला ज्ञान प्राप्त करता है। इसलिए इसे इस प्रकार जानकर वह कैवल्य-पद को प्राप्त होता है, कैवल्य-पद को प्राप्त होता है।",
+      "meaningEn": "By this one gains the knowledge that destroys the ocean of worldly existence. Therefore, knowing it thus, one attains the state of absolute oneness — attains the state of absolute oneness."
+    }
+  ]
+}

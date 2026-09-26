@@ -40,9 +40,9 @@ export const whatsNew: Readonly<Record<string, WhatsNewEntry>> = {
         titleHi: 'उपनिषद्',
         titleEn: 'Upanishads',
         bodyHi:
-          'ग्रन्थ में ईशावास्य, केन और माण्डूक्य उपनिषद् — शान्ति मन्त्र के साथ, हर मन्त्र का हिन्दी-अंग्रेज़ी भावार्थ।',
+          'ग्रन्थ में दस उपनिषद् — ईशावास्य, केन, कठ, प्रश्न, मुण्डक, माण्डूक्य, तैत्तिरीय, ऐतरेय, कैवल्य और श्वेताश्वतर — शान्ति मन्त्र के साथ, हर मन्त्र का हिन्दी-अंग्रेज़ी भावार्थ।',
         bodyEn:
-          'The Isha, Kena and Mandukya Upanishads in Sacred Books — each opened by its shanti mantra, every mantra with Hindi and English meaning.',
+          'Ten Upanishads in Sacred Books — Isha, Kena, Katha, Prashna, Mundaka, Mandukya, Taittiriya, Aitareya, Kaivalya and Shvetashvatara — each opened by its shanti mantra, every mantra with Hindi and English meaning.',
       },
       {
         titleHi: 'वास्तु दिशा',
