@@ -6,9 +6,9 @@
  * 2–3 short paragraphs with saffron highlights, a faded deity line-drawing behind,
  * and the brand footer (वेदांश़ · smart link · handle) on every slide.
  *
- *   node make-carousel.mjs pitru-paksha-2026                 # → carousel/pitru-paksha-2026-hi-1.png … and -en-1.png …
- *   node make-carousel.mjs pitru-paksha-2026 --lang hi        # one language only (hi | en)
- *   node make-carousel.mjs pitru-paksha-2026 --out ./posts/pitru-paksha-2026
+ *   node make-carousel.mjs pitru-mandakini-2026            # → carousel/pitru-mandakini-2026-hi-1.png … and -en-1.png …
+ *   node make-carousel.mjs pitru-falgu-2026 --lang hi      # one language only (hi | en)
+ *   node make-carousel.mjs pitru-falgu-2026 --out ./posts/pitru-falgu-2026
  *   node make-carousel.mjs pitru-paksha-2026 --fonts ./fonts/fonts.css   # offline fonts (see below)
  *
  * Fonts: by default the page links Google Fonts at render time (needs network in
@@ -21,7 +21,8 @@
  *
  * Slide kinds:
  *   hook    — slide 1. Kicker, one big question, one-line answer, a "swipe" cue.
- *   text    — kicker, title, subtitle, rule, paragraphs. `**…**` marks a saffron bold.
+ *   text    — kicker, title, subtitle, rule, optional `rows` (label · value list, for
+ *             dates/tithis), paragraphs. `**…**` marks a saffron bold.
  *   cta     — closing card: what the app does for this occasion + download button.
  *
  * Every string in a manifest is a { hi, en } pair; the builder renders one carousel per
@@ -62,7 +63,8 @@ const C = {
  * (Purnima Shraddha Sat 26 Sep 2026 · Sarva Pitru Amavasya Sat 10 Oct 2026).
  */
 const CAROUSELS = {
-  'pitru-paksha-2026': {
+  // ── Story A: Mandakini / Chitrakoot — the bank the Ramayana itself names ──
+  'pitru-mandakini-2026': {
     slides: [
       {
         kind: 'hook',
@@ -71,74 +73,109 @@ const CAROUSELS = {
         title: { hi: 'श्रीराम ने पिता को\nक्या दिया था?', en: 'What did Rama\noffer his father?' },
         subtitle: { hi: 'सोना नहीं। अन्न नहीं। अञ्जलि भर जल।', en: 'Not gold. Not grain. A cupped handful of water.' },
         body: [
-          { hi: 'आज से पितृ पक्ष आरम्भ। रामायण के दो प्रसंग बताते हैं कि पितरों तक **क्या** पहुँचता है — और दो नदी-तट जहाँ इसी पखवाड़े **लाखों लोग वही कर रहे हैं**: एक जो रामायण में है, एक जिसे माना जाता है।',
-            en: 'Pitru Paksha begins today. Two episodes from the Ramayana show **what actually reaches** the ancestors — and two riverbanks where **lakhs are doing exactly that** this fortnight: one the Ramayana names, one that is believed.' },
+          { hi: 'रामायण का वह तट जहाँ यह हुआ — और जहाँ इसी पखवाड़े **लाखों लोग वही कर रहे हैं**। चित्रकूट, मन्दाकिनी।',
+            en: 'The riverbank where the Ramayana places it — and where **lakhs are doing exactly that** this fortnight. Chitrakoot, on the Mandakini.' },
         ],
         swipe: { hi: 'स्वाइप करें →', en: 'Swipe →' },
       },
       {
         kind: 'text',
         bg: 'deity-ganga.webp',
-        kicker: { hi: 'तर्पण का सबसे पुराना रूप', en: 'The oldest form of tarpana' },
-        title: { hi: 'जल ही क्यों', en: 'Why water' },
-        subtitle: { hi: 'रामायण जो बार-बार दिखाती है', en: 'What the Ramayana shows again and again' },
+        kicker: { hi: 'अयोध्याकाण्ड · चित्रकूट', en: 'Ayodhya Kanda · Chitrakoot' },
+        title: { hi: 'मन्दाकिनी का तट', en: 'The banks of\nthe Mandakini' },
+        subtitle: { hi: 'जो रामायण स्वयं कहती है', en: 'What the Ramayana itself says' },
         body: [
-          { hi: 'रामायण में पितृ-कर्म एक ही रूप में मिलता है: **अञ्जलि भर जल**, **दक्षिण दिशा** की ओर मुख, और यह भाव कि यह जल उन तक पहुँचे।',
-            en: 'In the Ramayana the rite for the ancestors has one form: **a handful of water**, **facing south**, with the wish that it reach them.' },
-          { hi: 'श्रीराम ने पिता दशरथ के लिए **मन्दाकिनी** में यही किया, और जटायु के लिए **गोदावरी** में।',
-            en: 'Rama did this for his father Dasharatha at the **Mandakini**, and for Jatayu at the **Godavari**.' },
-          { hi: 'बालकाण्ड में गरुड़ अंशुमान् से कहते हैं — सगर के पुत्रों के लिए लौकिक जल पर्याप्त नहीं; उनके लिए **गंगा** चाहिए। तीन पीढ़ियाँ इसी प्रश्न में बीतीं।',
-            en: 'In the Bala Kanda, Garuda tells Anshuman: ordinary water will not do for Sagara’s sons — they need the **Ganga**. Three generations passed on that one question.' },
+          { hi: 'भरत चित्रकूट आए और दशरथ के देहान्त का समाचार दिया। श्रीराम मन्दाकिनी के तट पर उतरे, **अञ्जलि में जल भरा**, **दक्षिण दिशा** की ओर मुख किया — "पिता, यह जल आप तक पहुँचे।"',
+            en: 'Bharata reached Chitrakoot with news of Dasharatha’s death. Rama went down to the Mandakini, **filled his cupped hands with water**, **faced south** — “Father, may this reach you.”' },
+          { hi: 'वन में राजसी सामग्री नहीं थी। उन्होंने **इंगुदी के गूदे** का पिण्ड दर्भ पर रखा और कहा — **जो हम खाते हैं, वही आपको अर्पित है।**',
+            en: 'There was nothing royal in the forest. He set a pinda of **ingudi pulp** on darbha grass and said — **“What we eat, that we offer you.”**' },
+          { hi: 'तर्पण का सबसे पुराना रूप: जल, दिशा, भाव। सामग्री नहीं।',
+            en: 'The oldest form of tarpana: water, direction, bhava. Not the materials.' },
         ],
-        canon: { hi: 'वाल्मीकि रामायण · अयोध्याकाण्ड १०३ · अरण्यकाण्ड ६८ · बालकाण्ड ४१', en: 'Valmiki Ramayana · Ayodhya Kanda 103 · Aranya Kanda 68 · Bala Kanda 41' },
-      },
-      {
-        kind: 'text',
-        bg: 'deity-rama-darbar.webp',
-        kicker: { hi: 'जटायु का प्रसंग', en: 'The Jatayu episode' },
-        title: { hi: 'किसके लिए, और किससे', en: 'For whom, and with what' },
-        subtitle: { hi: 'सामग्री नहीं, भाव देखा जाता है', en: 'It is the feeling that counts, not the materials' },
-        body: [
-          { hi: 'अरण्यकाण्ड में श्रीराम **जटायु** का दाह-संस्कार स्वयं करते हैं। जटायु न उनके कुल के थे, न मनुष्य — वे पिता के मित्र एक पक्षी थे।',
-            en: 'In the Aranya Kanda, Rama himself performs **Jatayu’s** last rites. Jatayu was not of his clan, not even human — a bird, his father’s friend.' },
-          { hi: 'वन में राम के पास राजसी पदार्थ नहीं थे। उन्होंने वहीं मिले **इंगुदी के गूदे** से पिता के लिए पिण्ड बनाया और कहा — **जो हम खाते हैं, वही आपको अर्पित है।**',
-            en: 'In the forest there was nothing royal. Rama made the pinda for his father from **ingudi pulp** found right there, and said — **“What we eat, that we offer you.”**' },
-          { hi: 'स्मरण का द्वार किसी सूची से नहीं, **भाव** से खुलता है।',
-            en: 'Remembrance opens not with a checklist, but with **bhava**.' },
-        ],
-        canon: { hi: 'वाल्मीकि रामायण · अरण्यकाण्ड ६७–६८ · अयोध्याकाण्ड १०३', en: 'Valmiki Ramayana · Aranya Kanda 67–68 · Ayodhya Kanda 103' },
+        canon: { hi: 'वाल्मीकि रामायण · अयोध्याकाण्ड १०३', en: 'Valmiki Ramayana · Ayodhya Kanda 103' },
       },
       {
         kind: 'text',
         bg: 'source-gayatri-savitri-sun.webp',
-        kicker: { hi: 'जहाँ रामायण ने यह दिखाया · चित्रकूट, उत्तर प्रदेश', en: 'Where the Ramayana placed it · Chitrakoot, UP' },
-        title: { hi: 'मन्दाकिनी का तट', en: 'The banks of\nthe Mandakini' },
-        subtitle: { hi: 'रामघाट · सर्वपितृ अमावस्या मेला · 10 अक्टूबर 2026', en: 'Ramghat · Sarva Pitru Amavasya mela · 10 Oct 2026' },
-        body: [
-          { hi: 'अयोध्याकाण्ड में श्रीराम ने पिता दशरथ के लिए **मन्दाकिनी** के इसी तट पर अञ्जलि भर जल दिया और इंगुदी का पिण्ड रखा। यह **रामायण का प्रसंग** है — मान्यता नहीं।',
-            en: 'In the Ayodhya Kanda, Rama offered his father Dasharatha a handful of water and the ingudi pinda on this very bank of the **Mandakini**. This is the **Ramayana’s own account** — not a belief.' },
-          { hi: 'आज भी पूरे पितृ पक्ष में लोग **रामघाट** पर तर्पण करते हैं। पक्ष के अन्तिम दिन — **सर्वपितृ अमावस्या, 10 अक्टूबर** — यहाँ मेला लगता है और लाखों लोग स्नान और पिण्डदान करते हैं।',
-            en: 'Through Pitru Paksha people still do tarpana at **Ramghat**. On the last day — **Sarva Pitru Amavasya, 10 October** — a mela forms here, and lakhs bathe and offer pind-daan.' },
-          { hi: 'वही जल, वही दक्षिण दिशा, वही नदी।',
-            en: 'The same water, the same south, the same river.' },
+        kicker: { hi: 'अभी · रामघाट, चित्रकूट, उत्तर प्रदेश', en: 'Right now · Ramghat, Chitrakoot, UP' },
+        title: { hi: 'रामघाट, आज', en: 'Ramghat, today' },
+        subtitle: { hi: 'पितृ पक्ष 2026 · मन्दाकिनी तट', en: 'Pitru Paksha 2026 · on the Mandakini' },
+        rows: [
+          { k: { hi: 'आज', en: 'Today' }, v: { hi: 'शनिवार 26 सितम्बर · भाद्रपद पूर्णिमा · पूर्णिमा श्राद्ध — पक्ष का पहला दिन', en: 'Sat 26 Sep · Bhadrapada Purnima · Purnima Shraddha — first day of the paksha' } },
+          { k: { hi: 'पक्ष', en: 'Fortnight' }, v: { hi: '26 सितम्बर – 10 अक्टूबर · हर तिथि पर रामघाट में तर्पण', en: '26 Sep – 10 Oct · tarpana at Ramghat on every tithi' } },
+          { k: { hi: 'मेला', en: 'Mela' }, v: { hi: 'शनिवार 10 अक्टूबर · आश्विन कृष्ण अमावस्या · सर्वपितृ अमावस्या — लाखों का स्नान और पिण्डदान', en: 'Sat 10 Oct · Ashwin Krishna Amavasya · Sarva Pitru Amavasya — lakhs bathe and offer pind-daan' } },
         ],
-        canon: { hi: 'वाल्मीकि रामायण · अयोध्याकाण्ड १०३ · चित्रकूट', en: 'Valmiki Ramayana · Ayodhya Kanda 103 · Chitrakoot' },
+        body: [
+          { hi: 'जिस तट पर राम ने पिता को जल दिया, वहाँ आज भी लोग वही करते हैं। वही जल, वही दक्षिण दिशा, वही नदी।',
+            en: 'On the bank where Rama offered his father water, people still do the same. The same water, the same south, the same river.' },
+        ],
+        canon: { hi: 'तिथियाँ सूर्योदय के अनुसार · अपने शहर का पंचांग देखें', en: 'Tithis follow local sunrise · check your city’s Panchang' },
+      },
+      {
+        kind: 'cta',
+        bg: 'deity-rama-darbar.webp',
+        kicker: { hi: 'पितृ पक्ष · 26 सितम्बर – 10 अक्टूबर 2026', en: 'Pitru Paksha · 26 Sep – 10 Oct 2026' },
+        title: { hi: 'पितृ पक्ष, वेदांश़ में', en: 'Pitru Paksha in Vedansh' },
+        subtitle: { hi: 'समझिए, फिर करिए', en: 'Understand first, then offer' },
+        items: [
+          { glyph: 'पि', h: { hi: 'पितृ पक्ष परिचय', en: 'Pitru Paksha primer' }, d: { hi: 'जल ही क्यों · किसके लिए · किस दिन किसका श्राद्ध', en: 'Why water · for whom · whose shraddha on which day' } },
+          { glyph: 'ति', h: { hi: 'तिथि', en: 'Tithi' }, d: { hi: 'आपके शहर का पंचांग — श्राद्ध का दिन तिथि से', en: 'Your city’s Panchang — the shraddha day from the tithi' } },
+          { glyph: 'या', h: { hi: 'याद', en: 'Reminder' }, d: { hi: 'पितृ स्मरण reminder — तिथि से एक रात पहले', en: 'Pitru Smaran reminder — the night before the tithi' } },
+          { glyph: 'क', h: { hi: 'कथा', en: 'Katha' }, d: { hi: 'रामायण के प्रसंग — मूल पाठ तक, हिंदी और अंग्रेज़ी', en: 'Ramayana episodes — down to the original text' } },
+        ],
+        note: { hi: 'मुफ़्त · बिना इंटरनेट के भी चलता है', en: 'Free · Works offline' },
+        button: { hi: 'अभी डाउनलोड करें', en: 'Download Now' },
+      },
+    ],
+  },
+
+  // ── Story B: Falgu / Gaya — the belief, and the mela that is on right now ──
+  'pitru-falgu-2026': {
+    slides: [
+      {
+        kind: 'hook',
+        bg: 'source-vishnu-narayana.webp',
+        kicker: { hi: 'पितृ पक्ष · 26 सितम्बर – 10 अक्टूबर 2026', en: 'Pitru Paksha · 26 Sep – 10 Oct 2026' },
+        title: { hi: 'सीता ने पिण्ड\nकिससे बनाया था?', en: 'What did Sita make\nthe pinda from?' },
+        subtitle: { hi: 'बालू से। फल्गु की बालू से — ऐसा गया मानता है।', en: 'Sand. The sand of the Falgu — so Gaya believes.' },
+        body: [
+          { hi: 'गया की एक मान्यता — और वह मेला जो **आज वहाँ चल रहा है**।',
+            en: 'A belief that belongs to Gaya — and the mela that is **on there right now**.' },
+        ],
+        swipe: { hi: 'स्वाइप करें →', en: 'Swipe →' },
       },
       {
         kind: 'text',
         bg: 'source-vishnu-narayana.webp',
-        kicker: { hi: 'जिसे माना जाता है · गया, बिहार', en: 'What is believed · Gaya, Bihar' },
-        title: { hi: 'फल्गु का तट', en: 'The banks of\nthe Falgu' },
-        subtitle: { hi: 'विष्णुपद · पितृपक्ष मेला · 26 सितम्बर – 10 अक्टूबर 2026', en: 'Vishnupad · Pitru Paksha Mela · 26 Sep – 10 Oct' },
+        kicker: { hi: 'मान्यता · गया, बिहार', en: 'The belief · Gaya, Bihar' },
+        title: { hi: 'फल्गु की बालू', en: 'The sand of\nthe Falgu' },
+        subtitle: { hi: 'जो गया मानता है — रामायण में नहीं', en: 'What Gaya believes — not in the Ramayana' },
         body: [
-          { hi: 'इन पन्द्रह दिनों में **गया** में पितृपक्ष मेला चल रहा है। **फल्गु** के तट पर, **विष्णुपद** मन्दिर के आस-पास, देश भर से लोग पिण्डदान के लिए आ रहे हैं।',
-            en: 'The Pitru Paksha Mela is on in **Gaya** these fifteen days. On the **Falgu**’s banks, around **Vishnupad**, people are arriving from all over India for pind-daan.' },
-          { hi: 'गया की मान्यता है कि श्रीराम, सीता और लक्ष्मण भी दशरथ के लिए यहाँ आए थे — और **सीता ने फल्गु की बालू से पिण्ड** बनाया। यह रामायण में नहीं, गया की स्मृति में है।',
-            en: 'Gaya’s belief is that Rama, Sita and Lakshmana too came here for Dasharatha — and that **Sita made the pinda from the sand of the Falgu**. This lives in Gaya’s memory, not in the Ramayana.' },
-          { hi: 'यहाँ भी वही तीन चीज़ें: **जल**, **दक्षिण दिशा**, और **भाव**।',
-            en: 'Here too: **water**, **the south**, and **bhava**.' },
+          { hi: 'कथा है कि श्रीराम और लक्ष्मण पिण्डदान की सामग्री लाने गए, और समय बीतता गया। सीता ने **फल्गु की बालू** का पिण्ड बनाया और **फल्गु, गौ, केतकी और अक्षयवट** को साक्षी बनाकर दशरथ को अर्पित किया।',
+            en: 'The story goes that Rama and Lakshmana went to fetch the materials, and the hour was passing. Sita made a pinda of **Falgu sand** and offered it to Dasharatha, with **the Falgu, a cow, the ketaki and the Akshayavat** as witnesses.' },
+          { hi: 'राम लौटे तो अक्षयवट के सिवा किसी ने साक्षी नहीं दी — इसीलिए, मान्यता है, फल्गु ऊपर सूखी बहती है और अक्षयवट अक्षय है।',
+            en: 'When Rama returned, only the Akshayavat bore witness — which is why, it is believed, the Falgu runs dry on top and the Akshayavat never withers.' },
+          { hi: 'यह रामायण में नहीं, गया की स्मृति में है। पर भाव वही: **जो पास है, वही अर्पित।**',
+            en: 'This lives in Gaya’s memory, not in the Ramayana. But the bhava is the same: **what is at hand, that is offered.**' },
         ],
         canon: { hi: 'गया की लोक-मान्यता · गया-माहात्म्य', en: 'Gaya tradition · Gaya Mahatmya' },
+      },
+      {
+        kind: 'text',
+        bg: 'deity-ganga.webp',
+        kicker: { hi: 'अभी · विष्णुपद, फल्गु तट, गया', en: 'Right now · Vishnupad, on the Falgu, Gaya' },
+        title: { hi: 'गया, आज', en: 'Gaya, today' },
+        subtitle: { hi: 'पितृपक्ष मेला 2026 · विष्णुपद · फल्गु', en: 'Pitru Paksha Mela 2026 · Vishnupad · Falgu' },
+        rows: [
+          { k: { hi: 'आरम्भ', en: 'Opens' }, v: { hi: 'शनिवार 26 सितम्बर · भाद्रपद पूर्णिमा · पूर्णिमा श्राद्ध', en: 'Sat 26 Sep · Bhadrapada Purnima · Purnima Shraddha' } },
+          { k: { hi: 'मेला', en: 'Mela' }, v: { hi: '26 सितम्बर – 10 अक्टूबर · हर तिथि का श्राद्ध फल्गु तट पर · देश भर से पिण्डदान के लिए', en: '26 Sep – 10 Oct · each tithi’s shraddha on the Falgu · pilgrims from all over India for pind-daan' } },
+          { k: { hi: 'समापन', en: 'Closes' }, v: { hi: 'शनिवार 10 अक्टूबर · आश्विन कृष्ण अमावस्या · सर्वपितृ अमावस्या', en: 'Sat 10 Oct · Ashwin Krishna Amavasya · Sarva Pitru Amavasya' } },
+        ],
+        body: [
+          { hi: 'यहाँ भी वही तीन चीज़ें: **जल**, **दक्षिण दिशा**, और **भाव**।',
+            en: 'Here too, the same three things: **water**, **the south**, and **bhava**.' },
+        ],
+        canon: { hi: 'तिथियाँ सूर्योदय के अनुसार · अपने शहर का पंचांग देखें', en: 'Tithis follow local sunrise · check your city’s Panchang' },
       },
       {
         kind: 'cta',
@@ -227,6 +264,14 @@ function shell({ bgUri, bgPos = '62% 18%', bgOpacity = 0.22, inner, pageNo, tota
   body.en .para { font-size:38px; line-height:1.36; font-weight:500; }
   body.en .beat { margin-bottom:26px; }
   body.en .canon { font-size:26px; font-weight:500; }
+  .rows { margin:-6px 0 26px; }
+  .row { display:flex; gap:22px; align-items:flex-start; padding:16px 0; border-bottom:1px solid ${C.border}; }
+  .row:first-child { border-top:1px solid ${C.border}; }
+  .rowK { flex:0 0 150px; font-size:30px; font-weight:700; color:${C.saffron}; line-height:1.4; }
+  .rowV { font-size:31px; line-height:1.45; color:${C.inkSoft}; }
+  body.en .rowK, body.en .rowV { font-family:'Cormorant Garamond', Georgia, serif; }
+  body.en .rowK { font-size:32px; }
+  body.en .rowV { font-size:32px; line-height:1.3; font-weight:500; }
   .canon { margin-top:auto; font-size:24px; color:${C.inkMuted}; font-weight:400; }
 
   .om { position:absolute; left:0; right:0; top:1042px; text-align:center; font-size:30px; color:${C.gold}; letter-spacing:6px; }
@@ -280,9 +325,16 @@ function hookHtml(s, lang) {
     </div>`;
 }
 
+function rowsBlock(rows, lang) {
+  if (!rows) return '';
+  return `<div class="rows">${rows.map(r => `
+    <div class="row"><div class="rowK">${esc(T(r.k, lang))}</div><div class="rowV">${rich(T(r.v, lang))}</div></div>`).join('')}</div>`;
+}
+
 function textHtml(s, lang) {
   return `
     ${headBlock(s, lang)}
+    ${rowsBlock(s.rows, lang)}
     ${beats(s.body, lang)}
     ${s.canon ? `<div class="canon">${esc(T(s.canon, lang))}</div>` : ''}`;
 }

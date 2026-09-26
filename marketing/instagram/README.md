@@ -231,9 +231,9 @@ node make-reel.js app                   # product reel — needs screenshots, se
 deity sketch from `mobile/assets/backgrounds` · brand footer) come from a second builder:
 
 ```bash
-node make-carousel.mjs pitru-paksha-2026          # → carousel/pitru-paksha-2026-hi-1…6.png and -en-1…6.png (one carousel per language)
-node make-carousel.mjs pitru-paksha-2026 --lang hi   # one language only
-node make-carousel.mjs pitru-paksha-2026 --fonts ./fonts/fonts.css   # offline fonts if Chrome has no network
+node make-carousel.mjs pitru-mandakini-2026       # → carousel/pitru-mandakini-2026-hi-1…4.png and -en-1…4.png (one carousel per language)
+node make-carousel.mjs pitru-falgu-2026 --lang hi    # one language only
+node make-carousel.mjs pitru-falgu-2026 --fonts ./fonts/fonts.css    # offline fonts if Chrome has no network
 ```
 
 Manifests live in the `CAROUSELS` map at the top of `make-carousel.mjs` — every string is a
