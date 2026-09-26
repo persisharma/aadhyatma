@@ -5,8 +5,9 @@
 - English: `pitru-falgu-2026/pitru-falgu-2026-en-1.png … -en-4.png`
 
 Render: `node ../make-carousel.mjs pitru-falgu-2026` (add `--lang hi|en` for one set).
-**Order:** 1 hook (what did Sita make the pinda from?) · 2 the Gaya belief — Sita's sand pinda,
-Dasharatha's hand accepting it, the witnesses, why the Falgu runs dry (labelled मान्यता / "not in the Ramayana") · 3 Gaya today
+**Order:** 1 hook (what did Sita make the pinda from?) · 2 the Gaya story, told straight — Sita's sand
+pinda, the witnesses, Dasharatha accepting it, why the Falgu runs dry; provenance sits quietly in the
+source line ("गया की परम्परा · गया-माहात्म्य"), no "not in the Ramayana" on the cards · 3 Gaya today
 (Pitru Paksha Mela at Vishnupad: opens Sat 26 Sep Purnima Shraddha · closes Sat 10 Oct Sarva
 Pitru Amavasya) · 4 app CTA.
 **Post window:** any day while the mela is on; strongest 27 Sep – 3 Oct.
@@ -17,13 +18,13 @@ detail page yet), so the CTA sells the primer, tila-tarpana vidhi, tithi and rem
 ## Caption — Hindi
 
 ```
-सीता ने पिण्ड किससे बनाया था? — गया की मान्यता 🪔
+सीता ने पिण्ड किससे बनाया था? — गया की कथा 🪔
 
 बालू से। फल्गु की बालू से।
 
-कथा है कि श्रीराम और लक्ष्मण पिण्डदान की सामग्री लाने गए, और समय बीतता गया। सीता ने फल्गु की बालू का पिण्ड बनाया और फल्गु, गौ, केतकी और अक्षयवट को साक्षी बनाकर दशरथ को अर्पित किया। राम लौटे तो अक्षयवट के सिवा किसी ने साक्षी नहीं दी — इसीलिए, मान्यता है, फल्गु ऊपर सूखी बहती है और अक्षयवट अक्षय है।
+श्रीराम, सीता और लक्ष्मण दशरथ के पिण्डदान के लिए गया आए। राम और लक्ष्मण सामग्री लाने गए, और श्राद्ध का समय निकलने लगा। सीता ने फल्गु की बालू का पिण्ड बनाया — साक्षी बनाए फल्गु, गौ, केतकी और अक्षयवट। दशरथ ने स्वयं हाथ बढ़ाकर उसे स्वीकार किया। राम लौटे तो केवल अक्षयवट ने सच कहा — तभी से, कहते हैं, फल्गु ऊपर सूखी बहती है और अक्षयवट अक्षय है।
 
-यह रामायण में नहीं, गया की स्मृति में है। पर भाव वही: जो पास है, वही अर्पित।
+सीख सीधी है: जो पास है, वही अर्पित। भाव ही पहुँचता है।
 
 और वह मेला आज चल रहा है — पितृपक्ष मेला, विष्णुपद, फल्गु तट, गया।
 • आरम्भ: शनिवार 26 सितम्बर · भाद्रपद पूर्णिमा · पूर्णिमा श्राद्ध
@@ -42,13 +43,13 @@ detail page yet), so the CTA sells the primer, tila-tarpana vidhi, tithi and rem
 ## Caption — English
 
 ```
-What did Sita make the pinda from? — a Gaya belief
+What did Sita make the pinda from? — the Gaya story
 
 Sand. The sand of the Falgu.
 
-The story goes that Rama and Lakshmana went to fetch the materials, and the hour was passing. Sita made a pinda of Falgu sand and offered it to Dasharatha, with the Falgu, a cow, the ketaki and the Akshayavat as witnesses. When Rama returned, only the Akshayavat bore witness — which is why, it is believed, the Falgu runs dry on top and the Akshayavat never withers.
+Rama, Sita and Lakshmana came to Gaya for Dasharatha's pind-daan. The brothers went to fetch the materials, and the hour for shraddha began to slip away. Sita made the pinda from Falgu sand, with the Falgu, a cow, the ketaki and the Akshayavat as witnesses. Dasharatha himself reached out and accepted it. When Rama returned, only the Akshayavat told the truth — since then, they say, the Falgu runs dry on top and the Akshayavat never withers.
 
-This lives in Gaya's memory, not in the Ramayana. But the bhava is the same: what is at hand, that is offered.
+The lesson is simple: what is at hand, that is offered. It is the bhava that reaches.
 
 And that mela is on right now — Pitru Paksha Mela, Vishnupad, on the Falgu, Gaya.
 • Opens: Sat 26 Sep · Bhadrapada Purnima · Purnima Shraddha
@@ -65,7 +66,7 @@ The story is here — the understanding and the vidhi are in Vedansh: Pitru Paks
 
 ## Alt text (Hindi line on the Hindi set, English line on the English set)
 
-1. Hook — "पितृ पक्ष 2026। सीता ने पिण्ड किससे बनाया था? बालू से — ऐसा गया मानता है। पीछे विष्णु-नारायण का रेखाचित्र।" / "Pitru Paksha 2026. What did Sita make the pinda from? Sand — so Gaya believes. Faded Vishnu Narayana sketch behind."
-2. फल्गु की बालू — "गया की मान्यता: सीता का फल्गु की बालू का पिण्ड, फल्गु-गौ-केतकी-अक्षयवट साक्षी; रामायण में नहीं।" / "The sand of the Falgu: Gaya's belief of Sita's sand pinda and its witnesses; not in the Ramayana."
+1. Hook — "पितृ पक्ष 2026। सीता ने पिण्ड किससे बनाया था? बालू से — फल्गु की बालू से। पीछे विष्णु-नारायण का रेखाचित्र।" / "Pitru Paksha 2026. What did Sita make the pinda from? Sand — the sand of the Falgu. Faded Vishnu Narayana sketch behind."
+2. फल्गु की बालू — "गया की कथा: सीता का फल्गु की बालू का पिण्ड, फल्गु-गौ-केतकी-अक्षयवट साक्षी, दशरथ का स्वीकार।" / "The sand of the Falgu: the Gaya story of Sita's sand pinda, its witnesses, and Dasharatha accepting it."
 3. गया, आज — "पितृपक्ष मेला 2026, विष्णुपद, गया: 26 सितम्बर पूर्णिमा श्राद्ध से 10 अक्टूबर सर्वपितृ अमावस्या तक।" / "Pitru Paksha Mela 2026, Vishnupad, Gaya: from Purnima Shraddha 26 Sep to Sarva Pitru Amavasya 10 Oct."
 4. CTA — "Vedansh ऐप: पितृ पक्ष परिचय, तिल-तर्पण विधि, तिथि, पितृ स्मरण reminder। मुफ़्त, ऑफ़लाइन। persisharma.github.io/get-vedansh" / "Vedansh app: Pitru Paksha primer, tila-tarpana vidhi, tithi, Pitru Smaran reminder. Free, offline. persisharma.github.io/get-vedansh"
