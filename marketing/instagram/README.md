@@ -227,6 +227,17 @@ node make-reel.js tithi --slides-only --safe    # preview with safe-zone overlay
 node make-reel.js app                   # product reel — needs screenshots, see below
 ```
 
+**Light "parchment" carousels** (kicker · title · paragraphs with saffron highlights · faded
+deity sketch from `mobile/assets/backgrounds` · brand footer) come from a second builder:
+
+```bash
+node make-carousel.mjs pitru-paksha-2026          # → carousel/pitru-paksha-2026-1.png … -5.png
+node make-carousel.mjs pitru-paksha-2026 --fonts ./fonts/fonts.css   # offline fonts if Chrome has no network
+```
+
+Manifests live in the `CAROUSELS` map at the top of `make-carousel.mjs`; each post's caption,
+alt text and a committed copy of its slides sit in `posts/<name>.md` + `posts/<name>/`.
+
 **Prerequisites:** `node`, Google Chrome, and `ffmpeg` on PATH. Override with
 `CHROME_BIN` / `FFMPEG_BIN`. The `tithi`, `gita` and `--carousel` paths need no
 simulator and no capture step — they are pure typography.
