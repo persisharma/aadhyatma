@@ -12,13 +12,91 @@
 <meta property="og:title" content="Vedansh — Bhagavad Gita, Panchang &amp; japa">
 <meta property="og:description" content="Sacred texts in a book-like reader, a daily Panchang computed for your city, and a practice you keep. Free, ad-free, fully offline.">
 <meta property="og:image" content="https://vedansh.app/images/og.png">
+<meta property="og:site_name" content="Vedansh">
+<meta property="og:locale" content="en_IN">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Vedansh — Bhagavad Gita, Panchang and japa">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vedansh — Bhagavad Gita, Panchang &amp; japa">
+<meta name="twitter:description" content="Sacred texts in a book-like reader, a daily Panchang computed for your city, and a practice you keep. Free, ad-free, fully offline.">
+<meta name="twitter:image" content="https://vedansh.app/images/og.png">
+<!-- Let search engines show large image previews and untruncated snippets. -->
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<!-- Smart App Banner: offers the app directly to iOS Safari visitors. -->
+<meta name="apple-itunes-app" content="app-id=6766086529">
 <link rel="icon" href="images/favicon.png" sizes="any">
 <link rel="apple-touch-icon" href="images/icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+
+<!--
+  Structured data. Every claim here is one the page or the app already makes —
+  no rating or review data, since none has been collected and inventing it is
+  both false and a manual-action risk.
+-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "MobileApplication",
+      "@id": "https://vedansh.app/#app",
+      "name": "Vedansh",
+      "alternateName": "वेदांश़",
+      "description": "A bilingual companion for daily Hindu devotion: the Bhagavad Gita and other sacred texts in a book-like reader, an accurate daily Panchang with Muhurat, Sankalp programmes and japam. Free, ad-free and fully offline.",
+      "applicationCategory": "LifestyleApplication",
+      "applicationSubCategory": "Reference",
+      "operatingSystem": "iOS, Android",
+      "url": "https://vedansh.app/",
+      "installUrl": [
+        "https://apps.apple.com/app/vedansh/id6766086529",
+        "https://play.google.com/store/apps/details?id=com.prashantsharma.vedansh"
+      ],
+      "screenshot": [
+        "https://vedansh.app/images/shots/hero.jpg",
+        "https://vedansh.app/images/shots/reader.jpg",
+        "https://vedansh.app/images/shots/panchang.jpg",
+        "https://vedansh.app/images/shots/sadhana.jpg",
+        "https://vedansh.app/images/shots/theerth.jpg"
+      ],
+      "inLanguage": ["hi", "en", "gu", "kn"],
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+      "featureList": [
+        "All eighteen chapters and 701 shlokas of the Bhagavad Gita with meaning and commentary",
+        "Sundarkand, Ramcharitmanas selections, Vishnu Sahasranama, chalisas, aartis and stotrams",
+        "Daily Panchang computed from an astronomy engine: tithi, nakshatra, yoga, karana and sunrise",
+        "Purnimant and Amanta month systems with Vikram Samvat and a full month calendar",
+        "Muhurat and choghadiya timings including Rahu Kaal and Abhijit",
+        "Daily routines and Sankalp programmes of four to forty-one days",
+        "Japam bead counter with alarms",
+        "Theerth pilgrimage map of temples across India",
+        "Works fully offline with no account, no ads and no tracking"
+      ],
+      "publisher": { "@id": "https://vedansh.app/#publisher" }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://vedansh.app/#publisher",
+      "name": "Vedansh",
+      "url": "https://vedansh.app/",
+      "logo": "https://vedansh.app/images/icon.png"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://vedansh.app/#website",
+      "name": "Vedansh",
+      "url": "https://vedansh.app/",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://vedansh.app/#publisher" },
+      "about": { "@id": "https://vedansh.app/#app" }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -68,7 +146,7 @@
       <figure class="hero-figure">
         <div class="phone">
           <div class="phone-screen">
-            <img src="images/shots/hero.jpg" alt="The Vedansh home screen showing today's Panchang, the day's readings and the category grid" onerror="this.remove()">
+            <img src="images/shots/hero.jpg" alt="The Vedansh home screen showing today's Panchang, the day's readings and the category grid" width="900" height="1956" fetchpriority="high" onerror="this.remove()">
             <div class="depict" aria-hidden="true">
               <p class="depict-kicker">Sundarkand · Verse 3</p>
               <p class="depict-verse">जामवंत के बचन सुहाए।<br>सुनि हनुमंत हृदय अति भाए॥</p>
@@ -113,7 +191,7 @@
       <figure class="folio-figure reveal">
         <div class="phone">
           <div class="phone-screen">
-            <img src="images/shots/reader.jpg" alt="A Bhagavad Gita verse in Devanagari with transliteration and English meaning" onerror="this.remove()">
+            <img src="images/shots/reader.jpg" alt="A Bhagavad Gita verse in Devanagari with transliteration and English meaning" width="900" height="1956" loading="lazy" decoding="async" onerror="this.remove()">
             <div class="depict" aria-hidden="true">
               <p class="depict-kicker">Bhagavad Gita · 2.47</p>
               <p class="depict-verse">कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।</p>
@@ -147,7 +225,7 @@
       <figure class="folio-figure reveal">
         <div class="phone">
           <div class="phone-screen">
-            <img src="images/shots/panchang.jpg" alt="The daily Panchang screen showing tithi, nakshatra and the day's muhurat" onerror="this.remove()">
+            <img src="images/shots/panchang.jpg" alt="The daily Panchang screen showing tithi, nakshatra and the day's muhurat" width="900" height="1956" loading="lazy" decoding="async" onerror="this.remove()">
             <div class="depict" aria-hidden="true">
               <p class="depict-kicker">Ujjain · Ashwin, Vikram Samvat 2083</p>
               <p class="depict-verse" style="font-size:1rem">शुक्ल पक्ष · चतुर्थी</p>
@@ -186,7 +264,7 @@
       <figure class="folio-figure reveal">
         <div class="phone">
           <div class="phone-screen">
-            <img src="images/shots/sadhana.jpg" alt="The daily routine and japam counter in Vedansh" onerror="this.remove()">
+            <img src="images/shots/sadhana.jpg" alt="The daily routine and japam counter in Vedansh" width="900" height="1956" loading="lazy" decoding="async" onerror="this.remove()">
             <div class="depict" aria-hidden="true">
               <p class="depict-kicker">Tuesday · Hanuman</p>
               <p class="depict-verse" style="font-size:1rem">हनुमान चालीसा</p>
@@ -224,7 +302,7 @@
       <figure class="folio-figure reveal">
         <div class="phone">
           <div class="phone-screen">
-            <img src="images/shots/theerth.jpg" alt="The Theerth pilgrimage map of India with the Char Dham temples pinned" onerror="this.remove()">
+            <img src="images/shots/theerth.jpg" alt="The Theerth pilgrimage map of India with the Char Dham temples pinned" width="900" height="1956" loading="lazy" decoding="async" onerror="this.remove()">
             <div class="depict" aria-hidden="true">
               <p class="depict-kicker">Theerth · Char Dham</p>
               <dl class="depict-row"><dt>Badrinath</dt><dd>Uttarakhand</dd></dl>

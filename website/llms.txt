@@ -1,0 +1,48 @@
+# Vedansh
+
+> A free, ad-free, fully offline mobile app for daily Hindu devotion: sacred texts
+> in a book-like reader, a daily Panchang computed from an astronomy engine, daily
+> routines and Sankalp programmes, a japam bead counter, and a Theerth pilgrimage
+> map. Available for iOS and Android. No account, no ads, no tracking.
+
+Vedansh reads in Hindi (Devanagari) and English, with Gujarati and Kannada also
+available as reading languages; Sanskrit texts additionally show IAST
+transliteration. Everything — texts, audio and the panchang engine — ships inside
+the app, so it works with no network. The app reaches the network only to check
+for an update.
+
+## What it contains
+
+- **Sacred library**: all eighteen chapters and 701 shlokas of the Bhagavad Gita
+  with meaning and commentary; Sundarkand and Ramcharitmanas selections; Vishnu
+  Sahasranama; chalisas, aartis and stotrams.
+- **Panchang**: tithi, nakshatra, yoga, karana and sunrise computed from an
+  astronomy engine rather than a lookup table. Purnimant and Amanta month
+  systems, Vikram Samvat, and a full month calendar. Timings are computed for the
+  user's city; Ujjain is the default.
+- **Muhurat**: choghadiya through the day, including Rahu Kaal and Abhijit.
+- **Sadhana**: daily or weekday routines with the deity for each day, and Sankalp
+  programmes running four to forty-one days.
+- **Japam**: a bead counter with alarms.
+- **Theerth**: a pilgrimage map of temples across India, with each temple's story.
+
+## Privacy
+
+No account exists and no personal data is collected — no analytics, no ads, no
+tracking. Location is optional, used only to compute accurate sunrise, sunset and
+Panchang timings, and the coordinates never leave the device. Bookmarks, reading
+progress, routines, Sankalp programmes, japam counts and streaks live only on the
+device; uninstalling the app removes all of it, and there is nothing on a server
+to request deletion of.
+
+## Pages
+
+- [Home](https://vedansh.app/): what the app does, with screenshots of each area.
+- [Privacy Policy](https://vedansh.app/privacy/): what is collected (nothing) and why location is optional.
+- [Terms of Use](https://vedansh.app/terms/): public-domain texts offered for personal study and devotion, as-is.
+- [Support](https://vedansh.app/support/): common questions, japam alarm troubleshooting, reporting a verse correction, and how to reach a human.
+
+## Get the app
+
+- [App Store (iOS)](https://apps.apple.com/app/vedansh/id6766086529)
+- [Google Play (Android)](https://play.google.com/store/apps/details?id=com.prashantsharma.vedansh)
