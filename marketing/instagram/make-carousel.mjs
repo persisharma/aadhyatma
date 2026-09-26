@@ -64,64 +64,83 @@ const CAROUSELS = {
       {
         kind: 'hook',
         bg: 'deity-rama-darbar.webp',
-        kicker: 'पितृ पक्ष · 26 सितम्बर – 10 अक्टूबर 2026',
+        kicker: 'पितृ पक्ष · 26 सितम्बर – 10 अक्टूबर 2026 · Pitru Paksha',
         title: 'श्रीराम ने पिता को\nक्या दिया था?',
+        titleEn: 'What did Shri Rama offer his father?',
         subtitle: 'सोना नहीं। अन्न नहीं। अञ्जलि भर जल।',
+        subtitleEn: 'Not gold. Not grain. A cupped handful of water.',
         body: [
-          'आज से पितृ पक्ष आरम्भ। रामायण के दो प्रसंग बताते हैं कि पितरों तक **क्या** पहुँचता है — और बिहार की वह जगह जहाँ इसी पखवाड़े **लाखों लोग वही कर रहे हैं**।',
+          { hi: 'आज से पितृ पक्ष आरम्भ। रामायण के दो प्रसंग बताते हैं कि पितरों तक **क्या** पहुँचता है — और बिहार की वह जगह जहाँ इसी पखवाड़े **लाखों लोग वही कर रहे हैं**।',
+            en: 'Pitru Paksha begins today. Two episodes from the Ramayana show what actually reaches the ancestors — and the place in Bihar where lakhs of people are doing exactly that this fortnight.' },
         ],
-        swipe: 'स्वाइप करें →',
+        swipe: 'स्वाइप करें · Swipe →',
       },
       {
         kind: 'text',
         bg: 'deity-ganga.webp',
-        kicker: 'तर्पण का सबसे पुराना रूप',
+        kicker: 'तर्पण का सबसे पुराना रूप · The oldest form of tarpana',
         title: 'जल ही क्यों',
+        titleEn: 'Why water',
         subtitle: 'रामायण जो बार-बार दिखाती है',
+        subtitleEn: 'What the Ramayana shows again and again',
         body: [
-          'रामायण में पितृ-कर्म एक ही रूप में मिलता है: **अञ्जलि भर जल**, **दक्षिण दिशा** की ओर मुख, और यह भाव कि यह जल उन तक पहुँचे।',
-          'श्रीराम ने पिता दशरथ के लिए **मन्दाकिनी** में यही किया, और जटायु के लिए **गोदावरी** में।',
-          'बालकाण्ड में गरुड़ अंशुमान् से कहते हैं — सगर के पुत्रों के लिए लौकिक जल पर्याप्त नहीं; उनके लिए **गंगा** चाहिए। तीन पीढ़ियाँ इसी प्रश्न में बीतीं।',
+          { hi: 'रामायण में पितृ-कर्म एक ही रूप में मिलता है: **अञ्जलि भर जल**, **दक्षिण दिशा** की ओर मुख, और यह भाव कि यह जल उन तक पहुँचे।',
+            en: 'In the Ramayana the rite for the ancestors has one form: a handful of water, facing south, wished on to them.' },
+          { hi: 'श्रीराम ने पिता दशरथ के लिए **मन्दाकिनी** में यही किया, और जटायु के लिए **गोदावरी** में।',
+            en: 'Rama did this for Dasharatha at the Mandakini, and for Jatayu at the Godavari.' },
+          { hi: 'बालकाण्ड में गरुड़ अंशुमान् से कहते हैं — सगर के पुत्रों के लिए लौकिक जल पर्याप्त नहीं; उनके लिए **गंगा** चाहिए। तीन पीढ़ियाँ इसी प्रश्न में बीतीं।',
+            en: 'In the Bala Kanda, Garuda tells Anshuman: ordinary water will not do for Sagara’s sons — they need the Ganga. Three generations passed on that question.' },
         ],
         canon: 'वाल्मीकि रामायण · अयोध्याकाण्ड १०३ · अरण्यकाण्ड ६८ · बालकाण्ड ४१',
       },
       {
         kind: 'text',
         bg: 'deity-rama-darbar.webp',
-        kicker: 'जटायु का प्रसंग',
+        kicker: 'जटायु का प्रसंग · The Jatayu episode',
         title: 'किसके लिए, और किससे',
+        titleEn: 'For whom, and with what',
         subtitle: 'सामग्री नहीं, भाव देखा जाता है',
+        subtitleEn: 'It is the feeling that counts, not the materials',
         body: [
-          'अरण्यकाण्ड में श्रीराम **जटायु** का दाह-संस्कार स्वयं करते हैं। जटायु न उनके कुल के थे, न मनुष्य — वे पिता के मित्र एक पक्षी थे।',
-          'वन में राम के पास राजसी पदार्थ नहीं थे। उन्होंने वहीं मिले **इंगुदी के गूदे** से पिता के लिए पिण्ड बनाया और कहा — **जो हम खाते हैं, वही आपको अर्पित है।**',
-          'स्मरण का द्वार किसी सूची से नहीं, **भाव** से खुलता है।',
+          { hi: 'अरण्यकाण्ड में श्रीराम **जटायु** का दाह-संस्कार स्वयं करते हैं। जटायु न उनके कुल के थे, न मनुष्य — वे पिता के मित्र एक पक्षी थे।',
+            en: 'In the Aranya Kanda, Rama himself performs Jatayu’s last rites. Jatayu was not of his clan, not even human — a bird, his father’s friend.' },
+          { hi: 'वन में राजसी पदार्थ नहीं थे। राम ने वहीं मिले **इंगुदी के गूदे** से पिता के लिए पिण्ड बनाया — **जो हम खाते हैं, वही आपको अर्पित है।**',
+            en: 'In the forest there was nothing royal. Rama made the pinda for his father from ingudi pulp found right there: “What we eat, that we offer you.”' },
+          { hi: 'स्मरण का द्वार किसी सूची से नहीं, **भाव** से खुलता है।',
+            en: 'Remembrance opens not with a checklist, but with bhava.' },
         ],
         canon: 'वाल्मीकि रामायण · अरण्यकाण्ड ६७–६८ · अयोध्याकाण्ड १०३',
       },
       {
         kind: 'text',
         bg: 'source-vishnu-narayana.webp',
-        kicker: 'जहाँ आज यही हो रहा है · गया, बिहार',
+        kicker: 'जहाँ आज यही हो रहा है · गया, बिहार · Gaya, Bihar',
         title: 'फल्गु का तट',
+        titleEn: 'On the banks of the Falgu',
         subtitle: 'विष्णुपद · पितृपक्ष मेला · 26 सितम्बर – 10 अक्टूबर',
+        subtitleEn: 'Vishnupad · Pitru Paksha Mela · 26 Sep – 10 Oct',
         body: [
-          'इन पन्द्रह दिनों में **गया** में पितृपक्ष मेला लगता है। **फल्गु** के तट पर, **विष्णुपद** मन्दिर के आस-पास, देश भर से लोग पिण्डदान के लिए आते हैं।',
-          'गया-माहात्म्य और लोक-परम्परा कहती है कि श्रीराम, सीता और लक्ष्मण भी दशरथ के लिए यहीं आए थे — और **सीता ने फल्गु की बालू से पिण्ड** बनाया। (यह प्रसंग वाल्मीकि रामायण में नहीं है; यह गया की अपनी स्मृति है।)',
-          'यहाँ भी वही तीन चीज़ें: **जल**, **दक्षिण दिशा**, और **भाव**।',
+          { hi: 'इन पन्द्रह दिनों में **गया** में पितृपक्ष मेला लगता है। **फल्गु** के तट पर, **विष्णुपद** मन्दिर के आस-पास, देश भर से लोग पिण्डदान के लिए आते हैं।',
+            en: 'For these fifteen days Gaya hosts the Pitru Paksha Mela. On the banks of the Falgu, around the Vishnupad temple, people come from across India for pind-daan.' },
+          { hi: 'माना जाता है कि श्रीराम, सीता और लक्ष्मण भी दशरथ के लिए यहीं आए थे — और **सीता ने फल्गु की बालू से पिण्ड** बनाया।',
+            en: 'It is believed that Rama, Sita and Lakshmana too came here for Dasharatha — and that Sita made the pinda from the sand of the Falgu.' },
+          { hi: 'यहाँ भी वही तीन चीज़ें: **जल**, **दक्षिण दिशा**, और **भाव**।',
+            en: 'Here too, the same three things: water, the south, and bhava.' },
         ],
-        canon: 'लोक-परम्परा · गया-माहात्म्य (वायु पुराण)',
+        canon: 'गया की लोक-मान्यता · Gaya tradition',
       },
       {
         kind: 'cta',
         bg: 'deity-rama-darbar.webp',
-        kicker: 'पितृ पक्ष · 26 सितम्बर – 10 अक्टूबर 2026',
+        kicker: 'पितृ पक्ष · 26 सितम्बर – 10 अक्टूबर 2026 · Pitru Paksha',
         title: 'पितृ पक्ष, वेदांश़ में',
-        subtitle: 'समझिए, फिर करिए',
+        titleEn: 'Pitru Paksha, in Vedansh',
+        subtitle: 'समझिए, फिर करिए · Understand first, then offer',
         items: [
-          ['पितृ पक्ष परिचय', 'जल ही क्यों · किसके लिए · किस दिन किसका श्राद्ध', 'पि'],
-          ['तिथि', 'आपके शहर का पंचांग — श्राद्ध का दिन तिथि से', 'ति'],
-          ['याद', 'पितृ स्मरण reminder — तिथि से एक रात पहले', 'या'],
-          ['कथा', 'रामायण के प्रसंग — मूल पाठ तक, हिंदी और अंग्रेज़ी', 'क'],
+          ['पितृ पक्ष परिचय', 'Pitru Paksha primer', 'जल ही क्यों · किसके लिए · किस दिन किसका श्राद्ध', 'Why water · for whom · whose shraddha on which day', 'पि'],
+          ['तिथि', 'Tithi', 'आपके शहर का पंचांग — श्राद्ध का दिन तिथि से', 'Your city’s Panchang — the shraddha day from the tithi', 'ति'],
+          ['याद', 'Reminder', 'पितृ स्मरण reminder — तिथि से एक रात पहले', 'Pitru Smaran reminder — the night before the tithi', 'या'],
+          ['कथा', 'Katha', 'रामायण के प्रसंग — मूल पाठ तक', 'Ramayana episodes — down to the original text', 'क'],
         ],
         note: 'मुफ़्त · बिना इंटरनेट के भी चलता है · Free · Works offline',
         button: 'अभी डाउनलोड करें · Download Now',
@@ -184,11 +203,15 @@ function shell({ bgUri, bgPos = '62% 18%', bgOpacity = 0.22, inner, pageNo, tota
   .pageno { font-family:'Inter',sans-serif; font-weight:600; font-size:26px; color:${C.inkMuted}; letter-spacing:1px; }
 
   .content { position:absolute; top:128px; left:90px; right:90px; bottom:330px; display:flex; flex-direction:column; }
-  .title { font-size:96px; line-height:1.14; font-weight:700; color:${C.ink}; margin-top:6px; }
-  .subtitle { font-size:40px; line-height:1.3; font-weight:500; color:${C.saffronBright}; margin-top:18px; }
-  .rule { width:150px; height:2px; background:${C.rule}; margin:40px 0 36px; }
-  .para { font-size:40px; line-height:1.55; font-weight:400; color:${C.inkSoft}; margin-bottom:34px; }
-  .canon { margin-top:auto; font-size:24px; color:${C.inkMuted}; font-weight:400; }
+  .title { font-size:84px; line-height:1.14; font-weight:700; color:${C.ink}; margin-top:4px; }
+  .titleEn { font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:500; font-size:36px; line-height:1.2; color:${C.inkMuted}; margin-top:8px; }
+  .subtitle { font-size:34px; line-height:1.3; font-weight:500; color:${C.saffronBright}; margin-top:16px; }
+  .subtitleEn { font-family:'Cormorant Garamond',serif; font-weight:500; font-size:29px; line-height:1.25; color:${C.saffron}; opacity:0.85; margin-top:4px; }
+  .rule { width:150px; height:2px; background:${C.rule}; margin:26px 0 24px; }
+  .para { font-size:33px; line-height:1.5; font-weight:400; color:${C.inkSoft}; }
+  .paraEn { font-family:'Cormorant Garamond',serif; font-weight:500; font-size:27px; line-height:1.3; color:${C.inkMuted}; margin-top:6px; }
+  .beat { margin-bottom:18px; }
+  .canon { margin-top:auto; font-size:22px; color:${C.inkMuted}; font-weight:400; }
 
   .om { position:absolute; left:0; right:0; top:1042px; text-align:center; font-size:30px; color:${C.gold}; letter-spacing:6px; }
   .footRule { position:absolute; left:90px; right:90px; top:1110px; height:1px; background:${C.border}; }
@@ -219,47 +242,58 @@ ${om ? '<div class="om">॥ ॐ ॥</div>' : ''}
 }
 
 // ── slide kinds ──────────────────────────────────────────────────────────────
+function beats(body) {
+  return body.map(p => `<div class="beat"><div class="para">${rich(p.hi)}</div>${p.en ? `<div class="paraEn">${rich(p.en)}</div>` : ''}</div>`).join('');
+}
+function headBlock(s, titleSize) {
+  return `
+    <div class="title"${titleSize ? ` style="font-size:${titleSize}px;"` : ''}>${rich(s.title)}</div>
+    ${s.titleEn ? `<div class="titleEn">${rich(s.titleEn)}</div>` : ''}
+    <div class="subtitle">${rich(s.subtitle)}</div>
+    ${s.subtitleEn ? `<div class="subtitleEn">${rich(s.subtitleEn)}</div>` : ''}
+    <div class="rule"></div>`;
+}
+
 function hookHtml(s) {
   return `
-    <div class="title" style="font-size:104px;">${rich(s.title)}</div>
-    <div class="subtitle" style="font-size:44px; margin-top:26px;">${rich(s.subtitle)}</div>
-    <div class="rule"></div>
-    ${s.body.map(p => `<div class="para">${rich(p)}</div>`).join('')}
+    ${headBlock(s, 96)}
+    ${beats(s.body)}
     <div style="margin-top:auto; display:flex; justify-content:flex-end;">
-      <div class="ui" style="display:inline-block; padding:16px 34px; border:1.5px solid ${C.saffron}; border-radius:40px;
-                  font-family:'Noto Serif Devanagari',serif; font-size:30px; font-weight:600; color:${C.saffron};">${esc(s.swipe)}</div>
+      <div style="display:inline-block; padding:16px 34px; border:1.5px solid ${C.saffron}; border-radius:40px;
+                  font-size:30px; font-weight:600; color:${C.saffron};">${esc(s.swipe)}</div>
     </div>`;
 }
 
 function textHtml(s) {
   return `
-    <div class="title">${rich(s.title)}</div>
-    <div class="subtitle">${rich(s.subtitle)}</div>
-    <div class="rule"></div>
-    ${s.body.map(p => `<div class="para">${rich(p)}</div>`).join('')}
+    ${headBlock(s)}
+    ${beats(s.body)}
     ${s.canon ? `<div class="canon">${esc(s.canon)}</div>` : ''}`;
 }
 
 function ctaHtml(s) {
-  const items = s.items.map(([h, d, g]) => `
-    <div style="display:flex; gap:26px; align-items:flex-start; padding:22px 26px; margin-bottom:16px;
+  const items = s.items.map(([h, hEn, d, dEn, g]) => `
+    <div style="display:flex; gap:22px; align-items:flex-start; padding:13px 22px; margin-bottom:10px;
                 background:rgba(255,250,236,0.62); border:1px solid ${C.border}; border-radius:18px;">
-      <div style="flex:0 0 auto; min-width:64px; height:64px; padding:0 14px; border-radius:14px; display:flex; align-items:center; justify-content:center;
-                  background:linear-gradient(160deg,#E8B26A,#C9853E); color:#3d1a00; font-weight:700; font-size:30px;">${esc(g || h.slice(0, 2))}</div>
+      <div style="flex:0 0 auto; min-width:60px; height:60px; padding:0 14px; border-radius:14px; display:flex; align-items:center; justify-content:center;
+                  background:linear-gradient(160deg,#E8B26A,#C9853E); color:#3d1a00; font-weight:700; font-size:28px;">${esc(g)}</div>
       <div>
-        <div style="font-size:34px; font-weight:700; color:${C.saffron}; line-height:1.2;">${esc(h)}</div>
-        <div style="font-size:28px; color:${C.inkSoft}; line-height:1.4; margin-top:6px;">${esc(d)}</div>
+        <div style="font-size:31px; font-weight:700; color:${C.saffron}; line-height:1.2;">${esc(h)}
+          <span class="lat" style="font-weight:600; font-size:28px; margin-left:6px;">${esc(hEn)}</span></div>
+        <div style="font-size:25px; color:${C.inkSoft}; line-height:1.35; margin-top:4px;">${esc(d)}</div>
+        <div class="lat" style="font-size:24px; color:${C.inkMuted}; line-height:1.3; margin-top:2px;">${esc(dEn)}</div>
       </div>
     </div>`).join('');
   return `
-    <div class="title" style="font-size:84px;">${rich(s.title)}</div>
-    <div class="subtitle" style="margin-top:12px;">${rich(s.subtitle)}</div>
-    <div class="rule" style="margin:26px 0 22px;"></div>
+    <div class="title" style="font-size:76px;">${rich(s.title)}</div>
+    ${s.titleEn ? `<div class="titleEn">${rich(s.titleEn)}</div>` : ''}
+    <div class="subtitle" style="margin-top:10px;">${rich(s.subtitle)}</div>
+    <div class="rule" style="margin:20px 0 18px;"></div>
     ${items}
     <div style="margin-top:auto; text-align:center;">
-      <div class="lat" style="font-size:28px; color:${C.inkMuted}; margin-bottom:22px; font-family:'Noto Serif Devanagari',serif;">${esc(s.note)}</div>
-      <div style="display:inline-block; padding:22px 60px; border-radius:22px; background:linear-gradient(180deg,#A8501B,#7A3208);
-                  color:#F8EFD6; font-size:38px; font-weight:700; box-shadow:0 10px 30px rgba(122,50,8,0.28);">${esc(s.button)}</div>
+      <div style="font-size:26px; color:${C.inkMuted}; margin-bottom:14px;">${esc(s.note)}</div>
+      <div style="display:inline-block; padding:17px 52px; border-radius:22px; background:linear-gradient(180deg,#A8501B,#7A3208);
+                  color:#F8EFD6; font-size:36px; font-weight:700; box-shadow:0 10px 30px rgba(122,50,8,0.28);">${esc(s.button)}</div>
     </div>`;
 }
 
