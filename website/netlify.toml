@@ -27,3 +27,15 @@
   for = "/script.js"
   [headers.values]
     Cache-Control = "public, max-age=3600"
+
+# Short aliases for the smart download link, so an ad or a poster can carry
+# whichever reads best. /get/ itself does the platform detection.
+[[redirects]]
+  from = "/download"
+  to = "/get/"
+  status = 301
+
+[[redirects]]
+  from = "/app"
+  to = "/get/"
+  status = 301

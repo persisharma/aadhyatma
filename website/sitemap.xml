@@ -1,23 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<!--
+  Both languages are listed, and every entry declares the other as its
+  alternate so a crawler sees the pair rather than two unrelated pages.
+  /get/ is a redirector and is deliberately absent.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://vedansh.app/</loc>
     <lastmod>2026-09-26</lastmod>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://vedansh.app/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://vedansh.app/hi/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vedansh.app/"/>
+  </url>
+  <url>
+    <loc>https://vedansh.app/hi/</loc>
+    <lastmod>2026-09-26</lastmod>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://vedansh.app/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://vedansh.app/hi/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vedansh.app/"/>
   </url>
   <url>
     <loc>https://vedansh.app/privacy/</loc>
     <lastmod>2026-09-26</lastmod>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://vedansh.app/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://vedansh.app/hi/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vedansh.app/privacy/"/>
+  </url>
+  <url>
+    <loc>https://vedansh.app/hi/privacy/</loc>
+    <lastmod>2026-09-26</lastmod>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://vedansh.app/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://vedansh.app/hi/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vedansh.app/privacy/"/>
   </url>
   <url>
     <loc>https://vedansh.app/terms/</loc>
     <lastmod>2026-09-26</lastmod>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://vedansh.app/terms/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://vedansh.app/hi/terms/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vedansh.app/terms/"/>
+  </url>
+  <url>
+    <loc>https://vedansh.app/hi/terms/</loc>
+    <lastmod>2026-09-26</lastmod>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://vedansh.app/terms/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://vedansh.app/hi/terms/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vedansh.app/terms/"/>
   </url>
   <url>
     <loc>https://vedansh.app/support/</loc>
     <lastmod>2026-09-26</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://vedansh.app/support/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://vedansh.app/hi/support/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vedansh.app/support/"/>
+  </url>
+  <url>
+    <loc>https://vedansh.app/hi/support/</loc>
+    <lastmod>2026-09-26</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://vedansh.app/support/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://vedansh.app/hi/support/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vedansh.app/support/"/>
   </url>
 </urlset>

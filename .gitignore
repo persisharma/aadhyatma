@@ -48,3 +48,6 @@ tmp/
 
 # Netlify CLI link state for the vedansh.app site (holds the site id)
 website/.netlify/
+
+# Python bytecode from the one-off Hindi page generator
+__pycache__/

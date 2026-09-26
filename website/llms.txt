@@ -25,6 +25,14 @@ for an update.
   programmes running four to forty-one days.
 - **Japam**: a bead counter with alarms.
 - **Theerth**: a pilgrimage map of temples across India, with each temple's story.
+- **Vrat**: follow the vrats you observe, with optional reminders, the katha for
+  each vrat and festival (80+ of them), and the vidhi in Hindi and English.
+- **Kundali**: a birth chart with a full written report.
+- **Muhurat finder**: choose a date for a griha pravesh, a vehicle or a naming.
+- **Sanskar**: the samskaras, written for children to read.
+- **Also**: good-habit tracking, home-screen widgets for the panchang, a verse or
+  the japam count, search across the whole library, Daan kathas, and Pitru Paksha
+  with its shraddha days, smaran and kathas.
 
 ## Privacy
 
@@ -34,6 +42,13 @@ Panchang timings, and the coordinates never leave the device. Bookmarks, reading
 progress, routines, Sankalp programmes, japam counts and streaks live only on the
 device; uninstalling the app removes all of it, and there is nothing on a server
 to request deletion of.
+
+## Languages
+
+The site is published in English and Hindi. Each page has a counterpart at the
+same path under `/hi/`, cross-linked with hreflang: `https://vedansh.app/` and
+`https://vedansh.app/hi/`, `https://vedansh.app/support/` and
+`https://vedansh.app/hi/support/`, and so on.
 
 ## Pages
 
@@ -46,3 +61,8 @@ to request deletion of.
 
 - [App Store (iOS)](https://apps.apple.com/app/vedansh/id6766086529)
 - [Google Play (Android)](https://play.google.com/store/apps/details?id=com.prashantsharma.vedansh)
+- [vedansh.app/get](https://vedansh.app/get/) sends a visitor to whichever of the two fits their device.
+
+## Elsewhere
+
+- Instagram: [@vedansh.app](https://www.instagram.com/vedansh.app/)

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Get Vedansh</title>
+<meta name="description" content="Download Vedansh for iOS or Android.">
+<!--
+  A redirector, not a page: kept out of the index so it never competes with the
+  landing page in search, and never shows up as a thin result.
+-->
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://vedansh.app/">
+<meta name="theme-color" content="#F3E7C9">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vedansh.app/get/">
+<meta property="og:title" content="Get Vedansh">
+<meta property="og:description" content="Bhagavad Gita, Panchang &amp; japa. Free, ad-free, fully offline.">
+<meta property="og:image" content="https://vedansh.app/images/og.png">
+<link rel="icon" href="../images/favicon.png" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600&family=EB+Garamond:ital,wght@0,400;0,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  .redirect { min-height: 100svh; display: grid; place-items: center; text-align: center; padding: 2rem 1rem; }
+  .redirect .app-icon { margin-inline: auto; }
+  .redirect h1 { margin: 1.1rem 0 0.4rem; }
+  .redirect .btn-row { justify-content: center; margin-top: 1.6rem; }
+  .redirect .hero-note { margin-top: 1.4rem; }
+</style>
+</head>
+<body>
+<main class="redirect">
+  <div>
+    <img class="app-icon" src="../images/icon.png" alt="The Vedansh app icon" width="88" height="88">
+    <h1>Vedansh</h1>
+    <p class="hero-tagline">Bhagavad Gita, Panchang &amp; japa</p>
+    <p class="lede" id="status">Taking you to your app store…</p>
+    <div class="btn-row">
+      <a class="btn btn-primary" id="ios" href="https://apps.apple.com/app/vedansh/id6766086529">Download on the App Store</a>
+      <a class="btn btn-ghost" id="android" href="https://play.google.com/store/apps/details?id=com.prashantsharma.vedansh">Get it on Google Play</a>
+    </div>
+    <p class="hero-note">No account · No ads · No tracking</p>
+  </div>
+</main>
+
+<script>
+/*
+ * Sends each visitor to the store that can actually serve them, and shows both
+ * buttons to everyone else (desktop, bots, and anyone with JS off — the markup
+ * above is the no-JS state, so the page is never a dead end).
+ *
+ * Any query string on the way in is carried through to the store, so campaign
+ * parameters on /get/?utm_source=… survive the hop.
+ */
+(function () {
+  var ua = navigator.userAgent || '';
+  var IOS = 'https://apps.apple.com/app/vedansh/id6766086529';
+  var PLAY = 'https://play.google.com/store/apps/details?id=com.prashantsharma.vedansh';
+
+  var isAndroid = /Android/i.test(ua);
+  // iPadOS 13+ reports itself as a Mac, so a Mac with touch points is an iPad.
+  var isIOS = /iPad|iPhone|iPod/i.test(ua) ||
+              (/Macintosh/.test(ua) && typeof navigator.maxTouchPoints === 'number' && navigator.maxTouchPoints > 1);
+
+  var target = isAndroid ? PLAY : (isIOS ? IOS : null);
+  if (!target) {
+    document.getElementById('status').textContent = 'Choose your platform:';
+    return;
+  }
+
+  var qs = window.location.search;
+  if (qs && qs.length > 1) {
+    target += (target.indexOf('?') === -1 ? '?' : '&') + qs.slice(1);
+  }
+
+  // replace() so the back button returns to wherever they came from rather
+  // than bouncing them through this page again.
+  window.location.replace(target);
+})();
+</script>
+</body>
+</html>

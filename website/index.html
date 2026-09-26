@@ -6,6 +6,9 @@
 <title>Vedansh — Bhagavad Gita, Panchang &amp; japa</title>
 <meta name="description" content="A bilingual companion for daily Hindu devotion: the Bhagavad Gita and other sacred texts in a book-like reader, an accurate daily Panchang with Muhurat, Sankalp programmes and japam. Free, ad-free and fully offline.">
 <link rel="canonical" href="https://vedansh.app/">
+<link rel="alternate" hreflang="en-IN" href="https://vedansh.app/">
+<link rel="alternate" hreflang="hi-IN" href="https://vedansh.app/hi/">
+<link rel="alternate" hreflang="x-default" href="https://vedansh.app/">
 <meta name="theme-color" content="#F3E7C9">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://vedansh.app/">
@@ -74,6 +77,12 @@
         "Daily routines and Sankalp programmes of four to forty-one days",
         "Japam bead counter with alarms",
         "Theerth pilgrimage map of temples across India",
+        "Vrat following with optional reminders, 80+ vrat and festival kathas, and vidhi in Hindi and English",
+        "Kundali birth chart with a written report",
+        "Muhurat finder for griha pravesh, vehicle purchase and naming",
+        "Sanskar readings for children",
+        "Home-screen widgets for the panchang, a verse and the japam count",
+        "Search across the whole library",
         "Works fully offline with no account, no ads and no tracking"
       ],
       "publisher": { "@id": "https://vedansh.app/#publisher" }
@@ -83,7 +92,8 @@
       "@id": "https://vedansh.app/#publisher",
       "name": "Vedansh",
       "url": "https://vedansh.app/",
-      "logo": "https://vedansh.app/images/icon.png"
+      "logo": "https://vedansh.app/images/icon.png",
+      "sameAs": ["https://www.instagram.com/vedansh.app/"]
     },
     {
       "@type": "WebSite",
@@ -110,10 +120,15 @@
     <nav class="nav-links" id="navLinks" aria-label="Sections">
       <a href="#reader">Reader</a>
       <a href="#panchang">Panchang</a>
+      <a href="#vrat">Vrat</a>
       <a href="#sadhana">Sadhana</a>
       <a href="#theerth">Theerth</a>
       <a href="#get">Get the app</a>
     </nav>
+    <div class="lang-pill" role="group" aria-label="Language">
+      <a class="lang-hi" href="/hi/" hreflang="hi" lang="hi">हिन्दी</a>
+      <a class="lang-en" href="/" hreflang="en" aria-current="page">English</a>
+    </div>
     <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Menu">
       <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
     </button>
@@ -247,10 +262,49 @@
     </div>
   </section>
 
-  <section class="folio" id="sadhana">
+  <section class="folio" id="vrat">
     <div class="wrap folio-grid">
       <div class="folio-body reveal">
         <span class="folio-numeral" aria-hidden="true">III</span>
+        <p class="eyebrow">Vrat, katha &amp; vidhi</p>
+        <h2>The fasts you keep, and why</h2>
+        <p>Follow the vrats you observe and Vedansh carries them through the year — each with its katha to read and its vidhi to follow, so the day is not just marked on a calendar but understood.</p>
+        <ul class="marks">
+          <li>Follow the vrats you keep; the app tracks them across the year</li>
+          <li>Optional reminders for the days you follow</li>
+          <li>The katha for each vrat and festival — 80+ of them</li>
+          <li>Vidhi in Hindi and English: how the fast is kept, step by step</li>
+          <li>Pitru Paksha with its own kathas, and Daan kathas besides</li>
+        </ul>
+      </div>
+      <figure class="folio-figure reveal">
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="depict" aria-hidden="true">
+              <p class="depict-kicker">Purnima Vrat · Shukla Paksha</p>
+              <p class="depict-verse" style="font-size:1rem">पूर्णिमा व्रत</p>
+              <div class="depict-rule"></div>
+              <dl class="depict-row"><dt>Katha</dt><dd>Satyanarayan</dd></dl>
+              <dl class="depict-row"><dt>Vidhi</dt><dd>7 steps</dd></dl>
+              <dl class="depict-row"><dt>Reminder</dt><dd>On</dd></dl>
+              <div class="depict-rule"></div>
+              <p class="depict-kicker">Following · 6 vrats</p>
+              <span class="depict-chip">Ekadashi</span>
+              <span class="depict-chip">Pradosh</span>
+              <div class="depict-spacer"></div>
+              <p class="depict-kicker">80+ kathas · Hindi &amp; English</p>
+            </div>
+          </div>
+        </div>
+        <figcaption class="figure-caption">Katha to read, vidhi to follow.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="folio" id="sadhana">
+    <div class="wrap folio-grid">
+      <div class="folio-body reveal">
+        <span class="folio-numeral" aria-hidden="true">IV</span>
         <p class="eyebrow">Daily sadhana</p>
         <h2>A practice you actually keep</h2>
         <p>Build a daily or weekday routine with the right deity for each day. Take a Sankalp — a guided programme of four to forty-one days — and let the app carry you to completion.</p>
@@ -323,6 +377,26 @@
     </div>
   </section>
 
+  <section class="folio" id="more">
+    <div class="wrap">
+      <div class="folio-body reveal" style="max-width:none">
+        <p class="eyebrow">Also inside</p>
+        <h2>And a good deal more</h2>
+        <p>The folios above are the daily heart of the app. These come with it.</p>
+        <ul class="marks marks-grid">
+          <li><b>Kundali</b> — a birth chart with a full written report</li>
+          <li><b>Muhurat finder</b> — pick a date for a griha pravesh, a vehicle, a naming</li>
+          <li><b>Sanskar</b> — the samskaras, written for children to read</li>
+          <li><b>Good habits</b> — small daily disciplines, tracked</li>
+          <li><b>Home-screen widgets</b> — the panchang, a verse, or your japam count</li>
+          <li><b>Search</b> — one field across every text in the library</li>
+          <li><b>Daan kathas</b> — the stories behind giving</li>
+          <li><b>Pitru Paksha</b> — shraddha days, smaran and their kathas</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
   <section class="band">
     <img class="band-art" src="images/art/hanuman-sea.jpg" alt="" aria-hidden="true">
     <div class="wrap band-inner reveal">
@@ -371,6 +445,13 @@
           <li><a href="/terms/">Terms</a></li>
           <li><a href="/support/">Support</a></li>
           <li><a href="mailto:vedansh.app.support@gmail.com">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Follow</h3>
+        <ul>
+          <li><a href="https://www.instagram.com/vedansh.app/" rel="me noopener">Instagram</a></li>
+          <li><a href="/hi/" hreflang="hi" lang="hi">हिन्दी में पढ़ें</a></li>
         </ul>
       </div>
     </div>
