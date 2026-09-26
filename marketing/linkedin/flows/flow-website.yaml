@@ -37,7 +37,36 @@ appId: host.exp.Exponent
     direction: DOWN
 - waitForAnimationToEnd
 
+# A fresh install (a newly installed Expo Go has no app state) opens the 24-step
+# feature tour over Home, and its overlay swallows every tab tap below it. The
+# button reads SKIP but that is a text transform — the a11y label is "Skip tour"
+# (FeatureTour.tsx:249), and the label is what Maestro matches on.
+- tapOn:
+    text: "Skip tour"
+    optional: true
+- waitForAnimationToEnd
+
 # ── English ──
+# A fresh install opens the onboarding setup sheet over Home ("Choose your
+# reading language", Hindi preselected). Answering it here both dismisses the
+# sheet and sets the reading language, so the More route below is only needed
+# when app state already exists and the sheet never appears.
+# Tapped by point, not label: each row renders its a11y label a second time as
+# plain text beside the native name, so "English" matches an inner Text and the
+# tap never reaches the Pressable — it reports COMPLETED and selects nothing.
+# Guarded by the sheet's own copy so the taps cannot land on Home when the
+# sheet is absent (app state already set).
+- runFlow:
+    when:
+      visible: "Choose your reading language"
+    commands:
+      - tapOn:
+          point: "50%,51%"
+      - waitForAnimationToEnd
+      - tapOn:
+          point: "50%,93%"
+      - waitForAnimationToEnd
+
 - tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 # More opens a Language picker sheet on current builds; older builds show
@@ -46,13 +75,17 @@ appId: host.exp.Exponent
     text: "Language,.*"
     optional: true
 - waitForAnimationToEnd
-- extendedWaitUntil:
-    visible: "English"
-    timeout: 15000
-- tapOn: "English"
+- tapOn:
+    text: "English"
+    optional: true
 - waitForAnimationToEnd
 
 # ── 01 Home (hero) ──
+# Two taps: the first re-selects the Home tab, the second pops its stack back to
+# the root. One tap alone lands on whatever the Home tab was last showing (the
+# Gita reader, by this point in the flow).
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
 - tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
 - extendedWaitUntil:
@@ -62,7 +95,11 @@ appId: host.exp.Exponent
 - takeScreenshot: shots/website/01-home
 
 # ── 02 Gita reader (folio I) ──
-- tapOn: "Sacred Books\\..*Tap to open\\."
+# The library entry is the "Books" tile in the CATEGORIES grid. Its a11y label
+# matches, but tapping by label lands on the label node rather than the tile and
+# never navigates — the grid tiles need a point tap (same as the reel flows).
+- tapOn:
+    point: "20%,69%"
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Bhagavad Gītā\\..*Tap to open\\."
@@ -99,20 +136,26 @@ appId: host.exp.Exponent
 - takeScreenshot: shots/website/03-panchang
 
 # ── 04 Sankalp programmes (folio III) ──
+# Two taps: the first re-selects the Home tab, the second pops its stack back to
+# the root. One tap alone lands on whatever the Home tab was last showing (the
+# Gita reader, by this point in the flow).
 - tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
-- scrollUntilVisible:
-    element:
-      text: "Sadhana Programs"
-    direction: DOWN
-    centerElement: true
-    timeout: 20000
-- tapOn: "Sadhana Programs"
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+# The entry point is the routine banner on Home, labelled "Set your daily
+# practice" (RoutineBanner.tsx:99) — it sits above the fold, no scroll needed.
+- tapOn: "Set your daily practice"
 - waitForAnimationToEnd:
     timeout: 15000
 - takeScreenshot: shots/website/04-sankalp
 
 # ── 05 Japam bead counter (folio III alternate) ──
+# Two taps: the first re-selects the Home tab, the second pops its stack back to
+# the root. One tap alone lands on whatever the Home tab was last showing (the
+# Gita reader, by this point in the flow).
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
 - tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
 - scrollUntilVisible:
@@ -137,6 +180,11 @@ appId: host.exp.Exponent
 - takeScreenshot: shots/website/05-japam
 
 # ── 06 Theerth (folio IV) ──
+# Two taps: the first re-selects the Home tab, the second pops its stack back to
+# the root. One tap alone lands on whatever the Home tab was last showing (the
+# Gita reader, by this point in the flow).
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
 - tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
 - scrollUntilVisible:
