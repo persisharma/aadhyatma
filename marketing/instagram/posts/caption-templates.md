@@ -105,6 +105,42 @@ Vedansh में सब एक जगह है:
 
 ---
 
+## E. Deity download post — Khatu Shyam Ji
+
+**Pair with:** a Khatu Shyam Ji image (the app's `khatu-shyam` background or a temple
+photo) · **Post:** counts as a product post — same 1-in-5 budget as D.
+Line 1 carries the English hook the image says; the caption stays Hindi-first.
+
+```
+Get crowned by Khatu Shyam Baba 👑
+
+हारे का सहारा, खाटू श्याम हमारा 🙏
+
+जिसे श्री कृष्ण ने अपना "श्याम" नाम दिया, वही बाबा कलियुग में हर हारे हुए को
+सहारा देते हैं। अब उनका दर्शन, उनकी आरती और उनकी कथा — आपके फ़ोन में, हर दिन।
+
+Vedansh में:
+• खाटू श्याम जी — मंदिर की कथा, महत्व और यात्रा की जानकारी
+• श्याम बाबा की आरती और भजन — हिंदी और अंग्रेज़ी में
+• फाल्गुन मेला, एकादशी और हर व्रत का reminder — एक रात पहले
+• पंचांग — तिथि, नक्षत्र, ब्रह्म मुहूर्त — आपके शहर का
+• पूरी तरह ऑफ़लाइन। कोई अकाउंट नहीं, कोई विज्ञापन नहीं।
+
+बाबा का आशीर्वाद अपने फ़ोन में रखिए — आज ही डाउनलोड करें।
+मुफ़्त · iPhone और Android
+लिंक बायो में 🔗
+
+जय श्री श्याम। जिसे बाबा का सहारा चाहिए, उसे यह भेज दीजिए 🙏
+
+#खाटूश्याम #KhatuShyam #हारेकासहारा #जयश्रीश्याम #सनातनधर्म
+```
+
+> Reuse for any deity: swap line 1's hook + the deity-specific bullets, keep the
+> structure. The "crowned" hook works for Shyam Baba because Krishna literally gave
+> Barbarik his own name and the boon of being worshipped in Kaliyug.
+
+---
+
 ## Stories (daily)
 
 Stories don't earn reach — they're for the people you already have, and they're the
