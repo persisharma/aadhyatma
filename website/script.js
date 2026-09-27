@@ -55,8 +55,8 @@
    page without a counter, or a fetch that fails, changes nothing visible. */
 (function () {
   'use strict';
-  var el = document.querySelector('[data-hits]');
-  if (!el || !window.fetch) return;
+  var els = document.querySelectorAll('[data-hits]');
+  if (!els.length || !window.fetch) return;
 
   var key = 'vedansh-hit';
   var counted = false;
@@ -70,8 +70,10 @@
       try { sessionStorage.setItem(key, '1'); } catch (e) { /* ignore */ }
       var lang = document.documentElement.lang === 'hi' ? 'hi-IN' : 'en-IN';
       var n = data.total.toLocaleString(lang);
-      el.textContent = el.getAttribute('data-hits').replace('{n}', n);
-      el.hidden = false;
+      Array.prototype.forEach.call(els, function (el) {
+        el.textContent = el.getAttribute('data-hits').replace('{n}', n);
+        el.hidden = false;
+      });
     })
     .catch(function () { /* the counter is decoration; never surface an error */ });
 })();
