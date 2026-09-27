@@ -514,13 +514,11 @@ body[lang="hi"] { line-height: 1.75; }
 /* Visit counter, top right beside the language pill. Hidden until the number
    arrives, so a page never shows an empty chip. */
 .nav-hits {
-  margin-left: auto; margin-right: -0.4rem;
+  margin-left: 0.9rem;
   font-size: 0.82rem; letter-spacing: 0.02em; white-space: nowrap;
   color: var(--ink-muted); font-variant-numeric: tabular-nums;
 }
 .nav-hits[hidden] { display: none; }
-.nav-links + .nav-hits { margin-left: 1.5rem; }
 @media (max-width: 860px) {
-  .nav-hits { margin-left: auto; margin-right: 0.6rem; font-size: 0.78rem; }
-  .nav-hits + .lang-pill { margin-left: 0; }
+  .nav-hits { margin-left: 0.5rem; font-size: 0.78rem; }
 }
