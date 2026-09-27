@@ -1,11 +1,11 @@
 [build]
   publish = "."
 
-# The visit counter (functions/hits.mjs). Modern-format functions are bundled
+# The visit counter (netlify-functions/hits.mjs). Modern-format functions are bundled
 # with esbuild by the CLI at deploy time, so @netlify/blobs is pulled from
 # website/node_modules — the deploy workflow runs `npm ci` first.
 [functions]
-  directory = "functions"
+  directory = "netlify-functions"
   node_bundler = "esbuild"
 
 # No catch-all redirect. This is a multi-page static site: a
@@ -71,7 +71,7 @@
 # package manifests would otherwise be served as pages. Nothing in them is
 # secret; they are simply not content.
 [[redirects]]
-  from = "/functions/*"
+  from = "/netlify-functions/*"
   to = "/404.html"
   status = 404
   force = true
@@ -96,3 +96,15 @@
     Content-Type = "application/json"
     Cache-Control = "public, max-age=3600"
     Access-Control-Allow-Origin = "*"
+
+[[redirects]]
+  from = "/functions/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/cloudflare/*"
+  to = "/404.html"
+  status = 404
+  force = true

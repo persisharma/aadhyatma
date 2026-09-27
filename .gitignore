@@ -54,3 +54,4 @@ __pycache__/
 
 # website/ function dependencies are installed in CI
 website/node_modules/
+website/dist/

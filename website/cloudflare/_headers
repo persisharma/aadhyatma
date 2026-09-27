@@ -1,0 +1,27 @@
+# Cloudflare Pages headers — mirrors netlify.toml. Copied into the build root.
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), camera=(), microphone=()
+
+/images/*
+  Cache-Control: public, max-age=2592000
+
+/images/art/*
+  ! Cache-Control
+  Cache-Control: public, max-age=31536000, immutable
+
+/script.js
+  Cache-Control: public, max-age=0, must-revalidate
+
+/site.webmanifest
+  Content-Type: application/manifest+json
+
+/.well-known/assetlinks.json
+  Content-Type: application/json
+  Cache-Control: public, max-age=3600
+  Access-Control-Allow-Origin: *
+
+/api/*
+  Cache-Control: no-store

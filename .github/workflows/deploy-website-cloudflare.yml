@@ -1,0 +1,90 @@
+name: Deploy website (Cloudflare Pages)
+
+# Second host for vedansh.app. Every push deploys the same build here as well as
+# to Netlify; DNS decides which one visitors reach. Skips itself until the
+# CLOUDFLARE_API_TOKEN secret and CLOUDFLARE_ACCOUNT_ID exist.
+on:
+  push:
+    branches: [main, feat/vedansh-app-website]
+    paths: ['website/**', '.github/workflows/deploy-website-cloudflare.yml', '.github/scripts/**']
+  workflow_dispatch:
+
+concurrency:
+  group: cloudflare-pages
+  cancel-in-progress: true
+
+env:
+  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+  CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID || secrets.CLOUDFLARE_ACCOUNT_ID }}
+  PROJECT: vedansh
+  KV_TITLE: vedansh-hits
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check credentials
+        id: creds
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "::notice::Cloudflare credentials not set yet — skipping."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.creds.outputs.ready == 'true'
+
+      - uses: actions/setup-node@v4
+        if: steps.creds.outputs.ready == 'true'
+        with:
+          node-version: '20'
+
+      - name: Build
+        if: steps.creds.outputs.ready == 'true'
+        run: |
+          .github/scripts/build-dist.sh
+          cp website/cloudflare/_headers website/cloudflare/_redirects website/dist/
+
+      - name: Ensure the Pages project and counter storage exist
+        if: steps.creds.outputs.ready == 'true'
+        working-directory: website
+        run: |
+          npx --yes wrangler@4 pages project create "$PROJECT" --production-branch main >/dev/null 2>&1 || true
+          id=$(npx --yes wrangler@4 kv namespace list | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const n=JSON.parse(s).find(x=>x.title===process.env.KV_TITLE);process.stdout.write(n?n.id:"")})')
+          if [ -z "$id" ]; then
+            npx --yes wrangler@4 kv namespace create "$KV_TITLE" >/dev/null
+            id=$(npx --yes wrangler@4 kv namespace list | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{process.stdout.write(JSON.parse(s).find(x=>x.title===process.env.KV_TITLE).id)})')
+          fi
+          echo "KV_ID=$id" >> "$GITHUB_ENV"
+          cat > wrangler.toml <<EOF
+          name = "$PROJECT"
+          pages_build_output_dir = "dist"
+          compatibility_date = "2026-09-01"
+
+          [[kv_namespaces]]
+          binding = "HITS"
+          id = "$id"
+          EOF
+          sed -i 's/^          //' wrangler.toml
+
+      - name: Carry the visit count over on first run
+        # Seeds the Cloudflare counter from the live site once, so the number a
+        # visitor sees does not reset to zero when DNS moves.
+        if: steps.creds.outputs.ready == 'true'
+        working-directory: website
+        run: |
+          existing=$(npx --yes wrangler@4 kv key get total --namespace-id "$KV_ID" --remote 2>/dev/null || true)
+          if [ -z "$existing" ]; then
+            total=$(curl -s --max-time 20 'https://vedansh.app/api/hits?p=%2F' | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{process.stdout.write(String(JSON.parse(s).total||0))}catch{process.stdout.write("0")}})')
+            npx --yes wrangler@4 kv key put total "$total" --namespace-id "$KV_ID" --remote
+            echo "seeded total=$total"
+          else
+            echo "counter already at $existing"
+          fi
+
+      - name: Deploy
+        if: steps.creds.outputs.ready == 'true'
+        working-directory: website
+        run: npx --yes wrangler@4 pages deploy dist --project-name "$PROJECT" --branch main --commit-dirty=true

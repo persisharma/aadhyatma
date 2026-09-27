@@ -1,0 +1,3 @@
+# Short aliases for the smart download link. Mirrors netlify.toml.
+/download  /get/  301
+/app       /get/  301
