@@ -264,3 +264,93 @@ These are not moral fables; most are **dharma-sankat** — cases where two dutie
 | Sita refuses Hanuman's offer to carry her away | Rama's honour and dharma had to free her, not a shortcut | [Certain] Sundara Kanda |
 | Kunti asks for sorrow | "Let hardships come, so I keep remembering You" | [Certain] Bhagavata 1.8 |
 | Jada Bharata and the deer | Compassion that turned into attachment cost him a birth | [Certain] Bhagavata 5 |
+
+## 9. पर्व की कथा — Why each festival is celebrated
+
+Only festivals not already covered in §3. Several festivals carry *multiple* origin stories by region — listed together, since the app should not pick one as "the" reason.
+
+| Festival | Katha (by region / tradition) | Source |
+|---|---|---|
+| Diwali | Rama's return to Ayodhya (north); Lakshmi's emergence from the manthan; Bali Pratipada (Maharashtra, Karnataka); Kali Puja (Bengal); Mahavira's nirvana (Jain); Bandi Chhor Divas (Sikh) | Return [Certain] Valmiki, but lamps [Likely] later; Jain/Sikh [Certain] historical |
+| Dussehra / Vijayadashami | Rama kills Ravana; Durga's victory on the 10th day; Pandavas retrieve weapons from the shami; Raghu's gold rain for Kautsa — why *apta* leaves are exchanged as "sona" | Valmiki doesn't date the battle [Likely]; Raghu–Kautsa [Certain] Raghuvamsha |
+| Ram Navami | Rama's birth | [Certain] Valmiki, Bala Kanda |
+| Janmashtami | Krishna's midnight birth in Kansa's prison; Vasudeva carried him across the Yamuna | [Certain] Bhagavata 10 |
+| Hanuman Jayanti | Hanuman's birth to Anjana by Vayu's blessing | Birth [Certain] Valmiki; date varies by region |
+| Maha Shivaratri | Shiva appears as the column of fire; Shiva–Parvati wedding; Neelkanth | [Certain] Shiva Purana (linga); others [Likely] |
+| Ganesh Chaturthi | Parvati creates Ganesha from turmeric paste; public celebration started by Tilak in 1893 | Myth [Likely] Shiva Purana; public form [Certain] historical |
+| Anant Chaturdashi | Kaundinya threw away Sushila's Anant thread and lost everything until he atoned | [Likely] Bhavishya Purana |
+| Vasant Panchami | Saraswati's appearance; the first day of spring | [Likely] |
+| Gudi Padwa / Ugadi | Brahma began creation; Rama's return (gudi = victory flag); Shalivahana era | [Likely] Brahma Purana; era [Certain] historical |
+| Sharad Purnima / Kojagiri | Krishna's Maharaas; Lakshmi walks asking *"ko jagarti?"* — who is awake? — and blesses the wakeful | Raas [Certain] Bhagavata; Kojagiri [Likely] |
+| Kartik Purnima / Dev Deepawali | Shiva destroyed Tripurasura — the gods lit lamps at Kashi | [Certain] Mahabharata (Tripura); Kashi rite [Likely] |
+| Tulsi Vivah / Dev Uthani | Vishnu wakes from Chaturmas and marries Tulsi as Shaligram | [Certain] Padma Purana |
+| Ganga Dussehra | Ganga descends to earth through Bhagirath's tapas | [Certain] Valmiki, Bala Kanda |
+| Nirjala Ekadashi (Bhimseni) | Bhima couldn't fast every Ekadashi; Vyasa told him one waterless fast equals all 24 | [Likely] Padma / Brahmavaivarta |
+| Rath Yatra | Jagannath, Balabhadra and Subhadra go to their aunt Gundicha's house | [Likely] Skanda (Utkala Khanda) |
+| Gangaur | Parvati returns to her parents; women pray for marital happiness | [Guessing] Rajasthani folk |
+| Onam | Mahabali's annual visit to his people after Vamana sent him to Patala | Vamana–Bali [Certain] Bhagavata; the visit [Likely] Kerala tradition |
+| Pongal (Mattu Pongal) | Shiva cursed Nandi to plough the earth for misdelivering a message — cattle are honoured | [Guessing] Tamil folk |
+| Karthigai Deepam | Shiva as the endless column of fire at Thiruvannamalai | [Likely] Arunachala Mahatmya |
+| Thaipusam | Parvati gives Murugan the *vel* to defeat Surapadman | [Likely] Kanda Puranam |
+| Holika Dahan / Kama Dahanam (south) | North: Prahlad. South: Shiva burns Kamadeva, Rati's grief, Kama revived formless | Kama [Certain] Shiva Purana / Kumarasambhava |
+| Durga Puja (Bengal) | Uma visits her parents' home for four days with her children | [Likely] Bengali tradition, Agamani songs |
+| Lohri | Dulla Bhatti, who rescued girls from being sold | [Guessing] Punjabi folk-history |
+| Chhath | Surya worship — Karna, Draupadi and Sita are all credited | [Guessing] folk; Vedic Surya worship [Certain] |
+
+## 10. तीर्थ स्थापना — Founding stories of tirthas not yet in the app
+
+The app already ships origin stories for ~75 temples in `mobile/src/data/theerth/temples.ts` (all 12 Jyotirlingas, Char Dham, Chota Char Dham, most Shakti Peeths, Tirupati, Meenakshi, Konark, Sabarimala, Khatu Shyam, Karni Mata, Srinathji and others). These are the **major gaps**. Enrich one at a time via `/enrich-theerth` (RULEBOOK §12.6).
+
+### Sapta Puri and great tirthas
+
+| Tirtha | Sthapana katha | Source |
+|---|---|---|
+| Ayodhya | Built by Manu, the first king | [Certain] Valmiki, Bala Kanda 5 |
+| Mathura | Shatrughna killed Lavanasura and founded Madhupuri | [Certain] Valmiki, Uttara Kanda |
+| Haridwar (Har ki Pauri) | An amrit drop fell at Brahmakund; ghat traditionally said to be built by Vikramaditya for his brother Bhartrihari | Amrit [Likely]; ghat [Guessing] |
+| Prayagraj (Triveni) | Brahma's first yajna (*prakrishta yaga* → Prayag); the Akshayavat survives pralaya | [Likely] Matsya / Padma |
+| Pushkar | Brahma dropped a lotus; three lakes formed where the petals fell; he held his yajna there | [Likely] Padma Purana |
+| Kurukshetra | King Kuru ploughed it with a golden plough to make it a field of dharma; Indra granted that dying there gives heaven | [Certain] Shalya Parva |
+| Naimisharanya | Brahma's wheel-rim (*nemi*) fell there; the rishis heard the Puranas from Suta | [Certain] Vayu / Bhagavata |
+| Vrindavan (as a pilgrimage town) | Rediscovered in the 16th century by Chaitanya's disciples Rupa and Sanatana Goswami | [Certain] historical |
+| Chitrakoot | Rama's exile years; Bharat Milap | [Certain] Valmiki, Ayodhya Kanda |
+| Nashik (Panchavati) | Lakshmana cut Shurpanakha's nose (*nasika*) here | Event [Certain] Aranya Kanda; the etymology [Guessing] |
+| Ganga Sagar | Kapil Muni burned Sagara's 60,000 sons; Ganga freed them | [Certain] Valmiki, Bala Kanda |
+| Rishikesh | Vishnu appeared as Hrishikesh to Raibhya rishi; Lakshmana crossed the river on a jute rope (Lakshman Jhula) | [Likely] Skanda / folk |
+| Bet Dwarka | Where Sudama met Krishna | [Likely] |
+| Vindhyachal | Yogamaya, who slipped from Kansa's hands, made the Vindhya hills her seat | Escape [Certain] Bhagavata; Vindhyavasini [Certain] Devi Mahatmya 11 |
+
+### South India
+
+| Tirtha | Sthapana katha | Source |
+|---|---|---|
+| Srirangam | Rama gave the Ranganatha idol to Vibhishana; set down on the island, it refused to move — it faces south, toward Lanka | [Likely] Sthala Purana |
+| Guruvayur | The idol worshipped in Dwarka; after Dwarka sank, Guru (Brihaspati) and Vayu installed it — hence *Guru-vayu-ur* | [Likely] Sthala Purana |
+| Chidambaram | Nataraja danced for Patanjali and Vyaghrapada; the akasha (space) linga | [Likely] |
+| Thiruvannamalai | Shiva as the column of fire; the hill itself is the linga | [Likely] Arunachala Mahatmya |
+| Srikalahasti | A spider (*sri*), a snake (*kala*) and an elephant (*hasti*) worshipped the linga; Kannappa offered his own eyes | Kannappa [Certain] Periya Puranam; the rest [Likely] |
+| Kanyakumari | The Devi waited to marry Shiva; Narada crowed like a cock before dawn, the wedding was missed, and the rice turned to sand; as a virgin she killed Banasura | [Likely] |
+| Palani | Murugan lost the fruit race to Ganesha, left Kailash in anger — "*pazham nee*" (you are the fruit) | [Likely] Tamil tradition |
+| Kollur Mookambika | The Devi agreed to follow Adi Shankara if he didn't look back; he did, at Kollur | [Likely] |
+| Sringeri | Shankara saw a cobra shading a frog in labour and founded his first matha there | [Likely] Shankara-vijaya |
+| Hampi (Virupaksha) | Pampa's tapas won Shiva as her husband | [Likely] |
+| Murudeshwar | A piece of the Atmalinga's cloth landed here (Gokarna cycle) | [Likely] |
+| Lingaraj, Bhubaneswar | Parvati killed the demons Kirti and Vasa; Shiva created Bindusagar | [Likely] Ekamra Purana |
+
+### West, East and Himalaya
+
+| Tirtha | Sthapana katha | Source |
+|---|---|---|
+| Pandharpur | Pundalik, serving his parents, threw a brick for Krishna to wait on | [Likely] Varkari tradition |
+| Siddhivinayak, Mumbai | Built in 1801, funded by a childless woman so that others' wishes would be fulfilled | [Likely] temple trust history |
+| Shani Shingnapur | A black slab found after a flood; Shani said in a dream: no roof over me, no locks in the village | [Guessing] folk |
+| Tuljapur Bhavani | The Devi gave Shivaji his sword | [Guessing] tradition |
+| Ambaji | Sati's heart fell here | [Likely] Shakti Peeth lists |
+| Mehandipur Balaji | A self-manifested Hanuman in the Aravallis | [Guessing] |
+| Tarapith | Vasishtha's sadhana of Tara; Sati's third eye fell here; the saint Bamakhepa | [Likely] |
+| Dakshineswar | Rani Rashmoni built it in 1855 after a dream; Ramakrishna served as priest | [Certain] historical |
+| Amarnath | Shiva told Parvati the secret of immortality; two pigeons overheard and became immortal | [Likely] folk |
+| Kailash Mansarovar | Brahma created the lake from his mind (*manas*) | [Likely] |
+| Pashupatinath (Nepal) | Shiva lived as a deer; the gods caught his horn, which became the linga | [Likely] Nepala Mahatmya |
+
+**A pattern worth noticing:** "the deity was set down and refused to move" founds at least five tirthas: Gokarna, Vaidyanath, Srirangam, Kollur, and Nathdwara (Srinathji's cart stuck in the mud). The teaching is the same each time: the deity chooses the place, not the devotee.
