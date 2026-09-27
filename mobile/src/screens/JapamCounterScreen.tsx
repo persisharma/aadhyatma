@@ -11,6 +11,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useFocusEffect } from '@react-navigation/native';
 import { spacing } from '@/theme/spacing';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -33,6 +34,7 @@ import Ornament from '@/components/Ornament';
 import ShareButton from '@/components/ShareButton';
 import { AlarmEditorSheet } from '@/screens/JapamAlarmsScreen';
 import { useShare } from '@/utils/shareVerse';
+import { useRatingAsk } from '@/contexts/ratingAsk';
 import type { RootStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'JapamCounter'>;
@@ -43,6 +45,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const { getEntry, increment, resetBeads, clear } = useJapamCounter();
   const { addAlarm, updateAlarm, removeAlarm } = useJapamAlarms();
   const { share, busy: shareBusy } = useShare();
+  const requestRatingAsk = useRatingAsk();
   const { factor } = useFontScale();
   const { height: windowHeight } = useWindowDimensions();
   const isShortScreen = windowHeight < 720;
@@ -77,6 +80,8 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const [confirmKind, setConfirmKind] = useState<'beads' | 'all' | null>(null);
   const [alarmEditorOpen, setAlarmEditorOpen] = useState(false);
   const lastRoundRef = useRef(entry.rounds);
+  /** Did the user complete at least one full mala while this screen was open? */
+  const completedRoundThisVisitRef = useRef(false);
 
   const registerBead = useCallback(
     (beads: number = 1) => {
@@ -84,6 +89,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
       const next = increment(mantra.id, beads);
       if (next.rounds > lastRoundRef.current) {
         lastRoundRef.current = next.rounds;
+        completedRoundThisVisitRef.current = true;
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(
           () => undefined
         );
@@ -92,6 +98,24 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
       }
     },
     [increment, mantra]
+  );
+
+  // Ask for a rating when the user LEAVES the counter after finishing a mala —
+  // never a card over the beads mid-japa (§54). The moment is the settle point:
+  // the screen blurs, and the rating gate + delay decide whether the sheet opens
+  // on the screen behind. `requestAsk` no-ops silently if the gate says no.
+  const requestRatingAskRef = useRef(requestRatingAsk);
+  requestRatingAskRef.current = requestRatingAsk;
+  useFocusEffect(
+    useCallback(
+      () => () => {
+        if (completedRoundThisVisitRef.current) {
+          completedRoundThisVisitRef.current = false;
+          requestRatingAskRef.current('mala-complete');
+        }
+      },
+      []
+    )
   );
 
   // A screen tap is exactly one bead. Wrapped so the Pressable's gesture event

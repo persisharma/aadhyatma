@@ -75,9 +75,9 @@ Design: design.md §75; contract: RULEBOOK §29.
   12.19; because the page reads the corpus at open time it shows exactly what the Gita reader
   shows. Fix the corpus (`scripts/parse-gita.mjs` + `BhagwadGita/chapters/`), never a theme
   file — the theme never carries Sanskrit.
-- **`launchGraph.test.ts` byte budget was already over on this branch** (8,130,261 > 7,300,000
-  before this section; +39 KB after — the two screens and the page, imported eagerly by the Home
-  stack like every reader). Not raised here per the test's own rule; the corpus stays lazy.
+- **Launch-graph cost.** The two screens and the page are imported eagerly by the Home stack like
+  every reader (about 39 KB); theme files and the corpus stay behind `require()` thunks. After main
+  deferred the temple corpus (2026-09-25) `launchGraph.test.ts` passes with Gita Saar merged in.
 - **`require()` in `index.ts` lints as a warning** (`no-require-imports`) — the same warning
   `pitru/index.ts` and `daan/index.ts` carry; it is the sanctioned lazy-load shape, not a
   defect.

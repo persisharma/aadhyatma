@@ -1,0 +1,65 @@
+appId: com.prashantsharma.vedansh
+---
+# The isolated QA simulator has @vedansh/language=hi during this run.
+- stopApp
+- launchApp:
+    arguments: { RCT_jsLocation: "127.0.0.1:8084" }
+- waitForAnimationToEnd: { timeout: 30000 }
+- scrollUntilVisible:
+    element: { text: "Kundali. New. Tap to open." }
+    direction: DOWN
+    centerElement: true
+- tapOn: "Kundali. New. Tap to open."
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: { id: "jyotish-prashna-door" }
+    direction: DOWN
+    centerElement: true
+- tapOn: "Open Prashna"
+- extendedWaitUntil: { visible: { id: "question-study-exam" }, timeout: 15000 }
+- tapOn: { id: "question-study-exam" }
+- tapOn: { point: "92%, 91%" }
+- scrollUntilVisible:
+    element: { id: "prashna-phase" }
+    direction: DOWN
+    centerElement: true
+- takeScreenshot: 01-study-exam
+- scrollUntilVisible:
+    element: { id: "purpose-vidya" }
+    direction: UP
+    centerElement: true
+- swipe: { start: "75%, 33%", end: "45%, 33%", duration: 450 }
+- waitForAnimationToEnd
+- tapOn: { id: "purpose-dhan" }
+- scrollUntilVisible:
+    element: { id: "prashna-phase" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "बचत करें; बड़ी प्रतिबद्धता सावधानी से लें"
+- takeScreenshot: 02-money
+- scrollUntilVisible:
+    element: { id: "purpose-dhan" }
+    direction: UP
+    centerElement: true
+- swipe: { start: "75%, 33%", end: "45%, 33%", duration: 450 }
+- waitForAnimationToEnd
+- tapOn: { id: "purpose-vivah" }
+- scrollUntilVisible:
+    element: { id: "prashna-phase" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "बातचीत करें; अहम मतभेद पहले समझें"
+- takeScreenshot: 03-marriage
+- scrollUntilVisible:
+    element: { id: "purpose-vivah" }
+    direction: UP
+    centerElement: true
+- swipe: { start: "85%, 33%", end: "20%, 33%", duration: 450 }
+- waitForAnimationToEnd
+- tapOn: { id: "purpose-yatra" }
+- scrollUntilVisible:
+    element: { id: "prashna-phase" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "पहले दस्तावेज़ और ज़िम्मेदारियाँ सँभालें"
+- takeScreenshot: 04-travel

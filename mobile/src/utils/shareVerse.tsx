@@ -24,6 +24,7 @@ import {
   storyCanvas,
 } from '@/utils/shareStoryLayout';
 import { pick } from '@/utils/localize';
+import { useRatingAsk } from '@/contexts/ratingAsk';
 import type { Lang } from '@/data/gita/language';
 
 export type ShareableVerse = {
@@ -149,6 +150,14 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
   const inFlightRef = useRef(false);
   const cardRef = useRef<View>(null);
 
+  // A dispatched share is a "good moment" the rating ask may ride on (§54). Read
+  // through a ref so `run`'s empty-dep callback identity never churns, and from
+  // the light `contexts/ratingAsk.ts` module so this provider stays testable
+  // standalone (no expo-notifications pulled in). Outside the provider it no-ops.
+  const requestRatingAsk = useRatingAsk();
+  const requestRatingAskRef = useRef(requestRatingAsk);
+  requestRatingAskRef.current = requestRatingAsk;
+
   // Timely tags (design.md §39.2). Resolved by `TimelyTagsResolver`, which mounts
   // ONLY while the picker is open — see the note on that component for why this
   // must not live in the always-mounted provider body.
@@ -228,6 +237,10 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
           }
         }
 
+        // Whether a share sheet was actually presented — the only branch that
+        // does NOT is the Instagram-without-image error alert below. A presented
+        // sheet is the moment we may ask for a rating on (§54).
+        let dispatched = true;
         if (fileUri) {
           if (target === 'instagram') {
             // Always the expo-sharing route: on iOS the RN Share `message` would
@@ -274,6 +287,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
           // Instagram takes an image or nothing: a text-only sheet would simply not
           // list it, which reads as "the button did nothing". Say so instead of
           // opening a sheet the reader cannot use.
+          dispatched = false;
           Alert.alert(
             pick(lang, {
               hi: 'अभी शेयर नहीं हो पाया',
@@ -292,6 +306,11 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
           // Image capture failed — share text-only so the user still gets something.
           await Share.share({ message: caption }, { dialogTitle: 'Share verse' });
         }
+
+        // Report the moment once the sheet has closed (the awaits above have
+        // resolved). The rating gate + 1200 ms settle delay live in the provider;
+        // here we only say "a share just happened".
+        if (dispatched) requestRatingAskRef.current('verse-shared');
       } catch {
         // Share sheet dismissal or any other failure: swallow. The user dismissed.
       } finally {
