@@ -87,6 +87,21 @@ export const gitaSaarTitleEn = 'Gita Saar';
  */
 export const gitaSaarChaptersManifest: readonly GitaSaarChapterSummary[] = [
   { chapter: 1, id: 'true-prema', titleHi: 'सच्चा प्रेम', titleEn: 'True Prema', verseCount: 19 },
+  { chapter: 2, id: 'bhay-chinta', titleHi: 'भय और चिंता', titleEn: 'When I am afraid', verseCount: 8 },
+  { chapter: 3, id: 'shok', titleHi: 'शोक', titleEn: 'When someone is gone', verseCount: 9 },
+  { chapter: 4, id: 'krodh', titleHi: 'क्रोध', titleEn: 'When anger rises', verseCount: 9 },
+  { chapter: 5, id: 'karma', titleHi: 'कर्म', titleEn: 'How should I work?', verseCount: 12 },
+  { chapter: 6, id: 'guna', titleHi: 'गुण', titleEn: 'Why do I feel this way?', verseCount: 12 },
+  { chapter: 7, id: 'man', titleHi: 'मन', titleEn: 'The restless mind', verseCount: 9 },
+  { chapter: 8, id: 'sanshay', titleHi: 'संशय', titleEn: 'When I cannot decide', verseCount: 9 },
+  { chapter: 9, id: 'sharanagati', titleHi: 'श्रद्धा और शरणागति', titleEn: 'Faith and surrender', verseCount: 11 },
+  { chapter: 10, id: 'sthitaprajna', titleHi: 'स्थितप्रज्ञ', titleEn: 'What does a settled person look like?', verseCount: 10 },
+  { chapter: 11, id: 'kamna-santosh', titleHi: 'कामना और संतोष', titleEn: 'Desire and contentment', verseCount: 9 },
+  { chapter: 12, id: 'safalta', titleHi: 'सफलता-असफलता', titleEn: 'Success and failure', verseCount: 8 },
+  { chapter: 13, id: 'atma', titleHi: 'मृत्यु और आत्मा', titleEn: 'What am I?', verseCount: 11 },
+  { chapter: 14, id: 'akela', titleHi: 'क्या मैं अकेला हूँ', titleEn: 'Am I alone?', verseCount: 8 },
+  { chapter: 15, id: 'daivi', titleHi: 'दैवी सम्पदा', titleEn: 'How to live well', verseCount: 10 },
+  { chapter: 16, id: 'dhyan', titleHi: 'ध्यान और दिनचर्या', titleEn: 'How to meditate', verseCount: 16 },
 ];
 
 export const gitaSaarTotal = gitaSaarChaptersManifest.reduce((sum, c) => sum + c.verseCount, 0);

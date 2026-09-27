@@ -2,7 +2,7 @@
 title: Gita Saar (गीता सार)
 type: subsystem
 sources: [mobile/src/data/gita-saar/types.ts, mobile/src/data/gita-saar/index.ts, mobile/src/data/gita-saar/themes/index.ts, mobile/src/data/gita-saar/themes/true-prema.ts, mobile/src/components/GitaSaarVersePage.tsx, mobile/src/screens/GitaSaarReaderScreen.tsx, mobile/src/screens/GitaSaarThemesScreen.tsx, mobile/src/navigation/entryRoutes.ts, mobile/src/data/searchIndex.ts, mobile/src/data/texts.ts, mobile/src/data/gita-saar/__tests__/gitaSaarContent.test.ts, mobile/src/screens/__tests__/GitaSaarReaderScreen.test.tsx, mobile/.maestro/granth-smoke.yaml, design.md, RULEBOOK.md]
-last_verified_date: 2026-09-26
+last_verified_date: 2026-09-27
 confidence: high
 status: current
 ---
@@ -13,9 +13,11 @@ status: current
 in a considered order, each with its sense in plain words. It is a `granth` catalog row
 (`gita-saar`, deity `krishna`) that behaves like every chaptered text — a **chapter is a theme**,
 a **page is one shloka inside the theme** — and it exists so more readings can keep being added
-without touching code. First theme: **सच्चा प्रेम · True Prema** (19 shlokas, six groups: the
-root 6.32 → the devotee dear to Him 12.13–20 → the jñānī devotee 7.17 → living in love
-10.9–10 → love in action 3.30 / 9.26 / 17.20 → the reply and the promise 9.29 / 18.64–66).
+without touching code. **Sixteen themes ship (167 pages)**, in the order of
+`docs/roadmap/gita-saar-themes.md`: सच्चा प्रेम · भय और चिंता · शोक · क्रोध · कर्म · गुण · मन · संशय ·
+श्रद्धा और शरणागति · स्थितप्रज्ञ · कामना और संतोष · सफलता-असफलता · मृत्यु और आत्मा · क्या मैं अकेला हूँ ·
+दैवी सम्पदा · ध्यान और दिनचर्या. Moods name the state → what the text calls it → what steadies it →
+the reply; topics put the question → the answer in order → one line to carry.
 Design: design.md §75; contract: RULEBOOK §29.
 
 ## Shape
@@ -52,12 +54,10 @@ Design: design.md §75; contract: RULEBOOK §29.
   search, bookmarks, resume, the routine picker and the index all read the manifest. **Append
   only** — the registry position is the chapter number and therefore the key of every saved
   bookmark/progress row.
-- **Single-theme routing.** With one theme in the manifest, `entryRoutes` opens the reader
-  directly (the §38 one-row-index rule); the themes index takes over automatically at two. When
-  a second theme lands: move `gita-saar` from the "opens its reader directly" list to the "index
-  leads" list in `entryRoutes.test.ts`, and add `GitaSaarReaderScreen` to the
-  `readerAutoAdvance.test.tsx` table (that table renders chapter 2, so it cannot hold a
-  one-theme reader today — the transition logic is already in the screen).
+- **The themes index leads.** With sixteen themes the catalog row opens `GitaSaarChapters`
+  (pinned in `entryRoutes.test.ts`) and the reader crosses themes through the transition cards
+  (a row in `readerAutoAdvance.test.tsx`). If the manifest ever dropped to one theme, the §38
+  one-row-index rule would open the reader directly again with no code change.
 - **The saar is a sense line, not a claim** — no fruit-promise, verdict or prescription; the
   editorial framing lives in the group intros as reading, not as scripture (RULEBOOK §29.3).
 - **Pill vocabulary is the Gita's:** `श्लोक · c.v` / `Shloka · c.v` names the shloka as printed,
@@ -67,10 +67,10 @@ Design: design.md §75; contract: RULEBOOK §29.
 
 ## Gotchas
 
-- **Manifest `verseCount` is hand-typed and test-pinned.** The first cut said 16 (the share card
-  merged 12.13–14, 12.18–19 and 18.64–65 into three cards) while the registry has 19 separate
-  pages; the loader threw at first open and `searchIndex.test.ts` went red. Count the flattened
-  refs, not the cards.
+- **Manifest `verseCount` is hand-typed and test-pinned.** It has been wrong twice: 16 for
+  true-prema (the share card merged three pairs; the registry has 19 pages) and 11 for daivi
+  (three lists of 3 + 4 + 3 = 10). Both times the loader threw at first open and
+  `searchIndex.test.ts` went red before anything shipped. Count the flattened refs.
 - **Corpus defects travel.** The bundled Gita writes `भक्ित` (misplaced ि) in 7.17, 12.17 and
   12.19; because the page reads the corpus at open time it shows exactly what the Gita reader
   shows. Fix the corpus (`scripts/parse-gita.mjs` + `BhagwadGita/chapters/`), never a theme

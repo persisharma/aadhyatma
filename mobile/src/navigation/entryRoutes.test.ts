@@ -291,8 +291,6 @@ for (const sourceId of [
     // ram-aarti reuses the Ram Stuti content, so it inherits the same route.
     ['ram-aarti', 'RamStutiReader'],
     ['ramcharitmanas', 'RamcharitmanasReader'],
-    // gita-saar ships one theme today; the themes index leads once a second lands.
-    ['gita-saar', 'GitaSaarReader'],
   ] as const) {
     assert.deepEqual(
       buildEntryStartTarget(entry(id)),
@@ -312,6 +310,7 @@ for (const sourceId of [
     ['saraswati-stotram', 'SaraswatiStotramChapters'],
     ['krishna-stotram', 'KrishnaStotramChapters'],
     ['valmiki-ramayan', 'ValmikiRamayanChapters'],
+    ['gita-saar', 'GitaSaarChapters'],
   ] as const) {
     assert.deepEqual(
       buildEntryStartTarget(entry(id)),

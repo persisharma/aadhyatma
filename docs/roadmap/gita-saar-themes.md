@@ -1,7 +1,8 @@
 # गीता सार — theme roadmap (moods and topics)
 
-The first theme, **सच्चा प्रेम · True Prema** (`data/gita-saar/themes/true-prema.ts`), is live.
-This is the plan for the next themes: one **question a person actually arrives with**, answered
+**Status (2026-09-27): all sixteen themes below are built** — one file each under
+`data/gita-saar/themes/`, in this order, with आहार folded into ध्यान as "the yogi's day". This
+document is now the record of the selection and the template for the next ones: one **question a person actually arrives with**, answered
 only by the Gita's own verses in a considered order, each with a plain-language सार. Every ref
 below was resolved against the bundled corpus (`data/gita/chapter-NN.json`) on 2026-09-26; the
 chapter 13 numbering is the 35-verse one (13.8 = *amānitvam…*).
@@ -10,8 +11,7 @@ Building a theme is three files (RULEBOOK §29.7): `themes/<id>.ts`, the array i
 `themes/index.ts`, one manifest row in `index.ts`. **Append only** — registry position is the
 chapter number. The content test pins ref resolution, parity, well-formedness and the source
 threshold. Reader, search, bookmarks, resume and the routine picker pick the theme up from the
-manifest with no UI work. When the second theme lands, move `gita-saar` to the "index leads" list
-in `entryRoutes.test.ts` and add the reader to `readerAutoAdvance.test.tsx`.
+manifest with no UI work.
 
 Two kinds of theme, both welcome:
 
@@ -160,7 +160,7 @@ Refs: 2.17, 2.18, 2.19 (the indestructible pervades all; bodies end, the dweller
 
 Refs: 6.30, 6.31 (who sees Me everywhere, I never lose him) → 10.20, 15.15, 18.61 (I am the Self in every heart; seated in the heart; the Lord dwells in all beings) → 10.41 (every glory is a spark of Me) → 9.29, 9.22 (in Me and I in them; I carry what they lack). Closing: जिसे ढूँढ रहे हो, वह हृदय में बैठा है। *The one you look for is seated in the heart.*
 
-### 14. दैवी सम्पदा · How to live well (`daivi`) — 11 verses
+### 14. दैवी सम्पदा · How to live well (`daivi`) — 10 verses
 
 Refs: 16.1, 16.2, 16.3 (the 26 divine qualities) → 13.8, 13.9, 13.10, 13.11 (what counts as knowledge: humility, non-violence, detachment, steady devotion) → 17.14, 17.15, 17.16 (austerity of body, speech and mind — 17.15 alone is the whole rule of good speech). Closing: अच्छा जीवन बड़े कर्मों से नहीं, रोज़ के गुणों से बनता है। *A good life is built of daily qualities, not great deeds.*
 
