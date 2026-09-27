@@ -724,8 +724,8 @@ for (const v of aartiKunjBihari.verses) {
   const entry = libraryById.get('upanishad');
   assert.ok(entry, 'upanishad must exist in the library');
   assert.equal(entry.category, 'granth');
-  assert.match(entry.sub, /^10 उपनिषद् · 518 मन्त्र/, 'Hindi sub counts readable texts and mantras, not pages');
-  assert.match(entry.subEn || '', /^10 of 108 Upanishads · 518 mantras/, 'English sub counts readable texts and mantras, not pages');
+  assert.match(entry.sub, /^15 उपनिषद् · 1622 मन्त्र/, 'Hindi sub counts readable texts and mantras, not pages');
+  assert.match(entry.subEn || '', /^15 of 108 Upanishads · 1622 mantras/, 'English sub counts readable texts and mantras, not pages');
   assert.equal(entry.addedInVersion, '1.4.8', 'upanishad must set addedInVersion so it debuts as NEW for upgraders');
 
   const registry = readTs('upanishad/registry.ts');
@@ -766,8 +766,13 @@ for (const v of aartiKunjBihari.verses) {
       [6, 'Mandukya Upanishad', 12],
       [7, 'Taittiriya Upanishad', 31],
       [8, 'Aitareya Upanishad', 33],
+      [9, 'Chandogya Upanishad', 629],
+      [10, 'Brihadaranyaka Upanishad', 435],
+      [11, 'Brahma Upanishad', 23],
       [12, 'Kaivalya Upanishad', 26],
+      [13, 'Jabala Upanishad', 6],
       [14, 'Shvetashvatara Upanishad', 113],
+      [15, 'Hamsa Upanishad', 11],
     ],
     'the readable Upanishads by Muktikā number with their traditional mantra counts'
   );
@@ -792,11 +797,23 @@ for (const v of aartiKunjBihari.verses) {
   // muṇḍaka.khaṇḍa.mantra (9 · 13 · 10 · 11 · 10 · 11); Praśna praśna.mantra
   // (16 · 13 · 12 · 11 · 7 · 8); Taittirīya vallī.anuvāka (12 · 9 · 10); Aitareya
   // adhyāya.khaṇḍa.mantra (4 · 5 · 14 | 6 | 4); Kaivalya khaṇḍa.mantra (24 · 2);
-  // Śvetāśvatara adhyāya.mantra (16 · 17 · 21 · 22 · 14 · 23); Īśa and Māṇḍūkya by mantra.
+  // Śvetāśvatara adhyāya.mantra (16 · 17 · 21 · 22 · 14 · 23); Jābāla khaṇḍa.mantra (six
+  // one-paragraph khaṇḍas); Chāndogya prapāṭhaka.khaṇḍa.mantra (13 · 24 · 19 · 17 · 24 · 16 ·
+  // 26 · 15 khaṇḍas); Bṛhadāraṇyaka adhyāya.brāhmaṇa.mantra (6 · 6 · 9 · 6 · 15 · 5 brāhmaṇas);
+  // Īśa, Māṇḍūkya, Brahma and Haṃsa by mantra.
   const sectionCounts = (slug: string) => {
     const per = new Map<string, number>();
     for (const v of readJson(`upanishad/texts/${slug}.json`).verses.slice(1)) {
       const k = String(v.reference).split('.').slice(0, -1).join('.');
+      per.set(k, (per.get(k) ?? 0) + 1);
+    }
+    return [...per.values()];
+  };
+  // Mantras per top-level division, for the texts too long to pin khaṇḍa by khaṇḍa.
+  const topCounts = (slug: string) => {
+    const per = new Map<string, number>();
+    for (const v of readJson(`upanishad/texts/${slug}.json`).verses.slice(1)) {
+      const k = String(v.reference).split('.')[0];
       per.set(k, (per.get(k) ?? 0) + 1);
     }
     return [...per.values()];
@@ -809,6 +826,13 @@ for (const v of aartiKunjBihari.verses) {
   assert.deepEqual(sectionCounts('aitareya'), [4, 5, 14, 6, 4]);
   assert.deepEqual(sectionCounts('kaivalya'), [24, 2]);
   assert.deepEqual(sectionCounts('shvetashvatara'), [16, 17, 21, 22, 14, 23]);
+  assert.deepEqual(sectionCounts('jabala'), [1, 1, 1, 1, 1, 1]);
+  assert.deepEqual(topCounts('chandogya'), [104, 82, 95, 78, 88, 69, 51, 62]);
+  assert.equal(sectionCounts('chandogya').length, 154, 'Chāndogya has 154 khaṇḍas');
+  assert.deepEqual(topCounts('brihadaranyaka'), [80, 66, 92, 92, 30, 75]);
+  assert.equal(sectionCounts('brihadaranyaka').length, 47, 'Bṛhadāraṇyaka has 47 brāhmaṇas');
+  assert.equal(readJson('upanishad/texts/brahma.json').verses[23].reference, '23');
+  assert.equal(readJson('upanishad/texts/hamsa.json').verses[11].reference, '11');
   assert.equal(readJson('upanishad/texts/isha.json').verses[1].reference, '1');
   assert.equal(readJson('upanishad/texts/mandukya.json').verses[12].reference, '12');
 

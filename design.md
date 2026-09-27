@@ -1342,7 +1342,7 @@ The list is **two browsable tiers**, rendered as one `FlatList` under two group 
    - Verse hits are capped at `VERSE_RESULT_CAP = 50`, with an italic "More results — type a more specific query" note when clipped.
 4. **Zero state**: dimmed `॥`, "कोई परिणाम नहीं / No matches found", and a hint to try a Devanagari word or section name.
 
-**Index coverage.** Sections (every active library entry **plus one row per published vidhi** — vidhis are procedures, so they contribute no verse entries), deities, and verses from every text module — the nine chalisas, aartis, japam mantras, Gita, Sundarkand, all stotram modules, Ramcharitmanas, Valmiki Ramayan, the Upanishads (all 528 pages, §75), sanskar items, and the Theerth temples. Standard `lines`/`linesEn` shapes are picked up automatically when a section is added (RULEBOOK §7).
+**Index coverage.** Sections (every active library entry **plus one row per published vidhi** — vidhis are procedures, so they contribute no verse entries), deities, and verses from every text module — the nine chalisas, aartis, japam mantras, Gita, Sundarkand, all stotram modules, Ramcharitmanas, Valmiki Ramayan, the Upanishads (all 1,637 pages, §75), sanskar items, and the Theerth temples. Standard `lines`/`linesEn` shapes are picked up automatically when a section is added (RULEBOOK §7).
 
 **Normalization** (`data/searchNormalize.ts`) — one pure fold applied to both index and query, so Devanagari and Latin queries meet in the middle: Unicode NFD with the combining nukta stripped (क़ ⇄ क), lowercase, IAST diacritics folded to ASCII (`kṛṣṇa` → `krsna`, so a plain-ASCII query matches the romanized corpus), punctuation dropped **including daṇḍa `।`/`॥`**, whitespace collapsed. Ranking is exact > prefix > substring per field (`MatchRank`), idempotent and unit-tested.
 
@@ -1637,7 +1637,7 @@ Twenty-one deities, each `{ id, nameHi, nameEn, iconKey }`: rama (bowArrow) · k
 ### Data-shape families (one directory per module under `mobile/src/data/`)
 
 - **Linear `lines`/`linesEn` verses (swap-on-toggle, §3.1/§10)** — one JSON, one `Verse[]`, no chapters. Three registry-driven *multi-instance* readers dispatch on a route param instead of importing one section's data (RULEBOOK §3): **chalisas** (`chalisaRegistry.ts` → hanuman/shiv/durga/ganesh/gayatri/ram/krishna/vishnu/saraswati chalisa dirs — nine total), **aartis** (`aarti/index.ts` `aartiCollection`, 8 aartis, `refrain`/`stanza` verse types; the Aarti *category* also lists a 9th card, `ram-aarti`, which is an alias that opens the existing `ram-stuti` Stotram content rather than an `aartiCollection` entry), **sanskar** (8 practice modules — prabhati-shloka, surya-namaskar, tulsi-puja, bhojan-mantra, gau-seva, sandhya-deepam, ratri-shloka, vidyarambha-prarthana — whose `SanskarVerse` adds `vidhiHi/En` method prose and `intro`/`mantra`/`step`/`vidhi` types).
-- **Chaptered `chapter-NN.json` + `chapters-manifest.json`** — the Gita pattern (§10, §15): `gita/` (18 chapters, sanskrit + transliteration + meaning + commentary), `sundarkand/` (16 sargas), `shiva-strotam/` (4), `durga-stotram/` (3), `ganesh-stotram/` (3), `saraswati-stotram/` (3), `vishnu-sahasranama/` (4), `krishna-stotram/` (2), `ramcharitmanas/` (1 — Mangalacharan only today), `valmiki-ramayan/` (7 kāṇḍas / 648 sargas / 23,289 verified verse records, §53), `upanishad/` (10 readable of 108, one `texts/<slug>.json` per Upanishad, §75), plus single-chapter `hanuman-ashtak/`, `bajrang-baan/`, `ram-stuti/`. Each `index.ts` is a typed loader with module-load invariants; the Valmiki and Upanishad payloads validate lazily per loaded chapter (RULEBOOK §2 row 2 — manifest eager, payload behind a `require()` thunk).
+- **Chaptered `chapter-NN.json` + `chapters-manifest.json`** — the Gita pattern (§10, §15): `gita/` (18 chapters, sanskrit + transliteration + meaning + commentary), `sundarkand/` (16 sargas), `shiva-strotam/` (4), `durga-stotram/` (3), `ganesh-stotram/` (3), `saraswati-stotram/` (3), `vishnu-sahasranama/` (4), `krishna-stotram/` (2), `ramcharitmanas/` (1 — Mangalacharan only today), `valmiki-ramayan/` (7 kāṇḍas / 648 sargas / 23,289 verified verse records, §53), `upanishad/` (15 readable of 108, one `texts/<slug>.json` per Upanishad, §75), plus single-chapter `hanuman-ashtak/`, `bajrang-baan/`, `ram-stuti/`. Each `index.ts` is a typed loader with module-load invariants; the Valmiki and Upanishad payloads validate lazily per loaded chapter (RULEBOOK §2 row 2 — manifest eager, payload behind a `require()` thunk).
 - **Japam** (`japam/japam.json`) — mantras with round targets; routes to the counter, not a verse pager.
 - **Theerth** (`theerth/temples.ts`) — the prose-per-temple shape of §26–27 / RULEBOOK §12; no verse pages. Temples carry their own `addedInVersion` for NEW tracking (§44).
 
@@ -3302,19 +3302,22 @@ The **sticky action bar** (`daan-home-actions`) is absolutely positioned at the 
 Muktikā canon of 108 texts**: the index lists every one of the 108, grouped by the traditional
 seven categories with a chip filter, and each text that has shipped opens the reader while the
 rest are listed as coming. So the shape of the canon is visible from day one and texts are filled
-in over releases without the index, bookmarks or routines changing shape. Ten ship today — the
-Īśāvāsya, Kena, Kaṭha, Praśna, Muṇḍaka, Māṇḍūkya, Taittirīya, Aitareya, Kaivalya and Śvetāśvatara
-(Śāṅkara recension as printed by Gita Press; Kaivalya after the Adyar Śaiva Upaniṣads). The
-catalog counts **readable texts and mantras, not pages**: `10 उपनिषद् · 518 मन्त्र · अर्थ सहित` /
-`10 of 108 Upanishads · 518 mantras · with meaning`.
+in over releases without the index, bookmarks or routines changing shape. Fifteen ship today —
+Muktikā 1–15: the Īśāvāsya, Kena, Kaṭha, Praśna, Muṇḍaka, Māṇḍūkya, Taittirīya, Aitareya,
+Chāndogya, Bṛhadāraṇyaka, Brahma, Kaivalya, Jābāla, Śvetāśvatara and Haṃsa (the ten principal
+texts in Śāṅkara's recension as printed by Gita Press; Kaivalya, Brahma, Jābāla and Haṃsa after
+the Adyar Library editions). Texts are added five per release batch strictly in Muktikā order
+(`scripts/upanishad-content/HANDOFF.md`). The catalog counts **readable texts and mantras, not
+pages**: `15 उपनिषद् · 1622 मन्त्र · अर्थ सहित` / `15 of 108 Upanishads · 1622 mantras · with meaning`.
 
 **Identity: the Muktikā number is the chapter id, forever.** `chapter` on the reader route, in
 bookmarks, reading progress and routine items is the text's number in the Muktikā Upaniṣad's own
 list (Īśa 1 … Muktikā 108), never a position in the shipped subset. Chapter ids are therefore
-**sparse** (1–8, 12, 14 today); the reader steps between the previous/next *readable* text via
-`prevUpanishadChapter` / `nextUpanishadChapter` (`data/upanishad/index.ts`), so a swipe off the end
-of the Aitareya (8) lands on the Kaivalya (12) while 9–11 are unshipped, and adding the Chāndogya
-later slots it in without renumbering anything. Never compute a neighbour as `chapter ± 1`.
+**sparse** in principle (1–15 today, contiguous only because batches ship in Muktikā order); the
+reader steps between the previous/next *readable* text via `prevUpanishadChapter` /
+`nextUpanishadChapter` (`data/upanishad/index.ts`), so a swipe off the end of the Haṃsa (15) ends
+the section while 16+ are unshipped, and each later text slots in without renumbering anything.
+Never compute a neighbour as `chapter ± 1`.
 
 **Catalogue (`data/upanishad/registry.ts`).** 108 rows `{ muktika, slug, nameHi, nameEn, veda,
 category }` in Muktikā order, with the seven groups and five Vedas as typed enumerations. Grouping
@@ -3362,8 +3365,13 @@ variant="index"`, `LanguageToggle`, granth scripture plate) plus, in order:
 | 6 | माण्डूक्य उपनिषद् | Mandukya Upanishad | अथर्ववेद | 12 | 13 | mantra |
 | 7 | तैत्तिरीय उपनिषद् | Taittiriya Upanishad | कृष्ण यजुर्वेद | 31 anuvākas (12 · 9 · 10) | 32 | vallī.anuvāka |
 | 8 | ऐतरेय उपनिषद् | Aitareya Upanishad | ऋग्वेद | 33 (4 · 5 · 14 · 6 · 4) | 34 | adhyāya.khaṇḍa.mantra |
+| 9 | छान्दोग्य उपनिषद् | Chandogya Upanishad | सामवेद | 629 in 154 khaṇḍas (104 · 82 · 95 · 78 · 88 · 69 · 51 · 62 per prapāṭhaka) | 630 | prapāṭhaka.khaṇḍa.mantra |
+| 10 | बृहदारण्यक उपनिषद् | Brihadaranyaka Upanishad | शुक्ल यजुर्वेद | 435 in 47 brāhmaṇas (80 · 66 · 92 · 92 · 30 · 75 per adhyāya) | 436 | adhyāya.brāhmaṇa.mantra |
+| 11 | ब्रह्म उपनिषद् | Brahma Upanishad | कृष्ण यजुर्वेद | 23 | 24 | mantra |
 | 12 | कैवल्य उपनिषद् | Kaivalya Upanishad | कृष्ण यजुर्वेद | 26 (24 · 2) | 27 | khaṇḍa.mantra |
+| 13 | जाबाल उपनिषद् | Jabala Upanishad | शुक्ल यजुर्वेद | 6 (one prose paragraph per khaṇḍa) | 7 | khaṇḍa.mantra |
 | 14 | श्वेताश्वतर उपनिषद् | Shvetashvatara Upanishad | कृष्ण यजुर्वेद | 113 (16 · 17 · 21 · 22 · 14 · 23) | 114 | adhyāya.mantra |
+| 15 | हंस उपनिषद् | Hamsa Upanishad | शुक्ल यजुर्वेद | 11 | 12 | mantra |
 
 Source of truth for the table: `mobile/src/data/upanishad/chapters-manifest.json` (`chapter`,
 `slug`, `mantraCount`, `verseCount`, `vedaHi/En`); titles are composed from the registry
@@ -3395,9 +3403,10 @@ carries the Muktikā number so `getReaderBackground` stays deterministic per ver
 `textLoaders.ts` (generated) holds one `require()` thunk per readable slug and `index.ts` resolves
 `getUpanishadChapter(muktika)` through the manifest → slug → thunk, validating and caching on first
 open (`launchGraph.test.ts` forbids `texts/*.json` on the launch path). Only the manifest and the
-108-row registry are eager. At ~250 pages global search still indexes the section in full and Daily
-Bhakti registers it as a `PADA_SOURCE` (`versePool.ts`); revisit both once the long principal texts
-(Chāndogya, Bṛhadāraṇyaka) land — they belong on the Valmiki anchor-selection pattern (§53).
+108-row registry are eager. Global search still indexes the section in full (1,637 pages; the
+Chāndogya and Bṛhadāraṇyaka payloads are ~1.1 MB each but stay off the launch graph) and Daily
+Bhakti registers it as a `PADA_SOURCE` (`versePool.ts`). With the two long principal texts now
+shipped, moving both onto the Valmiki anchor-selection pattern (§53) is the open follow-up.
 
 **Files.** `mobile/src/data/upanishad/` (`registry.ts`, `index.ts`, `chapters-manifest.json`,
 `textLoaders.ts` *(generated)*, `texts/<slug>.json` *(generated)*) built by
@@ -3412,13 +3421,14 @@ entry announces it (§47).
 Tests: `src/screens/__tests__/UpanishadReaderScreen.test.tsx` (per-text first-page render, pill
 grammar, sparse neighbour stepping), `readerAutoAdvance.test.tsx` (text-boundary swipe contract on
 the last readable text), `readerReadAloud.test.tsx`, `readerTypeScale.test.tsx`,
-`chapteredTotals.test.ts` (253), `contentCorrectness.test.ts` (108 rows in Muktikā order, group and
+`chapteredTotals.test.ts` (1637), `contentCorrectness.test.ts` (108 rows in Muktikā order, group and
 Veda splits, readable manifest, mantra counts, citation depth, śānti page, pill numerals, routine
-registry), `searchIndex.test.ts` (253 indexed pages, Devanagari + IAST reach, Kaṭha → Muktikā 3).
+registry), `searchIndex.test.ts` (1637 indexed pages, Devanagari + IAST reach, Kaṭha → Muktikā 3).
 E2E: `.maestro/granth-smoke.yaml` (readable rows, a dimmed coming row, `Group: Yoga` / `Group:
 Principal` filter, Kena reader → śānti page → `Mantra · 1.1`).
 
-**Sourcing note.** The five shipped texts were written out from the printed Gita Press text
-without a network source at build time; the §11.12 and §11.14 gates pass, but a line-by-line check
+**Sourcing note.** The shipped texts were written out from memory of the printed editions
+without a network source at build time (the environment network policy blocks the Sanskrit source
+hosts); the §11.12 and §11.14 gates pass, but a line-by-line check
 against the scan is recorded as owed in each text's `source.notes`. Texts are added by authoring a
-content module — the remaining 103 are in the registry already.
+content module — the remaining 93 are in the registry already.

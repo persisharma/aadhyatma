@@ -43,5 +43,5 @@ authored.
 
 ## Progress
 
-Shipped (10/108): 1–8, 12, 14. Next batch: 9 Chandogya, 10 Brihadaranyaka,
-11 Brahma, 13 Jabala, 15 Hamsa.
+Shipped (15/108): 1–15. Next batch: 16 Aruni, 17 Garbha, 18 Narayana,
+19 Paramahamsa, 20 Amritabindu.
