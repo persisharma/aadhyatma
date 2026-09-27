@@ -1,7 +1,10 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
+import drikFixture from './fixtures/drikpanchang-ujjain.json';
+
 import { computePanchangForDate, getSiderealMoonLng, UJJAIN_GEO } from '../engine';
+import { NAKSHATRA_NAMES_EN, TITHI_NAMES_EN } from '../names';
 import { agniVaasPlace, chandraVaasDirection, dayVaas, vaasTiles } from '../vaas';
 
 test('chandra vaas maps each rashi to its element direction', () => {
@@ -97,4 +100,31 @@ test('the चन्द्रमा tile names the rashi and the next one when it
   // The havan verdict is its own line, never glued onto the headline.
   assert.equal(t.agni.element.nameHi, 'पृथ्वी');
   assert.deepEqual(t.agni.note, { hi: 'हवन शुभ', en: 'havan favoured' });
+});
+
+// Cross-check against the recorded drikpanchang.com Ujjain days (Mar–Jul 2026):
+// अग्नि वास and दिशा शूल read only the sunrise tithi + vara, and चन्द्रमा/चन्द्र वास
+// only the Moon's rashi, so these inputs matching Drik is what makes the tiles
+// match Drik. The rashi is implied by Drik's nakshatra wherever that nakshatra
+// lies wholly inside one sign (18 of 27); straddling nakshatras are skipped.
+// The reading CONVENTIONS themselves are not in the fixture (see vaas.ts).
+test('vaas inputs agree with the recorded Drik Panchang days', () => {
+  const days = (drikFixture as { days: Array<{ date: string; weekday: number; paksha: string; tithi: string; nakshatra: string }> }).days;
+  let rashiChecked = 0;
+  for (const d of days) {
+    const [y, m, dd] = d.date.split('-').map(Number);
+    const p = computePanchangForDate(new Date(y, m - 1, dd), { location: UJJAIN_GEO });
+    const tithi = TITHI_NAMES_EN.indexOf(d.tithi) + (d.paksha === 'krishna' && d.tithi !== 'Amavasya' ? 15 : 0);
+    assert.equal(p.tithi.index, tithi, `${d.date} tithi`);
+    assert.equal(p.vara.index, d.weekday, `${d.date} vara`);
+    const nak = NAKSHATRA_NAMES_EN.indexOf(d.nakshatra);
+    assert.ok(nak >= 0, `${d.date} nakshatra ${d.nakshatra}`);
+    const lo = Math.floor((nak * 360) / 27 / 30);
+    const hi = Math.floor(((nak + 1) * 360) / 27 / 30 - 1e-9);
+    if (lo === hi) {
+      rashiChecked++;
+      assert.equal(p.moonRashi.index, lo, `${d.date} moon rashi`);
+    }
+  }
+  assert.ok(rashiChecked > 60, `only ${rashiChecked} days had an unambiguous rashi`);
 });
