@@ -247,6 +247,18 @@ New kathas: `narak-chaturdashi-katha` (Narakasura and Rantideva, plus the abhyan
 
 `kundaliReport.ts` / `kundaliYoga.ts` / `dashaReading.ts` after the September 2026 review of a 1 y 9 m child's export: the snapshot's running-period `until` is now the Antardasha end (was the Mahadasha end, five years late); dasha basis keys are IST `indiaDateKey` everywhere (the pair reading sliced UTC, giving `2016-04-28` beside `29 Apr 2016`); same-sign groups are titled "in the same bhava" and always state their degree gap (10° close-conjunction orb; retrograde planets named, nodes never); Budhaditya / Chandra-Mangal are "association … (traditional same-sign rule)"; under 13 the Moon, combinations, transit card (`Current Saturn transit`, no phase headline, no practice pointer) and the whole Vimshottari section switch to a parent-observe register built around `DASHA_LORD_CHILD_HI/EN`, and the report names the child instead of "your chart". The snapshot's "Key combination" row is replaced by `Notable placements` (own/exalted or trikona/kendra, ≤3). Gotchas added to [[panchang]]; design.md §68 updated.
 
+## [2026-09-24] ingest | Job-switch answer from the current phase
+
+Prashna now leads explicit job-switch questions with a qualified decision and chart-linked reasons for and against. Ask recognizes explicit switch wording across English, Hindi and Hinglish and opens the same selected Prashna question. The export carries the decision alongside technical evidence. Updated [[panchang]] and [[ask]]; bilingual simulator captures and focused checks are recorded in the job-decision evaluation.
+
+## [2026-09-25] ingest | Prashna current-phase answers across adult topics
+
+The job-switch format now covers adult career, business, study, money, marriage and travel with question-specific recommendations, chart-linked reasons and bilingual next steps. Ask selects seven explicit subquestions; health, mind, fertility and minors keep protected guidance without timed verdicts. Updated [[panchang]] and [[ask]]. A 36-case synthetic date/person matrix and English/Hindi iOS captures are in `docs/evaluations/prashna-all-topics-2026-09-25/`; most sampled tones remain mixed, and source verification is still open.
+
+## [2026-09-25] ingest | Defer the temple corpus from Home startup
+
+The static launch graph exceeded its fixed budget on untouched main. `NewContentContext` now loads temple entries after its initial storage await; the Home stack lazy-loads Theerth map/detail routes; `kulParampara` looks up a temple only during record validation or export. The launch-budget test passes without raising its ceiling, and badge, temple-screen and family-record tests retain their behavior. Updated [[overview]].
+
 ## [2026-09-25] ingest | Upanishads added to Granth
 
 New `upanishad` library row (granth, `deities: ['vishnu']`, `addedInVersion: '1.4.8'`): Īśa (18), Kena (35, cited khaṇḍa.mantra) and Māṇḍūkya (12) as three chapters of one section, each opened by its śānti-pāṭha page. Content is authored in `scripts/build-upanishad.mjs` and emitted as `data/upanishad/chapter-0N.json` + manifest (`mantraCount` ≠ `verseCount`); the loader is the lazy Valmiki shape. Reader/chapters screens clone the Valmiki pair; `UpanishadVersePage` re-exports `SundarkandVersePage`. Wired into entryRoutes, HomeStack, backgrounds (granth plate), searchIndex (full), versePool (pada source), routine chapters, formatLocation, whatsNew 1.4.8. Gate tables extended (autoAdvance, readAloud, typeScale, chapteredTotals=68, launchGraph FORBIDDEN, contentCorrectness, searchIndex). design.md §75; gotcha in [[readers]]. Note: `launchGraph` byte budget (7.3 MB) was already exceeded on main (8.13 MB) before this change.
@@ -274,15 +286,3 @@ Batch 5 (Muktikā 21–25) per `scripts/upanishad-content/HANDOFF.md`: amritanad
 ## [2026-09-27] ingest | Upanishads: +Kālāgnirudra +Kṣurikā +Māntrika +Nirālamba +Vajrasūcī
 
 Batch 6 per `scripts/upanishad-content/HANDOFF.md`: kalagnirudra 9 (prose split by sense — printed numbering not recalled), kshurika 25, mantrika 20, niralamba 32 (3 verses + one answer per question; split is editorial), vajrasuchi 9. Now 30 readable of 108 — 1961 mantras, 1991 pages; readable ids 1–25, 28, 31, 32, 34, 36, so the manifest is genuinely sparse for the first time (reader stepping test covers 25→28 and 32→34). Held back because the full printed wording could not be recalled offline and the source hosts are blocked: 26 Bṛhajjābāla, 27 Nṛsiṃhatāpanī, 29 Maitreyī (partial draft in `scripts/upanishad-content/drafts/`, ignored by the build), 30 Subāla, 33 Sarvasāra, 35 Śukarahasya — HANDOFF now lists them under "Held" and says to skip, not block. Pins: `chapteredTotals` / `searchIndex` 1991 (readable set explicit), `contentCorrectness` sub `30 … 1961` + rows, Maestro Yoga group shows Kṣurikā readable + Tejobindu 37 coming, whatsNew 1.4.8, design.md §75/§21/data families. Gotcha: `git mv -k` on an untracked file silently no-ops — a held draft was still built until moved with plain `mv`.
-
-## [2026-09-24] ingest | Job-switch answer from the current phase
-
-Prashna now leads explicit job-switch questions with a qualified decision and chart-linked reasons for and against. Ask recognizes explicit switch wording across English, Hindi and Hinglish and opens the same selected Prashna question. The export carries the decision alongside technical evidence. Updated [[panchang]] and [[ask]]; bilingual simulator captures and focused checks are recorded in the job-decision evaluation.
-
-## [2026-09-25] ingest | Prashna current-phase answers across adult topics
-
-The job-switch format now covers adult career, business, study, money, marriage and travel with question-specific recommendations, chart-linked reasons and bilingual next steps. Ask selects seven explicit subquestions; health, mind, fertility and minors keep protected guidance without timed verdicts. Updated [[panchang]] and [[ask]]. A 36-case synthetic date/person matrix and English/Hindi iOS captures are in `docs/evaluations/prashna-all-topics-2026-09-25/`; most sampled tones remain mixed, and source verification is still open.
-
-## [2026-09-25] ingest | Defer the temple corpus from Home startup
-
-The static launch graph exceeded its fixed budget on untouched main. `NewContentContext` now loads temple entries after its initial storage await; the Home stack lazy-loads Theerth map/detail routes; `kulParampara` looks up a temple only during record validation or export. The launch-budget test passes without raising its ceiling, and badge, temple-screen and family-record tests retain their behavior. Updated [[overview]].
