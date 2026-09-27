@@ -24,9 +24,14 @@ transliteration. The texts, the audio and the panchang engine ship inside the ap
 - **Japam**: a bead counter with alarms.
 - **Theerth**: a pilgrimage map of temples across India, with each temple's story.
 - **Vrat**: follow the vrats you observe, with optional reminders, the katha for
-  each vrat and festival (80+ of them), and the vidhi in Hindi and English.
-- **Kundali**: a birth chart with a full written report.
-- **Muhurat finder**: choose a date for a griha pravesh, a vehicle or a naming.
+  each vrat and festival (90 kathas across 62 vrats and 90 festivals), 7 puja vidhis,
+  and the vidhi in Hindi and English.
+- **Kundali and Guna Milan**: a birth chart with a full written report, and a
+  private 36-point match with every koota explained.
+- **Muhurat finder**: choose a date for griha pravesh, bhumi pujan, a vehicle, or
+  the sanskars (naming, vidyarambh, mundan, annaprashan), with each window explained.
+- **Sharing**: any verse, muhurat or Guna Milan result as a card to WhatsApp,
+  Messages, or Instagram (4:5 post or 9:16 story).
 - **Sanskar**: the samskaras, written for children to read.
 - **Also**: good-habit tracking, home-screen widgets for the panchang, a verse or
   the japam count, search across the whole library, Daan kathas, and Pitru Paksha
@@ -53,7 +58,7 @@ The complete text of every page, in one file: https://vedansh.app/llms-full.txt
 ## Pages
 
 - [Home](https://vedansh.app/): what the app does, with screenshots of each area.
-- [Privacy Policy](https://vedansh.app/privacy/): what is collected (nothing) and why location is optional.
+- [Privacy Policy](https://vedansh.app/privacy/): what is kept on the phone, how location is used, and how to remove everything.
 - [Terms of Use](https://vedansh.app/terms/): public-domain texts offered for personal study and devotion, as-is.
 - [Support](https://vedansh.app/support/): common questions, japam alarm troubleshooting, reporting a verse correction, and how to reach a human.
 
