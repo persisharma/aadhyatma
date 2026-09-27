@@ -100,10 +100,16 @@ export function dayVaas(p: Pick<PanchangData, 'moonRashi' | 'tithi' | 'vara'>): 
 
 /**
  * The day-panel tiles (value = headline, endTime = the तक line) plus the
- * successor each tile names after it. The अग्नि वास headline carries the havan
- * verdict, since that is the only question it answers.
+ * successor each tile names after it. अग्नि वास carries the havan verdict as
+ * its own line, since that is the only question it answers — on the headline
+ * it overflowed the tile (the longest value on the grid).
  */
-type VaasTile = { element: PanchangElement; successor: { nameHi: string; nameEn: string } | null };
+type VaasTile = {
+  element: PanchangElement;
+  successor: { nameHi: string; nameEn: string } | null;
+  /** A verdict line under the headline (अग्नि वास only). */
+  note?: Label;
+};
 
 const labelEl = (l: Label, endTime: Date | null): PanchangElement => ({ index: 0, nameHi: l.hi, nameEn: l.en, endTime });
 const successorOf = (l: Label | null) => (l ? { nameHi: l.hi, nameEn: l.en } : null);
@@ -127,8 +133,9 @@ export function vaasTiles(
       successor: successorOf(v.chandra.next ? DIRECTION_LABELS[v.chandra.next] : null),
     },
     agni: {
-      element: labelEl({ hi: `${agni.hi} · ${havan.hi}`, en: `${agni.en} · ${havan.en}` }, v.agni.until),
+      element: labelEl(agni, v.agni.until),
       successor: successorOf(v.agni.next ? AGNI_VAAS_LABELS[v.agni.next] : null),
+      note: havan,
     },
     dishaShool: {
       element: labelEl(DISHA_LABELS[v.dishaShool], null),

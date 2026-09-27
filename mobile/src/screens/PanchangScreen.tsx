@@ -685,7 +685,7 @@ export default function PanchangScreen({ route }: Props) {
           {(() => {
             const vaas = vaasTiles(dayVaas(p), p.moonRashi);
             const tile = (label: string, t: typeof vaas.chandra) => (
-              <PanchangTile label={label} element={t.element} successor={t.successor} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
+              <PanchangTile label={label} element={t.element} successor={t.successor} note={t.note} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
             );
             return (
               <>
@@ -1583,9 +1583,11 @@ function CalendarSystemToggle({ value, onChange, lang, colors, radii, typography
   );
 }
 
-function PanchangTile({ label, element, kshaya, successor, panchangDate, lang, colors, typography, radii, elevation }: {
+function PanchangTile({ label, element, kshaya, successor, note, panchangDate, lang, colors, typography, radii, elevation }: {
   label: string;
   element: PanchangElement;
+  // A verdict line under the headline (अग्नि वास: हवन शुभ / वर्जित).
+  note?: { hi: string; en: string };
   // Kshaya anga (skipped at every sunrise) — rendered as a second, smaller row so
   // days like 10 Jul 2026 read "दशमी तक 8:16 AM · एकादशी तक 5:22 AM, 11 जुल".
   kshaya?: PanchangElement | null;
@@ -1635,6 +1637,11 @@ function PanchangTile({ label, element, kshaya, successor, panchangDate, lang, c
           >
             {contentByLang(lang, row.nameHi, row.nameEn)}
           </Text>
+          {i === 0 && note && (
+            <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latinSemiBold : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.saffronDeep, marginTop: 3 }}>
+              {contentByLang(lang, note.hi, note.en)}
+            </Text>
+          )}
           {/* formatEndInstant appends a short date when the end falls past
               midnight — a bare "तक 2:04 AM" would read as this morning. */}
           {row.endTime && (

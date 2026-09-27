@@ -94,4 +94,7 @@ test('the चन्द्रमा tile names the rashi and the next one when it
   assert.deepEqual(t.chandrama.successor, { nameHi: 'मेष', nameEn: 'Mesha' });
   assert.equal(t.dishaShool.element.nameHi, 'पश्चिम');
   assert.equal(t.dishaShool.successor, null);
+  // The havan verdict is its own line, never glued onto the headline.
+  assert.equal(t.agni.element.nameHi, 'पृथ्वी');
+  assert.deepEqual(t.agni.note, { hi: 'हवन शुभ', en: 'havan favoured' });
 });
