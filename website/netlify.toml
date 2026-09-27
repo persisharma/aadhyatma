@@ -86,3 +86,12 @@
   to = "/404.html"
   status = 404
   force = true
+
+# Android App Links: Play Console fetches this to associate vedansh.app with
+# com.prashantsharma.vedansh. Must be served as JSON, uncached-ish, no redirect.
+[[headers]]
+  for = "/.well-known/assetlinks.json"
+  [headers.values]
+    Content-Type = "application/json"
+    Cache-Control = "public, max-age=3600"
+    Access-Control-Allow-Origin = "*"

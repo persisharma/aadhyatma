@@ -1,0 +1,15 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.prashantsharma.vedansh",
+      "sha256_cert_fingerprints": [
+        "20:85:E1:7C:6A:20:CC:98:60:81:AA:A1:2A:FA:8F:64:CA:37:F5:43:5A:31:BD:42:51:9F:B5:A2:69:07:8F:0E"
+      ]
+    }
+  }
+]
