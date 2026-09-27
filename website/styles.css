@@ -130,8 +130,11 @@ p { margin: 0 0 1.1em; }
   border-bottom-color: var(--rule);
   box-shadow: 0 1px 0 rgba(166, 124, 52, 0.12);
 }
+/* The bar carries brand + eight links + the language pill + the visit count,
+   so both gaps ride the viewport: full spacing on a wide screen, tighter on a
+   laptop, rather than letting anything wrap or collide. */
 .nav-inner {
-  display: flex; align-items: center; gap: 1.5rem;
+  display: flex; align-items: center; gap: clamp(0.8rem, 1.2vw, 1.5rem);
   min-height: 4.75rem;
 }
 .brand {
@@ -140,8 +143,9 @@ p { margin: 0 0 1.1em; }
   color: var(--ink); text-decoration: none; letter-spacing: 0.01em;
 }
 .brand img { width: 2.1rem; height: 2.1rem; border-radius: 0.55rem; box-shadow: var(--shadow-soft); }
-.nav-links { display: flex; gap: 1.75rem; margin-left: auto; }
+.nav-links { display: flex; gap: clamp(0.95rem, 1.35vw, 1.75rem); margin-left: auto; }
 .nav-links a {
+  white-space: nowrap;
   font-size: 0.97rem; letter-spacing: 0.03em; color: var(--ink-soft);
   text-decoration: none; padding-block: 0.35rem; position: relative;
 }
@@ -427,7 +431,10 @@ p { margin: 0 0 1.1em; }
   .foot-grid > :first-child { grid-column: 1 / -1; }
 }
 
-@media (max-width: 640px) {
+/* Eight links, the language pill and the visit count stop fitting on one line
+   well before phone width, so the links fold into the menu from 1120px down —
+   below that the bar is brand, pill, count, menu button. */
+@media (max-width: 1120px) {
   .nav-links {
     display: none; position: absolute; left: var(--gutter); right: var(--gutter); top: 4.5rem;
     flex-direction: column; gap: 0.25rem; padding: 0.9rem 1.1rem;
@@ -435,8 +442,14 @@ p { margin: 0 0 1.1em; }
     box-shadow: var(--shadow-soft);
   }
   .nav-links.is-open { display: flex; }
-  .nav-toggle { display: inline-flex; }
+  /* Only the pill takes the free space, so pill + count + menu button travel
+     together against the right edge. */
+  .nav-toggle { display: inline-flex; margin-left: 0; }
   .nav { position: relative; }
+  .lang-pill { margin-left: auto; }
+}
+
+@media (max-width: 640px) {
   .hero-art { right: -22%; width: 92%; opacity: 0.12; }
   .folio-numeral { font-size: 6.5rem; top: -2.2rem; }
   .strip ul { grid-template-columns: 1fr; }
@@ -454,7 +467,6 @@ p { margin: 0 0 1.1em; }
 .lang-pill {
   display: inline-flex;
   padding: 0.2rem;
-  margin-left: 1.25rem;
   border-radius: 999px;
   background: var(--parchment-soft);
   border: 1px solid var(--rule);
@@ -489,11 +501,6 @@ body[lang="hi"] { line-height: 1.75; }
 [lang="hi"] h1,
 [lang="hi"] h2 { line-height: 1.3; }
 
-@media (max-width: 860px) {
-  /* The pill sits beside the menu button once the links collapse. */
-  .lang-pill { margin-left: auto; margin-right: 0.5rem; }
-}
-
 /* The "also inside" list runs two-up on wide screens; it is a survey, not a
    folio, so it carries no figure. */
 .marks-grid { columns: 2; column-gap: 2.5rem; }
@@ -511,16 +518,25 @@ body[lang="hi"] { line-height: 1.75; }
 .faq-grid p { margin: 0; color: var(--ink-soft); }
 @media (max-width: 760px) { .faq-grid { columns: 1; } }
 
-/* Visit counter, top right beside the language pill. Hidden until the number
-   arrives, so a page never shows an empty chip. */
+/* Visit counter — last item in the bar, so it sits in the top right corner.
+   Hidden until the number arrives, so a page never shows an empty chip. */
 .nav-hits {
-  margin-left: auto; margin-right: -0.4rem;
+  margin-left: -0.35rem;
   font-size: 0.82rem; letter-spacing: 0.02em; white-space: nowrap;
   color: var(--ink-muted); font-variant-numeric: tabular-nums;
 }
 .nav-hits[hidden] { display: none; }
-.nav-links + .nav-hits { margin-left: 1.5rem; }
-@media (max-width: 860px) {
-  .nav-hits { margin-left: auto; margin-right: 0.6rem; font-size: 0.78rem; }
-  .nav-hits + .lang-pill { margin-left: 0; }
+/* On phones the bar tightens so the count never costs the menu button its
+   place on screen. */
+@media (max-width: 640px) {
+  .nav-inner { gap: 0.55rem; }
+  .brand { font-size: 1.15rem; gap: 0.5rem; }
+  .brand img { width: 1.7rem; height: 1.7rem; }
+  .lang-pill a { padding: 0.22rem 0.55rem; font-size: 0.82rem; }
+  .nav-hits { margin-left: 0; font-size: 0.72rem; }
+  .nav-hits + .nav-toggle { margin-left: 0; padding: 0.35rem 0; }
+}
+/* Below this the brand, pill and menu button need the whole bar. */
+@media (max-width: 350px) {
+  .nav-hits { display: none; }
 }
