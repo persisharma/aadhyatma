@@ -1,0 +1,209 @@
+{
+  "chapter": 16,
+  "slug": "aruni",
+  "titleHi": "आरुणि उपनिषद्",
+  "titleEn": "Aruni Upanishad",
+  "vedaHi": "सामवेद",
+  "vedaEn": "Samaveda",
+  "mantraCount": 5,
+  "verseCount": 6,
+  "source": {
+    "baseText": "Sāmaveda recension as printed in the Adyar Library \"Saṃnyāsa Upaniṣads\" (with Upaniṣad-brahmayogin's commentary) and the Gita Press one-hundred-eight Upaniṣad collection; Devanagari written out from the printed text.",
+    "canonicalEdition": "Adyar Library, The Saṃnyāsa Upaniṣads (ed. F. Otto Schrader, 1912); Gita Press, उपनिषद् अंक",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_upanishhat/aruni.html",
+      "https://www.wisdomlib.org/hinduism/book/aruni-upanishad",
+      "https://archive.org/details/SamnyasaUpanishads"
+    ],
+    "notes": "Five khaṇḍas of 1 · 1 · 1 · 1 · 1 = 5 mantras: each khaṇḍa is a single numbered prose paragraph in the printed text, kept whole here and split into lines at sentence boundaries (1 Āruṇi’s question and the list of what is to be given up; 2 the abandonment of thread, fires and gāyatrī, and the conduct thereafter; 3 the thrice-spoken saṃnyasta formula, the staff mantra and the vows; 4 the paramahaṃsa’s seat, bowl, vices to be shed and the rainy-season rule; 5 renunciation at any stage, begging, the praṇava, and the closing tad viṣṇoḥ verse). The Sāmavedic śānti-pāṭha (आप्यायन्तु) is page 1. Devanagari was authored from memory of the printed text because the network policy blocks the Sanskrit source hosts — a line-by-line scan check against the printed edition (including exact wording of khaṇḍas 2 and 4, which vary between prints) is still owed.",
+    "retrievedOn": "2026-09-27"
+  },
+  "verses": [
+    {
+      "id": "aruni-shanti",
+      "upanishad": 16,
+      "section": "shanti",
+      "stanza": 16,
+      "numInSection": 1,
+      "reference": "shanti",
+      "labelHi": "शान्ति मन्त्र",
+      "labelEn": "Shanti Mantra",
+      "lines": [
+        "ॐ आप्यायन्तु ममाङ्गानि वाक्प्राणश्चक्षुः श्रोत्रमथो बलमिन्द्रियाणि च सर्वाणि।",
+        "सर्वं ब्रह्मौपनिषदं माहं ब्रह्म निराकुर्यां मा मा ब्रह्म निराकरोदनिराकरणमस्त्वनिराकरणं मेऽस्तु।",
+        "तदात्मनि निरते य उपनिषत्सु धर्मास्ते मयि सन्तु ते मयि सन्तु॥",
+        "ॐ शान्तिः शान्तिः शान्तिः॥"
+      ],
+      "linesEn": [
+        "om āpyāyantu mamāṅgāni vākprāṇaśchakṣhuḥ śrotramatho balamindriyāṇi cha sarvāṇi",
+        "sarvaṁ brahmaupaniṣhadaṁ māhaṁ brahma nirākuryāṁ mā mā brahma nirākarodanirākaraṇamastvanirākaraṇaṁ me'stu",
+        "tadātmani nirate ya upaniṣhatsu dharmāste mayi santu te mayi santu",
+        "om śhāntiḥ śhāntiḥ śhāntiḥ"
+      ],
+      "meaningHi": "मेरे अंग, वाणी, प्राण, नेत्र, श्रोत्र, बल और समस्त इन्द्रियाँ पुष्ट हों। यह सब उपनिषद्-प्रतिपादित ब्रह्म ही है। मैं ब्रह्म का निराकरण न करूँ, न ब्रह्म मेरा निराकरण करे। निराकरण न हो; मेरा निराकरण न हो। आत्मा में निरत मुझमें उपनिषदों में कहे हुए धर्म स्थित हों, वे मुझमें स्थित हों। ॐ शान्तिः शान्तिः शान्तिः।",
+      "meaningEn": "May my limbs, speech, breath, eye, ear, strength and all my senses grow strong. All this is the Brahman of the Upaniṣads. May I never deny Brahman, nor Brahman deny me. Let there be no denial — no denial of me. May the virtues the Upaniṣads speak of abide in me, devoted to the Self; may they abide in me. Om, peace, peace, peace."
+    },
+    {
+      "id": "aruni-1-1",
+      "upanishad": 16,
+      "section": "mantra",
+      "stanza": 16,
+      "numInSection": 2,
+      "reference": "1.1",
+      "labelHi": "मन्त्र · १.१",
+      "labelEn": "Mantra · 1.1",
+      "lines": [
+        "आरुणिः प्रजापतेर्लोकं जगाम।",
+        "तं गत्वोवाच।",
+        "केन भगवन्कर्माण्यशेषतो विसृजामीति।",
+        "तं होवाच प्रजापतिस्तव पुत्रान्भ्रातॄन्बन्ध्वादीञ्छिखां यज्ञोपवीतं यागं सूत्रं स्वाध्यायं च भूर्लोकभुवर्लोकस्वर्लोकमहर्लोकजनोलोकतपोलोकसत्यलोकं चातलतलातलवितलसुतलरसातलमहातलपातालं ब्रह्माण्डं च विसर्जयेत्।",
+        "दण्डमाच्छादनं चैव कौपीनं च परिग्रहेत्।",
+        "शेषं विसृजेदिति॥"
+      ],
+      "linesEn": [
+        "āruṇiḥ prajāpaterlokaṁ jagāma",
+        "taṁ gatvovācha",
+        "kena bhagavankarmāṇyaśheṣhato visṛijāmīti",
+        "taṁ hovācha prajāpatistava putrānbhrātṝnbandhvādīñchhikhāṁ yajñopavītaṁ yāgaṁ sūtraṁ svādhyāyaṁ cha bhūrlokabhuvarlokasvarlokamaharlokajanolokatapolokasatyalokaṁ chātalatalātalavitalasutalarasātalamahātalapātālaṁ brahmāṇḍaṁ cha visarjayet",
+        "daṇḍamāchchhādanaṁ chaiva kaupīnaṁ cha parigrahet",
+        "śheṣhaṁ visṛijediti"
+      ],
+      "meaningHi": "आरुणि प्रजापति के लोक में गये। वहाँ जाकर उन्होंने कहा — \"भगवन्! मैं किस उपाय से समस्त कर्मों का पूर्णतः त्याग करूँ?\" प्रजापति ने उनसे कहा — \"(संन्यास लेने वाला) अपने पुत्रों, भाइयों, बन्धु-बान्धवों आदि को, शिखा, यज्ञोपवीत, यज्ञ-याग, (कर्मकाण्ड के) सूत्र और स्वाध्याय को, तथा भूः, भुवः, स्वः, महः, जनः, तपः और सत्य — इन (ऊपर के) लोकों को, और अतल, तल, तलातल, वितल, सुतल, रसातल, महातल और पाताल — इन (नीचे के) लोकों को, तथा सम्पूर्ण ब्रह्माण्ड को त्याग दे। दण्ड, (शरीर ढँकने का) वस्त्र और कौपीन — केवल इन्हें ग्रहण करे; शेष सब छोड़ दे।\"",
+      "meaningEn": "Āruṇi went to the world of Prajāpati. Having gone there he said: \"Revered one, by what means may I give up all karma without remainder?\" Prajāpati said to him: \"One should give up sons, brothers, kinsmen and the rest; the tuft, the sacred thread, sacrifice, the ritual sūtras and Vedic recitation; the worlds Bhūḥ, Bhuvaḥ, Svaḥ, Mahaḥ, Janaḥ, Tapaḥ and Satya; and Atala, Talātala, Vitala, Sutala, Rasātala, Mahātala and Pātāla; and the whole cosmic egg. One should take up only a staff, a covering cloth and a loin-cloth; the rest one should give up.\""
+    },
+    {
+      "id": "aruni-2-1",
+      "upanishad": 16,
+      "section": "mantra",
+      "stanza": 16,
+      "numInSection": 3,
+      "reference": "2.1",
+      "labelHi": "मन्त्र · २.१",
+      "labelEn": "Mantra · 2.1",
+      "lines": [
+        "गृहस्थो ब्रह्मचारी वा वानप्रस्थो वा उपवीतं भूमावप्सु वा विसृजेत्।",
+        "अलौकिकाग्नीनुदराग्नौ समारोपयेत्।",
+        "गायत्रीं च स्ववाचाग्नौ समारोपयेत्।",
+        "कुटीचरो ब्रह्मचारी कुटुम्बं विसृजेत्।",
+        "पात्रं विसृजेत्।",
+        "पवित्रं विसृजेत्।",
+        "दण्डांल्लोकांश्च विसृजेदिति होवाच।",
+        "अत ऊर्ध्वममन्त्रवदाचरेत्।",
+        "ऊर्ध्वगमनं विसृजेत्।",
+        "औषधवदशनमाचरेत्।",
+        "त्रिसन्ध्यादौ स्नानमाचरेत्।",
+        "सन्धिं समाधावात्मन्याचरेत्।",
+        "सर्वेषु वेदेष्वारण्यकमावर्तयेदुपनिषदमावर्तयेदुपनिषदमावर्तयेदिति॥"
+      ],
+      "linesEn": [
+        "gṛihastho brahmachārī vā vānaprastho vā upavītaṁ bhūmāvapsu vā visṛijet",
+        "alaukikāgnīnudarāgnau samāropayet",
+        "gāyatrīṁ cha svavāchāgnau samāropayet",
+        "kuṭīcharo brahmachārī kuṭumbaṁ visṛijet",
+        "pātraṁ visṛijet",
+        "pavitraṁ visṛijet",
+        "daṇḍāṁllokāṁścha visṛijediti hovācha",
+        "ata ūrdhvamamantravadācharet",
+        "ūrdhvagamanaṁ visṛijet",
+        "auṣhadhavadaśhanamācharet",
+        "trisandhyādau snānamācharet",
+        "sandhiṁ samādhāvātmanyācharet",
+        "sarveṣhu vedeṣvāraṇyakamāvartayedupaniṣhadamāvartayedupaniṣhadamāvartayediti"
+      ],
+      "meaningHi": "गृहस्थ हो, ब्रह्मचारी हो या वानप्रस्थ — (संन्यास लेते समय) वह यज्ञोपवीत को भूमि पर या जल में विसर्जित कर दे। (गार्हपत्य आदि) अलौकिक (श्रौत) अग्नियों को अपनी जठराग्नि में आरोपित कर ले, और गायत्री को अपनी वाणी-रूपी अग्नि में आरोपित कर ले। कुटी में रहने वाला ब्रह्मचारी अपने कुटुम्ब का त्याग करे; (भिक्षा का) पात्र छोड़ दे, (जल छानने का) पवित्र छोड़ दे, दण्डों को और लोकों को भी छोड़ दे — ऐसा (प्रजापति ने) कहा। इसके बाद वह मन्त्ररहित की भाँति आचरण करे; ऊर्ध्व (स्वर्गादि) लोकों में जाने की कामना छोड़ दे; भोजन को औषधि की भाँति ग्रहण करे; तीनों सन्ध्याओं के आरम्भ में स्नान करे; सन्ध्या (की उपासना) को समाधि में, आत्मा में ही करे। सब वेदों में से आरण्यक का ही आवर्तन (पाठ) करे, उपनिषद् का आवर्तन करे, उपनिषद् का आवर्तन करे।",
+      "meaningEn": "Whether householder, student or forest-dweller, one should cast off the sacred thread on the ground or in water. One should lay the supramundane (śrauta) fires into the fire of the belly, and lay the Gāyatrī into the fire of one’s own speech. The student living in a hut should give up his family; he should give up the bowl, give up the water-strainer, and give up the staves and the worlds — so he (Prajāpati) said. From then on one should act as one without mantras; give up the going upward (to higher worlds); take food as one takes medicine; bathe at the beginning of the three twilights; perform the twilight worship in samādhi, in the Self. Of all the Vedas one should repeat the Āraṇyaka, repeat the Upaniṣad — repeat the Upaniṣad."
+    },
+    {
+      "id": "aruni-3-1",
+      "upanishad": 16,
+      "section": "mantra",
+      "stanza": 16,
+      "numInSection": 4,
+      "reference": "3.1",
+      "labelHi": "मन्त्र · ३.१",
+      "labelEn": "Mantra · 3.1",
+      "lines": [
+        "खल्वहं ब्रह्मसूत्रं सूचनात्सूत्रं ब्रह्मसूत्रमहमेव विद्वांस्त्रिवृत्सूत्रं त्यजेद्विद्वान्य एवं वेद।",
+        "संन्यस्तं मया संन्यस्तं मया संन्यस्तं मयेति त्रिरुक्त्वा अभयं सर्वभूतेभ्यो मत्तः सर्वं प्रवर्तते।",
+        "सखा मा गोपायौजः सखायोऽसीन्द्रस्य वज्रोऽसि वार्त्रघ्नः शर्म मे भव यत्पापं तन्निवारयेति।",
+        "अनेन मन्त्रेण कृतं वैणवं दण्डं कौपीनं परिग्रहेत्।",
+        "औषधवदशनमाचरेदौषधवदशनं प्राश्नीयात्।",
+        "यथालाभमश्नीयात्।",
+        "ब्रह्मचर्यमहिंसां चापरिग्रहं च सत्यं च यत्नेन हे रक्षतो हे रक्षतो हे रक्षत इति॥"
+      ],
+      "linesEn": [
+        "khalvahaṁ brahmasūtraṁ sūchanātsūtraṁ brahmasūtramahameva vidvāṁstrivṛitsūtraṁ tyajedvidvānya evaṁ veda",
+        "saṁnyastaṁ mayā saṁnyastaṁ mayā saṁnyastaṁ mayeti triruktvā abhayaṁ sarvabhūtebhyo mattaḥ sarvaṁ pravartate",
+        "sakhā mā gopāyaujaḥ sakhāyo'sīndrasya vajro'si vārtraghnaḥ śharma me bhava yatpāpaṁ tannivārayeti",
+        "anena mantreṇa kṛitaṁ vaiṇavaṁ daṇḍaṁ kaupīnaṁ parigrahet",
+        "auṣhadhavadaśhanamācharedauṣhadhavadaśhanaṁ prāśnīyāt",
+        "yathālābhamaśnīyāt",
+        "brahmacharyamahiṁsāṁ chāparigrahaṁ cha satyaṁ cha yatnena he rakṣhato he rakṣhato he rakṣhata iti"
+      ],
+      "meaningHi": "मैं ही ब्रह्मसूत्र हूँ — (ब्रह्म की) सूचना करने से वह सूत्र कहलाता है; ब्रह्मसूत्र मैं ही हूँ — ऐसा जानने वाला विद्वान् तीन लड़ों वाले (बाहरी) सूत्र को त्याग दे; जो ऐसा जानता है वही विद्वान् है। \"मैंने संन्यास लिया, मैंने संन्यास लिया, मैंने संन्यास लिया\" — ऐसा तीन बार कहकर (घोषणा करे कि) \"सब प्राणियों को मुझसे अभय है; मुझसे ही सब प्रवृत्त होता है।\" (फिर इस मन्त्र से दण्ड ग्रहण करे —) \"तुम मेरे सखा हो, मेरी रक्षा करो; तुम ओज हो, तुम सखा हो; तुम इन्द्र के वज्र हो, वृत्र का वध करने वाले; मेरे लिए कल्याणकारी बनो; जो पाप है उसका निवारण करो।\" इस मन्त्र से अभिमन्त्रित बाँस का दण्ड और कौपीन ग्रहण करे। भोजन को औषधि की भाँति ग्रहण करे, औषधि की भाँति ही खाए; जो मिल जाए वही खाए। ब्रह्मचर्य, अहिंसा, अपरिग्रह और सत्य — हे (साधक)! इनकी यत्नपूर्वक रक्षा करो, रक्षा करो, रक्षा करो।",
+      "meaningEn": "I myself am the brahma-sūtra — it is called sūtra because it indicates (Brahman); I alone am the brahma-sūtra: knowing this, the wise one should give up the three-stranded thread; he who knows thus is wise. Having said three times, \"Renounced by me, renounced by me, renounced by me,\" (he declares): \"Fearlessness to all beings from me; from me all proceeds.\" (Then, taking the staff:) \"You are my friend — protect me; you are strength, you are a friend; you are Indra’s thunderbolt, slayer of Vṛtra; be a shelter to me; ward off whatever is sin.\" With this mantra one should take up the bamboo staff so consecrated, and the loin-cloth. One should take food as medicine, eat it as one takes medicine; one should eat whatever comes. Celibacy, non-injury, non-possession and truth — guard them with effort, O (seeker), guard them, guard them."
+    },
+    {
+      "id": "aruni-4-1",
+      "upanishad": 16,
+      "section": "mantra",
+      "stanza": 16,
+      "numInSection": 5,
+      "reference": "4.1",
+      "labelHi": "मन्त्र · ४.१",
+      "labelEn": "Mantra · 4.1",
+      "lines": [
+        "अथातः परमहंसपरिव्राजकानामासनशयनाभ्यां भूमौ ब्रह्मचारिणां मृत्पात्रं वालाबुपात्रं दारुपात्रं वा।",
+        "कामक्रोधहर्षरोषलोभमोहदम्भदर्पासूयाममत्वाहंकारादींस्त्यजेत्।",
+        "वर्षासु ध्रुवशीलोऽष्टौ मासानेकाकी यतिश्चरेत्।",
+        "द्वावेव वा चरेद्द्वावेव वा चरेदिति॥"
+      ],
+      "linesEn": [
+        "athātaḥ paramahaṁsaparivrājakānāmāsanaśhayanābhyāṁ bhūmau brahmachāriṇāṁ mṛitpātraṁ vālābupātraṁ dārupātraṁ vā",
+        "kāmakrodhaharṣharoṣhalobhamohadambhadarpāsūyāmamatvāhaṁkārādīṁstyajet",
+        "varṣhāsu dhruvaśhīlo'ṣṭau māsānekākī yatiścharet",
+        "dvāveva vā chareddvāveva vā charediti"
+      ],
+      "meaningHi": "अब आगे परमहंस परिव्राजकों (का नियम कहा जाता है) — उनका आसन और शयन भूमि पर ही हो; (संन्यासी) ब्रह्मचारियों का पात्र मिट्टी का, तूँबी का या लकड़ी का हो। काम, क्रोध, हर्ष, रोष, लोभ, मोह, दम्भ, दर्प, असूया, ममता और अहंकार आदि का त्याग करे। वर्षा ऋतु में (चार मास) एक ही स्थान पर स्थिर रहे; (शेष) आठ मास यति अकेला विचरण करे — अथवा दो ही (साथ) विचरण करें, दो ही विचरण करें।",
+      "meaningEn": "Now next (the rule) for the paramahaṃsa wanderers: their sitting and lying are on the ground; for these celibates the bowl is of clay, of gourd, or of wood. One should give up desire, anger, elation, resentment, greed, delusion, hypocrisy, pride, envy, possessiveness, egoism and the like. In the rains he should stay fixed in one place; for the (other) eight months the ascetic should wander alone — or they may wander only as two, only as two."
+    },
+    {
+      "id": "aruni-5-1",
+      "upanishad": 16,
+      "section": "mantra",
+      "stanza": 16,
+      "numInSection": 6,
+      "reference": "5.1",
+      "labelHi": "मन्त्र · ५.१",
+      "labelEn": "Mantra · 5.1",
+      "lines": [
+        "स खलु वेदार्थं यो विद्वान्सोपनयनादूर्ध्वमेतानि प्राग्वा त्यजेत्।",
+        "पितरं पुत्रमग्नीनुपवीतं कर्म कलत्रं चान्यदपीह।",
+        "यतयो भिक्षार्थं ग्रामं प्रविशन्ति पाणिपात्रमुदरपात्रं वा।",
+        "ॐ हि ॐ हि ॐ हीत्येतदुपनिषदं विन्यसेत्।",
+        "विद्वान्य एवं वेद।",
+        "पालाशं बैल्वमाश्वत्थमौदुम्बरं दण्डं मौञ्जीं मेखलां यज्ञोपवीतं च त्यक्त्वा शूरो य एवं वेद।",
+        "तद्विष्णोः परमं पदं सदा पश्यन्ति सूरयः।",
+        "दिवीव चक्षुराततम्।",
+        "तद्विप्रासो विपन्यवो जागृवांसः समिन्धते।",
+        "विष्णोर्यत्परमं पदमिति।",
+        "एवं निर्वाणानुशासनं वेदानुशासनं वेदानुशासनमित्युपनिषत्॥"
+      ],
+      "linesEn": [
+        "sa khalu vedārthaṁ yo vidvānsopanayanādūrdhvametāni prāgvā tyajet",
+        "pitaraṁ putramagnīnupavītaṁ karma kalatraṁ chānyadapīha",
+        "yatayo bhikṣhārthaṁ grāmaṁ praviśhanti pāṇipātramudarapātraṁ vā",
+        "om hi om hi om hītyetadupaniṣhadaṁ vinyaset",
+        "vidvānya evaṁ veda",
+        "pālāśhaṁ bailvamāśvatthamaudumbaraṁ daṇḍaṁ mauñjīṁ mekhalāṁ yajñopavītaṁ cha tyaktvā śhūro ya evaṁ veda",
+        "tadviṣṇoḥ paramaṁ padaṁ sadā paśyanti sūrayaḥ",
+        "divīva chakṣhurātatam",
+        "tadviprāso vipanyavo jāgṛivāṁsaḥ samindhate",
+        "viṣṇoryatparamaṁ padamiti",
+        "evaṁ nirvāṇānuśhāsanaṁ vedānuśhāsanaṁ vedānuśhāsanamityupaniṣhat"
+      ],
+      "meaningHi": "जो विद्वान् वेद के अर्थ को जानता है, वह उपनयन के बाद अथवा उससे पहले ही — पिता, पुत्र, अग्नियाँ, यज्ञोपवीत, कर्म, पत्नी और इस लोक में जो कुछ भी अन्य है — इन सबका त्याग कर दे। यति भिक्षा के लिए गाँव में प्रवेश करते हैं, हाथ को ही पात्र बनाकर अथवा उदर को ही पात्र बनाकर। \"ॐ हि, ॐ हि, ॐ हि\" — इस उपनिषद् (प्रणव-रहस्य) का (अपने में) विन्यास करे। जो ऐसा जानता है वही विद्वान् है। पलाश, बेल, पीपल या गूलर का दण्ड, मूँज की मेखला और यज्ञोपवीत को त्यागकर — जो ऐसा जानता है वही शूर है। \"विष्णु के उस परम पद को ज्ञानीजन सदा देखते हैं, जैसे आकाश में फैला हुआ नेत्र (सूर्य)। विष्णु का जो परम पद है, उसे जागरूक, स्तुतिशील विप्र प्रदीप्त करते (प्रकाशित करते) हैं।\" यही निर्वाण का अनुशासन है, वेद का अनुशासन है, वेद का अनुशासन है — यह उपनिषद् है।",
+      "meaningEn": "He who is wise and knows the meaning of the Veda should, after the upanayana or even before it, give up these: father, son, the fires, the sacred thread, ritual action, wife, and whatever else there is here. Ascetics enter the village for alms with the hand as their bowl, or the belly as their bowl. \"Om hi, Om hi, Om hi\" — one should set this Upaniṣad (the secret of the praṇava) within oneself. He who knows thus is wise. Having given up the staff of palāśa, bilva, aśvattha or udumbara, the girdle of muñja grass and the sacred thread — he who knows thus is a hero. \"That supreme abode of Viṣṇu the seers ever behold, like an eye spread out in the sky. That which is the supreme abode of Viṣṇu, the wakeful sages, singing praise, kindle.\" Such is the teaching of nirvāṇa, the teaching of the Veda, the teaching of the Veda — thus the Upaniṣad."
+    }
+  ]
+}

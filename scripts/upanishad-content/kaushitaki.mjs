@@ -1,0 +1,780 @@
+/**
+ * Authored content for one Upanishad — consumed by scripts/build-upanishad.mjs.
+ * `muktika` is the text's fixed number in the Muktika canon (1–108) and is the
+ * reader's `chapter` id forever; `slug` must match `registry.ts`.
+ *
+ * Kauṣītaki (Kauṣītaki-brāhmaṇa Upaniṣad) — Ṛgveda, Sāmānya group. Four
+ * adhyāyas of numbered prose sections, cited adhyāya.section: Citra
+ * Gāṅgyāyani's teaching of the path to the Brahma-world, prāṇa as Brahman and
+ * its rites, Indra's teaching to Pratardana on prāṇa as prajñā, and Ajātaśatru
+ * correcting Gārgya Bālāki.
+ */
+const M = (lines, meaningHi, meaningEn) => ({ lines, meaningHi, meaningEn });
+
+export default {
+  slug: 'kaushitaki',
+  muktika: 25,
+  vedaHi: 'ऋग्वेद',
+  vedaEn: 'Rigveda',
+  source: {
+    baseText:
+      'Kauṣītaki-brāhmaṇa Upaniṣad in four adhyāyas, as printed in the Ānandāśrama Sanskrit Series (with Śaṅkarānanda\'s Dīpikā) and the Gita Press one-hundred-eight Upaniṣad collection; Devanagari written out from the printed text.',
+    canonicalEdition: 'Ānandāśrama Sanskrit Series, Kauṣītakibrāhmaṇopaniṣad (Śaṅkarānanda-dīpikā sahita); Gita Press, उपनिषद् अंक',
+    referenceUrls: [
+      'https://sanskritdocuments.org/doc_upanishhat/kaushitaki.html',
+      'https://www.wisdomlib.org/hinduism/book/kaushitaki-upanishad',
+      'https://archive.org/details/UpanishadAnk',
+    ],
+    notes: '51 sections in four adhyāyas of 7 · 15 · 9 · 20, cited adhyāya.section (Śaṅkarānanda\'s divisions as printed in the Ānandāśrama edition), plus the Ṛgvedic śānti-pāṭha (वाङ्मे मनसि) as page 1. Long prose sections are split at sentence boundaries into lines. Pluta digits (३) are omitted and the Vedic nasal before ल् is written with anusvāra so every line renders cleanly. Readings vary between prints in 1.2–1.3 (विरजा / विजरा, सालज्य / सायुज्य), 2.3–2.4 (the number of oblations), 2.15, 3.5 (अदूदुहत् / उदूढम्) and 4.2 (the order of Bālāki\'s list); where they diverge the Ānandāśrama reading is followed as recalled. The network policy blocks the Sanskrit source hosts, so the Devanagari was authored from memory of the printed text — a line-by-line scan check against the printed edition is still owed.',
+    retrievedOn: '2026-09-27',
+  },
+  shanti: M(
+    [
+      'ॐ वाङ्मे मनसि प्रतिष्ठिता मनो मे वाचि प्रतिष्ठितमाविरावीर्म एधि।',
+      'वेदस्य म आणीस्थः श्रुतं मे मा प्रहासीरनेनाधीतेनाहोरात्रान्संदधाम्यृतं वदिष्यामि सत्यं वदिष्यामि।',
+      'तन्मामवतु तद्वक्तारमवत्ववतु मामवतु वक्तारमवतु वक्तारम्॥',
+      'ॐ शान्तिः शान्तिः शान्तिः॥',
+    ],
+    'मेरी वाणी मन में प्रतिष्ठित हो; मेरा मन वाणी में प्रतिष्ठित हो। हे प्रकाशस्वरूप! मेरे लिए प्रकट हो। (हे मन और वाणी!) तुम दोनों मेरे लिए वेद (ज्ञान) को लाने वाले हो। मेरा सुना हुआ मुझे न छोड़े। इस अध्ययन से मैं दिन-रात को जोड़ता हूँ। मैं ऋत बोलूँगा, सत्य बोलूँगा। वह मेरी रक्षा करे, वह वक्ता की रक्षा करे; मेरी रक्षा करे, वक्ता की रक्षा करे, वक्ता की रक्षा करे। ॐ शान्तिः शान्तिः शान्तिः।',
+    'May my speech rest in my mind; may my mind rest in my speech. O self-luminous one, reveal yourself to me. You two (mind and speech) are the bearers of the Veda to me. May what I have heard not desert me. With this study I join day and night. I shall speak what is right; I shall speak the truth. May That protect me; may That protect the teacher; protect me, protect the teacher, protect the teacher. Om, peace, peace, peace.'
+  ),
+  khandas: [
+    // ── Adhyāya 1 ──
+    [
+      M(
+        [
+          'चित्रो ह वै गाङ्ग्यायनिर्यक्ष्यमाण आरुणिं वव्रे।',
+          'स ह पुत्रं श्वेतकेतुं प्रजिघाय याजयेति।',
+          'तं हासीनं पप्रच्छ गौतमस्य पुत्रास्ति संवृतं लोके यस्मिन्मा धास्यस्यन्यमहो बाध्वा तस्य मा लोके धास्यसीति।',
+          'स होवाच नाहमेतद्वेद हन्ताचार्यं पृच्छानीति।',
+          'स ह पितरमासाद्य पप्रच्छेतीति माप्राक्षीत्कथं प्रतिब्रवाणीति।',
+          'स होवाचाहमप्येतन्न वेद सदस्येव वयं स्वाध्यायमधीत्य हरामहे यन्नः परे ददत्येह्युभौ गमिष्याव इति।',
+          'स ह समित्पाणिश्चित्रं गाङ्ग्यायनिं प्रतिचक्रम उपायानीति।',
+          'तं होवाच ब्रह्मार्होऽसि गौतम यो न मानमुपागा एहि व्येव त्वा ज्ञपयिष्यामीति॥',
+        ],
+        'गङ्गा के वंशज चित्र ने यज्ञ करने की इच्छा से आरुणि (उद्दालक) को ऋत्विक् के रूप में वरण किया। आरुणि ने अपने पुत्र श्वेतकेतु को यह कहकर भेजा कि "जाओ, उसका यज्ञ कराओ।" जब श्वेतकेतु आकर बैठ गया, तब चित्र ने उससे पूछा — "हे गौतम के पुत्र! क्या लोक में कोई ऐसा ढका हुआ (गुप्त) स्थान है जिसमें तुम मुझे स्थापित करोगे? अथवा उससे भिन्न कोई मार्ग है, जिसके लोक में तुम मुझे रखोगे?" उसने कहा — "मैं यह नहीं जानता; अच्छा, मैं आचार्य (पिता) से पूछ लेता हूँ।" वह पिता के पास जाकर बोला — "उसने मुझसे इस प्रकार पूछा है; मैं उसे कैसे उत्तर दूँ?" पिता ने कहा — "मैं भी इसे नहीं जानता। हम तो यज्ञसभा में ही वेद का स्वाध्याय करके, दूसरे जो दक्षिणा देते हैं उसे ग्रहण कर लेते हैं। आओ, हम दोनों चलें।" तब आरुणि हाथ में समिधा लेकर गाङ्ग्यायनि चित्र के पास गये और बोले — "मैं आपके पास (शिष्य रूप में) आता हूँ।" चित्र ने उनसे कहा — "हे गौतम! तुम ब्रह्म (ब्रह्मविद्या) के अधिकारी हो, क्योंकि तुमने अभिमान नहीं किया। आओ, मैं तुम्हें इसका भली-भाँति ज्ञान कराऊँगा।"',
+        'Citra Gāṅgyāyani, wishing to perform a sacrifice, chose Āruṇi as his priest. Āruṇi sent his son Śvetaketu, saying, “Officiate at his sacrifice.” When he had sat down, Citra asked him: “Son of Gautama, is there a hidden place in the world in which you will set me? Or is there another way, and will you set me in its world?” He said: “I do not know this. Well, let me ask my teacher.” Going to his father, he asked: “He has questioned me thus; how shall I answer?” The father said: “I too do not know it. We recite the Veda in the sacrificial hall and take what others give us. Come, let us both go.” Then, fuel in hand, Āruṇi approached Citra Gāṅgyāyani, saying, “Let me come to you as a pupil.” Citra said to him: “You are worthy of Brahman, Gautama, for you have not given way to pride. Come, I shall make you understand it clearly.”'
+      ),
+      M(
+        [
+          'स होवाच ये वै के चास्माल्लोकात्प्रयन्ति चन्द्रमसमेव ते सर्वे गच्छन्ति।',
+          'तेषां प्राणैः पूर्वपक्ष आप्यायते तानपरपक्षेण प्रजनयति।',
+          'एतद्वै स्वर्गस्य लोकस्य द्वारं यच्चन्द्रमाः।',
+          'तं यः प्रत्याह तमतिसृजते।',
+          'य एनं न प्रत्याह तमिह वृष्टिर्भूत्वा वर्षति।',
+          'स इह कीटो वा पतङ्गो वा मत्स्यो वा शकुनिर्वा सिंहो वा वराहो वा परश्वा वा शार्दूलो वा पुरुषो वान्यो वा तेषु तेषु स्थानेषु प्रत्याजायते यथाकर्म यथाविद्यम्।',
+          'तमागतं पृच्छति कोऽसीति।',
+          'तं प्रतिब्रूयाद्विचक्षणादृतवो रेत आभृतं पञ्चदशात्प्रसूतात्पित्र्यावतस्तन्मा पुंसि कर्तर्येरयध्वं पुंसा कर्त्रा मातरि मा निषिञ्चत।',
+          'स जायमान उपजायमानो द्वादशत्रयोदश उपमासो द्वादशत्रयोदशेन पित्रासं तद्विदेऽहं प्रति तद्विदेऽहं तन्म ऋतवो मर्त्यव आरभध्वम्।',
+          'तेन सत्येन तेन तपसर्तुरस्म्यार्तवोऽस्मि कोऽसि त्वमस्मीति तमतिसृजते॥',
+        ],
+        'चित्र ने कहा — जो कोई भी इस लोक से प्रयाण करते हैं, वे सब चन्द्रमा को ही जाते हैं। उनके प्राणों से (चन्द्रमा का) पूर्वपक्ष (शुक्लपक्ष) बढ़ता है, और अपरपक्ष (कृष्णपक्ष) से वह उन्हें (पुनः) जन्म देता है। यह जो चन्द्रमा है, वही स्वर्गलोक का द्वार है। जो उसे (उसके प्रश्न का) उत्तर देता है, उसे वह आगे जाने देता है। जो उसे उत्तर नहीं देता, उसे वह वृष्टि बनाकर यहाँ बरसा देता है। वह यहाँ अपने कर्म और अपनी विद्या के अनुसार कीट, पतंग, मछली, पक्षी, सिंह, सूअर, सर्प (परश्वा), व्याघ्र, मनुष्य अथवा अन्य किसी रूप में उन-उन स्थानों में पुनः जन्म लेता है। जब वह (चन्द्रमा के पास) पहुँचता है, तो वह पूछता है — "तुम कौन हो?" तब वह उत्तर दे — "हे ऋतुओ! विचक्षण (दीप्तिमान्) पन्द्रह कलाओं वाले, पितरों से युक्त (चन्द्रमा) से वीर्य लाया गया; तुमने मुझे कर्ता पुरुष में प्रेरित किया, और कर्ता पुरुष के द्वारा मुझे माता में सींचा। वह मैं बारहवें-तेरहवें उपमास (अधिक मास) के रूप में, बारह-तेरह मासों वाले पिता (संवत्सर) से उत्पन्न होता हुआ, पुनः-पुनः जन्मा। मैं इसे जानता हूँ, मैं इसके विपरीत (अमृत) को भी जानता हूँ। इसलिए हे ऋतुओ! मुझे अमरत्व की ओर ले चलो। उस सत्य से, उस तप से, मैं ऋतु हूँ, ऋतु का पुत्र हूँ। तुम कौन हो? — मैं तुम ही हूँ।" (यह सुनकर) वह उसे आगे जाने देता है।',
+        'He said: All who depart from this world go to the moon. With their breaths the waxing half swells, and through the waning half it brings them to birth again. The moon is the door of the heavenly world. Whoever answers it, him it lets pass beyond. Whoever does not answer it, him it rains down here, having become rain. Here he is born again, in this place or that, as a worm or an insect, a fish or a bird, a lion, a boar, a snake, a tiger, a man or some other being, according to his deeds and according to his knowledge. When he arrives there, the moon asks him, “Who are you?” He should reply: “O Seasons, from the radiant one, from the one of fifteen parts, born of the fathers, the seed was brought; you sent me into a man as the maker, and through the man as maker you poured me into a mother. Thus was I born and born again, as the twelfth or thirteenth added month, through a father of twelve or thirteen months. I know this; I know also its opposite. Lead me, O Seasons, to immortality. By this truth, by this austerity, I am a season, I am the child of the seasons. Who are you? I am you.” Then it lets him pass beyond.'
+      ),
+      M(
+        [
+          'स एतं देवयानं पन्थानमापद्याग्निलोकमागच्छति स वायुलोकं स वरुणलोकं स इन्द्रलोकं स प्रजापतिलोकं स ब्रह्मलोकम्।',
+          'तस्य ह वा एतस्य ब्रह्मलोकस्यारो ह्रदो मुहूर्ता येष्टिहा विरजा नदी तिल्यो वृक्षः सालज्यं संस्थानमपराजितमायतनमिन्द्रप्रजापती द्वारगोपौ विभुप्रमितं विचक्षणासन्द्यमितौजाः पर्यङ्कः प्रिया च मानसी प्रतिरूपा च चाक्षुषी पुष्पाण्यादायावयतौ वै च जगन्त्यम्बाश्चाम्बायवीश्चाप्सरसोऽम्बया नद्यः।',
+          'तमित्थंविदागच्छति।',
+          'तं ब्रह्माहाभिधावत मम यशसा विरजां वा अयं नदीं प्रापन्न वा अयं जिगीषिष्यतीति॥',
+        ],
+        'वह इस देवयान मार्ग को प्राप्त होकर अग्निलोक में आता है, फिर वायुलोक में, फिर वरुणलोक में, फिर इन्द्रलोक में, फिर प्रजापतिलोक में और फिर ब्रह्मलोक में। उस ब्रह्मलोक में "आर" नामक सरोवर है, "येष्टिह" नामक मुहूर्त हैं, "विरजा" नदी है, "तिल्य" वृक्ष है, "सालज्य" नामक नगर है, "अपराजित" नामक भवन है, इन्द्र और प्रजापति उसके द्वारपाल हैं, "विभुप्रमित" नामक सभामण्डप है, "विचक्षणा" नामक वेदी (सिंहासन) है, "अमितौजा" नामक पर्यङ्क (पलंग) है; मनःस्वरूपा प्रिया और चक्षुःस्वरूपा प्रतिरूपा (दो देवियाँ) पुष्प लेकर जगत् को बुनती हैं; और अम्बा, अम्बायवी नामक अप्सराएँ तथा अम्बया नामक नदियाँ हैं। ऐसा जानने वाला वहाँ पहुँचता है। तब ब्रह्मा (अपने परिजनों से) कहते हैं — "मेरे यश से इसकी ओर दौड़ो! यह विरजा नदी तक पहुँच गया है; अब यह कभी जीर्ण नहीं होगा।"',
+        'Having reached this path of the gods, he comes to the world of Agni, then to the world of Vāyu, then to the world of Varuṇa, then to the world of Indra, then to the world of Prajāpati, and then to the world of Brahmā. In that Brahma-world are the lake Āra, the moments called Yeṣṭiha, the river Virajā, the tree Tilya, the city Sālajya, the palace Aparājita, Indra and Prajāpati as its two door-keepers, the hall Vibhupramita, the throne Vicakṣaṇā, the couch Amitaujas; there too are the beloved Mānasī and her counterpart Cākṣuṣī, who take flowers and weave the worlds, and the Apsarases Ambā and Ambāyavī, and the rivers Ambayā. One who knows thus comes there. Brahmā says to his attendants: “Run towards him with my glory! He has reached the river Virajā; he will never grow old.”'
+      ),
+      M(
+        [
+          'तं पञ्चशतान्यप्सरसां प्रतिधावन्ति शतं मालाहस्ताः शतमाञ्जनहस्ताः शतं चूर्णहस्ताः शतं वासोहस्ताः शतं फणहस्ताः।',
+          'तं ब्रह्मालङ्कारेणालङ्कुर्वन्ति।',
+          'स ब्रह्मालङ्कारेणालङ्कृतो ब्रह्मविद्वान्ब्रह्माभिप्रैति।',
+          'स आगच्छत्यारं ह्रदं तं मनसात्येति।',
+          'तमृत्वा सम्प्रतिविदो मज्जन्ति।',
+          'स आगच्छति मुहूर्तान्येष्टिहांस्तेऽस्मादपद्रवन्ति।',
+          'स आगच्छति विरजां नदीं तां मनसैवात्येति।',
+          'तत्सुकृतदुष्कृते धूनुते।',
+          'तस्य प्रिया ज्ञातयः सुकृतमुपयन्त्यप्रिया दुष्कृतम्।',
+          'तद्यथा रथेन धावयन्रथचक्रे पर्यवेक्षेतैवमहोरात्रे पर्यवेक्षेतैवं सुकृतदुष्कृते सर्वाणि च द्वन्द्वानि।',
+          'स एष विसुकृतो विदुष्कृतो ब्रह्मविद्वान्ब्रह्मैवाभिप्रैति॥',
+        ],
+        'उसकी ओर पाँच सौ अप्सराएँ दौड़ती हैं — सौ हाथों में मालाएँ लिये, सौ अञ्जन लिये, सौ सुगन्धित चूर्ण लिये, सौ वस्त्र लिये और सौ फल लिये। वे उसे ब्रह्म के अलंकार से अलंकृत करती हैं। ब्रह्म के अलंकार से अलंकृत वह ब्रह्मवेत्ता ब्रह्म की ओर जाता है। वह "आर" सरोवर पर आता है और उसे मन से ही पार कर जाता है; जो केवल तात्कालिक ज्ञान वाले (अविद्वान्) उसमें पहुँचते हैं, वे डूब जाते हैं। वह "येष्टिह" मुहूर्तों के पास आता है; वे उससे दूर भाग जाते हैं। वह विरजा नदी पर आता है और उसे मन से ही पार कर जाता है। वहाँ वह अपने पुण्य और पाप को झाड़ देता है। उसके प्रिय सम्बन्धी उसके पुण्य को प्राप्त होते हैं और अप्रिय सम्बन्धी उसके पाप को। जैसे रथ दौड़ाता हुआ मनुष्य रथ के दोनों पहियों को (नीचे घूमते हुए) देखता है, वैसे ही वह दिन और रात को देखता है, वैसे ही पुण्य-पाप को और सभी द्वन्द्वों को (अपने से असम्बद्ध) देखता है। वह पुण्य से रहित और पाप से रहित ब्रह्मवेत्ता ब्रह्म को ही प्राप्त होता है।',
+        'Five hundred Apsarases run towards him: a hundred with garlands in their hands, a hundred with ointments, a hundred with perfumed powders, a hundred with garments, a hundred with fruits. They adorn him with the adornment of Brahmā. Adorned with the adornment of Brahmā, the knower of Brahman goes on towards Brahman. He comes to the lake Āra and crosses it by the mind alone; those who go into it knowing only the present sink in it. He comes to the moments Yeṣṭiha; they flee from him. He comes to the river Virajā and crosses it by the mind alone. There he shakes off his good and his evil deeds. His dear relatives receive his good deeds, and those not dear his evil deeds. Just as one driving a chariot looks down upon the two wheels, so he looks down upon day and night, upon good and evil deeds, and upon all the pairs of opposites. Freed from good deeds and freed from evil deeds, this knower of Brahman goes on to Brahman itself.'
+      ),
+      M(
+        [
+          'स आगच्छति तिल्यं वृक्षं तं ब्रह्मगन्धः प्रविशति।',
+          'स आगच्छति सालज्यं संस्थानं तं ब्रह्मरसः प्रविशति।',
+          'स आगच्छत्यपराजितमायतनं तं ब्रह्मतेजः प्रविशति।',
+          'स आगच्छतीन्द्रप्रजापती द्वारगोपौ तावस्मादपद्रवतः।',
+          'स आगच्छति विभुप्रमितं तं ब्रह्मयशः प्रविशति।',
+          'स आगच्छति विचक्षणामासन्दीं बृहद्रथन्तरे सामनी पूर्वौ पादौ श्यैतनौधसे चापरौ पादौ वैरूपवैराजे अनूच्ये शाक्वररैवते तिरश्ची सा प्रज्ञा प्रज्ञया हि विपश्यति।',
+          'स आगच्छत्यमितौजसं पर्यङ्कं स प्राणस्तस्य भूतं च भविष्यच्च पूर्वौ पादौ श्रीश्चेरा चापरौ बृहद्रथन्तरे अनूच्ये भद्रयज्ञायज्ञीये शीर्षण्यमृचश्च सामानि च प्राचीनातानं यजूंषि तिरश्चीनानि सोमांशव उपस्तरणमुद्गीथ उपश्रीः श्रीरुपबर्हणम्।',
+          'तस्मिन्ब्रह्मास्ते।',
+          'तमित्थंवित्पादेनैवाग्र आरोहति।',
+          'तं ब्रह्माह कोऽसीति तं प्रतिब्रूयात्॥',
+        ],
+        'वह तिल्य वृक्ष के पास आता है; उसमें ब्रह्म की गन्ध प्रवेश करती है। वह सालज्य नगर में आता है; उसमें ब्रह्म का रस प्रवेश करता है। वह अपराजित भवन में आता है; उसमें ब्रह्म का तेज प्रवेश करता है। वह द्वारपाल इन्द्र और प्रजापति के पास आता है; वे दोनों उसके सामने से हट जाते हैं। वह विभुप्रमित सभामण्डप में आता है; उसमें ब्रह्म का यश प्रवेश करता है। वह विचक्षणा नामक सिंहासन के पास आता है — बृहत् और रथन्तर साम उसके आगे के दो पाये हैं, श्यैत और नौधस पीछे के दो पाये, वैरूप और वैराज लम्बाई की दो पाटियाँ, शाक्वर और रैवत चौड़ाई की दो पाटियाँ हैं; वह (सिंहासन) प्रज्ञा है, क्योंकि प्रज्ञा से ही मनुष्य विशेष रूप से देखता है। वह अमितौजा पर्यङ्क के पास आता है — वह प्राण है। भूत और भविष्यत् उसके आगे के दो पाये हैं, श्री और इरा (अन्न) पीछे के दो पाये, बृहत् और रथन्तर लम्बाई की पाटियाँ, भद्र और यज्ञायज्ञीय सिरहाने (और पैताने) की पाटियाँ; ऋचाएँ और साम लम्बाई में फैले तन्तु हैं, यजुः चौड़ाई के तन्तु, सोम की किरणें बिछौना, उद्गीथ चादर और श्री तकिया है। उस पर ब्रह्मा विराजमान हैं। ऐसा जानने वाला पहले एक पैर से ही उस पर आरोहण करता है। तब ब्रह्मा उससे पूछते हैं — "तुम कौन हो?" उसे वह (इस प्रकार) उत्तर दे —',
+        'He comes to the tree Tilya, and the fragrance of Brahman enters him. He comes to the city Sālajya, and the flavour of Brahman enters him. He comes to the palace Aparājita, and the radiance of Brahman enters him. He comes to the door-keepers Indra and Prajāpati, and they flee from him. He comes to the hall Vibhupramita, and the glory of Brahman enters him. He comes to the throne Vicakṣaṇā: the Bṛhat and Rathantara Sāmans are its two front legs, the Śyaita and Naudhasa its two back legs, the Vairūpa and Vairāja its lengthwise frame, the Śākvara and Raivata its crosswise frame. That throne is wisdom, for by wisdom one discerns. He comes to the couch Amitaujas: it is the breath. The past and the future are its two front legs, prosperity (śrī) and food (irā) its two back legs, the Bṛhat and Rathantara its lengthwise frame, the Bhadra and Yajñāyajñīya its head and foot pieces; the Ṛcs and Sāmans are the strings stretched lengthwise, the Yajus formulas those stretched crosswise, the rays of the moon its cushion, the Udgītha its coverlet, and prosperity its pillow. On it sits Brahmā. One who knows thus mounts it, first with one foot. Brahmā asks him, “Who are you?” He should answer him:'
+      ),
+      M(
+        [
+          'ऋतुरस्म्यार्तवोऽस्म्याकाशाद्योनेः सम्भूतो भार्यायै रेतः संवत्सरस्य तेजोभूतस्य भूतस्यात्मा।',
+          'भूतस्य भूतस्य त्वमात्मासि।',
+          'यस्त्वमसि सोऽहमस्मीति।',
+          'तमाह कोऽहमस्मीति सत्यमिति ब्रूयात्।',
+          'किं तद्यत्सत्यमिति यदन्यद्देवेभ्यश्च प्राणेभ्यश्च तत्सदथ यद्देवाश्च प्राणाश्च तत्त्यं तदेकया वाचाभिव्याह्रियते सत्यमिति।',
+          'एतावदिदं सर्वम्।',
+          'इदं सर्वमसीत्येवैनं तदाह।',
+          'तदेतच्छ्लोकेनाभ्युक्तम्॥',
+        ],
+        '"मैं ऋतु हूँ, मैं ऋतु से उत्पन्न हूँ; आकाशरूप योनि से उत्पन्न हुआ हूँ; मैं भार्या (प्रकृति) के लिए बीज (रेतस्) हूँ, संवत्सर का तेज हूँ, प्रत्येक भूत का आत्मा हूँ। आप प्रत्येक भूत के आत्मा हैं। जो आप हैं, वही मैं हूँ।" ब्रह्मा उससे पूछते हैं — "मैं कौन हूँ?" वह कहे — "सत्य।" "वह सत्य क्या है?" — "जो देवताओं (इन्द्रियों के अधिष्ठाताओं) और प्राणों से भिन्न है, वह ‘सत्’ है; और जो देवता और प्राण हैं, वह ‘त्यम्’ है। उन दोनों को एक ही शब्द ‘सत्यम्’ से कहा जाता है। यह सब कुछ इतना ही है। आप यह सब कुछ हैं।" इस प्रकार वह उन (ब्रह्मा) से कहता है। यही बात इस श्लोक द्वारा कही गयी है —',
+        '“I am a season, I am born of the seasons, sprung from space as from a womb, the seed for a wife, the radiance of the year, the self of every being. You are the self of every being. What you are, that am I.” Brahmā asks him, “Who am I?” He should say, “The real (satyam).” “What is the real?” “What is other than the gods and the breaths is sat; what the gods and the breaths are is tyam. These are expressed by the single word satyam. This is all that there is. You are all this.” So he says to him. This is declared in a verse:'
+      ),
+      M(
+        [
+          'यजूदरः सामशिरा असावृङ्मूर्तिरव्ययः।',
+          'स ब्रह्मेति विज्ञेय ऋषिर्ब्रह्ममयो महानिति।',
+          'तमाह केन मे पौंस्नानि नामान्याप्नोषीति प्राणेनेति ब्रूयात्।',
+          'केन स्त्रीनामानीति वाचेति।',
+          'केन नपुंसकनामानीति मनसेति।',
+          'केन गन्धानिति घ्राणेनेति ब्रूयात्।',
+          'केन रूपाणीति चक्षुषेति।',
+          'केन शब्दानिति श्रोत्रेणेति।',
+          'केनान्नरसानिति जिह्वयेति।',
+          'केन कर्माणीति हस्ताभ्यामिति।',
+          'केन सुखदुःखे इति शरीरेणेति।',
+          'केनानन्दं रतिं प्रजातिमित्युपस्थेनेति।',
+          'केनेत्या इति पादाभ्यामिति।',
+          'केन धियो विज्ञातव्यं कामानिति प्रज्ञयेति प्रब्रूयात्।',
+          'तमाहापो वै खलु मे ह्यसावयं ते लोक इति।',
+          'सा या ब्रह्मणो जितिर्या व्यष्टिस्तां जितिं जयति तां व्यष्टिं व्यश्नुते य एवं वेद य एवं वेद॥',
+        ],
+        '"यजुः जिसका उदर है, साम जिसका सिर है, ऋक् जिसकी मूर्ति है, वह अविनाशी — उसे ब्रह्म जानना चाहिए; वही ब्रह्ममय महान् ऋषि है।" ब्रह्मा उससे पूछते हैं — "तुम मेरे पुल्लिंग नामों को किससे प्राप्त करते हो?" वह कहे — "प्राण से।" "स्त्रीलिंग नामों को किससे?" — "वाणी से।" "नपुंसकलिंग नामों को किससे?" — "मन से।" "गन्धों को किससे?" — "घ्राण से।" "रूपों को किससे?" — "नेत्र से।" "शब्दों को किससे?" — "श्रोत्र से।" "अन्न के रसों को किससे?" — "जिह्वा से।" "कर्मों को किससे?" — "दोनों हाथों से।" "सुख-दुःख को किससे?" — "शरीर से।" "आनन्द, रति और प्रजोत्पत्ति को किससे?" — "उपस्थ से।" "गमन को किससे?" — "दोनों पैरों से।" "बुद्धि-वृत्तियों, जानने योग्य विषयों और कामनाओं को किससे?" — "प्रज्ञा से" — ऐसा वह उत्तर दे। तब ब्रह्मा उससे कहते हैं — "जल आदि (तत्त्व) निश्चय ही मेरा लोक है; यह (लोक) तुम्हारा है।" ब्रह्म की जो विजय है, जो व्याप्ति है, उस विजय को वह जीत लेता है, उस व्याप्ति को वह प्राप्त कर लेता है — जो इस प्रकार जानता है, जो इस प्रकार जानता है।',
+        '“The Yajus is his belly, the Sāman his head, the Ṛc his form; he is imperishable. He should be known as Brahman, the great seer made of Brahman.” Brahmā asks him, “With what do you obtain my masculine names?” He should say, “With breath.” “With what my feminine names?” “With speech.” “With what my neuter names?” “With mind.” “With what odours?” “With the sense of smell.” “With what forms?” “With the eye.” “With what sounds?” “With the ear.” “With what the flavours of food?” “With the tongue.” “With what actions?” “With the two hands.” “With what pleasure and pain?” “With the body.” “With what bliss, delight and procreation?” “With the organ of generation.” “With what movement?” “With the two feet.” “With what thoughts, what is to be known, and desires?” “With wisdom,” he should reply. Brahmā says to him: “The waters, indeed, are my world; this is yours.” Whatever victory is Brahman’s, whatever attainment, that victory he wins, that attainment he attains — he who knows thus, he who knows thus.'
+      ),
+    ],
+    // ── Adhyāya 2 ──
+    [
+      M(
+        [
+          'प्राणो ब्रह्मेति ह स्माह कौषीतकिः।',
+          'तस्य ह वा एतस्य प्राणस्य ब्रह्मणो मनो दूतं वाक्परिवेष्ट्री चक्षुर्गोप्तृ श्रोत्रं संश्रावयितृ।',
+          'यो ह वा एतस्य प्राणस्य ब्रह्मणो मनो दूतं वेद दूतवान्भवति।',
+          'यो वाचं परिवेष्ट्रीं परिवेष्ट्रीमान्भवति।',
+          'यश्चक्षुर्गोप्तृ गोप्तृमान्भवति।',
+          'यः श्रोत्रं संश्रावयितृ संश्रावयितृमान्भवति।',
+          'तस्मै वा एतस्मै प्राणाय ब्रह्मण एताः सर्वा देवता अयाचमानाय बलिं हरन्ति।',
+          'तथो एवास्मै सर्वाणि भूतान्ययाचमानायैव बलिं हरन्ति य एवं वेद।',
+          'तस्योपनिषन्न याचेदिति।',
+          'तद्यथा ग्रामं भिक्षित्वालब्ध्वोपविशेन्नाहमतो दत्तमश्नीयामिति।',
+          'य एवैनं पुरस्तात्प्रत्याचक्षीरंस्त एवैनमुपमन्त्रयन्ते ददाम त इति।',
+          'एष धर्मो याचतो भवति।',
+          'अन्नदास्त्वेवैनमुपमन्त्रयन्ते ददाम त इति॥',
+        ],
+        'कौषीतकि ऋषि कहा करते थे कि "प्राण ब्रह्म है।" उस प्राणरूप ब्रह्म का मन दूत है, वाणी परोसने वाली (परिचारिका) है, नेत्र रक्षक है और श्रोत्र सूचना सुनाने वाला है। जो उस प्राणरूप ब्रह्म के मन को दूत जानता है, वह दूतवान् होता है; जो वाणी को परिचारिका जानता है, वह परिचारिकावान् होता है; जो नेत्र को रक्षक जानता है, वह रक्षकवान् होता है; जो श्रोत्र को सूचना देने वाला जानता है, वह सूचना देने वालों से युक्त होता है। उस इस प्राणरूप ब्रह्म के लिए, बिना माँगे ही, ये सब देवता (इन्द्रियाँ) भेंट (बलि) लाते हैं। इसी प्रकार जो ऐसा जानता है, उसके लिए भी बिना माँगे ही सब प्राणी भेंट लाते हैं। उसका रहस्य-नियम (उपनिषद्) है — "याचना न करे।" जैसे कोई गाँव में भिक्षा माँगकर, कुछ न पाकर बैठ जाए और (निश्चय करे कि) "अब यहाँ से दिया हुआ मैं नहीं खाऊँगा", तब जिन लोगों ने पहले उसे मना कर दिया था, वे ही उसे बुलाकर कहते हैं — "हम तुम्हें देते हैं।" याचना न करने वाले का यही धर्म (फल) होता है। अन्नदाता ही उसे आमन्त्रित करके कहते हैं — "हम तुम्हें देते हैं।"',
+        '“Breath is Brahman,” so Kauṣītaki used to say. Of this breath that is Brahman, the mind is the messenger, speech the housekeeper, the eye the guard, and the ear the herald. He who knows the mind as the messenger of this breath that is Brahman comes to possess a messenger; he who knows speech as the housekeeper comes to possess a housekeeper; he who knows the eye as the guard comes to possess a guard; he who knows the ear as the herald comes to possess a herald. To this breath that is Brahman all these deities bring offerings, though it does not ask. In the same way, all beings bring offerings to him who knows this, though he does not ask. His secret rule is: “Let him not beg.” It is as when a man, having begged through a village and received nothing, sits down, saying, “I will not eat anything given from here”; then those very people who refused him before invite him, saying, “Let us give to you.” This is the way of one who does not beg. The givers of food themselves invite him, saying, “Let us give to you.”'
+      ),
+      M(
+        [
+          'प्राणो ब्रह्मेति ह स्माह पैङ्ग्यः।',
+          'तस्य ह वा एतस्य प्राणस्य ब्रह्मणो वाक्परस्ताच्चक्षुरारुन्धते चक्षुः परस्ताच्छ्रोत्रमारुन्धते श्रोत्रं परस्तान्मन आरुन्धते मनः परस्तात्प्राण आरुन्धते।',
+          'तस्मै वा एतस्मै प्राणाय ब्रह्मण एताः सर्वा देवता अयाचमानाय बलिं हरन्ति।',
+          'तथो एवास्मै सर्वाणि भूतान्ययाचमानायैव बलिं हरन्ति य एवं वेद।',
+          'तस्योपनिषन्न याचेदिति।',
+          'तद्यथा ग्रामं भिक्षित्वालब्ध्वोपविशेन्नाहमतो दत्तमश्नीयामिति।',
+          'य एवैनं पुरस्तात्प्रत्याचक्षीरंस्त एवैनमुपमन्त्रयन्ते ददाम त इति।',
+          'एष धर्मो याचतो भवति।',
+          'अन्नदास्त्वेवैनमुपमन्त्रयन्ते ददाम त इति॥',
+        ],
+        'पैङ्ग्य ऋषि कहा करते थे कि "प्राण ब्रह्म है।" उस प्राणरूप ब्रह्म में वाणी के पीछे नेत्र घिरा (स्थित) है, नेत्र के पीछे श्रोत्र घिरा है, श्रोत्र के पीछे मन घिरा है और मन के पीछे प्राण घिरा है। उस इस प्राणरूप ब्रह्म के लिए, बिना माँगे ही, ये सब देवता भेंट लाते हैं। इसी प्रकार जो ऐसा जानता है, उसके लिए भी बिना माँगे ही सब प्राणी भेंट लाते हैं। उसका रहस्य-नियम है — "याचना न करे।" जैसे कोई गाँव में भिक्षा माँगकर, कुछ न पाकर बैठ जाए और (निश्चय करे कि) "अब यहाँ से दिया हुआ मैं नहीं खाऊँगा", तब जिन्होंने पहले उसे मना किया था, वे ही उसे बुलाकर कहते हैं — "हम तुम्हें देते हैं।" याचना न करने वाले का यही धर्म होता है। अन्नदाता ही उसे आमन्त्रित करके कहते हैं — "हम तुम्हें देते हैं।"',
+        '“Breath is Brahman,” so Paiṅgya used to say. In this breath that is Brahman, behind speech the eye is enclosed, behind the eye the ear is enclosed, behind the ear the mind is enclosed, and behind the mind the breath is enclosed. To this breath that is Brahman all these deities bring offerings, though it does not ask. In the same way, all beings bring offerings to him who knows this, though he does not ask. His secret rule is: “Let him not beg.” It is as when a man, having begged through a village and received nothing, sits down, saying, “I will not eat anything given from here”; then those very people who refused him before invite him, saying, “Let us give to you.” This is the way of one who does not beg. The givers of food themselves invite him, saying, “Let us give to you.”'
+      ),
+      M(
+        [
+          'अथात एकधनावरोधनम्।',
+          'यदेकधनमभिध्यायात्पौर्णमास्यां वामावास्यायां वा शुद्धपक्षे वा पुण्ये नक्षत्रेऽग्निमुपसमाधाय परिसमुह्य परिस्तीर्य पर्युक्ष्य दक्षिणं जान्वाच्य स्रुवेण वा चमसेन वा कंसेन वैता आज्याहुतीर्जुहोति।',
+          'वाङ्नाम देवतावरोधिनी सा मेऽमुष्मादिदमवरुन्धां तस्यै स्वाहा।',
+          'प्राणो नाम देवतावरोधिनी सा मेऽमुष्मादिदमवरुन्धां तस्यै स्वाहा।',
+          'चक्षुर्नाम देवतावरोधिनी सा मेऽमुष्मादिदमवरुन्धां तस्यै स्वाहा।',
+          'श्रोत्रं नाम देवतावरोधिनी सा मेऽमुष्मादिदमवरुन्धां तस्यै स्वाहा।',
+          'मनो नाम देवतावरोधिनी सा मेऽमुष्मादिदमवरुन्धां तस्यै स्वाहा।',
+          'प्रज्ञा नाम देवतावरोधिनी सा मेऽमुष्मादिदमवरुन्धां तस्यै स्वाहेति।',
+          'अथ धूमगन्धं प्रजिघ्रायाज्यलेपेनाङ्गान्यनुविमृज्य वाचंयमोऽभिप्रव्रज्यार्थं ब्रूयाद्दूतं वा प्रहिणुयात्।',
+          'लभते हैव॥',
+        ],
+        'अब "एकधन-अवरोधन" (एक विशेष धन को प्राप्त करने की विधि) कही जाती है। यदि कोई किसी एक धन की कामना करे, तो पूर्णिमा को, अमावस्या को, शुक्लपक्ष में अथवा किसी पुण्य नक्षत्र में अग्नि का आधान करके, (वेदी को) झाड़कर, कुश बिछाकर, जल छिड़ककर, दाहिना घुटना झुकाकर स्रुवा, चमस अथवा काँसे के पात्र से इन घृत-आहुतियों का हवन करे — "वाणी नामक देवता प्राप्त कराने वाली है; वह मेरे लिए अमुक व्यक्ति से यह (धन) प्राप्त कराए; उसके लिए स्वाहा। प्राण नामक देवता प्राप्त कराने वाला है; वह मेरे लिए अमुक से यह प्राप्त कराए; उसके लिए स्वाहा। नेत्र नामक देवता... श्रोत्र नामक देवता... मन नामक देवता... प्रज्ञा नामक देवता प्राप्त कराने वाली है; वह मेरे लिए अमुक से यह प्राप्त कराए; उसके लिए स्वाहा।" फिर धूम की गन्ध सूँघकर, घृत के लेप से अंगों का मर्दन करके, मौन रहकर (उस व्यक्ति के पास) जाकर अपना प्रयोजन कहे, अथवा दूत भेजे। वह (धन) अवश्य प्राप्त करता है।',
+        'Next, the securing of a single treasure. If a man sets his mind on a single treasure, then on a full-moon night or a new-moon night, or in the bright fortnight under an auspicious constellation, he should lay the fire, sweep around it, strew grass around it, sprinkle water around it, and, bending his right knee, offer these oblations of ghee with a ladle, a cup or a bronze vessel: “The deity named speech is the securer; may she secure this for me from so-and-so; to her, svāhā! The deity named breath is the securer; may it secure this for me from so-and-so; to it, svāhā! The deity named the eye is the securer; may it secure this for me from so-and-so; to it, svāhā! The deity named the ear is the securer; may it secure this for me from so-and-so; to it, svāhā! The deity named the mind is the securer; may it secure this for me from so-and-so; to it, svāhā! The deity named wisdom is the securer; may she secure this for me from so-and-so; to her, svāhā!” Then, inhaling the smell of the smoke and rubbing his limbs with the smear of ghee, he should go forth in silence and state his purpose, or send a messenger. He will surely obtain it.'
+      ),
+      M(
+        [
+          'अथातो दैवः स्मरो यस्य प्रियो बुभूषेद्यस्यै वा यस्य वा तेषामेवैतस्मिन्पर्वण्यग्निमुपसमाधायैतयैवावृतैता आज्याहुतीर्जुहोति।',
+          'वाचं ते मयि जुहोम्यसौ स्वाहा।',
+          'प्राणं ते मयि जुहोम्यसौ स्वाहा।',
+          'चक्षुस्ते मयि जुहोम्यसौ स्वाहा।',
+          'श्रोत्रं ते मयि जुहोम्यसौ स्वाहा।',
+          'मनस्ते मयि जुहोम्यसौ स्वाहा।',
+          'प्रज्ञां ते मयि जुहोम्यसौ स्वाहेति।',
+          'अथ धूमगन्धं प्रजिघ्रायाज्यलेपेनाङ्गान्यनुविमृज्य वाचंयमोऽभिप्रव्रज्य संस्पर्शं जिगमिषेदपि वाताद्वा सम्भाषमाणस्तिष्ठेत्।',
+          'प्रियो हैव भवति स्मरन्ति हैवास्य॥',
+        ],
+        'अब "दैव स्मर" (देवताओं द्वारा प्रेरित प्रेमाकर्षण की विधि) कही जाती है। जो पुरुष किसी स्त्री का अथवा किसी पुरुष का — या बहुतों का — प्रिय होना चाहे, वह इन्हीं पर्वों (पूर्णिमा आदि) में अग्नि का आधान करके, इसी विधि से इन घृत-आहुतियों का हवन करे — "हे अमुक! मैं तेरी वाणी को अपने में हवन करता हूँ, स्वाहा। मैं तेरे प्राण को अपने में हवन करता हूँ, स्वाहा। मैं तेरे नेत्र को अपने में हवन करता हूँ, स्वाहा। मैं तेरे श्रोत्र को अपने में हवन करता हूँ, स्वाहा। मैं तेरे मन को अपने में हवन करता हूँ, स्वाहा। मैं तेरी प्रज्ञा को अपने में हवन करता हूँ, स्वाहा।" फिर धूम की गन्ध सूँघकर, घृत के लेप से अंगों का मर्दन करके, मौन रहकर (उसके पास) जाकर उसका स्पर्श पाने की इच्छा करे, अथवा (उसके पास) हवा की दिशा में खड़ा होकर उससे बातचीत करे। वह निश्चय ही प्रिय हो जाता है; वे उसे स्मरण (उसकी चाह) करने लगते हैं।',
+        'Next, the divine longing. If a man wishes to become dear to a woman or to a man, or to many, then on one of these same festal days he should lay the fire and, in the same manner, offer these oblations of ghee: “I offer your speech in me, so-and-so, svāhā! I offer your breath in me, so-and-so, svāhā! I offer your eye in me, so-and-so, svāhā! I offer your ear in me, so-and-so, svāhā! I offer your mind in me, so-and-so, svāhā! I offer your wisdom in me, so-and-so, svāhā!” Then, inhaling the smell of the smoke and rubbing his limbs with the smear of ghee, he should go forth in silence and seek to come into contact with that person, or he may stand talking to that person from where the wind blows. He surely becomes dear, and they long for him.'
+      ),
+      M(
+        [
+          'अथातः सांयमनं प्रातर्दनमान्तरमग्निहोत्रमित्याचक्षते।',
+          'यावद्वै पुरुषो भाषते न तावत्प्राणितुं शक्नोति प्राणं तदा वाचि जुहोति।',
+          'यावद्वै पुरुषः प्राणिति न तावद्भाषितुं शक्नोति वाचं तदा प्राणे जुहोति।',
+          'एते अनन्ते अमृते आहुती जाग्रच्च स्वपंश्च सन्ततमव्यवच्छिन्नं जुहोति।',
+          'अथ या अन्या आहुतयोऽन्तवत्यस्ताः कर्ममय्यो हि भवन्ति।',
+          'एतद्ध वै पूर्वे विद्वांसोऽग्निहोत्रं न जुहवाञ्चक्रुः॥',
+        ],
+        'अब प्रतर्दन का संयम-रूप (आत्म-नियमन का) यज्ञ कहा जाता है, जिसे "आन्तर अग्निहोत्र" कहते हैं। जब तक मनुष्य बोलता है, तब तक वह श्वास नहीं ले सकता; उस समय वह प्राण का वाणी में हवन करता है। जब तक मनुष्य श्वास लेता है, तब तक वह बोल नहीं सकता; उस समय वह वाणी का प्राण में हवन करता है। ये दोनों अनन्त और अमृत आहुतियाँ हैं, जिन्हें वह जागते और सोते हुए निरन्तर, बिना विच्छेद के हवन करता रहता है। इनके अतिरिक्त जो अन्य आहुतियाँ हैं, वे अन्तवाली हैं, क्योंकि वे कर्ममय होती हैं। इसी को जानकर प्राचीन विद्वान् (बाह्य) अग्निहोत्र का हवन नहीं करते थे।',
+        'Next, the self-restraint of Pratardana, which they call the inner fire-sacrifice. As long as a man is speaking, he cannot breathe; he then offers breath in speech. As long as a man is breathing, he cannot speak; he then offers speech in breath. These two are endless and immortal oblations; waking or sleeping, he offers them continually and without interruption. All other oblations have an end, for they consist of ritual action. Knowing this, the ancients did not offer the fire-sacrifice.'
+      ),
+      M(
+        [
+          'उक्थं ब्रह्मेति ह स्माह शुष्कभृङ्गारः।',
+          'तदृगित्युपासीत सर्वाणि हास्मै भूतानि श्रैष्ठ्यायाभ्यर्च्यन्ते।',
+          'तद्यजुरित्युपासीत सर्वाणि हास्मै भूतानि श्रैष्ठ्याय युज्यन्ते।',
+          'तत्सामेत्युपासीत सर्वाणि हास्मै भूतानि श्रैष्ठ्याय संनमन्ते।',
+          'तच्छ्रीरित्युपासीत तद्यश इत्युपासीत तत्तेज इत्युपासीत।',
+          'तद्यथैतच्छस्त्राणां श्रीमत्तमं यशस्वितमं तेजस्वितमं भवति तथो एवैवं विद्वान्सर्वेषां भूतानां श्रीमत्तमो यशस्वितमस्तेजस्वितमो भवति।',
+          'तमेतमैष्टकं कर्ममयमात्मानमध्वर्युः संस्करोति।',
+          'तस्मिन्यजुर्मयं प्रवयति यजुर्मये ऋङ्मयं होता ऋङ्मये साममयमुद्गाता।',
+          'स एष सर्वस्यै त्रयीविद्याया आत्मा।',
+          'एष उ एवास्यात्मा।',
+          'स एतदात्मा भवति य एवं वेद॥',
+        ],
+        'शुष्कभृङ्गार ऋषि कहा करते थे कि "उक्थ ब्रह्म है।" उसकी "ऋक्" रूप से उपासना करे; तब सब प्राणी उसकी श्रेष्ठता के लिए उसकी अर्चना करते हैं। उसकी "यजुः" रूप से उपासना करे; तब सब प्राणी उसकी श्रेष्ठता के लिए उससे जुड़ते हैं। उसकी "साम" रूप से उपासना करे; तब सब प्राणी उसकी श्रेष्ठता के लिए उसके आगे झुकते हैं। उसकी "श्री" रूप से उपासना करे, "यश" रूप से उपासना करे, "तेज" रूप से उपासना करे। जैसे यह (उक्थ) सब शस्त्रों (स्तोत्रों) में सबसे अधिक श्रीमान्, यशस्वी और तेजस्वी है, वैसे ही ऐसा जानने वाला सब प्राणियों में सबसे अधिक श्रीमान्, यशस्वी और तेजस्वी होता है। अध्वर्यु इस इष्टकामय (ईंटों से बनी वेदी वाले) कर्ममय आत्मा (यज्ञ-शरीर) का संस्कार करता है; उसमें वह यजुर्मय (आत्मा) को बुनता है; यजुर्मय में होता ऋङ्मय को, और ऋङ्मय में उद्गाता साममय को बुनता है। यह सम्पूर्ण त्रयी-विद्या का आत्मा है। यही इस (उपासक) का भी आत्मा है। जो ऐसा जानता है, वह इसी का आत्मा (इसी स्वरूप वाला) हो जाता है।',
+        '“The Uktha is Brahman,” so Śuṣkabhṛṅgāra used to say. Let him venerate it as the Ṛc, and all beings will praise him for his pre-eminence. Let him venerate it as the Yajus, and all beings will be joined to him for his pre-eminence. Let him venerate it as the Sāman, and all beings will bow to him for his pre-eminence. Let him venerate it as prosperity, let him venerate it as glory, let him venerate it as splendour. As the Uktha is the most prosperous, the most glorious and the most splendid among the recitations, so he who knows this becomes the most prosperous, the most glorious and the most splendid among all beings. The Adhvaryu priest prepares this self made of bricks and made of ritual action; into it he weaves the self made of Yajus; into the self made of Yajus the Hotṛ weaves the self made of Ṛc; into the self made of Ṛc the Udgātṛ weaves the self made of Sāman. This is the self of the entire triple knowledge. And this is his self too. He who knows this becomes the self of that.'
+      ),
+      M(
+        [
+          'अथातः सर्वजितः कौषीतकेस्त्रीण्युपासनानि भवन्ति।',
+          'यज्ञोपवीतं कृत्वाप आचम्य त्रिरुदपात्रं प्रसिच्योद्यन्तमादित्यमुपतिष्ठेत वर्गोऽसि पाप्मानं मे वृङ्ग्धीति।',
+          'एतयैवावृता मध्ये सन्तमुद्वर्गोऽसि पाप्मानं म उद्वृङ्ग्धीति।',
+          'एतयैवावृतास्तं यन्तं संवर्गोऽसि पाप्मानं मे संवृङ्ग्धीति।',
+          'तद्यदहोरात्राभ्यां पापं करोति सं तद्वृङ्क्ते।',
+          'तथो एवैवं विद्वानेतयैवावृतादित्यमुपतिष्ठते यदहोरात्राभ्यां पापं करोति सं तद्वृङ्क्ते॥',
+        ],
+        'अब सर्वजित् (सर्वविजयी) कौषीतकि की तीन उपासनाएँ कही जाती हैं। यज्ञोपवीत धारण करके, जल से आचमन करके और जलपात्र को तीन बार उड़ेलकर उदय होते हुए सूर्य का उपस्थान करे — "तुम वर्ग (पाप को हटाने वाले) हो; मेरे पाप को हटाओ।" इसी विधि से आकाश के मध्य में स्थित (सूर्य) का उपस्थान करे — "तुम उद्वर्ग हो; मेरे पाप को ऊपर उठाकर हटाओ।" इसी विधि से अस्त होते हुए (सूर्य) का उपस्थान करे — "तुम संवर्ग हो; मेरे पाप को पूर्णतः हटाओ।" (इस प्रकार वे) दिन और रात में जो पाप करते थे, उसे (सूर्य) पूर्णतः हटा देते थे। इसी प्रकार ऐसा जानने वाला भी जो इसी विधि से सूर्य का उपस्थान करता है, वह दिन और रात में जो पाप करता है, उसे (सूर्य) पूर्णतः हटा देता है।',
+        'Next, the three forms of worship of Kauṣītaki, the all-conquering. Wearing the sacred thread over the left shoulder, sipping water and pouring out the water-vessel three times, he would worship the rising sun: “You are the snatcher; snatch away my evil!” In the same manner he would worship the sun when it stands in the middle of the sky: “You are the snatcher-up; snatch up my evil!” In the same manner he would worship the setting sun: “You are the snatcher-together; snatch away my evil completely!” Whatever evil he did by day and by night, the sun snatched it away completely. In the same way, whoever, knowing this, worships the sun in this manner — whatever evil he does by day and by night, the sun snatches it away completely.'
+      ),
+      M(
+        [
+          'अथ मासि मास्यमावास्यायां वृत्तायां पश्चाच्चन्द्रमसं दृश्यमानमुपतिष्ठेतैतयैवावृता हरिततृणाभ्यां वा प्रत्यस्यति।',
+          'यत्ते सुसीमं हृदयमधि चन्द्रमसि श्रितम्।',
+          'तेनामृतत्वस्येशाने माहं पौत्रमघं रुदमिति।',
+          'न हास्मात्पूर्वाः प्रजाः प्रैतीति नु जातपुत्रस्य।',
+          'अथाजातपुत्रस्याप्यायस्व समेतु ते सं ते पयांसि समु यन्तु वाजा यमादित्या अंशुमाप्याययन्तीत्येतास्तिस्र ऋचो जपित्वा।',
+          'मास्माकं प्राणेन प्रजया पशुभिराप्याययिष्ठा योऽस्मान्द्वेष्टि यं च वयं द्विष्मस्तस्य प्राणेन प्रजया पशुभिराप्याययस्वेति।',
+          'दैवीमावृतमावर्त आदित्यस्यावृतमन्वावर्त इति दक्षिणं बाहुमन्वावर्तते॥',
+        ],
+        'अब प्रत्येक मास में अमावस्या बीत जाने पर पश्चिम दिशा में दिखायी देने वाले चन्द्रमा का इसी विधि से उपस्थान करे, अथवा उसकी ओर दो हरे तिनके फेंके (और कहे) — "हे अमृतत्व की स्वामिनी! तुम्हारा जो सुन्दर केशों वाला (सुसीम) हृदय चन्द्रमा में आश्रित है, उसके द्वारा (मेरी यह प्रार्थना है कि) मुझे पुत्र-सम्बन्धी दुःख से न रोना पड़े।" (ऐसा करने वाले से) पहले उसकी सन्तान नहीं मरती। यह विधि जिसके पुत्र हो चुका है, उसके लिए है। अब जिसके पुत्र नहीं हुआ है, उसके लिए — "आप्यायस्व समेतु ते", "सं ते पयांसि समु यन्तु वाजाः", "यमादित्या अंशुमाप्याययन्ति" — इन तीन ऋचाओं का जप करके (कहे) — "हमारे प्राण, सन्तान और पशुओं से तुम पुष्ट मत होओ; जो हमसे द्वेष करता है और जिससे हम द्वेष करते हैं, उसके प्राण, सन्तान और पशुओं से पुष्ट होओ।" फिर "मैं देवताओं के आवर्तन के अनुसार घूमता हूँ, सूर्य के आवर्तन के अनुसार घूमता हूँ" — ऐसा कहकर दाहिनी भुजा की ओर घूम जाता है।',
+        'Next, each month, when the new-moon night has passed, he should worship the moon as it becomes visible in the west in the same manner, or throw two blades of green grass towards it, saying: “O mistress of immortality, by that fair-tressed heart of yours which rests in the moon, may I never weep for misfortune concerning my children.” His offspring do not die before him. This is for one to whom a son has been born. Now for one to whom no son has been born: he should softly recite these three verses — “Swell up! May your strength come together,” “May your juices come together, may your vigour come together,” and “The drop that the Ādityas cause to swell” — and say: “Do not swell by our breath, our offspring and our cattle; he who hates us and whom we hate, swell by his breath, his offspring and his cattle.” Then, saying, “I turn with the turning of the gods; I turn after the turning of the sun,” he turns towards his right arm.'
+      ),
+      M(
+        [
+          'अथ पौर्णमास्यां पुरस्ताच्चन्द्रमसं दृश्यमानमुपतिष्ठेतैतयैवावृता।',
+          'सोमो राजासि विचक्षणः पञ्चमुखोऽसि प्रजापतिः।',
+          'ब्राह्मणस्त एकं मुखं तेन मुखेन राज्ञोऽत्सि तेन मुखेन मामन्नादं कुरु।',
+          'राजा त एकं मुखं तेन मुखेन विशोऽत्सि तेन मुखेन मामन्नादं कुरु।',
+          'श्येनस्त एकं मुखं तेन मुखेन पक्षिणोऽत्सि तेन मुखेन मामन्नादं कुरु।',
+          'अग्निष्ट एकं मुखं तेन मुखेनेमं लोकमत्सि तेन मुखेन मामन्नादं कुरु।',
+          'त्वयि पञ्चमं मुखं तेन मुखेन सर्वाणि भूतान्यत्सि तेन मुखेन मामन्नादं कुरु।',
+          'मास्माकं प्राणेन प्रजया पशुभिरवक्षेष्ठा योऽस्मान्द्वेष्टि यं च वयं द्विष्मस्तस्य प्राणेन प्रजया पशुभिरवक्षीयस्वेति।',
+          'दैवीमावृतमावर्त आदित्यस्यावृतमन्वावर्त इति दक्षिणं बाहुमन्वावर्तते॥',
+        ],
+        'अब पूर्णिमा को पूर्व दिशा में दिखायी देने वाले चन्द्रमा का इसी विधि से उपस्थान करे — "तुम राजा सोम हो, विचक्षण (दीप्तिमान्) हो, पाँच मुखों वाले प्रजापति हो। ब्राह्मण तुम्हारा एक मुख है; उस मुख से तुम राजाओं को खाते हो; उस मुख से मुझे अन्न का भोक्ता बनाओ। राजा तुम्हारा एक मुख है; उस मुख से तुम प्रजा (वैश्यों) को खाते हो; उस मुख से मुझे अन्न का भोक्ता बनाओ। श्येन (बाज) तुम्हारा एक मुख है; उस मुख से तुम पक्षियों को खाते हो; उस मुख से मुझे अन्न का भोक्ता बनाओ। अग्नि तुम्हारा एक मुख है; उस मुख से तुम इस लोक को खाते हो; उस मुख से मुझे अन्न का भोक्ता बनाओ। तुम्हीं में पाँचवाँ मुख है; उस मुख से तुम सब प्राणियों को खाते हो; उस मुख से मुझे अन्न का भोक्ता बनाओ। हमारे प्राण, सन्तान और पशुओं के साथ तुम क्षीण मत होओ; जो हमसे द्वेष करता है और जिससे हम द्वेष करते हैं, उसके प्राण, सन्तान और पशुओं के साथ क्षीण होओ।" फिर "मैं देवताओं के आवर्तन के अनुसार घूमता हूँ, सूर्य के आवर्तन के अनुसार घूमता हूँ" — ऐसा कहकर दाहिनी भुजा की ओर घूम जाता है।',
+        'Next, on the full-moon night he should worship the moon as it becomes visible in the east in the same manner: “You are King Soma, the radiant; you are Prajāpati with five mouths. The Brāhmaṇa is one of your mouths; with that mouth you eat kings; with that mouth make me an eater of food. The king is one of your mouths; with that mouth you eat the common people; with that mouth make me an eater of food. The hawk is one of your mouths; with that mouth you eat birds; with that mouth make me an eater of food. Fire is one of your mouths; with that mouth you eat this world; with that mouth make me an eater of food. In yourself is the fifth mouth; with that mouth you eat all beings; with that mouth make me an eater of food. Do not wane with our breath, our offspring and our cattle; he who hates us and whom we hate, wane with his breath, his offspring and his cattle.” Then, saying, “I turn with the turning of the gods; I turn after the turning of the sun,” he turns towards his right arm.'
+      ),
+      M(
+        [
+          'अथ संवेश्यञ्जायायै हृदयमभिमृशेत्।',
+          'यत्ते सुसीमे हृदये हितमन्तः प्रजापतौ।',
+          'मन्येऽहं मां तद्विद्वांसं माहं पौत्रमघं रुदमिति।',
+          'न हास्मात्पूर्वाः प्रजाः प्रैति॥',
+        ],
+        'अब (पत्नी के साथ) शयन करते समय पत्नी के हृदय का स्पर्श करे (और कहे) — "हे सुन्दर केशों वाली! तुम्हारे हृदय में, प्रजापति के भीतर जो (अमृत) निहित है, उसे मैं जानता हूँ — ऐसा मैं अपने को मानता हूँ; (इसलिए) मुझे पुत्र-सम्बन्धी दुःख से न रोना पड़े।" (ऐसा करने वाले से) पहले उसकी सन्तान नहीं मरती।',
+        'Next, when about to lie with his wife, he should touch her heart, saying: “O fair-tressed one, that which is placed within your heart, within Prajāpati — I think of myself as knowing it; may I never weep for misfortune concerning my children.” His offspring do not die before him.'
+      ),
+      M(
+        [
+          'अथ प्रोष्यायन्पुत्रस्य मूर्धानमभिमृशेत्।',
+          'अङ्गादङ्गात्सम्भवसि हृदयादधिजायसे।',
+          'आत्मा वै पुत्र नामासि स जीव शरदः शतमित्यसाविति नामास्य गृह्णाति।',
+          'अश्मा भव परशुर्भव हिरण्यमस्रुतं भव।',
+          'तेजो वै पुत्र नामासि स जीव शरदः शतमित्यसाविति नामास्य गृह्णाति।',
+          'अथैनं परिगृह्णाति येन प्रजापतिः प्रजाः पर्यगृह्णादरिष्ट्यै तेन त्वा परिगृह्णाम्यसाविति।',
+          'अथास्य दक्षिणे कर्णे जपत्यस्मे प्रयन्धि मघवन्नृजीषिन्निति।',
+          'इन्द्र श्रेष्ठानि द्रविणानि धेहीति सव्ये।',
+          'मा च्छेत्था मा व्यथिष्ठाः शतं शरद आयुषो जीव पुत्र ते नाम्ना मूर्धानमभिजिघ्रामीति त्रिरस्य मूर्धानमभिजिघ्रेत्।',
+          'गवां त्वा हिङ्कारेणाभिहिङ्करोमीति त्रिरस्य मूर्धानमभिहिङ्कुर्यात्॥',
+        ],
+        'अब परदेश से लौटकर आने पर पुत्र के मस्तक का स्पर्श करे (और कहे) — "तू मेरे अंग-अंग से उत्पन्न हुआ है, हृदय से जन्मा है। हे पुत्र! तू मेरा आत्मा ही है; तू सौ शरद् ऋतुओं तक जीवित रह" — (यहाँ "असौ" के स्थान पर) उसका नाम लेता है। "तू पत्थर के समान (दृढ़) हो, परशु के समान (शत्रुनाशक) हो, अक्षय सुवर्ण के समान हो। हे पुत्र! तू मेरा तेज ही है; तू सौ शरद् ऋतुओं तक जीवित रह" — (यहाँ) उसका नाम लेता है। फिर उसे आलिंगन में लेता है — "जिस (आलिंगन) से प्रजापति ने अपनी प्रजा को अनिष्ट से बचाने के लिए आलिंगन किया था, उसी से मैं तुझे आलिंगन करता हूँ, हे अमुक!" फिर उसके दाहिने कान में जपता है — "हे इन्द्र! हे मघवन्! हे ऋजीषिन्! इसे (धन) प्रदान करो।" और बायें कान में — "हे इन्द्र! इसे श्रेष्ठ धन प्रदान करो।" "तू (कुल की परम्परा को) मत काट, व्यथित मत हो; हे पुत्र! सौ शरद् की आयु तक जीवित रह। तेरे नाम से मैं तेरा मस्तक सूँघता हूँ" — ऐसा कहकर तीन बार उसका मस्तक सूँघे। "गौओं के हिंकार से मैं तुझ पर हिंकार करता हूँ" — ऐसा कहकर तीन बार उसके मस्तक पर हिंकार करे।',
+        'Next, when he returns from a journey, he should touch his son’s head, saying: “From limb after limb you are born; from the heart you are born. You are my very self, called son; live a hundred autumns, so-and-so!” — and he speaks his name. “Be a stone, be an axe, be imperishable gold! You are my very radiance, called son; live a hundred autumns, so-and-so!” — and he speaks his name. Then he embraces him, saying: “With the embrace with which Prajāpati embraced his creatures for their safety, with that I embrace you, so-and-so!” Then he murmurs in his right ear: “Grant to him, O bountiful one, O impetuous one!” and in the left: “O Indra, bestow on him the best treasures!” “Do not be cut off, do not be afraid; live a hundred autumns of life, my son. I kiss your head with your name” — so saying, he should kiss his head three times. “I low over you with the lowing of cows” — so saying, he should make a lowing sound over his head three times.'
+      ),
+      M(
+        [
+          'अथातो दैवः परिमरः।',
+          'एतद्वै ब्रह्म दीप्यते यदग्निर्ज्वलत्यथैतन्म्रियते यन्न ज्वलति।',
+          'तस्यादित्यमेव तेजो गच्छति वायुं प्राणः।',
+          'एतद्वै ब्रह्म दीप्यते यदादित्यो दृश्यतेऽथैतन्म्रियते यन्न दृश्यते।',
+          'तस्य चन्द्रमसमेव तेजो गच्छति वायुं प्राणः।',
+          'एतद्वै ब्रह्म दीप्यते यच्चन्द्रमा दृश्यतेऽथैतन्म्रियते यन्न दृश्यते।',
+          'तस्य विद्युतमेव तेजो गच्छति वायुं प्राणः।',
+          'एतद्वै ब्रह्म दीप्यते यद्विद्युद्विद्योततेऽथैतन्म्रियते यन्न विद्योतते।',
+          'तस्य दिश एव तेजो गच्छति वायुं प्राणः।',
+          'ता वा एताः सर्वा देवता वायुमेव प्रविश्य वायौ सृप्ता न मूर्छन्ते।',
+          'तस्मादेव पुनरुदीरते।',
+          'इत्यधिदैवतम्।',
+          'अथाध्यात्मम्॥',
+        ],
+        'अब "दैव परिमर" (देवताओं का एक-दूसरे में लय — जिसके ज्ञान से शत्रु चारों ओर से मरते हैं) कहा जाता है। यह ब्रह्म ही प्रकाशित होता है जब अग्नि जलती है; और यह मरता है जब वह नहीं जलती। तब उसका तेज सूर्य में ही चला जाता है और प्राण वायु में। यह ब्रह्म ही प्रकाशित होता है जब सूर्य दिखायी देता है; और यह मरता है जब वह नहीं दिखायी देता। तब उसका तेज चन्द्रमा में ही चला जाता है और प्राण वायु में। यह ब्रह्म ही प्रकाशित होता है जब चन्द्रमा दिखायी देता है; और यह मरता है जब वह नहीं दिखायी देता। तब उसका तेज विद्युत् में ही चला जाता है और प्राण वायु में। यह ब्रह्म ही प्रकाशित होता है जब विद्युत् चमकती है; और यह मरता है जब वह नहीं चमकती। तब उसका तेज दिशाओं में ही चला जाता है और प्राण वायु में। ये सब देवता वायु में ही प्रवेश करके, वायु में लीन होकर भी नष्ट नहीं होते; उसी (वायु) से वे फिर प्रकट हो जाते हैं। यह अधिदैवत (देवताओं के सम्बन्ध में उपासना) है। अब अध्यात्म (शरीर के सम्बन्ध में) कहा जाता है —',
+        'Next, the dying around of the gods. This Brahman shines when the fire blazes; and it dies when the fire does not blaze. Its radiance then goes to the sun, and its breath to the wind. This Brahman shines when the sun is seen; and it dies when the sun is not seen. Its radiance then goes to the moon, and its breath to the wind. This Brahman shines when the moon is seen; and it dies when the moon is not seen. Its radiance then goes to the lightning, and its breath to the wind. This Brahman shines when the lightning flashes; and it dies when the lightning does not flash. Its radiance then goes to the quarters, and its breath to the wind. All these deities, having entered the wind and dissolved in the wind, do not perish; from it they rise up again. So much with respect to the deities. Now with respect to the self:'
+      ),
+      M(
+        [
+          'एतद्वै ब्रह्म दीप्यते यद्वाचा वदत्यथैतन्म्रियते यन्न वदति।',
+          'तस्य चक्षुरेव तेजो गच्छति प्राणं प्राणः।',
+          'एतद्वै ब्रह्म दीप्यते यच्चक्षुषा पश्यत्यथैतन्म्रियते यन्न पश्यति।',
+          'तस्य श्रोत्रमेव तेजो गच्छति प्राणं प्राणः।',
+          'एतद्वै ब्रह्म दीप्यते यच्छ्रोत्रेण शृणोत्यथैतन्म्रियते यन्न शृणोति।',
+          'तस्य मन एव तेजो गच्छति प्राणं प्राणः।',
+          'एतद्वै ब्रह्म दीप्यते यन्मनसा ध्यायत्यथैतन्म्रियते यन्न ध्यायति।',
+          'तस्य प्राणमेव तेजो गच्छति प्राणं प्राणः।',
+          'ता वा एताः सर्वा देवताः प्राणमेव प्रविश्य प्राणे सृप्ता न मूर्छन्ते।',
+          'तस्मादेव पुनरुदीरते।',
+          'तद्यदि ह वा एवंविदमुभौ पर्वतावभिप्रवर्तेयातां दक्षिणश्चोत्तरश्च तुस्तूर्षमाणौ न हैवैनं स्तृण्वीयाताम्।',
+          'अथ य एनं द्विषन्ति यांश्च स्वयं द्वेष्टि त एवैनं सर्वे परिम्रियन्ते॥',
+        ],
+        'यह ब्रह्म ही प्रकाशित होता है जब मनुष्य वाणी से बोलता है; और यह मरता है जब वह नहीं बोलता। तब उसका तेज नेत्र में ही चला जाता है और प्राण प्राण में। यह ब्रह्म ही प्रकाशित होता है जब वह नेत्र से देखता है; और यह मरता है जब वह नहीं देखता। तब उसका तेज श्रोत्र में ही चला जाता है और प्राण प्राण में। यह ब्रह्म ही प्रकाशित होता है जब वह श्रोत्र से सुनता है; और यह मरता है जब वह नहीं सुनता। तब उसका तेज मन में ही चला जाता है और प्राण प्राण में। यह ब्रह्म ही प्रकाशित होता है जब वह मन से ध्यान (चिन्तन) करता है; और यह मरता है जब वह ध्यान नहीं करता। तब उसका तेज प्राण में ही चला जाता है और प्राण प्राण में। ये सब देवता प्राण में ही प्रवेश करके, प्राण में लीन होकर भी नष्ट नहीं होते; उसी (प्राण) से वे फिर प्रकट हो जाते हैं। इसलिए ऐसा जानने वाले पर यदि दक्षिण और उत्तर के दोनों पर्वत भी उसे कुचल डालने की इच्छा से लुढ़क आएँ, तो भी वे उसे कुचल नहीं सकते। और जो उससे द्वेष करते हैं तथा जिनसे वह स्वयं द्वेष करता है, वे सब उसके चारों ओर मर जाते हैं।',
+        'This Brahman shines when one speaks with speech; and it dies when one does not speak. Its radiance then goes to the eye, and its breath to the breath. This Brahman shines when one sees with the eye; and it dies when one does not see. Its radiance then goes to the ear, and its breath to the breath. This Brahman shines when one hears with the ear; and it dies when one does not hear. Its radiance then goes to the mind, and its breath to the breath. This Brahman shines when one thinks with the mind; and it dies when one does not think. Its radiance then goes to the breath, and its breath to the breath. All these deities, having entered the breath and dissolved in the breath, do not perish; from it they rise up again. Therefore, if both mountains, the southern and the northern, were to roll towards one who knows this, seeking to crush him, they would not crush him. But those who hate him and those whom he himself hates, all of them die around him.'
+      ),
+      M(
+        [
+          'अथातो निःश्रेयसादानम्।',
+          'एता ह वै देवता अहंश्रेयसे विवदमाना अस्माच्छरीरादुच्चक्रमुः।',
+          'तद्दारुभूतं शिश्ये।',
+          'अथैनद्वाक्प्रविवेश तद्वाचा वदच्छिश्य एव।',
+          'अथैनच्चक्षुः प्रविवेश तद्वाचा वदच्चक्षुषा पश्यच्छिश्य एव।',
+          'अथैनच्छ्रोत्रं प्रविवेश तद्वाचा वदच्चक्षुषा पश्यच्छ्रोत्रेण शृण्वच्छिश्य एव।',
+          'अथैनन्मनः प्रविवेश तद्वाचा वदच्चक्षुषा पश्यच्छ्रोत्रेण शृण्वन्मनसा ध्यायच्छिश्य एव।',
+          'अथैनत्प्राणः प्रविवेश तत्तत एव समुत्तस्थौ।',
+          'ता वा एताः सर्वा देवताः प्राणे निःश्रेयसं विदित्वा प्राणमेव प्रज्ञात्मानमभिसम्भूय सहैतैः सर्वैरस्माल्लोकादुच्चक्रमुः।',
+          'ते वायुप्रतिष्ठाकाशात्मानः स्वरीयुः।',
+          'तथो एवैवं विद्वान्प्राणे निःश्रेयसं विदित्वा प्राणमेव प्रज्ञात्मानमभिसम्भूय सहैतैः सर्वैरस्माच्छरीरादुत्क्रामति।',
+          'स वायुप्रतिष्ठाकाशात्मा स्वरेति।',
+          'तद्भवति यत्रैते देवाः।',
+          'तत्प्राप्य यदमृता देवास्तदमृतो भवति य एवं वेद॥',
+        ],
+        'अब "निःश्रेयस-आदान" (श्रेष्ठता का निर्णय) कहा जाता है। ये देवता (इन्द्रियाँ) "मैं श्रेष्ठ हूँ, मैं श्रेष्ठ हूँ" — इस प्रकार विवाद करते हुए इस शरीर से निकल गये। तब वह (शरीर) लकड़ी के समान होकर पड़ा रहा। फिर उसमें वाणी ने प्रवेश किया; वह वाणी से बोलता हुआ भी पड़ा ही रहा। फिर उसमें नेत्र ने प्रवेश किया; वह वाणी से बोलता, नेत्र से देखता हुआ भी पड़ा ही रहा। फिर उसमें श्रोत्र ने प्रवेश किया; वह वाणी से बोलता, नेत्र से देखता, श्रोत्र से सुनता हुआ भी पड़ा ही रहा। फिर उसमें मन ने प्रवेश किया; वह वाणी से बोलता, नेत्र से देखता, श्रोत्र से सुनता, मन से चिन्तन करता हुआ भी पड़ा ही रहा। फिर उसमें प्राण ने प्रवेश किया; तब वह तत्काल उठ खड़ा हुआ। उन सब देवताओं ने प्राण में श्रेष्ठता को जानकर, प्रज्ञास्वरूप प्राण के साथ ही एक होकर, इन सबके साथ इस लोक से उत्क्रमण किया। वे वायु में प्रतिष्ठित होकर, आकाशरूप होकर स्वर्ग को चले गये। इसी प्रकार ऐसा जानने वाला भी प्राण में श्रेष्ठता को जानकर, प्रज्ञास्वरूप प्राण के साथ ही एक होकर, इन सबके साथ इस शरीर से उत्क्रमण करता है। वह वायु में प्रतिष्ठित होकर, आकाशरूप होकर स्वर्ग को जाता है। वह वहाँ पहुँचता है जहाँ ये देवता हैं। वहाँ पहुँचकर, जिस प्रकार देवता अमर हैं, वैसे ही वह भी अमर हो जाता है — जो ऐसा जानता है।',
+        'Next, the ascertaining of what is best. These deities, disputing among themselves about who was the best, departed from this body. It lay there like a log of wood. Then speech entered it; it lay there, speaking with speech. Then the eye entered it; it lay there, speaking with speech and seeing with the eye. Then the ear entered it; it lay there, speaking with speech, seeing with the eye and hearing with the ear. Then the mind entered it; it lay there, speaking with speech, seeing with the eye, hearing with the ear and thinking with the mind. Then breath entered it, and at once it rose up. All these deities, recognising pre-eminence in breath and merging into breath, the self of wisdom, departed together with all these from this world. Established in the wind and having space as their self, they went to heaven. In the same way, one who knows this, recognising pre-eminence in breath and merging into breath, the self of wisdom, departs from this body together with all these. Established in the wind and having space as his self, he goes to heaven. He goes to where these gods are. Having reached it, he becomes immortal as the gods are immortal — he who knows this.'
+      ),
+      M(
+        [
+          'अथातः पितापुत्रीयं सम्प्रदानमिति चाचक्षते।',
+          'पिता पुत्रं प्रेष्यन्नाह्वयति।',
+          'नवैस्तृणैरगारं संस्तीर्याग्निमुपसमाधायोदकुम्भं सपात्रमुपनिधायाहतेन वाससा सम्प्रच्छन्नः पिता शेते।',
+          'एत्य पुत्र उपरिष्टादभिनिपद्यत इन्द्रियैरस्येन्द्रियाणि संस्पृश्यापि वास्याभिमुखत एवासीत।',
+          'अथास्मै सम्प्रयच्छति।',
+          'वाचं मे त्वयि दधानीति पिता वाचं ते मयि दध इति पुत्रः।',
+          'प्राणं मे त्वयि दधानीति पिता प्राणं ते मयि दध इति पुत्रः।',
+          'चक्षुर्मे त्वयि दधानीति पिता चक्षुस्ते मयि दध इति पुत्रः।',
+          'श्रोत्रं मे त्वयि दधानीति पिता श्रोत्रं ते मयि दध इति पुत्रः।',
+          'अन्नरसान्मे त्वयि दधानीति पिता अन्नरसांस्ते मयि दध इति पुत्रः।',
+          'कर्माणि मे त्वयि दधानीति पिता कर्माणि ते मयि दध इति पुत्रः।',
+          'सुखदुःखे मे त्वयि दधानीति पिता सुखदुःखे ते मयि दध इति पुत्रः।',
+          'आनन्दं रतिं प्रजातिं मे त्वयि दधानीति पिता आनन्दं रतिं प्रजातिं ते मयि दध इति पुत्रः।',
+          'इत्यां मे त्वयि दधानीति पिता इत्यां ते मयि दध इति पुत्रः।',
+          'मनो मे त्वयि दधानीति पिता मनस्ते मयि दध इति पुत्रः।',
+          'प्रज्ञां मे त्वयि दधानीति पिता प्रज्ञां ते मयि दध इति पुत्रः।',
+          'यद्यु वा अभिगदः स्यात्समासेनैव ब्रूयात्प्राणान्मे त्वयि दधानीति पिता प्राणांस्ते मयि दध इति पुत्रः।',
+          'अथ दक्षिणावृदुपनिष्क्रामति।',
+          'तं पितानुमन्त्रयते यशो ब्रह्मवर्चसमन्नाद्यं कीर्तिस्त्वा जुषतामिति।',
+          'अथेतरः सव्यमंसमन्ववेक्षते पाणिनान्तर्धाय वसनान्तेन वा प्रच्छाद्य स्वर्गांल्लोकान्कामानवाप्नुहीति।',
+          'स यद्यगदः स्यात्पुत्रस्यैश्वर्ये पिता वसेत्परि वा व्रजेत्।',
+          'यद्यु वै प्रेयाद्यदेवैनं समापयति तथा समापयितव्यो भवति तथा समापयितव्यो भवति॥',
+        ],
+        'अब पिता-पुत्र सम्बन्धी "सम्प्रदान" (परम्परा-हस्तान्तरण) कहा जाता है। जब पिता (मृत्यु के निकट होकर) प्रयाण करने वाला होता है, तब वह पुत्र को बुलाता है। घर को नये तृणों से आच्छादित करके, अग्नि का आधान करके, पात्र सहित जल का घड़ा पास रखकर, नये (बिना धुले) वस्त्र से ढका हुआ पिता लेट जाता है। पुत्र आकर उसके ऊपर (झुककर) लेट जाता है और अपनी इन्द्रियों से पिता की इन्द्रियों का स्पर्श करता है; अथवा वह उसके सम्मुख ही बैठ जाए। तब पिता उसे (अपना सब कुछ) सौंपता है — पिता कहता है, "मैं अपनी वाणी तुझमें स्थापित करता हूँ"; पुत्र कहता है, "आपकी वाणी मैं अपने में धारण करता हूँ।" पिता — "मैं अपना प्राण तुझमें स्थापित करता हूँ"; पुत्र — "आपका प्राण मैं अपने में धारण करता हूँ।" पिता — "अपना नेत्र..."; पुत्र — "आपका नेत्र..."। पिता — "अपना श्रोत्र..."; पुत्र — "आपका श्रोत्र..."। पिता — "अपने अन्न के रस..."; पुत्र — "आपके अन्न के रस..."। पिता — "अपने कर्म..."; पुत्र — "आपके कर्म..."। पिता — "अपने सुख-दुःख..."; पुत्र — "आपके सुख-दुःख..."। पिता — "अपना आनन्द, रति और प्रजोत्पत्ति..."; पुत्र — "आपका आनन्द, रति और प्रजोत्पत्ति..."। पिता — "अपनी गति..."; पुत्र — "आपकी गति..."। पिता — "अपना मन..."; पुत्र — "आपका मन..."। पिता — "अपनी प्रज्ञा तुझमें स्थापित करता हूँ"; पुत्र — "आपकी प्रज्ञा मैं अपने में धारण करता हूँ।" यदि पिता अधिक बोल न सके, तो संक्षेप में ही कहे — पिता, "मैं अपने प्राणों को तुझमें स्थापित करता हूँ"; पुत्र, "आपके प्राणों को मैं अपने में धारण करता हूँ।" फिर पुत्र दाहिनी ओर से प्रदक्षिणा करके (पूर्व की ओर) बाहर निकलता है। पिता उसके पीछे से यह मन्त्र कहता है — "यश, ब्रह्मतेज, अन्न का भोग और कीर्ति तुझे प्राप्त हों।" तब दूसरा (पुत्र) अपने बायें कंधे के ऊपर से पीछे देखता है, और हाथ से अथवा वस्त्र के छोर से (मुख) ढककर कहता है — "आप स्वर्गलोकों और (सब) कामनाओं को प्राप्त करें।" यदि पिता नीरोग हो जाए, तो वह पुत्र के आधिपत्य में रहे, अथवा संन्यासी होकर परिव्रजन करे। और यदि वह प्रयाण कर जाए (मर जाए), तो जिस प्रकार उसका अन्त्य संस्कार उचित हो, उसी प्रकार उसका अन्त्य संस्कार किया जाना चाहिए, उसी प्रकार किया जाना चाहिए।',
+        'Next, the transfer from father to son, as they call it. When a father is about to depart, he calls his son. Having strewn the house with fresh grass, laid the fire, and set down near it a pot of water together with a cup, the father, wrapped in a new garment, lies down. The son comes and lies on top of him, touching the father’s organs with his own organs; or the son may sit facing him. Then the father hands over to him. The father: “Let me place my speech in you.” The son: “I take your speech in me.” The father: “Let me place my breath in you.” The son: “I take your breath in me.” The father: “Let me place my eye in you.” The son: “I take your eye in me.” The father: “Let me place my ear in you.” The son: “I take your ear in me.” The father: “Let me place my tastes of food in you.” The son: “I take your tastes of food in me.” The father: “Let me place my actions in you.” The son: “I take your actions in me.” The father: “Let me place my pleasure and pain in you.” The son: “I take your pleasure and pain in me.” The father: “Let me place my bliss, delight and procreation in you.” The son: “I take your bliss, delight and procreation in me.” The father: “Let me place my movement in you.” The son: “I take your movement in me.” The father: “Let me place my mind in you.” The son: “I take your mind in me.” The father: “Let me place my wisdom in you.” The son: “I take your wisdom in me.” But if the father is too ill to speak much, he should say concisely: “Let me place my breaths in you,” and the son: “I take your breaths in me.” Then the son goes out, turning to the right. The father calls after him: “May fame, the lustre of sacred knowledge, the eating of food and renown delight in you.” Then the son looks back over his left shoulder, covering his face with his hand or with the hem of his garment, and says: “May you obtain the heavenly worlds and your desires.” If the father recovers, he should live under the authority of his son, or else wander forth as a renouncer. And if he dies, the funeral rites should be performed for him as is fitting — as is fitting.'
+      ),
+    ],
+    // ── Adhyāya 3 ──
+    [
+      M(
+        [
+          'प्रतर्दनो ह वै दैवोदासिरिन्द्रस्य प्रियं धामोपजगाम युद्धेन च पौरुषेण च।',
+          'तं हेन्द्र उवाच प्रतर्दन वरं ते ददानीति।',
+          'स होवाच प्रतर्दनस्त्वमेव वृणीष्व यं त्वं मनुष्याय हिततमं मन्यस इति।',
+          'तं हेन्द्र उवाच न वै वरोऽवरस्मै वृणीते त्वमेव वृणीष्वेति।',
+          'अवरो वै तर्हि किल म इति होवाच प्रतर्दनः।',
+          'अथो खल्विन्द्रः सत्यादेव नेयाय सत्यं हीन्द्रः।',
+          'तं हेन्द्र उवाच मामेव विजानीह्येतदेवाहं मनुष्याय हिततमं मन्ये यन्मां विजानीयात्।',
+          'त्रिशीर्षाणं त्वाष्ट्रमहनमरुन्मुखान्यतीन्सालावृकेभ्यः प्रायच्छम्।',
+          'बह्वीः सन्धा अतिक्रम्य दिवि प्रह्लादीयानतृणमहमन्तरिक्षे पौलोमान्पृथिव्यां कालकाञ्जान्।',
+          'तस्य मे तत्र न लोम च नामीयते।',
+          'स यो मां वेद न ह वै तस्य केन च कर्मणा लोको मीयते न स्तेयेन न भ्रूणहत्यया न मातृवधेन न पितृवधेन।',
+          'नास्य पापं च चकृषो मुखान्नीलं वेत्तीति॥',
+        ],
+        'दिवोदास के पुत्र प्रतर्दन युद्ध और पुरुषार्थ के द्वारा इन्द्र के प्रिय धाम (स्वर्ग) में पहुँचे। इन्द्र ने उनसे कहा — ‘प्रतर्दन! मैं तुम्हें वर देता हूँ।’ प्रतर्दन बोले — ‘आप ही उस वर को चुन दीजिये जिसे आप मनुष्य के लिये सबसे अधिक हितकर समझते हैं।’ इन्द्र ने कहा — ‘श्रेष्ठ पुरुष अपने से छोटे के लिये वर नहीं चुनता; तुम स्वयं ही चुनो।’ प्रतर्दन बोले — ‘तब तो वह (वर) मेरे लिये वर नहीं रहा।’ किंतु इन्द्र सत्य से विचलित नहीं हुए, क्योंकि इन्द्र सत्यस्वरूप हैं। इन्द्र ने कहा — ‘तुम मुझको ही जानो; मनुष्य मुझे जाने — इसी को मैं मनुष्य के लिये सबसे अधिक हितकर मानता हूँ। मैंने त्वष्टा के तीन सिरवाले पुत्र (विश्वरूप) को मारा; वेदविमुख अरुन्मुख यतियों को भेड़ियों को दे दिया; बहुत-सी संधियों का उल्लङ्घन करके मैंने द्युलोक में प्रह्लाद के अनुयायियों को, अन्तरिक्ष में पुलोमा के वंशजों को और पृथ्वी पर कालकाञ्जों को मार डाला; फिर भी उस (कर्म) से मेरा एक रोम भी नहीं घटा। जो मुझे (इस प्रकार) जानता है, उसका लोक किसी भी कर्म से नष्ट नहीं होता — न चोरी से, न भ्रूणहत्या से, न माता के वध से, न पिता के वध से; यदि वह पाप करना चाहे तो भी उसके मुख से कालिमा (कान्ति) नहीं जाती।’',
+        'Pratardana, son of Divodāsa, came by fighting and by manly vigour to the beloved abode of Indra. Indra said to him: ‘Pratardana, I will grant you a boon.’ Pratardana said: ‘Choose it yourself for me — the one you think most beneficial to man.’ Indra said: ‘A superior does not choose for an inferior; choose it yourself.’ ‘Then indeed that is no boon for me,’ said Pratardana. Yet Indra did not swerve from truth, for Indra is truth. Indra said to him: ‘Understand me alone; that a man should know me — this I consider most beneficial to man. I slew the three-headed son of Tvaṣṭṛ; I gave the Arunmukha ascetics to the hyenas; transgressing many compacts, I struck down the people of Prahlāda in the sky, the Paulomas in the mid-region and the Kālakāñjas on earth — and not a hair of mine was harmed there. Whoever knows me, his world is not injured by any deed whatever — not by theft, not by killing an embryo, not by killing his mother, not by killing his father; if he has done evil, the bloom does not depart from his face.’'
+      ),
+      M(
+        [
+          'स होवाच प्राणोऽस्मि प्रज्ञात्मा तं मामायुरमृतमित्युपास्स्व।',
+          'आयुः प्राणः प्राणो वा आयुः।',
+          'यावद्ध्यस्मिञ्छरीरे प्राणो वसति तावदायुः।',
+          'प्राणेन ह्येवामुष्मिंल्लोकेऽमृतत्वमाप्नोति प्रज्ञया सत्यसंकल्पम्।',
+          'स यो मामायुरमृतमित्युपास्ते सर्वमायुरस्मिंल्लोक एत्याप्नोत्यमृतत्वमक्षितिं स्वर्गे लोके।',
+          'तद्धैक आहुरेकभूयं वै प्राणा गच्छन्तीति।',
+          'न हि कश्चन शक्नुयात्सकृद्वाचा नाम प्रज्ञापयितुं चक्षुषा रूपं श्रोत्रेण शब्दं मनसा ध्यानम्।',
+          'एकभूयं वै प्राणा भूत्वैकैकं सर्वाण्येवैतानि प्रज्ञापयन्ति।',
+          'वाचं वदन्तीं सर्वे प्राणा अनुवदन्ति चक्षुः पश्यत्सर्वे प्राणा अनुपश्यन्ति श्रोत्रं शृण्वत्सर्वे प्राणा अनुशृण्वन्ति मनो ध्यायत्सर्वे प्राणा अनुध्यायन्ति प्राणं प्राणन्तं सर्वे प्राणा अनुप्राणन्तीति।',
+          'एवमु हैतदिति हेन्द्र उवाच।',
+          'अस्ति त्वेव प्राणानां निःश्रेयसमिति॥',
+        ],
+        'इन्द्र ने कहा — ‘मैं प्रज्ञात्मा प्राण हूँ; उस मुझको तुम आयु और अमृत मानकर उपासना करो। आयु प्राण है और प्राण ही आयु है। जब तक इस शरीर में प्राण रहता है, तभी तक आयु है। प्राण से ही मनुष्य परलोक में अमृतत्व को प्राप्त करता है और प्रज्ञा से सत्यसंकल्प को। जो मुझे आयु और अमृत मानकर उपासता है, वह इस लोक में पूर्ण आयु पाता है और स्वर्गलोक में अमृतत्व तथा अक्षयता को प्राप्त करता है।’ इस विषय में कुछ लोग कहते हैं कि प्राण (इन्द्रियाँ) एकरूप हो जाते हैं; क्योंकि कोई भी एक साथ वाणी से नाम, नेत्र से रूप, कान से शब्द और मन से ध्यान को नहीं जान सकता — प्राण एकरूप होकर ही इन सबको एक-एक करके जनाते हैं। जब वाणी बोलती है तो सब प्राण उसके साथ बोलते हैं; नेत्र देखता है तो सब प्राण साथ देखते हैं; कान सुनता है तो सब प्राण साथ सुनते हैं; मन ध्यान करता है तो सब प्राण साथ ध्यान करते हैं; प्राण श्वास लेता है तो सब प्राण उसके साथ श्वास लेते हैं। इन्द्र ने कहा — ‘यह ऐसा ही है; किंतु प्राणों में एक सर्वश्रेष्ठ (निःश्रेयस) भी है।’',
+        'He said: ‘I am prāṇa, the self of intelligence (prajñātman); worship me as life, as immortality. Life is prāṇa, prāṇa is life. For as long as prāṇa dwells in this body, so long is there life. By prāṇa one attains immortality in the other world, by intelligence true resolve. Whoever worships me as life and immortality reaches his full life in this world and attains immortality and imperishability in the heavenly world.’ Some say: ‘The prāṇas (the senses) become one; for no one could make known at once a name by speech, a form by the eye, a sound by the ear, a thought by the mind. Having become one, the prāṇas make known each of these one by one. When speech speaks, all the prāṇas speak after it; when the eye sees, all the prāṇas see after it; when the ear hears, all the prāṇas hear after it; when the mind thinks, all the prāṇas think after it; when the breath breathes, all the prāṇas breathe after it.’ ‘That is indeed so,’ said Indra, ‘but there is a pre-eminence among the prāṇas.’'
+      ),
+      M(
+        [
+          'जीवति वागपेतो मूकान्हि पश्यामः।',
+          'जीवति चक्षुरपेतोऽन्धान्हि पश्यामः।',
+          'जीवति श्रोत्रापेतो बधिरान्हि पश्यामः।',
+          'जीवति मनोऽपेतो बालान्हि पश्यामः।',
+          'जीवति बाहुच्छिन्नो जीवत्यूरुच्छिन्न इत्येवं हि पश्याम इति।',
+          'अथ खलु प्राण एव प्रज्ञात्मेदं शरीरं परिगृह्योत्थापयति।',
+          'तस्मादेतदेवोक्थमुपासीतेति।',
+          'यो वै प्राणः सा प्रज्ञा या वा प्रज्ञा स प्राणः।',
+          'तस्यैषैव दृष्टिरेतद्विज्ञानम्।',
+          'यत्रैतत्पुरुषः सुप्तः स्वप्नं न कंचन पश्यत्यथास्मिन्प्राण एवैकधा भवति।',
+          'तदैनं वाक्सर्वैर्नामभिः सहाप्येति चक्षुः सर्वै रूपैः सहाप्येति श्रोत्रं सर्वैः शब्दैः सहाप्येति मनः सर्वैर्ध्यानैः सहाप्येति।',
+          'स यदा प्रतिबुध्यते यथाग्नेर्ज्वलतः सर्वा दिशो विस्फुलिङ्गा विप्रतिष्ठेरन्नेवमेवैतस्मादात्मनः प्राणा यथायतनं विप्रतिष्ठन्ते प्राणेभ्यो देवा देवेभ्यो लोकाः।',
+          'तस्यैषैव सिद्धिः।',
+          'यत्रैतत्पुरुष आर्तो मरिष्यन्नाबल्यं न्येत्य संमोहं नैति तदाहुरुदक्रमीच्चित्तं न शृणोति न पश्यति न वाचा वदति न ध्यायतीति।',
+          'अथास्मिन्प्राण एवैकधा भवति।',
+          'तदैनं वाक्सर्वैर्नामभिः सहाप्येति चक्षुः सर्वै रूपैः सहाप्येति श्रोत्रं सर्वैः शब्दैः सहाप्येति मनः सर्वैर्ध्यानैः सहाप्येति।',
+          'स यदास्माच्छरीरादुत्क्रामति सहैवैतैः सर्वैरुत्क्रामति॥',
+        ],
+        'वाणी से रहित मनुष्य जीवित रहता है, क्योंकि हम गूँगों को देखते हैं; नेत्र से रहित जीता है, क्योंकि हम अंधों को देखते हैं; श्रोत्र से रहित जीता है, क्योंकि हम बहरों को देखते हैं; मन से रहित जीता है, क्योंकि हम बालकों (मूढ़ों) को देखते हैं; जिसकी भुजा कट गयी हो वह भी जीता है और जिसकी जाँघ कट गयी हो वह भी जीता है — ऐसा हम देखते ही हैं। परंतु प्रज्ञात्मा प्राण ही इस शरीर को पकड़कर उठाता है; इसलिये इसी की ‘उक्थ’ रूप से उपासना करे। जो प्राण है वही प्रज्ञा है और जो प्रज्ञा है वही प्राण है। इसका यही प्रमाण और यही विज्ञान है — जब मनुष्य ऐसा सोया होता है कि कोई स्वप्न नहीं देखता, तब वह इस प्राण में ही एकरूप हो जाता है; तब वाणी सब नामों के साथ, नेत्र सब रूपों के साथ, श्रोत्र सब शब्दों के साथ और मन सब ध्यानों (विचारों) के साथ उसी में लीन हो जाते हैं। और जब वह जागता है, तब जैसे जलती हुई अग्नि से चिनगारियाँ सब दिशाओं में बिखर जाती हैं, वैसे ही इस आत्मा से प्राण (इन्द्रियाँ) अपने-अपने स्थानों की ओर निकल पड़ते हैं; प्राणों से देवता (इन्द्रियाधिष्ठाता) और देवताओं से लोक (विषय) प्रकट होते हैं। इसका यही सिद्ध प्रमाण है — जब मनुष्य रोगग्रस्त होकर, मरने को होता हुआ, दुर्बलता को प्राप्त होकर मूर्च्छित हो जाता है, तब लोग कहते हैं — ‘इसका चित्त निकल गया; यह न सुनता है, न देखता है, न वाणी से बोलता है, न सोचता है।’ तब वह इस प्राण में ही एकरूप हो जाता है; तब वाणी सब नामों के साथ, नेत्र सब रूपों के साथ, श्रोत्र सब शब्दों के साथ और मन सब ध्यानों के साथ उसी में लीन हो जाते हैं। और जब वह इस शरीर से निकलता है, तब इन सबके साथ ही निकलता है।',
+        'One lives deprived of speech, for we see the dumb; one lives deprived of sight, for we see the blind; one lives deprived of hearing, for we see the deaf; one lives deprived of mind, for we see the simple-minded; one lives with arms cut off, one lives with thighs cut off — for thus we see. But it is prāṇa alone, the self of intelligence, that grasps this body and makes it rise up. Therefore one should worship it as the uktha. What is prāṇa, that is intelligence; what is intelligence, that is prāṇa. This is the evidence, this the understanding of it: when a man is so asleep that he sees no dream whatever, he becomes one in this prāṇa alone. Then speech goes into it with all names, the eye with all forms, the ear with all sounds, the mind with all thoughts. When he awakes, as sparks would fly out in all directions from a blazing fire, so from this self the prāṇas go forth each to its station; from the prāṇas the gods, from the gods the worlds. This is the proof of it: when a man, sick and about to die, sinks into weakness and falls into a stupor, they say of him: ‘His mind has departed; he does not hear, he does not see, he does not speak with speech, he does not think.’ Then he becomes one in this prāṇa alone. Then speech goes into it with all names, the eye with all forms, the ear with all sounds, the mind with all thoughts. And when he departs from this body, he departs together with all these.'
+      ),
+      M(
+        [
+          'वागेवास्मिन्सर्वाणि नामान्यभिविसृज्यते वाचा सर्वाणि नामान्याप्नोति।',
+          'प्राणोऽस्मिन्सर्वान्गन्धानभिविसृज्यते प्राणेन सर्वान्गन्धानाप्नोति।',
+          'चक्षुरस्मिन्सर्वाणि रूपाण्यभिविसृज्यते चक्षुषा सर्वाणि रूपाण्याप्नोति।',
+          'श्रोत्रमस्मिन्सर्वाञ्छब्दानभिविसृज्यते श्रोत्रेण सर्वाञ्छब्दानाप्नोति।',
+          'मनोऽस्मिन्सर्वाणि ध्यानान्यभिविसृज्यते मनसा सर्वाणि ध्यानान्याप्नोति।',
+          'सैषा प्राणे सर्वाप्तिः।',
+          'यो वै प्राणः सा प्रज्ञा या वा प्रज्ञा स प्राणः।',
+          'सह ह्येतावस्मिञ्छरीरे वसतः सहोत्क्रामतः।',
+          'अथ खलु यथास्यै प्रज्ञायै सर्वाणि भूतान्येकीभवन्ति तद्व्याख्यास्यामः॥',
+        ],
+        'वाणी इस (प्राण) में सब नामों को अर्पित कर देती है; वाणी के द्वारा वह सब नामों को प्राप्त करता है। घ्राण इसमें सब गन्धों को अर्पित करता है; घ्राण के द्वारा वह सब गन्धों को प्राप्त करता है। नेत्र इसमें सब रूपों को अर्पित करता है; नेत्र के द्वारा वह सब रूपों को प्राप्त करता है। श्रोत्र इसमें सब शब्दों को अर्पित करता है; श्रोत्र के द्वारा वह सब शब्दों को प्राप्त करता है। मन इसमें सब ध्यानों को अर्पित करता है; मन के द्वारा वह सब ध्यानों को प्राप्त करता है। यही प्राण में सबकी प्राप्ति है। जो प्राण है वही प्रज्ञा है और जो प्रज्ञा है वही प्राण है; क्योंकि ये दोनों साथ-साथ ही इस शरीर में रहते हैं और साथ-साथ ही निकलते हैं। अब, जिस प्रकार इस प्रज्ञा में सब भूत एक हो जाते हैं, उसकी हम व्याख्या करेंगे।',
+        'Speech gives up all names into it; by speech one obtains all names. The breath (smell) gives up all odours into it; by breath one obtains all odours. The eye gives up all forms into it; by the eye one obtains all forms. The ear gives up all sounds into it; by the ear one obtains all sounds. The mind gives up all thoughts into it; by the mind one obtains all thoughts. This is the total attainment in prāṇa. What is prāṇa, that is intelligence; what is intelligence, that is prāṇa; for together they dwell in this body and together they depart. Now we shall explain how all beings become one in this intelligence.'
+      ),
+      M(
+        [
+          'वागेवास्या एकमङ्गमदूदुहत्तस्यै नाम परस्तात्प्रतिविहिता भूतमात्रा।',
+          'प्राण एवास्या एकमङ्गमदूदुहत्तस्य गन्धः परस्तात्प्रतिविहिता भूतमात्रा।',
+          'चक्षुरेवास्या एकमङ्गमदूदुहत्तस्य रूपं परस्तात्प्रतिविहिता भूतमात्रा।',
+          'श्रोत्रमेवास्या एकमङ्गमदूदुहत्तस्य शब्दः परस्तात्प्रतिविहिता भूतमात्रा।',
+          'जिह्वैवास्या एकमङ्गमदूदुहत्तस्या अन्नरसः परस्तात्प्रतिविहिता भूतमात्रा।',
+          'हस्तावेवास्या एकमङ्गमदूदुहतां तयोः कर्म परस्तात्प्रतिविहिता भूतमात्रा।',
+          'शरीरमेवास्या एकमङ्गमदूदुहत्तस्य सुखदुःखे परस्तात्प्रतिविहिता भूतमात्रा।',
+          'उपस्थ एवास्या एकमङ्गमदूदुहत्तस्यानन्दो रतिः प्रजातिः परस्तात्प्रतिविहिता भूतमात्रा।',
+          'पादावेवास्या एकमङ्गमदूदुहतां तयोरित्या परस्तात्प्रतिविहिता भूतमात्रा।',
+          'प्रज्ञैवास्या एकमङ्गमदूदुहत्तस्यै धियो विज्ञातव्यं कामाः परस्तात्प्रतिविहिता भूतमात्रा॥',
+        ],
+        'वाणी ने ही इस (प्रज्ञा) का एक अंग दुहकर निकाला; नाम उसका बाहर स्थित अनुरूप भूतमात्रा (विषय) है। घ्राण ने इसका एक अंग निकाला; गन्ध उसकी बाहर स्थित भूतमात्रा है। नेत्र ने इसका एक अंग निकाला; रूप उसकी बाहर स्थित भूतमात्रा है। श्रोत्र ने इसका एक अंग निकाला; शब्द उसकी बाहर स्थित भूतमात्रा है। जिह्वा ने इसका एक अंग निकाला; अन्न का रस उसकी बाहर स्थित भूतमात्रा है। दोनों हाथों ने इसका एक अंग निकाला; कर्म उनकी बाहर स्थित भूतमात्रा है। शरीर ने इसका एक अंग निकाला; सुख और दुःख उसकी बाहर स्थित भूतमात्रा हैं। उपस्थ ने इसका एक अंग निकाला; आनन्द, रति और प्रजनन उसकी बाहर स्थित भूतमात्रा हैं। दोनों पैरों ने इसका एक अंग निकाला; गमन उनकी बाहर स्थित भूतमात्रा है। प्रज्ञा (मन) ने ही इसका एक अंग निकाला; विचार, जानने योग्य विषय और कामनाएँ उसकी बाहर स्थित भूतमात्रा हैं।',
+        'Speech drew out one portion of it (intelligence); name is its externally correlated element of being (bhūtamātrā). The breath drew out one portion of it; odour is its externally correlated element. The eye drew out one portion of it; form is its externally correlated element. The ear drew out one portion of it; sound is its externally correlated element. The tongue drew out one portion of it; the taste of food is its externally correlated element. The two hands drew out one portion of it; action is their externally correlated element. The body drew out one portion of it; pleasure and pain are its externally correlated element. The organ of generation drew out one portion of it; bliss, delight and procreation are its externally correlated element. The two feet drew out one portion of it; movement is their externally correlated element. Intelligence (mind) drew out one portion of it; thoughts, what is to be known, and desires are its externally correlated element.'
+      ),
+      M(
+        [
+          'प्रज्ञया वाचं समारुह्य वाचा सर्वाणि नामान्याप्नोति।',
+          'प्रज्ञया प्राणं समारुह्य प्राणेन सर्वान्गन्धानाप्नोति।',
+          'प्रज्ञया चक्षुः समारुह्य चक्षुषा सर्वाणि रूपाण्याप्नोति।',
+          'प्रज्ञया श्रोत्रं समारुह्य श्रोत्रेण सर्वाञ्छब्दानाप्नोति।',
+          'प्रज्ञया जिह्वां समारुह्य जिह्वया सर्वानन्नरसानाप्नोति।',
+          'प्रज्ञया हस्तौ समारुह्य हस्ताभ्यां सर्वाणि कर्माण्याप्नोति।',
+          'प्रज्ञया शरीरं समारुह्य शरीरेण सुखदुःखे आप्नोति।',
+          'प्रज्ञयोपस्थं समारुह्योपस्थेनानन्दं रतिं प्रजातिमाप्नोति।',
+          'प्रज्ञया पादौ समारुह्य पादाभ्यां सर्वा इत्या आप्नोति।',
+          'प्रज्ञयैव धियं समारुह्य प्रज्ञयैव धियो विज्ञातव्यं कामानाप्नोति॥',
+        ],
+        'प्रज्ञा के द्वारा वाणी पर आरूढ़ होकर मनुष्य वाणी से सब नामों को प्राप्त करता है। प्रज्ञा से घ्राण पर आरूढ़ होकर घ्राण से सब गन्धों को प्राप्त करता है। प्रज्ञा से नेत्र पर आरूढ़ होकर नेत्र से सब रूपों को प्राप्त करता है। प्रज्ञा से श्रोत्र पर आरूढ़ होकर श्रोत्र से सब शब्दों को प्राप्त करता है। प्रज्ञा से जिह्वा पर आरूढ़ होकर जिह्वा से सब अन्नरसों को प्राप्त करता है। प्रज्ञा से हाथों पर आरूढ़ होकर हाथों से सब कर्मों को प्राप्त करता है। प्रज्ञा से शरीर पर आरूढ़ होकर शरीर से सुख-दुःख को प्राप्त करता है। प्रज्ञा से उपस्थ पर आरूढ़ होकर उपस्थ से आनन्द, रति और प्रजनन को प्राप्त करता है। प्रज्ञा से पैरों पर आरूढ़ होकर पैरों से सब गतियों को प्राप्त करता है। प्रज्ञा से ही बुद्धि पर आरूढ़ होकर प्रज्ञा से ही विचारों, ज्ञेय विषयों और कामनाओं को प्राप्त करता है।',
+        'Having mounted speech by intelligence, one obtains all names by speech. Having mounted the breath by intelligence, one obtains all odours by the breath. Having mounted the eye by intelligence, one obtains all forms by the eye. Having mounted the ear by intelligence, one obtains all sounds by the ear. Having mounted the tongue by intelligence, one obtains all tastes of food by the tongue. Having mounted the hands by intelligence, one obtains all actions by the hands. Having mounted the body by intelligence, one obtains pleasure and pain by the body. Having mounted the organ of generation by intelligence, one obtains bliss, delight and procreation by it. Having mounted the feet by intelligence, one obtains all movements by the feet. Having mounted thought by intelligence alone, by intelligence alone one obtains thoughts, what is to be known, and desires.'
+      ),
+      M(
+        [
+          'न हि प्रज्ञापेता वाङ्नाम किंचन प्रज्ञापयेत्।',
+          'अन्यत्र मे मनोऽभूदित्याह नाहमेतन्नाम प्राज्ञासिषमिति।',
+          'न हि प्रज्ञापेतः प्राणो गन्धं कंचन प्रज्ञापयेत्।',
+          'अन्यत्र मे मनोऽभूदित्याह नाहमेतं गन्धं प्राज्ञासिषमिति।',
+          'न हि प्रज्ञापेतं चक्षू रूपं किंचन प्रज्ञापयेत्।',
+          'अन्यत्र मे मनोऽभूदित्याह नाहमेतद्रूपं प्राज्ञासिषमिति।',
+          'न हि प्रज्ञापेतं श्रोत्रं शब्दं कंचन प्रज्ञापयेत्।',
+          'अन्यत्र मे मनोऽभूदित्याह नाहमेतं शब्दं प्राज्ञासिषमिति।',
+          'न हि प्रज्ञापेता जिह्वान्नरसं कंचन प्रज्ञापयेत्।',
+          'अन्यत्र मे मनोऽभूदित्याह नाहमेतमन्नरसं प्राज्ञासिषमिति।',
+          'न हि प्रज्ञापेतौ हस्तौ कर्म किंचन प्रज्ञापयेताम्।',
+          'अन्यत्र नौ मनोऽभूदित्याहतुर्नावामेतत्कर्म प्राज्ञासिष्वेति।',
+          'न हि प्रज्ञापेतं शरीरं सुखं न दुःखं किंचन प्रज्ञापयेत्।',
+          'अन्यत्र मे मनोऽभूदित्याह नाहमेतत्सुखं न दुःखं प्राज्ञासिषमिति।',
+          'न हि प्रज्ञापेत उपस्थ आनन्दं न रतिं न प्रजातिं कांचन प्रज्ञापयेत्।',
+          'अन्यत्र मे मनोऽभूदित्याह नाहमेतमानन्दं न रतिं न प्रजातिं प्राज्ञासिषमिति।',
+          'न हि प्रज्ञापेतौ पादावित्यां कांचन प्रज्ञापयेताम्।',
+          'अन्यत्र नौ मनोऽभूदित्याहतुर्नावामेतामित्यां प्राज्ञासिष्वेति।',
+          'न हि प्रज्ञापेता धीः काचन सिध्येन्न प्रज्ञातव्यं प्रज्ञायेत॥',
+        ],
+        'प्रज्ञा से रहित वाणी किसी भी नाम का ज्ञान नहीं करा सकती; (ऐसी स्थिति में मनुष्य) कहता है — ‘मेरा मन दूसरी ओर था, मैंने यह नाम नहीं जाना।’ प्रज्ञा से रहित घ्राण किसी गन्ध का ज्ञान नहीं करा सकता; वह कहता है — ‘मेरा मन दूसरी ओर था, मैंने यह गन्ध नहीं जानी।’ प्रज्ञा से रहित नेत्र किसी रूप का ज्ञान नहीं करा सकता; वह कहता है — ‘मेरा मन दूसरी ओर था, मैंने यह रूप नहीं जाना।’ प्रज्ञा से रहित श्रोत्र किसी शब्द का ज्ञान नहीं करा सकता; वह कहता है — ‘मेरा मन दूसरी ओर था, मैंने यह शब्द नहीं जाना।’ प्रज्ञा से रहित जिह्वा किसी अन्नरस का ज्ञान नहीं करा सकती; वह कहता है — ‘मेरा मन दूसरी ओर था, मैंने यह रस नहीं जाना।’ प्रज्ञा से रहित दोनों हाथ किसी कर्म का ज्ञान नहीं करा सकते; वे कहते हैं — ‘हमारा मन दूसरी ओर था, हमने यह कर्म नहीं जाना।’ प्रज्ञा से रहित शरीर किसी सुख या दुःख का ज्ञान नहीं करा सकता; वह कहता है — ‘मेरा मन दूसरी ओर था, मैंने यह सुख या दुःख नहीं जाना।’ प्रज्ञा से रहित उपस्थ किसी आनन्द, रति या प्रजनन का ज्ञान नहीं करा सकता; वह कहता है — ‘मेरा मन दूसरी ओर था, मैंने यह आनन्द, रति या प्रजनन नहीं जाना।’ प्रज्ञा से रहित दोनों पैर किसी गमन का ज्ञान नहीं करा सकते; वे कहते हैं — ‘हमारा मन दूसरी ओर था, हमने यह गमन नहीं जाना।’ प्रज्ञा के बिना कोई भी विचार सिद्ध नहीं होता और न कोई ज्ञेय वस्तु जानी जाती है।',
+        'For without intelligence speech would not make known any name whatever: ‘My mind was elsewhere,’ one says, ‘I did not perceive that name.’ For without intelligence the breath would not make known any odour: ‘My mind was elsewhere,’ one says, ‘I did not perceive that odour.’ For without intelligence the eye would not make known any form: ‘My mind was elsewhere,’ one says, ‘I did not perceive that form.’ For without intelligence the ear would not make known any sound: ‘My mind was elsewhere,’ one says, ‘I did not perceive that sound.’ For without intelligence the tongue would not make known any taste of food: ‘My mind was elsewhere,’ one says, ‘I did not perceive that taste.’ For without intelligence the two hands would not make known any action: ‘Our mind was elsewhere,’ they say, ‘we did not perceive that action.’ For without intelligence the body would not make known any pleasure or pain: ‘My mind was elsewhere,’ one says, ‘I did not perceive that pleasure or pain.’ For without intelligence the organ of generation would not make known any bliss, delight or procreation: ‘My mind was elsewhere,’ one says, ‘I did not perceive that bliss, delight or procreation.’ For without intelligence the two feet would not make known any movement: ‘Our mind was elsewhere,’ they say, ‘we did not perceive that movement.’ Without intelligence no thought whatever would succeed, nothing knowable would be known.'
+      ),
+      M(
+        [
+          'न वाचं विजिज्ञासीत वक्तारं विद्यात्।',
+          'न गन्धं विजिज्ञासीत घ्रातारं विद्यात्।',
+          'न रूपं विजिज्ञासीत द्रष्टारं विद्यात्।',
+          'न शब्दं विजिज्ञासीत श्रोतारं विद्यात्।',
+          'नान्नरसं विजिज्ञासीतान्नरसस्य विज्ञातारं विद्यात्।',
+          'न कर्म विजिज्ञासीत कर्तारं विद्यात्।',
+          'न सुखदुःखे विजिज्ञासीत सुखदुःखयोर्विज्ञातारं विद्यात्।',
+          'नानन्दं न रतिं न प्रजातिं विजिज्ञासीतानन्दस्य रतेः प्रजातेर्विज्ञातारं विद्यात्।',
+          'नेत्यां विजिज्ञासीतैतारं विद्यात्।',
+          'न मनो विजिज्ञासीत मन्तारं विद्यात्।',
+          'ता वा एता दशैव भूतमात्रा अधिप्रज्ञं दश प्रज्ञामात्रा अधिभूतम्।',
+          'यद्धि भूतमात्रा न स्युर्न प्रज्ञामात्राः स्युः।',
+          'यद्वा प्रज्ञामात्रा न स्युर्न भूतमात्राः स्युः।',
+          'न ह्यन्यतरतो रूपं किंचन सिध्येत्।',
+          'नो एतन्नाना।',
+          'तद्यथा रथस्यारेषु नेमिरर्पिता नाभावरा अर्पिता एवमेवैता भूतमात्राः प्रज्ञामात्रास्वर्पिताः प्रज्ञामात्राः प्राणेऽर्पिताः॥',
+        ],
+        'वाणी को जानने की इच्छा न करे, बोलनेवाले को जाने। गन्ध को जानने की इच्छा न करे, सूँघनेवाले को जाने। रूप को जानने की इच्छा न करे, देखनेवाले को जाने। शब्द को जानने की इच्छा न करे, सुननेवाले को जाने। अन्नरस को जानने की इच्छा न करे, अन्नरस के जाननेवाले को जाने। कर्म को जानने की इच्छा न करे, करनेवाले को जाने। सुख-दुःख को जानने की इच्छा न करे, सुख-दुःख के जाननेवाले को जाने। आनन्द, रति और प्रजनन को जानने की इच्छा न करे, आनन्द, रति और प्रजनन के जाननेवाले को जाने। गति को जानने की इच्छा न करे, चलनेवाले को जाने। मन को जानने की इच्छा न करे, मनन करनेवाले को जाने। ये दस ही भूतमात्राएँ प्रज्ञा के आश्रित हैं और दस प्रज्ञामात्राएँ भूतों के आश्रित हैं। यदि भूतमात्राएँ न हों तो प्रज्ञामात्राएँ भी न हों, और यदि प्रज्ञामात्राएँ न हों तो भूतमात्राएँ भी न हों; क्योंकि किसी एक से ही कोई रूप सिद्ध नहीं होता। और ये (दोनों) भिन्न भी नहीं हैं। जैसे रथ की नेमि अरों पर टिकी होती है और अरे नाभि पर टिके होते हैं, वैसे ही ये भूतमात्राएँ प्रज्ञामात्राओं पर टिकी हैं और प्रज्ञामात्राएँ प्राण पर टिकी हैं।',
+        'One should not seek to know speech; one should know the speaker. One should not seek to know odour; one should know the smeller. One should not seek to know form; one should know the seer. One should not seek to know sound; one should know the hearer. One should not seek to know the taste of food; one should know the knower of the taste of food. One should not seek to know action; one should know the doer. One should not seek to know pleasure and pain; one should know the knower of pleasure and pain. One should not seek to know bliss, delight and procreation; one should know the knower of bliss, delight and procreation. One should not seek to know movement; one should know the mover. One should not seek to know the mind; one should know the thinker. These ten elements of being (bhūtamātrā) rest on intelligence, and the ten elements of intelligence (prajñāmātrā) rest on being. For if there were no elements of being, there would be no elements of intelligence; and if there were no elements of intelligence, there would be no elements of being; for from either one alone no form whatever would come about. Nor are these separate. As in a chariot the felly is fixed on the spokes and the spokes on the hub, so these elements of being are fixed on the elements of intelligence, and the elements of intelligence are fixed on prāṇa.'
+      ),
+      M(
+        [
+          'स एष प्राण एव प्रज्ञात्मानन्दोऽजरोऽमृतः।',
+          'न साधुना कर्मणा भूयान्भवति नो एवासाधुना कनीयान्।',
+          'एष ह्येवैनं साधु कर्म कारयति तं यमेभ्यो लोकेभ्य उन्निनीषते।',
+          'एष उ एवैनमसाधु कर्म कारयति तं यमधो निनीषते।',
+          'एष लोकपाल एष लोकाधिपतिरेष सर्वेशः।',
+          'स म आत्मेति विद्यात्स म आत्मेति विद्यात्॥',
+        ],
+        'वही यह प्राण ही प्रज्ञात्मा, आनन्दस्वरूप, अजर और अमर है। यह शुभ कर्म से बड़ा नहीं होता और अशुभ कर्म से छोटा नहीं होता। यही जिसे इन लोकों से ऊपर ले जाना चाहता है, उससे शुभ कर्म कराता है और यही जिसे नीचे ले जाना चाहता है, उससे अशुभ कर्म कराता है। यही लोकपाल है, यही लोकाधिपति है, यही सबका ईश्वर है। ‘वह मेरा आत्मा है’ — ऐसा जाने; ‘वह मेरा आत्मा है’ — ऐसा जाने।',
+        'This very prāṇa is the self of intelligence — bliss, unageing, immortal. It does not become greater by good action, nor smaller by bad action. For it is this that makes him whom it wishes to lead up from these worlds perform good action; and it is this that makes him whom it wishes to lead downward perform bad action. It is the guardian of the worlds, it is the sovereign of the worlds, it is the lord of all. ‘He is my self’ — so one should know; ‘he is my self’ — so one should know.'
+      ),
+    ],
+    // ── Adhyāya 4 ──
+    [
+      M(
+        [
+          'अथ ह वै गार्ग्यो बालाकिरनूचानः संस्पष्ट आस।',
+          'सोऽवसदुशीनरेषु स वसन्मत्स्येषु कुरुपञ्चालेषु काशीविदेहेष्विति।',
+          'स हाजातशत्रुं काश्यमेत्योवाच ब्रह्म ते ब्रवाणीति।',
+          'तं होवाचाजातशत्रुः सहस्रं दद्म इत्येतस्यां वाचि जनको जनक इति वा उ जना धावन्तीति॥',
+        ],
+        'गर्ग-गोत्र में उत्पन्न बालाकि नामक एक विद्वान् ब्राह्मण था, जो वेदों का प्रवक्ता और प्रसिद्ध था। वह उशीनर देशों में रहा, मत्स्य देशों में, कुरु-पञ्चाल देशों में तथा काशी और विदेह देशों में भी रहा। वह काशी के राजा अजातशत्रु के पास जाकर बोला — ‘मैं तुम्हें ब्रह्म का उपदेश करूँगा।’ अजातशत्रु ने उससे कहा — ‘इस बात (वचन) के लिये मैं तुम्हें एक सहस्र गौएँ देता हूँ; लोग तो ‘जनक, जनक’ कहते हुए (दान और ज्ञान के लिये) जनक की ओर ही दौड़ते हैं।’',
+        'Now there was Gārgya Bālāki, learned in the Veda and renowned. He had lived among the Uśīnaras, among the Matsyas, among the Kuru-Pañcālas and among the Kāśī-Videhas. He came to Ajātaśatru of Kāśī and said: ‘Let me declare brahman to you.’ Ajātaśatru said to him: ‘We give you a thousand cows for that speech; for people run about crying “Janaka, Janaka!”’'
+      ),
+      M(
+        [
+          'आदित्ये बृहच्चन्द्रमस्यन्नं विद्युति सत्यं स्तनयित्नौ शब्दो वायाविन्द्रो वैकुण्ठ आकाशे पूर्णमग्नौ विषासहिरप्सु तेज इत्यधिदैवतम्।',
+          'अथाध्यात्मम्।',
+          'आदर्शे प्रतिरूपश्छायायां द्वितीयः प्रतिश्रुत्कायामसुरिति शब्दे मृत्युः स्वप्ने यमः शरीरे प्रजापतिर्दक्षिणेऽक्षिणि वाचः सव्येऽक्षिणि सत्यस्य॥',
+        ],
+        '(बालाकि जिनकी उपासना बताता है, वे ये हैं —) आदित्य में ‘महान्’, चन्द्रमा में ‘अन्न’, विद्युत् में ‘सत्य’, मेघगर्जन में ‘शब्द’, वायु में ‘इन्द्र वैकुण्ठ’, आकाश में ‘पूर्ण’, अग्नि में ‘विषासहि’ (सब कुछ सहनेवाला) और जल में ‘तेज’ — यह अधिदैवत है। अब अध्यात्म — दर्पण में ‘प्रतिरूप’, छाया में ‘द्वितीय’, प्रतिध्वनि में ‘असु’ (प्राण), शब्द में ‘मृत्यु’, स्वप्न में ‘यम’, शरीर में ‘प्रजापति’, दाहिने नेत्र में ‘वाणी’ का और बायें नेत्र में ‘सत्य’ का (पुरुष)।',
+        '(The persons Bālāki proposes are these:) in the sun, the Great; in the moon, food; in lightning, truth; in thunder, sound; in the wind, Indra Vaikuṇṭha; in space, the Full; in fire, the Vanquisher; in the waters, brilliance — this with regard to the divinities. Now with regard to the self: in the mirror, the likeness; in the shadow, the double; in the echo, life (asu); in sound, death; in dream, Yama; in the body, Prajāpati; in the right eye, (the person) of speech; in the left eye, (the person) of truth.'
+      ),
+      M(
+        [
+          'स होवाच बालाकिर्य एवैष आदित्ये पुरुषस्तमेवाहमुपास इति।',
+          'तं होवाचाजातशत्रुर्मा मैतस्मिन्संवदयिष्ठा बृहत्पाण्डरवासा अतिष्ठाः सर्वेषां भूतानां मूर्धेति वा अहमेतमुपास इति।',
+          'स यो हैतमेवमुपास्तेऽतिष्ठाः सर्वेषां भूतानां मूर्धा भवति॥',
+        ],
+        'बालाकि बोला — ‘यह जो आदित्य में पुरुष है, उसी की मैं (ब्रह्म रूप से) उपासना करता हूँ।’ अजातशत्रु ने उससे कहा — ‘नहीं, नहीं, इसके विषय में मुझसे चर्चा मत करो; मैं तो इसकी ‘महान्, श्वेत वस्त्र धारण करनेवाला, सबसे आगे स्थित, समस्त भूतों का मस्तक’ — इस रूप में उपासना करता हूँ। जो इसकी इस प्रकार उपासना करता है, वह सबसे आगे स्थित और समस्त भूतों का मस्तक होता है।’',
+        'Bālāki said: ‘The person who is in the sun — him I worship (as brahman).’ Ajātaśatru said to him: ‘No, no! Do not make me talk about him. I worship him as the great one clad in white, the pre-eminent, the head of all beings. Whoever worships him thus becomes pre-eminent, the head of all beings.’'
+      ),
+      M(
+        [
+          'स होवाच बालाकिर्य एवैष चन्द्रमसि पुरुषस्तमेवाहमुपास इति।',
+          'तं होवाचाजातशत्रुर्मा मैतस्मिन्संवदयिष्ठाः सोमो राजान्नस्यात्मेति वा अहमेतमुपास इति।',
+          'स यो हैतमेवमुपास्तेऽन्नस्यात्मा भवति॥',
+        ],
+        'बालाकि बोला — ‘यह जो चन्द्रमा में पुरुष है, उसी की मैं उपासना करता हूँ।’ अजातशत्रु ने उससे कहा — ‘नहीं, नहीं, इसके विषय में मुझसे चर्चा मत करो; मैं तो इसकी ‘राजा सोम, अन्न का आत्मा’ — इस रूप में उपासना करता हूँ। जो इसकी इस प्रकार उपासना करता है, वह अन्न का आत्मा होता है।’',
+        'Bālāki said: ‘The person who is in the moon — him I worship.’ Ajātaśatru said to him: ‘No, no! Do not make me talk about him. I worship him as King Soma, the self of food. Whoever worships him thus becomes the self of food.’'
+      ),
+      M(
+        [
+          'स होवाच बालाकिर्य एवैष विद्युति पुरुषस्तमेवाहमुपास इति।',
+          'तं होवाचाजातशत्रुर्मा मैतस्मिन्संवदयिष्ठास्तेजस आत्मेति वा अहमेतमुपास इति।',
+          'स यो हैतमेवमुपास्ते तेजस आत्मा भवति॥',
+        ],
+        'बालाकि बोला — ‘यह जो विद्युत् में पुरुष है, उसी की मैं उपासना करता हूँ।’ अजातशत्रु ने उससे कहा — ‘नहीं, नहीं, इसके विषय में मुझसे चर्चा मत करो; मैं तो इसकी ‘तेज का आत्मा’ — इस रूप में उपासना करता हूँ। जो इसकी इस प्रकार उपासना करता है, वह तेज का आत्मा होता है।’',
+        'Bālāki said: ‘The person who is in lightning — him I worship.’ Ajātaśatru said to him: ‘No, no! Do not make me talk about him. I worship him as the self of brilliance. Whoever worships him thus becomes the self of brilliance.’'
+      ),
+      M(
+        [
+          'स होवाच बालाकिर्य एवैष स्तनयित्नौ पुरुषस्तमेवाहमुपास इति।',
+          'तं होवाचाजातशत्रुर्मा मैतस्मिन्संवदयिष्ठाः शब्दस्यात्मेति वा अहमेतमुपास इति।',
+          'स यो हैतमेवमुपास्ते शब्दस्यात्मा भवति॥',
+        ],
+        'बालाकि बोला — ‘यह जो मेघगर्जन में पुरुष है, उसी की मैं उपासना करता हूँ।’ अजातशत्रु ने उससे कहा — ‘नहीं, नहीं, इसके विषय में मुझसे चर्चा मत करो; मैं तो इसकी ‘शब्द का आत्मा’ — इस रूप में उपासना करता हूँ। जो इसकी इस प्रकार उपासना करता है, वह शब्द का आत्मा होता है।’',
+        'Bālāki said: ‘The person who is in thunder — him I worship.’ Ajātaśatru said to him: ‘No, no! Do not make me talk about him. I worship him as the self of sound. Whoever worships him thus becomes the self of sound.’'
+      ),
+      M(
+        [
+          'स होवाच बालाकिर्य एवैष आकाशे पुरुषस्तमेवाहमुपास इति।',
+          'तं होवाचाजातशत्रुर्मा मैतस्मिन्संवदयिष्ठाः पूर्णमप्रवर्ति ब्रह्मेति वा अहमेतमुपास इति।',
+          'स यो हैतमेवमुपास्ते पूर्यते प्रजया पशुभिः।',
+          'नो एव स्वयं नास्य प्रजा पुरा कालात्प्रवर्तते॥',
+        ],
+        'बालाकि बोला — ‘यह जो आकाश में पुरुष है, उसी की मैं उपासना करता हूँ।’ अजातशत्रु ने उससे कहा — ‘नहीं, नहीं, इसके विषय में मुझसे चर्चा मत करो; मैं तो इसकी ‘पूर्ण और निष्क्रिय (अप्रवर्ती) ब्रह्म’ — इस रूप में उपासना करता हूँ। जो इसकी इस प्रकार उपासना करता है, वह संतान और पशुओं से भरपूर होता है; न वह स्वयं और न उसकी संतान समय से पहले (इस लोक से) जाती है।’',
+        'Bālāki said: ‘The person who is in space — him I worship.’ Ajātaśatru said to him: ‘No, no! Do not make me talk about him. I worship him as the full, unmoving brahman. Whoever worships him thus is filled with offspring and cattle; neither he himself nor his offspring passes away before the time.’'
+      ),
+      M(
+        [
+          'स होवाच बालाकिर्य एवैष वायौ पुरुषस्तमेवाहमुपास इति।',
+          'तं होवाचाजातशत्रुर्मा मैतस्मिन्संवदयिष्ठा इन्द्रो वैकुण्ठोऽपराजिता सेनेति वा अहमेतमुपास इति।',
+          'स यो हैतमेवमुपास्ते जिष्णुर्ह वा अपराजिष्णुरन्यतस्त्यजायी भवति॥',
+        ],
+        'बालाकि बोला — ‘यह जो वायु में पुरुष है, उसी की मैं उपासना करता हूँ।’ अजातशत्रु ने उससे कहा — ‘नहीं, नहीं, इसके विषय में मुझसे चर्चा मत करो; मैं तो इसकी ‘इन्द्र वैकुण्ठ, अजेय सेना’ — इस रूप में उपासना करता हूँ। जो इसकी इस प्रकार उपासना करता है, वह विजयी, अपराजेय और शत्रुओं को जीतनेवाला होता है।’',
+        'Bālāki said: ‘The person who is in the wind — him I worship.’ Ajātaśatru said to him: ‘No, no! Do not make me talk about him. I worship him as Indra Vaikuṇṭha, the unconquered army. Whoever worships him thus becomes victorious, unconquerable, a conqueror of his foes.’'
+      ),
+      M(
+        [
+          'स होवाच बालाकिर्य एवैषोऽग्नौ पुरुषस्तमेवाहमुपास इति।',
+          'तं होवाचाजातशत्रुर्मा मैतस्मिन्संवदयिष्ठा विषासहिरिति वा अहमेतमुपास इति।',
+          'स यो हैतमेवमुपास्ते विषासहिर्ह वा अन्येषु भवति॥',
+        ],
+        'बालाकि बोला — ‘यह जो अग्नि में पुरुष है, उसी की मैं उपासना करता हूँ।’ अजातशत्रु ने उससे कहा — ‘नहीं, नहीं, इसके विषय में मुझसे चर्चा मत करो; मैं तो इसकी ‘विषासहि’ (सबको सहन कर लेनेवाला, सबको दबा देनेवाला) — इस रूप में उपासना करता हूँ। जो इसकी इस प्रकार उपासना करता है, वह दूसरों के बीच विषासहि (सबको वश में करनेवाला) होता है।’',
+        'Bālāki said: ‘The person who is in fire — him I worship.’ Ajātaśatru said to him: ‘No, no! Do not make me talk about him. I worship him as the Vanquisher. Whoever worships him thus becomes a vanquisher among others.’'
+      ),
+      M(
+        [
+          'स होवाच बालाकिर्य एवैषोऽप्सु पुरुषस्तमेवाहमुपास इति।',
+          'तं होवाचाजातशत्रुर्मा मैतस्मिन्संवदयिष्ठा नाम्न आत्मेति वा अहमेतमुपास इति।',
+          'स यो हैतमेवमुपास्ते नाम्न आत्मा भवति।',
+          'इत्यधिदैवतम्।',
+          'अथाध्यात्मम्॥',
+        ],
+        'बालाकि बोला — ‘यह जो जल में पुरुष है, उसी की मैं उपासना करता हूँ।’ अजातशत्रु ने उससे कहा — ‘नहीं, नहीं, इसके विषय में मुझसे चर्चा मत करो; मैं तो इसकी ‘नाम का आत्मा’ — इस रूप में उपासना करता हूँ। जो इसकी इस प्रकार उपासना करता है, वह नाम का आत्मा होता है।’ यह अधिदैवत (उपासना) हुई। अब अध्यात्म (उपासना) कहते हैं।',
+        'Bālāki said: ‘The person who is in the waters — him I worship.’ Ajātaśatru said to him: ‘No, no! Do not make me talk about him. I worship him as the self of name. Whoever worships him thus becomes the self of name.’ So much with regard to the divinities. Now with regard to the self.'
+      ),
+      M(
+        [
+          'स होवाच बालाकिर्य एवैष आदर्शे पुरुषस्तमेवाहमुपास इति।',
+          'तं होवाचाजातशत्रुर्मा मैतस्मिन्संवदयिष्ठाः प्रतिरूप इति वा अहमेतमुपास इति।',
+          'स यो हैतमेवमुपास्ते प्रतिरूपो हैवास्य प्रजायामाजायते नाप्रतिरूपः॥',
+        ],
+        'बालाकि बोला — ‘यह जो दर्पण में पुरुष है, उसी की मैं उपासना करता हूँ।’ अजातशत्रु ने उससे कहा — ‘नहीं, नहीं, इसके विषय में मुझसे चर्चा मत करो; मैं तो इसकी ‘प्रतिरूप’ (अनुरूप प्रतिबिम्ब) — इस रूप में उपासना करता हूँ। जो इसकी इस प्रकार उपासना करता है, उसकी संतान में उसके अनुरूप ही (पुत्र) उत्पन्न होता है, अननुरूप नहीं।’',
+        'Bālāki said: ‘The person who is in the mirror — him I worship.’ Ajātaśatru said to him: ‘No, no! Do not make me talk about him. I worship him as the likeness. Whoever worships him thus — a likeness of him is born among his offspring, not one unlike him.’'
+      ),
+      M(
+        [
+          'स होवाच बालाकिर्य एवैष प्रतिश्रुत्कायां पुरुषस्तमेवाहमुपास इति।',
+          'तं होवाचाजातशत्रुर्मा मैतस्मिन्संवदयिष्ठा द्वितीयोऽनपग इति वा अहमेतमुपास इति।',
+          'स यो हैतमेवमुपास्ते विन्दते द्वितीयाद्द्वितीयवान्भवति॥',
+        ],
+        'बालाकि बोला — ‘यह जो प्रतिध्वनि में पुरुष है, उसी की मैं उपासना करता हूँ।’ अजातशत्रु ने उससे कहा — ‘नहीं, नहीं, इसके विषय में मुझसे चर्चा मत करो; मैं तो इसकी ‘साथ न छोड़नेवाला दूसरा (साथी)’ — इस रूप में उपासना करता हूँ। जो इसकी इस प्रकार उपासना करता है, वह दूसरे (साथी) को प्राप्त करता है और साथीवाला होता है।’',
+        'Bālāki said: ‘The person who is in the echo — him I worship.’ Ajātaśatru said to him: ‘No, no! Do not make me talk about him. I worship him as the second who never departs. Whoever worships him thus obtains a second from his second; he becomes one who has a companion.’'
+      ),
+      M(
+        [
+          'स होवाच बालाकिर्य एवैष शब्दः पुरुषमन्वेति तमेवाहमुपास इति।',
+          'तं होवाचाजातशत्रुर्मा मैतस्मिन्संवदयिष्ठा असुरिति वा अहमेतमुपास इति।',
+          'स यो हैतमेवमुपास्ते नो एव स्वयं नास्य प्रजा पुरा कालात्संमोहमेति॥',
+        ],
+        'बालाकि बोला — ‘यह जो शब्द मनुष्य के पीछे-पीछे चलता है, उसी की मैं उपासना करता हूँ।’ अजातशत्रु ने उससे कहा — ‘नहीं, नहीं, इसके विषय में मुझसे चर्चा मत करो; मैं तो इसकी ‘असु’ (प्राण) — इस रूप में उपासना करता हूँ। जो इसकी इस प्रकार उपासना करता है, न वह स्वयं और न उसकी संतान समय से पहले मूर्च्छा (मोह) को प्राप्त होती है।’',
+        'Bālāki said: ‘The sound that follows a man as he goes — him I worship.’ Ajātaśatru said to him: ‘No, no! Do not make me talk about him. I worship him as life (asu). Whoever worships him thus — neither he himself nor his offspring falls into a stupor before the time.’'
+      ),
+      M(
+        [
+          'स होवाच बालाकिर्य एवैष छायायां पुरुषस्तमेवाहमुपास इति।',
+          'तं होवाचाजातशत्रुर्मा मैतस्मिन्संवदयिष्ठा मृत्युरिति वा अहमेतमुपास इति।',
+          'स यो हैतमेवमुपास्ते नो एव स्वयं नास्य प्रजा पुरा कालात्प्रमीयते॥',
+        ],
+        'बालाकि बोला — ‘यह जो छाया में पुरुष है, उसी की मैं उपासना करता हूँ।’ अजातशत्रु ने उससे कहा — ‘नहीं, नहीं, इसके विषय में मुझसे चर्चा मत करो; मैं तो इसकी ‘मृत्यु’ — इस रूप में उपासना करता हूँ। जो इसकी इस प्रकार उपासना करता है, न वह स्वयं और न उसकी संतान समय से पहले मरती है।’',
+        'Bālāki said: ‘The person who is in the shadow — him I worship.’ Ajātaśatru said to him: ‘No, no! Do not make me talk about him. I worship him as death. Whoever worships him thus — neither he himself nor his offspring dies before the time.’'
+      ),
+      M(
+        [
+          'स होवाच बालाकिर्य एवैष शारीरः पुरुषस्तमेवाहमुपास इति।',
+          'तं होवाचाजातशत्रुर्मा मैतस्मिन्संवदयिष्ठाः प्रजापतिरिति वा अहमेतमुपास इति।',
+          'स यो हैतमेवमुपास्ते प्रजायते प्रजया पशुभिः॥',
+        ],
+        'बालाकि बोला — ‘यह जो शरीर में पुरुष है, उसी की मैं उपासना करता हूँ।’ अजातशत्रु ने उससे कहा — ‘नहीं, नहीं, इसके विषय में मुझसे चर्चा मत करो; मैं तो इसकी ‘प्रजापति’ — इस रूप में उपासना करता हूँ। जो इसकी इस प्रकार उपासना करता है, वह संतान और पशुओं से बढ़ता है।’',
+        'Bālāki said: ‘The person who is in the body — him I worship.’ Ajātaśatru said to him: ‘No, no! Do not make me talk about him. I worship him as Prajāpati. Whoever worships him thus multiplies in offspring and cattle.’'
+      ),
+      M(
+        [
+          'स होवाच बालाकिर्य एवैष प्राज्ञ आत्मा येनैतत्सुप्तः स्वप्न्यया चरति तमेवाहमुपास इति।',
+          'तं होवाचाजातशत्रुर्मा मैतस्मिन्संवदयिष्ठा यमो राजेति वा अहमेतमुपास इति।',
+          'स यो हैतमेवमुपास्ते सर्वं हास्मा इदं श्रैष्ठ्याय यम्यते॥',
+        ],
+        'बालाकि बोला — ‘यह जो प्राज्ञ आत्मा है, जिसके द्वारा सोया हुआ पुरुष स्वप्न में विचरता है, उसी की मैं उपासना करता हूँ।’ अजातशत्रु ने उससे कहा — ‘नहीं, नहीं, इसके विषय में मुझसे चर्चा मत करो; मैं तो इसकी ‘राजा यम’ — इस रूप में उपासना करता हूँ। जो इसकी इस प्रकार उपासना करता है, उसकी श्रेष्ठता के लिये यह सब कुछ नियन्त्रित (वश में) हो जाता है।’',
+        'Bālāki said: ‘The intelligent self by which a man, asleep, moves about in dream — him I worship.’ Ajātaśatru said to him: ‘No, no! Do not make me talk about him. I worship him as King Yama. Whoever worships him thus — this whole world is brought under control for his pre-eminence.’'
+      ),
+      M(
+        [
+          'स होवाच बालाकिर्य एवैष दक्षिणेऽक्षन्पुरुषस्तमेवाहमुपास इति।',
+          'तं होवाचाजातशत्रुर्मा मैतस्मिन्संवदयिष्ठा नाम्न आत्माग्नेरात्मा ज्योतिष आत्मेति वा अहमेतमुपास इति।',
+          'स यो हैतमेवमुपास्त एतेषां सर्वेषामात्मा भवति॥',
+        ],
+        'बालाकि बोला — ‘यह जो दाहिने नेत्र में पुरुष है, उसी की मैं उपासना करता हूँ।’ अजातशत्रु ने उससे कहा — ‘नहीं, नहीं, इसके विषय में मुझसे चर्चा मत करो; मैं तो इसकी ‘नाम का आत्मा, अग्नि का आत्मा, ज्योति का आत्मा’ — इस रूप में उपासना करता हूँ। जो इसकी इस प्रकार उपासना करता है, वह इन सबका आत्मा होता है।’',
+        'Bālāki said: ‘The person who is in the right eye — him I worship.’ Ajātaśatru said to him: ‘No, no! Do not make me talk about him. I worship him as the self of name, the self of fire, the self of light. Whoever worships him thus becomes the self of all these.’'
+      ),
+      M(
+        [
+          'स होवाच बालाकिर्य एवैष सव्येऽक्षन्पुरुषस्तमेवाहमुपास इति।',
+          'तं होवाचाजातशत्रुर्मा मैतस्मिन्संवदयिष्ठाः सत्यस्यात्मा विद्युत आत्मा तेजस आत्मेति वा अहमेतमुपास इति।',
+          'स यो हैतमेवमुपास्त एतेषां सर्वेषामात्मा भवति।',
+          'तत उ ह बालाकिस्तूष्णीमास।',
+          'तं होवाचाजातशत्रुरेतावन्नु बालाक इति।',
+          'एतावद्धीति होवाच बालाकिः।',
+          'तं होवाचाजातशत्रुर्मृषा वै किल मा संवादयिष्ठा ब्रह्म ते ब्रवाणीति।',
+          'यो वै बालाक एतेषां पुरुषाणां कर्ता यस्य वैतत्कर्म स वै वेदितव्य इति।',
+          'तत उ ह बालाकिः समित्पाणिः प्रतिचक्रम उपायानीति।',
+          'तं होवाचाजातशत्रुः प्रतिलोमरूपमेव तन्मन्ये यत्क्षत्रियो ब्राह्मणमुपनयेत।',
+          'एहि व्येव त्वा ज्ञपयिष्यामीति।',
+          'तं ह पाणावभिपद्य प्रवव्राज।',
+          'तौ ह सुप्तं पुरुषमीयतुः।',
+          'तं हाजातशत्रुरामन्त्रयांचक्रे बृहत्पाण्डरवासः सोम राजन्निति।',
+          'स उ ह तूष्णीमेव शिश्ये।',
+          'तत उ हैनं यष्ट्या विचिक्षेप।',
+          'स तत एव समुत्तस्थौ।',
+          'तं होवाचाजातशत्रुः क्वैष एतद्बालाके पुरुषोऽशयिष्ट क्वैतदभूत्कुत एतदागादिति।',
+          'तत उ ह बालाकिर्न विजज्ञौ॥',
+        ],
+        'बालाकि बोला — ‘यह जो बायें नेत्र में पुरुष है, उसी की मैं उपासना करता हूँ।’ अजातशत्रु ने उससे कहा — ‘नहीं, नहीं, इसके विषय में मुझसे चर्चा मत करो; मैं तो इसकी ‘सत्य का आत्मा, विद्युत् का आत्मा, तेज का आत्मा’ — इस रूप में उपासना करता हूँ। जो इसकी इस प्रकार उपासना करता है, वह इन सबका आत्मा होता है।’ तब बालाकि चुप हो गया। अजातशत्रु ने उससे कहा — ‘बालाकि! क्या बस इतना ही है?’ बालाकि बोला — ‘इतना ही है।’ अजातशत्रु ने कहा — ‘तुमने ‘मैं तुम्हें ब्रह्म का उपदेश करूँगा’ — यह कहकर मुझसे व्यर्थ ही बात करायी। बालाकि! जो इन पुरुषों का कर्ता है, जिसका यह (सब) कर्म है, वही जानने योग्य है।’ तब बालाकि हाथ में समिधा लेकर यह कहता हुआ उसके पास आया — ‘मैं आपकी शरण में (शिष्यरूप से) आता हूँ।’ अजातशत्रु ने उससे कहा — ‘क्षत्रिय ब्राह्मण को उपनयन करे, इसे मैं उलटी रीति मानता हूँ। आओ, मैं तुम्हें (वैसे ही) समझा दूँगा।’ यह कहकर वह उसका हाथ पकड़कर चल पड़ा। वे दोनों एक सोये हुए पुरुष के पास पहुँचे। अजातशत्रु ने उसे पुकारा — ‘हे महान्, श्वेत वस्त्रधारी, राजा सोम!’ वह चुपचाप सोया ही रहा। तब उसने उसे छड़ी से ठोका; वह तुरंत उठ बैठा। अजातशत्रु ने उससे (बालाकि से) कहा — ‘बालाकि! यह पुरुष कहाँ सोया था? यह कहाँ था? और यह कहाँ से लौट आया?’ बालाकि यह नहीं जान सका।',
+        'Bālāki said: ‘The person who is in the left eye — him I worship.’ Ajātaśatru said to him: ‘No, no! Do not make me talk about him. I worship him as the self of truth, the self of lightning, the self of brilliance. Whoever worships him thus becomes the self of all these.’ Then Bālāki fell silent. Ajātaśatru said to him: ‘Is that all, Bālāki?’ ‘That is all,’ said Bālāki. Ajātaśatru said to him: ‘In vain, then, did you make me converse, saying “Let me declare brahman to you.” He, O Bālāki, who is the maker of these persons, whose work this is — he indeed is to be known.’ Then Bālāki came to him with fuel in his hands, saying: ‘Let me come to you as a pupil.’ Ajātaśatru said to him: ‘I consider it contrary to the natural order that a kṣatriya should initiate a brāhmaṇa. Come, I shall make you understand.’ Taking him by the hand, he went forth. The two came to a man asleep. Ajātaśatru called to him: ‘Great one clad in white, King Soma!’ But he lay silent. Then he struck him with a stick, and at that he rose up. Ajātaśatru said to him: ‘Bālāki, where did this person lie? Where was he then? Whence did he come back?’ Bālāki did not know.'
+      ),
+      M(
+        [
+          'तं होवाचाजातशत्रुर्यत्रैष एतद्बालाके पुरुषोऽशयिष्ट यत्रैतदभूद्यत एतदागाद्धिता नाम हृदयस्य नाड्यो हृदयात्पुरीततमभिप्रतन्वन्ति।',
+          'यथा सहस्रधा केशो विपाटितस्तावदण्व्यः पिङ्गलस्याणिम्ना तिष्ठन्ते शुक्लस्य कृष्णस्य पीतस्य लोहितस्येति।',
+          'तासु तदा भवति यदा सुप्तः स्वप्नं न कंचन पश्यति।',
+          'अथास्मिन्प्राण एवैकधा भवति।',
+          'तदैनं वाक्सर्वैर्नामभिः सहाप्येति चक्षुः सर्वै रूपैः सहाप्येति श्रोत्रं सर्वैः शब्दैः सहाप्येति मनः सर्वैर्ध्यानैः सहाप्येति।',
+          'स यदा प्रतिबुध्यते यथाग्नेर्ज्वलतो विस्फुलिङ्गा विप्रतिष्ठेरन्नेवमेवैतस्मादात्मनः प्राणा यथायतनं विप्रतिष्ठन्ते प्राणेभ्यो देवा देवेभ्यो लोकाः॥',
+        ],
+        'अजातशत्रु ने उससे कहा — ‘बालाकि! यह पुरुष जहाँ सोया था, जहाँ था और जहाँ से लौटा, वह यह है — हृदय की ‘हिता’ नामक नाड़ियाँ हृदय से निकलकर पुरीतत् (हृदय के चारों ओर की झिल्ली) तक फैली हुई हैं। वे इतनी सूक्ष्म हैं जितना सहस्र भागों में चीरा हुआ बाल; वे पिङ्गल, श्वेत, काले, पीले और लाल सूक्ष्म रस से भरी हुई स्थित हैं। जब मनुष्य ऐसा सोया होता है कि कोई स्वप्न नहीं देखता, तब वह उन्हीं में रहता है। तब वह इस प्राण में ही एकरूप हो जाता है; तब वाणी सब नामों के साथ, नेत्र सब रूपों के साथ, श्रोत्र सब शब्दों के साथ और मन सब ध्यानों के साथ उसी में लीन हो जाते हैं। और जब वह जागता है, तब जैसे जलती हुई अग्नि से चिनगारियाँ सब ओर बिखर जाती हैं, वैसे ही इस आत्मा से प्राण अपने-अपने स्थानों की ओर निकल पड़ते हैं; प्राणों से देवता और देवताओं से लोक प्रकट होते हैं।’',
+        'Ajātaśatru said to him: ‘Where this person lay, Bālāki, where he was then, and whence he came back is this: the channels of the heart called hitā extend from the heart to the pericardium. As fine as a hair split a thousandfold, they stand filled with a minute essence, tawny, white, black, yellow and red. In them one abides when, asleep, one sees no dream whatever. Then he becomes one in this prāṇa alone. Then speech goes into it with all names, the eye with all forms, the ear with all sounds, the mind with all thoughts. When he awakes, as sparks would fly out from a blazing fire, so from this self the prāṇas go forth each to its station; from the prāṇas the gods, from the gods the worlds.’'
+      ),
+      M(
+        [
+          'स एष प्राण एव प्रज्ञात्मेदं शरीरमात्मानमनुप्रविष्ट आ लोमभ्य आ नखेभ्यः।',
+          'तद्यथा क्षुरः क्षुरधानेऽवहितः स्याद्विश्वंभरो वा विश्वंभरकुलाय एवमेवैष प्रज्ञात्मेदं शरीरमात्मानमनुप्रविष्ट आ लोमभ्य आ नखेभ्यः।',
+          'तमेतमात्मानमेत आत्मानोऽन्ववस्यन्ति यथा श्रेष्ठिनं स्वाः।',
+          'तद्यथा श्रेष्ठी स्वैर्भुङ्क्ते यथा वा श्रेष्ठिनं स्वा भुञ्जन्त्येवमेवैष प्रज्ञात्मैतैरात्मभिर्भुङ्क्ते एवमेवैत आत्मान एतमात्मानं भुञ्जन्ति।',
+          'स यावद्ध वा इन्द्र एतमात्मानं न विजज्ञे तावदेनमसुरा अभिबभूवुः।',
+          'स यदा विजज्ञेऽथ हत्वासुरान्विजित्य सर्वेषां देवानां श्रैष्ठ्यं स्वाराज्यमाधिपत्यं पर्येत्।',
+          'तथो एवैवं विद्वान्सर्वान्पाप्मनोऽपहत्य सर्वेषां भूतानां श्रैष्ठ्यं स्वाराज्यमाधिपत्यं पर्येति य एवं वेद य एवं वेद॥',
+        ],
+        'वही यह प्रज्ञात्मा प्राण इस शरीर रूपी आत्मा में लोमों तक और नखों तक प्रविष्ट है। जैसे छुरा छुरे की म्यान में रखा रहता है, अथवा अग्नि अपने आश्रय (अरणि आदि) में रहती है, वैसे ही यह प्रज्ञात्मा इस शरीर रूपी आत्मा में लोमों तक और नखों तक प्रविष्ट है। इस आत्मा का ये (वाणी आदि) आत्मा वैसे ही अनुगमन करते हैं, जैसे सेठ का उसके अपने लोग (आश्रित जन)। जैसे सेठ अपने लोगों के द्वारा भोग करता है और जैसे अपने लोग सेठ के सहारे भोग करते हैं, वैसे ही यह प्रज्ञात्मा इन आत्माओं के द्वारा भोग करता है और वैसे ही ये आत्मा इस आत्मा के सहारे भोग करते हैं। जब तक इन्द्र ने इस आत्मा को नहीं जाना, तब तक असुर उसे दबाते रहे। जब उसने इसे जान लिया, तब असुरों को मारकर और जीतकर वह सब देवताओं में श्रेष्ठता, स्वाराज्य और आधिपत्य को प्राप्त हुआ। इसी प्रकार जो ऐसा जानता है, वह विद्वान् सब पापों को नष्ट करके सब भूतों में श्रेष्ठता, स्वाराज्य और आधिपत्य को प्राप्त करता है — जो ऐसा जानता है, जो ऐसा जानता है।',
+        'This very prāṇa, the self of intelligence, has entered this bodily self up to the hairs and up to the nails. As a razor lies placed in a razor-case, or fire in its nest, so this self of intelligence has entered this bodily self up to the hairs and up to the nails. These (other) selves cling to this self as his own people to a chief. As a chief enjoys with his own people, and as his own people enjoy the chief, so this self of intelligence enjoys with these selves, and so these selves enjoy this self. As long as Indra did not understand this self, so long the asuras prevailed over him. When he understood it, he struck down and conquered the asuras and attained pre-eminence, self-rule and sovereignty among all the gods. So too one who knows this, striking away all evils, attains pre-eminence, self-rule and sovereignty among all beings — he who knows this, he who knows this.'
+      ),
+    ],
+  ],
+};

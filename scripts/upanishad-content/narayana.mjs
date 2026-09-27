@@ -1,0 +1,131 @@
+/**
+ * Authored content for one Upanishad — consumed by scripts/build-upanishad.mjs.
+ * `muktika` is the text's fixed number in the Muktika canon (1–108) and is the
+ * reader's `chapter` id forever; `slug` must match `registry.ts`.
+ *
+ * Nārāyaṇa (Nārāyaṇopaniṣad, also called Nārāyaṇa-atharvaśiras) — Kṛṣṇa
+ * Yajurveda, Vaiṣṇava group. The short text of five sections (not the long
+ * Mahānārāyaṇa): 1 all beings and gods arise from Nārāyaṇa (Ṛgveda-śiras);
+ * 2 Nārāyaṇa is all (Yajurveda-śiras); 3 the eight-syllable mantra
+ * ॐ नमो नारायणाय (Sāmaveda-śiras); 4 the praṇava as Nārāyaṇa
+ * (Atharva-śiras); 5 phalaśruti. 5 mantras in all.
+ */
+const M = (lines, meaningHi, meaningEn) => ({ lines, meaningHi, meaningEn });
+
+export default {
+  slug: 'narayana',
+  muktika: 18,
+  vedaHi: 'कृष्ण यजुर्वेद',
+  vedaEn: 'Krishna Yajurveda',
+  source: {
+    baseText:
+      'Kṛṣṇa Yajurveda Nārāyaṇopaniṣad (the five-section Nārāyaṇa-atharvaśiras) as printed in the Gita Press one-hundred-eight Upaniṣad collection and the Adyar Library "Vaiṣṇava Upaniṣads"; Devanagari written out from the printed text.',
+    canonicalEdition: 'Adyar Library, The Vaiṣṇava Upaniṣads (ed. A. Mahadeva Sastri, 1923); Gita Press, उपनिषद् अंक',
+    referenceUrls: [
+      'https://sanskritdocuments.org/doc_upanishhat/narayana.html',
+      'https://www.wisdomlib.org/hinduism/book/narayana-upanishad',
+      'https://archive.org/details/VaishnavaUpanishads',
+    ],
+    notes:
+      '5 mantras (sections), each closing with its "एतद् … शिरोऽधीते" colophon: 1 creation from Nārāyaṇa (Ṛgveda-śiras); 2 Nārāyaṇa is all (Yajurveda-śiras); 3 the aṣṭākṣara ॐ नमो नारायणाय (Sāmaveda-śiras); 4 the praṇava and the heart-lotus as Nārāyaṇa (Atharva-śiras); 5 phalaśruti. This is the short Vaiṣṇava text, not the Mahānārāyaṇa (Taittirīya Āraṇyaka 10). The Kṛṣṇa-Yajurvedic śānti-pāṭha (सह नाववतु) is page 1. Long prose sections are split at sentence boundaries into lines. Devanagari was authored from memory of the printed text because the network policy blocks the Sanskrit source hosts — a line-by-line scan check against the printed edition is still owed.',
+    retrievedOn: '2026-09-27',
+  },
+  shanti: M(
+    ['ॐ सह नाववतु सह नौ भुनक्तु सह वीर्यं करवावहै।', 'तेजस्वि नावधीतमस्तु मा विद्विषावहै॥', 'ॐ शान्तिः शान्तिः शान्तिः॥'],
+    'वह (ब्रह्म) हम दोनों (गुरु-शिष्य) की साथ-साथ रक्षा करे, हम दोनों का साथ-साथ पालन करे; हम दोनों साथ-साथ सामर्थ्य प्राप्त करें। हमारा पढ़ा हुआ तेजस्वी हो; हम परस्पर द्वेष न करें। ॐ शान्तिः शान्तिः शान्तिः।',
+    'May That protect us both together; may That nourish us both together; may we work together with vigour. May what we study be luminous; may we never hate one another. Om, peace, peace, peace.'
+  ),
+  mantras: [
+    M(
+      [
+        'ॐ अथ पुरुषो ह वै नारायणोऽकामयत प्रजाः सृजेयेति।',
+        'नारायणात्प्राणो जायते।',
+        'मनः सर्वेन्द्रियाणि च।',
+        'खं वायुर्ज्योतिरापः पृथिवी विश्वस्य धारिणी।',
+        'नारायणाद्ब्रह्मा जायते।',
+        'नारायणाद्रुद्रो जायते।',
+        'नारायणादिन्द्रो जायते।',
+        'नारायणात्प्रजापतिः प्रजायते।',
+        'नारायणाद्द्वादशादित्या रुद्रा वसवः सर्वाणि छन्दांसि।',
+        'नारायणादेव समुत्पद्यन्ते।',
+        'नारायणे प्रवर्तन्ते।',
+        'नारायणे प्रलीयन्ते।',
+        'एतदृग्वेदशिरोऽधीते॥',
+      ],
+      'ॐ। तब उस पुरुष नारायण ने कामना की — "मैं प्रजा की सृष्टि करूँ।" नारायण से प्राण उत्पन्न होता है; मन और सब इन्द्रियाँ भी; आकाश, वायु, तेज, जल और विश्व को धारण करने वाली पृथ्वी (उत्पन्न होते हैं)। नारायण से ब्रह्मा उत्पन्न होते हैं; नारायण से रुद्र उत्पन्न होते हैं; नारायण से इन्द्र उत्पन्न होते हैं; नारायण से प्रजापति उत्पन्न होते हैं। नारायण से बारह आदित्य, (ग्यारह) रुद्र, (आठ) वसु और सब छन्द (उत्पन्न होते हैं)। नारायण से ही (सब) उत्पन्न होते हैं, नारायण में ही प्रवृत्त (स्थित) रहते हैं, और नारायण में ही लीन हो जाते हैं। यह ऋग्वेद का शिरोभाग (सार) है, जिसका (साधक) अध्ययन करता है।',
+      'Om. Then the Person, Nārāyaṇa, desired: “Let me bring forth creatures.” From Nārāyaṇa is born the life-breath, and the mind and all the senses; space, air, fire, water and the earth that upholds all. From Nārāyaṇa Brahmā is born; from Nārāyaṇa Rudra is born; from Nārāyaṇa Indra is born; from Nārāyaṇa Prajāpati is born. From Nārāyaṇa come the twelve Ādityas, the Rudras, the Vasus and all the metres. From Nārāyaṇa alone they arise; in Nārāyaṇa they move and abide; in Nārāyaṇa they dissolve. This is the head (essence) of the Ṛgveda, which one studies.'
+    ),
+    M(
+      [
+        'अथ नित्यो नारायणः।',
+        'ब्रह्मा नारायणः।',
+        'शिवश्च नारायणः।',
+        'शक्रश्च नारायणः।',
+        'कालश्च नारायणः।',
+        'दिशश्च नारायणः।',
+        'विदिशश्च नारायणः।',
+        'ऊर्ध्वं च नारायणः।',
+        'अधश्च नारायणः।',
+        'अन्तर्बहिश्च नारायणः।',
+        'नारायण एवेदं सर्वम्।',
+        'यद्भूतं यच्च भव्यम्।',
+        'निष्कलो निरञ्जनो निर्विकल्पो निराख्यातः शुद्धो देव एको नारायणः।',
+        'न द्वितीयोऽस्ति कश्चित्।',
+        'य एवं वेद।',
+        'स विष्णुरेव भवति स विष्णुरेव भवति।',
+        'एतद्यजुर्वेदशिरोऽधीते॥',
+      ],
+      'और नारायण नित्य हैं। ब्रह्मा नारायण हैं; शिव भी नारायण हैं; इन्द्र भी नारायण हैं; काल भी नारायण हैं; दिशाएँ भी नारायण हैं; उपदिशाएँ (कोण) भी नारायण हैं; ऊपर भी नारायण हैं; नीचे भी नारायण हैं; भीतर और बाहर भी नारायण हैं। जो कुछ हो चुका है और जो होने वाला है — यह सब नारायण ही है। कलारहित, निर्मल, विकल्परहित, अनिर्वचनीय, शुद्ध, एकमात्र देव नारायण ही हैं; (उनके अतिरिक्त) दूसरा कोई नहीं है। जो ऐसा जानता है, वह विष्णु ही हो जाता है, वह विष्णु ही हो जाता है। यह यजुर्वेद का शिरोभाग है, जिसका (साधक) अध्ययन करता है।',
+      'And Nārāyaṇa is eternal. Brahmā is Nārāyaṇa; Śiva too is Nārāyaṇa; Indra too is Nārāyaṇa; Time too is Nārāyaṇa; the quarters too are Nārāyaṇa; the intermediate quarters too are Nārāyaṇa; above too is Nārāyaṇa; below too is Nārāyaṇa; within and without too is Nārāyaṇa. All this is Nārāyaṇa alone — what has been and what is to be. Partless, stainless, beyond all distinction, beyond description, pure, the one God is Nārāyaṇa; there is no second whatever. Whoever knows thus becomes Viṣṇu himself, becomes Viṣṇu himself. This is the head of the Yajurveda, which one studies.'
+    ),
+    M(
+      [
+        'ओमित्यग्रे व्याहरेत्।',
+        'नम इति पश्चात्।',
+        'नारायणायेत्युपरिष्टात्।',
+        'ओमित्येकाक्षरम्।',
+        'नम इति द्वे अक्षरे।',
+        'नारायणायेति पञ्चाक्षराणि।',
+        'एतद्वै नारायणस्याष्टाक्षरं पदम्।',
+        'यो ह वै नारायणस्याष्टाक्षरं पदमध्येति।',
+        'अनपब्रुवः सर्वमायुरेति।',
+        'विन्दते प्राजापत्यं रायस्पोषं गौपत्यम्।',
+        'ततोऽमृतत्वमश्नुते ततोऽमृतत्वमश्नुत इति।',
+        'एतत्सामवेदशिरोऽधीते॥',
+      ],
+      'पहले "ॐ" का उच्चारण करे, उसके बाद "नमः", और अन्त में "नारायणाय"। "ॐ" एक अक्षर है, "नमः" दो अक्षर हैं, "नारायणाय" पाँच अक्षर हैं। यही नारायण का अष्टाक्षर पद (मन्त्र) है। जो नारायण के इस अष्टाक्षर पद का अध्ययन (जप) करता है, वह निर्दोष होकर पूर्ण आयु प्राप्त करता है; प्रजा का आधिपत्य, धन की पुष्टि और गौओं का स्वामित्व पाता है; और तब अमृतत्व को प्राप्त होता है, तब अमृतत्व को प्राप्त होता है। यह सामवेद का शिरोभाग है, जिसका (साधक) अध्ययन करता है।',
+      'First one should utter “Om”, then “namaḥ”, and after that “Nārāyaṇāya”. “Om” is one syllable; “namaḥ” is two syllables; “Nārāyaṇāya” is five syllables. This is the eight-syllabled word of Nārāyaṇa. Whoever studies this eight-syllabled word of Nārāyaṇa reaches the full span of life free of reproach; he gains lordship over offspring, increase of wealth and mastery of cattle; and then he attains immortality, then he attains immortality. This is the head of the Sāmaveda, which one studies.'
+    ),
+    M(
+      [
+        'प्रत्यगानन्दं ब्रह्मपुरुषं प्रणवस्वरूपम्।',
+        'अकार उकार मकार इति।',
+        'ता अनेकधा समभवत्तदेतदोमिति।',
+        'यमुक्त्वा मुच्यते योगी जन्मसंसारबन्धनात्।',
+        'ॐ नमो नारायणायेति मन्त्रोपासकः।',
+        'वैकुण्ठभुवनलोकं गमिष्यति।',
+        'तदिदं पुण्डरीकं विज्ञानघनम्।',
+        'तस्मात्तडिदाभमात्रम्।',
+        'ब्रह्मण्यो देवकीपुत्रो ब्रह्मण्यो मधुसूदनोम्।',
+        'सर्वभूतस्थमेकं नारायणम्।',
+        'कारणरूपमकार परं ब्रह्मोम्।',
+        'एतदथर्वशिरोऽधीते॥',
+      ],
+      'अन्तरात्मा का आनन्द-स्वरूप ब्रह्मपुरुष प्रणव (ॐ) का ही स्वरूप है — अकार, उकार और मकार। ये (तीनों मात्राएँ) अनेक प्रकार से मिलकर एक हुईं; वही यह "ॐ" है, जिसका उच्चारण करके योगी जन्म और संसार के बन्धन से मुक्त हो जाता है। "ॐ नमो नारायणाय" — इस मन्त्र का उपासक वैकुण्ठ लोक को जाएगा। वह यह (हृदय-) कमल विज्ञानघन है; इसलिए वह विद्युत् की-सी आभा मात्र है। देवकीपुत्र (श्रीकृष्ण) ब्रह्मण्य हैं, मधुसूदन ब्रह्मण्य हैं — ॐ। सब भूतों में स्थित एक नारायण, कारण-रूप, अकार-रहित (अविकारी) परब्रह्म हैं — ॐ। यह अथर्ववेद का शिरोभाग है, जिसका (साधक) अध्ययन करता है।',
+      'The Brahman-Person, the bliss of the inmost Self, has the form of the praṇava — “a”, “u” and “m”. These, joined in many ways, became one: that is this “Om”, uttering which the yogin is freed from the bondage of birth and worldly existence. The worshipper of the mantra “Om namo Nārāyaṇāya” will go to the world of Vaikuṇṭha. That lotus (of the heart) is dense consciousness; therefore it is a mere flash, like lightning. The son of Devakī is devoted to Brahman; Madhusūdana is devoted to Brahman — Om. The one Nārāyaṇa dwelling in all beings, the cause, beyond form [akāra: or “the a-sound”], is the supreme Brahman — Om. This is the head of the Atharvaveda, which one studies.'
+    ),
+    M(
+      [
+        'प्रातरधीयानो रात्रिकृतं पापं नाशयति।',
+        'सायमधीयानो दिवसकृतं पापं नाशयति।',
+        'मध्यन्दिनमादित्याभिमुखोऽधीयानः पञ्चमहापातकोपपातकात्प्रमुच्यते।',
+        'सर्ववेदपारायणपुण्यं लभते।',
+        'नारायणसायुज्यमवाप्नोति नारायणसायुज्यमवाप्नोति।',
+        'य एवं वेद।',
+        'इत्युपनिषत्॥',
+      ],
+      'प्रातःकाल इसका पाठ करने वाला रात में किए पाप का नाश करता है; सायंकाल पाठ करने वाला दिन में किए पाप का नाश करता है। मध्याह्न में सूर्य की ओर मुख करके पाठ करने वाला पाँच महापातकों और उपपातकों से मुक्त हो जाता है। उसे सब वेदों के पारायण का पुण्य मिलता है। वह नारायण का सायुज्य प्राप्त करता है, नारायण का सायुज्य प्राप्त करता है — जो ऐसा जानता है। यह उपनिषद् है।',
+      'One who recites this at dawn destroys the sin committed in the night; one who recites it at dusk destroys the sin committed in the day. One who recites it at midday facing the sun is freed from the five great sins and the lesser sins. He gains the merit of reciting all the Vedas. He attains union with Nārāyaṇa, he attains union with Nārāyaṇa — whoever knows thus. Thus the Upaniṣad.'
+    ),
+  ],
+};

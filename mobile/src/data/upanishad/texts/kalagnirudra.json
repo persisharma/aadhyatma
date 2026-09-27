@@ -1,0 +1,237 @@
+{
+  "chapter": 28,
+  "slug": "kalagnirudra",
+  "titleHi": "कालाग्निरुद्र उपनिषद्",
+  "titleEn": "Kalagnirudra Upanishad",
+  "vedaHi": "कृष्ण यजुर्वेद",
+  "vedaEn": "Krishna Yajurveda",
+  "mantraCount": 9,
+  "verseCount": 10,
+  "source": {
+    "baseText": "Kṛṣṇa Yajurveda Kālāgnirudra Upaniṣad as printed in the Adyar Library \"Śaiva Upaniṣads\" (with Upaniṣad-brahmayogin's commentary) and the Gita Press one-hundred-eight Upaniṣad collection; Devanagari written out from the printed text.",
+    "canonicalEdition": "Adyar Library, The Śaiva Upaniṣads (ed. A. Mahadeva Sastri, 1925); Gita Press, उपनिषद् अंक",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_upanishhat/kalagnirudra.html",
+      "https://www.wisdomlib.org/hinduism/book/kalagnirudra-upanishad",
+      "https://archive.org/details/SaivaUpanishads"
+    ],
+    "notes": "Undivided prose text, set here as 9 mantras at its sense-units: 1 the viniyoga (Saṃvartaka Agni the ṛṣi, anuṣṭubh the chandas, Kālāgnirudra the devatā); 2 Sanatkumāra's question (substance, place, measure, lines, mantras, power, deity, agent, fruit); 3 Kālāgnirudra's answer — the fire-born bhasma taken up with the five Brahma-mantras (Sadyojāta etc.), consecrated with \"agnir iti bhasma…\", lifted with मा नस्तोके, mixed with water with मा नो महान्तम्, and applied as three horizontal lines with त्रियायुषम्, the Śāmbhava vow; 4 the measure of the lines; 5–7 the first, second and third lines with their nine deities each (Gārhapatya/अ/rajas/bhūḥ/svātman/kriyā-śakti/Ṛgveda/morning pressing/Maheśvara; Dakṣiṇāgni/उ/sattva/antarikṣa/antarātman/icchā-śakti/Yajurveda/midday pressing/Sadāśiva; Āhavanīya/म/tamas/dyauḥ/paramātman/jñāna-śakti/Sāmaveda/third pressing/Mahādeva); 8 the phala-śruti for the wearer; 9 the phala for the reciter and the closing. The printed numbering is not reproduced verse-for-verse: the sanskritdocuments/Adyar text is continuous prose and its passage numbers could not be confirmed from memory, so the division here is by sense-unit. The Kṛṣṇa-Yajurvedic śānti-pāṭha (सह नाववतु) is page 1; the commentator's maṅgala verse (कालाग्निरुद्रोपनिषत्संवेद्यं यत्परं पदम्…) is omitted as not part of the Upaniṣad. Reading variants: the viniyoga (mantra 1) is absent from some prints; the abhimantraṇa formula in mantra 3 is given in some prints in full (अग्निरिति भस्म वायुरिति भस्म… देवा भस्म ऋषयो भस्म) and in others abbreviated (अग्निरिति भस्मेत्यनेन); मा नस्तोके / मानस्तोक; in mantra 4 the extent of the lines (आललाटादाचक्षुषोरामूर्ध्नोराभ्रुवोर्मध्यतश्च) is variously transmitted; in mantra 8 सर्वान्देवाञ्ज्ञातो / ध्यातो; in mantra 9 यस्त्वेतद्वाधीते / य एतदधीते. Least-certain passages: the exact wording of the abhimantraṇa formula in mantra 3, the whole of mantra 4 (the question on measure and the extent of the lines), and the opening of mantra 9. Devanagari was authored from memory of the printed text because the network policy blocks the Sanskrit source hosts — a line-by-line scan check against the printed edition is still owed.",
+    "retrievedOn": "2026-09-27"
+  },
+  "verses": [
+    {
+      "id": "kalagnirudra-shanti",
+      "upanishad": 28,
+      "section": "shanti",
+      "stanza": 28,
+      "numInSection": 1,
+      "reference": "shanti",
+      "labelHi": "शान्ति मन्त्र",
+      "labelEn": "Shanti Mantra",
+      "lines": [
+        "ॐ सह नाववतु सह नौ भुनक्तु सह वीर्यं करवावहै।",
+        "तेजस्वि नावधीतमस्तु मा विद्विषावहै॥",
+        "ॐ शान्तिः शान्तिः शान्तिः॥"
+      ],
+      "linesEn": [
+        "om saha nāvavatu saha nau bhunaktu saha vīryaṁ karavāvahai",
+        "tejasvi nāvadhītamastu mā vidviṣhāvahai",
+        "om śhāntiḥ śhāntiḥ śhāntiḥ"
+      ],
+      "meaningHi": "वह (ब्रह्म) हम दोनों (गुरु-शिष्य) की साथ-साथ रक्षा करे, हम दोनों का साथ-साथ पालन करे; हम दोनों साथ-साथ सामर्थ्य प्राप्त करें। हमारा पढ़ा हुआ तेजस्वी हो; हम परस्पर द्वेष न करें। ॐ शान्तिः शान्तिः शान्तिः।",
+      "meaningEn": "May That protect us both together; may That nourish us both together; may we work together with vigour. May what we study be luminous; may we never hate one another. Om, peace, peace, peace."
+    },
+    {
+      "id": "kalagnirudra-1",
+      "upanishad": 28,
+      "section": "mantra",
+      "stanza": 28,
+      "numInSection": 2,
+      "reference": "1",
+      "labelHi": "मन्त्र · १",
+      "labelEn": "Mantra · 1",
+      "lines": [
+        "ॐ अथ कालाग्निरुद्रोपनिषदः संवर्तकोऽग्निर्ऋषिः।",
+        "अनुष्टुप् छन्दः।",
+        "श्रीकालाग्निरुद्रो देवता।",
+        "श्रीकालाग्निरुद्रप्रीत्यर्थे भस्मत्रिपुण्ड्रधारणे विनियोगः॥"
+      ],
+      "linesEn": [
+        "om atha kālāgnirudropaniṣhadaḥ saṁvartako'gnirṛiṣhiḥ",
+        "anuṣṭup chhandaḥ",
+        "śrīkālāgnirudro devatā",
+        "śrīkālāgnirudraprītyarthe bhasmatripuṇḍradhāraṇe viniyogaḥ"
+      ],
+      "meaningHi": "अब कालाग्निरुद्र उपनिषद् के ऋषि संवर्तक अग्नि हैं, छन्द अनुष्टुप् है और देवता श्रीकालाग्निरुद्र हैं। श्रीकालाग्निरुद्र की प्रसन्नता के लिए भस्म से त्रिपुण्ड्र धारण करने में इसका विनियोग है।",
+      "meaningEn": "Now, of the Kālāgnirudra Upaniṣad the seer is Saṃvartaka Agni, the metre is anuṣṭubh, and the deity is Śrī Kālāgnirudra. Its application is the wearing of the tripuṇḍra of sacred ash, for the pleasure of Śrī Kālāgnirudra."
+    },
+    {
+      "id": "kalagnirudra-2",
+      "upanishad": 28,
+      "section": "mantra",
+      "stanza": 28,
+      "numInSection": 3,
+      "reference": "2",
+      "labelHi": "मन्त्र · २",
+      "labelEn": "Mantra · 2",
+      "lines": [
+        "अथ कालाग्निरुद्रं भगवन्तं सनत्कुमारः पप्रच्छ।",
+        "अधीहि भगवन्त्रिपुण्ड्रविधिं सतत्त्वम्।",
+        "किं द्रव्यं कियत्स्थानं कतिप्रमाणं का रेखाः के मन्त्राः का शक्तिः किं दैवतं कः कर्ता किं फलमिति च॥"
+      ],
+      "linesEn": [
+        "atha kālāgnirudraṁ bhagavantaṁ sanatkumāraḥ paprachchha",
+        "adhīhi bhagavantripuṇḍravidhiṁ satattvam",
+        "kiṁ dravyaṁ kiyatsthānaṁ katipramāṇaṁ kā rekhāḥ ke mantrāḥ kā śhaktiḥ kiṁ daivataṁ kaḥ kartā kiṁ phalamiti cha"
+      ],
+      "meaningHi": "तब सनत्कुमार ने भगवान् कालाग्निरुद्र से पूछा — हे भगवन्! मुझे त्रिपुण्ड्र की विधि उसके तत्त्व सहित बताइए। उसका द्रव्य क्या है, स्थान कितने हैं, प्रमाण (माप) कितना है, रेखाएँ कौन-सी हैं, मन्त्र कौन-से हैं, शक्ति क्या है, देवता कौन है, कर्ता कौन है और फल क्या है?",
+      "meaningEn": "Then Sanatkumāra asked the blessed Kālāgnirudra: “Teach me, O Lord, the rite of the tripuṇḍra together with its true meaning — what is its substance, how many are its places, what is its measure, what are its lines, what are its mantras, what is its power, who is its deity, who its agent, and what its fruit?”"
+    },
+    {
+      "id": "kalagnirudra-3",
+      "upanishad": 28,
+      "section": "mantra",
+      "stanza": 28,
+      "numInSection": 4,
+      "reference": "3",
+      "labelHi": "मन्त्र · ३",
+      "labelEn": "Mantra · 3",
+      "lines": [
+        "तं होवाच भगवान्कालाग्निरुद्रः।",
+        "यद्द्रव्यं तदाग्नेयं भस्म सद्योजातादिपञ्चब्रह्ममन्त्रैः परिगृह्याग्निरिति भस्म वायुरिति भस्म जलमिति भस्म स्थलमिति भस्म व्योमेति भस्म देवा भस्म ऋषयो भस्म इत्यनेनाभिमन्त्र्य मा नस्तोक इति समुद्धृत्य मा नो महान्तमिति जलेन संसृज्य त्रियायुषमिति शिरोललाटवक्षःस्कन्धेष्विति त्रियायुषैस्त्र्यम्बकैस्त्रिशक्तिभिस्तिर्यक्तिस्रो रेखाः प्रकुर्वीत।",
+        "व्रतमेतच्छाम्भवं सर्ववेदेषु वेदवादिभिरुक्तं भवति।",
+        "तत्समाचरेन्मुमुक्षुर्न पुनर्भवाय॥"
+      ],
+      "linesEn": [
+        "taṁ hovācha bhagavānkālāgnirudraḥ",
+        "yaddravyaṁ tadāgneyaṁ bhasma sadyojātādipañchabrahmamantraiḥ parigṛihyāgniriti bhasma vāyuriti bhasma jalamiti bhasma sthalamiti bhasma vyometi bhasma devā bhasma ṛiṣhayo bhasma ityanenābhimantrya mā nastoka iti samuddhṛitya mā no mahāntamiti jalena saṁsṛijya triyāyuṣhamiti śhirolalāṭavakṣhaḥskandheṣviti triyāyuṣhaistryambakaistriśhaktibhistiryaktisro rekhāḥ prakurvīta",
+        "vratametachchhāmbhavaṁ sarvavedeṣhu vedavādibhiruktaṁ bhavati",
+        "tatsamācharenmumukṣhurna punarbhavāya"
+      ],
+      "meaningHi": "भगवान् कालाग्निरुद्र ने उससे कहा — जो द्रव्य है, वह अग्नि से उत्पन्न भस्म है। उसे सद्योजात आदि पाँच ब्रह्म-मन्त्रों से ग्रहण करके, \"अग्नि भस्म है, वायु भस्म है, जल भस्म है, स्थल भस्म है, आकाश भस्म है, देवता भस्म हैं, ऋषि भस्म हैं\" — इस मन्त्र से अभिमन्त्रित करे; \"मा नस्तोके\" मन्त्र से उठाकर, \"मा नो महान्तम्\" मन्त्र से जल में मिलाकर, \"त्रियायुषम्\" मन्त्र से सिर, ललाट, वक्षःस्थल और कन्धों पर — तीन आयुओं, त्र्यम्बक और तीन शक्तियों के प्रतीक रूप में — तीन आड़ी रेखाएँ बनाए। वेदवादियों ने सब वेदों में इसे शाम्भव (शिव-सम्बन्धी) व्रत कहा है। मोक्ष चाहने वाला पुनर्जन्म से छूटने के लिए इसका आचरण करे।",
+      "meaningEn": "The blessed Kālāgnirudra said to him: “The substance is ash born of fire. Taking it up with the five Brahma-mantras beginning with Sadyojāta, consecrating it with the formula ‘Fire is ash, air is ash, water is ash, earth is ash, space is ash, the gods are ash, the seers are ash’, lifting it with the mantra mā nas toke, mixing it with water with mā no mahāntam, one should draw three horizontal lines on the head, forehead, chest and shoulders with the mantra tryāyuṣam — lines standing for the three life-spans, for Tryambaka and for the three powers. This is the vow of Śambhu, declared in all the Vedas by those who expound the Veda. The seeker of liberation should practise it, so as not to be born again.”"
+    },
+    {
+      "id": "kalagnirudra-4",
+      "upanishad": 28,
+      "section": "mantra",
+      "stanza": 28,
+      "numInSection": 5,
+      "reference": "4",
+      "labelHi": "मन्त्र · ४",
+      "labelEn": "Mantra · 4",
+      "lines": [
+        "अथ सनत्कुमारः पप्रच्छ प्रमाणमस्य।",
+        "त्रिपुण्ड्रस्य त्रिधा रेखा भवत्याललाटादाचक्षुषोरामूर्ध्नोराभ्रुवोर्मध्यतश्च॥"
+      ],
+      "linesEn": [
+        "atha sanatkumāraḥ paprachchha pramāṇamasya",
+        "tripuṇḍrasya tridhā rekhā bhavatyālalāṭādāchakṣhuṣhorāmūrdhnorābhruvormadhyataścha"
+      ],
+      "meaningHi": "फिर सनत्कुमार ने इसका प्रमाण (माप) पूछा। (भगवान् ने कहा —) त्रिपुण्ड्र की रेखा तीन प्रकार की होती है — ललाट भर में, नेत्रों तक, मस्तक तक और भौंहों के मध्य तक।",
+      "meaningEn": "Then Sanatkumāra asked about its measure. [The Lord said:] The lines of the tripuṇḍra are threefold, extending across the forehead, as far as the eyes, up to the crown, and to the space between the brows."
+    },
+    {
+      "id": "kalagnirudra-5",
+      "upanishad": 28,
+      "section": "mantra",
+      "stanza": 28,
+      "numInSection": 6,
+      "reference": "5",
+      "labelHi": "मन्त्र · ५",
+      "labelEn": "Mantra · 5",
+      "lines": [
+        "यास्य प्रथमा रेखा सा गार्हपत्यश्चाकारो रजो भूर्लोकः स्वात्मा क्रियाशक्तिः ऋग्वेदः प्रातःसवनं महेश्वरो देवतेति॥"
+      ],
+      "linesEn": [
+        "yāsya prathamā rekhā sā gārhapatyaśchākāro rajo bhūrlokaḥ svātmā kriyāśhaktiḥ ṛigvedaḥ prātaḥsavanaṁ maheśvaro devateti"
+      ],
+      "meaningHi": "इसकी जो पहली रेखा है, वह गार्हपत्य अग्नि, अकार, रजोगुण, भूलोक, स्वात्मा, क्रियाशक्ति, ऋग्वेद, प्रातःसवन है और उसके देवता महेश्वर हैं।",
+      "meaningEn": "Its first line is the Gārhapatya fire, the letter A, rajas, the earth-world, one’s own self, the power of action, the Ṛgveda, the morning soma-pressing; and its deity is Maheśvara."
+    },
+    {
+      "id": "kalagnirudra-6",
+      "upanishad": 28,
+      "section": "mantra",
+      "stanza": 28,
+      "numInSection": 7,
+      "reference": "6",
+      "labelHi": "मन्त्र · ६",
+      "labelEn": "Mantra · 6",
+      "lines": [
+        "यास्य द्वितीया रेखा सा दक्षिणाग्निरुकारः सत्त्वमन्तरिक्षमन्तरात्मा चेच्छाशक्तिर्यजुर्वेदो माध्यंदिनं सवनं सदाशिवो देवतेति॥"
+      ],
+      "linesEn": [
+        "yāsya dvitīyā rekhā sā dakṣhiṇāgnirukāraḥ sattvamantarikṣhamantarātmā chechchhāśhaktiryajurvedo mādhyaṁdinaṁ savanaṁ sadāśhivo devateti"
+      ],
+      "meaningHi": "इसकी जो दूसरी रेखा है, वह दक्षिणाग्नि, उकार, सत्त्वगुण, अन्तरिक्ष, अन्तरात्मा, इच्छाशक्ति, यजुर्वेद, माध्यन्दिन सवन है और उसके देवता सदाशिव हैं।",
+      "meaningEn": "Its second line is the Dakṣiṇa fire, the letter U, sattva, the mid-region, the inner self, the power of will, the Yajurveda, the midday soma-pressing; and its deity is Sadāśiva."
+    },
+    {
+      "id": "kalagnirudra-7",
+      "upanishad": 28,
+      "section": "mantra",
+      "stanza": 28,
+      "numInSection": 8,
+      "reference": "7",
+      "labelHi": "मन्त्र · ७",
+      "labelEn": "Mantra · 7",
+      "lines": [
+        "यास्य तृतीया रेखा साहवनीयो मकारस्तमो द्यौर्लोकः परमात्मा ज्ञानशक्तिः सामवेदस्तृतीयसवनं महादेवो देवतेति॥"
+      ],
+      "linesEn": [
+        "yāsya tṛitīyā rekhā sāhavanīyo makārastamo dyaurlokaḥ paramātmā jñānaśhaktiḥ sāmavedastṛitīyasavanaṁ mahādevo devateti"
+      ],
+      "meaningHi": "इसकी जो तीसरी रेखा है, वह आहवनीय अग्नि, मकार, तमोगुण, द्युलोक, परमात्मा, ज्ञानशक्ति, सामवेद, तृतीय सवन है और उसके देवता महादेव हैं।",
+      "meaningEn": "Its third line is the Āhavanīya fire, the letter M, tamas, the heaven-world, the supreme Self, the power of knowledge, the Sāmaveda, the third soma-pressing; and its deity is Mahādeva."
+    },
+    {
+      "id": "kalagnirudra-8",
+      "upanishad": 28,
+      "section": "mantra",
+      "stanza": 28,
+      "numInSection": 9,
+      "reference": "8",
+      "labelHi": "मन्त्र · ८",
+      "labelEn": "Mantra · 8",
+      "lines": [
+        "एवं त्रिपुण्ड्रविधिं भस्मना करोति यो विद्वान्ब्रह्मचारी गृही वानप्रस्थो यतिर्वा स महापातकोपपातकेभ्यः पूतो भवति।",
+        "स सर्वेषु तीर्थेषु स्नातो भवति।",
+        "स सर्वान्वेदानधीतो भवति।",
+        "स सर्वान्देवाञ्ज्ञातो भवति।",
+        "स सततं सकलरुद्रमन्त्रजापी भवति।",
+        "स सकलभोगान्भुङ्क्ते देहं त्यक्त्वा शिवसायुज्यमेति।",
+        "न स पुनरावर्तते न स पुनरावर्तत इत्याह भगवान्कालाग्निरुद्रः॥"
+      ],
+      "linesEn": [
+        "evaṁ tripuṇḍravidhiṁ bhasmanā karoti yo vidvānbrahmachārī gṛihī vānaprastho yatirvā sa mahāpātakopapātakebhyaḥ pūto bhavati",
+        "sa sarveṣhu tīrtheṣhu snāto bhavati",
+        "sa sarvānvedānadhīto bhavati",
+        "sa sarvāndevāñjñāto bhavati",
+        "sa satataṁ sakalarudramantrajāpī bhavati",
+        "sa sakalabhogānbhuṅkte dehaṁ tyaktvā śhivasāyujyameti",
+        "na sa punarāvartate na sa punarāvartata ityāha bhagavānkālāgnirudraḥ"
+      ],
+      "meaningHi": "जो विद्वान् — ब्रह्मचारी, गृहस्थ, वानप्रस्थ अथवा संन्यासी — इस प्रकार भस्म से त्रिपुण्ड्र की विधि करता है, वह महापातकों और उपपातकों से पवित्र हो जाता है। वह मानो सब तीर्थों में स्नान कर चुका होता है; वह सब वेदों का अध्ययन कर चुका होता है; वह सब देवताओं द्वारा जाना हुआ होता है; वह निरन्तर समस्त रुद्र-मन्त्रों का जप करने वाला होता है। वह सब भोगों को भोगता है और देह त्यागकर शिव के सायुज्य को प्राप्त होता है; वह फिर लौटकर नहीं आता, वह फिर लौटकर नहीं आता — ऐसा भगवान् कालाग्निरुद्र ने कहा।",
+      "meaningEn": "The knower — whether celibate student, householder, forest-dweller or renunciant — who performs the rite of the tripuṇḍra with ash in this way is purified of the great sins and the lesser sins. He becomes as one who has bathed in all the sacred waters; he becomes as one who has studied all the Vedas; he becomes known to all the gods; he becomes one who ceaselessly repeats all the Rudra-mantras. He enjoys all enjoyments and, leaving the body, attains union with Śiva; he does not return, he does not return — so said the blessed Kālāgnirudra."
+    },
+    {
+      "id": "kalagnirudra-9",
+      "upanishad": 28,
+      "section": "mantra",
+      "stanza": 28,
+      "numInSection": 10,
+      "reference": "9",
+      "labelHi": "मन्त्र · ९",
+      "labelEn": "Mantra · 9",
+      "lines": [
+        "यस्त्वेतद्वाधीते सोऽप्येवमेव भवतीत्यों सत्यमित्युपनिषत्॥"
+      ],
+      "linesEn": [
+        "yastvetadvādhīte so'pyevameva bhavatītyoṁ satyamityupaniṣhat"
+      ],
+      "meaningHi": "और जो इसका अध्ययन (पाठ) करता है, वह भी ऐसा ही हो जाता है। ॐ, यही सत्य है — यही उपनिषद् है।",
+      "meaningEn": "And whoever studies this too becomes just so. Om, this is the truth — this is the Upaniṣad."
+    }
+  ]
+}

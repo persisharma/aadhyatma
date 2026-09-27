@@ -1,0 +1,251 @@
+{
+  "chapter": 36,
+  "slug": "vajrasuchi",
+  "titleHi": "वज्रसूची उपनिषद्",
+  "titleEn": "Vajrasuchi Upanishad",
+  "vedaHi": "सामवेद",
+  "vedaEn": "Samaveda",
+  "mantraCount": 9,
+  "verseCount": 10,
+  "source": {
+    "baseText": "Sāmaveda Vajrasūcī (Vajrasūcikā) Upaniṣad in nine numbered passages, as printed in the Adyar Library Sāmānya-Vedānta Upaniṣads and the Gita Press one-hundred-eight Upaniṣad collection; Devanagari written out from the printed text.",
+    "canonicalEdition": "Adyar Library, The Sāmānya-Vedānta Upaniṣads (with Upaniṣad-brahmayogin's commentary); Gita Press, उपनिषद् अंक",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_upanishhat/vajrasuchi.html",
+      "https://www.wisdomlib.org/hinduism/book/vajrasuchika-upanishad",
+      "https://archive.org/details/UpanishadAnk"
+    ],
+    "notes": "9 passages, undivided, following the printed numbering: 1 the opening śloka (वज्रसूचीं प्रवक्ष्यामि); 2 the four varṇas and the question \"who is a brāhmaṇa — the jīva, the body, jāti, knowledge, karma, or the dhārmika?\"; 3–8 the six candidates refuted one by one (jīva, deha, jāti, jñāna, karma, dhārmika); 9 the true brāhmaṇa defined as the one who has directly realised the non-dual Self, and the closing \"meditate on the Self as Saccidānanda Brahman\". Passages 2–9 are prose and are split into lines at sentence boundaries; in 9 the one long definitional sentence is broken at वर्तते. The Sāmavedic śānti-pāṭha (आप्यायन्तु ममाङ्गानि) is page 1. Known reading variants: in 5 some prints extend or reorder the list of sages of irregular birth (the form जाम्बूको जम्बूकात् is followed here); in 9 prints differ between भावमात्सर्यतृष्णाशामोहादिरहितो and a hiatus-spelt तृष्णा आशा, between स एव ब्राह्मण इति and स एव ब्राह्मणेति, and between श्रुतिस्मृतीतिहासपुराणाभ्यामभिप्रायः and श्रुतिस्मृतिपुराणेतिहासानामभिप्रायः; the repeated closing clause (आत्मानं सच्चिदानन्दं ब्रह्म भावयेत्) is absent from some prints. The Devanagari was authored from memory of the printed text because the network policy blocks the Sanskrit source hosts — a line-by-line scan check against the printed edition is still owed, and it should START with the passages flagged as least certain: the list of sages in 5 (and the sentence एतेषां जात्या विनाप्यग्रे ज्ञानप्रतिपादिता ऋषयो बहवः सन्ति after it), the long compound chain of 9, and the wording of the refutations in 3 and 7.",
+    "retrievedOn": "2026-09-27"
+  },
+  "verses": [
+    {
+      "id": "vajrasuchi-shanti",
+      "upanishad": 36,
+      "section": "shanti",
+      "stanza": 36,
+      "numInSection": 1,
+      "reference": "shanti",
+      "labelHi": "शान्ति मन्त्र",
+      "labelEn": "Shanti Mantra",
+      "lines": [
+        "ॐ आप्यायन्तु ममाङ्गानि वाक्प्राणश्चक्षुः श्रोत्रमथो बलमिन्द्रियाणि च सर्वाणि।",
+        "सर्वं ब्रह्मौपनिषदं माहं ब्रह्म निराकुर्यां मा मा ब्रह्म निराकरोदनिराकरणमस्त्वनिराकरणं मेऽस्तु।",
+        "तदात्मनि निरते य उपनिषत्सु धर्मास्ते मयि सन्तु ते मयि सन्तु॥",
+        "ॐ शान्तिः शान्तिः शान्तिः॥"
+      ],
+      "linesEn": [
+        "om āpyāyantu mamāṅgāni vākprāṇaśchakṣhuḥ śrotramatho balamindriyāṇi cha sarvāṇi",
+        "sarvaṁ brahmaupaniṣhadaṁ māhaṁ brahma nirākuryāṁ mā mā brahma nirākarodanirākaraṇamastvanirākaraṇaṁ me'stu",
+        "tadātmani nirate ya upaniṣhatsu dharmāste mayi santu te mayi santu",
+        "om śhāntiḥ śhāntiḥ śhāntiḥ"
+      ],
+      "meaningHi": "मेरे अंग, वाणी, प्राण, नेत्र, श्रोत्र, बल और समस्त इन्द्रियाँ पुष्ट हों। यह सब उपनिषद्-प्रतिपादित ब्रह्म ही है। मैं ब्रह्म का निराकरण न करूँ, न ब्रह्म मेरा निराकरण करे। निराकरण न हो; मेरा निराकरण न हो। आत्मा में निरत मुझमें उपनिषदों में कहे हुए धर्म स्थित हों, वे मुझमें स्थित हों। ॐ शान्तिः शान्तिः शान्तिः।",
+      "meaningEn": "May my limbs, speech, breath, eye, ear, strength and all my senses grow strong. All this is the Brahman of the Upaniṣads. May I never deny Brahman, nor Brahman deny me. Let there be no denial — no denial of me. May the virtues the Upaniṣads speak of abide in me, devoted to the Self; may they abide in me. Om, peace, peace, peace."
+    },
+    {
+      "id": "vajrasuchi-1",
+      "upanishad": 36,
+      "section": "mantra",
+      "stanza": 36,
+      "numInSection": 2,
+      "reference": "1",
+      "labelHi": "मन्त्र · १",
+      "labelEn": "Mantra · 1",
+      "lines": [
+        "वज्रसूचीं प्रवक्ष्यामि शास्त्रमज्ञानभेदनम्।",
+        "दूषणं ज्ञानहीनानां भूषणं ज्ञानचक्षुषाम्॥"
+      ],
+      "linesEn": [
+        "vajrasūchīṁ pravakṣyāmi śhāstramajñānabhedanam",
+        "dūṣhaṇaṁ jñānahīnānāṁ bhūṣhaṇaṁ jñānachakṣhuṣhām"
+      ],
+      "meaningHi": "मैं अज्ञान का भेदन करने वाले \"वज्रसूची\" नामक शास्त्र का प्रवचन करूँगा, जो ज्ञानहीनों के लिए दूषण (उनके मत का खण्डन) और ज्ञान-रूपी नेत्र वालों के लिए भूषण है।",
+      "meaningEn": "I shall set forth the Vajrasūcī, the \"diamond needle\", a teaching that pierces ignorance — a refutation to those who lack knowledge, an ornament to those whose eye is knowledge."
+    },
+    {
+      "id": "vajrasuchi-2",
+      "upanishad": 36,
+      "section": "mantra",
+      "stanza": 36,
+      "numInSection": 3,
+      "reference": "2",
+      "labelHi": "मन्त्र · २",
+      "labelEn": "Mantra · 2",
+      "lines": [
+        "ब्राह्मक्षत्रियवैश्यशूद्रा इति चत्वारो वर्णास्तेषां वर्णानां ब्राह्मण एव प्रधान इति वेदवचनानुरूपं स्मृतिभिरप्युक्तम्।",
+        "तत्र चोद्यमस्ति को वा ब्राह्मणो नाम किं जीवः किं देहः किं जातिः किं ज्ञानं किं कर्म किं धार्मिक इति॥"
+      ],
+      "linesEn": [
+        "brāhmakṣhatriyavaiśyaśhūdrā iti chatvāro varṇāsteṣhāṁ varṇānāṁ brāhmaṇa eva pradhāna iti vedavachanānurūpaṁ smṛitibhirapyuktam",
+        "tatra chodyamasti ko vā brāhmaṇo nāma kiṁ jīvaḥ kiṁ dehaḥ kiṁ jātiḥ kiṁ jñānaṁ kiṁ karma kiṁ dhārmika iti"
+      ],
+      "meaningHi": "ब्राह्मण, क्षत्रिय, वैश्य और शूद्र — ये चार वर्ण हैं। इन वर्णों में ब्राह्मण ही प्रधान है — वेद-वचन के अनुरूप यह बात स्मृतियों ने भी कही है। इस पर प्रश्न उठता है कि ब्राह्मण कहलाने वाला कौन है? क्या जीव (ब्राह्मण है)? क्या देह? क्या जाति? क्या ज्ञान? क्या कर्म? अथवा क्या धार्मिक (पुरुष)?",
+      "meaningEn": "Brāhmaṇa, kṣatriya, vaiśya and śūdra — these are the four varṇas, and among them the brāhmaṇa alone is foremost: so the smṛtis too declare, in accord with the word of the Veda. Here a question arises: who, then, is the brāhmaṇa? Is it the jīva? The body? Birth (jāti)? Knowledge? Action (karma)? Or the doer of pious works?"
+    },
+    {
+      "id": "vajrasuchi-3",
+      "upanishad": 36,
+      "section": "mantra",
+      "stanza": 36,
+      "numInSection": 4,
+      "reference": "3",
+      "labelHi": "मन्त्र · ३",
+      "labelEn": "Mantra · 3",
+      "lines": [
+        "तत्र प्रथमो जीवो ब्राह्मण इति चेत्तन्न।",
+        "अतीतानागतानेकदेहानां जीवस्यैकरूपत्वादेकस्यापि कर्मवशादनेकदेहसम्भवात्सर्वशरीराणां जीवस्यैकरूपत्वाच्च।",
+        "तस्मान्न जीवो ब्राह्मण इति॥"
+      ],
+      "linesEn": [
+        "tatra prathamo jīvo brāhmaṇa iti chettanna",
+        "atītānāgatānekadehānāṁ jīvasyaikarūpatvādekasyāpi karmavaśhādanekadehasambhavātsarvaśharīrāṇāṁ jīvasyaikarūpatvāchcha",
+        "tasmānna jīvo brāhmaṇa iti"
+      ],
+      "meaningHi": "उनमें पहला — यदि कहो कि जीव ब्राह्मण है, तो यह ठीक नहीं; क्योंकि बीते हुए और आने वाले अनेक देहों में जीव एक ही रूप का रहता है, एक ही जीव कर्म के वश अनेक देह धारण करता है, और सब शरीरों में जीव एक-रूप ही है। इसलिए जीव ब्राह्मण नहीं है।",
+      "meaningEn": "First: if it is said that the jīva is the brāhmaṇa, that is not so. For the jīva is of one and the same nature through the many bodies past and to come; even a single jīva, driven by karma, takes on many bodies; and in all bodies the jīva is of one nature. Therefore the jīva is not the brāhmaṇa."
+    },
+    {
+      "id": "vajrasuchi-4",
+      "upanishad": 36,
+      "section": "mantra",
+      "stanza": 36,
+      "numInSection": 5,
+      "reference": "4",
+      "labelHi": "मन्त्र · ४",
+      "labelEn": "Mantra · 4",
+      "lines": [
+        "तर्हि देहो ब्राह्मण इति चेत्तन्न।",
+        "आचाण्डालादिपर्यन्तानां मनुष्याणां पाञ्चभौतिकत्वेन देहस्यैकरूपत्वाज्जरामरणधर्माधर्मादिसाम्यदर्शनाद्ब्राह्मणः श्वेतवर्णः क्षत्रियो रक्तवर्णो वैश्यः पीतवर्णः शूद्रः कृष्णवर्ण इति नियमाभावात्।",
+        "पित्रादिशरीरदहने पुत्रादीनां ब्रह्महत्यादिदोषसम्भवाच्च।",
+        "तस्मान्न देहो ब्राह्मण इति॥"
+      ],
+      "linesEn": [
+        "tarhi deho brāhmaṇa iti chettanna",
+        "āchāṇḍālādiparyantānāṁ manuṣyāṇāṁ pāñchabhautikatvena dehasyaikarūpatvājjarāmaraṇadharmādharmādisāmyadarśhanādbrāhmaṇaḥ śvetavarṇaḥ kṣhatriyo raktavarṇo vaiśyaḥ pītavarṇaḥ śhūdraḥ kṛiṣṇavarṇa iti niyamābhāvāt",
+        "pitrādiśharīradahane putrādīnāṁ brahmahatyādidoṣhasambhavāchcha",
+        "tasmānna deho brāhmaṇa iti"
+      ],
+      "meaningHi": "तो क्या देह ब्राह्मण है? — यह भी ठीक नहीं; क्योंकि चाण्डाल तक के सभी मनुष्यों का शरीर पाँच भूतों से बना होने के कारण एक-सा है; जरा, मृत्यु, धर्म, अधर्म आदि सब में समान देखे जाते हैं; \"ब्राह्मण श्वेत वर्ण का, क्षत्रिय लाल वर्ण का, वैश्य पीले वर्ण का और शूद्र काले वर्ण का होता है\" — ऐसा कोई नियम नहीं है; और (यदि देह ही ब्राह्मण हो तो) पिता आदि के शरीर का दाह करने पर पुत्र आदि को ब्रह्महत्या आदि का दोष लगेगा। इसलिए देह ब्राह्मण नहीं है।",
+      "meaningEn": "Then is the body the brāhmaṇa? That is not so. For the bodies of all human beings, down to the caṇḍāla, are alike, being made of the five elements; old age and death, merit and demerit are seen to be the same in all; there is no rule that the brāhmaṇa is white in colour, the kṣatriya red, the vaiśya yellow and the śūdra black; and [were the body the brāhmaṇa,] sons and others who cremate the body of a father would incur the sin of slaying a brāhmaṇa. Therefore the body is not the brāhmaṇa."
+    },
+    {
+      "id": "vajrasuchi-5",
+      "upanishad": 36,
+      "section": "mantra",
+      "stanza": 36,
+      "numInSection": 6,
+      "reference": "5",
+      "labelHi": "मन्त्र · ५",
+      "labelEn": "Mantra · 5",
+      "lines": [
+        "तर्हि जातिर्ब्राह्मण इति चेत्तन्न।",
+        "तत्र जात्यन्तरजन्तुष्वनेकजातिसम्भवा महर्षयो बहवः सन्ति।",
+        "ऋष्यशृङ्गो मृग्याः कौशिकः कुशाज्जाम्बूको जम्बूकाद्वाल्मीको वल्मीकाद्व्यासः कैवर्तकन्यकायां शशपृष्ठाद्गौतमो वसिष्ठ उर्वश्यामगस्त्यः कलशे जात इति श्रुतत्वात्।",
+        "एतेषां जात्या विनाप्यग्रे ज्ञानप्रतिपादिता ऋषयो बहवः सन्ति।",
+        "तस्मान्न जातिर्ब्राह्मण इति॥"
+      ],
+      "linesEn": [
+        "tarhi jātirbrāhmaṇa iti chettanna",
+        "tatra jātyantarajantuṣvanekajātisambhavā maharṣhayo bahavaḥ santi",
+        "ṛiṣyaśhṛiṅgo mṛigyāḥ kauśhikaḥ kuśhājjāmbūko jambūkādvālmīko valmīkādvyāsaḥ kaivartakanyakāyāṁ śhaśhapṛiṣṭhādgautamo vasiṣṭha urvaśyāmagastyaḥ kalaśhe jāta iti śrutatvāt",
+        "eteṣhāṁ jātyā vināpyagre jñānapratipāditā ṛiṣhayo bahavaḥ santi",
+        "tasmānna jātirbrāhmaṇa iti"
+      ],
+      "meaningHi": "तो क्या जाति ब्राह्मण है? — यह भी ठीक नहीं; क्योंकि अन्य जातियों के प्राणियों से अनेक प्रकार के जन्म वाले बहुत-से महर्षि हुए हैं। सुना जाता है कि ऋष्यशृंग हरिणी से, कौशिक कुश से, जाम्बूक जम्बूक (सियार) से, वाल्मीकि वल्मीक (दीमक की बाँबी) से, व्यास कैवर्त (मछुआरे) की कन्या से, गौतम शशपृष्ठ (खरगोश की पीठ) से, वसिष्ठ उर्वशी से और अगस्त्य कलश से उत्पन्न हुए। इनमें जाति के बिना भी पहले ही ज्ञान के द्वारा (ऋषि-पद को) प्रतिपादित बहुत-से ऋषि हुए हैं। इसलिए जाति ब्राह्मण नहीं है।",
+      "meaningEn": "Then is birth (jāti) the brāhmaṇa? That is not so. For there are many great sages born of other kinds of creatures, of many births: it is heard that Ṛṣyaśṛṅga was born of a doe, Kauśika of kuśa grass, Jāmbūka of a jackal, Vālmīki of an ant-hill, Vyāsa of a fisherman's daughter, Gautama from the back of a hare, Vasiṣṭha of Urvaśī, and Agastya in a water-jar. Among these there are many ṛṣis who, even without birth, were established [as sages] by knowledge. Therefore birth is not the brāhmaṇa."
+    },
+    {
+      "id": "vajrasuchi-6",
+      "upanishad": 36,
+      "section": "mantra",
+      "stanza": 36,
+      "numInSection": 7,
+      "reference": "6",
+      "labelHi": "मन्त्र · ६",
+      "labelEn": "Mantra · 6",
+      "lines": [
+        "तर्हि ज्ञानं ब्राह्मण इति चेत्तन्न।",
+        "क्षत्रियादयोऽपि परमार्थदर्शिनोऽभिज्ञा बहवः सन्ति।",
+        "तस्मान्न ज्ञानं ब्राह्मण इति॥"
+      ],
+      "linesEn": [
+        "tarhi jñānaṁ brāhmaṇa iti chettanna",
+        "kṣhatriyādayo'pi paramārthadarśhino'bhijñā bahavaḥ santi",
+        "tasmānna jñānaṁ brāhmaṇa iti"
+      ],
+      "meaningHi": "तो क्या ज्ञान ब्राह्मण है? — यह भी ठीक नहीं; क्योंकि क्षत्रिय आदि भी बहुत-से परमार्थ-तत्त्व को देखने वाले ज्ञानी हुए हैं। इसलिए ज्ञान ब्राह्मण नहीं है।",
+      "meaningEn": "Then is knowledge the brāhmaṇa? That is not so. For there are many kṣatriyas and others too who are seers of the highest truth, men of wisdom. Therefore knowledge is not the brāhmaṇa."
+    },
+    {
+      "id": "vajrasuchi-7",
+      "upanishad": 36,
+      "section": "mantra",
+      "stanza": 36,
+      "numInSection": 8,
+      "reference": "7",
+      "labelHi": "मन्त्र · ७",
+      "labelEn": "Mantra · 7",
+      "lines": [
+        "तर्हि कर्म ब्राह्मण इति चेत्तन्न।",
+        "सर्वेषां प्राणिनां प्रारब्धसञ्चितागामिकर्मसाधर्म्यदर्शनात्कर्माभिप्रेरिताः सन्तो जनाः क्रियाः कुर्वन्तीति।",
+        "तस्मान्न कर्म ब्राह्मण इति॥"
+      ],
+      "linesEn": [
+        "tarhi karma brāhmaṇa iti chettanna",
+        "sarveṣhāṁ prāṇināṁ prārabdhasañchitāgāmikarmasādharmyadarśhanātkarmābhipreritāḥ santo janāḥ kriyāḥ kurvantīti",
+        "tasmānna karma brāhmaṇa iti"
+      ],
+      "meaningHi": "तो क्या कर्म ब्राह्मण है? — यह भी ठीक नहीं; क्योंकि सभी प्राणियों में प्रारब्ध, संचित और आगामी कर्मों की समानता देखी जाती है, और सब लोग कर्म से प्रेरित होकर ही क्रियाएँ करते हैं। इसलिए कर्म ब्राह्मण नहीं है।",
+      "meaningEn": "Then is action (karma) the brāhmaṇa? That is not so. For all living beings are seen to share alike in prārabdha, sañcita and āgāmi karma, and it is impelled by karma that people perform their deeds. Therefore karma is not the brāhmaṇa."
+    },
+    {
+      "id": "vajrasuchi-8",
+      "upanishad": 36,
+      "section": "mantra",
+      "stanza": 36,
+      "numInSection": 9,
+      "reference": "8",
+      "labelHi": "मन्त्र · ८",
+      "labelEn": "Mantra · 8",
+      "lines": [
+        "तर्हि धार्मिको ब्राह्मण इति चेत्तन्न।",
+        "क्षत्रियादयो हिरण्यदातारो बहवः सन्ति।",
+        "तस्मान्न धार्मिको ब्राह्मण इति॥"
+      ],
+      "linesEn": [
+        "tarhi dhārmiko brāhmaṇa iti chettanna",
+        "kṣhatriyādayo hiraṇyadātāro bahavaḥ santi",
+        "tasmānna dhārmiko brāhmaṇa iti"
+      ],
+      "meaningHi": "तो क्या धार्मिक (पुण्य-कर्म करने वाला) ब्राह्मण है? — यह भी ठीक नहीं; क्योंकि क्षत्रिय आदि भी बहुत-से सुवर्ण का दान करने वाले हुए हैं। इसलिए धार्मिक (होना) ब्राह्मण नहीं है।",
+      "meaningEn": "Then is the doer of pious works the brāhmaṇa? That is not so. For there are many kṣatriyas and others who give gold in charity. Therefore the pious doer is not the brāhmaṇa."
+    },
+    {
+      "id": "vajrasuchi-9",
+      "upanishad": 36,
+      "section": "mantra",
+      "stanza": 36,
+      "numInSection": 10,
+      "reference": "9",
+      "labelHi": "मन्त्र · ९",
+      "labelEn": "Mantra · 9",
+      "lines": [
+        "तर्हि को वा ब्राह्मणो नाम।",
+        "यः कश्चिदात्मानमद्वितीयं जातिगुणक्रियाहीनं षडूर्मिषड्भावेत्यादिसर्वदोषरहितं सत्यज्ञानानन्दानन्तस्वरूपं स्वयं निर्विकल्पमशेषकल्पाधारमशेषभूतान्तर्यामित्वेन वर्तमानमन्तर्बहिश्चाकाशवदनुस्यूतमखण्डानन्दस्वभावमप्रमेयमनुभवैकवेद्यमपरोक्षतया भासमानं करतलामलकवत्साक्षादपरोक्षीकृत्य कृतार्थतया कामरागादिदोषरहितः शमदमादिसम्पन्नो भावमात्सर्यतृष्णाशामोहादिरहितो दम्भाहङ्कारादिभिरसंस्पृष्टचेता वर्तते।",
+        "एवमुक्तलक्षणो यः स एव ब्राह्मण इति श्रुतिस्मृतीतिहासपुराणाभ्यामभिप्रायः।",
+        "अन्यथा हि ब्राह्मणत्वसिद्धिर्नास्त्येव।",
+        "सच्चिदानन्दमात्मानमद्वितीयं ब्रह्म भावयेदात्मानं सच्चिदानन्दं ब्रह्म भावयेदित्युपनिषत्॥"
+      ],
+      "linesEn": [
+        "tarhi ko vā brāhmaṇo nāma",
+        "yaḥ kaśchidātmānamadvitīyaṁ jātiguṇakriyāhīnaṁ ṣhaḍūrmiṣhaḍbhāvetyādisarvadoṣharahitaṁ satyajñānānandānantasvarūpaṁ svayaṁ nirvikalpamaśheṣhakalpādhāramaśheṣhabhūtāntaryāmitvena vartamānamantarbahiśchākāśhavadanusyūtamakhaṇḍānandasvabhāvamaprameyamanubhavaikavedyamaparokṣhatayā bhāsamānaṁ karatalāmalakavatsākṣhādaparokṣhīkṛitya kṛitārthatayā kāmarāgādidoṣharahitaḥ śhamadamādisampanno bhāvamātsaryatṛiṣṇāśhāmohādirahito dambhāhaṅkārādibhirasaṁspṛiṣṭachetā vartate",
+        "evamuktalakṣhaṇo yaḥ sa eva brāhmaṇa iti śrutismṛitītihāsapurāṇābhyāmabhiprāyaḥ",
+        "anyathā hi brāhmaṇatvasiddhirnāstyeva",
+        "sachchidānandamātmānamadvitīyaṁ brahma bhāvayedātmānaṁ sachchidānandaṁ brahma bhāvayedityupaniṣhat"
+      ],
+      "meaningHi": "तो फिर ब्राह्मण कौन है? जो कोई आत्मा को — जो अद्वितीय है; जाति, गुण और क्रिया से रहित है; छह ऊर्मियों (भूख, प्यास, शोक, मोह, जरा, मृत्यु) और छह भावविकारों आदि सब दोषों से रहित है; सत्य, ज्ञान, आनन्द और अनन्त-स्वरूप है; स्वयं निर्विकल्प है; समस्त कल्पनाओं का आधार है; समस्त प्राणियों के अन्तर्यामी रूप से विद्यमान है; भीतर-बाहर आकाश की भाँति ओतप्रोत है; अखण्ड आनन्द-स्वभाव है; अप्रमेय है; केवल अनुभव से जानने योग्य है; और प्रत्यक्ष रूप से प्रकाशित हो रहा है — हथेली पर रखे आँवले की भाँति साक्षात् अपरोक्ष अनुभव करके, कृतार्थ होने के कारण काम, राग आदि दोषों से रहित, शम, दम आदि से सम्पन्न, भाव (विकार), मात्सर्य, तृष्णा, आशा, मोह आदि से रहित तथा दम्भ, अहंकार आदि से अछूते चित्त वाला होकर रहता है — इस प्रकार कहे गए लक्षणों वाला जो है, वही ब्राह्मण है — यही श्रुति, स्मृति, इतिहास और पुराणों का अभिप्राय है। अन्यथा ब्राह्मणत्व की सिद्धि होती ही नहीं। सच्चिदानन्द, अद्वितीय आत्मा को ब्रह्म-रूप से भावना करे; आत्मा को सच्चिदानन्द ब्रह्म-रूप से भावना करे — यह उपनिषद् है।",
+      "meaningEn": "Who, then, is the brāhmaṇa? Whoever has directly realised, as plainly as an āmalaka fruit on the palm of the hand, the Self — second to none; without birth, quality or action; free of every flaw such as the six waves (hunger, thirst, grief, delusion, old age and death) and the six modifications of being; whose nature is truth, knowledge, bliss and infinity; itself beyond all distinction; the ground of all imaginings; abiding as the inner ruler of all beings; pervading within and without like space; of the nature of undivided bliss; immeasurable; knowable by experience alone; shining forth immediately — and who, his purpose fulfilled, lives free of desire, passion and the other faults, endowed with calm, self-restraint and the rest, free of emotional turmoil, envy, craving, expectation and delusion, his mind untouched by hypocrisy, egotism and the like: the one marked thus, he alone is the brāhmaṇa — this is the purport of śruti, smṛti, itihāsa and purāṇa. Otherwise there is no attaining the state of a brāhmaṇa at all. One should meditate on the Self — Being, Consciousness and Bliss, second to none — as Brahman; one should meditate on the Self as Saccidānanda Brahman. Thus the Upaniṣad."
+    }
+  ]
+}

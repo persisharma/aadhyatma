@@ -1,0 +1,809 @@
+{
+  "chapter": 21,
+  "slug": "amritanada",
+  "titleHi": "अमृतनाद उपनिषद्",
+  "titleEn": "Amritanada Upanishad",
+  "vedaHi": "कृष्ण यजुर्वेद",
+  "vedaEn": "Krishna Yajurveda",
+  "mantraCount": 38,
+  "verseCount": 39,
+  "source": {
+    "baseText": "Kṛṣṇa Yajurveda Amṛtanāda Upaniṣad in 38 verses, as printed in the Ānandāśrama one-hundred-eight Upaniṣad collection and the Adyar Yoga Upaniṣads (with Upaniṣad-brahmayogin’s commentary); Devanagari written out from the printed text.",
+    "canonicalEdition": "Ānandāśrama Sanskrit Series, Upaniṣadāṃ Samuccayaḥ; The Yoga Upaniṣads, Adyar Library (ed. A. Mahadeva Sastri); Gita Press, उपनिषद् अंक",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_upanishhat/amritanada.html",
+      "https://www.wisdomlib.org/hinduism/book/amritanada-upanishad",
+      "https://archive.org/details/TheYogaUpanishads"
+    ],
+    "notes": "38 verses, undivided, numbered as in the Ānandāśrama / Adyar Yoga Upaniṣads: 1–4 discarding the books once Brahman is known, the chariot of Om driven by Viṣṇu, and the passage beyond the measures to the subtle state; 5–6 pratyāhāra and the six limbs of yoga; 7–14 breath-control burning the defects, the three prāṇāyāmas (recaka, pūraka, kumbhaka) and the mark of the tranquil one; 15–16 dhāraṇā, tarka and samādhi; 17–23 place, seat, posture, the drawing of breath with Om, gaze and the time-measure of practice; 24 the imperishable syllable; 25–27 the path of prāṇa, the doors and the things a yogin avoids; 28–29 fruits in three to six months; 30–31 the measures of the five elements and the half-measure; 32–33 the extent of prāṇa and the day-and-night breath count (1,13,180); 34–37 the seats and colours of the five prāṇas; 38 the breath that pierces the crown — no rebirth. Verse 9 is printed as three half-verses (the recaka/pūraka/kumbhaka line is joined to it), which is why the count is 38 rather than 39 as in some prints. Readings vary between prints in 3 (स्थित्वा रथपथस्थानं), 14 (काष्ठवत्पश्यते देहं), 21 (स्थूलातिस्थूलमात्रायां; some read स्थूलादिस्थूलसूक्ष्मं च), 23 (तालुमात्राविनिष्कम्पो), 24 (कथंचित् / कदाचित्), 32 (त्रिंशत्पर्वाङ्गुलः) and 35; the reading followed here is noted in the Devanagari. The Kṛṣṇa-Yajurvedic śānti-pāṭha (सह नाववतु) is page 1. Devanagari was authored from memory of the printed text because the network policy blocks the Sanskrit source hosts — a line-by-line scan check against the printed edition is still owed.",
+    "retrievedOn": "2026-09-27"
+  },
+  "verses": [
+    {
+      "id": "amritanada-shanti",
+      "upanishad": 21,
+      "section": "shanti",
+      "stanza": 21,
+      "numInSection": 1,
+      "reference": "shanti",
+      "labelHi": "शान्ति मन्त्र",
+      "labelEn": "Shanti Mantra",
+      "lines": [
+        "ॐ सह नाववतु सह नौ भुनक्तु सह वीर्यं करवावहै।",
+        "तेजस्वि नावधीतमस्तु मा विद्विषावहै॥",
+        "ॐ शान्तिः शान्तिः शान्तिः॥"
+      ],
+      "linesEn": [
+        "om saha nāvavatu saha nau bhunaktu saha vīryaṁ karavāvahai",
+        "tejasvi nāvadhītamastu mā vidviṣhāvahai",
+        "om śhāntiḥ śhāntiḥ śhāntiḥ"
+      ],
+      "meaningHi": "वह (ब्रह्म) हम दोनों (गुरु-शिष्य) की साथ-साथ रक्षा करे, हम दोनों का साथ-साथ पालन करे; हम दोनों साथ-साथ सामर्थ्य प्राप्त करें। हमारा पढ़ा हुआ तेजस्वी हो; हम परस्पर द्वेष न करें। ॐ शान्तिः शान्तिः शान्तिः।",
+      "meaningEn": "May That protect us both together; may That nourish us both together; may we work together with vigour. May what we study be luminous; may we never hate one another. Om, peace, peace, peace."
+    },
+    {
+      "id": "amritanada-1",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 2,
+      "reference": "1",
+      "labelHi": "मन्त्र · १",
+      "labelEn": "Mantra · 1",
+      "lines": [
+        "शास्त्राण्यधीत्य मेधावी अभ्यस्य च पुनः पुनः।",
+        "परमं ब्रह्म विज्ञाय उल्कावत्तान्यथोत्सृजेत्॥"
+      ],
+      "linesEn": [
+        "śhāstrāṇyadhītya medhāvī abhyasya cha punaḥ punaḥ",
+        "paramaṁ brahma vijñāya ulkāvattānyathotsṛijet"
+      ],
+      "meaningHi": "बुद्धिमान् साधक शास्त्रों का अध्ययन करके और उनका बार-बार अभ्यास करके, परब्रह्म को भली-भाँति जान लेने पर उन्हें (शास्त्रों को) उसी प्रकार त्याग दे जैसे (मार्ग दिख जाने पर) मशाल को त्याग दिया जाता है।",
+      "meaningEn": "Having studied the scriptures and practised them again and again, the wise one, once he has come to know the supreme Brahman, should then set them aside like a torch [once the way is seen]."
+    },
+    {
+      "id": "amritanada-2",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 3,
+      "reference": "2",
+      "labelHi": "मन्त्र · २",
+      "labelEn": "Mantra · 2",
+      "lines": [
+        "ओंकाररथमारुह्य विष्णुं कृत्वाथ सारथिम्।",
+        "ब्रह्मलोकपदान्वेषी रुद्राराधनतत्परः॥"
+      ],
+      "linesEn": [
+        "oṁkārarathamāruhya viṣṇuṁ kṛitvātha sārathim",
+        "brahmalokapadānveṣhī rudrārādhanatatparaḥ"
+      ],
+      "meaningHi": "ओंकार-रूपी रथ पर आरूढ़ होकर और भगवान् विष्णु को सारथि बनाकर, ब्रह्मलोक के पद की खोज करने वाला साधक रुद्र की आराधना में तत्पर रहे।",
+      "meaningEn": "Mounting the chariot of Om, with Viṣṇu made the charioteer, the seeker of the state of the world of Brahman remains intent on the worship of Rudra."
+    },
+    {
+      "id": "amritanada-3",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 4,
+      "reference": "3",
+      "labelHi": "मन्त्र · ३",
+      "labelEn": "Mantra · 3",
+      "lines": [
+        "तावद्रथेन गन्तव्यं यावद्रथपथि स्थितः।",
+        "स्थित्वा रथपथस्थानं रथमुत्सृज्य गच्छति॥"
+      ],
+      "linesEn": [
+        "tāvadrathena gantavyaṁ yāvadrathapathi sthitaḥ",
+        "sthitvā rathapathasthānaṁ rathamutsṛijya gachchhati"
+      ],
+      "meaningHi": "जब तक रथ के मार्ग पर स्थित है, तब तक रथ से ही चलना चाहिए। रथ-मार्ग के अन्तिम स्थान पर पहुँचकर (साधक) रथ को छोड़कर (आगे) जाता है।",
+      "meaningEn": "One should travel by the chariot as long as one is on the chariot-road. Having reached the end of the chariot-road, one leaves the chariot and goes on."
+    },
+    {
+      "id": "amritanada-4",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 5,
+      "reference": "4",
+      "labelHi": "मन्त्र · ४",
+      "labelEn": "Mantra · 4",
+      "lines": [
+        "मात्रालिङ्गपदं त्यक्त्वा शब्दव्यञ्जनवर्जितम्।",
+        "अस्वरेण मकारेण पदं सूक्ष्मं च गच्छति॥"
+      ],
+      "linesEn": [
+        "mātrāliṅgapadaṁ tyaktvā śhabdavyañjanavarjitam",
+        "asvareṇa makāreṇa padaṁ sūkṣmaṁ cha gachchhati"
+      ],
+      "meaningHi": "मात्रा, चिह्न और पद (के स्थूल रूप) को छोड़कर, स्वर-रहित मकार के द्वारा वह शब्द और व्यञ्जन से रहित सूक्ष्म पद को प्राप्त होता है।",
+      "meaningEn": "Giving up the measure, the mark and the word, one reaches, by the soundless ‘m’, the subtle state that is free of sound and consonant."
+    },
+    {
+      "id": "amritanada-5",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 6,
+      "reference": "5",
+      "labelHi": "मन्त्र · ५",
+      "labelEn": "Mantra · 5",
+      "lines": [
+        "शब्दादिविषयान्पञ्च मनश्चैवातिचञ्चलम्।",
+        "चिन्तयेदात्मनो रश्मीन्प्रत्याहारः स उच्यते॥"
+      ],
+      "linesEn": [
+        "śhabdādiviṣhayānpañcha manaśchaivātichañchalam",
+        "chintayedātmano raśmīnpratyāhāraḥ sa uchyate"
+      ],
+      "meaningHi": "शब्द आदि पाँचों विषयों को और अत्यन्त चञ्चल मन को भी आत्मा की ही किरणें समझकर उनका चिन्तन करे — यह प्रत्याहार कहलाता है।",
+      "meaningEn": "The five objects beginning with sound, and the mind too, which is exceedingly restless — one should contemplate them as the rays of the Self. This is called withdrawal (pratyāhāra)."
+    },
+    {
+      "id": "amritanada-6",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 7,
+      "reference": "6",
+      "labelHi": "मन्त्र · ६",
+      "labelEn": "Mantra · 6",
+      "lines": [
+        "प्रत्याहारस्तथा ध्यानं प्राणायामोऽथ धारणा।",
+        "तर्कश्चैव समाधिश्च षडङ्गो योग उच्यते॥"
+      ],
+      "linesEn": [
+        "pratyāhārastathā dhyānaṁ prāṇāyāmo'tha dhāraṇā",
+        "tarkaśchaiva samādhiścha ṣhaḍaṅgo yoga uchyate"
+      ],
+      "meaningHi": "प्रत्याहार, ध्यान, प्राणायाम, धारणा, तर्क और समाधि — यह छः अङ्गों वाला योग कहा जाता है।",
+      "meaningEn": "Withdrawal, meditation, breath-control, concentration, reasoning and absorption — this is called the six-limbed yoga."
+    },
+    {
+      "id": "amritanada-7",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 8,
+      "reference": "7",
+      "labelHi": "मन्त्र · ७",
+      "labelEn": "Mantra · 7",
+      "lines": [
+        "यथा पर्वतधातूनां दह्यन्ते धमनान्मलाः।",
+        "तथेन्द्रियकृता दोषा दह्यन्ते प्राणनिग्रहात्॥"
+      ],
+      "linesEn": [
+        "yathā parvatadhātūnāṁ dahyante dhamanānmalāḥ",
+        "tathendriyakṛitā doṣhā dahyante prāṇanigrahāt"
+      ],
+      "meaningHi": "जैसे पर्वत से निकली धातुओं के मल धौंकनी से धौंकने पर जल जाते हैं, वैसे ही इन्द्रियों द्वारा किए गए दोष प्राण के निग्रह से जल जाते हैं।",
+      "meaningEn": "As the impurities of ores from the mountain are burnt away by the blowing of the bellows, so the faults wrought by the senses are burnt away by the restraint of breath."
+    },
+    {
+      "id": "amritanada-8",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 9,
+      "reference": "8",
+      "labelHi": "मन्त्र · ८",
+      "labelEn": "Mantra · 8",
+      "lines": [
+        "प्राणायामैर्दहेद्दोषान्धारणाभिश्च किल्बिषम्।",
+        "प्रत्याहारेण संसर्गान्ध्यानेनानीश्वरान्गुणान्॥"
+      ],
+      "linesEn": [
+        "prāṇāyāmairdaheddoṣhāndhāraṇābhiścha kilbiṣham",
+        "pratyāhāreṇa saṁsargāndhyānenānīśvarānguṇān"
+      ],
+      "meaningHi": "प्राणायामों से दोषों को, धारणाओं से पाप को, प्रत्याहार से (विषयों के) संसर्ग को और ध्यान से अनीश्वर (आत्मा को आच्छादित करने वाले) गुणों को भस्म कर दे।",
+      "meaningEn": "By breath-control one should burn the faults; by concentration, sin; by withdrawal, the contacts [with objects]; and by meditation, the qualities that are not of the Lord."
+    },
+    {
+      "id": "amritanada-9",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 10,
+      "reference": "9",
+      "labelHi": "मन्त्र · ९",
+      "labelEn": "Mantra · 9",
+      "lines": [
+        "किल्बिषं हि क्षयं नीत्वा रुचिरं चैव चिन्तयेत्।",
+        "रुचिरं रेचकं चैव वायोराकर्षणं तथा।",
+        "प्राणायामास्त्रयः प्रोक्ता रेचपूरककुम्भकाः॥"
+      ],
+      "linesEn": [
+        "kilbiṣhaṁ hi kṣhayaṁ nītvā ruchiraṁ chaiva chintayet",
+        "ruchiraṁ rechakaṁ chaiva vāyorākarṣhaṇaṁ tathā",
+        "prāṇāyāmāstrayaḥ proktā rechapūrakakumbhakāḥ"
+      ],
+      "meaningHi": "पाप को क्षीण करके (साधक) रुचिर (प्रकाशमय परमात्मा) का चिन्तन करे। (प्राण का) रुचिर (रोकना), रेचक (बाहर निकालना) और वायु का आकर्षण (भीतर खींचना) — ये रेचक, पूरक और कुम्भक तीन प्राणायाम कहे गए हैं।",
+      "meaningEn": "Having brought sin to destruction, one should contemplate the Radiant. Holding, expelling, and the drawing in of air — these are said to be the three breath-controls: recaka, pūraka and kumbhaka."
+    },
+    {
+      "id": "amritanada-10",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 11,
+      "reference": "10",
+      "labelHi": "मन्त्र · १०",
+      "labelEn": "Mantra · 10",
+      "lines": [
+        "सव्याहृतिं सप्रणवां गायत्रीं शिरसा सह।",
+        "त्रिः पठेदायतप्राणः प्राणायामः स उच्यते॥"
+      ],
+      "linesEn": [
+        "savyāhṛitiṁ sapraṇavāṁ gāyatrīṁ śhirasā saha",
+        "triḥ paṭhedāyataprāṇaḥ prāṇāyāmaḥ sa uchyate"
+      ],
+      "meaningHi": "प्राण को रोककर व्याहृतियों और प्रणव सहित गायत्री को उसके शिरोमन्त्र के साथ तीन बार पढ़े — यह प्राणायाम कहलाता है।",
+      "meaningEn": "With the breath held, one should recite three times the Gāyatrī together with the vyāhṛtis, the praṇava and its head-verse (śiras). This is called prāṇāyāma."
+    },
+    {
+      "id": "amritanada-11",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 12,
+      "reference": "11",
+      "labelHi": "मन्त्र · ११",
+      "labelEn": "Mantra · 11",
+      "lines": [
+        "उत्क्षिप्य वायुमाकाशं शून्यं कृत्वा निरात्मकम्।",
+        "शून्यभावे नियुञ्जीयाद्रेचकस्येति लक्षणम्॥"
+      ],
+      "linesEn": [
+        "utkṣhipya vāyumākāśhaṁ śhūnyaṁ kṛitvā nirātmakam",
+        "śhūnyabhāve niyuñjīyādrechakasyeti lakṣhaṇam"
+      ],
+      "meaningHi": "वायु को ऊपर आकाश में फेंककर (बाहर निकालकर), (भीतर के स्थान को) शून्य और निरात्मक करके, मन को शून्य-भाव में लगाए — यह रेचक का लक्षण है।",
+      "meaningEn": "Casting the air out into space, making [the inner space] empty and void of self, one should fix [the mind] in the state of emptiness — this is the mark of recaka."
+    },
+    {
+      "id": "amritanada-12",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 13,
+      "reference": "12",
+      "labelHi": "मन्त्र · १२",
+      "labelEn": "Mantra · 12",
+      "lines": [
+        "वक्त्रेणोत्पलनालेन तोयमाकर्षयेन्नरः।",
+        "एवं वायुर्ग्रहीतव्यः पूरकस्येति लक्षणम्॥"
+      ],
+      "linesEn": [
+        "vaktreṇotpalanālena toyamākarṣhayennaraḥ",
+        "evaṁ vāyurgrahītavyaḥ pūrakasyeti lakṣhaṇam"
+      ],
+      "meaningHi": "जैसे मनुष्य मुख से कमल की नाल द्वारा जल खींचता है, वैसे ही वायु को (धीरे-धीरे) ग्रहण करना चाहिए — यह पूरक का लक्षण है।",
+      "meaningEn": "As a man draws water through the stalk of a lotus with his mouth, so should the air be taken in — this is the mark of pūraka."
+    },
+    {
+      "id": "amritanada-13",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 14,
+      "reference": "13",
+      "labelHi": "मन्त्र · १३",
+      "labelEn": "Mantra · 13",
+      "lines": [
+        "नोच्छ्वसेन्न च निश्वसेन्नैव गात्राणि चालयेत्।",
+        "एवं भावं नियुञ्जीयात्कुम्भकस्येति लक्षणम्॥"
+      ],
+      "linesEn": [
+        "nochchhvasenna cha niśvasennaiva gātrāṇi chālayet",
+        "evaṁ bhāvaṁ niyuñjīyātkumbhakasyeti lakṣhaṇam"
+      ],
+      "meaningHi": "न श्वास ऊपर ले, न बाहर छोड़े और न अङ्गों को हिलाए; इस प्रकार (मन को) भाव में लगाए — यह कुम्भक का लक्षण है।",
+      "meaningEn": "One should neither breathe in nor breathe out, nor move the limbs; thus one should fix the mind in that state — this is the mark of kumbhaka."
+    },
+    {
+      "id": "amritanada-14",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 15,
+      "reference": "14",
+      "labelHi": "मन्त्र · १४",
+      "labelEn": "Mantra · 14",
+      "lines": [
+        "अन्धवत्पश्य रूपाणि शब्दं बधिरवच्छृणु।",
+        "काष्ठवत्पश्यते देहं प्रशान्तस्येति लक्षणम्॥"
+      ],
+      "linesEn": [
+        "andhavatpaśya rūpāṇi śhabdaṁ badhiravachchhṛiṇu",
+        "kāṣṭhavatpaśyate dehaṁ praśhāntasyeti lakṣhaṇam"
+      ],
+      "meaningHi": "रूपों को अन्धे की भाँति देखो, शब्द को बहरे की भाँति सुनो; जो देह को काठ की भाँति देखता है — यह प्रशान्त (साधक) का लक्षण है।",
+      "meaningEn": "See forms as one who is blind; hear sound as one who is deaf; one who looks upon the body as a log of wood — this is the mark of the tranquil one."
+    },
+    {
+      "id": "amritanada-15",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 16,
+      "reference": "15",
+      "labelHi": "मन्त्र · १५",
+      "labelEn": "Mantra · 15",
+      "lines": [
+        "मनः संकल्पकं ध्यात्वा संक्षिप्यात्मनि बुद्धिमान्।",
+        "धारयित्वा तथात्मानं धारणा परिकीर्तिता॥"
+      ],
+      "linesEn": [
+        "manaḥ saṁkalpakaṁ dhyātvā saṁkṣhipyātmani buddhimān",
+        "dhārayitvā tathātmānaṁ dhāraṇā parikīrtitā"
+      ],
+      "meaningHi": "बुद्धिमान् साधक संकल्प करने वाले मन को (संकल्प-रूप) समझकर उसे आत्मा में समेट ले और इस प्रकार आत्मा में (मन को) धारण करे — यह धारणा कही गई है।",
+      "meaningEn": "The wise one, regarding the mind as that which forms intentions, draws it back into the Self and so holds it fixed in the Self — this is declared to be concentration (dhāraṇā)."
+    },
+    {
+      "id": "amritanada-16",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 17,
+      "reference": "16",
+      "labelHi": "मन्त्र · १६",
+      "labelEn": "Mantra · 16",
+      "lines": [
+        "आगमस्याविरोधेन ऊहनं तर्क उच्यते।",
+        "समं मन्येत यं लब्ध्वा स समाधिः प्रकीर्तितः॥"
+      ],
+      "linesEn": [
+        "āgamasyāvirodhena ūhanaṁ tarka uchyate",
+        "samaṁ manyeta yaṁ labdhvā sa samādhiḥ prakīrtitaḥ"
+      ],
+      "meaningHi": "शास्त्र (आगम) के अविरोध से (उसके अनुकूल) किया गया ऊहापोह तर्क कहलाता है। जिसे प्राप्त करके (साधक) सब कुछ सम मानने लगे, वह समाधि कही गई है।",
+      "meaningEn": "Reflection that does not contradict scripture is called reasoning (tarka). That on attaining which one regards all as the same is declared to be absorption (samādhi)."
+    },
+    {
+      "id": "amritanada-17",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 18,
+      "reference": "17",
+      "labelHi": "मन्त्र · १७",
+      "labelEn": "Mantra · 17",
+      "lines": [
+        "भूमौ दर्भासने रम्ये सर्वदोषविवर्जिते।",
+        "कृत्वा मनोमयीं रक्षां जप्त्वा वै रथमण्डलम्॥"
+      ],
+      "linesEn": [
+        "bhūmau darbhāsane ramye sarvadoṣhavivarjite",
+        "kṛitvā manomayīṁ rakṣhāṁ japtvā vai rathamaṇḍalam"
+      ],
+      "meaningHi": "सब दोषों से रहित, रमणीय भूमि पर कुश के आसन पर (बैठकर), मन से ही (अपनी) रक्षा का विधान करके और रथमण्डल (ओंकार-रूप रथ के मन्त्र) का जप करके —",
+      "meaningEn": "On level ground free of every fault, on a pleasant seat of darbha grass, having made a protection of the mind and having recited the chariot-circle [of Om] —"
+    },
+    {
+      "id": "amritanada-18",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 19,
+      "reference": "18",
+      "labelHi": "मन्त्र · १८",
+      "labelEn": "Mantra · 18",
+      "lines": [
+        "पद्मकं स्वस्तिकं वापि भद्रासनमथापि वा।",
+        "बद्ध्वा योगासनं सम्यगुत्तराभिमुखः स्थितः॥"
+      ],
+      "linesEn": [
+        "padmakaṁ svastikaṁ vāpi bhadrāsanamathāpi vā",
+        "baddhvā yogāsanaṁ samyaguttarābhimukhaḥ sthitaḥ"
+      ],
+      "meaningHi": "पद्मासन, स्वस्तिकासन अथवा भद्रासन — (इनमें से किसी) योगासन को भली-भाँति बाँधकर उत्तर की ओर मुख करके बैठे।",
+      "meaningEn": "Having rightly assumed a yogic posture — the lotus, the svastika or the bhadrāsana — one sits facing the north."
+    },
+    {
+      "id": "amritanada-19",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 20,
+      "reference": "19",
+      "labelHi": "मन्त्र · १९",
+      "labelEn": "Mantra · 19",
+      "lines": [
+        "नासिकापुटमङ्गुल्या पिधायैकेन मारुतम्।",
+        "आकृष्य धारयेदग्निं शब्दमेव विचिन्तयेत्॥"
+      ],
+      "linesEn": [
+        "nāsikāpuṭamaṅgulyā pidhāyaikena mārutam",
+        "ākṛiṣya dhārayedagniṁ śhabdameva vichintayet"
+      ],
+      "meaningHi": "अँगुली से नासिका के एक छिद्र को बन्द करके दूसरे से वायु को खींचकर (भीतर की) अग्नि को धारण करे और (प्रणव के) शब्द का ही चिन्तन करे।",
+      "meaningEn": "Closing one nostril with a finger and drawing in the air through the other, one should hold the fire [within] and contemplate the sound alone."
+    },
+    {
+      "id": "amritanada-20",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 21,
+      "reference": "20",
+      "labelHi": "मन्त्र · २०",
+      "labelEn": "Mantra · 20",
+      "lines": [
+        "ओमित्येकाक्षरं ब्रह्म ओमित्येकेन रेचयेत्।",
+        "दिव्यमन्त्रेण बहुशः कुर्यादात्ममलच्युतिम्॥"
+      ],
+      "linesEn": [
+        "omityekākṣharaṁ brahma omityekena rechayet",
+        "divyamantreṇa bahuśhaḥ kuryādātmamalachyutim"
+      ],
+      "meaningHi": "‘ॐ’ — यह एक अक्षर ब्रह्म है; ‘ॐ’ — इसी एक (अक्षर) के साथ (वायु का) रेचन करे। इस दिव्य मन्त्र के द्वारा बार-बार (ऐसा करके) अपने मल को दूर करे।",
+      "meaningEn": "‘Om’ — the one syllable is Brahman; with that one ‘Om’ one should breathe out. By this divine mantra, done many times, one should rid oneself of one’s impurity."
+    },
+    {
+      "id": "amritanada-21",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 22,
+      "reference": "21",
+      "labelHi": "मन्त्र · २१",
+      "labelEn": "Mantra · 21",
+      "lines": [
+        "पश्चाद्ध्यायीत पूर्वोक्तक्रमशो मन्त्रविद्बुधः।",
+        "स्थूलातिस्थूलमात्रायां नाभेरूर्ध्वमुपक्रमः॥"
+      ],
+      "linesEn": [
+        "paśchāddhyāyīta pūrvoktakramaśho mantravidbudhaḥ",
+        "sthūlātisthūlamātrāyāṁ nābherūrdhvamupakramaḥ"
+      ],
+      "meaningHi": "इसके पश्चात् मन्त्र को जानने वाला ज्ञानी पहले कहे हुए क्रम से ध्यान करे — स्थूल और अति-स्थूल मात्रा से आरम्भ करके नाभि से ऊपर की ओर।",
+      "meaningEn": "Afterwards the wise knower of the mantra should meditate in the order stated before, beginning with the gross and grosser measures, and moving upward from the navel."
+    },
+    {
+      "id": "amritanada-22",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 23,
+      "reference": "22",
+      "labelHi": "मन्त्र · २२",
+      "labelEn": "Mantra · 22",
+      "lines": [
+        "तिर्यगूर्ध्वमधोदृष्टिं विहाय च महामतिः।",
+        "स्थिरस्थायी विनिष्कम्पः सदा योगं समभ्यसेत्॥"
+      ],
+      "linesEn": [
+        "tiryagūrdhvamadhodṛiṣṭiṁ vihāya cha mahāmatiḥ",
+        "sthirasthāyī viniṣkampaḥ sadā yogaṁ samabhyaset"
+      ],
+      "meaningHi": "महाबुद्धिमान् साधक तिरछी, ऊपर और नीचे की दृष्टि को छोड़कर, स्थिर बैठकर और निष्कम्प होकर सदा योग का अभ्यास करे।",
+      "meaningEn": "Giving up the sideways, upward and downward gaze, the great-minded one, seated firm and unmoving, should always practise yoga."
+    },
+    {
+      "id": "amritanada-23",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 24,
+      "reference": "23",
+      "labelHi": "मन्त्र · २३",
+      "labelEn": "Mantra · 23",
+      "lines": [
+        "तालुमात्राविनिष्कम्पो धारणायोजनं तथा।",
+        "द्वादशमात्रो योगस्तु कालतो नियमः स्मृतः॥"
+      ],
+      "linesEn": [
+        "tālumātrāviniṣkampo dhāraṇāyojanaṁ tathā",
+        "dvādaśhamātro yogastu kālato niyamaḥ smṛitaḥ"
+      ],
+      "meaningHi": "तालु (के स्थान) में मात्रा के साथ निष्कम्प रहना और उसी प्रकार धारणा का योजन करना (योग है); काल के अनुसार बारह मात्राओं वाला योग ही नियम माना गया है।",
+      "meaningEn": "Remaining unmoving with the measure at the palate, and so joining the concentration — the yoga of twelve measures is held to be the rule in terms of time."
+    },
+    {
+      "id": "amritanada-24",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 25,
+      "reference": "24",
+      "labelHi": "मन्त्र · २४",
+      "labelEn": "Mantra · 24",
+      "lines": [
+        "अघोषमव्यञ्जनमस्वरं चाकण्ठताल्वोष्ठमनासिकं च।",
+        "अरेफजातमुभयोष्मवर्जितं यदक्षरं न क्षरते कथंचित्॥"
+      ],
+      "linesEn": [
+        "aghoṣhamavyañjanamasvaraṁ chākaṇṭhatālvoṣṭhamanāsikaṁ cha",
+        "arephajātamubhayoṣmavarjitaṁ yadakṣharaṁ na kṣharate kathaṁchit"
+      ],
+      "meaningHi": "जो घोष, व्यञ्जन और स्वर से रहित है; जो कण्ठ, तालु, ओष्ठ और नासिका से (उच्चारित) नहीं है; जो रेफ से उत्पन्न नहीं और दोनों ऊष्म वर्णों से भी रहित है — वह अक्षर (अविनाशी) है, जो कभी किसी प्रकार क्षीण नहीं होता।",
+      "meaningEn": "That which is without resonance, without consonant, without vowel, not of the throat, palate, lips or nose, not born of the ‘r’ and free of both sibilants — that is the Imperishable, which never perishes in any way."
+    },
+    {
+      "id": "amritanada-25",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 26,
+      "reference": "25",
+      "labelHi": "मन्त्र · २५",
+      "labelEn": "Mantra · 25",
+      "lines": [
+        "येनासौ पश्यते मार्गं प्राणस्तेन हि गच्छति।",
+        "अतस्तमभ्यसेन्नित्यं यन्मार्गगमनाय वै॥"
+      ],
+      "linesEn": [
+        "yenāsau paśyate mārgaṁ prāṇastena hi gachchhati",
+        "atastamabhyasennityaṁ yanmārgagamanāya vai"
+      ],
+      "meaningHi": "जिस (मार्ग) से यह (साधक) मार्ग को देखता है, उसी से प्राण जाता है। इसलिए उस मार्ग पर चलने के लिए उसका नित्य अभ्यास करना चाहिए।",
+      "meaningEn": "By the way through which he sees the path, by that the prāṇa goes. Therefore one should practise it constantly, for the sake of travelling that path."
+    },
+    {
+      "id": "amritanada-26",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 27,
+      "reference": "26",
+      "labelHi": "मन्त्र · २६",
+      "labelEn": "Mantra · 26",
+      "lines": [
+        "हृद्द्वारं वायुद्वारं च मूर्धद्वारमतः परम्।",
+        "मोक्षद्वारं बिलं चैव सुषिरं मण्डलं विदुः॥"
+      ],
+      "linesEn": [
+        "hṛiddvāraṁ vāyudvāraṁ cha mūrdhadvāramataḥ param",
+        "mokṣhadvāraṁ bilaṁ chaiva suṣhiraṁ maṇḍalaṁ viduḥ"
+      ],
+      "meaningHi": "हृदय का द्वार, वायु का द्वार, उसके पश्चात् मूर्धा का द्वार और मोक्ष का द्वार — इन्हें (ज्ञानी) बिल, सुषिर (छिद्र) और मण्डल कहते हैं।",
+      "meaningEn": "The door of the heart, the door of the air, beyond it the door of the crown, and the door of liberation — these the knowers call the cave, the hollow and the circle."
+    },
+    {
+      "id": "amritanada-27",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 28,
+      "reference": "27",
+      "labelHi": "मन्त्र · २७",
+      "labelEn": "Mantra · 27",
+      "lines": [
+        "भयं क्रोधमथालस्यमतिस्वप्नातिजागरम्।",
+        "अत्याहारमनाहारं नित्यं योगी विवर्जयेत्॥"
+      ],
+      "linesEn": [
+        "bhayaṁ krodhamathālasyamatisvapnātijāgaram",
+        "atyāhāramanāhāraṁ nityaṁ yogī vivarjayet"
+      ],
+      "meaningHi": "भय, क्रोध, आलस्य, अधिक सोना, अधिक जागना, अधिक भोजन और भोजन न करना — इनका योगी सदा त्याग करे।",
+      "meaningEn": "Fear, anger, sloth, too much sleep, too much waking, too much food and no food — these the yogin should always avoid."
+    },
+    {
+      "id": "amritanada-28",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 29,
+      "reference": "28",
+      "labelHi": "मन्त्र · २८",
+      "labelEn": "Mantra · 28",
+      "lines": [
+        "अनेन विधिना सम्यङ्नित्यमभ्यसतः क्रमात्।",
+        "स्वयमुत्पद्यते ज्ञानं त्रिभिर्मासैर्न संशयः॥"
+      ],
+      "linesEn": [
+        "anena vidhinā samyaṅnityamabhyasataḥ kramāt",
+        "svayamutpadyate jñānaṁ tribhirmāsairna saṁśhayaḥ"
+      ],
+      "meaningHi": "इस विधि से क्रमपूर्वक भली-भाँति नित्य अभ्यास करने वाले को तीन महीनों में स्वयं ही ज्ञान उत्पन्न हो जाता है — इसमें संशय नहीं।",
+      "meaningEn": "For one who practises rightly and constantly by this method, step by step, knowledge arises of itself in three months — there is no doubt."
+    },
+    {
+      "id": "amritanada-29",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 30,
+      "reference": "29",
+      "labelHi": "मन्त्र · २९",
+      "labelEn": "Mantra · 29",
+      "lines": [
+        "चतुर्भिः पश्यते देवान्पञ्चभिस्तुल्यविक्रमः।",
+        "इच्छयाप्नोति कैवल्यं षष्ठे मासि न संशयः॥"
+      ],
+      "linesEn": [
+        "chaturbhiḥ paśyate devānpañchabhistulyavikramaḥ",
+        "ichchhayāpnoti kaivalyaṁ ṣhaṣṭhe māsi na saṁśhayaḥ"
+      ],
+      "meaningHi": "चार महीनों में वह देवताओं का दर्शन करता है, पाँच में (उनके) समान पराक्रम वाला हो जाता है और छठे महीने में इच्छानुसार कैवल्य को प्राप्त कर लेता है — इसमें संशय नहीं।",
+      "meaningEn": "In four [months] he sees the gods; in five he becomes their equal in power; in the sixth month he attains aloneness (kaivalya) at will — there is no doubt."
+    },
+    {
+      "id": "amritanada-30",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 31,
+      "reference": "30",
+      "labelHi": "मन्त्र · ३०",
+      "labelEn": "Mantra · 30",
+      "lines": [
+        "पार्थिवः पञ्चमात्रस्तु चतुर्मात्रस्तु वारुणः।",
+        "आग्नेयस्तु त्रिमात्रोऽसौ वायव्यस्तु द्विमात्रकः॥"
+      ],
+      "linesEn": [
+        "pārthivaḥ pañchamātrastu chaturmātrastu vāruṇaḥ",
+        "āgneyastu trimātro'sau vāyavyastu dvimātrakaḥ"
+      ],
+      "meaningHi": "पृथ्वी-तत्त्व (की धारणा) पाँच मात्राओं की है, जल-तत्त्व की चार मात्राओं की, अग्नि-तत्त्व की तीन मात्राओं की और वायु-तत्त्व की दो मात्राओं की।",
+      "meaningEn": "The earthly [concentration] is of five measures, the watery of four; the fiery is of three measures, and the airy of two."
+    },
+    {
+      "id": "amritanada-31",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 32,
+      "reference": "31",
+      "labelHi": "मन्त्र · ३१",
+      "labelEn": "Mantra · 31",
+      "lines": [
+        "एकमात्रस्तथाकाशो ह्यर्धमात्रं तु चिन्तयेत्।",
+        "संधिं कृत्वा तु मनसा चिन्तयेदात्मनात्मनि॥"
+      ],
+      "linesEn": [
+        "ekamātrastathākāśho hyardhamātraṁ tu chintayet",
+        "saṁdhiṁ kṛitvā tu manasā chintayedātmanātmani"
+      ],
+      "meaningHi": "आकाश-तत्त्व एक मात्रा का है; फिर अर्धमात्रा का चिन्तन करे। मन से (इनका) संधान करके आत्मा के द्वारा आत्मा में (परमात्मा का) चिन्तन करे।",
+      "meaningEn": "Space is of one measure; then one should contemplate the half-measure. Joining them with the mind, one should contemplate the Self by the Self within the Self."
+    },
+    {
+      "id": "amritanada-32",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 33,
+      "reference": "32",
+      "labelHi": "मन्त्र · ३२",
+      "labelEn": "Mantra · 32",
+      "lines": [
+        "त्रिंशत्पर्वाङ्गुलः प्राणो यत्र प्राणः प्रतिष्ठितः।",
+        "एष प्राण इति ख्यातो बाह्यप्राणस्य गोचरः॥"
+      ],
+      "linesEn": [
+        "triṁśhatparvāṅgulaḥ prāṇo yatra prāṇaḥ pratiṣṭhitaḥ",
+        "eṣha prāṇa iti khyāto bāhyaprāṇasya gocharaḥ"
+      ],
+      "meaningHi": "प्राण तीस पर्वों वाली अँगुलियों (के परिमाण) का है, जहाँ प्राण प्रतिष्ठित है। यही प्राण कहा गया है, जो बाहरी प्राण का क्षेत्र है।",
+      "meaningEn": "The prāṇa extends thirty finger-joints, where the prāṇa is established. This is known as prāṇa, the range of the outer breath."
+    },
+    {
+      "id": "amritanada-33",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 34,
+      "reference": "33",
+      "labelHi": "मन्त्र · ३३",
+      "labelEn": "Mantra · 33",
+      "lines": [
+        "अशीतिश्च शतं चैव सहस्राणि त्रयोदश।",
+        "लक्षश्चैको विनिःश्वास अहोरात्रप्रमाणतः॥"
+      ],
+      "linesEn": [
+        "aśhītiścha śhataṁ chaiva sahasrāṇi trayodaśha",
+        "lakṣhaśchaiko viniḥśvāsa ahorātrapramāṇataḥ"
+      ],
+      "meaningHi": "एक दिन-रात के परिमाण में (मनुष्य के) श्वास एक लाख तेरह हजार एक सौ अस्सी होते हैं।",
+      "meaningEn": "One lakh, thirteen thousand, one hundred and eighty — such is the number of breaths in the measure of a day and night."
+    },
+    {
+      "id": "amritanada-34",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 35,
+      "reference": "34",
+      "labelHi": "मन्त्र · ३४",
+      "labelEn": "Mantra · 34",
+      "lines": [
+        "प्राण आद्यो हृदिस्थाने अपानस्तु पुनर्गुदे।",
+        "समानो नाभिदेशे तु उदानः कण्ठमाश्रितः॥"
+      ],
+      "linesEn": [
+        "prāṇa ādyo hṛidisthāne apānastu punargude",
+        "samāno nābhideśhe tu udānaḥ kaṇṭhamāśritaḥ"
+      ],
+      "meaningHi": "पहला (वायु) प्राण हृदय-स्थान में रहता है, अपान गुदा में, समान नाभि-प्रदेश में और उदान कण्ठ में आश्रित है।",
+      "meaningEn": "The first, prāṇa, is in the region of the heart; apāna in the anus; samāna in the region of the navel; and udāna dwells in the throat."
+    },
+    {
+      "id": "amritanada-35",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 36,
+      "reference": "35",
+      "labelHi": "मन्त्र · ३५",
+      "labelEn": "Mantra · 35",
+      "lines": [
+        "व्यानः सर्वेषु चाङ्गेषु सदा व्याप्य व्यवस्थितः।",
+        "अथ वर्णास्तु पञ्चानां प्राणादीनामनुक्रमात्॥"
+      ],
+      "linesEn": [
+        "vyānaḥ sarveṣhu chāṅgeṣhu sadā vyāpya vyavasthitaḥ",
+        "atha varṇāstu pañchānāṁ prāṇādīnāmanukramāt"
+      ],
+      "meaningHi": "व्यान सब अङ्गों में सदा व्याप्त होकर स्थित रहता है। अब प्राण आदि पाँचों (वायुओं) के वर्ण क्रम से (कहे जाते हैं)।",
+      "meaningEn": "Vyāna abides pervading all the limbs at all times. Now the colours of the five, prāṇa and the rest, in order."
+    },
+    {
+      "id": "amritanada-36",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 37,
+      "reference": "36",
+      "labelHi": "मन्त्र · ३६",
+      "labelEn": "Mantra · 36",
+      "lines": [
+        "रक्तवर्णो मणिप्रख्यः प्राणो वायुः प्रकीर्तितः।",
+        "अपानस्तस्य मध्ये तु इन्द्रगोपसमप्रभः॥"
+      ],
+      "linesEn": [
+        "raktavarṇo maṇiprakhyaḥ prāṇo vāyuḥ prakīrtitaḥ",
+        "apānastasya madhye tu indragopasamaprabhaḥ"
+      ],
+      "meaningHi": "प्राणवायु लाल वर्ण का, मणि के समान चमकने वाला कहा गया है। उसके मध्य में अपान है, जिसकी प्रभा इन्द्रगोप (बीरबहूटी) कीट के समान है।",
+      "meaningEn": "The prāṇa air is declared to be red in colour, shining like a gem. Apāna, in its midst, has the lustre of the indragopa insect."
+    },
+    {
+      "id": "amritanada-37",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 38,
+      "reference": "37",
+      "labelHi": "मन्त्र · ३७",
+      "labelEn": "Mantra · 37",
+      "lines": [
+        "समानस्तु द्वयोर्मध्ये गोक्षीरधवलप्रभः।",
+        "आपाण्डुर उदानश्च व्यानो ह्यर्चिःसमप्रभः॥"
+      ],
+      "linesEn": [
+        "samānastu dvayormadhye gokṣhīradhavalaprabhaḥ",
+        "āpāṇḍura udānaścha vyāno hyarchiḥsamaprabhaḥ"
+      ],
+      "meaningHi": "दोनों के मध्य में समान है, जिसकी प्रभा गाय के दूध के समान धवल है। उदान कुछ पीलापन लिए श्वेत (पाण्डुर) है और व्यान की प्रभा अग्नि की ज्वाला के समान है।",
+      "meaningEn": "Samāna, between the two, has a lustre white as cow’s milk; udāna is pale; and vyāna has the lustre of a flame."
+    },
+    {
+      "id": "amritanada-38",
+      "upanishad": 21,
+      "section": "mantra",
+      "stanza": 21,
+      "numInSection": 39,
+      "reference": "38",
+      "labelHi": "मन्त्र · ३८",
+      "labelEn": "Mantra · 38",
+      "lines": [
+        "यस्येदं मण्डलं भित्त्वा मारुतो याति मूर्धनि।",
+        "यत्र तत्र म्रियेद्वापि न स भूयोऽभिजायते।",
+        "न स भूयोऽभिजायत इत्युपनिषत्॥"
+      ],
+      "linesEn": [
+        "yasyedaṁ maṇḍalaṁ bhittvā māruto yāti mūrdhani",
+        "yatra tatra mriyedvāpi na sa bhūyo'bhijāyate",
+        "na sa bhūyo'bhijāyata ityupaniṣhat"
+      ],
+      "meaningHi": "जिसका प्राणवायु इस मण्डल को भेदकर मूर्धा में चला जाता है, वह कहीं भी मरे, फिर जन्म नहीं लेता; वह फिर जन्म नहीं लेता। यह उपनिषद् है।",
+      "meaningEn": "He whose breath pierces this circle and goes to the crown of the head — wherever he may die, he is not born again; he is not born again. Thus the Upaniṣad."
+    }
+  ]
+}

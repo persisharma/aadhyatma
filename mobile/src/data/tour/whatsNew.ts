@@ -37,6 +37,14 @@ export const whatsNew: Readonly<Record<string, WhatsNewEntry>> = {
     version: '1.4.8',
     items: [
       {
+        titleHi: 'उपनिषद्',
+        titleEn: 'Upanishads',
+        bodyHi:
+          'ग्रन्थ में तीस उपनिषद् — दसों मुख्य उपनिषद् (ईशावास्य से बृहदारण्यक तक) तथा ब्रह्म, कैवल्य, जाबाल, श्वेताश्वतर, हंस, आरुणि, गर्भ, नारायण, परमहंस, अमृतबिन्दु, अमृतनाद, अथर्वशिर, अथर्वशिखा, मैत्रायणी, कौषीतकि, कालाग्निरुद्र, क्षुरिका, मान्त्रिक, निरालम्ब और वज्रसूची — शान्ति मन्त्र के साथ, हर मन्त्र का हिन्दी-अंग्रेज़ी भावार्थ।',
+        bodyEn:
+          'Thirty Upanishads in Sacred Books — all ten principal texts (Isha to Brihadaranyaka) plus Brahma, Kaivalya, Jabala, Shvetashvatara, Hamsa, Aruni, Garbha, Narayana, Paramahamsa, Amritabindu, Amritanada, Atharvashira, Atharvashikha, Maitrayani, Kaushitaki, Kalagnirudra, Kshurika, Mantrika, Niralamba and Vajrasuchi — each opened by its shanti mantra, every mantra with Hindi and English meaning.',
+      },
+      {
         titleHi: 'वास्तु दिशा',
         titleEn: 'Vastu Disha',
         bodyHi:

@@ -79,6 +79,7 @@ import { getDurgaStotramChapter } from '@/data/durga-stotram';
 import { getSaraswatiStotramChapter } from '@/data/saraswati-stotram';
 import { getVishnuSahasranamaChapter } from '@/data/vishnu-sahasranama';
 import { getValmikiRamayanChapter } from '@/data/valmiki-ramayan';
+import { getUpanishadChapter } from '@/data/upanishad';
 import ChalisaReaderScreen from '../ChalisaReaderScreen';
 import GitaReaderScreen from '../GitaReaderScreen';
 import AartiReaderScreen from '../AartiReaderScreen';
@@ -101,6 +102,7 @@ import DurgaStotramReaderScreen from '../DurgaStotramReaderScreen';
 import SaraswatiStotramReaderScreen from '../SaraswatiStotramReaderScreen';
 import VishnuSahasranamaReaderScreen from '../VishnuSahasranamaReaderScreen';
 import ValmikiRamayanReaderScreen from '../ValmikiRamayanReaderScreen';
+import UpanishadReaderScreen from '../UpanishadReaderScreen';
 
 const speechMock = Speech as unknown as {
   __calls: { text: string; options: Record<string, unknown> }[];
@@ -297,6 +299,11 @@ const READERS: readonly ReaderEntry[] = [
     name: 'ValmikiRamayanReaderScreen (kāṇḍa 1)',
     ...screen(ValmikiRamayanReaderScreen, 'ValmikiRamayanReader', { chapter: 1, initialIndex: 0 }),
     firstSpokenLine: firstLine(chapter1(getValmikiRamayanChapter).verses.map((v) => v.lines)),
+  },
+  {
+    name: 'UpanishadReaderScreen (Īśa)',
+    ...screen(UpanishadReaderScreen, 'UpanishadReader', { chapter: 1, initialIndex: 0 }),
+    firstSpokenLine: firstLine(chapter1(getUpanishadChapter).verses.map((v) => v.lines)),
   },
 ];
 

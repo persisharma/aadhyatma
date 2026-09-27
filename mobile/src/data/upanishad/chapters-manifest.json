@@ -1,0 +1,302 @@
+[
+  {
+    "chapter": 1,
+    "slug": "isha",
+    "titleHi": "ईशावास्य उपनिषद्",
+    "titleEn": "Isha Upanishad",
+    "vedaHi": "शुक्ल यजुर्वेद",
+    "vedaEn": "Shukla Yajurveda",
+    "mantraCount": 18,
+    "verseCount": 19
+  },
+  {
+    "chapter": 2,
+    "slug": "kena",
+    "titleHi": "केन उपनिषद्",
+    "titleEn": "Kena Upanishad",
+    "vedaHi": "सामवेद",
+    "vedaEn": "Samaveda",
+    "mantraCount": 35,
+    "verseCount": 36
+  },
+  {
+    "chapter": 3,
+    "slug": "katha",
+    "titleHi": "कठ उपनिषद्",
+    "titleEn": "Katha Upanishad",
+    "vedaHi": "कृष्ण यजुर्वेद",
+    "vedaEn": "Krishna Yajurveda",
+    "mantraCount": 119,
+    "verseCount": 120
+  },
+  {
+    "chapter": 4,
+    "slug": "prashna",
+    "titleHi": "प्रश्न उपनिषद्",
+    "titleEn": "Prashna Upanishad",
+    "vedaHi": "अथर्ववेद",
+    "vedaEn": "Atharvaveda",
+    "mantraCount": 67,
+    "verseCount": 68
+  },
+  {
+    "chapter": 5,
+    "slug": "mundaka",
+    "titleHi": "मुण्डक उपनिषद्",
+    "titleEn": "Mundaka Upanishad",
+    "vedaHi": "अथर्ववेद",
+    "vedaEn": "Atharvaveda",
+    "mantraCount": 64,
+    "verseCount": 65
+  },
+  {
+    "chapter": 6,
+    "slug": "mandukya",
+    "titleHi": "माण्डूक्य उपनिषद्",
+    "titleEn": "Mandukya Upanishad",
+    "vedaHi": "अथर्ववेद",
+    "vedaEn": "Atharvaveda",
+    "mantraCount": 12,
+    "verseCount": 13
+  },
+  {
+    "chapter": 7,
+    "slug": "taittiriya",
+    "titleHi": "तैत्तिरीय उपनिषद्",
+    "titleEn": "Taittiriya Upanishad",
+    "vedaHi": "कृष्ण यजुर्वेद",
+    "vedaEn": "Krishna Yajurveda",
+    "mantraCount": 31,
+    "verseCount": 32
+  },
+  {
+    "chapter": 8,
+    "slug": "aitareya",
+    "titleHi": "ऐतरेय उपनिषद्",
+    "titleEn": "Aitareya Upanishad",
+    "vedaHi": "ऋग्वेद",
+    "vedaEn": "Rigveda",
+    "mantraCount": 33,
+    "verseCount": 34
+  },
+  {
+    "chapter": 9,
+    "slug": "chandogya",
+    "titleHi": "छान्दोग्य उपनिषद्",
+    "titleEn": "Chandogya Upanishad",
+    "vedaHi": "सामवेद",
+    "vedaEn": "Samaveda",
+    "mantraCount": 629,
+    "verseCount": 630
+  },
+  {
+    "chapter": 10,
+    "slug": "brihadaranyaka",
+    "titleHi": "बृहदारण्यक उपनिषद्",
+    "titleEn": "Brihadaranyaka Upanishad",
+    "vedaHi": "शुक्ल यजुर्वेद",
+    "vedaEn": "Shukla Yajurveda",
+    "mantraCount": 435,
+    "verseCount": 436
+  },
+  {
+    "chapter": 11,
+    "slug": "brahma",
+    "titleHi": "ब्रह्म उपनिषद्",
+    "titleEn": "Brahma Upanishad",
+    "vedaHi": "कृष्ण यजुर्वेद",
+    "vedaEn": "Krishna Yajurveda",
+    "mantraCount": 23,
+    "verseCount": 24
+  },
+  {
+    "chapter": 12,
+    "slug": "kaivalya",
+    "titleHi": "कैवल्य उपनिषद्",
+    "titleEn": "Kaivalya Upanishad",
+    "vedaHi": "कृष्ण यजुर्वेद",
+    "vedaEn": "Krishna Yajurveda",
+    "mantraCount": 26,
+    "verseCount": 27
+  },
+  {
+    "chapter": 13,
+    "slug": "jabala",
+    "titleHi": "जाबाल उपनिषद्",
+    "titleEn": "Jabala Upanishad",
+    "vedaHi": "शुक्ल यजुर्वेद",
+    "vedaEn": "Shukla Yajurveda",
+    "mantraCount": 6,
+    "verseCount": 7
+  },
+  {
+    "chapter": 14,
+    "slug": "shvetashvatara",
+    "titleHi": "श्वेताश्वतर उपनिषद्",
+    "titleEn": "Shvetashvatara Upanishad",
+    "vedaHi": "कृष्ण यजुर्वेद",
+    "vedaEn": "Krishna Yajurveda",
+    "mantraCount": 113,
+    "verseCount": 114
+  },
+  {
+    "chapter": 15,
+    "slug": "hamsa",
+    "titleHi": "हंस उपनिषद्",
+    "titleEn": "Hamsa Upanishad",
+    "vedaHi": "शुक्ल यजुर्वेद",
+    "vedaEn": "Shukla Yajurveda",
+    "mantraCount": 11,
+    "verseCount": 12
+  },
+  {
+    "chapter": 16,
+    "slug": "aruni",
+    "titleHi": "आरुणि उपनिषद्",
+    "titleEn": "Aruni Upanishad",
+    "vedaHi": "सामवेद",
+    "vedaEn": "Samaveda",
+    "mantraCount": 5,
+    "verseCount": 6
+  },
+  {
+    "chapter": 17,
+    "slug": "garbha",
+    "titleHi": "गर्भ उपनिषद्",
+    "titleEn": "Garbha Upanishad",
+    "vedaHi": "कृष्ण यजुर्वेद",
+    "vedaEn": "Krishna Yajurveda",
+    "mantraCount": 5,
+    "verseCount": 6
+  },
+  {
+    "chapter": 18,
+    "slug": "narayana",
+    "titleHi": "नारायण उपनिषद्",
+    "titleEn": "Narayana Upanishad",
+    "vedaHi": "कृष्ण यजुर्वेद",
+    "vedaEn": "Krishna Yajurveda",
+    "mantraCount": 5,
+    "verseCount": 6
+  },
+  {
+    "chapter": 19,
+    "slug": "paramahamsa",
+    "titleHi": "परमहंस उपनिषद्",
+    "titleEn": "Paramahamsa Upanishad",
+    "vedaHi": "शुक्ल यजुर्वेद",
+    "vedaEn": "Shukla Yajurveda",
+    "mantraCount": 4,
+    "verseCount": 5
+  },
+  {
+    "chapter": 20,
+    "slug": "amritabindu",
+    "titleHi": "अमृतबिन्दु उपनिषद्",
+    "titleEn": "Amritabindu Upanishad",
+    "vedaHi": "कृष्ण यजुर्वेद",
+    "vedaEn": "Krishna Yajurveda",
+    "mantraCount": 22,
+    "verseCount": 23
+  },
+  {
+    "chapter": 21,
+    "slug": "amritanada",
+    "titleHi": "अमृतनाद उपनिषद्",
+    "titleEn": "Amritanada Upanishad",
+    "vedaHi": "कृष्ण यजुर्वेद",
+    "vedaEn": "Krishna Yajurveda",
+    "mantraCount": 38,
+    "verseCount": 39
+  },
+  {
+    "chapter": 22,
+    "slug": "atharvashira",
+    "titleHi": "अथर्वशिर उपनिषद्",
+    "titleEn": "Atharvashira Upanishad",
+    "vedaHi": "अथर्ववेद",
+    "vedaEn": "Atharvaveda",
+    "mantraCount": 38,
+    "verseCount": 39
+  },
+  {
+    "chapter": 23,
+    "slug": "atharvashikha",
+    "titleHi": "अथर्वशिखा उपनिषद्",
+    "titleEn": "Atharvashikha Upanishad",
+    "vedaHi": "अथर्ववेद",
+    "vedaEn": "Atharvaveda",
+    "mantraCount": 3,
+    "verseCount": 4
+  },
+  {
+    "chapter": 24,
+    "slug": "maitrayani",
+    "titleHi": "मैत्रायणी उपनिषद्",
+    "titleEn": "Maitrayani Upanishad",
+    "vedaHi": "सामवेद",
+    "vedaEn": "Samaveda",
+    "mantraCount": 73,
+    "verseCount": 74
+  },
+  {
+    "chapter": 25,
+    "slug": "kaushitaki",
+    "titleHi": "कौषीतकि उपनिषद्",
+    "titleEn": "Kaushitaki Upanishad",
+    "vedaHi": "ऋग्वेद",
+    "vedaEn": "Rigveda",
+    "mantraCount": 51,
+    "verseCount": 52
+  },
+  {
+    "chapter": 28,
+    "slug": "kalagnirudra",
+    "titleHi": "कालाग्निरुद्र उपनिषद्",
+    "titleEn": "Kalagnirudra Upanishad",
+    "vedaHi": "कृष्ण यजुर्वेद",
+    "vedaEn": "Krishna Yajurveda",
+    "mantraCount": 9,
+    "verseCount": 10
+  },
+  {
+    "chapter": 31,
+    "slug": "kshurika",
+    "titleHi": "क्षुरिका उपनिषद्",
+    "titleEn": "Kshurika Upanishad",
+    "vedaHi": "कृष्ण यजुर्वेद",
+    "vedaEn": "Krishna Yajurveda",
+    "mantraCount": 25,
+    "verseCount": 26
+  },
+  {
+    "chapter": 32,
+    "slug": "mantrika",
+    "titleHi": "मान्त्रिक उपनिषद्",
+    "titleEn": "Mantrika Upanishad",
+    "vedaHi": "शुक्ल यजुर्वेद",
+    "vedaEn": "Shukla Yajurveda",
+    "mantraCount": 20,
+    "verseCount": 21
+  },
+  {
+    "chapter": 34,
+    "slug": "niralamba",
+    "titleHi": "निरालम्ब उपनिषद्",
+    "titleEn": "Niralamba Upanishad",
+    "vedaHi": "शुक्ल यजुर्वेद",
+    "vedaEn": "Shukla Yajurveda",
+    "mantraCount": 32,
+    "verseCount": 33
+  },
+  {
+    "chapter": 36,
+    "slug": "vajrasuchi",
+    "titleHi": "वज्रसूची उपनिषद्",
+    "titleEn": "Vajrasuchi Upanishad",
+    "vedaHi": "सामवेद",
+    "vedaEn": "Samaveda",
+    "mantraCount": 9,
+    "verseCount": 10
+  }
+]
