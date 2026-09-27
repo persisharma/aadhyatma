@@ -796,10 +796,10 @@ const prashnaPurpose: AskIntent = {
   // basis labels, the registry — ~150 KB) live in `./prashnaResolve` behind a
   // require() thunk: this module is on Home's static graph, and a top-level
   // import here put that whole tree on the first frame (launchGraph budget).
-  resolve(ctx, slots) {
+  resolve(ctx, slots, question) {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { resolvePrashna } = require('./prashnaResolve') as typeof import('./prashnaResolve');
-    return resolvePrashna(this.id, ctx, slots);
+    return resolvePrashna(this.id, ctx, slots, question);
   },
 };
 

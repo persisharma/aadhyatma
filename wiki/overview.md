@@ -59,6 +59,8 @@ visible Home frame stable instead of moving the launcher grid immediately after 
 Deep links and notification taps route through `navigationRef`, exported from
 `mobile/src/notifications/deepLink.ts`; route mapping lives in `mobile/src/navigation/entryRoutes.ts`.
 
+The temple registry includes substantial detail prose. `NewContentContext` loads it during asynchronous badge hydration, `HomeStackNavigator` lazy-loads the map and detail routes, and `kulParampara` looks up a temple only while validating or exporting a family record. Keep these paths out of the static Home import graph; the data launch-budget test catches regressions. This repairs an inherited budget failure on the 25 September 2026 main snapshot without changing the budget.
+
 ## Module Map
 
 | Module | Purpose | Key Paths |

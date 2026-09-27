@@ -29,7 +29,8 @@ test('with a saved adult chart a purpose-shaped predictive question becomes a da
   if (r.kind !== 'answer') return;
   assert.equal(r.answer.intentId, 'prashna.purpose');
   assert.equal(r.answer.family, 'jyotish');
-  assert.ok(r.answer.lines.some(line => line.label.en === 'Direction now'));
+  assert.ok(r.answer.lines.some(line => line.label.en === 'In favour'));
+  assert.ok(r.answer.lines.some(line => line.label.en === 'Reasons to pause'));
   assert.ok(!r.answer.lines.some(line => line.label.en === 'Supports'));
   assert.doesNotMatch(r.answer.headline.en, /will (get|become)/i);
   const window = r.answer.lines.find((line) => line.label.en === 'Running period');
@@ -37,6 +38,40 @@ test('with a saved adult chart a purpose-shaped predictive question becomes a da
   assert.match(window!.value.en, /Mahadasha.*Antardasha.*until \d{1,2} [A-Z][a-z]{2} \d{4}/);
   assert.ok(r.answer.working.length >= 2 && r.answer.working[1].includes('→'), 'working carries the basis chain');
   assert.deepEqual(r.answer.actions[0].target, { tab: 'panchang', screen: 'Prashna', params: { purposeId: 'naukri' } });
+});
+
+test('Ask sends an explicit job-change question to the same decision and selected screen question', () => {
+  const ctx = testContext({ kundali: { input: adult, name: 'Aarav' } });
+  for (const q of ['naukri badalni chahiye kya', 'नौकरी बदलनी चाहिए क्या', 'should I change my job?']) {
+    const r = askQuestion(q, ctx);
+    assert.equal(r.kind, 'answer', q);
+    if (r.kind !== 'answer') continue;
+    assert.ok(r.answer.lines.some(line => line.label.en === 'In favour'));
+    assert.ok(r.answer.lines.some(line => line.label.en === 'Reasons to pause'));
+    assert.ok(r.answer.lines.some(line => line.label.en === 'What to do now'));
+    assert.deepEqual(r.answer.actions[0].target, { tab: 'panchang', screen: 'Prashna', params: { purposeId: 'naukri', questionId: 'job-switch' } });
+  }
+});
+
+test('Ask selects the other explicit questions and keeps their chart-backed answer on hand-off', () => {
+  const ctx = testContext({ kundali: { input: adult, name: 'Aarav' } });
+  const cases = [
+    ['will I get my first job?', 'naukri', 'job-first'],
+    ['will I get a promotion in my job?', 'naukri', 'job-growth'],
+    ['should I start a business?', 'vyapar', 'business-start'],
+    ['should I add a business partner?', 'vyapar', 'business-partner'],
+    ['how should I prepare for my exam?', 'vidya', 'study-exam'],
+    ['which study course should I choose?', 'vidya', 'study-course'],
+    ['परीक्षा की तैयारी कैसी रहेगी', 'vidya', 'study-exam'],
+  ] as const;
+  for (const [query, purposeId, questionId] of cases) {
+    const result = askQuestion(query, ctx);
+    assert.equal(result.kind, 'answer', query);
+    if (result.kind !== 'answer') continue;
+    assert.ok(result.answer.lines.some(line => line.label.en === 'In favour'), query);
+    assert.ok(result.answer.lines.some(line => line.label.en === 'Reasons to pause'), query);
+    assert.deepEqual(result.answer.actions[0].target, { tab: 'panchang', screen: 'Prashna', params: { purposeId, questionId } }, query);
+  }
 });
 
 test('predictive framing with no readable purpose stays declined even with a chart', () => {

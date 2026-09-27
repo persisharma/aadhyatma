@@ -274,3 +274,15 @@ Batch 5 (Muktikā 21–25) per `scripts/upanishad-content/HANDOFF.md`: amritanad
 ## [2026-09-27] ingest | Upanishads: +Kālāgnirudra +Kṣurikā +Māntrika +Nirālamba +Vajrasūcī
 
 Batch 6 per `scripts/upanishad-content/HANDOFF.md`: kalagnirudra 9 (prose split by sense — printed numbering not recalled), kshurika 25, mantrika 20, niralamba 32 (3 verses + one answer per question; split is editorial), vajrasuchi 9. Now 30 readable of 108 — 1961 mantras, 1991 pages; readable ids 1–25, 28, 31, 32, 34, 36, so the manifest is genuinely sparse for the first time (reader stepping test covers 25→28 and 32→34). Held back because the full printed wording could not be recalled offline and the source hosts are blocked: 26 Bṛhajjābāla, 27 Nṛsiṃhatāpanī, 29 Maitreyī (partial draft in `scripts/upanishad-content/drafts/`, ignored by the build), 30 Subāla, 33 Sarvasāra, 35 Śukarahasya — HANDOFF now lists them under "Held" and says to skip, not block. Pins: `chapteredTotals` / `searchIndex` 1991 (readable set explicit), `contentCorrectness` sub `30 … 1961` + rows, Maestro Yoga group shows Kṣurikā readable + Tejobindu 37 coming, whatsNew 1.4.8, design.md §75/§21/data families. Gotcha: `git mv -k` on an untracked file silently no-ops — a held draft was still built until moved with plain `mv`.
+
+## [2026-09-24] ingest | Job-switch answer from the current phase
+
+Prashna now leads explicit job-switch questions with a qualified decision and chart-linked reasons for and against. Ask recognizes explicit switch wording across English, Hindi and Hinglish and opens the same selected Prashna question. The export carries the decision alongside technical evidence. Updated [[panchang]] and [[ask]]; bilingual simulator captures and focused checks are recorded in the job-decision evaluation.
+
+## [2026-09-25] ingest | Prashna current-phase answers across adult topics
+
+The job-switch format now covers adult career, business, study, money, marriage and travel with question-specific recommendations, chart-linked reasons and bilingual next steps. Ask selects seven explicit subquestions; health, mind, fertility and minors keep protected guidance without timed verdicts. Updated [[panchang]] and [[ask]]. A 36-case synthetic date/person matrix and English/Hindi iOS captures are in `docs/evaluations/prashna-all-topics-2026-09-25/`; most sampled tones remain mixed, and source verification is still open.
+
+## [2026-09-25] ingest | Defer the temple corpus from Home startup
+
+The static launch graph exceeded its fixed budget on untouched main. `NewContentContext` now loads temple entries after its initial storage await; the Home stack lazy-loads Theerth map/detail routes; `kulParampara` looks up a temple only during record validation or export. The launch-budget test passes without raising its ceiling, and badge, temple-screen and family-record tests retain their behavior. Updated [[overview]].
