@@ -38,6 +38,7 @@ import {
   usePanchangMonthObservances,
 } from '@/panchang/usePanchang';
 import { useShubhYoga } from '@/panchang/useShubhYoga';
+import { dayVaas, vaasTiles } from '@/panchang/vaas';
 import type { CalendarSystem, PanchangElement, ResolvedObservance } from '@/panchang/types';
 import { getKathaContent } from '@/panchang/kathaContent';
 import { getUpcomingObservances, searchObservances } from '@/panchang/festivalEngine';
@@ -679,6 +680,17 @@ export default function PanchangScreen({ route }: Props) {
             <PanchangTile label={contentByLang(lang, 'नित्य योग', 'Nitya Yoga')} element={p.yoga} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
             <PanchangTile label={contentByLang(lang, 'करण', 'Karana')} element={p.karana} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
           </View>
+          {/* चन्द्र वास (travel direction) + अग्नि वास (havan) — pure readings of
+              the solved day (panchang/vaas.ts), same quiet tier as Yoga/Karana. */}
+          {(() => {
+            const vaas = vaasTiles(dayVaas(p));
+            return (
+              <View style={styles.angaGridSecondary}>
+                <PanchangTile label={contentByLang(lang, 'चन्द्र वास', 'Chandra Vaas')} element={vaas.chandra.element} successor={vaas.chandra.successor} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
+                <PanchangTile label={contentByLang(lang, 'अग्नि वास', 'Agni Vaas')} element={vaas.agni.element} successor={vaas.agni.successor} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
+              </View>
+            );
+          })()}
 
           {/* PRD-27: the day's शुभ योग — present-or-absent with its window,
               annotation only (design.md §69). Absent days render nothing. */}

@@ -1,0 +1,119 @@
+// चन्द्र वास and अग्नि वास — two traditional day readings shown on the Panchang
+// tab. Pure, and derived only from the day's already-solved panchang: no engine
+// entry point is reachable from here, because the card renders on the Panchang
+// tab's scroll path (the same rule as `observanceDayNote.ts`).
+//
+// चन्द्र वास — the direction the Moon "resides" in, read from its rashi by
+// element: fire signs (मेष, सिंह, धनु) पूर्व · earth (वृषभ, कन्या, मकर) दक्षिण ·
+// air (मिथुन, तुला, कुम्भ) पश्चिम · water (कर्क, वृश्चिक, मीन) उत्तर. Consulted for
+// travel: a Moon ahead of or to the right of the direction of travel is
+// favourable, behind or to the left is not.
+//
+// अग्नि वास — where Agni resides today, read before a havan:
+//   सैका तिथिर्वारयुता कृताप्ता शेषे गुणेऽभ्रे भुवि वह्निवासः।
+//   सौख्याय होमे शशियुग्मशेषे प्राणार्थनाशौ दिवि भूतले च॥
+// (tithi counted from शुक्ल प्रतिपदा = 1 … अमावस्या = 30) + 1 + (vara counted
+// from रविवार = 1), divided by 4: remainder 3 or 0 ⇒ पृथ्वी (havan favourable);
+// 1 ⇒ आकाश; 2 ⇒ पाताल (havan not advised).
+//
+// Both readings change within the day — चन्द्र वास when the Moon changes rashi,
+// अग्नि वास when the tithi ends — so each carries the sunrise reading, the
+// instant it ends (null when it holds to the next sunrise), and what follows.
+import type { PanchangData, PanchangElement } from './types';
+
+export type Direction = 'east' | 'south' | 'west' | 'north';
+export type AgniVaasPlace = 'prithvi' | 'akash' | 'patal';
+
+type Label = { hi: string; en: string };
+
+export const DIRECTION_LABELS: Record<Direction, Label> = {
+  east: { hi: 'पूर्व', en: 'East' },
+  south: { hi: 'दक्षिण', en: 'South' },
+  west: { hi: 'पश्चिम', en: 'West' },
+  north: { hi: 'उत्तर', en: 'North' },
+};
+
+export const AGNI_VAAS_LABELS: Record<AgniVaasPlace, Label & { favourableForHavan: boolean }> = {
+  prithvi: { hi: 'पृथ्वी', en: 'Prithvi', favourableForHavan: true },
+  akash: { hi: 'आकाश', en: 'Akash', favourableForHavan: false },
+  patal: { hi: 'पाताल', en: 'Patal', favourableForHavan: false },
+};
+
+const DIRECTION_BY_ELEMENT: readonly Direction[] = ['east', 'south', 'west', 'north'];
+
+/** Moon rashi index (Mesha = 0) → the direction चन्द्र वास names. */
+export function chandraVaasDirection(moonRashiIndex: number): Direction {
+  return DIRECTION_BY_ELEMENT[((moonRashiIndex % 12) + 12) % 12 % 4];
+}
+
+/**
+ * Tithi index (0-based: 0 = शुक्ल प्रतिपदा … 29 = अमावस्या) and vara index
+ * (0 = रविवार) → where Agni resides.
+ */
+export function agniVaasPlace(tithiIndex: number, varaIndex: number): AgniVaasPlace {
+  const remainder = ((tithiIndex + 1) + 1 + (varaIndex + 1)) % 4;
+  if (remainder === 1) return 'akash';
+  if (remainder === 2) return 'patal';
+  return 'prithvi';
+}
+
+export type VaasReading<T> = {
+  /** The reading at sunrise. */
+  value: T;
+  /** When the sunrise reading ends; null when it holds to the next sunrise. */
+  until: Date | null;
+  /** The reading after `until`; null when `until` is null. */
+  next: T | null;
+};
+
+export type DayVaas = {
+  chandra: VaasReading<Direction>;
+  agni: VaasReading<AgniVaasPlace>;
+};
+
+/** The day's चन्द्र वास and अग्नि वास from its solved panchang. */
+export function dayVaas(p: Pick<PanchangData, 'moonRashi' | 'tithi' | 'vara'>): DayVaas {
+  const chandraUntil = p.moonRashi.endTime;
+  const agniValue = agniVaasPlace(p.tithi.index, p.vara.index);
+  // The vara holds sunrise to sunrise, so only the tithi moves अग्नि वास within
+  // the day. A kshaya tithi would move it twice; the card names the first change.
+  const agniNext = p.tithi.endTime ? agniVaasPlace((p.tithi.index + 1) % 30, p.vara.index) : null;
+  return {
+    chandra: {
+      value: chandraVaasDirection(p.moonRashi.index),
+      until: chandraUntil,
+      next: chandraUntil ? chandraVaasDirection(p.moonRashi.index + 1) : null,
+    },
+    agni: {
+      value: agniValue,
+      until: agniNext !== null && agniNext !== agniValue ? p.tithi.endTime : null,
+      next: agniNext !== null && agniNext !== agniValue ? agniNext : null,
+    },
+  };
+}
+
+/**
+ * The two readings as tile-shaped elements (value = headline, endTime = the
+ * तक line) plus the successor the tile names after it. The अग्नि वास headline
+ * carries the havan verdict, since that is the only question it answers.
+ */
+type VaasTile = { element: PanchangElement; successor: { nameHi: string; nameEn: string } | null };
+
+export function vaasTiles(v: DayVaas): { chandra: VaasTile; agni: VaasTile } {
+  const dir = DIRECTION_LABELS[v.chandra.value];
+  const agni = AGNI_VAAS_LABELS[v.agni.value];
+  const havan = agni.favourableForHavan
+    ? { hi: 'हवन शुभ', en: 'havan favoured' }
+    : { hi: 'हवन वर्जित', en: 'avoid havan' };
+  const nextAgni = v.agni.next ? AGNI_VAAS_LABELS[v.agni.next] : null;
+  return {
+    chandra: {
+      element: { index: 0, nameHi: dir.hi, nameEn: dir.en, endTime: v.chandra.until },
+      successor: v.chandra.next ? { nameHi: DIRECTION_LABELS[v.chandra.next].hi, nameEn: DIRECTION_LABELS[v.chandra.next].en } : null,
+    },
+    agni: {
+      element: { index: 0, nameHi: `${agni.hi} · ${havan.hi}`, nameEn: `${agni.en} · ${havan.en}`, endTime: v.agni.until },
+      successor: nextAgni ? { nameHi: nextAgni.hi, nameEn: nextAgni.en } : null,
+    },
+  };
+}

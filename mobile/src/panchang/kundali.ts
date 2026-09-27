@@ -9,7 +9,7 @@ import {
 } from 'astronomy-engine';
 
 import { getAyanamsa } from './engine';
-import { NAKSHATRA_NAMES_HI } from './names';
+import { NAKSHATRA_NAMES_HI, RASHI_NAMES_HI, RASHI_NAMES_EN } from './names';
 
 export type Graha =
   | 'sun'
@@ -151,35 +151,9 @@ export const GRAHA_NAMES_EN: Readonly<Record<Graha, string>> = {
   ketu: 'Ketu',
 };
 
-export const RASHI_NAMES_HI = [
-  'मेष',
-  'वृषभ',
-  'मिथुन',
-  'कर्क',
-  'सिंह',
-  'कन्या',
-  'तुला',
-  'वृश्चिक',
-  'धनु',
-  'मकर',
-  'कुम्भ',
-  'मीन',
-] as const;
-
-export const RASHI_NAMES_EN = [
-  'Mesha',
-  'Vrishabha',
-  'Mithuna',
-  'Karka',
-  'Simha',
-  'Kanya',
-  'Tula',
-  'Vrischika',
-  'Dhanu',
-  'Makara',
-  'Kumbha',
-  'Meena',
-] as const;
+// Rashi names live in names.ts so the day engine (which kundali imports) can
+// name the Moon's rashi without an import cycle; re-exported for existing callers.
+export { RASHI_NAMES_HI, RASHI_NAMES_EN } from './names';
 
 /** Plain-English equivalents shown beside the traditional Sanskrit rashi names. */
 export const RASHI_NAMES_WESTERN = [

@@ -57,6 +57,9 @@ export type PanchangData = {
   // karana is itself Vishti (that interval is sunrise → karana.endTime) or when
   // no Vishti begins this day. start = karana.endTime; end is its solved end.
   lateVishti: { start: Date; end: Date } | null;
+  // The Moon's sidereal rashi at sunrise (Mesha = 0). endTime is the sign
+  // change when it falls before the next sunrise, else null. Read by चन्द्र वास.
+  moonRashi: PanchangElement;
   sunrise: Date;
   sunset: Date;
   moonrise: Date | null;
