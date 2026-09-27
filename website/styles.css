@@ -169,7 +169,8 @@ p { margin: 0 0 1.1em; }
 }
 .btn svg { width: 1.15rem; height: 1.15rem; flex: none; }
 .btn-primary {
-  background: var(--saffron); color: #FFF9EC;
+  /* #A55716 not --saffron: cream on saffron is 4.17:1, under WCAG AA. */
+  background: #A55716; color: #FFF9EC;
   box-shadow: 0 10px 24px -14px rgba(138, 62, 11, 0.8);
 }
 .btn-primary:hover { background: var(--saffron-deep); color: #FFF9EC; transform: translateY(-1px); }

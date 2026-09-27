@@ -23,7 +23,8 @@
 [[headers]]
   for = "/images/*"
   [headers.values]
-    Cache-Control = "public, max-age=86400"
+    # 30 days. Replacing a screenshot means a new filename, not an overwrite.
+    Cache-Control = "public, max-age=2592000"
 
 # Art and icons never change; the later rule wins for the same header.
 [[headers]]

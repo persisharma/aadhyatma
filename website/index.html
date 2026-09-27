@@ -38,7 +38,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap"></noscript>
-<link rel="preload" as="image" href="images/art/hanuman-portrait.jpg" imagesrcset="images/art/hanuman-portrait-420.jpg 420w, images/art/hanuman-portrait.jpg 614w" imagesizes="(max-width: 860px) 200px, 614px" fetchpriority="high">
+<link rel="preload" as="image" href="images/art/hanuman-portrait.webp" type="image/webp" imagesrcset="images/art/hanuman-portrait-420.webp 420w, images/art/hanuman-portrait.webp 614w" imagesizes="(max-width: 860px) 200px, 614px" fetchpriority="high">
 <link rel="stylesheet" href="styles.css">
 
 <!--
@@ -268,7 +268,7 @@
 <main id="main">
 
   <section class="hero">
-    <img class="hero-art" src="images/art/hanuman-portrait.jpg" srcset="images/art/hanuman-portrait-420.jpg 420w, images/art/hanuman-portrait.jpg 614w" sizes="(max-width: 860px) 200px, 614px" alt="" aria-hidden="true" width="614" height="1100" fetchpriority="high" decoding="async">
+    <picture><source type="image/webp" srcset="images/art/hanuman-portrait-420.webp 420w, images/art/hanuman-portrait.webp 614w" sizes="(max-width: 860px) 200px, 614px"><img class="hero-art" src="images/art/hanuman-portrait.jpg" srcset="images/art/hanuman-portrait-420.jpg 420w, images/art/hanuman-portrait.jpg 614w" sizes="(max-width: 860px) 200px, 614px" alt="" aria-hidden="true" width="614" height="1100" fetchpriority="high" decoding="async"></picture>
     <div class="wrap hero-grid">
       <div class="stagger">
         <p class="hero-sanskrit dev">वेदांश</p>
@@ -290,7 +290,7 @@
       <figure class="hero-figure">
         <div class="phone">
           <div class="phone-screen">
-            <img src="images/shots/hero.jpg" alt="The Vedansh home screen showing today's Panchang, the day's readings and the category grid" width="900" height="1956" onerror="this.remove()">
+            <picture><source type="image/webp" srcset="images/shots/hero-600.webp 600w, images/shots/hero.webp 900w" sizes="(max-width: 860px) 76vw, 320px"><img src="images/shots/hero.jpg" alt="The Vedansh home screen showing today's Panchang, the day's readings and the category grid" width="900" height="1956" onerror="this.remove()"></picture>
             <div class="depict" aria-hidden="true">
               <p class="depict-kicker">Sundarkand · Verse 3</p>
               <p class="depict-verse">जामवंत के बचन सुहाए।<br>सुनि हनुमंत हृदय अति भाए॥</p>
@@ -335,7 +335,7 @@
       <figure class="folio-figure reveal">
         <div class="phone">
           <div class="phone-screen">
-            <img src="images/shots/reader.jpg" alt="A Bhagavad Gita verse in Devanagari with transliteration and English meaning" width="900" height="1956" loading="lazy" decoding="async" onerror="this.remove()">
+            <picture><source type="image/webp" srcset="images/shots/reader-600.webp 600w, images/shots/reader.webp 900w" sizes="(max-width: 860px) 76vw, 320px"><img src="images/shots/reader.jpg" alt="A Bhagavad Gita verse in Devanagari with transliteration and English meaning" width="900" height="1956" loading="lazy" decoding="async" onerror="this.remove()"></picture>
             <div class="depict" aria-hidden="true">
               <p class="depict-kicker">Bhagavad Gita · 2.47</p>
               <p class="depict-verse">कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।</p>
@@ -369,7 +369,7 @@
       <figure class="folio-figure reveal">
         <div class="phone">
           <div class="phone-screen">
-            <img src="images/shots/panchang.jpg" alt="The daily Panchang screen showing tithi, nakshatra and the day's muhurat" width="900" height="1956" loading="lazy" decoding="async" onerror="this.remove()">
+            <picture><source type="image/webp" srcset="images/shots/panchang-600.webp 600w, images/shots/panchang.webp 900w" sizes="(max-width: 860px) 76vw, 320px"><img src="images/shots/panchang.jpg" alt="The daily Panchang screen showing tithi, nakshatra and the day's muhurat" width="900" height="1956" loading="lazy" decoding="async" onerror="this.remove()"></picture>
             <div class="depict" aria-hidden="true">
               <p class="depict-kicker">Ujjain · Ashwin, Vikram Samvat 2083</p>
               <p class="depict-verse" style="font-size:1rem">शुक्ल पक्ष · चतुर्थी</p>
@@ -409,7 +409,7 @@
       <figure class="folio-figure reveal">
         <div class="phone">
           <div class="phone-screen">
-            <img src="images/shots/muhurat.jpg" alt="The Find a Muhurat screen listing Griha Pravesh, Bhumi Pujan and the sanskar ceremonies" width="900" height="1956" loading="lazy" decoding="async" onerror="this.remove()">
+            <picture><source type="image/webp" srcset="images/shots/muhurat-600.webp 600w, images/shots/muhurat.webp 900w" sizes="(max-width: 860px) 76vw, 320px"><img src="images/shots/muhurat.jpg" alt="The Find a Muhurat screen listing Griha Pravesh, Bhumi Pujan and the sanskar ceremonies" width="900" height="1956" loading="lazy" decoding="async" onerror="this.remove()"></picture>
           </div>
         </div>
         <figcaption class="figure-caption">Tell it what you are planning.</figcaption>
@@ -435,7 +435,7 @@
       <figure class="folio-figure reveal">
         <div class="phone">
           <div class="phone-screen">
-            <img src="images/shots/vrat.jpg" alt="The Vrat and Parv screen with My Vrat, upcoming observances and browsing by type" width="900" height="1956" loading="lazy" decoding="async" onerror="this.remove()">
+            <picture><source type="image/webp" srcset="images/shots/vrat-600.webp 600w, images/shots/vrat.webp 900w" sizes="(max-width: 860px) 76vw, 320px"><img src="images/shots/vrat.jpg" alt="The Vrat and Parv screen with My Vrat, upcoming observances and browsing by type" width="900" height="1956" loading="lazy" decoding="async" onerror="this.remove()"></picture>
           </div>
         </div>
         <figcaption class="figure-caption">Vrat, katha, vidhi — and a reminder.</figcaption>
@@ -460,7 +460,7 @@
       <figure class="folio-figure reveal">
         <div class="phone">
           <div class="phone-screen">
-            <img src="images/shots/sadhana.jpg" alt="The daily routine and japam counter in Vedansh" width="900" height="1956" loading="lazy" decoding="async" onerror="this.remove()">
+            <picture><source type="image/webp" srcset="images/shots/sadhana-600.webp 600w, images/shots/sadhana.webp 900w" sizes="(max-width: 860px) 76vw, 320px"><img src="images/shots/sadhana.jpg" alt="The daily routine and japam counter in Vedansh" width="900" height="1956" loading="lazy" decoding="async" onerror="this.remove()"></picture>
             <div class="depict" aria-hidden="true">
               <p class="depict-kicker">Tuesday · Hanuman</p>
               <p class="depict-verse" style="font-size:1rem">हनुमान चालीसा</p>
@@ -498,7 +498,7 @@
       <figure class="folio-figure reveal">
         <div class="phone">
           <div class="phone-screen">
-            <img src="images/shots/theerth.jpg" alt="The Theerth pilgrimage map of India with the Char Dham temples pinned" width="900" height="1956" loading="lazy" decoding="async" onerror="this.remove()">
+            <picture><source type="image/webp" srcset="images/shots/theerth-600.webp 600w, images/shots/theerth.webp 900w" sizes="(max-width: 860px) 76vw, 320px"><img src="images/shots/theerth.jpg" alt="The Theerth pilgrimage map of India with the Char Dham temples pinned" width="900" height="1956" loading="lazy" decoding="async" onerror="this.remove()"></picture>
             <div class="depict" aria-hidden="true">
               <p class="depict-kicker">Theerth · Char Dham</p>
               <dl class="depict-row"><dt>Badrinath</dt><dd>Uttarakhand</dd></dl>
@@ -537,7 +537,7 @@
       <figure class="folio-figure reveal">
         <div class="phone">
           <div class="phone-screen">
-            <img src="images/shots/jyotish.jpg" alt="The Jyotish screen with Create Kundali, Daily Rashifal, Guna Milan and Namkaran" width="900" height="1956" loading="lazy" decoding="async" onerror="this.remove()">
+            <picture><source type="image/webp" srcset="images/shots/jyotish-600.webp 600w, images/shots/jyotish.webp 900w" sizes="(max-width: 860px) 76vw, 320px"><img src="images/shots/jyotish.jpg" alt="The Jyotish screen with Create Kundali, Daily Rashifal, Guna Milan and Namkaran" width="900" height="1956" loading="lazy" decoding="async" onerror="this.remove()"></picture>
           </div>
         </div>
         <figcaption class="figure-caption">Guna Milan, koota by koota.</figcaption>
@@ -562,7 +562,7 @@
       <figure class="folio-figure reveal">
         <div class="phone">
           <div class="phone-screen">
-            <img src="images/shots/share.jpg" alt="The share sheet offering WhatsApp, an Instagram 4:5 post card and a 9:16 story" width="900" height="1956" loading="lazy" decoding="async" onerror="this.remove()">
+            <picture><source type="image/webp" srcset="images/shots/share-600.webp 600w, images/shots/share.webp 900w" sizes="(max-width: 860px) 76vw, 320px"><img src="images/shots/share.jpg" alt="The share sheet offering WhatsApp, an Instagram 4:5 post card and a 9:16 story" width="900" height="1956" loading="lazy" decoding="async" onerror="this.remove()"></picture>
           </div>
         </div>
         <figcaption class="figure-caption">A card, ready to send.</figcaption>
