@@ -244,3 +244,4 @@ Questions about these terms? Write to vedansh.app.support@gmail.com.
 - Google Play (Android): https://play.google.com/store/apps/details?id=com.prashantsharma.vedansh
 - https://vedansh.app/get/ sends a visitor to whichever of the two fits their device.
 - Instagram: https://www.instagram.com/vedansh.app/
+- Facebook: https://www.facebook.com/profile.php?id=61594970420675
