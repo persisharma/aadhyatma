@@ -16,6 +16,14 @@
 // from रविवार = 1), divided by 4: remainder 3 or 0 ⇒ पृथ्वी (havan favourable);
 // 1 ⇒ आकाश; 2 ⇒ पाताल (havan not advised).
 //
+// Sources (Sept 2026 check): the अग्नि वास count — tithi from शुक्ल प्रतिपदा,
+// vara from रविवार, +1, ÷4, remainder 0/3 पृथ्वी · 1 आकाश · 2 पाताल — agrees
+// across karmkandvidhi.in, hindimedia.in, sanskritmantr.in, vedicvidha and
+// guleriajantri; चन्द्र वास matches the यात्रा verse “मेष सिंह धनु पूरब चन्दा …”
+// (vastutapeshwar.com, jyotishshiksha); दिशा शूल the “सोम शनिचर पूरब न चालू”
+// couplet. Moon-sign change times match published Delhi dailies to ~2 min
+// (vaas.test.ts). No dated third-party अग्नि वास row was reachable to diff.
+//
 // Both readings change within the day — चन्द्र वास when the Moon changes rashi,
 // अग्नि वास when the tithi ends — so each carries the sunrise reading, the
 // instant it ends (null when it holds to the next sunrise), and what follows.

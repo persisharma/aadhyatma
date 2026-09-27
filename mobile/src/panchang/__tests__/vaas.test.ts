@@ -128,3 +128,30 @@ test('vaas inputs agree with the recorded Drik Panchang days', () => {
   }
   assert.ok(rashiChecked > 60, `only ${rashiChecked} days had an unambiguous rashi`);
 });
+
+// Published Delhi almanac rows (Hindi dailies, Sept 2026), within 5 minutes:
+// 21 Sep — Moon in धनु until 11:15 AM, then मकर; दिशा शूल पूर्व (Monday).
+// 28 Sep — Moon enters मेष; द्वितीया until 7:13 PM; दिशा शूल पूर्व.
+// 26 Sep — Moon in मीन; पूर्णिमा until 10:19 PM.
+test('moon sign changes match published Delhi almanac rows', () => {
+  const DELHI = { latitude: 28.6139, longitude: 77.209, elevation: 216 };
+  const near = (a: Date | null, h: number, m: number, label: string) => {
+    assert.ok(a, `${label}: no instant`);
+    const mins = a!.getHours() * 60 + a!.getMinutes();
+    assert.ok(Math.abs(mins - (h * 60 + m)) <= 5, `${label}: ${a!.toString()}`);
+  };
+  const s21 = computePanchangForDate(new Date(2026, 8, 21), { location: DELHI });
+  assert.equal(s21.moonRashi.index, 8); // धनु
+  near(s21.moonRashi.endTime, 11, 15, '21 Sep धनु → मकर');
+  assert.equal(dayVaas(s21).dishaShool, 'east');
+
+  const s28 = computePanchangForDate(new Date(2026, 8, 28), { location: DELHI });
+  assert.equal(s28.moonRashi.index, 11); // मीन at sunrise, मेष after
+  assert.ok(s28.moonRashi.endTime, '28 Sep: Moon enters मेष during the day');
+  near(s28.tithi.endTime, 19, 13, '28 Sep द्वितीया end');
+  assert.equal(dayVaas(s28).dishaShool, 'east');
+
+  const s26 = computePanchangForDate(new Date(2026, 8, 26), { location: DELHI });
+  assert.equal(s26.moonRashi.index, 11);
+  near(s26.tithi.endTime, 22, 19, '26 Sep पूर्णिमा end');
+});
