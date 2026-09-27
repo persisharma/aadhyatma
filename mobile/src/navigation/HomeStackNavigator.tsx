@@ -56,8 +56,6 @@ import ValmikiRamayanReaderScreen from '@/screens/ValmikiRamayanReaderScreen';
 import UpanishadChaptersScreen from '@/screens/UpanishadChaptersScreen';
 import UpanishadReaderScreen from '@/screens/UpanishadReaderScreen';
 import AartiReaderScreen from '@/screens/AartiReaderScreen';
-import TheerthMapScreen from '@/screens/TheerthMapScreen';
-import TheerthDetailScreen from '@/screens/TheerthDetailScreen';
 import SanskarReaderScreen from '@/screens/SanskarReaderScreen';
 import RoutineTodayScreen from '@/screens/RoutineTodayScreen';
 import RoutineListScreen from '@/screens/RoutineListScreen';
@@ -73,20 +71,33 @@ import VidhiConductScreen from '@/screens/VidhiConductScreen';
 import type { HomeStackParamList } from './types';
 
 const LazyJapamCounterScreen = lazy(() => import('@/screens/JapamCounterScreen'));
+// Temple prose is a route-only corpus; neither screen is needed for Home's first frame.
+const LazyTheerthMapScreen = lazy(() => import('@/screens/TheerthMapScreen'));
+const LazyTheerthDetailScreen = lazy(() => import('@/screens/TheerthDetailScreen'));
 type JapamCounterScreenProps = NativeStackScreenProps<HomeStackParamList, 'JapamCounter'>;
+type TheerthMapScreenProps = NativeStackScreenProps<HomeStackParamList, 'TheerthMap'>;
+type TheerthDetailScreenProps = NativeStackScreenProps<HomeStackParamList, 'TheerthDetail'>;
+
+function RouteLoading() {
+  return <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><ActivityIndicator /></View>;
+}
 
 function JapamCounterScreen(props: JapamCounterScreenProps) {
   return (
     <Suspense
-      fallback={
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <ActivityIndicator />
-        </View>
-      }
+      fallback={<RouteLoading />}
     >
       <LazyJapamCounterScreen {...props} />
     </Suspense>
   );
+}
+
+function TheerthMapScreen(props: TheerthMapScreenProps) {
+  return <Suspense fallback={<RouteLoading />}><LazyTheerthMapScreen {...props} /></Suspense>;
+}
+
+function TheerthDetailScreen(props: TheerthDetailScreenProps) {
+  return <Suspense fallback={<RouteLoading />}><LazyTheerthDetailScreen {...props} /></Suspense>;
 }
 
 const Stack = createNativeStackNavigator<HomeStackParamList>();

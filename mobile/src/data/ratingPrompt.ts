@@ -40,14 +40,24 @@ export type RatingPromptOutcome = 'pending' | 'rated' | 'declined';
  * rating request reads as a fair question rather than an interruption.
  *
  *  - `routine-complete` — the pushpa-varsha for today's routine has finished.
+ *  - `verse-shared` — a verse share was dispatched to the OS/Instagram sheet.
+ *  - `mala-complete` — the japam counter screen was left after ≥1 round this visit.
  *
- * One moment ships (product decision, Sept 2026: "ask when a routine is
- * completed"). The type stays a union so a further moment is a one-literal
- * change here plus a `requestAsk` call at the host — see RULEBOOK §6.2.
+ * Three moments ship (product decision, Sept 2026: routine completion was the
+ * first; share + mala added to widen reach to users who never build a routine,
+ * since ratings were coming in too low). The type stays a union so a further
+ * moment is a one-literal change here plus a `requestAsk` call at the host — see
+ * RULEBOOK §6.2. Each moment fires only once its own feedback has finished (a
+ * share sheet closed, the japam screen left) — never mid-interaction and never
+ * over a celebration; the gate and the once-per-session guard still apply.
  */
-export type RatingAskTrigger = 'routine-complete';
+export type RatingAskTrigger = 'routine-complete' | 'verse-shared' | 'mala-complete';
 
-export const RATING_ASK_TRIGGERS: readonly RatingAskTrigger[] = ['routine-complete'];
+export const RATING_ASK_TRIGGERS: readonly RatingAskTrigger[] = [
+  'routine-complete',
+  'verse-shared',
+  'mala-complete',
+];
 
 export type RatingPromptState = {
   /** How many times the sheet has auto-opened (manual opens from More don't count). */
