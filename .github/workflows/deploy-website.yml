@@ -18,6 +18,10 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Install function dependencies
+        working-directory: website
+        run: npm ci --no-audit --no-fund
+
       - name: Deploy to Netlify
         working-directory: website
         env:
@@ -68,3 +72,17 @@ jobs:
             printf '%s -> ' "$u"
             curl -s -o /dev/null -w '%{http_code}\n' --max-time 20 "$u" || echo "unreachable"
           done
+
+      - name: Tell IndexNow the pages changed
+        # Bing, Yandex, Naver, Seznam and the AI engines that read Bing's index
+        # re-crawl on this ping instead of on their own schedule. The key is
+        # public by design (it is served from the site). Never fatal.
+        run: |
+          curl -s -o /dev/null -w 'indexnow: HTTP %{http_code}\n' \
+            -X POST https://api.indexnow.org/indexnow \
+            -H 'Content-Type: application/json; charset=utf-8' \
+            -d '{"host":"vedansh.app","key":"2565c7fc92e3a91c995996d5d3d73f01","keyLocation":"https://vedansh.app/2565c7fc92e3a91c995996d5d3d73f01.txt","urlList":[
+              "https://vedansh.app/","https://vedansh.app/hi/",
+              "https://vedansh.app/support/","https://vedansh.app/hi/support/",
+              "https://vedansh.app/privacy/","https://vedansh.app/hi/privacy/",
+              "https://vedansh.app/terms/","https://vedansh.app/hi/terms/"]}' || true

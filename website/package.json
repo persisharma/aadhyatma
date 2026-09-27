@@ -1,0 +1,9 @@
+{
+  "name": "vedansh-website",
+  "private": true,
+  "description": "Dependencies for the site's one serverless function (the visit counter). The pages themselves need no build.",
+  "type": "module",
+  "dependencies": {
+    "@netlify/blobs": "^8.2.0"
+  }
+}

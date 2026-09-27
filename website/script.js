@@ -49,3 +49,29 @@
 
   Array.prototype.forEach.call(reveals, function (el) { observer.observe(el); });
 })();
+
+/* Visit counter. One POST per browser session (a reload does not recount);
+   later pages in the same session only read. The element is optional, so a
+   page without a counter, or a fetch that fails, changes nothing visible. */
+(function () {
+  'use strict';
+  var el = document.querySelector('[data-hits]');
+  if (!el || !window.fetch) return;
+
+  var key = 'vedansh-hit';
+  var counted = false;
+  try { counted = sessionStorage.getItem(key) === '1'; } catch (e) { /* private mode */ }
+
+  var url = '/api/hits?p=' + encodeURIComponent(location.pathname);
+  fetch(url, { method: counted ? 'GET' : 'POST', cache: 'no-store' })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (data) {
+      if (!data || typeof data.total !== 'number') return;
+      try { sessionStorage.setItem(key, '1'); } catch (e) { /* ignore */ }
+      var lang = document.documentElement.lang === 'hi' ? 'hi-IN' : 'en-IN';
+      var n = data.total.toLocaleString(lang);
+      el.textContent = el.getAttribute('data-hits').replace('{n}', n);
+      el.hidden = false;
+    })
+    .catch(function () { /* the counter is decoration; never surface an error */ });
+})();

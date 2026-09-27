@@ -1,0 +1,246 @@
+# Vedansh — full text
+
+> This file is the complete, plain-text content of https://vedansh.app for
+> readers that would rather not parse HTML. The short summary is at
+> https://vedansh.app/llms.txt. Each page also exists in Hindi under /hi/.
+
+
+---
+
+# Home — https://vedansh.app/
+
+वेदांश
+# Vedansh
+Bhagavad Gita, Panchang & japa
+A portion of the Vedas, carried in your pocket. Sacred texts in a reader that behaves like a book, a Panchang computed for your city, and a practice you keep.
+- 701Shlokas of the Gita
+- 90Vrat & festival kathas
+- 4Reading languages
+- 36Gunas in a Milan
+The sacred library
+
+## A reader that behaves like a book
+All eighteen chapters and 701 shlokas of the Bhagavad Gita, with meaning and commentary. Sundarkand and Ramcharitmanas selections, Vishnu Sahasranama, chalisas, aartis, stotrams, and sanskar for children — one verse to a page, on parchment, in the script you actually read.
+- Every verse in Hindi and English — plus Gujarati and Kannada
+- IAST transliteration for Sanskrit texts
+- Swipe from verse to verse; resume where you left off
+- Adjustable reading size, bookmarks, shareable verse cards
+- Instant search across the whole library
+Panchang & Muhurat
+
+## The day, computed for your city
+Tithi, nakshatra, yoga, karana and sunrise from a real astronomy engine — not a lookup table. Purnimant and Amanta systems, Vikram Samvat, and a full month calendar you can move through.
+- Daily Muhurat: Choghadiya, Rahu Kaal and Abhijit at a glance
+- 62 vrats and 90 festivals — follow the ones you observe
+- Gentle reminders for the days you keep
+- Location is optional; a city picker (Ujjain by default) works without it
+Muhurat
+
+## A good hour for the thing you are planning
+Choghadiya through the day is one thing; choosing a date is another. Tell Vedansh what you are planning and it searches ahead for the hours that suit it, with the reasoning shown rather than asserted.
+- Griha Pravesh, Bhumi Pujan, vehicle purchase, and the sanskars — naming, vidyarambh, mundan, annaprashan
+- Every window explained: nakshatra, tithi, vara and lagna, each marked favourable or not
+- Sarvartha Siddhi and the other auspicious yogas called out for the day
+- Follow a muhurat and it comes back as a reminder
+- Rahu Kaal and Abhijit for today, always a tap away
+Vrat, katha & vidhi
+
+## The fasts you keep, and why
+Follow the vrats you observe and Vedansh carries them through the year — each with its katha to read and its vidhi to follow, so the day is not just marked on a calendar but understood.
+- Follow the vrats you keep; the app tracks them across the year
+- Optional reminders for the days you follow
+- 90 kathas across the vrats and festivals, and 7 puja vidhis
+- Vidhi in Hindi and English: how the fast is kept, step by step
+- Pitru Paksha with its own kathas, and Daan kathas besides
+Daily sadhana
+
+## A practice you actually keep
+Build a daily or weekday routine with the right deity for each day. Take a Sankalp — a guided programme of four to forty-one days — and let the app carry you to completion.
+- Sankalp programmes from 4 to 41 days, tracked to the end
+- A digital bead counter for 108-bead mala rounds
+- Japam alarms: wake to Om Namah Shivaya, the Gayatri Mantra or the Hare Krishna mahamantra — with repeat days and skip-a-day
+- Sadhak profile: reads, beads, rounds and streaks
+Theerth & listening
+
+## Pilgrimage, and a voice to sit with
+Explore India’s dhams on a real-geography map — by state, by category, or along a yatra — each with sourced temple stories. And a calm built-in player for bhajans, mantras and aartis that keeps going in the background.
+- Dhams on real geography, browsable by state, category or yatra
+- Sourced stories for each site
+- Bhajans, mantras and aartis in a built-in player
+- Background audio, so listening survives a locked screen
+Jyotish
+
+## Kundali, and a match read honestly
+Birth charts and rashi guidance from the same astronomy foundation as the Panchang, explained in plain language — and Guna Milan, the 36-point match, with every koota shown and reasoned rather than reduced to a verdict.
+- Kundali: lagna, grahas, houses and Dasha, with a full written report
+- Guna Milan: a private 36-point match, every koota explained
+- Namkaran: a newborn's namakshar from the birth Moon
+- Daily Rashifal: reflection prompts from your Moon sign
+- Offered as a reflection aid, not a certain prediction — the app says so too
+Sharing
+
+## Send a verse to someone you love
+Any verse, a muhurat you found or a Guna Milan result becomes a card set in the same parchment as the app — and goes wherever you already talk to your people.
+- Share to WhatsApp, Messages, or anywhere else on your phone
+- A 4:5 card for the Instagram feed, or full-screen 9:16 for a story — nothing gets cropped
+- Caption and hashtags copied with it, ready to paste
+- Cards carry the Devanagari, the transliteration and the meaning together
+Also inside
+
+## And a good deal more
+The folios above are the daily heart of the app. These come with it.
+- Sanskar — the samskaras, written for children to read
+- Good habits — small daily disciplines, tracked
+- Home-screen widgets — the panchang, a verse, or your japam count
+- Search — one field across every text in the library
+- Daan kathas — the stories behind giving
+- Pitru Paksha — shraddha days, smaran and their kathas
+Questions
+
+## Asked often
+
+### Is Vedansh free?
+Yes. There is no account to create and nothing to subscribe to.
+
+### Which texts are in Vedansh?
+The complete Bhagavad Gita — all eighteen chapters and 701 shlokas with meaning and commentary — along with Sundarkand and Ramcharitmanas selections, Vishnu Sahasranama, chalisas, aartis, stotrams, kavacham, ashtakam and suktam, and sanskar readings for children.
+
+### Does the Panchang work for my city?
+Yes. Tithi, nakshatra, yoga, karana and sunrise are computed for your location, or for a city you pick — Ujjain is the default. Both the Purnimant and Amanta month systems are supported, with Vikram Samvat and a full month calendar.
+
+### Can Vedansh match two kundalis?
+Yes. Guna Milan gives a private 36-point match with every koota explained rather than just a score. The app also creates a Kundali with a written report, suggests a namakshar for Namkaran, and offers a daily Rashifal — all presented as a reflection aid, not a certain prediction.
+
+### Which languages can I read in?
+Hindi (Devanagari) and English on every verse, with Gujarati and Kannada as further reading languages. Sanskrit texts also show IAST transliteration.
+
+### Is Vedansh on Android and iPhone?
+Both. It is on the App Store and Google Play, and vedansh.app/get sends you to whichever store fits your phone.
+
+## Begin today’s reading
+Free. All texts are drawn from public-domain Hindu classics, presented with reverence for personal study and devotion.
+
+---
+
+# Support — https://vedansh.app/support/
+
+Vedansh
+# Support
+Written by one person, answered by the same person.
+Write to vedansh.app.support@gmail.com
+If something is broken, it helps to include your device (say, iPhone 14), its OS version, and whether you installed from the App Store or Google Play.
+
+## Common questions
+
+### Is Vedansh free?
+Yes — free. There is no account to create and nothing to subscribe to.
+
+### Why does it ask for my location?
+Only to compute accurate sunrise, sunset and Panchang timings for where you are — and it is entirely optional. Decline it and pick your city by hand instead; Ujjain is the default.
+
+### My japam alarm didn't go off
+Alarms are scheduled on your device, so the operating system has the final say:
+- Android — allow Alarms & reminders (exact alarms) for Vedansh in system settings, and exclude the app from battery optimisation. Both are needed for a mantra alarm to fire at the exact minute.
+- iOS — check that notifications are allowed for Vedansh, and that Focus or Do Not Disturb isn't silencing them at that hour.
+If it still misses after that, write in and say which day and time it skipped.
+
+### Which languages can I read in?
+Every verse carries Hindi (Devanagari) and English. Gujarati and Kannada are available as reading languages, and Sanskrit texts also show IAST transliteration.
+
+### A verse or translation looks wrong
+Please tell us — corrections are welcome and get priority. Inside the app, use More → Report an Error, which opens an email with the details filled in. Or write directly with the reference (for example "Gita 2.47" or "Sundarkand, verse 3") and what you believe it should read.
+
+### The Panchang differs from my almanac
+Likely reckoning rather than error: Purnimant and Amanta month systems, and different rounding conventions for tithi boundaries, legitimately disagree. You can switch systems in the app. If a value is off by more than a few minutes against your local panchang, send the date and your city and it will be looked into.
+
+### How do I delete my data?
+Uninstall the app. Everything — bookmarks, reading progress, routines, Sankalp programmes, japam counts and streaks — lives only on your device, so removing the app removes all of it. See the Privacy Policy.
+
+### Can you add a text, a katha or a bhajan?
+Very possibly. Send the name and, if you know it, a public-domain source. The library grows from these requests.
+
+## Still stuck?
+Write to vedansh.app.support@gmail.com. Expect a reply within a few days — it's one person, not a queue.
+
+---
+
+# Privacy Policy — https://vedansh.app/privacy/
+
+Vedansh
+# Privacy Policy
+Last updated: 25 September 2026
+There is no account to create in Vedansh. What you read, count and keep is saved on your phone.
+
+## Information we collect
+Vedansh has no sign-up and no login, so nothing you do in the app is attached to a name, an email address or an account.
+
+## Location
+Location access is optional and, when granted, is used only while you are using the app, to compute accurate sunrise, sunset and Panchang timings for where you are. Your coordinates are processed on your device only and are never transmitted or stored off it. If you decline location, a manual city picker (Ujjain by default) gives you the same functionality.
+
+## Notifications and alarms
+Daily reminders and japam alarms are scheduled locally on your device. If you allow notifications, the system creates a notification token for this installation. On Android, the app asks for exact-alarm and start-on-boot permissions purely so a japam alarm you set still fires at the right minute after a restart.
+
+## Audio and microphone
+The app plays mantras, aartis and bhajans, including in the background, from audio bundled inside the app. It does not use the microphone and does not record anything.
+
+## Data stored on your device
+Your preferences, bookmarks, reading progress, routines, Sankalp programmes, japam counts and streaks are saved in local storage on your device so the app remembers your place. This data never leaves your device, is never backed up to us, and is removed when you delete the app.
+
+## App updates
+So that improvements can reach you without waiting for a store release, the app checks for updates from Expo's update service (u.expo.dev). That check carries only what any network request carries — your IP address, the app version and the platform — and no personal data, no identifier we control, and nothing about your practice.
+
+## This website
+vedansh.app keeps a count of visits to each page, so it is possible to see the site is being read. The count is a number and nothing more — no IP address, browser details, cookie or identifier of any kind is stored with it.
+
+## Children's privacy
+Vedansh has no sign-up, so it does not ask a child — or anyone else — for a name, an email address or an account.
+
+## Third parties
+The App Store and Google Play collect their own download and crash statistics under their own policies, which we cannot see at an individual level.
+
+## Changes to this policy
+If this policy changes, this page is updated and the date above is revised.
+
+## Contact
+Questions about this policy? Write to vedansh.app.support@gmail.com.
+
+---
+
+# Terms of Use — https://vedansh.app/terms/
+
+Vedansh
+# Terms of Use
+Last updated: 25 September 2026
+Vedansh is offered free of charge for personal study and devotional practice. By installing or using the app, you accept the terms below. They mirror the disclaimer shown inside the app itself.
+
+## The texts
+The scriptures presented in Vedansh are drawn from public-domain spiritual classics of the Bharatiya tradition. Translations and explanatory notes are offered for educational and devotional purposes only and reflect the editor's best effort; they may contain errors, or interpretive choices that differ from other respected commentaries.
+Vedansh claims no scholarly or sectarian authority. For any definitive reading, please consult qualified teachers and the original Sanskrit, Awadhi or Vraj-Bhasha sources.
+
+## Panchang and muhurat timings
+Panchang values, muhurat windows and sunrise and sunset times are computed by an astronomy engine and are provided for reference. They may differ from your local almanac or family tradition, which use different reckonings and rounding. Use them as a guide, not as a ruling — for consequential decisions, consult your family priest or astrologer.
+
+## Fair use and rights
+All material is presented under a fair-use, non-commercial framework for personal study and devotion. If you believe content has been used incorrectly, or that your rights have been affected, please write to vedansh.app.support@gmail.com so it can be reviewed and corrected promptly.
+You may read, bookmark and share individual verses and verse cards for personal, non-commercial devotional use. Please do not redistribute the app's content as a bulk dataset or a competing compilation.
+
+## Provided as-is
+The content and the app are provided "as is", without warranty of any kind. Vedansh, its maintainers and its contributors accept no liability for any decisions, actions or interpretations arising from the use of this material.
+
+## Your device and your data
+The app stores your practice on your device. It is your responsibility to keep your device backed up; uninstalling the app removes your bookmarks, progress, routines and counts, and they cannot be recovered by us, because we never held them. See the Privacy Policy.
+
+## Availability and changes
+Vedansh is developed independently and offered without a service commitment. Features may change, and content may be corrected, expanded or reorganised between releases. If these terms change, this page is updated and the date above revised.
+
+## Contact
+Questions about these terms? Write to vedansh.app.support@gmail.com.
+
+---
+
+# Get the app
+
+- App Store (iOS): https://apps.apple.com/app/vedansh/id6766086529
+- Google Play (Android): https://play.google.com/store/apps/details?id=com.prashantsharma.vedansh
+- https://vedansh.app/get/ sends a visitor to whichever of the two fits their device.
+- Instagram: https://www.instagram.com/vedansh.app/

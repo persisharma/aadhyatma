@@ -500,3 +500,17 @@ body[lang="hi"] { line-height: 1.75; }
 .marks-grid li { break-inside: avoid; }
 .marks-grid b { font-weight: 600; color: var(--ink); }
 @media (max-width: 760px) { .marks-grid { columns: 1; } }
+
+/* --------------------------------------------------------------------------
+   Questions on the landing page — two columns of the same .faq blocks the
+   support page uses, so the two read as one voice.
+   -------------------------------------------------------------------------- */
+.faq-grid { columns: 2; column-gap: 3rem; margin-top: 1.4rem; }
+.faq-grid .faq { break-inside: avoid; margin-bottom: 1.6rem; }
+.faq-grid h3 { font-family: var(--display); font-size: 1.25rem; font-weight: 600; margin: 0 0 0.35rem; color: var(--ink); }
+.faq-grid p { margin: 0; color: var(--ink-soft); }
+@media (max-width: 760px) { .faq-grid { columns: 1; } }
+
+/* The visit counter lives under the footer note; hidden until it has a number. */
+.foot-hits { margin-top: 0.7rem; font-size: 0.85rem; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+.foot-hits[hidden] { display: none; }

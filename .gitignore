@@ -51,3 +51,6 @@ website/.netlify/
 
 # Python bytecode from the one-off Hindi page generator
 __pycache__/
+
+# website/ function dependencies are installed in CI
+website/node_modules/

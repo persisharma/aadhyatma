@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vedansh — Bhagavad Gita, Panchang &amp; japa</title>
+<title>Vedansh — Bhagavad Gita, Panchang &amp; Japa app</title>
 <meta name="description" content="A bilingual companion for daily Hindu devotion: the Bhagavad Gita and other sacred texts in a book-like reader, an accurate daily Panchang with Muhurat, vrat kathas and vidhi, Kundali and Guna Milan, Sankalp programmes and japam. Free.">
 <link rel="canonical" href="https://vedansh.app/">
 <link rel="alternate" hreflang="en-IN" href="https://vedansh.app/">
@@ -17,6 +17,7 @@
 <meta property="og:image" content="https://vedansh.app/images/og.png">
 <meta property="og:site_name" content="Vedansh">
 <meta property="og:locale" content="en_IN">
+<meta property="og:locale:alternate" content="hi_IN">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Vedansh — Bhagavad Gita, Panchang and japa">
@@ -28,11 +29,16 @@
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <!-- Smart App Banner: offers the app directly to iOS Safari visitors. -->
 <meta name="apple-itunes-app" content="app-id=6766086529">
+<meta name="application-name" content="Vedansh">
+<meta name="apple-mobile-web-app-title" content="Vedansh">
+<link rel="manifest" href="site.webmanifest">
 <link rel="icon" href="images/favicon.png" sizes="any">
 <link rel="apple-touch-icon" href="images/icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap"></noscript>
+<link rel="preload" as="image" href="images/shots/hero.jpg" fetchpriority="high">
 <link rel="stylesheet" href="styles.css">
 
 <!--
@@ -69,9 +75,18 @@
         "https://vedansh.app/images/shots/jyotish.jpg",
         "https://vedansh.app/images/shots/share.jpg"
       ],
-      "inLanguage": ["hi", "en", "gu", "kn"],
+      "inLanguage": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
       "isAccessibleForFree": true,
-      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "INR"
+      },
       "featureList": [
         "All eighteen chapters and 701 shlokas of the Bhagavad Gita with meaning and commentary",
         "Sundarkand, Ramcharitmanas selections, Vishnu Sahasranama, chalisas, aartis and stotrams",
@@ -90,7 +105,9 @@
         "Home-screen widgets for the panchang, a verse and the japam count",
         "Search across the whole library"
       ],
-      "publisher": { "@id": "https://vedansh.app/#publisher" }
+      "publisher": {
+        "@id": "https://vedansh.app/#publisher"
+      }
     },
     {
       "@type": "Organization",
@@ -98,7 +115,9 @@
       "name": "Vedansh",
       "url": "https://vedansh.app/",
       "logo": "https://vedansh.app/images/icon.png",
-      "sameAs": ["https://www.instagram.com/vedansh.app/"]
+      "sameAs": [
+        "https://www.instagram.com/vedansh.app/"
+      ]
     },
     {
       "@type": "WebSite",
@@ -106,8 +125,86 @@
       "name": "Vedansh",
       "url": "https://vedansh.app/",
       "inLanguage": "en",
-      "publisher": { "@id": "https://vedansh.app/#publisher" },
-      "about": { "@id": "https://vedansh.app/#app" }
+      "publisher": {
+        "@id": "https://vedansh.app/#publisher"
+      },
+      "about": {
+        "@id": "https://vedansh.app/#app"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://vedansh.app/#webpage",
+      "url": "https://vedansh.app/",
+      "name": "Vedansh — Bhagavad Gita, Panchang & Japa app",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://vedansh.app/#website"
+      },
+      "about": {
+        "@id": "https://vedansh.app/#app"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://vedansh.app/images/og.png",
+        "width": 1200,
+        "height": 630
+      },
+      "dateModified": "2026-09-27"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://vedansh.app/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is Vedansh free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. There is no account to create and nothing to subscribe to."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which texts are in Vedansh?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The complete Bhagavad Gita — all eighteen chapters and 701 shlokas with meaning and commentary — along with Sundarkand and Ramcharitmanas selections, Vishnu Sahasranama, chalisas, aartis, stotrams, kavacham, ashtakam and suktam, and sanskar readings for children."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the Panchang work for my city?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Tithi, nakshatra, yoga, karana and sunrise are computed for your location, or for a city you pick — Ujjain is the default. Both the Purnimant and Amanta month systems are supported, with Vikram Samvat and a full month calendar."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can Vedansh match two kundalis?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Guna Milan gives a private 36-point match with every koota explained rather than just a score. The app also creates a Kundali with a written report, suggests a namakshar for Namkaran, and offers a daily Rashifal — all presented as a reflection aid, not a certain prediction."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which languages can I read in?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Hindi (Devanagari) and English on every verse, with Gujarati and Kannada as further reading languages. Sanskrit texts also show IAST transliteration."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Vedansh on Android and iPhone?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Both. It is on the App Store and Google Play, and vedansh.app/get sends you to whichever store fits your phone."
+          }
+        }
+      ]
     }
   ]
 }
@@ -465,6 +562,41 @@
     </div>
   </section>
 
+  <section class="folio faq-section" id="faq">
+    <div class="wrap">
+      <div class="folio-body reveal" style="max-width:none">
+        <p class="eyebrow">Questions</p>
+        <h2>Asked often</h2>
+        <div class="faq-grid">
+          <div class="faq">
+            <h3>Is Vedansh free?</h3>
+            <p>Yes. There is no account to create and nothing to subscribe to.</p>
+          </div>
+          <div class="faq">
+            <h3>Which texts are in Vedansh?</h3>
+            <p>The complete Bhagavad Gita — all eighteen chapters and 701 shlokas with meaning and commentary — along with Sundarkand and Ramcharitmanas selections, Vishnu Sahasranama, chalisas, aartis, stotrams, kavacham, ashtakam and suktam, and sanskar readings for children.</p>
+          </div>
+          <div class="faq">
+            <h3>Does the Panchang work for my city?</h3>
+            <p>Yes. Tithi, nakshatra, yoga, karana and sunrise are computed for your location, or for a city you pick — Ujjain is the default. Both the Purnimant and Amanta month systems are supported, with Vikram Samvat and a full month calendar.</p>
+          </div>
+          <div class="faq">
+            <h3>Can Vedansh match two kundalis?</h3>
+            <p>Yes. Guna Milan gives a private 36-point match with every koota explained rather than just a score. The app also creates a Kundali with a written report, suggests a namakshar for Namkaran, and offers a daily Rashifal — all presented as a reflection aid, not a certain prediction.</p>
+          </div>
+          <div class="faq">
+            <h3>Which languages can I read in?</h3>
+            <p>Hindi (Devanagari) and English on every verse, with Gujarati and Kannada as further reading languages. Sanskrit texts also show IAST transliteration.</p>
+          </div>
+          <div class="faq">
+            <h3>Is Vedansh on Android and iPhone?</h3>
+            <p>Both. It is on the App Store and Google Play, and vedansh.app/get sends you to whichever store fits your phone.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="get" id="get">
     <div class="wrap reveal">
       <img class="app-icon" src="images/icon.png" alt="The Vedansh app icon" width="88" height="88">
@@ -485,6 +617,7 @@
       <div>
         <a class="brand" href="/"><img src="images/icon.png" alt="" width="28" height="28"><span>Vedansh</span></a>
         <p class="foot-note">A bilingual companion for Hindu devotion — sacred texts, a daily Panchang, and a practice you keep. Free.</p>
+        <p class="foot-hits" data-hits="Visits so far: {n}" hidden></p>
       </div>
       <div>
         <h3>The app</h3>

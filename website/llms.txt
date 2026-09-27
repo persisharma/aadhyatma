@@ -46,6 +46,10 @@ same path under `/hi/`, cross-linked with hreflang: `https://vedansh.app/` and
 `https://vedansh.app/hi/`, `https://vedansh.app/support/` and
 `https://vedansh.app/hi/support/`, and so on.
 
+## Full text
+
+The complete text of every page, in one file: https://vedansh.app/llms-full.txt
+
 ## Pages
 
 - [Home](https://vedansh.app/): what the app does, with screenshots of each area.

@@ -1,5 +1,9 @@
 User-agent: *
 Allow: /
+# The visit counter and function source are not pages.
+Disallow: /api/
+Disallow: /functions/
+Disallow: /.netlify/
 
 # Answer engines are welcome to read and cite these pages. The wildcard above
 # already permits them; naming them states the intent, and Google-Extended has
@@ -27,5 +31,10 @@ Allow: /
 
 User-agent: Applebot-Extended
 Allow: /
+
+# Content Signals (robots.txt extension): this site may be used for search,
+# for grounding AI answers, and for training. Stated explicitly because the
+# default for an unstated signal is not "yes".
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 
 Sitemap: https://vedansh.app/sitemap.xml
