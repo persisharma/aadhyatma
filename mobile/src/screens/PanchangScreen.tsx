@@ -38,7 +38,6 @@ import {
   usePanchangMonthObservances,
 } from '@/panchang/usePanchang';
 import { useShubhYoga } from '@/panchang/useShubhYoga';
-import { dayVaas, vaasTiles } from '@/panchang/vaas';
 import type { CalendarSystem, PanchangElement, ResolvedObservance } from '@/panchang/types';
 import { getKathaContent } from '@/panchang/kathaContent';
 import { getUpcomingObservances, searchObservances } from '@/panchang/festivalEngine';
@@ -67,6 +66,7 @@ import JyotishShareCard from '@/components/JyotishShareCard';
 import JyotishShareSheet from '@/components/JyotishShareSheet';
 import JyotishStateCard from '@/components/JyotishStateCard';
 import JyotishToolTile from '@/components/JyotishToolTile';
+import DayVaasCards from '@/components/DayVaasCards';
 import { computePersonalGuidance, SADE_SATI_PHASE_SHORT } from '@/panchang/gochar';
 import {
   RASHI_NAMES_EN,
@@ -680,26 +680,9 @@ export default function PanchangScreen({ route }: Props) {
             <PanchangTile label={contentByLang(lang, 'नित्य योग', 'Nitya Yoga')} element={p.yoga} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
             <PanchangTile label={contentByLang(lang, 'करण', 'Karana')} element={p.karana} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
           </View>
-          {/* चन्द्रमा · चन्द्र वास / अग्नि वास · दिशा शूल — pure readings of the
-              solved day (panchang/vaas.ts), same quiet tier as Yoga/Karana. */}
-          {(() => {
-            const vaas = vaasTiles(dayVaas(p), p.moonRashi);
-            const tile = (label: string, t: typeof vaas.chandra) => (
-              <PanchangTile label={label} element={t.element} successor={t.successor} note={t.note} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
-            );
-            return (
-              <>
-                <View style={styles.angaGridSecondary}>
-                  {tile(contentByLang(lang, 'चन्द्रमा', 'Moon Sign'), vaas.chandrama)}
-                  {tile(contentByLang(lang, 'चन्द्र वास', 'Chandra Vaas'), vaas.chandra)}
-                </View>
-                <View style={styles.angaGridSecondary}>
-                  {tile(contentByLang(lang, 'अग्नि वास', 'Agni Vaas'), vaas.agni)}
-                  {tile(contentByLang(lang, 'दिशा शूल', 'Disha Shool'), vaas.dishaShool)}
-                </View>
-              </>
-            );
-          })()}
+          {/* यात्रा (चन्द्रमा · चन्द्र वास · दिशा शूल) + हवन (अग्नि वास) cards —
+              pure readings of the solved day (design.md §33). */}
+          <DayVaasCards p={p} lang={lang} />
 
           {/* PRD-27: the day's शुभ योग — present-or-absent with its window,
               annotation only (design.md §69). Absent days render nothing. */}
@@ -1583,11 +1566,9 @@ function CalendarSystemToggle({ value, onChange, lang, colors, radii, typography
   );
 }
 
-function PanchangTile({ label, element, kshaya, successor, note, panchangDate, lang, colors, typography, radii, elevation }: {
+function PanchangTile({ label, element, kshaya, successor, panchangDate, lang, colors, typography, radii, elevation }: {
   label: string;
   element: PanchangElement;
-  // A verdict line under the headline (अग्नि वास: हवन शुभ / वर्जित).
-  note?: { hi: string; en: string };
   // Kshaya anga (skipped at every sunrise) — rendered as a second, smaller row so
   // days like 10 Jul 2026 read "दशमी तक 8:16 AM · एकादशी तक 5:22 AM, 11 जुल".
   kshaya?: PanchangElement | null;
@@ -1637,11 +1618,6 @@ function PanchangTile({ label, element, kshaya, successor, note, panchangDate, l
           >
             {contentByLang(lang, row.nameHi, row.nameEn)}
           </Text>
-          {i === 0 && note && (
-            <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latinSemiBold : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.saffronDeep, marginTop: 3 }}>
-              {contentByLang(lang, note.hi, note.en)}
-            </Text>
-          )}
           {/* formatEndInstant appends a short date when the end falls past
               midnight — a bare "तक 2:04 AM" would read as this morning. */}
           {row.endTime && (

@@ -107,17 +107,25 @@ export function dayVaas(p: Pick<PanchangData, 'moonRashi' | 'tithi' | 'vara'>): 
 }
 
 /**
- * The day-panel tiles (value = headline, endTime = the तक line) plus the
- * successor each tile names after it. अग्नि वास carries the havan verdict as
- * its own line, since that is the only question it answers — on the headline
- * it overflowed the tile (the longest value on the grid).
+ * The four readings shaped for the day panel's यात्रा and हवन cards
+ * (`DayVaasCards`): value, the instant it ends, and what follows. अग्नि वास
+ * carries its havan verdict separately — it is the only question it answers.
  */
 type VaasTile = {
   element: PanchangElement;
   successor: { nameHi: string; nameEn: string } | null;
-  /** A verdict line under the headline (अग्नि वास only). */
+  /** The havan verdict for the value (अग्नि वास only). */
   note?: Label;
+  /** The havan verdict for the successor (अग्नि वास only; null without one). */
+  nextNote?: Label | null;
 };
+
+/** हवन शुभ / वर्जित for a place Agni resides in. */
+export function havanVerdict(place: AgniVaasPlace): Label {
+  return AGNI_VAAS_LABELS[place].favourableForHavan
+    ? { hi: 'हवन शुभ', en: 'havan favoured' }
+    : { hi: 'हवन वर्जित', en: 'avoid havan' };
+}
 
 const labelEl = (l: Label, endTime: Date | null): PanchangElement => ({ index: 0, nameHi: l.hi, nameEn: l.en, endTime });
 const successorOf = (l: Label | null) => (l ? { nameHi: l.hi, nameEn: l.en } : null);
@@ -127,9 +135,6 @@ export function vaasTiles(
   moonRashi: PanchangElement,
 ): { chandrama: VaasTile; chandra: VaasTile; agni: VaasTile; dishaShool: VaasTile } {
   const agni = AGNI_VAAS_LABELS[v.agni.value];
-  const havan = agni.favourableForHavan
-    ? { hi: 'हवन शुभ', en: 'havan favoured' }
-    : { hi: 'हवन वर्जित', en: 'avoid havan' };
   const nextRashi = (moonRashi.index + 1) % 12;
   return {
     chandrama: {
@@ -143,7 +148,8 @@ export function vaasTiles(
     agni: {
       element: labelEl(agni, v.agni.until),
       successor: successorOf(v.agni.next ? AGNI_VAAS_LABELS[v.agni.next] : null),
-      note: havan,
+      note: havanVerdict(v.agni.value),
+      nextNote: v.agni.next ? havanVerdict(v.agni.next) : null,
     },
     dishaShool: {
       element: labelEl(DISHA_LABELS[v.dishaShool], null),
