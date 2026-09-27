@@ -1,0 +1,907 @@
+{
+  "chapter": 22,
+  "slug": "atharvashira",
+  "titleHi": "अथर्वशिर उपनिषद्",
+  "titleEn": "Atharvashira Upanishad",
+  "vedaHi": "अथर्ववेद",
+  "vedaEn": "Atharvaveda",
+  "mantraCount": 38,
+  "verseCount": 39,
+  "source": {
+    "baseText": "Atharvaveda text as printed in the Adyar Library \"Śaiva Upaniṣads\" (with Upaniṣad-brahmayogin's commentary) and the Gita Press one-hundred-eight Upaniṣad collection; Devanagari written out from the printed text.",
+    "canonicalEdition": "Adyar Library, The Śaiva Upaniṣads (ed. A. Mahadeva Sastri, 1925); Gita Press, उपनिषद् अंक",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_upanishhat/atharvashira.html",
+      "https://www.wisdomlib.org/hinduism/book/atharvashiras-upanishad",
+      "https://archive.org/details/SaivaUpanishads"
+    ],
+    "notes": "Seven khaṇḍas, one numbered passage each except khaṇḍa 2, whose litany \"यो वै रुद्रः स भगवान् … तस्मै वै नमो नमः\" is numbered item by item (32 items: Brahmā … sarvam) as in the sanskritdocuments/Adyar text — 38 mantras in all, plus the Atharvavedic śānti-pāṭha (भद्रं कर्णेभिः) as page 1. The long prose khaṇḍas (1, 3–7) are kept as single passages split into lines at sentence boundaries. Reading variants: some printings open khaṇḍa 1 with \"देवा ह वै स्वर्गं लोकमायन्\" vs \"…स्वर्गलोकम्\"; in khaṇḍa 4 the gloss on शुक्ल reads क्लन्दते/क्रन्दते; the mātrā passage (here khaṇḍa 5) is placed by some editions at the end of khaṇḍa 4; ग्रहाः/प्रतिग्रहाः in the litany is sometimes read as वसवः. The Vedic ḻ and pluta marks are normalised. Devanagari was authored from memory of the printed text because the network policy blocks the Sanskrit source hosts — a line-by-line scan check against the printed edition is still owed.",
+    "retrievedOn": "2026-09-27"
+  },
+  "verses": [
+    {
+      "id": "atharvashira-shanti",
+      "upanishad": 22,
+      "section": "shanti",
+      "stanza": 22,
+      "numInSection": 1,
+      "reference": "shanti",
+      "labelHi": "शान्ति मन्त्र",
+      "labelEn": "Shanti Mantra",
+      "lines": [
+        "ॐ भद्रं कर्णेभिः शृणुयाम देवाः भद्रं पश्येमाक्षभिर्यजत्राः।",
+        "स्थिरैरङ्गैस्तुष्टुवांसस्तनूभिर्व्यशेम देवहितं यदायुः।",
+        "स्वस्ति न इन्द्रो वृद्धश्रवाः स्वस्ति नः पूषा विश्ववेदाः।",
+        "स्वस्ति नस्तार्क्ष्यो अरिष्टनेमिः स्वस्ति नो बृहस्पतिर्दधातु॥",
+        "ॐ शान्तिः शान्तिः शान्तिः॥"
+      ],
+      "linesEn": [
+        "om bhadraṁ karṇebhiḥ śhṛiṇuyāma devāḥ bhadraṁ paśyemākṣhabhiryajatrāḥ",
+        "sthirairaṅgaistuṣṭuvāṁsastanūbhirvyaśhema devahitaṁ yadāyuḥ",
+        "svasti na indro vṛiddhaśravāḥ svasti naḥ pūṣhā viśvavedāḥ",
+        "svasti nastārkṣyo ariṣṭanemiḥ svasti no bṛihaspatirdadhātu",
+        "om śhāntiḥ śhāntiḥ śhāntiḥ"
+      ],
+      "meaningHi": "हे देवों! हम कानों से शुभ सुनें; हे यज्ञार्ह देवों! हम नेत्रों से शुभ देखें। स्थिर अंगों और शरीरों से आपकी स्तुति करते हुए हम देवों के हित की आयु प्राप्त करें। महान यशस्वी इन्द्र हमारा कल्याण करें; सर्वज्ञ पूषा हमारा कल्याण करें; अरिष्टनेमि तार्क्ष्य (गरुड़) हमारा कल्याण करें; बृहस्पति हमारा कल्याण करें। ॐ शान्तिः शान्तिः शान्तिः।",
+      "meaningEn": "O gods, may we hear what is auspicious with our ears; O you worthy of worship, may we see what is auspicious with our eyes. Praising you with steady limbs and bodies, may we live the full span the gods have allotted. May Indra of great renown bless us; may all-knowing Pūṣan bless us; may Tārkṣya (Garuḍa) of unhindered course bless us; may Bṛhaspati grant us well-being. Om, peace, peace, peace."
+    },
+    {
+      "id": "atharvashira-1-1",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 2,
+      "reference": "1.1",
+      "labelHi": "मन्त्र · १.१",
+      "labelEn": "Mantra · 1.1",
+      "lines": [
+        "ॐ देवा ह वै स्वर्गं लोकमायंस्ते देवा रुद्रमपृच्छन्को भवानिति।",
+        "सोऽब्रवीदहमेकः प्रथममासं वर्तामि च भविष्यामि च नान्यः कश्चिन्मत्तो व्यतिरिक्त इति।",
+        "सोऽन्तरादन्तरं प्राविशत् दिशश्चान्तरं प्राविशत्।",
+        "सोऽहं नित्यानित्यो व्यक्ताव्यक्तो ब्रह्माब्रह्माहं प्राञ्चः प्रत्यञ्चोऽहं दक्षिणाञ्च उदञ्चोऽहमधश्चोर्ध्वं चाहं दिशश्च प्रतिदिशश्चाहं पुमानपुमान्स्त्रियश्चाहम्।",
+        "गायत्र्यहं सावित्र्यहं त्रिष्टुब्जगत्यनुष्टुप्चाहं छन्दोऽहं गार्हपत्यो दक्षिणाग्निराहवनीयोऽहम्।",
+        "सत्योऽहं गौरहं गौर्यहमृगहं यजुरहं सामाहमथर्वाङ्गिरसोऽहम्।",
+        "ज्येष्ठोऽहं श्रेष्ठोऽहं वरिष्ठोऽहमापोऽहं तेजोऽहं गुह्योऽहमरण्योऽहमक्षरमहं क्षरमहं पुष्करमहं पवित्रमहम्।",
+        "उग्रं च मध्यं च बहिश्च पुरस्ताज्ज्योतिरित्यहमेव सर्वेभ्यो मामेव स सर्वः स माम्।",
+        "यो मां वेद स सर्वान्देवान्वेद सर्वांश्च वेदान्साङ्गानपि ब्रह्म ब्राह्मणैश्च।",
+        "गां गोभिर्ब्राह्मणान्ब्राह्मणेन हविर्हविषा आयुरायुषा सत्येन सत्यं धर्मेण धर्मं तर्पयामि स्वेन तेजसा।",
+        "ततो ह वै ते देवा रुद्रमपृच्छन्ते देवा रुद्रमपश्यन्।",
+        "ते देवा रुद्रमध्यायंस्ततो देवा ऊर्ध्वबाहवो रुद्रं स्तुवन्ति॥"
+      ],
+      "linesEn": [
+        "om devā ha vai svargaṁ lokamāyaṁste devā rudramapṛichchhanko bhavāniti",
+        "so'bravīdahamekaḥ prathamamāsaṁ vartāmi cha bhaviṣyāmi cha nānyaḥ kaśchinmatto vyatirikta iti",
+        "so'ntarādantaraṁ prāviśhat diśhaśchāntaraṁ prāviśhat",
+        "so'haṁ nityānityo vyaktāvyakto brahmābrahmāhaṁ prāñchaḥ pratyañcho'haṁ dakṣhiṇāñcha udañcho'hamadhaśchordhvaṁ chāhaṁ diśhaścha pratidiśhaśchāhaṁ pumānapumānstriyaśchāham",
+        "gāyatryahaṁ sāvitryahaṁ triṣṭubjagatyanuṣṭupchāhaṁ chhando'haṁ gārhapatyo dakṣhiṇāgnirāhavanīyo'ham",
+        "satyo'haṁ gaurahaṁ gauryahamṛigahaṁ yajurahaṁ sāmāhamatharvāṅgiraso'ham",
+        "jyeṣṭho'haṁ śreṣṭho'haṁ variṣṭho'hamāpo'haṁ tejo'haṁ guhyo'hamaraṇyo'hamakṣharamahaṁ kṣharamahaṁ puṣkaramahaṁ pavitramaham",
+        "ugraṁ cha madhyaṁ cha bahiścha purastājjyotirityahameva sarvebhyo māmeva sa sarvaḥ sa mām",
+        "yo māṁ veda sa sarvāndevānveda sarvāṁścha vedānsāṅgānapi brahma brāhmaṇaiścha",
+        "gāṁ gobhirbrāhmaṇānbrāhmaṇena havirhaviṣhā āyurāyuṣhā satyena satyaṁ dharmeṇa dharmaṁ tarpayāmi svena tejasā",
+        "tato ha vai te devā rudramapṛichchhante devā rudramapaśyan",
+        "te devā rudramadhyāyaṁstato devā ūrdhvabāhavo rudraṁ stuvanti"
+      ],
+      "meaningHi": "ॐ। देवता स्वर्गलोक में गये और उन देवताओं ने रुद्र से पूछा — \"आप कौन हैं?\" उन्होंने कहा — \"सबसे पहले मैं ही एक था, (अब भी) मैं ही हूँ और आगे भी मैं ही रहूँगा; मुझसे भिन्न और कोई नहीं है।\" (फिर) वे भीतर से भी भीतर प्रविष्ट हुए, दिशाओं के भी भीतर प्रविष्ट हुए (और बोले) — \"वह मैं नित्य और अनित्य हूँ, व्यक्त और अव्यक्त हूँ, ब्रह्म और अब्रह्म मैं हूँ; पूर्व और पश्चिम मैं हूँ, दक्षिण और उत्तर मैं हूँ, नीचे और ऊपर मैं हूँ, दिशाएँ और उपदिशाएँ मैं हूँ; पुरुष, अपुरुष और स्त्रियाँ मैं हूँ। गायत्री मैं हूँ, सावित्री मैं हूँ; त्रिष्टुप्, जगती और अनुष्टुप् मैं हूँ; छन्द मैं हूँ; गार्हपत्य, दक्षिणाग्नि और आहवनीय मैं हूँ। सत्य मैं हूँ, गौ मैं हूँ, गौरी मैं हूँ; ऋक् मैं हूँ, यजुः मैं हूँ, साम मैं हूँ, अथर्वाङ्गिरस मैं हूँ। ज्येष्ठ मैं हूँ, श्रेष्ठ मैं हूँ, वरिष्ठ मैं हूँ; जल मैं हूँ, तेज मैं हूँ; गुह्य मैं हूँ, अरण्य (में रहने वाला) मैं हूँ; अक्षर मैं हूँ, क्षर मैं हूँ; पुष्कर मैं हूँ, पवित्र मैं हूँ। उग्र, मध्य, बाहर और आगे जो ज्योति है, वह मैं ही हूँ; सबसे (परे) मैं ही हूँ। जो मुझे (जानता है), वह सब कुछ है, वह मुझे (प्राप्त होता है)। जो मुझे जानता है, वह सब देवताओं को जानता है और अंगों सहित सब वेदों को भी। ब्रह्म को ब्राह्मणों से, गौ को गौओं से, ब्राह्मणों को ब्राह्मण (-भाव) से, हवि को हवि से, आयु को आयु से, सत्य से सत्य को और धर्म से धर्म को — मैं अपने तेज से तृप्त करता हूँ।\" तब उन देवताओं ने रुद्र से पूछा (पर) उन देवताओं ने रुद्र को नहीं देखा; उन देवताओं ने रुद्र का ध्यान किया, तब देवता ऊपर भुजाएँ उठाकर रुद्र की स्तुति करने लगे।",
+      "meaningEn": "Om. The gods went to the world of heaven, and the gods asked Rudra: \"Who are you?\" He said: \"I alone was in the beginning, I am, and I shall be; there is no other distinct from me.\" He entered what is within the within, he entered within the quarters, (and said): \"I am the eternal and the non-eternal, the manifest and the unmanifest; I am Brahman and not-Brahman; I am east and west, south and north, below and above; I am the quarters and the intermediate quarters; I am male, not-male and female. I am the Gāyatrī, I am the Sāvitrī; I am the Triṣṭubh, Jagatī and Anuṣṭubh; I am metre; I am the Gārhapatya, Dakṣiṇāgni and Āhavanīya fires. I am truth, I am the cow, I am Gaurī; I am the Ṛk, the Yajus, the Sāman, the Atharvāṅgiras. I am the eldest, the best, the most excellent; I am the waters, I am radiance; I am the secret, I am the dweller in the forest; I am the imperishable and the perishable; I am the lotus, I am the purifier. The fierce, the middle, the outer, and the light in front — I alone am that; I am beyond all. He who (knows) me is all; he comes to me. He who knows me knows all the gods and all the Vedas with their limbs. With my own radiance I satisfy Brahman with brāhmaṇas, the cow with cows, brāhmaṇas with brāhmaṇahood, oblation with oblation, life with life, truth with truth, dharma with dharma.\" Then the gods asked Rudra, but the gods did not see Rudra; the gods meditated on Rudra, and then the gods, with arms raised, praised Rudra."
+    },
+    {
+      "id": "atharvashira-2-1",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 3,
+      "reference": "2.1",
+      "labelHi": "मन्त्र · २.१",
+      "labelEn": "Mantra · 2.1",
+      "lines": [
+        "यो वै रुद्रः स भगवान्यश्च ब्रह्मा तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyaścha brahmā tasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही ब्रह्मा हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is Brahmā — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-2",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 4,
+      "reference": "2.2",
+      "labelHi": "मन्त्र · २.२",
+      "labelEn": "Mantra · 2.2",
+      "lines": [
+        "यो वै रुद्रः स भगवान्यश्च विष्णुस्तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyaścha viṣṇustasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही विष्णु हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is Viṣṇu — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-3",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 5,
+      "reference": "2.3",
+      "labelHi": "मन्त्र · २.३",
+      "labelEn": "Mantra · 2.3",
+      "lines": [
+        "यो वै रुद्रः स भगवान्यश्च स्कन्दस्तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyaścha skandastasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही स्कन्द हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is Skanda — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-4",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 6,
+      "reference": "2.4",
+      "labelHi": "मन्त्र · २.४",
+      "labelEn": "Mantra · 2.4",
+      "lines": [
+        "यो वै रुद्रः स भगवान्यश्चेन्द्रस्तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyaśchendrastasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही इन्द्र हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is Indra — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-5",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 7,
+      "reference": "2.5",
+      "labelHi": "मन्त्र · २.५",
+      "labelEn": "Mantra · 2.5",
+      "lines": [
+        "यो वै रुद्रः स भगवान्यश्चाग्निस्तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyaśchāgnistasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही अग्नि हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is Agni — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-6",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 8,
+      "reference": "2.6",
+      "labelHi": "मन्त्र · २.६",
+      "labelEn": "Mantra · 2.6",
+      "lines": [
+        "यो वै रुद्रः स भगवान्यश्च वायुस्तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyaścha vāyustasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही वायु हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is Vāyu — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-7",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 9,
+      "reference": "2.7",
+      "labelHi": "मन्त्र · २.७",
+      "labelEn": "Mantra · 2.7",
+      "lines": [
+        "यो वै रुद्रः स भगवान्यश्च सूर्यस्तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyaścha sūryastasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही सूर्य हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is Sūrya — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-8",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 10,
+      "reference": "2.8",
+      "labelHi": "मन्त्र · २.८",
+      "labelEn": "Mantra · 2.8",
+      "lines": [
+        "यो वै रुद्रः स भगवान्यश्च सोमस्तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyaścha somastasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही सोम हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is Soma — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-9",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 11,
+      "reference": "2.9",
+      "labelHi": "मन्त्र · २.९",
+      "labelEn": "Mantra · 2.9",
+      "lines": [
+        "यो वै रुद्रः स भगवान्ये चाष्टौ ग्रहास्तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānye chāṣṭau grahāstasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही आठों ग्रह हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is the eight grahas (seizers) — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-10",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 12,
+      "reference": "2.10",
+      "labelHi": "मन्त्र · २.१०",
+      "labelEn": "Mantra · 2.10",
+      "lines": [
+        "यो वै रुद्रः स भगवान्ये चाष्टौ प्रतिग्रहास्तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānye chāṣṭau pratigrahāstasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही आठों प्रतिग्रह हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is the eight pratigrahas (counter-seizers) — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-11",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 13,
+      "reference": "2.11",
+      "labelHi": "मन्त्र · २.११",
+      "labelEn": "Mantra · 2.11",
+      "lines": [
+        "यो वै रुद्रः स भगवान्यच्च भूस्तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyachcha bhūstasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही भूः (भूलोक) हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is Bhūḥ (the earth-world) — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-12",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 14,
+      "reference": "2.12",
+      "labelHi": "मन्त्र · २.१२",
+      "labelEn": "Mantra · 2.12",
+      "lines": [
+        "यो वै रुद्रः स भगवान्यच्च भुवस्तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyachcha bhuvastasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही भुवः (अन्तरिक्षलोक) हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is Bhuvaḥ (the mid-world) — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-13",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 15,
+      "reference": "2.13",
+      "labelHi": "मन्त्र · २.१३",
+      "labelEn": "Mantra · 2.13",
+      "lines": [
+        "यो वै रुद्रः स भगवान्यच्च स्वस्तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyachcha svastasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही स्वः (स्वर्गलोक) हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is Svaḥ (the heaven-world) — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-14",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 16,
+      "reference": "2.14",
+      "labelHi": "मन्त्र · २.१४",
+      "labelEn": "Mantra · 2.14",
+      "lines": [
+        "यो वै रुद्रः स भगवान्यच्च महस्तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyachcha mahastasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही महः (महर्लोक) हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is Mahaḥ (the great world) — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-15",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 17,
+      "reference": "2.15",
+      "labelHi": "मन्त्र · २.१५",
+      "labelEn": "Mantra · 2.15",
+      "lines": [
+        "यो वै रुद्रः स भगवान्या च पृथिवी तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyā cha pṛithivī tasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही पृथ्वी हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is the earth — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-16",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 18,
+      "reference": "2.16",
+      "labelHi": "मन्त्र · २.१६",
+      "labelEn": "Mantra · 2.16",
+      "lines": [
+        "यो वै रुद्रः स भगवान्यच्चान्तरिक्षं तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyachchāntarikṣhaṁ tasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही अन्तरिक्ष हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is the mid-space — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-17",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 19,
+      "reference": "2.17",
+      "labelHi": "मन्त्र · २.१७",
+      "labelEn": "Mantra · 2.17",
+      "lines": [
+        "यो वै रुद्रः स भगवान्या च द्यौस्तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyā cha dyaustasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही द्युलोक हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is the sky — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-18",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 20,
+      "reference": "2.18",
+      "labelHi": "मन्त्र · २.१८",
+      "labelEn": "Mantra · 2.18",
+      "lines": [
+        "यो वै रुद्रः स भगवान्याश्चापस्तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyāśchāpastasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही जल हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is the waters — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-19",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 21,
+      "reference": "2.19",
+      "labelHi": "मन्त्र · २.१९",
+      "labelEn": "Mantra · 2.19",
+      "lines": [
+        "यो वै रुद्रः स भगवान्यच्च तेजस्तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyachcha tejastasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही तेज हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is radiance — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-20",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 22,
+      "reference": "2.20",
+      "labelHi": "मन्त्र · २.२०",
+      "labelEn": "Mantra · 2.20",
+      "lines": [
+        "यो वै रुद्रः स भगवान्यश्च कालस्तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyaścha kālastasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही काल हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is Time — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-21",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 23,
+      "reference": "2.21",
+      "labelHi": "मन्त्र · २.२१",
+      "labelEn": "Mantra · 2.21",
+      "lines": [
+        "यो वै रुद्रः स भगवान्यश्च यमस्तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyaścha yamastasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही यम हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is Yama — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-22",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 24,
+      "reference": "2.22",
+      "labelHi": "मन्त्र · २.२२",
+      "labelEn": "Mantra · 2.22",
+      "lines": [
+        "यो वै रुद्रः स भगवान्यश्च मृत्युस्तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyaścha mṛityustasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही मृत्यु हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is Death — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-23",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 25,
+      "reference": "2.23",
+      "labelHi": "मन्त्र · २.२३",
+      "labelEn": "Mantra · 2.23",
+      "lines": [
+        "यो वै रुद्रः स भगवान्यच्चामृतं तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyachchāmṛitaṁ tasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही अमृत हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is the Immortal — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-24",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 26,
+      "reference": "2.24",
+      "labelHi": "मन्त्र · २.२४",
+      "labelEn": "Mantra · 2.24",
+      "lines": [
+        "यो वै रुद्रः स भगवान्यच्चाकाशं तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyachchākāśhaṁ tasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही आकाश हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is space — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-25",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 27,
+      "reference": "2.25",
+      "labelHi": "मन्त्र · २.२५",
+      "labelEn": "Mantra · 2.25",
+      "lines": [
+        "यो वै रुद्रः स भगवान्यच्च विश्वं तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyachcha viśvaṁ tasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही विश्व हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is the universe — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-26",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 28,
+      "reference": "2.26",
+      "labelHi": "मन्त्र · २.२६",
+      "labelEn": "Mantra · 2.26",
+      "lines": [
+        "यो वै रुद्रः स भगवान्यच्च स्थूलं तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyachcha sthūlaṁ tasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही स्थूल हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is the gross — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-27",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 29,
+      "reference": "2.27",
+      "labelHi": "मन्त्र · २.२७",
+      "labelEn": "Mantra · 2.27",
+      "lines": [
+        "यो वै रुद्रः स भगवान्यच्च सूक्ष्मं तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyachcha sūkṣmaṁ tasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही सूक्ष्म हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is the subtle — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-28",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 30,
+      "reference": "2.28",
+      "labelHi": "मन्त्र · २.२८",
+      "labelEn": "Mantra · 2.28",
+      "lines": [
+        "यो वै रुद्रः स भगवान्यच्च शुक्लं तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyachcha śhuklaṁ tasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही शुक्ल हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is the white — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-29",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 31,
+      "reference": "2.29",
+      "labelHi": "मन्त्र · २.२९",
+      "labelEn": "Mantra · 2.29",
+      "lines": [
+        "यो वै रुद्रः स भगवान्यच्च कृष्णं तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyachcha kṛiṣṇaṁ tasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही कृष्ण हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is the dark — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-30",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 32,
+      "reference": "2.30",
+      "labelHi": "मन्त्र · २.३०",
+      "labelEn": "Mantra · 2.30",
+      "lines": [
+        "यो वै रुद्रः स भगवान्यच्च कृत्स्नं तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyachcha kṛitsnaṁ tasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही कृत्स्न (सम्पूर्ण) हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is the entire — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-31",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 33,
+      "reference": "2.31",
+      "labelHi": "मन्त्र · २.३१",
+      "labelEn": "Mantra · 2.31",
+      "lines": [
+        "यो वै रुद्रः स भगवान्यच्च सत्यं तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyachcha satyaṁ tasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही सत्य हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is truth — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-2-32",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 34,
+      "reference": "2.32",
+      "labelHi": "मन्त्र · २.३२",
+      "labelEn": "Mantra · 2.32",
+      "lines": [
+        "यो वै रुद्रः स भगवान्यच्च सर्वं तस्मै वै नमो नमः॥"
+      ],
+      "linesEn": [
+        "yo vai rudraḥ sa bhagavānyachcha sarvaṁ tasmai vai namo namaḥ"
+      ],
+      "meaningHi": "जो रुद्र हैं, वही भगवान् हैं और वही सर्व (सब कुछ) हैं — उन्हें बार-बार नमस्कार है।",
+      "meaningEn": "He who is Rudra is the Lord, and he is all that is — to him, salutations again and again."
+    },
+    {
+      "id": "atharvashira-3-1",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 35,
+      "reference": "3.1",
+      "labelHi": "मन्त्र · ३.१",
+      "labelEn": "Mantra · 3.1",
+      "lines": [
+        "भूस्ते आदिर्मध्यं भुवस्ते स्वस्ते शीर्षं विश्वरूपोऽसि ब्रह्मैकस्त्वं द्विधा त्रिधा वृद्धिस्त्वं शान्तिस्त्वं पुष्टिस्त्वम्।",
+        "हुतमहुतं दत्तमदत्तं सर्वमसर्वं विश्वमविश्वं कृतमकृतं परमपरं परायणं च त्वम्।",
+        "अपाम सोममृता अभूमागन्म ज्योतिरविदाम देवान्।",
+        "किं नूनमस्मान्कृणवदरातिः किमु धूर्तिरमृत मर्त्यस्य।",
+        "सोमसूर्यपुरस्तात्सूक्ष्मः पुरुषः।",
+        "सर्वं जगद्धितं वा एतदक्षरं प्राजापत्यं सौम्यं सूक्ष्मं पुरुषं ग्राह्यमग्राह्येण भावं भावेन सौम्यं सौम्येन सूक्ष्मं सूक्ष्मेण वायव्यं वायव्येन ग्रसति तस्मै महाग्रासाय वै नमो नमः।",
+        "हृदिस्था देवताः सर्वा हृदि प्राणाः प्रतिष्ठिताः।",
+        "हृदि त्वमसि यो नित्यं तिस्रो मात्राः परस्तु सः।",
+        "तस्योत्तरतः शिरो दक्षिणतः पादौ य उत्तरतः स ओङ्कारः।",
+        "य ओङ्कारः स प्रणवः यः प्रणवः स सर्वव्यापी यः सर्वव्यापी सोऽनन्तः।",
+        "योऽनन्तस्तत्तारं यत्तारं तत्सूक्ष्मं यत्सूक्ष्मं तच्छुक्लं यच्छुक्लं तद्वैद्युतं यद्वैद्युतं तत्परं ब्रह्म।",
+        "यत्परं ब्रह्म स एकः य एकः स रुद्रः यो रुद्रः स ईशानः य ईशानः स भगवान्महेश्वरः॥"
+      ],
+      "linesEn": [
+        "bhūste ādirmadhyaṁ bhuvaste svaste śhīrṣhaṁ viśvarūpo'si brahmaikastvaṁ dvidhā tridhā vṛiddhistvaṁ śhāntistvaṁ puṣṭistvam",
+        "hutamahutaṁ dattamadattaṁ sarvamasarvaṁ viśvamaviśvaṁ kṛitamakṛitaṁ paramaparaṁ parāyaṇaṁ cha tvam",
+        "apāma somamṛitā abhūmāganma jyotiravidāma devān",
+        "kiṁ nūnamasmānkṛiṇavadarātiḥ kimu dhūrtiramṛita martyasya",
+        "somasūryapurastātsūkṣmaḥ puruṣhaḥ",
+        "sarvaṁ jagaddhitaṁ vā etadakṣharaṁ prājāpatyaṁ saumyaṁ sūkṣmaṁ puruṣhaṁ grāhyamagrāhyeṇa bhāvaṁ bhāvena saumyaṁ saumyena sūkṣmaṁ sūkṣmeṇa vāyavyaṁ vāyavyena grasati tasmai mahāgrāsāya vai namo namaḥ",
+        "hṛidisthā devatāḥ sarvā hṛidi prāṇāḥ pratiṣṭhitāḥ",
+        "hṛidi tvamasi yo nityaṁ tisro mātrāḥ parastu saḥ",
+        "tasyottarataḥ śhiro dakṣhiṇataḥ pādau ya uttarataḥ sa oṅkāraḥ",
+        "ya oṅkāraḥ sa praṇavaḥ yaḥ praṇavaḥ sa sarvavyāpī yaḥ sarvavyāpī so'nantaḥ",
+        "yo'nantastattāraṁ yattāraṁ tatsūkṣmaṁ yatsūkṣmaṁ tachchhuklaṁ yachchhuklaṁ tadvaidyutaṁ yadvaidyutaṁ tatparaṁ brahma",
+        "yatparaṁ brahma sa ekaḥ ya ekaḥ sa rudraḥ yo rudraḥ sa īśhānaḥ ya īśhānaḥ sa bhagavānmaheśvaraḥ"
+      ],
+      "meaningHi": "(हे रुद्र!) भूः आपका आदि है, भुवः आपका मध्य है, स्वः आपका सिर है; आप विश्वरूप हैं। आप एक ब्रह्म हैं, (फिर भी) दो प्रकार से, तीन प्रकार से (प्रकट) हैं; आप वृद्धि हैं, आप शान्ति हैं, आप पुष्टि हैं। हवन किया हुआ और न किया हुआ, दिया हुआ और न दिया हुआ, सर्व और असर्व, विश्व और अविश्व, कृत और अकृत, पर और अपर तथा परम आश्रय — आप ही हैं। \"हमने सोम पिया, हम अमर हो गये, हम ज्योति को प्राप्त हुए, हमने देवों को जाना। अब शत्रु हमारा क्या कर सकता है? हे अमृतस्वरूप! मरणधर्मा (शत्रु) की हिंसा भी क्या (कर सकती है)?\" सोम और सूर्य से भी पहले (स्थित) सूक्ष्म पुरुष (आप हैं)। यह अक्षर समस्त जगत् का हितकारी है; (यह) प्राजापत्य, सौम्य, सूक्ष्म पुरुष को — ग्राह्य को अग्राह्य से, भाव को भाव से, सौम्य को सौम्य से, सूक्ष्म को सूक्ष्म से, वायव्य को वायव्य से — ग्रस लेता है; उस महाग्रास (सबको ग्रसने वाले) को बार-बार नमस्कार है। सब देवता हृदय में स्थित हैं, प्राण हृदय में प्रतिष्ठित हैं; जो नित्य हृदय में हैं, वे आप ही हैं; (ओंकार की) तीन मात्राएँ हैं, पर वे (आप) उनसे परे हैं। उसका सिर उत्तर की ओर है, पैर दक्षिण की ओर; जो उत्तर में है, वह ओंकार है। जो ओंकार है, वह प्रणव है; जो प्रणव है, वह सर्वव्यापी है; जो सर्वव्यापी है, वह अनन्त है; जो अनन्त है, वह तार है; जो तार है, वह सूक्ष्म है; जो सूक्ष्म है, वह शुक्ल है; जो शुक्ल है, वह वैद्युत है; जो वैद्युत है, वह परब्रह्म है; जो परब्रह्म है, वह एक है; जो एक है, वह रुद्र है; जो रुद्र है, वह ईशान है; जो ईशान है, वह भगवान् महेश्वर है।",
+      "meaningEn": "(O Rudra,) Bhūḥ is your beginning, Bhuvaḥ your middle, Svaḥ your head; you are of universal form. You are the one Brahman, yet twofold and threefold; you are growth, you are peace, you are nourishment. What is offered and not offered, given and not given, all and not-all, the universe and not-universe, the done and the undone, the higher and the lower, and the final refuge — that are you. \"We have drunk the Soma, we have become immortal, we have gone to the light, we have known the gods. What can the enemy now do to us? What, O Immortal, can the malice of a mortal do?\" You are the subtle Person who stands before Soma and Sūrya. This Imperishable is the good of the whole world; it devours the Prajāpati-born, the gentle, the subtle Person — the graspable by the ungraspable, being by being, the gentle by the gentle, the subtle by the subtle, the airy by the airy: to that Great Devourer, salutations again and again. All the deities dwell in the heart; in the heart the life-breaths are established. You are the one ever in the heart; the mātrās are three, but he is beyond them. His head is to the north, his feet to the south; what is to the north is Oṃkāra. What is Oṃkāra is Praṇava; what is Praṇava is the All-pervading; what is All-pervading is the Endless; what is Endless is the Tāra (the Saviour); what is Tāra is the Subtle; what is Subtle is the White; what is White is the Lightning-like; what is Lightning-like is the supreme Brahman; what is the supreme Brahman is the One; what is the One is Rudra; what is Rudra is Īśāna; what is Īśāna is the blessed Maheśvara."
+    },
+    {
+      "id": "atharvashira-4-1",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 36,
+      "reference": "4.1",
+      "labelHi": "मन्त्र · ४.१",
+      "labelEn": "Mantra · 4.1",
+      "lines": [
+        "अथ कस्मादुच्यत ओङ्कारः यस्मादुच्चार्यमाण एव प्राणानूर्ध्वमुत्क्रामयति तस्मादुच्यत ओङ्कारः।",
+        "अथ कस्मादुच्यते प्रणवः यस्मादुच्चार्यमाण एव ऋग्यजुःसामाथर्वाङ्गिरसं ब्रह्म ब्राह्मणेभ्यः प्रणामयति नामयति च तस्मादुच्यते प्रणवः।",
+        "अथ कस्मादुच्यते सर्वव्यापी यस्मादुच्चार्यमाण एव सर्वाँल्लोकान्व्याप्नोति स्नेहो यथा पललपिण्डमिव शान्तरूपमोतप्रोतमनुप्राप्तो व्यतिषक्तश्च तस्मादुच्यते सर्वव्यापी।",
+        "अथ कस्मादुच्यतेऽनन्तः यस्मादुच्चार्यमाण एव तिर्यगूर्ध्वमधस्ताच्चास्यान्तो नोपलभ्यते तस्मादुच्यतेऽनन्तः।",
+        "अथ कस्मादुच्यते तारं यस्मादुच्चार्यमाण एव गर्भजन्मव्याधिजरामरणसंसारमहाभयात्तारयति त्रायते च तस्मादुच्यते तारम्।",
+        "अथ कस्मादुच्यते शुक्लं यस्मादुच्चार्यमाण एव क्लन्दते क्लामयति च तस्मादुच्यते शुक्लम्।",
+        "अथ कस्मादुच्यते सूक्ष्मं यस्मादुच्चार्यमाण एव सूक्ष्मो भूत्वा शरीराण्यधितिष्ठति सर्वाणि चाङ्गान्यभिमृशति तस्मादुच्यते सूक्ष्मम्।",
+        "अथ कस्मादुच्यते वैद्युतं यस्मादुच्चार्यमाण एव व्यक्ते महति तमसि द्योतयति तस्मादुच्यते वैद्युतम्।",
+        "अथ कस्मादुच्यते परं ब्रह्म यस्मात्परमपरं परायणं च बृहद्बृहत्या बृंहयति तस्मादुच्यते परं ब्रह्म।",
+        "अथ कस्मादुच्यत एकः यः सर्वान्प्राणान्सम्भक्ष्य सम्भक्षणेनाजः संसृजति विसृजति।",
+        "तीर्थमेके व्रजन्ति तीर्थमेके दक्षिणाः प्रत्यञ्च उदञ्चः प्राञ्चोऽभिव्रजन्त्येके तेषां सर्वेषामिह सङ्गतिः।",
+        "साकं स एको भूतश्चरति प्रजानां तस्मादुच्यत एकः।",
+        "अथ कस्मादुच्यते रुद्रः यस्मादृषिभिर्नान्यैर्भक्तैर्द्रुतमस्य रूपमुपलभ्यते तस्मादुच्यते रुद्रः।",
+        "अथ कस्मादुच्यत ईशानः यः सर्वान्देवानीशत ईशानीभिर्जननीभिश्च शक्तिभिः।",
+        "अभि त्वा शूर नोनुमो दुग्धा इव धेनवः।",
+        "ईशानमस्य जगतः स्वर्दृशमीशानमिन्द्र तस्थुष इति तस्मादुच्यत ईशानः।",
+        "अथ कस्मादुच्यते भगवान्महेश्वरः यस्माद्भक्तान्ज्ञानेन भजत्यनुगृह्णाति च वाचं संसृजति विसृजति च।",
+        "सर्वान्भावान्परित्यज्यात्मज्ञानेन योगैश्वर्येण महति महीयते तस्मादुच्यते भगवान्महेश्वरः।",
+        "तदेतद्रुद्रचरितम्॥"
+      ],
+      "linesEn": [
+        "atha kasmāduchyata oṅkāraḥ yasmāduchchāryamāṇa eva prāṇānūrdhvamutkrāmayati tasmāduchyata oṅkāraḥ",
+        "atha kasmāduchyate praṇavaḥ yasmāduchchāryamāṇa eva ṛigyajuḥsāmātharvāṅgirasaṁ brahma brāhmaṇebhyaḥ praṇāmayati nāmayati cha tasmāduchyate praṇavaḥ",
+        "atha kasmāduchyate sarvavyāpī yasmāduchchāryamāṇa eva sarvāṁllokānvyāpnoti sneho yathā palalapiṇḍamiva śhāntarūpamotaprotamanuprāpto vyatiṣhaktaścha tasmāduchyate sarvavyāpī",
+        "atha kasmāduchyate'nantaḥ yasmāduchchāryamāṇa eva tiryagūrdhvamadhastāchchāsyānto nopalabhyate tasmāduchyate'nantaḥ",
+        "atha kasmāduchyate tāraṁ yasmāduchchāryamāṇa eva garbhajanmavyādhijarāmaraṇasaṁsāramahābhayāttārayati trāyate cha tasmāduchyate tāram",
+        "atha kasmāduchyate śhuklaṁ yasmāduchchāryamāṇa eva klandate klāmayati cha tasmāduchyate śhuklam",
+        "atha kasmāduchyate sūkṣmaṁ yasmāduchchāryamāṇa eva sūkṣmo bhūtvā śharīrāṇyadhitiṣṭhati sarvāṇi chāṅgānyabhimṛiśhati tasmāduchyate sūkṣmam",
+        "atha kasmāduchyate vaidyutaṁ yasmāduchchāryamāṇa eva vyakte mahati tamasi dyotayati tasmāduchyate vaidyutam",
+        "atha kasmāduchyate paraṁ brahma yasmātparamaparaṁ parāyaṇaṁ cha bṛihadbṛihatyā bṛiṁhayati tasmāduchyate paraṁ brahma",
+        "atha kasmāduchyata ekaḥ yaḥ sarvānprāṇānsambhakṣya sambhakṣhaṇenājaḥ saṁsṛijati visṛijati",
+        "tīrthameke vrajanti tīrthameke dakṣhiṇāḥ pratyañcha udañchaḥ prāñcho'bhivrajantyeke teṣhāṁ sarveṣhāmiha saṅgatiḥ",
+        "sākaṁ sa eko bhūtaścharati prajānāṁ tasmāduchyata ekaḥ",
+        "atha kasmāduchyate rudraḥ yasmādṛiṣhibhirnānyairbhaktairdrutamasya rūpamupalabhyate tasmāduchyate rudraḥ",
+        "atha kasmāduchyata īśhānaḥ yaḥ sarvāndevānīśhata īśhānībhirjananībhiścha śhaktibhiḥ",
+        "abhi tvā śhūra nonumo dugdhā iva dhenavaḥ",
+        "īśhānamasya jagataḥ svardṛiśhamīśhānamindra tasthuṣha iti tasmāduchyata īśhānaḥ",
+        "atha kasmāduchyate bhagavānmaheśvaraḥ yasmādbhaktānjñānena bhajatyanugṛihṇāti cha vāchaṁ saṁsṛijati visṛijati cha",
+        "sarvānbhāvānparityajyātmajñānena yogaiśvaryeṇa mahati mahīyate tasmāduchyate bhagavānmaheśvaraḥ",
+        "tadetadrudracharitam"
+      ],
+      "meaningHi": "अब (यह) ओंकार क्यों कहलाता है? क्योंकि उच्चारण करते ही यह प्राणों को ऊपर की ओर उठा ले जाता है, इसलिए ओंकार कहलाता है। प्रणव क्यों कहलाता है? क्योंकि उच्चारण करते ही यह ऋक्, यजुः, साम और अथर्वाङ्गिरस-रूप ब्रह्म (वेद) को ब्राह्मणों के सम्मुख प्रणत करता है और (उन्हें) झुकाता है, इसलिए प्रणव कहलाता है। सर्वव्यापी क्यों कहलाता है? क्योंकि उच्चारण करते ही यह सब लोकों को व्याप्त कर लेता है — जैसे तिल के पिण्ड में तेल — शान्तरूप, ओत-प्रोत, सबमें अनुप्रविष्ट और (सबसे) मिला हुआ; इसलिए सर्वव्यापी कहलाता है। अनन्त क्यों कहलाता है? क्योंकि उच्चारण करते ही इसका तिरछा, ऊपर या नीचे कहीं अन्त नहीं मिलता, इसलिए अनन्त कहलाता है। तार क्यों कहलाता है? क्योंकि उच्चारण करते ही यह गर्भ, जन्म, व्याधि, जरा और मरण-रूप संसार के महाभय से तार देता है और रक्षा करता है, इसलिए तार कहलाता है। शुक्ल क्यों कहलाता है? क्योंकि उच्चारण करते ही यह (स्वयं) क्लन्दन (ध्वनि) करता है और (साधक को) क्लान्त (शान्त) कर देता है, इसलिए शुक्ल कहलाता है। सूक्ष्म क्यों कहलाता है? क्योंकि उच्चारण करते ही यह सूक्ष्म होकर शरीरों में अधिष्ठित होता है और सब अंगों का स्पर्श करता है, इसलिए सूक्ष्म कहलाता है। वैद्युत क्यों कहलाता है? क्योंकि उच्चारण करते ही यह व्यक्त और महान् अन्धकार में (विद्युत् के समान) प्रकाश करता है, इसलिए वैद्युत कहलाता है। परब्रह्म क्यों कहलाता है? क्योंकि यह पर, अपर और परम आश्रय है, और अपनी बृहती (शक्ति) से (सबको) बढ़ाता है, इसलिए परब्रह्म कहलाता है। एक क्यों कहलाता है? जो अजन्मा सब प्राणों का भक्षण करके, (उसी) भक्षण के द्वारा (सबकी) सृष्टि और विसर्जन करता है; कुछ लोग तीर्थों को जाते हैं, कुछ दक्षिण, पश्चिम, उत्तर और पूर्व की ओर जाते हैं — उन सबकी यहीं (इसी में) संगति है; वह एक ही प्रजाओं के साथ (उनमें) होकर विचरता है, इसलिए एक कहलाता है। रुद्र क्यों कहलाता है? क्योंकि ऋषियों द्वारा — अन्य (अभक्तों) द्वारा नहीं — भक्तों द्वारा इसका रूप शीघ्र प्राप्त किया जाता है, इसलिए रुद्र कहलाता है। ईशान क्यों कहलाता है? जो ईशानी और जननी शक्तियों के द्वारा सब देवताओं पर शासन करता है — \"हे शूर! बिना दुही गौओं की भाँति हम तुम्हारी स्तुति करते हैं; हे इन्द्र! (तुम) इस जंगम जगत् के ईशान, स्वर्-द्रष्टा और स्थावर के ईशान हो\" — इसलिए ईशान कहलाता है। भगवान् महेश्वर क्यों कहलाता है? क्योंकि वह भक्तों को ज्ञान से भजता (अपनाता) है, उन पर अनुग्रह करता है, वाणी की सृष्टि और विसर्जन करता है; और (जो) सब भावों को त्यागकर आत्मज्ञान और योग-ऐश्वर्य से अपनी महिमा में महिमान्वित है, इसलिए भगवान् महेश्वर कहलाता है। यह रुद्र का चरित है।",
+      "meaningEn": "Now why is it called Oṃkāra? Because the moment it is uttered it lifts the life-breaths upward; therefore it is called Oṃkāra. Why is it called Praṇava? Because the moment it is uttered it makes the Veda — Ṛk, Yajus, Sāman, Atharvāṅgiras — bow before the brāhmaṇas and bends it (to them); therefore it is called Praṇava. Why is it called the All-pervading? Because the moment it is uttered it pervades all the worlds, as oil pervades a mass of sesame — peaceful in form, woven through and through, entering into and blended with all; therefore it is called the All-pervading. Why is it called the Endless? Because the moment it is uttered no end of it is found, across, above or below; therefore it is called the Endless. Why is it called Tāra? Because the moment it is uttered it carries one across and protects one from the great terror of saṃsāra — conception, birth, disease, old age and death; therefore it is called Tāra. Why is it called the White? Because the moment it is uttered it sounds forth and brings (the seeker) to rest; therefore it is called the White. Why is it called the Subtle? Because the moment it is uttered it becomes subtle, presides over the bodies and touches all the limbs; therefore it is called the Subtle. Why is it called the Lightning-like? Because the moment it is uttered it flashes forth in the manifest, in the great darkness; therefore it is called the Lightning-like. Why is it called the supreme Brahman? Because it is the higher, the lower and the final refuge, and it expands all by its great expanse; therefore it is called the supreme Brahman. Why is it called the One? The Unborn, having devoured all the life-breaths, by that very devouring sends forth and withdraws (all). Some go to sacred fords; some go south, west, north and east — for all of them the meeting is here. He, the One, moves together with creatures, having become them; therefore he is called the One. Why is he called Rudra? Because his form is quickly attained by the seers — by devotees, not by others; therefore he is called Rudra. Why is he called Īśāna? He rules all the gods by his ruling and generating powers: \"O hero, like unmilked cows we sing your praise, O Indra, lord of this moving world, beholder of heaven, lord of what stands still\" — therefore he is called Īśāna. Why is he called the blessed Maheśvara? Because he embraces his devotees through knowledge and favours them, sends forth speech and withdraws it; and, having cast off all states of being, he is magnified in his own greatness by knowledge of the Self and the sovereignty of yoga; therefore he is called the blessed Maheśvara. This is the story of Rudra."
+    },
+    {
+      "id": "atharvashira-5-1",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 37,
+      "reference": "5.1",
+      "labelHi": "मन्त्र · ५.१",
+      "labelEn": "Mantra · 5.1",
+      "lines": [
+        "एष ह देवः प्रदिशोऽनु सर्वाः पूर्वो ह जातः स उ गर्भे अन्तः।",
+        "स एव जातः स जनिष्यमाणः प्रत्यङ्जनास्तिष्ठति सर्वतोमुखः।",
+        "एको रुद्रो न द्वितीयाय तस्थे य इमाँल्लोकानीशत ईशनीभिः।",
+        "प्रत्यङ्जनास्तिष्ठति सञ्चुकोचान्तकाले संसृज्य विश्वा भुवनानि गोप्ता।",
+        "यो योनिं योनिमधितिष्ठत्येको येनेदं सर्वं विचरति सर्वम्।",
+        "तमीशानं वरदं देवमीड्यं निचाय्येमां शान्तिमत्यन्तमेति।",
+        "क्षमां हित्वा हेतुजालस्य मूलं बुद्ध्या सञ्चितं स्थापयित्वा तु रुद्रे रुद्रमेकत्वमाहुः।",
+        "शाश्वतं वै पुराणमिषमूर्जेन पशवोऽनुनामयन्तं मृत्युपाशान्।",
+        "तदेतेनात्मन्नेतेनार्धचतुर्थेन मात्रेण शान्तिं संसृजति पशुपाशविमोक्षणम्।",
+        "या सा प्रथमा मात्रा ब्रह्मदेवत्या रक्ता वर्णेन यस्तां ध्यायते नित्यं स गच्छेद्ब्राह्मं पदम्।",
+        "या सा द्वितीया मात्रा विष्णुदेवत्या कृष्णा वर्णेन यस्तां ध्यायते नित्यं स गच्छेद्वैष्णवं पदम्।",
+        "या सा तृतीया मात्रा ईशानदेवत्या कपिला वर्णेन यस्तां ध्यायते नित्यं स गच्छेदैशानं पदम्।",
+        "या सार्धचतुर्थी मात्रा सर्वदेवत्याऽव्यक्तीभूता खं विचरति शुद्धस्फटिकसन्निभा वर्णेन यस्तां ध्यायते नित्यं स गच्छेत्पदमनामकम्।",
+        "तदेतदुपासीत मुनयो वाग्वदन्ति न तस्य ग्रहणम्।",
+        "अयं पन्था विहित उत्तरेण येन देवा यान्ति येन पितरो येन ऋषयः परमपरं परायणं चेति।",
+        "वालाग्रमात्रं हृदयस्य मध्ये विश्वं देवं जातरूपं वरेण्यम्।",
+        "तमात्मस्थं ये नु पश्यन्ति धीरास्तेषां शान्तिर्भवति नेतरेषाम्।",
+        "यस्मिन्क्रोधं यां च तृष्णां क्षमां चाक्षमां हित्वा हेतुजालस्य मूलम्।",
+        "बुद्ध्या सञ्चितं स्थापयित्वा तु रुद्रे रुद्रमेकत्वमाहुः।",
+        "रुद्रो हि शाश्वतेन वै पुराणेनेषमूर्जेन तपसा नियन्ता।",
+        "अग्निरिति भस्म वायुरिति भस्म जलमिति भस्म स्थलमिति भस्म व्योमेति भस्म देवा भस्म ऋषयो भस्म।",
+        "सर्वं ह वा इदं भस्म पूतं पावनं नमामि यस्माद्व्रतमिदं पाशुपतं यद्भस्मनाङ्गानि संस्पृशेत्।",
+        "तस्माद्ब्रह्म तदेतत्पाशुपतं पशुपाशविमोक्षाय॥"
+      ],
+      "linesEn": [
+        "eṣha ha devaḥ pradiśho'nu sarvāḥ pūrvo ha jātaḥ sa u garbhe antaḥ",
+        "sa eva jātaḥ sa janiṣyamāṇaḥ pratyaṅjanāstiṣṭhati sarvatomukhaḥ",
+        "eko rudro na dvitīyāya tasthe ya imāṁllokānīśhata īśhanībhiḥ",
+        "pratyaṅjanāstiṣṭhati sañchukochāntakāle saṁsṛijya viśvā bhuvanāni goptā",
+        "yo yoniṁ yonimadhitiṣṭhatyeko yenedaṁ sarvaṁ vicharati sarvam",
+        "tamīśhānaṁ varadaṁ devamīḍyaṁ nichāyyemāṁ śhāntimatyantameti",
+        "kṣhamāṁ hitvā hetujālasya mūlaṁ buddhyā sañchitaṁ sthāpayitvā tu rudre rudramekatvamāhuḥ",
+        "śhāśvataṁ vai purāṇamiṣhamūrjena paśhavo'nunāmayantaṁ mṛityupāśhān",
+        "tadetenātmannetenārdhachaturthena mātreṇa śhāntiṁ saṁsṛijati paśhupāśhavimokṣhaṇam",
+        "yā sā prathamā mātrā brahmadevatyā raktā varṇena yastāṁ dhyāyate nityaṁ sa gachchhedbrāhmaṁ padam",
+        "yā sā dvitīyā mātrā viṣṇudevatyā kṛiṣṇā varṇena yastāṁ dhyāyate nityaṁ sa gachchhedvaiṣṇavaṁ padam",
+        "yā sā tṛitīyā mātrā īśhānadevatyā kapilā varṇena yastāṁ dhyāyate nityaṁ sa gachchhedaiśhānaṁ padam",
+        "yā sārdhachaturthī mātrā sarvadevatyā'vyaktībhūtā khaṁ vicharati śhuddhasphaṭikasannibhā varṇena yastāṁ dhyāyate nityaṁ sa gachchhetpadamanāmakam",
+        "tadetadupāsīta munayo vāgvadanti na tasya grahaṇam",
+        "ayaṁ panthā vihita uttareṇa yena devā yānti yena pitaro yena ṛiṣhayaḥ paramaparaṁ parāyaṇaṁ cheti",
+        "vālāgramātraṁ hṛidayasya madhye viśvaṁ devaṁ jātarūpaṁ vareṇyam",
+        "tamātmasthaṁ ye nu paśyanti dhīrāsteṣhāṁ śhāntirbhavati netareṣhām",
+        "yasminkrodhaṁ yāṁ cha tṛiṣṇāṁ kṣhamāṁ chākṣhamāṁ hitvā hetujālasya mūlam",
+        "buddhyā sañchitaṁ sthāpayitvā tu rudre rudramekatvamāhuḥ",
+        "rudro hi śhāśvatena vai purāṇeneṣhamūrjena tapasā niyantā",
+        "agniriti bhasma vāyuriti bhasma jalamiti bhasma sthalamiti bhasma vyometi bhasma devā bhasma ṛiṣhayo bhasma",
+        "sarvaṁ ha vā idaṁ bhasma pūtaṁ pāvanaṁ namāmi yasmādvratamidaṁ pāśhupataṁ yadbhasmanāṅgāni saṁspṛiśhet",
+        "tasmādbrahma tadetatpāśhupataṁ paśhupāśhavimokṣhāya"
+      ],
+      "meaningHi": "यही देव सब दिशाओं-उपदिशाओं में (व्याप्त) है; यही सबसे पहले उत्पन्न हुआ और यही गर्भ के भीतर है; यही उत्पन्न हुआ है और यही उत्पन्न होने वाला है; यह सब ओर मुख वाला प्रत्येक जीव के भीतर स्थित है। रुद्र एक ही है, (वह) दूसरे के लिए नहीं ठहरा (उसके समान दूसरा नहीं), जो अपनी ईशनी शक्तियों से इन लोकों पर शासन करता है। वह प्रत्येक जीव के भीतर स्थित है; सब भुवनों की सृष्टि करके (उनका) रक्षक (वह) अन्तकाल में (उन्हें) समेट लेता है। जो अकेला प्रत्येक योनि में अधिष्ठित है, जिसके द्वारा यह सब (जगत्) विचरता है — उस वरदायक, स्तुत्य देव ईशान को जानकर (मनुष्य) इस परम शान्ति को सदा के लिए प्राप्त होता है। क्षमा (तथा उसके विपरीत भावों) को, (जो) कारण-जाल का मूल है, त्यागकर, बुद्धि से संचित (कर्म) को रुद्र में स्थापित करके (ज्ञानी) रुद्र के साथ एकत्व बतलाते हैं। (वह) शाश्वत, पुराण, अन्न और बल से (युक्त) है; (वही) पशुओं (जीवों) को मृत्यु-पाशों से (मुक्ति की ओर) झुकाता है। वह इस आत्मा में, इस साढ़े-तीन मात्रा (वाले प्रणव) के द्वारा पशु-पाश से छुड़ाने वाली शान्ति उत्पन्न करता है। जो पहली मात्रा है, उसके देवता ब्रह्मा हैं, उसका वर्ण लाल है; जो उसका नित्य ध्यान करता है, वह ब्रह्मपद को जाता है। जो दूसरी मात्रा है, उसके देवता विष्णु हैं, उसका वर्ण काला है; जो उसका नित्य ध्यान करता है, वह वैष्णव पद को जाता है। जो तीसरी मात्रा है, उसके देवता ईशान हैं, उसका वर्ण कपिल (भूरा) है; जो उसका नित्य ध्यान करता है, वह ऐशान पद को जाता है। जो साढ़े-चौथी (अर्ध) मात्रा है, वह सर्वदेवमयी है, अव्यक्त होकर आकाश में विचरती है, उसका वर्ण शुद्ध स्फटिक के समान है; जो उसका नित्य ध्यान करता है, वह नाम-रहित पद को जाता है। इसी की उपासना करे; मुनि कहते हैं कि वाणी से इसका ग्रहण नहीं होता। यह उत्तर (-मार्ग) से विहित पथ है, जिससे देवता जाते हैं, जिससे पितर और जिससे ऋषि (जाते हैं); (यही) पर, अपर और परम आश्रय है। हृदय के मध्य में बाल की नोक के बराबर (स्थित), विश्वरूप, प्रकाशमय, स्वर्ण के समान, वरणीय देव को — उस आत्मस्थ (देव) को जो धीर पुरुष देखते हैं, उन्हीं को शान्ति प्राप्त होती है, दूसरों को नहीं। जिसमें क्रोध, तृष्णा, क्षमा और अक्षमा को — (जो) कारण-जाल का मूल है — त्यागकर, बुद्धि से संचित (कर्म) को रुद्र में स्थापित करके (ज्ञानी) रुद्र के साथ एकत्व बतलाते हैं। रुद्र ही शाश्वत, पुराण, अन्न, बल और तप के द्वारा नियन्ता हैं। अग्नि भस्म है, वायु भस्म है, जल भस्म है, स्थल भस्म है, आकाश भस्म है, देवता भस्म हैं, ऋषि भस्म हैं; यह सब कुछ भस्म ही है — पवित्र और पावन; (उसे) मैं नमस्कार करता हूँ। क्योंकि जो भस्म से अंगों का स्पर्श करे, यही पाशुपत व्रत है; इसलिए यह पाशुपत (व्रत) ब्रह्म है, पशु-पाश से मुक्ति के लिए।",
+      "meaningEn": "This god pervades all the quarters; he was born first, and he is within the womb. He it is who is born, he who will be born; facing every way, he stands within each being. Rudra is one — he did not stand for a second — who rules these worlds with his ruling powers. He stands within each being; having created all the worlds, the Protector draws them in at the time of the end. The One who presides over every womb, through whom all this moves — knowing him, the boon-giving, adorable god Īśāna, one comes to this peace for ever. Casting off forbearance (and its opposites), the root of the net of causes, and placing in Rudra what the intellect has amassed, they speak of oneness with Rudra. He is eternal, ancient, full of food and strength; he bends the bound souls away from the nooses of death. By this — in this Self, by this three-and-a-half-mātrā (praṇava) — he brings forth the peace that frees the bound soul from its bonds. The first mātrā has Brahmā for its deity and is red in colour; whoever meditates on it constantly goes to the state of Brahmā. The second mātrā has Viṣṇu for its deity and is dark in colour; whoever meditates on it constantly goes to the state of Viṣṇu. The third mātrā has Īśāna for its deity and is tawny in colour; whoever meditates on it constantly goes to the state of Īśāna. The half-mātrā beyond the three has all the gods for its deity; become unmanifest, it moves in space, pure as crystal in colour; whoever meditates on it constantly goes to the nameless state. Let one worship this; the sages say it cannot be grasped by speech. This path is ordained by the northern way, by which the gods go, by which the fathers, by which the seers go — the higher, the lower and the final refuge. Of the size of a hair-tip in the midst of the heart, the universal, radiant, golden, most excellent god — the wise who see him dwelling in the Self, theirs is peace, not others’. Casting off anger, craving, forbearance and impatience — the root of the net of causes — and placing in Rudra what the intellect has amassed, they speak of oneness with Rudra. Rudra indeed is the controller, through the eternal, the ancient, through food, strength and austerity. Fire is ash, air is ash, water is ash, earth is ash, space is ash, the gods are ash, the seers are ash; all this indeed is ash — pure and purifying: to it I bow. Since this is the Pāśupata vow — that one should touch the limbs with ash — therefore this Pāśupata is Brahman, for release from the bonds of the bound soul."
+    },
+    {
+      "id": "atharvashira-6-1",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 38,
+      "reference": "6.1",
+      "labelHi": "मन्त्र · ६.१",
+      "labelEn": "Mantra · 6.1",
+      "lines": [
+        "योऽग्नौ रुद्रो योऽप्स्वन्तर्य ओषधीर्वीरुध आविवेश।",
+        "य इमा विश्वा भुवनानि चक्लृपे तस्मै रुद्राय नमोऽस्त्वग्नये।",
+        "यो रुद्रोऽग्नौ यो रुद्रोऽप्स्वन्तर्यो रुद्र ओषधीर्वीरुध आविवेश।",
+        "यो रुद्र इमा विश्वा भुवनानि चक्लृपे तस्मै रुद्राय वै नमो नमः।",
+        "यो रुद्रोऽप्सु यो रुद्र ओषधीषु यो रुद्रो वनस्पतिषु।",
+        "येन रुद्रेण जगदूर्ध्वं धारितं पृथिवी द्विधा त्रिधा धर्ता धारिता नागा येऽन्तरिक्षे तस्मै रुद्राय वै नमो नमः।",
+        "मूर्धानमस्य संसेव्याप्यथर्वा हृदयं च यत्।",
+        "मस्तिष्कादूर्ध्वं प्रेरयत्यवमानोऽधिशीर्षतः।",
+        "तद्वा अथर्वणः शिरो देवकोशः समुज्झितः।",
+        "तत्प्राणोऽभिरक्षति शिरोऽन्नमथो मनः।",
+        "न च दिवो देवजनेन गुप्ता न चान्तरिक्षाणि न च भूम इमाः।",
+        "यस्मिन्निदं सर्वमोतप्रोतं तस्मादन्यन्न परं किञ्चनास्ति।",
+        "न तस्मात्पूर्वं न परं तदस्ति न भूतं नोत भव्यं यदासीत्।",
+        "सहस्रपादेकमूर्ध्ना व्याप्तं स एवेदमावरीवर्ति भूतम्।",
+        "अक्षरात्सञ्जायते कालः कालाद्व्यापक उच्यते।",
+        "व्यापको हि भगवान्रुद्रो भोगायमानो यदा शेते रुद्रस्तदा संहार्यते प्रजाः।",
+        "उच्छ्वसिते तमो भवति तमस आपोऽप्स्वङ्गुल्या मथिते मथितं शिशिरे शिशिरं मथ्यमानं फेनं भवति।",
+        "फेनादण्डं भवत्यण्डाद्ब्रह्मा भवति ब्रह्मणो वायुर्वायोरोङ्कार ओङ्कारात्सावित्री सावित्र्या गायत्री गायत्र्या लोका भवन्ति।",
+        "अर्चयन्ति तपः सत्यं मधु क्षरन्ति यद्ध्रुवम्।",
+        "एतद्धि परमं तपः आपो ज्योती रसोऽमृतं ब्रह्म भूर्भुवः स्वरों नम इति॥"
+      ],
+      "linesEn": [
+        "yo'gnau rudro yo'psvantarya oṣhadhīrvīrudha āviveśha",
+        "ya imā viśvā bhuvanāni chaklṛipe tasmai rudrāya namo'stvagnaye",
+        "yo rudro'gnau yo rudro'psvantaryo rudra oṣhadhīrvīrudha āviveśha",
+        "yo rudra imā viśvā bhuvanāni chaklṛipe tasmai rudrāya vai namo namaḥ",
+        "yo rudro'psu yo rudra oṣhadhīṣhu yo rudro vanaspatiṣhu",
+        "yena rudreṇa jagadūrdhvaṁ dhāritaṁ pṛithivī dvidhā tridhā dhartā dhāritā nāgā ye'ntarikṣhe tasmai rudrāya vai namo namaḥ",
+        "mūrdhānamasya saṁsevyāpyatharvā hṛidayaṁ cha yat",
+        "mastiṣkādūrdhvaṁ prerayatyavamāno'dhiśhīrṣhataḥ",
+        "tadvā atharvaṇaḥ śhiro devakośhaḥ samujjhitaḥ",
+        "tatprāṇo'bhirakṣhati śhiro'nnamatho manaḥ",
+        "na cha divo devajanena guptā na chāntarikṣhāṇi na cha bhūma imāḥ",
+        "yasminnidaṁ sarvamotaprotaṁ tasmādanyanna paraṁ kiñchanāsti",
+        "na tasmātpūrvaṁ na paraṁ tadasti na bhūtaṁ nota bhavyaṁ yadāsīt",
+        "sahasrapādekamūrdhnā vyāptaṁ sa evedamāvarīvarti bhūtam",
+        "akṣharātsañjāyate kālaḥ kālādvyāpaka uchyate",
+        "vyāpako hi bhagavānrudro bhogāyamāno yadā śhete rudrastadā saṁhāryate prajāḥ",
+        "uchchhvasite tamo bhavati tamasa āpo'psvaṅgulyā mathite mathitaṁ śhiśhire śhiśhiraṁ mathyamānaṁ phenaṁ bhavati",
+        "phenādaṇḍaṁ bhavatyaṇḍādbrahmā bhavati brahmaṇo vāyurvāyoroṅkāra oṅkārātsāvitrī sāvitryā gāyatrī gāyatryā lokā bhavanti",
+        "archayanti tapaḥ satyaṁ madhu kṣharanti yaddhruvam",
+        "etaddhi paramaṁ tapaḥ āpo jyotī raso'mṛitaṁ brahma bhūrbhuvaḥ svaroṁ nama iti"
+      ],
+      "meaningHi": "जो रुद्र अग्नि में हैं, जो जलों के भीतर हैं, जो ओषधियों और लताओं में प्रविष्ट हैं, जिन्होंने इन सब भुवनों की रचना की — उन अग्निरूप रुद्र को नमस्कार हो। जो रुद्र अग्नि में हैं, जो रुद्र जलों के भीतर हैं, जो रुद्र ओषधियों और लताओं में प्रविष्ट हैं, जिन रुद्र ने इन सब भुवनों की रचना की — उन रुद्र को बार-बार नमस्कार है। जो रुद्र जलों में हैं, जो रुद्र ओषधियों में हैं, जो रुद्र वनस्पतियों में हैं; जिन रुद्र ने जगत् को ऊपर धारण किया है, (जिनसे) पृथ्वी दो प्रकार से, तीन प्रकार से धारित है, (जो) धारण करने वाले हैं, (जिनसे) अन्तरिक्ष में (स्थित) नाग धारित हैं — उन रुद्र को बार-बार नमस्कार है। अथर्वा (ऋषि) ने इसके मूर्धा और जो हृदय है (उन्हें) एक साथ सी कर, मस्तिष्क से ऊपर, सिर के ऊपर (प्राण को) प्रेरित किया। वही अथर्वा का सिर है — देवताओं का भलीभाँति बन्द किया हुआ कोश। उस सिर की रक्षा प्राण, अन्न और मन करते हैं। न द्युलोक, न अन्तरिक्ष, न ये भूमियाँ ही देवजनों से (उस प्रकार) सुरक्षित हैं; जिसमें यह सब ओत-प्रोत है, उससे परे और कुछ भी नहीं है। उससे पहले कुछ नहीं, उसके पश्चात् कुछ नहीं, न भूत, न भविष्य — जो था (वह वही है)। सहस्र पैरों वाला, एक सिर से (सबमें) व्याप्त — वही इस भूत (जगत्) के रूप में बार-बार प्रवृत्त होता है। अक्षर से काल उत्पन्न होता है; काल (के कारण) वह व्यापक कहलाता है। भगवान् रुद्र ही व्यापक हैं। जब रुद्र भोग (में लीन) की तरह शयन करते हैं, तब प्रजा का संहार होता है। (उनके) श्वास छोड़ने पर तम होता है, तम से जल; जल में अंगुली से मथने पर, वह मथा हुआ (जल) शिशिर (ठण्डा) हो जाता है; वह शिशिर (जल) मथे जाने पर फेन बनता है; फेन से अण्ड होता है, अण्ड से ब्रह्मा होते हैं, ब्रह्मा से वायु, वायु से ओंकार, ओंकार से सावित्री, सावित्री से गायत्री और गायत्री से लोक उत्पन्न होते हैं। (साधक) तप और सत्य की अर्चना करते हैं; (वे) जो ध्रुव (अविनाशी) मधु है, उसे बहाते हैं। यही परम तप है — जल, ज्योति, रस, अमृत, ब्रह्म, भूः, भुवः, स्वः, ॐ — (उसे) नमस्कार है।",
+      "meaningEn": "To Rudra who is in the fire, who is within the waters, who has entered the herbs and the plants, who fashioned all these worlds — to that Rudra, to Agni, be salutation. The Rudra who is in the fire, the Rudra within the waters, the Rudra who has entered the herbs and plants, the Rudra who fashioned all these worlds — to that Rudra, salutations again and again. The Rudra in the waters, the Rudra in the herbs, the Rudra in the trees; the Rudra by whom the world is upheld on high, by whom the earth is held in two ways and three, the Upholder, by whom are held the serpents in the mid-space — to that Rudra, salutations again and again. Atharvan, having sewn together its head and what is the heart, drives (the breath) upward from the brain, above the head. That indeed is the head of Atharvan, the well-closed treasury of the gods. Breath guards that head, and food, and mind. Neither the heavens, nor the mid-regions, nor these earths are so guarded by the host of gods; he in whom all this is woven through and through — beyond him there is nothing whatever. Before him there is nothing, after him there is nothing; neither what has been nor what will be — what was is he. Thousand-footed, pervading all with a single head, he alone unfolds again and again as this world. From the Imperishable is born Time; because of Time he is called the Pervader. The blessed Rudra indeed is the Pervader. When Rudra lies at rest as if in enjoyment, then creatures are withdrawn. When he breathes out, darkness arises; from darkness the waters; the waters, churned with a finger, become cool; the cool, being churned, becomes foam; from the foam arises the egg, from the egg Brahmā, from Brahmā the wind, from the wind Oṃkāra, from Oṃkāra the Sāvitrī, from the Sāvitrī the Gāyatrī, from the Gāyatrī the worlds come to be. They worship austerity and truth; they let flow the honey that is abiding. This indeed is the supreme austerity — waters, light, essence, the Immortal, Brahman, Bhūḥ, Bhuvaḥ, Svaḥ, Om: salutation."
+    },
+    {
+      "id": "atharvashira-7-1",
+      "upanishad": 22,
+      "section": "mantra",
+      "stanza": 22,
+      "numInSection": 39,
+      "reference": "7.1",
+      "labelHi": "मन्त्र · ७.१",
+      "labelEn": "Mantra · 7.1",
+      "lines": [
+        "य इदमथर्वशिरो ब्राह्मणोऽधीते अश्रोत्रियः श्रोत्रियो भवति अनुपनीत उपनीतो भवति।",
+        "सोऽग्निपूतो भवति स वायुपूतो भवति स सूर्यपूतो भवति स सोमपूतो भवति स सत्यपूतो भवति स सर्वपूतो भवति।",
+        "स सर्वैर्देवैर्ज्ञातो भवति स सर्वैर्वेदैरनुध्यातो भवति स सर्वेषु तीर्थेषु स्नातो भवति तेन सर्वैः क्रतुभिरिष्टं भवति।",
+        "गायत्र्याः षष्टिसहस्राणि जप्तानि भवन्ति इतिहासपुराणानां रुद्राणां शतसहस्राणि जप्तानि भवन्ति प्रणवानामयुतं जप्तं भवति।",
+        "स चक्षुषः पङ्क्तिं पुनाति आ सप्तमात्पुरुषयुगान्पुनातीत्याह भगवानथर्वशिरः।",
+        "सकृज्जप्त्वैव शुचिः स पूतः कर्मण्यो भवति द्वितीयं जप्त्वा गणाधिपत्यमवाप्नोति तृतीयं जप्त्वैवमेवानुप्रविशति।",
+        "ॐ सत्यमों सत्यमों सत्यम्॥"
+      ],
+      "linesEn": [
+        "ya idamatharvaśhiro brāhmaṇo'dhīte aśrotriyaḥ śrotriyo bhavati anupanīta upanīto bhavati",
+        "so'gnipūto bhavati sa vāyupūto bhavati sa sūryapūto bhavati sa somapūto bhavati sa satyapūto bhavati sa sarvapūto bhavati",
+        "sa sarvairdevairjñāto bhavati sa sarvairvedairanudhyāto bhavati sa sarveṣhu tīrtheṣhu snāto bhavati tena sarvaiḥ kratubhiriṣṭaṁ bhavati",
+        "gāyatryāḥ ṣhaṣṭisahasrāṇi japtāni bhavanti itihāsapurāṇānāṁ rudrāṇāṁ śhatasahasrāṇi japtāni bhavanti praṇavānāmayutaṁ japtaṁ bhavati",
+        "sa chakṣhuṣhaḥ paṅktiṁ punāti ā saptamātpuruṣhayugānpunātītyāha bhagavānatharvaśhiraḥ",
+        "sakṛijjaptvaiva śhuchiḥ sa pūtaḥ karmaṇyo bhavati dvitīyaṁ japtvā gaṇādhipatyamavāpnoti tṛitīyaṁ japtvaivamevānupraviśhati",
+        "om satyamoṁ satyamoṁ satyam"
+      ],
+      "meaningHi": "जो ब्राह्मण इस अथर्वशिर का अध्ययन करता है, वह अश्रोत्रिय (वेद न पढ़ा हुआ) हो तो श्रोत्रिय हो जाता है, अनुपनीत हो तो उपनीत हो जाता है। वह अग्नि से पवित्र, वायु से पवित्र, सूर्य से पवित्र, सोम से पवित्र, सत्य से पवित्र और सबसे पवित्र हो जाता है। वह सब देवताओं का जाना हुआ होता है, सब वेदों द्वारा उसका अनुध्यान होता है; वह सब तीर्थों में स्नान किया हुआ होता है; उसने सब यज्ञों से यजन कर लिया होता है। (उसके द्वारा) गायत्री के साठ हजार जप, इतिहास-पुराणों और रुद्र (-मन्त्रों) के एक लाख जप तथा प्रणव के दस हजार जप हो जाते हैं। वह दृष्टि-पंक्ति (जहाँ तक दृष्टि जाए, वहाँ तक बैठे लोगों) को पवित्र कर देता है; सातवीं पीढ़ी तक पुरुषों को पवित्र कर देता है — ऐसा भगवान् अथर्वशिर ने कहा। एक बार जप करके ही वह शुद्ध, पवित्र और कर्म के योग्य हो जाता है; दूसरी बार जप करके गणों का आधिपत्य पाता है; तीसरी बार जप करके इसी प्रकार (उसी परमतत्त्व में) प्रवेश कर जाता है। ॐ सत्य है, ॐ सत्य है, ॐ सत्य है।",
+      "meaningEn": "The brāhmaṇa who studies this Atharvaśiras, if unlearned in the Veda, becomes learned; if uninitiated, becomes initiated. He is purified by fire, purified by wind, purified by the sun, purified by the moon, purified by truth, purified by all. He becomes known to all the gods, meditated upon by all the Vedas; he has bathed in all the sacred fords; he has sacrificed with all the sacrifices. Sixty thousand repetitions of the Gāyatrī are accomplished by him, a hundred thousand of the Itihāsa-Purāṇas and the Rudra hymns, ten thousand of the praṇava. He purifies the row (of diners) as far as the eye can see; he purifies the generations up to the seventh — so said the blessed Atharvaśiras. By repeating it once he becomes clean, purified and fit for rites; repeating it a second time he attains lordship over the gaṇas; repeating it a third time he enters into That in just this way. Om, it is truth; Om, it is truth; Om, it is truth."
+    }
+  ]
+}

@@ -198,5 +198,55 @@
     "vedaEn": "Krishna Yajurveda",
     "mantraCount": 22,
     "verseCount": 23
+  },
+  {
+    "chapter": 21,
+    "slug": "amritanada",
+    "titleHi": "अमृतनाद उपनिषद्",
+    "titleEn": "Amritanada Upanishad",
+    "vedaHi": "कृष्ण यजुर्वेद",
+    "vedaEn": "Krishna Yajurveda",
+    "mantraCount": 38,
+    "verseCount": 39
+  },
+  {
+    "chapter": 22,
+    "slug": "atharvashira",
+    "titleHi": "अथर्वशिर उपनिषद्",
+    "titleEn": "Atharvashira Upanishad",
+    "vedaHi": "अथर्ववेद",
+    "vedaEn": "Atharvaveda",
+    "mantraCount": 38,
+    "verseCount": 39
+  },
+  {
+    "chapter": 23,
+    "slug": "atharvashikha",
+    "titleHi": "अथर्वशिखा उपनिषद्",
+    "titleEn": "Atharvashikha Upanishad",
+    "vedaHi": "अथर्ववेद",
+    "vedaEn": "Atharvaveda",
+    "mantraCount": 3,
+    "verseCount": 4
+  },
+  {
+    "chapter": 24,
+    "slug": "maitrayani",
+    "titleHi": "मैत्रायणी उपनिषद्",
+    "titleEn": "Maitrayani Upanishad",
+    "vedaHi": "सामवेद",
+    "vedaEn": "Samaveda",
+    "mantraCount": 73,
+    "verseCount": 74
+  },
+  {
+    "chapter": 25,
+    "slug": "kaushitaki",
+    "titleHi": "कौषीतकि उपनिषद्",
+    "titleEn": "Kaushitaki Upanishad",
+    "vedaHi": "ऋग्वेद",
+    "vedaEn": "Rigveda",
+    "mantraCount": 51,
+    "verseCount": 52
   }
 ]

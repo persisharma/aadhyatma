@@ -724,8 +724,8 @@ for (const v of aartiKunjBihari.verses) {
   const entry = libraryById.get('upanishad');
   assert.ok(entry, 'upanishad must exist in the library');
   assert.equal(entry.category, 'granth');
-  assert.match(entry.sub, /^20 उपनिषद् · 1663 मन्त्र/, 'Hindi sub counts readable texts and mantras, not pages');
-  assert.match(entry.subEn || '', /^20 of 108 Upanishads · 1663 mantras/, 'English sub counts readable texts and mantras, not pages');
+  assert.match(entry.sub, /^25 उपनिषद् · 1866 मन्त्र/, 'Hindi sub counts readable texts and mantras, not pages');
+  assert.match(entry.subEn || '', /^25 of 108 Upanishads · 1866 mantras/, 'English sub counts readable texts and mantras, not pages');
   assert.equal(entry.addedInVersion, '1.4.8', 'upanishad must set addedInVersion so it debuts as NEW for upgraders');
 
   const registry = readTs('upanishad/registry.ts');
@@ -778,6 +778,11 @@ for (const v of aartiKunjBihari.verses) {
       [18, 'Narayana Upanishad', 5],
       [19, 'Paramahamsa Upanishad', 4],
       [20, 'Amritabindu Upanishad', 22],
+      [21, 'Amritanada Upanishad', 38],
+      [22, 'Atharvashira Upanishad', 38],
+      [23, 'Atharvashikha Upanishad', 3],
+      [24, 'Maitrayani Upanishad', 73],
+      [25, 'Kaushitaki Upanishad', 51],
     ],
     'the readable Upanishads by Muktikā number with their traditional mantra counts'
   );
@@ -835,6 +840,11 @@ for (const v of aartiKunjBihari.verses) {
   assert.deepEqual(sectionCounts('aruni'), [1, 1, 1, 1, 1]);
   assert.deepEqual(sectionCounts('paramahamsa'), [1, 1, 1, 1]);
   assert.equal(readJson('upanishad/texts/amritabindu.json').verses[22].reference, '22');
+  assert.equal(readJson('upanishad/texts/amritanada.json').verses[38].reference, '38');
+  assert.deepEqual(sectionCounts('atharvashira'), [1, 32, 1, 1, 1, 1, 1]);
+  assert.equal(readJson('upanishad/texts/atharvashikha.json').verses[3].reference, '3');
+  assert.deepEqual(sectionCounts('maitrayani'), [4, 7, 5, 6, 2, 38, 11]);
+  assert.deepEqual(sectionCounts('kaushitaki'), [7, 15, 9, 20]);
   assert.deepEqual(topCounts('chandogya'), [104, 82, 95, 78, 88, 69, 51, 62]);
   assert.equal(sectionCounts('chandogya').length, 154, 'Chāndogya has 154 khaṇḍas');
   assert.deepEqual(topCounts('brihadaranyaka'), [80, 66, 92, 92, 30, 75]);

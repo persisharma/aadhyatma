@@ -19,6 +19,9 @@ authored.
    meaningHi, meaningEn })`. Full text, every mantra, Hindi + English meaning.
    The network policy blocks the Sanskrit source hosts, so record in `source.notes`
    that a line-by-line scan check is owed.
+   If a helper agent reports it could not recall a passage and wrote a "stand-in" or
+   "reconstruction", never ship it as text: recover the genuine passage or leave the
+   whole text for later — and name the least-certain passages in `source.notes`.
 3. Build from repo root: `npx --prefix mobile tsx scripts/build-upanishad.mjs`.
 4. Gates (in `mobile/`): `npx tsc --noEmit`, `npm run lint` (0 errors),
    `npm run test:data` (only the pre-existing `launchGraph` byte-budget failure is
@@ -45,5 +48,5 @@ authored.
 
 ## Progress
 
-Shipped (20/108): 1–20. Next batch: 21 Amritanada, 22 Atharvashira,
-23 Atharvashikha, 24 Maitrayani, 25 Kaushitaki.
+Shipped (25/108): 1–25. Next batch: 26 Brihajjabala, 27 Nrisimhatapani,
+28 Kalagnirudra, 29 Maitreyi, 30 Subala.
