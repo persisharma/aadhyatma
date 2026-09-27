@@ -724,8 +724,8 @@ for (const v of aartiKunjBihari.verses) {
   const entry = libraryById.get('upanishad');
   assert.ok(entry, 'upanishad must exist in the library');
   assert.equal(entry.category, 'granth');
-  assert.match(entry.sub, /^25 उपनिषद् · 1866 मन्त्र/, 'Hindi sub counts readable texts and mantras, not pages');
-  assert.match(entry.subEn || '', /^25 of 108 Upanishads · 1866 mantras/, 'English sub counts readable texts and mantras, not pages');
+  assert.match(entry.sub, /^30 उपनिषद् · 1961 मन्त्र/, 'Hindi sub counts readable texts and mantras, not pages');
+  assert.match(entry.subEn || '', /^30 of 108 Upanishads · 1961 mantras/, 'English sub counts readable texts and mantras, not pages');
   assert.equal(entry.addedInVersion, '1.4.8', 'upanishad must set addedInVersion so it debuts as NEW for upgraders');
 
   const registry = readTs('upanishad/registry.ts');
@@ -783,6 +783,11 @@ for (const v of aartiKunjBihari.verses) {
       [23, 'Atharvashikha Upanishad', 3],
       [24, 'Maitrayani Upanishad', 73],
       [25, 'Kaushitaki Upanishad', 51],
+      [28, 'Kalagnirudra Upanishad', 9],
+      [31, 'Kshurika Upanishad', 25],
+      [32, 'Mantrika Upanishad', 20],
+      [34, 'Niralamba Upanishad', 32],
+      [36, 'Vajrasuchi Upanishad', 9],
     ],
     'the readable Upanishads by Muktikā number with their traditional mantra counts'
   );
@@ -845,6 +850,11 @@ for (const v of aartiKunjBihari.verses) {
   assert.equal(readJson('upanishad/texts/atharvashikha.json').verses[3].reference, '3');
   assert.deepEqual(sectionCounts('maitrayani'), [4, 7, 5, 6, 2, 38, 11]);
   assert.deepEqual(sectionCounts('kaushitaki'), [7, 15, 9, 20]);
+  assert.equal(readJson('upanishad/texts/kalagnirudra.json').verses[9].reference, '9');
+  assert.equal(readJson('upanishad/texts/kshurika.json').verses[25].reference, '25');
+  assert.equal(readJson('upanishad/texts/mantrika.json').verses[20].reference, '20');
+  assert.equal(readJson('upanishad/texts/niralamba.json').verses[32].reference, '32');
+  assert.equal(readJson('upanishad/texts/vajrasuchi.json').verses[9].reference, '9');
   assert.deepEqual(topCounts('chandogya'), [104, 82, 95, 78, 88, 69, 51, 62]);
   assert.equal(sectionCounts('chandogya').length, 154, 'Chāndogya has 154 khaṇḍas');
   assert.deepEqual(topCounts('brihadaranyaka'), [80, 66, 92, 92, 30, 75]);

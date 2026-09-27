@@ -115,10 +115,16 @@ test('the reader steps between READABLE Upanishads, skipping unshipped Muktikā 
   assert.equal(nextUpanishadChapter(3)?.chapter, 4, 'Kaṭha (3) now advances to Praśna (4)');
   assert.equal(nextUpanishadChapter(15)?.chapter, 16, 'Haṃsa (15) advances to Āruṇi (16)');
   assert.equal(nextUpanishadChapter(20)?.chapter, 21, 'Amṛtabindu (20) advances to Amṛtanāda (21)');
-  assert.equal(nextUpanishadChapter(25), null, 'Kauṣītaki (25) is the last readable text: 26+ are not shipped');
+  assert.equal(nextUpanishadChapter(25)?.chapter, 28, 'Kauṣītaki (25) skips unshipped 26–27 to Kālāgnirudra (28)');
+  assert.equal(prevUpanishadChapter(28)?.chapter, 25, 'Kālāgnirudra (28) steps back over 26–27 to Kauṣītaki (25)');
+  assert.equal(nextUpanishadChapter(32)?.chapter, 34, 'Māntrika (32) skips unshipped 33 to Nirālamba (34)');
+  assert.equal(nextUpanishadChapter(36), null, 'Vajrasūcī (36) is the last readable text: 37+ are not shipped');
   assert.equal(prevUpanishadChapter(1), null);
   assert.equal(isUpanishadAvailable(13), true);
   assert.equal(isUpanishadAvailable(20), true);
   assert.equal(isUpanishadAvailable(25), true);
   assert.equal(isUpanishadAvailable(26), false);
+  assert.equal(isUpanishadAvailable(28), true);
+  assert.equal(isUpanishadAvailable(33), false);
+  assert.equal(isUpanishadAvailable(36), true);
 });

@@ -89,7 +89,7 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
 - assertVisible: "Upanishad 26\\. Brihajjabala Upanishad\\. Atharvaveda\\. Coming soon\\."
 
-# Group filter narrows the catalogue: in the Yoga group the Hamsa, Amritabindu and Amritanada are readable so far.
+# Group filter narrows the catalogue: in the Yoga group the Hamsa, Amritabindu, Amritanada and Kshurika are readable so far.
 - scrollUntilVisible:
     element:
       text: "Group: Yoga"
@@ -99,7 +99,8 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Upanishad 15\\. Hamsa Upanishad\\. 11 mantras\\. Tap to open\\."
 - assertVisible: "Upanishad 20\\. Amritabindu Upanishad\\. 22 mantras\\. Tap to open\\."
 - assertVisible: "Upanishad 21\\. Amritanada Upanishad\\. 38 mantras\\. Tap to open\\."
-- assertVisible: "Upanishad 31\\. Kshurika Upanishad\\. Krishna Yajurveda\\. Coming soon\\."
+- assertVisible: "Upanishad 31\\. Kshurika Upanishad\\. 25 mantras\\. Tap to open\\."
+- assertVisible: "Upanishad 37\\. Tejobindu Upanishad\\. Krishna Yajurveda\\. Coming soon\\."
 - assertNotVisible: "Upanishad 1\\. Isha Upanishad\\. 18 mantras\\. Tap to open\\."
 - tapOn: "Group: Principal"
 - waitForAnimationToEnd

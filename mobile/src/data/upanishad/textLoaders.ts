@@ -28,4 +28,9 @@ export const upanishadTextLoaders: Readonly<Record<string, () => UpanishadChapte
   atharvashikha: () => require('./texts/atharvashikha.json') as UpanishadChapter,
   maitrayani: () => require('./texts/maitrayani.json') as UpanishadChapter,
   kaushitaki: () => require('./texts/kaushitaki.json') as UpanishadChapter,
+  kalagnirudra: () => require('./texts/kalagnirudra.json') as UpanishadChapter,
+  kshurika: () => require('./texts/kshurika.json') as UpanishadChapter,
+  mantrika: () => require('./texts/mantrika.json') as UpanishadChapter,
+  niralamba: () => require('./texts/niralamba.json') as UpanishadChapter,
+  vajrasuchi: () => require('./texts/vajrasuchi.json') as UpanishadChapter,
 };

@@ -249,13 +249,13 @@ const index = getSearchIndex();
   assert.equal(section.sections[0]?.entry.sourceId, 'valmiki-ramayan');
 }
 
-// Upanishads: every readable text is indexed in full (1891 pages), each verse carries
+// Upanishads: every readable text is indexed in full (1991 pages), each verse carries
 // its Muktikā number as `chapter`, and the Īśa's first mantra is reachable from both
 // scripts.
 {
   const upanishadVerses = index.verses.filter((v) => v.sourceId === 'upanishad');
-  assert.equal(upanishadVerses.length, 1891, 'expected every readable Upanishad page in the index');
-  const readable = new Set(Array.from({ length: 25 }, (_, i) => i + 1));
+  assert.equal(upanishadVerses.length, 1991, 'expected every readable Upanishad page in the index');
+  const readable = new Set([...Array.from({ length: 25 }, (_, i) => i + 1), 28, 31, 32, 34, 36]);
   for (const v of upanishadVerses) {
     assert.ok(v.chapter != null && readable.has(v.chapter), 'upanishad verse must carry its Muktikā number as chapter');
   }

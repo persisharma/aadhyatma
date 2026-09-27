@@ -22,6 +22,9 @@ authored.
    If a helper agent reports it could not recall a passage and wrote a "stand-in" or
    "reconstruction", never ship it as text: recover the genuine passage or leave the
    whole text for later — and name the least-certain passages in `source.notes`.
+   A held-back text is skipped (not blocking): take the next unshipped id so the batch
+   still ships five, and list the held id under "Held" below. Partial drafts go in
+   `drafts/` (the build ignores subfolders) — never ship one until its gaps are filled.
 3. Build from repo root: `npx --prefix mobile tsx scripts/build-upanishad.mjs`.
 4. Gates (in `mobile/`): `npx tsc --noEmit`, `npm run lint` (0 errors),
    `npm run test:data` (only the pre-existing `launchGraph` byte-budget failure is
@@ -48,5 +51,13 @@ authored.
 
 ## Progress
 
-Shipped (25/108): 1–25. Next batch: 26 Brihajjabala, 27 Nrisimhatapani,
-28 Kalagnirudra, 29 Maitreyi, 30 Subala.
+Shipped (30/108): 1–25, 28, 31, 32, 34, 36. Next batch: the next five unshipped
+ids after 36 — 37 Tejobindu, 38 Nadabindu, 39 Dhyanabindu, 40 Brahmavidya,
+41 Yogatattva (skip any that cannot be recalled in full; take the next id).
+
+Held (full printed wording not recallable offline; the source hosts are blocked —
+ship only once a printed text is supplied in the repo or network access allows it):
+26 Brihajjabala (brāhmaṇas 2–8), 27 Nrisimhatapani (most of both parts),
+29 Maitreyi (draft in `drafts/maitreyi.mjs`: one adhyāya-2 mādhūkara verse missing,
+1.2–1.3 prose uncertain), 30 Subala (khaṇḍas 4, 9–11, 16), 33 Sarvasara
+(¶11–12 and closing ślokas), 35 Shukarahasya (nyāsa sections, verse sets, close).

@@ -248,5 +248,55 @@
     "vedaEn": "Rigveda",
     "mantraCount": 51,
     "verseCount": 52
+  },
+  {
+    "chapter": 28,
+    "slug": "kalagnirudra",
+    "titleHi": "कालाग्निरुद्र उपनिषद्",
+    "titleEn": "Kalagnirudra Upanishad",
+    "vedaHi": "कृष्ण यजुर्वेद",
+    "vedaEn": "Krishna Yajurveda",
+    "mantraCount": 9,
+    "verseCount": 10
+  },
+  {
+    "chapter": 31,
+    "slug": "kshurika",
+    "titleHi": "क्षुरिका उपनिषद्",
+    "titleEn": "Kshurika Upanishad",
+    "vedaHi": "कृष्ण यजुर्वेद",
+    "vedaEn": "Krishna Yajurveda",
+    "mantraCount": 25,
+    "verseCount": 26
+  },
+  {
+    "chapter": 32,
+    "slug": "mantrika",
+    "titleHi": "मान्त्रिक उपनिषद्",
+    "titleEn": "Mantrika Upanishad",
+    "vedaHi": "शुक्ल यजुर्वेद",
+    "vedaEn": "Shukla Yajurveda",
+    "mantraCount": 20,
+    "verseCount": 21
+  },
+  {
+    "chapter": 34,
+    "slug": "niralamba",
+    "titleHi": "निरालम्ब उपनिषद्",
+    "titleEn": "Niralamba Upanishad",
+    "vedaHi": "शुक्ल यजुर्वेद",
+    "vedaEn": "Shukla Yajurveda",
+    "mantraCount": 32,
+    "verseCount": 33
+  },
+  {
+    "chapter": 36,
+    "slug": "vajrasuchi",
+    "titleHi": "वज्रसूची उपनिषद्",
+    "titleEn": "Vajrasuchi Upanishad",
+    "vedaHi": "सामवेद",
+    "vedaEn": "Samaveda",
+    "mantraCount": 9,
+    "verseCount": 10
   }
 ]
