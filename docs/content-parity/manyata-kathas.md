@@ -194,3 +194,73 @@ Research manifest of popular Hindu *manyatas* (beliefs/niyams) with the katha be
 - Vidura's banana peels
 - Kubera's feast eaten up by Ganesha
 - Origins of Lakshmi's owl and Ganesha's mouse as vahans
+
+## 8. धर्म क्या है — Stories that teach dharma itself
+
+These are not moral fables; most are **dharma-sankat** — cases where two duties collide and the text shows how dharma is *sukshma* (subtle). Grouped by the principle each one tests.
+
+### सत्य — Truth is subtle
+
+| Story | What it teaches about dharma | Source |
+|---|---|---|
+| Kaushika the truth-teller | Told robbers where fleeing travellers hid, and fell to hell — truth that serves harm is not dharma | [Certain] Karna Parva (Krishna to Arjuna) |
+| Balaka the hunter | Killed a blind beast about to destroy all life, and rose to heaven — intent and outcome matter, not the act alone | [Certain] Karna Parva |
+| "Ashwatthama hatah" | Yudhishthira's half-truth cost him a glimpse of hell — even a technically-true lie is a lie | [Certain] Drona / Swargarohana Parva |
+| Arjuna's vow vs. Yudhishthira | Sworn to kill whoever insulted the Gandiva; Krishna: an insult is death to an elder — a vow is subordinate to dharma | [Certain] Karna Parva |
+| Harishchandra | Truth kept even at the cremation ground | [Certain] Markandeya Purana |
+
+### स्वधर्म — Your own duty, done with integrity
+
+| Story | Teaching | Source |
+|---|---|---|
+| Dharmavyadha (Vana Parva) | Kaushika burned a crane with his anger; a pativrata sent him to a butcher in Mithila who taught him dharma — integrity in one's own work outranks status | [Certain] Vana Parva |
+| Tuladhara and Jajali | A merchant with honest scales teaches an ascetic whose pride grew with his tapas | [Certain] Shanti Parva |
+| Gita — Arjuna's vishad | Better one's own dharma imperfectly than another's perfectly; act without clinging to the fruit | [Certain] Bhishma Parva |
+| Bharata's paduka | Refused a throne gained unrighteously and ruled only as Rama's steward | [Certain] Ayodhya Kanda |
+| Sulabha and Janaka | A woman ascetic tests a king's claim of detachment | [Certain] Shanti Parva |
+
+### करुणा और अहिंसा — Compassion
+
+| Story | Teaching | Source |
+|---|---|---|
+| Rantideva | After a 48-day fast, gave his last food and water to a chandala and his dogs | [Certain] Bhagavata 9 |
+| Yudhishthira's dog | Refused heaven without the loyal dog; the dog was Dharma himself | [Certain] Mahaprasthanika Parva |
+| Mandavya and Yama | Impaled for torturing insects as a child; cursed Yama (born as Vidura) and fixed an age of moral accountability | [Certain] Adi Parva |
+| Jatayu | An old bird gave his life defending a woman; Rama performed his last rites like a father's | [Certain] Aranya Kanda |
+
+### क्षमा — Forgiveness
+
+| Story | Teaching | Source |
+|---|---|---|
+| Draupadi spares Ashwatthama | He killed her sons; she said "let his mother not grieve as I do" | [Certain] Sauptika Parva |
+| Shamika and Parikshit | The king insulted the sage; the sage forgave, his son cursed — anger vs. restraint | [Certain] Adi Parva / Bhagavata |
+| Krishna accepts Gandhari's curse | Accepting consequences without retort | [Certain] Stri Parva |
+
+### शरणागत और राजधर्म — Refuge and the duty of rulers
+
+| Story | Teaching | Source |
+|---|---|---|
+| Vibhishana's refuge | Rama: "Even if Ravana himself comes seeking refuge, I will protect him" | [Certain] Yuddha Kanda |
+| Shibi and the pigeon | Protecting the refugee even at the cost of one's own flesh | [Certain] Vana Parva |
+| Bhishma on the bed of arrows | Rajadharma, apad-dharma and moksha-dharma taught to Yudhishthira | [Certain] Shanti / Anushasana Parva |
+| Nahusha the python | A king fell from Indra's throne through pride; Yudhishthira's answers freed him | [Certain] Vana Parva |
+
+### आपद्धर्म — Dharma in crisis
+
+| Story | Teaching | Source |
+|---|---|---|
+| Vishvamitra and the dog meat | In famine the sage stole dog meat to survive, arguing that life preserves the capacity for dharma | [Certain] Shanti Parva |
+| Mudgala rejects heaven | Heaven's merit runs out; he chose moksha instead | [Certain] Vana Parva |
+
+### धर्म-संकट — When duties collide
+
+| Story | The conflict | Source |
+|---|---|---|
+| Draupadi's question in the sabha | "Did he lose himself before staking me?" — elders stayed silent; only Vikarna spoke. Silence before adharma is complicity | [Certain] Sabha Parva |
+| Bhishma's vow | A vow kept rigidly let adharma stand | [Certain] Adi / Sabha Parva |
+| Karna and Kunti | Loyalty to Duryodhana vs. blood; he promised to spare four brothers | [Certain] Udyoga Parva |
+| Dasharatha's boons to Kaikeyi | The cost of a promise given carelessly | [Certain] Ayodhya Kanda |
+| Rama kills Vali from hiding | Vali challenges him; Rama's defence — the text leaves room for debate | [Certain] Kishkindha Kanda |
+| Sita refuses Hanuman's offer to carry her away | Rama's honour and dharma had to free her, not a shortcut | [Certain] Sundara Kanda |
+| Kunti asks for sorrow | "Let hardships come, so I keep remembering You" | [Certain] Bhagavata 1.8 |
+| Jada Bharata and the deer | Compassion that turned into attachment cost him a birth | [Certain] Bhagavata 5 |
