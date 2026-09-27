@@ -22,6 +22,10 @@ jobs:
         working-directory: website
         run: npm ci --no-audit --no-fund
 
+      - name: Inline the stylesheet
+        working-directory: website
+        run: python3 ../.github/scripts/inline-css.py
+
       - name: Deploy to Netlify
         working-directory: website
         env:
