@@ -8,9 +8,10 @@
 // POST increments and returns the counts; GET only reads them. The page
 // decides which to send (see script.js: one POST per browser session).
 //
-// Blobs has no atomic increment, so two simultaneous visits can lose one
-// count. For a visitor counter that is an acceptable trade against the
-// alternative of a real database.
+// Blobs has no atomic increment. Strong consistency makes each request see the
+// previous request's write, so only genuinely simultaneous visits can lose a
+// count — an acceptable trade for a visitor counter against running a
+// database.
 
 import { getStore } from '@netlify/blobs';
 
@@ -39,7 +40,7 @@ export default async (request) => {
   const url = new URL(request.url);
   const raw = url.searchParams.get('p') || '/';
   const page = PAGES.has(raw) ? raw : null;
-  const store = getStore('hits');
+  const store = getStore({ name: 'hits', consistency: 'strong' });
 
   let total = await read(store, 'total');
   let count = page ? await read(store, `page:${page}`) : null;

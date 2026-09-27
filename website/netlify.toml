@@ -21,14 +21,20 @@
     Permissions-Policy = "geolocation=(), camera=(), microphone=()"
 
 [[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+# Art and icons never change; the later rule wins for the same header.
+[[headers]]
   for = "/images/art/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
-  for = "/images/*"
+  for = "/site.webmanifest"
   [headers.values]
-    Cache-Control = "public, max-age=86400"
+    Content-Type = "application/manifest+json"
 
 [[headers]]
   for = "/api/*"
@@ -56,3 +62,24 @@
   from = "/app"
   to = "/get/"
   status = 301
+
+# The publish directory is the site root, so the function source and its
+# package manifests would otherwise be served as pages. Nothing in them is
+# secret; they are simply not content.
+[[redirects]]
+  from = "/functions/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/package.json"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/package-lock.json"
+  to = "/404.html"
+  status = 404
+  force = true
