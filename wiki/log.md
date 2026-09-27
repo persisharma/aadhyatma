@@ -262,3 +262,11 @@ The static launch graph exceeded its fixed budget on untouched main. `NewContent
 ## [2026-09-27] fix | Repaired 172 of 205 dotted-circle (◌) clusters
 
 A reader saw `◌` again in BG 7.24 (`व्यक्ितमापन्नं`). It was one of the 107 entries in `devanagariWellFormed.baseline.json`. The August pass added the gate and quarantined these entries, but it never fixed them, so every one stayed visible on device. This pass repairs the three classes that have exactly one correct answer, in the generator inputs (`bhagavad-gita-complete-hi-en.md`, `BhagwadGita/chapters/*.md`) and in the shipped JSON: visual-order i-matra reordered past its conjunct (84, e.g. `निश्िचत`→`निश्चित`), legacy `ृ`+nukta→`ॄ` (39, e.g. `पितॄन्`), and a stray nukta on a matra dropped (49, e.g. `छो़ड़`→`छोड़`). `npm run verify:devanagari` went from 205 to 33. The baseline shrank from 107 to 33 entries in 6 files, all Valmiki plus one ashtakam. Those 33 are the `ऺ` artifacts, matra-after-matra (`अर्चिाल्य`), orphan marks and `मात्रृ़`. Each one needs a check against a printed edition, not a regex. Gotcha: `node scripts/parse-gita.mjs` rewrites 18 Gita JSON files with about 300 lines of drift unrelated to this pass. Don't regenerate as part of a content fix.
+
+## [2026-09-27] feature | Panchang tab: चन्द्र वास + अग्नि वास
+
+Added a Vaas tile row under Nitya Yoga · Karana. Engine gained `PanchangData.moonRashi` (cache v5); pure readings in `panchang/vaas.ts`. Updated [[panchang]].
+
+## [2026-09-27] feature | Panchang tab: चन्द्रमा + दिशा शूल tiles
+
+Vaas row became a 2×2 grid: चन्द्रमा (Moon rashi) · चन्द्र वास / अग्नि वास · दिशा शूल (shared Finder table). Updated [[panchang]].

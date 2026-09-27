@@ -16,6 +16,7 @@ import {
   KARANA_NAMES_HI, KARANA_NAMES_EN,
   VARA_NAMES_HI, VARA_NAMES_EN,
   LUNAR_MONTH_NAMES_HI, LUNAR_MONTH_NAMES_EN,
+  RASHI_NAMES_HI, RASHI_NAMES_EN,
 } from './names';
 
 const UJJAIN_LAT = 23.1765;
@@ -250,6 +251,33 @@ function* bisectNakshatraEnd(sunrise: Date, currentNakIndex: number, civilTimeZo
   let hi = new Date(lo.getTime() + 30 * 60 * 60 * 1000);
   const year = instantYear(sunrise, civilTimeZone);
   const targetBoundary = ((currentNakIndex + 1) % 27) * (360 / 27);
+
+  for (let i = 0; i < 20; i++) {
+    if (i % 4 === 0) yield;
+    const mid = new Date((lo.getTime() + hi.getTime()) / 2);
+    const moonLng = getSiderealMoonLng(mid, year);
+
+    if (moonLng >= targetBoundary && (moonLng - targetBoundary) < 180) {
+      hi = mid;
+    } else {
+      lo = mid;
+    }
+  }
+
+  return new Date((lo.getTime() + hi.getTime()) / 2);
+}
+
+/**
+ * The instant the Moon's sidereal longitude leaves rashi `currentRashiIndex`
+ * (crosses its upper 30° boundary). Same bracket as `bisectNakshatraEnd`; the
+ * caller runs it only when the rashi at the next sunrise differs, so days whose
+ * Moon stays in one sign pay nothing.
+ */
+function* bisectMoonRashiEnd(sunrise: Date, currentRashiIndex: number, civilTimeZone?: string): Generator<void, Date | null, void> {
+  let lo = sunrise;
+  let hi = new Date(lo.getTime() + 30 * 60 * 60 * 1000);
+  const year = instantYear(sunrise, civilTimeZone);
+  const targetBoundary = ((currentRashiIndex + 1) % 12) * 30;
 
   for (let i = 0; i < 20; i++) {
     if (i % 4 === 0) yield;
@@ -711,6 +739,13 @@ export function* computePanchangForDateSteps(localDate: Date, options: PanchangC
     };
   }
 
+  // The Moon's rashi (चन्द्र राशि) at sunrise — what चन्द्र वास reads. Its end
+  // is solved only when the next sunrise finds the Moon in another sign.
+  const moonRashiIndex = Math.floor(moonLng / 30) % 12;
+  const moonRashiEndTime = Math.floor(nextMoonLng / 30) % 12 !== moonRashiIndex
+    ? yield* bisectMoonRashiEnd(sunrise, moonRashiIndex, options.civilTimeZone)
+    : null;
+
   yield;
   const sunset = sunsetFor(localDate, options.location, options.civilTimeZone);
   yield;
@@ -759,6 +794,12 @@ export function* computePanchangForDateSteps(localDate: Date, options: PanchangC
       endTime: karanaEndTime,
     },
     lateVishti,
+    moonRashi: {
+      index: moonRashiIndex,
+      nameHi: RASHI_NAMES_HI[moonRashiIndex],
+      nameEn: RASHI_NAMES_EN[moonRashiIndex],
+      endTime: moonRashiEndTime,
+    },
     sunrise,
     sunset,
     moonrise,
