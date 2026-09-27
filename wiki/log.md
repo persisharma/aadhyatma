@@ -266,3 +266,7 @@ A reader saw `◌` again in BG 7.24 (`व्यक्ितमापन्नं
 ## [2026-09-27] feature | Panchang tab: चन्द्र वास + अग्नि वास
 
 Added a Vaas tile row under Nitya Yoga · Karana. Engine gained `PanchangData.moonRashi` (cache v5); pure readings in `panchang/vaas.ts`. Updated [[panchang]].
+
+## [2026-09-27] feature | Panchang tab: चन्द्रमा + दिशा शूल tiles
+
+Vaas row became a 2×2 grid: चन्द्रमा (Moon rashi) · चन्द्र वास / अग्नि वास · दिशा शूल (shared Finder table). Updated [[panchang]].

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
 import { computePanchangForDate, getSiderealMoonLng, UJJAIN_GEO } from '../engine';
-import { agniVaasPlace, chandraVaasDirection, dayVaas } from '../vaas';
+import { agniVaasPlace, chandraVaasDirection, dayVaas, vaasTiles } from '../vaas';
 
 test('chandra vaas maps each rashi to its element direction', () => {
   const expected = [
@@ -65,4 +65,33 @@ test('dayVaas carries the sunrise reading, its end, and what follows', () => {
   assert.deepEqual(steady.chandra, { value: 'north', until: null, next: null });
   // प्रतिपदा → द्वितीया on रविवार stays पृथ्वी (3 → 0), so no change is named.
   assert.deepEqual(steady.agni, { value: 'prithvi', until: null, next: null });
+});
+
+test('disha shool follows the vara (Sun/Fri W, Mon/Sat E, Tue/Wed N, Thu S)', () => {
+  const expected = ['west', 'east', 'north', 'north', 'south', 'west', 'east'];
+  const got = Array.from({ length: 7 }, (_, i) =>
+    dayVaas({
+      vara: { index: i, nameHi: '', nameEn: '' },
+      tithi: { index: 0, paksha: 'shukla', nameHi: '', nameEn: '', endTime: null },
+      moonRashi: { index: 0, nameHi: '', nameEn: '', endTime: null },
+    }).dishaShool,
+  );
+  assert.deepEqual(got, expected);
+});
+
+test('the चन्द्रमा tile names the rashi and the next one when it changes', () => {
+  const end = new Date(2026, 8, 27, 20, 0);
+  const moonRashi = { index: 11, nameHi: 'मीन', nameEn: 'Meena', endTime: end };
+  const t = vaasTiles(
+    dayVaas({
+      vara: { index: 0, nameHi: '', nameEn: '' },
+      tithi: { index: 0, paksha: 'shukla', nameHi: '', nameEn: '', endTime: null },
+      moonRashi,
+    }),
+    moonRashi,
+  );
+  assert.equal(t.chandrama.element.nameHi, 'मीन');
+  assert.deepEqual(t.chandrama.successor, { nameHi: 'मेष', nameEn: 'Mesha' });
+  assert.equal(t.dishaShool.element.nameHi, 'पश्चिम');
+  assert.equal(t.dishaShool.successor, null);
 });

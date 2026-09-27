@@ -680,15 +680,24 @@ export default function PanchangScreen({ route }: Props) {
             <PanchangTile label={contentByLang(lang, 'नित्य योग', 'Nitya Yoga')} element={p.yoga} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
             <PanchangTile label={contentByLang(lang, 'करण', 'Karana')} element={p.karana} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
           </View>
-          {/* चन्द्र वास (travel direction) + अग्नि वास (havan) — pure readings of
-              the solved day (panchang/vaas.ts), same quiet tier as Yoga/Karana. */}
+          {/* चन्द्रमा · चन्द्र वास / अग्नि वास · दिशा शूल — pure readings of the
+              solved day (panchang/vaas.ts), same quiet tier as Yoga/Karana. */}
           {(() => {
-            const vaas = vaasTiles(dayVaas(p));
+            const vaas = vaasTiles(dayVaas(p), p.moonRashi);
+            const tile = (label: string, t: typeof vaas.chandra) => (
+              <PanchangTile label={label} element={t.element} successor={t.successor} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
+            );
             return (
-              <View style={styles.angaGridSecondary}>
-                <PanchangTile label={contentByLang(lang, 'चन्द्र वास', 'Chandra Vaas')} element={vaas.chandra.element} successor={vaas.chandra.successor} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
-                <PanchangTile label={contentByLang(lang, 'अग्नि वास', 'Agni Vaas')} element={vaas.agni.element} successor={vaas.agni.successor} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
-              </View>
+              <>
+                <View style={styles.angaGridSecondary}>
+                  {tile(contentByLang(lang, 'चन्द्रमा', 'Moon Sign'), vaas.chandrama)}
+                  {tile(contentByLang(lang, 'चन्द्र वास', 'Chandra Vaas'), vaas.chandra)}
+                </View>
+                <View style={styles.angaGridSecondary}>
+                  {tile(contentByLang(lang, 'अग्नि वास', 'Agni Vaas'), vaas.agni)}
+                  {tile(contentByLang(lang, 'दिशा शूल', 'Disha Shool'), vaas.dishaShool)}
+                </View>
+              </>
             );
           })()}
 

@@ -19,6 +19,8 @@
 // Both readings change within the day — चन्द्र वास when the Moon changes rashi,
 // अग्नि वास when the tithi ends — so each carries the sunrise reading, the
 // instant it ends (null when it holds to the next sunrise), and what follows.
+import { DISHA_LABELS, DISHA_SHOOL_BY_VARA, type DishaDirection } from './eventMuhurat';
+import { RASHI_NAMES_EN, RASHI_NAMES_HI } from './names';
 import type { PanchangData, PanchangElement } from './types';
 
 export type Direction = 'east' | 'south' | 'west' | 'north';
@@ -69,6 +71,8 @@ export type VaasReading<T> = {
 export type DayVaas = {
   chandra: VaasReading<Direction>;
   agni: VaasReading<AgniVaasPlace>;
+  /** दिशा शूल — keyed by vara, so it holds sunrise to sunrise. */
+  dishaShool: DishaDirection;
 };
 
 /** The day's चन्द्र वास and अग्नि वास from its solved panchang. */
@@ -89,31 +93,46 @@ export function dayVaas(p: Pick<PanchangData, 'moonRashi' | 'tithi' | 'vara'>): 
       until: agniNext !== null && agniNext !== agniValue ? p.tithi.endTime : null,
       next: agniNext !== null && agniNext !== agniValue ? agniNext : null,
     },
+    // Same table the Muhurat Finder grades travel by, so the two never disagree.
+    dishaShool: DISHA_SHOOL_BY_VARA[p.vara.index],
   };
 }
 
 /**
- * The two readings as tile-shaped elements (value = headline, endTime = the
- * तक line) plus the successor the tile names after it. The अग्नि वास headline
- * carries the havan verdict, since that is the only question it answers.
+ * The day-panel tiles (value = headline, endTime = the तक line) plus the
+ * successor each tile names after it. The अग्नि वास headline carries the havan
+ * verdict, since that is the only question it answers.
  */
 type VaasTile = { element: PanchangElement; successor: { nameHi: string; nameEn: string } | null };
 
-export function vaasTiles(v: DayVaas): { chandra: VaasTile; agni: VaasTile } {
-  const dir = DIRECTION_LABELS[v.chandra.value];
+const labelEl = (l: Label, endTime: Date | null): PanchangElement => ({ index: 0, nameHi: l.hi, nameEn: l.en, endTime });
+const successorOf = (l: Label | null) => (l ? { nameHi: l.hi, nameEn: l.en } : null);
+
+export function vaasTiles(
+  v: DayVaas,
+  moonRashi: PanchangElement,
+): { chandrama: VaasTile; chandra: VaasTile; agni: VaasTile; dishaShool: VaasTile } {
   const agni = AGNI_VAAS_LABELS[v.agni.value];
   const havan = agni.favourableForHavan
     ? { hi: 'हवन शुभ', en: 'havan favoured' }
     : { hi: 'हवन वर्जित', en: 'avoid havan' };
-  const nextAgni = v.agni.next ? AGNI_VAAS_LABELS[v.agni.next] : null;
+  const nextRashi = (moonRashi.index + 1) % 12;
   return {
+    chandrama: {
+      element: moonRashi,
+      successor: moonRashi.endTime ? { nameHi: RASHI_NAMES_HI[nextRashi], nameEn: RASHI_NAMES_EN[nextRashi] } : null,
+    },
     chandra: {
-      element: { index: 0, nameHi: dir.hi, nameEn: dir.en, endTime: v.chandra.until },
-      successor: v.chandra.next ? { nameHi: DIRECTION_LABELS[v.chandra.next].hi, nameEn: DIRECTION_LABELS[v.chandra.next].en } : null,
+      element: labelEl(DIRECTION_LABELS[v.chandra.value], v.chandra.until),
+      successor: successorOf(v.chandra.next ? DIRECTION_LABELS[v.chandra.next] : null),
     },
     agni: {
-      element: { index: 0, nameHi: `${agni.hi} · ${havan.hi}`, nameEn: `${agni.en} · ${havan.en}`, endTime: v.agni.until },
-      successor: nextAgni ? { nameHi: nextAgni.hi, nameEn: nextAgni.en } : null,
+      element: labelEl({ hi: `${agni.hi} · ${havan.hi}`, en: `${agni.en} · ${havan.en}` }, v.agni.until),
+      successor: successorOf(v.agni.next ? AGNI_VAAS_LABELS[v.agni.next] : null),
+    },
+    dishaShool: {
+      element: labelEl(DISHA_LABELS[v.dishaShool], null),
+      successor: null,
     },
   };
 }
