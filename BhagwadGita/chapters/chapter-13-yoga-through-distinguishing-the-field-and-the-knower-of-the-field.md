@@ -157,7 +157,7 @@ I will tell you, O Arjuna, what the field is, why the body is called the field, 
 
 **Sanskrit Shloka**
 
-ऋषिभिर्बहुधा गीतं छन्दोभिर्विविधैः पृथक्।ब्रह्मसूत्रपदैश्चैव हेतुमद्भिर्विनिश्िचतैः।।13.5।।
+ऋषिभिर्बहुधा गीतं छन्दोभिर्विविधैः पृथक्।ब्रह्मसूत्रपदैश्चैव हेतुमद्भिर्विनिश्चितैः।।13.5।।
 
 **Transliteration**
 
@@ -312,7 +312,7 @@ The feeling of renunciation towards the objects of the senses is constant in the
 
 **Sanskrit Shloka**
 
-असक्ितरनभिष्वङ्गः पुत्रदारगृहादिषु।नित्यं च समचित्तत्वमिष्टानिष्टोपपत्तिषु।।13.10।।
+असक्तिरनभिष्वङ्गः पुत्रदारगृहादिषु।नित्यं च समचित्तत्वमिष्टानिष्टोपपत्तिषु।।13.10।।
 
 **Transliteration**
 
@@ -343,7 +343,7 @@ When a man thinks, This object is mine, the idea of mineness enters his mind. He
 
 **Sanskrit Shloka**
 
-मयि चानन्ययोगेन भक्ितरव्यभिचारिणी।विविक्तदेशसेवित्वमरतिर्जनसंसदि।।13.11।।
+मयि चानन्ययोगेन भक्तिरव्यभिचारिणी।विविक्तदेशसेवित्वमरतिर्जनसंसदि।।13.11।।
 
 **Transliteration**
 
