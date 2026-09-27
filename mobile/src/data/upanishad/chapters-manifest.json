@@ -148,5 +148,55 @@
     "vedaEn": "Shukla Yajurveda",
     "mantraCount": 11,
     "verseCount": 12
+  },
+  {
+    "chapter": 16,
+    "slug": "aruni",
+    "titleHi": "आरुणि उपनिषद्",
+    "titleEn": "Aruni Upanishad",
+    "vedaHi": "सामवेद",
+    "vedaEn": "Samaveda",
+    "mantraCount": 5,
+    "verseCount": 6
+  },
+  {
+    "chapter": 17,
+    "slug": "garbha",
+    "titleHi": "गर्भ उपनिषद्",
+    "titleEn": "Garbha Upanishad",
+    "vedaHi": "कृष्ण यजुर्वेद",
+    "vedaEn": "Krishna Yajurveda",
+    "mantraCount": 5,
+    "verseCount": 6
+  },
+  {
+    "chapter": 18,
+    "slug": "narayana",
+    "titleHi": "नारायण उपनिषद्",
+    "titleEn": "Narayana Upanishad",
+    "vedaHi": "कृष्ण यजुर्वेद",
+    "vedaEn": "Krishna Yajurveda",
+    "mantraCount": 5,
+    "verseCount": 6
+  },
+  {
+    "chapter": 19,
+    "slug": "paramahamsa",
+    "titleHi": "परमहंस उपनिषद्",
+    "titleEn": "Paramahamsa Upanishad",
+    "vedaHi": "शुक्ल यजुर्वेद",
+    "vedaEn": "Shukla Yajurveda",
+    "mantraCount": 4,
+    "verseCount": 5
+  },
+  {
+    "chapter": 20,
+    "slug": "amritabindu",
+    "titleHi": "अमृतबिन्दु उपनिषद्",
+    "titleEn": "Amritabindu Upanishad",
+    "vedaHi": "कृष्ण यजुर्वेद",
+    "vedaEn": "Krishna Yajurveda",
+    "mantraCount": 22,
+    "verseCount": 23
   }
 ]

@@ -85,11 +85,11 @@ appId: com.prashantsharma.vedansh
 # An unshipped text is listed from the 108-row catalogue, dimmed, not tappable.
 - scrollUntilVisible:
     element:
-      text: "Upanishad 16\\. Aruni Upanishad\\. Samaveda\\. Coming soon\\."
+      text: "Upanishad 21\\. Amritanada Upanishad\\. Krishna Yajurveda\\. Coming soon\\."
     direction: DOWN
-- assertVisible: "Upanishad 16\\. Aruni Upanishad\\. Samaveda\\. Coming soon\\."
+- assertVisible: "Upanishad 21\\. Amritanada Upanishad\\. Krishna Yajurveda\\. Coming soon\\."
 
-# Group filter narrows the catalogue: in the Yoga group only the Hamsa is readable so far.
+# Group filter narrows the catalogue: in the Yoga group the Hamsa and Amritabindu are readable so far.
 - scrollUntilVisible:
     element:
       text: "Group: Yoga"
@@ -97,7 +97,8 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Group: Yoga"
 - waitForAnimationToEnd
 - assertVisible: "Upanishad 15\\. Hamsa Upanishad\\. 11 mantras\\. Tap to open\\."
-- assertVisible: "Upanishad 20\\. Amritabindu Upanishad\\. Krishna Yajurveda\\. Coming soon\\."
+- assertVisible: "Upanishad 20\\. Amritabindu Upanishad\\. 22 mantras\\. Tap to open\\."
+- assertVisible: "Upanishad 21\\. Amritanada Upanishad\\. Krishna Yajurveda\\. Coming soon\\."
 - assertNotVisible: "Upanishad 1\\. Isha Upanishad\\. 18 mantras\\. Tap to open\\."
 - tapOn: "Group: Principal"
 - waitForAnimationToEnd

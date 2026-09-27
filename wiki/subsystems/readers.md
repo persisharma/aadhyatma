@@ -59,8 +59,8 @@ parse the complete epic during startup; the platform bundle still carries every 
 **Who has it:** Gita (18), Sundarkand (16), Shiva Strotam (4), Durga (3), Ganesh (3),
 Saraswati (3), Vishnu Sahasranama (4) — the last four added 2026-06-09 — and, as of 2026-07-31,
 Valmiki Ramayan (7 kāṇḍas), and, as of 2026-09-25, the Upanishads (one Upanishad per chapter,
-each opened by its śānti-pāṭha page; 15 of the 108-text Muktikā catalogue readable — Muktikā 1–15,
-Īśa through Haṃsa, incl. the long Chāndogya (629 mantras) and Bṛhadāraṇyaka (435); batches of five
+each opened by its śānti-pāṭha page; 20 of the 108-text Muktikā catalogue readable — Muktikā 1–20,
+Īśa through Amṛtabindu, incl. the long Chāndogya (629 mantras) and Bṛhadāraṇyaka (435); batches of five
 in Muktikā order per `scripts/upanishad-content/HANDOFF.md`). Single-chapter texts (Hanuman Ashtak, Krishna Stotram, Ram Stuti,
 Ramcharitmanas — 1 chapter file each today) render verses only; they need no transition because
 there is no next subsection yet.
@@ -118,7 +118,7 @@ transition page). `gitaAutoAdvance.test.tsx` covers the Gita swipe path Maestro 
   keys the per-kāṇḍa sketch off.
 - **Upanishad chapter ids are Muktikā numbers and SPARSE.** `chapter` is the text's number in the
   108-text canon (`data/upanishad/registry.ts`), fixed forever so progress/bookmarks survive new
-  texts; only shipped texts are in `chapters-manifest.json` (1–15 today; contiguous only because batches ship in Muktikā order). The reader
+  texts; only shipped texts are in `chapters-manifest.json` (1–20 today; contiguous only because batches ship in Muktikā order). The reader
   therefore steps with `prevUpanishadChapter` / `nextUpanishadChapter`, never `chapter ± 1`, and
   `readerAutoAdvance.test.tsx` passes the LAST READABLE number as `chapterCount`. The index screen
   lists all 108 from `upanishadCatalogue()` with a group-chip filter; unshipped rows render as a

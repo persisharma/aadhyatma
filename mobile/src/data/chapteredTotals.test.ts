@@ -71,10 +71,11 @@ const cases = [
   },
   {
     id: 'upanishad',
-    // 15 śānti-pāṭha pages + 18 (Īśa) + 35 (Kena) + 119 (Kaṭha) + 67 (Praśna) + 64 (Muṇḍaka)
+    // 20 śānti-pāṭha pages + 18 (Īśa) + 35 (Kena) + 119 (Kaṭha) + 67 (Praśna) + 64 (Muṇḍaka)
     // + 12 (Māṇḍūkya) + 31 (Taittirīya) + 33 (Aitareya) + 629 (Chāndogya) + 435 (Bṛhadāraṇyaka)
-    // + 23 (Brahma) + 26 (Kaivalya) + 6 (Jābāla) + 113 (Śvetāśvatara) + 11 (Haṃsa) mantras.
-    expectedTotal: 1637,
+    // + 23 (Brahma) + 26 (Kaivalya) + 6 (Jābāla) + 113 (Śvetāśvatara) + 11 (Haṃsa)
+    // + 5 (Āruṇi) + 5 (Garbha) + 5 (Nārāyaṇa) + 4 (Paramahaṃsa) + 22 (Amṛtabindu) mantras.
+    expectedTotal: 1683,
     load: async () => {
       const mod = await import('./upanishad');
       return {

@@ -18,4 +18,9 @@ export const upanishadTextLoaders: Readonly<Record<string, () => UpanishadChapte
   jabala: () => require('./texts/jabala.json') as UpanishadChapter,
   shvetashvatara: () => require('./texts/shvetashvatara.json') as UpanishadChapter,
   hamsa: () => require('./texts/hamsa.json') as UpanishadChapter,
+  aruni: () => require('./texts/aruni.json') as UpanishadChapter,
+  garbha: () => require('./texts/garbha.json') as UpanishadChapter,
+  narayana: () => require('./texts/narayana.json') as UpanishadChapter,
+  paramahamsa: () => require('./texts/paramahamsa.json') as UpanishadChapter,
+  amritabindu: () => require('./texts/amritabindu.json') as UpanishadChapter,
 };

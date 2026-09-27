@@ -10,7 +10,9 @@ authored.
 1. Read `wiki/index.md`, `wiki/subsystems/readers.md` (Upanishad gotchas), RULEBOOK §0.1,
    §11.12, §11.14, and one finished module (e.g. `shvetashvatara.mjs`, `aitareya.mjs`
    for 3-level `khandas`) to copy the exact shape.
-2. Pick the next 5 unshipped ids in `mobile/src/data/upanishad/registry.ts` order
+2. First `git fetch origin claude/upanishad-granth-app-qu2jaa` and fast-forward — a
+   chained session's checkout can predate the parent's push, and a stale Progress line
+   makes you redo the previous batch. Then pick the next 5 unshipped ids in `mobile/src/data/upanishad/registry.ts` order
    (shipped = a `<slug>.mjs` exists here). Author `scripts/upanishad-content/<slug>.mjs`
    for each: `{slug, muktika, vedaHi, vedaEn, source{…}, shanti: M(lines, hi, en),
    mantras | khandas}` with `const M = (lines, meaningHi, meaningEn) => ({ lines,
@@ -43,5 +45,5 @@ authored.
 
 ## Progress
 
-Shipped (15/108): 1–15. Next batch: 16 Aruni, 17 Garbha, 18 Narayana,
-19 Paramahamsa, 20 Amritabindu.
+Shipped (20/108): 1–20. Next batch: 21 Amritanada, 22 Atharvashira,
+23 Atharvashikha, 24 Maitrayani, 25 Kaushitaki.

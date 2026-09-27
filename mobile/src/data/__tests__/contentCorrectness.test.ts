@@ -724,8 +724,8 @@ for (const v of aartiKunjBihari.verses) {
   const entry = libraryById.get('upanishad');
   assert.ok(entry, 'upanishad must exist in the library');
   assert.equal(entry.category, 'granth');
-  assert.match(entry.sub, /^15 उपनिषद् · 1622 मन्त्र/, 'Hindi sub counts readable texts and mantras, not pages');
-  assert.match(entry.subEn || '', /^15 of 108 Upanishads · 1622 mantras/, 'English sub counts readable texts and mantras, not pages');
+  assert.match(entry.sub, /^20 उपनिषद् · 1663 मन्त्र/, 'Hindi sub counts readable texts and mantras, not pages');
+  assert.match(entry.subEn || '', /^20 of 108 Upanishads · 1663 mantras/, 'English sub counts readable texts and mantras, not pages');
   assert.equal(entry.addedInVersion, '1.4.8', 'upanishad must set addedInVersion so it debuts as NEW for upgraders');
 
   const registry = readTs('upanishad/registry.ts');
@@ -773,6 +773,11 @@ for (const v of aartiKunjBihari.verses) {
       [13, 'Jabala Upanishad', 6],
       [14, 'Shvetashvatara Upanishad', 113],
       [15, 'Hamsa Upanishad', 11],
+      [16, 'Aruni Upanishad', 5],
+      [17, 'Garbha Upanishad', 5],
+      [18, 'Narayana Upanishad', 5],
+      [19, 'Paramahamsa Upanishad', 4],
+      [20, 'Amritabindu Upanishad', 22],
     ],
     'the readable Upanishads by Muktikā number with their traditional mantra counts'
   );
@@ -827,6 +832,9 @@ for (const v of aartiKunjBihari.verses) {
   assert.deepEqual(sectionCounts('kaivalya'), [24, 2]);
   assert.deepEqual(sectionCounts('shvetashvatara'), [16, 17, 21, 22, 14, 23]);
   assert.deepEqual(sectionCounts('jabala'), [1, 1, 1, 1, 1, 1]);
+  assert.deepEqual(sectionCounts('aruni'), [1, 1, 1, 1, 1]);
+  assert.deepEqual(sectionCounts('paramahamsa'), [1, 1, 1, 1]);
+  assert.equal(readJson('upanishad/texts/amritabindu.json').verses[22].reference, '22');
   assert.deepEqual(topCounts('chandogya'), [104, 82, 95, 78, 88, 69, 51, 62]);
   assert.equal(sectionCounts('chandogya').length, 154, 'Chāndogya has 154 khaṇḍas');
   assert.deepEqual(topCounts('brihadaranyaka'), [80, 66, 92, 92, 30, 75]);
