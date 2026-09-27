@@ -1,0 +1,47 @@
+# Upanishad batch handoff
+
+Standing instruction from the owner: author all 108 Muktikā Upanishads with full
+content, **five per session, strictly in Muktikā order** (size does not matter),
+each batch in its own fresh session. No "coming soon" framing beyond rows not yet
+authored.
+
+## Batch protocol (one session = one batch of 5)
+
+1. Read `wiki/index.md`, `wiki/subsystems/readers.md` (Upanishad gotchas), RULEBOOK §0.1,
+   §11.12, §11.14, and one finished module (e.g. `shvetashvatara.mjs`, `aitareya.mjs`
+   for 3-level `khandas`) to copy the exact shape.
+2. Pick the next 5 unshipped ids in `mobile/src/data/upanishad/registry.ts` order
+   (shipped = a `<slug>.mjs` exists here). Author `scripts/upanishad-content/<slug>.mjs`
+   for each: `{slug, muktika, vedaHi, vedaEn, source{…}, shanti: M(lines, hi, en),
+   mantras | khandas}` with `const M = (lines, meaningHi, meaningEn) => ({ lines,
+   meaningHi, meaningEn })`. Full text, every mantra, Hindi + English meaning.
+   The network policy blocks the Sanskrit source hosts, so record in `source.notes`
+   that a line-by-line scan check is owed.
+3. Build from repo root: `npx --prefix mobile tsx scripts/build-upanishad.mjs`.
+4. Gates (in `mobile/`): `npx tsc --noEmit`, `npm run lint` (0 errors),
+   `npm run test:data` (only the pre-existing `launchGraph` byte-budget failure is
+   allowed — never raise that budget), and
+   `npx jest --config jest.config.js --runInBand src/screens/__tests__/UpanishadReaderScreen.test.tsx src/data/__tests__/devanagariWellFormed.test.ts`.
+5. Update pins to the new totals / readable set:
+   - `mobile/src/data/__tests__/contentCorrectness.test.ts` (sub regexes, manifest list,
+     per-text sectionCounts)
+   - `mobile/src/data/chapteredTotals.test.ts` (upanishad expectedTotal)
+   - `mobile/src/data/__tests__/searchIndex.test.ts` (page count, readable id set)
+   - `mobile/src/screens/__tests__/UpanishadReaderScreen.test.tsx` (sparse next/prev asserts)
+   - `mobile/.maestro/granth-smoke.yaml` (coming-row example = first unshipped id)
+   - `mobile/src/data/tour/whatsNew.ts` (1.4.8 body, hi + en)
+   - `design.md` §75 (prose counts, table rows, "all N pages"), data-shape families line
+   - wiki: `readers.md`, `overview.md`, append `log.md`
+   - the "Progress" line below
+6. Commit on `claude/upanishad-granth-app-qu2jaa`, push `git push -u origin
+   claude/upanishad-granth-app-qu2jaa`. No PR. No model ids in committed files.
+7. Chain: call `create_session` (claude-code-remote MCP; same environment,
+   `source_url` https://github.com/persisharma/aadhyatma, `source_revision` and
+   `outcome_branch` = `claude/upanishad-granth-app-qu2jaa`) with the prompt:
+   "Do the next Upanishad batch: follow scripts/upanishad-content/HANDOFF.md exactly,
+   then chain the following session." Stop chaining once all 108 are shipped.
+
+## Progress
+
+Shipped (10/108): 1–8, 12, 14. Next batch: 9 Chandogya, 10 Brihadaranyaka,
+11 Brahma, 13 Jabala, 15 Hamsa.
