@@ -13,7 +13,7 @@ status: current
 in a considered order, each with its sense in plain words. It is a `granth` catalog row
 (`gita-saar`, deity `krishna`) that behaves like every chaptered text — a **chapter is a theme**,
 a **page is one shloka inside the theme** — and it exists so more readings can keep being added
-without touching code. **Sixteen themes ship (167 pages)**, in the order of
+without touching code. **Sixteen themes ship (170 pages)**, in the order of
 `docs/roadmap/gita-saar-themes.md`: सच्चा प्रेम · भय और चिंता · शोक · क्रोध · कर्म · गुण · मन · संशय ·
 श्रद्धा और शरणागति · स्थितप्रज्ञ · कामना और संतोष · सफलता-असफलता · मृत्यु और आत्मा · क्या मैं अकेला हूँ ·
 दैवी सम्पदा · ध्यान और दिनचर्या. Moods name the state → what the text calls it → what steadies it →
