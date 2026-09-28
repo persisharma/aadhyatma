@@ -7,9 +7,13 @@
  * organizations, and the द्वार must never read like a fundraising portal.
  *
  * Hard rules encoded here:
- *  - `officialUrl` is the organization's OWN domain (or the government's),
- *    https, pointing at the page where the giving actually happens — never an
- *    aggregator, never a payment gateway of ours.
+ *  - `officialUrl` is the organization's OWN channel, https, pointing at the
+ *    page where the giving actually happens — never an aggregator, never a
+ *    Vedansh-owned gateway. Normally the org's own domain (or the government's);
+ *    a `directPay` row may instead point at the org's OWN hosted donation page
+ *    (a payment-page campaign of theirs), and the detail screen then says
+ *    "donation page" rather than "official website" so the copy stays honest
+ *    (RULEBOOK §27.8).
  *  - No account numbers, no UPI VPAs, no registration/80G/paperwork text, no
  *    figures the app would be asserting on an organization's behalf. Whatever
  *    receipt or exemption exists is between the giver and the organization.
@@ -24,6 +28,32 @@
 import type { DaanOrgEntry } from './types';
 
 export const DAAN_ORG_ENTRIES: readonly DaanOrgEntry[] = [
+  {
+    id: 'change-with-one',
+    nameHi: 'चेंज विद वन फ़ाउंडेशन',
+    nameEn: 'Change With One Foundation',
+    kind: 'anna-kshetra',
+    causes: ['anna'],
+    aboutHi: 'दिल्ली का सेवा-भोजनालय — हर किसी को ₹10 में सम्मान के साथ गर्म, असीमित भोजन (‘चेंज विद वन मील’)।',
+    aboutEn: 'A Delhi community kitchen — hot, unlimited meals served to anyone with dignity for ₹10 (‘Change With One Meal’).',
+    descriptionHi:
+      '‘चेंज विद वन मील’ के अंतर्गत दिल्ली में हर किसी को ₹10 में सम्मान के साथ गर्म, असीमित भोजन मिलता है — यह एक भोजनालय है, भिक्षा नहीं, ताकि कोई भूखा न लौटे। फ़ाउंडेशन की एक और पहल ‘सिंपली ब्लड’ है — एक वर्चुअल मंच जो रक्तदाता को ज़रूरतमंद से नि:शुल्क जोड़ता है, जिसकी प्रेरणा रक्तदान-जागरूकता की एक लम्बी पदयात्रा से मिली।',
+    descriptionEn:
+      'Through ‘Change With One Meal’, anyone in Delhi is served hot, unlimited meals for ₹10 with dignity — a community eatery, not alms, so no one leaves hungry. The foundation’s other initiative, ‘Simply Blood’, is a virtual platform that connects blood donors with those who need blood for free, inspired by a long cross-country walk to raise blood-donation awareness.',
+    officialUrl: 'https://pages.razorpay.com/ChangeWithOneMeal',
+    directPay: true,
+    verifiedOn: '2026-09-28',
+    daanKathaId: 'rantideva',
+    status: 'verified',
+    source: {
+      referenceUrls: [
+        'https://changewithone.org/',
+        'https://give.do/ngos/change-with-one-foundation',
+      ],
+      verificationNote:
+        '2026-09-28: the Delhi-based foundation and its ₹10 unlimited-meal work (‘Change With One Meal’) concordant across the org’s own site (changewithone.org) and its independent give.do NGO listing; the hand-off is the foundation’s own hosted donation page (directPay), not its website.',
+    },
+  },
   {
     id: 'akshaya-patra',
     nameHi: 'अक्षय पात्र फाउंडेशन',
@@ -116,6 +146,28 @@ export const DAAN_ORG_ENTRIES: readonly DaanOrgEntry[] = [
       referenceUrls: ['https://belurmath.org/donations/', 'https://donations.belurmath.org/about-us'],
       verificationNote:
         '2026-09-01: the official donations portal (own subdomain) and the Math/Mission service work concordant across belurmath.org and its donations subdomain.',
+    },
+  },
+  {
+    id: 'simply-blood',
+    nameHi: 'सिंपली ब्लड',
+    nameEn: 'Simply Blood',
+    kind: 'seva-portal',
+    causes: ['arogya'],
+    aboutHi: 'वर्चुअल रक्तदान मंच — रक्तदाता और ज़रूरतमंद को नि:शुल्क जोड़ता है (‘चेंज विद वन’ की पहल)।',
+    aboutEn: "A virtual blood-donation platform — connects blood donors with those who need blood, free ('Change With One' initiative).",
+    officialUrl: 'https://simplyblood.com/',
+    verifiedOn: '2026-09-28',
+    nonMonetaryHi: 'यह द्वार धन का नहीं — रक्तदाता को ज़रूरतमंद से जोड़ने का है। रक्त-दान ही यहाँ का दान है।',
+    nonMonetaryEn: 'This door takes no money — it connects blood donors with those in need. The blood itself is the daan here.',
+    status: 'verified',
+    source: {
+      referenceUrls: [
+        'https://simplyblood.com/',
+        'https://give.do/ngos/change-with-one-foundation',
+      ],
+      verificationNote:
+        '2026-09-28: the virtual blood-donation platform (connecting donors and seekers, free) and its Change With One Foundation lineage concordant across simplyblood.com and the independent give.do NGO listing; non-monetary donor-connection door, hand-off on the platform’s own domain.',
     },
   },
   {

@@ -16,7 +16,7 @@
  * (`userFacingImplementationCopy.test.ts` — the app does not narrate its own
  * storage). The ledger's privacy is a property of the feature, not a caption.
  */
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -24,6 +24,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Svg, { Path } from 'react-native-svg';
 
 import ReaderHeader from '@/components/ReaderHeader';
+import { useTodayKey } from '@/utils/useTodayKey';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import {
   DAAN_VAAR_ENTRIES,
@@ -60,7 +61,11 @@ export default function DaanPunyaScreen({ navigation }: Props) {
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
 
   const [calendarSystem] = usePanchangCalendarSystem();
-  const today = new Date();
+  // Stable per calendar day — an inline `new Date()` changes every render, which
+  // makes useObservancesForDate's selectionKey churn and drives its effect into a
+  // setState loop ("Maximum update depth"). Mirror the Home Today surfaces.
+  const todayKey = useTodayKey();
+  const today = useMemo(() => new Date(todayKey), [todayKey]);
   const observances = useObservancesForDate(today, calendarSystem);
   // First covered observance wins the "आज" card; no match ⇒ the card is absent
   // (never a placeholder), and the vaar row still serves the guest (U2).

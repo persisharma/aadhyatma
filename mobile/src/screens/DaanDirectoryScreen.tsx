@@ -89,12 +89,12 @@ export default function DaanDirectoryScreen({ navigation, route }: Props) {
           {meaningByLang(lang, cause.mahatvaHi, cause.mahatvaEn)}
         </Text>
         {cause.citeHi && cause.citeEn ? (
-          <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 17, color: colors.gold, marginTop: 7 }}>
+          <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 18, color: colors.gold, marginTop: 7 }}>
             {contentByLang(lang, cause.citeHi, cause.citeEn)}
           </Text>
         ) : null}
       </View>
-      <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 17, color: colors.inkMuted, marginTop: spacing.md, marginBottom: 6 }}>
+      <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 18, color: colors.inkMuted, marginTop: spacing.md, marginBottom: 6 }}>
         {contentByLang(lang, 'ये स्थान यह सेवा करते हैं — ', 'Places doing this seva — ')}
         {meaningByLang(lang, cause.whomHi, cause.whomEn)}
       </Text>
@@ -110,13 +110,13 @@ export default function DaanDirectoryScreen({ navigation, route }: Props) {
       style={[styles.rowCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}
     >
       <View style={{ flex: 1 }}>
-        <Text style={{ fontFamily: titleFont, fontSize: 14.5, lineHeight: 21, color: colors.ink }}>
+        <Text style={{ fontFamily: titleFont, fontSize: 14.5, lineHeight: 22, color: colors.ink }}>
           {contentByLang(lang, org.nameHi, org.nameEn)}
         </Text>
-        <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 17, color: colors.inkMuted, marginTop: 2 }} numberOfLines={2}>
+        <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 18, color: colors.inkMuted, marginTop: 2 }} numberOfLines={2}>
           {meaningByLang(lang, org.aboutHi, org.aboutEn)}
         </Text>
-        <Text style={{ fontFamily: bodyFont, fontSize: 11, lineHeight: 16, color: colors.gold, marginTop: 3 }}>
+        <Text style={{ fontFamily: bodyFont, fontSize: 11, lineHeight: 17, color: colors.gold, marginTop: 3 }}>
           {contentByLang(lang, KIND_LABELS[org.kind].hi, KIND_LABELS[org.kind].en)}
           {org.nonMonetaryHi ? contentByLang(lang, ' · धन नहीं', ' · not money') : ''}
         </Text>
@@ -145,10 +145,10 @@ export default function DaanDirectoryScreen({ navigation, route }: Props) {
           elevation.card,
         ]}
       >
-        <Text style={{ fontFamily: titleFont, fontSize: 15, lineHeight: 22, color: ringed ? colors.saffronDeep : colors.ink }}>
+        <Text style={{ fontFamily: titleFont, fontSize: 15, lineHeight: 23, color: ringed ? colors.saffronDeep : colors.ink }}>
           {contentByLang(lang, cause.nameHi, cause.nameEn)}
         </Text>
-        <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 17, color: colors.inkMuted, marginTop: 4 }}>
+        <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 18, color: colors.inkMuted, marginTop: 4 }}>
           {meaningByLang(lang, cause.whomHi, cause.whomEn)}
         </Text>
       </Pressable>
@@ -162,7 +162,7 @@ export default function DaanDirectoryScreen({ navigation, route }: Props) {
         variant="index"
         onBack={() => navigation.goBack()}
       />
-      <ScrollView contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingBottom: spacing.xxl }}>
+      <ScrollView contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingTop: spacing.sm, paddingBottom: spacing.xxl }}>
         <Text style={{ fontFamily: titleFont, fontSize: 15, lineHeight: 23, color: colors.ink, textAlign: 'center', marginTop: spacing.sm }}>
           {contentByLang(lang, 'देशे काले च पात्रे', 'Deshe kāle cha pātre')}
         </Text>
