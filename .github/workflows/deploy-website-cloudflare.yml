@@ -89,3 +89,15 @@ jobs:
         if: steps.creds.outputs.ready == 'true'
         working-directory: website
         run: npx --yes wrangler@4 pages deploy dist --project-name "$PROJECT" --branch main --commit-dirty=true
+
+      - name: Attach custom domains
+        # Idempotent: adding a domain that is already attached just returns it.
+        # Prints each domain's status so a pending or failed validation shows
+        # in the log rather than as a 522 on the live site.
+        if: steps.creds.outputs.ready == 'true'
+        run: |
+          api="https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/pages/projects/$PROJECT/domains"
+          for d in vedansh.app www.vedansh.app; do
+            curl -s -X POST "$api" -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" -H 'Content-Type: application/json' -d "{\"name\":\"$d\"}" >/dev/null
+          done
+          curl -s "$api" -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const j=JSON.parse(s);if(!j.success){console.log("API error:",JSON.stringify(j.errors));return}for(const d of j.result)console.log(d.name,"status="+d.status,"validation="+(d.validation_data&&d.validation_data.status),"verification="+(d.verification_data&&d.verification_data.status),d.verification_data&&d.verification_data.error_message||"")})'
