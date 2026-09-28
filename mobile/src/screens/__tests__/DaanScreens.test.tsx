@@ -408,4 +408,34 @@ describe('पात्र-परिचय — a place, not a profile (RULEBOOK �
     openURL.mockRestore();
     await act(async () => tree.unmount());
   });
+
+  test('an "about this work" description renders only for rows that carry one', async () => {
+    const withDesc = await renderDetail('change-with-one');
+    expect(has(withDesc, 'daan-org-description')).toBe(true);
+    expect(textOf(withDesc)).toContain('इनके बारे में');
+    await act(async () => withDesc.unmount());
+    // A thin row (no description) shows no About section — the default stays lean.
+    const thin = await renderDetail('akshaya-patra');
+    expect(has(thin, 'daan-org-description')).toBe(false);
+    await act(async () => thin.unmount());
+  });
+
+  test('a directPay row says "donation page", never "official website", and opens its own hosted page', async () => {
+    const { Linking } = require('react-native');
+    const openURL = jest.spyOn(Linking, 'openURL').mockResolvedValue(undefined as never);
+    const org = getDaanOrg('change-with-one')!;
+    expect(org.directPay).toBe(true);
+    const tree = await renderDetail('change-with-one');
+    // The app must not call a payment page a website (RULEBOOK §27.8 honesty).
+    const idle = textOf(tree);
+    expect(idle).toContain('दान-पृष्ठ');
+    expect(idle).not.toContain('आधिकारिक वेबसाइट');
+    await press(tree, 'daan-org-give');
+    expect(has(tree, 'daan-org-interstitial')).toBe(true);
+    expect(textOf(tree)).toContain('दान-पृष्ठ पर जा रहे हैं');
+    await press(tree, 'daan-org-open');
+    expect(openURL).toHaveBeenCalledWith(org.officialUrl);
+    openURL.mockRestore();
+    await act(async () => tree.unmount());
+  });
 });

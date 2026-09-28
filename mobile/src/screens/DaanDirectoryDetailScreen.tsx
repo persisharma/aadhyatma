@@ -71,8 +71,8 @@ export default function DaanDirectoryDetailScreen({ navigation, route }: Props) 
         variant="index"
         onBack={() => navigation.goBack()}
       />
-      <ScrollView contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingBottom: spacing.xxl }}>
-        <Text style={{ fontFamily: titleFont, fontSize: 19, lineHeight: 28, color: colors.ink, textAlign: 'center', marginTop: spacing.sm }}>
+      <ScrollView contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingTop: spacing.sm, paddingBottom: spacing.xxl }}>
+        <Text style={{ fontFamily: titleFont, fontSize: 19, lineHeight: 29, color: colors.ink, textAlign: 'center', marginTop: spacing.sm }}>
           {contentByLang(lang, org.nameHi, org.nameEn)}
         </Text>
 
@@ -83,6 +83,18 @@ export default function DaanDirectoryDetailScreen({ navigation, route }: Props) 
         >
           {meaningByLang(lang, org.aboutHi, org.aboutEn)}
         </Text>
+
+        {org.descriptionHi && org.descriptionEn ? (
+          <>
+            <Text style={sectionLabelStyle}>{contentByLang(lang, 'इनके बारे में', 'About this work')}</Text>
+            <Text
+              testID="daan-org-description"
+              style={{ fontFamily: bodyFont, fontSize: 13, lineHeight: 22, color: colors.inkSoft }}
+            >
+              {meaningByLang(lang, org.descriptionHi, org.descriptionEn)}
+            </Text>
+          </>
+        ) : null}
 
         {org.nonMonetaryHi && org.nonMonetaryEn ? (
           <View style={[styles.card, { backgroundColor: colors.goldChipBg, borderColor: colors.divider, borderRadius: radii.lg, marginTop: spacing.md }]}>
@@ -103,10 +115,10 @@ export default function DaanDirectoryDetailScreen({ navigation, route }: Props) 
               style={[styles.rowCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}
             >
               <View style={{ flex: 1 }}>
-                <Text style={{ fontFamily: titleFont, fontSize: 14.5, lineHeight: 21, color: colors.ink }}>
+                <Text style={{ fontFamily: titleFont, fontSize: 14.5, lineHeight: 22, color: colors.ink }}>
                   {contentByLang(lang, relatedKatha.titleHi, relatedKatha.titleEn)}
                 </Text>
-                <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 17, color: colors.inkMuted, marginTop: 2 }}>
+                <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 18, color: colors.inkMuted, marginTop: 2 }}>
                   {contentByLang(lang, relatedKatha.subtitleHi, relatedKatha.subtitleEn)}
                 </Text>
               </View>
@@ -145,21 +157,29 @@ export default function DaanDirectoryDetailScreen({ navigation, route }: Props) 
             <Pressable
               testID="daan-org-give"
               accessibilityRole="button"
-              accessibilityLabel="Open the official website"
+              accessibilityLabel={org.directPay ? 'Open the donation page' : 'Open the official website'}
               onPress={() => setHandOff('confirming')}
               style={[styles.actionBtn, { borderColor: colors.saffron, borderRadius: radii.pill }]}
             >
               <Text style={{ fontFamily: titleFont, fontSize: 13, color: colors.saffronDeep }}>
-                {contentByLang(lang, 'आधिकारिक वेबसाइट', 'Official website')}
+                {org.directPay
+                  ? contentByLang(lang, 'दान-पृष्ठ', 'Donation page')
+                  : contentByLang(lang, 'आधिकारिक वेबसाइट', 'Official website')}
               </Text>
             </Pressable>
           </View>
           <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 18, color: colors.inkMuted, textAlign: 'center', marginTop: 10 }}>
-            {meaningByLang(
-              lang,
-              'ऐप इस लेन-देन का हिस्सा नहीं है — दान संस्था की अपनी आधिकारिक वेबसाइट पर, ऐप के बाहर होगा।',
-              'The app is not part of this transaction — the daan happens on the organization’s own official website, outside the app.'
-            )}
+            {org.directPay
+              ? meaningByLang(
+                  lang,
+                  'ऐप इस लेन-देन का हिस्सा नहीं है — दान संस्था के अपने दान-पृष्ठ पर, ऐप के बाहर होगा।',
+                  'The app is not part of this transaction — the daan happens on the organization’s own donation page, outside the app.'
+                )
+              : meaningByLang(
+                  lang,
+                  'ऐप इस लेन-देन का हिस्सा नहीं है — दान संस्था की अपनी आधिकारिक वेबसाइट पर, ऐप के बाहर होगा।',
+                  'The app is not part of this transaction — the daan happens on the organization’s own official website, outside the app.'
+                )}
           </Text>
         </View>
 
@@ -169,7 +189,9 @@ export default function DaanDirectoryDetailScreen({ navigation, route }: Props) 
             style={[styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.cardActiveBorder, borderRadius: radii.lg, marginTop: 12 }, elevation.card]}
           >
             <Text style={{ fontFamily: titleFont, fontSize: 14.5, lineHeight: 22, color: colors.ink, textAlign: 'center' }}>
-              {contentByLang(lang, 'आधिकारिक वेबसाइट पर जा रहे हैं', 'Leaving for the official website')}
+              {org.directPay
+                ? contentByLang(lang, 'दान-पृष्ठ पर जा रहे हैं', 'Leaving for the donation page')
+                : contentByLang(lang, 'आधिकारिक वेबसाइट पर जा रहे हैं', 'Leaving for the official website')}
             </Text>
             <Text style={{ fontFamily: bodyFont, fontSize: 12.5, lineHeight: 19, color: colors.inkSoft, textAlign: 'center', marginTop: 6 }}>
               {contentByLang(
