@@ -145,14 +145,28 @@
   var hi = document.documentElement.lang === 'hi';
   var pool = SHLOKAS.slice();
   function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
-  Array.prototype.forEach.call(els, function (el) {
+  function take(shortOnly) {
+    var idx = [];
+    for (var i = 0; i < pool.length; i++) if (!shortOnly || pool[i].t.length <= 2) idx.push(i);
+    if (!idx.length) return null;
+    return pool.splice(idx[Math.floor(Math.random() * idx.length)], 1)[0];
+  }
+  // The top strip has a fixed height (it is on the first screen, so a swap
+  // must not move the page): it takes a two-line verse, and goes first.
+  var list = Array.prototype.slice.call(els).sort(function (a, b) {
+    return (b.getAttribute('data-shloka') === 'short') - (a.getAttribute('data-shloka') === 'short');
+  });
+  list.forEach(function (el) {
     try {
-      var v = pool.splice(Math.floor(Math.random() * pool.length), 1)[0];
+      var short = el.getAttribute('data-shloka') === 'short';
+      var v = take(short);
+      if (pool.length === 0) pool = SHLOKAS.slice();
       if (!v) return;
       var t = el.querySelector('.shloka-text');
       t.innerHTML = v.t.map(esc).join('<br>');
       t.setAttribute('lang', v.l);
-      el.querySelector('.shloka-meaning').textContent = hi ? v.h : v.e;
+      var m = el.querySelector('.shloka-meaning');
+      if (m) m.textContent = hi ? v.h : v.e;
       el.querySelector('.shloka-src').textContent = hi ? v.sh : v.se;
     } finally {
       el.classList.add('is-set');
