@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Vedansh — Bhagavad Gita, Panchang &amp; Japa app</title>
+<script>document.documentElement.classList.add("js")</script>
 <meta name="description" content="A bilingual companion for daily Hindu devotion: the Bhagavad Gita and other sacred texts in a book-like reader, an accurate daily Panchang with Muhurat, vrat kathas and vidhi, Kundali and Guna Milan, Sankalp programmes and japam. Free.">
 <link rel="canonical" href="https://vedansh.app/">
 <link rel="alternate" hreflang="en-IN" href="https://vedansh.app/">
@@ -38,7 +39,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap"></noscript>
-<link rel="preload" as="image" href="images/art/hanuman-portrait.webp" type="image/webp" imagesrcset="images/art/hanuman-portrait-420.webp 420w, images/art/hanuman-portrait.webp 614w" imagesizes="(max-width: 860px) 200px, 614px" fetchpriority="high">
 <link rel="stylesheet" href="styles.css">
 
 <!--
@@ -268,7 +268,7 @@
 <main id="main">
 
   <section class="hero">
-    <picture><source type="image/webp" srcset="images/art/hanuman-portrait-420.webp 420w, images/art/hanuman-portrait.webp 614w" sizes="(max-width: 860px) 200px, 614px"><img class="hero-art" src="images/art/hanuman-portrait.jpg" srcset="images/art/hanuman-portrait-420.jpg 420w, images/art/hanuman-portrait.jpg 614w" sizes="(max-width: 860px) 200px, 614px" alt="" aria-hidden="true" width="614" height="1100" fetchpriority="high" decoding="async"></picture>
+    <div class="folio-bg hero-bg" data-src="images/bg/hero.webp" data-eager aria-hidden="true"></div>
     <div class="wrap hero-grid">
       <div class="stagger">
         <p class="hero-sanskrit dev">वेदांश</p>
@@ -314,6 +314,17 @@
         <li><b>4</b>Reading languages</li>
         <li><b>36</b>Gunas in a Milan</li>
       </ul>
+    </div>
+  </section>
+
+  <section class="shloka-band" aria-label="A verse">
+    <div class="folio-bg" data-src="images/bg/darbar.webp" aria-hidden="true"></div>
+    <div class="wrap">
+      <blockquote class="shloka" data-shloka>
+        <p class="shloka-text" lang="hi">होइहि सोइ जो राम रचि राखा।<br>को करि तर्क बढ़ावै साखा॥</p>
+        <p class="shloka-meaning">Whatever Rama has ordained will come to pass. Who would lengthen the matter by argument?</p>
+        <cite class="shloka-src">Ramcharitmanas, Balkand</cite>
+      </blockquote>
     </div>
   </section>
 
@@ -593,6 +604,17 @@
           <li><b>Pitru Paksha</b> — shraddha days, smaran and their kathas</li>
         </ul>
       </div>
+    </div>
+  </section>
+
+  <section class="shloka-band" aria-label="A verse">
+    <div class="folio-bg" data-src="images/bg/darbar.webp" aria-hidden="true"></div>
+    <div class="wrap">
+      <blockquote class="shloka" data-shloka>
+        <p class="shloka-text" lang="sa">श्रीरामचन्द्रचरणौ मनसा स्मरामि<br>श्रीरामचन्द्रचरणौ वचसा गृणामि।<br>श्रीरामचन्द्रचरणौ शिरसा नमामि<br>श्रीरामचन्द्रचरणौ शरणं प्रपद्ये॥</p>
+        <p class="shloka-meaning">The feet of Shri Ramachandra I remember with my mind; the feet of Shri Ramachandra I extol with my speech; the feet of Shri Ramachandra I bow to with my head; in the feet of Shri Ramachandra I take refuge.</p>
+        <cite class="shloka-src">Shri Rama Raksha Stotra</cite>
+      </blockquote>
     </div>
   </section>
 

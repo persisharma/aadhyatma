@@ -419,7 +419,7 @@ p { margin: 0 0 1.1em; }
    -------------------------------------------------------------------------- */
 
 @media (max-width: 900px) {
-  .hero-grid, .folio-grid, .folio:nth-of-type(even) .folio-grid { grid-template-columns: 1fr; }
+  .hero-grid, .folio-grid, .folio:nth-of-type(even) .folio-grid { grid-template-columns: minmax(0, 1fr); }
   .hero-figure, .folio-figure { order: 0 !important; justify-self: center; }
   .folio-figure { margin-top: 2.5rem; }
   .hero .lede, .folio p, .marks { max-width: 56ch; }
@@ -572,3 +572,52 @@ body[lang="hi"] { line-height: 1.75; }
   .folio-bg::before { animation: none; }
   .folio-bg::after { transform: none; transition: opacity 600ms ease; }
 }
+
+/* First screen: Krishna behind the headline, loaded at once rather than on
+   idle (it is on screen), with the same glow-then-fade as the folios. */
+.hero { position: relative; overflow: hidden; }
+.hero > .wrap { position: relative; z-index: 1; }
+.hero-bg.is-loaded::after { opacity: 0.24; }
+@media (max-width: 860px) { .hero-bg.is-loaded::after { opacity: 0.16; } }
+
+/* Narrow phones: brand, language pill, visit count and menu must share one
+   row without the pill sliding over the wordmark. */
+@media (max-width: 560px) {
+  .nav-inner { gap: 0.6rem; }
+  .brand { gap: 0.45rem; font-size: 1.2rem; flex: none; }
+  .brand img { width: 1.7rem; height: 1.7rem; }
+  .lang-pill { margin-left: auto; margin-right: 0; padding: 0.15rem; }
+  .lang-pill a { padding: 0.2rem 0.5rem; font-size: 0.82rem; }
+  .nav-hits { margin-left: 0.2rem; font-size: 0.7rem; letter-spacing: 0; }
+  .nav-toggle { margin-left: 0; padding: 0.35rem; }
+}
+
+/* --------------------------------------------------------------------------
+   Verse band — a random shloka or chaupai on each visit, over the Ram Darbar.
+   -------------------------------------------------------------------------- */
+.shloka-band { position: relative; overflow: hidden; text-align: center;
+  padding-block: clamp(3.5rem, 8vw, 6rem); background: var(--parchment-high);
+  border-block: 1px solid var(--rule); }
+.shloka-band > .wrap { position: relative; z-index: 1; }
+.shloka-band .folio-bg::before, .shloka-band .folio-bg::after { left: 20%; right: 20%; width: auto;
+  -webkit-mask-image: radial-gradient(55% 60% at 50% 50%, #000 30%, transparent 80%);
+          mask-image: radial-gradient(55% 60% at 50% 50%, #000 30%, transparent 80%); }
+.shloka-band .folio-bg.is-loaded::after { opacity: 0.18; }
+.shloka { margin: 0 auto; max-width: 46rem; min-height: 9.5rem; }
+.shloka::before { content: "❖"; display: block; color: var(--gold); opacity: 0.7; margin-bottom: 1.1rem; }
+.shloka-text { font-family: var(--devanagari); font-size: clamp(1.35rem, 2.3vw, 1.85rem);
+  line-height: 1.85; color: var(--ink); margin: 0 0 1rem; }
+.shloka-meaning { font-family: var(--display); font-style: italic; font-size: clamp(1.05rem, 1.3vw, 1.2rem);
+  color: var(--ink-soft); max-width: 52ch; margin: 0 auto 0.9rem; }
+.shloka-src { font-style: normal; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--saffron-deep); }
+[lang="hi"] .shloka-src { letter-spacing: 0.04em; text-transform: none; font-size: 0.9rem; }
+.shloka-band--small { padding-block: clamp(2.5rem, 6vw, 4rem); }
+.shloka-band--small .shloka-text { font-size: clamp(1.2rem, 2vw, 1.55rem); }
+/* The markup's verse is replaced on load; hold it invisible for that moment
+   (only when JS is running) so the swap is a fade, not a jump. */
+.js .shloka { opacity: 0; transition: opacity 600ms ease; }
+.js .shloka.is-set { opacity: 1; }
+@media (max-width: 860px) { .shloka-band .folio-bg::before, .shloka-band .folio-bg::after { left: 0; right: 0; height: 100%; } .shloka { min-height: 12rem; } }
+
+/* Devanagari has no true italic; a synthetic slant reads poorly. */
+[lang="hi"] .shloka-meaning { font-style: normal; font-family: var(--devanagari); font-size: clamp(1rem, 1.2vw, 1.12rem); line-height: 1.85; }
