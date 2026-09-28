@@ -13,7 +13,9 @@
     var onScroll = function () {
       nav.classList.toggle('is-scrolled', window.scrollY > 24);
     };
-    onScroll();
+    // First check on the next frame, not during startup, so reading scrollY
+    // does not force a synchronous layout before first paint.
+    requestAnimationFrame(onScroll);
     window.addEventListener('scroll', onScroll, { passive: true });
   }
 
@@ -76,4 +78,48 @@
       });
     })
     .catch(function () { /* the counter is decoration; never surface an error */ });
+})();
+
+/* Folio background art: load each image as its section comes within a screen
+   of the viewport, then flip the class that fades it in over the placeholder
+   glow. Without JS the sections simply stay plain. */
+(function () {
+  'use strict';
+  var els = document.querySelectorAll('.folio-bg[data-src]');
+  if (!els.length) return;
+
+  function load(el) {
+    var src = el.getAttribute('data-src');
+    el.removeAttribute('data-src');
+    var img = new Image();
+    img.decoding = 'async';
+    img.onload = function () {
+      el.style.setProperty('--bg', 'url("' + src + '")');
+      // a frame later, so the transition runs rather than jumping
+      requestAnimationFrame(function () { el.classList.add('is-loaded'); });
+    };
+    img.src = src;
+  }
+
+  function start() {
+    if (!('IntersectionObserver' in window)) {
+      Array.prototype.forEach.call(els, load);
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { io.unobserve(e.target); load(e.target); }
+      });
+    }, { rootMargin: '600px 0px' });
+    Array.prototype.forEach.call(els, function (el) { io.observe(el); });
+  }
+
+  // Decoration never competes with the page itself: nothing is requested
+  // until the page has loaded and the browser is idle.
+  function whenIdle() {
+    if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 3000 });
+    else setTimeout(start, 1200);
+  }
+  if (document.readyState === 'complete') whenIdle();
+  else window.addEventListener('load', whenIdle);
 })();

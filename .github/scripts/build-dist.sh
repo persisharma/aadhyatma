@@ -10,4 +10,9 @@ rsync -a ./ dist/ \
   --exclude netlify.toml --exclude netlify-functions --exclude functions \
   --exclude cloudflare --exclude wrangler.toml --exclude .netlify
 ( cd dist && python3 ../../.github/scripts/inline-css.py )
+# Fingerprint script.js so it can be cached for a year: a change to the file
+# changes the URL every page asks for.
+v=$(shasum -a 256 dist/script.js | cut -c1-10)
+find dist -name '*.html' -exec sed -i.bak -E "s#(src=\"(\.\./)*)script\.js\"#\1script.js?v=$v\"#g" {} + && find dist -name '*.bak' -delete
+echo "script.js fingerprint: $v"
 echo "dist: $(find dist -type f | wc -l | tr -d ' ') files"
