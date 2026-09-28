@@ -75,13 +75,14 @@ jobs:
         if: steps.creds.outputs.ready == 'true'
         working-directory: website
         run: |
-          existing=$(npx --yes wrangler@4 kv key get total --namespace-id "$KV_ID" --remote 2>/dev/null || true)
-          if [ -z "$existing" ]; then
+          # Judge by exit status: a missing key prints an error to stdout, which
+          # an emptiness test would mistake for an existing count.
+          if existing=$(npx --yes wrangler@4 kv key get total --namespace-id "$KV_ID" --remote 2>/dev/null) && [ "$existing" -gt 0 ] 2>/dev/null; then
+            echo "counter already at $existing"
+          else
             total=$(curl -s --max-time 20 'https://vedansh.app/api/hits?p=%2F' | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{process.stdout.write(String(JSON.parse(s).total||0))}catch{process.stdout.write("0")}})')
             npx --yes wrangler@4 kv key put total "$total" --namespace-id "$KV_ID" --remote
             echo "seeded total=$total"
-          else
-            echo "counter already at $existing"
           fi
 
       - name: Deploy
