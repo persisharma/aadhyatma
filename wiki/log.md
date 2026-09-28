@@ -270,3 +270,7 @@ Added a Vaas tile row under Nitya Yoga · Karana. Engine gained `PanchangData.mo
 ## [2026-09-27] feature | Panchang tab: चन्द्रमा + दिशा शूल tiles
 
 Vaas row became a 2×2 grid: चन्द्रमा (Moon rashi) · चन्द्र वास / अग्नि वास · दिशा शूल (shared Finder table). Updated [[panchang]].
+
+## [2026-09-27] design | Vaas tiles → यात्रा + हवन cards
+
+Prototype option B chosen: the four small vaas tiles became two cards (compass travel card, havan card). Updated [[panchang]].
