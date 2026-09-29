@@ -99,8 +99,8 @@ export default function DaanPunyaScreen({ navigation }: Props) {
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
-      {/* Annapurna giving anna to Shiva-as-bhikshu, width-fit so both figures survive a portrait crop. */}
-      <BackgroundLayer source={getDaanBackground()} fit="width" />
+      {/* Annapurna giving anna to Shiva-as-bhikshu — a 2:3 portrait plate, cover-fitted full screen. */}
+      <BackgroundLayer source={getDaanBackground()} />
       <SafeAreaView style={styles.root} edges={['top']} testID="daan-punya-screen">
       <ReaderHeader
         title={contentByLang(lang, 'दान-पुण्य', 'Daan Punya')}

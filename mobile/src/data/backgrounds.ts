@@ -194,8 +194,9 @@ export function getRandomDeityBackground(): BackgroundImage {
 
 /**
  * The दान-पुण्य home plate: Annapurna ladling anna into Shiva's bhiksha-patra —
- * the tradition's own image of giving food. Wide two-figure composition, so the
- * screen renders it width-fit (`BackgroundLayer fit="width"`), never cover.
+ * the tradition's own image of giving food. A 2:3 portrait plate with both
+ * figures inside the middle ~70% of its width, which is what `cover` keeps on
+ * a portrait phone — keep that when it is regenerated.
  */
 export function getDaanBackground(): BackgroundImage {
   return backgroundImages.daan_annapurna_bhiksha;
