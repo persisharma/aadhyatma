@@ -95,14 +95,14 @@ test('the three shipped arcs are exactly the PRD-28 roster; the rules carry the 
   assert.equal(getArcForRule(getRuleById('diwali'))?.id, 'deepavali');
 });
 
-test('additive: the eight arc rules keep their tithi/month/paksha/dayRule (no rule rewritten, no date changed)', () => {
+test('the eight arc rules keep their tithi/month/paksha and the day rule their published dates require', () => {
   const pin: Record<string, [number, 'shukla' | 'krishna', number, string | undefined]> = {
     'ganesh-chaturthi': [6, 'shukla', 4, 'madhyahna'],
     'anant-chaturdashi': [6, 'shukla', 14, undefined],
     'navratri-start': [7, 'shukla', 1, undefined],
-    dussehra: [7, 'shukla', 10, undefined],
-    dhanteras: [8, 'krishna', 13, undefined],
-    diwali: [8, 'krishna', 15, undefined],
+    dussehra: [7, 'shukla', 10, 'aparahna'],
+    dhanteras: [8, 'krishna', 13, 'pradosh'],
+    diwali: [8, 'krishna', 15, 'pradosh'],
     'govardhan-puja': [8, 'shukla', 1, undefined],
     'bhai-dooj': [8, 'shukla', 2, undefined],
   };
@@ -178,16 +178,19 @@ test('Ganesh 10 days: the visarjan slot IS the Anant Chaturdashi rule and the sp
   assert.equal(occ.slots.filter((s) => s.ruleId).length, 2, 'only the two rule-bound days carry ruleIds');
 });
 
-test('Diwali 2026: five named days, day 2 carries the Naraka Chaturdashi gap label, rule-bound days are tappable ids', () => {
+test('Diwali 2026: six civil days, day 2 carries the Naraka Chaturdashi gap label, rule-bound days are tappable ids', () => {
+  // Dhanteras and Lakshmi Puja are pradosh-vyapini (Drik: 6 and 8 Nov 2026), while
+  // Govardhan and Bhai Dooj stay on their sunrise days (10 and 11 Nov), so the
+  // amavasya's second morning (9 Nov) is an unnamed day inside the arc.
   const occ = resolveArcOccurrence(DIWALI, d(2026, 9, 3))!;
   assert.ok(occ);
   assert.equal(occ.open, false);
-  assert.equal(occ.totalDays, 5);
+  assert.equal(occ.totalDays, 6);
   assert.deepEqual(
-    occ.slots.map((s) => s.ruleId ?? s.labelEn),
-    ['dhanteras', 'Naraka Chaturdashi', 'diwali', 'govardhan-puja', 'bhai-dooj']
+    occ.slots.map((s) => s.ruleId ?? s.labelEn ?? null),
+    ['dhanteras', 'Naraka Chaturdashi', 'diwali', null, 'govardhan-puja', 'bhai-dooj']
   );
-  assert.equal(arcDateKey(occ.startDate), '2026-11-07');
+  assert.equal(arcDateKey(occ.startDate), '2026-11-06');
   assert.equal(arcDateKey(occ.endDate), '2026-11-11');
   assert.ok(occ.slots.every((s) => s.role === 'day'));
 });
@@ -198,9 +201,13 @@ test('Navratri 2026: ghatasthapana → Vijayadashami; ordinals come from dates, 
   assert.equal(occ.slots[0].role, 'sthapana');
   const v = visarjanSlot(occ)!;
   assert.equal(v.ruleId, 'dussehra');
-  assert.equal(arcDateKey(v.date), '2026-10-21');
-  assert.equal(occ.totalDays, 11, 'a vriddhi year is 11 civil days — the strip must not pretend 10');
+  assert.equal(arcDateKey(v.date), '2026-10-20', 'Vijayadashami is aparahna-vyapini (Drik 20 Oct 2026)');
+  assert.equal(occ.totalDays, 10);
   assert.equal(occ.totalDays, dayDiff(occ.startDate, occ.endDate) + 1);
+  const vriddhi = resolveArcOccurrence(NAVRATRI, d(2025, 9, 3))!;
+  assert.equal(arcDateKey(vriddhi.startDate), '2025-09-22');
+  assert.equal(arcDateKey(visarjanSlot(vriddhi)!.date), '2025-10-02');
+  assert.equal(vriddhi.totalDays, 11, 'a vriddhi year is 11 civil days — the strip must not pretend 10');
 });
 
 test('resolveArcOccurrence picks the occurrence containing today, else the next one; choices are occurrence-scoped', () => {
@@ -219,7 +226,7 @@ test('resolveArcOccurrence picks the occurrence containing today, else the next 
   assert.equal(openGone.startDate.getFullYear(), 2027);
   // Before: the upcoming one.
   const before = resolveArcOccurrence(DIWALI, d(2026, 1, 1))!;
-  assert.equal(arcDateKey(before.startDate), '2026-11-07');
+  assert.equal(arcDateKey(before.startDate), '2026-11-06');
   // A non-arc rule resolves to nothing.
   assert.equal(resolveArcOccurrenceForRule(getRuleById('holi'), d(2026, 9, 3)), null);
   assert.equal(resolveArcOccurrenceForRule(getRuleById('bhai-dooj'), d(2026, 9, 3))?.arc.id, 'deepavali');
@@ -228,13 +235,13 @@ test('resolveArcOccurrence picks the occurrence containing today, else the next 
 // ─── Today's position ───────────────────────────────────────────────────────
 
 test('arcDayFor: before / during (ordinal, remaining) / after; open arcs count honestly with unknown remaining', () => {
-  const occ = buildArcOccurrence(DIWALI, d(2026, 11, 7), null);
-  assert.deepEqual(arcDayFor(occ, d(2026, 11, 5)), { phase: 'before', daysUntilStart: 2 });
-  const day2 = arcDayFor(occ, d(2026, 11, 8));
+  const occ = buildArcOccurrence(DIWALI, d(2026, 11, 6), null);
+  assert.deepEqual(arcDayFor(occ, d(2026, 11, 4)), { phase: 'before', daysUntilStart: 2 });
+  const day2 = arcDayFor(occ, d(2026, 11, 7));
   assert.equal(day2.phase, 'during');
   if (day2.phase === 'during') {
     assert.equal(day2.ordinal, 2);
-    assert.equal(day2.daysRemaining, 3);
+    assert.equal(day2.daysRemaining, 4);
     assert.equal(day2.slot.labelEn, 'Naraka Chaturdashi');
   }
   const last = arcDayFor(occ, d(2026, 11, 11));
@@ -252,12 +259,12 @@ test('arcDayFor: before / during (ordinal, remaining) / after; open arcs count h
 });
 
 test('Navratri preparation window: Kanya Pujan bhog/grocery hand-off surfaces from three days before the end to the eve, not on Dashami', () => {
-  const occ = resolveArcOccurrence(NAVRATRI, d(2026, 10, 12))!; // start 11 Oct, end 21 Oct
-  assert.equal(prepareActive(occ, d(2026, 10, 17)), false, 'Saptami morning is too early');
-  assert.equal(prepareActive(occ, d(2026, 10, 18)), true, '3 days before Dashami');
-  assert.equal(prepareActive(occ, d(2026, 10, 19)), true, 'Ashtami');
-  assert.equal(prepareActive(occ, d(2026, 10, 20)), true, 'Navami — the eve');
-  assert.equal(prepareActive(occ, d(2026, 10, 21)), false, 'Dashami itself');
+  const occ = resolveArcOccurrence(NAVRATRI, d(2026, 10, 12))!; // start 11 Oct, end 20 Oct
+  assert.equal(prepareActive(occ, d(2026, 10, 16)), false, 'four days out is too early');
+  assert.equal(prepareActive(occ, d(2026, 10, 17)), true, '3 days before Dashami');
+  assert.equal(prepareActive(occ, d(2026, 10, 18)), true, '2 days before');
+  assert.equal(prepareActive(occ, d(2026, 10, 19)), true, 'the eve');
+  assert.equal(prepareActive(occ, d(2026, 10, 20)), false, 'Dashami itself');
   assert.equal(NAVRATRI.prepare!.vidhiId, 'navratri-ghatasthapana', 'reuses the shipped vidhi’s तैयारी tab (PRD-23 bhog + grocery)');
   assert.equal(prepareActive(buildArcOccurrence(GANESH, d(2026, 9, 14), null), d(2026, 9, 15)), false, 'no prepare on an open arc');
   assert.equal(prepareActive(resolveArcOccurrence(DIWALI, d(2026, 11, 8))!, d(2026, 11, 8)), false, 'Diwali defines no prepare');
