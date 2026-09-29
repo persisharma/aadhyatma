@@ -36,7 +36,12 @@ import type { CalendarSystem, ResolvedObservance } from './types';
 // v8: section A — 27 pan-India jayantis and named days (Varaha, Vamana, Narak
 //     Chaturdashi, Mauni Amavasya…). Catalog additions only; no matcher change
 //     and no shipped date moved.
-const CACHE_VERSION = 8;
+// v9: day-rule audit — pradosh / nishita / ratri / sunset / sunset-last /
+//     purvahna / pradosh-next conventions, and 25 rules retagged onto them
+//     (Dussehra, Diwali, Dhanteras, Maha Shivaratri, Holi, the monthly Pradosh,
+//     Masik Shivaratri, Kalashtami, Purnima and Skanda Sashti vrats…). MOVES
+//     shipped dates — ~417 Ujjain rows 2024–2031 — so every city re-scans.
+const CACHE_VERSION = 9;
 const KEY_ROOT = '@vedansh:observances:';
 const KEY_PREFIX = `${KEY_ROOT}v${CACHE_VERSION}:`;
 

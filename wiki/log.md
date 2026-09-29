@@ -274,3 +274,6 @@ Vaas row became a 2×2 grid: चन्द्रमा (Moon rashi) · चन्�
 ## [2026-09-27] design | Vaas tiles → यात्रा + हवन cards
 
 Prototype option B chosen: the four small vaas tiles became two cards (compass travel card, havan card). Updated [[panchang]].
+
+## [2026-09-29] ingest | Day-rule audit: 7 new ObservanceDayRule conventions, 25 rules retagged (Dussehra/Diwali/Shivaratri/Holi + monthly vrats), verifier fails on any 1-day shift, KNOWN_DIVERGENCES holi:2026, observance CACHE_VERSION 9. Updated [[panchang]] gotchas.
+## [2026-09-29] gap | Bhadra (vishti karana) is not modelled — Holika Dahan/Holi 2026 diverge; no Holika Dahan rule exists at all.

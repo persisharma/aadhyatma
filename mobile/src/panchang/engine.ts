@@ -581,6 +581,98 @@ export function tithiAtAparahna(
 }
 
 /**
+ * The tithi running at this civil day's pradosh — the midpoint of the first
+ * three of the night's fifteen muhurtas, i.e. sunset + 0.1 × (next sunrise −
+ * sunset). This is the instant a pradosh-vyapini observance is fixed by: the
+ * evening lamp/puja of Diwali's Lakshmi Puja, Dhanteras, the monthly Pradosh
+ * vrat and Bachh Baras happen in the hours after sunset, so the day is the one
+ * whose evening the tithi covers. Diwali 2026: amavasya runs 8 Nov 11:27 AM →
+ * 9 Nov 12:31 PM, so udaya said 9 Nov while every almanac says 8 Nov.
+ *
+ * Same gate as `tithiAtMadhyahna`: pradosh falls before the next sunrise, and a
+ * tithi (≥ 19h59m) cannot open and close inside the ~14 h from sunrise to
+ * pradosh, so only the sunrise tithi or its successor can be running there.
+ */
+export function tithiAtPradosh(
+  localDate: Date,
+  expectedTithiIndex: number,
+  options: PanchangComputationOptions = {}
+): number | null {
+  return tithiAtNightFraction(localDate, expectedTithiIndex, options, 0.1);
+}
+
+/**
+ * The tithi running at this civil day's nishita — the eighth of the night's
+ * fifteen muhurtas, whose midpoint is the midpoint of sunset and the NEXT
+ * sunrise. Maha Shivaratri and the monthly Masik Shivaratri are fixed by the
+ * midnight puja: Maha Shivaratri 2026's chaturdashi runs 15 Feb 5:04 PM →
+ * 16 Feb 5:34 PM, so udaya said 16 Feb while Drik's nishita puja is the night
+ * of 15 Feb. The instant is still inside the civil day's "night", which the
+ * almanac names by the preceding sunrise's date.
+ *
+ * Same gate: nishita is at most ~19 h after sunrise, under the shortest tithi.
+ */
+export function tithiAtNishita(
+  localDate: Date,
+  expectedTithiIndex: number,
+  options: PanchangComputationOptions = {}
+): number | null {
+  return tithiAtNightFraction(localDate, expectedTithiIndex, options, 0.5);
+}
+
+/**
+ * The tithi running at `fraction` of this civil day's daylight (0 = sunrise,
+ * 1 = sunset). Backs the two "last covering day" conventions:
+ *
+ * - `sunset-last` (1 — sunset, the close of the sayankal the avatara is worshipped
+ *   in): Narasimha Jayanti is the later day whose sunset chaturdashi covers.
+ *   Drik: 21 May 2024 (chaturdashi ends 22 May 6:47 PM, before that sunset),
+ *   11 May 2025 (10 May 5:30 PM → 11 May 8:02 PM covers both sunsets; the later
+ *   is kept), 30 Apr 2026, 18 May 2027 (opens 18 May 4:05 PM).
+ * - `purvahna` (0.2 — the end of the day's third muhurta): Akshaya Tritiya is
+ *   the sunrise day only when tritiya lasts three muhurtas past sunrise — 9 May
+ *   2027 (tritiya to 9:03 AM) — and otherwise the day before, on which it
+ *   opened: 19 Apr 2026 (tritiya 19 Apr 10:49 AM → 20 Apr 7:27 AM).
+ *
+ * Also `sunset` (1, FIRST covering day): Skanda Sashti is kept on the day
+ * shashthi is already running at sunset — Drik 2026: 22 Feb (opens 11:11 AM),
+ * 19 Jun (5:01 PM), 17 Aug (5:01 PM), each a day before the sunrise shashthi.
+ *
+ * Same gate as the other instants: any daylight instant can only carry the
+ * sunrise tithi or its successor.
+ */
+export function tithiAtDayFraction(
+  localDate: Date,
+  expectedTithiIndex: number,
+  options: PanchangComputationOptions,
+  fraction: number
+): number | null {
+  const sunriseTithi = computeTithiAndMonth(localDate, options).tithiIndex;
+  if (sunriseTithi !== expectedTithiIndex && (sunriseTithi + 1) % 30 !== expectedTithiIndex) return null;
+  const sunrise = sunriseFor(localDate, options.location, options.civilTimeZone);
+  const sunset = sunsetFor(localDate, options.location, options.civilTimeZone);
+  const instant = new Date(sunrise.getTime() + fraction * (sunset.getTime() - sunrise.getTime()));
+  const year = instant.getFullYear();
+  return computeTithiIndex(getSiderealSunLng(instant, year), getSiderealMoonLng(instant, year));
+}
+
+function tithiAtNightFraction(
+  localDate: Date,
+  expectedTithiIndex: number,
+  options: PanchangComputationOptions,
+  fraction: number
+): number | null {
+  const sunriseTithi = computeTithiAndMonth(localDate, options).tithiIndex;
+  if (sunriseTithi !== expectedTithiIndex && (sunriseTithi + 1) % 30 !== expectedTithiIndex) return null;
+  const sunset = sunsetFor(localDate, options.location, options.civilTimeZone);
+  const nextDay = new Date(localDate.getFullYear(), localDate.getMonth(), localDate.getDate() + 1);
+  const nextSunrise = sunriseFor(nextDay, options.location, options.civilTimeZone);
+  const instant = new Date(sunset.getTime() + fraction * (nextSunrise.getTime() - sunset.getTime()));
+  const year = instant.getFullYear();
+  return computeTithiIndex(getSiderealSunLng(instant, year), getSiderealMoonLng(instant, year));
+}
+
+/**
  * The tithi running at this civil day's moonrise — what a chandrodaya-vyapini
  * vrat (Sankashti Chaturthi, Karwa Chauth) is fixed by, since its defining act
  * is the moon sighting and the arghya that ends the fast.
