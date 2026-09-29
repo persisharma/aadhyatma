@@ -8,10 +8,29 @@
   "background_color": "#F3E7C9",
   "theme_color": "#F3E7C9",
   "icons": [
-    { "src": "/images/icon.png", "sizes": "256x256", "type": "image/png", "purpose": "any" }
+    {
+      "src": "/images/favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
   ],
   "related_applications": [
-    { "platform": "itunes", "url": "https://apps.apple.com/app/vedansh/id6766086529", "id": "6766086529" },
-    { "platform": "play", "url": "https://play.google.com/store/apps/details?id=com.prashantsharma.vedansh", "id": "com.prashantsharma.vedansh" }
+    {
+      "platform": "itunes",
+      "url": "https://apps.apple.com/app/vedansh/id6766086529",
+      "id": "6766086529"
+    },
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=com.prashantsharma.vedansh",
+      "id": "com.prashantsharma.vedansh"
+    }
   ]
 }
