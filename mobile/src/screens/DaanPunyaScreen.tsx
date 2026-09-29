@@ -25,7 +25,7 @@ import Svg, { Path } from 'react-native-svg';
 
 import BackgroundLayer from '@/components/BackgroundLayer';
 import ReaderHeader from '@/components/ReaderHeader';
-import { getDeityBackground } from '@/data/backgrounds';
+import { getDaanBackground } from '@/data/backgrounds';
 import { useTodayKey } from '@/utils/useTodayKey';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import {
@@ -99,8 +99,8 @@ export default function DaanPunyaScreen({ navigation }: Props) {
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
-      {/* Lakshmi plate — dāna is Śrī given onward; the same faded layer as the other index screens. */}
-      <BackgroundLayer source={getDeityBackground('lakshmi')} />
+      {/* Annapurna giving anna to Shiva-as-bhikshu, width-fit so both figures survive a portrait crop. */}
+      <BackgroundLayer source={getDaanBackground()} fit="width" />
       <SafeAreaView style={styles.root} edges={['top']} testID="daan-punya-screen">
       <ReaderHeader
         title={contentByLang(lang, 'दान-पुण्य', 'Daan Punya')}

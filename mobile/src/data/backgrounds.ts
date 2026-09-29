@@ -192,6 +192,15 @@ export function getRandomDeityBackground(): BackgroundImage {
   return deityBackgroundList[Math.floor(Math.random() * deityBackgroundList.length)];
 }
 
+/**
+ * The दान-पुण्य home plate: Annapurna ladling anna into Shiva's bhiksha-patra —
+ * the tradition's own image of giving food. Wide two-figure composition, so the
+ * screen renders it width-fit (`BackgroundLayer fit="width"`), never cover.
+ */
+export function getDaanBackground(): BackgroundImage {
+  return backgroundImages.daan_annapurna_bhiksha;
+}
+
 export function getSourceBackground(sourceId: string): BackgroundImage | null {
   return sourceBackgrounds[sourceId] ?? null;
 }
