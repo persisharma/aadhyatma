@@ -26,6 +26,8 @@ jest.mock('@react-navigation/native', () => ({
   useNavigation: () => mockNavigation,
 }));
 
+jest.mock('@/components/BackgroundLayer', () => () => null);
+
 jest.mock('react-native-safe-area-context', () => ({
   SafeAreaView: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) =>
     mockReact.createElement(mockView, props, children),
@@ -114,10 +116,10 @@ describe('DaanPunyaScreen — the educate-first home', () => {
     const bar = tree.root.findAllByProps({ testID: 'daan-home-actions' })[0];
     expect(bar.findAllByProps({ testID: 'daan-home-dwaar' }).length).toBeGreaterThan(0);
     expect(bar.findAllByProps({ testID: 'daan-home-donate' }).length).toBeGreaterThan(0);
-    // Every verified principle rides the carousel; the meaning unfolds in place.
+    // Every verified principle rides the carousel; the meaning renders in full (no unfold toggle).
     const carousel = tree.root.findAllByProps({ testID: 'daan-principle-carousel' })[0];
     expect(carousel.findAllByProps({ testID: 'daan-principle-dana-sukta' }).length).toBeGreaterThan(0);
-    expect(has(tree, 'daan-principle-meaning-dana-sukta')).toBe(true);
+    expect(has(tree, 'daan-principle-meaning-dana-sukta')).toBe(false);
     // The kathas are a horizontal shelf.
     const shelf = tree.root.findAllByProps({ testID: 'daan-katha-shelf' })[0];
     expect(shelf.findAllByProps({ testID: 'daan-katha-karna' }).length).toBeGreaterThan(0);

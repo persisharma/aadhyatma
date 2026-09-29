@@ -23,7 +23,9 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Svg, { Path } from 'react-native-svg';
 
+import BackgroundLayer from '@/components/BackgroundLayer';
 import ReaderHeader from '@/components/ReaderHeader';
+import { getDaanBackground } from '@/data/backgrounds';
 import { useTodayKey } from '@/utils/useTodayKey';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import {
@@ -80,9 +82,9 @@ export default function DaanPunyaScreen({ navigation }: Props) {
   const principles = getDaanPrinciples();
   const kathas = getDaanKathas();
 
-  // Verse carousel: which card is in view (dots) and which meanings are unfolded.
+  // Verse carousel: which card is in view (dots). Meanings render in full — each
+  // fits its card, so there is no unfold toggle.
   const [verseIdx, setVerseIdx] = useState(0);
-  const [openMeanings, setOpenMeanings] = useState<Record<string, boolean>>({});
   const cardWidth = width - spacing.readingGutter * 2 - CAROUSEL_PEEK;
   const snap = cardWidth + CAROUSEL_GAP;
 
@@ -96,7 +98,10 @@ export default function DaanPunyaScreen({ navigation }: Props) {
   const quietLinkStyle = { fontFamily: titleFont, fontSize: 12.5, color: colors.saffronDeep };
 
   return (
-    <SafeAreaView style={[styles.root, { backgroundColor: colors.background }]} edges={['top']} testID="daan-punya-screen">
+    <View style={[styles.root, { backgroundColor: colors.parchment }]}>
+      {/* Annapurna giving anna to Shiva-as-bhikshu — a 2:3 portrait plate, cover-fitted full screen. */}
+      <BackgroundLayer source={getDaanBackground()} />
+      <SafeAreaView style={styles.root} edges={['top']} testID="daan-punya-screen">
       <ReaderHeader
         title={contentByLang(lang, 'दान-पुण्य', 'Daan Punya')}
         variant="index"
@@ -235,7 +240,6 @@ export default function DaanPunyaScreen({ navigation }: Props) {
           }}
         >
           {principles.map((entry) => {
-            const open = openMeanings[entry.id] === true;
             return (
               <View
                 key={entry.id}
@@ -260,46 +264,30 @@ export default function DaanPunyaScreen({ navigation }: Props) {
                   <Text style={{ fontFamily: typography.sectionLabel.fontFamily, fontSize: 10.5, letterSpacing: lang === 'en' ? 0.6 : 0, color: colors.inkMuted, textAlign: 'center', textTransform: 'uppercase', marginTop: 8 }}>
                     {contentByLang(lang, entry.citeHi, entry.citeEn)}
                   </Text>
-                  <Text
-                    numberOfLines={open ? undefined : 2}
-                    style={{ fontFamily: bodyFont, fontSize: 13, lineHeight: 20, color: colors.inkSoft, marginTop: 8 }}
-                  >
+                  <Text style={{ fontFamily: bodyFont, fontSize: 13, lineHeight: 20, color: colors.inkSoft, marginTop: 8 }}>
                     {meaningByLang(lang, entry.meaningHi, entry.meaningEn)}
                   </Text>
                 </View>
-                <View style={styles.cardActions}>
-                  <Pressable
-                    testID={`daan-principle-meaning-${entry.id}`}
-                    accessibilityRole="button"
-                    accessibilityLabel={open ? 'Collapse meaning' : 'Expand meaning'}
-                    onPress={() => setOpenMeanings((m) => ({ ...m, [entry.id]: !open }))}
-                    style={styles.inlineLink}
-                  >
-                    <Text style={{ fontFamily: titleFont, fontSize: 13, color: colors.saffronDeep }}>
-                      {open
-                        ? contentByLang(lang, 'संक्षेप ‹', 'Less ‹')
-                        : contentByLang(lang, 'पूरा अर्थ ›', 'Full meaning ›')}
-                    </Text>
-                  </Pressable>
-                  {entry.gitaRef ? (
-                    <Pressable
-                      testID="daan-gita-link"
-                      accessibilityRole="button"
-                      accessibilityLabel="Read in the Gita reader"
-                      onPress={() =>
-                        rootNav.navigate('HomeTab', {
-                          screen: 'GitaReader',
-                          params: { chapter: entry.gitaRef!.chapter, initialIndex: entry.gitaRef!.verseIndex },
-                        })
-                      }
-                      style={[styles.chip, { borderColor: colors.saffron, borderRadius: radii.pill }]}
-                    >
-                      <Text style={{ fontFamily: titleFont, fontSize: 12.5, color: colors.saffronDeep }}>
-                        {contentByLang(lang, 'गीता में पढ़ें ›', 'Read in the Gita ›')}
-                      </Text>
-                    </Pressable>
-                  ) : null}
-                </View>
+                {entry.gitaRef ? (
+                  <View style={styles.cardActions}>
+                      <Pressable
+                        testID="daan-gita-link"
+                        accessibilityRole="button"
+                        accessibilityLabel="Read in the Gita reader"
+                        onPress={() =>
+                          rootNav.navigate('HomeTab', {
+                            screen: 'GitaReader',
+                            params: { chapter: entry.gitaRef!.chapter, initialIndex: entry.gitaRef!.verseIndex },
+                          })
+                        }
+                        style={[styles.chip, { borderColor: colors.saffron, borderRadius: radii.pill }]}
+                      >
+                        <Text style={{ fontFamily: titleFont, fontSize: 12.5, color: colors.saffronDeep }}>
+                          {contentByLang(lang, 'गीता में पढ़ें ›', 'Read in the Gita ›')}
+                        </Text>
+                      </Pressable>
+                  </View>
+                ) : null}
               </View>
             );
           })}
@@ -401,7 +389,8 @@ export default function DaanPunyaScreen({ navigation }: Props) {
           </Text>
         </Pressable>
       </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </View>
   );
 }
 
@@ -411,7 +400,6 @@ const styles = StyleSheet.create({
   card: { borderWidth: 1, paddingHorizontal: 14, paddingTop: 13, paddingBottom: 13 },
   verseCard: { justifyContent: 'space-between' },
   cardActions: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 6, gap: 8 },
-  inlineLink: { minHeight: 32, justifyContent: 'center' },
   chip: { borderWidth: 1.5, paddingHorizontal: 12, paddingVertical: 5 },
   journeyBtn: { borderWidth: 1.5, paddingHorizontal: 14, paddingVertical: 7, marginTop: 11, alignSelf: 'flex-start' },
   labelRow: { flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 8 },
