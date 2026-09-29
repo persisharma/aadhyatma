@@ -401,6 +401,13 @@ export const FESTIVAL_RULES: ObservanceRule[] = [
   festival({ id: 'teja-dashami', nameHi: 'तेजा दशमी', nameEn: 'Teja Dashami', lunarMonth: 6, paksha: 'shukla', tithi: 10, marker: 'dot', deityHi: 'वीर तेजाजी', deityEn: 'Veer Tejaji', shortDescriptionHi: 'भाद्रपद शुक्ल दशमी को वीर तेजाजी का स्मरण — खरनाल और परबतसर (नागौर) के पशु मेले इसी दिन से जुड़े हैं; किसान और ग्रामीण सर्पदंश से रक्षा की मान्यता से तांती बांधते हैं।', shortDescriptionEn: 'Remembrance of Veer Tejaji on Bhadrapada Shukla Dashami — the Kharnal and Parbatsar (Nagaur) cattle fairs are tied to this day, and farmers and villagers tie the protective tanti thread against snakebite.', searchTerms: ['teja dashami', 'teja dashmi', 'tejaji', 'veer teja', 'parbatsar', 'kharnal'], kathaId: 'teja-dashami-katha', sourceUrl: RajasthanTourismUrl }),
   festival({ id: 'anant-chaturdashi', nameHi: 'अनंत चतुर्दशी', nameEn: 'Anant Chaturdashi', lunarMonth: 6, paksha: 'shukla', tithi: 14, arcId: 'ganesh-utsav', arcRole: 'visarjan', arcOrdinal: 10, marker: 'dot', category: 'vrat', deityHi: 'भगवान विष्णु', deityEn: 'Lord Vishnu', kathaId: 'anant-chaturdashi-vrat-katha', bhogId: 'anant-chaturdashi-bhog' }),
   festival({ id: 'navratri-start', nameHi: 'नवरात्रि प्रारंभ', nameEn: 'Navratri Begins', lunarMonth: 7, paksha: 'shukla', tithi: 1, arcId: 'sharad-navratri', arcRole: 'sthapana', arcOrdinal: 1, marker: 'star', deityHi: 'मां दुर्गा', deityEn: 'Maa Durga', linkSectionId: 'durga-stotram', kathaId: 'navratri-start-katha', vidhiId: 'navratri-ghatasthapana', bhogId: 'navratri-bhog' }),
+  // Ashvin Shukla Navami, `madhyahna` — Maha Navami (navami puja, havan, Kanya
+  // Pujan). Drik keeps it on the day navami covers midday, which is often the
+  // Ashtami day itself (11 Oct 2024, 26 Sep 2028). Published: 11 Oct 2024,
+  // 1 Oct 2025, 19 Oct 2026, 8 Oct 2027, 26 Sep 2028, 15 Oct 2029 (Drik "Maha
+  // Navami"; India TV, Samvat). Sunrise matching misses 4 of those 6. Bengal's
+  // Maha Navami (20 Oct 2026, 9 Oct 2027) is the Durga Puja reckoning, not this.
+  festival({ id: 'maha-navami', nameHi: 'महा नवमी', nameEn: 'Maha Navami', lunarMonth: 7, paksha: 'shukla', tithi: 9, dayRule: 'madhyahna', marker: 'dot', deityHi: 'मां सिद्धिदात्री', deityEn: 'Maa Siddhidatri', shortDescriptionHi: 'आश्विन शुक्ल नवमी को महा नवमी — शारदीय नवरात्रि का नौवाँ दिन, मां सिद्धिदात्री की पूजा। नवमी हवन और कन्या पूजन के साथ नवरात्रि का अनुष्ठान पूर्ण होता है; कई वर्षों में यह अष्टमी के ही दिन पड़ती है।', shortDescriptionEn: 'Maha Navami on Ashvin Shukla Navami — the ninth day of Sharad Navratri, given to Maa Siddhidatri. The navami havan and Kanya Pujan complete the Navratri observance; in many years it falls on the Ashtami day itself.', searchTerms: ['maha navami', 'mahanavami', 'durga navami', 'navami', 'navratri navami', 'siddhidatri', 'kanya pujan', 'navami havan'], sourceUrl: 'https://www.drikpanchang.com/navratri/durga-puja/maha-navami-date-time.html' }),
   festival({ id: 'dussehra', nameHi: 'दशहरा', nameEn: 'Dussehra', lunarMonth: 7, paksha: 'shukla', tithi: 10, dayRule: 'aparahna', arcId: 'sharad-navratri', arcRole: 'visarjan', arcOrdinal: 10, marker: 'star', deityHi: 'श्री राम', deityEn: 'Shri Ram', linkSectionId: 'ram-stuti', kathaId: 'dussehra-katha' }),
   festival({ id: 'sharad-purnima', nameHi: 'शरद पूर्णिमा', nameEn: 'Sharad Purnima', lunarMonth: 7, paksha: 'shukla', tithi: 15, dayRule: 'nishita', marker: 'dot', deityHi: 'चंद्र देव', deityEn: 'Chandra Deva', kathaId: 'sharad-purnima-vrat-katha' }),
   festival({ id: 'kojagara-puja', nameHi: 'कोजागरा पूजा', nameEn: 'Kojagara Puja', lunarMonth: 7, paksha: 'shukla', tithi: 15, dayRule: 'nishita', marker: 'dot', category: 'vrat', deityHi: 'मां लक्ष्मी', deityEn: 'Maa Lakshmi', kathaId: 'sharad-purnima-vrat-katha', bhogId: 'kojagara-bhog' }),
@@ -466,8 +473,9 @@ export const FESTIVAL_RULES: ObservanceRule[] = [
   // published date does not ship):
   //   • Lalita Panchami — published 26 Sep 2025 (Drik) vs the sunrise Panchami
   //     of 27 Sep; 2026 agrees. One matching year is not a convention.
-  //   • Durga Ashtami / Maha Navami (Sharad) — published sources split 18 vs 19
-  //     Oct 2026 (Ashtami) and 19 vs 20 Oct (Navami); Drik's own date unread.
+  //   • Durga Ashtami (Sharad) — already the Ashvin `masik-durgashtami` day,
+  //     which matches Drik 2024–2029 (19 Oct 2026); a second rule would put
+  //     it on the calendar twice. Maha Navami ships below (madhyahna).
   //   • Vaikuntha Chaturdashi — nishita-vyapini (modelled since the Sept 2026
   //     day-rule audit), but still a single source for 2026.
   //   • Balarama Jayanti (Bhadrapada S6, Drik) — distinct from Hal Shashthi

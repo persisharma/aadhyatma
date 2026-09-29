@@ -41,6 +41,7 @@ import type { CalendarSystem, ResolvedObservance } from './types';
 //     (Dussehra, Diwali, Dhanteras, Maha Shivaratri, Holi, the monthly Pradosh,
 //     Masik Shivaratri, Kalashtami, Purnima and Skanda Sashti vrats…). MOVES
 //     shipped dates — ~417 Ujjain rows 2024–2031 — so every city re-scans.
+//     Adds `maha-navami` (madhyahna).
 const CACHE_VERSION = 9;
 const KEY_ROOT = '@vedansh:observances:';
 const KEY_PREFIX = `${KEY_ROOT}v${CACHE_VERSION}:`;

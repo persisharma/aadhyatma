@@ -65,6 +65,7 @@ export const ANNUAL: AnnualFestival[] = [
   { id: 'ganesh-chaturthi', month: 6, paksha: 'shukla', tithi: 4, muhurta: 'madhyahna' },
   { id: 'navratri-start', month: 7, paksha: 'shukla', tithi: 1, muhurta: 'udaya' },
   { id: 'dussehra', month: 7, paksha: 'shukla', tithi: 10, muhurta: 'aparahna' },
+  { id: 'maha-navami', month: 7, paksha: 'shukla', tithi: 9, muhurta: 'madhyahna' },
   { id: 'sharad-purnima', month: 7, paksha: 'shukla', tithi: 15, muhurta: 'nishita' },
   { id: 'kojagara-puja', month: 7, paksha: 'shukla', tithi: 15, muhurta: 'nishita' },
   // Karwa Chauth is chandrodaya in the engine; pradosh is this script's stand-in for the
@@ -199,6 +200,8 @@ export const ANCHORS: Record<string, string> = {
   'kaal-bhairav-jayanti:2024': '2024-11-22', 'kaal-bhairav-jayanti:2027': '2027-11-20',
   'bhai-dooj:2026': '2026-11-11', 'radha-ashtami:2026': '2026-09-19', 'radha-ashtami:2027': '2027-09-08',
   'janmashtami:2027': '2027-08-25',
+  'maha-navami:2024': '2024-10-11', 'maha-navami:2025': '2025-10-01', 'maha-navami:2026': '2026-10-19',
+  'maha-navami:2027': '2027-10-08', 'maha-navami:2028': '2028-09-26', 'maha-navami:2029': '2029-10-15',
 };
 
 // Published dates the engine is KNOWN to miss, with the reason. Reported every run and

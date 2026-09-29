@@ -277,3 +277,4 @@ Prototype option B chosen: the four small vaas tiles became two cards (compass t
 
 ## [2026-09-29] ingest | Day-rule audit: 7 new ObservanceDayRule conventions, 25 rules retagged (Dussehra/Diwali/Shivaratri/Holi + monthly vrats), verifier fails on any 1-day shift, KNOWN_DIVERGENCES holi:2026, observance CACHE_VERSION 9. Updated [[panchang]] gotchas.
 ## [2026-09-29] gap | Bhadra (vishti karana) is not modelled — Holika Dahan/Holi 2026 diverge; no Holika Dahan rule exists at all.
+## [2026-09-29] ingest | Added `maha-navami` (madhyahna; Drik 2024–2029 pinned). Durga Ashtami stays the Ashvin `masik-durgashtami` day.

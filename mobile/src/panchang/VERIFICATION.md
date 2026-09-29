@@ -121,7 +121,7 @@ disagreement was settled against a published date (Drik for New Delhi unless not
 | `pradosh` | evening (sunset + 0.1 night), first of two | Diwali, Dhanteras, Ahoi Ashtami, Parashurama & Dattatreya Jayanti, Bachh Baras, both Pradosh vrats, Purnima vrat | Diwali 31 Oct 2024 / 8 Nov 2026 / 17 Oct 2028; Pradosh 30 Jan, 28 Apr 2026; Purnima vrat 2 Jan, 2 Mar, 28 Jul 2026 |
 | `nishita` | midnight, first of two | Maha & Masik Shivaratri, Sharad Purnima, Kojagara | 15 Feb 2026, 11 Feb 2029; Masik 17 Mar, 9 Sep 2026; Sharad 16 Oct 2024 |
 | `ratri` | pradosh, else nishita | Masik Kalashtami, Kaal Bhairav Jayanti | all 13 Kalashtamis of 2026 (10 Apr vs 5 Aug decide the order); KBJ 22 Nov 2024, 20 Nov 2027 |
-| `madhyahna` | midday | + Sita Navami, Ganga Saptami, Vat Savitri, Satyanarayan | 5 May, 3 May, 26 May 2025; Satyanarayan 2026 list |
+| `madhyahna` | midday | + Sita Navami, Ganga Saptami, Vat Savitri, Satyanarayan, **Maha Navami** (new rule) | 5 May, 3 May, 26 May 2025; Satyanarayan 2026 list; Maha Navami 11 Oct 2024 → 15 Oct 2029 (six years) |
 | `sunset` | at sunset, first of two | Skanda Sashti | 22 Feb, 19 Jun, 17 Aug 2026 |
 | `sunset-last` | at sunset, LATER of two | Narasimha Jayanti | 21 May 2024, 11 May 2025, 30 Apr 2026, 18 May 2027 |
 | `purvahna` | 3 muhurtas past sunrise, later of two; else the opening day | Akshaya Tritiya | 19 Apr 2026 vs 9 May 2027 |

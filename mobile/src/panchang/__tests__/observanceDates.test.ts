@@ -69,12 +69,29 @@ const DAY_RULE_PUBLISHED: Record<string, string> = {
   // stayed udaya — checked because another convention would have moved them
   'bhai-dooj:2026': '2026-11-11', 'radha-ashtami:2026': '2026-09-19', 'radha-ashtami:2027': '2027-09-08',
   'janmashtami:2027': '2027-08-25', 'shani-jayanti:2025': '2025-05-27',
+  // madhyahna — Maha Navami (added with the audit; Drik, India TV, Samvat)
+  'maha-navami:2024': '2024-10-11', 'maha-navami:2025': '2025-10-01', 'maha-navami:2026': '2026-10-19',
+  'maha-navami:2027': '2027-10-08', 'maha-navami:2028': '2028-09-26', 'maha-navami:2029': '2029-10-15',
 };
 
 test('the audited day rules land on their published dates exactly', () => {
   for (const [key, expected] of Object.entries(DAY_RULE_PUBLISHED)) {
     const [id, yearStr] = key.split(':');
     assert.equal(engineDate(id, Number(yearStr)), expected, `${key}`);
+  }
+});
+
+// Maha Navami resolves once a year, and on the Ashvin Durgashtami day or the
+// day after it — never before, never two days on.
+test('Maha Navami resolves once a year, on the Durgashtami day or the next', () => {
+  for (let year = 2024; year <= 2031; year += 1) {
+    const dates = engineDates('maha-navami', year);
+    assert.equal(dates.length, 1, `${year}: ${dates.join(' ') || 'none'}`);
+    const ashtami = engineDates('masik-durgashtami', year).find((a) => {
+      const gap = (new Date(dates[0]).getTime() - new Date(a).getTime()) / 86400000;
+      return gap === 0 || gap === 1;
+    });
+    assert.ok(ashtami, `${year}: Maha Navami ${dates[0]} is not on or after a Durgashtami day`);
   }
 });
 
