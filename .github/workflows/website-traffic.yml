@@ -1,0 +1,31 @@
+name: Website traffic report
+
+# Prints vedansh.app's daily page views and unique visitors from Cloudflare's
+# analytics, to check the on-page visit counter against. Read-only.
+on:
+  push:
+    branches: [feat/vedansh-app-website]
+    paths: ['.github/workflows/website-traffic.yml']
+  workflow_dispatch:
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    steps:
+      - name: Daily traffic since launch
+        run: |
+          set -euo pipefail
+          auth="Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+          zone=$(curl -s "https://api.cloudflare.com/client/v4/zones?name=vedansh.app" -H "$auth" | jq -r '.result[0].id // empty')
+          [ -n "$zone" ] || { echo "::error::token cannot read the vedansh.app zone (needs Zone → Zone → Read)"; exit 1; }
+          q='query($z:String!,$d:Date!){viewer{zones(filter:{zoneTag:$z}){httpRequests1dGroups(limit:60,filter:{date_geq:$d},orderBy:[date_ASC]){dimensions{date} sum{requests pageViews} uniq{uniques}}}}}'
+          body=$(jq -n --arg q "$q" --arg z "$zone" --arg d "2026-09-01" '{query:$q,variables:{z:$z,d:$d}}')
+          out=$(curl -s https://api.cloudflare.com/client/v4/graphql -H "$auth" -H 'Content-Type: application/json' -d "$body")
+          if [ "$(echo "$out" | jq '.errors != null and (.errors|length) > 0')" = "true" ]; then
+            echo "::error::$(echo "$out" | jq -c .errors) (token needs Zone → Analytics → Read)"; exit 1
+          fi
+          echo "date        requests  pageViews  uniques"
+          echo "$out" | jq -r '.data.viewer.zones[0].httpRequests1dGroups[] | "\(.dimensions.date)  \(.sum.requests)  \(.sum.pageViews)  \(.uniq.uniques)"'
+          echo "$out" | jq -r '.data.viewer.zones[0].httpRequests1dGroups | "TOTAL requests=\(map(.sum.requests)|add) pageViews=\(map(.sum.pageViews)|add) uniques(sum of daily)=\(map(.uniq.uniques)|add)"'
