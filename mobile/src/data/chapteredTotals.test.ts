@@ -70,6 +70,17 @@ const cases = [
     },
   },
   {
+    id: 'upanishad',
+    expectedTotal: 0, // No text is released until the source review gate is signed.
+    load: async () => {
+      const mod = await import('./upanishad');
+      return {
+        manifest: mod.upanishadChaptersManifest,
+        total: mod.upanishadTotal,
+      };
+    },
+  },
+  {
     id: 'shiva-strotam',
     expectedTotal: 23,
     load: async () => {

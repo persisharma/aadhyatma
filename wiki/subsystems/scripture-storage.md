@@ -2,7 +2,7 @@
 title: Scripture storage
 type: subsystem
 sources: [mobile/src/storage, mobile/scripts/build-library.mts, mobile/metro.config.js, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/SearchScreen.tsx]
-last_verified_date: 2026-09-26
+last_verified_date: 2026-09-30
 confidence: high
 status: current
 ---
@@ -20,6 +20,9 @@ Web and source-based component tests use the generated JSON adapter.
    `verses` array into `documents` and `verses`, retaining every field, ID, and position.
    It also builds the search entries and a contentless FTS5 trigram index. No competitor
    content is included. Mahabharata and Upanishads are not added by this migration.
+   The later Upanishad catalogue contributes no content document while its reviewed
+   release manifest is empty. Its generated loaders use this same SQLite adapter;
+   the Upanishad reader has bounded page loading for large future texts.
 2. `assets/library/library.db` is generated and gitignored. `npm start`, `npm run ios`,
    `npm run android`, `npm test`, and EAS post-install generate it. For direct `npx expo`
    commands, generate first. `npm run verify:library` detects stale output.

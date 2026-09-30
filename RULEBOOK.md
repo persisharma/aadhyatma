@@ -475,6 +475,21 @@ devotional reader that can read as disrespectful rather than merely imperfect. S
   that is squarely inside §11.3.
 - **Always opt-in per press.** Read-aloud never autoplays on opening a reader.
 
+### 11.16 Upanishad source-release boundary
+
+`mobile/src/data/upanishad/registry.ts` is a 108-title Muktikā catalogue, not
+108 verified texts. While `chapters-manifest.json` is empty, its library entry
+stays hidden and `coming`. A complete text may enter the native SQLite bundle
+only through `scripts/build-upanishad.mjs` with a matching
+`scripts/upanishad-content/release-reviewed.json` review record. The authoring
+module must be transcribed from the actually opened historical scan, checked
+against two independent published sources, and carry source pages, variants,
+reviewer and date. OCR and PR #398's memory-authored candidates are not release
+sources. Hindi/English meanings require review; Gujarati/Kannada re-scripted
+Hindi is not a native-language translation. The exact procedure and initial
+source evidence are in `scripts/upanishad-content/HANDOFF.md`. A release also
+requires the §0 simulator flows and §11.7 iOS/Android verification.
+
 ---
 
 ## 12. Theerth archetype (तीर्थ — map-driven pilgrimage tours)

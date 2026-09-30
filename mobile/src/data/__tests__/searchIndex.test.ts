@@ -248,3 +248,14 @@ const index = getSearchIndex();
   const section = runSearch('Valmiki Ramayan', index);
   assert.equal(section.sections[0]?.entry.sourceId, 'valmiki-ramayan');
 }
+
+// Only reviewed Upanishads enter search; draft modules are excluded from the
+// generated manifest and SQLite asset.
+{
+  const reviewed = require('../upanishad/chapters-manifest.json') as { verseCount: number; chapter: number }[];
+  const upanishadVerses = index.verses.filter((v) => v.sourceId === 'upanishad');
+  assert.equal(upanishadVerses.length, reviewed.reduce((sum, item) => sum + item.verseCount, 0));
+  const readable = new Set(reviewed.map((item) => item.chapter));
+  for (const verse of upanishadVerses) assert.ok(verse.chapter != null && readable.has(verse.chapter));
+  assert.ok(index.sections.some((section) => section.sourceId === 'upanishad'), 'catalogue may appear as a coming section');
+}

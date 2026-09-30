@@ -1,8 +1,8 @@
 ---
 title: Readers
 type: subsystem
-sources: [mobile/src/components/ReaderHeader.tsx, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, RULEBOOK.md]
-last_verified_date: 2026-09-26
+sources: [mobile/src/components/ReaderHeader.tsx, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/data/upanishad/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/UpanishadReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, RULEBOOK.md]
+last_verified_date: 2026-09-30
 confidence: high
 status: current
 ---
@@ -18,6 +18,11 @@ component. Native scripture content is bundled in SQLite; JSON/Markdown remain a
 Gita and Valmiki Ramayan fetch an async window of at most 72 verses, while short texts keep
 compatible synchronous accessors backed by the same DB. The full Ramayan is now searchable.
 See [[scripture-storage]] for generation, initialization, recovery, and size tradeoffs.
+
+The Upanishad section has a 108-title Muktikā catalogue but zero released texts while
+historical-source collation is pending. Its library card is hidden and `coming`, the reader uses
+bounded `usePagedVerses` and stable Muktikā chapter ids, and only reviewed JSON may
+enter SQLite. `scripts/upanishad-content/HANDOFF.md` records the source gate.
 
 ## Details
 

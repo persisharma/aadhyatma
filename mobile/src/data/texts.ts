@@ -19,6 +19,7 @@ import { ramStutiTotal } from './ram-stuti';
 import { krishnaStotramTotal } from './krishna-stotram';
 import { ramcharitmanasTotal } from './ramcharitmanas';
 import { valmikiRamayanTotal } from './valmiki-ramayan';
+import { upanishadChaptersManifest, upanishadMantraTotal, upanishadTotal } from './upanishad';
 import { aartiCollection } from './aarti';
 import { japamMantras } from './japam';
 import {
@@ -193,6 +194,24 @@ export const library: readonly LibraryEntry[] = [
     deities: ['rama', 'hanuman'],
     verseCount: valmikiRamayanTotal,
     addedInVersion: '1.4.5',
+  },
+  {
+    id: 'upanishad',
+    nameHi: 'उपनिषद्',
+    nameEn: 'Upanishads',
+    // Only source-reviewed texts may enter the readable manifest.
+    sub: upanishadChaptersManifest.length
+      ? `${upanishadChaptersManifest.length} उपनिषद् · ${upanishadMantraTotal} मन्त्र · अर्थ सहित`
+      : '१०८ उपनिषदों का पाठ सत्यापनाधीन',
+    subEn: upanishadChaptersManifest.length
+      ? `${upanishadChaptersManifest.length} of 108 Upanishads · ${upanishadMantraTotal} mantras · with meaning`
+      : '108 Upanishads · text verification in progress',
+    thumb: 'उ',
+    status: upanishadChaptersManifest.length ? 'active' : 'coming',
+    hidden: upanishadChaptersManifest.length === 0,
+    category: 'granth',
+    deities: [],
+    verseCount: upanishadTotal,
   },
   {
     id: 'durga-stotram',

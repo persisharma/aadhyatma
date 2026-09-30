@@ -667,7 +667,7 @@ When building new components, pull tokens from the theme — never hard-code a h
 
 ## 15. Screen: Chapters Index (Gita-style modules)
 
-**Purpose.** Let the reader pick a chapter and set their reading language before entering the Reader. Used by modules whose natural unit is a chapter (Gita's 18 adhyāyas; Vālmīki Rāmāyaṇa's 7 kāṇḍas, §53; future Ramcharitmanas kāṇḍas).
+**Purpose.** Let the reader pick a chapter and set their reading language before entering the Reader. Used by modules whose natural unit is a chapter (Gita's 18 adhyāyas; Vālmīki Rāmāyaṇa's 7 kāṇḍas, §53; the Upanishads, §75; future Ramcharitmanas kāṇḍas).
 
 **Layer stack:** same as Reader (Section 9, parchment + background sketch + gradient overlay + content column).
 
@@ -878,7 +878,7 @@ The legacy Deity List is the plain filtered-list fallback: same as Section 21, b
 
 **Gradient background:** same as Home.
 
-**Verse pool:** an explicit registry — `mobile/src/data/versePool.ts` — mapping each participating section (Gita, Sundarkand, the stotrams, chalisas, Ramcharitmanas, Valmiki Ramayan, japam mantras, sanskar verses, …) into a `UniformVerse` shape. Membership is **registered per section**, not inferred from categories, so the pool only surfaces content with a well-formed verse + meaning mapping. Selection: `Math.random()` over the flat pool on each visit / `↻ next` tap.
+**Verse pool:** an explicit registry — `mobile/src/data/versePool.ts` — mapping each participating section (Gita, Sundarkand, the stotrams, chalisas, Ramcharitmanas, Valmiki Ramayan, the Upanishads, japam mantras, sanskar verses, …) into a `UniformVerse` shape. Membership is **registered per section**, not inferred from categories, so the pool only surfaces content with a well-formed verse + meaning mapping. Selection: `Math.random()` over the flat pool on each visit / `↻ next` tap.
 
 **Deep-linking:** a daily-verse reminder tap can pin the tab to a specific verse via route params (`sourceId` / `chapter` / `verseIndex`); the pinned verse is resolved from the pool by identity and shown instead of a random pick.
 
@@ -1224,7 +1224,7 @@ Two new mechanisms carry them, both narrow: a real **`nakshatra`** matcher (the 
 
 **Muhurat Detail** (`MuhuratDetailScreen` → shared `MuhuratCardBody`, reached from the glance-card footer — and, for a specific chosen day, from the Muhurat Finder day detail and Abujh rows, §60) — the gold-॥-framed panchang card (§5): panchang + sun rows, then the full 8+8 day/night choghadiya table and अभिजीत/राहु/गुलिक/यमगण्ड rows. The panchang rows use the same `formatEndInstant` next-day suffix as the anga tiles, and kshaya days add `क्षय तिथि` / `क्षय नक्षत्र` rows so the card (and its share PNG) never disagrees with the tiles. The yoga row is labelled **नित्य योग** (the PRD-27 collision rule, §69), and — full variant only, like the नित्य योग/करण rows themselves — a **शुभ योग** row per present yoga follows it (`<full name> · <window>`; end-only when the window opens at sunrise, start–end on a mid-day onset; derived per render from `computeShubhYogas(p, md.nextSunrise)`, never cached). Each is a quality-tinted `Muh` row (`goldTint` auspicious / `avoidTint` avoid) with the currently-running period ring-bordered in `saffron` + an `अभी` badge. **Name and time render in dark `ink`/`ink-soft` on both qualities** — the tint plus a small signal-coloured `· शुभ/त्याज्य` text tag carry the quality (§12, never colour alone); the text is never itself tinted-down (terracotta-on-`avoidTint` was muddy ~4.8:1). The quality tag, time range, and now-badge use the **non-italic semibold Cormorant face, never the thin italic `cardLatin`** (§3) — the same readability fix as the glance card. The card title (top bar + `MuhuratCardBody` heading) is **`आज का पंचांग` only when the date is today** (`useMuhurat().isToday`); a specific finder/abujh-selected day reads **`इस दिन का पंचांग`** so it never claims to be today while the dateline shows a different day. The same body renders the shareable PNG (`variant="share"`, captured off-screen).
 
-**Catalog view** (`व्रत-पर्व` tab): a search field (44 high, `radii.md`) over `searchObservances`; the **ledger bar** — ONE card (`gold-tint` fill, 1.5 px `gold` border, `radii.lg`, `elevation.card`, ~72 pt) holding the three personal ledgers as hairline-divided columns, `CatalogLedgerBar`/`CatalogLedgerCell` in `PanchangScreen.tsx`: **★ मेरा व्रत** (`N फ़ॉलो`, else `जोड़ें`) · **॥ पितृ स्मरण** (`अगला <short date>`, else `N स्मरण` / `जोड़ें`) · **❖ क्षेत्र** (the first active calendar's name `+N`, else `22 उपलब्ध`). Each column is its own `Pressable` (≥ 48 pt tall, ~106 pt wide) to the same destination its full-width card used to carry — 17 pt `gold` glyph over a 14 pt `ink` label over an 11 pt `saffron-deep` state line, all single-line. This **replaced three stacked full-width `myVratRow` cards** (82 pt each, ~190 pt — about a third of the first fold), which pushed Upcoming low and the Browse grid off-screen; the bar keeps every destination and all live state and gives ~118 pt back to content. Compression is visual only: each cell's `accessibilityLabel` stays the full sentence (`My Vrat, 5 following`, `Pitru Smaran. 3 entries`, `Regional calendars, 2 on`). The reminder count left the surface with the subtitles — `MyVratScreen`'s metric band is its home. Then an **Upcoming** horizontal card rail (compact 136×72 pt cards, `radii.md`: category glyph ॐ/☾/✺ + uppercase date tag on top, one-line primary-language name beneath — no category caption); and a 2-up **Browse by type** grid of slim 60 pt half-tiles (`radii.md`, glyph in a 34 pt `saffron-tint` roundel inline-left; primary-language title 15 pt + live count — no secondary-language echo line): व्रत / पर्व / उपवास plus a **कथा** tile (॥ glyph, `getKathaCount()` stories) → Katha Library and a full-width **पूजा विधि** tile (॥ glyph, `VIDHI_ENTRIES.length` count) → the Vidhi Catalog (§61) — the vidhi's always-available door, since the day-panel pill is date-dependent.
+**Catalog view** (`व्रत-पर्व` tab): a search field (44 high, `radii.md`) over `searchObservances`; the **ledger bar** — ONE card (`gold-tint` fill, 1.5 px `gold` border, `radii.lg`, `elevation.card`, ~72 pt) holding the three personal ledgers as hairline-divided columns, `CatalogLedgerBar`/`CatalogLedgerCell` in `PanchangScreen.tsx`: **★ मेरा व्रत** (`N फ़ॉलो`, else `जोड़ें`) · **॥ पितृ स्मरण** (`अगला <short date>`, else `N स्मरण` / `जोड़ें`) · **❖ क्षेत्र** (the first active calendar's name `+N`, else `22 उपलब्ध`). Each column is its own `Pressable` (≥ 48 pt tall, ~106 pt wide) to the same destination its full-width card used to carry — 17 pt `gold` glyph over a 14 pt `ink` label over an 11 pt `saffron-deep` state line, all single-line. This **replaced three stacked full-width `myVratRow` cards** (82 pt each, ~190 pt — about a third of the first fold), which pushed Upcoming low and the Browse grid off-screen; the bar keeps every destination and all live state and gives ~118 pt back to content. Compression is visual only: each cell's `accessibilityLabel` stays the full sentence (`My Vrat, 5 following`, `Pitru Smaran. 3 entries`, `Regional calendars, 2 on`). The reminder count left the surface with the subtitles — `MyVratScreen`'s metric band is its home. **Directly under the search field and above the ledger bar, an `आज · Today` block** renders only when an observance falls on today: a 15 pt `ink` `आज` heading with an Inter SemiBold 10 pt `saffron-deep` uppercase short date, then one card per observance using the **same `ObservanceCard` the पंचांग day panel renders** (category chip, deity, name, description, day note when today's solve is loaded, `॥ पूजा विधि` / `कथा पढ़ें` / `पढ़ें:` pills). The block is not a new component, so the two surfaces cannot drift apart. Today's items are **removed from the Upcoming rail**, which keeps showing the next 6 future dates, so today is never shown as one more upcoming chip. Then an **Upcoming** horizontal card rail (compact 136×72 pt cards, `radii.md`: category glyph ॐ/☾/✺ + uppercase date tag on top, one-line primary-language name beneath — no category caption); and a 2-up **Browse by type** grid of slim 60 pt half-tiles (`radii.md`, glyph in a 34 pt `saffron-tint` roundel inline-left; primary-language title 15 pt + live count — no secondary-language echo line): व्रत / पर्व / उपवास plus a **कथा** tile (॥ glyph, `getKathaCount()` stories) → Katha Library and a full-width **पूजा विधि** tile (॥ glyph, `VIDHI_ENTRIES.length` count) → the Vidhi Catalog (§61) — the vidhi's always-available door, since the day-panel pill is date-dependent.
 
 **Observance List** (`ObservanceListScreen`) — category drill-in over the Home gradient, sorted soonest-first by next occurrence. Each row: a leading follow star (`gold` ★ filled / `ink-muted` ☆ outline, toggles without opening the detail), name + other-language caption, and right-aligned next date + relative label (`today` / `1d` / `Nd`). In-list search field on top; it also matches area names, so *राजस्थान* finds Gangaur. Under the search sits the **क्षेत्र · area filter** (`components/AreaFilterChips.tsx`): a horizontal chip row, PersonChips class (44 pt floor, `radii.pill`, 1.25 font-scale cap; selected = `saffron-deep` border on `saffron-tint`, idle = `divider` on `parchment-soft`), reading **सभी · All**, **सर्वत्र · Pan-India**, then one chip per area actually present in this list, in lens-registry order. The row is hidden when no rule in the list is tagged. A tagged row shows a 12 pt `saffron-deep` area line under its caption (e.g. `राजस्थान · पंजाब · हरियाणा`); pan-India rows show nothing, so the tag always carries information.
 
@@ -1342,7 +1342,7 @@ The list is **two browsable tiers**, rendered as one `FlatList` under two group 
    - Verse hits are capped at `VERSE_RESULT_CAP = 50`, with an italic "More results — type a more specific query" note when clipped.
 4. **Zero state**: dimmed `॥`, "कोई परिणाम नहीं / No matches found", and a hint to try a Devanagari word or section name.
 
-**Index coverage.** Sections (every active library entry **plus one row per published vidhi** — vidhis are procedures, so they contribute no verse entries), deities, and verses from every text module — the nine chalisas, aartis, japam mantras, Gita, Sundarkand, all stotram modules, Ramcharitmanas, Valmiki Ramayan, sanskar items, and the Theerth temples. Standard `lines`/`linesEn` shapes are picked up automatically when a section is added (RULEBOOK §7).
+**Index coverage.** Sections (every active library entry **plus one row per published vidhi** — vidhis are procedures, so they contribute no verse entries), deities, and verses from every text module — the nine chalisas, aartis, japam mantras, Gita, Sundarkand, all stotram modules, Ramcharitmanas, Valmiki Ramayan, source-reviewed Upanishads, when released (§75), sanskar items, and the Theerth temples. Standard `lines`/`linesEn` shapes are picked up automatically when a section is added (RULEBOOK §7).
 
 **Normalization** (`data/searchNormalize.ts`) — one pure fold applied to both index and query, so Devanagari and Latin queries meet in the middle: Unicode NFD with the combining nukta stripped (क़ ⇄ क), lowercase, IAST diacritics folded to ASCII (`kṛṣṇa` → `krsna`, so a plain-ASCII query matches the romanized corpus), punctuation dropped **including daṇḍa `।`/`॥`**, whitespace collapsed. Ranking is exact > prefix > substring per field (`MatchRank`), idempotent and unit-tested.
 
@@ -1582,7 +1582,7 @@ The continuous form of the `n / total` page counter. A 3 px full-width track in 
 
 1. Text title via `orderTitlesByLanguage` (dev primary 20 / secondary 13; lat primary 22 / secondary 12), then a 1 px `divider` rule.
 2. Prompt: `जहाँ छोड़ा था, वहीं से जारी रखें?` (reader-title face, 17, `ink`) over `Resume where you left off?` (italic 13, `ink-soft`).
-3. **Last-read card**: `parchment-soft`, `divider` border, `radii.md`; `अंतिम पठित` / `LAST READ` in the `sectionLabel` token over the pre-formatted location at 16 in the active script (via `formatLocation`, which speaks each source's vocabulary — `अध्याय N · श्लोक M` for Gita, `सर्ग` for Sundarkand, `स्तोत्र` for stotrams, `काण्ड … · पद` for Ramcharitmanas, `काण्ड … · श्लोक` for Valmiki Ramayan, plain `पद N` for chalisas/aartis).
+3. **Last-read card**: `parchment-soft`, `divider` border, `radii.md`; `अंतिम पठित` / `LAST READ` in the `sectionLabel` token over the pre-formatted location at 16 in the active script (via `formatLocation`, which speaks each source's vocabulary — `अध्याय N · श्लोक M` for Gita, `सर्ग` for Sundarkand, `स्तोत्र` for stotrams, `काण्ड … · पद` for Ramcharitmanas, `काण्ड … · श्लोक` for Valmiki Ramayan, `उपनिषद् … · मन्त्र` for the Upanishads, plain `पद N` for chalisas/aartis).
 4. Primary button: solid `saffron`, `radii.md`, `जारी रखें · Resume` in `onPrimary`.
 5. Secondary button: outlined `cardActiveBorder`, `आरंभ से पढ़ें · Start Over` in `saffron-deep`.
 6. `Cancel` — italic 13 `ink-muted`, 44 pt min-height text button.
@@ -1637,7 +1637,7 @@ Twenty-one deities, each `{ id, nameHi, nameEn, iconKey }`: rama (bowArrow) · k
 ### Data-shape families (one directory per module under `mobile/src/data/`)
 
 - **Linear `lines`/`linesEn` verses (swap-on-toggle, §3.1/§10)** — one JSON, one `Verse[]`, no chapters. Three registry-driven *multi-instance* readers dispatch on a route param instead of importing one section's data (RULEBOOK §3): **chalisas** (`chalisaRegistry.ts` → hanuman/shiv/durga/ganesh/gayatri/ram/krishna/vishnu/saraswati chalisa dirs — nine total), **aartis** (`aarti/index.ts` `aartiCollection`, 8 aartis, `refrain`/`stanza` verse types; the Aarti *category* also lists a 9th card, `ram-aarti`, which is an alias that opens the existing `ram-stuti` Stotram content rather than an `aartiCollection` entry), **sanskar** (8 practice modules — prabhati-shloka, surya-namaskar, tulsi-puja, bhojan-mantra, gau-seva, sandhya-deepam, ratri-shloka, vidyarambha-prarthana — whose `SanskarVerse` adds `vidhiHi/En` method prose and `intro`/`mantra`/`step`/`vidhi` types).
-- **Chaptered `chapter-NN.json` + `chapters-manifest.json`** — the Gita pattern (§10, §15): `gita/` (18 chapters, sanskrit + transliteration + meaning + commentary), `sundarkand/` (16 sargas), `shiva-strotam/` (4), `durga-stotram/` (3), `ganesh-stotram/` (3), `saraswati-stotram/` (3), `vishnu-sahasranama/` (4), `krishna-stotram/` (2), `ramcharitmanas/` (1 — Mangalacharan only today), `valmiki-ramayan/` (7 kāṇḍas / 648 sargas / 23,289 verified verse records, §53), plus single-chapter `hanuman-ashtak/`, `bajrang-baan/`, `ram-stuti/`. Each `index.ts` is a typed loader with module-load invariants; the large Valmiki payload is the exception that validates lazily per loaded kāṇḍa.
+- **Chaptered `chapter-NN.json` + `chapters-manifest.json`** — the Gita pattern (§10, §15): `gita/` (18 chapters, sanskrit + transliteration + meaning + commentary), `sundarkand/` (16 sargas), `shiva-strotam/` (4), `durga-stotram/` (3), `ganesh-stotram/` (3), `saraswati-stotram/` (3), `vishnu-sahasranama/` (4), `krishna-stotram/` (2), `ramcharitmanas/` (1 — Mangalacharan only today), `valmiki-ramayan/` (7 kāṇḍas / 648 sargas / 23,289 verified verse records, §53), `upanishad/` (30 readable of 108, one `texts/<slug>.json` per Upanishad, §75), plus single-chapter `hanuman-ashtak/`, `bajrang-baan/`, `ram-stuti/`. Each `index.ts` is a typed loader with module-load invariants; the Valmiki and Upanishad payloads validate lazily per loaded chapter (RULEBOOK §2 row 2 — manifest eager, payload behind a `require()` thunk).
 - **Japam** (`japam/japam.json`) — mantras with round targets; routes to the counter, not a verse pager.
 - **Theerth** (`theerth/temples.ts`) — the prose-per-temple shape of §26–27 / RULEBOOK §12; no verse pages. Temples carry their own `addedInVersion` for NEW tracking (§44).
 
@@ -2405,20 +2405,24 @@ All four languages are hand-authored via `pick` (this is UI chrome, not content,
 transliterated), and Indic labels drop Latin tracking/uppercase per §3.
 
 **Trigger — when the card may open** (`contexts/ratingAsk.ts` + the host). The card never
-opens on its own. The one surface where the user has just completed today's practice calls
-`requestAsk('routine-complete')`; the gate below then decides. One moment ships (product decision,
-Sept 2026: "ask when a routine is completed"):
+opens on its own. A surface where the user has just finished something calls
+`requestAsk('<moment>')`; the gate below then decides. Three moments ship — `routine-complete`
+shipped first (Sept 2026: "ask when a routine is completed"); `verse-shared` and `mala-complete`
+were added because that single moment reaches only routine users and ratings were coming in too low,
+so the two moments that had been cut only to keep one are back, reaching readers and japa users who
+never build a routine:
 
 | Trigger | Reported by | Exactly when | Why here |
 |---|---|---|---|
 | `routine-complete` | `components/RoutineCelebrationOverlay.tsx` | The pushpa-varsha's `onDone`, i.e. after the petals and caption have faded — **not** on completion itself | Today's practice is done; the best moment in the app. Riding on `onDone` keeps the card off the shower (§11) |
+| `verse-shared` | `utils/shareVerse.tsx` | After the OS/Instagram share sheet the `run()` dispatched has closed (the `Share`/`Sharing` await resolved) — **not** the Instagram-without-image error path | The user just endorsed the app to someone; a warm moment, and it reaches every reader/Daily-Bhakti screen with a share button, not only routine users |
+| `mala-complete` | `screens/JapamCounterScreen.tsx` | On screen **blur** (`useFocusEffect` cleanup), and only if ≥1 full round was completed during the visit — **never** a card over the beads mid-japa | Leaving the counter after finishing a mala is the settle point; a card during japa would break the count (the reason this was cut before) |
 
-Considered and **not** shipped, so nobody re-proposes them by accident: a completed mala on the
-japam counter (a card over the bead surface breaks the japa; asking on exit was built and then cut
-in favour of the single routine moment), a completed verse share (same cut), chapter completion
+Considered and **not** shipped, so nobody re-proposes them by accident: chapter completion
 (the readers' auto-advance carries the user straight into the next chapter with no pause to ask
 in), and streak milestones (covered in practice by `routine-complete`). `RatingAskTrigger` stays a
 union so adding one back is a one-literal change plus a `requestAsk` call — see RULEBOOK §6.2.
+(The mala and share moments, once on this "not shipped" list, now ship — see the table above.)
 
 `requestAsk` is safe to call freely: every refusal is silent and the moment simply passes. It
 refuses when the state is still hydrating (it does **not** queue — asking a few seconds after the
@@ -2483,9 +2487,11 @@ provider: importing `RatingPromptContext` directly would drag `NotificationPrefe
 
 **Files.** `mobile/src/data/ratingPrompt.ts` (state, triggers, gate, store URLs),
 `mobile/src/contexts/RatingPromptContext.tsx`, `mobile/src/contexts/ratingAsk.ts`,
-`mobile/src/components/RatingPromptSheet.tsx`, host in
-`mobile/src/components/RoutineCelebrationOverlay.tsx`, row in `mobile/src/screens/MoreScreen.tsx`,
-store URLs from `mobile/src/data/shareLinks.ts`.
+`mobile/src/components/RatingPromptSheet.tsx`, hosts in
+`mobile/src/components/RoutineCelebrationOverlay.tsx` (`routine-complete`),
+`mobile/src/utils/shareVerse.tsx` (`verse-shared`) and
+`mobile/src/screens/JapamCounterScreen.tsx` (`mala-complete`), row in
+`mobile/src/screens/MoreScreen.tsx`, store URLs from `mobile/src/data/shareLinks.ts`.
 Tests: `src/data/__tests__/ratingPrompt.jest.test.ts` (every gate clause, cooldown boundary,
 per-trigger credit, defensive parse incl. the pre-trigger blob, URL shapes),
 `src/components/__tests__/RatingPromptSheet.test.tsx` (silent cold start, the moment opens after
@@ -3293,3 +3299,30 @@ The **sticky action bar** (`daan-home-actions`) is absolutely positioned at the 
 **Privacy.** The layer reads nothing from `PitruSmaranContext`; routes carry `{kathaId}` or an undated `{vidhiId}` only; reminder payloads are unchanged.
 
 **Files.** `data/pitru/{types,lessons,principles,kathas,prashna,index}.ts` · `screens/PitruPakshaShikshaScreen.tsx` (hub) · `screens/PitruParichayReaderScreen.tsx` (reader) · `screens/PitruKathaScreen.tsx` · `components/KathaSectionPage.tsx` (`pillHi`/`pillEn`) · the door in `screens/PitruPakshaOverviewScreen.tsx` · routes in `navigation/types.ts` + `MoreStackNavigator.tsx`. Tests: `data/pitru/__tests__/pitruShikshaContent.test.ts` (Jest — registry invariants, reader-ref resolution against the bundled JSON, stance guard), `screens/__tests__/PitruPakshaShikshaScreen.test.tsx` (hub + reader + katha), the overview cases in `PitruSmaranScreens.test.tsx`, the reader's row in `readerReadAloud.test.tsx`; e2e `.maestro/pitru-paksha-smoke.yaml` (season-gated — see its header). PRD: `docs/roadmap/prds/44-pitru-paksha-shiksha.md`; prototype: `docs/pitru-paksha-shiksha-prototype.html`. Contract: RULEBOOK §28.
+
+---
+
+## 75. Section: Upanishads (उपनिषद्) — source-reviewed catalogue
+
+The Muktikā registry has 108 stable title numbers and seven browsing groups. A number is the
+permanent `chapter` identity for bookmarks, progress, routines, and links; released numbers may
+be sparse. The section is hidden and `coming` while the reviewed manifest is empty. It becomes active only
+when at least one complete, verified text is released. The catalogue screen shows a group's
+readable and total counts, and disabled rows for unreleased texts. A released row opens the
+horizontal verse-card reader, with śānti-pāṭha as page one, share/bookmark/progress controls,
+and next/previous transitions only between released texts. Hindi and English meaning fields
+are authored; Gujarati and Kannada cannot be advertised as native translations until reviewed.
+
+`mobile/src/data/upanishad/registry.ts` is catalogue metadata, not a scripture text source.
+The unverified candidate modules from PR #398 are not included in this branch or the app. A text moves to the top-level authoring directory only after
+complete line-by-line collation against the historical scan and two independently opened
+published references, with source pages, variant notes, translation review, reviewer and date
+recorded in `release-reviewed.json`. `scripts/build-upanishad.mjs` emits only those reviewed
+texts, a manifest and SQLite-backed loaders. `mobile/scripts/build-library.mts` then compiles
+the generated JSON into the native iOS/Android library and search index. An empty release list
+produces no Upanishad document or search verse. The raw scan and OCR are research materials,
+not mobile assets. See `scripts/upanishad-content/HANDOFF.md` for the review protocol.
+
+No Upanishad text is released at this checkpoint. The draft PR's memory-authored verses and
+uncollated meanings are not counted as verified. Runtime/UI verification on both platforms is
+required for each subsequent release under RULEBOOK §11.7.

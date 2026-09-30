@@ -98,6 +98,8 @@ asset identity so a future placeholder reuse fails explicitly.
    `Sundarkand/`, and the master `bhagavad-gita-complete-hi-en.md`.
 2. **`scripts/*.mjs`** (Node ESM, run manually — **not** a build step): `parse-gita`,
    `split-sundarkand`, `transliterate-shloka`, and `fix-*` repair tools → write JSON into `mobile/src/data/`.
+   `build-upanishad.mjs` separately requires a reviewed release record before generating any
+   Upanishad text; its 108-title registry alone does not activate the section.
 3. `mobile/scripts/build-library.mts` compiles verse JSON and the derived search index into the bundled native SQLite asset (see [[scripture-storage]]). `RULEBOOK.md` is the integration contract for adding a new
    section; `design.md` is the visual-system spec; `push.sh` wraps `eas update` for OTA publishing.
 

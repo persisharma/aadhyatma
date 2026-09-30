@@ -280,3 +280,12 @@ checks in [[scripture-storage]] and [[e2e-verification]]. Preserved all attempts
 separated emulator/system-service failures and runner teardown hangs from app
 failures. Stronger Namkaran, Muhurat Phase 2 and Ask briefing journeys also passed
 again on iOS. Full evidence: `docs/testing/sqlite-android-2026-09-26.md`.
+## [2026-09-30] ingest | Upanishad historical-source release gate
+
+Added the 108-title Muktikā catalogue and dormant reader integration on the SQLite branch.
+PR #398's memory-authored candidate verses remain outside this branch. The release builder
+requires a per-text review record and currently emits zero texts; the library remains `coming`.
+Recorded the Nirnaya Sagar scan's opened Īśā leaves 15–16 and the corrupt OCR in
+`scripts/upanishad-content/HANDOFF.md`. Corrected five group assignments and
+Mahat's title against the proofread Muktikā catalogue. Updated [[readers]],
+[[scripture-storage]], and [[overview]].

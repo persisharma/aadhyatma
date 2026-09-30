@@ -715,6 +715,45 @@ for (const v of aartiKunjBihari.verses) {
   }
 }
 
+// A catalogue row is not a readable text. Only a separately reviewed release
+// entry may create a payload, enter SQLite, and activate the section.
+{
+  const entry = libraryById.get('upanishad');
+  assert.ok(entry, 'Upanishads stay in the library catalogue');
+  const registry = readTs('upanishad/registry.ts');
+  const rows = [...registry.matchAll(/^\s*\[(\d+), '([a-z-]+)', '([^']+)', '([^']+)', (\w+), (\w+)\],$/gm)];
+  assert.equal(rows.length, 108, 'Muktikā catalogue has 108 titles');
+  rows.forEach((row, i) => assert.equal(Number(row[1]), i + 1));
+  const groups = rows.reduce<Record<string, number>>((out, row) => {
+    out[row[6]] = (out[row[6]] ?? 0) + 1;
+    return out;
+  }, {});
+  assert.deepEqual(groups, { M: 10, SN: 20, SH: 14, SA: 24, Y: 17, V: 14, SK: 9 },
+    'seven groups match the proofread Muktikā list, not the older PR classification');
+  const vedas = rows.reduce<Record<string, number>>((out, row) => {
+    out[row[5]] = (out[row[5]] ?? 0) + 1;
+    return out;
+  }, {});
+  assert.deepEqual(vedas, { SYV: 19, SV: 16, KYV: 32, AV: 31, RV: 10 });
+  const reviewed = JSON.parse(readFileSync(join(DATA, '..', '..', '..', 'scripts', 'upanishad-content', 'release-reviewed.json'), 'utf8')) as { slug: string }[];
+  const manifest = readJson('upanishad/chapters-manifest.json') as { slug: string; chapter: number; verseCount: number }[];
+  assert.deepEqual(manifest.map((item) => item.slug).sort(), reviewed.map((item) => item.slug).sort(), 'only reviewed texts can be readable');
+  const released = new Set(manifest.map((item) => item.slug));
+  const textFiles = readdirSync(join(DATA, 'upanishad', 'texts')).filter((name) => name.endsWith('.json'));
+  assert.deepEqual(textFiles.sort(), [...released].map((slug) => `${slug}.json`).sort(), 'no unreviewed JSON may enter the native SQLite build');
+  assert.equal(entry.status, manifest.length ? 'active' : 'coming');
+  assert.equal(!!entry.hidden, manifest.length === 0);
+  assert.equal(entry.verseCount, manifest.reduce((sum, item) => sum + item.verseCount, 0));
+  assert.equal(chaptersForSource('upanishad').length, manifest.length);
+  for (const summary of manifest) {
+    const ch = readJson(`upanishad/texts/${summary.slug}.json`);
+    assert.equal(ch.verses.length, summary.verseCount);
+    assert.ok(ch.source?.baseText && ch.source?.retrievedOn);
+    assert.equal(ch.verses[0].section, 'shanti');
+    for (const verse of ch.verses) assert.equal(verse.lines.length, verse.linesEn.length);
+  }
+}
+
 // ─── 12. Gita speaker prefixes are not glued to verse text ──────────────────
 
 for (let ch = 1; ch <= 18; ch++) {
@@ -743,6 +782,10 @@ for (let ch = 1; ch <= 16; ch++) {
 }
 
 // ─── 14. Content JSON declares source provenance ────────────────────────────
+
+function readTs(rel: string): string {
+  return readFileSync(join(DATA, rel), 'utf8');
+}
 
 function collectJsonFiles(dirRel = ''): string[] {
   const dir = join(DATA, dirRel);

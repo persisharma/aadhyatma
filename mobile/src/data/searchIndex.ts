@@ -88,6 +88,7 @@ import {
   valmikiRamayanDailySelection,
   type ValmikiRamayanVerse,
 } from './valmiki-ramayan';
+import { getUpanishadChapter, upanishadChaptersManifest, type UpanishadVerse } from './upanishad';
 import { getSanskar, sanskarIds } from './sanskar';
 import { VIDHI_ENTRIES, type VidhiEntry } from './vidhi';
 import { getPurposeMeta } from './purposes';
@@ -428,6 +429,11 @@ function buildVerseEntries(): readonly SearchVerseEntry[] {
       continue;
     }
 
+    if (entry.id === 'upanishad') {
+      pushChapteredUpanishad(verses, entry);
+      continue;
+    }
+
     if (entry.category === 'aarti') {
       pushAarti(verses, entry);
       continue;
@@ -704,6 +710,30 @@ function pushChapteredValmikiRamayan(out: SearchVerseEntry[], entry: LibraryEntr
       })
     );
   });
+}
+
+function pushChapteredUpanishad(out: SearchVerseEntry[], entry: LibraryEntry) {
+  // The reviewed manifest is the only source of Upanishad search verses.
+  for (const ch of upanishadChaptersManifest) {
+    const chapter = getUpanishadChapter(ch.chapter);
+    chapter.verses.forEach((v: UpanishadVerse, idx) => {
+      out.push(
+        makeVerseEntry({
+          sourceId: entry.id,
+          sectionNameHi: entry.nameHi,
+          sectionNameEn: entry.nameEn,
+          chapter: ch.chapter,
+          verseIndex: idx,
+          labelHi: v.labelHi,
+          labelEn: v.labelEn,
+          linesHi: v.lines,
+          linesEn: v.linesEn,
+          meaningHi: v.meaningHi,
+          meaningEn: v.meaningEn,
+        })
+      );
+    });
+  }
 }
 
 function pushAarti(out: SearchVerseEntry[], entry: LibraryEntry) {
