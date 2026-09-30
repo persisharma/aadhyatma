@@ -18,6 +18,7 @@ env:
   CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID || secrets.CLOUDFLARE_ACCOUNT_ID }}
   PROJECT: vedansh
   KV_TITLE: vedansh-hits
+  D1_NAME: vedansh-hits
 
 jobs:
   deploy:
@@ -58,6 +59,11 @@ jobs:
             id=$(npx --yes wrangler@4 kv namespace list | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{process.stdout.write(JSON.parse(s).find(x=>x.title===process.env.KV_TITLE).id)})')
           fi
           echo "KV_ID=$id" >> "$GITHUB_ENV"
+          # The counter lives in D1 (atomic increments); KV only holds the
+          # pre-D1 counts the seed step below carries over.
+          npx --yes wrangler@4 d1 create "$D1_NAME" >/dev/null 2>&1 || true
+          db=$(npx --yes wrangler@4 d1 list --json | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const n=JSON.parse(s).find(x=>x.name===process.env.D1_NAME);process.stdout.write(n?n.uuid:"")})')
+          [ -n "$db" ] || { echo "::error::could not create or find D1 database $D1_NAME"; exit 1; }
           cat > wrangler.toml <<EOF
           name = "$PROJECT"
           pages_build_output_dir = "dist"
@@ -66,24 +72,29 @@ jobs:
           [[kv_namespaces]]
           binding = "HITS"
           id = "$id"
+
+          [[d1_databases]]
+          binding = "DB"
+          database_name = "$D1_NAME"
+          database_id = "$db"
           EOF
           sed -i 's/^          //' wrangler.toml
 
-      - name: Carry the visit count over on first run
-        # Seeds the Cloudflare counter from the live site once, so the number a
-        # visitor sees does not reset to zero when DNS moves.
+      - name: Carry the visit counts over from KV once
+        # INSERT OR IGNORE: rows that already exist (every run after the first)
+        # are left alone, so this never rewinds the live count.
         if: steps.creds.outputs.ready == 'true'
         working-directory: website
         run: |
-          # Judge by exit status: a missing key prints an error to stdout, which
-          # an emptiness test would mistake for an existing count.
-          if existing=$(npx --yes wrangler@4 kv key get total --namespace-id "$KV_ID" --remote 2>/dev/null) && [ "$existing" -gt 0 ] 2>/dev/null; then
-            echo "counter already at $existing"
-          else
-            total=$(curl -s --max-time 20 'https://vedansh.app/api/hits?p=%2F' | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{process.stdout.write(String(JSON.parse(s).total||0))}catch{process.stdout.write("0")}})')
-            npx --yes wrangler@4 kv key put total "$total" --namespace-id "$KV_ID" --remote
-            echo "seeded total=$total"
-          fi
+          sql="CREATE TABLE IF NOT EXISTS hits (k TEXT PRIMARY KEY, n INTEGER NOT NULL);"
+          for k in total 'page:/' 'page:/privacy/' 'page:/terms/' 'page:/support/' 'page:/get/' 'page:/hi/' 'page:/hi/privacy/' 'page:/hi/terms/' 'page:/hi/support/'; do
+            # Judge by exit status: a missing key prints an error to stdout.
+            if v=$(npx --yes wrangler@4 kv key get "$k" --namespace-id "$KV_ID" --remote 2>/dev/null) && [ "$v" -ge 0 ] 2>/dev/null; then
+              sql="$sql INSERT OR IGNORE INTO hits (k, n) VALUES ('$k', $v);"
+            fi
+          done
+          npx --yes wrangler@4 d1 execute "$D1_NAME" --remote --yes --command "$sql"
+          npx --yes wrangler@4 d1 execute "$D1_NAME" --remote --command "SELECT k, n FROM hits ORDER BY k"
 
       - name: Deploy
         if: steps.creds.outputs.ready == 'true'

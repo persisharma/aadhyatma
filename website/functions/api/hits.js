@@ -1,10 +1,11 @@
 // Visit counter for Cloudflare Pages — same contract as the Netlify version in
 // netlify-functions/hits.mjs, so script.js does not care which host serves it.
 //
-// Integers in a Workers KV namespace bound as HITS: a site total and one count
-// per real page. Nothing about the visitor is stored. KV is eventually
-// consistent, so two visits within a second or so of each other can land as
-// one — acceptable for a visitor counter.
+// Integers in a D1 table bound as DB: a site total and one count per real
+// page. Nothing about the visitor is stored. D1 rather than KV because KV
+// caches reads per location for up to a minute, so a burst of visitors (a
+// shared post) all read the same number and overwrite each other's +1. Here
+// the increment happens inside SQLite, so no visit is lost.
 
 const PAGES = new Set([
   '/', '/privacy/', '/terms/', '/support/', '/get/',
@@ -13,31 +14,24 @@ const PAGES = new Set([
 
 const HEADERS = { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' };
 
+const BUMP = 'INSERT INTO hits (k, n) VALUES (?1, 1) ON CONFLICT(k) DO UPDATE SET n = n + 1 RETURNING n';
+const READ = 'SELECT n FROM hits WHERE k = ?1';
+
 export async function onRequest({ request, env }) {
   if (request.method !== 'GET' && request.method !== 'POST') {
     return new Response(null, { status: 405, headers: { allow: 'GET, POST' } });
   }
-  if (!env.HITS) {
+  if (!env.DB) {
     return new Response(JSON.stringify({ error: 'counter storage not bound' }), { status: 503, headers: HEADERS });
   }
 
   const raw = new URL(request.url).searchParams.get('p') || '/';
   const page = PAGES.has(raw) ? raw : null;
-  const read = async (key) => {
-    const n = Number(await env.HITS.get(key));
-    return Number.isFinite(n) ? n : 0;
-  };
+  const keys = page ? ['total', `page:${page}`] : ['total'];
+  const sql = request.method === 'POST' ? BUMP : READ;
 
-  let total = await read('total');
-  let count = page ? await read(`page:${page}`) : null;
+  const results = await env.DB.batch(keys.map((k) => env.DB.prepare(sql).bind(k)));
+  const [total, count] = results.map((r) => (r.results[0] ? Number(r.results[0].n) : 0));
 
-  if (request.method === 'POST') {
-    total += 1;
-    await env.HITS.put('total', String(total));
-    if (page) {
-      count += 1;
-      await env.HITS.put(`page:${page}`, String(count));
-    }
-  }
-  return new Response(JSON.stringify({ total, page, count }), { status: 200, headers: HEADERS });
+  return new Response(JSON.stringify({ total, page, count: page ? count : null }), { status: 200, headers: HEADERS });
 }

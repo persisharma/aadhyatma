@@ -65,6 +65,9 @@
   var isIOS = /iPad|iPhone|iPod/i.test(ua) ||
               (/Macintosh/.test(ua) && typeof navigator.maxTouchPoints === 'number' && navigator.maxTouchPoints > 1);
 
+  // Count the visit before leaving; sendBeacon survives the redirect below.
+  try { navigator.sendBeacon('/api/hits?p=%2Fget%2F'); } catch (e) { /* decoration only */ }
+
   var target = isAndroid ? PLAY : (isIOS ? IOS : null);
   if (!target) {
     document.getElementById('status').textContent = 'Choose your platform:';
