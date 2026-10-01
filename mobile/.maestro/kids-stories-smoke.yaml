@@ -1,0 +1,28 @@
+# Illustrated story reader: route, button/swipe parity, caption scrolling, return.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- tapOn: { id: "tab-more" }
+- scrollUntilVisible:
+    element: { id: "kids-stories-door" }
+    centerElement: true
+- tapOn: { id: "kids-stories-door" }
+- tapOn: { id: "kids-story-krishna-janma" }
+- assertVisible: { id: "story-pager" }
+- assertVisible: "1 / 10"
+- tapOn: { id: "story-next" }
+- assertVisible: "2 / 10"
+- swipe:
+    start: 85%, 45%
+    end: 15%, 45%
+    duration: 600
+- assertVisible: "3 / 10"
+- tapOn: { id: "story-prev" }
+- assertVisible: "2 / 10"
+- swipe:
+    start: 50%, 75%
+    end: 50%, 35%
+    duration: 600
+- assertVisible: { id: "story-caption" }
+- tapOn: "Back"
+- assertVisible: { id: "kids-story-krishna-janma" }

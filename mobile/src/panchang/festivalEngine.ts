@@ -1,5 +1,5 @@
 import { addDays } from './calendarGrid';
-import { computeTithiAndMonth, getSiderealSunLng, locationKey, nakshatraAtSunrise, solarMonthAtSunrise, tithiAtAparahna, tithiAtMadhyahna, tithiAtMoonrise, UJJAIN_CITY_ID } from './engine';
+import { computeTithiAndMonth, getSiderealSunLng, locationKey, nakshatraAtSunrise, solarMonthAtSunrise, tithiAtAparahna, tithiAtMadhyahna, tithiAtMoonrise, tithiAtDayFraction, tithiAtNishita, tithiAtPradosh, UJJAIN_CITY_ID } from './engine';
 import { getObservanceCatalog, OBSERVANCE_RULES } from './festivals';
 import { getStoredObservanceYear } from './observanceStore';
 import { PRECOMPUTED_OBSERVANCES, type PackedObservance } from './precomputedObservances';
@@ -486,12 +486,43 @@ export function matchesLunarTithiRuleOnDate(
   if (rule.dayRule === 'aparahna') {
     return matchesInstantVyapiniRuleOnDate(rule, date, calendarSystem, location, tithiAtAparahna);
   }
+  if (rule.dayRule === 'pradosh') {
+    return matchesInstantVyapiniRuleOnDate(rule, date, calendarSystem, location, tithiAtPradosh);
+  }
+  if (rule.dayRule === 'nishita') {
+    return matchesInstantVyapiniRuleOnDate(rule, date, calendarSystem, location, tithiAtNishita);
+  }
+  if (rule.dayRule === 'ratri') {
+    // Pradosh first; a lunation that covers no evening falls back to midnight
+    // (then, as always, to sunrise) — see ObservanceDayRule.
+    // The instant matcher's own "neither" case only looked at today and
+    // yesterday; tomorrow's evening must be uncovered too before the lunation
+    // is one that covers no pradosh at all.
+    return matchesInstantVyapiniRuleOnDate(rule, date, calendarSystem, location, tithiAtPradosh,
+      () => !instantCovers(rule, addDays(date, 1), calendarSystem, location, tithiAtPradosh)
+        && matchesInstantVyapiniRuleOnDate(rule, date, calendarSystem, location, tithiAtNishita));
+  }
+  if (rule.dayRule === 'pradosh-next') {
+    // Rangwali Holi: the morning after Holika Dahan, whose fire is lit in the
+    // pradosh the purnima covers — so the pradosh day, one day on.
+    return matchesInstantVyapiniRuleOnDate(rule, addDays(date, -1), calendarSystem, location, tithiAtPradosh);
+  }
+  if (rule.dayRule === 'sunset') {
+    return matchesInstantVyapiniRuleOnDate(rule, date, calendarSystem, location, tithiAtSunset);
+  }
+  if (rule.dayRule === 'sunset-last') {
+    return matchesLastVyapiniRuleOnDate(rule, date, calendarSystem, location, tithiAtSunset, 'udaya');
+  }
+  if (rule.dayRule === 'purvahna') {
+    return matchesLastVyapiniRuleOnDate(rule, date, calendarSystem, location, tithiAtPurvahna, 'opening-day');
+  }
   return matchesUdayaTithiRuleOnDate(rule, date, calendarSystem, location);
 }
 
 /**
  * Instant-vyapini day selection — the day whose GIVEN instant the tithi covers.
- * Three instants are wired: moonrise (chandrodaya — Sankashti Chaturthi, Karwa
+ * Five instants are wired — evening (pradosh) and midnight (nishita) below the
+ * three described here: moonrise (chandrodaya — Sankashti Chaturthi, Karwa
  * Chauth, Bahula Chaturthi, whose fast ends with the night's moon), midday
  * (madhyahna — Ganesh Chaturthi's sthapana, Ram Navami's janma, the monthly
  * Vinayaka Chaturthi) and afternoon (aparahna — दर्श अमावस्या, whose पितृ तर्पण is
@@ -535,7 +566,8 @@ function matchesInstantVyapiniRuleOnDate(
   date: Date,
   calendarSystem: CalendarSystem,
   location: ObservanceLocation | undefined,
-  tithiAtInstant: typeof tithiAtMoonrise
+  tithiAtInstant: typeof tithiAtMoonrise,
+  neitherCovered: () => boolean = () => matchesUdayaTithiRuleOnDate(rule, date, calendarSystem, location)
 ): boolean {
   const computationSystem = computationSystemForRule(rule, calendarSystem);
   const opts = { calendarSystem: computationSystem, location };
@@ -545,6 +577,66 @@ function matchesInstantVyapiniRuleOnDate(
     return !yesterdayCovers && monthMatchesRule(rule, date, calendarSystem, location);
   }
   if (yesterdayCovers) return false;
+  return neitherCovered();
+}
+
+/**
+ * "Last covering day" selection — the mirror of the instant matcher above for
+ * the conventions that keep the LATER of two days (`sayahna`, `purvahna`; see
+ * `tithiAtDayFraction` for the published cases each one encodes).
+ *
+ *  1. This day's instant is inside the tithi → this is the day, unless
+ *     tomorrow's is too (then tomorrow is the later of the two).
+ *  2. Otherwise, if yesterday's or tomorrow's instant is inside it, that day
+ *     owns the lunation.
+ *  3. No day's instant is covered: `udaya` falls back to the sunrise day;
+ *     `opening-day` takes the day BEFORE a true sunrise day when the tithi was
+ *     already running at that day's sunset (it opened in its daylight), else
+ *     the sunrise day too. A kshaya tithi's day is never moved: it has no
+ *     sunrise day to step back from.
+ */
+function instantCovers(
+  rule: ObservanceRule,
+  date: Date,
+  calendarSystem: CalendarSystem,
+  location: ObservanceLocation | undefined,
+  tithiAtInstant: typeof tithiAtMoonrise
+): boolean {
+  const opts = { calendarSystem: computationSystemForRule(rule, calendarSystem), location };
+  const target = rule.paksha === 'shukla' ? rule.tithi! - 1 : rule.tithi! + 14;
+  return tithiAtInstant(date, target, opts) === target;
+}
+
+const tithiAtSunset: typeof tithiAtMoonrise = (d, t, o) => tithiAtDayFraction(d, t, o ?? {}, 1);
+const tithiAtPurvahna: typeof tithiAtMoonrise = (d, t, o) => tithiAtDayFraction(d, t, o ?? {}, 0.2);
+
+function matchesLastVyapiniRuleOnDate(
+  rule: ObservanceRule,
+  date: Date,
+  calendarSystem: CalendarSystem,
+  location: ObservanceLocation | undefined,
+  tithiAtInstant: typeof tithiAtMoonrise,
+  fallback: 'udaya' | 'opening-day'
+): boolean {
+  const computationSystem = computationSystemForRule(rule, calendarSystem);
+  const opts = { calendarSystem: computationSystem, location };
+  const target = rule.paksha === 'shukla' ? rule.tithi! - 1 : rule.tithi! + 14;
+  const covers = (d: Date) => tithiAtInstant(d, target, opts) === target;
+  const tomorrow = addDays(date, 1);
+  if (covers(date)) {
+    return !covers(tomorrow) && monthMatchesRule(rule, date, calendarSystem, location);
+  }
+  if (covers(tomorrow) || covers(addDays(date, -1))) return false;
+  if (fallback === 'opening-day') {
+    const openedToday = tithiAtSunset(date, target, opts) === target;
+    const tomorrowIsSunriseDay = computeTithiAndMonth(tomorrow, opts).tithiIndex === target;
+    if (openedToday && tomorrowIsSunriseDay) {
+      return matchesUdayaTithiRuleOnDate(rule, tomorrow, calendarSystem, location);
+    }
+    const yesterday = addDays(date, -1);
+    const todayIsSunriseDay = computeTithiAndMonth(date, opts).tithiIndex === target;
+    if (todayIsSunriseDay && tithiAtSunset(yesterday, target, opts) === target) return false;
+  }
   return matchesUdayaTithiRuleOnDate(rule, date, calendarSystem, location);
 }
 

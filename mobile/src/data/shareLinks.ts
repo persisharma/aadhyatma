@@ -18,7 +18,7 @@ const IOS_APP_ID = '6766086529';
 export const APP_STORE_URL = `https://apps.apple.com/app/id${IOS_APP_ID}`;
 export const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.prashantsharma.vedansh';
 
-export const SMART_LINK = 'https://persisharma.github.io/get-vedansh/';
+export const SMART_LINK = 'https://vedansh.app/get';
 
 /**
  * Public Instagram profile, opened from the More hub's "Follow on Instagram" row (§37).
@@ -49,12 +49,33 @@ const SHARE_CTA: LocalizedStrings = {
   kn: 'Vedansh ಆ್ಯಪ್‌ನಲ್ಲಿ ಓದಿ:',
 };
 
-export function buildShareCaption(p: ShareCaptionParams): string {
+/** "Follow on Instagram:" line that precedes the public profile URL (§37 / §39). */
+const FOLLOW_IG_CTA: LocalizedStrings = {
+  hi: 'Instagram पर फ़ॉलो करें:',
+  en: 'Follow on Instagram:',
+  gu: 'Instagram પર ફૉલો કરો:',
+  kn: 'Instagram ನಲ್ಲಿ ಫಾಲೋ ಮಾಡಿ:',
+};
+
+/** The localized "Follow on Instagram: <url>" line, shared by the verse + app-invite captions. */
+function instagramLine(lang: Lang): string {
+  return `${pick(lang, FOLLOW_IG_CTA)} ${INSTAGRAM_URL}`;
+}
+
+export function buildShareCaption(
+  p: ShareCaptionParams,
+  // The Instagram caption (buildInstagramCaption) omits the profile line — it already
+  // carries the @handle, and a non-clickable instagram.com URL inside an IG post is noise.
+  opts: { withInstagram?: boolean } = {}
+): string {
+  const { withInstagram = true } = opts;
   // Header + first line are content: gu/kn re-script the Devanagari (which is the
   // recitation text for the verse line too). hi/en outputs are byte-identical to before.
   const header = `${contentByLang(p.lang, p.sectionNameHi, p.sectionNameEn)} · ${contentByLang(p.lang, p.verseLabelHi, p.verseLabelEn)}`;
   const firstLine = contentByLang(p.lang, p.firstLineHi, p.firstLineEn);
-  return [`${header}`, `"${firstLine}"`, '', `${pick(p.lang, SHARE_CTA)} ${SMART_LINK}`].join('\n');
+  const lines = [`${header}`, `"${firstLine}"`, '', `${pick(p.lang, SHARE_CTA)} ${SMART_LINK}`];
+  if (withInstagram) lines.push(instagramLine(p.lang));
+  return lines.join('\n');
 }
 
 /** "Follow" line that precedes the @handle in the Instagram caption. */
@@ -91,7 +112,7 @@ export function buildInstagramCaption(p: InstagramCaptionParams): string {
     })
   );
   return [
-    buildShareCaption(p),
+    buildShareCaption(p, { withInstagram: false }),
     `${pick(p.lang, IG_FOLLOW)} @${INSTAGRAM_HANDLE}`,
     '',
     hashtags,
@@ -146,5 +167,5 @@ const APP_SHARE_INVITE: LocalizedStrings = {
 
 /** App-invite message — feature list + download link, no verse attached (shared from More). */
 export function buildAppShareMessage(lang: Lang): string {
-  return `${pick(lang, APP_SHARE_INVITE)} ${SMART_LINK}`;
+  return [`${pick(lang, APP_SHARE_INVITE)} ${SMART_LINK}`, instagramLine(lang)].join('\n');
 }

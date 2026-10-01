@@ -189,6 +189,35 @@ describe('directory hygiene (PRD-26 §6.2)', () => {
     }
   });
 
+  test('a directPay row hands off to the org\'s own hosted donation page (§27.8)', () => {
+    // The user-approved exception to "own domain": a row may leave by the
+    // organization's OWN hosted donation page instead of its website, and it
+    // MUST be flagged directPay so the detail screen says "donation page".
+    const cwo = DAAN_ORG_ENTRIES.find((o) => o.id === 'change-with-one');
+    expect(cwo).toBeDefined();
+    expect(cwo!.directPay).toBe(true);
+    expect(cwo!.causes).toContain('anna');
+    expect(cwo!.officialUrl).toBe('https://pages.razorpay.com/ChangeWithOneMeal');
+    expect(cwo!.status).toBe('verified');
+    // Still never a Vedansh-owned recipient (the only structural URL ban).
+    expect(new URL(cwo!.officialUrl).hostname.toLowerCase()).not.toContain('vedansh');
+  });
+
+  test('the optional detail description travels in both languages and stays a few lines (§27.14)', () => {
+    for (const org of DAAN_ORG_ENTRIES) {
+      // Hi/En travel together — never one without the other.
+      expect(Boolean(org.descriptionHi)).toBe(Boolean(org.descriptionEn));
+      for (const d of [org.descriptionHi, org.descriptionEn]) {
+        if (!d) continue;
+        nonEmpty(d);
+        // A short read (3–4 lines), not a dossier — the द्वार is not a portal.
+        expect(d.length).toBeLessThanOrEqual(400);
+      }
+    }
+    const cwo = DAAN_ORG_ENTRIES.find((o) => o.id === 'change-with-one')!;
+    expect(Boolean(cwo.descriptionHi && cwo.descriptionEn)).toBe(true);
+  });
+
   test('a row stays a place, not a profile: one line, no paperwork, no numbers', () => {
     // RULEBOOK §27.14 — the mahatva belongs to the CAUSE; a directory row says
     // only what the place does. Registration/80G text and account or

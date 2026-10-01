@@ -1,0 +1,37 @@
+appId: com.prashantsharma.vedansh
+---
+- stopApp
+- launchApp:
+    arguments: { RCT_jsLocation: "127.0.0.1:8084" }
+- waitForAnimationToEnd: { timeout: 30000 }
+- scrollUntilVisible:
+    element: { text: "Kundali. New. Tap to open." }
+    direction: DOWN
+    centerElement: true
+- tapOn: "Kundali. New. Tap to open."
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: { id: "jyotish-prashna-door" }
+    direction: DOWN
+    centerElement: true
+- tapOn: "Open Prashna"
+- extendedWaitUntil: { visible: { id: "purpose-naukri" }, timeout: 15000 }
+- tapOn: { id: "purpose-naukri" }
+- tapOn: { id: "question-job-switch" }
+- tapOn: { point: "92%, 91%" }
+- scrollUntilVisible:
+    element: { id: "prashna-phase" }
+    direction: DOWN
+    centerElement: true
+- swipe: { start: "50%, 35%", end: "50%, 70%", duration: 450 }
+- takeScreenshot: 01-answer
+- scrollUntilVisible:
+    element: { id: "phase-for-natal-10" }
+    direction: DOWN
+    centerElement: true
+- takeScreenshot: 02-in-favour
+- scrollUntilVisible:
+    element: { id: "phase-against-transit-saturn" }
+    direction: DOWN
+    centerElement: true
+- takeScreenshot: 03-reasons-to-pause

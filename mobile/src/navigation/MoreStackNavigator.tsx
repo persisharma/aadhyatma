@@ -26,6 +26,8 @@ const loadWishlistRoute = prefetchedRoute('Wishlist', 3, () => require('@/screen
 const loadRemindersRoute = prefetchedRoute('Reminders', 3, () => require('@/screens/ReminderSettingsScreen').default);
 const loadJapamAlarmsRoute = prefetchedRoute('JapamAlarms', 3, () => require('@/screens/JapamAlarmsScreen').default);
 const loadWidgetGalleryRoute = prefetchedRoute('WidgetGallery', 3, () => require('@/screens/WidgetGalleryScreen').default);
+const loadKidsStoryLibraryRoute = prefetchedRoute('KidsStoryLibrary', 3, () => require('@/screens/KidsStoryLibraryScreen').default);
+const loadKidsStoryReaderRoute = prefetchedRoute('KidsStoryReader', 3, () => require('@/screens/KidsStoryReaderScreen').default);
 const loadPitruSmaranListRoute = prefetchedRoute('PitruSmaranList', 3, () => require('@/screens/PitruSmaranListScreen').default);
 const loadPitruSmaranEditRoute = prefetchedRoute('PitruSmaranEdit', 3, () => require('@/screens/PitruSmaranEditScreen').default);
 const loadPitruSmaranDetailRoute = prefetchedRoute('PitruSmaranDetail', 3, () => require('@/screens/PitruSmaranDetailScreen').default);
@@ -65,6 +67,9 @@ export default function MoreStackNavigator() {
       }}
     >
       <Stack.Screen name="MoreHome" component={MoreScreen} />
+      {/* बाल कथाएँ (PRD) — kids' story library + reader. */}
+      <Stack.Screen name="KidsStoryLibrary" getComponent={loadKidsStoryLibraryRoute} />
+      <Stack.Screen name="KidsStoryReader" getComponent={loadKidsStoryReaderRoute} />
       <Stack.Screen name="Profile" getComponent={loadProfileRoute} />
       <Stack.Screen name="Wishlist" getComponent={loadWishlistRoute} />
       <Stack.Screen name="Reminders" getComponent={loadRemindersRoute} />

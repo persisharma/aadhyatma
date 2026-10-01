@@ -26,6 +26,8 @@ jest.mock('@react-navigation/native', () => ({
   useNavigation: () => mockNavigation,
 }));
 
+jest.mock('@/components/BackgroundLayer', () => () => null);
+
 jest.mock('react-native-safe-area-context', () => ({
   SafeAreaView: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) =>
     mockReact.createElement(mockView, props, children),
@@ -114,10 +116,10 @@ describe('DaanPunyaScreen — the educate-first home', () => {
     const bar = tree.root.findAllByProps({ testID: 'daan-home-actions' })[0];
     expect(bar.findAllByProps({ testID: 'daan-home-dwaar' }).length).toBeGreaterThan(0);
     expect(bar.findAllByProps({ testID: 'daan-home-donate' }).length).toBeGreaterThan(0);
-    // Every verified principle rides the carousel; the meaning unfolds in place.
+    // Every verified principle rides the carousel; the meaning renders in full (no unfold toggle).
     const carousel = tree.root.findAllByProps({ testID: 'daan-principle-carousel' })[0];
     expect(carousel.findAllByProps({ testID: 'daan-principle-dana-sukta' }).length).toBeGreaterThan(0);
-    expect(has(tree, 'daan-principle-meaning-dana-sukta')).toBe(true);
+    expect(has(tree, 'daan-principle-meaning-dana-sukta')).toBe(false);
     // The kathas are a horizontal shelf.
     const shelf = tree.root.findAllByProps({ testID: 'daan-katha-shelf' })[0];
     expect(shelf.findAllByProps({ testID: 'daan-katha-karna' }).length).toBeGreaterThan(0);
@@ -405,6 +407,36 @@ describe('पात्र-परिचय — a place, not a profile (RULEBOOK �
     expect(openURL).toHaveBeenCalledWith(getDaanOrg('akshaya-patra')!.officialUrl);
     // And the return offer to record is gentle, after the fact — never before.
     expect(has(tree, 'daan-org-return-offer')).toBe(true);
+    openURL.mockRestore();
+    await act(async () => tree.unmount());
+  });
+
+  test('an "about this work" description renders only for rows that carry one', async () => {
+    const withDesc = await renderDetail('change-with-one');
+    expect(has(withDesc, 'daan-org-description')).toBe(true);
+    expect(textOf(withDesc)).toContain('इनके बारे में');
+    await act(async () => withDesc.unmount());
+    // A thin row (no description) shows no About section — the default stays lean.
+    const thin = await renderDetail('akshaya-patra');
+    expect(has(thin, 'daan-org-description')).toBe(false);
+    await act(async () => thin.unmount());
+  });
+
+  test('a directPay row says "donation page", never "official website", and opens its own hosted page', async () => {
+    const { Linking } = require('react-native');
+    const openURL = jest.spyOn(Linking, 'openURL').mockResolvedValue(undefined as never);
+    const org = getDaanOrg('change-with-one')!;
+    expect(org.directPay).toBe(true);
+    const tree = await renderDetail('change-with-one');
+    // The app must not call a payment page a website (RULEBOOK §27.8 honesty).
+    const idle = textOf(tree);
+    expect(idle).toContain('दान-पृष्ठ');
+    expect(idle).not.toContain('आधिकारिक वेबसाइट');
+    await press(tree, 'daan-org-give');
+    expect(has(tree, 'daan-org-interstitial')).toBe(true);
+    expect(textOf(tree)).toContain('दान-पृष्ठ पर जा रहे हैं');
+    await press(tree, 'daan-org-open');
+    expect(openURL).toHaveBeenCalledWith(org.officialUrl);
     openURL.mockRestore();
     await act(async () => tree.unmount());
   });

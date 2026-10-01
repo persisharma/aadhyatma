@@ -27,7 +27,7 @@ The fifth chapter of the Bhagavad Gita is "Karma Sanyasa Yoga". In this chapter,
 
 संन्यासं कर्मणां कृष्ण पुनर्योगं च शंससि।
 
-यच्छ्रेय एतयोरेकं तन्मे ब्रूहि सुनिश्िचतम्।।5.1।।
+यच्छ्रेय एतयोरेकं तन्मे ब्रूहि सुनिश्चितम्।।5.1।।
 
 **Transliteration**
 
