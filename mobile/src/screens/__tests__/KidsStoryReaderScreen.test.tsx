@@ -21,13 +21,14 @@ jest.mock('@/components/ReaderHeader', () => {
   return { __esModule: true, default: (props: any) => React.createElement('ReaderHeader', props, props.right) };
 });
 jest.mock('@/components/KidsStoryArt', () => ({ __esModule: true, default: 'KidsStoryArt' }));
+jest.mock('@/components/ReadingProgressBar', () => ({ __esModule: true, default: 'ReadingProgressBar' }));
 jest.mock('@/components/LanguagePickerSheet', () => ({ __esModule: true, default: 'LanguagePickerSheet' }));
 jest.mock('@/data/gita/language', () => ({
   useGitaLanguage: () => ({ lang: mockLang }),
   LANGUAGES: ['hi', 'en', 'gu', 'kn'].map(value => ({ value, shortLabel: value })),
 }));
 jest.mock('@/theme/ThemeContext', () => ({ useTheme: () => ({
-  colors: {}, typography: {}, spacing: { readingGutter: 22, lg: 16, md: 12, sm: 8 },
+  colors: {}, typography: { pageCounter: { fontFamily: 'test-font', fontSize: 14 } }, spacing: { readingGutter: 22, lg: 16, md: 12, sm: 8 },
 }) }));
 jest.mock('@/utils/langType', () => ({ meaningToken: () => ({}), titleFontByLang: () => 'test-font' }));
 jest.mock('@/utils/localize', () => ({ pick: (lang: string, values: Record<string, string>) => values[lang] }));
@@ -43,7 +44,7 @@ function mount(pageId?: string, storyId = story.id) {
 }
 afterEach(() => { mockLang = 'hi'; mockScroll.mockClear(); });
 
-test('first scene mounts with a horizontal pager and vertically scrolling captions', () => {
+test('first scene mounts with a horizontal pager, a counter and no page buttons', () => {
   const { tree, find } = mount();
   const pager = find('story-pager');
   expect(pager.props.horizontal).toBe(true);
@@ -51,12 +52,15 @@ test('first scene mounts with a horizontal pager and vertically scrolling captio
   expect(pager.props.initialNumToRender).toBe(1);
   expect(pager.props.getItemLayout(null, 2)).toEqual({ length: 390, offset: 780, index: 2 });
   expect(tree.root.findAllByType('Text' as any).some(node => node.props.children === story.pages[0].text.hi)).toBe(true);
-  expect(find('story-prev').props.disabled).toBe(true);
+  // Gita-style swipe-only navigation: a header counter, no Previous/Next buttons.
+  expect(find('story-progress').props.children[0]).toBe(1);
+  expect(tree.root.findAllByProps({ testID: 'story-prev' })).toHaveLength(0);
+  expect(tree.root.findAllByProps({ testID: 'story-next' })).toHaveLength(0);
   act(() => tree.unmount());
 });
 
-test('swipes, buttons, language changes and layout changes keep one page index', () => {
-  const { tree, props, find, navigation } = mount('yamuna-crossing');
+test('swipes, language changes and layout changes keep one page index', () => {
+  const { tree, props, find } = mount('yamuna-crossing');
   expect(find('story-progress').props.children[0]).toBe(8);
   for (const language of ['en', 'gu', 'kn', 'hi']) {
     mockLang = language;
@@ -66,18 +70,12 @@ test('swipes, buttons, language changes and layout changes keep one page index',
   }
   act(() => find('story-pager').props.onMomentumScrollEnd({ nativeEvent: { contentOffset: { x: 390 * 8 } } }));
   expect(find('story-progress').props.children[0]).toBe(9);
-  act(() => find('story-prev').props.onPress());
-  expect(mockScroll).toHaveBeenLastCalledWith({ index: 7, animated: true });
-  expect(find('story-progress').props.children[0]).toBe(8);
-  act(() => find('story-next').props.onPress());
-  expect(mockScroll).toHaveBeenLastCalledWith({ index: 8, animated: true });
   const layout = tree.root.findAllByType('View' as any).find(node => node.props.onLayout)!;
   act(() => layout.props.onLayout({ nativeEvent: { layout: { width: 700 } } }));
   expect(find('story-pager').props.initialScrollIndex).toBe(8);
   expect(find('story-pager').props.getItemLayout(null, 8).offset).toBe(5600);
   act(() => find('story-pager').props.onMomentumScrollEnd({ nativeEvent: { contentOffset: { x: 700 * 9 } } }));
-  act(() => find('story-next').props.onPress());
-  expect(navigation.goBack).toHaveBeenCalledTimes(1);
+  expect(find('story-progress').props.children[0]).toBe(10);
   act(() => tree.unmount());
 });
 
