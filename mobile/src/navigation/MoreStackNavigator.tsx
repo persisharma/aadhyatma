@@ -17,6 +17,8 @@ export default function MoreStackNavigator() {
       }}
     >
       <Stack.Screen name="MoreHome" component={MoreScreen} />
+      <Stack.Screen name="KidsStoryLibrary" getComponent={() => require('@/screens/KidsStoryLibraryScreen').default} />
+      <Stack.Screen name="KidsStoryReader" getComponent={() => require('@/screens/KidsStoryReaderScreen').default} />
       <Stack.Screen name="Profile" getComponent={() => require('@/screens/ProfileScreen').default} />
       <Stack.Screen name="Wishlist" getComponent={() => require('@/screens/WishlistScreen').default} />
       <Stack.Screen name="Reminders" getComponent={() => require('@/screens/ReminderSettingsScreen').default} />

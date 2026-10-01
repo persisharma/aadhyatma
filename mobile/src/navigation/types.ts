@@ -146,6 +146,8 @@ export type DaanStackParamList = {
 
 export type MoreStackParamList = VidhiStackParamList & DaanStackParamList & GharVastuStackParamList & {
   MoreHome: undefined;
+  KidsStoryLibrary: undefined;
+  KidsStoryReader: { storyId: string; pageId?: string };
   Wishlist: undefined;
   Profile: undefined;
   Reminders: undefined;

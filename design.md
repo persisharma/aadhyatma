@@ -3303,3 +3303,16 @@ The **sticky action bar** (`daan-home-actions`) is absolutely positioned at the 
 **Privacy.** The layer reads nothing from `PitruSmaranContext`; routes carry `{kathaId}` or an undated `{vidhiId}` only; reminder payloads are unchanged.
 
 **Files.** `data/pitru/{types,lessons,principles,kathas,prashna,index}.ts` · `screens/PitruPakshaShikshaScreen.tsx` (hub) · `screens/PitruParichayReaderScreen.tsx` (reader) · `screens/PitruKathaScreen.tsx` · `components/KathaSectionPage.tsx` (`pillHi`/`pillEn`) · the door in `screens/PitruPakshaOverviewScreen.tsx` · routes in `navigation/types.ts` + `MoreStackNavigator.tsx`. Tests: `data/pitru/__tests__/pitruShikshaContent.test.ts` (Jest — registry invariants, reader-ref resolution against the bundled JSON, stance guard), `screens/__tests__/PitruPakshaShikshaScreen.test.tsx` (hub + reader + katha), the overview cases in `PitruSmaranScreens.test.tsx`, the reader's row in `readerReadAloud.test.tsx`; e2e `.maestro/pitru-paksha-smoke.yaml` (season-gated — see its header). PRD: `docs/roadmap/prds/44-pitru-paksha-shiksha.md`; prototype: `docs/pitru-paksha-shiksha-prototype.html`. Contract: RULEBOOK §28.
+
+## 75. Illustrated stories for children
+
+Door: More → Stories for Kids → story card → reader. Both routes load lazily. `data/kidsStories/index.ts` is the registry; route params carry a stable `storyId` and optional `pageId`.
+
+The shared `ReaderHeader`, parchment theme and persisted reading-language context match the scripture readers. Scenes use a horizontal, paginated `FlatList`, one per measured viewport width. Each scene scrolls vertically to fit its illustration and caption on small screens, with long translations or large accessibility text. Previous/Next buttons and a counter sit below the pager. Buttons and swipes share one index; language changes preserve the scene. Width changes restore that scene at the new width.
+
+Bundled text-free 4:5 illustrations use the approved muted pastel style; the Yamuna keeps its strong current. Narration is native text below the art, separately authored in Hindi, English, Gujarati and Kannada. The birth scene is the cover; the last scene includes the takeaway and source note, with an action back to the library.
+
+This data-driven picture-book reader does not replace GitaReaderScreen. Story bookmarks, sharing, progress persistence and read-aloud remain future work; no inactive controls appear. Gujarati/Kannada editorial review and native device verification are release checks.
+
+Checks: `screens/__tests__/KidsStoryReaderScreen.test.tsx`, `data/__tests__/kidsStories.test.ts`, `.maestro/kids-stories-smoke.yaml`. Contract: RULEBOOK §29. Prototype: `docs/kids-stories-prototype.html`.
+
