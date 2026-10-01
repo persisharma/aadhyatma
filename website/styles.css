@@ -631,7 +631,25 @@ body[lang="hi"] { line-height: 1.75; }
 [lang="hi"] .shloka-band--slim .shloka-meaning { font-size: clamp(0.92rem, 1vw, 1rem); }
 .shloka-band--slim .folio-bg::before, .shloka-band--slim .folio-bg::after { left: 30%; right: 30%; }
 .shloka-band--slim .folio-bg.is-loaded::after { opacity: 0.14; }
-@media (max-width: 860px) { .shloka-band--slim .folio-bg::before, .shloka-band--slim .folio-bg::after { left: 0; right: 0; } }
+@media (max-width: 860px) {
+  .shloka-band--slim { padding-block: 1.5rem; }
+  .shloka-band--slim .folio-bg::before, .shloka-band--slim .folio-bg::after { left: 0; right: 0; }
+  .shloka-band--slim .shloka::before { display: none; }
+}
+/* Wide screens: verse and meaning side by side across the width, so the strip
+   is two lines tall instead of a narrow column of five or six. */
+@media (min-width: 861px) {
+  .shloka-band--slim { padding-block: 1.6rem; }
+  .shloka-band--slim .shloka { max-width: 64rem; display: grid; align-items: center;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "text meaning" "text src";
+    column-gap: 2.5rem; text-align: left; }
+  .shloka-band--slim .shloka::before { display: none; }
+  .shloka-band--slim .shloka-text { grid-area: text; text-align: right; margin: 0;
+    padding-right: 2.5rem; border-right: 1px solid var(--rule-strong); }
+  .shloka-band--slim .shloka-meaning { grid-area: meaning; align-self: end; max-width: none; margin: 0 0 0.4rem; line-height: 1.55; }
+  .shloka-band--slim .shloka-src { grid-area: src; align-self: start; }
+  .shloka-band--slim .folio-bg::before, .shloka-band--slim .folio-bg::after { left: 15%; right: 15%; }
+}
 
 /* The desktop bar carries nine links, the language pill and the visit count.
    Never let the menu wrap: a wrap during the web-font swap moved the whole
