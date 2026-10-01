@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { readFileSync, existsSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, URL } from 'node:url';
 import { kidsStories, getKidsStory, storyPageIndex, storyText } from '../kidsStories';
 
 test('stories have unique stable pages and authored text in all four languages', () => {
