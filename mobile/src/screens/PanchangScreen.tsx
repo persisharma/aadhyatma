@@ -66,6 +66,7 @@ import JyotishShareCard from '@/components/JyotishShareCard';
 import JyotishShareSheet from '@/components/JyotishShareSheet';
 import JyotishStateCard from '@/components/JyotishStateCard';
 import JyotishToolTile from '@/components/JyotishToolTile';
+import DayVaasCards from '@/components/DayVaasCards';
 import { computePersonalGuidance, SADE_SATI_PHASE_SHORT } from '@/panchang/gochar';
 import {
   RASHI_NAMES_EN,
@@ -679,6 +680,9 @@ export default function PanchangScreen({ route }: Props) {
             <PanchangTile label={contentByLang(lang, 'नित्य योग', 'Nitya Yoga')} element={p.yoga} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
             <PanchangTile label={contentByLang(lang, 'करण', 'Karana')} element={p.karana} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
           </View>
+          {/* यात्रा (चन्द्रमा · चन्द्र वास · दिशा शूल) + हवन (अग्नि वास) cards —
+              pure readings of the solved day (design.md §33). */}
+          <DayVaasCards p={p} lang={lang} />
 
           {/* PRD-27: the day's शुभ योग — present-or-absent with its window,
               annotation only (design.md §69). Absent days render nothing. */}

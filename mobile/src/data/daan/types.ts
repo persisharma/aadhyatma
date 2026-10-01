@@ -169,9 +169,23 @@ export type DaanOrgEntry = {
   /** ONE line — what they actually do. Not a profile (RULEBOOK §27.14). */
   aboutHi: string;
   aboutEn: string;
+  /** OPTIONAL 3–4 line "about this work" read, rendered ONLY on the detail
+   * screen (never in the list row, which stays the one-line `about`). A deeper
+   * factual, source-backed account of the seva — never a fundraising pitch, no
+   * PII (no personal/founder names), no scale figures or superlatives the app
+   * would assert on the org's behalf (RULEBOOK §27.14). Hi/En travel together. */
+  descriptionHi?: string;
+  descriptionEn?: string;
   /** The ONE link the user leaves by: the org's own official page where the
-   * giving happens. https, own domain, never an aggregator or a gateway. */
+   * giving happens. https, the org's own channel, never an aggregator and never
+   * a Vedansh-owned gateway. Usually the org's own domain; for a `directPay`
+   * row it is the org's own hosted donation page (RULEBOOK §27.8). */
   officialUrl: string;
+  /** The hand-off is the organization's own hosted DONATION page (e.g. a
+   * payment-page campaign of theirs) rather than their website. Flips the
+   * detail screen's hand-off copy from "official website" to "donation page"
+   * so the app never claims a payment page is a website (RULEBOOK §27.8). */
+  directPay?: boolean;
   /** Editorial only — never rendered; drives `isOrgRowStale` (PRD-26 §6.2). */
   verifiedOn: string; // ISO date
   /** True when the hand-off is not a money donation (e.g. blood-donor registration). */

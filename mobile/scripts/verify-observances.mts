@@ -11,8 +11,11 @@
 // drik-verified astronomy the engine uses, but with the CORRECT day-selection muhurta.
 //
 // Run:  TZ=Asia/Kolkata npx tsx scripts/verify-observances.mts
-// Exit: non-zero if any annual festival is off by a whole lunar MONTH or MISSING (severe),
-//       or if a self-check anchor fails. ±1-day muhurta shifts are reported as warnings.
+// Exit: non-zero on ANY disagreement — a whole lunar month, a single day, or a festival that
+//       does not resolve. ±1-day shifts used to be warnings ("Class B"); that let Dussehra,
+//       Diwali, Dhanteras and Maha Shivaratri sit a day late for years while CI printed PASS
+//       (Sept 2026 audit). A date the app cannot yet get right goes in KNOWN_DIVERGENCES with
+//       its published date and the reason — never into a warning bucket.
 
 import { createRequire } from 'node:module';
 import { computePanchangForDate } from '../src/panchang/engine';
@@ -26,7 +29,11 @@ const require = createRequire(import.meta.url);
 const { SunPosition, EclipticGeoMoon, MakeTime } =
   require('astronomy-engine') as typeof import('astronomy-engine');
 
-type Muhurta = 'udaya' | 'madhyahna' | 'aparahna' | 'nishita' | 'pradosh';
+// Mirrors ObservanceDayRule (types.ts) minus chandrodaya, which needs a moonrise solve this
+// script does not do — those rules are pinned by observanceDates.test.ts instead.
+type Muhurta =
+  | 'udaya' | 'madhyahna' | 'aparahna' | 'nishita' | 'pradosh'
+  | 'ratri' | 'pradosh-next' | 'sunset' | 'sunset-last' | 'purvahna';
 export interface AnnualFestival {
   id: string;
   month: number; // purnimant lunar month, 1-based (Chaitra=1 … Phalguna=12)
@@ -39,10 +46,15 @@ export interface AnnualFestival {
 export const ANNUAL: AnnualFestival[] = [
   { id: 'vasant-panchami', month: 11, paksha: 'shukla', tithi: 5, muhurta: 'udaya' },
   { id: 'maha-shivaratri', month: 12, paksha: 'krishna', tithi: 14, muhurta: 'nishita' },
-  { id: 'holi', month: 12, paksha: 'shukla', tithi: 15, muhurta: 'udaya' }, // Purnima; Dahan-vs-Rangwali makes ±1 day inherently ambiguous
+  { id: 'holi', month: 12, paksha: 'shukla', tithi: 15, muhurta: 'pradosh-next' }, // Rangwali: the morning after Holika Dahan
   { id: 'ram-navami', month: 1, paksha: 'shukla', tithi: 9, muhurta: 'madhyahna' },
   { id: 'hanuman-jayanti', month: 1, paksha: 'shukla', tithi: 15, muhurta: 'udaya' },
-  { id: 'akshaya-tritiya', month: 2, paksha: 'shukla', tithi: 3, muhurta: 'udaya' },
+  { id: 'akshaya-tritiya', month: 2, paksha: 'shukla', tithi: 3, muhurta: 'purvahna' },
+  { id: 'parashurama-jayanti', month: 2, paksha: 'shukla', tithi: 3, muhurta: 'pradosh' },
+  { id: 'ganga-saptami', month: 2, paksha: 'shukla', tithi: 7, muhurta: 'madhyahna' },
+  { id: 'sita-navami', month: 2, paksha: 'shukla', tithi: 9, muhurta: 'madhyahna' },
+  { id: 'narasimha-jayanti', month: 2, paksha: 'shukla', tithi: 14, muhurta: 'sunset-last' },
+  { id: 'vat-savitri-vrat', month: 3, paksha: 'krishna', tithi: 15, muhurta: 'madhyahna' },
   { id: 'narada-jayanti', month: 3, paksha: 'krishna', tithi: 1, muhurta: 'udaya' },
   { id: 'guru-purnima', month: 4, paksha: 'shukla', tithi: 15, muhurta: 'udaya' },
   { id: 'raksha-bandhan', month: 5, paksha: 'shukla', tithi: 15, muhurta: 'udaya' },
@@ -52,8 +64,14 @@ export const ANNUAL: AnnualFestival[] = [
   { id: 'janmashtami', month: 6, paksha: 'krishna', tithi: 8, muhurta: 'udaya' },
   { id: 'ganesh-chaturthi', month: 6, paksha: 'shukla', tithi: 4, muhurta: 'madhyahna' },
   { id: 'navratri-start', month: 7, paksha: 'shukla', tithi: 1, muhurta: 'udaya' },
-  { id: 'dussehra', month: 7, paksha: 'shukla', tithi: 10, muhurta: 'udaya' },
+  { id: 'dussehra', month: 7, paksha: 'shukla', tithi: 10, muhurta: 'aparahna' },
+  { id: 'maha-navami', month: 7, paksha: 'shukla', tithi: 9, muhurta: 'madhyahna' },
+  { id: 'sharad-purnima', month: 7, paksha: 'shukla', tithi: 15, muhurta: 'nishita' },
+  { id: 'kojagara-puja', month: 7, paksha: 'shukla', tithi: 15, muhurta: 'nishita' },
+  // Karwa Chauth is chandrodaya in the engine; pradosh is this script's stand-in for the
+  // evening moon, and the two agree for every year swept here.
   { id: 'karwa-chauth', month: 8, paksha: 'krishna', tithi: 4, muhurta: 'pradosh' },
+  { id: 'ahoi-ashtami', month: 8, paksha: 'krishna', tithi: 8, muhurta: 'pradosh' },
   { id: 'dhanteras', month: 8, paksha: 'krishna', tithi: 13, muhurta: 'pradosh' },
   { id: 'diwali', month: 8, paksha: 'krishna', tithi: 15, muhurta: 'pradosh' }, // Lakshmi Puja (Amavasya at Pradosh)
   { id: 'govardhan-puja', month: 8, paksha: 'shukla', tithi: 1, muhurta: 'udaya' },
@@ -120,7 +138,8 @@ export const ANNUAL: AnnualFestival[] = [
   { id: 'janaki-jayanti', month: 12, paksha: 'krishna', tithi: 8, muhurta: 'udaya' },
   { id: 'phulera-dooj', month: 12, paksha: 'shukla', tithi: 2, muhurta: 'udaya' },
   { id: 'narak-chaturdashi', month: 8, paksha: 'krishna', tithi: 14, muhurta: 'udaya' },
-  { id: 'kaal-bhairav-jayanti', month: 9, paksha: 'krishna', tithi: 8, muhurta: 'udaya' },
+  { id: 'kaal-bhairav-jayanti', month: 9, paksha: 'krishna', tithi: 8, muhurta: 'ratri' },
+  { id: 'dattatreya-jayanti', month: 9, paksha: 'shukla', tithi: 15, muhurta: 'pradosh' },
   { id: 'mauni-amavasya', month: 11, paksha: 'krishna', tithi: 15, muhurta: 'udaya' },
   { id: 'ganesh-jayanti', month: 11, paksha: 'shukla', tithi: 4, muhurta: 'madhyahna' },
   { id: 'bhishma-ashtami', month: 11, paksha: 'shukla', tithi: 8, muhurta: 'madhyahna' },
@@ -139,9 +158,8 @@ export const ANCHORS: Record<string, string> = {
   'diwali:2025': '2025-10-20', 'ram-navami:2025': '2025-04-06', 'narada-jayanti:2025': '2025-05-13',
   'holi:2025': '2025-03-14', 'dussehra:2025': '2025-10-02', 'navratri-start:2025': '2025-09-22',
   // Regional wave 1 — published civil dates gathered with the rules (see festivals.ts
-  // per-rule source comments). `bachh-baras` has NO anchor on purpose: its published
-  // date follows the pradosh muhurta this script re-derives, and pinning an anchor
-  // would hide the very Class B shift the row exists to report.
+  // per-rule source comments).
+  'bachh-baras:2026': '2026-09-07',
   'gangaur:2025': '2025-03-31', 'gangaur:2026': '2026-03-21',
   'goga-navami:2025': '2025-08-17', 'goga-navami:2026': '2026-09-05',
   'teja-dashami:2025': '2025-09-02', 'teja-dashami:2026': '2026-09-21',
@@ -163,6 +181,38 @@ export const ANCHORS: Record<string, string> = {
   'kabir-jayanti:2026': '2026-06-29', 'dhumavati-jayanti:2026': '2026-06-22',
   'mahesh-navami:2026': '2026-06-23',
   'hal-shashthi:2026': '2026-09-02', 'annapurna-jayanti:2026': '2026-12-23',
+  // Day-rule audit (Sept 2026) — dates READ from Drik/published almanacs while each rule's
+  // convention was retagged; mirrored by observanceDates.test.ts DAY_RULE_PUBLISHED.
+  'dussehra:2024': '2024-10-12', 'dussehra:2026': '2026-10-20', 'dussehra:2027': '2027-10-09',
+  'dussehra:2028': '2028-09-27', 'dussehra:2029': '2029-10-16',
+  'diwali:2024': '2024-10-31', 'diwali:2026': '2026-11-08', 'diwali:2028': '2028-10-17',
+  'diwali:2029': '2029-11-05', 'diwali:2030': '2030-10-26',
+  'maha-shivaratri:2028': '2028-02-23', 'maha-shivaratri:2029': '2029-02-11',
+  'holi:2027': '2027-03-22', 'holi:2028': '2028-03-11', 'holi:2029': '2029-03-01',
+  'akshaya-tritiya:2026': '2026-04-19', 'akshaya-tritiya:2027': '2027-05-09', 'akshaya-tritiya:2028': '2028-04-27',
+  'parashurama-jayanti:2025': '2025-04-29', 'sita-navami:2025': '2025-05-05', 'ganga-saptami:2025': '2025-05-03',
+  'narasimha-jayanti:2024': '2024-05-21', 'narasimha-jayanti:2025': '2025-05-11',
+  'narasimha-jayanti:2026': '2026-04-30', 'narasimha-jayanti:2027': '2027-05-18',
+  'vat-savitri-vrat:2025': '2025-05-26', 'vat-savitri-vrat:2026': '2026-05-16',
+  'sharad-purnima:2024': '2024-10-16', 'sharad-purnima:2026': '2026-10-25',
+  'kojagara-puja:2024': '2024-10-16', 'kojagara-puja:2026': '2026-10-25',
+  'ahoi-ashtami:2026': '2026-11-01', 'dattatreya-jayanti:2024': '2024-12-14',
+  'kaal-bhairav-jayanti:2024': '2024-11-22', 'kaal-bhairav-jayanti:2027': '2027-11-20',
+  'bhai-dooj:2026': '2026-11-11', 'radha-ashtami:2026': '2026-09-19', 'radha-ashtami:2027': '2027-09-08',
+  'janmashtami:2027': '2027-08-25',
+  'maha-navami:2024': '2024-10-11', 'maha-navami:2025': '2025-10-01', 'maha-navami:2026': '2026-10-19',
+  'maha-navami:2027': '2027-10-08', 'maha-navami:2028': '2028-09-26', 'maha-navami:2029': '2029-10-15',
+};
+
+// Published dates the engine is KNOWN to miss, with the reason. Reported every run and
+// excused from the gate — but only while the engine still gives exactly `engine`; if it
+// moves (fixed, or broken differently) the run fails so the entry gets revisited.
+export const KNOWN_DIVERGENCES: Record<string, { published: string; engine: string; reason: string }> = {
+  'holi:2026': {
+    published: '2026-03-04',
+    engine: '2026-03-03',
+    reason: 'bhadra covered the 2 Mar pradosh, so Drik moved Holika Dahan to 3 Mar; bhadra is not modelled',
+  },
 };
 
 const ayan = (y: number) => 23.853 + 0.01396 * (y - 2000);
@@ -172,38 +222,100 @@ function tithiAt(t: Date): number {
   const moon = (EclipticGeoMoon(MakeTime(t)).lon - ayan(y) + 360) % 360;
   return Math.floor(((moon - sun + 360) % 360) / 12);
 }
-const mid = (a: Date, b: Date) => new Date((a.getTime() + b.getTime()) / 2);
 const iso = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+const addDays = (d: Date, n: number) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+const at = (a: Date, b: Date, f: number) => new Date(a.getTime() + f * (b.getTime() - a.getTime()));
 
-// Independently compute the correct civil date for a festival in a given year, by finding
-// the day (in the right purnimant month) whose target tithi covers the festival's muhurta.
+// The target tithi's [start, end) interval, found by stepping then bisecting on this
+// script's own tithi function — independent of the engine's end-time solver.
+function tithiInterval(target: number, near: Date): [Date, Date] {
+  let t = new Date(near.getTime() - 36 * 3600e3);
+  while (tithiAt(t) !== target) t = new Date(t.getTime() + 30 * 60e3);
+  const edge = (inside: Date, dir: 1 | -1) => {
+    let lo = inside.getTime();
+    let hi = lo + dir * 30 * 3600e3;
+    for (let i = 0; i < 40; i++) {
+      const mid = (lo + hi) / 2;
+      if (tithiAt(new Date(mid)) === target) lo = mid; else hi = mid;
+    }
+    return new Date(lo);
+  };
+  return [edge(t, -1), edge(t, 1)];
+}
+
+type Day = { date: Date; sunrise: Date; sunset: Date; nextSunrise: Date };
+function dayOf(date: Date): Day {
+  const pan = computePanchangForDate(date, { calendarSystem: 'purnimant' });
+  const next = computePanchangForDate(addDays(date, 1), { calendarSystem: 'purnimant' });
+  return { date, sunrise: pan.sunrise, sunset: pan.sunset, nextSunrise: next.sunrise };
+}
+const INSTANT: Record<string, (d: Day) => Date> = {
+  udaya: (d) => d.sunrise,
+  purvahna: (d) => at(d.sunrise, d.sunset, 0.2),
+  madhyahna: (d) => at(d.sunrise, d.sunset, 0.5),
+  aparahna: (d) => at(d.sunrise, d.sunset, 0.7),
+  sunset: (d) => d.sunset,
+  pradosh: (d) => at(d.sunset, d.nextSunrise, 0.1),
+  nishita: (d) => at(d.sunset, d.nextSunrise, 0.5),
+};
+
+// Independently compute the correct civil date for a festival in a given year: locate the
+// target tithi in the NIJA month, then pick among the civil days around it by the rule's
+// muhurta — first covering day, last covering day, or its documented fallback.
 export function expectedDate(f: AnnualFestival, year: number): string | null {
   const target = f.paksha === 'shukla' ? f.tithi - 1 : f.tithi + 14;
-  for (let d = new Date(year, 0, 1); d.getFullYear() === year; d.setDate(d.getDate() + 1)) {
-    const day = new Date(d);
+  // Position inside a purnimant month, which opens at Krishna Pratipada (index 15).
+  const pos = (t: number) => (t - 15 + 30) % 30;
+  const nija = (d: Date) => {
+    const pan = computePanchangForDate(d, { calendarSystem: 'purnimant' });
+    return pan.lunarMonth.index === f.month && !pan.lunarMonth.isAdhik;
+  };
+  for (let d = new Date(year, 0, 1); d.getFullYear() === year; d = addDays(d, 1)) {
     let pan;
-    try { pan = computePanchangForDate(day, { calendarSystem: 'purnimant' }); } catch { continue; }
-    if (pan.lunarMonth.index !== f.month) continue;
-    // Festivals are kept in the NIJA month; an adhik (leap) month repeats the name
-    // and must be skipped, exactly as the engine does (2026 Jyeshtha, 2029 Chaitra,
-    // 2031 Bhadrapada all carry one).
-    if (pan.lunarMonth.isAdhik) continue;
-    let instant: Date;
-    if (f.muhurta === 'udaya') instant = pan.sunrise;
-    else if (f.muhurta === 'madhyahna') instant = mid(pan.sunrise, pan.sunset);
-    // Aparahna — the midpoint of the fourth of the day's five parts (sunrise + 0.7 × daylength).
-    else if (f.muhurta === 'aparahna') instant = new Date(pan.sunrise.getTime() + 0.7 * (pan.sunset.getTime() - pan.sunrise.getTime()));
-    else if (f.muhurta === 'pradosh') instant = new Date(pan.sunset.getTime() + 48 * 60 * 1000);
-    else { // nishita — midnight between this sunset and next sunrise
-      const next = computePanchangForDate(new Date(year, d.getMonth(), d.getDate() + 1), { calendarSystem: 'purnimant' });
-      instant = mid(pan.sunset, next.sunrise);
-    }
-    if (tithiAt(instant) === target) return iso(day);
+    try { pan = computePanchangForDate(d, { calendarSystem: 'purnimant' }); } catch { continue; }
+    if (pan.lunarMonth.index !== f.month || pan.lunarMonth.isAdhik) continue;
+    if (pos(tithiAt(pan.sunrise)) < pos(target) - 1) continue;
+    const [start, end] = tithiInterval(target, d);
+    const days = [-1, 0, 1, 2].map((n) => dayOf(addDays(d, n)));
+    const within = (t: Date) => t >= start && t < end;
+    // Sunrise day: the first day whose sunrise the tithi covers, else (kshaya) the day
+    // it lies wholly inside.
+    const udayaDay = days.find((x) => within(x.sunrise)) ?? days.find((x) => x.sunrise < start && end <= x.nextSunrise)!;
+    // Festivals are kept in the NIJA month; an adhik (leap) month repeats the name and
+    // must be skipped, exactly as the engine does (2026 Jyeshtha, 2029 Chaitra, 2031
+    // Bhadrapada all carry one). A kshaya month-opening pratipada takes the next day's
+    // month, as the engine does.
+    const monthDay = !within(udayaDay.sunrise) && pos(target) === 0 ? addDays(udayaDay.date, 1) : udayaDay.date;
+    if (!nija(monthDay)) { d = addDays(end, 0); continue; }
+    return pickDay(f.muhurta, days, udayaDay, within);
   }
   return null;
 }
 
-export type Status = 'OK' | 'DAY_SHIFT' | 'MONTH_OFF' | 'MISSING';
+function pickDay(muhurta: Muhurta, days: Day[], udayaDay: Day, within: (t: Date) => boolean): string {
+  const covering = (m: string) => days.filter((d) => within(INSTANT[m](d)));
+  const first = (m: string) => covering(m)[0] ?? udayaDay;
+  switch (muhurta) {
+    case 'udaya':
+      return iso(udayaDay.date);
+    case 'ratri':
+      return iso((covering('pradosh')[0] ?? covering('nishita')[0] ?? udayaDay).date);
+    case 'pradosh-next':
+      return iso(addDays(first('pradosh').date, 1));
+    case 'sunset-last':
+      return iso((covering('sunset').at(-1) ?? udayaDay).date);
+    case 'purvahna': {
+      const last = covering('purvahna').at(-1);
+      if (last) return iso(last.date);
+      const eve = days[days.indexOf(udayaDay) - 1];
+      return iso((within(udayaDay.sunrise) && eve && within(eve.sunset) ? eve : udayaDay).date);
+    }
+    default:
+      return iso(first(muhurta).date);
+  }
+}
+
+export type Status = 'OK' | 'DAY_SHIFT' | 'MONTH_OFF' | 'MISSING' | 'KNOWN';
 export function classify(engine: string | null, expected: string | null): Status {
   if (!engine || !expected) return 'MISSING';
   if (engine === expected) return 'OK';
@@ -216,8 +328,10 @@ export function engineDate(id: string, year: number): string | null {
   return o ? iso(o.date) : null;
 }
 
-// Authoritative expected date: a known anchor when we have one, else the muhurta estimate.
-export function expectedFor(f: AnnualFestival, year: number): { date: string | null; source: 'anchor' | 'muhurta' } {
+// Authoritative expected date: a published anchor when we have one, else the muhurta estimate.
+export function expectedFor(f: AnnualFestival, year: number): { date: string | null; source: 'anchor' | 'muhurta' | 'known' } {
+  const known = KNOWN_DIVERGENCES[`${f.id}:${year}`];
+  if (known) return { date: known.published, source: 'known' };
   const anchor = ANCHORS[`${f.id}:${year}`];
   if (anchor) return { date: anchor, source: 'anchor' };
   return { date: expectedDate(f, year), source: 'muhurta' };
@@ -225,14 +339,16 @@ export function expectedFor(f: AnnualFestival, year: number): { date: string | n
 
 // ---- run as a script ----
 if (process.argv[1] && process.argv[1].endsWith('verify-observances.mts')) {
-  // VERIFY_YEARS=2025-2031 widens the sweep; the default stays the three anchored years.
+  // VERIFY_YEARS=2025-2031 widens the sweep; the default covers the precomputed table.
   const range = /^(\d{4})-(\d{4})$/.exec(process.env.VERIFY_YEARS ?? '');
   const YEARS = range
     ? Array.from({ length: Number(range[2]) - Number(range[1]) + 1 }, (_, i) => Number(range[1]) + i)
-    : [2025, 2026, 2027];
-  const monthErrors: string[] = []; // SEVERE — the bug class just fixed
-  const dayShifts: string[] = [];   // Class B — sunrise vs muhurta (pre-existing, documented)
-  const kshayaMissing: string[] = []; // pre-existing kshaya-tithi drops
+    : [2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031];
+  const failures: string[] = [];
+  const known: string[] = [];
+  // An anchor the muhurta re-derivation disagrees with means THIS script's rule table is
+  // wrong for that festival — the independent check would be checking nothing.
+  const tableDrift: string[] = [];
 
   console.log('Observance date verification — app engine vs authoritative date\n');
   for (const year of YEARS) {
@@ -240,16 +356,21 @@ if (process.argv[1] && process.argv[1].endsWith('verify-observances.mts')) {
     for (const f of ANNUAL) {
       const eng = engineDate(f.id, year);
       const { date: exp, source } = expectedFor(f, year);
-      const st = classify(eng, exp);
       const tag = `${f.id}:${year}`;
-      if (st === 'MONTH_OFF') monthErrors.push(`${tag} engine=${eng} expected=${exp}`);
-      else if (st === 'DAY_SHIFT') dayShifts.push(`${tag} engine=${eng} expected=${exp} (${f.muhurta})`);
-      else if (st === 'MISSING' && !eng) kshayaMissing.push(tag);
-      const flag = st === 'OK' ? 'ok'
-        : st === 'DAY_SHIFT' ? `~1 day (engine=sunrise, festival=${f.muhurta})`
-        : st === 'MONTH_OFF' ? '*** WRONG MONTH'
-        : !eng ? '*** MISSING (kshaya tithi — dropped at sunrise)' : '*** no expected';
-      console.log(`  ${f.id.padEnd(20)} engine=${(eng ?? '—').padEnd(12)} expected=${(exp ?? '—').padEnd(12)} [${source}] ${flag}`);
+      let st = classify(eng, exp);
+      if (source === 'known') {
+        const entry = KNOWN_DIVERGENCES[tag];
+        if (eng === entry.engine) { st = 'KNOWN'; known.push(`${tag} engine=${eng} published=${exp} — ${entry.reason}`); }
+        else failures.push(`${tag} engine=${eng} moved off its known divergence (${entry.engine}); published=${exp} — revisit KNOWN_DIVERGENCES`);
+      } else if (st !== 'OK') {
+        failures.push(`${tag} engine=${eng ?? '—'} expected=${exp ?? '—'} [${source}, ${f.muhurta}] ${st}`);
+      }
+      if (source === 'anchor') {
+        const derived = expectedDate(f, year);
+        if (derived !== exp) tableDrift.push(`${tag} anchor=${exp} muhurta(${f.muhurta})=${derived}`);
+      }
+      const flag = st === 'OK' ? 'ok' : st === 'KNOWN' ? 'known divergence' : `*** ${st}`;
+      console.log(`  ${f.id.padEnd(24)} engine=${(eng ?? '—').padEnd(12)} expected=${(exp ?? '—').padEnd(12)} [${source}] ${flag}`);
     }
     console.log('');
   }
@@ -261,13 +382,18 @@ if (process.argv[1] && process.argv[1].endsWith('verify-observances.mts')) {
     console.log(`  ${year}: ekadashis=${ekadashi.length} (some years <24 due to kshaya)  total observances=${obs.length}`);
   }
 
-  console.log(`\nSUMMARY: wrong-month=${monthErrors.length}  day-shift(muhurta, Class B)=${dayShifts.length}  missing(kshaya)=${kshayaMissing.length}`);
-  if (dayShifts.length) console.log(`  Class B (±1 day): ${dayShifts.map((s) => s.split(' ')[0]).join(', ')}`);
-  if (kshayaMissing.length) console.log(`  kshaya-missing: ${kshayaMissing.join(', ')}`);
-  if (monthErrors.length) {
-    console.log('\nFAIL — festival(s) in the WRONG LUNAR MONTH (the Janmashtami-class bug regressed):');
-    for (const m of monthErrors) console.log(`  ${m}`);
+  console.log(`\nSUMMARY: failures=${failures.length}  known-divergences=${known.length}  anchor/rule-table drift=${tableDrift.length}`);
+  for (const k of known) console.log(`  known: ${k}`);
+  if (failures.length || tableDrift.length) {
+    if (failures.length) {
+      console.log('\nFAIL — festival date(s) disagree with the published/derived date:');
+      for (const m of failures) console.log(`  ${m}`);
+    }
+    if (tableDrift.length) {
+      console.log('\nFAIL — ANNUAL muhurta disagrees with a published anchor (fix the rule table):');
+      for (const m of tableDrift) console.log(`  ${m}`);
+    }
     process.exit(1);
   }
-  console.log('\nPASS — no wrong-month errors. Day-shifts/kshaya above are the pre-existing, documented sunrise-matching limitation (VERIFICATION.md), not the month bug.');
+  console.log('\nPASS — every festival lands on its published or muhurta-derived day.');
 }
