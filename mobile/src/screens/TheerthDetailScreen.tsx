@@ -9,7 +9,7 @@ import { meaningToken, pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/
 import { getTheerthBackground, getTheerthIllustration } from '@/data/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
-import { getTempleById } from '@/data/theerth/temples';
+import { getTempleDetailById } from '@/data/theerth/temples';
 import type { Deity } from '@/data/texts';
 import type { HomeStackParamList } from '@/navigation/types';
 
@@ -49,7 +49,9 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
 
-  const temple = getTempleById(templeId);
+  // The reading loads here, on the screen the user opened — see
+  // `loadDetails()` in temples.ts for why it is not on the launch path.
+  const temple = getTempleDetailById(templeId);
 
   if (!temple) {
     return (

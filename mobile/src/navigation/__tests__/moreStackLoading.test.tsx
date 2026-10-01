@@ -7,9 +7,14 @@ jest.mock('@react-navigation/native-stack', () => ({
 jest.mock('@/screens/MoreScreen', () => ({ __esModule: true, default: () => null }));
 jest.mock('@/screens/GitaReaderScreen', () => ({ __esModule: true, default: () => null }));
 
-test('More destination modules load only when their registered route is opened', () => {
+test('More destination modules load only when their route is opened or warmed', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '../MoreStackNavigator.tsx'), 'utf8');
-  const destinations = [...source.matchAll(/name="([^"]+)" getComponent=\{\(\) => require\('([^']+)'\)\.default\}/g)];
+  // Each destination is a module-scope loader enrolled with the background
+  // warm-up (`prefetchedRoute`) and referenced by `getComponent`. Enrolling must
+  // not evaluate anything — that is what this test pins.
+  const destinations = [...source.matchAll(
+    /const load(\w+)Route = prefetchedRoute\('\w+', \d+, \(\) => require\('([^']+)'\)\.default\);/g
+  )];
   const loaded: string[] = [];
   const screens = new Map<string, () => null>();
   for (const [, route, module] of destinations) {

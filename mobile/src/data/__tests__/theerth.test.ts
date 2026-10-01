@@ -5,7 +5,19 @@
  * Run: npx tsx src/data/__tests__/theerth.test.ts
  */
 import assert from 'node:assert/strict';
-import { temples, getTempleById, otherFamous, templesInGroup } from '../theerth/temples';
+import {
+  temples,
+  templesWithDetails,
+  getTempleById,
+  getTempleDetailById,
+  otherFamous,
+  templesInGroup,
+} from '../theerth/temples';
+
+// `temples` is rows only — the prose loads behind a require() thunk so it stays
+// off the launch graph (see temples.ts). Anything asserting on significance,
+// originStory or sections reads from here instead.
+const detailedTemples = templesWithDetails();
 import { library } from '../texts';
 import {
   INDIA_PROJECTION,
@@ -97,7 +109,7 @@ for (const t of temples) {
 }
 
 // ─── 6. Sourced detail prose exists for every temple ──────────────────────────
-for (const t of temples) {
+for (const t of detailedTemples) {
   for (const [key, value] of Object.entries({
     significanceHi: t.significanceHi,
     significanceEn: t.significanceEn,
@@ -115,7 +127,7 @@ for (const t of temples) {
 }
 
 // ─── 6a. Optional extended sections follow the same sourced-prose contract ────
-for (const t of temples) {
+for (const t of detailedTemples) {
   const sections = t.sections ?? [];
   const sectionIds = sections.map((s) => s.id);
   assert.equal(new Set(sectionIds).size, sectionIds.length, `${t.id}: section ids must be unique`);
@@ -157,7 +169,7 @@ assert.equal(LEGACY_WITHOUT_SECTIONS.size, 60, 'legacy no-sections allowlist is 
 // both ways — a temple that HAS sections must carry the five §12.6 ids in order
 // (enriched legacy rows included, which the old `continue` skipped), and a
 // temple that LACKS them must be one of the 60.
-for (const t of temples) {
+for (const t of detailedTemples) {
   const ids = (t.sections ?? []).map((s) => s.id);
   if (ids.length === 0) {
     assert.ok(
@@ -174,7 +186,7 @@ for (const t of temples) {
 }
 
 // Salasar Balaji ships the first full extended reading: sthapana → form → traditions → melas → yatra.
-const salasar = getTempleById('salasar-balaji');
+const salasar = getTempleDetailById('salasar-balaji');
 assert.ok(salasar, 'salasar-balaji must exist');
 assert.deepEqual(
   (salasar.sections ?? []).map((s) => s.id),
@@ -200,7 +212,7 @@ const RAJASTHAN_WAVE: Record<string, { hi: RegExp; en: RegExp; fact: string }> =
   'vetrimalai-murugan': { hi: /रॉस द्वीप/, en: /1932 CE/, fact: 'founded 1926 CE on Ross Island for the Tamil administrative staff, completed 1932 CE, moved to Port Blair after Independence (1966 by some accounts); no recorded consecration tithi' },
 };
 for (const [id, pin] of Object.entries(RAJASTHAN_WAVE)) {
-  const temple = getTempleById(id);
+  const temple = getTempleDetailById(id);
   assert.ok(temple, `${id} must exist`);
   assert.deepEqual(
     (temple.sections ?? []).map((s) => s.id),

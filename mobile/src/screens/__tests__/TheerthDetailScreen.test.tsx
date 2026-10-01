@@ -4,7 +4,10 @@ import TestRenderer, { act } from 'react-test-renderer';
 import { Image, ImageBackground, Text } from 'react-native';
 import { backgroundImages } from '@assets/backgrounds';
 import { getDeityBackground, getTheerthBackground } from '@/data/backgrounds';
-import { getTempleById, temples } from '@/data/theerth/temples';
+import { getTempleDetailById, templesWithDetails } from '@/data/theerth/temples';
+
+// Rows alone carry no prose now; this screen's assertions all need the reading.
+const temples = templesWithDetails();
 
 jest.mock('@react-native-async-storage/async-storage', () => ({
   getItem: jest.fn(() => Promise.resolve(null)),
@@ -179,7 +182,7 @@ describe('every enriched temple renders its full reading', () => {
 
   test.each(enriched.map((t) => [t.id] as const))('%s renders five sections in Hindi', (id) => {
     const text = render(id, 'hi');
-    for (const section of getTempleById(id)!.sections!) {
+    for (const section of getTempleDetailById(id)!.sections!) {
       assert.ok(
         text.includes(section.titleHi),
         `${id}: Hindi heading "${section.titleHi}" is missing from the detail screen`,
@@ -190,7 +193,7 @@ describe('every enriched temple renders its full reading', () => {
 
   test.each(enriched.map((t) => [t.id] as const))('%s renders five sections in English', (id) => {
     const text = render(id, 'en');
-    for (const section of getTempleById(id)!.sections!) {
+    for (const section of getTempleDetailById(id)!.sections!) {
       assert.ok(
         text.includes(section.titleEn),
         `${id}: English heading "${section.titleEn}" is missing from the detail screen`,

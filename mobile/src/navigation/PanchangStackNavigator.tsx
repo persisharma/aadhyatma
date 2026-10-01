@@ -1,34 +1,49 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import PanchangScreen from '@/screens/PanchangScreen';
-import ObservanceListScreen from '@/screens/ObservanceListScreen';
-import ObservanceDetailScreen from '@/screens/ObservanceDetailScreen';
-import KathaLibraryScreen from '@/screens/KathaLibraryScreen';
-import MyVratScreen from '@/screens/MyVratScreen';
-import MuhuratDetailScreen from '@/screens/MuhuratDetailScreen';
-import MuhuratFinderScreen from '@/screens/MuhuratFinderScreen';
-import MuhuratResultsScreen from '@/screens/MuhuratResultsScreen';
-import MuhuratDayDetailScreen from '@/screens/MuhuratDayDetailScreen';
-import AbujhDaysScreen from '@/screens/AbujhDaysScreen';
-import KundaliScreen from '@/screens/KundaliScreen';
-import RashifalScreen from '@/screens/RashifalScreen';
-import GocharScreen from '@/screens/GocharScreen';
-import KundaliReportScreen from '@/screens/KundaliReportScreen';
-import GunaMilanScreen from '@/screens/GunaMilanScreen';
-import NamkaranScreen from '@/screens/NamkaranScreen';
-import NamkaranResultScreen from '@/screens/NamkaranResultScreen';
-import NamkaranRashiScreen from '@/screens/NamkaranRashiScreen';
-import VastuDishaScreen from '@/screens/VastuDishaScreen';
-import DaanJourneyScreen from '@/screens/DaanJourneyScreen';
-import DaanLedgerScreen from '@/screens/DaanLedgerScreen';
-import DaanEntryScreen from '@/screens/DaanEntryScreen';
-import DaanDirectoryScreen from '@/screens/DaanDirectoryScreen';
-import DaanDirectoryDetailScreen from '@/screens/DaanDirectoryDetailScreen';
-import DaanKathaScreen from '@/screens/DaanKathaScreen';
-import VidhiCatalogScreen from '@/screens/VidhiCatalogScreen';
-import VidhiDetailScreen from '@/screens/VidhiDetailScreen';
-import VidhiConductScreen from '@/screens/VidhiConductScreen';
+import { lazyScreen } from './lazyScreen';
 import type { PanchangStackParamList } from './types';
+
+/**
+ * The Panchang stack is itself already behind a dynamic boundary
+ * (`lazyPanchangStack`), so this is the second tier: the tab root arrives with
+ * the chunk and its ~30 sub-screens load on demand, warmed in the background.
+ */
+
+// depth 3
+const AbujhDaysScreen = lazyScreen('AbujhDays', 3, () => import('@/screens/AbujhDaysScreen'));
+const DaanLedgerScreen = lazyScreen('DaanLedger', 3, () => import('@/screens/DaanLedgerScreen'));
+const GocharScreen = lazyScreen('Gochar', 3, () => import('@/screens/GocharScreen'));
+const GunaMilanScreen = lazyScreen('GunaMilan', 3, () => import('@/screens/GunaMilanScreen'));
+const KathaLibraryScreen = lazyScreen('KathaLibrary', 3, () => import('@/screens/KathaLibraryScreen'));
+const KundaliScreen = lazyScreen('Kundali', 3, () => import('@/screens/KundaliScreen'));
+const MuhuratDetailScreen = lazyScreen('MuhuratDetail', 3, () => import('@/screens/MuhuratDetailScreen'));
+const MuhuratFinderScreen = lazyScreen('MuhuratFinder', 3, () => import('@/screens/MuhuratFinderScreen'));
+const MyVratScreen = lazyScreen('MyVrat', 3, () => import('@/screens/MyVratScreen'));
+const NamkaranScreen = lazyScreen('Namkaran', 3, () => import('@/screens/NamkaranScreen'));
+const ObservanceDetailScreen = lazyScreen('ObservanceDetail', 3, () => import('@/screens/ObservanceDetailScreen'));
+const ObservanceListScreen = lazyScreen('ObservanceList', 3, () => import('@/screens/ObservanceListScreen'));
+const RashifalScreen = lazyScreen('Rashifal', 3, () => import('@/screens/RashifalScreen'));
+const VidhiCatalogScreen = lazyScreen('VidhiCatalog', 3, () => import('@/screens/VidhiCatalogScreen'));
+const VidhiDetailScreen = lazyScreen('VidhiDetail', 3, () => import('@/screens/VidhiDetailScreen'));
+
+// depth 4
+const DaanJourneyScreen = lazyScreen('DaanJourney', 4, () => import('@/screens/DaanJourneyScreen'));
+const KundaliReportScreen = lazyScreen('KundaliReport', 4, () => import('@/screens/KundaliReportScreen'));
+const MuhuratDayDetailScreen = lazyScreen('MuhuratDayDetail', 4, () => import('@/screens/MuhuratDayDetailScreen'));
+const MuhuratResultsScreen = lazyScreen('MuhuratResults', 4, () => import('@/screens/MuhuratResultsScreen'));
+const NamkaranRashiScreen = lazyScreen('NamkaranRashi', 4, () => import('@/screens/NamkaranRashiScreen'));
+const NamkaranResultScreen = lazyScreen('NamkaranResult', 4, () => import('@/screens/NamkaranResultScreen'));
+const VidhiConductScreen = lazyScreen('VidhiConduct', 4, () => import('@/screens/VidhiConductScreen'));
+
+// depth 5
+const DaanDirectoryScreen = lazyScreen('DaanDirectory', 5, () => import('@/screens/DaanDirectoryScreen'));
+const DaanEntryScreen = lazyScreen('DaanEntry', 5, () => import('@/screens/DaanEntryScreen'));
+const DaanKathaScreen = lazyScreen('DaanKatha', 5, () => import('@/screens/DaanKathaScreen'));
+const VastuDishaScreen = lazyScreen('VastuDisha', 5, () => import('@/screens/VastuDishaScreen'));
+
+// depth 6
+const DaanDirectoryDetailScreen = lazyScreen('DaanDirectoryDetail', 6, () => import('@/screens/DaanDirectoryDetailScreen'));
 
 const Stack = createNativeStackNavigator<PanchangStackParamList>();
 
