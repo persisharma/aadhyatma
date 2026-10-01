@@ -1,5 +1,5 @@
 /**
- * गीता सार — the content shapes of the themed Gita compilations (RULEBOOK §29).
+ * गीता सार — the content shapes of the themed Gita compilations (RULEBOOK §30).
  *
  * A saar theme is a READING ORDER over the bundled Bhagavad Gītā plus a
  * plain-language sense line per verse. It never re-types scripture: every

@@ -17,6 +17,12 @@ jest.mock('expo-haptics', () => ({
   impactAsync: jest.fn(() => Promise.resolve()),
 }));
 
+// Only PitruKathaScreen reaches for the root navigator (useNavigation); every other
+// reader takes navigation via props. None of the providers use it, so a stub is safe.
+jest.mock('@react-navigation/native', () => ({
+  useNavigation: () => ({ navigate: () => undefined, goBack: () => undefined }),
+}));
+
 jest.mock('react-native-view-shot', () => ({ captureRef: jest.fn(() => Promise.resolve(null)) }));
 jest.mock('expo-sharing', () => ({
   isAvailableAsync: jest.fn(() => Promise.resolve(false)),
@@ -67,7 +73,8 @@ import { getStuti } from '@/data/stuti';
 import { getSuktam } from '@/data/suktam';
 import { getSanskar } from '@/data/sanskar';
 import { getKathaContent } from '@/panchang/kathaContent';
-import { getPitruLessons } from '@/data/pitru';
+import { getPitruLessons, getPitruKathas } from '@/data/pitru';
+import { getDaanKathas } from '@/data/daan';
 import { getBajrangBaanChapter } from '@/data/bajrang-baan';
 import { getHanumanAshtakChapter } from '@/data/hanuman-ashtak';
 import { getKrishnaStotramChapter } from '@/data/krishna-stotram';
@@ -103,6 +110,8 @@ import DurgaStotramReaderScreen from '../DurgaStotramReaderScreen';
 import SaraswatiStotramReaderScreen from '../SaraswatiStotramReaderScreen';
 import VishnuSahasranamaReaderScreen from '../VishnuSahasranamaReaderScreen';
 import ValmikiRamayanReaderScreen from '../ValmikiRamayanReaderScreen';
+import DaanKathaScreen from '../DaanKathaScreen';
+import PitruKathaScreen from '../PitruKathaScreen';
 
 const speechMock = Speech as unknown as {
   __calls: { text: string; options: Record<string, unknown> }[];
@@ -417,6 +426,72 @@ describe.each(READERS)('$name', (entry) => {
       .join(' ');
     // The counter renders as three children (`1`, ' / ', total), so match loosely.
     expect(text).toMatch(/1\s+\/\s+\d+/);
+  });
+});
+
+/**
+ * The two single-scroll teaching-katha readers (दान-कथा, पितृ-कथा). They are NOT in
+ * the paged READERS table — they have no page counter and read as one continuous
+ * scroll — but they carry the same read-aloud control over their story prose. Their
+ * section shape is `paragraphs*`, mapped to the adapter's prose `body*` branch.
+ */
+const SCROLL_KATHAS: readonly { name: string; element: React.ReactElement; firstSpokenLine: string }[] = [
+  {
+    name: 'DaanKathaScreen (first teaching-katha)',
+    element: (
+      <DaanKathaScreen
+        navigation={navigation}
+        route={{ key: 'r', name: 'DaanKatha', params: { kathaId: getDaanKathas()[0].id } } as never}
+      />
+    ),
+    firstSpokenLine: firstLine(getDaanKathas()[0].sections.map((s) => s.paragraphsHi)),
+  },
+  {
+    name: 'PitruKathaScreen (first teaching-katha)',
+    element: (
+      <PitruKathaScreen
+        navigation={navigation}
+        route={{ key: 'r', name: 'PitruKatha', params: { kathaId: getPitruKathas()[0].id } } as never}
+      />
+    ),
+    firstSpokenLine: firstLine(getPitruKathas()[0].sections.map((s) => s.paragraphsHi)),
+  },
+];
+
+describe.each(SCROLL_KATHAS)('$name', ({ element, firstSpokenLine }) => {
+  async function mountScroll() {
+    await act(async () => {
+      tree = TestRenderer.create(
+        <GitaLanguageProvider initialLang="hi">
+          <ReadAloudPrefsProvider>
+            <ReadAloudProvider>
+              <ShareProvider>{element}</ShareProvider>
+            </ReadAloudProvider>
+          </ReadAloudPrefsProvider>
+        </GitaLanguageProvider>
+      );
+    });
+    await act(async () => {
+      await Promise.resolve();
+    });
+    return tree!;
+  }
+
+  it('renders exactly one read-aloud control', async () => {
+    const t = await mountScroll();
+    expect(findByA11y(t, 'Read aloud')).toHaveLength(1);
+  });
+
+  it('speaks the first story paragraph when pressed', async () => {
+    const t = await mountScroll();
+    await act(async () => {
+      findByA11y(t, 'Read aloud')[0].props.onPress();
+      await Promise.resolve();
+    });
+    expect(speechMock.speak).toHaveBeenCalled();
+    const expected = prepareForSpeech(firstSpokenLine, 'hi').slice(0, 40);
+    expect(expected.length).toBeGreaterThan(0);
+    expect(speechMock.__calls[0].text).toContain(expected);
   });
 });
 

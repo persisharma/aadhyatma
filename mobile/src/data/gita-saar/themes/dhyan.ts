@@ -171,6 +171,6 @@ export const DHYAN_THEME: GitaSaarTheme = {
   source: {
     referenceUrls: [`${GITA_CORPUS}chapter-06.json`, `${GITA_CORPUS}chapter-17.json`, `${GITA_HOLY}6`, `${GITA_HOLY}17`],
     verificationNote:
-      '2026-09-27: every ref opened in the bundled corpus JSON; saar lines paraphrase the bundled meanings and add nothing the verse does not say. Food verses are descriptive of the three kinds, never a prescription (RULEBOOK §29.3).',
+      '2026-09-27: every ref opened in the bundled corpus JSON; saar lines paraphrase the bundled meanings and add nothing the verse does not say. Food verses are descriptive of the three kinds, never a prescription (RULEBOOK §30.3).',
   },
 };

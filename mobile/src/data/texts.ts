@@ -136,8 +136,8 @@ export const library: readonly LibraryEntry[] = [
     verseCount: 701,
   },
   {
-    // गीता सार — themed readings over the bundled Gita (design.md §75,
-    // RULEBOOK §29). Counts come from the manifest, never hand-typed.
+    // गीता सार — themed readings over the bundled Gita (design.md §76,
+    // RULEBOOK §30). Counts come from the manifest, never hand-typed.
     id: 'gita-saar',
     nameHi: 'गीता सार',
     nameEn: 'Gita Saar',

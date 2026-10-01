@@ -1,11 +1,11 @@
 /**
- * गीता सार registry contract (RULEBOOK §29).
+ * गीता सार registry contract (RULEBOOK §30).
  *
  * - Every ref resolves to the bundled Gita verse whose printed number it names
  *   (opens the corpus JSON directly, like pitruShikshaContent.test.ts).
  * - The eager manifest mirrors the theme registry row for row.
  * - Bilingual parity, no duplicate refs inside a theme, well-formed Devanagari
- *   in every authored line, and the §29.4 source threshold on verified themes.
+ *   in every authored line, and the §30.4 source threshold on verified themes.
  * - The loader assembles pages in reading order with the corpus text attached.
  */
 import { readFileSync } from 'node:fs';

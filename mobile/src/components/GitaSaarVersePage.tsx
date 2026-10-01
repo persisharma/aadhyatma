@@ -31,7 +31,7 @@ type Props = {
   topActions?: React.ReactNode;
   /** Rendered under the saar on the theme's last page — the one-line essence. */
   closing?: { hi: string; en: string };
-  /** Opens the Gita reader on this shloka (design.md §75: the quote travels with its hand-off). */
+  /** Opens the Gita reader on this shloka (design.md §76: the quote travels with its hand-off). */
   onOpenInGita?: () => void;
 };
 

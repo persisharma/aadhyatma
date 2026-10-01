@@ -1,5 +1,5 @@
 /**
- * गीता सार — typed loader for the themed Gita compilations (RULEBOOK §29).
+ * गीता सार — typed loader for the themed Gita compilations (RULEBOOK §30).
  *
  * Shape follows the chaptered-text pattern (`gita/index.ts`): an eager, tiny
  * manifest (one row per theme) and a lazy `getGitaSaarChapter(n)` that builds
