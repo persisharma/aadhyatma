@@ -6,10 +6,10 @@ The first story has ten short pages with authored Hindi, English, Gujarati and K
 
 `KidsStoryReaderScreen` uses the existing persisted reading-language context and language picker. Changing the locale keeps the current page index and artwork. Caption and optional dialogue render as native text below the image with natural height, script-specific fonts and the existing reading-size tokens. The page scrolls when a translation or accessibility font setting needs extra room; text is not baked into the image.
 
-Artwork is bundled offline. Page 8 uses the approved muted pastel Yamuna illustration with stronger waves. The other nine pages retain the original prototype SVG placeholders; replace them with final illustrations in the approved style before release. The preview opens on page 8 to show the selected artwork. The story library uses this image as its cover preview.
+All ten scenes use bundled, text-free WebP illustrations in the approved muted pastel style. The powerful Yamuna crossing is preserved. The birth scene is the library cover, and the preview opens at the first page. All languages share the same artwork; no SVG placeholders remain.
 
 Optional `dialogue` carries translated speaker/text fields. Optional `audio` can hold real locale-specific recording references in future; no audio controls are exposed until recordings and playback are implemented.
 
-Prototype: `docs/kids-stories-prototype.html`. Same four-language story dataset and artwork as the native reader. It demonstrates changing language on page 8, previous/next navigation, the final takeaway and the library door. It is a browser preview; native screen/device testing is still required.
+Prototype: `docs/kids-stories-prototype.html`. Same four-language story dataset and artwork as the native reader. It demonstrates changing language on any page, previous/next navigation, the final takeaway and the library door. It is a browser preview; native screen/device testing is still required.
 
 Validation: `npx tsx --test src/data/__tests__/kidsStories.test.ts` from `mobile/`. Check the reader on a small phone with large reading text in all four languages before release.

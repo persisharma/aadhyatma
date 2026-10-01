@@ -32,10 +32,16 @@ test('locale selection changes narration while keeping the shared illustration a
   assert.equal(storyText({ en: 'English fallback' }, 'kn'), 'English fallback');
 });
 
-test('every illustrated page resolves to an offline asset or the existing prototype artwork', () => {
-  const placeholders = JSON.parse(readFileSync(fileURLToPath(new URL('../kidsStories/placeholder-art.json', import.meta.url)), 'utf8'));
-  assert.ok(existsSync(fileURLToPath(new URL('../../../assets/kids-stories/kj-08.webp', import.meta.url))));
-  for (const story of kidsStories) for (const page of story.pages) {
-    assert.ok(page.art === 'yamuna' || placeholders[page.art], `Missing illustration: ${page.id}`);
+test('every page and cover resolves to a bundled final illustration', () => {
+  const component = readFileSync(fileURLToPath(new URL('../../components/KidsStoryArt.tsx', import.meta.url)), 'utf8');
+  const assets = new Map([...component.matchAll(/(\w+): require\('(.+?)'\)/g)].map(match => [match[1], match[2]]));
+  for (const story of kidsStories) for (const art of [story.coverArt, ...story.pages.map(page => page.art)]) {
+    const asset = assets.get(art);
+    assert.ok(asset, `Missing static Metro import: ${art}`);
+    const path = fileURLToPath(new URL(asset, new URL('../../components/KidsStoryArt.tsx', import.meta.url)));
+    assert.ok(existsSync(path), `Missing bundled illustration: ${art}`);
+    const bytes = readFileSync(path);
+    assert.equal(bytes.toString('ascii', 0, 4), 'RIFF');
+    assert.equal(bytes.toString('ascii', 8, 12), 'WEBP');
   }
 });

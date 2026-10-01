@@ -545,8 +545,8 @@
   const $ = (id) => document.getElementById(id);
   const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
   const artCache = {};
-  // Approved generated artwork; other scenes retain SVG placeholders until their assets are ready.
-  const artAssets = { yamuna: 'assets/krishna-janma/kj-08.webp' };
+  // All ten scenes use the approved generated illustrations.
+  const artAssets = {"cover": "assets/krishna-janma/kj-01.webp", "chariot": "assets/krishna-janma/kj-02.webp", "sword": "assets/krishna-janma/kj-03.webp", "prison": "assets/krishna-janma/kj-04.webp", "midnight": "assets/krishna-janma/kj-05.webp", "vishnu": "assets/krishna-janma/kj-06.webp", "escape": "assets/krishna-janma/kj-07.webp", "yamuna": "assets/krishna-janma/kj-08.webp", "gokul": "assets/krishna-janma/kj-09.webp", "devi": "assets/krishna-janma/kj-10.webp"};
   const art = (key, label) => artAssets[key]
     ? `<img class="art" src="${artAssets[key]}" alt="${label}" width="1122" height="1402" decoding="async">`
     : (artCache[key] || (artCache[key] = scenes[key]())) && svg(artCache[key], label);
@@ -629,3 +629,4 @@
 })();
 </script>
 </body></html>
+

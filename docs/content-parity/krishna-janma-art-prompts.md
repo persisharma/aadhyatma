@@ -9,7 +9,7 @@ For ChatGPT image generation. Prototype layout: `docs/katha-comic-prototype.html
 3. Ask for **4:5 portrait, 1024×1280**, and repeat "no text, no letters" every time. The model likes to add captions, and the book already has them.
 4. Use `docs/assets/krishna-janma/kj-08.webp` as the approved style reference for every page, alongside the character sheet. Match its muted palette, fine linework and face treatment; do not copy its river setting onto other scenes. The Yamuna should remain powerful and flooded despite the quiet colours.
 5. Keep all critical figures inside the frame. Captions are rendered separately by the prototype; speech-bubble pages must retain the specified clear areas. Do not generate screenshot controls, usernames or other UI.
-6. Save the files as `kj-01.png` … `kj-10.png`, in page order, and send them to me.
+6. The completed illustrations are bundled as `kj-01.webp` … `kj-10.webp` in `mobile/assets/kids-stories/` and `docs/assets/krishna-janma/`, in page order.
 
 **Style block (paste at the end of every prompt):**
 
@@ -28,7 +28,7 @@ For ChatGPT image generation. Prototype layout: `docs/katha-comic-prototype.html
 > A royal wedding chariot against a faint warm parchment palace setting: Kansa, crowned, drives it holding the reins of a white horse with a dusty terracotta saddle cloth. Devaki and Vasudeva stand behind him, newly married. Above them, a restrained soft golden light breaks through the sky as a divine voice speaks. Kansa looks up, startled. [STYLE BLOCK]
 
 **kj-03 · The sword** (keep the top-left quarter clear)
-> Kansa, furious, grips Devaki's hair with one hand and raises a sword high with the other. Devaki turns away in fear. Vasudeva steps forward calmly, hands open, pleading and reasoning with him. Faint warm-grey palace background on parchment. [STYLE BLOCK]
+> Kansa holds a sword upright, away from Devaki. Devaki recoils slightly. No physical violence or injury. Vasudeva steps forward calmly, hands open, pleading and reasoning with him. Faint warm-grey palace background on parchment. [STYLE BLOCK]
 
 **kj-04 · Six lamps**
 > A dark prison cell with chains on the walls. Devaki and Vasudeva stand in sorrow, shackled. On the floor, six small clay lamps have gone out, thin smoke rising from each. A single soft orb of light floats upward and away through the wall, symbolising the seventh child carried to Rohini. [STYLE BLOCK]
@@ -49,4 +49,5 @@ For ChatGPT image generation. Prototype layout: `docs/katha-comic-prototype.html
 > Night in Gokul village, with kadamba trees and a mud hut with a thatched roof. Inside the lamp-lit doorway, Yashoda sleeps on a cot and baby Krishna lies beside her. Outside, Vasudeva walks away carrying a basket with a newborn baby girl, wrapped in pink. [STYLE BLOCK]
 
 **kj-10 · The Devi** (keep the bottom-left quarter clear)
-> Inside the prison, the baby girl has risen into the air as the eight-armed Devi, radiant, in a muted terracotta sari with a gold crown, holding a trident, sword, discus, conch, bow, lotus, bell and shield, with a halo behind her. Below, Kansa looks up with his sword raised, small and afraid. [STYLE BLOCK]
+> Inside the prison, the baby girl has risen into the air as the eight-armed Devi, radiant, in a muted terracotta sari with a gold crown, holding a trident, sword, discus, conch, bow, lotus, bell and shield, with a halo behind her. Below, Kansa looks up surprised and humbled, his sword lowered. [STYLE BLOCK]
+
