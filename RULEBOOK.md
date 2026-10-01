@@ -1040,3 +1040,13 @@ An education row is **source-reviewed explanation of the tradition** — never a
 8. **Reading order is the IA.** परिचय → तिथियाँ → शास्त्र-वचन → कथाएँ → प्रश्नोत्तर → शब्द → the three doors (overview · vidhi · ledger) LAST. Do not add a door above the lessons.
    **The fortnight is covered end to end.** All sixteen days — purnima, 1–14, amavasya — carry a `tithi` row, verified or draft, pinned by test: a missing day leaves the reader unable to tell "no tradition here" from "the app forgot", and that is a worse answer than a draft.
 9. **Tests.** `pitruShikshaContent.test.ts` (Jest, `src/data/pitru/__tests__/`) pins §28.1–§28.4 and bilingual parity, `fortnightDay` ⇔ `kind === 'tithi'`, Devanagari well-formedness; `PitruPakshaShikshaScreen.test.tsx` pins verified-renders / draft-absent (non-vacuous) on the hub AND the परिचय reader (a draft lesson never becomes a page; a draft `lessonId` falls back to page 1), reader hand-offs, the reader's closing-card `popTo` and the door order; `PitruSmaranScreens.test.tsx` pins the overview door and its absence; the reader is a row in `readerReadAloud.test.tsx` like every reader (RULEBOOK §3); e2e `.maestro/pitru-paksha-smoke.yaml`. §0.1 doc updates (design.md §63.5 + §74, this section) ride the same PR.
+
+## 29. Illustrated children's stories
+
+The registry is `mobile/src/data/kidsStories/index.ts`. Records carry stable story/page IDs, age guidance, shared artwork keys, source references, a takeaway and authored hi/en/gu/kn titles/narration. Artwork contains no captions. Every page and cover resolves to a statically imported bundled illustration; placeholders are not release assets.
+
+The More-stack reader dispatches by storyId and optional pageId. It shares the header and horizontal paging convention (§3), with vertically scrolling illustration/caption content and Previous/Next controls. Locale changes preserve the scene. Keep artwork separate from translated text and load routes lazily.
+
+For the initial illustrated-story scope, §3's read-aloud requirement applies when a story speech adapter or real recordings are added; no audio control is exposed until then. Bookmark/share/progress integrations remain explicit future work. Sharing paging/header conventions does not imply full Gita feature parity.
+
+The native unit suite covers the first page, swipe/button synchronization, locale stability, viewport resizing and invalid IDs. Asset and translation coverage lives in kidsStories.test.ts. Exercise `.maestro/kids-stories-smoke.yaml` on a phone/simulator before release; full npm test and regional editorial review remain required. UI specification: design.md §75.
