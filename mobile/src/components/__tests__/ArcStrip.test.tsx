@@ -94,8 +94,8 @@ describe('pickStripOrdinals', () => {
     expect(pickStripOrdinals(occ, 4)).toEqual([1, 'gap', 4, 'gap', 12]);
     expect(pickStripOrdinals(occ, null)).toEqual([1, 'gap', 12]);
     expect(pickStripOrdinals(occ, 2)).toEqual([1, 2, 'gap', 12]);
-    const diwali = buildArcOccurrence(ARC_BY_ID.get('deepavali')!, d(2026, 11, 7), null);
-    expect(pickStripOrdinals(diwali, 2)).toEqual([1, 2, 3, 4, 5]);
+    const diwali = buildArcOccurrence(ARC_BY_ID.get('deepavali')!, d(2026, 11, 6), null);
+    expect(pickStripOrdinals(diwali, 2)).toEqual([1, 2, 3, 'gap', 5, 6]);
   });
 });
 
@@ -168,14 +168,16 @@ describe('ArcStrip', () => {
     expect(allText(tree)).toContain('Today is day 12 of 12');
   });
 
-  test('Diwali: five named days, day 2 labelled Naraka Chaturdashi, other rule-bound days open their own detail', async () => {
-    const tree = await render('diwali', d(2026, 11, 8));
+  test('Diwali: six civil days, day 2 labelled Naraka Chaturdashi, other rule-bound days open their own detail', async () => {
+    // Dhanteras 6 Nov and Lakshmi Puja 8 Nov are pradosh days; 9 Nov is the
+    // amavasya's unnamed second morning before Govardhan (10) and Bhai Dooj (11).
+    const tree = await render('diwali', d(2026, 11, 7));
     const text = allText(tree);
     expect(text).toContain('Dhanteras');
     expect(text).toContain('Naraka Chaturdashi');
     expect(text).toContain('Govardhan Puja');
     expect(text).toContain('Bhai Dooj');
-    expect(text).toContain('Today is day 2 of 5');
+    expect(text).toContain('Today is day 2 of 6');
     expect(has(tree, 'arc-duration-chooser')).toBe(false);
     await act(async () => byId(tree, 'arc-slot-1').props.onPress());
     expect(onOpenRule).toHaveBeenCalledWith('dhanteras');
@@ -185,7 +187,7 @@ describe('ArcStrip', () => {
   });
 
   test('Navratri: the Kanya Pujan preparation hand-off surfaces on the eve, opens the shipped vidhi keyed to the sthapana date, and is absent otherwise', async () => {
-    const eve = await render('navratri-start', d(2026, 10, 20));
+    const eve = await render('navratri-start', d(2026, 10, 19));
     expect(has(eve, 'arc-prepare-row')).toBe(true);
     expect(allText(eve)).toContain('Prepare for Kanya Pujan');
     expect(allText(eve)).toContain('as your family keeps it');
@@ -194,7 +196,7 @@ describe('ArcStrip', () => {
 
     const early = await render('navratri-start', d(2026, 10, 13));
     expect(has(early, 'arc-prepare-row')).toBe(false);
-    const dashami = await render('dussehra', d(2026, 10, 21));
+    const dashami = await render('dussehra', d(2026, 10, 20));
     expect(has(dashami, 'arc-prepare-row')).toBe(false);
     expect(allText(dashami)).toContain('Visarjan today');
   });

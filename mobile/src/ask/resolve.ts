@@ -203,7 +203,7 @@ export function resolveAsk(
   for (const s of scored) {
     const it = intents.find((i) => i.id === s.intentId);
     if (!it) continue;
-    const answer = it.resolve(ctx, entities);
+    const answer = it.resolve(ctx, entities, question);
     if (answer) return { kind: 'answer', answer, trace };
   }
   return { kind: 'none', trace, suggestions: suggestionsFor(entities, intents) };

@@ -68,6 +68,21 @@ test('contradictions survive theme grouping including several houses mapped to o
   assert.deepEqual(g.timing.windowIds, []);
 });
 
+test('protected topics answer directly without chart-based outcome timing', () => {
+  const expected = {
+    swasthya: /cannot assess health or symptoms/,
+    santan: /cannot establish fertility or its timing/,
+    man: /cannot assess mental health/,
+  } as const;
+  for (const [purposeId, headline] of Object.entries(expected) as [keyof typeof expected, RegExp][]) {
+    const reading = buildPrashnaReading(adult, purposeId, now, options);
+    assert.match(reading.guidance!.title.en, headline);
+    assert.ok(reading.guidance!.title.hi);
+    assert.equal(reading.guidance!.timing.status, 'insufficient');
+    assert.equal(reading.phase, null);
+  }
+});
+
 test('timing relevance does not add favourable strength or require waiting', () => {
   const r = buildPrashnaReading(adult, 'naukri', now);
   assert.ok(!r.analysis.supports.some(f => f.id.startsWith('gochar-') || f.id === 'dasha-relevant'));

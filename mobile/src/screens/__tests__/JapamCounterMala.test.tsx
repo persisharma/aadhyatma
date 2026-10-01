@@ -11,6 +11,11 @@ import { ThemeProvider } from '@/theme/ThemeContext';
  */
 
 const mockGetItem = jest.fn((_key: string) => Promise.resolve<string | null>(null));
+// The screen uses useFocusEffect (§54 mala-complete exit trigger); mock the ESM
+// package so requireActual of the screen parses.
+jest.mock('@react-navigation/native', () => ({
+  useFocusEffect: (effect: () => void | (() => void)) => require('react').useEffect(effect, [effect]),
+}));
 jest.mock('@react-native-async-storage/async-storage', () => ({
   getItem: (key: string) => mockGetItem(key),
   setItem: jest.fn(() => Promise.resolve()),

@@ -30,8 +30,9 @@ content is generated from the registries, so it cannot drift from the code).
   (7-row weekly table, shared with PRD-21; each row carries `causes`, the
   प्रयोजन its items serve — Wed gau-gras → `gau`, Thu books → `vidya`), `kathas.ts` (Karna, Rantideva,
   Shibi, Bali–Vamana, Sudama — full bilingual retellings), `directory.ts`
-  (9 verified orgs: Akshaya Patra, Annamrita, TTD Annaprasadam, Goonj,
-  Belur Math, e-RaktKosh, HelpAge India, CRY, Blue Cross of India), `ledger.ts` (pure core: validation, gupt
+  (10 verified orgs: Akshaya Patra, Annamrita, Change With One Foundation,
+  TTD Annaprasadam, Goonj, Belur Math, e-RaktKosh, HelpAge India, CRY,
+  Blue Cross of India), `ledger.ts` (pure core: validation, gupt
   sanitizer, tithi stamp, CSV), `index.ts` (verified-only accessors +
   `getDaanOccasionForRule`).
 - **State** — `DaanLedgerContext` (AsyncStorage `@vedansh/daan-ledger:v1`,
@@ -103,9 +104,16 @@ content is generated from the registries, so it cannot drift from the code).
   mahatva makes a textual claim carries `citeHi`/`citeEn` + `source`; one
   written as plain tradition prose carries neither — all three fields travel
   together or none do (pinned by test).
-- Directory rows are THIN: name, ONE `about` line, ONE `officialUrl` (own
-  domain, https, no UPI). **No** registration/80G text, account numbers, or
-  scale figures — `types.ts` is grepped by test for the banned field names.
+- Directory rows are THIN: name, ONE `about` line, ONE `officialUrl` (the org's
+  own channel, https, no UPI). Normally the org's own domain; a `directPay: true`
+  row instead hands off to the org's **own hosted donation page** (e.g. a Razorpay
+  campaign) and the detail screen swaps its copy to `दान-पृष्ठ`/"donation page"
+  so a payment page is never called a website (§27.8; change-with-one is the first
+  such row). A row MAY also carry an OPTIONAL `descriptionHi/En` — a 3–4 line
+  "about this work" read shown ONLY on the detail (`daan-org-description`), never
+  in the list, still factual + no PII/scale figures (§27.14). **No**
+  registration/80G text, account numbers, or scale figures — `types.ts` is
+  grepped by test for the banned field names.
   `verifiedOn`/`source` are editorial only: never rendered, and `verifiedOn`
   > 18 months drops the row to draft via `isOrgRowStale`.
 

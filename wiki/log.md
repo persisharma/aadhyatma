@@ -242,3 +242,39 @@ Added `panchang/observanceAreas.ts` (53 rules tagged with the regions their desc
 ## [2026-09-24] ingest | Section A enrichment batch 2 (five festivals)
 
 New kathas: `narak-chaturdashi-katha` (Narakasura and Rantideva, plus the abhyanga, Yama deepa and Bhoot Chaturdashi customs), `mauni-amavasya-katha` (kind `mahatmya`: amrit kumbh, Manu, the silent snan, daan and tarpan), `varaha-jayanti-katha` and `vamana-jayanti-katha` (Bhagavata avatar stories plus the day's puja). New bhog profiles: `narak-chaturdashi-bhog`, `varaha-jayanti-bhog` and `vamana-jayanti-bhog` (47 total). Two rules reuse existing content: Kaal Bhairav Jayanti takes `masik-kalashtami-katha`, which already tells the Bhairava origin, and `kalashtami-bhog`; Mauni Amavasya takes `pitru-offering`. Gotcha: a default-visible katha needs at least 4 sections, at least 6 paragraphs in each language, and at least 900 Hindi / 1100 English characters (`observances.test.ts`). The mauni katha was split to meet the section minimum. 21 section-A rules remain unenriched.
+
+## [2026-09-25] ingest | Kundali report: child-chart review fixes
+
+`kundaliReport.ts` / `kundaliYoga.ts` / `dashaReading.ts` after the September 2026 review of a 1 y 9 m child's export: the snapshot's running-period `until` is now the Antardasha end (was the Mahadasha end, five years late); dasha basis keys are IST `indiaDateKey` everywhere (the pair reading sliced UTC, giving `2016-04-28` beside `29 Apr 2016`); same-sign groups are titled "in the same bhava" and always state their degree gap (10° close-conjunction orb; retrograde planets named, nodes never); Budhaditya / Chandra-Mangal are "association … (traditional same-sign rule)"; under 13 the Moon, combinations, transit card (`Current Saturn transit`, no phase headline, no practice pointer) and the whole Vimshottari section switch to a parent-observe register built around `DASHA_LORD_CHILD_HI/EN`, and the report names the child instead of "your chart". The snapshot's "Key combination" row is replaced by `Notable placements` (own/exalted or trikona/kendra, ≤3). Gotchas added to [[panchang]]; design.md §68 updated.
+
+## [2026-09-24] ingest | Job-switch answer from the current phase
+
+Prashna now leads explicit job-switch questions with a qualified decision and chart-linked reasons for and against. Ask recognizes explicit switch wording across English, Hindi and Hinglish and opens the same selected Prashna question. The export carries the decision alongside technical evidence. Updated [[panchang]] and [[ask]]; bilingual simulator captures and focused checks are recorded in the job-decision evaluation.
+
+## [2026-09-25] ingest | Prashna current-phase answers across adult topics
+
+The job-switch format now covers adult career, business, study, money, marriage and travel with question-specific recommendations, chart-linked reasons and bilingual next steps. Ask selects seven explicit subquestions; health, mind, fertility and minors keep protected guidance without timed verdicts. Updated [[panchang]] and [[ask]]. A 36-case synthetic date/person matrix and English/Hindi iOS captures are in `docs/evaluations/prashna-all-topics-2026-09-25/`; most sampled tones remain mixed, and source verification is still open.
+
+## [2026-09-25] ingest | Defer the temple corpus from Home startup
+
+The static launch graph exceeded its fixed budget on untouched main. `NewContentContext` now loads temple entries after its initial storage await; the Home stack lazy-loads Theerth map/detail routes; `kulParampara` looks up a temple only during record validation or export. The launch-budget test passes without raising its ceiling, and badge, temple-screen and family-record tests retain their behavior. Updated [[overview]].
+
+## [2026-09-27] fix | Repaired 172 of 205 dotted-circle (◌) clusters
+
+A reader saw `◌` again in BG 7.24 (`व्यक्ितमापन्नं`). It was one of the 107 entries in `devanagariWellFormed.baseline.json`. The August pass added the gate and quarantined these entries, but it never fixed them, so every one stayed visible on device. This pass repairs the three classes that have exactly one correct answer, in the generator inputs (`bhagavad-gita-complete-hi-en.md`, `BhagwadGita/chapters/*.md`) and in the shipped JSON: visual-order i-matra reordered past its conjunct (84, e.g. `निश्िचत`→`निश्चित`), legacy `ृ`+nukta→`ॄ` (39, e.g. `पितॄन्`), and a stray nukta on a matra dropped (49, e.g. `छो़ड़`→`छोड़`). `npm run verify:devanagari` went from 205 to 33. The baseline shrank from 107 to 33 entries in 6 files, all Valmiki plus one ashtakam. Those 33 are the `ऺ` artifacts, matra-after-matra (`अर्चिाल्य`), orphan marks and `मात्रृ़`. Each one needs a check against a printed edition, not a regex. Gotcha: `node scripts/parse-gita.mjs` rewrites 18 Gita JSON files with about 300 lines of drift unrelated to this pass. Don't regenerate as part of a content fix.
+
+## [2026-09-27] feature | Panchang tab: चन्द्र वास + अग्नि वास
+
+Added a Vaas tile row under Nitya Yoga · Karana. Engine gained `PanchangData.moonRashi` (cache v5); pure readings in `panchang/vaas.ts`. Updated [[panchang]].
+
+## [2026-09-27] feature | Panchang tab: चन्द्रमा + दिशा शूल tiles
+
+Vaas row became a 2×2 grid: चन्द्रमा (Moon rashi) · चन्द्र वास / अग्नि वास · दिशा शूल (shared Finder table). Updated [[panchang]].
+
+## [2026-09-27] design | Vaas tiles → यात्रा + हवन cards
+
+Prototype option B chosen: the four small vaas tiles became two cards (compass travel card, havan card). Updated [[panchang]].
+
+## [2026-09-29] ingest | Day-rule audit: 7 new ObservanceDayRule conventions, 25 rules retagged (Dussehra/Diwali/Shivaratri/Holi + monthly vrats), verifier fails on any 1-day shift, KNOWN_DIVERGENCES holi:2026, observance CACHE_VERSION 9. Updated [[panchang]] gotchas.
+## [2026-09-29] gap | Bhadra (vishti karana) is not modelled — Holika Dahan/Holi 2026 diverge; no Holika Dahan rule exists at all.
+## [2026-09-29] ingest | Added `maha-navami` (madhyahna; Drik 2024–2029 pinned). Durga Ashtami stays the Ashvin `masik-durgashtami` day.

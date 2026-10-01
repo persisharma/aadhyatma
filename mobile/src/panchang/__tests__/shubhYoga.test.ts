@@ -122,6 +122,7 @@ function syntheticDay(opts: {
     yoga: el(0, null),
     karana: el(0, null),
     lateVishti: null,
+    moonRashi: el(0, null),
     sunrise: opts.sunrise,
     sunset: new Date(opts.sunrise.getTime() + 12 * 3_600_000),
     moonrise: null,
