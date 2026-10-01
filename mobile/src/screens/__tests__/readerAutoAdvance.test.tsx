@@ -66,6 +66,10 @@ const VishnuScreen = jest.requireActual<typeof import('../VishnuSahasranamaReade
 const ValmikiScreen = jest.requireActual<typeof import('../ValmikiRamayanReaderScreen')>(
   '../ValmikiRamayanReaderScreen'
 ).default;
+const saar = jest.requireActual<typeof import('@/data/gita-saar')>('@/data/gita-saar');
+const GitaSaarScreen = jest.requireActual<typeof import('../GitaSaarReaderScreen')>(
+  '../GitaSaarReaderScreen'
+).default;
 
 type AnyScreen = (props: { navigation: any; route: any }) => React.ReactElement | null;
 
@@ -108,6 +112,12 @@ const READERS: ReaderCase[] = [
     routeName: 'ValmikiRamayanReader',
     Screen: ValmikiScreen,
     chapterCount: valmiki.valmikiRamayanChaptersManifest.length,
+  },
+  {
+    name: 'Gita Saar',
+    routeName: 'GitaSaarReader',
+    Screen: GitaSaarScreen,
+    chapterCount: saar.gitaSaarChaptersManifest.length,
   },
 ];
 
