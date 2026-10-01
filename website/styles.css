@@ -622,7 +622,7 @@ body[lang="hi"] { line-height: 1.75; }
 /* Devanagari has no true italic; a synthetic slant reads poorly. */
 [lang="hi"] .shloka-meaning { font-style: normal; font-family: var(--devanagari); font-size: clamp(1rem, 1.2vw, 1.12rem); line-height: 1.85; }
 
-/* Slim verse strips — at the top of each page and between sections. */
+/* Slim verse strips between sections. */
 .shloka-band--slim { padding-block: clamp(1.8rem, 4vw, 2.8rem); }
 .shloka-band--slim .shloka { max-width: 36rem; min-height: 0; }
 .shloka-band--slim .shloka::before { font-size: 0.8rem; margin-bottom: 0.6rem; }
@@ -631,12 +631,6 @@ body[lang="hi"] { line-height: 1.75; }
 [lang="hi"] .shloka-band--slim .shloka-meaning { font-size: clamp(0.92rem, 1vw, 1rem); }
 .shloka-band--slim .folio-bg::before, .shloka-band--slim .folio-bg::after { left: 30%; right: 30%; }
 .shloka-band--slim .folio-bg.is-loaded::after { opacity: 0.14; }
-/* Fixed height: two verse lines plus the source, so the swap never shifts the
-   first screen. */
-.shloka-band--top { padding-block: 1.2rem; border-top: 0; }
-.shloka-band--top .shloka { height: 7.6rem; overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
-.shloka-band--top .shloka::before { display: none; }
-@media (max-width: 560px) { .shloka-band--top .shloka { height: 8.4rem; } .shloka-band--top .shloka-text { font-size: 1.05rem; } }
 @media (max-width: 860px) { .shloka-band--slim .folio-bg::before, .shloka-band--slim .folio-bg::after { left: 0; right: 0; } }
 
 /* The desktop bar carries nine links, the language pill and the visit count.
