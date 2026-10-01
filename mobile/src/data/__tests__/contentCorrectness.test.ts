@@ -751,7 +751,12 @@ function collectJsonFiles(dirRel = ''): string[] {
   for (const entry of entries) {
     const rel = dirRel ? `${dirRel}/${entry.name}` : entry.name;
     if (entry.isDirectory()) {
-      if (entry.name !== '__tests__') files.push(...collectJsonFiles(rel));
+      // `kidsStories` holds retold picture-book narratives (design.md §76), not
+      // verse-level scripture — each carries a prose `sourceNote` rather than the
+      // structured `source.referenceUrls` this §14 provenance rule checks for.
+      if (entry.name !== '__tests__' && entry.name !== 'kidsStories') {
+        files.push(...collectJsonFiles(rel));
+      }
     } else if (
       entry.name.endsWith('.json') &&
       entry.name !== 'chapters-manifest.json' &&

@@ -63,6 +63,7 @@ const deityBackgrounds: Record<Deity, BackgroundImage> = {
 const sourceBackgrounds: Record<string, BackgroundImage> = {
   'hanuman-chalisa': chalisaImages.ram_hanuman,
   'bhagavad-gita': gitaImages.krishna_arjuna_vishvarupa,
+  'gita-saar': gitaImages.krishna_arjuna_vishvarupa,
   sundarkand: chalisaImages.hanuman_sea,
   'shiva-strotam': shivaStrotamImages.shiva,
   'om-namah-shivaya': shivaStrotamImages.shiva,

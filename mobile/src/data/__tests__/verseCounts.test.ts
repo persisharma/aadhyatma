@@ -170,8 +170,13 @@ test('texts.ts takes its verse counts from verseCounts.ts, never from a corpus',
   const path = await import('node:path');
   const dataDir = path.resolve(import.meta.dirname, '..');
   const src = fs.readFileSync(path.join(dataDir, 'texts.ts'), 'utf8');
-  // Genuinely-needed, deliberately small, and not a verse payload.
-  const ALLOWED = new Set(['./verseCounts', './japam']);
+  // Genuinely-needed, deliberately small, and not a verse payload. `./gita-saar`
+  // exposes only a tiny eager manifest at module scope (its theme registry and,
+  // through it, the Gita corpus sit behind a `require()` thunk — see
+  // `gita-saar/index.ts`); `texts.ts` reads that manifest for the row's theme
+  // and verse counts, and `launchGraph.test.ts` pins that it stays off the
+  // launch path.
+  const ALLOWED = new Set(['./verseCounts', './japam', './gita-saar']);
   const offenders = [...src.matchAll(/^import\s+(?!type\s)[^;]*?from\s+'(\.\/[\w-]+)';/gm)]
     .map((m) => m[1])
     .filter((spec) => !ALLOWED.has(spec) && fs.existsSync(path.join(dataDir, spec.slice(2), 'index.ts')));

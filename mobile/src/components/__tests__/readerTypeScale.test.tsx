@@ -39,6 +39,8 @@ const { GitaLanguageProvider } = jest.requireActual<typeof import('@/data/gita/l
 const VersePage = jest.requireActual<typeof import('../VersePage')>('../VersePage').default;
 const GitaVersePage = jest.requireActual<typeof import('../GitaVersePage')>('../GitaVersePage')
   .default;
+const GitaSaarVersePage = jest.requireActual<typeof import('../GitaSaarVersePage')>('../GitaSaarVersePage')
+  .default;
 const ShivaStrotamVersePage = jest.requireActual<typeof import('../ShivaStrotamVersePage')>(
   '../ShivaStrotamVersePage'
 ).default;
@@ -53,6 +55,7 @@ const SanskarVersePage = jest.requireActual<typeof import('../SanskarVersePage')
 ).default;
 
 const { getGitaChapter } = jest.requireActual<typeof import('@/data/gita')>('@/data/gita');
+const { getGitaSaarChapter } = jest.requireActual<typeof import('@/data/gita-saar')>('@/data/gita-saar');
 const { getShivaStrotamChapter } = jest.requireActual<typeof import('@/data/shiva-strotam')>(
   '@/data/shiva-strotam'
 );
@@ -125,6 +128,14 @@ describe('reader type scale — rendered per component', () => {
     );
     if (!verse) throw new Error('no suitable Gita verse fixture');
     const el = <GitaVersePage verse={verse} sourceId="bhagavad-gita" width={375} />;
+    expect(fontSizeOf(el, 'en', verse.transliteration[0])).toBe(VERSE_LATIN);
+    expect(fontSizeOf(el, 'en', verse.meaningEn)).toBe(MEANING_EN);
+    expect(fontSizeOf(el, 'hi', verse.meaningHi)).toBe(MEANING_HI);
+  });
+
+  test('GitaSaarVersePage: verse 24 > meaning 20; Hindi meaning 20', () => {
+    const verse = getGitaSaarChapter(1).verses[0];
+    const el = <GitaSaarVersePage verse={verse} sourceId="gita-saar" width={375} />;
     expect(fontSizeOf(el, 'en', verse.transliteration[0])).toBe(VERSE_LATIN);
     expect(fontSizeOf(el, 'en', verse.meaningEn)).toBe(MEANING_EN);
     expect(fontSizeOf(el, 'hi', verse.meaningHi)).toBe(MEANING_HI);
