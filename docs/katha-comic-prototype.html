@@ -49,7 +49,8 @@
     aspect-ratio: 4 / 5; max-width: 100%;
     box-shadow: 0 1px 0 rgba(26,14,3,.4), 0 8px 22px rgba(58, 30, 8, .28);
   }
-  .panel svg.art { display: block; width: 100%; height: 100%; }
+  .panel svg.art, .panel img.art { display: block; width: 100%; height: 100%; }
+  .panel img.art { object-fit: contain; background: var(--parchment-soft); }
 
   .bubble {
     position: absolute; background: var(--bubble); color: var(--ink);
@@ -526,11 +527,11 @@
     'Midnight in the cell; half moon through bars; a sentry awake; the couple barely visible.',
     'Four-armed Vishnu in yellow silk with conch, discus, mace, lotus, Kaustubha gem; cell flooded with light; parents in awe.',
     'Guards asleep, great door swung open onto a rainstorm; Vasudeva walking out with the glowing baby.',
-    'Stormy Yamuna parting; Vasudeva mid-river; five-hooded Shesha sheltering the baby from rain.',
+    'Powerful flooded Yamuna with curling waves, sweeping currents and ivory foam in muted slate blue-grey and sage; Vasudeva mid-river; five-hooded Shesha sheltering the baby from rain.',
     'Gokul hut at night; Yashoda asleep with baby Krishna; Vasudeva leaving with the baby girl.',
     'Eight-armed Devi rising above the cell with weapons; Kansa below, sword raised.'
   ];
-  const STYLE = 'Style for every page: Odisha Pattachitra painting, mineral pigments on treated cloth, bold black outlines, profile faces with elongated eyes, patterned textiles, red ground with floral fillers, double dotted border, no text in the image, 4:5 portrait.';
+  const STYLE = "Style for every page: Soft Indian devotional storybook illustration with thin warm-grey and brown outlines, graceful expressive almond-shaped eyes, smooth broad pastel fills and minimal gentle cel shading. Muted low-saturation palette: warm ivory parchment, powder-blue divine skin, dusty saffron and terracotta, sage and slate blue-grey water, restrained matte gold. Subtle paper texture, faint washed-out architecture, clear characters and simplified background detail. Devotional, dignified and suitable for children. Convey action through poses and shapes rather than loud colour or theatrical lighting. No heavy black comic outlines, saturated cobalt, vivid orange, photorealism, 3D, ornate borders or dense ornamentation. No text, no letters, no watermark. 4:5 portrait.";
 
   /* ---------- Reader ---------- */
   const DEVA = '०१२३४५६७८९';
@@ -544,7 +545,11 @@
   const $ = (id) => document.getElementById(id);
   const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
   const artCache = {};
-  const art = (key, label) => (artCache[key] || (artCache[key] = scenes[key]())) && svg(artCache[key], label);
+  // Approved generated artwork; other scenes retain SVG placeholders until their assets are ready.
+  const artAssets = { yamuna: 'assets/krishna-janma/kj-08.webp' };
+  const art = (key, label) => artAssets[key]
+    ? `<img class="art" src="${artAssets[key]}" alt="${label}" width="1122" height="1402" decoding="async">`
+    : (artCache[key] || (artCache[key] = scenes[key]())) && svg(artCache[key], label);
 
   function render(dir) {
     const p = pages[idx];
