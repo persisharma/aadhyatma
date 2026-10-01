@@ -1096,7 +1096,7 @@ Niyataharah means persons of regulated or limited food. They take moderate food.
 
 यज्ञशिष्टामृतभुजो यान्ति ब्रह्म सनातनम्।
 
-नायं लोकोऽस्त्ययज्ञस्य कुतो़ऽन्यः कुरुसत्तम।।4.31।।
+नायं लोकोऽस्त्ययज्ञस्य कुतोऽन्यः कुरुसत्तम।।4.31।।
 
 **Transliteration**
 

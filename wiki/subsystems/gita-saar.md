@@ -71,10 +71,11 @@ Design: design.md §75; contract: RULEBOOK §29.
   true-prema (the share card merged three pairs; the registry has 19 pages) and 11 for daivi
   (three lists of 3 + 4 + 3 = 10). Both times the loader threw at first open and
   `searchIndex.test.ts` went red before anything shipped. Count the flattened refs.
-- **Corpus defects travel.** The bundled Gita writes `भक्ित` (misplaced ि) in 7.17, 12.17 and
-  12.19; because the page reads the corpus at open time it shows exactly what the Gita reader
-  shows. Fix the corpus (`scripts/parse-gita.mjs` + `BhagwadGita/chapters/`), never a theme
-  file — the theme never carries Sanskrit.
+- **Corpus defects travel.** The page reads the corpus at open time, so it shows exactly what the
+  Gita reader shows, defects included. The `भक्ित` misspelling in 7.17, 12.17, 12.19 and 13.11 was
+  repaired in the corpus by the dotted-circle fix on main (#399, 2026-09-27). Fix any future defect
+  in the corpus (`scripts/parse-gita.mjs` + `BhagwadGita/chapters/`), never in a theme file; a
+  theme never carries Sanskrit.
 - **Launch-graph cost.** The two screens and the page are imported eagerly by the Home stack like
   every reader (about 39 KB); theme files and the corpus stay behind `require()` thunks. After main
   deferred the temple corpus (2026-09-25) `launchGraph.test.ts` passes with Gita Saar merged in.

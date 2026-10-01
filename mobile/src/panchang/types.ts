@@ -57,6 +57,9 @@ export type PanchangData = {
   // karana is itself Vishti (that interval is sunrise → karana.endTime) or when
   // no Vishti begins this day. start = karana.endTime; end is its solved end.
   lateVishti: { start: Date; end: Date } | null;
+  // The Moon's sidereal rashi at sunrise (Mesha = 0). endTime is the sign
+  // change when it falls before the next sunrise, else null. Read by चन्द्र वास.
+  moonRashi: PanchangElement;
   sunrise: Date;
   sunset: Date;
   moonrise: Date | null;
@@ -101,7 +104,7 @@ export type ObservanceRelativeRule = 'friday-before-purnima';
  * the observance day (the vyapini convention).
  *
  * - `udaya` — the tithi running at sunrise. The default, and right for the
- *   large majority: Ekadashi, Purnima, Amavasya, Navratri, Dussehra.
+ *   large majority: Ekadashi, Purnima, Amavasya, Navratri.
  * - `chandrodaya` — the tithi running at MOONRISE. Correct for vrats whose
  *   defining act is the evening moon that ends the fast: Sankashti Chaturthi,
  *   Karwa Chauth, Bahula Chaturthi. Their tithi typically begins mid-morning
@@ -118,12 +121,36 @@ export type ObservanceRelativeRule = 'friday-before-purnima';
  *   sunrise and aparahna covers this day's afternoon and tomorrow's sunrise, so
  *   the two answers name different days (Bhadrapada 2026: 10 Sep for दर्श
  *   अमावस्या, 11 Sep for the udaya snan-daan अमावस्या). Both are published, which
- *   is why the two are separate rules rather than one retagged rule.
+ *   is why the two are separate rules rather than one retagged rule. Also
+ *   Dussehra (Vijayadashami's aparajita puja / vijay muhurat): 2026's dashami
+ *   opens 20 Oct 12:50 PM, so udaya said 21 Oct against Drik's 20 Oct.
+ * - `pradosh` — the tithi running in the EVENING (midpoint of the first three
+ *   of the night's fifteen muhurtas). Diwali's Lakshmi Puja, Dhanteras, the
+ *   monthly Pradosh vrat, Bachh Baras.
+ * - `nishita` — the tithi running at MIDNIGHT (midpoint of sunset and the next
+ *   sunrise). Maha Shivaratri, Masik Shivaratri, Sharad Purnima / Kojagara.
+ * - `ratri` — pradosh first; when the tithi covers no day's pradosh (it opens
+ *   after one evening and ends before the next), the night it covers at
+ *   nishita. Kalashtami / Kaal Bhairav Jayanti: Drik 2026 keeps 10 Apr
+ *   (ashtami 9 Apr 9:21 PM → 10 Apr 11:15 PM, pradosh of the 10th) but 5 Aug
+ *   (ashtami 5 Aug 8:43 PM → 6 Aug 6:53 PM covers neither evening).
+ * - `pradosh-next` — the day AFTER the pradosh day: Rangwali Holi, the morning
+ *   after Holika Dahan (Drik 11 Mar 2028: purnima 10 Mar 10:22 AM → 11 Mar
+ *   6:35 AM is kshaya, so udaya read 10 Mar). Bhadra is not modelled: in
+ *   2026 Drik moved Holika Dahan off the bhadra-covered 2 Mar evening to 3 Mar,
+ *   so Holi was 4 Mar, not 3 Mar (pinned as a known divergence).
+ * - `sunset` — the tithi running at SUNSET, first of two: Skanda Sashti.
+ * - `sunset-last` / `purvahna` — "LAST covering day" conventions: the
+ *   observance is the later of two days whose sunset (Narasimha Jayanti) or
+ *   third morning muhurta (purvahna, Akshaya Tritiya) the tithi covers. When no
+ *   day's instant is covered, sunset-last falls back to the sunrise day and
+ *   purvahna to the day the tithi opened — see `tithiAtDayFraction`.
  *
- * The remaining non-sunrise conventions (pradosh, nishita) are not modelled
- * yet — see `VERIFICATION.md` "±1-day muhurta shift".
+ * Every rule's choice is pinned against published dates by
+ * `scripts/verify-observances.mts`, which FAILS on a ±1-day shift — a wrong
+ * convention can no longer pass as a documented warning.
  */
-export type ObservanceDayRule = 'udaya' | 'chandrodaya' | 'madhyahna' | 'aparahna';
+export type ObservanceDayRule = 'udaya' | 'chandrodaya' | 'madhyahna' | 'aparahna' | 'pradosh' | 'nishita' | 'ratri' | 'pradosh-next' | 'sunset' | 'sunset-last' | 'purvahna';
 
 /**
  * Where a rule sits inside a multi-day festival arc (PRD-28, पर्व-अर्क).

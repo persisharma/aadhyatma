@@ -10,6 +10,7 @@ export type BackgroundImageKey =
   | 'deity_durga_lion'
   | 'deity_ganesha_modak'
   | 'deity_lakshmi'
+  | 'daan_annapurna_bhiksha'
   | 'deity_surya'
   | 'deity_radha_krishna'
   | 'deity_kubera'
@@ -48,6 +49,7 @@ export const backgroundImages: Record<BackgroundImageKey, number> = {
   deity_durga_lion: require('./deity-durga-lion.webp'),
   deity_ganesha_modak: require('./deity-ganesha-modak.webp'),
   deity_lakshmi: require('./deity-lakshmi.webp'),
+  daan_annapurna_bhiksha: require('./daan-annapurna-bhiksha.webp'),
   deity_surya: require('./deity-surya.webp'),
   deity_radha_krishna: require('./deity-radha-krishna.webp'),
   deity_kubera: require('./deity-kubera.webp'),

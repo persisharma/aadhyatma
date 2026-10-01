@@ -36,9 +36,9 @@ describe('resolveDayAngas', () => {
   }, 30000);
 
   it('names the day\'s headline observance, preferring the more significant one', async () => {
-    // 16 Feb 2026 carries both Maha Shivaratri (star / festival) and Masik
-    // Shivaratri (halfmoon / vrat) for Ujjain.
-    const target = new Date(2026, 1, 16);
+    // 15 Feb 2026 carries both Maha Shivaratri (star / festival) and Masik
+    // Shivaratri (halfmoon / vrat) for Ujjain — both nishita-vyapini.
+    const target = new Date(2026, 1, 15);
     const ids = festivalEngine
       .getObservancesForDate(target, 'purnimant')
       .map((o) => o.rule.id);
