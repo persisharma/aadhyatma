@@ -656,6 +656,56 @@ export function tithiAtDayFraction(
   return computeTithiIndex(getSiderealSunLng(instant, year), getSiderealMoonLng(instant, year));
 }
 
+/** A civil day's aparahna span and how the tithis running in it share it. */
+export type AparahnaSplit = {
+  start: Date;
+  end: Date;
+  /** The tithi at the span's start. */
+  first: number;
+  /** The tithi that takes over inside the span, or null when `first` covers it all. */
+  second: number | null;
+  /** When `second` begins — null with it. */
+  boundary: Date | null;
+};
+
+/**
+ * The aparahna SPAN — the fourth of daylight's five equal parts, sunrise +
+ * [0.6, 0.8] × daylength — and the tithis that occupy it. Shraddha is assigned
+ * by how much of this span a tithi covers, not by one instant inside it: Drik's
+ * Pitru Paksha 2026 puts Chaturthi AND Panchami on 30 Sep, where Panchami opens
+ * at 2:55 PM inside the span and has closed before 1 Oct's span begins; the
+ * midpoint reading (`tithiAtAparahna`) misses Panchami there entirely.
+ *
+ * A tithi lasts at least ~20 h and the span ~2–3 h, so at most one boundary
+ * falls inside it. That boundary is bisected to the second.
+ */
+export function aparahnaSplitForDate(
+  localDate: Date,
+  options: PanchangComputationOptions = {}
+): AparahnaSplit {
+  const sunrise = sunriseFor(localDate, options.location, options.civilTimeZone);
+  const sunset = sunsetFor(localDate, options.location, options.civilTimeZone);
+  const length = sunset.getTime() - sunrise.getTime();
+  const start = new Date(sunrise.getTime() + 0.6 * length);
+  const end = new Date(sunrise.getTime() + 0.8 * length);
+  const tithiAt = (ms: number): number => {
+    const instant = new Date(ms);
+    const year = instant.getFullYear();
+    return computeTithiIndex(getSiderealSunLng(instant, year), getSiderealMoonLng(instant, year));
+  };
+  const first = tithiAt(start.getTime());
+  const last = tithiAt(end.getTime());
+  if (first === last) return { start, end, first, second: null, boundary: null };
+  let lo = start.getTime();
+  let hi = end.getTime();
+  while (hi - lo > 1000) {
+    const mid = (lo + hi) / 2;
+    if (tithiAt(mid) === first) lo = mid;
+    else hi = mid;
+  }
+  return { start, end, first, second: last, boundary: new Date(hi) };
+}
+
 function tithiAtNightFraction(
   localDate: Date,
   expectedTithiIndex: number,
