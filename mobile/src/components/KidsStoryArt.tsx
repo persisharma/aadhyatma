@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Image, View, Text, type ImageSourcePropType } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 
@@ -15,31 +15,17 @@ const images: Record<string, ImageSourcePropType> = {
   gokul: require('../../assets/kids-stories/kj-09.webp'),
   devi: require('../../assets/kids-stories/kj-10.webp'),
 };
-// The illustrations are 4:5 but composed with a soft parchment/ground band at
-// the foot. Clip that band from the bottom so the figures fill the frame: the
-// 4:5 image is pinned to the top of a shorter frame and the empty foot overflows
-// out. Subjects (faces, deities) always sit above this line, so nothing of
-// interest is lost. Tune with BOTTOM_CROP.
-const BOTTOM_CROP = 0.12;
-
+// The art fills whatever vertical space the page layout leaves for it (`flex: 1`
+// from the parent), so the caption below always stays on screen. `cover` crops
+// the 4:5 illustration to fill that frame — trimming the soft parchment/ground
+// band at the foot (and a little sky) rather than letterboxing — so no empty
+// space remains. minHeight keeps the art readable when a long caption squeezes it.
 export default function KidsStoryArt({ art, label }: { art: string; label: string }) {
   const { colors } = useTheme();
-  const [width, setWidth] = useState(0);
-  // Explicit pixel heights (measured width) are deterministic; aspectRatio inside
-  // the pager's ScrollView mis-sizes the image. Image keeps its full 4:5 height
-  // and is pinned to the top of a shorter frame; the empty foot overflows and is
-  // clipped by the frame.
-  const imageHeight = width * (5 / 4);
-  const frameHeight = imageHeight * (1 - BOTTOM_CROP);
   return (
-    <View
-      accessibilityRole="image"
-      accessibilityLabel={label}
-      onLayout={event => setWidth(event.nativeEvent.layout.width)}
-      style={{ width: '100%', height: width ? frameHeight : undefined, aspectRatio: width ? undefined : (4 / 5) / (1 - BOTTOM_CROP), overflow: 'hidden', borderRadius: 12, backgroundColor: colors.parchmentSoft, justifyContent: 'flex-start' }}
-    >
+    <View accessibilityRole="image" accessibilityLabel={label} style={{ flex: 1, width: '100%', minHeight: 150, overflow: 'hidden', borderRadius: 12, backgroundColor: colors.parchmentSoft }}>
       {images[art] ? (
-        <Image accessible={false} source={images[art]} resizeMode="cover" style={{ width: '100%', height: width ? imageHeight : undefined, aspectRatio: width ? undefined : 4 / 5 }} />
+        <Image accessible={false} source={images[art]} resizeMode="cover" style={{ width: '100%', height: '100%' }} />
       ) : (
         <Text style={{ color: colors.ink, padding: 20 }}>{label}</Text>
       )}

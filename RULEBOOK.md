@@ -1046,7 +1046,7 @@ An education row is **source-reviewed explanation of the tradition** — never a
 
 The registry is `mobile/src/data/kidsStories/index.ts`. Records carry stable story/page IDs, age guidance, shared artwork keys, source references, a takeaway and authored hi/en/gu/kn titles/narration. Artwork contains no captions. Every page and cover resolves to a statically imported bundled illustration; placeholders are not release assets.
 
-The More-stack reader dispatches by storyId and optional pageId. It shares the header and horizontal paging convention (§3), with vertically scrolling illustration/caption content and swipe-only paging (no Previous/Next controls) — the `n / total` counter sits in the header, matching the Gita reader. Locale changes preserve the scene. Keep artwork separate from translated text and load routes lazily.
+The More-stack reader dispatches by storyId and optional pageId. It shares the header and horizontal paging convention (§3), with swipe-only paging (no Previous/Next controls) — the `n / total` counter sits in the header, matching the Gita reader. Each scene is a flex column that fits one screen (the cover-cropped art fills the space above the caption); the final takeaway scene stays scrollable. Locale changes preserve the scene. Keep artwork separate from translated text and load routes lazily.
 
 For the initial illustrated-story scope, §3's read-aloud requirement applies when a story speech adapter or real recordings are added; no audio control is exposed until then. Bookmark/share/progress integrations remain explicit future work. Sharing paging/header conventions does not imply full Gita feature parity.
 
