@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Image, ImageBackground, Text } from 'react-native';
+import { Image, ImageBackground, StyleSheet, Text } from 'react-native';
 import { backgroundImages } from '@assets/backgrounds';
 import { getDeityBackground, getTheerthBackground } from '@/data/backgrounds';
 import { getTempleDetailById, templesWithDetails } from '@/data/theerth/temples';
@@ -114,6 +114,11 @@ test('Salasar Balaji shows its commissioned sketch as an in-content illustration
   assert.equal(frames[0].props.accessibilityLabel, 'सालासर बालाजी');
   const img = frames[0].findByType(Image);
   assert.equal(img.props.source, backgroundImages.theerth_salasar_balaji, 'frame shows the Salasar plate');
+  // Explicit height so RN's injected intrinsic asset height (1024 pt) can't
+  // win over the square sizing and zoom the frame into the plate's canopy.
+  const imgStyle = StyleSheet.flatten(img.props.style);
+  assert.equal(imgStyle.width, '100%');
+  assert.equal(imgStyle.height, '100%');
   assert.equal(tree.root.findAllByType(ImageBackground).length, 1, 'faded background layer still renders');
 });
 
