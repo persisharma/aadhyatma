@@ -271,7 +271,7 @@ test('graha cards open one at a time into gives, care, upay and an on-demand bas
     tree.root.findAll((node) => node.props.testID === 'graha-row-jupiter' && typeof node.props.onPress === 'function')[0].props.onPress();
   });
   const open = textOf(tree);
-  for (const heading of ['Why this label', 'What it gives', 'Where to take care', 'Upay · ', 'Day', 'Daan', 'Seva', 'Mantra']) {
+  for (const heading of ['Friends and enemies', 'This house’s karaka (natural guardian)', 'Why this label', 'What it gives', 'Where to take care', 'Upay · ', 'Day', 'Daan', 'Seva', 'Mantra']) {
     assert.ok(open.includes(heading), `card shows ${heading}`);
   }
   assert.ok(open.includes('Thursday'));

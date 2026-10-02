@@ -41,6 +41,21 @@ This is the same rule as the detailed daily readings (RULEBOOK §14.6). There is
 
 Silent cases: a benefic in the 2nd or 3rd; a malefic in the 1st, 2nd, 4th, 5th, 7th or 9th; a graha that rules only houses among 2/4/7/10/12; a neutral sign; the nodes' sign, lordship and combustion (they have none).
 
+## Names on the card (review note, 2 October 2026)
+
+The first review asked *which graha is an enemy of what* and *which house supports which graha*. So every strength line names the sign, its lord and the relation (`Simha (Leo) is ruled by the Sun, whom Venus counts as an enemy (shatru rashi)`), every planet's card lists its whole maitri row (`Friends: Sun, Moon, Mars · Neutral: Saturn · Enemies: Mercury, Venus`), and every card names its house's karaka from `BHAVA_PLAIN[].karakas`:
+
+| House | Karaka | House | Karaka |
+| --- | --- | --- | --- |
+| 1st | Sun | 7th | Venus |
+| 2nd | Jupiter | 8th | Saturn |
+| 3rd | Mars | 9th | Jupiter, Sun |
+| 4th | Moon | 10th | Sun, Mercury, Jupiter, Saturn |
+| 5th | Jupiter | 11th | Jupiter |
+| 6th | Mars, Saturn | 12th | Saturn |
+
+The karaka is information only; it does not vote. The review sheet also shows, per house, which grahas the house rule supports or asks for care.
+
 ## Simplifications the reviewer should confirm
 
 1. The Moon and Mercury count as benefic in every chart. The waxing/waning Moon and Mercury's association are not checked.
@@ -48,6 +63,7 @@ Silent cases: a benefic in the 2nd or 3rd; a malefic in the 1st, 2nd, 4th, 5th, 
 3. Combustion uses flat orbs. The retrograde variants (Mercury 12°, Venus 8°) are not applied, matching the muhurat engine (PRD-16 §9). Venus 10° and Jupiter 11° are pinned equal to `eventMuhurat.ts`.
 4. Rahu and Ketu vote only through their house. Dispositor strength and association are not read, and the nodes have no exaltation table here.
 5. Retrograde motion is shown as a fact on the strength line and in the basis. It does not vote, because classical views on it differ.
+6. The 2nd house casts no vote for anyone (nor the 3rd for a benefic). Classically benefics in the 2nd give wealth and sweet speech and malefics make speech harsh — open for the reviewer.
 
 ## Upay table
 

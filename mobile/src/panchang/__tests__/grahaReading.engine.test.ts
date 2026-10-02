@@ -6,6 +6,8 @@ import { DAAN_VAAR_ENTRIES } from '../../data/daan/vaar';
 import {
   buildGrahaReadings,
   combustionSeparation,
+  friendsLine,
+  grahaInSentenceEn,
   houseFactor,
   lordshipFactor,
   resolveGrahaTone,
@@ -17,9 +19,10 @@ import {
   GRAHA_PLAIN,
   GRAHA_READING_REVIEW,
   GRAHA_UPAY,
+  SIGN_STRENGTH,
   grahaReadingsApproved,
 } from '../grahaReadingContent';
-import { renderGrahaReviewSheet } from '../grahaReviewSheet';
+import { renderGrahaReviewSheet, signContextFor } from '../grahaReviewSheet';
 import {
   computeKundali,
   GRAHA_ORDER,
@@ -29,7 +32,7 @@ import {
   type GrahaPosition,
   type KundaliChart,
 } from '../kundali';
-import { COMBUSTION_ORB_DEG, housesRuledBy, signLordOf, signRelationOf } from '../kundaliBasis';
+import { COMBUSTION_ORB_DEG, dignityOf, housesRuledBy, maitriRow, signLordOf, signRelationOf } from '../kundaliBasis';
 import { RASHI_LORD } from '../kundaliReport';
 
 /** Two-hour steps through one day rotate the ascendant through all twelve signs. */
@@ -146,6 +149,29 @@ test('combustion uses flat orbs that agree with the muhurat engine, across the 0
   assert.equal(combustionSeparation(sun, sun), null, 'the Sun is never combust');
 });
 
+test('strength lines name the sign, its lord and the relation — "an unfriendly sign" never stands alone', () => {
+  const enemy = SIGN_STRENGTH.enemy(signContextFor('venus', 4));
+  assert.equal(enemy.en, 'Simha (Leo) is ruled by the Sun, whom Venus counts as an enemy (shatru rashi)');
+  assert.equal(enemy.hi, 'सिंह के स्वामी सूर्य हैं, जिन्हें शुक्र शत्रु मानता है (शत्रु राशि)');
+  const friend = SIGN_STRENGTH.friend(signContextFor('mars', 4));
+  assert.equal(friend.en, 'Simha (Leo) is ruled by the Sun, whom Mars counts as a friend (mitra rashi)');
+  assert.equal(SIGN_STRENGTH.exalted(signContextFor('jupiter', 3)).en, 'Karka (Cancer) is where Jupiter is strongest — exalted (uchcha)');
+  assert.equal(friendsLine('jupiter', false), 'Friends: Sun, Moon, Mars · Neutral: Saturn · Enemies: Mercury, Venus');
+  assert.equal(friendsLine('moon', false), 'Friends: Sun, Mercury · Neutral: Mars, Jupiter, Venus, Saturn · Enemies: none');
+  assert.equal(friendsLine('rahu', true), null);
+  for (const graha of GRAHA_ORDER) {
+    const row = maitriRow(graha);
+    if (!row) continue;
+    assert.equal(row.friends.length + row.neutral.length + row.enemies.length, 6, `${graha} regards all six other planets`);
+  }
+});
+
+test('every house names its karaka', () => {
+  BHAVA_PLAIN.forEach((house, index) => assert.ok(house.karakas.length > 0, `house ${index + 1}`));
+  assert.deepEqual(BHAVA_PLAIN[1].karakas, ['jupiter'], 'the 2nd house is looked after by Jupiter');
+  assert.deepEqual(BHAVA_PLAIN[6].karakas, ['venus']);
+});
+
 test('the label is counted: all one way → that way; any disagreement, or no vote → mixed', () => {
   const supports = (group: GrahaFactor['group']): GrahaFactor => ({ id: 'sign-own', group, vote: 'supports' });
   const cautions = (group: GrahaFactor['group']): GrahaFactor => ({ id: 'sign-enemy', group, vote: 'cautions' });
@@ -181,6 +207,13 @@ test('nine cards for every lagna: order, closed labels, own basis, every line fi
       assert.doesNotMatch(english, /\b(?:\d*[02-9])?[123]th (?:house|bhava)/, `${label}: ordinal grammar`);
       assert.doesNotMatch([card.placeHi, card.rulesHi ?? '', ...card.reasons.map((reason) => reason.textHi)].join(' '), /\d भाव/, `${label}: no bare digit before भाव`);
       assert.doesNotMatch(english, /[ऀ-ॿ]/, `${label}: no Devanagari in English lines`);
+      // Review note (2 Oct 2026): a strength line always says whose sign it is.
+      const node = card.graha === 'rahu' || card.graha === 'ketu';
+      if (node || dignityOf(card.graha, card.rashiIndex) === 'neutral') {
+        assert.ok(card.strengthEn.includes(`is ruled by ${grahaInSentenceEn(signLordOf(card.rashiIndex))}`), `${label}: names the sign lord`);
+      }
+      assert.equal(card.friendsEn === null, node, `${label}: friends line for the seven planets only`);
+      assert.ok(card.karakaEn.startsWith('This house’s karaka (natural guardian): '), `${label}: karaka line`);
     }
   }
   assert.equal(lagnas.size, 12, 'fixtures covered every lagna');

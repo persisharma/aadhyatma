@@ -23,6 +23,7 @@ Every card is built as: **name and meaning → house and life areas → sign and
 | हर ग्रह जीवन के किसी एक हिस्से की देखभाल करता है। हर ग्रह के लिए यहाँ लिखा है कि वह आपकी कुंडली में कहाँ बैठा है, वहाँ कितना मज़बूत है, क्या देता है, कहाँ सावधानी चाहिए, और उसका एक सरल उपाय। | Each graha (planet) looks after one part of life. For each one, this shows where it sits in your chart, how strong it is there, what it gives, where to take care, and one simple practice (upay) for it. | ☐ | |
 | हर ग्रह का लेबल अनुमान से नहीं, गिनकर तय होता है — राशि, भाव, आपके लग्न के लिए उसकी भूमिका, और सूर्य से दूरी। सब संकेत सहारा दें तो ‘सहायक’, सब सावधानी माँगें तो ‘ध्यान दें’, और संकेत अलग-अलग हों तो ‘मिश्रित’। | Each label is counted, not guessed — from the sign, the house, the graha’s role for your Lagna, and its distance from the Sun. When every sign helps it reads ‘Helps you’, when every sign asks for care it reads ‘Needs care’, and when they differ it reads ‘Mixed’. | ☐ | |
 | उपाय मन को स्थिर रखने और अच्छी आदतें बनाने का अभ्यास है — कोई वादा या तुरंत हल नहीं। | An upay is a practice that steadies the mind and builds good habits — not a promise or an instant fix. | ☐ | |
+| हर ग्रह कुछ ग्रहों को मित्र, कुछ को शत्रु और कुछ को सम मानता है (नैसर्गिक मैत्री)। हर राशि का एक स्वामी ग्रह होता है, इसलिए किसी राशि में बैठा ग्रह उसके स्वामी से अपने संबंध के अनुसार सहज रहता है या अधिक प्रयास करता है — हर ग्रह के विवेचन में उसके मित्र और शत्रु लिखे हैं। हर भाव का एक कारक ग्रह भी होता है, जो उस भाव के विषयों का स्वाभाविक संरक्षक है। | Each graha counts some grahas as friends, some as enemies and the rest as neutral (naisargika maitri). Every sign has a lord, so a graha in a sign works with ease or with extra effort depending on how it regards that lord — each graha’s reading lists its friends and enemies. Each house also has a karaka: the graha that naturally looks after that house’s matters. | ☐ | |
 
 ## What each graha stands for
 
@@ -38,34 +39,52 @@ Every card is built as: **name and meaning → house and life areas → sign and
 | राहु · Rahu | बड़ी इच्छाओं, महत्वाकांक्षा, विदेशी चीज़ों और अचानक मोड़ों का छाया ग्रह | a shadow graha (chhaya graha) of big desires, ambition, foreign things and sudden turns | ☐ | |
 | केतु · Ketu | त्याग, आध्यात्मिकता और अंतर्ज्ञान का छाया ग्रह | a shadow graha (chhaya graha) of letting go, spirituality and intuition | ☐ | |
 
-## What each house covers
+## Friends and enemies (naisargika maitri)
 
-| House | Hindi | English | OK | Notes |
-|---|---|---|---|---|
-| प्रथम · 1st | स्वयं आप — शरीर, स्वभाव, आत्मविश्वास और काम शुरू करने का ढंग | you yourself — body, nature, confidence and how you begin things | ☐ | |
-| द्वितीय · 2nd | परिवार, जमा-पूँजी, वाणी और खान-पान | family, savings, speech and food | ☐ | |
-| तृतीय · 3rd | साहस, मेहनत, छोटे भाई-बहन, छोटी यात्राएँ और अपनी बात रखने का कौशल | courage, effort, younger siblings, short trips and how you express yourself | ☐ | |
-| चतुर्थ · 4th | घर, माँ, वाहन, ज़मीन-जायदाद और मन की शांति | home, mother, vehicles, property and peace of mind | ☐ | |
-| पंचम · 5th | पढ़ाई, बुद्धि, रचनात्मकता, संतान और पूर्व-पुण्य | studies, intelligence, creativity, children and past good deeds | ☐ | |
-| षष्ठ · 6th | रोज़ का काम, दिनचर्या, प्रतियोगिता, सेवा और कर्ज़ | daily work, routine, competition, service and debts | ☐ | |
-| सप्तम · 7th | विवाह, जीवनसाथी, साझेदारी और दूसरों से व्यवहार | marriage, your partner, partnerships and dealings with others | ☐ | |
-| अष्टम · 8th | अचानक बदलाव, शोध, छिपे विषय और ससुराल या साझी सम्पत्ति | sudden changes, research, hidden matters and in-laws’ or shared resources | ☐ | |
-| नवम · 9th | भाग्य, पिता, गुरु, श्रद्धा, धर्म और लंबी यात्राएँ | fortune, father, teachers, faith, dharma and long journeys | ☐ | |
-| दशम · 10th | करियर, काम-काज, मान-सम्मान और समाज में स्थान | career, work, reputation and standing in society | ☐ | |
-| एकादश · 11th | आमदनी, लाभ, मित्र, बड़े भाई-बहन और इच्छाओं की पूर्ति | income, gains, friends, elder siblings and wishes fulfilled | ☐ | |
-| द्वादश · 12th | खर्च, नींद और विश्राम, दूर देश या विदेश, और आध्यात्मिक मुक्ति | expenses, sleep and rest, faraway places or abroad, and spiritual release | ☐ | |
+Every sign has a lord; a graha in a sign works with ease or with effort depending on how it regards that lord. Rahu and Ketu have no classical row and are not graded by sign.
+
+| Graha | मित्र · Friends | सम · Neutral | शत्रु · Enemies | OK | Notes |
+|---|---|---|---|---|---|
+| सूर्य · Sun | चन्द्र, मंगल, गुरु (Moon, Mars, Jupiter) | बुध (Mercury) | शुक्र, शनि (Venus, Saturn) | ☐ | |
+| चन्द्र · Moon | सूर्य, बुध (Sun, Mercury) | मंगल, गुरु, शुक्र, शनि (Mars, Jupiter, Venus, Saturn) | — | ☐ | |
+| मंगल · Mars | सूर्य, चन्द्र, गुरु (Sun, Moon, Jupiter) | शुक्र, शनि (Venus, Saturn) | बुध (Mercury) | ☐ | |
+| बुध · Mercury | सूर्य, शुक्र (Sun, Venus) | मंगल, गुरु, शनि (Mars, Jupiter, Saturn) | चन्द्र (Moon) | ☐ | |
+| गुरु · Jupiter | सूर्य, चन्द्र, मंगल (Sun, Moon, Mars) | शनि (Saturn) | बुध, शुक्र (Mercury, Venus) | ☐ | |
+| शुक्र · Venus | बुध, शनि (Mercury, Saturn) | मंगल, गुरु (Mars, Jupiter) | सूर्य, चन्द्र (Sun, Moon) | ☐ | |
+| शनि · Saturn | बुध, शुक्र (Mercury, Venus) | गुरु (Jupiter) | सूर्य, चन्द्र, मंगल (Sun, Moon, Mars) | ☐ | |
+
+## What each house covers, its karaka, and who does well there
+
+“Does well / needs care here” is the house vote of the label convention (graha-reading-v1).
+
+| House | Hindi | English | Karaka | Does well here | Needs care here | OK | Notes |
+|---|---|---|---|---|---|---|---|
+| प्रथम · 1st | स्वयं आप — शरीर, स्वभाव, आत्मविश्वास और काम शुरू करने का ढंग | you yourself — body, nature, confidence and how you begin things | सूर्य (Sun) | Moon, Mercury, Jupiter, Venus | — | ☐ | |
+| द्वितीय · 2nd | परिवार, जमा-पूँजी, वाणी और खान-पान | family, savings, speech and food | गुरु (Jupiter) | — | — | ☐ | |
+| तृतीय · 3rd | साहस, मेहनत, छोटे भाई-बहन, छोटी यात्राएँ और अपनी बात रखने का कौशल | courage, effort, younger siblings, short trips and how you express yourself | मंगल (Mars) | Sun, Mars, Saturn, Rahu, Ketu | — | ☐ | |
+| चतुर्थ · 4th | घर, माँ, वाहन, ज़मीन-जायदाद और मन की शांति | home, mother, vehicles, property and peace of mind | चन्द्र (Moon) | Moon, Mercury, Jupiter, Venus | — | ☐ | |
+| पंचम · 5th | पढ़ाई, बुद्धि, रचनात्मकता, संतान और पूर्व-पुण्य | studies, intelligence, creativity, children and past good deeds | गुरु (Jupiter) | Moon, Mercury, Jupiter, Venus | — | ☐ | |
+| षष्ठ · 6th | रोज़ का काम, दिनचर्या, प्रतियोगिता, सेवा और कर्ज़ | daily work, routine, competition, service and debts | मंगल, शनि (Mars, Saturn) | Sun, Mars, Saturn, Rahu, Ketu | Moon, Mercury, Jupiter, Venus | ☐ | |
+| सप्तम · 7th | विवाह, जीवनसाथी, साझेदारी और दूसरों से व्यवहार | marriage, your partner, partnerships and dealings with others | शुक्र (Venus) | Moon, Mercury, Jupiter, Venus, Saturn | — | ☐ | |
+| अष्टम · 8th | अचानक बदलाव, शोध, छिपे विषय और ससुराल या साझी सम्पत्ति | sudden changes, research, hidden matters and in-laws’ or shared resources | शनि (Saturn) | — | Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, Rahu, Ketu | ☐ | |
+| नवम · 9th | भाग्य, पिता, गुरु, श्रद्धा, धर्म और लंबी यात्राएँ | fortune, father, teachers, faith, dharma and long journeys | गुरु, सूर्य (Jupiter, Sun) | Moon, Mercury, Jupiter, Venus | — | ☐ | |
+| दशम · 10th | करियर, काम-काज, मान-सम्मान और समाज में स्थान | career, work, reputation and standing in society | सूर्य, बुध, गुरु, शनि (Sun, Mercury, Jupiter, Saturn) | Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, Rahu, Ketu | — | ☐ | |
+| एकादश · 11th | आमदनी, लाभ, मित्र, बड़े भाई-बहन और इच्छाओं की पूर्ति | income, gains, friends, elder siblings and wishes fulfilled | गुरु (Jupiter) | Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, Rahu, Ketu | — | ☐ | |
+| द्वादश · 12th | खर्च, नींद और विश्राम, दूर देश या विदेश, और आध्यात्मिक मुक्ति | expenses, sleep and rest, faraway places or abroad, and spiritual release | शनि (Saturn) | — | Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, Rahu, Ketu | ☐ | |
 
 ## Strength words
 
+Each strength line names the sign, its lord and the relation; shown here on one worked example each.
+
 | Key | Hindi | English | OK | Notes |
 |---|---|---|---|---|
-| exalted | अपनी सबसे मज़बूत राशि (उच्च) | its strongest sign — exalted (uchcha) | ☐ | |
-| own | अपनी ही राशि, जैसे अपने घर में (स्वराशि) | its own sign — at home (swarashi) | ☐ | |
-| debilitated | अपनी सबसे कमज़ोर राशि (नीच) | its weakest sign — debilitated (neecha) | ☐ | |
-| friend | मित्र ग्रह की राशि (मित्र राशि) | a friendly sign (mitra rashi) | ☐ | |
-| neutral | सम राशि — न मित्र, न शत्रु | a neutral sign (sama rashi) | ☐ | |
-| enemy | शत्रु ग्रह की राशि (शत्रु राशि) | an unfriendly sign (shatru rashi) | ☐ | |
-| node | छाया ग्रह — इसका फल मुख्य रूप से भाव से पढ़ा जाता है | a shadow graha — read mainly through its house | ☐ | |
+| exalted | कर्क में गुरु सबसे मज़बूत होता है — उच्च | Karka (Cancer) is where Jupiter is strongest — exalted (uchcha) | ☐ | |
+| own | कर्क चन्द्र की अपनी राशि है — जैसे अपने घर में (स्वराशि) | Karka (Cancer) is the Moon’s own sign — at home (swarashi) | ☐ | |
+| debilitated | मेष में शनि सबसे कमज़ोर होता है — नीच | Mesha (Aries) is where Saturn is weakest — debilitated (neecha) | ☐ | |
+| friend | सिंह के स्वामी सूर्य हैं, जिन्हें मंगल मित्र मानता है (मित्र राशि) | Simha (Leo) is ruled by the Sun, whom Mars counts as a friend (mitra rashi) | ☐ | |
+| neutral | मेष के स्वामी मंगल हैं — चन्द्र के लिए न मित्र, न शत्रु (सम राशि) | Mesha (Aries) is ruled by Mars, neither friend nor enemy to the Moon (sama rashi) | ☐ | |
+| enemy | सिंह के स्वामी सूर्य हैं, जिन्हें शुक्र शत्रु मानता है (शत्रु राशि) | Simha (Leo) is ruled by the Sun, whom Venus counts as an enemy (shatru rashi) | ☐ | |
+| node | राहु छाया ग्रह है — इसका फल मुख्य रूप से भाव से पढ़ा जाता है; धनु के स्वामी गुरु हैं | Rahu is a shadow graha — read mainly through its house; Dhanu (Sagittarius) is ruled by Jupiter | ☐ | |
 | retrograde | वक्री — उल्टी चाल में दिखता है | appears to move backwards (vakri) | ☐ | |
 | combust | सूर्य के बहुत पास, इसलिए तेज मंद (अस्त) | very close to the Sun, so its light is dimmed (asta) | ☐ | |
 
@@ -80,15 +99,15 @@ Combustion orbs (degrees from the Sun): Moon 12°, Mars 17°, Mercury 14°, Jupi
 | care | ध्यान दें — इसके बल के संकेत सावधानी माँगते हैं — नीचे का उपाय इसे संतुलित करने में सहायक है। | Needs care — Its signs of strength ask for care — the practice below helps steady it. | ☐ | |
 | mixed, no vote | किसी ओर विशेष झुकाव नहीं — यह ग्रह यहाँ शांत रूप से काम करता है। | No strong pull either way — this graha works quietly here. | ☐ | |
 
-Reason lines as they read on a card (sample values: Guru, the 4th house; Jupiter ruling the 9th and 12th; 6° from the Sun):
+Reason lines as they read on a card. Sign reasons use the worked examples above; the others use Jupiter in the 4th house, ruling the 9th, 6° from the Sun:
 
 | Reason | Hindi | English | OK | Notes |
 |---|---|---|---|---|
-| sign-exalted | यह अपनी सबसे मज़बूत राशि (उच्च) में है, इसलिए अपने फल पूरे बल से देता है। | It sits in its strongest sign (uchcha), so it gives its results in full. | ☐ | |
-| sign-own | यह अपनी ही राशि (स्वराशि) में है — अपने घर की तरह सहज। | It sits in its own sign (swarashi) — at home and at ease. | ☐ | |
-| sign-friend | यह मित्र ग्रह की राशि (मित्र राशि) में है, इसलिए सहजता से काम करता है। | It sits in a friendly sign (mitra rashi), so it works with ease. | ☐ | |
-| sign-enemy | यह शत्रु ग्रह की राशि (शत्रु राशि) में है, इसलिए इसके काम में अधिक प्रयास लगता है। | It sits in an unfriendly sign (shatru rashi), so its work takes more effort. | ☐ | |
-| sign-debilitated | यह अपनी सबसे कमज़ोर राशि (नीच) में है, इसलिए इसके फल अतिरिक्त प्रयास से मिलते हैं। | It sits in its weakest sign (neecha), so its results come with extra effort. | ☐ | |
+| sign-exalted | कर्क गुरु की उच्च राशि है — जहाँ यह सबसे मज़बूत होता है — इसलिए अपने फल पूरे बल से देता है। | Karka (Cancer) is Jupiter’s exaltation sign (uchcha), where it is strongest — so it gives its results in full. | ☐ | |
+| sign-own | कर्क चन्द्र की अपनी राशि (स्वराशि) है — अपने घर की तरह सहज। | Karka (Cancer) is the Moon’s own sign (swarashi) — at home and at ease. | ☐ | |
+| sign-friend | यह सूर्य की राशि सिंह में है, और सूर्य को मित्र मानता है (मित्र राशि) — इसलिए सहजता से काम करता है। | It sits in Simha (Leo), the Sun’s sign, and counts the Sun as a friend (mitra rashi) — so it works with ease. | ☐ | |
+| sign-enemy | यह सूर्य की राशि सिंह में है, और सूर्य को शत्रु मानता है (शत्रु राशि) — इसलिए इसके काम में अधिक प्रयास लगता है। | It sits in Simha (Leo), the Sun’s sign, and counts the Sun as an enemy (shatru rashi) — so its work takes more effort. | ☐ | |
+| sign-debilitated | मेष शनि की नीच राशि है — जहाँ यह सबसे कमज़ोर होता है — इसलिए इसके फल अतिरिक्त प्रयास से मिलते हैं। | Mesha (Aries) is Saturn’s debilitation sign (neecha), where it is weakest — so its results come with extra effort. | ☐ | |
 | house-digbala | गुरु को चतुर्थ भाव में दिशा का बल (दिग्बल) मिलता है। | Jupiter gains directional strength (dig-bala) in the 4th house. | ☐ | |
 | house-gains | एकादश भाव लाभ का घर है — यहाँ हर ग्रह कुछ न कुछ देता है। | The 11th house is the house of gains — every graha gives something here. | ☐ | |
 | house-benefic-strong | शुभ ग्रह कुंडली के मुख्य भावों (केन्द्र और त्रिकोण) में अच्छा फल देते हैं, और चतुर्थ भाव उन्हीं में से एक है। | Kind planets (shubh graha) do well in the main houses of a chart (kendra and trikona), and the 4th house is one of them. | ☐ | |
@@ -350,6 +369,7 @@ Reason lines as they read on a card (sample values: Guru, the 4th house; Jupiter
 - The cow-fodder seva (gau-gras) sits with Budh on Wednesday, matching the shared vaar-daan table. Some families give it on Friday for Shukra — confirm.
 - The label treats the Moon and Mercury as benefic in every chart (no waxing/waning or association check), and kendra lordship as neutral (no kendradhipati rule). Confirm these simplifications are acceptable for a first version.
 - Combustion uses flat orbs; the retrograde variants for Mercury (12°) and Venus (8°) are not applied.
+- The 2nd house casts no vote for any graha (nor the 3rd for a benefic), so its “does well here” is empty. Classically benefics in the 2nd give wealth and sweet speech and malefics make speech harsh — should the 2nd support benefics and ask malefics for care?
 
 ## Sign-off
 

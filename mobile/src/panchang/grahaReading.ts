@@ -9,6 +9,8 @@ import {
   dignityOfPosition,
   elongationDeg,
   housesRuledBy,
+  maitriRow,
+  signLordOf,
   signRelationOf,
   type BasisNode,
   type Dignity,
@@ -20,6 +22,8 @@ import {
   GRAHA_BHAVA_READINGS,
   GRAHA_PLAIN,
   GRAHA_UPAY,
+  KARAKA_LABEL,
+  MAITRI_LABELS,
   MANTRA_COUNT,
   RETROGRADE_NOTE,
   SIGN_STRENGTH,
@@ -147,6 +151,30 @@ function houseEn(house: number): string {
   return `${ordinalEn(house)} house`;
 }
 
+/** A graha named inside an English sentence: `the Sun`, `the Moon`, `Jupiter`. */
+export function grahaInSentenceEn(graha: Graha): string {
+  return graha === 'sun' || graha === 'moon' ? `the ${GRAHA_NAMES_EN[graha]}` : GRAHA_NAMES_EN[graha];
+}
+
+function namesList(grahas: readonly Graha[], hi: boolean): string {
+  if (grahas.length === 0) return hi ? MAITRI_LABELS.none.hi : MAITRI_LABELS.none.en;
+  return grahas.map((graha) => (hi ? GRAHA_NAMES_HI[graha] : GRAHA_NAMES_EN[graha])).join(', ');
+}
+
+/** `Friends: Sun, Moon, Mars · Neutral: Saturn · Enemies: Mercury, Venus`; null for the nodes. */
+export function friendsLine(graha: Graha, hi: boolean): string | null {
+  const row = maitriRow(graha);
+  if (!row) return null;
+  const labels = MAITRI_LABELS;
+  const part = (label: { hi: string; en: string }, grahas: readonly Graha[]) => `${hi ? label.hi : label.en}: ${namesList(grahas, hi)}`;
+  return [part(labels.friends, row.friends), part(labels.neutral, row.neutral), part(labels.enemies, row.enemies)].join(' · ');
+}
+
+/** `इस भाव का कारक (स्वाभाविक संरक्षक): गुरु` / `This house’s karaka (natural guardian): Jupiter`. */
+export function karakaLine(house: number, hi: boolean): string {
+  return `${hi ? KARAKA_LABEL.hi : KARAKA_LABEL.en}: ${namesList(BHAVA_PLAIN[house - 1].karakas, hi)}`;
+}
+
 function housesLabel(houses: readonly number[], hi: boolean): string {
   const parts = houses.map((house) =>
     hi ? `${bhavaLabelHi(house)} (${BHAVA_PLAIN[house - 1].shortHi})` : `${houseEn(house)} (${BHAVA_PLAIN[house - 1].shortEn})`
@@ -173,10 +201,18 @@ function grahaCard(chart: KundaliChart, position: GrahaPosition, sun: GrahaPosit
   if (separation !== null) factors.push({ id: 'combust', group: 'combustion', vote: 'cautions' });
   const tone = resolveGrahaTone(factors);
 
+  const lord = signLordOf(rashiIndex);
+  const signContext = {
+    grahaHi: GRAHA_NAMES_HI[graha],
+    grahaEn: grahaInSentenceEn(graha),
+    rashiHi: RASHI_NAMES_HI[rashiIndex],
+    rashiEn: `${RASHI_NAMES_EN[rashiIndex]} (${RASHI_NAMES_WESTERN[rashiIndex]})`,
+    lordHi: GRAHA_NAMES_HI[lord],
+    lordEn: grahaInSentenceEn(lord),
+  };
   const reasons = factors.map((factor) => {
     const text = FACTOR_REASON[factor.id]({
-      grahaHi: GRAHA_NAMES_HI[graha],
-      grahaEn: GRAHA_NAMES_EN[graha],
+      ...signContext,
       houseHi: bhavaLabelHi(house),
       houseEn: houseEn(house),
       ruledHi: factor.houses ? housesLabel(factor.houses, true) : '',
@@ -191,11 +227,9 @@ function grahaCard(chart: KundaliChart, position: GrahaPosition, sun: GrahaPosit
     ...(position.retrograde && !node ? [RETROGRADE_NOTE] : []),
     ...(separation !== null ? [COMBUST_NOTE] : []),
   ];
-  const strengthHi = [`${RASHI_NAMES_HI[rashiIndex]} राशि में — ${SIGN_STRENGTH[strengthKey].hi}`, ...notes.map((note) => note.hi)].join(' · ');
-  const strengthEn = [
-    `In ${RASHI_NAMES_EN[rashiIndex]} (${RASHI_NAMES_WESTERN[rashiIndex]}) — ${SIGN_STRENGTH[strengthKey].en}`,
-    ...notes.map((note) => note.en),
-  ].join(' · ');
+  const strength = SIGN_STRENGTH[strengthKey](signContext);
+  const strengthHi = [strength.hi, ...notes.map((note) => note.hi)].join(' · ');
+  const strengthEn = [strength.en, ...notes.map((note) => note.en)].join(' · ');
 
   const reading = GRAHA_BHAVA_READINGS[graha][house - 1];
   const upay = GRAHA_UPAY[graha];
@@ -230,6 +264,10 @@ function grahaCard(chart: KundaliChart, position: GrahaPosition, sun: GrahaPosit
     placeEn: `${houseEn(house)} — ${BHAVA_PLAIN[house - 1].en}`,
     strengthHi,
     strengthEn,
+    karakaHi: karakaLine(house, true),
+    karakaEn: karakaLine(house, false),
+    friendsHi: friendsLine(graha, true),
+    friendsEn: friendsLine(graha, false),
     tone,
     toneLabelHi: TONE_LABEL[tone].hi,
     toneLabelEn: TONE_LABEL[tone].en,

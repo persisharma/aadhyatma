@@ -75,9 +75,15 @@ export type KundaliGrahaCard = {
   /** The house and its life areas. */
   placeHi: string;
   placeEn: string;
-  /** The sign and how strong the graha is in it. */
+  /** The sign, whose sign it is, and how strong the graha is in it. */
   strengthHi: string;
   strengthEn: string;
+  /** The occupied house's karaka — its natural guardian graha(s). */
+  karakaHi: string;
+  karakaEn: string;
+  /** Whom the graha counts as friend, neutral and enemy; null for the nodes. */
+  friendsHi: string | null;
+  friendsEn: string | null;
   tone: KundaliGrahaTone;
   toneLabelHi: string;
   toneLabelEn: string;

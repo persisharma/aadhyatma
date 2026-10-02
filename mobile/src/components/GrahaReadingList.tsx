@@ -100,6 +100,13 @@ export default function GrahaReadingList({ cards, lang, onPractice }: Props) {
               <View testID={`graha-card-${card.graha}`} style={styles.body}>
                 <Paragraph lang={lang} hi={`${card.nameHi} — ${card.meaningHi}।`} en={`${card.nameEn} — ${card.meaningEn}.`} />
                 <Paragraph lang={lang} hi={card.strengthHi} en={card.strengthEn} muted />
+                {card.friendsHi && card.friendsEn && (
+                  <>
+                    <Label lang={lang} hi="ग्रह-मैत्री — कौन मित्र, कौन शत्रु" en="Friends and enemies" />
+                    <Paragraph lang={lang} hi={card.friendsHi} en={card.friendsEn} />
+                  </>
+                )}
+                <Paragraph lang={lang} hi={card.karakaHi} en={card.karakaEn} muted />
                 <Label lang={lang} hi="यह लेबल क्यों" en="Why this label" />
                 <Paragraph lang={lang} hi={card.toneLineHi} en={card.toneLineEn} />
                 {card.reasons.map((reason) => (

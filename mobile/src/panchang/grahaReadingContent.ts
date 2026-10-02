@@ -106,79 +106,95 @@ export const GRAHA_PLAIN: Readonly<Record<Graha, { nameHi: string; nameEn: strin
   },
 };
 
-/** Each house's life areas in everyday words — `short` names it inside a sentence. */
-export const BHAVA_PLAIN: readonly { hi: string; en: string; shortHi: string; shortEn: string }[] = [
+/**
+ * Each house's life areas in everyday words — `short` names it inside a
+ * sentence — and its karaka: the graha that naturally looks after the house's
+ * matters (BPHS sthira bhava-karakas; the reviewer confirms the list).
+ */
+export const BHAVA_PLAIN: readonly { hi: string; en: string; shortHi: string; shortEn: string; karakas: readonly Graha[] }[] = [
   {
     hi: 'स्वयं आप — शरीर, स्वभाव, आत्मविश्वास और काम शुरू करने का ढंग',
     en: 'you yourself — body, nature, confidence and how you begin things',
     shortHi: 'स्वयं आप',
     shortEn: 'you yourself',
+    karakas: ['sun'],
   },
   {
     hi: 'परिवार, जमा-पूँजी, वाणी और खान-पान',
     en: 'family, savings, speech and food',
     shortHi: 'परिवार और बचत',
     shortEn: 'family and savings',
+    karakas: ['jupiter'],
   },
   {
     hi: 'साहस, मेहनत, छोटे भाई-बहन, छोटी यात्राएँ और अपनी बात रखने का कौशल',
     en: 'courage, effort, younger siblings, short trips and how you express yourself',
     shortHi: 'साहस और मेहनत',
     shortEn: 'courage and effort',
+    karakas: ['mars'],
   },
   {
     hi: 'घर, माँ, वाहन, ज़मीन-जायदाद और मन की शांति',
     en: 'home, mother, vehicles, property and peace of mind',
     shortHi: 'घर और माँ',
     shortEn: 'home and mother',
+    karakas: ['moon'],
   },
   {
     hi: 'पढ़ाई, बुद्धि, रचनात्मकता, संतान और पूर्व-पुण्य',
     en: 'studies, intelligence, creativity, children and past good deeds',
     shortHi: 'पढ़ाई और संतान',
     shortEn: 'studies and children',
+    karakas: ['jupiter'],
   },
   {
     hi: 'रोज़ का काम, दिनचर्या, प्रतियोगिता, सेवा और कर्ज़',
     en: 'daily work, routine, competition, service and debts',
     shortHi: 'काम और प्रतियोगिता',
     shortEn: 'work and competition',
+    karakas: ['mars', 'saturn'],
   },
   {
     hi: 'विवाह, जीवनसाथी, साझेदारी और दूसरों से व्यवहार',
     en: 'marriage, your partner, partnerships and dealings with others',
     shortHi: 'विवाह और साझेदारी',
     shortEn: 'marriage and partnerships',
+    karakas: ['venus'],
   },
   {
     hi: 'अचानक बदलाव, शोध, छिपे विषय और ससुराल या साझी सम्पत्ति',
     en: 'sudden changes, research, hidden matters and in-laws’ or shared resources',
     shortHi: 'अचानक बदलाव और छिपे विषय',
     shortEn: 'sudden changes and hidden matters',
+    karakas: ['saturn'],
   },
   {
     hi: 'भाग्य, पिता, गुरु, श्रद्धा, धर्म और लंबी यात्राएँ',
     en: 'fortune, father, teachers, faith, dharma and long journeys',
     shortHi: 'भाग्य और धर्म',
     shortEn: 'fortune and dharma',
+    karakas: ['jupiter', 'sun'],
   },
   {
     hi: 'करियर, काम-काज, मान-सम्मान और समाज में स्थान',
     en: 'career, work, reputation and standing in society',
     shortHi: 'करियर और मान-सम्मान',
     shortEn: 'career and reputation',
+    karakas: ['sun', 'mercury', 'jupiter', 'saturn'],
   },
   {
     hi: 'आमदनी, लाभ, मित्र, बड़े भाई-बहन और इच्छाओं की पूर्ति',
     en: 'income, gains, friends, elder siblings and wishes fulfilled',
     shortHi: 'आमदनी और लाभ',
     shortEn: 'income and gains',
+    karakas: ['jupiter'],
   },
   {
     hi: 'खर्च, नींद और विश्राम, दूर देश या विदेश, और आध्यात्मिक मुक्ति',
     en: 'expenses, sleep and rest, faraway places or abroad, and spiritual release',
     shortHi: 'खर्च और दूर देश',
     shortEn: 'expenses and faraway places',
+    karakas: ['saturn'],
   },
 ];
 
@@ -859,16 +875,63 @@ export const GRAHA_BHAVA_READINGS: Readonly<Record<Graha, readonly GrahaBhavaRea
   ],
 };
 
-/** The sign's strength, meaning first and the term after it. */
-export const SIGN_STRENGTH: Readonly<Record<'exalted' | 'own' | 'debilitated' | 'friend' | 'neutral' | 'enemy' | 'node', Bilingual>> = {
-  exalted: { hi: 'अपनी सबसे मज़बूत राशि (उच्च)', en: 'its strongest sign — exalted (uchcha)' },
-  own: { hi: 'अपनी ही राशि, जैसे अपने घर में (स्वराशि)', en: 'its own sign — at home (swarashi)' },
-  debilitated: { hi: 'अपनी सबसे कमज़ोर राशि (नीच)', en: 'its weakest sign — debilitated (neecha)' },
-  friend: { hi: 'मित्र ग्रह की राशि (मित्र राशि)', en: 'a friendly sign (mitra rashi)' },
-  neutral: { hi: 'सम राशि — न मित्र, न शत्रु', en: 'a neutral sign (sama rashi)' },
-  enemy: { hi: 'शत्रु ग्रह की राशि (शत्रु राशि)', en: 'an unfriendly sign (shatru rashi)' },
-  node: { hi: 'छाया ग्रह — इसका फल मुख्य रूप से भाव से पढ़ा जाता है', en: 'a shadow graha — read mainly through its house' },
+/** Names used inside a sentence: `गुरु` / `Jupiter`, `the Sun`, `the Moon`. */
+export type SignContext = {
+  grahaHi: string;
+  grahaEn: string;
+  /** `कर्क` / `Karka (Cancer)`. */
+  rashiHi: string;
+  rashiEn: string;
+  /** The sign's lord, sentence form. */
+  lordHi: string;
+  lordEn: string;
 };
+
+/**
+ * The sign's strength, meaning first and the term after it — and it always
+ * says WHOSE sign it is and how this graha regards that lord, so "an unfriendly
+ * sign" never stands alone (review note, 2 Oct 2026).
+ */
+export const SIGN_STRENGTH: Readonly<Record<'exalted' | 'own' | 'debilitated' | 'friend' | 'neutral' | 'enemy' | 'node', (ctx: SignContext) => Bilingual>> = {
+  exalted: (ctx) => ({
+    hi: `${ctx.rashiHi} में ${ctx.grahaHi} सबसे मज़बूत होता है — उच्च`,
+    en: `${ctx.rashiEn} is where ${ctx.grahaEn} is strongest — exalted (uchcha)`,
+  }),
+  own: (ctx) => ({
+    hi: `${ctx.rashiHi} ${ctx.grahaHi} की अपनी राशि है — जैसे अपने घर में (स्वराशि)`,
+    en: `${ctx.rashiEn} is ${ctx.grahaEn}’s own sign — at home (swarashi)`,
+  }),
+  debilitated: (ctx) => ({
+    hi: `${ctx.rashiHi} में ${ctx.grahaHi} सबसे कमज़ोर होता है — नीच`,
+    en: `${ctx.rashiEn} is where ${ctx.grahaEn} is weakest — debilitated (neecha)`,
+  }),
+  friend: (ctx) => ({
+    hi: `${ctx.rashiHi} के स्वामी ${ctx.lordHi} हैं, जिन्हें ${ctx.grahaHi} मित्र मानता है (मित्र राशि)`,
+    en: `${ctx.rashiEn} is ruled by ${ctx.lordEn}, whom ${ctx.grahaEn} counts as a friend (mitra rashi)`,
+  }),
+  neutral: (ctx) => ({
+    hi: `${ctx.rashiHi} के स्वामी ${ctx.lordHi} हैं — ${ctx.grahaHi} के लिए न मित्र, न शत्रु (सम राशि)`,
+    en: `${ctx.rashiEn} is ruled by ${ctx.lordEn}, neither friend nor enemy to ${ctx.grahaEn} (sama rashi)`,
+  }),
+  enemy: (ctx) => ({
+    hi: `${ctx.rashiHi} के स्वामी ${ctx.lordHi} हैं, जिन्हें ${ctx.grahaHi} शत्रु मानता है (शत्रु राशि)`,
+    en: `${ctx.rashiEn} is ruled by ${ctx.lordEn}, whom ${ctx.grahaEn} counts as an enemy (shatru rashi)`,
+  }),
+  node: (ctx) => ({
+    hi: `${ctx.grahaHi} छाया ग्रह है — इसका फल मुख्य रूप से भाव से पढ़ा जाता है; ${ctx.rashiHi} के स्वामी ${ctx.lordHi} हैं`,
+    en: `${ctx.grahaEn} is a shadow graha — read mainly through its house; ${ctx.rashiEn} is ruled by ${ctx.lordEn}`,
+  }),
+};
+
+/** Each house's natural guardian, and each planet's friends and enemies. */
+export const KARAKA_LABEL: Bilingual = { hi: 'इस भाव का कारक (स्वाभाविक संरक्षक)', en: 'This house’s karaka (natural guardian)' };
+export const MAITRI_LABELS = {
+  friends: { hi: 'मित्र', en: 'Friends' },
+  neutral: { hi: 'सम', en: 'Neutral' },
+  enemies: { hi: 'शत्रु', en: 'Enemies' },
+  none: { hi: 'कोई नहीं', en: 'none' },
+  intro: { hi: 'ग्रह-मैत्री', en: 'Friends and enemies' },
+} as const;
 
 export const RETROGRADE_NOTE: Bilingual = { hi: 'वक्री — उल्टी चाल में दिखता है', en: 'appears to move backwards (vakri)' };
 export const COMBUST_NOTE: Bilingual = { hi: 'सूर्य के बहुत पास, इसलिए तेज मंद (अस्त)', en: 'very close to the Sun, so its light is dimmed (asta)' };
@@ -894,6 +957,11 @@ export type GrahaFactorId =
 export type ReasonContext = {
   grahaHi: string;
   grahaEn: string;
+  /** The occupied sign and its lord, sentence form. */
+  rashiHi: string;
+  rashiEn: string;
+  lordHi: string;
+  lordEn: string;
   /** The occupied house: `चतुर्थ भाव` / `4th house`. */
   houseHi: string;
   houseEn: string;
@@ -906,29 +974,29 @@ export type ReasonContext = {
 
 /** One plain "why" line per vote — the card's reasons list. */
 export const FACTOR_REASON: Readonly<Record<GrahaFactorId, (ctx: ReasonContext) => Bilingual>> = {
-  'sign-exalted': () => ({
-    hi: 'यह अपनी सबसे मज़बूत राशि (उच्च) में है, इसलिए अपने फल पूरे बल से देता है।',
-    en: 'It sits in its strongest sign (uchcha), so it gives its results in full.',
+  'sign-exalted': (ctx) => ({
+    hi: `${ctx.rashiHi} ${ctx.grahaHi} की उच्च राशि है — जहाँ यह सबसे मज़बूत होता है — इसलिए अपने फल पूरे बल से देता है।`,
+    en: `${ctx.rashiEn} is ${ctx.grahaEn}’s exaltation sign (uchcha), where it is strongest — so it gives its results in full.`,
   }),
-  'sign-own': () => ({
-    hi: 'यह अपनी ही राशि (स्वराशि) में है — अपने घर की तरह सहज।',
-    en: 'It sits in its own sign (swarashi) — at home and at ease.',
+  'sign-own': (ctx) => ({
+    hi: `${ctx.rashiHi} ${ctx.grahaHi} की अपनी राशि (स्वराशि) है — अपने घर की तरह सहज।`,
+    en: `${ctx.rashiEn} is ${ctx.grahaEn}’s own sign (swarashi) — at home and at ease.`,
   }),
-  'sign-friend': () => ({
-    hi: 'यह मित्र ग्रह की राशि (मित्र राशि) में है, इसलिए सहजता से काम करता है।',
-    en: 'It sits in a friendly sign (mitra rashi), so it works with ease.',
+  'sign-friend': (ctx) => ({
+    hi: `यह ${ctx.lordHi} की राशि ${ctx.rashiHi} में है, और ${ctx.lordHi} को मित्र मानता है (मित्र राशि) — इसलिए सहजता से काम करता है।`,
+    en: `It sits in ${ctx.rashiEn}, ${ctx.lordEn}’s sign, and counts ${ctx.lordEn} as a friend (mitra rashi) — so it works with ease.`,
   }),
-  'sign-enemy': () => ({
-    hi: 'यह शत्रु ग्रह की राशि (शत्रु राशि) में है, इसलिए इसके काम में अधिक प्रयास लगता है।',
-    en: 'It sits in an unfriendly sign (shatru rashi), so its work takes more effort.',
+  'sign-enemy': (ctx) => ({
+    hi: `यह ${ctx.lordHi} की राशि ${ctx.rashiHi} में है, और ${ctx.lordHi} को शत्रु मानता है (शत्रु राशि) — इसलिए इसके काम में अधिक प्रयास लगता है।`,
+    en: `It sits in ${ctx.rashiEn}, ${ctx.lordEn}’s sign, and counts ${ctx.lordEn} as an enemy (shatru rashi) — so its work takes more effort.`,
   }),
-  'sign-debilitated': () => ({
-    hi: 'यह अपनी सबसे कमज़ोर राशि (नीच) में है, इसलिए इसके फल अतिरिक्त प्रयास से मिलते हैं।',
-    en: 'It sits in its weakest sign (neecha), so its results come with extra effort.',
+  'sign-debilitated': (ctx) => ({
+    hi: `${ctx.rashiHi} ${ctx.grahaHi} की नीच राशि है — जहाँ यह सबसे कमज़ोर होता है — इसलिए इसके फल अतिरिक्त प्रयास से मिलते हैं।`,
+    en: `${ctx.rashiEn} is ${ctx.grahaEn}’s debilitation sign (neecha), where it is weakest — so its results come with extra effort.`,
   }),
   'house-digbala': (ctx) => ({
     hi: `${ctx.grahaHi} को ${ctx.houseHi} में दिशा का बल (दिग्बल) मिलता है।`,
-    en: `${ctx.grahaEn} gains directional strength (dig-bala) in the ${ctx.houseEn}.`,
+    en: `${ctx.grahaEn.charAt(0).toUpperCase()}${ctx.grahaEn.slice(1)} gains directional strength (dig-bala) in the ${ctx.houseEn}.`,
   }),
   'house-gains': () => ({
     hi: 'एकादश भाव लाभ का घर है — यहाँ हर ग्रह कुछ न कुछ देता है।',
@@ -1009,6 +1077,10 @@ export const GRAHA_SECTION_COPY = {
     {
       hi: 'उपाय मन को स्थिर रखने और अच्छी आदतें बनाने का अभ्यास है — कोई वादा या तुरंत हल नहीं।',
       en: 'An upay is a practice that steadies the mind and builds good habits — not a promise or an instant fix.',
+    },
+    {
+      hi: 'हर ग्रह कुछ ग्रहों को मित्र, कुछ को शत्रु और कुछ को सम मानता है (नैसर्गिक मैत्री)। हर राशि का एक स्वामी ग्रह होता है, इसलिए किसी राशि में बैठा ग्रह उसके स्वामी से अपने संबंध के अनुसार सहज रहता है या अधिक प्रयास करता है — हर ग्रह के विवेचन में उसके मित्र और शत्रु लिखे हैं। हर भाव का एक कारक ग्रह भी होता है, जो उस भाव के विषयों का स्वाभाविक संरक्षक है।',
+      en: 'Each graha counts some grahas as friends, some as enemies and the rest as neutral (naisargika maitri). Every sign has a lord, so a graha in a sign works with ease or with extra effort depending on how it regards that lord — each graha’s reading lists its friends and enemies. Each house also has a karaka: the graha that naturally looks after that house’s matters.',
     },
   ],
   snapshotLabel: { hi: 'ग्रह एक नज़र में', en: 'Grahas at a glance' },

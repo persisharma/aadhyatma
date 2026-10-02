@@ -1,5 +1,7 @@
-import { GRAHA_NAMES_EN, GRAHA_NAMES_HI, GRAHA_ORDER } from './kundali';
-import { COMBUSTION_ORB_DEG } from './kundaliBasis';
+import { GRAHA_NAMES_EN, GRAHA_NAMES_HI, GRAHA_ORDER, RASHI_NAMES_EN, RASHI_NAMES_HI, RASHI_NAMES_WESTERN } from './kundali';
+import type { Graha } from './kundali';
+import { COMBUSTION_ORB_DEG, maitriRow, signLordOf } from './kundaliBasis';
+import { grahaInSentenceEn, houseFactor } from './grahaReading';
 import {
   BHAVA_PLAIN,
   COMBUST_NOTE,
@@ -15,7 +17,9 @@ import {
   TONE_LABEL,
   TONE_LINE,
   UPAY_INTRO,
+  type Bilingual,
   type GrahaFactorId,
+  type SignContext,
 } from './grahaReadingContent';
 import { BHAVA_ORDINAL_HI, ordinalEn } from './reportFormat';
 
@@ -29,6 +33,63 @@ import { BHAVA_ORDINAL_HI, ordinalEn } from './reportFormat';
 
 function cell(text: string): string {
   return text.replace(/\|/g, '\\|');
+}
+
+/** One worked example per strength word: the graha and the sign it is read in. */
+export const STRENGTH_SAMPLES: Readonly<Record<keyof typeof SIGN_STRENGTH, { graha: Graha; rashiIndex: number }>> = {
+  exalted: { graha: 'jupiter', rashiIndex: 3 },
+  own: { graha: 'moon', rashiIndex: 3 },
+  debilitated: { graha: 'saturn', rashiIndex: 0 },
+  friend: { graha: 'mars', rashiIndex: 4 },
+  neutral: { graha: 'moon', rashiIndex: 0 },
+  enemy: { graha: 'venus', rashiIndex: 4 },
+  node: { graha: 'rahu', rashiIndex: 8 },
+};
+
+export function signContextFor(graha: Graha, rashiIndex: number): SignContext {
+  const lord = signLordOf(rashiIndex);
+  return {
+    grahaHi: GRAHA_NAMES_HI[graha],
+    grahaEn: grahaInSentenceEn(graha),
+    rashiHi: RASHI_NAMES_HI[rashiIndex],
+    rashiEn: `${RASHI_NAMES_EN[rashiIndex]} (${RASHI_NAMES_WESTERN[rashiIndex]})`,
+    lordHi: GRAHA_NAMES_HI[lord],
+    lordEn: grahaInSentenceEn(lord),
+  };
+}
+
+const REASON_SIGN_SAMPLE: Partial<Record<GrahaFactorId, { graha: Graha; rashiIndex: number }>> = {
+  'sign-exalted': STRENGTH_SAMPLES.exalted,
+  'sign-own': STRENGTH_SAMPLES.own,
+  'sign-friend': STRENGTH_SAMPLES.friend,
+  'sign-enemy': STRENGTH_SAMPLES.enemy,
+  'sign-debilitated': STRENGTH_SAMPLES.debilitated,
+};
+
+/** A reason line as a card would show it, on a fixed sample. */
+export function reasonSample(id: GrahaFactorId): Bilingual {
+  const sample = REASON_SIGN_SAMPLE[id] ?? { graha: 'jupiter' as const, rashiIndex: 3 };
+  return FACTOR_REASON[id]({
+    ...signContextFor(sample.graha, sample.rashiIndex),
+    houseHi: 'चतुर्थ भाव',
+    houseEn: '4th house',
+    ruledHi: 'नवम भाव (भाग्य और धर्म)',
+    ruledEn: '9th house (fortune and dharma)',
+    degreesFromSun: 6,
+  });
+}
+
+/** Which grahas the house rule supports, and which it asks for care, in one house. */
+export function houseVotes(house: number): { supports: readonly Graha[]; cautions: readonly Graha[] } {
+  return {
+    supports: GRAHA_ORDER.filter((graha) => houseFactor(graha, house)?.vote === 'supports'),
+    cautions: GRAHA_ORDER.filter((graha) => houseFactor(graha, house)?.vote === 'cautions'),
+  };
+}
+
+export function namesBoth(grahas: readonly Graha[]): Bilingual {
+  if (grahas.length === 0) return { hi: '—', en: '—' };
+  return { hi: grahas.map((graha) => GRAHA_NAMES_HI[graha]).join(', '), en: grahas.map((graha) => GRAHA_NAMES_EN[graha]).join(', ') };
 }
 
 const FACTOR_ORDER: readonly GrahaFactorId[] = [
@@ -90,20 +151,51 @@ export function renderGrahaReviewSheet(): string {
   }
   push('');
 
-  push('## What each house covers');
+  push('## Friends and enemies (naisargika maitri)');
   push('');
-  push('| House | Hindi | English | OK | Notes |');
-  push('|---|---|---|---|---|');
+  push('Every sign has a lord; a graha in a sign works with ease or with effort depending on how it regards that lord. Rahu and Ketu have no classical row and are not graded by sign.');
+  push('');
+  push('| Graha | मित्र · Friends | सम · Neutral | शत्रु · Enemies | OK | Notes |');
+  push('|---|---|---|---|---|---|');
+  for (const graha of GRAHA_ORDER) {
+    const row = maitriRow(graha);
+    if (!row) continue;
+    const both = (grahas: readonly Graha[]) => {
+      const names = namesBoth(grahas);
+      return names.hi === '—' ? '—' : `${names.hi} (${names.en})`;
+    };
+    push(`| ${GRAHA_NAMES_HI[graha]} · ${GRAHA_NAMES_EN[graha]} | ${both(row.friends)} | ${both(row.neutral)} | ${both(row.enemies)} | ☐ | |`);
+  }
+  push('');
+
+  push('## What each house covers, its karaka, and who does well there');
+  push('');
+  push('“Does well / needs care here” is the house vote of the label convention (graha-reading-v1).');
+  push('');
+  push('| House | Hindi | English | Karaka | Does well here | Needs care here | OK | Notes |');
+  push('|---|---|---|---|---|---|---|---|');
   BHAVA_PLAIN.forEach((house, index) => {
-    push(`| ${BHAVA_ORDINAL_HI[index]} · ${ordinalEn(index + 1)} | ${cell(house.hi)} | ${cell(house.en)} | ☐ | |`);
+    const karaka = namesBoth(house.karakas);
+    const votes = houseVotes(index + 1);
+    const supports = namesBoth(votes.supports);
+    const cautions = namesBoth(votes.cautions);
+    push(
+      `| ${BHAVA_ORDINAL_HI[index]} · ${ordinalEn(index + 1)} | ${cell(house.hi)} | ${cell(house.en)} | ${karaka.hi} (${karaka.en}) | ${supports.en} | ${cautions.en} | ☐ | |`
+    );
   });
   push('');
 
   push('## Strength words');
   push('');
+  push('Each strength line names the sign, its lord and the relation; shown here on one worked example each.');
+  push('');
   push('| Key | Hindi | English | OK | Notes |');
   push('|---|---|---|---|---|');
-  for (const [key, phrase] of Object.entries(SIGN_STRENGTH)) push(`| ${key} | ${cell(phrase.hi)} | ${cell(phrase.en)} | ☐ | |`);
+  for (const key of Object.keys(SIGN_STRENGTH) as (keyof typeof SIGN_STRENGTH)[]) {
+    const sample = STRENGTH_SAMPLES[key];
+    const phrase = SIGN_STRENGTH[key](signContextFor(sample.graha, sample.rashiIndex));
+    push(`| ${key} | ${cell(phrase.hi)} | ${cell(phrase.en)} | ☐ | |`);
+  }
   push(`| retrograde | ${cell(RETROGRADE_NOTE.hi)} | ${cell(RETROGRADE_NOTE.en)} | ☐ | |`);
   push(`| combust | ${cell(COMBUST_NOTE.hi)} | ${cell(COMBUST_NOTE.en)} | ☐ | |`);
   push('');
@@ -119,20 +211,12 @@ export function renderGrahaReviewSheet(): string {
   }
   push(`| mixed, no vote | ${cell(TONE_LINE.quiet.hi)} | ${cell(TONE_LINE.quiet.en)} | ☐ | |`);
   push('');
-  push('Reason lines as they read on a card (sample values: Guru, the 4th house; Jupiter ruling the 9th and 12th; 6° from the Sun):');
+  push('Reason lines as they read on a card. Sign reasons use the worked examples above; the others use Jupiter in the 4th house, ruling the 9th, 6° from the Sun:');
   push('');
   push('| Reason | Hindi | English | OK | Notes |');
   push('|---|---|---|---|---|');
   for (const id of FACTOR_ORDER) {
-    const text = FACTOR_REASON[id]({
-      grahaHi: 'गुरु',
-      grahaEn: 'Jupiter',
-      houseHi: 'चतुर्थ भाव',
-      houseEn: '4th house',
-      ruledHi: 'नवम भाव (भाग्य और धर्म)',
-      ruledEn: '9th house (fortune and dharma)',
-      degreesFromSun: 6,
-    });
+    const text = reasonSample(id);
     push(`| ${id} | ${cell(text.hi)} | ${cell(text.en)} | ☐ | |`);
   }
   push('');
@@ -168,6 +252,7 @@ export function renderGrahaReviewSheet(): string {
   push('- The cow-fodder seva (gau-gras) sits with Budh on Wednesday, matching the shared vaar-daan table. Some families give it on Friday for Shukra — confirm.');
   push('- The label treats the Moon and Mercury as benefic in every chart (no waxing/waning or association check), and kendra lordship as neutral (no kendradhipati rule). Confirm these simplifications are acceptable for a first version.');
   push('- Combustion uses flat orbs; the retrograde variants for Mercury (12°) and Venus (8°) are not applied.');
+  push('- The 2nd house casts no vote for any graha (nor the 3rd for a benefic), so its “does well here” is empty. Classically benefics in the 2nd give wealth and sweet speech and malefics make speech harsh — should the 2nd support benefics and ask malefics for care?');
   push('');
   push('## Sign-off');
   push('');

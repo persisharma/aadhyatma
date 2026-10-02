@@ -142,6 +142,23 @@ export const MAITRI_LABEL_EN: Readonly<Record<Maitri, string>> = {
   enemy: 'adversary',
 };
 
+const SEVEN_PLANETS: readonly Graha[] = ['sun', 'moon', 'mars', 'mercury', 'jupiter', 'venus', 'saturn'];
+
+/**
+ * A planet's whole naisargika row — whom it counts as friend, neutral and
+ * enemy among the other six classical planets (the BPHS table above). Null
+ * for the nodes, whose row is a draft modern convention.
+ */
+export function maitriRow(graha: Graha): { friends: readonly Graha[]; neutral: readonly Graha[]; enemies: readonly Graha[] } | null {
+  if (graha === 'rahu' || graha === 'ketu') return null;
+  const others = SEVEN_PLANETS.filter((other) => other !== graha);
+  return {
+    friends: others.filter((other) => maitriOf(graha, other) === 'friend'),
+    neutral: others.filter((other) => maitriOf(graha, other) === 'neutral'),
+    enemies: others.filter((other) => maitriOf(graha, other) === 'enemy'),
+  };
+}
+
 /** The classical lord of a sign, read off `OWN_SIGNS` so it can never disagree
  * with the dignity table (it equals `RASHI_LORD` — test-pinned). */
 export function signLordOf(rashiIndex: number): Graha {

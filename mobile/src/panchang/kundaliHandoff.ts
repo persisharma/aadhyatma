@@ -100,6 +100,8 @@ export function buildKundaliHandoffText(
         lines.push(`### ${card.nameEn} — ${card.placeEn} · ${card.toneLabelEn}`);
         lines.push(`${card.nameEn} is ${card.meaningEn}.`);
         lines.push(`Strength: ${card.strengthEn}`);
+        if (card.friendsEn) lines.push(`Friends and enemies: ${card.friendsEn}`);
+        lines.push(card.karakaEn);
         lines.push(`Label: ${card.toneLabelEn} — ${card.toneLineEn}`);
         for (const reason of card.reasons) {
           lines.push(`- ${reason.vote === 'supports' ? 'Helps' : 'Asks for care'}: ${reason.textEn}`);

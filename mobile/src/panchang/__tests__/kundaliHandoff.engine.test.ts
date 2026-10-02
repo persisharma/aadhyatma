@@ -130,6 +130,8 @@ test('the graha cards export card by card, each with its own basis line (RULEBOO
     assert.ok(block.includes(`Take care: ${card.careEn}`), `${card.graha} care`);
     assert.ok(block.includes(`mantra: ${card.upay.mantraEn}`), `${card.graha} upay`);
     assert.ok(block.includes(`paath: ${card.upay.practiceSourceId}`), `${card.graha} paath`);
+    assert.ok(block.includes(card.karakaEn), `${card.graha} house karaka`);
+    if (card.friendsEn) assert.ok(block.includes(`Friends and enemies: ${card.friendsEn}`), `${card.graha} friends`);
     assert.match(block, /\nBasis: /, `${card.graha} basis`);
   }
   // The JSON tail is still the parse-back-equal model.
