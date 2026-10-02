@@ -207,7 +207,7 @@ test('summary carries birth facts and the disclaimer frames both ends', () => {
   }
   assert.ok(model.disclaimerHi.includes('निश्चित भविष्यवाणी नहीं'));
   assert.ok(model.disclaimerEn.includes('not a certain prediction'));
-  assert.equal(model.reportVersion, 2);
+  assert.equal(model.reportVersion, 3);
   assert.equal(model.generatedDateKey, '2026-08-19');
   assert.equal(model.asOfLabelEn, '19 Aug 2026');
   assert.equal(model.ageBand, 'adult');
@@ -469,4 +469,55 @@ test('the snapshot leads with notable placements drawn from the summary, not the
   assert.ok(!snapshot.facts.some((factEntry) => factEntry.id === 'combinations'));
   assert.ok(!JSON.stringify(snapshot).includes('Key combination'));
   assert.equal(notablePlacements(childChart).length, 3);
+});
+
+/* ---------------- RULEBOOK §14.7: the graha cards ---------------- */
+
+test('graha cards are display-gated: off by default, between moon and combinations when on, never for a minor', () => {
+  const plain = build(chart);
+  assert.ok(!plain.sections.some((section) => section.id === 'grahas'), 'off by default');
+  assert.ok(!plain.sections[0].facts.some((factEntry) => factEntry.id === 'grahas'));
+
+  const withGrahas = build(chart, { includeGrahaReadings: true });
+  const ids = withGrahas.sections.map((section) => section.id);
+  assert.equal(ids[ids.indexOf('moon') + 1], 'grahas', 'placement before combination');
+  assert.equal(ids[ids.indexOf('grahas') + 1], 'combinations');
+  assert.deepEqual(ids.filter((id) => id !== 'grahas'), plain.sections.map((section) => section.id), 'every other section keeps its place');
+  const grahas = withGrahas.sections.find((section) => section.id === 'grahas')!;
+  assert.equal(grahas.grahaCards?.length, 9);
+  assert.equal(grahas.facts.length, 9, 'an at-a-glance row per graha');
+  assert.equal(grahas.bodyHi.length, grahas.bodyEn.length);
+  assert.ok((grahas.basis?.length ?? 0) >= 9, 'the section carries every card’s chain');
+  for (const card of grahas.grahaCards!) assert.ok(card.basis.length > 0, `${card.graha} has its own basis`);
+
+  // The snapshot projects the section and stays within 5–7 rows.
+  const snapshot = withGrahas.sections[0];
+  assert.ok(snapshot.facts.some((factEntry) => factEntry.id === 'grahas'));
+  assert.ok(snapshot.facts.length >= 5 && snapshot.facts.length <= 7);
+
+  // Every other section is byte-identical with or without the cards.
+  for (const section of plain.sections) {
+    if (section.id === 'snapshot') continue;
+    assert.deepEqual(withGrahas.sections.find((entry) => entry.id === section.id), section, section.id);
+  }
+  assert.deepEqual(JSON.parse(JSON.stringify(withGrahas)), withGrahas, 'still plain JSON');
+
+  // A minor never gets the section, whatever the caller asks for.
+  const child = buildKundaliReport(childChart, CHILD_META, CHILD_NOW, { sadeSatiBoundaryScanDays: 0, includeGrahaReadings: true });
+  assert.ok(!child.sections.some((section) => section.id === 'grahas'));
+  assert.ok(!child.sections[0].facts.some((factEntry) => factEntry.id === 'grahas'));
+});
+
+test('graha cards across all twelve lagnas: plain ordinals, no bare digit before भाव', () => {
+  for (let step = 0; step < 24; step += 1) {
+    const stepChart = computeKundali({
+      date: new Date(Date.UTC(1995, 2, 15, step, 0, 0)),
+      latitude: 23.1793,
+      longitude: 75.7849,
+      timezone: 'Asia/Kolkata',
+    });
+    const serialized = JSON.stringify(build(stepChart, { includeGrahaReadings: true }));
+    assert.doesNotMatch(serialized, /\b(?:\d*[02-9])?[123]th (?:bhava|house)/, `lagna step ${step}`);
+    assert.doesNotMatch(serialized, /\d भाव/, `Hindi bhava with a bare digit, lagna step ${step}`);
+  }
 });

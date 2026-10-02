@@ -35,6 +35,8 @@ import {
   type BasisNode,
 } from './kundaliBasis';
 import { computeCombinations } from './kundaliYoga';
+import { buildGrahaReadings } from './grahaReading';
+import { GRAHA_SECTION_COPY, TONE_LABEL } from './grahaReadingContent';
 import { NAKSHATRA_NAMES_EN, NAKSHATRA_NAMES_HI } from './names';
 import {
   ageBetween,
@@ -45,8 +47,10 @@ import {
   bhavaLabelHi,
   formatIstDateEn,
   formatIstDateHi,
+  ordinalEn,
 } from './reportFormat';
 import type {
+  KundaliGrahaCard,
   KundaliReportFact,
   KundaliReportModel,
   KundaliReportSection,
@@ -250,6 +254,10 @@ export type KundaliReportOptions = {
   includeMangalDosha?: boolean;
   /** Forwarded to computeSadeSati; 0 skips the Saturn boundary scan. */
   sadeSatiBoundaryScanDays?: number;
+  /** Display gate for the graha-by-graha cards (RULEBOOK §14.7) — OFF unless
+   * the caller opts in; the report screen opts in for development builds and,
+   * once a jyotishi has approved the content, for every build. Adults only. */
+  includeGrahaReadings?: boolean;
 };
 
 function fact(
@@ -419,6 +427,20 @@ function isoKey(date: Date): string {
   return indiaDateKey(date);
 }
 
+/** The snapshot row for the graha cards: who helps, who needs care. */
+function grahaGlanceLabel(cards: readonly KundaliGrahaCard[], hi: boolean): string {
+  const namesFor = (tone: KundaliGrahaCard['tone']) =>
+    cards.filter((card) => card.tone === tone).map((card) => (hi ? GRAHA_NAMES_HI[card.graha] : GRAHA_NAMES_EN[card.graha]));
+  const helps = namesFor('supportive');
+  const care = namesFor('care');
+  const parts = [
+    ...(helps.length > 0 ? [`${hi ? TONE_LABEL.supportive.hi : TONE_LABEL.supportive.en}: ${helps.join(', ')}`] : []),
+    ...(care.length > 0 ? [`${hi ? TONE_LABEL.care.hi : TONE_LABEL.care.en}: ${care.join(', ')}`] : []),
+  ];
+  if (parts.length === 0) return hi ? GRAHA_SECTION_COPY.snapshotNone.hi : GRAHA_SECTION_COPY.snapshotNone.en;
+  return parts.join(' · ');
+}
+
 export function buildKundaliReport(
   chart: KundaliChart,
   meta: KundaliReportMeta,
@@ -538,6 +560,33 @@ export function buildKundaliReport(
     facts: [],
     basis: [{ kind: 'graha', graha: 'moon', house: moon.house, dignity: dignityOfPosition(moon) }],
   };
+
+  // — The nine grahas, one card each (RULEBOOK §14.7): placement before
+  // combination. Display-gated, and never for a minor — the parent-facing
+  // registers have no graha-card form yet.
+  const grahaCards = options?.includeGrahaReadings && band === 'adult' ? buildGrahaReadings(chart) : null;
+  const grahasSection: KundaliReportSection | null = grahaCards
+    ? {
+      id: 'grahas',
+      eyebrowHi: GRAHA_SECTION_COPY.eyebrow.hi,
+      eyebrowEn: GRAHA_SECTION_COPY.eyebrow.en,
+      titleHi: GRAHA_SECTION_COPY.title.hi,
+      titleEn: GRAHA_SECTION_COPY.title.en,
+      bodyHi: GRAHA_SECTION_COPY.body.map((paragraph) => paragraph.hi),
+      bodyEn: GRAHA_SECTION_COPY.body.map((paragraph) => paragraph.en),
+      facts: grahaCards.map((card) =>
+        fact(
+          card.id,
+          card.nameHi,
+          card.nameEn,
+          `${bhavaLabelHi(card.house)} · ${card.toneLabelHi}`,
+          `${ordinalEn(card.house)} house · ${card.toneLabelEn}`
+        )
+      ),
+      basis: grahaCards.flatMap((card) => card.basis),
+      grahaCards,
+    }
+    : null;
 
   // — Combinations: what the placements do together.
   const combinations = computeCombinations(chart, { band });
@@ -762,6 +811,17 @@ export function buildKundaliReport(
     // Factual highlights, projected from the summary — not the top-ranked
     // combination, which for many charts is only "Lagna lord in a neutral house".
     fact('summary', 'उल्लेखनीय स्थितियाँ', 'Notable placements', notablePlacementsLabel(chart, true), notablePlacementsLabel(chart, false)),
+    ...(grahaCards
+      ? [
+        fact(
+          'grahas',
+          GRAHA_SECTION_COPY.snapshotLabel.hi,
+          GRAHA_SECTION_COPY.snapshotLabel.en,
+          grahaGlanceLabel(grahaCards, true),
+          grahaGlanceLabel(grahaCards, false)
+        ),
+      ]
+      : []),
     // The "until" date belongs to the ANTARDASHA when one is running — the
     // Mahadasha end here read a Rahu sub-period as ending five years late.
     ...(current
@@ -810,6 +870,7 @@ export function buildKundaliReport(
     summary,
     lagnaSection,
     moonSection,
+    ...(grahasSection ? [grahasSection] : []),
     combinationsSection,
     ...areaSections,
     observationsSection,
@@ -817,7 +878,7 @@ export function buildKundaliReport(
   );
 
   return {
-    reportVersion: 2,
+    reportVersion: 3,
     generatedDateKey: indiaDateKey(now),
     asOfLabelHi: asOfHi,
     asOfLabelEn: asOfEn,

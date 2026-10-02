@@ -93,6 +93,28 @@ export function buildKundaliHandoffText(
       lines.push(paragraph);
       lines.push('');
     }
+    // The graha cards (RULEBOOK §14.7) carry their own chains, card by card,
+    // in place of the section's union chain.
+    if (section.grahaCards) {
+      for (const card of section.grahaCards) {
+        lines.push(`### ${card.nameEn} — ${card.placeEn} · ${card.toneLabelEn}`);
+        lines.push(`${card.nameEn} is ${card.meaningEn}.`);
+        lines.push(`Strength: ${card.strengthEn}`);
+        lines.push(`Label: ${card.toneLabelEn} — ${card.toneLineEn}`);
+        for (const reason of card.reasons) {
+          lines.push(`- ${reason.vote === 'supports' ? 'Helps' : 'Asks for care'}: ${reason.textEn}`);
+        }
+        lines.push(`What it gives: ${card.givesEn}`);
+        lines.push(`Take care: ${card.careEn}`);
+        if (card.rulesEn) lines.push(card.rulesEn);
+        lines.push(
+          `Upay (${card.upay.introEn.toLowerCase()}): ${card.upay.vaarEn} · daan: ${card.upay.daanEn} · seva: ${card.upay.sevaEn} · mantra: ${card.upay.mantraEn} (${card.upay.mantraCountEn}) · paath: ${card.upay.practiceSourceId}`
+        );
+        lines.push(`Basis: ${card.basis.map(basisLabelEn).join(' → ')}`);
+        lines.push('');
+      }
+      continue;
+    }
     // The आधार chain — every chart fact the section's reading was derived
     // from (RULEBOOK §14.3.1), so a reader can audit the sentence above it.
     if (section.basis && section.basis.length > 0) {

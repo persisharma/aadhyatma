@@ -116,3 +116,23 @@ test('selected question export carries auditable context and preserves the origi
   assert.throws(() => buildKundaliHandoffText(chart, model, otherDay), /dates must match/);
   assert.equal(buildKundaliHandoffText(chart, model, { ...reading, guidance: null }), buildKundaliHandoffText(chart, model));
 });
+
+test('the graha cards export card by card, each with its own basis line (RULEBOOK §14.7)', () => {
+  const withGrahas = buildKundaliReport(chart, META, NOW, { sadeSatiBoundaryScanDays: 0, includeGrahaReadings: true });
+  const text = buildKundaliHandoffText(chart, withGrahas);
+  const grahas = withGrahas.sections.find((section) => section.id === 'grahas')!;
+  assert.ok(text.includes('## Your nine grahas, one by one'));
+  for (const card of grahas.grahaCards!) {
+    const at = text.indexOf(`### ${card.nameEn} — ${card.placeEn} · ${card.toneLabelEn}`);
+    assert.ok(at >= 0, `${card.graha} card printed`);
+    const block = text.slice(at, text.indexOf('\n\n', at));
+    assert.ok(block.includes(`What it gives: ${card.givesEn}`), `${card.graha} gives`);
+    assert.ok(block.includes(`Take care: ${card.careEn}`), `${card.graha} care`);
+    assert.ok(block.includes(`mantra: ${card.upay.mantraEn}`), `${card.graha} upay`);
+    assert.ok(block.includes(`paath: ${card.upay.practiceSourceId}`), `${card.graha} paath`);
+    assert.match(block, /\nBasis: /, `${card.graha} basis`);
+  }
+  // The JSON tail is still the parse-back-equal model.
+  const tail = text.slice(text.lastIndexOf('```json') + '```json'.length, text.lastIndexOf('```')).trim();
+  assert.deepEqual(JSON.parse(tail), withGrahas);
+});

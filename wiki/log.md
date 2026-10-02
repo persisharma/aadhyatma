@@ -286,3 +286,7 @@ Prototype option B chosen: the four small vaas tiles became two cards (compass t
 ## [2026-09-29] ingest | Day-rule audit: 7 new ObservanceDayRule conventions, 25 rules retagged (Dussehra/Diwali/Shivaratri/Holi + monthly vrats), verifier fails on any 1-day shift, KNOWN_DIVERGENCES holi:2026, observance CACHE_VERSION 9. Updated [[panchang]] gotchas.
 ## [2026-09-29] gap | Bhadra (vishti karana) is not modelled — Holika Dahan/Holi 2026 diverge; no Holika Dahan rule exists at all.
 ## [2026-09-29] ingest | Added `maha-navami` (madhyahna; Drik 2024–2029 pinned). Durga Ashtami stays the Ashvin `masik-durgashtami` day.
+
+## [2026-10-02] ingest | Graha-by-graha cards (नवग्रह विवेचन): RULEBOOK §14.3.5 replaces the three-stotra upaya allow-list with the one `GRAHA_UPAY` table (ten paath ids); new §14.7 contract (counted supportive/mixed/care label from sign · house · lordship · combustion votes, plain-language register, adults only, dev-builds-only until jyotishi sign-off); engine `grahaReading.ts`, content `grahaReadingContent.ts` (108 graha×house readings hi/en), `kundaliBasis` sign relation / lordship / combustion orbs, report model v3, handoff blocks, `GrahaReadingList` UI, design.md §78, convention graha-reading-v1, generated review sheet. Updated [[panchang]].
+## [2026-10-02] gap | Graha cards have no minor (parent-observe) register and no Japam-counter hand-off for the beej mantra (PRD-21's payoff); the existing report sections still use the "tradition links…" hedge the cards dropped.
+

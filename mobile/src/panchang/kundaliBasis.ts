@@ -29,7 +29,16 @@ export type Dignity = 'exalted' | 'own' | 'debilitated' | 'neutral';
 export type BasisNode =
   | { kind: 'bhava'; house: number; rashiIndex: number }
   | { kind: 'lord'; graha: Graha; ofHouse: number; inHouse: number }
-  | { kind: 'graha'; graha: Graha; house: number; dignity: Dignity; retrograde?: boolean }
+  | {
+    kind: 'graha';
+    graha: Graha;
+    house: number;
+    dignity: Dignity;
+    retrograde?: boolean;
+    /** Set only by the graha cards (§14.7), and only when it voted. */
+    signRelation?: 'friend' | 'enemy';
+    combust?: boolean;
+  }
   | { kind: 'yoga'; yogaId: string }
   | { kind: 'dasha'; level: 'maha' | 'antar'; lord: Graha; startKey: string; endKey: string }
   | { kind: 'gochar'; graha: Graha; fromMoonHouse: number; fromLagnaHouse?: number; aspectsFromLagna?: readonly number[]; asOfKey: string }
@@ -133,6 +142,59 @@ export const MAITRI_LABEL_EN: Readonly<Record<Maitri, string>> = {
   enemy: 'adversary',
 };
 
+/** The classical lord of a sign, read off `OWN_SIGNS` so it can never disagree
+ * with the dignity table (it equals `RASHI_LORD` — test-pinned). */
+export function signLordOf(rashiIndex: number): Graha {
+  const sign = ((rashiIndex % 12) + 12) % 12;
+  for (const [graha, signs] of Object.entries(OWN_SIGNS) as [Graha, readonly number[]][]) {
+    if (signs.includes(sign)) return graha;
+  }
+  throw new Error(`no lord for rashi ${rashiIndex}`);
+}
+
+/**
+ * Mitra / shatru rashi: how a graha regards the lord of the sign it sits in.
+ * Dignity speaks first — own, exaltation and debilitation signs return null —
+ * and the nodes always return null: their maitri row above is a draft modern
+ * convention and never grades a placement (graha-reading-v1 §Simplifications).
+ */
+export function signRelationOf(graha: Graha, rashiIndex: number): Maitri | null {
+  if (graha === 'rahu' || graha === 'ketu') return null;
+  if (dignityOf(graha, rashiIndex) !== 'neutral') return null;
+  return maitriOf(graha, signLordOf(rashiIndex));
+}
+
+/** The houses a graha rules for a Lagna, ascending. Empty for the nodes. */
+export function housesRuledBy(graha: Graha, lagnaRashiIndex: number): readonly number[] {
+  return (OWN_SIGNS[graha] ?? [])
+    .map((sign) => ((sign - lagnaRashiIndex + 12) % 12) + 1)
+    .sort((a, b) => a - b);
+}
+
+/** Naisargika shubha grahas. The Moon and Mercury count as benefic without the
+ * waxing-Moon and association refinements (graha-reading-v1 §2). */
+export const NATURAL_BENEFICS: readonly Graha[] = ['moon', 'mercury', 'jupiter', 'venus'];
+
+/**
+ * Combustion (asta) orbs — flat Surya Siddhanta values. The retrograde variants
+ * (Mercury 12°, Venus 8°) stay an open question, as in PRD-16 §9. Venus and
+ * Jupiter must equal the muhurat orbs in `eventMuhurat.ts` (test-pinned), so a
+ * natal reading and a muhurat never call the same separation two ways.
+ */
+export const COMBUSTION_ORB_DEG: Readonly<Partial<Record<Graha, number>>> = {
+  moon: 12,
+  mars: 17,
+  mercury: 14,
+  jupiter: 11,
+  venus: 10,
+  saturn: 15,
+};
+
+/** Shortest angular distance between two longitudes, 0…180°. */
+export function elongationDeg(a: number, b: number): number {
+  return Math.abs(((a - b + 540) % 360) - 180);
+}
+
 export type AgeBand = 'child' | 'adolescent' | 'adult';
 
 /** Derived at read time from the chart's birth instant — never stored. */
@@ -167,7 +229,7 @@ export function basisLabelHi(node: BasisNode): string {
     case 'lord':
       return `${bhavaLabelHi(node.ofHouse)} का स्वामी ${GRAHA_NAMES_HI[node.graha]} · ${bhavaLabelHi(node.inHouse)} में`;
     case 'graha':
-      return `${GRAHA_NAMES_HI[node.graha]} · ${bhavaLabelHi(node.house)}${node.dignity !== 'neutral' ? ` · ${DIGNITY_LABEL_HI[node.dignity]}` : ''}${node.retrograde ? ' · वक्री' : ''}`;
+      return `${GRAHA_NAMES_HI[node.graha]} · ${bhavaLabelHi(node.house)}${node.dignity !== 'neutral' ? ` · ${DIGNITY_LABEL_HI[node.dignity]}` : ''}${node.signRelation ? ` · ${node.signRelation === 'friend' ? 'मित्र राशि' : 'शत्रु राशि'}` : ''}${node.combust ? ' · अस्त' : ''}${node.retrograde ? ' · वक्री' : ''}`;
     case 'yoga':
       return `योग · ${node.yogaId}`;
     case 'dasha':
@@ -186,7 +248,7 @@ export function basisLabelEn(node: BasisNode): string {
     case 'lord':
       return `lord of ${bhavaLabelEn(node.ofHouse)} ${GRAHA_NAMES_EN[node.graha]} · in ${bhavaLabelEn(node.inHouse)}`;
     case 'graha':
-      return `${GRAHA_NAMES_EN[node.graha]} · ${bhavaLabelEn(node.house)}${node.dignity !== 'neutral' ? ` · ${DIGNITY_LABEL_EN[node.dignity]}` : ''}${node.retrograde ? ' · retrograde' : ''}`;
+      return `${GRAHA_NAMES_EN[node.graha]} · ${bhavaLabelEn(node.house)}${node.dignity !== 'neutral' ? ` · ${DIGNITY_LABEL_EN[node.dignity]}` : ''}${node.signRelation ? ` · ${node.signRelation === 'friend' ? 'friend’s sign' : 'enemy’s sign'}` : ''}${node.combust ? ' · combust' : ''}${node.retrograde ? ' · retrograde' : ''}`;
     case 'yoga':
       return `yoga · ${node.yogaId}`;
     case 'dasha':
