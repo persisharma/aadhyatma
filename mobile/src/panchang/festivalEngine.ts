@@ -2,8 +2,7 @@ import { addDays } from './calendarGrid';
 import { aparahnaCover, computeTithiAndMonth, getSiderealSunLng, locationKey, nakshatraAtSunrise, solarMonthAtSunrise, tithiAtMadhyahna, tithiAtMoonrise, tithiAtDayFraction, tithiAtNishita, tithiAtPradosh, UJJAIN_CITY_ID } from './engine';
 import { getObservanceCatalog, OBSERVANCE_RULES } from './festivals';
 import { getStoredObservanceYear } from './observanceStore';
-import { ekadashiDays, holikaDahanDay, janmashtamiDays, rakshaBandhanDay } from './specialDayRules';
-import { PRECOMPUTED_OBSERVANCES, type PackedObservance } from './precomputedObservances';
+import type { PackedObservance } from './precomputedObservances';
 import { ALL_LENSES, ruleVisibleForLenses, type ObservanceLens } from './lenses';
 import type { CalendarSystem, GeoLocation, ObservanceRule, ResolvedObservance, ResolvedFestival } from './types';
 
@@ -31,6 +30,16 @@ const cache = new Map<string, ResolvedObservance[]>();
 const ruleById = new Map(OBSERVANCE_RULES.map((rule) => [rule.id, rule] as const));
 // Resolved for EVERY lens, so the per-year cache never depends on the user's set;
 // each query below narrows it. See `ALL_LENSES`.
+// Both are LAZY (launchGraph.test.ts): the 200 KB bundled observance table and
+// the published-rule solvers load on the first observance read, not with the
+// module graph every cold launch evaluates before its first frame.
+let precomputedTable: Record<string, PackedObservance[]> | null = null;
+function precomputedYear(key: string): PackedObservance[] | undefined {
+  precomputedTable ??= (require('./precomputedObservances') as typeof import('./precomputedObservances')).PRECOMPUTED_OBSERVANCES;
+  return precomputedTable[key];
+}
+const special = (): typeof import('./specialDayRules') => require('./specialDayRules') as typeof import('./specialDayRules');
+
 const defaultRules = getObservanceCatalog({ lenses: ALL_LENSES });
 
 function cacheKey(year: number, calendarSystem: CalendarSystem, location?: ObservanceLocation): string {
@@ -60,7 +69,7 @@ export function resolveObservancesForYear(
   if (cached) return cached;
 
   if (cityId === UJJAIN_CITY_ID) {
-    const precomputed = PRECOMPUTED_OBSERVANCES[`${calendarSystem}:${year}`];
+    const precomputed = precomputedYear(`${calendarSystem}:${year}`);
     const results = precomputed
       ? reconstructPrecomputed(precomputed)
       : resolveObservancesForYearLive(year, calendarSystem);
@@ -262,7 +271,7 @@ export function getCachedObservancesForDate(
   const cached = cache.get(cacheKey(year, calendarSystem, location));
   if (cached) return cached.filter((item) => isSameLocalDate(item.date, date));
 
-  const precomputed = PRECOMPUTED_OBSERVANCES[`${calendarSystem}:${year}`];
+  const precomputed = precomputedYear(`${calendarSystem}:${year}`);
   if (locationKey(location) === UJJAIN_CITY_ID) {
     // Ujjain answers from the table or not at all — never a live scan here.
     if (!precomputed) return null;
@@ -286,9 +295,9 @@ export function getObservancesForDateKey(
   const year = Number(dateKey.slice(0, 4));
   const cityId = locationKey(location);
   const exact = cityId === UJJAIN_CITY_ID
-    ? PRECOMPUTED_OBSERVANCES[`${calendarSystem}:${year}`]
+    ? precomputedYear(`${calendarSystem}:${year}`)
     : getStoredObservanceYear(cityId, calendarSystem, year);
-  const entries = exact ?? PRECOMPUTED_OBSERVANCES[`${calendarSystem}:${year}`];
+  const entries = exact ?? precomputedYear(`${calendarSystem}:${year}`);
   if (entries) return withLenses(reconstructPrecomputed(entries.filter(([, date]) => date === dateKey)), lenses);
   return getObservancesForDate(new Date(`${dateKey}T12:00:00`), calendarSystem, location, lenses);
 }
@@ -510,20 +519,20 @@ export function matchesLunarTithiRuleOnDate(
     // Raksha Bandhan: the day is the sunrise day, the day before it or (vriddhi) the day after.
     return [addDays(date, 1), date, addDays(date, -1)].some((sunriseDay) =>
       matchesUdayaTithiRuleOnDate(rule, sunriseDay, calendarSystem, location)
-      && sameDay(rakshaBandhanDay(sunriseDay, { calendarSystem: computationSystemForRule(rule, calendarSystem), location }), date));
+      && sameDay(special().rakshaBandhanDay(sunriseDay, { calendarSystem: computationSystemForRule(rule, calendarSystem), location }), date));
   }
   if (rule.dayRule === 'holika-dahan-next') {
     // Rangwali Holi: the day after Holika Dahan, which is the pradosh day of the
     // Purnima or the one after it (`holikaDahanDay`).
     return [addDays(date, -1), addDays(date, -2)].some((pradoshDay) =>
       matchesInstantVyapiniRuleOnDate(rule, pradoshDay, calendarSystem, location, tithiAtPradosh)
-      && sameDay(addDays(holikaDahanDay(pradoshDay, { calendarSystem: computationSystemForRule(rule, calendarSystem), location }), 1), date));
+      && sameDay(addDays(special().holikaDahanDay(pradoshDay, { calendarSystem: computationSystemForRule(rule, calendarSystem), location }), 1), date));
   }
   if (rule.dayRule === 'janmashtami-smarta' || rule.dayRule === 'janmashtami-vaishnava') {
     const vaishnava = rule.dayRule === 'janmashtami-vaishnava';
     return [addDays(date, 1), date, addDays(date, -1), addDays(date, 2)].some((sunriseDay) => {
       if (!matchesUdayaTithiRuleOnDate(rule, sunriseDay, calendarSystem, location)) return false;
-      const days = janmashtamiDays(sunriseDay, { calendarSystem: computationSystemForRule(rule, calendarSystem), location });
+      const days = special().janmashtamiDays(sunriseDay, { calendarSystem: computationSystemForRule(rule, calendarSystem), location });
       // The Vaishnava row is printed only on a day the Smarta one is not.
       return vaishnava
         ? sameDay(days.vaishnava, date) && !sameDay(days.vaishnava, days.smarta)
@@ -632,7 +641,7 @@ function matchesEkadashiRuleOnDate(
   const rel = (computeTithiAndMonth(date, opts).tithiIndex - target + 30) % 30;
   if (rel !== 29 && rel !== 0 && rel !== 1) return false;
   for (const anchor of [date, addDays(date, -1)]) {
-    const days = ekadashiDays(anchor, target, opts);
+    const days = special().ekadashiDays(anchor, target, opts);
     if (!days) continue;
     const day = vaishnava ? days.vaishnava : days.smarta;
     if (!sameDay(day, date)) continue;
