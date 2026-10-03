@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { FlatList, Pressable, ScrollView, Text, View, useWindowDimensions } from 'react-native';
+import { FlatList, ScrollView, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import ReaderHeader from '@/components/ReaderHeader';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
-import LanguagePickerSheet from '@/components/LanguagePickerSheet';
+import LanguageToggle from '@/components/LanguageToggle';
 import KidsStoryArt from '@/components/KidsStoryArt';
 import { getKidsStory, storyPageIndex, storyText, type StoryPage } from '@/data/kidsStories';
-import { LANGUAGES, useGitaLanguage } from '@/data/gita/language';
+import { useGitaLanguage } from '@/data/gita/language';
 import { useTheme } from '@/theme/ThemeContext';
 import { meaningToken, titleFontByLang } from '@/utils/langType';
 import { pick } from '@/utils/localize';
@@ -18,7 +18,6 @@ export default function KidsStoryReaderScreen({ navigation, route }: NativeStack
   const { colors, typography, spacing } = useTheme();
   const story = getKidsStory(route.params.storyId);
   const [index, setIndex] = useState(() => story ? storyPageIndex(story, route.params.pageId) : 0);
-  const [languageOpen, setLanguageOpen] = useState(false);
   const { width } = useWindowDimensions();
   const [pageWidth, setPageWidth] = useState(width);
   const pager = useRef<FlatList<StoryPage>>(null);
@@ -34,7 +33,6 @@ export default function KidsStoryReaderScreen({ navigation, route }: NativeStack
       <Text style={{ ...meaningToken(lang, typography), padding: spacing.readingGutter, color: colors.ink }}>{pick(lang, { hi: 'कथा नहीं मिली।', en: 'Story not found.', gu: 'વાર્તા મળી નથી.', kn: 'ಕಥೆ ಸಿಗಲಿಲ್ಲ.' })}</Text>
     </SafeAreaView>
   );
-  const languageName = LANGUAGES.find(option => option.value === lang)?.shortLabel;
   return (
     <SafeAreaView testID="kids-story-reader" style={{ flex: 1, backgroundColor: colors.parchment }} edges={['top', 'left', 'right', 'bottom']}>
       <ReaderHeader title={storyText(story.title, lang)} onBack={() => navigation.goBack()} sideWidth={60} right={
@@ -44,9 +42,7 @@ export default function KidsStoryReaderScreen({ navigation, route }: NativeStack
       } />
       <ReadingProgressBar current={index + 1} total={story.pages.length} />
       <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingTop: 6, paddingBottom: 12 }}>
-        <Pressable testID="story-language" onPress={() => setLanguageOpen(true)} accessibilityRole="button" accessibilityLabel={pick(lang, { hi: 'भाषा बदलें', en: 'Change language', gu: 'ભાષા બદલો', kn: 'ಭಾಷೆ ಬದಲಿಸಿ' })} style={{ minHeight: 44, minWidth: 44, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 12 }}>
-          <Text style={{ fontFamily: titleFontByLang(lang), color: colors.saffronDeep }}>{languageName}</Text>
-        </Pressable>
+        <LanguageToggle />
       </View>
       <View style={{ flex: 1 }} onLayout={event => { if (event.nativeEvent.layout.width > 0) setPageWidth(event.nativeEvent.layout.width); }}>
         <FlatList
@@ -80,7 +76,6 @@ export default function KidsStoryReaderScreen({ navigation, route }: NativeStack
             <Text style={{ fontFamily: titleFontByLang(lang), color: colors.inkSoft }}>{storyText(page.dialogue.speaker, lang)}</Text>
             <Text style={{ ...meaningToken(lang, typography), color: colors.ink }}>{storyText(page.dialogue.text, lang)}</Text>
           </View>}
-          <Text style={{ fontFamily: titleFontByLang(lang), color: colors.inkMuted }}>{pick(lang, { hi: 'भागवत', en: 'Bhagavata', gu: 'ભાગવત', kn: 'ಭಾಗವತ' })} · {page.source}</Text>
         </View>
       );
       // The last scene adds the takeaway + source note, so it stays scrollable.
@@ -110,7 +105,6 @@ export default function KidsStoryReaderScreen({ navigation, route }: NativeStack
           }}
         />
       </View>
-      {languageOpen && <LanguagePickerSheet visible onClose={() => setLanguageOpen(false)} />}
     </SafeAreaView>
   );
 }

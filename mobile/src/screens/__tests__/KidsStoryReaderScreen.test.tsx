@@ -22,7 +22,7 @@ jest.mock('@/components/ReaderHeader', () => {
 });
 jest.mock('@/components/KidsStoryArt', () => ({ __esModule: true, default: 'KidsStoryArt' }));
 jest.mock('@/components/ReadingProgressBar', () => ({ __esModule: true, default: 'ReadingProgressBar' }));
-jest.mock('@/components/LanguagePickerSheet', () => ({ __esModule: true, default: 'LanguagePickerSheet' }));
+jest.mock('@/components/LanguageToggle', () => ({ __esModule: true, default: 'LanguageToggle' }));
 jest.mock('@/data/gita/language', () => ({
   useGitaLanguage: () => ({ lang: mockLang }),
   LANGUAGES: ['hi', 'en', 'gu', 'kn'].map(value => ({ value, shortLabel: value })),
