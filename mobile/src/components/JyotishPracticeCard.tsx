@@ -68,7 +68,7 @@ export default function JyotishPracticeCard({
             color: colors.inkMuted,
             fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
             fontSize: 10,
-            lineHeight: 14,
+            lineHeight: 15,
             marginTop: 1,
           }}
         >

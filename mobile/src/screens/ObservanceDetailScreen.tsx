@@ -27,6 +27,8 @@ import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont, pillTextStyle } from '@/utils/langType';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import type { UpvasFastType } from '@/panchang/types';
+import { getObservanceAreas } from '@/panchang/observanceAreas';
+import { areaName } from '@/components/AreaFilterChips';
 import ShareButton from '@/components/ShareButton';
 import { useShare } from '@/utils/shareVerse';
 import { observanceShareable } from '@/utils/shareContent';
@@ -94,6 +96,8 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
   // PRD-23 follows the same verified-only contract as upvas content. Draft
   // food guidance never produces a placeholder or review-status UI.
   const bhog = rule?.bhogId ? getBhogContent(rule.bhogId) : null;
+  // क्षेत्र pill — display only; pan-India rules carry none (panchang/observanceAreas.ts).
+  const areaLabel = rule ? getObservanceAreas(rule).map((id) => areaName(id, lang)).join(' · ') : '';
   // PRD-26: the daan door renders only where an attested daan tradition exists
   // for this rule id — absent otherwise, never a placeholder (§10.1).
   const daan = rule ? getDaanOccasionForRule(rule.id) : null;
@@ -195,6 +199,16 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                   <Text style={{ fontFamily: fontFamilies.latin, fontSize: 13, color: colors.inkMuted }}>
                     {contentByLang(lang, rule.deityHi, rule.deityEn)}
                   </Text>
+                  {areaLabel ? (
+                    <View
+                      accessibilityLabel={`Area: ${getObservanceAreas(rule).map((id) => areaName(id, 'en')).join(', ')}`}
+                      style={[styles.pill, { borderWidth: 1, borderColor: colors.divider, borderRadius: radii.pill }]}
+                    >
+                      <Text style={{ fontFamily: captionFont(areaLabel).fontFamily, fontSize: 11, color: colors.saffronDeep }}>
+                        {areaLabel}
+                      </Text>
+                    </View>
+                  ) : null}
                 </View>
               )}
               title={contentByLang(lang, rule.nameHi, rule.nameEn)}
@@ -568,7 +582,7 @@ const styles = StyleSheet.create({
   backButton: { width: 36, height: 36, borderWidth: 1, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
   centered: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 },
   scroll: { paddingTop: 8, paddingBottom: 32 },
-  heroTags: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  heroTags: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', gap: 8 },
   pill: { paddingHorizontal: 10, paddingVertical: 4 },
   actionRow: { flexDirection: 'row', gap: 8, marginTop: 4, marginBottom: 4 },
   askRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 8, marginBottom: 4, paddingHorizontal: 14, minHeight: 40, borderWidth: 1 },

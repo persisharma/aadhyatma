@@ -9,7 +9,7 @@ import { meaningToken, pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/
 import { getTheerthBackground, getTheerthIllustration } from '@/data/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
-import { getTempleById } from '@/data/theerth/temples';
+import { getTempleDetailById } from '@/data/theerth/temples';
 import type { Deity } from '@/data/texts';
 import type { HomeStackParamList } from '@/navigation/types';
 import ShareButton from '@/components/ShareButton';
@@ -53,7 +53,9 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
   const { lang } = useGitaLanguage();
   const { share, busy: shareBusy } = useShare();
 
-  const temple = getTempleById(templeId);
+  // The reading loads here, on the screen the user opened — see
+  // `loadDetails()` in temples.ts for why it is not on the launch path.
+  const temple = getTempleDetailById(templeId);
 
   if (!temple) {
     return (
@@ -175,8 +177,14 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
             >
               {/* The plates are square with the artwork in the upper part; a
                   5:4 window anchored to the top keeps the murti and mandap in
-                  view without a centred crop lopping off the canopy. */}
-              <Image source={illustration} style={styles.illustrationImage} resizeMode="cover" />
+                  view without a centred crop lopping off the canopy. The square
+                  is sized by a View, not the Image: RN injects a static
+                  require's intrinsic size (1024 pt) as the Image's default
+                  height, which defeats aspectRatio and zooms the frame into
+                  the top-centre of the plate. */}
+              <View style={styles.illustrationSquare}>
+                <Image source={illustration} style={styles.illustrationImage} resizeMode="cover" />
+              </View>
             </View>
           ) : null}
 
@@ -363,13 +371,13 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginTop: 4,
   },
-  illustrationImage: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
+  illustrationSquare: {
     width: '100%',
     aspectRatio: 1,
+  },
+  illustrationImage: {
+    width: '100%',
+    height: '100%',
   },
   ornamentRow: {
     flexDirection: 'row',

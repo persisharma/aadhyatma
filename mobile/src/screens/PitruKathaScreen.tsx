@@ -5,20 +5,24 @@
  * a bundled text — a hand-off into that reader. Mirrors DaanKathaScreen so the
  * teaching-kathas never enter the festival katha library.
  */
-import React from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useMemo, useRef } from 'react';
+import { Pressable, ScrollView, StyleSheet, Text, View, type FlatList } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import ReaderHeader from '@/components/ReaderHeader';
+import Ornament from '@/components/Ornament';
+import LanguageToggle from '@/components/LanguageToggle';
+import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
+import { useReaderReadAloud } from '@/screens/_useReaderReadAloud';
 import { useGitaLanguage } from '@/data/gita/language';
 import { getPitruKatha } from '@/data/pitru';
 import type { MoreStackParamList } from '@/navigation/types';
 import { useTheme } from '@/theme/ThemeContext';
 import { commentaryByLang, contentByLang, meaningByLang } from '@/utils/localize';
-import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
+import { meaningToken, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'PitruKatha'>;
 
@@ -30,6 +34,33 @@ export default function PitruKathaScreen({ navigation, route }: Props) {
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
 
   const katha = getPitruKatha(route.params.kathaId);
+
+  // Read-aloud over the story prose — same hook every reader uses (RULEBOOK §3).
+  // The katha section carries `paragraphs*`; map it to the adapter's prose shape
+  // (`body*`). Short single-section stories read as one scroll: `currentIndex`
+  // pinned to 0, the unattached `listRef` never scrolled (one page, no advance).
+  const readAloudData = useMemo(
+    () => (katha?.sections ?? []).map((s) => ({ bodyHi: s.paragraphsHi, bodyEn: s.paragraphsEn })),
+    [katha]
+  );
+  const listRef = useRef<FlatList<{ bodyHi: readonly string[]; bodyEn: readonly string[] }>>(null);
+  const readAloud = useReaderReadAloud({
+    sourceId: `pitru-katha-${route.params.kathaId}`,
+    data: readAloudData,
+    offset: 0,
+    verseCount: readAloudData.length,
+    currentIndex: 0,
+    listRef,
+  });
+
+  // Story prose uses the shared reading token, matching every other katha reader.
+  const meaning = meaningToken(lang, typography);
+  const storyBodyStyle = {
+    color: lang === 'en' ? colors.ink : colors.inkSoft,
+    fontFamily: meaning.fontFamily,
+    fontSize: meaning.fontSize,
+    lineHeight: meaning.lineHeight,
+  };
 
   const openRef = () => {
     if (!katha?.ref) return;
@@ -53,23 +84,34 @@ export default function PitruKathaScreen({ navigation, route }: Props) {
           onBack={() => navigation.goBack()}
         />
         {katha && (
-          <ScrollView contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl }]} showsVerticalScrollIndicator={false}>
-            <Text style={{ fontFamily: bodyFont, fontSize: 12.5, lineHeight: 19, color: colors.inkMuted, textAlign: 'center', marginTop: spacing.sm }}>
-              {contentByLang(lang, katha.subtitleHi, katha.subtitleEn)}
-            </Text>
-
-            {katha.sections.map((section) => (
-              <View key={section.id} style={{ marginTop: spacing.lg }}>
-                {commentaryByLang(lang, section.paragraphsHi, section.paragraphsEn).map((paragraph, idx) => (
-                  <Text
-                    key={`${section.id}-${idx}`}
-                    style={{ fontFamily: bodyFont, fontSize: 14, lineHeight: 25, color: colors.inkSoft, marginBottom: spacing.md }}
-                  >
-                    {paragraph}
-                  </Text>
-                ))}
+          <>
+            <View style={styles.toggleRow}>
+              <LanguageToggle />
+              {/* Pinned right so the toggle stays centred (design.md §56.2). */}
+              <View style={styles.readAloudSlot}>
+                <ReadAloudButton control={readAloud} />
               </View>
-            ))}
+            </View>
+            <ScrollView contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl }]} showsVerticalScrollIndicator={false}>
+              <Text style={{ fontFamily: bodyFont, fontSize: 12.5, lineHeight: 19, color: colors.inkMuted, textAlign: 'center', marginTop: spacing.sm }}>
+                {contentByLang(lang, katha.subtitleHi, katha.subtitleEn)}
+              </Text>
+
+              {/* Ornament divider — the title→ornament→prose rhythm every reader shares. */}
+              <Ornament />
+
+              {katha.sections.map((section) => (
+                <View key={section.id}>
+                  {commentaryByLang(lang, section.paragraphsHi, section.paragraphsEn).map((paragraph, idx) => (
+                    <Text
+                      key={`${section.id}-${idx}`}
+                      style={[storyBodyStyle, { marginBottom: spacing.md }]}
+                    >
+                      {paragraph}
+                    </Text>
+                  ))}
+                </View>
+              ))}
 
             <View
               testID="pitru-katha-teaching"
@@ -115,7 +157,8 @@ export default function PitruKathaScreen({ navigation, route }: Props) {
             <Text style={{ fontFamily: titleFont, fontSize: 15, color: colors.gold, textAlign: 'center', marginTop: spacing.lg, opacity: 0.7 }}>
               ॥ ॐ ॥
             </Text>
-          </ScrollView>
+            </ScrollView>
+          </>
         )}
       </SafeAreaView>
     </View>
@@ -125,6 +168,8 @@ export default function PitruKathaScreen({ navigation, route }: Props) {
 const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
+  toggleRow: { flexDirection: 'row', justifyContent: 'center', paddingTop: 6, paddingBottom: 6, alignItems: 'center' },
+  readAloudSlot: { position: 'absolute', right: 16, top: 6, bottom: 6, justifyContent: 'center' },
   scroll: { paddingTop: 4, paddingBottom: 40 },
   teaching: { borderWidth: 1, paddingHorizontal: 14, paddingVertical: 13, marginTop: 6 },
   refPill: { alignSelf: 'center', borderWidth: 1, paddingHorizontal: 14, paddingVertical: 8, marginTop: 14, minHeight: 36, justifyContent: 'center' },

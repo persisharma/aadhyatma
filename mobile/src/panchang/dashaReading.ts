@@ -6,9 +6,10 @@ import {
   RASHI_NAMES_EN,
   RASHI_NAMES_HI,
   getCurrentDasha,
+  indiaDateKey,
 } from './kundali';
 import type { DashaLord, KundaliChart } from './kundali';
-import { maitriOf, type BasisNode, type Maitri } from './kundaliBasis';
+import { maitriOf, type AgeBand, type BasisNode, type Maitri } from './kundaliBasis';
 import { bhavaLabelEn, bhavaLabelHi, formatIstDateEn, formatIstDateHi } from './reportFormat';
 
 /**
@@ -152,6 +153,59 @@ export const DASHA_LORD_KEYWORDS_EN: Readonly<Record<DashaLord, string>> = {
   mercury: 'intellect, communication, analysis',
 };
 
+/**
+ * Child register per lord (under 13): what the traditional reading highlights,
+ * then what a parent can simply OBSERVE at this age — sounds, play, sleep,
+ * curiosity. Never an adult theme with a renamed heading (September 2026
+ * child-chart review).
+ */
+export const DASHA_LORD_CHILD_HI: Readonly<Record<DashaLord, { highlights: string; observe: string }>> = {
+  // Observe lines are written around "बच्चे का/की/के + noun" so the verb agrees
+  // with the noun, never with the child — the report does not know gender.
+  ketu: { highlights: 'सरलता और भीतर की ओर मुड़ना', observe: 'अकेले खेल में बच्चे का मन कैसे लगता है और शांत क्षणों में बच्चे को क्या सुकून देता है' },
+  venus: { highlights: 'सौन्दर्य, कला और सहजता', observe: 'रंग, संगीत, कोमल स्पर्श और लोगों से बच्चे का जुड़ाव कैसा है' },
+  sun: { highlights: 'आत्मबल और अपनी पहचान', observe: 'बच्चे की पसंद कैसे प्रकट होती है और बच्चे को कहाँ आगे आकर दिखाना अच्छा लगता है' },
+  moon: { highlights: 'मन, पोषण और भावनात्मक लय', observe: 'बच्चे की नींद, भूख, आराम और मन बदलने की लय कैसी है — और किसके पास बच्चे को सबसे अधिक सुकून मिलता है' },
+  mars: { highlights: 'ऊर्जा और साहस', observe: 'दौड़ना-चढ़ना, शारीरिक खेल और अपनी बात पर टिकना बच्चे के लिए कैसा है' },
+  rahu: { highlights: 'नवीनता और जिज्ञासा', observe: 'नए चेहरों, जगहों और वस्तुओं पर बच्चे की प्रतिक्रिया कैसी है — उत्सुकता या सतर्कता' },
+  jupiter: { highlights: 'सीख, विस्तार और श्रद्धा', observe: 'कहानियों, बड़ों और घर की रीतियों में बच्चे की रुचि कैसी है' },
+  saturn: { highlights: 'धैर्य और नियम', observe: 'दिनचर्या, दोहराव और धीरे-धीरे सीखने में बच्चे की सहजता कैसी है' },
+  mercury: { highlights: 'सीख और संवाद', observe: 'ध्वनियों, शब्दों, चित्र-पुस्तकों, नकल और खोजबीन वाले खेल पर बच्चे की प्रतिक्रिया कैसी है' },
+};
+
+/** Substitutes the child's name into an observe line (oblique "बच्चे" in Hindi, "the child" in English). */
+export function childObserveHi(lord: DashaLord, name: string | null | undefined): string {
+  return DASHA_LORD_CHILD_HI[lord].observe.split('बच्चे').join(name ?? 'बच्चे');
+}
+
+export function childObserveEn(lord: DashaLord, name: string | null | undefined): string {
+  return DASHA_LORD_CHILD_EN[lord].observe.split('the child').join(name ?? 'the child');
+}
+
+export const DASHA_LORD_CHILD_EN: Readonly<Record<DashaLord, { highlights: string; observe: string }>> = {
+  ketu: { highlights: 'simplicity and turning inward', observe: 'how the child settles into solitary play and what brings calm in quiet moments' },
+  venus: { highlights: 'beauty, art and ease', observe: 'how the child warms to colour, music, gentle touch and people' },
+  sun: { highlights: 'vitality and a sense of self', observe: 'how the child asserts a preference and where they like to be seen doing something' },
+  moon: { highlights: 'the mind, nurture and emotional rhythm', observe: 'sleep, appetite, comfort and the rhythm of moods — and who the child settles with most easily' },
+  mars: { highlights: 'energy and courage', observe: 'how the child takes to running, climbing, physical play and holding their ground' },
+  rahu: { highlights: 'novelty and curiosity', observe: 'how the child responds to new faces, places and objects — with eagerness or caution' },
+  jupiter: { highlights: 'learning, expansion and faith', observe: 'how the child takes to stories, elders and the household’s rituals' },
+  saturn: { highlights: 'patience and routine', observe: 'how the child settles into routine, repetition and slow, steady learning' },
+  mercury: { highlights: 'learning and communication', observe: 'how the child responds to sounds, words, picture books, imitation and exploratory play' },
+};
+
+const PAIR_RELATION_CHILD_HI: Readonly<Record<Maitri, string>> = {
+  friend: 'परम्परा में ये दोनों ग्रह परस्पर मित्र हैं — उप-काल मुख्य काल के भीतर सहज बैठता है। बच्चे के लिए यह एक शास्त्रीय टिप्पणी है, कोई पूर्वानुमान नहीं।',
+  neutral: 'परम्परा में ये दोनों ग्रह परस्पर सम हैं — उप-काल अपना अलग रंग जोड़ता है। बच्चे के लिए यह एक शास्त्रीय टिप्पणी है, कोई पूर्वानुमान नहीं।',
+  enemy: 'परम्परा में ये दोनों ग्रह भिन्न लय के हैं — परम्परा इसे बदलती रुचियों का काल कहती है। बच्चे के लिए यह एक शास्त्रीय टिप्पणी है, कोई पूर्वानुमान नहीं।',
+};
+
+const PAIR_RELATION_CHILD_EN: Readonly<Record<Maitri, string>> = {
+  friend: 'Tradition counts these two lords as friends — the sub-period is read as sitting easily inside the main one. For a child this is a classical note, not a forecast.',
+  neutral: 'Tradition counts these two lords as neutral to each other — the sub-period adds its own shade. For a child this is a classical note, not a forecast.',
+  enemy: 'Tradition counts these two lords as pulling in different directions — tradition calls this a stretch of shifting interests. For a child this is a classical note, not a forecast.',
+};
+
 const PAIR_RELATION_HI: Readonly<Record<Maitri, string>> = {
   friend: 'परम्परा में ये दोनों ग्रह परस्पर मित्र हैं — अन्तर्दशा महादशा के स्वर को सहारा देती है, और दोनों के विषय एक ही दिशा में चलते हैं।',
   neutral: 'परम्परा में ये दोनों ग्रह परस्पर सम हैं — अन्तर्दशा अपना अलग रंग जोड़ती है, महादशा के स्वर से टकराती नहीं।',
@@ -183,9 +237,22 @@ export type DashaPairReading = {
  * sits natally — the part that makes it about THIS chart. Null outside the
  * 120-year table or at a float boundary where no Antardasha contains `at`.
  */
-export function buildDashaPairReading(chart: KundaliChart, at: Date): DashaPairReading | null {
+export type DashaPairReadingOptions = {
+  /** Under 13 the three paragraphs switch to the parent-facing observe register. */
+  band?: AgeBand;
+  /** Names the child in the observe sentence; null falls back to "the child". */
+  subjectName?: string | null;
+};
+
+export function buildDashaPairReading(
+  chart: KundaliChart,
+  at: Date,
+  options?: DashaPairReadingOptions
+): DashaPairReading | null {
   const current = getCurrentDasha(chart, at);
   if (!current || !current.antar) return null;
+  const child = options?.band === 'child';
+  const name = options?.subjectName ?? null;
   const mahaLord = current.maha.lord;
   const antarLord = current.antar.lord;
   const antarNatal = chart.grahas.find((position) => position.graha === antarLord);
@@ -198,20 +265,36 @@ export function buildDashaPairReading(chart: KundaliChart, at: Date): DashaPairR
   const seatHi = `${bhavaLabelHi(antarNatal.house)} (${HOUSE_THEME_HI[antarNatal.house - 1]})`;
   const seatEn = `${bhavaLabelEn(antarNatal.house)} (${HOUSE_THEME_EN[antarNatal.house - 1]})`;
 
-  const bodyHi = [
-    `${mahaHi} महादशा ${formatIstDateHi(current.maha.start)} से ${formatIstDateHi(current.maha.end)} तक — ${DASHA_LORD_KEYWORDS_HI[mahaLord]} का काल। इसके भीतर ${antarHi} की अन्तर्दशा ${formatIstDateHi(current.antar.start)} से ${formatIstDateHi(current.antar.end)} तक चल रही है — ${DASHA_LORD_KEYWORDS_HI[antarLord]} का उप-काल।`,
-    PAIR_RELATION_HI[relation],
-    mahaLord === antarLord
-      ? `${antarHi} की अपनी ही अन्तर्दशा — परम्परा में महादशा का स्वर सबसे सघन इसी उप-काल में होता है।`
-      : `आपकी कुंडली में ${antarHi} ${seatHi} में है — परम्परा इस उप-काल के विषयों को उसी भाव की दृष्टि से पढ़ती है: ${HOUSE_THEME_HI[antarNatal.house - 1]} पर इस समय ${antarHi} का रंग है।`,
-  ];
-  const bodyEn = [
-    `The ${mahaEn} Mahadasha runs ${formatIstDateEn(current.maha.start)} → ${formatIstDateEn(current.maha.end)} — a period of ${DASHA_LORD_KEYWORDS_EN[mahaLord]}. Inside it, the ${antarEn} Antardasha runs ${formatIstDateEn(current.antar.start)} → ${formatIstDateEn(current.antar.end)} — a sub-period of ${DASHA_LORD_KEYWORDS_EN[antarLord]}.`,
-    PAIR_RELATION_EN[relation],
-    mahaLord === antarLord
-      ? `${antarEn}’s own Antardasha — tradition treats this sub-period as where the Mahadasha’s tone runs most concentrated.`
-      : `In this chart ${antarEn} sits in the ${seatEn} — tradition reads this sub-period’s themes through that house: matters of ${HOUSE_THEME_EN[antarNatal.house - 1]} carry ${antarEn}’s colour just now.`,
-  ];
+  const bodyHi = child
+    ? [
+      `${mahaHi} महादशा ${formatIstDateHi(current.maha.start)} से ${formatIstDateHi(current.maha.end)} तक; इसके भीतर ${antarHi} की अन्तर्दशा ${formatIstDateHi(current.antar.start)} से ${formatIstDateHi(current.antar.end)} तक। पारम्परिक पाठ में ${mahaHi} ${DASHA_LORD_CHILD_HI[mahaLord].highlights} को उभारता है। इस आयु में माता-पिता बस यह देख सकते हैं कि ${childObserveHi(mahaLord, name)}।`,
+      PAIR_RELATION_CHILD_HI[relation],
+      mahaLord === antarLord
+        ? `${antarHi} की अपनी ही अन्तर्दशा — परम्परा में महादशा का स्वर इसी उप-काल में सबसे सघन माना जाता है; बच्चे के लिए यह देखने की बात है, तय स्वभाव नहीं।`
+        : `इस कुंडली में ${antarHi} ${seatHi} में है — इस आयु में यह स्थिति केवल दर्ज की गई है; ${antarHi} के उप-काल में देखने की बात बस इतनी है कि ${childObserveHi(antarLord, name)}।`,
+    ]
+    : [
+      `${mahaHi} महादशा ${formatIstDateHi(current.maha.start)} से ${formatIstDateHi(current.maha.end)} तक — ${DASHA_LORD_KEYWORDS_HI[mahaLord]} का काल। इसके भीतर ${antarHi} की अन्तर्दशा ${formatIstDateHi(current.antar.start)} से ${formatIstDateHi(current.antar.end)} तक चल रही है — ${DASHA_LORD_KEYWORDS_HI[antarLord]} का उप-काल।`,
+      PAIR_RELATION_HI[relation],
+      mahaLord === antarLord
+        ? `${antarHi} की अपनी ही अन्तर्दशा — परम्परा में महादशा का स्वर सबसे सघन इसी उप-काल में होता है।`
+        : `आपकी कुंडली में ${antarHi} ${seatHi} में है — परम्परा इस उप-काल के विषयों को उसी भाव की दृष्टि से पढ़ती है: ${HOUSE_THEME_HI[antarNatal.house - 1]} पर इस समय ${antarHi} का रंग है।`,
+    ];
+  const bodyEn = child
+    ? [
+      `The ${mahaEn} Mahadasha runs ${formatIstDateEn(current.maha.start)} → ${formatIstDateEn(current.maha.end)}; inside it, the ${antarEn} Antardasha runs ${formatIstDateEn(current.antar.start)} → ${formatIstDateEn(current.antar.end)}. In the traditional reading, ${mahaEn} highlights ${DASHA_LORD_CHILD_EN[mahaLord].highlights}. At this age, parents can simply observe ${childObserveEn(mahaLord, name)}.`,
+      PAIR_RELATION_CHILD_EN[relation],
+      mahaLord === antarLord
+        ? `${antarEn}’s own Antardasha — tradition treats this sub-period as where the Mahadasha’s tone runs most concentrated; for a child that is something to watch, not a settled nature.`
+        : `In this chart ${antarEn} sits in the ${seatEn} — at this age the placement is simply recorded; what a parent may notice in a ${antarEn} sub-period is only ${childObserveEn(antarLord, name)}.`,
+    ]
+    : [
+      `The ${mahaEn} Mahadasha runs ${formatIstDateEn(current.maha.start)} → ${formatIstDateEn(current.maha.end)} — a period of ${DASHA_LORD_KEYWORDS_EN[mahaLord]}. Inside it, the ${antarEn} Antardasha runs ${formatIstDateEn(current.antar.start)} → ${formatIstDateEn(current.antar.end)} — a sub-period of ${DASHA_LORD_KEYWORDS_EN[antarLord]}.`,
+      PAIR_RELATION_EN[relation],
+      mahaLord === antarLord
+        ? `${antarEn}’s own Antardasha — tradition treats this sub-period as where the Mahadasha’s tone runs most concentrated.`
+        : `In this chart ${antarEn} sits in the ${seatEn} — tradition reads this sub-period’s themes through that house: matters of ${HOUSE_THEME_EN[antarNatal.house - 1]} carry ${antarEn}’s colour just now.`,
+    ];
 
   return {
     mahaLord,
@@ -223,8 +306,10 @@ export function buildDashaPairReading(chart: KundaliChart, at: Date): DashaPairR
     bodyHi,
     bodyEn,
     basis: [
-      { kind: 'dasha', level: 'maha', lord: mahaLord, startKey: current.maha.start.toISOString().slice(0, 10), endKey: current.maha.end.toISOString().slice(0, 10) },
-      { kind: 'dasha', level: 'antar', lord: antarLord, startKey: current.antar.start.toISOString().slice(0, 10), endKey: current.antar.end.toISOString().slice(0, 10) },
+      // IST civil keys, the same `indiaDateKey` the report's own timeline
+      // uses — a UTC slice here read "28 Apr" under a "29 Apr" paragraph.
+      { kind: 'dasha', level: 'maha', lord: mahaLord, startKey: indiaDateKey(current.maha.start), endKey: indiaDateKey(current.maha.end) },
+      { kind: 'dasha', level: 'antar', lord: antarLord, startKey: indiaDateKey(current.antar.start), endKey: indiaDateKey(current.antar.end) },
       { kind: 'relation', from: mahaLord, to: antarLord, relation },
       { kind: 'graha', graha: antarLord, house: antarNatal.house, dignity: 'neutral' },
     ],

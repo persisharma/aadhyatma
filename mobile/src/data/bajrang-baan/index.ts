@@ -1,5 +1,5 @@
 import manifest from './chapters-manifest.json';
-import ch01 from './bajrang-baan.json';
+import { assertChapterMatchesManifest } from '../chapterInvariants';
 
 export type BajrangBaanVerse = {
   id: string;
@@ -37,38 +37,31 @@ export const bajrangBaanTitleEn = 'Bajrang Baan';
 export const bajrangBaanChaptersManifest: readonly BajrangBaanChapterSummary[] =
   manifest as BajrangBaanChapterSummary[];
 
-export const bajrangBaanChapters: readonly BajrangBaanChapter[] = [
-  ch01 as BajrangBaanChapter,
+/**
+ * Chapter payloads behind `require()` thunks — the launch path must be able
+ * to read this corpus's MANIFEST (title, verse count) without evaluating its
+ * verses. `routine/chapters.ts` and `texts.ts` do exactly that, and importing
+ * the payloads here put the whole corpus on every cold start.
+ *
+ * Same shape as `gita/index.ts`. Metro caches each module, so repeat reads of
+ * a chapter are free; the first read of each pays once.
+ */
+/* eslint-disable @typescript-eslint/no-require-imports */
+const bajrangBaanChaptersLoaders: readonly (() => BajrangBaanChapter)[] = [
+  () => require('./bajrang-baan.json') as BajrangBaanChapter,
 ];
+/* eslint-enable @typescript-eslint/no-require-imports */
 
-export const bajrangBaanTotal = bajrangBaanChapters.reduce(
+export const bajrangBaanTotal = bajrangBaanChaptersManifest.reduce(
   (sum, ch) => sum + ch.verseCount,
   0
 );
 
 export function getBajrangBaanChapter(chapter: number): BajrangBaanChapter {
   const idx = chapter - 1;
-  if (idx < 0 || idx >= bajrangBaanChapters.length) {
-    throw new Error(`bajrang-baan: chapter ${chapter} out of range (1-${bajrangBaanChapters.length})`);
+  if (idx < 0 || idx >= bajrangBaanChaptersLoaders.length) {
+    throw new Error(`bajrang-baan: chapter ${chapter} out of range (1-${bajrangBaanChaptersLoaders.length})`);
   }
-  return bajrangBaanChapters[idx];
+  return assertChapterMatchesManifest('bajrang-baan', bajrangBaanChaptersLoaders[idx](), bajrangBaanChaptersManifest[idx]);
 }
 
-(function assertBajrangBaanInvariants() {
-  if (bajrangBaanChapters.length !== 1) {
-    throw new Error(`bajrang-baan: expected 1 chapter, got ${bajrangBaanChapters.length}`);
-  }
-  const seenIds = new Set<string>();
-  for (const c of bajrangBaanChapters) {
-    if (c.verses.length !== c.verseCount) {
-      throw new Error(`bajrang-baan: ch${c.chapter} declares ${c.verseCount} verses but has ${c.verses.length}`);
-    }
-    for (const v of c.verses) {
-      if (seenIds.has(v.id)) throw new Error(`bajrang-baan: duplicate id '${v.id}'`);
-      seenIds.add(v.id);
-      if (v.lines.length < 1) throw new Error(`bajrang-baan: ${v.id} has no lines`);
-      if (!v.meaningHi.trim()) throw new Error(`bajrang-baan: ${v.id} has empty meaningHi`);
-      if (!v.meaningEn.trim()) throw new Error(`bajrang-baan: ${v.id} has empty meaningEn`);
-    }
-  }
-})();

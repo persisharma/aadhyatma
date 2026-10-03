@@ -293,7 +293,7 @@ export default function PitruPakshaOverviewScreen({ navigation }: Props) {
             >
               {/* The standing hero — what today IS in this fortnight, before the dates. */}
               <View style={styles.hero} testID="pitru-paksha-standing">
-                <Text style={{ fontFamily: titleFont, fontSize: 21, lineHeight: 30, color: colors.ink, textAlign: 'center' }}>
+                <Text style={{ fontFamily: titleFont, fontSize: 21, lineHeight: 32, color: colors.ink, textAlign: 'center' }}>
                   {heroTitle}
                 </Text>
                 <View

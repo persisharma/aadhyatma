@@ -10,7 +10,7 @@ import {
 import { KATHA_CONTENT, getKathaContent } from '@/panchang/kathaContent';
 import { getKathaLibrary } from '@/panchang/vratCatalog';
 import { getDaanKathas, getDaanPrinciples } from '@/data/daan';
-import { temples } from '@/data/theerth/temples';
+import { templesWithDetails } from '@/data/theerth/temples';
 import { MAX_SHARE_PAGES, paginateProse } from '@/utils/shareCardPages';
 import type { ShareableProse } from '@/utils/shareVerse';
 import type { Lang } from '@/data/gita/language';
@@ -71,7 +71,7 @@ describe('vratKathaShareable', () => {
 
 describe('theerthShareable', () => {
   test('every temple has a default scope that fits one carousel, on its own plate', () => {
-    for (const temple of temples) {
+    for (const temple of templesWithDetails()) {
       const p = theerthShareable(temple);
       expect(p.background).toBeTruthy();
       expect(p.scopes[0].blocks.filter((b) => b.kind === 'heading').map((b) => b.en)).toEqual([

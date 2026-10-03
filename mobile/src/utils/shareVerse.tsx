@@ -34,6 +34,7 @@ import {
   type ProsePagination,
 } from '@/utils/shareCardPages';
 import { isMultiShareAvailable, shareFiles } from '@/utils/multiShare';
+import { useRatingAsk } from '@/contexts/ratingAsk';
 import type { Lang } from '@/data/gita/language';
 
 export type ShareableVerse = {
@@ -282,6 +283,14 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
   const inFlightRef = useRef(false);
   const cardRef = useRef<View>(null);
 
+  // A dispatched share is a "good moment" the rating ask may ride on (§54). Read
+  // through a ref so `run`'s empty-dep callback identity never churns, and from
+  // the light `contexts/ratingAsk.ts` module so this provider stays testable
+  // standalone (no expo-notifications pulled in). Outside the provider it no-ops.
+  const requestRatingAsk = useRatingAsk();
+  const requestRatingAskRef = useRef(requestRatingAsk);
+  requestRatingAskRef.current = requestRatingAsk;
+
   // Timely tags (design.md §39.2). Resolved by `TimelyTagsResolver`, which mounts
   // ONLY while the picker is open — see the note on that component for why this
   // must not live in the always-mounted provider body.
@@ -320,9 +329,19 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
     []
   );
 
-  /** Hand one PNG (or, failing capture, the caption) to its destination. */
+  /**
+   * Hand one PNG (or, failing capture, the caption) to its destination. Resolves
+   * whether a share sheet was actually presented — false only for the
+   * Instagram-without-image alert.
+   */
   const deliver = useCallback(
-    async (fileUri: string | null, caption: string, target: ShareTarget, format: ShareFormat, lang: Lang) => {
+    async (
+      fileUri: string | null,
+      caption: string,
+      target: ShareTarget,
+      format: ShareFormat,
+      lang: Lang
+    ): Promise<boolean> => {
       if (target === 'instagram') {
         // Instagram's share intent ignores any text handed to it, so the caption
         // goes to the clipboard for the reader to paste. Deprecated RN API, but
@@ -382,10 +401,12 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
         // list it, which reads as "the button did nothing". Say so instead of
         // opening a sheet the reader cannot use.
         alertCouldNotShare(lang);
+        return false;
       } else {
         // Image capture failed — share text-only so the user still gets something.
         await Share.share({ message: caption }, { dialogTitle: 'Share verse' });
       }
+      return true;
     },
     []
   );
@@ -424,7 +445,11 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
               })
             : buildShareCaption(captionParams);
 
-        await deliver(fileUri, caption, target, format, lang);
+        const dispatched = await deliver(fileUri, caption, target, format, lang);
+        // Report the moment once the sheet has closed (the awaits in deliver have
+        // resolved). The rating gate + 1200 ms settle delay live in the provider;
+        // here we only say "a verse share just happened" (§54).
+        if (dispatched) requestRatingAskRef.current('verse-shared');
       } catch {
         // Share sheet dismissal or any other failure: swallow. The user dismissed.
       } finally {

@@ -94,9 +94,9 @@ Jnanam is Paroksha Jnanam or indirect knowledge of Brahman obtained through the 
 
 **Sanskrit Shloka**
 
-मनुष्याणां सहस्रेषु कश्िचद्यतति सिद्धये।
+मनुष्याणां सहस्रेषु कश्चिद्यतति सिद्धये।
 
-यततामपि सिद्धानां कश्िचन्मां वेत्ति तत्त्वतः।।7.3।।
+यततामपि सिद्धानां कश्चिन्मां वेत्ति तत्त्वतः।।7.3।।
 
 **Transliteration**
 
@@ -588,7 +588,7 @@ The distressed is he who is suffering from a chronic and incurable disease, he w
 
 **Sanskrit Shloka**
 
-तेषां ज्ञानी नित्ययुक्त एकभक्ितर्विशिष्यते।
+तेषां ज्ञानी नित्ययुक्त एकभक्तिर्विशिष्यते।
 
 प्रियो हि ज्ञानिनोऽत्यर्थमहं स च मम प्रियः।।7.17।।
 
@@ -833,7 +833,7 @@ The exertion in the two kinds is the same and yet people do not attempt to worsh
 
 **Sanskrit Shloka**
 
-अव्यक्तं व्यक्ितमापन्नं मन्यन्ते मामबुद्धयः।
+अव्यक्तं व्यक्तिमापन्नं मन्यन्ते मामबुद्धयः।
 
 परं भावमजानन्तो ममाव्ययमनुत्तमम्।।7.24।।
 

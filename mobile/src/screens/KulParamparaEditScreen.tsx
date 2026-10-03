@@ -15,7 +15,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import ReaderHeader from '@/components/ReaderHeader';
 import DeityIcon from '@/components/DeityIcon';
 import { deities } from '@/data/deities';
-import { temples, type TempleEntry } from '@/data/theerth/temples';
+import { temples, type TempleListEntry } from '@/data/theerth/temples';
 import { getObservanceCatalog } from '@/panchang/festivals';
 import { useGitaLanguage } from '@/data/gita/language';
 import { saveKulRecord, useKulRecord } from '@/panchang/kulParamparaStore';
@@ -75,7 +75,7 @@ export default function KulParamparaEditScreen({ navigation }: Props) {
     setNotes(record.notes ?? '');
   }
 
-  const templeMatches = useMemo<TempleEntry[]>(() => {
+  const templeMatches = useMemo<TempleListEntry[]>(() => {
     const q = templeQuery.trim().toLowerCase();
     if (!q || templeId) return [];
     return temples

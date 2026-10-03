@@ -63,6 +63,7 @@ const deityBackgrounds: Record<Deity, BackgroundImage> = {
 const sourceBackgrounds: Record<string, BackgroundImage> = {
   'hanuman-chalisa': chalisaImages.ram_hanuman,
   'bhagavad-gita': gitaImages.krishna_arjuna_vishvarupa,
+  'gita-saar': gitaImages.krishna_arjuna_vishvarupa,
   sundarkand: chalisaImages.hanuman_sea,
   'shiva-strotam': shivaStrotamImages.shiva,
   'om-namah-shivaya': shivaStrotamImages.shiva,
@@ -190,6 +191,16 @@ const deityBackgroundList: BackgroundImage[] = Object.values(deityBackgrounds);
  */
 export function getRandomDeityBackground(): BackgroundImage {
   return deityBackgroundList[Math.floor(Math.random() * deityBackgroundList.length)];
+}
+
+/**
+ * The दान-पुण्य home plate: Annapurna ladling anna into Shiva's bhiksha-patra —
+ * the tradition's own image of giving food. A 2:3 portrait plate with both
+ * figures inside the middle ~70% of its width, which is what `cover` keeps on
+ * a portrait phone — keep that when it is regenerated.
+ */
+export function getDaanBackground(): BackgroundImage {
+  return backgroundImages.daan_annapurna_bhiksha;
 }
 
 export function getSourceBackground(sourceId: string): BackgroundImage | null {

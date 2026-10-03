@@ -477,7 +477,7 @@ Rishi is a holy sage of disciplined mind and senses. Devarshi A divine sage more
 
 सर्वमेतदृतं मन्ये यन्मां वदसि केशव।
 
-न हि ते भगवन् व्यक्ितं विदुर्देवा न दानवाः।।10.14।।
+न हि ते भगवन् व्यक्तिं विदुर्देवा न दानवाः।।10.14।।
 
 **Transliteration**
 
@@ -987,7 +987,7 @@ Vajram the thunderbolt weapon made of the bones of Dadhichi an implement of warf
 
 अनन्तश्चास्मि नागानां वरुणो यादसामहम्।
 
-पितृ़णामर्यमा चास्मि यमः संयमतामहम्।।10.29।।
+पितॄणामर्यमा चास्मि यमः संयमतामहम्।।10.29।।
 
 **Transliteration**
 

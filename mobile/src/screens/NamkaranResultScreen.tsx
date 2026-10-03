@@ -348,7 +348,7 @@ const styles = StyleSheet.create({
   // The tag holds the documented 10 pt chrome floor (§3.0), so the current cell
   // is a little taller than its siblings — the grid rows size to the tallest.
   rashiSyllableCurrent: { borderWidth: 1.5, paddingVertical: 5 },
-  rashiCurrentTag: { fontSize: 10, lineHeight: 14, marginTop: 1 },
+  rashiCurrentTag: { fontSize: 10, lineHeight: 15, marginTop: 1 },
   rashiDetail: { minHeight: 44, marginTop: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 10 },
   rashiDetailText: { fontFamily: fontFamilies.interSemiBold, fontSize: 12 },
   shareOptIn: { borderWidth: 1, padding: 12, flexDirection: 'row', alignItems: 'center', gap: 10 },

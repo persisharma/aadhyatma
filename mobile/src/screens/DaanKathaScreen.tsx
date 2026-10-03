@@ -12,12 +12,16 @@
  * दर्ज करें (→ the ledger form) quiet. No closing stance line: the doors speak
  * for themselves. §2.7 holds: no give/pay control, the app never transacts.
  */
-import React from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useMemo, useRef } from 'react';
+import { Pressable, ScrollView, StyleSheet, Text, View, type FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import ReaderHeader from '@/components/ReaderHeader';
+import Ornament from '@/components/Ornament';
+import LanguageToggle from '@/components/LanguageToggle';
+import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
+import { useReaderReadAloud } from '@/screens/_useReaderReadAloud';
 import ShareButton from '@/components/ShareButton';
 import { useShare } from '@/utils/shareVerse';
 import { daanKathaShareable } from '@/utils/shareContent';
@@ -26,7 +30,7 @@ import { getDaanKatha, getDaanKathas } from '@/data/daan';
 import type { DaanStackParamList } from '@/navigation/types';
 import { useTheme } from '@/theme/ThemeContext';
 import { commentaryByLang, contentByLang, meaningByLang } from '@/utils/localize';
-import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
+import { meaningToken, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 
 type Props = NativeStackScreenProps<DaanStackParamList, 'DaanKatha'>;
 
@@ -38,6 +42,27 @@ export default function DaanKathaScreen({ navigation, route }: Props) {
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
 
   const katha = getDaanKatha(route.params.kathaId);
+
+  // Read-aloud over the story prose — same hook every reader uses (RULEBOOK §3,
+  // never call Speech.speak from a screen). The teaching-katha section carries
+  // `paragraphs*`; map it to the adapter's prose shape (`body*`). These are short
+  // single-section stories read as one continuous scroll, so there is no paging:
+  // `currentIndex` is pinned to 0 and the unattached `listRef` is never scrolled
+  // (the controller only auto-advances across pages, of which there is one).
+  const readAloudData = useMemo(
+    () => (katha?.sections ?? []).map((s) => ({ bodyHi: s.paragraphsHi, bodyEn: s.paragraphsEn })),
+    [katha]
+  );
+  const listRef = useRef<FlatList<{ bodyHi: readonly string[]; bodyEn: readonly string[] }>>(null);
+  const readAloud = useReaderReadAloud({
+    sourceId: `daan-katha-${route.params.kathaId}`,
+    data: readAloudData,
+    offset: 0,
+    verseCount: readAloudData.length,
+    currentIndex: 0,
+    listRef,
+  });
+
   if (!katha) {
     return (
       <SafeAreaView style={[styles.root, { backgroundColor: colors.background }]} edges={['top']}>
@@ -59,33 +84,53 @@ export default function DaanKathaScreen({ navigation, route }: Props) {
     textTransform: 'uppercase' as const,
   };
 
+  // Story prose uses the shared reading token (like KathaSectionPage), so the
+  // daan story reads at the same size/rhythm as every other katha reader.
+  const meaning = meaningToken(lang, typography);
+  const storyBodyStyle = {
+    color: lang === 'en' ? colors.ink : colors.inkSoft,
+    fontFamily: meaning.fontFamily,
+    fontSize: meaning.fontSize,
+    lineHeight: meaning.lineHeight,
+  };
+
   return (
     <SafeAreaView style={[styles.root, { backgroundColor: colors.background }]} edges={['top']} testID="daan-katha-screen">
       <ReaderHeader
         title={contentByLang(lang, katha.titleHi, katha.titleEn)}
         variant="index"
         onBack={() => navigation.goBack()}
-        right={
+      />
+      <View style={styles.toggleRow}>
+        {/* Share pinned left, read-aloud pinned right — the katha reader row (design.md §39.4). */}
+        <View style={styles.shareSlot}>
           <ShareButton
             onPress={() => void share(daanKathaShareable(katha), lang)}
             busy={shareBusy}
             accessibilityLabel="Share katha"
             accessibilityHint="Opens share options for this katha and its teaching"
           />
-        }
-        sideWidth={44}
-      />
+        </View>
+        <LanguageToggle />
+        {/* Pinned right so the toggle stays centred (design.md §56.2). */}
+        <View style={styles.readAloudSlot}>
+          <ReadAloudButton control={readAloud} />
+        </View>
+      </View>
       <ScrollView contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingBottom: spacing.xxl }}>
         <Text style={{ fontFamily: bodyFont, fontSize: 12.5, lineHeight: 19, color: colors.inkMuted, textAlign: 'center', marginTop: spacing.sm }}>
           {contentByLang(lang, katha.subtitleHi, katha.subtitleEn)}
         </Text>
 
+        {/* Ornament divider — the title→ornament→prose rhythm every reader shares. */}
+        <Ornament />
+
         {katha.sections.map((section) => (
-          <View key={section.id} style={{ marginTop: spacing.lg }}>
+          <View key={section.id}>
             {commentaryByLang(lang, section.paragraphsHi, section.paragraphsEn).map((paragraph, idx) => (
               <Text
                 key={`${section.id}-${idx}`}
-                style={{ fontFamily: bodyFont, fontSize: 14, lineHeight: 25, color: colors.inkSoft, marginBottom: spacing.md }}
+                style={[storyBodyStyle, { marginBottom: spacing.md }]}
               >
                 {paragraph}
               </Text>
@@ -143,10 +188,10 @@ export default function DaanKathaScreen({ navigation, route }: Props) {
                   <Text style={{ fontFamily: titleFont, fontSize: 16, color: colors.gold }}>॥</Text>
                 </View>
                 <View style={{ flex: 1 }}>
-                  <Text style={{ fontFamily: titleFont, fontSize: 15.5, lineHeight: 22, color: colors.ink }}>
+                  <Text style={{ fontFamily: titleFont, fontSize: 15.5, lineHeight: 24, color: colors.ink }}>
                     {contentByLang(lang, next.titleHi, next.titleEn)}
                   </Text>
-                  <Text style={{ fontFamily: bodyFont, fontSize: 12, lineHeight: 17, color: colors.inkMuted }}>
+                  <Text style={{ fontFamily: bodyFont, fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
                     {contentByLang(lang, next.subtitleHi, next.subtitleEn)}
                   </Text>
                 </View>
@@ -193,6 +238,9 @@ export default function DaanKathaScreen({ navigation, route }: Props) {
 
 const styles = StyleSheet.create({
   root: { flex: 1 },
+  toggleRow: { flexDirection: 'row', justifyContent: 'center', paddingTop: 6, paddingBottom: 6, alignItems: 'center' },
+  readAloudSlot: { position: 'absolute', right: 16, top: 6, bottom: 6, justifyContent: 'center' },
+  shareSlot: { position: 'absolute', left: 16, top: 6, bottom: 6, justifyContent: 'center' },
   teaching: { borderWidth: 1, paddingHorizontal: 16, paddingTop: 14, paddingBottom: 16, marginTop: 6 },
   onward: { borderTopWidth: 1, marginTop: 20, paddingTop: 18 },
   labelRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 },

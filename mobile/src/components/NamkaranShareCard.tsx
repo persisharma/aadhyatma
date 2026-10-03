@@ -42,10 +42,10 @@ export default function NamkaranShareCard({ width, lang, model }: { width: numbe
 
 const styles = StyleSheet.create({
   card: { height: '100%', borderWidth: 1, padding: 22, alignItems: 'center', overflow: 'hidden' },
-  brand: { fontSize: 17, lineHeight: 24 },
+  brand: { fontSize: 17, lineHeight: 26 },
   // Face/tracking/case come from pillTextStyle (design.md §3.0) — this card is
   // rendered to an image, so an Inter-fallback Devanagari label ships as a file.
   eyebrow: { lineHeight: 16, marginTop: 10 },
-  aid: { fontFamily: fontFamilies.latinSemiBoldItalic, fontSize: 14, lineHeight: 20 },
+  aid: { fontFamily: fontFamilies.latinSemiBoldItalic, fontSize: 14, lineHeight: 21 },
   shortlist: { alignSelf: 'stretch', borderTopWidth: StyleSheet.hairlineWidth, marginTop: 14, paddingTop: 4, gap: 2 },
 });

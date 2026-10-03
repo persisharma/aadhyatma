@@ -79,7 +79,7 @@ export default function GunaMilanShareCard({
           );
         })}
       </View>
-      <Text style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 10, lineHeight: 14, textAlign: 'center', marginTop: 'auto' }}>
+      <Text style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 10, lineHeight: 15, textAlign: 'center', marginTop: 'auto' }}>
         {meaningByLang(lang, 'पारम्परिक गणना — मार्गदर्शन हेतु, निर्णय हेतु नहीं।', 'Traditional calculation — for guidance, not a decision.')}
       </Text>
       <Text style={[styles.footer, { color: colors.saffronDeep }]}>ॐ वेदांश़</Text>

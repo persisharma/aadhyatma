@@ -77,6 +77,9 @@ export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & {
   StutiReader: { initialIndex?: number; stutiId?: string } | undefined;
   GitaChapters: undefined;
   GitaReader: GitaReaderParams;
+  // गीता सार (design.md §77): a chapter is a theme, the reader pages its verses.
+  GitaSaarChapters: undefined;
+  GitaSaarReader: { chapter: number; initialIndex?: number };
   SundarkandChapters: undefined;
   SundarkandReader: { chapter: number; initialIndex?: number };
   ShivaStrotamChapters: undefined;
@@ -146,6 +149,8 @@ export type DaanStackParamList = {
 
 export type MoreStackParamList = VidhiStackParamList & DaanStackParamList & GharVastuStackParamList & {
   MoreHome: undefined;
+  KidsStoryLibrary: undefined;
+  KidsStoryReader: { storyId: string; pageId?: string };
   Wishlist: undefined;
   Profile: undefined;
   Reminders: undefined;
@@ -209,7 +214,7 @@ export type PanchangStackParamList = VidhiStackParamList & DaanStackParamList & 
   KundaliReport: { prashnaContext?: { purposeId: string; questionId: string } } | undefined;
   // प्रश्न — purpose-driven reading for the active person (PRD-43 Wave D).
   // `purposeId` preselects a purpose (the Ask intent deep-links here).
-  Prashna: { purposeId?: string } | undefined;
+  Prashna: { purposeId?: string; questionId?: string } | undefined;
   GunaMilan: undefined;
   Namkaran: undefined;
   /** वास्तु दिशा (PRD-24) — the griha-pravesh result's door pushes it in place

@@ -2,7 +2,7 @@
 title: जिज्ञासा · Ask Vedansh (answer engine)
 type: subsystem
 sources: [mobile/src/ask/types.ts, mobile/src/ask/fold.ts, mobile/src/ask/aliases.ts, mobile/src/ask/lexicon.ts, mobile/src/ask/resolve.ts, mobile/src/ask/intents/index.ts, mobile/src/ask/engine.ts, mobile/src/ask/useAsk.ts, mobile/src/ask/actions.ts, mobile/src/ask/briefing.ts, mobile/src/components/AskAnswerCard.tsx, mobile/src/screens/SearchScreen.tsx, mobile/src/screens/TodayVidhanScreen.tsx, mobile/src/screens/ObservanceDetailScreen.tsx, mobile/src/ask/__tests__/, docs/roadmap/prds/41-jijnasa-ask-vedansh.md]
-last_verified_date: 2026-09-02
+last_verified_date: 2026-09-25
 confidence: high
 status: current
 ---
@@ -37,6 +37,8 @@ Spec: `design.md` §71 · contract: `RULEBOOK.md` §25 · PRD: `docs/roadmap/prd
   (`cachedDayInputs` from the shared day store, `getNextOccurrence`, `computeMuhuratDay`,
   `getObservancesForDate`) or a verified-only accessor. `ruleFor(entry, ctx, needs)` picks the
   class member that actually carries the field (`upvasId`/`kathaId`/`bhogId`/`vidhiId`).
+
+Explicit job-switch, first-job, job-growth, business-start, business-partner, exam and course phrases in English, Hindi and Hinglish pass the question text to the lazy Prashna resolver. It selects the matching question, returns the same current-phase answer with one chart-linked reason on each side and a next step, and deep-links to that selected Prashna question. Broad or unrecognized subtype phrasing stays with the purpose's general question. `resolveAsk` passes the raw question as an optional third resolver argument without adding the chart engine to Home's import graph. Adult money, marriage and travel now use their general current-phase decisions; Muhurat and Guna Milan handoffs remain available where applicable. Health, mind and fertility do not get timed decisions.
 - **`engine.ts`** — `askQuestion(q, ctx)`, `warmAsk()`, `askExamples()`. The only module the UI
   loads, and only through `import()`.
 - **`useAsk.ts`** — React: lazy engine load + warm on mount; `useAskContextBuilder()` assembles

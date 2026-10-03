@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
   idxHeader: { flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 6 },
   idxRow: { flexDirection: 'row', gap: 8 },
   idxCell: { flex: 1, minHeight: 56, borderWidth: 1, alignItems: 'center', justifyContent: 'center', gap: 2, paddingVertical: 6 },
-  idxCellPada: { fontSize: 10, lineHeight: 14 },
+  idxCellPada: { fontSize: 10, lineHeight: 15 },
   remember: { minHeight: 64, borderWidth: 1, paddingHorizontal: 14, paddingVertical: 9, flexDirection: 'row', alignItems: 'center', gap: 10 },
   controlTitle: { fontFamily: fontFamilies.interSemiBold, fontSize: 12 }, clear: { minHeight: 44, justifyContent: 'center', alignSelf: 'flex-start' },
   message: { fontFamily: fontFamilies.inter, fontSize: 11 }, primary: { minHeight: 50, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 18 },

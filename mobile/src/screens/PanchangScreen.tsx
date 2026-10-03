@@ -66,6 +66,7 @@ import JyotishShareCard from '@/components/JyotishShareCard';
 import JyotishShareSheet from '@/components/JyotishShareSheet';
 import JyotishStateCard from '@/components/JyotishStateCard';
 import JyotishToolTile from '@/components/JyotishToolTile';
+import DayVaasCards from '@/components/DayVaasCards';
 import { computePersonalGuidance, SADE_SATI_PHASE_SHORT } from '@/panchang/gochar';
 import {
   RASHI_NAMES_EN,
@@ -679,6 +680,9 @@ export default function PanchangScreen({ route }: Props) {
             <PanchangTile label={contentByLang(lang, 'नित्य योग', 'Nitya Yoga')} element={p.yoga} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
             <PanchangTile label={contentByLang(lang, 'करण', 'Karana')} element={p.karana} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
           </View>
+          {/* यात्रा (चन्द्रमा · चन्द्र वास · दिशा शूल) + हवन (अग्नि वास) cards —
+              pure readings of the solved day (design.md §33). */}
+          <DayVaasCards p={p} lang={lang} />
 
           {/* PRD-27: the day's शुभ योग — present-or-absent with its window,
               annotation only (design.md §69). Absent days render nothing. */}
@@ -840,6 +844,10 @@ export default function PanchangScreen({ route }: Props) {
               lenses={lenses}
               lensAvailableCount={lensAvailableCount}
               followCount={followCount}
+              todaySolve={p && selectedDate.getTime() === today.getTime() ? { sunrise: p.sunrise, sunset: p.sunset, moonrise: p.moonrise, tithiIndex: p.tithi.index, tithiEnd: p.tithi.endTime } : null}
+              onOpenLink={openLinkedSection}
+              onOpenKatha={openKatha}
+              onOpenVidhi={openVidhi}
             />
           ) : (
             <JyotishLanding
@@ -2128,6 +2136,7 @@ function CatalogLanding({
   colors, typography, radii, elevation,
   onOpenDetail, onOpenCategory, onOpenKathaLibrary, onOpenVidhiCatalog, onOpenMyVrat, followCount,
   onOpenPitruSmaran, onOpenLenses, lenses, lensAvailableCount,
+  todaySolve, onOpenLink, onOpenKatha, onOpenVidhi,
 }: {
   lang: Lang;
   today: Date;
@@ -2148,13 +2157,23 @@ function CatalogLanding({
   lenses: ReadonlySet<ObservanceLens>;
   lensAvailableCount: number;
   followCount: number;
+  // Today's solve for the day note, or null when the calendar is on another day.
+  todaySolve: ObservanceDaySolve | null;
+  onOpenLink: (sectionId: string) => void;
+  onOpenKatha: (kathaId: string) => void;
+  onOpenVidhi: (vidhiId: string, dateMs: number) => void;
 }) {
   const trimmed = query.trim();
   // Search stays lens-blind on purpose — see `searchObservances`.
   const results = useMemo(() => (trimmed ? searchObservances(trimmed) : []), [trimmed]);
   const lensKey = serializeLenses(lenses);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const upcoming = useMemo(() => getUpcomingObservances(today, 6, calendarSystem, 150, undefined, lenses), [today, calendarSystem, lensKey]);
+  const upcomingWindow = useMemo(() => getUpcomingObservances(today, 12, calendarSystem, 150, undefined, lenses), [today, calendarSystem, lensKey]);
+  // Today's observances are lifted out of the rail into their own आज card: an
+  // item dated today sitting as one more "upcoming" chip is what today looks
+  // like when nothing is in focus.
+  const todayItems = useMemo(() => upcomingWindow.filter((o) => o.date.getTime() === today.getTime()), [upcomingWindow, today]);
+  const upcoming = useMemo(() => upcomingWindow.filter((o) => o.date.getTime() !== today.getTime()).slice(0, 6), [upcomingWindow, today]);
   const counts = useMemo(() => getCategoryCounts(), []);
   const kathaCount = getKathaCount();
 
@@ -2206,6 +2225,36 @@ function CatalogLanding({
         )
       ) : (
         <>
+          {/* आज — today's observances as the SAME ObservanceCard the पंचांग day
+              panel renders (pills and all), so the catalog opens on what today
+              is for instead of burying it as one more आगामी chip. */}
+          {todayItems.length > 0 && (
+            <View testID="catalog-today" style={{ marginBottom: 12 }}>
+              <View style={styles.todayHead}>
+                <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
+                  {contentByLang(lang, 'आज', 'Today')}
+                </Text>
+                <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 10, color: colors.saffronDeep, letterSpacing: 0.4, marginLeft: 8 }}>
+                  {formatShortDate(today, lang).toUpperCase()}
+                </Text>
+              </View>
+              {todayItems.map((item) => (
+                <ObservanceCard
+                  key={`today-${item.rule.id}`}
+                  item={item}
+                  daySolve={todaySolve}
+                  lang={lang}
+                  colors={colors}
+                  typography={typography}
+                  radii={radii}
+                  elevation={elevation}
+                  onOpenLink={onOpenLink}
+                  onOpenKatha={onOpenKatha}
+                  onOpenVidhi={onOpenVidhi}
+                />
+              ))}
+            </View>
+          )}
           {/* The personal ledgers — one bar, three columns. See CatalogLedgerBar. */}
           <CatalogLedgerBar
             lang={lang}
@@ -2412,6 +2461,7 @@ const styles = StyleSheet.create({
   additionsHead: { flexDirection: 'row', alignItems: 'flex-start', gap: 12 },
   // Compact upcoming card (design.md § catalog view): date + glyph top row and a
   // one-line name — the category caption is dropped, the ॐ/☾/✺ glyph carries it.
+  todayHead: { flexDirection: 'row', alignItems: 'baseline', marginBottom: 8 },
   upCard: { width: 136, height: 72, borderWidth: 1, paddingVertical: 10, paddingHorizontal: 12 },
   upCardTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   tileGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
@@ -2482,7 +2532,7 @@ const styles = StyleSheet.create({
   // ("व्रत"), whose matras clip below ~1.4× leading, so the box follows the
   // 14pt line box rather than the old 10pt one.
   dateTag: { minWidth: 28, minHeight: 16, borderRadius: 8, paddingHorizontal: 5, alignItems: 'center', justifyContent: 'center', marginTop: 2 },
-  dateTagText: { fontSize: 10, lineHeight: 14 },
+  dateTagText: { fontSize: 10, lineHeight: 15 },
   todayButton: { alignSelf: 'center', marginTop: 8, borderWidth: 1, borderRadius: 999, paddingHorizontal: 16, paddingVertical: 8 },
   compactTodayButton: { marginTop: 0, paddingHorizontal: 14, paddingVertical: 7 },
   angaGrid: { flexDirection: 'row', gap: 8, marginTop: 12 },

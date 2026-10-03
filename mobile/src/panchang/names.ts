@@ -83,3 +83,34 @@ export const LUNAR_MONTH_NAMES_EN = [
 // Paksha display names (base form — surfaces append 'पक्ष'/'Paksha' as needed).
 export const PAKSHA_NAMES_HI = { shukla: 'शुक्ल', krishna: 'कृष्ण' } as const;
 export const PAKSHA_NAMES_EN = { shukla: 'Shukla', krishna: 'Krishna' } as const;
+
+// The twelve sidereal rashis, Mesha first (index = floor(longitude / 30)).
+export const RASHI_NAMES_HI = [
+  'मेष',
+  'वृषभ',
+  'मिथुन',
+  'कर्क',
+  'सिंह',
+  'कन्या',
+  'तुला',
+  'वृश्चिक',
+  'धनु',
+  'मकर',
+  'कुम्भ',
+  'मीन',
+] as const;
+
+export const RASHI_NAMES_EN = [
+  'Mesha',
+  'Vrishabha',
+  'Mithuna',
+  'Karka',
+  'Simha',
+  'Kanya',
+  'Tula',
+  'Vrischika',
+  'Dhanu',
+  'Makara',
+  'Kumbha',
+  'Meena',
+] as const;

@@ -6,6 +6,7 @@ import React, {
   useState,
 } from 'react';
 import {
+  ActivityIndicator,
   FlatList,
   Keyboard,
   Pressable,
@@ -22,7 +23,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import {
-  getSearchIndex,
+  EMPTY_SEARCH_INDEX,
   runSearch,
   type SearchHit,
   type SearchSectionEntry,
@@ -30,6 +31,7 @@ import {
   type SearchVerseEntry,
 } from '@/data/searchIndex';
 import { library } from '@/data/texts';
+import { useSearchIndex } from './_useSearchIndex';
 import { getVidhiById } from '@/data/vidhi';
 import { useNewContent } from '@/contexts/NewContentContext';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
@@ -103,11 +105,12 @@ export default function SearchScreen({ navigation, route }: Props) {
     return () => clearTimeout(t);
   }, []);
 
-  // Build the index lazily on first user interaction (mount = first interaction
-  // from the user's perspective — they tapped search to get here).
-  const index = useMemo(() => getSearchIndex(), []);
+  // Usually already warm (built in the background after launch). If not, the
+  // screen still renders at once and searches an empty index until it lands —
+  // it never blocks on the build. See `_useSearchIndex.ts`.
+  const index = useSearchIndex();
 
-  const results = useMemo(() => runSearch(query, index), [query, index]);
+  const results = useMemo(() => runSearch(query, index ?? EMPTY_SEARCH_INDEX), [query, index]);
 
   const trimmed = query.trim();
   const hasQuery = trimmed.length > 0;
@@ -260,7 +263,8 @@ export default function SearchScreen({ navigation, route }: Props) {
             kind={resolution.kind}
             suggestions={resolution.kind === 'none' ? resolution.suggestions : []}
             lang={lang}
-            libraryEmpty={totalHits === 0}
+            // Unknown until the index lands: never claim the library is empty.
+            libraryEmpty={index != null && totalHits === 0}
             onSuggestion={(q) => {
               setQuery(q);
               inputRef.current?.focus();
@@ -367,7 +371,13 @@ export default function SearchScreen({ navigation, route }: Props) {
             radii={radii}
             lang={lang}
             header={askHeader}
-            empty={askHeader ? null : <ZeroState colors={colors} typography={typography} lang={lang} />}
+            empty={
+              askHeader ? null : index ? (
+                <ZeroState colors={colors} typography={typography} lang={lang} />
+              ) : (
+                <PreparingState colors={colors} typography={typography} lang={lang} />
+              )
+            }
             onSectionPress={(h) => openSection(h.entry.sourceId)}
             onDeityPress={(h) => openDeity(h.entry.deityId)}
             onVersePress={(h) => openVerse(h.entry)}
@@ -632,6 +642,48 @@ function EmptyState({
         </View>
       }
     />
+  );
+}
+
+/**
+ * Shown in place of the zero-results state while the index is still being
+ * built (a search within seconds of launch). It must not say "no matches" —
+ * nothing has been searched yet.
+ */
+function PreparingState({
+  colors,
+  typography,
+  lang,
+}: {
+  colors: Theme['colors'];
+  typography: Theme['typography'];
+  lang: Lang;
+}) {
+  const label = pick(lang, {
+    hi: 'खोज तैयार हो रही है…',
+    en: 'Preparing search…',
+    gu: 'શોધ તૈયાર થઈ રહી છે…',
+    kn: 'ಹುಡುಕಾಟ ಸಿದ್ಧವಾಗುತ್ತಿದೆ…',
+  });
+  return (
+    <View
+      style={styles.zero}
+      accessible
+      accessibilityRole="progressbar"
+      accessibilityLabel={label}
+      accessibilityLiveRegion="polite"
+      testID="search-preparing"
+    >
+      <ActivityIndicator color={colors.saffron} />
+      <Text
+        style={[
+          styles.zeroSecondary,
+          { color: colors.inkMuted, fontFamily: typography.meaning.fontFamily },
+        ]}
+      >
+        {label}
+      </Text>
+    </View>
   );
 }
 
@@ -997,22 +1049,27 @@ const styles = StyleSheet.create({
   resultBody: {
     flex: 1,
   },
+  // Devanagari needs ≥1.5× leading or the above-shirorekha matras
+  // (ि ी ें) are sliced off a single-line box (design.md §3.0).
   resultPrimary: {
     fontSize: 16,
+    lineHeight: 26,
     includeFontPadding: false,
   },
   resultSecondary: {
     fontSize: 12,
+    lineHeight: 18,
     marginTop: 2,
     includeFontPadding: false,
   },
   verseLine: {
     fontSize: 17,
-    lineHeight: 24,
+    lineHeight: 28,
     includeFontPadding: false,
   },
   verseMeta: {
     fontSize: 13,
+    lineHeight: 20,
     marginTop: 3,
     includeFontPadding: false,
   },

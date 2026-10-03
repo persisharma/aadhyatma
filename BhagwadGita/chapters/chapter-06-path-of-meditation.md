@@ -1371,7 +1371,7 @@ There can be no better teacher than Thee for Thou art the omniscient Lord. Thou 
 
 पार्थ नैवेह नामुत्र विनाशस्तस्य विद्यते।
 
-नहि कल्याणकृत्कश्िचद्दुर्गतिं तात गच्छति।।6.40।।
+नहि कल्याणकृत्कश्चिद्दुर्गतिं तात गच्छति।।6.40।।
 
 **Transliteration**
 

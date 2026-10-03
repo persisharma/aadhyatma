@@ -122,7 +122,7 @@ export default function GharVastuRosterScreen({ navigation }: { navigation: Navi
                 style={{
                   fontFamily: titleFont,
                   fontSize: 10,
-                  lineHeight: 14,
+                  lineHeight: 15,
                   color: cls === 'forbidden' ? colors.avoidDeep : cls === 'in-keeping' ? colors.saffronDeep : colors.inkSoft,
                 }}
               >

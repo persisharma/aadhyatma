@@ -16,14 +16,17 @@
  * (`userFacingImplementationCopy.test.ts` — the app does not narrate its own
  * storage). The ledger's privacy is a property of the feature, not a caption.
  */
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Svg, { Path } from 'react-native-svg';
 
+import BackgroundLayer from '@/components/BackgroundLayer';
 import ReaderHeader from '@/components/ReaderHeader';
+import { getDaanBackground } from '@/data/backgrounds';
+import { useTodayKey } from '@/utils/useTodayKey';
 import ShareButton from '@/components/ShareButton';
 import { useShare } from '@/utils/shareVerse';
 import { daanPrincipleShareable } from '@/utils/shareContent';
@@ -64,7 +67,11 @@ export default function DaanPunyaScreen({ navigation }: Props) {
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
 
   const [calendarSystem] = usePanchangCalendarSystem();
-  const today = new Date();
+  // Stable per calendar day — an inline `new Date()` changes every render, which
+  // makes useObservancesForDate's selectionKey churn and drives its effect into a
+  // setState loop ("Maximum update depth"). Mirror the Home Today surfaces.
+  const todayKey = useTodayKey();
+  const today = useMemo(() => new Date(todayKey), [todayKey]);
   const observances = useObservancesForDate(today, calendarSystem);
   // First covered observance wins the "आज" card; no match ⇒ the card is absent
   // (never a placeholder), and the vaar row still serves the guest (U2).
@@ -79,9 +86,9 @@ export default function DaanPunyaScreen({ navigation }: Props) {
   const principles = getDaanPrinciples();
   const kathas = getDaanKathas();
 
-  // Verse carousel: which card is in view (dots) and which meanings are unfolded.
+  // Verse carousel: which card is in view (dots). Meanings render in full — each
+  // fits its card, so there is no unfold toggle.
   const [verseIdx, setVerseIdx] = useState(0);
-  const [openMeanings, setOpenMeanings] = useState<Record<string, boolean>>({});
   const cardWidth = width - spacing.readingGutter * 2 - CAROUSEL_PEEK;
   const snap = cardWidth + CAROUSEL_GAP;
 
@@ -95,7 +102,10 @@ export default function DaanPunyaScreen({ navigation }: Props) {
   const quietLinkStyle = { fontFamily: titleFont, fontSize: 12.5, color: colors.saffronDeep };
 
   return (
-    <SafeAreaView style={[styles.root, { backgroundColor: colors.background }]} edges={['top']} testID="daan-punya-screen">
+    <View style={[styles.root, { backgroundColor: colors.parchment }]}>
+      {/* Annapurna giving anna to Shiva-as-bhikshu — a 2:3 portrait plate, cover-fitted full screen. */}
+      <BackgroundLayer source={getDaanBackground()} />
+      <SafeAreaView style={styles.root} edges={['top']} testID="daan-punya-screen">
       <ReaderHeader
         title={contentByLang(lang, 'दान-पुण्य', 'Daan Punya')}
         variant="index"
@@ -234,7 +244,6 @@ export default function DaanPunyaScreen({ navigation }: Props) {
           }}
         >
           {principles.map((entry) => {
-            const open = openMeanings[entry.id] === true;
             return (
               <View
                 key={entry.id}
@@ -259,27 +268,11 @@ export default function DaanPunyaScreen({ navigation }: Props) {
                   <Text style={{ fontFamily: typography.sectionLabel.fontFamily, fontSize: 10.5, letterSpacing: lang === 'en' ? 0.6 : 0, color: colors.inkMuted, textAlign: 'center', textTransform: 'uppercase', marginTop: 8 }}>
                     {contentByLang(lang, entry.citeHi, entry.citeEn)}
                   </Text>
-                  <Text
-                    numberOfLines={open ? undefined : 2}
-                    style={{ fontFamily: bodyFont, fontSize: 13, lineHeight: 20, color: colors.inkSoft, marginTop: 8 }}
-                  >
+                  <Text style={{ fontFamily: bodyFont, fontSize: 13, lineHeight: 20, color: colors.inkSoft, marginTop: 8 }}>
                     {meaningByLang(lang, entry.meaningHi, entry.meaningEn)}
                   </Text>
                 </View>
                 <View style={styles.cardActions}>
-                  <Pressable
-                    testID={`daan-principle-meaning-${entry.id}`}
-                    accessibilityRole="button"
-                    accessibilityLabel={open ? 'Collapse meaning' : 'Expand meaning'}
-                    onPress={() => setOpenMeanings((m) => ({ ...m, [entry.id]: !open }))}
-                    style={styles.inlineLink}
-                  >
-                    <Text style={{ fontFamily: titleFont, fontSize: 13, color: colors.saffronDeep }}>
-                      {open
-                        ? contentByLang(lang, 'संक्षेप ‹', 'Less ‹')
-                        : contentByLang(lang, 'पूरा अर्थ ›', 'Full meaning ›')}
-                    </Text>
-                  </Pressable>
                   {entry.gitaRef ? (
                     <Pressable
                       testID="daan-gita-link"
@@ -408,7 +401,8 @@ export default function DaanPunyaScreen({ navigation }: Props) {
           </Text>
         </Pressable>
       </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </View>
   );
 }
 
@@ -418,7 +412,6 @@ const styles = StyleSheet.create({
   card: { borderWidth: 1, paddingHorizontal: 14, paddingTop: 13, paddingBottom: 13 },
   verseCard: { justifyContent: 'space-between' },
   cardActions: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 6, gap: 8 },
-  inlineLink: { minHeight: 32, justifyContent: 'center' },
   shareEnd: { marginLeft: 'auto' },
   chip: { borderWidth: 1.5, paddingHorizontal: 12, paddingVertical: 5 },
   journeyBtn: { borderWidth: 1.5, paddingHorizontal: 14, paddingVertical: 7, marginTop: 11, alignSelf: 'flex-start' },

@@ -16,6 +16,7 @@ import {
   houseClassEn,
   houseClassHi,
   houseTheme,
+  type AgeBand,
   type BasisNode,
   type Dignity,
 } from './kundaliBasis';
@@ -80,10 +81,10 @@ export type YogaDefinition = {
 export const YOGA_DEFINITIONS: readonly YogaDefinition[] = [
   {
     id: 'budhaditya',
-    nameHi: 'बुधादित्य योग',
-    nameEn: 'Budhaditya yoga',
-    themeHi: 'सूर्य और बुध का एक भाव में होना — परम्परा इसे स्पष्ट बुद्धि, संवाद और सीखने की तत्परता से जोड़ती है।',
-    themeEn: 'Sun and Mercury sharing a house — tradition links it with clear thinking, articulate speech and a readiness to learn.',
+    nameHi: 'सूर्य–बुध सम्बन्ध · बुधादित्य योग (पारम्परिक एक-राशि नियम)',
+    nameEn: 'Sun–Mercury association · Budhaditya yoga (traditional same-sign rule)',
+    themeHi: 'सूर्य और बुध का एक राशि में होना — परम्परा इसे स्पष्ट बुद्धि, संवाद और सीखने की तत्परता से जोड़ती है। एक-राशि नियम हर ऐसी कुंडली में योग गिनता है; अंशों में निकटता जितनी अधिक, परम्परा इसे उतना ही सघन पढ़ती है — इसलिए इसे सम्बन्ध की तरह पढ़ें, हर कुंडली में समान बल का योग नहीं।',
+    themeEn: 'Sun and Mercury sharing a sign — tradition links it with clear thinking, articulate speech and a readiness to learn. The same-sign rule counts the yoga in every such chart; the closer the two stand by degree, the more concentrated tradition reads it — so read this as an association, not a yoga of equal strength in every chart.',
     weight: 75,
     source: { verified: false, referenceUrls: [], notes: 'BPHS; Phaladeepika ch. 6. Two-source review pending.' },
   },
@@ -98,10 +99,10 @@ export const YOGA_DEFINITIONS: readonly YogaDefinition[] = [
   },
   {
     id: 'chandra-mangal',
-    nameHi: 'चन्द्र-मंगल योग',
-    nameEn: 'Chandra-Mangal yoga',
-    themeHi: 'चन्द्र और मंगल का एक भाव में होना — परम्परा इसे उद्यम, कमाने की क्षमता और भावनाओं की तीव्रता से जोड़ती है।',
-    themeEn: 'Moon and Mars sharing a house — tradition links it with enterprise, earning capacity, and intensity of feeling.',
+    nameHi: 'चन्द्र–मंगल सम्बन्ध · चन्द्र-मंगल योग (पारम्परिक एक-राशि नियम)',
+    nameEn: 'Moon–Mars association · Chandra-Mangal yoga (traditional same-sign rule)',
+    themeHi: 'चन्द्र और मंगल का एक राशि में होना — परम्परा इसे उद्यम, कमाने की क्षमता और भावनाओं की तीव्रता से जोड़ती है। एक-राशि नियम हर ऐसी कुंडली में योग गिनता है; अंशों में निकटता जितनी अधिक, परम्परा इसे उतना ही सघन पढ़ती है।',
+    themeEn: 'Moon and Mars sharing a sign — tradition links it with enterprise, earning capacity, and intensity of feeling. The same-sign rule counts the yoga in every such chart; the closer the two stand by degree, the more concentrated tradition reads it.',
     weight: 72,
     source: { verified: false, referenceUrls: [], notes: 'BPHS; Saravali. Two-source review pending.' },
   },
@@ -180,6 +181,82 @@ function grahaNode(position: GrahaPosition): BasisNode {
   };
 }
 
+/**
+ * Orb inside which a same-sign pair is also called a CLOSE conjunction. The
+ * engine groups by whole sign (the classical bhava rule); the degree gap is
+ * always stated so "together" never implies a tight conjunction it did not
+ * measure. 10° is the wider of the two common orbs (8°/10°).
+ */
+export const CLOSE_CONJUNCTION_ORB_DEGREES = 10;
+
+/** Largest gap by degree among grahas that share a sign. */
+export function separationWithinSign(group: readonly GrahaPosition[]): number {
+  const degrees = group.map((position) => position.degreeInRashi);
+  return Math.max(...degrees) - Math.min(...degrees);
+}
+
+/** `10°32′` — whole minutes, never a decimal degree in copy. */
+export function formatSeparation(degrees: number): string {
+  const totalMinutes = Math.round(degrees * 60);
+  const whole = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  return `${whole}°${String(minutes).padStart(2, '0')}′`;
+}
+
+/** The nodes are always retrograde, so naming it says nothing — planets only. */
+function retrogradePlanets(group: readonly GrahaPosition[]): readonly GrahaPosition[] {
+  return group.filter((position) => position.retrograde && position.graha !== 'rahu' && position.graha !== 'ketu');
+}
+
+function retrogradeNamesHi(group: readonly GrahaPosition[]): string {
+  const names = retrogradePlanets(group).map((position) => GRAHA_NAMES_HI[position.graha]);
+  if (names.length === 0) return '';
+  return ` ${names.join(' और ')} वक्री ${names.length === 1 ? 'है' : 'हैं'}।`;
+}
+
+function retrogradeNamesEn(group: readonly GrahaPosition[]): string {
+  const names = retrogradePlanets(group).map((position) => GRAHA_NAMES_EN[position.graha]);
+  if (names.length === 0) return '';
+  return ` ${names.join(' and ')} ${names.length === 1 ? 'is' : 'are'} retrograde.`;
+}
+
+/** The degree-gap sentence every same-sign pairing carries (RULEBOOK §14.3.2). */
+function separationClauseHi(group: readonly GrahaPosition[]): string {
+  const gap = separationWithinSign(group);
+  const label = formatSeparation(gap);
+  return gap <= CLOSE_CONJUNCTION_ORB_DEGREES
+    ? `अंशों में ये लगभग ${label} के भीतर हैं — राशि से भी और अंश से भी निकट युति।${retrogradeNamesHi(group)}`
+    : `अंशों में ये लगभग ${label} दूर हैं — पूर्ण-राशि पद्धति इन्हें एक भाव में रखती है; यह अंशों की निकट युति नहीं है।${retrogradeNamesHi(group)}`;
+}
+
+function separationClauseEn(group: readonly GrahaPosition[]): string {
+  const gap = separationWithinSign(group);
+  const label = formatSeparation(gap);
+  return gap <= CLOSE_CONJUNCTION_ORB_DEGREES
+    ? `By degree they stand within about ${label} of each other — a close conjunction by degree as well as by sign.${retrogradeNamesEn(group)}`
+    : `By degree they stand about ${label} apart — the whole-sign reading places them in one bhava; this is not a tight conjunction.${retrogradeNamesEn(group)}`;
+}
+
+/**
+ * Register per age band, appended to conjunction and yoga bodies only. For a
+ * child the placement is recorded as something to notice over time — never a
+ * settled trait (PRD-43 §5.4; the September 2026 child-chart review).
+ */
+const CHILD_FRAME_HI: Readonly<Record<'conjunction' | 'yoga', string>> = {
+  conjunction: 'इस आयु में इसे केवल समय के साथ देखने की बात समझें — तय स्वभाव नहीं।',
+  yoga: 'बच्चे के लिए यह योग एक शास्त्रीय स्थिति के रूप में दर्ज है — यह खेल और सीख में वर्षों में कैसे दिखता है, यह देखने की बात है, तय गुण नहीं।',
+};
+
+const CHILD_FRAME_EN: Readonly<Record<'conjunction' | 'yoga', string>> = {
+  conjunction: 'At this age, treat this only as something to observe over time — not a fixed trait.',
+  yoga: 'For a child, the yoga is recorded as a classical placement — how it shows in play and learning over the years is something to watch, not a settled trait.',
+};
+
+function frameForBand(kind: 'conjunction' | 'yoga', band: AgeBand | undefined, hi: boolean): string {
+  if (band !== 'child') return '';
+  return ` ${hi ? CHILD_FRAME_HI[kind] : CHILD_FRAME_EN[kind]}`;
+}
+
 /* ------------------------------------------------------------------ */
 /*  1. Lagna lord                                                       */
 /* ------------------------------------------------------------------ */
@@ -189,7 +266,7 @@ const LAGNA_LORD_CLASS_HI: Record<'lagna' | 'kendra' | 'trikona' | 'dusthana' | 
   kendra: 'लग्नेश केन्द्र में है — परम्परा इसे जीवन के मुख्य स्तम्भों (घर, संबंध, कर्म) से सीधा जुड़ाव और टिकाऊ बल कहती है।',
   trikona: 'लग्नेश त्रिकोण में है — परम्परा इसे भाग्य, विद्या और सुयोग के साथ आत्म-प्रकाश से जोड़ती है।',
   dusthana: 'लग्नेश दुःस्थान में है — परम्परा इसे संघर्ष से गढ़े गए व्यक्तित्व और देर से मिलने वाली स्थिरता से जोड़ती है; यह क्षमता नहीं, मार्ग की बात है।',
-  other: 'लग्नेश एक सामान्य भाव में है — परम्परा में लग्नेश की स्थिति पूरे विवेचन की एक प्रमुख धुरी है, इसलिए यह भाव आपके स्वभाव का पहला रंग देता है।',
+  other: 'लग्नेश एक सामान्य भाव में है — परम्परा में लग्नेश की स्थिति पूरे विवेचन की एक प्रमुख धुरी है, इसलिए यह भाव स्वभाव का पहला रंग देता है।',
 };
 
 const LAGNA_LORD_CLASS_EN: Record<'lagna' | 'kendra' | 'trikona' | 'dusthana' | 'other', string> = {
@@ -239,7 +316,7 @@ function lagnaLordCombination(chart: KundaliChart): KundaliCombination {
 /*  2. Conjunctions                                                     */
 /* ------------------------------------------------------------------ */
 
-function conjunctions(chart: KundaliChart): KundaliCombination[] {
+function conjunctions(chart: KundaliChart, band?: AgeBand): KundaliCombination[] {
   const byHouse = new Map<number, GrahaPosition[]>();
   for (const graha of GRAHA_ORDER) {
     const position = pos(chart, graha);
@@ -262,10 +339,10 @@ function conjunctions(chart: KundaliChart): KundaliCombination[] {
       house,
       rashiIndex: rashi,
       weight: 80 + group.length * 4 + (KENDRA_HOUSES.includes(house) ? 6 : 0),
-      titleHi: `${names(grahas, true)} एक साथ · ${bhavaLabelHi(house)}`,
-      titleEn: `${names(grahas, false)} together · ${bhavaLabelEn(house)}`,
-      bodyHi: `${keywordsHi} — ये ${RASHI_NAMES_HI[rashi]} राशि में, ${bhavaLabelHi(house)} (${theme.hi}) में एक साथ हैं। परम्परा में एक भाव के ग्रह अपने विषय आपस में मिला देते हैं: यहाँ ${theme.hi} के विषय इन सब के रंग में एक साथ पढ़े जाते हैं, अलग-अलग नहीं।`,
-      bodyEn: `${keywordsEn} — share ${RASHI_NAMES_EN[rashi]} in the ${bhavaLabelEn(house)} (${theme.en}). Tradition reads grahas in one house as blending their significations: matters of ${theme.en} here carry all of these colours at once, not one at a time.`,
+      titleHi: `${names(grahas, true)} एक ही भाव में · ${bhavaLabelHi(house)}`,
+      titleEn: `${names(grahas, false)} in the same bhava · ${bhavaLabelEn(house)}`,
+      bodyHi: `${keywordsHi} — ये ${RASHI_NAMES_HI[rashi]} राशि में, ${bhavaLabelHi(house)} (${theme.hi}) में एक ही भाव में हैं। ${separationClauseHi(group)} परम्परा में एक भाव के ग्रह अपने विषय आपस में मिला देते हैं: यहाँ ${theme.hi} के विषय इन सब के रंग में एक साथ पढ़े जाते हैं, अलग-अलग नहीं।${frameForBand('conjunction', band, true)}`,
+      bodyEn: `${keywordsEn} — share ${RASHI_NAMES_EN[rashi]} in the ${bhavaLabelEn(house)} (${theme.en}). ${separationClauseEn(group)} Tradition reads grahas in one house as blending their significations: matters of ${theme.en} here carry all of these colours at once, not one at a time.${frameForBand('conjunction', band, false)}`,
       basis: [
         { kind: 'bhava', house, rashiIndex: rashi },
         ...group.map(grahaNode),
@@ -329,7 +406,8 @@ function yogaCombination(
   rashiIndex: number | null,
   basis: readonly BasisNode[],
   detailHi: string,
-  detailEn: string
+  detailEn: string,
+  band?: AgeBand
 ): KundaliCombination {
   return {
     id: `yoga-${def.id}`,
@@ -340,8 +418,8 @@ function yogaCombination(
     weight: def.weight,
     titleHi: def.nameHi,
     titleEn: def.nameEn,
-    bodyHi: `${detailHi} ${def.themeHi}`,
-    bodyEn: `${detailEn} ${def.themeEn}`,
+    bodyHi: `${detailHi} ${def.themeHi}${frameForBand('yoga', band, true)}`,
+    bodyEn: `${detailEn} ${def.themeEn}${frameForBand('yoga', band, false)}`,
     basis: [{ kind: 'yoga', yogaId: def.id }, ...basis],
   };
 }
@@ -357,7 +435,7 @@ function exchanged(chart: KundaliChart, a: Graha, b: Graha): boolean {
   return RASHI_LORD_BY_INDEX[pa.rashiIndex] === b && RASHI_LORD_BY_INDEX[pb.rashiIndex] === a;
 }
 
-function yogas(chart: KundaliChart): KundaliCombination[] {
+function yogas(chart: KundaliChart, band?: AgeBand): KundaliCombination[] {
   const out: KundaliCombination[] = [];
   const sun = pos(chart, 'sun');
   const moon = pos(chart, 'moon');
@@ -373,8 +451,9 @@ function yogas(chart: KundaliChart): KundaliCombination[] {
         sun.house,
         sun.rashiIndex,
         [grahaNode(sun), grahaNode(mercury)],
-        `सूर्य और बुध ${bhavaLabelHi(sun.house)} (${houseTheme(sun.house).hi}) में साथ हैं।`,
-        `Sun and Mercury share the ${bhavaLabelEn(sun.house)} (${houseTheme(sun.house).en}).`
+        `सूर्य और बुध ${bhavaLabelHi(sun.house)} (${houseTheme(sun.house).hi}) में एक ही राशि में हैं। ${separationClauseHi([sun, mercury])}`,
+        `Sun and Mercury share the ${bhavaLabelEn(sun.house)} (${houseTheme(sun.house).en}). ${separationClauseEn([sun, mercury])}`,
+        band
       )
     );
   }
@@ -389,7 +468,8 @@ function yogas(chart: KundaliChart): KundaliCombination[] {
         jupiter.rashiIndex,
         [grahaNode(moon), grahaNode(jupiter)],
         `गुरु चन्द्र से ${bhavaLabelHi(jupiterFromMoon)} (केन्द्र) में है।`,
-        `Jupiter stands in the ${bhavaLabelEn(jupiterFromMoon)} (a kendra) from the Moon.`
+        `Jupiter stands in the ${bhavaLabelEn(jupiterFromMoon)} (a kendra) from the Moon.`,
+        band
       )
     );
   }
@@ -402,8 +482,9 @@ function yogas(chart: KundaliChart): KundaliCombination[] {
         moon.house,
         moon.rashiIndex,
         [grahaNode(moon), grahaNode(mars)],
-        `चन्द्र और मंगल ${bhavaLabelHi(moon.house)} (${houseTheme(moon.house).hi}) में साथ हैं।`,
-        `Moon and Mars share the ${bhavaLabelEn(moon.house)} (${houseTheme(moon.house).en}).`
+        `चन्द्र और मंगल ${bhavaLabelHi(moon.house)} (${houseTheme(moon.house).hi}) में एक ही राशि में हैं। ${separationClauseHi([moon, mars])}`,
+        `Moon and Mars share the ${bhavaLabelEn(moon.house)} (${houseTheme(moon.house).en}). ${separationClauseEn([moon, mars])}`,
+        band
       )
     );
   }
@@ -436,7 +517,8 @@ function yogas(chart: KundaliChart): KundaliCombination[] {
           : `${bhavaLabelHi(k.house)} का स्वामी ${GRAHA_NAMES_HI[k.lord]} और ${bhavaLabelHi(t.house)} का स्वामी ${GRAHA_NAMES_HI[t.lord]} परस्पर राशि-परिवर्तन में हैं।`,
         together
           ? `The lord of the ${bhavaLabelEn(k.house)}, ${GRAHA_NAMES_EN[k.lord]}, and the lord of the ${bhavaLabelEn(t.house)}, ${GRAHA_NAMES_EN[t.lord]}, share the ${bhavaLabelEn(pk.house)}.`
-          : `The lord of the ${bhavaLabelEn(k.house)}, ${GRAHA_NAMES_EN[k.lord]}, and the lord of the ${bhavaLabelEn(t.house)}, ${GRAHA_NAMES_EN[t.lord]}, are in mutual exchange.`
+          : `The lord of the ${bhavaLabelEn(k.house)}, ${GRAHA_NAMES_EN[k.lord]}, and the lord of the ${bhavaLabelEn(t.house)}, ${GRAHA_NAMES_EN[t.lord]}, are in mutual exchange.`,
+        band
       );
       if (!kendraTrikona) kendraTrikona = candidate;
     }
@@ -470,7 +552,8 @@ function yogas(chart: KundaliChart): KundaliCombination[] {
           ? `The lord of the 2nd, ${GRAHA_NAMES_EN[lord2]}, and the lord of the 11th, ${GRAHA_NAMES_EN[lord11]}, share the ${bhavaLabelEn(p2.house)}.`
           : dhanaSwap
             ? `The lord of the 2nd, ${GRAHA_NAMES_EN[lord2]}, and the lord of the 11th, ${GRAHA_NAMES_EN[lord11]}, are in mutual exchange.`
-            : `The lords of the 2nd and 11th both sit in the wealth houses (2nd/11th).`
+            : `The lords of the 2nd and 11th both sit in the wealth houses (2nd/11th).`,
+        band
       )
     );
   }
@@ -484,10 +567,11 @@ function yogas(chart: KundaliChart): KundaliCombination[] {
 
 export function computeCombinations(
   chart: KundaliChart,
-  options?: { cap?: number }
+  options?: { cap?: number; band?: AgeBand }
 ): readonly KundaliCombination[] {
   const cap = options?.cap ?? DEFAULT_CAP;
-  const all = [lagnaLordCombination(chart), ...conjunctions(chart), ...yogas(chart), ...dignities(chart)];
+  const band = options?.band;
+  const all = [lagnaLordCombination(chart), ...conjunctions(chart, band), ...yogas(chart, band), ...dignities(chart)];
   for (const combination of all) {
     if (combination.basis.length === 0) throw new Error(`combination ${combination.id} has no basis`);
   }

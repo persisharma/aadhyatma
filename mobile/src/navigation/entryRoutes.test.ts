@@ -310,6 +310,7 @@ for (const sourceId of [
     ['saraswati-stotram', 'SaraswatiStotramChapters'],
     ['krishna-stotram', 'KrishnaStotramChapters'],
     ['valmiki-ramayan', 'ValmikiRamayanChapters'],
+    ['gita-saar', 'GitaSaarChapters'],
   ] as const) {
     assert.deepEqual(
       buildEntryStartTarget(entry(id)),

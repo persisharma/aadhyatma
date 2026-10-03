@@ -33,7 +33,16 @@ import type { CalendarSystem, ResolvedObservance } from './types';
 //     earlier, onto the civil day that actually contains the ingress instant
 //     (Makar Sankranti 2026 was resolving to 15 Jan against a published 14 Jan).
 //     A city that already scanned must re-scan or it keeps the old, wrong dates.
-const CACHE_VERSION = 7;
+// v8: section A — 27 pan-India jayantis and named days (Varaha, Vamana, Narak
+//     Chaturdashi, Mauni Amavasya…). Catalog additions only; no matcher change
+//     and no shipped date moved.
+// v9: day-rule audit — pradosh / nishita / ratri / sunset / sunset-last /
+//     purvahna / pradosh-next conventions, and 25 rules retagged onto them
+//     (Dussehra, Diwali, Dhanteras, Maha Shivaratri, Holi, the monthly Pradosh,
+//     Masik Shivaratri, Kalashtami, Purnima and Skanda Sashti vrats…). MOVES
+//     shipped dates — ~417 Ujjain rows 2024–2031 — so every city re-scans.
+//     Adds `maha-navami` (madhyahna).
+const CACHE_VERSION = 9;
 const KEY_ROOT = '@vedansh:observances:';
 const KEY_PREFIX = `${KEY_ROOT}v${CACHE_VERSION}:`;
 

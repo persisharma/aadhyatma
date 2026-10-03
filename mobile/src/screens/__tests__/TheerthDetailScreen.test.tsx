@@ -2,9 +2,13 @@ import assert from 'node:assert/strict';
 import { ShareProvider } from '@/utils/shareVerse';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Image, ImageBackground, Text } from 'react-native';
+import { Image, ImageBackground, StyleSheet, Text } from 'react-native';
 import { backgroundImages } from '@assets/backgrounds';
 import { getDeityBackground, getTheerthBackground } from '@/data/backgrounds';
+import { getTempleDetailById, templesWithDetails } from '@/data/theerth/temples';
+
+// Rows alone carry no prose now; this screen's assertions all need the reading.
+const temples = templesWithDetails();
 
 jest.mock('@react-native-async-storage/async-storage', () => ({
   getItem: jest.fn(() => Promise.resolve(null)),
@@ -111,6 +115,11 @@ test('Salasar Balaji shows its commissioned sketch as an in-content illustration
   assert.equal(frames[0].props.accessibilityLabel, 'सालासर बालाजी');
   const img = frames[0].findByType(Image);
   assert.equal(img.props.source, backgroundImages.theerth_salasar_balaji, 'frame shows the Salasar plate');
+  // Explicit height so RN's injected intrinsic asset height (1024 pt) can't
+  // win over the square sizing and zoom the frame into the plate's canopy.
+  const imgStyle = StyleSheet.flatten(img.props.style);
+  assert.equal(imgStyle.width, '100%');
+  assert.equal(imgStyle.height, '100%');
   assert.equal(tree.root.findAllByType(ImageBackground).length, 1, 'faded background layer still renders');
 });
 
@@ -156,11 +165,48 @@ for (const temple of RAJASTHAN_WAVE) {
   });
 }
 
-test('temples without extended sections render only the two core sections', () => {
-  const text = render('somnath', 'en');
-  assert.doesNotMatch(text, /Sthapana Katha/);
-  assert.equal((text.match(/Significance/g) ?? []).length, 1);
-  assert.equal((text.match(/Origin Story/g) ?? []).length, 1);
+// Picked from the data rather than hard-coded: the §12.6 rollout keeps
+// converting bare rows into full readings, so naming one here would break the
+// moment that temple is enriched.
+const bareTemple = temples.find((t) => !t.sections?.length);
+
+(bareTemple ? test : test.skip)(
+  'temples without extended sections render only the two core sections',
+  () => {
+    const text = render(bareTemple!.id, 'en');
+    assert.doesNotMatch(text, /Sthapana Katha/);
+    assert.equal((text.match(/Significance/g) ?? []).length, 1);
+    assert.equal((text.match(/Origin Story/g) ?? []).length, 1);
+  },
+);
+
+// Blanket cover for the rollout: every temple that carries the five §12.6
+// sections must actually render all five headings in both languages. This is
+// what lets an enrichment wave add temples without touching this file.
+describe('every enriched temple renders its full reading', () => {
+  const enriched = temples.filter((t) => t.sections?.length);
+
+  test.each(enriched.map((t) => [t.id] as const))('%s renders five sections in Hindi', (id) => {
+    const text = render(id, 'hi');
+    for (const section of getTempleDetailById(id)!.sections!) {
+      assert.ok(
+        text.includes(section.titleHi),
+        `${id}: Hindi heading "${section.titleHi}" is missing from the detail screen`,
+      );
+    }
+    assert.match(text, /स्रोत/);
+  });
+
+  test.each(enriched.map((t) => [t.id] as const))('%s renders five sections in English', (id) => {
+    const text = render(id, 'en');
+    for (const section of getTempleDetailById(id)!.sections!) {
+      assert.ok(
+        text.includes(section.titleEn),
+        `${id}: English heading "${section.titleEn}" is missing from the detail screen`,
+      );
+    }
+    assert.match(text, /Sources/);
+  });
 });
 
 test('shows a not-found message for an unknown temple id', () => {

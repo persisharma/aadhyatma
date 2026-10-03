@@ -1,0 +1,632 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>
+<title>कारागार की वह रात</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Noto+Serif+Devanagari:wght@400;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap">
+<style>
+  :root {
+    --parchment: #F3E7C9;
+    --parchment-soft: #F8EFD6;
+    --parchment-deep: #E9D9B1;
+    --ink: #1A0E03;
+    --ink-soft: #5A3A1E;
+    --ink-muted: #6E5230;
+    --saffron: #B8621B;
+    --saffron-deep: #8A3E0B;
+    --gold: #A67C34;
+    --bubble: #FFF8E6;
+    --hi: "Noto Serif Devanagari", "Kohinoor Devanagari", "Mangal", serif;
+    --en: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    --display: "Yatra One", "Noto Serif Devanagari", serif;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    background: var(--parchment-deep);
+    background-image: radial-gradient(ellipse at 50% 0%, var(--parchment-soft) 0%, var(--parchment) 45%, var(--parchment-deep) 100%);
+    color: var(--ink);
+    font-family: var(--hi);
+    padding-inline: 16px;
+    padding-block: 12px 24px;
+  }
+  body.en { font-family: var(--en); }
+  .book { max-width: 480px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+
+  .topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .crest { display: flex; align-items: center; gap: 8px; color: var(--saffron-deep); font-size: 14px; font-weight: 600; }
+  .crest .om { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--saffron); display: grid; place-items: center; font-family: var(--hi); font-size: 15px; line-height: 1; }
+  body.en .crest { font-family: var(--en); font-size: 16px; letter-spacing: .02em; }
+  .lang { display: flex; border: 1.5px solid var(--gold); border-radius: 999px; overflow: hidden; }
+  .lang button { border: 0; background: transparent; color: var(--ink-muted); padding: 5px 12px; cursor: pointer; font-size: 14px; }
+  .lang button:first-child { font-family: var(--hi); }
+  .lang button:last-child { font-family: var(--en); font-style: italic; font-size: 15px; }
+  .lang button[aria-pressed="true"] { background: var(--saffron-deep); color: var(--parchment-soft); }
+  button:focus-visible { outline: 2px solid var(--saffron); outline-offset: 2px; }
+
+  .page { display: flex; flex-direction: column; gap: 12px; }
+  .panel {
+    position: relative; margin: 0; border-radius: 3px; overflow: hidden; background: #A42C1C;
+    aspect-ratio: 4 / 5; max-width: 100%;
+    box-shadow: 0 1px 0 rgba(26,14,3,.4), 0 8px 22px rgba(58, 30, 8, .28);
+  }
+  .panel svg.art, .panel img.art { display: block; width: 100%; height: 100%; }
+  .panel img.art { object-fit: contain; background: var(--parchment-soft); }
+
+  .bubble {
+    position: absolute; background: var(--bubble); color: var(--ink);
+    border: 2px solid var(--ink); border-radius: 14px; padding: 8px 12px 9px;
+    font-size: 15px; line-height: 1.5; box-shadow: 2px 3px 0 rgba(26,14,3,.55);
+  }
+  body.en .bubble { font-size: 16.5px; line-height: 1.3; }
+  .bubble .who { display: block; font-size: 11px; font-weight: 600; letter-spacing: .04em; color: var(--saffron-deep); margin-bottom: 2px; }
+  body.en .bubble .who { font-family: var(--en); font-size: 12.5px; letter-spacing: .12em; text-transform: uppercase; }
+  .bubble::after, .bubble::before { content: ""; position: absolute; width: 0; height: 0; border: solid transparent; }
+  .bubble.t-bl::before { left: 22px; bottom: -16px; border-width: 16px 14px 0 0; border-top-color: var(--ink); }
+  .bubble.t-bl::after { left: 24.5px; bottom: -11px; border-width: 11px 9px 0 0; border-top-color: var(--bubble); }
+  .bubble.t-tr::before { right: 26px; top: -16px; border-width: 0 0 16px 14px; border-bottom-color: var(--ink); }
+  .bubble.t-tr::after { right: 28.5px; top: -11px; border-width: 0 0 11px 9px; border-bottom-color: var(--bubble); }
+  .bubble.voice { background: rgba(255, 244, 214, .95); border: 1.5px solid var(--gold); border-radius: 50% / 40%; text-align: center; padding: 12px 22px; box-shadow: 0 0 22px rgba(255, 220, 150, .85); }
+  body.en .bubble.voice { font-style: italic; }
+
+  .caption {
+    background: var(--parchment-soft); border: 1px solid var(--gold); border-radius: 4px;
+    padding: 14px 16px 12px; display: flex; flex-direction: column; gap: 10px;
+    box-shadow: 0 2px 6px rgba(58,30,8,.08);
+  }
+  .caption p { margin: 0; font-size: 17px; line-height: 1.75; color: var(--ink); text-wrap: pretty; }
+  body.en .caption p { font-size: 19px; line-height: 1.45; }
+  .src { align-self: flex-start; font-size: 11.5px; font-weight: 600; color: var(--saffron-deep); background: rgba(184, 98, 27, .12); border-radius: 999px; padding: 3px 10px; }
+  body.en .src { font-family: var(--en); font-size: 13px; letter-spacing: .04em; }
+
+  .cover-title { font-family: var(--display); font-size: 34px; line-height: 1.25; color: var(--saffron-deep); margin: 0; text-wrap: balance; }
+  body.en .cover-title { font-family: var(--en); font-weight: 600; font-size: 36px; line-height: 1.1; }
+  .cover-sub { font-size: 14px; color: var(--ink-soft); margin: 0; }
+  body.en .cover-sub { font-size: 17px; font-style: italic; }
+
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .nav button.step {
+    border: 1.5px solid var(--saffron-deep); background: var(--parchment-soft); color: var(--saffron-deep);
+    border-radius: 999px; padding: 8px 16px; font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; min-width: 96px;
+  }
+  .nav button.step.primary { background: var(--saffron-deep); color: var(--parchment-soft); }
+  .nav button.step:disabled { opacity: .35; cursor: default; }
+  .count { font-size: 14px; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+  .dots { display: flex; justify-content: center; gap: 7px; flex-wrap: wrap; }
+  .dots button { width: 9px; height: 9px; padding: 0; border-radius: 50%; border: 0; background: rgba(138, 62, 11, .25); cursor: pointer; }
+  .dots button[aria-current="true"] { background: var(--saffron-deep); transform: scale(1.25); }
+
+  .lessons { display: flex; flex-direction: column; gap: 14px; margin: 0; padding: 0; list-style: none; }
+  .lessons li { display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start; }
+  .lessons .n { width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--saffron); color: var(--saffron-deep); display: grid; place-items: center; font-size: 14px; font-weight: 600; }
+  .lessons strong { display: block; font-size: 17px; line-height: 1.5; }
+  body.en .lessons strong { font-size: 19.5px; line-height: 1.25; }
+  .lessons span.d { display: block; font-size: 14.5px; line-height: 1.6; color: var(--ink-soft); margin-top: 2px; }
+  body.en .lessons span.d { font-size: 16.5px; line-height: 1.35; }
+  .h { font-family: var(--display); font-size: 24px; color: var(--saffron-deep); margin: 0; }
+  body.en .h { font-family: var(--en); font-weight: 600; font-size: 27px; }
+  .note { border-top: 1px dashed var(--gold); padding-top: 10px; font-size: 14px; line-height: 1.6; color: var(--ink-soft); }
+  body.en .note { font-size: 16px; line-height: 1.35; }
+  .note b { color: var(--saffron-deep); }
+  details { font-size: 13px; color: var(--ink-soft); }
+  details summary { cursor: pointer; color: var(--saffron-deep); font-weight: 600; font-size: 14px; }
+  details ol { padding-left: 20px; margin: 8px 0 0; display: flex; flex-direction: column; gap: 6px; font-family: var(--en); font-size: 15px; line-height: 1.3; }
+  .emblem { display: flex; justify-content: center; }
+
+  .page.enter { animation: turn .38s ease-out; }
+  @keyframes turn { from { opacity: .35; transform: translateX(var(--dir, 18px)); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .page.enter { animation: none; } }
+  svg.defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+</style>
+
+<svg class="defs" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="gGlow"><stop offset="0" stop-color="#FFF0B8" stop-opacity="1"/><stop offset=".35" stop-color="#F6C552" stop-opacity=".6"/><stop offset="1" stop-color="#F6C552" stop-opacity="0"/></radialGradient>
+    <radialGradient id="gGlowRose"><stop offset="0" stop-color="#FFE0BC" stop-opacity="1"/><stop offset=".4" stop-color="#EC8A48" stop-opacity=".55"/><stop offset="1" stop-color="#EC8A48" stop-opacity="0"/></radialGradient>
+    <radialGradient id="gMoon"><stop offset="0" stop-color="#FBF3DF" stop-opacity=".6"/><stop offset="1" stop-color="#FBF3DF" stop-opacity="0"/></radialGradient>
+    <linearGradient id="gShade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0A1024" stop-opacity="0"/><stop offset="1" stop-color="#0A1024" stop-opacity=".55"/></linearGradient>
+    <pattern id="pFlor" width="56" height="56" patternUnits="userSpaceOnUse">
+      <g fill="#F6D478" opacity=".5">
+        <g transform="translate(14 14)"><circle r="2"/><ellipse cy="-5" rx="1.8" ry="3.4"/><ellipse cy="5" rx="1.8" ry="3.4"/><ellipse cx="-5" rx="3.4" ry="1.8"/><ellipse cx="5" rx="3.4" ry="1.8"/></g>
+        <g transform="translate(42 42)"><circle r="2"/><ellipse cy="-5" rx="1.8" ry="3.4"/><ellipse cy="5" rx="1.8" ry="3.4"/><ellipse cx="-5" rx="3.4" ry="1.8"/><ellipse cx="5" rx="3.4" ry="1.8"/></g>
+        <circle cx="42" cy="14" r="1.2"/><circle cx="14" cy="42" r="1.2"/>
+      </g>
+    </pattern>
+    <pattern id="pStars" width="90" height="90" patternUnits="userSpaceOnUse">
+      <g fill="#FBF3DF" opacity=".75">
+        <g transform="translate(18 22)"><ellipse cy="-4" rx="1.2" ry="2.8"/><ellipse cy="4" rx="1.2" ry="2.8"/><ellipse cx="-4" rx="2.8" ry="1.2"/><ellipse cx="4" rx="2.8" ry="1.2"/></g>
+        <g transform="translate(64 66)"><ellipse cy="-3" rx="1" ry="2.2"/><ellipse cy="3" rx="1" ry="2.2"/><ellipse cx="-3" rx="2.2" ry="1"/><ellipse cx="3" rx="2.2" ry="1"/></g>
+        <circle cx="70" cy="18" r="1.1"/><circle cx="30" cy="70" r="1"/><circle cx="48" cy="44" r=".8"/>
+      </g>
+    </pattern>
+    <pattern id="pBrick" width="48" height="24" patternUnits="userSpaceOnUse"><path d="M0 .75H48M0 12.75H48M.75 0V12M24.75 12V24" stroke="rgba(0,0,0,.3)" stroke-width="1.5" fill="none"/><path d="M3 3H20M28 15H44" stroke="rgba(255,230,190,.07)" stroke-width="2" fill="none"/></pattern>
+    <pattern id="pWave" width="28" height="14" patternUnits="userSpaceOnUse"><path d="M0,14 Q7,2 14,14 Q21,2 28,14" stroke="#A8DADB" stroke-width="1.6" fill="none" opacity=".75"/></pattern>
+    <pattern id="pRain" width="24" height="40" patternUnits="userSpaceOnUse"><path d="M20 0 L12 16 M8 22 L0 38" stroke="rgba(210,228,255,.4)" stroke-width="1.5" fill="none"/></pattern>
+    <pattern id="pDotW" width="7" height="7" patternUnits="userSpaceOnUse"><circle cx="3.5" cy="3.5" r=".95" fill="rgba(255,244,214,.6)"/></pattern>
+    <pattern id="pDotR" width="7" height="7" patternUnits="userSpaceOnUse"><circle cx="3.5" cy="3.5" r="1" fill="rgba(170,34,24,.6)"/></pattern>
+    <g id="chain" fill="none" stroke="#1A0E03" stroke-width="4.2"><ellipse cx="0" cy="0" rx="5" ry="8"/><ellipse cx="0" cy="14" rx="3" ry="8"/><ellipse cx="0" cy="28" rx="5" ry="8"/><ellipse cx="0" cy="42" rx="3" ry="8"/><ellipse cx="0" cy="56" rx="5" ry="8"/><ellipse cx="0" cy="70" rx="3" ry="8"/><ellipse cx="0" cy="84" rx="5" ry="8"/></g>
+    <g id="chainIn" fill="none" stroke="#8A8378" stroke-width="2"><ellipse cx="0" cy="0" rx="5" ry="8"/><ellipse cx="0" cy="14" rx="3" ry="8"/><ellipse cx="0" cy="28" rx="5" ry="8"/><ellipse cx="0" cy="42" rx="3" ry="8"/><ellipse cx="0" cy="56" rx="5" ry="8"/><ellipse cx="0" cy="70" rx="3" ry="8"/><ellipse cx="0" cy="84" rx="5" ry="8"/></g>
+    <g id="rays" fill="#FFE7A6" opacity=".2">
+      <path d="M0,0 L-26,-280 L26,-280 Z"/><path d="M0,0 L-26,-280 L26,-280 Z" transform="rotate(30)"/><path d="M0,0 L-26,-280 L26,-280 Z" transform="rotate(-30)"/>
+      <path d="M0,0 L-26,-280 L26,-280 Z" transform="rotate(60)"/><path d="M0,0 L-26,-280 L26,-280 Z" transform="rotate(-60)"/><path d="M0,0 L-26,-280 L26,-280 Z" transform="rotate(90)"/>
+      <path d="M0,0 L-26,-280 L26,-280 Z" transform="rotate(-90)"/><path d="M0,0 L-26,-280 L26,-280 Z" transform="rotate(135)"/><path d="M0,0 L-26,-280 L26,-280 Z" transform="rotate(-135)"/><path d="M0,0 L-26,-280 L26,-280 Z" transform="rotate(180)"/>
+    </g>
+  </defs>
+</svg>
+
+<main class="book">
+  <header class="topbar">
+    <div class="crest"><span class="om" aria-hidden="true">ॐ</span><span id="crestText">श्रीकृष्ण जन्म</span></div>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" id="langHi" aria-pressed="true">हिं</button>
+      <button type="button" id="langEn" aria-pressed="false">EN</button>
+    </div>
+  </header>
+
+  <article class="page" id="page" aria-live="polite"></article>
+
+  <nav class="nav" aria-label="Pages">
+    <button type="button" class="step" id="prev">‹</button>
+    <span class="count" id="count"></span>
+    <button type="button" class="step primary" id="next">›</button>
+  </nav>
+  <div class="dots" id="dots"></div>
+</main>
+
+<script>
+(function () {
+  /* ---------- Pattachitra drawing kit ---------- */
+  const OL = '#1A0E03', GOLD = '#E2A93B', GOLD2 = '#F6D478', RED = '#B8261B', CREAM = '#FBF3DF', WOOD = '#8B5A2B';
+  const SK = { fair: '#F3C49A', wheat: '#DDA271', kansa: '#CF8F66', blue: '#2F6DB5', devi: '#F2B05A' };
+
+  const sh = (d, fill, w) => `<path d="${d}" fill="${fill}" stroke="${OL}" stroke-width="${w || 2}" stroke-linejoin="round"/>`;
+  const limb = (d, c, w) => `<path d="${d}" fill="none" stroke="${OL}" stroke-width="${w + 3.5}" stroke-linecap="round" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
+  const hand = (x, y, c, r) => `<circle cx="${x}" cy="${y}" r="${r || 4.6}" fill="${c}" stroke="${OL}" stroke-width="1.8"/>`;
+  const fig = (x, y, s, body, flip) => `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s})">${body}</g>`;
+  const glow = (x, y, r, id) => `<circle cx="${x}" cy="${y}" r="${r}" fill="url(#${id || 'gGlow'})"/>`;
+  const dotted = (d, c, gap) => `<path d="${d}" fill="none" stroke="${c}" stroke-width="3.2" stroke-dasharray="0.1 ${gap || 8}" stroke-linecap="round"/>`;
+
+  const FACE_M = 'M-12,-188 Q0,-196 9,-189 Q14,-184 14,-176 L21,-167 L15,-165 L16,-161 L13.5,-159.5 L15,-156 Q11,-150 4,-150 Q-6,-150 -10,-157 Q-17,-170 -12,-188 Z';
+  const HAIR_M = 'M-13,-186 Q-1,-199 11,-190 Q3,-190 -3,-185 Q-9,-177 -8,-163 Q-12,-158 -15,-166 Q-18,-177 -13,-186 Z';
+  const FACE_F = 'M-12,-186 Q0,-195 9,-188 Q13,-183 13,-176 L19,-168 L14,-166 L15,-162 L13,-160.5 L14,-157.5 Q10,-151 4,-151 Q-6,-151 -10,-158 Q-16,-170 -12,-186 Z';
+
+  function headM(h) {
+    const sk = h.skin, hair = '#140B04';
+    let s = '';
+    if (h.gear === 'bun') s += `<circle cx="-9" cy="-192" r="8.5" fill="${hair}" stroke="${OL}" stroke-width="2"/>`;
+    s += sh(FACE_M, sk) + sh(HAIR_M, hair);
+    s += `<ellipse cx="-3" cy="-168" rx="3.2" ry="4.6" fill="${sk}" stroke="${OL}" stroke-width="1.4"/><circle cx="-3" cy="-161" r="2.6" fill="${GOLD}" stroke="${OL}" stroke-width="1"/>`;
+    s += h.eyeClosed
+      ? `<path d="M3.5,-174.5 Q8.5,-171.5 13.5,-175" fill="none" stroke="${OL}" stroke-width="1.6"/>`
+      : `<path d="M3,-175 Q8,-179.5 13.5,-175.5 Q8,-171.8 3,-175 Z" fill="${CREAM}" stroke="${OL}" stroke-width="1.4"/><circle cx="9.2" cy="-175.6" r="1.9" fill="${OL}"/>`;
+    s += h.fierce
+      ? `<path d="M2,-178 L14.5,-183.5" stroke="${OL}" stroke-width="2.4" stroke-linecap="round"/>`
+      : `<path d="M2,-180 Q8,-184 14,-180.5" fill="none" stroke="${OL}" stroke-width="1.6"/>`;
+    s += `<path d="M14.6,-160.6 L17.2,-160.2" stroke="#9E2A1C" stroke-width="1.8" stroke-linecap="round"/>`;
+    if (h.tilak !== false) s += `<path d="M15.6,-187 L14.8,-181.5" stroke="#C0392B" stroke-width="2" stroke-linecap="round"/>`;
+    if (h.beard) s += sh('M15,-157 Q13,-144 2,-142 Q-8,-145 -10,-157 Q-2,-151 6,-151 Q11,-152 15,-157 Z', hair);
+    if (h.mst === 'curl') s += sh('M15.5,-163 Q7,-158.5 0,-165 Q-3,-169 0,-171 Q1,-164 15,-160.5 Z', hair);
+    else if (h.mst) s += sh('M15.5,-163 Q9,-159.5 3,-164 Q8,-158 15,-160.5 Z', hair);
+    if (h.gear === 'crown') s += sh('M-14,-186 L-13,-205 L-7,-198 L-1,-215 L5,-198 L11,-206 L13,-186 Z', GOLD) + sh('M-15,-189 L14,-189 L14,-184 L-15,-184 Z', GOLD2) + `<circle cx="-1" cy="-202" r="2.6" fill="${RED}"/><circle cx="-8" cy="-193" r="1.7" fill="${RED}"/><circle cx="7" cy="-193" r="1.7" fill="${RED}"/>`;
+    if (h.gear === 'helmet') s += sh('M-15,-183 Q-2,-207 15,-183 Q0,-188 -15,-183 Z', '#9A9A92') + sh('M-2,-199 L0,-212 L2.5,-199 Z', '#9A9A92') + `<path d="M-15,-184 Q0,-189 15,-184" stroke="${GOLD}" stroke-width="2.2" fill="none"/>`;
+    if (h.gear === 'bun') s += `<path d="M-16,-190 Q-9,-185 -2,-190" fill="none" stroke="${GOLD}" stroke-width="2.2"/>`;
+    return s;
+  }
+
+  const D_STAND = 'M-21,-100 L21,-100 L25,-40 L21,-4 L6,-4 L2,-46 L-2,-46 L-6,-4 L-21,-4 L-25,-40 Z';
+  const D_WALK = 'M-21,-100 L21,-100 L29,-44 L33,-5 L18,-5 L10,-44 L0,-60 L-10,-44 L-18,-5 L-33,-5 L-29,-44 Z';
+
+  function man(o) {
+    const sk = o.skin, A = o.arms;
+    let s = limb(A.back.d, sk, 8) + hand(A.back.h[0], A.back.h[1], sk);
+    const fx = o.walk ? [-26, 27] : [-13, 14];
+    s += fx.map(x => `<ellipse cx="${x}" cy="-3" rx="8" ry="3.5" fill="${sk}" stroke="${OL}" stroke-width="1.6"/>`).join('');
+    const dd = o.walk ? D_WALK : D_STAND;
+    s += sh(dd, o.dhoti) + `<path d="${dd}" fill="url(#pDotR)"/>`;
+    s += `<path d="M0,-100 L0,-62" stroke="${OL}" stroke-width="1.3"/>` + `<path d="${o.walk ? 'M-31,-26 L-18,-26 M18,-26 L31,-26' : 'M-24,-26 L-4,-26 M4,-26 L23,-26'}" stroke="${o.border}" stroke-width="3.4"/>`;
+    s += sh('M-21,-106 L21,-106 L21,-98 L-21,-98 Z', o.border);
+    s += sh('M-5,-154 L5,-154 L5,-146 L-5,-146 Z', sk);
+    s += sh('M-16,-150 Q0,-155 16,-150 L20,-104 L-20,-104 Z', sk);
+    if (o.sash) s += sh('M-15,-149 L-6,-152 L20,-106 L11,-102 Z', o.sash);
+    s += `<path d="M-9,-150 Q0,-137 9,-150" fill="none" stroke="${GOLD}" stroke-width="2.6"/>`;
+    if (o.pre) s += o.pre;
+    s += limb(A.front.d, sk, 8) + hand(A.front.h[0], A.front.h[1], sk);
+    s += headM(o.head);
+    if (o.post) s += o.post;
+    return s;
+  }
+
+  function woman(o) {
+    const sk = o.skin, A = o.arms, hair = '#140B04';
+    let s = limb(A.back.d, sk, 6.5) + hand(A.back.h[0], A.back.h[1], sk, 4);
+    s += [-13, 13].map(x => `<ellipse cx="${x}" cy="-3" rx="7" ry="3.2" fill="${sk}" stroke="${OL}" stroke-width="1.5"/>`).join('');
+    const SKD = 'M-20,-112 L20,-112 L34,-5 L-34,-5 Z';
+    s += sh(SKD, o.sari) + `<path d="${SKD}" fill="url(#pDotW)"/>`;
+    s += sh('M-34,-5 L34,-5 L32.4,-17 L-32.4,-17 Z', o.border) + dotted('M-31,-11 L31,-11', RED, 6);
+    s += `<path d="M4,-112 L10,-17 M10,-112 L19,-17" stroke="${OL}" stroke-width="1.2" fill="none"/>`;
+    s += sh('M-4.5,-153 L4.5,-153 L4.5,-146 L-4.5,-146 Z', sk);
+    s += sh('M-14,-150 Q0,-154 14,-150 L16,-110 L-16,-110 Z', o.blouse);
+    s += `<path d="M-8,-150 Q0,-139 8,-150" fill="none" stroke="${GOLD}" stroke-width="2.4"/>`;
+    s += sh(FACE_F, sk) + sh('M-12,-186 Q0,-196 10,-189 Q2,-189 -4,-184 Q-9,-176 -9,-166 Q-14,-172 -12,-186 Z', hair);
+    s += `<path d="M2,-174.5 Q8,-180 14,-175 Q8,-171 2,-174.5 Z" fill="${CREAM}" stroke="${OL}" stroke-width="1.4"/><circle cx="9" cy="-175.4" r="2" fill="${OL}"/><path d="M1.5,-180.5 Q8,-184.5 14,-180" fill="none" stroke="${OL}" stroke-width="1.5"/>`;
+    s += `<circle cx="13.2" cy="-183.4" r="1.9" fill="${RED}"/><circle cx="16.4" cy="-164" r="3.2" fill="none" stroke="${GOLD}" stroke-width="1.5"/><path d="M13.8,-160.2 L16.4,-159.9" stroke="#B0301F" stroke-width="2" stroke-linecap="round"/>`;
+    const VEIL = 'M-16,-158 Q-20,-192 1,-195 Q12,-195 14,-187 Q2,-190 -6,-182 Q-10,-172 -8,-158 Q-4,-138 12,-122 L18,-110 L-18,-110 Q-24,-132 -16,-158 Z';
+    s += sh(VEIL, o.sari) + `<path d="${VEIL}" fill="url(#pDotW)"/>`;
+    s += `<path d="M14,-187 Q2,-190 -6,-182 Q-10,-172 -8,-158 Q-4,-138 12,-122" fill="none" stroke="${o.border}" stroke-width="3.2"/>`;
+    s += `<circle cx="-2" cy="-162" r="2.6" fill="${GOLD}" stroke="${OL}" stroke-width="1"/>`;
+    s += limb(A.front.d, sk, 6.5) + hand(A.front.h[0], A.front.h[1], sk, 4);
+    return s;
+  }
+
+  const ARM = {
+    prayM: { back: { d: 'M-8,-146 L-1,-125 L13,-136', h: [14, -137] }, front: { d: 'M8,-146 L7,-124 L16,-136', h: [16.5, -137.5] } },
+    pleadM: { back: { d: 'M-8,-146 L8,-130 L28,-132', h: [29, -132] }, front: { d: 'M8,-146 L24,-134 L42,-142', h: [43, -143] } },
+    carry: { back: { d: 'M-8,-146 L-19,-172 L-13,-198', h: [-13, -199] }, front: { d: 'M8,-146 L19,-172 L13,-198', h: [13, -199] } },
+    sword: { back: { d: 'M-8,-146 L20,-154 L57,-168', h: [58, -168] }, front: { d: 'M8,-146 L26,-176 L34,-204', h: [34, -206] } },
+    reins: { back: { d: 'M-8,-146 L12,-128 L38,-124', h: [39, -124] }, front: { d: 'M8,-146 L26,-130 L46,-128', h: [47, -128] } },
+    spear: { back: { d: 'M-8,-146 L-4,-122 L4,-104', h: [4, -103] }, front: { d: 'M8,-146 L22,-130 L25,-112', h: [25, -111] } },
+    prayF: { back: { d: 'M-7,-145 L0,-126 L12,-137', h: [13, -138] }, front: { d: 'M7,-145 L7,-125 L15,-137', h: [15.5, -138.5] } }
+  };
+
+  const SWORD = limb('M34,-206 L52,-272', '#DADDE0', 4.5) + limb('M25,-211 L44,-202', GOLD, 3.4);
+  const SPEAR = limb('M29,-20 L20,-236', WOOD, 3) + sh('M19,-262 L14,-236 L25,-236 Z', '#C9CCD0');
+  const BASKET = sh('M-30,-216 L30,-216 L22,-199 L-22,-199 Z', '#C98B45') + `<path d="M-27,-210 H27 M-25,-204 H25" stroke="#8C5A22" stroke-width="1.5" fill="none"/>` + sh('M-33,-220 L33,-220 L31,-215 L-31,-215 Z', '#A8702F') + hand(-13, -199, SK.wheat) + hand(13, -199, SK.wheat);
+
+  const P = {
+    vasu: (arms, x) => man(Object.assign({ skin: SK.wheat, dhoti: '#F1E2BD', border: RED, sash: '#D9731F', head: { skin: SK.wheat, gear: 'bun', beard: true, mst: true }, arms: ARM[arms] }, x || {})),
+    kansa: (arms, x) => man(Object.assign({ skin: SK.kansa, dhoti: '#2F6B3B', border: GOLD, sash: '#7E1A14', head: { skin: SK.kansa, gear: 'crown', mst: 'curl', fierce: true }, arms: ARM[arms] }, x || {})),
+    devaki: (arms) => woman({ skin: SK.fair, sari: '#C0271E', border: GOLD, blouse: '#1F5FA8', arms: ARM[arms || 'prayF'] }),
+    guardUp: () => man({ skin: SK.wheat, dhoti: '#C58B2E', border: GOLD, sash: '#8E2418', head: { skin: SK.wheat, gear: 'helmet', mst: true, tilak: false }, arms: ARM.spear, pre: SPEAR })
+  };
+
+  function guardSleep() {
+    let s = limb('M-26,0 L-6,-150', WOOD, 3) + sh('M-6,-152 L-11.5,-132 L-0.5,-131 Z', '#C9CCD0');
+    s += `<circle cx="-18" cy="-44" r="15" fill="#7A4A26" stroke="${OL}" stroke-width="2"/><circle cx="-18" cy="-44" r="5" fill="${GOLD}" stroke="${OL}" stroke-width="1.2"/>`;
+    s += sh('M-16,-32 L26,-32 L38,-8 L30,-2 L20,-14 L-16,-14 Z', '#C58B2E') + `<ellipse cx="36" cy="-3" rx="7" ry="3.4" fill="${SK.wheat}" stroke="${OL}" stroke-width="1.5"/>`;
+    s += sh('M-15,-68 Q2,-76 17,-66 L19,-30 L-17,-30 Z', '#8E2418') + `<path d="M-15,-68 Q2,-76 17,-66 L19,-30 L-17,-30 Z" fill="url(#pDotW)"/>` + sh('M-17,-37 L19,-37 L19,-30 L-17,-30 Z', GOLD);
+    s += `<g transform="translate(14 100) rotate(38 0 -170)">${headM({ skin: SK.wheat, gear: 'helmet', mst: true, eyeClosed: true, tilak: false })}</g>`;
+    s += limb('M4,-62 L20,-46 L32,-40', SK.wheat, 7) + hand(33, -40, SK.wheat);
+    return s;
+  }
+
+  function baby(o) {
+    let s = sh('M-24,-4 Q-26,-22 -6,-24 L24,-20 Q34,-12 26,-3 Z', o.cloth) + `<path d="M-24,-4 Q-26,-22 -6,-24 L24,-20 Q34,-12 26,-3 Z" fill="url(#pDotR)"/>`;
+    s += `<ellipse cx="30" cy="-11" rx="5" ry="4" fill="${o.skin}" stroke="${OL}" stroke-width="1.4"/>`;
+    s += limb('M-8,-20 L2,-31', o.skin, 4.5) + hand(3, -32, o.skin, 3);
+    s += `<circle cx="-28" cy="-16" r="12" fill="${o.skin}" stroke="${OL}" stroke-width="1.8"/>`;
+    s += sh('M-40,-17 Q-41,-31 -27,-30 Q-17,-30 -16,-21 Q-22,-26 -29,-25 Q-36,-24 -40,-17 Z', '#140B04');
+    s += `<path d="M-32,-15 Q-29,-12 -25.5,-15" fill="none" stroke="${OL}" stroke-width="1.4"/><path d="M-27,-8.5 Q-24.5,-7 -22.5,-9" fill="none" stroke="#9E2A1C" stroke-width="1.4"/>`;
+    if (o.feather) s += sh('M-35,-28 Q-47,-52 -33,-61 Q-25,-45 -35,-28 Z', '#1E7B5C', 1.6) + `<ellipse cx="-34" cy="-50" rx="3.6" ry="5.2" fill="#1F5FA8" stroke="${OL}" stroke-width="1"/><circle cx="-34" cy="-50" r="1.6" fill="${GOLD2}"/>`;
+    else s += `<circle cx="-28" cy="-24" r="1.6" fill="${RED}"/>`;
+    return s;
+  }
+  const BABY_K = baby({ skin: SK.blue, cloth: '#F0B429', feather: true });
+  const BABY_G = baby({ skin: SK.fair, cloth: '#EC8A9A', feather: false });
+
+  function faceFront(skin, fem) {
+    let s = [1, -1].map(k => `<g transform="scale(${k} 1)">${sh('M-13,-178 Q-20,-160 -18,-138 L-12,-144 Q-14,-162 -11,-180 Z', '#140B04')}</g>`).join('');
+    s += sh('M-13,-172 Q-13,-191 0,-191 Q13,-191 13,-172 Q13,-154 0,-150 Q-13,-154 -13,-172 Z', skin);
+    s += [-1, 1].map(k => `<path d="M${k * 1.5},-173 Q${k * 6.5},-178 ${k * 11.5},-173.5 Q${k * 6.5},-170 ${k * 1.5},-173 Z" fill="${CREAM}" stroke="${OL}" stroke-width="1.3"/><circle cx="${k * 6.8}" cy="-173.6" r="1.9" fill="${OL}"/><path d="M${k * 1.5},-178.5 Q${k * 6.5},-182.5 ${k * 12},-178" fill="none" stroke="${OL}" stroke-width="1.5"/>`).join('');
+    s += `<path d="M0,-172 L-1.8,-162.5 L1.8,-162.5" fill="none" stroke="${OL}" stroke-width="1.3"/><ellipse cx="0" cy="-157" rx="3.2" ry="1.5" fill="#B0301F"/>`;
+    s += [-1, 1].map(k => `<circle cx="${k * 13.8}" cy="-163" r="3.2" fill="${GOLD}" stroke="${OL}" stroke-width="1.2"/>`).join('');
+    s += fem ? `<circle cx="0" cy="-181.5" r="2.1" fill="${RED}"/><circle cx="3.6" cy="-161.5" r="2.6" fill="none" stroke="${GOLD}" stroke-width="1.4"/>`
+             : `<path d="M-3,-190 Q0,-181 3,-190" fill="none" stroke="${CREAM}" stroke-width="1.8"/><path d="M0,-189 V-183" stroke="${RED}" stroke-width="1.6"/>`;
+    return s;
+  }
+  const halo = (r, c) => `<circle cx="0" cy="-174" r="${r}" fill="${GOLD2}" stroke="${OL}" stroke-width="2"/>${`<circle cx="0" cy="-174" r="${r}" fill="none" stroke="${c || RED}" stroke-width="3.2" stroke-dasharray="0.1 8.2" stroke-linecap="round"/>`}<circle cx="0" cy="-174" r="${r - 8}" fill="#FBE7A8" stroke="${OL}" stroke-width="1.2"/>`;
+
+  function vishnu() {
+    const B = SK.blue;
+    let s = halo(40);
+    s += limb('M-15,-146 L-38,-162 L-44,-190', B, 8) + limb('M15,-146 L38,-162 L44,-190', B, 8);
+    s += hand(-44, -192, B) + hand(44, -192, B);
+    s += sh('M-44,-218 Q-32,-208 -41,-194 Q-56,-200 -44,-218 Z', CREAM) + `<path d="M-44,-211 Q-39,-205 -43,-200" fill="none" stroke="${OL}" stroke-width="1.2"/>`;
+    s += `<circle cx="44" cy="-206" r="14" fill="none" stroke="#E8574A" stroke-width="3.2" stroke-dasharray="0.1 5" stroke-linecap="round"/><circle cx="44" cy="-206" r="11" fill="${GOLD2}" stroke="${OL}" stroke-width="1.8"/><path d="M44,-216 V-196 M34,-206 H54 M37,-213 L51,-199 M51,-213 L37,-199" stroke="${OL}" stroke-width="1.1"/><circle cx="44" cy="-206" r="3.6" fill="${RED}" stroke="${OL}" stroke-width="1"/>`;
+    s += [-11, 11].map(x => `<ellipse cx="${x}" cy="-3" rx="8" ry="3.6" fill="${B}" stroke="${OL}" stroke-width="1.6"/>`).join('');
+    const PB = 'M-24,-106 L24,-106 L31,-6 L-31,-6 Z';
+    s += sh(PB, '#F2B418') + `<path d="${PB}" fill="url(#pDotR)"/>` + sh('M-31,-6 L31,-6 L30,-16 L-30,-16 Z', RED) + sh('M-6,-100 L6,-100 L5,-16 L-5,-16 Z', '#E39B0E') + sh('M-22,-110 L22,-110 L22,-102 L-22,-102 Z', RED);
+    s += sh('M-5,-154 L5,-154 L5,-146 L-5,-146 Z', B) + sh('M-18,-150 Q0,-156 18,-150 L21,-106 L-21,-106 Z', B);
+    s += `<path d="M-12,-150 L18,-108" stroke="${CREAM}" stroke-width="1.6"/><path d="M-10,-150 Q0,-136 10,-150" stroke="${GOLD}" stroke-width="2.6" fill="none"/><circle cx="0" cy="-139" r="4" fill="${RED}" stroke="${GOLD}" stroke-width="1.6"/>`;
+    s += `<path d="M-16,-150 Q-25,-112 0,-94 Q25,-112 16,-150" fill="none" stroke="${OL}" stroke-width="6.5"/><path d="M-16,-150 Q-25,-112 0,-94 Q25,-112 16,-150" fill="none" stroke="#2E8B57" stroke-width="4"/>` + dotted('M-16,-150 Q-25,-112 0,-94 Q25,-112 16,-150', '#E8574A', 9);
+    s += faceFront(B, false);
+    s += sh('M-13,-186 L-11,-212 L0,-229 L11,-212 L13,-186 Z', GOLD) + sh('M-14,-189 L14,-189 L14,-184 L-14,-184 Z', GOLD2) + `<circle cx="0" cy="-208" r="3.2" fill="${RED}" stroke="${OL}" stroke-width="1"/><circle cx="0" cy="-196" r="2" fill="#1E7B5C"/><circle cx="-6" cy="-200" r="1.4" fill="${RED}"/><circle cx="6" cy="-200" r="1.4" fill="${RED}"/>`;
+    s += limb('M-17,-140 L-30,-116 L-36,-96', B, 8) + limb('M17,-140 L30,-116 L36,-96', B, 8);
+    s += [[-38, -162], [38, -162], [-30, -116], [30, -116]].map(p => `<circle cx="${p[0]}" cy="${p[1]}" r="3.4" fill="${GOLD}" stroke="${OL}" stroke-width="1"/>`).join('');
+    s += limb('M36,-96 L39,-44', '#C9973F', 4) + `<circle cx="35" cy="-107" r="9.5" fill="${GOLD}" stroke="${OL}" stroke-width="1.8"/><path d="M26,-107 H44 M35,-116 V-98" stroke="${OL}" stroke-width="1"/>`;
+    s += hand(-36, -94, B) + hand(36, -94, B);
+    s += ['rotate(-32 -37 -100)', '', 'rotate(32 -37 -100)'].map(t => `<ellipse cx="-37" cy="-110" rx="4.6" ry="11" fill="#EE8A9A" stroke="${OL}" stroke-width="1.4" transform="${t}"/>`).join('');
+    return s;
+  }
+
+  function devi() {
+    const S = SK.devi;
+    let s = halo(40, '#1E7B5C');
+    s += sh('M-15,-176 Q-28,-148 -24,-112 L24,-112 Q28,-148 15,-176 Z', '#140B04');
+    const L = [['M-15,-148 L-36,-172 L-56,-204', [-56, -206]], ['M-15,-146 L-44,-162 L-68,-176', [-68, -176]], ['M-15,-142 L-44,-140 L-68,-140', [-68, -140]], ['M-15,-138 L-36,-122 L-56,-108', [-56, -108]]];
+    L.forEach(a => { s += limb(a[0], S, 6.5); });
+    L.forEach(a => { const d = a[0].replace(/M-15/, 'M15').replace(/L-(\d+)/g, 'L$1'); s += limb(d, S, 6.5); });
+    s += limb('M-56,-206 L-60,-246', WOOD, 2.6) + limb('M-69,-252 L-68,-240 Q-60,-234 -52,-242 L-51,-254', GOLD, 2.4) + limb('M-60,-236 L-61,-258', GOLD, 2.4);
+    s += sh('M-68,-190 Q-58,-182 -65,-170 Q-78,-174 -68,-190 Z', CREAM);
+    s += limb('M-78,-160 Q-58,-140 -78,-120', WOOD, 3) + `<path d="M-78,-160 L-78,-120" stroke="${OL}" stroke-width="1"/>`;
+    s += sh('M-63,-98 Q-56,-118 -49,-98 Z', GOLD);
+    s += limb('M56,-206 L72,-252', '#DADDE0', 4) + limb('M50,-210 L63,-202', GOLD, 3);
+    s += `<circle cx="70" cy="-180" r="9" fill="${GOLD2}" stroke="${OL}" stroke-width="1.8"/><circle cx="70" cy="-180" r="3" fill="${RED}"/>`;
+    s += ['rotate(-32 70 -146)', '', 'rotate(32 70 -146)'].map(t => `<ellipse cx="70" cy="-154" rx="4.2" ry="9.5" fill="#EE8A9A" stroke="${OL}" stroke-width="1.3" transform="${t}"/>`).join('');
+    s += `<circle cx="58" cy="-104" r="11" fill="#7A4A26" stroke="${OL}" stroke-width="1.8"/><circle cx="58" cy="-104" r="4" fill="${GOLD}" stroke="${OL}" stroke-width="1"/>`;
+    [[-56, -206], [-68, -176], [-68, -140], [-56, -108], [56, -206], [68, -176], [68, -140], [56, -108]].forEach(p => { s += hand(p[0], p[1], S, 4.2); });
+    s += [-13, 13].map(x => `<ellipse cx="${x}" cy="-3" rx="7" ry="3.2" fill="${S}" stroke="${OL}" stroke-width="1.5"/>`).join('');
+    const SKD = 'M-24,-104 L24,-104 L38,-5 L-38,-5 Z';
+    s += sh(SKD, '#C0271E') + `<path d="${SKD}" fill="url(#pDotW)"/>` + sh('M-38,-5 L38,-5 L36.4,-17 L-36.4,-17 Z', GOLD) + dotted('M-35,-11 L35,-11', RED, 6) + `<path d="M-6,-104 L-10,-17 M6,-104 L10,-17" stroke="${OL}" stroke-width="1.2"/>`;
+    s += sh('M-5,-154 L5,-154 L5,-146 L-5,-146 Z', S) + sh('M-17,-150 Q0,-156 17,-150 L20,-104 L-20,-104 Z', '#1E7B5C');
+    s += sh('M-17,-150 L-8,-152 L20,-108 L12,-104 Z', '#C0271E') + `<path d="M-8,-152 L20,-108" stroke="${GOLD}" stroke-width="2.4"/><path d="M-10,-150 Q0,-136 10,-150" stroke="${GOLD}" stroke-width="2.6" fill="none"/>`;
+    s += faceFront(S, true);
+    s += sh('M-13,-186 L-10,-205 L-5,-196 L0,-214 L5,-196 L10,-205 L13,-186 Z', GOLD) + sh('M-14,-189 L14,-189 L14,-184 L-14,-184 Z', GOLD2) + `<circle cx="0" cy="-203" r="2.8" fill="${RED}"/>`;
+    return s;
+  }
+
+  const HORSE = limb('M-32,-50 L-38,-2 M-20,-46 L-14,0 M22,-48 L26,0 M34,-52 L46,-8', '#F4EAD5', 6) + limb('M-44,-66 Q-66,-60 -62,-24', '#D8CBB0', 5)
+    + sh('M-44,-60 Q-40,-80 0,-80 Q30,-80 36,-70 L52,-104 Q60,-112 72,-100 L76,-92 L66,-90 L56,-80 L44,-56 Q30,-44 0,-44 Q-40,-44 -44,-60 Z', '#F4EAD5')
+    + sh('M40,-74 Q46,-96 54,-106 L50,-94 Q46,-84 44,-72 Z', '#3A2A18') + sh('M-18,-80 L16,-80 L18,-50 L-20,-50 Z', RED) + dotted('M-19,-56 L17,-56', GOLD2, 6)
+    + `<circle cx="64" cy="-99" r="1.8" fill="${OL}"/><path d="M58,-94 L72,-94 M50,-100 L62,-86" stroke="${GOLD}" stroke-width="2"/>` + limb('M58,-108 L55,-124', RED, 3);
+  const CHARIOT = limb('M-54,-90 L-50,-150', WOOD, 4) + limb('M54,-90 L50,-150', WOOD, 4) + limb('M50,-150 L50,-178', WOOD, 2.4)
+    + sh('M50,-178 L72,-170 L52,-162 Z', RED) + sh('M-66,-148 Q0,-182 66,-148 Z', '#E8912C') + dotted('M-64,-150 L64,-150', RED, 7)
+    + sh('M-60,-40 L60,-40 L54,-90 L-50,-90 Z', RED) + `<path d="M-52,-80 H54 M-56,-50 H58" stroke="${GOLD2}" stroke-width="2.6"/>` + dotted('M-52,-65 L56,-65', GOLD2, 9)
+    + `<circle cx="-20" cy="-30" r="30" fill="none" stroke="${OL}" stroke-width="9"/><circle cx="-20" cy="-30" r="30" fill="none" stroke="${WOOD}" stroke-width="5.5"/><path d="M-20,-58 V-2 M-48,-30 H8 M-40,-50 L0,-10 M0,-50 L-40,-10" stroke="${OL}" stroke-width="3"/><circle cx="-20" cy="-30" r="7" fill="${GOLD}" stroke="${OL}" stroke-width="1.6"/>`
+    + limb('M60,-44 L130,-60', WOOD, 5);
+  const HUT = sh('M-50,-62 H50 V0 H-50 Z', '#C98B45') + `<path d="M-44,-50 L-38,-56 L-32,-50 M32,-50 L38,-56 L44,-50 M-44,-12 H-36 M36,-12 H44" stroke="${CREAM}" stroke-width="1.6" fill="none"/>`
+    + sh('M-66,-58 L0,-112 L66,-58 Z', '#8C6A2E') + `<path d="M-50,-66 L0,-106 M-30,-62 L0,-100 M50,-66 L0,-106 M30,-62 L0,-100 M-10,-60 L0,-104 M10,-60 L0,-104" stroke="#5E4520" stroke-width="1.6" fill="none"/>`
+    + sh('M-32,0 V-34 Q0,-58 32,-34 V0 Z', '#F6C552');
+  const YASHODA = `<path d="M-40,0 H44 M-38,0 V9 M42,0 V9" stroke="${OL}" stroke-width="4"/><path d="M-40,0 H44 M-38,0 V9 M42,0 V9" stroke="${WOOD}" stroke-width="2.2"/>`
+    + sh('M-24,-2 Q-12,-19 18,-15 Q33,-13 35,-2 Z', '#2E7D4F') + `<path d="M-24,-2 Q-12,-19 18,-15 Q33,-13 35,-2 Z" fill="url(#pDotW)"/>`
+    + `<ellipse cx="-30" cy="-4" rx="9" ry="4" fill="${CREAM}" stroke="${OL}" stroke-width="1.4"/><circle cx="-29" cy="-11" r="7.5" fill="${SK.fair}" stroke="${OL}" stroke-width="1.6"/>`
+    + sh('M-36,-11 Q-37,-20 -28,-19 Q-23,-19 -22,-15 Q-27,-16 -31,-14 Z', '#140B04') + `<path d="M-31,-10 Q-28.5,-8 -26,-10.5" fill="none" stroke="${OL}" stroke-width="1.2"/>`;
+  function tree(s) {
+    let g = sh('M-6,0 L6,0 L4,-60 L-4,-60 Z', '#6B4423') + limb('M0,-50 L-16,-70 M0,-54 L14,-76', '#6B4423', 3);
+    [[-24, -72, 22], [24, -72, 22], [0, -88, 26], [-13, -104, 18], [13, -104, 18]].forEach(c => { g += `<circle cx="${c[0]}" cy="${c[1]}" r="${c[2]}" fill="#2F7A45" stroke="${OL}" stroke-width="2"/>`; });
+    [[-26, -76], [-8, -92], [14, -84], [24, -70], [2, -106], [-18, -104], [10, -70]].forEach(p => { g += `<circle cx="${p[0]}" cy="${p[1]}" r="3.2" fill="#F2A93B" stroke="${OL}" stroke-width="1"/>`; });
+    return g;
+  }
+  function shesha() {
+    let s = limb('M0,0 Q22,34 10,74 Q0,120 30,160', '#2E8B57', 14) + dotted('M0,0 Q22,34 10,74 Q0,120 30,160', '#F2D07A', 8);
+    const hood = `${sh('M0,0 Q-13,-8 -10,-34 Q0,-46 10,-34 Q13,-8 0,0 Z', '#2E8B57')}${sh('M0,-4 Q-6,-10 -5,-28 Q0,-34 5,-28 Q6,-10 0,-4 Z', '#F2D07A', 1.2)}<circle cx="0" cy="-36" r="2.6" fill="${RED}"/>`;
+    [-46, 46, -23, 23, 0].forEach(r => { s += `<g transform="rotate(${r})">${hood}</g>`; });
+    return s;
+  }
+  const DIYA = sh('M-17,-4 Q0,14 17,-4 L11,-8 L-11,-8 Z', '#A5602A') + `<path d="M0,-10 Q-6,-20 0,-28 Q6,-36 0,-46" fill="none" stroke="rgba(235,225,205,.45)" stroke-width="2" stroke-linecap="round"/>`;
+  const ARCH = 'M-50,60 V-40 Q-50,-92 0,-92 Q50,-92 50,-40 V60 Z';
+  const windowG = (moonAt) => `<path d="${ARCH}" fill="#8A6A48" stroke="${OL}" stroke-width="2" transform="scale(1.16)"/><path d="${ARCH}" fill="#1B2E57" stroke="${OL}" stroke-width="2"/><path d="${ARCH}" fill="url(#pStars)"/>`
+    + `<g transform="translate(${moonAt[0]} ${moonAt[1]})"><circle r="30" fill="url(#gMoon)"/><path d="M0,-15 A15,15 0 0 0 0,15 Z" fill="${CREAM}" stroke="${OL}" stroke-width="1.2"/></g>`
+    + `<path d="M-30,-86 V60 M-10,-92 V60 M10,-92 V60 M30,-86 V60 M-50,-12 H50" stroke="${OL}" stroke-width="4.5" fill="none"/>` + sh('M-64,60 H64 V70 H-64 Z', '#8A6A48');
+  const brick = (c) => `<rect width="400" height="500" fill="${c}"/><rect width="400" height="500" fill="url(#pBrick)"/>`;
+  const floor = (y, c) => `<rect y="${y}" width="400" height="${500 - y}" fill="${c || '#2B1A0E'}"/><path d="M0,${y} H400" stroke="${OL}" stroke-width="2"/>`;
+  const frame = () => `<rect x="4" y="4" width="392" height="492" fill="none" stroke="${RED}" stroke-width="8"/><rect x="10.5" y="10.5" width="379" height="479" fill="none" stroke="${GOLD2}" stroke-width="6"/>`
+    + `<rect x="10.5" y="10.5" width="379" height="479" fill="none" stroke="${RED}" stroke-width="3.2" stroke-dasharray="0.1 9" stroke-linecap="round"/><rect x="14" y="14" width="372" height="472" fill="none" stroke="${OL}" stroke-width="1.6"/><rect x=".8" y=".8" width="398.4" height="498.4" fill="none" stroke="${OL}" stroke-width="1.6"/>`;
+  const svg = (inner, label) => `<svg class="art" viewBox="0 0 400 500" role="img" aria-label="${label}" preserveAspectRatio="xMidYMid slice">${inner}${frame()}</svg>`;
+
+  const scenes = {
+    cover: () => brick('#4A2E1C') + fig(200, 150, 1.12, windowG([18, -34])) + floor(440)
+      + glow(200, 392, 150) + sh('M128,402 Q200,382 272,402 Q200,418 128,402 Z', RED) + dotted('M136,402 Q200,386 264,402', GOLD2, 7)
+      + fig(206, 400, 1.35, BABY_K) + fig(104, 474, 1.2, P.devaki()) + fig(298, 474, 1.2, P.vasu('prayM'), true),
+
+    chariot: () => `<rect width="400" height="500" fill="#A42C1C"/><rect width="400" height="500" fill="url(#pFlor)"/>`
+      + `<use href="#rays" transform="translate(200 40) scale(1 .8)"/>` + `<circle cx="330" cy="168" r="24" fill="${GOLD2}" stroke="${OL}" stroke-width="2"/>`
+      + fig(44, 446, .9, tree()) + sh('M0,440 Q100,426 200,440 T400,436 V500 H0 Z', '#D9A441') + `<path d="M40,460 l4,-8 l4,8 M120,470 l4,-8 l4,8 M250,462 l4,-8 l4,8 M340,474 l4,-8 l4,8" stroke="#2F7A45" stroke-width="2" fill="none"/>`
+      + fig(128, 398, .7, P.devaki()) + fig(170, 398, .72, P.vasu('prayM')) + fig(218, 398, .76, P.kansa('reins'))
+      + fig(170, 444, 1.2, CHARIOT) + fig(296, 444, 1.05, HORSE) + `<path d="M254,301 Q312,300 372,344" stroke="${OL}" stroke-width="2" fill="none"/>`,
+
+    sword: () => `<rect width="400" height="500" fill="#7E1E12"/><rect width="400" height="500" fill="url(#pFlor)" opacity=".55"/>` + floor(470, '#3A140A')
+      + glow(222, 112, 46) + fig(80, 482, 1.32, P.vasu('pleadM')) + fig(180, 482, 1.32, P.devaki(), true) + fig(292, 482, 1.36, P.kansa('sword', { pre: SWORD }), true),
+
+    prison: () => brick('#4A2E1C') + `<use href="#chain" transform="translate(56 18) scale(1.2)"/><use href="#chainIn" transform="translate(56 18) scale(1.2)"/><use href="#chain" transform="translate(344 18) scale(1.2)"/><use href="#chainIn" transform="translate(344 18) scale(1.2)"/>`
+      + `<path d="M200,300 C230,230 280,200 328,134" stroke="${GOLD2}" stroke-opacity=".8" stroke-width="2.2" stroke-dasharray="3 7" fill="none"/>` + glow(328, 126, 58, 'gGlowRose') + `<circle cx="328" cy="126" r="9" fill="#FFE2C0" stroke="${OL}" stroke-width="1.4"/>`
+      + floor(456) + fig(132, 462, 1.02, P.devaki()) + fig(266, 462, 1.02, P.vasu('prayM'), true)
+      + [60, 116, 172, 228, 284, 340].map(x => fig(x, 488, 1, DIYA)).join(''),
+
+    midnight: () => brick('#33221A') + fig(200, 172, 1.35, windowG([20, -36])) + floor(462, '#1C120A')
+      + fig(84, 476, 1.22, P.guardUp()) + fig(272, 476, .94, P.devaki()) + fig(334, 476, .98, P.vasu('prayM'), true)
+      + `<rect y="230" width="400" height="270" fill="url(#gShade)"/>`,
+
+    vishnu: () => brick('#5A3A22') + `<use href="#rays" transform="translate(200 250) scale(1.3)"/>` + glow(200, 270, 220) + floor(470, '#3A2413')
+      + [[-46, 10], [-24, 6], [0, 4], [24, 6], [46, 10]].map(p => `<ellipse cx="${200 + p[0]}" cy="${452 + p[1] - 4}" rx="16" ry="8" fill="#EE8A9A" stroke="${OL}" stroke-width="1.6"/>`).join('')
+      + fig(200, 450, 1.28, vishnu()) + fig(64, 486, .9, P.devaki()) + fig(338, 486, .94, P.vasu('prayM'), true),
+
+    escape: () => brick('#4A2E1C')
+      + `<path d="M212,472 V210 Q212,140 292,140 Q372,140 372,210 V472 Z" fill="#8A6A48" stroke="${OL}" stroke-width="2" transform="translate(292 306) scale(1.08) translate(-292 -306)"/>`
+      + `<path d="M212,472 V210 Q212,140 292,140 Q372,140 372,210 V472 Z" fill="#17264A" stroke="${OL}" stroke-width="2"/><path d="M212,472 V210 Q212,140 292,140 Q372,140 372,210 V472 Z" fill="url(#pRain)"/>`
+      + sh('M212,208 L176,194 L176,486 L212,472 Z', '#6B4423') + dotted('M184,230 L184,460 M200,236 L200,466', '#9A9A92', 14)
+      + floor(472) + fig(62, 488, 1.2, guardSleep()) + fig(160, 482, 1.0, guardSleep(), true)
+      + glow(292, 226, 56) + fig(292, 476, 1.16, P.vasu('carry', { walk: true, post: BASKET })) + fig(296, 222, .5, BABY_K),
+
+    yamuna: () => `<rect width="400" height="500" fill="#14233F"/><rect width="400" height="500" fill="url(#pStars)" opacity=".4"/><rect width="400" height="500" fill="url(#pRain)"/>`
+      + sh('M60,26 L38,82 L56,82 L32,144 L80,66 L62,66 L84,26 Z', GOLD2)
+      + sh('M180,60 Q200,30 232,44 Q262,28 284,52 Q312,50 312,72 L176,78 Q160,72 180,60 Z', '#2A3B5E') + sh('M300,110 Q316,90 340,100 Q364,92 376,112 L296,120 Z', '#2A3B5E')
+      + fig(200, 206, 1.7, shesha())
+      + sh('M16,300 Q50,284 84,300 T160,298 L150,486 H16 Z', '#1F6F8B') + `<path d="M16,300 Q50,284 84,300 T160,298 L150,486 H16 Z" fill="url(#pWave)"/>`
+      + sh('M384,298 Q350,282 316,300 T244,296 L252,486 H384 Z', '#1F6F8B') + `<path d="M384,298 Q350,282 316,300 T244,296 L252,486 H384 Z" fill="url(#pWave)"/>`
+      + sh('M52,410 Q66,400 80,410 Q66,420 52,410 Z M80,410 L90,402 L90,418 Z', '#F2B84B', 1.6) + sh('M330,440 Q316,430 302,440 Q316,450 330,440 Z M302,440 L292,432 L292,448 Z', '#EC8A48', 1.6)
+      + sh('M150,486 L160,298 Q200,312 244,296 L252,486 Z', '#6B5A3A') + `<g fill="#8C7A58" stroke="${OL}" stroke-width="1"><ellipse cx="176" cy="470" rx="6" ry="3"/><ellipse cx="226" cy="430" rx="5" ry="2.6"/><ellipse cx="184" cy="360" rx="4" ry="2.2"/></g>`
+      + glow(200, 222, 52) + fig(200, 476, 1.2, P.vasu('carry', { walk: true, post: BASKET })) + fig(204, 210, .5, BABY_K),
+
+    gokul: () => `<rect width="400" height="500" fill="#17264A"/><rect width="400" height="500" fill="url(#pStars)"/>`
+      + `<circle cx="70" cy="80" r="0"/>` + fig(40, 448, 1.05, tree()) + fig(376, 446, .85, tree())
+      + sh('M0,440 Q120,426 240,440 T400,436 V500 H0 Z', '#2B3A26') + glow(292, 410, 115)
+      + fig(292, 446, 1.6, HUT) + fig(290, 442, 1.02, YASHODA) + fig(312, 428, .46, BABY_K)
+      + glow(100, 236, 46, 'gGlowRose') + fig(100, 476, 1.12, P.vasu('carry', { walk: true, post: BASKET }), true) + fig(96, 226, .5, BABY_G, true),
+
+    devi: () => brick('#4A2E1C') + `<use href="#rays" transform="translate(200 196) scale(1.25)"/>` + glow(200, 210, 190, 'gGlowRose') + floor(478)
+      + fig(200, 318, 1.0, devi()) + fig(300, 496, .78, P.kansa('sword', { pre: SWORD }), true)
+  };
+
+  const emblem = `<svg viewBox="0 0 160 70" width="160" height="70" aria-hidden="true">
+      ${limb('M12,48 L148,22', '#8A3E0B', 6)}
+      <g fill="${CREAM}"><circle cx="70" cy="37" r="1.8"/><circle cx="84" cy="34.3" r="1.8"/><circle cx="98" cy="31.6" r="1.8"/><circle cx="112" cy="29" r="1.8"/></g>
+      ${sh('M30,40 Q24,10 44,4 Q48,28 30,40 Z', '#1E7B5C', 1.6)}<ellipse cx="41" cy="15" rx="5" ry="7" fill="#1F5FA8" stroke="${OL}" stroke-width="1.2"/><circle cx="41" cy="15" r="2.4" fill="${GOLD2}"/>
+    </svg>`;
+
+  /* ---------- Story ---------- */
+  const pages = [
+    { kind: 'cover', scene: 'cover',
+      hi: { title: 'कारागार की वह रात', sub: 'श्रीकृष्ण जन्म-कथा · श्रीमद्भागवत, दशम स्कन्ध', alt: 'कारागार में देवकी और वसुदेव, बीच में दिव्य प्रकाश में शिशु कृष्ण' },
+      en: { title: 'The Night in the Prison', sub: 'The birth of Krishna · Bhagavata Purana, Book 10', alt: 'Devaki and Vasudeva in the prison, the baby Krishna glowing between them' } },
+    { scene: 'chariot', src: '10.1.29–34',
+      bubble: { cls: 'voice', pos: 'left:12%;top:4%;width:76%' },
+      hi: { cap: 'मथुरा में देवकी और वसुदेव का विवाह हुआ। बहन पर स्नेह के कारण कंस स्वयं उनका रथ हाँक रहा था। तभी आकाश से वाणी गूँजी।', who: 'आकाशवाणी', say: 'अरे मूर्ख! जिसे तू रथ में लिए जा रहा है, उसी की आठवीं संतान तेरा वध करेगी।', alt: 'कंस रथ हाँक रहा है, पीछे देवकी और वसुदेव, ऊपर आकाश से प्रकाश' },
+      en: { cap: 'Devaki married Vasudeva in Mathura. Out of love for his sister, Kansa drove their chariot himself. Then a voice rang out from the sky.', who: 'Voice from the sky', say: 'Fool! The eighth child of the woman you carry will be your death.', alt: 'Kansa driving the wedding chariot with Devaki and Vasudeva, light breaking from the sky' } },
+    { scene: 'sword', src: '10.1.35–55',
+      bubble: { cls: 't-bl', pos: 'left:5%;top:5%;width:47%' },
+      hi: { cap: 'कंस ने देवकी के केश पकड़े और तलवार उठा ली। वसुदेव ने क्रोध का उत्तर क्रोध से नहीं दिया। उन्होंने शांत रहकर उसे समझाया और एक वचन दिया।', who: 'वसुदेव', say: 'इसे मत मारो। तुम्हें भय इससे नहीं, इसकी संतान से है। उसकी हर संतान मैं स्वयं तुम्हें सौंप दूँगा।', alt: 'कंस तलवार उठाए, देवकी सामने, वसुदेव हाथ जोड़े' },
+      en: { cap: 'Kansa seized Devaki by the hair and raised his sword. Vasudeva did not answer anger with anger. He reasoned with him calmly and made a promise.', who: 'Vasudeva', say: 'Do not kill her. Your fear is of her children, not of her. I will hand every child to you myself.', alt: 'Kansa with raised sword, Devaki before him, Vasudeva pleading' } },
+    { scene: 'prison', src: '10.1.57–66 · 10.2.5–15',
+      hi: { cap: 'वसुदेव ने वचन निभाया। पहला पुत्र वे स्वयं कंस को सौंप आए। पर भय ने कंस को अंधा कर दिया। उसने दोनों को बेड़ियों में डाला और एक-एक कर छह पुत्रों को मार डाला। सातवें गर्भ को योगमाया ने चुपचाप रोहिणी के गर्भ में पहुँचा दिया। वही बालक बलराम हुए।', alt: 'कारागार में जंजीरें, छह बुझे दीपक, एक प्रकाश-पुंज ऊपर उठता हुआ' },
+      en: { cap: 'Vasudeva kept his word and brought his firstborn to Kansa himself. But fear blinded Kansa. He chained them both and killed six sons, one after another. Yogamaya quietly moved the seventh child into Rohini’s womb. That child was Balarama.', alt: 'Chains in the prison, six extinguished lamps, one light rising away' } },
+    { scene: 'midnight', src: '10.3.1–8',
+      hi: { cap: 'फिर आई भाद्रपद कृष्ण अष्टमी की आधी रात। रोहिणी नक्षत्र था। आकाश निर्मल था, नदियाँ शांत, वनों में फूल खिले थे। पर कारागार में घना अँधेरा था, और पहरेदार जाग रहे थे।', alt: 'कारागार की खिड़की से अष्टमी का आधा चाँद, पहरेदार और दम्पती अँधेरे में' },
+      en: { cap: 'Then came midnight on the eighth night of the waning moon in Bhadrapada, under the Rohini star. The sky was clear, the rivers calm, the forests in bloom. Inside the prison it was pitch dark, and the guards were awake.', alt: 'A half moon through the barred window, a guard and the couple in darkness' } },
+    { scene: 'vishnu', src: '10.3.9–46',
+      bubble: { cls: 't-bl', pos: 'left:5%;top:4%;width:52%' },
+      hi: { cap: 'उसी अँधेरे में प्रभु प्रकट हुए। चार भुजाएँ, हाथों में शंख, चक्र, गदा और कमल, पीताम्बर, और वक्ष पर कौस्तुभ मणि। वसुदेव और देवकी ने हाथ जोड़कर स्तुति की। प्रभु ने उन्हें पूर्वजन्म का वरदान याद दिलाया और फिर साधारण शिशु बन गए।', who: 'देवकी', say: 'प्रभु, यह दिव्य रूप छिपा लीजिए। कंस इसे न देख ले।', alt: 'प्रकाश के बीच चतुर्भुज विष्णु, दोनों ओर देवकी और वसुदेव' },
+      en: { cap: 'In that darkness the Lord appeared, with four arms holding conch, discus, mace and lotus, dressed in yellow silk, the Kaustubha gem on his chest. Vasudeva and Devaki folded their hands in praise. He reminded them of a boon from a past life, and then became an ordinary baby.', who: 'Devaki', say: 'Lord, hide this divine form. Do not let Kansa see it.', alt: 'Four-armed Vishnu in a blaze of light, Devaki and Vasudeva on either side' } },
+    { scene: 'escape', src: '10.3.47–48',
+      hi: { cap: 'योगमाया के प्रभाव से पहरेदार गहरी नींद में सो गए। भारी द्वार अपने-आप खुल गए, जैसे सूर्य के आगे अँधेरा हट जाता है। वसुदेव शिशु को लेकर बाहर निकले। बाहर मूसलाधार वर्षा हो रही थी।', alt: 'सोते पहरेदार, खुला द्वार, बाहर वर्षा, वसुदेव सिर पर शिशु लिए' },
+      en: { cap: 'Yogamaya’s power put the guards into a deep sleep. The heavy doors opened by themselves, the way darkness gives way to the sun. Vasudeva carried the baby out into the pouring rain.', alt: 'Sleeping guards, the open door, rain outside, Vasudeva carrying the baby on his head' } },
+    { scene: 'yamuna', src: '10.3.49–50',
+      hi: { cap: 'शेषनाग पीछे-पीछे चले और अपने फनों से वर्षा रोकते रहे। उफनती यमुना ने मार्ग दे दिया, जैसे समुद्र ने कभी श्रीराम को दिया था।', alt: 'वर्षा में यमुना बीच से हटी, वसुदेव शिशु लिए, ऊपर शेषनाग के फन' },
+      en: { cap: 'Shesha followed behind, spreading his hoods to shield them from the rain. The flooded Yamuna made way for them, as the ocean once had for Rama.', alt: 'The Yamuna parting in the storm, Vasudeva carrying the baby, Shesha’s hoods above' } },
+    { scene: 'gokul', src: '10.3.51–52',
+      hi: { cap: 'गोकुल में नंद के घर सब सो रहे थे। यशोदा ने अभी-अभी एक कन्या को जन्म दिया था। वही योगमाया थीं। वसुदेव ने कृष्ण को यशोदा के पास सुला दिया, कन्या को उठाया और लौट आए। कारागार पहुँचकर उन्होंने अपने पैरों में फिर से बेड़ियाँ डाल लीं।', alt: 'गोकुल की कुटिया में यशोदा के पास कृष्ण, वसुदेव कन्या को लेकर लौटते हुए' },
+      en: { cap: 'In Gokul, everyone in Nanda’s house was asleep. Yashoda had just given birth to a girl, who was Yogamaya herself. Vasudeva laid Krishna beside Yashoda, lifted the girl, and went back. In the prison, he put the fetters back on his own feet.', alt: 'Krishna beside Yashoda in a Gokul hut, Vasudeva walking back with the baby girl' } },
+    { scene: 'devi', src: '10.4.1–12',
+      bubble: { cls: 't-tr', pos: 'left:5%;top:66%;width:45%' },
+      hi: { cap: 'शिशु के रोने से पहरेदार जागे और कंस दौड़ा आया। देवकी ने विनती की, “भैया, यह तो कन्या है।” पर कंस ने उसे पत्थर पर पटकना चाहा। कन्या उसके हाथ से छूटकर आकाश में उठी और अष्टभुजा देवी के रूप में प्रकट हुई।', who: 'देवी', say: 'अरे मूर्ख, मुझे मारकर क्या पाएगा? तेरा शत्रु कहीं और जन्म ले चुका है।', alt: 'आकाश में अष्टभुजा देवी, नीचे तलवार उठाए कंस' },
+      en: { cap: 'The baby’s cry woke the guards, and Kansa came running. Devaki begged, “Brother, it is only a girl.” But Kansa tried to dash her against a stone. She slipped from his hands, rose into the sky, and appeared as the eight-armed Devi.', who: 'The Devi', say: 'Fool, what will you gain by killing me? Your enemy has already been born elsewhere.', alt: 'The eight-armed Devi in the sky, Kansa below with his sword raised' } },
+    { kind: 'seekh',
+      hi: { h: 'इस कथा की सीख', items: [
+              ['अँधेरा सबसे घना हो, तब भी धर्म प्रकट होता है।', 'यदा यदा हि धर्मस्य ग्लानिर्भवति भारत… (गीता 4.7)। प्रभु कारागार की आधी रात में जन्मे, महल के उजाले में नहीं।'],
+              ['वचन शत्रु के आगे भी वचन है।', 'वसुदेव ने पहला पुत्र स्वयं सौंपा, और गोकुल से लौटकर अपने पैरों में फिर बेड़ियाँ डाल लीं।'],
+              ['भय अंधा करता है।', 'जिस भय से बचने के लिए कंस ने छह निर्दोषों को मारा, वह फिर भी टला नहीं।']],
+            noteTitle: 'शास्त्र और लोक-परंपरा',
+            note1: '<b>भागवत में है:</b> आकाशवाणी, वसुदेव का वचन, बलराम का गर्भ-स्थानांतरण, चतुर्भुज दर्शन, शेषनाग की छाया, यमुना का मार्ग देना, योगमाया।',
+            note2: '<b>लोक-परंपरा है:</b> यमुना का शिशु के चरण छूने के लिए ऊपर उठना, और शिशु को टोकरी में ले जाना।',
+            srcLine: 'स्रोत: श्रीमद्भागवत महापुराण, दशम स्कन्ध, अध्याय 1–4',
+            art: 'चित्र-निर्देश (चित्रकार या इमेज-मॉडल के लिए)' },
+      en: { h: 'What this story teaches', items: [
+              ['Dharma appears when the dark is deepest.', 'Yada yada hi dharmasya glanir bhavati Bharata… (Gita 4.7). The Lord was born at midnight in a prison, not in the light of a palace.'],
+              ['A promise holds, even to an enemy.', 'Vasudeva handed over his firstborn himself, and after Gokul he put the fetters back on his own feet.'],
+              ['Fear makes you blind.', 'Kansa killed six innocents to escape what he feared, and it came anyway.']],
+            noteTitle: 'Scripture and folk tradition',
+            note1: '<b>In the Bhagavata:</b> the voice from the sky, Vasudeva’s promise, Balarama’s transfer to Rohini, the four-armed vision, Shesha’s shelter, the Yamuna making way, Yogamaya.',
+            note2: '<b>Folk tradition:</b> the Yamuna rising to touch the baby’s feet, and carrying him in a basket.',
+            srcLine: 'Source: Shrimad Bhagavata Purana, Book 10, chapters 1–4',
+            art: 'Art brief (for a painter or an image model)' } }
+  ];
+
+  const artBrief = [
+    'Cover: barred prison window with a half moon (Krishna Ashtami); Devaki and Vasudeva in prayer; newborn Krishna glowing on a red cloth.',
+    'Wedding chariot in Mathura; Kansa driving, Devaki and Vasudeva behind; golden light and a voice breaking through the sky.',
+    'Kansa gripping Devaki’s hair with a raised sword; Vasudeva calm, pleading, stepping forward.',
+    'Stone cell with chains; six extinguished clay lamps; one soft light rising away (Balarama to Rohini).',
+    'Midnight in the cell; half moon through bars; a sentry awake; the couple barely visible.',
+    'Four-armed Vishnu in yellow silk with conch, discus, mace, lotus, Kaustubha gem; cell flooded with light; parents in awe.',
+    'Guards asleep, great door swung open onto a rainstorm; Vasudeva walking out with the glowing baby.',
+    'Powerful flooded Yamuna with curling waves, sweeping currents and ivory foam in muted slate blue-grey and sage; Vasudeva mid-river; five-hooded Shesha sheltering the baby from rain.',
+    'Gokul hut at night; Yashoda asleep with baby Krishna; Vasudeva leaving with the baby girl.',
+    'Eight-armed Devi rising above the cell with weapons; Kansa below, sword raised.'
+  ];
+  const STYLE = "Style for every page: Soft Indian devotional storybook illustration with thin warm-grey and brown outlines, graceful expressive almond-shaped eyes, smooth broad pastel fills and minimal gentle cel shading. Muted low-saturation palette: warm ivory parchment, powder-blue divine skin, dusty saffron and terracotta, sage and slate blue-grey water, restrained matte gold. Subtle paper texture, faint washed-out architecture, clear characters and simplified background detail. Devotional, dignified and suitable for children. Convey action through poses and shapes rather than loud colour or theatrical lighting. No heavy black comic outlines, saturated cobalt, vivid orange, photorealism, 3D, ornate borders or dense ornamentation. No text, no letters, no watermark. 4:5 portrait.";
+
+  /* ---------- Reader ---------- */
+  const DEVA = '०१२३४५६७८९';
+  let lang = 'hi';
+  try { const s = localStorage.getItem('kj-lang'); if (s === 'en' || s === 'hi') lang = s; } catch (e) {}
+  let idx = 0;
+  const m = /^#p(\d+)$/.exec(location.hash || '');
+  if (m) idx = Math.min(pages.length - 1, Math.max(0, parseInt(m[1], 10) - 1));
+
+  const num = (n) => lang === 'hi' ? String(n).replace(/\d/g, d => DEVA[d]) : String(n);
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  const artCache = {};
+  // All ten scenes use the approved generated illustrations.
+  const artAssets = {"cover": "assets/krishna-janma/kj-01.webp", "chariot": "assets/krishna-janma/kj-02.webp", "sword": "assets/krishna-janma/kj-03.webp", "prison": "assets/krishna-janma/kj-04.webp", "midnight": "assets/krishna-janma/kj-05.webp", "vishnu": "assets/krishna-janma/kj-06.webp", "escape": "assets/krishna-janma/kj-07.webp", "yamuna": "assets/krishna-janma/kj-08.webp", "gokul": "assets/krishna-janma/kj-09.webp", "devi": "assets/krishna-janma/kj-10.webp"};
+  const art = (key, label) => artAssets[key]
+    ? `<img class="art" src="${artAssets[key]}" alt="${label}" width="1122" height="1402" decoding="async">`
+    : (artCache[key] || (artCache[key] = scenes[key]())) && svg(artCache[key], label);
+
+  function render(dir) {
+    const p = pages[idx];
+    const t = p[lang];
+    const el = $('page');
+    let html = '';
+    if (p.kind === 'seekh') {
+      html = `<div class="caption">
+        <div class="emblem">${emblem}</div>
+        <h2 class="h">${t.h}</h2>
+        <ol class="lessons">${t.items.map((it, i) => `<li><span class="n">${num(i + 1)}</span><div><strong>${esc(it[0])}</strong><span class="d">${esc(it[1])}</span></div></li>`).join('')}</ol>
+        <div class="note"><div><b>${t.noteTitle}</b></div><div>${t.note1}</div><div>${t.note2}</div><div style="margin-top:6px">${t.srcLine}</div></div>
+        <details><summary>${t.art}</summary><ol>${artBrief.map(a => `<li>${esc(a)}</li>`).join('')}</ol><p style="font-family:var(--en);font-size:15px;margin:8px 0 0">${STYLE}</p></details>
+      </div>`;
+    } else {
+      const b = p.bubble && t.say ? `<div class="bubble ${p.bubble.cls}" style="${p.bubble.pos}"><span class="who">${esc(t.who)}</span>${esc(t.say)}</div>` : '';
+      const panel = `<figure class="panel">${art(p.scene, esc(t.alt))}${b}</figure>`;
+      if (p.kind === 'cover') {
+        html = panel + `<div class="caption"><h1 class="cover-title">${t.title}</h1><p class="cover-sub">${t.sub}</p></div>`;
+      } else {
+        const srcLabel = (lang === 'hi' ? 'भागवत ' : 'Bhagavata ') + num(p.src);
+        html = panel + `<div class="caption"><p>${esc(t.cap)}</p><span class="src">${srcLabel}</span></div>`;
+      }
+    }
+    el.innerHTML = html;
+    el.classList.remove('enter'); void el.offsetWidth;
+    if (dir) { el.style.setProperty('--dir', dir > 0 ? '18px' : '-18px'); el.classList.add('enter'); }
+
+    $('count').textContent = `${num(idx + 1)} / ${num(pages.length)}`;
+    $('prev').disabled = idx === 0;
+    $('next').disabled = idx === pages.length - 1;
+    const hi = lang === 'hi';
+    $('prev').textContent = hi ? '‹ पिछला' : '‹ Back';
+    $('next').textContent = hi ? 'आगे ›' : 'Next ›';
+    $('crestText').textContent = hi ? 'श्रीकृष्ण जन्म' : 'Krishna Janma';
+    document.body.classList.toggle('en', !hi);
+    document.documentElement.lang = hi ? 'hi' : 'en';
+    $('langHi').setAttribute('aria-pressed', String(hi));
+    $('langEn').setAttribute('aria-pressed', String(!hi));
+    [...$('dots').children].forEach((d, i) => d.setAttribute('aria-current', String(i === idx)));
+  }
+
+  function go(n) {
+    if (n < 0 || n >= pages.length || n === idx) return;
+    const dir = n > idx ? 1 : -1;
+    idx = n;
+    try { history.replaceState(null, '', '#p' + (idx + 1)); } catch (e) {}
+    render(dir);
+  }
+
+  pages.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.type = 'button';
+    d.setAttribute('aria-label', 'Page ' + (i + 1));
+    d.addEventListener('click', () => go(i));
+    $('dots').appendChild(d);
+  });
+  $('prev').addEventListener('click', () => go(idx - 1));
+  $('next').addEventListener('click', () => go(idx + 1));
+  const setLang = (l) => { lang = l; try { localStorage.setItem('kj-lang', l); } catch (e) {} render(0); };
+  $('langHi').addEventListener('click', () => setLang('hi'));
+  $('langEn').addEventListener('click', () => setLang('en'));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') go(idx + 1);
+    if (e.key === 'ArrowLeft') go(idx - 1);
+  });
+  let sx = null, sy = null;
+  $('page').addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+  $('page').addEventListener('touchend', (e) => {
+    if (sx === null) return;
+    const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) go(idx + (dx < 0 ? 1 : -1));
+    sx = null;
+  }, { passive: true });
+
+  render(0);
+})();
+</script>
+</body></html>
+

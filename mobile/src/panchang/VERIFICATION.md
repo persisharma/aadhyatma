@@ -100,45 +100,52 @@ Magha(11)→**Phalguna(12)**, Narada Jayanti Vaishakha(2)→**Jyeshtha(3)**. Jan
 is now correctly **Fri 4 Sep 2026**.
 
 `scripts/verify-observances.mts` (`npm run verify:observances`, also a CI step) re-derives
-each major festival's correct civil day **independently** from astronomy-engine using its
-proper muhurta rule (udaya/madhyahna/nishita/pradosh), anchors known drik dates, and fails
-on any **wrong-month** regression. `__tests__/observanceDates.test.ts` is the fast anchor
+each major festival's correct civil day **independently** — its own tithi-interval search on
+astronomy-engine, then the rule's muhurta (udaya · purvahna · madhyahna · aparahna · sunset ·
+pradosh · nishita, with the first/last-of-two and fallback variants below) — checks it against
+published anchors, and **fails on any disagreement, including a single day**. It also fails
+when its own muhurta table disagrees with a published anchor, so the independent check cannot
+quietly stop checking anything. `__tests__/observanceDates.test.ts` is the fast exact-date
 guard inside `test:engine`.
 
-Two **pre-existing** issues it surfaces (NOT the month bug, not yet fixed) — both downstream
-of the sunrise-only matcher:
-- **±1-day muhurta shift (Class B):** festivals fixed by a non-sunrise muhurta resolve one
-  day late when their tithi starts after sunrise — remaining: Maha Shivaratri (Nishita) and
-  Diwali/Dhanteras/**Bachh Baras** (Pradosh). e.g. Diwali 2025 engine 21 Oct vs real 20 Oct; Maha Shivaratri
-  2026 engine 16 Feb vs real 15 Feb.
-  **The moonrise (chandrodaya) members of this class are FIXED** (Aug 2026): `ObservanceRule.dayRule`
-  now carries the per-rule vyapini convention, and `sankashti-chaturthi-vrat` + `karwa-chauth` + `bahula-chaturthi` + `bhadwa-chauth`
-  match at moonrise (`tithiAtMoonrise` in `engine.ts`; RULEBOOK §23). Sankashti was wrong in
-  6 of 12 lunations in 2025 and 5 of 13 in 2026 — Bhadrapada 2026 resolved to 1 Sep, whose
-  9:22 PM moonrise falls in Panchami, instead of 31 Aug's 8:39 PM moonrise inside Chaturthi.
-  Karwa Chauth moved only in 2027 and 2031 (2024–2026 already agreed).
-  **The madhyahna members are FIXED too** (Aug 2026): `ganesh-chaturthi`, `ram-navami` and the
-  monthly `vinayaka-chaturthi-vrat` match at the sunrise–sunset midpoint (`tithiAtMadhyahna`).
-  Ganesh Chaturthi 2026 moved 15 Sep → 14 Sep, Ram Navami 2026 27 Mar → 26 Mar (and 2028
-  4 Apr → 3 Apr); the monthly Vinayaka dates shifted in ~20 of 100 lunations 2024–2031 and now
-  always coincide with Ganesh Chaturthi in Bhadrapada.
-- **kshaya-tithi drop:** a festival whose tithi is skipped at sunrise is dropped entirely —
-  e.g. Vasant Panchami 2025, Dev Uthani Ekadashi 2026, **Navratri start 2027**. (Since fixed:
-  the matcher carries a kshaya fallback, and `verify:observances` reports `missing(kshaya)=0`.)
+**Class B (±1-day muhurta shift) — CLOSED, Sept 2026.** The script used to report a day
+shift as a warning and print PASS. That let Dussehra (2024, 2026–2028), Diwali (2024–2026,
+2028–2029), Dhanteras and Maha Shivaratri (every year 2024–2030) sit a day late while CI was
+green; the user-facing report was Dussehra 2026 showing 21 Oct against Drik's 20 Oct.
+Every lunar rule was then re-derived under each convention for 2024–2031, and each
+disagreement was settled against a published date (Drik for New Delhi unless noted):
 
-**Bachh Baras joined Class B in Sept 2026, knowingly** (regional wave 1). The Bhadrapada
-Krishna Dwadashi cow-and-calf worship happens in the evening godhuli/pradosh hour, and
-DrikPanchang publishes it pradosh-vyapini: **7 Sep 2026**, where this engine's sunrise
-matcher says 8 Sep (Dwadashi runs 7 Sep 1:33 PM → 8 Sep 11:12 AM). The popular Hindi
-almanacs are not consistent with Drik here — for 2025 they reasoned explicitly from sunrise
-("द्वादशी तिथि का सूर्योदय 20 अगस्त को होगा, इसलिए इसी दिन ये व्रत किया जाएगा") and published
-20 Aug, which is what the engine returns. Rather than invent a convention from one contested
-data point, the rule ships on `udaya` and the variance is pinned two ways: a named test in
-`observanceDates.test.ts` and a `pradosh` row in `verify-observances.mts`'s `ANNUAL`, so every
-run reports `bachh-baras` in the Class B list until a real `pradosh` dayRule lands.
+| dayRule | Convention | Rules | Published cases that decided it |
+|---|---|---|---|
+| `aparahna` | afternoon, first of two | Dussehra (+ darsha amavasya, 4 avatar jayantis) | 12 Oct 2024, 20 Oct 2026, 9 Oct 2027, 27 Sep 2028 |
+| `pradosh` | evening (sunset + 0.1 night), first of two | Diwali, Dhanteras, Ahoi Ashtami, Parashurama & Dattatreya Jayanti, Bachh Baras, both Pradosh vrats, Purnima vrat | Diwali 31 Oct 2024 / 8 Nov 2026 / 17 Oct 2028; Pradosh 30 Jan, 28 Apr 2026; Purnima vrat 2 Jan, 2 Mar, 28 Jul 2026 |
+| `nishita` | midnight, first of two | Maha & Masik Shivaratri, Sharad Purnima, Kojagara | 15 Feb 2026, 11 Feb 2029; Masik 17 Mar, 9 Sep 2026; Sharad 16 Oct 2024 |
+| `ratri` | pradosh, else nishita | Masik Kalashtami, Kaal Bhairav Jayanti | all 13 Kalashtamis of 2026 (10 Apr vs 5 Aug decide the order); KBJ 22 Nov 2024, 20 Nov 2027 |
+| `madhyahna` | midday | + Sita Navami, Ganga Saptami, Vat Savitri, Satyanarayan, **Maha Navami** (new rule) | 5 May, 3 May, 26 May 2025; Satyanarayan 2026 list; Maha Navami 11 Oct 2024 → 15 Oct 2029 (six years) |
+| `sunset` | at sunset, first of two | Skanda Sashti | 22 Feb, 19 Jun, 17 Aug 2026 |
+| `sunset-last` | at sunset, LATER of two | Narasimha Jayanti | 21 May 2024, 11 May 2025, 30 Apr 2026, 18 May 2027 |
+| `purvahna` | 3 muhurtas past sunrise, later of two; else the opening day | Akshaya Tritiya | 19 Apr 2026 vs 9 May 2027 |
+| `pradosh-next` | the day after the pradosh day | Holi (Rangwali) | 22 Mar 2027, 11 Mar 2028, 1 Mar 2029 |
 
-Closing the rest of Class B is the same three-part job the chandrodaya case took: a `dayRule`
-value, its case in the matcher, and published-date tests across several years.
+Checked and deliberately left on `udaya` because a published date contradicts every other
+convention: Bhai Dooj (11 Nov 2026), Radha Ashtami (19 Sep 2026, 8 Sep 2027), Janmashtami
+(25 Aug 2027), Narak Chaturdashi, Shani Jayanti (27 May 2025 — a day after Vat Savitri),
+Masik Durgashtami (all of 2026). Regenerating the table moved **417 Ujjain rows 2024–2031**;
+`CACHE_VERSION` went to 9 so every other city re-scans.
+
+**The one known divergence** is `KNOWN_DIVERGENCES['holi:2026']`: bhadra covered the 2 Mar
+pradosh, so Drik lit Holika Dahan on 3 Mar and Holi was 4 Mar; the engine does not model
+bhadra and says 3 Mar. The entry is excused only while the engine keeps giving exactly that
+date. **Location caveat:** the table is Ujjain; Drik's lists are New Delhi, and a tithi that
+opens between the two cities' sunsets legitimately differs (Skanda Sashti 23 vs 24 Mar 2026).
+
+**Mutation check** (run once, Sept 2026): the new script against the pre-audit table fails
+with 68 wrong dates, Dussehra 2026 among them.
+
+**Forward sweep.** `verify:observances` now sweeps 2024–2031 by default (the whole
+precomputed table). It depends on skipping adhik months — 2026 Jyeshtha, 2029 Chaitra and
+2031 Bhadrapada each carry one — and the month is read at the tithi's own sunrise day, not
+at the day the search starts from (2029's Chaitra Navratri is 14 Apr, in the nija month).
 
 **Class A fixed, Sept 2026 — every sankranti was a day late.** Not a muhurta shift but a
 plain off-by-one in `findSolarFestivalDate`: the loop compared each day's midnight with the
@@ -167,7 +174,7 @@ unreadable and this is what it is for.**
 ## Reproduce
 ```
 cd mobile
-npm run verify:observances   # festival-date check (independent muhurta re-derivation)
+npm run verify:observances   # festival-date check — fails on ANY day disagreement
 npm run test:engine          # includes panchangVsDrikpanchang.e2e.test.ts + observanceDates
 # regenerate / extend the fixture (throttle to avoid drik's reCAPTCHA):
 EMIT_FIXTURE=1 START=2026-03-01 END=2027-06-15 POOL=1 DELAY=3000 \

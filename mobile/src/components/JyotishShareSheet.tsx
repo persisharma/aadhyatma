@@ -250,7 +250,7 @@ export default function JyotishShareSheet({
                         color: colors.inkMuted,
                         fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
                         fontSize: 10.5,
-                        lineHeight: 15,
+                        lineHeight: 16,
                         marginTop: 2,
                       }}
                     >

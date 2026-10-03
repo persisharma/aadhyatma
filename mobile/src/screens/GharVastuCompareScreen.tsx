@@ -97,7 +97,7 @@ export default function GharVastuCompareScreen({ navigation, route }: { navigati
             const template = getHomeTemplate(home.template);
             return (
               <View key={home.id} style={styles.col} testID={`compare-col-${home.id}`}>
-                <Text numberOfLines={2} style={{ fontFamily: titleFont, fontSize: 13.5, lineHeight: 19, color: colors.ink }}>
+                <Text numberOfLines={2} style={{ fontFamily: titleFont, fontSize: 13.5, lineHeight: 21, color: colors.ink }}>
                   {home.label}
                 </Text>
                 <Text style={{ fontFamily: bodyFont, fontSize: 11, lineHeight: 16, color: colors.inkMuted, marginTop: 2 }}>
@@ -127,7 +127,7 @@ export default function GharVastuCompareScreen({ navigation, route }: { navigati
                         },
                       ]}
                     >
-                      <Text style={{ fontFamily: titleFont, fontSize: 10, lineHeight: 14, color: clsTextColor(cls) }}>
+                      <Text style={{ fontFamily: titleFont, fontSize: 10, lineHeight: 15, color: clsTextColor(cls) }}>
                         {contentByLang(lang, FINDING_CLASS_LABELS[cls].hi, FINDING_CLASS_LABELS[cls].en)}
                         {` ${models[index]!.counts[cls]}`}
                       </Text>
@@ -159,7 +159,7 @@ export default function GharVastuCompareScreen({ navigation, route }: { navigati
         {/* per-room rows across the union */}
         {unionKeys.map((room) => (
           <View key={findingKey(room.roomId, room.ordinal)} testID={`compare-room-${findingKey(room.roomId, room.ordinal)}`}>
-            <Text style={{ fontFamily: titleFont, fontSize: 12.5, lineHeight: 18, color: colors.ink, marginTop: spacing.md }}>
+            <Text style={{ fontFamily: titleFont, fontSize: 12.5, lineHeight: 19, color: colors.ink, marginTop: spacing.md }}>
               {contentByLang(lang, room.titleHi, room.titleEn)}
               {room.ordinal > 1 ? ` ${room.ordinal}` : ''}
             </Text>
