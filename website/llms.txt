@@ -1,5 +1,7 @@
 # Vedansh
 
+Also written वेदांश, Vedaansh or Vedānsh; known as the Vedansh app. Official site: https://vedansh.app
+
 > A free mobile app for daily Hindu devotion: sacred texts
 > in a book-like reader, a daily Panchang computed from an astronomy engine, daily
 > routines and Sankalp programmes, a japam bead counter, and a Theerth pilgrimage
