@@ -359,7 +359,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   upayRow: { flexDirection: 'row', gap: 8, marginTop: 6 },
-  upayLabel: { width: 52, fontSize: 10, paddingTop: 2 },
+  // 64 pt fits MANTRA at the section-label tracking (2.4) without breaking the word.
+  upayLabel: { width: 64, fontSize: 10, paddingTop: 2 },
   practiceLink: {
     minHeight: 38,
     marginTop: 10,
