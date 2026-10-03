@@ -61,21 +61,21 @@ test('first scene mounts with a horizontal pager, a counter and no page buttons'
 
 test('swipes, language changes and layout changes keep one page index', () => {
   const { tree, props, find } = mount('yamuna-crossing');
-  expect(find('story-progress').props.children[0]).toBe(8);
+  expect(find('story-progress').props.children[0]).toBe(12);
   for (const language of ['en', 'gu', 'kn', 'hi']) {
     mockLang = language;
     act(() => tree.update(<Screen {...props} />));
-    expect(find('story-progress').props.children[0]).toBe(8);
-    expect(find('story-pager').props.keyExtractor(story.pages[7])).toBe('yamuna-crossing');
+    expect(find('story-progress').props.children[0]).toBe(12);
+    expect(find('story-pager').props.keyExtractor(story.pages[11])).toBe('yamuna-crossing');
   }
-  act(() => find('story-pager').props.onMomentumScrollEnd({ nativeEvent: { contentOffset: { x: 390 * 8 } } }));
-  expect(find('story-progress').props.children[0]).toBe(9);
+  act(() => find('story-pager').props.onMomentumScrollEnd({ nativeEvent: { contentOffset: { x: 390 * 12 } } }));
+  expect(find('story-progress').props.children[0]).toBe(13);
   const layout = tree.root.findAllByType('View' as any).find(node => node.props.onLayout)!;
   act(() => layout.props.onLayout({ nativeEvent: { layout: { width: 700 } } }));
-  expect(find('story-pager').props.initialScrollIndex).toBe(8);
-  expect(find('story-pager').props.getItemLayout(null, 8).offset).toBe(5600);
-  act(() => find('story-pager').props.onMomentumScrollEnd({ nativeEvent: { contentOffset: { x: 700 * 9 } } }));
-  expect(find('story-progress').props.children[0]).toBe(10);
+  expect(find('story-pager').props.initialScrollIndex).toBe(12);
+  expect(find('story-pager').props.getItemLayout(null, 12).offset).toBe(8400);
+  act(() => find('story-pager').props.onMomentumScrollEnd({ nativeEvent: { contentOffset: { x: 700 * 13 } } }));
+  expect(find('story-progress').props.children[0]).toBe(14);
   act(() => tree.unmount());
 });
 

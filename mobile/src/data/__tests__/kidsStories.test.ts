@@ -20,7 +20,7 @@ test('stories have unique stable pages and authored text in all four languages',
 test('locale selection changes narration while keeping the shared illustration and page', () => {
   const story = getKidsStory('krishna-janma')!;
   const index = storyPageIndex(story, 'yamuna-crossing');
-  assert.equal(index, 7);
+  assert.equal(index, 11);
   const page = story.pages[index];
   assert.equal(page.art, 'yamuna');
   assert.notEqual(storyText(page.text, 'hi'), storyText(page.text, 'en'));
