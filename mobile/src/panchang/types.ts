@@ -60,6 +60,10 @@ export type PanchangData = {
   // The Moon's sidereal rashi at sunrise (Mesha = 0). endTime is the sign
   // change when it falls before the next sunrise, else null. Read by चन्द्र वास.
   moonRashi: PanchangElement;
+  // The Sun's sidereal rashi at sunrise (Mesha = 0) — the solar month. Read by
+  // the day panel's सूर्य card; endTime is always null (the Sun changes sign ~once
+  // a month, never shown intra-day).
+  sunRashi: PanchangElement;
   sunrise: Date;
   sunset: Date;
   moonrise: Date | null;

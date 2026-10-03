@@ -834,6 +834,7 @@ export function* computePanchangForDateSteps(localDate: Date, options: PanchangC
   // The Moon's rashi (चन्द्र राशि) at sunrise — what चन्द्र वास reads. Its end
   // is solved only when the next sunrise finds the Moon in another sign.
   const moonRashiIndex = Math.floor(moonLng / 30) % 12;
+  const sunRashiIndex = Math.floor(sunLng / 30) % 12;
   const moonRashiEndTime = Math.floor(nextMoonLng / 30) % 12 !== moonRashiIndex
     ? yield* bisectMoonRashiEnd(sunrise, moonRashiIndex, options.civilTimeZone)
     : null;
@@ -891,6 +892,15 @@ export function* computePanchangForDateSteps(localDate: Date, options: PanchangC
       nameHi: RASHI_NAMES_HI[moonRashiIndex],
       nameEn: RASHI_NAMES_EN[moonRashiIndex],
       endTime: moonRashiEndTime,
+    },
+    // The Sun's sidereal rashi (सूर्य राशि) at sunrise — the solar month, read by
+    // the day panel's सूर्य card. The Sun changes sign roughly once a month, so
+    // its intra-day change is never shown; endTime stays null.
+    sunRashi: {
+      index: sunRashiIndex,
+      nameHi: RASHI_NAMES_HI[sunRashiIndex],
+      nameEn: RASHI_NAMES_EN[sunRashiIndex],
+      endTime: null,
     },
     sunrise,
     sunset,
