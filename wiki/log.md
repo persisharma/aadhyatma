@@ -286,3 +286,7 @@ Prototype option B chosen: the four small vaas tiles became two cards (compass t
 ## [2026-09-29] ingest | Day-rule audit: 7 new ObservanceDayRule conventions, 25 rules retagged (Dussehra/Diwali/Shivaratri/Holi + monthly vrats), verifier fails on any 1-day shift, KNOWN_DIVERGENCES holi:2026, observance CACHE_VERSION 9. Updated [[panchang]] gotchas.
 ## [2026-09-29] gap | Bhadra (vishti karana) is not modelled — Holika Dahan/Holi 2026 diverge; no Holika Dahan rule exists at all.
 ## [2026-09-29] ingest | Added `maha-navami` (madhyahna; Drik 2024–2029 pinned). Durga Ashtami stays the Ashvin `masik-durgashtami` day.
+
+## [2026-10-03] ingest | PRD-45 universal share + multi-page series
+
+New page `subsystems/share.md`. `share()` now takes `ShareableContent` (verse | prose); per-surface builders in `utils/shareContent.ts`; pure paginator `utils/shareCardPages.ts` with glyph advances fitted to the app TTFs in Chromium (never under-counts; ~11 % over); `ProseShareCard`, pages strip + in-sheet preview, all-pages rows via probed/lazy `react-native-share` (store build; disabled on older binaries). `expo-media-library` rejected (Android READ_MEDIA_IMAGES Play policy). Buttons on Vrat Katha, Theerth, Daan katha/principles/journey, Vidhi mantra, Observance, Ask answer; Pitru surfaces excluded per design.md §74. Gotchas recorded: `useShare()` needs a provider in screen tests (jest.setup now stubs view-shot / expo-sharing / linear-gradient), stable `useObservancesForDate` mock refs, and the missing iOS Photos-add plist key.

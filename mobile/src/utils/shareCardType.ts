@@ -59,7 +59,7 @@ const LEADING = 1.5;
  * (Devanagari measures ~0.50 in Noto Serif once zero-width matras are averaged
  * in; Cormorant italic is nearer 0.42.)
  */
-const AVG_ADVANCE = { indic: 0.52, latin: 0.46 } as const;
+export const AVG_ADVANCE = { indic: 0.52, latin: 0.46 } as const;
 
 export type MeaningScript = keyof typeof AVG_ADVANCE;
 
@@ -74,6 +74,11 @@ export function meaningScriptFor(lang: string): MeaningScript {
   return lang === 'en' ? 'latin' : 'indic';
 }
 
+/** Estimated characters per line for a given width, size and mean glyph advance. */
+export function charsPerLine(widthDp: number, fontSize: number, advance: number): number {
+  return Math.max(8, Math.floor(widthDp / (fontSize * advance)));
+}
+
 /** Lines `text` wraps to at `fontSize`, honouring explicit newlines. */
 export function estimateWrappedLines(
   text: string,
@@ -81,10 +86,10 @@ export function estimateWrappedLines(
   fontSize: number,
   script: MeaningScript
 ): number {
-  const charsPerLine = Math.max(8, Math.floor(widthDp / (fontSize * AVG_ADVANCE[script])));
+  const perLine = charsPerLine(widthDp, fontSize, AVG_ADVANCE[script]);
   return text
     .split('\n')
-    .reduce((total, para) => total + Math.max(1, Math.ceil(para.trim().length / charsPerLine)), 0);
+    .reduce((total, para) => total + Math.max(1, Math.ceil(para.trim().length / perLine)), 0);
 }
 
 /**
