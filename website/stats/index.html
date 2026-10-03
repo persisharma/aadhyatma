@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vedansh visits</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#F3E7C9">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+<style>
+  .stats { max-width: 46rem; margin: 0 auto; padding: clamp(2rem, 6vw, 4rem) 1rem; }
+  .stats h1 { font-size: clamp(2rem, 5vw, 2.8rem); margin: 0 0 0.3rem; }
+  .stats .total { font-family: var(--display); font-size: clamp(2.6rem, 8vw, 3.6rem); color: var(--saffron-deep); margin: 0.8rem 0 0; }
+  .stats h2 { font-size: 1.35rem; margin: 2.4rem 0 0.4rem; }
+  .stats .hint { color: var(--ink-muted); font-size: 0.95rem; margin: 0 0 0.8rem; }
+  .stats table { width: 100%; border-collapse: collapse; font-size: 1.02rem; }
+  .stats td { padding: 0.55rem 0.2rem; border-bottom: 1px solid var(--rule); }
+  .stats td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+  .stats .bar { display: block; height: 4px; margin-top: 0.3rem; border-radius: 2px; background: var(--gold); opacity: 0.55; }
+  .stats code { font-size: 0.9em; background: var(--parchment-high); padding: 0.1em 0.35em; border-radius: 4px; }
+  .stats .empty { color: var(--ink-muted); font-style: italic; }
+</style>
+</head>
+<body>
+<main class="stats">
+  <h1>Visits</h1>
+  <p class="hint">Counted on vedansh.app. Refresh for the latest.</p>
+  <p class="total" id="total">…</p>
+
+  <h2>Download link by source</h2>
+  <p class="hint">Visits to <code>/get/</code> tagged <code>?utm_source=…</code> — one row per source.</p>
+  <table id="sources"></table>
+
+  <h2>By page</h2>
+  <table id="pages"></table>
+</main>
+<script>
+(function () {
+  function fill(id, rows) {
+    var t = document.getElementById(id);
+    if (!rows.length) { t.innerHTML = '<tr><td class="empty">None yet</td><td></td></tr>'; return; }
+    var max = rows[0].count || 1;
+    rows.forEach(function (r) {
+      var tr = t.insertRow(), name = tr.insertCell(), n = tr.insertCell();
+      name.textContent = r.name;
+      var bar = document.createElement('span');
+      bar.className = 'bar'; bar.style.width = Math.max(2, 100 * r.count / max) + '%';
+      name.appendChild(bar);
+      n.textContent = r.count.toLocaleString('en-IN');
+    });
+  }
+  fetch('/api/hits?all=1', { cache: 'no-store' })
+    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(function (d) {
+      document.getElementById('total').textContent = d.total.toLocaleString('en-IN') + ' visits';
+      fill('sources', d.sources);
+      fill('pages', d.pages);
+    })
+    .catch(function (e) { document.getElementById('total').textContent = 'Could not load (' + e.message + ')'; });
+})();
+</script>
+</body>
+</html>

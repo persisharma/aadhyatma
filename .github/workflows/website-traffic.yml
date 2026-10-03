@@ -29,3 +29,11 @@ jobs:
           echo "date        requests  pageViews  uniques"
           echo "$out" | jq -r '.data.viewer.zones[0].httpRequests1dGroups[] | "\(.dimensions.date)  \(.sum.requests)  \(.sum.pageViews)  \(.uniq.uniques)"'
           echo "$out" | jq -r '.data.viewer.zones[0].httpRequests1dGroups | "TOTAL requests=\(map(.sum.requests)|add) pageViews=\(map(.sum.pageViews)|add) uniques(sum of daily)=\(map(.uniq.uniques)|add)"'
+
+      - name: On-site counter, with /get/ visits by campaign source
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID || secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          npx --yes wrangler@4 d1 execute vedansh-hits --remote --json \
+            --command "SELECT k, n FROM hits ORDER BY (k LIKE 'src:%'), n DESC" \
+            | jq -r '.[0].results[] | "\(.k)\t\(.n)"'

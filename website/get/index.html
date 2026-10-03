@@ -135,8 +135,11 @@
  * buttons to everyone else (desktop, bots, and anyone with JS off — the markup
  * above is the no-JS state, so the page is never a dead end).
  *
- * Any query string on the way in is carried through to the store, so campaign
- * parameters on /get/?utm_source=… survive the hop.
+ * Campaign tags: /get/?utm_source=poster&utm_campaign=diwali
+ *   - the visit is counted under its source (see /api/hits)
+ *   - Google Play receives them as its install `referrer`, which is what Play
+ *     Console's acquisition reports read
+ *   - the App Store receives the source as `ct`, its campaign-token parameter
  */
 (function () {
   var ua = navigator.userAgent || '';
@@ -148,18 +151,29 @@
   var isIOS = /iPad|iPhone|iPod/i.test(ua) ||
               (/Macintosh/.test(ua) && typeof navigator.maxTouchPoints === 'number' && navigator.maxTouchPoints > 1);
 
-  // Count the visit before leaving; sendBeacon survives the redirect below.
-  try { navigator.sendBeacon('/api/hits?p=%2Fget%2F'); } catch (e) { /* decoration only */ }
+  var params = new URLSearchParams(window.location.search);
+  var utm = [];
+  params.forEach(function (v, k) { if (/^utm_/.test(k) && v) utm.push(k + '=' + encodeURIComponent(v)); });
+  var source = (params.get('utm_source') || '').toLowerCase();
+
+  if (utm.length) {
+    PLAY += '&referrer=' + encodeURIComponent(utm.join('&'));
+    if (source) IOS += '?ct=' + encodeURIComponent(source.slice(0, 40));
+  }
+  // Desktop and no-redirect visitors tap these, so they carry the tags too.
+  document.getElementById('ios').href = IOS;
+  document.getElementById('android').href = PLAY;
+
+  // Count the visit (and its source) before leaving; sendBeacon survives the
+  // redirect below.
+  try {
+    navigator.sendBeacon('/api/hits?p=%2Fget%2F' + (source ? '&src=' + encodeURIComponent(source) : ''));
+  } catch (e) { /* decoration only */ }
 
   var target = isAndroid ? PLAY : (isIOS ? IOS : null);
   if (!target) {
     document.getElementById('status').textContent = 'Choose your store above.';
     return;
-  }
-
-  var qs = window.location.search;
-  if (qs && qs.length > 1) {
-    target += (target.indexOf('?') === -1 ? '?' : '&') + qs.slice(1);
   }
 
   // replace() so the back button returns to wherever they came from rather
