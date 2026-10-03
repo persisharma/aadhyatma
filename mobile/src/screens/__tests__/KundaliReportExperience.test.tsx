@@ -264,6 +264,8 @@ test('graha cards open one at a time into gives, care, upay and an on-demand bas
   assert.equal(tree.root.findAll((node) => typeof node.props.testID === 'string' && node.props.testID.startsWith('graha-card-')).length, 0);
   const collapsed = textOf(tree);
   assert.ok(collapsed.includes('Tap a graha to open its full reading.'));
+  // The intro is bullets, not paragraphs (review note, 3 Oct 2026).
+  assert.ok(collapsed.includes('Each graha (planet) looks after one part of life'));
   assert.match(collapsed, /Helps you|Mixed|Needs care/);
   assert.doesNotMatch(collapsed, /What it gives/);
 
@@ -271,7 +273,7 @@ test('graha cards open one at a time into gives, care, upay and an on-demand bas
     tree.root.findAll((node) => node.props.testID === 'graha-row-jupiter' && typeof node.props.onPress === 'function')[0].props.onPress();
   });
   const open = textOf(tree);
-  for (const heading of ['Friends and enemies', 'This house’s karaka (natural guardian)', 'Why this label', 'What it gives', 'Where to take care', 'Upay · ', 'Day', 'Daan', 'Seva', 'Mantra']) {
+  for (const heading of ['About this graha', 'Friends and enemies', 'This house’s karaka (guardian)', 'Why “', 'What it gives', 'Where to take care', 'Upay · ', 'Day', 'Daan', 'Seva', 'Mantra']) {
     assert.ok(open.includes(heading), `card shows ${heading}`);
   }
   assert.ok(open.includes('Thursday'));

@@ -6,11 +6,12 @@ import { DAAN_VAAR_ENTRIES } from '../../data/daan/vaar';
 import {
   buildGrahaReadings,
   combustionSeparation,
-  friendsLine,
   grahaInSentenceEn,
   houseFactor,
   lordshipFactor,
+  maitriNames,
   resolveGrahaTone,
+  ruledLabel,
   type GrahaFactor,
 } from '../grahaReading';
 import {
@@ -18,6 +19,7 @@ import {
   GRAHA_BHAVA_READINGS,
   GRAHA_PLAIN,
   GRAHA_READING_REVIEW,
+  GRAHA_SECTION_COPY,
   GRAHA_UPAY,
   SIGN_STRENGTH,
   grahaReadingsApproved,
@@ -59,6 +61,16 @@ function position(graha: Graha, siderealLongitude: number, house = 1): GrahaPosi
     house,
     retrograde: false,
   };
+}
+
+/** Review note (3 Oct 2026): bullets, not paragraphs — one idea per line, no full stop. */
+const READING_BULLET_MAX = 90;
+const BULLET_MAX = 130;
+
+function assertBullet(text: string, max: number, label: string): void {
+  assert.ok(text.length > 0, `${label}: empty bullet`);
+  assert.ok(text.length <= max, `${label}: bullet over ${max} characters — ${text}`);
+  assert.doesNotMatch(text, /[.।]$/, `${label}: a bullet ends without a full stop — ${text}`);
 }
 
 function withoutComments(source: string): string {
@@ -149,16 +161,22 @@ test('combustion uses flat orbs that agree with the muhurat engine, across the 0
   assert.equal(combustionSeparation(sun, sun), null, 'the Sun is never combust');
 });
 
-test('strength lines name the sign, its lord and the relation — "an unfriendly sign" never stands alone', () => {
+test('sign lines name the sign, its lord and the relation — "an unfriendly sign" never stands alone', () => {
   const enemy = SIGN_STRENGTH.enemy(signContextFor('venus', 4));
-  assert.equal(enemy.en, 'Simha (Leo) is ruled by the Sun, whom Venus counts as an enemy (shatru rashi)');
-  assert.equal(enemy.hi, 'सिंह के स्वामी सूर्य हैं, जिन्हें शुक्र शत्रु मानता है (शत्रु राशि)');
+  assert.equal(enemy.en, 'In Simha (Leo) — ruled by the Sun, whom Venus counts as an enemy (shatru rashi)');
+  assert.equal(enemy.hi, 'सिंह में — राशि के स्वामी सूर्य, जिन्हें शुक्र शत्रु मानता है (शत्रु राशि)');
   const friend = SIGN_STRENGTH.friend(signContextFor('mars', 4));
-  assert.equal(friend.en, 'Simha (Leo) is ruled by the Sun, whom Mars counts as a friend (mitra rashi)');
-  assert.equal(SIGN_STRENGTH.exalted(signContextFor('jupiter', 3)).en, 'Karka (Cancer) is where Jupiter is strongest — exalted (uchcha)');
-  assert.equal(friendsLine('jupiter', false), 'Friends: Sun, Moon, Mars · Neutral: Saturn · Enemies: Mercury, Venus');
-  assert.equal(friendsLine('moon', false), 'Friends: Sun, Mercury · Neutral: Mars, Jupiter, Venus, Saturn · Enemies: none');
-  assert.equal(friendsLine('rahu', true), null);
+  assert.equal(friend.en, 'In Simha (Leo) — ruled by the Sun, whom Mars counts as a friend (mitra rashi)');
+  assert.equal(SIGN_STRENGTH.exalted(signContextFor('jupiter', 3)).en, 'In Karka (Cancer) — its strongest sign (exalted, uchcha)');
+  const jupiter = maitriNames('jupiter');
+  assert.equal(jupiter?.friendsEn, 'Sun, Moon, Mars');
+  assert.equal(jupiter?.enemiesEn, 'Mercury, Venus');
+  assert.equal(jupiter?.neutralEn, 'Saturn');
+  assert.equal(maitriNames('moon')?.enemiesEn, 'none', 'the Moon has no enemies');
+  assert.equal(maitriNames('rahu'), null);
+  assert.equal(ruledLabel([9], false), '9th house');
+  assert.equal(ruledLabel([6, 11], false), '6th and 11th houses');
+  assert.equal(ruledLabel([6, 11], true), 'षष्ठ और एकादश भाव');
   for (const graha of GRAHA_ORDER) {
     const row = maitriRow(graha);
     if (!row) continue;
@@ -199,21 +217,36 @@ test('nine cards for every lagna: order, closed labels, own basis, every line fi
       assert.equal(card.basis[0].kind, 'graha', `${label}: the placement leads the chain`);
       const ruled = housesRuledBy(card.graha, chart.lagnaRashiIndex);
       assert.equal(card.basis.filter((node) => node.kind === 'lord').length, ruled.length, `${label}: one lord node per ruled house`);
-      assert.equal(card.rulesEn === null, ruled.length === 0, `${label}: the rules line follows lordship`);
-      for (const key of ['nameHi', 'nameEn', 'meaningHi', 'meaningEn', 'placeHi', 'placeEn', 'strengthHi', 'strengthEn', 'givesHi', 'givesEn', 'careHi', 'careEn', 'toneLabelHi', 'toneLabelEn', 'toneLineHi', 'toneLineEn'] as const) {
+      assert.equal(card.rulesEn.length, ruled.length, `${label}: one rules bullet per ruled house`);
+      for (const key of ['nameHi', 'nameEn', 'meaningHi', 'meaningEn', 'placeHi', 'placeEn', 'strengthHi', 'strengthEn', 'toneLabelHi', 'toneLabelEn', 'toneLineHi', 'toneLineEn'] as const) {
         assert.ok(card[key].length > 0, `${label}: ${key}`);
       }
-      const english = [card.placeEn, card.strengthEn, card.rulesEn ?? '', ...card.reasons.map((reason) => reason.textEn)].join(' ');
-      assert.doesNotMatch(english, /\b(?:\d*[02-9])?[123]th (?:house|bhava)/, `${label}: ordinal grammar`);
-      assert.doesNotMatch([card.placeHi, card.rulesHi ?? '', ...card.reasons.map((reason) => reason.textHi)].join(' '), /\d भाव/, `${label}: no bare digit before भाव`);
-      assert.doesNotMatch(english, /[ऀ-ॿ]/, `${label}: no Devanagari in English lines`);
-      // Review note (2 Oct 2026): a strength line always says whose sign it is.
-      const node = card.graha === 'rahu' || card.graha === 'ketu';
-      if (node || dignityOf(card.graha, card.rashiIndex) === 'neutral') {
-        assert.ok(card.strengthEn.includes(`is ruled by ${grahaInSentenceEn(signLordOf(card.rashiIndex))}`), `${label}: names the sign lord`);
+      for (const [hi, en, name] of [
+        [card.givesHi, card.givesEn, 'gives'],
+        [card.careHi, card.careEn, 'care'],
+        [card.rulesHi, card.rulesEn, 'rules'],
+        [card.notesHi, card.notesEn, 'notes'],
+      ] as const) {
+        assert.equal(hi.length, en.length, `${label}: ${name} bullets align across languages`);
+        for (const text of [...hi, ...en]) assertBullet(text, BULLET_MAX, `${label} ${name}`);
       }
-      assert.equal(card.friendsEn === null, node, `${label}: friends line for the seven planets only`);
-      assert.ok(card.karakaEn.startsWith('This house’s karaka (natural guardian): '), `${label}: karaka line`);
+      assert.ok(card.givesEn.length > 0 && card.careEn.length > 0, `${label}: gives and care bullets`);
+      for (const text of [card.strengthHi, card.strengthEn, card.karakaHi, card.karakaEn, ...card.reasons.flatMap((reason) => [reason.textHi, reason.textEn])]) {
+        assertBullet(text, BULLET_MAX, label);
+      }
+      const node = card.graha === 'rahu' || card.graha === 'ketu';
+      const retrograde = chart.grahas.find((entry) => entry.graha === card.graha)!.retrograde;
+      assert.equal(card.notesEn.length, retrograde && !node ? 1 : 0, `${label}: retrograde is the only note`);
+      const english = [card.placeEn, card.strengthEn, ...card.rulesEn, ...card.reasons.map((reason) => reason.textEn)].join(' ');
+      assert.doesNotMatch(english, /\b(?:\d*[02-9])?[123]th (?:house|bhava)/, `${label}: ordinal grammar`);
+      assert.doesNotMatch([card.placeHi, ...card.rulesHi, ...card.reasons.map((reason) => reason.textHi)].join(' '), /\d भाव/, `${label}: no bare digit before भाव`);
+      assert.doesNotMatch(english, /[ऀ-ॿ]/, `${label}: no Devanagari in English lines`);
+      // Review note (2 Oct 2026): a sign line always says whose sign it is.
+      const lordEn = grahaInSentenceEn(signLordOf(card.rashiIndex));
+      if (node) assert.ok(card.strengthEn.includes(`the sign’s lord is ${lordEn}`), `${label}: names the sign lord`);
+      else if (dignityOf(card.graha, card.rashiIndex) === 'neutral') assert.ok(card.strengthEn.includes(`ruled by ${lordEn}`), `${label}: names the sign lord`);
+      assert.equal(card.maitri === null, node, `${label}: friends and enemies for the seven planets only`);
+      assert.ok(card.karakaEn.startsWith('This house’s karaka (guardian): '), `${label}: karaka line`);
     }
   }
   assert.equal(lagnas.size, 12, 'fixtures covered every lagna');
@@ -226,12 +259,20 @@ test('content tables are complete and bilingual', () => {
     assert.ok(plain.nameHi && plain.nameEn && plain.meaningHi && plain.meaningEn, graha);
     const rows = GRAHA_BHAVA_READINGS[graha];
     assert.equal(rows.length, 12, `${graha}: twelve houses`);
-    assert.equal(new Set(rows.map((row) => row.givesEn)).size, 12, `${graha}: no repeated gives line`);
+    assert.equal(new Set(rows.map((row) => row.givesEn.join(' | '))).size, 12, `${graha}: no repeated gives list`);
     rows.forEach((row, index) => {
-      for (const text of [row.givesHi, row.careHi]) assert.match(text, /[ऀ-ॿ]/, `${graha} house ${index + 1}: Hindi`);
-      for (const text of [row.givesEn, row.careEn]) {
-        assert.ok(text.length > 20, `${graha} house ${index + 1}: English`);
-        assert.doesNotMatch(text, /[ऀ-ॿ]/, `${graha} house ${index + 1}: no Devanagari in English`);
+      const label = `${graha} house ${index + 1}`;
+      assert.equal(row.givesHi.length, row.givesEn.length, `${label}: gives bullets align across languages`);
+      assert.equal(row.careHi.length, row.careEn.length, `${label}: care bullets align across languages`);
+      assert.ok(row.givesEn.length >= 2 && row.givesEn.length <= 4, `${label}: two to four gives bullets`);
+      assert.ok(row.careEn.length >= 1 && row.careEn.length <= 3, `${label}: one to three care bullets`);
+      for (const text of [...row.givesHi, ...row.careHi]) {
+        assert.match(text, /[ऀ-ॿ]/, `${label}: Hindi`);
+        assertBullet(text, READING_BULLET_MAX, label);
+      }
+      for (const text of [...row.givesEn, ...row.careEn]) {
+        assert.doesNotMatch(text, /[ऀ-ॿ]/, `${label}: no Devanagari in English`);
+        assertBullet(text, READING_BULLET_MAX, label);
       }
     });
     const upay = GRAHA_UPAY[graha];
@@ -240,6 +281,16 @@ test('content tables are complete and bilingual', () => {
     }
     assert.match(upay.mantraHi, /^ॐ .+ नमः$/, `${graha}: beej mantra`);
     assert.match(upay.mantraEn, /^Om .+ Namah$/, `${graha}: transliteration`);
+  }
+});
+
+test('the section intro is short bullets, index-aligned across languages', () => {
+  assert.ok(GRAHA_SECTION_COPY.body.length >= 5 && GRAHA_SECTION_COPY.body.length <= 8);
+  for (const bullet of GRAHA_SECTION_COPY.body) {
+    assertBullet(bullet.hi, BULLET_MAX, 'intro hi');
+    assertBullet(bullet.en, BULLET_MAX, 'intro en');
+    assert.match(bullet.hi, /[ऀ-ॿ]/);
+    assert.doesNotMatch(bullet.en, /[ऀ-ॿ]/);
   }
 });
 

@@ -4,11 +4,11 @@ Status: **draft, pending jyotishi review** (`GRAHA_READING_REVIEW.status: 'draft
 
 ## What a card is
 
-One card per graha, in `GRAHA_ORDER`, for adult charts only:
+One card per graha, in `GRAHA_ORDER`, for adult charts only. The row shows the name, the house and the label; the open card is headed bullet lists:
 
-**name and meaning → house and life areas → sign and strength → label (and why) → what it gives → where to take care → houses it rules for the Lagna → upay**
+**about this graha (meaning, sign and strength, retrograde, house karaka) → friends and enemies → why the label (+ helps, − asks for care) → what it gives → where to take care → houses it rules for the Lagna → upay**
 
-The *gives* and *care* lines come from `GRAHA_BHAVA_READINGS` (9 grahas × 12 houses). They describe the placement in the house alone. The sign's strength, the Lagna's lordship and combustion are stated by the card's own strength and reason lines, so the house sentences never repeat or contradict them.
+Bullets, not paragraphs (review note, 3 Oct 2026): one idea per bullet, no closing full stop. The *gives* (2–4) and *care* (1–3) bullets come from `GRAHA_BHAVA_READINGS` (9 grahas × 12 houses). They describe the placement in the house alone. The sign's strength, the Lagna's lordship and combustion are stated by the card's own sign and reason bullets, so the house bullets never repeat or contradict them. Combustion has no separate note: it votes, so its reason bullet says it.
 
 ## The label: four votes, counted
 
@@ -43,7 +43,7 @@ Silent cases: a benefic in the 2nd or 3rd; a malefic in the 1st, 2nd, 4th, 5th, 
 
 ## Names on the card (review note, 2 October 2026)
 
-The first review asked *which graha is an enemy of what* and *which house supports which graha*. So every strength line names the sign, its lord and the relation (`Simha (Leo) is ruled by the Sun, whom Venus counts as an enemy (shatru rashi)`), every planet's card lists its whole maitri row (`Friends: Sun, Moon, Mars · Neutral: Saturn · Enemies: Mercury, Venus`), and every card names its house's karaka from `BHAVA_PLAIN[].karakas`:
+The first review asked *which graha is an enemy of what* and *which house supports which graha*. So every sign bullet names the sign, its lord and the relation (`In Simha (Leo) — ruled by the Sun, whom Venus counts as an enemy (shatru rashi)`), every planet's card lists its whole maitri row as three bullets (`Friends: Sun, Moon, Mars` · `Enemies: Mercury, Venus` · `Neutral: Saturn`), and every card names its house's karaka from `BHAVA_PLAIN[].karakas`:
 
 | House | Karaka | House | Karaka |
 | --- | --- | --- | --- |
@@ -62,7 +62,7 @@ The karaka is information only; it does not vote. The review sheet also shows, p
 2. Kendra lordship is silent. There is no kendradhipati rule for benefics owning kendras, and no badhaka or maraka logic. Maraka is deliberately never read: it is a longevity topic (RULEBOOK §14.3.5).
 3. Combustion uses flat orbs. The retrograde variants (Mercury 12°, Venus 8°) are not applied, matching the muhurat engine (PRD-16 §9). Venus 10° and Jupiter 11° are pinned equal to `eventMuhurat.ts`.
 4. Rahu and Ketu vote only through their house. Dispositor strength and association are not read, and the nodes have no exaltation table here.
-5. Retrograde motion is shown as a fact on the strength line and in the basis. It does not vote, because classical views on it differ.
+5. Retrograde motion is shown as its own bullet under *about this graha* and in the basis. It does not vote, because classical views on it differ.
 6. The 2nd house casts no vote for anyone (nor the 3rd for a benefic). Classically benefics in the 2nd give wealth and sweet speech and malefics make speech harsh — open for the reviewer.
 
 ## Upay table

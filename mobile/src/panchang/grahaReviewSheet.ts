@@ -1,10 +1,9 @@
 import { GRAHA_NAMES_EN, GRAHA_NAMES_HI, GRAHA_ORDER, RASHI_NAMES_EN, RASHI_NAMES_HI, RASHI_NAMES_WESTERN } from './kundali';
 import type { Graha } from './kundali';
 import { COMBUSTION_ORB_DEG, maitriRow, signLordOf } from './kundaliBasis';
-import { grahaInSentenceEn, houseFactor } from './grahaReading';
+import { grahaInSentenceEn, houseFactor, ruledLabel } from './grahaReading';
 import {
   BHAVA_PLAIN,
-  COMBUST_NOTE,
   FACTOR_REASON,
   GRAHA_BHAVA_READINGS,
   GRAHA_PLAIN,
@@ -21,7 +20,7 @@ import {
   type GrahaFactorId,
   type SignContext,
 } from './grahaReadingContent';
-import { BHAVA_ORDINAL_HI, ordinalEn } from './reportFormat';
+import { BHAVA_ORDINAL_HI, bhavaLabelHi, ordinalEn } from './reportFormat';
 
 /**
  * The jyotishi review sheet for the graha cards (RULEBOOK §14.7.7) — every
@@ -33,6 +32,11 @@ import { BHAVA_ORDINAL_HI, ordinalEn } from './reportFormat';
 
 function cell(text: string): string {
   return text.replace(/\|/g, '\\|');
+}
+
+/** A bullet list inside one table cell, as the card shows it. */
+function bulletsCell(items: readonly string[]): string {
+  return items.map((item) => `• ${cell(item)}`).join('<br>');
 }
 
 /** One worked example per strength word: the graha and the sign it is read in. */
@@ -66,15 +70,34 @@ const REASON_SIGN_SAMPLE: Partial<Record<GrahaFactorId, { graha: Graha; rashiInd
   'sign-debilitated': STRENGTH_SAMPLES.debilitated,
 };
 
-/** A reason line as a card would show it, on a fixed sample. */
+/** The house each house reason is sampled in — one that really casts that vote. */
+const REASON_HOUSE_SAMPLE: Partial<Record<GrahaFactorId, number>> = {
+  'house-digbala': 1,
+  'house-benefic-strong': 4,
+  'house-malefic-growth': 6,
+  'house-benefic-dusthana': 8,
+  'house-malefic-hidden': 12,
+};
+
+/** The houses each lordship reason is sampled on — a combination that really casts that vote. */
+const REASON_RULED_SAMPLE: Partial<Record<GrahaFactorId, readonly number[]>> = {
+  'lord-yogakaraka': [4, 9],
+  'lord-trikona': [9],
+  'lord-demanding': [6, 11],
+};
+
+/** A reason bullet as a card would show it, on a fixed sample. */
 export function reasonSample(id: GrahaFactorId): Bilingual {
   const sample = REASON_SIGN_SAMPLE[id] ?? { graha: 'jupiter' as const, rashiIndex: 3 };
+  const house = REASON_HOUSE_SAMPLE[id] ?? 4;
+  const ruled = REASON_RULED_SAMPLE[id] ?? [];
   return FACTOR_REASON[id]({
     ...signContextFor(sample.graha, sample.rashiIndex),
-    houseHi: 'चतुर्थ भाव',
-    houseEn: '4th house',
-    ruledHi: 'नवम भाव (भाग्य और धर्म)',
-    ruledEn: '9th house (fortune and dharma)',
+    houseHi: bhavaLabelHi(house),
+    houseEn: `${ordinalEn(house)} house`,
+    ruledHi: ruled.length > 0 ? ruledLabel(ruled, true) : '',
+    ruledEn: ruled.length > 0 ? ruledLabel(ruled, false) : '',
+    ruledCount: ruled.length,
     degreesFromSun: 6,
   });
 }
@@ -130,7 +153,7 @@ export function renderGrahaReviewSheet(): string {
   push('3. Check the label convention in `docs/roadmap/conventions/graha-reading-v1.md` and the reason lines below.');
   push('4. Sign off at the end. The app shows these cards in store builds only after the sign-off reference and date are recorded in `GRAHA_READING_REVIEW`.');
   push('');
-  push('Every card is built as: **name and meaning → house and life areas → sign and strength → label (why) → what it gives → where to take care → houses it rules for the Lagna → upay**.');
+  push('Every card is built as: **about this graha (meaning, sign and strength, karaka) → friends and enemies → why the label → what it gives → where to take care → houses it rules for the Lagna → upay**. Each block is a short bullet list, one idea per bullet; a reason reads + when it helps and − when it asks for care.');
   push('');
 
   push('## Section copy');
@@ -138,7 +161,7 @@ export function renderGrahaReviewSheet(): string {
   push('| Hindi | English | OK | Notes |');
   push('|---|---|---|---|');
   push(`| ${cell(GRAHA_SECTION_COPY.title.hi)} | ${cell(GRAHA_SECTION_COPY.title.en)} | ☐ | |`);
-  for (const paragraph of GRAHA_SECTION_COPY.body) push(`| ${cell(paragraph.hi)} | ${cell(paragraph.en)} | ☐ | |`);
+  for (const bullet of GRAHA_SECTION_COPY.body) push(`| • ${cell(bullet.hi)} | • ${cell(bullet.en)} | ☐ | |`);
   push('');
 
   push('## What each graha stands for');
@@ -187,7 +210,7 @@ export function renderGrahaReviewSheet(): string {
 
   push('## Strength words');
   push('');
-  push('Each strength line names the sign, its lord and the relation; shown here on one worked example each.');
+  push('Each sign bullet names the sign, its lord and the relation; shown here on one worked example each. Retrograde motion is its own bullet and casts no vote; combustion has no separate note because its reason bullet (below) says it.');
   push('');
   push('| Key | Hindi | English | OK | Notes |');
   push('|---|---|---|---|---|');
@@ -197,7 +220,6 @@ export function renderGrahaReviewSheet(): string {
     push(`| ${key} | ${cell(phrase.hi)} | ${cell(phrase.en)} | ☐ | |`);
   }
   push(`| retrograde | ${cell(RETROGRADE_NOTE.hi)} | ${cell(RETROGRADE_NOTE.en)} | ☐ | |`);
-  push(`| combust | ${cell(COMBUST_NOTE.hi)} | ${cell(COMBUST_NOTE.en)} | ☐ | |`);
   push('');
   push(`Combustion orbs (degrees from the Sun): ${Object.entries(COMBUSTION_ORB_DEG).map(([graha, orb]) => `${GRAHA_NAMES_EN[graha as keyof typeof GRAHA_NAMES_EN]} ${orb}°`).join(', ')}.`);
   push('');
@@ -211,7 +233,7 @@ export function renderGrahaReviewSheet(): string {
   }
   push(`| mixed, no vote | ${cell(TONE_LINE.quiet.hi)} | ${cell(TONE_LINE.quiet.en)} | ☐ | |`);
   push('');
-  push('Reason lines as they read on a card. Sign reasons use the worked examples above; the others use Jupiter in the 4th house, ruling the 9th, 6° from the Sun:');
+  push('Reason bullets as they read on a card, each on a sample that really casts it: sign reasons on the worked examples above; house reasons in the 1st (dig-bala), 4th (kind planet), 6th (strict planet), 8th (kind planet) and 12th (strict planet); lordship reasons ruling the 4th and 9th (yogakaraka), the 9th (trikona), and the 6th and 11th (effort); combustion at 6° from the Sun:');
   push('');
   push('| Reason | Hindi | English | OK | Notes |');
   push('|---|---|---|---|---|');
@@ -230,7 +252,7 @@ export function renderGrahaReviewSheet(): string {
     push('|---|---|---|---|---|---|---|');
     GRAHA_BHAVA_READINGS[graha].forEach((reading, index) => {
       push(
-        `| ${BHAVA_ORDINAL_HI[index]} · ${ordinalEn(index + 1)} | ${cell(reading.givesHi)} | ${cell(reading.careHi)} | ${cell(reading.givesEn)} | ${cell(reading.careEn)} | ☐ | |`
+        `| ${BHAVA_ORDINAL_HI[index]} · ${ordinalEn(index + 1)} | ${bulletsCell(reading.givesHi)} | ${bulletsCell(reading.careHi)} | ${bulletsCell(reading.givesEn)} | ${bulletsCell(reading.careEn)} | ☐ | |`
       );
     });
     push('');

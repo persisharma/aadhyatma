@@ -292,3 +292,4 @@ Prototype option B chosen: the four small vaas tiles became two cards (compass t
 
 ## [2026-10-02] ingest | First review notes on the graha cards applied: strength lines name the sign, its lord and the relation (`SIGN_STRENGTH` templates over `SignContext`), cards list each planet's friends/neutral/enemies (`maitriRow`) and the house karaka (`BHAVA_PLAIN[].karakas`); review sheet + page gain friendship and karaka tables and a 2nd-house open question. Updated [[panchang]].
 
+## [2026-10-03] ingest | Graha cards to bullets (review note "too much text in a paragraph"): readings become 2–4 gives / 1–3 care bullet arrays, sign/reason/tone lines shortened, intro = seven bullets, card = headed bullet lists (+/− reason glyphs), `maitri` object replaces `friendsHi/En`, `rulesHi/En`/`notesHi/En` arrays; handoff, review sheet (real per-reason samples), RULEBOOK §14.7, design.md §78, convention updated. Updated [[panchang]].

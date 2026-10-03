@@ -439,7 +439,8 @@ function ReportSectionCard({
           ))}
         </View>
       )}
-      {section.bodyHi.map((paragraphHi, index) => (
+      {/* The graha section's intro is bullets, rendered by its list. */}
+      {!section.grahaCards && section.bodyHi.map((paragraphHi, index) => (
         <Text
           key={`${section.id}-p${index}`}
           style={{
@@ -455,7 +456,13 @@ function ReportSectionCard({
       ))}
       {section.grahaCards ? (
         // Each card carries its own आधार chain behind a toggle.
-        <GrahaReadingList cards={section.grahaCards} lang={lang} onPractice={onPractice} />
+        <GrahaReadingList
+          cards={section.grahaCards}
+          introHi={section.bodyHi}
+          introEn={section.bodyEn}
+          lang={lang}
+          onPractice={onPractice}
+        />
       ) : (
         section.basis && section.basis.length > 0 && (
           <BasisChain basis={section.basis} lang={lang} testID={`basis-${section.id}`} />

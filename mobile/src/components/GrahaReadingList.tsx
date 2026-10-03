@@ -1,12 +1,14 @@
 /**
  * The nine graha cards of the compiled report (RULEBOOK §14.7, design.md §78).
  *
- * One row per graha — name, house, and its counted label — that opens into the
- * full card: what the graha stands for, where it sits and how strong it is,
- * why it carries its label, what it gives, where to take care, the houses it
- * rules for this Lagna, and its upay (day, daan, seva, mantra, one paath).
- * The आधार chain sits behind its own toggle so the reading stays plain; it is
- * always one tap away (§14.3.1).
+ * The section's intro bullets, then one row per graha — name, house, and its
+ * counted label — that opens into the full card. Every block of the card is a
+ * short bullet list under its own heading: about this graha (meaning, sign,
+ * karaka), friends and enemies, why it carries its label (+ helps, − asks for
+ * care), what it gives, where to take care, the houses it rules for this
+ * Lagna; then its upay (day, daan, seva, mantra, one paath). The आधार chain
+ * sits behind its own toggle so the reading stays plain; it is always one tap
+ * away (§14.3.1).
  */
 import React, { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
@@ -14,6 +16,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import BasisChain from '@/components/BasisChain';
 import type { Lang } from '@/data/gita/language';
 import { library } from '@/data/texts';
+import { MAITRI_LABELS } from '@/panchang/grahaReadingContent';
 import type { Graha } from '@/panchang/kundali';
 import type { KundaliGrahaCard, KundaliGrahaTone } from '@/panchang/kundaliReportModel';
 import { useTheme } from '@/theme/ThemeContext';
@@ -23,11 +26,14 @@ import { pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType
 
 type Props = {
   cards: readonly KundaliGrahaCard[];
+  /** The section's intro bullets, index-aligned across languages. */
+  introHi: readonly string[];
+  introEn: readonly string[];
   lang: Lang;
   onPractice: (sourceId: string) => void;
 };
 
-export default function GrahaReadingList({ cards, lang, onPractice }: Props) {
+export default function GrahaReadingList({ cards, introHi, introEn, lang, onPractice }: Props) {
   const { colors, typography, radii } = useTheme();
   const [open, setOpen] = useState<ReadonlySet<Graha>>(() => new Set());
   const [basisOpen, setBasisOpen] = useState<ReadonlySet<Graha>>(() => new Set());
@@ -41,6 +47,7 @@ export default function GrahaReadingList({ cards, lang, onPractice }: Props) {
 
   return (
     <View testID="graha-reading-list" style={styles.list}>
+      <Bullets lang={lang} hi={introHi} en={introEn} />
       <Text
         style={{
           color: colors.inkMuted,
@@ -98,30 +105,55 @@ export default function GrahaReadingList({ cards, lang, onPractice }: Props) {
 
             {expanded && (
               <View testID={`graha-card-${card.graha}`} style={styles.body}>
-                <Paragraph lang={lang} hi={`${card.nameHi} — ${card.meaningHi}।`} en={`${card.nameEn} — ${card.meaningEn}.`} />
-                <Paragraph lang={lang} hi={card.strengthHi} en={card.strengthEn} muted />
-                {card.friendsHi && card.friendsEn && (
+                <Label lang={lang} hi="इस ग्रह के बारे में" en="About this graha" />
+                <Bullets
+                  lang={lang}
+                  hi={[`${card.nameHi} — ${card.meaningHi}`, card.strengthHi, ...card.notesHi, card.karakaHi]}
+                  en={[`${card.nameEn} — ${card.meaningEn}`, card.strengthEn, ...card.notesEn, card.karakaEn]}
+                />
+                {card.maitri && (
                   <>
-                    <Label lang={lang} hi="ग्रह-मैत्री — कौन मित्र, कौन शत्रु" en="Friends and enemies" />
-                    <Paragraph lang={lang} hi={card.friendsHi} en={card.friendsEn} />
+                    <Label lang={lang} hi="मित्र और शत्रु" en="Friends and enemies" />
+                    <Bullets
+                      lang={lang}
+                      hi={[
+                        `${MAITRI_LABELS.friends.hi}: ${card.maitri.friendsHi}`,
+                        `${MAITRI_LABELS.enemies.hi}: ${card.maitri.enemiesHi}`,
+                        `${MAITRI_LABELS.neutral.hi}: ${card.maitri.neutralHi}`,
+                      ]}
+                      en={[
+                        `${MAITRI_LABELS.friends.en}: ${card.maitri.friendsEn}`,
+                        `${MAITRI_LABELS.enemies.en}: ${card.maitri.enemiesEn}`,
+                        `${MAITRI_LABELS.neutral.en}: ${card.maitri.neutralEn}`,
+                      ]}
+                    />
                   </>
                 )}
-                <Paragraph lang={lang} hi={card.karakaHi} en={card.karakaEn} muted />
-                <Label lang={lang} hi="यह लेबल क्यों" en="Why this label" />
-                <Paragraph lang={lang} hi={card.toneLineHi} en={card.toneLineEn} />
-                {card.reasons.map((reason) => (
-                  <Paragraph
-                    key={reason.id}
-                    lang={lang}
-                    hi={`• ${reason.textHi}`}
-                    en={`• ${reason.textEn}`}
-                  />
-                ))}
+                <Label lang={lang} hi={`‘${card.toneLabelHi}’ क्यों`} en={`Why “${card.toneLabelEn}”`} />
+                {card.reasons.length > 0 ? (
+                  card.reasons.map((reason) => (
+                    <Bullet
+                      key={reason.id}
+                      lang={lang}
+                      glyph={reason.vote === 'supports' ? '+' : '−'}
+                      vote={reason.vote}
+                      hi={reason.textHi}
+                      en={reason.textEn}
+                    />
+                  ))
+                ) : (
+                  <Bullets lang={lang} hi={[card.toneLineHi]} en={[card.toneLineEn]} />
+                )}
                 <Label lang={lang} hi="क्या देता है" en="What it gives" />
-                <Paragraph lang={lang} hi={card.givesHi} en={card.givesEn} />
+                <Bullets lang={lang} hi={card.givesHi} en={card.givesEn} />
                 <Label lang={lang} hi="कहाँ सावधानी रखें" en="Where to take care" />
-                <Paragraph lang={lang} hi={card.careHi} en={card.careEn} />
-                {card.rulesHi && card.rulesEn && <Paragraph lang={lang} hi={card.rulesHi} en={card.rulesEn} muted />}
+                <Bullets lang={lang} hi={card.careHi} en={card.careEn} />
+                {card.rulesEn.length > 0 && (
+                  <>
+                    <Label lang={lang} hi="आपके लग्न के लिए इन भावों का स्वामी भी" en="For your Lagna it also rules" />
+                    <Bullets lang={lang} hi={card.rulesHi} en={card.rulesEn} />
+                  </>
+                )}
 
                 <View style={[styles.upay, { borderColor: colors.divider, backgroundColor: colors.goldTint, borderRadius: radii.md }]}>
                   <Label lang={lang} hi={`उपाय · ${card.upay.introHi}`} en={`Upay · ${card.upay.introEn}`} />
@@ -199,20 +231,54 @@ function Label({ lang, hi, en }: { lang: Lang; hi: string; en: string }) {
   );
 }
 
-function Paragraph({ lang, hi, en, muted }: { lang: Lang; hi: string; en: string; muted?: boolean }) {
-  const { colors, typography } = useTheme();
+function Bullets({ lang, hi, en }: { lang: Lang; hi: readonly string[]; en: readonly string[] }) {
   return (
-    <Text
-      style={{
-        color: muted ? colors.inkMuted : colors.inkSoft,
-        fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-        fontSize: 12,
-        lineHeight: 19,
-        marginTop: 4,
-      }}
+    <>
+      {en.map((textEn, index) => (
+        <Bullet key={`${index}-${textEn}`} lang={lang} hi={hi[index]} en={textEn} />
+      ))}
+    </>
+  );
+}
+
+/** One bullet; a reason's glyph is + (helps) or − (asks for care), read aloud as words. */
+function Bullet({
+  lang,
+  hi,
+  en,
+  glyph = '•',
+  vote,
+}: {
+  lang: Lang;
+  hi: string;
+  en: string;
+  glyph?: string;
+  vote?: 'supports' | 'cautions';
+}) {
+  const { colors, typography } = useTheme();
+  const text = meaningByLang(lang, hi, en);
+  const glyphColor = vote === 'cautions' ? colors.avoidDeep : vote === 'supports' ? colors.saffronDeep : colors.saffron;
+  return (
+    <View
+      style={styles.bulletRow}
+      accessible={vote !== undefined}
+      accessibilityLabel={vote === undefined ? undefined : `${vote === 'supports' ? 'Helps' : 'Asks for care'}: ${en}`}
     >
-      {meaningByLang(lang, hi, en)}
-    </Text>
+      <Text style={[styles.bulletGlyph, { color: glyphColor }]} accessibilityElementsHidden importantForAccessibility="no">
+        {glyph}
+      </Text>
+      <Text
+        style={{
+          flex: 1,
+          color: colors.inkSoft,
+          fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+          fontSize: 12,
+          lineHeight: 19,
+        }}
+      >
+        {text}
+      </Text>
+    </View>
   );
 }
 
@@ -284,7 +350,9 @@ const styles = StyleSheet.create({
   chevron: { fontSize: 14, width: 14, textAlign: 'center' },
   pill: { paddingHorizontal: 9, paddingVertical: 3 },
   body: { paddingBottom: 8 },
-  label: { fontSize: 10, marginTop: 10 },
+  label: { fontSize: 10, marginTop: 12, marginBottom: 2 },
+  bulletRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 7, marginTop: 4 },
+  bulletGlyph: { width: 10, fontSize: 13, lineHeight: 19, textAlign: 'center' },
   upay: {
     marginTop: 12,
     padding: 10,

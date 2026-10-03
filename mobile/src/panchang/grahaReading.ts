@@ -17,7 +17,6 @@ import {
 } from './kundaliBasis';
 import {
   BHAVA_PLAIN,
-  COMBUST_NOTE,
   FACTOR_REASON,
   GRAHA_BHAVA_READINGS,
   GRAHA_PLAIN,
@@ -32,8 +31,8 @@ import {
   UPAY_INTRO,
   type GrahaFactorId,
 } from './grahaReadingContent';
-import type { KundaliGrahaCard, KundaliGrahaTone } from './kundaliReportModel';
-import { bhavaLabelHi, ordinalEn } from './reportFormat';
+import type { KundaliGrahaCard, KundaliGrahaMaitri, KundaliGrahaTone } from './kundaliReportModel';
+import { BHAVA_ORDINAL_HI, bhavaLabelHi, ordinalEn } from './reportFormat';
 
 /**
  * Graha-by-graha reading — RULEBOOK §14.7.
@@ -43,8 +42,9 @@ import { bhavaLabelHi, ordinalEn } from './reportFormat';
  * groups — the sign, the house, the graha's lordship for this Lagna, and
  * combustion — each of which votes `supports`, `cautions` or nothing; the
  * label is never a score (the convention and its simplifications:
- * docs/roadmap/conventions/graha-reading-v1.md). Sentences come from the
- * typed tables in `grahaReadingContent.ts`; none is written per chart.
+ * docs/roadmap/conventions/graha-reading-v1.md). Every line is a short bullet
+ * composed from the typed tables in `grahaReadingContent.ts`; none is written
+ * per chart.
  */
 
 export type GrahaFactorGroup = 'sign' | 'house' | 'lordship' | 'combustion';
@@ -161,25 +161,37 @@ function namesList(grahas: readonly Graha[], hi: boolean): string {
   return grahas.map((graha) => (hi ? GRAHA_NAMES_HI[graha] : GRAHA_NAMES_EN[graha])).join(', ');
 }
 
-/** `Friends: Sun, Moon, Mars · Neutral: Saturn · Enemies: Mercury, Venus`; null for the nodes. */
-export function friendsLine(graha: Graha, hi: boolean): string | null {
+/** Whom a planet counts as friend, enemy and neutral, as name lists; null for the nodes. */
+export function maitriNames(graha: Graha): KundaliGrahaMaitri | null {
   const row = maitriRow(graha);
   if (!row) return null;
-  const labels = MAITRI_LABELS;
-  const part = (label: { hi: string; en: string }, grahas: readonly Graha[]) => `${hi ? label.hi : label.en}: ${namesList(grahas, hi)}`;
-  return [part(labels.friends, row.friends), part(labels.neutral, row.neutral), part(labels.enemies, row.enemies)].join(' · ');
+  return {
+    friendsHi: namesList(row.friends, true),
+    friendsEn: namesList(row.friends, false),
+    enemiesHi: namesList(row.enemies, true),
+    enemiesEn: namesList(row.enemies, false),
+    neutralHi: namesList(row.neutral, true),
+    neutralEn: namesList(row.neutral, false),
+  };
 }
 
-/** `इस भाव का कारक (स्वाभाविक संरक्षक): गुरु` / `This house’s karaka (natural guardian): Jupiter`. */
+/** `इस भाव का कारक (संरक्षक): गुरु` / `This house’s karaka (guardian): Jupiter`. */
 export function karakaLine(house: number, hi: boolean): string {
   return `${hi ? KARAKA_LABEL.hi : KARAKA_LABEL.en}: ${namesList(BHAVA_PLAIN[house - 1].karakas, hi)}`;
 }
 
-function housesLabel(houses: readonly number[], hi: boolean): string {
-  const parts = houses.map((house) =>
-    hi ? `${bhavaLabelHi(house)} (${BHAVA_PLAIN[house - 1].shortHi})` : `${houseEn(house)} (${BHAVA_PLAIN[house - 1].shortEn})`
+/** The houses inside a reason bullet: `षष्ठ और एकादश भाव` / `6th and 11th houses`. */
+export function ruledLabel(houses: readonly number[], hi: boolean): string {
+  if (hi) return `${houses.map((house) => BHAVA_ORDINAL_HI[house - 1]).join(' और ')} भाव`;
+  const ordinals = houses.map((house) => ordinalEn(house));
+  return houses.length === 1 ? `${ordinals[0]} house` : `${ordinals.join(' and ')} houses`;
+}
+
+/** One bullet per ruled house: `षष्ठ भाव — काम और प्रतियोगिता` / `6th house — work and competition`. */
+function rulesList(houses: readonly number[], hi: boolean): readonly string[] {
+  return houses.map((house) =>
+    hi ? `${bhavaLabelHi(house)} — ${BHAVA_PLAIN[house - 1].shortHi}` : `${houseEn(house)} — ${BHAVA_PLAIN[house - 1].shortEn}`
   );
-  return parts.join(hi ? ' और ' : ' and ');
 }
 
 function grahaCard(chart: KundaliChart, position: GrahaPosition, sun: GrahaPosition): KundaliGrahaCard {
@@ -215,21 +227,18 @@ function grahaCard(chart: KundaliChart, position: GrahaPosition, sun: GrahaPosit
       ...signContext,
       houseHi: bhavaLabelHi(house),
       houseEn: houseEn(house),
-      ruledHi: factor.houses ? housesLabel(factor.houses, true) : '',
-      ruledEn: factor.houses ? housesLabel(factor.houses, false) : '',
+      ruledHi: factor.houses ? ruledLabel(factor.houses, true) : '',
+      ruledEn: factor.houses ? ruledLabel(factor.houses, false) : '',
+      ruledCount: factor.houses?.length ?? 0,
       degreesFromSun: Math.round(separation ?? 0),
     });
     return { id: factor.id, vote: factor.vote, textHi: text.hi, textEn: text.en };
   });
 
   const strengthKey = node ? 'node' : dignity !== 'neutral' ? dignity : relation ?? 'neutral';
-  const notes = [
-    ...(position.retrograde && !node ? [RETROGRADE_NOTE] : []),
-    ...(separation !== null ? [COMBUST_NOTE] : []),
-  ];
   const strength = SIGN_STRENGTH[strengthKey](signContext);
-  const strengthHi = [strength.hi, ...notes.map((note) => note.hi)].join(' · ');
-  const strengthEn = [strength.en, ...notes.map((note) => note.en)].join(' · ');
+  // Combustion votes, so its reason bullet says it; retrograde motion does not.
+  const notes = position.retrograde && !node ? [RETROGRADE_NOTE] : [];
 
   const reading = GRAHA_BHAVA_READINGS[graha][house - 1];
   const upay = GRAHA_UPAY[graha];
@@ -262,12 +271,13 @@ function grahaCard(chart: KundaliChart, position: GrahaPosition, sun: GrahaPosit
     meaningEn: plain.meaningEn,
     placeHi: `${bhavaLabelHi(house)} — ${BHAVA_PLAIN[house - 1].hi}`,
     placeEn: `${houseEn(house)} — ${BHAVA_PLAIN[house - 1].en}`,
-    strengthHi,
-    strengthEn,
+    strengthHi: strength.hi,
+    strengthEn: strength.en,
+    notesHi: notes.map((note) => note.hi),
+    notesEn: notes.map((note) => note.en),
     karakaHi: karakaLine(house, true),
     karakaEn: karakaLine(house, false),
-    friendsHi: friendsLine(graha, true),
-    friendsEn: friendsLine(graha, false),
+    maitri: maitriNames(graha),
     tone,
     toneLabelHi: TONE_LABEL[tone].hi,
     toneLabelEn: TONE_LABEL[tone].en,
@@ -277,12 +287,8 @@ function grahaCard(chart: KundaliChart, position: GrahaPosition, sun: GrahaPosit
     givesEn: reading.givesEn,
     careHi: reading.careHi,
     careEn: reading.careEn,
-    rulesHi: ruled.length > 0
-      ? `आपके लग्न के लिए ${plain.nameHi} ${housesLabel(ruled, true)} का स्वामी है — इसलिए यहाँ जो यह देता है, उसका रंग उन विषयों पर भी पड़ता है।`
-      : null,
-    rulesEn: ruled.length > 0
-      ? `For your Lagna, ${GRAHA_NAMES_EN[graha]} rules the ${housesLabel(ruled, false)} — so what it gives here also colours those areas.`
-      : null,
+    rulesHi: rulesList(ruled, true),
+    rulesEn: rulesList(ruled, false),
     reasons,
     upay: {
       introHi: intro.hi,

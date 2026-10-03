@@ -122,16 +122,23 @@ test('the graha cards export card by card, each with its own basis line (RULEBOO
   const text = buildKundaliHandoffText(chart, withGrahas);
   const grahas = withGrahas.sections.find((section) => section.id === 'grahas')!;
   assert.ok(text.includes('## Your nine grahas, one by one'));
+  // The intro and every card list print as bullets, one idea per line.
+  for (const item of grahas.bodyEn) assert.ok(text.includes(`\n- ${item}\n`), `intro bullet: ${item}`);
   for (const card of grahas.grahaCards!) {
     const at = text.indexOf(`### ${card.nameEn} — ${card.placeEn} · ${card.toneLabelEn}`);
     assert.ok(at >= 0, `${card.graha} card printed`);
     const block = text.slice(at, text.indexOf('\n\n', at));
-    assert.ok(block.includes(`What it gives: ${card.givesEn}`), `${card.graha} gives`);
-    assert.ok(block.includes(`Take care: ${card.careEn}`), `${card.graha} care`);
+    assert.ok(block.includes(`\n- ${card.strengthEn}\n`), `${card.graha} sign bullet`);
+    assert.ok(block.includes(`\n- ${card.karakaEn}\n`), `${card.graha} house karaka`);
+    assert.ok(block.includes('\nWhat it gives:\n'), `${card.graha} gives heading`);
+    for (const item of card.givesEn) assert.ok(block.includes(`\n- ${item}\n`), `${card.graha} gives: ${item}`);
+    assert.ok(block.includes('\nWhere to take care:\n'), `${card.graha} care heading`);
+    for (const item of card.careEn) assert.ok(block.includes(`\n- ${item}\n`), `${card.graha} care: ${item}`);
+    for (const item of card.rulesEn) assert.ok(block.includes(`\n- ${item}\n`), `${card.graha} rules: ${item}`);
+    if (card.maitri) assert.ok(block.includes(`\n- Friends: ${card.maitri.friendsEn}\n`), `${card.graha} friends`);
+    else assert.ok(!block.includes('Friends and enemies:'), `${card.graha}: the nodes have no maitri row`);
     assert.ok(block.includes(`mantra: ${card.upay.mantraEn}`), `${card.graha} upay`);
     assert.ok(block.includes(`paath: ${card.upay.practiceSourceId}`), `${card.graha} paath`);
-    assert.ok(block.includes(card.karakaEn), `${card.graha} house karaka`);
-    if (card.friendsEn) assert.ok(block.includes(`Friends and enemies: ${card.friendsEn}`), `${card.graha} friends`);
     assert.match(block, /\nBasis: /, `${card.graha} basis`);
   }
   // The JSON tail is still the parse-back-equal model.

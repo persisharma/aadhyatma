@@ -61,7 +61,20 @@ export type KundaliGrahaUpay = {
   practiceSourceId: KundaliReportPracticeId;
 };
 
-/** One graha read the way a family pandit would — meaning first, term second. */
+/** Whom a planet counts as friend, enemy and neutral (naisargika maitri), as name lists. */
+export type KundaliGrahaMaitri = {
+  friendsHi: string;
+  friendsEn: string;
+  enemiesHi: string;
+  enemiesEn: string;
+  neutralHi: string;
+  neutralEn: string;
+};
+
+/**
+ * One graha read the way a family pandit would — meaning first, term second.
+ * Every list is short bullets, one idea each, index-aligned across languages.
+ */
 export type KundaliGrahaCard = {
   id: string;
   graha: Graha;
@@ -78,24 +91,27 @@ export type KundaliGrahaCard = {
   /** The sign, whose sign it is, and how strong the graha is in it. */
   strengthHi: string;
   strengthEn: string;
+  /** Facts that cast no vote (retrograde motion); empty when there are none. */
+  notesHi: readonly string[];
+  notesEn: readonly string[];
   /** The occupied house's karaka — its natural guardian graha(s). */
   karakaHi: string;
   karakaEn: string;
-  /** Whom the graha counts as friend, neutral and enemy; null for the nodes. */
-  friendsHi: string | null;
-  friendsEn: string | null;
+  /** Null for the nodes, which have no classical maitri row. */
+  maitri: KundaliGrahaMaitri | null;
   tone: KundaliGrahaTone;
   toneLabelHi: string;
   toneLabelEn: string;
+  /** The label's meaning — shown in place of the reasons when none voted. */
   toneLineHi: string;
   toneLineEn: string;
-  givesHi: string;
-  givesEn: string;
-  careHi: string;
-  careEn: string;
-  /** The houses it rules for this Lagna; null for the nodes. */
-  rulesHi: string | null;
-  rulesEn: string | null;
+  givesHi: readonly string[];
+  givesEn: readonly string[];
+  careHi: readonly string[];
+  careEn: readonly string[];
+  /** The houses it rules for this Lagna, one bullet each; empty for the nodes. */
+  rulesHi: readonly string[];
+  rulesEn: readonly string[];
   reasons: readonly KundaliGrahaReason[];
   upay: KundaliGrahaUpay;
   basis: readonly BasisNode[];
