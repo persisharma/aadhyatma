@@ -22,7 +22,7 @@ const SOURCE_DIR = path.join(ROOT, 'assets', 'backgrounds');
 const OUT_DIR = path.join(ROOT, 'assets', 'widget-backgrounds');
 
 const PARCHMENT = '#F8EFD6'; // colors.parchmentSoft — the widgets' container background
-/** Share of the sketch over parchment. The sketches are already near-parchment, so this keeps them a quiet watermark. */
+/** Default share of the sketch over parchment (a source may set its own `wash`). The sketches are already near-parchment, so this keeps them a quiet watermark. */
 const WASH = 0.22;
 /** The sketches carry a burnt-paper border; it reads as a dirty edge on a rounded widget, so it is cropped away. */
 const INSET = 0.08;
@@ -40,7 +40,7 @@ const contrast = (a: number, b: number) => (Math.max(a, b) + 0.05) / (Math.min(a
 fs.mkdirSync(OUT_DIR, { recursive: true });
 const index: string[] = [];
 for (const { content, size, name } of widgetBackgroundPlates()) {
-  const { file, focusY } = WIDGET_BACKGROUND_SOURCES[content];
+  const { file, focusY, wash = WASH } = WIDGET_BACKGROUND_SOURCES[content];
   const [width, height] = WIDGET_BACKGROUND_DIMENSIONS[size];
   const source = path.join(SOURCE_DIR, file);
   const [sw, sh] = execFileSync('identify', ['-format', '%w %h', source], { encoding: 'utf8' }).trim().split(' ').map(Number);
@@ -57,7 +57,7 @@ for (const { content, size, name } of widgetBackgroundPlates()) {
   execFileSync('convert', [
     source, '-crop', `${cropW}x${cropH}+${cropX}+${cropY}`, '+repage', '-resize', `${width}x${height}!`,
     '(', '-size', `${width}x${height}`, `xc:${PARCHMENT}`, ')', '+swap',
-    '-compose', 'blend', '-define', `compose:args=${Math.round(WASH * 100)}`, '-composite',
+    '-compose', 'blend', '-define', `compose:args=${Math.round(wash * 100)}`, '-composite',
     '-strip', '-interlace', 'none', '-sampling-factor', '4:2:0', '-quality', '82', out,
   ]);
   // Darkest the background gets under a glyph-sized area (a 1.5 px blur ignores single-pixel grain).
@@ -67,7 +67,7 @@ for (const { content, size, name } of widgetBackgroundPlates()) {
     .reduce((a, b) => (b[1] < a[1] ? b : a));
   if (worst < MIN_CONTRAST) {
     fs.rmSync(out);
-    throw new Error(`${name}: ${token} reaches only ${worst.toFixed(2)}:1 on the darkest area — lower WASH`);
+    throw new Error(`${name}: ${token} reaches only ${worst.toFixed(2)}:1 on the darkest area — lower its wash`);
   }
   console.log(`${name}.jpg ${width}x${height} ${(fs.statSync(out).size / 1024).toFixed(1)} KB · worst text contrast ${worst.toFixed(2)}:1 (${token})`);
   index.push(`  ${name}: require('./${name}.jpg'),`);

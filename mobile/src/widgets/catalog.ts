@@ -73,10 +73,14 @@ export const WIDGET_BACKGROUND_DIMENSIONS: Record<WidgetBackgroundSize, readonly
   large: [560, 560],
 };
 
-/** The source sketch (in `assets/backgrounds/`) each content's plates are cut from, and where its subject sits vertically. */
-export const WIDGET_BACKGROUND_SOURCES: Record<WidgetContent, { file: string; focusY: number }> = {
+/**
+ * The source sketch (in `assets/backgrounds/`) each content's plates are cut from,
+ * where its subject sits vertically, and — for a darker sketch — a lighter wash than
+ * the generator's default so it still clears the 4.5:1 text gate.
+ */
+export const WIDGET_BACKGROUND_SOURCES: Record<WidgetContent, { file: string; focusY: number; wash?: number }> = {
   verse: { file: 'deity-krishna-bansuri.webp', focusY: 0.32 },
-  panchang: { file: 'panchang-celestial-almanac.webp', focusY: 0.34 },
+  panchang: { file: 'deity-navagraha-icons.webp', focusY: 0.5, wash: 0.18 },
   japam: { file: 'category-japam-mala.webp', focusY: 0.55 },
 };
 
