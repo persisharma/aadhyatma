@@ -1,5 +1,6 @@
 import WidgetKit
 import SwiftUI
+import UIKit
 
 private let appGroup = "group.com.prashantsharma.vedansh.widgets"
 private let payloadName = "widget-payload-v1.json"
@@ -21,10 +22,60 @@ enum WidgetTheme {
   static let gold = Color(red: 0.651, green: 0.486, blue: 0.204)      // colors.gold #A67C34
 }
 
+// The faded sketch behind each system-family widget (design.md §59): one plate per
+// (surface, family), pre-cropped and already washed onto parchment by
+// `scripts/build-widget-backgrounds.mts`, bundled as `vedansh_widget_bg_<surface>_<size>.jpg`.
+// The art is strictly optional. Any failure — a Lock Screen family, a tinted/
+// vibrant rendering mode, a missing or undecodable file, a plate over the pixel
+// budget — returns nil and the widget draws the flat parchment it always has.
+enum WidgetArt {
+  /// Pixel budget per family = the plate's own size (`WIDGET_BACKGROUND_DIMENSIONS`
+  /// in catalog.ts). WidgetKit refuses to archive an image larger than the cell's
+  /// pixel area and the widget then renders blank, so an oversize replacement plate
+  /// is dropped here instead of costing the whole widget.
+  static func maxPixels(_ family: WidgetFamily) -> Int? {
+    switch family {
+    case .systemSmall: return 256 * 256
+    case .systemMedium: return 560 * 260
+    case .systemLarge: return 560 * 560
+    default: return nil
+    }
+  }
+  private static func sizeName(_ family: WidgetFamily) -> String? {
+    switch family {
+    case .systemSmall: return "small"
+    case .systemMedium: return "medium"
+    case .systemLarge: return "large"
+    default: return nil
+    }
+  }
+  static func image(_ surface: VedanshSurface, _ family: WidgetFamily) -> UIImage? {
+    guard let size = sizeName(family), let budget = maxPixels(family),
+          let url = Bundle.main.url(forResource: "vedansh_widget_bg_\(surface.rawValue)_\(size)", withExtension: "jpg"),
+          let image = UIImage(contentsOfFile: url.path), let cg = image.cgImage,
+          cg.width * cg.height <= budget else { return nil }
+    return image
+  }
+}
+
+private struct WidgetBackdrop: View {
+  let art: UIImage?
+  var body: some View {
+    ZStack {
+      WidgetTheme.parchment
+      if let art { Image(uiImage: art).resizable().scaledToFill().accessibilityHidden(true) }
+    }
+  }
+}
+
 private extension View {
-  @ViewBuilder func vedanshWidgetBackground() -> some View {
+  @ViewBuilder func vedanshWidgetBackground(_ art: UIImage?) -> some View {
     if #available(iOSApplicationExtension 17.0, *) {
-      containerBackground(for: .widget) { WidgetTheme.parchment }
+      containerBackground(for: .widget) { WidgetBackdrop(art: art) }
+    } else if let art {
+      // iOS 16 has no container background: the art must cover the whole cell, not
+      // just the content's bounds, and scaledToFill must not spill past it.
+      frame(maxWidth: .infinity, maxHeight: .infinity).background(WidgetBackdrop(art: art)).clipped()
     } else { background(WidgetTheme.parchment) }
   }
 }
@@ -86,10 +137,11 @@ struct VedanshProvider: TimelineProvider {
 // choice in the OS gallery — a shloka is offered wide/large first because it needs
 // the line width, the Panchang is offered small first because a tithi headline is
 // a glance, and every kind still renders every size it advertises.
-enum VedanshSurface: Equatable { case verse, panchang, japam }
+enum VedanshSurface: String { case verse, panchang, japam }
 
 struct VedanshWidgetView: View {
   @Environment(\.widgetFamily) var family
+  @Environment(\.widgetRenderingMode) var renderingMode
   let entry: VedanshEntry
   let surface: VedanshSurface
   var body: some View {
@@ -104,7 +156,29 @@ struct VedanshWidgetView: View {
       case .expired: recovery("पंचांग ताज़ा करने हेतु वेदांश़ खोलें", "Open Vedansh to refresh")
       case .missing, .invalid: recovery("विजेट तैयार करने हेतु वेदांश़ खोलें", "Open Vedansh to prepare widgets")
       }
-    }.vedanshWidgetBackground()
+    }.vedanshWidgetBackground(art)
+  }
+
+  // Art only behind real content in full colour. Recovery cards stay the plain
+  // parchment they always were, and the tinted/vibrant modes (iOS 18 tinted Home
+  // Screen, StandBy at night) would grey the sketch into a smudge behind the text.
+  private var art: UIImage? {
+    guard renderingMode == .fullColor, case .ready(let payload) = entry.state, hasContent(payload) else { return nil }
+    return WidgetArt.image(surface, family)
+  }
+
+  /// Whether this entry renders the surface's dated content rather than a refresh card.
+  private func hasContent(_ payload: WidgetPayload) -> Bool {
+    switch surface {
+    case .verse:
+      let key = widgetDateKey(entry.date, timeZone: payload.verses.timeZone)
+      return payload.verses.days.contains { $0.dateKey == key }
+    case .panchang:
+      let key = widgetDateKey(entry.date, timeZone: widgetIstTimeZone)
+      return payload.panchang.days.contains { $0.dateKey == key }
+    case .japam:
+      return payload.japam.dateKey == widgetDateKey(entry.date, timeZone: payload.japam.timeZone)
+    }
   }
 
   // MARK: - आज का श्लोक

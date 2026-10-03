@@ -2,10 +2,34 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
-import { WIDGET_CATALOG, widgetCatalogEntry, widgetSizeLabel, type WidgetSize } from '../catalog';
+import {
+  WIDGET_BACKGROUND_DIMENSIONS,
+  WIDGET_CATALOG,
+  widgetBackgroundPlates,
+  widgetCatalogEntry,
+  widgetSizeLabel,
+  type WidgetSize,
+} from '../catalog';
 
 const PLUGIN_ROOT = path.join(__dirname, '..', '..', '..', 'plugins');
 const read = (...parts: string[]) => fs.readFileSync(path.join(PLUGIN_ROOT, ...parts), 'utf8');
+const PLATE_DIR = path.join(__dirname, '..', '..', '..', 'assets', 'widget-backgrounds');
+
+/** Width × height from a baseline/progressive JPEG's SOF segment. */
+function jpegSize(file: string): [number, number] {
+  const bytes = fs.readFileSync(file);
+  assert.ok(bytes[0] === 0xff && bytes[1] === 0xd8, `${path.basename(file)} is not a JPEG`);
+  let offset = 2;
+  while (offset < bytes.length) {
+    const marker = bytes[offset + 1];
+    const length = bytes.readUInt16BE(offset + 2);
+    if (marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker)) {
+      return [bytes.readUInt16BE(offset + 7), bytes.readUInt16BE(offset + 5)];
+    }
+    offset += 2 + length;
+  }
+  throw new Error(`${path.basename(file)} has no SOF segment`);
+}
 
 const IOS_FAMILY_SIZE: Record<string, WidgetSize> = {
   systemSmall: 'small', systemMedium: 'medium', systemLarge: 'large',
@@ -139,4 +163,60 @@ test('every iOS family branch attaches its own widget URL', () => {
   // The recovery card is reachable from every surface and every size; it is the
   // only way back into the app when a payload is stale, so it must be tappable.
   assert.match(branchBody(swift.indexOf('private func recovery')), /\.widgetURL\(/);
+});
+
+/**
+ * The background plates (design.md §59) are optional on both platforms, so nothing
+ * at runtime would notice a plate that silently stopped shipping — it would just
+ * render the plain parchment. These pin the art to the catalog instead.
+ */
+test('every offered non-Lock-Screen size has a plate at its exact pixel budget, and no strays', () => {
+  const plates = widgetBackgroundPlates();
+  assert.equal(plates.length, 8, 'verse ×3 + panchang ×3 + japam ×2');
+  for (const { name, size } of plates) {
+    const file = path.join(PLATE_DIR, `${name}.jpg`);
+    assert.ok(fs.existsSync(file), `${name}.jpg is missing — run scripts/build-widget-backgrounds.mts`);
+    assert.deepEqual(jpegSize(file), [...WIDGET_BACKGROUND_DIMENSIONS[size]], `${name}.jpg is not the ${size} plate size`);
+  }
+  const expected = new Set(plates.map((plate) => `${plate.name}.jpg`));
+  for (const file of fs.readdirSync(PLATE_DIR).filter((f) => f.endsWith('.jpg'))) {
+    assert.ok(expected.has(file), `${file} is not a catalog plate`);
+  }
+  const index = fs.readFileSync(path.join(PLATE_DIR, 'index.ts'), 'utf8');
+  for (const { name } of plates) assert.match(index, new RegExp(`${name}: require\\('\\./${name}\\.jpg'\\)`), `gallery index lacks ${name}`);
+});
+
+// WidgetKit drops the entire render when an image exceeds the cell's pixel area,
+// so the Swift guard must refuse anything bigger than the plates actually are.
+test('iOS loads each plate by name and refuses one over the family pixel budget', () => {
+  const swift = read('home-widgets', 'ios', 'VedanshWidgets.swift');
+  const families = { small: 'systemSmall', medium: 'systemMedium', large: 'systemLarge' } as const;
+  for (const [size, family] of Object.entries(families)) {
+    const [w, h] = WIDGET_BACKGROUND_DIMENSIONS[size as keyof typeof families];
+    assert.match(swift, new RegExp(`case \\.${family}: return ${w} \\* ${h}`), `${family} budget drifted from the ${size} plate`);
+    assert.match(swift, new RegExp(`case \\.${family}: return "${size}"`), `${family} does not map to the ${size} plate`);
+  }
+  assert.match(swift, /forResource: "vedansh_widget_bg_\\\(surface\.rawValue\)_\\\(size\)", withExtension: "jpg"/);
+  assert.match(swift, /cg\.width \* cg\.height <= budget/);
+  // Recovery cards and tinted/vibrant rendering keep the plain parchment.
+  assert.match(swift, /guard renderingMode == \.fullColor, case \.ready\(let payload\) = entry\.state, hasContent\(payload\)/);
+  assert.match(swift, /\.vedanshWidgetBackground\(art\)/);
+  assert.match(read('withHomeWidgetsIos.js'), /'assets', 'widget-backgrounds'/);
+});
+
+test('Android shows each provider\'s plates only through the guarded art step', () => {
+  const kotlin = read('home-widgets', 'android', 'VedanshWidgetProvider.kt');
+  for (const { content, name } of widgetBackgroundPlates()) {
+    if (!widgetCatalogEntry(content).androidProvider) continue;
+    assert.match(kotlin, new RegExp(`R\\.drawable\\.${name}\\b`), `Android never draws ${name}`);
+  }
+  for (const layout of ['vedansh_widget_verse.xml', 'vedansh_widget_panchang.xml']) {
+    const xml = read('home-widgets', 'android', 'res', 'layout', layout);
+    assert.match(xml, /android:id="@\+id\/widget_art"[^>]*android:visibility="gone"/, `${layout} must default the art to GONE`);
+    assert.match(xml, /android:id="@\+id\/widget_root"[^>]*android:clipToOutline="true"/, `${layout} must clip the art to the card`);
+  }
+  const recovery = kotlin.slice(kotlin.indexOf('private fun recovery'), kotlin.indexOf('private fun boundaryIntent'));
+  assert.match(recovery, /setViewVisibility\(__APP_PACKAGE__\.R\.id\.widget_art, View\.GONE\)/, 'recovery must hide a previous render\'s art');
+  assert.match(kotlin, /Build\.VERSION\.SDK_INT < Build\.VERSION_CODES\.S\) return/);
+  assert.match(read('withHomeWidgets.js'), /'assets', 'widget-backgrounds'[\s\S]*drawable-nodpi/);
 });
