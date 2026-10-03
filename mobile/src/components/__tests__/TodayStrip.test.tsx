@@ -418,9 +418,14 @@ describe('TodayStrip', () => {
       const tree = render();
       expect(textOf(tree)).not.toContain('पितृ पक्ष');
       expect(mockObservanceForDate).not.toHaveBeenCalled();
-      await act(async () => {
-        await new Promise((resolve) => setTimeout(resolve, 0));
-      });
+      // Hydrate → idle → window → day table → setState is several async hops, so
+      // one macrotask is a race. Flush until the chip lands, bounded so a real
+      // regression still fails.
+      for (let i = 0; i < 20 && !textOf(tree).includes('पितृ पक्ष'); i++) {
+        await act(async () => {
+          await new Promise((resolve) => setTimeout(resolve, 0));
+        });
+      }
       expect(textOf(tree)).toContain('पितृ पक्ष — सर्वपितृ अमावस्या');
     });
 

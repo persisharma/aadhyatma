@@ -19,6 +19,7 @@
       "buildNumber": "63",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
+        "NSPhotoLibraryAddUsageDescription": "Save the verse and katha cards you share to Photos.",
         "UIBackgroundModes": [
           "audio"
         ]

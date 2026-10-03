@@ -12,6 +12,9 @@ import LanguageToggle from '@/components/LanguageToggle';
 import { getTempleDetailById } from '@/data/theerth/temples';
 import type { Deity } from '@/data/texts';
 import type { HomeStackParamList } from '@/navigation/types';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
+import { theerthShareable } from '@/utils/shareContent';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'TheerthDetail'>;
 
@@ -48,6 +51,7 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
   const { templeId } = route.params;
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
+  const { share, busy: shareBusy } = useShare();
 
   // The reading loads here, on the screen the user opened — see
   // `loadDetails()` in temples.ts for why it is not on the launch path.
@@ -92,7 +96,13 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
           {/* Language toggle at the top (consistent with the map/listing screens);
               the temple name lives only in the hero below, never duplicated here. */}
           <LanguageToggle />
-          <View style={styles.backBtnSpacer} />
+          {/* Share sits where the back button's mirror spacer was (design.md §39.4). */}
+          <ShareButton
+            onPress={() => void share(theerthShareable(temple), lang)}
+            busy={shareBusy}
+            accessibilityLabel="Share theerth"
+            accessibilityHint="Opens share options for this temple's story"
+          />
         </View>
 
         <ScrollView
@@ -339,7 +349,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  backBtnSpacer: { width: 34, height: 34 },
   scroll: {
     paddingTop: 4,
   },
