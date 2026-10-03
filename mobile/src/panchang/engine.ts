@@ -460,6 +460,11 @@ export function sunriseForDate(localDate: Date, options: PanchangComputationOpti
   return sunriseFor(localDate, options.location, options.civilTimeZone);
 }
 
+/** This civil day's sunset — the shared memo `tithiAtDayFraction` and friends read. */
+export function sunsetForDate(localDate: Date, options: PanchangComputationOptions = {}): Date {
+  return sunsetFor(localDate, options.location, options.civilTimeZone);
+}
+
 // Lightweight tithi + lunar-month for a date, computed at sunrise — exactly the
 // two values festival matching needs. Skips the end-time bisections and the
 // sunset/moonrise rise/set solves that computePanchangForDate also performs.
@@ -704,6 +709,28 @@ export function aparahnaSplitForDate(
     else hi = mid;
   }
   return { start, end, first, second: last, boundary: new Date(hi) };
+}
+
+/**
+ * The FRACTION (0–1) of this day's aparahna span that `tithiIndex` covers.
+ * Shraddha and the aparahna-vyapini observances pick the day the tithi covers
+ * MORE of — Dharma Sindhu: "the day on which it is more in aparahna"; on equal
+ * cover the later day (a tithi that covers both spans whole is a lengthening
+ * one, taken on its second day). A fraction, not minutes, so the season's
+ * shortening day can never decide a tie.
+ *
+ * Gated like the instant solvers: the span can only hold the sunrise tithi or
+ * its successor, so any other index answers 0 with no sunset solve.
+ */
+export function aparahnaCover(localDate: Date, tithiIndex: number, options: PanchangComputationOptions = {}): number {
+  const sunriseTithi = computeTithiAndMonth(localDate, options).tithiIndex;
+  if (sunriseTithi !== tithiIndex && (sunriseTithi + 1) % 30 !== tithiIndex) return 0;
+  const split = aparahnaSplitForDate(localDate, options);
+  const length = split.end.getTime() - split.start.getTime();
+  if (split.second === null || !split.boundary) return split.first === tithiIndex ? 1 : 0;
+  if (split.first === tithiIndex) return (split.boundary.getTime() - split.start.getTime()) / length;
+  if (split.second === tithiIndex) return (split.end.getTime() - split.boundary.getTime()) / length;
+  return 0;
 }
 
 function tithiAtNightFraction(

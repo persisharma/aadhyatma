@@ -28,7 +28,7 @@
 
 import { addDays } from './calendarGrid';
 import { runInBackground, runSynchronously } from './backgroundWork';
-import { aparahnaSplitForDate, computeTithiAndMonthSteps } from './engine';
+import { aparahnaCover, computeTithiAndMonthSteps } from './engine';
 import { matchesLunarTithiRuleOnDate, type ObservanceLocation } from './festivalEngine';
 import {
   LUNAR_MONTH_NAMES_EN,
@@ -300,8 +300,9 @@ export function primePitruPakshaWindow(
  *    day's span and close before the next one's) takes its sunrise day, the
  *    same fallback the shared matcher's instant rules use. No year 2020–2035
  *    reaches this branch (Ujjain, Delhi, Jaipur, Chennai).
- * Equal cover keeps the earlier day: the span shortens through Bhadrapada, so
- * the earlier day only ties if the tithi covered both spans whole.
+ * Cover is the FRACTION of each span (`aparahnaCover`); equal cover keeps the
+ * LATER day (Dharma Sindhu: a tithi in both aparahnas equally is taken on the
+ * next day — it is a lengthening one).
  */
 function* assignAparahnaDaysSteps(
   from: Date,
@@ -310,21 +311,19 @@ function* assignAparahnaDaysSteps(
 ): Generator<void, Map<number, Date>, void> {
   const best = new Map<number, { day: Date; cover: number }>();
   const sunriseDay = new Map<number, Date>();
-  const consider = (index: number, day: Date, cover: number) => {
-    if (index < 14 || index > 29 || cover <= 0) return;
-    const current = best.get(index);
-    if (!current || cover > current.cover) best.set(index, { day, cover });
-  };
+  const opts = { calendarSystem: 'purnimant' as const, location: options.location };
   for (let day = startOfLocalDay(from); day.getTime() <= to.getTime(); day = addDays(day, 1)) {
-    const { tithiIndex } = yield* computeTithiAndMonthSteps(day, { calendarSystem: 'purnimant', location: options.location });
+    const { tithiIndex } = yield* computeTithiAndMonthSteps(day, opts);
     if (!sunriseDay.has(tithiIndex)) sunriseDay.set(tithiIndex, day);
     yield;
-    const split = aparahnaSplitForDate(day, { calendarSystem: 'purnimant', location: options.location });
-    if (split.second === null || !split.boundary) {
-      consider(split.first, day, split.end.getTime() - split.start.getTime());
-    } else {
-      consider(split.first, day, split.boundary.getTime() - split.start.getTime());
-      consider(split.second, day, split.end.getTime() - split.boundary.getTime());
+    // The span holds only the sunrise tithi or its successor.
+    for (const index of [tithiIndex, (tithiIndex + 1) % 30]) {
+      if (index < 14 || index > 29) continue;
+      const cover = aparahnaCover(day, index, opts);
+      if (cover <= 0) continue;
+      // `>=`: the days run in order, so equal cover keeps the LATER day.
+      const current = best.get(index);
+      if (!current || cover >= current.cover) best.set(index, { day, cover });
     }
   }
   const days = new Map<number, Date>();
@@ -506,10 +505,10 @@ export function nextSarvapitriAmavasya(fromDate: Date, options: SolveOptions = {
 /**
  * The shraddha day of one lunation, given its SUNRISE day (the shared matcher's
  * answer, kshaya-aware): that day or the one before, whichever aparahna span the
- * tithi covers longer — the Pitru Paksha rule (`assignAparahnaDaysSteps`) for a
- * single tithi. A tithi can only reach back one day: it opened after the
- * previous sunrise. Equal cover keeps the earlier day; no cover keeps the
- * sunrise day.
+ * tithi covers the greater fraction of — the Pitru Paksha rule
+ * (`assignAparahnaDaysSteps`) for a single tithi. A tithi can only reach back
+ * one day: it opened after the previous sunrise. Equal cover, or none, keeps
+ * the sunrise (later) day.
  *
  * Magha Krishna Ashtami 2027 opens 29 Jan 4:02 AM — its sunrise day 29 Jan
  * holds the whole aparahna, so nothing moves. Pitru Paksha Saptami 2026 opens
@@ -518,18 +517,10 @@ export function nextSarvapitriAmavasya(fromDate: Date, options: SolveOptions = {
  */
 function shraddhaDayForSunriseDay(rule: Pick<TithiRule, 'paksha' | 'tithi'>, sunriseDay: Date, options: SolveOptions): Date {
   const target = tithiSlotIndex(rule);
-  const cover = (day: Date): number => {
-    const split = aparahnaSplitForDate(day, { calendarSystem: 'purnimant', location: options.location });
-    if (split.second === null || !split.boundary) {
-      return split.first === target ? split.end.getTime() - split.start.getTime() : 0;
-    }
-    if (split.first === target) return split.boundary.getTime() - split.start.getTime();
-    if (split.second === target) return split.end.getTime() - split.boundary.getTime();
-    return 0;
-  };
+  const opts = { calendarSystem: 'purnimant' as const, location: options.location };
   const before = addDays(sunriseDay, -1);
-  const coverBefore = cover(before);
-  return coverBefore > 0 && coverBefore >= cover(sunriseDay) ? before : sunriseDay;
+  // Strictly more: equal cover keeps the later (sunrise) day.
+  return aparahnaCover(before, target, opts) > aparahnaCover(sunriseDay, target, opts) ? before : sunriseDay;
 }
 
 /**
