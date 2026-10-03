@@ -3,7 +3,7 @@
     "name": "Vedansh",
     "slug": "vedansh",
     "scheme": "vedansh",
-    "version": "1.4.8",
+    "version": "1.4.9",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -16,10 +16,11 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.prashantsharma.vedansh",
-      "buildNumber": "63",
+      "buildNumber": "67",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSPhotoLibraryAddUsageDescription": "Save the verse and katha cards you share to Photos.",
+        "NSPhotoLibraryUsageDescription": "Allow access to your photo library to save and share the verse and katha cards you create.",
         "UIBackgroundModes": [
           "audio"
         ]
@@ -82,7 +83,24 @@
     "owner": "prashant.sharma",
     "extra": {
       "eas": {
-        "projectId": "c83547c2-423c-4902-9087-a9ec9879a1f9"
+        "projectId": "c83547c2-423c-4902-9087-a9ec9879a1f9",
+        "build": {
+          "experimental": {
+            "ios": {
+              "appExtensions": [
+                {
+                  "targetName": "VedanshWidgets",
+                  "bundleIdentifier": "com.prashantsharma.vedansh.widgets",
+                  "entitlements": {
+                    "com.apple.security.application-groups": [
+                      "group.com.prashantsharma.vedansh.widgets"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        }
       }
     },
     "runtimeVersion": {
