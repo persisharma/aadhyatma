@@ -16,6 +16,7 @@ import {
   primePitruPakshaWindow,
   solveNextOccurrence,
   tithiRuleLabel,
+  tithiRuleMatchesDate,
   __resetPitruPakshaWindowCacheForTests,
 } from '../pitruSmaran';
 
@@ -211,6 +212,46 @@ test('Jaipur 2026: Saptami Shraddha 2 Oct and Ashtami Shraddha 3 Oct are separat
   assert.equal(pitruPakshaObservanceForDate(new Date(2026, 9, 3), { location: jaipur })?.labelEn, 'Pitru Paksha — Ashtami Shraddha');
   assert.equal(iso(pakshaShraddhaDay({ lunarMonth: 7, paksha: 'krishna', tithi: 7 }, 2026, { location: jaipur })), '2026-10-02');
   assert.equal(iso(pakshaShraddhaDay({ lunarMonth: 7, paksha: 'krishna', tithi: 8 }, 2026, { location: jaipur })), '2026-10-03');
+});
+
+// Annual (barsi) dates use the same aparahna reckoning as the fortnight: an
+// Ashwin-krishna death tithi recurs inside Pitru Paksha itself, so its annual
+// date must be exactly its fortnight day — which the published lists above pin.
+test('annual shraddha dates land on the published Pitru Paksha days (2024–2027)', () => {
+  for (const year of [2024, 2025, 2026, 2027]) {
+    const w = pitruPakshaWindow(year)!;
+    const from = new Date(year, 7, 1);
+    for (let tithi = 1; tithi <= 14; tithi++) {
+      const rule = { lunarMonth: 7, paksha: 'krishna', tithi } as const;
+      assert.equal(
+        iso(nextObservanceForEntry({ tithiRule: rule }, from)),
+        iso(pakshaShraddhaDay(rule, year)),
+        `${year} Ashwin krishna ${tithi}`
+      );
+    }
+    assert.equal(iso(nextObservanceForEntry({ tithiRule: { lunarMonth: 6, paksha: 'shukla', tithi: 15 } }, from)), iso(w.purnima), `${year} purnima`);
+    assert.equal(iso(nextObservanceForEntry({ tithiRule: { lunarMonth: 7, paksha: 'krishna', tithi: 15 } }, from)), iso(w.end), `${year} amavasya`);
+  }
+});
+
+test('annual shraddha: Saptami 2026 is 2 Oct (aparahna); the janma reckoning keeps the sunrise day 3 Oct', () => {
+  const rule = { lunarMonth: 7, paksha: 'krishna', tithi: 7 } as const;
+  const from = new Date(2026, 8, 1);
+  assert.equal(iso(nextObservanceForEntry({ tithiRule: rule }, from)), '2026-10-02');
+  assert.equal(iso(nextObservanceForEntry({ tithiRule: rule }, from, {}, 'janma')), '2026-10-03');
+  assert.equal(iso(solveNextOccurrence(rule, from)), '2026-10-03'); // the bare matcher stays sunrise
+  assert.equal(entryMatchesDate({ tithiRule: rule }, new Date(2026, 9, 2)), true);
+  assert.equal(entryMatchesDate({ tithiRule: rule }, new Date(2026, 9, 3)), false);
+  // The living: `tithiRuleMatchesDate` never moves to the aparahna day.
+  assert.equal(tithiRuleMatchesDate(rule, new Date(2026, 9, 3)), true);
+  assert.equal(tithiRuleMatchesDate(rule, new Date(2026, 9, 2)), false);
+});
+
+test('annual shraddha: a sunrise day after `from` whose aparahna day is before it has passed — the next year answers', () => {
+  const rule = { lunarMonth: 7, paksha: 'krishna', tithi: 7 } as const;
+  const next = nextObservanceForEntry({ tithiRule: rule }, new Date(2026, 9, 3));
+  assert.ok(next && next.getFullYear() === 2027, `from 3 Oct 2026 the 2 Oct shraddha is past; got ${iso(next)}`);
+  assert.equal(iso(next), iso(pakshaShraddhaDay(rule, 2027)));
 });
 
 // The persistence layer (`pitruSmaranSolves.ts`) reads a window off disk and hands
