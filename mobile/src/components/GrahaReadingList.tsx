@@ -203,6 +203,7 @@ export default function GrahaReadingList({ cards, introHi, introEn, emptyHouses,
         >
           <Label lang={lang} hi={emptyHouses.titleHi} en={emptyHouses.titleEn} />
           <Bullets lang={lang} hi={emptyHouses.introHi} en={emptyHouses.introEn} />
+          <Label lang={lang} hi="आपकी कुंडली में" en="In your chart" />
           <Bullets
             lang={lang}
             hi={emptyHouses.houses.map((entry) => entry.lineHi)}
