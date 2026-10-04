@@ -2,7 +2,7 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useNavigation, type NavigationProp } from '@react-navigation/native';
 import { useGitaLanguage } from '@/data/gita/language';
-import { pitruPakshaObservanceForDate, type PitruPakshaDayObservance } from '@/panchang/pitruSmaran';
+import { pitruPakshaObservanceForDateAsync, type PitruPakshaDayObservance } from '@/panchang/pitruSmaran';
 import { useTheme } from '@/theme/ThemeContext';
 import { contentByLang } from '@/utils/localize';
 import { scriptBodyFont } from '@/utils/langType';
@@ -20,12 +20,13 @@ export default function PitruPakshaDayChip({ date }: { date: Date }) {
 
   React.useEffect(() => {
     let cancelled = false;
-    const handle = setTimeout(() => {
-      let result: PitruPakshaDayObservance | null = null;
-      try { result = pitruPakshaObservanceForDate(new Date(dateMs)); } catch { result = null; }
-      if (!cancelled) setObservance(result);
-    }, 0);
-    return () => { cancelled = true; clearTimeout(handle); };
+    // Cooperative: a cold fortnight's window and day table yield to the UI.
+    pitruPakshaObservanceForDateAsync(new Date(dateMs), () => cancelled)
+      .catch(() => null)
+      .then((result) => {
+        if (!cancelled && result !== undefined) setObservance(result);
+      });
+    return () => { cancelled = true; };
   }, [dateMs]);
 
   if (!observance) return null;

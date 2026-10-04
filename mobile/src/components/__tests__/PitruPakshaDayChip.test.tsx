@@ -11,7 +11,7 @@ jest.mock('@react-navigation/native', () => ({
 
 let mockObservance: import('@/panchang/pitruSmaran').PitruPakshaDayObservance | null = null;
 jest.mock('@/panchang/pitruSmaran', () => ({
-  pitruPakshaObservanceForDate: () => mockObservance,
+  pitruPakshaObservanceForDateAsync: () => Promise.resolve(mockObservance),
 }));
 jest.mock('@/data/vidhi', () => ({
   getVidhiById: (id: string) => id === 'shraddha-tarpan-vidhi' ? { id } : null,
@@ -23,7 +23,7 @@ const { GitaLanguageProvider } = jest.requireActual<typeof import('@/data/gita/l
 
 const trees: TestRenderer.ReactTestRenderer[] = [];
 
-// The chip resolves its observance through a real setTimeout(0) in useEffect, so
+// The chip resolves its observance asynchronously in useEffect, so
 // pin real timers here — otherwise fake timers leaked by a sibling suite (runInBand)
 // leave `observance` null and the guide door never renders.
 beforeEach(() => {
@@ -49,9 +49,9 @@ async function render(): Promise<TestRenderer.ReactTestRenderer> {
       </FontScaleProvider>
     );
   });
-  // The chip resolves its observance in a passive effect that schedules its own
-  // setTimeout(0), so awaiting a single macrotask here is a race: whether the
-  // chip's timer is scheduled BEFORE the awaited one depends on when React
+  // The chip resolves its observance in a passive effect that awaits its own
+  // async solve, so awaiting a single macrotask here is a race: whether the
+  // chip's work is scheduled BEFORE the awaited one depends on when React
   // flushes passive effects, which in turn shifts with where this suite lands in
   // the run order. It passed for as long as this file happened to run first.
   // Flush until the chip has rendered instead — same assertions, no dependence

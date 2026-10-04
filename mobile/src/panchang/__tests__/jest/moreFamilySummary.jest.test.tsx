@@ -74,9 +74,9 @@ test('hydrates before a deduplicated solve and publishes the earliest date', asy
   expect(mockEnsure).not.toHaveBeenCalled();
   expect(latest.smaranSoonest).toBeNull();
   await act(async () => disk.resolve());
-  expect(mockHydrate).toHaveBeenCalledWith([rule, earlierRule], expect.any(Date));
+  expect(mockHydrate).toHaveBeenCalledWith([rule, earlierRule], expect.any(Date), 'shraddha');
   expect(mockEnsure).toHaveBeenCalledTimes(2);
-  expect(mockEnsure).toHaveBeenCalledWith(rule, expect.any(Date), 1, expect.any(Function));
+  expect(mockEnsure).toHaveBeenCalledWith(rule, expect.any(Date), 1, expect.any(Function), 'shraddha');
   expect(latest.smaranSoonest).toEqual(new Date(2026, 9, 1));
   expect(mockPersist).toHaveBeenCalled();
 });
@@ -88,6 +88,8 @@ test('birthday derivation starts on a later turn and deduplicates birth dates', 
   await act(async () => { await jest.runAllTimersAsync(); });
   expect(mockDerive).toHaveBeenCalledTimes(1);
   expect(mockEnsure).toHaveBeenCalledTimes(1);
+  // Birthdays are the living's sunrise reckoning, never the shraddha record.
+  expect(mockEnsure.mock.calls[0][4]).toBe('janma');
   expect(latest.janmaSoonest).toEqual(new Date(2026, 10, 1));
 });
 

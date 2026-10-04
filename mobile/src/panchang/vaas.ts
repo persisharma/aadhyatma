@@ -56,6 +56,28 @@ export function chandraVaasDirection(moonRashiIndex: number): Direction {
   return DIRECTION_BY_ELEMENT[((moonRashiIndex % 12) + 12) % 12 % 4];
 }
 
+// Facing travel direction T, the traveller's right hand points to T rotated 90°
+// clockwise (N→E→S→W→N). So the Moon residing in direction `d` is on the right
+// when right(T) === d, i.e. when T is `d` rotated 90° counter-clockwise.
+const CCW: Record<Direction, Direction> = { north: 'west', west: 'south', south: 'east', east: 'north' };
+
+/**
+ * चन्द्र वास travel rule: a Moon in front (सम्मुख) of or to the right (दाहिने) of
+ * the direction of travel is शुभ; to the left (बाएँ) or behind (पीछे) is अशुभ. For
+ * a Moon residing in direction `d`, travelling toward `d` (Moon ahead) is
+ * favourable, and so is travelling in the direction that puts `d` on the
+ * traveller's right. Returns the two favourable travel directions, the Moon's own
+ * direction first — e.g. Moon in पश्चिम → [पश्चिम, दक्षिण].
+ *
+ * TODO(muhurat-lagna-v1): when दिशा शूल falls on one of these favourable
+ * directions the two readings disagree. v1 does NOT reconcile them in code —
+ * Chandra-vasa is out of v1 (content review pending; PRD-16 §14 Q4). See
+ * docs/roadmap/conventions/muhurat-lagna-v1.md.
+ */
+export function chandraVaasFavourableDirections(d: Direction): [Direction, Direction] {
+  return [d, CCW[d]];
+}
+
 /**
  * Tithi index (0-based: 0 = शुक्ल प्रतिपदा … 29 = अमावस्या) and vara index
  * (0 = रविवार) → where Agni resides.

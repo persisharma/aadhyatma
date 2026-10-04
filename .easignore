@@ -1,0 +1,42 @@
+# EAS Build only needs the Expo app in mobile/. The repo root also holds docs/,
+# images/, source books, prototypes, marketing and wiki — none of which are part
+# of the iOS build, and together they bloated the upload archive to ~201 MB
+# (causing flaky "socket hang up" uploads). Keep only mobile/.
+#
+# NOTE: a .easignore REPLACES .gitignore for EAS's file selection, so we must
+# also re-exclude the heavy/generated files that .gitignore normally hides
+# (node_modules, prebuilt ios/android, .expo, credentials, env, etc.).
+
+# 1) Ignore every top-level entry...
+/*
+
+# 2) ...except the Expo app directory.
+!/mobile
+
+# 3) Re-exclude generated/secret files inside mobile/ (mirrors mobile/.gitignore).
+mobile/node_modules/
+mobile/.expo/
+mobile/.expo-verify-out/
+mobile/dist/
+mobile/web-build/
+mobile/ios/
+mobile/android/
+mobile/.kotlin/
+mobile/coverage/
+mobile/.metro-health-check*
+mobile/credentials/
+mobile/credentials.json
+mobile/.env
+mobile/.env*.local
+mobile/*.tsbuildinfo
+mobile/e2e-shots/*.png
+mobile/**/*.orig.*
+mobile/**/*.jks
+mobile/**/*.p8
+mobile/**/*.p12
+mobile/**/*.key
+mobile/**/*.mobileprovision
+mobile/**/*.pem
+
+# Misc
+.DS_Store

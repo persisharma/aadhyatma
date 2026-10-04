@@ -460,6 +460,11 @@ export function sunriseForDate(localDate: Date, options: PanchangComputationOpti
   return sunriseFor(localDate, options.location, options.civilTimeZone);
 }
 
+/** This civil day's sunset — the shared memo `tithiAtDayFraction` and friends read. */
+export function sunsetForDate(localDate: Date, options: PanchangComputationOptions = {}): Date {
+  return sunsetFor(localDate, options.location, options.civilTimeZone);
+}
+
 // Lightweight tithi + lunar-month for a date, computed at sunrise — exactly the
 // two values festival matching needs. Skips the end-time bisections and the
 // sunset/moonrise rise/set solves that computePanchangForDate also performs.
@@ -656,6 +661,78 @@ export function tithiAtDayFraction(
   return computeTithiIndex(getSiderealSunLng(instant, year), getSiderealMoonLng(instant, year));
 }
 
+/** A civil day's aparahna span and how the tithis running in it share it. */
+export type AparahnaSplit = {
+  start: Date;
+  end: Date;
+  /** The tithi at the span's start. */
+  first: number;
+  /** The tithi that takes over inside the span, or null when `first` covers it all. */
+  second: number | null;
+  /** When `second` begins — null with it. */
+  boundary: Date | null;
+};
+
+/**
+ * The aparahna SPAN — the fourth of daylight's five equal parts, sunrise +
+ * [0.6, 0.8] × daylength — and the tithis that occupy it. Shraddha is assigned
+ * by how much of this span a tithi covers, not by one instant inside it: Drik's
+ * Pitru Paksha 2026 puts Chaturthi AND Panchami on 30 Sep, where Panchami opens
+ * at 2:55 PM inside the span and has closed before 1 Oct's span begins; the
+ * midpoint reading (`tithiAtAparahna`) misses Panchami there entirely.
+ *
+ * A tithi lasts at least ~20 h and the span ~2–3 h, so at most one boundary
+ * falls inside it. That boundary is bisected to the second.
+ */
+export function aparahnaSplitForDate(
+  localDate: Date,
+  options: PanchangComputationOptions = {}
+): AparahnaSplit {
+  const sunrise = sunriseFor(localDate, options.location, options.civilTimeZone);
+  const sunset = sunsetFor(localDate, options.location, options.civilTimeZone);
+  const length = sunset.getTime() - sunrise.getTime();
+  const start = new Date(sunrise.getTime() + 0.6 * length);
+  const end = new Date(sunrise.getTime() + 0.8 * length);
+  const tithiAt = (ms: number): number => {
+    const instant = new Date(ms);
+    const year = instant.getFullYear();
+    return computeTithiIndex(getSiderealSunLng(instant, year), getSiderealMoonLng(instant, year));
+  };
+  const first = tithiAt(start.getTime());
+  const last = tithiAt(end.getTime());
+  if (first === last) return { start, end, first, second: null, boundary: null };
+  let lo = start.getTime();
+  let hi = end.getTime();
+  while (hi - lo > 1000) {
+    const mid = (lo + hi) / 2;
+    if (tithiAt(mid) === first) lo = mid;
+    else hi = mid;
+  }
+  return { start, end, first, second: last, boundary: new Date(hi) };
+}
+
+/**
+ * The FRACTION (0–1) of this day's aparahna span that `tithiIndex` covers.
+ * Shraddha and the aparahna-vyapini observances pick the day the tithi covers
+ * MORE of — Dharma Sindhu: "the day on which it is more in aparahna"; on equal
+ * cover the later day (a tithi that covers both spans whole is a lengthening
+ * one, taken on its second day). A fraction, not minutes, so the season's
+ * shortening day can never decide a tie.
+ *
+ * Gated like the instant solvers: the span can only hold the sunrise tithi or
+ * its successor, so any other index answers 0 with no sunset solve.
+ */
+export function aparahnaCover(localDate: Date, tithiIndex: number, options: PanchangComputationOptions = {}): number {
+  const sunriseTithi = computeTithiAndMonth(localDate, options).tithiIndex;
+  if (sunriseTithi !== tithiIndex && (sunriseTithi + 1) % 30 !== tithiIndex) return 0;
+  const split = aparahnaSplitForDate(localDate, options);
+  const length = split.end.getTime() - split.start.getTime();
+  if (split.second === null || !split.boundary) return split.first === tithiIndex ? 1 : 0;
+  if (split.first === tithiIndex) return (split.boundary.getTime() - split.start.getTime()) / length;
+  if (split.second === tithiIndex) return (split.end.getTime() - split.boundary.getTime()) / length;
+  return 0;
+}
+
 function tithiAtNightFraction(
   localDate: Date,
   expectedTithiIndex: number,
@@ -834,6 +911,7 @@ export function* computePanchangForDateSteps(localDate: Date, options: PanchangC
   // The Moon's rashi (चन्द्र राशि) at sunrise — what चन्द्र वास reads. Its end
   // is solved only when the next sunrise finds the Moon in another sign.
   const moonRashiIndex = Math.floor(moonLng / 30) % 12;
+  const sunRashiIndex = Math.floor(sunLng / 30) % 12;
   const moonRashiEndTime = Math.floor(nextMoonLng / 30) % 12 !== moonRashiIndex
     ? yield* bisectMoonRashiEnd(sunrise, moonRashiIndex, options.civilTimeZone)
     : null;
@@ -891,6 +969,15 @@ export function* computePanchangForDateSteps(localDate: Date, options: PanchangC
       nameHi: RASHI_NAMES_HI[moonRashiIndex],
       nameEn: RASHI_NAMES_EN[moonRashiIndex],
       endTime: moonRashiEndTime,
+    },
+    // The Sun's sidereal rashi (सूर्य राशि) at sunrise — the solar month, read by
+    // the day panel's सूर्य card. The Sun changes sign roughly once a month, so
+    // its intra-day change is never shown; endTime stays null.
+    sunRashi: {
+      index: sunRashiIndex,
+      nameHi: RASHI_NAMES_HI[sunRashiIndex],
+      nameEn: RASHI_NAMES_EN[sunRashiIndex],
+      endTime: null,
     },
     sunrise,
     sunset,

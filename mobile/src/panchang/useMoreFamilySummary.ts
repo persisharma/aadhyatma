@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { runInBackground } from './backgroundWork';
 import type { PersonProfile } from './birthProfiles';
-import type { SmaranEntry } from './pitruSmaran';
+import type { Reckoning, SmaranEntry } from './pitruSmaran';
 import { hydrateSmaranSolves, ensureOccurrencesAsync, persistSmaranSolves, smaranRuleKey, type SmaranRule } from './pitruSmaranSolves';
 import { janmaTithiRuleFromBirthDateSteps } from './janmaTithi';
 
@@ -26,20 +26,20 @@ export function useMoreFamilySummary(entries: readonly SmaranEntry[], people: re
     void (async () => {
       if (cancelled) return;
 
-      const soonest = async (rules: SmaranRule[]): Promise<Date | null> => {
-        const unique = [...new Map(rules.map((rule) => [smaranRuleKey(rule), rule])).values()];
+      const soonest = async (rules: SmaranRule[], reckoning: Reckoning): Promise<Date | null> => {
+        const unique = [...new Map(rules.map((rule) => [smaranRuleKey(rule, reckoning), rule])).values()];
         if (cancelled || unique.length === 0) return null;
-        await hydrateSmaranSolves(unique, today);
+        await hydrateSmaranSolves(unique, today, reckoning);
         let next: Date | null = null;
         for (const rule of unique) {
           if (cancelled) return null;
-          const [date] = await ensureOccurrencesAsync(rule, today, 1, isCancelled);
+          const [date] = await ensureOccurrencesAsync(rule, today, 1, isCancelled, reckoning);
           if (date && (!next || date < next)) next = date;
         }
         return next;
       };
 
-      const smaranSoonest = await soonest(entries.map((entry) => entry.tithiRule));
+      const smaranSoonest = await soonest(entries.map((entry) => entry.tithiRule), 'shraddha');
       if (cancelled) return;
       setSummary({ smaranSoonest, janmaSoonest: null });
       void persistSmaranSolves();
@@ -51,7 +51,7 @@ export function useMoreFamilySummary(entries: readonly SmaranEntry[], people: re
         const rule = await runInBackground(janmaTithiRuleFromBirthDateSteps(date), isCancelled);
         if (rule) rules.push(rule);
       }
-      const janmaSoonest = await soonest(rules);
+      const janmaSoonest = await soonest(rules, 'janma');
       if (cancelled) return;
       setSummary({ smaranSoonest, janmaSoonest });
       void persistSmaranSolves();

@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
+import { ShareProvider } from '@/utils/shareVerse';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Image, ImageBackground, Text } from 'react-native';
+import { Image, ImageBackground, StyleSheet, Text } from 'react-native';
 import { backgroundImages } from '@assets/backgrounds';
 import { getDeityBackground, getTheerthBackground } from '@/data/backgrounds';
 import { getTempleDetailById, templesWithDetails } from '@/data/theerth/temples';
@@ -46,9 +47,9 @@ function render(templeId: string, lang: 'hi' | 'en') {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang={lang}>
+      <GitaLanguageProvider initialLang={lang}><ShareProvider>
         <TheerthDetailScreen navigation={navigation} route={route} />
-      </GitaLanguageProvider>,
+      </ShareProvider></GitaLanguageProvider>,
     );
   });
   return tree
@@ -104,9 +105,9 @@ test('Salasar Balaji shows its commissioned sketch as an in-content illustration
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="hi">
+      <GitaLanguageProvider initialLang="hi"><ShareProvider>
         <TheerthDetailScreen navigation={navigation} route={route} />
-      </GitaLanguageProvider>,
+      </ShareProvider></GitaLanguageProvider>,
     );
   });
   const frames = tree.root.findAll((n) => typeof n.type === 'string' && n.props.testID === 'theerth-illustration');
@@ -114,6 +115,11 @@ test('Salasar Balaji shows its commissioned sketch as an in-content illustration
   assert.equal(frames[0].props.accessibilityLabel, 'सालासर बालाजी');
   const img = frames[0].findByType(Image);
   assert.equal(img.props.source, backgroundImages.theerth_salasar_balaji, 'frame shows the Salasar plate');
+  // Explicit height so RN's injected intrinsic asset height (1024 pt) can't
+  // win over the square sizing and zoom the frame into the plate's canopy.
+  const imgStyle = StyleSheet.flatten(img.props.style);
+  assert.equal(imgStyle.width, '100%');
+  assert.equal(imgStyle.height, '100%');
   assert.equal(tree.root.findAllByType(ImageBackground).length, 1, 'faded background layer still renders');
 });
 
@@ -122,9 +128,9 @@ test('temples on a generic deity plate get no in-content illustration', () => {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">
+      <GitaLanguageProvider initialLang="en"><ShareProvider>
         <TheerthDetailScreen navigation={navigation} route={route} />
-      </GitaLanguageProvider>,
+      </ShareProvider></GitaLanguageProvider>,
     );
   });
   assert.equal(tree.root.findAll((n) => typeof n.type === 'string' && n.props.testID === 'theerth-illustration').length, 0);
@@ -222,9 +228,9 @@ test('Khatu Shyam uses its dedicated Theerth background plate', () => {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">
+      <GitaLanguageProvider initialLang="en"><ShareProvider>
         <TheerthDetailScreen navigation={navigation} route={route} />
-      </GitaLanguageProvider>,
+      </ShareProvider></GitaLanguageProvider>,
     );
   });
   const layers = tree.root.findAllByType(ImageBackground);
@@ -246,9 +252,9 @@ test('renders the temple deity background (Somnath → Shiva)', () => {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">
+      <GitaLanguageProvider initialLang="en"><ShareProvider>
         <TheerthDetailScreen navigation={navigation} route={route} />
-      </GitaLanguageProvider>,
+      </ShareProvider></GitaLanguageProvider>,
     );
   });
   const layers = tree.root.findAllByType(ImageBackground);

@@ -27,6 +27,9 @@ import BackgroundLayer from '@/components/BackgroundLayer';
 import ReaderHeader from '@/components/ReaderHeader';
 import { getDaanBackground } from '@/data/backgrounds';
 import { useTodayKey } from '@/utils/useTodayKey';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
+import { daanPrincipleShareable } from '@/utils/shareContent';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import {
   DAAN_VAAR_ENTRIES,
@@ -57,6 +60,7 @@ function vaarShortName(lang: Lang, vaarHi: string, vaarEn: string): string {
 export default function DaanPunyaScreen({ navigation }: Props) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
+  const { share, busy: shareBusy } = useShare();
   const rootNav = useNavigation<any>();
   const { width } = useWindowDimensions();
   const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
@@ -268,26 +272,34 @@ export default function DaanPunyaScreen({ navigation }: Props) {
                     {meaningByLang(lang, entry.meaningHi, entry.meaningEn)}
                   </Text>
                 </View>
-                {entry.gitaRef ? (
-                  <View style={styles.cardActions}>
-                      <Pressable
-                        testID="daan-gita-link"
-                        accessibilityRole="button"
-                        accessibilityLabel="Read in the Gita reader"
-                        onPress={() =>
-                          rootNav.navigate('HomeTab', {
-                            screen: 'GitaReader',
-                            params: { chapter: entry.gitaRef!.chapter, initialIndex: entry.gitaRef!.verseIndex },
-                          })
-                        }
-                        style={[styles.chip, { borderColor: colors.saffron, borderRadius: radii.pill }]}
-                      >
-                        <Text style={{ fontFamily: titleFont, fontSize: 12.5, color: colors.saffronDeep }}>
-                          {contentByLang(lang, 'गीता में पढ़ें ›', 'Read in the Gita ›')}
-                        </Text>
-                      </Pressable>
+                <View style={styles.cardActions}>
+                  {entry.gitaRef ? (
+                    <Pressable
+                      testID="daan-gita-link"
+                      accessibilityRole="button"
+                      accessibilityLabel="Read in the Gita reader"
+                      onPress={() =>
+                        rootNav.navigate('HomeTab', {
+                          screen: 'GitaReader',
+                          params: { chapter: entry.gitaRef!.chapter, initialIndex: entry.gitaRef!.verseIndex },
+                        })
+                      }
+                      style={[styles.chip, { borderColor: colors.saffron, borderRadius: radii.pill }]}
+                    >
+                      <Text style={{ fontFamily: titleFont, fontSize: 12.5, color: colors.saffronDeep }}>
+                        {contentByLang(lang, 'गीता में पढ़ें ›', 'Read in the Gita ›')}
+                      </Text>
+                    </Pressable>
+                  ) : null}
+                  <View style={styles.shareEnd}>
+                    <ShareButton
+                      onPress={() => void share(daanPrincipleShareable(entry), lang)}
+                      busy={shareBusy}
+                      accessibilityLabel="Share verse"
+                      accessibilityHint="Opens share options for this verse and its meaning"
+                    />
                   </View>
-                ) : null}
+                </View>
               </View>
             );
           })}
@@ -400,6 +412,7 @@ const styles = StyleSheet.create({
   card: { borderWidth: 1, paddingHorizontal: 14, paddingTop: 13, paddingBottom: 13 },
   verseCard: { justifyContent: 'space-between' },
   cardActions: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 6, gap: 8 },
+  shareEnd: { marginLeft: 'auto' },
   chip: { borderWidth: 1.5, paddingHorizontal: 12, paddingVertical: 5 },
   journeyBtn: { borderWidth: 1.5, paddingHorizontal: 14, paddingVertical: 7, marginTop: 11, alignSelf: 'flex-start' },
   labelRow: { flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 8 },
