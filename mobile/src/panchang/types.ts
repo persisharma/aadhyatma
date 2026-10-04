@@ -154,7 +154,12 @@ export type ObservanceRelativeRule = 'friday-before-purnima';
  * `scripts/verify-observances.mts`, which FAILS on a ±1-day shift — a wrong
  * convention can no longer pass as a documented warning.
  */
-export type ObservanceDayRule = 'udaya' | 'chandrodaya' | 'madhyahna' | 'aparahna' | 'pradosh' | 'nishita' | 'ratri' | 'pradosh-next' | 'sunset' | 'sunset-last' | 'purvahna';
+export type ObservanceDayRule =
+  | 'udaya' | 'chandrodaya' | 'madhyahna' | 'aparahna' | 'pradosh' | 'nishita' | 'ratri' | 'pradosh-next'
+  | 'sunset' | 'sunset-last' | 'purvahna'
+  // Multi-clause published rules (`specialDayRules.ts`, RULEBOOK §23.14–23.17):
+  | 'ekadashi' | 'ekadashi-vaishnava' | 'shravani' | 'holika-dahan-next'
+  | 'janmashtami-smarta' | 'janmashtami-vaishnava';
 
 /**
  * Where a rule sits inside a multi-day festival arc (PRD-28, पर्व-अर्क).

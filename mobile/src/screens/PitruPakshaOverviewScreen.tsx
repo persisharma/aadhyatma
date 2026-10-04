@@ -16,9 +16,7 @@ import {
 } from '@/data/pitru';
 import { getVidhiById } from '@/data/vidhi';
 import { addDays } from '@/panchang/calendarGrid';
-import { computeTithiAndMonth } from '@/panchang/engine';
-import { TITHI_NAMES_EN, TITHI_NAMES_HI } from '@/panchang/names';
-import { pakshaShraddhaDay, pitruPakshaWindow } from '@/panchang/pitruSmaran';
+import { pakshaShraddhaDay, pitruPakshaDayName, pitruPakshaWindow } from '@/panchang/pitruSmaran';
 import { entryDisplayName, shortDate, startOfLocalDay } from '@/panchang/pitruSmaranDisplay';
 import { useTheme } from '@/theme/ThemeContext';
 import { commentaryByLang, contentByLang } from '@/utils/localize';
@@ -47,7 +45,8 @@ type FortnightRow = {
   family: FamilyMember[];
   /**
    * Which day of the fortnight this civil date is, so the row can carry the
-   * §74 tithi teaching for it. A kshaya row takes its sunrise tithi's day.
+   * §74 tithi teaching for it. A row two tithis share takes the first's; a row
+   * that carries no tithi has none.
    */
   fortnightDay: PitruFortnightDay | null;
 };
@@ -141,40 +140,27 @@ export default function PitruPakshaOverviewScreen({ navigation }: Props) {
           familyByDay.set(key, members);
         }
 
-        // One row per civil day, purnima through amavasya, named by its sunrise
-        // tithi; a kshaya day (sunrise index jumps by 2) carries both names, the
-        // same combined form published shraddha calendars use.
+        // One row per civil day, purnima through amavasya, named by the tithi(s)
+        // whose shraddha falls on it (aparahna-assigned in the engine): two
+        // tithis can share a day and a day can carry none, exactly as published
+        // shraddha calendars list them.
         const rows: FortnightRow[] = [];
         for (let d = new Date(window.purnima); d.getTime() <= window.end.getTime(); d = addDays(d, 1)) {
-          const isLast = d.getTime() === window.end.getTime();
           const key = rowKey(d);
-          let labelHi: string;
-          let labelEn: string;
-          let heroHi: string;
-          let heroEn: string;
-          let fortnightDay: PitruFortnightDay | null;
-          if (d.getTime() === window.purnima.getTime()) {
-            labelHi = heroHi = 'पूर्णिमा श्राद्ध';
-            labelEn = heroEn = 'Purnima Shraddha';
+          const name = pitruPakshaDayName(d, {}, window);
+          let labelHi = name?.nameHi ?? '';
+          let labelEn = name?.nameEn ?? '';
+          const heroHi = labelHi;
+          const heroEn = labelEn;
+          let fortnightDay: PitruFortnightDay | null = null;
+          if (name?.isPurnima) {
             fortnightDay = 'purnima';
-          } else if (isLast) {
-            heroHi = 'सर्वपितृ अमावस्या';
-            heroEn = 'Sarvapitri Amavasya';
-            labelHi = 'सर्वपितृ अमावस्या — अज्ञात तिथियों हेतु';
-            labelEn = 'Sarvapitri Amavasya — for unknown tithis';
+          } else if (name?.isSarvapitri) {
+            labelHi = `${labelHi} — अज्ञात तिथियों हेतु`;
+            labelEn = `${labelEn} — for unknown tithis`;
             fortnightDay = 'amavasya';
-          } else {
-            const { tithiIndex } = computeTithiAndMonth(d, { calendarSystem: 'purnimant' });
-            const nextIndex = computeTithiAndMonth(addDays(d, 1), { calendarSystem: 'purnimant' }).tithiIndex;
-            const kshayaIndex = (tithiIndex + 2) % 30 === nextIndex ? (tithiIndex + 1) % 30 : null;
-            labelHi = heroHi = kshayaIndex !== null
-              ? `${TITHI_NAMES_HI[tithiIndex]} व ${TITHI_NAMES_HI[kshayaIndex]} श्राद्ध`
-              : `${TITHI_NAMES_HI[tithiIndex]} श्राद्ध`;
-            labelEn = heroEn = kshayaIndex !== null
-              ? `${TITHI_NAMES_EN[tithiIndex]} & ${TITHI_NAMES_EN[kshayaIndex]} Shraddha`
-              : `${TITHI_NAMES_EN[tithiIndex]} Shraddha`;
-            // Krishna tithis sit at 15–29; day 1 is प्रतिपदा at index 15.
-            fortnightDay = tithiIndex >= 15 && tithiIndex <= 28 ? ((tithiIndex - 14) as PitruFortnightDay) : null;
+          } else if (name && name.tithis.length > 0) {
+            fortnightDay = name.tithis[0] as PitruFortnightDay;
           }
           rows.push({
             key,

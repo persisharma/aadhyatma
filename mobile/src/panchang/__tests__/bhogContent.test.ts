@@ -97,7 +97,9 @@ test('every genuine vrat and upavas rule has verified food or offering guidance'
   const eligible = OBSERVANCE_RULES.filter((rule) => rule.category === 'vrat' || rule.category === 'upavas');
   // 77 → 79: सोमवती अमावस्या and कर्किडक वावु, both sharing the `pitru-offering`
   // profile whose tradition note now names them (RULEBOOK §23a.7).
-  assert.equal(eligible.length, 79);
+  // 79 → 103: the 24 "Vaishnava <name> Ekadashi" rows (RULEBOOK §23.16), each
+  // sharing its Smarta Ekadashi's food profile — same fast, other tradition's day.
+  assert.equal(eligible.length, 103);
   assert.deepEqual(
     eligible.filter((rule) => !rule.bhogId).map((rule) => rule.id),
     []

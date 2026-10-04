@@ -296,7 +296,7 @@ export const FESTIVAL_RULES: ObservanceRule[] = [
   festival({ id: 'ratha-saptami', nameHi: 'रथ सप्तमी', nameEn: 'Ratha Saptami', lunarMonth: 11, paksha: 'shukla', tithi: 7, marker: 'star', deityHi: 'सूर्य देव', deityEn: 'Surya Deva', shortDescriptionHi: 'माघ शुक्ल सप्तमी को रथ सप्तमी — सूर्य जयंती और अचला सप्तमी; सूर्य देव के सात अश्वों वाले रथ के उत्तरायण प्रस्थान का स्मरण। अरुणोदय स्नान, अर्घ्य और सूर्य नमस्कार इस दिन के मुख्य कर्म हैं; तिरुमला और दक्षिण भारत के सूर्य मंदिरों में विशेष उत्सव होता है।', shortDescriptionEn: 'Ratha Saptami on Magha Shukla Saptami — Surya Jayanti and Achala Saptami, remembering the Sun’s seven-horsed chariot turning north. The arunodaya bath, the arghya and Surya Namaskar are the day’s rites, and Tirumala and the Sun temples of the South keep it as a major utsav.', searchTerms: ['ratha saptami', 'rath saptami', 'surya jayanti', 'achala saptami', 'magha saptami', 'arogya saptami'] }),
   // Krishna-paksha lunarMonth is the PURNIMANT (North-Indian) month — Maha Shivaratri is Phalguna (12), not Magha (11, its amanta name). See monthForRuleInSystem.
   festival({ id: 'maha-shivaratri', nameHi: 'महा शिवरात्रि', nameEn: 'Maha Shivaratri', lunarMonth: 12, paksha: 'krishna', tithi: 14, dayRule: 'nishita', marker: 'star', deityHi: 'भगवान शिव', deityEn: 'Lord Shiva', linkSectionId: 'shiv-chalisa', kathaId: 'maha-shivaratri-vrat-katha', vidhiId: 'maha-shivaratri-puja', upvasId: 'maha-shivaratri-upvas', bhogId: 'maha-shivaratri-bhog' }),
-  festival({ id: 'holi', nameHi: 'होली', nameEn: 'Holi', lunarMonth: 12, paksha: 'shukla', tithi: 15, dayRule: 'pradosh-next', marker: 'star', deityHi: 'श्री कृष्ण', deityEn: 'Shri Krishna', kathaId: 'holi-legends' }),
+  festival({ id: 'holi', nameHi: 'होली', nameEn: 'Holi', lunarMonth: 12, paksha: 'shukla', tithi: 15, dayRule: 'holika-dahan-next', marker: 'star', deityHi: 'श्री कृष्ण', deityEn: 'Shri Krishna', kathaId: 'holi-legends' }),
   // Chaitra Krishna Panchami (purnimant month 1) — the fifth day after Holi, and in
   // Malwa, Nimar and much of Maharashtra the day the colour is actually played
   // rather than on Holi itself; Indore's gair is this day. Published: 8 Mar 2026
@@ -358,7 +358,7 @@ export const FESTIVAL_RULES: ObservanceRule[] = [
   // 2026 (The Mithila Times, Hindu Blog "Madhushravani Tritiya").
   festival({ id: 'madhushravani', nameHi: 'मधुश्रावणी', nameEn: 'Madhushravani', lunarMonth: 5, paksha: 'shukla', tithi: 3, marker: 'dot', category: 'vrat', deityHi: 'शिव-पार्वती व विषहरा', deityEn: 'Shiva–Parvati and Vishahara', shortDescriptionHi: 'श्रावण शुक्ल तृतीया को मधुश्रावणी — मिथिला की नवविवाहिताओं का व्रत; श्रावण कृष्ण पंचमी से चलने वाले पूजन-कथा क्रम का समापन दिवस, जिसमें शिव-पार्वती और विषहरा (मनसा) का पूजन होता है।', shortDescriptionEn: 'Madhushravani on Shravana Shukla Tritiya — the vrat of the newly married women of Mithila; the closing day of the cycle of daily puja and katha begun on Shravana Krishna Panchami, honouring Shiva–Parvati and Vishahara (Manasa).', searchTerms: ['madhushravani', 'madhusravani', 'mithila', 'maithil teej', 'madhushrawani'], sourceUrl: BiharTourismUrl, bhogId: 'devi-vrat-bhog' }),
   festival({ id: 'nag-panchami', nameHi: 'नाग पंचमी', nameEn: 'Nag Panchami', lunarMonth: 5, paksha: 'shukla', tithi: 5, marker: 'dot', deityHi: 'नाग देवता', deityEn: 'Naga Devata', kathaId: 'nag-panchami-vrat-katha' }),
-  festival({ id: 'raksha-bandhan', nameHi: 'रक्षा बंधन', nameEn: 'Raksha Bandhan', lunarMonth: 5, paksha: 'shukla', tithi: 15, marker: 'star', kathaId: 'raksha-bandhan-legends' }),
+  festival({ id: 'raksha-bandhan', nameHi: 'रक्षा बंधन', nameEn: 'Raksha Bandhan', lunarMonth: 5, paksha: 'shukla', tithi: 15, dayRule: 'shravani', marker: 'star', kathaId: 'raksha-bandhan-legends' }),
   // Shravana Purnima — the SAME tithi as `raksha-bandhan` (RULEBOOK §23.4 sibling,
   // asserted in observanceDates.test.ts). The upakarma is the day's own rite in
   // the South and West: the Yajur-vedin's is this Purnima, the Rig-vedin's the
@@ -374,7 +374,11 @@ export const FESTIVAL_RULES: ObservanceRule[] = [
   // a suhag vrat to Chauth Mata, concluded with the evening moon arghya.
   festival({ id: 'bhadwa-chauth', nameHi: 'भादवा चौथ (चौथ माता व्रत)', nameEn: 'Bhadwa Chauth (Chauth Mata Vrat)', lunarMonth: 6, paksha: 'krishna', tithi: 4, dayRule: 'chandrodaya', marker: 'dot', category: 'vrat', deityHi: 'चौथ माता व विनायक जी', deityEn: 'Chauth Mata and Vinayak Ji', shortDescriptionHi: 'राजस्थान का सुहाग व्रत — भाद्रपद कृष्ण चतुर्थी को चौथ माता और विनायक जी का पूजन, संध्या चंद्रोदय पर अर्घ्य; चौथ का बरवाड़ा (सवाई माधोपुर) का प्रसिद्ध मेला इसी दिन भरता है।', shortDescriptionEn: 'Rajasthan’s marital-well-being vrat — Chauth Mata and Vinayak Ji worship on Bhadrapada Krishna Chaturthi, with arghya at the evening moonrise; the famed Chauth Ka Barwara (Sawai Madhopur) fair is held this day.', searchTerms: ['bhadwa chauth', 'chauth mata', 'bhaduri chauth', 'chauth'], bhogId: 'bhadwa-chauth-bhog' }),
   // Purnimant month: Janmashtami is Bhadrapada (6) Krishna Ashtami, not Shravana (5, its amanta name).
-  festival({ id: 'janmashtami', nameHi: 'जन्माष्टमी', nameEn: 'Janmashtami', lunarMonth: 6, paksha: 'krishna', tithi: 8, marker: 'star', deityHi: 'श्री कृष्ण', deityEn: 'Shri Krishna', linkSectionId: 'bhagavad-gita', kathaId: 'janmashtami-katha', upvasId: 'janmashtami-upvas', bhogId: 'janmashtami-bhog' }),
+  festival({ id: 'janmashtami', nameHi: 'जन्माष्टमी', nameEn: 'Janmashtami', lunarMonth: 6, paksha: 'krishna', tithi: 8, dayRule: 'janmashtami-smarta', marker: 'star', deityHi: 'श्री कृष्ण', deityEn: 'Shri Krishna', linkSectionId: 'bhagavad-gita', kathaId: 'janmashtami-katha', upvasId: 'janmashtami-upvas', bhogId: 'janmashtami-bhog' }),
+  // The Vaishnava / ISKCON Janmashtami (`janmashtamiDays`): resolves ONLY on a day
+  // the Smarta row above does not — Drik prints the two as separate rows exactly
+  // then (2023 6/7 Sep, 2025 15/16 Aug, 2029 31 Aug/1 Sep), one row otherwise.
+  festival({ id: 'janmashtami-vaishnava', nameHi: 'जन्माष्टमी (वैष्णव)', nameEn: 'Janmashtami (Vaishnava)', lunarMonth: 6, paksha: 'krishna', tithi: 8, dayRule: 'janmashtami-vaishnava', marker: 'star', deityHi: 'श्री कृष्ण', deityEn: 'Shri Krishna', shortDescriptionHi: 'वैष्णव व इस्कॉन परम्परा की जन्माष्टमी — सप्तमी-विद्धा अष्टमी त्यागकर सूर्योदय की अष्टमी व रोहिणी को प्रधानता; जिस वर्ष यह स्मार्त जन्माष्टमी से अलग दिन पड़ती है, उसी वर्ष दिखती है।', shortDescriptionEn: 'Janmashtami as the Vaishnava and ISKCON traditions keep it — never on a Saptami-joined Ashtami, preferring the sunrise Ashtami and Rohini; shown only in years it falls on a different day from the Smarta Janmashtami.', searchTerms: ['janmashtami', 'iskcon janmashtami', 'vaishnava janmashtami', 'krishna janmashtami'], linkSectionId: 'bhagavad-gita', kathaId: 'janmashtami-katha', upvasId: 'janmashtami-upvas', bhogId: 'janmashtami-bhog' }),
   // Bhadrapada Krishna Navami — Gogaji (Jaharveer), the folk deity of Rajasthan's
   // Gogamedi. Published: 5 Sep 2026 (BhaktiBharat, Prokerala; Drik "Goga Navami").
   festival({ id: 'goga-navami', nameHi: 'गोगा नवमी', nameEn: 'Goga Navami', lunarMonth: 6, paksha: 'krishna', tithi: 9, marker: 'dot', deityHi: 'गोगाजी (जाहरवीर)', deityEn: 'Gogaji (Jaharveer)', shortDescriptionHi: 'भाद्रपद कृष्ण नवमी को लोक देवता गोगाजी — जाहरवीर — का पूजन, सर्पदंश से रक्षा की कामना के साथ; गोगामेड़ी (हनुमानगढ़) का विशाल मेला इसी तिथि पर भरता है। राजस्थान, हरियाणा, पंजाब और पश्चिमी उत्तर प्रदेश में मनाई जाती है।', shortDescriptionEn: 'Worship of the folk deity Gogaji — Jaharveer — on Bhadrapada Krishna Navami, prayed to for protection from snakebite; the great Gogamedi (Hanumangarh) fair is held on this tithi. Kept across Rajasthan, Haryana, Punjab and western Uttar Pradesh.', searchTerms: ['goga navami', 'gogaji', 'goga ji', 'jaharveer', 'jahar veer', 'gogamedi', 'goga nomi', 'goga maharaj'] }),
@@ -432,7 +436,7 @@ export const FESTIVAL_RULES: ObservanceRule[] = [
   // Kartik Purnima; only the opening day is a tithi rule. Sources: Wikipedia
   // (Sama Chakeva), utsav.gov.in, Bihar Museum folklore note.
   festival({ id: 'sama-chakeva', nameHi: 'सामा-चकेवा', nameEn: 'Sama Chakeva', lunarMonth: 8, paksha: 'shukla', tithi: 7, marker: 'dot', deityHi: 'लोक परंपरा', deityEn: 'Folk tradition', shortDescriptionHi: 'कार्तिक शुक्ल सप्तमी से सामा-चकेवा — मिथिला में बहन-भाई के स्नेह का लोकपर्व; मिट्टी की सामा, चकेवा और चुगला की मूर्तियां बनाकर गीत गाए जाते हैं और कार्तिक पूर्णिमा को विसर्जन होता है।', shortDescriptionEn: 'Sama Chakeva begins on Kartika Shukla Saptami — Mithila’s folk festival of the bond between sister and brother; clay figures of Sama, Chakeva and Chugla are made and sung to, and immersed on Kartik Purnima.', searchTerms: ['sama chakeva', 'sama chakeba', 'mithila', 'maithil', 'bhai bahan'], sourceUrl: BiharTourismUrl }),
-  festival({ id: 'dev-uthani-ekadashi', nameHi: 'देव उठनी एकादशी', nameEn: 'Dev Uthani Ekadashi', lunarMonth: 8, paksha: 'shukla', tithi: 11, marker: 'dot', category: 'vrat', deityHi: 'श्री विष्णु', deityEn: 'Shri Vishnu', linkSectionId: 'vishnu-sahasranama', kathaId: 'kartika-mahatmya', bhogId: 'ekadashi-food' }),
+  festival({ id: 'dev-uthani-ekadashi', nameHi: 'देव उठनी एकादशी', nameEn: 'Dev Uthani Ekadashi', lunarMonth: 8, paksha: 'shukla', tithi: 11, dayRule: 'ekadashi', marker: 'dot', category: 'vrat', deityHi: 'श्री विष्णु', deityEn: 'Shri Vishnu', linkSectionId: 'vishnu-sahasranama', kathaId: 'kartika-mahatmya', bhogId: 'ekadashi-food' }),
   festival({ id: 'tulasi-vivah', nameHi: 'तुलसी विवाह', nameEn: 'Tulasi Vivah', lunarMonth: 8, paksha: 'shukla', tithi: 12, marker: 'dot', deityHi: 'तुलसी माता', deityEn: 'Tulasi Mata', kathaId: 'kartika-mahatmya' }),
   // Kartika Shukla Ashtami — the cow-and-calf day of Braj, when the calves are
   // first taken to graze and Krishna becomes a gopa. Published: 17 Nov 2026
@@ -450,7 +454,7 @@ export const FESTIVAL_RULES: ObservanceRule[] = [
   // Khandoba's; Subrahmanya Shashthi in Karnataka is Kukke Subramanya's.
   // Published: 15 Dec 2026 (BhaktiBharat "Champa Shashthi", mpanchang).
   festival({ id: 'champa-shashthi', nameHi: 'चंपा षष्ठी', nameEn: 'Champa Shashthi', lunarMonth: 9, paksha: 'shukla', tithi: 6, marker: 'dot', deityHi: 'खंडोबा व भगवान कार्तिकेय', deityEn: 'Khandoba and Lord Kartikeya', shortDescriptionHi: 'मार्गशीर्ष शुक्ल षष्ठी को चंपा षष्ठी — महाराष्ट्र में खंडोबा जी का और कर्नाटक में सुब्रह्मण्य षष्ठी के रूप में भगवान कार्तिकेय का पर्व; जेजुरी (पुणे) और कुक्के सुब्रह्मण्य के मंदिरों में छह दिन के उत्सव का समापन इसी दिन होता है। यह मार्गशीर्ष मास की स्कंद षष्ठी ही है।', shortDescriptionEn: 'Champa Shashthi on Margashirsha Shukla Shashthi — Khandoba’s festival in Maharashtra and, as Subrahmanya Shashthi, Lord Kartikeya’s in Karnataka; the six-day utsav at Jejuri (Pune) and Kukke Subramanya concludes on this day. It is Margashirsha’s own Skanda Shashthi.', searchTerms: ['champa shashthi', 'champa sashti', 'skanda shashthi', 'subrahmanya shashthi', 'khandoba', 'jejuri', 'kukke subramanya'] }),
-  festival({ id: 'gita-jayanti', nameHi: 'गीता जयंती', nameEn: 'Gita Jayanti', lunarMonth: 9, paksha: 'shukla', tithi: 11, marker: 'dot', deityHi: 'श्री कृष्ण', deityEn: 'Shri Krishna', linkSectionId: 'bhagavad-gita', kathaId: 'gita-jayanti-katha' }),
+  festival({ id: 'gita-jayanti', nameHi: 'गीता जयंती', nameEn: 'Gita Jayanti', lunarMonth: 9, paksha: 'shukla', tithi: 11, dayRule: 'ekadashi', marker: 'dot', deityHi: 'श्री कृष्ण', deityEn: 'Shri Krishna', linkSectionId: 'bhagavad-gita', kathaId: 'gita-jayanti-katha' }),
   festival({ id: 'dattatreya-jayanti', nameHi: 'दत्तात्रेय जयंती', nameEn: 'Dattatreya Jayanti', lunarMonth: 9, paksha: 'shukla', tithi: 15, dayRule: 'pradosh', marker: 'dot', deityHi: 'भगवान दत्तात्रेय', deityEn: 'Lord Dattatreya', kathaId: 'dattatreya-jayanti-katha' }),
 
   // ── Pan-India jayantis and named days (Sept 2026 gap sweep) ──────────────
@@ -547,7 +551,7 @@ export const FESTIVAL_RULES: ObservanceRule[] = [
   // must ride `varuthini-ekadashi` (sibling, asserted). Published: 13 Apr 2026
   // (Drik "Shri Vallabhacharya Jayanti", Oneindia; Ekadashi 01:16 AM 13 Apr →
   // 01:08 AM 14 Apr, prevailing at sunrise).
-  festival({ id: 'vallabhacharya-jayanti', nameHi: 'वल्लभाचार्य जयंती', nameEn: 'Vallabhacharya Jayanti', lunarMonth: 2, paksha: 'krishna', tithi: 11, marker: 'dot', deityHi: 'श्री वल्लभाचार्य', deityEn: 'Shri Vallabhacharya', shortDescriptionHi: 'वैशाख कृष्ण एकादशी को पुष्टिमार्ग के प्रवर्तक श्री वल्लभाचार्य का प्राकट्य दिवस — वरूथिनी एकादशी का ही दिन। नाथद्वारा, गोकुल और पुष्टिमार्गीय हवेलियों में श्रीनाथजी का विशेष श्रृंगार और उत्सव होता है।', shortDescriptionEn: 'The appearance day of Shri Vallabhacharya, founder of the Pushtimarg, on Vaishakha Krishna Ekadashi — the Varuthini Ekadashi day. Nathdwara, Gokul and the Pushtimarg havelis keep it with Shrinathji’s special shringar and utsav.', searchTerms: ['vallabhacharya jayanti', 'vallabh jayanti', 'vallabhacharya', 'pushtimarg', 'shrinathji', 'nathdwara', 'mahaprabhuji'] }),
+  festival({ id: 'vallabhacharya-jayanti', nameHi: 'वल्लभाचार्य जयंती', nameEn: 'Vallabhacharya Jayanti', lunarMonth: 2, paksha: 'krishna', tithi: 11, dayRule: 'ekadashi', marker: 'dot', deityHi: 'श्री वल्लभाचार्य', deityEn: 'Shri Vallabhacharya', shortDescriptionHi: 'वैशाख कृष्ण एकादशी को पुष्टिमार्ग के प्रवर्तक श्री वल्लभाचार्य का प्राकट्य दिवस — वरूथिनी एकादशी का ही दिन। नाथद्वारा, गोकुल और पुष्टिमार्गीय हवेलियों में श्रीनाथजी का विशेष श्रृंगार और उत्सव होता है।', shortDescriptionEn: 'The appearance day of Shri Vallabhacharya, founder of the Pushtimarg, on Vaishakha Krishna Ekadashi — the Varuthini Ekadashi day. Nathdwara, Gokul and the Pushtimarg havelis keep it with Shrinathji’s special shringar and utsav.', searchTerms: ['vallabhacharya jayanti', 'vallabh jayanti', 'vallabhacharya', 'pushtimarg', 'shrinathji', 'nathdwara', 'mahaprabhuji'] }),
   // Jyeshtha Purnima. Published: 29 Jun 2026 (Drik "Sant Kabir Jayanti",
   // NationalToday; Purnima 03:06 AM 29 Jun → 05:26 AM 30 Jun). Rides the
   // Jyeshtha `purnima-vrat` day (asserted).
@@ -756,6 +760,7 @@ export const EKADASHI_RULES: ObservanceRule[] = EKADASHI_NAMES.map((item) => vra
   lunarMonth: item.lunarMonth,
   paksha: item.paksha,
   tithi: 11,
+  dayRule: 'ekadashi',
   marker: 'halfmoon',
   deityHi: 'श्री विष्णु',
   deityEn: 'Shri Vishnu',
@@ -768,6 +773,24 @@ export const EKADASHI_RULES: ObservanceRule[] = EKADASHI_NAMES.map((item) => vra
   upvasId: item.nameEn === 'Nirjala Ekadashi' ? 'nirjala-ekadashi-upvas' : 'ekadashi-upvas',
   bhogId: item.nameEn === 'Nirjala Ekadashi' ? 'nirjala-ekadashi-food' : 'ekadashi-food',
   searchTerms: ['ekadashi', 'upavas', 'vishnu', ...(EKADASHI_EXTRA_SEARCH_TERMS[item.nameEn] ?? [])],
+}));
+
+/**
+ * "Vaishnava <name> Ekadashi" — the same Ekadashi by the Vaishnava rule
+ * (`ekadashiDays`: Dashami at arunodaya, or Dwadashi on two sunrises, moves the
+ * fast a day on). Each resolves ONLY on a day its Smarta row does not, which is
+ * exactly when Drik prints it (Vijaya 2024 7 Mar, Papmochani 2025 26 Mar, Yogini
+ * 2025 22 Jun, Dev Uthani 2026 21 Nov) — about one Ekadashi in five.
+ */
+export const VAISHNAVA_EKADASHI_RULES: ObservanceRule[] = EKADASHI_RULES.map((rule) => ({
+  ...rule,
+  id: `vaishnava-${rule.id}`,
+  nameHi: `वैष्णव ${rule.nameHi}`,
+  nameEn: `Vaishnava ${rule.nameEn}`,
+  dayRule: 'ekadashi-vaishnava',
+  shortDescriptionHi: `${rule.nameHi} का वैष्णव व्रत — अरुणोदय में दशमी हो (या द्वादशी दो सूर्योदय छुए) तो वैष्णव अगले दिन व्रत रखते हैं; जिस बार यह स्मार्त व्रत से अलग दिन पड़ता है, उसी बार दिखता है।`,
+  shortDescriptionEn: `The Vaishnava fast of ${rule.nameEn} — when Dashami still runs at arunodaya (or Dwadashi touches two sunrises), Vaishnavas fast a day later; shown only when it falls on a different day from the Smarta fast.`,
+  searchTerms: [...(rule.searchTerms ?? []), 'vaishnava', 'iskcon'],
 }));
 
 export const MONTHLY_VRAT_RULES: ObservanceRule[] = [
@@ -862,6 +885,7 @@ export const ADVANCED_OBSERVANCE_RULES: ObservanceRule[] = [
 export const OBSERVANCE_RULES: ObservanceRule[] = [
   ...FESTIVAL_RULES,
   ...EKADASHI_RULES,
+  ...VAISHNAVA_EKADASHI_RULES,
   ...MONTHLY_VRAT_RULES,
   ...ADVANCED_OBSERVANCE_RULES,
 ];

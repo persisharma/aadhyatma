@@ -169,10 +169,12 @@ test('no on-demand corpus payload is statically reachable from the app entry', (
  * to blow this budget is to import one of them — or a data module behind one —
  * from something the launch path reaches: a context, a scheduler mounted in
  * `App.tsx`, or a navigator. The failure prints the import chain; fix the
- * importer. The remaining bulk is `precomputedObservances` (201 KB, via
- * `PitruSmaranContext`), `festivals` (165 KB, via `VratReminderScheduler`) and
- * `rajasthanTehsils` (67 KB, via `PanchangLocationContext`) — the next three
- * candidates, all the same shape as what came before.
+ * importer. `precomputedObservances` (~205 KB) left the graph in Oct 2026:
+ * `festivalEngine` now `require()`s it on the first observance read, together
+ * with the published-rule solvers (`specialDayRules`, ~17 KB) that the same
+ * change added. The remaining bulk is `festivals` (173 KB, via
+ * `VratReminderScheduler`) and `rajasthanTehsils` (67 KB, via
+ * `PanchangLocationContext`) — the next candidates, the same shape.
  *
  * ~90 KB of headroom, deliberately tight: that list is the work, not slack.
  */
