@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { ShareProvider } from '@/utils/shareVerse';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Image, ImageBackground, StyleSheet, Text } from 'react-native';
@@ -46,9 +47,9 @@ function render(templeId: string, lang: 'hi' | 'en') {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang={lang}>
+      <GitaLanguageProvider initialLang={lang}><ShareProvider>
         <TheerthDetailScreen navigation={navigation} route={route} />
-      </GitaLanguageProvider>,
+      </ShareProvider></GitaLanguageProvider>,
     );
   });
   return tree
@@ -104,9 +105,9 @@ test('Salasar Balaji shows its commissioned sketch as an in-content illustration
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="hi">
+      <GitaLanguageProvider initialLang="hi"><ShareProvider>
         <TheerthDetailScreen navigation={navigation} route={route} />
-      </GitaLanguageProvider>,
+      </ShareProvider></GitaLanguageProvider>,
     );
   });
   const frames = tree.root.findAll((n) => typeof n.type === 'string' && n.props.testID === 'theerth-illustration');
@@ -127,9 +128,9 @@ test('temples on a generic deity plate get no in-content illustration', () => {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">
+      <GitaLanguageProvider initialLang="en"><ShareProvider>
         <TheerthDetailScreen navigation={navigation} route={route} />
-      </GitaLanguageProvider>,
+      </ShareProvider></GitaLanguageProvider>,
     );
   });
   assert.equal(tree.root.findAll((n) => typeof n.type === 'string' && n.props.testID === 'theerth-illustration').length, 0);
@@ -227,9 +228,9 @@ test('Khatu Shyam uses its dedicated Theerth background plate', () => {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">
+      <GitaLanguageProvider initialLang="en"><ShareProvider>
         <TheerthDetailScreen navigation={navigation} route={route} />
-      </GitaLanguageProvider>,
+      </ShareProvider></GitaLanguageProvider>,
     );
   });
   const layers = tree.root.findAllByType(ImageBackground);
@@ -251,9 +252,9 @@ test('renders the temple deity background (Somnath → Shiva)', () => {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">
+      <GitaLanguageProvider initialLang="en"><ShareProvider>
         <TheerthDetailScreen navigation={navigation} route={route} />
-      </GitaLanguageProvider>,
+      </ShareProvider></GitaLanguageProvider>,
     );
   });
   const layers = tree.root.findAllByType(ImageBackground);

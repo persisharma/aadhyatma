@@ -118,3 +118,76 @@ describe('ShareTargetSheet', () => {
     expect(onShareSystem).not.toHaveBeenCalled();
   });
 });
+
+describe('ShareTargetSheet · series (design.md §39.5)', () => {
+  const series = (over: Partial<React.ComponentProps<typeof ShareTargetSheet>['series'] & object> = {}) => ({
+    pageCount: 3,
+    selected: [true, true, true],
+    highlighted: 1,
+    renderPage: () => null,
+    onHighlight: jest.fn(),
+    onToggle: jest.fn(),
+    scopes: [{ label: 'This part', pageCount: 3 }],
+    scopeIndex: 0,
+    onScope: jest.fn(),
+    multiShareAvailable: true,
+    onShareAll: jest.fn(),
+    onInstagramCarousel: jest.fn(),
+    view: 'targets' as const,
+    onView: jest.fn(),
+    onPreviewStep: jest.fn(),
+    onContinueCarousel: jest.fn(),
+    ...over,
+  });
+
+  test('a verse sheet has no series rows', async () => {
+    const tree = await renderSheet();
+    expect(byLabel(tree, 'Share all pages')).toBeUndefined();
+    expect(byLabel(tree, 'Share as Instagram carousel')).toBeUndefined();
+  });
+
+  test('a one-page series renders exactly the verse sheet rows', async () => {
+    const tree = await renderSheet({ series: series({ pageCount: 1, selected: [true], highlighted: 0 }) });
+    expect(byLabel(tree, 'Share all pages')).toBeUndefined();
+    expect(byLabel(tree, 'Page 1')).toBeUndefined();
+  });
+
+  test('a multi-page series adds the strip, the all-pages rows and a page chip', async () => {
+    const s = series();
+    const tree = await renderSheet({ series: s });
+    expect(byLabel(tree, 'Page 1')).toBeDefined();
+    expect(byLabel(tree, 'Page 3')).toBeDefined();
+    await act(async () => byLabel(tree, 'Share all pages').props.onPress());
+    expect(s.onShareAll).toHaveBeenCalledTimes(1);
+    await act(async () => byLabel(tree, 'Share as Instagram carousel').props.onPress());
+    expect(s.onInstagramCarousel).toHaveBeenCalledTimes(1);
+    const chips = tree.root.findAll((n) => n.props.children === 'page 2');
+    expect(chips.length).toBeGreaterThan(0);
+  });
+
+  test('tapping a thumbnail highlights it; tapping the highlighted one toggles it', async () => {
+    const s = series();
+    const tree = await renderSheet({ series: s });
+    await act(async () => byLabel(tree, 'Page 3').props.onPress());
+    expect(s.onHighlight).toHaveBeenCalledWith(2);
+    await act(async () => byLabel(tree, 'Page 2').props.onPress());
+    expect(s.onToggle).toHaveBeenCalledWith(1);
+  });
+
+  test('all-pages rows disable without the multi-image module, or past the page cap', async () => {
+    const off = await renderSheet({ series: series({ multiShareAvailable: false }) });
+    expect(byLabel(off, 'Share all pages').props.disabled).toBe(true);
+    const many = await renderSheet({
+      series: series({ pageCount: 12, selected: Array(12).fill(true), highlighted: 0 }),
+    });
+    expect(byLabel(many, 'Share all pages').props.disabled).toBe(true);
+    expect(byLabel(many, 'Share to other apps').props.disabled).toBeFalsy();
+  });
+
+  test('the carousel-ready view offers Continue', async () => {
+    const s = series({ view: 'carouselReady', progress: { done: 3, total: 3 } });
+    const tree = await renderSheet({ series: s });
+    await act(async () => byLabel(tree, 'Continue to Instagram').props.onPress());
+    expect(s.onContinueCarousel).toHaveBeenCalledTimes(1);
+  });
+});

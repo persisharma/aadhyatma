@@ -50,8 +50,12 @@ jest.mock('@/panchang/pitruSmaranSolves', () => ({
   ensurePakshaWindowAsync: (...args: unknown[]) => mockEnsureWindow(...(args as [])),
   persistSmaranSolves: (...args: unknown[]) => mockPersistSolves(...(args as [])),
 }));
+let mockDayTableWarm = true;
 jest.mock('@/panchang/pitruSmaran', () => ({
+  isPitruPakshaDayTableWarm: () => mockDayTableWarm,
   pitruPakshaObservanceForDate: (...args: unknown[]) => mockObservanceForDate(...(args as [])),
+  pitruPakshaObservanceForDateAsync: (...args: unknown[]) =>
+    Promise.resolve(mockObservanceForDate(...(args as []))),
 }));
 
 const panchangDay = {
@@ -143,6 +147,7 @@ beforeEach(() => {
   mockPersistSolves.mockClear();
   mockObservanceForDate.mockReset();
   mockObservanceForDate.mockReturnValue(null);
+  mockDayTableWarm = true;
 });
 
 describe('TodayStrip', () => {
@@ -404,6 +409,24 @@ describe('TodayStrip', () => {
       });
       // Nothing goes to disk for an answer already in memory.
       expect(mockHydrateSolves).not.toHaveBeenCalled();
+    });
+
+    it('a window primed from disk but no day table yet waits for idle instead of solving on render', async () => {
+      mockKnownWindow = todayWindow();
+      mockDayTableWarm = false;
+      mockObservanceForDate.mockReturnValue(observance);
+      const tree = render();
+      expect(textOf(tree)).not.toContain('पितृ पक्ष');
+      expect(mockObservanceForDate).not.toHaveBeenCalled();
+      // Hydrate → idle → window → day table → setState is several async hops, so
+      // one macrotask is a race. Flush until the chip lands, bounded so a real
+      // regression still fails.
+      for (let i = 0; i < 20 && !textOf(tree).includes('पितृ पक्ष'); i++) {
+        await act(async () => {
+          await new Promise((resolve) => setTimeout(resolve, 0));
+        });
+      }
+      expect(textOf(tree)).toContain('पितृ पक्ष — सर्वपितृ अमावस्या');
     });
 
     it('costs no engine call at all on the ~350 days outside the fortnight', async () => {

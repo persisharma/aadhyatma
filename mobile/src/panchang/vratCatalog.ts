@@ -37,6 +37,9 @@ export function getRulesForCategory(category: BrowseCategory): ObservanceRule[] 
   const seen = new Set<string>();
   return getObservanceCatalog().filter((rule) => {
     if (rule.category !== category || seen.has(rule.id)) return false;
+    // A Vaishnava row is its Smarta vrat on the other tradition's day — it shows
+    // on the calendar day it falls on, never as a second catalog entry.
+    if (rule.dayRule === 'ekadashi-vaishnava' || rule.dayRule === 'janmashtami-vaishnava') return false;
     seen.add(rule.id);
     return true;
   });

@@ -1,4 +1,5 @@
 import React from 'react';
+import { ShareProvider } from '@/utils/shareVerse';
 import { TextInput } from 'react-native';
 import TestRenderer, { act } from 'react-test-renderer';
 
@@ -31,10 +32,10 @@ async function searchFor(query: string) {
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">
+      <GitaLanguageProvider initialLang="en"><ShareProvider>
         {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
         <SearchScreen navigation={navigation as any} route={{ key: 'Search', name: 'Search', params: {} } as any} />
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
   });
   await act(async () => {
