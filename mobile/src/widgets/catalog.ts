@@ -49,6 +49,67 @@ export const WIDGET_CATALOG: readonly WidgetCatalogEntry[] = [
   },
 ];
 
+/**
+ * Faded sketch art behind each home-screen widget, one pre-cropped plate per
+ * (content, size) so no platform ever stretches a square onto a wide cell. Lock
+ * Screen families get none — the system draws those monochrome/vibrant.
+ *
+ * The plates are generated (`scripts/build-widget-backgrounds.mts`) from the app's
+ * own `assets/backgrounds/` sketches, already washed onto `parchmentSoft`, so they
+ * are opaque and every token text colour keeps its contrast without a runtime
+ * overlay. Both native surfaces treat the art as optional: a missing, undecodable
+ * or over-budget plate renders the flat parchment card exactly as before.
+ *
+ * `dimensions` are the exact pixel sizes of the plates AND the iOS decode budget
+ * (`WidgetArt.maxPixels` in `VedanshWidgets.swift`). WidgetKit drops the whole
+ * render when an image exceeds the cell's pixel area, so each size stays under the
+ * smallest iOS 16 cell of that family at @2x (iPhone SE / iPad mini).
+ */
+export type WidgetBackgroundSize = Exclude<WidgetSize, 'lock'>;
+
+export const WIDGET_BACKGROUND_DIMENSIONS: Record<WidgetBackgroundSize, readonly [number, number]> = {
+  small: [256, 256],
+  medium: [560, 260],
+  large: [560, 560],
+};
+
+/** The source sketch (in `assets/backgrounds/`) each content's plates are cut from, and where its subject sits vertically. */
+export const WIDGET_BACKGROUND_SOURCES: Record<WidgetContent, { file: string; focusY: number }> = {
+  verse: { file: 'deity-krishna-bansuri.webp', focusY: 0.32 },
+  panchang: { file: 'deity-navagraha-icons.webp', focusY: 0.5 },
+  japam: { file: 'category-japam-mala.webp', focusY: 0.55 },
+};
+
+/**
+ * Text colours drawn over the plates, on both native widgets and the gallery preview.
+ * `ink` is the app token; the other three are DEEPER than the app's
+ * `inkMuted #6E5230` / `saffronDeep #8A3E0B` / `gold #A67C34`. The art can only be as
+ * dark as the lightest of these allows at 4.5:1, and with the app values that limit
+ * left the sketch barely visible. Mirrored by `WidgetTheme` in `VedanshWidgets.swift`
+ * and the Android layouts; `catalog.test.ts` pins all three to this table.
+ */
+export const WIDGET_TEXT_TOKENS = {
+  ink: '#1A0E03',
+  inkMuted: '#4A3420',
+  saffronDeep: '#6B2E05',
+  /** The decorative ॐ brand mark — not held to 4.5:1. */
+  gold: '#7E5A1E',
+} as const;
+
+/** Resource basename shared by the Android drawable, the iOS extension bundle file, and the gallery asset. */
+export function widgetBackgroundName(content: WidgetContent, size: WidgetBackgroundSize): string {
+  return `vedansh_widget_bg_${content}_${size}`;
+}
+
+/** Every plate the catalog needs: each content at each non-Lock-Screen size it offers. */
+export function widgetBackgroundPlates(): { content: WidgetContent; size: WidgetBackgroundSize; name: string }[] {
+  return WIDGET_CATALOG.flatMap((entry) =>
+    entry.sizes
+      .filter((size): size is WidgetBackgroundSize => size !== 'lock')
+      .map((size) => ({ content: entry.content, size, name: widgetBackgroundName(entry.content, size) }))
+  );
+}
+
 export function widgetCatalogEntry(content: WidgetContent): WidgetCatalogEntry {
   const entry = WIDGET_CATALOG.find((item) => item.content === content);
   if (!entry) throw new Error(`Unknown widget content: ${content}`);
