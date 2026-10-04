@@ -203,6 +203,39 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - assertVisible: "Aarav"
 - assertVisible: ".*Ujjain.*"
+# RULEBOOK §14.7: the nine graha cards render in development builds until a
+# jyotishi approves them; open one card, read it, and close it again.
+- scrollUntilVisible:
+    element:
+      text: ".*Your nine grahas, one by one.*"
+    direction: DOWN
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      id: "graha-row-jupiter"
+    direction: DOWN
+    timeout: 10000
+- tapOn:
+    id: "graha-row-jupiter"
+- scrollUntilVisible:
+    element:
+      text: ".*What it gives.*"
+    direction: DOWN
+    timeout: 10000
+- assertVisible: ".*Where to take care.*"
+- scrollUntilVisible:
+    element:
+      text: ".*Upay · .*"
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Open Vishnu Sahasranama Excerpt practice"
+- scrollUntilVisible:
+    element:
+      id: "graha-row-jupiter"
+    direction: UP
+    timeout: 10000
+- tapOn:
+    id: "graha-row-jupiter"
 # Combinations: the Lagna lord always leads, with its आधार chain beneath.
 - scrollUntilVisible:
     element:

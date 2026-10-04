@@ -89,9 +89,61 @@ export function buildKundaliHandoffText(
       lines.push(`- ${fact.labelEn}: ${fact.valueEn}`);
     }
     if (section.facts.length > 0) lines.push('');
-    for (const paragraph of section.bodyEn) {
-      lines.push(paragraph);
-      lines.push('');
+    if (section.grahaCards) {
+      // The graha section's intro is short bullets (RULEBOOK §14.7).
+      for (const item of section.bodyEn) lines.push(`- ${item}`);
+      if (section.bodyEn.length > 0) lines.push('');
+    } else {
+      for (const paragraph of section.bodyEn) {
+        lines.push(paragraph);
+        lines.push('');
+      }
+    }
+    // The graha cards (RULEBOOK §14.7) carry their own chains, card by card,
+    // in place of the section's union chain.
+    if (section.grahaCards) {
+      for (const card of section.grahaCards) {
+        lines.push(`### ${card.nameEn} — ${card.placeEn} · ${card.toneLabelEn}`);
+        const bullets = (heading: string, items: readonly string[]) => {
+          if (items.length === 0) return;
+          lines.push(heading);
+          for (const item of items) lines.push(`- ${item}`);
+        };
+        bullets('About this graha:', [
+          `${card.nameEn} is ${card.meaningEn}`,
+          card.strengthEn,
+          ...card.notesEn,
+          card.karakaEn,
+        ]);
+        if (card.maitri) {
+          bullets('Friends and enemies:', [
+            `Friends: ${card.maitri.friendsEn}`,
+            `Enemies: ${card.maitri.enemiesEn}`,
+            `Neutral: ${card.maitri.neutralEn}`,
+          ]);
+        }
+        lines.push(`Label: ${card.toneLabelEn} — ${card.toneLineEn}`);
+        for (const reason of card.reasons) {
+          lines.push(`- ${reason.vote === 'supports' ? 'Helps' : 'Asks for care'}: ${reason.textEn}`);
+        }
+        bullets('What it gives:', card.givesEn);
+        bullets('Where to take care:', card.careEn);
+        bullets('For your Lagna it also rules:', card.rulesEn);
+        lines.push(
+          `Upay (${card.upay.introEn.toLowerCase()}): ${card.upay.vaarEn} · daan: ${card.upay.daanEn} · seva: ${card.upay.sevaEn} · mantra: ${card.upay.mantraEn} (${card.upay.mantraCountEn}) · paath: ${card.upay.practiceSourceId}`
+        );
+        lines.push(`Basis: ${card.basis.map(basisLabelEn).join(' → ')}`);
+        lines.push('');
+      }
+      if (section.emptyHouses) {
+        const empty = section.emptyHouses;
+        lines.push(`### ${empty.titleEn}`);
+        for (const item of empty.introEn) lines.push(`- ${item}`);
+        for (const entry of empty.houses) lines.push(`- ${entry.lineEn}`);
+        lines.push(`Basis: ${empty.houses.flatMap((entry) => entry.basis).map(basisLabelEn).join(' → ')}`);
+        lines.push('');
+      }
+      continue;
     }
     // The आधार chain — every chart fact the section's reading was derived
     // from (RULEBOOK §14.3.1), so a reader can audit the sentence above it.
