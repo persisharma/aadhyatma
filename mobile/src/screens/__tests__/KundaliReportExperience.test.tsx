@@ -266,6 +266,10 @@ test('graha cards open one at a time into gives, care, upay and an on-demand bas
   assert.ok(collapsed.includes('Tap a graha to open its full reading.'));
   // The intro is bullets, not paragraphs (review note, 3 Oct 2026).
   assert.ok(collapsed.includes('Each graha (planet) looks after one part of life'));
+  // Empty houses follow the rows, each read through its lord (review note, 4 Oct 2026).
+  assert.ok(collapsed.includes('Empty houses'));
+  assert.ok(collapsed.includes('Being empty does not make a house weak — its matters follow its lord'));
+  assert.match(collapsed, /house \([^)]+\) — ruled by (?:the )?[A-Z]/);
   assert.match(collapsed, /Helps you|Mixed|Needs care/);
   assert.doesNotMatch(collapsed, /What it gives/);
 

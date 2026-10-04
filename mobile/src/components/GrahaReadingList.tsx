@@ -6,7 +6,8 @@
  * short bullet list under its own heading: about this graha (meaning, sign,
  * karaka), friends and enemies, why it carries its label (+ helps, − asks for
  * care), what it gives, where to take care, the houses it rules for this
- * Lagna; then its upay (day, daan, seva, mantra, one paath). The आधार chain
+ * Lagna; then its upay (day, daan, seva, mantra, one paath). After the rows,
+ * the empty houses — each read through its lord (§14.7.9). Every आधार chain
  * sits behind its own toggle so the reading stays plain; it is always one tap
  * away (§14.3.1).
  */
@@ -18,7 +19,7 @@ import type { Lang } from '@/data/gita/language';
 import { library } from '@/data/texts';
 import { MAITRI_LABELS } from '@/panchang/grahaReadingContent';
 import type { Graha } from '@/panchang/kundali';
-import type { KundaliGrahaCard, KundaliGrahaTone } from '@/panchang/kundaliReportModel';
+import type { KundaliEmptyHouses, KundaliGrahaCard, KundaliGrahaTone } from '@/panchang/kundaliReportModel';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang } from '@/utils/localize';
@@ -29,14 +30,17 @@ type Props = {
   /** The section's intro bullets, index-aligned across languages. */
   introHi: readonly string[];
   introEn: readonly string[];
+  /** The houses no graha occupies, shown after the nine rows. */
+  emptyHouses?: KundaliEmptyHouses;
   lang: Lang;
   onPractice: (sourceId: string) => void;
 };
 
-export default function GrahaReadingList({ cards, introHi, introEn, lang, onPractice }: Props) {
+export default function GrahaReadingList({ cards, introHi, introEn, emptyHouses, lang, onPractice }: Props) {
   const { colors, typography, radii } = useTheme();
   const [open, setOpen] = useState<ReadonlySet<Graha>>(() => new Set());
   const [basisOpen, setBasisOpen] = useState<ReadonlySet<Graha>>(() => new Set());
+  const [emptyBasisOpen, setEmptyBasisOpen] = useState(false);
 
   const toggle = (set: ReadonlySet<Graha>, graha: Graha): ReadonlySet<Graha> => {
     const next = new Set(set);
@@ -192,6 +196,41 @@ export default function GrahaReadingList({ cards, introHi, introEn, lang, onPrac
           </View>
         );
       })}
+      {emptyHouses && emptyHouses.houses.length > 0 && (
+        <View
+          testID="graha-empty-houses"
+          style={[styles.emptyBlock, { borderColor: colors.divider, backgroundColor: colors.cardSurface, borderRadius: radii.md }]}
+        >
+          <Label lang={lang} hi={emptyHouses.titleHi} en={emptyHouses.titleEn} />
+          <Bullets lang={lang} hi={emptyHouses.introHi} en={emptyHouses.introEn} />
+          <Bullets
+            lang={lang}
+            hi={emptyHouses.houses.map((entry) => entry.lineHi)}
+            en={emptyHouses.houses.map((entry) => entry.lineEn)}
+          />
+          <Pressable
+            testID="graha-empty-basis-toggle"
+            onPress={() => setEmptyBasisOpen((current) => !current)}
+            accessibilityRole="button"
+            accessibilityLabel={`${emptyBasisOpen ? 'Hide' : 'Show'} the basis for the empty houses`}
+            accessibilityState={{ expanded: emptyBasisOpen }}
+            style={({ pressed }) => [styles.basisToggle, pressed && { opacity: 0.7 }]}
+          >
+            <Text style={[styles.basisToggleText, { color: colors.saffronDeep }]}>
+              {emptyBasisOpen
+                ? contentByLang(lang, 'आधार छिपाएँ', 'Hide the basis')
+                : contentByLang(lang, 'आधार देखें — यह कैसे निकाला गया', 'See the basis — how this was worked out')}
+            </Text>
+          </Pressable>
+          {emptyBasisOpen && (
+            <BasisChain
+              basis={emptyHouses.houses.flatMap((entry) => entry.basis)}
+              lang={lang}
+              testID="basis-empty-houses"
+            />
+          )}
+        </View>
+      )}
     </View>
   );
 }
@@ -374,6 +413,7 @@ const styles = StyleSheet.create({
     fontFamily: fontFamilies.interSemiBold,
     fontSize: 10,
   },
+  emptyBlock: { borderWidth: 1, paddingHorizontal: 12, paddingTop: 2, paddingBottom: 4 },
   basisToggle: { minHeight: 36, justifyContent: 'center', marginTop: 6, alignSelf: 'flex-start' },
   basisToggleText: { fontFamily: fontFamilies.interSemiBold, fontSize: 10 },
 });

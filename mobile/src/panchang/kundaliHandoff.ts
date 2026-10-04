@@ -135,6 +135,14 @@ export function buildKundaliHandoffText(
         lines.push(`Basis: ${card.basis.map(basisLabelEn).join(' → ')}`);
         lines.push('');
       }
+      if (section.emptyHouses) {
+        const empty = section.emptyHouses;
+        lines.push(`### ${empty.titleEn}`);
+        for (const item of empty.introEn) lines.push(`- ${item}`);
+        for (const entry of empty.houses) lines.push(`- ${entry.lineEn}`);
+        lines.push(`Basis: ${empty.houses.flatMap((entry) => entry.basis).map(basisLabelEn).join(' → ')}`);
+        lines.push('');
+      }
       continue;
     }
     // The आधार chain — every chart fact the section's reading was derived

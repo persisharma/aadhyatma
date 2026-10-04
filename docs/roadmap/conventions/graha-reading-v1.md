@@ -56,6 +56,10 @@ The first review asked *which graha is an enemy of what* and *which house suppor
 
 The karaka is information only; it does not vote. The review sheet also shows, per house, which grahas the house rule supports or asks for care.
 
+## Empty houses (review note, 4 October 2026)
+
+Nine grahas share twelve houses, so at least three are always empty (in 3,000 sampled charts, 5–7 empty was typical and 6 the most common). After the nine cards, `buildEmptyHouses` lists each empty house in order as one bullet — the house and its life areas, its lord, and the house the lord sits in — under two intro bullets: empty houses are normal, and an empty house is read through its lord. It carries no label and casts no vote; each entry's basis is the `bhava` node and the `lord` node.
+
 ## Simplifications the reviewer should confirm
 
 1. The Moon and Mercury count as benefic in every chart. The waxing/waning Moon and Mercury's association are not checked.
@@ -64,6 +68,7 @@ The karaka is information only; it does not vote. The review sheet also shows, p
 4. Rahu and Ketu vote only through their house. Dispositor strength and association are not read, and the nodes have no exaltation table here.
 5. Retrograde motion is shown as its own bullet under *about this graha* and in the basis. It does not vote, because classical views on it differ.
 6. The 2nd house casts no vote for anyone (nor the 3rd for a benefic). Classically benefics in the 2nd give wealth and sweet speech and malefics make speech harsh — open for the reviewer.
+7. An empty house is read through its lord's seat only. Aspects (drishti) on the house and the house's karaka are not read for it.
 
 ## Upay table
 

@@ -4,7 +4,7 @@
 
 **Status:** draft
 
-**Scope:** GRAHA_PLAIN, BHAVA_PLAIN, GRAHA_BHAVA_READINGS (9 × 12), the strength, reason and tone phrases, GRAHA_UPAY (9 rows), and the tone convention in docs/roadmap/conventions/graha-reading-v1.md.
+**Scope:** GRAHA_PLAIN, BHAVA_PLAIN, GRAHA_BHAVA_READINGS (9 × 12), the strength, reason and tone phrases, the empty-houses copy, GRAHA_UPAY (9 rows), and the tone convention in docs/roadmap/conventions/graha-reading-v1.md.
 
 ## How to review
 
@@ -13,7 +13,7 @@
 3. Check the label convention in `docs/roadmap/conventions/graha-reading-v1.md` and the reason lines below.
 4. Sign off at the end. The app shows these cards in store builds only after the sign-off reference and date are recorded in `GRAHA_READING_REVIEW`.
 
-Every card is built as: **about this graha (meaning, sign and strength, karaka) → friends and enemies → why the label → what it gives → where to take care → houses it rules for the Lagna → upay**. Each block is a short bullet list, one idea per bullet; a reason reads + when it helps and − when it asks for care.
+Every card is built as: **about this graha (meaning, sign and strength, karaka) → friends and enemies → why the label → what it gives → where to take care → houses it rules for the Lagna → upay**. Each block is a short bullet list, one idea per bullet; a reason reads + when it helps and − when it asks for care. After the nine cards come the empty houses, each read through its lord.
 
 ## Section copy
 
@@ -121,6 +121,17 @@ Reason bullets as they read on a card, each on a sample that really casts it: si
 | lord-trikona | शुभ त्रिकोण का स्वामी — नवम भाव | Rules a blessing house (trikona) — the 9th house | ☐ | |
 | lord-demanding | मेहनत माँगने वाले भावों का स्वामी — षष्ठ और एकादश भाव | Rules houses that ask for effort — the 6th and 11th houses | ☐ | |
 | combust | सूर्य से लगभग 6° — तेज मंद (अस्त) | About 6° from the Sun — its light is dimmed (asta) | ☐ | |
+
+## Empty houses
+
+Nine grahas share twelve houses, so at least three are always empty. After the nine cards, each empty house gets one bullet naming its lord and where that lord sits — information only, no label and no vote. The house line is composed per chart; the example is the 3rd house of a Karka Lagna (Kanya, lord Mercury) with Mercury in the 1st.
+
+| Part | Hindi | English | OK | Notes |
+|---|---|---|---|---|
+| Heading | खाली भाव | Empty houses | ☐ | |
+| Intro 1 | • खाली भाव सामान्य हैं — नौ ग्रह बारह भावों में, इसलिए कुछ भाव हमेशा खाली रहते हैं | • Empty houses are normal — nine grahas share twelve houses, so some always stay empty | ☐ | |
+| Intro 2 | • खाली होने से भाव कमज़ोर नहीं होता — उसके विषय उसके स्वामी ग्रह से चलते हैं | • Being empty does not make a house weak — its matters follow its lord | ☐ | |
+| House line | • तृतीय भाव (साहस और मेहनत) — स्वामी बुध, जो प्रथम भाव (स्वयं आप) में बैठा है | • 3rd house (courage and effort) — ruled by Mercury, who sits in your 1st house (you yourself) | ☐ | |
 
 ## सूर्य · Sun (Surya)
 
@@ -371,6 +382,7 @@ Reason bullets as they read on a card, each on a sample that really casts it: si
 - The cow-fodder seva (gau-gras) sits with Budh on Wednesday, matching the shared vaar-daan table. Some families give it on Friday for Shukra — confirm.
 - The label treats the Moon and Mercury as benefic in every chart (no waxing/waning or association check), and kendra lordship as neutral (no kendradhipati rule). Confirm these simplifications are acceptable for a first version.
 - Combustion uses flat orbs; the retrograde variants for Mercury (12°) and Venus (8°) are not applied.
+- An empty house is read through its lord’s seat only — aspects (drishti) on the house and its karaka are not read for it. Confirm this is enough for a first version.
 - The 2nd house casts no vote for any graha (nor the 3rd for a benefic), so its “does well here” is empty. Classically benefics in the 2nd give wealth and sweet speech and malefics make speech harsh — should the 2nd support benefics and ask malefics for care?
 
 ## Sign-off

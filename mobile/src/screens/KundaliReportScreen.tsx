@@ -475,6 +475,7 @@ function ReportSectionCard({
           cards={section.grahaCards}
           introHi={section.bodyHi}
           introEn={section.bodyEn}
+          emptyHouses={section.emptyHouses}
           lang={lang}
           onPractice={onPractice}
         />

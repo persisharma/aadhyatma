@@ -141,6 +141,13 @@ test('the graha cards export card by card, each with its own basis line (RULEBOO
     assert.ok(block.includes(`paath: ${card.upay.practiceSourceId}`), `${card.graha} paath`);
     assert.match(block, /\nBasis: /, `${card.graha} basis`);
   }
+  // The empty houses print after the cards, one bullet each, with their own basis line.
+  const emptyAt = text.indexOf('### Empty houses');
+  assert.ok(emptyAt >= 0, 'empty houses printed');
+  const emptyBlock = text.slice(emptyAt, text.indexOf('\n\n', emptyAt));
+  for (const item of grahas.emptyHouses!.introEn) assert.ok(emptyBlock.includes(`\n- ${item}\n`), `empty intro: ${item}`);
+  for (const entry of grahas.emptyHouses!.houses) assert.ok(emptyBlock.includes(`\n- ${entry.lineEn}\n`), `empty house ${entry.house}`);
+  assert.match(emptyBlock, /\nBasis: /, 'empty houses basis');
   // The JSON tail is still the parse-back-equal model.
   const tail = text.slice(text.lastIndexOf('```json') + '```json'.length, text.lastIndexOf('```')).trim();
   assert.deepEqual(JSON.parse(tail), withGrahas);

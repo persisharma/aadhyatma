@@ -17,6 +17,8 @@ import {
 } from './kundaliBasis';
 import {
   BHAVA_PLAIN,
+  EMPTY_HOUSE_LINE,
+  EMPTY_HOUSES_COPY,
   FACTOR_REASON,
   GRAHA_BHAVA_READINGS,
   GRAHA_PLAIN,
@@ -31,7 +33,7 @@ import {
   UPAY_INTRO,
   type GrahaFactorId,
 } from './grahaReadingContent';
-import type { KundaliGrahaCard, KundaliGrahaMaitri, KundaliGrahaTone } from './kundaliReportModel';
+import type { KundaliEmptyHouse, KundaliEmptyHouses, KundaliGrahaCard, KundaliGrahaMaitri, KundaliGrahaTone } from './kundaliReportModel';
 import { BHAVA_ORDINAL_HI, bhavaLabelHi, ordinalEn } from './reportFormat';
 
 /**
@@ -320,4 +322,54 @@ export function buildGrahaReadings(chart: KundaliChart): readonly KundaliGrahaCa
     if (card.basis.length === 0) throw new Error(`${graha} card has an empty basis`);
     return card;
   });
+}
+
+/**
+ * The houses no graha occupies (review note, 4 Oct 2026). Nine grahas share
+ * twelve houses, so at least three are always empty; each is read through its
+ * lord — where the lord sits. Information only: it carries no label and casts
+ * no vote. Houses in order, 1 to 12.
+ */
+export function buildEmptyHouses(chart: KundaliChart): KundaliEmptyHouses {
+  const occupied = new Set(chart.grahas.map((position) => position.house));
+  const houses = chart.houses.flatMap((rashiIndex, index): KundaliEmptyHouse[] => {
+    const house = index + 1;
+    if (occupied.has(house)) return [];
+    const lord = signLordOf(rashiIndex);
+    const seat = chart.grahas.find((position) => position.graha === lord);
+    if (!seat) throw new Error(`${lord} position is required`);
+    const line = EMPTY_HOUSE_LINE({
+      houseHi: bhavaLabelHi(house),
+      houseEn: houseEn(house),
+      shortHi: BHAVA_PLAIN[house - 1].shortHi,
+      shortEn: BHAVA_PLAIN[house - 1].shortEn,
+      lordHi: GRAHA_NAMES_HI[lord],
+      lordEn: grahaInSentenceEn(lord),
+      seatHi: bhavaLabelHi(seat.house),
+      seatEn: houseEn(seat.house),
+      seatShortHi: BHAVA_PLAIN[seat.house - 1].shortHi,
+      seatShortEn: BHAVA_PLAIN[seat.house - 1].shortEn,
+    });
+    return [
+      {
+        house,
+        rashiIndex,
+        lord,
+        lordHouse: seat.house,
+        lineHi: line.hi,
+        lineEn: line.en,
+        basis: [
+          { kind: 'bhava', house, rashiIndex },
+          { kind: 'lord', graha: lord, ofHouse: house, inHouse: seat.house },
+        ],
+      },
+    ];
+  });
+  return {
+    titleHi: EMPTY_HOUSES_COPY.title.hi,
+    titleEn: EMPTY_HOUSES_COPY.title.en,
+    introHi: EMPTY_HOUSES_COPY.intro.map((bullet) => bullet.hi),
+    introEn: EMPTY_HOUSES_COPY.intro.map((bullet) => bullet.en),
+    houses,
+  };
 }

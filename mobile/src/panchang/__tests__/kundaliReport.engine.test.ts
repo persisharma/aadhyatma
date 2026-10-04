@@ -489,6 +489,11 @@ test('graha cards are display-gated: off by default, between moon and combinatio
   assert.equal(grahas.bodyHi.length, grahas.bodyEn.length);
   assert.ok((grahas.basis?.length ?? 0) >= 9, 'the section carries every card’s chain');
   for (const card of grahas.grahaCards!) assert.ok(card.basis.length > 0, `${card.graha} has its own basis`);
+  // The empty houses ride with the cards, each read through its lord, and their chain joins the section's.
+  assert.ok((grahas.emptyHouses?.houses.length ?? 0) >= 3, 'at least three empty houses');
+  for (const entry of grahas.emptyHouses!.houses) {
+    for (const node of entry.basis) assert.ok(grahas.basis!.some((sectionNode) => JSON.stringify(sectionNode) === JSON.stringify(node)), `house ${entry.house} basis in the section chain`);
+  }
 
   // The snapshot projects the section and stays within 5–7 rows.
   const snapshot = withGrahas.sections[0];

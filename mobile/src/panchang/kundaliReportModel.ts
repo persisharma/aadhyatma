@@ -117,6 +117,28 @@ export type KundaliGrahaCard = {
   basis: readonly BasisNode[];
 };
 
+/** A house no graha occupies, read through its lord (RULEBOOK §14.7.9). */
+export type KundaliEmptyHouse = {
+  house: number;
+  rashiIndex: number;
+  lord: Graha;
+  /** The house the lord sits in. */
+  lordHouse: number;
+  /** One bullet: the house, its lord, and where the lord sits. */
+  lineHi: string;
+  lineEn: string;
+  basis: readonly BasisNode[];
+};
+
+/** The empty-houses block after the nine graha cards; never empty in practice (≥ 3 houses). */
+export type KundaliEmptyHouses = {
+  titleHi: string;
+  titleEn: string;
+  introHi: readonly string[];
+  introEn: readonly string[];
+  houses: readonly KundaliEmptyHouse[];
+};
+
 export type KundaliReportFact = {
   id: string;
   labelHi: string;
@@ -141,6 +163,8 @@ export type KundaliReportSection = {
   basis?: readonly BasisNode[];
   /** The `grahas` section only: nine cards, each with its own basis. */
   grahaCards?: readonly KundaliGrahaCard[];
+  /** The houses no graha occupies, each read through its lord — with the cards only. */
+  emptyHouses?: KundaliEmptyHouses;
 };
 
 export type KundaliReportAgeBand = 'child' | 'adolescent' | 'adult';

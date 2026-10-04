@@ -38,7 +38,7 @@ export const GRAHA_READING_REVIEW: GrahaReadingReview = {
   signOffRef: null,
   reviewedOn: null,
   scope:
-    'GRAHA_PLAIN, BHAVA_PLAIN, GRAHA_BHAVA_READINGS (9 × 12), the strength, reason and tone phrases, GRAHA_UPAY (9 rows), and the tone convention in docs/roadmap/conventions/graha-reading-v1.md',
+    'GRAHA_PLAIN, BHAVA_PLAIN, GRAHA_BHAVA_READINGS (9 × 12), the strength, reason and tone phrases, the empty-houses copy, GRAHA_UPAY (9 rows), and the tone convention in docs/roadmap/conventions/graha-reading-v1.md',
 };
 
 /** A store build may show the cards only once a recorded, dated sign-off exists. */
@@ -2226,6 +2226,48 @@ export const GRAHA_SECTION_COPY = {
   snapshotLabel: { hi: 'ग्रह एक नज़र में', en: 'Grahas at a glance' },
   snapshotNone: { hi: 'सभी ग्रह मिश्रित — हर ग्रह का विवेचन देखें', en: 'All mixed — open each graha’s reading' },
 } as const;
+
+/**
+ * The empty-houses block after the nine cards (review note, 4 Oct 2026: "can a
+ * bhava stay empty?"). Nine grahas share twelve houses, so at least three are
+ * always empty; each is read through its lord — where the lord sits. It is
+ * information only: no label, no vote.
+ */
+export const EMPTY_HOUSES_COPY = {
+  title: { hi: 'खाली भाव', en: 'Empty houses' },
+  intro: [
+    {
+      hi: 'खाली भाव सामान्य हैं — नौ ग्रह बारह भावों में, इसलिए कुछ भाव हमेशा खाली रहते हैं',
+      en: 'Empty houses are normal — nine grahas share twelve houses, so some always stay empty',
+    },
+    {
+      hi: 'खाली होने से भाव कमज़ोर नहीं होता — उसके विषय उसके स्वामी ग्रह से चलते हैं',
+      en: 'Being empty does not make a house weak — its matters follow its lord',
+    },
+  ],
+} as const;
+
+export type EmptyHouseContext = {
+  /** The empty house: `तृतीय भाव` / `3rd house`, and its short life areas. */
+  houseHi: string;
+  houseEn: string;
+  shortHi: string;
+  shortEn: string;
+  /** Its lord, sentence form. */
+  lordHi: string;
+  lordEn: string;
+  /** The house the lord sits in, and its short life areas. */
+  seatHi: string;
+  seatEn: string;
+  seatShortHi: string;
+  seatShortEn: string;
+};
+
+/** One bullet per empty house: the house, its lord, and where the lord sits. */
+export const EMPTY_HOUSE_LINE = (ctx: EmptyHouseContext): Bilingual => ({
+  hi: `${ctx.houseHi} (${ctx.shortHi}) — स्वामी ${ctx.lordHi}, जो ${ctx.seatHi} (${ctx.seatShortHi}) में बैठा है`,
+  en: `${ctx.houseEn} (${ctx.shortEn}) — ruled by ${ctx.lordEn}, who sits in your ${ctx.seatEn} (${ctx.seatShortEn})`,
+});
 
 export type GrahaUpay = {
   /** JS getDay(): 0 = Sunday. */

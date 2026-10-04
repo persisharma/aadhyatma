@@ -35,7 +35,7 @@ import {
   type BasisNode,
 } from './kundaliBasis';
 import { computeCombinations } from './kundaliYoga';
-import { buildGrahaReadings } from './grahaReading';
+import { buildEmptyHouses, buildGrahaReadings } from './grahaReading';
 import { GRAHA_SECTION_COPY, TONE_LABEL } from './grahaReadingContent';
 import { NAKSHATRA_NAMES_EN, NAKSHATRA_NAMES_HI } from './names';
 import {
@@ -565,7 +565,8 @@ export function buildKundaliReport(
   // combination. Display-gated, and never for a minor — the parent-facing
   // registers have no graha-card form yet.
   const grahaCards = options?.includeGrahaReadings && band === 'adult' ? buildGrahaReadings(chart) : null;
-  const grahasSection: KundaliReportSection | null = grahaCards
+  const emptyHouses = grahaCards ? buildEmptyHouses(chart) : null;
+  const grahasSection: KundaliReportSection | null = grahaCards && emptyHouses
     ? {
       id: 'grahas',
       eyebrowHi: GRAHA_SECTION_COPY.eyebrow.hi,
@@ -583,8 +584,9 @@ export function buildKundaliReport(
           `${ordinalEn(card.house)} house · ${card.toneLabelEn}`
         )
       ),
-      basis: grahaCards.flatMap((card) => card.basis),
+      basis: [...grahaCards.flatMap((card) => card.basis), ...emptyHouses.houses.flatMap((entry) => entry.basis)],
       grahaCards,
+      emptyHouses,
     }
     : null;
 

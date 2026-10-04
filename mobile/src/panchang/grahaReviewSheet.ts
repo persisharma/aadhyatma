@@ -4,6 +4,8 @@ import { COMBUSTION_ORB_DEG, maitriRow, signLordOf } from './kundaliBasis';
 import { grahaInSentenceEn, houseFactor, ruledLabel } from './grahaReading';
 import {
   BHAVA_PLAIN,
+  EMPTY_HOUSE_LINE,
+  EMPTY_HOUSES_COPY,
   FACTOR_REASON,
   GRAHA_BHAVA_READINGS,
   GRAHA_PLAIN,
@@ -153,7 +155,7 @@ export function renderGrahaReviewSheet(): string {
   push('3. Check the label convention in `docs/roadmap/conventions/graha-reading-v1.md` and the reason lines below.');
   push('4. Sign off at the end. The app shows these cards in store builds only after the sign-off reference and date are recorded in `GRAHA_READING_REVIEW`.');
   push('');
-  push('Every card is built as: **about this graha (meaning, sign and strength, karaka) → friends and enemies → why the label → what it gives → where to take care → houses it rules for the Lagna → upay**. Each block is a short bullet list, one idea per bullet; a reason reads + when it helps and − when it asks for care.');
+  push('Every card is built as: **about this graha (meaning, sign and strength, karaka) → friends and enemies → why the label → what it gives → where to take care → houses it rules for the Lagna → upay**. Each block is a short bullet list, one idea per bullet; a reason reads + when it helps and − when it asks for care. After the nine cards come the empty houses, each read through its lord.');
   push('');
 
   push('## Section copy');
@@ -243,6 +245,29 @@ export function renderGrahaReviewSheet(): string {
   }
   push('');
 
+  push('## Empty houses');
+  push('');
+  push('Nine grahas share twelve houses, so at least three are always empty. After the nine cards, each empty house gets one bullet naming its lord and where that lord sits — information only, no label and no vote. The house line is composed per chart; the example is the 3rd house of a Karka Lagna (Kanya, lord Mercury) with Mercury in the 1st.');
+  push('');
+  push('| Part | Hindi | English | OK | Notes |');
+  push('|---|---|---|---|---|');
+  push(`| Heading | ${cell(EMPTY_HOUSES_COPY.title.hi)} | ${cell(EMPTY_HOUSES_COPY.title.en)} | ☐ | |`);
+  EMPTY_HOUSES_COPY.intro.forEach((bullet, index) => push(`| Intro ${index + 1} | • ${cell(bullet.hi)} | • ${cell(bullet.en)} | ☐ | |`));
+  const emptySample = EMPTY_HOUSE_LINE({
+    houseHi: bhavaLabelHi(3),
+    houseEn: '3rd house',
+    shortHi: BHAVA_PLAIN[2].shortHi,
+    shortEn: BHAVA_PLAIN[2].shortEn,
+    lordHi: GRAHA_NAMES_HI.mercury,
+    lordEn: grahaInSentenceEn('mercury'),
+    seatHi: bhavaLabelHi(1),
+    seatEn: '1st house',
+    seatShortHi: BHAVA_PLAIN[0].shortHi,
+    seatShortEn: BHAVA_PLAIN[0].shortEn,
+  });
+  push(`| House line | • ${cell(emptySample.hi)} | • ${cell(emptySample.en)} | ☐ | |`);
+  push('');
+
   for (const graha of GRAHA_ORDER) {
     const plain = GRAHA_PLAIN[graha];
     const upay = GRAHA_UPAY[graha];
@@ -274,6 +299,7 @@ export function renderGrahaReviewSheet(): string {
   push('- The cow-fodder seva (gau-gras) sits with Budh on Wednesday, matching the shared vaar-daan table. Some families give it on Friday for Shukra — confirm.');
   push('- The label treats the Moon and Mercury as benefic in every chart (no waxing/waning or association check), and kendra lordship as neutral (no kendradhipati rule). Confirm these simplifications are acceptable for a first version.');
   push('- Combustion uses flat orbs; the retrograde variants for Mercury (12°) and Venus (8°) are not applied.');
+  push('- An empty house is read through its lord’s seat only — aspects (drishti) on the house and its karaka are not read for it. Confirm this is enough for a first version.');
   push('- The 2nd house casts no vote for any graha (nor the 3rd for a benefic), so its “does well here” is empty. Classically benefics in the 2nd give wealth and sweet speech and malefics make speech harsh — should the 2nd support benefics and ask malefics for care?');
   push('');
   push('## Sign-off');

@@ -4,6 +4,7 @@ import { test } from 'node:test';
 
 import { DAAN_VAAR_ENTRIES } from '../../data/daan/vaar';
 import {
+  buildEmptyHouses,
   buildGrahaReadings,
   combustionSeparation,
   grahaInSentenceEn,
@@ -250,6 +251,35 @@ test('nine cards for every lagna: order, closed labels, own basis, every line fi
     }
   }
   assert.equal(lagnas.size, 12, 'fixtures covered every lagna');
+});
+
+test('empty houses: every unoccupied house, in order, read through where its lord sits', () => {
+  for (const chart of sweepCharts()) {
+    const label = `lagna ${RASHI_NAMES_EN[chart.lagnaRashiIndex]}`;
+    const empty = buildEmptyHouses(chart);
+    assert.deepEqual(buildEmptyHouses(chart), empty, `${label}: deterministic`);
+    const occupied = new Set(chart.grahas.map((entry) => entry.house));
+    const expected = Array.from({ length: 12 }, (_, index) => index + 1).filter((house) => !occupied.has(house));
+    assert.deepEqual(empty.houses.map((entry) => entry.house), expected, `${label}: exactly the unoccupied houses`);
+    assert.ok(empty.houses.length >= 3, `${label}: nine grahas leave at least three houses empty`);
+    for (const text of [...empty.introHi, ...empty.introEn]) assertBullet(text, BULLET_MAX, `${label} intro`);
+    for (const entry of empty.houses) {
+      const where = `${label} house ${entry.house}`;
+      assert.equal(entry.rashiIndex, chart.houses[entry.house - 1], `${where}: its sign`);
+      assert.equal(entry.lord, signLordOf(entry.rashiIndex), `${where}: its lord`);
+      assert.equal(entry.lordHouse, chart.grahas.find((position) => position.graha === entry.lord)!.house, `${where}: the lord’s seat`);
+      assert.notEqual(entry.lordHouse, entry.house, `${where}: a lord at home would fill the house`);
+      assertBullet(entry.lineHi, BULLET_MAX, where);
+      assertBullet(entry.lineEn, BULLET_MAX, where);
+      assert.doesNotMatch(entry.lineEn, /[ऀ-ॿ]/, `${where}: no Devanagari in English`);
+      assert.doesNotMatch(entry.lineEn, /\b(?:\d*[02-9])?[123]th (?:house|bhava)/, `${where}: ordinal grammar`);
+      assert.doesNotMatch(entry.lineHi, /\d भाव/, `${where}: no bare digit before भाव`);
+      assert.deepEqual(entry.basis, [
+        { kind: 'bhava', house: entry.house, rashiIndex: entry.rashiIndex },
+        { kind: 'lord', graha: entry.lord, ofHouse: entry.house, inHouse: entry.lordHouse },
+      ], `${where}: basis`);
+    }
+  }
 });
 
 test('content tables are complete and bilingual', () => {
