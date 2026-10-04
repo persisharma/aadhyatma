@@ -19,6 +19,7 @@ import { buildKundaliHandoffText } from '@/panchang/kundaliHandoff';
 import { buildPrashnaReading } from '@/panchang/prashnaGuidance';
 import { isPurposeId } from '@/panchang/prashnaPurposes';
 import { grahaReadingsApproved } from '@/panchang/grahaReadingContent';
+import { RASHI_NAMES_EN, RASHI_NAMES_HI } from '@/panchang/kundali';
 import { buildKundaliReport } from '@/panchang/kundaliReport';
 import type { KundaliReportSection } from '@/panchang/kundaliReportModel';
 import { getCityById } from '@/panchang/locations';
@@ -302,6 +303,20 @@ export default function KundaliReportScreen({ navigation, route }: Props) {
                 ]}
               >
                 <NorthIndianChart chart={chart} size={224} />
+                {/* The box numbers are rashis, not houses — say so, with this
+                    chart's own Lagna number, before anyone counts boxes. */}
+                <Text
+                  style={[
+                    styles.chartKey,
+                    { color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily) },
+                  ]}
+                >
+                  {meaningByLang(
+                    lang,
+                    `ऊपर बीच का रंगीन खाना = पहला भाव (लग्न); बाकी भाव उल्टी घड़ी की दिशा में। छोटे अंक राशि हैं, भाव नहीं — यहाँ ${chart.lagnaRashiIndex + 1} यानी ${RASHI_NAMES_HI[chart.lagnaRashiIndex]}।`,
+                    `Top middle box (tinted) = 1st house, your Lagna; the other houses follow anticlockwise. The small numbers are signs, not houses — ${chart.lagnaRashiIndex + 1} here is ${RASHI_NAMES_EN[chart.lagnaRashiIndex]}.`
+                  )}
+                </Text>
               </View>
               {report.sections.map((section) => (
                 <ReportSectionCard
@@ -557,6 +572,7 @@ const styles = StyleSheet.create({
     fontFamily: fontFamilies.interSemiBold,
     fontSize: 10,
   },
+  chartKey: { fontSize: 11, lineHeight: 17, marginTop: 10, textAlign: 'center' },
   chartCard: {
     padding: 14,
     borderWidth: 1,
