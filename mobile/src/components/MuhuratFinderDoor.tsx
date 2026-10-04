@@ -94,12 +94,12 @@ export default function MuhuratFinderDoor({ onPress }: { onPress: () => void }) 
       variant="flat"
       leading={
         <View style={[styles.glyphPad, { backgroundColor: colors.saffronTint }]}>
-          <SunriseGlyph color={colors.saffronDeep} size={26} />
+          <SunriseGlyph color={colors.saffronDeep} size={24} />
         </View>
       }
     >
       <View style={styles.titleRow}>
-        <Text style={{ fontFamily: titleFont, fontSize: 15, color: colors.ink, lineHeight: 24 }}>
+        <Text style={{ fontFamily: titleFont, fontSize: 17, color: colors.ink, lineHeight: 24 }}>
           {contentByLang(lang, 'शुभ मुहूर्त खोज', 'Find a Muhurat')}
         </Text>
         <View style={[styles.newBadge, { backgroundColor: colors.newBadgeBg, borderRadius: radii.sm }]}>
@@ -125,8 +125,8 @@ export default function MuhuratFinderDoor({ onPress }: { onPress: () => void }) 
 }
 
 const styles = StyleSheet.create({
-  door: { marginTop: 12 },
-  glyphPad: { width: 46, height: 46, borderRadius: 23, alignItems: 'center', justifyContent: 'center' },
+  door: { marginTop: 8 },
+  glyphPad: { width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center' },
   titleRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   newBadge: { paddingHorizontal: 7, paddingVertical: 2 },
 });
