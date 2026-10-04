@@ -2,7 +2,7 @@
 #
 # Verifies:
 #   1. Home shows the Sanskar category tile
-#   2. CategoryList shows all 7 sanskar sections
+#   2. CategoryList shows all 9 sanskar sections
 #   3. Reader opens with the intro page (परिचय / Introduction)
 #   4. Language toggle flips text from Hindi to English
 #   5. Swipe pagination works (intro → next verse)
@@ -30,7 +30,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Aarti\\..*Tap to open\\."
 - assertVisible: "Good Habits\\..*Tap to open\\."       # Sanskar
 
-# ── Step 3: Open Sanskar category, verify all 8 sections (regex for LibraryCard) ──
+# ── Step 3: Open Sanskar category, verify all 9 sections (regex for LibraryCard) ──
 # "Good Habits" is the last Home tile — low enough that a direct tap can land on
 # the bottom tab bar (→ Panchang). Center it first so the tap stays mid-screen.
 - scrollUntilVisible:
@@ -49,7 +49,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Meal Prayer\\..*Tap to open\\."
 - assertVisible: "Serving Cows & Birds\\..*Tap to open\\."
 - assertVisible: "Evening Lamp\\..*Tap to open\\."
-# Bedtime Slokas & Vidyarambha Prarthana fall below the fold — Android's shorter
+# Bedtime Slokas, Vidyarambha Prarthana & Matribhumi Vandana fall below the fold — Android's shorter
 # viewport folds after ~6 rows, so scroll to them rather than a plain
 # assertVisible (a no-op scroll when already on-screen, correct on both platforms).
 - scrollUntilVisible:
@@ -63,12 +63,18 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     visibilityPercentage: 60
     timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "Matribhumi Vandana\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
 
 # ── Step 4: Open Morning Slokas, toggle to English, assert intro pill ──
 # Maestro's iOS accessibility tree doesn't reliably expose standalone
 # Devanagari text nodes — so we toggle to English first and assert the
 # English label "Introduction" instead of "परिचय".
-# Scroll back up first — verifying Vidyarambha Prarthana above scrolled the list down.
+# Scroll back up first — verifying Matribhumi Vandana above scrolled the list down.
 - scrollUntilVisible:
     element:
       text: "Morning Slokas\\..*Tap to open\\."
