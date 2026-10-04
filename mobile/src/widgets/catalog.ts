@@ -73,16 +73,28 @@ export const WIDGET_BACKGROUND_DIMENSIONS: Record<WidgetBackgroundSize, readonly
   large: [560, 560],
 };
 
-/**
- * The source sketch (in `assets/backgrounds/`) each content's plates are cut from,
- * where its subject sits vertically, and — for a darker sketch — a lighter wash than
- * the generator's default so it still clears the 4.5:1 text gate.
- */
-export const WIDGET_BACKGROUND_SOURCES: Record<WidgetContent, { file: string; focusY: number; wash?: number }> = {
+/** The source sketch (in `assets/backgrounds/`) each content's plates are cut from, and where its subject sits vertically. */
+export const WIDGET_BACKGROUND_SOURCES: Record<WidgetContent, { file: string; focusY: number }> = {
   verse: { file: 'deity-krishna-bansuri.webp', focusY: 0.32 },
-  panchang: { file: 'deity-navagraha-icons.webp', focusY: 0.5, wash: 0.18 },
+  panchang: { file: 'deity-navagraha-icons.webp', focusY: 0.5 },
   japam: { file: 'category-japam-mala.webp', focusY: 0.55 },
 };
+
+/**
+ * Text colours drawn over the plates, on both native widgets and the gallery preview.
+ * `ink` is the app token; the other three are DEEPER than the app's
+ * `inkMuted #6E5230` / `saffronDeep #8A3E0B` / `gold #A67C34`. The art can only be as
+ * dark as the lightest of these allows at 4.5:1, and with the app values that limit
+ * left the sketch barely visible. Mirrored by `WidgetTheme` in `VedanshWidgets.swift`
+ * and the Android layouts; `catalog.test.ts` pins all three to this table.
+ */
+export const WIDGET_TEXT_TOKENS = {
+  ink: '#1A0E03',
+  inkMuted: '#4A3420',
+  saffronDeep: '#6B2E05',
+  /** The decorative ॐ brand mark — not held to 4.5:1. */
+  gold: '#7E5A1E',
+} as const;
 
 /** Resource basename shared by the Android drawable, the iOS extension bundle file, and the gallery asset. */
 export function widgetBackgroundName(content: WidgetContent, size: WidgetBackgroundSize): string {

@@ -12,7 +12,7 @@ import { radii, spacing } from '@/theme/spacing';
 import { eyebrowTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { isWidgetPinSupported, readWidgetPayload, requestPinWidget } from '@/widgets/native';
 import { WIDGET_TIME_ZONE, widgetDateKey, type WidgetPayloadState } from '@/widgets/contract';
-import { widgetBackgroundName, widgetCatalogEntry, widgetSizeLabel, type WidgetContent } from '@/widgets/catalog';
+import { WIDGET_TEXT_TOKENS, widgetBackgroundName, widgetCatalogEntry, widgetSizeLabel, type WidgetContent } from '@/widgets/catalog';
 import { widgetBackgroundImages } from '@assets/widget-backgrounds';
 import { flowedVerse, runningTithi } from '@/widgets/planner';
 import type { MoreStackParamList } from '@/navigation/types';
@@ -77,18 +77,18 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
                 renders the whole verse flowed across three lines — not the
                 small-cell excerpt (design.md §59). */}
             <Text numberOfLines={3} style={[styles.verse, { color: colors.ink, fontFamily: bodyFont }]}>{verse ? flowedVerse(verse.lines[lang]) : recovery}</Text>
-            {verse ? <Text style={[styles.meta, { color: colors.inkMuted }]}>{verse.source[lang]}</Text> : null}
+            {verse ? <Text style={[styles.meta, { color: WIDGET_TEXT_TOKENS.inkMuted }]}>{verse.source[lang]}</Text> : null}
           </Preview>
           <Preview content="panchang" title={contentByLang(lang, 'आज का पंचांग', 'Today’s Panchang')} accessibilityLabel="Panchang widget preview" colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
             {/* The tithi RUNNING NOW plus its तक line — a tithi hands over
                 mid-day, so the facsimile would otherwise show the sunrise tithi
                 while the placed widget (and the Home glance) had moved on. */}
             <Text style={[styles.headline, { color: colors.ink, fontFamily: titleFont }]}>{tithi ? tithi.name[lang] : recovery}</Text>
-            {day ? <Text style={[styles.meta, { color: colors.inkMuted }]}>{[tithi?.till?.[lang], day.representedDate[lang], day.sunrise[lang], day.rahuKaal[lang]].filter(Boolean).join(' · ')}</Text> : null}
+            {day ? <Text style={[styles.meta, { color: WIDGET_TEXT_TOKENS.inkMuted }]}>{[tithi?.till?.[lang], day.representedDate[lang], day.sunrise[lang], day.rahuKaal[lang]].filter(Boolean).join(' · ')}</Text> : null}
           </Preview>
           <Preview content="japam" title={contentByLang(lang, 'जप-साधना', 'Japam practice')} accessibilityLabel="Japam widget preview" colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
             <Text style={[styles.headline, { color: colors.ink, fontFamily: titleFont }]}>{japam ? `${japam.totalBeads} / 108` : recovery}</Text>
-            {japam ? <Text style={[styles.meta, { color: colors.inkMuted }]}>{japam.totalRounds} {contentByLang(lang, 'माला', 'rounds')} · {japam.japaStreak} {contentByLang(lang, 'जप-दिन', 'Japam days')}</Text> : null}
+            {japam ? <Text style={[styles.meta, { color: WIDGET_TEXT_TOKENS.inkMuted }]}>{japam.totalRounds} {contentByLang(lang, 'माला', 'rounds')} · {japam.japaStreak} {contentByLang(lang, 'जप-दिन', 'Japam days')}</Text> : null}
           </Preview>
         </View>
         <View style={[styles.instructions, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
@@ -131,13 +131,15 @@ function Preview({ content, title, accessibilityLabel, colors, eyebrowStyle, lan
   const cardStyle = [styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }];
   const body = <>
     <View accessible accessibilityRole="image" accessibilityLabel={accessibilityLabel} style={styles.preview}>
-      <Text style={[eyebrowStyle, { color: colors.saffronDeep }]}>{title}</Text>{children}<Text style={[styles.brand, { color: colors.gold }]}>ॐ वेदांश़</Text>
+      {/* The facsimile draws in the widgets' own deeper text tokens (design.md §59) —
+          the app's lighter inkMuted/saffronDeep/gold are what kept the art faint. */}
+      <Text style={[eyebrowStyle, { color: WIDGET_TEXT_TOKENS.saffronDeep }]}>{title}</Text>{children}<Text style={[styles.brand, { color: WIDGET_TEXT_TOKENS.gold }]}>ॐ वेदांश़</Text>
     </View>
     <View accessible accessibilityLabel={`${pick(lang, { hi: 'आकार', en: 'Sizes', gu: 'કદ', kn: 'ಗಾತ್ರ' })}: ${sizeLabels.join(', ')}`} style={styles.sizeRow}>
       {entry.sizes.map((size, index) => {
         const recommended = size === entry.recommended;
         return <View key={size} style={[styles.sizeChip, { backgroundColor: recommended ? colors.saffronTint : 'transparent', borderColor: colors.divider }]}>
-          <Text style={[styles.sizeText, { color: recommended ? colors.saffronDeep : colors.inkMuted, fontFamily: bodyFont }]}>{sizeLabels[index]}</Text>
+          <Text style={[styles.sizeText, { color: recommended ? WIDGET_TEXT_TOKENS.saffronDeep : WIDGET_TEXT_TOKENS.inkMuted, fontFamily: bodyFont }]}>{sizeLabels[index]}</Text>
         </View>;
       })}
     </View>

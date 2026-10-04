@@ -5,6 +5,7 @@ import path from 'node:path';
 import {
   WIDGET_BACKGROUND_DIMENSIONS,
   WIDGET_CATALOG,
+  WIDGET_TEXT_TOKENS,
   widgetBackgroundPlates,
   widgetCatalogEntry,
   widgetSizeLabel,
@@ -219,4 +220,22 @@ test('Android shows each provider\'s plates only through the guarded art step', 
   assert.match(recovery, /setViewVisibility\(__APP_PACKAGE__\.R\.id\.widget_art, View\.GONE\)/, 'recovery must hide a previous render\'s art');
   assert.match(kotlin, /Build\.VERSION\.SDK_INT < Build\.VERSION_CODES\.S\) return/);
   assert.match(read('withHomeWidgets.js'), /'assets', 'widget-backgrounds'[\s\S]*drawable-nodpi/);
+});
+
+// The plates are toned exactly as dark as WIDGET_TEXT_TOKENS allow at 4.5:1, so a
+// native surface still drawing the app's lighter inkMuted/saffronDeep/gold would sit
+// below the gate on the darkest linework. Every surface must draw the table's values.
+test('both native widgets draw the widget text tokens the plates were toned for', () => {
+  const swift = read('home-widgets', 'ios', 'VedanshWidgets.swift');
+  for (const [name, hex] of Object.entries(WIDGET_TEXT_TOKENS)) {
+    const [r, g, b] = [1, 3, 5].map((i) => (parseInt(hex.slice(i, i + 2), 16) / 255).toFixed(3));
+    assert.match(swift, new RegExp(`static let ${name} = Color\\(red: ${r}, green: ${g}, blue: ${b}\\)`), `WidgetTheme.${name} is not ${hex}`);
+  }
+  const allowed = new Set(Object.values(WIDGET_TEXT_TOKENS).map((hex) => hex.toUpperCase()));
+  for (const layout of ['vedansh_widget_verse.xml', 'vedansh_widget_panchang.xml']) {
+    const xml = read('home-widgets', 'android', 'res', 'layout', layout);
+    for (const [, hex] of xml.matchAll(/android:textColor="(#[0-9A-Fa-f]{6})"/g)) {
+      assert.ok(allowed.has(hex.toUpperCase()), `${layout} draws ${hex}, which is not a widget text token`);
+    }
+  }
 });

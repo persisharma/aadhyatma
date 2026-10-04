@@ -17,13 +17,16 @@ private let payloadName = "widget-payload-v1.json"
 enum WidgetTheme {
   static let parchment = Color(red: 0.973, green: 0.937, blue: 0.839) // colors.parchmentSoft #F8EFD6 (card surface, matches Android)
   static let ink = Color(red: 0.102, green: 0.055, blue: 0.012)       // colors.ink #1A0E03
-  static let inkMuted = Color(red: 0.431, green: 0.322, blue: 0.188)  // colors.inkMuted #6E5230 (~5.9:1 on parchment)
-  static let saffronDeep = Color(red: 0.541, green: 0.243, blue: 0.043) // colors.saffronDeep #8A3E0B
-  static let gold = Color(red: 0.651, green: 0.486, blue: 0.204)      // colors.gold #A67C34
+  // The next three are WIDGET_TEXT_TOKENS (catalog.ts), deliberately deeper than the
+  // app's inkMuted/saffronDeep/gold: the background art can only be as dark as the
+  // lightest text allows at 4.5:1, and the app shades kept it barely visible.
+  static let inkMuted = Color(red: 0.290, green: 0.204, blue: 0.125)  // #4A3420 (app colors.inkMuted #6E5230)
+  static let saffronDeep = Color(red: 0.420, green: 0.180, blue: 0.020) // #6B2E05 (app colors.saffronDeep #8A3E0B)
+  static let gold = Color(red: 0.494, green: 0.353, blue: 0.118)      // #7E5A1E (app colors.gold #A67C34)
 }
 
 // The faded sketch behind each system-family widget (design.md §59): one plate per
-// (surface, family), pre-cropped and already washed onto parchment by
+// (surface, family), pre-cropped and toned onto parchment by
 // `scripts/build-widget-backgrounds.mts`, bundled as `vedansh_widget_bg_<surface>_<size>.jpg`.
 // The art is strictly optional. Any failure — a Lock Screen family, a tinted/
 // vibrant rendering mode, a missing or undecodable file, a plate over the pixel

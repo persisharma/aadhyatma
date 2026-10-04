@@ -1,46 +1,74 @@
 /**
  * Cut the home-screen widget background plates (design.md §59) from the app's own
- * sketches: one pre-cropped, parchment-washed JPEG per (content, size) the catalog
+ * sketches: one pre-cropped, sepia-toned JPEG per (content, size) the catalog
  * offers, written to `assets/widget-backgrounds/`. Both native config plugins and
  * the in-app gallery read that one folder.
  *
  *   npx tsx scripts/build-widget-backgrounds.mts
  *
  * Requires ImageMagick 6 (`convert`). The plates are committed, so this only runs
- * when the art, the wash, or `WIDGET_BACKGROUND_DIMENSIONS` change. It refuses to
+ * when the art, `WIDGET_TEXT_TOKENS`, or `WIDGET_BACKGROUND_DIMENSIONS` change. It refuses to
  * write a plate on which any widget text token would fall below 4.5:1.
+ * The sketch is tone-mapped as a sepia duotone between the darkest background the
+ * text allows and parchment, so it is as visible as the text colours permit.
  */
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { WIDGET_BACKGROUND_DIMENSIONS, WIDGET_BACKGROUND_SOURCES, widgetBackgroundPlates } from '../src/widgets/catalog';
+import { WIDGET_BACKGROUND_DIMENSIONS, WIDGET_BACKGROUND_SOURCES, WIDGET_TEXT_TOKENS, widgetBackgroundPlates } from '../src/widgets/catalog';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SOURCE_DIR = path.join(ROOT, 'assets', 'backgrounds');
 const OUT_DIR = path.join(ROOT, 'assets', 'widget-backgrounds');
 
 const PARCHMENT = '#F8EFD6'; // colors.parchmentSoft — the widgets' container background
-/** Default share of the sketch over parchment (a source may set its own `wash`). The sketches are already near-parchment, so this keeps them a quiet watermark. */
-const WASH = 0.22;
+/** The sepia the sketch's lines are drawn in, mixed toward parchment until it reaches the contrast floor. */
+const SEPIA = '#7A5A34';
 /** The sketches carry a burnt-paper border; it reads as a dirty edge on a rounded widget, so it is cropped away. */
 const INSET = 0.08;
-/** The text tokens the native widgets draw on this background (ink, inkMuted, saffronDeep). `gold` is the decorative ॐ mark. */
-const TEXT_TOKENS = { ink: '#1A0E03', inkMuted: '#6E5230', saffronDeep: '#8A3E0B' };
+/** Clip the sketch's paper grain (the light end) and its deepest lines (the dark end) before tone-mapping. */
+const LEVELS = '8%,94%';
+/** < 1 lifts the mid-tone linework toward the floor so more of the drawing shows, not just its darkest strokes. */
+const GAMMA = '0.8';
+/** The text drawn over the plates; `gold` is the decorative ॐ mark and is not held to the gate. */
+const { gold: _gold, ...TEXT_TOKENS } = WIDGET_TEXT_TOKENS;
 const MIN_CONTRAST = 4.5;
+/** Headroom over the gate for JPEG ringing and the blur measure below. */
+const TARGET_CONTRAST = 4.75;
 
-const luminance = (hex: string) => {
-  const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255)
-    .map((c) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
-  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+const rgb = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
+const linearLuminance = ([r, g, b]: number[]) => {
+  const [lr, lg, lb] = [r, g, b].map((c) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
+  return 0.2126 * lr + 0.7152 * lg + 0.0722 * lb;
 };
+const luminance = (hex: string) => linearLuminance(rgb(hex));
 const contrast = (a: number, b: number) => (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
 
+/**
+ * The darkest background every text token still reads on at TARGET_CONTRAST: the
+ * SEPIA→PARCHMENT mix found by bisection. The plates are tone-mapped so their
+ * darkest line lands here and their paper on PARCHMENT — the full range the text
+ * allows, which is what makes the sketch visible rather than a faint wash.
+ */
+function contrastFloor(): string {
+  const lightestText = Math.max(...Object.values(TEXT_TOKENS).map(luminance));
+  const [p, s] = [rgb(PARCHMENT), rgb(SEPIA)];
+  const mix = (t: number) => p.map((c, i) => c * (1 - t) + s[i] * t);
+  let lo = 0; let hi = 1;
+  for (let i = 0; i < 40; i += 1) {
+    const t = (lo + hi) / 2;
+    if (contrast(lightestText, linearLuminance(mix(t))) > TARGET_CONTRAST) lo = t; else hi = t;
+  }
+  return `#${mix(lo).map((c) => Math.round(c * 255).toString(16).padStart(2, '0')).join('').toUpperCase()}`;
+}
+
+const FLOOR = contrastFloor();
 fs.mkdirSync(OUT_DIR, { recursive: true });
 const index: string[] = [];
 for (const { content, size, name } of widgetBackgroundPlates()) {
-  const { file, focusY, wash = WASH } = WIDGET_BACKGROUND_SOURCES[content];
+  const { file, focusY } = WIDGET_BACKGROUND_SOURCES[content];
   const [width, height] = WIDGET_BACKGROUND_DIMENSIONS[size];
   const source = path.join(SOURCE_DIR, file);
   const [sw, sh] = execFileSync('identify', ['-format', '%w %h', source], { encoding: 'utf8' }).trim().split(' ').map(Number);
@@ -56,8 +84,8 @@ for (const { content, size, name } of widgetBackgroundPlates()) {
   const out = path.join(OUT_DIR, `${name}.jpg`);
   execFileSync('convert', [
     source, '-crop', `${cropW}x${cropH}+${cropX}+${cropY}`, '+repage', '-resize', `${width}x${height}!`,
-    '(', '-size', `${width}x${height}`, `xc:${PARCHMENT}`, ')', '+swap',
-    '-compose', 'blend', '-define', `compose:args=${Math.round(wash * 100)}`, '-composite',
+    '-colorspace', 'Gray', '-level', LEVELS, '-gamma', GAMMA, '-colorspace', 'sRGB',
+    '+level-colors', `${FLOOR},${PARCHMENT}`,
     '-strip', '-interlace', 'none', '-sampling-factor', '4:2:0', '-quality', '82', out,
   ]);
   // Darkest the background gets under a glyph-sized area (a 1.5 px blur ignores single-pixel grain).
@@ -67,7 +95,7 @@ for (const { content, size, name } of widgetBackgroundPlates()) {
     .reduce((a, b) => (b[1] < a[1] ? b : a));
   if (worst < MIN_CONTRAST) {
     fs.rmSync(out);
-    throw new Error(`${name}: ${token} reaches only ${worst.toFixed(2)}:1 on the darkest area — lower its wash`);
+    throw new Error(`${name}: ${token} reaches only ${worst.toFixed(2)}:1 on the darkest area — raise TARGET_CONTRAST`);
   }
   console.log(`${name}.jpg ${width}x${height} ${(fs.statSync(out).size / 1024).toFixed(1)} KB · worst text contrast ${worst.toFixed(2)}:1 (${token})`);
   index.push(`  ${name}: require('./${name}.jpg'),`);
