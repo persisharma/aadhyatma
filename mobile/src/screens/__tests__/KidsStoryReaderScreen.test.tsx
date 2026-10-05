@@ -21,10 +21,9 @@ jest.mock('@/components/ReaderHeader', () => {
   return { __esModule: true, default: (props: any) => React.createElement('ReaderHeader', props, props.right) };
 });
 jest.mock('@/components/KidsStoryArt', () => ({ __esModule: true, default: 'KidsStoryArt' }));
-jest.mock('@/components/LanguagePickerSheet', () => ({ __esModule: true, default: 'LanguagePickerSheet' }));
+jest.mock('@/components/LanguageToggle', () => ({ __esModule: true, default: 'LanguageToggle' }));
 jest.mock('@/data/gita/language', () => ({
   useGitaLanguage: () => ({ lang: mockLang }),
-  LANGUAGES: ['hi', 'en', 'gu', 'kn'].map(value => ({ value, shortLabel: value })),
 }));
 jest.mock('@/theme/ThemeContext', () => ({ useTheme: () => ({
   colors: {}, typography: {}, spacing: { readingGutter: 22, lg: 16, md: 12, sm: 8 },

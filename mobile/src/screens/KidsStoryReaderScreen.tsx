@@ -3,10 +3,10 @@ import { FlatList, Pressable, ScrollView, Text, View, useWindowDimensions } from
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import ReaderHeader from '@/components/ReaderHeader';
-import LanguagePickerSheet from '@/components/LanguagePickerSheet';
+import LanguageToggle from '@/components/LanguageToggle';
 import KidsStoryArt from '@/components/KidsStoryArt';
 import { getKidsStory, storyPageIndex, storyText, type StoryPage } from '@/data/kidsStories';
-import { LANGUAGES, useGitaLanguage } from '@/data/gita/language';
+import { useGitaLanguage } from '@/data/gita/language';
 import { useTheme } from '@/theme/ThemeContext';
 import { meaningToken, titleFontByLang } from '@/utils/langType';
 import { pick } from '@/utils/localize';
@@ -17,7 +17,6 @@ export default function KidsStoryReaderScreen({ navigation, route }: NativeStack
   const { colors, typography, spacing } = useTheme();
   const story = getKidsStory(route.params.storyId);
   const [index, setIndex] = useState(() => story ? storyPageIndex(story, route.params.pageId) : 0);
-  const [languageOpen, setLanguageOpen] = useState(false);
   const { width } = useWindowDimensions();
   const [pageWidth, setPageWidth] = useState(width);
   const pager = useRef<FlatList<StoryPage>>(null);
@@ -42,14 +41,13 @@ export default function KidsStoryReaderScreen({ navigation, route }: NativeStack
     </SafeAreaView>
   );
   const finished = index === story.pages.length - 1;
-  const languageName = LANGUAGES.find(option => option.value === lang)?.shortLabel;
   return (
     <SafeAreaView testID="kids-story-reader" style={{ flex: 1, backgroundColor: colors.parchment }} edges={['top', 'left', 'right', 'bottom']}>
-      <ReaderHeader title={storyText(story.title, lang)} onBack={() => navigation.goBack()} sideWidth={48} right={
-        <Pressable testID="story-language" onPress={() => setLanguageOpen(true)} accessibilityRole="button" accessibilityLabel={pick(lang, { hi: 'भाषा बदलें', en: 'Change language', gu: 'ભાષા બદલો', kn: 'ಭಾಷೆ ಬದಲಿಸಿ' })} style={{ minHeight: 44, minWidth: 44, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ fontFamily: titleFontByLang(lang), color: colors.saffronDeep }}>{languageName}</Text>
-        </Pressable>
-      } />
+      <ReaderHeader title={storyText(story.title, lang)} onBack={() => navigation.goBack()} />
+      {/* Shared two-segment reading-language pill, centred like every reader (design.md §16). */}
+      <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingTop: 6, paddingBottom: spacing.sm }}>
+        <LanguageToggle />
+      </View>
       <View style={{ flex: 1 }} onLayout={event => { if (event.nativeEvent.layout.width > 0) setPageWidth(event.nativeEvent.layout.width); }}>
         <FlatList
           testID="story-pager"
@@ -99,7 +97,6 @@ export default function KidsStoryReaderScreen({ navigation, route }: NativeStack
         <Text testID="story-progress" style={{ color: colors.inkMuted }}>{index + 1} / {story.pages.length}</Text>
         <Pressable testID="story-next" accessibilityRole="button" onPress={() => finished ? navigation.goBack() : goToPage(index + 1)} style={{ flex: 1, minHeight: 48, justifyContent: 'center', alignItems: 'center', borderRadius: 24, paddingHorizontal: 10, backgroundColor: colors.saffronDeep }}><Text style={{ color: colors.onPrimary, fontFamily: titleFontByLang(lang), textAlign: 'center' }}>{finished ? library : next}</Text></Pressable>
       </View>
-      {languageOpen && <LanguagePickerSheet visible onClose={() => setLanguageOpen(false)} />}
     </SafeAreaView>
   );
 }
