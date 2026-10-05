@@ -1,4 +1,4 @@
-# Illustrated story reader: route, button/swipe parity, caption scrolling, return.
+# Illustrated story reader: route, swipe-only paging (Gita-style), caption scrolling, return.
 appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
@@ -9,20 +9,23 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: "kids-stories-door" }
 - tapOn: { id: "kids-story-krishna-janma" }
 - assertVisible: { id: "story-pager" }
-- assertVisible: "1 / 10"
-- tapOn: { id: "story-next" }
-- assertVisible: "2 / 10"
+- assertVisible: "1 / 16"
+# Swipe-only navigation: no Previous/Next buttons, just the horizontal pager.
 - swipe:
     start: 85%, 45%
     end: 15%, 45%
     duration: 600
-- assertVisible: "3 / 10"
-- tapOn: { id: "story-prev" }
-- assertVisible: "2 / 10"
+- assertVisible: "2 / 16"
 - swipe:
-    start: 50%, 75%
-    end: 50%, 35%
+    start: 85%, 45%
+    end: 15%, 45%
     duration: 600
+- assertVisible: "3 / 16"
+- swipe:
+    start: 15%, 45%
+    end: 85%, 45%
+    duration: 600
+- assertVisible: "2 / 16"
 - assertVisible: { id: "story-caption" }
 - tapOn: "Back"
 - assertVisible: { id: "kids-story-krishna-janma" }

@@ -26,13 +26,26 @@ export type WhatsNewEntry = {
  * Current app version. Must match `expo.version` in `mobile/app.json`. This is
  * the key against which the user's "last seen what's new" is compared.
  */
-export const APP_TOUR_VERSION = '1.4.8';
+export const APP_TOUR_VERSION = '1.4.9';
 
 /**
  * Per-version what's-new content. The latest entry is shown when the user
  * first opens this version of the app after updating.
  */
 export const whatsNew: Readonly<Record<string, WhatsNewEntry>> = {
+  '1.4.9': {
+    version: '1.4.9',
+    items: [
+      {
+        titleHi: 'कुछ भी साझा करें · कार्ड शृंखला',
+        titleEn: 'Share anything · card carousel',
+        bodyHi:
+          'अब केवल श्लोक ही नहीं — पूरी व्रत कथा, मंदिर पाठ एवं उत्तर भी सुंदर कार्डों की शृंखला (कैरोसेल) के रूप में साझा होते हैं। पूरे ऐप में साझा बटन देखें।',
+        bodyEn:
+          'Not just single verses anymore — full vrat kathas, temple readings and answers now share as a beautiful carousel of cards. Look for the share button across the app.',
+      },
+    ],
+  },
   '1.4.8': {
     version: '1.4.8',
     items: [

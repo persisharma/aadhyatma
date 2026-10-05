@@ -82,7 +82,11 @@ describe('vidhi back navigation', () => {
     const more = src('MoreStackNavigator.tsx');
     const types = src('types.ts');
     expect(more).toContain('name="GitaReader"');
-    expect(more).toContain("import GitaReaderScreen from '@/screens/GitaReaderScreen'");
+    // Mounted on THIS stack (now lazily, like every other destination) rather
+    // than reached by jumping to another tab — that is what keeps Back working.
+    expect(more).toMatch(
+      /const GitaReaderScreen = lazyScreen\('GitaReader', \d+, \(\) => import\('@\/screens\/GitaReaderScreen'\)\);/
+    );
     // The intersection may carry other multi-stack flows (e.g. GharVastu,
     // PRD-24 Phase 2; दान-पुण्य, PRD-26) — the pin is Vidhi + a locally-mounted
     // GitaReader.

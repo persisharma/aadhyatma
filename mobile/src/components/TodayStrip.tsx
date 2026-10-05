@@ -23,7 +23,9 @@ import PitruSmaranDayChip from '@/components/PitruSmaranDayChip';
 import JanmaTithiDayChip from '@/components/JanmaTithiDayChip';
 import { moreTabTarget } from '@/navigation/entryRoutes';
 import {
+  isPitruPakshaDayTableWarm,
   pitruPakshaObservanceForDate,
+  pitruPakshaObservanceForDateAsync,
   type PitruPakshaDayObservance,
   type PitruPakshaWindow,
 } from '@/panchang/pitruSmaran';
@@ -119,9 +121,12 @@ export default function TodayStrip() {
    */
   const [pitruPakshaToday, setPitruPakshaToday] = React.useState<PitruPakshaDayObservance | null>(
     // A known fortnight answers on the first render: outside it for free, and
-    // inside it from the tithi reads the pass that produced the window already
-    // memoised (this strip is Home's first resolver, so it is that pass).
-    () => (knownPakshaWindow(today.getFullYear()) ? readPitruPaksha(today) : null)
+    // inside it from the day table the pass that produced the window already
+    // memoised (this strip is Home's first resolver, so it is that pass). A
+    // window primed from disk has no table yet — that solve waits for idle.
+    () => (knownPakshaWindow(today.getFullYear()) && isPitruPakshaDayTableWarm(today.getFullYear())
+      ? readPitruPaksha(today)
+      : null)
   );
   React.useEffect(() => {
     let cancelled = false;
@@ -130,8 +135,8 @@ export default function TodayStrip() {
     const year = today.getFullYear();
 
     // Everything that can reach the engine — the fortnight scan when it is
-    // missing, and the day's two tithi reads when today is inside it — waits for
-    // an idle UI, then persists whatever it had to solve.
+    // missing, and the fortnight's day table when today is inside it — waits for
+    // an idle UI, yields while it solves, then persists whatever it had to solve.
     const solveWhenIdle = () => {
       interaction = InteractionManager.runAfterInteractions(() => {
         handle = setTimeout(async () => {
@@ -139,8 +144,10 @@ export default function TodayStrip() {
           const cold = knownPakshaWindow(year) === null;
           const window = await ensurePakshaWindowAsync(year, () => cancelled);
           if (cancelled) return;
-          const value = window ? readPitruPaksha(today) : null;
-          if (cancelled) return;
+          const value = window
+            ? await pitruPakshaObservanceForDateAsync(today, () => cancelled).catch(() => null)
+            : null;
+          if (cancelled || value === undefined) return;
           setPitruPakshaToday(value);
           if (cold) void persistSmaranSolves();
         }, 0);

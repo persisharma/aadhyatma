@@ -9,9 +9,12 @@ import { meaningToken, pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/
 import { getTheerthBackground, getTheerthIllustration } from '@/data/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
-import { getTempleById } from '@/data/theerth/temples';
+import { getTempleDetailById } from '@/data/theerth/temples';
 import type { Deity } from '@/data/texts';
 import type { HomeStackParamList } from '@/navigation/types';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
+import { theerthShareable } from '@/utils/shareContent';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'TheerthDetail'>;
 
@@ -48,8 +51,11 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
   const { templeId } = route.params;
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
+  const { share, busy: shareBusy } = useShare();
 
-  const temple = getTempleById(templeId);
+  // The reading loads here, on the screen the user opened — see
+  // `loadDetails()` in temples.ts for why it is not on the launch path.
+  const temple = getTempleDetailById(templeId);
 
   if (!temple) {
     return (
@@ -90,7 +96,13 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
           {/* Language toggle at the top (consistent with the map/listing screens);
               the temple name lives only in the hero below, never duplicated here. */}
           <LanguageToggle />
-          <View style={styles.backBtnSpacer} />
+          {/* Share sits where the back button's mirror spacer was (design.md §39.4). */}
+          <ShareButton
+            onPress={() => void share(theerthShareable(temple), lang)}
+            busy={shareBusy}
+            accessibilityLabel="Share theerth"
+            accessibilityHint="Opens share options for this temple's story"
+          />
         </View>
 
         <ScrollView
@@ -165,8 +177,14 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
             >
               {/* The plates are square with the artwork in the upper part; a
                   5:4 window anchored to the top keeps the murti and mandap in
-                  view without a centred crop lopping off the canopy. */}
-              <Image source={illustration} style={styles.illustrationImage} resizeMode="cover" />
+                  view without a centred crop lopping off the canopy. The square
+                  is sized by a View, not the Image: RN injects a static
+                  require's intrinsic size (1024 pt) as the Image's default
+                  height, which defeats aspectRatio and zooms the frame into
+                  the top-centre of the plate. */}
+              <View style={styles.illustrationSquare}>
+                <Image source={illustration} style={styles.illustrationImage} resizeMode="cover" />
+              </View>
             </View>
           ) : null}
 
@@ -331,7 +349,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  backBtnSpacer: { width: 34, height: 34 },
   scroll: {
     paddingTop: 4,
   },
@@ -354,13 +371,13 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginTop: 4,
   },
-  illustrationImage: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
+  illustrationSquare: {
     width: '100%',
     aspectRatio: 1,
+  },
+  illustrationImage: {
+    width: '100%',
+    height: '100%',
   },
   ornamentRow: {
     flexDirection: 'row',

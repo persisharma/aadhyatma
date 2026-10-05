@@ -8,6 +8,7 @@ import { fitMeaningType, meaningScriptFor, shareCardMetrics } from '@/utils/shar
 import { getReaderBackground } from '@/data/backgrounds';
 import BackgroundLayer from './BackgroundLayer';
 import Ornament from './Ornament';
+import ShareBrandFooter from './ShareBrandFooter';
 
 export type ShareCardProps = {
   /** Source id — resolves the same faded sketch the source's reader page shows. */
@@ -148,41 +149,7 @@ const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(prop
         </Text>
       ) : null}
 
-      <View style={[styles.footer, { borderTopColor: colors.divider }]}>
-        <Text
-          style={[
-            styles.wordmarkHi,
-            {
-              color: colors.ink,
-              fontFamily: typography.readerTitle.fontFamily,
-            },
-          ]}
-        >
-          वेदांश़
-        </Text>
-        <Text
-          style={[
-            styles.wordmarkLatin,
-            {
-              color: colors.saffronDeep,
-              fontFamily: typography.cardLatin.fontFamily,
-            },
-          ]}
-        >
-          Vedansh — Sacred Texts, Daily Reading
-        </Text>
-        <Text
-          style={[
-            styles.storeLine,
-            {
-              color: colors.inkMuted,
-              fontFamily: typography.cardLatin.fontFamily,
-            },
-          ]}
-        >
-          Now available on iOS & Android
-        </Text>
-      </View>
+      <ShareBrandFooter />
     </View>
   );
 });
@@ -227,31 +194,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: shareCardMetrics.meaningMarginTop,
     paddingHorizontal: shareCardMetrics.meaningPaddingHorizontal,
-    includeFontPadding: false,
-  },
-  footer: {
-    marginTop: 18,
-    paddingTop: 14,
-    borderTopWidth: 1,
-    alignItems: 'center',
-  },
-  wordmarkHi: {
-    // no tracking on the Devanagari wordmark — it splits the shirorekha
-    fontSize: 18,
-    includeFontPadding: false,
-  },
-  wordmarkLatin: {
-    fontSize: 12,
-    letterSpacing: 1.2,
-    marginTop: 3,
-    fontStyle: 'italic',
-    includeFontPadding: false,
-  },
-  storeLine: {
-    fontSize: 10,
-    letterSpacing: 2,
-    marginTop: 6,
-    textTransform: 'uppercase',
     includeFontPadding: false,
   },
 });

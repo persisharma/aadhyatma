@@ -5,7 +5,7 @@ import drikFixture from './fixtures/drikpanchang-ujjain.json';
 
 import { computePanchangForDate, getSiderealMoonLng, UJJAIN_GEO } from '../engine';
 import { NAKSHATRA_NAMES_EN, TITHI_NAMES_EN } from '../names';
-import { agniVaasPlace, chandraVaasDirection, dayVaas, vaasTiles } from '../vaas';
+import { agniVaasPlace, chandraVaasDirection, chandraVaasFavourableDirections, dayVaas, vaasTiles } from '../vaas';
 
 test('chandra vaas maps each rashi to its element direction', () => {
   const expected = [
@@ -15,6 +15,16 @@ test('chandra vaas maps each rashi to its element direction', () => {
   ];
   assert.deepEqual(Array.from({ length: 12 }, (_, i) => chandraVaasDirection(i)), expected);
   assert.equal(chandraVaasDirection(12), 'east'); // मीन → मेष wraps
+});
+
+test('chandra vaas favourable travel: the Moon ahead or on the right, for all 4 directions', () => {
+  // Moon ahead (सम्मुख) = travel toward its direction; Moon on the right (दाहिने)
+  // = travel in the direction 90° counter-clockwise of it. The Moon's own
+  // direction leads the pair.
+  assert.deepEqual(chandraVaasFavourableDirections('west'), ['west', 'south']); // the verse example
+  assert.deepEqual(chandraVaasFavourableDirections('east'), ['east', 'north']);
+  assert.deepEqual(chandraVaasFavourableDirections('south'), ['south', 'east']);
+  assert.deepEqual(chandraVaasFavourableDirections('north'), ['north', 'west']);
 });
 
 test('agni vaas: (tithi + 1 + vara) mod 4 — 0/3 prithvi, 1 akash, 2 patal', () => {

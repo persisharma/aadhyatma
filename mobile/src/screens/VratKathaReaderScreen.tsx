@@ -24,6 +24,9 @@ import { scriptBodyFont } from '@/utils/langType';
 import ReaderHeader from '@/components/ReaderHeader';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
 import { useReaderReadAloud } from '@/screens/_useReaderReadAloud';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
+import { vratKathaShareable } from '@/utils/shareContent';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'VratKathaReader'>;
 
@@ -37,6 +40,7 @@ export default function VratKathaReaderScreen({ navigation, route }: Props) {
   const total = sections.length;
   const [currentIndex, setCurrentIndex] = useState(0);
   const listRef = useRef<FlatList<KathaContentSection>>(null);
+  const { share, busy: shareBusy } = useShare();
 
   // Prose reader: each section's `bodyHi`/`bodyEn` paragraphs are the spoken text
   // (the adapter's prose branch), one page per section, no offset. Namespaced so a
@@ -99,6 +103,16 @@ export default function VratKathaReaderScreen({ navigation, route }: Props) {
           <>
             <ReadingProgressBar current={currentIndex + 1} total={total} />
             <View style={styles.toggleRow}>
+              {/* Share pinned left, read-aloud pinned right, so the toggle stays
+                  centred (design.md §56.2, §39.4). */}
+              <View style={styles.shareSlot}>
+                <ShareButton
+                  onPress={() => void share(vratKathaShareable(katha, currentIndex), lang)}
+                  busy={shareBusy}
+                  accessibilityLabel="Share katha"
+                  accessibilityHint="Opens share options for this part or the whole katha"
+                />
+              </View>
               <LanguageToggle />
               {/* Pinned right so the toggle stays centred (design.md §56.2). */}
               <View style={styles.readAloudSlot}>
@@ -156,6 +170,7 @@ const styles = StyleSheet.create({
   counter: { includeFontPadding: false, minWidth: 44, textAlign: 'right', fontStyle: 'italic' },
   toggleRow: { flexDirection: 'row', justifyContent: 'center', paddingTop: 6, paddingBottom: 6, alignItems: 'center' },
   readAloudSlot: { position: 'absolute', right: 16, top: 6, bottom: 6, justifyContent: 'center' },
+  shareSlot: { position: 'absolute', left: 16, top: 6, bottom: 6, justifyContent: 'center' },
   listContainer: { flex: 1 },
   list: { flex: 1 },
   empty: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 },
