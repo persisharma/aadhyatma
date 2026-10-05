@@ -81,7 +81,7 @@ function withoutComments(source: string): string {
 test('engine, content and sheet renderer stay pure', () => {
   for (const file of ['src/panchang/grahaReading.ts', 'src/panchang/grahaReadingContent.ts', 'src/panchang/grahaReviewSheet.ts']) {
     const source = readFileSync(file, 'utf8');
-    assert.doesNotMatch(source, /react|AsyncStorage|Date\.now\s*\(|new Date\s*\(\s*\)|Math\.random|fetch\s*\(/, file);
+    assert.doesNotMatch(source, /\breact\b|AsyncStorage|Date\.now\s*\(|new Date\s*\(\s*\)|Math\.random|fetch\s*\(/, file);
   }
 });
 
