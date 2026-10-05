@@ -14,6 +14,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { categories } from '@/data/categories';
 import CategoryCard from '@/components/CategoryCard';
+import KidsStoriesHomeCard from '@/components/KidsStoriesHomeCard';
 import CategoryIcon, { type CategoryIconKey } from '@/components/CategoryIcon';
 import FeatureCard, { type FeatureSpotlight } from '@/components/FeatureCard';
 import LotusMark from '@/components/LotusMark';
@@ -452,6 +453,26 @@ export default function HomeScreen({ navigation }: Props) {
               </View>
             ))}
           </View>
+
+          <Text
+            style={[
+              styles.sectionLabel,
+              styles.sectionLabelSpaced,
+              {
+                color: colors.inkMuted,
+                fontSize: typography.sectionLabel.fontSize,
+                fontFamily: typography.sectionLabel.fontFamily,
+                letterSpacing: typography.sectionLabel.letterSpacing,
+              },
+            ]}
+          >
+            STORIES FOR KIDS
+          </Text>
+          <KidsStoriesHomeCard
+            onPress={() => activateTile(() => navigation.navigate('KidsStoryLibrary'))}
+            onPressIn={() => beginTilePress(() => navigation.navigate('KidsStoryLibrary'))}
+            onPressOut={finishTilePress}
+          />
 
           <Text
             style={[

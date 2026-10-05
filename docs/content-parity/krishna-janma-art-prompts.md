@@ -9,7 +9,9 @@ For ChatGPT image generation. Prototype layout: `docs/katha-comic-prototype.html
 3. Ask for **4:5 portrait, 1024×1280**, and repeat "no text, no letters" every time. The model likes to add captions, and the book already has them.
 4. Use `docs/assets/krishna-janma/kj-08.webp` as the approved style reference for every page, alongside the character sheet. Match its muted palette, fine linework and face treatment; do not copy its river setting onto other scenes. The Yamuna should remain powerful and flooded despite the quiet colours.
 5. Keep all critical figures inside the frame. Captions are rendered separately by the prototype; speech-bubble pages must retain the specified clear areas. Do not generate screenshot controls, usernames or other UI.
-6. The completed illustrations are bundled as `kj-01.webp` … `kj-10.webp` in `mobile/assets/kids-stories/` and `docs/assets/krishna-janma/`, in page order.
+6. The completed illustrations are bundled as `kj-01.webp` … `kj-11.webp` in `mobile/assets/kids-stories/` and `docs/assets/krishna-janma/`. `kj-11` is the closing Gokul scene; the earlier ten files keep their established meanings.
+
+Reusable guidance for future stories: [`kids-stories-art-style.md`](kids-stories-art-style.md).
 
 **Style block (paste at the end of every prompt):**
 
@@ -51,3 +53,5 @@ For ChatGPT image generation. Prototype layout: `docs/katha-comic-prototype.html
 **kj-10 · The Devi** (keep the bottom-left quarter clear)
 > Inside the prison, the baby girl has risen into the air as the eight-armed Devi, radiant, in a muted terracotta sari with a gold crown, holding a trident, sword, discus, conch, bow, lotus, bell and shield, with a halo behind her. Below, Kansa looks up surprised and humbled, his sword lowered. [STYLE BLOCK]
 
+**kj-11 · Safe in Gokul** (closing page)
+> Inside Yashoda's safe rural Gokul cottage at early dawn, she sits awake on a simple woven cot and tenderly cradles sleeping newborn Krishna directly in her lap. Match Yashoda and Krishna's appearance from `kj-09`; the doorway shows a quiet village and a kadamba tree. Let warm lamplight and the first dawn light carry the sense of hope. Only Yashoda and Krishna appear. No prison, chains, father, basket, river or other baby. Keep their faces in the upper central area and fade the lower fifth to blank parchment for cropping. [STYLE BLOCK]

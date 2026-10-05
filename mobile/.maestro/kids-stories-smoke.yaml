@@ -1,12 +1,16 @@
-# Illustrated story reader: route, swipe-only paging (Gita-style), caption scrolling, return.
+# Home → deity → story reader; swipe-only paging and return to the Krishna shelf.
 appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
-- tapOn: { id: "tab-more" }
 - scrollUntilVisible:
-    element: { id: "kids-stories-door" }
+    element: { id: "home-kids-stories-card" }
     centerElement: true
-- tapOn: { id: "kids-stories-door" }
+- tapOn: { id: "home-kids-stories-card" }
+- assertVisible: { id: "kids-story-deity-krishna" }
+- assertVisible: { id: "kids-story-deity-ganesha" }
+- assertVisible: { id: "kids-story-deity-hanuman" }
+- tapOn: { id: "kids-story-deity-krishna" }
+- assertVisible: { id: "kids-story-planned-kaliya-nag" }
 - tapOn: { id: "kids-story-krishna-janma" }
 - assertVisible: { id: "story-pager" }
 - assertVisible: "1 / 16"
@@ -27,5 +31,14 @@ appId: com.prashantsharma.vedansh
     duration: 600
 - assertVisible: "2 / 16"
 - assertVisible: { id: "story-caption" }
+- repeat:
+    times: 14
+    commands:
+      - swipe:
+          start: 85%, 45%
+          end: 15%, 45%
+          duration: 300
+- assertVisible: "16 / 16"
+- assertVisible: { id: "story-page-safe" }
 - tapOn: "Back"
 - assertVisible: { id: "kids-story-krishna-janma" }
