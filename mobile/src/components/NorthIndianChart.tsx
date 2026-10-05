@@ -48,7 +48,7 @@ export function buildChartAccessibilityLabel(chart: KundaliChart): string {
       .filter((position) => position.house === index + 1)
       .map((position) => GRAHA_NAMES_EN[position.graha])
       .join(', ');
-    return `House ${index + 1}, ${RASHI_NAMES_EN[rashiIndex]}${grahas ? `: ${grahas}` : ''}`;
+    return `House ${index + 1}${index === 0 ? ' (Lagna)' : ''}, ${RASHI_NAMES_EN[rashiIndex]}${grahas ? `: ${grahas}` : ''}`;
   });
   return `North Indian Kundali. ${houses.join('. ')}.`;
 }
@@ -66,6 +66,9 @@ export default function NorthIndianChart({ chart, size = 300 }: Props) {
     >
       <Svg width={size} height={size} viewBox="0 0 300 300">
         <Rect x="7" y="7" width="286" height="286" fill={colors.parchmentSoft} stroke={colors.saffronDeep} strokeWidth="2" />
+        {/* House 1 — the Lagna — is tinted: the box numbers are rashis, so
+            without it readers hunt for a "1" and land in the wrong house. */}
+        <Polygon points="150,7 221.5,78.5 150,150 78.5,78.5" fill={colors.saffronTint} />
         <Polygon points="150,7 293,150 150,293 7,150" fill="none" stroke={colors.saffronDeep} strokeWidth="1.5" />
         <Line x1="7" y1="7" x2="150" y2="150" stroke={colors.saffronDeep} strokeWidth="1.2" />
         <Line x1="293" y1="7" x2="150" y2="150" stroke={colors.saffronDeep} strokeWidth="1.2" />

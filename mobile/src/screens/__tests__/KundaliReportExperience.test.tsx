@@ -112,6 +112,8 @@ test('saved report renders every section in order with disclaimers at both ends'
     'Lagna',
     'Inner rhythm',
     'What the placements say together',
+    // Development build (__DEV__): the draft graha cards render (RULEBOOK §14.7).
+    'Your nine grahas, one by one',
     'Career and work',
     'Relationships',
     'Resources and gains',
@@ -127,8 +129,9 @@ test('saved report renders every section in order with disclaimers at both ends'
   assert.ok(text.includes('Ujjain'));
   assert.ok(text.includes('Sade Sati'));
   assert.ok(text.includes('(current)'));
-  // Mangal Dosha stays display-gated off (PRD-20 §4).
-  assert.ok(!text.includes('Mangal'));
+  // Mangal Dosha stays display-gated off (PRD-20 §4). "Mars (Mangal)" names
+  // the graha on its card; the dosha copy itself must never render.
+  assert.doesNotMatch(text, /Mangal (yoga|houses|Dosha)|मांगलिक/);
   assert.ok(!/kaal\s*sarp/i.test(text));
 
   // PRD-43: the top band is the dated as-of stamp; the full disclaimer
@@ -206,7 +209,10 @@ test('one Share button offers both the card and the warned full-text export', ()
   assert.ok(message.includes('## Vimshottari Dasha — a dated life view'));
   assert.ok(message.includes('Basis: '));
   assert.ok(message.includes('```json'));
-  assert.ok(message.includes('"reportVersion":2'));
+  assert.ok(message.includes('"reportVersion":3'));
+  // The graha cards print one by one, each with its own basis.
+  assert.ok(message.includes('## Your nine grahas, one by one'));
+  assert.ok(message.includes('### Jupiter (Guru) — '));
   assert.ok(message.includes('Considering a job switch'));
   assert.ok(message.includes('Machine-readable question context'));
   assert.ok(text.includes('selected question and guidance'));
@@ -235,5 +241,59 @@ test('sharing the summary goes through the warned Kundali path', () => {
     textOf(tree).includes('include the chart name, birth date, time, and city'),
     'the Kundali-style birth-details warning is visible'
   );
+  act(() => tree.unmount());
+});
+
+test('graha cards open one at a time into gives, care, upay and an on-demand basis (RULEBOOK §14.7)', () => {
+  mockKundaliState = {
+    profile: { name: 'Aarav', date: '1992-08-14', time: '05:42', cityId: 'ujjain' },
+    chart: savedChart,
+    hydrated: true,
+    loadState: 'saved',
+  };
+  mockNavigation.navigate.mockClear();
+  const tree = render(
+    <KundaliReportScreen
+      navigation={mockNavigation as any}
+      route={{ key: 'KundaliReport-test', name: 'KundaliReport' } as any}
+    />
+  );
+  // Nine rows, all collapsed: name, house and label only.
+  const rows = tree.root.findAll((node) => typeof node.props.testID === 'string' && node.props.testID.startsWith('graha-row-') && typeof node.props.onPress === 'function');
+  assert.equal(rows.length, 9);
+  assert.equal(tree.root.findAll((node) => typeof node.props.testID === 'string' && node.props.testID.startsWith('graha-card-')).length, 0);
+  const collapsed = textOf(tree);
+  assert.ok(collapsed.includes('Tap a graha to open its full reading.'));
+  // The intro is bullets, not paragraphs (review note, 3 Oct 2026).
+  assert.ok(collapsed.includes('Each graha (planet) looks after one part of life'));
+  // Empty houses follow the rows, each read through its lord (review note, 4 Oct 2026).
+  assert.ok(collapsed.includes('Empty houses'));
+  assert.ok(collapsed.includes('Being empty does not make a house weak — its matters follow its lord'));
+  assert.match(collapsed, /house \([^)]+\) — ruled by (?:the )?[A-Z]/);
+  assert.match(collapsed, /Helps you|Mixed|Needs care/);
+  assert.doesNotMatch(collapsed, /What it gives/);
+
+  act(() => {
+    tree.root.findAll((node) => node.props.testID === 'graha-row-jupiter' && typeof node.props.onPress === 'function')[0].props.onPress();
+  });
+  const open = textOf(tree);
+  for (const heading of ['About this graha', 'Friends and enemies', 'This house’s karaka (guardian)', 'Why “', 'What it gives', 'Where to take care', 'Upay · ', 'Day', 'Daan', 'Seva', 'Mantra']) {
+    assert.ok(open.includes(heading), `card shows ${heading}`);
+  }
+  assert.ok(open.includes('Thursday'));
+  assert.ok(open.includes('Om Graam Greem Graum Sah Gurave Namah'));
+  assert.doesNotMatch(open, /\b[123]th (?:house|bhava)/, 'ordinal grammar');
+  // The basis is one tap away, never in the way.
+  assert.equal(tree.root.findAll((node) => node.props.testID === 'basis-graha-jupiter').length, 0);
+  act(() => {
+    tree.root.findAll((node) => node.props.testID === 'graha-basis-toggle-jupiter' && typeof node.props.onPress === 'function')[0].props.onPress();
+  });
+  assert.ok(tree.root.findAll((node) => node.props.testID === 'basis-graha-jupiter').length > 0);
+
+  // The paath opens the shipped library text.
+  act(() => {
+    tree.root.findAll((node) => node.props.accessibilityLabel === 'Open Vishnu Sahasranama Excerpt practice' && typeof node.props.onPress === 'function')[0].props.onPress();
+  });
+  assert.equal(mockNavigation.navigate.mock.calls.at(-1)?.[0], 'HomeTab');
   act(() => tree.unmount());
 });
