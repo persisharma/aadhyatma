@@ -296,16 +296,6 @@ export default function MoreScreen({ navigation }: Props) {
                   <Text style={[styles.chevron, { color: colors.gold }]}>›</Text>
                 </Pressable>
 
-                <SettingsRow
-                  testID="kids-stories-door"
-                  icon="॥"
-                  iconBg={colors.gold}
-                  label={pick(lang, { hi: 'बच्चों की चित्र-कथाएँ', en: 'Stories for Kids', gu: 'બાળકોની ચિત્રવાર્તાઓ', kn: 'ಮಕ್ಕಳ ಚಿತ್ರಕಥೆಗಳು' })}
-                  labelFontFamily={labelFont}
-                  onPress={() => navigation.navigate('KidsStoryLibrary')}
-                  accessibilityLabel={pick(lang, { hi: 'बच्चों की चित्र-कथाएँ', en: 'Stories for Kids', gu: 'બાળકોની ચિત્રવાર્તાઓ', kn: 'ಮಕ್ಕಳ ಚಿತ್ರಕಥೆಗಳು' })}
-                />
-
                 {/* Row order = importance (design.md §37): the daily-practice loop first
                     (reminders → japam → saved verses), then the family & lineage records
                     (kuldev → ancestors → birthdays), then the occasional home tool. */}

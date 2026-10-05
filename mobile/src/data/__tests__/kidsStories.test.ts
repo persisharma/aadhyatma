@@ -2,7 +2,18 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath, URL } from 'node:url';
-import { kidsStories, getKidsStory, storyPageIndex, storyText } from '../kidsStories';
+import { kidsStories, getKidsStory, storyDeities, storiesForDeity, plannedStories, storyPageIndex, storyText } from '../kidsStories';
+
+test('deity shelves contain only published stories, with future titles kept separate', () => {
+  assert.deepEqual(storyDeities.map(deity => deity.id), ['krishna', 'ganesha', 'hanuman']);
+  for (const story of kidsStories) {
+    assert.ok(storyDeities.some(deity => deity.id === story.deityId), `${story.id}: unknown deity`);
+  }
+  assert.deepEqual(storiesForDeity('krishna').map(story => story.id), ['krishna-janma']);
+  assert.deepEqual(storiesForDeity('ganesha'), []);
+  assert.deepEqual(storiesForDeity('hanuman'), []);
+  for (const planned of plannedStories) assert.equal(getKidsStory(planned.id), undefined);
+});
 
 test('stories have unique stable pages and authored text in all four languages', () => {
   assert.equal(new Set(kidsStories.map(story => story.id)).size, kidsStories.length);

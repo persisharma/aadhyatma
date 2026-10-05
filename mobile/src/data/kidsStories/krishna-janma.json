@@ -1,5 +1,6 @@
 {
   "id": "krishna-janma",
+  "deityId": "krishna",
   "coverArt": "cover",
   "ageMin": 6,
   "title": {
@@ -284,7 +285,7 @@
     },
     {
       "id": "safe",
-      "art": "cover",
+      "art": "safe",
       "source": "10.4.14",
       "title": {
         "hi": "गोकुल में सुरक्षित",
