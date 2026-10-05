@@ -14,7 +14,6 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { categories } from '@/data/categories';
 import CategoryCard from '@/components/CategoryCard';
-import KidsStoriesHomeCard from '@/components/KidsStoriesHomeCard';
 import CategoryIcon, { type CategoryIconKey } from '@/components/CategoryIcon';
 import FeatureCard, { type FeatureSpotlight } from '@/components/FeatureCard';
 import LotusMark from '@/components/LotusMark';
@@ -34,6 +33,10 @@ import { useTilePressController, TilePressProvider } from '@/contexts/TilePressC
 import { shuffleBySeed } from '@/utils/shuffleBySeed';
 import { moreTabTarget, panchangTabTarget } from '@/navigation/entryRoutes';
 import { useTourTarget, scrollNodeIntoView } from '@/components/tour/tourTargets';
+
+// The illustrated card sits below the category grid. Load its art and copy in
+// a separate chunk so the Home launch graph stays within its byte budget.
+const KidsStoriesHomeCard = React.lazy(() => import('@/components/KidsStoriesHomeCard'));
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>;
 
@@ -468,11 +471,13 @@ export default function HomeScreen({ navigation }: Props) {
           >
             STORIES FOR KIDS
           </Text>
-          <KidsStoriesHomeCard
-            onPress={() => activateTile(() => navigation.navigate('KidsStoryLibrary'))}
-            onPressIn={() => beginTilePress(() => navigation.navigate('KidsStoryLibrary'))}
-            onPressOut={finishTilePress}
-          />
+          <React.Suspense fallback={<View style={{ height: 138 }} />}>
+            <KidsStoriesHomeCard
+              onPress={() => activateTile(() => navigation.navigate('KidsStoryLibrary'))}
+              onPressIn={() => beginTilePress(() => navigation.navigate('KidsStoryLibrary'))}
+              onPressOut={finishTilePress}
+            />
+          </React.Suspense>
 
           <Text
             style={[
