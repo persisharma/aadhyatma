@@ -1,6 +1,6 @@
 # Krishna Janma picture book — image prompts
 
-For ChatGPT image generation. Prototype layout: `docs/katha-comic-prototype.html`.
+For ChatGPT image generation. Current sixteen-scene reader: `docs/kids-stories-prototype.html`. Earlier comic layout: `docs/katha-comic-prototype.html`.
 
 ## How to keep characters consistent
 
@@ -9,7 +9,9 @@ For ChatGPT image generation. Prototype layout: `docs/katha-comic-prototype.html
 3. Ask for **4:5 portrait, 1024×1280**, and repeat "no text, no letters" every time. The model likes to add captions, and the book already has them.
 4. Use `docs/assets/krishna-janma/kj-08.webp` as the approved style reference for every page, alongside the character sheet. Match its muted palette, fine linework and face treatment; do not copy its river setting onto other scenes. The Yamuna should remain powerful and flooded despite the quiet colours.
 5. Keep all critical figures inside the frame. Captions are rendered separately by the prototype; speech-bubble pages must retain the specified clear areas. Do not generate screenshot controls, usernames or other UI.
-6. The completed illustrations are bundled as `kj-01.webp` … `kj-10.webp` in `mobile/assets/kids-stories/` and `docs/assets/krishna-janma/`, in page order.
+6. The completed illustrations are bundled as `kj-01.webp` … `kj-17.webp` in `mobile/assets/kids-stories/` and `docs/assets/krishna-janma/`. `kj-11` is the closing Gokul scene; the earlier ten files keep their established meanings. `kj-12`–`kj-17` add the six distinct scenes below. `kj-03` has corrected left/right palms and `kj-10` has exactly eight connected arms, with no detached hand or duplicate weapon.
+
+Reusable guidance for future stories: [`kids-stories-art-style.md`](kids-stories-art-style.md).
 
 **Style block (paste at the end of every prompt):**
 
@@ -51,3 +53,23 @@ For ChatGPT image generation. Prototype layout: `docs/katha-comic-prototype.html
 **kj-10 · The Devi** (keep the bottom-left quarter clear)
 > Inside the prison, the baby girl has risen into the air as the eight-armed Devi, radiant, in a muted terracotta sari with a gold crown, holding a trident, sword, discus, conch, bow, lotus, bell and shield, with a halo behind her. Below, Kansa looks up surprised and humbled, his sword lowered. [STYLE BLOCK]
 
+**kj-11 · Safe in Gokul** (closing page)
+> Inside Yashoda's safe rural Gokul cottage at early dawn, she sits awake on a simple woven cot and tenderly cradles sleeping newborn Krishna directly in her lap. Match Yashoda and Krishna's appearance from `kj-09`; the doorway shows a quiet village and a kadamba tree. Let warm lamplight and the first dawn light carry the sense of hope. Only Yashoda and Krishna appear. No prison, chains, father, basket, river or other baby. Keep their faces in the upper central area and fade the lower fifth to blank parchment for cropping. [STYLE BLOCK]
+
+**kj-12 · Wedding**
+> Wedding procession before the prophecy. Newly married Devaki and Vasudeva sit together wearing garlands in a decorated chariot while smiling Kansa drives the white horse. Mathura's flower-decorated streets and joyful onlookers establish the celebration. No sword, prison, baby or divine warning. [STYLE BLOCK]
+
+**kj-13 · Kansa's threat**
+> After the prophecy, Kansa seizes Devaki's hair and raises his sword without depicting injury. Vasudeva raises two open palms, a plausible left/right pair, calmly asking him to stop. Devaki is frightened. Match the wedding costumes and faces. [STYLE BLOCK]
+
+**kj-14 · Imprisoned**
+> Devaki and Vasudeva sit together inside their newly locked stone cell, in wrist chains, sorrowful but supporting each other. The barred door and faint palace guard establish imprisonment. No lamps symbolising children, orb or newborn. [STYLE BLOCK]
+
+**kj-15 · Balarama**
+> A gentle symbolic golden light travels from Devaki in the prison to Rohini resting in a safe rural Gokul cottage. Suggest the seventh child's divine transfer without depicting physical birth or a visible newborn. Distinguish the two places and women clearly. [STYLE BLOCK]
+
+**kj-16 · Devaki's prayer**
+> In the prison, Devaki and Vasudeva kneel with folded hands beside tiny sleeping Krishna after the Lord gives his instruction and takes a newborn's form. Krishna lies in a woven basket, wrapped in pale yellow cloth, with a gentle golden glow. No standing four-armed form or extra baby. [STYLE BLOCK]
+
+**kj-17 · Vasudeva returns**
+> Vasudeva returns to the prison with Yashoda's sleeping newborn girl wrapped in pink, rejoining waiting Devaki. Closed bars, renewed chains and a sleeping guard establish the return. No Krishna in the basket, Yashoda or village cottage. [STYLE BLOCK]

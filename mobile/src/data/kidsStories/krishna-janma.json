@@ -1,5 +1,6 @@
 {
   "id": "krishna-janma",
+  "deityId": "krishna",
   "coverArt": "cover",
   "ageMin": 6,
   "title": {
@@ -29,7 +30,7 @@
   "pages": [
     {
       "id": "wedding",
-      "art": "chariot",
+      "art": "wedding",
       "source": "10.1.24–28",
       "title": {
         "hi": "विवाह का उत्सव",
@@ -63,7 +64,7 @@
     },
     {
       "id": "threat",
-      "art": "sword",
+      "art": "threat",
       "source": "10.1.35–44",
       "title": {
         "hi": "कंस का क्रोध",
@@ -97,7 +98,7 @@
     },
     {
       "id": "imprisoned",
-      "art": "prison",
+      "art": "imprisoned",
       "source": "10.1.65–69",
       "title": {
         "hi": "कारागार में बंदी",
@@ -131,7 +132,7 @@
     },
     {
       "id": "balarama",
-      "art": "prison",
+      "art": "balarama",
       "source": "10.2.6–13",
       "title": {
         "hi": "सातवाँ शिशु — बलराम",
@@ -182,7 +183,7 @@
     },
     {
       "id": "prayer",
-      "art": "vishnu",
+      "art": "prayer",
       "source": "10.3.14–46",
       "title": {
         "hi": "प्रार्थना और आदेश",
@@ -250,7 +251,7 @@
     },
     {
       "id": "return",
-      "art": "gokul",
+      "art": "return",
       "source": "10.3.52–53",
       "title": {
         "hi": "वापस कारागार",
@@ -284,7 +285,7 @@
     },
     {
       "id": "safe",
-      "art": "cover",
+      "art": "safe",
       "source": "10.4.14",
       "title": {
         "hi": "गोकुल में सुरक्षित",

@@ -3,6 +3,7 @@ import type { NavigatorScreenParams } from '@react-navigation/native';
 import type { ContentCategory, Deity } from '@/data/texts';
 import type { PurposeId } from '@/data/purposes';
 import type { EntityType as AskEntityType } from '@/ask/types';
+import type { StoryDeityId } from '@/data/kidsStories';
 
 export type TabParamList = {
   // Nested-navigator params so cross-tab jumps (e.g. Pitru Smaran's गीता पाठ
@@ -58,6 +59,9 @@ export type GharVastuStackParamList = {
 
 export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & {
   Home: undefined;
+  KidsStoryLibrary: undefined;
+  KidsStoryDeity: { deityId: StoryDeityId };
+  KidsStoryReader: { storyId: string; pageId?: string };
   /**
    * जिज्ञासा (PRD-41). `seed` is ask-from-context: the surface the user came
    * from names an entity so "iska bhog kya hai" resolves against it.
@@ -149,8 +153,6 @@ export type DaanStackParamList = {
 
 export type MoreStackParamList = VidhiStackParamList & DaanStackParamList & GharVastuStackParamList & {
   MoreHome: undefined;
-  KidsStoryLibrary: undefined;
-  KidsStoryReader: { storyId: string; pageId?: string };
   Wishlist: undefined;
   Profile: undefined;
   Reminders: undefined;

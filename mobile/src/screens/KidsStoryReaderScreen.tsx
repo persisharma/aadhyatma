@@ -11,9 +11,9 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { useTheme } from '@/theme/ThemeContext';
 import { meaningToken, titleFontByLang } from '@/utils/langType';
 import { pick } from '@/utils/localize';
-import type { MoreStackParamList } from '@/navigation/types';
+import type { HomeStackParamList } from '@/navigation/types';
 
-export default function KidsStoryReaderScreen({ navigation, route }: NativeStackScreenProps<MoreStackParamList, 'KidsStoryReader'>) {
+export default function KidsStoryReaderScreen({ navigation, route }: NativeStackScreenProps<HomeStackParamList, 'KidsStoryReader'>) {
   const { lang } = useGitaLanguage();
   const { colors, typography, spacing } = useTheme();
   const story = getKidsStory(route.params.storyId);
@@ -108,4 +108,3 @@ export default function KidsStoryReaderScreen({ navigation, route }: NativeStack
     </SafeAreaView>
   );
 }
-

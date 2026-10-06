@@ -22,6 +22,8 @@ const CategoryListScreen = lazyScreen('CategoryList', 2, () => import('@/screens
 // आरोग्य on PurposeList) pushes in place and Back retraces the journey.
 const DaanPunyaScreen = lazyScreen('DaanPunya', 2, () => import('@/screens/DaanPunyaScreen'));
 const DeityIndexScreen = lazyScreen('DeityIndex', 2, () => import('@/screens/DeityIndexScreen'));
+const KidsStoryLibraryScreen = lazyScreen('KidsStoryLibrary', 2, () => import('@/screens/KidsStoryLibraryScreen'));
+const KidsStoryDeityScreen = lazyScreen('KidsStoryDeity', 3, () => import('@/screens/KidsStoryDeityScreen'));
 const RoutineTodayScreen = lazyScreen('RoutineToday', 2, () => import('@/screens/RoutineTodayScreen'));
 const SadhanaProgramListScreen = lazyScreen('SadhanaPrograms', 2, () => import('@/screens/SadhanaProgramListScreen'));
 const SearchScreen = lazyScreen('Search', 2, () => import('@/screens/SearchScreen'));
@@ -53,6 +55,7 @@ const HanumanAshtakChaptersScreen = lazyScreen('HanumanAshtakChapters', 3, () =>
 const HanumanAshtakReaderScreen = lazyScreen('HanumanAshtakReader', 3, () => import('@/screens/HanumanAshtakReaderScreen'));
 const JapamCounterScreen = lazyScreen('JapamCounter', 3, () => import('@/screens/JapamCounterScreen'));
 const KavachamReaderScreen = lazyScreen('KavachamReader', 3, () => import('@/screens/KavachamReaderScreen'));
+const KidsStoryReaderScreen = lazyScreen('KidsStoryReader', 4, () => import('@/screens/KidsStoryReaderScreen'));
 const KrishnaStotramChaptersScreen = lazyScreen('KrishnaStotramChapters', 3, () => import('@/screens/KrishnaStotramChaptersScreen'));
 const KrishnaStotramReaderScreen = lazyScreen('KrishnaStotramReader', 3, () => import('@/screens/KrishnaStotramReaderScreen'));
 const PurposeListScreen = lazyScreen('PurposeList', 3, () => import('@/screens/PurposeListScreen'));
@@ -107,6 +110,9 @@ export default function HomeStackNavigator() {
         options={{ animation: 'fade' }}
       />
       <Stack.Screen name="CategoryList" component={CategoryListScreen} />
+      <Stack.Screen name="KidsStoryLibrary" component={KidsStoryLibraryScreen} />
+      <Stack.Screen name="KidsStoryDeity" component={KidsStoryDeityScreen} />
+      <Stack.Screen name="KidsStoryReader" component={KidsStoryReaderScreen} />
       <Stack.Screen name="DeityList" component={DeityListScreen} />
       <Stack.Screen name="DeityIndex" component={DeityIndexScreen} />
       <Stack.Screen name="DeityDetail" component={DeityDetailScreen} />

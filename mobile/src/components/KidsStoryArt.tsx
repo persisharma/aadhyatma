@@ -14,6 +14,13 @@ const images: Record<string, ImageSourcePropType> = {
   yamuna: require('../../assets/kids-stories/kj-08.webp'),
   gokul: require('../../assets/kids-stories/kj-09.webp'),
   devi: require('../../assets/kids-stories/kj-10.webp'),
+  safe: require('../../assets/kids-stories/kj-11.webp'),
+  wedding: require('../../assets/kids-stories/kj-12.webp'),
+  threat: require('../../assets/kids-stories/kj-13.webp'),
+  imprisoned: require('../../assets/kids-stories/kj-14.webp'),
+  balarama: require('../../assets/kids-stories/kj-15.webp'),
+  prayer: require('../../assets/kids-stories/kj-16.webp'),
+  return: require('../../assets/kids-stories/kj-17.webp'),
 };
 // The art fills whatever vertical space the page layout leaves for it (`flex: 1`
 // from the parent), so the caption below always stays on screen. The image is
