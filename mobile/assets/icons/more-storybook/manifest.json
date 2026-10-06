@@ -276,6 +276,24 @@
         472
       ],
       "prompt": "Create ONE production utility icon asset on a truly transparent RGBA background. Reference role: the supplied approved Storybook miniatures board establishes the exact visual family; extend its lower-right painted settings icons into this new subject. Match its matte earthy burnt ochre, muted gold/brass, warm brown outlines, subtle hand-painted shading and delicate grain. Simple bold shapes must read at 25 logical pixels. Center the visible bounding box exactly in a square canvas; generous equal transparent margins, subject occupies about 78% of canvas in its longest dimension. Flat front-facing miniature, no surrounding frame or tile unless part of the specified subject, no badge, no ground/cast shadow, no scenery, no checkerboard, no captions. Never shiny yellow, vivid orange, glossy 3D or thin generic outline UI glyphs. Subject: A single thick burnt-ochre counterclockwise return arrow curving nearly one full circle with an obvious broad triangular arrowhead at the upper left pointing left. Hand-painted matte brass-ochre body, warm-brown contour, subtly shaded. No surrounding tile or medallion."
+    },
+    {
+      "name": "question",
+      "file": "question.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 41602,
+      "sha256": "4558de27e363482afc94d488a692c424e520db5c8cd9a9706bb5cd2617ea3e94",
+      "masterSha256": "fc6d6424043f434ae2167aac66a2dbcfce9a8e5309edb626fe9b6fcd7a9d946e",
+      "source": "More info.png painted-circle reference, symbol edited to question for Discover Ask Vedansh",
+      "referenceSha256": "743d6258eb54f7e1c6df06548ba067a24fe47875ce4a3bc8710dadd376a590a2",
+      "visibleBounds": [
+        40,
+        40,
+        471,
+        472
+      ],
+      "prompt": "Edit the supplied transparent painted information icon to create ONE matching Ask/Question icon asset for this same native mobile app. The supplied PNG is the exact style and frame reference. Keep its circular brass/ochre rim, cream parchment disc, warm brown hand-painted outline, matte watercolor grain, frontal composition, lighting and colors essentially identical. Replace ONLY the lowercase information letter i and its separate upper dot with one centered bold warm burnt-ochre question mark (?) with a separate round dot beneath it. The question mark is the sole symbol: no word, no caption, no other letters or numbers. Center its visible shape evenly inside the disc; the punctuation should read cleanly at 30 logical pixels. Preserve the round signboard at a centered square canvas with equal transparent margins and full rim inside the canvas. Genuine transparent RGBA outside the disc, no tile, scenery, cast shadow, glow, glossy metal, checkerboard or watermark. This is an individual shipped icon, not a UI mockup. Maintain the exact muted warm pigment family and restrained painterly texture of the reference."
     }
   ]
 }

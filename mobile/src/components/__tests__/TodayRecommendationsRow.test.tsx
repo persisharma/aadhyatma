@@ -94,8 +94,8 @@ jest.mock('@/components/FeatureCard', () => {
 // the environment down — where the engine's lazy `require()` of the bundled
 // observance table fails the whole run.
 const trees: TestRenderer.ReactTestRenderer[] = [];
-function mountRow(): TestRenderer.ReactTestRenderer {
-  const tree = TestRenderer.create(<TodayRecommendationsRow />);
+function mountRow(horizontalGutter?: number): TestRenderer.ReactTestRenderer {
+  const tree = TestRenderer.create(<TodayRecommendationsRow horizontalGutter={horizontalGutter} />);
   trees.push(tree);
   return tree;
 }
@@ -158,12 +158,22 @@ describe('TodayRecommendationsRow', () => {
   });
 
   test('enlarged text widens the recommendation without exceeding the phone gutter', () => {
-    mockDimensions = { width: 375, height: 667, scale: 2, fontScale: 1.64 };
+    mockDimensions = { width: 375, height: 667, scale: 2, fontScale: 3.12 };
     act(() => { mountRow(); });
     for (const card of renderedFeatureCardProps) {
       expect(card.width).toBeGreaterThan(196);
-      expect(card.width).toBeLessThanOrEqual(375 - 48);
+      expect(card.width).toBe(375 - 32);
     }
+  });
+
+  test.each([16, 24])('keeps the full-bleed band and enlarged cards aligned to a %spt page gutter', (gutter) => {
+    mockDimensions = { width: 375, height: 667, scale: 2, fontScale: 3.12 };
+    let tree!: TestRenderer.ReactTestRenderer;
+    act(() => { tree = mountRow(gutter); });
+    const band = tree.root.findByType(ScrollView);
+    expect(StyleSheet.flatten(band.props.style).marginHorizontal).toBe(-gutter);
+    expect(StyleSheet.flatten(band.props.contentContainerStyle).paddingHorizontal).toBe(gutter);
+    expect(renderedFeatureCardProps.every((card) => card.width === 375 - 2 * gutter)).toBe(true);
   });
 
   // A festive reminder lands the user on Home, so the card that its message

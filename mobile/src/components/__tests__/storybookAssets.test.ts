@@ -50,7 +50,7 @@ it('ships More illustrations with transparent, centered bounds and matching hash
   const assets = path.resolve(__dirname, '../../../assets/icons/more-storybook');
   const manifest = JSON.parse(fs.readFileSync(path.join(assets, 'manifest.json'), 'utf8'));
   const registry = fs.readFileSync(path.resolve(__dirname, '../MoreIcon.tsx'), 'utf8');
-  expect(manifest.icons).toHaveLength(16);
+  expect(manifest.icons).toHaveLength(17);
   expect(fs.readdirSync(assets).filter((p) => p.endsWith('.png')).sort()).toEqual(manifest.icons.map((i: { file: string }) => i.file).sort());
   for (const icon of manifest.icons) {
     const bytes = fs.readFileSync(path.join(assets, icon.file));

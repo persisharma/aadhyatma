@@ -6,6 +6,8 @@ describe('Home responsive grid', () => {
   test.each([375, 402, 440])('retains three balanced phone columns at %spt', (width) => {
     const layout = homeLayout(width);
     expect(layout.columns).toBe(3);
+    expect(layout.gridPadding).toBe(16);
+    expect(layout.gridWidth).toBe(width - 32);
     expect(layout.launcherHeight).toBe(72);
     expect(layout.tileWidth * layout.columns + layout.gridGap * (layout.columns - 1)).toBeCloseTo(layout.gridWidth);
   });
@@ -18,6 +20,8 @@ describe('Home responsive grid', () => {
     expect(landscape.tileWidth).toBeGreaterThan(portrait.tileWidth);
     expect(landscape.contentWidth).toBeLessThan(1133);
     for (const layout of [portrait, landscape]) {
+      expect(layout.gridPadding).toBe(16);
+      expect(layout.gridWidth).toBe(layout.contentWidth - 32);
       expect(layout.tileWidth * layout.columns + (layout.columns - 1) * layout.gridGap).toBeCloseTo(layout.gridWidth);
     }
     expect(homeLayout(744)).toEqual(portrait);

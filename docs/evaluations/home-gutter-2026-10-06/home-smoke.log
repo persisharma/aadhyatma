@@ -1,0 +1,33 @@
+WARNING: Final field parent in class maestro.cli.command.TestCommand has been mutated reflectively by class picocli.CommandLine$Model$FieldBinding in unnamed module @41e68d87 (file:/Users/prashant/.maestro/lib/picocli-4.6.3.jar)
+WARNING: Use --enable-final-field-mutation=ALL-UNNAMED to avoid a warning
+WARNING: Mutating final fields will be blocked in a future release unless final field mutation is enabled
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/Users/prashant/.maestro/lib/jansi-2.4.1.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+Running on Vedansh-Upanishad-QA - iOS 26.5 - 5799D1D7-B645-4613-8058-822E63009C0F
+ > Flow home-gutter-smoke
+Launch app "com.prashantsharma.vedansh"... COMPLETED
+Tap on id: tab-home... COMPLETED
+Scrolling UP until ".*Today.s Panchang.*" is visible with speed 40, visibility percentage 100%, timeout 15000 ms, with centering disabled... COMPLETED
+Swiping in DOWN direction in 400 ms... COMPLETED
+Wait for animation to end... COMPLETED
+Take screenshot home-after... COMPLETED
+Tap on "Search verses, sections, and mantras"... COMPLETED
+Assert that "Search input" is visible... COMPLETED
+Tap on "Back"... COMPLETED
+Scrolling DOWN until "Kundali\..*Tap to open\." is visible with speed 40, visibility percentage 100%, timeout 15000 ms, with centering enabled... COMPLETED
+Wait for animation to end... COMPLETED
+Take screenshot grid-after... COMPLETED
+Tap on "Kundali\..*Tap to open\."... COMPLETED
+Assert that "Create Kundali" is visible... COMPLETED
+Tap on id: tab-home... COMPLETED
+Scrolling DOWN until id: home-kids-stories-card is visible with speed 40, visibility percentage 100%, timeout 15000 ms, with centering enabled... COMPLETED
+Wait for animation to end... COMPLETED
+Take screenshot lower-home-after... COMPLETED
+Tap on id: home-kids-stories-card... COMPLETED
+Assert that id: kids-story-deity-krishna is visible... COMPLETED
+Tap on "Back"... COMPLETED
+Scrolling UP until ".*Today.s Panchang.*" is visible with speed 40, visibility percentage 100%, timeout 15000 ms, with centering disabled... COMPLETED
+Swiping in DOWN direction in 400 ms... COMPLETED

@@ -34,7 +34,7 @@ export type FeatureSpotlight = {
   /** Call-to-action label rendered in the bottom pill. */
   ctaHi: string;
   ctaEn: string;
-  /** Icon glyph/vector — wrapped in the icon tile by the card. */
+  /** Decorative feature artwork — wrapped in the icon tile by the card. */
   icon: React.ReactNode;
   /** When true, a saffron "NEW" badge shows at the end of the title row. */
   hasNew?: boolean;
@@ -53,6 +53,7 @@ type Props = {
    * no blurb and no CTA pill. ~56 tall against the default card's ~130.
    */
   compact?: boolean;
+  testID?: string;
 };
 
 export default function FeatureCard({
@@ -62,6 +63,7 @@ export default function FeatureCard({
   onPressIn,
   onPressOut,
   compact = false,
+  testID,
 }: Props) {
   const { colors, radii, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
@@ -137,6 +139,7 @@ export default function FeatureCard({
   if (compact) {
     return (
       <Pressable
+        testID={testID}
         onPress={onPress}
         onPressIn={onPressIn}
         onPressOut={onPressOut}
@@ -184,6 +187,7 @@ export default function FeatureCard({
 
   return (
     <Pressable
+      testID={testID}
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}

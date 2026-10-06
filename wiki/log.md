@@ -330,3 +330,7 @@ Added six distinct scene illustrations for wedding, threat, imprisonment, Balara
 ## [2026-10-06] ingest | More now uses a complete painted settings family: 16 new transparent utility assets plus 3 existing subjects. Fixed 38dp columns align the profile Om, every row icon and label starts; bounded copy and enlarged-text wrapping retain the chevron column. Generation provenance and passing final native Hindi/English before/after evidence are recorded. → concepts/deity-icons.md.
 
 ## [2026-10-06] ingest | All three approved celestial placements are integrated natively: one shared wheel for Home/Panchang, a separate guest-Jyotish seal, and isolated decorative clipping/accessibility. Source/native comparisons, enlarged English, passing native routing, 2,946 tests and controlled 0.275 MB incremental bundle evidence are recorded. → concepts/deity-icons.md.
+
+## [2026-10-06] ingest | Home gutter and Discover icon consistency
+
+Re-verified HomeScreen, homeLayout, TodayRecommendationsRow, FeatureIcon and MoreIcon. Home uses one 16dp gutter, including both full-bleed carousel insets. All nine Discover subjects use centered 32dp painted art from the shared registries; Pitru/Widgets/Daan reuse More’s exact sources. Added the utility question seal (56 painted icons total), documented the font-based HomeWordmark Om exception, and refreshed concepts/deity-icons.md plus the index. Native evidence and size measurement are in docs/evaluations/home-gutter-2026-10-06/.

@@ -26,11 +26,12 @@ import type { HomeStackParamList } from '@/navigation/types';
 
 type Nav = NativeStackNavigationProp<HomeStackParamList>;
 
-export default function TodayRecommendationsRow() {
+export default function TodayRecommendationsRow({ horizontalGutter }: { horizontalGutter?: number } = {}) {
   const { colors, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
   const { width, fontScale } = useWindowDimensions();
-  const cardWidth = fontScale > 1.2 ? Math.min(width - 48, 196 * fontScale) : 196;
+  const gutter = horizontalGutter ?? spacing.lg;
+  const cardWidth = fontScale > 1.2 ? Math.min(width - 2 * gutter, 196 * fontScale) : 196;
   const navigation = useNavigation<Nav>();
   const { beginTilePress, markTileDrag, finishTilePress, activateTile } = useTilePress();
   const todayKey = useTodayKey();
@@ -89,9 +90,9 @@ export default function TodayRecommendationsRow() {
         horizontal
         showsHorizontalScrollIndicator={false}
         decelerationRate="fast"
-        style={{ marginHorizontal: -spacing.xxl }}
+        style={{ marginHorizontal: -gutter }}
         contentContainerStyle={{
-          paddingHorizontal: spacing.xxl,
+          paddingHorizontal: gutter,
           gap: spacing.sm,
           // The compact strip is only ~56pt tall. In a band that thin, a natural
           // (slightly-arced) horizontal flick starts near the band edge and the

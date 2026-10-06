@@ -1,5 +1,5 @@
 import AppIcon from '@/components/AppIcon';
-import StoryIcon from '@/components/StoryIcon';
+import FeatureIcon from '@/components/FeatureIcon';
 import React from 'react';
 import {
   useWindowDimensions,
@@ -18,7 +18,6 @@ import { categories } from '@/data/categories';
 import CategoryCard from '@/components/CategoryCard';
 import CategoryIcon, { type CategoryIconKey } from '@/components/CategoryIcon';
 import FeatureCard, { type FeatureSpotlight } from '@/components/FeatureCard';
-import LotusMark from '@/components/LotusMark';
 import HomeWordmark from '@/components/HomeWordmark';
 import { homeLayout } from '@/utils/homeLayout';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -213,7 +212,7 @@ export default function HomeScreen({ navigation }: Props) {
       descHi: 'अपनी दैनिक साधना चुनें और निरंतरता बनाए रखें।',
       descEn: 'Pick your daily rituals and keep the streak alive.',
       ctaHi: 'शुरू करें', ctaEn: 'Begin',
-      icon: <LotusMark size={28} />,
+      icon: <FeatureIcon name="routine" />,
       onPress: () => navigation.navigate('RoutineToday'),
     },
     {
@@ -222,7 +221,7 @@ export default function HomeScreen({ navigation }: Props) {
       descHi: 'हर दिन एक नया श्लोक चिंतन और भक्ति के लिए।',
       descEn: 'A fresh shloka to reflect on every single day.',
       ctaHi: 'पढ़ें', ctaEn: 'Read',
-      icon: <CategoryIcon iconKey="stotram" />,
+      icon: <FeatureIcon name="daily-bhakti" />,
       onPress: () => rootNav.navigate('DailyBhaktiTab'),
     },
     {
@@ -233,7 +232,7 @@ export default function HomeScreen({ navigation }: Props) {
       descEn: 'Japa · vrat · daan — understand first, then give. Any day.',
       ctaHi: 'खोलें', ctaEn: 'Open',
       hasNew: true,
-      icon: <CategoryIcon iconKey="daan" />,
+      icon: <FeatureIcon name="daan-punya" />,
       onPress: () => navigation.navigate('DaanPunya'),
     },
     // NOTE: no Panchang spotlight here — the Today strip (§48) owns that
@@ -245,7 +244,7 @@ export default function HomeScreen({ navigation }: Props) {
       descHi: '४१-दिन हनुमान चालीसा जैसे तैयार संकल्प लें।',
       descEn: 'Take a prebuilt vow, like the 41-day Hanuman Chalisa.',
       ctaHi: 'संकल्प लें', ctaEn: 'Begin',
-      icon: <StoryIcon name="japam" size={32} />,
+      icon: <FeatureIcon name="sankalp" />,
       onPress: () => navigation.navigate('SadhanaPrograms'),
     },
     {
@@ -258,7 +257,7 @@ export default function HomeScreen({ navigation }: Props) {
       descEn: 'Save a tithi once and know its shraddha date every year.',
       ctaHi: 'स्मरण जोड़ें', ctaEn: 'Set up',
       hasNew: true,
-      icon: <AppIcon name="remembrance" size={28} color={colors.iconInk} weight="duotone" />,
+      icon: <FeatureIcon name="pitru-smaran" />,
       onPress: () => rootNav.navigate('MoreTab', moreTabTarget('PitruSmaranList')),
     },
     {
@@ -274,7 +273,7 @@ export default function HomeScreen({ navigation }: Props) {
       descEn: 'Satyanarayan to Shivaratri — every step, guided in hand.',
       ctaHi: 'विधि देखें', ctaEn: 'Open',
       hasNew: true,
-      icon: <StoryIcon name="vrat" size={32} />,
+      icon: <FeatureIcon name="puja-vidhi" />,
       onPress: () => navigation.navigate('VidhiCatalog'),
     },
     {
@@ -288,7 +287,7 @@ export default function HomeScreen({ navigation }: Props) {
       descEn: "Today's tithi, vrat, bhog, muhurat — answered in one line.",
       ctaHi: 'पूछें', ctaEn: 'Ask',
       hasNew: true,
-      icon: <AppIcon name="question" size={28} weight="duotone" />,
+      icon: <FeatureIcon name="jijnasa" />,
       onPress: () => navigation.navigate('TodayVidhan'),
     },
     {
@@ -297,7 +296,7 @@ export default function HomeScreen({ navigation }: Props) {
       descHi: 'भारत के पवित्र मंदिरों और धामों की खोज करें।',
       descEn: 'Explore sacred temples and dhams across Bharat.',
       ctaHi: 'खोजें', ctaEn: 'Explore',
-      icon: <CategoryIcon iconKey="theerth" />,
+      icon: <FeatureIcon name="theerth" />,
       onPress: () => navigation.navigate('TheerthMap', {}),
     },
     {
@@ -312,7 +311,7 @@ export default function HomeScreen({ navigation }: Props) {
       descEn: "Today's verse, Panchang, and japa on your home screen.",
       ctaHi: 'देखें', ctaEn: 'View',
       hasNew: true,
-      icon: <AppIcon name="widgets" size={28} weight="duotone" />,
+      icon: <FeatureIcon name="home-widgets" />,
       onPress: () => rootNav.navigate('MoreTab', moreTabTarget('WidgetGallery')),
     },
   ];
@@ -378,7 +377,7 @@ export default function HomeScreen({ navigation }: Props) {
 
           <TodayStrip />
 
-          <TodayRecommendationsRow />
+          <TodayRecommendationsRow horizontalGutter={gridPadding} />
 
           {/* Routine banner, inline (not docked) on Home — it sits with the
               Today strip as the "today" cluster, above the library grid, so it
@@ -477,6 +476,7 @@ export default function HomeScreen({ navigation }: Props) {
           </Text>
 
           <ScrollView
+              testID="home-discover-carousel"
               horizontal
               showsHorizontalScrollIndicator={false}
               decelerationRate="fast"
@@ -508,6 +508,7 @@ export default function HomeScreen({ navigation }: Props) {
               {orderedSpotlights.map(({ onPress, ...item }) => (
                 <FeatureCard
                   key={item.key}
+                  testID={`home-discover-${item.key}`}
                   item={item}
                   width={featureWidth}
                   onPress={() => activateTile(onPress)}
