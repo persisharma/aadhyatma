@@ -13,7 +13,7 @@ export default function HomeWordmark() {
 
   const renderMark = () => (
     <View style={[styles.mark, { borderColor: colors.iconAccent }]}>
-      <Text style={[styles.markText, { color: colors.iconAccent, fontFamily: typography.thumb.fontFamily }]}>
+      <Text allowFontScaling={false} style={[styles.markText, { color: colors.iconAccent, fontFamily: typography.thumb.fontFamily }]}>
         ॐ
       </Text>
     </View>
@@ -25,6 +25,7 @@ export default function HomeWordmark() {
         <View style={[styles.rule, { backgroundColor: colors.iconAccent }]} />
         {renderMark()}
         <Text
+          allowFontScaling={false}
           style={[
             styles.title,
             {
@@ -85,6 +86,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     marginTop: 5,
+    textAlign: 'center',
     fontSize: 14,
     fontStyle: 'italic',
     includeFontPadding: false,

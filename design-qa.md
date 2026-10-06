@@ -1,82 +1,62 @@
-# Native Storybook icon design QA
+# Native Storybook icon and sizing QA
 
 **Findings**
 
-No remaining actionable P0/P1/P2 source-fidelity or centering issue in the requested icon integration and refinement scope. The final native grid was compared with the selected source and the original native screens. Earlier source drift, inconsistent centering and floating/text-only NEW treatments are resolved.
+No remaining actionable P0/P1/P2 finding in the implemented sizing recommendations on the tested native states. The approved artwork remains centered at 62.7dp; normal phone tiles remain 72dp. Filled NEW states clear Kundali/Muhurat at enlarged text. Search no longer covers categories. Reader targets are actual 48dp controls. Defined tablet tracks and full-width Daan respond to rotation.
 
-[P3] Generated isolation retains slightly sharper contours and different grain/tiny manuscript marks from the small source board. This is an illustration reconstruction, not a pixel-identical extraction. The focused comparison makes this residual difference visible; no literal reproduction claim is made for the sixteen deity subjects absent from the board.
+[P3] The reconstructed source artwork still has slightly sharper contours and different tiny grain/manuscript marks than the small selected board. This is the previously accepted residual illustration difference; the sixteen deity subjects absent from the board are semantic additions, not literal reproductions. No artwork was regenerated for this follow-up.
 
-**Comparison target and state**
+**Comparison target, state and density**
 
-- Source: `docs/evaluations/storybook-icons-2026-10-06/selected-storybook-reference.png`, selected Option 1, 1448×1086px. The larger labeled category grid is the subject reference; its Sanskar pose differs from the smaller phone vignette. Exact crop coordinates and source hash are in the asset manifest.
-- Original structure: `original-home-window.png` and `original-more-window.png`, 784×1736px simulator window captures. Layout follows the existing app; the board supplies artwork and color direction.
-- Current implementation: `screenshots/home-native.png`, `screenshots/home-grid-native.png`, and the other native route captures under the same evidence directory. Actual native captures are 1206×2622px = 402×874dp at 3× density.
-- Simulator: Vedansh-Upanishad-QA, iOS 26.5; standalone Release app `com.prashantsharma.vedansh`, version 1.4.9 / build 69. Hindi, light theme, visible NEW states, reader verse 1, bookmark state restored. App is left on the category grid so the refinement is visible.
-- Original window content is cropped at `(47,205,739,1705)` and downsampled to 402px width. Before/after comparisons use body rows 52–750dp to exclude simulator cutout/bezel differences. Native status-bar color, device mask and dynamic date/recommendation/profile data are not judged as icon fidelity differences.
-- Full board/native comparison keeps the source board intact beside native Home. Focused source crops are enlarged to comparable visible subject size beside actual rendered artwork. Native icon crops use the bundled asset's alpha bounds and the actual 62.7dp rendering scale; no replacement artwork is painted into screenshots.
+- Selected artwork truth: `docs/evaluations/storybook-icons-2026-10-06/selected-storybook-reference.png`, Option 1, 1448×1086px; original native structure: `original-home-window.png` / `original-more-window.png` in that directory. Exact reference hash/crops remain in the bundled manifest.
+- Sizing truth: approved default art plus the six recommendations in `docs/evaluations/storybook-icons-2026-10-06/size-audit/README.md`. Before PNGs 23, 24 and 21 show the actual enlarged-badge, default-grid and rotated-tablet states. Requested adaptive layout changes are intentional differences from those before captures.
+- Implementation: exact Release captures under `docs/evaluations/storybook-icons-2026-10-06/post-change/`, version 1.4.9 (69), iOS 26.5. Hindi/light at normal text, Hindi/English at compact accessibility-medium. Reader verse 1; bookmark add/remove restores state.
+- Native 402×874pt phone = 1206×2622px at 3x; compact 375×667pt = 750×1334px at 2x; large 440×956pt = 1320×2868px at 3x; iPad portrait 744×1133pt = 1488×2266px at 2x. Landscape files store portrait pixels with EXIF orientation 8; displayed size is 2266×1488px = 1133×744pt.
+- Comparison sheets normalize to logical-point density. The enlarged grid intentionally changes from three to two columns and therefore needs a different scroll position to show Kundali/Muhurat. The same device, system text setting, language and feature state are compared; focused tiles remain at the original 2x density. The default grid offsets differ slightly, with all sixteen subjects visible in the accepted final image. Dynamic dates/timings, status clocks and carousel scroll offsets are not artwork-fidelity differences.
 
-**Combined visual evidence**
+**Combined evidence**
 
-- `reference-native-comparison.png`: complete selected board beside actual native Home.
-- `icon-fidelity-comparison.png`: selected and rendered Chalisa, Om, Japa and Kundali together at comparable subject scale.
-- `home-before-after.png` / `more-before-after.png`: original/current native body composition at equal scale.
-- `native-gallery.png`: all sixteen category subjects, More and deity browsing together.
-- `screenshots/home-grid-native.png`: final installed build, all sixteen icons and the restored filled NEW pills in one viewport.
-- `icon-contact-sheet.png`: all 39 bundled assets. `asset-corrections.md`: prompt invariants and semantic exceptions.
+All paths below are relative to `docs/evaluations/storybook-icons-2026-10-06/post-change/`:
+
+- Full default comparison: `default-grid-before-after.png`; handoff: `main-preview.png`.
+- Full enlarged comparison: `large-text-before-after.png`; focused actual tile crops: `badge-clearance-detail.png`.
+- Full tablet comparison: `tablet-before-after.png`; raw return state: `tablet-portrait-return.png`.
+- Full enlarged English title/tab state: `compact-enlarged-english-recommendations.png` and `compact-enlarged-english-new.png`.
+- Reader/More: `reader-and-more.png`; exact PNGs `03-reader.png` and `04-more.png`.
+- Existing source/asset comparison sheets remain in the parent directory. The original 39 asset files and pigments are unchanged by this follow-up.
 
 **Required fidelity surfaces**
 
 | Surface | Observed result |
 | --- | --- |
-| Fonts and typography | Existing Noto Serif Devanagari, Cormorant Garamond and Inter roles remain. Hindi captions, headings, labels and bilingual detail hierarchy retain native conventions. Decorative icon rendering no longer relies on font glyphs. |
-| Spacing and layout | Original three-column Home layout, full-width Daan closing tile, 72dp tile height, captions, More row geometry and navigation remain. All Home artwork uses 62.7dp, exactly 5% below 66dp; its visible bounds are about 53dp. NEW state no longer moves any launcher icon. The final full-grid capture shows consistent centers. |
-| Badge clearance | Original filled saffron-tint NEW pill restored. It is inside Home tiles at top 2dp / right 6dp, with 2dp horizontal padding, 12dp line height and 0.5dp tracking. Kundali's frame and Muhurat's pointer remain clear. Pill text remains 10pt, with the existing full accessibility label announcing New. |
-| Colors and tokens | Om has flat burnt ochre and a diamond dot. Painted subjects retain reference pigments. Ordinary utility controls share `iconInk #6F3F1D`; active accents use `iconAccent #AD571F`. The original parchment/card/theme surfaces remain. |
-| Imagery and semantics | Japa has smooth oval beads and the large lower-left pendant; Chalisa has the source loop/tassel; Kundali uses dark doubled lines, sun and small house marks. Books, coconut/pot, shrine, temple, compass, shield and lotus use distinct source subjects. Practice uses two leaves, with separate broad Bhakti/Panchang navigation silhouettes. Daan retains three offerings; Suktam uses abstract marks rather than fabricated scripture. |
-| Copy and behavior | Existing app copy, verses, meanings, routes, accessible control labels and hit areas remain. Reader bookmark toggle restores its starting state; search and navigation continue to open the existing screens. |
+| Fonts and typography | Native font families/script roles retained. NEW/tab text starts at 11pt. Tab labels grow uniformly up to 1.4x and retain full English names using the whole slot. Enlarged recommendations, Today headline/chips and inline Routine copy show their full text. Decorative brand geometry stays fixed; tagline scales. |
+| Spacing and layout | All art remains centered. Normal phones retain three columns/72dp tiles. Enlarged text reserves badge space in every tile and uses wider tracks. Tablet content is centered/capped at 800dp, with five normal tracks; portrait/landscape/portrait update correctly. Daan spans the actual grid. Reader visible circles retain their size inside real 48dp targets; verse pill aligns vertically. |
+| Colors and tokens | Original parchment gradients and painted pigments retained. Utility ink stays `#6F3F1D`; selected icons stay `#AD571F`. Active text uses `#8A3E0B` for calculated 6.60:1 on `#F8EFD6`. NEW uses its original filled saffron tint/deep text. |
+| Image quality and asset fidelity | 512px transparent PNGs retain square aspect ratio with contain rendering and the existing art registry. 62.7dp at 3x needs about 188px, below source resolution. No stretched raster, crop change, new texture or replacement graphic. |
+| Copy/content | Category names, semantic deity mappings, content order, routes and kids-story shelves retained. Search has a localized prompt and the original accessible action label. Tab titles keep full localized accessibility names. No placeholder/prototype content. |
 
-**Comparison history and resolved findings**
+**Comparison history**
 
-1. [P2] User review rejected generic-family assets: glossy orange Om, rudraksha/tiny-charm Japa, pale/simplified Kundali and other silhouette/pigment drift. Twenty-three assets were regenerated from enlarged exact source crops; the four critical subjects are compared with native rendering in `icon-fidelity-comparison.png`.
-2. [P2] Artwork was undersized and NEW state shifted some icons lower. Home initially moved to 66dp artwork, then the user requested a 5% reduction to 62.7dp. Every launcher now retains its original center; final evidence is `home-grid-native.png`.
-3. [P2] A floating NEW pill escaped the tile. Transparent text then looked loose; the user explicitly requested the original chip, just inside. Filled pills are restored with compact insets, without any icon offset. The final installed build and full-grid capture verify this state.
-4. [P2] The source's practice leaves and navigation silhouettes were initially substituted with other subjects. Dedicated local assets now reproduce those source directions; native Home/navigation are visible in the gallery.
-5. Earlier reader/search thumbnail inconsistencies were resolved through the shared registry. Current reader, search, audio, More and deity screenshots verify the consumers.
+1. Original artwork refinement: exact selected-source subjects, consistent centers, 5% size reduction and the filled inset badge resolved the earlier default-size findings. The separate sizing audit then exposed enlarged text, tablet width and touch-target gaps.
+2. First sizing implementation: subscribed grid, 48dp wrappers, inline Search, 11pt text and expanded badge clearance were captured. A native reader check exposed the verse pill's old top alignment; centering it resolved the row. Enlarged English still truncated recommendation/Today/Routine titles and tab names (`iterations/english-before-wrapping.png`).
+3. Natural title wrapping and a 1.4x tab scaling cap resolved body titles, but UIKit's 5dp side padding still shortened Panchang (`iterations/english-before-full-tab-width.png`). Captions now use the full slot and drop English tracking at enlarged text. Fresh English captures show full Panchang/Bhajan names, full recommendation copy and clear NEW artwork.
+4. Capture-only fixes: an initial grid frame cut Daan; the accepted final `02-phone-grid.png` shows all sixteen subjects. The first iPad flow stopped on a tour introduced after Begin; another Skip check resolved onboarding. The rerun verifies portrait → landscape → portrait. Failed captures are not counted as passes.
 
-**Technical and interaction evidence**
+**Validation and limits**
 
-- Final iOS Release build/install succeeded: zero errors / zero warnings. Build log `/tmp/vedansh-icons-inside-final-release-build.log`; embedded JS and local images are installed, independent of Metro.
-- Full native walkthrough passed on the filled-pill/reduced-art build: Home → Chalisa → Hanuman reader, bookmark add/remove, More, By Deity, Panchang, Kundali, audio, Search → reader → Home. Log `/tmp/vedansh-icons-filled-final-maestro.log`.
-- After final compact-launcher alignment and pill inset changes, the final installed build passed the focused Home grid run: Chalisa, Kundali, Muhurat and Daan visible together; captures include all sixteen subjects. Logs `/tmp/vedansh-icons-grid-final-maestro.log` and `/tmp/vedansh-icons-grid-final-frame.log`.
-- A prior capture attempt returned to Home during the reader assertion. A clean app launch and waiting for the build/launch process to finish produced the passing walkthrough. Its failed debug output remains outside the repository; it is not counted as a pass.
-- Earlier correction UI suite: 223 suites / 2,084 tests passed. Later focused runs passed 18 tests after the 39-asset registry/badge changes; all 8 CategoryCard tests passed after the final offset removal. Typecheck passed after registry changes. Final CategoryCard/spacing lint is clean and whitespace check passes.
-- Asset tests verify 39 local mappings, 512px dimensions, transparency, SHA/byte counts and a total of 1,467,840 bytes below the 1.5MB artwork budget. All sixteen visible alpha bounding-box centers are within 0.5px of their 512px canvas center; rendered optical alignment is checked separately above.
-- The previous integration's full 2,903-test run predates these corrections. It is not claimed as a fresh full-suite run. The earlier debug Metro heap failure was not repaired by this visual work.
-- This initial fidelity stage did not exercise tablet or enlarged-text states. The later sizing review below includes them and records the remaining issues. Android builds, physical-device performance and full VoiceOver navigation remain unverified. No OTA or store publication occurred.
+Full local checks pass: typecheck and 2,941 tests (226 UI suites/2,100 UI tests), plus zero observance failures/divergences/drift. After the final caption-width polish, typecheck, lint and the actual Release build pass; Release has zero errors/warnings. Native smoke covers content readers, bookmark add/remove, More, By Deity, current Home kids shelves, Panchang, Bhajan and inline Search. Focused captures cover three phone widths, enlarged Hindi/English and iPad rotation.
 
-**Implementation Checklist**
+Android, physical-device ergonomics, full screen-reader navigation, Gujarati/Kannada widths and the largest Dynamic Type setting remain unverified. This is a pass for the implemented recommendations on the tested states, not a general accessibility certification. No merge/OTA/store publication.
 
-- [x] Correct source-based subjects and preserve semantic exceptions.
-- [x] Integrate bundled category/deity/navigation/utility consumers.
-- [x] Keep native content, typography, routes and hit areas.
-- [x] Center every launcher icon; reduce Home art by 5%.
-- [x] Restore the original filled NEW pill entirely inside Home tiles.
-- [x] Build/install and verify native navigation plus final full-grid state.
-- [x] Inspect combined full-view and focused source/native comparisons.
-- [x] Refresh evidence, design contract and wiki.
+**Implementation checklist**
 
-**Additional icon-size and screen review (2026-10-06)**
+- [x] Retain approved artwork size/pigments and the filled inset NEW cue.
+- [x] Reserve large-text clearance and support caption/title wrapping.
+- [x] React to width/rotation and derive Daan's span from the current grid.
+- [x] Give reader actions real 48dp targets and center their row.
+- [x] Improve small-label size/contrast while preserving icon accent.
+- [x] Move Search into the page and preserve first-tap/routing behavior.
+- [x] Inspect combined full-view and focused native comparisons.
+- [x] Record tested states, failed attempts and remaining platform limits.
 
-The user subsequently requested a sizing/aspect-ratio review. Fresh merged-main native captures and findings are in [the sizing report](docs/evaluations/storybook-icons-2026-10-06/size-audit/README.md). That review documents existing usability gaps separately from the accepted artwork fidelity: small badge/tab text, the reader's effective touch targets and layout behavior at larger text/tablet widths. The fidelity pass below does not certify full accessibility compliance.
-
-Full checks were rerun after merging current main: **2,928 tests passed**, including 224 UI suites / 2,087 UI tests; observance verification passed with no drift/failures; the Release build passed with zero errors/warnings. The updated native smoke passes with Home's new kids-story catalog preserved. Its redundant Hanuman centering step was removed after a failure screenshot showed the row already visible.
-
-**Open Questions**
-
-None required for the authorized local integration.
-
-**Follow-up Polish**
-
-Source texture differences are minor. The separate sizing review records larger-text, touch-target and tablet layout findings that need follow-up; untested platforms and full screen-reader navigation remain limitations.
-
-final result: passed for the approved default-size artwork fidelity, centering and badge treatment; broader sizing/accessibility findings are documented in the separate review
+final result: passed

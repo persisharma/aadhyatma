@@ -3,6 +3,11 @@ import TestRenderer, { act } from 'react-test-renderer';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import TodayRecommendationsRow from '@/components/TodayRecommendationsRow';
 
+let mockDimensions = { width: 375, height: 667, scale: 2, fontScale: 1 };
+jest.mock('react-native/Libraries/Utilities/useWindowDimensions', () => ({
+  default: () => mockDimensions,
+}));
+
 const mockNavigate = jest.fn();
 // Mutable so a single test can flip the reading language; read at render time
 // (inside useGitaLanguage), so no jest-hoisting TDZ issue.
@@ -103,6 +108,7 @@ describe('TodayRecommendationsRow', () => {
   });
 
   beforeEach(() => {
+    mockDimensions = { width: 375, height: 667, scale: 2, fontScale: 1 };
     renderedFeatureCardProps.length = 0;
     mockLang = 'en';
     mockRecommendations = entries.map((entry) => ({ entry }));
@@ -149,6 +155,15 @@ describe('TodayRecommendationsRow', () => {
       'Vishnu Chalisa',
     ]);
     expect(renderedFeatureCardProps.every((props) => props.item.descEn === 'Recommended for today')).toBe(true);
+  });
+
+  test('enlarged text widens the recommendation without exceeding the phone gutter', () => {
+    mockDimensions = { width: 375, height: 667, scale: 2, fontScale: 1.64 };
+    act(() => { mountRow(); });
+    for (const card of renderedFeatureCardProps) {
+      expect(card.width).toBeGreaterThan(196);
+      expect(card.width).toBeLessThanOrEqual(375 - 48);
+    }
   });
 
   // A festive reminder lands the user on Home, so the card that its message

@@ -30,6 +30,8 @@ type Props = {
   launcherLabelPosition?: 'below' | 'tile';
   /** More room for Home's illustrations; dense named indexes remain compact. */
   launcherArtwork?: 'compact' | 'illustrated';
+  /** Home reserves a badge row at enlarged text without shifting individual art. */
+  launcherHeight?: number;
 };
 
 function CategoryCard({
@@ -46,6 +48,7 @@ function CategoryCard({
   launcherLabelLines = 1,
   launcherLabelPosition = 'below',
   launcherArtwork = 'compact',
+  launcherHeight = 72,
 }: Props) {
   const { colors, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
@@ -108,6 +111,7 @@ function CategoryCard({
           <View
             style={[
               styles.launcherTile,
+              { height: launcherHeight },
               styles.launcherTileComing,
               {
                 borderRadius: radii.lg,
@@ -149,6 +153,7 @@ function CategoryCard({
         <View
           style={[
             styles.launcherTile,
+            { height: launcherHeight },
             {
               borderRadius: radii.lg,
               borderColor: colors.cardActiveBorder,
@@ -336,7 +341,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 2,
     paddingVertical: 0,
   },
-  illustratedBadgeText: { lineHeight: 12, letterSpacing: 0.5 },
+  illustratedBadgeText: { lineHeight: 13, letterSpacing: 0.5 },
   badge: {
     position: 'absolute',
     top: 8,
@@ -345,7 +350,7 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
   },
   badgeText: {
-    fontSize: 10,
+    fontSize: 11,
     fontWeight: '600',
     textTransform: 'uppercase',
   },

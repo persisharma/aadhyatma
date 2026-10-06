@@ -1,7 +1,7 @@
 import StoryIcon from './StoryIcon';
 import AppIcon from './AppIcon';
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '@/theme/ThemeContext';
 import { androidBoxShadow } from '@/theme/elevation';
@@ -31,6 +31,7 @@ export default function RoutineBanner({
 }: { bannerRef?: React.Ref<View>; variant?: 'docked' | 'inline' } = {}) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
+  const { fontScale } = useWindowDimensions();
   const navigation = useNavigation<any>();
   const { hasRoutine, doneCount, total } = useRoutineToday();
   const { beginTilePress, finishTilePress, activateTile } = useTilePress();
@@ -109,7 +110,7 @@ export default function RoutineBanner({
         <Disc colors={colors} radii={radii}>
           <StoryIcon name="practice" size={32} />
         </Disc>
-        <Text numberOfLines={1} style={lineStyle}>
+        <Text numberOfLines={variant === 'inline' && fontScale > 1.2 ? undefined : 1} style={lineStyle}>
           {line}
         </Text>
         {chevron}
@@ -137,7 +138,7 @@ export default function RoutineBanner({
         <View style={styles.lotusSlot}>
           <LotusMark size={30} />
         </View>
-        <Text numberOfLines={1} style={lineStyle}>
+        <Text numberOfLines={variant === 'inline' && fontScale > 1.2 ? undefined : 1} style={lineStyle}>
           {line}
         </Text>
         {chevron}
@@ -168,7 +169,7 @@ export default function RoutineBanner({
             {doneCount}/{total}
           </Text>
         </Disc>
-        <Text numberOfLines={1} style={lineStyle}>
+        <Text numberOfLines={variant === 'inline' && fontScale > 1.2 ? undefined : 1} style={lineStyle}>
           {line}
         </Text>
         {chevron}

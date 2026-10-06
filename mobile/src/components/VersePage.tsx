@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   pill: {
-    alignSelf: 'flex-start',
+    alignSelf: 'center',
     paddingHorizontal: 12,
     paddingVertical: 4,
   },

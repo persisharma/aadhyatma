@@ -3,7 +3,7 @@ import { deityIconKey } from '@/data/deities';
 import CategoryIcon from './CategoryIcon';
 import StoryIcon from './StoryIcon';
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
@@ -29,6 +29,8 @@ type Nav = NativeStackNavigationProp<HomeStackParamList>;
 export default function TodayRecommendationsRow() {
   const { colors, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
+  const { width, fontScale } = useWindowDimensions();
+  const cardWidth = fontScale > 1.2 ? Math.min(width - 48, 196 * fontScale) : 196;
   const navigation = useNavigation<Nav>();
   const { beginTilePress, markTileDrag, finishTilePress, activateTile } = useTilePress();
   const todayKey = useTodayKey();
@@ -110,11 +112,11 @@ export default function TodayRecommendationsRow() {
           const { entry } = recommendation;
           const open = () => navigateToEntryStart(navigation, entry);
           const card = (
-            <View key={entry.id} style={styles.cardWrap}>
+            <View key={entry.id} style={{ width: cardWidth }}>
               <FeatureCard
                 compact
                 item={spotlightForEntry(recommendation)}
-                width={styles.cardWrap.width}
+                width={cardWidth}
                 onPress={() => activateTile(open)}
                 onPressIn={() => beginTilePress(open)}
                 onPressOut={finishTilePress}
@@ -131,7 +133,7 @@ export default function TodayRecommendationsRow() {
               { screen: 'AbujhDays', initial: false }
             );
           const abujhCard = (
-            <View key="abujh-today" style={styles.cardWrap} testID="for-today-abujh">
+            <View key="abujh-today" style={{ width: cardWidth }} testID="for-today-abujh">
               <FeatureCard
                 compact
                 item={{
@@ -146,7 +148,7 @@ export default function TodayRecommendationsRow() {
                     <StoryIcon name="muhurat" size={31} />
                   ),
                 }}
-                width={styles.cardWrap.width}
+                width={cardWidth}
                 onPress={() => activateTile(openAbujh)}
                 onPressIn={() => beginTilePress(openAbujh)}
                 onPressOut={finishTilePress}
@@ -161,7 +163,7 @@ export default function TodayRecommendationsRow() {
               const openDaan = () =>
                 navigation.navigate('DaanJourney', { occasionId: daanOccasion.id });
               return (
-                <View key="daan-today" style={styles.cardWrap} testID="for-today-daan">
+                <View key="daan-today" style={{ width: cardWidth }} testID="for-today-daan">
                   <FeatureCard
                     compact
                     item={{
@@ -176,7 +178,7 @@ export default function TodayRecommendationsRow() {
                         <StoryIcon name="daan" size={31} />
                       ),
                     }}
-                    width={styles.cardWrap.width}
+                    width={cardWidth}
                     onPress={() => activateTile(openDaan)}
                     onPressIn={() => beginTilePress(openDaan)}
                     onPressOut={finishTilePress}
@@ -223,16 +225,5 @@ const styles = StyleSheet.create({
   sectionLabel: {
     // textTransform/letterSpacing/fontFamily are owned by pillTextStyle (script-aware).
     paddingHorizontal: 4,
-  },
-  cardWrap: {
-    // Much narrower than the 292 spotlight width: the compact strip is icon +
-    // name + chevron, so it needs room for a title and nothing else, and the
-    // extra card that fits per viewport is more of today's recommendations in
-    // the same scroll. This leaves ~108pt for the title — comfortable for a
-    // typical name (हनुमान चालीसा ≈ 80) but at the edge for the longest shipped
-    // one (विष्णु सहस्रनाम अंश ≈ 105), which ellipsizes under a raised system
-    // font scale. Widen here, not in FeatureCard, if that trade stops being
-    // acceptable — the strip sizes to whatever width the row hands it.
-    width: 196,
   },
 });

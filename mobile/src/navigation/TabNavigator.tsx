@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, Text, View, useWindowDimensions } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -21,7 +21,6 @@ import {
   PanchangIcon,
   MusicIcon,
   MoreIcon,
-  type TabIconProps,
 } from './tabBarIcons';
 
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -35,12 +34,13 @@ export default function TabNavigator() {
   const { colors } = useTheme();
   const { lang } = useGitaLanguage();
   const insets = useSafeAreaInsets();
+  const { fontScale } = useWindowDimensions();
 
   const tabBarStyle = {
     backgroundColor: colors.parchmentSoft,
     borderTopWidth: 1,
     borderTopColor: colors.divider,
-    height: 60 + insets.bottom,
+    height: 60 + Math.max(0, Math.ceil(16 * (Math.min(fontScale, 1.4) - 1))) + insets.bottom,
     paddingBottom: insets.bottom,
     paddingTop: 6,
   };
@@ -48,25 +48,43 @@ export default function TabNavigator() {
   // Tab labels follow the reading language like the rest of the chrome — the
   // bar was the last surface still English-only under a fully Indic screen.
   // contentByLang transliterates the Hindi label for gu/kn.
-  const tabLabel = (hi: string, en: string) => contentByLang(lang, hi, en);
+  const tabLabelStyle = {
+    fontFamily: lang === 'en' ? fontFamilies.inter : scriptTitleFont(lang, fontFamilies.devanagariBold),
+    fontSize: 11,
+    letterSpacing: lang === 'en' && fontScale <= 1.2 ? 0.4 : 0,
+    textAlign: 'center' as const,
+  };
+  // Navigation labels grow by up to 40%; full reading text remains uncapped.
+  // A larger scale clips Panchang/Bhajan on compact English phones.
+  const tabLabel = (hi: string, en: string) =>
+    function NavigationLabel({ color, position }: { color: string; position: 'below-icon' | 'beside-icon' }) {
+      return (
+        <Text
+          allowFontScaling
+          maxFontSizeMultiplier={1.4}
+          numberOfLines={1}
+          style={[
+            tabLabelStyle,
+            { color },
+            // UIKit tabs add 5dp side padding. Captions can use the full slot
+            // while the icon retains its inset; enlarged Panchang then fits.
+            position === 'below-icon' ? { marginHorizontal: -5 } : { marginLeft: 8 },
+          ]}
+        >
+          {contentByLang(lang, hi, en)}
+        </Text>
+      );
+    };
   return (
     <Tab.Navigator
       initialRouteName="HomeTab"
       screenOptions={{
         headerShown: false,
         tabBarStyle,
-        tabBarActiveTintColor: colors.iconAccent,
+        tabBarActiveTintColor: colors.saffronDeep,
+        tabBarAllowFontScaling: true,
         tabBarInactiveTintColor: colors.iconInk,
-        tabBarLabelStyle: {
-          // Inter carries only the English labels — it has no Indic glyphs; the
-          // scripts take their own serif title faces (hi → Noto Serif Devanagari).
-          fontFamily: lang === 'en' ? fontFamilies.inter : scriptTitleFont(lang, fontFamilies.devanagariBold),
-          fontSize: 10,
-          // RN letterSpacing is in px, not em: the previous 0.02 was invisible.
-          // 0.4 matches the cardMeta chrome token, the nearest sibling scale —
-          // but tracking splits the shirorekha, so it applies to en only (§3).
-          letterSpacing: lang === 'en' ? 0.4 : 0,
-        },
+        tabBarLabelStyle: tabLabelStyle,
       }}
     >
       <Tab.Screen
@@ -75,10 +93,11 @@ export default function TabNavigator() {
         options={({ route }) => {
           const focused = getFocusedRouteNameFromRoute(route) ?? 'Home';
           return {
+            title: contentByLang(lang, 'होम', 'Home'),
             tabBarLabel: tabLabel('होम', 'Home'),
             tabBarButtonTestID: 'tab-home',
-            tabBarIcon: ({ color, size }: TabIconProps) => (
-              <HomeIcon color={color} size={size} />
+            tabBarIcon: ({ focused, size }) => (
+              <HomeIcon color={focused ? colors.iconAccent : colors.iconInk} size={size} />
             ),
             tabBarStyle: IMMERSIVE_HOME_ROUTES.includes(focused)
               ? { display: 'none' as const }
@@ -90,10 +109,11 @@ export default function TabNavigator() {
         name="DailyBhaktiTab"
         component={DailyBhaktiScreen}
         options={{
+          title: contentByLang(lang, 'भक्ति', 'Bhakti'),
           tabBarLabel: tabLabel('भक्ति', 'Bhakti'),
           tabBarButtonTestID: 'tab-bhakti',
-          tabBarIcon: ({ color, size }) => (
-            <BhaktiIcon color={color} accentColor={colors.saffron} size={size} />
+          tabBarIcon: ({ focused, size }) => (
+            <BhaktiIcon color={focused ? colors.iconAccent : colors.iconInk} accentColor={colors.saffron} size={size} />
           ),
         }}
       />
@@ -101,10 +121,11 @@ export default function TabNavigator() {
         name="PanchangTab"
         component={PanchangTabRoot}
         options={{
+          title: contentByLang(lang, 'पंचांग', 'Panchang'),
           tabBarLabel: tabLabel('पंचांग', 'Panchang'),
           tabBarButtonTestID: 'tab-panchang',
-          tabBarIcon: ({ color, size }) => (
-            <PanchangIcon color={color} size={size} />
+          tabBarIcon: ({ focused, size }) => (
+            <PanchangIcon color={focused ? colors.iconAccent : colors.iconInk} size={size} />
           ),
         }}
       />
@@ -112,10 +133,11 @@ export default function TabNavigator() {
         name="AudioTab"
         component={AudioStackNavigator}
         options={{
+          title: contentByLang(lang, 'भजन', 'Bhajan'),
           tabBarLabel: tabLabel('भजन', 'Bhajan'),
           tabBarButtonTestID: 'tab-bhajan',
-          tabBarIcon: ({ color, size }) => (
-            <MusicIcon color={color} size={size} />
+          tabBarIcon: ({ focused, size }) => (
+            <MusicIcon color={focused ? colors.iconAccent : colors.iconInk} size={size} />
           ),
         }}
       />
@@ -123,10 +145,11 @@ export default function TabNavigator() {
         name="MoreTab"
         component={MoreStackNavigator}
         options={{
+          title: contentByLang(lang, 'अन्य', 'More'),
           tabBarLabel: tabLabel('अन्य', 'More'),
           tabBarButtonTestID: 'tab-more',
-          tabBarIcon: ({ color, size }) => (
-            <MoreIcon color={color} size={size} />
+          tabBarIcon: ({ focused, size }) => (
+            <MoreIcon color={focused ? colors.iconAccent : colors.iconInk} size={size} />
           ),
         }}
       />

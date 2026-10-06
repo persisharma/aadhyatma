@@ -1,0 +1,21 @@
+appId: com.prashantsharma.vedansh
+---
+- launchApp:
+    stopApp: true
+- tapOn: { id: "tab-home" }
+- scrollUntilVisible:
+    element: { text: "Search verses, sections, and mantras" }
+    direction: UP
+    timeout: 20000
+- swipe: { direction: DOWN }
+- takeScreenshot: docs/evaluations/storybook-icons-2026-10-06/post-change/compact-enlarged-english-home
+- swipe:
+    start: "50%,60%"
+    end: "50%,45%"
+    duration: 1500
+- takeScreenshot: docs/evaluations/storybook-icons-2026-10-06/post-change/compact-enlarged-english-recommendations
+- scrollUntilVisible:
+    element: { text: "Kundali\\..*Tap to open\\." }
+    direction: DOWN
+    timeout: 20000
+- takeScreenshot: docs/evaluations/storybook-icons-2026-10-06/post-change/compact-enlarged-english-new

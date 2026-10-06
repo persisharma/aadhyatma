@@ -1,5 +1,5 @@
 import React from 'react';
-import { InteractionManager, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { InteractionManager, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { useReducedMotion } from '@/utils/useReducedMotion';
@@ -91,6 +91,7 @@ export default function TodayStrip() {
   launchMarkOnce('strip-render');
   const { colors, typography, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
+  const { fontScale } = useWindowDimensions();
   // Sibling tab — navigate via the parent so the action bubbles up (same
   // pattern as RoutineBanner / the Panchang spotlight card).
   const rootNav = useNavigation<any>();
@@ -494,7 +495,7 @@ export default function TodayStrip() {
           </Text>
         </View>
         <Text
-          numberOfLines={1}
+          numberOfLines={fontScale > 1.2 ? undefined : 1}
           style={{
             marginTop: 3,
             fontFamily: headlineFont,
@@ -543,7 +544,7 @@ export default function TodayStrip() {
               pressed && { opacity: 0.7 },
             ]}
           >
-            <Text numberOfLines={1} style={{ maxWidth: 200 }}>
+            <Text numberOfLines={1} style={{ maxWidth: fontScale > 1.2 ? undefined : 200 }}>
               <Text style={[chipText, { color: chip.fg }]}>
                 {contentByLang(lang, chip.labelHi, chip.labelEn)}
               </Text>

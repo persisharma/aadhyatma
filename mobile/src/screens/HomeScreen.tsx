@@ -2,7 +2,7 @@ import AppIcon from '@/components/AppIcon';
 import StoryIcon from '@/components/StoryIcon';
 import React from 'react';
 import {
-  Dimensions,
+  useWindowDimensions,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -10,7 +10,7 @@ import {
   View,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
@@ -20,7 +20,10 @@ import CategoryIcon, { type CategoryIconKey } from '@/components/CategoryIcon';
 import FeatureCard, { type FeatureSpotlight } from '@/components/FeatureCard';
 import LotusMark from '@/components/LotusMark';
 import HomeWordmark from '@/components/HomeWordmark';
-import SearchFloatingButton from '@/components/SearchFloatingButton';
+import { homeLayout } from '@/utils/homeLayout';
+import { useGitaLanguage } from '@/data/gita/language';
+import { contentByLang } from '@/utils/localize';
+import { pillTextStyle } from '@/utils/langType';
 import RoutineBanner from '@/components/RoutineBanner';
 import TodayStrip from '@/components/TodayStrip';
 import TodayRecommendationsRow from '@/components/TodayRecommendationsRow';
@@ -67,6 +70,7 @@ export default function HomeScreen({ navigation }: Props) {
   // fallback instead of navigating. See @/contexts/TilePressContext.
   const tilePress = useTilePressController();
   const { beginTilePress, markTileDrag, finishTilePress, activateTile } = tilePress;
+  const openSearch = React.useCallback(() => navigation.navigate('Search'), [navigation]);
 
   // Festive toran (design.md §55): on the 18 catalog festivals Home hangs a
   // garland + greeting chip under the wordmark. Same festival resolution as the
@@ -186,17 +190,18 @@ export default function HomeScreen({ navigation }: Props) {
     // full-width row (PRD-26; design.md §18).
     result.push(daanTile);
     return result;
-  }, [hasNewInCategory, navigation, rootNav]);
+  }, [hasNewInCategory, navigation, rootNav, spacing.homeCategoryArtwork]);
 
-  const screenWidth = Dimensions.get('window').width;
-  const gridPadding = spacing.xxl;
-  const gridGap = 10;
-  const tileWidth = (screenWidth - 2 * gridPadding - 2 * gridGap) / 3;
+  const { width, fontScale } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
+  const { lang } = useGitaLanguage();
+  const { contentWidth, gridWidth, gridPadding, gridGap, tileWidth, launcherHeight, largeText } =
+    homeLayout(width - insets.left - insets.right, fontScale);
 
   // Discover carousel — wide cards that peek the next one. Width is the viewport
   // minus the side gutter and a sliver of the following card; snap by card+gap.
   const featureGap = spacing.md;
-  const featureWidth = Math.min(320, screenWidth - gridPadding - 56);
+  const featureWidth = Math.min(320, contentWidth - gridPadding - 56);
   const featureSnap = featureWidth + featureGap;
 
   // Spotlight content. One flexible card shell (FeatureCard) carries every
@@ -332,7 +337,10 @@ export default function HomeScreen({ navigation }: Props) {
           contentContainerStyle={[
             styles.scroll,
             {
-              paddingHorizontal: spacing.xxl,
+              width: '100%',
+              maxWidth: contentWidth,
+              alignSelf: 'center',
+              paddingHorizontal: gridPadding,
               paddingBottom: spacing.xxl * 3,
             },
           ]}
@@ -342,6 +350,24 @@ export default function HomeScreen({ navigation }: Props) {
           <View style={styles.hero}>
             <HomeWordmark />
           </View>
+
+          <Pressable
+            onPress={() => activateTile(openSearch)}
+            onPressIn={() => beginTilePress(openSearch)}
+            onPressOut={finishTilePress}
+            accessibilityRole="button"
+            accessibilityLabel="Search verses, sections, and mantras"
+            style={({ pressed }) => [
+              styles.search,
+              { backgroundColor: colors.parchmentSoft, borderColor: colors.divider },
+              pressed && { opacity: 0.7 },
+            ]}
+          >
+            <AppIcon name="search" size={24} color={colors.iconInk} />
+            <Text style={[styles.searchText, { color: colors.inkMuted }, pillTextStyle(lang, typography.cardMeta), { fontSize: 14, textTransform: 'none', letterSpacing: 0 }]}>
+              {contentByLang(lang, 'श्लोक, मंत्र और ग्रंथ खोजें', 'Search verses, mantras and texts')}
+            </Text>
+          </Pressable>
 
           {todayFestival && (
             <FestiveToran
@@ -382,8 +408,8 @@ export default function HomeScreen({ navigation }: Props) {
               <View
                 key={tile.key}
                 // दान-पुण्य is the grid's full-width closing row (design.md §18);
-                // every other tile keeps the 3-column width.
-                style={{ width: tile.fullWidth ? tileWidth * 3 + 2 * gridGap : tileWidth }}
+                // other tiles use the current responsive grid track.
+                style={{ width: tile.fullWidth ? gridWidth : tileWidth }}
                 ref={
                   tile.key === 'japam'
                     ? japaTileRef
@@ -405,6 +431,8 @@ export default function HomeScreen({ navigation }: Props) {
                   hasNew={tile.hasNew}
                   variant="launcher"
                   launcherArtwork="illustrated"
+                  launcherHeight={launcherHeight}
+                  launcherLabelLines={largeText ? 2 : 1}
                 />
               </View>
             ))}
@@ -539,8 +567,6 @@ export default function HomeScreen({ navigation }: Props) {
         </ScrollView>
         </TilePressProvider>
       </SafeAreaView>
-
-      <SearchFloatingButton onPress={() => navigation.navigate('Search')} />
     </View>
   );
 }
@@ -560,6 +586,18 @@ const styles = StyleSheet.create({
     marginTop: 6,
     marginBottom: 12,
   },
+  search: {
+    minHeight: 48,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    borderWidth: 1,
+    borderRadius: 14,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    marginBottom: 12,
+  },
+  searchText: { flex: 1, fontSize: 14, textTransform: 'none', letterSpacing: 0 },
   sectionLabel: {
     textTransform: 'uppercase',
     marginBottom: 8,

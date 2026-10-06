@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Animated, Pressable, StyleSheet } from 'react-native';
+import { Animated, Pressable, StyleSheet, View } from 'react-native';
 import AppIcon from './AppIcon';
 import * as Haptics from 'expo-haptics';
 import { useTheme } from '@/theme/ThemeContext';
@@ -31,26 +31,22 @@ export default function BookmarkButton({ isBookmarked, onToggle }: Props) {
   return (
     <Pressable
       onPress={handleToggle}
-      hitSlop={12}
-      style={[
-        styles.circle,
-        {
-          backgroundColor: colors.parchmentSoft,
-          borderColor: colors.divider,
-        },
-      ]}
+      style={styles.target}
       accessibilityRole="button"
       accessibilityLabel={isBookmarked ? 'Remove bookmark' : 'Add bookmark'}
       accessibilityState={{ selected: isBookmarked }}
     >
-      <Animated.View style={{ transform: [{ scale }] }}>
-        <AppIcon name="heart" size={21} color={isBookmarked ? colors.iconAccent : colors.iconInk} weight={isBookmarked ? 'fill' : 'regular'} />
-      </Animated.View>
+      <View style={[styles.circle, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
+        <Animated.View style={{ transform: [{ scale }] }}>
+          <AppIcon name="heart" size={21} color={isBookmarked ? colors.iconAccent : colors.iconInk} weight={isBookmarked ? 'fill' : 'regular'} />
+        </Animated.View>
+      </View>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
+  target: { width: 48, height: 48, alignItems: 'center', justifyContent: 'center' },
   circle: {
     width: 34,
     height: 34,

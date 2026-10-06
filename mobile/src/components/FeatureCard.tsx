@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
 import { elevation } from '@/theme/elevation';
@@ -66,6 +66,7 @@ export default function FeatureCard({
   const { colors, radii, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
   const isHi = lang === 'hi';
+  const { fontScale } = useWindowDimensions();
 
   // Home spotlight shows a single language line (the reader's primary); the
   // demoted second-language title is dropped to shorten the card. Catalog/detail
@@ -94,7 +95,7 @@ export default function FeatureCard({
         fontStyle: primary.fontStyle,
         letterSpacing: primary.letterSpacing,
       }}
-      numberOfLines={1}
+      numberOfLines={compact && fontScale > 1.2 ? undefined : 1}
     >
       {primary.text}
     </Text>

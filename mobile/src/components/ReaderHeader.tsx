@@ -16,8 +16,7 @@ import { isLatinLang, titleFontByLang } from '@/utils/langType';
  * `readerTitle` token. This component fixes the spec in one place (design.md §7);
  * screens supply content, not geometry.
  *
- * Spec: 22pt reading gutter · 8/12 vertical padding · 44×44 circular back control
- * with hitSlop 16 (the app-wide minimum, design.md §12) · title in the language's
+ * Spec: 22pt reading gutter · 8/12 vertical padding · 44×44 visible circle inside a real 48×48 back target · title in the language's
  * title face at `typography.readerTitle.fontSize`, italic for English only.
  */
 export default function ReaderHeader({
@@ -45,7 +44,7 @@ export default function ReaderHeader({
    * Width of the two balancing side columns. The title is centred in the space
    * between them, so both sides must clear the widest side's content. Defaults to
    * 120 when a `right` slot is present (counter + audio button) and to the bare
-   * 44pt control width when it is not.
+   * 48pt target width when it is not.
    */
   sideWidth?: number;
   /**
@@ -60,7 +59,7 @@ export default function ReaderHeader({
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
   const latin = isLatinLang(lang);
-  const side = sideWidth ?? (right ? 120 : 44);
+  const side = Math.max(48, sideWidth ?? (right ? 120 : 48));
   const titleFontSize =
     variant === 'index' ? (latin ? 20 : 22) : typography.readerTitle.fontSize;
 
@@ -71,14 +70,14 @@ export default function ReaderHeader({
           onPress={onBack}
           accessibilityRole="button"
           accessibilityLabel={backAccessibilityLabel ?? 'Back'}
-          hitSlop={16}
           style={({ pressed }) => [
-            styles.back,
-            { backgroundColor: colors.parchmentSoft, borderColor: colors.divider },
+            styles.backTarget,
             pressed && { opacity: 0.7 },
           ]}
         >
-          <AppIcon name="back" size={22} color={colors.iconInk} />
+          <View style={[styles.back, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
+            <AppIcon name="back" size={22} color={colors.iconInk} />
+          </View>
         </Pressable>
       </View>
 
@@ -119,6 +118,7 @@ const styles = StyleSheet.create({
   },
   side: { flexDirection: 'row', alignItems: 'center' },
   sideRight: { justifyContent: 'flex-end' },
+  backTarget: { width: 48, height: 48, alignItems: 'center', justifyContent: 'center' },
   back: {
     width: 44,
     height: 44,

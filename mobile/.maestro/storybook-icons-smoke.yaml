@@ -68,6 +68,10 @@ appId: com.prashantsharma.vedansh
 - assertVisible: ".*Bhajans & Aartis.*"
 - tapOn: { id: "tab-home" }
 - tapOn: { text: "Back", optional: true }
+- scrollUntilVisible:
+    element: { text: "Search verses, sections, and mantras" }
+    direction: UP
+    timeout: 15000
 - tapOn: "Search verses, sections, and mantras"
 - assertVisible: "Search input"
 - assertVisible: "Open Hanuman Chalisa"

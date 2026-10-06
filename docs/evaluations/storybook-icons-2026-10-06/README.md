@@ -39,3 +39,7 @@ Logs: `/tmp/vedansh-icons-pr-test.log`, `/tmp/vedansh-icons-pr-observances.log`,
 - Repository-root `design-qa.md`: final visual findings and verification limits.
 
 Maestro debug output and generation masters remain outside the repository under `/Users/prashant/.codex/visualizations/2026/10/05/01a10cf8-763b-77d2-ad60-fdb256afb305/native-storybook-correction/`.
+
+## Implemented sizing recommendations
+
+The follow-up is integrated in the native app. [Post-change evidence](post-change/README.md) covers filled NEW clearance, subscribed phone/tablet grids, real 48dp reader targets, readable tab labels, inline Search and enlarged-text reflow. The original size audit remains historical before evidence.

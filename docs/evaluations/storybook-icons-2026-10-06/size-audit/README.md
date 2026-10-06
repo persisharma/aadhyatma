@@ -85,3 +85,7 @@ Each linked file is an exact accepted native capture. Repeated top/upper states 
 - [Capture flows](capture-flows/) are provided for reproducibility from the repository root. The enlarged-text flow requires setting the temporary simulator with `xcrun simctl ui <UDID> content_size accessibility-medium` first. Temporary audit devices were removed; the original QA simulator remains on the full category grid.
 
 The icon refresh is ready for review at the accepted default scale. This is not an all-platform or accessibility-compliance pass, and the findings above are not claimed as fixed.
+
+## Follow-up implemented
+
+The six recommendations above have now been applied and verified in [the post-change report](../post-change/README.md). This report and its numbered captures remain the pre-change audit; see the follow-up for current behavior and validation limits.
