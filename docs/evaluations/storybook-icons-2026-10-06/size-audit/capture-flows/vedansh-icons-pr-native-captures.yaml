@@ -21,6 +21,7 @@ appId: com.prashantsharma.vedansh
     element: { text: "Chalisa\\..*Tap to open\\." }
     direction: UP
     timeout: 10000
+- takeScreenshot: docs/evaluations/storybook-icons-2026-10-06/size-audit/01-phone-402-home-upper
 - tapOn: "Chalisa\\..*Tap to open\\."
 - extendedWaitUntil:
     visible: "Hanuman Chalisa\\..*Tap to open\\."
@@ -31,6 +32,7 @@ appId: com.prashantsharma.vedansh
     visible: "Add bookmark|Remove bookmark"
     timeout: 15000
 - assertVisible: "Share verse"
+- takeScreenshot: docs/evaluations/storybook-icons-2026-10-06/size-audit/02-phone-402-reader
 - runFlow:
     when: { visible: "Add bookmark" }
     commands:
@@ -42,16 +44,19 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Reminders.*|Daily verse reminders.*"
 - assertVisible: "Japam alarms.*"
 - assertVisible: "Wishlist.*"
+- takeScreenshot: docs/evaluations/storybook-icons-2026-10-06/size-audit/03-phone-402-more
 - tapOn: { id: "tab-home" }
 - tapOn: { text: "Back", optional: true }
 - scrollUntilVisible:
     element: { text: "By Deity\\..*Tap to open\\." }
     direction: DOWN
     timeout: 15000
+- takeScreenshot: docs/evaluations/storybook-icons-2026-10-06/size-audit/04-phone-402-home-lower
 - tapOn: "By Deity\\..*Tap to open\\."
 - assertVisible: "Shri Rama\\..*"
 - assertVisible: "Shri Krishna\\..*"
 - assertVisible: "Shri Vishnu\\..*"
+- takeScreenshot: docs/evaluations/storybook-icons-2026-10-06/size-audit/05-phone-402-deities
 - tapOn: "Back.*"
 - scrollUntilVisible:
     element: { id: "home-kids-stories-card" }
@@ -61,11 +66,14 @@ appId: com.prashantsharma.vedansh
 - assertVisible: { id: "kids-story-deity-krishna" }
 - assertVisible: { id: "kids-story-deity-ganesha" }
 - assertVisible: { id: "kids-story-deity-hanuman" }
+- takeScreenshot: docs/evaluations/storybook-icons-2026-10-06/size-audit/06-phone-402-kids-shelves
 - tapOn: "Back.*"
 - tapOn: { id: "tab-panchang" }
 - assertVisible: ".*Panchang.*|.*पंचांग.*"
+- takeScreenshot: docs/evaluations/storybook-icons-2026-10-06/size-audit/07-phone-402-panchang
 - tapOn: { id: "tab-bhajan" }
 - assertVisible: ".*Bhajans & Aartis.*"
+- takeScreenshot: docs/evaluations/storybook-icons-2026-10-06/size-audit/08-phone-402-bhajan
 - tapOn: { id: "tab-home" }
 - tapOn: { text: "Back", optional: true }
 - tapOn: "Search verses, sections, and mantras"

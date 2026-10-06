@@ -16,24 +16,25 @@ The selected Option 1 artwork is integrated into the React Native app, with the 
 
 ## Validation
 
-- Standalone iOS Release build: **zero errors / zero warnings**, installed on Vedansh-Upanishad-QA, iOS 26.5, UDID `5799D1D7-B645-4613-8058-822E63009C0F`. Bundle `com.prashantsharma.vedansh`, version 1.4.9, build 69.
-- Full native walkthrough passed on the filled-pill, reduced-art build: Home → Chalisa → Hanuman reader, bookmark add/remove, More, By Deity, Panchang, Kundali, audio, Search → reader → Home. The final installed build separately passed the Home grid check, with all sixteen subjects visible together and the restored pills inside their tiles.
-- Current correction UI run: **223 suites / 2,084 tests passed**. After the 39-asset registry and final badge changes, focused runs passed **18 tests**, followed by all **8 CategoryCard badge/label tests** after removing the remaining launcher offset.
-- Typecheck passed after the asset registry changes. Focused lint has zero errors; the final CategoryCard/spacing lint is clean. `git diff --check` passed.
-- Asset tests verify all 39 mappings, PNG dimensions/transparency, hashes and the 1.5MB artwork budget. Visible alpha bounds of every Home asset center within 0.5px of the 512px canvas center; native screenshots are the separate check for optical alignment and badge clearance.
-- The earlier integration's full `npm test` passed 2,903 tests. That result predates these visual corrections; it is not presented as a new full-suite run.
-- Android, tablet, physical devices, full VoiceOver navigation and enlarged-text visual sweeps were not exercised. No OTA or store publication occurred.
+- Merged current `origin/main` (`cb38ba61`), preserving Home's new kids-story catalog and all append-only wiki entries. Removed the retired More kids-story row during conflict resolution.
+- Fresh full `npm test` on the merged branch passed **2,928 tests**: 37 widget tests, 2,087 UI tests across 224 suites, 589 engine tests, 166 data tests and 49 Ask tests. Typecheck also passed.
+- Fresh `npm run verify:observances` passed, with zero failures, known divergences or anchor/rule-table drift.
+- Fresh standalone iOS Release build: **zero errors / zero warnings**, installed on Vedansh-Upanishad-QA, iOS 26.5, UDID `5799D1D7-B645-4613-8058-822E63009C0F`. Bundle `com.prashantsharma.vedansh`, version 1.4.9, build 69.
+- Merged-main native walkthrough passed: Home → Chalisa → Hanuman reader, bookmark add/remove, More, By Deity, Home Kids Stories → three deity shelves, Panchang, Bhajan, Search → reader → Home. A redundant centering step failed despite the Hanuman row being visible; removing it produced the passing run.
+- Asset tests verify all 39 mappings, 512px dimensions/transparency, hashes and the 1.5MB artwork budget. Every Home asset's visible alpha bounds center within 0.5px of the canvas center. Optical alignment is checked separately in native captures.
+- See [the icon-size review](size-audit/README.md) for fresh device captures, dimensions, standards and remaining usability gaps. Icon source fidelity and an accessibility audit are separate acceptance claims.
+- Android, physical devices and full VoiceOver navigation remain unverified. No OTA or store publication occurred.
 
-Logs: `/tmp/vedansh-icons-inside-final-release-build.log`, `/tmp/vedansh-icons-filled-final-maestro.log`, `/tmp/vedansh-icons-grid-final-maestro.log`, `/tmp/vedansh-icon-correction-ui-tests.log`, `/tmp/vedansh-icons-inside-final-tests.log`.
+Logs: `/tmp/vedansh-icons-pr-test.log`, `/tmp/vedansh-icons-pr-observances.log`, `/tmp/vedansh-icons-pr-release-build.log`, `/tmp/vedansh-icons-pr-native-retry.log`.
 
 ## Evidence
 
 - `selected-storybook-reference.png`: exact selected source board.
 - `original-{home,more}-window.png`: original native simulator window captures.
 - `pre-correction-home{,-lower}-window.png`: earlier rejected integration.
-- `screenshots/*-native.png`: actual app captures at 1206×2622px / 402×874dp, not browser prototypes.
+- `screenshots/*-native.png`: native captures from the implementation/refinement stages. Fresh merged-main captures for this review are numbered under `size-audit/`; that review uses only its own captures.
 - `reference-native-comparison.png`, `icon-fidelity-comparison.png`: combined source/native comparisons.
-- `home-before-after.png`, `more-before-after.png`, `native-gallery.png`: current native composition and consumer evidence.
+- `home-before-after.png`, `more-before-after.png`, `native-gallery.png`: native composition and consumer comparisons; original screens are retained as the before state.
 - `icon-contact-sheet.png`: all 39 bundled assets. `asset-corrections.md`: correction prompts and semantic constraints.
 - Repository-root `design-qa.md`: final visual findings and verification limits.
 

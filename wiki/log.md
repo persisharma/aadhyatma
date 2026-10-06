@@ -322,3 +322,5 @@ Added six distinct scene illustrations for wedding, threat, imprisonment, Balara
 ## [2026-10-06] ingest | Focused native check caught Muhurat pointer touching NEW: Home badges now float above tile edge, preserving one centered66dp artwork size in original72dp tiles. Full source/native visual checks remain separate from passing interaction tests.
 
 ## [2026-10-06] ingest | User refinement: reduce Home category art by 5% to 62.7dp, retain one center for all subjects, and restore the original filled NEW pill entirely inside the tile. Transparent and floating badge treatments were rejected. → concepts/deity-icons.md.
+
+## [2026-10-06] ingest | Icon sizing review distinguishes painted subject size, layout boxes and effective touch targets; current-main Home kids-story relocation is preserved. Fresh release build, 2,928 tests, observance verification and updated native routing pass. Broader usability findings and device evidence are recorded with the icon evaluation. → concepts/deity-icons.md.

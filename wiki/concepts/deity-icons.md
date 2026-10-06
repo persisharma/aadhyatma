@@ -1,7 +1,7 @@
 ---
 title: Shared Storybook Icon System
 type: concept
-sources: [mobile/src/components/DeityIcon.tsx, mobile/src/components/deityArtwork.ts, mobile/src/components/storybookSources.ts, mobile/src/components/StoryIcon.tsx, mobile/src/components/AppIcon.tsx, mobile/assets/icons/storybook/manifest.json, mobile/src/navigation/tabBarIcons.tsx, design.md, docs/evaluations/storybook-icons-2026-10-06/README.md, design-qa.md]
+sources: [mobile/src/components/DeityIcon.tsx, mobile/src/components/deityArtwork.ts, mobile/src/components/storybookSources.ts, mobile/src/components/StoryIcon.tsx, mobile/src/components/AppIcon.tsx, mobile/assets/icons/storybook/manifest.json, mobile/src/navigation/tabBarIcons.tsx, design.md, docs/evaluations/storybook-icons-2026-10-06/README.md, design-qa.md, mobile/src/screens/HomeScreen.tsx, mobile/src/components/CategoryCard.tsx, docs/evaluations/storybook-icons-2026-10-06/size-audit/README.md]
 last_verified_date: 2026-10-06
 confidence: high
 status: current
@@ -35,4 +35,7 @@ The native app uses 39 bundled transparent Storybook assets for categories and d
 - Cool illustration colors belong to attributes only; app chrome uses theme tokens.
 - Never import the Phosphor runtime barrel. Its direct modules require the `react-native-svg` className type augmentation and Jest transform allowance.
 - The single-akshara thumb DATA constraint remains even though library cards now display artwork.
-- `.maestro/storybook-icons-smoke.yaml` checks accessible routing and reader bookmark controls. Visual QA separately checks actual artwork at native size.
+- `.maestro/storybook-icons-smoke.yaml` checks accessible routing and reader bookmark controls, including the current Home kids-story shelf door. Visual QA separately checks actual artwork at native size.
+- Artwork bounds, layout frames and touch targets are different measurements. A large image does not make a small enclosing Pressable accessible; React Native hitSlop is limited by its parent bounds. The size review records 34dp reader circles, 10pt status/tab text and tablet/large-text behavior as broader usability follow-ups rather than claiming the icon refresh certifies accessibility.
+
+The 2026-10-06 size audit also found that Home reads `Dimensions.get('window').width` without a dimension subscription. Rotation on iPad can retain portrait-sized tiles while flex wrapping changes the number of columns, and Daan retains a three-column span. A future adaptive-grid change must update the width subscription and full-width span together; enlarging artwork alone will not resolve it. The filled NEW pill also overlaps artwork at accessibility-medium Dynamic Type. See the numbered audit evidence before claiming these broader states are covered.

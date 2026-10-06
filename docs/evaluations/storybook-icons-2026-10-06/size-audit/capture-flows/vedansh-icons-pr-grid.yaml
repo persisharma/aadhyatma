@@ -1,0 +1,25 @@
+appId: com.prashantsharma.vedansh
+---
+- tapOn: { id: "tab-home" }
+- tapOn: { text: "Back", optional: true }
+- scrollUntilVisible:
+    element: { text: "Daan Punya\\..*Tap to open\\." }
+    direction: DOWN
+    timeout: 15000
+- swipe:
+    start: "50%,30%"
+    end: "50%,42%"
+    duration: 1000
+- swipe:
+    start: "50%,30%"
+    end: "50%,35%"
+    duration: 1000
+- swipe:
+    start: "50%,30%"
+    end: "50%,37%"
+    duration: 1000
+- assertVisible: "Chalisa\\..*Tap to open\\."
+- assertVisible: "Kundali\\..*Tap to open\\."
+- assertVisible: "Muhurat\\..*Tap to open\\."
+- assertVisible: "Daan Punya\\..*Tap to open\\."
+- takeScreenshot: docs/evaluations/storybook-icons-2026-10-06/size-audit/24-phone-402-grid-overview

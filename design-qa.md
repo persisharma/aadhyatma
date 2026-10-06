@@ -2,7 +2,7 @@
 
 **Findings**
 
-No remaining actionable P0/P1/P2 issue in the requested icon integration and refinement scope. The final native grid was compared with the selected source and the original native screens. Earlier source drift, inconsistent centering and floating/text-only NEW treatments are resolved.
+No remaining actionable P0/P1/P2 source-fidelity or centering issue in the requested icon integration and refinement scope. The final native grid was compared with the selected source and the original native screens. Earlier source drift, inconsistent centering and floating/text-only NEW treatments are resolved.
 
 [P3] Generated isolation retains slightly sharper contours and different grain/tiny manuscript marks from the small source board. This is an illustration reconstruction, not a pixel-identical extraction. The focused comparison makes this residual difference visible; no literal reproduction claim is made for the sixteen deity subjects absent from the board.
 
@@ -49,10 +49,10 @@ No remaining actionable P0/P1/P2 issue in the requested icon integration and ref
 - Full native walkthrough passed on the filled-pill/reduced-art build: Home → Chalisa → Hanuman reader, bookmark add/remove, More, By Deity, Panchang, Kundali, audio, Search → reader → Home. Log `/tmp/vedansh-icons-filled-final-maestro.log`.
 - After final compact-launcher alignment and pill inset changes, the final installed build passed the focused Home grid run: Chalisa, Kundali, Muhurat and Daan visible together; captures include all sixteen subjects. Logs `/tmp/vedansh-icons-grid-final-maestro.log` and `/tmp/vedansh-icons-grid-final-frame.log`.
 - A prior capture attempt returned to Home during the reader assertion. A clean app launch and waiting for the build/launch process to finish produced the passing walkthrough. Its failed debug output remains outside the repository; it is not counted as a pass.
-- Current correction UI suite: 223 suites / 2,084 tests passed. Later focused runs passed 18 tests after the 39-asset registry/badge changes; all 8 CategoryCard tests passed after the final offset removal. Typecheck passed after registry changes. Final CategoryCard/spacing lint is clean and whitespace check passes.
+- Earlier correction UI suite: 223 suites / 2,084 tests passed. Later focused runs passed 18 tests after the 39-asset registry/badge changes; all 8 CategoryCard tests passed after the final offset removal. Typecheck passed after registry changes. Final CategoryCard/spacing lint is clean and whitespace check passes.
 - Asset tests verify 39 local mappings, 512px dimensions, transparency, SHA/byte counts and a total of 1,467,840 bytes below the 1.5MB artwork budget. All sixteen visible alpha bounding-box centers are within 0.5px of their 512px canvas center; rendered optical alignment is checked separately above.
 - The previous integration's full 2,903-test run predates these corrections. It is not claimed as a fresh full-suite run. The earlier debug Metro heap failure was not repaired by this visual work.
-- Android/tablet builds, physical-device performance, full VoiceOver navigation and enlarged-text visual sweeps remain unverified. No OTA or store publication occurred.
+- This initial fidelity stage did not exercise tablet or enlarged-text states. The later sizing review below includes them and records the remaining issues. Android builds, physical-device performance and full VoiceOver navigation remain unverified. No OTA or store publication occurred.
 
 **Implementation Checklist**
 
@@ -65,12 +65,18 @@ No remaining actionable P0/P1/P2 issue in the requested icon integration and ref
 - [x] Inspect combined full-view and focused source/native comparisons.
 - [x] Refresh evidence, design contract and wiki.
 
+**Additional icon-size and screen review (2026-10-06)**
+
+The user subsequently requested a sizing/aspect-ratio review. Fresh merged-main native captures and findings are in [the sizing report](docs/evaluations/storybook-icons-2026-10-06/size-audit/README.md). That review documents existing usability gaps separately from the accepted artwork fidelity: small badge/tab text, the reader's effective touch targets and layout behavior at larger text/tablet widths. The fidelity pass below does not certify full accessibility compliance.
+
+Full checks were rerun after merging current main: **2,928 tests passed**, including 224 UI suites / 2,087 UI tests; observance verification passed with no drift/failures; the Release build passed with zero errors/warnings. The updated native smoke passes with Home's new kids-story catalog preserved. Its redundant Hanuman centering step was removed after a failure screenshot showed the row already visible.
+
 **Open Questions**
 
 None required for the authorized local integration.
 
 **Follow-up Polish**
 
-Minor source texture differences and the untested platform/accessibility sweeps above are residual limits.
+Source texture differences are minor. The separate sizing review records larger-text, touch-target and tablet layout findings that need follow-up; untested platforms and full screen-reader navigation remain limitations.
 
-final result: passed
+final result: passed for the approved default-size artwork fidelity, centering and badge treatment; broader sizing/accessibility findings are documented in the separate review
