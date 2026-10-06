@@ -43,3 +43,7 @@ Maestro debug output and generation masters remain outside the repository under 
 ## Implemented sizing recommendations
 
 The follow-up is integrated in the native app. [Post-change evidence](post-change/README.md) covers filled NEW clearance, subscribed phone/tablet grids, real 48dp reader targets, readable tab labels, inline Search and enlarged-text reflow. The original size audit remains historical before evidence.
+
+## More icon follow-up
+
+User review identified both icon placement and style drift in More. [The More correction](more-alignment/README.md) adds a complete painted settings family and aligns its profile with the shared row columns. The earlier More captures remain pre-correction evidence.

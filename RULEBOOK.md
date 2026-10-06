@@ -24,6 +24,12 @@ Code is canonical, but the docs may never lag it by more than the PR that change
 - **Reviewer gate.** A PR that changes UI or contract with an untouched `design.md`/`RULEBOOK.md` is a hard reject, same bar as missing tests. Ask "which doc section describes what this PR just changed?" — if the answer is "none", the PR isn't done.
 - (Origin: a full design↔code audit in July 2026 found ~35 drifted sections — 3-tab bar vs shipped 5, phantom Bookmarks tab, 4-segment toggle vs shipped 2, Theerth map-first vs shipped list-first — because nothing forced doc updates alongside code.)
 
+### 0.2 Bundled icon registries
+
+Home/category artwork is registered in `mobile/src/components/storybookSources.ts`; deity attribute mappings live in `deityArtwork.ts`. More's settings subjects are registered separately in `MoreIcon.tsx`, which combines sixteen painted utility assets with three existing Home subjects. Row callers use the registry's typed names; navigation/reader controls retain `AppIcon`.
+
+Every new painted icon is a statically required local transparent square PNG with a matching provenance manifest. `storybookAssets.test.ts` verifies registry coverage, shipped hashes, dimensions, alpha, centered visible bounds and the separate Home/More byte budgets. Keep exact generation prompts and source/master hashes alongside the assets. Update the owning registry, manifest, asset contract and the matching `design.md` spec together; verify the installed native surface rather than treating the artwork sheet as integration evidence. More's row/profile sizing and enlarged-text behavior are specified in design.md §37.
+
 ---
 
 ## 1. The questions every new section must answer

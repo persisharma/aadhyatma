@@ -36,11 +36,12 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: "tab-more" }
 - waitForAnimationToEnd
 - extendedWaitUntil:
-    visible: "Language,.*"
+    visible: "Open Sadhak profile"
     timeout: 15000
 # The ऐप section (Language/Reading size) sits below the fold on standard-height
 # iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
-# tapping the off-screen row's estimated center hits the tab bar instead. Scroll first.
+# wait for the first-viewport Profile anchor, then scroll to Language. Waiting
+# for Language before scrolling incorrectly fails a correctly rendered More hub.
 - scrollUntilVisible:
     element:
       text: "Language,.*"

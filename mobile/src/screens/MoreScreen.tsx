@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Linking, Modal, Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
+import { Alert, Linking, Modal, Pressable, ScrollView, Share, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -27,21 +27,23 @@ import { isEmptyKulRecord, kuldevDisplayName } from '@/panchang/kulParampara';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import { useFontScale } from '@/contexts/FontScaleContext';
 import LanguagePickerSheet from '@/components/LanguagePickerSheet';
-// Lazy: a sheet that only exists after a tap has no business on the launch
-// graph (`launchGraph.test.ts`), and `React.lazy` is the same treatment
-// `TabNavigator` gives the Panchang stack.
-const LensPickerSheet = React.lazy(() => import('@/components/LensPickerSheet'));
 import { getLensDefinition } from '@/panchang/lenses';
 import { useLenses } from '@/panchang/useLenses';
 import ReadingSizePickerSheet, { readingSizeLabel } from '@/components/ReadingSizePickerSheet';
 import ReadAloudSettingsSheet, { readAloudRowLabel } from '@/components/ReadAloudSettingsSheet';
-import AppIcon, { type AppIconName } from '@/components/AppIcon';
-import StoryIcon, { type StoryIconName } from '@/components/StoryIcon';
+import AppIcon from '@/components/AppIcon';
+import StoryIcon from '@/components/StoryIcon';
+import MoreIcon, { type MoreIconName } from '@/components/MoreIcon';
 import { useReadAloudPrefs } from '@/contexts/ReadAloudPrefsContext';
 import { useReadAloud } from '@/contexts/ReadAloudContext';
 import { useTourTarget, scrollNodeIntoView } from '@/components/tour/tourTargets';
 import type { TimeOfDay } from '@/notifications/pure';
 import type { MoreStackParamList } from '@/navigation/types';
+
+// Lazy: a sheet that only exists after a tap has no business on the launch
+// graph (`launchGraph.test.ts`), and `React.lazy` is the same treatment
+// `TabNavigator` gives the Panchang stack.
+const LensPickerSheet = React.lazy(() => import('@/components/LensPickerSheet'));
 
 function formatReminderTimes(times: TimeOfDay[]): string {
   if (times.length === 0) return '';
@@ -59,7 +61,7 @@ function nativeNameFont(lang: Lang, devanagariFallback: string): string {
 }
 
 type RowProps = {
-  icon: AppIconName | StoryIconName;
+  icon: MoreIconName;
   label: string;
   labelFontFamily: string;
   state?: string;
@@ -83,7 +85,8 @@ function SettingsRow({
   first,
 }: RowProps) {
   const { colors } = useTheme();
-  const illustrated = ['sanskar', 'daan', 'purpose', 'stotram'].includes(icon);
+  const { fontScale } = useWindowDimensions();
+  const largeText = fontScale > 1.2;
   return (
     <Pressable
       testID={testID}
@@ -97,22 +100,27 @@ function SettingsRow({
       ]}
     >
       <View style={[styles.rowIcon, { backgroundColor: colors.goldTint }]}>
-        {illustrated
-          ? <StoryIcon name={icon as StoryIconName} size={36} />
-          : <AppIcon name={icon as AppIconName} size={23} weight="duotone" />}
+        <MoreIcon name={icon} />
       </View>
-      <Text style={[styles.rowLabel, { color: colors.ink, fontFamily: labelFontFamily }]} numberOfLines={1}>
-        {label}
-      </Text>
-      {state ? (
+      <View style={[styles.rowCopy, largeText && styles.rowCopyStacked]}>
         <Text
-          style={[styles.rowState, { color: colors.inkMuted, fontFamily: stateFontFamily ?? fontFamilies.inter }]}
-          numberOfLines={1}
+          style={[styles.rowLabel, largeText && styles.rowLabelStacked, { color: colors.ink, fontFamily: labelFontFamily }]}
+          numberOfLines={largeText ? undefined : 1}
         >
-          {state}
+          {label}
         </Text>
-      ) : null}
-      <AppIcon name="next" size={17} />
+        {state ? (
+          <Text
+            style={[styles.rowState, largeText && styles.rowStateStacked, { color: colors.inkMuted, fontFamily: stateFontFamily ?? fontFamilies.inter }]}
+            numberOfLines={largeText ? undefined : 1}
+          >
+            {state}
+          </Text>
+        ) : null}
+      </View>
+      <View style={styles.rowChevron}>
+        <AppIcon name="next" size={17} />
+      </View>
     </Pressable>
   );
 }
@@ -121,6 +129,8 @@ type Props = NativeStackScreenProps<MoreStackParamList, 'MoreHome'>;
 
 export default function MoreScreen({ navigation }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
+  const { fontScale } = useWindowDimensions();
+  const largeText = fontScale > 1.2;
   const { bookmarks } = useBookmarks();
   const { lang } = useGitaLanguage();
   const { lifetimeTotals, currentStreak } = useUserActivity();
@@ -274,14 +284,16 @@ export default function MoreScreen({ navigation }: Props) {
                     end={{ x: 0, y: 1 }}
                     style={StyleSheet.absoluteFill}
                   />
-                  <View style={[styles.profileBadge, { backgroundColor: colors.goldTint }]}>
-                    <StoryIcon name="stotram" size={40} />
+                  <View style={styles.profileIconColumn}>
+                    <View style={[styles.profileBadge, { backgroundColor: colors.goldTint }]}>
+                      <StoryIcon name="stotram" size={32} />
+                    </View>
                   </View>
                   <View style={styles.profileMeta}>
-                    <Text style={{ fontFamily: labelFont, fontSize: 18, color: colors.ink }} numberOfLines={1}>
+                    <Text style={{ fontFamily: labelFont, fontSize: 18, color: colors.ink }} numberOfLines={largeText ? undefined : 1}>
                       {pick(lang, { hi: 'साधक प्रोफ़ाइल', en: 'Sadhak Profile', gu: 'સાધક પ્રોફાઇલ', kn: 'ಸಾಧಕ ಪ್ರೊಫೈಲ್' })}
                     </Text>
-                    <Text style={{ marginTop: 3, fontFamily: chromeFont, fontSize: 14, color: colors.inkMuted }} numberOfLines={1}>
+                    <Text style={{ marginTop: 3, fontFamily: chromeFont, fontSize: 14, color: colors.inkMuted }} numberOfLines={largeText ? undefined : 1}>
                       <Text style={{ color: colors.saffron, fontFamily: fontFamilies.interSemiBold }}>{profileTotals.totalReads}</Text>
                       {' '}
                       {pick(lang, { hi: 'श्लोक', en: 'verses', gu: 'શ્લોક', kn: 'ಶ್ಲೋಕ' })}
@@ -291,7 +303,9 @@ export default function MoreScreen({ navigation }: Props) {
                       {pick(lang, { hi: 'श्रृंखला', en: 'day streak', gu: 'શ્રેણી', kn: 'ಸರಣಿ' })}
                     </Text>
                   </View>
-                  <AppIcon name="next" size={17} color={colors.iconInk} />
+                  <View style={styles.rowChevron}>
+                    <AppIcon name="next" size={17} color={colors.iconInk} />
+                  </View>
                 </Pressable>
 
                 {/* Row order = importance (design.md §37): the daily-practice loop first
@@ -673,12 +687,18 @@ const styles = StyleSheet.create({
   rowIcon: {
     width: 38,
     height: 38,
+    flexShrink: 0,
     borderRadius: radii.sm,
     alignItems: 'center',
     justifyContent: 'center',
   },
   rowLabel: { flex: 1, fontSize: 18 },
-  rowState: { fontSize: 15 },
+  rowLabelStacked: { flex: 0 },
+  rowCopy: { flex: 1, minWidth: 0, flexDirection: 'row', alignItems: 'center', gap: 14 },
+  rowCopyStacked: { flexDirection: 'column', alignItems: 'stretch', gap: 4 },
+  rowChevron: { width: 17, flexShrink: 0, alignItems: 'center', justifyContent: 'center' },
+  rowState: { fontSize: 15, flexShrink: 1, maxWidth: '60%' },
+  rowStateStacked: { flexShrink: 0, maxWidth: '100%' },
   chevron: { fontSize: 19 },
   profileRow: {
     flexDirection: 'row',
@@ -692,6 +712,14 @@ const styles = StyleSheet.create({
     width: 52,
     height: 52,
     borderRadius: 26,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  // The larger profile disc uses the same 38dp column and center as every row.
+  profileIconColumn: {
+    width: 38,
+    height: 52,
+    flexShrink: 0,
     alignItems: 'center',
     justifyContent: 'center',
   },

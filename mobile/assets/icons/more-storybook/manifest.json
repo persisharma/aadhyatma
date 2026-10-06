@@ -1,0 +1,281 @@
+{
+  "artDirection": "Approved Option 1 Storybook miniatures extended to More",
+  "generatedWith": "Built-in image_gen; individual transparent assets",
+  "generatedDate": "2026-10-06",
+  "referenceSha256": "c7bf2abade0305ffc0c6b9368119e8fb135c587f10cbabe4e517e54353c4c543",
+  "export": "512px PNG, 256-color alpha palette, longest visible dimension 432px, equal transparent margins, alpha below 8 cleared",
+  "icons": [
+    {
+      "name": "bell",
+      "file": "bell.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 40218,
+      "sha256": "f9a9b1f98b08ca90304ea69dea2926d0d328f1c1b6a230e97dd9f30784eef44f",
+      "masterSha256": "eccd372ad0ec502e2bbe63f81a650f297f314ce3221938552afb4d9c9b1ffd0c",
+      "source": "Selected board settings subject",
+      "visibleBounds": [
+        73,
+        40,
+        438,
+        472
+      ],
+      "prompt": "Create ONE production icon asset on a truly transparent RGBA background. Reference role: supplied image is the approved Storybook miniatures style and exact source for this subject. Match the reference matte earthy burnt ochre, muted gold/brass, warm brown outlines, subtle hand-painted shading and delicate grain. Crisp simple shapes must read at 25 logical pixels. Center the visible bounding box exactly in a square canvas; generous equal transparent margins, subject occupies about 78% of canvas in its longest dimension. Flat front-facing miniature, no surrounding frame, no tile, no badge, no ground shadow, no scenery, no cast shadow, no checkerboard, no text or labels. Do not change the palette to shiny yellow, vivid orange or glossy 3D. Isolate and faithfully reconstruct the small brass bell marked Reminders in the SETTINGS / DEITIES / ACTIONS strip in the lower right of the supplied reference. It has a warm softly shaded gold-brass body, dark warm brown contours, a tiny top handle and rounded dark clapper. This must be that exact design, not a modern outline notification bell."
+    },
+    {
+      "name": "alarm",
+      "file": "alarm.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 44995,
+      "sha256": "167429e7b0ae946c66546a0ac0503b623e066bf0cd0bd7ed54c840e4270b5028",
+      "masterSha256": "e76457d6bda8fc7321ac55e655db199de53646af3d4a13dd5d14b32b3285ecb7",
+      "source": "Selected board settings subject",
+      "visibleBounds": [
+        103,
+        40,
+        408,
+        472
+      ],
+      "prompt": "Create ONE production icon asset on a truly transparent RGBA background. Reference role: supplied image is the approved Storybook miniatures style and exact source for this subject. Match the reference matte earthy burnt ochre, muted gold/brass, warm brown outlines, subtle hand-painted shading and delicate grain. Crisp simple shapes must read at 25 logical pixels. Center the visible bounding box exactly in a square canvas; generous equal transparent margins, subject occupies about 78% of canvas in its longest dimension. Flat front-facing miniature, no surrounding frame, no tile, no badge, no ground shadow, no scenery, no cast shadow, no checkerboard, no text or labels. Do not change the palette to shiny yellow, vivid orange or glossy 3D. Isolate and faithfully reconstruct the antique round alarm clock marked Japa Alarm in the SETTINGS / DEITIES / ACTIONS strip in the lower right of the supplied reference. Gold-brass twin bells, ivory dial, warm brown hands and marks, small beads around its bottom. No letters, no caption. This must be that exact design, not a modern outline alarm clock."
+    },
+    {
+      "name": "saved",
+      "file": "saved.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 28884,
+      "sha256": "64de67d9e316d678d1c3ebe7fcb28440647fcedcf0dec52e52730b1876375469",
+      "masterSha256": "82c45aaa72059f7a44f376cdb63aef884a9e955a09242803284108658d04c858",
+      "source": "Selected board settings subject",
+      "visibleBounds": [
+        110,
+        40,
+        402,
+        472
+      ],
+      "prompt": "Create ONE production icon asset on a truly transparent RGBA background. Reference role: supplied image is the approved Storybook miniatures style and exact source for this subject. Match the reference matte earthy burnt ochre, muted gold/brass, warm brown outlines, subtle hand-painted shading and delicate grain. Crisp simple shapes must read at 25 logical pixels. Center the visible bounding box exactly in a square canvas; generous equal transparent margins, subject occupies about 78% of canvas in its longest dimension. Flat front-facing miniature, no surrounding frame, no tile, no badge, no ground shadow, no scenery, no cast shadow, no checkerboard, no text or labels. Do not change the palette to shiny yellow, vivid orange or glossy 3D. Isolate and faithfully reconstruct the ochre filled bookmark ribbon marked Saved in the SETTINGS / DEITIES / ACTIONS strip in the lower right of the supplied reference. Burnt ochre bookmark, V-notch at the bottom, small cream heart centered in its upper middle. That exact filled ribbon design, not an outline bookmark."
+    },
+    {
+      "name": "family",
+      "file": "family.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 34991,
+      "sha256": "b2a39ba1b2831de2502f33bb0afb91ddfc7dc2666e04907a8401671d5cffe325",
+      "masterSha256": "3961c3269fdca4f442dae0b98218d2704d4faea5ddf391af52624767111584b2",
+      "source": "Semantic extension of selected Storybook settings palette",
+      "visibleBounds": [
+        40,
+        96,
+        472,
+        415
+      ],
+      "prompt": "Create ONE production utility icon asset on a truly transparent RGBA background. Reference role: the supplied approved Storybook miniatures board establishes the exact visual family; extend its lower-right painted settings icons into this new subject. Match its matte earthy burnt ochre, muted gold/brass, warm brown outlines, subtle hand-painted shading and delicate grain. Simple bold shapes must read at 25 logical pixels. Center the visible bounding box exactly in a square canvas; generous equal transparent margins, subject occupies about 78% of canvas in its longest dimension. Flat front-facing miniature, no surrounding frame or tile unless part of the specified subject, no badge, no ground/cast shadow, no scenery, no checkerboard, no captions. Never shiny yellow, vivid orange, glossy 3D or thin generic outline UI glyphs. Subject: Three simplified family members: three small round heads and three overlapping busts. Center figure slightly forward, two slightly behind. Solid matte burnt ochre and brass-gold shapes with a fine warm-brown outline; friendly abstract silhouettes, no facial detail."
+    },
+    {
+      "name": "regional",
+      "file": "regional.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 62017,
+      "sha256": "165f81d8ff69e6c3959233e40d1266405f9300e38d5c791568babc7129bd643d",
+      "masterSha256": "97ef71da2361e5fd98d2540a74a8e4c8e5b0d2e6156ac0a83d98168a46752221",
+      "source": "Semantic extension of selected Storybook settings palette",
+      "visibleBounds": [
+        40,
+        40,
+        472,
+        471
+      ],
+      "prompt": "Create ONE production utility icon asset on a truly transparent RGBA background. Reference role: the supplied approved Storybook miniatures board establishes the exact visual family; extend its lower-right painted settings icons into this new subject. Match its matte earthy burnt ochre, muted gold/brass, warm brown outlines, subtle hand-painted shading and delicate grain. Simple bold shapes must read at 25 logical pixels. Center the visible bounding box exactly in a square canvas; generous equal transparent margins, subject occupies about 78% of canvas in its longest dimension. Flat front-facing miniature, no surrounding frame or tile unless part of the specified subject, no badge, no ground/cast shadow, no scenery, no checkerboard, no captions. Never shiny yellow, vivid orange, glossy 3D or thin generic outline UI glyphs. Subject: A small front-facing globe. Round muted brass-gold sphere with a simple recognizable olive-green landmass, fine dark warm-brown outline and just two subtle geographic arcs. No stand and no text. Simple regional-calendar globe, not a planetary or astrology chart."
+    },
+    {
+      "name": "birthday",
+      "file": "birthday.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 47498,
+      "sha256": "130227a9c1705a8a4a4170c999f3bea30b6cac4bfe6e83a9ed8bbdb9f0c018e5",
+      "masterSha256": "40c3eea3ac10abe1597fadbafc7f0d31e989b8299861edccf0b5374a37692d29",
+      "source": "Semantic extension of selected Storybook settings palette",
+      "visibleBounds": [
+        55,
+        40,
+        457,
+        472
+      ],
+      "prompt": "Create ONE production utility icon asset on a truly transparent RGBA background. Reference role: the supplied approved Storybook miniatures board establishes the exact visual family; extend its lower-right painted settings icons into this new subject. Match its matte earthy burnt ochre, muted gold/brass, warm brown outlines, subtle hand-painted shading and delicate grain. Simple bold shapes must read at 25 logical pixels. Center the visible bounding box exactly in a square canvas; generous equal transparent margins, subject occupies about 78% of canvas in its longest dimension. Flat front-facing miniature, no surrounding frame or tile unless part of the specified subject, no badge, no ground/cast shadow, no scenery, no checkerboard, no captions. Never shiny yellow, vivid orange, glossy 3D or thin generic outline UI glyphs. Subject: A tiny front-facing cream parchment calendar plaque in a bronze frame, two small brown binding loops at the top, and one single burnt-ochre five-point star centered on the cream face. No dates, numbers or letters."
+    },
+    {
+      "name": "language",
+      "file": "language.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 48001,
+      "sha256": "d16a8eb49b693fa63a458c2987792c0aac95a570a63d859160cfa3abc1befe6d",
+      "masterSha256": "7c62b491cc78b0de286ebb86749cf597f1ee6cb89b94ebe767919c72469c8545",
+      "source": "Semantic extension of selected Storybook settings palette",
+      "visibleBounds": [
+        40,
+        53,
+        472,
+        459
+      ],
+      "prompt": "Create ONE production utility icon asset on a truly transparent RGBA background. Reference role: the supplied approved Storybook miniatures board establishes the exact visual family; extend its lower-right painted settings icons into this new subject. Match its matte earthy burnt ochre, muted gold/brass, warm brown outlines, subtle hand-painted shading and delicate grain. Simple bold shapes must read at 25 logical pixels. Center the visible bounding box exactly in a square canvas; generous equal transparent margins, subject occupies about 78% of canvas in its longest dimension. Flat front-facing miniature, no surrounding frame or tile unless part of the specified subject, no badge, no ground/cast shadow, no scenery, no checkerboard, no captions. Never shiny yellow, vivid orange, glossy 3D or thin generic outline UI glyphs. Subject: Two small overlapping translation tiles: rear cream parchment tile bearing exactly the Devanagari letter \u0905, front warm-gold tile bearing exactly the Latin letter A. Hand-painted warm-brown glyphs, clean minimal shapes. Only those two letters, no other text."
+    },
+    {
+      "name": "textSize",
+      "file": "text-size.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 23761,
+      "sha256": "e468f6a0f84dea95fd4d7dd353118de5b6704039313b742349e6f0b156b93d40",
+      "masterSha256": "7a02a60105ffbb7be71ff318c719a538cdc71ff4becbc36d7b8d44c0662ba24f",
+      "source": "Semantic extension of selected Storybook settings palette",
+      "visibleBounds": [
+        41,
+        117,
+        471,
+        395
+      ],
+      "prompt": "Create ONE production utility icon asset on a truly transparent RGBA background. Reference role: the supplied approved Storybook miniatures board establishes the exact visual family; extend its lower-right painted settings icons into this new subject. Match its matte earthy burnt ochre, muted gold/brass, warm brown outlines, subtle hand-painted shading and delicate grain. Simple bold shapes must read at 25 logical pixels. Center the visible bounding box exactly in a square canvas; generous equal transparent margins, subject occupies about 78% of canvas in its longest dimension. Flat front-facing miniature, no surrounding frame or tile unless part of the specified subject, no badge, no ground/cast shadow, no scenery, no checkerboard, no captions. Never shiny yellow, vivid orange, glossy 3D or thin generic outline UI glyphs. Subject: Exactly Aa: one large uppercase Latin A and one smaller lowercase Latin a side by side. Substantial hand-painted burnt-ochre serif letterforms with subtle matte shading and thin brown contours. Clear size comparison; no tiles or other text."
+    },
+    {
+      "name": "voice",
+      "file": "voice.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 40476,
+      "sha256": "ca573fb17851a175e05265a4c333d4d8c04959f5636d4a75f8894596c8053598",
+      "masterSha256": "aace701274a2a2ffffec48de422c732a498bf5acaceefdb03e68dc991125f96a",
+      "source": "Semantic extension of selected Storybook settings palette",
+      "visibleBounds": [
+        40,
+        86,
+        472,
+        426
+      ],
+      "prompt": "Create ONE production utility icon asset on a truly transparent RGBA background. Reference role: the supplied approved Storybook miniatures board establishes the exact visual family; extend its lower-right painted settings icons into this new subject. Match its matte earthy burnt ochre, muted gold/brass, warm brown outlines, subtle hand-painted shading and delicate grain. Simple bold shapes must read at 25 logical pixels. Center the visible bounding box exactly in a square canvas; generous equal transparent margins, subject occupies about 78% of canvas in its longest dimension. Flat front-facing miniature, no surrounding frame or tile unless part of the specified subject, no badge, no ground/cast shadow, no scenery, no checkerboard, no captions. Never shiny yellow, vivid orange, glossy 3D or thin generic outline UI glyphs. Subject: A front-facing small matte brass speaker symbol: warm-gold tapered horn on the left and exactly two warm-brown curved sound waves to its right. Simple recognizable listen/read-aloud miniature. No cord, text, musical notes or surrounding disc."
+    },
+    {
+      "name": "widgets",
+      "file": "widgets.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 56295,
+      "sha256": "f712179d387591e7845adb8901e1fd982f950d83ba20a015f28e5e68082132b6",
+      "masterSha256": "f02fc1a012da0f48958c607c7abbc586044c2a1608f3203471de1f849976aff7",
+      "source": "Semantic extension of selected Storybook settings palette",
+      "visibleBounds": [
+        40,
+        47,
+        471,
+        465
+      ],
+      "prompt": "Create ONE production utility icon asset on a truly transparent RGBA background. Reference role: the supplied approved Storybook miniatures board establishes the exact visual family; extend its lower-right painted settings icons into this new subject. Match its matte earthy burnt ochre, muted gold/brass, warm brown outlines, subtle hand-painted shading and delicate grain. Simple bold shapes must read at 25 logical pixels. Center the visible bounding box exactly in a square canvas; generous equal transparent margins, subject occupies about 78% of canvas in its longest dimension. Flat front-facing miniature, no surrounding frame or tile unless part of the specified subject, no badge, no ground/cast shadow, no scenery, no checkerboard, no captions. Never shiny yellow, vivid orange, glossy 3D or thin generic outline UI glyphs. Subject: Four small separate rounded squares in an exactly aligned 2-by-2 grid. Two warm ochre and two muted brass-gold, delicate warm-brown outlines and subtle matte hand-painted shading. Generous equal gaps, no details inside the squares."
+    },
+    {
+      "name": "share",
+      "file": "share.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 30252,
+      "sha256": "ddf0909ba40c81b465ed9a21d63e5564fd1ecaff35a319ac6a215ab8bff3993c",
+      "masterSha256": "d5828c470f740ae1d25b14b4f51304916918b03c72f7a4c4e5aa4d8158490e46",
+      "source": "Semantic extension of selected Storybook settings palette",
+      "visibleBounds": [
+        56,
+        40,
+        456,
+        472
+      ],
+      "prompt": "Create ONE production utility icon asset on a truly transparent RGBA background. Reference role: the supplied approved Storybook miniatures board establishes the exact visual family; extend its lower-right painted settings icons into this new subject. Match its matte earthy burnt ochre, muted gold/brass, warm brown outlines, subtle hand-painted shading and delicate grain. Simple bold shapes must read at 25 logical pixels. Center the visible bounding box exactly in a square canvas; generous equal transparent margins, subject occupies about 78% of canvas in its longest dimension. Flat front-facing miniature, no surrounding frame or tile unless part of the specified subject, no badge, no ground/cast shadow, no scenery, no checkerboard, no captions. Never shiny yellow, vivid orange, glossy 3D or thin generic outline UI glyphs. Subject: Exactly three small matte brass-gold round nodes joined by two warm-brown diagonal branches: one node left center, one upper right, one lower right. Familiar share-network geometry, sturdy simple strokes, no surrounding frame."
+    },
+    {
+      "name": "star",
+      "file": "star.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 33411,
+      "sha256": "4e97730145a4b389770524857dbafdcf561a809317c6950082db1c0dd43c1b8a",
+      "masterSha256": "c51fd847d4ba24f385c3220ce8d9475b62df914fa09b48a9a489346b2e0c2c46",
+      "source": "Semantic extension of selected Storybook settings palette",
+      "visibleBounds": [
+        40,
+        55,
+        472,
+        457
+      ],
+      "prompt": "Create ONE production utility icon asset on a truly transparent RGBA background. Reference role: the supplied approved Storybook miniatures board establishes the exact visual family; extend its lower-right painted settings icons into this new subject. Match its matte earthy burnt ochre, muted gold/brass, warm brown outlines, subtle hand-painted shading and delicate grain. Simple bold shapes must read at 25 logical pixels. Center the visible bounding box exactly in a square canvas; generous equal transparent margins, subject occupies about 78% of canvas in its longest dimension. Flat front-facing miniature, no surrounding frame or tile unless part of the specified subject, no badge, no ground/cast shadow, no scenery, no checkerboard, no captions. Never shiny yellow, vivid orange, glossy 3D or thin generic outline UI glyphs. Subject: One simple five-point star, matte antique brass gold with subtle burnt-ochre shading and thin warm-brown contour. Broad balanced points, centered upright, no sparkle companions or medallion."
+    },
+    {
+      "name": "instagram",
+      "file": "instagram.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 54940,
+      "sha256": "0f41f7fce449cee0d148af6305a54a4aae4d691e5342f7a576c71aa631990628",
+      "masterSha256": "8f22c2525a3297c76a5d73c333139f115e5e4ad5b88c9998fca4ff751c75d8a0",
+      "source": "Semantic extension of selected Storybook settings palette",
+      "visibleBounds": [
+        40,
+        41,
+        472,
+        470
+      ],
+      "prompt": "Create ONE production utility icon asset on a truly transparent RGBA background. Reference role: the supplied approved Storybook miniatures board establishes the exact visual family; extend its lower-right painted settings icons into this new subject. Match its matte earthy burnt ochre, muted gold/brass, warm brown outlines, subtle hand-painted shading and delicate grain. Simple bold shapes must read at 25 logical pixels. Center the visible bounding box exactly in a square canvas; generous equal transparent margins, subject occupies about 78% of canvas in its longest dimension. Flat front-facing miniature, no surrounding frame or tile unless part of the specified subject, no badge, no ground/cast shadow, no scenery, no checkerboard, no captions. Never shiny yellow, vivid orange, glossy 3D or thin generic outline UI glyphs. Subject: A familiar Instagram camera mark rendered as a matte burnt-ochre rounded square camera, a cream circular lens in the center and a tiny cream round viewfinder dot upper right. Flat hand-painted miniature, warm-brown contours. No wordmark, no pink/purple gradient."
+    },
+    {
+      "name": "info",
+      "file": "info.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 46712,
+      "sha256": "743d6258eb54f7e1c6df06548ba067a24fe47875ce4a3bc8710dadd376a590a2",
+      "masterSha256": "ad931fa9b7a0d3de9ea333bbb5689425bf91d0f7bae3caae3382e30f800bbb99",
+      "source": "Semantic extension of selected Storybook settings palette",
+      "visibleBounds": [
+        41,
+        40,
+        471,
+        472
+      ],
+      "prompt": "Create ONE production utility icon asset on a truly transparent RGBA background. Reference role: the supplied approved Storybook miniatures board establishes the exact visual family; extend its lower-right painted settings icons into this new subject. Match its matte earthy burnt ochre, muted gold/brass, warm brown outlines, subtle hand-painted shading and delicate grain. Simple bold shapes must read at 25 logical pixels. Center the visible bounding box exactly in a square canvas; generous equal transparent margins, subject occupies about 78% of canvas in its longest dimension. Flat front-facing miniature, no surrounding frame or tile unless part of the specified subject, no badge, no ground/cast shadow, no scenery, no checkerboard, no captions. Never shiny yellow, vivid orange, glossy 3D or thin generic outline UI glyphs. Subject: A small circular cream-and-brass medallion containing exactly a centered lowercase Latin i in warm brown. Subtle matte burnt-ochre edge and delicate hand-painted grain. Clear dot above the i, no other letters."
+    },
+    {
+      "name": "report",
+      "file": "report.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 23528,
+      "sha256": "edf6b9331f4513e29515dc591eebfe0e281d4f89cbc5ec8a1d3410e20a2e3679",
+      "masterSha256": "a4b1e52b6a296ac55df683e299dbe807c68c0fd4231e59a303fc17659d2459d5",
+      "source": "Semantic extension of selected Storybook settings palette",
+      "visibleBounds": [
+        107,
+        40,
+        404,
+        472
+      ],
+      "prompt": "Create ONE production utility icon asset on a truly transparent RGBA background. Reference role: the supplied approved Storybook miniatures board establishes the exact visual family; extend its lower-right painted settings icons into this new subject. Match its matte earthy burnt ochre, muted gold/brass, warm brown outlines, subtle hand-painted shading and delicate grain. Simple bold shapes must read at 25 logical pixels. Center the visible bounding box exactly in a square canvas; generous equal transparent margins, subject occupies about 78% of canvas in its longest dimension. Flat front-facing miniature, no surrounding frame or tile unless part of the specified subject, no badge, no ground/cast shadow, no scenery, no checkerboard, no captions. Never shiny yellow, vivid orange, glossy 3D or thin generic outline UI glyphs. Subject: A small front-facing report flag: a warm-brown vertical pole on the left with a matte burnt-ochre rectangular waving pennant attached on the upper right. Simple neutral flag, no religious mark, no emblem or writing."
+    },
+    {
+      "name": "reset",
+      "file": "reset.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 32510,
+      "sha256": "99b37f6cde6f9476263ce54dcb3a96ce04343e2d48b36d6e4f0f37fe78691315",
+      "masterSha256": "1774222f0833bb9d451791fe8728a37aaa7281a1a7a9d43c2c796185141dc0e6",
+      "source": "Semantic extension of selected Storybook settings palette",
+      "visibleBounds": [
+        60,
+        40,
+        451,
+        472
+      ],
+      "prompt": "Create ONE production utility icon asset on a truly transparent RGBA background. Reference role: the supplied approved Storybook miniatures board establishes the exact visual family; extend its lower-right painted settings icons into this new subject. Match its matte earthy burnt ochre, muted gold/brass, warm brown outlines, subtle hand-painted shading and delicate grain. Simple bold shapes must read at 25 logical pixels. Center the visible bounding box exactly in a square canvas; generous equal transparent margins, subject occupies about 78% of canvas in its longest dimension. Flat front-facing miniature, no surrounding frame or tile unless part of the specified subject, no badge, no ground/cast shadow, no scenery, no checkerboard, no captions. Never shiny yellow, vivid orange, glossy 3D or thin generic outline UI glyphs. Subject: A single thick burnt-ochre counterclockwise return arrow curving nearly one full circle with an obvious broad triangular arrowhead at the upper left pointing left. Hand-painted matte brass-ochre body, warm-brown contour, subtly shaded. No surrounding tile or medallion."
+    }
+  ]
+}
