@@ -19,7 +19,7 @@ Add for each page: the exact sentence or scene from the story data, location and
 
 1. Read the story page in `mobile/src/data/kidsStories/<story>.json` and its adjacent pages. Write the visual action in one sentence. Do not infer an ending from the cover.
 2. Use the built-in image generation tool with the approved style image and the nearest character reference. For the Krishna closing page, `kj-09` fixed Yashoda and baby Krishna's appearance; `kj-08` supplied overall style.
-3. Inspect the image at full size: correct place, time, people, action, age and count; no copied prison/river/other-scene objects; consistent faces and clothing; no in-image text; safe crop. Regenerate if a required detail is wrong.
+3. Inspect the image at full size: correct place, time, people, action, age and count; no copied prison/river/other-scene objects; consistent faces and clothing; no in-image text; safe crop. Check each hand's thumb side, finger count and wrist connection; two open palms must form a plausible left/right pair. Check the specified deity arm count and one attached hand per arm, with no detached hands or ghost duplicate weapons. Regenerate if a required detail is wrong.
 4. Export the selected image as a WebP, keep its new scene filename, copy the same bytes to the app and prototype asset directories, and register its art key in `KidsStoryArt.tsx` and the browser prototype. Keep the library cover separate from closing art.
 5. Open the final card in the native reader and browser prototype with the caption visible; check that the image and narration describe the same event. Run the story asset test.
 

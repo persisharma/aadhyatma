@@ -310,3 +310,7 @@ New page `subsystems/share.md`. `share()` now takes `ShareableContent` (verse | 
 ## [2026-10-04] ingest | Empty houses block (review: "can a bhava stay empty?"): `buildEmptyHouses` lists each unoccupied house after the nine graha cards — house + life areas, its lord, the lord's seat — as one bullet under two intro bullets (`EMPTY_HOUSES_COPY`, `EMPTY_HOUSE_LINE`); model `KundaliEmptyHouses` on the grahas section, handoff `### Empty houses`, review sheet section + open question (no drishti read), RULEBOOK §14.7.9, design.md §78 item 5, convention. Updated [[panchang]].
 ## [2026-10-05] ingest | Stories for Kids now opens Home → deity shelves → published story reader. Added [[kids-stories]] for the catalog, planned-story boundary, lazy routes and illustration workflow.
 ## [2026-10-05] lint | Verified [[kids-stories]] is indexed and all source paths in its frontmatter exist; aligned the entry with shared catalog cards and Home-stack routing.
+
+## [2026-10-06] ingest | Krishna Janma illustration corrections
+
+Added six distinct scene illustrations for wedding, threat, imprisonment, Balarama, prayer and return. Corrected Vasudeva's paired palms in the promise scene and Devi's detached hand/duplicate weapon. Native and browser mappings now cover sixteen distinct scenes plus the separate cover; asset tests guard scene uniqueness and byte-for-byte prototype parity. Updated [[kids-stories]].

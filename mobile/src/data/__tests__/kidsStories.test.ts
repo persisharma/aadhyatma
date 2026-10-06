@@ -56,3 +56,35 @@ test('every page and cover resolves to a bundled final illustration', () => {
     assert.equal(bytes.toString('ascii', 8, 12), 'WEBP');
   }
 });
+
+test('Krishna Janma keeps distinct scene art and matching browser assets', () => {
+  const story = getKidsStory('krishna-janma')!;
+  assert.equal(story.pages.length, 16);
+  assert.equal(new Set([story.coverArt, ...story.pages.map(page => page.art)]).size, 17);
+  const expectedScenes = {
+    wedding: 'wedding', prophecy: 'chariot', threat: 'threat', promise: 'sword',
+    imprisoned: 'imprisoned', 'six-children': 'prison', balarama: 'balarama',
+    midnight: 'midnight', darshan: 'vishnu', prayer: 'prayer', escape: 'escape',
+    'yamuna-crossing': 'yamuna', gokul: 'gokul', return: 'return', devi: 'devi', safe: 'safe',
+  };
+  assert.deepEqual(Object.fromEntries(story.pages.map(page => [page.id, page.art])), expectedScenes);
+
+  const repoRoot = new URL('../../../../', import.meta.url);
+  const componentUrl = new URL('../../components/KidsStoryArt.tsx', import.meta.url);
+  const component = readFileSync(componentUrl, 'utf8');
+  const assets = new Map([...component.matchAll(/(\w+): require\('(.+?)'\)/g)].map(match => [match[1], match[2]]));
+  const prototype = readFileSync(new URL('docs/kids-stories-prototype.html', repoRoot), 'utf8');
+  const prototypeStory = prototype.match(/const story = (\{.*?\});/);
+  const prototypeArtwork = prototype.match(/const artwork = (\{.*?\});/);
+  assert.ok(prototypeStory);
+  assert.ok(prototypeArtwork);
+  assert.deepEqual(JSON.parse(prototypeStory[1]), story);
+  const browserAssets = JSON.parse(prototypeArtwork[1]) as Record<string, string>;
+  for (const art of [story.coverArt, ...story.pages.map(page => page.art)]) {
+    assert.ok(assets.get(art));
+    assert.ok(browserAssets[art], `Missing browser art: ${art}`);
+    const nativeUrl = new URL(assets.get(art)!, componentUrl);
+    const browserUrl = new URL(`docs/${browserAssets[art]}`, repoRoot);
+    assert.deepEqual(readFileSync(nativeUrl), readFileSync(browserUrl), `App/browser mismatch: ${art}`);
+  }
+});
