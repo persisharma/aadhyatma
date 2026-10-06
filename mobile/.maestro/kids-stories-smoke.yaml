@@ -1,12 +1,16 @@
-# Illustrated story reader: route, swipe-only paging (Gita-style), caption scrolling, return.
+# Home → deity → story reader; swipe-only paging and return to the Krishna shelf.
 appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
-- tapOn: { id: "tab-more" }
 - scrollUntilVisible:
-    element: { id: "kids-stories-door" }
+    element: { id: "home-kids-stories-card" }
     centerElement: true
-- tapOn: { id: "kids-stories-door" }
+- tapOn: { id: "home-kids-stories-card" }
+- assertVisible: { id: "kids-story-deity-krishna" }
+- assertVisible: { id: "kids-story-deity-ganesha" }
+- assertVisible: { id: "kids-story-deity-hanuman" }
+- tapOn: { id: "kids-story-deity-krishna" }
+- assertVisible: { id: "kids-story-planned-kaliya-nag" }
 - tapOn: { id: "kids-story-krishna-janma" }
 - assertVisible: { id: "story-pager" }
 - assertVisible: "1 / 16"
@@ -27,5 +31,105 @@ appId: com.prashantsharma.vedansh
     duration: 600
 - assertVisible: "2 / 16"
 - assertVisible: { id: "story-caption" }
+# threat: verify each distinct illustration's page is reachable.
+- swipe:
+    start: 85%, 45%
+    end: 15%, 45%
+    duration: 600
+- assertVisible: "3 / 16"
+- assertVisible: { id: "story-page-threat" }
+# promise: verify each distinct illustration's page is reachable.
+- swipe:
+    start: 85%, 45%
+    end: 15%, 45%
+    duration: 600
+- assertVisible: "4 / 16"
+- assertVisible: { id: "story-page-promise" }
+# imprisoned: verify each distinct illustration's page is reachable.
+- swipe:
+    start: 85%, 45%
+    end: 15%, 45%
+    duration: 600
+- assertVisible: "5 / 16"
+- assertVisible: { id: "story-page-imprisoned" }
+# six-children: verify each distinct illustration's page is reachable.
+- swipe:
+    start: 85%, 45%
+    end: 15%, 45%
+    duration: 600
+- assertVisible: "6 / 16"
+- assertVisible: { id: "story-page-six-children" }
+# balarama: verify each distinct illustration's page is reachable.
+- swipe:
+    start: 85%, 45%
+    end: 15%, 45%
+    duration: 600
+- assertVisible: "7 / 16"
+- assertVisible: { id: "story-page-balarama" }
+# midnight: verify each distinct illustration's page is reachable.
+- swipe:
+    start: 85%, 45%
+    end: 15%, 45%
+    duration: 600
+- assertVisible: "8 / 16"
+- assertVisible: { id: "story-page-midnight" }
+# darshan: verify each distinct illustration's page is reachable.
+- swipe:
+    start: 85%, 45%
+    end: 15%, 45%
+    duration: 600
+- assertVisible: "9 / 16"
+- assertVisible: { id: "story-page-darshan" }
+# prayer: verify each distinct illustration's page is reachable.
+- swipe:
+    start: 85%, 45%
+    end: 15%, 45%
+    duration: 600
+- assertVisible: "10 / 16"
+- assertVisible: { id: "story-page-prayer" }
+# escape: verify each distinct illustration's page is reachable.
+- swipe:
+    start: 85%, 45%
+    end: 15%, 45%
+    duration: 600
+- assertVisible: "11 / 16"
+- assertVisible: { id: "story-page-escape" }
+# yamuna-crossing: verify each distinct illustration's page is reachable.
+- swipe:
+    start: 85%, 45%
+    end: 15%, 45%
+    duration: 600
+- assertVisible: "12 / 16"
+- assertVisible: { id: "story-page-yamuna-crossing" }
+# gokul: verify each distinct illustration's page is reachable.
+- swipe:
+    start: 85%, 45%
+    end: 15%, 45%
+    duration: 600
+- assertVisible: "13 / 16"
+- assertVisible: { id: "story-page-gokul" }
+# return: verify each distinct illustration's page is reachable.
+- swipe:
+    start: 85%, 45%
+    end: 15%, 45%
+    duration: 600
+- assertVisible: "14 / 16"
+- assertVisible: { id: "story-page-return" }
+# devi: verify each distinct illustration's page is reachable.
+- swipe:
+    start: 85%, 45%
+    end: 15%, 45%
+    duration: 600
+- assertVisible: "15 / 16"
+- assertVisible: { id: "story-page-devi" }
+# safe: verify each distinct illustration's page is reachable.
+- swipe:
+    start: 85%, 45%
+    end: 15%, 45%
+    duration: 600
+- assertVisible: "16 / 16"
+- assertVisible: { id: "story-page-safe" }
+- assertVisible: "16 / 16"
+- assertVisible: { id: "story-page-safe" }
 - tapOn: "Back"
 - assertVisible: { id: "kids-story-krishna-janma" }

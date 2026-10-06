@@ -13,8 +13,9 @@
 
 ## Subsystems
 - [[readers]] — per-text paged `FlatList` reader screens; chapter auto-advance contract.
+- [[kids-stories]] — Home → deity → story shelves and illustrated children's reader; published versus planned story boundary and art workflow.
 - [[routine]] — Daily Routine (नित्य साधना): daily/weekday schedules, vaar deity suggestions, derived completion, per-routine reminders, home banner + celebration.
-- [[panchang]] — Panchang tab: Hindu-calendar engine, festival/vrat observances, **festival arcs (पर्व-अर्क: sthapana → family-chosen visarjan)**, Daily Muhurat, shubh-yoga annotations (annotate-only), Kundali, deterministic Daily Rashifal, private IST-only Guna Milan, newborn-private Namkaran, and dated one-shot muhurat follows.
+- [[panchang]] — Panchang tab: Hindu-calendar engine, festival/vrat observances, **festival arcs (पर्व-अर्क: sthapana → family-chosen visarjan)**, Daily Muhurat, shubh-yoga annotations (annotate-only), Kundali (incl. the draft **graha-by-graha cards with counted labels and upay**, jyotishi-gated), deterministic Daily Rashifal, private IST-only Guna Milan, newborn-private Namkaran, and dated one-shot muhurat follows.
 - [[japam-alarms]] — Japam Alarms: repeat-days, one-time, and skip-next; native AlarmKit/AlarmManager tier with expo fallback.
 - [[audio]] — the three sound sources (recorded library, japam loop, read-aloud TTS), the playback arbiter that keeps them mutually exclusive, and the expo-speech platform traps.
 - [[notifications]] — ten local notification families (daily verse, vrat, **muhurat**, festive, **return / वापसी स्मरण**, sadhana, **routine**, personal Pitru Smaran, public Pitru Paksha, japam), the pure-planner + glue + headless-scheduler shape, the shared iOS pending budget, and notification-tap deep links.

@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import BasisChain from '@/components/BasisChain';
+import GrahaReadingList from '@/components/GrahaReadingList';
 import JyotishShareCard from '@/components/JyotishShareCard';
 import JyotishShareSheet from '@/components/JyotishShareSheet';
 import JyotishStateCard from '@/components/JyotishStateCard';
@@ -18,6 +19,8 @@ import type { PanchangStackParamList } from '@/navigation/types';
 import { buildKundaliHandoffText } from '@/panchang/kundaliHandoff';
 import { buildPrashnaReading } from '@/panchang/prashnaGuidance';
 import { isPurposeId } from '@/panchang/prashnaPurposes';
+import { grahaReadingsApproved } from '@/panchang/grahaReadingContent';
+import { RASHI_NAMES_EN, RASHI_NAMES_HI } from '@/panchang/kundali';
 import { buildKundaliReport } from '@/panchang/kundaliReport';
 import type { KundaliReportSection } from '@/panchang/kundaliReportModel';
 import { getCityById } from '@/panchang/locations';
@@ -80,7 +83,11 @@ export default function KundaliReportScreen({ navigation, route }: Props) {
         cityNameHi: city.nameHi,
         cityNameEn: city.nameEn,
       },
-      now
+      now,
+      // The graha cards wait on a jyotishi's sign-off (RULEBOOK §14.7):
+      // development builds show the draft so it can be reviewed in place;
+      // store builds show it only once the review record is approved.
+      { includeGrahaReadings: __DEV__ || grahaReadingsApproved() }
     );
   }, [chart, city, now, profile]);
 
@@ -298,6 +305,20 @@ export default function KundaliReportScreen({ navigation, route }: Props) {
                 ]}
               >
                 <NorthIndianChart chart={chart} size={224} />
+                {/* The box numbers are rashis, not houses — say so, with this
+                    chart's own Lagna number, before anyone counts boxes. */}
+                <Text
+                  style={[
+                    styles.chartKey,
+                    { color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily) },
+                  ]}
+                >
+                  {meaningByLang(
+                    lang,
+                    `ऊपर बीच का रंगीन खाना = पहला भाव (लग्न); बाकी भाव उल्टी घड़ी की दिशा में। छोटे अंक राशि हैं, भाव नहीं — यहाँ ${chart.lagnaRashiIndex + 1} यानी ${RASHI_NAMES_HI[chart.lagnaRashiIndex]}।`,
+                    `Top middle box (tinted) = 1st house, your Lagna; the other houses follow anticlockwise. The small numbers are signs, not houses — ${chart.lagnaRashiIndex + 1} here is ${RASHI_NAMES_EN[chart.lagnaRashiIndex]}.`
+                  )}
+                </Text>
               </View>
               {report.sections.map((section) => (
                 <ReportSectionCard
@@ -366,8 +387,10 @@ function ReportSectionCard({
     : undefined;
   return (
     <View
-      accessible
-      accessibilityLabel={[
+      // The graha section is NOT one grouped element: each of its nine rows
+      // must stay reachable (and tappable) on its own.
+      accessible={!section.grahaCards}
+      accessibilityLabel={section.grahaCards ? undefined : [
         section.titleEn,
         ...section.facts.map((fact) => `${fact.labelEn}: ${fact.valueEn}`),
         ...section.bodyEn,
@@ -399,7 +422,7 @@ function ReportSectionCard({
       >
         {contentByLang(lang, section.titleHi, section.titleEn)}
       </Text>
-      {section.facts.length > 0 && (
+      {section.facts.length > 0 && !section.grahaCards && (
         <View style={styles.factList}>
           {section.facts.map((factEntry) => (
             <View
@@ -433,7 +456,8 @@ function ReportSectionCard({
           ))}
         </View>
       )}
-      {section.bodyHi.map((paragraphHi, index) => (
+      {/* The graha section's intro is bullets, rendered by its list. */}
+      {!section.grahaCards && section.bodyHi.map((paragraphHi, index) => (
         <Text
           key={`${section.id}-p${index}`}
           style={{
@@ -447,8 +471,20 @@ function ReportSectionCard({
           {meaningByLang(lang, paragraphHi, section.bodyEn[index])}
         </Text>
       ))}
-      {section.basis && section.basis.length > 0 && (
-        <BasisChain basis={section.basis} lang={lang} testID={`basis-${section.id}`} />
+      {section.grahaCards ? (
+        // Each card carries its own आधार chain behind a toggle.
+        <GrahaReadingList
+          cards={section.grahaCards}
+          introHi={section.bodyHi}
+          introEn={section.bodyEn}
+          emptyHouses={section.emptyHouses}
+          lang={lang}
+          onPractice={onPractice}
+        />
+      ) : (
+        section.basis && section.basis.length > 0 && (
+          <BasisChain basis={section.basis} lang={lang} testID={`basis-${section.id}`} />
+        )
       )}
       {practice && (
         <Pressable
@@ -539,6 +575,7 @@ const styles = StyleSheet.create({
     fontFamily: fontFamilies.interSemiBold,
     fontSize: 10,
   },
+  chartKey: { fontSize: 11, lineHeight: 17, marginTop: 10, textAlign: 'center' },
   chartCard: {
     padding: 14,
     borderWidth: 1,

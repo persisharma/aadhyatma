@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vedansh · Stories for Kids</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:#e8ddc7;color:#1a0e03;font-family:Georgia,'Noto Serif Devanagari','Noto Serif Gujarati','Noto Serif Kannada',serif}
+    .page{min-height:100vh;display:grid;place-items:center;padding:22px}.phone{width:min(420px,100%);min-height:760px;background:#f3e7c9;border-radius:26px;box-shadow:0 18px 55px #59472235;overflow:hidden}
+    header{display:flex;align-items:center;gap:12px;padding:20px 18px;border-bottom:1px solid #dbc8a3}header h1{flex:1;font-size:19px;font-weight:600;margin:0}header a{color:#8a3e0b;text-decoration:none;font-size:25px;width:38px;text-align:center}select{font:14px system-ui;color:#5a3a1e;background:#f8efd6;border:1px solid #d5c09c;border-radius:10px;padding:8px}
+    main{padding:22px;display:grid;gap:13px}.intro{font-size:20px;color:#5a3a1e;margin:0 0 7px}.deity-card{display:flex;align-items:center;gap:15px;width:100%;min-height:96px;padding:15px 18px;text-align:left;background:linear-gradient(130deg,#fff1d5,#f8e4b5);border:1px solid #e2bd80;border-radius:16px;box-shadow:0 4px 12px #5b3c1715;color:#1a0e03;font:inherit;cursor:pointer}.deity-card:hover,.story-card:hover{border-color:#b8621b}.deity-card:focus-visible,.story-card:focus-visible{outline:3px solid #8a3e0b;outline-offset:2px}.deity-card .bar{width:44px;height:44px;flex:none;border-radius:50%;display:grid;place-items:center;background:linear-gradient(#f5c77b,#dda250);color:#733207;font-size:20px}.deity-card .copy{flex:1}.deity-card strong{display:block;font-size:18px}.deity-card em{display:block;margin-top:2px;color:#7b6248;font-size:11px}.deity-card small{display:block;margin-top:4px;color:#6e5230;font-size:10px}.chev{font:25px system-ui;color:#8a3e0b}
+    .story-card{display:flex;align-items:center;gap:14px;width:100%;padding:14px;background:linear-gradient(130deg,#fff1d5,#f8e4b5);border:1px solid #e2bd80;border-radius:16px;text-align:left;text-decoration:none;color:#1a0e03;box-shadow:0 4px 12px #5b3c1715}.story-card img{display:block;width:120px;height:150px;flex:none;object-fit:cover;border-radius:9px}.story-card .copy{min-width:0;flex:1}.story-card strong{display:block;font-size:19px}.story-card em{display:block;margin-top:4px;color:#7b6248;font-size:12px}.story-card p{color:#5a3a1e;font-size:13px;line-height:1.4;margin:7px 0}.story-card small{color:#6e5230;font-size:11px}.planned,.empty{background:#f8efd6;border:1px solid #d5c09c;border-radius:16px;padding:19px;color:#6e5230}.planned strong{display:block;color:#5a3a1e;font-size:18px}.planned small{display:block;margin-top:6px;font-size:13px}.empty{line-height:1.5;text-align:center}
+    .note{max-width:420px;text-align:center;font:13px/1.45 system-ui;color:#594722;margin:15px auto}@media(max-width:500px){.page{padding:0}.phone{border-radius:0;min-height:100vh}.note{padding:0 20px 20px}}
+  </style>
+</head>
+<body>
+  <div class="page"><div>
+    <section class="phone" aria-label="Stories for Kids prototype">
+      <header><a id="back" href="kids-stories-home-prototype.html" aria-label="Back">‹</a><h1 id="title"></h1><select id="language" aria-label="Reading language"><option value="hi">हिन्दी</option><option value="en" selected>English</option><option value="gu">ગુજરાતી</option><option value="kn">ಕನ್ನಡ</option></select></header>
+      <main id="content"></main>
+    </section>
+    <p class="note">Flow preview: Home → deity → story. Kaliya Nag is a planned story; Ganesha and Hanuman shelves await reviewed content.</p>
+  </div></div>
+  <script>
+    const names={krishna:{hi:'कृष्ण',en:'Krishna',gu:'કૃષ્ણ',kn:'ಕೃಷ್ಣ'},ganesha:{hi:'गणेश',en:'Ganesha',gu:'ગણેશ',kn:'ಗಣೇಶ'},hanuman:{hi:'हनुमान',en:'Hanuman',gu:'હનુમાન',kn:'ಹನುಮಾನ್'}};
+    const story={hi:'कृष्ण की जन्म-कथा',en:'The Birth of Krishna',gu:'કૃષ્ણની જન્મકથા',kn:'ಕೃಷ್ಣನ ಜನ್ಮಕಥೆ'};
+    const kaliya={hi:'कालिया नाग',en:'Kaliya Nag',gu:'કાલિય નાગ',kn:'ಕಾಳಿಯ ನಾಗ'};
+    const copy={
+      hi:{title:'बच्चों की चित्र-कथाएँ',pick:'किसकी कथा पढ़ेंगे?',one:'1 कथा',soon:'कथाएँ जल्द आएँगी',planned:'जल्द आएगी',empty:'यहाँ नई चित्र-कथाएँ जल्द आएँगी।',description:'एक कठिन रात में साहस, प्रेम और आशा की कहानी।',pages:'16 पृष्ठ · 6+ वर्ष'},
+      en:{title:'Stories for Kids',pick:'Whose stories shall we read?',one:'1 story',soon:'Stories coming soon',planned:'Coming soon',empty:'New picture stories are being prepared for this shelf.',description:'A story of courage, love and hope on a difficult night.',pages:'16 pages · Ages 6+'},
+      gu:{title:'બાળકોની ચિત્રવાર્તાઓ',pick:'કોની વાર્તાઓ વાંચશો?',one:'1 વાર્તા',soon:'વાર્તાઓ જલ્દી આવશે',planned:'જલ્દી આવશે',empty:'અહીં નવી ચિત્રવાર્તાઓ જલ્દી આવશે.',description:'એક મુશ્કેલ રાતમાં સાહસ, પ્રેમ અને આશાની વાર્તા.',pages:'16 પાનાં · 6+ વર્ષ'},
+      kn:{title:'ಮಕ್ಕಳ ಚಿತ್ರಕಥೆಗಳು',pick:'ಯಾರ ಕಥೆಗಳನ್ನು ಓದುತ್ತೀರಿ?',one:'1 ಕಥೆ',soon:'ಕಥೆಗಳು ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿವೆ',planned:'ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿದೆ',empty:'ಈ ವಿಭಾಗಕ್ಕೆ ಹೊಸ ಚಿತ್ರಕಥೆಗಳು ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿವೆ.',description:'ಕಷ್ಟದ ರಾತ್ರಿಯಲ್ಲಿ ಧೈರ್ಯ, ಪ್ರೀತಿ ಮತ್ತು ಭರವಸೆಯ ಕಥೆ.',pages:'16 ಪುಟಗಳು · 6+ ವರ್ಷ'}
+    };
+    let lang='en',deity=null;
+    const back=document.getElementById('back'),title=document.getElementById('title'),content=document.getElementById('content');
+    const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+    function render(){
+      const t=copy[lang];document.documentElement.lang=lang;title.textContent=deity?names[deity][lang]:t.title;
+      back.href=deity?'#': 'kids-stories-home-prototype.html';
+      if(!deity){
+        content.innerHTML=`<p class="intro">${esc(t.pick)}</p>`+['krishna','ganesha','hanuman'].map(id=>`<button class="deity-card" type="button" data-deity="${id}"><span class="bar" aria-hidden="true">${esc(names[id].hi.slice(0,1))}</span><span class="copy"><strong>${esc(names[id][lang])}</strong><em>${esc(lang==='en'?names[id].hi:names[id].en)}</em><small>${esc(id==='krishna'?t.one:t.soon)}</small></span><span class="chev" aria-hidden="true">›</span></button>`).join('');
+        content.querySelectorAll('[data-deity]').forEach(button=>button.addEventListener('click',()=>{deity=button.dataset.deity;render()}));
+      }else if(deity==='krishna'){
+        content.innerHTML=`<a class="story-card" href="kids-stories-prototype.html"><img src="assets/krishna-janma/kj-01.webp" alt=""><span class="copy"><strong>${esc(story[lang])}</strong><em>${esc(lang==='en'?story.hi:story.en)}</em><p>${esc(t.description)}</p><small>${esc(t.pages)}</small></span><span class="chev" aria-hidden="true">›</span></a><div class="planned"><strong>${esc(kaliya[lang])}</strong><small>${esc(t.planned)}</small></div>`;
+      }else content.innerHTML=`<div class="empty">${esc(t.empty)}</div>`;
+    }
+    back.addEventListener('click',event=>{if(deity){event.preventDefault();deity=null;render()}});
+    document.getElementById('language').addEventListener('change',event=>{lang=event.target.value;render()});
+    render();
+  </script>
+</body>
+</html>

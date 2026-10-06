@@ -36,6 +36,10 @@ import { shuffleBySeed } from '@/utils/shuffleBySeed';
 import { moreTabTarget, panchangTabTarget } from '@/navigation/entryRoutes';
 import { useTourTarget, scrollNodeIntoView } from '@/components/tour/tourTargets';
 
+// The illustrated card sits below the category grid. Load its art and copy in
+// a separate chunk so the Home launch graph stays within its byte budget.
+const KidsStoriesHomeCard = React.lazy(() => import('@/components/KidsStoriesHomeCard'));
+
 type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>;
 
 export default function HomeScreen({ navigation }: Props) {
@@ -405,6 +409,28 @@ export default function HomeScreen({ navigation }: Props) {
               </View>
             ))}
           </View>
+
+          <Text
+            style={[
+              styles.sectionLabel,
+              styles.sectionLabelSpaced,
+              {
+                color: colors.inkMuted,
+                fontSize: typography.sectionLabel.fontSize,
+                fontFamily: typography.sectionLabel.fontFamily,
+                letterSpacing: typography.sectionLabel.letterSpacing,
+              },
+            ]}
+          >
+            STORIES FOR KIDS
+          </Text>
+          <React.Suspense fallback={<View style={{ height: 138 }} />}>
+            <KidsStoriesHomeCard
+              onPress={() => activateTile(() => navigation.navigate('KidsStoryLibrary'))}
+              onPressIn={() => beginTilePress(() => navigation.navigate('KidsStoryLibrary'))}
+              onPressOut={finishTilePress}
+            />
+          </React.Suspense>
 
           <Text
             style={[

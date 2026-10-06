@@ -44,7 +44,6 @@ appId: com.prashantsharma.vedansh
       - tapOn: "Remove bookmark"
 - tapOn: "Back.*"
 - tapOn: { id: "tab-more" }
-- assertVisible: { id: "kids-stories-door" }
 - assertVisible: "Reminders.*|Daily verse reminders.*"
 - assertVisible: "Japam alarms.*"
 - assertVisible: "Wishlist.*"
@@ -58,6 +57,16 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Shri Rama\\..*"
 - assertVisible: "Shri Krishna\\..*"
 - assertVisible: "Shri Vishnu\\..*"
+- tapOn: "Back.*"
+- scrollUntilVisible:
+    element: { id: "home-kids-stories-card" }
+    direction: DOWN
+    timeout: 15000
+- tapOn: { id: "home-kids-stories-card" }
+- assertVisible: { id: "kids-story-deity-krishna" }
+- assertVisible: { id: "kids-story-deity-ganesha" }
+- assertVisible: { id: "kids-story-deity-hanuman" }
+- tapOn: "Back.*"
 - tapOn: { id: "tab-panchang" }
 - assertVisible: ".*Panchang.*|.*पंचांग.*"
 - tapOn: { id: "tab-bhajan" }
