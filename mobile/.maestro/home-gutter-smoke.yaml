@@ -1,0 +1,41 @@
+# Native Home's 16dp gutter: aligned cards/grid, full-width Kids Stories,
+# Search and Kundali keep working with the wider content area.
+appId: com.prashantsharma.vedansh
+---
+- launchApp: { stopApp: true }
+- tapOn: { id: "tab-home" }
+- scrollUntilVisible:
+    element: { text: ".*Today.s Panchang.*" }
+    direction: UP
+    timeout: 15000
+- swipe: { direction: DOWN }
+- waitForAnimationToEnd
+- takeScreenshot: home-after
+- tapOn: "Search verses, sections, and mantras"
+- assertVisible: "Search input"
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { text: "Kundali\\..*Tap to open\\." }
+    direction: DOWN
+    centerElement: true
+    timeout: 15000
+- waitForAnimationToEnd
+- takeScreenshot: grid-after
+- tapOn: "Kundali\\..*Tap to open\\."
+- assertVisible: "Create Kundali"
+- tapOn: { id: "tab-home" }
+- scrollUntilVisible:
+    element: { id: "home-kids-stories-card" }
+    direction: DOWN
+    centerElement: true
+    timeout: 15000
+- waitForAnimationToEnd
+- takeScreenshot: lower-home-after
+- tapOn: { id: "home-kids-stories-card" }
+- assertVisible: { id: "kids-story-deity-krishna" }
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { text: ".*Today.s Panchang.*" }
+    direction: UP
+    timeout: 15000
+- swipe: { direction: DOWN }

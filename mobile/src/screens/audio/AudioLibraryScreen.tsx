@@ -1,3 +1,5 @@
+import DeityIcon from '@/components/DeityIcon';
+import StoryIcon from '@/components/StoryIcon';
 import React, { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -6,27 +8,13 @@ import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
-import { deities } from '@/data/deities';
+import { deities, type DeityIconKey } from '@/data/deities';
 import type { Deity } from '@/data/texts';
 import { AUDIO_TRACKS, type AudioTrack } from '@/data/audio/tracks';
 import { hasRealAudio } from '@assets/audio-library';
 import { useAudioPlayerContext } from '@/contexts/AudioPlayerContext';
 import TrackCard from '@/components/audio/TrackCard';
 import { useTourTarget } from '@/components/tour/tourTargets';
-
-// A single Devanagari glyph per deity for the filter avatar (the chip mirrors the
-// catalog thumb — a letter on a saffron-gold disc).
-const DEITY_GLYPH: Partial<Record<Deity, string>> = {
-  rama: 'रा',
-  krishna: 'कृ',
-  vishnu: 'वि',
-  shiva: 'शि',
-  hanuman: 'ह',
-  durga: 'दु',
-  ganesha: 'ग',
-  savitr: 'गा',
-  saraswati: 'स',
-};
 
 export default function AudioLibraryScreen() {
   const { colors, spacing, typography } = useTheme();
@@ -81,11 +69,11 @@ export default function AudioLibraryScreen() {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ paddingHorizontal: spacing.screenGutter, gap: 16, paddingVertical: 6 }}
           >
-            <DeityChip glyph="ॐ" label={allLabel} selected={filter === null} onPress={() => setFilter(null)} />
+            <DeityChip label={allLabel} selected={filter === null} onPress={() => setFilter(null)} />
             {presentDeities.map((d) => (
               <DeityChip
                 key={d.id}
-                glyph={DEITY_GLYPH[d.id] ?? 'ॐ'}
+                iconKey={d.iconKey}
                 label={contentByLang(lang, d.nameHi, d.nameEn)}
                 selected={filter === d.id}
                 onPress={() => setFilter((cur) => (cur === d.id ? null : d.id))}
@@ -135,19 +123,19 @@ export default function AudioLibraryScreen() {
   );
 }
 
-/** Circular deity filter chip — saffron-gold disc + Devanagari glyph, selected ring (design.md §20). */
+/** Deity attributes match the catalog artwork; the saffron ring marks selection. */
 function DeityChip({
-  glyph,
+  iconKey,
   label,
   selected,
   onPress,
 }: {
-  glyph: string;
+  iconKey?: DeityIconKey;
   label: string;
   selected: boolean;
   onPress: () => void;
 }) {
-  const { colors, typography, radii } = useTheme();
+  const { colors, radii } = useTheme();
   return (
     <Pressable
       onPress={onPress}
@@ -173,9 +161,9 @@ function DeityChip({
           end={{ x: 1, y: 1 }}
           style={[styles.chipDisc, { borderRadius: radii.pill }]}
         >
-          <Text style={[styles.chipGlyph, { color: colors.parchmentSoft, fontFamily: typography.thumb.fontFamily }]}>
-            {glyph}
-          </Text>
+          {iconKey
+            ? <DeityIcon iconKey={iconKey} fallbackText="" />
+            : <StoryIcon name="stotram" size={36} />}
         </LinearGradient>
       </View>
       <Text
@@ -229,10 +217,6 @@ const styles = StyleSheet.create({
     height: 54,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  chipGlyph: {
-    fontSize: 22,
-    includeFontPadding: false,
   },
   chipLabel: {
     fontSize: 11,

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text } from 'react-native';
+import AppIcon from './AppIcon';
+import { Pressable, StyleSheet } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 
 type Props = {
@@ -14,7 +15,7 @@ type Props = {
 };
 
 export default function SearchFloatingButton({ onPress, bottomOffset }: Props) {
-  const { colors, typography, spacing } = useTheme();
+  const { colors, spacing } = useTheme();
 
   return (
     <Pressable
@@ -33,17 +34,7 @@ export default function SearchFloatingButton({ onPress, bottomOffset }: Props) {
         pressed && { opacity: 0.6 },
       ]}
     >
-      <Text
-        style={[
-          styles.glyph,
-          {
-            color: colors.saffron,
-            fontFamily: typography.readerTitle.fontFamily,
-          },
-        ]}
-      >
-        ⌕
-      </Text>
+      <AppIcon name="search" size={24} color={colors.iconInk} />
     </Pressable>
   );
 }
@@ -60,10 +51,5 @@ const styles = StyleSheet.create({
     // Keep a positive z so the FAB stays above the scroll content it floats over.
     zIndex: 5,
     elevation: 8,
-  },
-  glyph: {
-    fontSize: 26,
-    lineHeight: 28,
-    includeFontPadding: false,
   },
 });

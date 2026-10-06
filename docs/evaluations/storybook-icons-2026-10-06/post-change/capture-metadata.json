@@ -1,0 +1,410 @@
+{
+  "appId": "com.prashantsharma.vedansh",
+  "version": "1.4.9",
+  "build": "69",
+  "runtime": "iOS 26.5",
+  "sourceBase": "9f231a119a76f0cb9ba4037cbb120adc34abcc35",
+  "note": "Captures span the sizing refinement builds. Final primary, large-phone and enlarged-English captures use the last built source. Compact Hindi and tablet captures precede the English-only caption-width polish; their grid and label appearance was unchanged by that polish.",
+  "captures": [
+    {
+      "file": "01-phone-home.png",
+      "storedPixels": [
+        1206,
+        2622
+      ],
+      "displayedPixels": [
+        1206,
+        2622
+      ],
+      "logicalViewport": [
+        402.0,
+        874.0
+      ],
+      "density": 3,
+      "exifOrientation": 1,
+      "language": "hi",
+      "systemTextSize": "large",
+      "sha256": "3117b38740fa577eebb8ec123909f51915d7ba0c54f758bd94bca77764b77b7e"
+    },
+    {
+      "file": "02-phone-grid.png",
+      "storedPixels": [
+        1206,
+        2622
+      ],
+      "displayedPixels": [
+        1206,
+        2622
+      ],
+      "logicalViewport": [
+        402.0,
+        874.0
+      ],
+      "density": 3,
+      "exifOrientation": 1,
+      "language": "hi",
+      "systemTextSize": "large",
+      "sha256": "379ee650aedc8a170ef367a62c6b39436d7a2752fba68b9662b7272cdf481918"
+    },
+    {
+      "file": "03-reader.png",
+      "storedPixels": [
+        1206,
+        2622
+      ],
+      "displayedPixels": [
+        1206,
+        2622
+      ],
+      "logicalViewport": [
+        402.0,
+        874.0
+      ],
+      "density": 3,
+      "exifOrientation": 1,
+      "language": "hi",
+      "systemTextSize": "large",
+      "sha256": "3046873fcc73971a8092b1428739bfe0e0e7f2f5d5e9f57db09e7c2f2717f1ae"
+    },
+    {
+      "file": "04-more.png",
+      "storedPixels": [
+        1206,
+        2622
+      ],
+      "displayedPixels": [
+        1206,
+        2622
+      ],
+      "logicalViewport": [
+        402.0,
+        874.0
+      ],
+      "density": 3,
+      "exifOrientation": 1,
+      "language": "hi",
+      "systemTextSize": "large",
+      "sha256": "4c62234bedee757ce29b24d55394608d2810bdecceed77ad82b6d5376c45ff09"
+    },
+    {
+      "file": "compact-home.png",
+      "storedPixels": [
+        750,
+        1334
+      ],
+      "displayedPixels": [
+        750,
+        1334
+      ],
+      "logicalViewport": [
+        375.0,
+        667.0
+      ],
+      "density": 2,
+      "exifOrientation": 1,
+      "language": "hi",
+      "systemTextSize": "large",
+      "sha256": "6b9adc7c3c3d401f008062ea64afae771e7ac5f3a58d1fcc3c73451e32eab71a"
+    },
+    {
+      "file": "compact-new.png",
+      "storedPixels": [
+        750,
+        1334
+      ],
+      "displayedPixels": [
+        750,
+        1334
+      ],
+      "logicalViewport": [
+        375.0,
+        667.0
+      ],
+      "density": 2,
+      "exifOrientation": 1,
+      "language": "hi",
+      "systemTextSize": "large",
+      "sha256": "f07b8562d63f61ba751f67c31ec11e8abc981b4aca6be725e0a6c3c9d4decbd3"
+    },
+    {
+      "file": "compact-enlarged-home.png",
+      "storedPixels": [
+        750,
+        1334
+      ],
+      "displayedPixels": [
+        750,
+        1334
+      ],
+      "logicalViewport": [
+        375.0,
+        667.0
+      ],
+      "density": 2,
+      "exifOrientation": 1,
+      "language": "hi",
+      "systemTextSize": "accessibility-medium",
+      "sha256": "1ff05001539cae3fb5119f96024fcc189bdfe4165bf4d40367c8443f792e772d"
+    },
+    {
+      "file": "compact-enlarged-new.png",
+      "storedPixels": [
+        750,
+        1334
+      ],
+      "displayedPixels": [
+        750,
+        1334
+      ],
+      "logicalViewport": [
+        375.0,
+        667.0
+      ],
+      "density": 2,
+      "exifOrientation": 1,
+      "language": "hi",
+      "systemTextSize": "accessibility-medium",
+      "sha256": "85b22a50bf9f79342161810791e6c0765622c7b6e63ea46569dafbb1de0ad3c4"
+    },
+    {
+      "file": "compact-enlarged-muhurat.png",
+      "storedPixels": [
+        750,
+        1334
+      ],
+      "displayedPixels": [
+        750,
+        1334
+      ],
+      "logicalViewport": [
+        375.0,
+        667.0
+      ],
+      "density": 2,
+      "exifOrientation": 1,
+      "language": "hi",
+      "systemTextSize": "accessibility-medium",
+      "sha256": "85b22a50bf9f79342161810791e6c0765622c7b6e63ea46569dafbb1de0ad3c4"
+    },
+    {
+      "file": "compact-enlarged-english-home.png",
+      "storedPixels": [
+        750,
+        1334
+      ],
+      "displayedPixels": [
+        750,
+        1334
+      ],
+      "logicalViewport": [
+        375.0,
+        667.0
+      ],
+      "density": 2,
+      "exifOrientation": 1,
+      "language": "en",
+      "systemTextSize": "accessibility-medium",
+      "sha256": "2692024b0cd4da6ff6dbf8a941ebbc3c92ae1dc137acc890a0d1504ac9361528"
+    },
+    {
+      "file": "compact-enlarged-english-recommendations.png",
+      "storedPixels": [
+        750,
+        1334
+      ],
+      "displayedPixels": [
+        750,
+        1334
+      ],
+      "logicalViewport": [
+        375.0,
+        667.0
+      ],
+      "density": 2,
+      "exifOrientation": 1,
+      "language": "en",
+      "systemTextSize": "accessibility-medium",
+      "sha256": "9fe6356ff3288912416c239df882ee9b05cdc404f5683645bdc655be65cd3821"
+    },
+    {
+      "file": "compact-enlarged-english-new.png",
+      "storedPixels": [
+        750,
+        1334
+      ],
+      "displayedPixels": [
+        750,
+        1334
+      ],
+      "logicalViewport": [
+        375.0,
+        667.0
+      ],
+      "density": 2,
+      "exifOrientation": 1,
+      "language": "en",
+      "systemTextSize": "accessibility-medium",
+      "sha256": "99245abbe7f6c44da68ac546df1361e7d4a72bc37cc05378da854530e441f8b5"
+    },
+    {
+      "file": "tablet-portrait-home.png",
+      "storedPixels": [
+        1488,
+        2266
+      ],
+      "displayedPixels": [
+        1488,
+        2266
+      ],
+      "logicalViewport": [
+        744.0,
+        1133.0
+      ],
+      "density": 2,
+      "exifOrientation": 1,
+      "language": "hi",
+      "systemTextSize": "large",
+      "sha256": "21fbc3807616c0a618410351919ff393b834ac039bf878359860bd0c768019bc"
+    },
+    {
+      "file": "tablet-portrait-grid.png",
+      "storedPixels": [
+        1488,
+        2266
+      ],
+      "displayedPixels": [
+        1488,
+        2266
+      ],
+      "logicalViewport": [
+        744.0,
+        1133.0
+      ],
+      "density": 2,
+      "exifOrientation": 1,
+      "language": "hi",
+      "systemTextSize": "large",
+      "sha256": "21fbc3807616c0a618410351919ff393b834ac039bf878359860bd0c768019bc"
+    },
+    {
+      "file": "tablet-portrait-lower.png",
+      "storedPixels": [
+        1488,
+        2266
+      ],
+      "displayedPixels": [
+        1488,
+        2266
+      ],
+      "logicalViewport": [
+        744.0,
+        1133.0
+      ],
+      "density": 2,
+      "exifOrientation": 1,
+      "language": "hi",
+      "systemTextSize": "large",
+      "sha256": "21fbc3807616c0a618410351919ff393b834ac039bf878359860bd0c768019bc"
+    },
+    {
+      "file": "tablet-landscape-grid.png",
+      "storedPixels": [
+        1488,
+        2266
+      ],
+      "displayedPixels": [
+        2266,
+        1488
+      ],
+      "logicalViewport": [
+        1133.0,
+        744.0
+      ],
+      "density": 2,
+      "exifOrientation": 8,
+      "language": "hi",
+      "systemTextSize": "large",
+      "sha256": "7affebf2438fb28d5235d81467287acfe9fe8045ae5616b6a179835cb9468019"
+    },
+    {
+      "file": "tablet-landscape-lower.png",
+      "storedPixels": [
+        1488,
+        2266
+      ],
+      "displayedPixels": [
+        2266,
+        1488
+      ],
+      "logicalViewport": [
+        1133.0,
+        744.0
+      ],
+      "density": 2,
+      "exifOrientation": 8,
+      "language": "hi",
+      "systemTextSize": "large",
+      "sha256": "4279413d61b4535143e8e57240bbb16980a4f50d9031b4f5ec6491b04a7d849e"
+    },
+    {
+      "file": "tablet-portrait-return.png",
+      "storedPixels": [
+        1488,
+        2266
+      ],
+      "displayedPixels": [
+        1488,
+        2266
+      ],
+      "logicalViewport": [
+        744.0,
+        1133.0
+      ],
+      "density": 2,
+      "exifOrientation": 1,
+      "language": "hi",
+      "systemTextSize": "large",
+      "sha256": "b773fde5337ac463cac79ea210e9d441e4e6ce38d21f68d65db612918e758d4d"
+    },
+    {
+      "file": "large-home.png",
+      "storedPixels": [
+        1320,
+        2868
+      ],
+      "displayedPixels": [
+        1320,
+        2868
+      ],
+      "logicalViewport": [
+        440.0,
+        956.0
+      ],
+      "density": 3,
+      "exifOrientation": 1,
+      "language": "hi",
+      "systemTextSize": "large",
+      "sha256": "e8559e8aac9fac1025873b39788ab5ef38175cac7e4a369b5d8d43e4b3ca7939"
+    },
+    {
+      "file": "large-new.png",
+      "storedPixels": [
+        1320,
+        2868
+      ],
+      "displayedPixels": [
+        1320,
+        2868
+      ],
+      "logicalViewport": [
+        440.0,
+        956.0
+      ],
+      "density": 3,
+      "exifOrientation": 1,
+      "language": "hi",
+      "systemTextSize": "large",
+      "sha256": "e8559e8aac9fac1025873b39788ab5ef38175cac7e4a369b5d8d43e4b3ca7939"
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+import AppIcon from '@/components/AppIcon';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ActivityIndicator,
@@ -336,9 +337,10 @@ export default function KundaliScreen({ navigation, route }: Props) {
                   pressed && { opacity: 0.65 },
                 ]}
               >
-                <Text style={[styles.shareText, { color: colors.saffronDeep }]}>
-                  ↗ {contentByLang(lang, 'साझा करें', 'Share')}
-                </Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+                <AppIcon name="share" size={15} />
+                <Text style={[styles.shareText, { color: colors.saffronDeep }]}>{contentByLang(lang, 'साझा करें', 'Share')}</Text>
+              </View>
               </Pressable>
               <Pressable
                 onPress={() => setEditing(true)}

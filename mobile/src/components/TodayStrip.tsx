@@ -1,5 +1,5 @@
 import React from 'react';
-import { InteractionManager, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { InteractionManager, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { useReducedMotion } from '@/utils/useReducedMotion';
@@ -21,6 +21,7 @@ import { useTodayKey } from '@/utils/useTodayKey';
 import { launchMarkOnce } from '@/utils/launchTrace';
 import PitruSmaranDayChip from '@/components/PitruSmaranDayChip';
 import JanmaTithiDayChip from '@/components/JanmaTithiDayChip';
+import { TodayChakraOrnament } from '@/components/CelestialChakra';
 import { moreTabTarget } from '@/navigation/entryRoutes';
 import {
   isPitruPakshaDayTableWarm,
@@ -91,6 +92,7 @@ export default function TodayStrip() {
   launchMarkOnce('strip-render');
   const { colors, typography, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
+  const { fontScale } = useWindowDimensions();
   // Sibling tab — navigate via the parent so the action bubbles up (same
   // pattern as RoutineBanner / the Panchang spotlight card).
   const rootNav = useNavigation<any>();
@@ -475,6 +477,7 @@ export default function TodayStrip() {
         end={{ x: 1, y: 1 }}
         style={[StyleSheet.absoluteFillObject, { borderRadius: radii.lg }]}
       />
+      <TodayChakraOrnament />
       {/* The card shell is not one accessibility element: private Smaran chips
           must remain independently focusable/tappable on iOS. This header keeps
           the original Panchang action and label without swallowing its siblings. */}
@@ -494,7 +497,7 @@ export default function TodayStrip() {
           </Text>
         </View>
         <Text
-          numberOfLines={1}
+          numberOfLines={fontScale > 1.2 ? undefined : 1}
           style={{
             marginTop: 3,
             fontFamily: headlineFont,
@@ -543,7 +546,7 @@ export default function TodayStrip() {
               pressed && { opacity: 0.7 },
             ]}
           >
-            <Text numberOfLines={1} style={{ maxWidth: 200 }}>
+            <Text numberOfLines={1} style={{ maxWidth: fontScale > 1.2 ? undefined : 200 }}>
               <Text style={[chipText, { color: chip.fg }]}>
                 {contentByLang(lang, chip.labelHi, chip.labelEn)}
               </Text>

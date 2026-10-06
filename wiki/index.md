@@ -31,7 +31,7 @@
 
 ## Concepts
 - [[languages]] — reading languages hi/en/gu/kn; gu/kn derived at runtime by transliterating the Devanagari; selection + typography helpers.
-- [[deity-icons]] — deity avatar glyph system: 21 hand-drawn View-composition glyphs (`deityGlyphs/` total registry), baked palette, 36 dp canvas/scaling contract, no-emoji rule.
+- [[deity-icons]] — shared Storybook icon system: 56 painted assets across Home/More/Discover, 21 deity attributes, direct Phosphor utility imports, offline art, shared celestial decorations and stable layout/accessibility contracts.
 
 ## Entities
 _(none yet — add per-model pages as they warrant)_

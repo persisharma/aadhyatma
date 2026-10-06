@@ -1,3 +1,4 @@
+import AppIcon from '@/components/AppIcon';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
@@ -280,16 +281,7 @@ function ActiveAudioPlayer({
           !status.isLoaded && { opacity: 0.5 },
         ]}
       >
-        <Text
-          style={[
-            styles.playGlyph,
-            {
-              color: isPlaying ? colors.onPrimary : colors.saffronDeep,
-            },
-          ]}
-        >
-          {isPlaying ? '❚❚' : '▶'}
-        </Text>
+        <AppIcon name={isPlaying ? "pause" : "play"} size={16} color={isPlaying ? colors.onPrimary : colors.iconInk} weight="fill" />
         <Text
           style={[
             styles.playLabel,

@@ -1,0 +1,86 @@
+# Native icon integration: existing category → reader, More, Jyotish and deity
+# routes retain their accessible controls. Works with the installed Release build.
+# For Debug first launch with: xcrun simctl launch <UDID> com.prashantsharma.vedansh -RCT_jsLocation 127.0.0.1:8097
+appId: com.prashantsharma.vedansh
+---
+- launchApp:
+    stopApp: true
+- tapOn: { text: "Skip tour", optional: true }
+- tapOn: { text: "Begin", optional: true }
+- tapOn: { text: "Close", optional: true }
+- tapOn: { text: "Got it", optional: true }
+- tapOn: { text: "Not now|अभी नहीं", optional: true }
+- tapOn: { id: "tab-home" }
+- tapOn: { text: "Back", optional: true }
+- scrollUntilVisible:
+    element: { text: ".*Today.s Panchang.*" }
+    direction: UP
+    timeout: 15000
+- swipe: { direction: DOWN }
+- scrollUntilVisible:
+    element: { text: "Chalisa\\..*Tap to open\\." }
+    direction: UP
+    timeout: 10000
+- tapOn: "Chalisa\\..*Tap to open\\."
+- extendedWaitUntil:
+    visible: "Hanuman Chalisa\\..*Tap to open\\."
+    timeout: 15000
+- tapOn: "Hanuman Chalisa\\..*Tap to open\\."
+- tapOn: { text: "Start over", optional: true }
+- extendedWaitUntil:
+    visible: "Add bookmark|Remove bookmark"
+    timeout: 15000
+- assertVisible: "Share verse"
+- runFlow:
+    when: { visible: "Add bookmark" }
+    commands:
+      - tapOn: "Add bookmark"
+      - assertVisible: "Remove bookmark"
+      - tapOn: "Remove bookmark"
+- tapOn: "Back.*"
+- tapOn: { id: "tab-more" }
+- assertVisible: "Reminders.*|Daily verse reminders.*"
+- assertVisible: "Japam alarms.*"
+- assertVisible: "Wishlist.*"
+- tapOn: { id: "tab-home" }
+- tapOn: { text: "Back", optional: true }
+- scrollUntilVisible:
+    element: { text: "By Deity\\..*Tap to open\\." }
+    direction: DOWN
+    timeout: 15000
+- tapOn: "By Deity\\..*Tap to open\\."
+- assertVisible: "Shri Rama\\..*"
+- assertVisible: "Shri Krishna\\..*"
+- assertVisible: "Shri Vishnu\\..*"
+- tapOn: "Back.*"
+- scrollUntilVisible:
+    element: { id: "home-kids-stories-card" }
+    direction: DOWN
+    timeout: 15000
+- tapOn: { id: "home-kids-stories-card" }
+- assertVisible: { id: "kids-story-deity-krishna" }
+- assertVisible: { id: "kids-story-deity-ganesha" }
+- assertVisible: { id: "kids-story-deity-hanuman" }
+- tapOn: "Back.*"
+- tapOn: { id: "tab-panchang" }
+- assertVisible: ".*Panchang.*|.*पंचांग.*"
+- tapOn: { id: "tab-bhajan" }
+- assertVisible: ".*Bhajans & Aartis.*"
+- tapOn: { id: "tab-home" }
+- tapOn: { text: "Back", optional: true }
+- scrollUntilVisible:
+    element: { text: "Search verses, sections, and mantras" }
+    direction: UP
+    timeout: 15000
+- tapOn: "Search verses, sections, and mantras"
+- assertVisible: "Search input"
+- assertVisible: "Open Hanuman Chalisa"
+- tapOn: "Open Hanuman Chalisa"
+- assertVisible: "Share verse"
+- tapOn: "Back.*"
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { text: ".*Today.s Panchang.*" }
+    direction: UP
+    timeout: 15000
+- swipe: { direction: DOWN }

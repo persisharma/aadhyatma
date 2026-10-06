@@ -1,3 +1,5 @@
+import AppIcon, { type AppIconName } from './AppIcon';
+import StoryIcon from './StoryIcon';
 /**
  * A Jyotish door as a 2×2 GRID TILE that answers for the selected person
  * (design.md §51c).
@@ -101,16 +103,9 @@ export default function JyotishToolTile({
             { backgroundColor: colors.saffronTint, borderRadius: radii.md },
           ]}
         >
-          <Text
-            maxFontSizeMultiplier={TILE_FONT_CAP}
-            style={{
-              color: colors.saffronDeep,
-              fontFamily: fontFamilies.devanagariBold,
-              fontSize: 15,
-            }}
-          >
-            {glyph}
-          </Text>
+          {glyph === 'कु'
+            ? <StoryIcon name="kundali" size={34} />
+            : <AppIcon name={({ 'रा': 'sun', 'मि': 'match', 'ना': 'name', 'गो': 'gochar' } as Record<string, AppIconName>)[glyph] ?? 'star'} size={23} weight="duotone" />}
         </View>
         <View style={styles.topEnd}>
           {badge && (
@@ -120,20 +115,10 @@ export default function JyotishToolTile({
                 { backgroundColor: colors.newBadgeBg, borderRadius: radii.pill },
               ]}
             >
-              <Text
-                maxFontSizeMultiplier={TILE_FONT_CAP}
-                style={[styles.badgeText, { color: colors.newBadgeText }]}
-              >
-                {badge}
-              </Text>
+              <Text maxFontSizeMultiplier={TILE_FONT_CAP} style={[styles.badgeText, { color: colors.newBadgeText }]}>{badge}</Text>
             </View>
           )}
-          <Text
-            maxFontSizeMultiplier={TILE_FONT_CAP}
-            style={{ color: colors.saffronDeep, fontSize: 17 }}
-          >
-            ›
-          </Text>
+          <AppIcon name="next" size={17} />
         </View>
       </View>
       <Text

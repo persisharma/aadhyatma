@@ -1,3 +1,4 @@
+import AppIcon from '@/components/AppIcon';
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -99,7 +100,7 @@ export default function MiniPlayer() {
           hitSlop={8}
           style={({ pressed }) => [styles.iconBtn, pressed && { opacity: 0.6 }]}
         >
-          <Text style={[styles.glyph, { color: colors.saffronDeep }]}>{isPlaying ? '❚❚' : '▶'}</Text>
+          <AppIcon name={isPlaying ? "pause" : "play"} size={21} color={colors.iconInk} weight="fill" />
         </Pressable>
 
         <Pressable
@@ -109,7 +110,7 @@ export default function MiniPlayer() {
           hitSlop={8}
           style={({ pressed }) => [styles.iconBtn, pressed && { opacity: 0.6 }]}
         >
-          <Text style={[styles.closeGlyph, { color: colors.inkMuted }]}>✕</Text>
+          <AppIcon name="close" size={18} color={colors.iconInk} />
         </Pressable>
       </View>
     </View>

@@ -1,3 +1,4 @@
+import AppIcon from '@/components/AppIcon';
 import React, { useState } from 'react';
 import { ActivityIndicator, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -182,15 +183,9 @@ export default function WishlistScreen({ navigation }: Props) {
                   hitSlop={12}
                   style={({ pressed }) => [styles.removeBtn, pressed && { opacity: 0.6 }]}
                 >
-                  <Text style={{ color: colors.saffron, fontSize: 18 }}>♥</Text>
+                  <AppIcon name="heart" size={21} color={colors.saffron} weight="fill" />
                 </Pressable>
-                <Text
-                  accessible={false}
-                  importantForAccessibility="no"
-                  style={{ color: colors.saffron, fontSize: 18, includeFontPadding: false }}
-                >
-                  ›
-                </Text>
+                <AppIcon name="next" size={18} color={colors.saffron} />
               </Pressable>
             ))
           )}

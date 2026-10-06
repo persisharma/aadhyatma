@@ -1,3 +1,4 @@
+import AppIcon, { type AppIconName } from './AppIcon';
 import React from 'react';
 import { Modal, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
@@ -77,7 +78,7 @@ type Props = {
 };
 
 type RowProps = {
-  glyph: string;
+  icon: AppIconName;
   title: string;
   sub: string;
   chips?: string[];
@@ -106,7 +107,7 @@ function TargetRow(p: RowProps) {
         { opacity: p.disabled ? 0.5 : pressed ? 0.7 : 1 },
       ]}
     >
-      <Text style={[styles.glyph, { color: colors.saffron }]}>{p.glyph}</Text>
+      <AppIcon name={p.icon} size={22} color={colors.saffron} />
       <View style={styles.rowText}>
         <Text style={{ fontFamily: titleFont, fontSize: 17, color: colors.ink }}>{p.title}</Text>
         <Text style={[eyebrowTextStyle(p.lang, 12), { color: colors.inkMuted }]}>{p.sub}</Text>
@@ -270,7 +271,7 @@ export default function ShareTargetSheet({
             </Text>
             <TargetRow
               lang={lang}
-              glyph="⇶"
+              icon="share"
               title={pick(lang, { hi: 'सभी पृष्ठ साझा करें', en: 'Share all pages', gu: 'બધાં પૃષ્ઠ શેર કરો', kn: 'ಎಲ್ಲ ಪುಟ ಹಂಚಿಕೊಳ್ಳಿ' })}
               sub={allSub ?? pick(lang, { hi: 'WhatsApp एल्बम, संदेश, Photos में सहेजें', en: 'WhatsApp album, Messages, Save to Photos', gu: 'WhatsApp આલ્બમ, સંદેશ, Photos', kn: 'WhatsApp ಆಲ್ಬಮ್, ಸಂದೇಶ, Photos' })}
               chips={[String(selectedCount)]}
@@ -281,7 +282,7 @@ export default function ShareTargetSheet({
             />
             <TargetRow
               lang={lang}
-              glyph="▤"
+              icon="instagram"
               title={pick(lang, { hi: 'Instagram कैरोसेल', en: 'Instagram carousel', gu: 'Instagram કૅરોસેલ', kn: 'Instagram ಕ್ಯಾರೋಸೆಲ್' })}
               sub={allSub ?? pick(lang, { hi: 'सभी पृष्ठ एक पोस्ट में — कैप्शन कॉपी होगा', en: 'All pages as one post — caption is copied', gu: 'બધાં પૃષ્ઠ એક પોસ્ટમાં', kn: 'ಎಲ್ಲ ಪುಟಗಳು ಒಂದು ಪೋಸ್ಟ್‌ನಲ್ಲಿ' })}
               chips={[String(selectedCount)]}
@@ -300,7 +301,7 @@ export default function ShareTargetSheet({
 
         <TargetRow
           lang={lang}
-          glyph="↗"
+          icon="share"
           title={pick(lang, { hi: 'शेयर करें', en: 'Share', gu: 'શેર કરો', kn: 'ಹಂಚಿಕೊಳ್ಳಿ' })}
           sub={pick(lang, { hi: 'WhatsApp, संदेश या कहीं भी', en: 'WhatsApp, Messages, anywhere', gu: 'WhatsApp, સંદેશ કે ગમે ત્યાં', kn: 'WhatsApp, ಸಂದೇಶ ಅಥವಾ ಎಲ್ಲಿಯಾದರೂ' })}
           chips={pageChip}
@@ -310,7 +311,7 @@ export default function ShareTargetSheet({
         />
         <TargetRow
           lang={lang}
-          glyph="◉"
+          icon="instagram"
           title={pick(lang, { hi: 'Instagram पोस्ट', en: 'Instagram post', gu: 'Instagram પોસ્ટ', kn: 'Instagram ಪೋಸ್ಟ್' })}
           sub={pick(lang, { hi: 'फ़ीड के लिए 4:5 कार्ड', en: '4:5 card — for the feed', gu: 'ફીડ માટે 4:5 કાર્ડ', kn: 'ಫೀಡ್‌ಗಾಗಿ 4:5 ಕಾರ್ಡ್' })}
           chips={[...pageChip, '4:5']}
@@ -321,7 +322,7 @@ export default function ShareTargetSheet({
         />
         <TargetRow
           lang={lang}
-          glyph="▮"
+          icon="instagram"
           title={pick(lang, { hi: 'Instagram स्टोरी / रील', en: 'Instagram story / reel', gu: 'Instagram સ્ટોરી / રીલ', kn: 'Instagram ಸ್ಟೋರಿ / ರೀಲ್' })}
           sub={pick(lang, { hi: 'पूरी स्क्रीन 9:16 — कुछ भी नहीं कटेगा', en: 'Full screen 9:16 — nothing gets cropped', gu: 'આખી સ્ક્રીન 9:16 — કશું કપાશે નહીં', kn: 'ಪೂರ್ಣ ಪರದೆ 9:16 — ಏನೂ ಕತ್ತರಿಸುವುದಿಲ್ಲ' })}
           chips={[...pageChip, '9:16']}
@@ -419,7 +420,6 @@ const styles = StyleSheet.create({
   body: { flexGrow: 0 },
   row: { flexDirection: 'row', alignItems: 'center', paddingVertical: 14, gap: 14, minHeight: 44 },
   rowText: { flex: 1, gap: 2 },
-  glyph: { fontSize: 18, width: 22, textAlign: 'center' },
   // Aspect chip on the two Instagram rows — the size difference IS the choice,
   // so it is stated numerically as well as in the sub-label.
   ratio: {

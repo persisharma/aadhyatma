@@ -314,3 +314,23 @@ New page `subsystems/share.md`. `share()` now takes `ShareableContent` (verse | 
 ## [2026-10-06] ingest | Krishna Janma illustration corrections
 
 Added six distinct scene illustrations for wedding, threat, imprisonment, Balarama, prayer and return. Corrected Vasudeva's paired palms in the promise scene and Devi's detached hand/duplicate weapon. Native and browser mappings now cover sixteen distinct scenes plus the separate cover; asset tests guard scene uniqueness and byte-for-byte prototype parity. Updated [[kids-stories]].
+
+## [2026-10-06] ingest | Native Storybook icons: 36 offline illustrations, total 21-deity mapping, shared Phosphor utility controls and preserved accessibility/layout contracts → concepts/deity-icons.md, daan-punya.md.
+
+## [2026-10-06] ingest | Storybook source fidelity correction: exact Option1 crop inputs correct23 subjects, broad navigation silhouettes and the leaf nudge; restore66dp Home art in original72dp tiles, unified utility ink, and reference-hash provenance. Earlier family-level visual acceptance was insufficient → concepts/deity-icons.md.
+
+## [2026-10-06] ingest | Focused native check caught Muhurat pointer touching NEW: Home badges now float above tile edge, preserving one centered66dp artwork size in original72dp tiles. Full source/native visual checks remain separate from passing interaction tests.
+
+## [2026-10-06] ingest | User refinement: reduce Home category art by 5% to 62.7dp, retain one center for all subjects, and restore the original filled NEW pill entirely inside the tile. Transparent and floating badge treatments were rejected. → concepts/deity-icons.md.
+
+## [2026-10-06] ingest | Icon sizing review distinguishes painted subject size, layout boxes and effective touch targets; current-main Home kids-story relocation is preserved. Fresh release build, 2,928 tests, observance verification and updated native routing pass. Broader usability findings and device evidence are recorded with the icon evaluation. → concepts/deity-icons.md.
+
+## [2026-10-06] ingest | Implement native sizing recommendations: subscribed 3/5-column Home grid with an 800dp cap and true full-width Daan; large-text 2/3 tracks and badge clearance; real 48dp reader targets; 11pt higher-contrast tab text with full-width scalable captions; inline Search and reflowing Home chrome. Fresh native phone, enlarged Hindi/English and iPad rotation evidence plus 2,941 tests, zero-drift observances and a clean Release build are recorded. → concepts/deity-icons.md.
+
+## [2026-10-06] ingest | More now uses a complete painted settings family: 16 new transparent utility assets plus 3 existing subjects. Fixed 38dp columns align the profile Om, every row icon and label starts; bounded copy and enlarged-text wrapping retain the chevron column. Generation provenance and passing final native Hindi/English before/after evidence are recorded. → concepts/deity-icons.md.
+
+## [2026-10-06] ingest | All three approved celestial placements are integrated natively: one shared wheel for Home/Panchang, a separate guest-Jyotish seal, and isolated decorative clipping/accessibility. Source/native comparisons, enlarged English, passing native routing, 2,946 tests and controlled 0.275 MB incremental bundle evidence are recorded. → concepts/deity-icons.md.
+
+## [2026-10-06] ingest | Home gutter and Discover icon consistency
+
+Re-verified HomeScreen, homeLayout, TodayRecommendationsRow, FeatureIcon and MoreIcon. Home uses one 16dp gutter, including both full-bleed carousel insets. All nine Discover subjects use centered 32dp painted art from the shared registries; Pitru/Widgets/Daan reuse More’s exact sources. Added the utility question seal (56 painted icons total), documented the font-based HomeWordmark Om exception, and refreshed concepts/deity-icons.md plus the index. Native evidence and size measurement are in docs/evaluations/home-gutter-2026-10-06/.

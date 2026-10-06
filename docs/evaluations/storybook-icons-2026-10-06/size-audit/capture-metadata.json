@@ -1,0 +1,410 @@
+[
+  {
+    "file": "01-phone-402-home-upper.png",
+    "storedPixels": [
+      1206,
+      2622
+    ],
+    "exifOrientation": 1,
+    "displayedPixels": [
+      1206,
+      2622
+    ],
+    "displayedLogicalPoints": [
+      402.0,
+      874.0
+    ],
+    "scale": 3
+  },
+  {
+    "file": "02-phone-402-reader.png",
+    "storedPixels": [
+      1206,
+      2622
+    ],
+    "exifOrientation": 1,
+    "displayedPixels": [
+      1206,
+      2622
+    ],
+    "displayedLogicalPoints": [
+      402.0,
+      874.0
+    ],
+    "scale": 3
+  },
+  {
+    "file": "03-phone-402-more.png",
+    "storedPixels": [
+      1206,
+      2622
+    ],
+    "exifOrientation": 1,
+    "displayedPixels": [
+      1206,
+      2622
+    ],
+    "displayedLogicalPoints": [
+      402.0,
+      874.0
+    ],
+    "scale": 3
+  },
+  {
+    "file": "04-phone-402-home-lower.png",
+    "storedPixels": [
+      1206,
+      2622
+    ],
+    "exifOrientation": 1,
+    "displayedPixels": [
+      1206,
+      2622
+    ],
+    "displayedLogicalPoints": [
+      402.0,
+      874.0
+    ],
+    "scale": 3
+  },
+  {
+    "file": "05-phone-402-deities.png",
+    "storedPixels": [
+      1206,
+      2622
+    ],
+    "exifOrientation": 1,
+    "displayedPixels": [
+      1206,
+      2622
+    ],
+    "displayedLogicalPoints": [
+      402.0,
+      874.0
+    ],
+    "scale": 3
+  },
+  {
+    "file": "06-phone-402-kids-shelves.png",
+    "storedPixels": [
+      1206,
+      2622
+    ],
+    "exifOrientation": 1,
+    "displayedPixels": [
+      1206,
+      2622
+    ],
+    "displayedLogicalPoints": [
+      402.0,
+      874.0
+    ],
+    "scale": 3
+  },
+  {
+    "file": "07-phone-402-panchang.png",
+    "storedPixels": [
+      1206,
+      2622
+    ],
+    "exifOrientation": 1,
+    "displayedPixels": [
+      1206,
+      2622
+    ],
+    "displayedLogicalPoints": [
+      402.0,
+      874.0
+    ],
+    "scale": 3
+  },
+  {
+    "file": "08-phone-402-bhajan.png",
+    "storedPixels": [
+      1206,
+      2622
+    ],
+    "exifOrientation": 1,
+    "displayedPixels": [
+      1206,
+      2622
+    ],
+    "displayedLogicalPoints": [
+      402.0,
+      874.0
+    ],
+    "scale": 3
+  },
+  {
+    "file": "09-compact-home-top.png",
+    "storedPixels": [
+      750,
+      1334
+    ],
+    "exifOrientation": 1,
+    "displayedPixels": [
+      750,
+      1334
+    ],
+    "displayedLogicalPoints": [
+      375.0,
+      667.0
+    ],
+    "scale": 2
+  },
+  {
+    "file": "10-compact-home-upper.png",
+    "storedPixels": [
+      750,
+      1334
+    ],
+    "exifOrientation": 1,
+    "displayedPixels": [
+      750,
+      1334
+    ],
+    "displayedLogicalPoints": [
+      375.0,
+      667.0
+    ],
+    "scale": 2
+  },
+  {
+    "file": "11-compact-home-lower.png",
+    "storedPixels": [
+      750,
+      1334
+    ],
+    "exifOrientation": 1,
+    "displayedPixels": [
+      750,
+      1334
+    ],
+    "displayedLogicalPoints": [
+      375.0,
+      667.0
+    ],
+    "scale": 2
+  },
+  {
+    "file": "12-compact-home-new.png",
+    "storedPixels": [
+      750,
+      1334
+    ],
+    "exifOrientation": 1,
+    "displayedPixels": [
+      750,
+      1334
+    ],
+    "displayedLogicalPoints": [
+      375.0,
+      667.0
+    ],
+    "scale": 2
+  },
+  {
+    "file": "13-large-home-top.png",
+    "storedPixels": [
+      1320,
+      2868
+    ],
+    "exifOrientation": 1,
+    "displayedPixels": [
+      1320,
+      2868
+    ],
+    "displayedLogicalPoints": [
+      440.0,
+      956.0
+    ],
+    "scale": 3
+  },
+  {
+    "file": "14-large-home-upper.png",
+    "storedPixels": [
+      1320,
+      2868
+    ],
+    "exifOrientation": 1,
+    "displayedPixels": [
+      1320,
+      2868
+    ],
+    "displayedLogicalPoints": [
+      440.0,
+      956.0
+    ],
+    "scale": 3
+  },
+  {
+    "file": "15-large-home-lower.png",
+    "storedPixels": [
+      1320,
+      2868
+    ],
+    "exifOrientation": 1,
+    "displayedPixels": [
+      1320,
+      2868
+    ],
+    "displayedLogicalPoints": [
+      440.0,
+      956.0
+    ],
+    "scale": 3
+  },
+  {
+    "file": "16-large-grid-overview.png",
+    "storedPixels": [
+      1320,
+      2868
+    ],
+    "exifOrientation": 1,
+    "displayedPixels": [
+      1320,
+      2868
+    ],
+    "displayedLogicalPoints": [
+      440.0,
+      956.0
+    ],
+    "scale": 3
+  },
+  {
+    "file": "17-tablet-home-top.png",
+    "storedPixels": [
+      1488,
+      2266
+    ],
+    "exifOrientation": 1,
+    "displayedPixels": [
+      1488,
+      2266
+    ],
+    "displayedLogicalPoints": [
+      744.0,
+      1133.0
+    ],
+    "scale": 2
+  },
+  {
+    "file": "18-tablet-home-upper.png",
+    "storedPixels": [
+      1488,
+      2266
+    ],
+    "exifOrientation": 1,
+    "displayedPixels": [
+      1488,
+      2266
+    ],
+    "displayedLogicalPoints": [
+      744.0,
+      1133.0
+    ],
+    "scale": 2
+  },
+  {
+    "file": "19-tablet-home-lower.png",
+    "storedPixels": [
+      1488,
+      2266
+    ],
+    "exifOrientation": 1,
+    "displayedPixels": [
+      1488,
+      2266
+    ],
+    "displayedLogicalPoints": [
+      744.0,
+      1133.0
+    ],
+    "scale": 2
+  },
+  {
+    "file": "20-tablet-landscape-upper.png",
+    "storedPixels": [
+      1488,
+      2266
+    ],
+    "exifOrientation": 8,
+    "displayedPixels": [
+      2266,
+      1488
+    ],
+    "displayedLogicalPoints": [
+      1133.0,
+      744.0
+    ],
+    "scale": 2
+  },
+  {
+    "file": "21-tablet-landscape-lower.png",
+    "storedPixels": [
+      1488,
+      2266
+    ],
+    "exifOrientation": 8,
+    "displayedPixels": [
+      2266,
+      1488
+    ],
+    "displayedLogicalPoints": [
+      1133.0,
+      744.0
+    ],
+    "scale": 2
+  },
+  {
+    "file": "22-compact-accessibility-upper.png",
+    "storedPixels": [
+      750,
+      1334
+    ],
+    "exifOrientation": 1,
+    "displayedPixels": [
+      750,
+      1334
+    ],
+    "displayedLogicalPoints": [
+      375.0,
+      667.0
+    ],
+    "scale": 2
+  },
+  {
+    "file": "23-compact-accessibility-new.png",
+    "storedPixels": [
+      750,
+      1334
+    ],
+    "exifOrientation": 1,
+    "displayedPixels": [
+      750,
+      1334
+    ],
+    "displayedLogicalPoints": [
+      375.0,
+      667.0
+    ],
+    "scale": 2
+  },
+  {
+    "file": "24-phone-402-grid-overview.png",
+    "storedPixels": [
+      1206,
+      2622
+    ],
+    "exifOrientation": 1,
+    "displayedPixels": [
+      1206,
+      2622
+    ],
+    "displayedLogicalPoints": [
+      402.0,
+      874.0
+    ],
+    "scale": 3
+  }
+]

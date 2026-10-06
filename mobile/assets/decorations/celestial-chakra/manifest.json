@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "method": "built-in image_gen",
+  "assets": [
+    {
+      "name": "wheel",
+      "file": "wheel.png",
+      "bytes": 246185,
+      "sha256": "ab4185edf92ba8fd41a4a519a0aaa6141f6747a499811b116df867721289bc0d",
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "visibleBounds": [
+        45,
+        41,
+        979,
+        983
+      ],
+      "alphaExtrema": [
+        0,
+        252
+      ],
+      "provenanceFile": "wheel-provenance.json",
+      "packaging": "Generated RGBA downsampled/centered as recorded in provenance; indexed 256-color alpha PNG packaging with Pillow FASTOCTREE, no dithering. Original unquantized master retained."
+    },
+    {
+      "name": "seal",
+      "file": "seal.png",
+      "bytes": 28207,
+      "sha256": "36da6f41daa6466805d34ab80af9d91412ce40db8b96dd8087acc9edc77cb0c5",
+      "dimensions": [
+        512,
+        512
+      ],
+      "visibleBounds": [
+        29,
+        26,
+        483,
+        487
+      ],
+      "alphaExtrema": [
+        0,
+        253
+      ],
+      "provenanceFile": "seal-provenance.json",
+      "packaging": "Generated RGBA downsampled/centered as recorded in provenance; indexed 256-color alpha PNG packaging with Pillow FASTOCTREE, no dithering. Original unquantized master retained."
+    }
+  ]
+}

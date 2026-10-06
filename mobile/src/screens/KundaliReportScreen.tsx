@@ -1,3 +1,4 @@
+import AppIcon from '@/components/AppIcon';
 import React, { useMemo, useState } from 'react';
 import { Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -186,9 +187,10 @@ export default function KundaliReportScreen({ navigation, route }: Props) {
                 pressed && { opacity: 0.65 },
               ]}
             >
-              <Text style={[styles.shareText, { color: colors.saffronDeep }]}>
-                ↗ {contentByLang(lang, 'साझा करें', 'Share')}
-              </Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+                <AppIcon name="share" size={15} />
+                <Text style={[styles.shareText, { color: colors.saffronDeep }]}>{contentByLang(lang, 'साझा करें', 'Share')}</Text>
+              </View>
             </Pressable>
           )}
         </View>

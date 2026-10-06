@@ -2,6 +2,7 @@ import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { ScrollView, Text, View as mockView } from 'react-native';
 import TodayStrip from '@/components/TodayStrip';
+import { TodayChakraOrnament } from '@/components/CelestialChakra';
 
 // ---- mutable mock state (reset in beforeEach) ----
 let mockLang: 'hi' | 'en' = 'hi';
@@ -325,6 +326,10 @@ describe('TodayStrip', () => {
   it('navigates to the Panchang tab on press', () => {
     mockMuhurat = { muhurat: muhuratDay, panchang: panchangDay };
     const tree = render();
+    // The new painted ornament remains a non-interactive sibling, leaving
+    // the header and independently accessible chip actions available.
+    const ornament = tree.root.findByType(TodayChakraOrnament);
+    expect(ornament.findAll((node) => node.props.pointerEvents === 'none').length).toBeGreaterThan(0);
     const button = tree.root.findAll(
       (n) => n.props?.accessibilityRole === 'button' && typeof n.props?.onPress === 'function'
     )[0];

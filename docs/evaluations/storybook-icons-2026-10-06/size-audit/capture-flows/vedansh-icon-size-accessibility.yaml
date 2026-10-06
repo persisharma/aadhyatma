@@ -1,0 +1,17 @@
+appId: com.prashantsharma.vedansh
+---
+- setOrientation: PORTRAIT
+- launchApp:
+    stopApp: true
+- tapOn: { id: "tab-home" }
+- tapOn: { text: "Back", optional: true }
+- scrollUntilVisible:
+    element: { text: "Chalisa\\..*Tap to open\\." }
+    direction: UP
+    timeout: 20000
+- takeScreenshot: docs/evaluations/storybook-icons-2026-10-06/size-audit/22-compact-accessibility-upper
+- scrollUntilVisible:
+    element: { text: "Kundali\\..*Tap to open\\." }
+    direction: DOWN
+    timeout: 20000
+- takeScreenshot: docs/evaluations/storybook-icons-2026-10-06/size-audit/23-compact-accessibility-new

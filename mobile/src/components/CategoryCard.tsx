@@ -13,7 +13,7 @@ type Props = {
   onPress?: () => void;
   onPressIn?: () => void;
   onPressOut?: () => void;
-  /** When true (and active), shows a green "NEW" badge top-right. */
+  /** When true (and active), shows the "NEW" cue top-right. */
   hasNew?: boolean;
   /**
    * `card` (default): the classic gradient card with the name inside — used by
@@ -28,6 +28,10 @@ type Props = {
   launcherLabelLines?: 1 | 2;
   /** Home keeps captions below; dense indexes can place the title inside the tile. */
   launcherLabelPosition?: 'below' | 'tile';
+  /** More room for Home's illustrations; dense named indexes remain compact. */
+  launcherArtwork?: 'compact' | 'illustrated';
+  /** Home reserves a badge row at enlarged text without shifting individual art. */
+  launcherHeight?: number;
 };
 
 function CategoryCard({
@@ -43,6 +47,8 @@ function CategoryCard({
   displayNameEn,
   launcherLabelLines = 1,
   launcherLabelPosition = 'below',
+  launcherArtwork = 'compact',
+  launcherHeight = 72,
 }: Props) {
   const { colors, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
@@ -105,6 +111,7 @@ function CategoryCard({
           <View
             style={[
               styles.launcherTile,
+              { height: launcherHeight },
               styles.launcherTileComing,
               {
                 borderRadius: radii.lg,
@@ -146,6 +153,7 @@ function CategoryCard({
         <View
           style={[
             styles.launcherTile,
+            { height: launcherHeight },
             {
               borderRadius: radii.lg,
               borderColor: colors.cardActiveBorder,
@@ -172,10 +180,11 @@ function CategoryCard({
                 styles.badge,
                 styles.launcherBadge,
                 { backgroundColor: colors.newBadgeBg, borderRadius: radii.pill },
+                launcherArtwork === 'illustrated' && styles.illustratedBadge,
               ]}
               pointerEvents="none"
             >
-              <Text style={[styles.badgeText, { color: colors.newBadgeText, letterSpacing: 1.6 }]}>
+              <Text style={[styles.badgeText, { color: colors.newBadgeText, letterSpacing: 1.6 }, launcherArtwork === 'illustrated' && styles.illustratedBadgeText]}>
                 NEW
               </Text>
             </View>
@@ -325,6 +334,14 @@ const styles = StyleSheet.create({
     top: 6,
     right: 6,
   },
+  // Keep the original filled cue inside Home without moving the illustration.
+  illustratedBadge: {
+    top: 2,
+    right: 6,
+    paddingHorizontal: 2,
+    paddingVertical: 0,
+  },
+  illustratedBadgeText: { lineHeight: 13, letterSpacing: 0.5 },
   badge: {
     position: 'absolute',
     top: 8,
@@ -333,7 +350,7 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
   },
   badgeText: {
-    fontSize: 10,
+    fontSize: 11,
     fontWeight: '600',
     textTransform: 'uppercase',
   },

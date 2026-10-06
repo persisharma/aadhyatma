@@ -1,0 +1,49 @@
+{
+  "request": "all 3 are on different screen so all 3",
+  "placements": [
+    {
+      "option": 1,
+      "surface": "Panchang calendar-mode upper-left backdrop",
+      "selectedTarget": "targets/panchang.png"
+    },
+    {
+      "option": 2,
+      "surface": "Home Today card right ornament",
+      "selectedTarget": "targets/home.png"
+    },
+    {
+      "option": 3,
+      "surface": "Guest Jyotish introduction seal only",
+      "selectedTarget": "targets/jyotish.png"
+    }
+  ],
+  "nativeDevice": {
+    "udid": "5799D1D7-B645-4613-8058-822E63009C0F",
+    "name": "Vedansh-Upanishad-QA",
+    "iOS": "26.5",
+    "pointViewport": [
+      402,
+      874
+    ],
+    "pixels": [
+      1206,
+      2622
+    ],
+    "scale": 3
+  },
+  "application": {
+    "bundle": "com.prashantsharma.vedansh",
+    "version": "1.4.9",
+    "build": "69",
+    "configuration": "Release",
+    "installedBundleSha256": "0ae8b048c98d1b9707294fecd9421b2da5658cf535d33cd607b3893c5d55fbeb"
+  },
+  "normalLanguage": "hi",
+  "normalSystemText": "large (iOS default)",
+  "extraState": "en / accessibility-medium",
+  "sourcePixels": [
+    851,
+    1848
+  ],
+  "comparisonDensity": "Both source and full native captures normalized to 402x874 logical pixels; no screenshot repainting. Native status bar preserved; generated targets omit clock/network chrome."
+}

@@ -1,5 +1,9 @@
+import DeityIcon from './DeityIcon';
+import { deityIconKey } from '@/data/deities';
+import CategoryIcon from './CategoryIcon';
+import StoryIcon from './StoryIcon';
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
@@ -22,9 +26,12 @@ import type { HomeStackParamList } from '@/navigation/types';
 
 type Nav = NativeStackNavigationProp<HomeStackParamList>;
 
-export default function TodayRecommendationsRow() {
+export default function TodayRecommendationsRow({ horizontalGutter }: { horizontalGutter?: number } = {}) {
   const { colors, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
+  const { width, fontScale } = useWindowDimensions();
+  const gutter = horizontalGutter ?? spacing.lg;
+  const cardWidth = fontScale > 1.2 ? Math.min(width - 2 * gutter, 196 * fontScale) : 196;
   const navigation = useNavigation<Nav>();
   const { beginTilePress, markTileDrag, finishTilePress, activateTile } = useTilePress();
   const todayKey = useTodayKey();
@@ -83,9 +90,9 @@ export default function TodayRecommendationsRow() {
         horizontal
         showsHorizontalScrollIndicator={false}
         decelerationRate="fast"
-        style={{ marginHorizontal: -spacing.xxl }}
+        style={{ marginHorizontal: -gutter }}
         contentContainerStyle={{
-          paddingHorizontal: spacing.xxl,
+          paddingHorizontal: gutter,
           gap: spacing.sm,
           // The compact strip is only ~56pt tall. In a band that thin, a natural
           // (slightly-arced) horizontal flick starts near the band edge and the
@@ -106,15 +113,11 @@ export default function TodayRecommendationsRow() {
           const { entry } = recommendation;
           const open = () => navigateToEntryStart(navigation, entry);
           const card = (
-            <View key={entry.id} style={styles.cardWrap}>
+            <View key={entry.id} style={{ width: cardWidth }}>
               <FeatureCard
                 compact
-                item={spotlightForEntry(
-                  recommendation,
-                  typography.thumb.fontFamily,
-                  colors.saffronDeep
-                )}
-                width={styles.cardWrap.width}
+                item={spotlightForEntry(recommendation)}
+                width={cardWidth}
                 onPress={() => activateTile(open)}
                 onPressIn={() => beginTilePress(open)}
                 onPressOut={finishTilePress}
@@ -131,7 +134,7 @@ export default function TodayRecommendationsRow() {
               { screen: 'AbujhDays', initial: false }
             );
           const abujhCard = (
-            <View key="abujh-today" style={styles.cardWrap} testID="for-today-abujh">
+            <View key="abujh-today" style={{ width: cardWidth }} testID="for-today-abujh">
               <FeatureCard
                 compact
                 item={{
@@ -143,12 +146,10 @@ export default function TodayRecommendationsRow() {
                   ctaHi: 'देखें',
                   ctaEn: 'View',
                   icon: (
-                    <Text style={{ color: colors.saffronDeep, fontFamily: typography.thumb.fontFamily, fontSize: 19 }}>
-                      ॥
-                    </Text>
+                    <StoryIcon name="muhurat" size={31} />
                   ),
                 }}
-                width={styles.cardWrap.width}
+                width={cardWidth}
                 onPress={() => activateTile(openAbujh)}
                 onPressIn={() => beginTilePress(openAbujh)}
                 onPressOut={finishTilePress}
@@ -163,7 +164,7 @@ export default function TodayRecommendationsRow() {
               const openDaan = () =>
                 navigation.navigate('DaanJourney', { occasionId: daanOccasion.id });
               return (
-                <View key="daan-today" style={styles.cardWrap} testID="for-today-daan">
+                <View key="daan-today" style={{ width: cardWidth }} testID="for-today-daan">
                   <FeatureCard
                     compact
                     item={{
@@ -175,12 +176,10 @@ export default function TodayRecommendationsRow() {
                       ctaHi: 'खोलें',
                       ctaEn: 'Open',
                       icon: (
-                        <Text style={{ color: colors.saffronDeep, fontFamily: typography.thumb.fontFamily, fontSize: 19 }}>
-                          दा
-                        </Text>
+                        <StoryIcon name="daan" size={31} />
                       ),
                     }}
-                    width={styles.cardWrap.width}
+                    width={cardWidth}
                     onPress={() => activateTile(openDaan)}
                     onPressIn={() => beginTilePress(openDaan)}
                     onPressOut={finishTilePress}
@@ -195,9 +194,7 @@ export default function TodayRecommendationsRow() {
 }
 
 function spotlightForEntry(
-  { entry, festivalHi, festivalEn }: TodayRecommendation,
-  thumbFontFamily: string,
-  thumbColor: string
+  { entry, festivalHi, festivalEn }: TodayRecommendation
 ): FeatureSpotlight {
   // A festival card names the occasion instead of the generic line, so a reader
   // arriving from the morning's festive reminder lands on the same festival the
@@ -212,15 +209,9 @@ function spotlightForEntry(
     ctaHi: 'पढ़ें',
     ctaEn: 'Read',
     icon: (
-      <Text
-        style={{
-          color: thumbColor,
-          fontFamily: thumbFontFamily,
-          fontSize: 19,
-        }}
-      >
-        {entry.thumb}
-      </Text>
+      entry.deities?.[0]
+        ? <DeityIcon iconKey={deityIconKey(entry.deities[0])} fallbackText={entry.thumb} size={32} />
+        : <CategoryIcon iconKey={entry.category} />
     ),
   };
 }
@@ -235,16 +226,5 @@ const styles = StyleSheet.create({
   sectionLabel: {
     // textTransform/letterSpacing/fontFamily are owned by pillTextStyle (script-aware).
     paddingHorizontal: 4,
-  },
-  cardWrap: {
-    // Much narrower than the 292 spotlight width: the compact strip is icon +
-    // name + chevron, so it needs room for a title and nothing else, and the
-    // extra card that fits per viewport is more of today's recommendations in
-    // the same scroll. This leaves ~108pt for the title — comfortable for a
-    // typical name (हनुमान चालीसा ≈ 80) but at the edge for the longest shipped
-    // one (विष्णु सहस्रनाम अंश ≈ 105), which ellipsizes under a raised system
-    // font scale. Widen here, not in FeatureCard, if that trade stops being
-    // acceptable — the strip sizes to whatever width the row hands it.
-    width: 196,
   },
 });

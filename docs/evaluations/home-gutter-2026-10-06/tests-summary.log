@@ -1,0 +1,32 @@
+> vedansh@0.1.0 test
+> npm run typecheck && npm run test:widgets && npm run test:readers && npm run test:engine && npm run test:data && npm run test:ask
+> vedansh@0.1.0 typecheck
+> tsc --noEmit
+> vedansh@0.1.0 test:widgets
+> tsx --test src/widgets/__tests__/catalog.test.ts src/widgets/__tests__/contract.test.ts src/widgets/__tests__/planPayload.test.ts src/widgets/__tests__/planner.test.ts src/widgets/__tests__/startup.test.ts
+ℹ tests 37
+ℹ pass 37
+ℹ fail 0
+> vedansh@0.1.0 test:readers
+> jest --config jest.config.js --runInBand
+Test Suites: 228 passed, 228 total
+Tests:       2109 passed, 2109 total
+Snapshots:   0 total
+Time:        60.002 s
+> vedansh@0.1.0 test:engine
+> TZ=Asia/Kolkata tsx --test src/panchang/__tests__/*.test.ts
+ℹ tests 589
+ℹ pass 589
+ℹ fail 0
+> vedansh@0.1.0 test:data
+> tsx --test src/data/__tests__/searchNormalize.test.ts src/data/__tests__/contentCorrectness.test.ts src/data/__tests__/libraryIntegrity.test.ts src/data/__tests__/devanagariWellFormed.test.ts src/data/__tests__/vidhiContent.test.ts src/data/__tests__/searchIndex.test.ts src/data/__tests__/warmSearchIndex.test.ts src/data/__tests__/launchGraph.test.ts src/data/__tests__/verseCounts.test.ts src/data/__tests__/chapteredCorpusInvariants.test.ts src/data/__tests__/theerth.test.ts src/data/__tests__/namkaranCorpus.test.ts src/data/__tests__/kidsStories.test.ts src/data/chapteredTotals.test.ts src/data/sourceIdMigration.test.ts src/data/sadhana/progress.test.ts src/panchang/muhurat.test.ts src/navigation/entryRoutes.test.ts src/navigation/routeGraph.test.ts src/notifications/__tests__/scheduler.test.ts src/notifications/__tests__/reminderVerseLookup.test.ts src/notifications/__tests__/vratReminderPure.test.ts src/notifications/__tests__/muhuratReminderPure.test.ts src/notifications/__tests__/festiveReminderPure.test.ts src/notifications/__tests__/festiveReminders.test.ts src/notifications/__tests__/pitruReminderPure.test.ts src/notifications/__tests__/janmaTithiReminderPure.test.ts src/notifications/__tests__/japamAlarms.test.ts src/notifications/__tests__/sadhanaReminder.test.ts src/notifications/__tests__/routineReminderPure.test.ts src/notifications/__tests__/returnReminderPure.test.ts src/notifications/__tests__/pushTokenPure.test.ts
+ℹ tests 166
+ℹ pass 166
+ℹ fail 0
+> vedansh@0.1.0 test:ask
+> TZ=Asia/Kolkata tsx --test src/ask/__tests__/*.test.ts
+ℹ tests 49
+ℹ pass 49
+ℹ fail 0
+
+Full npm test exit code: 0. Total: 2950 tests. Runtime: existing system Node 25.9.0.

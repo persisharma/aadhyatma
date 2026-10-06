@@ -1,3 +1,4 @@
+import AppIcon from '@/components/AppIcon';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   FlatList,
@@ -169,9 +170,7 @@ export default function KavachamReaderScreen({ navigation, route }: Props) {
                     pressed && { opacity: 0.6 },
                   ]}
                 >
-                  <Text style={{ color: colors.saffronDeep, fontSize: 16, includeFontPadding: false }}>
-                    ▶
-                  </Text>
+                  <AppIcon name="play" size={17} weight="fill" />
                 </Pressable>
               )}
             </View>

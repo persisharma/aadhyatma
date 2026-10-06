@@ -1,5 +1,6 @@
 module.exports = {
   preset: 'react-native',
+  transformIgnorePatterns: ['node_modules/(?!((jest-)?react-native|@react-native(-community)?|phosphor-react-native)/)'],
   setupFiles: ['<rootDir>/jest.setup.js'],
   // Scoped to the dirs holding Jest-style suites. src/data/__tests__ and the
   // plain `*.test.ts` files in src/notifications/__tests__ are node:assert

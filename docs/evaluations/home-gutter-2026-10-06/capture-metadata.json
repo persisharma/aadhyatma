@@ -1,0 +1,38 @@
+{
+  "capturedAt": "2026-10-06T23:56:13.880367+05:30",
+  "device": "Vedansh-Upanishad-QA",
+  "udid": "5799D1D7-B645-4613-8058-822E63009C0F",
+  "os": "iOS 26.5",
+  "viewportPoints": [
+    402,
+    874
+  ],
+  "screenshotPixels": [
+    1206,
+    2622
+  ],
+  "scale": 3,
+  "version": "1.4.9 (69)",
+  "beforeHome": "HEAD 456be4e2, original 24dp gutter",
+  "beforeDiscover": "Padding-only intermediate Release based on 456be4e2: 16dp gutter, previous Discover icons",
+  "after": "Combined Home gutter and Discover icon changes; installed bundle hash recorded in size-comparison.json",
+  "defaultState": "Hindi, system content_size large",
+  "enlargedState": "English, system content_size accessibility-medium",
+  "restoredState": "Hindi and system content_size large restored after capture",
+  "sourceSha256": {
+    "mobile/src/utils/homeLayout.ts": "7346d41bd9e334064055e653ba3086fe9e87d1d0f549b5d92fcca14618fce9c4",
+    "mobile/src/components/TodayRecommendationsRow.tsx": "8ba7dab285016dd184c66229a99043fa814b38428032eaddadde1cfa2d5aea25",
+    "mobile/src/screens/HomeScreen.tsx": "02fe9da99658bc5f8e5ad2bf5efd03b8f3ed650aacc5e7a1e2ebac7052b444a3",
+    "mobile/src/components/FeatureIcon.tsx": "16911ac6336278d5d18cea609b0a2388432faef38d822e4ac8ea49ea9da06d57",
+    "mobile/src/components/MoreIcon.tsx": "0aad9d560b16a6f6ec692e29c7a1be9c93ca39d65a6e811a6e57956de319e588",
+    "mobile/src/components/FeatureCard.tsx": "3d1f6511ca623488e286abd79909872c7b67e74698334e0fb995ef6f76f9bb55"
+  },
+  "assets": {
+    "homeCount": 39,
+    "utilityCount": 17,
+    "totalPaintedIconBytes": 2157931,
+    "chakraBytes": 274392,
+    "combinedPngBytes": 2432323
+  },
+  "normalGallery": "Nine native 3x card crops, no UI redrawing; crop-metadata.json records source screenshots, hashes and rectangles."
+}
