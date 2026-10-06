@@ -8,7 +8,7 @@ jest.mock('react-native', () => {
   return {
     Pressable: 'Pressable', ScrollView: 'ScrollView', Text: 'Text', View: 'View',
     useWindowDimensions: () => ({ width: 390, height: 844 }),
-    FlatList: React.forwardRef((props: any, ref: any) => {
+    FlatList: React.forwardRef(function MockFlatList(props: any, ref: any) {
       React.useImperativeHandle(ref, () => ({ scrollToIndex: mockScroll }));
       return React.createElement('FlatList', props, props.data.map((item: any, index: number) =>
         React.createElement(React.Fragment, { key: item.id }, props.renderItem({ item, index }))));

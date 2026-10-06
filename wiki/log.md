@@ -298,3 +298,11 @@ New page `subsystems/share.md`. `share()` now takes `ShareableContent` (verse | 
 ## [2026-10-03] ingest | Home widgets gained per-size background art: generated, parchment-washed plates (`assets/widget-backgrounds/`, `scripts/build-widget-backgrounds.mts`, 4.5:1 contrast gate), optional on iOS (`WidgetArt`, fullColor + pixel-budget guard) and Android (`widget_art` GONE by default, API 31+), and drawn behind gallery previews. Recorded the WidgetKit oversize-image blank-render trap and the RemoteViews reapply trap. home-widgets.md updated.
 ## [2026-10-03] ingest | Panchang widget art switched from the near-invisible celestial-almanac sketch to Navagraha; sources may now set a per-source `wash` so darker sketches still clear the 4.5:1 gate.
 ## [2026-10-04] ingest | Widget art made clearly visible: plates are now tone-mapped to the darkest background the widget text allows, and widget text uses deeper `WIDGET_TEXT_TOKENS` (inkMuted #4A3420, saffronDeep #6B2E05, gold #7E5A1E) on iOS, Android and the gallery facsimile. Worst plate contrast 5.17:1.
+
+## [2026-10-06] ingest | Native Storybook icons: 36 offline illustrations, total 21-deity mapping, shared Phosphor utility controls and preserved accessibility/layout contracts → concepts/deity-icons.md, daan-punya.md.
+
+## [2026-10-06] ingest | Storybook source fidelity correction: exact Option1 crop inputs correct23 subjects, broad navigation silhouettes and the leaf nudge; restore66dp Home art in original72dp tiles, unified utility ink, and reference-hash provenance. Earlier family-level visual acceptance was insufficient → concepts/deity-icons.md.
+
+## [2026-10-06] ingest | Focused native check caught Muhurat pointer touching NEW: Home badges now float above tile edge, preserving one centered66dp artwork size in original72dp tiles. Full source/native visual checks remain separate from passing interaction tests.
+
+## [2026-10-06] ingest | User refinement: reduce Home category art by 5% to 62.7dp, retain one center for all subjects, and restore the original filled NEW pill entirely inside the tile. Transparent and floating badge treatments were rejected. → concepts/deity-icons.md.

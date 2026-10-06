@@ -35,7 +35,8 @@ import { getLensDefinition } from '@/panchang/lenses';
 import { useLenses } from '@/panchang/useLenses';
 import ReadingSizePickerSheet, { readingSizeLabel } from '@/components/ReadingSizePickerSheet';
 import ReadAloudSettingsSheet, { readAloudRowLabel } from '@/components/ReadAloudSettingsSheet';
-import { READ_ALOUD_GLYPH } from '@/components/readAloud/ReadAloudButton';
+import AppIcon, { type AppIconName } from '@/components/AppIcon';
+import StoryIcon, { type StoryIconName } from '@/components/StoryIcon';
 import { useReadAloudPrefs } from '@/contexts/ReadAloudPrefsContext';
 import { useReadAloud } from '@/contexts/ReadAloudContext';
 import { useTourTarget, scrollNodeIntoView } from '@/components/tour/tourTargets';
@@ -58,10 +59,7 @@ function nativeNameFont(lang: Lang, devanagariFallback: string): string {
 }
 
 type RowProps = {
-  icon: string;
-  iconBg: string;
-  iconFontFamily?: string;
-  iconFontSize?: number;
+  icon: AppIconName | StoryIconName;
   label: string;
   labelFontFamily: string;
   state?: string;
@@ -75,9 +73,6 @@ type RowProps = {
 /** One inset settings row: [icon tile] [label] … [state] [chevron]. */
 function SettingsRow({
   icon,
-  iconBg,
-  iconFontFamily,
-  iconFontSize = 17,
   label,
   labelFontFamily,
   state,
@@ -88,6 +83,7 @@ function SettingsRow({
   first,
 }: RowProps) {
   const { colors } = useTheme();
+  const illustrated = ['sanskar', 'daan', 'purpose', 'stotram'].includes(icon);
   return (
     <Pressable
       testID={testID}
@@ -100,8 +96,10 @@ function SettingsRow({
         pressed && { backgroundColor: colors.saffronTint },
       ]}
     >
-      <View style={[styles.rowIcon, { backgroundColor: iconBg }]}>
-        <Text style={{ color: colors.onPrimary, fontSize: iconFontSize, fontFamily: iconFontFamily }}>{icon}</Text>
+      <View style={[styles.rowIcon, { backgroundColor: colors.goldTint }]}>
+        {illustrated
+          ? <StoryIcon name={icon as StoryIconName} size={36} />
+          : <AppIcon name={icon as AppIconName} size={23} weight="duotone" />}
       </View>
       <Text style={[styles.rowLabel, { color: colors.ink, fontFamily: labelFontFamily }]} numberOfLines={1}>
         {label}
@@ -114,7 +112,7 @@ function SettingsRow({
           {state}
         </Text>
       ) : null}
-      <Text style={[styles.chevron, { color: colors.gold }]}>›</Text>
+      <AppIcon name="next" size={17} />
     </Pressable>
   );
 }
@@ -276,8 +274,8 @@ export default function MoreScreen({ navigation }: Props) {
                     end={{ x: 0, y: 1 }}
                     style={StyleSheet.absoluteFill}
                   />
-                  <View style={[styles.profileBadge, { backgroundColor: colors.saffron }]}>
-                    <Text style={{ color: colors.onPrimary, fontFamily: typography.readerTitle.fontFamily, fontSize: 26 }}>ॐ</Text>
+                  <View style={[styles.profileBadge, { backgroundColor: colors.goldTint }]}>
+                    <StoryIcon name="stotram" size={40} />
                   </View>
                   <View style={styles.profileMeta}>
                     <Text style={{ fontFamily: labelFont, fontSize: 18, color: colors.ink }} numberOfLines={1}>
@@ -293,13 +291,12 @@ export default function MoreScreen({ navigation }: Props) {
                       {pick(lang, { hi: 'श्रृंखला', en: 'day streak', gu: 'શ્રેણી', kn: 'ಸರಣಿ' })}
                     </Text>
                   </View>
-                  <Text style={[styles.chevron, { color: colors.gold }]}>›</Text>
+                  <AppIcon name="next" size={17} color={colors.iconInk} />
                 </Pressable>
 
                 <SettingsRow
                   testID="kids-stories-door"
-                  icon="॥"
-                  iconBg={colors.gold}
+                  icon="sanskar"
                   label={pick(lang, { hi: 'बच्चों की चित्र-कथाएँ', en: 'Stories for Kids', gu: 'બાળકોની ચિત્રવાર્તાઓ', kn: 'ಮಕ್ಕಳ ಚಿತ್ರಕಥೆಗಳು' })}
                   labelFontFamily={labelFont}
                   onPress={() => navigation.navigate('KidsStoryLibrary')}
@@ -310,10 +307,7 @@ export default function MoreScreen({ navigation }: Props) {
                     (reminders → japam → saved verses), then the family & lineage records
                     (kuldev → ancestors → birthdays), then the occasional home tool. */}
                 <SettingsRow
-                  icon="ॐ"
-                  iconBg={colors.gold}
-                  iconFontFamily={typography.readerTitle.fontFamily}
-                  iconFontSize={18}
+                  icon="bell"
                   label={pick(lang, { hi: 'स्मरण', en: 'Reminders', gu: 'સ્મરણ', kn: 'ಸ್ಮರಣೆ' })}
                   labelFontFamily={labelFont}
                   state={remindersState}
@@ -326,9 +320,7 @@ export default function MoreScreen({ navigation }: Props) {
                   }
                 />
                 <SettingsRow
-                  icon="⏰"
-                  iconBg={colors.saffronDeep}
-                  iconFontSize={18}
+                  icon="alarm"
                   label={pick(lang, { hi: 'जप अलार्म', en: 'Japam Alarms', gu: 'જપ અલાર્મ', kn: 'ಜಪ ಅಲಾರಂ' })}
                   labelFontFamily={labelFont}
                   state={activeJapamAlarms.length > 0 ? `${activeJapamAlarms.length}` : undefined}
@@ -338,8 +330,7 @@ export default function MoreScreen({ navigation }: Props) {
                   }
                 />
                 <SettingsRow
-                  icon="♥"
-                  iconBg={colors.saffron}
+                  icon="saved"
                   label={pick(lang, { hi: 'संग्रह', en: 'Wishlist', gu: 'સંગ્રહ', kn: 'ಸಂಗ್ರಹ' })}
                   labelFontFamily={labelFont}
                   state={`${bookmarks.length}`}
@@ -349,10 +340,7 @@ export default function MoreScreen({ navigation }: Props) {
                 {/* कुल परम्परा (PRD-29 Part B) — the family record; state names
                     the saved kuldev once one is chosen. */}
                 <SettingsRow
-                  icon="॥"
-                  iconBg={colors.saffron}
-                  iconFontFamily={typography.readerTitle.fontFamily}
-                  iconFontSize={16}
+                  icon="family"
                   label={pick(lang, { hi: 'कुल परम्परा', en: 'Kul Parampara', gu: 'કુળ પરંપરા', kn: 'ಕುಲ ಪರಂಪರಾ' })}
                   labelFontFamily={labelFont}
                   state={kulState}
@@ -364,10 +352,7 @@ export default function MoreScreen({ navigation }: Props) {
                 {/* पितृ स्मरण (PRD-17) — private tithi remembrance; the standard
                     More-row NEW state for one release, then count + soonest date. */}
                 <SettingsRow
-                  icon="॥"
-                  iconBg={colors.gold}
-                  iconFontFamily={typography.readerTitle.fontFamily}
-                  iconFontSize={16}
+                  icon="remembrance"
                   label={pick(lang, { hi: 'पितृ स्मरण', en: 'Pitru Smaran', gu: 'પિતૃ સ્મરણ', kn: 'ಪಿತೃ ಸ್ಮರಣ' })}
                   labelFontFamily={labelFont}
                   state={smaranState}
@@ -387,10 +372,7 @@ export default function MoreScreen({ navigation }: Props) {
                     the same sheet. */}
                 {lensAvailableCount > 0 && (
                   <SettingsRow
-                    icon="❖"
-                    iconBg={colors.gold}
-                    iconFontFamily={typography.readerTitle.fontFamily}
-                    iconFontSize={15}
+                    icon="regional"
                     label={pick(lang, { hi: 'क्षेत्रीय पंचांग', en: 'Regional calendars', gu: 'પ્રાદેશિક પંચાંગ', kn: 'ಪ್ರಾದೇಶಿಕ ಪಂಚಾಂಗ' })}
                     labelFontFamily={labelFont}
                     state={lensState}
@@ -409,10 +391,7 @@ export default function MoreScreen({ navigation }: Props) {
                 {/* जन्म तिथि (PRD-29 Part A) — the living side of the tithi
                     ledger: count + the soonest Hindu birthday. */}
                 <SettingsRow
-                  icon="✦"
-                  iconBg={colors.saffronDeep}
-                  iconFontFamily={typography.readerTitle.fontFamily}
-                  iconFontSize={15}
+                  icon="birthday"
                   label={pick(lang, { hi: 'जन्म तिथि', en: 'Janma Tithi', gu: 'જન્મ તિથિ', kn: 'ಜನ್ಮ ತಿಥಿ' })}
                   labelFontFamily={labelFont}
                   state={janmaState}
@@ -428,10 +407,7 @@ export default function MoreScreen({ navigation }: Props) {
                 {/* वास्तु दिशा (PRD-24) — the More-row NEW state for one release,
                     the widget-gallery pattern. */}
                 <SettingsRow
-                  icon="॰"
-                  iconBg={colors.saffron}
-                  iconFontFamily={typography.readerTitle.fontFamily}
-                  iconFontSize={18}
+                  icon="purpose"
                   label={pick(lang, { hi: 'वास्तु दिशा', en: 'Vastu Disha', gu: 'વાસ્તુ દિશા', kn: 'ವಾಸ್ತು ದಿಶಾ' })}
                   labelFontFamily={labelFont}
                   state="NEW"
@@ -442,10 +418,7 @@ export default function MoreScreen({ navigation }: Props) {
                 />
                 {/* दान-पुण्य (PRD-26) — the educate-first giving layer. */}
                 <SettingsRow
-                  icon="दा"
-                  iconBg={colors.saffron}
-                  iconFontFamily={typography.readerTitle.fontFamily}
-                  iconFontSize={15}
+                  icon="daan"
                   label={pick(lang, { hi: 'दान-पुण्य', en: 'Daan Punya', gu: 'દાન-પુણ્ય', kn: 'ದಾನ-ಪುಣ್ಯ' })}
                   labelFontFamily={labelFont}
                   state="NEW"
@@ -468,10 +441,7 @@ export default function MoreScreen({ navigation }: Props) {
                 <View ref={languageRowRef} collapsable={false}>
                   <SettingsRow
                     first
-                    icon="अ"
-                    iconBg={colors.gold}
-                    iconFontFamily={typography.readerTitle.fontFamily}
-                    iconFontSize={16}
+                    icon="language"
                     label={pick(lang, { hi: 'भाषा', en: 'Language', gu: 'ભાષા', kn: 'ಭಾಷೆ' })}
                     labelFontFamily={labelFont}
                     state={currentLang.nativeLabel}
@@ -482,10 +452,7 @@ export default function MoreScreen({ navigation }: Props) {
                 </View>
                 <View ref={readingSizeRowRef} collapsable={false}>
                   <SettingsRow
-                    icon="Aa"
-                    iconBg={colors.saffron}
-                    iconFontFamily={fontFamilies.interSemiBold}
-                    iconFontSize={14}
+                    icon="textSize"
                     label={pick(lang, { hi: 'पाठ का आकार', en: 'Reading Size', gu: 'વાંચન કદ', kn: 'ಓದುವ ಗಾತ್ರ' })}
                     labelFontFamily={labelFont}
                     state={readingSizeLabel(scale, lang)}
@@ -498,9 +465,7 @@ export default function MoreScreen({ navigation }: Props) {
                     final steps to Language + Reading Size, and the tour finds them by
                     ref — so a row below them is safe as long as no tour step is added. */}
                 <SettingsRow
-                  icon={READ_ALOUD_GLYPH}
-                  iconBg={colors.saffronDeep}
-                  iconFontSize={15}
+                  icon="voice"
                   label={pick(lang, { hi: 'पाठ सुनें', en: 'Read Aloud', gu: 'પાઠ સાંભળો', kn: 'ಪಾಠ ಕೇಳಿ' })}
                   labelFontFamily={labelFont}
                   state={readAloudRowLabel(readAloudPrefs, lang, readAloudAvailability)}
@@ -509,10 +474,7 @@ export default function MoreScreen({ navigation }: Props) {
                   accessibilityLabel="Read aloud settings"
                 />
                 <SettingsRow
-                  icon="▦"
-                  iconBg={colors.gold}
-                  iconFontFamily={fontFamilies.interSemiBold}
-                  iconFontSize={18}
+                  icon="widgets"
                   label={pick(lang, { hi: 'होम-स्क्रीन विजेट', en: 'Home-Screen Widgets', gu: 'હોમ-સ્ક્રીન વિજેટ', kn: 'ಹೋಮ್-ಸ್ಕ್ರೀನ್ ವಿಜೆಟ್' })}
                   labelFontFamily={labelFont}
                   state="NEW"
@@ -522,8 +484,7 @@ export default function MoreScreen({ navigation }: Props) {
                   testID="more-home-widgets"
                 />
                 <SettingsRow
-                  icon="↗"
-                  iconBg={colors.saffron}
+                  icon="share"
                   label={pick(lang, { hi: 'ऐप साझा करें', en: 'Share the App', gu: 'ઍપ શેર કરો', kn: 'ಆ್ಯಪ್ ಹಂಚಿಕೊಳ್ಳಿ' })}
                   labelFontFamily={labelFont}
                   onPress={shareApp}
@@ -538,9 +499,7 @@ export default function MoreScreen({ navigation }: Props) {
                     sheet the gate auto-opens, but bypasses the gate and spends
                     no ask slot — the user came looking for it. */}
                 <SettingsRow
-                  icon="★"
-                  iconBg={colors.gold}
-                  iconFontSize={18}
+                  icon="star"
                   label={pick(lang, {
                     hi: 'ऐप को रेटिंग दें',
                     en: 'Rate the App',
@@ -553,9 +512,7 @@ export default function MoreScreen({ navigation }: Props) {
                 />
                 {/* Leaves the app for the public @vedansh.app profile (§37). */}
                 <SettingsRow
-                  icon="◉"
-                  iconBg={colors.saffronDeep}
-                  iconFontSize={19}
+                  icon="instagram"
                   label={pick(lang, {
                     hi: 'Instagram पर फ़ॉलो करें',
                     en: 'Follow on Instagram',
@@ -578,16 +535,14 @@ export default function MoreScreen({ navigation }: Props) {
               <View style={[styles.list, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
                 <SettingsRow
                   first
-                  icon="ⓘ"
-                  iconBg={colors.inkMuted}
+                  icon="info"
                   label={pick(lang, { hi: 'परिचय व अस्वीकरण', en: 'About & Disclaimer', gu: 'પરિચય અને અસ્વીકરણ', kn: 'ಪರಿಚಯ ಮತ್ತು ಹಕ್ಕುನಿರಾಕರಣೆ' })}
                   labelFontFamily={labelFont}
                   onPress={() => setDisclaimerVisible(true)}
                   accessibilityLabel="About and disclaimer"
                 />
                 <SettingsRow
-                  icon="⚑"
-                  iconBg={colors.inkMuted}
+                  icon="report"
                   label={pick(lang, { hi: 'त्रुटि सूचित करें', en: 'Report an Error', gu: 'ભૂલ જણાવો', kn: 'ದೋಷ ವರದಿ ಮಾಡಿ' })}
                   labelFontFamily={labelFont}
                   onPress={reportError}
@@ -595,8 +550,7 @@ export default function MoreScreen({ navigation }: Props) {
                 />
                 {/* Replay the first-launch feature tour on demand (design.md §37/§47). */}
                 <SettingsRow
-                  icon="↻"
-                  iconBg={colors.gold}
+                  icon="reset"
                   label={pick(lang, { hi: 'ऐप भ्रमण फिर देखें', en: 'Show App Tour', gu: 'ઍપ પરિચય ફરી જુઓ', kn: 'ಆ್ಯಪ್ ಪ್ರವಾಸ ಮತ್ತೆ ನೋಡಿ' })}
                   labelFontFamily={labelFont}
                   onPress={() => resetTour()}

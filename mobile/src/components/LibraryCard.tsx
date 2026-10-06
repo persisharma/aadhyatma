@@ -1,3 +1,6 @@
+import CategoryIcon from './CategoryIcon';
+import DeityIcon from './DeityIcon';
+import { deityIconKey } from '@/data/deities';
 import React from 'react';
 import {
   Pressable,
@@ -45,6 +48,11 @@ export default function LibraryCard({ entry, onPress, style, variant = 'default'
   const accessibilityLabel = `${entry.nameEn}. ${entry.subEn}.${showNew ? ' New.' : ''} ${isActive ? 'Tap to open.' : 'Coming soon.'}`;
   const accessibilityState: AccessibilityState = { disabled: !isActive };
 
+  const firstDeity = entry.deities?.[0];
+  const thumbnail = firstDeity
+    ? <DeityIcon iconKey={deityIconKey(firstDeity)} fallbackText={entry.thumb} />
+    : <CategoryIcon iconKey={entry.category} />;
+
   const body = (
     <>
       {isActive ? (
@@ -54,18 +62,7 @@ export default function LibraryCard({ entry, onPress, style, variant = 'default'
           end={{ x: 1, y: 1 }}
           style={[styles.thumb, compact && styles.thumbCompact, { borderRadius: radii.md }]}
         >
-          <Text
-            style={[
-              styles.thumbText,
-              {
-                color: colors.parchmentSoft,
-                fontFamily: typography.thumb.fontFamily,
-                fontSize: typography.thumb.fontSize,
-              },
-            ]}
-          >
-            {entry.thumb}
-          </Text>
+          {thumbnail}
         </LinearGradient>
       ) : (
         <View
@@ -80,19 +77,7 @@ export default function LibraryCard({ entry, onPress, style, variant = 'default'
             },
           ]}
         >
-          <Text
-            style={[
-              styles.thumbText,
-              {
-                color: colors.saffronDeep,
-                fontFamily: typography.thumb.fontFamily,
-                fontSize: typography.thumb.fontSize,
-                opacity: 0.55,
-              },
-            ]}
-          >
-            {entry.thumb}
-          </Text>
+          <View style={{ opacity: 0.55 }}>{thumbnail}</View>
         </View>
       )}
 

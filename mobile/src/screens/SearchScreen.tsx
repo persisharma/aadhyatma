@@ -1,3 +1,8 @@
+import DeityIcon from '@/components/DeityIcon';
+import StoryIcon from '@/components/StoryIcon';
+import CategoryIcon from '@/components/CategoryIcon';
+import { deities, deityIconKey } from '@/data/deities';
+import AppIcon from '@/components/AppIcon';
 import React, {
   useCallback,
   useEffect,
@@ -30,7 +35,7 @@ import {
   type SearchDeityEntry,
   type SearchVerseEntry,
 } from '@/data/searchIndex';
-import { library } from '@/data/texts';
+import { library, type LibraryEntry } from '@/data/texts';
 import { useSearchIndex } from './_useSearchIndex';
 import { getVidhiById } from '@/data/vidhi';
 import { useNewContent } from '@/contexts/NewContentContext';
@@ -297,7 +302,7 @@ export default function SearchScreen({ navigation, route }: Props) {
               pressed && { opacity: 0.7 },
             ]}
           >
-            <Text style={[styles.backGlyph, { color: colors.inkSoft }]}>‹</Text>
+            <AppIcon name="back" size={22} color={colors.iconInk} />
           </Pressable>
           <View
             style={[
@@ -309,7 +314,7 @@ export default function SearchScreen({ navigation, route }: Props) {
               },
             ]}
           >
-            <Text style={[styles.searchGlyph, { color: colors.saffron }]}>⌕</Text>
+            <AppIcon name="search" size={21} color={colors.iconInk} />
             <TextInput
               ref={inputRef}
               value={query}
@@ -337,7 +342,7 @@ export default function SearchScreen({ navigation, route }: Props) {
                 hitSlop={12}
                 style={({ pressed }) => [styles.clearBtn, pressed && { opacity: 0.6 }]}
               >
-                <Text style={[styles.clearGlyph, { color: colors.inkMuted }]}>✕</Text>
+                <AppIcon name="close" size={16} color={colors.iconInk} />
               </Pressable>
             ) : null}
           </View>
@@ -491,7 +496,7 @@ function EmptyState({
   lang,
 }: {
   recent: string[];
-  popular: { id: string; nameHi: string; nameEn: string; thumb: string }[];
+  popular: LibraryEntry[];
   /** जिज्ञासा (PRD-41): the briefing door in the question box's empty state. */
   onTodayVidhan: () => void;
   colors: Theme['colors'];
@@ -521,7 +526,7 @@ function EmptyState({
               { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md, opacity: pressed ? 0.85 : 1 },
             ]}
           >
-            <Text style={[styles.vidhanGlyph, { color: colors.saffron }]}>?</Text>
+            <AppIcon name="question" size={26} color={colors.iconInk} weight="duotone" />
             <View style={styles.resultBody}>
               <Text style={[styles.resultPrimary, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]} numberOfLines={1}>
                 {pick(lang, { hi: 'आज का विधान', en: "Today's Vidhan", gu: 'આજનું વિધાન', kn: 'ಇಂದಿನ ವಿಧಾನ' })}
@@ -530,7 +535,7 @@ function EmptyState({
                 {pick(lang, { hi: 'आज की तिथि · व्रत · शुभ समय · संकल्प', en: 'Tithi · observance · windows · sankalp', gu: 'તિથિ · વ્રત · શુભ સમય · સંકલ્પ', kn: 'ತಿಥಿ · ವ್ರತ · ಶುಭ ಸಮಯ · ಸಂಕಲ್ಪ' })}
               </Text>
             </View>
-            <Text style={[styles.chevron, { color: colors.saffron }]}>›</Text>
+            <AppIcon name="next" size={17} color={colors.iconInk} />
           </Pressable>
           {recent.length > 0 ? (
             <>
@@ -587,7 +592,7 @@ function EmptyState({
                       hitSlop={6}
                       style={({ pressed }) => [styles.recentRemoveBtn, { opacity: pressed ? 0.4 : 1 }]}
                     >
-                      <Text style={[styles.recentRemoveGlyph, { color: colors.inkMuted }]}>✕</Text>
+                      <AppIcon name="close" size={16} color={colors.iconInk} />
                     </Pressable>
                   </View>
                 ))}
@@ -619,17 +624,7 @@ function EmptyState({
                   },
                 ]}
               >
-                <Text
-                  style={[
-                    styles.popularThumb,
-                    {
-                      color: colors.saffronDeep,
-                      fontFamily: typography.readerTitle.fontFamily,
-                    },
-                  ]}
-                >
-                  {p.thumb}
-                </Text>
+                <SearchLibraryArtwork entry={p} />
                 <PopularName
                   nameHi={p.nameHi}
                   nameEn={p.nameEn}
@@ -685,6 +680,15 @@ function PreparingState({
       </Text>
     </View>
   );
+}
+
+function SearchLibraryArtwork({ entry }: { entry?: LibraryEntry }) {
+  const firstDeity = entry?.deities?.[0];
+  return <View style={{ width: 36, height: 36, alignItems: 'center', justifyContent: 'center' }}>
+    {firstDeity
+      ? <DeityIcon iconKey={deityIconKey(firstDeity)} fallbackText={entry?.thumb ?? ''} size={32} />
+      : entry ? <CategoryIcon iconKey={entry.category} /> : <StoryIcon name="sanskar" size={32} />}
+  </View>;
 }
 
 function ZeroState({
@@ -846,14 +850,7 @@ function ResultsList({
                 },
               ]}
             >
-              <Text
-                style={[
-                  styles.sectionThumb,
-                  { color: colors.saffronDeep, fontFamily: typography.readerTitle.fontFamily },
-                ]}
-              >
-                {s.thumb}
-              </Text>
+              <SearchLibraryArtwork entry={library.find((entry) => entry.id === s.sourceId)} />
               <View style={styles.resultBody}>
                 <Text
                   style={[styles.resultPrimary, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]}
@@ -868,7 +865,7 @@ function ResultsList({
                   {s.subtitleHi}
                 </Text>
               </View>
-              <Text style={[styles.chevron, { color: colors.saffron }]}>›</Text>
+              <AppIcon name="next" size={17} color={colors.iconInk} />
             </Pressable>
           );
         }
@@ -889,14 +886,7 @@ function ResultsList({
                 },
               ]}
             >
-              <Text
-                style={[
-                  styles.sectionThumb,
-                  { color: colors.gold, fontFamily: typography.readerTitle.fontFamily },
-                ]}
-              >
-                ॐ
-              </Text>
+              <DeityIcon iconKey={deities.find((deity) => deity.id === d.deityId)?.iconKey} fallbackText="ॐ" size={32} />
               <View style={styles.resultBody}>
                 <Text
                   style={[styles.resultPrimary, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]}
@@ -911,7 +901,7 @@ function ResultsList({
                   {pick(lang, { hi: 'देवता', en: 'Deity', gu: 'દેવતા', kn: 'ದೇವತೆ' })}
                 </Text>
               </View>
-              <Text style={[styles.chevron, { color: colors.saffron }]}>›</Text>
+              <AppIcon name="next" size={17} color={colors.iconInk} />
             </Pressable>
           );
         }
@@ -952,7 +942,7 @@ function ResultsList({
                   {contentByLang(lang, v.sectionNameHi, v.sectionNameEn)} · {contentByLang(lang, v.labelHi, v.labelEn)}
                 </Text>
               </View>
-              <Text style={[styles.chevron, { color: colors.saffron }]}>›</Text>
+              <AppIcon name="next" size={17} color={colors.iconInk} />
             </Pressable>
           );
         }

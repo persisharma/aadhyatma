@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import AppIcon from '@/components/AppIcon';
 import { Alert, Linking, Platform, Pressable, StyleSheet, Text } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { radii } from '@/theme/spacing';
@@ -26,19 +27,11 @@ export function languageName(lang: Lang): string {
  * The muted state is deliberate — hiding the control would leave the user with no way
  * to learn why read-aloud never appears.
  *
- * The ▶/❚❚ glyphs carry the trailing U+FE0E text variation selector so they render
- * monochrome, never as colour emoji — RULEBOOK §5 "no emoji", same treatment as the
- * Panchang ☀/☽ glyphs (design.md §33). The visible label is localized, but the
- * `accessibilityLabel` stays English and un-localized ("Read aloud" / "Pause reading
- * aloud" / "Read aloud unavailable"): the Maestro flows tap it literally and the
- * default reading language is `hi`.
- *
- * `READ_ALOUD_GLYPH` (♪) is still exported for the More → Read Aloud *settings* row —
- * a settings entry, not a play control, so it keeps the note glyph.
+ * Playback uses the shared AppIcon play/pause symbols. The visible label is
+ * localized, while the English accessibility labels stay stable for Maestro.
+ * READ_ALOUD_GLYPH remains exported for compatibility with earlier callers.
  */
 export const READ_ALOUD_GLYPH = '♪︎';
-const PLAY_GLYPH = '▶︎';
-const PAUSE_GLYPH = '❚❚';
 export default function ReadAloudButton({
   control,
   compact = false,
@@ -127,7 +120,7 @@ export default function ReadAloudButton({
         pressed && { opacity: 0.6 },
       ]}
     >
-      <Text style={[styles.icon, { color: tint }]}>{speaking ? PAUSE_GLYPH : PLAY_GLYPH}</Text>
+      <AppIcon name={speaking ? "pause" : "play"} size={14} color={tint} weight="fill" />
       {!compact && (
         <Text style={[styles.label, { color: tint }]} numberOfLines={1}>
           {label}

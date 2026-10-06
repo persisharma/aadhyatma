@@ -1,3 +1,4 @@
+import AppIcon from '@/components/AppIcon';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, InteractionManager, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import type { GestureResponderEvent } from 'react-native';
@@ -1206,9 +1207,10 @@ function JyotishLanding({
                 pressed && { opacity: 0.65 },
               ]}
             >
-              <Text style={[styles.jyotishShareText, { color: colors.saffronDeep }]}>
-                ↗ {contentByLang(lang, 'साझा करें', 'Share')}
-              </Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+                <AppIcon name="share" size={15} />
+                <Text style={[styles.jyotishShareText, { color: colors.saffronDeep }]}>{contentByLang(lang, 'साझा करें', 'Share')}</Text>
+              </View>
             </Pressable>
           </View>
           {/* One आधार line, not a chip per row — Favour and Reflect share a
@@ -1649,7 +1651,7 @@ function TimeCell({ icon, label, value, lang, colors }: { icon: string; label: s
       {/* ︎ forces text (monochrome) presentation so ☀ doesn't render as a
           colour emoji on iOS while ☽ stays a plain glyph — design.md is "no emoji".
           All four metrics now share one filled-with-accent (gold) glyph style. */}
-      <Text style={{ fontSize: 17, color: colors.gold, width: 22, textAlign: 'center' }}>{`${icon}︎`}</Text>
+      <AppIcon name={icon === "☀" ? "sun" : "moon"} size={20} color={colors.iconInk} weight="duotone" />
       <View style={{ marginLeft: 9, flex: 1 }}>
         <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latin : scriptBodyFont(lang, fontFamilies.devanagari), fontSize: 10, color: colors.inkMuted }}>{label}</Text>
         <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 13, color: colors.ink }}>{value}</Text>
@@ -1865,7 +1867,7 @@ function CatalogLedgerCell({
         pressed && { opacity: 0.6 },
       ]}
     >
-      <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 17, color: colors.gold }}>{glyph}</Text>
+      <AppIcon name={glyph === "★" ? "star" : glyph === "॥" ? "remembrance" : "regional"} size={20} color={colors.iconInk} weight="duotone" />
       <Text
         numberOfLines={1}
         style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginTop: 3 }}

@@ -1,3 +1,4 @@
+import AppIcon from '@/components/AppIcon';
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -128,9 +129,7 @@ export default function TrackCard({ track, onPress, playing }: Props) {
         ]}
         pointerEvents="none"
       >
-        <Text style={[styles.playGlyph, { color: playing ? colors.onPrimary : colors.saffronDeep }]}>
-          {playing ? '❚❚' : '▶'}
-        </Text>
+        <AppIcon name={playing ? "pause" : "play"} size={18} color={playing ? colors.onPrimary : colors.iconInk} weight="fill" />
       </View>
     </Pressable>
   );

@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { Animated, Pressable, StyleSheet } from 'react-native';
+import AppIcon from './AppIcon';
 import * as Haptics from 'expo-haptics';
 import { useTheme } from '@/theme/ThemeContext';
 import { useReducedMotion } from '@/utils/useReducedMotion';
@@ -42,17 +43,9 @@ export default function BookmarkButton({ isBookmarked, onToggle }: Props) {
       accessibilityLabel={isBookmarked ? 'Remove bookmark' : 'Add bookmark'}
       accessibilityState={{ selected: isBookmarked }}
     >
-      <Animated.Text
-        style={[
-          styles.icon,
-          {
-            color: isBookmarked ? colors.saffron : colors.inkMuted,
-            transform: [{ scale }],
-          },
-        ]}
-      >
-        {isBookmarked ? '♥' : '♡'}
-      </Animated.Text>
+      <Animated.View style={{ transform: [{ scale }] }}>
+        <AppIcon name="heart" size={21} color={isBookmarked ? colors.iconAccent : colors.iconInk} weight={isBookmarked ? 'fill' : 'regular'} />
+      </Animated.View>
     </Pressable>
   );
 }
@@ -65,9 +58,5 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  icon: {
-    fontSize: 16,
-    includeFontPadding: false,
   },
 });

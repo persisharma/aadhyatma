@@ -1,3 +1,7 @@
+import DeityIcon from './DeityIcon';
+import { deityIconKey } from '@/data/deities';
+import CategoryIcon from './CategoryIcon';
+import StoryIcon from './StoryIcon';
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -109,11 +113,7 @@ export default function TodayRecommendationsRow() {
             <View key={entry.id} style={styles.cardWrap}>
               <FeatureCard
                 compact
-                item={spotlightForEntry(
-                  recommendation,
-                  typography.thumb.fontFamily,
-                  colors.saffronDeep
-                )}
+                item={spotlightForEntry(recommendation)}
                 width={styles.cardWrap.width}
                 onPress={() => activateTile(open)}
                 onPressIn={() => beginTilePress(open)}
@@ -143,9 +143,7 @@ export default function TodayRecommendationsRow() {
                   ctaHi: 'देखें',
                   ctaEn: 'View',
                   icon: (
-                    <Text style={{ color: colors.saffronDeep, fontFamily: typography.thumb.fontFamily, fontSize: 19 }}>
-                      ॥
-                    </Text>
+                    <StoryIcon name="muhurat" size={31} />
                   ),
                 }}
                 width={styles.cardWrap.width}
@@ -175,9 +173,7 @@ export default function TodayRecommendationsRow() {
                       ctaHi: 'खोलें',
                       ctaEn: 'Open',
                       icon: (
-                        <Text style={{ color: colors.saffronDeep, fontFamily: typography.thumb.fontFamily, fontSize: 19 }}>
-                          दा
-                        </Text>
+                        <StoryIcon name="daan" size={31} />
                       ),
                     }}
                     width={styles.cardWrap.width}
@@ -195,9 +191,7 @@ export default function TodayRecommendationsRow() {
 }
 
 function spotlightForEntry(
-  { entry, festivalHi, festivalEn }: TodayRecommendation,
-  thumbFontFamily: string,
-  thumbColor: string
+  { entry, festivalHi, festivalEn }: TodayRecommendation
 ): FeatureSpotlight {
   // A festival card names the occasion instead of the generic line, so a reader
   // arriving from the morning's festive reminder lands on the same festival the
@@ -212,15 +206,9 @@ function spotlightForEntry(
     ctaHi: 'पढ़ें',
     ctaEn: 'Read',
     icon: (
-      <Text
-        style={{
-          color: thumbColor,
-          fontFamily: thumbFontFamily,
-          fontSize: 19,
-        }}
-      >
-        {entry.thumb}
-      </Text>
+      entry.deities?.[0]
+        ? <DeityIcon iconKey={deityIconKey(entry.deities[0])} fallbackText={entry.thumb} size={32} />
+        : <CategoryIcon iconKey={entry.category} />
     ),
   };
 }

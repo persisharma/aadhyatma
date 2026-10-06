@@ -31,7 +31,7 @@ jest.mock('react-native-view-shot', () => ({ captureRef: jest.fn(() => Promise.r
 jest.mock('expo-sharing', () => ({ isAvailableAsync: jest.fn(() => Promise.resolve(true)), shareAsync: jest.fn(() => Promise.resolve()) }));
 jest.mock('react-native-svg', () => {
   const Svg = ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => mockReact.createElement(mockView, props, children);
-  return { __esModule: true, default: Svg, Circle: (props: Record<string, unknown>) => mockReact.createElement(mockView, props) };
+  return { ...jest.requireActual('react-native-svg'), __esModule: true, default: Svg, Circle: (props: Record<string, unknown>) => mockReact.createElement(mockView, props) };
 });
 jest.mock('@/panchang/useKundali', () => ({ useKundali: () => ({ profile: mockProfile, chart: null, hydrated: true, loadState: 'saved' }) }));
 

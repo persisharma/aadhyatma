@@ -13,7 +13,7 @@ type Props = {
   onPress?: () => void;
   onPressIn?: () => void;
   onPressOut?: () => void;
-  /** When true (and active), shows a green "NEW" badge top-right. */
+  /** When true (and active), shows the "NEW" cue top-right. */
   hasNew?: boolean;
   /**
    * `card` (default): the classic gradient card with the name inside — used by
@@ -28,6 +28,8 @@ type Props = {
   launcherLabelLines?: 1 | 2;
   /** Home keeps captions below; dense indexes can place the title inside the tile. */
   launcherLabelPosition?: 'below' | 'tile';
+  /** More room for Home's illustrations; dense named indexes remain compact. */
+  launcherArtwork?: 'compact' | 'illustrated';
 };
 
 function CategoryCard({
@@ -43,6 +45,7 @@ function CategoryCard({
   displayNameEn,
   launcherLabelLines = 1,
   launcherLabelPosition = 'below',
+  launcherArtwork = 'compact',
 }: Props) {
   const { colors, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
@@ -172,10 +175,11 @@ function CategoryCard({
                 styles.badge,
                 styles.launcherBadge,
                 { backgroundColor: colors.newBadgeBg, borderRadius: radii.pill },
+                launcherArtwork === 'illustrated' && styles.illustratedBadge,
               ]}
               pointerEvents="none"
             >
-              <Text style={[styles.badgeText, { color: colors.newBadgeText, letterSpacing: 1.6 }]}>
+              <Text style={[styles.badgeText, { color: colors.newBadgeText, letterSpacing: 1.6 }, launcherArtwork === 'illustrated' && styles.illustratedBadgeText]}>
                 NEW
               </Text>
             </View>
@@ -325,6 +329,14 @@ const styles = StyleSheet.create({
     top: 6,
     right: 6,
   },
+  // Keep the original filled cue inside Home without moving the illustration.
+  illustratedBadge: {
+    top: 2,
+    right: 6,
+    paddingHorizontal: 2,
+    paddingVertical: 0,
+  },
+  illustratedBadgeText: { lineHeight: 12, letterSpacing: 0.5 },
   badge: {
     position: 'absolute',
     top: 8,

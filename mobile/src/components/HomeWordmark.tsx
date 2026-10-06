@@ -12,8 +12,8 @@ export default function HomeWordmark() {
   const { colors, typography } = useTheme();
 
   const renderMark = () => (
-    <View style={[styles.mark, { borderColor: colors.saffron }]}>
-      <Text style={[styles.markText, { color: colors.saffron, fontFamily: typography.thumb.fontFamily }]}>
+    <View style={[styles.mark, { borderColor: colors.iconAccent }]}>
+      <Text style={[styles.markText, { color: colors.iconAccent, fontFamily: typography.thumb.fontFamily }]}>
         ॐ
       </Text>
     </View>
@@ -22,7 +22,7 @@ export default function HomeWordmark() {
   return (
     <View style={styles.wrap}>
       <View style={styles.lockup}>
-        <View style={[styles.rule, { backgroundColor: colors.saffron }]} />
+        <View style={[styles.rule, { backgroundColor: colors.iconAccent }]} />
         {renderMark()}
         <Text
           style={[
@@ -38,7 +38,7 @@ export default function HomeWordmark() {
           वेदांश़
         </Text>
         {renderMark()}
-        <View style={[styles.rule, { backgroundColor: colors.saffron }]} />
+        <View style={[styles.rule, { backgroundColor: colors.iconAccent }]} />
       </View>
       <Text
         style={[

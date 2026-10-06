@@ -1,3 +1,5 @@
+import AppIcon from '@/components/AppIcon';
+import StoryIcon from '@/components/StoryIcon';
 import React from 'react';
 import {
   Dimensions,
@@ -93,7 +95,7 @@ export default function HomeScreen({ navigation }: Props) {
   // added/reordered. Memoized so the CategoryCards keep stable icon/onPress
   // props across unrelated HomeScreen re-renders (context churn, tour registration).
   const tiles: TileItem[] = React.useMemo(() => {
-    const iconFor = (key: CategoryIconKey) => <CategoryIcon iconKey={key} />;
+    const iconFor = (key: CategoryIconKey) => <CategoryIcon iconKey={key} size={spacing.homeCategoryArtwork} />;
     const vratTile: TileItem = {
       key: 'vrat',
       nameHi: 'व्रत',
@@ -234,17 +236,7 @@ export default function HomeScreen({ navigation }: Props) {
       descHi: '४१-दिन हनुमान चालीसा जैसे तैयार संकल्प लें।',
       descEn: 'Take a prebuilt vow, like the 41-day Hanuman Chalisa.',
       ctaHi: 'संकल्प लें', ctaEn: 'Begin',
-      icon: (
-        <Text
-          style={{
-            fontFamily: typography.thumb.fontFamily,
-            fontSize: 22,
-            color: colors.saffronDeep,
-          }}
-        >
-          सं
-        </Text>
-      ),
+      icon: <StoryIcon name="japam" size={32} />,
       onPress: () => navigation.navigate('SadhanaPrograms'),
     },
     {
@@ -257,17 +249,7 @@ export default function HomeScreen({ navigation }: Props) {
       descEn: 'Save a tithi once and know its shraddha date every year.',
       ctaHi: 'स्मरण जोड़ें', ctaEn: 'Set up',
       hasNew: true,
-      icon: (
-        <Text
-          style={{
-            fontFamily: typography.thumb.fontFamily,
-            fontSize: 22,
-            color: colors.gold,
-          }}
-        >
-          ॥
-        </Text>
-      ),
+      icon: <AppIcon name="remembrance" size={28} color={colors.iconInk} weight="duotone" />,
       onPress: () => rootNav.navigate('MoreTab', moreTabTarget('PitruSmaranList')),
     },
     {
@@ -283,17 +265,7 @@ export default function HomeScreen({ navigation }: Props) {
       descEn: 'Satyanarayan to Shivaratri — every step, guided in hand.',
       ctaHi: 'विधि देखें', ctaEn: 'Open',
       hasNew: true,
-      icon: (
-        <Text
-          style={{
-            fontFamily: typography.thumb.fontFamily,
-            fontSize: 22,
-            color: colors.saffronDeep,
-          }}
-        >
-          ॥
-        </Text>
-      ),
+      icon: <StoryIcon name="vrat" size={32} />,
       onPress: () => navigation.navigate('VidhiCatalog'),
     },
     {
@@ -307,17 +279,7 @@ export default function HomeScreen({ navigation }: Props) {
       descEn: "Today's tithi, vrat, bhog, muhurat — answered in one line.",
       ctaHi: 'पूछें', ctaEn: 'Ask',
       hasNew: true,
-      icon: (
-        <Text
-          style={{
-            fontFamily: typography.thumb.fontFamily,
-            fontSize: 22,
-            color: colors.saffronDeep,
-          }}
-        >
-          ?
-        </Text>
-      ),
+      icon: <AppIcon name="question" size={28} weight="duotone" />,
       onPress: () => navigation.navigate('TodayVidhan'),
     },
     {
@@ -341,17 +303,7 @@ export default function HomeScreen({ navigation }: Props) {
       descEn: "Today's verse, Panchang, and japa on your home screen.",
       ctaHi: 'देखें', ctaEn: 'View',
       hasNew: true,
-      icon: (
-        <Text
-          style={{
-            fontFamily: typography.thumb.fontFamily,
-            fontSize: 22,
-            color: colors.saffronDeep,
-          }}
-        >
-          वि
-        </Text>
-      ),
+      icon: <AppIcon name="widgets" size={28} weight="duotone" />,
       onPress: () => rootNav.navigate('MoreTab', moreTabTarget('WidgetGallery')),
     },
   ];
@@ -448,6 +400,7 @@ export default function HomeScreen({ navigation }: Props) {
                   onPressOut={finishTilePress}
                   hasNew={tile.hasNew}
                   variant="launcher"
+                  launcherArtwork="illustrated"
                 />
               </View>
             ))}

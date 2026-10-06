@@ -29,6 +29,8 @@ The source-of-truth visual reference is `design-preview.html` at the repo root. 
 | `ink-muted` | `#6E5230` | Tertiary / metadata / placeholders / demoted secondary-language line. Deepened from `#8A6A47` (which only reached ~4.0:1) to ~5.9:1 (WCAG AA). |
 | `saffron` | `#B8621B` | Primary accent, active states, arrows |
 | `saffron-deep` | `#8A3E0B` | Strong accent, pager dot, labels |
+| `iconInk` | `#6F3F1D` | Shared brown utility icon and inactive navigation tint |
+| `iconAccent` | `#AD571F` | Active navigation, saved controls and wordmark accent |
 | `gold` | `#A67C34` | Secondary accent, crest, section tags |
 | `divider` | `rgba(138, 62, 11, 0.18)` | Borders, card outlines |
 | `newBadgeBg` | `rgba(184, 98, 27, 0.16)` | "NEW" badge fill — saffron tint (recently-added content) |
@@ -52,13 +54,11 @@ The palette is warm manuscript — **never green/red** — and signal colours st
 §12). This rule governs **theme colour and UI chrome**, i.e. everything in
 `mobile/src/theme/colors.ts`.
 
-**One sanctioned exception:** the baked deity-glyph illustration palette
-(`mobile/src/components/deityGlyphs/palette.ts`, §42) carries cool peacock/water hues —
-`leafGreen #17715D`, `teal #0B7D82`, `deepBlue #064D5E`. They are **painted attributes of the
-art, never signals**: Krishna's feather, Kartikeya's plume, Ganga's waves. The boundary is
-what matters — nothing in that file may be imported into chrome (no badge, chip, border, state
-colour or icon tint outside the glyph files). Chrome takes its colour from `colors.ts` only.
-Both files carry this note so the exception cannot be mistaken for a precedent.
+**One sanctioned exception:** the bundled Storybook illustrations
+(`mobile/assets/icons/storybook/`, §42) carry muted peacock and water hues.
+They are **painted attributes of the art, never signals**: Krishna's feather,
+Kartikeya's plume, Ganga's waves. These colors stay inside the illustration assets;
+badges, chips, borders, states and utility icon tints take their color from `colors.ts`.
 
 ---
 
@@ -279,7 +279,7 @@ This table is the **single source of truth** for reading-content sizing, impleme
 
 - **Home wordmark (crest lockup).** A single compact row: thin rule · `ॐ` circle · `वेदांश़` · `ॐ` circle · thin rule, with the `Sacred Texts · Daily Reading` tagline beneath. ॐ on **both** sides of the wordmark. Rules 22px, circles 30px (ॐ 19px), title 27px, saffron stroke `1.5px`, row gap 11. Implemented in `HomeWordmark.tsx`. This replaced the older stacked crest + 34px title to reclaim ~50dp of hero height while keeping the centered, altar-like essence.
 - **Verse divider.** `॥` centered between two 1px horizontal rules, 80px wide, saffron at 60% opacity. Use between verse and meaning on every reader page.
-- **Back chevron.** `‹` inside a **44px** circle with `parchment-soft` fill and `divider` border — the circle itself meets the 44×44 a11y target (`ChalisaReaderScreen.tsx` `styles.back`). Browse screens that keep a smaller 34px visual top it up with `hitSlop` 16.
+- **Shared reader back control.** Phosphor `ArrowLeft` inside a **44px** circle with `parchment-soft` fill and `divider` border — the circle itself meets the 44×44 a11y target (`ChalisaReaderScreen.tsx` `styles.back`). Browse screens that keep a smaller 34px visual top it up with `hitSlop` 16.
 - **Forward chevron.** Single `›` in saffron on active cards.
 - **Pager dots.** 6px circles, `rgba(138,62,11,0.25)` resting. Current page dot: saffron-deep, width 18, radius 999 (pill).
 - **No emoji. No photos.** Only hand-drawn faded sketches as backgrounds.
@@ -336,7 +336,7 @@ Two variants: `active` (live module) and `coming` (placeholder).
 - Background: linear-gradient `#FFF5E0 → #F5DEAC`
 - Border: `rgba(184, 98, 27, 0.4)`
 - Shadow: `md` (runtime: **`elevation.raised`**)
-- Thumb: gradient `#F8D291 → #E0A255` with the text's first Devanagari letter (`ह`, `रा`, `भ`, `सु`) in white, Noto Serif Devanagari 22.
+- Thumb: gradient `#F8D291 → #E0A255` with tagged deity artwork and category fallback (§42). The data keeps its single-akshara thumb for fallback consumers.
 - Right side: saffron `›` chevron.
 
 ### Coming
@@ -741,8 +741,8 @@ When building new components, pull tokens from the theme — never hard-code a h
   - **Bhajan** — audio stack
   - **More** — profile, wishlist (§24), reminders, settings
 - Tab labels: **reading-language localized** via `contentByLang` — होम · भक्ति · पंचांग · भजन · अन्य in hi (gu/kn transliterate; English labels in en). The bar was the last chrome surface still English-only under a fully Indic screen. Type: en = `fontFamilies.inter` 10 @ **`0.4`** tracking (was `0.02`, a no-op: RN `letterSpacing` is in **px**, not em, so 0.02 px is invisible; 0.4 matches the `cardMeta` chrome token); hi/gu/kn = their bold serif title faces (`scriptTitleFont`, hi → `devanagariBold`) at 10 with **no tracking** — tracking splits the shirorekha (§3). Maestro flows tap tabs by `tabBarButtonTestID` (`tab-home` … `tab-more`), never by label text, since the exposed text is now language-dependent.
-- Each tab carries a custom icon in the tint colour. Home, Bhakti, Panchang, and More are hand-built from `View` strokes; Bhajan preserves the reference filled SVG glyph: a **round filled head**, vertical stem, and square flag (`d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"`). The head **must stay filled** — a hollow ring reads as a broken glyph rather than a note.
-- Active tint: `saffron`; inactive: `ink-muted`. No active dot indicator — the tinted icon+label is the cue
+- Each tab uses the selected Storybook icon treatment: filled Phosphor Home, a broad bundled trident for Bhakti, a bundled sun/moon silhouette for Panchang, the original filled eighth note for Bhajan, and three filled dots for More. Tint is owned by navigation. Keep direct Phosphor module imports; its barrel includes the whole catalogue. The Bhajan head stays filled (`d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"`).
+- Active tint: `iconAccent`; inactive: `iconInk`. No active dot indicator — the tinted icon+label is the cue
 - Tap targets: full tab width × full bar height (well above 44×44 minimum)
 - The tab bar **stays visible inside readers**. The only exception is the immersive Vrat Katha reader (`IMMERSIVE_HOME_ROUTES = ['VratKathaReader']`), which hides the bar while focused
 
@@ -796,7 +796,7 @@ Two status variants — `active` (has content) and `coming` (placeholder) — an
 - Label: **one line, caption size** — `devPrimary 13` / `latPrimary 14` via `orderTitlesByLanguage()`, `ink`, centered, `numberOfLines 1`, 6px below the tile.
 - **Label position** (`launcherLabelPosition`): `below` (Home's default, above) or `tile` — the dense-index variant that centres the name *inside* the 72 pt tile over up to two lines (`launcherLabelLines`), used by the 27-tile Namkaran nakshatra grid (§61). Either position keeps the label at the fixed caption size; the in-tile position adds `lineHeight 21` and a `maxFontSizeMultiplier` of 1.25 and must **never** enable `adjustsFontSizeToFit` (see §61 for the iOS shrink bug it caused).
 - **Short English display names.** Under a ~⅓-row tile the full registry names ("Hymns & Praise", "Japa & Mantras") don't survive one line, so `categories.ts` carries an optional `shortNameEn` ("Hymns", "Japa", "Books", "Habits") used **only** by the launcher label. The **accessibility label always carries the full `nameEn`** (`"{nameEn}.{ New.?} Tap to open."`) — the Maestro smokes tap tiles by that full label, and screen readers keep the descriptive name.
-- `NEW` badge: same pill as the card variant, inset 6px in the tile's top-right corner.
+- `NEW` badge: compact launchers use the card's pill, inset 6px at top-right. Home's illustrated launchers keep the filled pill inside the tile (top 2dp, right 6dp), with compact padding and no artwork offset (§42).
 - **Coming (launcher).** A `status: 'coming'` tile keeps the launcher geometry: `cardSurface` tile at 55% opacity, same `elevation.card` lift as its active siblings, with the `SOON` pill (gold tint) and the caption label below; not pressable (`accessibilityState.disabled`). It does **not** fall through to the 2-column card layout.
 
 **Active (card variant):**
@@ -1711,14 +1711,25 @@ Wears the active LibraryCard treatment (§8): `cardActiveFrom → cardActiveTo` 
 - **NEW pill** top-right when `hasNew`: `newBadgeBg` fill, `newBadgeText` text, `pill` radius, **10 pt** uppercase (was 9, below the §3.0 floor) — same geometry as §19.
 - Whole card is the press target; a11y label reads name + count + "New." when badged.
 
-### Deity Icon system (`DeityIcon.tsx` + `deityGlyphs/`)
+### Deity Icon system (`DeityIcon.tsx` + `deityArtwork.ts`)
 
-Each deity's avatar glyph is a compact **symbolic attribute**, not a portrait (design spec: `docs/superpowers/specs/2026-05-08-deity-icons-design.md`). All 21 icon keys render as **hand-built vector glyphs** — pure `View` compositions, no SVG per the §30 convention and no emoji per §5 — one file per key under `mobile/src/components/deityGlyphs/`, registered in a total `Record<DeityIconKey, ComponentType>` so a deity added without a drawn glyph fails typecheck.
+The selected **Storybook miniatures** direction uses bundled transparent illustration assets, one symbolic attribute per deity. `deityArtwork.ts` is a total `Record<DeityIconKey, StoryIconName>` covering all 21 existing keys. `StoryIcon.tsx` renders local `Image` sources from `storybookSources.ts`; artwork never needs a network request. This replaces the older View-composition glyph registry.
 
-- **Canvas + scaling:** every glyph draws inside a uniform 36×36 dp centered canvas (`DeityIcon` wraps it with a `deity-glyph-<key>` testID) and is transform-scaled for other sizes (`size` prop; MiniPlayer 26, cards 36, Now Playing 150). The layout box stays 36×36 at every size — consumers center it in fixed frames.
-- **Baked illustration palette** (`deityGlyphs/palette.ts`): warm ink-brown `#733207` silhouettes/strokes (borderWidth ~1.3–2), gold `#D49A35` accent fills, plus goldSoft/cream and the peacock leafGreen/teal/deepBlue/featherYellow family (also used for Ganga's cool-water waves) and a flame orange. Deliberate illustration colors baked into the art, not theme tokens — the glyphs sit on the fixed `cardThumbActiveFrom → cardThumbActiveTo` medallion gradient. **The cool hues (leafGreen/teal/deepBlue) are the one sanctioned exception to the warm-only "never green/red" rule (§2), and are bounded to these glyph files** — painted attributes, never signals. Nothing here may be imported into UI chrome; chrome takes its colour from `theme/colors.ts` only.
-- **The 21 attributes:** bow-and-arrow (rama), bansuri + peacock-feather plume (krishna), Sudarshana chakra (vishnu), trishul (shiva), gada (hanuman), open lotus (durga), modak (ganesha), eight-ray sun (savitr), veena (saraswati), coins-into-lotus (lakshmi), rising sun over horizon (suryadev), lotus bud on stem (radha), vel spear (kartikeya), treasure pot (kubera), descending waves (ganga), five-petal blossom (parvati), lion emblem in a mane ring (narasimha), hand-drawn ॐ (dattatreya), ringed graha (shani), khadga (kali), nine-dot yantra (navagraha).
-- **Fallback:** an undefined `iconKey` renders the deity's first two Devanagari characters — never a blank avatar.
+- **Canvas + scaling:** retain the 36×36 dp layout box and transform scaling (`size`: MiniPlayer 26, cards 36, Now Playing 150). The `deity-glyph-<key>` wrapper and all enclosing accessible control labels remain stable. Artwork is decorative and hidden from accessibility.
+- **Bundled art:** `mobile/assets/icons/storybook/` contains 39 normalized 512px transparent PNGs and a provenance/hash manifest. Visible bounds fit 432px; alpha below 8 is removed before palette compression. Supply enlarged close-ups of the exact selected subject to image_gen; generic style prompts are insufficient for fidelity. Keep individual generated masters; do not ship board crops. Manifest includes reference hash and crop provenance for corrected assets.
+- **Illustration palette:** brown contour with matte ochre, brass, cream and restrained coral. Peacock feather, leaves and water can carry muted teal/blue/green as painted attributes. All app chrome continues to use theme tokens.
+- **The 21 attributes:** bow-and-arrow (rama), bansuri + feather (krishna), chakra (vishnu), trishul/damaru (shiva), gada (hanuman), open lotus (durga), modak (ganesha), full eight-ray sun (savitr), veena (saraswati), coins-into-lotus (lakshmi), rising half-sun (suryadev), closed lotus bud (radha), vel spear (kartikeya), treasure pot (kubera), descending waves (ganga), five rounded petals (parvati), lion emblem (narasimha), Om (dattatreya), ringed graha (shani), khadga (kali), nine plain discs in a 3×3 yantra (navagraha).
+- **Fallback:** an undefined `iconKey` retains the caller's text fallback, rather than a blank avatar.
+
+### Shared category and utility icons
+
+`CategoryIcon` preserves its 36×32 compact layout box with 44dp artwork. Home uses 62.7dp artwork in existing 72dp illustrated launcher tiles (about 53dp visible artwork), a 5% reduction from the reviewed 66dp size. Other dense indexes retain their existing tile sizes. Sixteen Home categories use individual Storybook subjects; all fourteen purpose keys use distinct warm duotone Phosphor symbols. The animated twelve-petal `LotusMark` remains the routine completion mark. Every Home illustration shares the same center and scale, regardless of NEW state. Home's NEW cue keeps the original saffron-tint pill and deep-saffron 10pt Latin text. It sits inside the tile, top 2dp and right 6dp, with 2dp horizontal padding, 12dp line height and 0.5dp tracking. It never shifts the artwork. Dense indexes retain their existing badge placement.
+
+Library thumbnails and FOR TODAY cards show the first tagged deity attribute, preserving distinctions between texts of the same category; category artwork is the fallback. Keep the single-akshara `thumb` data contract for other consumers. The routine nudge shows the selected source’s two olive leaves. More uses pale warm icon tiles with named illustration or duotone utility symbols, replacing emoji/letter approximations.
+
+The exact selected source is `docs/evaluations/storybook-icons-2026-10-06/selected-storybook-reference.png`. The corrected set preserves flat burnt-ochre Om/diamond dot, smooth wooden beads, Japa’s large lower-left pendant, Kundali’s house marks, layered folios and muted pigment shading. Source fidelity is checked at native display size. Suktam carries abstract marks rather than fabricated scripture. Bhakti and Panchang navigation use separate broad silhouettes matching the source, tinted from the same tokens.
+
+`AppIcon` owns consistent search, share, heart, arrows, play/pause, audio transport and settings icons. Utility ink uses `iconInk`; selected navigation/saved states use `iconAccent` (filled primary controls retain `onPrimary`). More no longer varies utility icon tint row by row. These shared mappings take precedence over older font-glyph descriptions in individual screen sections. Audio filter chips use the same deity attributes as the catalog. Import individual Phosphor modules, never its runtime barrel. The parent control keeps its existing accessibility label, role, hit area and event behavior. Saved hearts use fill vs outline in addition to tint; reduced-motion and haptic behavior remain in `BookmarkButton`.
 
 **Interactions.** Tap a card → push the Deity Detail page (§50) for that deity — essay plus grouped `LibraryCard` rows, resume-sheet behaviour (§40), and NEW clearing (§44). `DeityListScreen` remains a compatibility route for plain filtered lists.
 

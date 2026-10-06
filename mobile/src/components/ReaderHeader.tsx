@@ -1,4 +1,5 @@
 import React from 'react';
+import AppIcon from './AppIcon';
 import { Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 
 import { useGitaLanguage } from '@/data/gita/language';
@@ -77,7 +78,7 @@ export default function ReaderHeader({
             pressed && { opacity: 0.7 },
           ]}
         >
-          <Text style={[styles.backGlyph, { color: colors.inkSoft }]}>‹</Text>
+          <AppIcon name="back" size={22} color={colors.iconInk} />
         </Pressable>
       </View>
 

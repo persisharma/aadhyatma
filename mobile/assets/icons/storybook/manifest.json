@@ -1,0 +1,522 @@
+{
+  "artDirection": "Selected option 1: Storybook miniatures - source fidelity correction",
+  "generatedWith": "Built-in image_gen, individual transparent assets",
+  "generatedDate": "2026-10-06",
+  "export": "512px PNG,256-color alpha palette,visible bounds fit432px,alpha below8 cleared",
+  "icons": [
+    {
+      "name": "chalisa",
+      "file": "chalisa.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 30763,
+      "sha256": "0bf236f98a4049744f37592a4638d5b19bec45ae0a2468014ff143ce092f0c22",
+      "masterSha256": "90064c6aaad39f4cdb1dc8d6e0dd777bb937c3d837b0ccefb1caced7ac01c447",
+      "source": "Exact Option 1 reference, enlarged crop supplied to built-in image_gen for artwork isolation",
+      "referenceCrop": [
+        643,
+        174,
+        744,
+        275
+      ]
+    },
+    {
+      "name": "aarti",
+      "file": "aarti.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 38831,
+      "sha256": "58f8d776fdb36dcd9f7ea3944842ba92c85d1fedfd13f9ca9ed95b6e317b818d",
+      "masterSha256": "f29a4ee190be2cb9515967ad17d20b196a8d849420b2b7d2d8ff87ed003fc6aa",
+      "source": "Exact Option 1 reference, enlarged crop supplied to built-in image_gen for artwork isolation",
+      "referenceCrop": [
+        845,
+        176,
+        947,
+        273
+      ]
+    },
+    {
+      "name": "stotram",
+      "file": "stotram.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 29125,
+      "sha256": "0b3b5cf57d6e3ac8afeb5539a40ddf3660af1408fb9032165ea1c9dc43bbff97",
+      "masterSha256": "a841740299fc696aaf6a635e478691a1922d900385e43dd891c57eda0f3434a2",
+      "source": "Exact Option 1 reference, enlarged crop supplied to built-in image_gen for artwork isolation",
+      "referenceCrop": [
+        1048,
+        180,
+        1140,
+        267
+      ]
+    },
+    {
+      "name": "granth",
+      "file": "granth.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 44831,
+      "sha256": "1d50d8e03ee71f48e3d6f079b87b6c64aa5895cf164035ca43db50a735f097c6",
+      "masterSha256": "56838949916bd5e867df2ac9d01326204af7a0be10fa7b29122bee42a38d328f",
+      "source": "Exact Option 1 reference, enlarged crop supplied to built-in image_gen for artwork isolation",
+      "referenceCrop": [
+        1238,
+        180,
+        1360,
+        275
+      ]
+    },
+    {
+      "name": "krishna",
+      "file": "krishna.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 49006,
+      "sha256": "d35cb5a0991ff88439c13650fd1d15a4c19bee2c9c2c5bb74a986ab2e5317c24",
+      "masterSha256": "9721e4b69e2f147bd3d0da4f2cb864d0ebbc988696499ae3a4e41efb3173b718",
+      "source": "Exact Option 1 reference, enlarged crop supplied to built-in image_gen for artwork isolation",
+      "referenceCrop": [
+        1130,
+        813,
+        1210,
+        894
+      ]
+    },
+    {
+      "name": "shiva",
+      "file": "shiva.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 25294,
+      "sha256": "585a2586fead8fda6f1b9d5796254bf49847458573873c7cf977325d6b0eae3e",
+      "masterSha256": "699261948df92d71c6b8a28ba0ce205ea858eb94492ae49a6883ba90013fc77e",
+      "source": "Exact Option 1 reference, enlarged crop supplied to built-in image_gen for artwork isolation",
+      "referenceCrop": [
+        1252,
+        812,
+        1292,
+        885
+      ]
+    },
+    {
+      "name": "vrat",
+      "file": "vrat.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 52807,
+      "sha256": "786eed295989be32726ac484c7cb20a93dcd339055c1e0833a4a56e56a206d1c",
+      "masterSha256": "fd3985422fa89dfa0977d26e08ad8b5c18b818fb2f8336df908e997abffdf797",
+      "source": "Exact Option 1 reference, enlarged crop supplied to built-in image_gen for artwork isolation",
+      "referenceCrop": [
+        843,
+        316,
+        945,
+        419
+      ]
+    },
+    {
+      "name": "kundali",
+      "file": "kundali.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 27249,
+      "sha256": "4f4ac7f420c54900f5c5d9b1d74a8ba6b38890e26752f685802cecaacd92df3f",
+      "masterSha256": "3f02ba2e37103662cc985beaf70cb5809af42fa0a645081389b1b72f4e1f0d8d",
+      "source": "Exact Option 1 reference, enlarged crop supplied to built-in image_gen for artwork isolation",
+      "referenceCrop": [
+        1039,
+        328,
+        1146,
+        413
+      ]
+    },
+    {
+      "name": "muhurat",
+      "file": "muhurat.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 56254,
+      "sha256": "09f005106e47dd67783323a3827e79f02d79260dd7ed6c189354fb7a17369d0a",
+      "masterSha256": "f3bb647fd3159d83cc374713896d8ccef7e37b645967adb927166c7ce7036f9b",
+      "source": "Exact Option 1 reference, enlarged crop supplied to built-in image_gen for artwork isolation",
+      "referenceCrop": [
+        1237,
+        321,
+        1356,
+        419
+      ]
+    },
+    {
+      "name": "sanskar",
+      "file": "sanskar.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 38979,
+      "sha256": "894094a1d9f06ec722725292fa136a273fcaec160707d3ad01c962684b2d4e05",
+      "masterSha256": "e8860e7e1fe45369935b565d6ab8c877dc127e3aca8d745611bd65e6d023e7a5",
+      "source": "Exact Option 1 reference, enlarged crop supplied to built-in image_gen for artwork isolation",
+      "referenceCrop": [
+        631,
+        479,
+        764,
+        573
+      ]
+    },
+    {
+      "name": "suktam",
+      "file": "suktam.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 34079,
+      "sha256": "f559e8f0281dee5d2dc7b59e72ff5fd0ba7393b69f9898082e9ef82ea4af7a03",
+      "masterSha256": "d5b1c84618b407002266438897ebe5b508cf022654e2f6e7c88467a9005b5caf",
+      "source": "Exact Option 1 reference, enlarged crop supplied to built-in image_gen for artwork isolation",
+      "referenceCrop": [
+        1027,
+        627,
+        1157,
+        715
+      ]
+    },
+    {
+      "name": "ashtakam",
+      "file": "ashtakam.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 51905,
+      "sha256": "c3fc2d8b31e61323be4236813863f2796ad96e9469e021cd1931b67712ff968a",
+      "masterSha256": "cce4992e432c39bef785a4a5b2b90cf44570e461555aecfbdcdcf2f986f9986e",
+      "source": "Exact Option 1 reference, enlarged crop supplied to built-in image_gen for artwork isolation",
+      "referenceCrop": [
+        844,
+        627,
+        946,
+        723
+      ]
+    },
+    {
+      "name": "deity",
+      "file": "deity.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 67435,
+      "sha256": "52607c117a53e274dda5da28ab4a6277818bd0c800cfa1226a4ce7a72a752e16",
+      "masterSha256": "6eb6bf2fe5692bb2089d75a46c4c755a4786268643ec7f2bf03248999ddf6ce1",
+      "source": "Exact Option 1 reference, enlarged crop supplied to built-in image_gen for artwork isolation",
+      "referenceCrop": [
+        1042,
+        461,
+        1141,
+        575
+      ]
+    },
+    {
+      "name": "purpose",
+      "file": "purpose.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 44152,
+      "sha256": "2fd39dc92f1d959f760495d58fceedf81394fe65302dd8172705d7098196293e",
+      "masterSha256": "4c9d4103265164d790c119d81cecba8148eee1c87f035be5bed0efde95517ae8",
+      "source": "Exact Option 1 reference, enlarged crop supplied to built-in image_gen for artwork isolation",
+      "referenceCrop": [
+        1240,
+        464,
+        1358,
+        578
+      ]
+    },
+    {
+      "name": "daan",
+      "file": "daan.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 44822,
+      "sha256": "8ce9ae212e27d7dc6e1550e375d783d1f713432a7295a0ded6608c310b81ad59",
+      "masterSha256": "477985b67044a93c2c9fc47e00ef180ece65b495e3fa8de2926a03183105241b",
+      "source": "Exact Option 1 reference, enlarged crop supplied to built-in image_gen for artwork isolation",
+      "referenceCrop": [
+        1242,
+        633,
+        1353,
+        714
+      ]
+    },
+    {
+      "name": "japam",
+      "file": "japam.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 38003,
+      "sha256": "7e1ebe37e2f6271aa3a1f529da2b6cdcbc1d19cfa6739754accd55108f6a808d",
+      "masterSha256": "9c9f68c0df6ac4f5ef2f71f6e89d42bd8221c58c55f5a2ee1c0f31a067ce833f",
+      "source": "Exact Option 1 reference, enlarged crop supplied to built-in image_gen for artwork isolation",
+      "referenceCrop": [
+        643,
+        318,
+        744,
+        416
+      ]
+    },
+    {
+      "name": "kavacham",
+      "file": "kavacham.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 56947,
+      "sha256": "a23d5cdf7e7c69448a29732511520df6cc8159d3e3b9974636833fbde8644a76",
+      "masterSha256": "5190fa5045bcdd8404cb722b3dc322e807409dd5755974828153ef2d3acde439",
+      "source": "Exact Option 1 reference, enlarged crop supplied to built-in image_gen for artwork isolation",
+      "referenceCrop": [
+        650,
+        618,
+        740,
+        723
+      ]
+    },
+    {
+      "name": "theerth",
+      "file": "theerth.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 49619,
+      "sha256": "85851d1e5bf2c6fa02ec1b5084ee1123bb2c7c439a9458fa8e5a380b1946a451",
+      "masterSha256": "e738f9a5ef29e14fd451925a16c79905cbcca9bff96479c1c37fd343a22785a0",
+      "source": "Exact Option 1 reference, enlarged crop supplied to built-in image_gen for artwork isolation",
+      "referenceCrop": [
+        832,
+        463,
+        954,
+        580
+      ]
+    },
+    {
+      "name": "rama",
+      "file": "rama.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 26005,
+      "sha256": "56782f0d4d8e96b2283d46b5e79f3430eb33fddc86b2f6071c8c5df164eff0ae",
+      "masterSha256": "f6ca600200e10a8d93f4187f31c16ea558a6e64d8d5ae3c9f82bd5cad246c296",
+      "source": "Exact Option 1 reference, enlarged crop supplied to built-in image_gen for artwork isolation",
+      "referenceCrop": [
+        1354,
+        815,
+        1418,
+        891
+      ]
+    },
+    {
+      "name": "vishnu",
+      "file": "vishnu.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 44981,
+      "sha256": "28cfb152fe0362d1a6529e7d6d48e3b2cdfa1d897804932d32f9f4daafa35b5b",
+      "masterSha256": "8f36ffd3c9e3cc8ee130a1214e135aec1afc6f502c8e3fbf5ebe6ddf193f73c4"
+    },
+    {
+      "name": "hanuman",
+      "file": "hanuman.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 25079,
+      "sha256": "3631ac9ed510937bed06090145a6cdf3b0dc01f232070950638cca55062302e4",
+      "masterSha256": "ff1fddf44c3ecca858f33f4642c9103494192f576f2818eef0505ea762363279",
+      "source": "Exact Option 1 reference, enlarged crop supplied to built-in image_gen for artwork isolation",
+      "referenceCrop": [
+        1300,
+        813,
+        1348,
+        892
+      ]
+    },
+    {
+      "name": "durga",
+      "file": "durga.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 36383,
+      "sha256": "28660796a75d8bf20e56afe65143fde9df34ed0872a48e14bdb9a04fc5b9e024",
+      "masterSha256": "0a792456b2d8c9ebd0da8db4a6cc784af7e12ec386e4c07104982a5afeeb1bed"
+    },
+    {
+      "name": "ganesha",
+      "file": "ganesha.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 43278,
+      "sha256": "e4fae105b447471a6dbbfd0f2ed30700e16453426cae1b1855d51649c4becb81",
+      "masterSha256": "472c44c52563c357d9275a3451e02072b014fd964593cdc2d1790f69ee0a8996"
+    },
+    {
+      "name": "gayatri",
+      "file": "gayatri.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 27261,
+      "sha256": "f024aa85880f4d6c56421fd9262ecae4fbdbc26c9061dfb82b8d7d5d04bc7a68",
+      "masterSha256": "fabb0e94725f97fb7896e6859a5257a1e867c753828a6484ca856d0ec339ad2c"
+    },
+    {
+      "name": "saraswati",
+      "file": "saraswati.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 38731,
+      "sha256": "06abf15abc10f7e78704e70ca84ce5fc338f37df6b6f57eaf1d9e72e8ac8112b",
+      "masterSha256": "42b3f373a030d088ae032784f598bcf4d3289bf5a9db764661387e70613d17a0"
+    },
+    {
+      "name": "lakshmi",
+      "file": "lakshmi.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 46978,
+      "sha256": "fb2e4d3f39a0eeea3ebd3da18f112796997a6bcd6453a822255d06d8001e2e44",
+      "masterSha256": "d27b49db73920bd0fd02f23bb98d665261842b3f6e6c6ff2d457f921b3ada544"
+    },
+    {
+      "name": "surya",
+      "file": "surya.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 23498,
+      "sha256": "52f7a02b5f44733bcc57312822e7a3e1f8811e87355c5c6f7411561409a9d520",
+      "masterSha256": "44e81d369a673f9aec19bc50468b314bfa8ad8d267a0b72783997549607349b6"
+    },
+    {
+      "name": "radha",
+      "file": "radha.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 32014,
+      "sha256": "e1e57ca1366f4e78a401ca7d962fd12466a6ad3cec5fadf337298c578bedf810",
+      "masterSha256": "0b312cd69b534ad11907f3874232ef91976fca61efa58c3645c8bbf5e871d1c2"
+    },
+    {
+      "name": "kartikeya",
+      "file": "kartikeya.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 11974,
+      "sha256": "4cadd101cc4bd6e0a76fbd46fb9a224b11cab5d2d81d0dbff8d95e3eea6a8e7b",
+      "masterSha256": "377308e88002e36935377ecf6a0f7b56a90d3f07963528f4035db0857ac7e402"
+    },
+    {
+      "name": "kubera",
+      "file": "kubera.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 52269,
+      "sha256": "3d8aa49f9c02ea893b95a0da6a5c27b3a1d7395923e44ad3acf119ccbb3a22b7",
+      "masterSha256": "21759dfecad9ffafc94968743581cb3053de735b5a881297e4428963f6f0fe9b"
+    },
+    {
+      "name": "ganga",
+      "file": "ganga.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 32577,
+      "sha256": "4a610ac12d83aada952ac0cf2738c7f5b02934ea63ece8dd43f63e1023e36017",
+      "masterSha256": "a038234acc9ba220bf99ead5f6d85ca2b9ebdc361416f1a6ae9c9a75fa0d04e4"
+    },
+    {
+      "name": "parvati",
+      "file": "parvati.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 42113,
+      "sha256": "52341d794a80167251cdee7f42be58c92d0ec0d7e481fb4281afa7edf91dd4b3",
+      "masterSha256": "ee8f2d60d99787e222b7282c9c4333b941fe4db2ae867aa7ef3c07d1c25f0837"
+    },
+    {
+      "name": "narasimha",
+      "file": "narasimha.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 57443,
+      "sha256": "402c9f3e02ebf88aa5b227b57cd8264126db0db6109fbc9f23ad688ec6fc3685",
+      "masterSha256": "265c803ec1d3839b2f76cb81f682bbf7df6cb7b277467f7756210962f66ff44c"
+    },
+    {
+      "name": "shani",
+      "file": "shani.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 31292,
+      "sha256": "f6fbd732ada6d5ad4ab4ec2e959e83a7920890dca8b1d08d35e06d9242b067a7",
+      "masterSha256": "95de724322c718adde166a030fe3b3a257e0ffa53edc5a4127125875733da829"
+    },
+    {
+      "name": "kali",
+      "file": "kali.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 15075,
+      "sha256": "d945d73ee4c32496d2ff185ecfc555344518987e679379caba9cd84be4c021e5",
+      "masterSha256": "db09e58129ddb74d189c9779ef2135689a2b9fac3c49a01951d43af9e468739c"
+    },
+    {
+      "name": "navagraha",
+      "file": "navagraha.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 54064,
+      "sha256": "580adca19f391ded55f2e542c2049c8eb515ef5e70cb2730e716601439e85e51",
+      "masterSha256": "71ae994ce6e780628e2f5583f9f351872d5b65ecca48f238b5d318d56f3ab7d5"
+    },
+    {
+      "name": "nav-bhakti",
+      "file": "nav-bhakti.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 12433,
+      "sha256": "364f16cb527e763944efc2f4a5f9dea0342d30ebfa8ee24b06bcb943684340cf",
+      "masterSha256": "30587deb983303f4972079fc59a4d87c91f2ebf6e969a9415980ef867d108aa1",
+      "source": "Exact Option 1 reference, enlarged crop supplied to built-in image_gen for artwork isolation",
+      "referenceCrop": [
+        636,
+        834,
+        673,
+        878
+      ]
+    },
+    {
+      "name": "nav-panchang",
+      "file": "nav-panchang.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 12739,
+      "sha256": "8e3d3d87a21c8f1cec4bbea523650e8024f59c0601c5546db832d7e0eb3d8126",
+      "masterSha256": "b23fd7f270dd03a99863751c2ae2291c2a272bb968c8f7008bdc8ba5fe1071e0",
+      "source": "Exact Option 1 reference, enlarged crop supplied to built-in image_gen for artwork isolation",
+      "referenceCrop": [
+        691,
+        829,
+        742,
+        882
+      ]
+    },
+    {
+      "name": "practice",
+      "file": "practice.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 21552,
+      "sha256": "9757f790734ae2e6820ebb069f3a797822247a397a3708326d345cd58831aaa6",
+      "masterSha256": "8665d8dca9215dcaf814c387ff6fd155e3db62a0707ea52cdc862c551522cf21",
+      "source": "Exact Option 1 reference, enlarged crop supplied to built-in image_gen for artwork isolation",
+      "referenceCrop": [
+        64,
+        433,
+        104,
+        471
+      ]
+    }
+  ],
+  "correctedDate": "2026-10-06",
+  "referenceSha256": "c7bf2abade0305ffc0c6b9368119e8fb135c587f10cbabe4e517e54353c4c543"
+}

@@ -55,8 +55,8 @@ export default function TabNavigator() {
       screenOptions={{
         headerShown: false,
         tabBarStyle,
-        tabBarActiveTintColor: colors.saffron,
-        tabBarInactiveTintColor: colors.inkMuted,
+        tabBarActiveTintColor: colors.iconAccent,
+        tabBarInactiveTintColor: colors.iconInk,
         tabBarLabelStyle: {
           // Inter carries only the English labels — it has no Indic glyphs; the
           // scripts take their own serif title faces (hi → Noto Serif Devanagari).

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text } from 'react-native';
+import AppIcon from './AppIcon';
+import { Pressable, StyleSheet } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 
 type Props = {
@@ -39,7 +40,7 @@ export default function ShareButton({
       accessibilityLabel={accessibilityLabel}
       accessibilityHint={accessibilityHint}
     >
-      <Text style={[styles.icon, { color: colors.saffron }]}>↗</Text>
+      <AppIcon name="share" size={20} color={colors.iconInk} />
     </Pressable>
   );
 }
@@ -52,11 +53,5 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  icon: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginTop: -1,
-    includeFontPadding: false,
   },
 });

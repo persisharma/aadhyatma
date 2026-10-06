@@ -1,3 +1,5 @@
+import StoryIcon from './StoryIcon';
+import AppIcon from './AppIcon';
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -85,7 +87,7 @@ export default function RoutineBanner({
     fontSize: 14,
     color: colors.ink,
   };
-  const chevron = <Text style={{ color: colors.saffron, fontSize: 18 }}>›</Text>;
+  const chevron = <AppIcon name="next" size={18} />;
 
   if (status === 'nudge') {
     return (
@@ -105,9 +107,7 @@ export default function RoutineBanner({
         ]}
       >
         <Disc colors={colors} radii={radii}>
-          <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 15, color: colors.saffronDeep }}>
-            नि
-          </Text>
+          <StoryIcon name="practice" size={32} />
         </Disc>
         <Text numberOfLines={1} style={lineStyle}>
           {line}

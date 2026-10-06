@@ -12,6 +12,9 @@ export const spacing = {
   // screens share one value instead of re-typing it (design.md §5).
   readingGutter: 22,
   cardGap: 12,
+  // Option 1 miniatures occupy half a Home tile's width. Catalog thumbnails
+  // retain their compact boxes; only the illustrated Home launchers use these.
+  homeCategoryArtwork: 62.7,
 } as const;
 
 // Corner radii — a single 4-step scale (10 · 14 · 18 · 22) plus the pill.

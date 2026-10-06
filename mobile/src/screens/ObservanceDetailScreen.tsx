@@ -1,3 +1,4 @@
+import AppIcon from '@/components/AppIcon';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -279,7 +280,7 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                 pressed && { opacity: 0.8 },
               ]}
             >
-              <Text style={{ fontSize: 14, color: colors.saffron }}>⌕</Text>
+              <AppIcon name="search" size={18} color={colors.saffron} />
               <Text style={{ flex: 1, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.inkSoft }}>
                 {contentByLang(lang, 'इस व्रत के बारे में पूछें — कैसे करें, क्या खाएँ, कथा…', 'Ask about this observance — how, what to eat, katha…')}
               </Text>
