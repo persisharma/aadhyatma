@@ -1179,7 +1179,7 @@ A content-agnostic spotlight card. Every text field is **bilingual**; the card r
 
 **Purpose.** A daily Hindu almanac plus a vrat/festival companion, living in its own bottom tab (`PanchangTab` → `PanchangStackNavigator`: `PanchangHome` → `ObservanceList` / `ObservanceDetail` / `KathaLibrary` / `MyVrat`). Everything is computed **on-device and offline**: the engine (`mobile/src/panchang/engine.ts`) derives tithi / nakshatra / yoga / karana / vara / lunar month from `astronomy-engine` sun–moon ephemerides with a linear Lahiri-style ayanamsa, so no network, no API, no panchang service. Observance dates come from bundled rules (`festivals.ts` / `festivalEngine.ts`) with a persisted per-city cache warmed off the interaction path. **Day selection is per-rule (`ObservanceRule.dayRule`, RULEBOOK §23):** absent ⇒ `udaya`, the tithi at sunrise, correct for the large majority; `chandrodaya` matches at **moonrise** and is what Sankashti Chaturthi and Karwa Chauth take, since the vrat ends with the moon sighting and arghya; `madhyahna` matches at the sunrise–sunset midpoint (Ganesh Chaturthi, Ram Navami); `aparahna` matches in the afternoon (sunrise + 0.7 × daylength) and is what **दर्श अमावस्या** takes, since पितृ तर्पण is an afternoon rite. Krishna Chaturthi typically opens mid-morning and closes before the next mid-morning, so sunrise matching named the day AFTER the night the moon is worshipped — Bhadrapada 2026 resolved to 1 Sep, whose 9:22 PM moonrise falls in Panchami, instead of 31 Aug, whose 8:39 PM moonrise falls in Chaturthi.
 
-**Layer stack.** Parchment base · faded sketch background (`panchang_celestial_almanac` via `BackgroundLayer` — the §6 exception pattern: this surface pins its own celestial sketch) · content ScrollView at `spacing.xxl` gutters.
+**Layer stack.** Calendar mode uses the parchment gradient plus a faint celestial chakra (`PanchangChakraBackground`, §48 asset family): a 360dp square at left −70 / top −110 with 0.18 opacity, clipped by the screen. The wavy sun is centered above the mode selector; rings, crescents/stars and leaf tips form a cropped upper-left ornament. Opaque content cards retain their surfaces. Vrat & Parv and Jyotish retain `panchang_celestial_almanac` via `BackgroundLayer`. Art is static, non-interactive and hidden from accessibility; it does not encode the selected date or chart. The content ScrollView and safe-area gutters retain their existing geometry.
 
 **Structure (top to bottom):**
 
@@ -1998,6 +1998,8 @@ Three AsyncStorage keys hold the last-seen **version string**: `@vedansh/tour-co
 
 **Files:** `mobile/src/components/TodayStrip.tsx`; consumed by `HomeScreen.tsx` (§18).
 
+**Celestial ornament (Oct 2026).** The approved reference's sun, flowing rays, orbit rings, crescent/star/disc rhythm and leaf tips form one reusable transparent wheel in `assets/decorations/celestial-chakra/`. Home places a 160dp square at right 4 / top −32 inside this card at 0.32 opacity. A separate absolute layer clips the drawing to `radii.lg`; the card shell stays unclipped so its raised shadow survives. Header/chip copy and actions remain above the decoration. At enlarged text the ornament stays anchored while the card grows with its copy. This image and the Panchang backdrop reuse the same 1024px PNG; the smaller Jyotish introduction uses a simpler 512px seal. `CelestialChakra.tsx` owns the static sources and non-interactive, accessibility-hidden presentation. No runtime tint, animation, chart meaning or remote download.
+
 ---
 
 ## 49. Continue-Reading Card (जारी रखें) — RETIRED (July 2026)
@@ -2245,6 +2247,8 @@ accessibility label.
 **Guest and error states use the same grid.** Neither has a chart, so no tile has
 a reading and every one falls back to its description — one geometry for all three
 states, never a guest-only layout. The error branch's three tiles wrap as 2 + 1.
+
+**Guest introduction art (Oct 2026).** The existing “ज्योतिष को समझें / Understand Jyotish” card replaces only its introduction illustration with `JyotishChakraSeal`: a centered 54dp transparent sun-and-rings seal inside the existing 58dp `saffronTint` tile. Four leaf points remain inside the tile. Copy, card geometry and the original geometric background remain. The actual Create Kundali tool below retains its 34dp house-chart drawing; saved-profile, loading and error landings retain their existing content. This seal is decorative and supplies no calculated chart information.
 
 **Files.** `mobile/src/components/JyotishToolTile.tsx` (new),
 `JyotishGuidanceRows.tsx`; `mobile/src/panchang/gochar.ts`

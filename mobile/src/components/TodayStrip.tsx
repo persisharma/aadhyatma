@@ -21,6 +21,7 @@ import { useTodayKey } from '@/utils/useTodayKey';
 import { launchMarkOnce } from '@/utils/launchTrace';
 import PitruSmaranDayChip from '@/components/PitruSmaranDayChip';
 import JanmaTithiDayChip from '@/components/JanmaTithiDayChip';
+import { TodayChakraOrnament } from '@/components/CelestialChakra';
 import { moreTabTarget } from '@/navigation/entryRoutes';
 import {
   isPitruPakshaDayTableWarm,
@@ -476,6 +477,7 @@ export default function TodayStrip() {
         end={{ x: 1, y: 1 }}
         style={[StyleSheet.absoluteFillObject, { borderRadius: radii.lg }]}
       />
+      <TodayChakraOrnament />
       {/* The card shell is not one accessibility element: private Smaran chips
           must remain independently focusable/tappable on iOS. This header keeps
           the original Panchang action and label without swallowing its siblings. */}

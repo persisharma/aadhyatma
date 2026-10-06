@@ -30,6 +30,8 @@ Home/category artwork is registered in `mobile/src/components/storybookSources.t
 
 Every new painted icon is a statically required local transparent square PNG with a matching provenance manifest. `storybookAssets.test.ts` verifies registry coverage, shipped hashes, dimensions, alpha, centered visible bounds and the separate Home/More byte budgets. Keep exact generation prompts and source/master hashes alongside the assets. Update the owning registry, manifest, asset contract and the matching `design.md` spec together; verify the installed native surface rather than treating the artwork sheet as integration evidence. More's row/profile sizing and enlarged-text behavior are specified in design.md §37.
 
+Celestial decorations use the separate `CelestialChakra.tsx` registry: one detailed wheel shared by Home's Today card and calendar-mode Panchang background, plus one simplified seal for the guest Jyotish introduction. The two local alpha PNGs and their shipped-hash manifest live in `assets/decorations/celestial-chakra/`; per-asset provenance retains exact prompts and master hashes. The asset contract caps their combined bytes below 300KB and pins centered bounds/dimensions/transparency. Decorations must never intercept touches or add screen-reader stops, alter chart calculations or replace the actual Kundali tool icon. `celestial-chakra-smoke.yaml` verifies the installed native Home → Panchang → Jyotish → Kundali route and mode switches; visual evidence checks the three approved placements separately.
+
 ---
 
 ## 1. The questions every new section must answer

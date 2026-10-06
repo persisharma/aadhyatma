@@ -1,0 +1,97 @@
+{
+  "asset": "seal.png",
+  "sourceMasterPath": "/Users/prashant/.codex/generated_images/01a11234-a807-7231-8c13-ff17645b82e9/exec-51b56642-2225-47ba-9ad1-f7e758af6ac6.png",
+  "sourceMasterSha256": "8724cc55268a0a6fd6a3d18d5cd2a2ac00f5c1c36ff423aa79022f9fd7893a76",
+  "sourceMasterBytes": 569655,
+  "sourceMasterDimensions": [
+    1254,
+    1254
+  ],
+  "packaging": {
+    "operations": [
+      "crop to square with equal visual margins",
+      "Lanczos downsample to 512px",
+      "lossless optimized PNG compression"
+    ],
+    "cropBox": [
+      32,
+      18,
+      1222,
+      1208
+    ],
+    "preservesGeneratedAlpha": true
+  },
+  "shipped": {
+    "path": "/Users/prashant/.codex/worktrees/ca4c/Aadhyatma/mobile/assets/decorations/celestial-chakra/seal.png",
+    "sha256": "80bcb88dc10e02019f650fff1e41282cf4739f9a1e8965a32fe17d377d9a976f",
+    "bytes": 131865,
+    "dimensions": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "alphaBounds": [
+      4,
+      13,
+      504,
+      491
+    ],
+    "visibleAlphaBoundsAbove8": [
+      29,
+      26,
+      483,
+      487
+    ],
+    "role": "unquantized packaged intermediate before final indexed-alpha compression"
+  },
+  "referenceImages": [
+    {
+      "path": "/Users/prashant/.codex/generated_images/01a10cf8-763b-77d2-ad60-fdb256afb305/exec-b79009d4-0e15-4517-9a07-502cf2fcf54c.png",
+      "sha256": "0b499efb016ded76d7763ba4a8cde2b754b982ef0b4d1eda52db004ba792f529",
+      "role": "approved option3 Jyotish introduction screenshot"
+    },
+    {
+      "path": "/Users/prashant/.codex/generated_images/01a11234-a807-7231-8c13-ff17645b82e9/exec-0e4b71a3-e276-4c05-b473-cba395a7802b.png",
+      "sha256": "6f857480f9a033061c06a29a4b4362d4200fb38aaa0dc03a93f00f8bf08a1cbb",
+      "role": "first extraction attempt used for refinement"
+    }
+  ],
+  "method": "built-in image_gen",
+  "transparentBackgroundRequested": true,
+  "use": "ONLY Jyotish introduction seal; native UI owns the rounded square tile",
+  "prompts": [
+    {
+      "stage": "initial extraction",
+      "prompt": "Use case: background-extraction\nAsset type: a transparent raster celestial chakra seal for a native mobile app introductory icon, rendered at 46 logical pixels.\nInput image: the attached app screenshot is an extraction and style reference. Recreate ONLY the small round celestial seal in the pale rounded icon tile at the left of the TOP \"\u091c\u094d\u092f\u094b\u0924\u093f\u0937 \u0915\u094b \u0938\u092e\u091d\u0947\u0902\" introduction card. Ignore all other interface elements and the rectangular Kundali icon below.\nSubject: a perfectly centered, symmetrical circular ochre-brown sun seal. A solid central sun disk with very subtle warm painted shading, approximately 24 graceful thin wavy sun rays, two thin concentric rings enclosing the sun, a few tiny stars and crescent marks in the ring space, four tiny pointed leaf shapes at the cardinal directions just outside the outer ring. Match the reference's refined thin warm brown linework and simple devotional appearance; keep the detailing legible at very small icon sizes.\nComposition: a single complete isolated seal on a square canvas, frontal flat view, centered horizontally and vertically with equal transparent margins. Full visible artwork occupies approximately 88 to 90 percent of both canvas dimensions. All four cardinal leaf points fully inside the canvas. Symmetric circular silhouette.\nColor palette: warm muted ochre-brown ink close to #A66C2A and dark warm brown details close to #875020. No bright yellows or harsh orange.\nBackground: genuinely transparent RGBA everywhere outside the drawn artwork and inside all unpainted gaps. Rings and ray gaps are transparent, not filled cream.\nConstraints: NO rounded square tile, NO rectangular background, NO parchment backdrop, NO cast shadow, NO glow, NO halo, NO bevel, NO 3D effect, NO photographic objects, NO text, NO letters, NO numbers, NO zodiac symbols, NO watermark. Only the circle, sun, minimal celestial marks and four small leaf points. Square output."
+    },
+    {
+      "stage": "selected refinement",
+      "prompt": "Use case: background-extraction.\nAsset: transparent celestial chakra seal for a native mobile icon at46 logicalpixels.\nInput1 is the approved app mockup. Match ONLY the small thin warm-brown circular seal inside the left icon tile of the TOP Jyotish introduction card. Input2 is a first extraction attempt: keep its single isolated full sun/rings/four-leaves composition but refine it to the much lighter flatter thin-ink design in input1.\nMake a simple flat two-dimensional ochre-brown hand-inked illustration, not metal or 3D. One small SOLID sun disk in the center, its diameter 22% of the artwork width. 24 very SLENDER curved tapering wavy rays evenly around the disk. Two very THIN concentric circular line rings: inner radius30% artworkwidth, outer radius40% artworkwidth. Tiny crescent and star marks in the ring space, simple and sparse. Four small pointed leaf ink marks just outside the outer ring at12,3,6,9o'clock. Keep all leaves and rays fullyinside. No shadows, no bevels, no highlights, no glow, no thick filled sunray ribbons. Warm muted flat ink approximately #A66C2A; tiny natural tonevariation only.\nOne complete symmetrical seal on a square transparent canvas. Visible mark centered exactly with equal transparent margins and occupies88% of canvaswidthandheight. All negative space between rays and rings is genuinely transparent RGBA. No roundedsquare tile, no backgroundcirclefill, no parchment, no text, no numbers, no letters, no rectangular Kundali diagram, no borderaroundthecanvas, no straydotsoutside theouterleafbounds."
+    }
+  ],
+  "generatedAt": "2026-10-06",
+  "finalShippedAsset": {
+    "file": "seal.png",
+    "bytes": 28207,
+    "sha256": "36da6f41daa6466805d34ab80af9d91412ce40db8b96dd8087acc9edc77cb0c5",
+    "dimensions": [
+      512,
+      512
+    ],
+    "visibleBounds": [
+      29,
+      26,
+      483,
+      487
+    ],
+    "alphaExtrema": [
+      0,
+      253
+    ],
+    "packaging": "Generated RGBA downsampled/centered as recorded in provenance; indexed 256-color alpha PNG packaging with Pillow FASTOCTREE, no dithering. Original unquantized master retained."
+  }
+}

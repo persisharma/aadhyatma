@@ -1,0 +1,52 @@
+WARNING: Final field parent in class maestro.cli.command.TestCommand has been mutated reflectively by class picocli.CommandLine$Model$FieldBinding in unnamed module @41e68d87 (file:/Users/prashant/.maestro/lib/picocli-4.6.3.jar)
+WARNING: Use --enable-final-field-mutation=ALL-UNNAMED to avoid a warning
+WARNING: Mutating final fields will be blocked in a future release unless final field mutation is enabled
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/Users/prashant/.maestro/lib/jansi-2.4.1.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+Running on Vedansh-Upanishad-QA - iOS 26.5 - 5799D1D7-B645-4613-8058-822E63009C0F
+ > Flow celestial-chakra-smoke
+Launch app "com.prashantsharma.vedansh"... COMPLETED
+Tap on (Optional) "Skip tour"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Skip tour
+Tap on (Optional) "Close"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Close
+Tap on (Optional) "Got it"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Got it
+Tap on id: tab-home... COMPLETED
+Tap on (Optional) "Back"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Back
+Scrolling UP until ".*Today.s Panchang.*" is visible with speed 40, visibility percentage 100%, timeout 15000 ms, with centering disabled... COMPLETED
+Swiping in DOWN direction in 400 ms... COMPLETED
+Wait for animation to end... COMPLETED
+Take screenshot home... COMPLETED
+Tap on ".*Today.s Panchang.*"... COMPLETED
+Tap on "Panchang"... COMPLETED
+Assert that "Today" is visible... COMPLETED
+Wait for animation to end... COMPLETED
+Take screenshot panchang... COMPLETED
+Tap on "Jyotish"... COMPLETED
+Assert that "Create Kundali" is visible... COMPLETED
+Assert that "Open Daily Rashifal" is visible... COMPLETED
+Wait for animation to end... COMPLETED
+Take screenshot jyotish... COMPLETED
+Tap on "Create Kundali"... COMPLETED
+Assert that "Birth name" is visible... COMPLETED
+Tap on "Back.*"... COMPLETED
+Assert that "Create Kundali" is visible... COMPLETED
+Tap on "Vrat & Parv"... COMPLETED
+Assert that "My Vrat.*" is visible... COMPLETED
+Tap on "Panchang"... COMPLETED
+Assert that "Today" is visible... COMPLETED
+Tap on id: tab-home... COMPLETED
+Assert that ".*Today.s Panchang.*" is visible... COMPLETED

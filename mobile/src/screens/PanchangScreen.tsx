@@ -7,6 +7,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { backgroundImages } from '@assets/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
+import { JyotishChakraSeal, PanchangChakraBackground } from '@/components/CelestialChakra';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { library } from '@/data/texts';
@@ -60,7 +61,6 @@ import { pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType
 import { useTourTarget } from '@/components/tour/tourTargets';
 import { fontFamilies } from '@/theme/typography';
 import { transliterateDevanagari } from '@/utils/transliterate';
-import CategoryIcon from '@/components/CategoryIcon';
 import JyotishGuidanceRows from '@/components/JyotishGuidanceRows';
 import JyotishPracticeCard from '@/components/JyotishPracticeCard';
 import JyotishShareCard from '@/components/JyotishShareCard';
@@ -345,7 +345,9 @@ export default function PanchangScreen({ route }: Props) {
 
   return (
     <View style={styles.root}>
-      <BackgroundLayer source={backgroundImages.panchang_celestial_almanac} />
+      {panchangTab === 'calendar'
+        ? <PanchangChakraBackground />
+        : <BackgroundLayer source={backgroundImages.panchang_celestial_almanac} />}
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <ScrollView
           contentContainerStyle={[styles.scroll, { paddingHorizontal: 14 }]}
@@ -1402,7 +1404,7 @@ function JyotishLanding({
         ]}
       >
         <View style={[styles.jyotishHeroIcon, { backgroundColor: colors.saffronTint, borderRadius: radii.lg }]}>
-          <CategoryIcon iconKey="insight" />
+          <JyotishChakraSeal />
         </View>
         <View style={{ flex: 1 }}>
           <Text
