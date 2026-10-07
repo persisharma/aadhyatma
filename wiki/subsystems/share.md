@@ -54,6 +54,13 @@ page to one OS sheet (WhatsApp album; iOS "Save N Images"; Instagram → Select 
   in Chromium at 484 dp with the app's TTFs, + 0.02. The verse meaning ladder's
   `AVG_ADVANCE` (0.52/0.46) over-counts prose by ~38 %. If a device clips a page, widen
   the advance — never add `adjustsFontSizeToFit` (design.md §39's 7 pt failure).
+- **Verse budget counts logical lines, not wrapped ones.** `fitMeaningType` charges 42 dp per
+  `lines[]` entry, but at 24 pt over 468 dp most Gita lines (40–63 chars) wrap to two. Measured in
+  Chromium with the app TTFs (Oct 2026): 164 of 340 Gita Saar cards wrap, the worst lands at
+  677/675 dp (2 dp into bottom padding — invisible). Any verse share whose meaning uses its full
+  cap *and* wraps its verse would clip the footer; count wrapped verse lines before widening.
+- **Optional title line.** `meaningTitleHi/En` sets a line above the meaning at the fitted size
+  (Gita Saar's theme line); it spends the same budget via `fitMeaningType({ title })`.
 - **No-share surfaces.** Pitru Smaran, the पितृ पक्ष परिचय layer and the personal-tithi
   Vidhi carry no share button — design.md §63/§74 lock it.
 - **Tests that mount a share surface** must wrap it in `ShareProvider` (`useShare()`

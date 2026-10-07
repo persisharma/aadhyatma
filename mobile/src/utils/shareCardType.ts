@@ -68,6 +68,8 @@ export type MeaningTypeFit = {
   lineHeight: number;
   /** Height-derived cap; the meaning is only clipped past this many lines. */
   numberOfLines: number;
+  /** Lines reserved for the optional title above the meaning (0 without one). */
+  titleLines: number;
 };
 
 export function meaningScriptFor(lang: string): MeaningScript {
@@ -101,6 +103,12 @@ export function estimateWrappedLines(
  */
 export function fitMeaningType(params: {
   meaning: string;
+  /**
+   * Optional line set above the meaning at the same size (Gita Saar's theme
+   * line). It spends the same line budget, so it is fitted together with the
+   * meaning rather than squeezed in after it.
+   */
+  title?: string;
   verseLineCount: number;
   cardWidth: number;
   cardHeight: number;
@@ -122,12 +130,16 @@ export function fitMeaningType(params: {
     params.cardWidth - 2 * m.paddingHorizontal - 2 * m.meaningPaddingHorizontal
   );
 
+  const titleLinesAt = (fontSize: number) =>
+    params.title ? estimateWrappedLines(params.title, textWidth, fontSize, params.script) : 0;
+
   for (const fontSize of SIZE_LADDER) {
     const lineHeight = Math.round(fontSize * LEADING);
-    const maxLines = Math.floor(available / lineHeight);
+    const titleLines = titleLinesAt(fontSize);
+    const maxLines = Math.floor(available / lineHeight) - titleLines;
     if (maxLines < 1) continue;
     const wrapped = estimateWrappedLines(params.meaning, textWidth, fontSize, params.script);
-    if (wrapped <= maxLines) return { fontSize, lineHeight, numberOfLines: maxLines };
+    if (wrapped <= maxLines) return { fontSize, lineHeight, numberOfLines: maxLines, titleLines };
   }
 
   // Longer than the card can hold even at the floor size (a handful of Valmiki
@@ -135,9 +147,11 @@ export function fitMeaningType(params: {
   // rather than a full-length but illegible one.
   const fontSize = SIZE_LADDER[SIZE_LADDER.length - 1];
   const lineHeight = Math.round(fontSize * LEADING);
+  const titleLines = titleLinesAt(fontSize);
   return {
     fontSize,
     lineHeight,
-    numberOfLines: Math.max(1, Math.floor(available / lineHeight)),
+    numberOfLines: Math.max(1, Math.floor(available / lineHeight) - titleLines),
+    titleLines,
   };
 }
