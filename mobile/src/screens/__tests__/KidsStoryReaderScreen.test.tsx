@@ -87,6 +87,12 @@ test('first scene mounts with a horizontal pager, a counter and no page buttons'
   act(() => tree.unmount());
 });
 
+test('the tab-hosted reader leaves the bottom safe-area inset to its navigator', () => {
+  const { tree, find } = mount();
+  expect(find('kids-story-reader').props.edges).toEqual(['top', 'left', 'right']);
+  act(() => tree.unmount());
+});
+
 test('swipes, language changes and layout changes keep one page index', () => {
   const { tree, props, find } = mount('yamuna-crossing');
   expect(find('story-progress').props.children[0]).toBe(12);

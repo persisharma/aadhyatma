@@ -3,6 +3,7 @@ import { test } from 'node:test';
 import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath, URL } from 'node:url';
 import { createHash } from 'node:crypto';
+import reviewedFrames from '../../components/kidsStoryArtFrames.json';
 import { kidsStories, getKidsStory, storyDeities, storiesForDeity, plannedStories, storyPageIndex, storyText } from '../kidsStories';
 
 test('deity shelves contain only published stories, with future titles kept separate', () => {
@@ -101,6 +102,19 @@ test('every page and cover resolves to a bundled final illustration', () => {
     const bytes = readFileSync(path);
     assert.equal(bytes.toString('ascii', 0, 4), 'RIFF');
     assert.equal(bytes.toString('ascii', 8, 12), 'WEBP');
+  }
+});
+
+test('every bundled illustration has a bottom-band review tied to its actual image bytes', () => {
+  const componentUrl = new URL('../../components/KidsStoryArt.tsx', import.meta.url);
+  const component = readFileSync(componentUrl, 'utf8');
+  const assets = new Map([...component.matchAll(/(\w+): require\('(.+?)'\)/g)].map(match => [match[1], match[2]]));
+  assert.deepEqual(Object.keys(reviewedFrames).sort(), [...assets.keys()].sort(), 'Review every image, including covers');
+  for (const [art, frame] of Object.entries(reviewedFrames)) {
+    assert.ok(frame.retainedHeight > 0 && frame.retainedHeight <= 1, `${art}: invalid retained image height`);
+    const bytes = readFileSync(new URL(assets.get(art)!, componentUrl));
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), frame.sha256,
+      `${art}: illustration changed; visually review and update its bottom-band frame before shipping`);
   }
 });
 

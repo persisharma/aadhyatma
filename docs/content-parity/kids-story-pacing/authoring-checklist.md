@@ -43,7 +43,7 @@ Do not mark a pending review as approved. Record technical and editorial outcome
 - [ ] Read each language from beginning to end without relying on source notes to explain missing events. Compare the event sequence across all four languages.
 - [ ] Review the exact illustration against each page narrative, including intermediate reactions and the ending; a matching story title/cover is insufficient.
 - [ ] Extend the relevant Maestro flow to visit every page, verify its stable ID/counter and full non-final caption, scroll the ending/source and return to the shelf. Confirm locale changes preserve the page.
-- [ ] Inspect the actual native sequence at Standard and Large reading sizes. Keep captions readable and the complete illustrated content visible: permit vertical scrolling rather than shrinking art to fit a caption, and trim only a visually reviewed empty bottom band. Do not accept browser-only evidence as native validation.
+- [ ] Inspect the actual native sequence at Standard and Large reading sizes. Keep captions readable and the complete illustrated content visible: permit vertical scrolling rather than shrinking art to fit a caption, and trim only a visually reviewed empty bottom band. Review every scene and cover against its painted boundary and record the retained height/image hash in `mobile/src/components/kidsStoryArtFrames.json`; replacing art requires a new review. Do not accept browser-only evidence as native validation.
 - [ ] Synchronize browser copies, verify bundled art/translation coverage and byte parity, and run the required repository checks.
 - [ ] Retain dated full-sequence evidence, source/art provenance and unresolved release checks. A story with a remaining causal gap is not complete even if tests pass.
 

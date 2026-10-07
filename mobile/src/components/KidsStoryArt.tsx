@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Image, View, Text, type ImageSourcePropType } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
+import reviewedFrames from './kidsStoryArtFrames.json';
 
 // Static Metro imports keep shared illustrations bundled and available offline.
 const images: Record<string, ImageSourcePropType> = {
@@ -61,13 +62,13 @@ const images: Record<string, ImageSourcePropType> = {
   hs08: require('../../assets/kids-stories/hs-08.webp'),
   hs09: require('../../assets/kids-stories/hs-09.webp'),
 };
-// Trim only a visually reviewed empty bottom band. Every other scene retains
-// the whole illustration; caption length must never determine the art crop.
-const visibleHeight: Record<string, number> = { hs09: 0.84 };
+// These frames remove only visually reviewed blank parchment below the scene.
+// New artwork stays full-height until reviewed; caption length never sets a crop.
+const artFrames: Record<string, { retainedHeight: number }> = reviewedFrames;
 export default function KidsStoryArt({ art, label }: { art: string; label: string }) {
   const { colors } = useTheme();
   const [width, setWidth] = useState(0);
-  const retainedHeight = visibleHeight[art] ?? 1;
+  const retainedHeight = artFrames[art]?.retainedHeight ?? 1;
   return (
     <View
       accessibilityRole="image"

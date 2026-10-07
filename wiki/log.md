@@ -352,3 +352,11 @@ Added [[integrations/meta-app-events]] for the local Expo Core SDK bridge, verif
 ## [2026-10-08] ingest | Complete story pacing and preserve illustrated content
 
 Expanded Putana, Ganesha Birth and Hanuman to 10/11/10 scenes with nine sourced illustrations and four-language causal transitions. Added the discoverable AGENTS.md instruction and RULEBOOK §29’s mandatory full-arc review, reusable authoring checklist and page-by-page review. User’s crop correction changes every native scene to vertical overflow with art independent of caption length; only the reviewed empty bottom band of hs09 is trimmed. Full 2,971 tests, final Release build, all 39 current English Standard story pages and unchanged Krishna’s 16-page paging flow pass; scoped Large simulator results and remaining editorial/device checks are recorded in docs/content-parity/kids-story-pacing/. Updated [[kids-stories]].
+
+## [2026-10-08] ingest | Reviewed image bounds and remove duplicate reader bottom inset
+
+All 56 story illustrations now have reviewed 78–88% retained-height frames pinned to image SHA-256, removing blank parchment without scaling or caption-driven crops. The tab-hosted reader leaves the bottom safe-area inset to the visible tab bar and tightens scene/caption spacing; future artwork replacement requires a new framing review. Full 2,973 tests, changed-source lint and final iOS Release build pass. Full final Standard/Large native walkthrough and user visual review remain pending; this follow-up is local, not pushed to PR #429. Updated [[kids-stories]] and the authoring guidance.
+
+## [2026-10-08] ingest | User approves final story spacing for PR update
+
+The user manually inspected the final simulator build, confirmed the appearance and requested commit/PR delivery. Final automated all-page Standard/Large framing coverage remains incomplete and is distinguished from prior native runs in the validation report. Local gates remain 2,973 passing tests and a successful Release build.

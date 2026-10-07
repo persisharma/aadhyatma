@@ -28,13 +28,14 @@ export default function KidsStoryReaderScreen({ navigation, route }: NativeStack
   }, [story, route.params.pageId]);
   const library = pick(lang, { hi: 'कथा संग्रह', en: 'Story library', gu: 'વાર્તા સંગ્રહ', kn: 'ಕಥಾ ಸಂಗ್ರಹ' });
   if (!story) return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.parchment }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.parchment }} edges={['top', 'left', 'right']}>
       <ReaderHeader title={library} onBack={() => navigation.goBack()} />
       <Text style={{ ...meaningToken(lang, typography), padding: spacing.readingGutter, color: colors.ink }}>{pick(lang, { hi: 'कथा नहीं मिली।', en: 'Story not found.', gu: 'વાર્તા મળી નથી.', kn: 'ಕಥೆ ಸಿಗಲಿಲ್ಲ.' })}</Text>
     </SafeAreaView>
   );
+  // The visible bottom tab bar already owns the bottom safe-area inset.
   return (
-    <SafeAreaView testID="kids-story-reader" style={{ flex: 1, backgroundColor: colors.parchment }} edges={['top', 'left', 'right', 'bottom']}>
+    <SafeAreaView testID="kids-story-reader" style={{ flex: 1, backgroundColor: colors.parchment }} edges={['top', 'left', 'right']}>
       <ReaderHeader title={storyText(story.title, lang)} onBack={() => navigation.goBack()} sideWidth={60} right={
         <Text testID="story-progress" style={{ color: colors.inkMuted, fontFamily: typography.pageCounter.fontFamily, fontSize: typography.pageCounter.fontSize, fontStyle: 'italic', includeFontPadding: false, minWidth: 48, textAlign: 'right' }}>
           {index + 1} / {story.pages.length}
@@ -69,7 +70,7 @@ export default function KidsStoryReaderScreen({ navigation, route }: NativeStack
           renderItem={({ item: page, index: pageIndex }) => {
       const isLast = pageIndex === story.pages.length - 1;
       const caption = (
-        <View testID="story-caption" accessibilityLiveRegion="polite" style={{ padding: spacing.lg, borderRadius: 12, backgroundColor: colors.parchmentSoft, gap: spacing.sm }}>
+        <View testID="story-caption" accessibilityLiveRegion="polite" style={{ paddingHorizontal: spacing.lg, paddingVertical: spacing.md, borderRadius: 12, backgroundColor: colors.parchmentSoft, gap: spacing.sm }}>
           <Text accessibilityRole="header" style={{ fontFamily: titleFontByLang(lang), color: colors.saffronDeep, fontSize: 24 }}>{storyText(page.title, lang)}</Text>
           <Text style={{ ...meaningToken(lang, typography), color: colors.ink }}>{storyText(page.text, lang)}</Text>
           {page.dialogue && <View style={{ padding: spacing.md, backgroundColor: colors.goldTint, borderRadius: 10 }}>
@@ -81,7 +82,7 @@ export default function KidsStoryReaderScreen({ navigation, route }: NativeStack
       // Preserve the scene independently of caption length. Vertical overflow
       // scrolls within this page; horizontal swipes still turn the story page.
       return (
-          <ScrollView testID={`story-page-${page.id}`} directionalLockEnabled nestedScrollEnabled style={{ width: pageWidth, flex: 1 }} contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingBottom: spacing.lg, gap: spacing.md }}>
+          <ScrollView testID={`story-page-${page.id}`} directionalLockEnabled nestedScrollEnabled style={{ width: pageWidth, flex: 1 }} contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingBottom: spacing.sm, gap: spacing.sm }}>
             <KidsStoryArt art={page.art} label={storyText(page.title, lang)} />
             {caption}
             {isLast && <View style={{ padding: spacing.lg, gap: spacing.sm }}>
