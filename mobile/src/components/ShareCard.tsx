@@ -5,6 +5,7 @@ import { fontFamilies } from '@/theme/typography';
 import type { Lang } from '@/data/gita/language';
 import { contentByLang, meaningByLang, verseLinesByLang } from '@/utils/localize';
 import { fitMeaningType, meaningScriptFor, shareCardMetrics } from '@/utils/shareCardType';
+import { titleFontByLang } from '@/utils/langType';
 import { getReaderBackground } from '@/data/backgrounds';
 import BackgroundLayer from './BackgroundLayer';
 import Ornament from './Ornament';
@@ -29,6 +30,12 @@ export type ShareCardProps = {
   meaningEn?: string;
   meaningGu?: string;
   meaningKn?: string;
+  /**
+   * One line set above the meaning in the title face (Gita Saar's theme line —
+   * the idea the verse is shared for). gu/kn re-script the Hindi.
+   */
+  meaningTitleHi?: string;
+  meaningTitleEn?: string;
   lang: Lang;
   width: number;
   height: number;
@@ -42,6 +49,11 @@ const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(prop
     gu: props.meaningGu,
     kn: props.meaningKn,
   });
+  const meaningTitle = meaningByLang(
+    props.lang,
+    props.meaningTitleHi ?? '',
+    props.meaningTitleEn ?? ''
+  );
   const lines = verseLinesByLang(props.lang, props.linesHi, props.linesEn);
   // Constrained surface (design.md §13 sanctioned): keeps its own tuned sizes, but the
   // font family must follow the script or gu/kn render as tofu. hi/en unchanged — en
@@ -66,6 +78,7 @@ const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(prop
   const meaningScript = meaningScriptFor(props.lang);
   const meaningFit = fitMeaningType({
     meaning,
+    title: meaningTitle || undefined,
     verseLineCount: lines.length,
     cardWidth: props.width,
     cardHeight: props.height,
@@ -128,6 +141,23 @@ const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(prop
 
       <Ornament />
 
+      {meaningTitle ? (
+        <Text
+          numberOfLines={meaningFit.titleLines}
+          style={[
+            styles.meaning,
+            {
+              color: colors.saffronDeep,
+              fontFamily: titleFontByLang(props.lang),
+              fontSize: meaningFit.fontSize,
+              lineHeight: meaningFit.lineHeight,
+            },
+          ]}
+        >
+          {meaningTitle}
+        </Text>
+      ) : null}
+
       {meaning ? (
         <Text
           numberOfLines={meaningFit.numberOfLines}
@@ -143,6 +173,8 @@ const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(prop
               // matras. Same rule as `captionFont` in utils/scriptFont.ts.
               fontStyle: meaningScript === 'latin' ? 'italic' : 'normal',
             },
+            // The title already took the block's top margin from the budget.
+            meaningTitle ? { marginTop: 0 } : null,
           ]}
         >
           {meaning}

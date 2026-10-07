@@ -58,6 +58,9 @@ export type ShareableVerse = {
   /** Verified native meaning overrides; when present, gu/kn use these instead of transliterating meaningHi. */
   meaningGu?: string;
   meaningKn?: string;
+  /** Title line above the meaning (Gita Saar's theme line); see `ShareCardProps`. */
+  meaningTitleHi?: string;
+  meaningTitleEn?: string;
 };
 
 /** One block of shareable prose; `en` may be empty, in which case `hi` is used. */
@@ -817,6 +820,8 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
                 meaningEn={pending.verse.meaningEn}
                 meaningGu={pending.verse.meaningGu}
                 meaningKn={pending.verse.meaningKn}
+                meaningTitleHi={pending.verse.meaningTitleHi}
+                meaningTitleEn={pending.verse.meaningTitleEn}
                 lang={pending.lang}
               />
             ) : (
@@ -833,6 +838,8 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
                 meaningEn={pending.verse.meaningEn}
                 meaningGu={pending.verse.meaningGu}
                 meaningKn={pending.verse.meaningKn}
+                meaningTitleHi={pending.verse.meaningTitleHi}
+                meaningTitleEn={pending.verse.meaningTitleEn}
                 lang={pending.lang}
                 width={CARD_WIDTH}
                 height={CARD_HEIGHT}

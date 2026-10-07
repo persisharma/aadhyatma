@@ -326,8 +326,16 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
                               verseLabelEn: `Verse ${item.gitaChapter}.${item.gitaVerse}`,
                               linesHi: [...item.sanskrit],
                               linesEn: [...item.transliteration],
-                              meaningHi: item.meaningHi,
-                              meaningEn: item.meaningEn,
+                              // The card carries what the page carries: the theme line
+                              // over the saar, and the theme's closing line on its last page.
+                              meaningTitleHi: item.themeHi,
+                              meaningTitleEn: item.themeEn,
+                              meaningHi: isLastPage
+                                ? `${item.meaningHi}\n\n${chapter.closingHi}`
+                                : item.meaningHi,
+                              meaningEn: isLastPage
+                                ? `${item.meaningEn}\n\n${chapter.closingEn}`
+                                : item.meaningEn,
                             },
                             lang
                           );
