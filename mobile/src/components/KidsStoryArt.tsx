@@ -15,10 +15,10 @@ const ART_STEMS: Record<string, string> = {
   vishnu: 'kj-06', escape: 'kj-07', yamuna: 'kj-08', gokul: 'kj-09', devi: 'kj-10',
   safe: 'kj-11', wedding: 'kj-12', threat: 'kj-13', imprisoned: 'kj-14', balarama: 'kj-15',
   prayer: 'kj-16', return: 'kj-17',
-  pt01: 'pt-01', pt02: 'pt-02', pt03: 'pt-03', pt04: 'pt-04', pt05: 'pt-05', pt06: 'pt-06',
-  ka01: 'ka-01', ka02: 'ka-02', ka03: 'ka-03', ka04: 'ka-04', ka05: 'ka-05', ka06: 'ka-06', ka07: 'ka-07',
-  gb01: 'gb-01', gb02: 'gb-02', gb03: 'gb-03', gb04: 'gb-04', gb05: 'gb-05', gb06: 'gb-06', gb07: 'gb-07',
-  hs01: 'hs-01', hs02: 'hs-02', hs03: 'hs-03', hs04: 'hs-04', hs05: 'hs-05', hs06: 'hs-06',
+  pt00: 'pt-00', pt01: 'pt-01', pt02: 'pt-02', pt03: 'pt-03', pt04: 'pt-04', pt05: 'pt-05', pt06: 'pt-06',
+  ka00: 'ka-00', ka01: 'ka-01', ka02: 'ka-02', ka03: 'ka-03', ka04: 'ka-04', ka05: 'ka-05', ka06: 'ka-06', ka07: 'ka-07',
+  gb00: 'gb-00', gb01: 'gb-01', gb02: 'gb-02', gb03: 'gb-03', gb04: 'gb-04', gb05: 'gb-05', gb06: 'gb-06', gb07: 'gb-07',
+  hs00: 'hs-00', hs01: 'hs-01', hs02: 'hs-02', hs03: 'hs-03', hs04: 'hs-04', hs05: 'hs-05', hs06: 'hs-06',
 };
 // The art fills whatever vertical space the page layout leaves for it (`flex: 1`
 // from the parent), so the caption below always stays on screen. The image is

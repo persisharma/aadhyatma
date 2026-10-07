@@ -1,6 +1,10 @@
 {
   "prefix": "kids-stories",
   "assets": {
+    "gb-00": {
+      "hash": "f57a7e3e98b311f6",
+      "ext": "webp"
+    },
     "gb-01": {
       "hash": "e9493ac5906f5ad2",
       "ext": "webp"
@@ -29,6 +33,10 @@
       "hash": "0defd043ab3ddf1a",
       "ext": "webp"
     },
+    "hs-00": {
+      "hash": "099cc99df102a906",
+      "ext": "webp"
+    },
     "hs-01": {
       "hash": "792038b2284fe717",
       "ext": "webp"
@@ -51,6 +59,10 @@
     },
     "hs-06": {
       "hash": "b10d6b34fb6e823a",
+      "ext": "webp"
+    },
+    "ka-00": {
+      "hash": "a631008c2e56855f",
       "ext": "webp"
     },
     "ka-01": {
@@ -147,6 +159,10 @@
     },
     "kj-17": {
       "hash": "d50e2bd9b90d9c22",
+      "ext": "webp"
+    },
+    "pt-00": {
+      "hash": "f5f83b36e72e66d0",
       "ext": "webp"
     },
     "pt-01": {
