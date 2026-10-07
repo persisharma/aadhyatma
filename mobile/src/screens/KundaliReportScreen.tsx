@@ -84,9 +84,9 @@ export default function KundaliReportScreen({ navigation, route }: Props) {
         cityNameEn: city.nameEn,
       },
       now,
-      // The graha cards wait on a jyotishi's sign-off (RULEBOOK §14.7):
-      // development builds show the draft so it can be reviewed in place;
-      // store builds show it only once the review record is approved.
+      // The graha cards show once the review record carries a dated sign-off
+      // (RULEBOOK §14.7.7 — approved 7 Oct 2026); development builds always
+      // show them, so an edit set back to draft can be reviewed in place.
       { includeGrahaReadings: __DEV__ || grahaReadingsApproved() }
     );
   }, [chart, city, now, profile]);

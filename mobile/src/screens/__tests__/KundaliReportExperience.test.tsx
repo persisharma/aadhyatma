@@ -112,7 +112,7 @@ test('saved report renders every section in order with disclaimers at both ends'
     'Lagna',
     'Inner rhythm',
     'What the placements say together',
-    // Development build (__DEV__): the draft graha cards render (RULEBOOK §14.7).
+    // The graha cards render (signed off 7 Oct 2026; RULEBOOK §14.7).
     'Your nine grahas, one by one',
     'Career and work',
     'Relationships',

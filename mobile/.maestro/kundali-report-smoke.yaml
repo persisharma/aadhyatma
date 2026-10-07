@@ -203,8 +203,8 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - assertVisible: "Aarav"
 - assertVisible: ".*Ujjain.*"
-# RULEBOOK §14.7: the nine graha cards render in development builds until a
-# jyotishi approves them; open one card, read it, and close it again.
+# RULEBOOK §14.7: the nine graha cards render (signed off 7 Oct 2026); open
+# one card, read it, and close it again.
 - scrollUntilVisible:
     element:
       text: ".*Your nine grahas, one by one.*"
