@@ -342,3 +342,5 @@ Added Putana and Kaliya Nag to Krishna, Ganesha Birth to Ganesha, and Hanuman an
 ## [2026-10-07] ingest | Gentler openings for the four kids stories
 
 Updated `subsystems/kids-stories.md` from canonical story records and native evidence: one distinct sourced introduction per story, hi/en/gu/kn narration, Putana motivation context, 30 total scenes, synchronized assets/prototypes, and scoped Standard/Large simulator validation. Follow-up remains local on `codex/kids-story-openings`; the original delivery PR #422 has merged. Evidence: `docs/content-parity/kids-story-openings/README.md`.
+
+## [2026-10-07] ingest | Graha cards signed off: `GRAHA_READING_REVIEW` approved 7 Oct 2026 (approval relayed by the product owner; review page holds partial marks, no on-page sign-off), so store builds show the section. New `reviewedSheetSha256` + `reviewedSheetContent` pin the reviewed content — a later content edit fails the engine test until reset to draft or re-signed. RULEBOOK §14.7.7, design.md §68/§78, convention updated. Updated [[panchang]].

@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 
@@ -25,7 +26,7 @@ import {
   SIGN_STRENGTH,
   grahaReadingsApproved,
 } from '../grahaReadingContent';
-import { renderGrahaReviewSheet, signContextFor } from '../grahaReviewSheet';
+import { renderGrahaReviewSheet, reviewedSheetContent, signContextFor } from '../grahaReviewSheet';
 import {
   computeKundali,
   GRAHA_ORDER,
@@ -379,13 +380,24 @@ test('authored copy: no absolute claims, fatality, medical directive, commerce, 
   }
 });
 
-test('the review record stays draft until a dated jyotishi sign-off is recorded', () => {
-  assert.equal(GRAHA_READING_REVIEW.status, 'draft');
-  assert.equal(GRAHA_READING_REVIEW.signOffRef, null);
-  assert.equal(GRAHA_READING_REVIEW.reviewedOn, null);
-  assert.equal(grahaReadingsApproved(), false);
-  assert.equal(grahaReadingsApproved({ ...GRAHA_READING_REVIEW, status: 'approved' }), false, 'approval needs a sign-off reference and a date');
-  assert.equal(grahaReadingsApproved({ status: 'approved', signOffRef: 'review-artifact', reviewedOn: '2026-10-10', scope: '' }), true);
+test('the review record carries a dated sign-off (7 Oct 2026), and only a complete record opens the gate', () => {
+  assert.equal(GRAHA_READING_REVIEW.status, 'approved');
+  assert.ok(GRAHA_READING_REVIEW.signOffRef, 'where the approval lives — never a name');
+  assert.match(GRAHA_READING_REVIEW.reviewedOn ?? '', /^\d{4}-\d{2}-\d{2}$/);
+  assert.equal(grahaReadingsApproved(), true);
+  assert.equal(grahaReadingsApproved({ ...GRAHA_READING_REVIEW, status: 'draft' }), false, 'a draft is never shown in store builds');
+  assert.equal(grahaReadingsApproved({ ...GRAHA_READING_REVIEW, signOffRef: null }), false, 'approval needs a sign-off reference');
+  assert.equal(grahaReadingsApproved({ ...GRAHA_READING_REVIEW, reviewedOn: null }), false, 'approval needs a date');
+});
+
+test('the sign-off covers exactly the reviewed content — any later edit needs a new sign-off', () => {
+  if (GRAHA_READING_REVIEW.status !== 'approved') return;
+  const hash = createHash('sha256').update(reviewedSheetContent()).digest('hex');
+  assert.equal(
+    hash,
+    GRAHA_READING_REVIEW.reviewedSheetSha256,
+    'graha content changed after the sign-off: set GRAHA_READING_REVIEW back to draft, or record the new sign-off with this hash (RULEBOOK §14.7.7)'
+  );
 });
 
 test('the committed jyotishi review sheet matches the tables (npm run export:graha-review)', () => {
