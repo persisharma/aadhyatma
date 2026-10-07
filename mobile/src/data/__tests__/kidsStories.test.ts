@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath, URL } from 'node:url';
+import { createHash } from 'node:crypto';
 import { kidsStories, getKidsStory, storyDeities, storiesForDeity, plannedStories, storyPageIndex, storyText } from '../kidsStories';
 
 test('deity shelves contain only published stories, with future titles kept separate', () => {
@@ -9,9 +10,10 @@ test('deity shelves contain only published stories, with future titles kept sepa
   for (const story of kidsStories) {
     assert.ok(storyDeities.some(deity => deity.id === story.deityId), `${story.id}: unknown deity`);
   }
-  assert.deepEqual(storiesForDeity('krishna').map(story => story.id), ['krishna-janma']);
-  assert.deepEqual(storiesForDeity('ganesha'), []);
-  assert.deepEqual(storiesForDeity('hanuman'), []);
+  assert.deepEqual(storiesForDeity('krishna').map(story => story.id), ['krishna-janma', 'putana', 'kaliya-nag']);
+  assert.deepEqual(storiesForDeity('ganesha').map(story => story.id), ['ganesha-birth']);
+  assert.deepEqual(storiesForDeity('hanuman').map(story => story.id), ['hanuman-sun']);
+  assert.equal(plannedStories.some(story => story.id === 'kaliya-nag'), false);
   for (const planned of plannedStories) assert.equal(getKidsStory(planned.id), undefined);
 });
 
@@ -41,6 +43,51 @@ test('locale selection changes narration while keeping the shared illustration a
   assert.equal(storyPageIndex(story, 'unknown'), 0);
   assert.equal(getKidsStory('missing'), undefined);
   assert.equal(storyText({ en: 'English fallback' }, 'kn'), 'English fallback');
+});
+
+test('the four new stories carry complete sourced arcs, regional text and distinct matching artwork', () => {
+  const expected = { putana: 6, 'kaliya-nag': 7, 'ganesha-birth': 7, 'hanuman-sun': 6 };
+  const componentUrl = new URL('../../components/KidsStoryArt.tsx', import.meta.url);
+  const component = readFileSync(componentUrl, 'utf8');
+  const assets = new Map([...component.matchAll(/(\w+): require\('(.+?)'\)/g)].map(match => [match[1], match[2]]));
+  const hashes = new Set<string>();
+  for (const [id, pageCount] of Object.entries(expected)) {
+    const story = getKidsStory(id)!;
+    assert.ok(story, `Missing requested story: ${id}`);
+    assert.equal(story.pages.length, pageCount);
+    assert.ok(story.source?.baseText);
+    assert.equal(story.source.retrievedOn, '2026-10-07');
+    assert.ok(new Set(story.source.referenceUrls.map(url => new URL(url).hostname)).size >= 2,
+      `${id}: corroborate the narrative against two publication sources`);
+    assert.equal(new Set(story.pages.map(page => page.art)).size, pageCount);
+    assert.notEqual(story.coverArt, story.pages.at(-1)!.art, `${id}: cover must not substitute for closing scene`);
+    const prototype = readFileSync(new URL(`../../../../docs/kids-stories-${id}-prototype.html`, import.meta.url), 'utf8');
+    const prototypeStory = prototype.match(/const story = (\{.*?\});/);
+    const prototypeArtwork = prototype.match(/const artwork = (\{.*?\});/);
+    assert.ok(prototypeStory);
+    assert.ok(prototypeArtwork);
+    assert.deepEqual(JSON.parse(prototypeStory[1]), story, `${id}: browser story must match native`);
+    const browserAssets = JSON.parse(prototypeArtwork[1]) as Record<string, string>;
+    for (const page of story.pages) {
+      assert.match(page.source, /^(Bhagavata Purana|Shiva Purana|Valmiki Ramayana)/);
+      for (const field of [page.title, page.text]) {
+        assert.match(field.hi, /[\u0900-\u097F]/);
+        assert.match(field.gu, /[\u0A80-\u0AFF]/);
+        assert.match(field.kn, /[\u0C80-\u0CFF]/);
+        assert.doesNotMatch(field.en, /[\u0900-\u097F\u0A80-\u0AFF\u0C80-\u0CFF]/);
+      }
+      const asset = assets.get(page.art);
+      assert.ok(asset, `${id}/${page.id}: missing asset map`);
+      const native = readFileSync(new URL(asset, componentUrl));
+      assert.ok(browserAssets[page.art], `${id}/${page.id}: missing browser art map`);
+      const browser = readFileSync(new URL(`../../../../docs/${browserAssets[page.art]}`, import.meta.url));
+      assert.deepEqual(native, browser, `${id}/${page.id}: app/browser asset mismatch`);
+      const hash = createHash('sha256').update(native).digest('hex');
+      assert.equal(hashes.has(hash), false, `${id}/${page.id}: artwork reused from another scene`);
+      hashes.add(hash);
+    }
+  }
+  assert.equal(hashes.size, 26);
 });
 
 test('every page and cover resolves to a bundled final illustration', () => {

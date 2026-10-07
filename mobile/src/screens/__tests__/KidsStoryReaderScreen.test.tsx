@@ -1,5 +1,6 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
+import type { KidsStory } from '@/data/kidsStories';
 
 let mockLang = 'hi';
 const mockScroll = jest.fn();
@@ -35,6 +36,7 @@ jest.mock('@/utils/localize', () => ({ pick: (lang: string, values: Record<strin
 
 const Screen = require('../KidsStoryReaderScreen').default;
 const story = require('@/data/kidsStories/krishna-janma.json');
+const { kidsStories }: { kidsStories: readonly KidsStory[] } = require('@/data/kidsStories');
 function mount(pageId?: string, storyId = story.id) {
   const navigation = { goBack: jest.fn() };
   const props = { navigation, route: { params: { storyId, pageId } } };
@@ -43,6 +45,26 @@ function mount(pageId?: string, storyId = story.id) {
   return { tree, props, navigation, find: (testID: string) => tree.root.findByProps({ testID }) };
 }
 afterEach(() => { mockLang = 'hi'; mockScroll.mockClear(); });
+
+test.each(kidsStories.filter(item => item.id !== story.id))('$id uses the same reader from first scene to sourced ending in every language', (item: KidsStory) => {
+  const { tree, props, find } = mount(undefined, item.id);
+  expect(find('story-pager').props.data).toEqual(item.pages);
+  expect(find('story-progress').props.children).toEqual([1, ' / ', item.pages.length]);
+  expect(tree.root.findAllByType('KidsStoryArt' as any).map(node => node.props.art)).toEqual(item.pages.map(page => page.art));
+  act(() => find('story-pager').props.onMomentumScrollEnd({ nativeEvent: { contentOffset: { x: 390 * (item.pages.length - 1) } } }));
+  for (const language of ['hi', 'en', 'gu', 'kn'] as const) {
+    mockLang = language;
+    act(() => tree.update(<Screen {...props} />));
+    expect(find('story-progress').props.children[0]).toBe(item.pages.length);
+    const texts = tree.root.findAllByType('Text' as any).map(node => node.props.children);
+    expect(texts).toContain(item.pages[0].text[language]);
+    expect(texts).toContain(item.pages[item.pages.length - 1].text[language]);
+    expect(texts).toContain(item.takeaway[language]);
+    expect(texts).toContain(item.sourceNote[language]);
+  }
+  expect(find(`story-page-${item.pages[item.pages.length - 1].id}`).type).toBe('ScrollView');
+  act(() => tree.unmount());
+});
 
 test('first scene mounts with a horizontal pager, a counter and no page buttons', () => {
   const { tree, find } = mount();

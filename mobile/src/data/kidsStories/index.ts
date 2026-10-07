@@ -1,6 +1,10 @@
 import type { Lang } from '@/data/gita/language';
 import type { DeityIconKey } from '@/data/deities';
 import content from './krishna-janma.json';
+import putana from './putana.json';
+import kaliyaNag from './kaliya-nag.json';
+import ganeshaBirth from './ganesha-birth.json';
+import hanumanSun from './hanuman-sun.json';
 
 export type StoryText = Record<Lang, string>;
 export type StoryDeityId = 'krishna' | 'ganesha' | 'hanuman';
@@ -35,17 +39,25 @@ export type KidsStory = {
   title: StoryText;
   description: StoryText;
   sourceNote: StoryText;
+  /** Publication provenance for authored retellings; legacy records may omit it. */
+  source?: {
+    baseText: string;
+    retrievedOn: string;
+    referenceUrls: string[];
+    notes: string;
+  };
   takeaway: StoryText;
   pages: StoryPage[];
 };
 
-export const kidsStories: readonly KidsStory[] = [content as KidsStory];
+export const kidsStories: readonly KidsStory[] = [
+  content as KidsStory, putana as KidsStory, kaliyaNag as KidsStory,
+  ganeshaBirth as KidsStory, hanumanSun as KidsStory,
+];
 export const getKidsStory = (id: string) => kidsStories.find(story => story.id === id);
 export const storiesForDeity = (deityId: StoryDeityId) => kidsStories.filter(story => story.deityId === deityId);
 /** Catalog teasers only; these have no reader route until sourced story text and art ship. */
-export const plannedStories: readonly { id: string; deityId: StoryDeityId; title: StoryText }[] = [
-  { id: 'kaliya-nag', deityId: 'krishna', title: { hi: 'कालिया नाग', en: 'Kaliya Nag', gu: 'કાલિય નાગ', kn: 'ಕಾಳಿಯ ನಾಗ' } },
-];
+export const plannedStories: readonly { id: string; deityId: StoryDeityId; title: StoryText }[] = [];
 /** Missing translations fall back to authored English, never re-scripted Hindi. */
 export const storyText = (text: Partial<StoryText>, lang: Lang): string => text[lang]?.trim() || text.en || text.hi || '';
 export function storyPageIndex(story: KidsStory, pageId?: string): number {

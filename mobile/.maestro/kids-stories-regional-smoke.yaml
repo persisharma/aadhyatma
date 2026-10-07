@@ -1,0 +1,514 @@
+# All added scenes in Gujarati/Kannada at Large reading size.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- tapOn: { id: "tab-more" }
+- scrollUntilVisible:
+    element: { text: "Reading size,.*" }
+    centerElement: true
+- tapOn: "Reading size,.*"
+- tapOn: "Large"
+- tapOn: "हो गया|Done"
+- scrollUntilVisible:
+    element: { text: "Language,.*" }
+    centerElement: true
+- tapOn: "Language,.*"
+- tapOn: "Gujarati"
+- tapOn: { id: "tab-home" }
+- scrollUntilVisible:
+    element: { id: "home-kids-stories-card" }
+    centerElement: true
+- tapOn: { id: "home-kids-stories-card" }
+- tapOn: { id: "kids-story-deity-krishna" }
+- scrollUntilVisible:
+    element: { id: "kids-story-putana" }
+    centerElement: true
+- tapOn: { id: "kids-story-putana" }
+- assertVisible: { id: "lang-toggle-gu" }
+- assertVisible: "1 / 6"
+- assertVisible: { id: "story-page-kansas-plan" }
+- assertVisible: "કંસે પૂતના નામની રાક્ષસીને શિશુઓને નુકસાન પહોંચાડવા મોકલી. નગરો અને ગામોમાં ફરતાં તે ગોકુળ પહોંચી, જ્યાં નાનકડા કૃષ્ણ રહેતા હતા."
+- takeScreenshot: kids-putana-gu-large-01
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 6"
+- assertVisible: { id: "story-page-beautiful-disguise" }
+- assertVisible: "પૂતનાએ સુંદર સ્ત્રીનું રૂપ લીધું અને નંદના ઘરમાં પ્રવેશ કર્યો. તેનો વ્યવહાર પ્રેમાળ લાગતો હતો. યશોદા અને રોહિણી તેના મનનો ખરાબ ઇરાદો ઓળખી શક્યાં નહીં."
+- takeScreenshot: kids-putana-gu-large-02
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 6"
+- assertVisible: { id: "story-page-krishnas-power" }
+- assertVisible: "પૂતનાએ કૃષ્ણને ખોળામાં લીધા અને સ્તન પર ઝેર લગાવીને દૂધ પિવડાવવા લાગી. કૃષ્ણ તેનો ઇરાદો જાણતા હતા. ઝેર તેમને હાનિ કરી શક્યું નહીં; તેમણે પૂતનાની પ્રાણશક્તિ ખેંચી લીધી."
+- takeScreenshot: kids-putana-gu-large-03
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 6"
+- assertVisible: { id: "story-page-danger-ends" }
+- assertVisible: "પૂતનાનો છુપો વેશ દૂર થયો. વિશાળ રાક્ષસીના રૂપમાં તે ધરતી પર પડી અને તેના પ્રાણ ગયા. કૃષ્ણ સુરક્ષિત હતા. ગોપીઓ દોડી આવી અને તેમને ઊંચકી લીધા."
+- takeScreenshot: kids-putana-gu-large-04
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 6"
+- assertVisible: { id: "story-page-mothers-care" }
+- assertVisible: "યશોદા, રોહિણી અને ગોપીઓએ પ્રભુનાં નામ લઈને કૃષ્ણની રક્ષા માટે પ્રાર્થના કરી. યશોદાએ તેમને દૂધ પિવડાવ્યું અને આરામથી સુવડાવ્યા. ઘરમાં ફરી શાંતિ છવાઈ."
+- takeScreenshot: kids-putana-gu-large-05
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 6"
+- assertVisible: { id: "story-page-mercy-and-home" }
+- takeScreenshot: kids-putana-gu-large-06
+- scrollUntilVisible:
+    element: { text: "શ્રીમદ્ ભાગવત 10.6નું બાળકો માટે સરળ રૂપાંતર. ભયાનક વિગતો ટૂંકાવી છે; શીખ સંપાદકીય છે." }
+    direction: DOWN
+    centerElement: true
+- takeScreenshot: kids-putana-gu-source
+- tapOn: "Back"
+- tapOn: "Back"
+- tapOn: { id: "kids-story-deity-krishna" }
+- scrollUntilVisible:
+    element: { id: "kids-story-kaliya-nag" }
+    centerElement: true
+- tapOn: { id: "kids-story-kaliya-nag" }
+- assertVisible: { id: "lang-toggle-gu" }
+- assertVisible: "1 / 7"
+- assertVisible: { id: "story-page-poisoned-yamuna" }
+- assertVisible: "યમુનાના એક ઊંડા જળાશયમાં કાલિય નાગ રહેતો હતો. તેના ઝેરથી પાણી અને કાંઠાના જીવોને હાનિ થતી હતી. કૃષ્ણે નદીને ફરી નિર્મળ કરવાનો નિશ્ચય કર્યો."
+- takeScreenshot: kids-kaliya-nag-gu-large-01
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 7"
+- assertVisible: { id: "story-page-kadamba-leap" }
+- assertVisible: "કૃષ્ણ કાંઠાના ઊંચા કદંબ પર ચઢ્યા અને પાણીમાં કૂદી પડ્યા. ચારે તરફ મોજાં ઊઠ્યાં. અવાજ સાંભળીને કાલિય ગુસ્સે થયો અને કૃષ્ણ તરફ વધ્યો."
+- takeScreenshot: kids-kaliya-nag-gu-large-02
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 7"
+- assertVisible: { id: "story-page-friends-worry" }
+- assertVisible: "કાલિયે કૃષ્ણને પોતાની કુંડળીમાં જકડી લીધા. પરિવાર અને મિત્રો ગભરાયા. બલરામે લોકોને પાણીમાં જતા અટકાવ્યા. પછી કૃષ્ણે પોતાનું શરીર મોટું કર્યું અને બંધનમાંથી નીકળી આવ્યા."
+- takeScreenshot: kids-kaliya-nag-gu-large-03
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 7"
+- assertVisible: { id: "story-page-dance-on-hoods" }
+- assertVisible: "કૃષ્ણ કાલિયના ફણ પર ચઢીને નૃત્ય કરવા લાગ્યા. આકાશમાંથી ફૂલો વરસવા લાગ્યાં. કાલિયની શક્તિ અને ઘમંડ તૂટી ગયાં. તેને સમજાયું કે કૃષ્ણ સામાન્ય બાળક નહોતા."
+- takeScreenshot: kids-kaliya-nag-gu-large-04
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 7"
+- assertVisible: { id: "story-page-family-prays" }
+- assertVisible: "કાલિયની પત્નીઓ બાળકો સાથે કૃષ્ણ પાસે આવી. હાથ જોડીને તેમણે કાલિયના જીવન માટે પ્રાર્થના કરી. કૃષ્ણે તેમની વિનંતી સાંભળી અને તેને છોડી દીધો."
+- takeScreenshot: kids-kaliya-nag-gu-large-05
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 7"
+- assertVisible: { id: "story-page-leave-in-peace" }
+- assertVisible: "કાલિયે પોતાની ભૂલ સ્વીકારી. કૃષ્ણે તેને પરિવાર સાથે સમુદ્રના રમણક ટાપુ પર પાછા જવા કહ્યું, જેથી ગાયો અને લોકો યમુનાનું પાણી પી શકે. કાલિયે આજ્ઞા માની અને વિદાય લીધી."
+- takeScreenshot: kids-kaliya-nag-gu-large-06
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 7"
+- assertVisible: { id: "story-page-river-restored" }
+- takeScreenshot: kids-kaliya-nag-gu-large-07
+- scrollUntilVisible:
+    element: { text: "શ્રીમદ્ ભાગવત 10.16નું સરળ રૂપાંતર. અનેક ફણને ચિત્રોમાં નાના સમૂહથી દર્શાવ્યા છે. શીખ સંપાદકીય છે." }
+    direction: DOWN
+    centerElement: true
+- takeScreenshot: kids-kaliya-nag-gu-source
+- tapOn: "Back"
+- tapOn: "Back"
+- tapOn: { id: "kids-story-deity-ganesha" }
+- scrollUntilVisible:
+    element: { id: "kids-story-ganesha-birth" }
+    centerElement: true
+- tapOn: { id: "kids-story-ganesha-birth" }
+- assertVisible: { id: "lang-toggle-gu" }
+- assertVisible: "1 / 7"
+- assertVisible: { id: "story-page-parvatis-son" }
+- assertVisible: "કૈલાસ પર પાર્વતીએ પોતાના શરીરના લેપથી એક બાળક બનાવ્યું અને તેને જીવન આપ્યું. તેમણે તેને વસ્ત્રો અને આભૂષણો પહેરાવ્યાં. તે તેમનો પોતાનો વહાલો પુત્ર હતો."
+- takeScreenshot: kids-ganesha-birth-gu-large-01
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 7"
+- assertVisible: { id: "story-page-guard-the-door" }
+- assertVisible: "સ્નાન પહેલાં પાર્વતીએ પુત્રને દ્વારની રખેવાળી કરવા કહ્યું. તેમની પરવાનગી વિના કોઈને અંદર આવવા દેવાનું નહોતું. બાળક પોતાનો દંડ લઈને દ્વાર પર ઊભો રહ્યો."
+- takeScreenshot: kids-ganesha-birth-gu-large-02
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 7"
+- assertVisible: { id: "story-page-shiva-returns" }
+- assertVisible: "શિવ ઘરે પાછા આવ્યા, પરંતુ બાળક તેમને ઓળખતો નહોતો. માની આજ્ઞા પાળતાં તેણે રસ્તો રોક્યો. શિવના ગણો પણ તેને હટાવી શક્યા નહીં. વાત વધીને સંઘર્ષ બની."
+- takeScreenshot: kids-ganesha-birth-gu-large-03
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 7"
+- assertVisible: { id: "story-page-parvatis-sorrow" }
+- assertVisible: "સંઘર્ષમાં શિવે બાળકનું માથું અલગ કર્યું અને તેના પ્રાણ ગયા. પાર્વતી દુઃખ અને ક્રોધથી ભરાઈ ગયાં. દેવતાઓએ ક્ષમા માગી. પાર્વતીએ પોતાના પુત્રને ફરી જીવન આપવા કહ્યું."
+- takeScreenshot: kids-ganesha-birth-gu-large-04
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 7"
+- assertVisible: { id: "story-page-new-life" }
+- assertVisible: "શિવની આજ્ઞાથી ગણો ઉત્તર દિશામાં ગયા. ત્યાં મળેલા હાથીનું માથું લાવી બાળકના શરીર સાથે જોડ્યું. મંત્રો અને પવિત્ર જળથી બાળક ફરી જીવંત થયો, હવે હાથીના મુખ સાથે."
+- takeScreenshot: kids-ganesha-birth-gu-large-05
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 7"
+- assertVisible: { id: "story-page-mothers-embrace" }
+- assertVisible: "પોતાના પુત્રને જીવંત જોઈ પાર્વતીએ આનંદથી ગળે લગાવ્યો. શિવે તેના માથા પર હાથ મૂકીને તેને પોતાનો પુત્ર કહ્યો. કૈલાસમાં ફરી શાંતિ અને ખુશી છવાઈ."
+- takeScreenshot: kids-ganesha-birth-gu-large-06
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 7"
+- assertVisible: { id: "story-page-ganapati-blessing" }
+- takeScreenshot: kids-ganesha-birth-gu-large-07
+- scrollUntilVisible:
+    element: { text: "શિવપુરાણ, રુદ્રસંહિતા, કુમારખંડ 13–18ની શ્વેતકલ્પ કથાનું સરળ રૂપાંતર. અન્ય જન્મકથાઓ પણ પ્રચલિત છે. હિંસાની વિગતો ટૂંકાવી છે; શીખ સંપાદકીય છે." }
+    direction: DOWN
+    centerElement: true
+- takeScreenshot: kids-ganesha-birth-gu-source
+- tapOn: "Back"
+- tapOn: "Back"
+- tapOn: { id: "kids-story-deity-hanuman" }
+- scrollUntilVisible:
+    element: { id: "kids-story-hanuman-sun" }
+    centerElement: true
+- tapOn: { id: "kids-story-hanuman-sun" }
+- assertVisible: { id: "lang-toggle-gu" }
+- assertVisible: "1 / 6"
+- assertVisible: { id: "story-page-hungry-at-dawn" }
+- assertVisible: "અંજના ફળ લેવા વનમાં ગયાં હતાં. નાનકડા હનુમાનને ભૂખ લાગી. તેમણે ઊગતો લાલ સૂર્ય જોયો અને વિચાર્યું કે તે મોટું, સ્વાદિષ્ટ ફળ છે."
+- takeScreenshot: kids-hanuman-sun-gu-large-01
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 6"
+- assertVisible: { id: "story-page-towards-the-sun" }
+- assertVisible: "હનુમાન આકાશમાં કૂદ્યા. તેમની ઝડપ જોઈને દેવતાઓ આશ્ચર્ય પામ્યા. વાયુદેવ ઠંડી હવાથી તેમની રક્ષા કરતાં સાથે ગયા. સૂર્યે પણ નાનકડા બાળકને બળવા દીધો નહીં."
+- takeScreenshot: kids-hanuman-sun-gu-large-02
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 6"
+- assertVisible: { id: "story-page-indra-arrives" }
+- assertVisible: "રાહુ સૂર્ય પાસે આવ્યો, પણ હનુમાનને જોઈ ડરી ગયો અને ઇન્દ્રની મદદ માગી. ઇન્દ્ર ઐરાવત હાથી પર આવ્યા. હનુમાન ઉત્સાહમાં તેની તરફ પણ વધ્યા. ઇન્દ્રના વજ્રથી ઘાયલ થઈને તેઓ પડી ગયા."
+- takeScreenshot: kids-hanuman-sun-gu-large-03
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 6"
+- assertVisible: { id: "story-page-vayus-sorrow" }
+- assertVisible: "વાયુદેવ પોતાના ઘાયલ પુત્રને ગુફામાં લઈ ગયા. દુઃખ અને ક્રોધમાં તેમણે હવાનો પ્રવાહ રોકી દીધો. જીવોને શ્વાસ લેવામાં મુશ્કેલી થવા લાગી. સૌએ બ્રહ્માની મદદ માગી."
+- takeScreenshot: kids-hanuman-sun-gu-large-04
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 6"
+- assertVisible: { id: "story-page-brahma-restores" }
+- assertVisible: "બ્રહ્મા દેવતાઓ સાથે ગુફામાં આવ્યા અને બાળકને પ્રેમથી સ્પર્શ કર્યો. હનુમાન ફરી બેઠા થયા. વાયુદેવ ખુશ થયા અને હવા ફરી વહેવા લાગી. જીવોને રાહત મળી."
+- takeScreenshot: kids-hanuman-sun-gu-large-05
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 6"
+- assertVisible: { id: "story-page-gods-blessings" }
+- takeScreenshot: kids-hanuman-sun-gu-large-06
+- scrollUntilVisible:
+    element: { text: "વાલ્મીકિ રામાયણ, ઉત્તરકાંડ 35–36નું સરળ રૂપાંતર. અહીં સૂર્ય તરફ ઉડવાની કથા છે; સૂર્ય ગળી જવાની લોકકથા અલગ છે. શીખ સંપાદકીય છે." }
+    direction: DOWN
+    centerElement: true
+- takeScreenshot: kids-hanuman-sun-gu-source
+- tapOn: "Back"
+- tapOn: "Back"
+- tapOn: "Back"
+- tapOn: { id: "tab-more" }
+- scrollUntilVisible:
+    element: { text: "Language,.*" }
+    centerElement: true
+- tapOn: "Language,.*"
+- tapOn: "Kannada"
+- tapOn: { id: "tab-home" }
+- scrollUntilVisible:
+    element: { id: "home-kids-stories-card" }
+    centerElement: true
+- tapOn: { id: "home-kids-stories-card" }
+- tapOn: { id: "kids-story-deity-krishna" }
+- scrollUntilVisible:
+    element: { id: "kids-story-putana" }
+    centerElement: true
+- tapOn: { id: "kids-story-putana" }
+- assertVisible: { id: "lang-toggle-kn" }
+- assertVisible: "1 / 6"
+- assertVisible: { id: "story-page-kansas-plan" }
+- assertVisible: "ಕಂಸನು ಪೂತನೆ ಎಂಬ ರಾಕ್ಷಸಿಯನ್ನು ಶಿಶುಗಳಿಗೆ ಹಾನಿಮಾಡಲು ಕಳುಹಿಸಿದ. ಊರುಗಳಲ್ಲಿ ಹುಡುಕುತ್ತಾ ಅವಳು ಪುಟ್ಟ ಕೃಷ್ಣನಿದ್ದ ಗೋಕುಲಕ್ಕೆ ಬಂದಳು."
+- takeScreenshot: kids-putana-kn-large-01
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 6"
+- assertVisible: { id: "story-page-beautiful-disguise" }
+- assertVisible: "ಪೂತನೆ ಸುಂದರ ಮಹಿಳೆಯ ರೂಪದಲ್ಲಿ ನಂದನ ಮನೆಗೆ ಬಂದಳು. ಅವಳು ಪ್ರೀತಿಯಿಂದ ವರ್ತಿಸುವಂತೆ ಕಂಡಳು. ಯಶೋದೆ ಮತ್ತು ರೋಹಿಣಿಗೆ ಅವಳ ಕೆಟ್ಟ ಉದ್ದೇಶ ತಿಳಿಯಲಿಲ್ಲ."
+- takeScreenshot: kids-putana-kn-large-02
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 6"
+- assertVisible: { id: "story-page-krishnas-power" }
+- assertVisible: "ಪೂತನೆ ಕೃಷ್ಣನನ್ನು ಮಡಿಲಲ್ಲಿ ಹಿಡಿದು ಸ್ತನಕ್ಕೆ ವಿಷ ಹಚ್ಚಿ ಹಾಲುಣಿಸಿದಳು. ಕೃಷ್ಣನಿಗೆ ಅವಳ ಉದ್ದೇಶ ತಿಳಿದಿತ್ತು. ವಿಷ ಅವನಿಗೆ ಹಾನಿಮಾಡಲಿಲ್ಲ; ಅವನು ಪೂತನೆಯ ಪ್ರಾಣಶಕ್ತಿಯನ್ನು ಸೆಳೆದನು."
+- takeScreenshot: kids-putana-kn-large-03
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 6"
+- assertVisible: { id: "story-page-danger-ends" }
+- assertVisible: "ಪೂತನೆಯ ವೇಷ ಮಾಯವಾಯಿತು. ದೊಡ್ಡ ರಾಕ್ಷಸಿಯ ರೂಪದಲ್ಲಿ ಅವಳು ನೆಲಕ್ಕೆ ಬಿದ್ದು ಪ್ರಾಣಬಿಟ್ಟಳು. ಕೃಷ್ಣ ಸುರಕ್ಷಿತವಾಗಿದ್ದ. ಗೋಪಿಯರು ಓಡಿಬಂದು ಅವನನ್ನು ಎತ್ತಿಕೊಂಡರು."
+- takeScreenshot: kids-putana-kn-large-04
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 6"
+- assertVisible: { id: "story-page-mothers-care" }
+- assertVisible: "ಯಶೋದೆ, ರೋಹಿಣಿ ಮತ್ತು ಗೋಪಿಯರು ಭಗವಂತನ ಹೆಸರುಗಳನ್ನು ಹೇಳಿ ಕೃಷ್ಣನ ರಕ್ಷಣೆಗಾಗಿ ಪ್ರಾರ್ಥಿಸಿದರು. ಯಶೋದೆ ಅವನಿಗೆ ಹಾಲುಣಿಸಿ ಹಾಸಿಗೆಯಲ್ಲಿ ಮಲಗಿಸಿದಳು. ಮನೆಯಲ್ಲಿ ಮತ್ತೆ ನೆಮ್ಮದಿ ನೆಲೆಸಿತು."
+- takeScreenshot: kids-putana-kn-large-05
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 6"
+- assertVisible: { id: "story-page-mercy-and-home" }
+- takeScreenshot: kids-putana-kn-large-06
+- scrollUntilVisible:
+    element: { text: "ಶ್ರೀಮದ್ಭಾಗವತ 10.6ರ ಮಕ್ಕಳಿಗಾಗಿ ಸರಳ ರೂಪಾಂತರ. ಭಯಾನಕ ವಿವರಗಳನ್ನು ಸಂಕ್ಷಿಪ್ತಗೊಳಿಸಲಾಗಿದೆ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ." }
+    direction: DOWN
+    centerElement: true
+- takeScreenshot: kids-putana-kn-source
+- tapOn: "Back"
+- tapOn: "Back"
+- tapOn: { id: "kids-story-deity-krishna" }
+- scrollUntilVisible:
+    element: { id: "kids-story-kaliya-nag" }
+    centerElement: true
+- tapOn: { id: "kids-story-kaliya-nag" }
+- assertVisible: { id: "lang-toggle-kn" }
+- assertVisible: "1 / 7"
+- assertVisible: { id: "story-page-poisoned-yamuna" }
+- assertVisible: "ಯಮುನೆಯ ಆಳವಾದ ಕೊಳದಲ್ಲಿ ಕಾಳಿಯ ನಾಗ ವಾಸಿಸುತ್ತಿದ್ದ. ಅವನ ವಿಷ ನೀರನ್ನೂ ದಡದ ಜೀವಿಗಳನ್ನೂ ಹಾನಿಗೊಳಿಸುತ್ತಿತ್ತು. ನದಿಯನ್ನು ಮತ್ತೆ ನಿರ್ಮಲಗೊಳಿಸಲು ಕೃಷ್ಣ ನಿರ್ಧರಿಸಿದ."
+- takeScreenshot: kids-kaliya-nag-kn-large-01
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 7"
+- assertVisible: { id: "story-page-kadamba-leap" }
+- assertVisible: "ಕೃಷ್ಣ ದಡದ ಎತ್ತರದ ಕದಂಬ ಮರವನ್ನು ಹತ್ತಿ ನೀರಿಗೆ ಜಿಗಿದ. ಸುತ್ತಲೂ ಅಲೆಗಳು ಎದ್ದವು. ಸದ್ದು ಕೇಳಿ ಕೋಪಗೊಂಡ ಕಾಳಿಯ ಅವನತ್ತ ಬಂದನು."
+- takeScreenshot: kids-kaliya-nag-kn-large-02
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 7"
+- assertVisible: { id: "story-page-friends-worry" }
+- assertVisible: "ಕಾಳಿಯ ಕೃಷ್ಣನನ್ನು ಸುತ್ತಿಕೊಂಡ. ಎಲ್ಲರೂ ಹೆದರಿದರು; ಬಲರಾಮ ಅವರನ್ನು ನೀರಿಗೆ ಇಳಿಯದಂತೆ ತಡೆದ. ಕೃಷ್ಣ ತನ್ನ ದೇಹವನ್ನು ಹಿಗ್ಗಿಸಿ ಹೊರಬಂದ."
+- takeScreenshot: kids-kaliya-nag-kn-large-03
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 7"
+- assertVisible: { id: "story-page-dance-on-hoods" }
+- assertVisible: "ಕೃಷ್ಣ ಕಾಳಿಯನ ಹೆಡೆಗಳ ಮೇಲೆ ಹತ್ತಿ ನೃತ್ಯಮಾಡಿದ. ಮೇಲಿನಿಂದ ಹೂಗಳು ಸುರಿದವು. ಕಾಳಿಯನ ಶಕ್ತಿಯೂ ಅಹಂಕಾರವೂ ಕರಗಿದವು. ಕೃಷ್ಣ ಸಾಮಾನ್ಯ ಬಾಲಕನಲ್ಲ ಎಂದು ಅವನಿಗೆ ತಿಳಿಯಿತು."
+- takeScreenshot: kids-kaliya-nag-kn-large-04
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 7"
+- assertVisible: { id: "story-page-family-prays" }
+- assertVisible: "ಕಾಳಿಯನ ಪತ್ನಿಯರು ಮಕ್ಕಳೊಂದಿಗೆ ಕೃಷ್ಣನ ಬಳಿಗೆ ಬಂದರು. ಕೈಜೋಡಿಸಿ ಕಾಳಿಯನ ಪ್ರಾಣ ಉಳಿಸಲು ಬೇಡಿದರು. ಕೃಷ್ಣ ಅವರ ಪ್ರಾರ್ಥನೆ ಕೇಳಿ ನಾಗನನ್ನು ಬಿಡುಗಡೆಮಾಡಿದ."
+- takeScreenshot: kids-kaliya-nag-kn-large-05
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 7"
+- assertVisible: { id: "story-page-leave-in-peace" }
+- assertVisible: "ಕಾಳಿಯ ತನ್ನ ತಪ್ಪನ್ನು ಒಪ್ಪಿಕೊಂಡನು. ಹಸುಗಳೂ ಜನರೂ ಯಮುನೆಯ ನೀರು ಕುಡಿಯುವಂತೆ, ಕುಟುಂಬದೊಂದಿಗೆ ಸಮುದ್ರದ ರಮಣಕ ದ್ವೀಪಕ್ಕೆ ಮರಳಲು ಕೃಷ್ಣ ಹೇಳಿದ. ಕಾಳಿಯ ಆಜ್ಞೆ ಪಾಲಿಸಿ ಹೊರಟನು."
+- takeScreenshot: kids-kaliya-nag-kn-large-06
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 7"
+- assertVisible: { id: "story-page-river-restored" }
+- takeScreenshot: kids-kaliya-nag-kn-large-07
+- scrollUntilVisible:
+    element: { text: "ಶ್ರೀಮದ್ಭಾಗವತ 10.16ರ ಸರಳ ರೂಪಾಂತರ. ಚಿತ್ರಗಳಲ್ಲಿ ಅನೇಕ ಹೆಡೆಗಳನ್ನು ಚಿಕ್ಕ ಗುಂಪಿನಿಂದ ಸೂಚಿಸಲಾಗಿದೆ. ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ." }
+    direction: DOWN
+    centerElement: true
+- takeScreenshot: kids-kaliya-nag-kn-source
+- tapOn: "Back"
+- tapOn: "Back"
+- tapOn: { id: "kids-story-deity-ganesha" }
+- scrollUntilVisible:
+    element: { id: "kids-story-ganesha-birth" }
+    centerElement: true
+- tapOn: { id: "kids-story-ganesha-birth" }
+- assertVisible: { id: "lang-toggle-kn" }
+- assertVisible: "1 / 7"
+- assertVisible: { id: "story-page-parvatis-son" }
+- assertVisible: "ಕೈಲಾಸದಲ್ಲಿ ಪಾರ್ವತಿ ತನ್ನ ಮೈಯ ಮೇಲಿನ ಲೇಪದಿಂದ ಬಾಲಕನನ್ನು ರೂಪಿಸಿ ಜೀವಕೊಟ್ಟಳು. ಅವನಿಗೆ ಬಟ್ಟೆ ಮತ್ತು ಆಭರಣಗಳನ್ನು ತೊಡಿಸಿದಳು. ಅವನು ಅವಳ ಪ್ರೀತಿಯ ಮಗನಾದನು."
+- takeScreenshot: kids-ganesha-birth-kn-large-01
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 7"
+- assertVisible: { id: "story-page-guard-the-door" }
+- assertVisible: "ಸ್ನಾನಕ್ಕೆ ಹೋಗುವ ಮೊದಲು ಪಾರ್ವತಿ ಮಗನಿಗೆ ಬಾಗಿಲು ಕಾಯಲು ಹೇಳಿದಳು. ಅವಳ ಅನುಮತಿಯಿಲ್ಲದೆ ಯಾರೂ ಒಳಬರಬಾರದು. ಬಾಲಕ ದಂಡ ಹಿಡಿದು ಬಾಗಿಲಲ್ಲಿ ನಿಂತನು."
+- takeScreenshot: kids-ganesha-birth-kn-large-02
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 7"
+- assertVisible: { id: "story-page-shiva-returns" }
+- assertVisible: "ಶಿವ ಮನೆಗೆ ಮರಳಿದ, ಆದರೆ ಬಾಲಕನಿಗೆ ಅವನ ಪರಿಚಯ ಇರಲಿಲ್ಲ. ತಾಯಿಯ ಮಾತಿನಂತೆ ಅವನು ದಾರಿ ತಡೆದ. ಶಿವನ ಗಣಗಳೂ ಅವನನ್ನು ಸರಿಸಲಾರದೆ ಹೋದರು. ಭಿನ್ನಾಭಿಪ್ರಾಯ ಯುದ್ಧವಾಗಿ ಬೆಳೆಯಿತು."
+- takeScreenshot: kids-ganesha-birth-kn-large-03
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 7"
+- assertVisible: { id: "story-page-parvatis-sorrow" }
+- assertVisible: "ಯುದ್ಧದಲ್ಲಿ ಶಿವ ಬಾಲಕನ ತಲೆಯನ್ನು ಬೇರ್ಪಡಿಸಿದ; ಬಾಲಕ ಪ್ರಾಣಬಿಟ್ಟ. ಪಾರ್ವತಿ ದುಃಖ ಮತ್ತು ಕೋಪದಿಂದ ತುಂಬಿದಳು. ದೇವತೆಗಳು ಕ್ಷಮೆ ಕೇಳಿದರು. ತನ್ನ ಮಗನಿಗೆ ಮತ್ತೆ ಜೀವಕೊಡಬೇಕೆಂದು ಅವಳು ಕೇಳಿದಳು."
+- takeScreenshot: kids-ganesha-birth-kn-large-04
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 7"
+- assertVisible: { id: "story-page-new-life" }
+- assertVisible: "ಶಿವನ ಆಜ್ಞೆಯಂತೆ ಗಣಗಳು ಉತ್ತರಕ್ಕೆ ಹೋಗಿ ಆನೆಯ ತಲೆಯನ್ನು ತಂದು ಬಾಲಕನ ದೇಹಕ್ಕೆ ಜೋಡಿಸಿದರು. ಮಂತ್ರಗಳೂ ಪವಿತ್ರ ನೀರೂ ಅವನಿಗೆ ಮತ್ತೆ ಜೀವಕೊಟ್ಟವು. ಈಗ ಅವನಿಗೆ ಆನೆಯ ಮುಖವಿತ್ತು."
+- takeScreenshot: kids-ganesha-birth-kn-large-05
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 7"
+- assertVisible: { id: "story-page-mothers-embrace" }
+- assertVisible: "ಮಗ ಜೀವಂತವಾಗಿರುವುದನ್ನು ಕಂಡ ಪಾರ್ವತಿ ಸಂತೋಷದಿಂದ ಅವನನ್ನು ಅಪ್ಪಿಕೊಂಡಳು. ಶಿವ ಅವನ ತಲೆಯ ಮೇಲೆ ಕೈಯಿಟ್ಟು ತನ್ನ ಮಗನೆಂದು ಒಪ್ಪಿಕೊಂಡ. ಕೈಲಾಸದಲ್ಲಿ ಮತ್ತೆ ಶಾಂತಿ ಮತ್ತು ಸಂತೋಷ ನೆಲೆಸಿತು."
+- takeScreenshot: kids-ganesha-birth-kn-large-06
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 7"
+- assertVisible: { id: "story-page-ganapati-blessing" }
+- takeScreenshot: kids-ganesha-birth-kn-large-07
+- scrollUntilVisible:
+    element: { text: "ಶಿವಪುರಾಣದ ರುದ್ರಸಂಹಿತೆ, ಕುಮಾರಖಂಡ 13–18ರ ಶ್ವೇತಕಲ್ಪ ಕಥೆಯ ಸರಳ ರೂಪಾಂತರ. ಬೇರೆ ಜನ್ಮಕಥೆಗಳೂ ಇವೆ. ಹಿಂಸೆಯ ವಿವರಗಳನ್ನು ಸಂಕ್ಷಿಪ್ತಗೊಳಿಸಲಾಗಿದೆ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ." }
+    direction: DOWN
+    centerElement: true
+- takeScreenshot: kids-ganesha-birth-kn-source
+- tapOn: "Back"
+- tapOn: "Back"
+- tapOn: { id: "kids-story-deity-hanuman" }
+- scrollUntilVisible:
+    element: { id: "kids-story-hanuman-sun" }
+    centerElement: true
+- tapOn: { id: "kids-story-hanuman-sun" }
+- assertVisible: { id: "lang-toggle-kn" }
+- assertVisible: "1 / 6"
+- assertVisible: { id: "story-page-hungry-at-dawn" }
+- assertVisible: "ಅಂಜನೆ ಹಣ್ಣು ತರಲು ಕಾಡಿಗೆ ಹೋಗಿದ್ದಳು. ಪುಟ್ಟ ಹನುಮಂತನಿಗೆ ಹಸಿವಾಯಿತು. ಕೆಂಪಾಗಿ ಉದಯಿಸುತ್ತಿದ್ದ ಸೂರ್ಯನನ್ನು ಕಂಡು ಅದು ದೊಡ್ಡ ರುಚಿಯಾದ ಹಣ್ಣೆಂದು ಭಾವಿಸಿದ."
+- takeScreenshot: kids-hanuman-sun-kn-large-01
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 6"
+- assertVisible: { id: "story-page-towards-the-sun" }
+- assertVisible: "ಹನುಮಂತ ಆಕಾಶಕ್ಕೆ ಜಿಗಿದ. ಅವನ ವೇಗ ದೇವತೆಗಳಿಗೆ ಅಚ್ಚರಿ ತಂದಿತು. ವಾಯುದೇವ ತಂಪಾದ ಗಾಳಿಯಿಂದ ರಕ್ಷಿಸುತ್ತಾ ಹಿಂಬಾಲಿಸಿದ. ಸೂರ್ಯನೂ ಮುಗ್ಧ ಬಾಲಕನನ್ನು ಸುಡದಂತೆ ತನ್ನ ಶಾಖವನ್ನು ತಡೆದ."
+- takeScreenshot: kids-hanuman-sun-kn-large-02
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 6"
+- assertVisible: { id: "story-page-indra-arrives" }
+- assertVisible: "ರಾಹು ಸೂರ್ಯನ ಬಳಿಗೆ ಬಂದು ಹನುಮಂತನನ್ನು ಕಂಡು ಹೆದರಿ ಇಂದ್ರನ ಸಹಾಯ ಕೇಳಿದ. ಇಂದ್ರ ಐರಾವತ ಆನೆಯ ಮೇಲೆ ಬಂದ. ಹನುಮಂತ ಆನೆಯತ್ತಲೂ ಧಾವಿಸಿದ. ಇಂದ್ರನ ವಜ್ರ ತಾಗಿ ಅವನು ಗಾಯಗೊಂಡು ಬಿದ್ದ."
+- takeScreenshot: kids-hanuman-sun-kn-large-03
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 6"
+- assertVisible: { id: "story-page-vayus-sorrow" }
+- assertVisible: "ವಾಯುದೇವ ಗಾಯಗೊಂಡ ಮಗನನ್ನು ಗುಹೆಗೆ ಕರೆದೊಯ್ದ. ದುಃಖ ಮತ್ತು ಕೋಪದಲ್ಲಿ ಗಾಳಿಯ ಹರಿವನ್ನು ನಿಲ್ಲಿಸಿದ. ಜೀವಿಗಳಿಗೆ ಉಸಿರಾಡಲು ಕಷ್ಟವಾಯಿತು. ಎಲ್ಲರೂ ಬ್ರಹ್ಮನ ಸಹಾಯ ಕೇಳಿದರು."
+- takeScreenshot: kids-hanuman-sun-kn-large-04
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 6"
+- assertVisible: { id: "story-page-brahma-restores" }
+- assertVisible: "ಬ್ರಹ್ಮ ದೇವತೆಗಳೊಂದಿಗೆ ಗುಹೆಗೆ ಬಂದು ಬಾಲಕನನ್ನು ಪ್ರೀತಿಯಿಂದ ಮುಟ್ಟಿದ. ಹನುಮಂತ ಮತ್ತೆ ಚೇತರಿಸಿಕೊಂಡ. ವಾಯುದೇವ ಸಂತೋಷಗೊಂಡು ಗಾಳಿ ಮತ್ತೆ ಹರಿಯಿತು. ಜೀವಿಗಳು ನೆಮ್ಮದಿಯಿಂದ ಉಸಿರಾಡಿದವು."
+- takeScreenshot: kids-hanuman-sun-kn-large-05
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 6"
+- assertVisible: { id: "story-page-gods-blessings" }
+- takeScreenshot: kids-hanuman-sun-kn-large-06
+- scrollUntilVisible:
+    element: { text: "ವಾಲ್ಮೀಕಿ ರಾಮಾಯಣದ ಉತ್ತರಕಾಂಡ 35–36ರ ಸರಳ ರೂಪಾಂತರ. ಇದು ಸೂರ್ಯನ ಕಡೆಗೆ ಹಾರಿದ ಕಥೆ; ಸೂರ್ಯನನ್ನು ನುಂಗಿದ ಜನಪದ ಕಥೆ ಬೇರೆ. ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ." }
+    direction: DOWN
+    centerElement: true
+- takeScreenshot: kids-hanuman-sun-kn-source
+- tapOn: "Back"
+- tapOn: "Back"
+- tapOn: "Back"

@@ -1,0 +1,261 @@
+# Every new story: all scenes, locale stability, ending and shelf return.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- scrollUntilVisible:
+    element: { id: "home-kids-stories-card" }
+    centerElement: true
+- tapOn: { id: "home-kids-stories-card" }
+- tapOn: { id: "kids-story-deity-krishna" }
+- scrollUntilVisible:
+    element: { id: "kids-story-putana" }
+    centerElement: true
+- tapOn: { id: "kids-story-putana" }
+- tapOn: { id: "lang-toggle-en" }
+- assertVisible: "1 / 6"
+- assertVisible: { id: "story-page-kansas-plan" }
+- takeScreenshot: kids-putana-01
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 6"
+- assertVisible: { id: "story-page-beautiful-disguise" }
+- takeScreenshot: kids-putana-02
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 6"
+- assertVisible: { id: "story-page-krishnas-power" }
+- takeScreenshot: kids-putana-03
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 6"
+- assertVisible: { id: "story-page-danger-ends" }
+- takeScreenshot: kids-putana-04
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 6"
+- assertVisible: { id: "story-page-mothers-care" }
+- takeScreenshot: kids-putana-05
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 6"
+- assertVisible: { id: "story-page-mercy-and-home" }
+- takeScreenshot: kids-putana-06
+- tapOn: { id: "lang-toggle-hi" }
+- assertVisible: "6 / 6"
+- tapOn: { id: "lang-toggle-en" }
+- scrollUntilVisible:
+    element: { text: "What we learn" }
+    direction: DOWN
+- assertVisible: "What we learn"
+- scrollUntilVisible:
+    element: { text: ".*takeaway is editorial.*" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: ".*takeaway is editorial.*"
+- takeScreenshot: kids-putana-source
+- tapOn: "Back"
+- assertVisible: { id: "kids-story-putana" }
+- scrollUntilVisible:
+    element: { id: "kids-story-kaliya-nag" }
+    centerElement: true
+- tapOn: { id: "kids-story-kaliya-nag" }
+- tapOn: { id: "lang-toggle-en" }
+- assertVisible: "1 / 7"
+- assertVisible: { id: "story-page-poisoned-yamuna" }
+- takeScreenshot: kids-kaliya-nag-01
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 7"
+- assertVisible: { id: "story-page-kadamba-leap" }
+- takeScreenshot: kids-kaliya-nag-02
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 7"
+- assertVisible: { id: "story-page-friends-worry" }
+- takeScreenshot: kids-kaliya-nag-03
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 7"
+- assertVisible: { id: "story-page-dance-on-hoods" }
+- takeScreenshot: kids-kaliya-nag-04
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 7"
+- assertVisible: { id: "story-page-family-prays" }
+- takeScreenshot: kids-kaliya-nag-05
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 7"
+- assertVisible: { id: "story-page-leave-in-peace" }
+- takeScreenshot: kids-kaliya-nag-06
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 7"
+- assertVisible: { id: "story-page-river-restored" }
+- takeScreenshot: kids-kaliya-nag-07
+- tapOn: { id: "lang-toggle-hi" }
+- assertVisible: "7 / 7"
+- tapOn: { id: "lang-toggle-en" }
+- scrollUntilVisible:
+    element: { text: "What we learn" }
+    direction: DOWN
+- assertVisible: "What we learn"
+- scrollUntilVisible:
+    element: { text: ".*takeaway is editorial.*" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: ".*takeaway is editorial.*"
+- takeScreenshot: kids-kaliya-nag-source
+- tapOn: "Back"
+- assertVisible: { id: "kids-story-kaliya-nag" }
+- tapOn: "Back"
+- tapOn: { id: "kids-story-deity-ganesha" }
+- scrollUntilVisible:
+    element: { id: "kids-story-ganesha-birth" }
+    centerElement: true
+- tapOn: { id: "kids-story-ganesha-birth" }
+- tapOn: { id: "lang-toggle-en" }
+- assertVisible: "1 / 7"
+- assertVisible: { id: "story-page-parvatis-son" }
+- takeScreenshot: kids-ganesha-birth-01
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 7"
+- assertVisible: { id: "story-page-guard-the-door" }
+- takeScreenshot: kids-ganesha-birth-02
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 7"
+- assertVisible: { id: "story-page-shiva-returns" }
+- takeScreenshot: kids-ganesha-birth-03
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 7"
+- assertVisible: { id: "story-page-parvatis-sorrow" }
+- takeScreenshot: kids-ganesha-birth-04
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 7"
+- assertVisible: { id: "story-page-new-life" }
+- takeScreenshot: kids-ganesha-birth-05
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 7"
+- assertVisible: { id: "story-page-mothers-embrace" }
+- takeScreenshot: kids-ganesha-birth-06
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 7"
+- assertVisible: { id: "story-page-ganapati-blessing" }
+- takeScreenshot: kids-ganesha-birth-07
+- tapOn: { id: "lang-toggle-hi" }
+- assertVisible: "7 / 7"
+- tapOn: { id: "lang-toggle-en" }
+- scrollUntilVisible:
+    element: { text: "What we learn" }
+    direction: DOWN
+- assertVisible: "What we learn"
+- scrollUntilVisible:
+    element: { text: ".*takeaway is editorial.*" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: ".*takeaway is editorial.*"
+- takeScreenshot: kids-ganesha-birth-source
+- tapOn: "Back"
+- assertVisible: { id: "kids-story-ganesha-birth" }
+- tapOn: "Back"
+- tapOn: { id: "kids-story-deity-hanuman" }
+- scrollUntilVisible:
+    element: { id: "kids-story-hanuman-sun" }
+    centerElement: true
+- tapOn: { id: "kids-story-hanuman-sun" }
+- tapOn: { id: "lang-toggle-en" }
+- assertVisible: "1 / 6"
+- assertVisible: { id: "story-page-hungry-at-dawn" }
+- takeScreenshot: kids-hanuman-sun-01
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 6"
+- assertVisible: { id: "story-page-towards-the-sun" }
+- takeScreenshot: kids-hanuman-sun-02
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 6"
+- assertVisible: { id: "story-page-indra-arrives" }
+- takeScreenshot: kids-hanuman-sun-03
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 6"
+- assertVisible: { id: "story-page-vayus-sorrow" }
+- takeScreenshot: kids-hanuman-sun-04
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 6"
+- assertVisible: { id: "story-page-brahma-restores" }
+- takeScreenshot: kids-hanuman-sun-05
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 6"
+- assertVisible: { id: "story-page-gods-blessings" }
+- takeScreenshot: kids-hanuman-sun-06
+- tapOn: { id: "lang-toggle-hi" }
+- assertVisible: "6 / 6"
+- tapOn: { id: "lang-toggle-en" }
+- scrollUntilVisible:
+    element: { text: "What we learn" }
+    direction: DOWN
+- assertVisible: "What we learn"
+- scrollUntilVisible:
+    element: { text: ".*takeaway is editorial.*" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: ".*takeaway is editorial.*"
+- takeScreenshot: kids-hanuman-sun-source
+- tapOn: "Back"
+- assertVisible: { id: "kids-story-hanuman-sun" }
+- tapOn: "Back"
+- assertVisible: { id: "kids-story-deity-hanuman" }

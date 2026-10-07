@@ -1093,7 +1093,9 @@ The Home-stack reader dispatches by storyId and optional pageId. It shares the h
 
 For the initial illustrated-story scope, §3's read-aloud requirement applies when a story speech adapter or real recordings are added; no audio control is exposed until then. Bookmark/share/progress integrations remain explicit future work. Sharing paging/header conventions does not imply full Gita feature parity.
 
-The native unit suite covers the first page, swipe-driven page index, locale stability, viewport resizing and invalid IDs. Asset and translation coverage lives in kidsStories.test.ts. Exercise `.maestro/kids-stories-smoke.yaml` on a phone/simulator before release; full npm test and regional editorial review remain required. UI specification: design.md §76.
+The published shelves contain Krishna Janma, Putana (6 scenes), Kaliya Nag (7), Ganesha Birth (7) and Hanuman and the Sun (6). New retellings carry `source.baseText`, `source.retrievedOn`, reference URLs and adaptation notes (§11); compare two publication sources and keep regional/traditional distinctions explicit. Source and art provenance lives in `docs/content-parity/kids-stories-expansion/`. Each added scene has its own bundled illustration, shared across languages. A cover may reuse a representative interior scene; it must never stand in for the final scene.
+
+The native unit suite covers each story, swipe-driven page index, locale stability, viewport resizing and invalid IDs. Asset and translation coverage lives in kidsStories.test.ts, including byte parity with browser review copies. Exercise `.maestro/kids-stories-smoke.yaml`, `.maestro/kids-stories-new-stories-smoke.yaml` and `.maestro/kids-stories-regional-smoke.yaml` on a phone/simulator before release; the regional flow checks all added scenes in Gujarati/Kannada at Large reading size. Full npm test and regional editorial review remain required. UI specification: design.md §76.
 
 ## 30. गीता सार (Gita Saar) — the themed-reading contract
 

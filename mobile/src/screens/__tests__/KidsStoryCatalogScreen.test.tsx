@@ -34,15 +34,20 @@ test('Home library opens a deity shelf before a story', () => {
   act(() => tree.unmount());
 });
 
-test('Krishna shelf opens the published story; planned story and empty shelves do not', () => {
+test.each([
+  ['krishna', ['krishna-janma', 'putana', 'kaliya-nag']],
+  ['ganesha', ['ganesha-birth']],
+  ['hanuman', ['hanuman-sun']],
+])('%s shelf opens every published story in the shared reader', (deityId, storyIds) => {
   const navigation = { navigate: jest.fn(), goBack: jest.fn() };
   let tree!: TestRenderer.ReactTestRenderer;
-  act(() => { tree = TestRenderer.create(<Deity navigation={navigation} route={{ params: { deityId: 'krishna' } }} />); });
-  act(() => tree.root.findByProps({ testID: 'kids-story-krishna-janma' }).props.onPress());
-  expect(navigation.navigate).toHaveBeenCalledWith('KidsStoryReader', { storyId: 'krishna-janma' });
-  expect(tree.root.findByProps({ testID: 'kids-story-planned-kaliya-nag' }).props.onPress).toBeUndefined();
-  act(() => tree.update(<Deity navigation={navigation} route={{ params: { deityId: 'ganesha' } }} />));
-  expect(tree.root.findAllByProps({ testID: 'kids-story-krishna-janma' })).toHaveLength(0);
-  expect(tree.root.findAllByType('Text' as any).some(node => node.props.children === 'New picture stories are being prepared for this shelf.')).toBe(true);
+  act(() => { tree = TestRenderer.create(<Deity navigation={navigation} route={{ params: { deityId } }} />); });
+  for (const storyId of storyIds) {
+    act(() => tree.root.findByProps({ testID: `kids-story-${storyId}` }).props.onPress());
+    expect(navigation.navigate).toHaveBeenLastCalledWith('KidsStoryReader', { storyId });
+  }
+  expect(tree.root.findAllByType('Pressable' as any)).toHaveLength(storyIds.length);
+  expect(tree.root.findAllByProps({ testID: 'kids-story-planned-kaliya-nag' })).toHaveLength(0);
+  expect(tree.root.findAllByType('Text' as any).some(node => node.props.children === 'New picture stories are being prepared for this shelf.')).toBe(false);
   act(() => tree.unmount());
 });
