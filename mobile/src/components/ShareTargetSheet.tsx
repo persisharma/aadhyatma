@@ -30,8 +30,10 @@ import SharePagePreview from './SharePagePreview';
  *
  * **Series (PRD-45, §39.5–§39.6).** When the content paginates to more than one card
  * the sheet grows a pages strip, two all-pages rows (share every selected page at
- * once; Instagram carousel) and relabels the three rows above as "this page". With a
- * single page none of that renders — a verse share is exactly the sheet it always was.
+ * once; Instagram carousel) and relabels the three rows above as "this page". A one-page
+ * scope of multi-scope prose keeps just the strip, so its scope segment stays reachable.
+ * With one scope of one page none of that renders — a verse share is exactly the sheet
+ * it always was.
  */
 
 export type ShareSeriesView = 'targets' | 'preview' | 'progress' | 'carouselReady';
@@ -73,7 +75,7 @@ type Props = {
   onClose: () => void;
   /** True while a capture/share is running — every row disables. */
   busy?: boolean;
-  /** Present for multi-page content. Ignored when `pageCount` is 1. */
+  /** Present for prose. Ignored when there is one scope and it is one page. */
   series?: ShareSeriesProps;
 };
 
@@ -144,10 +146,13 @@ export default function ShareTargetSheet({
   const { colors, spacing, radii } = useTheme();
   const subLabel = eyebrowTextStyle(lang, 12);
   const titleFont = cardFontByLang(lang);
-  const multi = series && series.pageCount > 1 ? series : null;
+  // A one-page scope still shows the strip when another scope exists — otherwise a short
+  // "this part" would hide the segment that reaches the multi-page "whole katha".
+  const multi = series && (series.pageCount > 1 || series.scopes.length > 1) ? series : null;
+  const paged = !!multi && multi.pageCount > 1;
   const selectedCount = multi ? multi.selected.filter(Boolean).length : 0;
   const allDisabled = !!busy || !multi?.multiShareAvailable || selectedCount > MAX_SHARE_PAGES;
-  const pageChip = multi
+  const pageChip = paged
     ? [pick(lang, { hi: `पृष्ठ ${multi.highlighted + 1}`, en: `page ${multi.highlighted + 1}`, gu: `પૃષ્ઠ ${multi.highlighted + 1}`, kn: `ಪುಟ ${multi.highlighted + 1}` })]
     : [];
   const eyebrow = [indicSafeTag(lang, 1.6), { fontSize: 10, color: colors.inkMuted, marginTop: spacing.md }];
@@ -155,7 +160,7 @@ export default function ShareTargetSheet({
   const heading = (
     <Text
       accessibilityRole="header"
-      style={{ fontFamily: titleFont, fontSize: 18, color: colors.ink, textAlign: 'center', marginBottom: multi ? 2 : spacing.md }}
+      style={{ fontFamily: titleFont, fontSize: 18, color: colors.ink, textAlign: 'center', marginBottom: paged ? 2 : spacing.md }}
     >
       {title ??
         pick(lang, { hi: 'श्लोक साझा करें', en: 'Share this verse', gu: 'શ્લોક શેર કરો', kn: 'ಶ್ಲೋಕ ಹಂಚಿಕೊಳ್ಳಿ' })}
@@ -244,14 +249,16 @@ export default function ShareTargetSheet({
       <>
         {multi ? (
           <>
-            <Text style={[subLabel, { color: colors.inkMuted, textAlign: 'center', marginBottom: spacing.md }]}>
-              {pick(lang, {
-                hi: 'एक कार्ड में नहीं समाता — कार्ड्स की शृंखला बनी',
-                en: 'Too long for one card — split into a series',
-                gu: 'એક કાર્ડમાં સમાતું નથી — કાર્ડની શ્રેણી બની',
-                kn: 'ಒಂದು ಕಾರ್ಡ್‌ಗೆ ಉದ್ದ — ಕಾರ್ಡ್‌ಗಳ ಸರಣಿ',
-              })}
-            </Text>
+            {paged ? (
+              <Text style={[subLabel, { color: colors.inkMuted, textAlign: 'center', marginBottom: spacing.md }]}>
+                {pick(lang, {
+                  hi: 'एक कार्ड में नहीं समाता — कार्ड्स की शृंखला बनी',
+                  en: 'Too long for one card — split into a series',
+                  gu: 'એક કાર્ડમાં સમાતું નથી — કાર્ડની શ્રેણી બની',
+                  kn: 'ಒಂದು ಕಾರ್ಡ್‌ಗೆ ಉದ್ದ — ಕಾರ್ಡ್‌ಗಳ ಸರಣಿ',
+                })}
+              </Text>
+            ) : null}
             <SharePagesStrip
               lang={lang}
               pageCount={multi.pageCount}
@@ -266,36 +273,40 @@ export default function ShareTargetSheet({
               onScope={multi.onScope}
               disabled={busy}
             />
-            <Text style={eyebrow}>
-              {pick(lang, { hi: `सभी चुने पृष्ठ · ${selectedCount}`, en: `ALL SELECTED PAGES · ${selectedCount}`, gu: `બધાં પસંદ પૃષ્ઠ · ${selectedCount}`, kn: `ಆಯ್ಕೆಯ ಎಲ್ಲ ಪುಟಗಳು · ${selectedCount}` })}
-            </Text>
-            <TargetRow
-              lang={lang}
-              icon="share"
-              title={pick(lang, { hi: 'सभी पृष्ठ साझा करें', en: 'Share all pages', gu: 'બધાં પૃષ્ઠ શેર કરો', kn: 'ಎಲ್ಲ ಪುಟ ಹಂಚಿಕೊಳ್ಳಿ' })}
-              sub={allSub ?? pick(lang, { hi: 'WhatsApp एल्बम, संदेश, Photos में सहेजें', en: 'WhatsApp album, Messages, Save to Photos', gu: 'WhatsApp આલ્બમ, સંદેશ, Photos', kn: 'WhatsApp ಆಲ್ಬಮ್, ಸಂದೇಶ, Photos' })}
-              chips={[String(selectedCount)]}
-              hotChip
-              onPress={multi.onShareAll}
-              disabled={allDisabled}
-              accessibilityLabel="Share all pages"
-            />
-            <TargetRow
-              lang={lang}
-              icon="instagram"
-              title={pick(lang, { hi: 'Instagram कैरोसेल', en: 'Instagram carousel', gu: 'Instagram કૅરોસેલ', kn: 'Instagram ಕ್ಯಾರೋಸೆಲ್' })}
-              sub={allSub ?? pick(lang, { hi: 'सभी पृष्ठ एक पोस्ट में — कैप्शन कॉपी होगा', en: 'All pages as one post — caption is copied', gu: 'બધાં પૃષ્ઠ એક પોસ્ટમાં', kn: 'ಎಲ್ಲ ಪುಟಗಳು ಒಂದು ಪೋಸ್ಟ್‌ನಲ್ಲಿ' })}
-              chips={[String(selectedCount)]}
-              hotChip
-              onPress={multi.onInstagramCarousel}
-              disabled={allDisabled}
-              divider={false}
-              accessibilityLabel="Share as Instagram carousel"
-              accessibilityHint="Renders every selected page, copies the caption, then opens the share sheet"
-            />
-            <Text style={eyebrow}>
-              {pick(lang, { hi: `केवल यह पृष्ठ · ${multi.highlighted + 1}`, en: `JUST THIS PAGE · ${multi.highlighted + 1}`, gu: `માત્ર આ પૃષ્ઠ · ${multi.highlighted + 1}`, kn: `ಈ ಪುಟ ಮಾತ್ರ · ${multi.highlighted + 1}` })}
-            </Text>
+            {paged ? (
+              <>
+                <Text style={eyebrow}>
+                  {pick(lang, { hi: `सभी चुने पृष्ठ · ${selectedCount}`, en: `ALL SELECTED PAGES · ${selectedCount}`, gu: `બધાં પસંદ પૃષ્ઠ · ${selectedCount}`, kn: `ಆಯ್ಕೆಯ ಎಲ್ಲ ಪುಟಗಳು · ${selectedCount}` })}
+                </Text>
+                <TargetRow
+                  lang={lang}
+                  icon="share"
+                  title={pick(lang, { hi: 'सभी पृष्ठ साझा करें', en: 'Share all pages', gu: 'બધાં પૃષ્ઠ શેર કરો', kn: 'ಎಲ್ಲ ಪುಟ ಹಂಚಿಕೊಳ್ಳಿ' })}
+                  sub={allSub ?? pick(lang, { hi: 'WhatsApp एल्बम, संदेश, Photos में सहेजें', en: 'WhatsApp album, Messages, Save to Photos', gu: 'WhatsApp આલ્બમ, સંદેશ, Photos', kn: 'WhatsApp ಆಲ್ಬಮ್, ಸಂದೇಶ, Photos' })}
+                  chips={[String(selectedCount)]}
+                  hotChip
+                  onPress={multi.onShareAll}
+                  disabled={allDisabled}
+                  accessibilityLabel="Share all pages"
+                />
+                <TargetRow
+                  lang={lang}
+                  icon="instagram"
+                  title={pick(lang, { hi: 'Instagram कैरोसेल', en: 'Instagram carousel', gu: 'Instagram કૅરોસેલ', kn: 'Instagram ಕ್ಯಾರೋಸೆಲ್' })}
+                  sub={allSub ?? pick(lang, { hi: 'सभी पृष्ठ एक पोस्ट में — कैप्शन कॉपी होगा', en: 'All pages as one post — caption is copied', gu: 'બધાં પૃષ્ઠ એક પોસ્ટમાં', kn: 'ಎಲ್ಲ ಪುಟಗಳು ಒಂದು ಪೋಸ್ಟ್‌ನಲ್ಲಿ' })}
+                  chips={[String(selectedCount)]}
+                  hotChip
+                  onPress={multi.onInstagramCarousel}
+                  disabled={allDisabled}
+                  divider={false}
+                  accessibilityLabel="Share as Instagram carousel"
+                  accessibilityHint="Renders every selected page, copies the caption, then opens the share sheet"
+                />
+                <Text style={eyebrow}>
+                  {pick(lang, { hi: `केवल यह पृष्ठ · ${multi.highlighted + 1}`, en: `JUST THIS PAGE · ${multi.highlighted + 1}`, gu: `માત્ર આ પૃષ્ઠ · ${multi.highlighted + 1}`, kn: `ಈ ಪುಟ ಮಾತ್ರ · ${multi.highlighted + 1}` })}
+                </Text>
+              </>
+            ) : null}
           </>
         ) : null}
 

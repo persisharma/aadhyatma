@@ -22,8 +22,12 @@
 import type { Lang } from '@/data/gita/language';
 import { charsPerLine } from '@/utils/shareCardType';
 
-/** Instagram takes 20 slides; nobody reads 20 parchment pages. Past this a scope is refused. */
-export const MAX_SHARE_PAGES = 10;
+/**
+ * Most pages handed out at once (all-pages rows, Instagram carousel). Instagram takes 20
+ * slides, but a WhatsApp album of more than five parchment pages goes unread. A longer
+ * scope still opens: the first five are pre-selected and the reader swaps in the rest.
+ */
+export const MAX_SHARE_PAGES = 5;
 
 /** Geometry of the prose card, in dp. `ProseShareCard`'s StyleSheet reads these. */
 export const proseCardMetrics = {

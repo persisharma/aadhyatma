@@ -342,3 +342,7 @@ Added Putana and Kaliya Nag to Krishna, Ganesha Birth to Ganesha, and Hanuman an
 ## [2026-10-07] ingest | Gentler openings for the four kids stories
 
 Updated `subsystems/kids-stories.md` from canonical story records and native evidence: one distinct sourced introduction per story, hi/en/gu/kn narration, Putana motivation context, 30 total scenes, synchronized assets/prototypes, and scoped Standard/Large simulator validation. Follow-up remains local on `codex/kids-story-openings`; the original delivery PR #422 has merged. Evidence: `docs/content-parity/kids-story-openings/README.md`.
+
+## [2026-10-07] ingest | Share series: 5-page cap, scope segment always reachable
+
+Updated `subsystems/share.md`: `MAX_SHARE_PAGES` 10 → 5 (all-pages rows and Instagram carousel send at most 5; longer scopes pre-select the first 5). The sheet now enters series mode when the content has >1 page **or** >1 scope, so a one-card *this part* / *significance* no longer hides the segment to the multi-page scope.

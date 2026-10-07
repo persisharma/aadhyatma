@@ -2,7 +2,7 @@
 title: Share Cards (verse, prose, series)
 type: subsystem
 sources: [mobile/src/utils/shareVerse.tsx, mobile/src/utils/shareContent.ts, mobile/src/utils/shareCardPages.ts, mobile/src/utils/shareCardType.ts, mobile/src/utils/multiShare.ts, mobile/src/utils/shareStoryLayout.ts, mobile/src/components/ShareCard.tsx, mobile/src/components/ProseShareCard.tsx, mobile/src/components/ShareTargetSheet.tsx, mobile/src/components/SharePagesStrip.tsx, mobile/src/components/SharePagePreview.tsx, mobile/src/components/ShareStoryFrame.tsx, mobile/src/components/ShareBrandFooter.tsx, mobile/src/data/shareLinks.ts, mobile/src/data/shareHashtags.ts, mobile/app.json, mobile/jest.setup.js, design.md, RULEBOOK.md, docs/roadmap/prds/45-universal-share-carousel.md]
-last_verified_date: 2026-09-23
+last_verified_date: 2026-10-07
 confidence: high
 status: current
 ---
@@ -31,7 +31,8 @@ page to one OS sheet (WhatsApp album; iOS "Save N Images"; Instagram → Select 
 - **Paginator** (`utils/shareCardPages.ts`): sentence-greedy packing into a fixed
   459 dp body box, words only for a sentence longer than a page, heading keep-with-next,
   3-line widow rule, one slack line per page. Chars-per-line comes from per-language glyph
-  advances **fitted to the real TTFs** (see Gotchas). `MAX_SHARE_PAGES = 10`.
+  advances **fitted to the real TTFs** (see Gotchas). `MAX_SHARE_PAGES = 5` (Oct 2026, was 10):
+  caps what the all-pages rows send; a longer scope still paginates and pre-selects the first 5.
 - **Capture.** Always one off-screen mount; a series is captured page by page (never N
   bitmaps at once). Single-page rows reuse the verse path's `deliver()` exactly.
 - **Multi-file share** (`utils/multiShare.ts`): `react-native-share` `open({ urls })`,
@@ -61,6 +62,9 @@ page to one OS sheet (WhatsApp album; iOS "Save N Images"; Instagram → Select 
   cap *and* wraps its verse would clip the footer; count wrapped verse lines before widening.
 - **Optional title line.** `meaningTitleHi/En` sets a line above the meaning at the fitted size
   (Gita Saar's theme line); it spends the same budget via `fitMeaningType({ title })`.
+- **Series mode needs >1 page *or* >1 scope.** Until Oct 2026 the sheet gated the strip on the
+  active scope's page count alone, so a katha section or temple significance that fit one card
+  hid the segment to *whole katha* / *full reading* — the all-pages rows were unreachable.
 - **No-share surfaces.** Pitru Smaran, the पितृ पक्ष परिचय layer and the personal-tithi
   Vidhi carry no share button — design.md §63/§74 lock it.
 - **Tests that mount a share surface** must wrap it in `ShareProvider` (`useShare()`

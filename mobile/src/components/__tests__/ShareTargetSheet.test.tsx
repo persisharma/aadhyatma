@@ -152,6 +152,23 @@ describe('ShareTargetSheet · series (design.md §39.5)', () => {
     expect(byLabel(tree, 'Page 1')).toBeUndefined();
   });
 
+  test('a one-page scope keeps the scope segment so a longer scope is reachable', async () => {
+    const s = series({
+      pageCount: 1,
+      selected: [true],
+      highlighted: 0,
+      scopes: [
+        { label: 'This part', pageCount: 1 },
+        { label: 'Whole katha', pageCount: 4 },
+      ],
+    });
+    const tree = await renderSheet({ series: s });
+    await act(async () => byLabel(tree, 'Scope: Whole katha, 4 pages').props.onPress());
+    expect(s.onScope).toHaveBeenCalledWith(1);
+    expect(byLabel(tree, 'Share all pages')).toBeUndefined();
+    expect(tree.root.findAll((n) => n.props.children === 'page 1')).toHaveLength(0);
+  });
+
   test('a multi-page series adds the strip, the all-pages rows and a page chip', async () => {
     const s = series();
     const tree = await renderSheet({ series: s });

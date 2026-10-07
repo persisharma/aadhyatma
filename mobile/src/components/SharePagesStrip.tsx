@@ -37,8 +37,8 @@ function pagesWord(lang: Lang, n: number): string {
 }
 
 /**
- * The pages strip of the share sheet (design.md §39.5) — shown only when the content
- * paginates to more than one card. Tap a thumbnail to highlight it (the page the
+ * The pages strip of the share sheet (design.md §39.5) — shown when the content
+ * paginates to more than one card, or has a second scope to switch to. Tap a thumbnail to highlight it (the page the
  * single-page rows export); tap the highlighted one again to drop it from, or add it
  * back to, the series. The scope segment (this part | whole katha) re-paginates.
  */
