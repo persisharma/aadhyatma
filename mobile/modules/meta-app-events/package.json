@@ -1,0 +1,7 @@
+{
+  "name": "vedansh-meta-app-events",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Activation-only bridge to Meta's native Core SDKs",
+  "license": "MIT"
+}
