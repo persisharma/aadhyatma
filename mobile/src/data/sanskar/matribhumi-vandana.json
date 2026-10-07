@@ -1,12 +1,12 @@
 {
   "titleHi": "मातृभूमि वंदना",
   "titleEn": "Matribhumi Vandana",
-  "subtitleHi": "नमस्ते सदा वत्सले मातृभूमे — मातृभूमि को प्रणाम",
-  "subtitleEn": "Namaste Sada Vatsale Matribhume — salutation to the Motherland",
+  "subtitleHi": "मातृभूमि को प्रणाम",
+  "subtitleEn": "Salutation to the Motherland",
   "deity": "bharat-mata",
   "language": "sa-hi-en",
   "source": {
-    "baseText": "Sangh Prarthana 'Namaste Sada Vatsale Matribhume' (Sanskrit, three stanzas, with the Hindi closing 'भारत माता की जय'). Text cross-checked via web-search index excerpts of hi.wikipedia.org (नमस्ते सदा वत्सले), samagrabharat.com, bhubnesh.blogspot.com and biginningtobetterment.wordpress.com, using exact-phrase queries for lines of stanzas 2 and 3. The introduction, meanings and vidhi are editorial guidance, not part of the prayer.",
+    "baseText": "Matribhumi Vandana (Sanskrit, three stanzas, with the Hindi closing 'भारत माता की जय'). Text cross-checked via web-search index excerpts of hi.wikipedia.org (नमस्ते सदा वत्सले), samagrabharat.com, bhubnesh.blogspot.com and biginningtobetterment.wordpress.com, using exact-phrase queries for lines of stanzas 2 and 3. The introduction, meanings and vidhi are editorial guidance, not part of the prayer.",
     "referenceUrls": [
       "https://hi.wikipedia.org/wiki/नमस्ते_सदा_वत्सले",
       "https://samagrabharat.com/2022/11/20/translation-of-rss-prayer-in-hindi/",
@@ -24,10 +24,10 @@
       "type": "intro",
       "labelHi": "परिचय",
       "labelEn": "Introduction",
-      "lines": ["नमस्ते सदा वत्सले मातृभूमे — मातृभूमि वंदना"],
-      "linesEn": ["Namaste sadaa vatsale maatribhoome — Matribhumi Vandana"],
-      "meaningHi": "यह संस्कृत प्रार्थना मातृभूमि भारत को 'सदा वत्सला' — सदा स्नेह करने वाली माँ — के रूप में प्रणाम करती है। इसकी रचना सन् 1939–40 में श्री नरहरि नारायण भिडे ने की थी, और यह राष्ट्रीय स्वयंसेवक संघ की शाखाओं में प्रतिदिन गाई जाने वाली 'संघ प्रार्थना' के रूप में प्रसिद्ध है। तीन श्लोक संस्कृत में हैं; अन्त में 'भारत माता की जय' का जयघोष हिन्दी में होता है।\n\nइसका भाव है कृतज्ञता और कर्तव्य: जिस भूमि ने हमें पाला-पोसा, उसके प्रति आभार; उसकी सेवा के लिए बल, विनम्र शील, ज्ञान, ध्येय-निष्ठा और संगठित शक्ति की याचना। भारतीय परम्परा में भूमि को माता मानने का भाव अथर्ववेद के भूमि सूक्त (12.1.12 — 'माता भूमिः पुत्रो अहं पृथिव्याः') से चला आ रहा है; यह प्रार्थना उसी भाव को राष्ट्र-सेवा के संकल्प से जोड़ती है।",
-      "meaningEn": "This Sanskrit prayer bows to the Motherland, India, as 'sadaa vatsalaa' — the ever-affectionate mother. It was composed in 1939–40 by Shri Narhari Narayan Bhide and is best known as the 'Sangh Prarthana' sung daily at the shakhas of the Rashtriya Swayamsevak Sangh. The three stanzas are in Sanskrit; it closes with the Hindi call 'Bharat Mata ki Jai'.\n\nIts spirit is gratitude and duty: thanks to the land that raised us, and a plea for the strength, humble character, knowledge, steadfast purpose and united effort needed to serve it. Revering the land as mother is old in Indian tradition — the Atharvaveda's Bhumi Sukta (12.1.12) says 'maataa bhoomih putro aham prithivyaah' (the Earth is my mother, I am her child); this prayer joins that feeling to a resolve of service."
+      "lines": ["मातृभूमि वंदना"],
+      "linesEn": ["Matribhumi Vandana"],
+      "meaningHi": "यह संस्कृत प्रार्थना मातृभूमि भारत को 'सदा वत्सला' — सदा स्नेह करने वाली माँ — के रूप में प्रणाम करती है। तीन श्लोक संस्कृत में हैं; अन्त में 'भारत माता की जय' का जयघोष हिन्दी में होता है।\n\nइसका भाव है कृतज्ञता और कर्तव्य: जिस भूमि ने हमें पाला-पोसा, उसके प्रति आभार; उसकी सेवा के लिए बल, विनम्र शील, ज्ञान, ध्येय-निष्ठा और संगठित शक्ति की याचना। भारतीय परम्परा में भूमि को माता मानने का भाव अथर्ववेद के भूमि सूक्त (12.1.12 — 'माता भूमिः पुत्रो अहं पृथिव्याः') से चला आ रहा है; यह प्रार्थना उसी भाव को राष्ट्र-सेवा के संकल्प से जोड़ती है।",
+      "meaningEn": "This Sanskrit prayer bows to the Motherland, India, as 'sadaa vatsalaa' — the ever-affectionate mother. The three stanzas are in Sanskrit; it closes with the Hindi call 'Bharat Mata ki Jai'.\n\nIts spirit is gratitude and duty: thanks to the land that raised us, and a plea for the strength, humble character, knowledge, steadfast purpose and united effort needed to serve it. Revering the land as mother is old in Indian tradition — the Atharvaveda's Bhumi Sukta (12.1.12) says 'maataa bhoomih putro aham prithivyaah' (the Earth is my mother, I am her child); this prayer joins that feeling to a resolve of service."
     },
     {
       "id": "mv-01",
