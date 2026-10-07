@@ -136,6 +136,18 @@ const FACTOR_ORDER: readonly GrahaFactorId[] = [
   'combust',
 ];
 
+/**
+ * The sheet's reviewed content: everything but the status line, which carries
+ * the sign-off itself. Its SHA-256 is what a sign-off approves
+ * (`GRAHA_READING_REVIEW.reviewedSheetSha256`).
+ */
+export function reviewedSheetContent(sheet: string = renderGrahaReviewSheet()): string {
+  return sheet
+    .split('\n')
+    .filter((line) => !line.startsWith('**Status:**'))
+    .join('\n');
+}
+
 export function renderGrahaReviewSheet(): string {
   const lines: string[] = [];
   const push = (...rows: string[]) => lines.push(...rows);
