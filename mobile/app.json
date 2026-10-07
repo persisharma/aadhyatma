@@ -16,7 +16,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.prashantsharma.vedansh",
-      "buildNumber": "70",
+      "buildNumber": "71",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSPhotoLibraryAddUsageDescription": "Save the verse and katha cards you share to Photos.",
