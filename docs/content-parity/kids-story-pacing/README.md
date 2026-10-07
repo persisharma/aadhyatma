@@ -1,6 +1,6 @@
 # Story pacing revision
 
-Dates: 2026-10-07–08. Branch: `codex/kids-story-pacing`, based on `25fb414b` after PR #425 merged. The prior opening-only change did not resolve compressed transitions through the stories. This revision expands the complete arcs.
+Dates: 2026-10-07–08. Delivery: [PR #429](https://github.com/persisharma/aadhyatma/pull/429). Branch: `codex/kids-story-pacing`, based on `25fb414b` after PR #425 merged. The prior opening-only change did not resolve compressed transitions through the stories. This revision expands the complete arcs.
 
 | Story | Before | After | Added connections |
 | --- | ---: | ---: | --- |
@@ -10,7 +10,7 @@ Dates: 2026-10-07–08. Branch: `codex/kids-story-pacing`, based on `25fb414b` a
 
 Each new page has a distinct illustration. Existing stable page IDs, covers and closing scenes remain. Adjacent narration is rewritten to remove duplicate beats and premature conclusions. Hindi, English, Gujarati and Kannada share the illustrations. Horizontal paging and locale/page stability remain. The follow-up layout preserves the illustration independently of caption length and permits vertical scrolling. Only the reviewed empty bottom band of `hs09` is trimmed (top 84% retained). Kaliya Nag (8 pages) and Krishna Janma (16) are unchanged.
 
-To prevent the same gaps in future stories, RULEBOOK §29 now requires a complete sourced outline, a page-by-page causal transition review, all four full narratives and the entire native walkthrough before sign-off. The [reusable authoring checklist and review template](authoring-checklist.md) includes the Putana, Ganesha and Hanuman regression examples. Narrative review is a separate gate from passing technical tests; there is no fixed page/word-count heuristic claiming to establish comprehension.
+To prevent the same gaps in future stories, AGENTS.md directs future story work to RULEBOOK §29, which now requires a complete sourced outline, a page-by-page causal transition review, all four full narratives and the entire native walkthrough before sign-off. The [reusable authoring checklist and review template](authoring-checklist.md) includes the Putana, Ganesha and Hanuman regression examples. Narrative review is a separate gate from passing technical tests; there is no fixed page/word-count heuristic claiming to establish comprehension.
 
 ## Source checks and adaptation
 
@@ -54,7 +54,8 @@ The final Release build preserves the full 4:5 illustration by default. `hs09` t
 
 - Focused Kannada Large native walkthrough passes the three corrected Putana/Ganesha captions, art captures, vertical scrolling and horizontal page turns. Evidence: `/tmp/kids-pacing-scroll-focus/`. The run then used an unsupported `label` selector to return to the Hanuman artwork; the tracked flow now uses `text`, and the remaining Hanuman checks pass in the resume below.
 - “The World Needs Air” passes complete art and caption checks in Kannada and English Large, plus return navigation: `/tmp/kids-pacing-world-scroll/`. Both art/caption pairs were visually inspected; all supporting figures remain and only blank parchment is trimmed.
-- Current full English Standard and unchanged Krishna Janma walkthroughs are recorded after completion. Scope: iOS simulator, phone portrait. Android, physical-device, tablet/rotation and independent Gujarati/Kannada editorial approval remain separate release checks.
+- Current English Standard: all 39 Putana/Kaliya/Ganesha/Hanuman pages pass counter/ID, art capture, complete non-final caption, four Hindi opening switches, ending source scroll and return navigation checks. This result combines the completed Putana segment in `/tmp/kids-pacing-scroll-standard-final/` and the final passing 29-page Kaliya/Ganesha/Hanuman run in `/tmp/kids-pacing-scroll-remaining/`. The initial run hit disk exhaustion; its first resume hit an XCTest runner exit/restart. Task-owned build intermediates were removed, and the final remaining-story run passes. Earlier interrupted logs are retained and are not described as complete runs.
+- Unchanged Krishna Janma: all 16 page counters/IDs, forward/backward swipes, catalog/shelf routing and return pass on the final layout; 16 scene captures plus catalog/shelf captures in `/tmp/kids-pacing-krishna/screenshots/`. Balarama, return, Devi and final Gokul art were visually inspected. This flow checks paging/art reachability, not full-caption assertions for all 16 pages. Scope: iOS simulator, phone portrait. Android, physical-device, tablet/rotation and independent Gujarati/Kannada editorial approval remain separate release checks.
 
 Historical unmodified native captures remain under [screenshots/](screenshots/); current scroll-layout captures are identified with an `-art` or `-caption` suffix.
 
