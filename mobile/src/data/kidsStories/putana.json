@@ -16,10 +16,10 @@
     "kn": "ಪುಟ್ಟ ಕೃಷ್ಣನ ರಕ್ಷಣೆ ಮತ್ತು ಭಗವಂತನ ಕರುಣೆಯ ಕಥೆ."
   },
   "sourceNote": {
-    "hi": "श्रीमद्भागवत 10.6 का बच्चों के लिए सरल रूपांतरण। भयावह विवरण संक्षिप्त हैं; सीख संपादकीय है।",
-    "en": "A children's retelling of Bhagavata Purana 10.6. Frightening details are shortened; the takeaway is editorial.",
-    "gu": "શ્રીમદ્ ભાગવત 10.6નું બાળકો માટે સરળ રૂપાંતર. ભયાનક વિગતો ટૂંકાવી છે; શીખ સંપાદકીય છે.",
-    "kn": "ಶ್ರೀಮದ್ಭಾಗವತ 10.6ರ ಮಕ್ಕಳಿಗಾಗಿ ಸರಳ ರೂಪಾಂತರ. ಭಯಾನಕ ವಿವರಗಳನ್ನು ಸಂಕ್ಷಿಪ್ತಗೊಳಿಸಲಾಗಿದೆ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+    "hi": "श्रीमद्भागवत 10.5–6 का बच्चों के लिए सरल रूपांतरण। भयावह विवरण संक्षिप्त हैं; सीख संपादकीय है।",
+    "en": "A children's retelling of Bhagavata Purana 10.5–6. Frightening details are shortened; the takeaway is editorial.",
+    "gu": "શ્રીમદ્ ભાગવત 10.5–6નું બાળકો માટે સરળ રૂપાંતર. ભયાનક વિગતો ટૂંકાવી છે; શીખ સંપાદકીય છે.",
+    "kn": "ಶ್ರೀಮದ್ಭಾಗವತ 10.5–6ರ ಮಕ್ಕಳಿಗಾಗಿ ಸರಳ ರೂಪಾಂತರ. ಭಯಾನಕ ವಿವರಗಳನ್ನು ಸಂಕ್ಷಿಪ್ತಗೊಳಿಸಲಾಗಿದೆ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
   },
   "takeaway": {
     "hi": "सच्चा स्नेह देखभाल में दिखता है। कृष्ण की यह कथा उनकी रक्षा और अपार करुणा याद दिलाती है।",
@@ -29,9 +29,26 @@
   },
   "pages": [
     {
+      "id": "little-krishna-in-gokul",
+      "art": "pt00",
+      "source": "Bhagavata Purana 10.5.1–2,9–18",
+      "title": {
+        "hi": "गोकुल के नन्हे कृष्ण",
+        "en": "Little Krishna in Gokul",
+        "gu": "ગોકુળના નાનકડા કૃષ્ણ",
+        "kn": "ಗೋಕುಲದ ಪುಟ್ಟ ಕೃಷ್ಣ"
+      },
+      "text": {
+        "hi": "बहुत समय पहले, गोकुल नाम के गाँव में नन्हे कृष्ण रहते थे। यशोदा और नंद उन्हें प्यार से पालते थे। उनके आने से घर और गाँव में खुशियाँ थीं।",
+        "en": "Long ago, little Krishna lived in the village of Gokul. Yashoda and Nanda cared for him with love. His arrival had brought joy to their home and the village.",
+        "gu": "ઘણા સમય પહેલાં, ગોકુળ ગામમાં નાનકડા કૃષ્ણ રહેતા હતા. યશોદા અને નંદ તેમને પ્રેમથી ઉછેરતા હતા. તેમના આવવાથી ઘર અને ગામમાં આનંદ છવાયો હતો.",
+        "kn": "ಬಹಳ ಹಿಂದೆ, ಗೋಕುಲದಲ್ಲಿ ಪುಟ್ಟ ಕೃಷ್ಣನಿದ್ದ. ಯಶೋದೆ ಮತ್ತು ನಂದ ಅವನನ್ನು ಪ್ರೀತಿಯಿಂದ ಸಾಕುತ್ತಿದ್ದರು. ಅವನ ಆಗಮನ ಮನೆಗೂ ಊರಿಗೂ ಸಂತೋಷ ತಂದಿತ್ತು."
+      }
+    },
+    {
       "id": "kansas-plan",
       "art": "pt01",
-      "source": "Bhagavata Purana 10.6.2",
+      "source": "Bhagavata Purana 10.1.34,10.6.2",
       "title": {
         "hi": "कंस की योजना",
         "en": "Kansa's Plan",
@@ -39,10 +56,10 @@
         "kn": "ಕಂಸನ ಯೋಜನೆ"
       },
       "text": {
-        "hi": "कंस ने पूतना नाम की राक्षसी को शिशुओं को हानि पहुँचाने भेजा। वह नगरों और गाँवों में घूमते हुए गोकुल पहुँची, जहाँ नन्हे कृष्ण रहते थे।",
-        "en": "Kansa sent the demoness Putana to harm babies. Her search through towns and villages brought her to Gokul, where little Krishna lived.",
-        "gu": "કંસે પૂતના નામની રાક્ષસીને શિશુઓને નુકસાન પહોંચાડવા મોકલી. નગરો અને ગામોમાં ફરતાં તે ગોકુળ પહોંચી, જ્યાં નાનકડા કૃષ્ણ રહેતા હતા.",
-        "kn": "ಕಂಸನು ಪೂತನೆ ಎಂಬ ರಾಕ್ಷಸಿಯನ್ನು ಶಿಶುಗಳಿಗೆ ಹಾನಿಮಾಡಲು ಕಳುಹಿಸಿದ. ಊರುಗಳಲ್ಲಿ ಹುಡುಕುತ್ತಾ ಅವಳು ಪುಟ್ಟ ಕೃಷ್ಣನಿದ್ದ ಗೋಕುಲಕ್ಕೆ ಬಂದಳು."
+        "hi": "मथुरा का राजा कंस देवकी की आठवीं संतान से डरता था। उसने शिशुओं को हानि पहुँचाने पूतना को भेजा। पूतना खोजते हुए गोकुल पहुँची।",
+        "en": "Mathura's king, Kansa, feared Devaki's eighth child. He sent the demoness Putana to harm babies. Her search brought her to Gokul.",
+        "gu": "મથુરાનો રાજા કંસ દેવકીના આઠમા સંતાનથી ડરતો હતો. તેણે શિશુઓને નુકસાન પહોંચાડવા પૂતનાને મોકલી. શોધ કરતાં પૂતના ગોકુળ પહોંચી.",
+        "kn": "ಮಥುರೆಯ ರಾಜ ಕಂಸ ದೇವಕಿಯ ಎಂಟನೇ ಮಗುವಿಗೆ ಹೆದರಿದ್ದ. ಶಿಶುಗಳಿಗೆ ಹಾನಿಮಾಡಲು ಪೂತನೆಯನ್ನು ಕಳುಹಿಸಿದ. ಹುಡುಕುತ್ತಾ ಅವಳು ಗೋಕುಲಕ್ಕೆ ಬಂದಳು."
       }
     },
     {
@@ -132,12 +149,16 @@
     }
   ],
   "source": {
-    "baseText": "Bhagavata Purana 10.6",
+    "baseText": "Bhagavata Purana 10.5–6; background 10.1.34",
     "retrievedOn": "2026-10-07",
     "referenceUrls": [
       "https://vedabase.io/en/library/sb/10/6/",
-      "https://bhagavata.org/canto10/chapter6.html"
+      "https://bhagavata.org/canto10/chapter6.html",
+      "https://vedabase.io/en/library/sb/10/5/",
+      "https://bhagavata.org/canto10/chapter5.html",
+      "https://vedabase.io/en/library/sb/10/1/34/",
+      "https://bhagavata.org/canto10/chapter1.html"
     ],
-    "notes": "BBT and Aadhar translation checked for the narrative arc. Original child adaptation; no translation or liturgical verses reproduced."
+    "notes": "BBT and Aadhar translation checked for the narrative arc. Original child adaptation; no translation or liturgical verses reproduced. Opening setup introduces the characters and setting before the existing story events."
   }
 }
