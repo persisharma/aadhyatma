@@ -45,9 +45,13 @@ import * as ExpoAudio from 'expo-audio';
 import { AudioPlayerProvider, useAudioPlayerContext } from '@/contexts/AudioPlayerContext';
 import { registerStopper, __resetPlaybackArbiter } from '@/audio/playbackArbiter';
 import { AUDIO_TRACKS, type AudioTrack } from '@/data/audio/tracks';
+import { playableAudioUri } from '@/utils/encryptedAudioCache';
+
+const mockPlayable = playableAudioUri as jest.Mock;
 
 const mockPlayer = (ExpoAudio as unknown as { __player: {
   play: jest.Mock;
+  pause: jest.Mock;
   replace: jest.Mock;
   loop: boolean;
   _emit: (evt: string, s: Partial<AudioStatus>) => void;
@@ -110,6 +114,7 @@ async function emitFinished(t: AudioTrack, extra: Partial<AudioStatus> = {}) {
 
 beforeEach(() => {
   mockPlayer.play.mockClear();
+  mockPlayer.pause.mockClear();
   mockPlayer.replace.mockClear();
   mockPlayer.loop = false;
 });
@@ -170,6 +175,32 @@ describe('AudioPlayerContext.playTrack', () => {
 
     expect(stopTts).toHaveBeenCalledTimes(1);
     expect(stopJapam).toHaveBeenCalledTimes(1);
+  });
+
+  test('pauses the outgoing track the moment a new one is selected', async () => {
+    // The new source resolves asynchronously; without an immediate pause the old
+    // track keeps playing through the new one's download/decrypt.
+    mount();
+    await startPlaying(AUDIO_TRACKS[0]);
+    mockPlayer.pause.mockClear();
+    await playTrack(AUDIO_TRACKS[1]);
+    expect(mockPlayer.pause).toHaveBeenCalled();
+  });
+
+  test('a source resolve that finishes after stop() does not restart playback', async () => {
+    mount();
+    let resolve!: (uri: string) => void;
+    mockPlayable.mockReturnValueOnce(new Promise<string>((r) => { resolve = r; }));
+
+    await act(async () => { ctx.playTrack(track); await tick(); }); // resolve still pending
+    act(() => ctx.stop());
+    mockPlayer.replace.mockClear();
+    mockPlayer.play.mockClear();
+
+    await act(async () => { resolve('file:///cache/audio-library-play/hash.mp3'); await tick(); });
+    // The stale resolve is dropped — no source swap, no playback restart.
+    expect(mockPlayer.replace).not.toHaveBeenCalled();
+    expect(mockPlayer.play).not.toHaveBeenCalled();
   });
 });
 

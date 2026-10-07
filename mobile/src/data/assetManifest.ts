@@ -15,6 +15,14 @@ import type { CachedAssetRequest } from '@/utils/assetCache';
 
 export const ASSET_BASE_URL_ENV_VAR = 'EXPO_PUBLIC_ASSET_BASE_URL';
 
+/**
+ * The production CDN, used whenever the env var is unset or invalid. This is the
+ * default ON PURPOSE: build-profile `env` in eas.json is NOT available to
+ * `eas update`, so an OTA bundle would otherwise ship with no base URL and fall
+ * back to placeholders. The env var only exists to override this for dev.
+ */
+export const PRODUCTION_ASSET_BASE_URL = 'https://cdn.vedansh.app';
+
 export interface RemoteAssetManifest {
   /** R2 key prefix / document subdir, e.g. `kids-stories` or `audio-library`. */
   prefix: string;
@@ -27,10 +35,10 @@ export interface RemoteAssetManifest {
  * an https URL. Read as the full literal so babel inlines it in release bundles
  * (see the EXPO_PUBLIC note in `pushTokenPure.ts`).
  */
-export function assetBaseUrl(): string | null {
+export function assetBaseUrl(): string {
   const value = process.env.EXPO_PUBLIC_ASSET_BASE_URL;
-  if (!value || !value.startsWith('https://')) return null;
-  return value.replace(/\/+$/, '');
+  if (value && value.startsWith('https://')) return value.replace(/\/+$/, '');
+  return PRODUCTION_ASSET_BASE_URL;
 }
 
 /**

@@ -7,26 +7,22 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal",
-      "channel": "development",
-      "env": { "EXPO_PUBLIC_ASSET_BASE_URL": "https://cdn.vedansh.app" }
+      "channel": "development"
     },
     "preview": {
       "distribution": "internal",
-      "channel": "preview",
-      "env": { "EXPO_PUBLIC_ASSET_BASE_URL": "https://cdn.vedansh.app" }
+      "channel": "preview"
     },
     "dev-sim": {
       "distribution": "internal",
       "ios": {
         "simulator": true
       },
-      "channel": "dev-sim",
-      "env": { "EXPO_PUBLIC_ASSET_BASE_URL": "https://cdn.vedansh.app" }
+      "channel": "dev-sim"
     },
     "production": {
       "autoIncrement": true,
-      "channel": "production",
-      "env": { "EXPO_PUBLIC_ASSET_BASE_URL": "https://cdn.vedansh.app" }
+      "channel": "production"
     }
   },
   "submit": {

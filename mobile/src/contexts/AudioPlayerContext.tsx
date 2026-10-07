@@ -89,6 +89,9 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
 
   useEffect(() => {
     ensureBackgroundAudioMode();
+    // Wipe any decrypted plaintext audio a prior force-killed session left in
+    // the cache dir (its teardown cleanup never ran).
+    clearDecryptedAudioCache('audio-library');
   }, []);
 
   // Mirror native playback state into React.
@@ -135,6 +138,13 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
         // No audio for this track yet — surface it without crashing.
         setCurrentTrack(track);
         return;
+      }
+      // Stop the outgoing track at once so it doesn't keep playing through the
+      // new one's download/decrypt (which can take a beat on first use).
+      try {
+        player.pause();
+      } catch {
+        /* player released */
       }
       // Show the track immediately; the source resolves asynchronously (the
       // recording is fetched once and decrypted from the on-device cache).
@@ -273,6 +283,11 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
   }, [player]);
 
   const stop = useCallback(() => {
+    // Invalidate any in-flight source resolve so a slow download/decrypt can't
+    // replace the source and restart playback after Stop — or after read-aloud
+    // / japam has claimed the session (this is the 'recorded' stopper).
+    playTokenRef.current += 1;
+    wantPlayRef.current = false;
     try {
       player.pause();
       player.seekTo(0).catch(() => undefined);

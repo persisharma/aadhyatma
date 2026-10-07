@@ -6,14 +6,19 @@
  * document dir, so the saved file is not a playable mp3: it can't be pulled off
  * the device and opened in another player or shared. Playback decrypts to a
  * transient plaintext file in the (app-private, OS-evictable) cache dir — the
- * unavoidable DRM window — reused for the session and wiped on teardown.
+ * unavoidable DRM window — reused for the session and wiped on teardown AND on
+ * next launch (see `clearDecryptedAudioCache`) so a force-kill leaves no
+ * plaintext lingering across sessions.
  *
  *   first play : download → encrypt → store .enc → decrypt → play (one fetch)
  *   replay     : decrypt stored .enc → play           (offline, no network)
  *   same session: the plaintext temp is reused directly
  *
- * The .enc file lives in the document dir (survives app close, only cleared on
- * uninstall/clear-storage); the plaintext temp lives in the cache dir.
+ * Every write lands via a `.part`/scratch sibling that is renamed into place
+ * only once complete, so an interrupted download/encrypt/decrypt never leaves a
+ * half-written `.enc` or temp that a later call would trust — and a leftover
+ * scratch from a failed attempt is cleared before retrying (else the native
+ * downloader throws `DestinationAlreadyExists` and the track is stuck forever).
  */
 import { Directory, File, Paths } from 'expo-file-system';
 import * as aesjs from 'aes-js';
@@ -55,17 +60,32 @@ export async function playableAudioUri(req: CachedAssetRequest): Promise<string>
   const task = (async () => {
     const encDir = new Directory(Paths.document, `${req.subdir}-enc`);
     const encFile = new File(encDir, `${req.key}.enc`);
+    const encPart = new File(encDir, `${req.key}.enc.part`);
+    const dlScratch = new File(tmpDir, `${req.key}.dl`);
+    const tmpPart = new File(tmpDir, `${req.key}.${req.ext}.part`);
     try {
       if (!tmpDir.exists) tmpDir.create({ intermediates: true });
+      if (!encDir.exists) encDir.create({ intermediates: true });
       if (!encFile.exists) {
-        if (!encDir.exists) encDir.create({ intermediates: true });
-        const scratch = new File(tmpDir, `${req.key}.dl`);
-        await File.downloadFileAsync(req.remoteUrl, scratch);
-        encFile.write(await xcrypt(await scratch.bytes(), req.key));
-        scratch.delete();
+        // Clear leftovers from a prior interrupted attempt, or the native
+        // downloader rejects (DestinationAlreadyExists) and never retries.
+        if (dlScratch.exists) dlScratch.delete();
+        if (encPart.exists) encPart.delete();
+        await File.downloadFileAsync(req.remoteUrl, dlScratch);
+        encPart.write(await xcrypt(await dlScratch.bytes(), req.key));
+        dlScratch.delete();
+        encPart.move(encFile); // atomic: .enc only ever exists complete
       }
-      tmpFile.write(await xcrypt(await encFile.bytes(), req.key));
+      if (tmpPart.exists) tmpPart.delete();
+      tmpPart.write(await xcrypt(await encFile.bytes(), req.key));
+      tmpPart.move(tmpFile); // atomic: the playable temp is complete or absent
       return tmpFile.uri;
+    } catch (err) {
+      // Leave nothing half-written that a later call would treat as valid.
+      if (dlScratch.exists) dlScratch.delete();
+      if (encPart.exists) encPart.delete();
+      if (tmpPart.exists) tmpPart.delete();
+      throw err;
     } finally {
       inFlight.delete(req.key);
     }
@@ -75,7 +95,7 @@ export async function playableAudioUri(req: CachedAssetRequest): Promise<string>
   return task;
 }
 
-/** Wipe the plaintext playback temps (called on player teardown). */
+/** Wipe the plaintext playback temps (called on player teardown and on launch). */
 export function clearDecryptedAudioCache(subdir: string): void {
   const tmpDir = new Directory(Paths.cache, `${subdir}-play`);
   if (tmpDir.exists) tmpDir.delete();

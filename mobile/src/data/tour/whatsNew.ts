@@ -26,13 +26,26 @@ export type WhatsNewEntry = {
  * Current app version. Must match `expo.version` in `mobile/app.json`. This is
  * the key against which the user's "last seen what's new" is compared.
  */
-export const APP_TOUR_VERSION = '1.4.9';
+export const APP_TOUR_VERSION = '1.5.0';
 
 /**
  * Per-version what's-new content. The latest entry is shown when the user
  * first opens this version of the app after updating.
  */
 export const whatsNew: Readonly<Record<string, WhatsNewEntry>> = {
+  '1.5.0': {
+    version: '1.5.0',
+    items: [
+      {
+        titleHi: 'हल्का ऐप · सामग्री स्वतः जुड़े',
+        titleEn: 'Lighter app · content arrives on its own',
+        bodyHi:
+          'कहानियों के चित्र और भजन अब इंटरनेट से आते हैं — ऐप का आकार बहुत छोटा, और नई कहानियाँ व भजन बिना अपडेट के अपने आप जुड़ते रहेंगे। हर सामग्री पहली बार खोलने पर एक बार आती है, फिर ऑफ़लाइन भी उपलब्ध रहती है।',
+        bodyEn:
+          'Story artwork and bhajans now come from the cloud — a much smaller app, and new stories and bhajans arrive on their own without an update. Each loads once on first view, then stays available offline.',
+      },
+    ],
+  },
   '1.4.9': {
     version: '1.4.9',
     items: [

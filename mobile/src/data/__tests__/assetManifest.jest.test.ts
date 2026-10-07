@@ -5,7 +5,7 @@
  * and every "no remote" path (unset base, unknown stem) degrades to null rather
  * than a broken URL, so the caller can show its bundled placeholder.
  */
-import { assetBaseUrl, remoteAssetRequest, type RemoteAssetManifest } from '@/data/assetManifest';
+import { assetBaseUrl, PRODUCTION_ASSET_BASE_URL, remoteAssetRequest, type RemoteAssetManifest } from '@/data/assetManifest';
 
 const manifest: RemoteAssetManifest = {
   prefix: 'kids-stories',
@@ -39,18 +39,18 @@ describe('assetBaseUrl', () => {
     else process.env.EXPO_PUBLIC_ASSET_BASE_URL = ORIGINAL;
   });
 
-  it('trims a trailing slash', () => {
-    process.env.EXPO_PUBLIC_ASSET_BASE_URL = 'https://cdn.vedansh.app/';
-    expect(assetBaseUrl()).toBe('https://cdn.vedansh.app');
+  it('trims a trailing slash on an override', () => {
+    process.env.EXPO_PUBLIC_ASSET_BASE_URL = 'https://cdn.example.test/';
+    expect(assetBaseUrl()).toBe('https://cdn.example.test');
   });
 
-  it('is null when unset', () => {
+  it('defaults to the production CDN when unset (so OTA bundles still resolve)', () => {
     delete process.env.EXPO_PUBLIC_ASSET_BASE_URL;
-    expect(assetBaseUrl()).toBeNull();
+    expect(assetBaseUrl()).toBe(PRODUCTION_ASSET_BASE_URL);
   });
 
-  it('rejects a non-https value', () => {
+  it('falls back to the production CDN for a non-https value', () => {
     process.env.EXPO_PUBLIC_ASSET_BASE_URL = 'http://insecure.example';
-    expect(assetBaseUrl()).toBeNull();
+    expect(assetBaseUrl()).toBe(PRODUCTION_ASSET_BASE_URL);
   });
 });

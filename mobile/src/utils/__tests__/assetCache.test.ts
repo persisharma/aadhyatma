@@ -35,8 +35,13 @@ jest.mock('expo-file-system', () => {
     constructor(...parts: unknown[]) { this.uri = join(parts); }
     get exists() { return state.exists.has(this.uri); }
     delete() { state.exists.delete(this.uri); }
+    move(dest: { uri: string }) {
+      if (state.exists.has(this.uri)) { state.exists.delete(this.uri); state.exists.add(dest.uri); }
+    }
     static async downloadFileAsync(url: string, dest: { uri: string }) {
       if (state.fail.has(url)) throw new Error('network down');
+      // Mirror the native downloader: it rejects if the destination exists.
+      if (state.exists.has(dest.uri)) throw new Error('DestinationAlreadyExists');
       state.downloads.push(dest.uri);
       state.exists.add(dest.uri);
       return dest;
@@ -72,11 +77,14 @@ describe('cachedAssetUri', () => {
     expect(uri.startsWith('file:///cache')).toBe(false);
   });
 
-  it('downloads exactly once, then serves the local file with no network', async () => {
+  it('downloads once to a scratch, moves it into place, then serves locally', async () => {
     const first = await cachedAssetUri(req());
     const second = await cachedAssetUri(req());
     expect(first).toBe(second);
-    expect(fsState.downloads).toEqual(['file:///doc/kids-stories/a3f9c2.webp']);
+    // The download targets a .part sibling; the final file is the atomic result.
+    expect(fsState.downloads).toEqual(['file:///doc/kids-stories/a3f9c2.webp.part']);
+    expect(fsState.exists.has('file:///doc/kids-stories/a3f9c2.webp')).toBe(true);
+    expect(fsState.exists.has('file:///doc/kids-stories/a3f9c2.webp.part')).toBe(false);
   });
 
   it('collapses concurrent first-requests into a single download', async () => {
@@ -89,8 +97,8 @@ describe('cachedAssetUri', () => {
     await cachedAssetUri(req({ key: 'a3f9c2' }));
     await cachedAssetUri(req({ key: 'b7e100', remoteUrl: 'https://cdn.example.com/b7e100.webp' }));
     expect(fsState.downloads).toEqual([
-      'file:///doc/kids-stories/a3f9c2.webp',
-      'file:///doc/kids-stories/b7e100.webp',
+      'file:///doc/kids-stories/a3f9c2.webp.part',
+      'file:///doc/kids-stories/b7e100.webp.part',
     ]);
   });
 
@@ -102,7 +110,16 @@ describe('cachedAssetUri', () => {
     fsState.fail.clear();
     const uri = await cachedAssetUri(req());
     expect(uri).toBe('file:///doc/kids-stories/a3f9c2.webp');
-    expect(fsState.downloads).toEqual(['file:///doc/kids-stories/a3f9c2.webp']);
+    expect(fsState.downloads).toEqual(['file:///doc/kids-stories/a3f9c2.webp.part']);
+  });
+
+  it('clears a leftover scratch from an interrupted attempt so it stays retryable', async () => {
+    // A prior run was killed mid-download, leaving the .part behind. A naive
+    // retry would hit DestinationAlreadyExists and be stuck forever.
+    fsState.exists.add('file:///doc/kids-stories/a3f9c2.webp.part');
+    const uri = await cachedAssetUri(req());
+    expect(uri).toBe('file:///doc/kids-stories/a3f9c2.webp');
+    expect(fsState.exists.has('file:///doc/kids-stories/a3f9c2.webp')).toBe(true);
   });
 
   it('keeps audio and image subdirs separate', async () => {

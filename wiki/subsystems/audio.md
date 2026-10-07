@@ -13,7 +13,12 @@ The app makes sound three ways, and they are **mutually exclusive**:
 
 1. **Recorded audio** — the Bhajan tab's library, played by one app-wide `expo-audio` player
    (`AudioPlayerContext`) with a root-overlay MiniPlayer + Now Playing surface. 13 catalog tracks,
-   **5 real recordings**.
+   **10 real recordings**. The recordings are **served from the R2 CDN, not bundled** — each is
+   downloaded once and stored **AES-256-CTR-encrypted** on-device (device key in the Keychain/
+   Keystore via `audioKey`), then decrypted to a transient cache-dir temp for playback. See
+   `src/utils/encryptedAudioCache.ts`; `assets/audio-library/index.ts` resolves a track id →
+   `audioRemoteRequest` via `audioAssetManifest.json`. (`hare-rama.mp3` + `gayatri-mantra.mp3` stay
+   bundled because the japam loop `require`s them for offline alarm playback.)
 2. **The japam loop** — a component-scoped looping player inside `JapamAudioPlayer` that also
    drives the bead count.
 3. **Read aloud (पाठ सुनें)** — on-device TTS via `expo-speech`, reader-scoped, added July 2026.

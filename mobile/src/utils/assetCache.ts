@@ -46,13 +46,18 @@ export async function cachedAssetUri({ key, ext, subdir, remoteUrl }: CachedAsse
   if (pending) return pending;
 
   const task = (async () => {
-    if (!dir.exists) dir.create({ intermediates: true });
+    const part = new File(dir, `${key}.${ext}.part`);
     try {
-      await File.downloadFileAsync(remoteUrl, file);
+      if (!dir.exists) dir.create({ intermediates: true });
+      // Clear a leftover from a prior interrupted attempt, else the native
+      // downloader rejects (DestinationAlreadyExists) and never retries.
+      if (part.exists) part.delete();
+      await File.downloadFileAsync(remoteUrl, part);
+      part.move(file); // atomic: the final file only ever exists complete
       return file.uri;
     } catch (err) {
-      // Leave nothing half-written behind, so the next attempt retries cleanly.
-      if (file.exists) file.delete();
+      // Leave nothing half-written that a later call would treat as a cache hit.
+      if (part.exists) part.delete();
       throw err;
     } finally {
       inFlight.delete(file.uri);

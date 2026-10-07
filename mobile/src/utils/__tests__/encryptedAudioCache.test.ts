@@ -33,9 +33,15 @@ jest.mock('expo-file-system', () => {
     constructor(...parts: unknown[]) { this.uri = join(parts); }
     get exists() { return store.has(this.uri); }
     delete() { store.delete(this.uri); }
+    move(dest: { uri: string }) {
+      const b = store.get(this.uri);
+      if (b !== undefined) { store.delete(this.uri); store.set(dest.uri, b); }
+    }
     async bytes() { return store.get(this.uri)!; }
     write(content: Uint8Array) { store.set(this.uri, content); }
     static async downloadFileAsync(url: string, dest: { uri: string }) {
+      // Mirror the native downloader: reject if the destination already exists.
+      if (store.has(dest.uri)) throw new Error('DestinationAlreadyExists');
       state.downloads.push(url);
       store.set(dest.uri, new Uint8Array([10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]));
       return dest;
@@ -91,5 +97,15 @@ describe('playableAudioUri', () => {
     expect(uri).toBe(TMP);
     expect(fs.__state.downloads).toHaveLength(1); // no second network fetch
     expect([...fs.__store.get(TMP)!]).toEqual([...PLAINTEXT]);
+  });
+
+  it('clears leftover scratch from an interrupted attempt so it stays retryable', async () => {
+    // A prior attempt was killed mid-download, leaving the .dl scratch behind.
+    // Without clearing it, the native downloader would reject forever.
+    fs.__store.set(`file:///cache/audio-library-play/${HASH}.dl`, new Uint8Array([1, 2]));
+    const uri = await playableAudioUri(req());
+    expect(uri).toBe(TMP);
+    expect([...fs.__store.get(ENC)!]).not.toEqual([...PLAINTEXT]); // encrypted at rest
+    expect([...fs.__store.get(TMP)!]).toEqual([...PLAINTEXT]); // plays correctly
   });
 });
