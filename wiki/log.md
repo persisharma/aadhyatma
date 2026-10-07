@@ -342,3 +342,7 @@ Added Putana and Kaliya Nag to Krishna, Ganesha Birth to Ganesha, and Hanuman an
 ## [2026-10-07] ingest | Gentler openings for the four kids stories
 
 Updated `subsystems/kids-stories.md` from canonical story records and native evidence: one distinct sourced introduction per story, hi/en/gu/kn narration, Putana motivation context, 30 total scenes, synchronized assets/prototypes, and scoped Standard/Large simulator validation. Follow-up remains local on `codex/kids-story-openings`; the original delivery PR #422 has merged. Evidence: `docs/content-parity/kids-story-openings/README.md`.
+
+## [2026-10-07] ingest | Meta app-install measurement for Android and iOS
+
+Added [[integrations/meta-app-events]] for the local Expo Core SDK bridge, verified app/platform/owner mapping, build flag and native-only client configuration, ATT lifecycle handling, and explicit privacy guards. iOS simulator build/startup and focused source checks pass; no event receipt or paid attribution has been established. Android toolchain is unavailable, simulator SDK transport has TLS -1200, and production privacy disclosures/new store binaries are still required. Runbook and unpublished disclosure draft are in docs; no campaign/store/OTA publication or Git push occurred.
