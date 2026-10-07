@@ -29,6 +29,23 @@
   },
   "pages": [
     {
+      "id": "a-wish-on-kailasa",
+      "art": "gb00",
+      "source": "Shiva Purana 2.4.13.9–19",
+      "title": {
+        "hi": "कैलास पर एक इच्छा",
+        "en": "A Wish on Kailasa",
+        "gu": "કૈલાસ પર એક ઇચ્છા",
+        "kn": "ಕೈಲಾಸದಲ್ಲಿ ಒಂದು ಬಯಕೆ"
+      },
+      "text": {
+        "hi": "कैलास पर पार्वती शिव के साथ रहती थीं। शिव के गण द्वार की रखवाली करते थे। अपनी सखियों से बात करते हुए पार्वती ने चाहा कि कोई उनका अपना भी हो, जो उनके निर्देश माने।",
+        "en": "Parvati lived with Shiva on Mount Kailasa. His attendants guarded the door. Speaking with her friends, she wished for someone of her own who would listen carefully to her instructions.",
+        "gu": "કૈલાસ પર પાર્વતી શિવ સાથે રહેતાં હતાં. શિવના ગણ દ્વારની રખેવાળી કરતા. સખીઓ સાથે વાત કરતાં પાર્વતીએ વિચાર્યું કે કોઈ તેમનું પોતાનું પણ હોય, જે તેમની સૂચના માને.",
+        "kn": "ಕೈಲಾಸದಲ್ಲಿ ಪಾರ್ವತಿ ಶಿವನೊಂದಿಗೆ ವಾಸಿಸುತ್ತಿದ್ದಳು. ಶಿವನ ಗಣಗಳು ಬಾಗಿಲು ಕಾಯುತ್ತಿದ್ದರು. ತನ್ನ ಮಾತನ್ನು ಕೇಳುವ ಒಬ್ಬರು ಬೇಕೆಂದು ಗೆಳತಿಯರೊಂದಿಗೆ ಮಾತನಾಡಿದಳು."
+      }
+    },
+    {
       "id": "parvatis-son",
       "art": "gb01",
       "source": "Shiva Purana 2.4.13.19–24",
@@ -157,6 +174,6 @@
       "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226138.html",
       "https://sanskritdocuments.org/doc_purana/shivapurANam2rudrasaMhitA4kumArakhaNDaH.pdf"
     ],
-    "notes": "J. L. Shastri translation compared with Sanskrit text, especially 17.47–59 and 18.3–4. Human head precedes restoration; single-tusked elephant head follows it. Graphic events are shortened and not illustrated."
+    "notes": "J. L. Shastri translation compared with Sanskrit text, especially 17.47–59 and 18.3–4. Human head precedes restoration; single-tusked elephant head follows it. Graphic events are shortened and not illustrated. Opening setup introduces the characters and setting before the existing story events."
   }
 }

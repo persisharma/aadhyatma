@@ -338,3 +338,7 @@ Re-verified HomeScreen, homeLayout, TodayRecommendationsRow, FeatureIcon and Mor
 ## [2026-10-07] ingest | Four sourced kids stories
 
 Added Putana and Kaliya Nag to Krishna, Ganesha Birth to Ganesha, and Hanuman and the Sun to Hanuman. All four reuse the existing reader with authored hi/en/gu/kn narration, dated publication provenance, distinct closing scenes and 26 bundled WebP illustrations. Final Release build, 2,957 tests, existing Krishna flow, all 26 new scenes and all 52 Gujarati/Kannada Large-size scenes passed. Visual review caught and corrected a Kannada caption hiding Krishna’s face without changing the reader layout. Native evidence, prompts, source/adaptation boundaries and the 7,677,712-byte art payload are recorded in docs/content-parity/kids-stories-expansion/. Regional editorial review remains a release check; feature changes are local. Updated [[kids-stories]] and index.
+
+## [2026-10-07] ingest | Gentler openings for the four kids stories
+
+Updated `subsystems/kids-stories.md` from canonical story records and native evidence: one distinct sourced introduction per story, hi/en/gu/kn narration, Putana motivation context, 30 total scenes, synchronized assets/prototypes, and scoped Standard/Large simulator validation. Follow-up remains local on `codex/kids-story-openings`; the original delivery PR #422 has merged. Evidence: `docs/content-parity/kids-story-openings/README.md`.

@@ -29,6 +29,23 @@
   },
   "pages": [
     {
+      "id": "meet-little-hanuman",
+      "art": "hs00",
+      "source": "Valmiki Ramayana, Uttara-kanda 35.19–21",
+      "title": {
+        "hi": "मिलिए नन्हे हनुमान से",
+        "en": "Meet Little Hanuman",
+        "gu": "મળો નાનકડા હનુમાનને",
+        "kn": "ಪುಟ್ಟ ಹನುಮಂತನ ಪರಿಚಯ"
+      },
+      "text": {
+        "hi": "सुमेरु पर्वत के पास अंजना अपने नन्हे पुत्र हनुमान के साथ रहती थीं। हनुमान वायुदेव के पुत्र भी कहलाते हैं। यह उनके बचपन की कहानी है, जब वे बहुत छोटे थे।",
+        "en": "Near Mount Sumeru lived Anjana and her little son, Hanuman. He is also known as the son of Vayu, the wind god. Our story begins when he was still very young.",
+        "gu": "સુમેરુ પર્વત પાસે અંજના પોતાના નાનકડા પુત્ર હનુમાન સાથે રહેતાં હતાં. હનુમાન વાયુદેવના પુત્ર પણ કહેવાય છે. આ તેમના બાળપણની કથા છે, જ્યારે તેઓ બહુ નાના હતા.",
+        "kn": "ಸುಮೇರು ಪರ್ವತದ ಬಳಿ ಅಂಜನೆ ಪುಟ್ಟ ಮಗ ಹನುಮಂತನೊಂದಿಗೆ ವಾಸಿಸುತ್ತಿದ್ದಳು. ಅವನು ವಾಯುದೇವನ ಮಗನೂ ಹೌದು. ಇದು ಅವನ ಚಿಕ್ಕಂದಿನ ಕಥೆ."
+      }
+    },
+    {
       "id": "hungry-at-dawn",
       "art": "hs01",
       "source": "Valmiki Ramayana, Uttara-kanda 35.21–23",
@@ -140,6 +157,6 @@
       "https://sanskritdocuments.org/mirrors/ramayana/utf/7_uttarakanda_35.html",
       "https://sanskritdocuments.org/mirrors/ramayana/utf/7_uttarakanda_36.html"
     ],
-    "notes": "Hari Prasad Shastri translation compared with Sanskrit text. Airavata has four tusks (35.37); revival and boons follow 36.3–24. This version is flight towards the sun, not swallowing it."
+    "notes": "Hari Prasad Shastri translation compared with Sanskrit text. Airavata has four tusks (35.37); revival and boons follow 36.3–24. This version is flight towards the sun, not swallowing it. Opening setup introduces the characters and setting before the existing story events."
   }
 }

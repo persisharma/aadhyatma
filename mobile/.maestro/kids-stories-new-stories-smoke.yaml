@@ -12,46 +12,59 @@ appId: com.prashantsharma.vedansh
     centerElement: true
 - tapOn: { id: "kids-story-putana" }
 - tapOn: { id: "lang-toggle-en" }
-- assertVisible: "1 / 6"
+- assertVisible: "1 / 7"
+- assertVisible: { id: "story-page-little-krishna-in-gokul" }
+- assertVisible: "Long ago, little Krishna lived in the village of Gokul. Yashoda and Nanda cared for him with love. His arrival had brought joy to their home and the village."
+- takeScreenshot: kids-putana-00
+- tapOn: { id: "lang-toggle-hi" }
+- assertVisible: "1 / 7"
+- assertVisible: "बहुत समय पहले, गोकुल नाम के गाँव में नन्हे कृष्ण रहते थे। यशोदा और नंद उन्हें प्यार से पालते थे। उनके आने से घर और गाँव में खुशियाँ थीं।"
+- takeScreenshot: kids-putana-hi-00
+- tapOn: { id: "lang-toggle-en" }
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 7"
 - assertVisible: { id: "story-page-kansas-plan" }
 - takeScreenshot: kids-putana-01
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "2 / 6"
+- assertVisible: "3 / 7"
 - assertVisible: { id: "story-page-beautiful-disguise" }
 - takeScreenshot: kids-putana-02
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "3 / 6"
+- assertVisible: "4 / 7"
 - assertVisible: { id: "story-page-krishnas-power" }
 - takeScreenshot: kids-putana-03
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "4 / 6"
+- assertVisible: "5 / 7"
 - assertVisible: { id: "story-page-danger-ends" }
 - takeScreenshot: kids-putana-04
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "5 / 6"
+- assertVisible: "6 / 7"
 - assertVisible: { id: "story-page-mothers-care" }
 - takeScreenshot: kids-putana-05
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "6 / 6"
+- assertVisible: "7 / 7"
 - assertVisible: { id: "story-page-mercy-and-home" }
 - takeScreenshot: kids-putana-06
 - tapOn: { id: "lang-toggle-hi" }
-- assertVisible: "6 / 6"
+- assertVisible: "7 / 7"
 - tapOn: { id: "lang-toggle-en" }
 - scrollUntilVisible:
     element: { text: "What we learn" }
@@ -70,53 +83,66 @@ appId: com.prashantsharma.vedansh
     centerElement: true
 - tapOn: { id: "kids-story-kaliya-nag" }
 - tapOn: { id: "lang-toggle-en" }
-- assertVisible: "1 / 7"
+- assertVisible: "1 / 8"
+- assertVisible: { id: "story-page-a-cowherds-day" }
+- assertVisible: "Krishna now tended cows in Vrindavana with his friends. Among trees, birds and flowers, they played and sang together. They also took their cows to graze along the Yamuna."
+- takeScreenshot: kids-kaliya-nag-00
+- tapOn: { id: "lang-toggle-hi" }
+- assertVisible: "1 / 8"
+- assertVisible: "कृष्ण अब वृंदावन में गायें चराने जाते थे। उनके सखा भी साथ होते थे। पेड़ों, पक्षियों और फूलों के बीच वे खेलते और गाते थे। यमुना के किनारे भी उनकी गायें चरती थीं।"
+- takeScreenshot: kids-kaliya-nag-hi-00
+- tapOn: { id: "lang-toggle-en" }
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 8"
 - assertVisible: { id: "story-page-poisoned-yamuna" }
 - takeScreenshot: kids-kaliya-nag-01
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "2 / 7"
+- assertVisible: "3 / 8"
 - assertVisible: { id: "story-page-kadamba-leap" }
 - takeScreenshot: kids-kaliya-nag-02
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "3 / 7"
+- assertVisible: "4 / 8"
 - assertVisible: { id: "story-page-friends-worry" }
 - takeScreenshot: kids-kaliya-nag-03
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "4 / 7"
+- assertVisible: "5 / 8"
 - assertVisible: { id: "story-page-dance-on-hoods" }
 - takeScreenshot: kids-kaliya-nag-04
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "5 / 7"
+- assertVisible: "6 / 8"
 - assertVisible: { id: "story-page-family-prays" }
 - takeScreenshot: kids-kaliya-nag-05
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "6 / 7"
+- assertVisible: "7 / 8"
 - assertVisible: { id: "story-page-leave-in-peace" }
 - takeScreenshot: kids-kaliya-nag-06
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "7 / 7"
+- assertVisible: "8 / 8"
 - assertVisible: { id: "story-page-river-restored" }
 - takeScreenshot: kids-kaliya-nag-07
 - tapOn: { id: "lang-toggle-hi" }
-- assertVisible: "7 / 7"
+- assertVisible: "8 / 8"
 - tapOn: { id: "lang-toggle-en" }
 - scrollUntilVisible:
     element: { text: "What we learn" }
@@ -137,53 +163,66 @@ appId: com.prashantsharma.vedansh
     centerElement: true
 - tapOn: { id: "kids-story-ganesha-birth" }
 - tapOn: { id: "lang-toggle-en" }
-- assertVisible: "1 / 7"
+- assertVisible: "1 / 8"
+- assertVisible: { id: "story-page-a-wish-on-kailasa" }
+- assertVisible: "Parvati lived with Shiva on Mount Kailasa. His attendants guarded the door. Speaking with her friends, she wished for someone of her own who would listen carefully to her instructions."
+- takeScreenshot: kids-ganesha-birth-00
+- tapOn: { id: "lang-toggle-hi" }
+- assertVisible: "1 / 8"
+- assertVisible: "कैलास पर पार्वती शिव के साथ रहती थीं। शिव के गण द्वार की रखवाली करते थे। अपनी सखियों से बात करते हुए पार्वती ने चाहा कि कोई उनका अपना भी हो, जो उनके निर्देश माने।"
+- takeScreenshot: kids-ganesha-birth-hi-00
+- tapOn: { id: "lang-toggle-en" }
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 8"
 - assertVisible: { id: "story-page-parvatis-son" }
 - takeScreenshot: kids-ganesha-birth-01
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "2 / 7"
+- assertVisible: "3 / 8"
 - assertVisible: { id: "story-page-guard-the-door" }
 - takeScreenshot: kids-ganesha-birth-02
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "3 / 7"
+- assertVisible: "4 / 8"
 - assertVisible: { id: "story-page-shiva-returns" }
 - takeScreenshot: kids-ganesha-birth-03
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "4 / 7"
+- assertVisible: "5 / 8"
 - assertVisible: { id: "story-page-parvatis-sorrow" }
 - takeScreenshot: kids-ganesha-birth-04
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "5 / 7"
+- assertVisible: "6 / 8"
 - assertVisible: { id: "story-page-new-life" }
 - takeScreenshot: kids-ganesha-birth-05
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "6 / 7"
+- assertVisible: "7 / 8"
 - assertVisible: { id: "story-page-mothers-embrace" }
 - takeScreenshot: kids-ganesha-birth-06
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "7 / 7"
+- assertVisible: "8 / 8"
 - assertVisible: { id: "story-page-ganapati-blessing" }
 - takeScreenshot: kids-ganesha-birth-07
 - tapOn: { id: "lang-toggle-hi" }
-- assertVisible: "7 / 7"
+- assertVisible: "8 / 8"
 - tapOn: { id: "lang-toggle-en" }
 - scrollUntilVisible:
     element: { text: "What we learn" }
@@ -204,46 +243,59 @@ appId: com.prashantsharma.vedansh
     centerElement: true
 - tapOn: { id: "kids-story-hanuman-sun" }
 - tapOn: { id: "lang-toggle-en" }
-- assertVisible: "1 / 6"
+- assertVisible: "1 / 7"
+- assertVisible: { id: "story-page-meet-little-hanuman" }
+- assertVisible: "Near Mount Sumeru lived Anjana and her little son, Hanuman. He is also known as the son of Vayu, the wind god. Our story begins when he was still very young."
+- takeScreenshot: kids-hanuman-sun-00
+- tapOn: { id: "lang-toggle-hi" }
+- assertVisible: "1 / 7"
+- assertVisible: "सुमेरु पर्वत के पास अंजना अपने नन्हे पुत्र हनुमान के साथ रहती थीं। हनुमान वायुदेव के पुत्र भी कहलाते हैं। यह उनके बचपन की कहानी है, जब वे बहुत छोटे थे।"
+- takeScreenshot: kids-hanuman-sun-hi-00
+- tapOn: { id: "lang-toggle-en" }
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 7"
 - assertVisible: { id: "story-page-hungry-at-dawn" }
 - takeScreenshot: kids-hanuman-sun-01
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "2 / 6"
+- assertVisible: "3 / 7"
 - assertVisible: { id: "story-page-towards-the-sun" }
 - takeScreenshot: kids-hanuman-sun-02
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "3 / 6"
+- assertVisible: "4 / 7"
 - assertVisible: { id: "story-page-indra-arrives" }
 - takeScreenshot: kids-hanuman-sun-03
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "4 / 6"
+- assertVisible: "5 / 7"
 - assertVisible: { id: "story-page-vayus-sorrow" }
 - takeScreenshot: kids-hanuman-sun-04
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "5 / 6"
+- assertVisible: "6 / 7"
 - assertVisible: { id: "story-page-brahma-restores" }
 - takeScreenshot: kids-hanuman-sun-05
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "6 / 6"
+- assertVisible: "7 / 7"
 - assertVisible: { id: "story-page-gods-blessings" }
 - takeScreenshot: kids-hanuman-sun-06
 - tapOn: { id: "lang-toggle-hi" }
-- assertVisible: "6 / 6"
+- assertVisible: "7 / 7"
 - tapOn: { id: "lang-toggle-en" }
 - scrollUntilVisible:
     element: { text: "What we learn" }

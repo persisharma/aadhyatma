@@ -16,10 +16,10 @@
     "kn": "ಯಮುನೆಯಲ್ಲಿ ಧೈರ್ಯ, ವಿನಯ ಮತ್ತು ಕ್ಷಮೆಯ ಕಥೆ."
   },
   "sourceNote": {
-    "hi": "श्रीमद्भागवत 10.16 का सरल रूपांतरण। अनेक फण चित्रों में संक्षेप से दिखाए गए हैं। सीख संपादकीय है।",
-    "en": "A simple retelling of Bhagavata Purana 10.16. Illustrations represent the many hoods with a smaller visible group. The takeaway is editorial.",
-    "gu": "શ્રીમદ્ ભાગવત 10.16નું સરળ રૂપાંતર. અનેક ફણને ચિત્રોમાં નાના સમૂહથી દર્શાવ્યા છે. શીખ સંપાદકીય છે.",
-    "kn": "ಶ್ರೀಮದ್ಭಾಗವತ 10.16ರ ಸರಳ ರೂಪಾಂತರ. ಚಿತ್ರಗಳಲ್ಲಿ ಅನೇಕ ಹೆಡೆಗಳನ್ನು ಚಿಕ್ಕ ಗುಂಪಿನಿಂದ ಸೂಚಿಸಲಾಗಿದೆ. ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+    "hi": "श्रीमद्भागवत 10.15–16 का सरल रूपांतरण। अनेक फण चित्रों में संक्षेप से दिखाए गए हैं। सीख संपादकीय है।",
+    "en": "A simple retelling of Bhagavata Purana 10.15–16. Illustrations represent the many hoods with a smaller visible group. The takeaway is editorial.",
+    "gu": "શ્રીમદ્ ભાગવત 10.15–16નું સરળ રૂપાંતર. અનેક ફણને ચિત્રોમાં નાના સમૂહથી દર્શાવ્યા છે. શીખ સંપાદકીય છે.",
+    "kn": "ಶ್ರೀಮದ್ಭಾಗವತ 10.15–16ರ ಸರಳ ರೂಪಾಂತರ. ಚಿತ್ರಗಳಲ್ಲಿ ಅನೇಕ ಹೆಡೆಗಳನ್ನು ಚಿಕ್ಕ ಗುಂಪಿನಿಂದ ಸೂಚಿಸಲಾಗಿದೆ. ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
   },
   "takeaway": {
     "hi": "साहस के साथ करुणा भी रखो। गलती स्वीकार करना और उसे सुधारना विनम्रता है। प्रकृति की रक्षा सबके लिए मूल्यवान है।",
@@ -28,6 +28,23 @@
     "kn": "ಧೈರ್ಯದ ಜೊತೆ ಕರುಣೆಯೂ ಇರಲಿ. ತಪ್ಪನ್ನು ಒಪ್ಪಿಕೊಂಡು ಸರಿಪಡಿಸುವುದು ವಿನಯ. ಪ್ರಕೃತಿಯ ಕಾಳಜಿ ಎಲ್ಲರಿಗೂ ಮುಖ್ಯ."
   },
   "pages": [
+    {
+      "id": "a-cowherds-day",
+      "art": "ka00",
+      "source": "Bhagavata Purana 10.15.1–3,9,47",
+      "title": {
+        "hi": "वृंदावन के सखा",
+        "en": "Friends in Vrindavana",
+        "gu": "વૃંદાવનના મિત્રો",
+        "kn": "ವೃಂದಾವನದ ಗೆಳೆಯರು"
+      },
+      "text": {
+        "hi": "कृष्ण अब वृंदावन में गायें चराने जाते थे। उनके सखा भी साथ होते थे। पेड़ों, पक्षियों और फूलों के बीच वे खेलते और गाते थे। यमुना के किनारे भी उनकी गायें चरती थीं।",
+        "en": "Krishna now tended cows in Vrindavana with his friends. Among trees, birds and flowers, they played and sang together. They also took their cows to graze along the Yamuna.",
+        "gu": "કૃષ્ણ હવે વૃંદાવનમાં ગાયો ચરાવવા જતા હતા. તેમના મિત્રો પણ સાથે રહેતા. વૃક્ષો, પક્ષીઓ અને ફૂલો વચ્ચે તેઓ રમતા અને ગાતા. યમુનાના કાંઠે પણ તેમની ગાયો ચરતી.",
+        "kn": "ಕೃಷ್ಣ ವೃಂದಾವನದಲ್ಲಿ ಗೆಳೆಯರೊಂದಿಗೆ ಹಸು ಮೇಯಿಸುತ್ತಿದ್ದ. ಮರ, ಹಕ್ಕಿ, ಹೂಗಳ ನಡುವೆ ಅವರು ಆಡುತ್ತಾ ಹಾಡುತ್ತಿದ್ದರು. ಯಮುನೆಯ ದಡದಲ್ಲೂ ಹಸುಗಳನ್ನು ಮೇಯಿಸುತ್ತಿದ್ದರು."
+      }
+    },
     {
       "id": "poisoned-yamuna",
       "art": "ka01",
@@ -149,12 +166,14 @@
     }
   ],
   "source": {
-    "baseText": "Bhagavata Purana 10.16",
+    "baseText": "Bhagavata Purana 10.15–16",
     "retrievedOn": "2026-10-07",
     "referenceUrls": [
       "https://vedabase.io/en/library/sb/10/16/",
-      "https://bhagavata.org/canto10/chapter16.html"
+      "https://bhagavata.org/canto10/chapter16.html",
+      "https://vedabase.io/en/library/sb/10/15/",
+      "https://bhagavata.org/canto10/chapter15.html"
     ],
-    "notes": "BBT and Aadhar translation checked, including submission, family departure and restored Yamuna. Art abbreviates the many hoods."
+    "notes": "BBT and Aadhar translation checked, including submission, family departure and restored Yamuna. Art abbreviates the many hoods. Opening setup introduces the characters and setting before the existing story events."
   }
 }

@@ -27,3 +27,12 @@ The Sanskrit [sarga 35](https://sanskritdocuments.org/mirrors/ramayana/utf/7_utt
 ## Integration and review boundary
 
 All four stories use the existing native Krishna Janma reader, shelves, source-note placement and four-language selection. No recordings or invented speech are added. Art prompts and generated-file provenance are maintained alongside this note. Review every illustration against the corresponding page, particularly each closing scene; title/filename correspondence alone is insufficient. These are authored children's adaptations; regional editorial review remains a release check under RULEBOOK §29.
+
+## Opening-page follow-up (2026-10-07)
+
+One distinct opening illustration now precedes each existing arc. Introductions remain original child-facing prose and do not invent dialogue or extra story events.
+
+- Putana: Gokul, Yashoda/Nanda and the community's joy from Bhagavata 10.5.1–2,9–18, checked against [BBT](https://vedabase.io/en/library/sb/10/5/) and [Aadhar](https://bhagavata.org/canto10/chapter5.html). The next page now explains Kansa's fear from [10.1.34](https://vedabase.io/en/library/sb/10/1/34/) before his commission in 10.6.2. It does not claim that he already knew Krishna's location.
+- Kaliya: Krishna's ordinary cowherd life in Vrindavana from [BBT 10.15.1–3,9,47](https://vedabase.io/en/library/sb/10/15/) and [Aadhar](https://bhagavata.org/canto10/chapter15.html), before the dangerous pool. The opening art shows Krishna and friends, not Balarama on the later outing.
+- Ganesha: Kailasa and Parvati's wish for someone following her own instructions from Shiva Purana 2.4.13.9–19, checked in the existing Shastri translation and Sanskrit PDF (pages 56–57). Jaya/Vijaya are the two friends; the opening shows no already-created boy and no bathing scene.
+- Hanuman: Sumeru, Anjana and the divine wind-father from Uttara-kanda 35.19–21, checked in the existing Shastri translation and Sanskrit text. The quiet family opening precedes the hunger and flight. No visible father is added to this scene, to avoid conflating Vayu with Kesari.

@@ -1,5 +1,7 @@
 # Four new kids stories — implementation and verification
 
+Historical PR #422 delivery record. The later four opening pages and their current validation are documented in [the opening-page follow-up](../kids-story-openings/README.md).
+
 Date: 2026-10-07. Workspace: `/Users/prashant/.codex/worktrees/e02b/Aadhyatma`, branch `codex/kids-four-stories`. Validation ran on the feature changes above `cf340d46`. PR preparation rebases the feature onto `b18a0356` (`main`, merged PR #421), whose tree is identical to that validation base. No OTA has been published.
 
 ## Delivered behavior
