@@ -334,3 +334,7 @@ Added six distinct scene illustrations for wedding, threat, imprisonment, Balara
 ## [2026-10-06] ingest | Home gutter and Discover icon consistency
 
 Re-verified HomeScreen, homeLayout, TodayRecommendationsRow, FeatureIcon and MoreIcon. Home uses one 16dp gutter, including both full-bleed carousel insets. All nine Discover subjects use centered 32dp painted art from the shared registries; Pitru/Widgets/Daan reuse More’s exact sources. Added the utility question seal (56 painted icons total), documented the font-based HomeWordmark Om exception, and refreshed concepts/deity-icons.md plus the index. Native evidence and size measurement are in docs/evaluations/home-gutter-2026-10-06/.
+
+## [2026-10-07] ingest | Four sourced kids stories
+
+Added Putana and Kaliya Nag to Krishna, Ganesha Birth to Ganesha, and Hanuman and the Sun to Hanuman. All four reuse the existing reader with authored hi/en/gu/kn narration, dated publication provenance, distinct closing scenes and 26 bundled WebP illustrations. Final Release build, 2,957 tests, existing Krishna flow, all 26 new scenes and all 52 Gujarati/Kannada Large-size scenes passed. Visual review caught and corrected a Kannada caption hiding Krishna’s face without changing the reader layout. Native evidence, prompts, source/adaptation boundaries and the 7,677,712-byte art payload are recorded in docs/content-parity/kids-stories-expansion/. Regional editorial review remains a release check; feature changes are local. Updated [[kids-stories]] and index.

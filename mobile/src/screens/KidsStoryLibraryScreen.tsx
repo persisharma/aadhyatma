@@ -24,7 +24,7 @@ export default function KidsStoryLibraryScreen({ navigation }: NativeStackScreen
         {storyDeities.map(deity => {
           const count = storiesForDeity(deity.id).length;
           const status = count
-            ? pick(lang, { hi: `${count} कथा`, en: `${count} story`, gu: `${count} વાર્તા`, kn: `${count} ಕಥೆ` })
+            ? pick(lang, { hi: `${count} कथा`, en: `${count} ${count === 1 ? 'story' : 'stories'}`, gu: `${count} વાર્તા`, kn: `${count} ಕಥೆ` })
             : pick(lang, { hi: 'कथाएँ जल्द आएँगी', en: 'Stories coming soon', gu: 'વાર્તાઓ જલ્દી આવશે', kn: 'ಕಥೆಗಳು ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿವೆ' });
           return (
             <DeityCard

@@ -9,8 +9,10 @@ appId: com.prashantsharma.vedansh
 - assertVisible: { id: "kids-story-deity-krishna" }
 - assertVisible: { id: "kids-story-deity-ganesha" }
 - assertVisible: { id: "kids-story-deity-hanuman" }
+- takeScreenshot: kids-story-catalog
 - tapOn: { id: "kids-story-deity-krishna" }
-- assertVisible: { id: "kids-story-planned-kaliya-nag" }
+- assertVisible: { id: "kids-story-putana" }
+- takeScreenshot: kids-krishna-shelf
 - tapOn: { id: "kids-story-krishna-janma" }
 - assertVisible: { id: "story-pager" }
 - assertVisible: "1 / 16"

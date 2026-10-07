@@ -1,0 +1,145 @@
+{
+  "id": "hanuman-sun",
+  "deityId": "hanuman",
+  "ageMin": 6,
+  "coverArt": "hs02",
+  "title": {
+    "hi": "हनुमान और सूर्य",
+    "en": "Hanuman and the Sun",
+    "gu": "હનુમાન અને સૂર્ય",
+    "kn": "ಹನುಮಂತ ಮತ್ತು ಸೂರ್ಯ"
+  },
+  "description": {
+    "hi": "नन्हे हनुमान की अद्भुत उड़ान और देवताओं के आशीर्वाद।",
+    "en": "Little Hanuman's astonishing flight and the blessings that followed.",
+    "gu": "નાનકડા હનુમાનની અદ્ભુત ઉડાન અને દેવતાઓના આશીર્વાદ.",
+    "kn": "ಪುಟ್ಟ ಹನುಮಂತನ ಅದ್ಭುತ ಹಾರಾಟ ಮತ್ತು ದೇವತೆಗಳ ಆಶೀರ್ವಾದ."
+  },
+  "sourceNote": {
+    "hi": "वाल्मीकि रामायण, उत्तरकाण्ड 35–36 का सरल रूपांतरण। इसमें सूर्य की ओर उड़ने की कथा है; सूर्य निगलने की लोक-कथा अलग है। सीख संपादकीय है।",
+    "en": "A children's retelling of Valmiki Ramayana, Uttara-kanda 35–36. This account follows his flight towards the sun; swallowing the sun belongs to other popular retellings. The takeaway is editorial.",
+    "gu": "વાલ્મીકિ રામાયણ, ઉત્તરકાંડ 35–36નું સરળ રૂપાંતર. અહીં સૂર્ય તરફ ઉડવાની કથા છે; સૂર્ય ગળી જવાની લોકકથા અલગ છે. શીખ સંપાદકીય છે.",
+    "kn": "ವಾಲ್ಮೀಕಿ ರಾಮಾಯಣದ ಉತ್ತರಕಾಂಡ 35–36ರ ಸರಳ ರೂಪಾಂತರ. ಇದು ಸೂರ್ಯನ ಕಡೆಗೆ ಹಾರಿದ ಕಥೆ; ಸೂರ್ಯನನ್ನು ನುಂಗಿದ ಜನಪದ ಕಥೆ ಬೇರೆ. ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+  },
+  "takeaway": {
+    "hi": "जिज्ञासा सीखने की शुरुआत है। बड़ी शक्ति के साथ समझ और देखभाल भी जरूरी हैं।",
+    "en": "Curiosity begins learning. Great strength also needs understanding and care.",
+    "gu": "જિજ્ઞાસા શીખવાની શરૂઆત છે. મોટી શક્તિ સાથે સમજ અને કાળજી પણ જરૂરી છે.",
+    "kn": "ಕುತೂಹಲ ಕಲಿಕೆಯ ಆರಂಭ. ದೊಡ್ಡ ಶಕ್ತಿಯ ಜೊತೆಗೆ ತಿಳುವಳಿಕೆ ಮತ್ತು ಕಾಳಜಿಯೂ ಬೇಕು."
+  },
+  "pages": [
+    {
+      "id": "hungry-at-dawn",
+      "art": "hs01",
+      "source": "Valmiki Ramayana, Uttara-kanda 35.21–23",
+      "title": {
+        "hi": "सुबह की भूख",
+        "en": "Hungry at Dawn",
+        "gu": "સવારની ભૂખ",
+        "kn": "ಬೆಳಗಿನ ಹಸಿವು"
+      },
+      "text": {
+        "hi": "अंजना फल लेने वन में गई थीं। नन्हे हनुमान को भूख लगी। उन्होंने उगते हुए लाल सूर्य को देखा और सोचा कि वह कोई बड़ा, स्वादिष्ट फल है।",
+        "en": "Anjana had gone to gather fruit. Little Hanuman was hungry. Seeing the red rising sun, he imagined it was a large, delicious fruit.",
+        "gu": "અંજના ફળ લેવા વનમાં ગયાં હતાં. નાનકડા હનુમાનને ભૂખ લાગી. તેમણે ઊગતો લાલ સૂર્ય જોયો અને વિચાર્યું કે તે મોટું, સ્વાદિષ્ટ ફળ છે.",
+        "kn": "ಅಂಜನೆ ಹಣ್ಣು ತರಲು ಕಾಡಿಗೆ ಹೋಗಿದ್ದಳು. ಪುಟ್ಟ ಹನುಮಂತನಿಗೆ ಹಸಿವಾಯಿತು. ಕೆಂಪಾಗಿ ಉದಯಿಸುತ್ತಿದ್ದ ಸೂರ್ಯನನ್ನು ಕಂಡು ಅದು ದೊಡ್ಡ ರುಚಿಯಾದ ಹಣ್ಣೆಂದು ಭಾವಿಸಿದ."
+      }
+    },
+    {
+      "id": "towards-the-sun",
+      "art": "hs02",
+      "source": "Valmiki Ramayana, Uttara-kanda 35.24–30",
+      "title": {
+        "hi": "सूर्य की ओर उड़ान",
+        "en": "Flying Towards the Sun",
+        "gu": "સૂર્ય તરફ ઉડાન",
+        "kn": "ಸೂರ್ಯನ ಕಡೆಗೆ ಹಾರಾಟ"
+      },
+      "text": {
+        "hi": "हनुमान ने आकाश में छलाँग लगाई। उनकी गति देखकर देवता चकित रह गए। वायुदेव ठंडी हवा से उनकी रक्षा करते हुए साथ चले। सूर्य ने भी नन्हे बालक को जलने नहीं दिया।",
+        "en": "Hanuman leapt into the sky, astonishing the gods with his speed. Vayu followed with cooling air to protect him. The sun also held back his heat from the innocent child.",
+        "gu": "હનુમાન આકાશમાં કૂદ્યા. તેમની ઝડપ જોઈને દેવતાઓ આશ્ચર્ય પામ્યા. વાયુદેવ ઠંડી હવાથી તેમની રક્ષા કરતાં સાથે ગયા. સૂર્યે પણ નાનકડા બાળકને બળવા દીધો નહીં.",
+        "kn": "ಹನುಮಂತ ಆಕಾಶಕ್ಕೆ ಜಿಗಿದ. ಅವನ ವೇಗ ದೇವತೆಗಳಿಗೆ ಅಚ್ಚರಿ ತಂದಿತು. ವಾಯುದೇವ ತಂಪಾದ ಗಾಳಿಯಿಂದ ರಕ್ಷಿಸುತ್ತಾ ಹಿಂಬಾಲಿಸಿದ. ಸೂರ್ಯನೂ ಮುಗ್ಧ ಬಾಲಕನನ್ನು ಸುಡದಂತೆ ತನ್ನ ಶಾಖವನ್ನು ತಡೆದ."
+      }
+    },
+    {
+      "id": "indra-arrives",
+      "art": "hs03",
+      "source": "Valmiki Ramayana, Uttara-kanda 35.31–47",
+      "title": {
+        "hi": "इंद्र का आगमन",
+        "en": "Indra Arrives",
+        "gu": "ઇન્દ્રનું આગમન",
+        "kn": "ಇಂದ್ರನ ಆಗಮನ"
+      },
+      "text": {
+        "hi": "राहु सूर्य के पास आया, पर हनुमान को देखकर डर गया और इंद्र से सहायता माँगी। इंद्र ऐरावत हाथी पर आए। हनुमान उत्साह में उसकी ओर भी बढ़े। इंद्र के वज्र से वे घायल होकर गिर पड़े।",
+        "en": "Rahu came near the sun, feared Hanuman and sought Indra's help. Indra arrived on Airavata. Hanuman rushed towards the elephant too. Indra's thunderbolt struck him, and he fell injured.",
+        "gu": "રાહુ સૂર્ય પાસે આવ્યો, પણ હનુમાનને જોઈ ડરી ગયો અને ઇન્દ્રની મદદ માગી. ઇન્દ્ર ઐરાવત હાથી પર આવ્યા. હનુમાન ઉત્સાહમાં તેની તરફ પણ વધ્યા. ઇન્દ્રના વજ્રથી ઘાયલ થઈને તેઓ પડી ગયા.",
+        "kn": "ರಾಹು ಸೂರ್ಯನ ಬಳಿಗೆ ಬಂದು ಹನುಮಂತನನ್ನು ಕಂಡು ಹೆದರಿ ಇಂದ್ರನ ಸಹಾಯ ಕೇಳಿದ. ಇಂದ್ರ ಐರಾವತ ಆನೆಯ ಮೇಲೆ ಬಂದ. ಹನುಮಂತ ಆನೆಯತ್ತಲೂ ಧಾವಿಸಿದ. ಇಂದ್ರನ ವಜ್ರ ತಾಗಿ ಅವನು ಗಾಯಗೊಂಡು ಬಿದ್ದ."
+      }
+    },
+    {
+      "id": "vayus-sorrow",
+      "art": "hs04",
+      "source": "Valmiki Ramayana, Uttara-kanda 35.48–65",
+      "title": {
+        "hi": "वायुदेव का दुख",
+        "en": "Vayu's Sorrow",
+        "gu": "વાયુદેવનું દુઃખ",
+        "kn": "ವಾಯುದೇವನ ದುಃಖ"
+      },
+      "text": {
+        "hi": "वायुदेव अपने घायल पुत्र को गुफा में ले गए। दुख और क्रोध में उन्होंने हवा का प्रवाह रोक दिया। संसार के जीव साँस लेने में कठिनाई अनुभव करने लगे। सबने ब्रह्मा से सहायता माँगी।",
+        "en": "Vayu carried his injured son into a cave. In sorrow and anger, he stopped the flow of air. Living beings struggled to breathe. Everyone turned to Brahma for help.",
+        "gu": "વાયુદેવ પોતાના ઘાયલ પુત્રને ગુફામાં લઈ ગયા. દુઃખ અને ક્રોધમાં તેમણે હવાનો પ્રવાહ રોકી દીધો. જીવોને શ્વાસ લેવામાં મુશ્કેલી થવા લાગી. સૌએ બ્રહ્માની મદદ માગી.",
+        "kn": "ವಾಯುದೇವ ಗಾಯಗೊಂಡ ಮಗನನ್ನು ಗುಹೆಗೆ ಕರೆದೊಯ್ದ. ದುಃಖ ಮತ್ತು ಕೋಪದಲ್ಲಿ ಗಾಳಿಯ ಹರಿವನ್ನು ನಿಲ್ಲಿಸಿದ. ಜೀವಿಗಳಿಗೆ ಉಸಿರಾಡಲು ಕಷ್ಟವಾಯಿತು. ಎಲ್ಲರೂ ಬ್ರಹ್ಮನ ಸಹಾಯ ಕೇಳಿದರು."
+      }
+    },
+    {
+      "id": "brahma-restores",
+      "art": "hs05",
+      "source": "Valmiki Ramayana, Uttara-kanda 36.1–6",
+      "title": {
+        "hi": "ब्रह्मा का स्नेह",
+        "en": "Brahma's Gentle Touch",
+        "gu": "બ્રહ્માનો સ્નેહ",
+        "kn": "ಬ್ರಹ್ಮನ ಮಮತೆ"
+      },
+      "text": {
+        "hi": "ब्रह्मा देवताओं के साथ गुफा में आए और बालक को स्नेह से छुआ। हनुमान फिर उठ बैठे। वायुदेव प्रसन्न हुए और हवा फिर बहने लगी। संसार के जीवों को राहत मिली।",
+        "en": "Brahma came to the cave with the gods and gently touched the child. Hanuman revived. Vayu rejoiced, and air flowed again. Living beings could breathe freely once more.",
+        "gu": "બ્રહ્મા દેવતાઓ સાથે ગુફામાં આવ્યા અને બાળકને પ્રેમથી સ્પર્શ કર્યો. હનુમાન ફરી બેઠા થયા. વાયુદેવ ખુશ થયા અને હવા ફરી વહેવા લાગી. જીવોને રાહત મળી.",
+        "kn": "ಬ್ರಹ್ಮ ದೇವತೆಗಳೊಂದಿಗೆ ಗುಹೆಗೆ ಬಂದು ಬಾಲಕನನ್ನು ಪ್ರೀತಿಯಿಂದ ಮುಟ್ಟಿದ. ಹನುಮಂತ ಮತ್ತೆ ಚೇತರಿಸಿಕೊಂಡ. ವಾಯುದೇವ ಸಂತೋಷಗೊಂಡು ಗಾಳಿ ಮತ್ತೆ ಹರಿಯಿತು. ಜೀವಿಗಳು ನೆಮ್ಮದಿಯಿಂದ ಉಸಿರಾಡಿದವು."
+      }
+    },
+    {
+      "id": "gods-blessings",
+      "art": "hs06",
+      "source": "Valmiki Ramayana, Uttara-kanda 36.7–26",
+      "title": {
+        "hi": "देवताओं के आशीर्वाद",
+        "en": "Blessings for Hanuman",
+        "gu": "દેવતાઓના આશીર્વાદ",
+        "kn": "ಹನುಮಂತನಿಗೆ ಆಶೀರ್ವಾದ"
+      },
+      "text": {
+        "hi": "इंद्र ने हनुमान को वज्र से सुरक्षित रहने का वर दिया। सूर्य ने तेज और ज्ञान का आशीर्वाद दिया। अन्य देवताओं ने भी वर दिए। यह अद्भुत बालक आगे चलकर राम का प्रिय सेवक बना।",
+        "en": "Indra blessed Hanuman with protection from his thunderbolt. The sun promised brilliance and learning. Other gods gave blessings too. This extraordinary child would grow to serve Rama with devotion.",
+        "gu": "ઇન્દ્રે હનુમાનને વજ્રથી સુરક્ષિત રહેવાનું વર આપ્યું. સૂર્યે તેજ અને જ્ઞાનનો આશીર્વાદ આપ્યો. અન્ય દેવતાઓએ પણ વર આપ્યાં. આ અદ્ભુત બાળક આગળ જતાં રામનો પ્રિય સેવક બન્યો.",
+        "kn": "ಇಂದ್ರ ಹನುಮಂತನಿಗೆ ತನ್ನ ವಜ್ರದಿಂದ ರಕ್ಷಣೆಯ ವರ ಕೊಟ್ಟ. ಸೂರ್ಯ ತೇಜಸ್ಸು ಮತ್ತು ಜ್ಞಾನದ ಆಶೀರ್ವಾದ ನೀಡಿದ. ಇತರ ದೇವತೆಗಳೂ ವರ ಕೊಟ್ಟರು. ಈ ಅದ್ಭುತ ಬಾಲಕ ಮುಂದೆ ರಾಮನ ಭಕ್ತ ಸೇವಕನಾದನು."
+      }
+    }
+  ],
+  "source": {
+    "baseText": "Valmiki Ramayana, Uttara-kanda 35–36",
+    "retrievedOn": "2026-10-07",
+    "referenceUrls": [
+      "https://www.wisdomlib.org/hinduism/book/the-ramayana-of-valmiki/d/doc424801.html",
+      "https://www.wisdomlib.org/hinduism/book/the-ramayana-of-valmiki/d/doc424802.html",
+      "https://sanskritdocuments.org/mirrors/ramayana/utf/7_uttarakanda_35.html",
+      "https://sanskritdocuments.org/mirrors/ramayana/utf/7_uttarakanda_36.html"
+    ],
+    "notes": "Hari Prasad Shastri translation compared with Sanskrit text. Airavata has four tusks (35.37); revival and boons follow 36.3–24. This version is flight towards the sun, not swallowing it."
+  }
+}
