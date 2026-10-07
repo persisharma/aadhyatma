@@ -696,6 +696,20 @@ export const library: readonly LibraryEntry[] = [
     verseCount: 6,
     addedInVersion: '1.3.1',
   },
+  {
+    id: 'matribhumi-vandana',
+    nameHi: 'मातृभूमि वंदना',
+    nameEn: 'Matribhumi Vandana',
+    sub: '३ श्लोक · विधि सहित',
+    subEn: '3 shlokas · with method',
+    thumb: 'मा',
+    status: 'active',
+    category: 'sanskar',
+    // Addresses the Motherland (and an unnamed प्रभु) — no registry deity matches (RULEBOOK §11.4).
+    deities: [],
+    verseCount: 5,
+    addedInVersion: '1.4.9',
+  },
   // ─────────── Ashtakam (अष्टकम्) — PRD-A, multi-instance form ───────────
   {
     id: 'lingashtakam',

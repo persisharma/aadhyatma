@@ -1,0 +1,125 @@
+{
+  "titleHi": "मातृभूमि वंदना",
+  "titleEn": "Matribhumi Vandana",
+  "subtitleHi": "मातृभूमि को प्रणाम",
+  "subtitleEn": "Salutation to the Motherland",
+  "deity": "bharat-mata",
+  "language": "sa-hi-en",
+  "source": {
+    "baseText": "Matribhumi Vandana (Sanskrit, three stanzas, with the Hindi closing 'भारत माता की जय'). Text cross-checked via web-search index excerpts of hi.wikipedia.org (नमस्ते सदा वत्सले), samagrabharat.com, bhubnesh.blogspot.com and biginningtobetterment.wordpress.com, using exact-phrase queries for lines of stanzas 2 and 3. The introduction, meanings and vidhi are editorial guidance, not part of the prayer.",
+    "referenceUrls": [
+      "https://hi.wikipedia.org/wiki/नमस्ते_सदा_वत्सले",
+      "https://samagrabharat.com/2022/11/20/translation-of-rss-prayer-in-hindi/",
+      "https://bhubnesh.blogspot.com/2017/07/blog-post_55.html"
+    ],
+    "canonicalEdition": "Rashtriya Swayamsevak Sangh published prarthana text",
+    "canonicalEditionStatus": "Pages were not opened directly — the authoring environment's egress proxy blocks these hosts; verification is via search-index excerpts. Open hi.wikipedia.org and one RSS publication and compare character-by-character before release.",
+    "retrievedOn": "2026-10-04"
+  },
+  "counts": { "totalVerses": 5 },
+  "verses": [
+    {
+      "id": "mv-intro",
+      "number": 1,
+      "type": "intro",
+      "labelHi": "परिचय",
+      "labelEn": "Introduction",
+      "lines": ["मातृभूमि वंदना"],
+      "linesEn": ["Matribhumi Vandana"],
+      "meaningHi": "यह संस्कृत प्रार्थना मातृभूमि भारत को 'सदा वत्सला' — सदा स्नेह करने वाली माँ — के रूप में प्रणाम करती है। तीन श्लोक संस्कृत में हैं; अन्त में 'भारत माता की जय' का जयघोष हिन्दी में होता है।\n\nइसका भाव है कृतज्ञता और कर्तव्य: जिस भूमि ने हमें पाला-पोसा, उसके प्रति आभार; उसकी सेवा के लिए बल, विनम्र शील, ज्ञान, ध्येय-निष्ठा और संगठित शक्ति की याचना। भारतीय परम्परा में भूमि को माता मानने का भाव अथर्ववेद के भूमि सूक्त (12.1.12 — 'माता भूमिः पुत्रो अहं पृथिव्याः') से चला आ रहा है; यह प्रार्थना उसी भाव को राष्ट्र-सेवा के संकल्प से जोड़ती है।",
+      "meaningEn": "This Sanskrit prayer bows to the Motherland, India, as 'sadaa vatsalaa' — the ever-affectionate mother. The three stanzas are in Sanskrit; it closes with the Hindi call 'Bharat Mata ki Jai'.\n\nIts spirit is gratitude and duty: thanks to the land that raised us, and a plea for the strength, humble character, knowledge, steadfast purpose and united effort needed to serve it. Revering the land as mother is old in Indian tradition — the Atharvaveda's Bhumi Sukta (12.1.12) says 'maataa bhoomih putro aham prithivyaah' (the Earth is my mother, I am her child); this prayer joins that feeling to a resolve of service."
+    },
+    {
+      "id": "mv-01",
+      "number": 2,
+      "type": "mantra",
+      "labelHi": "श्लोक १ — मातृभूमि को प्रणाम",
+      "labelEn": "Verse 1 — Salutation to the Motherland",
+      "lines": [
+        "नमस्ते सदा वत्सले मातृभूमे",
+        "त्वया हिन्दुभूमे सुखं वर्धितोऽहम्।",
+        "महामङ्गले पुण्यभूमे त्वदर्थे",
+        "पतत्वेष कायो नमस्ते नमस्ते॥१॥"
+      ],
+      "linesEn": [
+        "Namaste sadaa vatsale maatribhoome",
+        "tvayaa hindubhoome sukham vardhito-ham.",
+        "Mahaamangale punyabhoome tvadarthe",
+        "patatvesha kaayo namaste namaste."
+      ],
+      "meaningHi": "हे सदा स्नेह करने वाली मातृभूमि! तुम्हें नमस्कार। हे हिन्दुभूमि, तुमने ही मुझे सुखपूर्वक पाला-बढ़ाया है। हे महामंगलमयी पुण्यभूमि, तुम्हारे ही लिए मेरा यह शरीर अर्पित हो। तुम्हें बार-बार नमस्कार।\n\nप्रथम श्लोक कृतज्ञता का है — जैसे बालक माँ के उपकार को स्मरण करता है, वैसे ही हम उस भूमि को प्रणाम करते हैं जिसके अन्न, जल और संस्कृति से हम बने हैं। 'पतत्वेष कायो' — 'यह शरीर तुम्हारे लिए समर्पित हो' — सेवा और त्याग का संकल्प है। 'नमस्ते नमस्ते' की पुनरावृत्ति भाव की गहराई दर्शाती है।",
+      "meaningEn": "O ever-affectionate Motherland, salutations to you. O land of the Hindus, by you I have been raised in happiness. O most auspicious, holy land — may this body of mine be offered for your sake. Salutations to you, again and again.\n\nThe first stanza is one of gratitude: as a child remembers a mother's care, we bow to the land whose food, water and culture have formed us. 'Patatvesha kaayo' — 'may this body fall (be offered) for you' — is a vow of service and sacrifice. The repeated 'namaste namaste' shows the depth of the feeling."
+    },
+    {
+      "id": "mv-02",
+      "number": 3,
+      "type": "mantra",
+      "labelHi": "श्लोक २ — शक्ति और शील की याचना",
+      "labelEn": "Verse 2 — A plea for strength and character",
+      "lines": [
+        "प्रभो शक्तिमन् हिन्दुराष्ट्राङ्गभूता",
+        "इमे सादरं त्वां नमामो वयम्",
+        "त्वदीयाय कार्याय बद्धा कटीयं",
+        "शुभामाशिषं देहि तत्पूर्तये।",
+        "अजय्यां च विश्वस्य देहीश शक्तिं",
+        "सुशीलं जगद्येन नम्रं भवेत्",
+        "श्रुतं चैव यत्कण्टकाकीर्णमार्गं",
+        "स्वयं स्वीकृतं नः सुगं कारयेत्॥२॥"
+      ],
+      "linesEn": [
+        "Prabho shaktiman hindu-raashtraanga-bhootaa",
+        "ime saadaram tvaam namaamo vayam",
+        "tvadeeyaaya kaaryaaya baddhaa kateeyam",
+        "shubhaam-aashisham dehi tat-poortaye.",
+        "Ajayyaam cha vishvasya deheesha shaktim",
+        "susheelam jagad-yena namram bhavet",
+        "shrutam chaiva yat-kantakaakeerna-maargam",
+        "svayam sveekritam nah sugam kaarayet."
+      ],
+      "meaningHi": "हे सर्वशक्तिमान प्रभु! हिन्दू राष्ट्र के अंगरूप हम सब तुम्हें आदरपूर्वक नमस्कार करते हैं। तुम्हारे ही कार्य के लिए हमने कमर कसी है; उसकी पूर्ति के लिए हमें शुभ आशीर्वाद दो। हे ईश, हमें ऐसी शक्ति दो जिसे विश्व में कोई जीत न सके; ऐसा शील दो जिसके सामने सारा जगत नम्र हो जाए; और ऐसा ज्ञान दो जो हमारे द्वारा स्वयं स्वीकार किए गए इस काँटों भरे मार्ग को सुगम बना दे।\n\nदूसरा श्लोक ईश्वर से तीन गुण माँगता है — अजेय शक्ति, सुशील (उत्तम चरित्र) और श्रुत (ज्ञान)। ध्यान दें: शक्ति के साथ शील माँगा गया है, ताकि बल विनम्रता से संयमित रहे और जगत भय से नहीं, आदर से झुके। 'बद्धा कटीयं' — 'कमर कस ली है' — यह तत्परता का मुहावरा है। सेवा का मार्ग कठिन ('कण्टकाकीर्ण') है, पर स्वेच्छा से चुना गया है।",
+      "meaningEn": "O Almighty Lord, we who are limbs of the Hindu nation bow to you with reverence. For your work we have girded our loins; grant us your blessing to fulfil it. O Lord, give us a strength the world cannot conquer, a noble character before which the world bows in humility, and the knowledge that makes easy this thorn-strewn path we have chosen of our own will.\n\nThe second stanza asks God for three gifts — invincible strength, good character (susheela) and knowledge (shruta). Notice that strength is paired with character, so that power stays tempered by humility and the world bows out of respect, not fear. 'Baddhaa kateeyam' — 'the waist is girded' — is an idiom for readiness. The path of service is hard ('kantakaakeerna', strewn with thorns), but it is freely chosen."
+    },
+    {
+      "id": "mv-03",
+      "number": 4,
+      "type": "mantra",
+      "labelHi": "श्लोक ३ — वीरव्रत और ध्येय-निष्ठा",
+      "labelEn": "Verse 3 — The heroic vow and steadfast purpose",
+      "lines": [
+        "समुत्कर्षनिःश्रेयसस्यैकमुग्रं",
+        "परं साधनं नाम वीरव्रतम्",
+        "तदन्तः स्फुरत्वक्षया ध्येयनिष्ठा",
+        "हृदन्तः प्रजागर्तु तीव्राऽनिशम्।",
+        "विजेत्री च नः संहता कार्यशक्तिर्",
+        "विधायास्य धर्मस्य संरक्षणम्।",
+        "परं वैभवं नेतुमेतत् स्वराष्ट्रं",
+        "समर्था भवत्वाशिषा ते भृशम्॥३॥"
+      ],
+      "linesEn": [
+        "Samutkarsha-nihshreyasasyaikam-ugram",
+        "param saadhanam naama veera-vratam",
+        "tad-antah sphuratv-akshayaa dhyeya-nishthaa",
+        "hrid-antah prajaagartu teevraa-nisham.",
+        "Vijetree cha nah samhataa kaarya-shaktir",
+        "vidhaayaasya dharmasya samrakshanam.",
+        "Param vaibhavam netum-etat svaraashtram",
+        "samarthaa bhavatv-aashishaa te bhrisham."
+      ],
+      "meaningHi": "समुत्कर्ष (सांसारिक उन्नति) और निःश्रेयस (आध्यात्मिक कल्याण) — दोनों का एकमात्र प्रखर और श्रेष्ठ साधन 'वीरव्रत' है। वह वीरव्रत हमारे भीतर स्फुरित हो; अक्षय ध्येय-निष्ठा हमारे हृदय में दिन-रात तीव्रता से जागती रहे। तुम्हारे आशीर्वाद से हमारी विजयशालिनी संगठित कार्यशक्ति इस धर्म का संरक्षण करते हुए अपने इस राष्ट्र को परम वैभव तक ले जाने में पूर्णतः समर्थ हो।\n\nतीसरा श्लोक भारतीय दर्शन के दो लक्ष्यों — 'अभ्युदय' (समुत्कर्ष) और 'निःश्रेयस' — को साथ रखता है: जीवन की भौतिक और आध्यात्मिक दोनों उन्नति। इसका साधन 'वीरव्रत' है — साहस और दृढ़ता से कर्तव्य निभाने का व्रत। 'संहता कार्यशक्ति' — संगठित, मिल-जुलकर किया गया प्रयास — अकेले की नहीं, सबकी शक्ति। अन्तिम लक्ष्य है धर्म का संरक्षण और राष्ट्र को 'परम वैभव' तक पहुँचाना।",
+      "meaningEn": "The one intense and supreme means to both samutkarsha (worldly progress) and nihshreyasa (spiritual good) is the 'veera-vrata', the vow of the brave. May that vow stir within us; may an undying devotion to our goal stay fiercely awake in our hearts, day and night. By your blessing, may our victorious, united strength of effort — protecting this dharma — become fully able to lead our nation to the highest glory.\n\nThe third stanza holds together the two aims of Indian thought — abhyudaya (here samutkarsha, worldly flourishing) and nihshreyasa (the highest good). Its means is the 'veera-vrata' — a vow to carry out one's duty with courage and steadiness. 'Samhataa kaarya-shakti' — organised, collective effort — is the strength of all, not of one alone. The final aim is to protect dharma and bring the nation to 'param vaibhavam', its highest glory."
+    },
+    {
+      "id": "mv-jayaghosh",
+      "number": 5,
+      "type": "vidhi",
+      "labelHi": "जयघोष एवं विधि",
+      "labelEn": "Closing call and method",
+      "lines": ["॥ भारत माता की जय ॥"],
+      "linesEn": ["Bhaarat Maataa kee Jai"],
+      "meaningHi": "'भारत माता की जय' — प्रार्थना का समापन इसी हिन्दी जयघोष से होता है, जो पूरी प्रार्थना में एकमात्र हिन्दी पंक्ति है। यह मातृभूमि के प्रति कृतज्ञता और श्रद्धा की सामूहिक घोषणा है।\n\nयह प्रार्थना मन में कृतज्ञता जगाती है, अनुशासन सिखाती है और याद दिलाती है कि सच्ची शक्ति विनम्र शील और सबके साथ मिलकर किए गए कार्य से आती है।",
+      "meaningEn": "'Bharat Mata ki Jai' — 'Victory to Mother India' — the prayer ends with this Hindi call, its only line not in Sanskrit. It is a shared declaration of gratitude and reverence for the Motherland.\n\nThe prayer awakens gratitude, teaches discipline, and reminds us that true strength comes from humble character and from working together.",
+      "vidhiHi": "१. सीधे खड़े हों, पैर साथ रखें, शरीर स्थिर रखें।\n२. दायाँ हाथ हथेली नीचे की ओर करके छाती के सामने (हृदय के पास) आड़ा रखें; बायाँ हाथ शरीर के साथ सीधा रहे।\n३. सिर थोड़ा झुकाकर, शान्त मन से तीनों श्लोक क्रम से बोलें या गाएँ — समूह में हों तो सबके साथ एक लय में।\n४. अन्त में 'भारत माता की जय' बोलें और हाथ नीचे करें।\n५. प्रतिदिन सुबह या किसी सभा/कार्य के अन्त में यह प्रार्थना की जा सकती है।",
+      "vidhiEn": "1. Stand straight with feet together and the body still.\n2. Hold the right hand level across the chest (near the heart), palm facing down; keep the left arm straight at your side.\n3. With the head slightly bowed and a calm mind, recite or sing the three stanzas in order — in a group, keep one rhythm together.\n4. Finish with 'Bharat Mata ki Jai' and lower the hand.\n5. The prayer may be said each morning, or at the close of a gathering or task."
+    }
+  ]
+}

@@ -105,6 +105,7 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'saraswati-aarti': backgroundImages.deity_saraswati_veena,
   'gayatri-aarti': backgroundImages.source_gayatri_savitri_sun,
   'vidyarambha-prarthana': backgroundImages.deity_saraswati_veena,
+  'matribhumi-vandana': backgroundImages.category_stotram_hymn_scroll,
   lingashtakam: shivaStrotamImages.shiva,
   madhurashtakam: backgroundImages.deity_krishna_bansuri,
   achyutashtakam: backgroundImages.source_vishnu_narayana,

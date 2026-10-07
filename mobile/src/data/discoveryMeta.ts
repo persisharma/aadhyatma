@@ -92,6 +92,11 @@ export const discoveryMeta: Readonly<Record<string, DiscoveryMeta>> = {
     bestTime: 'sunrise',
     source: `${SOURCE_BUNDLED} Vidyarambha Prarthana source references in sanskar/vidyarambha-prarthana.json.`,
   },
+  'matribhumi-vandana': {
+    purposes: ['courage', 'morning-practice'],
+    bestTime: 'sunrise',
+    source: `${SOURCE_BUNDLED} Matribhumi Vandana source references in sanskar/matribhumi-vandana.json.`,
+  },
   'mahalakshmi-ashtakam': {
     purposes: ['wealth', 'prosperity', 'devotion'],
     bestDays: [5],
