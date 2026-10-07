@@ -6,7 +6,7 @@ Use this for future illustrated stories. The Krishna Janma scene prompts and cha
 
 - Use [`kj-08.webp`](../assets/krishna-janma/kj-08.webp) for the approved storybook rendering: fine warm outlines, expressive faces, muted colours and soft paper texture. Use [`kj-11.webp`](../assets/krishna-janma/kj-11.webp) for the warm, intimate closing-page treatment and lower parchment fade.
 - Make one new image per distinct scene. Refer to the preceding approved page and a character sheet to keep faces, clothing and scale consistent within the story. A style reference supplies technique and palette, not its setting or characters.
-- Deliver a text-free 4:5 portrait image. Keep faces and essential action in the upper four-fifths; fade the lower fifth gently into warm parchment. The reader places native text beneath the image and may crop only the bottom.
+- Deliver a text-free 4:5 portrait image. Keep faces and essential action in the upper four-fifths; fade the lower fifth gently into warm parchment. The reader places native text beneath the image and scrolls vertically when needed. Caption length must not crop the illustration: retain the full image by default, trimming only a visually reviewed empty bottom band per scene.
 - The shipped WebP files are 1122 × 1402 pixels in both `mobile/assets/kids-stories/` and `docs/assets/krishna-janma/`. If a generator returns another size, crop deliberately with the story action visible and inspect the result before export.
 
 ## Reusable prompt block
@@ -21,7 +21,7 @@ Add for each page: the exact sentence or scene from the story data, location and
 2. Use the built-in image generation tool with the approved style image and the nearest character reference. For the Krishna closing page, `kj-09` fixed Yashoda and baby Krishna's appearance; `kj-08` supplied overall style.
 3. Inspect the image at full size: correct place, time, people, action, age and count; no copied prison/river/other-scene objects; consistent faces and clothing; no in-image text; safe crop. Check each hand's thumb side, finger count and wrist connection; two open palms must form a plausible left/right pair. Check the specified deity arm count and one attached hand per arm, with no detached hands or ghost duplicate weapons. Regenerate if a required detail is wrong.
 4. Export the selected image as a WebP, keep its new scene filename, copy the same bytes to the app and prototype asset directories, and register its art key in `KidsStoryArt.tsx` and the browser prototype. Keep the library cover separate from closing art.
-5. Open the final card in the native reader and browser prototype with the caption visible; check that the image and narration describe the same event. Run the story asset test.
+5. Open the final card in the native reader and browser prototype; check that the image and narration describe the same event. In the native reader, inspect both the top artwork and the complete caption at Standard and Large sizes, scrolling as necessary. Retain all illustrated faces, actions and supporting characters when reviewing a bottom crop. Complete RULEBOOK §29's full-arc review and reusable authoring checklist, then run the story asset test.
 
 The closing-page example was generated as a new image with `kj-09` and `kj-08` as references, then converted to WebP with `cwebp -q 86`. It uses dawn and Yashoda's lap to express the final page's hope, without repeating the prison cover.
 

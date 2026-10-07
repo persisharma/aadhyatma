@@ -1,0 +1,108 @@
+{
+  "tool": "built-in image_gen.imagegen",
+  "date": "2026-10-07",
+  "base": "25fb414b",
+  "export": "Top-preserving 4:5 crop, 1122x1402 WebP quality 86; byte-identical native/browser files.",
+  "records": [
+    {
+      "key": "gb08",
+      "prompt": "Use case: illustration-story. Generate ONE new text-free 4:5 portrait children's Indian devotional storybook illustration, 1122x1402 or equivalent. Reference images are ONLY style and recurring-character guides, not edit targets. Match the muted detailed pastel painting, fine warm-brown outlines, expressive faces, subtle paper texture, ivory parchment, dusty terracotta, sage, slate blue-grey and matte gold. All essential faces, hands, and story actions fit within the UPPER 60 percent of the frame. Lower 40 percent is simple ground or clouds fading to empty warm parchment, no important details there. Natural connected anatomy, no detached limbs, exactly two arms per human unless specified. No text, captions, border, collage, watermark, modern objects, photorealism, graphic injury, blood or nudity.\nScene: Parvati's decision AFTER an earlier intrusion into her private room. Parvati, same fully clothed terracotta sari, sage veil and crown as reference, stands thoughtfully beside a CLOSED carved inner door, one hand resting on the door frame. White Nandi bull sits beyond the outer courtyard at a distance. Snowy Kailasa behind arches. This is a quiet decision scene, not bathing: everyone fully clothed, no bath, no water, no child yet, no attendants surrounding her. Medium framing Parvati face and hand upper half.",
+      "references": [
+        "/Users/prashant/.codex/worktrees/e02b/Aadhyatma/mobile/assets/kids-stories/gb-00.webp"
+      ],
+      "generatedPath": "/Users/prashant/.codex/generated_images/01a112b6-f935-7d12-a168-42a2a2dd1dce/exec-9cd49edf-e64c-4755-b580-dd57933235df.png",
+      "asset": "mobile/assets/kids-stories/gb-08.webp",
+      "review": "Accepted after inspecting the full master against the individual scene: recurring characters and clothing, connected anatomy, specified deity arm/face count, distinct story action, muted text-free style and high focal placement. Putana transformation is gently depicted; no graphic injury or bathing. Native Large caption/crop checks will be recorded separately in README.md."
+    },
+    {
+      "key": "gb09",
+      "prompt": "Use case: illustration-story. Generate ONE new text-free 4:5 portrait children's Indian devotional storybook illustration, 1122x1402 or equivalent. Reference images are ONLY style and recurring-character guides, not edit targets. Match the muted detailed pastel painting, fine warm-brown outlines, expressive faces, subtle paper texture, ivory parchment, dusty terracotta, sage, slate blue-grey and matte gold. All essential faces, hands, and story actions fit within the UPPER 60 percent of the frame. Lower 40 percent is simple ground or clouds fading to empty warm parchment, no important details there. Natural connected anatomy, no detached limbs, exactly two arms per human unless specified. No text, captions, border, collage, watermark, modern objects, photorealism, graphic injury, blood or nudity.\nScene: The disagreement becomes a battle. SAME human-headed young guardian in ivory-and-gold dhoti and saffron sash stands firmly at carved Kailasa doorway holding a wooden staff across his body defensively. Three Shiva attendants in simple ivory robes and topknots approach with wooden batons; one retreats, another pauses at a distance. Attendants distinct faces. Guardian determined, faces tense but restrained. Snowy mountains beyond courtyard, soft dust. No elephant head yet, no Shiva attack, no strikes landing, no injuries or blood. All faces and staffs in upper60%.",
+      "references": [
+        "/Users/prashant/.codex/worktrees/e02b/Aadhyatma/mobile/assets/kids-stories/gb-03.webp"
+      ],
+      "generatedPath": "/Users/prashant/.codex/generated_images/01a112b6-f935-7d12-a168-42a2a2dd1dce/exec-c835c1c9-426a-47d0-aee3-3926d7f31448.png",
+      "asset": "mobile/assets/kids-stories/gb-09.webp",
+      "review": "Accepted after inspecting the full master against the individual scene: recurring characters and clothing, connected anatomy, specified deity arm/face count, distinct story action, muted text-free style and high focal placement. Putana transformation is gently depicted; no graphic injury or bathing. Native Large caption/crop checks will be recorded separately in README.md."
+    },
+    {
+      "key": "gb10",
+      "prompt": "Use case: illustration-story. Generate ONE new text-free 4:5 portrait children's Indian devotional storybook illustration, 1122x1402 or equivalent. Reference images are ONLY style and recurring-character guides, not edit targets. Match the muted detailed pastel painting, fine warm-brown outlines, expressive faces, subtle paper texture, ivory parchment, dusty terracotta, sage, slate blue-grey and matte gold. All essential faces, hands, and story actions fit within the UPPER 60 percent of the frame. Lower 40 percent is simple ground or clouds fading to empty warm parchment, no important details there. Natural connected anatomy, no detached limbs, exactly two arms per human unless specified. No text, captions, border, collage, watermark, modern objects, photorealism, graphic injury, blood or nudity.\nScene: The plea to Parvati after her son's death. Fully clothed Parvati same terracotta-sage sari and gold crown, seated upright with tearful sorrowful face. Elderly Narada with two arms, tied white hair, ivory robes, veena resting beside him, approaches with joined palms accompanied by two simple-robed sages likewise respectful. They ask forgiveness and she asks for her son's life and honor. Parvati gestures gently with one hand toward them, other on lap. Quiet Kailasa stone courtyard. No child or corpse, no violence, no revival yet, no elephant. Essential faces/hands upper60%.",
+      "references": [
+        "/Users/prashant/.codex/worktrees/e02b/Aadhyatma/mobile/assets/kids-stories/gb-00.webp"
+      ],
+      "generatedPath": "/Users/prashant/.codex/generated_images/01a112b6-f935-7d12-a168-42a2a2dd1dce/exec-272461a5-a8c0-41f1-8253-f93d1c33281e.png",
+      "asset": "mobile/assets/kids-stories/gb-10.webp",
+      "review": "Accepted after inspecting the full master against the individual scene: recurring characters and clothing, connected anatomy, specified deity arm/face count, distinct story action, muted text-free style and high focal placement. Putana transformation is gently depicted; no graphic injury or bathing. Native Large caption/crop checks will be recorded separately in README.md."
+    },
+    {
+      "key": "hs07",
+      "prompt": "Use case: illustration-story. Generate ONE new text-free 4:5 portrait children's Indian devotional storybook illustration, 1122x1402 or equivalent. Reference images are ONLY style and recurring-character guides, not edit targets. Match the muted detailed pastel painting, fine warm-brown outlines, expressive faces, subtle paper texture, ivory parchment, dusty terracotta, sage, slate blue-grey and matte gold. All essential faces, hands, and story actions fit within the UPPER 60 percent of the frame. Lower 40 percent is simple ground or clouds fading to empty warm parchment, no important details there. Natural connected anatomy, no detached limbs, exactly two arms per human unless specified. No text, captions, border, collage, watermark, modern objects, photorealism, graphic injury, blood or nudity.\nScene: Anjana leaves to gather fruit. Same Anjana wearing sage sari and terracotta blouse walks from their mountain cottage toward fruit trees, holding an empty wicker basket; she looks back at her young son affectionately. SAME small golden-tan monkey-faced Hanuman, black curly tuft, rosy muzzle, ONE attached curved tail, FULLY CLOTHED ivory short tunic and terracotta trousers, sits on cottage step reaching one hand toward mother. The separation begins quietly before he notices the sun. No flight, no hunger fruit fantasy, no sun disk as focal point. Upper60% all faces and gestures.",
+      "references": [
+        "/Users/prashant/.codex/worktrees/e02b/Aadhyatma/mobile/assets/kids-stories/hs-00.webp"
+      ],
+      "generatedPath": "/Users/prashant/.codex/generated_images/01a112b6-f935-7d12-a168-42a2a2dd1dce/exec-8f395e40-c0f3-4d17-89fd-8cc8dcd2e14e.png",
+      "asset": "mobile/assets/kids-stories/hs-07.webp",
+      "review": "Accepted after inspecting the full master against the individual scene: recurring characters and clothing, connected anatomy, specified deity arm/face count, distinct story action, muted text-free style and high focal placement. Putana transformation is gently depicted; no graphic injury or bathing. Native Large caption/crop checks will be recorded separately in README.md."
+    },
+    {
+      "key": "hs08",
+      "prompt": "Use case: illustration-story. Generate ONE new text-free 4:5 portrait children's Indian devotional storybook illustration, 1122x1402 or equivalent. Reference images are ONLY style and recurring-character guides, not edit targets. Match the muted detailed pastel painting, fine warm-brown outlines, expressive faces, subtle paper texture, ivory parchment, dusty terracotta, sage, slate blue-grey and matte gold. All essential faces, hands, and story actions fit within the UPPER 60 percent of the frame. Lower 40 percent is simple ground or clouds fading to empty warm parchment, no important details there. Natural connected anatomy, no detached limbs, exactly two arms per human unless specified. No text, captions, border, collage, watermark, modern objects, photorealism, graphic injury, blood or nudity.\nScene: Rahu asks Indra for help. Celestial cloud court, Indra same gold crown, moustache, ivory and slate robes as reference sits on a modest throne, TWO arms. Rahu is represented ONLY as same floating dark blue-grey head in reference, no body, no duplicate head. Rahu's expression worried, turned toward Indra; Indra looks surprised and attentive. Distant warm sun partly behind clouds gives context. No Hanuman in this scene, no elephant, no thunderbolt attack yet. Muted dignified atmosphere, not horror. Head faces and hands upper60%.",
+      "references": [
+        "/Users/prashant/.codex/worktrees/e02b/Aadhyatma/mobile/assets/kids-stories/hs-03.webp"
+      ],
+      "generatedPath": "/Users/prashant/.codex/generated_images/01a112b6-f935-7d12-a168-42a2a2dd1dce/exec-3787a460-4eda-4a29-8b95-5925959399c4.png",
+      "asset": "mobile/assets/kids-stories/hs-08.webp",
+      "review": "Accepted after inspecting the full master against the individual scene: recurring characters and clothing, connected anatomy, specified deity arm/face count, distinct story action, muted text-free style and high focal placement. Putana transformation is gently depicted; no graphic injury or bathing. Native Large caption/crop checks will be recorded separately in README.md."
+    },
+    {
+      "key": "hs09",
+      "prompt": "Use case: precise-object-edit. This is an accepted new story illustration except Brahma's arm count is unclear. Change ONLY Brahma's arms so exactly FOUR clearly visible anatomically connected arms are unambiguous: preserve his lower-left arm and hand resting on his knee; preserve upper-right listening palm beside his ear; preserve lower-right hand holding kamandalu; ADD a separate upper-left arm emerging from his upper-left shoulder and bending upward, its hand holding a small rosary in the open gap above the two supplicants' heads, with the entire arm connected and clearly separated from the knee-resting arm. Brahma must have exactly four arms, no other extra hands. Keep the three visible faces, crowns, face identity, posture, robes, lotus, two two-armed supplicating deities, villagers, cow, trees, composition, muted pastel style and text-free parchment unchanged. No detached limb, no extra heads, no collage or lettering. 4:5 portrait.",
+      "references": [
+        "/Users/prashant/.codex/generated_images/01a112b6-f935-7d12-a168-42a2a2dd1dce/exec-22672d96-0436-4ea2-83bd-eaf92227ccf8.png"
+      ],
+      "generatedPath": "/Users/prashant/.codex/generated_images/01a112b6-f935-7d12-a168-42a2a2dd1dce/exec-ba2b02a0-ebc8-4048-8841-ee7b4b0821f2.png",
+      "asset": "mobile/assets/kids-stories/hs-09.webp",
+      "review": "Accepted after full-size inspection: exactly FOUR clearly visible connected arms (rosary, listening palm, knee-resting hand and kamandalu), three visible faces with fourth behind, unchanged two-armed supplicants and villagers. All narrative actions match the appeal to Brahma; native Large crop verified separately.",
+      "rejectedAttempts": [
+        {
+          "prompt": "Use case: illustration-story. Generate ONE new text-free 4:5 portrait children's Indian devotional storybook illustration, 1122x1402 or equivalent. Reference images are ONLY style and recurring-character guides, not edit targets. Match the muted detailed pastel painting, fine warm-brown outlines, expressive faces, subtle paper texture, ivory parchment, dusty terracotta, sage, slate blue-grey and matte gold. All essential faces, hands, and story actions fit within the UPPER 60 percent of the frame. Lower 40 percent is simple ground or clouds fading to empty warm parchment, no important details there. Natural connected anatomy, no detached limbs, exactly two arms per human unless specified. No text, captions, border, collage, watermark, modern objects, photorealism, graphic injury, blood or nudity.\nScene: The world needs air. Mountain village with still trees and drooping pennants, two worried fully clothed villagers seated upright touching their chests and looking concerned, a cow stands quietly. In clouds above them, FOUR-FACED Brahma represented with THREE visible white-bearded faces and fourth hidden behind, gold crown, FOUR distinct connected arms: one raised listening, one holding small kamandalu, two relaxed. Two deities in ivory robes with TWO arms each and joined palms approach Brahma asking help for living beings after Vayu withdraws air. No corpses, collapse, hospital, Hanuman, injury or fantasy storm. Clear tranquil distress, essential faces upper60%.",
+          "references": [
+            "/Users/prashant/.codex/worktrees/e02b/Aadhyatma/mobile/assets/kids-stories/hs-00.webp"
+          ],
+          "generatedPath": "/Users/prashant/.codex/generated_images/01a112b6-f935-7d12-a168-42a2a2dd1dce/exec-22672d96-0436-4ea2-83bd-eaf92227ccf8.png",
+          "reason": "Fourth arm was not unambiguously visible at full size. Repaired before final native verification."
+        }
+      ]
+    },
+    {
+      "key": "pt07",
+      "prompt": "Use case: illustration-story. Generate ONE new text-free 4:5 portrait children's Indian devotional storybook illustration, 1122x1402 or equivalent. Reference images are ONLY style and recurring-character guides, not edit targets. Match the muted detailed pastel painting, fine warm-brown outlines, expressive faces, subtle paper texture, ivory parchment, dusty terracotta, sage, slate blue-grey and matte gold. All essential faces, hands, and story actions fit within the UPPER 60 percent of the frame. Lower 40 percent is simple ground or clouds fading to empty warm parchment, no important details there. Natural connected anatomy, no detached limbs, exactly two arms per human unless specified. No text, captions, border, collage, watermark, modern objects, photorealism, graphic injury, blood or nudity.\nScene: Krishna knows the hidden danger. Same Putana in beautiful disguise, purple sari and jasmine in dark hair, leans toward wooden cradle with BOTH hands gently reaching to lift fully swaddled slate-blue infant Krishna in ivory cloth. Krishna's eyes are softly closed, small restrained warm halo, no expressions of fear. Yashoda sage sari and Rohini terracotta sari nearby look calmly on, unaware of the intention. Same warm earthen Gokul interior. This scene is BEFORE nursing: no breast exposure, no nursing, no poison bottle or visible chemicals, no monster. Faces and cradle infant upper60%.",
+      "references": [
+        "/Users/prashant/.codex/worktrees/e02b/Aadhyatma/mobile/assets/kids-stories/pt-02.webp"
+      ],
+      "generatedPath": "/Users/prashant/.codex/generated_images/01a112b6-f935-7d12-a168-42a2a2dd1dce/exec-4bc817db-66a4-4db7-9b4a-85cbf9a2b110.png",
+      "asset": "mobile/assets/kids-stories/pt-07.webp",
+      "review": "Accepted after inspecting the full master against the individual scene: recurring characters and clothing, connected anatomy, specified deity arm/face count, distinct story action, muted text-free style and high focal placement. Putana transformation is gently depicted; no graphic injury or bathing. Native Large caption/crop checks will be recorded separately in README.md."
+    },
+    {
+      "key": "pt08",
+      "prompt": "Use case: illustration-story. Generate ONE new text-free 4:5 portrait children's Indian devotional storybook illustration, 1122x1402 or equivalent. Reference images are ONLY style and recurring-character guides, not edit targets. Match the muted detailed pastel painting, fine warm-brown outlines, expressive faces, subtle paper texture, ivory parchment, dusty terracotta, sage, slate blue-grey and matte gold. All essential faces, hands, and story actions fit within the UPPER 60 percent of the frame. Lower 40 percent is simple ground or clouds fading to empty warm parchment, no important details there. Natural connected anatomy, no detached limbs, exactly two arms per human unless specified. No text, captions, border, collage, watermark, modern objects, photorealism, graphic injury, blood or nudity.\nScene: Putana cannot escape Krishna's power. SAME fully clothed disguised Putana purple sari, jasmine hair, holds SAME fully swaddled blue infant Krishna safely against her clothed chest. She leans back looking startled, head turned and mouth calling out, brows anxious, TWO connected arms still supporting infant safely. Krishna serene with faint matte-gold halo and eyes closed. Soft wind stirs purple veil and lamp flame; no magical beam, no nudity, no breast exposure, no injury or violence. Quiet child-friendly rendering of her cry for release as her strength fades. Tight medium framing face and held infant upper60%. Different pose from reference: leaning back and looking upward.",
+      "references": [
+        "/Users/prashant/.codex/worktrees/e02b/Aadhyatma/mobile/assets/kids-stories/pt-03.webp"
+      ],
+      "generatedPath": "/Users/prashant/.codex/generated_images/01a112b6-f935-7d12-a168-42a2a2dd1dce/exec-6a02ecc4-b1f4-4f9f-96d0-00beffe784d6.png",
+      "asset": "mobile/assets/kids-stories/pt-08.webp",
+      "review": "Accepted after inspecting the full master against the individual scene: recurring characters and clothing, connected anatomy, specified deity arm/face count, distinct story action, muted text-free style and high focal placement. Putana transformation is gently depicted; no graphic injury or bathing. Native Large caption/crop checks will be recorded separately in README.md."
+    },
+    {
+      "key": "pt09",
+      "prompt": "Use case: illustration-story. Generate ONE new text-free 4:5 portrait children's Indian devotional storybook illustration, 1122x1402 or equivalent. Reference images are ONLY style and recurring-character guides, not edit targets. Match the muted detailed pastel painting, fine warm-brown outlines, expressive faces, subtle paper texture, ivory parchment, dusty terracotta, sage, slate blue-grey and matte gold. All essential faces, hands, and story actions fit within the UPPER 60 percent of the frame. Lower 40 percent is simple ground or clouds fading to empty warm parchment, no important details there. Natural connected anatomy, no detached limbs, exactly two arms per human unless specified. No text, captions, border, collage, watermark, modern objects, photorealism, graphic injury, blood or nudity.\nScene: Putana's disguise vanishes and she falls. Outside Gokul, an ENORMOUS fully clothed demoness Putana lies still on earth with eyes closed; SAME purple sari and jasmine dark hair, now clearly demoness features subtly grey-brown skin and two tiny visible fangs, no gore, not horror. Infant Krishna in ivory wrap sits peacefully supported atop her clothed torso near shoulder with gentle halo, unharmed. Tall tree and tiny village huts establish her enormous size; no rescuers lifting him yet. Composition shows demoness HEAD and baby together in upper50%, her body continues into simple muted ground lowerhalf. Storybook symbolic aftermath, no impact, no wounds, no nudity.",
+      "references": [
+        "/Users/prashant/.codex/worktrees/e02b/Aadhyatma/mobile/assets/kids-stories/pt-04.webp"
+      ],
+      "generatedPath": "/Users/prashant/.codex/generated_images/01a112b6-f935-7d12-a168-42a2a2dd1dce/exec-fc918cc4-23da-4f45-93e0-3542f1689f01.png",
+      "asset": "mobile/assets/kids-stories/pt-09.webp",
+      "review": "Accepted after inspecting the full master against the individual scene: recurring characters and clothing, connected anatomy, specified deity arm/face count, distinct story action, muted text-free style and high focal placement. Putana transformation is gently depicted; no graphic injury or bathing. Native Large caption/crop checks will be recorded separately in README.md."
+    }
+  ]
+}

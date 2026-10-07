@@ -72,6 +72,12 @@ test('first scene mounts with a horizontal pager, a counter and no page buttons'
   expect(pager.props.horizontal).toBe(true);
   expect(pager.props.pagingEnabled).toBe(true);
   expect(pager.props.initialNumToRender).toBe(1);
+  for (const page of story.pages) {
+    const scene = find(`story-page-${page.id}`);
+    expect(scene.type).toBe('ScrollView');
+    expect(scene.props.horizontal).not.toBe(true);
+    expect(scene.findByType('KidsStoryArt' as any).props.art).toBe(page.art);
+  }
   expect(pager.props.getItemLayout(null, 2)).toEqual({ length: 390, offset: 780, index: 2 });
   expect(tree.root.findAllByType('Text' as any).some(node => node.props.children === story.pages[0].text.hi)).toBe(true);
   // Gita-style swipe-only navigation: a header counter, no Previous/Next buttons.

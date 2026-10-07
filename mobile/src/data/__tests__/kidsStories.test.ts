@@ -46,7 +46,7 @@ test('locale selection changes narration while keeping the shared illustration a
 });
 
 test('the four new stories carry complete sourced arcs, regional text and distinct matching artwork', () => {
-  const expected = { putana: 7, 'kaliya-nag': 8, 'ganesha-birth': 8, 'hanuman-sun': 7 };
+  const expected = { putana: 10, 'kaliya-nag': 8, 'ganesha-birth': 11, 'hanuman-sun': 10 };
   const componentUrl = new URL('../../components/KidsStoryArt.tsx', import.meta.url);
   const component = readFileSync(componentUrl, 'utf8');
   const assets = new Map([...component.matchAll(/(\w+): require\('(.+?)'\)/g)].map(match => [match[1], match[2]]));
@@ -87,7 +87,7 @@ test('the four new stories carry complete sourced arcs, regional text and distin
       hashes.add(hash);
     }
   }
-  assert.equal(hashes.size, 30);
+  assert.equal(hashes.size, 39);
 });
 
 test('every page and cover resolves to a bundled final illustration', () => {
