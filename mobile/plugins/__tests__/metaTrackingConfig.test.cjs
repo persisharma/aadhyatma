@@ -17,7 +17,11 @@ test('enabled configuration preserves existing plugins/EAS and never exposes the
 
 test('tracking defaults off and rejects missing credentials or an unverified app mapping', () => {
   assert.equal(configureMetaTracking(base, {}).extra.metaTrackingEnabled, false);
-  assert.throws(() => configureMetaTracking(base, { META_TRACKING_ENABLED: 'true' }), /META_CLIENT_TOKEN/);
+  // On the builder (EAS_BUILD=true) the client token is required when enabled.
+  assert.throws(() => configureMetaTracking(base, { META_TRACKING_ENABLED: 'true', EAS_BUILD: 'true' }), /META_CLIENT_TOKEN/);
+  // The local pre-upload config read (no EAS_BUILD) can't see the build secret,
+  // so an enabled profile must NOT fail there for the missing token.
+  assert.equal(configureMetaTracking(base, { META_TRACKING_ENABLED: 'true' }).extra.metaTrackingEnabled, true);
   assert.throws(() => configureMetaTracking(base, { META_APP_ID: 'wrong' }), /verified/);
   assert.equal(configureMetaTracking(base, { META_APP_ID }).extra.metaTrackingEnabled, false);
 });
