@@ -9,7 +9,7 @@
  *      reuses the plaintext temp, and a later session (temp gone) re-decrypts the
  *      stored `.enc` with NO network. Concurrent first-plays fetch once.
  */
-import { playableAudioUri } from '@/utils/encryptedAudioCache';
+import { playableAudioUri, whenAudioPersisted } from '@/utils/encryptedAudioCache';
 
 const PLAINTEXT = new Uint8Array([10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]);
 
@@ -69,13 +69,14 @@ const req = () => ({
 beforeEach(() => { fs.__store.clear(); fs.__state.downloads.length = 0; });
 
 describe('playableAudioUri', () => {
-  it('stores ciphertext (not the mp3) at rest, and decrypts to a playable temp', async () => {
+  it('plays the plaintext at once, then stores ciphertext (not the mp3) at rest', async () => {
     const uri = await playableAudioUri(req());
     expect(uri).toBe(TMP);
-    // persisted .enc is encrypted — different bytes from the original mp3
-    expect([...fs.__store.get(ENC)!]).not.toEqual([...PLAINTEXT]);
-    // the playable temp round-trips back to the exact plaintext
+    // the playable temp is the exact plaintext — ready before the .enc is written
     expect([...fs.__store.get(TMP)!]).toEqual([...PLAINTEXT]);
+    // first play does not block on encryption; the .enc lands in the background
+    await whenAudioPersisted(HASH);
+    expect([...fs.__store.get(ENC)!]).not.toEqual([...PLAINTEXT]);
   });
 
   it('downloads once; a same-session replay reuses the temp with no fetch', async () => {
@@ -92,6 +93,7 @@ describe('playableAudioUri', () => {
 
   it('a later session (temp gone) re-decrypts the stored .enc offline', async () => {
     await playableAudioUri(req());
+    await whenAudioPersisted(HASH); // the .enc must be written before the next session
     fs.__store.delete(TMP); // temp cache cleared between sessions
     const uri = await playableAudioUri(req());
     expect(uri).toBe(TMP);
@@ -105,7 +107,8 @@ describe('playableAudioUri', () => {
     fs.__store.set(`file:///cache/audio-library-play/${HASH}.dl`, new Uint8Array([1, 2]));
     const uri = await playableAudioUri(req());
     expect(uri).toBe(TMP);
-    expect([...fs.__store.get(ENC)!]).not.toEqual([...PLAINTEXT]); // encrypted at rest
     expect([...fs.__store.get(TMP)!]).toEqual([...PLAINTEXT]); // plays correctly
+    await whenAudioPersisted(HASH);
+    expect([...fs.__store.get(ENC)!]).not.toEqual([...PLAINTEXT]); // encrypted at rest
   });
 });
