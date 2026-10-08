@@ -11,7 +11,8 @@ import { createAudioPlayer, type AudioStatus } from 'expo-audio';
 import { ensureBackgroundAudioMode } from '@/audio/audioSession';
 import { claimPlayback, registerStopper } from '@/audio/playbackArbiter';
 import { AUDIO_TRACKS, type AudioTrack } from '@/data/audio/tracks';
-import { getAudioSource, hasRealAudio } from '@assets/audio-library';
+import { audioRemoteRequest, hasRealAudio } from '@assets/audio-library';
+import { playableAudioUri, clearDecryptedAudioCache } from '@/utils/encryptedAudioCache';
 
 // Only tracks with a real recording participate in playback / skip.
 const PLAYABLE_TRACKS = AUDIO_TRACKS.filter((t) => hasRealAudio(t.id));
@@ -81,8 +82,16 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
   // this, longer files that load slowly stay paused.
   const wantPlayRef = useRef(false);
 
+  // Monotonic token guarding the async source resolve (download → decrypt): if
+  // the user taps another track before this one's uri is ready, the stale
+  // resolve must not replace the player source out from under the new track.
+  const playTokenRef = useRef(0);
+
   useEffect(() => {
     ensureBackgroundAudioMode();
+    // Wipe any decrypted plaintext audio a prior force-killed session left in
+    // the cache dir (its teardown cleanup never ran).
+    clearDecryptedAudioCache('audio-library');
   }, []);
 
   // Mirror native playback state into React.
@@ -108,6 +117,8 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
       } catch {
         /* already released */
       }
+      // Wipe the decrypted playback temps so no plaintext audio lingers.
+      clearDecryptedAudioCache('audio-library');
     };
   }, [player]);
 
@@ -122,17 +133,21 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
         player.play();
         return;
       }
-      const source = getAudioSource(track.id);
-      if (source == null) {
+      const request = audioRemoteRequest(track.id);
+      if (request == null) {
         // No audio for this track yet — surface it without crashing.
         setCurrentTrack(track);
         return;
       }
-      player.replace(source);
-      player.shouldCorrectPitch = true;
-      player.setPlaybackRate(rateRef.current, 'high');
-      // Defer play() to the loaded-gate effect — the source isn't ready yet.
-      wantPlayRef.current = true;
+      // Stop the outgoing track at once so it doesn't keep playing through the
+      // new one's download/decrypt (which can take a beat on first use).
+      try {
+        player.pause();
+      } catch {
+        /* player released */
+      }
+      // Show the track immediately; the source resolves asynchronously (the
+      // recording is fetched once and decrypted from the on-device cache).
       setCurrentTrack(track);
       try {
         player.setActiveForLockScreen(true, {
@@ -142,6 +157,20 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
       } catch {
         /* lock-screen controls unavailable on this platform */
       }
+      const token = ++playTokenRef.current;
+      playableAudioUri(request)
+        .then((uri) => {
+          // A newer tap superseded this resolve — drop the stale source.
+          if (playTokenRef.current !== token) return;
+          player.replace({ uri });
+          player.shouldCorrectPitch = true;
+          player.setPlaybackRate(rateRef.current, 'high');
+          // Defer play() to the loaded-gate effect — the source isn't ready yet.
+          wantPlayRef.current = true;
+        })
+        .catch(() => {
+          // Download/decrypt failed — leave the track visible but un-started.
+        });
     },
     [player, currentTrack?.id]
   );
@@ -254,6 +283,11 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
   }, [player]);
 
   const stop = useCallback(() => {
+    // Invalidate any in-flight source resolve so a slow download/decrypt can't
+    // replace the source and restart playback after Stop — or after read-aloud
+    // / japam has claimed the session (this is the 'recorded' stopper).
+    playTokenRef.current += 1;
+    wantPlayRef.current = false;
     try {
       player.pause();
       player.seekTo(0).catch(() => undefined);

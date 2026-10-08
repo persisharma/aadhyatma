@@ -22,7 +22,8 @@
     },
     "production": {
       "autoIncrement": true,
-      "channel": "production"
+      "channel": "production",
+      "env": { "META_TRACKING_ENABLED": "false" }
     }
   },
   "submit": {

@@ -1,66 +1,28 @@
 import React, { useState } from 'react';
-import { Image, View, Text, type ImageSourcePropType } from 'react-native';
+import { Image, View, Text } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
+import { assetBaseUrl, remoteAssetRequest, type RemoteAssetManifest } from '@/data/assetManifest';
+import kidsStoryManifestJson from '@/data/kidsStoryAssetManifest.json';
+import { useCachedAsset } from '@/utils/useCachedAsset';
 import reviewedFrames from './kidsStoryArtFrames.json';
 
-// Static Metro imports keep shared illustrations bundled and available offline.
-const images: Record<string, ImageSourcePropType> = {
-  cover: require('../../assets/kids-stories/kj-01.webp'),
-  chariot: require('../../assets/kids-stories/kj-02.webp'),
-  sword: require('../../assets/kids-stories/kj-03.webp'),
-  prison: require('../../assets/kids-stories/kj-04.webp'),
-  midnight: require('../../assets/kids-stories/kj-05.webp'),
-  vishnu: require('../../assets/kids-stories/kj-06.webp'),
-  escape: require('../../assets/kids-stories/kj-07.webp'),
-  yamuna: require('../../assets/kids-stories/kj-08.webp'),
-  gokul: require('../../assets/kids-stories/kj-09.webp'),
-  devi: require('../../assets/kids-stories/kj-10.webp'),
-  safe: require('../../assets/kids-stories/kj-11.webp'),
-  wedding: require('../../assets/kids-stories/kj-12.webp'),
-  threat: require('../../assets/kids-stories/kj-13.webp'),
-  imprisoned: require('../../assets/kids-stories/kj-14.webp'),
-  balarama: require('../../assets/kids-stories/kj-15.webp'),
-  prayer: require('../../assets/kids-stories/kj-16.webp'),
-  return: require('../../assets/kids-stories/kj-17.webp'),
-  pt00: require('../../assets/kids-stories/pt-00.webp'),
-  pt01: require('../../assets/kids-stories/pt-01.webp'),
-  pt02: require('../../assets/kids-stories/pt-02.webp'),
-  pt03: require('../../assets/kids-stories/pt-03.webp'),
-  pt04: require('../../assets/kids-stories/pt-04.webp'),
-  pt05: require('../../assets/kids-stories/pt-05.webp'),
-  pt06: require('../../assets/kids-stories/pt-06.webp'),
-  pt07: require('../../assets/kids-stories/pt-07.webp'),
-  pt08: require('../../assets/kids-stories/pt-08.webp'),
-  pt09: require('../../assets/kids-stories/pt-09.webp'),
-  ka00: require('../../assets/kids-stories/ka-00.webp'),
-  ka01: require('../../assets/kids-stories/ka-01.webp'),
-  ka02: require('../../assets/kids-stories/ka-02.webp'),
-  ka03: require('../../assets/kids-stories/ka-03.webp'),
-  ka04: require('../../assets/kids-stories/ka-04.webp'),
-  ka05: require('../../assets/kids-stories/ka-05.webp'),
-  ka06: require('../../assets/kids-stories/ka-06.webp'),
-  ka07: require('../../assets/kids-stories/ka-07.webp'),
-  gb00: require('../../assets/kids-stories/gb-00.webp'),
-  gb01: require('../../assets/kids-stories/gb-01.webp'),
-  gb02: require('../../assets/kids-stories/gb-02.webp'),
-  gb03: require('../../assets/kids-stories/gb-03.webp'),
-  gb04: require('../../assets/kids-stories/gb-04.webp'),
-  gb05: require('../../assets/kids-stories/gb-05.webp'),
-  gb06: require('../../assets/kids-stories/gb-06.webp'),
-  gb07: require('../../assets/kids-stories/gb-07.webp'),
-  gb08: require('../../assets/kids-stories/gb-08.webp'),
-  gb09: require('../../assets/kids-stories/gb-09.webp'),
-  gb10: require('../../assets/kids-stories/gb-10.webp'),
-  hs00: require('../../assets/kids-stories/hs-00.webp'),
-  hs01: require('../../assets/kids-stories/hs-01.webp'),
-  hs02: require('../../assets/kids-stories/hs-02.webp'),
-  hs03: require('../../assets/kids-stories/hs-03.webp'),
-  hs04: require('../../assets/kids-stories/hs-04.webp'),
-  hs05: require('../../assets/kids-stories/hs-05.webp'),
-  hs06: require('../../assets/kids-stories/hs-06.webp'),
-  hs07: require('../../assets/kids-stories/hs-07.webp'),
-  hs08: require('../../assets/kids-stories/hs-08.webp'),
-  hs09: require('../../assets/kids-stories/hs-09.webp'),
+const kidsStoryManifest = kidsStoryManifestJson as RemoteAssetManifest;
+
+// The art is served from the CDN (R2) and cached on-device after the first view
+// — see `assetCache`. This map is the only app-side knowledge of the bundle: it
+// turns a story's `art` label into the manifest stem the uploaded file carries.
+const ART_STEMS: Record<string, string> = {
+  cover: 'kj-01', chariot: 'kj-02', sword: 'kj-03', prison: 'kj-04', midnight: 'kj-05',
+  vishnu: 'kj-06', escape: 'kj-07', yamuna: 'kj-08', gokul: 'kj-09', devi: 'kj-10',
+  safe: 'kj-11', wedding: 'kj-12', threat: 'kj-13', imprisoned: 'kj-14', balarama: 'kj-15',
+  prayer: 'kj-16', return: 'kj-17',
+  pt00: 'pt-00', pt01: 'pt-01', pt02: 'pt-02', pt03: 'pt-03', pt04: 'pt-04', pt05: 'pt-05', pt06: 'pt-06',
+  pt07: 'pt-07', pt08: 'pt-08', pt09: 'pt-09',
+  ka00: 'ka-00', ka01: 'ka-01', ka02: 'ka-02', ka03: 'ka-03', ka04: 'ka-04', ka05: 'ka-05', ka06: 'ka-06', ka07: 'ka-07',
+  gb00: 'gb-00', gb01: 'gb-01', gb02: 'gb-02', gb03: 'gb-03', gb04: 'gb-04', gb05: 'gb-05', gb06: 'gb-06', gb07: 'gb-07',
+  gb08: 'gb-08', gb09: 'gb-09', gb10: 'gb-10',
+  hs00: 'hs-00', hs01: 'hs-01', hs02: 'hs-02', hs03: 'hs-03', hs04: 'hs-04', hs05: 'hs-05', hs06: 'hs-06',
+  hs07: 'hs-07', hs08: 'hs-08', hs09: 'hs-09',
 };
 // These frames remove only visually reviewed blank parchment below the scene.
 // New artwork stays full-height until reviewed; caption length never sets a crop.
@@ -69,6 +31,9 @@ export default function KidsStoryArt({ art, label }: { art: string; label: strin
   const { colors } = useTheme();
   const [width, setWidth] = useState(0);
   const retainedHeight = artFrames[art]?.retainedHeight ?? 1;
+  const stem = ART_STEMS[art];
+  const request = stem ? remoteAssetRequest(kidsStoryManifest, stem, assetBaseUrl()) : null;
+  const uri = useCachedAsset(request);
   return (
     <View
       accessibilityRole="image"
@@ -76,8 +41,8 @@ export default function KidsStoryArt({ art, label }: { art: string; label: strin
       onLayout={event => setWidth(event.nativeEvent.layout.width)}
       style={{ width: '100%', aspectRatio: 4 / (5 * retainedHeight), flexShrink: 0, overflow: 'hidden', borderRadius: 12, backgroundColor: colors.parchmentSoft }}
     >
-      {images[art] ? (
-        <Image accessible={false} source={images[art]} resizeMode="contain" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: width ? width * (5 / 4) : '100%' }} />
+      {uri ? (
+        <Image accessible={false} source={{ uri }} resizeMode="contain" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: width ? width * (5 / 4) : '100%' }} />
       ) : (
         <Text style={{ color: colors.ink, padding: 20 }}>{label}</Text>
       )}

@@ -3,7 +3,7 @@
     "name": "Vedansh",
     "slug": "vedansh",
     "scheme": "vedansh",
-    "version": "1.4.9",
+    "version": "1.5.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -16,7 +16,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.prashantsharma.vedansh",
-      "buildNumber": "69",
+      "buildNumber": "71",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSPhotoLibraryAddUsageDescription": "Save the verse and katha cards you share to Photos.",
@@ -78,7 +78,8 @@
           "locationWhenInUsePermission": "Vedansh uses your location only to compute accurate sunrise and panchang times for your city. Location never leaves your device.",
           "isAndroidBackgroundLocationEnabled": false
         }
-      ]
+      ],
+      "expo-secure-store"
     ],
     "owner": "prashant.sharma",
     "extra": {

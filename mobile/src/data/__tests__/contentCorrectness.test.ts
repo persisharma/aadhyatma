@@ -760,6 +760,10 @@ function collectJsonFiles(dirRel = ''): string[] {
     } else if (
       entry.name.endsWith('.json') &&
       entry.name !== 'chapters-manifest.json' &&
+      // Generated CDN asset manifests (stem → content hash) carry no editorial
+      // `source` — the heavy art/audio they point to is served from R2, not here.
+      entry.name !== 'audioAssetManifest.json' &&
+      entry.name !== 'kidsStoryAssetManifest.json' &&
       rel !== 'valmiki-ramayan/daily-selection.json'
     ) {
       files.push(rel);
