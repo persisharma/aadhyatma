@@ -39,6 +39,8 @@ type AudioPlayerContextValue = {
   currentTrack: AudioTrack | null;
   isPlaying: boolean;
   isLoaded: boolean;
+  /** True while a tapped track is downloading/decrypting before it can play. */
+  isBuffering: boolean;
   /** Current position in seconds. */
   positionSec: number;
   /** Track duration in seconds (falls back to the catalog's nominal length). */
@@ -48,6 +50,8 @@ type AudioPlayerContextValue = {
   nowPlayingOpen: boolean;
   /** Load (if needed) and play a track, surfacing the mini-player. */
   playTrack: (track: AudioTrack) => void;
+  /** Warm a track's on-device cache ahead of a tap, so playback starts instantly. */
+  prefetchTrack: (track: AudioTrack) => void;
   togglePlay: () => void;
   seekTo: (seconds: number) => void;
   skipBy: (seconds: number) => void;
@@ -69,6 +73,9 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
   const [currentTrack, setCurrentTrack] = useState<AudioTrack | null>(null);
   const [rate, setRateState] = useState(1.0);
   const [nowPlayingOpen, setNowPlayingOpen] = useState(false);
+  // True between a new-track tap and the moment it actually starts (download +
+  // decrypt), so the play controls can show a spinner instead of looking stuck.
+  const [isBuffering, setIsBuffering] = useState(false);
 
   // Keep the live rate available to playTrack without re-creating the callback.
   const rateRef = useRef(rate);
@@ -105,6 +112,7 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
   useEffect(() => {
     if (wantPlayRef.current && status?.isLoaded) {
       wantPlayRef.current = false;
+      setIsBuffering(false);
       player.play();
     }
   }, [status, player]);
@@ -147,8 +155,10 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
         /* player released */
       }
       // Show the track immediately; the source resolves asynchronously (the
-      // recording is fetched once and decrypted from the on-device cache).
+      // recording is fetched once and decrypted from the on-device cache). The
+      // spinner stays until the loaded-gate effect fires play.
       setCurrentTrack(track);
+      setIsBuffering(true);
       try {
         player.setActiveForLockScreen(true, {
           title: track.titleEn,
@@ -170,10 +180,20 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
         })
         .catch(() => {
           // Download/decrypt failed — leave the track visible but un-started.
+          if (playTokenRef.current === token) setIsBuffering(false);
         });
     },
     [player, currentTrack?.id]
   );
+
+  // Warm a track's on-device cache before the user taps it (e.g. on press-in),
+  // so playback starts instantly. Fire-and-forget; `playableAudioUri` dedups a
+  // later real play against this in-flight fetch, so no work is duplicated.
+  const prefetchTrack = useCallback((track: AudioTrack) => {
+    const request = audioRemoteRequest(track.id);
+    if (request == null) return;
+    void playableAudioUri(request).catch(() => undefined);
+  }, []);
 
   const togglePlay = useCallback(() => {
     if (status?.playing) player.pause();
@@ -288,6 +308,7 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
     // / japam has claimed the session (this is the 'recorded' stopper).
     playTokenRef.current += 1;
     wantPlayRef.current = false;
+    setIsBuffering(false);
     try {
       player.pause();
       player.seekTo(0).catch(() => undefined);
@@ -310,12 +331,14 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
       currentTrack,
       isPlaying: status?.playing ?? false,
       isLoaded: status?.isLoaded ?? false,
+      isBuffering,
       positionSec: status?.currentTime ?? 0,
       durationSec: status?.duration || currentTrack?.durationSec || 0,
       rate,
       isLooping: status?.loop ?? false,
       nowPlayingOpen,
       playTrack,
+      prefetchTrack,
       togglePlay,
       seekTo,
       skipBy,
@@ -331,12 +354,14 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
       currentTrack,
       status?.playing,
       status?.isLoaded,
+      isBuffering,
       status?.currentTime,
       status?.duration,
       status?.loop,
       rate,
       nowPlayingOpen,
       playTrack,
+      prefetchTrack,
       togglePlay,
       seekTo,
       skipBy,

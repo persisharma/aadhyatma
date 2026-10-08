@@ -15,8 +15,12 @@ The app makes sound three ways, and they are **mutually exclusive**:
    (`AudioPlayerContext`) with a root-overlay MiniPlayer + Now Playing surface. 13 catalog tracks,
    **10 real recordings**. The recordings are **served from the R2 CDN, not bundled** — each is
    downloaded once and stored **AES-256-CTR-encrypted** on-device (device key in the Keychain/
-   Keystore via `audioKey`), then decrypted to a transient cache-dir temp for playback. See
-   `src/utils/encryptedAudioCache.ts`; `assets/audio-library/index.ts` resolves a track id →
+   Keystore via `audioKey`). First play is latency-critical, so it plays the just-downloaded
+   plaintext straight away and writes the `.enc` in the **background** (`persistEncrypted`); a later
+   session (plaintext temp wiped on launch) decrypts the stored `.enc`. The player exposes
+   `isBuffering` (spinner on the play controls while a tapped track resolves) and `prefetchTrack`
+   (warmed on TrackCard press-in). See `src/utils/encryptedAudioCache.ts`;
+   `assets/audio-library/index.ts` resolves a track id →
    `audioRemoteRequest` via `audioAssetManifest.json`. (`hare-rama.mp3` + `gayatri-mantra.mp3` stay
    bundled because the japam loop `require`s them for offline alarm playback.)
 2. **The japam loop** — a component-scoped looping player inside `JapamAudioPlayer` that also

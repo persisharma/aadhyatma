@@ -1,6 +1,6 @@
 import AppIcon, { type AppIconName } from '@/components/AppIcon';
 import React, { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
@@ -29,6 +29,7 @@ export default function NowPlayingScreen() {
     currentTrack,
     nowPlayingOpen,
     isPlaying,
+    isBuffering,
     positionSec,
     durationSec,
     isLooping,
@@ -134,15 +135,21 @@ export default function NowPlayingScreen() {
           <ControlButton icon="previous" onPress={skipToPrevious} color={colors.inkSoft} a11y="Previous track" />
           <Pressable
             onPress={togglePlay}
+            disabled={isBuffering}
             accessibilityRole="button"
-            accessibilityLabel={isPlaying ? 'Pause' : 'Play'}
+            accessibilityState={{ busy: isBuffering }}
+            accessibilityLabel={isBuffering ? 'Loading' : isPlaying ? 'Pause' : 'Play'}
             style={({ pressed }) => [
               styles.playBtn,
               { backgroundColor: colors.saffron, borderColor: colors.saffronDeep, borderRadius: radii.pill },
               pressed && { opacity: 0.85 },
             ]}
           >
-            <AppIcon name={isPlaying ? "pause" : "play"} size={32} color={colors.onPrimary} weight="fill" />
+            {isBuffering ? (
+              <ActivityIndicator size="small" color={colors.onPrimary} />
+            ) : (
+              <AppIcon name={isPlaying ? "pause" : "play"} size={32} color={colors.onPrimary} weight="fill" />
+            )}
           </Pressable>
           <ControlButton icon="skip" onPress={skipToNext} color={colors.inkSoft} a11y="Next track" />
           <ControlButton label={`+${SKIP_SECONDS}`} small onPress={() => skipBy(SKIP_SECONDS)} color={colors.inkSoft} a11y="Forward 15 seconds" />
