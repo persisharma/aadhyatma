@@ -8,7 +8,12 @@ function configureMetaTracking(config, env) {
   if (appId !== META_APP_ID) {
     throw new Error('META_APP_ID does not match the verified Vedansh Meta app. Reverify platform mappings before changing it.');
   }
-  if (enabled && !/^[a-f0-9]{32}$/i.test(clientToken)) {
+  // The client token is a build secret, injected only on the EAS builder
+  // (EAS_BUILD=true) — not during the local pre-upload config read eas-cli runs
+  // to fingerprint the app. Enforce it where it is actually consumed (the
+  // builder bakes it into Info.plist / strings.xml), so the local read of an
+  // enabled production profile doesn't fail for a secret it can't see.
+  if (enabled && env.EAS_BUILD === 'true' && !/^[a-f0-9]{32}$/i.test(clientToken)) {
     throw new Error('Enabled Meta tracking requires META_CLIENT_TOKEN from the build environment. Never use the app secret.');
   }
   if (env.EAS_BUILD_PROFILE === 'production' && !['true', 'false'].includes(env.META_TRACKING_ENABLED)) {
