@@ -23,6 +23,7 @@
     "production": {
       "autoIncrement": true,
       "channel": "production",
+      "environment": "production",
       "env": { "META_TRACKING_ENABLED": "true" }
     }
   },
