@@ -1,0 +1,437 @@
+# Full revised arcs in Hindi at Large size: Putana, Ganesha and Hanuman.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- tapOn: { id: "tab-more" }
+- scrollUntilVisible:
+    element: { text: "Reading size,.*" }
+    centerElement: true
+- tapOn: "Reading size,.*"
+- tapOn: "Large"
+- tapOn: "हो गया|Done|થઈ ગયું|ಮುಗಿಯಿತು"
+- scrollUntilVisible:
+    element: { text: "Language,.*" }
+    centerElement: true
+- tapOn: "Language,.*"
+- tapOn: "Hindi"
+- tapOn: { id: "tab-home" }
+- scrollUntilVisible:
+    element: { id: "home-kids-stories-card" }
+    centerElement: true
+- tapOn: { id: "home-kids-stories-card" }
+- tapOn: { id: "kids-story-deity-krishna" }
+- scrollUntilVisible:
+    element: { id: "kids-story-putana" }
+    centerElement: true
+- tapOn: { id: "kids-story-putana" }
+- tapOn: { id: "lang-toggle-hi" }
+- assertVisible: "1 / 10"
+- assertVisible: { id: "story-page-little-krishna-in-gokul" }
+- takeScreenshot: kids-putana-hi-large-pt00-art
+- scrollUntilVisible:
+    element: { text: "बहुत समय पहले, गोकुल नाम के गाँव में नन्हे कृष्ण रहते थे। यशोदा और नंद उन्हें प्यार से पालते थे। उनके आने से घर और गाँव में खुशियाँ थीं।" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "बहुत समय पहले, गोकुल नाम के गाँव में नन्हे कृष्ण रहते थे। यशोदा और नंद उन्हें प्यार से पालते थे। उनके आने से घर और गाँव में खुशियाँ थीं।"
+- takeScreenshot: kids-putana-hi-large-pt00
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 10"
+- assertVisible: { id: "story-page-kansas-plan" }
+- takeScreenshot: kids-putana-hi-large-pt01-art
+- scrollUntilVisible:
+    element: { text: "मथुरा के राजा कंस ने सुना था कि देवकी की आठवीं संतान उसका अंत करेगी। डरकर उसने पूतना को शिशुओं को हानि पहुँचाने भेजा। खोजते हुए वह गोकुल पहुँची।" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "मथुरा के राजा कंस ने सुना था कि देवकी की आठवीं संतान उसका अंत करेगी। डरकर उसने पूतना को शिशुओं को हानि पहुँचाने भेजा। खोजते हुए वह गोकुल पहुँची।"
+- takeScreenshot: kids-putana-hi-large-pt01
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 10"
+- assertVisible: { id: "story-page-beautiful-disguise" }
+- takeScreenshot: kids-putana-hi-large-pt02-art
+- scrollUntilVisible:
+    element: { text: "पूतना ने सुंदर स्त्री का रूप लिया और नंद के घर में प्रवेश किया। उसका व्यवहार स्नेहभरा दिखता था। यशोदा और रोहिणी उसके मन की बुरी इच्छा नहीं जान सकीं।" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "पूतना ने सुंदर स्त्री का रूप लिया और नंद के घर में प्रवेश किया। उसका व्यवहार स्नेहभरा दिखता था। यशोदा और रोहिणी उसके मन की बुरी इच्छा नहीं जान सकीं।"
+- takeScreenshot: kids-putana-hi-large-pt02
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 10"
+- assertVisible: { id: "story-page-hidden-danger" }
+- takeScreenshot: kids-putana-hi-large-pt07-art
+- scrollUntilVisible:
+    element: { text: "पूतना नन्हे कृष्ण के पास गई और उन्हें उठाया। उसकी मुस्कान के पीछे बुरी इच्छा छिपी थी। सबको वे साधारण शिशु लगते थे, पर कृष्ण उसका उद्देश्य जानते थे।" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "पूतना नन्हे कृष्ण के पास गई और उन्हें उठाया। उसकी मुस्कान के पीछे बुरी इच्छा छिपी थी। सबको वे साधारण शिशु लगते थे, पर कृष्ण उसका उद्देश्य जानते थे।"
+- takeScreenshot: kids-putana-hi-large-pt07
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 10"
+- assertVisible: { id: "story-page-krishnas-power" }
+- takeScreenshot: kids-putana-hi-large-pt03-art
+- scrollUntilVisible:
+    element: { text: "पूतना ने अपने स्तन पर विष लगाया था और कृष्ण को दूध पिलाने लगी। पर नन्हे कृष्ण असहाय नहीं थे। दूध के साथ वे उसकी प्राणशक्ति भी खींचने लगे।" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "पूतना ने अपने स्तन पर विष लगाया था और कृष्ण को दूध पिलाने लगी। पर नन्हे कृष्ण असहाय नहीं थे। दूध के साथ वे उसकी प्राणशक्ति भी खींचने लगे।"
+- takeScreenshot: kids-putana-hi-large-pt03
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 10"
+- assertVisible: { id: "story-page-putanas-cry" }
+- takeScreenshot: kids-putana-hi-large-pt08-art
+- scrollUntilVisible:
+    element: { text: "पूतना घबरा गई। उसने कृष्ण से छोड़ देने की पुकार की और छूटने की कोशिश की। पर उनकी पकड़ नहीं छूटी। उसकी शक्ति घटती गई और उसकी पुकार दूर तक गूँजी।" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "पूतना घबरा गई। उसने कृष्ण से छोड़ देने की पुकार की और छूटने की कोशिश की। पर उनकी पकड़ नहीं छूटी। उसकी शक्ति घटती गई और उसकी पुकार दूर तक गूँजी।"
+- takeScreenshot: kids-putana-hi-large-pt08
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 10"
+- assertVisible: { id: "story-page-disguise-falls" }
+- takeScreenshot: kids-putana-hi-large-pt09-art
+- scrollUntilVisible:
+    element: { text: "आखिर पूतना अपने विशाल राक्षसी रूप में आ गई। वह धरती पर गिरी और उसके प्राण चले गए। इतने बड़े संकट के बीच भी नन्हे कृष्ण उसके शरीर पर सुरक्षित खेल रहे थे।" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "आखिर पूतना अपने विशाल राक्षसी रूप में आ गई। वह धरती पर गिरी और उसके प्राण चले गए। इतने बड़े संकट के बीच भी नन्हे कृष्ण उसके शरीर पर सुरक्षित खेल रहे थे।"
+- takeScreenshot: kids-putana-hi-large-pt09
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "8 / 10"
+- assertVisible: { id: "story-page-danger-ends" }
+- takeScreenshot: kids-putana-hi-large-pt04-art
+- scrollUntilVisible:
+    element: { text: "गोपियाँ कृष्ण को देखकर दौड़ीं। यशोदा और रोहिणी ने भी राहत की साँस ली। उन्होंने नन्हे कृष्ण को पूतना के शरीर से उठाया और अपनी गोद में सुरक्षित ले लिया।" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "गोपियाँ कृष्ण को देखकर दौड़ीं। यशोदा और रोहिणी ने भी राहत की साँस ली। उन्होंने नन्हे कृष्ण को पूतना के शरीर से उठाया और अपनी गोद में सुरक्षित ले लिया।"
+- takeScreenshot: kids-putana-hi-large-pt04
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "9 / 10"
+- assertVisible: { id: "story-page-mothers-care" }
+- takeScreenshot: kids-putana-hi-large-pt05-art
+- scrollUntilVisible:
+    element: { text: "यशोदा, रोहिणी और गोपियों ने कृष्ण की रक्षा के लिए भगवान के नामों से प्रार्थना की। यशोदा ने उन्हें दूध पिलाया और आराम से सुला दिया। घर फिर शांत हो गया।" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "यशोदा, रोहिणी और गोपियों ने कृष्ण की रक्षा के लिए भगवान के नामों से प्रार्थना की। यशोदा ने उन्हें दूध पिलाया और आराम से सुला दिया। घर फिर शांत हो गया।"
+- takeScreenshot: kids-putana-hi-large-pt05
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "10 / 10"
+- assertVisible: { id: "story-page-mercy-and-home" }
+- takeScreenshot: kids-putana-hi-large-pt06
+- scrollUntilVisible:
+    element: { text: "श्रीमद्भागवत 10.5–6 का बच्चों के लिए सरल रूपांतरण। भयावह विवरण संक्षिप्त हैं; सीख संपादकीय है।" }
+    direction: DOWN
+    centerElement: true
+- takeScreenshot: kids-putana-hi-source
+- tapOn: "Back"
+- assertVisible: { id: "kids-story-putana" }
+- tapOn: "Back"
+- tapOn: { id: "kids-story-deity-ganesha" }
+- scrollUntilVisible:
+    element: { id: "kids-story-ganesha-birth" }
+    centerElement: true
+- tapOn: { id: "kids-story-ganesha-birth" }
+- tapOn: { id: "lang-toggle-hi" }
+- assertVisible: "1 / 11"
+- assertVisible: { id: "story-page-a-wish-on-kailasa" }
+- takeScreenshot: kids-ganesha-birth-hi-large-gb00-art
+- scrollUntilVisible:
+    element: { text: "कैलास पर्वत पर पार्वती शिव के साथ रहती थीं। एक दिन उनकी सखियों जया और विजया ने बात छेड़ी। शिव के गण उनकी आज्ञा मानते थे; पार्वती का अपना रक्षक कौन होता?" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "कैलास पर्वत पर पार्वती शिव के साथ रहती थीं। एक दिन उनकी सखियों जया और विजया ने बात छेड़ी। शिव के गण उनकी आज्ञा मानते थे; पार्वती का अपना रक्षक कौन होता?"
+- takeScreenshot: kids-ganesha-birth-hi-large-gb00
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 11"
+- assertVisible: { id: "story-page-parvatis-decision" }
+- takeScreenshot: kids-ganesha-birth-hi-large-gb08-art
+- scrollUntilVisible:
+    element: { text: "एक बार पार्वती स्नान कर रही थीं, तभी शिव भीतर आ गए। नंदी उन्हें रोक नहीं सके थे। तब पार्वती ने निश्चय किया कि उनका अपना रक्षक होगा, जो उनकी आज्ञा माने।" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "एक बार पार्वती स्नान कर रही थीं, तभी शिव भीतर आ गए। नंदी उन्हें रोक नहीं सके थे। तब पार्वती ने निश्चय किया कि उनका अपना रक्षक होगा, जो उनकी आज्ञा माने।"
+- takeScreenshot: kids-ganesha-birth-hi-large-gb08
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 11"
+- assertVisible: { id: "story-page-parvatis-son" }
+- takeScreenshot: kids-ganesha-birth-hi-large-gb01-art
+- scrollUntilVisible:
+    element: { text: "कैलास पर पार्वती ने अपने शरीर के लेप से एक बालक बनाया और उसे जीवन दिया। उन्होंने उसे वस्त्र और आभूषण पहनाए। वह उनका अपना प्रिय पुत्र था।" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "कैलास पर पार्वती ने अपने शरीर के लेप से एक बालक बनाया और उसे जीवन दिया। उन्होंने उसे वस्त्र और आभूषण पहनाए। वह उनका अपना प्रिय पुत्र था।"
+- takeScreenshot: kids-ganesha-birth-hi-large-gb01
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 11"
+- assertVisible: { id: "story-page-guard-the-door" }
+- takeScreenshot: kids-ganesha-birth-hi-large-gb02-art
+- scrollUntilVisible:
+    element: { text: "स्नान करने से पहले पार्वती ने पुत्र से द्वार की रखवाली करने को कहा। उनकी अनुमति के बिना किसी को भीतर नहीं आने देना था। बालक अपना दंड लेकर द्वार पर खड़ा हो गया।" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "स्नान करने से पहले पार्वती ने पुत्र से द्वार की रखवाली करने को कहा। उनकी अनुमति के बिना किसी को भीतर नहीं आने देना था। बालक अपना दंड लेकर द्वार पर खड़ा हो गया।"
+- takeScreenshot: kids-ganesha-birth-hi-large-gb02
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 11"
+- assertVisible: { id: "story-page-shiva-returns" }
+- takeScreenshot: kids-ganesha-birth-hi-large-gb03-art
+- scrollUntilVisible:
+    element: { text: "शिव घर लौटे, पर बालक उन्हें पहचानता नहीं था। माँ की आज्ञा याद रखकर उसने रास्ता रोका। शिव भीतर जाना चाहते थे, लेकिन बालक द्वार से नहीं हटा।" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "शिव घर लौटे, पर बालक उन्हें पहचानता नहीं था। माँ की आज्ञा याद रखकर उसने रास्ता रोका। शिव भीतर जाना चाहते थे, लेकिन बालक द्वार से नहीं हटा।"
+- takeScreenshot: kids-ganesha-birth-hi-large-gb03
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 11"
+- assertVisible: { id: "story-page-guardian-stands-firm" }
+- takeScreenshot: kids-ganesha-birth-hi-large-gb09-art
+- scrollUntilVisible:
+    element: { text: "शिव ने अपने गणों को बालक के पास भेजा। वे उसे हटाने लगे, पर वह माँ की आज्ञा पर अडिग रहा। झगड़ा युद्ध में बदल गया। बालक ने अपनी असाधारण शक्ति से सामना किया।" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "शिव ने अपने गणों को बालक के पास भेजा। वे उसे हटाने लगे, पर वह माँ की आज्ञा पर अडिग रहा। झगड़ा युद्ध में बदल गया। बालक ने अपनी असाधारण शक्ति से सामना किया।"
+- takeScreenshot: kids-ganesha-birth-hi-large-gb09
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 11"
+- assertVisible: { id: "story-page-parvatis-sorrow" }
+- takeScreenshot: kids-ganesha-birth-hi-large-gb04-art
+- scrollUntilVisible:
+    element: { text: "युद्ध के दौरान शिव ने बालक का सिर अलग कर दिया और उसकी मृत्यु हो गई। यह समाचार सुनकर पार्वती का हृदय दुख से भर गया। अपने प्रिय पुत्र को खोकर वे बहुत क्रोधित भी हुईं।" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "युद्ध के दौरान शिव ने बालक का सिर अलग कर दिया और उसकी मृत्यु हो गई। यह समाचार सुनकर पार्वती का हृदय दुख से भर गया। अपने प्रिय पुत्र को खोकर वे बहुत क्रोधित भी हुईं।"
+- takeScreenshot: kids-ganesha-birth-hi-large-gb04
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "8 / 11"
+- assertVisible: { id: "story-page-a-plea-for-peace" }
+- takeScreenshot: kids-ganesha-birth-hi-large-gb10-art
+- scrollUntilVisible:
+    element: { text: "देवताओं और ऋषियों ने पार्वती से क्षमा माँगी। पार्वती ने कहा कि उनके पुत्र को फिर जीवन और सम्मान मिले, तभी शांति लौटेगी। उनकी बात सुनकर शिव ने उसे पूरा करने की आज्ञा दी।" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "देवताओं और ऋषियों ने पार्वती से क्षमा माँगी। पार्वती ने कहा कि उनके पुत्र को फिर जीवन और सम्मान मिले, तभी शांति लौटेगी। उनकी बात सुनकर शिव ने उसे पूरा करने की आज्ञा दी।"
+- takeScreenshot: kids-ganesha-birth-hi-large-gb10
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "9 / 11"
+- assertVisible: { id: "story-page-new-life" }
+- takeScreenshot: kids-ganesha-birth-hi-large-gb05-art
+- scrollUntilVisible:
+    element: { text: "शिव की आज्ञा से गण उत्तर दिशा में गए। वहाँ मिले हाथी का सिर लाकर बालक के शरीर से जोड़ा गया। मंत्रों और पवित्र जल से बालक फिर जीवित हुआ, अब हाथी के मुख के साथ।" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "शिव की आज्ञा से गण उत्तर दिशा में गए। वहाँ मिले हाथी का सिर लाकर बालक के शरीर से जोड़ा गया। मंत्रों और पवित्र जल से बालक फिर जीवित हुआ, अब हाथी के मुख के साथ।"
+- takeScreenshot: kids-ganesha-birth-hi-large-gb05
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "10 / 11"
+- assertVisible: { id: "story-page-mothers-embrace" }
+- takeScreenshot: kids-ganesha-birth-hi-large-gb06-art
+- scrollUntilVisible:
+    element: { text: "पार्वती ने अपने जीवित पुत्र को देखा तो आनंद से गले लगा लिया। शिव ने उसके सिर पर हाथ रखकर उसे अपना पुत्र कहा। कैलास में फिर शांति और खुशी छा गई।" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "पार्वती ने अपने जीवित पुत्र को देखा तो आनंद से गले लगा लिया। शिव ने उसके सिर पर हाथ रखकर उसे अपना पुत्र कहा। कैलास में फिर शांति और खुशी छा गई।"
+- takeScreenshot: kids-ganesha-birth-hi-large-gb06
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "11 / 11"
+- assertVisible: { id: "story-page-ganapati-blessing" }
+- takeScreenshot: kids-ganesha-birth-hi-large-gb07
+- scrollUntilVisible:
+    element: { text: "शिवपुराण, रुद्रसंहिता, कुमारखण्ड 13–18 की श्वेतकल्प कथा का सरल रूपांतरण। अन्य जन्म-कथाएँ भी प्रचलित हैं। हिंसा के विवरण संक्षिप्त हैं; सीख संपादकीय है।" }
+    direction: DOWN
+    centerElement: true
+- takeScreenshot: kids-ganesha-birth-hi-source
+- tapOn: "Back"
+- assertVisible: { id: "kids-story-ganesha-birth" }
+- tapOn: "Back"
+- tapOn: { id: "kids-story-deity-hanuman" }
+- scrollUntilVisible:
+    element: { id: "kids-story-hanuman-sun" }
+    centerElement: true
+- tapOn: { id: "kids-story-hanuman-sun" }
+- tapOn: { id: "lang-toggle-hi" }
+- assertVisible: "1 / 10"
+- assertVisible: { id: "story-page-meet-little-hanuman" }
+- takeScreenshot: kids-hanuman-sun-hi-large-hs00-art
+- scrollUntilVisible:
+    element: { text: "सुमेरु पर्वत के पास अंजना अपने नन्हे पुत्र हनुमान के साथ रहती थीं। हनुमान वायुदेव के पुत्र भी कहलाते हैं। यह उनके बचपन की कहानी है, जब वे बहुत छोटे थे।" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "सुमेरु पर्वत के पास अंजना अपने नन्हे पुत्र हनुमान के साथ रहती थीं। हनुमान वायुदेव के पुत्र भी कहलाते हैं। यह उनके बचपन की कहानी है, जब वे बहुत छोटे थे।"
+- takeScreenshot: kids-hanuman-sun-hi-large-hs00
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 10"
+- assertVisible: { id: "story-page-anjana-gathers-fruit" }
+- takeScreenshot: kids-hanuman-sun-hi-large-hs07-art
+- scrollUntilVisible:
+    element: { text: "एक दिन अंजना वन में फल लेने गईं। माँ के दूर जाते ही नन्हे हनुमान भूख से व्याकुल होने लगे। उन्हें खाने के लिए कुछ चाहिए था। अब उनकी नजर आकाश की ओर गई।" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "एक दिन अंजना वन में फल लेने गईं। माँ के दूर जाते ही नन्हे हनुमान भूख से व्याकुल होने लगे। उन्हें खाने के लिए कुछ चाहिए था। अब उनकी नजर आकाश की ओर गई।"
+- takeScreenshot: kids-hanuman-sun-hi-large-hs07
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 10"
+- assertVisible: { id: "story-page-hungry-at-dawn" }
+- takeScreenshot: kids-hanuman-sun-hi-large-hs01-art
+- scrollUntilVisible:
+    element: { text: "सुबह का लाल सूरज उग रहा था। हनुमान को वह बड़ा, पका हुआ फल लगा। वे अभी बहुत छोटे थे और अंतर नहीं जानते थे। उसे पाने के लिए वे आकाश में उछल पड़े।" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "सुबह का लाल सूरज उग रहा था। हनुमान को वह बड़ा, पका हुआ फल लगा। वे अभी बहुत छोटे थे और अंतर नहीं जानते थे। उसे पाने के लिए वे आकाश में उछल पड़े।"
+- takeScreenshot: kids-hanuman-sun-hi-large-hs01
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 10"
+- assertVisible: { id: "story-page-towards-the-sun" }
+- takeScreenshot: kids-hanuman-sun-hi-large-hs02-art
+- scrollUntilVisible:
+    element: { text: "हनुमान ने आकाश में छलाँग लगाई। उनकी गति देखकर देवता चकित रह गए। वायुदेव ठंडी हवा से उनकी रक्षा करते हुए साथ चले। सूर्य ने भी नन्हे बालक को जलने नहीं दिया।" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "हनुमान ने आकाश में छलाँग लगाई। उनकी गति देखकर देवता चकित रह गए। वायुदेव ठंडी हवा से उनकी रक्षा करते हुए साथ चले। सूर्य ने भी नन्हे बालक को जलने नहीं दिया।"
+- takeScreenshot: kids-hanuman-sun-hi-large-hs02
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 10"
+- assertVisible: { id: "story-page-rahu-seeks-help" }
+- takeScreenshot: kids-hanuman-sun-hi-large-hs08-art
+- scrollUntilVisible:
+    element: { text: "उसी दिन राहु सूर्य को ग्रहण लगाने आया था। हनुमान को देखकर वह डर गया और देवताओं के राजा इंद्र से सहायता माँगी। इंद्र उसकी बात सुनकर ऐरावत हाथी पर चले।" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "उसी दिन राहु सूर्य को ग्रहण लगाने आया था। हनुमान को देखकर वह डर गया और देवताओं के राजा इंद्र से सहायता माँगी। इंद्र उसकी बात सुनकर ऐरावत हाथी पर चले।"
+- takeScreenshot: kids-hanuman-sun-hi-large-hs08
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 10"
+- assertVisible: { id: "story-page-indra-arrives" }
+- takeScreenshot: kids-hanuman-sun-hi-large-hs03-art
+- scrollUntilVisible:
+    element: { text: "हनुमान ने राहु का पीछा किया, फिर ऐरावत को भी फल समझकर उसकी ओर बढ़े। इंद्र ने उन्हें रोकने के लिए वज्र चलाया। उससे चोट खाकर हनुमान पर्वत पर गिर पड़े।" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "हनुमान ने राहु का पीछा किया, फिर ऐरावत को भी फल समझकर उसकी ओर बढ़े। इंद्र ने उन्हें रोकने के लिए वज्र चलाया। उससे चोट खाकर हनुमान पर्वत पर गिर पड़े।"
+- takeScreenshot: kids-hanuman-sun-hi-large-hs03
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 10"
+- assertVisible: { id: "story-page-vayus-sorrow" }
+- takeScreenshot: kids-hanuman-sun-hi-large-hs04-art
+- scrollUntilVisible:
+    element: { text: "अपने पुत्र को घायल देखकर वायुदेव दुखी और क्रोधित हुए। वे उसे गोद में लेकर गुफा में चले गए। उन्होंने संसार में वायु का प्रवाह रोक दिया। उनके बिना जीवों की साँसें कठिन होने लगीं।" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "अपने पुत्र को घायल देखकर वायुदेव दुखी और क्रोधित हुए। वे उसे गोद में लेकर गुफा में चले गए। उन्होंने संसार में वायु का प्रवाह रोक दिया। उनके बिना जीवों की साँसें कठिन होने लगीं।"
+- takeScreenshot: kids-hanuman-sun-hi-large-hs04
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "8 / 10"
+- assertVisible: { id: "story-page-the-world-needs-air" }
+- takeScreenshot: kids-hanuman-sun-hi-large-hs09-art
+- scrollUntilVisible:
+    element: { text: "सारा संसार संकट में था। देवता और दूसरे जीव सृष्टिकर्ता ब्रह्मा के पास सहायता माँगने पहुँचे। ब्रह्मा ने वायुदेव का दुख समझाया। फिर सब उनके साथ हनुमान और वायु के पास गए।" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "सारा संसार संकट में था। देवता और दूसरे जीव सृष्टिकर्ता ब्रह्मा के पास सहायता माँगने पहुँचे। ब्रह्मा ने वायुदेव का दुख समझाया। फिर सब उनके साथ हनुमान और वायु के पास गए।"
+- takeScreenshot: kids-hanuman-sun-hi-large-hs09
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "9 / 10"
+- assertVisible: { id: "story-page-brahma-restores" }
+- takeScreenshot: kids-hanuman-sun-hi-large-hs05-art
+- scrollUntilVisible:
+    element: { text: "ब्रह्मा देवताओं के साथ गुफा में आए और बालक को स्नेह से छुआ। हनुमान फिर उठ बैठे। वायुदेव प्रसन्न हुए और हवा फिर बहने लगी। संसार के जीवों को राहत मिली।" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "ब्रह्मा देवताओं के साथ गुफा में आए और बालक को स्नेह से छुआ। हनुमान फिर उठ बैठे। वायुदेव प्रसन्न हुए और हवा फिर बहने लगी। संसार के जीवों को राहत मिली।"
+- takeScreenshot: kids-hanuman-sun-hi-large-hs05
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "10 / 10"
+- assertVisible: { id: "story-page-gods-blessings" }
+- takeScreenshot: kids-hanuman-sun-hi-large-hs06
+- scrollUntilVisible:
+    element: { text: "वाल्मीकि रामायण, उत्तरकाण्ड 35–36 का सरल रूपांतरण। इसमें सूर्य की ओर उड़ने की कथा है; सूर्य निगलने की लोक-कथा अलग है। सीख संपादकीय है।" }
+    direction: DOWN
+    centerElement: true
+- takeScreenshot: kids-hanuman-sun-hi-source
+- tapOn: "Back"
+- assertVisible: { id: "kids-story-hanuman-sun" }
+- tapOn: "Back"
+- tapOn: "Back"

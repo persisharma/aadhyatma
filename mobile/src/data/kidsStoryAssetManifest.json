@@ -33,6 +33,18 @@
       "hash": "0defd043ab3ddf1a",
       "ext": "webp"
     },
+    "gb-08": {
+      "hash": "e31c224c09698c72",
+      "ext": "webp"
+    },
+    "gb-09": {
+      "hash": "1199c6b9e62adb9b",
+      "ext": "webp"
+    },
+    "gb-10": {
+      "hash": "52acabc7628c53dc",
+      "ext": "webp"
+    },
     "hs-00": {
       "hash": "099cc99df102a906",
       "ext": "webp"
@@ -59,6 +71,18 @@
     },
     "hs-06": {
       "hash": "b10d6b34fb6e823a",
+      "ext": "webp"
+    },
+    "hs-07": {
+      "hash": "322f9a1a5b7ed159",
+      "ext": "webp"
+    },
+    "hs-08": {
+      "hash": "fe65f743b0f6b235",
+      "ext": "webp"
+    },
+    "hs-09": {
+      "hash": "826c8e99cffa3d28",
       "ext": "webp"
     },
     "ka-00": {
@@ -187,6 +211,18 @@
     },
     "pt-06": {
       "hash": "3ce79d2cc97aa87a",
+      "ext": "webp"
+    },
+    "pt-07": {
+      "hash": "872b436e7d117f78",
+      "ext": "webp"
+    },
+    "pt-08": {
+      "hash": "e0d601b74a906ba4",
+      "ext": "webp"
+    },
+    "pt-09": {
+      "hash": "fccd03d9acd57db7",
       "ext": "webp"
     },
     "story-library": {
