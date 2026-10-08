@@ -50,7 +50,7 @@ test('the four new stories carry complete sourced arcs, regional text and distin
   const expected = { putana: 10, 'kaliya-nag': 8, 'ganesha-birth': 11, 'hanuman-sun': 10 };
   const componentUrl = new URL('../../components/KidsStoryArt.tsx', import.meta.url);
   const component = readFileSync(componentUrl, 'utf8');
-  const assets = new Map([...component.matchAll(/(\w+): require\('(.+?)'\)/g)].map(match => [match[1], match[2]]));
+  const assets = new Map([...component.matchAll(/(\w+): '((?:kj|pt|ka|gb|hs)-\d+)'/g)].map(match => [match[1], `../../assets/kids-stories/${match[2]}.webp`]));
   const hashes = new Set<string>();
   for (const [id, pageCount] of Object.entries(expected)) {
     const story = getKidsStory(id)!;
@@ -91,9 +91,9 @@ test('the four new stories carry complete sourced arcs, regional text and distin
   assert.equal(hashes.size, 39);
 });
 
-test('every page and cover resolves to a bundled final illustration', () => {
+test('every page and cover resolves to a source illustration (uploaded to the CDN, cached on-device)', () => {
   const component = readFileSync(fileURLToPath(new URL('../../components/KidsStoryArt.tsx', import.meta.url)), 'utf8');
-  const assets = new Map([...component.matchAll(/(\w+): require\('(.+?)'\)/g)].map(match => [match[1], match[2]]));
+  const assets = new Map([...component.matchAll(/(\w+): '((?:kj|pt|ka|gb|hs)-\d+)'/g)].map(match => [match[1], `../../assets/kids-stories/${match[2]}.webp`]));
   for (const story of kidsStories) for (const art of [story.coverArt, ...story.pages.map(page => page.art)]) {
     const asset = assets.get(art);
     assert.ok(asset, `Missing static Metro import: ${art}`);
@@ -105,10 +105,10 @@ test('every page and cover resolves to a bundled final illustration', () => {
   }
 });
 
-test('every bundled illustration has a bottom-band review tied to its actual image bytes', () => {
+test('every source illustration has a bottom-band review tied to its actual image bytes', () => {
   const componentUrl = new URL('../../components/KidsStoryArt.tsx', import.meta.url);
   const component = readFileSync(componentUrl, 'utf8');
-  const assets = new Map([...component.matchAll(/(\w+): require\('(.+?)'\)/g)].map(match => [match[1], match[2]]));
+  const assets = new Map([...component.matchAll(/(\w+): '((?:kj|pt|ka|gb|hs)-\d+)'/g)].map(match => [match[1], `../../assets/kids-stories/${match[2]}.webp`]));
   assert.deepEqual(Object.keys(reviewedFrames).sort(), [...assets.keys()].sort(), 'Review every image, including covers');
   for (const [art, frame] of Object.entries(reviewedFrames)) {
     assert.ok(frame.retainedHeight > 0 && frame.retainedHeight <= 1, `${art}: invalid retained image height`);
@@ -133,7 +133,7 @@ test('Krishna Janma keeps distinct scene art and matching browser assets', () =>
   const repoRoot = new URL('../../../../', import.meta.url);
   const componentUrl = new URL('../../components/KidsStoryArt.tsx', import.meta.url);
   const component = readFileSync(componentUrl, 'utf8');
-  const assets = new Map([...component.matchAll(/(\w+): require\('(.+?)'\)/g)].map(match => [match[1], match[2]]));
+  const assets = new Map([...component.matchAll(/(\w+): '((?:kj|pt|ka|gb|hs)-\d+)'/g)].map(match => [match[1], `../../assets/kids-stories/${match[2]}.webp`]));
   const prototype = readFileSync(new URL('docs/kids-stories-prototype.html', repoRoot), 'utf8');
   const prototypeStory = prototype.match(/const story = (\{.*?\});/);
   const prototypeArtwork = prototype.match(/const artwork = (\{.*?\});/);
