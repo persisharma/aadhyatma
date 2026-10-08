@@ -1,10 +1,10 @@
 /**
  * Audio-library track registry.
  *
- * The recordings are served from the R2 CDN (not bundled) and cached encrypted
- * on-device after first play — see `encryptedAudioCache`. A track id maps to its
- * uploaded file through `audioAssetManifest.json`; the player resolves the
- * playable (decrypted) uri via `audioRemoteRequest(id)` → `playableAudioUri`.
+ * The recordings are served from the R2 CDN (not bundled). The player streams
+ * the CDN url on first play and caches the file once on-device (plain, see
+ * `assetCache`) for instant/offline replay. A track id maps to its uploaded file
+ * through `audioAssetManifest.json` via `audioRemoteRequest(id)`.
  *
  * Only tracks present in the manifest have audio: the library and the reader
  * play button show a track ONLY when `hasRealAudio` is true, so nothing surfaces

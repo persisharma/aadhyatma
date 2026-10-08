@@ -27,8 +27,7 @@ jest.mock('expo-audio', () => {
 });
 
 jest.mock('@/audio/audioSession', () => ({ ensureBackgroundAudioMode: jest.fn() }));
-// The library resolves to a CDN request; the recording is fetched+decrypted
-// asynchronously (both mocked here so playTrack's source resolve is immediate).
+// The library resolves a track to its CDN request (key + remote url).
 jest.mock('@assets/audio-library', () => ({
   audioRemoteRequest: jest.fn(() => ({
     key: 'hash', ext: 'mp3', subdir: 'audio-library',
@@ -36,18 +35,20 @@ jest.mock('@assets/audio-library', () => ({
   })),
   hasRealAudio: jest.fn(() => true),
 }));
-jest.mock('@/utils/encryptedAudioCache', () => ({
-  playableAudioUri: jest.fn(async () => 'file:///cache/audio-library-play/hash.mp3'),
-  clearDecryptedAudioCache: jest.fn(),
+// Plain cache: by default nothing is cached yet, so playTrack streams the
+// remote url and kicks a fire-and-forget background download.
+jest.mock('@/utils/assetCache', () => ({
+  cachedFileUri: jest.fn(() => null),
+  cachedAssetUri: jest.fn(async () => 'file:///doc/audio-library/hash.mp3'),
 }));
 
 import * as ExpoAudio from 'expo-audio';
 import { AudioPlayerProvider, useAudioPlayerContext } from '@/contexts/AudioPlayerContext';
 import { registerStopper, __resetPlaybackArbiter } from '@/audio/playbackArbiter';
 import { AUDIO_TRACKS, type AudioTrack } from '@/data/audio/tracks';
-import { playableAudioUri } from '@/utils/encryptedAudioCache';
+import { cachedFileUri } from '@/utils/assetCache';
 
-const mockPlayable = playableAudioUri as jest.Mock;
+const mockCachedFileUri = cachedFileUri as jest.Mock;
 
 const mockPlayer = (ExpoAudio as unknown as { __player: {
   play: jest.Mock;
@@ -178,8 +179,8 @@ describe('AudioPlayerContext.playTrack', () => {
   });
 
   test('pauses the outgoing track the moment a new one is selected', async () => {
-    // The new source resolves asynchronously; without an immediate pause the old
-    // track keeps playing through the new one's download/decrypt.
+    // Without an immediate pause the old track keeps playing while the new one
+    // buffers.
     mount();
     await startPlaying(AUDIO_TRACKS[0]);
     mockPlayer.pause.mockClear();
@@ -187,19 +188,33 @@ describe('AudioPlayerContext.playTrack', () => {
     expect(mockPlayer.pause).toHaveBeenCalled();
   });
 
-  test('a source resolve that finishes after stop() does not restart playback', async () => {
+  test('streams the CDN url when the track is not cached yet', async () => {
+    mockCachedFileUri.mockReturnValueOnce(null);
     mount();
-    let resolve!: (uri: string) => void;
-    mockPlayable.mockReturnValueOnce(new Promise<string>((r) => { resolve = r; }));
+    await playTrack(track);
+    // Hands the player the remote url so it starts buffering without waiting for
+    // a full download.
+    expect(mockPlayer.replace).toHaveBeenCalledWith({
+      uri: 'https://cdn.vedansh.app/audio-library/hash.mp3',
+    });
+  });
 
-    await act(async () => { ctx.playTrack(track); await tick(); }); // resolve still pending
+  test('plays the local file when the track is already cached (offline, no stream)', async () => {
+    mockCachedFileUri.mockReturnValueOnce('file:///doc/audio-library/hash.mp3');
+    mount();
+    await playTrack(track);
+    expect(mockPlayer.replace).toHaveBeenCalledWith({
+      uri: 'file:///doc/audio-library/hash.mp3',
+    });
+  });
+
+  test('stop() before the source finishes buffering disarms the pending play', async () => {
+    mount();
+    await playTrack(track); // streaming; play deferred to the loaded-gate
     act(() => ctx.stop());
-    mockPlayer.replace.mockClear();
     mockPlayer.play.mockClear();
-
-    await act(async () => { resolve('file:///cache/audio-library-play/hash.mp3'); await tick(); });
-    // The stale resolve is dropped — no source swap, no playback restart.
-    expect(mockPlayer.replace).not.toHaveBeenCalled();
+    // Buffering completes after stop — play must NOT fire.
+    await emitStatus({ isLoaded: true });
     expect(mockPlayer.play).not.toHaveBeenCalled();
   });
 });

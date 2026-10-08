@@ -16,7 +16,7 @@
  *   3. No silent corruption — a failed download propagates (never a blank
  *      fallback) and leaves nothing stored, so the next mount retries cleanly.
  */
-import { cachedAssetUri } from '@/utils/assetCache';
+import { cachedAssetUri, cachedFileUri } from '@/utils/assetCache';
 
 type MockState = { exists: Set<string>; downloads: string[]; fail: Set<string> };
 
@@ -127,5 +127,16 @@ describe('cachedAssetUri', () => {
     const audio = await cachedAssetUri(req({ subdir: 'audio', ext: 'mp3', remoteUrl: 'https://cdn.example.com/a3f9c2.mp3' }));
     expect(art).toBe('file:///doc/kids-stories/a3f9c2.webp');
     expect(audio).toBe('file:///doc/audio/a3f9c2.mp3');
+  });
+});
+
+describe('cachedFileUri', () => {
+  it('returns null before the asset is cached, so the caller can stream the url', () => {
+    expect(cachedFileUri(req())).toBeNull();
+  });
+
+  it('returns the local file uri once the asset has been downloaded', async () => {
+    await cachedAssetUri(req());
+    expect(cachedFileUri(req())).toBe('file:///doc/kids-stories/a3f9c2.webp');
   });
 });

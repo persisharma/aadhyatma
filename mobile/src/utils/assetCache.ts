@@ -32,6 +32,16 @@ export interface CachedAssetRequest {
 const inFlight = new Map<string, Promise<string>>();
 
 /**
+ * The local `file://` uri for an asset that is ALREADY cached, or null if it has
+ * not been fetched yet. Synchronous — lets a caller choose a local file when
+ * present and fall back to the remote URL (e.g. stream it) without awaiting.
+ */
+export function cachedFileUri({ key, ext, subdir }: CachedAssetRequest): string | null {
+  const file = new File(new Directory(Paths.document, subdir), `${key}.${ext}`);
+  return file.exists ? file.uri : null;
+}
+
+/**
  * Returns a local `file://` uri for the asset, downloading it once if it is not
  * already stored. Throws if the download fails (callers show a placeholder and
  * retry on the next mount — never a silent blank).
