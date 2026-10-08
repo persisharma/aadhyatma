@@ -12,7 +12,7 @@ import { ensureBackgroundAudioMode } from '@/audio/audioSession';
 import { claimPlayback, registerStopper } from '@/audio/playbackArbiter';
 import { AUDIO_TRACKS, type AudioTrack } from '@/data/audio/tracks';
 import { audioRemoteRequest, hasRealAudio } from '@assets/audio-library';
-import { playableAudioUri, clearDecryptedAudioCache } from '@/utils/encryptedAudioCache';
+import { cachedAssetUri, cachedFileUri } from '@/utils/assetCache';
 
 // Only tracks with a real recording participate in playback / skip.
 const PLAYABLE_TRACKS = AUDIO_TRACKS.filter((t) => hasRealAudio(t.id));
@@ -89,16 +89,8 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
   // this, longer files that load slowly stay paused.
   const wantPlayRef = useRef(false);
 
-  // Monotonic token guarding the async source resolve (download → decrypt): if
-  // the user taps another track before this one's uri is ready, the stale
-  // resolve must not replace the player source out from under the new track.
-  const playTokenRef = useRef(0);
-
   useEffect(() => {
     ensureBackgroundAudioMode();
-    // Wipe any decrypted plaintext audio a prior force-killed session left in
-    // the cache dir (its teardown cleanup never ran).
-    clearDecryptedAudioCache('audio-library');
   }, []);
 
   // Mirror native playback state into React.
@@ -125,8 +117,6 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
       } catch {
         /* already released */
       }
-      // Wipe the decrypted playback temps so no plaintext audio lingers.
-      clearDecryptedAudioCache('audio-library');
     };
   }, [player]);
 
@@ -154,9 +144,8 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
       } catch {
         /* player released */
       }
-      // Show the track immediately; the source resolves asynchronously (the
-      // recording is fetched once and decrypted from the on-device cache). The
-      // spinner stays until the loaded-gate effect fires play.
+      // Show the track immediately. The spinner stays until the loaded-gate
+      // effect fires play (the brief initial buffer).
       setCurrentTrack(track);
       setIsBuffering(true);
       try {
@@ -167,32 +156,28 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
       } catch {
         /* lock-screen controls unavailable on this platform */
       }
-      const token = ++playTokenRef.current;
-      playableAudioUri(request)
-        .then((uri) => {
-          // A newer tap superseded this resolve — drop the stale source.
-          if (playTokenRef.current !== token) return;
-          player.replace({ uri });
-          player.shouldCorrectPitch = true;
-          player.setPlaybackRate(rateRef.current, 'high');
-          // Defer play() to the loaded-gate effect — the source isn't ready yet.
-          wantPlayRef.current = true;
-        })
-        .catch(() => {
-          // Download/decrypt failed — leave the track visible but un-started.
-          if (playTokenRef.current === token) setIsBuffering(false);
-        });
+      // Start at once — no waiting on a full download. If the file is already
+      // cached, play the local copy (instant, offline); otherwise hand the
+      // player the CDN url so it STREAMS while buffering (like any music app),
+      // and download the file in the background so the next play is local.
+      const local = cachedFileUri(request);
+      if (!local) void cachedAssetUri(request).catch(() => undefined);
+      player.replace({ uri: local ?? request.remoteUrl });
+      player.shouldCorrectPitch = true;
+      player.setPlaybackRate(rateRef.current, 'high');
+      // Defer play() to the loaded-gate effect — the source buffers first.
+      wantPlayRef.current = true;
     },
     [player, currentTrack?.id]
   );
 
   // Warm a track's on-device cache before the user taps it (e.g. on press-in),
-  // so playback starts instantly. Fire-and-forget; `playableAudioUri` dedups a
-  // later real play against this in-flight fetch, so no work is duplicated.
+  // so a later play is local + offline. Fire-and-forget; `cachedAssetUri` dedups
+  // a concurrent play's background download, so no work is duplicated.
   const prefetchTrack = useCallback((track: AudioTrack) => {
     const request = audioRemoteRequest(track.id);
     if (request == null) return;
-    void playableAudioUri(request).catch(() => undefined);
+    void cachedAssetUri(request).catch(() => undefined);
   }, []);
 
   const togglePlay = useCallback(() => {
@@ -303,10 +288,8 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
   }, [player]);
 
   const stop = useCallback(() => {
-    // Invalidate any in-flight source resolve so a slow download/decrypt can't
-    // replace the source and restart playback after Stop — or after read-aloud
-    // / japam has claimed the session (this is the 'recorded' stopper).
-    playTokenRef.current += 1;
+    // Disarm a pending play so a still-buffering source can't start after Stop —
+    // or after read-aloud / japam has claimed the session (the 'recorded' stopper).
     wantPlayRef.current = false;
     setIsBuffering(false);
     try {
