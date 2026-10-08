@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
 
 const [key, source] = process.argv.slice(2);
-if (!/^(pt|ka|gb|hs)0[0-7]$/.test(key ?? '') || !source) {
+if (!/^(pt|ka|gb|hs)\d{2}$/.test(key ?? '') || !source) {
   throw new Error('Provide a scene key and generated PNG path.');
 }
 const bytes = readFileSync(source);

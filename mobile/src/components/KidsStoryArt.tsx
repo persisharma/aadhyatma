@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Image, View, Text, type ImageSourcePropType } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
+import reviewedFrames from './kidsStoryArtFrames.json';
 
 // Static Metro imports keep shared illustrations bundled and available offline.
 const images: Record<string, ImageSourcePropType> = {
@@ -28,6 +29,9 @@ const images: Record<string, ImageSourcePropType> = {
   pt04: require('../../assets/kids-stories/pt-04.webp'),
   pt05: require('../../assets/kids-stories/pt-05.webp'),
   pt06: require('../../assets/kids-stories/pt-06.webp'),
+  pt07: require('../../assets/kids-stories/pt-07.webp'),
+  pt08: require('../../assets/kids-stories/pt-08.webp'),
+  pt09: require('../../assets/kids-stories/pt-09.webp'),
   ka00: require('../../assets/kids-stories/ka-00.webp'),
   ka01: require('../../assets/kids-stories/ka-01.webp'),
   ka02: require('../../assets/kids-stories/ka-02.webp'),
@@ -44,6 +48,9 @@ const images: Record<string, ImageSourcePropType> = {
   gb05: require('../../assets/kids-stories/gb-05.webp'),
   gb06: require('../../assets/kids-stories/gb-06.webp'),
   gb07: require('../../assets/kids-stories/gb-07.webp'),
+  gb08: require('../../assets/kids-stories/gb-08.webp'),
+  gb09: require('../../assets/kids-stories/gb-09.webp'),
+  gb10: require('../../assets/kids-stories/gb-10.webp'),
   hs00: require('../../assets/kids-stories/hs-00.webp'),
   hs01: require('../../assets/kids-stories/hs-01.webp'),
   hs02: require('../../assets/kids-stories/hs-02.webp'),
@@ -51,28 +58,26 @@ const images: Record<string, ImageSourcePropType> = {
   hs04: require('../../assets/kids-stories/hs-04.webp'),
   hs05: require('../../assets/kids-stories/hs-05.webp'),
   hs06: require('../../assets/kids-stories/hs-06.webp'),
+  hs07: require('../../assets/kids-stories/hs-07.webp'),
+  hs08: require('../../assets/kids-stories/hs-08.webp'),
+  hs09: require('../../assets/kids-stories/hs-09.webp'),
 };
-// The art fills whatever vertical space the page layout leaves for it (`flex: 1`
-// from the parent), so the caption below always stays on screen. The image is
-// pinned to the TOP of that frame at its natural 4:5 height (measured from the
-// frame width); when the frame is shorter than the image, the empty parchment/
-// ground band at the FOOT overflows and is clipped — only the bottom is cropped,
-// never the top. `Math.max` guards the rare case where the frame is taller than
-// the image (short caption / big screen) so no empty band appears below it.
+// These frames remove only visually reviewed blank parchment below the scene.
+// New artwork stays full-height until reviewed; caption length never sets a crop.
+const artFrames: Record<string, { retainedHeight: number }> = reviewedFrames;
 export default function KidsStoryArt({ art, label }: { art: string; label: string }) {
   const { colors } = useTheme();
-  const [frame, setFrame] = useState({ w: 0, h: 0 });
-  const naturalHeight = frame.w * (5 / 4);
-  const imageHeight = Math.max(naturalHeight, frame.h);
+  const [width, setWidth] = useState(0);
+  const retainedHeight = artFrames[art]?.retainedHeight ?? 1;
   return (
     <View
       accessibilityRole="image"
       accessibilityLabel={label}
-      onLayout={event => setFrame({ w: event.nativeEvent.layout.width, h: event.nativeEvent.layout.height })}
-      style={{ flex: 1, width: '100%', minHeight: 150, overflow: 'hidden', borderRadius: 12, backgroundColor: colors.parchmentSoft }}
+      onLayout={event => setWidth(event.nativeEvent.layout.width)}
+      style={{ width: '100%', aspectRatio: 4 / (5 * retainedHeight), flexShrink: 0, overflow: 'hidden', borderRadius: 12, backgroundColor: colors.parchmentSoft }}
     >
       {images[art] ? (
-        <Image accessible={false} source={images[art]} resizeMode="cover" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: frame.w ? imageHeight : '100%' }} />
+        <Image accessible={false} source={images[art]} resizeMode="contain" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: width ? width * (5 / 4) : '100%' }} />
       ) : (
         <Text style={{ color: colors.ink, padding: 20 }}>{label}</Text>
       )}
