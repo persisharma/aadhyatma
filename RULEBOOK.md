@@ -34,6 +34,17 @@ Every new painted icon is a statically required local transparent square PNG wit
 
 Celestial decorations use the separate `CelestialChakra.tsx` registry: one detailed wheel shared by Home's Today card and calendar-mode Panchang background, plus one simplified seal for the guest Jyotish introduction. The two local alpha PNGs and their shipped-hash manifest live in `assets/decorations/celestial-chakra/`; per-asset provenance retains exact prompts and master hashes. The asset contract caps their combined bytes below 300KB and pins centered bounds/dimensions/transparency. Decorations must never intercept touches or add screen-reader stops, alter chart calculations or replace the actual Kundali tool icon. `celestial-chakra-smoke.yaml` verifies the installed native Home → Panchang → Jyotish → Kundali route and mode switches; visual evidence checks the three approved placements separately.
 
+## 0.3 Never cut a build, release, or OTA without explicit approval
+
+Native builds and store/OTA releases are outward-facing and quota-limited — never start one on your own initiative. Ask first, every time.
+
+- **Do not run `eas build`, `eas submit`, `eas update` (OTA), or bump the app `version`/`buildNumber` unless the user explicitly asked for that build/release in the current request.** A general "ship it", an approved plan, or a merged PR is **not** standing authorization to cut a native build or push an update.
+- **Verify without burning a cloud build.** Use the simulator/emulator and the unit + e2e suites (§0) to prove a change works. A cloud build is for releasing, not checking.
+- **A failed build is not a licence to retry.** Diagnose, report what went wrong, and ask before re-running — EAS build minutes are limited.
+- **OTA is a user-facing push.** Before `eas update`, confirm the target channel/runtime and that the JS is OTA-safe (no native/native-config changes); publishing to the wrong runtime silently misses users or ships a crash.
+
+This is a process gate, not a code rule — there is no test to enforce it; treat an unapproved build/release the same as shipping without tests (§0).
+
 ---
 
 ## 1. The questions every new section must answer
