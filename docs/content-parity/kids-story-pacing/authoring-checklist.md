@@ -10,6 +10,7 @@ Required by RULEBOOK §29 for every new story and every narrative revision. Copy
 - [ ] For every adjacent pair of pages, answer: why does this happen next, who acts, what changed, and what response leads to the outcome?
 - [ ] Resolve missing causes/reactions with a sourced scene. Keep one principal beat per caption; use another scene when a caption contains several major events. Do not add invented dialogue or filler to meet a page count.
 - [ ] Preserve existing stable page IDs during revisions; add IDs for inserted beats and update the expected sequence/counts.
+- [ ] Follow RULEBOOK §29.1 before commissioning art: inspect the viewport/frame geometry, use the current generation template without a blank lower fifth or caption zone, and list lower-edge details that must remain complete. Reuse the section's supported geometry; adapting its aspect ratio requires renderer verification.
 
 ## Review template
 
@@ -45,6 +46,7 @@ Do not mark a pending review as approved. Record technical and editorial outcome
 - [ ] Extend the relevant Maestro flow to visit every page, verify its stable ID/counter and full non-final caption, scroll the ending/source and return to the shelf. Confirm locale changes preserve the page.
 - [ ] Inspect the actual native sequence at Standard and Large reading sizes. Keep captions readable and the complete illustrated content visible: permit vertical scrolling rather than shrinking art to fit a caption, and trim only a visually reviewed empty bottom band. Review every scene and cover against its painted boundary and record the retained height/image hash in `mobile/src/components/kidsStoryArtFrames.json`; replacing art requires a new review. Do not accept browser-only evidence as native validation.
 - [ ] Synchronize browser copies, verify bundled art/translation coverage and byte parity, and run the required repository checks.
+- [ ] Inspect every asset and cover for unnecessary empty bands; record its own reviewed frame/hash, including retained height `1` when no trim is needed. Never reuse legacy crop percentages blindly. Check fixed-height wrappers, aspect-ratio letterboxing, scene/caption padding and safe-area ownership. Verify short cards do not scroll solely from empty space while long/Large captions remain fully reachable. Copyable request: [story-image-layout-prompt.md](../story-image-layout-prompt.md).
 - [ ] Retain dated full-sequence evidence, source/art provenance and unresolved release checks. A story with a remaining causal gap is not complete even if tests pass.
 
 ## Regression examples: gaps that must not recur
